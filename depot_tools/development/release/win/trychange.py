@@ -88,7 +88,6 @@ def _SendChangeHTTP(options):
   """Send a change to the try server using the HTTP protocol."""
   script_locals = ExecuteTryServerScript()
 
-  values = {}
   if not options.host:
     options.host = script_locals.get('try_server_http_host', None)
     if not options.host:
@@ -100,17 +99,20 @@ def _SendChangeHTTP(options):
       raise NoTryServerAccess('Please use the --port option to specify the try '
           'server port to connect to.')
 
+  values = {}
   if options.email:
     values['email'] = options.email
   values['user'] = options.user
   values['name'] = options.name
   if options.bot:
-    values['bot'] = options.bot
-  values['patch'] = options.diff
+    values['bot'] = ','.join(options.bot)
   if options.revision:
     values['revision'] = options.revision
+  if options.tests:
+    values['tests'] = ','.join(options.tests)
   if options.root:
     values['root'] = options.root
+  values['patch'] = options.diff
   
   url = 'http://%s:%s/send_try_patch' % (options.host, options.port)
   proxies = None
@@ -144,9 +146,11 @@ def _SendChangeSVN(options):
   values['user'] = options.user
   values['name'] = options.name
   if options.bot:
-    values['bot'] = options.bot
+    values['bot'] = ','.join(options.bot)
   if options.revision:
     values['revision'] = options.revision
+  if options.tests:
+    values['tests'] = ','.join(options.tests)
   if options.root:
     values['root'] = options.root
   
@@ -214,11 +218,14 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
   parser.add_option_group(group)
 
   group = optparse.OptionGroup(parser, "Try run options")
-  group.add_option("-b", "--bot", default=None,
-                    help="Force the use specifics build slaves, separated with "
-                         "a comma. ex: -b 'try win32 7'")
+  group.add_option("-b", "--bot", action="append",
+                    help="Force the use specifics build slaves, use multiple "
+                         "times to list many bots (or comma separated)")
   group.add_option("-r", "--revision", default=None, type='int',
                     help="Revision to use for testing.")
+  group.add_option("-t", "--tests", action="append",
+                    help="Override the list of tests to run, use multiple times"
+                         "to list many tests (or comma separated)")
   parser.add_option_group(group)
 
   group = optparse.OptionGroup(parser, "Which patch to run")
