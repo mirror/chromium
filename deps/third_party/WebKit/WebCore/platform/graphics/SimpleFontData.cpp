@@ -141,6 +141,7 @@ void SimpleFontData::platformGlyphInit()
     m_zeroWidthFontData->init(this);
     m_cjkWidthFontData->init(this);
 }
+#endif
 
 SimpleFontData::SimpleFontData()
     : m_treatAsFixedPitch(false)
@@ -152,7 +153,6 @@ SimpleFontData::SimpleFontData()
     , m_smallCapsFontData(0)
 {
 }
-#endif
 
 SimpleFontData::~SimpleFontData()
 {
