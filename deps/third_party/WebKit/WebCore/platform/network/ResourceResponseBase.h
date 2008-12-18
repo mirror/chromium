@@ -82,6 +82,8 @@ class ResourceResponseBase {
     void setLastModifiedDate(time_t);
     time_t lastModifiedDate() const;
 
+    unsigned size() const { return 0; }
+
     static bool compare(const ResourceResponse& a, const ResourceResponse& b);
 
  protected:
