@@ -28,9 +28,7 @@
 
 #include "KURL.h"
 #include <wtf/OwnPtr.h>
-#if USE(JSC)
-#include <runtime/Protect.h>
-#endif
+#include "ScriptCachedPageData.h"
 
 namespace WebCore {
     
@@ -76,9 +74,7 @@ private:
     RefPtr<FrameView> m_view;
     RefPtr<Node> m_mousePressNode;
     KURL m_URL;
-#if USE(JSC)
-    JSC::ProtectedPtr<JSDOMWindow> m_window;
-#endif
+    ScriptCachedPageData m_cachedPageScriptData;
     OwnPtr<CachedPagePlatformData> m_cachedPagePlatformData;
 };
 
