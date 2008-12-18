@@ -39,7 +39,7 @@ class PurifyCommand(retcode_command.ReturnCodeCommand):
   def __init__(self, **kwargs):
     shell.ShellCommand.__init__(self, **kwargs)
     self.test_observer = TestObserver()
-    self.addLogObserver('stderr', self.test_observer)
+    self.addLogObserver('stdout', self.test_observer)
 
   def getText(self, cmd, results):
     if results == builder.SUCCESS:
