@@ -896,9 +896,9 @@ class FactoryCommands(object):
            '-o', self.GetWebkitResultDir(),
            '--build-dir', self._build_dir]
 
-    # Only run pixel tests on windows until we're ready for them on linux or
+    # Only run pixel tests on windows and linux until we're ready for them on
     # mac.
-    if self._target_platform != 'win32':
+    if self._target_platform == 'darwin':
       cmd.append('--no-pixel-tests')
     if with_pageheap:
       cmd.append('--enable-pageheap')
