@@ -430,42 +430,57 @@ def Opened():
       print "".join(file)
 
 
-def Help():
-  print ("GCL is a wrapper for Subversion that simplifies working with groups "
-         "of files.\n")
-  print "Basic commands:"
-  print "-----------------------------------------"
-  print "   gcl change change_name"
-  print ("      Add/remove files to a changelist.  Only scans the current "
-         "directory and subdirectories.\n")
-  print ("   gcl upload change_name [-r reviewer1@gmail.com,"
-         "reviewer2@gmail.com,...] [--send_mail] [--no_try]")
-  print "      Uploads the changelist to the server for review.\n"
-  print "   gcl commit change_name [--force]"
-  print "      Commits the changelist to the repository.\n"
-  print "Advanced commands:"
-  print "-----------------------------------------"
-  print "   gcl delete change_name"
-  print "      Deletes a changelist.\n"
-  print "   gcl diff change_name"
-  print "      Diffs all files in the changelist.\n"
-  print "   gcl diff"
-  print ("      Diffs all files in the current directory and subdirectories "
-         "that aren't in a changelist.\n")
-  print "   gcl changes"
-  print "      Lists all the the changelists and the files in them.\n"
-  print "   gcl nothave [optional directory]"
-  print "      Lists files unknown to Subversion.\n"
-  print "   gcl opened"
-  print ("      Lists modified files in the current directory and "
-         "subdirectories.\n")
-  print "   gcl settings"
-  print "      Print the code review settings for this directory.\n"
-  print "   gcl try change_name"
-  print ("      Sends the change to the tryserver so a trybot can do a test"
-         " run on your code. To send multiple changes as one path, use a"
-         " comma-separated list of changenames.\n")
+def Help(argv=None):
+  if argv and  argv[0] == 'try':
+    TryChange(None, ['--help'])
+    return
 
+  print (
+"""GCL is a wrapper for Subversion that simplifies working with groups of files.
+
+Basic commands:
+-----------------------------------------
+   gcl change change_name
+      Add/remove files to a changelist. Only scans the current directory and
+      subdirectories.
+
+   gcl upload change_name [-r reviewer1@gmail.com,reviewer2@gmail.com,...]
+                          [--send_mail] [--no_try]
+      Uploads the changelist to the server for review.
+
+   gcl commit change_name [--force]
+      Commits the changelist to the repository.
+
+Advanced commands:
+-----------------------------------------
+   gcl delete change_name
+      Deletes a changelist.
+
+   gcl diff change_name
+      Diffs all files in the changelist.
+
+   gcl diff
+      Diffs all files in the current directory and subdirectories that aren't in
+      a changelist.
+
+   gcl changes
+      Lists all the the changelists and the files in them.
+
+   gcl nothave [optional directory]
+      Lists files unknown to Subversion.
+
+   gcl opened
+      Lists modified files in the current directory and subdirectories.
+
+   gcl settings
+      Print the code review settings for this directory.
+
+   gcl try change_name
+      Sends the change to the tryserver so a trybot can do a test run on your
+      code. To send multiple changes as one path, use a comma-separated list
+      of changenames.
+      --> Use 'gcl help try' for more information.
+""")
 
 def GetEditor():
   editor = os.environ.get("SVN_EDITOR")
@@ -731,7 +746,7 @@ def main(argv=None):
     Changes()
     return 0
   if command == "help":
-    Help()
+    Help(argv[2:])
     return 0
   if command == "diff" and len(argv) == 2:
     files = GetFilesNotInCL()
