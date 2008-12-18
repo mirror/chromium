@@ -1,18 +1,27 @@
 @echo off
 
-setlocal
+setlocal ENABLEEXTENSIONS ENABLEDELAYEDEXPANSION
 
-:: we silently update the depot_tools when it already exists
+:: We silently update the depot_tools when it already exists.
 IF NOT EXIST %1 GOTO message
 
 IF EXIST %1\.svn GOTO svn
+:: If not versioned, we can't update.
 exit /b 0
 
 :message
-echo checking out latest depot_tools...
+echo Checking out latest depot_tools...
 
 :svn
-set url="http://src.chromium.org/svn/trunk/depot_tools/development/release/win"
+:: Retrieve the root url
+"%~dp0svn\svn.exe" info "%~dp0.." > "%~dp0root.txt"
+set url=
+for /F "usebackq tokens=1,2" %%a in ("%~dp0root.txt") do if "%%a" == "URL:" set url=%%b
+del "%~dp0root.txt"
+if "%url%"=="" set url="http://src.chromium.org/svn/trunk/depot_tools/development/win"
+
+:: Massage the url.
+set url=%url:~,-3%release/win
 set opt=-q
 
 "%~dp0svn\svn.exe" co %opt% %url% %1
