@@ -84,29 +84,6 @@ def RunCommand(command):
   return output
 
 
-# TODO(maruel): Remove support eventually.
-def _SendChangeNFS(options):
-  """Send a change to the try server."""
-  script_locals = ExecuteTryServerScript()
-
-  if not options.nfs_path:
-    # TODO(maruel): Use try_server_nfs instead.
-    options.nfs_path = script_locals.get('try_server', None)
-    if not options.nfs_path:
-      raise NoTryServerAccess('Please use the --nfs_path option to specify the '
-          'try server path to write into.')
-  patch_name = EscapeDot(options.user) + '.' + EscapeDot(options.name)
-  if options.bot:
-    patch_name += '.' + EscapeDot(options.bot)
-  patch_name += '.diff'
-  patch_path = os.path.join(options.nfs_path, patch_name)
-  try:
-    gcl.WriteFile(patch_path, options.diff)
-  except IOError, e:
-    raise NoTryServerAccess('%s is unwritable.' % patch_path)
-  return patch_name
-
-
 def _SendChangeHTTP(options):
   """Send a change to the try server using the HTTP protocol."""
   script_locals = ExecuteTryServerScript()
@@ -272,11 +249,6 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
                    help="HTTP port to use to talk to the try server.")
   group.add_option("--proxy", default=None,
                    help="HTTP proxy.")
-  # TODO(maruel): Remove support eventually.
-  group.add_option("--use_nfs", action="store_true",
-                   help="Use NFS to talk to the try server.")
-  group.add_option("--nfs_path", default=None,
-                   help="NFS path to use to write the diff to the try server.")
   group.add_option("--use_svn", action="store_true",
                    help="Use SVN to talk to the try server.")
   group.add_option("--svn_repo", default=None,
@@ -325,10 +297,8 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
                                       for x in options.files])
 
     # Send the patch. Defaults to HTTP.
-    if (not options.use_nfs and not options.use_svn) or options.use_http:
+    if not options.use_svn or options.use_http:
       patch_name = _SendChangeHTTP(options)
-    elif options.use_nfs:
-      patch_name = _SendChangeNFS(options)
     else:
       patch_name = _SendChangeSVN(options)
     print 'Patch \'%s\' sent to try server.' % patch_name
