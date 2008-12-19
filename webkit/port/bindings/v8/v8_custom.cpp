@@ -2451,7 +2451,9 @@ static String WriteHelper_GetString(const v8::Arguments& args) {
 CALLBACK_FUNC_DECL(HTMLDocumentWrite) {
   INC_STATS(L"DOM.HTMLDocument.write()");
   HTMLDocument* imp = V8Proxy::DOMWrapperToNode<HTMLDocument>(args.Holder());
-  imp->write(WriteHelper_GetString(args));
+  Frame* frame = V8Proxy::retrieveActiveFrame();
+  ASSERT(frame);
+  imp->write(WriteHelper_GetString(args), frame->document());
   return v8::Undefined();
 }
 
@@ -2459,7 +2461,9 @@ CALLBACK_FUNC_DECL(HTMLDocumentWrite) {
 CALLBACK_FUNC_DECL(HTMLDocumentWriteln) {
   INC_STATS(L"DOM.HTMLDocument.writeln()");
   HTMLDocument* imp = V8Proxy::DOMWrapperToNode<HTMLDocument>(args.Holder());
-  imp->writeln(WriteHelper_GetString(args));
+  Frame* frame = V8Proxy::retrieveActiveFrame();
+  ASSERT(frame);
+  imp->writeln(WriteHelper_GetString(args), frame->document());
   return v8::Undefined();
 }
 
