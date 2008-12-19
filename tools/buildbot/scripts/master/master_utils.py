@@ -41,7 +41,7 @@ class MasterFactory(object):
       [('src/data/selenium_core', None)],
     'tab_switching':
       [('src/data/tab_switching', None)],
-    'ui':
+    '^(ui|purify_ui)$':
       [('src/chrome/test/data/firefox2_profile/searchplugins', None),
        ('src/chrome/test/data/firefox2_searchplugins', None),
        ('src/chrome/test/data/firefox3_profile/searchplugins', None),
@@ -49,7 +49,7 @@ class MasterFactory(object):
        ('src/chrome/test/data/ssl/certs', None)],
     'plugin_tests':
       [('src/chrome/test/data/plugin', None)],
-    '^(unit|purify_chrome)$':
+    '^(unit|purify_unit)$':
       [('src/chrome/test/data/osdd', None)],
     '^(webkit|test_shell)$':
       [('src/webkit/data/bmp_decoder', None),
@@ -163,8 +163,10 @@ class MasterFactory(object):
       factory_cmd_obj.AddPurifyTest('test_shell')
     if self._ShouldRunTest(tests, 'purify_net'):
       factory_cmd_obj.AddPurifyTest('net')
-    if self._ShouldRunTest(tests, 'purify_chrome'):
+    if self._ShouldRunTest(tests, 'purify_unit'):
       factory_cmd_obj.AddPurifyTest('unit')
+    if self._ShouldRunTest(tests, 'purify_ui'):
+      factory_cmd_obj.AddPurifyTest('ui')
     if self._ShouldRunTest(tests, 'purify_layout'):
       factory_cmd_obj.AddPurifyTest('layout', timeout=3600)
     if self._ShouldRunTest(tests, 'selenium'):
@@ -299,10 +301,10 @@ class MasterFactory(object):
       tests: list of tests to run, chosen from
                ('unit', 'ui', 'test_shell', 'webkit', 'plugin', 'page_cycler',
                 'page_cycler_http', 'startup', 'selenium', 'qemu',
-                'purify_webkit', 'purify_base', 'purify_net', 'purify_chrome',
-                'purify_layout', 'playback', 'node_leak', 'tab_switching',
-                'omnibox', 'memory, 'interactive_ui', 'base', 'net',
-                'reliability').
+                'purify_webkit', 'purify_base', 'purify_net', 'purify_unit',
+                'purify_layout', 'purify_ui', 'playback', 'node_leak',
+                'tab_switching', 'omnibox', 'memory, 'interactive_ui', 'base',
+                'net', 'reliability').
          The 'unit' suite includes the IPC tests.
       arhive_webkit_results: whether to archive the webkit test output
       show_perf_results: whether to add links to the test perf result graphs
@@ -500,6 +502,7 @@ class MasterFactory(object):
     factory_cmd_obj = factory_commands.FactoryCommands(factory, identifier,
                                                        'release', '',
                                                        self._target_platform)
+    factory_cmd_obj.AddUpdateScriptStep()
     factory_cmd_obj.AddQueryQemu()
     return factory
 
