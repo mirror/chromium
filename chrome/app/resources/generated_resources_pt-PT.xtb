@@ -102,7 +102,7 @@
 <translation id="6163363155248589649">&amp;Normal</translation>
 <translation id="3873963583678942942">(Sem nome)</translation>
 <translation id="8725178340343806893">Favoritos/Marcadores</translation>
-<translation id="3605499851022050619">P�gina de diagn�stico Navega��o segura</translation>
+<translation id="3605499851022050619">Página de diagnóstico Navegação segura</translation>
 <translation id="4307992518367153382">Noções básicas</translation>
 <translation id="5912378097832178659">&amp;Editar motores de pesquisa...</translation>
 <translation id="4813345808229079766">Ligação</translation>
@@ -184,7 +184,7 @@
 <translation id="772440777491435074">Informações do certificado...</translation>
 <translation id="2869459179306435079">Importar definições de:</translation>
 <translation id="4999762576397546063">Ctrl+<ph name="KEY_COMBO_NAME"/></translation>
-<translation id="3369624026883419694">A resolver anfitri�o...</translation>
+<translation id="3369624026883419694">A resolver anfitrião...</translation>
 <translation id="3967132639560659870">Existem vários erros de SSL nesta página:</translation>
 <translation id="5039804452771397117">Permitir</translation>
 <translation id="2266011376676382776">Página(s) sem resposta</translation>
@@ -217,7 +217,7 @@
 <translation id="347250956943431997">O certificado do servidor foi revogado</translation>
 <translation id="9087164549070846958">No entanto, se trabalhar numa organização responsável pela criação dos seus próprios certificados e tentar ligar a um Web site interno dessa organização utilizando um certificado desse tipo, poderá conseguir resolver este problema de forma segura. Pode importar o certificado de raiz da sua organização como &quot;certificado de raiz&quot;; em seguida, os certificados emitidos ou verificados pela sua organização serão considerados fidedignos, fazendo com que não veja este erro da próxima vez que tentar ligar a um Web site interno. Contacte a equipa de ajuda da sua organização para obter assistência para adicionar um novo certificado de raiz ao Windows.</translation>
 <translation id="7977590112176369853">&lt;introduzir consulta&gt;</translation>
-<translation id="5155632014218747366">Para obter informa��es detalhadas sobre os problemas com este site, visite a Google <ph name="DIAGNOSTIC_PAGE"/> para <ph name="DOMAIN"/>.</translation>
+<translation id="5155632014218747366">Para obter informações detalhadas sobre os problemas com este site, visite a Google <ph name="DIAGNOSTIC_PAGE"/> para <ph name="DOMAIN"/>.</translation>
 <translation id="1120026268649657149">A palavra-chave tem de estar vazia ou ser exclusiva</translation>
 <translation id="5317780077021120954">Guardar</translation>
 <translation id="358344266898797651">Celta</translation>
@@ -262,7 +262,7 @@
 <translation id="3994878504415702912">&amp;Zoom</translation>
 <translation id="5602600725402519729">&amp;Recarregar</translation>
 <translation id="7965010376480416255">Memória partilhada</translation>
-<translation id="6248988683584659830">Pesquisar defini��es</translation>
+<translation id="6248988683584659830">Pesquisar definições</translation>
 <translation id="8887733174653581061">Sempre visível</translation>
 <translation id="610886263749567451">Alerta JavaScript</translation>
 <translation id="8413126021676339697">Mostrar histórico completo</translation>
