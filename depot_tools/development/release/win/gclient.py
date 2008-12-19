@@ -318,6 +318,9 @@ def RunSVN(options, args, in_directory):
   c = [SVN_COMMAND]
   c.extend(args)
 
+  print >> options.stdout, ("\n________ running \'%s\' in \'%s\'"
+         % (' '.join(c), os.path.realpath(in_directory)))
+
   # *Sigh*:  Windows needs shell=True, or else it won't search %PATH% for
   # the svn.exe executable, but shell=True makes subprocess on Linux fail
   # when it's called with a list because it only tries to execute the
@@ -437,9 +440,6 @@ class SCMWrapper(object):
     return '/'.join(self.url.split('/')[:4]) + url
 
   def RunCommand(self, command, options, args):
-    if options.verbose:
-      print >> options.stdout, ("\n________ running \'%s\' in \'%s\'"
-             % (command, os.path.realpath(self.relpath)))
     if command == 'update':
       self.update(options, args)
     elif command == 'revert':
@@ -491,8 +491,6 @@ class SCMWrapper(object):
 
     if not options.path_exists(os.path.join(self._root_dir, self.relpath)):
       # We need to checkout.
-      print >>options.stdout, ("\n_____ checkout %s%s" % (self.relpath,
-                                                          rev_str))
       command = ['checkout', url, os.path.join(self._root_dir, self.relpath)]
       RunSVN(options, command, self._root_dir)
       return
@@ -502,11 +500,12 @@ class SCMWrapper(object):
                                os.path.join(self._root_dir, self.relpath, '.'),
                                '.')
 
-    # Retrieve the current HEAD version because svn is slow at null updates.
-    if not revision:
-      from_info_live = CaptureSVNInfo(options, from_info.url, '.')
-      revision = int(from_info_live.revision)
-      rev_str = ' at %d' % revision
+    if options.manually_grab_svn_rev:
+      # Retrieve the current HEAD version because svn is slow at null updates.
+      if not revision:
+        from_info_live = CaptureSVNInfo(options, from_info.url, '.')
+        revision = int(from_info_live.revision)
+        rev_str = ' at %d' % revision
 
     if from_info.url != components[0]:
       raise Error("The current %s checkout is from %s but %s was expected" % (
@@ -538,7 +537,6 @@ class SCMWrapper(object):
             self.relpath, rev_str))
       return
 
-    print >>options.stdout, ("\n_____ updating %s%s" % (self.relpath, rev_str))
     command = ["update", os.path.join(self._root_dir, self.relpath)]
     if revision:
       command.extend(['--revision', str(revision)])
@@ -1023,6 +1021,10 @@ def Main(argv):
                                  "containing the provided string"))
   option_parser.add_option("", "--verbose", action="store_true", default=False,
                            help="produce additional output for diagnostics")
+  option_parser.add_option("", "--manually_grab_svn_rev", action="store_true",
+                           default=False,
+                           help="Skip svn up whenever possible by requesting "
+                           "actual HEAD revision from the repository")
 
   if len(argv) < 2:
     # Users don't need to be told to use the 'help' command.
