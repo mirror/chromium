@@ -180,7 +180,8 @@ WebInspector.Console.prototype = {
             // Add message to the resource panel
             if (msg.url in WebInspector.resourceURLMap) {
                 msg.resource = WebInspector.resourceURLMap[msg.url];
-                WebInspector.panels.resources.addMessageToResource(msg.resource, msg);
+                if (WebInspector.panels.resources)
+                    WebInspector.panels.resources.addMessageToResource(msg.resource, msg);
             }
 
             this.commandSincePreviousMessage = false;
@@ -223,7 +224,8 @@ WebInspector.Console.prototype = {
     {
         if (clearInspectorController)
             InspectorController.clearMessages();
-        WebInspector.panels.resources.clearMessages();
+        if (WebInspector.panels.resources)
+            WebInspector.panels.resources.clearMessages();
 
         this.messages = [];
 

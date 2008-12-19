@@ -34,6 +34,7 @@
 #include "JSValue.h"
 #include "Interpreter.h"
 #include "Debugger.h"
+#include "BytecodeGenerator.h"
 #include <stdio.h>
 #include <wtf/StringExtras.h>
 
@@ -322,6 +323,11 @@ void CodeBlock::printStructures(const Instruction* vPC) const
 
 void CodeBlock::dump(ExecState* exec) const
 {
+    if (m_instructions.isEmpty()) {
+        printf("No instructions available.\n");
+        return;
+    }
+
     size_t instructionCount = 0;
 
     for (size_t i = 0; i < m_instructions.size(); i += opcodeLengths[exec->interpreter()->getOpcodeID(m_instructions[i].u.opcode)])
@@ -1087,6 +1093,7 @@ static HashSet<CodeBlock*> liveCodeBlockSet;
     macro(constantRegisters) \
     macro(expressionInfo) \
     macro(lineInfo) \
+    macro(getByIdExceptionInfo) \
     macro(pcVector)
 
 #define FOR_EACH_MEMBER_VECTOR_RARE_DATA(macro) \
@@ -1096,7 +1103,8 @@ static HashSet<CodeBlock*> liveCodeBlockSet;
     macro(exceptionHandlers) \
     macro(immediateSwitchJumpTables) \
     macro(characterSwitchJumpTables) \
-    macro(stringSwitchJumpTables)
+    macro(stringSwitchJumpTables) \
+    macro(functionRegisterInfos)
 
 template<typename T>
 static size_t sizeInBytes(const Vector<T>& vector)
@@ -1144,8 +1152,20 @@ void CodeBlock::dumpStatistics()
         }
     }
 
+    size_t totalSize = 0;
+
+    #define GET_TOTAL_SIZE(name) totalSize += name##TotalSize;
+            FOR_EACH_MEMBER_VECTOR(GET_TOTAL_SIZE)
+            FOR_EACH_MEMBER_VECTOR_RARE_DATA(GET_TOTAL_SIZE)
+    #undef GET_TOTAL_SIZE
+
+    totalSize += symbolTableTotalSize;
+    totalSize += (liveCodeBlockSet.size() * sizeof(CodeBlock));
+
     printf("Number of live CodeBlocks: %d\n", liveCodeBlockSet.size());
     printf("Size of a single CodeBlock [sizeof(CodeBlock)]: %zu\n", sizeof(CodeBlock));
+    printf("Size of all CodeBlocks: %zu\n", totalSize);
+    printf("Average size of a CodeBlock: %zu\n", totalSize / liveCodeBlockSet.size());
 
     printf("Number of CodeBlocks with rare data: %zu\n", hasRareData);
 
@@ -1172,6 +1192,9 @@ CodeBlock::CodeBlock(ScopeNode* ownerNode, CodeType codeType, PassRefPtr<SourceP
     , m_numParameters(0)
     , m_ownerNode(ownerNode)
     , m_globalData(0)
+#ifndef NDEBUG
+    , m_instructionCount(0)
+#endif
     , m_needsFullScopeChain(ownerNode->needsActivation())
     , m_usesEval(ownerNode->usesEval())
     , m_codeType(codeType)
@@ -1329,10 +1352,10 @@ void CodeBlock::mark()
 
 HandlerInfo* CodeBlock::handlerForBytecodeOffset(unsigned bytecodeOffset)
 {
+    ASSERT(bytecodeOffset < m_instructionCount);
+
     if (!m_rareData)
         return 0;
-
-    ASSERT(bytecodeOffset < m_instructions.size());
     
     Vector<HandlerInfo>& exceptionHandlers = m_rareData->m_exceptionHandlers;
     for (size_t i = 0; i < exceptionHandlers.size(); ++i) {
@@ -1347,7 +1370,7 @@ HandlerInfo* CodeBlock::handlerForBytecodeOffset(unsigned bytecodeOffset)
 
 int CodeBlock::lineNumberForBytecodeOffset(unsigned bytecodeOffset)
 {
-    ASSERT(bytecodeOffset < m_instructions.size());
+    ASSERT(bytecodeOffset < m_instructionCount);
 
     if (!m_lineInfo.size())
         return m_ownerNode->source().firstLine(); // Empty function
@@ -1369,7 +1392,7 @@ int CodeBlock::lineNumberForBytecodeOffset(unsigned bytecodeOffset)
 
 int CodeBlock::expressionRangeForBytecodeOffset(unsigned bytecodeOffset, int& divot, int& startOffset, int& endOffset)
 {
-    ASSERT(bytecodeOffset < m_instructions.size());
+    ASSERT(bytecodeOffset < m_instructionCount);
 
     if (!m_expressionInfo.size()) {
         // We didn't think anything could throw.  Apparently we were wrong.
@@ -1405,7 +1428,7 @@ int CodeBlock::expressionRangeForBytecodeOffset(unsigned bytecodeOffset, int& di
 
 bool CodeBlock::getByIdExceptionInfoForBytecodeOffset(unsigned bytecodeOffset, OpcodeID& opcodeID)
 {
-    ASSERT(bytecodeOffset < m_instructions.size());
+    ASSERT(bytecodeOffset < m_instructionCount);
 
     if (!m_getByIdExceptionInfo.size())
         return false;
@@ -1427,6 +1450,41 @@ bool CodeBlock::getByIdExceptionInfoForBytecodeOffset(unsigned bytecodeOffset, O
     return true;
 }
 
+#if ENABLE(JIT)
+bool CodeBlock::functionRegisterForBytecodeOffset(unsigned bytecodeOffset, int& functionRegisterIndex)
+{
+    ASSERT(bytecodeOffset < m_instructionCount);
+
+    if (!m_rareData || !m_rareData->m_functionRegisterInfos.size())
+        return false;
+
+    int low = 0;
+    int high = m_rareData->m_functionRegisterInfos.size();
+    while (low < high) {
+        int mid = low + (high - low) / 2;
+        if (m_rareData->m_functionRegisterInfos[mid].bytecodeOffset <= bytecodeOffset)
+            low = mid + 1;
+        else
+            high = mid;
+    }
+
+    if (!low || m_rareData->m_functionRegisterInfos[low - 1].bytecodeOffset != bytecodeOffset)
+        return false;
+
+    functionRegisterIndex = m_rareData->m_functionRegisterInfos[low - 1].functionRegisterIndex;
+    return true;
+}
+
+void CodeBlock::setJITCode(JITCodeRef& jitCode)
+{
+    m_jitCode = jitCode;
+#if !ENABLE(OPCODE_SAMPLING)
+    if (!BytecodeGenerator::dumpsGeneratedCode())
+        m_instructions.clear();
+#endif
+}
+#endif
+
 void CodeBlock::shrinkToFit()
 {
     m_instructions.shrinkToFit();
@@ -1443,6 +1501,7 @@ void CodeBlock::shrinkToFit()
 
     m_expressionInfo.shrinkToFit();
     m_lineInfo.shrinkToFit();
+    m_getByIdExceptionInfo.shrinkToFit();
 
     m_identifiers.shrinkToFit();
     m_functionExpressions.shrinkToFit();
@@ -1456,6 +1515,9 @@ void CodeBlock::shrinkToFit()
         m_rareData->m_immediateSwitchJumpTables.shrinkToFit();
         m_rareData->m_characterSwitchJumpTables.shrinkToFit();
         m_rareData->m_stringSwitchJumpTables.shrinkToFit();
+#if ENABLE(JIT)
+        m_rareData->m_functionRegisterInfos.shrinkToFit();
+#endif
     }
 }
 

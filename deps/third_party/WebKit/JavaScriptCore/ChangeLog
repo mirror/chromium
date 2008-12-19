@@ -1,3 +1,275 @@
+2008-12-17  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Gavin Barraclough.
+
+        Add more CodeBlock statistics.
+
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::dumpStatistics):
+
+2008-12-17  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=22897
+        <rdar://problem/6428342>
+        Look into feasibility of discarding bytecode after native codegen
+
+        Clear the bytecode Instruction vector at the end JIT generation.
+
+        Saves 4.8 MB on Membuster head.
+
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::dump): Add logging for the case that someone tries
+        to dump the instructions of a CodeBlock that has had its bytecode
+        vector cleared.
+        (JSC::CodeBlock::CodeBlock): Initialize the instructionCount
+        (JSC::CodeBlock::handlerForBytecodeOffset): Use instructionCount instead
+        of the size of the instruction vector in the assertion.
+        (JSC::CodeBlock::lineNumberForBytecodeOffset): Ditto.
+        (JSC::CodeBlock::expressionRangeForBytecodeOffset): Ditto.
+        (JSC::CodeBlock::getByIdExceptionInfoForBytecodeOffset): Ditto.
+        (JSC::CodeBlock::functionRegisterForBytecodeOffset): Ditto.
+        * bytecode/CodeBlock.h:
+        (JSC::CodeBlock::setInstructionCount): Store the instruction vector size
+        in debug builds for assertions.
+        * bytecompiler/BytecodeGenerator.cpp:
+        (JSC::BytecodeGenerator::generate):
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompile): Clear the bytecode vector unless we
+        have compiled with Opcode sampling where we will continue to require it
+
+2008-12-17  Cary Clark  <caryclark@google.com>
+
+        Reviewed by Darin Adler.
+        Landed by Adam Barth.
+
+        Add ENABLE_TEXT_CARET to permit the ANDROID platform
+        to invalidate and draw the caret in a separate thread.
+
+        * wtf/Platform.h:
+        Default ENABLE_TEXT_CARET to 1.
+
+2008-12-17  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Don't use unique context group in JSGlobalContextCreate() on Tiger or Leopard, take two.
+
+        * API/JSContextRef.cpp: The previous patch that claimed to do this was making Tiger and
+        Leopard always use unique context group instead.
+
+2008-12-16  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey Garen.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=22838
+        Remove dependency on the bytecode Instruction buffer in Interpreter::throwException
+        Part of <rdar://problem/6428342>
+
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::functionRegisterForBytecodeOffset): Added. Function to get
+        a function Register index in a callFrame for a bytecode offset.
+        (JSC::CodeBlock::shrinkToFit): Shrink m_getByIdExceptionInfo and m_functionRegisterInfos.
+        * bytecode/CodeBlock.h:
+        (JSC::FunctionRegisterInfo::FunctionRegisterInfo): Added.
+        (JSC::CodeBlock::addFunctionRegisterInfo):
+        * bytecompiler/BytecodeGenerator.cpp:
+        (JSC::BytecodeGenerator::emitCall):
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::throwException): Use functionRegisterForBytecodeOffset in JIT
+        mode.
+
+2008-12-16  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Gavin Barraclough.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=22837
+        Remove dependency on the bytecode Instruction buffer in Interpreter::cti_op_call_NotJSFunction
+        Part of <rdar://problem/6428342>
+
+        * interpreter/CallFrame.h: Added comment regarding returnPC storing a void*.
+        * interpreter/Interpreter.cpp:
+        (JSC::bytecodeOffsetForPC): We no longer have any cases of the PC
+        being in the instruction stream for JIT, so we can remove the check.
+        (JSC::Interpreter::cti_op_call_NotJSFunction): Use the CTI_RETURN_ADDRESS
+        as the call frame returnPC as it is only necessary for looking up when
+        throwing an exception.
+        * interpreter/RegisterFile.h:
+        (JSC::RegisterFile::): Added comment regarding returnPC storing a void*.
+        * jit/JIT.h: Remove ARG_instr4.
+        * jit/JITCall.cpp:
+        (JSC::JIT::compileOpCallSetupArgs): Don't pass the instruction pointer.
+
+2008-12-16  Darin Adler  <darin@apple.com>
+
+        Reviewed and landed by Cameron Zwarich.
+
+        Preparatory work for fixing
+
+        Bug 22887: Make UString::Rep use RefCounted rather than implementing its own ref counting
+        <https://bugs.webkit.org/show_bug.cgi?id=22887>
+
+        Change the various string translators used by Identifier:add() so that
+        they never zero the ref count of a newly created UString::Rep.
+
+        * runtime/Identifier.cpp:
+        (JSC::CStringTranslator::translate):
+        (JSC::Identifier::add):
+        (JSC::UCharBufferTranslator::translate):
+
+2008-12-16  Gavin Barraclough  <barraclough@apple.com>
+
+        Build fix for 'doze.
+
+        * assembler/AssemblerBuffer.h:
+
+2008-12-16  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Cameron Zwarich.
+
+        Make the JIT compile on x86-64.
+        This largely involves populting the missing calls in MacroAssembler.h.
+        In addition some reinterpret_casts need removing from the JIT, and the
+        repatching property access code will need to be fully compiled out for
+        now.  The changes in interpret.cpp are to reorder the functions so that
+        the _generic forms come before all other property access methods, and
+        then to place all property access methods other than the generic forms
+        under control of the ENABLE_JIT_OPTIMIZE_PROPERTY_ACCESS macro.
+
+        No performance impact.
+
+        * assembler/AssemblerBuffer.h:
+        (JSC::AssemblerBuffer::putInt64Unchecked):
+        * assembler/MacroAssembler.h:
+        (JSC::MacroAssembler::loadPtr):
+        (JSC::MacroAssembler::load32):
+        (JSC::MacroAssembler::storePtr):
+        (JSC::MacroAssembler::storePtrWithRepatch):
+        (JSC::MacroAssembler::store32):
+        (JSC::MacroAssembler::poke):
+        (JSC::MacroAssembler::move):
+        (JSC::MacroAssembler::testImm64):
+        (JSC::MacroAssembler::jePtr):
+        (JSC::MacroAssembler::jnePtr):
+        (JSC::MacroAssembler::jnzPtr):
+        (JSC::MacroAssembler::jzPtr):
+        * assembler/X86Assembler.h:
+        (JSC::X86Assembler::):
+        (JSC::X86Assembler::cmpq_rr):
+        (JSC::X86Assembler::cmpq_rm):
+        (JSC::X86Assembler::cmpq_im):
+        (JSC::X86Assembler::testq_i32m):
+        (JSC::X86Assembler::movl_mEAX):
+        (JSC::X86Assembler::movl_i32r):
+        (JSC::X86Assembler::movl_EAXm):
+        (JSC::X86Assembler::movq_rm):
+        (JSC::X86Assembler::movq_mEAX):
+        (JSC::X86Assembler::movq_mr):
+        (JSC::X86Assembler::movq_i64r):
+        (JSC::X86Assembler::movl_mr):
+        (JSC::X86Assembler::X86InstructionFormatter::oneByteOp64):
+        (JSC::X86Assembler::X86InstructionFormatter::immediate64):
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::cti_op_put_by_id_generic):
+        (JSC::Interpreter::cti_op_get_by_id_generic):
+        (JSC::Interpreter::cti_op_put_by_id):
+        (JSC::Interpreter::cti_op_put_by_id_second):
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompile):
+        (JSC::JIT::privateCompileCTIMachineTrampolines):
+        * jit/JITCall.cpp:
+        (JSC::JIT::compileOpCallSetupArgs):
+        (JSC::JIT::compileOpCall):
+        * jit/JITPropertyAccess.cpp:
+        (JSC::JIT::compileGetByIdHotPath):
+        (JSC::JIT::compilePutByIdHotPath):
+        * runtime/JSImmediate.h:
+        (JSC::JSImmediate::makeInt):
+
+2008-12-16  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Darin Adler.
+
+        Bug 22869: REGRESSION (r38407): http://news.cnet.com/8301-13579_3-9953533-37.html crashes
+        <https://bugs.webkit.org/show_bug.cgi?id=22869>
+        <rdar://problem/6402499>
+
+        Before r38407, Structure::m_nameInPrevious was ref'd due to it being
+        stored in a PropertyMap. However, PropertyMaps are created lazily after
+        r38407, so Structure::m_nameInPrevious is not necessarily ref'd while
+        it is being used. Making it a RefPtr instead of a raw pointer fixes
+        the problem.
+
+        Unfortunately, the crash in the bug is rather intermittent, and it is
+        impossible to add an assertion in UString::Ref::ref() to catch this bug
+        because some users of UString::Rep deliberately zero out the reference
+        count. Therefore, there is no layout test accompanying this bug fix.
+
+        * runtime/Structure.cpp:
+        (JSC::Structure::~Structure): Use get().
+        (JSC::Structure::materializePropertyMap): Use get().
+        (JSC::Structure::addPropertyTransitionToExistingStructure): Use get().
+        (JSC::Structure::addPropertyTransition): Use get().
+        * runtime/Structure.h: Make Structure::m_nameInPrevious a RefPtr instead
+        of a raw pointer.
+
+2008-12-16  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Not reviewed. Attempt to fix win build. No 'using namespace WTF' in this file, needs manual WTF:: prefix.
+        Not sure why the build works as is here.
+
+        * runtime/MathObject.cpp:
+        (JSC::mathProtoFuncRandom):
+
+2008-12-16  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Darin Adler.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=22876
+
+        Unify random number generation in JavaScriptCore & WebCore, by introducing
+        wtf/RandomNumber.h and moving wtf_random/wtf_random_init out of MathExtras.h.
+
+        wtf_random_init() has been renamed to initializeRandomNumberGenerator() and
+        lives in it's own private header: wtf/RandomNumberSeed.h, only intended to
+        be used from within JavaScriptCore.
+
+        wtf_random() has been renamed to randomNumber() and lives in a public header
+        wtf/RandomNumber.h, usable from within JavaScriptCore & WebCore. It encapsulates
+        the code taking care of initializing the random number generator (only when
+        building without ENABLE(JSC_MULTIPLE_THREADS), otherwhise initializeThreading()
+        already took care of that).
+
+        Functional change on darwin: Use random() instead of rand(), as it got a larger
+        period (more randomness). HTMLFormElement already contains this implementation
+        and I just moved it in randomNumber(), as  special case for PLATFORM(DARWIN).
+
+        * GNUmakefile.am: Add RandomNumber.(cpp/h) / RandomNumberSeed.h.
+        * JavaScriptCore.exp: Ditto.
+        * JavaScriptCore.pri: Ditto.
+        * JavaScriptCore.scons: Ditto.
+        * JavaScriptCore.vcproj/WTF/WTF.vcproj: Ditto.
+        * JavaScriptCore.xcodeproj/project.pbxproj: Ditto.
+        * JavaScriptCoreSources.bkl: Ditto.
+        * runtime/MathObject.cpp: Use new WTF::randomNumber() functionality.
+        (JSC::mathProtoFuncRandom):
+        * wtf/MathExtras.h: Move wtf_random / wtf_random_init to new files.
+        * wtf/RandomNumber.cpp: Added.
+        (WTF::randomNumber):
+        * wtf/RandomNumber.h: Added.
+        * wtf/RandomNumberSeed.h: Added. Internal usage within JSC only.
+        (WTF::initializeRandomNumberGenerator):
+        * wtf/ThreadingGtk.cpp: Rename wtf_random_init() to initializeRandomNumberGenerator().
+        (WTF::initializeThreading):
+        * wtf/ThreadingPthreads.cpp: Ditto.
+        (WTF::initializeThreading):
+        * wtf/ThreadingQt.cpp: Ditto.
+        (WTF::initializeThreading):
+        * wtf/ThreadingWin.cpp: Ditto.
+        (WTF::initializeThreading):
+
 2008-12-16 Yael Aharon <yael.aharon@nokia.com>
 
         Reviewed by Tor Arne Vestbø.

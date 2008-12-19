@@ -91,8 +91,6 @@ static const int preferredScriptCheckTimeInterval = 1000;
 static ALWAYS_INLINE unsigned bytecodeOffsetForPC(CodeBlock* codeBlock, void* pc)
 {
 #if ENABLE(JIT)
-    if (pc >= codeBlock->instructions().begin() && pc < codeBlock->instructions().end())
-        return static_cast<Instruction*>(pc) - codeBlock->instructions().begin();
     return codeBlock->getBytecodeIndex(pc);
 #else
     return static_cast<Instruction*>(pc) - codeBlock->instructions().begin();
@@ -834,10 +832,16 @@ NEVER_INLINE HandlerInfo* Interpreter::throwException(CallFrame*& callFrame, JSV
     // the profiler manually that the call instruction has returned, since
     // we'll never reach the relevant op_profile_did_call.
     if (Profiler* profiler = *Profiler::enabledProfilerReference()) {
+#if !ENABLE(JIT)
         if (isCallBytecode(codeBlock->instructions()[bytecodeOffset].u.opcode))
             profiler->didExecute(callFrame, callFrame[codeBlock->instructions()[bytecodeOffset + 2].u.operand].jsValue(callFrame));
         else if (codeBlock->instructions()[bytecodeOffset + 8].u.opcode == getOpcode(op_construct))
             profiler->didExecute(callFrame, callFrame[codeBlock->instructions()[bytecodeOffset + 10].u.operand].jsValue(callFrame));
+#else
+        int functionRegisterIndex;
+        if (codeBlock->functionRegisterForBytecodeOffset(bytecodeOffset, functionRegisterIndex))
+            profiler->didExecute(callFrame, callFrame[functionRegisterIndex].jsValue(callFrame));
+#endif
     }
 
     // Calculate an exception handler vPC, unwinding call frames as necessary.
@@ -4051,6 +4055,8 @@ CallFrame* Interpreter::findFunctionCallFrame(CallFrame* callFrame, InternalFunc
 
 #if ENABLE(JIT)
 
+#if ENABLE(JIT_OPTIMIZE_PROPERTY_ACCESS)
+
 NEVER_INLINE void Interpreter::tryCTICachePutByID(CallFrame* callFrame, CodeBlock* codeBlock, void* returnAddress, JSValue* baseValue, const PutPropertySlot& slot)
 {
     // The interpreter checks for recursion here; I do not believe this can occur in CTI.
@@ -4201,6 +4207,8 @@ NEVER_INLINE void Interpreter::tryCTICacheGetByID(CallFrame* callFrame, CodeBloc
 
     JIT::compileGetByIdChain(callFrame->scopeChain()->globalData, callFrame, codeBlock, stubInfo, structure, chain, count, slot.cachedOffset(), returnAddress);
 }
+
+#endif
 
 #ifndef NDEBUG
 
@@ -4430,6 +4438,32 @@ JSObject* Interpreter::cti_op_new_object(CTI_ARGS)
     return constructEmptyObject(ARG_callFrame);
 }
 
+void Interpreter::cti_op_put_by_id_generic(CTI_ARGS)
+{
+    CTI_STACK_HACK();
+
+    PutPropertySlot slot;
+    ARG_src1->put(ARG_callFrame, *ARG_id2, ARG_src3, slot);
+    CHECK_FOR_EXCEPTION_AT_END();
+}
+
+JSValue* Interpreter::cti_op_get_by_id_generic(CTI_ARGS)
+{
+    CTI_STACK_HACK();
+
+    CallFrame* callFrame = ARG_callFrame;
+    Identifier& ident = *ARG_id2;
+
+    JSValue* baseValue = ARG_src1;
+    PropertySlot slot(baseValue);
+    JSValue* result = baseValue->get(callFrame, ident, slot);
+
+    CHECK_FOR_EXCEPTION_AT_END();
+    return result;
+}
+
+#if ENABLE(JIT_OPTIMIZE_PROPERTY_ACCESS)
+
 void Interpreter::cti_op_put_by_id(CTI_ARGS)
 {
     CTI_STACK_HACK();
@@ -4452,15 +4486,6 @@ void Interpreter::cti_op_put_by_id_second(CTI_ARGS)
     PutPropertySlot slot;
     ARG_src1->put(ARG_callFrame, *ARG_id2, ARG_src3, slot);
     ARG_globalData->interpreter->tryCTICachePutByID(ARG_callFrame, ARG_callFrame->codeBlock(), CTI_RETURN_ADDRESS, ARG_src1, slot);
-    CHECK_FOR_EXCEPTION_AT_END();
-}
-
-void Interpreter::cti_op_put_by_id_generic(CTI_ARGS)
-{
-    CTI_STACK_HACK();
-
-    PutPropertySlot slot;
-    ARG_src1->put(ARG_callFrame, *ARG_id2, ARG_src3, slot);
     CHECK_FOR_EXCEPTION_AT_END();
 }
 
@@ -4506,21 +4531,6 @@ JSValue* Interpreter::cti_op_get_by_id_second(CTI_ARGS)
     JSValue* result = baseValue->get(callFrame, ident, slot);
 
     ARG_globalData->interpreter->tryCTICacheGetByID(callFrame, callFrame->codeBlock(), CTI_RETURN_ADDRESS, baseValue, ident, slot);
-
-    CHECK_FOR_EXCEPTION_AT_END();
-    return result;
-}
-
-JSValue* Interpreter::cti_op_get_by_id_generic(CTI_ARGS)
-{
-    CTI_STACK_HACK();
-
-    CallFrame* callFrame = ARG_callFrame;
-    Identifier& ident = *ARG_id2;
-
-    JSValue* baseValue = ARG_src1;
-    PropertySlot slot(baseValue);
-    JSValue* result = baseValue->get(callFrame, ident, slot);
 
     CHECK_FOR_EXCEPTION_AT_END();
     return result;
@@ -4709,6 +4719,8 @@ JSValue* Interpreter::cti_op_get_by_id_string_fail(CTI_ARGS)
     CHECK_FOR_EXCEPTION_AT_END();
     return result;
 }
+
+#endif
 
 JSValue* Interpreter::cti_op_instanceof(CTI_ARGS)
 {
@@ -4907,7 +4919,7 @@ JSValue* Interpreter::cti_op_call_NotJSFunction(CTI_ARGS)
         CallFrame* previousCallFrame = ARG_callFrame;
         CallFrame* callFrame = CallFrame::create(previousCallFrame->registers() + registerOffset);
 
-        callFrame->init(0, ARG_instr4 + 1, previousCallFrame->scopeChain(), previousCallFrame, 0, argCount, 0);
+        callFrame->init(0, static_cast<Instruction*>(CTI_RETURN_ADDRESS), previousCallFrame->scopeChain(), previousCallFrame, 0, argCount, 0);
         ARG_setCallFrame(callFrame);
 
         Register* argv = ARG_callFrame->registers() - RegisterFile::CallFrameHeaderSize - argCount;

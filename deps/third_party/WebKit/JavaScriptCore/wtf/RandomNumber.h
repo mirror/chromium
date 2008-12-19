@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 Apple Computer, Inc.  All rights reserved.
+ * Copyright (C) 2008 Nikolas Zimmermann <nikolas.zimmermann@torchmobile.com>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,18 +23,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-#ifndef HTTPHeaderMap_h
-#define HTTPHeaderMap_h
+#ifndef WTF_RandomNumber_h
+#define WTF_RandomNumber_h
 
-#include "AtomicString.h"
-#include "AtomicStringHash.h"
-#include "StringHash.h"
-#include <wtf/HashMap.h>
+namespace WTF {
 
-namespace WebCore {
+    // Returns a pseudo-random number in the range [0, 1)
+    double randomNumber();
 
-    typedef HashMap<AtomicString, String, CaseFoldingHash> HTTPHeaderMap;
+}
 
-} // namespace WebCore
-
-#endif // HTTPHeaderMap_h
+#endif

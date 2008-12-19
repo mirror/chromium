@@ -128,6 +128,17 @@ namespace JSC {
         bool isLinked() { return callee; }
     };
 
+    struct FunctionRegisterInfo {
+        FunctionRegisterInfo(unsigned bytecodeOffset, int functionRegisterIndex)
+            : bytecodeOffset(bytecodeOffset)
+            , functionRegisterIndex(functionRegisterIndex)
+        {
+        }
+
+        unsigned bytecodeOffset;
+        int functionRegisterIndex;
+    };
+
     struct GlobalResolveInfo {
         GlobalResolveInfo()
             : structure(0)
@@ -290,12 +301,17 @@ namespace JSC {
         {
             return binaryChop<PC, void*, getNativePC>(m_pcVector.begin(), m_pcVector.size(), nativePC)->bytecodeIndex;
         }
+
+        bool functionRegisterForBytecodeOffset(unsigned bytecodeOffset, int& functionRegisterIndex);
 #endif
 
         Vector<Instruction>& instructions() { return m_instructions; }
+#ifndef NDEBUG
+        void setInstructionCount(unsigned instructionCount) { m_instructionCount = instructionCount; }
+#endif
 
 #if ENABLE(JIT)
-        void setJITCode(JITCodeRef& jitCode) { m_jitCode = jitCode; }
+        void setJITCode(JITCodeRef& jitCode);
         void* jitCode() { return m_jitCode.code; }
         ExecutablePool* executablePool() { return m_jitCode.executablePool.get(); }
 #endif
@@ -349,6 +365,8 @@ namespace JSC {
         size_t numberOfCallLinkInfos() const { return m_callLinkInfos.size(); }
         void addCallLinkInfo() { m_callLinkInfos.append(CallLinkInfo()); }
         CallLinkInfo& callLinkInfo(int index) { return m_callLinkInfos[index]; }
+
+        void addFunctionRegisterInfo(unsigned bytecodeOffset, int functionIndex) { createRareDataIfNecessary(); m_rareData->m_functionRegisterInfos.append(FunctionRegisterInfo(bytecodeOffset, functionIndex)); }
 
         Vector<PC>& pcVector() { return m_pcVector; }
 #endif
@@ -424,6 +442,9 @@ namespace JSC {
         JSGlobalData* m_globalData;
 
         Vector<Instruction> m_instructions;
+#ifndef NDEBUG
+        unsigned m_instructionCount;
+#endif
 #if ENABLE(JIT)
         JITCodeRef m_jitCode;
 #endif
@@ -480,6 +501,10 @@ namespace JSC {
             Vector<StringJumpTable> m_stringSwitchJumpTables;
 
             EvalCodeCache m_evalCodeCache;
+
+#if ENABLE(JIT)
+            Vector<FunctionRegisterInfo> m_functionRegisterInfos;
+#endif
         };
 
         OwnPtr<RareData> m_rareData;

@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2006 Apple Computer, Inc.  All rights reserved.
+ * Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
+ *           (C) 2008 Nikolas Zimmermann <nikolas.zimmermann@torchmobile.com>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,18 +24,34 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-#ifndef HTTPHeaderMap_h
-#define HTTPHeaderMap_h
+#include "config.h"
+#include "RandomNumber.h"
 
-#include "AtomicString.h"
-#include "AtomicStringHash.h"
-#include "StringHash.h"
-#include <wtf/HashMap.h>
+#include "RandomNumberSeed.h"
 
-namespace WebCore {
+#include <limits.h>
+#include <stdlib.h>
 
-    typedef HashMap<AtomicString, String, CaseFoldingHash> HTTPHeaderMap;
+namespace WTF {
 
-} // namespace WebCore
+double randomNumber()
+{
+#if !ENABLE(JSC_MULTIPLE_THREADS)
+    static bool s_initialized = false;
+    if (!s_initialized) {
+        initializeRandomNumberGenerator();
+        s_initialized = true;
+    }
+#endif
 
-#endif // HTTPHeaderMap_h
+#if COMPILER(MSVC) && defined(_CRT_RAND_S)
+    unsigned u;
+    rand_s(&u);
+
+    return static_cast<double>(u) / (static_cast<double>(UINT_MAX) + 1.0);
+#else
+    return static_cast<double>(rand()) / (static_cast<double>(RAND_MAX) + 1.0);
+#endif
+}
+
+}

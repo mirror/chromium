@@ -30,6 +30,7 @@
 
 #if ENABLE(ASSEMBLER)
 
+#include "stdint.h"
 #include <string.h>
 #include <jit/ExecutableAllocator.h>
 #include <wtf/Assertions.h>
@@ -96,6 +97,12 @@ namespace JSC {
         {
             *reinterpret_cast<int*>(&m_buffer[m_size]) = value;
             m_size += 4;
+        }
+
+        void putInt64Unchecked(int64_t value)
+        {
+            *reinterpret_cast<int64_t*>(&m_buffer[m_size]) = value;
+            m_size += 8;
         }
 
         void putInt(int value)
