@@ -1,9 +1,10 @@
-// Copyright (c) 2008, Google Inc. All rights reserved.
-// 
+// Copyright (c) 2008, Google Inc.
+// All rights reserved.
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
 // met:
-// 
+//
 //     * Redistributions of source code must retain the above copyright
 // notice, this list of conditions and the following disclaimer.
 //     * Redistributions in binary form must reproduce the above
@@ -13,7 +14,7 @@
 //     * Neither the name of Google Inc. nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -26,30 +27,27 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef DragImageRef_h
-#define DragImageRef_h
+#include "config.h"
+#include "ChromiumDataObject.h"
 
-#if PLATFORM(WIN_OS)
-typedef struct HBITMAP__* HBITMAP;
-#elif PLATFORM(DARWIN)
-#if __OBJC__
-@class NSImage;
-#else
-class NSImage;
-#endif
-#endif
+using namespace WebCore;
 
-namespace WebCore {
-
-#if PLATFORM(WIN_OS)
-typedef HBITMAP DragImageRef;
-#elif PLATFORM(DARWIN)
-typedef NSImage* DragImageRef;
-#else
-// TODO(port): remove null port.
-typedef void* DragImageRef;
-#endif
-
+void ChromiumDataObject::clear()
+{
+    url = KURL();
+    url_title = "";
+    filenames.clear();
+    plain_text = "";
+    text_html = "";
+    html_base_url = KURL();
+    file_content_filename = "";
+    if (file_content)
+        file_content->clear();
 }
 
-#endif
+bool ChromiumDataObject::hasData()
+{
+    return !url.isEmpty() || !filenames.isEmpty() ||
+        !plain_text.isEmpty() || !text_html.isEmpty() ||
+        file_content;
+}

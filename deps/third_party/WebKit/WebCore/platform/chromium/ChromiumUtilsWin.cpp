@@ -26,30 +26,29 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef DragImageRef_h
-#define DragImageRef_h
+#include "config.h"
+#include "ChromiumUtilsWin.h"
 
-#if PLATFORM(WIN_OS)
-typedef struct HBITMAP__* HBITMAP;
-#elif PLATFORM(DARWIN)
-#if __OBJC__
-@class NSImage;
-#else
-class NSImage;
-#endif
-#endif
+#include <windows.h>
 
 namespace WebCore {
+namespace ChromiumUtils {
 
-#if PLATFORM(WIN_OS)
-typedef HBITMAP DragImageRef;
-#elif PLATFORM(DARWIN)
-typedef NSImage* DragImageRef;
-#else
-// TODO(port): remove null port.
-typedef void* DragImageRef;
-#endif
+bool isVistaOrGreater()
+{
+    // Cache the result to avoid asking every time.
+    static bool haveResult = false;
+    static bool result = false;
+    if (!haveResult) {
+        OSVERSIONINFO versionInfo;
+        versionInfo.dwOSVersionInfoSize = sizeof(versionInfo);
+        GetVersionEx(&versionInfo);
 
+        haveResult = true;
+        result = versionInfo.dwMajorVersion >= 6;
+    }
+    return result;
 }
 
-#endif
+} // namespace ChromiumUtils
+} // namespace WebCore

@@ -1,9 +1,10 @@
-// Copyright (c) 2008, Google Inc. All rights reserved.
-// 
+// Copyright (c) 2008, Google Inc.
+// All rights reserved.
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
 // met:
-// 
+//
 //     * Redistributions of source code must retain the above copyright
 // notice, this list of conditions and the following disclaimer.
 //     * Redistributions in binary form must reproduce the above
@@ -13,7 +14,7 @@
 //     * Neither the name of Google Inc. nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -26,30 +27,15 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef DragImageRef_h
-#define DragImageRef_h
+#ifndef KeyboardCodes_h
+#define KeyboardCodes_h
+
+#include "config.h"
 
 #if PLATFORM(WIN_OS)
-typedef struct HBITMAP__* HBITMAP;
-#elif PLATFORM(DARWIN)
-#if __OBJC__
-@class NSImage;
+#include "KeyboardCodesWin.h"
 #else
-class NSImage;
+#include "KeyboardCodesPosix.h"
 #endif
-#endif
-
-namespace WebCore {
-
-#if PLATFORM(WIN_OS)
-typedef HBITMAP DragImageRef;
-#elif PLATFORM(DARWIN)
-typedef NSImage* DragImageRef;
-#else
-// TODO(port): remove null port.
-typedef void* DragImageRef;
-#endif
-
-}
 
 #endif

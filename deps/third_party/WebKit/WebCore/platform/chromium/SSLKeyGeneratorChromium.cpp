@@ -1,4 +1,5 @@
-// Copyright (c) 2008, Google Inc. All rights reserved.
+// Copyright (c) 2008, Google Inc.
+// All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -26,30 +27,25 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef DragImageRef_h
-#define DragImageRef_h
-
-#if PLATFORM(WIN_OS)
-typedef struct HBITMAP__* HBITMAP;
-#elif PLATFORM(DARWIN)
-#if __OBJC__
-@class NSImage;
-#else
-class NSImage;
-#endif
-#endif
+#include "config.h"
+#include "SSLKeyGenerator.h"
 
 namespace WebCore {
 
-#if PLATFORM(WIN_OS)
-typedef HBITMAP DragImageRef;
-#elif PLATFORM(DARWIN)
-typedef NSImage* DragImageRef;
-#else
-// TODO(port): remove null port.
-typedef void* DragImageRef;
-#endif
+// These are defined in webkit/glue/localized_strings.cpp.
+String keygenMenuHighGradeKeySize();
+String keygenMenuMediumGradeKeySize();
 
+// Returns the key sizes supported by the HTML keygen tag.  The first string
+// is displayed as the default key size in the keygen menu.
+Vector<String> supportedKeySizes()
+{
+    Vector<String> sizes(2);
+    sizes[0] = keygenMenuHighGradeKeySize();
+    sizes[1] = keygenMenuMediumGradeKeySize();
+    return sizes;
 }
 
-#endif
+// TODO: implement signedPublicKeyAndChallengeString here.
+
+} // namespace WebCore

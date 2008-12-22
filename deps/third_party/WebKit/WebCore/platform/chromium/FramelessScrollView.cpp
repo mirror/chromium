@@ -1,4 +1,5 @@
-// Copyright (c) 2008, Google Inc. All rights reserved.
+// Copyright (c) 2008, Google Inc.
+// All rights reserved.
 // 
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -26,30 +27,60 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#ifndef DragImageRef_h
-#define DragImageRef_h
+#include "config.h"
+#include "FramelessScrollView.h"
 
-#if PLATFORM(WIN_OS)
-typedef struct HBITMAP__* HBITMAP;
-#elif PLATFORM(DARWIN)
-#if __OBJC__
-@class NSImage;
-#else
-class NSImage;
-#endif
-#endif
+#include "FramelessScrollViewClient.h"
 
 namespace WebCore {
 
-#if PLATFORM(WIN_OS)
-typedef HBITMAP DragImageRef;
-#elif PLATFORM(DARWIN)
-typedef NSImage* DragImageRef;
-#else
-// TODO(port): remove null port.
-typedef void* DragImageRef;
-#endif
-
+FramelessScrollView::~FramelessScrollView()
+{
+    // Remove native scrollbars now before we lose the connection to the HostWindow.
+    setHasHorizontalScrollbar(false);
+    setHasVerticalScrollbar(false);
 }
 
-#endif
+void FramelessScrollView::invalidateScrollbarRect(Scrollbar* scrollbar, const IntRect& rect)
+{
+    // Add in our offset within the ScrollView.
+    IntRect dirtyRect = rect;
+    dirtyRect.move(scrollbar->x(), scrollbar->y());
+    invalidateRect(dirtyRect);
+}
+
+bool FramelessScrollView::isActive() const
+{
+    // FIXME
+    return true;
+}
+
+void FramelessScrollView::invalidateRect(const IntRect& rect)
+{
+    if (HostWindow* h = hostWindow())
+        h->repaint(contentsToWindow(rect), true);
+}
+
+HostWindow* FramelessScrollView::hostWindow() const
+{
+    return const_cast<FramelessScrollViewClient*>(m_client);
+}
+
+IntRect FramelessScrollView::windowClipRect(bool clipToContents) const
+{
+    return contentsToWindow(visibleContentRect(!clipToContents));
+}
+
+void FramelessScrollView::paintContents(GraphicsContext*, const IntRect& damageRect)
+{
+}
+
+void FramelessScrollView::contentsResized()
+{
+}
+
+void FramelessScrollView::visibleContentsResized()
+{
+}
+
+}
