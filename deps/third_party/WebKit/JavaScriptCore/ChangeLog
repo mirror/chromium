@@ -1,3 +1,282 @@
+2008-12-19  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Reviewed by Holger Freyther.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22686
+
+        Added file which was missing to the javascriptcore_sources
+        variable, so that it shows up in the tarball created by `make
+        dist'.
+
+        * GNUmakefile.am:
+
+2008-12-19  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by Antti Koivisto.
+
+        Build fix when building JS API tests with a c89 c compiler
+
+        Do not use C++ style comments and convert them to C comments.
+
+        * wtf/Platform.h:
+
+2008-12-18  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Same as last revision, adding cases for pre & post inc & dec.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22928
+
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+
+2008-12-18  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Fixes for the JIT's handling of JSImmediate values on x86-64.
+        On 64-bit systems, the code in JSImmediate.h relies on the upper
+        bits of a JSImmediate being a sign extension of the low 32-bits.
+        This was not being enforced by the JIT, since a number of inline
+        operations were being performed on 32-bit values in registers, and
+        when a 32-bit result is written to a register on x86-64 the value
+        is zero-extended to 64-bits.
+        
+        This fix honors previous behavoir.  A better fix in the long run
+        (when the JIT is enabled by default) may be to change JSImmediate.h
+        so it no longer relies on the upper bits of the pointer,... though
+        if we're going to change JSImmediate.h for 64-bit, we probably may
+        as well change the format so that the full range of 32-bit ints can
+        be stored, rather than just 31-bits.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22925
+
+        * assembler/MacroAssembler.h:
+        (JSC::MacroAssembler::addPtr):
+        (JSC::MacroAssembler::andPtr):
+        (JSC::MacroAssembler::orPtr):
+        (JSC::MacroAssembler::or32):
+        (JSC::MacroAssembler::xor32):
+        (JSC::MacroAssembler::xorPtr):
+        (JSC::MacroAssembler::signExtend32ToPtr):
+        * assembler/X86Assembler.h:
+        (JSC::X86Assembler::):
+        (JSC::X86Assembler::andq_rr):
+        (JSC::X86Assembler::andq_ir):
+        (JSC::X86Assembler::orq_rr):
+        (JSC::X86Assembler::xorq_ir):
+        (JSC::X86Assembler::movsxd_rr):
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        * jit/JITInlineMethods.h:
+        (JSC::JIT::emitFastArithReTagImmediate):
+        (JSC::JIT::emitFastArithPotentiallyReTagImmediate):
+        (JSC::JIT::emitFastArithImmToInt):
+
+2008-12-18  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Just a tidy up - rename & refactor some the #defines configuring the JIT.
+
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::cti_op_convert_this):
+        (JSC::Interpreter::cti_op_end):
+        (JSC::Interpreter::cti_op_add):
+        (JSC::Interpreter::cti_op_pre_inc):
+        (JSC::Interpreter::cti_timeout_check):
+        (JSC::Interpreter::cti_register_file_check):
+        (JSC::Interpreter::cti_op_loop_if_less):
+        (JSC::Interpreter::cti_op_loop_if_lesseq):
+        (JSC::Interpreter::cti_op_new_object):
+        (JSC::Interpreter::cti_op_put_by_id_generic):
+        (JSC::Interpreter::cti_op_get_by_id_generic):
+        (JSC::Interpreter::cti_op_put_by_id):
+        (JSC::Interpreter::cti_op_put_by_id_second):
+        (JSC::Interpreter::cti_op_put_by_id_fail):
+        (JSC::Interpreter::cti_op_get_by_id):
+        (JSC::Interpreter::cti_op_get_by_id_second):
+        (JSC::Interpreter::cti_op_get_by_id_self_fail):
+        (JSC::Interpreter::cti_op_get_by_id_proto_list):
+        (JSC::Interpreter::cti_op_get_by_id_proto_list_full):
+        (JSC::Interpreter::cti_op_get_by_id_proto_fail):
+        (JSC::Interpreter::cti_op_get_by_id_array_fail):
+        (JSC::Interpreter::cti_op_get_by_id_string_fail):
+        (JSC::Interpreter::cti_op_instanceof):
+        (JSC::Interpreter::cti_op_del_by_id):
+        (JSC::Interpreter::cti_op_mul):
+        (JSC::Interpreter::cti_op_new_func):
+        (JSC::Interpreter::cti_op_call_JSFunction):
+        (JSC::Interpreter::cti_op_call_arityCheck):
+        (JSC::Interpreter::cti_vm_dontLazyLinkCall):
+        (JSC::Interpreter::cti_vm_lazyLinkCall):
+        (JSC::Interpreter::cti_op_push_activation):
+        (JSC::Interpreter::cti_op_call_NotJSFunction):
+        (JSC::Interpreter::cti_op_create_arguments):
+        (JSC::Interpreter::cti_op_create_arguments_no_params):
+        (JSC::Interpreter::cti_op_tear_off_activation):
+        (JSC::Interpreter::cti_op_tear_off_arguments):
+        (JSC::Interpreter::cti_op_profile_will_call):
+        (JSC::Interpreter::cti_op_profile_did_call):
+        (JSC::Interpreter::cti_op_ret_scopeChain):
+        (JSC::Interpreter::cti_op_new_array):
+        (JSC::Interpreter::cti_op_resolve):
+        (JSC::Interpreter::cti_op_construct_JSConstruct):
+        (JSC::Interpreter::cti_op_construct_NotJSConstruct):
+        (JSC::Interpreter::cti_op_get_by_val):
+        (JSC::Interpreter::cti_op_resolve_func):
+        (JSC::Interpreter::cti_op_sub):
+        (JSC::Interpreter::cti_op_put_by_val):
+        (JSC::Interpreter::cti_op_put_by_val_array):
+        (JSC::Interpreter::cti_op_lesseq):
+        (JSC::Interpreter::cti_op_loop_if_true):
+        (JSC::Interpreter::cti_op_negate):
+        (JSC::Interpreter::cti_op_resolve_base):
+        (JSC::Interpreter::cti_op_resolve_skip):
+        (JSC::Interpreter::cti_op_resolve_global):
+        (JSC::Interpreter::cti_op_div):
+        (JSC::Interpreter::cti_op_pre_dec):
+        (JSC::Interpreter::cti_op_jless):
+        (JSC::Interpreter::cti_op_not):
+        (JSC::Interpreter::cti_op_jtrue):
+        (JSC::Interpreter::cti_op_post_inc):
+        (JSC::Interpreter::cti_op_eq):
+        (JSC::Interpreter::cti_op_lshift):
+        (JSC::Interpreter::cti_op_bitand):
+        (JSC::Interpreter::cti_op_rshift):
+        (JSC::Interpreter::cti_op_bitnot):
+        (JSC::Interpreter::cti_op_resolve_with_base):
+        (JSC::Interpreter::cti_op_new_func_exp):
+        (JSC::Interpreter::cti_op_mod):
+        (JSC::Interpreter::cti_op_less):
+        (JSC::Interpreter::cti_op_neq):
+        (JSC::Interpreter::cti_op_post_dec):
+        (JSC::Interpreter::cti_op_urshift):
+        (JSC::Interpreter::cti_op_bitxor):
+        (JSC::Interpreter::cti_op_new_regexp):
+        (JSC::Interpreter::cti_op_bitor):
+        (JSC::Interpreter::cti_op_call_eval):
+        (JSC::Interpreter::cti_op_throw):
+        (JSC::Interpreter::cti_op_get_pnames):
+        (JSC::Interpreter::cti_op_next_pname):
+        (JSC::Interpreter::cti_op_push_scope):
+        (JSC::Interpreter::cti_op_pop_scope):
+        (JSC::Interpreter::cti_op_typeof):
+        (JSC::Interpreter::cti_op_is_undefined):
+        (JSC::Interpreter::cti_op_is_boolean):
+        (JSC::Interpreter::cti_op_is_number):
+        (JSC::Interpreter::cti_op_is_string):
+        (JSC::Interpreter::cti_op_is_object):
+        (JSC::Interpreter::cti_op_is_function):
+        (JSC::Interpreter::cti_op_stricteq):
+        (JSC::Interpreter::cti_op_nstricteq):
+        (JSC::Interpreter::cti_op_to_jsnumber):
+        (JSC::Interpreter::cti_op_in):
+        (JSC::Interpreter::cti_op_push_new_scope):
+        (JSC::Interpreter::cti_op_jmp_scopes):
+        (JSC::Interpreter::cti_op_put_by_index):
+        (JSC::Interpreter::cti_op_switch_imm):
+        (JSC::Interpreter::cti_op_switch_char):
+        (JSC::Interpreter::cti_op_switch_string):
+        (JSC::Interpreter::cti_op_del_by_val):
+        (JSC::Interpreter::cti_op_put_getter):
+        (JSC::Interpreter::cti_op_put_setter):
+        (JSC::Interpreter::cti_op_new_error):
+        (JSC::Interpreter::cti_op_debug):
+        (JSC::Interpreter::cti_vm_throw):
+        * interpreter/Interpreter.h:
+        * jit/JIT.cpp:
+        (JSC::):
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompile):
+        * jit/JIT.h:
+        * jit/JITInlineMethods.h:
+        (JSC::JIT::restoreArgumentReference):
+        (JSC::JIT::restoreArgumentReferenceForTrampoline):
+        * wtf/Platform.h:
+
+2008-12-18  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        Bug 21855: REGRESSION (r37323): Gmail complains about popup blocking when opening a link
+        <https://bugs.webkit.org/show_bug.cgi?id=21855>
+        <rdar://problem/6278244>
+
+        Move DynamicGlobalObjectScope to JSGlobalObject.h so that it can be used
+        from WebCore.
+
+        * interpreter/Interpreter.cpp:
+        * runtime/JSGlobalObject.h:
+        (JSC::DynamicGlobalObjectScope::DynamicGlobalObjectScope):
+        (JSC::DynamicGlobalObjectScope::~DynamicGlobalObjectScope):
+
+2008-12-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Gavin Barraclough.
+        
+        Fixed https://bugs.webkit.org/show_bug.cgi?id=22393
+        Segfault when caching property accesses to primitive cells.
+        
+        Changed some asObject casts to asCell casts in cases where a primitive
+        value may be a cell and not an object.
+        
+        Re-enabled property caching for primitives in cases where it had been
+        disabled because of this bug.
+        
+        Updated a comment to better explain something Darin thought needed
+        explaining in an old patch review.
+
+        * interpreter/Interpreter.cpp:
+        (JSC::countPrototypeChainEntriesAndCheckForProxies):
+        (JSC::Interpreter::tryCacheGetByID):
+        (JSC::Interpreter::tryCTICacheGetByID):
+        (JSC::Interpreter::cti_op_get_by_id_self_fail):
+        (JSC::Interpreter::cti_op_get_by_id_proto_list):
+
+2008-12-17  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Cameron Zwarich.
+
+        Fixes for Sunspider failures with the JIT enabled on x86-64.
+
+        * assembler/MacroAssembler.h:
+            Switch the order of the RegisterID & Address form of je32, to keep it consistent with jne32.
+        * jit/JIT.cpp:
+        * jit/JIT.h:
+        * jit/JITInlineMethods.h:
+            Port the m_ctiVirtualCall tramopline generation to use the MacroAssembler interface.
+        * jit/JITCall.cpp:
+            Fix bug in the non-optimizing code path, vptr check should have been to the memory address pointer
+            to by the register, not to the register itself.
+        * wrec/WRECGenerator.cpp:
+            See assembler/MacroAssembler.h, above.
+
+2008-12-17  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        print("Hello, 64-bit jitted world!");
+        Get hello-world working through the JIT, on x86-64.
+
+        * assembler/X86Assembler.h:
+            Fix encoding of opcode + RegisterID format instructions for 64-bit.
+        * interpreter/Interpreter.cpp:
+        * interpreter/Interpreter.h:
+            Make VoidPtrPair actually be a pair of void*s.
+            (Possibly should make this change for 32-bit Mac platforms, too - but won't change 32-bit behaviour in this patch).
+        * jit/JIT.cpp:
+        * jit/JIT.h:
+            Provide names for the timeoutCheckRegister & callFrameRegister on x86-64,
+            force x86-64 ctiTrampoline arguments onto the stack,
+            implement the asm trampolines for x86-64,
+            implement the restoreArgumentReference methods for x86-64 calling conventions.
+        * jit/JITCall.cpp:
+        * jit/JITInlineMethods.h:
+        * wtf/Platform.h:
+            Add switch settings to ENABLE(JIT), on PLATFORM(X86_64) (currently still disabled).
+
 2008-12-17  Sam Weinig  <sam@webkit.org>
 
         Reviewed by Gavin Barraclough.

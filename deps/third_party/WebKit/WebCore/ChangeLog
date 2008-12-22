@@ -1,3 +1,424 @@
+2008-12-19  Kevin Ollivier  <kevino@theolliviers.com>
+
+        wx build fixes after recent changes.
+
+        * WebCoreSources.bkl:
+        * platform/graphics/wx/ImageSourceWx.cpp:
+        (WebCore::ImageSource::clear):
+        * webcore-base.bkl:
+
+2008-12-19  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by Sam Weinig.
+
+        [GTK] Fix make distcheck again
+
+        These files were moved to WebCore/platform/animation
+        and WebCore/platform/graphics/transforms.
+
+        * GNUmakefile.am:
+
+2008-12-19  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Reviewed by Holger Freyther.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22900
+
+        Fix AtomicString usage, so that building works.
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+
+2008-12-19  Adam Roben  <aroben@apple.com>
+
+        Windows build fix on older versions of CFNetwork after r39393
+
+        * platform/network/cf/ResourceHandleCFNet.cpp:
+        (WebCore::highestSupportedCFURLConnectionClientVersion): Changed
+        preprocessor directives not to leave in unreachable code on old
+        versions of CFNetwork.
+
+2008-12-19  Antti Koivisto  <antti@apple.com>
+
+        Comment fix.
+
+        * platform/PurgeableBuffer.h:
+
+2008-12-19  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        [GTK] Build fix by adding the new files.
+
+        * GNUmakefile.am:
+
+2008-12-19  Jade Han <jade.han@nokia.com>
+
+        Reviewed by Tor Arne Vestbø.
+
+        [Qt] Allow conversion of JavaScript Number and Boolean types to Qt types
+
+        https://bugs.webkit.org/show_bug.cgi?id=22880
+
+        * bridge/qt/qt_runtime.cpp:
+        (JSC::Bindings::convertValueToQVariant):
+
+2008-12-19  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Reviewed by Holger Freyther.
+
+        Implement ImageDecoder::filenameExtension() for Qt
+
+        * platform/graphics/qt/ImageDecoderQt.cpp:
+        (WebCore::ImageDecoderQt::filenameExtension):
+        * platform/graphics/qt/ImageDecoderQt.h:
+        * platform/graphics/qt/ImageSourceQt.cpp:
+        (WebCore::ImageSource::filenameExtension):
+
+2008-12-19  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Darin Alder.
+
+        Implement ImageSource::filenameExtension for Cario
+          https://bugs.webkit.org/show_bug.cgi?id=22905
+
+        * platform/graphics/cairo/ImageSourceCairo.cpp:
+        (WebCore::ImageSource::filenameExtension):
+        * platform/image-decoders/ImageDecoder.h:
+        * platform/image-decoders/bmp/BMPImageDecoder.h:
+        (WebCore::BMPImageDecoder::filenameExtension):
+        * platform/image-decoders/gif/GIFImageDecoder.h:
+        (WebCore::GIFImageDecoder::filenameExtension):
+        * platform/image-decoders/ico/ICOImageDecoder.h:
+        (WebCore::ICOImageDecoder::filenameExtension):
+        * platform/image-decoders/jpeg/JPEGImageDecoder.h:
+        (WebCore::JPEGImageDecoder::filenameExtension):
+        * platform/image-decoders/png/PNGImageDecoder.h:
+        (WebCore::PNGImageDecoder::filenameExtension):
+        * platform/image-decoders/xbm/XBMImageDecoder.h:
+        (WebCore::XBMImageDecoder::filenameExtension):
+
+2008-12-18  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        - avoid using the ResourceHandle-level credential storage, if any,
+          unless the client opts to use it; when use of the credential
+          storage is disallowed, all authentication challenges are sent to
+          the client.
+        - let the FrameLoaderClient decide whether to use the credential
+          storage. 
+
+        * loader/EmptyClients.h:
+        (WebCore::EmptyFrameLoaderClient::shouldUseCredentialStorage): Added.
+        Returns false.
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::shouldUseCredentialStorage): Added. Calls through
+        to the FrameLoaderClient.
+        * loader/FrameLoader.h: Declared shouldUseCredentialStorage().
+        * loader/FrameLoaderClient.h: Declared shouldUseCredentialStorage().
+        * loader/ResourceLoader.cpp: 
+        (WebCore::ResourceLoader::shouldUseCredentialStorage): Added. Calls
+        through to the FrameLoader.
+        * loader/ResourceLoader.h:
+        (WebCore::ResourceLoader::shouldUseCredentialStorage): Implemented this
+        ResourceHandleClient method.
+        * loader/SubresourceLoader.cpp:
+        (WebCore::SubresourceLoader::shouldUseCredentialStorage): Added.
+        Overrides the ResourceLoader implementation by letting the client
+        supply the return value. If the client does not do this, continues
+        with the ResourceLoader behavior of asking the FrameLoader.
+        * loader/SubresourceLoader.h: Removed an unused #include and declared
+        shouldUseCredentialStorage().
+        * loader/SubresourceLoaderClient.h:
+        (WebCore::SubresourceLoaderClient::getShouldUseCredentialStorage):
+        Added a default implementation which returns false, meaning the client
+        does not wish to decide whether the credential storage should be used.
+        * platform/network/ResourceHandle.h: Removed unused forward declarations.
+        Declared a new member function, shouldUseCredentialStorage(), on Mac and
+        CFNetwork-using builds.
+        * platform/network/ResourceHandleClient.h:
+        (WebCore::ResourceHandleClient::shouldUseCredentialStorage): Added this
+        default implementation that returns false.
+        * platform/network/cf/ResourceHandleCFNet.cpp:
+        (WebCore::findCFNetworkModule): Added. Returns a handle to the CFNetwork
+        module.
+        (WebCore::cfNetworkVersion): Added. Returns the high word of the
+        CFNetwork library's product version.
+        (WebCore::highestSupportedCFURLConnectionClientVersion): Added. Returns
+        the highest version of the CFURLConnectionClient structure supported by
+        the CFNetwork library. The only reason to check this at runtime is
+        that WebKit may be linking at runtime against an older version of
+        CFNetwork than the one it was built with, as is the case with nightly
+        builds.
+        (WebCore::shouldUseCredentialStorageCallback): Added this
+        CFURLConnection callback which calls through to
+        ResourceHandle::shouldUseCredentialStorage().
+        (WebCore::ResourceHandle::start): Pass a version 3 CFURLConnectionClient
+        including the shouldUseCredentialStorage callback. At runtime, clamp the
+        client structure version down to the highest supported by CFNetwork.
+        (WebCore::ResourceHandle::shouldUseCredentialStorage): Added. Calls through
+        to the client if there is one. Otherwise returns false.
+        * platform/network/mac/ResourceHandleMac.mm:
+        (WebCore::ResourceHandle::shouldUseCredentialStorage): Ditto.
+        (-[WebCoreResourceHandleAsDelegate connectionShouldUseCredentialStorage:]):
+        Added this delegate method which callls through to
+        ResourceHandle::shouldUseCredentialStorage().
+
+2008-12-18  David Kilzer  <ddkilzer@apple.com>
+
+        Reset role to "Private" on 6 header files to fix clean builds after r39378
+
+        Reviewed by BUILD FIX.
+
+        * WebCore.xcodeproj/project.pbxproj: Added back "Private" role
+        that was lost on 6 headers when they were "moved":
+        AffineTransform.h, Animation.h, AnimationList.h,
+        TimingFunction.h, TransformOperation.h and
+        TransformOperations.h.
+
+2008-12-18  Pamela Greene  <pam@chromium.org>
+
+        Reviewed by Dan Bernstein.
+
+        Add initializer for m_textDirectionSubmenuInclusionBehavior.
+        https://bugs.webkit.org/show_bug.cgi?id=22926
+
+        * page/Settings.cpp:
+        (WebCore::Settings::Settings): Initialize m_textDirectionSubmenuInclusionBehavior
+
+2008-12-18  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by John Sullivan.
+
+        Add new FrameLoaderClient method to indicate the first visually 
+        non-empty layout based on an heuristic.  Right now that heuristic
+        is the first layout after an image, text or plugin has been added
+        to the render tree, but I can imagine it becoming much smarter.
+
+        * loader/EmptyClients.h:
+        (WebCore::EmptyFrameLoaderClient::dispatchDidFirstVisuallyNonEmptyLayout):
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::didFirstVisuallyNonEmptyLayout):
+        * loader/FrameLoader.h:
+        * loader/FrameLoaderClient.h:
+        * page/FrameView.cpp:
+        (WebCore::FrameViewPrivate::reset):
+        (WebCore::FrameView::layout):
+        (WebCore::FrameView::performPostLayoutTasks):
+        (WebCore::FrameView::setIsVisuallyNonEmpty):
+        * page/FrameView.h:
+        * rendering/RenderImage.cpp:
+        (WebCore::RenderImage::RenderImage):
+        * rendering/RenderPartObject.cpp:
+        (WebCore::RenderPartObject::RenderPartObject):
+        * rendering/RenderText.cpp:
+        (WebCore::RenderText::RenderText):
+
+2008-12-18  Darin Adler  <darin@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        - fix <rdar://problem/6449841> reduce memory use of ResourceResponseBase by removing two maps
+
+        We were parsing the cache-control and pragma header field values into maps.
+        I changed that so instead we only cache two bits with the data we were actually
+        using. Later we might want to move this responsibility out of this class entirely;
+        we can cache it at the higher level instead.
+
+        * loader/CachedResource.cpp:
+        (WebCore::CachedResource::mustRevalidate): Changed to call a specific API to get at
+        the bits in quest instead of a general "cache control directives" API.
+
+        * platform/network/ResourceResponseBase.cpp:
+        (WebCore::ResourceResponseBase::setHTTPHeaderField): Remove the logic for the
+        pragma header field since no one is using this for now.
+        (WebCore::ResourceResponseBase::parseCacheControlDirectives): Eliminated the return
+        value and made this function have side effects only. Changed it so it's the caller's
+        responsibility to check m_haveParsedCacheControl. Set m_cacheControlContainsNoCache
+        and m_cacheControlContainsMustRevalidate rather than keeping a map around.
+
+        * platform/network/ResourceResponseBase.h:
+        (WebCore::ResourceResponseBase::cacheControlContainsNoCache): Added.
+        (WebCore::ResourceResponseBase::cacheControlContainsMustRevalidate): Added.
+        (WebCore::ResourceResponseBase::ResourceResponseBase): Updated since I removed
+        m_haveParsedCacheControl and renamed m_haveParsedCacheControlHeader to remove
+        the imprecise use of the term "header".
+
+2008-12-18  Steve Falkenburg  <sfalken@apple.com>
+
+        Build fix.
+        Delete 2nd copy of code in these files.
+
+        * platform/animation/Animation.cpp:
+        * platform/animation/Animation.h:
+        * platform/animation/AnimationList.cpp:
+        * platform/animation/AnimationList.h:
+        * platform/animation/TimingFunction.h:
+        * platform/graphics/transforms/AffineTransform.cpp:
+        * platform/graphics/transforms/AffineTransform.h:
+        * platform/graphics/transforms/IdentityTransformOperation.h:
+        * platform/graphics/transforms/MatrixTransformOperation.cpp:
+        * platform/graphics/transforms/MatrixTransformOperation.h:
+        * platform/graphics/transforms/RotateTransformOperation.cpp:
+        * platform/graphics/transforms/RotateTransformOperation.h:
+        * platform/graphics/transforms/ScaleTransformOperation.cpp:
+        * platform/graphics/transforms/ScaleTransformOperation.h:
+        * platform/graphics/transforms/SkewTransformOperation.cpp:
+        * platform/graphics/transforms/SkewTransformOperation.h:
+        * platform/graphics/transforms/TransformOperation.h:
+        * platform/graphics/transforms/TransformOperations.cpp:
+        * platform/graphics/transforms/TransformOperations.h:
+        * platform/graphics/transforms/TranslateTransformOperation.cpp:
+        * platform/graphics/transforms/TranslateTransformOperation.h:
+
+2008-12-18  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Geoffrey Garen.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22859
+        Abstract away the use of JSDOMWindow in CachedPage and introduce
+        ScriptCachedPageData abstraction.
+
+        * GNUmakefile.am: Added ScriptCachedPageData to project.
+        * WebCore.pro: Added ScriptCachedPageData to project.
+        * WebCore.vcproj/WebCore.vcproj: Added ScriptCachedPageData to project.
+        * WebCore.xcodeproj/project.pbxproj: Added ScriptCachedPageData to
+            project.
+        * bindings/js/ScriptCachedPageData.cpp: Added.
+        (WebCore::ScriptCachedPageData::ScriptCachedPageData):
+        (WebCore::ScriptCachedPageData::~ScriptCachedPageData):
+        (WebCore::ScriptCachedPageData::restore):
+        (WebCore::ScriptCachedPageData::clear):
+        * bindings/js/ScriptCachedPageData.h: Added.
+        * history/CachedPage.cpp: Replaced JSDOMWindow and ProtectedPtr with
+            ScriptCachedPageData.
+        (WebCore::CachedPage::CachedPage):
+        (WebCore::CachedPage::domWindow):
+        (WebCore::CachedPage::restore):
+        (WebCore::CachedPage::clear):
+        * history/CachedPage.h: Replaced JSDOMWindow and ProtectedPtr with
+            ScriptCachedPageData.
+
+2008-12-18  Chris Marrin  <cmarrin@apple.com>
+
+        Reviewed by Dave Hyatt.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22888
+
+        To avoid future dependency issues, all the TransformOperations and Animation related files need to be moved to platform
+
+        * WebCore.xcodeproj/project.pbxproj:
+        * platform/animation: Added.
+        * platform/animation/Animation.cpp: Copied from WebCore/rendering/style/Animation.cpp.
+        * platform/animation/Animation.h: Copied from WebCore/rendering/style/Animation.h.
+        * platform/animation/AnimationList.cpp: Copied from WebCore/rendering/style/AnimationList.cpp.
+        * platform/animation/AnimationList.h: Copied from WebCore/rendering/style/AnimationList.h.
+        * platform/animation/TimingFunction.h: Copied from WebCore/rendering/style/TimingFunction.h.
+        * platform/graphics/AffineTransform.cpp: Removed.
+        * platform/graphics/AffineTransform.h: Removed.
+        * platform/graphics/transforms: Added.
+        * platform/graphics/transforms/AffineTransform.cpp: Copied from WebCore/platform/graphics/AffineTransform.cpp.
+        * platform/graphics/transforms/AffineTransform.h: Copied from WebCore/platform/graphics/AffineTransform.h.
+        * platform/graphics/transforms/IdentityTransformOperation.h: Copied from WebCore/rendering/style/IdentityTransformOperation.h.
+        * platform/graphics/transforms/MatrixTransformOperation.cpp: Copied from WebCore/rendering/style/MatrixTransformOperation.cpp.
+        * platform/graphics/transforms/MatrixTransformOperation.h: Copied from WebCore/rendering/style/MatrixTransformOperation.h.
+        * platform/graphics/transforms/RotateTransformOperation.cpp: Copied from WebCore/rendering/style/RotateTransformOperation.cpp.
+        * platform/graphics/transforms/RotateTransformOperation.h: Copied from WebCore/rendering/style/RotateTransformOperation.h.
+        * platform/graphics/transforms/ScaleTransformOperation.cpp: Copied from WebCore/rendering/style/ScaleTransformOperation.cpp.
+        * platform/graphics/transforms/ScaleTransformOperation.h: Copied from WebCore/rendering/style/ScaleTransformOperation.h.
+        * platform/graphics/transforms/SkewTransformOperation.cpp: Copied from WebCore/rendering/style/SkewTransformOperation.cpp.
+        * platform/graphics/transforms/SkewTransformOperation.h: Copied from WebCore/rendering/style/SkewTransformOperation.h.
+        * platform/graphics/transforms/TransformOperation.h: Copied from WebCore/rendering/style/TransformOperation.h.
+        * platform/graphics/transforms/TransformOperations.cpp: Copied from WebCore/rendering/style/TransformOperations.cpp.
+        * platform/graphics/transforms/TransformOperations.h: Copied from WebCore/rendering/style/TransformOperations.h.
+        * platform/graphics/transforms/TranslateTransformOperation.cpp: Copied from WebCore/rendering/style/TranslateTransformOperation.cpp.
+        * platform/graphics/transforms/TranslateTransformOperation.h: Copied from WebCore/rendering/style/TranslateTransformOperation.h.
+        * rendering/style/Animation.cpp: Removed.
+        * rendering/style/Animation.h: Removed.
+        * rendering/style/AnimationList.cpp: Removed.
+        * rendering/style/AnimationList.h: Removed.
+        * rendering/style/IdentityTransformOperation.h: Removed.
+        * rendering/style/MatrixTransformOperation.cpp: Removed.
+        * rendering/style/MatrixTransformOperation.h: Removed.
+        * rendering/style/RotateTransformOperation.cpp: Removed.
+        * rendering/style/RotateTransformOperation.h: Removed.
+        * rendering/style/ScaleTransformOperation.cpp: Removed.
+        * rendering/style/ScaleTransformOperation.h: Removed.
+        * rendering/style/SkewTransformOperation.cpp: Removed.
+        * rendering/style/SkewTransformOperation.h: Removed.
+        * rendering/style/TimingFunction.h: Removed.
+        * rendering/style/TransformOperation.h: Removed.
+        * rendering/style/TransformOperations.cpp: Removed.
+        * rendering/style/TransformOperations.h: Removed.
+        * rendering/style/TranslateTransformOperation.cpp: Removed.
+        * rendering/style/TranslateTransformOperation.h: Removed.
+
+2008-12-18  Cameron Zwarich  <zwarich@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        Bug 21855: REGRESSION (r37323): Gmail complains about popup blocking when opening a link
+        <https://bugs.webkit.org/show_bug.cgi?id=21855>
+        <rdar://problem/6278244>
+
+        If JavaScript is not currently executing, the handleEvent member function
+        of JSAbstractEventListener should set the dynamic global object to the
+        global object of the context in which the event occurred.
+        
+        If this is not set, then JavaScriptCore will simply take the global object
+        of the context where the event handler function was created, which may be
+        a different frame. This will cause the popup blocker to incorrectly block
+        windows opened from onclick events inside of an iframe whose handler was
+        created in the outer frame, as it will check the outer frame and see that
+        it is not processing any events.
+
+        * bindings/js/JSEventListener.cpp:
+        (WebCore::JSAbstractEventListener::handleEvent):
+
+2008-12-17  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+
+        https://bugs.webkit.org/show_bug.cgi?id=22570
+        
+        Add the ability to compute clip rects independently from
+        caching them on the RenderLayer. When painting reflections, use 
+        such temporarily computed clipRects, otherwise the layer may cache
+        clipRects which are invalid, since they have been computed with
+        a rootLayer that is not the one usually used to paint.
+        
+        Test: fast/reflections/reflection-overflow-hidden.html
+
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::paintLayer):
+        (WebCore::RenderLayer::hitTestLayer):
+        (WebCore::RenderLayer::updateClipRects):
+        (WebCore::RenderLayer::calculateClipRects):
+        (WebCore::RenderLayer::calculateRects):
+        * rendering/RenderLayer.h:
+        (WebCore::ClipRects::ClipRects):
+        (WebCore::ClipRects::reset):
+        (WebCore::ClipRects::overflowClipRect):
+        (WebCore::ClipRects::setOverflowClipRect):
+        (WebCore::ClipRects::fixedClipRect):
+        (WebCore::ClipRects::setFixedClipRect):
+        (WebCore::ClipRects::posClipRect):
+        (WebCore::ClipRects::setPosClipRect):
+        (WebCore::ClipRects::setFixed):
+        (WebCore::ClipRects::operator==):
+        (WebCore::ClipRects::operator=):
+        * rendering/RenderReplica.cpp:
+        (WebCore::RenderReplica::paint):
+
+2008-12-17  Laszlo Gombos  <laszlo.1.gombos@nokia.com>
+
+        Reviewed by Simon Hausmann.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22618
+
+        Fix MinGW QtWebKit linking problems and also make the 
+        QtWebKit build system more robust.
+
+        * WebCore.pro:
+
 2008-12-17  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
 
         Reviewed by Maciej Stachowiak.

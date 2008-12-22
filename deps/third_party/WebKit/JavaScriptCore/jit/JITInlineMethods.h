@@ -203,25 +203,35 @@ ALWAYS_INLINE JIT::Jump JIT::emitNakedCall(void* function)
     return nakedCall;
 }
 
+#if USE(JIT_STUB_ARGUMENT_REGISTER)
 ALWAYS_INLINE void JIT::restoreArgumentReference()
 {
-#if USE(CTI_ARGUMENT)
-#if USE(FAST_CALL_CTI_ARGUMENT)
-    m_assembler.movl_rr(X86::esp, X86::ecx);
+#if PLATFORM(X86_64)
+    move(X86::esp, X86::edi);
 #else
-    m_assembler.movl_rm(X86::esp, 0, X86::esp);
+    move(X86::esp, X86::ecx);
 #endif
-#endif
+    emitPutCTIParam(callFrameRegister, STUB_ARGS_callFrame);
 }
-
 ALWAYS_INLINE void JIT::restoreArgumentReferenceForTrampoline()
 {
-#if USE(CTI_ARGUMENT) && USE(FAST_CALL_CTI_ARGUMENT)
-    m_assembler.movl_rr(X86::esp, X86::ecx);
-    m_assembler.addl_ir(4, X86::ecx);
-#endif
+    move(X86::esp, X86::ecx);
+    addPtr(Imm32(sizeof(void*)), X86::ecx);
 }
-
+#elif USE(JIT_STUB_ARGUMENT_STACK)
+ALWAYS_INLINE void JIT::restoreArgumentReference()
+{
+    storePtr(X86::esp, X86::esp);
+    emitPutCTIParam(callFrameRegister, STUB_ARGS_callFrame);
+}
+ALWAYS_INLINE void JIT::restoreArgumentReferenceForTrampoline() {}
+#else // JIT_STUB_ARGUMENT_VA_LIST
+ALWAYS_INLINE void JIT::restoreArgumentReference()
+{
+    emitPutCTIParam(callFrameRegister, STUB_ARGS_callFrame);
+}
+ALWAYS_INLINE void JIT::restoreArgumentReferenceForTrampoline() {}
+#endif
 
 ALWAYS_INLINE JIT::Jump JIT::emitCTICall_internal(void* helper)
 {
@@ -231,7 +241,6 @@ ALWAYS_INLINE JIT::Jump JIT::emitCTICall_internal(void* helper)
     store32(Imm32(m_interpreter->sampler()->encodeSample(m_codeBlock->instructions().begin() + m_bytecodeIndex, true)), m_interpreter->sampler()->sampleSlot());
 #endif
     restoreArgumentReference();
-    emitPutCTIParam(callFrameRegister, CTI_ARGS_callFrame);
     Jump ctiCall = call();
     m_calls.append(CallRecord(ctiCall, m_bytecodeIndex, helper));
 #if ENABLE(OPCODE_SAMPLING)
@@ -310,16 +319,18 @@ ALWAYS_INLINE JIT::Jump JIT::emitFastArithDeTagImmediateJumpIfZero(RegisterID re
 ALWAYS_INLINE void JIT::emitFastArithReTagImmediate(RegisterID reg)
 {
     add32(Imm32(JSImmediate::TagBitTypeInteger), reg);
+    signExtend32ToPtr(reg, reg);
 }
 
 ALWAYS_INLINE void JIT::emitFastArithPotentiallyReTagImmediate(RegisterID reg)
 {
     or32(Imm32(JSImmediate::TagBitTypeInteger), reg);
+    signExtend32ToPtr(reg, reg);
 }
 
 ALWAYS_INLINE void JIT::emitFastArithImmToInt(RegisterID reg)
 {
-    rshift32(Imm32(1), reg);
+    rshift32(Imm32(JSImmediate::IntegerPayloadShift), reg);
 }
 
 ALWAYS_INLINE void JIT::emitFastArithIntToImmOrSlowCase(RegisterID reg)

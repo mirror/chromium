@@ -48,7 +48,6 @@ freebsd-*: DEFINES += HAVE_PTHREAD_NP_H
 
 DEFINES += BUILD_WEBKIT
 
-!CONFIG(QTDIR_build):win32-*: DEFINES += ENABLE_ICONDATABASE=0 ENABLE_DATABASE=0
 win32-*: DEFINES += _HAS_TR1=0
 wince* {
 #    DEFINES += ENABLE_SVG=0 ENABLE_XPATH=0 ENABLE_XBL=0 \
@@ -67,12 +66,36 @@ win32-g++ {
     QMAKE_LIBDIR_POST += $$split(TMPPATH,";")
 }
 
+# Try to locate sqlite3 source
+CONFIG(QTDIR_build) {
+    SQLITE3SRCDIR = $$QT_SOURCE_TREE/src/3rdparty/sqlite/
+} else {
+    SQLITE3SRCDIR = $$(SQLITE3SRCDIR)
+    isEmpty(SQLITE3SRCDIR) {
+        SQLITE3SRCDIR = $$[QT_INSTALL_PREFIX]/src/3rdparty/sqlite/
+    } 
+}
+
 # Optional components (look for defs in config.h and included files!)
-!contains(DEFINES, ENABLE_DASHBOARD_SUPPORT=.): DEFINES += ENABLE_DASHBOARD_SUPPORT=0
+
+# turn off database support if we do not have sqlite3 support 
+!CONFIG(QTDIR_build):win32-*:!exists( $${SQLITE3SRCDIR}/sqlite3.c ): DEFINES += ENABLE_DATABASE=0 ENABLE_ICONDATABASE=0 ENABLE_OFFLINE_WEB_APPLICATIONS=0 ENABLE_DOM_STORAGE=0
+
 !contains(DEFINES, ENABLE_OFFLINE_WEB_APPLICATIONS=.): DEFINES += ENABLE_OFFLINE_WEB_APPLICATIONS=1
 !contains(DEFINES, ENABLE_DOM_STORAGE=.): DEFINES += ENABLE_DOM_STORAGE=1
-!contains(DEFINES, ENABLE_DATABASE=.): DEFINES += ENABLE_DATABASE=1
 !contains(DEFINES, ENABLE_ICONDATABASE=.): DEFINES += ENABLE_ICONDATABASE=1
+
+# turn on database support if any of the dependent features are turned on
+!contains(DEFINES, ENABLE_DATABASE=1) {
+  contains(DEFINES, ENABLE_ICONDATABASE=1)|(DEFINES, ENABLE_DOM_STORAGE=1)|(DEFINES, ENABLE_OFFLINE_WEB_APPLICATIONS=1) {
+    DEFINES += ENABLE_DATABASE=1
+  }
+}
+
+# if database support is not on by now, turn it off 
+!contains(DEFINES, ENABLE_DATABASE=.): DEFINES += ENABLE_DATABASE=0
+
+!contains(DEFINES, ENABLE_DASHBOARD_SUPPORT=.): DEFINES += ENABLE_DASHBOARD_SUPPORT=0
 !contains(DEFINES, ENABLE_XPATH=.): DEFINES += ENABLE_XPATH=1
 #!contains(DEFINES, ENABLE_XBL=.): DEFINES += ENABLE_XBL=1
 !contains(DEFINES, ENABLE_WML=.): DEFINES += ENABLE_WML=0
@@ -118,6 +141,7 @@ INCLUDEPATH += \
     $$PWD/platform/qt \
     $$PWD/platform/network/qt \
     $$PWD/platform/graphics/filters \
+    $$PWD/platform/graphics/transforms \
     $$PWD/platform/graphics/qt \
     $$PWD/svg/graphics/qt \
     $$PWD/loader \
@@ -135,6 +159,7 @@ INCLUDEPATH +=  $$PWD \
                 $$PWD/ForwardingHeaders \
                 $$PWD/.. \
                 $$PWD/platform \
+                $$PWD/platform/animation \
                 $$PWD/platform/network \
                 $$PWD/platform/graphics \
                 $$PWD/svg/animation \
@@ -443,6 +468,7 @@ SOURCES += \
     bindings/js/JSDOMBinding.cpp \
     bindings/js/JSEventListener.cpp \
     bindings/js/JSPluginElementFunctions.cpp \
+    bindings/js/ScriptCachedPageData.cpp \
     bindings/js/ScriptCallFrame.cpp \
     bindings/js/ScriptCallStack.cpp \
     bindings/js/ScriptController.cpp \
@@ -813,6 +839,8 @@ SOURCES += \
     plugins/PluginMainThreadScheduler.cpp \
     plugins/MimeType.cpp \
     plugins/MimeTypeArray.cpp \
+    platform/animation/Animation.cpp \
+    platform/animation/AnimationList.cpp \
     platform/Arena.cpp \
     platform/text/AtomicString.cpp \
     platform/text/Base64.cpp \
@@ -826,7 +854,6 @@ SOURCES += \
     platform/GeolocationService.cpp \
     platform/graphics/FontDescription.cpp \
     platform/graphics/FontFamily.cpp \
-    platform/graphics/AffineTransform.cpp \
     platform/graphics/BitmapImage.cpp \
     platform/graphics/Color.cpp \
     platform/graphics/FloatPoint3D.cpp \
@@ -848,6 +875,13 @@ SOURCES += \
     platform/graphics/Pen.cpp \
     platform/graphics/SegmentedFontData.cpp \
     platform/graphics/SimpleFontData.cpp \
+    platform/graphics/transforms/AffineTransform.cpp \
+    platform/graphics/transforms/MatrixTransformOperation.cpp \
+    platform/graphics/transforms/RotateTransformOperation.cpp \
+    platform/graphics/transforms/ScaleTransformOperation.cpp \
+    platform/graphics/transforms/SkewTransformOperation.cpp \
+    platform/graphics/transforms/TransformOperations.cpp \
+    platform/graphics/transforms/TranslateTransformOperation.cpp \
     platform/KURL.cpp \
     platform/Length.cpp \
     platform/LinkHash.cpp \
@@ -951,20 +985,14 @@ SOURCES += \
     rendering/RootInlineBox.cpp \
     rendering/SVGRenderTreeAsText.cpp \
     rendering/TextControlInnerElements.cpp \
-    rendering/style/Animation.cpp \
-    rendering/style/AnimationList.cpp \
     rendering/style/BindingURI.cpp \
     rendering/style/ContentData.cpp \
     rendering/style/CounterDirectives.cpp \
     rendering/style/FillLayer.cpp \
     rendering/style/KeyframeList.cpp \
-    rendering/style/MatrixTransformOperation.cpp \
     rendering/style/NinePieceImage.cpp \
     rendering/style/RenderStyle.cpp \
-    rendering/style/RotateTransformOperation.cpp \
-    rendering/style/ScaleTransformOperation.cpp \
     rendering/style/ShadowData.cpp \
-    rendering/style/SkewTransformOperation.cpp \
     rendering/style/StyleBackgroundData.cpp \
     rendering/style/StyleBoxData.cpp \
     rendering/style/StyleCachedImage.cpp \
@@ -978,8 +1006,6 @@ SOURCES += \
     rendering/style/StyleSurroundData.cpp \
     rendering/style/StyleTransformData.cpp \
     rendering/style/StyleVisualData.cpp \
-    rendering/style/TransformOperations.cpp \
-    rendering/style/TranslateTransformOperation.cpp \
     xml/DOMParser.cpp \
     xml/NativeXPathNSResolver.cpp \
     xml/XMLHttpRequest.cpp \
@@ -1199,25 +1225,21 @@ contains(DEFINES, ENABLE_DASHBOARD_SUPPORT=0) {
 contains(DEFINES, ENABLE_DATABASE=1) {
     FEATURE_DEFINES_JAVASCRIPT += ENABLE_DATABASE=1
 
-    CONFIG(QTDIR_build) {
-        # some what copied from src/plugins/sqldrivers/sqlite/sqlite.pro
-        system-sqlite {
-            LIBS *= $$QT_LFLAGS_SQLITE
-            QMAKE_CXXFLAGS *= $$QT_CFLAGS_SQLITE
-        } else {
-            CONFIG(release, debug|release):DEFINES *= NDEBUG
-            INCLUDEPATH += $$QT_SOURCE_TREE/src/3rdparty/sqlite/
-            SOURCES += $$QT_SOURCE_TREE/src/3rdparty/sqlite/sqlite3.c
-        }
+    # somewhat copied from src/plugins/sqldrivers/sqlite/sqlite.pro
+    CONFIG(QTDIR_build):system-sqlite {
+        LIBS *= $$QT_LFLAGS_SQLITE
+        QMAKE_CXXFLAGS *= $$QT_CFLAGS_SQLITE
     } else {
-        SQLITE3SRCDIR = $$(SQLITE3SRCDIR)
-        isEmpty(SQLITE3SRCDIR) {
-            INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/sqlite/
-            LIBS += -lsqlite3
-        } else {
+        exists( $${SQLITE3SRCDIR}/sqlite3.c )  {
+            # we have source - use it
             CONFIG(release, debug|release):DEFINES *= NDEBUG
+            DEFINES += SQLITE_CORE SQLITE_OMIT_LOAD_EXTENSION SQLITE_OMIT_COMPLETE 
             INCLUDEPATH += $${SQLITE3SRCDIR}
             SOURCES += $${SQLITE3SRCDIR}/sqlite3.c
+        } else {
+            # fall back to platform library
+            INCLUDEPATH += $$[QT_INSTALL_PREFIX]/src/3rdparty/sqlite/
+            LIBS += -lsqlite3
         }
     }
 

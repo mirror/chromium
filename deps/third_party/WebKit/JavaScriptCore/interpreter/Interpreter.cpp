@@ -864,25 +864,6 @@ NEVER_INLINE HandlerInfo* Interpreter::throwException(CallFrame*& callFrame, JSV
     return handler;
 }
 
-class DynamicGlobalObjectScope : Noncopyable {
-public:
-    DynamicGlobalObjectScope(CallFrame* callFrame, JSGlobalObject* dynamicGlobalObject) 
-        : m_dynamicGlobalObjectSlot(callFrame->globalData().dynamicGlobalObject)
-        , m_savedDynamicGlobalObject(m_dynamicGlobalObjectSlot)
-    {
-        m_dynamicGlobalObjectSlot = dynamicGlobalObject;
-    }
-
-    ~DynamicGlobalObjectScope()
-    {
-        m_dynamicGlobalObjectSlot = m_savedDynamicGlobalObject;
-    }
-
-private:
-    JSGlobalObject*& m_dynamicGlobalObjectSlot;
-    JSGlobalObject* m_savedDynamicGlobalObject;
-};
-
 JSValue* Interpreter::execute(ProgramNode* programNode, CallFrame* callFrame, ScopeChainNode* scopeChain, JSObject* thisObj, JSValue** exception)
 {
     ASSERT(!scopeChain->globalData->exception);
@@ -1314,11 +1295,11 @@ NEVER_INLINE void Interpreter::uncachePutByID(CodeBlock* codeBlock, Instruction*
 
 static size_t countPrototypeChainEntriesAndCheckForProxies(CallFrame* callFrame, JSValue* baseValue, const PropertySlot& slot)
 {
-    JSObject* o = asObject(baseValue);
+    JSCell* cell = asCell(baseValue);
     size_t count = 0;
 
-    while (slot.slotBase() != o) {
-        JSValue* v = o->structure()->prototypeForLookup(callFrame);
+    while (slot.slotBase() != cell) {
+        JSValue* v = cell->structure()->prototypeForLookup(callFrame);
 
         // If we didn't find slotBase in baseValue's prototype chain, then baseValue
         // must be a proxy for another object.
@@ -1326,14 +1307,14 @@ static size_t countPrototypeChainEntriesAndCheckForProxies(CallFrame* callFrame,
         if (v->isNull())
             return 0;
 
-        o = asObject(v);
+        cell = asCell(v);
 
-        // Heavy access to a prototype is a good indication that it's not being
-        // used as a dictionary.
-        if (o->structure()->isDictionary()) {
-            RefPtr<Structure> transition = Structure::fromDictionaryTransition(o->structure());
-            o->setStructure(transition.release());
-            asObject(baseValue)->structure()->setCachedPrototypeChain(0);
+        // Since we're accessing a prototype in a loop, it's a good bet that it
+        // should not be treated as a dictionary.
+        if (cell->structure()->isDictionary()) {
+            RefPtr<Structure> transition = Structure::fromDictionaryTransition(cell->structure());
+            asObject(cell)->setStructure(transition.release());
+            cell->structure()->setCachedPrototypeChain(0);
         }
 
         ++count;
@@ -1407,8 +1388,8 @@ NEVER_INLINE void Interpreter::tryCacheGetByID(CallFrame* callFrame, CodeBlock* 
 
         JSObject* baseObject = asObject(slot.slotBase());
 
-        // Heavy access to a prototype is a good indication that it's not being
-        // used as a dictionary.
+        // Since we're accessing a prototype in a loop, it's a good bet that it
+        // should not be treated as a dictionary.
         if (baseObject->structure()->isDictionary()) {
             RefPtr<Structure> transition = Structure::fromDictionaryTransition(baseObject->structure());
             baseObject->setStructure(transition.release());
@@ -4178,12 +4159,12 @@ NEVER_INLINE void Interpreter::tryCTICacheGetByID(CallFrame* callFrame, CodeBloc
 
         JSObject* slotBaseObject = asObject(slot.slotBase());
 
-        // Heavy access to a prototype is a good indication that it's not being
-        // used as a dictionary.
+        // Since we're accessing a prototype in a loop, it's a good bet that it
+        // should not be treated as a dictionary.
         if (slotBaseObject->structure()->isDictionary()) {
             RefPtr<Structure> transition = Structure::fromDictionaryTransition(slotBaseObject->structure());
             slotBaseObject->setStructure(transition.release());
-            asObject(baseValue)->structure()->setCachedPrototypeChain(0);
+            asCell(baseValue)->structure()->setCachedPrototypeChain(0);
         }
         
         stubInfo->initGetByIdProto(structure, slotBaseObject->structure());
@@ -4208,6 +4189,12 @@ NEVER_INLINE void Interpreter::tryCTICacheGetByID(CallFrame* callFrame, CodeBloc
     JIT::compileGetByIdChain(callFrame->scopeChain()->globalData, callFrame, codeBlock, stubInfo, structure, chain, count, slot.cachedOffset(), returnAddress);
 }
 
+#endif
+
+#if USE(JIT_STUB_ARGUMENT_VA_LIST)
+#define SETUP_VA_LISTL_ARGS va_list vl_args; va_start(vl_args, args)
+#else // JIT_STUB_ARGUMENT_REGISTER or JIT_STUB_ARGUMENT_STACK
+#define SETUP_VA_LISTL_ARGS
 #endif
 
 #ifndef NDEBUG
@@ -4239,15 +4226,15 @@ struct StackHack {
     void* savedReturnAddress;
 };
 
-#define CTI_STACK_HACK() va_list vl_args; va_start(vl_args, args); StackHack stackHack(&CTI_RETURN_ADDRESS_SLOT)
-#define CTI_SET_RETURN_ADDRESS(address) stackHack.savedReturnAddress = address
-#define CTI_RETURN_ADDRESS stackHack.savedReturnAddress
+#define BEGIN_STUB_FUNCTION() SETUP_VA_LISTL_ARGS; StackHack stackHack(&STUB_RETURN_ADDRESS_SLOT)
+#define STUB_SET_RETURN_ADDRESS(address) stackHack.savedReturnAddress = address
+#define STUB_RETURN_ADDRESS stackHack.savedReturnAddress
 
 #else
 
-#define CTI_STACK_HACK() va_list vl_args; va_start(vl_args, args)
-#define CTI_SET_RETURN_ADDRESS(address) ctiSetReturnAddress(&CTI_RETURN_ADDRESS_SLOT, address);
-#define CTI_RETURN_ADDRESS CTI_RETURN_ADDRESS_SLOT
+#define BEGIN_STUB_FUNCTION() SETUP_VA_LISTL_ARGS
+#define STUB_SET_RETURN_ADDRESS(address) ctiSetReturnAddress(&STUB_RETURN_ADDRESS_SLOT, address);
+#define STUB_RETURN_ADDRESS STUB_RETURN_ADDRESS_SLOT
 
 #endif
 
@@ -4276,11 +4263,10 @@ static NEVER_INLINE void throwStackOverflowError(CallFrame* callFrame, JSGlobalD
 #define VM_THROW_EXCEPTION_2() \
     do { \
         VM_THROW_EXCEPTION_AT_END(); \
-        VoidPtrPairValue pair = {{ 0, 0 }}; \
-        return pair.i; \
+        RETURN_PAIR(0, 0); \
     } while (0)
 #define VM_THROW_EXCEPTION_AT_END() \
-    returnToThrowTrampoline(ARG_globalData, CTI_RETURN_ADDRESS, CTI_RETURN_ADDRESS)
+    returnToThrowTrampoline(ARG_globalData, STUB_RETURN_ADDRESS, STUB_RETURN_ADDRESS)
 
 #define CHECK_FOR_EXCEPTION() \
     do { \
@@ -4300,9 +4286,9 @@ static NEVER_INLINE void throwStackOverflowError(CallFrame* callFrame, JSGlobalD
         } \
     } while (0)
 
-JSObject* Interpreter::cti_op_convert_this(CTI_ARGS)
+JSObject* Interpreter::cti_op_convert_this(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* v1 = ARG_src1;
     CallFrame* callFrame = ARG_callFrame;
@@ -4312,18 +4298,18 @@ JSObject* Interpreter::cti_op_convert_this(CTI_ARGS)
     return result;
 }
 
-void Interpreter::cti_op_end(CTI_ARGS)
+void Interpreter::cti_op_end(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     ScopeChainNode* scopeChain = ARG_callFrame->scopeChain();
     ASSERT(scopeChain->refCount > 1);
     scopeChain->deref();
 }
 
-JSValue* Interpreter::cti_op_add(CTI_ARGS)
+JSValue* Interpreter::cti_op_add(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* v1 = ARG_src1;
     JSValue* v2 = ARG_src2;
@@ -4366,9 +4352,9 @@ JSValue* Interpreter::cti_op_add(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_pre_inc(CTI_ARGS)
+JSValue* Interpreter::cti_op_pre_inc(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* v = ARG_src1;
 
@@ -4378,9 +4364,9 @@ JSValue* Interpreter::cti_op_pre_inc(CTI_ARGS)
     return result;
 }
 
-int Interpreter::cti_timeout_check(CTI_ARGS)
+int Interpreter::cti_timeout_check(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
     Interpreter* interpreter = ARG_globalData->interpreter;
 
     if (interpreter->checkTimeout(ARG_callFrame->dynamicGlobalObject())) {
@@ -4391,9 +4377,9 @@ int Interpreter::cti_timeout_check(CTI_ARGS)
     return interpreter->m_ticksUntilNextTimeoutCheck;
 }
 
-void Interpreter::cti_register_file_check(CTI_ARGS)
+void Interpreter::cti_register_file_check(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     if (LIKELY(ARG_registerFile->grow(ARG_callFrame + ARG_callFrame->codeBlock()->m_numCalleeRegisters)))
         return;
@@ -4402,12 +4388,12 @@ void Interpreter::cti_register_file_check(CTI_ARGS)
     // moved the call frame forward.
     CallFrame* oldCallFrame = ARG_callFrame->callerFrame();
     ARG_setCallFrame(oldCallFrame);
-    throwStackOverflowError(oldCallFrame, ARG_globalData, oldCallFrame->returnPC(), CTI_RETURN_ADDRESS);
+    throwStackOverflowError(oldCallFrame, ARG_globalData, oldCallFrame->returnPC(), STUB_RETURN_ADDRESS);
 }
 
-int Interpreter::cti_op_loop_if_less(CTI_ARGS)
+int Interpreter::cti_op_loop_if_less(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src1 = ARG_src1;
     JSValue* src2 = ARG_src2;
@@ -4418,9 +4404,9 @@ int Interpreter::cti_op_loop_if_less(CTI_ARGS)
     return result;
 }
 
-int Interpreter::cti_op_loop_if_lesseq(CTI_ARGS)
+int Interpreter::cti_op_loop_if_lesseq(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src1 = ARG_src1;
     JSValue* src2 = ARG_src2;
@@ -4431,25 +4417,25 @@ int Interpreter::cti_op_loop_if_lesseq(CTI_ARGS)
     return result;
 }
 
-JSObject* Interpreter::cti_op_new_object(CTI_ARGS)
+JSObject* Interpreter::cti_op_new_object(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     return constructEmptyObject(ARG_callFrame);
 }
 
-void Interpreter::cti_op_put_by_id_generic(CTI_ARGS)
+void Interpreter::cti_op_put_by_id_generic(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     PutPropertySlot slot;
     ARG_src1->put(ARG_callFrame, *ARG_id2, ARG_src3, slot);
     CHECK_FOR_EXCEPTION_AT_END();
 }
 
-JSValue* Interpreter::cti_op_get_by_id_generic(CTI_ARGS)
+JSValue* Interpreter::cti_op_get_by_id_generic(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     Identifier& ident = *ARG_id2;
@@ -4464,9 +4450,9 @@ JSValue* Interpreter::cti_op_get_by_id_generic(CTI_ARGS)
 
 #if ENABLE(JIT_OPTIMIZE_PROPERTY_ACCESS)
 
-void Interpreter::cti_op_put_by_id(CTI_ARGS)
+void Interpreter::cti_op_put_by_id(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     Identifier& ident = *ARG_id2;
@@ -4474,24 +4460,24 @@ void Interpreter::cti_op_put_by_id(CTI_ARGS)
     PutPropertySlot slot;
     ARG_src1->put(callFrame, ident, ARG_src3, slot);
 
-    ctiRepatchCallByReturnAddress(CTI_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_put_by_id_second));
+    ctiRepatchCallByReturnAddress(STUB_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_put_by_id_second));
 
     CHECK_FOR_EXCEPTION_AT_END();
 }
 
-void Interpreter::cti_op_put_by_id_second(CTI_ARGS)
+void Interpreter::cti_op_put_by_id_second(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     PutPropertySlot slot;
     ARG_src1->put(ARG_callFrame, *ARG_id2, ARG_src3, slot);
-    ARG_globalData->interpreter->tryCTICachePutByID(ARG_callFrame, ARG_callFrame->codeBlock(), CTI_RETURN_ADDRESS, ARG_src1, slot);
+    ARG_globalData->interpreter->tryCTICachePutByID(ARG_callFrame, ARG_callFrame->codeBlock(), STUB_RETURN_ADDRESS, ARG_src1, slot);
     CHECK_FOR_EXCEPTION_AT_END();
 }
 
-void Interpreter::cti_op_put_by_id_fail(CTI_ARGS)
+void Interpreter::cti_op_put_by_id_fail(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     Identifier& ident = *ARG_id2;
@@ -4502,9 +4488,9 @@ void Interpreter::cti_op_put_by_id_fail(CTI_ARGS)
     CHECK_FOR_EXCEPTION_AT_END();
 }
 
-JSValue* Interpreter::cti_op_get_by_id(CTI_ARGS)
+JSValue* Interpreter::cti_op_get_by_id(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     Identifier& ident = *ARG_id2;
@@ -4513,15 +4499,15 @@ JSValue* Interpreter::cti_op_get_by_id(CTI_ARGS)
     PropertySlot slot(baseValue);
     JSValue* result = baseValue->get(callFrame, ident, slot);
 
-    ctiRepatchCallByReturnAddress(CTI_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_get_by_id_second));
+    ctiRepatchCallByReturnAddress(STUB_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_get_by_id_second));
 
     CHECK_FOR_EXCEPTION_AT_END();
     return result;
 }
 
-JSValue* Interpreter::cti_op_get_by_id_second(CTI_ARGS)
+JSValue* Interpreter::cti_op_get_by_id_second(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     Identifier& ident = *ARG_id2;
@@ -4530,15 +4516,15 @@ JSValue* Interpreter::cti_op_get_by_id_second(CTI_ARGS)
     PropertySlot slot(baseValue);
     JSValue* result = baseValue->get(callFrame, ident, slot);
 
-    ARG_globalData->interpreter->tryCTICacheGetByID(callFrame, callFrame->codeBlock(), CTI_RETURN_ADDRESS, baseValue, ident, slot);
+    ARG_globalData->interpreter->tryCTICacheGetByID(callFrame, callFrame->codeBlock(), STUB_RETURN_ADDRESS, baseValue, ident, slot);
 
     CHECK_FOR_EXCEPTION_AT_END();
     return result;
 }
 
-JSValue* Interpreter::cti_op_get_by_id_self_fail(CTI_ARGS)
+JSValue* Interpreter::cti_op_get_by_id_self_fail(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     Identifier& ident = *ARG_id2;
@@ -4549,13 +4535,13 @@ JSValue* Interpreter::cti_op_get_by_id_self_fail(CTI_ARGS)
 
     CHECK_FOR_EXCEPTION();
 
-    if (baseValue->isObject()
+    if (!JSImmediate::isImmediate(baseValue)
         && slot.isCacheable()
         && !asCell(baseValue)->structure()->isDictionary()
         && slot.slotBase() == baseValue) {
 
         CodeBlock* codeBlock = callFrame->codeBlock();
-        StructureStubInfo* stubInfo = &codeBlock->getStubInfo(CTI_RETURN_ADDRESS);
+        StructureStubInfo* stubInfo = &codeBlock->getStubInfo(STUB_RETURN_ADDRESS);
 
         ASSERT(slot.slotBase()->isObject());
 
@@ -4575,9 +4561,9 @@ JSValue* Interpreter::cti_op_get_by_id_self_fail(CTI_ARGS)
         JIT::compileGetByIdSelfList(callFrame->scopeChain()->globalData, codeBlock, stubInfo, polymorphicStructureList, listIndex, asCell(baseValue)->structure(), slot.cachedOffset());
 
         if (listIndex == (POLYMORPHIC_LIST_CACHE_SIZE - 1))
-            ctiRepatchCallByReturnAddress(CTI_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_get_by_id_generic));
+            ctiRepatchCallByReturnAddress(STUB_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_get_by_id_generic));
     } else {
-        ctiRepatchCallByReturnAddress(CTI_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_get_by_id_generic));
+        ctiRepatchCallByReturnAddress(STUB_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_get_by_id_generic));
     }
     return result;
 }
@@ -4611,9 +4597,9 @@ static PolymorphicAccessStructureList* getPolymorphicAccessStructureListSlot(Str
     return prototypeStructureList;
 }
 
-JSValue* Interpreter::cti_op_get_by_id_proto_list(CTI_ARGS)
+JSValue* Interpreter::cti_op_get_by_id_proto_list(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
 
@@ -4623,27 +4609,27 @@ JSValue* Interpreter::cti_op_get_by_id_proto_list(CTI_ARGS)
 
     CHECK_FOR_EXCEPTION();
 
-    if (!baseValue->isObject() || !slot.isCacheable() || asCell(baseValue)->structure()->isDictionary()) {
-        ctiRepatchCallByReturnAddress(CTI_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_get_by_id_proto_fail));
+    if (JSImmediate::isImmediate(baseValue) || !slot.isCacheable() || asCell(baseValue)->structure()->isDictionary()) {
+        ctiRepatchCallByReturnAddress(STUB_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_get_by_id_proto_fail));
         return result;
     }
 
     Structure* structure = asCell(baseValue)->structure();
     CodeBlock* codeBlock = callFrame->codeBlock();
-    StructureStubInfo* stubInfo = &codeBlock->getStubInfo(CTI_RETURN_ADDRESS);
+    StructureStubInfo* stubInfo = &codeBlock->getStubInfo(STUB_RETURN_ADDRESS);
 
     ASSERT(slot.slotBase()->isObject());
     JSObject* slotBaseObject = asObject(slot.slotBase());
 
     if (slot.slotBase() == baseValue)
-        ctiRepatchCallByReturnAddress(CTI_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_get_by_id_proto_fail));
+        ctiRepatchCallByReturnAddress(STUB_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_get_by_id_proto_fail));
     else if (slot.slotBase() == asCell(baseValue)->structure()->prototypeForLookup(callFrame)) {
-        // Heavy access to a prototype is a good indication that it's not being
-        // used as a dictionary.
+        // Since we're accessing a prototype in a loop, it's a good bet that it
+        // should not be treated as a dictionary.
         if (slotBaseObject->structure()->isDictionary()) {
             RefPtr<Structure> transition = Structure::fromDictionaryTransition(slotBaseObject->structure());
             slotBaseObject->setStructure(transition.release());
-            asObject(baseValue)->structure()->setCachedPrototypeChain(0);
+            asCell(baseValue)->structure()->setCachedPrototypeChain(0);
         }
 
         int listIndex;
@@ -4652,7 +4638,7 @@ JSValue* Interpreter::cti_op_get_by_id_proto_list(CTI_ARGS)
         JIT::compileGetByIdProtoList(callFrame->scopeChain()->globalData, callFrame, codeBlock, stubInfo, prototypeStructureList, listIndex, structure, slotBaseObject->structure(), slot.cachedOffset());
 
         if (listIndex == (POLYMORPHIC_LIST_CACHE_SIZE - 1))
-            ctiRepatchCallByReturnAddress(CTI_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_get_by_id_proto_list_full));
+            ctiRepatchCallByReturnAddress(STUB_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_get_by_id_proto_list_full));
     } else if (size_t count = countPrototypeChainEntriesAndCheckForProxies(callFrame, baseValue, slot)) {
         StructureChain* chain = structure->cachedPrototypeChain();
         if (!chain)
@@ -4665,16 +4651,16 @@ JSValue* Interpreter::cti_op_get_by_id_proto_list(CTI_ARGS)
         JIT::compileGetByIdChainList(callFrame->scopeChain()->globalData, callFrame, codeBlock, stubInfo, prototypeStructureList, listIndex, structure, chain, count, slot.cachedOffset());
 
         if (listIndex == (POLYMORPHIC_LIST_CACHE_SIZE - 1))
-            ctiRepatchCallByReturnAddress(CTI_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_get_by_id_proto_list_full));
+            ctiRepatchCallByReturnAddress(STUB_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_get_by_id_proto_list_full));
     } else
-        ctiRepatchCallByReturnAddress(CTI_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_get_by_id_proto_fail));
+        ctiRepatchCallByReturnAddress(STUB_RETURN_ADDRESS, reinterpret_cast<void*>(cti_op_get_by_id_proto_fail));
 
     return result;
 }
 
-JSValue* Interpreter::cti_op_get_by_id_proto_list_full(CTI_ARGS)
+JSValue* Interpreter::cti_op_get_by_id_proto_list_full(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* baseValue = ARG_src1;
     PropertySlot slot(baseValue);
@@ -4684,9 +4670,9 @@ JSValue* Interpreter::cti_op_get_by_id_proto_list_full(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_get_by_id_proto_fail(CTI_ARGS)
+JSValue* Interpreter::cti_op_get_by_id_proto_fail(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* baseValue = ARG_src1;
     PropertySlot slot(baseValue);
@@ -4696,9 +4682,9 @@ JSValue* Interpreter::cti_op_get_by_id_proto_fail(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_get_by_id_array_fail(CTI_ARGS)
+JSValue* Interpreter::cti_op_get_by_id_array_fail(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* baseValue = ARG_src1;
     PropertySlot slot(baseValue);
@@ -4708,9 +4694,9 @@ JSValue* Interpreter::cti_op_get_by_id_array_fail(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_get_by_id_string_fail(CTI_ARGS)
+JSValue* Interpreter::cti_op_get_by_id_string_fail(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* baseValue = ARG_src1;
     PropertySlot slot(baseValue);
@@ -4722,9 +4708,9 @@ JSValue* Interpreter::cti_op_get_by_id_string_fail(CTI_ARGS)
 
 #endif
 
-JSValue* Interpreter::cti_op_instanceof(CTI_ARGS)
+JSValue* Interpreter::cti_op_instanceof(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     JSValue* value = ARG_src1;
@@ -4739,7 +4725,7 @@ JSValue* Interpreter::cti_op_instanceof(CTI_ARGS)
     if (!baseVal->isObject()) {
         CallFrame* callFrame = ARG_callFrame;
         CodeBlock* codeBlock = callFrame->codeBlock();
-        unsigned vPCIndex = codeBlock->getBytecodeIndex(CTI_RETURN_ADDRESS);
+        unsigned vPCIndex = codeBlock->getBytecodeIndex(STUB_RETURN_ADDRESS);
         ARG_globalData->exception = createInvalidParamError(callFrame, "instanceof", baseVal, vPCIndex, codeBlock);
         VM_THROW_EXCEPTION();
     }
@@ -4761,9 +4747,9 @@ JSValue* Interpreter::cti_op_instanceof(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_del_by_id(CTI_ARGS)
+JSValue* Interpreter::cti_op_del_by_id(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     
@@ -4774,9 +4760,9 @@ JSValue* Interpreter::cti_op_del_by_id(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_mul(CTI_ARGS)
+JSValue* Interpreter::cti_op_mul(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src1 = ARG_src1;
     JSValue* src2 = ARG_src2;
@@ -4792,16 +4778,16 @@ JSValue* Interpreter::cti_op_mul(CTI_ARGS)
     return result;
 }
 
-JSObject* Interpreter::cti_op_new_func(CTI_ARGS)
+JSObject* Interpreter::cti_op_new_func(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     return ARG_func1->makeFunction(ARG_callFrame, ARG_callFrame->scopeChain());
 }
 
-void* Interpreter::cti_op_call_JSFunction(CTI_ARGS)
+void* Interpreter::cti_op_call_JSFunction(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
 #ifndef NDEBUG
     CallData callData;
@@ -4817,9 +4803,9 @@ void* Interpreter::cti_op_call_JSFunction(CTI_ARGS)
     return newCodeBlock;
 }
 
-VoidPtrPair Interpreter::cti_op_call_arityCheck(CTI_ARGS)
+VoidPtrPair Interpreter::cti_op_call_arityCheck(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     CodeBlock* newCodeBlock = ARG_codeBlock4;
@@ -4847,9 +4833,8 @@ VoidPtrPair Interpreter::cti_op_call_arityCheck(CTI_ARGS)
             // Rewind to the previous call frame because op_call already optimistically
             // moved the call frame forward.
             ARG_setCallFrame(oldCallFrame);
-            throwStackOverflowError(oldCallFrame, ARG_globalData, ARG_returnAddress2, CTI_RETURN_ADDRESS);
-            VoidPtrPairValue pair = {{ 0, 0 }};
-            return pair.i;
+            throwStackOverflowError(oldCallFrame, ARG_globalData, ARG_returnAddress2, STUB_RETURN_ADDRESS);
+            RETURN_PAIR(0, 0);
         }
 
         Register* argv = r - RegisterFile::CallFrameHeaderSize - omittedArgCount;
@@ -4860,13 +4845,12 @@ VoidPtrPair Interpreter::cti_op_call_arityCheck(CTI_ARGS)
         callFrame->setCallerFrame(oldCallFrame);
     }
 
-    VoidPtrPairValue pair = {{ newCodeBlock, callFrame }};
-    return pair.i;
+    RETURN_PAIR(newCodeBlock, callFrame);
 }
 
-void* Interpreter::cti_vm_dontLazyLinkCall(CTI_ARGS)
+void* Interpreter::cti_vm_dontLazyLinkCall(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSFunction* callee = asFunction(ARG_src1);
     CodeBlock* codeBlock = &callee->body()->bytecode(callee->m_scopeChain.node());
@@ -4878,9 +4862,9 @@ void* Interpreter::cti_vm_dontLazyLinkCall(CTI_ARGS)
     return codeBlock->jitCode();
 }
 
-void* Interpreter::cti_vm_lazyLinkCall(CTI_ARGS)
+void* Interpreter::cti_vm_lazyLinkCall(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSFunction* callee = asFunction(ARG_src1);
     CodeBlock* codeBlock = &callee->body()->bytecode(callee->m_scopeChain.node());
@@ -4893,18 +4877,18 @@ void* Interpreter::cti_vm_lazyLinkCall(CTI_ARGS)
     return codeBlock->jitCode();
 }
 
-JSObject* Interpreter::cti_op_push_activation(CTI_ARGS)
+JSObject* Interpreter::cti_op_push_activation(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSActivation* activation = new (ARG_globalData) JSActivation(ARG_callFrame, static_cast<FunctionBodyNode*>(ARG_callFrame->codeBlock()->ownerNode()));
     ARG_callFrame->setScopeChain(ARG_callFrame->scopeChain()->copy()->push(activation));
     return activation;
 }
 
-JSValue* Interpreter::cti_op_call_NotJSFunction(CTI_ARGS)
+JSValue* Interpreter::cti_op_call_NotJSFunction(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* funcVal = ARG_src1;
 
@@ -4919,7 +4903,7 @@ JSValue* Interpreter::cti_op_call_NotJSFunction(CTI_ARGS)
         CallFrame* previousCallFrame = ARG_callFrame;
         CallFrame* callFrame = CallFrame::create(previousCallFrame->registers() + registerOffset);
 
-        callFrame->init(0, static_cast<Instruction*>(CTI_RETURN_ADDRESS), previousCallFrame->scopeChain(), previousCallFrame, 0, argCount, 0);
+        callFrame->init(0, static_cast<Instruction*>(STUB_RETURN_ADDRESS), previousCallFrame->scopeChain(), previousCallFrame, 0, argCount, 0);
         ARG_setCallFrame(callFrame);
 
         Register* argv = ARG_callFrame->registers() - RegisterFile::CallFrameHeaderSize - argCount;
@@ -4945,80 +4929,80 @@ JSValue* Interpreter::cti_op_call_NotJSFunction(CTI_ARGS)
     ASSERT(callType == CallTypeNone);
 
     CodeBlock* codeBlock = ARG_callFrame->codeBlock();
-    unsigned vPCIndex = codeBlock->getBytecodeIndex(CTI_RETURN_ADDRESS);
+    unsigned vPCIndex = codeBlock->getBytecodeIndex(STUB_RETURN_ADDRESS);
     ARG_globalData->exception = createNotAFunctionError(ARG_callFrame, funcVal, vPCIndex, codeBlock);
     VM_THROW_EXCEPTION();
 }
 
-void Interpreter::cti_op_create_arguments(CTI_ARGS)
+void Interpreter::cti_op_create_arguments(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     Arguments* arguments = new (ARG_globalData) Arguments(ARG_callFrame);
     ARG_callFrame->setCalleeArguments(arguments);
     ARG_callFrame[RegisterFile::ArgumentsRegister] = arguments;
 }
 
-void Interpreter::cti_op_create_arguments_no_params(CTI_ARGS)
+void Interpreter::cti_op_create_arguments_no_params(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     Arguments* arguments = new (ARG_globalData) Arguments(ARG_callFrame, Arguments::NoParameters);
     ARG_callFrame->setCalleeArguments(arguments);
     ARG_callFrame[RegisterFile::ArgumentsRegister] = arguments;
 }
 
-void Interpreter::cti_op_tear_off_activation(CTI_ARGS)
+void Interpreter::cti_op_tear_off_activation(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     ASSERT(ARG_callFrame->codeBlock()->needsFullScopeChain());
     asActivation(ARG_src1)->copyRegisters(ARG_callFrame->optionalCalleeArguments());
 }
 
-void Interpreter::cti_op_tear_off_arguments(CTI_ARGS)
+void Interpreter::cti_op_tear_off_arguments(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     ASSERT(ARG_callFrame->codeBlock()->usesArguments() && !ARG_callFrame->codeBlock()->needsFullScopeChain());
     ARG_callFrame->optionalCalleeArguments()->copyRegisters();
 }
 
-void Interpreter::cti_op_profile_will_call(CTI_ARGS)
+void Interpreter::cti_op_profile_will_call(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     ASSERT(*ARG_profilerReference);
     (*ARG_profilerReference)->willExecute(ARG_callFrame, ARG_src1);
 }
 
-void Interpreter::cti_op_profile_did_call(CTI_ARGS)
+void Interpreter::cti_op_profile_did_call(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     ASSERT(*ARG_profilerReference);
     (*ARG_profilerReference)->didExecute(ARG_callFrame, ARG_src1);
 }
 
-void Interpreter::cti_op_ret_scopeChain(CTI_ARGS)
+void Interpreter::cti_op_ret_scopeChain(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     ASSERT(ARG_callFrame->codeBlock()->needsFullScopeChain());
     ARG_callFrame->scopeChain()->deref();
 }
 
-JSObject* Interpreter::cti_op_new_array(CTI_ARGS)
+JSObject* Interpreter::cti_op_new_array(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     ArgList argList(&ARG_callFrame->registers()[ARG_int1], ARG_int2);
     return constructArray(ARG_callFrame, argList);
 }
 
-JSValue* Interpreter::cti_op_resolve(CTI_ARGS)
+JSValue* Interpreter::cti_op_resolve(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     ScopeChainNode* scopeChain = callFrame->scopeChain();
@@ -5039,14 +5023,14 @@ JSValue* Interpreter::cti_op_resolve(CTI_ARGS)
     } while (++iter != end);
 
     CodeBlock* codeBlock = callFrame->codeBlock();
-    unsigned vPCIndex = codeBlock->getBytecodeIndex(CTI_RETURN_ADDRESS);
+    unsigned vPCIndex = codeBlock->getBytecodeIndex(STUB_RETURN_ADDRESS);
     ARG_globalData->exception = createUndefinedVariableError(callFrame, ident, vPCIndex, codeBlock);
     VM_THROW_EXCEPTION();
 }
 
-JSObject* Interpreter::cti_op_construct_JSConstruct(CTI_ARGS)
+JSObject* Interpreter::cti_op_construct_JSConstruct(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
 #ifndef NDEBUG
     ConstructData constructData;
@@ -5061,9 +5045,9 @@ JSObject* Interpreter::cti_op_construct_JSConstruct(CTI_ARGS)
     return new (ARG_globalData) JSObject(structure);
 }
 
-JSValue* Interpreter::cti_op_construct_NotJSConstruct(CTI_ARGS)
+JSValue* Interpreter::cti_op_construct_NotJSConstruct(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
 
@@ -5090,14 +5074,14 @@ JSValue* Interpreter::cti_op_construct_NotJSConstruct(CTI_ARGS)
     ASSERT(constructType == ConstructTypeNone);
 
     CodeBlock* codeBlock = callFrame->codeBlock();
-    unsigned vPCIndex = codeBlock->getBytecodeIndex(CTI_RETURN_ADDRESS);
+    unsigned vPCIndex = codeBlock->getBytecodeIndex(STUB_RETURN_ADDRESS);
     ARG_globalData->exception = createNotAConstructorError(callFrame, constrVal, vPCIndex, codeBlock);
     VM_THROW_EXCEPTION();
 }
 
-JSValue* Interpreter::cti_op_get_by_val(CTI_ARGS)
+JSValue* Interpreter::cti_op_get_by_val(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     Interpreter* interpreter = ARG_globalData->interpreter;
@@ -5129,9 +5113,9 @@ JSValue* Interpreter::cti_op_get_by_val(CTI_ARGS)
     return result;
 }
 
-VoidPtrPair Interpreter::cti_op_resolve_func(CTI_ARGS)
+VoidPtrPair Interpreter::cti_op_resolve_func(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     ScopeChainNode* scopeChain = callFrame->scopeChain();
@@ -5160,21 +5144,20 @@ VoidPtrPair Interpreter::cti_op_resolve_func(CTI_ARGS)
             JSValue* result = slot.getValue(callFrame, ident);
             CHECK_FOR_EXCEPTION_AT_END();
 
-            VoidPtrPairValue pair = {{ thisObj, asPointer(result) }};
-            return pair.i;
+            RETURN_PAIR(thisObj, asPointer(result));
         }
         ++iter;
     } while (iter != end);
 
     CodeBlock* codeBlock = callFrame->codeBlock();
-    unsigned vPCIndex = codeBlock->getBytecodeIndex(CTI_RETURN_ADDRESS);
+    unsigned vPCIndex = codeBlock->getBytecodeIndex(STUB_RETURN_ADDRESS);
     ARG_globalData->exception = createUndefinedVariableError(callFrame, ident, vPCIndex, codeBlock);
     VM_THROW_EXCEPTION_2();
 }
 
-JSValue* Interpreter::cti_op_sub(CTI_ARGS)
+JSValue* Interpreter::cti_op_sub(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src1 = ARG_src1;
     JSValue* src2 = ARG_src2;
@@ -5190,9 +5173,9 @@ JSValue* Interpreter::cti_op_sub(CTI_ARGS)
     return result;
 }
 
-void Interpreter::cti_op_put_by_val(CTI_ARGS)
+void Interpreter::cti_op_put_by_val(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     Interpreter* interpreter = ARG_globalData->interpreter;
@@ -5224,9 +5207,9 @@ void Interpreter::cti_op_put_by_val(CTI_ARGS)
     CHECK_FOR_EXCEPTION_AT_END();
 }
 
-void Interpreter::cti_op_put_by_val_array(CTI_ARGS)
+void Interpreter::cti_op_put_by_val_array(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
 
@@ -5250,9 +5233,9 @@ void Interpreter::cti_op_put_by_val_array(CTI_ARGS)
     CHECK_FOR_EXCEPTION_AT_END();
 }
 
-JSValue* Interpreter::cti_op_lesseq(CTI_ARGS)
+JSValue* Interpreter::cti_op_lesseq(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     JSValue* result = jsBoolean(jsLessEq(callFrame, ARG_src1, ARG_src2));
@@ -5260,9 +5243,9 @@ JSValue* Interpreter::cti_op_lesseq(CTI_ARGS)
     return result;
 }
 
-int Interpreter::cti_op_loop_if_true(CTI_ARGS)
+int Interpreter::cti_op_loop_if_true(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src1 = ARG_src1;
 
@@ -5273,9 +5256,9 @@ int Interpreter::cti_op_loop_if_true(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_negate(CTI_ARGS)
+JSValue* Interpreter::cti_op_negate(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src = ARG_src1;
 
@@ -5289,16 +5272,16 @@ JSValue* Interpreter::cti_op_negate(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_resolve_base(CTI_ARGS)
+JSValue* Interpreter::cti_op_resolve_base(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     return inlineResolveBase(ARG_callFrame, *ARG_id1, ARG_callFrame->scopeChain());
 }
 
-JSValue* Interpreter::cti_op_resolve_skip(CTI_ARGS)
+JSValue* Interpreter::cti_op_resolve_skip(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     ScopeChainNode* scopeChain = callFrame->scopeChain();
@@ -5324,14 +5307,14 @@ JSValue* Interpreter::cti_op_resolve_skip(CTI_ARGS)
     } while (++iter != end);
 
     CodeBlock* codeBlock = callFrame->codeBlock();
-    unsigned vPCIndex = codeBlock->getBytecodeIndex(CTI_RETURN_ADDRESS);
+    unsigned vPCIndex = codeBlock->getBytecodeIndex(STUB_RETURN_ADDRESS);
     ARG_globalData->exception = createUndefinedVariableError(callFrame, ident, vPCIndex, codeBlock);
     VM_THROW_EXCEPTION();
 }
 
-JSValue* Interpreter::cti_op_resolve_global(CTI_ARGS)
+JSValue* Interpreter::cti_op_resolve_global(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     JSGlobalObject* globalObject = asGlobalObject(ARG_src1);
@@ -5356,14 +5339,14 @@ JSValue* Interpreter::cti_op_resolve_global(CTI_ARGS)
         return result;
     }
 
-    unsigned vPCIndex = ARG_callFrame->codeBlock()->getBytecodeIndex(CTI_RETURN_ADDRESS);
+    unsigned vPCIndex = ARG_callFrame->codeBlock()->getBytecodeIndex(STUB_RETURN_ADDRESS);
     ARG_globalData->exception = createUndefinedVariableError(callFrame, ident, vPCIndex, callFrame->codeBlock());
     VM_THROW_EXCEPTION();
 }
 
-JSValue* Interpreter::cti_op_div(CTI_ARGS)
+JSValue* Interpreter::cti_op_div(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src1 = ARG_src1;
     JSValue* src2 = ARG_src2;
@@ -5379,9 +5362,9 @@ JSValue* Interpreter::cti_op_div(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_pre_dec(CTI_ARGS)
+JSValue* Interpreter::cti_op_pre_dec(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* v = ARG_src1;
 
@@ -5391,9 +5374,9 @@ JSValue* Interpreter::cti_op_pre_dec(CTI_ARGS)
     return result;
 }
 
-int Interpreter::cti_op_jless(CTI_ARGS)
+int Interpreter::cti_op_jless(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src1 = ARG_src1;
     JSValue* src2 = ARG_src2;
@@ -5404,9 +5387,9 @@ int Interpreter::cti_op_jless(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_not(CTI_ARGS)
+JSValue* Interpreter::cti_op_not(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src = ARG_src1;
 
@@ -5417,9 +5400,9 @@ JSValue* Interpreter::cti_op_not(CTI_ARGS)
     return result;
 }
 
-int SFX_CALL Interpreter::cti_op_jtrue(CTI_ARGS)
+int Interpreter::cti_op_jtrue(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src1 = ARG_src1;
 
@@ -5430,9 +5413,9 @@ int SFX_CALL Interpreter::cti_op_jtrue(CTI_ARGS)
     return result;
 }
 
-VoidPtrPair Interpreter::cti_op_post_inc(CTI_ARGS)
+VoidPtrPair Interpreter::cti_op_post_inc(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* v = ARG_src1;
 
@@ -5441,13 +5424,12 @@ VoidPtrPair Interpreter::cti_op_post_inc(CTI_ARGS)
     JSValue* number = v->toJSNumber(callFrame);
     CHECK_FOR_EXCEPTION_AT_END();
 
-    VoidPtrPairValue pair = {{ asPointer(number), asPointer(jsNumber(ARG_globalData, number->uncheckedGetNumber() + 1)) }};
-    return pair.i;
+    RETURN_PAIR(asPointer(number), asPointer(jsNumber(ARG_globalData, number->uncheckedGetNumber() + 1)));
 }
 
-JSValue* Interpreter::cti_op_eq(CTI_ARGS)
+JSValue* Interpreter::cti_op_eq(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src1 = ARG_src1;
     JSValue* src2 = ARG_src2;
@@ -5460,9 +5442,9 @@ JSValue* Interpreter::cti_op_eq(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_lshift(CTI_ARGS)
+JSValue* Interpreter::cti_op_lshift(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* val = ARG_src1;
     JSValue* shift = ARG_src2;
@@ -5480,9 +5462,9 @@ JSValue* Interpreter::cti_op_lshift(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_bitand(CTI_ARGS)
+JSValue* Interpreter::cti_op_bitand(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src1 = ARG_src1;
     JSValue* src2 = ARG_src2;
@@ -5498,9 +5480,9 @@ JSValue* Interpreter::cti_op_bitand(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_rshift(CTI_ARGS)
+JSValue* Interpreter::cti_op_rshift(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* val = ARG_src1;
     JSValue* shift = ARG_src2;
@@ -5518,9 +5500,9 @@ JSValue* Interpreter::cti_op_rshift(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_bitnot(CTI_ARGS)
+JSValue* Interpreter::cti_op_bitnot(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src = ARG_src1;
 
@@ -5534,9 +5516,9 @@ JSValue* Interpreter::cti_op_bitnot(CTI_ARGS)
     return result;
 }
 
-VoidPtrPair Interpreter::cti_op_resolve_with_base(CTI_ARGS)
+VoidPtrPair Interpreter::cti_op_resolve_with_base(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     ScopeChainNode* scopeChain = callFrame->scopeChain();
@@ -5557,28 +5539,27 @@ VoidPtrPair Interpreter::cti_op_resolve_with_base(CTI_ARGS)
             JSValue* result = slot.getValue(callFrame, ident);
             CHECK_FOR_EXCEPTION_AT_END();
 
-            VoidPtrPairValue pair = {{ base, asPointer(result) }};
-            return pair.i;
+            RETURN_PAIR(base, asPointer(result));
         }
         ++iter;
     } while (iter != end);
 
     CodeBlock* codeBlock = callFrame->codeBlock();
-    unsigned vPCIndex = codeBlock->getBytecodeIndex(CTI_RETURN_ADDRESS);
+    unsigned vPCIndex = codeBlock->getBytecodeIndex(STUB_RETURN_ADDRESS);
     ARG_globalData->exception = createUndefinedVariableError(callFrame, ident, vPCIndex, codeBlock);
     VM_THROW_EXCEPTION_2();
 }
 
-JSObject* Interpreter::cti_op_new_func_exp(CTI_ARGS)
+JSObject* Interpreter::cti_op_new_func_exp(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     return ARG_funcexp1->makeFunction(ARG_callFrame, ARG_callFrame->scopeChain());
 }
 
-JSValue* Interpreter::cti_op_mod(CTI_ARGS)
+JSValue* Interpreter::cti_op_mod(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* dividendValue = ARG_src1;
     JSValue* divisorValue = ARG_src2;
@@ -5590,9 +5571,9 @@ JSValue* Interpreter::cti_op_mod(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_less(CTI_ARGS)
+JSValue* Interpreter::cti_op_less(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     JSValue* result = jsBoolean(jsLess(callFrame, ARG_src1, ARG_src2));
@@ -5600,9 +5581,9 @@ JSValue* Interpreter::cti_op_less(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_neq(CTI_ARGS)
+JSValue* Interpreter::cti_op_neq(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src1 = ARG_src1;
     JSValue* src2 = ARG_src2;
@@ -5615,9 +5596,9 @@ JSValue* Interpreter::cti_op_neq(CTI_ARGS)
     return result;
 }
 
-VoidPtrPair Interpreter::cti_op_post_dec(CTI_ARGS)
+VoidPtrPair Interpreter::cti_op_post_dec(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* v = ARG_src1;
 
@@ -5626,13 +5607,12 @@ VoidPtrPair Interpreter::cti_op_post_dec(CTI_ARGS)
     JSValue* number = v->toJSNumber(callFrame);
     CHECK_FOR_EXCEPTION_AT_END();
 
-    VoidPtrPairValue pair = {{ asPointer(number), asPointer(jsNumber(ARG_globalData, number->uncheckedGetNumber() - 1)) }};
-    return pair.i;
+    RETURN_PAIR(asPointer(number), asPointer(jsNumber(ARG_globalData, number->uncheckedGetNumber() - 1)));
 }
 
-JSValue* Interpreter::cti_op_urshift(CTI_ARGS)
+JSValue* Interpreter::cti_op_urshift(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* val = ARG_src1;
     JSValue* shift = ARG_src2;
@@ -5648,9 +5628,9 @@ JSValue* Interpreter::cti_op_urshift(CTI_ARGS)
     }
 }
 
-JSValue* Interpreter::cti_op_bitxor(CTI_ARGS)
+JSValue* Interpreter::cti_op_bitxor(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src1 = ARG_src1;
     JSValue* src2 = ARG_src2;
@@ -5662,16 +5642,16 @@ JSValue* Interpreter::cti_op_bitxor(CTI_ARGS)
     return result;
 }
 
-JSObject* Interpreter::cti_op_new_regexp(CTI_ARGS)
+JSObject* Interpreter::cti_op_new_regexp(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     return new (ARG_globalData) RegExpObject(ARG_callFrame->lexicalGlobalObject()->regExpStructure(), ARG_regexp1);
 }
 
-JSValue* Interpreter::cti_op_bitor(CTI_ARGS)
+JSValue* Interpreter::cti_op_bitor(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src1 = ARG_src1;
     JSValue* src2 = ARG_src2;
@@ -5683,9 +5663,9 @@ JSValue* Interpreter::cti_op_bitor(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_call_eval(CTI_ARGS)
+JSValue* Interpreter::cti_op_call_eval(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     RegisterFile* registerFile = ARG_registerFile;
@@ -5714,14 +5694,14 @@ JSValue* Interpreter::cti_op_call_eval(CTI_ARGS)
     return JSImmediate::impossibleValue();
 }
 
-JSValue* Interpreter::cti_op_throw(CTI_ARGS)
+JSValue* Interpreter::cti_op_throw(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     CodeBlock* codeBlock = callFrame->codeBlock();
 
-    unsigned vPCIndex = codeBlock->getBytecodeIndex(CTI_RETURN_ADDRESS);
+    unsigned vPCIndex = codeBlock->getBytecodeIndex(STUB_RETURN_ADDRESS);
 
     JSValue* exceptionValue = ARG_src1;
     ASSERT(exceptionValue);
@@ -5736,20 +5716,20 @@ JSValue* Interpreter::cti_op_throw(CTI_ARGS)
     ARG_setCallFrame(callFrame);
     void* catchRoutine = handler->nativeCode;
     ASSERT(catchRoutine);
-    CTI_SET_RETURN_ADDRESS(catchRoutine);
+    STUB_SET_RETURN_ADDRESS(catchRoutine);
     return exceptionValue;
 }
 
-JSPropertyNameIterator* Interpreter::cti_op_get_pnames(CTI_ARGS)
+JSPropertyNameIterator* Interpreter::cti_op_get_pnames(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     return JSPropertyNameIterator::create(ARG_callFrame, ARG_src1);
 }
 
-JSValue* Interpreter::cti_op_next_pname(CTI_ARGS)
+JSValue* Interpreter::cti_op_next_pname(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSPropertyNameIterator* it = ARG_pni1;
     JSValue* temp = it->next(ARG_callFrame);
@@ -5758,75 +5738,75 @@ JSValue* Interpreter::cti_op_next_pname(CTI_ARGS)
     return temp;
 }
 
-void Interpreter::cti_op_push_scope(CTI_ARGS)
+void Interpreter::cti_op_push_scope(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSObject* o = ARG_src1->toObject(ARG_callFrame);
     CHECK_FOR_EXCEPTION_VOID();
     ARG_callFrame->setScopeChain(ARG_callFrame->scopeChain()->push(o));
 }
 
-void Interpreter::cti_op_pop_scope(CTI_ARGS)
+void Interpreter::cti_op_pop_scope(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     ARG_callFrame->setScopeChain(ARG_callFrame->scopeChain()->pop());
 }
 
-JSValue* Interpreter::cti_op_typeof(CTI_ARGS)
+JSValue* Interpreter::cti_op_typeof(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     return jsTypeStringForValue(ARG_callFrame, ARG_src1);
 }
 
-JSValue* Interpreter::cti_op_is_undefined(CTI_ARGS)
+JSValue* Interpreter::cti_op_is_undefined(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* v = ARG_src1;
     return jsBoolean(JSImmediate::isImmediate(v) ? v->isUndefined() : v->asCell()->structure()->typeInfo().masqueradesAsUndefined());
 }
 
-JSValue* Interpreter::cti_op_is_boolean(CTI_ARGS)
+JSValue* Interpreter::cti_op_is_boolean(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     return jsBoolean(ARG_src1->isBoolean());
 }
 
-JSValue* Interpreter::cti_op_is_number(CTI_ARGS)
+JSValue* Interpreter::cti_op_is_number(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     return jsBoolean(ARG_src1->isNumber());
 }
 
-JSValue* Interpreter::cti_op_is_string(CTI_ARGS)
+JSValue* Interpreter::cti_op_is_string(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     return jsBoolean(ARG_globalData->interpreter->isJSString(ARG_src1));
 }
 
-JSValue* Interpreter::cti_op_is_object(CTI_ARGS)
+JSValue* Interpreter::cti_op_is_object(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     return jsBoolean(jsIsObjectType(ARG_src1));
 }
 
-JSValue* Interpreter::cti_op_is_function(CTI_ARGS)
+JSValue* Interpreter::cti_op_is_function(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     return jsBoolean(jsIsFunctionType(ARG_src1));
 }
 
-JSValue* Interpreter::cti_op_stricteq(CTI_ARGS)
+JSValue* Interpreter::cti_op_stricteq(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src1 = ARG_src1;
     JSValue* src2 = ARG_src2;
@@ -5838,9 +5818,9 @@ JSValue* Interpreter::cti_op_stricteq(CTI_ARGS)
     return jsBoolean(strictEqualSlowCaseInline(src1, src2));
 }
 
-JSValue* Interpreter::cti_op_nstricteq(CTI_ARGS)
+JSValue* Interpreter::cti_op_nstricteq(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src1 = ARG_src1;
     JSValue* src2 = ARG_src2;
@@ -5852,9 +5832,9 @@ JSValue* Interpreter::cti_op_nstricteq(CTI_ARGS)
     return jsBoolean(!strictEqualSlowCaseInline(src1, src2));
 }
 
-JSValue* Interpreter::cti_op_to_jsnumber(CTI_ARGS)
+JSValue* Interpreter::cti_op_to_jsnumber(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* src = ARG_src1;
     CallFrame* callFrame = ARG_callFrame;
@@ -5864,9 +5844,9 @@ JSValue* Interpreter::cti_op_to_jsnumber(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_in(CTI_ARGS)
+JSValue* Interpreter::cti_op_in(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     JSValue* baseVal = ARG_src2;
@@ -5874,7 +5854,7 @@ JSValue* Interpreter::cti_op_in(CTI_ARGS)
     if (!baseVal->isObject()) {
         CallFrame* callFrame = ARG_callFrame;
         CodeBlock* codeBlock = callFrame->codeBlock();
-        unsigned vPCIndex = codeBlock->getBytecodeIndex(CTI_RETURN_ADDRESS);
+        unsigned vPCIndex = codeBlock->getBytecodeIndex(STUB_RETURN_ADDRESS);
         ARG_globalData->exception = createInvalidParamError(callFrame, "in", baseVal, vPCIndex, codeBlock);
         VM_THROW_EXCEPTION();
     }
@@ -5891,9 +5871,9 @@ JSValue* Interpreter::cti_op_in(CTI_ARGS)
     return jsBoolean(baseObj->hasProperty(callFrame, property));
 }
 
-JSObject* Interpreter::cti_op_push_new_scope(CTI_ARGS)
+JSObject* Interpreter::cti_op_push_new_scope(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSObject* scope = new (ARG_globalData) JSStaticScopeObject(ARG_callFrame, *ARG_id1, ARG_src2, DontDelete);
 
@@ -5902,9 +5882,9 @@ JSObject* Interpreter::cti_op_push_new_scope(CTI_ARGS)
     return scope;
 }
 
-void Interpreter::cti_op_jmp_scopes(CTI_ARGS)
+void Interpreter::cti_op_jmp_scopes(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     unsigned count = ARG_int1;
     CallFrame* callFrame = ARG_callFrame;
@@ -5915,9 +5895,9 @@ void Interpreter::cti_op_jmp_scopes(CTI_ARGS)
     callFrame->setScopeChain(tmp);
 }
 
-void Interpreter::cti_op_put_by_index(CTI_ARGS)
+void Interpreter::cti_op_put_by_index(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     unsigned property = ARG_int2;
@@ -5925,9 +5905,9 @@ void Interpreter::cti_op_put_by_index(CTI_ARGS)
     ARG_src1->put(callFrame, property, ARG_src3);
 }
 
-void* Interpreter::cti_op_switch_imm(CTI_ARGS)
+void* Interpreter::cti_op_switch_imm(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* scrutinee = ARG_src1;
     unsigned tableIndex = ARG_int2;
@@ -5942,9 +5922,9 @@ void* Interpreter::cti_op_switch_imm(CTI_ARGS)
     return codeBlock->immediateSwitchJumpTable(tableIndex).ctiDefault;
 }
 
-void* Interpreter::cti_op_switch_char(CTI_ARGS)
+void* Interpreter::cti_op_switch_char(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* scrutinee = ARG_src1;
     unsigned tableIndex = ARG_int2;
@@ -5962,9 +5942,9 @@ void* Interpreter::cti_op_switch_char(CTI_ARGS)
     return result;
 }
 
-void* Interpreter::cti_op_switch_string(CTI_ARGS)
+void* Interpreter::cti_op_switch_string(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     JSValue* scrutinee = ARG_src1;
     unsigned tableIndex = ARG_int2;
@@ -5981,9 +5961,9 @@ void* Interpreter::cti_op_switch_string(CTI_ARGS)
     return result;
 }
 
-JSValue* Interpreter::cti_op_del_by_val(CTI_ARGS)
+JSValue* Interpreter::cti_op_del_by_val(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
 
@@ -6006,9 +5986,9 @@ JSValue* Interpreter::cti_op_del_by_val(CTI_ARGS)
     return result;
 }
 
-void Interpreter::cti_op_put_getter(CTI_ARGS)
+void Interpreter::cti_op_put_getter(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
 
@@ -6018,9 +5998,9 @@ void Interpreter::cti_op_put_getter(CTI_ARGS)
     baseObj->defineGetter(callFrame, *ARG_id2, asObject(ARG_src3));
 }
 
-void Interpreter::cti_op_put_setter(CTI_ARGS)
+void Interpreter::cti_op_put_setter(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
 
@@ -6030,9 +6010,9 @@ void Interpreter::cti_op_put_setter(CTI_ARGS)
     baseObj->defineSetter(callFrame, *ARG_id2, asObject(ARG_src3));
 }
 
-JSObject* Interpreter::cti_op_new_error(CTI_ARGS)
+JSObject* Interpreter::cti_op_new_error(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     CodeBlock* codeBlock = callFrame->codeBlock();
@@ -6043,9 +6023,9 @@ JSObject* Interpreter::cti_op_new_error(CTI_ARGS)
     return Error::create(callFrame, static_cast<ErrorType>(type), message->toString(callFrame), lineNumber, codeBlock->ownerNode()->sourceID(), codeBlock->ownerNode()->sourceURL());
 }
 
-void Interpreter::cti_op_debug(CTI_ARGS)
+void Interpreter::cti_op_debug(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
 
@@ -6056,9 +6036,9 @@ void Interpreter::cti_op_debug(CTI_ARGS)
     ARG_globalData->interpreter->debug(callFrame, static_cast<DebugHookID>(debugHookID), firstLine, lastLine);
 }
 
-JSValue* Interpreter::cti_vm_throw(CTI_ARGS)
+JSValue* Interpreter::cti_vm_throw(STUB_ARGS)
 {
-    CTI_STACK_HACK();
+    BEGIN_STUB_FUNCTION();
 
     CallFrame* callFrame = ARG_callFrame;
     CodeBlock* codeBlock = callFrame->codeBlock();
@@ -6080,13 +6060,13 @@ JSValue* Interpreter::cti_vm_throw(CTI_ARGS)
     ARG_setCallFrame(callFrame);
     void* catchRoutine = handler->nativeCode;
     ASSERT(catchRoutine);
-    CTI_SET_RETURN_ADDRESS(catchRoutine);
+    STUB_SET_RETURN_ADDRESS(catchRoutine);
     return exceptionValue;
 }
 
-#undef CTI_RETURN_ADDRESS
-#undef CTI_SET_RETURN_ADDRESS
-#undef CTI_STACK_HACK
+#undef STUB_RETURN_ADDRESS
+#undef STUB_SET_RETURN_ADDRESS
+#undef BEGIN_STUB_FUNCTION
 #undef CHECK_FOR_EXCEPTION
 #undef CHECK_FOR_EXCEPTION_AT_END
 #undef CHECK_FOR_EXCEPTION_VOID
