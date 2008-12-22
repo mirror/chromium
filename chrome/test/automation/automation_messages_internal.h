@@ -311,15 +311,15 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   // (1=case sensitive, 0=case insensitive). If an error occurs, matches_found
   // will be -1.
   //
-  // NOTE: This message has been deprecated, please use the new message
-  // AutomationMsg_FindRequest below.
+  // NOTE: These two messages have been deprecated, please use the new messages
+  // AutomationMsg_FindRequest and AutomationMsg_FindInPageResponse2 below.
   //
-  IPC_MESSAGE_ROUTED4(AutomationMsg_FindInPageRequest,
+  IPC_MESSAGE_ROUTED4(AutomationMsg_FindInPageRequest,   // DEPRECATED.
                       int, /* tab_handle */
                       std::wstring, /* find_request */
                       int, /* forward */
                       int /* match_case */)
-  IPC_MESSAGE_ROUTED1(AutomationMsg_FindInPageResponse,
+  IPC_MESSAGE_ROUTED1(AutomationMsg_FindInPageResponse,  // DEPRECATED.
                       int /* matches_found */)
 
   // This message sends a inspect element request for a given tab. The response
@@ -600,7 +600,8 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   IPC_MESSAGE_ROUTED2(AutomationMsg_ActionOnSSLBlockingPage, int, bool)
   IPC_MESSAGE_ROUTED1(AutomationMsg_ActionOnSSLBlockingPageResponse, bool)
 
-  // Message to request that a browser window is brought to the front and activated.
+  // Message to request that a browser window is brought to the front and
+  // activated.
   // Request:
   //   - int: handle of the browser window.
   // Response:
@@ -608,8 +609,8 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   IPC_MESSAGE_ROUTED1(AutomationMsg_BringBrowserToFront, int)
   IPC_MESSAGE_ROUTED1(AutomationMsg_BringBrowserToFrontResponse, bool)
 
-  // Message to request whether a certain item is enabled of disabled in the "Page"
-  // menu in the browser window
+  // Message to request whether a certain item is enabled of disabled in the
+  // "Page" menu in the browser window
   //
   // Request:
   //   - int: handle of the browser window.
@@ -641,8 +642,8 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   IPC_MESSAGE_ROUTED1(AutomationMsg_LastActiveBrowserWindowResponse, int)
 
   // This message requests the bounds of a constrained window (relative to its
-  // containing TabContents). On an internal error, the boolean in the result will
-  // be set to false.
+  // containing TabContents). On an internal error, the boolean in the result
+  // will be set to false.
   IPC_MESSAGE_ROUTED1(AutomationMsg_ConstrainedWindowBoundsRequest,
                       int /* tab_handle */)
   IPC_MESSAGE_ROUTED2(AutomationMsg_ConstrainedWindowBoundsResponse,
@@ -733,7 +734,7 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   // This message starts a find within a tab corresponding to the supplied
   // tab handle. The parameter |request| specifies what to search for.
   // If an error occurs, |matches_found| will be -1 (see response message
-  // AutomationMsg_FindInPageResponse).
+  // AutomationMsg_FindInPageResponse2).
   //
   IPC_MESSAGE_ROUTED2(AutomationMsg_FindRequest,
                       int, /* tab_handle */
@@ -802,9 +803,62 @@ IPC_BEGIN_MESSAGES(Automation, 0)
                       bool /* success */)
 
   // Queries whether an app modal dialog is currently being shown. (i.e. a
-  // javascript alert).
+  // javascript alert) and which buttons it contains.
   IPC_MESSAGE_ROUTED0(AutomationMsg_ShowingAppModalDialogRequest)
-  IPC_MESSAGE_ROUTED1(AutomationMsg_ShowingAppModalDialogResponse,
-                      bool /* showing dialog */)
+  IPC_MESSAGE_ROUTED2(AutomationMsg_ShowingAppModalDialogResponse,
+                      bool /* showing dialog */,
+                      int /* view::DelegateDialog::DialogButton */)
+
+  // Returns the ordinal and the number of matches found as a response to
+  // a AutomationMsg_FindRequest.
+  IPC_MESSAGE_ROUTED2(AutomationMsg_FindInPageResponse2,
+                      int /* active_ordinal */,
+                      int /* matches_found */)
+
+  // This message triggers the specified button for the currently showing
+  // modal dialog.
+  IPC_MESSAGE_ROUTED1(AutomationMsg_ClickAppModalDialogButtonRequest,
+                      int /* view::DelegateDialog::DialogButton */)
+  IPC_MESSAGE_ROUTED1(AutomationMsg_ClickAppModalDialogButtonResponse,
+                      bool /* success */)
+
+  // This messages sets a string-value preference.
+  IPC_MESSAGE_ROUTED3(AutomationMsg_SetStringPreferenceRequest,
+                      int /* browser handle */,
+                      std::wstring /* pref name */,
+                      std::wstring /* pref value */)
+  IPC_MESSAGE_ROUTED1(AutomationMsg_SetStringPreferenceResponse,
+                      bool /* success */)
+
+  // This messages gets a boolean-value preference.
+  IPC_MESSAGE_ROUTED2(AutomationMsg_GetBooleanPreferenceRequest,
+                      int /* browser handle */,
+                      std::wstring /* pref name */)
+  IPC_MESSAGE_ROUTED2(AutomationMsg_GetBooleanPreferenceResponse,
+                      bool /* success */,
+                      bool /* pref value */)
+
+  // This messages sets a boolean-value preference.
+  IPC_MESSAGE_ROUTED3(AutomationMsg_SetBooleanPreferenceRequest,
+                      int /* browser handle */,
+                      std::wstring /* pref name */,
+                      bool /* pref value */)
+  IPC_MESSAGE_ROUTED1(AutomationMsg_SetBooleanPreferenceResponse,
+                      bool /* success */)
+
+  // Queries the current used encoding name of the page in the specified
+  // web content tab.
+  IPC_MESSAGE_ROUTED1(AutomationMsg_GetPageCurrentEncodingRequest,
+                      int /* tab handle */)
+  IPC_MESSAGE_ROUTED1(AutomationMsg_GetPageCurrentEncodingResponse,
+                      std::wstring /* current used encoding name */)
+
+  // Uses the specified encoding to override the encoding of the page in the
+  // specified web content tab.
+  IPC_MESSAGE_ROUTED2(AutomationMsg_OverrideEncodingRequest,
+                      int /* tab handle */,
+                      std::wstring /* overrided encoding name */)
+  IPC_MESSAGE_ROUTED1(AutomationMsg_OverrideEncodingResponse,
+                      bool /* success */)
 
 IPC_END_MESSAGES(Automation)

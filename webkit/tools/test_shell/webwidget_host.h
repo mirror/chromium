@@ -7,9 +7,9 @@
 
 #include "base/basictypes.h"
 #include "base/gfx/native_widget_types.h"
-#include "base/gfx/platform_canvas.h"
 #include "base/gfx/rect.h"
 #include "base/scoped_ptr.h"
+#include "skia/ext/platform_canvas.h"
 
 class WebWidget;
 class WebWidgetDelegate;
@@ -18,21 +18,21 @@ namespace gfx {
 class Size;
 }
 
-// This class is a simple ViewHandle-based host for a WebWidget
+// This class is a simple NativeView-based host for a WebWidget
 class WebWidgetHost {
  public:
-  // The new instance is deleted once the associated ViewHandle is destroyed.
+  // The new instance is deleted once the associated NativeView is destroyed.
   // The newly created window should be resized after it is created, using the
   // MoveWindow (or equivalent) function.
-  static WebWidgetHost* Create(gfx::WindowHandle parent_window,
+  static WebWidgetHost* Create(gfx::NativeWindow parent_window,
                                WebWidgetDelegate* delegate);
 
-  static WebWidgetHost* FromWindow(gfx::WindowHandle view);
+  static WebWidgetHost* FromWindow(gfx::NativeWindow view);
 #if defined(OS_MACOSX)
-  static void HandleEvent(gfx::WindowHandle window, NSEvent *event);
+  static void HandleEvent(gfx::NativeWindow window, NSEvent *event);
 #endif
 
-  gfx::ViewHandle window_handle() const { return view_; }
+  gfx::NativeView view_handle() const { return view_; }
   WebWidget* webwidget() const { return webwidget_; }
 
   void DidInvalidateRect(const gfx::Rect& rect);
@@ -42,6 +42,10 @@ class WebWidgetHost {
 #endif
 
   void DiscardBackingStore();
+  // Allow clients to update the paint rect. For example, if we get a gdk
+  // expose or WM_PAINT event, we need to update the paint rect.
+  void UpdatePaintRect(const gfx::Rect& rect);
+  void Paint();
 
  protected:
   WebWidgetHost();
@@ -51,7 +55,6 @@ class WebWidgetHost {
   // Per-class wndproc.  Returns true if the event should be swallowed.
   virtual bool WndProc(UINT message, WPARAM wparam, LPARAM lparam);
 
-  void Paint();
   void Resize(LPARAM lparam);
   void MouseEvent(UINT message, WPARAM wparam, LPARAM lparam);
   void WheelEvent(WPARAM wparam, LPARAM lparam);
@@ -63,13 +66,26 @@ class WebWidgetHost {
 #elif defined(OS_MACOSX)
   // These need to be called from a non-subclass, so they need to be public.
  public:
-  void Paint();
   void Resize(const gfx::Rect& rect);
   void MouseEvent(NSEvent *);
   void WheelEvent(NSEvent *);
   void KeyEvent(NSEvent *);
   void SetFocus(bool enable);
  protected:
+#elif defined(OS_LINUX)
+ public:
+  // ---------------------------------------------------------------------------
+  // This is needed on Linux because the GtkWidget creation is the same between
+  // both web view hosts and web widget hosts. The Windows code manages this by
+  // reusing the WndProc function (static, above). However, GTK doesn't use a
+  // single big callback function like that so we have a static function that
+  // sets up a GtkWidget correctly.
+  //   parent: a GtkBox to pack the new widget at the end of
+  //   host: a pointer to a WebWidgetHost (or subclass thereof)
+  // ---------------------------------------------------------------------------
+  static gfx::NativeWindow CreateWindow(gfx::NativeWindow parent, void* host);
+  void WindowDestroyed();
+  void Resize(const gfx::Size& size);
 #endif
 
   void TrackMouseLeave(bool enable);
@@ -82,9 +98,9 @@ class WebWidgetHost {
 #endif
   }
 
-  gfx::ViewHandle view_;
+  gfx::NativeView view_;
   WebWidget* webwidget_;
-  scoped_ptr<gfx::PlatformCanvas> canvas_;
+  scoped_ptr<skia::PlatformCanvas> canvas_;
 
   // specifies the portion of the webwidget that needs painting
   gfx::Rect paint_rect_;

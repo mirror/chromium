@@ -7,18 +7,19 @@
 #include "base/file_util.h"
 #include "base/message_loop.h"
 #include "base/string_util.h"
+#include "base/time.h"
 #include "googleurl/src/gurl.h"
 #include "net/base/net_util.h"
-#include "net/base/wininet_util.h"
 #include "net/url_request/url_request.h"
 
-using std::string;
-using std::wstring;
+#if defined(OS_POSIX)
+#include <sys/stat.h>
+#endif
 
-using net::WinInetUtil;
+using std::string;
 
 URLRequestFileDirJob::URLRequestFileDirJob(URLRequest* request,
-                                           const wstring& dir_path)
+                                           const FilePath& dir_path)
     : URLRequestJob(request),
       dir_path_(dir_path),
       canceled_(false),
@@ -97,24 +98,41 @@ bool URLRequestFileDirJob::GetCharset(string* charset) {
   return true;
 }
 
-void URLRequestFileDirJob::OnListFile(const WIN32_FIND_DATA& data) {
-  FILETIME local_time;
-  FileTimeToLocalFileTime(&data.ftLastWriteTime, &local_time);
-  int64 size = (static_cast<unsigned __int64>(data.nFileSizeHigh) << 32) |
-      data.nFileSizeLow;
-
+void URLRequestFileDirJob::OnListFile(
+    const file_util::FileEnumerator::FindInfo& data) {
   // We wait to write out the header until we get the first file, so that we
   // can catch errors from DirectoryLister and show an error page.
   if (!wrote_header_) {
-    data_.append(net::GetDirectoryListingHeader(WideToUTF8(dir_path_)));
+#if defined(OS_WIN)
+    const std::string& title = WideToUTF8(dir_path_.value());
+#elif defined(OS_POSIX)
+    const std::string& title = dir_path_.value();
+#endif
+    data_.append(net::GetDirectoryListingHeader(title));
     wrote_header_ = true;
   }
 
+#if defined(OS_WIN)
+  FILETIME local_time;
+  ::FileTimeToLocalFileTime(&data.ftLastWriteTime, &local_time);
+  int64 size = (static_cast<unsigned __int64>(data.nFileSizeHigh) << 32) |
+      data.nFileSizeLow;
+
   data_.append(net::GetDirectoryListingEntry(
-      WideToUTF8(data.cFileName), data.dwFileAttributes, size, &local_time));
+      WideToUTF8(data.cFileName),
+      (data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) ? true : false,
+      size,
+      base::Time::FromFileTime(local_time)));
+
+#elif defined(OS_POSIX)
+  data_.append(net::GetDirectoryListingEntry(
+      data.filename.c_str(),
+      S_ISDIR(data.stat.st_mode),
+      data.stat.st_size,
+      base::Time::FromTimeT(data.stat.st_mtime)));
+#endif
 
   // TODO(darin): coalesce more?
-
   CompleteRead();
 }
 
@@ -123,8 +141,7 @@ void URLRequestFileDirJob::OnListDone(int error) {
 
   if (error) {
     read_pending_ = false;
-    NotifyDone(URLRequestStatus(URLRequestStatus::FAILED,
-                                WinInetUtil::OSErrorToNetError(error)));
+    NotifyDone(URLRequestStatus(URLRequestStatus::FAILED, error));
   } else if (canceled_) {
     read_pending_ = false;
     NotifyCanceled();
@@ -176,8 +193,30 @@ void URLRequestFileDirJob::CompleteRead() {
       NotifyReadComplete(bytes_read);
     } else {
       NOTREACHED();
-      NotifyDone(URLRequestStatus(URLRequestStatus::FAILED, 0));  // TODO: Better error code.
+      // TODO: Better error code.
+      NotifyDone(URLRequestStatus(URLRequestStatus::FAILED, 0));
     }
   }
+}
+
+bool URLRequestFileDirJob::IsRedirectResponse(
+    GURL* location, int* http_status_code) {
+  // If the URL did not have a trailing slash, treat the response as a redirect
+  // to the URL with a trailing slash appended.
+  std::string path = request_->url().path();
+  if (path.empty() || (path[path.size() - 1] != '/')) {
+    // This happens when we discovered the file is a directory, so needs a
+    // slash at the end of the path.
+    std::string new_path = path;
+    new_path.push_back('/');
+    GURL::Replacements replacements;
+    replacements.SetPathStr(new_path);
+
+    *location = request_->url().ReplaceComponents(replacements);
+    *http_status_code = 301;  // simulate a permanent redirect
+    return true;
+  }
+
+  return false;
 }
 

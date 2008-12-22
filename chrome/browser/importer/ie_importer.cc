@@ -4,10 +4,12 @@
 
 #include "chrome/browser/importer/ie_importer.h"
 
+#include <atlbase.h>
 #include <intshcut.h>
 #include <pstore.h>
 #include <shlobj.h>
 #include <urlhist.h>
+
 #include <algorithm>
 
 #include "base/file_util.h"
@@ -24,6 +26,8 @@
 #include "googleurl/src/gurl.h"
 
 #include "generated_resources.h"
+
+using base::Time;
 
 namespace {
 
@@ -54,6 +58,7 @@ const GUID IEImporter::kUnittestGUID = { 0xa79029d6, 0x753e, 0x4e27,
 void IEImporter::StartImport(ProfileInfo profile_info,
                              uint16 items,
                              ProfileWriter* writer,
+                             MessageLoop* delagate_loop,
                              ImporterHost* host) {
   writer_ = writer;
   source_path_ = profile_info.source_path;
@@ -466,12 +471,13 @@ void IEImporter::ParseFavoritesFolder(const FavoritesInfo& info,
                                       BookmarkVector* bookmarks) {
   std::wstring ie_folder = l10n_util::GetString(IDS_BOOKMARK_GROUP_FROM_IE);
   BookmarkVector toolbar_bookmarks;
-  std::wstring file;
+  FilePath file;
   std::vector<std::wstring> file_list;
-  file_util::FileEnumerator file_enumerator(info.path, true,
+  file_util::FileEnumerator file_enumerator(
+      FilePath::FromWStringHack(info.path), true,
       file_util::FileEnumerator::FILES);
-  while (!(file = file_enumerator.Next()).empty() && !cancelled())
-    file_list.push_back(file);
+  while (!(file = file_enumerator.Next()).value().empty() && !cancelled())
+    file_list.push_back(file.ToWStringHack());
 
   // Keep the bookmarks in alphabetical order.
   std::sort(file_list.begin(), file_list.end());
@@ -498,7 +504,7 @@ void IEImporter::ParseFavoritesFolder(const FavoritesInfo& info,
     entry.url = url;
     entry.creation_time = GetFileCreationTime(*it);
     if (!relative_path.empty())
-      SplitString(relative_path, file_util::kPathSeparator, &entry.path);
+      file_util::PathComponents(relative_path, &entry.path);
 
     // Flatten the bookmarks in Link folder onto bookmark toolbar. Otherwise,
     // put it into "Other bookmarks".

@@ -10,24 +10,41 @@
 
 #include "base/basictypes.h"
 
-#ifdef OS_WIN
+#if defined(OS_WIN)
 #include <windows.h>
 #include <tlhelp32.h>
+#elif defined(OS_LINUX)
+#include <dirent.h>
+#include <limits.h>
+#include <sys/types.h>
 #endif
 
 #include <string>
 
+#include "base/command_line.h"
 #include "base/process.h"
 
 #if defined(OS_WIN)
 typedef PROCESSENTRY32 ProcessEntry;
 typedef IO_COUNTERS IoCounters;
 #elif defined(OS_POSIX)
-typedef int ProcessEntry;
-typedef int IoCounters;  //TODO(awalker): replace with struct when available
+struct ProcessEntry {
+  int pid;
+  int ppid;
+  char szExeFile[NAME_MAX+1];
+};
+
+struct IoCounters {
+  unsigned long long ReadOperationCount;
+  unsigned long long WriteOperationCount;
+  unsigned long long OtherOperationCount;
+  unsigned long long ReadTransferCount;
+  unsigned long long WriteTransferCount;
+  unsigned long long OtherTransferCount;
+};
 #endif
 
-namespace process_util {
+namespace base {
 
 // A minimalistic but hopefully cross-platform set of exit codes.
 // Do not change the enumeration values or you will break third-party
@@ -49,6 +66,13 @@ ProcessHandle GetCurrentProcessHandle();
 // Win XP SP1 as well.
 int GetProcId(ProcessHandle process);
 
+#if defined(OS_POSIX)
+// Returns the maximum number of files that a process can have open.
+// Returns 0 on error.
+int GetMaxFilesOpenInProcess();
+#endif
+
+#if defined(OS_WIN)
 // Runs the given application name with the given command line. Normally, the
 // first command line argument should be the path to the process, and don't
 // forget to quote it.
@@ -64,6 +88,29 @@ int GetProcId(ProcessHandle process);
 // NOTE: In this case, the caller is responsible for closing the handle so
 //       that it doesn't leak!
 bool LaunchApp(const std::wstring& cmdline,
+               bool wait, bool start_hidden, ProcessHandle* process_handle);
+#elif defined(OS_POSIX)
+// Runs the application specified in argv[0] with the command line argv.
+// Both the elements of argv and argv itself must be terminated with a null
+// byte.
+// Before launching all FDs open in the parent process will be marked as
+// close-on-exec.  |fds_to_remap| defines a mapping of src fd->dest fd to
+// propagate FDs into the child process.
+//
+// As above, if wait is true, execute synchronously. The pid will be stored
+// in process_handle if that pointer is non-null.
+//
+// Note that the first argument in argv must point to the filename,
+// and must be fully specified.
+typedef std::vector<std::pair<int, int> > file_handle_mapping_vector;
+bool LaunchApp(const std::vector<std::string>& argv,
+               const file_handle_mapping_vector& fds_to_remap,
+               bool wait, ProcessHandle* process_handle);
+#endif
+
+// Execute the application specified by cl. This function delegates to one
+// of the above two platform-specific functions.
+bool LaunchApp(const CommandLine& cl,
                bool wait, bool start_hidden, ProcessHandle* process_handle);
 
 // Used to filter processes by process ID.
@@ -108,6 +155,11 @@ bool WaitForProcessesToExit(const std::wstring& executable_name,
                             int wait_milliseconds,
                             const ProcessFilter* filter);
 
+// Wait for a single process to exit. Return true if it exited cleanly within
+// the given time limit.
+bool WaitForSingleProcess(ProcessHandle handle,
+                          int wait_milliseconds);
+
 // Waits a certain amount of time (can be 0) for all the processes with a given
 // executable name to exit, then kills off any of them that are still around.
 // If filter is non-null, then only processes selected by the filter are waited
@@ -149,10 +201,16 @@ class NamedProcessIterator {
   void InitProcessEntry(ProcessEntry* entry);
 
   std::wstring executable_name_;
-#ifdef OS_WIN
+
+#if defined(OS_WIN)
   HANDLE snapshot_;
-#endif
   bool started_iteration_;
+#elif defined(OS_LINUX)
+  DIR *procfs_dir_;
+#elif defined(OS_MACOSX)
+  // probably kvm_t *kvmd_;
+#endif
+
   ProcessEntry entry_;
   const ProcessFilter* filter_;
 
@@ -275,6 +333,6 @@ void EnableTerminationOnHeapCorruption();
 // the current process's scheduling priority to a high priority.
 void RaiseProcessToHighPriority();
 
-}  // namespace process_util
+}  // namespace base
 
 #endif  // BASE_PROCESS_UTIL_H_

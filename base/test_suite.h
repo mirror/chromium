@@ -14,11 +14,14 @@
 #include "base/debug_on_start.h"
 #include "base/icu_util.h"
 #include "base/logging.h"
+#include "base/multiprocess_test.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "testing/multiprocess_func_list.h"
 
 #if defined(OS_WIN)
 #include <windows.h>
-#include "base/multiprocess_test.h"
+#elif defined(OS_LINUX)
+#include <gtk/gtk.h>
 #endif
 
 class TestSuite {
@@ -26,31 +29,23 @@ class TestSuite {
   TestSuite(int argc, char** argv) {
     CommandLine::SetArgcArgv(argc, argv);
     testing::InitGoogleTest(&argc, argv);
+#if defined(OS_LINUX)
+    gtk_init_check(&argc, &argv);
+#endif
   }
 
   virtual ~TestSuite() {}
 
   int Run() {
     Initialize();
-
-#if defined(OS_WIN)
-    // Check to see if we are being run as a client process.
     std::wstring client_func = CommandLine().GetSwitchValue(kRunClientProcess);
+    // Check to see if we are being run as a client process.
     if (!client_func.empty()) {
       // Convert our function name to a usable string for GetProcAddress.
       std::string func_name(client_func.begin(), client_func.end());
 
-      // Get our module handle and search for an exported function
-      // which we can use as our client main.
-      MultiProcessTest::ChildFunctionPtr func =
-          reinterpret_cast<MultiProcessTest::ChildFunctionPtr>(
-              GetProcAddress(GetModuleHandle(NULL), func_name.c_str()));
-      if (func)
-        return func();
-      return -1;
+      return multi_process_function_list::InvokeChildProcessTest(func_name);
     }
-#endif
-
     int result = RUN_ALL_TESTS();
 
     Shutdown();

@@ -112,6 +112,9 @@ const wchar_t kTestSandbox[]                   = L"test-sandbox";
 // for all of its state.
 const wchar_t kUserDataDir[]                   = L"user-data-dir";
 
+// Specifies the path to the user data folder for the parent profile.
+const wchar_t kParentProfile[]                = L"parent-profile";
+
 // Specifies that the associated value should be launched in "application" mode.
 const wchar_t kApp[]                           = L"app";
 
@@ -312,8 +315,8 @@ const wchar_t kGearsPluginPathOverride[] = L"gears-plugin-path";
 // Switch to load Gears in the renderer process.
 const wchar_t kGearsInRenderer[] = L"gears-in-renderer";
 
-// Enable new HTTP stack.
-const wchar_t kUseNewHttp[] = L"new-http";
+// Enable winhttp HTTP stack.
+const wchar_t kUseWinHttp[] = L"winhttp";
 
 // Enable the fastback page cache.
 const wchar_t kEnableFastback[] = L"enable-fastback";
@@ -333,17 +336,21 @@ const wchar_t kSdchFilter[] = L"enable-sdch";
 // Enable Greasemonkey script support.
 const wchar_t kEnableGreasemonkey[] = L"enable-greasemonkey";
 
+// Enable extensions.
+const wchar_t kEnableExtensions[] = L"enable-extensions";
+
 // Causes the browser to launch directly in incognito mode.
 const wchar_t kIncognito[] = L"incognito";
 
-// Turn on an experimental implementation of SafeBrowsing which improves
-// performance during updates by avoiding the enormous IO from SQLite
-// operations.
-const wchar_t kUseNewSafeBrowsing[] = L"new-safe-browsing";
+// Turn on the old implementation of SafeBrowsing which may have performance
+// problems on some computers during updates.
+const wchar_t kUseOldSafeBrowsing[] = L"old-safe-browsing";
 
 // Turns on the accessibility in the renderer.  Off by default until 
 // http://b/issue?id=1432077 is fixed.
 const wchar_t kEnableRendererAccessibility[] = L"enable-renderer-accessibility";
 
-}  // namespace switches
+// Enable HTML5 Video/Audio tag support
+const wchar_t kEnableVideo[] = L"enable-video";
 
+}  // namespace switches

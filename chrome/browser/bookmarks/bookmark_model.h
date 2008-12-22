@@ -5,9 +5,13 @@
 #ifndef CHROME_BROWSER_BOOKMARKS_BOOKMARK_BAR_MODEL_H_
 #define CHROME_BROWSER_BOOKMARKS_BOOKMARK_BAR_MODEL_H_
 
+#include "build/build_config.h"
+
 #include "base/lock.h"
 #include "base/observer_list.h"
+#if defined(OS_WIN)
 #include "base/scoped_handle.h"
+#endif  // defined(OS_WIN)
 #include "chrome/browser/bookmarks/bookmark_service.h"
 #include "chrome/browser/bookmarks/bookmark_storage.h"
 #include "chrome/browser/cancelable_request.h"
@@ -69,11 +73,11 @@ class BookmarkNode : public views::TreeNode<BookmarkNode> {
   }
 
   // Returns the time the bookmark/group was added.
-  Time date_added() const { return date_added_; }
+  base::Time date_added() const { return date_added_; }
 
   // Returns the last time the group was modified. This is only maintained
   // for folders (including the bookmark and other folder).
-  Time date_group_modified() const { return date_group_modified_; }
+  base::Time date_group_modified() const { return date_group_modified_; }
 
   // Convenience for testing if this nodes represents a group. A group is
   // a node whose type is not URL.
@@ -114,10 +118,10 @@ class BookmarkNode : public views::TreeNode<BookmarkNode> {
   history::StarredEntry::Type type_;
 
   // Date we were created.
-  Time date_added_;
+  base::Time date_added_;
 
   // Time last modified. Only used for groups.
-  Time date_group_modified_;
+  base::Time date_group_modified_;
 
   DISALLOW_COPY_AND_ASSIGN(BookmarkNode);
 };
@@ -186,7 +190,7 @@ class BookmarkModel : public NotificationObserver, public BookmarkService {
  public:
   explicit BookmarkModel(Profile* profile);
   virtual ~BookmarkModel();
-  
+
   // Loads the bookmarks. This is called by Profile upon creation of the
   // BookmarkModel. You need not invoke this directly.
   void Load();
@@ -204,33 +208,6 @@ class BookmarkModel : public NotificationObserver, public BookmarkService {
   // Returns the parent the last node was added to. This never returns NULL
   // (as long as the model is loaded).
   BookmarkNode* GetParentForNewNodes();
-
-  // Returns a vector containing up to |max_count| of the most recently
-  // modified groups. This never returns an empty vector.
-  std::vector<BookmarkNode*> GetMostRecentlyModifiedGroups(size_t max_count);
-
-  // Returns the most recently added bookmarks.
-  void GetMostRecentlyAddedEntries(size_t count,
-                                   std::vector<BookmarkNode*>* nodes);
-
-  // Used by GetBookmarksMatchingText to return a matching node and the location
-  // of the match in the title.
-  struct TitleMatch {
-    BookmarkNode* node;
-
-    // Location of the matching words in the title of the node.
-    Snippet::MatchPositions match_positions;
-  };
-
-  // Returns the bookmarks whose title contains text. At most |max_count|
-  // matches are returned in |matches|.
-  void GetBookmarksMatchingText(const std::wstring& text,
-                                size_t max_count,
-                                std::vector<TitleMatch>* matches);
-
-  // Returns true if the specified bookmark's title matches the specified
-  // text.
-  bool DoesBookmarkMatchText(const std::wstring& text, BookmarkNode* node);
 
   void AddObserver(BookmarkModelObserver* observer) {
     observers_.AddObserver(observer);
@@ -291,7 +268,7 @@ class BookmarkModel : public NotificationObserver, public BookmarkService {
                                        int index,
                                        const std::wstring& title,
                                        const GURL& url,
-                                       const Time& creation_time);
+                                       const base::Time& creation_time);
 
   // This is the convenience that makes sure the url is starred or not starred.
   // If is_starred is false, all bookmarks for URL are removed. If is_starred is
@@ -305,6 +282,13 @@ class BookmarkModel : public NotificationObserver, public BookmarkService {
   // combobox of most recently modified groups.
   void ResetDateGroupModified(BookmarkNode* node);
 
+  Profile* profile() const { return profile_; }
+
+  // Sets the store to NULL, making it so the BookmarkModel does not persist
+  // any changes to disk. This is only useful during testing to speed up
+  // testing.
+  void ClearStore();
+
  private:
   // Used to order BookmarkNodes by URL.
   class NodeURLComparator {
@@ -313,6 +297,10 @@ class BookmarkModel : public NotificationObserver, public BookmarkService {
       return n1->GetURL() < n2->GetURL();
     }
   };
+
+  // Implementation of IsBookmarked. Before calling this the caller must
+  // obtain a lock on url_lock_.
+  bool IsBookmarkedNoLock(const GURL& url);
 
   // Overriden to notify the observer the favicon has been loaded.
   void FavIconLoaded(BookmarkNode* node);
@@ -366,7 +354,7 @@ class BookmarkModel : public NotificationObserver, public BookmarkService {
   bool IsValidIndex(BookmarkNode* parent, int index, bool allow_end);
 
   // Sets the date modified time of the specified node.
-  void SetDateGroupModified(BookmarkNode* parent, const Time time);
+  void SetDateGroupModified(BookmarkNode* parent, const base::Time time);
 
   // Creates the bookmark bar/other nodes. These call into
   // CreateRootNodeFromStarredEntry.
@@ -393,12 +381,6 @@ class BookmarkModel : public NotificationObserver, public BookmarkService {
 
   // If we're waiting on a favicon for node, the load request is canceled.
   void CancelPendingFavIconLoadRequests(BookmarkNode* node);
-
-  // Returns up to count of the most recently modified groups. This may not
-  // add anything.
-  void GetMostRecentlyModifiedGroupNodes(BookmarkNode* parent,
-                                         size_t count,
-                                         std::vector<BookmarkNode*>* nodes);
 
   // NotificationObserver.
   virtual void Observe(NotificationType type,
@@ -429,7 +411,7 @@ class BookmarkModel : public NotificationObserver, public BookmarkService {
   Lock url_lock_;
 
   // Used for loading favicons and the empty history request.
-  CancelableRequestConsumerT<BookmarkNode*, NULL> load_consumer_;
+  CancelableRequestConsumerTSimple<BookmarkNode*> load_consumer_;
 
   // Reads/writes bookmarks to disk.
   scoped_refptr<BookmarkStorage> store_;
@@ -439,8 +421,12 @@ class BookmarkModel : public NotificationObserver, public BookmarkService {
   // doesn't exist and the history service hasn't finished loading.
   bool waiting_for_history_load_;
 
+#if defined(OS_WIN)
+  // TODO(port): Implement for other platforms.
+
   // Handle to event signaled when loading is done.
   ScopedHandle loaded_signal_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(BookmarkModel);
 };

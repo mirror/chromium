@@ -13,6 +13,7 @@
 #include "chrome/browser/toolbar_model.h"
 #include "chrome/browser/web_app.h"
 #include "chrome/browser/web_contents.h"
+#include "chrome/browser/web_contents_view.h"
 #include "chrome/browser/window_sizer.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/gfx/chrome_canvas.h"
@@ -34,6 +35,8 @@
 
 #include "chromium_strings.h"
 #include "generated_resources.h"
+
+using base::TimeDelta;
 
 namespace views {
 class ClientView;
@@ -204,6 +207,7 @@ class ConstrainedWindowNonClientView
   virtual int NonClientHitTest(const gfx::Point& point);
   virtual void GetWindowMask(const gfx::Size& size, gfx::Path* window_mask);
   virtual void EnableClose(bool enable);
+  virtual void ResetWindowControls();
 
   // Overridden from views::View:
   virtual void Paint(ChromeCanvas* canvas);
@@ -410,6 +414,10 @@ void ConstrainedWindowNonClientView::EnableClose(bool enable) {
   close_button_->SetEnabled(enable);
 }
 
+void ConstrainedWindowNonClientView::ResetWindowControls() {
+  // We have no window controls to reset.
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // ConstrainedWindowNonClientView, views::View implementation:
 
@@ -457,10 +465,10 @@ gfx::Size ConstrainedWindowNonClientView::GetPreferredSize() {
 void ConstrainedWindowNonClientView::ViewHierarchyChanged(bool is_add,
                                                           View *parent,
                                                           View *child) {
-  if (is_add && GetContainer()) {
+  if (is_add && GetWidget()) {
     // Add our Client View as we are added to the Container so that if we are
     // subsequently resized all the parent-child relationships are established.
-    if (is_add && GetContainer() && child == this)
+    if (is_add && GetWidget() && child == this)
       AddChildView(container_->client_view());
   }
 }
@@ -601,8 +609,8 @@ void ConstrainedWindowImpl::ActivateConstrainedWindow() {
     focus_manager->StoreFocusedView();
 
     // Give our window the focus so we get keyboard messages.
-        ::SetFocus(GetHWND());
-    }
+    ::SetFocus(GetHWND());
+  }
 }
 
 void ConstrainedWindowImpl::CloseConstrainedWindow() {
@@ -628,7 +636,7 @@ std::wstring ConstrainedWindowImpl::GetWindowTitle() const {
   std::wstring display_title;
   if (window_delegate())
     display_title = window_delegate()->GetWindowTitle();
-    else
+  else
     display_title = L"Untitled";
 
   return display_title;
@@ -669,7 +677,7 @@ void ConstrainedWindowImpl::UpdateUI(unsigned int changed_flags) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// ConstrainedWindowImpl, views::ContainerWin overrides:
+// ConstrainedWindowImpl, views::WidgetWin overrides:
 
 void ConstrainedWindowImpl::OnDestroy() {
   // We do this here, rather than |Close|, since the window may be destroyed in
@@ -701,19 +709,7 @@ void ConstrainedWindowImpl::OnFinalMessage(HWND window) {
   // list.
   owner_->WillClose(this);
 
-  ContainerWin::OnFinalMessage(window);
-}
-
-void ConstrainedWindowImpl::OnGetMinMaxInfo(LPMINMAXINFO mm_info) {
-  // Override this function to set the maximize area as the client area of the
-  // containing window.
-  CRect parent_rect;
-  ::GetClientRect(GetParent(), &parent_rect);
-
-  mm_info->ptMaxSize.x = parent_rect.Width();
-  mm_info->ptMaxSize.y = parent_rect.Height();
-  mm_info->ptMaxPosition.x = parent_rect.left;
-  mm_info->ptMaxPosition.y = parent_rect.top;
+  WidgetWin::OnFinalMessage(window);
 }
 
 LRESULT ConstrainedWindowImpl::OnMouseActivate(HWND window,

@@ -14,23 +14,26 @@
 #include "chrome/browser/views/download_shelf_view.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/text_elider.h"
+#include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/container.h"
 #include "chrome/views/native_button.h"
 #include "chrome/views/root_view.h"
+#include "chrome/views/widget.h"
 
 #include "generated_resources.h"
+
+using base::TimeDelta;
 
 // TODO(paulg): These may need to be adjusted when download progress
 //              animation is added, and also possibly to take into account
 //              different screen resolutions.
-static const int kTextWidth = 140;           // Pixels
-static const int kDangerousTextWidth = 200;  // Pixels
-static const int kHorizontalTextPadding = 2; // Pixels
-static const int kVerticalPadding = 3;       // Pixels
-static const int kVerticalTextSpacer = 2;    // Pixels
-static const int kVerticalTextPadding = 2;   // Pixels
+static const int kTextWidth = 140;            // Pixels
+static const int kDangerousTextWidth = 200;   // Pixels
+static const int kHorizontalTextPadding = 2;  // Pixels
+static const int kVerticalPadding = 3;        // Pixels
+static const int kVerticalTextSpacer = 2;     // Pixels
+static const int kVerticalTextPadding = 2;    // Pixels
 
 // The maximum number of characters we show in a file name when displaying the
 // dangerous download message.
@@ -584,7 +587,6 @@ gfx::Size DownloadItemView::GetPreferredSize() {
     width += warning_icon_->width() + kLabelPadding;
     width += dangerous_download_label_->width() + kLabelPadding;
     gfx::Size button_size = GetButtonSize();
-
     // Make sure the button fits.
     height = std::max<int>(height, 2 * kVerticalPadding + button_size.height());
     // Then we make sure the warning icon fits.
@@ -657,7 +659,7 @@ bool DownloadItemView::OnMousePressed(const views::MouseEvent& event) {
 
     views::View::ConvertPointToScreen(this, &point);
     download_util::DownloadShelfContextMenu menu(download_,
-                                                 GetContainer()->GetHWND(),
+                                                 GetWidget()->GetHWND(),
                                                  model_.get(),
                                                  point.ToPOINT());
     drop_down_pressed_ = false;

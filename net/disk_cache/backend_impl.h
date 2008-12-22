@@ -7,10 +7,10 @@
 #ifndef NET_DISK_CACHE_BACKEND_IMPL_H__
 #define NET_DISK_CACHE_BACKEND_IMPL_H__
 
-#include "base/compiler_specific.h"
 #include "base/timer.h"
 #include "net/disk_cache/block_files.h"
 #include "net/disk_cache/disk_cache.h"
+#include "net/disk_cache/eviction.h"
 #include "net/disk_cache/rankings.h"
 #include "net/disk_cache/stats.h"
 #include "net/disk_cache/trace.h"
@@ -20,16 +20,15 @@ namespace disk_cache {
 // This class implements the Backend interface. An object of this
 // class handles the operations of the cache for a particular profile.
 class BackendImpl : public Backend {
+  friend class Eviction;
  public:
   explicit BackendImpl(const std::wstring& path)
-      : path_(path), block_files_(path), mask_(0), max_size_(0),
-        init_(false), restarted_(false), unit_test_(false),
-        ALLOW_THIS_IN_INITIALIZER_LIST(factory_(this)) {}
+      : path_(path), block_files_(path), mask_(0), max_size_(0), init_(false),
+        restarted_(false), unit_test_(false), read_only_(false) {}
   // mask can be used to limit the usable size of the hash table, for testing.
   BackendImpl(const std::wstring& path, uint32 mask)
       : path_(path), block_files_(path), mask_(mask), max_size_(0),
-        init_(false), restarted_(false), unit_test_(false),
-        ALLOW_THIS_IN_INITIALIZER_LIST(factory_(this)) {}
+        init_(false), restarted_(false), unit_test_(false), read_only_(false) {}
   ~BackendImpl();
 
   // Performs general initialization for this current instance of the cache.
@@ -41,9 +40,9 @@ class BackendImpl : public Backend {
   virtual bool CreateEntry(const std::string& key, Entry** entry);
   virtual bool DoomEntry(const std::string& key);
   virtual bool DoomAllEntries();
-  virtual bool DoomEntriesBetween(const Time initial_time,
-                                  const Time end_time);
-  virtual bool DoomEntriesSince(const Time initial_time);
+  virtual bool DoomEntriesBetween(const base::Time initial_time,
+                                  const base::Time end_time);
+  virtual bool DoomEntriesSince(const base::Time initial_time);
   virtual bool OpenNextEntry(void** iter, Entry** next_entry);
   virtual void EndEnumeration(void** iter);
   virtual void GetStats(StatsItems* stats);
@@ -68,8 +67,11 @@ class BackendImpl : public Backend {
   // the related storage in addition of releasing the related block.
   void DeleteBlock(Addr block_address, bool deep);
 
+  // Retrieves a pointer to the lru-related data.
+  LruData* GetLruData();
+
   // Updates the ranking information for an entry.
-  void UpdateRank(CacheRankingsBlock* node, bool modified);
+  void UpdateRank(EntryImpl* entry, bool modified);
 
   // A node was recovered from a crash, it may not be on the index, so this
   // method checks it and takes the appropriate action.
@@ -96,6 +98,9 @@ class BackendImpl : public Backend {
   // Reports a critical error (and disables the cache).
   void CriticalError(int error);
 
+  // Reports an uncommon, recoverable error.
+  void ReportError(int error);
+
   // Called when an interesting event should be logged (counted).
   void OnEvent(Stats::Counters an_event);
 
@@ -109,12 +114,18 @@ class BackendImpl : public Backend {
   // Sets internal parameters to enable unit testing mode.
   void SetUnitTestMode();
 
+  // Sets internal parameters to enable upgrade mode (for internal tools).
+  void SetUpgradeMode();
+
   // Clears the counter of references to test handling of corruptions.
   void ClearRefCountForTest();
 
   // Peforms a simple self-check, and returns the number of dirty items
   // or an error code (negative value).
   int SelfCheck();
+
+  // Same bahavior as OpenNextEntry but walks the list from back to front.
+  bool OpenPrevEntry(void** iter, Entry** prev_entry);
 
  private:
   // Creates a new backing file for the cache index.
@@ -124,6 +135,7 @@ class BackendImpl : public Backend {
 
   // Deletes the cache and starts again.
   void RestartCache();
+  void PrepareForRestart();
 
   // Creates a new entry object and checks to see if it is dirty. Returns zero
   // on success, or a disk_cache error on failure.
@@ -135,13 +147,11 @@ class BackendImpl : public Backend {
   EntryImpl* MatchEntry(const std::string& key, uint32 hash,
                          bool find_parent);
 
+  // Opens the next or previous entry on a cache iteration.
+  bool OpenFollowingEntry(bool forward, void** iter, Entry** next_entry);
+
   void DestroyInvalidEntry(Addr address, EntryImpl* entry);
 
-  // Deletes entries from the cache until the current size is below the limit.
-  // If empty is true, the whole cache will be trimmed, regardless of being in
-  // use.
-  void TrimCache(bool empty);
-  
   // Handles the used storage count.
   void AddStorageSize(int32 bytes);
   void SubstractStorageSize(int32 bytes);
@@ -169,18 +179,19 @@ class BackendImpl : public Backend {
   Rankings rankings_;  // Rankings to be able to trim the cache.
   uint32 mask_;  // Binary mask to map a hash to the hash table.
   int32 max_size_;  // Maximum data size for this instance.
+  Eviction eviction_;  // Handler of the eviction algorithm.
   int num_refs_;  // Number of referenced cache entries.
   int max_refs_;  // Max number of eferenced cache entries.
   int num_pending_io_;  // Number of pending IO operations;
   bool init_;  // controls the initialization of the system.
   bool restarted_;
   bool unit_test_;
+  bool read_only_;  // Prevents updates of the rankings data (used by tools).
   bool disabled_;
 
   Stats stats_;  // Usage statistcs.
   base::RepeatingTimer<BackendImpl> timer_;  // Usage timer.
   TraceObject trace_object_;  // Inits and destroys internal tracing.
-  ScopedRunnableMethodFactory<BackendImpl> factory_;
 
   DISALLOW_EVIL_CONSTRUCTORS(BackendImpl);
 };

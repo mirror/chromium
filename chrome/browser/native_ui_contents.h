@@ -8,14 +8,15 @@
 #include "chrome/browser/page_state.h"
 #include "chrome/browser/tab_contents.h"
 #include "chrome/views/background.h"
-#include "chrome/views/container_win.h"
 #include "chrome/views/link.h"
 #include "chrome/views/native_button.h"
 #include "chrome/views/text_field.h"
+#include "chrome/views/widget_win.h"
 
 namespace views {
 class CheckBox;
 class FocusTraversable;
+class ImageView;
 class ScrollView;
 class Throbber;
 }
@@ -33,13 +34,13 @@ class NativeUI;
 //
 ////////////////////////////////////////////////////////////////////////////////
 class NativeUIContents : public TabContents,
-                         public views::ContainerWin {
+                         public views::WidgetWin {
  public:
   explicit NativeUIContents(Profile* profile);
 
-  virtual void CreateView(HWND parent_hwnd, const gfx::Rect& initial_bounds);
+  virtual void CreateView();
   virtual HWND GetContainerHWND() const { return GetHWND(); }
-  virtual void GetContainerBounds(gfx::Rect *out) const;
+  virtual void GetContainerBounds(gfx::Rect* out) const;
 
   // Sets the page state. NativeUIContents takes ownership of the supplied
   // PageState. Use a value of NULL to set the state to empty.
@@ -73,7 +74,7 @@ class NativeUIContents : public TabContents,
       views::View** focus_traversable_view);
   virtual views::RootView* GetContentsRootView() { return GetRootView(); }
 
-  // Return the scheme used. We currently use nativeui:
+  // Return the scheme used. We currently use chrome-nativeui:
   static std::string GetScheme();
 
   // Register a NativeUIFactory for a given path.

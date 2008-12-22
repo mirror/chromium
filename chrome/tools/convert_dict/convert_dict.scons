@@ -1,0 +1,46 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+Import('env')
+
+env = env.Clone()
+
+env.ApplySConscript([
+    '$BASE_DIR/using_base.scons',
+#    '$BASE_DIR/gfx/using_base_gfx.scons',
+#    '$BREAKPAD_DIR/using_breakpad.scons',
+    '$ICU38_DIR/using_icu38.scons',
+#    '$SKIA_DIR/using_skia.scons',
+#    '$ZLIB_DIR/using_zlib.scons',
+])
+
+if env.Bit('windows'):
+  env.Prepend(
+      LIBS = [
+          #'breakpad_handler',
+          #'breakpad_sender',
+          #'common',
+      ],
+  )
+
+input_files = [
+    'aff_reader.cc',
+    'convert_dict.cc',
+    'dic_reader.cc',
+    'hunspell_reader.cc',
+    '$CHROME_DIR/third_party/hunspell/google/bdict_reader$OBJSUFFIX',
+    '$CHROME_DIR/third_party/hunspell/google/bdict_writer.cc',
+]
+
+# TODO(port):
+if env.Bit('windows'):
+  env.ChromeProgram('convert_dict', input_files)
+
+env.ChromeMSVSProject('$CHROME_DIR/tools/convert_dict/convert_dict.vcproj',
+                      dependencies = [
+                          '$BASE_DIR/build/base.vcproj',
+                          '$ICU38_DIR/build/icu.vcproj',
+                          '$ICU38_DIR/build/icudt.vcproj',
+                      ],
+                      guid='{42ECD5EC-722F-41DE-B6B8-83764C8016DF}')

@@ -84,12 +84,7 @@ class BookmarkManagerView : public views::View,
   virtual bool CanResize() const { return true; }
   virtual bool CanMaximize() const { return true; }
   virtual std::wstring GetWindowTitle() const;
-  virtual void SaveWindowPosition(const CRect& bounds,
-                                  bool maximized,
-                                  bool always_on_top);
-  virtual bool RestoreWindowPosition(CRect* bounds,
-                                     bool* maximized,
-                                     bool* always_on_top);
+  virtual std::wstring GetWindowName() const;
   virtual View* GetContentsView() { return this; }
   // TODO(sky): implement these when we have an icon.
   //virtual SkBitmap GetWindowIcon();
@@ -163,9 +158,11 @@ class BookmarkManagerView : public views::View,
   // is no search text.
   BookmarkTableModel* CreateSearchTableModel();
 
-  // Sets the model of the table and its parent node.
+  // Sets the model of the table and its parent node. If |is_search| is true,
+  // it means the table is showing search results.
   void SetTableModel(BookmarkTableModel* new_table_model,
-                     BookmarkNode* parent_node);
+                     BookmarkNode* parent_node,
+                     bool is_search);
 
   // Sets the table's model to the results of CreateSearchTableModel and selects
   // the search node in the tree.

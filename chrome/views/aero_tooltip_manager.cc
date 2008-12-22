@@ -18,8 +18,8 @@ namespace views {
 ///////////////////////////////////////////////////////////////////////////////
 // AeroTooltipManager, public:
 
-AeroTooltipManager::AeroTooltipManager(Container* container, HWND parent)
-    : TooltipManager(container, parent),
+AeroTooltipManager::AeroTooltipManager(Widget* widget, HWND parent)
+    : TooltipManager(widget, parent),
       initial_delay_(0) {
 }
 
@@ -56,6 +56,11 @@ void AeroTooltipManager::OnMouse(UINT u_msg, WPARAM w_param, LPARAM l_param) {
     ::SendMessage(tooltip_hwnd_, TTM_TRACKACTIVATE, false, (LPARAM)&toolinfo_);
     return;
   }
+}
+
+void AeroTooltipManager::OnMouseLeave() {
+  last_mouse_x_ = last_mouse_y_ = -1;
+  UpdateTooltip();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

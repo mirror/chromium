@@ -43,7 +43,7 @@ class SavePageTest : public UITest {
       EXPECT_TRUE(file_util::GetFileSize(client_file, &client_file_size));
       EXPECT_TRUE(file_util::GetFileSize(server_file_name, &server_file_size));
       EXPECT_EQ(client_file_size, server_file_size);
-      EXPECT_PRED2(file_util::ContentsEqual, client_file, server_file_name);
+      EXPECT_TRUE(file_util::ContentsEqual(client_file, server_file_name));
     }
 
     EXPECT_TRUE(DieFileDie(client_file, false));
@@ -52,7 +52,7 @@ class SavePageTest : public UITest {
   virtual void SetUp() {
     UITest::SetUp();
     EXPECT_TRUE(file_util::CreateNewTempDirectory(L"", &save_dir_));
-    save_dir_ += file_util::kPathSeparator;
+    save_dir_ += FilePath::kSeparators[0];
   }
 
   std::wstring save_dir_;

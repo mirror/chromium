@@ -85,8 +85,20 @@ gfx::Size Window::CalculateMaximumSize() const {
 }
 
 void Window::Show() {
-  ShowWindow(SW_SHOW);
+  int show_state = GetShowState();
+  bool maximized = false;
+  if (saved_maximized_state_)
+    show_state = SW_SHOWMAXIMIZED;
+  Show(show_state);
+}
+
+void Window::Show(int show_state) {
+  ShowWindow(show_state);
   SetInitialFocus();
+}
+
+int Window::GetShowState() const {
+  return SW_SHOWNORMAL;
 }
 
 void Window::Activate() {
@@ -117,7 +129,7 @@ void Window::Close() {
   if (client_view_->CanClose()) {
     SaveWindowPosition();
     RestoreEnabledIfNecessary();
-    ContainerWin::Close();
+    WidgetWin::Close();
     // If the user activates another app after opening us, then comes back and
     // closes us, we want our owner to gain activation.  But only if the owner
     // is visible. If we don't manually force that here, the other app will
@@ -189,77 +201,37 @@ void Window::ExecuteSystemMenuCommand(int command) {
 }
 
 // static
-bool Window::SaveWindowPositionToPrefService(PrefService* pref_service,
-                                             const std::wstring& entry,
-                                             const CRect& bounds,
-                                             bool maximized,
-                                             bool always_on_top) {
-  DCHECK(pref_service);
-  DictionaryValue* win_pref = pref_service->GetMutableDictionary(entry.c_str());
-  DCHECK(win_pref);
-
-  win_pref->SetInteger(L"left", bounds.left);
-  win_pref->SetInteger(L"top", bounds.top);
-  win_pref->SetInteger(L"right", bounds.right);
-  win_pref->SetInteger(L"bottom", bounds.bottom);
-  win_pref->SetBoolean(L"maximized", maximized);
-  win_pref->SetBoolean(L"always_on_top", always_on_top);
-  return true;
+int Window::GetLocalizedContentsWidth(int col_resource_id) {
+  double chars = _wtof(l10n_util::GetString(col_resource_id).c_str());
+  ResourceBundle& rb = ResourceBundle::GetSharedInstance();
+  ChromeFont font = rb.GetFont(ResourceBundle::BaseFont);
+  int width = font.GetExpectedTextWidth(static_cast<int>(chars));
+  DCHECK(width > 0);
+  return width;
 }
 
 // static
-bool Window::RestoreWindowPositionFromPrefService(PrefService* pref_service,
-                                                  const std::wstring& entry,
-                                                  CRect* bounds,
-                                                  bool* maximized,
-                                                  bool* always_on_top) {
-  DCHECK(pref_service);
-  DCHECK(bounds);
-  DCHECK(maximized);
-  DCHECK(always_on_top);
-
-  const DictionaryValue* dictionary = pref_service->GetDictionary(entry.c_str());
-  if (!dictionary)
-    return false;
-
-  int left, top, right, bottom;
-  bool temp_maximized, temp_always_on_top;
-  if (!dictionary || !dictionary->GetInteger(L"left", &left) ||
-      !dictionary->GetInteger(L"top", &top) ||
-      !dictionary->GetInteger(L"right", &right) ||
-      !dictionary->GetInteger(L"bottom", &bottom) ||
-      !dictionary->GetBoolean(L"maximized", &temp_maximized) ||
-      !dictionary->GetBoolean(L"always_on_top", &temp_always_on_top))
-    return false;
-
-  bounds->SetRect(left, top, right, bottom);
-  *maximized = temp_maximized;
-  *always_on_top = temp_always_on_top;
-  return true;
+int Window::GetLocalizedContentsHeight(int row_resource_id) {
+  double lines = _wtof(l10n_util::GetString(row_resource_id).c_str());
+  ResourceBundle& rb = ResourceBundle::GetSharedInstance();
+  ChromeFont font = rb.GetFont(ResourceBundle::BaseFont);
+  int height = static_cast<int>(font.height() * lines);
+  DCHECK(height > 0);
+  return height;
 }
 
 // static
 gfx::Size Window::GetLocalizedContentsSize(int col_resource_id,
                                            int row_resource_id) {
-  ResourceBundle& rb = ResourceBundle::GetSharedInstance();
-  ChromeFont font = rb.GetFont(ResourceBundle::BaseFont);
-
-  double chars = _wtof(l10n_util::GetString(col_resource_id).c_str());
-  double lines = _wtof(l10n_util::GetString(row_resource_id).c_str());
-
-  int width = font.GetExpectedTextWidth(static_cast<int>(chars));
-  int height = static_cast<int>(font.height() * lines);
-
-  DCHECK(width > 0 && height > 0);
-
-  return gfx::Size(width, height);
+  return gfx::Size(GetLocalizedContentsWidth(col_resource_id),
+                   GetLocalizedContentsHeight(row_resource_id));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
 // Window, protected:
 
 Window::Window(WindowDelegate* window_delegate)
-    : ContainerWin(),
+    : WidgetWin(),
       focus_on_creation_(true),
       window_delegate_(window_delegate),
       non_client_view_(NULL),
@@ -270,7 +242,8 @@ Window::Window(WindowDelegate* window_delegate)
       restored_enabled_(false),
       is_always_on_top_(false),
       window_closed_(false),
-      disable_inactive_rendering_(false) {
+      disable_inactive_rendering_(false),
+      saved_maximized_state_(0) {
   InitClass();
   DCHECK(window_delegate_);
   window_delegate_->window_.reset(this);
@@ -286,7 +259,7 @@ void Window::Init(HWND parent, const gfx::Rect& bounds) {
   // return NULL.
   owning_hwnd_ = parent;
   // We call this after initializing our members since our implementations of
-  // assorted ContainerWin functions may be called during initialization.
+  // assorted WidgetWin functions may be called during initialization.
   is_modal_ = window_delegate_->IsModal();
   if (is_modal_)
     BecomeModal();
@@ -297,7 +270,7 @@ void Window::Init(HWND parent, const gfx::Rect& bounds) {
   if (window_ex_style() == 0)
     set_window_ex_style(CalculateWindowExStyle());
 
-  ContainerWin::Init(parent, bounds, true);
+  WidgetWin::Init(parent, bounds, true);
   win_util::SetWindowUserData(GetHWND(), this);
   
   std::wstring window_title = window_delegate_->GetWindowTitle();
@@ -308,9 +281,7 @@ void Window::Init(HWND parent, const gfx::Rect& bounds) {
 
   SetClientView(window_delegate_->CreateClientView(this));
   SetInitialBounds(bounds);
-
-  if (window_delegate_->HasAlwaysOnTopMenu())
-    AddAlwaysOnTopSystemMenuItem();
+  InitAlwaysOnTopState();
 }
 
 void Window::SetClientView(ClientView* client_view) {
@@ -318,9 +289,9 @@ void Window::SetClientView(ClientView* client_view) {
   client_view_ = client_view;
   if (non_client_view_) {
     // This will trigger the ClientView to be added by the non-client view.
-    ContainerWin::SetContentsView(non_client_view_);
+    WidgetWin::SetContentsView(non_client_view_);
   } else {
-    ContainerWin::SetContentsView(client_view_);
+    WidgetWin::SetContentsView(client_view_);
   }
 }
 
@@ -343,7 +314,7 @@ void Window::RunSystemMenu(const CPoint& point) {
   // We need to call this otherwise there's a small chance that we aren't going
   // to get a system menu. We also can't take the return value of this
   // function. We need to call it *again* to get a valid HMENU.
-  ::GetSystemMenu(GetHWND(), TRUE);
+  //::GetSystemMenu(GetHWND(), TRUE);
   HMENU system_menu = ::GetSystemMenu(GetHWND(), FALSE);
   int id = ::TrackPopupMenu(system_menu,
                             TPM_LEFTBUTTON | TPM_RIGHTBUTTON | TPM_RETURNCMD,
@@ -352,7 +323,7 @@ void Window::RunSystemMenu(const CPoint& point) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// Window, ContainerWin overrides:
+// Window, WidgetWin overrides:
 
 void Window::OnActivate(UINT action, BOOL minimized, HWND window) {
   if (action == WA_INACTIVE)
@@ -364,16 +335,19 @@ LRESULT Window::OnAppCommand(HWND window, short app_command, WORD device,
   // We treat APPCOMMAND ids as an extension of our command namespace, and just
   // let the delegate figure out what to do...
   if (!window_delegate_->ExecuteWindowsCommand(app_command))
-    return ContainerWin::OnAppCommand(window, app_command, device, keystate);
+    return WidgetWin::OnAppCommand(window, app_command, device, keystate);
   return 0;
 }
-
 
 void Window::OnCommand(UINT notification_code, int command_id, HWND window) {
   // We NULL check |window_delegate_| here because we can be sent WM_COMMAND
   // messages even after the window is destroyed.
-  if (!window_delegate_ || !window_delegate_->ExecuteWindowsCommand(command_id))
-    ContainerWin::OnCommand(notification_code, command_id, window);
+  // If the notification code is > 1 it means it is control specific and we
+  // should ignore it.
+  if (notification_code > 1 || !window_delegate_ ||
+      window_delegate_->ExecuteWindowsCommand(command_id)) {
+    WidgetWin::OnCommand(notification_code, command_id, window);
+  }
 }
 
 void Window::OnDestroy() {
@@ -382,12 +356,7 @@ void Window::OnDestroy() {
     window_delegate_ = NULL;
   }
   RestoreEnabledIfNecessary();
-  ContainerWin::OnDestroy();
-}
-
-LRESULT Window::OnEraseBkgnd(HDC dc) {
-  SetMsgHandled(TRUE);
-  return 1;
+  WidgetWin::OnDestroy();
 }
 
 LRESULT Window::OnNCActivate(BOOL active) {
@@ -396,7 +365,7 @@ LRESULT Window::OnNCActivate(BOOL active) {
     return DefWindowProc(GetHWND(), WM_NCACTIVATE, TRUE, 0);
   }
   // Otherwise just do the default thing.
-  return ContainerWin::OnNCActivate(active);
+  return WidgetWin::OnNCActivate(active);
 }
 
 LRESULT Window::OnNCHitTest(const CPoint& point) {
@@ -422,14 +391,14 @@ LRESULT Window::OnNCHitTest(const CPoint& point) {
 void Window::OnNCLButtonDown(UINT ht_component, const CPoint& point) {
   if (non_client_view_ && ht_component == HTSYSMENU)
     RunSystemMenu(non_client_view_->GetSystemMenuPoint());
-  ContainerWin::OnNCLButtonDown(ht_component, point);
+  WidgetWin::OnNCLButtonDown(ht_component, point);
 }
 
 void Window::OnNCRButtonDown(UINT ht_component, const CPoint& point) {
   if (ht_component == HTCAPTION || ht_component == HTSYSMENU) {
     RunSystemMenu(point);
   } else {
-    ContainerWin::OnNCRButtonDown(ht_component, point);
+    WidgetWin::OnNCRButtonDown(ht_component, point);
   }
 }
 
@@ -447,10 +416,9 @@ LRESULT Window::OnSetCursor(HWND window, UINT hittest_code, UINT message) {
 }
 
 void Window::OnSize(UINT size_param, const CSize& new_size) {
-  if (root_view_->width() == new_size.cx &&
-      root_view_->height() == new_size.cy)
-    return;
-
+  // Don't no-op if the new_size matches current size. If our normal bounds
+  // and maximized bounds are the same, then we need to layout (because we
+  // layout differently when maximized).
   SaveWindowPosition();
   ChangeSize(size_param, new_size);
   RedrawWindow(GetHWND(), NULL, NULL, RDW_INVALIDATE | RDW_ALLCHILDREN);
@@ -505,21 +473,10 @@ void Window::SetInitialFocus() {
   if (!focus_on_creation_)
     return;
 
-  bool focus_set = false;
-  views::View* v = window_delegate_->GetInitiallyFocusedView();
+  View* v = window_delegate_->GetInitiallyFocusedView();
   if (v) {
-    focus_set = true;
-    // In order to make that view the initially focused one, we make it the
-    // focused view on the focus manager and we store the focused view.
-    // When the window is activated, the focus manager will restore the
-    // stored focused view.
-    FocusManager* focus_manager = FocusManager::GetFocusManager(GetHWND());
-    DCHECK(focus_manager);
-    focus_manager->SetFocusedView(v);
-    focus_manager->StoreFocusedView();
-  }
-
-  if (!focus_set && focus_on_creation_) {
+    v->RequestFocus();
+  } else {
     // The window does not get keyboard messages unless we focus it, not sure
     // why.
     SetFocus(GetHWND());
@@ -527,36 +484,38 @@ void Window::SetInitialFocus() {
 }
 
 void Window::SetInitialBounds(const gfx::Rect& create_bounds) {
+  // First we obtain the window's saved show-style and store it. We need to do
+  // this here, rather than in Show() because by the time Show() is called,
+  // the window's size will have been reset (below) and the saved maximized
+  // state will have been lost. Sadly there's no way to tell on Windows when
+  // a window is restored from maximized state, so we can't more accurately
+  // track maximized state independently of sizing information.
+  window_delegate_->GetSavedMaximizedState(&saved_maximized_state_);
+
   // Restore the window's placement from the controller.
-  CRect saved_bounds(create_bounds.ToRECT());
-  bool maximized = false;
-  if (window_delegate_->RestoreWindowPosition(&saved_bounds,
-                                              &maximized,
-                                              &is_always_on_top_)) {
+  gfx::Rect saved_bounds(create_bounds.ToRECT());
+  if (window_delegate_->GetSavedWindowBounds(&saved_bounds)) {
     // Make sure the bounds are at least the minimum size.
-    if (saved_bounds.Width() < minimum_size_.cx) {
-      saved_bounds.SetRect(saved_bounds.left, saved_bounds.top,
-                           saved_bounds.right + minimum_size_.cx -
-                              saved_bounds.Width(),
-                           saved_bounds.bottom);
+    if (saved_bounds.width() < minimum_size_.cx) {
+      saved_bounds.SetRect(saved_bounds.x(), saved_bounds.y(),
+                           saved_bounds.right() + minimum_size_.cx -
+                              saved_bounds.width(),
+                           saved_bounds.bottom());
     }
 
-    if (saved_bounds.Height() < minimum_size_.cy) {
-      saved_bounds.SetRect(saved_bounds.left, saved_bounds.top,
-                           saved_bounds.right,
-                           saved_bounds.bottom + minimum_size_.cy -
-                              saved_bounds.Height());
+    if (saved_bounds.height() < minimum_size_.cy) {
+      saved_bounds.SetRect(saved_bounds.x(), saved_bounds.y(),
+                           saved_bounds.right(),
+                           saved_bounds.bottom() + minimum_size_.cy -
+                              saved_bounds.height());
     }
 
-    WINDOWPLACEMENT placement = {0};
-    placement.length = sizeof(WINDOWPLACEMENT);
-    placement.rcNormalPosition = saved_bounds;
-    if (maximized)
-      placement.showCmd = SW_SHOWMAXIMIZED;
-    ::SetWindowPlacement(GetHWND(), &placement);
-
-    if (is_always_on_top_ != window_delegate_->IsAlwaysOnTop())
-      AlwaysOnTopChanged();
+    // "Show state" (maximized, minimized, etc) is handled by Show().
+    // Don't use SetBounds here. SetBounds constrains to the size of the
+    // monitor, but we don't want that when creating a new window as the result
+    // of dragging out a tab to create a new window.
+    SetWindowPos(NULL, saved_bounds.x(), saved_bounds.y(),
+                 saved_bounds.width(), saved_bounds.height(), 0);
   } else {
     if (create_bounds.IsEmpty()) {
       // No initial bounds supplied, so size the window to its content and
@@ -567,6 +526,17 @@ void Window::SetInitialBounds(const gfx::Rect& create_bounds) {
       SetBounds(create_bounds);
     }
   }
+}
+
+void Window::InitAlwaysOnTopState() {
+  is_always_on_top_ = false;
+  if (window_delegate_->GetSavedAlwaysOnTopState(&is_always_on_top_) &&
+      is_always_on_top_ != window_delegate_->IsAlwaysOnTop()) {
+    AlwaysOnTopChanged();
+  }
+
+  if (window_delegate_->HasAlwaysOnTopMenu())
+    AddAlwaysOnTopSystemMenuItem();
 }
 
 void Window::AddAlwaysOnTopSystemMenuItem() {
@@ -642,11 +612,8 @@ DWORD Window::CalculateWindowStyle() {
 
 DWORD Window::CalculateWindowExStyle() {
   DWORD window_ex_styles = 0;
-  if (window_delegate_->AsDialogDelegate()) {
+  if (window_delegate_->AsDialogDelegate())
     window_ex_styles |= WS_EX_DLGMODALFRAME;
-  } else if (!(window_style() & WS_CHILD)) {
-    window_ex_styles |= WS_EX_APPWINDOW;
-  }
   if (window_delegate_->IsAlwaysOnTop())
     window_ex_styles |= WS_EX_TOPMOST;
   return window_ex_styles;
@@ -661,9 +628,8 @@ void Window::SaveWindowPosition() {
 
   bool maximized = (win_placement.showCmd == SW_SHOWMAXIMIZED);
   CRect window_bounds(win_placement.rcNormalPosition);
-  window_delegate_->SaveWindowPosition(window_bounds,
-                                       maximized,
-                                       is_always_on_top_);
+  window_delegate_->SaveWindowPlacement(
+      gfx::Rect(win_placement.rcNormalPosition), maximized, is_always_on_top_);
 }
 
 void Window::InitClass() {

@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// See http://wiki.corp.google.com/twiki/bin/view/Main/ChromeMultiProcessResourceLoading
+// See http://dev.chromium.org/developers/design-documents/multi-process-resource-loading
 
 #include <vector>
 
@@ -25,10 +25,8 @@
 #include "chrome/browser/render_view_host_delegate.h"
 #include "chrome/browser/resource_request_details.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
-#include "chrome/browser/tab_contents.h"
 #include "chrome/browser/tab_util.h"
-#include "chrome/browser/views/info_bar_view.h"
-#include "chrome/browser/views/info_bar_message_view.h"
+#include "chrome/browser/web_contents.h"
 #include "chrome/common/notification_source.h"
 #include "chrome/common/notification_types.h"
 #include "chrome/common/render_messages.h"
@@ -49,6 +47,10 @@
 #else
 # define RESOURCE_LOG(stuff)
 #endif
+
+using base::Time;
+using base::TimeDelta;
+using base::TimeTicks;
 
 // ----------------------------------------------------------------------------
 
@@ -117,7 +119,7 @@ class ResourceDispatcherHost::AsyncEventHandler
       read_buffer_.reset(spare_read_buffer_);
       spare_read_buffer_ = NULL;
     } else {
-      read_buffer_.reset(new SharedMemory);
+      read_buffer_.reset(new base::SharedMemory);
       if (!read_buffer_->Create(std::wstring(), false, false, kReadBufSize))
         return false;
       if (!read_buffer_->Map(kReadBufSize))
@@ -138,7 +140,7 @@ class ResourceDispatcherHost::AsyncEventHandler
       return true;
     }
 
-    SharedMemoryHandle handle;
+    base::SharedMemoryHandle handle;
     if (!read_buffer_->GiveToProcess(render_process_, &handle)) {
       // We wrongfully incremented the pending data count. Fake an ACK message
       // to fix this. We can't move this call above the WillSendData because
@@ -171,16 +173,18 @@ class ResourceDispatcherHost::AsyncEventHandler
   // When reading, we don't know if we are going to get EOF (0 bytes read), so
   // we typically have a buffer that we allocated but did not use.  We keep
   // this buffer around for the next read as a small optimization.
-  static SharedMemory* spare_read_buffer_;
+  static base::SharedMemory* spare_read_buffer_;
 
-  scoped_ptr<SharedMemory> read_buffer_;
+  scoped_ptr<base::SharedMemory> read_buffer_;
   ResourceDispatcherHost::Receiver* receiver_;
   int render_process_host_id_;
   int routing_id_;
   HANDLE render_process_;
   ResourceDispatcherHost* rdh_;
 };
-SharedMemory* ResourceDispatcherHost::AsyncEventHandler::spare_read_buffer_;
+
+base::SharedMemory*
+    ResourceDispatcherHost::AsyncEventHandler::spare_read_buffer_;
 
 // ----------------------------------------------------------------------------
 // ResourceDispatcherHost::SyncEventHandler
@@ -259,9 +263,7 @@ class ResourceDispatcherHost::DownloadEventHandler
                        URLRequest* request,
                        bool save_as)
       : download_id_(-1),
-        global_id_(
-            ResourceDispatcherHost::GlobalRequestID(render_process_host_id,
-                                                    request_id)),
+        global_id_(render_process_host_id, request_id),
         render_view_id_(render_view_id),
         read_buffer_(NULL),
         url_(UTF8ToWide(url)),
@@ -1607,6 +1609,9 @@ void ResourceDispatcherHost::BeginDownload(const GURL& url,
   if (is_shutdown_)
     return;
 
+  if (!URLRequest::IsHandledURL(url))
+    return;
+
   // Check if the renderer is permitted to request the requested URL.
   //
   // TODO(mpcomplete): remove "render_process_host_id != -1"
@@ -1645,11 +1650,6 @@ void ResourceDispatcherHost::BeginDownload(const GURL& url,
                                            ResourceType::MAIN_FRAME,
                                            safe_browsing_,
                                            this);
-  }
-
-  bool known_proto = URLRequest::IsHandledURL(url);
-  if (!known_proto) {
-    CHECK(false);
   }
 
   request->set_method("GET");
@@ -1900,8 +1900,7 @@ void ResourceDispatcherHost::CancelRequestsForRenderView(
       ExtraRequestInfo* info = ExtraInfoForRequest(i->second);
       if (!info->is_download && (render_view_id == -1 ||
                                  render_view_id == info->render_view_id)) {
-        matching_requests.push_back(
-            GlobalRequestID(render_process_host_id, i->first.request_id));
+        matching_requests.push_back(i->first);
       }
     }
   }
@@ -1910,8 +1909,16 @@ void ResourceDispatcherHost::CancelRequestsForRenderView(
   for (size_t i = 0; i < matching_requests.size(); ++i) {
     PendingRequestList::iterator iter =
         pending_requests_.find(matching_requests[i]);
-    DCHECK(iter != pending_requests_.end());
-    RemovePendingRequest(iter);
+    // Although every matching request was in pending_requests_ when we built
+    // matching_requests, it is normal for a matching request to be not found
+    // in pending_requests_ after we have removed some matching requests from
+    // pending_requests_.  For example, deleting a URLRequest that has
+    // exclusive (write) access to an HTTP cache entry may unblock another
+    // URLRequest that needs exclusive access to the same cache entry, and
+    // that URLRequest may complete and remove itself from pending_requests_.
+    // So we need to check that iter is not equal to pending_requests_.end().
+    if (iter != pending_requests_.end())
+      RemovePendingRequest(iter);
   }
 }
 
@@ -2312,14 +2319,14 @@ class NotificationTask : public Task {
 
   void Run() {
     // Find the tab associated with this request.
-    TabContents* tab_contents =
-        tab_util::GetTabContentsByID(render_process_host_id_, tab_contents_id_);
+    WebContents* web_contents =
+        tab_util::GetWebContentsByID(render_process_host_id_, tab_contents_id_);
 
-    if (tab_contents) {
+    if (web_contents) {
       // Issue the notification.
       NotificationService::current()->
           Notify(type_,
-                 Source<NavigationController>(tab_contents->controller()),
+                 Source<NavigationController>(web_contents->controller()),
                  Details<ResourceRequestDetails>(details_.get()));
     }
   }

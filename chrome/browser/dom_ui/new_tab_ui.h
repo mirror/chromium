@@ -9,7 +9,7 @@
 #include "chrome/browser/dom_ui/dom_ui_host.h"
 #include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/browser/history/history.h"
-#include "chrome/browser/tab_restore_service.h"
+#include "chrome/browser/sessions/tab_restore_service.h"
 #include "chrome/browser/template_url_model.h"
 
 class GURL;
@@ -20,9 +20,9 @@ enum TabContentsType;
 // Return the URL for the new tab page.
 GURL NewTabUIURL();
 
-// If a |url| is a chrome: URL, this method sets up |url|, and |result_type|
-// to the appropriate values for displaying the new tab page and returns true.
-// Exposed for use by BrowserURLHandler.
+// If a |url| is a chrome-internal: URL, this method sets up |url|, and 
+// |result_type| to the appropriate values for displaying the new tab page 
+// and returns true. Exposed for use by BrowserURLHandler.
 bool NewTabUIHandleURL(GURL* url, TabContentsType* result_type);
 
 // The following classes aren't used outside of new_tab_ui.cc but are
@@ -35,6 +35,10 @@ class NewTabHTMLSource : public ChromeURLDataManager::DataSource {
   // Called when the network layer has requested a resource underneath
   // the path we registered.
   virtual void StartDataRequest(const std::string& path, int request_id);
+
+  virtual std::string GetMimeType(const std::string&) const {
+    return "text/html";
+  }
 
   // Setters and getters for first_view.
   static void set_first_view(bool first_view) { first_view_ = first_view; }
@@ -57,63 +61,12 @@ class IncognitoTabHTMLSource : public ChromeURLDataManager::DataSource {
   // the path we registered.
   virtual void StartDataRequest(const std::string& path, int request_id);
 
+  virtual std::string GetMimeType(const std::string&) const {
+    return "text/html";
+  }
+
  private:
   DISALLOW_EVIL_CONSTRUCTORS(IncognitoTabHTMLSource);
-};
-
-// ThumbnailSource is the gateway between network-level chrome-resource:
-// requests for thumbnails and the history backend that serves these.
-class ThumbnailSource : public ChromeURLDataManager::DataSource {
- public:
-  explicit ThumbnailSource(Profile* profile);
-
-  // Called when the network layer has requested a resource underneath
-  // the path we registered.
-  virtual void StartDataRequest(const std::string& path, int request_id);
-
-  // Called when thumbnail data is available from the history backend.
-  void OnThumbnailDataAvailable(
-      HistoryService::Handle request_handle,
-      scoped_refptr<RefCountedBytes> data);
-
- private:
-  Profile* profile_;
-  CancelableRequestConsumerT<int, 0> cancelable_consumer_;
-
-  // Raw PNG representation of the thumbnail to show when the thumbnail
-  // database doesn't have a thumbnail for a webpage.
-  scoped_refptr<RefCountedBytes> default_thumbnail_;
-
-  DISALLOW_EVIL_CONSTRUCTORS(ThumbnailSource);
-};
-
-// ThumbnailSource is the gateway between network-level chrome-resource:
-// requests for favicons and the history backend that serves these.
-class FavIconSource : public ChromeURLDataManager::DataSource {
- public:
-  explicit FavIconSource(Profile* profile);
-
-  // Called when the network layer has requested a resource underneath
-  // the path we registered.
-  virtual void StartDataRequest(const std::string& path, int request_id);
-
-  // Called when favicon data is available from the history backend.
-  void OnFavIconDataAvailable(
-      HistoryService::Handle request_handle,
-      bool know_favicon,
-      scoped_refptr<RefCountedBytes> data,
-      bool expired,
-      GURL url);
-
- private:
-  Profile* profile_;
-  CancelableRequestConsumerT<int, 0> cancelable_consumer_;
-
-  // Raw PNG representation of the favicon to show when the favicon
-  // database doesn't have a favicon for a webpage.
-  scoped_refptr<RefCountedBytes> default_favicon_;
-
-  DISALLOW_EVIL_CONSTRUCTORS(FavIconSource);
 };
 
 // The handler for Javascript messages related to the "most visited" view.
@@ -245,6 +198,16 @@ class RecentlyClosedTabsHandler : public DOMMessageHandler,
   virtual void TabRestoreServiceDestroyed(TabRestoreService* service);
 
  private:
+  // Converts a closed tab to the value sent down to the NTP. Returns true on
+  // success, false if the value shouldn't be sent down.
+  bool TabToValue(const TabRestoreService::Tab& tab,
+                  DictionaryValue* dictionary);
+
+  // Converts a closed window to the value sent down to the NTP. Returns true
+  // on success, false if the value shouldn't be sent down.
+  bool WindowToValue(const TabRestoreService::Window& window,
+                     DictionaryValue* dictionary);
+
   DOMUIHost* dom_ui_host_;
 
   /// TabRestoreService that we are observing.

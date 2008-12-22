@@ -4,12 +4,15 @@
 
 #include "config.h"
 
-#pragma warning(push, 0)
+#include "base/compiler_specific.h"
+
+MSVC_PUSH_WARNING_LEVEL(0);
+#include "DOMWindow.h"
 #include "FloatRect.h"
 #include "InspectorController.h"
 #include "Page.h"
 #include "Settings.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 
 #undef LOG
 #include "webkit/glue/inspector_client_impl.h"
@@ -129,6 +132,11 @@ void WebInspectorClient::detachWindow() {
   // TODO(jackson): Implement this
 }
 
+void WebInspectorClient::setAttachedWindowHeight(unsigned int height) {
+  // TODO(dglazkov): Implement this
+  NOTIMPLEMENTED();
+}
+
 static void invalidateNodeBoundingRect(WebViewImpl* web_view) {
   // TODO(ojan): http://b/1143996 Is it important to just invalidate the rect
   // of the node region given that this is not on a critical codepath?
@@ -162,7 +170,20 @@ void WebInspectorClient::inspectedURLChanged(const String& newURL) {
 }
 
 String WebInspectorClient::localizedStringsURL() {
-  notImplemented();
+  NOTIMPLEMENTED();
   return String();
 }
 
+void WebInspectorClient::populateSetting(
+    const String& key, InspectorController::Setting&) {
+  NOTIMPLEMENTED();
+}
+
+void WebInspectorClient::storeSetting(
+    const String& key, const InspectorController::Setting&) {
+  NOTIMPLEMENTED();
+}
+
+void WebInspectorClient::removeSetting(const String& key) {
+  NOTIMPLEMENTED();
+}

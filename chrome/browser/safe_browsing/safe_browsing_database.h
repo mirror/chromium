@@ -17,6 +17,7 @@
 #include "base/time.h"
 #include "chrome/browser/safe_browsing/bloom_filter.h"
 #include "chrome/browser/safe_browsing/safe_browsing_util.h"
+#include "testing/gtest/include/gtest/gtest_prod.h"
 
 class GURL;
 
@@ -54,7 +55,7 @@ class SafeBrowsingDatabase {
                            std::string* matching_list,
                            std::vector<SBPrefix>* prefix_hits,
                            std::vector<SBFullHashResult>* full_hits,
-                           Time last_update) = 0;
+                           base::Time last_update) = 0;
 
   // Processes add/sub commands.  Database will free the chunks when it's done.
   virtual void InsertChunks(const std::string& list_name,
@@ -88,6 +89,9 @@ class SafeBrowsingDatabase {
   virtual std::wstring filename() const { return filename_; }
 
  protected:
+  friend class SafeBrowsingDatabaseTest;
+  FRIEND_TEST(SafeBrowsingDatabase, HashCaching);
+
   static std::wstring BloomFilterFilename(const std::wstring& db_filename);
 
   // Load the bloom filter off disk, or generates one if it doesn't exist.
@@ -105,15 +109,12 @@ class SafeBrowsingDatabase {
   // Measuring false positive rate. Call this each time we look in the filter.
   virtual void IncrementBloomFilterReadCount() {}
 
-  // Full hash cache support.
-  friend class SafeBrowsingDatabase_HashCaching_Test;
-
   typedef struct HashCacheEntry {
     SBFullHash full_hash;
     int list_id;
     int add_chunk_id;
     int sub_chunk_id;
-    Time received;
+    base::Time received;
   } HashCacheEntry;
 
   typedef std::list<HashCacheEntry> HashList;

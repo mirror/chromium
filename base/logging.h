@@ -88,7 +88,8 @@
 namespace logging {
 
 // Where to record logging output? A flat file and/or system debug log via
-// OutputDebugString. Defaults to LOG_ONLY_TO_FILE.
+// OutputDebugString. Defaults on Windows to LOG_ONLY_TO_FILE, and on
+// POSIX to LOG_ONLY_TO_SYSTEM_DEBUG_LOG (aka stderr).
 enum LoggingDestination { LOG_NONE,
                           LOG_ONLY_TO_FILE,
                           LOG_ONLY_TO_SYSTEM_DEBUG_LOG,
@@ -257,7 +258,64 @@ std::string* MakeCheckOpString(const int& v1, const int& v2, const char* names) 
 //     foo.CheckThatFoo();
 //   #endif
 
+#ifdef OFFICIAL_BUILD
+// We want to have optimized code for an official build so we remove DLOGS and
+// DCHECK from the executable.
+
+#define DLOG(severity) \
+  true ? (void) 0 : logging::LogMessageVoidify() & LOG(severity)
+
+#define DLOG_IF(severity, condition) \
+  true ? (void) 0 : logging::LogMessageVoidify() & LOG(severity)
+
+#define DLOG_ASSERT(condition) \
+  true ? (void) 0 : LOG_ASSERT(condition)
+
+enum { DEBUG_MODE = 0 };
+
+// This macro can be followed by a sequence of stream parameters in
+// non-debug mode. The DCHECK and friends macros use this so that
+// the expanded expression DCHECK(foo) << "asdf" is still syntactically
+// valid, even though the expression will get optimized away.
+#define NDEBUG_EAT_STREAM_PARAMETERS \
+  logging::LogMessage(__FILE__, __LINE__).stream()
+
+#define DCHECK(condition) \
+  while (false) NDEBUG_EAT_STREAM_PARAMETERS
+
+#define DCHECK_EQ(val1, val2) \
+  while (false) NDEBUG_EAT_STREAM_PARAMETERS
+
+#define DCHECK_NE(val1, val2) \
+  while (false) NDEBUG_EAT_STREAM_PARAMETERS
+
+#define DCHECK_LE(val1, val2) \
+  while (false) NDEBUG_EAT_STREAM_PARAMETERS
+
+#define DCHECK_LT(val1, val2) \
+  while (false) NDEBUG_EAT_STREAM_PARAMETERS
+
+#define DCHECK_GE(val1, val2) \
+  while (false) NDEBUG_EAT_STREAM_PARAMETERS
+
+#define DCHECK_GT(val1, val2) \
+  while (false) NDEBUG_EAT_STREAM_PARAMETERS
+
+#define DCHECK_STREQ(str1, str2) \
+  while (false) NDEBUG_EAT_STREAM_PARAMETERS
+
+#define DCHECK_STRCASEEQ(str1, str2) \
+  while (false) NDEBUG_EAT_STREAM_PARAMETERS
+
+#define DCHECK_STRNE(str1, str2) \
+  while (false) NDEBUG_EAT_STREAM_PARAMETERS
+
+#define DCHECK_STRCASENE(str1, str2) \
+  while (false) NDEBUG_EAT_STREAM_PARAMETERS
+
+#else
 #ifndef NDEBUG
+// On a regular debug build, we want to have DCHECKS and DLOGS enabled.
 
 #define DLOG(severity) LOG(severity)
 #define DLOG_IF(severity, condition) LOG_IF(severity, condition)
@@ -311,7 +369,8 @@ DECLARE_DCHECK_STROP_IMPL(_stricmp, false)
 #define DCHECK_BOUND(B,A) DCHECK(B <= (sizeof(A)/sizeof(A[0])))
 
 #else  // NDEBUG
-
+// On a regular release build we want to be able to enable DCHECKS through the
+// command line.
 #define DLOG(severity) \
   true ? (void) 0 : logging::LogMessageVoidify() & LOG(severity)
 
@@ -406,6 +465,7 @@ DEFINE_DCHECK_OP_IMPL(GT, > )
 #define DCHECK_GE(val1, val2) DCHECK_OP(GE, >=, val1, val2)
 #define DCHECK_GT(val1, val2) DCHECK_OP(GT, > , val1, val2)
 
+#endif  // OFFICIAL_BUILD
 
 #define NOTREACHED() DCHECK(false)
 
@@ -513,6 +573,14 @@ inline std::ostream& operator<<(std::ostream& out, const std::wstring& wstr) {
 #define NOTIMPLEMENTED_POLICY 4
 #endif
 
+#if defined(COMPILER_GCC)
+// On Linux, with GCC, we can use __PRETTY_FUNCTION__ to get the demangled name
+// of the current function in the NOTIMPLEMENTED message.
+#define NOTIMPLEMENTED_MSG "Not implemented reached in " << __PRETTY_FUNCTION__
+#else
+#define NOTIMPLEMENTED_MSG "NOT IMPLEMENTED"
+#endif
+
 #if NOTIMPLEMENTED_POLICY == 0
 #define NOTIMPLEMENTED() ;
 #elif NOTIMPLEMENTED_POLICY == 1
@@ -523,13 +591,12 @@ inline std::ostream& operator<<(std::ostream& out, const std::wstring& wstr) {
 #elif NOTIMPLEMENTED_POLICY == 3
 #define NOTIMPLEMENTED() NOTREACHED()
 #elif NOTIMPLEMENTED_POLICY == 4
-#define NOTIMPLEMENTED() LOG(ERROR) << "NOT IMPLEMENTED!"
+#define NOTIMPLEMENTED() LOG(ERROR) << NOTIMPLEMENTED_MSG
 #elif NOTIMPLEMENTED_POLICY == 5
 #define NOTIMPLEMENTED() do {\
   static int count = 0;\
-  LOG_IF(ERROR, 0 == count++) << "NOT IMPLEMENTED!";\
+  LOG_IF(ERROR, 0 == count++) << NOTIMPLEMENTED_MSG;\
 } while(0)
 #endif
 
 #endif  // BASE_LOGGING_H_
-

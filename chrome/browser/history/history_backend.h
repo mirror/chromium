@@ -198,16 +198,16 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   void CreateDownload(scoped_refptr<DownloadCreateRequest> request,
                       const DownloadCreateInfo& info);
   void RemoveDownload(int64 db_handle);
-  void RemoveDownloadsBetween(const Time remove_begin,
-                              const Time remove_end);
-  void RemoveDownloads(const Time remove_end);
+  void RemoveDownloadsBetween(const base::Time remove_begin,
+                              const base::Time remove_end);
+  void RemoveDownloads(const base::Time remove_end);
   void SearchDownloads(scoped_refptr<DownloadSearchRequest>,
                        const std::wstring& search_text);
 
   // Segment usage -------------------------------------------------------------
 
   void QuerySegmentUsage(scoped_refptr<QuerySegmentUsageRequest> request,
-                         const Time from_time);
+                         const base::Time from_time);
   void DeleteOldSegmentData();
   void SetSegmentPresentationIndex(SegmentID segment_id, int index);
 
@@ -235,8 +235,8 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
 
   // Calls ExpireHistoryBackend::ExpireHistoryBetween and commits the change.
   void ExpireHistoryBetween(scoped_refptr<ExpireHistoryRequest> request,
-                            Time begin_time,
-                            Time end_time);
+                            base::Time begin_time,
+                            base::Time end_time);
 
   // Bookmarks -----------------------------------------------------------------
 
@@ -262,9 +262,6 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   FRIEND_TEST(HistoryBackendTest, URLsNoLongerBookmarked);
   friend class TestingProfile;
 
-  // For invoking methods that circumvent requests.
-  friend class HistoryTest;
-
   // Computes the name of the specified database on disk.
   std::wstring GetThumbnailFileName() const;
   std::wstring GetArchivedFileName() const;
@@ -283,7 +280,7 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   // This does not schedule database commits, it is intended to be used as a
   // subroutine for AddPage only. It also assumes the database is valid.
   std::pair<URLID, VisitID> AddPageVisit(const GURL& url,
-                                         Time time,
+                                         base::Time time,
                                          VisitID referring_visit,
                                          PageTransition::Type transition);
 
@@ -346,7 +343,7 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
                            VisitID from_visit,
                            VisitID visit_id,
                            PageTransition::Type transition_type,
-                           const Time ts);
+                           const base::Time ts);
 
   // Favicons ------------------------------------------------------------------
 
@@ -455,13 +452,13 @@ class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend>,
   // of the timer), so we can try to ensure they're unique when they're added
   // to the database by using the last_recorded_time_ (q.v.). We still can't
   // enforce or guarantee uniqueness, since the user might set his clock back.
-  Time last_requested_time_;
+  base::Time last_requested_time_;
 
   // Timestamp of the last page addition, as it was recorded in the database.
   // If two or more requests come in at the same time, we increment that time
   // by 1 us between them so it's more likely to be unique in the database.
   // This keeps track of that higher-resolution timestamp.
-  Time last_recorded_time_;
+  base::Time last_recorded_time_;
 
   // When non-NULL, this is the task that should be invoked on
   MessageLoop* backend_destroy_message_loop_;

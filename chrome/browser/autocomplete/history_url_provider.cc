@@ -23,6 +23,10 @@
 #include "googleurl/src/url_util.h"
 #include "net/base/net_util.h"
 
+using base::Time;
+using base::TimeDelta;
+using base::TimeTicks;
+
 HistoryURLProviderParams::HistoryURLProviderParams(
     const AutocompleteInput& input,
     bool trim_http,
@@ -37,8 +41,7 @@ HistoryURLProviderParams::HistoryURLProviderParams(
 }
 
 void HistoryURLProvider::Start(const AutocompleteInput& input,
-                               bool minimal_changes,
-                               bool synchronous_only) {
+                               bool minimal_changes) {
   // NOTE: We could try hard to do less work in the |minimal_changes| case
   // here; some clever caching would let us reuse the raw matches from the
   // history DB without re-querying.  However, we'd still have to go back to
@@ -51,7 +54,7 @@ void HistoryURLProvider::Start(const AutocompleteInput& input,
   // Cancel any in-progress query.
   Stop();
 
-  RunAutocompletePasses(input, true, !synchronous_only);
+  RunAutocompletePasses(input, true);
 }
 
 void HistoryURLProvider::Stop() {
@@ -99,7 +102,7 @@ void HistoryURLProvider::DeleteMatch(const AutocompleteMatch& match) {
     // out from under us on the other thread after we set params_->cancel here.
     AutocompleteInput input(params_->input);
     params_->cancel = true;
-    RunAutocompletePasses(input, false, true);
+    RunAutocompletePasses(input, false);
   }
 }
 
@@ -146,8 +149,7 @@ void HistoryURLProvider::DoAutocomplete(history::HistoryBackend* backend,
                               max_matches() * 2, &url_matches);
     for (URLRowVector::const_iterator j(url_matches.begin());
          j != url_matches.end(); ++j) {
-      const Prefix* best_prefix = BestPrefix(UTF8ToWide(j->url().spec()),
-                                             std::wstring());
+      const Prefix* best_prefix = BestPrefix(j->url(), std::wstring());
       DCHECK(best_prefix != NULL);
       history_matches.push_back(HistoryMatch(*j, i->prefix.length(),
           !i->num_components,
@@ -216,7 +218,8 @@ void HistoryURLProvider::QueryComplete(
 void HistoryURLProvider::SuggestExactInput(const AutocompleteInput& input,
                                            bool trim_http) {
   AutocompleteMatch match(this,
-      CalculateRelevance(input.type(), WHAT_YOU_TYPED, 0), false);
+      CalculateRelevance(input.type(), WHAT_YOU_TYPED, 0), false,
+      AutocompleteMatch::URL_WHAT_YOU_TYPED);
 
   // Try to canonicalize the URL.  If this fails, don't create a What You Typed
   // suggestion, since it can't be navigated to.  We also need this so other
@@ -228,7 +231,7 @@ void HistoryURLProvider::SuggestExactInput(const AutocompleteInput& input,
       (canonicalized_url.IsStandard() &&
        !canonicalized_url.SchemeIsFile() && canonicalized_url.host().empty()))
     return;
-  match.destination_url = UTF8ToWide(canonicalized_url.spec());
+  match.destination_url = canonicalized_url;
   match.fill_into_edit = StringForURLDisplay(canonicalized_url, false);
   // NOTE: Don't set match.input_location (to allow inline autocompletion)
   // here, it's surprising and annoying.
@@ -279,7 +282,7 @@ bool HistoryURLProvider::FixupExactSuggestion(history::URLDatabase* db,
   // * and the input _without_ the TLD _is_ in the history DB,
   // * ...then just before pressing "ctrl" the best match we supplied was the
   //   what-you-typed match, so stick with it by promoting this.
-  if (!db->GetRowForURL(GURL(match.destination_url), &info)) {
+  if (!db->GetRowForURL(match.destination_url, &info)) {
     if (params->input.desired_tld().empty())
       return false;
     // This code should match what SuggestExactInput() would do with no
@@ -513,9 +516,8 @@ void HistoryURLProvider::PromoteOrCreateShorterSuggestion(
     search_base = GURL(new_match);
 
   } else if (!can_add_search_base_to_matches) {
-    // TODO(brettw) this extra GURL conversion should be unnecessary.
     can_add_search_base_to_matches =
-        (search_base != GURL(params.matches.front().destination_url));
+        (search_base != params.matches.front().destination_url);
   }
   if (search_base == match.url_info.url())
     return;  // Couldn't shorten |match|, so no range of URLs to search over.
@@ -577,8 +579,7 @@ void HistoryURLProvider::EnsureMatchPresent(
 }
 
 void HistoryURLProvider::RunAutocompletePasses(const AutocompleteInput& input,
-                                               bool fixup_input_and_run_pass_1,
-                                               bool run_pass_2) {
+                                               bool fixup_input_and_run_pass_1) {
   matches_.clear();
 
   if ((input.type() != AutocompleteInput::UNKNOWN) &&
@@ -650,7 +651,7 @@ void HistoryURLProvider::RunAutocompletePasses(const AutocompleteInput& input,
 
   // Pass 2: Ask the history service to call us back on the history thread,
   // where we can read the full on-disk DB.
-  if (run_pass_2) {
+  if (!input.synchronous_only()) {
     done_ = false;
     params_ = params.release();  // This object will be destroyed in
                                  // QueryComplete() once we're done with it.
@@ -659,9 +660,10 @@ void HistoryURLProvider::RunAutocompletePasses(const AutocompleteInput& input,
 }
 
 const HistoryURLProvider::Prefix* HistoryURLProvider::BestPrefix(
-    const std::wstring& text,
+    const GURL& url,
     const std::wstring& prefix_suffix) const {
   const Prefix* best_prefix = NULL;
+  const std::wstring text(UTF8ToWide(url.spec()));
   for (Prefixes::const_iterator i(prefixes_.begin()); i != prefixes_.end();
        ++i) {
     if ((best_prefix == NULL) ||
@@ -794,8 +796,8 @@ AutocompleteMatch HistoryURLProvider::HistoryMatchToACMatch(
   const history::URLRow& info = history_match.url_info;
   AutocompleteMatch match(this,
       CalculateRelevance(params->input.type(), match_type, match_number),
-      !!info.visit_count());
-  match.destination_url = UTF8ToWide(info.url().possibly_invalid_spec());
+      !!info.visit_count(), AutocompleteMatch::HISTORY_URL);
+  match.destination_url = info.url();
   match.fill_into_edit = gfx::ElideUrl(info.url(), ChromeFont(), 0,
       match_type == WHAT_YOU_TYPED ? std::wstring() : params->languages);
   if (!params->input.prevent_inline_autocomplete()) {

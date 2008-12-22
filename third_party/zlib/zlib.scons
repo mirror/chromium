@@ -1,0 +1,47 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+__doc__ = """
+Configuration for building zlib.lib / libzlib.a.
+"""
+
+Import('env')
+
+if env.WantSystemLib('zlib'):
+  env.Append(ZLIB_LIB = ['z'])
+  Return()
+
+env = env.Clone()
+
+env.Append(
+    ZLIB_LIB = ['zlib'],
+)
+
+if env.Bit('windows'):
+  env.Append(
+      CCFLAGS = [
+          '/TC',
+          '/wd4800',
+      ],
+  )
+
+input_files = [
+    'adler32.c',
+    'compress.c',
+    'crc32.c',
+    'deflate.c',
+    'gzio.c',
+    'infback.c',
+    'inffast.c',
+    'inflate.c',
+    'inftrees.c',
+    'trees.c',
+    'uncompr.c',
+    'zutil.c',
+]
+
+env.ChromeStaticLibrary('zlib', input_files)
+
+env.ChromeMSVSProject('$ZLIB_DIR/zlib.vcproj',
+                guid='{8423AF0D-4B88-4EBF-94E1-E4D00D00E21C}')

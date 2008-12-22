@@ -246,6 +246,9 @@ be available for now. -->
       <message name="IDS_INSTALL_INVALID_ARCHIVE" desc="Error displayed when we can not open the installation archive.">
         The installer archive is corrupted or invalid. Please download Chromium again.
       </message>
+      <message name="IDS_INSTALL_INSUFFICIENT_RIGHTS" desc="Error displayed when a non admin user tries to attempt system level install/uninstall.">
+        You do not have appropriate rights for system-level install. Try running the installer again as Administrator.
+      </message>
       <message name="IDS_UNINSTALL_FAILED" desc="Error during uninstall if we can not find the installation directory from registry.">
         Chromium is not installed or it failed to find installation directory. Please download Chromium again.
       </message>
@@ -255,6 +258,9 @@ be available for now. -->
       </message>
       <message name="IDS_IMPORT_BOOKMARKS" desc="Explanatory text for the importing progress dialog when importing a bookmarks.html file from the bookmark manager">
         Chromium is now importing Favorites/Bookmarks.
+      </message>
+      <message name="IDS_START_IN_PROFILE_SHORTCUT_NAME" desc="Name of the desktop shortcut to start the application in a specific profile.">
+        Chromium for <ph name="profile_name">$1</ph>
       </message>
     </messages>
   </release>

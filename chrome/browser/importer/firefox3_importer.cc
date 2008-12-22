@@ -15,6 +15,8 @@
 #include "chrome/common/time_format.h"
 #include "generated_resources.h"
 
+using base::Time;
+
 // Wraps the function sqlite3_close() in a class that is
 // used in scoped_ptr_malloc.
 
@@ -31,6 +33,7 @@ class DBClose {
 
 void Firefox3Importer::StartImport(ProfileInfo profile_info,
                                    uint16 items, ProfileWriter* writer,
+                                   MessageLoop* delagate_loop,
                                    ImporterHost* host) {
   writer_ = writer;
   source_path_ = profile_info.source_path;
@@ -501,4 +504,3 @@ void Firefox3Importer::LoadFavicons(
     s.reset();
   }
 }
-

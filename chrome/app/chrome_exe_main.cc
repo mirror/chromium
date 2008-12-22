@@ -20,8 +20,8 @@
 #include "sandbox/src/dep.h"
 
 int APIENTRY wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
-                      wchar_t* command_line, int show_command) {
-  process_util::EnableTerminationOnHeapCorruption();
+                      wchar_t* command_line, int) {
+  base::EnableTerminationOnHeapCorruption();
 
   // The exit manager is in charge of calling the dtors of singletons.
   base::AtExitManager exit_manager;
@@ -62,8 +62,8 @@ int APIENTRY wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
   }
 
   int ret = 0;
-  if (client.Launch(instance, &sandbox_info, command_line, show_command,
-      "ChromeMain", &ret)) {
+  if (client.Launch(instance, &sandbox_info, command_line, "ChromeMain",
+                    &ret)) {
     return ret;
   }
 #else
@@ -80,16 +80,17 @@ int APIENTRY wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
     delete[] version;
   }
 
+  HINSTANCE dll_handle = ::LoadLibraryEx(dll_name, NULL,
+                                         LOAD_WITH_ALTERED_SEARCH_PATH);
+
   // Initialize the crash reporter.
   InitCrashReporter(client_util::GetDLLPath(dll_name, dll_path));
 
-  HINSTANCE dll_handle = ::LoadLibraryEx(dll_name, NULL,
-                                         LOAD_WITH_ALTERED_SEARCH_PATH);
   if (NULL != dll_handle) {
     client_util::DLL_MAIN entry = reinterpret_cast<client_util::DLL_MAIN>(
         ::GetProcAddress(dll_handle, "ChromeMain"));
     if (NULL != entry)
-      return (entry)(instance, &sandbox_info, command_line, show_command);
+      return (entry)(instance, &sandbox_info, command_line);
   }
 #endif
 

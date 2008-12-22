@@ -89,10 +89,10 @@ class LocationBarView : public views::View,
   virtual void OnMouseReleased(const views::MouseEvent& event, bool canceled);
 
   // AutocompleteEditController
-  virtual void OnAutocompleteAccept(const std::wstring& url,
+  virtual void OnAutocompleteAccept(const GURL& url,
                                     WindowOpenDisposition disposition,
                                     PageTransition::Type transition,
-                                    const std::wstring& alternate_nav_url);
+                                    const GURL& alternate_nav_url);
   virtual void OnChanged();
   virtual void OnInputInProgress(bool in_progress) {
     delegate_->OnInputInProgress(in_progress);
@@ -253,7 +253,7 @@ class LocationBarView : public views::View,
     virtual bool OnMousePressed(const views::MouseEvent& event);
 
     // InfoBubbleDelegate
-    void InfoBubbleClosing(InfoBubble* info_bubble);
+    void InfoBubbleClosing(InfoBubble* info_bubble, bool closed_by_escape);
     bool CloseOnEscape() { return true; }
 
     void set_profile(Profile* profile) { profile_ = profile; }

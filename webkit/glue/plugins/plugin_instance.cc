@@ -4,6 +4,7 @@
 
 #include "webkit/glue/plugins/plugin_instance.h"
 
+#include "base/file_util.h"
 #include "base/message_loop.h"
 #include "base/string_util.h"
 #include "base/thread_local_storage.h"
@@ -14,7 +15,9 @@
 #include "webkit/glue/plugins/plugin_lib.h"
 #include "webkit/glue/plugins/plugin_stream_url.h"
 #include "webkit/glue/plugins/plugin_string_stream.h"
+#if defined(OS_WIN)
 #include "webkit/glue/plugins/mozilla_extensions.h"
+#endif
 #include "net/base/escape.h"
 
 namespace NPAPI
@@ -28,15 +31,17 @@ PluginInstance::PluginInstance(PluginLib *plugin, const std::string &mime_type)
       npp_(0),
       host_(PluginHost::Singleton()),
       npp_functions_(plugin->functions()),
+#if defined(OS_WIN)
       hwnd_(0),
+#endif
       windowless_(false),
       transparent_(true),
-      mime_type_(mime_type),
       webplugin_(0),
+      mime_type_(mime_type),
+      get_notify_data_(NULL),
       use_mozilla_user_agent_(false),
       message_loop_(MessageLoop::current()),
       load_manually_(false),
-      get_notify_data_(NULL),
       in_close_streams_(false) {
   npp_ = new NPP_t();
   npp_->ndata = 0;
@@ -109,6 +114,7 @@ void PluginInstance::CloseStreams() {
   in_close_streams_ = false;
 }
 
+#if defined(OS_WIN)
 bool PluginInstance::HandleEvent(UINT message, WPARAM wParam, LPARAM lParam) {
   if (!windowless_)
     return false;
@@ -119,6 +125,7 @@ bool PluginInstance::HandleEvent(UINT message, WPARAM wParam, LPARAM lParam) {
   windowEvent.wParam = static_cast<uint32>(wParam);
   return NPP_HandleEvent(&windowEvent) != 0;
 }
+#endif
 
 bool PluginInstance::Start(const GURL& url,
                            char** const param_names,
@@ -192,10 +199,17 @@ void PluginInstance::NPP_Destroy() {
     DCHECK(savedData == 0);
   }
 
+#if defined(OS_WIN)
   // Clean up back references to this instance if any
   if (mozilla_extenstions_) {
     mozilla_extenstions_->DetachFromInstance();
     mozilla_extenstions_ = NULL;
+  }
+#endif
+
+  for (unsigned int file_index = 0; file_index < files_created_.size();
+       file_index++) {
+    file_util::Delete(files_created_[file_index], false);
   }
 }
 
@@ -264,6 +278,12 @@ void PluginInstance::NPP_StreamAsFile(NPStream *stream, const char *fname) {
   if (npp_functions_->asfile != 0) {
     npp_functions_->asfile(npp_, stream, fname);
   }
+
+  // Creating a temporary FilePath instance on the stack as the explicit
+  // FilePath constructor with StringType as an argument causes a compiler
+  // error when invoked via vector push back.
+  FilePath file_name = FilePath::FromWStringHack(UTF8ToWide(fname));
+  files_created_.push_back(file_name);
 }
 
 void PluginInstance::NPP_URLNotify(const char *url,
@@ -348,7 +368,7 @@ void PluginInstance::DidReceiveManualResponse(const std::string& url,
   plugin_data_stream_ = CreateStream(-1, url, mime_type, false, NULL);
 
   plugin_data_stream_->DidReceiveResponse(mime_type, headers, expected_length,
-                                          last_modified, &cancel);
+                                          last_modified, true, &cancel);
   AddStream(plugin_data_stream_.get());
 }
 
@@ -384,7 +404,8 @@ void PluginInstance::PluginThreadAsyncCall(void (*func)(void *),
 
 void PluginInstance::OnPluginThreadAsyncCall(void (*func)(void *),
                                              void *userData) {
-  // We are invoking an arbitrary callback provided by a third
+#if defined(OS_WIN)
+    // We are invoking an arbitrary callback provided by a third
   // party plugin. It's better to wrap this into an exception
   // block to protect us from crashes.
   __try {
@@ -393,6 +414,9 @@ void PluginInstance::OnPluginThreadAsyncCall(void (*func)(void *),
     // Maybe we can disable a crashing plugin.
     // But for now, just continue.
   }
+#else
+  NOTIMPLEMENTED();
+#endif
 }
 
 PluginInstance* PluginInstance::SetInitializingInstance(
@@ -410,6 +434,7 @@ PluginInstance* PluginInstance::GetInitializingInstance() {
 }
 
 NPError PluginInstance::GetServiceManager(void** service_manager) {
+#if defined(OS_WIN)
   if (!mozilla_extenstions_) {
     mozilla_extenstions_ = new MozillaExtensionApi(this);
   }
@@ -417,6 +442,9 @@ NPError PluginInstance::GetServiceManager(void** service_manager) {
   DCHECK(mozilla_extenstions_);
   mozilla_extenstions_->QueryInterface(nsIServiceManager::GetIID(),
                                        service_manager);
+#else
+  NOTIMPLEMENTED();
+#endif
   return NPERR_NO_ERROR;
 }
 
@@ -466,7 +494,7 @@ void PluginInstance::RequestRead(NPStream* stream, NPByteRange* range_list) {
       webplugin_->InitiateHTTPRangeRequest(
           stream->url, range_info.c_str(),
           plugin_stream,
-          plugin_stream->notify_needed(), 
+          plugin_stream->notify_needed(),
           plugin_stream->notify_data());
       break;
     }

@@ -17,6 +17,8 @@
 
 #include "generated_resources.h"
 
+using base::TimeDelta;
+
 namespace printing {
 
 PrintViewManager::PrintViewManager(WebContents& owner)
@@ -25,6 +27,9 @@ PrintViewManager::PrintViewManager(WebContents& owner)
       inside_inner_message_loop_(false),
       waiting_to_show_print_dialog_(false) {
   memset(&print_params_, 0, sizeof(print_params_));
+}
+
+PrintViewManager::~PrintViewManager() {
 }
 
 void PrintViewManager::Destroy() {
@@ -129,7 +134,7 @@ void PrintViewManager::DidPrintPage(
     return;
   }
 
-  SharedMemory shared_buf(params.emf_data_handle, true);
+  base::SharedMemory shared_buf(params.emf_data_handle, true);
   if (!shared_buf.Map(params.data_size)) {
     NOTREACHED() << "couldn't map";
     owner_.Stop();

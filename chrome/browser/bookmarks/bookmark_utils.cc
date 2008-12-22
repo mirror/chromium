@@ -4,16 +4,20 @@
 
 #include "chrome/browser/bookmarks/bookmark_utils.h"
 
+#include "base/string_util.h"
+#include "base/time.h"
 #include "chrome/browser/bookmarks/bookmark_drag_data.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_list.h"
+#include "chrome/browser/history/query_parser.h"
 #include "chrome/browser/page_navigator.h"
 #include "chrome/browser/tab_contents.h"
 #include "chrome/common/drag_drop_types.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/os_exchange_data.h"
 #include "chrome/views/event.h"
+#include "chrome/views/tree_node_iterator.h"
 
 #include "chromium_strings.h"
 #include "generated_resources.h"
@@ -31,7 +35,7 @@ class NewBrowserPageNavigator : public PageNavigator {
 
   virtual ~NewBrowserPageNavigator() {
     if (browser_)
-      browser_->Show();
+      browser_->window()->Show();
   }
 
   Browser* browser() const { return browser_; }
@@ -43,8 +47,7 @@ class NewBrowserPageNavigator : public PageNavigator {
     if (!browser_) {
       Profile* profile = (disposition == OFF_THE_RECORD) ?
           profile_->GetOffTheRecordProfile() : profile_;
-      browser_ = new Browser(gfx::Rect(), SW_SHOW, profile,
-                             BrowserType::TABBED_BROWSER, std::wstring());
+      browser_ = Browser::Create(profile);
       // Always open the first tab in the foreground.
       disposition = NEW_FOREGROUND_TAB;
     }
@@ -139,6 +142,31 @@ bool ShouldOpenAll(HWND parent, const std::vector<BookmarkNode*>& nodes) {
                     MB_YESNO | MB_ICONWARNING | MB_TOPMOST) == IDYES;
 }
 
+// Comparison function that compares based on date modified of the two nodes.
+bool MoreRecentlyModified(BookmarkNode* n1, BookmarkNode* n2) {
+  return n1->date_group_modified() > n2->date_group_modified();
+}
+
+// Returns true if |text| contains each string in |words|. This is used when
+// searching for bookmarks.
+bool DoesBookmarkTextContainWords(const std::wstring& text,
+                                  const std::vector<std::wstring>& words) {
+  for (size_t i = 0; i < words.size(); ++i) {
+    if (text.find(words[i]) == std::wstring::npos)
+      return false;
+  }
+  return true;
+}
+
+// Returns true if |node|s title or url contains the strings in |words|.
+bool DoesBookmarkContainWords(BookmarkNode* node,
+                              const std::vector<std::wstring>& words) {
+  return
+      DoesBookmarkTextContainWords(
+          l10n_util::ToLower(node->GetTitle()), words) ||
+      DoesBookmarkTextContainWords(UTF8ToWide(node->GetURL().spec()), words);
+}
+
 }  // namespace
 
 namespace bookmark_utils {
@@ -214,11 +242,13 @@ void OpenAll(HWND parent,
   NewBrowserPageNavigator navigator_impl(profile);
   if (!navigator) {
     Browser* browser = 
-        BrowserList::FindBrowserWithType(profile, BrowserType::TABBED_BROWSER);
-    if (!browser || !browser->GetSelectedTabContents())
+        BrowserList::FindBrowserWithType(profile, Browser::TYPE_NORMAL);
+    if (!browser || !browser->GetSelectedTabContents()) {
       navigator = &navigator_impl;
-    else
+    } else {
+      browser->window()->Activate();
       navigator = browser->GetSelectedTabContents();
+    }
   }
 
   bool opened_url = false;
@@ -286,6 +316,125 @@ bool CanPasteFromClipboard(BookmarkNode* node) {
   OSExchangeData data_wrapper(data);
   BookmarkDragData bookmark_data;
   return bookmark_data.Read(data_wrapper);
+}
+
+std::vector<BookmarkNode*> GetMostRecentlyModifiedGroups(
+    BookmarkModel* model,
+    size_t max_count) {
+  std::vector<BookmarkNode*> nodes;
+  views::TreeNodeIterator<BookmarkNode> iterator(model->root_node());
+  while (iterator.has_next()) {
+    BookmarkNode* parent = iterator.Next();
+    if (parent->is_folder() && parent->date_group_modified() > base::Time()) {
+      if (max_count == 0) {
+        nodes.push_back(parent);
+      } else {
+        std::vector<BookmarkNode*>::iterator i =
+            std::upper_bound(nodes.begin(), nodes.end(), parent,
+                             &MoreRecentlyModified);
+        if (nodes.size() < max_count || i != nodes.end()) {
+          nodes.insert(i, parent);
+          while (nodes.size() > max_count)
+            nodes.pop_back();
+        }
+      }
+    }  // else case, the root node, which we don't care about or imported nodes
+       // (which have a time of 0).
+  }
+
+  if (nodes.size() < max_count) {
+    // Add the bookmark bar and other nodes if there is space.
+    if (find(nodes.begin(), nodes.end(), model->GetBookmarkBarNode()) ==
+        nodes.end()) {
+      nodes.push_back(model->GetBookmarkBarNode());
+    }
+
+    if (nodes.size() < max_count &&
+        find(nodes.begin(), nodes.end(), model->other_node()) == nodes.end()) {
+      nodes.push_back(model->other_node());
+    }
+  }
+  return nodes;
+}
+
+void GetMostRecentlyAddedEntries(BookmarkModel* model,
+                                 size_t count,
+                                 std::vector<BookmarkNode*>* nodes) {
+  views::TreeNodeIterator<BookmarkNode> iterator(model->root_node());
+  while (iterator.has_next()) {
+    BookmarkNode* node = iterator.Next();
+    if (node->is_url()) {
+      std::vector<BookmarkNode*>::iterator insert_position =
+          std::upper_bound(nodes->begin(), nodes->end(), node,
+                           &MoreRecentlyAdded);
+      if (nodes->size() < count || insert_position != nodes->end()) {
+        nodes->insert(insert_position, node);
+        while (nodes->size() > count)
+          nodes->pop_back();
+      }
+    }
+  }
+}
+
+void GetBookmarksMatchingText(BookmarkModel* model,
+                              const std::wstring& text,
+                              size_t max_count,
+                              std::vector<TitleMatch>* matches) {
+  QueryParser parser;
+  ScopedVector<QueryNode> query_nodes;
+  parser.ParseQuery(text, &query_nodes.get());
+  if (query_nodes.empty())
+    return;
+
+  views::TreeNodeIterator<BookmarkNode> iterator(model->root_node());
+  Snippet::MatchPositions match_position;
+  while (iterator.has_next()) {
+    BookmarkNode* node = iterator.Next();
+    if (node->is_url() &&
+        parser.DoesQueryMatch(node->GetTitle(), query_nodes.get(),
+                              &match_position)) {
+      matches->push_back(TitleMatch());
+      matches->back().node = node;
+      matches->back().match_positions.swap(match_position);
+      if (matches->size() == max_count)
+        break;
+    }
+  }
+}
+
+bool MoreRecentlyAdded(BookmarkNode* n1, BookmarkNode* n2) {
+  return n1->date_added() > n2->date_added();
+}
+
+void GetBookmarksContainingText(BookmarkModel* model,
+                                const std::wstring& text,
+                                size_t max_count,
+                                std::vector<BookmarkNode*>* nodes) {
+  std::vector<std::wstring> words;
+  QueryParser parser;
+  parser.ExtractQueryWords(l10n_util::ToLower(text), &words);
+  if (words.empty())
+    return;
+
+  views::TreeNodeIterator<BookmarkNode> iterator(model->root_node());
+  while (iterator.has_next()) {
+    BookmarkNode* node = iterator.Next();
+    if (node->is_url() && DoesBookmarkContainWords(node, words)) {
+      nodes->push_back(node);
+      if (nodes->size() == max_count)
+        return;
+    }
+  }
+}
+
+bool DoesBookmarkContainText(BookmarkNode* node, const std::wstring& text) {
+  std::vector<std::wstring> words;
+  QueryParser parser;
+  parser.ExtractQueryWords(l10n_util::ToLower(text), &words);
+  if (words.empty())
+    return false;
+
+  return (node->is_url() && DoesBookmarkContainWords(node, words));
 }
 
 }  // namespace bookmark_utils

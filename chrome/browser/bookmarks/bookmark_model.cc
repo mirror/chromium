@@ -5,25 +5,15 @@
 #include "chrome/browser/bookmarks/bookmark_model.h"
 
 #include "base/gfx/png_decoder.h"
+#include "chrome/browser/bookmarks/bookmark_utils.h"
 #include "chrome/browser/bookmarks/bookmark_storage.h"
-#include "chrome/browser/history/query_parser.h"
 #include "chrome/browser/profile.h"
+#include "chrome/common/l10n_util.h"
 #include "chrome/common/scoped_vector.h"
 
 #include "generated_resources.h"
 
-namespace {
-
-// Functions used for sorting.
-bool MoreRecentlyModified(BookmarkNode* n1, BookmarkNode* n2) {
-  return n1->date_group_modified() > n2->date_group_modified();
-}
-
-bool MoreRecentlyAdded(BookmarkNode* n1, BookmarkNode* n2) {
-  return n1->date_added() > n2->date_added();
-}
-
-}  // namespace
+using base::Time;
 
 // BookmarkNode ---------------------------------------------------------------
 
@@ -136,85 +126,9 @@ void BookmarkModel::Load() {
 }
 
 BookmarkNode* BookmarkModel::GetParentForNewNodes() {
-  std::vector<BookmarkNode*> nodes;
-
-  GetMostRecentlyModifiedGroupNodes(&root_, 1, &nodes);
+  std::vector<BookmarkNode*> nodes =
+      bookmark_utils::GetMostRecentlyModifiedGroups(this, 1);
   return nodes.empty() ? bookmark_bar_node_ : nodes[0];
-}
-
-std::vector<BookmarkNode*> BookmarkModel::GetMostRecentlyModifiedGroups(
-    size_t max_count) {
-  std::vector<BookmarkNode*> nodes;
-  GetMostRecentlyModifiedGroupNodes(&root_, max_count, &nodes);
-
-  if (nodes.size() < max_count) {
-    // Add the bookmark bar and other nodes if there is space.
-    if (find(nodes.begin(), nodes.end(), bookmark_bar_node_) == nodes.end())
-      nodes.push_back(bookmark_bar_node_);
-
-    if (nodes.size() < max_count &&
-        find(nodes.begin(), nodes.end(), other_node_) == nodes.end()) {
-      nodes.push_back(other_node_);
-    }
-  }
-  return nodes;
-}
-
-void BookmarkModel::GetMostRecentlyAddedEntries(
-    size_t count,
-    std::vector<BookmarkNode*>* nodes) {
-  AutoLock url_lock(url_lock_);
-  for (NodesOrderedByURLSet::iterator i = nodes_ordered_by_url_set_.begin();
-       i != nodes_ordered_by_url_set_.end(); ++i) {
-    std::vector<BookmarkNode*>::iterator insert_position =
-        std::upper_bound(nodes->begin(), nodes->end(), *i, &MoreRecentlyAdded);
-    if (nodes->size() < count || insert_position != nodes->end()) {
-      nodes->insert(insert_position, *i);
-      while (nodes->size() > count)
-        nodes->pop_back();
-    }
-  }
-}
-
-void BookmarkModel::GetBookmarksMatchingText(
-    const std::wstring& text,
-    size_t max_count,
-    std::vector<TitleMatch>* matches) {
-  QueryParser parser;
-  ScopedVector<QueryNode> query_nodes;
-  parser.ParseQuery(text, &query_nodes.get());
-  if (query_nodes.empty())
-    return;
-
-  AutoLock url_lock(url_lock_);
-  Snippet::MatchPositions match_position;
-  for (NodesOrderedByURLSet::iterator i = nodes_ordered_by_url_set_.begin();
-       i != nodes_ordered_by_url_set_.end(); ++i) {
-    if (parser.DoesQueryMatch((*i)->GetTitle(), query_nodes.get(),
-                              &match_position)) {
-      matches->push_back(TitleMatch());
-      matches->back().node = *i;
-      matches->back().match_positions.swap(match_position);
-      if (matches->size() == max_count)
-        break;
-    }
-  }
-}
-
-bool BookmarkModel::DoesBookmarkMatchText(const std::wstring& text,
-                                          BookmarkNode* node) {
-  if (!node->is_url())
-    return false;
-
-  QueryParser parser;
-  ScopedVector<QueryNode> query_nodes;
-  parser.ParseQuery(text, &query_nodes.get());
-  if (query_nodes.empty())
-    return false;
-
-  Snippet::MatchPositions match_position;
-  return parser.DoesQueryMatch(node->GetTitle(), query_nodes.get(),
-                               &match_position);
 }
 
 void BookmarkModel::Remove(BookmarkNode* parent, int index) {
@@ -299,7 +213,7 @@ BookmarkNode* BookmarkModel::GetMostRecentlyAddedNodeForURL(const GURL& url) {
   if (nodes.empty())
     return NULL;
 
-  std::sort(nodes.begin(), nodes.end(), &MoreRecentlyAdded);
+  std::sort(nodes.begin(), nodes.end(), &bookmark_utils::MoreRecentlyAdded);
   return nodes.front();
 }
 
@@ -318,9 +232,7 @@ void BookmarkModel::GetBookmarks(std::vector<GURL>* urls) {
 
 bool BookmarkModel::IsBookmarked(const GURL& url) {
   AutoLock url_lock(url_lock_);
-  BookmarkNode tmp_node(this, url);
-  return (nodes_ordered_by_url_set_.find(&tmp_node) !=
-          nodes_ordered_by_url_set_.end());
+  return IsBookmarkedNoLock(url);
 }
 
 BookmarkNode* BookmarkModel::GetNodeByID(int id) {
@@ -407,6 +319,20 @@ void BookmarkModel::SetURLStarred(const GURL& url,
 
 void BookmarkModel::ResetDateGroupModified(BookmarkNode* node) {
   SetDateGroupModified(node, Time());
+}
+
+void BookmarkModel::ClearStore() {
+  if (profile_ && store_.get()) {
+    NotificationService::current()->RemoveObserver(
+        this, NOTIFY_FAVICON_CHANGED, Source<Profile>(profile_));
+  }
+  store_ = NULL;
+}
+
+bool BookmarkModel::IsBookmarkedNoLock(const GURL& url) {
+  BookmarkNode tmp_node(this, url);
+  return (nodes_ordered_by_url_set_.find(&tmp_node) !=
+          nodes_ordered_by_url_set_.end());
 }
 
 void BookmarkModel::FavIconLoaded(BookmarkNode* node) {
@@ -540,7 +466,7 @@ void BookmarkModel::RemoveAndDeleteNode(BookmarkNode* delete_me) {
     // allow duplicates we need to remove any entries that are still bookmarked.
     for (std::set<GURL>::iterator i = details.changed_urls.begin();
          i != details.changed_urls.end(); ){
-      if (IsBookmarked(*i))
+      if (IsBookmarkedNoLock(*i))
         i = details.changed_urls.erase(i);
       else
         ++i;
@@ -694,33 +620,6 @@ void BookmarkModel::CancelPendingFavIconLoadRequests(BookmarkNode* node) {
     if (history)
       history->CancelRequest(node->favicon_load_handle_);
     node->favicon_load_handle_ = 0;
-  }
-}
-
-void BookmarkModel::GetMostRecentlyModifiedGroupNodes(
-    BookmarkNode* parent,
-    size_t count,
-    std::vector<BookmarkNode*>* nodes) {
-  if (parent != &root_ && parent->is_folder() &&
-      parent->date_group_modified() > Time()) {
-    if (count == 0) {
-      nodes->push_back(parent);
-    } else {
-      std::vector<BookmarkNode*>::iterator i =
-          std::upper_bound(nodes->begin(), nodes->end(), parent,
-                           &MoreRecentlyModified);
-      if (nodes->size() < count || i != nodes->end()) {
-        nodes->insert(i, parent);
-        while (nodes->size() > count)
-          nodes->pop_back();
-      }
-    }
-  }  // else case, the root node, which we don't care about or imported nodes
-     // (which have a time of 0).
-  for (int i = 0; i < parent->GetChildCount(); ++i) {
-    BookmarkNode* child = parent->GetChild(i);
-    if (child->is_folder())
-      GetMostRecentlyModifiedGroupNodes(child, count, nodes);
   }
 }
 

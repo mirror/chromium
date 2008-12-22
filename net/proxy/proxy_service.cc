@@ -17,8 +17,28 @@
 #include "base/string_util.h"
 #include "googleurl/src/gurl.h"
 #include "net/base/net_errors.h"
+#include "net/proxy/proxy_config_service_fixed.h"
+#if defined(OS_WIN)
+#include "net/http/http_transaction_winhttp.h"
+#include "net/proxy/proxy_config_service_win.h"
+#include "net/proxy/proxy_resolver_winhttp.h"
+#elif defined(OS_MACOSX)
+#include "net/proxy/proxy_resolver_mac.h"
+#endif
+
+using base::TimeDelta;
+using base::TimeTicks;
 
 namespace net {
+
+// Config getter that fails every time.
+class ProxyConfigServiceNull : public ProxyConfigService {
+ public:
+  virtual int GetProxyConfig(ProxyConfig* config) {
+    return ERR_NOT_IMPLEMENTED;
+  }
+};
+
 
 // ProxyConfig ----------------------------------------------------------------
 
@@ -27,6 +47,7 @@ ProxyConfig::ID ProxyConfig::last_id_ = ProxyConfig::INVALID_ID;
 
 ProxyConfig::ProxyConfig()
     : auto_detect(false),
+      proxy_bypass_local_names(false),
       id_(++last_id_) {
 }
 
@@ -36,7 +57,8 @@ bool ProxyConfig::Equals(const ProxyConfig& other) const {
   return auto_detect == other.auto_detect &&
          pac_url == other.pac_url &&
          proxy_server == other.proxy_server &&
-         proxy_bypass == other.proxy_bypass;
+         proxy_bypass == other.proxy_bypass &&
+         proxy_bypass_local_names == other.proxy_bypass_local_names;
 }
 
 // ProxyList ------------------------------------------------------------------
@@ -83,13 +105,14 @@ std::string ProxyList::Get() const {
   return std::string();
 }
 
-std::string ProxyList::GetList() const {
+std::string ProxyList::GetAnnotatedList() const {
   std::string proxy_list;
   std::vector<std::string>::const_iterator iter = proxies_.begin();
   for (; iter != proxies_.end(); ++iter) {
     if (!proxy_list.empty())
-      proxy_list += L';';
-
+      proxy_list += ";";
+    // Assume every proxy is an HTTP proxy, as that is all we currently support.
+    proxy_list += "PROXY ";
     proxy_list += *iter;
   }
 
@@ -163,6 +186,10 @@ void ProxyInfo::Apply(HINTERNET request_handle) {
 }
 #endif
 
+std::string ProxyInfo::GetAnnotatedProxyList() {
+  return is_direct() ? "DIRECT" : proxy_list_.GetAnnotatedList();
+}
+
 // ProxyService::PacRequest ---------------------------------------------------
 
 // We rely on the fact that the origin thread (and its message loop) will not
@@ -172,7 +199,7 @@ class ProxyService::PacRequest :
     public base::RefCountedThreadSafe<ProxyService::PacRequest> {
  public:
   PacRequest(ProxyService* service,
-             const std::string& pac_url,
+             const GURL& pac_url,
              CompletionCallback* callback)
       : service_(service),
         callback_(callback),
@@ -185,7 +212,7 @@ class ProxyService::PacRequest :
       origin_loop_ = MessageLoop::current();
   }
 
-  void Query(const std::string& url, ProxyInfo* results) {
+  void Query(const GURL& url, ProxyInfo* results) {
     results_ = results;
     // If we have a valid callback then execute Query asynchronously
     if (callback_) {
@@ -209,8 +236,8 @@ class ProxyService::PacRequest :
  private:
   // Runs on the PAC thread if a valid callback is provided.
   void DoQuery(ProxyResolver* resolver,
-               const std::string& query_url,
-               const std::string& pac_url) {
+               const GURL& query_url,
+               const GURL& pac_url) {
     int rv = resolver->GetProxyForURL(query_url, pac_url, &results_buf_);
     if (origin_loop_) {
       origin_loop_->PostTask(FROM_HERE,
@@ -248,26 +275,67 @@ class ProxyService::PacRequest :
 
   // Usable from within DoQuery on the PAC thread.
   ProxyInfo results_buf_;
-  std::string pac_url_;
+  GURL pac_url_;
   MessageLoop* origin_loop_;
 };
 
 // ProxyService ---------------------------------------------------------------
 
-ProxyService::ProxyService(ProxyResolver* resolver)
-    : resolver_(resolver),
-      config_is_bad_(false) {
-  UpdateConfig();
+ProxyService::ProxyService(ProxyConfigService* config_service,
+                           ProxyResolver* resolver)
+    : config_service_(config_service),
+      resolver_(resolver),
+      config_is_bad_(false),
+      config_has_been_updated_(false) {
+}
+
+// static
+ProxyService* ProxyService::Create(const ProxyInfo* pi) {
+  if (pi) {
+    // The ProxyResolver is set to NULL, since it should never be called
+    // (because the configuration will never require PAC).
+    ProxyService* proxy_service =
+        new ProxyService(new ProxyConfigServiceFixed(*pi), NULL);
+
+    // TODO(eroman): remove this WinHTTP hack once it is no more.
+    // We keep a copy of the ProxyInfo that was used to create the
+    // proxy service, so we can pass it to WinHTTP.
+    proxy_service->proxy_info_.reset(new ProxyInfo(*pi));
+
+    return proxy_service;
+  }
+#if defined(OS_WIN)
+  return new ProxyService(new ProxyConfigServiceWin(),
+                          new ProxyResolverWinHttp());
+#elif defined(OS_MACOSX)
+  return new ProxyService(new ProxyConfigServiceMac(),
+                          new ProxyResolverMac());
+#else
+  // This used to be a NOTIMPLEMENTED(), but that logs as an error,
+  // screwing up layout tests.
+  LOG(WARNING) << "Proxies are not implemented; remove me once that's fixed.";
+  // http://code.google.com/p/chromium/issues/detail?id=4523 is the bug
+  // to implement this.
+  return CreateNull();
+#endif
+}
+
+// static
+ProxyService* ProxyService::CreateNull() {
+  // The ProxyResolver is set to NULL, since it should never be called
+  // (because the configuration will never require PAC).
+  return new ProxyService(new ProxyConfigServiceNull, NULL);
 }
 
 int ProxyService::ResolveProxy(const GURL& url, ProxyInfo* result,
                                CompletionCallback* callback,
                                PacRequest** pac_request) {
-  // The overhead of calling WinHttpGetIEProxyConfigForCurrentUser is very low.
+  // The overhead of calling ProxyConfigService::GetProxyConfig is very low.
   const TimeDelta kProxyConfigMaxAge = TimeDelta::FromSeconds(5);
 
   // Periodically check for a new config.
-  if ((TimeTicks::Now() - config_last_update_time_) > kProxyConfigMaxAge)
+  if (!config_has_been_updated_ ||
+      (TimeTicks::Now() - config_last_update_time_) > kProxyConfigMaxAge)
     UpdateConfig();
   result->config_id_ = config_.id();
 
@@ -321,7 +389,7 @@ int ProxyService::ResolveProxy(const GURL& url, ProxyInfo* result,
       return OK;
     }
 
-    if (!config_.pac_url.empty() || config_.auto_detect) {
+    if (config_.pac_url.is_valid() || config_.auto_detect) {
       if (callback) {
         // Create PAC thread for asynchronous mode.
         if (!pac_thread_.get()) {
@@ -336,9 +404,20 @@ int ProxyService::ResolveProxy(const GURL& url, ProxyInfo* result,
 
       scoped_refptr<PacRequest> req =
           new PacRequest(this, config_.pac_url, callback);
-      // TODO(darin): We should strip away any reference fragment since it is
-      // not relevant, and moreover it could contain non-ASCII bytes.
-      req->Query(url.spec(), result);
+
+      // Strip away any reference fragments and the username/password, as they
+      // are not relevant to proxy resolution.
+      GURL sanitized_url;
+      { // TODO(eroman): The following duplicates logic from
+        // HttpUtil::SpecForRequest. Should probably live in net_util.h
+        GURL::Replacements replacements;
+        replacements.ClearUsername();
+        replacements.ClearPassword();
+        replacements.ClearRef();
+        sanitized_url = url.ReplaceComponents(replacements);
+      }
+
+      req->Query(sanitized_url, result);
 
       if (callback) {
         if (pac_request)
@@ -421,16 +500,10 @@ void ProxyService::DidCompletePacRequest(int config_id, int result_code) {
 }
 
 void ProxyService::UpdateConfig() {
-#if !defined(WIN_OS)
-  if (!resolver_) {
-    // Tied to the NOTIMPLEMENTED in HttpNetworkLayer::HttpNetworkLayer()
-    NOTIMPLEMENTED();
-    return;
-  }
-#endif
+  config_has_been_updated_ = true;
 
   ProxyConfig latest;
-  if (resolver_->GetProxyConfig(&latest) != OK)
+  if (config_service_->GetProxyConfig(&latest) != OK)
     return;
   config_last_update_time_ = TimeTicks::Now();
 
@@ -450,17 +523,18 @@ bool ProxyService::ShouldBypassProxyForURL(const GURL& url) {
     url_domain += "://";
 
   url_domain += url.host();
+  // This isn't superfluous; GURL case canonicalization doesn't hit the embedded
+  // percent-encoded characters.
   StringToLowerASCII(&url_domain);
 
-  StringTokenizer proxy_server_bypass_list(config_.proxy_bypass, ";");
-  while (proxy_server_bypass_list.GetNext()) {
-    std::string bypass_url_domain = proxy_server_bypass_list.token();
-    if (bypass_url_domain == "<local>") {
-      // Any name without a DOT (.) is considered to be local.
-      if (url.host().find('.') == std::string::npos)
-        return true;
-      continue;
-    }
+  if (config_.proxy_bypass_local_names) {
+    if (url.host().find('.') == std::string::npos)
+      return true;
+  }
+  
+  for(std::vector<std::string>::const_iterator i = config_.proxy_bypass.begin();
+      i != config_.proxy_bypass.end(); ++i) {
+    std::string bypass_url_domain = *i;
 
     // The proxy server bypass list can contain entities with http/https
     // If no scheme is specified then it indicates that all schemes are
@@ -478,6 +552,12 @@ bool ProxyService::ShouldBypassProxyForURL(const GURL& url) {
 
     if (MatchPattern(url_domain, bypass_url_domain))
       return true;
+      
+    // Some systems (the Mac, for example) allow CIDR-style specification of
+    // proxy bypass for IP-specified hosts (e.g.  "10.0.0.0/8"; see
+    // http://www.tcd.ie/iss/internet/osx_proxy.php for a real-world example).
+    // That's kinda cool so we'll provide that for everyone.
+    // TODO(avi): implement here
   }
 
   return false;

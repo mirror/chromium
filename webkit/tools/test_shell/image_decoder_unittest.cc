@@ -4,15 +4,16 @@
 
 #include "config.h"
 
-#include <windows.h>
+#include "webkit/tools/test_shell/image_decoder_unittest.h"
 
 #include "base/file_util.h"
 #include "base/md5.h"
 #include "base/path_service.h"
-#include "base/scoped_handle.h"
 #include "base/scoped_ptr.h"
+#include "base/string_util.h"
 #include "base/time.h"
-#include "webkit/tools/test_shell/image_decoder_unittest.h"
+
+using base::Time;
 
 void ReadFileToVector(const std::wstring& path, Vector<char>* contents) {
   std::string contents_str;
@@ -42,9 +43,7 @@ void SaveMD5Sum(const std::wstring& path, WebCore::RGBA32Buffer* buffer) {
          &digest);
 
   // Write sum to disk.
-  DWORD bytes_written;
-  ASSERT_TRUE(WriteFile(handle, &digest, sizeof digest, &bytes_written,
-                        NULL));
+  int bytes_written = file_util::WriteFile(path, &digest, sizeof digest);
   ASSERT_EQ(sizeof digest, bytes_written);
 }
 #else
@@ -87,19 +86,20 @@ void ImageDecoderTest::SetUp() {
 }
 
 std::vector<std::wstring> ImageDecoderTest::GetImageFiles() const {
-  std::wstring find_string(data_dir_);
-  file_util::AppendToPath(&find_string, L"*." + format_);
-  WIN32_FIND_DATA find_data;
-  ScopedFindFileHandle handle(FindFirstFile(find_string.c_str(),
-                                            &find_data));
-  EXPECT_TRUE(handle.IsValid());
+  std::wstring pattern = L"*." + format_;
+
+  file_util::FileEnumerator enumerator(FilePath::FromWStringHack(data_dir_),
+                                       false,
+                                       file_util::FileEnumerator::FILES);
 
   std::vector<std::wstring> image_files;
-  do {
-    std::wstring image_path = data_dir_;
-    file_util::AppendToPath(&image_path, find_data.cFileName);
-    image_files.push_back(image_path);
-  } while (FindNextFile(handle, &find_data));
+  std::wstring next_file_name;
+  while ((next_file_name = enumerator.Next().ToWStringHack()) != L"") {
+    if (!MatchPattern(next_file_name, pattern)) {
+      continue;
+    }
+    image_files.push_back(next_file_name);
+  }
 
   return image_files;
 }
@@ -119,7 +119,7 @@ void ImageDecoderTest::TestDecoding() const {
     ReadFileToVector(*i, &image_contents);
 
     scoped_ptr<WebCore::ImageDecoder> decoder(CreateDecoder());
-    RefPtr<WebCore::SharedBuffer> shared_contents(new WebCore::SharedBuffer);
+    RefPtr<WebCore::SharedBuffer> shared_contents(WebCore::SharedBuffer::create());
     shared_contents->append(image_contents.data(),
                             static_cast<int>(image_contents.size()));
     decoder->setData(shared_contents.get(), true);
@@ -164,7 +164,7 @@ void ImageDecoderTest::TestChunkedDecoding() const {
     ReadFileToVector(*i, &image_contents);
     const int partial_size = static_cast<int>(
       (static_cast<double>(rand()) / RAND_MAX) * image_contents.size());
-    RefPtr<WebCore::SharedBuffer> partial_contents(new WebCore::SharedBuffer);
+    RefPtr<WebCore::SharedBuffer> partial_contents(WebCore::SharedBuffer::create());
     partial_contents->append(image_contents.data(), partial_size);
 
     // Make sure the image decoder doesn't fail when we ask for the frame buffer

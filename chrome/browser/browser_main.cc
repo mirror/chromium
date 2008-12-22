@@ -2,18 +2,32 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "build/build_config.h"
+
+#include "base/command_line.h"
+#include "sandbox/src/sandbox.h"
+
+// TODO(port): several win-only methods have been pulled out of this, but 
+// BrowserMain() as a whole needs to be broken apart so that it's usable by
+// other platforms. For now, it's just a stub. This is a serious work in 
+// progress and should not be taken as an indication of a real refactoring.
+
+#if defined(OS_WIN)
+
 #include <windows.h>
 #include <shellapi.h>
 
 #include <algorithm>
 
-#include "base/command_line.h"
 #include "base/file_util.h"
-#include "base/gfx/vector_canvas.h"
 #include "base/histogram.h"
+#include "base/lazy_instance.h"
 #include "base/path_service.h"
+#include "base/process_util.h"
 #include "base/registry.h"
+#include "base/string_piece.h"
 #include "base/string_util.h"
+#include "base/system_monitor.h"
 #include "base/tracked_objects.h"
 #include "base/win_util.h"
 #include "chrome/app/result_codes.h"
@@ -21,6 +35,7 @@
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_init.h"
 #include "chrome/browser/browser_list.h"
+#include "chrome/browser/browser_main_win.h"
 #include "chrome/browser/browser_prefs.h"
 #include "chrome/browser/browser_process_impl.h"
 #include "chrome/browser/browser_shutdown.h"
@@ -37,6 +52,7 @@
 #include "chrome/browser/rlz/rlz.h"
 #include "chrome/browser/shell_integration.h"
 #include "chrome/browser/url_fixer_upper.h"
+#include "chrome/browser/user_data_manager.h"
 #include "chrome/browser/user_metrics.h"
 #include "chrome/browser/views/user_data_dir_dialog.h"
 #include "chrome/common/chrome_constants.h"
@@ -82,11 +98,13 @@ void HandleErrorTestParameters(const CommandLine& command_line) {
   }
 }
 
-// This is called indirectly by the network layer to access resources.
-std::string NetResourceProvider(int key) {
-  const std::string& data_blob =
-      ResourceBundle::GetSharedInstance().GetDataResource(key);
-  if (IDR_DIR_HEADER_HTML == key) {
+// The net module doesn't have access to this HTML or the strings that need to
+// be localized.  The Chrome locale will never change while we're running, so
+// it's safe to have a static string that we always return a pointer into.
+// This allows us to have the ResourceProvider return a pointer into the actual
+// resource (via a StringPiece), instead of always copying resources.
+struct LazyDirectoryListerCacher {
+  LazyDirectoryListerCacher() {
     DictionaryValue value;
     value.SetString(L"header",
                     l10n_util::GetString(IDS_DIRECTORY_LISTING_HEADER));
@@ -98,167 +116,31 @@ std::string NetResourceProvider(int key) {
                     l10n_util::GetString(IDS_DIRECTORY_LISTING_SIZE));
     value.SetString(L"headerDateModified",
                     l10n_util::GetString(IDS_DIRECTORY_LISTING_DATE_MODIFIED));
-    return jstemplate_builder::GetTemplateHtml(data_blob, &value, "t");
+    html_data = jstemplate_builder::GetTemplateHtml(
+        ResourceBundle::GetSharedInstance().GetRawDataResource(
+            IDR_DIR_HEADER_HTML),
+        &value,
+        "t");
   }
 
-  return data_blob;
-}
+  std::string html_data;
+};
 
-// Displays a warning message if the user is running chrome on windows 2000.
-// Returns true if the OS is win2000, false otherwise.
-bool CheckForWin2000() {
-  if (win_util::GetWinVersion() == win_util::WINVERSION_2000) {
-    const std::wstring text = l10n_util::GetString(IDS_UNSUPPORTED_OS_WIN2000);
-    const std::wstring caption = l10n_util::GetString(IDS_PRODUCT_NAME);
-    win_util::MessageBox(NULL, text, caption,
-                         MB_OK | MB_ICONWARNING | MB_TOPMOST);
-    return true;
-  }
-  return false;
-}
+base::LazyInstance<LazyDirectoryListerCacher> lazy_dir_lister(
+    base::LINKER_INITIALIZED);
 
-bool AskForUninstallConfirmation() {
-  const std::wstring text = l10n_util::GetString(IDS_UNINSTALL_VERIFY);
-  const std::wstring caption = l10n_util::GetString(IDS_PRODUCT_NAME);
-  const UINT flags = MB_OKCANCEL | MB_ICONWARNING | MB_TOPMOST;
-  return (IDOK == win_util::MessageBox(NULL, text, caption, flags));
-}
+// This is called indirectly by the network layer to access resources.
+StringPiece NetResourceProvider(int key) {
+  if (IDR_DIR_HEADER_HTML == key)
+    return StringPiece(lazy_dir_lister.Pointer()->html_data);
 
-// Prepares the localized strings that are going to be displayed to
-// the user if the browser process dies. These strings are stored in the
-// environment block so they are accessible in the early stages of the
-// chrome executable's lifetime.
-void PrepareRestartOnCrashEnviroment(const CommandLine &parsed_command_line) {
-  // Clear this var so child processes don't show the dialog by default.
-  ::SetEnvironmentVariableW(env_vars::kShowRestart, NULL);
-
-  // For non-interactive tests we don't restart on crash.
-  if (::GetEnvironmentVariableW(env_vars::kHeadless, NULL, 0))
-    return;
-
-  // If the known command-line test options are used we don't create the
-  // environment block which means we don't get the restart dialog.
-  if (parsed_command_line.HasSwitch(switches::kBrowserCrashTest) ||
-      parsed_command_line.HasSwitch(switches::kBrowserAssertTest) ||
-      parsed_command_line.HasSwitch(switches::kNoErrorDialogs))
-    return;
-
-  // The encoding we use for the info is "title|context|direction" where
-  // direction is either env_vars::kRtlLocale or env_vars::kLtrLocale depending
-  // on the current locale.
-  std::wstring dlg_strings;
-  dlg_strings.append(l10n_util::GetString(IDS_CRASH_RECOVERY_TITLE));
-  dlg_strings.append(L"|");
-  dlg_strings.append(l10n_util::GetString(IDS_CRASH_RECOVERY_CONTENT));
-  dlg_strings.append(L"|");
-  if (l10n_util::GetTextDirection() == l10n_util::RIGHT_TO_LEFT)
-    dlg_strings.append(env_vars::kRtlLocale);
-  else
-    dlg_strings.append(env_vars::kLtrLocale);
-
-  ::SetEnvironmentVariableW(env_vars::kRestartInfo, dlg_strings.c_str());
-}
-
-int DoUninstallTasks() {
-  if (!AskForUninstallConfirmation())
-    return ResultCodes::UNINSTALL_USER_CANCEL;
-  // The following actions are just best effort.
-  LOG(INFO) << "Executing uninstall actions";
-  ResultCodes::ExitCode ret = ResultCodes::NORMAL_EXIT;
-  if (!FirstRun::RemoveSentinel())
-    ret = ResultCodes::UNINSTALL_DELETE_FILE_ERROR;
-  // We only want to modify user level shortcuts so pass false for system_level.
-  if (!ShellUtil::RemoveChromeDesktopShortcut(ShellUtil::CURRENT_USER))
-    ret = ResultCodes::UNINSTALL_DELETE_FILE_ERROR;
-  if (!ShellUtil::RemoveChromeQuickLaunchShortcut(ShellUtil::CURRENT_USER))
-    ret = ResultCodes::UNINSTALL_DELETE_FILE_ERROR;
-  return ret;
-}
-
-// This method handles the --hide-icons and --show-icons command line options
-// for chrome that get triggered by Windows from registry entries
-// HideIconsCommand & ShowIconsCommand. Chrome doesn't support hide icons
-// functionality so we just ask the users if they want to uninstall Chrome.
-int HandleIconsCommands(const CommandLine &parsed_command_line) {
-  if (parsed_command_line.HasSwitch(switches::kHideIcons)) {
-    std::wstring cp_applet;
-    if (win_util::GetWinVersion() == win_util::WINVERSION_VISTA) {
-      cp_applet.assign(L"Programs and Features");  // Windows Vista and later.
-    } else if (win_util::GetWinVersion() == win_util::WINVERSION_XP) {
-      cp_applet.assign(L"Add/Remove Programs");  // Windows XP.
-    } else {
-      return ResultCodes::UNSUPPORTED_PARAM;  // Not supported
-    }
-
-    const std::wstring msg = l10n_util::GetStringF(IDS_HIDE_ICONS_NOT_SUPPORTED,
-                                                   cp_applet);
-    const std::wstring caption = l10n_util::GetString(IDS_PRODUCT_NAME);
-    const UINT flags = MB_OKCANCEL | MB_ICONWARNING | MB_TOPMOST;
-    if (IDOK == win_util::MessageBox(NULL, msg, caption, flags))
-      ShellExecute(NULL, NULL, L"appwiz.cpl", NULL, NULL, SW_SHOWNORMAL);
-    return ResultCodes::NORMAL_EXIT;  // Exit as we are not launching browser.
-  }
-  // We don't hide icons so we shouldn't do anything special to show them
-  return ResultCodes::UNSUPPORTED_PARAM;
-}
-
-bool DoUpgradeTasks(const CommandLine& command_line) {
-  if (!Upgrade::SwapNewChromeExeIfPresent())
-    return false;
-  // At this point the chrome.exe has been swapped with the new one.
-  if (!Upgrade::RelaunchChromeBrowser(command_line)) {
-    // The re-launch fails. Feel free to panic now.
-    NOTREACHED();
-  }
-  return true;
-}
-
-// Check if there is any machine level Chrome installed on the current
-// machine. If yes and the current Chrome process is user level, we do not
-// allow the user level Chrome to run. So we notify the user and uninstall
-// user level Chrome.
-bool CheckMachineLevelInstall() {
-  scoped_ptr<installer::Version> version(InstallUtil::GetChromeVersion(true));
-  if (version.get()) {
-    std::wstring exe;
-    PathService::Get(base::DIR_EXE, &exe);
-    std::transform(exe.begin(), exe.end(), exe.begin(), tolower);
-    std::wstring user_exe_path = installer::GetChromeInstallPath(false);
-    std::transform(user_exe_path.begin(), user_exe_path.end(),
-                   user_exe_path.begin(), tolower);
-    if (exe == user_exe_path) {
-      const std::wstring text =
-          l10n_util::GetString(IDS_MACHINE_LEVEL_INSTALL_CONFLICT);
-      const std::wstring caption = l10n_util::GetString(IDS_PRODUCT_NAME);
-      const UINT flags = MB_OK | MB_ICONERROR | MB_TOPMOST;
-      win_util::MessageBox(NULL, text, caption, flags);
-      std::wstring uninstall_cmd = InstallUtil::GetChromeUninstallCmd(false);
-      if (!uninstall_cmd.empty()) {
-        uninstall_cmd.append(L" --");
-        uninstall_cmd.append(installer_util::switches::kForceUninstall);
-        uninstall_cmd.append(L" --");
-        uninstall_cmd.append(installer_util::switches::kDoNotRemoveSharedItems);
-        process_util::LaunchApp(uninstall_cmd, false, false, NULL);
-      }
-      return true;
-    }
-  }
-  return false;
-}
-
-// We record in UMA the conditions that can prevent breakpad from generating
-// and sending crash reports. Namely that the crash reporting registration
-// failed and that the process is being debugged.
-void RecordBreakpadStatusUMA(MetricsService* metrics) {
-  DWORD len = ::GetEnvironmentVariableW(env_vars::kNoOOBreakpad, NULL, 0);
-  metrics->RecordBreakpadRegistration((len == 0));
-  metrics->RecordBreakpadHasDebugger(TRUE == ::IsDebuggerPresent());
+  return ResourceBundle::GetSharedInstance().GetRawDataResource(key);
 }
 
 }  // namespace
 
 // Main routine for running as the Browser process.
-int BrowserMain(CommandLine &parsed_command_line, int show_command,
+int BrowserMain(CommandLine &parsed_command_line,
                 sandbox::BrokerServices* broker_services) {
   // WARNING: If we get a WM_ENDSESSION objects created on the stack here
   // are NOT deleted. If you need something to run during WM_ENDSESSION add it
@@ -268,6 +150,9 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   //                     defined roles (e.g. pre/post-profile startup, etc).
 
   MessageLoop main_message_loop(MessageLoop::TYPE_UI);
+
+  // Initialize the SystemMonitor
+  base::SystemMonitor::Start();
 
   // Initialize statistical testing infrastructure.
   FieldTrialList field_trial;
@@ -280,10 +165,12 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   main_message_loop.set_thread_name(thread_name);
   bool already_running = Upgrade::IsBrowserAlreadyRunning();
 
+#if defined(OS_WIN)
   // Make the selection of network stacks early on before any consumers try to
   // issue HTTP requests.
-  if (parsed_command_line.HasSwitch(switches::kUseNewHttp))
-    net::HttpNetworkLayer::UseWinHttp(false);
+  if (parsed_command_line.HasSwitch(switches::kUseWinHttp))
+    net::HttpNetworkLayer::UseWinHttp(true);
+#endif
 
   std::wstring user_data_dir;
   PathService::Get(chrome::DIR_USER_DATA, &user_data_dir);
@@ -301,6 +188,10 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
 
   // BrowserProcessImpl's constructor should set g_browser_process.
   DCHECK(g_browser_process);
+
+  std::wstring local_state_path;
+  PathService::Get(chrome::FILE_LOCAL_STATE, &local_state_path);
+  bool local_state_file_exists = file_util::PathExists(local_state_path);
 
   // Load local state.  This includes the application locale so we know which
   // locale dll to load.
@@ -331,6 +222,32 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
     first_run_ui_bypass =
         !FirstRun::ProcessMasterPreferences(user_data_dir,
                                             std::wstring(), NULL);
+
+    // If we are running in App mode, we do not want to show the importer
+    // (first run) UI.
+    if (!first_run_ui_bypass && parsed_command_line.HasSwitch(switches::kApp))
+      first_run_ui_bypass = true;
+  }
+
+  // If the local state file for the current profile doesn't exist and the
+  // parent profile command line flag is present, then we should inherit some
+  // local state from the parent profile.
+  // Checking that the local state file for the current profile doesn't exist
+  // is the most robust way to determine whether we need to inherit or not
+  // since the parent profile command line flag can be present even when the
+  // current profile is not a new one, and in that case we do not want to
+  // inherit and reset the user's setting.
+  if (!local_state_file_exists &&
+      parsed_command_line.HasSwitch(switches::kParentProfile)) {
+    std::wstring parent_profile =
+        parsed_command_line.GetSwitchValue(switches::kParentProfile);
+    PrefService parent_local_state(parent_profile);
+    parent_local_state.RegisterStringPref(prefs::kApplicationLocale,
+                                          std::wstring());
+    // Right now, we only inherit the locale setting from the parent profile.
+    local_state->SetString(
+        prefs::kApplicationLocale,
+        parent_local_state.GetString(prefs::kApplicationLocale));
   }
 
   ResourceBundle::InitSharedInstance(
@@ -352,6 +269,9 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   tracking_objects = tracked_objects::ThreadData::StartTracking(true);
 #endif
 
+  // Initialize the shared instance of user data manager.
+  UserDataManager::Create();
+
   // Try to create/load the profile.
   ProfileManager* profile_manager = browser_process->profile_manager();
   Profile* profile = profile_manager->GetDefaultProfile(user_data_dir);
@@ -371,7 +291,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
           parsed_command_line.command_line_string();
       CommandLine::AppendSwitchWithValue(&new_command_line,
           switches::kUserDataDir, user_data_dir);
-      process_util::LaunchApp(new_command_line, false, false, NULL);
+      base::LaunchApp(new_command_line, false, false, NULL);
     }
 
     return ResultCodes::NORMAL_EXIT;
@@ -418,7 +338,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
     return FirstRun::ImportNow(profile, parsed_command_line);
 
   // When another process is running, use it instead of starting us.
-  if (message_window.NotifyOtherProcess(show_command))
+  if (message_window.NotifyOtherProcess())
     return ResultCodes::NORMAL_EXIT;
 
   message_window.HuntForZombieChromeProcesses();
@@ -459,11 +379,11 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   PrepareRestartOnCrashEnviroment(parsed_command_line);
 
   // Initialize Winsock.
-  net::WinsockInit init;
+  net::EnsureWinsockInit();
 
   // Initialize the DNS prefetch system
   chrome_browser_net::DnsPrefetcherInit dns_prefetch_init(user_prefs);
-  chrome_browser_net::DnsPretchHostNamesAtStartup(user_prefs, local_state);
+  chrome_browser_net::DnsPrefetchHostNamesAtStartup(user_prefs, local_state);
 
   // Init common control sex.
   INITCOMMONCONTROLSEX config;
@@ -481,7 +401,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
   // Config the network module so it has access to resources.
   net::NetModule::SetResourceProvider(NetResourceProvider);
 
-  // Register our global network handler for chrome-resource:// URLs.
+  // Register our global network handler for chrome:// URLs.
   RegisterURLRequestChromeJob();
 
   browser_process->InitBrokerServices(broker_services);
@@ -554,8 +474,7 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
 
   int result_code = ResultCodes::NORMAL_EXIT;
   if (BrowserInit::ProcessCommandLine(parsed_command_line, L"", local_state,
-                                      show_command, true, profile,
-                                      &result_code)) {
+                                      true, profile, &result_code)) {
     MessageLoopForUI::current()->Run(browser_process->accelerator_handler());
   }
 
@@ -582,3 +501,26 @@ int BrowserMain(CommandLine &parsed_command_line, int show_command,
 
   return result_code;
 }
+
+#elif defined(OS_POSIX)
+
+// Call to kick off the main message loop. The implementation for this on Mac
+// must reside in another file because it has to call Cocoa functions and thus
+// cannot live in a .cc file.
+int StartPlatformMessageLoop();
+
+// TODO(port): merge this with above. Just a stub for now, not meant as a place
+// to duplicate code.
+// Main routine for running as the Browser process.
+int BrowserMain(CommandLine &parsed_command_line,
+                sandbox::BrokerServices* broker_services) {
+  return StartPlatformMessageLoop();
+}
+
+#if defined(OS_LINUX)
+void StartPlatformMessageLoop() {
+  return 0;
+}
+#endif
+
+#endif

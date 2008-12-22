@@ -13,12 +13,15 @@
 #include "chrome/browser/template_url.h"
 #include "chrome/common/chrome_constants.h"
 #include "webkit/glue/password_form.h"
+#include "webkit/glue/autofill_form.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 //
 // WebDataService implementation.
 //
 ////////////////////////////////////////////////////////////////////////////////
+
+using base::Time;
 
 WebDataService::WebDataService() : should_commit_(false),
                                    next_request_handle_(1),
@@ -110,6 +113,33 @@ void WebDataService::CancelRequest(Handle h) {
     return;
   }
   i->second->Cancel();
+}
+
+void WebDataService::AddAutofillFormElements(
+    const std::vector<AutofillForm::Element>& element) {
+  GenericRequest<std::vector<AutofillForm::Element> >* request =
+      new GenericRequest<std::vector<AutofillForm::Element> >(
+          this, GetNextRequestHandle(), NULL, element);
+  RegisterRequest(request);
+  ScheduleTask(NewRunnableMethod(this,
+                                 &WebDataService::AddAutofillFormElementsImpl,
+                                 request));
+}
+
+WebDataService::Handle WebDataService::GetFormValuesForElementName(
+    const std::wstring& name, const std::wstring& prefix, int limit,
+    WebDataServiceConsumer* consumer) {
+  WebDataRequest* request =
+      new WebDataRequest(this, GetNextRequestHandle(), consumer);
+  RegisterRequest(request);
+  ScheduleTask(
+      NewRunnableMethod(this,
+                        &WebDataService::GetFormValuesForElementNameImpl,
+                        request,
+                        name,
+                        prefix,
+                        limit));
+  return request->GetHandle();
 }
 
 void WebDataService::RequestCompleted(Handle h) {
@@ -310,6 +340,19 @@ void WebDataService::RemoveLoginsCreatedBetween(const Time delete_begin,
 
 void WebDataService::RemoveLoginsCreatedAfter(const Time delete_begin) {
   RemoveLoginsCreatedBetween(delete_begin, Time());
+}
+
+void WebDataService::RemoveFormElementsAddedBetween(const Time& delete_begin,
+                                                    const Time& delete_end) {
+  GenericRequest2<Time, Time>* request =
+    new GenericRequest2<Time, Time>(this,
+                                    GetNextRequestHandle(),
+                                    NULL,
+                                    delete_begin,
+                                    delete_end);
+  RegisterRequest(request);
+  ScheduleTask(NewRunnableMethod(this,
+      &WebDataService::RemoveFormElementsAddedBetweenImpl, request));
 }
 
 WebDataService::Handle WebDataService::GetLogins(
@@ -554,6 +597,43 @@ void WebDataService::GetAllLoginsImpl(WebDataRequest* request) {
     db_->GetAllLogins(&forms, true);
     request->SetResult(
         new WDResult<std::vector<PasswordForm*> >(PASSWORD_RESULT, forms));
+  }
+  request->RequestComplete();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Autofill support.
+//
+////////////////////////////////////////////////////////////////////////////////
+
+void WebDataService::AddAutofillFormElementsImpl(
+    GenericRequest<std::vector<AutofillForm::Element> >* request) {
+  if (db_ && !request->IsCancelled()) {
+    if (db_->AddAutofillFormElements(request->GetArgument()))
+      ScheduleCommit();
+  }
+  request->RequestComplete();
+}
+
+void WebDataService::GetFormValuesForElementNameImpl(WebDataRequest* request,
+    const std::wstring& name, const std::wstring& prefix, int limit) {
+  if (db_ && !request->IsCancelled()) {
+    std::vector<std::wstring> values;
+    db_->GetFormValuesForElementName(name, prefix, &values, limit);
+    request->SetResult(
+        new WDResult<std::vector<std::wstring> >(AUTOFILL_VALUE_RESULT,
+            values));
+  }
+  request->RequestComplete();
+}
+
+void WebDataService::RemoveFormElementsAddedBetweenImpl(
+    GenericRequest2<Time, Time>* request) {
+  if (db_ && !request->IsCancelled()) {
+    if (db_->RemoveFormElementsAddedBetween(request->GetArgument1(),
+                                            request->GetArgument2()))
+      ScheduleCommit();
   }
   request->RequestComplete();
 }

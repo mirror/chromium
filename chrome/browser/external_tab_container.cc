@@ -14,7 +14,7 @@
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/win_util.h"
 // Included for SetRootViewForHWND.
-#include "chrome/views/container_win.h"
+#include "chrome/views/widget_win.h"
 #include "chrome/test/automation/automation_messages.h"
 
 static const wchar_t kWindowObjectKey[] = L"ChromeWindowObject";
@@ -57,8 +57,7 @@ bool ExternalTabContainer::Init(Profile* profile) {
       views::FocusManager::CreateFocusManager(m_hWnd, GetRootView());
   DCHECK(focus_manager);
   focus_manager->AddKeystrokeListener(this);
-  tab_contents_ = TabContents::CreateWithType(TAB_CONTENTS_WEB,
-                                              m_hWnd, profile, NULL);
+  tab_contents_ = TabContents::CreateWithType(TAB_CONTENTS_WEB, profile, NULL);
   if (!tab_contents_) {
     NOTREACHED();
     DestroyWindow();
@@ -236,8 +235,11 @@ void ExternalTabContainer::Observe(NotificationType type,
   }
 }
 
-void ExternalTabContainer::GetBounds(CRect *out, bool including_frame) const {
-  GetWindowRect(out);
+void ExternalTabContainer::GetBounds(gfx::Rect* out,
+                                     bool including_frame) const {
+  CRect crect;
+  GetWindowRect(&crect);
+  *out = gfx::Rect(crect);
 }
 
 void ExternalTabContainer::MoveToFront(bool should_activate) {

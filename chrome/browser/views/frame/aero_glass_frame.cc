@@ -7,8 +7,8 @@
 #include <dwmapi.h>
 
 #include "chrome/app/theme/theme_resources.h"
-#include "chrome/browser/frame_util.h"
-#include "chrome/browser/views/frame/browser_view2.h"
+#include "chrome/browser/browser_list.h"
+#include "chrome/browser/views/frame/browser_view.h"
 #include "chrome/browser/views/frame/aero_glass_non_client_view.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/window_delegate.h"
@@ -29,7 +29,7 @@ HICON AeroGlassFrame::throbber_icons_[AeroGlassFrame::kThrobberIconCount];
 ///////////////////////////////////////////////////////////////////////////////
 // AeroGlassFrame, public:
 
-AeroGlassFrame::AeroGlassFrame(BrowserView2* browser_view)
+AeroGlassFrame::AeroGlassFrame(BrowserView* browser_view)
     : Window(browser_view),
       browser_view_(browser_view),
       frame_initialized_(false),
@@ -45,8 +45,8 @@ AeroGlassFrame::AeroGlassFrame(BrowserView2* browser_view)
 AeroGlassFrame::~AeroGlassFrame() {
 }
 
-void AeroGlassFrame::Init(const gfx::Rect& bounds) {
-  Window::Init(NULL, bounds);
+void AeroGlassFrame::Init() {
+  Window::Init(NULL, gfx::Rect());
 }
 
 int AeroGlassFrame::GetMinimizeButtonOffset() const {
@@ -91,7 +91,16 @@ views::Window* AeroGlassFrame::GetWindow() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// AeroGlassFrame, views::ContainerWin implementation:
+// AeroGlassFrame, views::WidgetWin overrides:
+
+bool AeroGlassFrame::AcceleratorPressed(views::Accelerator* accelerator) {
+  return browser_view_->AcceleratorPressed(*accelerator);
+}
+
+bool AeroGlassFrame::GetAccelerator(int cmd_id,
+                                    views::Accelerator* accelerator) {
+  return browser_view_->GetAccelerator(cmd_id, accelerator);
+}
 
 void AeroGlassFrame::OnInitMenuPopup(HMENU menu, UINT position,
                                      BOOL is_system_menu) {
@@ -99,11 +108,7 @@ void AeroGlassFrame::OnInitMenuPopup(HMENU menu, UINT position,
 }
 
 void AeroGlassFrame::OnEndSession(BOOL ending, UINT logoff) {
-  FrameUtil::EndSession();
-}
-
-void AeroGlassFrame::OnExitMenuLoop(bool is_track_popup_menu) {
-  browser_view_->SystemMenuEnded();
+  BrowserList::WindowsSessionEnding();
 }
 
 LRESULT AeroGlassFrame::OnMouseActivate(HWND window, UINT hittest_code,
@@ -183,15 +188,10 @@ LRESULT AeroGlassFrame::OnNCHitTest(const CPoint& pt) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// AeroGlassFrame, views::ContainerWin overrides:
+// AeroGlassFrame, views::CustomFrameWindow overrides:
 
-bool AeroGlassFrame::AcceleratorPressed(views::Accelerator* accelerator) {
-  return browser_view_->AcceleratorPressed(*accelerator);
-}
-
-bool AeroGlassFrame::GetAccelerator(int cmd_id,
-                                    views::Accelerator* accelerator) {
-  return browser_view_->GetAccelerator(cmd_id, accelerator);
+int AeroGlassFrame::GetShowState() const {
+  return browser_view_->GetShowState();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

@@ -13,7 +13,7 @@ env.Prepend(
     ],
 )
 
-if env['PLATFORM'] == 'win32':
+if env.Bit('windows'):
   env.Append(
       CCFLAGS = [
           '/TP',
@@ -28,7 +28,10 @@ input_files = [
     'gtest/src/gtest-filepath.cc',
     'gtest/src/gtest-port.cc',
     'gtest/src/gtest.cc',
+    'multiprocess_func_list.cc',
 ]
 
 env.ChromeStaticLibrary('gtest', input_files)
 
+env.ChromeMSVSProject('$TESTING_DIR/gtest.vcproj',
+                guid='{BFE8E2A7-3B3B-43B0-A994-3058B852DB8B}')

@@ -28,9 +28,9 @@
 
 #include "config.h"
 #include "AtomicString.h"
+#include "ChromiumBridge.h"
 #include "FontCache.h"
 #include "FontDescription.h"
-#include "webkit_glue.h"
 
 //
 // This file contains implementations of methods in the "pending" version
@@ -45,7 +45,7 @@ namespace WebCore {
 // TODO in pending/FontCache.h.
 AtomicString FontCache::getGenericFontForScript(UScriptCode script, const FontDescription& description)
 {
-  if (webkit_glue::IsLayoutTestMode())
+  if (ChromiumBridge::layoutTestMode())
     return emptyAtom;
   // TODO(pinkerton) -- flesh this out with some script handling code
   return emptyAtom;

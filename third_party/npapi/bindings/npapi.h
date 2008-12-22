@@ -525,6 +525,15 @@ typedef struct _NPPrint
   } print;
 } NPPrint;
 
+// BEGIN GOOGLE MODIFICATIONS
+#ifdef XP_MACOSX
+typedef struct _NPNSMenu NPNSMenu;
+typedef NPNSMenu NPMenu;
+#else
+typedef void * NPMenu;
+#endif
+// END GOOGLE MODIFICATIONS
+
 #ifdef XP_MACOSX
 typedef EventRecord	NPEvent;
 #elif defined(XP_WIN)

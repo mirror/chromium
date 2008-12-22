@@ -76,8 +76,8 @@ HTMLElement: exception
 BarInfo: no constructor
 CanvasGradient: no constructor
 CanvasPattern: no constructor
-CanvasRenderingContext2D: no constructor
-Clipboard: no constructor
+CanvasRenderingContext2D: exception
+Clipboard: exception
 Console: no constructor
 Counter: exception
 CSSCharsetRule: exception
@@ -100,14 +100,14 @@ DOMWindow: no constructor
 Event: exception
 History: no constructor
 UndetectableHTMLCollection: no constructor
-HTMLCollection: no constructor
+HTMLCollection: exception
 HTMLOptionsCollection: no constructor
 InspectorController: no constructor
 KeyboardEvent: exception
 Location: no constructor
 MediaList: exception
-MimeType: no constructor
-MimeTypeArray: no constructor
+MimeType: exception
+MimeTypeArray: exception
 MouseEvent: exception
 MutationEvent: exception
 NamedNodeMap: exception
@@ -116,8 +116,8 @@ NodeFilter: exception
 NodeIterator: no constructor
 NodeList: exception
 OverflowEvent: exception
-Plugin: no constructor
-PluginArray: no constructor
+Plugin: exception
+PluginArray: exception
 Range: exception
 Rect: exception
 RGBColor: no constructor

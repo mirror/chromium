@@ -35,7 +35,7 @@ void TestNavigationEntry::SetContentState(const std::string& state) {
 
 WebHistoryItem* TestNavigationEntry::GetHistoryItem() const {
   if (!cached_history_item_) {
-    TestShellExtraRequestData* extra_data = 
+    TestShellExtraRequestData* extra_data =
         new TestShellExtraRequestData(GetPageID());
     cached_history_item_ =
         WebHistoryItem::Create(GetURL(), GetTitle(), GetContentState(),
@@ -244,4 +244,3 @@ void TestNavigationController::UpdateMaxPageID() {
   if (entry)
     max_page_id_ = std::max(max_page_id_, entry->GetPageID());
 }
-

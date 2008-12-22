@@ -24,8 +24,8 @@
 #endif
 
 // The URL scheme used for internal chrome resources.
-// This URL scheme is never needed by code external to this module.
-static const char kChromeURLScheme[] = "chrome-resource";
+// TODO(glen): Choose a better location for this.
+static const char kChromeURLScheme[] = "chrome";
 
 // The single global instance of ChromeURLDataManager.
 ChromeURLDataManager chrome_url_data_manager;
@@ -52,6 +52,10 @@ class URLRequestChromeJob : public URLRequestJob {
   // for us.
   void DataAvailable(RefCountedBytes* bytes);
 
+  void SetMimeType(const std::string& mime_type) {
+    mime_type_ = mime_type;
+  }
+
  private:
   // Helper for Start(), to let us start asynchronously.
   // (This pattern is shared by most URLRequestJob implementations.)
@@ -71,6 +75,7 @@ class URLRequestChromeJob : public URLRequestJob {
   // we're reading into.
   char* pending_buf_;
   int pending_buf_size_;
+  std::string mime_type_;
 
   DISALLOW_EVIL_CONSTRUCTORS(URLRequestChromeJob);
 };
@@ -118,7 +123,7 @@ void ChromeURLDataManager::URLToRequest(const GURL& url,
     return;
   }
 
-  // Our input looks like: chrome-resource://source_name/extra_bits?foo .
+  // Our input looks like: chrome://source_name/extra_bits?foo .
   // So the url's "host" is our source, and everything after the host is
   // the path.
   source_name->assign(url.host());
@@ -186,6 +191,11 @@ bool ChromeURLDataManager::StartRequest(const GURL& url,
   // Save this request so we know where to send the data.
   RequestID request_id = next_request_id_++;
   pending_requests_.insert(std::make_pair(request_id, job));
+
+  // TODO(eroman): would be nicer if the mimetype were set at the same time
+  // as the data blob. For now do it here, since NotifyHeadersComplete() is
+  // going to get called once we return.
+  job->SetMimeType(source->GetMimeType(path));
 
   // Forward along the request to the data source.
   source->message_loop()->PostTask(FROM_HERE,
@@ -258,9 +268,8 @@ void URLRequestChromeJob::Kill() {
 }
 
 bool URLRequestChromeJob::GetMimeType(std::string* mime_type) {
-  // Rely on MIME sniffing to simplify the logic here.
-  *mime_type = "text/html";
-  return true;
+  *mime_type = mime_type_;
+  return !mime_type_.empty();
 }
 
 void URLRequestChromeJob::DataAvailable(RefCountedBytes* bytes) {
@@ -322,7 +331,8 @@ void URLRequestChromeJob::StartAsync() {
 URLRequestChromeFileJob::URLRequestChromeFileJob(URLRequest* request,
                                                  const std::wstring& path)
     : URLRequestFileJob(request) {
-  this->file_path_ = path;  // set URLRequestFileJob::file_path_
+  // set URLRequestFileJob::file_path_
+  this->file_path_ = FilePath::FromWStringHack(path);
 }
 
 URLRequestChromeFileJob::~URLRequestChromeFileJob() { }

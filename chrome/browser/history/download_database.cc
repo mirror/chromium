@@ -2,15 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/history/download_database.h"
+
 #include <limits>
 #include <vector>
-
-#include "chrome/browser/history/download_database.h"
 
 #include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/history/download_types.h"
 #include "chrome/common/sqlite_utils.h"
 #include "chrome/common/sqlite_compiled_statement.h"
+
+using base::Time;
 
 // Download schema:
 //
@@ -175,4 +177,3 @@ void DownloadDatabase::SearchDownloads(std::vector<int64>* results,
 }
 
 }  // namespace history
-

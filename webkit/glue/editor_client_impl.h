@@ -5,16 +5,20 @@
 #ifndef WEBKIT_GLUE_EDITOR_CLIENT_IMPL_H__
 #define WEBKIT_GLUE_EDITOR_CLIENT_IMPL_H__
 
+#include "base/compiler_specific.h"
+#include "base/task.h"
+
 #include "build/build_config.h"
 
 #include <deque>
 
-#pragma warning(push, 0)
+MSVC_PUSH_WARNING_LEVEL(0);
 #include "EditorClient.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 
 namespace WebCore {
 class Frame;
+class HTMLInputElement;
 class Node;
 class PlatformKeyboardEvent;
 }
@@ -30,6 +34,7 @@ class EditorClientImpl : public WebCore::EditorClient {
 
   virtual bool shouldShowDeleteInterface(WebCore::HTMLElement*);
   virtual bool smartInsertDeleteEnabled();
+  virtual bool isSelectTrailingWhitespaceEnabled();
   virtual bool isContinuousSpellCheckingEnabled();
   virtual void toggleContinuousSpellChecking();
   virtual bool isGrammarCheckingEnabled();
@@ -42,7 +47,7 @@ class EditorClientImpl : public WebCore::EditorClient {
   virtual bool shouldEndEditing(WebCore::Range* range);
   virtual bool shouldInsertNode(WebCore::Node* node, WebCore::Range* range,
                                 WebCore::EditorInsertAction action);
-  virtual bool shouldInsertText(WebCore::String text, WebCore::Range* range,
+  virtual bool shouldInsertText(const WebCore::String& text, WebCore::Range* range,
                                 WebCore::EditorInsertAction action);
   virtual bool shouldDeleteRange(WebCore::Range* range);
   virtual bool shouldChangeSelectedRange(WebCore::Range* fromRange, 
@@ -82,14 +87,6 @@ class EditorClientImpl : public WebCore::EditorClient {
   virtual void textWillBeDeletedInTextField(WebCore::Element*);
   virtual void textDidChangeInTextArea(WebCore::Element*);
 
-#if defined(OS_MACOSX)
-  virtual NSData* dataForArchivedSelection(WebCore::Frame*); 
-  virtual NSString* userVisibleString(NSURL*);
-#ifdef BUILDING_ON_TIGER
-  virtual NSArray* pasteboardTypesForSelection(WebCore::Frame*);
-#endif
-#endif
-
   virtual void ignoreWordInSpellDocument(const WebCore::String&);
   virtual void learnWord(const WebCore::String&);
   virtual void checkSpellingOfString(const UChar*, int length,
@@ -109,9 +106,6 @@ class EditorClientImpl : public WebCore::EditorClient {
   virtual void setInputMethodState(bool enabled);
 
   void SetUseEditorDelegate(bool value) { use_editor_delegate_ = value; }
-  // HACK for webkit bug #16976.
-  // TODO (timsteele): Clean this up once webkit bug 16976 is fixed.
-  void PreserveSelection();
 
   // It would be better to add these methods to the objects they describe, but
   // those are in WebCore and therefore inaccessible.
@@ -125,25 +119,62 @@ class EditorClientImpl : public WebCore::EditorClient {
   virtual std::wstring Describe(WebCore::EAffinity affinity);
   virtual std::wstring Describe(WebCore::CSSStyleDeclaration* style);
 
+  // Shows the autofill popup for |node| if it is an HTMLInputElement and it is
+  // empty.  This is called when you press the up or down arrow in a text field
+  // or when clicking an already focused text-field.
+  virtual void ShowAutofillForNode(WebCore::Node* node);
+
  private:
   void ModifySelection(WebCore::Frame* frame,
                        WebCore::KeyboardEvent* event);
+
+  // Popups an autofill menu for |input_element| is applicable.
+  // |autofill_on_empty_value| indicates whether the autofill should be shown
+  // when the text-field is empty.
+  void Autofill(WebCore::HTMLInputElement* input_element,
+                bool autofill_on_empty_value);
+
+  // This method is invoked later by Autofill() as when Autofill() is invoked
+  // (from one of the EditorClient callback) the carret position is not
+  // reflecting the last text change yet and we need it to decide whether or not
+  // to show the autofill popup.
+  void DoAutofill(WebCore::HTMLInputElement* input_element,
+                  bool autofill_on_empty_value,
+                  bool backspace);
 
  protected:
   WebViewImpl* web_view_;
   bool use_editor_delegate_;
   bool in_redo_;
 
-  // Should preserve the selection in next call to shouldChangeSelectedRange.
-  bool preserve_;
-
-  // Points to an HTMLInputElement that was just autocompleted (else NULL), 
-  // for use by respondToChangedContents().
-  WebCore::Element* pending_inline_autocompleted_element_;
-
   typedef std::deque<WTF::RefPtr<WebCore::EditCommand> > EditCommandStack;
   EditCommandStack undo_stack_;
   EditCommandStack redo_stack_;
+
+ private:
+  // Returns whether or not the focused control needs spell-checking.
+  // Currently, this function just retrieves the focused node and determines
+  // whether or not it is a <textarea> element or an element whose
+  // contenteditable attribute is true.
+  // TODO(hbono): Bug 740540: This code just implements the default behavior
+  // proposed in this issue. We should also retrieve "spellcheck" attributes 
+  // for text fields and create a flag to over-write the default behavior.
+  bool ShouldSpellcheckByDefault();
+
+  // Whether the last entered key was a backspace.
+  bool backspace_pressed_;
+
+  // This flag is set to false if spell check for this editor is manually 
+  // turned off. The default setting is SPELLCHECK_AUTOMATIC.
+  enum {
+    SPELLCHECK_AUTOMATIC,
+    SPELLCHECK_FORCED_ON,
+    SPELLCHECK_FORCED_OFF
+  };
+  int spell_check_this_field_status_;
+
+  // The method factory used to post autofill related tasks.
+  ScopedRunnableMethodFactory<EditorClientImpl> autofill_factory_;
 };
 
 #endif  // WEBKIT_GLUE_EDITOR_CLIENT_IMPL_H__

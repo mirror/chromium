@@ -8,24 +8,30 @@
 #include <set>
 
 #include "base/file_util.h"
-#include "base/gfx/image_operations.h"
 #include "base/gfx/png_encoder.h"
 #include "base/string_util.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
+#include "chrome/browser/browser.h"
+#include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/first_run.h"
 #include "chrome/browser/importer/firefox2_importer.h"
 #include "chrome/browser/importer/firefox3_importer.h"
 #include "chrome/browser/importer/firefox_importer_utils.h"
 #include "chrome/browser/importer/firefox_profile_lock.h"
 #include "chrome/browser/importer/ie_importer.h"
+#include "chrome/browser/importer/toolbar_importer.h"
 #include "chrome/browser/template_url_model.h"
 #include "chrome/browser/shell_integration.h"
+#include "chrome/browser/views/importer_lock_view.h"
 #include "chrome/browser/webdata/web_data_service.h"
 #include "chrome/common/gfx/favicon_size.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
+#include "chrome/common/win_util.h"
 #include "chrome/views/window.h"
+#include "skia/ext/image_operations.h"
 #include "webkit/glue/image_decoder.h"
 
 #include "generated_resources.h"
@@ -160,8 +166,7 @@ typedef std::map<std::string, const TemplateURL*> HostPathMap;
 
 // Returns the key for the map built by BuildHostPathMap. If url_string is not
 // a valid URL, an empty string is returned, otherwise host+path is returned.
-static std::string HostPathKeyForURL(const std::wstring& url_string) {
-  GURL url(url_string);
+static std::string HostPathKeyForURL(const GURL& url) {
   return url.is_valid() ? url.host() + url.path() : std::string();
 }
 
@@ -182,7 +187,7 @@ static std::string BuildHostPathKey(const TemplateURL* t_url,
                                     bool try_url_if_invalid) {
   if (t_url->url()) {
     if (try_url_if_invalid && !t_url->url()->IsValid())
-      return HostPathKeyForURL(t_url->url()->url());
+      return HostPathKeyForURL(GURL(WideToUTF8(t_url->url()->url())));
 
     if (t_url->url()->SupportsReplacement()) {
       return HostPathKeyForURL(
@@ -264,7 +269,8 @@ void ProfileWriter::AddKeywords(const std::vector<TemplateURL*>& template_urls,
     }
     if (t_url->url() && t_url->url()->IsValid()) {
       model->Add(t_url);
-      if (default_keyword && t_url->url() && t_url->url()->SupportsReplacement())
+      if (default_keyword && t_url->url() && 
+          t_url->url()->SupportsReplacement())
         model->SetDefaultSearchProvider(t_url);
     } else {
       // Don't add invalid TemplateURLs to the model.
@@ -378,9 +384,8 @@ bool Importer::ReencodeFavicon(const unsigned char* src_data, size_t src_len,
     int new_width = decoded.width();
     int new_height = decoded.height();
     calc_favicon_target_size(&new_width, &new_height);
-    decoded = gfx::ImageOperations::Resize(
-        decoded, gfx::ImageOperations::RESIZE_LANCZOS3,
-        gfx::Size(new_width, new_height));
+    decoded = skia::ImageOperations::Resize(
+        decoded, skia::ImageOperations::RESIZE_LANCZOS3, new_width, new_height);
   }
 
   // Encode our bitmap as a PNG.
@@ -419,6 +424,7 @@ ImporterHost::ImporterHost(MessageLoop* file_loop)
 
 ImporterHost::~ImporterHost() {
   STLDeleteContainerPointers(source_profiles_.begin(), source_profiles_.end());
+  if (NULL != importer_)  importer_->Release();
 }
 
 void ImporterHost::Loaded(BookmarkModel* model) {
@@ -478,9 +484,10 @@ void ImporterHost::StartImportSettings(const ProfileInfo& profile_info,
   // will be notified.
   writer_ = writer;
   importer_ = CreateImporterByType(profile_info.browser_type);
+  importer_->AddRef();
   importer_->set_first_run(first_run);
   task_ = NewRunnableMethod(importer_, &Importer::StartImport,
-      profile_info, items, writer_.get(), this);
+      profile_info, items, writer_.get(), file_loop_, this);
 
   // We should lock the Firefox profile directory to prevent corruption.
   if (profile_info.browser_type == FIREFOX2 ||
@@ -491,6 +498,27 @@ void ImporterHost::StartImportSettings(const ProfileInfo& profile_info,
       // show a warning dialog.
       is_source_readable_ = false;
       ShowWarningDialog();
+    }
+  }
+
+  if (profile_info.browser_type == GOOGLE_TOOLBAR5) {
+    if (!ToolbarImporterUtils::IsGoogleGAIACookieInstalled()) {
+      win_util::MessageBox(
+          NULL,
+          l10n_util::GetString(IDS_IMPORTER_GOOGLE_LOGIN_TEXT).c_str(),
+          L"",
+          MB_OK | MB_TOPMOST);
+
+      GURL url("https://www.google.com/accounts/ServiceLogin");
+      BrowsingInstance* instance = new BrowsingInstance(writer_->GetProfile());
+      SiteInstance* site = instance->GetSiteInstanceForURL(url);
+      Browser* browser = BrowserList::GetLastActive();
+      browser->AddTabWithURL(url, GURL(), PageTransition::TYPED, true, site);
+
+      MessageLoop::current()->PostTask(FROM_HERE, NewRunnableMethod(
+        this, &ImporterHost::OnLockViewEnd, false));
+
+      is_source_readable_ = false;
     }
   }
 
@@ -562,6 +590,8 @@ Importer* ImporterHost::CreateImporterByType(ProfileType type) {
       return new Firefox2Importer();
     case FIREFOX3:
       return new Firefox3Importer();
+    case GOOGLE_TOOLBAR5:
+      return new Toolbar5Importer();
   }
   NOTREACHED();
   return NULL;
@@ -582,6 +612,8 @@ const ProfileInfo& ImporterHost::GetSourceProfileInfoAt(int index) const {
 }
 
 void ImporterHost::DetectSourceProfiles() {
+  // The order in which detect is called determines the order
+  // in which the options appear in the dropdown combo-box
   if (ShellIntegration::IsFirefoxDefaultBrowser()) {
     DetectFirefoxProfiles();
     DetectIEProfiles();
@@ -589,6 +621,8 @@ void ImporterHost::DetectSourceProfiles() {
     DetectIEProfiles();
     DetectFirefoxProfiles();
   }
+
+  if (!FirstRun::IsChromeFirstRun()) DetectGoogleToolbarProfiles();
 }
 
 void ImporterHost::DetectIEProfiles() {
@@ -598,6 +632,8 @@ void ImporterHost::DetectIEProfiles() {
   ie->browser_type = MS_IE;
   ie->source_path.clear();
   ie->app_path.clear();
+  ie->services_supported = HISTORY | FAVORITES | COOKIES | PASSWORDS |
+      SEARCH_ENGINES;
   source_profiles_.push_back(ie);
 }
 
@@ -661,7 +697,21 @@ void ImporterHost::DetectFirefoxProfiles() {
     firefox->browser_type = firefox_type;
     firefox->source_path = source_path;
     firefox->app_path = GetFirefoxInstallPath();
+    firefox->services_supported = HISTORY | FAVORITES | COOKIES | PASSWORDS |
+        SEARCH_ENGINES;
     source_profiles_.push_back(firefox);
   }
 }
 
+void ImporterHost::DetectGoogleToolbarProfiles() {
+  if (!FirstRun::IsChromeFirstRun()) {
+    ProfileInfo* google_toolbar = new ProfileInfo();
+    google_toolbar->browser_type = GOOGLE_TOOLBAR5;
+    google_toolbar->description = l10n_util::GetString(
+                                  IDS_IMPORT_FROM_GOOGLE_TOOLBAR);
+    google_toolbar->source_path.clear();
+    google_toolbar->app_path.clear();
+    google_toolbar->services_supported = FAVORITES;
+    source_profiles_.push_back(google_toolbar);
+  }
+}

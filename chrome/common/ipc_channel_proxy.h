@@ -10,6 +10,8 @@
 #include "base/ref_counted.h"
 #include "chrome/common/ipc_channel.h"
 
+class MessageLoop;
+
 namespace IPC {
 
 //-----------------------------------------------------------------------------
@@ -170,7 +172,7 @@ class ChannelProxy : public Message::Sender {
     Channel::Listener* listener_;
 
     // List of filters.  This is only accessed on the IPC thread.
-    std::vector<scoped_refptr<MessageFilter>> filters_;
+    std::vector<scoped_refptr<MessageFilter> > filters_;
     MessageLoop* ipc_message_loop_;
     Channel* channel_;
     std::wstring channel_id_;

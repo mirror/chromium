@@ -13,31 +13,26 @@
 #include "base/rand_util.h"
 #include "base/ref_counted.h"
 #include "base/string_util.h"
-#include "base/win_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
 
 uint32 GenHash() {
-  return static_cast<uint32>(base::RandUInt64());
+  return static_cast<uint32>(base::RandUint64());
 }
 
 }
 
 TEST(SafeBrowsing, BloomFilter) {
-  // rand_util isn't random enough on Win2K, see bug 1076619.
-  if (win_util::GetWinVersion() == win_util::WINVERSION_2000)
-    return;
-
   // Use a small number for unit test so it's not slow.
-  int count = 1000;//100000;
+  uint32 count = 1000;
 
   // Build up the bloom filter.
   scoped_refptr<BloomFilter> filter = new BloomFilter(count * 10);
 
   typedef std::set<int> Values;
   Values values;
-  for (int i = 0; i < count; ++i) {
+  for (uint32 i = 0; i < count; ++i) {
     uint32 value = GenHash();
     values.insert(value);
     filter->Insert(value);

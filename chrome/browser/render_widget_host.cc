@@ -16,6 +16,10 @@
 #include "webkit/glue/webcursor.h"
 #include "webkit/glue/webinputevent.h"
 
+using base::Time;
+using base::TimeDelta;
+using base::TimeTicks;
+
 // How long to (synchronously) wait for the renderer to respond with a
 // PaintRect message, when our backing-store is invalid, before giving up and
 // returning a null or incorrectly sized backing-store from GetBackingStore.
@@ -336,8 +340,8 @@ void RenderWidgetHost::OnMsgClose() {
 }
 
 void RenderWidgetHost::OnMsgRequestMove(const gfx::Rect& pos) {
-  // Don't allow renderer widgets to move themselves by default.  Maybe this
-  // policy will change if we add more types of widgets.
+  // Note that we ignore the position.
+  view_->SetSize(pos.size());
 }
 
 void RenderWidgetHost::OnMsgPaintRect(
@@ -663,6 +667,11 @@ void RenderWidgetHost::ViewDestroyed() {
 }
 
 void RenderWidgetHost::Destroy() {
+  NotificationService::current()->Notify(
+      NOTIFY_RENDER_WIDGET_HOST_DESTROYED,
+      Source<RenderWidgetHost>(this),
+      NotificationService::NoDetails());
+
   // Tell the view to die.
   // Note that in the process of the view shutting down, it can call a ton
   // of other messages on us.  So if you do any other deinitialization here,
@@ -761,7 +770,7 @@ void RenderWidgetHost::PaintRect(HANDLE bitmap, const gfx::Rect& bitmap_rect,
   bool needs_full_paint = false;
   BackingStore* backing_store = 
       BackingStoreManager::PrepareBackingStore(this, view_rect,
-                                               process_->process(),
+                                               process_->process().handle(),
                                                bitmap, bitmap_rect,
                                                &needs_full_paint);
   DCHECK(backing_store != NULL);
@@ -796,7 +805,7 @@ void RenderWidgetHost::ScrollRect(HANDLE bitmap, const gfx::Rect& bitmap_rect,
   // We expect that damaged_rect should equal bitmap_rect.
   DCHECK(gfx::Rect(damaged_rect) == bitmap_rect);
 
-  backing_store->Refresh(process_->process(), bitmap, bitmap_rect);
+  backing_store->Refresh(process_->process().handle(), bitmap, bitmap_rect);
 }
 
 void RenderWidgetHost::RestartHangMonitorTimeout() {
@@ -834,5 +843,3 @@ void RenderWidgetHost::RendererExited() {
 void RenderWidgetHost::SystemThemeChanged() {
   Send(new ViewMsg_ThemeChanged(routing_id_));
 }
-
-

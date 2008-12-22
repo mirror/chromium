@@ -32,16 +32,16 @@ class HistoryPublisher {
   bool Init();
 
   void PublishPageThumbnail(const std::vector<unsigned char>& thumbnail,
-                            const GURL& url, const Time& time) const;
-  void PublishPageContent(const Time& time, const GURL& url,
+                            const GURL& url, const base::Time& time) const;
+  void PublishPageContent(const base::Time& time, const GURL& url,
                           const std::wstring& title,
                           const std::wstring& contents) const;
-  void DeleteUserHistoryBetween(const Time& begin_time,
-                                const Time& end_time) const;
+  void DeleteUserHistoryBetween(const base::Time& begin_time,
+                                const base::Time& end_time) const;
 
  private:
   struct PageData {
-    const Time& time;
+    const base::Time& time;
     const GURL& url;
     const wchar_t* html;
     const wchar_t* title;
@@ -52,7 +52,7 @@ class HistoryPublisher {
 
   // Converts time represented by the Time class object to variant time in UTC.
   // Returns '0' if the time object is NULL.
-  static double TimeToUTCVariantTime(const Time& time);
+  static double TimeToUTCVariantTime(const base::Time& time);
 
   // Initializes the indexer_list_ with the list of indexers that registered
   // with us to index history. Returns true if there are any registered.

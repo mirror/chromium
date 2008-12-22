@@ -22,10 +22,10 @@
 #include "chrome/views/accessibility/accessible_wrapper.h"
 #include "chrome/views/background.h"
 #include "chrome/views/border.h"
-#include "chrome/views/container.h"
 #include "chrome/views/layout_manager.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/tooltip_manager.h"
+#include "chrome/views/widget.h"
 #include "SkShader.h"
 
 namespace views {
@@ -75,9 +75,7 @@ View::View()
       enabled_(true),
       is_visible_(true),
       focusable_(false),
-      background_(NULL),
       accessibility_(NULL),
-      border_(NULL),
       is_parent_owned_(true),
       notify_when_visible_bounds_in_root_changes_(false),
       registered_for_visible_bounds_notification_(false),
@@ -102,10 +100,6 @@ View::~View() {
     else
       child_views_[c]->SetParent(NULL);
   }
-  if (background_)
-    delete background_;
-  if (border_)
-    delete border_;
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -150,7 +144,7 @@ void View::SetBounds(const gfx::Rect& bounds) {
 }
 
 gfx::Rect View::GetLocalBounds(bool include_border) const {
-  if (include_border || border_ == NULL)
+  if (include_border || !border_.get())
     return gfx::Rect(0, 0, width(), height());
 
   gfx::Insets insets;
@@ -288,11 +282,11 @@ void View::SetFocusable(bool focusable) {
 }
 
 FocusManager* View::GetFocusManager() {
-  Container* container = GetContainer();
-  if (!container)
+  Widget* widget = GetWidget();
+  if (!widget)
     return NULL;
 
-  HWND hwnd = container->GetHWND();
+  HWND hwnd = widget->GetHWND();
   if (!hwnd)
     return NULL;
 
@@ -344,12 +338,12 @@ void View::Paint(ChromeCanvas* canvas) {
 }
 
 void View::PaintBackground(ChromeCanvas* canvas) {
-  if (background_)
+  if (background_.get())
     background_->Paint(canvas, this);
 }
 
 void View::PaintBorder(ChromeCanvas* canvas) {
-  if (border_)
+  if (border_.get())
     border_->Paint(*this, canvas);
 }
 
@@ -445,31 +439,10 @@ void View::PaintFloatingView(ChromeCanvas* canvas, View* view,
   view->SetParent(saved_parent);
 }
 
-void View::SetBackground(Background* b) {
-  if (background_ != b)
-    delete background_;
-  background_ = b;
-}
-
-const Background* View::GetBackground() const {
-  return background_;
-}
-
-void View::SetBorder(Border* b) {
-  if (border_ != b)
-    delete border_;
-  border_ = b;
-}
-
-const Border* View::GetBorder() const {
-  return border_;
-}
-
 gfx::Insets View::GetInsets() const {
-  const Border* border = GetBorder();
   gfx::Insets insets;
-  if (border)
-    border->GetInsets(&insets);
+  if (border_.get())
+    border_->GetInsets(&insets);
   return insets;
 }
 
@@ -537,8 +510,7 @@ void View::ProcessMouseReleased(const MouseEvent& e, bool canceled) {
     ConvertPointToScreen(this, &location);
     ContextMenuController* context_menu_controller = context_menu_controller_;
     OnMouseReleased(e, canceled);
-    context_menu_controller_->ShowContextMenu(this, location.x(), location.y(),
-                                              true);
+    ShowContextMenu(location.x(), location.y(), true);
   } else {
     OnMouseReleased(e, canceled);
   }
@@ -776,19 +748,15 @@ View* View::GetViewForPoint(const gfx::Point& point,
   return this;
 }
 
-Container* View::GetContainer() const {
-  // The root view holds a reference to this view hierarchy's container.
-  return parent_ ? parent_->GetContainer() : NULL;
+Widget* View::GetWidget() const {
+  // The root view holds a reference to this view hierarchy's Widget.
+  return parent_ ? parent_->GetWidget() : NULL;
 }
 
 // Get the containing RootView
 RootView* View::GetRootView() {
-  Container* vc = GetContainer();
-  if (vc) {
-    return vc->GetRootView();
-  } else {
-    return NULL;
-  }
+  Widget* widget = GetWidget();
+  return widget ? widget->GetRootView() : NULL;
 }
 
 View* View::GetViewByID(int id) const {
@@ -1319,18 +1287,18 @@ void View::ConvertPointToView(View* src, View* dst, gfx::Point* point,
 
     // If src is NULL, sp is in the screen coordinate system
     if (src == NULL) {
-      Container* vc = dst->GetContainer();
-      if (vc) {
-        CRect b;
-        vc->GetBounds(&b, false);
-        point->SetPoint(point->x() - b.left, point->y() - b.top);
+      Widget* widget = dst->GetWidget();
+      if (widget) {
+        gfx::Rect b;
+        widget->GetBounds(&b, false);
+        point->SetPoint(point->x() - b.x(), point->y() - b.y());
       }
     }
   }
 }
 
 // static
-void View::ConvertPointToContainer(View* src, gfx::Point* p) {
+void View::ConvertPointToWidget(View* src, gfx::Point* p) {
   DCHECK(src);
   DCHECK(p);
 
@@ -1344,9 +1312,9 @@ void View::ConvertPointToContainer(View* src, gfx::Point* p) {
 }
 
 // static
-void View::ConvertPointFromContainer(View *source, gfx::Point* p) {
+void View::ConvertPointFromWidget(View *source, gfx::Point* p) {
   gfx::Point t;
-  ConvertPointToContainer(source, &t);
+  ConvertPointToWidget(source, &t);
   p->SetPoint(p->x() - t.x(), p->y() - t.y());
 }
 
@@ -1356,12 +1324,12 @@ void View::ConvertPointToScreen(View* src, gfx::Point* p) {
   DCHECK(p);
 
   // If the view is not connected to a tree, there's nothing we can do.
-  Container* vc = src->GetContainer();
-  if (vc) {
-    ConvertPointToContainer(src, p);
-    CRect r;
-    vc->GetBounds(&r, false);
-    p->SetPoint(p->x() + r.left, p->y() + r.top);
+  Widget* widget = src->GetWidget();
+  if (widget) {
+    ConvertPointToWidget(src, p);
+    gfx::Rect r;
+    widget->GetBounds(&r, false);
+    p->SetPoint(p->x() + r.x(), p->y() + r.y());
   }
 }
 
@@ -1531,7 +1499,7 @@ void View::Focus() {
   // messages.
   FocusManager* focus_manager = GetFocusManager();
   if (focus_manager)
-    focus_manager->FocusHWND(GetRootView()->GetContainer()->GetHWND());
+    focus_manager->FocusHWND(GetRootView()->GetWidget()->GetHWND());
 }
 
 bool View::CanProcessTabKeyEvents() {
@@ -1548,15 +1516,15 @@ bool View::GetTooltipTextOrigin(int x, int y, gfx::Point* loc) {
 }
 
 void View::TooltipTextChanged() {
-  Container* view_container = GetContainer();
-  if (view_container != NULL && view_container->GetTooltipManager())
-    view_container->GetTooltipManager()->TooltipTextChanged(this);
+  Widget* widget = GetWidget();
+  if (widget && widget->GetTooltipManager())
+    widget->GetTooltipManager()->TooltipTextChanged(this);
 }
 
 void View::UpdateTooltip() {
-  Container* view_container = GetContainer();
-  if (view_container != NULL && view_container->GetTooltipManager())
-    view_container->GetTooltipManager()->UpdateTooltip();
+  Widget* widget = GetWidget();
+  if (widget && widget->GetTooltipManager())
+    widget->GetTooltipManager()->UpdateTooltip();
 }
 
 void View::SetParentOwned(bool f) {
@@ -1577,7 +1545,6 @@ gfx::Rect View::GetVisibleBounds() {
   View* view = this;
   int root_x = 0;
   int root_y = 0;
-  bool has_view_container = false;
   while (view != NULL && !vis_bounds.IsEmpty()) {
     root_x += view->GetX(APPLY_MIRRORING_TRANSFORMATION);
     root_y += view->y();
@@ -1587,9 +1554,8 @@ gfx::Rect View::GetVisibleBounds() {
       ancestor_bounds.SetRect(0, 0, ancestor->width(),
                               ancestor->height());
       vis_bounds = vis_bounds.Intersect(ancestor_bounds);
-    } else if (!view->GetContainer()) {
-      // If the view has no Container, we're not visible. Return an empty
-      // rect.
+    } else if (!view->GetWidget()) {
+      // If the view has no Widget, we're not visible. Return an empty rect.
       return gfx::Rect();
     }
     view = ancestor;

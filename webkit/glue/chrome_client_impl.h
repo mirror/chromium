@@ -5,21 +5,27 @@
 #ifndef WEBKIT_GLUE_CHROME_CLIENT_IMPL_H__
 #define WEBKIT_GLUE_CHROME_CLIENT_IMPL_H__
 
-#pragma warning(push, 0)
-#include "ChromeClientWin.h"
-#pragma warning(pop)
+#include "base/compiler_specific.h"
 
+MSVC_PUSH_WARNING_LEVEL(0);
+#include "ChromeClientChromium.h"
+MSVC_POP_WARNING();
+
+class WebCursor;
 class WebViewImpl;
+
 namespace WebCore {
-    class SecurityOrigin;
-    struct WindowFeatures;
+class SecurityOrigin;
+struct WindowFeatures;
 }
 
 // Handles window-level notifications from WebCore on behalf of a WebView.
-class ChromeClientImpl : public WebCore::ChromeClientWin {
+class ChromeClientImpl : public WebCore::ChromeClientChromium {
 public:
   ChromeClientImpl(WebViewImpl* webview);
   virtual ~ChromeClientImpl();
+
+  WebViewImpl* webview() { return webview_; }
 
   virtual void chromeDestroyed();
 
@@ -70,8 +76,11 @@ public:
 
   virtual void runJavaScriptAlert(WebCore::Frame*, const WebCore::String&);
   virtual bool runJavaScriptConfirm(WebCore::Frame*, const WebCore::String&);
-  virtual bool runJavaScriptPrompt(WebCore::Frame*, const WebCore::String& message, const WebCore::String& defaultValue, WebCore::String& result);
-  
+  virtual bool runJavaScriptPrompt(WebCore::Frame*,
+                                   const WebCore::String& message,
+                                   const WebCore::String& defaultValue,
+                                   WebCore::String& result);
+
   virtual void setStatusbarText(const WebCore::String&);
   virtual bool shouldInterruptJavaScript();
 
@@ -83,22 +92,39 @@ public:
   virtual bool tabsToLinks() const;
 
   virtual WebCore::IntRect windowResizerRect() const;
-  virtual void addToDirtyRegion(const WebCore::IntRect&);
-  virtual void scrollBackingStore(int dx, int dy, const WebCore::IntRect& scrollViewRect, const WebCore::IntRect& clipRect);
-  virtual void updateBackingStore();
 
-  virtual void mouseDidMoveOverElement(const WebCore::HitTestResult& result, unsigned modifierFlags);
+  virtual void repaint(const WebCore::IntRect&, bool contentChanged,
+                       bool immediate = false, bool repaintContentOnly = false);
+  virtual void scroll(const WebCore::IntSize& scrollDelta,
+                      const WebCore::IntRect& rectToScroll,
+                      const WebCore::IntRect& clipRect);
+  virtual WebCore::IntPoint screenToWindow(const WebCore::IntPoint&) const;
+  virtual WebCore::IntRect windowToScreen(const WebCore::IntRect&) const;
+  virtual PlatformWidget platformWindow() const;
+
+  virtual void mouseDidMoveOverElement(const WebCore::HitTestResult& result,
+                                       unsigned modifierFlags);
 
   virtual void setToolTip(const WebCore::String& tooltip_text);
-
-  virtual void runFileChooser(const WebCore::String&,
-                              PassRefPtr<WebCore::FileChooser>);
-  virtual WebCore::IntRect windowToScreen(const WebCore::IntRect& rect);
 
   virtual void print(WebCore::Frame*);
 
   virtual void exceededDatabaseQuota(WebCore::Frame*,
-                                          const WebCore::String& databaseName);
+                                     const WebCore::String& databaseName);
+
+  virtual void runOpenPanel(WebCore::Frame*,
+                            PassRefPtr<WebCore::FileChooser>);
+  virtual void popupOpened(WebCore::FramelessScrollView* popup_view,
+                           const WebCore::IntRect& bounds,
+                           bool focus_on_show);
+
+  void SetCursor(const WebCursor& cursor);
+
+  virtual void enableSuddenTermination();
+  virtual void disableSuddenTermination();
+
+  // TODO(brettw): Implement me!
+  virtual void formStateDidChange(const WebCore::Node*) { }
 
 private:
   WebViewImpl* webview_;  // weak pointer

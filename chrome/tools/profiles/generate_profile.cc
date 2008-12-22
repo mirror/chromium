@@ -19,6 +19,8 @@
 #include "chrome/common/thumbnail_score.h"
 #include "SkBitmap.h"
 
+using base::Time;
+
 // Probabilities of different word lengths, as measured from Darin's profile.
 //   kWordLengthProbabilities[n-1] = P(word of length n)
 const float kWordLengthProbabilities[] = { 0.069f, 0.132f, 0.199f,
@@ -179,7 +181,7 @@ void InsertURLBatch(const std::wstring& profile_dir, int page_id,
 }
 
 int main(int argc, const char* argv[]) {
-  process_util::EnableTerminationOnHeapCorruption();
+  base::EnableTerminationOnHeapCorruption();
   base::AtExitManager exit_manager;
 
   int next_arg = 1;
@@ -216,4 +218,3 @@ int main(int argc, const char* argv[]) {
 
   return 0;
 }
-

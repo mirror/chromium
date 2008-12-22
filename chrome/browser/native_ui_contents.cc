@@ -16,12 +16,12 @@
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/background.h"
 #include "chrome/views/checkbox.h"
-#include "chrome/views/container_win.h"
 #include "chrome/views/grid_layout.h"
 #include "chrome/views/image_view.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/scroll_view.h"
 #include "chrome/views/throbber.h"
+#include "chrome/views/widget_win.h"
 
 #include "generated_resources.h"
 
@@ -148,10 +148,9 @@ NativeUIContents::~NativeUIContents() {
                                        path_to_native_uis_.end());
 }
 
-void NativeUIContents::CreateView(HWND parent_hwnd,
-                                  const gfx::Rect& initial_bounds) {
+void NativeUIContents::CreateView() {
   set_delete_on_destroy(false);
-  ContainerWin::Init(parent_hwnd, initial_bounds, false);
+  WidgetWin::Init(GetDesktopWindow(), gfx::Rect(), false);
 }
 
 LRESULT NativeUIContents::OnCreate(LPCREATESTRUCT create_struct) {
@@ -164,7 +163,7 @@ LRESULT NativeUIContents::OnCreate(LPCREATESTRUCT create_struct) {
 
   // Install the focus manager so we get notified of Tab key events.
   views::FocusManager::InstallFocusSubclass(GetHWND(), NULL);
-  GetRootView()->SetBackground(new NativeUIBackground);
+  GetRootView()->set_background(new NativeUIBackground);
   return 0;
 }
 
@@ -198,10 +197,8 @@ void NativeUIContents::OnWindowPosChanged(WINDOWPOS* position) {
   SetMsgHandled(FALSE);
 }
 
-void NativeUIContents::GetContainerBounds(gfx::Rect *out) const {
-  CRect r;
-  GetBounds(&r, false);
-  *out = r;
+void NativeUIContents::GetContainerBounds(gfx::Rect* out) const {
+  GetBounds(out, false);
 }
 
 void NativeUIContents::SetPageState(PageState* page_state) {
@@ -497,10 +494,11 @@ SearchableUIContainer::SearchableUIContainer(
   search_field_->SetController(this);
 
   scroll_view_ = new views::ScrollView;
-  scroll_view_->SetBackground(views::Background::CreateSolidBackground(kBackground));
+  scroll_view_->set_background(
+      views::Background::CreateSolidBackground(kBackground));
 
   // Set background class so that native controls can get a color.
-  SetBackground(new SearchableUIBackground(kBackground));
+  set_background(new SearchableUIBackground(kBackground));
 
   throbber_ = new views::SmoothedThrobber(50);
 
@@ -516,7 +514,7 @@ SearchableUIContainer::SearchableUIContainer(
 
   // Set a background color for the search button.  If SearchableUIContainer
   // provided a background, then the search button could inherit that instead.
-  search_button_->SetBackground(new SearchableUIBackground(kBackground));
+  search_button_->set_background(new SearchableUIBackground(kBackground));
 
   // For the first row (icon, title/text field, search button and throbber).
   ColumnSet* column_set = layout->AddColumnSet(0);

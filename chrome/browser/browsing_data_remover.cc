@@ -8,8 +8,8 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/profile.h"
-#include "chrome/browser/session_service.h"
-#include "chrome/browser/tab_restore_service.h"
+#include "chrome/browser/sessions/session_service.h"
+#include "chrome/browser/sessions/tab_restore_service.h"
 #include "chrome/browser/template_url_model.h"
 #include "chrome/browser/user_metrics.h"
 #include "chrome/browser/webdata/web_data_service.h"
@@ -19,6 +19,8 @@
 #include "net/http/http_cache.h"
 #include "net/url_request/url_request_context.h"
 #include "webkit/glue/password_form.h"
+
+using base::Time;
 
 // Done so that we can use invokeLater on BrowsingDataRemovers and not have
 // BrowsingDataRemover implement RefCounted.
@@ -75,19 +77,22 @@ void BrowsingDataRemover::Remove(int remove_mask) {
     // We also delete the list of recently closed tabs. Since these expire,
     // they can't be more than a day old, so we can simply clear them all.
     TabRestoreService* tab_service = profile_->GetTabRestoreService();
-    if (tab_service)
-      tab_service->ClearHistoricalTabs();
+    if (tab_service) {
+      tab_service->ClearEntries();
+      tab_service->DeleteLastSession();
+    }
 
     // We also delete the last session when we delete the history.
     SessionService* session_service = profile_->GetSessionService();
     if (session_service)
-      session_service->DeleteSession(false);   // Last session.
+      session_service->DeleteLastSession();
   }
 
   if (remove_mask & REMOVE_DOWNLOADS) {
     UserMetrics::RecordAction(L"ClearBrowsingData_Downloads", profile_);
     DownloadManager* download_manager = profile_->GetDownloadManager();
     download_manager->RemoveDownloadsBetween(delete_begin_, delete_end_);
+    download_manager->ClearLastDownloadPath();
   }
 
   if (remove_mask & REMOVE_COOKIES) {
@@ -103,6 +108,15 @@ void BrowsingDataRemover::Remove(int remove_mask) {
         profile_->GetWebDataService(Profile::EXPLICIT_ACCESS);
 
     web_data_service->RemoveLoginsCreatedBetween(delete_begin_, delete_end_);
+  }
+
+  if (remove_mask & REMOVE_FORM_DATA) {
+    UserMetrics::RecordAction(L"ClearBrowsingData_Autofill", profile_);
+    WebDataService* web_data_service =
+        profile_->GetWebDataService(Profile::EXPLICIT_ACCESS);
+
+    web_data_service->RemoveFormElementsAddedBetween(delete_begin_,
+        delete_end_);
   }
 
   if (remove_mask & REMOVE_CACHE) {
@@ -200,4 +214,3 @@ void BrowsingDataRemover::ClearCacheOnIOThread(Time delete_begin,
   ui_loop->PostTask(FROM_HERE, NewRunnableMethod(
       this, &BrowsingDataRemover::ClearedCache));
 }
-

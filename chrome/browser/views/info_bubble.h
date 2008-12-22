@@ -6,8 +6,8 @@
 #define CHROME_BROWSER_VIEWS_INFO_BUBBLE_H_
 
 #include "chrome/common/slide_animation.h"
-#include "chrome/views/container_win.h"
 #include "chrome/views/view.h"
+#include "chrome/views/widget_win.h"
 
 // InfoBubble is used to display an arbitrary view above all other windows.
 // Think of InfoBubble as a tooltip that allows you to embed an arbitrary view
@@ -18,19 +18,24 @@
 // (or rather ContentView) insets the content view for you, so that the
 // content typically shouldn't have any additional margins around the view.
 
-class BrowserWindow;
 class InfoBubble;
+namespace views {
+class Window;
+}
 
 class InfoBubbleDelegate {
  public:
   // Called when the InfoBubble is closing and is about to be deleted.
-  virtual void InfoBubbleClosing(InfoBubble* info_bubble) = 0;
+  // |closed_by_escape| is true if the close is the result of the user pressing
+  // escape.
+  virtual void InfoBubbleClosing(InfoBubble* info_bubble,
+                                 bool closed_by_escape) = 0;
 
   // Whether the InfoBubble should be closed when the Esc key is pressed.
   virtual bool CloseOnEscape() = 0;
 };
 
-class InfoBubble : public views::ContainerWin,
+class InfoBubble : public views::WidgetWin,
                    public AnimationDelegate {
  public:
   // Shows the InfoBubble. The InfoBubble is parented to parent_hwnd, contains
@@ -145,12 +150,16 @@ class InfoBubble : public views::ContainerWin,
   // Creates and return a new ContentView containing content.
   virtual ContentView* CreateContentView(views::View* content);
 
-  // Returns the BrowserWindow that owns this InfoBubble.
-  BrowserWindow* GetHostingWindow();
-
  private:
+  // Closes the window notifying the delegate. |closed_by_escape| is true if
+  // the close is the result of pressing escape.
+  void Close(bool closed_by_escape);
+
   // The delegate notified when the InfoBubble is closed.
   InfoBubbleDelegate* delegate_;
+
+  // The window that this InfoBubble is parented to.
+  views::Window* parent_;
 
   // The content view contained by the infobubble.
   ContentView* content_view_;
@@ -158,8 +167,10 @@ class InfoBubble : public views::ContainerWin,
   // The fade-in animation.
   scoped_ptr<SlideAnimation> fade_animation_;
 
+  // Have we been closed?
+  bool closed_;
+
   DISALLOW_COPY_AND_ASSIGN(InfoBubble);
 };
 
 #endif  // CHROME_BROWSER_VIEWS_INFO_BUBBLE_H_
-

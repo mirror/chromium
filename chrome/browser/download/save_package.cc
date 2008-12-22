@@ -31,11 +31,14 @@
 #include "chrome/common/pref_service.h"
 #include "chrome/common/stl_util-inl.h"
 #include "chrome/common/win_util.h"
+#include "net/base/mime_util.h"
 #include "net/base/net_util.h"
 #include "net/url_request/url_request_context.h"
 #include "webkit/glue/dom_serializer_delegate.h"
 
 #include "generated_resources.h"
+
+using base::Time;
 
 // Default name which will be used when we can not get proper name from
 // resource URL.
@@ -1027,7 +1030,9 @@ bool SavePackage::IsSavableContents(const std::string& contents_mime_type) {
   return contents_mime_type == "text/html" ||
          contents_mime_type == "text/xml" ||
          contents_mime_type == "application/xhtml+xml" ||
-         contents_mime_type == "text/plain";
+         contents_mime_type == "text/plain" ||
+         contents_mime_type == "text/css" ||
+         net::IsSupportedJavascriptMimeType(contents_mime_type.c_str());
 }
 
 // Static
@@ -1063,4 +1068,3 @@ bool SavePackage::GetSafePureFileName(const std::wstring& dir_path,
     return false;
   }
 }
-

@@ -43,14 +43,15 @@ class ToolbarStarToggle : public views::ToggleButton,
 
  private:
   // InfoBubbleDelegate.
-  virtual void InfoBubbleClosing(InfoBubble* info_bubble);
+  virtual void InfoBubbleClosing(InfoBubble* info_bubble,
+                                 bool closed_by_escape);
   virtual bool CloseOnEscape();
 
   // Contains us.
   BrowserToolbarView* host_;
 
   // Time the bubble last closed.
-  TimeTicks bubble_closed_time_;
+  base::TimeTicks bubble_closed_time_;
 
   // If true NotifyClick does nothing. This is set in OnMousePressed based on
   // the amount of time between when the bubble clicked and now.

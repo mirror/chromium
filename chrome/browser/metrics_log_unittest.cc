@@ -10,6 +10,8 @@
 #include "googleurl/src/gurl.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using base::TimeDelta;
+
 namespace {
   class MetricsLogTest : public testing::Test {
   };
@@ -111,7 +113,7 @@ TEST(MetricsLogTest, CreateHash) {
     {"NewTab", "0x290eb683f96572f1"},
   };
 
-  for (int i = 0; i < arraysize(cases); i++) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(cases); i++) {
     std::string hash_string = MetricsLog::CreateHash(cases[i].input);
 
     // Convert to hex string

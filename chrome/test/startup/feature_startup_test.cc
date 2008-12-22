@@ -15,6 +15,8 @@
 #include "chrome/test/ui/ui_test.h"
 #include "net/base/net_util.h"
 
+using base::TimeDelta;
+
 namespace {
 
 // Returns the directory name where the "typical" user data is that we use for
@@ -39,20 +41,18 @@ class NewTabUIStartupTest : public UITest {
 
   static const int kNumCycles = 5;
 
-  void PrintTimings(const char* label, TimeDelta timings[kNumCycles]) {
-    printf("\n%s = [", label);
-    for (int i = 0; i < kNumCycles; ++i) {
-      if (i > 0)
-        printf(",");
-      printf("%.2f", timings[i].InMillisecondsF());
-    }
-    printf("]\n");
+  void PrintTimings(const wchar_t* label, TimeDelta timings[kNumCycles],
+                    bool important) {
+    std::wstring times;
+    for (int i = 0; i < kNumCycles; ++i)
+      StringAppendF(&times, L"%.2f,", timings[i].InMillisecondsF());
+    PrintResultList(L"new_tab", L"", label, times, L"ms", important);
   }
 
   // Run the test, by bringing up a browser and timing the new tab startup.
   // |want_warm| is true if we should output warm-disk timings, false if
   // we should report cold timings.
-  void RunStartupTest(bool want_warm) {
+  void RunStartupTest(const wchar_t* label, bool want_warm, bool important) {
     // Install the location of the test profile file.
     set_template_user_data(ComputeTypicalUserDataSource());
 
@@ -69,7 +69,7 @@ class NewTabUIStartupTest : public UITest {
       ASSERT_EQ(1, old_tab_count);
 
       // Hit ctl-t and wait for the tab to load.
-      window->ApplyAccelerator(IDC_NEWTAB);
+      window->ApplyAccelerator(IDC_NEW_TAB);
       int new_tab_count = -1;
       ASSERT_TRUE(window->WaitForTabCountToChange(old_tab_count, &new_tab_count,
                                                   5000));
@@ -82,9 +82,9 @@ class NewTabUIStartupTest : public UITest {
         // Bring up a second tab, now that we've already shown one tab.
         old_tab_count = new_tab_count;
         new_tab_count = -1;
-        window->ApplyAccelerator(IDC_NEWTAB);
-        ASSERT_TRUE(window->WaitForTabCountToChange(old_tab_count, &new_tab_count,
-                                                    5000));
+        window->ApplyAccelerator(IDC_NEW_TAB);
+        ASSERT_TRUE(window->WaitForTabCountToChange(old_tab_count,
+                                                    &new_tab_count, 5000));
         ASSERT_EQ(3, new_tab_count);
         ASSERT_TRUE(automation()->WaitForInitialNewTabUILoad(&load_time));
         timings[i] = TimeDelta::FromMilliseconds(load_time);
@@ -94,41 +94,18 @@ class NewTabUIStartupTest : public UITest {
       UITest::TearDown();
     }
 
-    // The buildbot log-scraper looks for this "__.._pages" line to tell when
-    // the test has completed and how many pages it loaded.
-    printf("\n__ts_pages = [about:blank]\n");
-    PrintTimings("__ts_timings", timings);
+    PrintTimings(label, timings, important);
   }
 };
 
-// The name of this test is important, since the buildbot runs with a gTest
-// filter.
-typedef NewTabUIStartupTest NewTabUIStartupTestReference;
-
 }  // namespace
 
+// TODO(pamg): run these tests with a reference build?
+
 TEST_F(NewTabUIStartupTest, PerfCold) {
-  RunStartupTest(false);
+  RunStartupTest(L"tab_cold", false /* not cold */, true /* important */);
 }
 
 TEST_F(NewTabUIStartupTest, DISABLED_PerfWarm) {
-  RunStartupTest(true);
-}
-
-TEST_F(NewTabUIStartupTestReference, FakePerfForLogScraperCold) {
-  // Print an empty reference-test result line so the log-scraper is happy.
-  // TODO(pamg): really run the test with a reference build?
-  TimeDelta timings[kNumCycles];
-  for (int i = 0; i < kNumCycles; ++i)
-    timings[i] = TimeDelta::FromMilliseconds(0);
-  PrintTimings("__ts_reference_timings", timings);
-}
-
-TEST_F(NewTabUIStartupTestReference, FakePerfForLogScraperWarm) {
-  // Print an empty reference-test result line so the log-scraper is happy.
-  // TODO(pamg): really run the test with a reference build?
-  TimeDelta timings[kNumCycles];
-  for (int i = 0; i < kNumCycles; ++i)
-    timings[i] = TimeDelta::FromMilliseconds(0);
-  PrintTimings("__ts_reference_timings", timings);
+  RunStartupTest(L"tab_warm", true /* cold */, false /* not important */);
 }

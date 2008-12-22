@@ -125,6 +125,14 @@
 			Name="API"
 			>
 			<File
+				RelativePath="..\..\glue\autofill_form.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\autofill_form.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\glue\cache_manager.h"
 				>
 			</File>
@@ -161,6 +169,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\glue\screen_info.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\glue\webdatasource.h"
 				>
 			</File>
@@ -178,6 +190,14 @@
 			</File>
 			<File
 				RelativePath="..\..\glue\webinputevent.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\webmediaplayer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\webmediaplayer_delegate.h"
 				>
 			</File>
 			<File
@@ -261,11 +281,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\glue\autocomplete_input_listener.cc"
+				RelativePath="..\..\glue\back_forward_list_client_impl.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\glue\autocomplete_input_listener.h"
+				RelativePath="..\..\glue\back_forward_list_client_impl.h"
 				>
 			</File>
 			<File
@@ -278,6 +298,18 @@
 			</File>
 			<File
 				RelativePath="..\..\glue\chrome_client_impl.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\chromium_bridge_impl.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\clipboard_conversion.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\clipboard_conversion.h"
 				>
 			</File>
 			<File
@@ -417,6 +449,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\glue\media_player_private_impl.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\..\glue\multipart_response_delegate.cc"
 				>
 			</File>
@@ -461,11 +497,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\glue\resource_handle_win.cc"
+				RelativePath="..\..\glue\resource_handle_impl.cc"
 				>
 			</File>
 			<File
 				RelativePath="..\..\glue\resource_loader_bridge.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\scoped_clipboard_writer_glue.h"
 				>
 			</File>
 			<File
@@ -494,6 +534,10 @@
 			</File>
 			<File
 				RelativePath="..\..\glue\webcursor.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\webcursor_win.cc"
 				>
 			</File>
 			<File
@@ -562,6 +606,18 @@
 			</File>
 			<File
 				RelativePath="..\..\glue\webkit_glue.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\webkit_glue_win.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\webmediaplayer_impl.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\webmediaplayer_impl.h"
 				>
 			</File>
 			<File
@@ -670,6 +726,10 @@
 			</File>
 			<File
 				RelativePath="..\..\glue\plugins\plugin_stream_url.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\plugins\plugin_stream_win.cc"
 				>
 			</File>
 			<File

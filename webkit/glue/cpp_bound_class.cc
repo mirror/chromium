@@ -14,17 +14,20 @@
 
 #include "config.h"
 
+#include "base/compiler_specific.h"
+
 #include "webkit/glue/cpp_bound_class.h"
 #include "webkit/glue/webframe.h"
 
 // This is required for the KJS build due to an artifact of the
 // npruntime_priv.h file from JavaScriptCore/bindings.
-#pragma warning(disable:4067)
+MSVC_PUSH_DISABLE_WARNING(4067)
 #include "npruntime_priv.h"
+MSVC_POP_WARNING()
 
-#if USE(JAVASCRIPTCORE_BINDINGS)
+#if USE(JSC)
 #pragma warning(push, 0)
-#include "JSLock.h"
+#include <runtime/JSLock.h>
 #pragma warning(pop)
 #endif
 
@@ -146,7 +149,7 @@ CppBoundClass::~CppBoundClass() {
   // Unregister objects we created and bound to a frame.
   for (BoundObjectList::iterator i = bound_objects_.begin(); 
       i != bound_objects_.end(); ++i) {
-#if USE(V8_BINDING)
+#if USE(V8)
     _NPN_UnregisterObject(*i);
 #endif
     NPN_ReleaseObject(*i);
@@ -236,8 +239,8 @@ bool CppBoundClass::IsMethodRegistered(std::string name) {
 
 void CppBoundClass::BindToJavascript(WebFrame* frame,
                                      const std::wstring& classname) {
-#if USE(JAVASCRIPTCORE_BINDINGS)
-  KJS::JSLock lock;
+#if USE(JSC)
+  JSC::JSLock lock(false);
 #endif
 
   // Create an NPObject using our static NPClass.  The first argument (a

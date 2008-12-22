@@ -16,6 +16,8 @@
 #include "base/scoped_ptr.h"
 #include "base/string_util.h"
 
+using base::TimeDelta;
+
 typedef Histogram::Count Count;
 
 // static
@@ -23,7 +25,7 @@ const int Histogram::kHexRangePrintingFlag = 0x8000;
 
 Histogram::Histogram(const wchar_t* name, Sample minimum,
                      Sample maximum, size_t bucket_count)
-  : StatsRate(name),
+  : StatsRate(WideToASCII(name).c_str()),
     histogram_name_(WideToASCII(name)),
     declared_min_(minimum),
     declared_max_(maximum),
@@ -37,7 +39,7 @@ Histogram::Histogram(const wchar_t* name, Sample minimum,
 
 Histogram::Histogram(const wchar_t* name, TimeDelta minimum,
                      TimeDelta maximum, size_t bucket_count)
-  : StatsRate(name),
+  : StatsRate(WideToASCII(name).c_str()),
     histogram_name_(WideToASCII(name)),
     declared_min_(static_cast<int> (minimum.InMilliseconds())),
     declared_max_(static_cast<int> (maximum.InMilliseconds())),

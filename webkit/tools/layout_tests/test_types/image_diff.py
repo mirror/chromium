@@ -10,6 +10,7 @@ test results directory.
 """
 
 import errno
+import logging
 import os
 import shutil
 
@@ -38,20 +39,19 @@ class ImageDiff(test_type_base.TestTypeBase):
       if errno.ENOENT != e.errno:
         raise
 
-  def _SaveBaselineFiles(self, filename, dest_dir, png_path, checksum):
+  def _SaveBaselineFiles(self, filename, png_path, checksum):
     """Saves new baselines for the PNG and checksum.
 
     Args:
       filename: test filename
-      dest_dir: outer directory into which the results should be saved.
       png_path: path to the actual PNG result file
       checksum: value of the actual checksum result
     """
     png_file = open(png_path, "rb")
     png_data = png_file.read()
     png_file.close()
-    self._SaveBaselineData(filename, dest_dir, png_data, ".png")
-    self._SaveBaselineData(filename, dest_dir, checksum, ".checksum")
+    self._SaveBaselineData(filename, png_data, ".png")
+    self._SaveBaselineData(filename, checksum, ".checksum")
 
   def CompareOutput(self, filename, proc, output, test_args):
     """Implementation of CompareOutput that checks the output image and
@@ -65,18 +65,20 @@ class ImageDiff(test_type_base.TestTypeBase):
 
     # If we're generating a new baseline, we pass.
     if test_args.new_baseline:
-      self._SaveBaselineFiles(filename, test_args.new_baseline,
-                              test_args.png_path, test_args.hash)
+      self._SaveBaselineFiles(filename, test_args.png_path, test_args.hash)
       return failures
 
     # Compare hashes.
     expected_hash_file = path_utils.ExpectedFilename(filename,
                                                      '.checksum',
-                                                     self._custom_result_id)
+                                                     self._platform)
 
     expected_png_file = path_utils.ExpectedFilename(filename,
                                                     '.png',
-                                                    self._custom_result_id)
+                                                    self._platform)
+
+    if test_args.show_sources:
+      logging.debug('Using %s' % expected_png_file)
 
     try:
       expected_hash = open(expected_hash_file, "r").read()

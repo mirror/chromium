@@ -68,9 +68,6 @@ class DownloadShelfView : public views::View,
   // one.
   void ChangeTabContents(TabContents* old_contents, TabContents* new_contents);
 
- protected:
-  virtual void ViewHierarchyChanged(bool is_add, View* parent, View* child);
-
  private:
   void Init();
 

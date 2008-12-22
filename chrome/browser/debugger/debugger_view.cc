@@ -51,7 +51,7 @@ void DebuggerView::ViewHierarchyChanged(bool is_add,
                                         views::View* parent,
                                         views::View* child) {
   if (is_add && child == this) {
-    DCHECK(GetContainer());
+    DCHECK(GetWidget());
     OnInit();
   }
 }
@@ -70,6 +70,12 @@ void DebuggerView::SetOutputViewReady() {
     Output(*i);
   }
   pending_output_.clear();
+
+  for (std::vector<std::string>::const_iterator i = pending_events_.begin();
+       i != pending_events_.end(); ++i) {
+    ExecuteJavascript(*i);
+  }
+  pending_events_.clear();
 }
 
 void DebuggerView::Output(const std::string& out) {
@@ -81,45 +87,36 @@ void DebuggerView::Output(const std::wstring& out) {
     pending_output_.push_back(out);
     return;
   }
-  Value* str_value = Value::CreateStringValue(out);
-  std::string json;
-  JSONWriter::Write(str_value, false, &json);
-  const std::string js = StringPrintf("appendText(%s)", json.c_str());
-  ExecuteJavascript(js);
+
+  DictionaryValue* body = new DictionaryValue;
+  body->Set(L"text", Value::CreateStringValue(out));
+  SendEventToPage(L"appendText", body);
 }
 
 void DebuggerView::OnInit() {
   // We can't create the WebContents until we've actually been put into a real
   // view hierarchy somewhere.
   Profile* profile = BrowserList::GetLastActive()->profile();
-  TabContents* tc = TabContents::CreateWithType(TAB_CONTENTS_DEBUGGER, 
-      ::GetDesktopWindow(), profile, NULL);
+  TabContents* tc = TabContents::CreateWithType(TAB_CONTENTS_DEBUGGER, profile,
+                                                NULL);
   web_contents_ = tc->AsWebContents();
   web_contents_->SetupController(profile);
   web_contents_->set_delegate(this);
   web_container_->SetTabContents(web_contents_);
   web_contents_->render_view_host()->AllowDOMUIBindings();
 
-  GURL contents("chrome-resource://debugger/");
+  GURL contents("chrome://inspector/debugger.html");
   web_contents_->controller()->LoadURL(contents, GURL(),
                                        PageTransition::START_PAGE);
 }
 
 void DebuggerView::OnShow() {
   web_contents_->Focus();
-  if (output_ready_)
-    ExecuteJavascript("focusOnCommandLine()");
 }
 
 void DebuggerView::OnClose() {
   web_container_->SetTabContents(NULL);
   web_contents_->CloseContents();
-}
-
-void DebuggerView::SetDebuggerBreak(bool is_broken) {
-  const std::string js =
-      StringPrintf("setDebuggerBreak(%s)", is_broken ? "true" : "false");
-  ExecuteJavascript(js);
 }
 
 void DebuggerView::OpenURLFromTab(TabContents* source,
@@ -131,10 +128,29 @@ void DebuggerView::OpenURLFromTab(TabContents* source,
                                         transition);
 }
 
+
+void DebuggerView::SendEventToPage(const std::wstring& name,
+                                   Value* body) {
+  DictionaryValue msg;
+  msg.SetString(L"type", L"event");
+  msg.SetString(L"event", name);
+  msg.Set(L"body", body);
+
+  std::string json;
+  JSONWriter::Write(&msg, false, &json);
+
+  const std::string js =
+    StringPrintf("DebuggerIPC.onMessageReceived(%s)", json.c_str());
+  if (output_ready_) {
+    ExecuteJavascript(js);
+  } else {
+    pending_events_.push_back(js);
+  }
+}
+
 void DebuggerView::ExecuteJavascript(const std::string& js) {
-  const std::string url = StringPrintf("javascript:void(%s)", js.c_str());
-  web_contents_->render_view_host()->ExecuteJavascriptInWebFrame(L"", 
-      UTF8ToWide(url));
+  web_contents_->render_view_host()->ExecuteJavascriptInWebFrame(L"",
+      UTF8ToWide(js));
 }
 
 void DebuggerView::LoadingStateChanged(TabContents* source) {

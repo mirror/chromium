@@ -11,15 +11,34 @@
 #ifndef NET_BASE_SOCKET_H_
 #define NET_BASE_SOCKET_H_
 
-#include "base/basictypes.h"
+#if defined(OS_WIN)
+#include <winsock2.h>
+#endif
+#include <string>
+#if defined(OS_WIN)
 #include "base/object_watcher.h"
+#elif defined(OS_POSIX)
+#include "base/message_loop.h"
+#include "net/base/net_util.h"
+#include "net/base/net_errors.h"
+#endif
+
+#include "base/basictypes.h"
 #include "base/ref_counted.h"
 
-#include <winsock2.h>
+#if defined(OS_POSIX)
+struct event;  // From libevent
+#define SOCKET int
+#endif
 
 // Implements a raw socket interface
 class ListenSocket : public base::RefCountedThreadSafe<ListenSocket>,
-                     public base::ObjectWatcher::Delegate {
+#if defined(OS_WIN)
+                     public base::ObjectWatcher::Delegate
+#elif defined(OS_POSIX)
+                     public MessageLoopForIO::Watcher
+#endif
+{
  public:
   // TODO(erikkay): this delegate should really be split into two parts
   // to split up the listener from the connected socket.  Perhaps this class
@@ -52,23 +71,42 @@ class ListenSocket : public base::RefCountedThreadSafe<ListenSocket>,
 
   virtual void SendInternal(const char* bytes, int len);
 
-  // ObjectWatcher delegate
-  virtual void OnObjectSignaled(HANDLE object);
-
   virtual void Listen();
   virtual void Accept();
   virtual void Read();
   virtual void Close();
+  virtual void CloseSocket(SOCKET s);
+
+  enum WaitState {
+    NOT_WAITING      = 0,
+    WAITING_ACCEPT   = 1,
+    WAITING_READ     = 3,
+    WAITING_CLOSE    = 4
+  };
+  // Pass any value in case of Windows, because in Windows
+  // we are not using state.
+  void WatchSocket(WaitState state);
+  void UnwatchSocket();
+
+#if defined(OS_WIN)
+  // ObjectWatcher delegate
+  virtual void OnObjectSignaled(HANDLE object);
+  base::ObjectWatcher watcher_;
+  HANDLE socket_event_;
+#elif defined(OS_POSIX)
+  WaitState wait_state_;
+  // The socket's libevent wrapper
+  MessageLoopForIO::FileDescriptorWatcher watcher_;
+  // Called by MessagePumpLibevent when the socket is ready to do I/O
+  void OnFileCanReadWithoutBlocking(int fd);
+  void OnFileCanWriteWithoutBlocking(int fd);
+#endif
 
   SOCKET socket_;
-  HANDLE socket_event_;
   ListenSocketDelegate *socket_delegate_;
-  
-  base::ObjectWatcher watcher_;
 
  private:
   DISALLOW_EVIL_CONSTRUCTORS(ListenSocket);
 };
 
-#endif // NET_BASE_SOCKET_H_
-
+#endif  // NET_BASE_SOCKET_H_

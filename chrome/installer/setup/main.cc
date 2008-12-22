@@ -21,6 +21,7 @@
 #include "chrome/installer/util/browser_distribution.h"
 #include "chrome/installer/util/delete_tree_work_item.h"
 #include "chrome/installer/util/helper.h"
+#include "chrome/installer/util/html_dialog.h"
 #include "chrome/installer/util/install_util.h"
 #include "chrome/installer/util/logging_installer.h"
 #include "chrome/installer/util/lzma_util.h"
@@ -430,8 +431,19 @@ installer_util::InstallStatus UninstallChrome(const CommandLine& cmd_line,
                                           *version, remove_all, force);
 }
 
-}  // namespace
+// This function is temporary and meant to live while we get our eula dialogs
+// looking sharp. If the cmd line has --eula-test=path then the eula dialog
+// will be shown and no matter what the selection is the installer will exit.
+bool HandleEULADialog(const CommandLine& cmdline) {
+  std:: wstring eula_path(cmdline.GetSwitchValue(L"eula-test"));
+  if (eula_path.empty())
+    return true;
+  installer::EulaHTMLDialog dlg(eula_path);
+  dlg.ShowModal();
+  return false;
+}
 
+}  // namespace
 
 int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
                     wchar_t* command_line, int show_command) {
@@ -445,6 +457,9 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
 
   bool system_install = (options & installer_util::SYSTEM_LEVEL) != 0;
   LOG(INFO) << "system install is " << system_install;
+
+  if (!HandleEULADialog(parsed_command_line))
+    return 0;
 
   // Check to make sure current system is WinXP or later. If not, log
   // error message and get out.
@@ -484,19 +499,21 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
 
   if (system_install && !IsUserAnAdmin()) {
     if (win_util::GetWinVersion() == win_util::WINVERSION_VISTA &&
-      !parsed_command_line.HasSwitch(installer_util::switches::kRunAsAdmin)) {
-    std::wstring exe = parsed_command_line.program();
-    std::wstring params(command_line);
-    params.append(L" --");
-    params.append(installer_util::switches::kRunAsAdmin);
-    DWORD exit_code = installer_util::UNKNOWN_STATUS;
-    InstallUtil::ExecuteExeAsAdmin(exe, params, &exit_code);
-    return exit_code;
+        !parsed_command_line.HasSwitch(installer_util::switches::kRunAsAdmin)) {
+      std::wstring exe = parsed_command_line.program();
+      std::wstring params(command_line);
+      // Append --run-as-admin flag to let the new instance of setup.exe know
+      // that we already tried to launch ourselves as admin.
+      params.append(L" --");
+      params.append(installer_util::switches::kRunAsAdmin);
+      DWORD exit_code = installer_util::UNKNOWN_STATUS;
+      InstallUtil::ExecuteExeAsAdmin(exe, params, &exit_code);
+      return exit_code;
     } else {
       LOG(ERROR) << "Non admin user can not install system level Chrome.";
       InstallUtil::WriteInstallerResult(system_install,
                                         installer_util::INSUFFICIENT_RIGHTS,
-                                        IDS_INSTALL_FAILED_BASE,
+                                        IDS_INSTALL_INSUFFICIENT_RIGHTS_BASE,
                                         NULL);
       return installer_util::INSUFFICIENT_RIGHTS;
     }

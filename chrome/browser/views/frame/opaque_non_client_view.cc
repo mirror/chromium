@@ -5,7 +5,8 @@
 #include "chrome/browser/views/frame/opaque_non_client_view.h"
 
 #include "chrome/app/theme/theme_resources.h"
-#include "chrome/browser/views/frame/browser_view2.h"
+#include "chrome/browser/tab_contents.h"
+#include "chrome/browser/views/frame/browser_view.h"
 #include "chrome/browser/views/tabs/tab_strip.h"
 #include "chrome/common/gfx/chrome_font.h"
 #include "chrome/common/gfx/path.h"
@@ -355,7 +356,7 @@ static const int kNewTabIconWindowControlsSpacing = 10;
 // OpaqueNonClientView, public:
 
 OpaqueNonClientView::OpaqueNonClientView(OpaqueFrame* frame,
-                                         BrowserView2* browser_view)
+                                         BrowserView* browser_view)
     : NonClientView(),
       minimize_button_(new views::Button),
       maximize_button_(new views::Button),
@@ -467,7 +468,8 @@ gfx::Rect OpaqueNonClientView::GetBoundsForTabStrip(TabStrip* tabstrip) {
   int tabstrip_width = minimize_button_->x() - tabstrip_x;
   if (frame_->IsMaximized())
     tabstrip_width -= kNewTabIconWindowControlsSpacing;
-  return gfx::Rect(tabstrip_x, 0, tabstrip_width, tabstrip_height);
+  return gfx::Rect(tabstrip_x, 0, std::max(0, tabstrip_width),
+                   tabstrip_height);
 }
 
 void OpaqueNonClientView::UpdateWindowIcon() {
@@ -478,11 +480,15 @@ void OpaqueNonClientView::UpdateWindowIcon() {
 ///////////////////////////////////////////////////////////////////////////////
 // OpaqueNonClientView, TabIconView::TabContentsProvider implementation:
 
-TabContents* OpaqueNonClientView::GetCurrentTabContents() {
-  return browser_view_->GetSelectedTabContents();
+bool OpaqueNonClientView::ShouldTabIconViewAnimate() const {
+  // This function is queried during the creation of the window as the
+  // TabIconView we host is initialized, so we need to NULL check the selected
+  // TabContents because in this condition there is not yet a selected tab.
+  TabContents* current_tab = browser_view_->GetSelectedTabContents();
+  return current_tab ? current_tab->is_loading() : false;
 }
 
-SkBitmap OpaqueNonClientView::GetFavIcon() {
+SkBitmap OpaqueNonClientView::GetFavIconForTabIconView() {
   return frame_->window_delegate()->GetWindowIcon();
 }
 
@@ -592,6 +598,13 @@ void OpaqueNonClientView::EnableClose(bool enable) {
   close_button_->SetEnabled(enable);
 }
 
+void OpaqueNonClientView::ResetWindowControls() {
+  restore_button_->SetState(views::Button::BS_NORMAL);
+  minimize_button_->SetState(views::Button::BS_NORMAL);
+  maximize_button_->SetState(views::Button::BS_NORMAL);
+  // The close button isn't affected by this constraint.
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // OpaqueNonClientView, views::View overrides:
 
@@ -644,7 +657,8 @@ views::View* OpaqueNonClientView::GetViewForPoint(const gfx::Point& point,
   for (int i = 0; i < arraysize(views); ++i) {
     if (!views[i]->IsVisible())
       continue;
-    if (views[i]->bounds().Contains(point))
+    // Apply mirroring transformation on view bounds for RTL chrome.
+    if (views[i]->GetBounds(APPLY_MIRRORING_TRANSFORMATION).Contains(point))
       return views[i];
   }
   return View::GetViewForPoint(point, can_create_floating);
@@ -654,7 +668,7 @@ void OpaqueNonClientView::ViewHierarchyChanged(bool is_add,
                                                views::View* parent,
                                                views::View* child) {
   if (is_add && child == this) {
-    DCHECK(GetContainer());
+    DCHECK(GetWidget());
     DCHECK(frame_->client_view()->GetParent() != this);
     AddChildView(frame_->client_view());
 

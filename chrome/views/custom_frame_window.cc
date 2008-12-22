@@ -25,45 +25,44 @@
 
 namespace views {
 
-// A scoping class that removes the WS_VISIBLE style of a window.
+// A scoping class that prevents a window from being able to redraw in response
+// to invalidations that may occur within it for the lifetime of the object.
 //
 // Why would we want such a thing? Well, it turns out Windows has some
 // "unorthodox" behavior when it comes to painting its non-client areas.
-// Sadly, the default implementation of some messages, e.g. WM_SETTEXT and
-// WM_SETICON actually paint all or parts of the native title bar of the
-// application. That's right, they just paint it. They don't go through
-// WM_NCPAINT or anything like that that we already override. What this means
-// is that we end up with occasional flicker of bits of the normal Windows
-// title bar whenever we do things like change the title text, or right click
-// on the caption. The solution turns out to be to handle these messages,
-// use this scoped object to remove the WS_VISIBLE style which prevents this
-// rendering from happening, call the default window procedure, then add the
-// WS_VISIBLE style back when this object goes out of scope.
+// Occasionally, Windows will paint portions of the default non-client area
+// right over the top of the custom frame. This is not simply fixed by handling
+// WM_NCPAINT/WM_PAINT, with some investigation it turns out that this
+// rendering is being done *inside* the default implementation of some message
+// handlers and functions:
+//  . WM_SETTEXT
+//  . WM_SETICON
+//  . WM_NCLBUTTONDOWN
+//  . EnableMenuItem, called from our WM_INITMENU handler
+// The solution is to handle these messages and call DefWindowProc ourselves,
+// but prevent the window from being able to update itself for the duration of
+// the call. We do this with this class, which automatically calls its
+// associated CustomFrameWindow's lock and unlock functions as it is created
+// and destroyed. See documentation in those methods for the technique used.
+//
+// IMPORTANT: Do not use this scoping object for large scopes or periods of
+//            time! IT WILL PREVENT THE WINDOW FROM BEING REDRAWN! (duh).
+//
 // I would love to hear Raymond Chen's explanation for all this. And maybe a
 // list of other messages that this applies to ;-)
-//
-// *** Sigh. ***
-class ScopedVisibilityRemover {
+class CustomFrameWindow::ScopedRedrawLock {
  public:
-  explicit ScopedVisibilityRemover(HWND hwnd)
-      : hwnd_(hwnd),
-        window_style_(0) {
-    window_style_ = GetWindowLong(hwnd_, GWL_STYLE);
-    if (window_style_ & WS_VISIBLE)
-      SetWindowLong(hwnd_, GWL_STYLE, window_style_ & ~WS_VISIBLE);
+  explicit ScopedRedrawLock(CustomFrameWindow* window) : window_(window) {
+    window_->LockUpdates();
   }
 
-  ~ScopedVisibilityRemover() {
-    if (window_style_ & WS_VISIBLE)
-      SetWindowLong(hwnd_, GWL_STYLE, window_style_);
+  ~ScopedRedrawLock() {
+    window_->UnlockUpdates();
   }
 
  private:
   // The window having its style changed.
-  HWND hwnd_;
-
-  // The original style of the window, including WS_VISIBLE if present.
-  DWORD window_style_;
+  CustomFrameWindow* window_;
 };
 
 HCURSOR CustomFrameWindow::resize_cursors_[6];
@@ -240,6 +239,7 @@ class DefaultNonClientView : public NonClientView,
   virtual int NonClientHitTest(const gfx::Point& point);
   virtual void GetWindowMask(const gfx::Size& size, gfx::Path* window_mask);
   virtual void EnableClose(bool enable);
+  virtual void ResetWindowControls();
 
   // View overrides:
   virtual void Paint(ChromeCanvas* canvas);
@@ -491,6 +491,13 @@ void DefaultNonClientView::EnableClose(bool enable) {
   close_button_->SetEnabled(enable);
 }
 
+void DefaultNonClientView::ResetWindowControls() {
+  restore_button_->SetState(Button::BS_NORMAL);
+  minimize_button_->SetState(Button::BS_NORMAL);
+  maximize_button_->SetState(Button::BS_NORMAL);
+  // The close button isn't affected by this constraint.
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // DefaultNonClientView, View overrides:
 
@@ -527,9 +534,9 @@ gfx::Size DefaultNonClientView::GetPreferredSize() {
 void DefaultNonClientView::ViewHierarchyChanged(bool is_add,
                                                 View* parent,
                                                 View* child) {
-  // Add our Client View as we are added to the Container so that if we are
+  // Add our Client View as we are added to the Widget so that if we are
   // subsequently resized all the parent-child relationships are established.
-  if (is_add && GetContainer() && child == this)
+  if (is_add && GetWidget() && child == this)
     AddChildView(container_->client_view());
 }
 
@@ -880,7 +887,9 @@ class NonClientViewLayout : public LayoutManager {
 
 CustomFrameWindow::CustomFrameWindow(WindowDelegate* window_delegate)
     : Window(window_delegate),
-      is_active_(false) {
+      is_active_(false),
+      lock_updates_(false),
+      saved_window_style_(0) {
   InitClass();
   non_client_view_ = new DefaultNonClientView(this);
 }
@@ -920,7 +929,7 @@ void CustomFrameWindow::SetClientView(ClientView* cv) {
   DCHECK(cv && !client_view() && GetHWND());
   set_client_view(cv);
   // For a CustomFrameWindow, the non-client view is the root.
-  ContainerWin::SetContentsView(non_client_view_);
+  WidgetWin::SetContentsView(non_client_view_);
   // When the non client view is added to the view hierarchy, it will cause the
   // client view to be added as well.
 }
@@ -970,43 +979,7 @@ void CustomFrameWindow::SizeWindowToDefault() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// CustomFrameWindow, ContainerWin overrides:
-
-void CustomFrameWindow::OnGetMinMaxInfo(MINMAXINFO* minmax_info) {
-  // We handle this message so that we can make sure we interact nicely with
-  // the taskbar on different edges of the screen and auto-hide taskbars.
-
-  HMONITOR primary_monitor = MonitorFromWindow(NULL, MONITOR_DEFAULTTOPRIMARY);
-  MONITORINFO primary_info;
-  primary_info.cbSize = sizeof(primary_info);
-  GetMonitorInfo(primary_monitor, &primary_info);
-
-  minmax_info->ptMaxSize.x =
-      primary_info.rcWork.right - primary_info.rcWork.left;
-  minmax_info->ptMaxSize.y =
-      primary_info.rcWork.bottom - primary_info.rcWork.top;
-
-  HMONITOR target_monitor =
-      MonitorFromWindow(GetHWND(), MONITOR_DEFAULTTONEAREST);
-  MONITORINFO target_info;
-  target_info.cbSize = sizeof(target_info);
-  GetMonitorInfo(target_monitor, &target_info);
-
-  minmax_info->ptMaxPosition.x =
-      abs(target_info.rcWork.left - target_info.rcMonitor.left);
-  minmax_info->ptMaxPosition.y =
-      abs(target_info.rcWork.top - target_info.rcMonitor.top);
-
-  // Work around task bar auto-hiding. By default the window is sized over the
-  // top of the un-hide strip, so we adjust the size by a single pixel to make
-  // it work. Because of the way Windows adjusts the target size rect for non
-  // primary screens (it's quite daft), we only do this for the primary screen,
-  // which I think should cover at least 95% of use cases.
-  if ((target_monitor == primary_monitor) &&
-      EqualRect(&target_info.rcWork, &target_info.rcMonitor)) {
-    --minmax_info->ptMaxSize.y;
-  }
-}
+// CustomFrameWindow, WidgetWin overrides:
 
 static void EnableMenuItem(HMENU menu, UINT command, bool enabled) {
   UINT flags = MF_BYCOMMAND | (enabled ? MF_ENABLED : MF_DISABLED | MF_GRAYED);
@@ -1018,6 +991,7 @@ void CustomFrameWindow::OnInitMenu(HMENU menu) {
   bool maximized = IsMaximized();
   bool minimized_or_maximized = minimized || maximized;
 
+  ScopedRedrawLock lock(this);
   EnableMenuItem(menu, SC_RESTORE,
                  window_delegate()->CanMaximize() && minimized_or_maximized);
   EnableMenuItem(menu, SC_MOVE, !minimized_or_maximized);
@@ -1191,38 +1165,54 @@ void CustomFrameWindow::OnNCLButtonDown(UINT ht_component,
       // view! Ick! By handling this message we prevent Windows from doing this
       // undesirable thing, but that means we need to roll the sys-command
       // handling ourselves.
-      CPoint temp = point;
-      MapWindowPoints(HWND_DESKTOP, GetHWND(), &temp, 1);
-      UINT flags = 0;
-      if ((GetKeyState(VK_CONTROL) & 0x80) == 0x80)
-        flags |= MK_CONTROL;
-      if ((GetKeyState(VK_SHIFT) & 0x80) == 0x80)
-        flags |= MK_SHIFT;
-      flags |= MK_LBUTTON;
-      ProcessMousePressed(temp, flags, false);
-      SetMsgHandled(TRUE);
+      ProcessNCMousePress(point, MK_LBUTTON);
       return;
     }
     default:
       Window::OnNCLButtonDown(ht_component, point);
+      /*
+      if (!IsMsgHandled()) {
+        // Window::OnNCLButtonDown set the message as unhandled. This normally
+        // means WidgetWin::ProcessWindowMessage will pass it to
+        // DefWindowProc. Sadly, DefWindowProc for WM_NCLBUTTONDOWN does weird
+        // non-client painting, so we need to call it directly here inside a
+        // scoped update lock.
+        ScopedRedrawLock lock(this);
+        DefWindowProc(GetHWND(), WM_NCLBUTTONDOWN, ht_component,
+                      MAKELPARAM(point.x, point.y));
+        SetMsgHandled(TRUE);
+      }
+      */
       break;
   }
 }
 
+void CustomFrameWindow::OnNCMButtonDown(UINT ht_component,
+                                        const CPoint& point) {
+  if (ht_component == HTCAPTION) {
+    // When there's only one window and only one tab, the tab area is reported
+    // to be part of the caption area of the window. However users should still
+    // be able to middle click that tab to close it so we need to make sure
+    // these messages reach the View system.
+    ProcessNCMousePress(point, MK_MBUTTON);
+    SetMsgHandled(FALSE);
+    return;
+  }
+  WidgetWin::OnNCMButtonDown(ht_component, point);
+}
+
 LRESULT CustomFrameWindow::OnNCUAHDrawCaption(UINT msg, WPARAM w_param,
                                               LPARAM l_param) {
-  // See comment in hwnd_view_container.h at the definition of
-  // WM_NCUAHDRAWCAPTION for an explanation about why we need to handle this
-  // message.
+  // See comment in widget_win.h at the definition of WM_NCUAHDRAWCAPTION for
+  // an explanation about why we need to handle this message.
   SetMsgHandled(TRUE);
   return 0;
 }
 
 LRESULT CustomFrameWindow::OnNCUAHDrawFrame(UINT msg, WPARAM w_param,
                                             LPARAM l_param) {
-  // See comment in hwnd_view_container.h at the definition of
-  // WM_NCUAHDRAWCAPTION for an explanation about why we need to handle this
-  // message.
+  // See comment in widget_win.h at the definition of WM_NCUAHDRAWCAPTION for
+  // an explanation about why we need to handle this message.
   SetMsgHandled(TRUE);
   return 0;
 }
@@ -1257,13 +1247,13 @@ LRESULT CustomFrameWindow::OnSetCursor(HWND window, UINT hittest_code,
 }
 
 LRESULT CustomFrameWindow::OnSetIcon(UINT size_type, HICON new_icon) {
-  ScopedVisibilityRemover remover(GetHWND());
+  ScopedRedrawLock lock(this);
   return DefWindowProc(GetHWND(), WM_SETICON, size_type,
                        reinterpret_cast<LPARAM>(new_icon));
 }
 
 LRESULT CustomFrameWindow::OnSetText(const wchar_t* text) {
-  ScopedVisibilityRemover remover(GetHWND());
+  ScopedRedrawLock lock(this);
   return DefWindowProc(GetHWND(), WM_SETTEXT, NULL,
                        reinterpret_cast<LPARAM>(text));
 }
@@ -1274,6 +1264,26 @@ void CustomFrameWindow::OnSize(UINT param, const CSize& size) {
   // ResetWindowRegion is going to trigger WM_NCPAINT. By doing it after we've
   // invoked OnSize we ensure the RootView has been layed out.
   ResetWindowRegion();
+}
+
+void CustomFrameWindow::OnSysCommand(UINT notification_code, CPoint click) {
+  // Windows uses the 4 lower order bits of |notification_code| for type-
+  // specific information so we must exclude this when comparing.
+  static const int sc_mask = 0xFFF0;
+  if ((notification_code & sc_mask) == SC_MINIMIZE ||
+      (notification_code & sc_mask) == SC_MAXIMIZE ||
+      (notification_code & sc_mask) == SC_RESTORE) {
+    non_client_view_->ResetWindowControls();
+  } else if ((notification_code & sc_mask) == SC_MOVE ||
+             (notification_code & sc_mask) == SC_SIZE) {
+    if (lock_updates_) {
+      // We were locked, before entering a resize or move modal loop. Now that
+      // we've begun to move the window, we need to unlock updates so that the
+      // sizing/moving feedback can be continuous.
+      UnlockUpdates();
+    }
+  }
+  Window::OnSysCommand(notification_code, click);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1290,6 +1300,17 @@ void CustomFrameWindow::InitClass() {
     resize_cursors_[RC_NWSE] = LoadCursor(NULL, IDC_SIZENWSE);
     initialized = true;
   }
+}
+
+void CustomFrameWindow::LockUpdates() {
+  lock_updates_ = true;
+  saved_window_style_ = GetWindowLong(GetHWND(), GWL_STYLE);
+  SetWindowLong(GetHWND(), GWL_STYLE, saved_window_style_ & ~WS_VISIBLE);
+}
+
+void CustomFrameWindow::UnlockUpdates() {
+  SetWindowLong(GetHWND(), GWL_STYLE, saved_window_style_);
+  lock_updates_ = false;
 }
 
 void CustomFrameWindow::ResetWindowRegion() {
@@ -1318,6 +1339,18 @@ void CustomFrameWindow::ResetWindowRegion() {
   }
 
   DeleteObject(current_rgn);
+}
+
+void CustomFrameWindow::ProcessNCMousePress(const CPoint& point, int flags) {
+  CPoint temp = point;
+  MapWindowPoints(HWND_DESKTOP, GetHWND(), &temp, 1);
+  UINT message_flags = 0;
+  if ((GetKeyState(VK_CONTROL) & 0x80) == 0x80)
+    message_flags |= MK_CONTROL;
+  if ((GetKeyState(VK_SHIFT) & 0x80) == 0x80)
+    message_flags |= MK_SHIFT;
+  message_flags |= flags;
+  ProcessMousePressed(temp, message_flags, false);
 }
 
 }  // namespace views

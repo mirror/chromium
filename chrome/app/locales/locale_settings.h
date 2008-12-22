@@ -47,8 +47,7 @@
 
 // Removed: #define IDS_REPORT_ERROR_PHISHING_URL 1018
 
-// URL for reporting a site as phishing.
-#define IDS_PAGE_MENU_REPORT_PHISHING_WEBSITE_URL 1019
+// Removed: #define IDS_PAGE_MENU_REPORT_PHISHING_WEBSITE_URL 1019
 
 // The width of the Options dialog box, in characters (character width =
 // average character width for default dialog box font)
@@ -172,3 +171,11 @@
 
 // The language dependent download view size.
 #define IDS_DOWNLOAD_BIG_PROGRESS_SIZE 1064
+
+// The width and height of the Select Profile dialog in characters and lines
+// (See above).
+#define IDS_SELECT_PROFILE_DIALOG_WIDTH_CHARS 1065
+#define IDS_SELECT_PROFILE_DIALOG_HEIGHT_LINES 1066
+
+// The width of the New Profile dialog in characters (See above).
+#define IDS_NEW_PROFILE_DIALOG_WIDTH_CHARS 1067

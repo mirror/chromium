@@ -7,6 +7,7 @@
 #include "base/path_service.h"
 #include "base/platform_thread.h"
 #include "base/string_util.h"
+#include "base/system_monitor.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_counters.h"
 #include "chrome/common/chrome_switches.h"
@@ -43,7 +44,7 @@ static void HandleRendererErrorTestParameters(const CommandLine& command_line) {
 }
 
 // mainline routine for running as the Rendererer process
-int RendererMain(CommandLine &parsed_command_line, int show_command,
+int RendererMain(CommandLine &parsed_command_line,
                  sandbox::TargetServices* target_services) {
   StatsScope<StatsCounterTimer>
       startup_timer(chrome::Counters::renderer_main());
@@ -52,6 +53,9 @@ int RendererMain(CommandLine &parsed_command_line, int show_command,
   MessageLoopForIO main_message_loop;
   std::wstring app_name = chrome::kBrowserAppName;
   PlatformThread::SetName(WideToASCII(app_name + L"_RendererMain").c_str());
+
+  // Initialize the SystemMonitor
+  base::SystemMonitor::Start();
 
   CoInitialize(NULL);
 
@@ -107,8 +111,9 @@ int RendererMain(CommandLine &parsed_command_line, int show_command,
       // message loop to use it when translating messages.
       MessageLoop::current()->Run();
     }
+
+    RenderProcess::GlobalCleanup();
   }
-  RenderProcess::GlobalCleanup();
 
   CoUninitialize();
   return 0;

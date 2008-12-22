@@ -14,6 +14,8 @@
 #include "chrome/common/sqlite_compiled_statement.h"
 #include "chrome/common/sqlite_utils.h"
 
+using base::Time;
+
 // This class is designed to be shared between any calling threads and the
 // database thread.  It batches operations and commits them on a timer.
 class SQLitePersistentCookieStore::Backend
@@ -203,6 +205,7 @@ void SQLitePersistentCookieStore::Backend::Commit() {
           NOTREACHED() << "Could not add a cookie to the DB.";
         }
         break;
+
       case PendingOperation::COOKIE_UPDATEACCESS:
         update_access_smt->reset();
         update_access_smt->bind_int64(0,
@@ -221,6 +224,7 @@ void SQLitePersistentCookieStore::Backend::Commit() {
           NOTREACHED() << "Could not delete a cookie from the DB.";
         }
         break;
+
       default:
         NOTREACHED();
         break;
@@ -430,4 +434,3 @@ void SQLitePersistentCookieStore::DeleteCookie(
   if (backend_.get())
     backend_->DeleteCookie(cc);
 }
-

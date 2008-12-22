@@ -19,12 +19,9 @@
 #include "build/build_config.h"
 #include "base/gfx/point.h"
 #include "webkit/glue/cpp_bound_class.h"
+#include "webkit/glue/webdropdata.h"
 #include "webkit/glue/webinputevent.h"
 
-#if defined(OS_WIN)
-struct IDataObject;
-struct IDropSource;
-#endif
 class TestShell;
 class WebView;
 
@@ -37,10 +34,8 @@ class EventSendingController : public CppBoundClass {
   // Resets some static variable state.
   void Reset();
 
-#if defined(OS_WIN)
-  // Simulate Windows' drag&drop system call.
-  static void DoDragDrop(IDataObject* drag_data);
-#endif
+  // Simulate drag&drop system call.
+  static void DoDragDrop(const WebDropData& drag_data);
 
   // JS callback methods.
   void mouseDown(const CppArgumentList& args, CppVariant* result);
@@ -71,13 +66,16 @@ class EventSendingController : public CppBoundClass {
   static void DoMouseUp(const WebMouseEvent& e);
   static void ReplaySavedEvents();
 
-  // Helper to extract the optional arg from mouseDown() and mouseUp()
-  static WebMouseEvent::Button GetButtonTypeFromSingleArg(
-      const CppArgumentList& args);
+  // Helper to return the button type given a button code
+  static WebMouseEvent::Button GetButtonTypeFromButtonNumber(int button_code);
+
+  // Helper to extract the button number from the optional argument in
+  // mouseDown and mouseUp
+  static int GetButtonNumberFromSingleArg(const CppArgumentList& args);
 
   // Returns true if the key_code passed in needs a shift key modifier to
   // be passed into the generated event.
-  bool NeedsShiftModifer(wchar_t key_code);
+  bool NeedsShiftModifer(int key_code);
 
   // Non-owning pointer.  The LayoutTestController is owned by the host.
   static TestShell* shell_;
@@ -87,6 +85,11 @@ class EventSendingController : public CppBoundClass {
 
   // Currently pressed mouse button (Left/Right/Middle or None)
   static WebMouseEvent::Button pressed_button_;
+
+  // The last button number passed to mouseDown and mouseUp.
+  // Used to determine whether the click count continues to
+  // increment or not.
+  static int last_button_number_;
 };
 
 #endif  // WEBKIT_TOOLS_TEST_SHELL_EVENT_SENDING_CONTROLLER_H_

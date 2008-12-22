@@ -153,11 +153,15 @@
 				>
 			</File>
 			<File
+				RelativePath=".\gfx\chrome_canvas_win.cc"
+				>
+			</File>
+			<File
 				RelativePath=".\gfx\chrome_canvas.h"
 				>
 			</File>
 			<File
-				RelativePath=".\gfx\chrome_font.cc"
+				RelativePath=".\gfx\chrome_font_win.cc"
 				>
 			</File>
 			<File
@@ -221,7 +225,7 @@
 			Name="ipc"
 			>
 			<File
-				RelativePath=".\ipc_channel.cc"
+				RelativePath=".\ipc_channel_win.cc"
 				>
 			</File>
 			<File
@@ -390,10 +394,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\clipboard_service.cc"
-			>
-		</File>
-		<File
 			RelativePath=".\clipboard_service.h"
 			>
 		</File>
@@ -542,6 +542,10 @@
 			>
 		</File>
 		<File
+			RelativePath=".\page_zoom.h"
+			>
+		</File>
+		<File
 			RelativePath="..\tools\build\win\precompiled.cc"
 			>
 			<FileConfiguration
@@ -587,6 +591,14 @@
 		</File>
 		<File
 			RelativePath=".\process_watcher.h"
+			>
+		</File>
+		<File
+			RelativePath=".\property_bag.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\property_bag.h"
 			>
 		</File>
 		<File
@@ -655,10 +667,6 @@
 		</File>
 		<File
 			RelativePath=".\task_queue.h"
-			>
-		</File>
-		<File
-			RelativePath=".\text_zoom.h"
 			>
 		</File>
 		<File

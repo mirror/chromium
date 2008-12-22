@@ -48,6 +48,7 @@
 #include "base/file_util.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/test/automation/tab_proxy.h"
+#include "chrome/test/automation/window_proxy.h"
 #include "chrome/test/ui/npapi_test_helper.h"
 #include "net/base/net_util.h"
 
@@ -167,9 +168,27 @@ TEST_F(NPAPITester, SelfDeletePluginInvoke) {
                 kShortWaitTimeout);
 }
 
+// Tests if a plugin executing a self deleting script using Invoke with
+// a modal dialog showing works without crashing or hanging
+TEST_F(NPAPITester, DISABLED_SelfDeletePluginInvokeAlert) {
+  std::wstring test_case = L"self_delete_plugin_invoke_alert.html";
+  GURL url = GetTestUrl(L"npapi", test_case);
+  NavigateToURL(url);
+
+  // Wait for the alert dialog and then close it.
+  automation()->WaitForAppModalDialog(5000);
+  scoped_ptr<WindowProxy> window(automation()->GetActiveWindow());
+  ASSERT_TRUE(window.get());
+  ASSERT_TRUE(window->SimulateOSKeyPress(VK_ESCAPE, 0));
+
+  WaitForFinish("self_delete_plugin_invoke_alert", "1", url,
+                kTestCompleteCookie, kTestCompleteSuccess,
+                kShortWaitTimeout);
+}
+
 // Tests if a plugin executing a self deleting script in the context of 
 // a synchronous paint event works correctly
-TEST_F(NPAPIVisiblePluginTester, DISABLED_SelfDeletePluginInvokeInSynchronousPaint) {
+TEST_F(NPAPIVisiblePluginTester, SelfDeletePluginInvokeInSynchronousPaint) {
   if (!UITest::in_process_plugins() && !UITest::in_process_renderer()) {
     show_window_ = true;
     std::wstring test_case = L"execute_script_delete_in_paint.html";
@@ -194,7 +213,7 @@ TEST_F(NPAPIVisiblePluginTester, SelfDeletePluginInNewStream) {
 }
 
 // Tests if a plugin has a non zero window rect.
-TEST_F(NPAPIVisiblePluginTester, DISABLED_VerifyPluginWindowRect) {
+TEST_F(NPAPIVisiblePluginTester, VerifyPluginWindowRect) {
   show_window_ = true;
   std::wstring test_case = L"verify_plugin_window_rect.html";
   GURL url = GetTestUrl(L"npapi", test_case);
@@ -240,5 +259,5 @@ TEST_F(NPAPIVisiblePluginTester, OpenPopupWindowWithPlugin) {
   NavigateToURL(url);
   WaitForFinish("plugin_popup_with_plugin_target", "1", url,
                 kTestCompleteCookie, kTestCompleteSuccess,
-                kShortWaitTimeout);
+                action_timeout_ms());
 }

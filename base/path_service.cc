@@ -10,27 +10,28 @@
 #include <shlobj.h>
 #endif
 
-#include "base/hash_tables.h"
+#include "base/file_path.h"
 #include "base/file_util.h"
+#include "base/hash_tables.h"
 #include "base/lock.h"
 #include "base/logging.h"
 #include "base/singleton.h"
 #include "base/string_util.h"
 
 namespace base {
-  bool PathProvider(int key, std::wstring* result);
+  bool PathProvider(int key, FilePath* result);
 #if defined(OS_WIN)
-  bool PathProviderWin(int key, std::wstring* result);
+  bool PathProviderWin(int key, FilePath* result);
 #elif defined(OS_MACOSX)
-  bool PathProviderMac(int key, std::wstring* result);
+  bool PathProviderMac(int key, FilePath* result);
 #elif defined(OS_LINUX)
-  bool PathProviderLinux(int key, std::wstring* result);
+  bool PathProviderLinux(int key, FilePath* result);
 #endif
 }
 
 namespace {
 
-typedef base::hash_map<int, std::wstring> PathMap;
+typedef base::hash_map<int, FilePath> PathMap;
 typedef base::hash_set<int> PathSet;
 
 // We keep a linked list of providers.  In a debug build we ensure that no two
@@ -127,7 +128,7 @@ static PathData* GetPathData() {
 
 
 // static
-bool PathService::GetFromCache(int key, std::wstring* result) {
+bool PathService::GetFromCache(int key, FilePath* result) {
   PathData* path_data = GetPathData();
   AutoLock scoped_lock(path_data->lock);
   
@@ -141,7 +142,7 @@ bool PathService::GetFromCache(int key, std::wstring* result) {
 }
 
 // static
-void PathService::AddToCache(int key, const std::wstring& path) {
+void PathService::AddToCache(int key, const FilePath& path) {
   PathData* path_data = GetPathData();
   AutoLock scoped_lock(path_data->lock);
   // Save the computed path in our cache.
@@ -152,7 +153,7 @@ void PathService::AddToCache(int key, const std::wstring& path) {
 // characters). This isn't supported very well by Windows right now, so it is
 // moot, but we should keep this in mind for the future.
 // static
-bool PathService::Get(int key, std::wstring* result) {
+bool PathService::Get(int key, FilePath* result) {
   PathData* path_data = GetPathData();
   DCHECK(path_data);
   DCHECK(result);
@@ -165,7 +166,7 @@ bool PathService::Get(int key, std::wstring* result) {
   if (GetFromCache(key, result))
     return true;
   
-  std::wstring path;
+  FilePath path;
 
   // search providers for the requested path
   // NOTE: it should be safe to iterate here without the lock
@@ -174,16 +175,26 @@ bool PathService::Get(int key, std::wstring* result) {
   while (provider) {
     if (provider->func(key, &path))
       break;
-    DCHECK(path.empty()) << "provider should not have modified path";
+    DCHECK(path.value().empty()) << "provider should not have modified path";
     provider = provider->next;
   }
 
-  if (path.empty())
+  if (path.value().empty())
     return false;
 
   AddToCache(key, path);
   
-  result->swap(path);
+  *result = path;
+  return true;
+}
+
+// static
+bool PathService::Get(int key, std::wstring* result) {
+  // Deprecated compatibility function.
+  FilePath path;
+  if (!Get(key, &path))
+    return false;
+  *result = path.ToWStringHack();
   return true;
 }
 
@@ -211,7 +222,7 @@ bool PathService::Override(int key, const std::wstring& path) {
   file_util::TrimTrailingSeparator(&file_path);
 
   AutoLock scoped_lock(path_data->lock);
-  path_data->cache[key] = file_path;
+  path_data->cache[key] = FilePath::FromWStringHack(file_path);
   path_data->overrides.insert(key);
   return true;
 }

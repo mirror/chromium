@@ -9,7 +9,7 @@
 
 #include "base/linked_ptr.h"
 #include "base/ref_counted.h"
-#include "chrome/browser/session_service.h"
+#include "chrome/browser/sessions/session_id.h"
 #include "chrome/browser/site_instance.h"
 #include "chrome/browser/ssl_manager.h"
 #include "chrome/browser/tab_contents_type.h"
@@ -20,7 +20,7 @@ class Profile;
 class TabContents;
 class WebContents;
 class TabContentsCollector;
-struct TabNavigation;
+class TabNavigation;
 struct ViewHostMsg_FrameNavigate_Params;
 
 // A NavigationController maintains the back-forward list for a single tab and
@@ -51,8 +51,7 @@ class NavigationController {
         : entry(NULL),
           is_auto(false),
           is_in_page(false),
-          is_main_frame(true),
-          is_interstitial(false) {
+          is_main_frame(true) {
     }
 
     // The committed entry. This will be the active entry in the controller.
@@ -84,10 +83,6 @@ class NavigationController {
     // True when the main frame was navigated. False means the navigation was a
     // sub-frame.
     bool is_main_frame;
-
-    // True when this navigation is for an interstitial page. Many consumers
-    // won't care about interstitial loads.
-    bool is_interstitial;
 
     // Whether the content of this frame has been altered/blocked because it was
     // unsafe.
@@ -128,8 +123,7 @@ class NavigationController {
   NavigationController(
       Profile* profile,
       const std::vector<TabNavigation>& navigations,
-      int selected_navigation,
-      HWND parent);
+      int selected_navigation);
   ~NavigationController();
 
   // Begin the destruction sequence for this NavigationController and all its
@@ -141,8 +135,8 @@ class NavigationController {
   void Destroy();
 
   // Clone the receiving navigation controller. Only the active tab contents is
-  // duplicated. It is created as a child of the provided HWND.
-  NavigationController* Clone(HWND hwnd);
+  // duplicated.
+  NavigationController* Clone();
 
   // Returns the profile for this controller. It can never be NULL.
   Profile* profile() const {
@@ -151,10 +145,11 @@ class NavigationController {
 
   // Active entry --------------------------------------------------------------
 
-  // Returns the active entry, which is the pending entry if a navigation is in
-  // progress or the last committed entry otherwise.  NOTE: This can be NULL!!
+  // Returns the active entry, which is the transient entry if any, the pending
+  // entry if a navigation is in progress or the last committed entry otherwise.
+  // NOTE: This can be NULL!!
   //
-  // If you are trying to get the current state of the NavigationControllerBase,
+  // If you are trying to get the current state of the NavigationController,
   // this is the method you will typically want to call.
   //
   NavigationEntry* GetActiveEntry() const;
@@ -175,8 +170,9 @@ class NavigationController {
 
   // Navigation list -----------------------------------------------------------
 
-  // Returns the number of entries in the NavigationControllerBase, excluding
-  // the pending entry if there is one.
+  // Returns the number of entries in the NavigationController, excluding
+  // the pending entry if there is one, but including the transient entry if
+  // any.
   int GetEntryCount() const {
     return static_cast<int>(entries_.size());
   }
@@ -190,7 +186,7 @@ class NavigationController {
   NavigationEntry* GetEntryAtOffset(int offset) const;
 
   // Returns the index of the specified entry, or -1 if entry is not contained
-  // in this NavigationControllerBase.
+  // in this NavigationController.
   int GetIndexOfEntry(const NavigationEntry* entry) const;
 
   // Return the index of the entry with the corresponding type, instance, and
@@ -219,9 +215,10 @@ class NavigationController {
   // new page ID for you and update the TabContents with that ID.
   void CommitPendingEntry();
 
-  // Calling this may cause the active tab contents to switch if the current
-  // entry corresponds to a different tab contents type.
-  void DiscardPendingEntry();
+  // Discards the pending and transient entries if any.  Calling this may cause
+  // the active tab contents to switch if the current entry corresponds to a
+  // different tab contents type.
+  void DiscardNonCommittedEntries();
 
   // Returns the pending entry corresponding to the navigation that is
   // currently in progress, or null if there is none.
@@ -234,6 +231,21 @@ class NavigationController {
   int GetPendingEntryIndex() const {
     return pending_entry_index_;
   }
+
+  // Transient entry -----------------------------------------------------------
+
+  // Adds an entry that is returned by GetActiveEntry().  The entry is
+  // transient: any navigation causes it to be removed and discarded.
+  // The NavigationController becomes the owner of |entry| and deletes it when
+  // it discards it.  This is useful with interstitial page that need to be
+  // represented as an entry, but should go away when the user navigates away
+  // from them.
+  // Note that adding a transient entry does not change the active contents.
+  void AddTransientEntry(NavigationEntry* entry);
+
+  // Returns the transient entry if any.  Note that the returned entry is owned
+  // by the navigation controller and may be deleted at any time.
+  NavigationEntry* GetTransientEntry() const;
 
   // New navigations -----------------------------------------------------------
 
@@ -270,6 +282,14 @@ class NavigationController {
   // reload the page. In nearly all cases pass in true.
   void Reload(bool check_for_repost);
 
+  // Removing of entries -------------------------------------------------------
+
+  // Removes the entry at the specified |index|.  This call dicards any pending
+  // and transient entries.  |default_url| is the URL that the navigation
+  // controller navigates to if there are no more entries after the removal.
+  // If |default_url| is empty, we default to "about:blank".
+  void RemoveEntryAtIndex(int index, const GURL& default_url);
+
   // TabContents ---------------------------------------------------------------
 
   // Notifies the controller that a TabContents that it owns has been destroyed.
@@ -300,19 +320,7 @@ class NavigationController {
   // In the case that nothing has changed, the details structure is undefined
   // and it will return false.
   bool RendererDidNavigate(const ViewHostMsg_FrameNavigate_Params& params,
-                           bool is_interstitial,
                            LoadCommittedDetails* details);
-
-  // Inserts a new entry by making a copy of the given navigation entry. This is
-  // used by interstitials to create dummy entries that they will be in charge
-  // of removing later.
-  void AddDummyEntryForInterstitial(const NavigationEntry& clone_me);
-
-  // Removes the last entry in the list. This is used by the interstitial code
-  // to delete the dummy entry created by AddDummyEntryForInterstitial. If the
-  // last entry is the currently committed one, a ENTRY_COMMITTED notification
-  // will be broadcast.
-  void RemoveLastEntryForInterstitial();
 
   // Notifies us that we just became active. This is used by the TabContents
   // so that we know to load URLs that were pending as "lazy" loads.
@@ -419,16 +427,11 @@ class NavigationController {
   // Returns the TabContents for the |entry|'s type. If the TabContents
   // doesn't yet exist, it is created. If a new TabContents is created, its
   // parent is |parent|.  Becomes part of |entry|'s SiteInstance.
-  TabContents* GetTabContentsCreateIfNecessary(HWND parent,
-                                               const NavigationEntry& entry);
+  TabContents* GetTabContentsCreateIfNecessary(const NavigationEntry& entry);
 
   // Register the provided tab contents. This tab contents will be owned
   // and deleted by this navigation controller
   void RegisterTabContents(TabContents* some_contents);
-
-  // Removes the entry at the specified index.  Note that you should not remove
-  // the pending entry or the last committed entry.
-  void RemoveEntryAtIndex(int index);
 
   // Sets the max restored page ID this NavigationController has seen, if it
   // was restored from a previous session.
@@ -452,14 +455,18 @@ class NavigationController {
   // Invoked after session/tab restore or cloning a tab. Resets the transition
   // type of the entries, updates the max page id and creates the active
   // contents.
-  void FinishRestore(HWND parent_hwnd, int selected_index);
+  void FinishRestore(int selected_index);
 
   // Inserts an entry after the current position, removing all entries after it.
   // The new entry will become the active one.
   void InsertEntry(NavigationEntry* entry);
 
-  // Discards the pending entry without updating active_contents_
-  void DiscardPendingEntryInternal();
+  // Discards the pending and transient entries without updating
+  // active_contents_.
+  void DiscardNonCommittedEntriesInternal();
+
+  // Discards the transient entry without updating active_contents_.
+  void DiscardTransientEntry();
 
   // ---------------------------------------------------------------------------
 
@@ -485,6 +492,13 @@ class NavigationController {
   // index of pending entry if it is in entries_, or -1 if pending_entry_ is a
   // new entry (created by LoadURL).
   int pending_entry_index_;
+
+  // The index for the entry that is shown until a navigation occurs.  This is
+  // used for interstitial pages. -1 if there are no such entry.
+  // Note that this entry really appears in the list of entries, but only
+  // temporarily (until the next navigation).  Any index poiting to an entry
+  // after the transient entry will become invalid if you navigate forward.
+  int transient_entry_index_;
 
   // Tab contents. One entry per type used. The tab controller owns
   // every tab contents used.
@@ -518,7 +532,7 @@ class NavigationController {
   // Unique identifier of this controller for session restore. This id is only
   // unique within the current session, and is not guaranteed to be unique
   // across sessions.
-  SessionID session_id_;
+  const SessionID session_id_;
 
   // Unique identifier of the window we're in. Used by session restore.
   SessionID window_id_;

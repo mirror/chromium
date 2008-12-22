@@ -35,7 +35,6 @@ struct WebPreferences {
   bool shrinks_standalone_images_to_fit;
   bool uses_universal_detector;
   bool text_areas_are_resizable;
-  bool dashboard_compatibility_mode;
   bool java_enabled;
   bool allow_scripts_to_close_windows;
   bool uses_page_cache;
@@ -69,7 +68,6 @@ struct WebPreferences {
         shrinks_standalone_images_to_fit(true),
         uses_universal_detector(false),  // Disabled: page cycler regression
         text_areas_are_resizable(true),
-        dashboard_compatibility_mode(false),
         java_enabled(true),
         allow_scripts_to_close_windows(false),
         uses_page_cache(false),

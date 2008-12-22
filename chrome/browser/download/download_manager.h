@@ -35,6 +35,8 @@
 #ifndef CHROME_BROWSER_DOWNLOAD_DOWNLOAD_MANAGER_H__
 #define CHROME_BROWSER_DOWNLOAD_DOWNLOAD_MANAGER_H__
 
+#include "build/build_config.h"
+
 #include <string>
 #include <map>
 #include <set>
@@ -47,11 +49,13 @@
 #include "chrome/browser/cancelable_request.h"
 #include "chrome/browser/history/download_types.h"
 #include "chrome/browser/history/history.h"
+#if defined(OS_WIN)
+// TODO(port): Port this header and remove #ifdef.
 #include "chrome/browser/shell_dialogs.h"
+#endif
 #include "chrome/common/pref_member.h"
 
 class DownloadFileManager;
-class DownloadItem;
 class DownloadItemView;
 class DownloadManager;
 class GURL;
@@ -102,7 +106,7 @@ class DownloadItem {
                int path_uniquifier,
                const std::wstring& url,
                const std::wstring& original_name,
-               const Time start_time,
+               const base::Time start_time,
                int64 download_size,
                int render_process_id,
                int request_id,
@@ -149,7 +153,7 @@ class DownloadItem {
   // |*remaining| with the amount of time remaining if successful. Fails and
   // returns false if we do not have the number of bytes or the speed so can
   // not estimate.
-  bool TimeRemaining(TimeDelta* remaining) const;
+  bool TimeRemaining(base::TimeDelta* remaining) const;
 
   // Simple speed estimate in bytes/s
   int64 CurrentSpeed() const;
@@ -178,7 +182,7 @@ class DownloadItem {
   void set_total_bytes(int64 total_bytes) { total_bytes_ = total_bytes; }
   int64 received_bytes() const { return received_bytes_; }
   int32 id() const { return id_; }
-  Time start_time() const { return start_time_; }
+  base::Time start_time() const { return start_time_; }
   void set_db_handle(int64 handle) { db_handle_ = handle; }
   int64 db_handle() const { return db_handle_; }
   DownloadManager* manager() const { return manager_; }
@@ -237,7 +241,7 @@ class DownloadItem {
   ObserverList<Observer> observers_;
 
   // Time the download was started
-  Time start_time_;
+  base::Time start_time_;
 
   // Our persistent store handle
   int64 db_handle_;
@@ -271,6 +275,9 @@ class DownloadItem {
 
 
 // DownloadManager -------------------------------------------------------------
+
+#if defined(OS_WIN)
+// TODO(port): Port this part of the header and remove the #ifdef.
 
 // Browser's download manager: manages all downloads and destination view.
 class DownloadManager : public base::RefCountedThreadSafe<DownloadManager>,
@@ -329,12 +336,13 @@ class DownloadManager : public base::RefCountedThreadSafe<DownloadManager>,
   // Remove downloads after remove_begin (inclusive) and before remove_end
   // (exclusive). You may pass in null Time values to do an unbounded delete
   // in either direction.
-  int RemoveDownloadsBetween(const Time remove_begin, const Time remove_end);
+  int RemoveDownloadsBetween(const base::Time remove_begin,
+                             const base::Time remove_end);
 
   // Remove downloads will delete all downloads that have a timestamp that is
   // the same or more recent than |remove_begin|. The number of downloads
   // deleted is returned back to the caller.
-  int RemoveDownloads(const Time remove_begin);
+  int RemoveDownloads(const base::Time remove_begin);
 
   // Download the object at the URL. Used in cases such as "Save Link As..."
   void DownloadUrl(const GURL& url,
@@ -364,6 +372,9 @@ class DownloadManager : public base::RefCountedThreadSafe<DownloadManager>,
   }
 
   std::wstring download_path() { return *download_path_; }
+
+  // Clears the last download path, used to initialize "save as" dialogs.  
+  void ClearLastDownloadPath();
 
   // Registers this file extension for automatic opening upon download
   // completion if 'open' is true, or prevents the extension from automatic
@@ -418,8 +429,8 @@ class DownloadManager : public base::RefCountedThreadSafe<DownloadManager>,
   // Update the history service for a particular download.
   void UpdateHistoryForDownload(DownloadItem* download);
   void RemoveDownloadFromHistory(DownloadItem* download);
-  void RemoveDownloadsFromHistoryBetween(const Time remove_begin,
-                                         const Time remove_before);
+  void RemoveDownloadsFromHistoryBetween(const base::Time remove_begin,
+                                         const base::Time remove_before);
 
   // Inform the notification service of download starts and stops.
   void NotifyAboutDownloadStart();
@@ -555,5 +566,6 @@ class DownloadManager : public base::RefCountedThreadSafe<DownloadManager>,
   DISALLOW_EVIL_CONSTRUCTORS(DownloadManager);
 };
 
+#endif  // defined(OS_WIN)
 
 #endif  // CHROME_BROWSER_DOWNLOAD_DOWNLOAD_MANAGER_H__

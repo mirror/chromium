@@ -16,6 +16,7 @@ extern const wchar_t kNoErrorDialogs[];
 extern const wchar_t kNoTree[];
 extern const wchar_t kTestShellTimeOut[];
 extern const wchar_t kStartupDialog[];
+extern const wchar_t kGPFaultErrorBox[];
 extern const wchar_t kJavaScriptFlags[];
 extern const wchar_t kRecordMode[];
 extern const wchar_t kPlaybackMode[];
@@ -24,9 +25,11 @@ extern const wchar_t kDumpStatsTable[];
 extern const wchar_t kCacheDir[];
 extern const wchar_t kDebugMemoryInUse[];
 extern const wchar_t kEnableFileCookies[];
-extern const wchar_t kUseNewHttp[];
+extern const wchar_t kUseWinHttp[];
 extern const wchar_t kEnableTracing[];
 extern const wchar_t kAllowScriptsToCloseWindows[];
+extern const wchar_t kCheckLayoutTestSystemDeps[];
+extern const wchar_t kEnableVideo[];
 
 }  // namespace test_shell
 

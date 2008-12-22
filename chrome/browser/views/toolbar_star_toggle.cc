@@ -12,6 +12,8 @@
 #include "chrome/common/resource_bundle.h"
 #include "googleurl/src/gurl.h"
 
+using base::TimeTicks;
+
 // The amount of time (in milliseconds) between when the bubble closes and when
 // pressing on the button again does something. Yes, this is a hackish. I tried
 // many different options, all to no avail:
@@ -44,8 +46,10 @@ void ToolbarStarToggle::ShowStarBubble(const GURL& url, bool newly_bookmarked) {
   // of the star.
   gfx::Rect star_bounds(star_location.x() + 1, star_location.y(), width(),
                         height());
-  BookmarkBubbleView::Show(host_->browser()->GetTopLevelHWND(), star_bounds,
-                           this, host_->profile(), url, newly_bookmarked);
+  HWND parent_hwnd =
+      reinterpret_cast<HWND>(host_->browser()->window()->GetNativeHandle());
+  BookmarkBubbleView::Show(parent_hwnd, star_bounds, this, host_->profile(),
+                           url, newly_bookmarked);
   is_bubble_showing_ = true;
 }
 
@@ -79,7 +83,8 @@ SkBitmap ToolbarStarToggle::GetImageToPaint() {
   return Button::GetImageToPaint();
 }
 
-void ToolbarStarToggle::InfoBubbleClosing(InfoBubble* info_bubble) {
+void ToolbarStarToggle::InfoBubbleClosing(InfoBubble* info_bubble,
+                                          bool closed_by_escape) {
   is_bubble_showing_ = false;
   SchedulePaint();
   bubble_closed_time_ = TimeTicks::Now();
@@ -88,4 +93,3 @@ void ToolbarStarToggle::InfoBubbleClosing(InfoBubble* info_bubble) {
 bool ToolbarStarToggle::CloseOnEscape() {
   return true;
 }
-

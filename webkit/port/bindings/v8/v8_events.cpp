@@ -45,15 +45,15 @@
 namespace WebCore {
 
 
-V8AbstractEventListener::V8AbstractEventListener(Frame* frame, bool html)
-    : m_frame(frame), m_html(html) {
+V8AbstractEventListener::V8AbstractEventListener(Frame* frame, bool isInline)
+    : m_frame(frame), m_isInline(isInline) {
   ASSERT(m_frame);
   if (!m_frame) return;
 
   // Get the position in the source if any.
   m_lineNumber = 0;
   m_columnNumber = 0;
-  if (m_html && m_frame->document()->tokenizer()) {
+  if (m_isInline && m_frame->document()->tokenizer()) {
     m_lineNumber = m_frame->document()->tokenizer()->lineNumber();
     m_columnNumber = m_frame->document()->tokenizer()->columnNumber();
   }
@@ -61,8 +61,8 @@ V8AbstractEventListener::V8AbstractEventListener(Frame* frame, bool html)
 
 void V8AbstractEventListener::handleEvent(Event* event, bool isWindowEvent) {
   // EventListener could be disconnected from the frame.
-  ASSERT(m_frame);
-  if (!m_frame) return;
+  if (!m_frame)
+    return;
 
   // The callback function on XMLHttpRequest can clear the event listener
   // and destroys 'this' object. Keep a local reference of it.
@@ -72,7 +72,8 @@ void V8AbstractEventListener::handleEvent(Event* event, bool isWindowEvent) {
   v8::HandleScope handle_scope;
 
   v8::Handle<v8::Context> context = V8Proxy::GetContext(m_frame);
-  if (context.IsEmpty()) return;
+  if (context.IsEmpty())
+    return;
   v8::Context::Scope scope(context);
 
   // m_frame can removed by the callback function,
@@ -120,7 +121,7 @@ void V8AbstractEventListener::handleEvent(Event* event, bool isWindowEvent) {
     }
     // Prevent default action if the return value is false;
     // TODO(fqian): example, and reference to buganizer entry
-    if (m_html) {
+    if (m_isInline) {
       if (ret->IsBoolean() && !ret->BooleanValue()) {
         event->preventDefault();
       }
@@ -146,8 +147,8 @@ void V8AbstractEventListener::DisposeListenerObject() {
 
 
 V8EventListener::V8EventListener(Frame* frame, v8::Local<v8::Object> listener,
-                                 bool html)
-  : V8AbstractEventListener(frame, html) {
+                                 bool isInline)
+  : V8AbstractEventListener(frame, isInline) {
   m_listener = v8::Persistent<v8::Object>::New(listener);
 #ifndef NDEBUG
   V8Proxy::RegisterGlobalHandle(EVENT_LISTENER, this, m_listener);
@@ -212,6 +213,7 @@ v8::Local<v8::Object> V8EventListener::GetThisObject(Event* event,
       return v8::Context::GetCurrent()->Global();
   }
 
+  // make sure to sync type conversions with V8Proxy::EventTargetToV8Object
   EventTarget* target = event->currentTarget();
   if (target->toNode()) {
     v8::Handle<v8::Value> value =
@@ -223,6 +225,23 @@ v8::Local<v8::Object> V8EventListener::GetThisObject(Event* event,
         V8ClassIndex::XMLHTTPREQUEST, target->toXMLHttpRequest());
     return v8::Local<v8::Object>::New(v8::Handle<v8::Object>::Cast(value));
 
+  } else if (target->toXMLHttpRequestUpload()) {
+    v8::Handle<v8::Value> value = V8Proxy::ToV8Object(
+        V8ClassIndex::XMLHTTPREQUESTUPLOAD, target->toXMLHttpRequestUpload());
+    return v8::Local<v8::Object>::New(v8::Handle<v8::Object>::Cast(value));
+  
+  } else if (target->toMessagePort()) {
+    v8::Handle<v8::Value> value = V8Proxy::ToV8Object(
+        V8ClassIndex::MESSAGEPORT, target->toMessagePort());
+    return v8::Local<v8::Object>::New(v8::Handle<v8::Object>::Cast(value));
+
+#if ENABLE(SVG)
+  } else if (target->toSVGElementInstance()) {
+    v8::Handle<v8::Value> value = V8Proxy::ToV8Object(
+        V8ClassIndex::SVGELEMENTINSTANCE, target->toSVGElementInstance());
+    return v8::Local<v8::Object>::New(v8::Handle<v8::Object>::Cast(value));
+#endif
+
   } else {
     ASSERT(false);
     return v8::Local<v8::Object>();
@@ -232,16 +251,16 @@ v8::Local<v8::Object> V8EventListener::GetThisObject(Event* event,
 
 // ------- V 8 X H R E v e n t L i s t e n e r -----------------
 
-static void WeakXHRListenerCallback(v8::Persistent<v8::Object> obj,
+static void WeakObjectEventListenerCallback(v8::Persistent<v8::Value> obj,
                                     void* para) {
-  V8XHREventListener* listener = static_cast<V8XHREventListener*>(para);
+  V8ObjectEventListener* listener = static_cast<V8ObjectEventListener*>(para);
 
   // Remove the wrapper
   Frame* frame = listener->frame();
   if (frame) {
     V8Proxy* proxy = V8Proxy::retrieve(frame);
     if (proxy)
-      proxy->RemoveXHREventListener(listener);
+      proxy->RemoveObjectEventListener(listener);
 
     // Because the listener is no longer in the list, it must
     // be disconnected from the frame to avoid dangling frame pointer
@@ -254,21 +273,21 @@ static void WeakXHRListenerCallback(v8::Persistent<v8::Object> obj,
 }
 
 
-V8XHREventListener::V8XHREventListener(Frame* frame,
+V8ObjectEventListener::V8ObjectEventListener(Frame* frame,
                                        v8::Local<v8::Object> listener,
-                                       bool html)
-    : V8EventListener(frame, listener, html) {
+                                       bool isInline)
+    : V8EventListener(frame, listener, isInline) {
   // make m_listener weak.
-  m_listener.MakeWeak(this, WeakXHRListenerCallback);
+  m_listener.MakeWeak(this, WeakObjectEventListenerCallback);
 }
 
 
-V8XHREventListener::~V8XHREventListener() {
+V8ObjectEventListener::~V8ObjectEventListener() {
   if (m_frame) {
     ASSERT(!m_listener.IsEmpty());
     V8Proxy* proxy = V8Proxy::retrieve(m_frame);
     if (proxy)
-      proxy->RemoveXHREventListener(this);
+      proxy->RemoveObjectEventListener(this);
   }
 
   DisposeListenerObject();
@@ -423,10 +442,6 @@ v8::Local<v8::Function> V8LazyEventListener::GetWrappedListenerFunction() {
 
     // TODO(fqian): cache the wrapper function.
     String code = "(function (evt) {\n";
-
-    // This variable records how many lines the code has been offset within the
-    // source code to be evaluated
-    int codeOffset = 2;
 
     // Nodes other than the document object, when executing inline event
     // handlers push document, form, and the target node on the scope chain.

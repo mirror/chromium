@@ -74,6 +74,13 @@ IPC_BEGIN_MESSAGES(PluginProcessHost, 4)
                               GURL /* url */,
                               std::string /* cookies */)
 
+  // Get the list of proxies to use for |url|, as a semicolon delimited list
+  // of "<TYPE> <HOST>:<PORT>" | "DIRECT".
+  IPC_SYNC_MESSAGE_CONTROL1_2(PluginProcessHostMsg_ResolveProxy,
+                              GURL /* url */,
+                              int /* network error */,
+                              std::string /* proxy list */)
+
 IPC_END_MESSAGES(PluginProcessHost)
 
 
@@ -129,8 +136,8 @@ IPC_BEGIN_MESSAGES(Plugin, 5)
                       gfx::Rect /* clip_rect */,
                       std::vector<gfx::Rect> /* cutout_rects */,
                       bool /* visible */,
-                      SharedMemoryHandle /* windowless_buffer */,
-                      SharedMemoryHandle /* background_buffer */)
+                      base::SharedMemoryHandle /* windowless_buffer */,
+                      base::SharedMemoryHandle /* background_buffer */)
 
   IPC_SYNC_MESSAGE_ROUTED0_0(PluginMsg_SetFocus)
 

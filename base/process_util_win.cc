@@ -22,7 +22,7 @@ typedef BOOL (WINAPI* HeapSetFn)(HANDLE, HEAP_INFORMATION_CLASS, PVOID, SIZE_T);
 
 }  // namespace
 
-namespace process_util {
+namespace base {
 
 int GetCurrentProcId() {
   return ::GetCurrentProcessId();
@@ -118,10 +118,8 @@ bool LaunchApp(const std::wstring& cmdline,
                bool wait, bool start_hidden, ProcessHandle* process_handle) {
   STARTUPINFO startup_info = {0};
   startup_info.cb = sizeof(startup_info);
-  if (start_hidden) {
-    startup_info.dwFlags = STARTF_USESHOWWINDOW;
-    startup_info.wShowWindow = SW_HIDE;
-  }
+  startup_info.dwFlags = STARTF_USESHOWWINDOW;
+  startup_info.wShowWindow = start_hidden ? SW_HIDE : SW_SHOW;
   PROCESS_INFORMATION process_info;
   if (!CreateProcess(NULL,
                      const_cast<wchar_t*>(cmdline.c_str()), NULL, NULL,
@@ -142,6 +140,12 @@ bool LaunchApp(const std::wstring& cmdline,
     CloseHandle(process_info.hProcess);
   }
   return true;
+}
+
+bool LaunchApp(const CommandLine& cl,
+               bool wait, bool start_hidden, ProcessHandle* process_handle) {
+  return LaunchApp(cl.command_line_string(), wait,
+                   start_hidden, process_handle);
 }
 
 // Attempts to kill the process identified by the given process
@@ -315,18 +319,23 @@ bool WaitForProcessesToExit(const std::wstring& executable_name,
   return result;
 }
 
+bool WaitForSingleProcess(ProcessHandle handle, int wait_milliseconds) {
+  bool retval = WaitForSingleObject(handle, wait_milliseconds) == WAIT_OBJECT_0;
+  CloseHandle(handle);
+  return retval;
+}
+
 bool CleanupProcesses(const std::wstring& executable_name,
                       int wait_milliseconds,
                       int exit_code,
                       const ProcessFilter* filter) {
-  bool exited_cleanly =
-    process_util::WaitForProcessesToExit(executable_name, wait_milliseconds,
-                                         filter);
+  bool exited_cleanly = WaitForProcessesToExit(executable_name,
+                                               wait_milliseconds,
+                                               filter);
   if (!exited_cleanly)
-    process_util::KillProcesses(executable_name, exit_code, filter);
+    KillProcesses(executable_name, exit_code, filter);
   return exited_cleanly;
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // ProcesMetrics
@@ -606,4 +615,4 @@ void RaiseProcessToHighPriority() {
   SetPriorityClass(GetCurrentProcess(), HIGH_PRIORITY_CLASS);
 }
 
-}  // namespace process_util
+}  // namespace base

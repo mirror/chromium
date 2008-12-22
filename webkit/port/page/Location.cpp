@@ -30,11 +30,12 @@
 #include "config.h"
 #include "Location.h"
 #include "PlatformString.h"
-#include "DeprecatedString.h"
 #include "KURL.h"
 #include "Document.h"
 #include "FrameLoader.h"
+#include "ScriptController.h"
 #include "CSSHelper.h"
+#include "Frame.h"
 
 namespace {
 
@@ -60,82 +61,54 @@ WebCore::KURL GetFrameUrl(WebCore::Frame* frame) {
 
 namespace WebCore {
 
-void Location::ChangeLocationTo(const KURL& url, bool lock_history) {
-  if (url.isEmpty())
-    return;
+#if USE(V8)
+  // Notes about V8/JSC porting of this file.
+  // The getter functions on this class are generic across V8/JSC.
+  // The setter functions are basically custom.  In JSC, this gets separated
+  // into Location.h and JSLocation.h, with the implementation in
+  // JSLocationCustom.cpp.  For V8, we include the custom functions here.
+  //
+  // This class is not very JS-engine specific.  If we can move a couple of
+  // methods to the scriptController, we should be able to unify the code
+  // between JSC and V8:
+  //    retrieveActiveFrame()   - in JSC, this needs an ExecState.  Is there
+  //                              a static accessor?
+  //    isSafeScript()
+#endif
 
-  Frame* active_frame = JSBridge::retrieveActiveFrame();
-  if (!active_frame)
-    return;
-
-  bool user_gesture = active_frame->scriptBridge()->wasRunByUserGesture();
-  String referrer = active_frame->loader()->outgoingReferrer();
-
-  m_frame->loader()->scheduleLocationChange(url.string(), referrer, lock_history, user_gesture);
+Location::Location(Frame* frame)
+    : m_frame(frame)
+{
 }
 
-String Location::hash() {
-  KURL url = GetFrameUrl(m_frame);
-  return url.ref().isNull() ? "" : "#" + url.ref();  // convert DeprecatedString to String
+void Location::disconnectFrame()
+{
+    m_frame = 0;
 }
 
-void Location::setHash(const String& hash) {
+String Location::hash() const {
   if (!m_frame)
-    return;
-
-  KURL url = m_frame->loader()->url();
-  DeprecatedString str = hash.deprecatedString();
-  
-  if (str.startsWith("#"))
-    str = str.mid(1);
-  if (url.ref() == str)
-    return;
-  url.setRef(str);
-
-  ChangeLocationTo(url, false);
+    return String();
+  KURL url = GetFrameUrl(m_frame);
+  return url.ref().isNull() ? "" : "#" + url.ref();
 }
 
-String Location::host() {
+String Location::host() const {
   KURL url = GetFrameUrl(m_frame);
 
-  DeprecatedString str = url.host();
-  if (url.port()) {
-    str += ":" + DeprecatedString::number((int)url.port());
-  }
+  String str = url.host();
+  if (url.port())
+    str += ":" + String::number((int)url.port());
+
   return str;
 }
 
-void Location::setHost(const String& host) {
-  if (!m_frame)
-    return;
-
-  KURL url = m_frame->loader()->url();  
-  DeprecatedString str = host.deprecatedString();
-  DeprecatedString newhost = str.left(str.find(":"));
-  DeprecatedString newport = str.mid(str.find(":") + 1);
-  url.setHost(newhost);
-  url.setPort(newport.toUInt());
-
-  ChangeLocationTo(url, false);
-}
-
-String Location::hostname() {
+String Location::hostname() const {
   KURL url = GetFrameUrl(m_frame);
   return url.host();
 }
 
-void Location::setHostname(const String& hostname) {
-  if (!m_frame)
-    return;
-
-  KURL url = m_frame->loader()->url();  
-  DeprecatedString str = hostname.deprecatedString();
-  url.setHost(str);
-
-  ChangeLocationTo(url, false);  
-}
-
-String Location::href() {
+String Location::href() const {
   KURL url = GetFrameUrl(m_frame);
 
   if (!url.hasPath())
@@ -143,27 +116,100 @@ String Location::href() {
   return url.prettyURL();
 }
 
+String Location::pathname() const {
+  KURL url = GetFrameUrl(m_frame);
+  return url.path().isEmpty() ? "/" : url.path();
+}
+
+String Location::port() const {
+  KURL url = GetFrameUrl(m_frame);
+  return url.port() ? String::number((int)url.port()) : String();
+}
+
+String Location::protocol() const {
+  KURL url = GetFrameUrl(m_frame);
+  return url.protocol() + ":";
+}
+
+String Location::search() const {
+  KURL url = GetFrameUrl(m_frame);
+  return url.query();
+}
+
+String Location::toString() const {
+  return href();
+}
+
+#if USE(V8)
+static void navigateIfAllowed(Frame* frame, const KURL& url, bool lock_history)
+{
+  if (url.isEmpty())
+    return;
+
+  Frame* activeFrame = ScriptController::retrieveActiveFrame();
+  if (!activeFrame)
+    return;
+  
+  if (!url.protocolIs("javascript") || ScriptController::isSafeScript(frame)) {
+    bool user_gesture = activeFrame->script()->processingUserGesture();
+    frame->loader()->scheduleLocationChange(url.string(), 
+      activeFrame->loader()->outgoingReferrer(), lock_history, user_gesture);
+  }
+}
+
+void Location::setHash(const String& hash) {
+  if (!m_frame)
+    return;
+
+  KURL url = m_frame->loader()->url();
+  String old_ref = url.ref();
+  String str = hash;
+
+  if (str.startsWith("#"))
+    str = str.substring(1);
+  if (old_ref == str || (old_ref.isNull() && str.isEmpty()))
+    return;
+  url.setRef(str);
+
+  navigateIfAllowed(m_frame, url, false);
+}
+
+void Location::setHost(const String& host) {
+  if (!m_frame)
+    return;
+
+  KURL url = m_frame->loader()->url();  
+  String str = host;
+  String newhost = str.left(str.find(":"));
+  String newport = str.substring(str.find(":") + 1);
+  url.setHost(newhost);
+  url.setPort(newport.toUInt());
+
+  navigateIfAllowed(m_frame, url, false);
+}
+
+void Location::setHostname(const String& hostname) {
+  if (!m_frame)
+    return;
+
+  KURL url = m_frame->loader()->url();
+  url.setHost(hostname);
+
+  navigateIfAllowed(m_frame, url, false);  
+}
+
 void Location::setHref(const String& value) {
   if (!m_frame)
     return;
 
-  Frame* active_frame = JSBridge::retrieveActiveFrame();
+  Frame* active_frame = ScriptController::retrieveActiveFrame();
   if (!active_frame)
     return;
 
   if (!active_frame->loader()->shouldAllowNavigation(m_frame))
     return;
 
-  // Allows cross domain access except javascript url.
-  if (!parseURL(value).startsWith("javascript:", false) ||
-      JSBridge::isSafeScript(m_frame)) {
-    ChangeLocationTo(active_frame->loader()->completeURL(value), false);
-  }  
-}
-
-String Location::pathname() {
-  KURL url = GetFrameUrl(m_frame);
-  return url.path().isEmpty() ? "/" : url.path();
+  navigateIfAllowed(m_frame, active_frame->loader()->completeURL(value), false);
 }
 
 void Location::setPathname(const String& pathname) {
@@ -171,15 +217,9 @@ void Location::setPathname(const String& pathname) {
     return;
 
   KURL url = m_frame->loader()->url();  
-  DeprecatedString str = pathname.deprecatedString();
-  url.setPath(str);
+  url.setPath(pathname);
 
-  ChangeLocationTo(url, false);    
-}
-
-String Location::port() {
-  KURL url = GetFrameUrl(m_frame);
-  return url.port() ? String::number((int)url.port()) : String();
+  navigateIfAllowed(m_frame, url, false);    
 }
 
 void Location::setPort(const String& port) {
@@ -187,95 +227,75 @@ void Location::setPort(const String& port) {
     return;
 
   KURL url = m_frame->loader()->url();  
-  DeprecatedString str = port.deprecatedString();
-  url.setPort(str.toUInt());
+  url.setPort(port.toUInt());
 
-  ChangeLocationTo(url, false);  
-}
-
-String Location::protocol() {
-  KURL url = GetFrameUrl(m_frame);
-  return url.protocol() + ":";
+  navigateIfAllowed(m_frame, url, false);  
 }
 
 void Location::setProtocol(const String& protocol) {
   if (!m_frame)
     return;
 
-  KURL url = m_frame->loader()->url();  
-  DeprecatedString str = protocol.deprecatedString();
-  url.setProtocol(str);
+  KURL url = m_frame->loader()->url();
+  url.setProtocol(protocol);
   
-  ChangeLocationTo(url, false); 
-}
-
-String Location::search() {
-  KURL url = GetFrameUrl(m_frame);
-  return url.query();
+  navigateIfAllowed(m_frame, url, false); 
 }
 
 void Location::setSearch(const String& query) {
   if (!m_frame)
     return;
 
-  KURL url = m_frame->loader()->url();  
-  DeprecatedString str = query.deprecatedString();
-  url.setQuery(str);
+  KURL url = m_frame->loader()->url();
+  url.setQuery(query);
   
-  ChangeLocationTo(url, false); 
+  navigateIfAllowed(m_frame, url, false); 
 }
 
-void Location::reload(bool forceget) {
+void Location::reload(bool forceget)
+{
   if (!m_frame)
     return;
 
-  Frame* active_frame = JSBridge::retrieveActiveFrame();
+  Frame* active_frame = ScriptController::retrieveActiveFrame();
   if (!active_frame)
     return;
 
-  if (JSBridge::isSafeScript(m_frame)) {
-    m_frame->loader()->scheduleRefresh(active_frame->scriptBridge()->wasRunByUserGesture());
-  }
+  if (!ScriptController::isSafeScript(m_frame))
+    return;
+
+  bool userGesture = active_frame->script()->processingUserGesture();
+  m_frame->loader()->scheduleRefresh(userGesture);
 }
 
 void Location::replace(const String& url) {
   if (!m_frame)
     return;
 
-  Frame* active_frame = JSBridge::retrieveActiveFrame();
+  Frame* active_frame = ScriptController::retrieveActiveFrame();
   if (!active_frame)
     return;
 
   if (!active_frame->loader()->shouldAllowNavigation(m_frame))
     return;
 
-  // Allows cross domain access except javascript url.
-  if (!parseURL(url).startsWith("javascript:", false) ||
-      JSBridge::isSafeScript(m_frame)) {
-    ChangeLocationTo(active_frame->loader()->completeURL(url), true);
-  }
+  navigateIfAllowed(m_frame, active_frame->loader()->completeURL(url), true);
 }
 
 void Location::assign(const String& url) {
   if (!m_frame) 
     return;
 
-  Frame* active_frame = JSBridge::retrieveActiveFrame();
+  Frame* active_frame = ScriptController::retrieveActiveFrame();
   if (!active_frame)
     return;
 
   if (!active_frame->loader()->shouldAllowNavigation(m_frame))
     return;
 
-  if (!parseURL(url).startsWith("javascript:", false) ||
-      JSBridge::isSafeScript(m_frame)) {
-    ChangeLocationTo(active_frame->loader()->completeURL(url), false);
-  }
+  navigateIfAllowed(m_frame, active_frame->loader()->completeURL(url), false);
 }
 
-
-String Location::toString() {
-  return href();
-}
+#endif  // USE(V8)
 
 }  // namespace WebCore

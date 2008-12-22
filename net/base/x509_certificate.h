@@ -19,6 +19,9 @@
 #include <wincrypt.h>
 #elif defined(OS_MACOSX)
 #include <Security/Security.h>
+#elif defined(OS_LINUX)
+// Forward declaration; real one in <cert.h>
+struct CERTCertificateStr;
 #endif
 
 class Pickle;
@@ -50,6 +53,8 @@ class X509Certificate : public base::RefCountedThreadSafe<X509Certificate> {
   typedef PCCERT_CONTEXT OSCertHandle;
 #elif defined(OS_MACOSX)
   typedef SecCertificateRef OSCertHandle;
+#elif defined(OS_LINUX)
+  typedef struct CERTCertificateStr* OSCertHandle;
 #else
   // TODO(ericroman): not implemented
   typedef void* OSCertHandle;
@@ -126,7 +131,7 @@ class X509Certificate : public base::RefCountedThreadSafe<X509Certificate> {
   // Creates a X509Certificate from the ground up.  Used by tests that simulate
   // SSL connections.
   X509Certificate(std::string subject, std::string issuer,
-                  Time start_date, Time expiration_date);
+                  base::Time start_date, base::Time expiration_date);
 
   // Appends a representation of this object to the given pickle.
   void Persist(Pickle* pickle);
@@ -144,8 +149,8 @@ class X509Certificate : public base::RefCountedThreadSafe<X509Certificate> {
   // the |valid_expiry| date.
   // If we were unable to parse either date from the certificate (or if the cert
   // lacks either date), the date will be null (i.e., is_null() will be true).
-  const Time& valid_start() const { return valid_start_; }
-  const Time& valid_expiry() const { return valid_expiry_; }
+  const base::Time& valid_start() const { return valid_start_; }
+  const base::Time& valid_expiry() const { return valid_expiry_; }
 
   // The fingerprint of this certificate.
   const Fingerprint& fingerprint() const { return fingerprint_; }
@@ -210,10 +215,10 @@ class X509Certificate : public base::RefCountedThreadSafe<X509Certificate> {
   Principal issuer_;
 
   // This certificate is not valid before |valid_start_|
-  Time valid_start_;
+  base::Time valid_start_;
 
   // This certificate is not valid after |valid_expiry_|
-  Time valid_expiry_;
+  base::Time valid_expiry_;
 
   // The fingerprint of this certificate.
   Fingerprint fingerprint_;

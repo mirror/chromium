@@ -16,6 +16,7 @@ env.Replace(
         '$THIRD_PARTY_DIR/libjpeg',
         '$THIRD_PARTY_DIR/libpng',
         '$THIRD_PARTY_DIR/zlib',
+        '$VC80_CPPPATH',
     ],
 )
 
@@ -44,7 +45,7 @@ if env['OS'] == 'win32':
           '/wd4102',
       ],
   )
-elif env['OS'] == 'linux':
+elif env['OS'] in ['linux', 'osx']:
   env.Append(
       CPPFLAGS = [
           '-Wno-unused-variable',
@@ -84,4 +85,4 @@ input_files = [
         '$LIBGD_DIR/wbmp.c',
 ]
 
-env.ChromeStaticLibrary('gd', input_files)
+env.GearsStaticLibrary('gd', input_files)

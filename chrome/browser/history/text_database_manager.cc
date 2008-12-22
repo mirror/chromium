@@ -4,6 +4,7 @@
 
 #include "chrome/browser/history/text_database_manager.h"
 
+#include "base/compiler_specific.h"
 #include "base/file_util.h"
 #include "base/histogram.h"
 #include "base/logging.h"
@@ -11,6 +12,10 @@
 #include "base/string_util.h"
 #include "chrome/browser/history/history_publisher.h"
 #include "chrome/common/mru_cache.h"
+
+using base::Time;
+using base::TimeDelta;
+using base::TimeTicks;
 
 namespace history {
 
@@ -73,8 +78,7 @@ TextDatabaseManager::TextDatabaseManager(const std::wstring& dir,
       transaction_nesting_(0),
       db_cache_(DBCache::NO_AUTO_EVICT),
       present_databases_loaded_(false),
-#pragma warning(suppress: 4355)  // Okay to pass "this" here.
-      factory_(this),
+      ALLOW_THIS_IN_INITIALIZER_LIST(factory_(this)),
       history_publisher_(NULL) {
 }
 
@@ -143,11 +147,12 @@ void TextDatabaseManager::InitDBList() {
   present_databases_loaded_ = true;
 
   // Find files on disk matching our pattern so we can quickly test for them.
-  file_util::FileEnumerator enumerator(dir_, false,
+  file_util::FileEnumerator enumerator(FilePath::FromWStringHack(dir_), false,
       file_util::FileEnumerator::FILES,
-      std::wstring(TextDatabase::file_base()) + L"*");
+      FilePath::FromWStringHack(
+          std::wstring(TextDatabase::file_base()) + L"*").value());
   std::wstring cur_file;
-  while (!(cur_file = enumerator.Next()).empty()) {
+  while (!(cur_file = enumerator.Next().ToWStringHack()).empty()) {
     // Convert to the number representing this file.
     TextDatabase::DBIdent id = TextDatabase::FileNameToID(cur_file);
     if (id)  // Will be 0 on error.

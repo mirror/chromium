@@ -1,0 +1,62 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+__doc__ = """
+Configuration for building the media_unittests{,.exe} executable.
+"""
+
+Import('env')
+
+env = env.Clone()
+
+env.SConscript([
+    '$BASE_DIR/using_base.scons',
+    '$GTEST_DIR/../using_gtest.scons',
+    '$ICU38_DIR/using_icu38.scons',
+    '$MEDIA_DIR/using_media.scons',
+], {'env':env})
+
+env.Prepend(
+    CPPPATH = [
+        '$CHROME_SRC_DIR',
+    ],
+)
+
+if env.Bit('windows'):
+  env.Prepend(
+      CCFLAGS = [
+          '/TP',
+          '/WX',
+      ],
+      CPPDEFINES = [
+          '_WIN32_WINNT=0x0600',
+          'WINVER=0x0600',
+          '_HAS_EXCEPTIONS=0',
+      ],
+      LINKFLAGS = [
+          '/DELAYLOAD:"dwmapi.dll"',
+          '/DELAYLOAD:"uxtheme.dll"',
+          '/MACHINE:X86',
+          '/FIXED:No',
+          '/safeseh',
+          '/dynamicbase',
+          '/ignore:4199',
+          '/nxcompat',
+      ],
+  )
+
+input_files = [
+    'base/data_buffer_unittest.cc',
+    'base/run_all_unittests.cc',
+]
+
+env.ChromeTestProgram('media_unittests', input_files)
+
+env.ChromeMSVSProject('$MEDIA_DIR/build/media_unittests.vcproj',
+                dependencies = [
+                    '$BASE_DIR/build/base.vcproj',
+                    '$MEDIA_DIR/build/media.vcproj',
+                    '$TESTING_DIR/gtest.vcproj',
+                ],
+                guid='{C8C6183C-B03C-11DD-B471-DFD256D89593}')

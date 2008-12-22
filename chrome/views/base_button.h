@@ -86,6 +86,8 @@ class BaseButton : public View,
   virtual void OnMouseExited(const MouseEvent& e);
   virtual bool OnKeyPressed(const KeyEvent& e);
   virtual bool OnKeyReleased(const KeyEvent& e);
+  // Overriden to reset state then invoke super's implementation.
+  virtual void ShowContextMenu(int x, int y, bool is_mouse_gesture);
 
   class ButtonListener {
    public:
@@ -121,6 +123,13 @@ class BaseButton : public View,
     return state_;
   }
 
+  //
+  // Set the state. If the state is different, causes the button
+  // to be repainted
+  //
+  virtual void SetState(ButtonState new_state);
+
+
   virtual void Paint(ChromeCanvas* canvas);
 
   // Variant of paint that allows you to specify whether the paint is for a
@@ -134,12 +143,6 @@ class BaseButton : public View,
   // Returns true if the event is one that can trigger notifying the listener.
   // This implementation returns true if the left mouse button is down.
   virtual bool IsTriggerableEvent(const MouseEvent& e);
-
-  //
-  // Set the state. If the state is different, causes the button
-  // to be repainted
-  //
-  virtual void SetState(ButtonState new_state);
 
   virtual void OnDragDone();
 
@@ -181,4 +184,3 @@ class BaseButton : public View,
 }  // namespace views
 
 #endif  // CHROME_VIEWS_BASE_BUTTON_H__
-

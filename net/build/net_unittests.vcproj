@@ -227,6 +227,10 @@
 				Name="http"
 				>
 				<File
+					RelativePath="..\http\http_auth_cache_unittest.cc"
+					>
+				</File>
+				<File
 					RelativePath="..\http\http_auth_handler_basic_unittest.cc"
 					>
 				</File>
@@ -323,7 +327,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\base\file_input_stream_unittest.cc"
+					RelativePath="..\base\file_stream_unittest.cc"
 					>
 				</File>
 				<File
@@ -410,6 +414,10 @@
 			<Filter
 				Name="proxy"
 				>
+				<File
+					RelativePath="..\proxy\proxy_script_fetcher_unittest.cc"
+					>
+				</File>
 				<File
 					RelativePath="..\proxy\proxy_service_unittest.cc"
 					>

@@ -5,6 +5,7 @@
 #include "chrome/browser/profile.h"
 
 #include "base/command_line.h"
+#include "base/file_path.h"
 #include "base/file_util.h"
 #include "base/lock.h"
 #include "base/path_service.h"
@@ -16,12 +17,15 @@
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_manager.h"
+#include "chrome/browser/extensions/extensions_service.h"
+#include "chrome/browser/greasemonkey_master.h"
 #include "chrome/browser/history/history.h"
 #include "chrome/browser/navigation_controller.h"
 #include "chrome/browser/profile_manager.h"
 #include "chrome/browser/render_process_host.h"
+#include "chrome/browser/sessions/session_service.h"
+#include "chrome/browser/sessions/tab_restore_service.h"
 #include "chrome/browser/spellchecker.h"
-#include "chrome/browser/tab_restore_service.h"
 #include "chrome/browser/template_url_fetcher.h"
 #include "chrome/browser/template_url_model.h"
 #include "chrome/browser/visitedlink_master.h"
@@ -40,6 +44,9 @@
 #include "net/proxy/proxy_service.h"
 #include "net/url_request/url_request_context.h"
 #include "webkit/glue/webkit_glue.h"
+
+using base::Time;
+using base::TimeDelta;
 
 // Delay, in milliseconds, before we explicitly create the SessionService.
 static const int kCreateSessionServiceDelayMS = 500;
@@ -117,8 +124,10 @@ class ProfileImpl::RequestContext : public URLRequestContext,
     CommandLine command_line;
 
     scoped_ptr<net::ProxyInfo> proxy_info(CreateProxyInfo(command_line));
+    proxy_service_ = net::ProxyService::Create(proxy_info.get());
+
     net::HttpCache* cache =
-        new net::HttpCache(proxy_info.get(), disk_cache_path, 0);
+        new net::HttpCache(proxy_service_, disk_cache_path, 0);
 
     bool record_mode = chrome::kRecordModeEnabled &&
                        CommandLine().HasSwitch(switches::kRecordMode);
@@ -209,6 +218,7 @@ class ProfileImpl::RequestContext : public URLRequestContext,
     DCHECK(NULL == prefs_);
     delete cookie_store_;
     delete http_transaction_factory_;
+    delete proxy_service_;
 
     if (default_request_context_ == this)
       default_request_context_ = NULL;
@@ -244,10 +254,12 @@ class OffTheRecordRequestContext : public URLRequestContext,
     // context to make sure it doesn't go away when we delete the object graph.
     original_context_ = profile->GetRequestContext();
 
-    CommandLine command_line;
-    scoped_ptr<net::ProxyInfo> proxy_info(CreateProxyInfo(command_line));
+    // Share the same proxy service as the original profile. This proxy
+    // service's lifespan is dependent on the lifespan of the original profile,
+    // which we reference (see above).
+    proxy_service_ = original_context_->proxy_service();
 
-    http_transaction_factory_ = new net::HttpCache(NULL, 0);
+    http_transaction_factory_ = new net::HttpCache(proxy_service_, 0);
     cookie_store_ = new net::CookieMonster;
     cookie_policy_.SetType(net::CookiePolicy::FromInt(
         prefs_->GetInteger(prefs::kCookieBehavior)));
@@ -316,6 +328,8 @@ class OffTheRecordRequestContext : public URLRequestContext,
     DCHECK(NULL == prefs_);
     delete cookie_store_;
     delete http_transaction_factory_;
+    // NOTE: do not delete |proxy_service_| as is owned by the original profile.
+   
     // The OffTheRecordRequestContext simply act as a proxy to the real context.
     // There is nothing else to delete.
   }
@@ -377,6 +391,14 @@ class OffTheRecordProfileImpl : public Profile,
 
   virtual VisitedLinkMaster* GetVisitedLinkMaster() {
     return profile_->GetVisitedLinkMaster();
+  }
+
+  virtual ExtensionsService* GetExtensionsService() {
+    return profile_->GetExtensionsService();
+  }
+
+  virtual GreasemonkeyMaster* GetGreasemonkeyMaster() {
+    return profile_->GetGreasemonkeyMaster();
   }
 
   virtual HistoryService* GetHistoryService(ServiceAccessType sat) {
@@ -538,6 +560,7 @@ class OffTheRecordProfileImpl : public Profile,
 ProfileImpl::ProfileImpl(const std::wstring& path)
     : path_(path),
       off_the_record_(false),
+      extensions_service_(new ExtensionsService(FilePath(path))),
       history_service_created_(false),
       created_web_data_service_(false),
       created_download_manager_(false),
@@ -559,7 +582,7 @@ ProfileImpl::ProfileImpl(const std::wstring& path)
 }
 
 ProfileImpl::~ProfileImpl() {
-  tab_restore_service_.reset();
+  tab_restore_service_ = NULL;
 
   StopCreateSessionServiceTimer();
   // TemplateURLModel schedules a task on the WebDataService from its
@@ -643,7 +666,7 @@ Profile* ProfileImpl::GetOriginalProfile() {
   return this;
 }
 
-static void BroadcastNewHistoryTable(SharedMemory* table_memory) {
+static void BroadcastNewHistoryTable(base::SharedMemory* table_memory) {
   if (!table_memory)
     return;
 
@@ -653,8 +676,8 @@ static void BroadcastNewHistoryTable(SharedMemory* table_memory) {
     if (!i->second->channel())
       continue;
 
-    SharedMemoryHandle new_table;
-    HANDLE process = i->second->process();
+    base::SharedMemoryHandle new_table;
+    HANDLE process = i->second->process().handle();
     if (!process) {
       // process can be null if it's started with the --single-process flag.
       process = GetCurrentProcess();
@@ -677,6 +700,23 @@ VisitedLinkMaster* ProfileImpl::GetVisitedLinkMaster() {
   }
 
   return visited_link_master_.get();
+}
+
+ExtensionsService* ProfileImpl::GetExtensionsService() {
+  return extensions_service_.get();
+}
+
+GreasemonkeyMaster* ProfileImpl::GetGreasemonkeyMaster() {
+  if (!greasemonkey_master_.get()) {
+    std::wstring script_dir_str;
+    PathService::Get(chrome::DIR_USER_SCRIPTS, &script_dir_str);
+    FilePath script_dir(script_dir_str);
+    greasemonkey_master_ =
+        new GreasemonkeyMaster(g_browser_process->file_thread()->message_loop(),
+                               script_dir);
+  }
+
+  return greasemonkey_master_.get();
 }
 
 PrefService* ProfileImpl::GetPrefs() {
@@ -846,12 +886,12 @@ Time ProfileImpl::GetStartTime() const {
 
 TabRestoreService* ProfileImpl::GetTabRestoreService() {
   if (!tab_restore_service_.get())
-    tab_restore_service_.reset(new TabRestoreService(this));
+    tab_restore_service_ = new TabRestoreService(this);
   return tab_restore_service_.get();
 }
 
 void ProfileImpl::ResetTabRestoreService() {
-  tab_restore_service_.reset(NULL);
+  tab_restore_service_ = NULL;
 }
 
 // To be run in the IO thread to notify all resource message filters that the 
@@ -898,13 +938,12 @@ void ProfileImpl::InitializeSpellChecker(bool need_to_broadcast) {
   if (enable_spellcheck) {
     std::wstring dict_dir;
     PathService::Get(chrome::DIR_APP_DICTIONARIES, &dict_dir);
-    std::wstring language = prefs->GetString(prefs::kSpellCheckDictionary);
-
     // Note that, as the object pointed to by previously by spellchecker_ 
     // is being deleted in the io thread, the spellchecker_ can be made to point
     // to a new object (RE-initialized) in parallel in this UI thread.
-    spellchecker_ = new SpellChecker(dict_dir, language, GetRequestContext(), 
-                                     L"");
+    spellchecker_ = new SpellChecker(dict_dir,
+        prefs->GetString(prefs::kSpellCheckDictionary), GetRequestContext(),
+        std::wstring());
     spellchecker_->AddRef();  // Manual refcounting.
   } else {
     spellchecker_ = NULL;

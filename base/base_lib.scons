@@ -1,0 +1,224 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+__doc__ = """
+Configuration for building base.lib / libbase.a.
+"""
+
+Import('env')
+
+env = env.Clone()
+
+env.ApplySConscript([
+    '$ICU38_DIR/using_icu38.scons',
+])
+
+if env.Bit('windows'):
+  env.Prepend(
+      CCFLAGS = [
+          '/Wp64',
+      ],
+  )
+
+# Some files from this list are not yet ported. They are removed from
+# the list, see code below.
+input_files = [
+    'at_exit.cc',
+    'base_paths.cc',
+    'base_switches.cc',
+    'bzip2_error_handler.cc',
+    'clipboard.cc',
+    'clipboard_util.cc',
+    'command_line.cc',
+    'debug_util.cc',
+    'event_recorder.cc',
+    'field_trial.cc',
+    'file_path.cc',
+    'file_util.cc',
+    'file_version_info.cc',
+    'histogram.cc',
+    'icu_util.cc',
+    'idle_timer.cc',
+    'json_reader.cc',
+    'json_writer.cc',
+    'lazy_instance.cc',
+    'lock.cc',
+    'logging.cc',
+    'md5.cc',
+    'memory_debug.cc',
+    'message_loop.cc',
+    'message_pump_default.cc',
+    'non_thread_safe.cc',
+    'object_watcher.cc',
+    'path_service.cc',
+    'pickle.cc',
+    'rand_util.cc',
+    'ref_counted.cc',
+    'resource_util.cc',
+    'revocable_store.cc',
+    'scoped_clipboard_writer.cc',
+    'sha2.cc',
+    'simple_thread.cc',
+    'stats_table.cc',
+    'string_escape.cc',
+    'string_piece.cc',
+    'string_util.cc',
+    'string_util_icu.cc',
+    'system_monitor.cc',
+    'third_party/nspr/prtime.cc',
+    'third_party/nss/sha512.cc',
+    'thread.cc',
+    'thread_collision_warner.cc',
+    'time.cc',
+    'time_format.cc',
+    'timer.cc',
+    'trace_event.cc',
+    'tracked.cc',
+    'tracked_objects.cc',
+    'values.cc',
+    'watchdog.cc',
+    'word_iterator.cc',
+]
+
+# Add object files David M Gay's dtoa and g_fmt third party lib.  We
+# compile these separately so we can disable warnings.
+env_dmg_fp = env.Clone()
+if env_dmg_fp.Bit('windows'):
+  env_dmg_fp.Append(
+      CCFLAGS = [
+          '/wd4018',
+          '/wd4102',
+          '/wd4244',
+          '/wd4554',
+      ],
+  )
+elif env_dmg_fp.Bit('posix'):
+  for var in ['CCFLAGS', 'CXXFLAGS']:
+    if '-Wall' in env_dmg_fp[var]:
+      env_dmg_fp[var].remove('-Wall')
+      env_dmg_fp[var].append('-Wno-write-strings')
+
+input_files.extend([
+    env_dmg_fp.Object('third_party/dmg_fp/dtoa.cc'),
+    env_dmg_fp.Object('third_party/dmg_fp/g_fmt.cc'),
+])
+
+if env.Bit('posix'):
+  # Remove files that still need to be ported from the input_files list.
+  # TODO(port): delete files from this list as they get ported.
+  to_be_ported_files = [
+    'clipboard_util.cc',
+    'event_recorder.cc',
+    'file_version_info.cc',
+
+    # We have an implementation of idle_timer, but it's unclear if we want it
+    # yet, so it's commented out for now.  Leave this 'unported'.
+    'idle_timer.cc',
+
+    'object_watcher.cc',
+
+    'resource_util.cc',  # Uses HMODULE, but may be abstractable.
+  ]
+  for remove in to_be_ported_files:
+      input_files.remove(remove)
+
+if env.Bit('windows'):
+  input_files.extend([
+      'base_drag_source.cc',
+      'base_drop_target.cc',
+      'base_paths_win.cc',
+      'clipboard_win.cc',
+      'condition_variable_win.cc',
+      'cpu.cc',
+      'debug_on_start.cc',
+      'debug_util_win.cc',
+      'directory_watcher_win.cc',
+      'file_util_win.cc',
+      'hmac_win.cc',
+      'iat_patch.cc',
+      'image_util.cc',
+      'lock_impl_win.cc',
+      'message_pump_win.cc',
+      'pe_image.cc',
+      'platform_file_win.cc',
+      'platform_thread_win.cc',
+      'process_util_win.cc',
+      'process_win.cc',
+      'rand_util_win.cc',
+      'registry.cc',
+      'shared_memory_win.cc',
+      'sys_info_win.cc',
+      'sys_string_conversions_win.cc',
+      'system_monitor_win.cc',
+      'test_file_util_win.cc',
+      'thread_local_storage_win.cc',
+      'thread_local_win.cc',
+      'third_party/purify/pure_api.c',
+      'time_win.cc',
+      'waitable_event_win.cc',
+      'win_util.cc',
+      'wmi_util.cc',
+      'worker_pool.cc',
+  ])
+
+if env.Bit('posix'):
+  input_files.extend([
+      'condition_variable_posix.cc',
+      'debug_util_posix.cc',
+      'file_util_posix.cc',
+      'lock_impl_posix.cc',
+      'message_pump_libevent.cc',
+      'platform_file_posix.cc',
+      'platform_thread_posix.cc',
+      'process_util_posix.cc',
+      'rand_util_posix.cc',
+      'shared_memory_posix.cc',
+      'string16.cc',
+      'sys_info_posix.cc',
+      'thread_local_storage_posix.cc',
+      'thread_local_posix.cc',
+      'time_posix.cc',
+      'waitable_event_generic.cc',
+  ])
+
+if env.Bit('mac'):
+  input_files.extend([
+      'base_paths_mac.mm',
+      'clipboard_mac.mm',
+      'file_util_mac.mm',
+      'file_version_info_mac.mm',
+      'hmac_mac.cc',
+      'mac_util.mm',
+      'message_pump_mac.mm',
+      'platform_thread_mac.mm',
+      'scoped_nsautorelease_pool.mm',
+      'sys_string_conversions_mac.mm',
+      'test_file_util_mac.cc',
+      'worker_pool_mac.mm',
+  ])
+
+if env.Bit('linux'):
+  input_files.extend([
+      'atomicops_internals_x86_gcc.cc',
+      'base_paths_linux.cc',
+      'clipboard_linux.cc',
+      'file_util_linux.cc',
+      'file_version_info_linux.cc',
+      'hmac_nss.cc',
+      'message_pump_glib.cc',
+      'nss_init.cc',
+      'process_posix.cc',
+      'process_util_linux.cc',
+      'sys_string_conversions_linux.cc',
+      'test_file_util_linux.cc',
+      'worker_pool.cc',
+  ])
+
+env.ChromeStaticLibrary('base', input_files)
+
+env.ChromeMSVSProject('$BASE_DIR/build/base.vcproj',
+                dependencies = [
+                    '$BASE_DIR/build/debug_message.vcproj',
+                ],
+                guid='{1832A374-8A74-4F9E-B536-69A699B3E165}')

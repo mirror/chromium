@@ -7,15 +7,19 @@
 #include "base/histogram.h"
 #include "base/string_piece.h"
 #include "chrome/app/locales/locale_settings.h"
+#include "chrome/browser/bookmarks/bookmark_utils.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_resources.h"
+#include "chrome/browser/dom_ui/dom_ui_contents.h"
 #include "chrome/browser/history_tab_ui.h"
 #include "chrome/browser/history/page_usage_data.h"
 #include "chrome/browser/navigation_entry.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/render_view_host.h"
+#include "chrome/browser/sessions/session_types.h"
 #include "chrome/browser/template_url.h"
+#include "chrome/browser/user_data_manager.h"
 #include "chrome/browser/user_metrics.h"
 #include "chrome/browser/views/keyword_editor_view.h"
 #include "chrome/common/jstemplate_builder.h"
@@ -27,14 +31,12 @@
 #include "chromium_strings.h"
 #include "generated_resources.h"
 
+using base::Time;
+using base::TimeDelta;
+using base::TimeTicks;
+
 // The URL scheme used for the new tab.
 static const char kNewTabUIScheme[] = "chrome-internal";
-
-// The path used in internal URLs to thumbnail data.
-static const char kThumbnailPath[] = "thumb";
-
-// The path used in internal URLs to favicon data.
-static const char kFavIconPath[] = "favicon";
 
 // The number of most visited pages we show.
 const int kMostVisitedPages = 9;
@@ -164,11 +166,27 @@ void NewTabHTMLSource::StartDataRequest(const std::string& path,
     NOTREACHED();
     return;
   }
+
+  // Show the profile name in the title and most visited labels if the current
+  // profile is not the default.
+  std::wstring title;
+  std::wstring most_visited;
+  if (UserDataManager::Get()->is_current_profile_default()) {
+    title = l10n_util::GetString(IDS_NEW_TAB_TITLE);
+    most_visited = l10n_util::GetString(IDS_NEW_TAB_MOST_VISITED);
+  } else {
+    // Get the current profile name.
+    std::wstring profile_name =
+      UserDataManager::Get()->current_profile_name();
+    title = l10n_util::GetStringF(IDS_NEW_TAB_TITLE_WITH_PROFILE_NAME,
+                                  profile_name);
+    most_visited = l10n_util::GetStringF(
+        IDS_NEW_TAB_MOST_VISITED_WITH_PROFILE_NAME,
+        profile_name);
+  }
   DictionaryValue localized_strings;
-  localized_strings.SetString(L"title",
-      l10n_util::GetString(IDS_NEW_TAB_TITLE));
-  localized_strings.SetString(L"mostvisited",
-      l10n_util::GetString(IDS_NEW_TAB_MOST_VISITED));
+  localized_strings.SetString(L"title", title);
+  localized_strings.SetString(L"mostvisited", most_visited);
   localized_strings.SetString(L"searches",
       l10n_util::GetString(IDS_NEW_TAB_SEARCHES));
   localized_strings.SetString(L"bookmarks",
@@ -177,11 +195,13 @@ void NewTabHTMLSource::StartDataRequest(const std::string& path,
       l10n_util::GetString(IDS_NEW_TAB_HISTORY_SHOW));
   localized_strings.SetString(L"searchhistory",
       l10n_util::GetString(IDS_NEW_TAB_HISTORY_SEARCH));
-  localized_strings.SetString(L"closedtabs",
-      l10n_util::GetString(IDS_NEW_TAB_CLOSED_TABS));
+  localized_strings.SetString(L"recentlyclosed",
+      l10n_util::GetString(IDS_NEW_TAB_RECENTLY_CLOSED));
   localized_strings.SetString(L"mostvisitedintro",
       l10n_util::GetStringF(IDS_NEW_TAB_MOST_VISITED_INTRO,
           l10n_util::GetString(IDS_WELCOME_PAGE_URL)));
+  localized_strings.SetString(L"closedwindow",
+      l10n_util::GetString(IDS_NEW_TAB_RECENTLY_CLOSED_WINDOW));
 
   localized_strings.SetString(L"textdirection",
       (l10n_util::GetTextDirection() == l10n_util::RIGHT_TO_LEFT) ?
@@ -239,101 +259,6 @@ void IncognitoTabHTMLSource::StartDataRequest(const std::string& path,
 
   SendResponse(request_id, html_bytes);
 }
-
-///////////////////////////////////////////////////////////////////////////////
-// ThumbnailSource
-
-ThumbnailSource::ThumbnailSource(Profile* profile)
-    : DataSource(kThumbnailPath, MessageLoop::current()), profile_(profile) {}
-
-void ThumbnailSource::StartDataRequest(const std::string& path,
-                                       int request_id) {
-  HistoryService* hs = profile_->GetHistoryService(Profile::EXPLICIT_ACCESS);
-  if (hs) {
-    HistoryService::Handle handle = hs->GetPageThumbnail(
-        GURL(path),
-        &cancelable_consumer_,
-        NewCallback(this, &ThumbnailSource::OnThumbnailDataAvailable));
-    // Attach the ChromeURLDataManager request ID to the history request.
-    cancelable_consumer_.SetClientData(hs, handle, request_id);
-  } else {
-    // Tell the caller that no thumbnail is available.
-    SendResponse(request_id, NULL);
-  }
-}
-
-void ThumbnailSource::OnThumbnailDataAvailable(
-    HistoryService::Handle request_handle,
-    scoped_refptr<RefCountedBytes> data) {
-  HistoryService* hs =
-    profile_->GetHistoryService(Profile::EXPLICIT_ACCESS);
-  int request_id = cancelable_consumer_.GetClientData(hs, request_handle);
-  // Forward the data along to the networking system.
-  if (data.get() && !data->data.empty()) {
-    SendResponse(request_id, data);
-  } else {
-    if (!default_thumbnail_.get()) {
-      default_thumbnail_ = new RefCountedBytes;
-      ResourceBundle::GetSharedInstance().LoadImageResourceBytes(
-          IDR_DEFAULT_THUMBNAIL, &default_thumbnail_->data);
-    }
-
-    SendResponse(request_id, default_thumbnail_);
-  }
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// FavIconSource
-
-FavIconSource::FavIconSource(Profile* profile)
-    : DataSource(kFavIconPath, MessageLoop::current()), profile_(profile) {}
-
-void FavIconSource::StartDataRequest(const std::string& path, int request_id) {
-  HistoryService* hs = profile_->GetHistoryService(Profile::EXPLICIT_ACCESS);
-  if (hs) {
-    HistoryService::Handle handle;
-    if (path.size() > 8 && path.substr(0, 8) == "iconurl/") {
-      handle = hs->GetFavIcon(
-          GURL(path.substr(8)),
-          &cancelable_consumer_,
-          NewCallback(this, &FavIconSource::OnFavIconDataAvailable));
-    } else {
-      handle = hs->GetFavIconForURL(
-          GURL(path),
-          &cancelable_consumer_,
-          NewCallback(this, &FavIconSource::OnFavIconDataAvailable));
-    }
-    // Attach the ChromeURLDataManager request ID to the history request.
-    cancelable_consumer_.SetClientData(hs, handle, request_id);
-  } else {
-    SendResponse(request_id, NULL);
-  }
-}
-
-void FavIconSource::OnFavIconDataAvailable(
-    HistoryService::Handle request_handle,
-    bool know_favicon,
-    scoped_refptr<RefCountedBytes> data,
-    bool expired,
-    GURL icon_url) {
-  HistoryService* hs =
-      profile_->GetHistoryService(Profile::EXPLICIT_ACCESS);
-  int request_id = cancelable_consumer_.GetClientData(hs, request_handle);
-
-  if (know_favicon && data.get() && !data->data.empty()) {
-    // Forward the data along to the networking system.
-    SendResponse(request_id, data);
-  } else {
-    if (!default_favicon_.get()) {
-      default_favicon_ = new RefCountedBytes;
-      ResourceBundle::GetSharedInstance().LoadImageResourceBytes(
-          IDR_DEFAULT_FAVICON, &default_favicon_->data);
-    }
-
-    SendResponse(request_id, default_favicon_);
-  }
-}
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // MostVisitedHandler
@@ -478,13 +403,12 @@ void TemplateURLHandler::HandleDoSearch(const Value* content) {
     NOTREACHED();
     return;
   }
-  std::wstring url = url_ref->ReplaceSearchTerms(*template_url, search,
+  GURL url = url_ref->ReplaceSearchTerms(*template_url, search,
       TemplateURLRef::NO_SUGGESTIONS_AVAILABLE, std::wstring());
 
-  if (!url.empty()) {
-  // Load the URL.
-    dom_ui_host_->OpenURL(GURL(WideToUTF8(url)), GURL(), CURRENT_TAB,
-                          PageTransition::LINK);
+  if (url.is_valid()) {
+    // Load the URL.
+    dom_ui_host_->OpenURL(url, GURL(), CURRENT_TAB, PageTransition::LINK);
 
     // Record the user action
     std::vector<const TemplateURL*> urls =
@@ -568,7 +492,8 @@ void RecentlyBookmarkedHandler::HandleGetRecentlyBookmarked(const Value*) {
 
 void RecentlyBookmarkedHandler::SendBookmarksToPage() {
   std::vector<BookmarkNode*> recently_bookmarked;
-  model_->GetMostRecentlyAddedEntries(kRecentBookmarks, &recently_bookmarked);
+  bookmark_utils::GetMostRecentlyAddedEntries(
+      model_, kRecentBookmarks, &recently_bookmarked);
   ListValue list_value;
   for (size_t i = 0; i < recently_bookmarked.size(); ++i) {
     BookmarkNode* node = recently_bookmarked[i];
@@ -640,20 +565,10 @@ void RecentlyClosedTabsHandler::HandleReopenTab(const Value* content) {
       std::wstring wstring_value;
       if (string_value->GetAsString(&wstring_value)) {
         int session_to_restore = _wtoi(wstring_value.c_str());
-
-        const TabRestoreService::Tabs& tabs = tab_restore_service_->tabs();
-        for (TabRestoreService::Tabs::const_iterator it = tabs.begin();
-             it != tabs.end(); ++it) {
-          if (it->id == session_to_restore) {
-            TabRestoreService* tab_restore_service = tab_restore_service_;
-            browser->ReplaceRestoredTab(
-                 it->navigations, it->current_navigation_index);
-            tab_restore_service->RemoveHistoricalTabById(session_to_restore);
-            // The current tab has been nuked at this point;
-            // don't touch any member variables.
-            break;
-          }
-        }
+        tab_restore_service_->RestoreEntryById(browser, session_to_restore,
+                                               true);
+        // The current tab has been nuked at this point; don't touch any member
+        // variables.
       }
     }
   }
@@ -666,8 +581,13 @@ void RecentlyClosedTabsHandler::HandleGetRecentlyClosedTabs(
 
     // GetTabRestoreService() can return NULL (i.e., when in Off the
     // Record mode)
-    if (tab_restore_service_)
+    if (tab_restore_service_) {
+      // This does nothing if the tabs have already been loaded or they
+      // shouldn't be loaded.
+      tab_restore_service_->LoadTabsFromLastSession();
+
       tab_restore_service_->AddObserver(this);
+    }
   }
 
   if (tab_restore_service_)
@@ -676,28 +596,28 @@ void RecentlyClosedTabsHandler::HandleGetRecentlyClosedTabs(
 
 void RecentlyClosedTabsHandler::TabRestoreServiceChanged(
     TabRestoreService* service) {
-  const TabRestoreService::Tabs& tabs = service->tabs();
+  const TabRestoreService::Entries& entries = service->entries();
   ListValue list_value;
   int added_count = 0;
 
-  // We filter the list of recently closed to only show 'interesting' tabs,
-  // where an interesting tab navigation is not the new tab ui.
-  for (TabRestoreService::Tabs::const_iterator it = tabs.begin();
-       it != tabs.end() && added_count < 3; ++it) {
-    if (it->navigations.empty())
-      continue;
-
-    const TabNavigation& navigator =
-        it->navigations.at(it->current_navigation_index);
-    if (navigator.url == NewTabUIURL())
-      continue;
-
-    DictionaryValue* dictionary = new DictionaryValue;
-    SetURLAndTitle(dictionary, navigator.title, navigator.url);
-    dictionary->SetInteger(L"sessionId", it->id);
-
-    list_value.Append(dictionary);
-    added_count++;
+  // We filter the list of recently closed to only show 'interesting' entries,
+  // where an interesting entry is either a closed window or a closed tab
+  // whose selected navigation is not the new tab ui.
+  for (TabRestoreService::Entries::const_iterator it = entries.begin();
+       it != entries.end() && added_count < 3; ++it) {
+    TabRestoreService::Entry* entry = *it;
+    DictionaryValue* value = new DictionaryValue();
+    if ((entry->type == TabRestoreService::TAB &&
+         TabToValue(*static_cast<TabRestoreService::Tab*>(entry), value)) ||
+        (entry->type == TabRestoreService::WINDOW &&
+         WindowToValue(*static_cast<TabRestoreService::Window*>(entry),
+                       value))) {
+      value->SetInteger(L"sessionId", entry->id);
+      list_value.Append(value);
+      added_count++;
+    } else {
+      delete value;
+    }
   }
   dom_ui_host_->CallJavascriptFunction(L"recentlyClosedTabs", list_value);
 }
@@ -705,6 +625,49 @@ void RecentlyClosedTabsHandler::TabRestoreServiceChanged(
 void RecentlyClosedTabsHandler::TabRestoreServiceDestroyed(
     TabRestoreService* service) {
   tab_restore_service_ = NULL;
+}
+
+bool RecentlyClosedTabsHandler::TabToValue(
+    const TabRestoreService::Tab& tab,
+    DictionaryValue* dictionary) {
+  if (tab.navigations.empty())
+    return false;
+
+  const TabNavigation& current_navigation =
+      tab.navigations.at(tab.current_navigation_index);
+  if (current_navigation.url() == NewTabUIURL())
+    return false;
+
+  SetURLAndTitle(dictionary, current_navigation.title(),
+                 current_navigation.url());
+  dictionary->SetString(L"type", L"tab");
+  return true;
+}
+
+bool RecentlyClosedTabsHandler::WindowToValue(
+    const TabRestoreService::Window& window,
+    DictionaryValue* dictionary) {
+  if (window.tabs.empty()) {
+    NOTREACHED();
+    return false;
+  }
+
+  ListValue* tab_values = new ListValue();
+  for (size_t i = 0; i < window.tabs.size(); ++i) {
+    DictionaryValue* tab_value = new DictionaryValue();
+    if (TabToValue(window.tabs[i], tab_value))
+      tab_values->Append(tab_value);
+    else
+      delete tab_value;
+  }
+  if (tab_values->GetSize() == 0) {
+    delete tab_values;
+    return false;
+  }
+
+  dictionary->SetString(L"type", L"window");
+  dictionary->Set(L"tabs", tab_values);
+  return true;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -787,7 +750,7 @@ bool NewTabUIHandleURL(GURL* url,
     return false;
 
   *result_type = TAB_CONTENTS_NEW_TAB_UI;
-  *url = GURL("chrome-resource://new-tab/");
+  *url = GURL(DOMUIContents::GetScheme() + "://new-tab/");
 
   return true;
 }
@@ -805,7 +768,17 @@ NewTabUIContents::NewTabUIContents(Profile* profile,
     incognito_(false),
     most_visited_handler_(NULL) {
   set_type(TAB_CONTENTS_NEW_TAB_UI);
-  set_forced_title(l10n_util::GetString(IDS_NEW_TAB_TITLE));
+
+  // Show profile name in the title if the current profile is not the default.
+  std::wstring title;
+  if (UserDataManager::Get()->is_current_profile_default()) {
+    title = l10n_util::GetString(IDS_NEW_TAB_TITLE);
+  } else {
+    title = l10n_util::GetStringF(
+        IDS_NEW_TAB_TITLE_WITH_PROFILE_NAME,
+        UserDataManager::Get()->current_profile_name());
+  }
+  set_forced_title(title);
 
   if (profile->IsOffTheRecord())
     incognito_ = true;
@@ -881,7 +854,7 @@ void NewTabUIContents::SetInitialFocus() {
   if (browser)
     browser->FocusLocationBar();
   else
-    ::SetFocus(GetHWND());
+    ::SetFocus(GetContainerHWND());
 }
 
 bool NewTabUIContents::SupportsURL(GURL* url) {
@@ -900,4 +873,3 @@ void NewTabUIContents::RequestOpenURL(const GURL& url,
   // but also clicks on recently bookmarked.
   OpenURL(url, GURL(), disposition, PageTransition::AUTO_BOOKMARK);
 }
-

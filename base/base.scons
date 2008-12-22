@@ -1,0 +1,25 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+__doc__ = """
+Master configuration for building base components (including base_gfx).
+"""
+
+Import('env')
+
+# Arrange for Hammer to add all programs to the 'base' Alias.
+env.Append(
+    COMPONENT_PROGRAM_GROUPS = ['base'],
+    COMPONENT_TEST_PROGRAM_GROUPS = ['base'],
+)
+
+sconscript_files = [
+    'base_lib.scons',
+    'base_sln.scons',
+    'base_unittests.scons',
+    'gfx/base_gfx.scons',
+    'debug_message.scons',
+]
+
+SConscript(sconscript_files, exports=['env'])

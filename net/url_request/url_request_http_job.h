@@ -48,8 +48,6 @@ class URLRequestHttpJob : public URLRequestJob {
   virtual bool IsSafeRedirect(const GURL& location);
   virtual bool NeedsAuth();
   virtual void GetAuthChallengeInfo(scoped_refptr<net::AuthChallengeInfo>*);
-  virtual void GetCachedAuthData(const net::AuthChallengeInfo& auth_info,
-                                 scoped_refptr<net::AuthData>* auth_data);
   virtual void SetAuth(const std::wstring& username,
                        const std::wstring& password);
   virtual void CancelAuth();
@@ -69,7 +67,7 @@ class URLRequestHttpJob : public URLRequestJob {
   void OnReadCompleted(int result);
 
   net::HttpRequestInfo request_info_;
-  net::HttpTransaction* transaction_;
+  scoped_ptr<net::HttpTransaction> transaction_;
   const net::HttpResponseInfo* response_info_;
   std::vector<std::string> response_cookies_;
 

@@ -2,21 +2,22 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef WEBKIT_GLUE_WEBPLUGIN_IMPL_H__
-#define WEBKIT_GLUE_WEBPLUGIN_IMPL_H__
+#ifndef WEBKIT_GLUE_WEBPLUGIN_IMPL_H_
+#define WEBKIT_GLUE_WEBPLUGIN_IMPL_H_
 
 #include <string>
 #include <map>
 #include <vector>
 
 #include "config.h"
-#pragma warning(push, 0)
+#include "base/compiler_specific.h"
+
+MSVC_PUSH_WARNING_LEVEL(0);
 #include "ResourceHandle.h"
 #include "ResourceHandleClient.h"
 #include "ResourceRequest.h"
 #include "Widget.h"
-#include "Vector.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 
 #include "base/basictypes.h"
 #include "base/scoped_ptr.h"
@@ -30,7 +31,6 @@ class WebPluginImpl;
 class MultipartResponseDelegate;
 
 namespace WebCore {
-  class DeprecatedString;
   class Element;
   class Event;
   class Frame;
@@ -55,16 +55,21 @@ class WebPluginContainer : public WebCore::Widget {
   WebPluginContainer(WebPluginImpl* impl);
   virtual ~WebPluginContainer();
   NPObject* GetPluginScriptableObject();
-  virtual WebCore::IntRect windowClipRect() const;
-  virtual void geometryChanged() const;
-  virtual void setFrameGeometry(const WebCore::IntRect& rect);
+  
+  // Widget methods:
+  virtual void setFrameRect(const WebCore::IntRect& rect);
   virtual void paint(WebCore::GraphicsContext*, const WebCore::IntRect& rect);
+  virtual void invalidateRect(const WebCore::IntRect&);
   virtual void setFocus();
   virtual void show();
   virtual void hide();
   virtual void handleEvent(WebCore::Event* event);
-  virtual void attachToWindow();
-  virtual void detachFromWindow();
+  virtual void frameRectsChanged();
+  virtual void setParentVisible(bool visible);
+
+#if USE(JSC)
+  virtual bool isPluginView() const;
+#endif
 
   // Returns window-relative rectangles that should clip this widget.
   // Only rects that intersect the given bounds are relevant.
@@ -74,8 +79,8 @@ class WebPluginContainer : public WebCore::Widget {
   // can be used by any platform.
   void windowCutoutRects(const WebCore::IntRect& bounds,
                          WTF::Vector<WebCore::IntRect>* cutouts) const;
-  
-  // These methods are invoked from webkit when it has data to be sent to the 
+
+  // These methods are invoked from webkit when it has data to be sent to the
   // plugin. The plugin in this case does not initiate a download for the data.
   void didReceiveResponse(const WebCore::ResourceResponse& response);
   void didReceiveData(const char *buffer, int length);
@@ -92,7 +97,7 @@ class WebPluginContainer : public WebCore::Widget {
     uint32 last_modified;
     uint32 expected_length;
   };
-  // Helper function to read fields in a HTTP response structure. 
+  // Helper function to read fields in a HTTP response structure.
   // These fields are written to the HttpResponseInfo structure passed in.
   static void ReadHttpResponseInfo(const WebCore::ResourceResponse& response,
                                    HttpResponseInfo* http_response);
@@ -119,12 +124,13 @@ class WebPluginImpl : public WebPlugin,
                                  WebCore::Element* element,
                                  WebFrameImpl* frame,
                                  WebPluginDelegate* delegate,
-                                 bool load_manually);
+                                 bool load_manually,
+                                 const std::string& mime_type);
   virtual ~WebPluginImpl();
 
   virtual NPObject* GetPluginScriptableObject();
 
-  // Helper function for sorting post data. 
+  // Helper function for sorting post data.
   static bool SetPostData(WebCore::ResourceRequest* request,
                           const char *buf,
                           uint32 length);
@@ -134,7 +140,8 @@ class WebPluginImpl : public WebPlugin,
 
   WebPluginImpl(WebCore::Element *element, WebFrameImpl *frame,
                 WebPluginDelegate* delegate, const GURL& plugin_url,
-                bool load_manually);
+                bool load_manually, const std::string& mime_type,
+                int arg_count, char** arg_names, char** arg_values);
 
   // WebPlugin implementation:
   void SetWindow(HWND window, HANDLE pump_messages_event);
@@ -144,10 +151,10 @@ class WebPluginImpl : public WebPlugin,
 
   // Executes the script passed in. The notify_needed and notify_data arguments
   // are passed in by the plugin process. These indicate whether the plugin
-  // expects a notification on script execution. We pass them back to the 
+  // expects a notification on script execution. We pass them back to the
   // plugin as is. This avoids having to track the notification arguments
   // in the plugin process.
-  bool ExecuteScript(const std::string& url, const std::wstring& script, 
+  bool ExecuteScript(const std::string& url, const std::wstring& script,
                      bool notify_needed, int notify_data, bool popups_allowed);
 
   // Given a download request, check if we need to route the output
@@ -192,7 +199,6 @@ class WebPluginImpl : public WebPlugin,
 
   // Widget implementation:
   virtual WebCore::IntRect windowClipRect() const;
-  virtual void geometryChanged() const;
 
   // Returns window-relative rectangles that should clip this widget.
   // Only rects that intersect the given bounds are relevant.
@@ -205,7 +211,7 @@ class WebPluginImpl : public WebPlugin,
 
   // Override for when our window changes size or position.
   // Used to notify the plugin when the size or position changes.
-  virtual void setFrameGeometry(const WebCore::IntRect& rect);
+  virtual void setFrameRect(const WebCore::IntRect& rect);
 
   // Overrides paint so we can notify the underlying widget to repaint.
   virtual void paint(WebCore::GraphicsContext*, const WebCore::IntRect& rect);
@@ -226,6 +232,12 @@ class WebPluginImpl : public WebPlugin,
 
   // Sets the actual Widget for the plugin.
   void SetContainer(WebPluginContainer* container);
+
+  // Destroys the plugin instance.
+  // The response_handle_to_ignore parameter if not NULL indicates the
+  // resource handle to be left valid during plugin shutdown.
+  void TearDownPluginInstance(
+      WebCore::ResourceHandle* response_handle_to_ignore);
 
   WebCore::ScrollView* parent() const;
 
@@ -265,7 +277,7 @@ class WebPluginImpl : public WebPlugin,
                        WebCore::IntRect* clip_rect,
                        std::vector<gfx::Rect>* cutout_rects);
 
-  void HandleURLRequest(const char *method, 
+  void HandleURLRequest(const char *method,
                         bool is_javascript_url,
                         const char* target, unsigned int len,
                         const char* buf, bool is_file_data,
@@ -275,7 +287,7 @@ class WebPluginImpl : public WebPlugin,
   void CancelDocumentLoad();
 
   void InitiateHTTPRangeRequest(const char* url, const char* range_info,
-                                HANDLE existing_stream, bool notify_needed, 
+                                HANDLE existing_stream, bool notify_needed,
                                 HANDLE notify_data);
 
   // Handles HTTP multipart responses, i.e. responses received with a HTTP
@@ -289,6 +301,14 @@ class WebPluginImpl : public WebPlugin,
                                 bool notify, const char* url,
                                 void* notify_data, bool popups_allowed,
                                 bool use_plugin_src_as_referrer);
+
+  // Tears down the existing plugin instance and creates a new plugin instance
+  // to handle the response identified by the response_handle parameter.
+  bool ReinitializePluginForResponse(WebCore::ResourceHandle* response_handle);
+
+  // Helper functions to convert an array of names/values to a vector.
+  static void ArrayToVector(int total_values, char** values, 
+                            std::vector<std::string>* value_vector);
 
   struct ClientInfo {
     int id;
@@ -328,8 +348,16 @@ class WebPluginImpl : public WebPlugin,
   // Indicates if this is the first geometry update received by the plugin.
   bool first_geometry_update_;
 
+  // The mime type of the plugin.
+  std::string mime_type_;
+
+  // Holds the list of argument names passed to the plugin.
+  std::vector<std::string> arg_names_;
+
+  // Holds the list of argument values passed to the plugin.
+  std::vector<std::string> arg_values_;
+
   DISALLOW_COPY_AND_ASSIGN(WebPluginImpl);
 };
 
-#endif  // #ifndef WEBKIT_GLUE_WEBPLUGIN_IMPL_H__
-
+#endif  // #ifndef WEBKIT_GLUE_WEBPLUGIN_IMPL_H_

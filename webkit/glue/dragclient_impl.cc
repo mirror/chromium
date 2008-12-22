@@ -4,29 +4,23 @@
 
 #include "config.h"
 
-#include "build/build_config.h"
+#include "base/compiler_specific.h"
 
-#if defined(OS_WIN)
-#include <objidl.h>
-#endif
-
-#pragma warning(push, 0)
-#if defined(OS_WIN)
-#include "ClipboardWin.h"
-#include "COMPtr.h"
-#endif
+MSVC_PUSH_WARNING_LEVEL(0);
+#include "ClipboardChromium.h"
 #include "DragData.h"
 #include "Frame.h"
 #include "HitTestResult.h"
 #include "Image.h"
 #include "KURL.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 #undef LOG
 
 #include "webkit/glue/dragclient_impl.h"
 
 #include "base/logging.h"
 #include "base/string_util.h"
+#include "webkit/glue/clipboard_conversion.h"
 #include "webkit/glue/context_node_types.h"
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/webdropdata.h"
@@ -66,15 +60,11 @@ void DragClientImpl::startDrag(WebCore::DragImageRef drag_image,
   // Add a ref to the frame just in case a load occurs mid-drag.
   RefPtr<WebCore::Frame> frame_protector = frame;
 
-#if defined(OS_WIN)
-  COMPtr<IDataObject> data_object(
-      static_cast<WebCore::ClipboardWin*>(clipboard)->dataObject());
+  RefPtr<WebCore::ChromiumDataObject> data_object =
+      static_cast<WebCore::ClipboardChromium*>(clipboard)->dataObject();
   DCHECK(data_object.get());
-  WebDropData drop_data;
-  WebDropData::PopulateWebDropData(data_object.get(), &drop_data);
-#elif defined(OS_MACOSX) || defined(OS_LINUX)
-  WebDropData drop_data;
-#endif
+  WebDropData drop_data = webkit_glue::ChromiumDataObjectToWebDropData(
+      data_object.get());
 
   webview_->StartDragging(drop_data);
 }
@@ -90,4 +80,3 @@ WebCore::DragImageRef DragClientImpl::createDragImageForLink(
 void DragClientImpl::dragControllerDestroyed() {
   delete this;
 }
-

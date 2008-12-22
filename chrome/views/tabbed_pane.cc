@@ -7,7 +7,6 @@
 #include <vssym32.h>
 
 #include "base/gfx/native_theme.h"
-#include "base/gfx/skia_utils.h"
 #include "base/logging.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/chrome_font.h"
@@ -16,8 +15,9 @@
 #include "chrome/common/stl_util-inl.h"
 #include "chrome/common/throb_animation.h"
 #include "chrome/views/background.h"
-#include "chrome/views/container_win.h"
 #include "chrome/views/root_view.h"
+#include "chrome/views/widget_win.h"
+#include "skia/ext/skia_utils_win.h"
 #include "skia/include/SkColor.h"
 
 namespace views {
@@ -85,8 +85,8 @@ void TabbedPane::AddTabAtIndex(int index,
   int result = TabCtrl_InsertItem(tab_control_, index, &tcitem);
   DCHECK(result != -1);
 
-  if (!contents->GetBackground()) {
-    contents->SetBackground(new TabBackground);
+  if (!contents->background()) {
+    contents->set_background(new TabBackground);
   }
 
   if (tab_views_.size() == 1 && select_if_first_tab) {
@@ -127,9 +127,13 @@ View* TabbedPane::RemoveTabAtIndex(int index) {
 }
 
 void TabbedPane::SelectTabAt(int index) {
-  DCHECK(index < static_cast<int>(tab_views_.size()));
+  DCHECK((index >= 0) && (index < static_cast<int>(tab_views_.size())));
   TabCtrl_SetCurSel(tab_control_, index);
   DoSelectTabAt(index);
+}
+
+void TabbedPane::SelectTabForContents(const View* contents) {
+  SelectTabAt(GetIndexForContents(contents));
 }
 
 int TabbedPane::GetTabCount() {
@@ -167,7 +171,7 @@ HWND TabbedPane::CreateNativeControl(HWND parent_container) {
   SendMessage(tab_control_, WM_SETFONT, reinterpret_cast<WPARAM>(font), FALSE);
 
   // Create the view container which is a child of the TabControl.
-  content_window_ = new ContainerWin();
+  content_window_ = new WidgetWin();
   content_window_->Init(tab_control_, gfx::Rect(), false);
 
   // Explicitly setting the WS_EX_LAYOUTRTL property for the HWND (see above
@@ -182,7 +186,7 @@ HWND TabbedPane::CreateNativeControl(HWND parent_container) {
   DWORD sys_color = ::GetSysColor(COLOR_3DHILIGHT);
   SkColor color = SkColorSetRGB(GetRValue(sys_color), GetGValue(sys_color),
                                 GetBValue(sys_color));
-  root_view->SetBackground(Background::CreateSolidBackground(color));
+  root_view->set_background(Background::CreateSolidBackground(color));
 
   content_window_->SetFocusTraversableParentView(this);
   ResizeContents(tab_control_);
@@ -214,6 +218,13 @@ void TabbedPane::DoSelectTabAt(int index) {
   content_root->Layout();
   if (listener_)
     listener_->TabSelectedAt(index);
+}
+
+int TabbedPane::GetIndexForContents(const View* contents) const {
+  std::vector<View*>::const_iterator i =
+      std::find(tab_views_.begin(), tab_views_.end(), contents);
+  DCHECK(i != tab_views_.end());
+  return static_cast<int>(i - tab_views_.begin());
 }
 
 void TabbedPane::Layout() {

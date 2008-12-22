@@ -9,6 +9,7 @@
 
 #include "base/message_loop.h"
 #include "base/string_util.h"
+#include "base/time.h"
 #include "net/base/auth.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_util.h"
@@ -167,19 +168,32 @@ void URLRequestFtpJob::OnIOComplete(const AsyncResult& result) {
         // fall through
       case ERROR_INTERNET_INCORRECT_USER_NAME:
         // fall through
-      case ERROR_INTERNET_INCORRECT_PASSWORD:
+      case ERROR_INTERNET_INCORRECT_PASSWORD: {
+        // TODO(eroman): shouldn't the port be part of the key?
+        std::string cache_key = request_->url().host();
         if (server_auth_ != NULL &&
             server_auth_->state == net::AUTH_STATE_HAVE_AUTH) {
-          request_->context()->ftp_auth_cache()->Remove(request_->url().host());
+          request_->context()->ftp_auth_cache()->Remove(cache_key);
         } else {
           server_auth_ = new net::AuthData();
         }
-        // Try again, prompting for authentication.
         server_auth_->state = net::AUTH_STATE_NEED_AUTH;
-        // The io completed fine, the error was due to invalid auth.
-        SetStatus(URLRequestStatus());
-        NotifyHeadersComplete();
+
+        scoped_refptr<net::AuthData> cached_auth =
+            request_->context()->ftp_auth_cache()->Lookup(cache_key);
+
+        if (cached_auth) {
+          // Retry using cached auth data.
+          SetAuth(cached_auth->username, cached_auth->password);
+        } else {
+          // The io completed fine, the error was due to invalid auth.
+          SetStatus(URLRequestStatus());
+
+          // Prompt for a username/password.
+          NotifyHeadersComplete();
+        }
         return;
+      }
       case ERROR_SUCCESS:
         connection_handle_ = (HINTERNET)result.dwResult;
         OnConnect();
@@ -259,13 +273,6 @@ void URLRequestFtpJob::GetAuthChallengeInfo(
   auth_info->scheme = L"";
   auth_info->realm = L"";
   result->swap(auth_info);
-}
-
-void URLRequestFtpJob::GetCachedAuthData(
-    const net::AuthChallengeInfo& auth_info,
-    scoped_refptr<net::AuthData>* auth_data) {
-  *auth_data = request_->context()->ftp_auth_cache()->
-               Lookup(WideToUTF8(auth_info.host));
 }
 
 void URLRequestFtpJob::OnConnect() {
@@ -372,8 +379,8 @@ void URLRequestFtpJob::OnFindFile(DWORD last_error) {
     // We don't know the encoding, and can't assume utf8, so pass the 8bit
     // directly to the browser for it to decide.
     string file_entry = net::GetDirectoryListingEntry(
-        find_data_.cFileName, find_data_.dwFileAttributes, size,
-        &find_data_.ftLastWriteTime);
+        find_data_.cFileName, false, size,
+        base::Time::FromFileTime(find_data_.ftLastWriteTime));
     WriteData(&file_entry, true);
 
     FindNextFile();
@@ -395,7 +402,7 @@ void URLRequestFtpJob::OnStartDirectoryTraversal() {
   // If this isn't top level directory (i.e. the path isn't "/",) add a link to
   // the parent directory.
   if (request_->url().path().length() > 1)
-    html.append(net::GetDirectoryListingEntry("..", 0, 0, NULL));
+    html.append(net::GetDirectoryListingEntry("..", false, 0, base::Time()));
 
   WriteData(&html, true);
 

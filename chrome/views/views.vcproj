@@ -133,14 +133,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\accessibility\autocomplete_accessibility.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\accessibility\autocomplete_accessibility.h"
-				>
-			</File>
-			<File
 				RelativePath=".\accessibility\view_accessibility.cc"
 				>
 			</File>
@@ -255,18 +247,6 @@
 		</File>
 		<File
 			RelativePath=".\combo_box.h"
-			>
-		</File>
-		<File
-			RelativePath=".\container.h"
-			>
-		</File>
-		<File
-			RelativePath=".\container_win.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\container_win.h"
 			>
 		</File>
 		<File
@@ -590,6 +570,14 @@
 			>
 		</File>
 		<File
+			RelativePath=".\tree_model.h"
+			>
+		</File>
+		<File
+			RelativePath=".\tree_node_iterator.h"
+			>
+		</File>
+		<File
 			RelativePath=".\tree_node_model.h"
 			>
 		</File>
@@ -627,6 +615,18 @@
 		</File>
 		<File
 			RelativePath=".\view_storage.h"
+			>
+		</File>
+		<File
+			RelativePath=".\widget.h"
+			>
+		</File>
+		<File
+			RelativePath=".\widget_win.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\widget_win.h"
 			>
 		</File>
 		<File

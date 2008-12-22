@@ -7,14 +7,17 @@
 
 #include <vector>
 
-#include "chrome/browser/history/history_database.h"
 #include "chrome/browser/history/history_types.h"
 #include "chrome/browser/history/url_database.h"  // For DBCloseScoper.
+#include "chrome/browser/meta_table_helper.h"
 #include "chrome/common/sqlite_compiled_statement.h"
+#include "skia/include/SkBitmap.h"
 
 struct sqlite3;
 struct ThumbnailScore;
-class Time;
+namespace base {
+  class Time;
+}
 
 namespace history {
 
@@ -58,7 +61,7 @@ class ThumbnailDatabase {
                         URLID id,
                         const SkBitmap& thumbnail,
                         const ThumbnailScore& score,
-                        const Time& time);
+                        const base::Time& time);
 
   // Retrieves thumbnail data for the given URL, returning true on success,
   // false if there is no such thumbnail or there was some other error.
@@ -83,10 +86,10 @@ class ThumbnailDatabase {
   // should be refreshed.
   bool SetFavIcon(FavIconID icon_id,
                   const std::vector<unsigned char>& icon_data,
-                  Time time);
+                  base::Time time);
 
   // Sets the time the favicon was last updated.
-  bool SetFavIconLastUpdateTime(FavIconID icon_id, const Time& time);
+  bool SetFavIconLastUpdateTime(FavIconID icon_id, const base::Time& time);
 
   // Returns the id of the entry in the favicon database with the specified url.
   // Returns 0 if no entry exists for the specified url.
@@ -95,7 +98,7 @@ class ThumbnailDatabase {
   // Gets the png encoded favicon and last updated time for the specified
   // favicon id.
   bool GetFavIcon(FavIconID icon_id,
-                  Time* last_updated,
+                  base::Time* last_updated,
                   std::vector<unsigned char>* png_icon_data,
                   GURL* icon_url);
 

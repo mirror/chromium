@@ -17,18 +17,27 @@
 #include "googleurl/src/url_canon.h"
 #include "googleurl/src/url_parse.h"
 
+class FilePath;
 class GURL;
+
+namespace base {
+class Time;
+}
 
 namespace net {
 
 // Given the full path to a file name, creates a file: URL. The returned URL
 // may not be valid if the input is malformed.
+GURL FilePathToFileURL(const FilePath& path);
+// Deprecated temporary compatibility function.
 GURL FilePathToFileURL(const std::wstring& file_path);
 
 // Converts a file: URL back to a filename that can be passed to the OS. The
 // file URL must be well-formed (GURL::is_valid() must return true); we don't
 // handle degenerate cases here. Returns true on success, false if it isn't a
 // valid file URL. On failure, *file_path will be empty.
+bool FileURLToFilePath(const GURL& url, FilePath* file_path);
+// Deprecated temporary compatibility function.
 bool FileURLToFilePath(const GURL& url, std::wstring* file_path);
 
 // Return the value of the HTTP response header with name 'name'.  'headers'
@@ -95,15 +104,12 @@ void IDNToUnicode(const char* host,
 std::string CanonicalizeHost(const std::string& host, bool* is_ip_address);
 std::string CanonicalizeHost(const std::wstring& host, bool* is_ip_address);
 
-#ifdef OS_WIN
-// TODO: Port GetDirectoryListingEntry for OSX and linux.
 // Call these functions to get the html for a directory listing.
 // They will pass non-7bit-ascii characters unescaped, allowing
 // the browser to interpret the encoding (utf8, etc).
 std::string GetDirectoryListingHeader(const std::string& title);
-std::string GetDirectoryListingEntry(const std::string& name, DWORD attrib,
-                                     int64 size, const FILETIME* modified);
-#endif
+std::string GetDirectoryListingEntry(const std::string& name, bool is_dir,
+                                     int64 size, const base::Time& modified);
 
 // If text starts with "www." it is removed, otherwise text is returned
 // unmodified.
@@ -131,10 +137,8 @@ bool IsPortAllowedByDefault(int port);
 // restricted.
 bool IsPortAllowedByFtp(int port);
 
-// Get the port number for the URL. If the URL does not have a port number,
-// then returns the default port for the scheme. If the scheme is unrecognized
-// returns empty string.
-std::string GetImplicitPort(const GURL& url);
+// Set socket to non-blocking mode
+int SetNonBlocking(int fd);
 
 }  // namespace net
 

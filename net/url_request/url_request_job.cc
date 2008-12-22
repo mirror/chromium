@@ -13,6 +13,9 @@
 #include "net/url_request/url_request_job_metrics.h"
 #include "net/url_request/url_request_job_tracker.h"
 
+using base::Time;
+using base::TimeTicks;
+
 // Buffer size allocated when de-compressing data.
 static const int kFilterBufSize = 32 * 1024;
 
@@ -311,12 +314,6 @@ void URLRequestJob::NotifyHeadersComplete() {
     // Need to check for a NULL auth_info because the server may have failed
     // to send a challenge with the 401 response.
     if (auth_info) {
-      scoped_refptr<net::AuthData> auth_data;
-      GetCachedAuthData(*auth_info, &auth_data);
-      if (auth_data) {
-        SetAuth(auth_data->username, auth_data->password);
-        return;
-      }
       request_->delegate()->OnAuthRequired(request_, auth_info);
       // Wait for SetAuth or CancelAuth to be called.
       return;
@@ -410,15 +407,6 @@ void URLRequestJob::NotifyDone(const URLRequestStatus &status) {
   // the response before getting here.
   DCHECK(has_handled_response_ || !status.is_success());
 
-  // In the success case, we cannot send the NotifyDone now.  It can only be
-  // sent after the request is completed, because otherwise we can get the
-  // NotifyDone() called while the delegate is still accessing the request.
-  // In the case of an error, we are fre
-  if (status.is_success()) {
-    // If there is data left in the filter, then something is probably wrong.
-    DCHECK(!FilterHasData());
-  }
-
   // As with NotifyReadComplete, we need to take care to notice if we were
   // destroyed during a delegate callback.
   if (request_) {
@@ -502,4 +490,3 @@ void URLRequestJob::SetStatus(const URLRequestStatus &status) {
   if (request_)
     request_->set_status(status);
 }
-

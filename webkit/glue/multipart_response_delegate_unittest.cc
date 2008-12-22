@@ -6,13 +6,14 @@
 
 #include "config.h"
 
-#pragma warning(push, 0)
+#include "base/compiler_specific.h"
+
+MSVC_PUSH_WARNING_LEVEL(0);
 #include "KURL.h"
 #include "ResourceResponse.h"
 #include "ResourceHandle.h"
 #include "ResourceHandleClient.h"
-#include "String.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 
 #include "base/basictypes.h"
 #include "webkit/glue/glue_util.h"
@@ -87,7 +88,7 @@ TEST(MultipartResponseTest, Functions) {
     { "Line\rLine", 4, 1 },
     { "Line\r\rLine", 4, 1 },
   };
-  for (int i = 0; i < arraysize(line_tests); ++i) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(line_tests); ++i) {
     EXPECT_EQ(line_tests[i].expected,
               delegate.PushOverLine(line_tests[i].input,
                                     line_tests[i].position));
@@ -109,7 +110,7 @@ TEST(MultipartResponseTest, Functions) {
     { "Foo: bar\r\nBaz:\n", false, 0, "Foo: bar\r\nBaz:\n" },
     { "\r\n", true, 1, "" },
   };
-  for (int i = 0; i < arraysize(header_tests); ++i) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(header_tests); ++i) {
     client.Reset();
     delegate.data_.assign(header_tests[i].data);
     EXPECT_EQ(header_tests[i].rv,
@@ -152,7 +153,7 @@ TEST(MultipartResponseTest, Functions) {
     { "foo", "bound", string::npos },
     { "bound", "--boundbound", 0 },
   };
-  for (int i = 0; i < arraysize(boundary_tests); ++i) {
+  for (size_t i = 0; i < ARRAYSIZE_UNSAFE(boundary_tests); ++i) {
     delegate.boundary_.assign(boundary_tests[i].boundary);
     delegate.data_.assign(boundary_tests[i].data);
     EXPECT_EQ(boundary_tests[i].position,
@@ -222,6 +223,32 @@ TEST(MultipartResponseTest, MissingBoundaries) {
   EXPECT_EQ(1, client.received_data_);
   EXPECT_EQ(string("This is a sample response\n"),
             client.data_);
+}
+
+TEST(MultipartResponseTest, MalformedBoundary) {
+  // Some servers send a boundary that is prefixed by "--".  See bug 5786.
+
+  ResourceResponse response(KURL(), "multipart/x-mixed-replace", 0, "en-US",
+                            String());
+  response.setHTTPHeaderField(String("Foo"), String("Bar"));
+  response.setHTTPHeaderField(String("Content-type"), String("text/plain"));
+  MockResourceHandleClient client;
+  MultipartResponseDelegate delegate(&client, NULL, response, "--bound");
+
+  string data(
+    "--bound\n"
+    "Content-type: text/plain\n\n"
+    "This is a sample response\n"
+    "--bound--"
+    "ignore junk after end token --bound\n\nTest2\n");
+  delegate.OnReceivedData(data.c_str(), static_cast<int>(data.length()));
+  EXPECT_EQ(1, client.received_response_);
+  EXPECT_EQ(1, client.received_data_);
+  EXPECT_EQ(string("This is a sample response\n"), client.data_);
+
+  delegate.OnCompletedRequest();
+  EXPECT_EQ(1, client.received_response_);
+  EXPECT_EQ(1, client.received_data_);
 }
 
 
@@ -423,7 +450,7 @@ TEST(MultipartResponseTest, MultipartByteRangeParsingTest) {
   result = MultipartResponseDelegate::ReadMultipartBoundary(
       response3, &multipart_boundary);
   EXPECT_EQ(result, false);
-  EXPECT_EQ(multipart_boundary.length(), 0);
+  EXPECT_EQ(multipart_boundary.length(), 0U);
 
   ResourceResponse response4(KURL(), "multipart/byteranges", 0, "en-US",
                              String());

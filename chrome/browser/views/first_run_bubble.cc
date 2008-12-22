@@ -4,6 +4,7 @@
 
 #include "chrome/browser/views/first_run_bubble.h"
 
+#include "base/win_util.h"
 #include "chrome/app/locales/locale_settings.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_list.h"
@@ -193,7 +194,8 @@ void FirstRunBubble::OnActivate(UINT action, BOOL minimized, HWND window) {
   InfoBubble::OnActivate(action, minimized, window);
 }
 
-void FirstRunBubble::InfoBubbleClosing(InfoBubble* info_bubble) {
+void FirstRunBubble::InfoBubbleClosing(InfoBubble* info_bubble,
+                                       bool closed_by_escape) {
   // Make sure our parent window is re-enabled.
   if (!IsWindowEnabled(GetParent()))
     ::EnableWindow(GetParent(), true);
@@ -206,9 +208,6 @@ FirstRunBubble* FirstRunBubble::Show(HWND parent_hwnd,
   views::View* view = new FirstRunBubbleView(window);
   window->SetDelegate(window);
   window->Init(parent_hwnd, position_relative_to, view);
-  BrowserWindow* frame = window->GetHostingWindow();
-  DCHECK(frame);
-  frame->InfoBubbleShowing();
   window->ShowWindow(SW_SHOW);
   return window;
 }

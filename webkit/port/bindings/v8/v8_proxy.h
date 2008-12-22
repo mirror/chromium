@@ -9,18 +9,20 @@
 #include "v8_index.h"
 #include "v8_custom.h"
 #include "v8_utility.h"
+#include "ChromiumBridge.h"
 #include "Node.h"
 #include "NodeFilter.h"
+#include "SecurityOrigin.h"  // for WebCore::SecurityOrigin
 #include "PlatformString.h"  // for WebCore::String
 #include <wtf/HashMap.h>   // for HashMap
+#include <wtf/PassRefPtr.h> // so generated bindings don't have to
 #include <wtf/Assertions.h>
 
 #include <iterator>
 #include <list>
 
 #ifdef ENABLE_DOM_STATS_COUNTERS
-#include "base/stats_counters.h"
-#define INC_STATS(name) StatsCounter(name).Increment()
+#define INC_STATS(name) ChromiumBridge::incrementStatsCounter(name)
 #else
 #define INC_STATS(name)
 #endif
@@ -62,13 +64,14 @@ class CSSRule;
 class CSSRuleList;
 class CSSValueList;
 class NodeFilter;
+class ScriptExecutionContext;
 
 #if ENABLE(SVG)
 class SVGElementInstance;
 #endif
 
 class V8EventListener;
-class V8XHREventListener;
+class V8ObjectEventListener;
 typedef std::list<V8EventListener*>  V8EventListenerList;
 
 // TODO(fqian): use standard logging facilities in WebCore.
@@ -83,7 +86,8 @@ void log_info(Frame* frame, const String& msg, const String& url);
   V(SCHEDULED_ACTION)           \
   V(EVENT_LISTENER)             \
   V(NODE_FILTER)                \
-  V(JSINSTANCE)                 \
+  V(SCRIPTINSTANCE)             \
+  V(SCRIPTVALUE)                
 
 
 // Host information of persistent handles.
@@ -156,17 +160,23 @@ class V8Proxy {
 
   ~V8Proxy();
 
-  // Clear security token by setting the security token
-  // for the context to the global object.
-  void ClearSecurityToken();
+  Frame* frame() { return m_frame; }
 
-  // Clear page-specific data, exception keep the global object identify.
-  void clear();
+  // Clear page-specific data, but keep the global object identify.
+  void clearForNavigation();
+
+  // Clear page-specific data before shutting down the proxy object.
+  void clearForClose();
+
+  // Update document object of the frame.
+  void updateDocument();
+
+  // Update the security origin of a document
+  // (e.g., after setting docoument.domain).
+  void updateSecurityOrigin();
 
   // Destroy the global object.
   void DestroyGlobal();
-
-  Frame* frame() { return m_frame; }
 
   // TODO(mpcomplete): Need comment.  User Gesture related.
   bool inlineCode() const { return m_inlineCode; }
@@ -184,33 +194,30 @@ class V8Proxy {
 
   bool isEnabled();
 
-  // Remove 'document' property from the global object.
-  void clearDocumentWrapper();
-
   // Find/Create/Remove event listener wrappers.
-  V8EventListener* FindV8EventListener(v8::Local<v8::Value> listener,
+  PassRefPtr<V8EventListener> FindV8EventListener(v8::Local<v8::Value> listener,
                                        bool html);
-  V8EventListener* FindOrCreateV8EventListener(v8::Local<v8::Value> listener,
+  PassRefPtr<V8EventListener> FindOrCreateV8EventListener(v8::Local<v8::Value> listener,
                                                bool html);
 
-  V8EventListener* FindXHREventListener(v8::Local<v8::Value> listener,
+  PassRefPtr<V8EventListener> FindObjectEventListener(v8::Local<v8::Value> listener,
                                         bool html);
-  V8EventListener* FindOrCreateXHREventListener(v8::Local<v8::Value> listener,
+  PassRefPtr<V8EventListener> FindOrCreateObjectEventListener(v8::Local<v8::Value> listener,
                                                 bool html);
 
   void RemoveV8EventListener(V8EventListener* listener);
-  void RemoveXHREventListener(V8XHREventListener* listener);
+  void RemoveObjectEventListener(V8ObjectEventListener* listener);
 
   // Protect/Unprotect JS wrappers of a DOM object.
-  static void GCProtect(Peerable* dom_object);
-  static void GCUnprotect(Peerable* dom_object);
+  static void GCProtect(void* dom_object);
+  static void GCUnprotect(void* dom_object);
 
   // Create a lazy event listener.
-  EventListener* createHTMLEventHandler(const String& functionName,
-                                        const String& code, Node* node);
+  PassRefPtr<EventListener> createInlineEventListener(
+      const String& functionName, const String& code, Node* node);
 #if ENABLE(SVG)
-  EventListener* createSVGEventHandler(const String& functionName,
-                                        const String& code, Node* node);
+  PassRefPtr<EventListener> createSVGEventHandler(
+      const String& functionName, const String& code, Node* node);
 
   static void SetSVGContext(void* object, SVGElement* context);
   static SVGElement* GetSVGContext(void* object);
@@ -240,15 +247,20 @@ class V8Proxy {
 
   // Returns the window object of the currently executing context.
   static DOMWindow* retrieveWindow();
+  // Returns the window object associated with a context.
+  static DOMWindow* retrieveWindow(v8::Handle<v8::Context> context);
   // Returns V8Proxy object of the currently executing context.
   static V8Proxy* retrieve();
   // Returns V8Proxy object associated with a frame.
   static V8Proxy* retrieve(Frame* frame);
+  // Returns V8Proxy object associated with a script execution context.
+  static V8Proxy* retrieve(ScriptExecutionContext* context);
+
   // Returns the frame object of the window object associated
   // with the currently executing context.
   static Frame* retrieveFrame();
   // Returns the frame object of the window object associated with
-  // an context.
+  // a context.
   static Frame* retrieveFrame(v8::Handle<v8::Context> context);
   // Returns the frame that started JS execution.
   // NOTE: cannot declare retrieveActiveFrame as inline function,
@@ -264,20 +276,12 @@ class V8Proxy {
   // is disabled and it returns true.
   static bool HandleOutOfMemory();
 
-  // Generate the security token for a context.
-  static v8::Handle<v8::Value> GenerateSecurityToken(
-      v8::Local<v8::Context> context);
-
-  // Check if the active execution context is from the same origin
-  // as the target frame.
-  static bool IsFromSameOrigin(Frame* target, bool report_error);
+  // Check if the active execution context can access the target frame.
+  static bool CanAccessFrame(Frame* target, bool report_error);
 
   // Check if it is safe to access the given node from the
   // current security context.
   static bool CheckNodeSecurity(Node* node);
-
-  // Return true if the current security context can access the target frame.
-  static bool CanAccess(Frame* target);
 
   static v8::Handle<v8::Value> CheckNewLegal(const v8::Arguments& args);
 
@@ -315,8 +319,10 @@ class V8Proxy {
   template <class C>
   static C* DOMWrapperToNative(v8::Handle<v8::Value> object) {
     ASSERT(MaybeDOMWrapper(object));
-    return ExtractCPointer<C>(
-        v8::Handle<v8::Object>::Cast(object)->GetInternalField(0));
+    v8::Handle<v8::Value> ptr =
+      v8::Handle<v8::Object>::Cast(object)->GetInternalField(
+          V8Custom::kDOMWrapperObjectIndex);
+    return ExtractCPointer<C>(ptr);
   }
 
   // A help function extract a node type pointer from a DOM wrapper.
@@ -334,6 +340,11 @@ class V8Proxy {
     return static_cast<C*>(ExtractCPointer<Node>(wrapper));
   }
 
+  template<typename T>
+  static v8::Handle<v8::Value> ToV8Object(V8ClassIndex::V8WrapperType type, PassRefPtr<T> imp)
+  {
+    return ToV8Object(type, imp.get());
+  }
   static v8::Handle<v8::Value> ToV8Object(V8ClassIndex::V8WrapperType type,
                                           void* imp);
   // Fast-path for Node objects.
@@ -375,13 +386,12 @@ class V8Proxy {
 
   // DOMImplementation is a singleton and it is handled in a special
   // way.  A wrapper is generated per document and stored in an
-  // internal field of the document.  When wrapping the
-  // DOMImplementation object, the peer field is not set.
+  // internal field of the document.
   static v8::Handle<v8::Value> DOMImplementationToV8Object(
       DOMImplementation* impl);
 
   // Wrap JS node filter in C++
-  static NodeFilter* ToNativeNodeFilter(v8::Handle<v8::Value> filter);
+  static PassRefPtr<NodeFilter> ToNativeNodeFilter(v8::Handle<v8::Value> filter);
 
   static v8::Persistent<v8::FunctionTemplate> GetTemplate(
       V8ClassIndex::V8WrapperType type);
@@ -389,14 +399,15 @@ class V8Proxy {
   template <int tag, typename T>
     static v8::Handle<v8::Value> ConstructDOMObject(const v8::Arguments& args);
 
-  // Set JS wrapper of a DOM object
-  static void SetJSWrapperForDOMObject(Peerable* obj,
+  // Checks whether a DOM object has a JS wrapper.
+  static bool DOMObjectHasJSWrapper(void* obj); 
+  // Set JS wrapper of a DOM object, the caller in charge of increase ref.
+  static void SetJSWrapperForDOMObject(void* obj,
                                        v8::Persistent<v8::Object> wrapper);
+  static void SetJSWrapperForActiveDOMObject(void* obj,
+                                             v8::Persistent<v8::Object> wrapper);
   static void SetJSWrapperForDOMNode(Node* node,
                                      v8::Persistent<v8::Object> wrapper);
-
-  // Domain of a frame is changed, invalidate its security token.
-  static void DomainChanged(Frame* frame);
 
   // Process any pending JavaScript console messages.
   static void ProcessConsoleMessages();
@@ -410,11 +421,25 @@ class V8Proxy {
                                      v8::Persistent<v8::Value> handle);
 #endif
 
+  // Check whether a V8 value is a wrapper of type |classType|.
+  static bool IsWrapperOfType(v8::Handle<v8::Value> obj,
+                              V8ClassIndex::V8WrapperType classType);
+
+  // Function for retrieving the line number and source name for the top
+  // JavaScript stack frame.
+  static int GetSourceLineNumber();
+  static String GetSourceName();
+
  private:
-  void initContextIfNeeded();
+  void InitContextIfNeeded();
   void DisconnectEventListeners();
+  void SetSecurityToken();
+  void ClearDocumentWrapper();
+  void UpdateDocumentWrapper(v8::Handle<v8::Value> wrapper);
   // Dispose global handles of m_contexts and friends.
   void DisposeContextHandles();
+
+  static bool CanAccessPrivate(DOMWindow* target);
 
   // Check whether a V8 value is a DOM Event wrapper
   static bool IsDOMEventWrapper(v8::Handle<v8::Value> obj);
@@ -441,7 +466,7 @@ class V8Proxy {
   static v8::Handle<v8::Value> SVGElementInstanceToV8Object(
       SVGElementInstance* instance);
   static v8::Handle<v8::Value> SVGObjectWithContextToV8Object(
-    Peerable* object, V8ClassIndex::V8WrapperType type);
+      V8ClassIndex::V8WrapperType type, void* object);
 #endif
 
   // Set hidden references in a DOMWindow object of a frame.
@@ -476,13 +501,20 @@ class V8Proxy {
   static const char* GetSVGExceptionName(int exception_code);
 #endif
 
-  // Update m_document field, dispose old one and create a string reference
-  // to the new one.
-  void UpdateDocumentHandle(v8::Local<v8::Object> handle);
-
   // Returns a local handle of the context.
   v8::Local<v8::Context> GetContext() {
     return v8::Local<v8::Context>::New(m_context);
+  }
+
+  // Create and populate the utility context.
+  static void CreateUtilityContext();
+
+  // Returns a local handle of the utility context.
+  static v8::Local<v8::Context> GetUtilityContext() {
+    if (m_utilityContext.IsEmpty()) {
+      CreateUtilityContext();
+    }
+    return v8::Local<v8::Context>::New(m_utilityContext);
   }
 
   Frame* m_frame;
@@ -505,8 +537,10 @@ class V8Proxy {
   v8::Persistent<v8::Value> m_object_prototype;
   
   v8::Persistent<v8::Object> m_global;
-  // Special handling of document wrapper;
-  v8::Persistent<v8::Object> m_document;
+  v8::Persistent<v8::Value> m_document;
+
+  // Utility context holding JavaScript functions used internally.
+  static v8::Persistent<v8::Context> m_utilityContext;
 
   int m_handlerLineno;
 
@@ -539,10 +573,15 @@ v8::Handle<v8::Value> V8Proxy::ConstructDOMObject(const v8::Arguments& args) {
         "DOM object constructor cannot be called as a function.");
     return v8::Undefined();
   }
-  T* obj = new T();
-  V8Proxy::SetDOMWrapper(args.Holder(), tag, obj);
+
+
+  // Note: it's OK to let this RefPtr go out of scope because we also call
+  // SetDOMWrapper(), which effectively holds a reference to obj.
+  RefPtr<T> obj = T::create();
+  V8Proxy::SetDOMWrapper(args.Holder(), tag, obj.get());
+  obj->ref();
   V8Proxy::SetJSWrapperForDOMObject(
-      obj, v8::Persistent<v8::Object>::New(args.Holder()));
+      obj.get(), v8::Persistent<v8::Object>::New(args.Holder()));
   return args.Holder();
 }
 

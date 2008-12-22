@@ -13,6 +13,8 @@
 #pragma warning(disable:4355)  // 'this' : used in base member initializer list
 #endif
 
+using base::TimeDelta;
+
 namespace printing {
 
 PrintJob::PrintJob(PrintedPagesSource* source)
@@ -22,6 +24,8 @@ PrintJob::PrintJob(PrintedPagesSource* source)
       is_job_pending_(false),
       is_print_dialog_box_shown_(false),
       is_canceling_(false) {
+  DCHECK(ui_message_loop_);
+  ui_message_loop_->AddDestructionObserver(this);
 }
 
 PrintJob::PrintJob()
@@ -32,14 +36,18 @@ PrintJob::PrintJob()
       is_job_pending_(false),
       is_print_dialog_box_shown_(false),
       is_canceling_(false) {
+  DCHECK(ui_message_loop_);
+  ui_message_loop_->AddDestructionObserver(this);
 }
 
 PrintJob::~PrintJob() {
+  ui_message_loop_->RemoveDestructionObserver(this);
   // The job should be finished (or at least canceled) when it is destroyed.
   DCHECK(!is_job_pending_);
   DCHECK(!is_print_dialog_box_shown_);
   DCHECK(!is_canceling_);
-  DCHECK(worker_->message_loop() == NULL);
+  if (worker_.get())
+    DCHECK(worker_->message_loop() == NULL);
   DCHECK_EQ(ui_message_loop_, MessageLoop::current());
 }
 
@@ -138,6 +146,10 @@ int PrintJob::cookie() const {
     // Always use an invalid cookie in this case.
     return 0;
   return document_->cookie();
+}
+
+void PrintJob::WillDestroyCurrentMessageLoop() {
+  NOTREACHED();
 }
 
 void PrintJob::GetSettings(GetSettingsAskParam ask_user_for_settings,

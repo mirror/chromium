@@ -70,44 +70,26 @@ rm -f "${WebCoreObjDir}/definitions.h"
 JSHeadersDir="${JSHeadersDir}${SubDir}"
 mkdir -p $JSHeadersDir
 JavaScriptCoreSrcDir="../../../third_party/WebKit/JavaScriptCore"
+WebCoreSrcDir="../../../third_party/WebKit/WebCore"
 if [[ "$2" = "kjs" ]]
 then
   mkdir -p $JSHeadersDir/JavaScriptCore
-  # Note, we'd like to copy dir/*.h here, but the directories
-  # are poluted with files like Node.h.  Copying the Node.h
-  # from these directories is fatal.  So, we have to hand copy just
-  # the right list of files.  Hooray!
   $CP $JavaScriptCoreSrcDir/API/APICast.h $JSHeadersDir/JavaScriptCore
+  $CP $JavaScriptCoreSrcDir/API/JavaScript.h $JSHeadersDir/JavaScriptCore
   $CP $JavaScriptCoreSrcDir/API/JSBase.h $JSHeadersDir/JavaScriptCore
-  $CP $JavaScriptCoreSrcDir/API/JSValueRef.h $JSHeadersDir/JavaScriptCore
-  $CP $JavaScriptCoreSrcDir/API/JSObjectRef.h $JSHeadersDir/JavaScriptCore
   $CP $JavaScriptCoreSrcDir/API/JSContextRef.h $JSHeadersDir/JavaScriptCore
+  $CP $JavaScriptCoreSrcDir/API/JSObjectRef.h $JSHeadersDir/JavaScriptCore
   $CP $JavaScriptCoreSrcDir/API/JSStringRef.h $JSHeadersDir/JavaScriptCore
-
-  $CP $JavaScriptCoreSrcDir/bindings/npapi.h $JSHeadersDir
-  $CP $JavaScriptCoreSrcDir/bindings/npruntime.h $JSHeadersDir
-  $CP $JavaScriptCoreSrcDir/bindings/npruntime_internal.h $JSHeadersDir
-  $CP $JavaScriptCoreSrcDir/bindings/npruntime_impl.h $JSHeadersDir
-  $CP $JavaScriptCoreSrcDir/bindings/npruntime_priv.h $JSHeadersDir
-
-  $CP $JavaScriptCoreSrcDir/bindings/runtime.h $JSHeadersDir/JavaScriptCore
-  $CP $JavaScriptCoreSrcDir/bindings/NP_jsobject.h $JSHeadersDir/JavaScriptCore
-  $CP $JavaScriptCoreSrcDir/bindings/runtime_object.h $JSHeadersDir/JavaScriptCore
-  $CP $JavaScriptCoreSrcDir/bindings/runtime_root.h $JSHeadersDir/JavaScriptCore
-
-  $CP $JavaScriptCoreSrcDir/kjs/JSImmediate.h $JSHeadersDir/JavaScriptCore
-  $CP $JavaScriptCoreSrcDir/kjs/JSLock.h $JSHeadersDir/JavaScriptCore
-  $CP $JavaScriptCoreSrcDir/kjs/JSType.h $JSHeadersDir/JavaScriptCore
-  $CP ../../../webkit/pending/kjs/collector.h $JSHeadersDir/JavaScriptCore
-  $CP $JavaScriptCoreSrcDir/kjs/interpreter.h $JSHeadersDir/JavaScriptCore
-  $CP $JavaScriptCoreSrcDir/kjs/protect.h $JSHeadersDir/JavaScriptCore
-  $CP $JavaScriptCoreSrcDir/kjs/ustring.h $JSHeadersDir/JavaScriptCore
-  $CP $JavaScriptCoreSrcDir/kjs/value.h $JSHeadersDir/JavaScriptCore
-
-  $CP $JavaScriptCoreSrcDir/wtf/HashCountedSet.h $JSHeadersDir/JavaScriptCore
+  $CP $JavaScriptCoreSrcDir/API/JSStringRefCF.h $JSHeadersDir/JavaScriptCore
+  $CP $JavaScriptCoreSrcDir/API/JSStringRefBSTR.h $JSHeadersDir/JavaScriptCore
+  $CP $JavaScriptCoreSrcDir/API/JSValueRef.h $JSHeadersDir/JavaScriptCore
+  $CP $JavaScriptCoreSrcDir/API/JavaScriptCore.h $JSHeadersDir/JavaScriptCore
+  $CP $JavaScriptCoreSrcDir/API/JSRetainPtr.h $JSHeadersDir/JavaScriptCore
+  $CP $JavaScriptCoreSrcDir/API/OpaqueJSString.h $JSHeadersDir/JavaScriptCore
+  $CP $JavaScriptCoreSrcDir/API/WebKitAvailability.h $JSHeadersDir/JavaScriptCore
 else 
-  $CP $JavaScriptCoreSrcDir/bindings/npapi.h $JSHeadersDir
-  $CP $JavaScriptCoreSrcDir/bindings/npruntime.h $JSHeadersDir
+  $CP $WebCoreSrcDir/bridge/npapi.h $JSHeadersDir
+  $CP $WebCoreSrcDir/bridge/npruntime.h $JSHeadersDir
   $CP ../../../webkit/port/bindings/v8/npruntime_priv.h $JSHeadersDir
 fi
 

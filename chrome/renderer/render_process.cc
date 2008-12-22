@@ -12,8 +12,10 @@
 #include "base/command_line.h"
 #include "base/message_loop.h"
 #include "base/histogram.h"
+#include "base/path_service.h"
 #include "chrome/browser/net/dns_global.h"  // TODO(jar): DNS calls should be renderer specific, not including browser.
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/chrome_paths.h"
 #include "chrome/common/ipc_channel.h"
 #include "chrome/common/ipc_message_utils.h"
 #include "chrome/common/render_messages.h"
@@ -22,7 +24,6 @@
 
 //-----------------------------------------------------------------------------
 
-IMLangFontLink2* RenderProcess::lang_font_link_ = NULL;
 bool RenderProcess::load_plugins_in_process_ = false;
 
 //-----------------------------------------------------------------------------
@@ -62,8 +63,6 @@ bool RenderProcess::GlobalInit(const std::wstring &channel_name) {
     }
   }
 
-  InitializeLangFontLink();
-
   CommandLine command_line;
   if (command_line.HasSwitch(switches::kJavaScriptFlags)) {
     webkit_glue::SetJavaScriptFlags(
@@ -86,6 +85,14 @@ bool RenderProcess::GlobalInit(const std::wstring &channel_name) {
     StatisticsRecorder::set_dump_on_exit(true);
   }
 
+  if (command_line.HasSwitch(switches::kGearsInRenderer)) {
+    // Load gears.dll on startup so we can access it before the sandbox
+    // blocks us.
+    std::wstring path;
+    if (PathService::Get(chrome::FILE_GEARS_PLUGIN, &path))
+      LoadLibrary(path.c_str());
+  }
+
   ChildProcessFactory<RenderProcess> factory;
   return ChildProcess::GlobalInit(channel_name, &factory);
 }
@@ -93,49 +100,6 @@ bool RenderProcess::GlobalInit(const std::wstring &channel_name) {
 // static
 void RenderProcess::GlobalCleanup() {
   ChildProcess::GlobalCleanup();
-  ReleaseLangFontLink();
-}
-
-// static
-void RenderProcess::InitializeLangFontLink() {
-  // TODO(hbono): http://b/1072298 Experimentally commented out this code to
-  // prevent registry leaks caused by this IMLangFontLink2 interface.
-  // If you find any font-rendering regressions. Please feel free to blame me.
-#ifdef USE_IMLANGFONTLINK2
-  IMultiLanguage* multi_language = NULL;
-  lang_font_link_ = NULL;
-  if (S_OK != CoCreateInstance(CLSID_CMultiLanguage,
-                               0,
-                               CLSCTX_ALL,
-                               IID_IMultiLanguage,
-                               reinterpret_cast<void**>(&multi_language))) {
-    DLOG(ERROR) << "Cannot CoCreate CMultiLanguage";
-  } else {
-    if (S_OK != multi_language->QueryInterface(IID_IMLangFontLink2,
-        reinterpret_cast<void**>(&lang_font_link_))) {
-      DLOG(ERROR) << "Cannot query LangFontLink2 interface";
-    }
-  }
-
-  if (multi_language)
-    multi_language->Release();
-#endif
-}
-
-// static
-void RenderProcess::ReleaseLangFontLink() {
-  // TODO(hbono): http://b/1072298 Experimentally commented out this code to
-  // prevent registry leaks caused by this IMLangFontLink2 interface.
-  // If you find any font-rendering regressions. Please feel free to blame me.
-#ifdef USE_IMLANGFONTLINK2
-  if (lang_font_link_)
-    lang_font_link_->Release();
-#endif
-}
-
-// static
-IMLangFontLink2* RenderProcess::GetLangFontLink() {
-  return lang_font_link_;
 }
 
 // static
@@ -144,10 +108,10 @@ bool RenderProcess::ShouldLoadPluginsInProcess() {
 }
 
 // static
-SharedMemory* RenderProcess::AllocSharedMemory(size_t size) {
+base::SharedMemory* RenderProcess::AllocSharedMemory(size_t size) {
   self()->clearer_factory_.RevokeAll();
 
-  SharedMemory* mem = self()->GetSharedMemFromCache(size);
+  base::SharedMemory* mem = self()->GetSharedMemFromCache(size);
   if (mem)
     return mem;
 
@@ -158,7 +122,7 @@ SharedMemory* RenderProcess::AllocSharedMemory(size_t size) {
   size = size / info.dwAllocationGranularity + 1;
   size = size * info.dwAllocationGranularity;
 
-  mem = new SharedMemory();
+  mem = new base::SharedMemory();
   if (!mem)
     return NULL;
   if (!mem->Create(L"", false, true, size)) {
@@ -170,7 +134,7 @@ SharedMemory* RenderProcess::AllocSharedMemory(size_t size) {
 }
 
 // static
-void RenderProcess::FreeSharedMemory(SharedMemory* mem) {
+void RenderProcess::FreeSharedMemory(base::SharedMemory* mem) {
   if (self()->PutSharedMemInCache(mem)) {
     self()->ScheduleCacheClearer();
     return;
@@ -179,14 +143,14 @@ void RenderProcess::FreeSharedMemory(SharedMemory* mem) {
 }
 
 // static
-void RenderProcess::DeleteSharedMem(SharedMemory* mem) {
+void RenderProcess::DeleteSharedMem(base::SharedMemory* mem) {
   delete mem;
 }
 
-SharedMemory* RenderProcess::GetSharedMemFromCache(size_t size) {
+base::SharedMemory* RenderProcess::GetSharedMemFromCache(size_t size) {
   // look for a cached object that is suitable for the requested size.
   for (int i = 0; i < arraysize(shared_mem_cache_); ++i) {
-    SharedMemory* mem = shared_mem_cache_[i];
+    base::SharedMemory* mem = shared_mem_cache_[i];
     if (mem && mem->max_size() >= size) {
       shared_mem_cache_[i] = NULL;
       return mem;
@@ -195,7 +159,7 @@ SharedMemory* RenderProcess::GetSharedMemFromCache(size_t size) {
   return NULL;
 }
 
-bool RenderProcess::PutSharedMemInCache(SharedMemory* mem) {
+bool RenderProcess::PutSharedMemInCache(base::SharedMemory* mem) {
   // simple algorithm:
   //  - look for an empty slot to store mem, or
   //  - if full, then replace any existing cache entry that is smaller than the
@@ -207,7 +171,7 @@ bool RenderProcess::PutSharedMemInCache(SharedMemory* mem) {
     }
   }
   for (int i = 0; i < arraysize(shared_mem_cache_); ++i) {
-    SharedMemory* cached_mem = shared_mem_cache_[i];
+    base::SharedMemory* cached_mem = shared_mem_cache_[i];
     if (cached_mem->max_size() < mem->max_size()) {
       shared_mem_cache_[i] = mem;
       DeleteSharedMem(cached_mem);

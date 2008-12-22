@@ -4,15 +4,106 @@
 
 #include "base/idle_timer.h"
 
+// We may not want to port idle_timer to Linux, but we have implemented it
+// anyway.  Define this to 1 to enable the Linux idle timer and then add the
+// libs that need to be linked (Xss).
+#define ENABLE_XSS_SUPPORT 0
+
+#if defined(OS_MACOSX)
+#include <ApplicationServices/ApplicationServices.h>
+#endif
+
+#if defined(OS_LINUX) && ENABLE_XSS_SUPPORT
+// We may not want to port idle_timer to Linux, but we have implemented it
+// anyway.  Remove the 0 above if we want it.
+#include <gdk/gdkx.h>
+#include <X11/extensions/scrnsaver.h>
+#include "base/lazy_instance.h"
+#include "base/thread_local.h"
+#endif
+
 #include "base/message_loop.h"
 #include "base/time.h"
 
 namespace base {
 
+#if defined(OS_WIN)
+bool OSIdleTimeSource(int32 *milliseconds_interval_since_last_event) {
+  LASTINPUTINFO lastInputInfo;
+  lastInputInfo.cbSize = sizeof(lastInputInfo);
+  if (GetLastInputInfo(&lastInputInfo) == 0) {
+    return false;
+  }
+  int32 last_input_time = lastInputInfo.dwTime;
+  
+  // Note: On Windows GetLastInputInfo returns a 32bit value which rolls over 
+  // ~49days.
+  int32 current_time = GetTickCount();
+  int32 delta = current_time - last_input_time;
+  // delta will go negative if we've been idle for 2GB of ticks.
+  if (delta < 0)
+    delta = -delta;    
+  *milliseconds_interval_since_last_event = delta;
+  return true;
+}
+#elif defined(OS_MACOSX)
+bool OSIdleTimeSource(int32 *milliseconds_interval_since_last_event) {
+  *milliseconds_interval_since_last_event = 
+      CGEventSourceSecondsSinceLastEventType(
+          kCGEventSourceStateCombinedSessionState, 
+          kCGAnyInputEventType) * 1000.0;
+  return true;
+}
+#elif defined(OS_LINUX) && ENABLE_XSS_SUPPORT
+class IdleState {
+ public:
+  IdleState() {
+    int event_base, error_base;
+    have_idle_info_ = XScreenSaverQueryExtension(GDK_DISPLAY(), &event_base,
+                                                 &error_base);
+    if (have_idle_info_)
+      idle_info_.Set(XScreenSaverAllocInfo());
+  }
+
+  ~IdleState() {
+    if (idle_info_.Get()) {
+      XFree(idle_info_.Get());
+      idle_info_.~ThreadLocalPointer();
+    }
+  }
+
+  int32 IdleTime() {
+    if (have_idle_info_ && idle_info_.Get()) {
+      XScreenSaverQueryInfo(GDK_DISPLAY(), GDK_ROOT_WINDOW(),
+                            idle_info_.Get());
+      return idle_info_.Get()->idle;
+    }
+    return -1;
+  }
+
+ private:
+  bool have_idle_info_;
+  ThreadLocalPointer<XScreenSaverInfo> idle_info_;
+
+  DISALLOW_COPY_AND_ASSIGN(IdleState);
+};
+
+bool OSIdleTimeSource(int32* milliseconds_interval_since_last_event) {
+  static LazyInstance<IdleState> state_instance(base::LINKER_INITIALIZED);
+  IdleState* state = state_instance.Pointer();
+  int32 idle_time = state->IdleTime();
+  if (0 < idle_time) {
+    *milliseconds_interval_since_last_event = idle_time;
+    return true;
+  }
+  return false;
+}
+#endif
+
 IdleTimer::IdleTimer(TimeDelta idle_time, bool repeat)
     : idle_interval_(idle_time),
       repeat_(repeat),
-      get_last_input_info_fn_(GetLastInputInfo) {
+      idle_time_source_(OSIdleTimeSource) {
   DCHECK_EQ(MessageLoop::TYPE_UI, MessageLoop::current()->type()) <<
       "Requires a thread that processes Windows UI events";
 }
@@ -48,17 +139,8 @@ void IdleTimer::StartTimer() {
 }
 
 TimeDelta IdleTimer::CurrentIdleTime() {
-  // TODO(mbelshe): This is windows-specific code.
-  LASTINPUTINFO info;
-  info.cbSize = sizeof(info);
-  if (get_last_input_info_fn_(&info)) {
-    // Note: GetLastInputInfo returns a 32bit value which rolls over ~49days.
-    int32 last_input_time = info.dwTime;
-    int32 current_time = GetTickCount();
-    int32 interval = current_time - last_input_time;
-    // Interval will go negative if we've been idle for 2GB of ticks.
-    if (interval < 0)
-      interval = -interval;
+  int32 interval = 0;
+  if (idle_time_source_(&interval)) {
     return TimeDelta::FromMilliseconds(interval);
   }
   NOTREACHED();

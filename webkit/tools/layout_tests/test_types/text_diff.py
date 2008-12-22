@@ -9,6 +9,7 @@ files into the layout test results directory.
 """
 
 import errno
+import logging
 import os.path
 
 from layout_package import path_utils
@@ -23,14 +24,16 @@ class TestTextDiff(test_type_base.TestTypeBase):
     norm = output.replace("\r\r\n", "\r\n").strip("\r\n").replace("\r\n", "\n")
     return norm + "\n"
 
-  def GetNormalizedExpectedText(self, filename):
+  def GetNormalizedExpectedText(self, filename, show_sources):
     """Given the filename of the test, read the expected output from a file
     and normalize the text.  Returns a string with the expected text, or ''
     if the expected output file was not found."""
-    # Read the platform-specific expected text, or the Mac default if no
-    # platform result exists.
+    # Read the platform-specific expected text.
     expected_filename = path_utils.ExpectedFilename(filename, '.txt',
-                                                    self._custom_result_id)
+                                                    self._platform)
+
+    if show_sources:
+      logging.debug('Using %s' % expected_filename)
     try:
       expected = open(expected_filename).read()
     except IOError, e:
@@ -40,7 +43,7 @@ class TestTextDiff(test_type_base.TestTypeBase):
       return expected
 
     # Normalize line endings
-    return expected.strip("\r\n") + "\n"
+    return expected.strip("\r\n").replace("\r\n", "\n") + "\n"
 
   def CompareOutput(self, filename, proc, output, test_args):
     """Implementation of CompareOutput that checks the output text against the
@@ -48,24 +51,24 @@ class TestTextDiff(test_type_base.TestTypeBase):
     failures = []
 
     # If we're generating a new baseline, we pass.
-    if test_args.text_baseline:
-      self._SaveBaselineData(filename, test_args.new_baseline,
-                             output, ".txt")
+    if test_args.new_baseline:
+      self._SaveBaselineData(filename, output, ".txt")
       return failures
 
     # Normalize text to diff
     output = self.GetNormalizedOutputText(output)
-    expected = self.GetNormalizedExpectedText(filename)
+    expected = self.GetNormalizedExpectedText(filename, test_args.show_sources)
 
     # Write output files for new tests, too.
     if output != expected:
       # Text doesn't match, write output files.
-      self.WriteOutputFiles(filename, "", ".txt", output, expected)
+      self.WriteOutputFiles(filename, "", ".txt", output, expected,
+                            diff=True, wdiff=True)
 
       if expected == '':
         failures.append(test_failures.FailureMissingResult(self))
       else:
-        failures.append(test_failures.FailureTextMismatch(self))
+        failures.append(test_failures.FailureTextMismatch(self, True))
 
     return failures
 

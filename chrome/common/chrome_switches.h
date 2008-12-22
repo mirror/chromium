@@ -39,6 +39,7 @@ extern const wchar_t kSafePlugins[];
 extern const wchar_t kTrustedPlugins[];
 extern const wchar_t kTestSandbox[];
 extern const wchar_t kUserDataDir[];
+extern const wchar_t kParentProfile[];
 extern const wchar_t kApp[];
 extern const wchar_t kAppUploadFile[];
 extern const wchar_t kDomAutomationController[];
@@ -118,7 +119,7 @@ extern const wchar_t kGearsPluginPathOverride[];
 
 extern const wchar_t kGearsInRenderer[];
 
-extern const wchar_t kUseNewHttp[];
+extern const wchar_t kUseWinHttp[];
 
 extern const wchar_t kEnableFastback[];
 
@@ -129,11 +130,14 @@ extern const wchar_t kEnableP13n[];
 extern const wchar_t kSdchFilter[];
 
 extern const wchar_t kEnableGreasemonkey[];
+extern const wchar_t kEnableExtensions[];
 
 extern const wchar_t kIncognito[];
-extern const wchar_t kUseNewSafeBrowsing[];
+extern const wchar_t kUseOldSafeBrowsing[];
 
 extern const wchar_t kEnableRendererAccessibility[];
+
+extern const wchar_t kEnableVideo[];
 
 }  // namespace switches
 

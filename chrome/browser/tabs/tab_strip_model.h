@@ -18,6 +18,7 @@
 namespace gfx {
 class Point;
 }
+class DockInfo;
 class GURL;
 class NavigationController;
 class Profile;
@@ -69,12 +70,6 @@ class TabStripModelObserver {
                         int to_index) { }
   // The specified TabContents at |index| changed in some way.
   virtual void TabChangedAt(TabContents* contents, int index) { }
-  // Loading progress representations for tabs should be validated/updated.
-  // TODO(beng): this wiring is cracktarded. consider revising. The loading
-  //             animation timer should live in BrowserView2, and from there
-  //             notify both the tabstrip and the window icon.
-  //             clean this up once XPFrame and VistaFrame have retired.
-  virtual void TabValidateAnimations() { }
   // The TabStripModel now no longer has any "significant" (user created or
   // user manipulated) tabs. The implementer may use this as a trigger to try
   // and close the window containing the TabStripModel, for example...
@@ -95,13 +90,16 @@ class TabStripModelObserver {
 ///////////////////////////////////////////////////////////////////////////////
 class TabStripModelDelegate {
  public:
+  // Retrieve the URL that should be used to construct blank tabs.
+  virtual GURL GetBlankTabURL() const = 0;
+
   // Ask for a new TabStripModel to be created and the given tab contents to
-  // be added to it. Its presentation (e.g. a browser window) anchored at the
-  // specified creation point. It is left up to the delegate to decide how to
-  // size the window. ass an empty point (0, 0) to allow the delegate to decide
-  // where to  position the window.
+  // be added to it. Its size and position are reflected in |window_bounds|.
+  // If |dock_info|'s type is other than NONE, the newly created window should
+  // be docked as identified by |dock_info|.
   virtual void CreateNewStripWithContents(TabContents* contents,
-                                          const gfx::Point& creation_point) = 0;
+                                          const gfx::Rect& window_bounds,
+                                          const DockInfo& dock_info) = 0;
 
   enum {
     TAB_MOVE_ACTION = 1,
@@ -124,21 +122,12 @@ class TabStripModelDelegate {
       bool defer_load,
       SiteInstance* instance) const = 0;
 
-  // Show the web application context menu at the provided point. |p| is in
-  // screen coordinate system.
-  virtual void ShowApplicationMenu(const gfx::Point& p) = 0;
-
   // Return whether some contents can be duplicated.
   virtual bool CanDuplicateContentsAt(int index) = 0;
 
   // Duplicate the contents at the provided index and places it into its own
   // window.
   virtual void DuplicateContentsAt(int index) = 0;
-
-  // Called every time the the throbber needs to be updated. We have this to
-  // give the browser/frame a chance to implement some loading animation. This
-  // is used by simple web application frames.
-  virtual void ValidateLoadingAnimations() = 0;
 
   // Called when a drag session has completed and the frame that initiated the
   // the session should be closed.
@@ -284,11 +273,6 @@ class TabStripModel : public NotificationObserver {
   // changed in some way.
   void UpdateTabContentsStateAt(int index);
 
-  // Notify any observers that Loading progress for TabContents should be
-  // validated.
-  // TODO(beng): (Cleanup) This should definitely be moved to the View.
-  void UpdateTabContentsLoadingAnimations();
-
   // Make sure there is an auto-generated New Tab tab in the TabStripModel.
   // If |force_create| is true, the New Tab will be created even if the
   // preference is set to false (used by startup).
@@ -371,7 +355,8 @@ class TabStripModel : public NotificationObserver {
 
   // The specified contents should be opened in a new tabstrip.
   void TearOffTabContents(TabContents* detached_contents,
-                          const gfx::Point& drop_point);
+                          const gfx::Rect& window_bounds,
+                          const DockInfo& dock_info);
 
   // Context menu functions.
   enum ContextMenuCommand {
@@ -537,4 +522,3 @@ class TabStripModel : public NotificationObserver {
 };
 
 #endif  // CHROME_BROWSER_TABS_TAB_STRIP_MODEL_H__
-

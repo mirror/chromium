@@ -4,11 +4,14 @@
 
 #include "base/shared_memory.h"
 
+#include <errno.h>
 #include <fcntl.h>
 #include <sys/mman.h>
 
 #include "base/logging.h"
 #include "base/string_util.h"
+
+namespace base {
 
 namespace {
 // Paranoia. Semaphores and shared memory segments should live in different
@@ -58,36 +61,39 @@ bool SharedMemory::Create(const std::wstring &name, bool read_only,
   posix_flags |= read_only ? O_RDONLY : O_RDWR;
   if (!open_existing || mapped_file_ <= 0)
     posix_flags |= O_CREAT;
-  
-  if (CreateOrOpen(name, posix_flags)) {
-    ftruncate(mapped_file_, size);
-    max_size_ = size;
-    return true;
+
+  if (!CreateOrOpen(name, posix_flags))
+    return false;
+
+  if (ftruncate(mapped_file_, size) != 0) {
+    Close();
+    return false;
   }
-  
-  return false;
+
+  max_size_ = size;
+  return true;
 }
 
 bool SharedMemory::Open(const std::wstring &name, bool read_only) {
   read_only_ = read_only;
-  
+
   int posix_flags = 0;
   posix_flags |= read_only ? O_RDONLY : O_RDWR;
-  
+
   return CreateOrOpen(name, posix_flags);
 }
 
 bool SharedMemory::CreateOrOpen(const std::wstring &name, int posix_flags) {
   DCHECK(mapped_file_ == -1);
-  
+
   name_ = L"/" + name;
-  
-  int posix_mode = 0600;  // owner read/write
+
+  mode_t posix_mode = S_IRUSR | S_IWUSR;  // owner read/write
   std::string posix_name(WideToUTF8(name_));
   mapped_file_ = shm_open(posix_name.c_str(), posix_flags, posix_mode);
   if (mapped_file_ < 0)
     return false;
-  
+
   posix_name += kSemaphoreSuffix;
   lock_ = sem_open(posix_name.c_str(), O_CREAT, posix_mode, 1);
   if (lock_ == SEM_FAILED) {
@@ -97,14 +103,14 @@ bool SharedMemory::CreateOrOpen(const std::wstring &name, int posix_flags) {
     lock_ = NULL;
     return false;
   }
-  
+
   return true;
 }
 
 bool SharedMemory::Map(size_t bytes) {
   if (mapped_file_ == -1)
     return false;
-  
+
   memory_ = mmap(NULL, bytes, PROT_READ | (read_only_ ? 0 : PROT_WRITE),
                  MAP_SHARED, mapped_file_, 0);
 
@@ -143,12 +149,12 @@ void SharedMemory::Close() {
   }
 
   std::string posix_name(WideToUTF8(name_));
-  if (mapped_file_) {
+  if (mapped_file_ > 0) {
     close(mapped_file_);
     shm_unlink(posix_name.c_str());
     mapped_file_ = -1;
   }
-  
+
   if (lock_) {
     posix_name += kSemaphoreSuffix;
     sem_unlink(posix_name.c_str());
@@ -158,11 +164,15 @@ void SharedMemory::Close() {
 
 void SharedMemory::Lock() {
   DCHECK(lock_ != NULL);
-  sem_wait(lock_);
+  while(sem_wait(lock_) < 0) {
+    DCHECK(errno == EAGAIN || errno == EINTR);
+  }
 }
 
 void SharedMemory::Unlock() {
   DCHECK(lock_ != NULL);
-  sem_post(lock_);
+  int result = sem_post(lock_);
+  DCHECK(result == 0);
 }
 
+}  // namespace base

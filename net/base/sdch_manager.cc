@@ -12,6 +12,8 @@
 #include "net/base/sdch_manager.h"
 #include "net/url_request/url_request_http_job.h"
 
+using base::Time;
+using base::TimeDelta;
 
 //------------------------------------------------------------------------------
 // static
@@ -313,18 +315,6 @@ void SdchManager::UrlSafeBase64Encode(const std::string& input,
 // Security functions restricting loads and use of dictionaries.
 
 // static
-int SdchManager::Dictionary::GetPortIncludingDefault(const GURL& url) {
-  std::string port(url.port());
-  if (port.length())
-    return StringToInt(port);
-  if (url.scheme() == "http")
-    return 80;  // Default port value.
-  // TODO(jar): If sdch supports other schemes, then write a general function
-  // or surface functionality hidden in url_cannon_stdurl.cc into url_canon.h.
-  return -1;
-}
-
-// static
 bool SdchManager::Dictionary::CanSet(const std::string& domain,
                                      const std::string& path,
                                      const std::set<int> ports,
@@ -434,7 +424,7 @@ bool SdchManager::Dictionary::CanAdvertise(const GURL& target_url) {
     */
   if (!DomainMatch(target_url, domain_))
     return false;
-  if (!ports_.empty() && 0 == ports_.count(GetPortIncludingDefault(target_url)))
+  if (!ports_.empty() && 0 == ports_.count(target_url.EffectiveIntPort()))
     return false;
   if (path_.size() && !PathMatch(target_url.path(), path_))
     return false;

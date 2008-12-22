@@ -13,8 +13,8 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/stl_util-inl.h"
-#include "chrome/views/container.h"
 #include "chrome/views/focus_manager.h"
+#include "chrome/views/widget.h"
 
 namespace views {
 
@@ -438,9 +438,9 @@ bool TreeView::OnKeyDown(int virtual_key_code) {
     }
     return true;
   } else if (virtual_key_code == VK_RETURN && !process_enter_) {
-    Container* vc = GetContainer();
-    DCHECK(vc);
-    FocusManager* fm = FocusManager::GetFocusManager(vc->GetHWND());
+    Widget* widget = GetWidget();
+    DCHECK(widget);
+    FocusManager* fm = FocusManager::GetFocusManager(widget->GetHWND());
     DCHECK(fm);
     Accelerator accelerator(Accelerator(static_cast<int>(virtual_key_code),
                                         win_util::IsShiftPressed(),
@@ -638,12 +638,12 @@ LRESULT CALLBACK TreeView::TreeWndProc(HWND window,
   switch (message) {
     case WM_ERASEBKGND:
       return 1;
-      
+
     case WM_PAINT: {
       ChromeCanvasPaint canvas(window);
       if (canvas.isEmpty())
         return 0;
-      
+
       HDC dc = canvas.beginPlatformPaint();
       if (l10n_util::GetTextDirection() == l10n_util::RIGHT_TO_LEFT) {
         // ChromeCanvas ends up configuring the DC with a mode of GM_ADVANCED.
@@ -681,7 +681,7 @@ LRESULT CALLBACK TreeView::TreeWndProc(HWND window,
       canvas.endPlatformPaint();
       return 0;
     }
-    
+
     case WM_RBUTTONDOWN:
       if (tree->select_on_right_mouse_down_) {
         TVHITTESTINFO hit_info;

@@ -6,7 +6,9 @@
 
 #include "base/logging.h"
 #include "base/message_loop.h"
+#include "chrome/app/result_codes.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/browser_window.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/profile_manager.h"
@@ -109,7 +111,7 @@ void BrowserList::CloseAllBrowsers(bool use_post) {
   BrowserList::const_iterator iter;
   for (iter = BrowserList::begin(); iter != BrowserList::end();) {
     if (use_post) {
-      ::PostMessage((*iter)->GetTopLevelHWND(), WM_CLOSE, 0, 0);
+      (*iter)->window()->Close();
       ++iter;
     } else {
       // This path is hit during logoff/power-down. In this case we won't get
@@ -134,6 +136,36 @@ void BrowserList::CloseAllBrowsers(bool use_post) {
 }
 
 // static
+void BrowserList::WindowsSessionEnding() {
+  // EndSession is invoked once per frame. Only do something the first time.
+  static bool already_ended = false;
+  if (already_ended)
+    return;
+  already_ended = true;
+
+  browser_shutdown::OnShutdownStarting(browser_shutdown::END_SESSION);
+
+  // Write important data first.
+  g_browser_process->EndSession();
+
+  // Close all the browsers.
+  BrowserList::CloseAllBrowsers(false);
+
+  // Send out notification. This is used during testing so that the test harness
+  // can properly shutdown before we exit.
+  NotificationService::current()->Notify(NOTIFY_SESSION_END,
+    NotificationService::AllSources(),
+    NotificationService::NoDetails());
+
+  // And shutdown.
+  browser_shutdown::Shutdown();
+
+  // At this point the message loop is still running yet we've shut everything
+  // down. If any messages are processed we'll likely crash. Exit now.
+  ExitProcess(ResultCodes::NORMAL_EXIT);
+}
+
+// static
 bool BrowserList::HasBrowserWithProfile(Profile* profile) {
   BrowserList::const_iterator iter;
   for (size_t i = 0; i < browsers_.size(); ++i) {
@@ -144,18 +176,23 @@ bool BrowserList::HasBrowserWithProfile(Profile* profile) {
 }
 
 // static
-bool BrowserList::is_app_modal_ = false;
+views::AppModalDialogDelegate* BrowserList::app_modal_dialog_ = NULL;
 
 // static
-void BrowserList::SetIsShowingAppModalDialog(bool is_app_modal) {
-  // If we are already modal, we can't go modal again.
-  DCHECK(!(is_app_modal_ && is_app_modal));
-  is_app_modal_ = is_app_modal;
+void BrowserList::SetShowingAppModalDialog(
+    views::AppModalDialogDelegate* dialog) {
+  DCHECK(!(app_modal_dialog_ && dialog));
+  app_modal_dialog_ = dialog;
+}
+
+// static
+views::AppModalDialogDelegate* BrowserList::GetShowingAppModalDialog() {
+  return app_modal_dialog_;
 }
 
 // static
 bool BrowserList::IsShowingAppModalDialog() {
-  return is_app_modal_;
+  return app_modal_dialog_ != NULL;
 }
 
 // static
@@ -176,9 +213,9 @@ Browser* BrowserList::GetLastActive() {
 }
 
 // static
-Browser* BrowserList::FindBrowserWithType(Profile* p, BrowserType::Type t) {
+Browser* BrowserList::FindBrowserWithType(Profile* p, Browser::Type t) {
   Browser* last_active = GetLastActive();
-  if (last_active && last_active->profile() == p && last_active->GetType() == t)
+  if (last_active && last_active->profile() == p && last_active->type() == t)
     return last_active;
 
   BrowserList::const_iterator i;
@@ -186,18 +223,18 @@ Browser* BrowserList::FindBrowserWithType(Profile* p, BrowserType::Type t) {
     if (*i == last_active)
       continue;
 
-    if ((*i)->profile() == p && (*i)->GetType() == t)
+    if ((*i)->profile() == p && (*i)->type() == t)
       return *i;
   }
   return NULL;
 }
 
 // static
-size_t BrowserList::GetBrowserCountForType(Profile* p, BrowserType::Type type) {
+size_t BrowserList::GetBrowserCountForType(Profile* p, Browser::Type type) {
   BrowserList::const_iterator i;
   size_t result = 0;
   for (i = BrowserList::begin(); i != BrowserList::end(); ++i) {
-    if ((*i)->profile() == p && (*i)->GetType() == type)
+    if ((*i)->profile() == p && (*i)->type() == type)
       result++;
   }
   return result;

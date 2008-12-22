@@ -20,11 +20,11 @@ const wchar_t* HistoryPublisher::kRegKeyRegisteredIndexersInfo =
 const char* HistoryPublisher::kThumbnailImageFormat = "image/jpeg";
 
 // static
-double HistoryPublisher::TimeToUTCVariantTime(const Time& time) {
+double HistoryPublisher::TimeToUTCVariantTime(const base::Time& time) {
   double var_time = 0;
 #if defined(OS_WIN)
   if (!time.is_null()) {
-    Time::Exploded exploded;
+    base::Time::Exploded exploded;
     time.UTCExplode(&exploded);
 
     // Create the system time struct representing our exploded time.
@@ -88,7 +88,7 @@ bool HistoryPublisher::ReadRegisteredIndexersFromRegistry() {
 
 void HistoryPublisher::PublishPageThumbnail(
     const std::vector<unsigned char>& thumbnail, const GURL& url,
-    const Time& time) const {
+    const base::Time& time) const {
   PageData page_data = {
     time,
     url,
@@ -101,7 +101,7 @@ void HistoryPublisher::PublishPageThumbnail(
   PublishDataToIndexers(page_data);
 }
 
-void HistoryPublisher::PublishPageContent(const Time& time,
+void HistoryPublisher::PublishPageContent(const base::Time& time,
                                           const GURL& url,
                                           const std::wstring& title,
                                           const std::wstring& contents) const {
@@ -141,8 +141,8 @@ void HistoryPublisher::PublishDataToIndexers(const PageData& page_data)
 #endif
 }
 
-void HistoryPublisher::DeleteUserHistoryBetween(const Time& begin_time,
-                                                const Time& end_time) const {
+void HistoryPublisher::DeleteUserHistoryBetween(const base::Time& begin_time,
+                                                const base::Time& end_time) const {
 #if defined(OS_WIN)
   double var_begin_time = TimeToUTCVariantTime(begin_time);
   double var_end_time = TimeToUTCVariantTime(end_time);

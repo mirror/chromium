@@ -7,6 +7,7 @@
 
 #include <string>
 
+#include "base/ref_counted.h"
 #include "net/http/http_auth.h"
 
 namespace net {
@@ -18,20 +19,22 @@ class ProxyInfo;
 // (basic, digest, ...)
 // The registry mapping auth-schemes to implementations is hardcoded in 
 // HttpAuth::CreateAuthHandler().
-class HttpAuthHandler {
+class HttpAuthHandler : public base::RefCounted<HttpAuthHandler> {
  public:
+  virtual ~HttpAuthHandler() { }
+
   // Initialize the handler by parsing a challenge string.
   bool InitFromChallenge(std::string::const_iterator begin,
                          std::string::const_iterator end,
                          HttpAuth::Target target);
 
   // Lowercase name of the auth scheme
-  virtual std::string scheme() const {
+  const std::string& scheme() const {
     return scheme_;
   }
 
   // The realm value that was parsed during Init().
-  std::string realm() const {
+  const std::string& realm() const {
     return realm_;
   }
 
@@ -59,7 +62,7 @@ class HttpAuthHandler {
                     std::string::const_iterator challenge_end) = 0;
 
   // The lowercase auth-scheme {"basic", "digest", "ntlm", ...}
-  const char* scheme_;
+  std::string scheme_;
 
   // The realm.
   std::string realm_;

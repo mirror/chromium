@@ -51,7 +51,9 @@
 
 #include "config.h"
 
-#pragma warning(push, 0)
+#include "base/compiler_specific.h"
+
+MSVC_PUSH_WARNING_LEVEL(0);
 #include "DocumentType.h"
 #include "FrameLoader.h"
 #include "Document.h"
@@ -62,9 +64,10 @@
 #include "HTMLMetaElement.h"
 #include "HTMLNames.h"
 #include "KURL.h"
+#include "markup.h"
 #include "PlatformString.h"
 #include "TextEncoding.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 #undef LOG
 
 #include "webkit/glue/dom_serializer.h"
@@ -123,7 +126,9 @@ void ConvertCorrespondingSymbolToEntity(WebCore::String* result,
       // Append content before entity code.
       if (cur_pos > start_pos)
         result->append(start_pos, cur_pos - start_pos);
+      result->append("&");
       result->append(entity_name);
+      result->append(";");
       start_pos = ++cur_pos;
     } else {
       cur_pos++;
@@ -202,18 +207,15 @@ WebCore::String DomSerializer::PreActionBeforeSerializeOpenTag(
       // First we add doc type declaration if original doc has it.
       if (!param->has_doctype) {
         param->has_doctype = true;
-        WebCore::DocumentType* doc_type = param->doc->doctype();
-        if (doc_type)
-          result += doc_type->toString();
+        result += createMarkup(param->doc->doctype());
       }
 
       // Add MOTW declaration before html tag.
       // See http://msdn2.microsoft.com/en-us/library/ms537628(VS.85).aspx.
-      result += GenerateMarkOfTheWebDeclaration(param->current_frame_wurl).
-                c_str();
+      result += StdWStringToString(GenerateMarkOfTheWebDeclaration(param->current_frame_wurl));
     } else if (element->hasTagName(WebCore::HTMLNames::baseTag)) {
       // Comment the BASE tag when serializing dom.
-      result += kStartCommentNotation;
+      result += StdWStringToString(kStartCommentNotation);
     }
   } else {
     // Write XML declaration.
@@ -227,18 +229,16 @@ WebCore::String DomSerializer::PreActionBeforeSerializeOpenTag(
         xml_encoding = WebCore::UTF8Encoding().name();
       std::wstring str_xml_declaration =
           StringPrintf(kXMLDeclaration,
-                       param->doc->xmlVersion().charactersWithNullTermination(),
-                       xml_encoding.charactersWithNullTermination(),
+                       StringToStdWString(param->doc->xmlVersion()).c_str(),
+                       StringToStdWString(xml_encoding).c_str(),
                        param->doc->xmlStandalone() ? L" standalone=\"yes\"" :
                                                      L"");
-      result += str_xml_declaration.c_str();
+      result += StdWStringToString(str_xml_declaration);
     }
     // Add doc type declaration if original doc has it.
     if (!param->has_doctype) {
       param->has_doctype = true;
-      WebCore::DocumentType* doc_type = param->doc->doctype();
-      if (doc_type)
-        result += doc_type->toString();
+      result += createMarkup(param->doc->doctype());
     }
   }
 
@@ -265,7 +265,7 @@ WebCore::String DomSerializer::PostActionAfterSerializeOpenTag(
     std::wstring str_meta =
         StringPrintf(kDefaultMetaContent,
                      ASCIIToWide(param->text_encoding.name()).c_str());
-    result += str_meta.c_str();
+    result += StdWStringToString(str_meta);
 
     // Will search each META which has charset declaration, and skip them all
     // in PreActionBeforeSerializeOpenTag.
@@ -309,10 +309,10 @@ WebCore::String DomSerializer::PostActionAfterSerializeEndTag(
     return result;
   // Comment the BASE tag when serializing DOM.
   if (element->hasTagName(WebCore::HTMLNames::baseTag)) {
-    result += kEndCommentNotation;
+    result += StdWStringToString(kEndCommentNotation);
     // Append a new base tag declaration.
-    result += GenerateBaseTagDeclaration(
-        webkit_glue::StringToStdWString(param->doc->baseTarget())).c_str();
+    result += StdWStringToString(GenerateBaseTagDeclaration(
+        webkit_glue::StringToStdWString(param->doc->baseTarget())));
   }
 
   return result;
@@ -323,12 +323,8 @@ void DomSerializer::SaveHtmlContentToBuffer(const WebCore::String& result,
   if (!result.length())
     return;
   // Convert the unicode content to target encoding
-  const UChar* ucode = result.characters();
-  // If the text encoding can not convert some unicode character to
-  // corresponding code, we allow using entity notation to replace
-  // the unicode character.
-  WebCore::CString encoding_result = param->text_encoding.encode(ucode,
-      result.length(), true);
+  WebCore::CString encoding_result = param->text_encoding.encode(
+      result.characters(), result.length(), WebCore::EntitiesForUnencodables);
 
   // if the data buffer will be full, then send it out first.
   if (encoding_result.length() + data_buffer_.size() >
@@ -379,13 +375,13 @@ void DomSerializer::OpenTagToString(const WebCore::Element* element,
             result += attr_value;
           } else {
             WebCore::String str_value = param->doc->completeURL(attr_value);
-            std::wstring value(str_value.charactersWithNullTermination());
+            std::wstring value(StringToStdWString(str_value));
             // Check whether we local files for those link.
             LinkLocalPathMap::const_iterator it = local_links_.find(value);
             if (it != local_links_.end()) {
               // Replace the link when we have local files.
-              result += param->directory_name.c_str();
-              result += (it->second).c_str();
+              result += StdWStringToString(param->directory_name);
+              result += StdWStringToString(it->second);
             } else {
               // If not found local path, replace it with absolute link.
               result += str_value;
@@ -461,22 +457,7 @@ void DomSerializer::BuildContentForNode(const WebCore::Node* node,
       break;
     }
     case WebCore::Node::TEXT_NODE: {
-      WebCore::String result;
-      WebCore::String s = node->toString();
-      if (param->is_html_document) {
-        // For html document, do not convert entity notation in code
-        // block of style tag and script tag.
-        if (param->is_in_script_or_style_tag)
-          result += s;
-        else
-          ConvertCorrespondingSymbolToEntity(&result, s,
-              param->is_html_document);
-      } else {
-        ConvertCorrespondingSymbolToEntity(&result, s,
-            param->is_html_document);
-      }
-
-      SaveHtmlContentToBuffer(result, param);
+      SaveHtmlContentToBuffer(createMarkup(node), param);
       break;
     }
     case WebCore::Node::ATTRIBUTE_NODE:
@@ -491,7 +472,7 @@ void DomSerializer::BuildContentForNode(const WebCore::Node* node,
       param->has_doctype = true;
     default: {
       // For other type node, call default action.
-      SaveHtmlContentToBuffer(node->toString(), param);
+      SaveHtmlContentToBuffer(createMarkup(node), param);
       break;
     }
   }
@@ -503,10 +484,10 @@ DomSerializer::DomSerializer(WebFrame* webframe,
                              const std::vector<std::wstring>& links,
                              const std::vector<std::wstring>& local_paths,
                              const std::wstring& local_directory_name)
-    : recursive_serialization_(recursive_serialization),
-      delegate_(delegate),
-      local_directory_name_(local_directory_name),
-      frames_collected_(false) {
+    : delegate_(delegate),
+      recursive_serialization_(recursive_serialization),
+      frames_collected_(false),
+      local_directory_name_(local_directory_name) {
   // Must specify available webframe.
   DCHECK(webframe);
   specified_webframeimpl_ = static_cast<WebFrameImpl*>(webframe);

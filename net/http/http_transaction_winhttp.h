@@ -28,30 +28,26 @@ class HttpTransactionWinHttp : public HttpTransaction {
   // Instantiate this class, and use it to create HttpTransaction objects.
   class Factory : public HttpTransactionFactory {
    public:
-    Factory() : session_(NULL), proxy_info_(NULL), is_suspended_(false) {}
-    explicit Factory(const ProxyInfo* info)
-        : session_(NULL), proxy_info_(NULL), is_suspended_(false) {
-      if (info) {
-        proxy_info_.reset(new ProxyInfo());
-        proxy_info_->Use(*info);
-      }
+    explicit Factory(ProxyService* proxy_service)
+        : session_(NULL), proxy_service_(proxy_service), is_suspended_(false) {
+      DCHECK(proxy_service);
     }
     ~Factory();
 
     virtual HttpTransaction* CreateTransaction();
     virtual HttpCache* GetCache();
-    virtual AuthCache* GetAuthCache();
     virtual void Suspend(bool suspend);
 
    private:
     Session* session_;
-    scoped_ptr<ProxyInfo> proxy_info_;
+    ProxyService* proxy_service_;
     bool is_suspended_;
     DISALLOW_EVIL_CONSTRUCTORS(Factory);
   };
 
+  virtual ~HttpTransactionWinHttp();
+
   // HttpTransaction methods:
-  virtual void Destroy();
   virtual int Start(const HttpRequestInfo*, CompletionCallback*);
   virtual int RestartIgnoringLastError(CompletionCallback*);
   virtual int RestartWithAuth(const std::wstring&,
@@ -80,7 +76,6 @@ class HttpTransactionWinHttp : public HttpTransaction {
   // Methods ------------------------------------------------------------------
 
   HttpTransactionWinHttp(Session* session, const ProxyInfo* info);
-  ~HttpTransactionWinHttp();
 
   void DoCallback(int rv);
   int ResolveProxy();

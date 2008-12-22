@@ -1,0 +1,60 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+Import('env')
+
+env = env.Clone()
+
+env.ApplySConscript([
+    '$BASE_DIR/using_base.scons',
+    '$BASE_DIR/gfx/using_base_gfx.scons',
+    '$ICU38_DIR/using_icu38.scons',
+    '$LIBPNG_DIR/using_libpng.scons',
+    '$SKIA_DIR/using_skia.scons',
+    '$ZLIB_DIR/using_zlib.scons',
+])
+
+env.Prepend(
+    CPPPATH = [
+        '$CHROME_SRC_DIR',
+    ],
+)
+
+if env.Bit('windows'):
+    env.Prepend(
+        LINKFLAGS = [
+            '/INCREMENTAL',
+            '/DEBUG',
+
+            '/DELAYLOAD:"dwmapi.dll"',
+            '/DELAYLOAD:"uxtheme.dll"',
+
+            '/SUBSYSTEM:CONSOLE',
+
+            '/MACHINE:X86',
+            '/FIXED:No',
+
+            '/safeseh',
+            '/dynamicbase',
+            '/ignore:4199',
+            '/nxcompat',
+        ],
+    )
+
+input_files = [
+    'image_diff.cc',
+]
+
+env.ChromeTestProgram('image_diff', input_files)
+
+env.ChromeMSVSProject('$CHROME_DIR/tools/test/image_diff/image_diff.vcproj',
+                dependencies = [
+                    '$BASE_DIR/build/base.vcproj',
+                    '$ZLIB_DIR/zlib.vcproj',
+                    '$ICU38_DIR/build/icu.vcproj',
+                    '$BASE_DIR/build/base_gfx.vcproj',
+                    '$LIBPNG_DIR/libpng.vcproj',
+                    '$SKIA_DIR/skia.vcproj',
+                ],
+                guid='{50B079C7-CD01-42D3-B8C4-9F8D9322E822}')

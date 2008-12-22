@@ -74,10 +74,10 @@
 class StatsCounter {
  public:
   // Create a StatsCounter object.
-  explicit StatsCounter(const std::wstring& name)
+  explicit StatsCounter(const std::string& name)
        : counter_id_(-1) {
     // We prepend the name with 'c:' to indicate that it is a counter.
-    name_ = L"c:";
+    name_ = "c:";
     name_.append(name);
   };
 
@@ -146,7 +146,7 @@ class StatsCounter {
     if (counter_id_ == -1) {
       counter_id_ = table->FindCounter(name_);
       if (table->GetSlot() == 0) {
-        if (!table->RegisterThread(L"")) {
+        if (!table->RegisterThread("")) {
           // There is no room for this thread.  This thread
           // cannot use counters.
           counter_id_ = 0;
@@ -163,7 +163,7 @@ class StatsCounter {
     return NULL;
   }
 
-  std::wstring name_;
+  std::string name_;
   // The counter id in the table.  We initialize to -1 (an invalid value)
   // and then cache it once it has been looked up.  The counter_id is
   // valid across all threads and processes.
@@ -177,9 +177,9 @@ class StatsCounter {
 class StatsCounterTimer : protected StatsCounter {
  public:
   // Constructs and starts the timer.
-  explicit StatsCounterTimer(const std::wstring& name) {
+  explicit StatsCounterTimer(const std::string& name) {
     // we prepend the name with 't:' to indicate that it is a timer.
-    name_ = L"t:";
+    name_ = "t:";
     name_.append(name);
   }
 
@@ -187,15 +187,15 @@ class StatsCounterTimer : protected StatsCounter {
   void Start() {
     if (!Enabled())
       return;
-    start_time_ = TimeTicks::Now();
-    stop_time_ = TimeTicks();
+    start_time_ = base::TimeTicks::Now();
+    stop_time_ = base::TimeTicks();
   }
 
   // Stop the timer and record the results.
   void Stop() {
     if (!Enabled() || !Running())
       return;
-    stop_time_ = TimeTicks::Now();
+    stop_time_ = base::TimeTicks::Now();
     Record();
   }
 
@@ -205,12 +205,12 @@ class StatsCounterTimer : protected StatsCounter {
   }
 
   // Accept a TimeDelta to increment.
-  virtual void AddTime(TimeDelta time) {
+  virtual void AddTime(base::TimeDelta time) {
     Add(static_cast<int>(time.InMilliseconds()));
   }
 
   // TODO(jar)  temporary hack include method till base and chrome use new name.
-  void IncrementTimer(TimeDelta time) {
+  void IncrementTimer(base::TimeDelta time) {
     AddTime(time);
   }
 
@@ -220,8 +220,8 @@ class StatsCounterTimer : protected StatsCounter {
     AddTime(stop_time_ - start_time_);
   }
 
-  TimeTicks start_time_;
-  TimeTicks stop_time_;
+  base::TimeTicks start_time_;
+  base::TimeTicks stop_time_;
 };
 
 // A StatsRate is a timer that keeps a count of the number of intervals added so
@@ -230,10 +230,10 @@ class StatsCounterTimer : protected StatsCounter {
 class StatsRate : public StatsCounterTimer {
  public:
   // Constructs and starts the timer.
-  explicit StatsRate(const wchar_t* name)
+  explicit StatsRate(const char* name)
       : StatsCounterTimer(name),
       counter_(name),
-      largest_add_(std::wstring(L" ").append(name).append(L"MAX").c_str()) {
+      largest_add_(std::string(" ").append(name).append("MAX").c_str()) {
   }
 
   virtual void Add(int value) {

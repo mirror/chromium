@@ -26,6 +26,7 @@ class Firefox3Importer : public Importer {
   virtual void StartImport(ProfileInfo profile_info,
                            uint16 items,
                            ProfileWriter* writer,
+                           MessageLoop* delagate_loop_,
                            ImporterHost* host);
 
  private:
@@ -48,7 +49,7 @@ class Firefox3Importer : public Importer {
     std::wstring title;
     int type;
     std::string keyword;
-    Time date_added;
+    base::Time date_added;
     int64 favicon;
   };
   typedef std::vector<BookmarkItem*> BookmarkList;

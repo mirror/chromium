@@ -6,7 +6,9 @@
 
 #include "base/logging.h"
 #include "chrome/app/chrome_dll_resource.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/profile.h"
+#include "chrome/browser/spellchecker.h"
 #include "chrome/browser/template_url_model.h"
 #include "chrome/common/l10n_util.h"
 #include "webkit/glue/context_node_types.h"
@@ -117,9 +119,9 @@ void RenderViewContextMenu::AppendSelectionItems() {
 void RenderViewContextMenu::AppendEditableItems() {
   // Append Dictionary spell check suggestions.
   for (size_t i = 0; i < misspelled_word_suggestions_.size() &&
-       IDC_USESPELLCHECKSUGGESTION_0 + i <= IDC_USESPELLCHECKSUGGESTION_LAST;
+       IDC_SPELLCHECK_SUGGESTION_0 + i <= IDC_SPELLCHECK_SUGGESTION_LAST;
        i ++) {
-    AppendMenuItemWithLabel(IDC_USESPELLCHECKSUGGESTION_0 + static_cast<int>(i),
+    AppendMenuItemWithLabel(IDC_SPELLCHECK_SUGGESTION_0 + static_cast<int>(i),
                             misspelled_word_suggestions_[i]);
   }
   if (misspelled_word_suggestions_.size() > 0)
@@ -143,6 +145,36 @@ void RenderViewContextMenu::AppendEditableItems() {
   AppendDelegateMenuItem(IDS_CONTENT_CONTEXT_PASTE);
   AppendDelegateMenuItem(IDS_CONTENT_CONTEXT_DELETE);
   AppendSeparator();
+
+  // Add Spell Check options sub menu.
+  spellchecker_sub_menu_ = AppendSubMenu(IDC_SPELLCHECK_MENU,
+      l10n_util::GetString(IDS_CONTENT_CONTEXT_SPELLCHECK_MENU));
+
+  // Add Spell Check languages to sub menu.
+  SpellChecker::Languages display_languages;
+  SpellChecker::GetSpellCheckLanguagesToDisplayInContextMenu(profile_,
+      &display_languages);
+  DCHECK(display_languages.size() <
+         IDC_SPELLCHECK_LANGUAGES_LAST - IDC_SPELLCHECK_LANGUAGES_FIRST);
+  const std::wstring app_locale = g_browser_process->GetApplicationLocale();
+  for (size_t i = 0; i < display_languages.size(); ++i) {
+    std::wstring local_language(l10n_util::GetLocalName(
+        display_languages[i], app_locale, true));
+    spellchecker_sub_menu_->AppendMenuItem(
+        IDC_SPELLCHECK_LANGUAGES_FIRST + i, local_language, RADIO);
+  }
+
+  // Add item in the sub menu to pop up the fonts and languages options menu.
+  spellchecker_sub_menu_->AppendSeparator();
+  spellchecker_sub_menu_->AppendDelegateMenuItem(
+      IDS_CONTENT_CONTEXT_LANGUAGE_SETTINGS);
+
+  // Add 'Check the spelling of this field' item in the sub menu.
+  spellchecker_sub_menu_->AppendMenuItem(
+      IDC_CHECK_SPELLING_OF_THIS_FIELD,
+      l10n_util::GetString(IDS_CONTENT_CONTEXT_CHECK_SPELLING_OF_THIS_FIELD),
+      CHECKBOX);
+
+  AppendSeparator();
   AppendDelegateMenuItem(IDS_CONTENT_CONTEXT_SELECTALL);
 }
-

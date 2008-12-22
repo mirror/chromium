@@ -27,7 +27,7 @@ static const wchar_t kTempDirName[] = L"memory_test_profile";
 
 class MemoryTest : public UITest {
  public:
-  MemoryTest() {
+  MemoryTest() : cleanup_temp_dir_on_exit_(false) {
     show_window_ = true;
 
     // For now, turn off plugins because they crash like crazy.
@@ -52,15 +52,15 @@ class MemoryTest : public UITest {
       file_util::AppendToPath(&profile_dir, L"data");
       file_util::AppendToPath(&profile_dir, L"memory_test");
       file_util::AppendToPath(&profile_dir, L"general_mix");
-    }
 
-    if (!SetupTempDirectory(profile_dir)) {
-      // There isn't really a way to fail gracefully here.
-      // Neither this constuctor nor the SetUp() method return
-      // status to the caller.  So, just fall through using the
-      // default profile and log this.  The failure will be
-      // obvious.
-      LOG(ERROR) << "Error preparing temp directory for test";
+      if (!SetupTempDirectory(profile_dir)) {
+        // There isn't really a way to fail gracefully here.
+        // Neither this constuctor nor the SetUp() method return
+        // status to the caller.  So, just fall through using the
+        // default profile and log this.  The failure will be
+        // obvious.
+        LOG(ERROR) << "Error preparing temp directory for test";
+      }
     }
 
     CommandLine::AppendSwitchWithValue(&launch_arguments_,
@@ -70,7 +70,7 @@ class MemoryTest : public UITest {
 
   ~MemoryTest() {
     // Cleanup our temporary directory.
-    if (user_data_dir_.length() > 0)
+    if (cleanup_temp_dir_on_exit_)
       file_util::Delete(user_data_dir_, true);
   }
 
@@ -248,6 +248,11 @@ class MemoryTest : public UITest {
                                     &timed_out);
       if (timed_out)
         printf("warning: %s timed out!\n", urls[counter].c_str());
+
+      // TODO(mbelshe): Bug 2953
+      // The automation crashes periodically if we cycle too quickly.
+      // To make these tests more reliable, slowing them down a bit.
+      Sleep(100);
     }
     size_t stop_size = GetSystemCommitCharge();
 
@@ -266,7 +271,7 @@ class MemoryTest : public UITest {
   void PrintIOPerfInfo(const wchar_t* test_name) {
     printf("\n");
     BrowserProcessFilter chrome_filter(user_data_dir_);
-    process_util::NamedProcessIterator
+    base::NamedProcessIterator
         chrome_process_itr(chrome::kBrowserProcessExecutableName,
                            &chrome_filter);
 
@@ -281,10 +286,10 @@ class MemoryTest : public UITest {
         continue;
       }
 
-      scoped_ptr<process_util::ProcessMetrics> process_metrics;
+      scoped_ptr<base::ProcessMetrics> process_metrics;
       IO_COUNTERS io_counters;
       process_metrics.reset(
-          process_util::ProcessMetrics::CreateProcessMetrics(process_handle));
+          base::ProcessMetrics::CreateProcessMetrics(process_handle));
       ZeroMemory(&io_counters, sizeof(io_counters));
 
       if (process_metrics.get()->GetIOCounters(&io_counters)) {
@@ -318,7 +323,7 @@ class MemoryTest : public UITest {
   void PrintMemoryUsageInfo(const wchar_t* test_name) {
     printf("\n");
     BrowserProcessFilter chrome_filter(user_data_dir_);
-    process_util::NamedProcessIterator
+    base::NamedProcessIterator
         chrome_process_itr(chrome::kBrowserProcessExecutableName,
                            &chrome_filter);
 
@@ -371,23 +376,32 @@ class MemoryTest : public UITest {
   //   src_dir is set to the source directory
   // Output:
   //   On success, modifies user_data_dir_ to be a new profile directory
+  //   and sets cleanup_temp_dir_on_exit_ to true.
   bool SetupTempDirectory(std::wstring src_dir) {
+    LOG(INFO) << "Setting up temp directory in " << src_dir.c_str();
     // We create a copy of the test dir and use it so that each
     // run of this test starts with the same data.  Running this
     // test has the side effect that it will change the profile.
     std::wstring temp_dir;
-    if (!file_util::CreateNewTempDirectory(kTempDirName, &temp_dir))
+    if (!file_util::CreateNewTempDirectory(kTempDirName, &temp_dir)) {
+      LOG(ERROR) << "Could not create temp directory:" << kTempDirName;
       return false;
+    }
 
     src_dir.append(L"\\*");
 
-    if (!file_util::CopyDirectory(src_dir, temp_dir, true))
+    if (!file_util::CopyDirectory(src_dir, temp_dir, true)) {
+      LOG(ERROR) << "Could not copy temp directory";
       return false;
+    }
 
     user_data_dir_ = temp_dir;
+    cleanup_temp_dir_on_exit_ = true;
+    LOG(INFO) << "Finished temp directory setup.";
     return true;
   }
 
+  bool cleanup_temp_dir_on_exit_;
   std::wstring user_data_dir_;
 };
 

@@ -122,30 +122,6 @@
 	</References>
 	<Files>
 		<File
-			RelativePath="..\gfx\bitmap_platform_device_win.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\bitmap_platform_device_win.h"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\convolver.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\convolver.h"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\font_utils.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\font_utils.h"
-			>
-		</File>
-		<File
 			RelativePath="..\gfx\gdi_util.cc"
 			>
 		</File>
@@ -154,35 +130,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\gfx\image_operations.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\image_operations.h"
-			>
-		</File>
-		<File
 			RelativePath="..\gfx\native_theme.cc"
 			>
 		</File>
 		<File
 			RelativePath="..\gfx\native_theme.h"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\platform_canvas_win.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\platform_canvas_win.h"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\platform_device_win.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\platform_device_win.h"
 			>
 		</File>
 		<File
@@ -223,38 +175,6 @@
 		</File>
 		<File
 			RelativePath="..\gfx\size.h"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\skia_utils.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\skia_utils.h"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\uniscribe.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\uniscribe.h"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\vector_canvas.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\vector_canvas.h"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\vector_device.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\gfx\vector_device.h"
 			>
 		</File>
 	</Files>

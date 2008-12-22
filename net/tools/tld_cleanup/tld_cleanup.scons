@@ -1,0 +1,42 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+__doc__ = """
+Configuration the tld_cleanup{,.exe} executable.
+"""
+
+Import('env')
+
+env = env.Clone()
+
+env.ApplySConscript([
+    '$BASE_DIR/using_base.scons',
+    '$CHROME_SRC_DIR/build/using_googleurl.scons',
+    '$ICU38_DIR/using_icu38.scons',
+    '$NET_DIR/using_net.scons',
+])
+
+if env.Bit('windows'):
+  env.Append(
+      LINKFLAGS = [
+          '/SUBSYSTEM:CONSOLE',
+      ],
+  )
+
+input_files = [
+    'tld_cleanup.cc',
+]
+
+if env.Bit('windows'):
+  # TODO(port): We need to port tld_cleanup before this will work on other
+  # platforms.
+  env.ChromeProgram('tld_cleanup', input_files)
+
+env.ChromeMSVSProject('$NET_DIR/build/tld_cleanup.vcproj',
+                dependencies = [
+                    '$BASE_DIR/build/base.vcproj',
+                    '$ICU38_DIR/build/icu.vcproj',
+                    '$GOOGLEURL_DIR/build/googleurl.vcproj',
+                ],
+                guid='{E13045CD-7E1F-4A41-9B18-8D288B2E7B41}')

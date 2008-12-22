@@ -1,16 +1,17 @@
 // Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-//
+
 // This file contains a class that can be used to extract the salient
 // elements of a command line in a relatively lightweight manner.
 // Switches can optionally have a value attached using an equals sign,
 // as in "-switch=value".  Arguments that aren't prefixed with a
 // switch prefix are considered "loose parameters".  Switch names
-// are case-insensitive.
+// are case-insensitive.  An argument of "--" will terminate switch parsing,
+// causing everything after to be considered as loose parameters.
 
-#ifndef BASE_COMMAND_LINE_H__
-#define BASE_COMMAND_LINE_H__
+#ifndef BASE_COMMAND_LINE_H_
+#define BASE_COMMAND_LINE_H_
 
 #include <map>
 #include <string>
@@ -31,6 +32,7 @@ class CommandLine {
   CommandLine(const std::wstring& command_line);
 #elif defined(OS_POSIX)
   CommandLine(int argc, const char* const* argv);
+  CommandLine(const std::vector<std::string>& argv);
 #endif
 
   ~CommandLine();
@@ -66,6 +68,11 @@ class CommandLine {
   // Simply returns the original command line string.
   std::wstring command_line_string() const;
 
+#if defined(OS_POSIX)
+  // Returns the original command line string as a vector of strings.
+  const std::vector<std::string>& argv() const;
+#endif
+
   // Returns the program part of the command line string (the first item).
   std::wstring program() const;
 
@@ -75,6 +82,19 @@ class CommandLine {
 
   // The string that's used to separate switches from their values.
   static const wchar_t kSwitchValueSeparator[];
+
+  // Treat everything after this argument as loose parameters.
+  static const wchar_t kSwitchTerminator[];
+
+  // Return a copy of the string prefixed with a switch prefix.
+  // Used internally.
+  static std::wstring PrefixedSwitchString(const std::wstring& switch_string);
+
+  // Return a copy of the string prefixed with a switch prefix,
+  // and appended with the given value. Used internally.
+  static std::wstring PrefixedSwitchStringWithValue(
+                        const std::wstring& switch_string,
+                        const std::wstring& value_string);
 
   // Appends the given switch string (preceded by a space and a switch
   // prefix) to the given string.
@@ -101,5 +121,4 @@ class CommandLine {
   DISALLOW_EVIL_CONSTRUCTORS(CommandLine);
 };
 
-#endif  // BASE_COMMAND_LINE_H__
-
+#endif  // BASE_COMMAND_LINE_H_

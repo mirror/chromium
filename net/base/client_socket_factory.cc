@@ -7,7 +7,11 @@
 #include "base/singleton.h"
 #include "build/build_config.h"
 #if defined(OS_WIN)
-#include "net/base/ssl_client_socket.h"
+#include "net/base/ssl_client_socket_win.h"
+#elif defined(OS_LINUX)
+#include "net/base/ssl_client_socket_nss.h"
+#elif defined(OS_MACOSX)
+#include "net/base/ssl_client_socket_mac.h"
 #endif
 #include "net/base/tcp_client_socket.h"
 
@@ -20,15 +24,17 @@ class DefaultClientSocketFactory : public ClientSocketFactory {
     return new TCPClientSocket(addresses);
   }
 
-  virtual ClientSocket* CreateSSLClientSocket(
+  virtual SSLClientSocket* CreateSSLClientSocket(
       ClientSocket* transport_socket,
       const std::string& hostname,
-      int protocol_version_mask) {
+      const SSLConfig& ssl_config) {
 #if defined(OS_WIN)
-    return new SSLClientSocket(transport_socket, hostname,
-                               protocol_version_mask);
+    return new SSLClientSocketWin(transport_socket, hostname, ssl_config);
+#elif defined(OS_LINUX)
+    return new SSLClientSocketNSS(transport_socket, hostname, ssl_config);
+#elif defined(OS_MACOSX)
+    return new SSLClientSocketMac(transport_socket, hostname, ssl_config);
 #else
-    // TODO(pinkerton): turn on when we port SSL socket from win32
     NOTIMPLEMENTED();
     return NULL;
 #endif

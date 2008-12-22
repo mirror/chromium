@@ -15,7 +15,6 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/background.h"
-#include "chrome/views/container.h"
 
 namespace views {
 
@@ -148,7 +147,7 @@ void Label::Paint(ChromeCanvas* canvas) {
 void Label::PaintBackground(ChromeCanvas* canvas) {
   const Background* bg = contains_mouse_ ? GetMouseOverBackground() : NULL;
   if (!bg)
-    bg = GetBackground();
+    bg = background();
   if (bg)
     bg->Paint(canvas, this);
 }

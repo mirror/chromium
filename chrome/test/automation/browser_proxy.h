@@ -122,6 +122,9 @@ class BrowserProxy : public AutomationResourceProxy {
   // Returns false if the tab count does not change.
   bool WaitForTabCountToChange(int count, int* new_count, int wait_timeout);
 
+  // Block the thread until the tab count is |count|.
+  bool WaitForTabCountToBecome(int count, int wait_timeout);
+
   // Block the thread until the specified tab is the active tab.
   // |wait_timeout| is the timeout, in milliseconds, for waiting.
   // Returns false if the tab does not become active.
@@ -145,6 +148,15 @@ class BrowserProxy : public AutomationResourceProxy {
 
   // Sets the int value of the specified preference.
   bool SetIntPreference(const std::wstring& name, int value);
+
+  // Sets the string value of the specified preference.
+  bool SetStringPreference(const std::wstring& name, const std::wstring& value);
+
+  // Gets the boolean value of the specified preference.
+  bool GetBooleanPreference(const std::wstring& name, bool* value);
+
+  // Sets the boolean value of the specified preference.
+  bool SetBooleanPreference(const std::wstring& name, bool value);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(BrowserProxy);

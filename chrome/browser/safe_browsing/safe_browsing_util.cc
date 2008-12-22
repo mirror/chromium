@@ -255,6 +255,7 @@ void SBEntry::RemovePrefix(int index) {
       break;
     default:
       NOTREACHED();
+      return;
   }
 
   char* from = reinterpret_cast<char*>(to) + PrefixSize(type());

@@ -13,14 +13,16 @@
 #include "chrome/common/chrome_switches.h"
 #include "googleurl/src/gurl.h"
 
+using base::Time;
+
 // Filename suffix for the bloom filter.
 static const wchar_t kBloomFilterFile[] = L" Filter";
 
 // Factory method.
 SafeBrowsingDatabase* SafeBrowsingDatabase::Create() {
-  if (CommandLine().HasSwitch(switches::kUseNewSafeBrowsing))
-    return new SafeBrowsingDatabaseBloom;
-  return new SafeBrowsingDatabaseImpl;
+  if (CommandLine().HasSwitch(switches::kUseOldSafeBrowsing))
+    return new SafeBrowsingDatabaseImpl;
+  return new SafeBrowsingDatabaseBloom;
 }
 
 bool SafeBrowsingDatabase::NeedToCheckUrl(const GURL& url) {
@@ -98,4 +100,3 @@ void SafeBrowsingDatabase::WriteBloomFilter() {
   SB_DLOG(INFO) << "SafeBrowsingDatabase wrote bloom filter in " <<
       (Time::Now() - before).InMilliseconds() << " ms";
 }
-

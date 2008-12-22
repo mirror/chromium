@@ -29,6 +29,9 @@
 #include "googleurl/src/gurl.h"
 #include "generated_resources.h"
 
+using base::Time;
+using base::TimeDelta;
+
 // Approximate spacing, in pixels, taken from initial UI mock up screens
 static const int kVerticalPadding = 5;
 static const int kHorizontalLinkPadding = 15;
@@ -713,7 +716,7 @@ bool DownloadItemTabView::OnMousePressed(const views::MouseEvent& event) {
       views::View::ConvertPointToScreen(this, &point);
 
       download_util::DownloadDestinationContextMenu menu(
-          model_, GetContainer()->GetHWND(), point.ToPOINT());
+          model_, GetWidget()->GetHWND(), point.ToPOINT());
     }
   } else {
     parent_->ItemBecameSelected(NULL);
@@ -755,8 +758,8 @@ bool DownloadItemTabView::OnMouseDragged(const views::MouseEvent& event) {
 void DownloadItemTabView::LinkActivated(views::Link* source, int event_flags) {
   // There are several links in our view that could have been clicked:
   if (source == file_name_) {
-    views::Container* container = this->GetContainer();
-    HWND parent_window = container ? container->GetHWND() : NULL;
+    views::Widget* widget = this->GetWidget();
+    HWND parent_window = widget ? widget->GetHWND() : NULL;
     model_->manager()->OpenDownloadInShell(model_, parent_window);
   } else if (source == pause_) {
     model_->TogglePause();
@@ -874,7 +877,10 @@ void DownloadTabView::Paint(ChromeCanvas* canvas) {
   if (canvas->getClipBounds(&clip)) {
     int row_start = (SkScalarRound(clip.fTop) - kSpacer) /
                     (big_icon_size_ + kSpacer);
-    int row_stop = SkScalarRound(clip.fBottom) / (big_icon_size_ + kSpacer);
+    int row_stop =
+        std::min(static_cast<int>(downloads_.size()) - 1,
+                 (SkScalarRound(clip.fBottom) - kSpacer) /
+                 (big_icon_size_ + kSpacer));
     SkRect download_rect;
     for (int i = row_start; i <= row_stop; ++i) {
       int y = i * (big_icon_size_ + kSpacer) + kSpacer;

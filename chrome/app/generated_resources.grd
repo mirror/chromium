@@ -144,9 +144,6 @@ each locale. -->
         Did you mean to go to <ph name="SITE">$1<ex>http://intranetsite/</ex></ph>?
       </message>
 
-      <message name="IDS_AUTOCOMPLETE_NO_ACTION" desc="Description for the dummy match displayed when no action is possible.">
-        (No action possible)
-      </message>
       <message name="IDS_AUTOCOMPLETE_KEYWORD_DESCRIPTION" desc="Description for a keyword match.">
         (Keyword: <ph name="KEYWORD">$1</ph>)
       </message>
@@ -181,23 +178,12 @@ each locale. -->
       <message name="IDS_VIEW_SOURCE_TITLE" desc="The ViewSource tab title.">
         Source of <ph name="PAGE_URL">%s</ph>
       </message>
-      <message name="IDS_HISTORY_SEARCH_BUTTON" desc="Title of the button in the history page that triggers a search">
-        Search history
-      </message>
-      <message name="IDS_HISTORY_NO_RESULTS" desc="Text shown when no history search results have been found">
-        No search results found.
-      </message>
+
+
       <message name="IDS_HISTORY_SEARCH_STRING" desc="Text showing what the user searched for">
-        Search Results for '<ph name="SEARCH_STRING">$1<ex>pie</ex></ph>'
-      </message>
-      <message name="IDS_HISTORY_NO_ITEMS" desc="Text shown when the user has no history">
-        All the pages you visit will appear here unless you open them in an incognito window. You can use the Search button on this page to search all the pages in your history.
-      </message>
-      <message name="IDS_HISTORY_LOADING" desc="Text shown when we're loading the user's history">
-        Loading...
-      </message>
-      <message name="IDS_HISTORY_DATE_WITH_RELATIVE_TIME" desc="In the history view, some dates are formatted as 'Today - Wednesday, Nov 7, 2007">
-        <ph name="RELATIVE_DATE">$1<ex>Today</ex></ph> - <ph name="FULL_DATE">$2<ex>Wednesday, Nov 7, 2007</ex></ph>
+        Search Results for '<ph name="SEARCH_STRING">
+          $1<ex>pie</ex>
+        </ph>'
       </message>
       <message name="IDS_HISTORY_DELETE_PRIOR_VISITS_LINK" desc="Title of the link that allows the user to delete visits prior to the specified point">
         Delete history for this day
@@ -207,6 +193,48 @@ each locale. -->
       </message>
       <message name="IDS_HISTORY_DELETE_PRIOR_VISITS_WARNING_TITLE" desc="Title of the warning dialog">
         Delete
+      </message>
+
+      <!-- History HTML UI -->
+      <message name="IDS_HISTORY_LOADING" desc="Text shown when we're loading the user's history">
+        Loading...
+      </message>
+      <message name="IDS_HISTORY_DATE_WITH_RELATIVE_TIME" desc="In the history view, some dates are formatted as 'Today - Wednesday, Nov 7, 2007">
+        <ph name="RELATIVE_DATE">
+          $1<ex>Today</ex>
+        </ph> - <ph name="FULL_DATE">
+          $2<ex>Wednesday, Nov 7, 2007</ex>
+        </ph>
+      </message>
+      <message name="IDS_HISTORY_NO_RESULTS" desc="Text shown when no history search results have been found">
+        No search results found.
+      </message>
+      <message name="IDS_HISTORY_NO_ITEMS" desc="Text shown when the user has no history">
+        All the pages you visit will appear here unless you open them in an incognito window. You can use the Search button on this page to search all the pages in your history.
+      </message>
+      <message name="IDS_HISTORY_SEARCH_BUTTON" desc="Title of the button in the history page that triggers a search">
+        Search history
+      </message>
+      <message name="IDS_HISTORY_NEWEST" desc="HTML text shown as page navigation tool to take the user to the top of their history">
+        Newest
+      </message>
+      <message name="IDS_HISTORY_NEWER" desc="HTML text shown as page navigation tool to take the user back to the more recent page">
+        Newer
+      </message>
+      <message name="IDS_HISTORY_OLDER" desc="HTML text shown as page navigation tool to take the user forward to their older history">
+        Older
+      </message>
+      <message name="IDS_HISTORY_SEARCHRESULTSFOR" desc="Format string for search results">
+        Search results for '<ph name="SEARCH_STRING">%s</ph>'
+      </message>
+      <message name="IDS_HISTORY_BROWSERESULTS" desc="Title of browsing results page">
+        History
+      </message>
+      <message name="IDS_HISTORY_CONTINUED" desc="Shown after the date if the data is continued from the previous page">
+        (Cont.)
+      </message>
+      <message name="IDS_HISTORY_DELETE" desc="Link shown after the date, allowing the user to delete that date">
+        delete
       </message>
 
       <!-- Generic terms -->
@@ -332,7 +360,7 @@ each locale. -->
       <message name="IDS_CONTENT_CONTEXT_NO_SPELLING_SUGGESTIONS" desc="The name of the No Spelling Suggestions display in the content area context menu">
         &amp;No spelling suggestions
       </message>
-      <message name="IDS_CONTENT_CONTEXT_SPELLCHECK_OPTIONS" desc="The name of the Spellcheck Options display in the content area context menu">
+      <message name="IDS_CONTENT_CONTEXT_SPELLCHECK_MENU" desc="The name of the Spellcheck Options submenu in the content area context menu">
         &amp;Spell-checker options
       </message>
       <message name="IDS_CONTENT_CONTEXT_LANGUAGE_SETTINGS" desc="The name of the Language Settings command in the content area context menu">
@@ -355,16 +383,22 @@ each locale. -->
       </message>
 
       <!-- Page menu -->
-      <message name="IDS_NEWTAB" desc="The text label of the New Tab menu item">
+      <message name="IDS_NEW_TAB" desc="The text label of the New Tab menu item">
         New &amp;tab
       </message>
       <message name="IDS_SHOW_AS_TAB" desc="The text label for the Show As tab menu item">
         &amp;Show as tab
       </message>
-      <message name="IDS_NEWWINDOW" desc="The text label of the New Window menu item" >
+      <message name="IDS_NEW_WINDOW" desc="The text label of the New Window menu item" >
         &amp;New window
       </message>
-      <message name="IDS_GOOFFTHERECORD" desc="The text label of the New incognito window menu item">
+      <message name="IDS_PROFILE_MENU" desc="The text label of the New profile Window menu item" >
+        New window in &amp;profile
+      </message>
+      <message name="IDS_SELECT_PROFILE" desc="The text label of the menu item to select a profile other than the ones displayed directly in the Profile submenu." >
+        Other...
+      </message>
+      <message name="IDS_NEW_INCOGNITO_WINDOW" desc="The text label of the New incognito window menu item">
         New &amp;incognito window
       </message>
       <message name="IDS_UNDO" desc="The text label of the Undo menu item" >
@@ -379,20 +413,20 @@ each locale. -->
       <message name="IDS_PASTE" desc="The text label of the Paste menu item" >
         &amp;Paste
       </message>
-      <message name="IDS_SELECTALL" desc="The text label of the Select All menu item" >
+      <message name="IDS_SELECT_ALL" desc="The text label of the Select All menu item" >
         Select &amp;all
       </message>
-      <message name="IDS_FIND_IN_PAGE" desc="The text label of the Find in Page menu item" >
+      <message name="IDS_FIND" desc="The text label of the Find in Page menu item" >
         &amp;Find in page
       </message>
-      <message name="IDS_SAVEPAGEAS" desc="The text label of the Save Page As menu item" >
+      <message name="IDS_SAVE_PAGE" desc="The text label of the Save Page As menu item" >
         Save page &amp;as...
       </message>
       <message name="IDS_PRINT" desc="The text label of the Print... menu item. Opens a dialog box to select print settings" >
         &amp;Print...
       </message>
-      <message name="IDS_ZOOM" desc="The text label of the Zoom submenu" >
-        Text &amp;zoom
+      <message name="IDS_ZOOM_MENU" desc="The text label of the Zoom submenu" >
+        &amp;Zoom
       </message>
       <message name="IDS_ZOOM_PLUS" desc="The text label of the Make Text Larger menu item" >
         &amp;Larger
@@ -403,7 +437,7 @@ each locale. -->
       <message name="IDS_ZOOM_MINUS" desc="The text label of the Make Text Smaller menu item" >
         &amp;Smaller
       </message>
-      <message name="IDS_ENCODING" desc="The text label of the Encoding submenu" >
+      <message name="IDS_ENCODING_MENU" desc="The text label of the Encoding submenu" >
         &amp;Encoding
       </message>
       <message name="IDS_ENCODING_AUTO_DETECT" desc="The text label of the Auto Dectect submenu" >
@@ -469,25 +503,22 @@ each locale. -->
       <message name="IDS_ENCODING_VIETNAMESE" desc="The text label of Vietnamese encoding" >
         Vietnamese
       </message>
-      <message name="IDS_DEVELOPER" desc="The text label of the Developer submenu">
+      <message name="IDS_DEVELOPER_MENU" desc="The text label of the Developer submenu">
         Developer
       </message>
-      <message name="IDS_VIEWPAGESOURCE" desc="The text label of the View Page Source menu item" >
+      <message name="IDS_VIEW_SOURCE" desc="The text label of the View Page Source menu item" >
         View s&amp;ource
-      </message>
-      <message name="IDS_VIEWPAGEINFO" desc="The text label of the View Page Info menu item" >
-        Page &amp;info
       </message>
       <message name="IDS_DEBUGGER" desc="The text label of the JavaScript debugger menu item">
         Debug JavaScript
       </message>
-      <message name="IDS_COMMANDS_REPORTBUG" desc="The text label of the Report Bug menu item">
+      <message name="IDS_REPORT_BUG" desc="The text label of the Report Bug menu item">
         &amp;Report bug or broken website...
       </message>
-      <message name="IDS_VIEWJSCONSOLE" desc="The text the menu to show the JS console">
+      <message name="IDS_JS_CONSOLE" desc="The text the menu to show the JS console">
         &amp;JavaScript console
       </message>
-      <message name="IDS_TASKMANAGER" desc="The text label of the Task Manager menu item" >
+      <message name="IDS_TASK_MANAGER" desc="The text label of the Task Manager menu item" >
         &amp;Task manager
       </message>
       <message name="IDS_CLOSE" desc="The close menu">
@@ -527,7 +558,7 @@ each locale. -->
       <message name="IDS_OPTIONS" desc="The text label of the Options menu item">
         &amp;Options
       </message>
-      <message name="IDS_HELP" desc="The text label of the Help menu item">
+      <message name="IDS_HELP_PAGE" desc="The text label of the Help menu item">
         Help
       </message>
       <message name="IDS_ABOUT" desc="The text label of the About Chrome menu item">
@@ -1249,7 +1280,7 @@ each locale. -->
       </message>
 
       <!-- Gears shortcut strings -->
-      <message name="IDS_DEFAULT_INSTALL_SITE_LABEL" desc="Default installation menu label">
+      <message name="IDS_CREATE_SHORTCUTS" desc="Default installation menu label">
         Create application &amp;shortcuts...
       </message>
 
@@ -1776,6 +1807,9 @@ each locale. -->
       <message name="IDS_IMPORT_FROM_FIREFOX" desc="browser combo box: Mozilla Firefox">
         Mozilla Firefox
       </message>
+      <message name="IDS_IMPORT_FROM_GOOGLE_TOOLBAR" desc="browser combo box: Google Toolbar">
+        Google Toolbar
+      </message>
       <message name="IDS_IMPORT_ITEMS_LABEL" desc="Label before item select checkboxes">
         Select items to import:
       </message>
@@ -1797,6 +1831,10 @@ each locale. -->
 
       <message name="IDS_IMPORT_COMMIT" desc="Text for OK button on dialog">
         Import
+      </message>
+
+      <message name="IDS_IMPORTER_GOOGLE_LOGIN_TEXT" desc="The message to be displayed on dialog">
+        In order to import Toolbar bookmarks into Chrome, you must be logged into your Google account.  Please log in and try to import again.
       </message>
 
       <!-- Import progress popup -->
@@ -2040,7 +2078,7 @@ each locale. -->
       <message name="IDS_BOOKMARKS_NO_ITEMS" desc="Text shown when the user has no bookmarks">
         For quick access, place your bookmarks here in the bookmarks bar.
       </message>
-      
+
       <!-- The location for special bookmark groups -->
       <message name="IDS_BOOKMARK_GROUP_FROM_IE" desc="The group name of bookmarks from Internet Explorer">
         Imported From IE
@@ -2048,11 +2086,14 @@ each locale. -->
       <message name="IDS_BOOKMARK_GROUP_FROM_FIREFOX" desc="The group name of bookmarks from Firefox">
         Imported From Firefox
       </message>
+      <message name="IDS_BOOKMARK_GROUP_FROM_GOOGLE_TOOLBAR" desc="The group name of bookmarks from Google Toolbar">
+        Imported From Google Toolbar
+      </message>
       <message name="IDS_BOOKMARK_GROUP" desc="The group name of bookmarks imported from a file">
         Imported
       </message>
 
-      <!-- bookmark editor messages-->
+  <!-- bookmark editor messages-->
       <message name="IDS_BOOMARK_EDITOR_NAME_LABEL" desc="Label shown before the title/name of the URL.">
         Name:
       </message>
@@ -2114,7 +2155,7 @@ each locale. -->
       <message name="IDS_APP_MENU_RELOAD" desc="The reload menu in application windows">
         Reload
       </message>
-      <message name="IDS_APP_MENU_DUPLICATE" meaning="Duplicate application window" desc="The duplicate / start new instance menu">
+      <message name="IDS_APP_MENU_DUPLICATE_APP_WINDOW" meaning="Duplicate application window" desc="The duplicate / start new instance menu">
         Duplicate
       </message>
       <message name="IDS_APP_MENU_COPY_URL" desc="The copy url menu in application windows">
@@ -2171,9 +2212,13 @@ each locale. -->
                desc="Title of the bookmark context menu item that brings up the bookmark editor">
         Edit...
       </message>
+      <message name="IDS_BOOKMARK_BAR_RENAME_FOLDER"
+               desc="Title of the bookmark context menu item that brings up a dialog to rename a folder">
+        Rename...
+      </message>
       <message name="IDS_BOOKMARK_BAR_SHOULD_OPEN_ALL"
                desc="Message in the message box shown if user asks to open a lot of bookmarks in a folder">
-        Are you sure you want to open <ph name="tab_count">$1<ex>20</ex></ph> tabs?
+        Are you sure you want to open <ph name="TAB_COUNT">$1<ex>20</ex></ph> tabs?
       </message>
 
       <!-- error page messages -->
@@ -2420,14 +2465,6 @@ each locale. -->
         Add
       </message>
 
-      <!-- Advanced autofill settings -->
-      <message name="IDS_AUTOFILL_SETTING_WINDOWS_TITLE" desc="Title that appears in the dialogue title bar for advanced autofill settings">
-        Form autofill
-      </message>
-      <message name="IDS_AUTOFILL_SAVEFORMS" desc="The autofill checkbox label">
-        Save and show text typed in similar fields
-      </message>
-
       <!-- HTTP POST Warning -->
       <message name="IDS_HTTP_POST_WARNING_TITLE" desc="Title for dialog that warns users about a navigation that results in a repost">
         Confirm Form Resubmission
@@ -2567,6 +2604,9 @@ each locale. -->
       <message name="IDS_OPTIONS_CONTENT_TAB_LABEL" desc="The title of the Tweaks tab">
         Minor Tweaks
       </message>
+      <message name="IDS_OPTIONS_USER_DATA_TAB_LABEL" desc="The title of the User Data tab">
+        User Data
+      </message>
       <message name="IDS_OPTIONS_ADVANCED_TAB_LABEL" desc="The title of the Advanced tab">
         Under the Hood
       </message>
@@ -2687,7 +2727,14 @@ each locale. -->
       <message name="IDS_OPTIONS_PASSWORDS_SHOWPASSWORDS" desc="The label of the 'Show passwords' button">
         Show saved passwords
       </message>
-      
+
+      <message name="IDS_AUTOFILL_SETTING_WINDOWS_GROUP_NAME" desc="The title of the form autofill group">
+        Form autofill:
+      </message>
+      <message name="IDS_AUTOFILL_SAVEFORMS" desc="The autofill checkbox label">
+        Save and show text typed in similar fields
+      </message>
+
       <message name="IDS_OPTIONS_FONTSANDLANGUAGES_GROUP_NAME" desc="The label of the 'Fonts and Languages' group">
         Fonts and Languages:
       </message>
@@ -2746,6 +2793,27 @@ each locale. -->
       <message name="IDS_OPTIONS_INCLUDE_MIXED_CONTENT" desc="The combo-box option for setting that all mixed-content be included.">
         Allow all content to load
       </message>
+
+      <message name="IDS_OPTIONS_IMPORT_DATA_GROUP_NAME" desc="The title of the 'Import' group.">
+        Import:
+      </message>
+      <message name="IDS_OPTIONS_IMPORT_DATA_INFO" desc="Information text about import options.">
+        You can import your bookmarks and settings from other browsers and user accounts on this computer.
+      </message>
+      <message name="IDS_OPTIONS_IMPORT_DATA_BUTTON" desc="Label for the import data button.">
+        Import data...
+      </message>
+
+      <message name="IDS_OPTIONS_CLEAR_DATA_GROUP_NAME" desc="The title of the 'Clear data' group.">
+        Clear Data:
+      </message>
+      <message name="IDS_OPTIONS_CLEAR_DATA_INFO" desc="Information text about clear data options.">
+        Clear your browsing data from this computer. Be aware that this may adversely affect the contents of the New Tab Page.
+      </message>
+      <message name="IDS_OPTIONS_CLEAR_DATA_BUTTON" desc="Label for the Clear data button.">
+        Clear browsing data...
+      </message>
+
 
       <!-- Misc advanced option description strings. -->
       <message name="IDS_WEBKIT_JAVA_ENABLED_DESCRIPTION" desc="In the advanced options tab, the text next to the checkbox that enables Java.">
@@ -2828,9 +2896,17 @@ each locale. -->
                desc="Title of the new tab page, this is only shown while loading, then the title comes from the page">
         New Tab
       </message>
+      <message name="IDS_NEW_TAB_TITLE_WITH_PROFILE_NAME"
+               desc="Title of the new tab page with profile name, this is only shown while loading, then the title comes from the page">
+        New Tab [<ph name="PROFILE_NAME">$1</ph>]
+      </message>
       <message name="IDS_NEW_TAB_MOST_VISITED"
                desc="The 'Most Visited' heading on the new tab page">
         Most visited
+      </message>
+      <message name="IDS_NEW_TAB_MOST_VISITED_WITH_PROFILE_NAME"
+               desc="The 'Most Visited' heading on the new tab page">
+        Most visited [<ph name="PROFILE_NAME">$1</ph>]
       </message>
       <message name="IDS_NEW_TAB_SEARCHES"
                desc="The 'Searches' heading on the new tab page">
@@ -2856,9 +2932,9 @@ each locale. -->
                desc="The label for the field that searches the user's history on the new tab page">
         Search your history
       </message>
-      <message name="IDS_NEW_TAB_CLOSED_TABS"
-               desc="The 'Recently Closed Tabs' heading on the new tab page">
-        Recently closed tabs
+      <message name="IDS_NEW_TAB_RECENTLY_CLOSED"
+               desc="The 'Recently Closed' heading on the new tab page">
+        Recently closed
       </message>
       <message name="IDS_NEW_TAB_FOOTER_HELP"
                desc="The help footer on the new tab page">
@@ -2882,7 +2958,11 @@ each locale. -->
         <ph name="END_LIST">&lt;/ul&gt;</ph>
         <ph name="BEGIN_LINK">&lt;a href="$1"&gt;</ph>Learn more<ph name="END_LINK">&lt;/a&gt;</ph> about incognito browsing.
       </message>
-      
+      <message name="IDS_NEW_TAB_RECENTLY_CLOSED_WINDOW"
+               desc="Title of recently closed windows in the recently closed section of the new tab page">
+        Window
+      </message>
+
       <!-- SafeBrowsing -->
       <message name="IDS_SAFE_BROWSING_MALWARE_TITLE" desc="SafeBrowsing Malware HTML title">
         Malware Detected!
@@ -3138,7 +3218,29 @@ each locale. -->
       <message name="IDS_CANT_WRITE_USER_DIRECTORY_CHOOSE_DIRECTORY_BUTTON" desc="Text on button that opens another dialog to choose a new directory for user data.">
         Choose Another Directory...
       </message>
-      
+
+      <!-- User data directory profiles dialog -->
+      <message name="IDS_SELECT_PROFILE_DIALOG_TITLE" desc="Title of the dialog that lets the user select a profile to open a new window.">
+        Select a Profile
+      </message>
+      <message name="IDS_SELECT_PROFILE_DIALOG_LABEL_TEXT" desc="The label for the combo box that shows all the available profiles.">
+        Select a profile to open a new window
+      </message>
+      <message name="IDS_SELECT_PROFILE_DIALOG_NEW_PROFILE_ENTRY" desc="Text for an extra entry in the profiles combo box. The user can select this entry to create a new profile.">
+        &lt;New Profile&gt;...
+      </message>
+
+      <!-- User data directory new profile dialog -->
+      <message name="IDS_NEW_PROFILE_DIALOG_TITLE" desc="Title of dialog that lets the user enter a new profile name to open new window.">
+        Enter a Profile Name
+      </message>
+      <message name="IDS_NEW_PROFILE_DIALOG_LABEL_TEXT" desc="The label for the text box that lets the user enter a new profile name.">
+        Enter a new profile name
+      </message>
+      <message name="IDS_NEW_PROFILE_DIALOG_CREATE_SHORTCUT_TEXT" desc="The label for the text box that lets the user enter a new profile name.">
+        Create a desktop shortcut for this profile
+      </message>
+
       <!-- Advanced Section Titles -->
       <message name="IDS_OPTIONS_ADVANCED_SECTION_TITLE_PRIVACY">
         Privacy
@@ -3241,6 +3343,15 @@ each locale. -->
       </message>
       <message name="IDS_BOOKMARK_MANAGER_EXPORT_MENU" desc="Title of the export menu item in the bookmark manager.">
         Export bookmarks...
+      </message>
+      <message name="IDS_BOOKMARK_MANAGER_NO_SEARCH_TEXT" desc="Text shown in the bookmark table if the user clicks on the search folder without typing in any text in the search text field.">
+        Enter a query in the text field above to search your bookmarks.
+      </message>
+      <message name="IDS_BOOKMARK_MANAGER_NO_RESULTS" desc="Text shown in the bookmark table when the search didn't find anything.">
+        No bookmarks match the query '<ph name="SEARCH_TEXT">$1</ph>'.
+      </message>
+      <message name="IDS_BOOKMARK_MANAGER_SEARCH_TITLE" desc="Text shown before the search text field.">
+        Search:
       </message>
 
     </messages>

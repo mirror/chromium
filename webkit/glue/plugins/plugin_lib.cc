@@ -29,8 +29,8 @@
 namespace NPAPI
 {
 
-const wchar_t kPluginLibrariesLoadedCounter[] = L"PluginLibrariesLoaded";
-const wchar_t kPluginInstancesActiveCounter[] = L"PluginInstancesActive";
+const char kPluginLibrariesLoadedCounter[] = "PluginLibrariesLoaded";
+const char kPluginInstancesActiveCounter[] = "PluginInstancesActive";
 
 PluginLib::PluginMap* PluginLib::loaded_libs_;
 
@@ -335,7 +335,7 @@ void PluginLib::Unload() {
     // so that the plugin will have a chance to unwind.
     bool defer_unload = webkit_glue::IsPluginRunningInRendererProcess();
 
-#if USE(JAVASCRIPTCORE_BINDINGS)
+#if USE(JSC)
     // The plugin NPAPI instances may still be around. Delay the
     // NP_Shutdown and FreeLibrary calls at least till the next
     // peek message.

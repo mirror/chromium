@@ -73,22 +73,14 @@ class CookiesTableModel : public views::TableModel {
 
   views::TableModelObserver* observer_;
 
-  // Static resources for this object.
-  static SkBitmap cookie_icon_;
-  static void InitClass();
-
   DISALLOW_EVIL_CONSTRUCTORS(CookiesTableModel);
 };
-
-// static
-SkBitmap CookiesTableModel::cookie_icon_;
 
 ///////////////////////////////////////////////////////////////////////////////
 // CookiesTableModel, public:
 
 CookiesTableModel::CookiesTableModel(Profile* profile)
     : profile_(profile) {
-  InitClass();
   LoadCookies();
 }
 
@@ -171,7 +163,9 @@ std::wstring CookiesTableModel::GetText(int row, int column_id) {
 }
 
 SkBitmap CookiesTableModel::GetIcon(int row) {
-  return cookie_icon_;
+  static SkBitmap* icon = ResourceBundle::GetSharedInstance().GetBitmapNamed(
+      IDR_COOKIE_ICON);
+  return *icon;
 }
 
 void CookiesTableModel::SetObserver(views::TableModelObserver* observer) {
@@ -242,17 +236,6 @@ void CookiesTableModel::UpdateSearchResults(const std::wstring& filter) {
   observer_->OnModelChanged();
 }
 
-// static
-void CookiesTableModel::InitClass() {
-  static bool initialized = false;
-  if (!initialized) {
-    ResourceBundle& rb = ResourceBundle::GetSharedInstance();
-    cookie_icon_ = *rb.GetBitmapNamed(IDR_COOKIE_ICON);
-    initialized = true;
-  }
-}
-
-
 ///////////////////////////////////////////////////////////////////////////////
 // CookiesTableView
 //  Overridden to handle Delete key presses
@@ -265,10 +248,6 @@ class CookiesTableView : public views::TableView {
 
   // Removes the cookies associated with the selected rows in the TableView.
   void RemoveSelectedCookies();
-
- protected:
-  // views::TableView implementation:
-  virtual void OnKeyDown(unsigned short virtual_keycode);
 
  private:
   // Our model, as a CookiesTableModel.
@@ -295,7 +274,8 @@ void CookiesTableView::RemoveSelectedCookies() {
     return;
   }
 
-  // Remove the selected cookies.
+  // Remove the selected cookies.  This iterates over the rows backwards, which
+  // is required when calling RemoveCookies, see bug 2994.
   int last_selected_view_row = -1;
   int remove_count = 0;
   for (views::TableView::iterator i = SelectionBegin();
@@ -316,11 +296,6 @@ void CookiesTableView::RemoveSelectedCookies() {
       last_selected_view_row - remove_count + 1)));
 }
 
-void CookiesTableView::OnKeyDown(unsigned short virtual_keycode) {
-  if (virtual_keycode == VK_DELETE)
-    RemoveSelectedCookies();
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 // CookieInfoView
 //
@@ -337,6 +312,9 @@ class CookieInfoView : public views::View {
   // Clears the cookie display to indicate that no or multiple cookies are
   // selected.
   void ClearCookieDisplay();
+
+  // Enables or disables the cookie proerty text fields.
+  void EnableCookieDisplay(bool enabled);
 
  protected:
   // views::View overrides:
@@ -417,25 +395,30 @@ void CookieInfoView::SetCookie(
     sendfor_text = l10n_util::GetString(IDS_COOKIES_COOKIE_SENDFOR_ANY);
   }
   send_for_value_field_->SetText(sendfor_text);
+  EnableCookieDisplay(true);
+}
+
+void CookieInfoView::EnableCookieDisplay(bool enabled) {
+  name_value_field_->SetEnabled(enabled);
+  content_value_field_->SetEnabled(enabled);
+  domain_value_field_->SetEnabled(enabled);
+  path_value_field_->SetEnabled(enabled);
+  send_for_value_field_->SetEnabled(enabled);
+  created_value_field_->SetEnabled(enabled);
+  expires_value_field_->SetEnabled(enabled);
 }
 
 void CookieInfoView::ClearCookieDisplay() {
   std::wstring no_cookie_string =
       l10n_util::GetString(IDS_COOKIES_COOKIE_NONESELECTED);
   name_value_field_->SetText(no_cookie_string);
-  name_value_field_->SetEnabled(false);
   content_value_field_->SetText(no_cookie_string);
-  content_value_field_->SetEnabled(false);
   domain_value_field_->SetText(no_cookie_string);
-  domain_value_field_->SetEnabled(false);
   path_value_field_->SetText(no_cookie_string);
-  path_value_field_->SetEnabled(false);
   send_for_value_field_->SetText(no_cookie_string);
-  send_for_value_field_->SetEnabled(false);
   created_value_field_->SetText(no_cookie_string);
-  created_value_field_->SetEnabled(false);
   expires_value_field_->SetText(no_cookie_string);
-  expires_value_field_->SetEnabled(false);
+  EnableCookieDisplay(false);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -455,7 +438,7 @@ void CookieInfoView::Init() {
   SkColor border_color = color_utils::GetSysSkColor(COLOR_3DSHADOW);
   views::Border* border = views::Border::CreateSolidBorder(
       kCookieInfoViewBorderSize, border_color);
-  SetBorder(border);
+  set_border(border);
 
   name_label_ = new views::Label(
       l10n_util::GetString(IDS_COOKIES_COOKIE_NAME_LABEL));
@@ -609,6 +592,10 @@ void CookiesView::OnSelectionChanged() {
   remove_button_->SetEnabled(selected_row_count != 0);
   if (cookies_table_->RowCount() == 0)
     UpdateForEmptyState();
+}
+
+void CookiesView::OnTableViewDelete(views::TableView* table_view) {
+  cookies_table_->RemoveSelectedCookies();
 }
 
 ///////////////////////////////////////////////////////////////////////////////

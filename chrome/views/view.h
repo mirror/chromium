@@ -15,6 +15,8 @@
 #include "base/gfx/rect.h"
 #include "base/scoped_ptr.h"
 #include "chrome/views/accelerator.h"
+#include "chrome/views/background.h"
+#include "chrome/views/border.h"
 
 namespace gfx {
 class Insets;
@@ -30,13 +32,13 @@ namespace views {
 
 class Background;
 class Border;
-class Container;
 class FocusManager;
 class FocusTraversable;
 class LayoutManager;
 class RestoreFocusTask;
 class RootView;
 class ScrollView;
+class Widget;
 
 // ContextMenuController is responsible for showing the context menu for a
 // View. To use a ContextMenuController invoke SetContextMenuController on a
@@ -422,8 +424,8 @@ class View : public AcceleratorTarget {
   // Get the child View at the specified point.
   virtual View* GetViewForPoint(const gfx::Point& point);
 
-  // Get the Container that hosts this View, if any.
-  virtual Container* GetContainer() const;
+  // Get the Widget that hosts this View, if any.
+  virtual Widget* GetWidget() const;
 
   // Get the containing RootView
   virtual RootView* GetRootView();
@@ -494,8 +496,8 @@ class View : public AcceleratorTarget {
   virtual void SetFocusable(bool focusable);
 
   // Convenience method to retrieve the FocusManager associated with the
-  // container window that contains this view.  This can return NULL if this
-  // view is not part of a view hierarchy with a Container.
+  // Widget that contains this view.  This can return NULL if this view is not
+  // part of a view hierarchy with a Widget.
   virtual FocusManager* GetFocusManager();
 
   // Sets a keyboard accelerator for that view. When the user presses the
@@ -670,13 +672,13 @@ class View : public AcceleratorTarget {
                                  gfx::Point* point);
 
   // Convert a point from the coordinate system of a View to that of the
-  // Container. This is useful for example when sizing HWND children of the
-  // Container that don't know about the View hierarchy and need to be placed
-  // relative to the Container that is their parent.
-  static void ConvertPointToContainer(View* src, gfx::Point* point);
+  // Widget. This is useful for example when sizing HWND children of the
+  // Widget that don't know about the View hierarchy and need to be placed
+  // relative to the Widget that is their parent.
+  static void ConvertPointToWidget(View* src, gfx::Point* point);
 
-  // Convert a point from a view Container to a View dest
-  static void ConvertPointFromContainer(View *dest, gfx::Point* p);
+  // Convert a point from a view Widget to a View dest
+  static void ConvertPointFromWidget(View *dest, gfx::Point* p);
 
   // Convert a point from the coordinate system of a View to that of the
   // screen. This is useful for example when placing popup windows.
@@ -877,17 +879,13 @@ class View : public AcceleratorTarget {
                                int y,
                                bool is_mouse_gesture);
 
-  // Set the background. The background is owned by the view after this call.
-  virtual void SetBackground(Background* b);
+  // The background object is owned by this object and may be NULL.
+  void set_background(Background* b) { background_.reset(b); }
+  const Background* background() const { return background_.get(); }
 
-  // Return the background currently in use or NULL.
-  virtual const Background* GetBackground() const;
-
-  // Set the border. The border is owned by the view after this call.
-  virtual void SetBorder(Border* b);
-
-  // Return the border currently in use or NULL.
-  virtual const Border* GetBorder() const;
+  // The border object is owned by this object and may be NULL.
+  void set_border(Border* b) { border_.reset(b); }
+  const Border* border() const { return border_.get(); }
 
   // Returns the insets of the current border. If there is no border an empty
   // insets is returned.
@@ -1052,8 +1050,8 @@ class View : public AcceleratorTarget {
   // set and gives an opportunity to subclasses to perform any extra focus steps
   // (for example native component set the native focus on their native
   // component). The default behavior is to set the native focus on the root
-  // view container, which is what is appropriate for views that have no native
-  // window associated with them (so the root view gets the keyboard messages).
+  // Widget, which is what is appropriate for views that have no native window
+  // associated with them (so the root view gets the keyboard messages).
   virtual void Focus();
 
   // Invoked when a key is pressed before the key event is processed by the
@@ -1173,7 +1171,7 @@ class View : public AcceleratorTarget {
                                  gfx::Point* point,
                                  bool try_other_direction);
 
-  // Propagates UpdateTooltip() to the TooltipManager for the Container.
+  // Propagates UpdateTooltip() to the TooltipManager for the Widget.
   // This must be invoked any time the View hierarchy changes in such a way
   // the view under the mouse differs. For example, if the bounds of a View is
   // changed, this is invoked. Similarly, as Views are added/removed, this
@@ -1256,10 +1254,10 @@ class View : public AcceleratorTarget {
   bool is_visible_;
 
   // Background
-  Background* background_;
+  scoped_ptr<Background> background_;
 
   // Border.
-  Border* border_;
+  scoped_ptr<Border> border_;
 
   // Whether this view is owned by its parent.
   bool is_parent_owned_;

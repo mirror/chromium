@@ -14,8 +14,11 @@
 #include "net/http/http_version.h"
 
 class Pickle;
+
+namespace base {
 class Time;
 class TimeDelta;
+}
 
 namespace net {
 
@@ -41,10 +44,18 @@ class HttpResponseHeaders :
   // be passed to the pickle's various Read* methods.
   HttpResponseHeaders(const Pickle& pickle, void** pickle_iter);
 
-  // Appends a representation of this object to the given pickle.  If the
-  // for_cache argument is true, then non-cacheable headers will be pruned from
-  // the persisted version of the response headers.
-  void Persist(Pickle* pickle, bool for_cache);
+  // Persist options.
+  typedef int PersistOptions;
+  static const PersistOptions PERSIST_RAW = -1;  // Raw, unparsed headers.
+  static const PersistOptions PERSIST_ALL = 0;  // Parsed headers.
+  static const PersistOptions PERSIST_SANS_COOKIES = 1 << 0;
+  static const PersistOptions PERSIST_SANS_CHALLENGES = 1 << 1;
+  static const PersistOptions PERSIST_SANS_HOP_BY_HOP = 1 << 2;
+  static const PersistOptions PERSIST_SANS_NON_CACHEABLE = 1 << 3;
+
+  // Appends a representation of this object to the given pickle.
+  // The options argument can be a combination of PersistOptions.
+  void Persist(Pickle* pickle, PersistOptions options);
 
   // Performs header merging as described in 13.5.3 of RFC 2616.
   void Update(const HttpResponseHeaders& new_headers);
@@ -150,33 +161,33 @@ class HttpResponseHeaders :
   // support unit testing.  The request_time parameter indicates the time at
   // which the request was made that resulted in this response, which was
   // received at response_time.
-  bool RequiresValidation(const Time& request_time,
-                          const Time& response_time,
-                          const Time& current_time) const;
+  bool RequiresValidation(const base::Time& request_time,
+                          const base::Time& response_time,
+                          const base::Time& current_time) const;
 
   // Returns the amount of time the server claims the response is fresh from
   // the time the response was generated.  See section 13.2.4 of RFC 2616.  See
   // RequiresValidation for a description of the response_time parameter.
-  TimeDelta GetFreshnessLifetime(const Time& response_time) const;
+  base::TimeDelta GetFreshnessLifetime(const base::Time& response_time) const;
 
   // Returns the age of the response.  See section 13.2.3 of RFC 2616.
   // See RequiresValidation for a description of this method's parameters.
-  TimeDelta GetCurrentAge(const Time& request_time,
-                          const Time& response_time,
-                          const Time& current_time) const;
+  base::TimeDelta GetCurrentAge(const base::Time& request_time,
+                                const base::Time& response_time,
+                                const base::Time& current_time) const;
 
   // The following methods extract values from the response headers.  If a
   // value is not present, then false is returned.  Otherwise, true is returned
   // and the out param is assigned to the corresponding value.
-  bool GetMaxAgeValue(TimeDelta* value) const;
-  bool GetAgeValue(TimeDelta* value) const;
-  bool GetDateValue(Time* value) const;
-  bool GetLastModifiedValue(Time* value) const;
-  bool GetExpiresValue(Time* value) const;
+  bool GetMaxAgeValue(base::TimeDelta* value) const;
+  bool GetAgeValue(base::TimeDelta* value) const;
+  bool GetDateValue(base::Time* value) const;
+  bool GetLastModifiedValue(base::Time* value) const;
+  bool GetExpiresValue(base::Time* value) const;
 
   // Extracts the time value of a particular header.  This method looks for the
   // first matching header value and parses its value as a HTTP-date.
-  bool GetTimeValuedHeader(const std::string& name, Time* result) const;
+  bool GetTimeValuedHeader(const std::string& name, base::Time* result) const;
 
   // Determines if this response indicates a keep-alive connection.
   bool IsKeepAlive() const;
@@ -239,10 +250,20 @@ class HttpResponseHeaders :
 
   typedef base::hash_set<std::string> HeaderSet;
 
-  // Returns the values from any 'cache-control: no-cache="foo,bar"' headers as
-  // well as other known-to-be-transient header names.  The header names are
-  // all lowercase to support fast lookup.
-  void GetTransientHeaders(HeaderSet* header_names) const;
+  // Adds the values from any 'cache-control: no-cache="foo,bar"' headers.
+  void AddNonCacheableHeaders(HeaderSet* header_names) const;
+
+  // Adds the set of header names that contain cookie values.
+  static void AddSensitiveHeaders(HeaderSet* header_names);
+
+  // Adds the set of rfc2616 hop-by-hop response headers.
+  static void AddHopByHopHeaders(HeaderSet* header_names);
+
+  // Adds the set of challenge response headers.
+  static void AddChallengeHeaders(HeaderSet* header_names);
+
+  // Adds the set of cookie response headers.
+  static void AddCookieHeaders(HeaderSet* header_names);
 
   // The members of this structure point into raw_headers_.
   struct ParsedHeader {
@@ -284,4 +305,3 @@ class HttpResponseHeaders :
 }  // namespace net
 
 #endif  // NET_HTTP_RESPONSE_HEADERS_H_
-

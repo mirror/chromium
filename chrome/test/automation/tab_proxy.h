@@ -178,9 +178,11 @@ class TabProxy : public AutomationResourceProxy {
   // specifies what string to search for, |forward| specifies whether to search
   // in forward direction, and |match_case| specifies case sensitivity
   // (true=case sensitive). |find_next| specifies whether this is a new search
-  // or a continuation of the old one. A return value of -1 indicates failure.
+  // or a continuation of the old one. |ordinal| is an optional parameter that
+  // returns the ordinal of the active match (also known as "the 7" part of
+  // "7 of 9"). A return value of -1 indicates failure.
   int FindInPage(const std::wstring& search_string, FindInPageDirection forward,
-                 FindInPageCase match_case, bool find_next);
+                 FindInPageCase match_case, bool find_next, int* ordinal);
 
   bool GetCookies(const GURL& url, std::string* cookies);
   bool GetCookieByName(const GURL& url,
@@ -204,7 +206,7 @@ class TabProxy : public AutomationResourceProxy {
 
   // Shows an interstitial page.  Blocks until the interstitial page
   // has been loaded. Return false if a failure happens.3
-  bool ShowInterstitialPage(const std::string& html_text);
+  bool ShowInterstitialPage(const std::string& html_text, int timeout_ms);
 
   // Hides the currently shown interstitial page. Blocks until the interstitial
   // page has been hidden. Return false if a failure happens.
@@ -274,6 +276,12 @@ class TabProxy : public AutomationResourceProxy {
   // tab_proxy->SomeOperationThatTriggersAnAsynchronousNavigation();
   // tab_proxy->WaitForNavigation(last_nav_time);
   bool WaitForNavigation(int64 last_navigation_time);
+
+  // Gets the current used encoding of the page in the tab.
+  bool GetPageCurrentEncoding(std::wstring* encoding);
+
+  // Uses the specified encoding to override encoding of the page in the tab.
+  bool OverrideEncoding(const std::wstring& encoding);
 
  private:
   DISALLOW_COPY_AND_ASSIGN(TabProxy);

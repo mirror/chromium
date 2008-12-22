@@ -5,9 +5,18 @@
 #ifndef BASE_MULTIPROCESS_TEST_H__
 #define BASE_MULTIPROCESS_TEST_H__
 
+#include "base/base_switches.h"
 #include "base/command_line.h"
 #include "base/process_util.h"
+#include "base/string_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "testing/multiprocess_func_list.h"
+#include "testing/platform_test.h"
+
+#if defined(OS_POSIX)
+#include <sys/types.h>
+#include <unistd.h>
+#endif
 
 // Command line switch to invoke a child process rather than
 // to run the normal test suite.
@@ -18,20 +27,24 @@ static const wchar_t kRunClientProcess[] = L"client";
 //
 // To create a multiprocess test simply follow these steps:
 //
-// 1) Derive your test from MultiProcessTest.
-// 2) Modify your mainline so that if it sees the
-//    kRunClientProcess switch, it will deal with it.
-// 3) Create a mainline function for the child processes
-// 4) Call SpawnChild("foo"), where "foo" is the name of
+// 1) Derive your test from MultiProcessTest. Example:
+//
+//    class MyTest : public MultiProcessTest {
+//    };
+//
+//    TEST_F(MyTest, TestCaseName) {
+//      ...
+//    }
+//
+// 2) Create a mainline function for the child processes and include
+//    testing/multiprocess_func_list.h.
+//    See the declaration of the MULTIPROCESS_TEST_MAIN macro
+//    in that file for an example.
+// 3) Call SpawnChild(L"foo"), where "foo" is the name of
 //    the function you wish to run in the child processes.
 // That's it!
 //
-class MultiProcessTest : public testing::Test {
- public:
-  // Prototype function for a client function.  Multi-process
-  // clients must provide a callback with this signature to run.
-  typedef int (__cdecl *ChildFunctionPtr)();
-
+class MultiProcessTest : public PlatformTest {
  protected:
   // Run a child process.
   // 'procname' is the name of a function which the child will
@@ -44,16 +57,72 @@ class MultiProcessTest : public testing::Test {
   //    }
   //
   // Returns the handle to the child, or NULL on failure
-  HANDLE SpawnChild(const std::wstring& procname) {
-    std::wstring cl(GetCommandLineW());
-    CommandLine::AppendSwitchWithValue(&cl, kRunClientProcess, procname);
-    // TODO(darin): re-enable this once we have base/debug_util.h
-    //ProcessDebugFlags(&cl, DebugUtil::UNKNOWN, false);
-    HANDLE handle = NULL;
-    process_util::LaunchApp(cl, false, true, &handle);
+  //
+  // TODO(darin): re-enable this once we have base/debug_util.h
+  // ProcessDebugFlags(&cl, DebugUtil::UNKNOWN, false);
+  base::ProcessHandle SpawnChild(const std::wstring& procname) {
+    return SpawnChild(procname, false);
+  }
+
+  base::ProcessHandle SpawnChild(const std::wstring& procname,
+                                 bool debug_on_start) {
+#if defined(OS_WIN)
+    return SpawnChildImpl(procname, debug_on_start);
+#elif defined(OS_POSIX)
+    base::file_handle_mapping_vector empty_file_list;
+    return SpawnChildImpl(procname, empty_file_list, debug_on_start);
+#endif
+  }
+
+#if defined(OS_POSIX)
+  base::ProcessHandle SpawnChild(
+      const std::wstring& procname,
+      const base::file_handle_mapping_vector& fds_to_map,
+      bool debug_on_start) {
+    return SpawnChildImpl(procname, fds_to_map, debug_on_start);
+  }
+
+#endif
+
+ private:
+#if defined(OS_WIN)
+  base::ProcessHandle SpawnChildImpl(
+      const std::wstring& procname,
+      bool debug_on_start) {
+    CommandLine cl;
+    base::ProcessHandle handle = static_cast<base::ProcessHandle>(NULL);
+    std::wstring clstr = cl.command_line_string();
+    CommandLine::AppendSwitchWithValue(&clstr, kRunClientProcess, procname);
+
+    if (debug_on_start) {
+      CommandLine::AppendSwitch(&clstr, switches::kDebugOnStart);
+    }
+
+    base::LaunchApp(clstr, false, true, &handle);
     return handle;
   }
+#elif defined(OS_POSIX)
+  base::ProcessHandle SpawnChildImpl(
+      const std::wstring& procname,
+      const base::file_handle_mapping_vector& fds_to_map,
+      bool debug_on_start) {
+    CommandLine cl;
+    base::ProcessHandle handle = static_cast<base::ProcessHandle>(NULL);
+
+    std::vector<std::string> clvec(cl.argv());
+    std::wstring wswitchstr =
+        CommandLine::PrefixedSwitchStringWithValue(kRunClientProcess,
+                                                   procname);
+    if (debug_on_start) {
+      CommandLine::AppendSwitch(&wswitchstr, switches::kDebugOnStart);
+    }
+
+    std::string switchstr = WideToUTF8(wswitchstr);
+    clvec.push_back(switchstr.c_str());
+    base::LaunchApp(clvec, fds_to_map, false, &handle);
+    return handle;
+  }
+#endif
 };
 
 #endif  // BASE_MULTIPROCESS_TEST_H__
-

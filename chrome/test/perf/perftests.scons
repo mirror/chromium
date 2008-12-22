@@ -1,0 +1,117 @@
+# Copyright (c) 2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+__doc__ = """
+Configuration for building the perf_tests{,.exe} executable.
+"""
+
+Import('env')
+
+env = env.Clone()
+
+env.ApplySConscript([
+    '$BASE_DIR/using_base.scons',
+    '$NET_DIR/using_net.scons',
+    '$CHROME_SRC_DIR/build/using_googleurl.scons',
+    '$GTEST_DIR/../using_gtest.scons',
+    '$ICU38_DIR/using_icu38.scons',
+    '$MODP_B64_DIR/using_modp_b64.scons',
+])
+
+env.Prepend(
+    CPPDEFINES = [
+        'PERF_TEST',
+    ],
+    LIBS = [
+        'browser',
+        'common',
+        'sqlite',
+    ],
+)
+
+if env.Bit('posix'):
+  env.SConscript([
+      '$LIBEVENT_DIR/using_libevent.scons',
+  ], {'env':env})
+
+input_files = [
+    'perftests.cc',
+    'url_parse_perftest.cc',
+    '$BASE_DIR/perftimer$OBJSUFFIX',
+    '$CHROME_DIR/browser/safe_browsing/database_perftest.cc',
+    '$CHROME_DIR/browser/visitedlink_master$OBJSUFFIX',
+    '$CHROME_DIR/browser/visitedlink_perftest.cc',
+    '$CHROME_DIR/common/json_value_serializer_perftest.cc',
+]
+
+if env.Bit('windows'):
+  env.Prepend(
+      LIBS = [
+          'rpcrt4',
+          'shlwapi',
+          'winmm',
+      ]
+  )
+
+if env.Bit('linux'):
+  # TODO(port): Port these files.
+  remove_files = [
+      'url_parse_perftest.cc',
+      '$CHROME_DIR/browser/visitedlink_master$OBJSUFFIX',
+      '$CHROME_DIR/browser/visitedlink_perftest.cc',
+  ]
+  for file in remove_files:
+    input_files.remove(file)
+
+if env.Bit('mac'):
+  # TODO(port): Port these files.
+  remove_files = [
+      'url_parse_perftest.cc',
+      '$CHROME_DIR/browser/visitedlink_master$OBJSUFFIX',
+      '$CHROME_DIR/browser/visitedlink_perftest.cc',
+  ]
+  for file in remove_files:
+    input_files.remove(file)
+
+if not env.Bit('mac'):
+  env.ChromeTestProgram('perf_tests', input_files)
+
+env.ChromeMSVSProject('$CHROME_DIR/test/perf/perftests.vcproj',
+                name='perf_tests',
+                dependencies = [
+                    '$BASE_DIR/build/base.vcproj',
+                    '$WEBKIT_DIR/build/WebCore/WebCore.vcproj',
+                    '$CHROME_DIR/plugin/plugin.vcproj',
+                    '$LIBJPEG_DIR/libjpeg.vcproj',
+                    '$BZIP2_DIR/bzip2.vcproj',
+                    '$NET_DIR/build/net.vcproj',
+                    '$WEBKIT_DIR/build/JavaScriptCore/JavaScriptCore_pcre.vcproj',
+                    '$WEBKIT_DIR/build/port/port.vcproj',
+                    '$CHROME_DIR/browser/debugger/debugger.vcproj',
+                    '$WEBKIT_DIR/default_plugin/default_plugin.vcproj',
+                    '$CHROME_DIR/browser/browser.vcproj',
+                    '$WEBKIT_DIR/build/V8Bindings/V8Bindings.vcproj',
+                    '$SQLITE_DIR/sqlite.vcproj',
+                    '$CHROME_DIR/views/views.vcproj',
+                    '$MODP_B64_DIR/modp_b64.vcproj',
+                    '$ZLIB_DIR/zlib.vcproj',
+                    '$CHROME_DIR/common/common.vcproj',
+                    '$ICU38_DIR/build/icu.vcproj',
+                    '$CHROME_DIR/renderer/renderer.vcproj',
+                    '$BASE_DIR/build/base_gfx.vcproj',
+                    '$WEBKIT_DIR/build/JavaScriptCore/WTF.vcproj',
+                    '$TESTING_DIR/gtest.vcproj',
+                    '$V8_DIR/tools/visual_studio/v8_snapshot.vcproj',
+                    '$LIBPNG_DIR/libpng.vcproj',
+                    '$WEBKIT_DIR/build/glue/glue.vcproj',
+                    '$SKIA_DIR/skia.vcproj',
+                    '$CHROME_DIR/third_party/hunspell/hunspell.vcproj',
+                    '$GOOGLEURL_DIR/build/googleurl.vcproj',
+                    '$CHROME_DIR/installer/util/util.vcproj',
+                    '$WEBKIT_DIR/activex_shim/activex_shim.vcproj',
+                    '$SDCH_DIR/sdch.vcproj',
+                    '$CHROME_DIR/browser/views/browser_views.vcproj',
+                    '$LIBXSLT_DIR/build/libxslt.vcproj',
+                ],
+                guid='{9055E088-25C6-47FD-87D5-D9DD9FD75C9F}')

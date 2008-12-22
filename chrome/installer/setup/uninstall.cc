@@ -28,7 +28,7 @@ namespace {
 // to kill them.
 void CloseAllChromeProcesses() {
   for (int j = 0; j < 4; ++j) {
-    std::wstring wnd_class(L"Chrome_ContainerWin_");
+    std::wstring wnd_class(L"Chrome_WidgetWin_");
     wnd_class.append(IntToWString(j));
     HWND window = FindWindowEx(NULL, NULL, wnd_class.c_str(), NULL);
     while (window) {
@@ -36,8 +36,8 @@ void CloseAllChromeProcesses() {
       window = FindWindowEx(NULL, window, wnd_class.c_str(), NULL);
       if (!SendMessageTimeout(tmpWnd, WM_CLOSE, 0, 0, SMTO_BLOCK, 3000, NULL) &&
           (GetLastError() == ERROR_TIMEOUT)) {
-        process_util::CleanupProcesses(installer_util::kChromeExe, 0,
-                                       ResultCodes::HUNG, NULL);
+        base::CleanupProcesses(installer_util::kChromeExe, 0,
+                               ResultCodes::HUNG, NULL);
         return;
       }
     }
@@ -45,8 +45,8 @@ void CloseAllChromeProcesses() {
 
   // If asking politely didn't work, wait for 15 seconds and then kill all
   // chrome.exe. This check is just in case Chrome is ignoring WM_CLOSE messages.
-  process_util::CleanupProcesses(installer_util::kChromeExe, 15000,
-                                 ResultCodes::HUNG, NULL);
+  base::CleanupProcesses(installer_util::kChromeExe, 15000,
+                         ResultCodes::HUNG, NULL);
 }
 
 // This method deletes Chrome shortcut folder from Windows Start menu. It

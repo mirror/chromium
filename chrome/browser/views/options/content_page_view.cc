@@ -11,7 +11,6 @@
 
 #include "base/file_util.h"
 #include "base/gfx/native_theme.h"
-#include "base/gfx/skia_utils.h"
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/shell_dialogs.h"
@@ -25,12 +24,13 @@
 #include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/checkbox.h"
-#include "chrome/views/container.h"
 #include "chrome/views/grid_layout.h"
 #include "chrome/views/native_button.h"
 #include "chrome/views/radio_button.h"
 #include "chrome/views/text_field.h"
+#include "chrome/views/widget.h"
 #include "generated_resources.h"
+#include "skia/ext/skia_utils_win.h"
 #include "skia/include/SkBitmap.h"
 
 namespace {
@@ -102,7 +102,7 @@ void FileDisplayArea::Paint(ChromeCanvas* canvas) {
   RECT rect = { 0, 0, width(), height() };
   gfx::NativeTheme::instance()->PaintTextField(
       dc, EP_EDITTEXT, ETS_READONLY, 0, &rect,
-      gfx::SkColorToCOLORREF(text_field_background_color_), true, true);
+      skia::SkColorToCOLORREF(text_field_background_color_), true, true);
   canvas->endPlatformPaint();
   canvas->DrawBitmapInt(default_folder_icon_, icon_bounds_.x(),
                         icon_bounds_.y());
@@ -127,7 +127,7 @@ gfx::Size FileDisplayArea::GetPreferredSize() {
 void FileDisplayArea::ViewHierarchyChanged(bool is_add,
                                            views::View* parent,
                                            views::View* child) {
-  if (!initialized_ && is_add && GetContainer())
+  if (!initialized_ && is_add && GetWidget())
     Init();
 }
 
@@ -196,9 +196,12 @@ void ContentPageView::ButtonPressed(views::NativeButton* sender) {
     const std::wstring dialog_title =
        l10n_util::GetString(IDS_OPTIONS_DOWNLOADLOCATION_BROWSE_TITLE);
     select_file_dialog_->SelectFile(SelectFileDialog::SELECT_FOLDER,
-                                    dialog_title, std::wstring(),
+                                    dialog_title,
+                                    profile()->GetPrefs()->GetString(
+                                        prefs::kDownloadDefaultDirectory),
                                     std::wstring(), std::wstring(),
-                                    GetRootWindow(), NULL);
+                                    GetRootWindow(),
+                                    NULL);
   } else if (sender == download_ask_for_save_location_checkbox_) {
     bool enabled = download_ask_for_save_location_checkbox_->IsSelected();
     if (enabled) {
@@ -223,6 +226,16 @@ void ContentPageView::ButtonPressed(views::NativeButton* sender) {
   } else if (sender == passwords_show_passwords_button_) {
     UserMetricsRecordAction(L"Options_ShowPasswordManager", NULL);
     PasswordManagerView::Show(profile());
+  } else if (sender == form_autofill_checkbox_) {
+    bool enabled = form_autofill_checkbox_->IsSelected();
+    if (enabled) {
+      UserMetricsRecordAction(L"Options_FormAutofill_Enable",
+                              profile()->GetPrefs());
+    } else {
+      UserMetricsRecordAction(L"Options_FormAutofill_Disable",
+                              profile()->GetPrefs());
+    }
+    form_autofill_.SetValue(enabled);
   } else if (sender == change_content_fonts_button_) {
     views::Window::CreateChromeWindow(
         GetRootWindow(),
@@ -265,6 +278,11 @@ void ContentPageView::InitControlLayout() {
   layout->AddView(fonts_lang_group_);
   layout->AddPaddingRow(0, kRelatedControlVerticalSpacing);
 
+  layout->StartRow(0, single_column_view_set_id);
+  InitFormAutofillGroup();
+  layout->AddView(form_autofill_group_);
+  layout->AddPaddingRow(0, kRelatedControlVerticalSpacing);
+
   // Init member prefs so we can update the controls if prefs change.
   default_download_location_.Init(prefs::kDownloadDefaultDirectory,
                                   profile()->GetPrefs(), this);
@@ -272,6 +290,7 @@ void ContentPageView::InitControlLayout() {
                               profile()->GetPrefs(), this);
   ask_to_save_passwords_.Init(prefs::kPasswordManagerEnabled,
                               profile()->GetPrefs(), this);
+  form_autofill_.Init(prefs::kFormAutofillEnabled, profile()->GetPrefs(), this);
 }
 
 void ContentPageView::NotifyPrefChanged(const std::wstring* pref_name) {
@@ -288,6 +307,9 @@ void ContentPageView::NotifyPrefChanged(const std::wstring* pref_name) {
     } else {
       passwords_neversave_radio_->SetIsSelected(true);
     }
+  }
+  if (!pref_name || *pref_name == prefs::kFormAutofillEnabled) {
+    form_autofill_checkbox_->SetIsSelected(form_autofill_.GetValue());
   }
 }
 
@@ -401,6 +423,32 @@ void ContentPageView::InitPasswordSavingGroup() {
       true);
 }
 
+void ContentPageView::InitFormAutofillGroup() {
+  form_autofill_checkbox_ = new views::CheckBox(
+      l10n_util::GetString(IDS_AUTOFILL_SAVEFORMS));
+  form_autofill_checkbox_->SetListener(this);
+  form_autofill_checkbox_->SetMultiLine(true);
+
+  using views::GridLayout;
+  using views::ColumnSet;
+
+  views::View* contents = new views::View;
+  GridLayout* layout = new GridLayout(contents);
+  contents->SetLayoutManager(layout);
+
+  const int single_column_view_set_id = 1;
+  ColumnSet* column_set = layout->AddColumnSet(single_column_view_set_id);
+  column_set->AddColumn(GridLayout::FILL, GridLayout::CENTER, 1,
+                        GridLayout::USE_PREF, 0, 0);
+
+  layout->StartRow(0, single_column_view_set_id);
+  layout->AddView(form_autofill_checkbox_);
+
+  form_autofill_group_ = new OptionsGroupView(
+      contents, l10n_util::GetString(IDS_AUTOFILL_SETTING_WINDOWS_GROUP_NAME),
+      L"", false);
+}
+
 void ContentPageView::InitFontsLangGroup() {
   fonts_and_languages_label_ = new views::Label(
       l10n_util::GetString(IDS_OPTIONS_FONTSETTINGS_INFO));
@@ -431,7 +479,7 @@ void ContentPageView::InitFontsLangGroup() {
   fonts_lang_group_ = new OptionsGroupView(
       contents,
       l10n_util::GetString(IDS_OPTIONS_FONTSANDLANGUAGES_GROUP_NAME),
-      L"", false);
+      L"", true);
 }
 
 void ContentPageView::UpdateDownloadDirectoryDisplay() {

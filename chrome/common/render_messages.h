@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 #include "base/basictypes.h"
 #include "base/ref_counted.h"
@@ -18,12 +19,14 @@
 #include "googleurl/src/gurl.h"
 #include "net/base/upload_data.h"
 #include "net/url_request/url_request_status.h"
+#include "webkit/glue/autofill_form.h"
 #include "webkit/glue/cache_manager.h"
 #include "webkit/glue/context_node_types.h"
 #include "webkit/glue/form_data.h"
 #include "webkit/glue/password_form.h"
 #include "webkit/glue/password_form_dom_manager.h"
 #include "webkit/glue/resource_loader_bridge.h"
+#include "webkit/glue/screen_info.h"
 #include "webkit/glue/webdropdata.h"
 #include "webkit/glue/webplugin.h"
 #include "webkit/glue/webpreferences.h"
@@ -155,6 +158,9 @@ struct ViewHostMsg_ContextMenu_Params {
   // and the misspelled_word is not empty.
   std::vector<std::wstring> dictionary_suggestions;
 
+  // If editable, flag for whether spell check is enabled or not.
+  bool spellcheck_enabled;
+
   // These flags indicate to the browser whether the renderer believes it is
   // able to perform the corresponding action.
   int edit_flags;
@@ -183,10 +189,13 @@ struct ViewHostMsg_PaintRect_Flags {
   }
 };
 
+#if defined(OS_WIN)
+// TODO(port): Make these structs portable.
+
 struct ViewHostMsg_PaintRect_Params {
   // The bitmap to be painted into the rect given by bitmap_rect.  Valid only
   // in the context of the renderer process.
-  SharedMemoryHandle bitmap;
+  base::SharedMemoryHandle bitmap;
 
   // The position and size of the bitmap.
   gfx::Rect bitmap_rect;
@@ -220,7 +229,7 @@ struct ViewHostMsg_PaintRect_Params {
 struct ViewHostMsg_ScrollRect_Params {
   // The bitmap to be painted into the rect exposed by scrolling.  This handle
   // is valid only in the context of the renderer process.
-  SharedMemoryHandle bitmap;
+  base::SharedMemoryHandle bitmap;
 
   // The position and size of the bitmap.
   gfx::Rect bitmap_rect;
@@ -238,6 +247,7 @@ struct ViewHostMsg_ScrollRect_Params {
   // New window locations for plugin child windows.
   std::vector<WebPluginGeometry> plugin_window_moves;
 };
+#endif  // defined(OS_WIN)
 
 // Parameters structure for ViewMsg_UploadFile.
 struct ViewMsg_UploadFile_Params {
@@ -364,7 +374,7 @@ struct ViewMsg_PrintPages_Params {
 struct ViewHostMsg_DidPrintPage_Params {
   // A shared memory handle to the EMF data. This data can be quite large so a
   // memory map needs to be used.
-  SharedMemoryHandle emf_data_handle;
+  base::SharedMemoryHandle emf_data_handle;
 
   // Size of the EMF data.
   unsigned data_size;
@@ -822,6 +832,37 @@ struct ParamTraits<PasswordForm> {
   }
 };
 
+// Traits for AutofillForm_Params structure to pack/unpack.
+template <>
+struct ParamTraits<AutofillForm> {
+  typedef AutofillForm param_type;
+  static void Write(Message* m, const param_type& p) {
+    WriteParam(m, p.elements.size());
+    for (std::vector<AutofillForm::Element>::const_iterator itr =
+        p.elements.begin();
+        itr != p.elements.end();
+        itr++) {
+      WriteParam(m, itr->name);
+      WriteParam(m, itr->value);
+    }
+  }
+  static bool Read(const Message* m, void** iter, param_type* p) {
+      bool result = true;
+      size_t elements_size = 0;
+      result = result && ReadParam(m, iter, &elements_size);
+      p->elements.resize(elements_size);
+      for (size_t i = 0; i < elements_size; i++) {
+        std::wstring s;
+        result = result && ReadParam(m, iter, &(p->elements[i].name));
+        result = result && ReadParam(m, iter, &(p->elements[i].value));
+      }
+      return result;
+  }
+  static void Log(const param_type& p, std::wstring* l) {
+    l->append(L"<AutofillForm>");
+  }
+};
+
 // Traits for ViewHostMsg_FrameNavigate_Params structure to pack/unpack.
 template <>
 struct ParamTraits<ViewHostMsg_FrameNavigate_Params> {
@@ -841,6 +882,7 @@ struct ParamTraits<ViewHostMsg_FrameNavigate_Params> {
     WriteParam(m, p.gesture);
     WriteParam(m, p.contents_mime_type);
     WriteParam(m, p.is_post);
+    WriteParam(m, p.is_content_filtered);
   }
   static bool Read(const Message* m, void** iter, param_type* p) {
     return
@@ -857,7 +899,8 @@ struct ParamTraits<ViewHostMsg_FrameNavigate_Params> {
       ReadParam(m, iter, &p->security_info) &&
       ReadParam(m, iter, &p->gesture) &&
       ReadParam(m, iter, &p->contents_mime_type) &&
-      ReadParam(m, iter, &p->is_post);
+      ReadParam(m, iter, &p->is_post) &&
+      ReadParam(m, iter, &p->is_content_filtered);
   }
   static void Log(const param_type& p, std::wstring* l) {
     l->append(L"(");
@@ -888,6 +931,8 @@ struct ParamTraits<ViewHostMsg_FrameNavigate_Params> {
     LogParam(p.contents_mime_type, l);
     l->append(L", ");
     LogParam(p.is_post, l);
+    l->append(L", ");
+    LogParam(p.is_content_filtered, l);
     l->append(L")");
   }
 };
@@ -907,6 +952,7 @@ struct ParamTraits<ViewHostMsg_ContextMenu_Params> {
     WriteParam(m, p.selection_text);
     WriteParam(m, p.misspelled_word);
     WriteParam(m, p.dictionary_suggestions);
+    WriteParam(m, p.spellcheck_enabled);
     WriteParam(m, p.edit_flags);
     WriteParam(m, p.security_info);
   }
@@ -922,6 +968,7 @@ struct ParamTraits<ViewHostMsg_ContextMenu_Params> {
       ReadParam(m, iter, &p->selection_text) &&
       ReadParam(m, iter, &p->misspelled_word) &&
       ReadParam(m, iter, &p->dictionary_suggestions) &&
+      ReadParam(m, iter, &p->spellcheck_enabled) &&
       ReadParam(m, iter, &p->edit_flags) &&
       ReadParam(m, iter, &p->security_info);
   }
@@ -929,6 +976,9 @@ struct ParamTraits<ViewHostMsg_ContextMenu_Params> {
     l->append(L"<ViewHostMsg_ContextMenu_Params>");
   }
 };
+
+#if defined(OS_WIN)
+// TODO(port): Make these messages portable.
 
 // Traits for ViewHostMsg_PaintRect_Params structure to pack/unpack.
 template <>
@@ -1038,6 +1088,7 @@ struct ParamTraits<WebPluginGeometry> {
     l->append(L")");
   }
 };
+#endif  // defined(OS_WIN)
 
 // Traits for ViewMsg_GetPlugins_Reply structure to pack/unpack.
 template <>
@@ -1345,12 +1396,14 @@ struct ParamTraits<URLRequestStatus> {
 };
 
 template <>
-struct ParamTraits<scoped_refptr<net::HttpResponseHeaders>> {
+struct ParamTraits<scoped_refptr<net::HttpResponseHeaders> > {
   typedef scoped_refptr<net::HttpResponseHeaders> param_type;
   static void Write(Message* m, const param_type& p) {
     WriteParam(m, p.get() != NULL);
-    if (p)
-      p->Persist(m, false);
+    if (p) {
+      // Do not disclose Set-Cookie headers over IPC.
+      p->Persist(m, net::HttpResponseHeaders::PERSIST_SANS_COOKIES);
+    }
   }
   static bool Read(const Message* m, void** iter, param_type* r) {
     bool has_object;
@@ -1578,7 +1631,6 @@ struct ParamTraits<WebPreferences> {
     WriteParam(m, p.shrinks_standalone_images_to_fit);
     WriteParam(m, p.uses_universal_detector);
     WriteParam(m, p.text_areas_are_resizable);
-    WriteParam(m, p.dashboard_compatibility_mode);
     WriteParam(m, p.java_enabled);
     WriteParam(m, p.user_style_sheet_enabled);
     WriteParam(m, p.user_style_sheet_location);
@@ -1606,7 +1658,6 @@ struct ParamTraits<WebPreferences> {
         ReadParam(m, iter, &p->shrinks_standalone_images_to_fit) &&
         ReadParam(m, iter, &p->uses_universal_detector) &&
         ReadParam(m, iter, &p->text_areas_are_resizable) &&
-        ReadParam(m, iter, &p->dashboard_compatibility_mode) &&
         ReadParam(m, iter, &p->java_enabled) &&
         ReadParam(m, iter, &p->user_style_sheet_enabled) &&
         ReadParam(m, iter, &p->user_style_sheet_location) &&
@@ -1626,8 +1677,8 @@ struct ParamTraits<WebDropData> {
     WriteParam(m, p.url_title);
     WriteParam(m, p.filenames);
     WriteParam(m, p.plain_text);
-    WriteParam(m, p.cf_html);
     WriteParam(m, p.text_html);
+    WriteParam(m, p.html_base_url);
     WriteParam(m, p.file_description_filename);
     WriteParam(m, p.file_contents);
   }
@@ -1637,13 +1688,37 @@ struct ParamTraits<WebDropData> {
       ReadParam(m, iter, &p->url_title) &&
       ReadParam(m, iter, &p->filenames) &&
       ReadParam(m, iter, &p->plain_text) &&
-      ReadParam(m, iter, &p->cf_html) &&
       ReadParam(m, iter, &p->text_html) &&
+      ReadParam(m, iter, &p->html_base_url) &&
       ReadParam(m, iter, &p->file_description_filename) &&
       ReadParam(m, iter, &p->file_contents);
   }
   static void Log(const param_type& p, std::wstring* l) {
     l->append(L"<WebDropData>");
+  }
+};
+
+// Traits for ScreenInfo
+template <>
+struct ParamTraits<webkit_glue::ScreenInfo> {
+  typedef webkit_glue::ScreenInfo param_type;
+  static void Write(Message* m, const param_type& p) {
+    WriteParam(m, p.depth);
+    WriteParam(m, p.depth_per_component);
+    WriteParam(m, p.is_monochrome);
+    WriteParam(m, p.rect);
+    WriteParam(m, p.available_rect);
+  }
+  static bool Read(const Message* m, void** iter, param_type* p) {
+    return
+      ReadParam(m, iter, &p->depth) &&
+      ReadParam(m, iter, &p->depth_per_component) &&
+      ReadParam(m, iter, &p->is_monochrome) &&
+      ReadParam(m, iter, &p->rect) &&
+      ReadParam(m, iter, &p->available_rect);
+  }
+  static void Log(const param_type& p, std::wstring* l) {
+    l->append(L"<webkit_glue::ScreenInfo>");
   }
 };
 

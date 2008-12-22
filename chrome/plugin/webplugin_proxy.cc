@@ -5,7 +5,6 @@
 #include "chrome/plugin/webplugin_proxy.h"
 
 #include "base/gfx/gdi_util.h"
-#include "base/gfx/platform_device_win.h"
 #include "base/scoped_handle.h"
 #include "base/shared_memory.h"
 #include "base/singleton.h"
@@ -16,6 +15,7 @@
 #include "chrome/plugin/webplugin_delegate_stub.h"
 #include "chrome/plugin/npobject_proxy.h"
 #include "chrome/plugin/npobject_util.h"
+#include "skia/ext/platform_device.h"
 #include "webkit/glue/plugins/webplugin_delegate_impl.h"
 
 typedef std::map<CPBrowsingContext, WebPluginProxy*> ContextMap;
@@ -282,9 +282,9 @@ void WebPluginProxy::UpdateGeometry(
     const gfx::Rect& clip_rect,
     const std::vector<gfx::Rect>& cutout_rects,
     bool visible,
-    const SharedMemoryHandle& windowless_buffer,
-    const SharedMemoryHandle& background_buffer) {
-      gfx::Rect old = delegate_->rect();
+    const base::SharedMemoryHandle& windowless_buffer,
+    const base::SharedMemoryHandle& background_buffer) {
+  gfx::Rect old = delegate_->rect();
   gfx::Rect old_clip_rect = delegate_->clip_rect();
 
   bool moved = delegate_->rect().x() != window_rect.x() ||
@@ -306,8 +306,8 @@ void WebPluginProxy::UpdateGeometry(
 }
 
 void WebPluginProxy::SetWindowlessBuffer(
-    const SharedMemoryHandle& windowless_buffer,
-    const SharedMemoryHandle& background_buffer) {
+    const base::SharedMemoryHandle& windowless_buffer,
+    const base::SharedMemoryHandle& background_buffer) {
   // Convert the shared memory handle to a handle that works in our process,
   // and then use that to create an HDC.
   ConvertBuffer(windowless_buffer,
@@ -323,7 +323,7 @@ void WebPluginProxy::SetWindowlessBuffer(
   UpdateTransform();
 }
 
-void WebPluginProxy::ConvertBuffer(const SharedMemoryHandle& buffer,
+void WebPluginProxy::ConvertBuffer(const base::SharedMemoryHandle& buffer,
                                    ScopedHandle* shared_section,
                                    ScopedBitmap* bitmap,
                                    ScopedHDC* hdc) {
@@ -355,7 +355,7 @@ void WebPluginProxy::ConvertBuffer(const SharedMemoryHandle& buffer,
     return;
   }
 
-  gfx::PlatformDeviceWin::InitializeDC(hdc->Get());
+  skia::PlatformDeviceWin::InitializeDC(hdc->Get());
   SelectObject(hdc->Get(), bitmap->Get());
 }
 

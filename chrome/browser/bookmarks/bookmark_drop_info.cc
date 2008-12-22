@@ -29,7 +29,7 @@ void BookmarkDropInfo::Update(const views::DropTargetEvent& event) {
   if (scroll_up_ || scroll_down) {
     if (!scroll_timer_.IsRunning()) {
       scroll_timer_.Start(
-          TimeDelta::FromMilliseconds(views::kAutoscrollRowTimerMS),
+          base::TimeDelta::FromMilliseconds(views::kAutoscrollRowTimerMS),
           this,
           &BookmarkDropInfo::Scroll);
     }

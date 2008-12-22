@@ -14,6 +14,7 @@
 #include "chrome/common/ipc_message.h"
 #include "chrome/test/automation/automation_handle_tracker.h"
 #include "chrome/test/automation/automation_messages.h"
+#include "chrome/views/dialog_delegate.h"
 
 class AutomationRequest;
 class BrowserProxy;
@@ -59,7 +60,7 @@ class AutomationMessageSender : public IPC::Message::Sender {
 class AutomationProxy : public IPC::Channel::Listener,
                         public AutomationMessageSender {
  public:
-  AutomationProxy();
+  explicit AutomationProxy(int command_execution_timeout_ms);
   virtual ~AutomationProxy();
 
   // IPC callback
@@ -109,8 +110,12 @@ class AutomationProxy : public IPC::Channel::Listener,
   bool WaitForWindowCountToBecome(int target_count, int wait_timeout);
 
   // Returns whether an app modal dialog window is showing right now (i.e., a
-  // javascript alert).
-  bool GetShowingAppModalDialog(bool* showing_app_modal_dialog);
+  // javascript alert), and what buttons it contains.
+  bool GetShowingAppModalDialog(bool* showing_app_modal_dialog,
+                                views::DialogDelegate::DialogButton* button);
+
+  // Simulates a click on a dialog button.
+  bool ClickAppModalDialogButton(views::DialogDelegate::DialogButton button);
 
   // Block the thread until a modal dialog is displayed. Returns true on
   // success.
@@ -199,6 +204,10 @@ class AutomationProxy : public IPC::Channel::Listener,
   // that can be reparented in another process.
   TabProxy* CreateExternalTab(HWND* external_tab_container);
 
+  int command_execution_timeout_ms() const {
+    return command_execution_timeout_ms_;
+  }
+
  private:
   DISALLOW_EVIL_CONSTRUCTORS(AutomationProxy);
 
@@ -220,8 +229,8 @@ class AutomationProxy : public IPC::Channel::Listener,
 
   AutomationRequest* current_request_;
 
-  static const int kMaxCommandExecutionTime;  // Delay to let the browser
-                                              //  execute the command.;
+  // Delay to let the browser execute the command.
+  int command_execution_timeout_ms_;
 };
 
 #endif  // CHROME_TEST_AUTOMATION_AUTOMATION_PROXY_H__

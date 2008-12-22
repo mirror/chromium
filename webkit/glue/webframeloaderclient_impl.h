@@ -5,6 +5,8 @@
 #ifndef WEBKIT_GLUE_WEBFRAMELOADERCLIENT_IMPL_H__
 #define WEBKIT_GLUE_WEBFRAMELOADERCLIENT_IMPL_H__
 
+#include <set>
+
 #include "base/compiler_specific.h"
 
 MSVC_PUSH_WARNING_LEVEL(0);
@@ -18,6 +20,7 @@ MSVC_POP_WARNING();
 
 namespace WebCore {
 class Frame;
+class HTMLFormElement;
 class Widget;
 }
 
@@ -44,11 +47,7 @@ class WebFrameLoaderClient : public WebCore::FrameLoaderClient {
   virtual bool hasWebView() const; // mainly for assertions
   virtual bool hasFrameView() const; // ditto
 
-  virtual bool privateBrowsingEnabled() const;
-
-  virtual void makeDocumentView();
   virtual void makeRepresentation(WebCore::DocumentLoader*);
-  virtual void setDocumentViewFromCachedPage(WebCore::CachedPage*);
   virtual void forceLayout();
   virtual void forceLayoutForNonHTML();
 
@@ -56,13 +55,11 @@ class WebFrameLoaderClient : public WebCore::FrameLoaderClient {
 
   virtual void detachedFromParent2();
   virtual void detachedFromParent3();
-  virtual void detachedFromParent4();
-
-  virtual void loadedFromCachedPage();
 
   virtual void assignIdentifierToInitialRequest(unsigned long identifier, WebCore::DocumentLoader*, const WebCore::ResourceRequest&);
 
   virtual void dispatchWillSendRequest(WebCore::DocumentLoader*, unsigned long identifier, WebCore::ResourceRequest&, const WebCore::ResourceResponse& redirectResponse);
+  virtual bool shouldUseCredentialStorage(WebCore::DocumentLoader*, unsigned long identifier);
   virtual void dispatchDidReceiveAuthenticationChallenge(WebCore::DocumentLoader*, unsigned long identifier, const WebCore::AuthenticationChallenge&);
   virtual void dispatchDidCancelAuthenticationChallenge(WebCore::DocumentLoader*, unsigned long identifier, const WebCore::AuthenticationChallenge&);        
   virtual void dispatchDidReceiveResponse(WebCore::DocumentLoader*, unsigned long identifier, const WebCore::ResourceResponse&);
@@ -86,13 +83,14 @@ class WebFrameLoaderClient : public WebCore::FrameLoaderClient {
   virtual void dispatchDidFinishDocumentLoad();
   virtual void dispatchDidFinishLoad();
   virtual void dispatchDidFirstLayout();
+  virtual void dispatchDidFirstVisuallyNonEmptyLayout();
 
   virtual WebCore::Frame* dispatchCreatePage();
   virtual void dispatchShow();
 
   virtual void dispatchDecidePolicyForMIMEType(WebCore::FramePolicyFunction function, const WebCore::String& mime_type, const WebCore::ResourceRequest&);
-  virtual void dispatchDecidePolicyForNewWindowAction(WebCore::FramePolicyFunction function, const WebCore::NavigationAction& action, const WebCore::ResourceRequest& request, const WebCore::String& frame_name);
-  virtual void dispatchDecidePolicyForNavigationAction(WebCore::FramePolicyFunction function, const WebCore::NavigationAction& action, const WebCore::ResourceRequest& request);
+  virtual void dispatchDecidePolicyForNewWindowAction(WebCore::FramePolicyFunction function, const WebCore::NavigationAction& action, const WebCore::ResourceRequest& request, PassRefPtr<WebCore::FormState> form_state, const WebCore::String& frame_name);
+  virtual void dispatchDecidePolicyForNavigationAction(WebCore::FramePolicyFunction function, const WebCore::NavigationAction& action, const WebCore::ResourceRequest& request, PassRefPtr<WebCore::FormState> form_state);
   virtual void cancelPolicyCheck();
 
   virtual void dispatchUnableToImplementPolicy(const WebCore::ResourceError&);
@@ -102,7 +100,6 @@ class WebFrameLoaderClient : public WebCore::FrameLoaderClient {
   virtual void dispatchDidLoadMainResource(WebCore::DocumentLoader*);
   virtual void revertToProvisionalState(WebCore::DocumentLoader*);
   virtual void setMainDocumentError(WebCore::DocumentLoader*, const WebCore::ResourceError&);
-  virtual void clearUnarchivingState(WebCore::DocumentLoader*);
 
   // Maybe these should go into a ProgressTrackerClient some day
   virtual void willChangeEstimatedProgress() { }
@@ -120,10 +117,8 @@ class WebFrameLoaderClient : public WebCore::FrameLoaderClient {
 
   virtual void committedLoad(WebCore::DocumentLoader*, const char*, int);
   virtual void finishedLoading(WebCore::DocumentLoader*);
-  virtual void finalSetupForReplace(WebCore::DocumentLoader*);
 
-  virtual void updateGlobalHistoryForStandardLoad(const WebCore::KURL&);
-  virtual void updateGlobalHistoryForReload(const WebCore::KURL&);
+  virtual void updateGlobalHistory();
   virtual bool shouldGoToHistoryItem(WebCore::HistoryItem*) const;
 
   virtual WebCore::ResourceError blockedError(const WebCore::ResourceRequest&);
@@ -133,15 +128,9 @@ class WebFrameLoaderClient : public WebCore::FrameLoaderClient {
 
   virtual WebCore::ResourceError cannotShowMIMETypeError(const WebCore::ResourceResponse&);
   virtual WebCore::ResourceError fileDoesNotExistError(const WebCore::ResourceResponse&);
+  virtual WebCore::ResourceError pluginWillHandleLoadError(const WebCore::ResourceResponse&);
 
   virtual bool shouldFallBack(const WebCore::ResourceError&);
-
-  virtual void setDefersLoading(bool);
-
-  virtual bool willUseArchive(WebCore::ResourceLoader*, const WebCore::ResourceRequest&, const WebCore::KURL& originalURL) const;
-  virtual bool isArchiveLoadPending(WebCore::ResourceLoader*) const;
-  virtual void cancelPendingArchiveLoad(WebCore::ResourceLoader*);
-  virtual void clearArchivedResources();
 
   virtual bool canHandleRequest(const WebCore::ResourceRequest&) const;
   virtual bool canShowMIMEType(const WebCore::String& MIMEType) const;
@@ -200,17 +189,6 @@ class WebFrameLoaderClient : public WebCore::FrameLoaderClient {
 
   virtual void registerForIconNotification(bool listen = true);
 
-  virtual void unloadListenerChanged();
-
-#if defined(OS_MACOSX)
-// The above should have && !defined(BUILDING_CHROMIUM__) at the end but can't
-// for now, since we need to add that extra define all the way down to the
-// WebCore core. TODO(avi): Get that define into WebCore.
-  virtual NSCachedURLResponse* willCacheResponse(WebCore::DocumentLoader*,
-                                                 unsigned long identifier,
-                                                 NSCachedURLResponse*) const;
-#endif
-  
   // Callback function for download of alternate 404 pages.  If the server is
   // down or we take more than 1s to download the page, html will be an empty
   // string.
@@ -218,6 +196,8 @@ class WebFrameLoaderClient : public WebCore::FrameLoaderClient {
                           const std::string& html);
 
  private:
+  void makeDocumentView();
+
   // Given a NavigationAction, determine the associated window opening
   // disposition.  For example, a middle click means "open in background tab".
   static bool ActionSpecifiesDisposition(

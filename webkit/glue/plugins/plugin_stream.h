@@ -8,9 +8,9 @@
 #include <string>
 #include <vector>
 
+#include "base/file_path.h"
 #include "base/ref_counted.h"
 #include "third_party/npapi/bindings/npapi.h"
-
 
 class WebPluginResourceClient;
 
@@ -39,10 +39,13 @@ class PluginStream : public base::RefCounted<PluginStream> {
   // mime-types table and the extension (if any) in the URL.
   // If the size of the stream is known, use length to set the size.  If
   // not known, set length to 0.
+  // The request_is_seekable parameter indicates whether byte range requests
+  // can be issued on the stream.
   bool Open(const std::string &mime_type,
             const std::string &headers,
             uint32 length,
-            uint32 last_modified);
+            uint32 last_modified,
+            bool request_is_seekable);
 
   // Writes to the stream.
   int Write(const char *buf, const int len, int data_offset);
@@ -79,7 +82,7 @@ class PluginStream : public base::RefCounted<PluginStream> {
   bool open() { return opened_; }
 
  private:
-  // Open a temporary file for this stream.  
+  // Open a temporary file for this stream.
   // If successful, will set temp_file_name_, temp_file_handle_, and
   // return true.
   bool OpenTempFile();
@@ -87,11 +90,11 @@ class PluginStream : public base::RefCounted<PluginStream> {
   // Closes the temporary file if it is open.
   void CloseTempFile();
 
-  // Closes the temporary file if it is open and deletes the file.
-  void CleanupTempFile();
+  // Sends the data to the file. Called From WriteToFile.
+  size_t WriteBytes(const char *buf, size_t length);
 
   // Sends the data to the file if it's open.
-  bool WriteToFile(const char *buf, const int length);
+  bool WriteToFile(const char *buf, size_t length);
 
   // Sends the data to the plugin.  If it's not ready, handles buffering it
   // and retrying later.
@@ -104,6 +107,9 @@ class PluginStream : public base::RefCounted<PluginStream> {
   // The callback which calls TryWriteToPlugin.
   void OnDelayDelivery();
 
+  // Returns true if the temp file is valid and open for writing.
+  bool TempFileIsValid();
+
  private:
   NPStream                      stream_;
   std::string                   headers_;
@@ -113,8 +119,13 @@ class PluginStream : public base::RefCounted<PluginStream> {
   bool                          close_on_write_data_;
   uint16                        requested_plugin_mode_;
   bool                          opened_;
+#if defined(OS_WIN)
   char                          temp_file_name_[MAX_PATH];
   HANDLE                        temp_file_handle_;
+#elif defined(OS_POSIX)
+  FILE*                         temp_file_;
+  FilePath                      temp_file_path_;
+#endif
   std::vector<char>             delivery_data_;
   int                           data_offset_;
   bool                          seekable_stream_;

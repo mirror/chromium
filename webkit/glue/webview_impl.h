@@ -9,29 +9,32 @@
 
 #include "base/basictypes.h"
 #include "base/compiler_specific.h"
-#include "base/gfx/platform_canvas.h"
 #include "base/gfx/point.h"
 #include "base/gfx/size.h"
+#include "skia/ext/platform_canvas.h"
+#include "webkit/glue/back_forward_list_client_impl.h"
 #include "webkit/glue/webdropdata.h"
 #include "webkit/glue/webframe_impl.h"
 #include "webkit/glue/webpreferences.h"
 #include "webkit/glue/webview.h"
 
 MSVC_PUSH_WARNING_LEVEL(0);
-#include "webkit/port/history/BackForwardList.h"
-#include "webkit/port/platform/WidgetClientWin.h"
+#include "Page.h"
 MSVC_POP_WARNING();
 
 namespace WebCore {
-  class Frame;
-  class HistoryItem;
-  class KeyboardEvent;
-  class Page;
-  class PlatformKeyboardEvent;
-  class Range;
-  class Widget;
+class ChromiumDataObject;
+class Frame;
+class HistoryItem;
+class KeyboardEvent;
+class Page;
+class PlatformKeyboardEvent;
+class PopupContainer;
+class Range;
+class Widget;
 }
 
+class AutocompletePopupMenuClient;
 class ImageResourceFetcher;
 class SearchableFormData;
 struct WebDropData;
@@ -41,9 +44,7 @@ class WebMouseEvent;
 class WebMouseWheelEvent;
 class WebViewDelegate;
 
-class WebViewImpl : public WebView,
-                    public WebCore::WidgetClientWin,
-                    public WebCore::BackForwardListClient {
+class WebViewImpl : public WebView {
  public:
   // WebView
   virtual bool ShouldClose();
@@ -60,7 +61,7 @@ class WebViewImpl : public WebView,
   virtual void Resize(const gfx::Size& new_size);
   virtual gfx::Size GetSize() { return size(); }
   virtual void Layout();
-  virtual void Paint(gfx::PlatformCanvas* canvas, const gfx::Rect& rect);
+  virtual void Paint(skia::PlatformCanvas* canvas, const gfx::Rect& rect);
   virtual bool HandleInputEvent(const WebInputEvent* input_event);
   virtual void MouseCaptureLost();
   virtual void SetFocus(bool enable);
@@ -77,15 +78,14 @@ class WebViewImpl : public WebView,
   virtual void SetBackForwardListSize(int size);
   virtual void RestoreFocus();
   virtual void SetInitialFocus(bool reverse);
-  virtual bool FocusedFrameNeedsSpellchecking();
   virtual bool DownloadImage(int id, const GURL& image_url, int image_size);
   virtual void SetPreferences(const WebPreferences& preferences);
   virtual const WebPreferences& GetPreferences();
   virtual void SetPageEncoding(const std::wstring& encoding_name);
   virtual std::wstring GetMainFrameEncodingName();
-  virtual void MakeTextLarger();
-  virtual void MakeTextSmaller();
-  virtual void MakeTextStandardSize();
+  virtual void ZoomIn(bool text_only);
+  virtual void ZoomOut(bool text_only);
+  virtual void ResetZoom();
   virtual void CopyImageAt(int x, int y);
   virtual void InspectElement(int x, int y);
   virtual void ShowJavaScriptConsole();
@@ -101,6 +101,10 @@ class WebViewImpl : public WebView,
   virtual void DragTargetDragLeave();
   virtual void DragTargetDrop(
       int client_x, int client_y, int screen_x, int screen_y);
+  virtual void AutofillSuggestionsForNode(
+      int64 node_id,
+      const std::vector<std::wstring>& suggestions,
+      int default_suggestion_index);
 
   // WebViewImpl
 
@@ -114,24 +118,28 @@ class WebViewImpl : public WebView,
 
   static WebViewImpl* FromPage(WebCore::Page* page);
 
-  WebFrameImpl* main_frame() {
-    return main_frame_;
-  }
-
   WebViewDelegate* delegate() {
     return delegate_.get();
   }
 
-  // Returns the page object associated with this view. This may be NULL when
-  // the page is shutting down, but will be valid all other times.
+  // Returns the page object associated with this view.  This may be NULL when
+  // the page is shutting down, but will be valid at all other times.
   WebCore::Page* page() const {
     return page_.get();
   }
 
-  WebHistoryItemImpl* pending_history_item() const {
-    return pending_history_item_;
+  // Returns the main frame associated with this view.  This may be NULL when
+  // the page is shutting down, but will be valid at all other times.
+  WebFrameImpl* main_frame() {
+    return page_.get() ? WebFrameImpl::FromFrame(page_->mainFrame()) : NULL;
   }
 
+  // History related methods:
+  void SetCurrentHistoryItem(WebCore::HistoryItem* item);
+  WebCore::HistoryItem* GetPreviousHistoryItem();
+  void ObserveNewNavigation();
+
+  // Event related methods:
   void MouseMove(const WebMouseEvent& mouse_event);
   void MouseLeave(const WebMouseEvent& mouse_event);
   void MouseDown(const WebMouseEvent& mouse_event);
@@ -181,6 +189,9 @@ class WebViewImpl : public WebView,
                                  bool errored,
                                  const SkBitmap& image);
 
+  // Hides the autocomplete popup if it is showing.
+  void HideAutoCompletePopup();
+
  protected:
   friend class WebView;  // So WebView::Create can call our constructor
 
@@ -191,29 +202,13 @@ class WebViewImpl : public WebView,
                        WebCore::Frame* frame,
                        const WebCore::PlatformKeyboardEvent& e);
 
+  // TODO(darin): Figure out what happens to these methods.
+#if 0
   // WebCore::WidgetClientWin
-  virtual gfx::ViewHandle containingWindow();
-  virtual void invalidateRect(const WebCore::IntRect& damaged_rect);
-  virtual void scrollRect(int dx, int dy, const WebCore::IntRect& clip_rect);
-  virtual void popupOpened(WebCore::Widget* widget,
-                           const WebCore::IntRect& bounds);
-  virtual void popupClosed(WebCore::Widget* widget);
-  virtual void setCursor(const WebCore::Cursor& cursor);
-  virtual void setFocus();
   virtual const SkBitmap* getPreloadedResourceBitmap(int resource_id);
   virtual void onScrollPositionChanged(WebCore::Widget* widget);
-  virtual const WTF::Vector<RefPtr<WebCore::Range> >* getTickmarks(
-      WebCore::Frame* frame);
-  virtual size_t getActiveTickmarkIndex(WebCore::Frame* frame);
   virtual bool isHidden();
-
-  // WebCore::BackForwardListClient
-  virtual void didAddHistoryItem(WebCore::HistoryItem* item);
-  virtual void willGoToHistoryItem(WebCore::HistoryItem* item);
-  virtual WebCore::HistoryItem* itemAtIndex(int index);
-  virtual void goToItemAtIndexAsync(int index);
-  virtual int backListCount();
-  virtual int forwardListCount();
+#endif
 
   // Creates and returns a new SearchableFormData for the focused node.
   // It's up to the caller to free the returned SearchableFormData.
@@ -223,7 +218,6 @@ class WebViewImpl : public WebView,
   scoped_refptr<WebViewDelegate> delegate_;
   gfx::Size size_;
 
-  scoped_refptr<WebFrameImpl> main_frame_;
   gfx::Point last_mouse_position_;
   // Reference to the Frame that last had focus. This is set once when
   // we lose focus, and used when focus is gained to reinstall focus to
@@ -233,10 +227,7 @@ class WebViewImpl : public WebView,
   RefPtr<WebCore::Node> last_focused_node_;
   scoped_ptr<WebCore::Page> page_;
 
-  // The last history item that was accessed via itemAtIndex().  We keep track
-  // of this until willGoToHistoryItem() is called, so we can track the
-  // navigation.
-  scoped_refptr<WebHistoryItemImpl> pending_history_item_;
+  webkit_glue::BackForwardListClientImpl back_forward_list_client_impl_;
 
   // This flag is set when a new navigation is detected.  It is used to satisfy
   // the corresponding argument to WebViewDelegate::DidCommitLoadForFrame.
@@ -251,7 +242,7 @@ class WebViewImpl : public WebView,
   WebPreferences webprefs_;
 
   // A copy of the web drop data object we received from the browser.
-  scoped_ptr<WebDropData> current_drop_data_;
+  RefPtr<WebCore::ChromiumDataObject> current_drop_data_;
 
  private:
   // Returns true if the event was actually processed.
@@ -263,6 +254,9 @@ class WebViewImpl : public WebView,
   // Removes fetcher from the set of pending image fetchers and deletes it.
   // This is invoked after the download is completed (or fails).
   void DeleteImageResourceFetcher(ImageResourceFetcher* fetcher);
+
+  // Returns the currently focused Node or NULL if no node has focus.
+  WebCore::Node* GetFocusedNode();
 
   // ImageResourceFetchers schedule via DownloadImage.
   std::set<ImageResourceFetcher*> image_fetchers_;
@@ -277,8 +271,8 @@ class WebViewImpl : public WebView,
   gfx::Point last_mouse_down_point_;
 
   // Keeps track of the current text zoom level.  0 means no zoom, positive
-  // values mean larger text, negative numbers mean smaller text.
-  int text_zoom_level_;
+  // values mean larger text, negative numbers mean smaller.
+  int zoom_level_;
 
   bool context_menu_allowed_;
 
@@ -295,6 +289,13 @@ class WebViewImpl : public WebView,
 
   // Represents whether or not this object should process incoming IME events.
   bool ime_accept_events_;
+
+  // The currently shown autocomplete popup.
+  RefPtr<WebCore::PopupContainer> autocomplete_popup_;
+
+  // The popup client of the currently shown autocomplete popup.  Necessary for
+  // managing the life of the client.
+  RefPtr<AutocompletePopupMenuClient> autocomplete_popup_client_;
 
   // HACK: current_input_event is for ChromeClientImpl::show(), until we can fix
   // WebKit to pass enough information up into ChromeClient::show() so we can

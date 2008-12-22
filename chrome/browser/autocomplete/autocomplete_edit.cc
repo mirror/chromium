@@ -7,12 +7,13 @@
 #include <locale>
 
 #include "base/base_drag_source.h"
-#include "base/clipboard_util.h"
-#include "base/gfx/skia_utils.h"
+#include "base/clipboard.h"
 #include "base/iat_patch.h"
 #include "base/ref_counted.h"
+#include "base/scoped_clipboard_writer.h"
 #include "base/string_util.h"
 #include "chrome/app/chrome_dll_resource.h"
+#include "chrome/browser/autocomplete/autocomplete_accessibility.h"
 #include "chrome/browser/autocomplete/autocomplete_popup.h"
 #include "chrome/browser/autocomplete/edit_drop_target.h"
 #include "chrome/browser/autocomplete/keyword_provider.h"
@@ -32,8 +33,8 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/os_exchange_data.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/accessibility/autocomplete_accessibility.h"
 #include "googleurl/src/url_util.h"
+#include "skia/ext/skia_utils_win.h"
 
 #include "generated_resources.h"
 
@@ -69,10 +70,9 @@ AutocompleteEditModel::AutocompleteEditModel(
       show_search_hint_(true),
       profile_(profile) {
   if (++paste_and_go_controller_refcount == 1) {
-    // We don't have a controller yet, so create one.  No listener is needed
-    // since we'll only be doing synchronous calls, and no profile is set since
+    // We don't have a controller yet, so create one.  No profile is set since
     // we'll set this before each call to the controller.
-    paste_and_go_controller = new AutocompleteController(NULL, NULL);
+    paste_and_go_controller = new AutocompleteController(NULL);
   }
 }
 
@@ -137,9 +137,8 @@ void AutocompleteEditModel::SetUserText(const std::wstring& text) {
 void AutocompleteEditModel::GetDataForURLExport(GURL* url,
                                                 std::wstring* title,
                                                 SkBitmap* favicon) {
-  const std::wstring url_str(GetURLForCurrentText(NULL, NULL, NULL));
-  *url = GURL(url_str);
-  if (url_str == permanent_text_) {
+  *url = GetURLForCurrentText(NULL, NULL, NULL);
+  if (UTF8ToWide(url->possibly_invalid_spec()) == permanent_text_) {
     *title = controller_->GetTitle();
     *favicon = controller_->GetFavIcon();
   }
@@ -205,14 +204,9 @@ void AutocompleteEditModel::StartAutocomplete(
 
 bool AutocompleteEditModel::CanPasteAndGo(const std::wstring& text) const {
   // Reset local state.
-  paste_and_go_url_.clear();
+  paste_and_go_url_ = GURL();
   paste_and_go_transition_ = PageTransition::TYPED;
-  paste_and_go_alternate_nav_url_.clear();
-
-  // See if the clipboard text can be parsed.
-  const AutocompleteInput input(text, std::wstring(), true, false);
-  if (input.type() == AutocompleteInput::INVALID)
-    return false;
+  paste_and_go_alternate_nav_url_ = GURL();
 
   // Ask the controller what do do with this input.
   paste_and_go_controller->SetProfile(profile_);
@@ -220,10 +214,9 @@ bool AutocompleteEditModel::CanPasteAndGo(const std::wstring& text) const {
                               // paste_and_go_controller for many tabs which
                               // may all have different profiles, it ensures
                               // we're always using the right one.
-  const bool done = paste_and_go_controller->Start(input, false, true);
-  DCHECK(done);
-  AutocompleteResult result;
-  paste_and_go_controller->GetResult(&result);
+  paste_and_go_controller->Start(text, std::wstring(), true, false, true);
+  DCHECK(paste_and_go_controller->done());
+  const AutocompleteResult& result = paste_and_go_controller->result();
   if (result.empty())
     return false;
 
@@ -232,9 +225,10 @@ bool AutocompleteEditModel::CanPasteAndGo(const std::wstring& text) const {
   DCHECK(match != result.end());
   paste_and_go_url_ = match->destination_url;
   paste_and_go_transition_ = match->transition;
-  paste_and_go_alternate_nav_url_ = result.GetAlternateNavURL(input, match);
+  paste_and_go_alternate_nav_url_ =
+      result.GetAlternateNavURL(paste_and_go_controller->input(), match);
 
-  return !paste_and_go_url_.empty();
+  return paste_and_go_url_.is_valid();
 }
 
 void AutocompleteEditModel::PasteAndGo() {
@@ -252,14 +246,14 @@ void AutocompleteEditModel::AcceptInput(WindowOpenDisposition disposition,
   // Get the URL and transition type for the selected entry.
   PageTransition::Type transition;
   bool is_history_what_you_typed_match;
-  std::wstring alternate_nav_url;
-  const std::wstring url(GetURLForCurrentText(&transition,
-                                              &is_history_what_you_typed_match,
-                                              &alternate_nav_url));
-  if (url.empty())
+  GURL alternate_nav_url;
+  const GURL url(GetURLForCurrentText(&transition,
+                                      &is_history_what_you_typed_match,
+                                      &alternate_nav_url));
+  if (!url.is_valid())
     return;
 
-  if (url == permanent_text_) {
+  if (UTF8ToWide(url.spec()) == permanent_text_) {
     // When the user hit enter on the existing permanent URL, treat it like a
     // reload for scoring purposes.  We could detect this by just checking
     // user_input_in_progress_, but it seems better to treat "edits" that end
@@ -339,11 +333,11 @@ void AutocompleteEditModel::ClearKeyword(const std::wstring& visible_text) {
 }
 
 bool AutocompleteEditModel::query_in_progress() const {
-  return popup_->query_in_progress();
+  return !popup_->autocomplete_controller()->done();
 }
 
-const AutocompleteResult* AutocompleteEditModel::latest_result() const {
-  return popup_->latest_result();
+const AutocompleteResult& AutocompleteEditModel::result() const {
+  return popup_->autocomplete_controller()->result();
 }
 
 void AutocompleteEditModel::OnSetFocus(bool control_down) {
@@ -407,16 +401,21 @@ void AutocompleteEditModel::OnUpOrDownKeyPressed(int count) {
   // NOTE: This purposefully don't trigger any code that resets paste_state_.
 
   if (!popup_->is_open()) {
-    if (!popup_->query_in_progress()) {
+    if (popup_->autocomplete_controller()->done()) {
       // The popup is neither open nor working on a query already.  So, start an
       // autocomplete query for the current text.  This also sets
       // user_input_in_progress_ to true, which we want: if the user has started
       // to interact with the popup, changing the permanent_text_ shouldn't
       // change the displayed text.
       // Note: This does not force the popup to open immediately.
+      // TODO(pkasting): We should, in fact, force this particular query to open
+      // the popup immediately.
       if (!user_input_in_progress_)
         InternalSetUserText(permanent_text_);
       view_->UpdatePopup();
+    } else {
+      // TODO(pkasting): The popup is working on a query but is not open.  We
+      // should force it to open immediately.
     }
   } else {
     // The popup is open, so the user should be able to interact with it
@@ -435,20 +434,23 @@ void AutocompleteEditModel::OnPopupDataChanged(
     bool is_temporary_text,
     const std::wstring& keyword,
     bool is_keyword_hint,
-    bool can_show_search_hint) {
+    AutocompleteMatch::Type type) {
   // We don't want to show the search hint if we're showing a keyword hint or
   // selected keyword, or (subtle!) if we would be showing a selected keyword
   // but for keyword_ui_state_ == NO_KEYWORD.
-  can_show_search_hint &= keyword.empty();
+  const bool show_search_hint = keyword.empty() &&
+      ((type == AutocompleteMatch::SEARCH_WHAT_YOU_TYPED) ||
+       (type == AutocompleteMatch::SEARCH_HISTORY) ||
+       (type == AutocompleteMatch::SEARCH_SUGGEST));
 
   // Update keyword/hint-related local state.
   bool keyword_state_changed = (keyword_ != keyword) ||
       ((is_keyword_hint_ != is_keyword_hint) && !keyword.empty()) ||
-      (show_search_hint_ != can_show_search_hint);
+      (show_search_hint_ != show_search_hint);
   if (keyword_state_changed) {
     keyword_ = keyword;
     is_keyword_hint_ = is_keyword_hint;
-    show_search_hint_ = can_show_search_hint;
+    show_search_hint_ = show_search_hint;
   }
 
   // Handle changes to temporary text.
@@ -562,11 +564,11 @@ std::wstring AutocompleteEditModel::UserTextFromDisplayText(
       text : (keyword_ + L" " + text);
 }
 
-std::wstring AutocompleteEditModel::GetURLForCurrentText(
+GURL AutocompleteEditModel::GetURLForCurrentText(
     PageTransition::Type* transition,
     bool* is_history_what_you_typed_match,
-    std::wstring* alternate_nav_url) {
-  return (popup_->is_open() || popup_->query_in_progress()) ?
+    GURL* alternate_nav_url) {
+  return (popup_->is_open() || !popup_->autocomplete_controller()->done()) ?
       popup_->URLsForCurrentSelection(transition,
                                       is_history_what_you_typed_match,
                                       alternate_nav_url) :
@@ -642,6 +644,13 @@ static const SkColor kSchemeSelectedStrikeoutColor =
 // EndPaint() and provide a memory DC instead.  See OnPaint().
 static HWND edit_hwnd = NULL;
 static PAINTSTRUCT paint_struct;
+
+// Returns a lazily initialized property bag accessor for saving our state in a
+// TabContents.
+static PropertyAccessor<AutocompleteEditState>* GetStateAccessor() {
+  static PropertyAccessor<AutocompleteEditState> state;
+  return &state;
+}
 
 AutocompleteEditView::AutocompleteEditView(
     const ChromeFont& font,
@@ -753,8 +762,8 @@ AutocompleteEditView::AutocompleteEditView(
     context_menu_->AppendMenuItemWithLabel(
         IDS_PASTE_AND_GO, l10n_util::GetString(IDS_PASTE_AND_GO));
     context_menu_->AppendSeparator();
-    context_menu_->AppendMenuItemWithLabel(IDS_SELECTALL,
-                                           l10n_util::GetString(IDS_SELECTALL));
+    context_menu_->AppendMenuItemWithLabel(
+        IDS_SELECT_ALL, l10n_util::GetString(IDS_SELECT_ALL));
     context_menu_->AppendSeparator();
     context_menu_->AppendMenuItemWithLabel(
         IDS_EDIT_SEARCH_ENGINES, l10n_util::GetString(IDS_EDIT_SEARCH_ENGINES));
@@ -785,8 +794,10 @@ void AutocompleteEditView::SaveStateToTab(TabContents* tab) {
 
   CHARRANGE selection;
   GetSelection(selection);
-  tab->set_saved_location_bar_state(new AutocompleteEditState(model_state,
-      State(selection, saved_selection_for_focus_change_)));
+  GetStateAccessor()->SetProperty(tab->property_bag(),
+      AutocompleteEditState(
+          model_state,
+          State(selection, saved_selection_for_focus_change_)));
 }
 
 void AutocompleteEditView::Update(const TabContents* tab_for_state_restoring) {
@@ -823,8 +834,8 @@ void AutocompleteEditView::Update(const TabContents* tab_for_state_restoring) {
     // won't overwrite all our local state.
     RevertAll();
 
-    const AutocompleteEditState* const state =
-        tab_for_state_restoring->saved_location_bar_state();
+    const AutocompleteEditState* state = GetStateAccessor()->GetProperty(
+        tab_for_state_restoring->property_bag());
     if (state) {
       model_->RestoreState(state->model_state);
 
@@ -865,13 +876,13 @@ void AutocompleteEditView::Update(const TabContents* tab_for_state_restoring) {
   }
 }
 
-void AutocompleteEditView::OpenURL(const std::wstring& url,
+void AutocompleteEditView::OpenURL(const GURL& url,
                                    WindowOpenDisposition disposition,
                                    PageTransition::Type transition,
-                                   const std::wstring& alternate_nav_url,
+                                   const GURL& alternate_nav_url,
                                    size_t selected_line,
                                    const std::wstring& keyword) {
-  if (url.empty())
+  if (!url.is_valid())
     return;
 
   model_->SendOpenNotification(selected_line, keyword);
@@ -1171,7 +1182,7 @@ bool AutocompleteEditView::IsCommandEnabled(int id) const {
     case IDS_COPY:         return !!CanCopy();
     case IDS_PASTE:        return !!CanPaste();
     case IDS_PASTE_AND_GO: return CanPasteAndGo(GetClipboardText());
-    case IDS_SELECTALL:    return !!CanSelectAll();
+    case IDS_SELECT_ALL:   return !!CanSelectAll();
     case IDS_EDIT_SEARCH_ENGINES:
       return command_controller_->IsCommandEnabled(IDC_EDIT_SEARCH_ENGINES);
     default:               NOTREACHED(); return false;
@@ -1216,7 +1227,7 @@ void AutocompleteEditView::ExecuteCommand(int id) {
       Paste();
       break;
 
-    case IDS_SELECTALL:
+    case IDS_SELECT_ALL:
       SelectAll(false);
       break;
 
@@ -1414,9 +1425,8 @@ void AutocompleteEditView::OnCopy() {
   if (text.empty())
     return;
 
-  ClipboardService* clipboard = g_browser_process->clipboard_service();
-  clipboard->Clear();
-  clipboard->WriteText(text);
+  ScopedClipboardWriter scw(g_browser_process->clipboard_service());
+  scw.WriteText(text);
 
   // Check if the user is copying the whole address bar.  If they are, we
   // assume they are trying to copy a URL and write this to the clipboard as a
@@ -1430,7 +1440,7 @@ void AutocompleteEditView::OnCopy() {
   // which will screw up our calculation of the desired_tld.
   GURL url;
   if (model_->GetURLForText(text, &url))
-    clipboard->WriteHyperlink(text, url.spec());
+    scw.WriteHyperlink(text, url.spec());
 }
 
 void AutocompleteEditView::OnCut() {
@@ -2304,7 +2314,7 @@ std::wstring AutocompleteEditView::GetClipboardText() const {
   // and pastes from the URL bar to itself, the text will get fixed up and
   // cannonicalized, which is not what the user expects.  By pasting in this
   // order, we are sure to paste what the user copied.
-  if (clipboard->IsFormatAvailable(ClipboardUtil::GetUrlWFormat()->cfFormat)) {
+  if (clipboard->IsFormatAvailable(Clipboard::GetUrlWFormatType())) {
     std::string url_str;
     clipboard->ReadBookmark(NULL, &url_str);
     // pass resulting url string through GURL to normalize

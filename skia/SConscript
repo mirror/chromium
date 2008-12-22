@@ -13,7 +13,7 @@ env.Prepend(
     'corecg',
     'sgl',
     'picture',
-    '#..',
+    '$CHROME_SRC_DIR',
   ],
 )
 
@@ -23,7 +23,7 @@ env.Append(
   ],
 )
 
-if env['PLATFORM'] == 'win32':
+if env.Bit('windows'):
   env.Append(
     CCFLAGS = [
       '/TP',
@@ -36,9 +36,8 @@ if env['PLATFORM'] == 'win32':
       '/wd4800',
     ],
   )
-elif env['PLATFORM'] in ('posix', 'darwin'):
-  # Because images/SkStream.cpp has len asserts.
-  env.Append(CCFLAGS = ['-Wno-unused-variable'])
+elif env.Bit('posix'):
+  env.Append(CCFLAGS = ['-Wno-unused'])
 
 input_files = [
   'animator/SkTime.cpp',
@@ -49,10 +48,12 @@ input_files = [
   'corecg/SkDebug.cpp',
   'corecg/SkDebug_stdio.cpp',
   'corecg/SkFloat.cpp',
+  'corecg/SkFloatBits.cpp',
   'corecg/SkInterpolator.cpp',
   'corecg/SkMath.cpp',
   'corecg/SkMatrix.cpp',
   'corecg/SkMemory_stdlib.cpp',
+  'corecg/SkPageFlipper.cpp',
   'corecg/SkPoint.cpp',
   'corecg/SkRect.cpp',
   'corecg/SkRegion.cpp',
@@ -80,10 +81,14 @@ input_files = [
   'effects/SkShaderExtras.cpp',
   'effects/SkTransparentShader.cpp',
   'effects/SkUnitMappers.cpp',
+  'ext/image_operations.cc',
+  'ext/convolver.cc',
+  'ext/skia_utils.cc',
   'images/SkImageDecoder.cpp',
   'images/SkImageRef.cpp',
   'images/SkStream.cpp',
-  'images/SkStream.cpp',
+  'picture/SkPathHeap.cpp',
+  'picture/SkPicture.cpp',
   'picture/SkPictureFlat.cpp',
   'picture/SkPicturePlayback.cpp',
   'picture/SkPictureRecord.cpp',
@@ -129,7 +134,6 @@ input_files = [
   'sgl/SkPath.cpp',
   'sgl/SkPathEffect.cpp',
   'sgl/SkPathMeasure.cpp',
-  'sgl/SkPicture.cpp',
   'sgl/SkPixelRef.cpp',
   'sgl/SkProcSpriteBlitter.cpp',
   'sgl/SkPtrRecorder.cpp',
@@ -155,10 +159,39 @@ input_files = [
   'sgl/SkXfermode.cpp',
 ]
 
-if env['PLATFORM'] in ('darwin', 'posix'):
+if env.Bit('linux'):
+  input_files.append('ext/bitmap_platform_device_linux.cc')
+  input_files.append('ext/platform_canvas_linux.cc')
+  input_files.append('ext/platform_device_linux.cc')
+
+  # On Linux we use Skia to render fonts with FreeType and fontconfig
+  input_files.remove('sgl/SkTypeface_fake.cpp')
+  input_files.remove('ports/SkFontHost_none.cpp')
+  input_files.append('sgl/SkTypeface.cpp')
+  input_files.append('ports/SkFontHost_FreeType.cpp')
+  input_files.append('ports/SkFontHost_TrueType_Tables.cpp')
+  input_files.append('ports/SkFontHost_gamma_none.cpp')
+  input_files.append('ports/SkFontHost_fontconfig.cpp')
+  input_files.append('images/SkMMapStream.cpp')
+
+  env.Append(CCFLAGS = ['-Wno-unused-function'])
+
+if env.Bit('posix'):
   input_files.append('ports/SkThread_pthread.cpp')
 
-if env['PLATFORM'] == 'win32':
+if env.Bit('mac'):
+  input_files.append('ext/bitmap_platform_device_mac.cc')
+  input_files.append('ext/platform_canvas_mac.cc')
+  input_files.append('ext/platform_device_mac.cc')
+
+if env.Bit('windows'):
+  input_files.append('ext/bitmap_platform_device_win.cc')
+  input_files.append('ext/platform_canvas_win.cc')
+  input_files.append('ext/platform_device_win.cc')
+  input_files.append('ext/skia_utils_win.cc')
+  input_files.append('ext/vector_canvas.cc')
+  input_files.append('ext/vector_device.cc')
+
   input_files.append('ports/SkThread_win.cpp')
 
   env_p = env.Clone(
@@ -178,3 +211,5 @@ if env['PLATFORM'] == 'win32':
 
 env.ChromeStaticLibrary('skia', input_files)
 
+env.ChromeMSVSProject('$SKIA_DIR/skia.vcproj',
+                guid='{CD9CA56E-4E94-444C-87D4-58CA1E6F300D}')

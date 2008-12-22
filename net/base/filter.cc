@@ -321,7 +321,7 @@ void Filter::SetMimeType(const std::string& mime_type) {
     next_filter_->SetMimeType(mime_type);
 }
 
-void Filter::SetConnectTime(const Time& time) {
+void Filter::SetConnectTime(const base::Time& time) {
   connect_time_ = time;
   if (next_filter_.get())
     next_filter_->SetConnectTime(time);
