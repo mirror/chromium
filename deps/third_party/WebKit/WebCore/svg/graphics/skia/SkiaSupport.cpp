@@ -47,35 +47,6 @@
 
 namespace WebCore {
 
-void applyStrokeStyleToContext(GraphicsContext* context, const RenderStyle* style, const RenderObject* object)
-{
-    const SVGRenderStyle* svgStyle = style->svgStyle();
-    
-    context->setStrokeThickness(SVGRenderStyle::cssPrimitiveToLength(object, svgStyle->strokeWidth(), 1.0));
-
-    context->setLineCap(svgStyle->capStyle());
-    context->setLineJoin(svgStyle->joinStyle());
-
-    if (svgStyle->joinStyle() == MiterJoin)
-        context->setMiterLimit(svgStyle->strokeMiterLimit());
-
-    const DashArray& dashes = dashArrayFromRenderingStyle(style);
-    float dashOffset = SVGRenderStyle::cssPrimitiveToLength(object, style->svgStyle()->strokeDashOffset(), 0.0);
-
-    unsigned int dashLength = !dashes.isEmpty() ? dashes.size() : 0;
-    if(dashLength) {
-        unsigned int count = (dashLength % 2) == 0 ? dashLength : dashLength * 2;
-        SkScalar* intervals = new SkScalar[count];
-
-        for(unsigned int i = 0; i < count; i++)
-            intervals[i] = dashes[i % dashLength];
-
-        context->platformContext()->setDashPathEffect(new SkDashPathEffect(intervals, count, dashOffset));
-
-        delete[] intervals;
-    }
-}
-
 GraphicsContext* scratchContext()
 {
     static ImageBuffer* scratch = NULL;
@@ -84,32 +55,6 @@ GraphicsContext* scratchContext()
     // We don't bother checking for failure creating the ImageBuffer, since our
     // ImageBuffer initializer won't fail.
     return scratch->context();
-}
-
-FloatRect boundingBoxForCurrentStroke(const GraphicsContext* context)
-{
-    SkPaint paint;
-    context->platformContext()->setupPaintForStroking(&paint, 0, 0);
-    SkPath boundingPath;
-    paint.getFillPath(*context->platformContext()->currentPath(),
-                      &boundingPath);
-    SkRect r;
-    boundingPath.computeBounds(&r, SkPath::kExact_BoundsType);
-    return r;
-}
-
-FloatRect strokeBoundingBox(const Path& path, RenderStyle* style,
-                            const RenderObject* object)
-{ 
-    GraphicsContext* scratch = scratchContext();
-    scratch->save();
-    scratch->beginPath();
-    scratch->addPath(path);
-    applyStrokeStyleToContext(scratch, style, object);
-
-    FloatRect r = boundingBoxForCurrentStroke(scratch);
-    scratch->restore();
-    return r;
 }
 
 }

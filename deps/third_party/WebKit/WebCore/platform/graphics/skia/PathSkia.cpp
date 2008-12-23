@@ -30,7 +30,9 @@
 #include "config.h"
 #include "Path.h"
 #include "FloatRect.h"
+#include "ImageBuffer.h"
 #include "AffineTransform.h"
+#include "StrokeStyleApplier.h"
 
 #include "SkPath.h"
 #include "SkRegion.h"
@@ -282,6 +284,47 @@ String Path::debugString() const
     }
 
     return result.stripWhiteSpace();
+}
+
+// TODO: This is a duplicate of scratchContext() in SkiaSupport. Can't
+// currently include "SkiaSupport.h" from here, need to fix.
+static GraphicsContext* scratchContext()
+{
+    static ImageBuffer* scratch = NULL;
+    if (!scratch)
+        scratch = ImageBuffer::create(IntSize(1, 1), false).release();
+    // We don't bother checking for failure creating the ImageBuffer, since our
+    // ImageBuffer initializer won't fail.
+    return scratch->context();
+}
+
+// Computes the bounding box for the stroke and style currently selected into
+// the given bounding box. This also takes into account the stroke width.
+static FloatRect boundingBoxForCurrentStroke(const GraphicsContext* context)
+{
+    SkPaint paint;
+    context->platformContext()->setupPaintForStroking(&paint, 0, 0);
+    SkPath boundingPath;
+    paint.getFillPath(*context->platformContext()->currentPath(),
+                      &boundingPath);
+    SkRect r;
+    boundingPath.computeBounds(&r, SkPath::kExact_BoundsType);
+    return r;
+}
+
+FloatRect Path::strokeBoundingRect(StrokeStyleApplier* applier)
+{
+    GraphicsContext* scratch = scratchContext();
+    scratch->save();
+    scratch->beginPath();
+    scratch->addPath(*this);
+
+    if (applier)
+        applier->strokeStyle(scratch);
+
+    FloatRect r = boundingBoxForCurrentStroke(scratch);
+    scratch->restore();
+    return r;
 }
 
 } // namespace WebCore

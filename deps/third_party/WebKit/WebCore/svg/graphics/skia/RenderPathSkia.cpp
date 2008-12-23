@@ -64,14 +64,6 @@ bool RenderPath::strokeContains(const FloatPoint& point, bool requiresStroke) co
     return contains;
 }
 
-FloatRect RenderPath::strokeBBox() const
-{
-    if (style()->svgStyle()->hasStroke())
-        return strokeBoundingBox(path(), style(), this);
-
-    return path().boundingRect();
-}
-
 }
 
 #endif // ENABLE(SVG)
