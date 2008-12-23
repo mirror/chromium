@@ -287,6 +287,21 @@ void TransformDimensions(const SkMatrix& matrix,
     *dest_height = SkScalarToFloat((dest_points[2] - dest_points[0]).length());
 }
 
+// A helper method for translating negative width and height values.
+FloatRect normalizeRect(const FloatRect& rect)
+{
+    FloatRect norm = rect;
+    if (norm.width() < 0) {
+        norm.setX(norm.x() + norm.width());
+        norm.setWidth(-norm.width());
+    }
+    if (norm.height() < 0) {
+        norm.setY(norm.y() + norm.height());
+        norm.setHeight(-norm.height());
+    }
+    return norm;
+}
+
 }  // namespace
 
 void FrameData::clear()
@@ -424,13 +439,16 @@ void BitmapImage::draw(GraphicsContext* ctxt, const FloatRect& dstRect,
     if (!bm)
         return;  // It's too early and we don't have an image yet.
 
-    if (srcRect.isEmpty() || dstRect.isEmpty())
+    FloatRect normDstRect = normalizeRect(dstRect);
+    FloatRect normSrcRect = normalizeRect(srcRect);
+
+    if (normSrcRect.isEmpty() || normDstRect.isEmpty())
         return;  // Nothing to draw.
 
     paintSkBitmap(ctxt->platformContext(),
                   *bm,
-                  enclosingIntRect(srcRect),
-                  enclosingIntRect(dstRect),
+                  enclosingIntRect(normSrcRect),
+                  enclosingIntRect(normDstRect),
                   WebCoreCompositeToSkiaComposite(compositeOp));
 }
 
@@ -439,13 +457,16 @@ void BitmapImageSingleFrameSkia::draw(GraphicsContext* ctxt,
                                       const FloatRect& srcRect,
                                       CompositeOperator compositeOp)
 {
-    if (srcRect.isEmpty() || dstRect.isEmpty())
+    FloatRect normDstRect = normalizeRect(dstRect);
+    FloatRect normSrcRect = normalizeRect(srcRect);
+
+    if (normSrcRect.isEmpty() || normDstRect.isEmpty())
         return;  // Nothing to draw.
 
     paintSkBitmap(ctxt->platformContext(),
                   m_nativeImage,
-                  enclosingIntRect(srcRect),
-                  enclosingIntRect(dstRect),
+                  enclosingIntRect(normSrcRect),
+                  enclosingIntRect(normDstRect),
                   WebCoreCompositeToSkiaComposite(compositeOp));
 }
 
