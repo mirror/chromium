@@ -110,6 +110,13 @@ private:
     unsigned count_;
 };
 
+// TODO(brettw): Figure out whether we still need this method
+// This method is always compiled out, when linker picks its counterpart from
+// SVGPaintServerGradient.cpp, so we're commenting it out for now to avoid
+// link warnings.
+// http://crbug.com/5804
+#if 0 
+
 bool SVGPaintServerGradient::setup(GraphicsContext*& context, 
     const RenderObject* object, 
     SVGPaintTargetType type, 
@@ -223,6 +230,8 @@ bool SVGPaintServerGradient::setup(GraphicsContext*& context,
 
     return false;
 }
+
+#endif
 
 } // namespace WebCore
 
