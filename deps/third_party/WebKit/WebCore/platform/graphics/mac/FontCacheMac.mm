@@ -37,6 +37,10 @@
 #import "WebFontCache.h"
 #include <wtf/StdLibExtras.h>
 
+#if PLATFORM(CHROMIUM)
+#include "ChromiumBridge.h"
+#endif
+
 #ifdef BUILDING_ON_TIGER
 typedef int NSInteger;
 #endif
@@ -198,6 +202,47 @@ FontPlatformData* FontCache::createFontPlatformData(const FontDescription& fontD
     result->m_syntheticBold = isAppKitFontWeightBold(weight) && !isAppKitFontWeightBold(actualWeight);
     result->m_syntheticOblique = (traits & NSFontItalicTrait) && !(actualTraits & NSFontItalicTrait);
     return result;
+}
+
+// TODO(jungshik): This may not be the best place to put this function. See FontCache.h.
+AtomicString FontCache::getGenericFontForScript(UScriptCode script, const FontDescription& description)
+{
+#if PLATFORM(CHROMIUM)
+    if (ChromiumBridge::layoutTestMode())
+        return emptyAtom;
+#endif
+    // TODO(pinkerton) -- flesh this out with some script handling code
+    return emptyAtom;
+}
+
+// default implementation taken from 
+// WebCore/port/platform/graphics/FontCache.cpp. Windows makes lots of changes
+// due to their font representations, we can probably stick with the original
+// fallbacks for Mac. 
+const AtomicString& FontCache::alternateFamilyName(const AtomicString& familyName)
+{
+    // Alias Courier <-> Courier New
+    static AtomicString courier("Courier"), courierNew("Courier New");
+    if (equalIgnoringCase(familyName, courier))
+        return courierNew;
+    if (equalIgnoringCase(familyName, courierNew))
+        return courier;
+
+    // Alias Times and Times New Roman.
+    static AtomicString times("Times"), timesNewRoman("Times New Roman");
+    if (equalIgnoringCase(familyName, times))
+        return timesNewRoman;
+    if (equalIgnoringCase(familyName, timesNewRoman))
+        return times;
+    
+    // Alias Arial and Helvetica
+    static AtomicString arial("Arial"), helvetica("Helvetica");
+    if (equalIgnoringCase(familyName, arial))
+        return helvetica;
+    if (equalIgnoringCase(familyName, helvetica))
+        return arial;
+
+    return emptyAtom;
 }
 
 } // namespace WebCore
