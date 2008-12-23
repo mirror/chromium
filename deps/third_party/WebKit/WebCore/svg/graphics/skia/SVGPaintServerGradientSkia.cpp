@@ -41,7 +41,6 @@
 #include "RenderPath.h"
 #include "RenderStyle.h"
 #include "SVGGradientElement.h"
-#include "SkiaSupport.h"
 
 #include "SkGradientShader.h"
 #include "SkPath.h"

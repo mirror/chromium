@@ -31,7 +31,6 @@
 #include "Path.h"
 #include "FloatRect.h"
 #include "ImageBuffer.h"
-#include "AffineTransform.h"
 #include "StrokeStyleApplier.h"
 
 #include "SkPath.h"
@@ -284,18 +283,6 @@ String Path::debugString() const
     }
 
     return result.stripWhiteSpace();
-}
-
-// TODO: This is a duplicate of scratchContext() in SkiaSupport. Can't
-// currently include "SkiaSupport.h" from here, need to fix.
-static GraphicsContext* scratchContext()
-{
-    static ImageBuffer* scratch = NULL;
-    if (!scratch)
-        scratch = ImageBuffer::create(IntSize(1, 1), false).release();
-    // We don't bother checking for failure creating the ImageBuffer, since our
-    // ImageBuffer initializer won't fail.
-    return scratch->context();
 }
 
 // Computes the bounding box for the stroke and style currently selected into

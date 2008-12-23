@@ -31,7 +31,6 @@
 #include "GraphicsContext.h"
 #include "PlatformContextSkia.h"
 #include "RenderPath.h"
-#include "SkiaSupport.h"
 #include "SkiaUtils.h"
 #include "SkPaint.h"
 #include "SkPath.h"

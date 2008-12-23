@@ -36,7 +36,6 @@
 #include "Pattern.h"
 #include "SVGPatternElement.h"
 #include "SVGPaintServerPattern.h"
-#include "SkiaSupport.h"
 
 #include "SkShader.h"
 #include "SkiaUtils.h"

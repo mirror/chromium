@@ -31,6 +31,7 @@
 
 #include "SkiaUtils.h"
 
+#include "ImageBuffer.h"
 #include "SharedBuffer.h"
 #include "SkCanvas.h"
 #include "SkColorPriv.h"
@@ -224,6 +225,16 @@ bool SkPathContainsPoint(SkPath* orig_path, WebCore::FloatPoint point, SkPath::F
 
     orig_path->setFillType(orig_ft);    // restore
     return contains;
+}
+
+GraphicsContext* scratchContext()
+{
+    static ImageBuffer* scratch = NULL;
+    if (!scratch)
+        scratch = ImageBuffer::create(IntSize(1, 1), false).release();
+    // We don't bother checking for failure creating the ImageBuffer, since our
+    // ImageBuffer initializer won't fail.
+    return scratch->context();
 }
 
 }  // namespace WebCore
