@@ -1847,6 +1847,11 @@ const KURL& Document::virtualURL() const
     return m_url;
 }
 
+KURL Document::virtualCompleteURL(const String& url) const
+{
+    return completeURL(url);
+}
+
 void Document::setURL(const KURL& url)
 {
     const KURL& newURL = url.isEmpty() ? blankURL() : url;
@@ -3241,6 +3246,7 @@ KURL Document::completeURL(const String& url) const
 {
     // Always return a null URL when passed a null string.
     // FIXME: Should we change the KURL constructor to have this behavior?
+    // See also [CSS]StyleSheet::completeURL(const String&)
     if (url.isNull())
         return KURL();
     if (!m_decoder)

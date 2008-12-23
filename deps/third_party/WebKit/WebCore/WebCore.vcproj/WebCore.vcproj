@@ -17374,6 +17374,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\wml\WMLMetaElement.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\wml\WMLMetaElement.h"
+				>
+			</File>
+			<File
 				RelativePath="..\wml\WMLNoopElement.cpp"
 				>
 			</File>
