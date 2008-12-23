@@ -1,6 +1,5 @@
 /**
- * Copyright (C) 2008 Torch Mobile Inc. All rights reserved.
- *               http://www.torchmobile.com/
+ * Copyright (C) 2008 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -25,8 +24,6 @@
 #if ENABLE(WML)
 #include "WMLElement.h"
 
-#include <wtf/HashSet.h>
-
 namespace WebCore {
 
 class WMLPostfieldElement : public WMLElement {
@@ -38,6 +35,9 @@ public:
 
     String name() const { return m_name; }
     String value() const { return m_value; }
+
+    // Encode name() and value() in a CString using the passed encoding
+    void encodeData(const TextEncoding&, CString& name, CString& value);
 
 private:
     String m_name;

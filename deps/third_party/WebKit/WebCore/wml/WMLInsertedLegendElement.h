@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2007 Alp Toker <alp@atoker.com>
+/**
+ * Copyright (C) 2008 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -15,25 +15,26 @@
  * along with this library; see the file COPYING.LIB.  If not, write to
  * the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
  * Boston, MA 02110-1301, USA.
+ *
  */
 
-#include "config.h"
-#include "RenderPath.h"
+#ifndef WMLInsertedLegendElement_h
+#define WMLInsertedLegendElement_h
 
-#include "CairoPath.h"
-#include "SVGPaintServer.h"
+#if ENABLE(WML)
+#include "WMLElement.h"
 
 namespace WebCore {
 
-bool RenderPath::strokeContains(const FloatPoint& point, bool requiresStroke) const
-{
-    if (requiresStroke && !SVGPaintServer::strokePaintServer(style(), this))
-        return false;
+class WMLInsertedLegendElement : public WMLElement {
+public:
+    WMLInsertedLegendElement(const QualifiedName& tagName, Document*);
+    virtual ~WMLInsertedLegendElement();
 
-    cairo_t* cr = path().platformPath()->m_cr;
-
-    // TODO: set stroke properties
-    return cairo_in_stroke(cr, point.x(), point.y());
-}
+    virtual RenderObject* createRenderer(RenderArena*, RenderStyle*);
+};
 
 }
+
+#endif
+#endif
