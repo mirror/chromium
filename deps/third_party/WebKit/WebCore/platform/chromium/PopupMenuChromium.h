@@ -6,21 +6,14 @@
 #define PopupMenuChromium_h
 
 #include "config.h"
-
-#if COMPILER(MSVC)
-__pragma(warning(push, 0))
-#endif
 #include "PopupMenuClient.h"
 
 #include "FramelessScrollView.h"
 #include "IntRect.h"
-#if COMPILER(MSVC)
-__pragma(warning(pop))
-#endif
-
 
 namespace WebCore {
-    
+
+class FrameView;
 class PopupListBox;
 
 // TODO(darin): Our FramelessScrollView classes need to implement HostWindow!

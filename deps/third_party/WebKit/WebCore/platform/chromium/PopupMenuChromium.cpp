@@ -28,11 +28,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "config.h"
-
-#if COMPILER(MSVC)
-__pragma(warning(push, 0))
-#endif
-#include "PopupMenu.h"
+#include "PopupMenuChromium.h"
 
 #include "CharacterNames.h"
 #include "ChromeClientChromium.h"
@@ -52,16 +48,12 @@ __pragma(warning(push, 0))
 #include "PlatformMouseEvent.h"
 #include "PlatformScreen.h"
 #include "PlatformWheelEvent.h"
+#include "PopupMenu.h"
 #include "RenderBlock.h"
 #include "RenderTheme.h"
 #include "ScrollbarTheme.h"
 #include "SystemTime.h"
 #include "Widget.h"
-#if COMPILER(MSVC)
-__pragma(warning(pop))
-#endif
-
-#include "webkit/port/platform/chromium/PopupMenuChromium.h"
 
 using namespace WTF;
 using namespace Unicode;
