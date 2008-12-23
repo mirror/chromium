@@ -890,6 +890,7 @@ SOURCES += \
     platform/network/AuthenticationChallengeBase.cpp \
     platform/network/Credential.cpp \
     platform/network/FormData.cpp \
+    platform/network/FormDataBuilder.cpp \
     platform/network/HTTPParsers.cpp \
     platform/network/NetworkStateNotifier.cpp \
     platform/network/ProtectionSpace.cpp \
@@ -1402,7 +1403,11 @@ contains(DEFINES, ENABLE_WML=1) {
         wml/WMLElement.cpp \
         wml/WMLErrorHandling.cpp \
         wml/WMLEventHandlingElement.cpp \
+        wml/WMLFieldSetElement.cpp \
         wml/WMLGoElement.cpp \
+        wml/WMLImageElement.cpp \
+        wml/WMLImageLoader.cpp \
+        wml/WMLInsertedLegendElement.cpp \
         wml/WMLIntrinsicEvent.cpp \
         wml/WMLIntrinsicEventHandler.cpp \
         wml/WMLNoopElement.cpp \

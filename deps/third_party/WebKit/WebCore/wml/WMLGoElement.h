@@ -1,6 +1,5 @@
 /**
- * Copyright (C) 2008 Torch Mobile Inc. All rights reserved.
- *               http://www.torchmobile.com/
+ * Copyright (C) 2008 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -23,10 +22,12 @@
 #define WMLGoElement_h
 
 #if ENABLE(WML)
+#include "FormDataBuilder.h"
 #include "WMLTaskElement.h"
 
 namespace WebCore {
 
+class FormData;
 class ResourceRequest;
 class WMLPostfieldElement;
 
@@ -40,18 +41,13 @@ public:
     virtual void executeTask(Event*);
 
 private:
-    void parseContentType(const String&);
-
     void preparePOSTRequest(ResourceRequest&, bool inSameDeck, const String& cacheControl);
     void prepareGETRequest(ResourceRequest&, const KURL&);
 
-    HashSet<WMLPostfieldElement*> m_postfieldElements;
+    PassRefPtr<FormData> createFormData(const CString& boundary);
 
-    String m_contentType;
-    String m_acceptCharset;
-
-    bool m_isMultiPart;
-    bool m_isPostMethod;
+    Vector<WMLPostfieldElement*> m_postfieldElements;
+    FormDataBuilder m_formDataBuilder;
 };
 
 }

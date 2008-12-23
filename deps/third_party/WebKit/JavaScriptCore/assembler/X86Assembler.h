@@ -285,6 +285,17 @@ public:
         }
     }
 
+    void addl_im(int imm, int offset, RegisterID base)
+    {
+        if (CAN_SIGN_EXTEND_8_32(imm)) {
+            m_formatter.oneByteOp(OP_GROUP1_EvIb, GROUP1_OP_ADD, base, offset);
+            m_formatter.immediate8(imm);
+        } else {
+            m_formatter.oneByteOp(OP_GROUP1_EvIz, GROUP1_OP_ADD, base, offset);
+            m_formatter.immediate32(imm);
+        }
+    }
+
 #if PLATFORM(X86_64)
     void addq_ir(int imm, RegisterID dst)
     {
@@ -392,6 +403,17 @@ public:
         }
     }
     
+    void subl_im(int imm, int offset, RegisterID base)
+    {
+        if (CAN_SIGN_EXTEND_8_32(imm)) {
+            m_formatter.oneByteOp(OP_GROUP1_EvIb, GROUP1_OP_SUB, base, offset);
+            m_formatter.immediate8(imm);
+        } else {
+            m_formatter.oneByteOp(OP_GROUP1_EvIz, GROUP1_OP_SUB, base, offset);
+            m_formatter.immediate32(imm);
+        }
+    }
+
 #if !PLATFORM(X86_64)
     void subl_im(int imm, void* addr)
     {
@@ -575,6 +597,11 @@ public:
         }
     }
 #else
+    void cmpl_rm(RegisterID reg, void* addr)
+    {
+        m_formatter.oneByteOp(OP_CMP_EvGv, reg, addr);
+    }
+
     void cmpl_im(int imm, void* addr)
     {
         if (CAN_SIGN_EXTEND_8_32(imm)) {
@@ -696,6 +723,11 @@ public:
         m_formatter.oneByteOp(OP_MOV_EvGv, src, base, offset);
     }
 
+    void movl_rm_disp32(RegisterID src, int offset, RegisterID base)
+    {
+        m_formatter.oneByteOp_disp32(OP_MOV_EvGv, src, base, offset);
+    }
+
     void movl_rm(RegisterID src, int offset, RegisterID base, RegisterID index, int scale)
     {
         m_formatter.oneByteOp(OP_MOV_EvGv, src, base, index, scale, offset);
@@ -714,6 +746,11 @@ public:
     void movl_mr(int offset, RegisterID base, RegisterID dst)
     {
         m_formatter.oneByteOp(OP_MOV_GvEv, dst, base, offset);
+    }
+
+    void movl_mr_disp32(int offset, RegisterID base, RegisterID dst)
+    {
+        m_formatter.oneByteOp_disp32(OP_MOV_GvEv, dst, base, offset);
     }
 
     void movl_mr(int offset, RegisterID base, RegisterID index, int scale, RegisterID dst)
@@ -754,6 +791,11 @@ public:
         m_formatter.oneByteOp64(OP_MOV_EvGv, src, base, offset);
     }
 
+    void movq_rm_disp32(RegisterID src, int offset, RegisterID base)
+    {
+        m_formatter.oneByteOp64_disp32(OP_MOV_EvGv, src, base, offset);
+    }
+
     void movq_rm(RegisterID src, int offset, RegisterID base, RegisterID index, int scale)
     {
         m_formatter.oneByteOp64(OP_MOV_EvGv, src, base, index, scale, offset);
@@ -768,6 +810,11 @@ public:
     void movq_mr(int offset, RegisterID base, RegisterID dst)
     {
         m_formatter.oneByteOp64(OP_MOV_GvEv, dst, base, offset);
+    }
+
+    void movq_mr_disp32(int offset, RegisterID base, RegisterID dst)
+    {
+        m_formatter.oneByteOp64_disp32(OP_MOV_GvEv, dst, base, offset);
     }
 
     void movq_mr(int offset, RegisterID base, RegisterID index, int scale, RegisterID dst)
@@ -1108,14 +1155,16 @@ public:
         reinterpret_cast<int32_t*>(where)[-1] = value;
     }
     
-    static void repatchDisplacement(intptr_t where, intptr_t value)
+    static void repatchPointer(intptr_t where, intptr_t value)
     {
         reinterpret_cast<intptr_t*>(where)[-1] = value;
     }
     
     static void repatchBranchOffset(intptr_t where, void* destination)
     {
-        reinterpret_cast<intptr_t*>(where)[-1] = (reinterpret_cast<intptr_t>(destination) - where);
+        intptr_t offset = reinterpret_cast<intptr_t>(destination) - where;
+        ASSERT(offset == static_cast<int32_t>(offset));
+        reinterpret_cast<int32_t*>(where)[-1] = static_cast<int32_t>(offset);
     }
     
     void* executableCopy(ExecutablePool* allocator)
@@ -1183,6 +1232,14 @@ private:
             emitRexIfNeeded(reg, 0, base);
             m_buffer.putByteUnchecked(opcode);
             memoryModRM(reg, base, offset);
+        }
+
+        void oneByteOp_disp32(OneByteOpcodeID opcode, int reg, RegisterID base, int offset)
+        {
+            m_buffer.ensureSpace(maxInstructionSize);
+            emitRexIfNeeded(reg, 0, base);
+            m_buffer.putByteUnchecked(opcode);
+            memoryModRM_disp32(reg, base, offset);
         }
 
         void oneByteOp(OneByteOpcodeID opcode, int reg, RegisterID base, RegisterID index, int scale, int offset)
@@ -1271,6 +1328,14 @@ private:
             emitRexW(reg, 0, base);
             m_buffer.putByteUnchecked(opcode);
             memoryModRM(reg, base, offset);
+        }
+
+        void oneByteOp64_disp32(OneByteOpcodeID opcode, int reg, RegisterID base, int offset)
+        {
+            m_buffer.ensureSpace(maxInstructionSize);
+            emitRexW(reg, 0, base);
+            m_buffer.putByteUnchecked(opcode);
+            memoryModRM_disp32(reg, base, offset);
         }
 
         void oneByteOp64(OneByteOpcodeID opcode, int reg, RegisterID base, RegisterID index, int scale, int offset)
@@ -1482,6 +1547,22 @@ private:
                     putModRm(ModRmMemoryDisp32, reg, base);
                     m_buffer.putIntUnchecked(offset);
                 }
+            }
+        }
+    
+        void memoryModRM_disp32(int reg, RegisterID base, int offset)
+        {
+            // A base of esp or r12 would be interpreted as a sib, so force a sib with no index & put the base in there.
+#if PLATFORM(X86_64)
+            if ((base == hasSib) || (base == hasSib2)) {
+#else
+            if (base == hasSib) {
+#endif
+                putModRmSib(ModRmMemoryDisp32, reg, base, noIndex, 0);
+                m_buffer.putIntUnchecked(offset);
+            } else {
+                putModRm(ModRmMemoryDisp32, reg, base);
+                m_buffer.putIntUnchecked(offset);
             }
         }
     

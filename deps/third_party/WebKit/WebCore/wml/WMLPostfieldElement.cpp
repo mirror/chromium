@@ -1,6 +1,5 @@
 /**
- * Copyright (C) 2008 Torch Mobile Inc. All rights reserved.
- *               http://www.torchmobile.com/
+ * Copyright (C) 2008 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -24,6 +23,8 @@
 #if ENABLE(WML)
 #include "WMLPostfieldElement.h"
 
+#include "CString.h"
+#include "TextEncoding.h"
 #include "HTMLNames.h"
 #include "WMLDocument.h"
 #include "WMLGoElement.h"
@@ -59,6 +60,17 @@ void WMLPostfieldElement::insertedIntoDocument()
         return;
 
     static_cast<WMLGoElement*>(parent)->registerPostfieldElement(this);
+}
+
+static inline CString encodedString(const TextEncoding& encoding, const String& data)
+{
+    return encoding.encode(data.characters(), data.length(), EntitiesForUnencodables);
+}
+
+void WMLPostfieldElement::encodeData(const TextEncoding& encoding, CString& name, CString& value)
+{
+    name = encodedString(encoding, m_name);
+    value = encodedString(encoding, m_value);
 }
 
 }

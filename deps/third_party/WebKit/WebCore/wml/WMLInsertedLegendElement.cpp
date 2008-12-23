@@ -18,23 +18,29 @@
  *
  */
 
-#ifndef WMLAccessElement_h
-#define WMLAccessElement_h
+#include "config.h"
 
 #if ENABLE(WML)
-#include "WMLElement.h"
+#include "WMLInsertedLegendElement.h"
+
+#include "RenderLegend.h"
 
 namespace WebCore {
 
-class WMLAccessElement : public WMLElement {
-public:
-    WMLAccessElement(const QualifiedName& tagName, Document*);
+WMLInsertedLegendElement::WMLInsertedLegendElement(const QualifiedName& tagName, Document* doc)
+    : WMLElement(tagName, doc)
+{
+}
 
-    virtual void parseMappedAttribute(MappedAttribute*);
-    virtual void insertedIntoDocument();
-};
+WMLInsertedLegendElement::~WMLInsertedLegendElement()
+{
+}
+
+RenderObject* WMLInsertedLegendElement::createRenderer(RenderArena* arena, RenderStyle*)
+{
+    return new (arena) RenderLegend(this);
+}
 
 }
 
-#endif
 #endif

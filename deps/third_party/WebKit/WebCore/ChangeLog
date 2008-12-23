@@ -1,3 +1,362 @@
+2008-12-22  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        <rdar://problem/6277060> ASSERTION FAILED: !m_cacheBeingUpdated if the manifest is not available
+
+        Tests: http/tests/appcache/404-manifest.html
+               http/tests/appcache/fail-on-update.html
+
+        * loader/appcache/ApplicationCacheGroup.cpp: (WebCore::ApplicationCacheGroup::stopLoading):
+        Removed the incorrect assertion.
+
+        * loader/appcache/ApplicationCacheGroup.h: Added an explanation of somewhat nonintuitive
+        m_currentHandle handling.
+
+2008-12-22  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Alexey Proskuryakov & George Staikos.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=22961
+
+        Add WML <fieldset> element support.
+        Unlike HTML's <fieldset> element, WML doesn't provide a <legend> child element
+        to describe the <fieldset>. WML instead offers a 'title' attribute on the <fieldset>
+        element. To integrate within the existing RenderFieldset code, we just create an
+        internal <insertedLegend> element as first child for a WML <fieldset> element, containing
+        the title attribute value.
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::adjustRenderStyle):
+        * css/wml.css:
+        * rendering/RenderFieldset.cpp:
+        (WebCore::RenderFieldset::RenderFieldset):
+        (WebCore::RenderFieldset::findLegend):
+        * rendering/RenderFieldset.h:
+        * rendering/RenderLegend.cpp:
+        (WebCore::RenderLegend::RenderLegend):
+        * rendering/RenderLegend.h:
+        * wml/WMLFieldSetElement.cpp: Added.
+        (WebCore::WMLFieldSetElement::WMLFieldSetElement):
+        (WebCore::WMLFieldSetElement::~WMLFieldSetElement):
+        (WebCore::WMLFieldSetElement::parseMappedAttribute):
+        (WebCore::WMLFieldSetElement::insertedIntoDocument):
+        (WebCore::WMLFieldSetElement::removedFromDocument):
+        (WebCore::WMLFieldSetElement::createRenderer):
+        * wml/WMLFieldSetElement.h: Added.
+        * wml/WMLInsertedLegendElement.cpp: Added.
+        (WebCore::WMLInsertedLegendElement::WMLInsertedLegendElement):
+        (WebCore::WMLInsertedLegendElement::~WMLInsertedLegendElement):
+        (WebCore::WMLInsertedLegendElement::createRenderer):
+        * wml/WMLInsertedLegendElement.h: Added.
+        * wml/WMLTagNames.in:
+
+2008-12-22  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Not reviewed. Try to fix clean Mac builds, set role=private for FormDataBuilder.h
+
+        * WebCore.xcodeproj/project.pbxproj:
+
+2008-12-22  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Rubber-stamped by George Staikos.
+
+        Unify all TorchMobile copyright lines. Consolidate in a single line, as requested by Mark Rowe, some time ago.
+
+        * css/CSSStyleSelector.cpp:
+        * css/wml.css:
+        * dom/DOMImplementation.cpp:
+        * dom/Document.cpp:
+        * dom/Document.h:
+        * dom/XMLTokenizer.cpp:
+        * dom/XMLTokenizerLibxml2.cpp:
+        * dom/XMLTokenizerQt.cpp:
+        * history/BackForwardList.cpp:
+        * history/BackForwardList.h:
+        * loader/FrameLoader.cpp:
+        * loader/FrameLoader.h:
+        * loader/MainResourceLoader.cpp:
+        * page/Page.cpp:
+        * page/Page.h:
+        * platform/MIMETypeRegistry.cpp:
+        * platform/network/FormDataBuilder.cpp:
+        * platform/network/FormDataBuilder.h:
+        * platform/qt/MIMETypeRegistryQt.cpp:
+        * wml/WMLAElement.cpp:
+        * wml/WMLAElement.h:
+        * wml/WMLAccessElement.cpp:
+        * wml/WMLAccessElement.h:
+        * wml/WMLAnchorElement.cpp:
+        * wml/WMLAnchorElement.h:
+        * wml/WMLBRElement.cpp:
+        * wml/WMLBRElement.h:
+        * wml/WMLCardElement.cpp:
+        * wml/WMLCardElement.h:
+        * wml/WMLDoElement.cpp:
+        * wml/WMLDoElement.h:
+        * wml/WMLDocument.cpp:
+        * wml/WMLDocument.h:
+        * wml/WMLElement.cpp:
+        * wml/WMLElement.h:
+        * wml/WMLErrorHandling.cpp:
+        * wml/WMLErrorHandling.h:
+        * wml/WMLEventHandlingElement.cpp:
+        * wml/WMLEventHandlingElement.h:
+        * wml/WMLGoElement.cpp:
+        * wml/WMLGoElement.h:
+        * wml/WMLImageElement.cpp:
+        * wml/WMLImageElement.h:
+        * wml/WMLImageLoader.cpp:
+        * wml/WMLImageLoader.h:
+        * wml/WMLIntrinsicEvent.cpp:
+        * wml/WMLIntrinsicEvent.h:
+        * wml/WMLIntrinsicEventHandler.cpp:
+        * wml/WMLIntrinsicEventHandler.h:
+        * wml/WMLNoopElement.cpp:
+        * wml/WMLNoopElement.h:
+        * wml/WMLOnEventElement.cpp:
+        * wml/WMLOnEventElement.h:
+        * wml/WMLPElement.cpp:
+        * wml/WMLPElement.h:
+        * wml/WMLPageState.cpp:
+        * wml/WMLPageState.h:
+        * wml/WMLPostfieldElement.cpp:
+        * wml/WMLPostfieldElement.h:
+        * wml/WMLPrevElement.cpp:
+        * wml/WMLPrevElement.h:
+        * wml/WMLRefreshElement.cpp:
+        * wml/WMLRefreshElement.h:
+        * wml/WMLSetvarElement.cpp:
+        * wml/WMLSetvarElement.h:
+        * wml/WMLTableElement.cpp:
+        * wml/WMLTableElement.h:
+        * wml/WMLTaskElement.cpp:
+        * wml/WMLTaskElement.h:
+        * wml/WMLTemplateElement.cpp:
+        * wml/WMLTemplateElement.h:
+        * wml/WMLTimerElement.cpp:
+        * wml/WMLTimerElement.h:
+        * wml/WMLVariables.cpp:
+        * wml/WMLVariables.h:
+
+2008-12-22  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by George Staikos.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=22638
+
+        Add POST method support to WMLGoElement. GET & POST over HTTP
+        covered by a new set of WML HTTP layout tests.
+
+        Tests: http/tests/wml/go-task-get-method-accept-charset.html
+               http/tests/wml/go-task-get-method.html
+               http/tests/wml/go-task-post-method-accept-charset.html
+               http/tests/wml/go-task-post-method.html
+
+        * wml/WMLGoElement.cpp:
+        (WebCore::WMLGoElement::WMLGoElement):
+        (WebCore::WMLGoElement::registerPostfieldElement):
+        (WebCore::WMLGoElement::parseMappedAttribute):
+        (WebCore::WMLGoElement::executeTask):
+        (WebCore::WMLGoElement::preparePOSTRequest):
+        (WebCore::WMLGoElement::prepareGETRequest):
+        (WebCore::WMLGoElement::createFormData):
+        * wml/WMLGoElement.h:
+        * wml/WMLPostfieldElement.cpp:
+        (WebCore::encodedString):
+        (WebCore::WMLPostfieldElement::encodeData):
+        * wml/WMLPostfieldElement.h:
+
+2008-12-21  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Darin Adler and George Staikos.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=22949
+
+        Refactor HTMLFormElement to share a maximum level of code between HTMLFormElement & WMLGoElement.
+        Create a new helper class 'FormDataBuilder', which is hold as member variable in those classes.
+        It encapsulates all functionality needed to generate a FormData object, usable for HTML/WML form
+        submission, including boundary string generation, multi-part form handling etc.
+
+        No functional changes, no test cases affected.
+        WMLGoElement will be converted in a follow-up patch.
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.scons:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+        * html/HTMLFormElement.cpp:
+        (WebCore::HTMLFormElement::HTMLFormElement):
+        (WebCore::HTMLFormElement::dataEncoding):
+        (WebCore::HTMLFormElement::createFormData):
+        (WebCore::HTMLFormElement::submit):
+        (WebCore::HTMLFormElement::parseMappedAttribute):
+        * html/HTMLFormElement.h:
+        (WebCore::HTMLFormElement::enctype):
+        (WebCore::HTMLFormElement::encoding):
+        (WebCore::HTMLFormElement::setEncoding):
+        (WebCore::HTMLFormElement::acceptCharset):
+        * platform/network/FormDataBuilder.cpp: Added.
+        (WebCore::FormDataBuilder::FormDataBuilder):
+        (WebCore::FormDataBuilder::~FormDataBuilder):
+        (WebCore::FormDataBuilder::parseEncodingType):
+        (WebCore::FormDataBuilder::parseMethodType):
+        (WebCore::FormDataBuilder::dataEncoding):
+        (WebCore::appendString):
+        (WebCore::FormDataBuilder::beginMultiPartHeader):
+        (WebCore::FormDataBuilder::addBoundaryToMultiPartHeader):
+        (WebCore::FormDataBuilder::addFileNameToMultiPartHeader):
+        (WebCore::FormDataBuilder::addContentTypeToMultiPartHeader):
+        (WebCore::FormDataBuilder::finishMultiPartHeader):
+        (WebCore::FormDataBuilder::clear):
+        (WebCore::FormDataBuilder::addKeyValuePairAsFormData):
+        (WebCore::FormDataBuilder::encodeStringAsFormData):
+        (WebCore::FormDataBuilder::generateUniqueBoundaryString):
+        * platform/network/FormDataBuilder.h: Added.
+        (WebCore::FormDataBuilder::isPostMethod):
+        (WebCore::FormDataBuilder::setIsPostMethod):
+        (WebCore::FormDataBuilder::isMultiPartForm):
+        (WebCore::FormDataBuilder::setIsMultiPartForm):
+        (WebCore::FormDataBuilder::encodingType):
+        (WebCore::FormDataBuilder::setEncodingType):
+        (WebCore::FormDataBuilder::acceptCharset):
+        (WebCore::FormDataBuilder::setAcceptCharset):
+        (WebCore::FormDataBuilder::encodedData):
+        (WebCore::FormDataBuilder::multiPartData):
+
+2008-12-21  Dirk Schulze  <krit@webkit.org>
+
+        Reviewed by Darin Adler, Nikolas Zimmermann.
+
+        Move the the platform dependent strokeBBox functionality out of RenderPath
+        into Path with strokeBoundingRect.
+
+        RenderPath clean-up for strokeBoundingBox
+        [https://bugs.webkit.org/show_bug.cgi?id=22902]
+
+        * GNUmakefile.am:
+        * WebCore.xcodeproj/project.pbxproj:
+        * platform/graphics/GraphicsContext.h:
+        * platform/graphics/Path.h:
+        * platform/graphics/StrokeStyleApplier.h: Added.
+        (WebCore::StrokeStyleApplier::~StrokeStyleApplier):
+        * platform/graphics/cairo/PathCairo.cpp:
+        (WebCore::Path::strokeBoundingRect):
+        * platform/graphics/cg/PathCG.cpp:
+        (WebCore::createScratchContext):
+        (WebCore::scratchContext):
+        (WebCore::Path::strokeBoundingRect):
+        * platform/graphics/qt/GraphicsContextQt.cpp:
+        (WebCore::GraphicsContext::pen):
+        * platform/graphics/qt/PathQt.cpp:
+        (WebCore::Path::strokeBoundingRect):
+        * rendering/RenderPath.cpp:
+        (WebCore::StrokeBoundingRectStyleApplier::StrokeBoundingRectStyleApplier):
+        (WebCore::StrokeBoundingRectStyleApplier::strokeStyle):
+        (WebCore::RenderPath::relativeBBox):
+        * rendering/RenderPath.h:
+        * svg/graphics/cairo/RenderPathCairo.cpp:
+        * svg/graphics/cg/RenderPathCg.cpp:
+        * svg/graphics/qt/RenderPathQt.cpp:
+
+2008-12-20  David Kilzer  <ddkilzer@apple.com>
+
+        Fix typo "CSSAferRuleValue" to "CSSAfterRuleValue"
+
+        * html/PreloadScanner.cpp:
+        (WebCore::PreloadScanner::tokenizeCSS):
+        * html/PreloadScanner.h:
+        (WebCore::PreloadScanner::CSSState):
+
+2008-12-19  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Geoff Garen.
+
+        <rdar://problem/6454076> Random crashes on JS raytracer
+
+        No test, because the crash is not readily reproducible.
+
+        * platform/text/StringImpl.cpp:
+        (WebCore::StringImpl::empty):
+        * platform/text/StringImpl.h:
+        Made empty string per-thread.
+
+2008-12-19  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Replace some uses of HardRetain etc with RetainPtr.
+
+        * platform/mac/DragImageMac.mm:
+        * platform/mac/SharedBufferMac.mm:
+        (WebCore::SharedBuffer::createCFData):
+        * rendering/RenderThemeMac.mm:
+        * svg/graphics/cg/SVGResourceFilterCg.mm:
+        (WebCore::SVGResourceFilter::prepareFilter):
+        (WebCore::SVGResourceFilter::applyFilter):
+        * svg/graphics/mac/SVGResourceFilterPlatformDataMac.h:
+        * svg/graphics/mac/SVGResourceFilterPlatformDataMac.mm:
+        (WebCore::SVGResourceFilterPlatformDataMac::SVGResourceFilterPlatformDataMac):
+
+2008-12-19  miggilin  <mr.diggilin@gmail.com>
+
+        Reviewed by Kevin Ollivier.
+
+        Add Context Menu support to wx bindings.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=22675
+
+        * platform/ContextMenu.h:
+        * platform/ContextMenuItem.h:
+        (WebCore::PlatformMenuItemDescription::PlatformMenuItemDescription):
+        * platform/wx/ContextMenuItemWx.cpp: Added.
+        * platform/wx/ContextMenuWx.cpp: Added.
+        * platform/wx/LocalizedStringsWx.cpp:
+        * platform/wx/TemporaryLinkStubs.cpp:
+        * webcore-wx.bkl:
+
+
+2008-12-19  Beth Dakin  <bdakin@apple.com>
+
+        Reviewed by Darin Adler.
+
+        Temporary band-aide fix for <rdar://problem/6372481> In Gmail, a 
+        crash occurs at 
+        AccessibilityTable::isTableExposableThroughAccessibility() when 
+        attempting to create a link in a rich text message
+
+        We need to disable Accessibility Tables until we get this fixed for 
+        real to prevent rampant crashing.
+
+        * page/AccessibilityTable.cpp:
+        (WebCore::AccessibilityTable::AccessibilityTable):
+
+2008-12-19  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Darin Adler
+
+        https://bugs.webkit.org/show_bug.cgi?id=22938
+        
+        When the document element is transformed, we need to paint
+        the view background to avoid unpainted areas.
+        
+        Test: fast/transforms/transformed-document-element.html
+
+        * rendering/RenderView.cpp:
+        (WebCore::RenderView::paintBoxDecorations):
+
+2008-12-19  Steve Falkenburg  <sfalken@apple.com>
+
+        Fix build.
+
+        * WebCore.vcproj/WebCore.vcproj:
+
 2008-12-19  Kevin Ollivier  <kevino@theolliviers.com>
 
         wx build fixes after recent changes.
