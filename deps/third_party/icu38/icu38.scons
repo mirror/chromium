@@ -8,7 +8,7 @@
 #       When True, builds a combined libicu.a (or icu.lib) containing
 #       the common, i18n, stubdata and toolutil parts of ICU.  When
 #       False, builds those as separate libraries.
-# 
+#
 # GeneratedDataLib
 #       When True, specifies that we want to build a libicudata.a
 #       (or icudata.lib) library containing the data.  When False,
@@ -289,6 +289,7 @@ i18n_input_files = [
     'source/i18n/rbt_pars.cpp',
     'source/i18n/rbt_rule.cpp',
     'source/i18n/rbt_set.cpp',
+    'source/i18n/rbtz.cpp',
     'source/i18n/regexcmp.cpp',
     'source/i18n/regexst.cpp',
     'source/i18n/reldtfmt.cpp',
@@ -384,32 +385,32 @@ if CombinedLib:
 
   for n in need_common_implementation:
     common_input_files.remove(n)
-    o = env.Object(n, CPPDEFINES = env['CPPDEFINES'] +
-                                   ['U_COMMON_IMPLEMENTATION',
-                                    'U_COMBINED_IMPLEMENTATION'])
+    o = env.ChromeObject(n, CPPDEFINES = env['CPPDEFINES'] +
+                                         ['U_COMMON_IMPLEMENTATION',
+                                          'U_COMBINED_IMPLEMENTATION'])
     common_input_files.append(o)
 
-  icu_lib = env.ChromeStaticLibrary('icu', common_input_files +
-                                           i18n_input_files +
-                                           stubdata_input_files,
-                                    CPPDEFINES = env['CPPDEFINES'] +
-                                                 ['U_COMBINED_IMPLEMENTATION'])
+  icu_lib = env.ChromeLibrary('icu', common_input_files +
+                                     i18n_input_files +
+                                     stubdata_input_files,
+                              CPPDEFINES = env['CPPDEFINES'] +
+                                           ['U_COMBINED_IMPLEMENTATION'])
 
 else:
 
-  icu_lib = env.ChromeStaticLibrary('icuuc', common_input_files,
-                                    CPPDEFINES = env['CPPDEFINES'] +
-                                                 ['U_COMMON_IMPLEMENTATION'])
+  icu_lib = env.ChromeLibrary('icuuc', common_input_files,
+                              CPPDEFINES = env['CPPDEFINES'] +
+                                           ['U_COMMON_IMPLEMENTATION'])
 
-  env.ChromeStaticLibrary('icui18n', i18n_input_files,
-                          CPPDEFINES = env['CPPDEFINES'] +
-                                       ['U_I18N_IMPLEMENTATION'])
+  env.ChromeLibrary('icui18n', i18n_input_files,
+                    CPPDEFINES = env['CPPDEFINES'] +
+                                 ['U_I18N_IMPLEMENTATION'])
 
-  env.ChromeStaticLibrary('icudata_stub', stubdata_input_files)
+  env.ChromeLibrary('icudata_stub', stubdata_input_files)
 
-  env.ChromeStaticLibrary('icutu', toolutil_input_files,
-                          CPPDEFINES = env['CPPDEFINES'] +
-                                       ['U_TOOLUTIL_IMPLEMENTATION'])
+  env.ChromeLibrary('icutu', toolutil_input_files,
+                    CPPDEFINES = env['CPPDEFINES'] +
+                                 ['U_TOOLUTIL_IMPLEMENTATION'])
 
 
 #
@@ -434,7 +435,7 @@ if GenerateDataLib:
                             '$GENCCODE $GENCCODE_FLAGS -d ${TARGET.dir} $SOURCE')
   env.Depends(icudt38_src, '$GENCCODE')
 
-  icu_data = env.ChromeStaticLibrary('icudata', icudt38_src)
+  icu_data = env.ChromeLibrary('icudata', icudt38_src)
 
   if CombinedLib:
     lib_list = ['icu']
