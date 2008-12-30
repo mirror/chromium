@@ -26,8 +26,8 @@ void Font::drawGlyphs(GraphicsContext* gc, const SimpleFontData* font,
     SkCanvas* canvas = gc->platformContext()->canvas();
     SkPaint paint;
 
-    font->platformData().setupPaint(&paint);
     gc->platformContext()->setupPaintCommon(&paint);
+    font->platformData().setupPaint(&paint);
     paint.setTextEncoding(SkPaint::kGlyphID_TextEncoding);
     paint.setColor(gc->fillColor().rgb());
 
