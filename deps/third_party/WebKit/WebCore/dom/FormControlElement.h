@@ -1,7 +1,5 @@
 /*
- * This file is part of the DOM implementation for KDE.
- *
- * Copyright (C) 2005 Apple Computer, Inc.
+ * Copyright (C) 2008 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -20,17 +18,22 @@
  *
  */
 
-#include "config.h"
-#include "EventNames.h"
+#ifndef FormControlElement_h
+#define FormControlElement_h
 
 namespace WebCore {
 
-#define INITIALIZE_EVENT_NAME(name) \
-    , name##Event(#name)
-EventNames::EventNames()
-    : dummy(0)
-DOM_EVENT_NAMES_FOR_EACH(INITIALIZE_EVENT_NAME)
-{
-}
+class FormControlElement {
+public:
+    virtual ~FormControlElement() { }
+
+    virtual bool valueMatchesRenderer() const = 0;
+    virtual void setValueMatchesRenderer(bool value = true) = 0;
+
+protected:
+    FormControlElement() { }
+};
 
 }
+
+#endif

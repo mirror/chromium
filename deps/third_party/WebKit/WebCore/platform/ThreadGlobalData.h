@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2005, 2006, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2008 Apple Inc. All Rights Reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -21,37 +21,55 @@
  * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+ *
  */
 
-#include "config.h"
-#include "AppendNodeCommand.h"
+#ifndef ThreadGlobalData_h
+#define ThreadGlobalData_h
 
-#include "htmlediting.h"
+#include "StringHash.h"
+#include <wtf/HashSet.h>
+#include <wtf/Noncopyable.h>
 
 namespace WebCore {
 
-AppendNodeCommand::AppendNodeCommand(PassRefPtr<Element> parent, PassRefPtr<Node> node)
-    : SimpleEditCommand(parent->document())
-    , m_parent(parent)
-    , m_node(node)
-{
-    ASSERT(m_parent);
-    ASSERT(m_node);
-    ASSERT(!m_node->parent());
+    class EventNames;
+    struct ICUConverterWrapper;
+    struct TECConverterWrapper;
 
-    ASSERT(enclosingNodeOfType(Position(m_parent.get(), 0), isContentEditable) || !m_parent->attached());
-}
+    class ThreadGlobalData : Noncopyable {
+    public:
+        ThreadGlobalData();
+        ~ThreadGlobalData();
 
-void AppendNodeCommand::doApply()
-{
-    ExceptionCode ec;
-    m_parent->appendChild(m_node.get(), ec);
-}
+        EventNames& eventNames();
+        StringImpl* emptyString() { return m_emptyString; }
+        HashSet<StringImpl*>& atomicStringTable() { return *m_atomicStringTable; }
 
-void AppendNodeCommand::doUnapply()
-{
-    ExceptionCode ec;
-    m_node->remove(ec);
-}
+#if USE(ICU_UNICODE)
+        ICUConverterWrapper& cachedConverterICU() { return *m_cachedConverterICU; }
+#endif
+
+#if PLATFORM(MAC)
+        TECConverterWrapper& cachedConverterTEC() { return *m_cachedConverterTEC; }
+#endif
+
+    private:
+        StringImpl* m_emptyString;
+        HashSet<StringImpl*>* m_atomicStringTable;
+        EventNames* m_eventNames;
+
+#if USE(ICU_UNICODE)
+        ICUConverterWrapper* m_cachedConverterICU;
+#endif
+
+#if PLATFORM(MAC)
+        TECConverterWrapper* m_cachedConverterTEC;
+#endif
+    };
+
+    ThreadGlobalData& threadGlobalData();
 
 } // namespace WebCore
+
+#endif // ThreadGlobalData_h

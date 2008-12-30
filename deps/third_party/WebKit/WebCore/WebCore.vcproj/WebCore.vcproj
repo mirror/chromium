@@ -3372,6 +3372,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\ThreadGlobalData.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\ThreadGlobalData.h"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\Timer.cpp"
 				>
 			</File>
@@ -9750,6 +9758,38 @@
 				>
 			</File>
 			<File
+				RelativePath="..\rendering\RenderTextControlMultiLine.cpp"
+				>
+				<FileConfiguration
+					Name="Release_PGO|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						WholeProgramOptimization="true"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\rendering\RenderTextControlMultiLine.h"
+				>
+			</File>
+			<File
+				RelativePath="..\rendering\RenderTextControlSingleLine.cpp"
+				>
+				<FileConfiguration
+					Name="Release_PGO|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						WholeProgramOptimization="true"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\rendering\RenderTextControlSingleLine.h"
+				>
+			</File>
+			<File
 				RelativePath="..\rendering\RenderTextFragment.cpp"
 				>
 				<FileConfiguration
@@ -11283,6 +11323,10 @@
 			</File>
 			<File
 				RelativePath="..\dom\ExceptionCode.h"
+				>
+			</File>
+			<File
+				RelativePath="..\dom\FormControlElement.h"
 				>
 			</File>
 			<File

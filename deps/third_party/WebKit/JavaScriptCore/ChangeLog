@@ -1,3 +1,85 @@
+2008-12-29  Cameron Zwarich  <cwzwarich@uwaterloo.ca>
+
+        Reviewed by Oliver Hunt.
+
+        Change code using m_body.get() as a boolean to take advantage of the 
+        implicit conversion of RefPtr to boolean.
+
+        * runtime/JSFunction.cpp:
+        (JSC::JSFunction::~JSFunction):
+
+2008-12-28  Cameron Zwarich  <cwzwarich@uwaterloo.ca>
+
+        Reviewed by Oliver Hunt.
+
+        Bug 22840: REGRESSION (r38349): Gmail doesn't load with profiling enabled
+        <https://bugs.webkit.org/show_bug.cgi?id=22840>
+        <rdar://problem/6468077>
+
+        * bytecompiler/BytecodeGenerator.cpp:
+        (JSC::BytecodeGenerator::emitNewArray): Add an assertion that the range
+        of registers passed to op_new_array is sequential.
+        (JSC::BytecodeGenerator::emitCall): Correct the relocation of registers
+        when emitting profiler hooks so that registers aren't leaked. Also, add
+        an assertion that the 'this' register is always ref'd (because it is),
+        remove the needless protection of the 'this' register when relocating,
+        and add an assertion that the range of registers passed to op_call for
+        function call arguments is sequential.
+        (JSC::BytecodeGenerator::emitConstruct): Correct the relocation of
+        registers when emitting profiler hooks so that registers aren't leaked.
+        Also, add an assertion that the range of registers passed to op_construct
+        for function call arguments is sequential.
+
+2008-12-26  Mark Rowe  <mrowe@apple.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        <rdar://problem/6467376> Race condition in WTF::currentThread can lead to a thread using two different identifiers during its lifetime
+
+        If a newly-created thread calls WTF::currentThread() before WTF::createThread calls establishIdentifierForPthreadHandle
+        then more than one identifier will be used for the same thread.  We can avoid this by adding some extra synchronization
+        during thread creation that delays the execution of the thread function until the thread identifier has been set up, and
+        an assertion to catch this problem should it reappear in the future.
+
+        * wtf/Threading.cpp: Added.
+        (WTF::NewThreadContext::NewThreadContext):
+        (WTF::threadEntryPoint):
+        (WTF::createThread): Add cross-platform createThread function that delays the execution of the thread function until
+        after the thread identifier has been set up.
+        * wtf/Threading.h:
+        * wtf/ThreadingGtk.cpp:
+        (WTF::establishIdentifierForThread):
+        (WTF::createThreadInternal):
+        * wtf/ThreadingNone.cpp:
+        (WTF::createThreadInternal):
+        * wtf/ThreadingPthreads.cpp:
+        (WTF::establishIdentifierForPthreadHandle):
+        (WTF::createThreadInternal):
+        * wtf/ThreadingQt.cpp:
+        (WTF::identifierByQthreadHandle):
+        (WTF::establishIdentifierForThread):
+        (WTF::createThreadInternal):
+        * wtf/ThreadingWin.cpp:
+        (WTF::storeThreadHandleByIdentifier):
+        (WTF::createThreadInternal):
+
+        Add Threading.cpp to the build.
+
+        * GNUmakefile.am:
+        * JavaScriptCore.pri:
+        * JavaScriptCore.scons:
+        * JavaScriptCore.vcproj/WTF/WTF.vcproj:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * JavaScriptCoreSources.bkl:
+
+2008-12-26  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Remove unused method.
+
+        * runtime/Structure.h: Remove mutableTypeInfo.
+
 2008-12-22  Gavin Barraclough  <barraclough@apple.com>
 
         Reviewed by Oliver Hunt.
