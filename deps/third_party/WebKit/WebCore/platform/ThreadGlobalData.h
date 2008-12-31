@@ -50,7 +50,7 @@ namespace WebCore {
         ICUConverterWrapper& cachedConverterICU() { return *m_cachedConverterICU; }
 #endif
 
-#if PLATFORM(MAC)
+#if PLATFORM(DARWIN)
         TECConverterWrapper& cachedConverterTEC() { return *m_cachedConverterTEC; }
 #endif
 
@@ -63,7 +63,7 @@ namespace WebCore {
         ICUConverterWrapper* m_cachedConverterICU;
 #endif
 
-#if PLATFORM(MAC)
+#if PLATFORM(DARWIN)
         TECConverterWrapper* m_cachedConverterTEC;
 #endif
     };
