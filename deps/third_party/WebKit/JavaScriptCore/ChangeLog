@@ -1,3 +1,109 @@
+2008-12-29  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by NOBODY (Build fix).
+
+        Yet another attempt to fix Tiger.
+
+        * wtf/RandomNumber.cpp:
+        (WTF::randomNumber):
+
+2008-12-29  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by NOBODY (Build fix).
+
+        Tiger build fix (correct this time)
+
+        * wtf/RandomNumber.cpp:
+
+2008-12-29  Cameron Zwarich  <cwzwarich@uwaterloo.ca>
+
+        Rubber-stamped by Alexey Proskuryakov.
+
+        Revert r39509, because kjsyydebug is used in the generated code if YYDEBUG is 1.
+
+        * parser/Grammar.y:
+
+2008-12-29  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by NOBODY (Build fix).
+
+        Tiger build fix.
+
+        * wtf/RandomNumber.cpp:
+
+2008-12-29  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by Mark Rowe.
+
+        <rdar://problem/6358108> Insecure randomness in Math.random() leads to user tracking
+
+        Switch to arc4random on PLATFORM(DARWIN), this is ~1.5x slower than random(), but the
+        it is still so fast that there is no fathomable way it could be a bottleneck for anything.
+
+        randomNumber is called in two places
+          * During form submission where it is called once per form
+          * Math.random in JSC.  For this difference to show up you have to be looping on
+            a cached local copy of random, for a large (>10000) calls.
+
+        No change in SunSpider.
+
+        * wtf/RandomNumber.cpp:
+        (WTF::randomNumber):
+        * wtf/RandomNumberSeed.h:
+        (WTF::initializeRandomNumberGenerator):
+
+2008-12-29  Cameron Zwarich  <cwzwarich@uwaterloo.ca>
+
+        Rubber-stamped by Sam Weinig.
+
+        Remove unused kjsyydebug #define.
+
+        * parser/Grammar.y:
+
+2008-12-29  Cameron Zwarich  <cwzwarich@uwaterloo.ca>
+
+        Reviewed by Oliver Hunt and Sam Weinig.
+
+        Bug 23029: REGRESSION (r39337): jsfunfuzz generates identical test files
+        <https://bugs.webkit.org/show_bug.cgi?id=23029>
+        <rdar://problem/6469185>
+
+        The unification of random number generation in r39337 resulted in random()
+        being initialized on Darwin, but rand() actually being used. Fix this by
+        making randomNumber() use random() instead of rand() on Darwin.
+
+        * wtf/RandomNumber.cpp:
+        (WTF::randomNumber):
+
+2008-12-29  Sam Weinig  <sam@webkit.org>
+
+        Fix buildbots.
+
+        * runtime/Structure.cpp:
+
+2008-12-29  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Oliver Hunt.
+
+        Patch for https://bugs.webkit.org/show_bug.cgi?id=23026
+        Move the deleted offsets vector into the PropertyMap
+
+        Saves 3 words per Structure.
+
+        * runtime/PropertyMapHashTable.h:
+        * runtime/Structure.cpp:
+        (JSC::Structure::addPropertyTransition):
+        (JSC::Structure::changePrototypeTransition):
+        (JSC::Structure::getterSetterTransition):
+        (JSC::Structure::toDictionaryTransition):
+        (JSC::Structure::fromDictionaryTransition):
+        (JSC::Structure::copyPropertyTable):
+        (JSC::Structure::put):
+        (JSC::Structure::remove):
+        (JSC::Structure::rehashPropertyMapHashTable):
+        * runtime/Structure.h:
+        (JSC::Structure::propertyStorageSize):
+
 2008-12-29  Cameron Zwarich  <cwzwarich@uwaterloo.ca>
 
         Reviewed by Oliver Hunt.

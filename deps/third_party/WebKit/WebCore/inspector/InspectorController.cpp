@@ -304,6 +304,17 @@ struct InspectorResource : public RefCounted<InspectorResource> {
             if (!cachedResource)
                 return String();
 
+            if (cachedResource->isPurgeable()) {
+                // If the resource is purgeable then make it unpurgeable to get
+                // get its data. This might fail, in which case we return an
+                // empty String.
+                // FIXME: should we do something else in the case of a purged
+                // resource that informs the user why there is no data in the
+                // inspector?
+                if (!cachedResource->makePurgeable(false))
+                    return String();
+            }
+            
             // Try to get the decoded source.  Only applies to some CachedResource
             // types.
             switch(cachedResource->type()) {
@@ -333,6 +344,7 @@ struct InspectorResource : public RefCounted<InspectorResource> {
                 default:
                     break;
             }
+
         }
 
         return sourceString;
