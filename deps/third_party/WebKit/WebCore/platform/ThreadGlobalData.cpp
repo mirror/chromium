@@ -55,7 +55,11 @@ ThreadGlobalData& threadGlobalData()
     AtomicallyInitializedStatic(ThreadSpecific<ThreadGlobalData>*, threadGlobalData = new ThreadSpecific<ThreadGlobalData>);
     return **threadGlobalData;
 #else
-    static ThreadGlobalData* staticData = new ThreadGlobalData;
+    static ThreadGlobalData* staticData;
+    if (!staticData) {
+        staticData = static_cast<ThreadGlobalData*>(fastMalloc(sizeof(ThreadGlobalData)));
+        new (staticData) ThreadGlobalData;
+    }
     return *staticData;
 #endif
 }
@@ -63,7 +67,7 @@ ThreadGlobalData& threadGlobalData()
 ThreadGlobalData::ThreadGlobalData()
     : m_emptyString(new StringImpl)
     , m_atomicStringTable(new HashSet<StringImpl*>)
-    , m_eventNames(0)
+    , m_eventNames(new EventNames)
 #if USE(ICU_UNICODE)
     , m_cachedConverterICU(new ICUConverterWrapper)
 #endif
@@ -85,16 +89,8 @@ ThreadGlobalData::~ThreadGlobalData()
     delete m_eventNames;
     delete m_atomicStringTable;
 
-    ASSERT(m_emptyString->hasOneRef());
+    ASSERT(isMainThread() || m_emptyString->hasOneRef()); // We intentionally don't clean up static data on application quit, so there will be many strings remaining on the main thread.
     delete m_emptyString;
-}
-
-EventNames& ThreadGlobalData::eventNames()
-{
-    // m_eventNames cannot be initialized in constructor, as that would cause recursion.
-    if (!m_eventNames)
-        m_eventNames = new EventNames;
-    return *m_eventNames;
 }
 
 } // namespace WebCore

@@ -837,7 +837,7 @@ Node* Node::traversePreviousSiblingPostOrder(const Node* stayWithin) const
     return 0;
 }
 
-void Node::checkSetPrefix(const AtomicString &_prefix, ExceptionCode& ec)
+void Node::checkSetPrefix(const AtomicString&, ExceptionCode& ec)
 {
     // Perform error checking as required by spec for setting Node.prefix. Used by
     // Element::setPrefix() and Attr::setPrefix()
@@ -867,19 +867,17 @@ void Node::checkSetPrefix(const AtomicString &_prefix, ExceptionCode& ec)
     }*/
 }
 
-bool Node::canReplaceChild(Node* newChild, Node* oldChild)
+bool Node::canReplaceChild(Node* newChild, Node*)
 {
     if (newChild->nodeType() != DOCUMENT_FRAGMENT_NODE) {
         if (!childTypeAllowed(newChild->nodeType()))
             return false;
-    }
-    else {
+    } else {
         for (Node *n = newChild->firstChild(); n; n = n->nextSibling()) {
             if (!childTypeAllowed(n->nodeType())) 
                 return false;
         }
     }
-    
     return true;
 }
 
@@ -1231,7 +1229,7 @@ bool Node::rendererIsNeeded(RenderStyle *style)
     return (document()->documentElement() == this) || (style->display() != NONE);
 }
 
-RenderObject *Node::createRenderer(RenderArena *arena, RenderStyle *style)
+RenderObject* Node::createRenderer(RenderArena*, RenderStyle*)
 {
     ASSERT(false);
     return 0;
@@ -1376,18 +1374,29 @@ bool Node::inSameContainingBlockFlowElement(Node *n)
 
 PassRefPtr<NodeList> Node::getElementsByTagName(const String& name)
 {
-    return getElementsByTagNameNS("*", name);
+    return getElementsByTagNameNS(starAtom, name);
 }
  
-PassRefPtr<NodeList> Node::getElementsByTagNameNS(const String& namespaceURI, const String& localName)
+PassRefPtr<NodeList> Node::getElementsByTagNameNS(const AtomicString& namespaceURI, const String& localName)
 {
     if (localName.isNull())
         return 0;
+    
+    NodeRareData* data = ensureRareData();
+    if (!data->nodeLists()) {
+        data->setNodeLists(auto_ptr<NodeListsNodeData>(new NodeListsNodeData));
+        document()->addNodeListCache();
+    }
 
     String name = localName;
     if (document()->isHTMLDocument())
         name = localName.lower();
-    return TagNodeList::create(this, namespaceURI.isEmpty() ? nullAtom : AtomicString(namespaceURI), name);
+        
+    pair<NodeListsNodeData::TagCacheMap::iterator, bool> result = data->nodeLists()->m_tagNodeListCaches.add(QualifiedName(nullAtom, name, namespaceURI), 0);
+    if (result.second)
+        result.first->second = new DynamicNodeList::Caches;
+    
+    return TagNodeList::create(this, namespaceURI.isEmpty() ? nullAtom : namespaceURI, name, result.first->second);
 }
 
 PassRefPtr<NodeList> Node::getElementsByName(const String& elementName)
@@ -1603,7 +1612,7 @@ bool Node::isEqualNode(Node *other) const
     return true;
 }
 
-bool Node::isDefaultNamespace(const String &namespaceURI) const
+bool Node::isDefaultNamespace(const AtomicString &namespaceURI) const
 {
     // Implemented according to
     // http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/namespaces-algorithms.html#isDefaultNamespaceAlgo
@@ -1653,7 +1662,7 @@ bool Node::isDefaultNamespace(const String &namespaceURI) const
     }
 }
 
-String Node::lookupPrefix(const String &namespaceURI) const
+String Node::lookupPrefix(const AtomicString &namespaceURI) const
 {
     // Implemented according to
     // http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/namespaces-algorithms.html#lookupNamespacePrefixAlgo
@@ -1748,7 +1757,7 @@ String Node::lookupNamespaceURI(const String &prefix) const
     }
 }
 
-String Node::lookupNamespacePrefix(const String &_namespaceURI, const Element *originalElement) const
+String Node::lookupNamespacePrefix(const AtomicString &_namespaceURI, const Element *originalElement) const
 {
     if (_namespaceURI.isNull())
         return String();
@@ -2041,6 +2050,9 @@ void Node::formatForDebugger(char* buffer, unsigned length) const
 void NodeListsNodeData::invalidateCaches()
 {
     m_childNodeListCaches.reset();
+    TagCacheMap::const_iterator tagCachesEnd = m_tagNodeListCaches.end();
+    for (TagCacheMap::const_iterator it = m_tagNodeListCaches.begin(); it != tagCachesEnd; ++it)
+        it->second->reset();
     invalidateCachesThatDependOnAttributes();
 }
 
@@ -2062,6 +2074,12 @@ bool NodeListsNodeData::isEmpty() const
 
     if (m_childNodeListCaches.refCount)
         return false;
+    
+    TagCacheMap::const_iterator tagCachesEnd = m_tagNodeListCaches.end();
+    for (TagCacheMap::const_iterator it = m_tagNodeListCaches.begin(); it != tagCachesEnd; ++it) {
+        if (it->second->refCount)
+            return false;
+    }
 
     CacheMap::const_iterator classCachesEnd = m_classNodeListCaches.end();
     for (CacheMap::const_iterator it = m_classNodeListCaches.begin(); it != classCachesEnd; ++it) {

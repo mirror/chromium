@@ -142,10 +142,10 @@ public:
 
     bool isSameNode(Node* other) const { return this == other; }
     bool isEqualNode(Node*) const;
-    bool isDefaultNamespace(const String& namespaceURI) const;
-    String lookupPrefix(const String& namespaceURI) const;
+    bool isDefaultNamespace(const AtomicString& namespaceURI) const;
+    String lookupPrefix(const AtomicString& namespaceURI) const;
     String lookupNamespaceURI(const String& prefix) const;
-    String lookupNamespacePrefix(const String& namespaceURI, const Element* originalElement) const;
+    String lookupNamespacePrefix(const AtomicString& namespaceURI, const Element* originalElement) const;
     
     String textContent(bool convertBRsToNewlines = false) const;
     void setTextContent(const String&, ExceptionCode&);
@@ -456,14 +456,14 @@ public:
     // These functions are called whenever you are connected or disconnected from a tree.  That tree may be the main
     // document tree, or it could be another disconnected tree.  Override these functions to do any work that depends
     // on connectedness to some ancestor (e.g., an ancestor <form> for example).
-    virtual void insertedIntoTree(bool deep) { }
-    virtual void removedFromTree(bool deep) { }
+    virtual void insertedIntoTree(bool /*deep*/) { }
+    virtual void removedFromTree(bool /*deep*/) { }
 
     /**
      * Notifies the node that it's list of children have changed (either by adding or removing child nodes), or a child
      * node that is of the type CDATA_SECTION_NODE, TEXT_NODE or COMMENT_NODE has changed its value.
      */
-    virtual void childrenChanged(bool changedByParser = false, Node* beforeChange = 0, Node* afterChange = 0, int childCountDelta = 0) {};
+    virtual void childrenChanged(bool /*changedByParser*/ = false, Node* /*beforeChange*/ = 0, Node* /*afterChange*/ = 0, int /*childCountDelta*/ = 0) { }
 
 #ifndef NDEBUG
     virtual void formatForDebugger(char* buffer, unsigned length) const;
@@ -481,7 +481,7 @@ public:
     void notifyLocalNodeListsAttributeChanged();
     
     PassRefPtr<NodeList> getElementsByTagName(const String&);
-    PassRefPtr<NodeList> getElementsByTagNameNS(const String& namespaceURI, const String& localName);
+    PassRefPtr<NodeList> getElementsByTagNameNS(const AtomicString& namespaceURI, const String& localName);
     PassRefPtr<NodeList> getElementsByName(const String& elementName);
     PassRefPtr<NodeList> getElementsByClassName(const String& classNames);
 

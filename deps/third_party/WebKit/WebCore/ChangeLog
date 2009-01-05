@@ -1,3 +1,961 @@
+2009-01-05  Darin Adler  <darin@apple.com>
+
+        * dom/Document.cpp: Fix build. Oops again.
+
+2009-01-05  Darin Adler  <darin@apple.com>
+
+        Reviewed by Anders Carlsson.
+
+        Fix hang whenever following an anchor.
+
+        * dom/Document.cpp:
+        (WebCore::Document::findAnchor): Oops!
+
+2009-01-05  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23073
+        <rdar://problem/6471129> Workers crash on Windows Release builds
+
+        * platform/ThreadGlobalData.cpp: (WebCore::ThreadGlobalData::ThreadGlobalData):
+        * platform/ThreadGlobalData.h: (WebCore::ThreadGlobalData::eventNames):
+        Now that ThreadSpecific sets up the pointer before invoking data constructor, we can
+        initialize EventNames right away.
+
+2009-01-05  Darin Adler  <darin@apple.com>
+
+        Reviewed by Anders Carlsson.
+
+        Bug 23106: HTMLFormCollection::namedItem ignores caseSensitive argument
+        https://bugs.webkit.org/show_bug.cgi?id=23106
+
+        This led me to a bunch of dead code. It turns out that HTML collections
+        were carrying the case-insensitive code just so they could be used to
+        find anchors, something we can do more simply and efficiently without
+        creating a DOM HTMLCollection object.
+
+        No behavior change. Just adding a new function findAnchor function and
+        removing some dead code.
+
+        * dom/Document.cpp:
+        (WebCore::Document::findAnchor): Added.
+        * dom/Document.h: Ditto.
+
+        * html/HTMLAnchorElement.cpp:
+        (WebCore::HTMLAnchorElement::accessKey): Take and return AtomicString
+        references for better efficiency.
+        (WebCore::HTMLAnchorElement::setAccessKey): Ditto.
+        (WebCore::HTMLAnchorElement::charset): Ditto.
+        (WebCore::HTMLAnchorElement::setCharset): Ditto.
+        (WebCore::HTMLAnchorElement::coords): Ditto.
+        (WebCore::HTMLAnchorElement::setCoords): Ditto.
+        (WebCore::HTMLAnchorElement::setHref): Ditto.
+        (WebCore::HTMLAnchorElement::hreflang): Ditto.
+        (WebCore::HTMLAnchorElement::setHreflang): Ditto.
+        (WebCore::HTMLAnchorElement::name): Ditto.
+        (WebCore::HTMLAnchorElement::setName): Ditto.
+        (WebCore::HTMLAnchorElement::rel): Ditto.
+        (WebCore::HTMLAnchorElement::setRel): Ditto.
+        (WebCore::HTMLAnchorElement::rev): Ditto.
+        (WebCore::HTMLAnchorElement::setRev): Ditto.
+        (WebCore::HTMLAnchorElement::shape): Ditto.
+        (WebCore::HTMLAnchorElement::setShape): Ditto.
+        (WebCore::HTMLAnchorElement::setTarget): Ditto.
+        (WebCore::HTMLAnchorElement::type): Ditto.
+        (WebCore::HTMLAnchorElement::setType): Ditto.
+        * html/HTMLAnchorElement.h: Ditto.
+
+        * html/HTMLCollection.cpp:
+        (WebCore::HTMLCollection::checkForNameMatch): Changed argument to an
+        AtomicString and removed the caseSensitive boolean, since we're now always
+        case sensitive.
+        (WebCore::HTMLCollection::namedItem): Ditto.
+        (WebCore::HTMLCollection::nextNamedItem): Ditto.
+        * html/HTMLCollection.h: Ditto.
+        * html/HTMLFormCollection.cpp:
+        (WebCore::HTMLFormCollection::getNamedItem): Ditto.
+        (WebCore::HTMLFormCollection::getNamedFormItem): Ditto.
+        (WebCore::HTMLFormCollection::nextNamedItemInternal): Ditto.
+        (WebCore::HTMLFormCollection::namedItem): Ditto.
+        (WebCore::HTMLFormCollection::nextNamedItem): Ditto.
+        * html/HTMLFormCollection.h: Ditto.
+        * html/HTMLSelectElement.cpp:
+        (WebCore::HTMLSelectElement::namedItem): Ditto.
+        * html/HTMLSelectElement.h: Ditto.
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::gotoAnchor): Use the new findAnchor function.
+        * page/AccessibilityRenderObject.cpp:
+        (WebCore::AccessibilityRenderObject::internalLinkElement): Ditto.
+
+2009-01-05  Darin Adler  <darin@apple.com>
+
+        Reviewed by Anders Carlsson.
+
+        Bug 23104: minor mistakes in init functions for animation and transition events
+        https://bugs.webkit.org/show_bug.cgi?id=23104
+
+        Test: fast/events/init-events.html
+
+        Also fixed two StorageEvent problems the test case uncovered:
+
+            Made document.createEvent("StorageEvent") work.
+            Allow null values for StorageEvent.oldValue and StorageEvent.newValue.
+
+        * dom/Document.cpp:
+        (WebCore::Document::createEvent): Sorted alphabetically by the name of the event
+        class. Added StorageEvent.
+
+        * dom/UIEvent.idl: Fixed typo in a comment.
+
+        * dom/WebKitAnimationEvent.cpp:
+        (WebCore::WebKitAnimationEvent::initWebKitAnimationEvent): Use all the arguments.
+        * dom/WebKitTransitionEvent.cpp:
+        (WebCore::WebKitTransitionEvent::initWebKitTransitionEvent): Ditto.
+
+        * storage/StorageEvent.idl: Use the ConvertNullToNullString keyword on the
+        arguments to initStorageEvent so it can create events with null values for the
+        oldValue and newValue, just like the real storage events. Note that the properties
+        already had ConvertNullStringTo=Null, so this is just the other half of that.
+
+2009-01-05  Darin Adler  <darin@apple.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Bug 23102: turn on unused parameter warnings in WebCore
+        https://bugs.webkit.org/show_bug.cgi?id=23102
+
+        First step: Fix the simple cases where we can just remove an argument name.
+        Also made a few more things protected and private.
+
+        * many files
+
+2009-01-05  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23115
+        Create a version of ASSERT for use with otherwise unused variables
+
+        * loader/appcache/ApplicationCacheStorage.cpp:
+        (WebCore::ApplicationCacheStorage::verifySchemaVersion): Use the new ASSERT_UNUSED macro.
+
+2009-01-05  Alexey Proskuryakov  <ap@webkit.org>
+
+        Non-Mac build fix.
+
+        * loader/appcache/ApplicationCacheStorage.cpp: Include wtf/StringExtras.h for snprintf.
+
+2009-01-05  Adam Treat  <treat@kde.org>
+
+        Reviewed by George Staikos.
+
+        Remove unnecessary methods from EmptyFrameLoaderClient
+
+        * loader/EmptyClients.h:
+
+2009-01-05  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23077
+        Make application cache use SQLite built-in user_version
+
+        * loader/appcache/ApplicationCacheStorage.cpp:
+        (WebCore::ApplicationCacheStorage::verifySchemaVersion): Changed to track versions with
+        PRAGMA user_version.
+
+        * loader/appcache/ApplicationCacheResource.h: (WebCore::ApplicationCacheResource::):
+        Used the occasion to get rid of the hole in bitmask that was a leftover from opportunistic
+        cache entries.
+
+2009-01-04  David Smith  <catfish.man@gmail.com>
+
+        Reviewed by Oliver Hunt.
+
+        Avoid redundant AtomicString conversions
+
+        * dom/Node.cpp:
+        (WebCore::Node::getElementsByTagName): Pass starAtom instead of "*"
+        (WebCore::Node::getElementsByTagNameNS): Take an AtomicString for the namespace URI
+        (WebCore::Node::isDefaultNamespace): Ditto
+        (WebCore::Node::lookupPrefix): Ditto
+        (WebCore::Node::lookupNamespacePrefix): Ditto
+        * dom/Node.h: Ditto
+
+2009-01-04  Darin Adler  <darin@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Bug 23105: canvas setFillColor function ignores alpha argument
+        https://bugs.webkit.org/show_bug.cgi?id=23105
+
+        Test: fast/canvas/set-colors.html
+
+        * html/CanvasRenderingContext2D.cpp:
+        (WebCore::CanvasRenderingContext2D::setFillColor): Pass alpha value through instead
+        of ignoring it and always passing 1.
+
+        * html/CanvasStyle.cpp:
+        (WebCore::CanvasStyle::applyStrokeColor): Fix spelling of transparent in comments.
+        (WebCore::CanvasStyle::applyFillColor): Ditto.
+
+2009-01-04  Darin Adler  <darin@apple.com>
+
+        Bug 23086: REGRESSION(r39540/r39541): Windows build fails due to ICU errors
+        https://bugs.webkit.org/show_bug.cgi?id=23086
+
+        * editing/TextIterator.cpp: Check UCONFIG_NO_COLLATION and don't compile
+        in the new search path if it's 0.
+
+2009-01-04  David Kilzer  <ddkilzer@apple.com>
+
+        Don't install *.idl and *.in files as resources
+
+        Reviewed by Oliver Hunt.
+
+        Don't install these files as resources in the WebCore framework:
+        - WMLAttributeNames.in
+        - WMLTagNames.in
+        - WorkerContext.idl
+        - WorkerLocation.idl
+        - WorkerNavigator.idl
+
+        * WebCore.xcodeproj/project.pbxproj: Removed resources.
+
+2009-01-04  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Darin Adler
+
+        https://bugs.webkit.org/show_bug.cgi?id=23090
+        
+        If an object gets a Layout hint, and the style change will result in
+        the creation of a RenderLayer, then we need to repaint the old position
+        of the object. This was done for transform, but we have to test opacity too.
+
+        Test: fast/repaint/create-layer-repaint.html
+
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::styleWillChange):
+
+2009-01-04  Darin Adler  <darin@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Bug 23103: Safari's auto-fill no longer works for <select> elements
+        https://bugs.webkit.org/show_bug.cgi?id=23103
+        rdar://problem/6472061
+
+        * bindings/objc/DOMHTML.mm:
+        (-[DOMHTMLSelectElement _activateItemAtIndex:]): Implemented this.
+
+2009-01-04  Adam Treat  <treat@kde.org>
+
+        Reviewed by George Staikos.
+
+        Add fixedLayoutSize feature to ScrollView to allow for controlling the
+        layout beyond the constraint of the current viewports dynamic size
+
+        * css/MediaQueryEvaluator.cpp:
+        (WebCore::heightMediaFeatureEval):
+        (WebCore::widthMediaFeatureEval):
+        * dom/Element.cpp:
+        (WebCore::Element::clientWidth):
+        (WebCore::Element::clientHeight):
+        * loader/FrameLoaderClient.cpp:
+        (WebCore::FrameLoaderClient::transitionToCommittedForNewPage):
+        * loader/FrameLoaderClient.h:
+        * page/FrameView.cpp:
+        (WebCore::FrameView::layout):
+        * platform/ScrollView.cpp:
+        (WebCore::ScrollView::ScrollView):
+        (WebCore::ScrollView::layoutWidth):
+        (WebCore::ScrollView::layoutHeight):
+        (WebCore::ScrollView::fixedLayoutSize):
+        (WebCore::ScrollView::setFixedLayoutSize):
+        (WebCore::ScrollView::useFixedLayout):
+        (WebCore::ScrollView::setUseFixedLayout):
+        * platform/ScrollView.h:
+        * rendering/RenderView.cpp:
+        (WebCore::RenderView::viewHeight):
+        (WebCore::RenderView::viewWidth):
+        * rendering/RenderView.h:
+
+2009-01-03  Rob Buis  <rwlbuis@gmail.com>
+
+        Reviewed by Darin.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22660
+        SVG elements that are moved are nor fully invalidated/earsed
+
+        Mark the SVG root as needing a layout when its position changes.
+
+        Tests: svg/custom/circle-move-invalidation.svg
+
+        * rendering/RenderSVGRoot.cpp:
+        (WebCore::RenderSVGRoot::position):
+        * rendering/RenderSVGRoot.h:
+
+2009-01-03  Steve Falkenburg  <sfalken@apple.com>
+
+        Build fix.
+
+        * loader/FrameLoader.h:
+
+2009-01-02  Cary Clark  <caryclark@google.com>
+
+        Reviewed and landed by Darin Adler.
+
+        Bug 22963: write icons before reading them
+        https://bugs.webkit.org/show_bug.cgi?id=22963
+
+        Reverse the order in the icon database main thread loop to
+        write the pending icons to the database before trying
+        to read any requested icons. This ensures that a requested icon 
+        has the correct data when read.
+        
+        * loader/icon/IconDatabase.cpp:
+        (WebCore::IconDatabase::syncThreadMainLoop):
+
+2009-01-02  Darin Adler  <darin@apple.com>
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::loadItem): One small thing I forgot in my last check-in.
+        This cuts down on the number of hash table operations during loading.
+
+2009-01-02  Dmitry Titov  <dimich@chromium.org>
+
+        Reviewed and landed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23025
+        DOMTimer lifetime cleanup: timeoutMap methods on Document now do not delete the timer.
+        Instead, all 3 places that delete timers do it directly calling 'delete' and then timer's dtor removes the ID from the timeoutMap.
+        Note that in case the context is destroyed and timers are deleted at once, the check in ~DOMTimer() prevents 
+        unnecessary HashMap remove in case the Document is being destroyed.
+
+        * bindings/js/DOMTimer.cpp:
+        (WebCore::DOMTimer::~DOMTimer): removes the id from the timeoutMap.
+        (WebCore::DOMTimer::install):
+        (WebCore::DOMTimer::removeById): simply uses 'delete this'.
+        (WebCore::DOMTimer::fired): same.
+        (WebCore::DOMTimer::contextDestroyed): same.
+        * dom/Document.cpp:
+        (WebCore::Document::removeTimeout): now it only removes the id from the map, does not delete the timer.
+
+2009-01-02  Darin Adler  <darin@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Bug 23072: REGRESSION (r37371): In the Dictionary application, scroll bar appears
+        inside its web view when resizing its window
+        https://bugs.webkit.org/show_bug.cgi?id=23072
+        rdar://problem/6368028
+
+        The first attempt at fixing this did not work.
+        This time I was able to reproduce the bug and test the fix.
+
+        Bug 11212: REGRESSION: Activity window doesn't always list all files until refresh
+        https://bugs.webkit.org/show_bug.cgi?id=11212
+        rdar://problem/4959702
+
+        I had to fix this second bug because otherwise the WebKit code to trigger the first
+        fix didn't run.
+
+        Also fixes memory use that kept growing as we maintained a set of all URLs loaded in
+        a particular frame. Bad idea! It's bad enough that we do it for each document, but
+        the old version kept the set around forever as you moved from one document to the next.
+
+        * html/HTMLFrameElementBase.cpp:
+        (WebCore::HTMLFrameElementBase::parseMappedAttribute): Change this so that we allow
+        turning off scrolling when the quirk is enabled. We just don't allow turning it on.
+        This fixes one of the two problems with the initial patch; the other fix is in WebKit.
+
+        * loader/DocumentLoader.h: Moved didTellClientAboutLoad and haveToldClientAboutLoad
+        here from FrameLoader. The old way meant that a given frame would forever remember
+        the URL of any resources loaded in that frame and never send any "loaded from cache"
+        client calls about those URLs.
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::loadResourceSynchronously): Removed call to didTellCientAboutLoad.
+        This is now handled by dispatchWillSendRequest, which is safer since that's the actual
+        function that tells the client about the load.
+        (WebCore::FrameLoader::loadedResourceFromMemoryCache): Changed calls to
+        haveToldClientAboutLoad and didTellClientAboutLoad to call the document loader.
+        Also removed the call in the case where we don't load from the cache, since
+        dispatchWillSendRequest now takes care of it.
+        (WebCore::FrameLoader::dispatchWillSendRequest): Put calls to didTellClientAboutLoad
+        here. Call it both on the URL we pass in and the URL the client returns; we won't
+        tell the client about either if it's loaded from the memory cache.
+
+        * loader/FrameLoader.h: Removed didTellClientAboutLoad, haveToldClientAboutLoad, and
+        m_urlsClientKnowsAbout.
+
+        * loader/SubresourceLoader.cpp: Removed unneeded load function that called
+        didTellClientAboutLoad. That's now taken care of in dispatchWillSendRequest.
+
+        * loader/SubresourceLoader.h: Removed load function. Also made all members private
+        except for create and clearClient.
+
+2009-01-02  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Darin Adler
+
+        https://bugs.webkit.org/show_bug.cgi?id=23082
+        
+        Fix GIF animation by ensuring that the signature of
+        startAnimation() in the base class matches the method in BitmapImage.
+        
+        Test: fast/backgrounds/animated-gif-as-background.html
+
+        * platform/graphics/Image.h:
+        (WebCore::Image::startAnimation):
+
+2009-01-02  David Smith  <catfish.man@gmail.com>
+
+        Reviewed by Darin Adler.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=22699
+        Enable NodeList caching for getElementsByTagName
+        
+        test: fast/dom/getelementsbytagnamens-mixed-namespaces.html
+
+        * dom/Document.cpp:
+        (WebCore::FormElementKeyHash::hash): Use WTF::stringHashingStartValue
+        * dom/Node.cpp:
+        (WebCore::Node::getElementsByTagNameNS): Ensure rare data and add a node list cache
+        (WebCore::NodeListsNodeData::invalidateCaches): Invalidate the tag name node list cache as well as the others
+        (WebCore::NodeListsNodeData::isEmpty): Check the tag name node list cache as well as the others
+        * dom/NodeRareData.h: Add m_tagNodeListCaches
+        * dom/QualifiedName.cpp:
+        * dom/QualifiedName.h: Move QNameHash to the header, make it work on QualifiedNames, and rename to QualifiedNameHash
+        * dom/StyledElement.cpp:
+        (WebCore::MappedAttributeHash::hash): Use WTF::stringHashingStartValue
+        * dom/TagNodeList.cpp:
+        (WebCore::TagNodeList::TagNodeList): Add a NodeList cache argument
+        * dom/TagNodeList.h: 
+        (WebCore::TagNodeList::create): Add a NodeList cache argument
+        * platform/text/StringHash.h:
+        (WebCore::CaseFoldingHash::hash): Use WTF::stringHashingStartValue
+        * platform/text/TextEncodingRegistry.cpp:
+        (WebCore::TextEncodingNameHash::hash): Use WTF::stringHashingStartValue
+
+2009-01-02  Eric Carlson  <eric.carlson@apple.com>
+
+        Reviewed by Darin Adler
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=23066 & <rdar://problem/6028417> 
+        Full Page Zoom: a <video> element that doesn't include width/height attribute does not scale
+
+        * rendering/RenderVideo.cpp:
+        (WebCore::RenderVideo::calcReplacedWidth): Multiply aspect ratio width by style()->effectiveZoom()
+        (WebCore::RenderVideo::calcReplacedHeight): Multiply aspect ratio height by style()->effectiveZoom()
+
+2009-01-02  David Kilzer  <ddkilzer@apple.com>
+
+        BUILD FIX (r39552): Add mediaControls.css to other build files
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+
+2009-01-02  David Kilzer  <ddkilzer@apple.com>
+
+        Try to fix Wx build after r39427
+
+        * platform/graphics/wx/PathWx.cpp:
+        (WebCore::Path::strokeBoundingRect): Added stub.
+
+2009-01-02  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Adele Peterson.
+
+        <rdar://problem/6471356> Failed assertion on quit
+
+        * platform/ThreadGlobalData.cpp: (WebCore::ThreadGlobalData::~ThreadGlobalData):
+        Only assert that empty string are all removed on secondary threads.
+
+2009-01-02  David Kilzer  <ddkilzer@apple.com>
+
+        Bug 23081: These files are no longer part of the KDE libraries
+
+        <https://bugs.webkit.org/show_bug.cgi?id=23081>
+
+        Reviewed by Darin Adler.
+
+        Removed "This file is part of the KDE libraries" comment from
+        source files.  Added or updated Apple copyrights as well.
+
+        No tests since there are only changes to comments.
+
+        * bridge/testbindings.cpp:
+        * html/HTMLEntityNames.gperf:
+        * loader/Cache.h:
+        * loader/CachedCSSStyleSheet.h:
+        * loader/CachedResourceClient.h:
+        * loader/CachedResourceClientWalker.cpp:
+        * loader/CachedResourceClientWalker.h:
+        * loader/CachedScript.cpp:
+        * loader/CachedScript.h:
+        * loader/CachedXBLDocument.cpp:
+        * loader/CachedXBLDocument.h:
+        * loader/CachedXSLStyleSheet.cpp:
+        * loader/CachedXSLStyleSheet.h:
+        * rendering/GapRects.h:
+        * xml/XMLSerializer.cpp:
+
+2009-01-02  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Darin Adler
+
+        Use an OwnPtr for m_chromeClient.
+        
+        * svg/graphics/SVGImage.cpp:
+        (WebCore::SVGImage::~SVGImage):
+        (WebCore::SVGImage::dataChanged):
+        * svg/graphics/SVGImage.h:
+
+2009-01-02  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Darin Adler
+
+        https://bugs.webkit.org/show_bug.cgi?id=22981
+
+        Repaints inside of an SVGImage were thrown on the floor,
+        which broke incremental painting due to loading, or SVG animation.
+        Fix this by assigning the SVGImage a ChromeClient subclass that passes
+        along repaints via a new method on ImageObserver, which also takes
+        a rect parameter for the changed rect, allowing incremental repaints.
+        Fix RenderImage::imageChanged to take advantage of this changedRect to
+        only repaint the changed parts of the image.
+        
+        This also enables incremental painting for canvas-as-image, so
+        add tests for that too.
+
+        Tests: fast/backgrounds/animated-svg-as-background.html
+               fast/backgrounds/animated-svg-as-mask.html
+               fast/canvas/canvas-as-image-incremental-repaint.html
+               fast/canvas/canvas-as-image.html
+               fast/images/animated-svg-as-image.html
+
+        * css/CSSCanvasValue.cpp:
+        (WebCore::CSSCanvasValue::canvasChanged):
+        * loader/CachedImage.cpp:
+        (WebCore::CachedImage::notifyObservers):
+        (WebCore::CachedImage::data):
+        (WebCore::CachedImage::changedInRect):
+        * loader/CachedImage.h:
+        * loader/CachedResourceClient.h:
+        (WebCore::CachedResourceClient::imageChanged):
+        * platform/graphics/ImageObserver.h:
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::imageChanged):
+        * rendering/RenderBox.h:
+        * rendering/RenderImage.cpp:
+        (WebCore::RenderImage::imageChanged):
+        * rendering/RenderImage.h:
+        * rendering/RenderListMarker.cpp:
+        (WebCore::RenderListMarker::imageChanged):
+        * rendering/RenderListMarker.h:
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::imageChanged):
+        * rendering/RenderObject.h:
+        (WebCore::RenderObject::imageChanged):
+        * rendering/RenderSVGImage.cpp:
+        (WebCore::RenderSVGImage::imageChanged):
+        * rendering/RenderSVGImage.h:
+        * rendering/RenderScrollbarPart.cpp:
+        (WebCore::RenderScrollbarPart::imageChanged):
+        * rendering/RenderScrollbarPart.h:
+        * rendering/RenderTableCol.cpp:
+        (WebCore::RenderTableCol::imageChanged):
+        * rendering/RenderTableCol.h:
+        * rendering/RenderTableRow.cpp:
+        (WebCore::RenderTableRow::imageChanged):
+        * rendering/RenderTableRow.h:
+        * rendering/RenderTableSection.cpp:
+        (WebCore::RenderTableSection::imageChanged):
+        * rendering/RenderTableSection.h:
+        * svg/graphics/SVGImage.cpp:
+        (WebCore::SVGImageChromeClient::SVGImageChromeClient):
+        (WebCore::SVGImageChromeClient::image):
+        (WebCore::SVGImageChromeClient::chromeDestroyed):
+        (WebCore::SVGImageChromeClient::repaint):
+        (WebCore::SVGImage::SVGImage):
+        (WebCore::SVGImage::~SVGImage):
+        (WebCore::SVGImage::dataChanged):
+        * svg/graphics/SVGImage.h:
+
+2009-01-02  Eric Carlson  <eric.carlson@apple.com>
+
+        Reviewed by Darin Adler
+
+        https://bugs.webkit.org/show_bug.cgi?id=23043
+
+        Pull media controls css out of html4.css into separate file. Don't generate
+        wml, svg, or media css globals unless the feature is enabled.
+
+        * DerivedSources.make:
+            Don't include css for unused features.
+
+        * WebCore.xcodeproj/project.pbxproj:
+            include mediaControls.css
+
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::styleForElement):
+            don't parse or add media css unless VIDEO feature is enabled and the target
+            element is video or audio
+
+        * css/html4.css:
+            moved media controls css to mediaControls.css
+
+        * css/mediaControls.css: Added.
+
+2009-01-02  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23022
+        Fix multiple issues with appcache online whitelist handling
+
+        Test: http/tests/appcache/online-whitelist.html
+
+        * loader/appcache/ApplicationCache.cpp:
+        (WebCore::ApplicationCache::isURLInOnlineWhitelist): Test whitelist entries as prefixes,
+        making it possible to use them for CGI invocation (as required by HTML5).
+
+        * loader/DocumentLoader.cpp: (WebCore::DocumentLoader::shouldLoadResourceFromApplicationCache):
+        Re-ordered checks, so that resources that are cached, but are also listed in online whitelist
+        are loaded from the cache. This is required by HTML5, although Firefox doesn't match.
+
+        * loader/appcache/ManifestParser.cpp:
+        (WebCore::parseManifest):
+        * loader/appcache/ManifestParser.h:
+        * loader/appcache/ApplicationCache.h:
+        (WebCore::ApplicationCache::onlineWhitelist):
+        * loader/appcache/ApplicationCacheStorage.cpp:
+        (WebCore::ApplicationCacheStorage::store):
+        (WebCore::ApplicationCacheStorage::loadCache):
+        Changed online whitelist to be a vector of URLs, which is better suited for the new algorithm.
+
+2009-01-02  Darin Adler  <darin@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Bug 23072: REGRESSION (r37371): In the Dictionary application, scroll bar appears inside its web view when resizing its window
+        https://bugs.webkit.org/show_bug.cgi?id=23072
+        rdar://problem/6368028
+
+        * WebCore.base.exp: Updated.
+        * WebCore.xcodeproj/project.pbxproj: Mark HTMLHeadElement.h Private so it can be used in WebKit.
+
+        * dom/Document.cpp:
+        (WebCore::Document::Document): Initialize m_frameElementsShouldIgnoreScrolling to false.
+        * dom/Document.h: Added setFrameElementsShouldIgnoreScrolling, frameElementsShouldIgnoreScrolling,
+        and m_frameElementsShouldIgnoreScrolling.
+
+        * html/HTMLFrameElementBase.cpp:
+        (WebCore::HTMLFrameElementBase::parseMappedAttribute): Don't allow changes to the scrolling attribute
+        to affect the scrolling mode if frameElementsShouldIgnoreScrolling() returns true. This is only
+        triggered on Mac OS X when running the Dictionary application.
+
+2009-01-02  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23036
+        <rdar://problem/6451666> Implement AppCache fallback entries (23036)
+
+        Test: http/tests/appcache/fallback.html
+
+        * loader/FrameLoader.cpp: (WebCore::FrameLoader::loadResourceSynchronously): Use fallback
+        entries if normal loading fails.
+
+        * loader/DocumentLoader.cpp:
+        (WebCore::DocumentLoader::shouldLoadResourceFromApplicationCache): Do not prevent normal
+        loading for resources that match fallback namespaces - they are only loaded from the cache
+        if that fails.
+        (WebCore::DocumentLoader::getApplicationCacheFallbackResource): Get a fallback entry for
+        resource from associated appcache, or from passed in one, if any.
+        (WebCore::DocumentLoader::scheduleLoadFallbackResourceFromApplicationCache): If a fallback
+        entry for resourse exists, add it to pending substitute loads.
+
+        * loader/DocumentLoader.h: Added new functions for loading fallback data for resources.
+
+        * loader/ResourceLoader.h:
+        * loader/ResourceLoader.cpp:
+        (WebCore::ResourceLoader::scheduleLoadFallbackResourceFromApplicationCache): This function
+        is called when normal loading fails (which includes network failures, 4xx and 5xx responses,
+        and cross-origin redirects) to load appcache fallback data instead. It can use either the
+        cache that is associated with the browsing context, or a custom one if association is yet
+        to take place.
+        (WebCore::ResourceLoader::willSendRequest): Try using fallback data.
+        (WebCore::ResourceLoader::didReceiveResponse): Ditto.
+        (WebCore::ResourceLoader::didFail): Ditto.
+
+        * loader/MainResourceLoader.cpp:
+        (WebCore::MainResourceLoader::didReceiveResponse): Locate an appropriate cache and load
+        fallback data from it if loading fails. The browsing context may still be associated with
+        its previous document here, so the cache to load from must be passed explicitly.
+        (WebCore::MainResourceLoader::didFail): Ditto.
+        (WebCore::MainResourceLoader::load): Remove unnecessary check and FIXME.
+
+        * loader/appcache/ApplicationCache.cpp:
+        (WebCore::ApplicationCache::setFallbackURLs):
+        (WebCore::ApplicationCache::urlMatchesFallbackNamespace):
+        * loader/appcache/ApplicationCache.h:
+        (WebCore::ApplicationCache::fallbackURLs):
+        * loader/appcache/ApplicationCacheStorage.cpp:
+        (WebCore::ApplicationCacheStorage::cacheGroupForURL):
+        (WebCore::ApplicationCacheStorage::fallbackCacheGroupForURL):
+        (WebCore::ApplicationCacheStorage::store):
+        (WebCore::ApplicationCacheStorage::loadCache):
+        (WebCore::ApplicationCacheStorage::storeCopyOfCache):
+        * loader/appcache/ApplicationCacheStorage.h:
+        * loader/appcache/ApplicationCacheGroup.cpp:
+        (WebCore::ApplicationCacheGroup::fallbackCacheForMainRequest):
+        (WebCore::ApplicationCacheGroup::didFinishLoadingManifest):
+        * loader/appcache/ApplicationCacheGroup.h:
+        Implement fallback map saving and loading, pass it to the cache.
+
+        * loader/appcache/ManifestParser.h: Use a correct data structure for fallback map - keys
+        are matched by prefix, so HAshMap cannot be used.
+
+        * loader/appcache/ManifestParser.cpp: (WebCore::parseManifest): Fix bugs in fallback section
+        parsing.
+
+2009-01-01  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        <rdar://problem/6450530> WebCore::FontPlatformData should not leak
+
+        Whoops, previous patch should also have fixed the font referencing in
+        the constructor.
+
+        * WebCore.xcodeproj/project.pbxproj:
+        * platform/graphics/mac/FontPlatformDataMac.mm:
+        (WebCore::FontPlatformData::FontPlatformData):
+
+2009-01-01  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        <rdar://problem/6450530> WebCore::FontPlatformData should not leak
+
+        Make sure we only adopt the new font, rather than re-referencing (and so leaking).
+
+        * platform/graphics/mac/FontPlatformDataMac.mm:
+        (WebCore::FontPlatformData::setFont):
+
+2009-01-01  Darin Adler  <darin@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Bug 23071: REGRESSION (r39536): New test failures after committing patch in bug 23051 (ICU search)
+        https://bugs.webkit.org/show_bug.cgi?id=23071
+
+        Also fix some things that Dan suggested during review of the ICU search patch that I forgot
+        the first time around.
+
+        * editing/TextIterator.cpp: Use ICU search on all platforms that use ICU, now that
+        we've double checked it works everywhere, removing HAVE_ICU_SEARCH entirely.
+        Removed unused m_atBreak data member from the non-ICU code path.
+        (WebCore::TextIterator::TextIterator): Move null check up.
+        (WebCore::TextIterator::handleTextBox): Fix mistake that made the iterator include
+        collapsed whitespace. This was left over from an earlier version of the patch.
+        (WebCore::SimplifiedBackwardsTextIterator::SimplifiedBackwardsTextIterator):
+        Move null check up.
+
+2009-01-01  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Darin Adler, Oliver Hunt
+
+        https://bugs.webkit.org/show_bug.cgi?id=23065
+        
+        Enable incremental painting of canvas. This turns incremental painting
+        back on, and fixes issues with stroke width and miters, calling willDraw()
+        for strokeText and fillText, and taking shadows into account.
+        
+        Test: fast/canvas/canvas-incremental-repaint.html
+
+        * html/CanvasRenderingContext2D.cpp:
+        (WebCore::CanvasStrokeStyleApplier::CanvasStrokeStyleApplier):
+        (WebCore::CanvasStrokeStyleApplier::strokeStyle):
+        (WebCore::CanvasRenderingContext2D::stroke):
+        (WebCore::CanvasRenderingContext2D::willDraw):
+        (WebCore::CanvasRenderingContext2D::putImageData):
+        (WebCore::CanvasRenderingContext2D::drawTextInternal):
+        * html/CanvasRenderingContext2D.h:
+        * html/HTMLCanvasElement.cpp:
+        (WebCore::HTMLCanvasElement::willDraw):
+        * platform/graphics/FloatRect.h:
+        (WebCore::mapRect): new method to map a rect contained
+        in one rect to an equivalent rect inside another rect.
+
+2008-12-29  Konstantin Käfer  <kkaefer@gmail.com>
+
+        Reviewed by Tim Hatcher.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=17229
+        <rdar://problem/5732829> Inspector should show properties of all JS objects in Console
+
+        Prints objects not as plain text but makes them expandable so that
+        they can be inspected.
+
+        * inspector/front-end/Console.js:
+        (): added a parameter "inline" to the WebInspector.Console._format function which indicates
+            whether the object is printed in the context of another string (with console.log()) or
+            as sole element.
+        (.): objects and DOM nodes are now printed in an expandable form when they are printed alone
+            (i.e. not in the context of a console.log() string) so that they can be inspected.
+        * inspector/front-end/PropertiesSection.js:
+        (WebInspector.PropertiesSection.prototype.set title): Allow DOM Nodes as title instead of strings
+            in that case, the Node is inserted into the title instead of the string value of the passed
+            object. This is used for displaying linkified titles, for example when inspecting DOM nodes,
+            the syntax highlighted HTML representation is shown instead of the plain source code.
+        * inspector/front-end/inspector.css: correct the offsetParent for the expandable object inspector.
+
+2009-01-01  Darin Adler  <darin@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Bug 23051: web page searching should use ICU's search so it can ignore diacritical differences
+        https://bugs.webkit.org/show_bug.cgi?id=23051
+        rdar://problem/3574497
+
+        Test: editing/execCommand/findString-diacriticals.html
+
+        * editing/TextIterator.cpp: Changed the CircularSearchBuffer class to have a new
+        name, since it doesn't always use a circular buffer any more. Changed the interface
+        so it can work well in the new chunky comparison mode for ICU search, and also
+        added private data members for both the ICU-search and non-ICU-search code paths.
+        (WebCore::TextIterator::TextIterator): Use the versions of the Range functions
+        that don't take an exception code.
+        (WebCore::TextIterator::handleTextBox): Added a special case to handle the position
+        of a collapsed-away space better. This is not needed for search mechanism, but was
+        helpful in an earlier version of this patch, and is still an improvement.
+        (WebCore::SimplifiedBackwardsTextIterator::SimplifiedBackwardsTextIterator): Use the
+        versions of the Range functions that don't take an exception code.
+        (WebCore::CharacterIterator::range): Ditto.
+        (WebCore::characterSubrange): Added. Helper function used in both places below where
+        we want to convert a range and character offsets into a subrange.
+        (WebCore::WordAwareIterator::advance): Use the versions of the Range functions that
+        don't take an exception code.
+        (WebCore::createSearcher): Added.
+        (WebCore::searcher): Added.
+        (WebCore::lockSearcher): Added.
+        (WebCore::unlockSearcher): Added.
+        (WebCore::SearchBuffer::SearchBuffer): Added.
+        (WebCore::SearchBuffer::~SearchBuffer): Added.
+        (WebCore::SearchBuffer::append): Added.
+        (WebCore::SearchBuffer::atBreak): Added.
+        (WebCore::SearchBuffer::reachedBreak): Added.
+        (WebCore::SearchBuffer::search): Added.
+        (WebCore::SearchBuffer::length): Added.
+        (WebCore::TextIterator::subrange): Changed to call the characterSubrange
+        function above.
+        (WebCore::TextIterator::rangeFromLocationAndLength): Use the versions of the
+        Range functions that don't take an exception code. Also tweak some other details
+        of the code.
+        (WebCore::isAllCollapsibleWhitespace): Added.
+        (WebCore::collapsedToBoundary): Added.
+        (WebCore::findPlainText): Rewrote to use new interface and streamline the
+        logic a bit.
+
+        Add the relevant files in the icu directory. As icu/README says, the "icu"
+        directory is really just for Mac OS X, where we have the ICU library but not
+        the headers installed. It should be moved inside platform/mac at some point
+        to make this more clear (and the copy in JavaScriptCore should be moved
+        somewhere similar for the same reason).
+
+        * icu/unicode/ucoleitr.h: Added.
+        * icu/unicode/usearch.h: Added.
+
+2009-01-01  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by Cameron Zwarich.
+
+        CrashTracer: [REGRESSION] 1090 crashes in Safari at com.apple.JavaScriptCore: KJS::JSGlobalObject::stopTimeoutCheck + 0
+        <rdar://problem/5821130>
+
+        This was caused by a plugin instance calling into JS code that removed the plugin
+        object.  This fix is to cache the global object locally in a ProtectedPtr so we don't
+        need to rely on the continued existence of the plugin instance.
+
+        * bridge/NP_jsobject.cpp:
+        (_NPN_InvokeDefault):
+        (_NPN_Invoke):
+        (_NPN_Evaluate):
+        (_NPN_Construct):
+
+2008-12-31  Laszlo Gombos  <laszlo.1.gombos@nokia.com>
+
+        Reviewed by Holger Freyther.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=22964
+
+        MinGW build failure.
+
+        * platform/graphics/qt/SimpleFontDataQt.cpp:
+        (WebCore::SimpleFontData::containsCharacters):
+
+2008-12-31  Alexander V. Butenko  <alex@digiqube.com>
+
+        Reviewed by Holger Freyther.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22750
+        [gtk] webkit up to r39121 crash on image urls like
+        http:///sitename.com
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::ResourceHandle::start):
+
+2008-12-31  Hiroyuki Ikezoe  <poincare@ikezoe.net>
+
+        Reviewed by Holger Freyther.
+
+        https://bugs.webkit.org/show_bug.cgi?id=18310
+
+        * platform/graphics/gtk/SimpleFontDataPango.cpp:
+        (WebCore::SimpleFontData::determinePitch): Do not invoke
+        isFixedPitch() when the font is a custom font.
+
+2008-12-31  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by Cameron Zwarich.
+
+        More work on Bug 3781: Animation via canvas could be faster
+        <https://bugs.webkit.org/show_bug.cgi?id=3781>
+
+        Make use of the fast path parsing of color strings that Color
+        uses.  This improves performance of '#rgb', '#rrggbb', etc and
+        named (eg. 'green') colors.
+
+        Improves frame rate of test by around 40%
+
+        * html/CanvasStyle.cpp:
+        (WebCore::CanvasStyle::applyStrokeColor):
+        (WebCore::CanvasStyle::applyFillColor):
+
+2008-12-30  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Darin Adler
+
+        https://bugs.webkit.org/show_bug.cgi?id=23042
+        
+        Rather than doing a repaint() inside of computeAbsoluteRepaintRect()
+        when there is a reflection, compute the location of the rect inside
+        the reflection and take the union of the unreflected and reflected rects.
+        
+        Test: fast/repaint/reflection-redraw.html
+
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::computeAbsoluteRepaintRect):
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::reflectedRect):
+        * rendering/RenderObject.h:
+
 2008-12-30  Dan Bernstein  <mitz@apple.com>
 
         Reviewed by Adele Peterson.

@@ -59,6 +59,7 @@
 #include "FrameLoader.h"
 #include "FrameTree.h"
 #include "FrameView.h"
+#include "HTMLAnchorElement.h"
 #include "HTMLBodyElement.h"
 #include "HTMLCanvasElement.h"
 #include "HTMLDocument.h"
@@ -102,6 +103,7 @@
 #include "SegmentedString.h"
 #include "SelectionController.h"
 #include "Settings.h"
+#include "StorageEvent.h"
 #include "StyleSheetList.h"
 #include "SystemTime.h"
 #include "TextEvent.h"
@@ -120,6 +122,7 @@
 #include "JSDOMBinding.h"
 #endif
 #include "ScriptController.h"
+#include <wtf/HashFunctions.h>
 #include <wtf/MainThread.h>
 #include <wtf/StdLibExtras.h>
 #include <wtf/PassRefPtr.h>
@@ -181,9 +184,6 @@ static const int cLayoutScheduleThreshold = 250;
 
 // Use 1 to represent the document's default form.
 static HTMLFormElement* const defaultForm = reinterpret_cast<HTMLFormElement*>(1);
-
-// Golden ratio - arbitrary start value to avoid mapping all 0's to all 0's
-static const unsigned PHI = 0x9e3779b9U;
 
 // DOM Level 2 says (letters added):
 //
@@ -287,6 +287,7 @@ Document::Document(Frame* frame, bool isXHTML)
     : ContainerNode(0)
     , m_domtree_version(0)
     , m_styleSheets(StyleSheetList::create(this))
+    , m_frameElementsShouldIgnoreScrolling(false)
     , m_title("")
     , m_titleSetExplicitly(false)
     , m_imageLoadEventTimer(this, &Document::imageLoadEventTimerFired)
@@ -2752,22 +2753,30 @@ DOMWindow* Document::domWindow() const
 
 PassRefPtr<Event> Document::createEvent(const String& eventType, ExceptionCode& ec)
 {
-    if (eventType == "UIEvents" || eventType == "UIEvent")
-        return UIEvent::create();
-    if (eventType == "MouseEvents" || eventType == "MouseEvent")
-        return MouseEvent::create();
-    if (eventType == "MutationEvents" || eventType == "MutationEvent")
-        return MutationEvent::create();
-    if (eventType == "KeyboardEvents" || eventType == "KeyboardEvent")
-        return KeyboardEvent::create();
-    if (eventType == "HTMLEvents" || eventType == "Event" || eventType == "Events")
+    if (eventType == "Event" || eventType == "Events" || eventType == "HTMLEvents")
         return Event::create();
-    if (eventType == "ProgressEvent")
-        return ProgressEvent::create();
-    if (eventType == "TextEvent")
-        return TextEvent::create();
+    if (eventType == "KeyboardEvent" || eventType == "KeyboardEvents")
+        return KeyboardEvent::create();
+    if (eventType == "MessageEvent")
+        return MessageEvent::create();
+    if (eventType == "MouseEvent" || eventType == "MouseEvents")
+        return MouseEvent::create();
+    if (eventType == "MutationEvent" || eventType == "MutationEvents")
+        return MutationEvent::create();
     if (eventType == "OverflowEvent")
         return OverflowEvent::create();
+    if (eventType == "ProgressEvent")
+        return ProgressEvent::create();
+    if (eventType == "StorageEvent")
+        return StorageEvent::create();
+    if (eventType == "TextEvent")
+        return TextEvent::create();
+    if (eventType == "UIEvent" || eventType == "UIEvents")
+        return UIEvent::create();
+    if (eventType == "WebKitAnimationEvent")
+        return WebKitAnimationEvent::create();
+    if (eventType == "WebKitTransitionEvent")
+        return WebKitTransitionEvent::create();
     if (eventType == "WheelEvent")
         return WheelEvent::create();
 #if ENABLE(SVG)
@@ -2776,12 +2785,6 @@ PassRefPtr<Event> Document::createEvent(const String& eventType, ExceptionCode& 
     if (eventType == "SVGZoomEvents")
         return SVGZoomEvent::create();
 #endif
-    if (eventType == "MessageEvent")
-        return MessageEvent::create();
-    if (eventType == "WebKitAnimationEvent")
-        return WebKitAnimationEvent::create();
-    if (eventType == "WebKitTransitionEvent")
-        return WebKitTransitionEvent::create();
     ec = NOT_SUPPORTED_ERR;
     return 0;
 }
@@ -4143,7 +4146,7 @@ unsigned FormElementKeyHash::hash(const FormElementKey& k)
 
     unsigned l = sizeof(k) / (sizeof(uint16_t) * 2);
     const uint16_t* s = reinterpret_cast<const uint16_t*>(&k);
-    uint32_t hash = PHI;
+    uint32_t hash = WTF::stringHashingStartValue;
 
     // Main loop
     for (; l > 0; l--) {
@@ -4402,8 +4405,7 @@ void Document::addTimeout(int timeoutId, DOMTimer* timer)
 
 void Document::removeTimeout(int timeoutId)
 {
-    DOMTimer* timer = m_timeouts.take(timeoutId);
-    delete timer;
+    m_timeouts.remove(timeoutId);
 }
 
 DOMTimer* Document::findTimeout(int timeoutId)
@@ -4462,6 +4464,29 @@ void Document::postTask(PassRefPtr<Task> task)
     } else {
         callOnMainThread(performTask, new PerformTaskContext(this, task));
     }
+}
+
+Element* Document::findAnchor(const String& name)
+{
+    if (name.isEmpty())
+        return 0;
+    if (Element* element = getElementById(name))
+        return element;
+    for (Node* node = this; node; node = node->traverseNextNode()) {
+        if (node->hasTagName(aTag)) {
+            HTMLAnchorElement* anchor = static_cast<HTMLAnchorElement*>(node);
+            if (inCompatMode()) {
+                // Quirks mode, case insensitive comparison of names.
+                if (equalIgnoringCase(anchor->name(), name))
+                    return anchor;
+            } else {
+                // Strict mode, names need to match exactly.
+                if (anchor->name() == name)
+                    return anchor;
+            }
+        }
+    }
+    return 0;
 }
 
 } // namespace WebCore

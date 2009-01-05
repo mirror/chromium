@@ -274,6 +274,13 @@ public:
     PassRefPtr<HTMLCollection> windowNamedItems(const String& name);
     PassRefPtr<HTMLCollection> documentNamedItems(const String& name);
 
+    // Find first anchor with the given name.
+    // First searches for an element with the given ID, but if that fails, then looks
+    // for an anchor with the given name. ID matching is always case sensitive, but
+    // Anchor name matching is case sensitive in strict mode and not case sensitive in
+    // quirks mode for historical compatibility reasons.
+    Element* findAnchor(const String& name);
+
     HTMLCollection::CollectionInfo* collectionInfo(HTMLCollection::Type type)
     {
         ASSERT(type >= HTMLCollection::FirstUnnamedDocumentCachedType);
@@ -891,9 +898,9 @@ private:
     bool m_usesFirstLineRules;
     bool m_usesFirstLetterRules;
     bool m_gotoAnchorNeededAfterStylesheetsLoad;
-
     bool m_isDNSPrefetchEnabled;
     bool m_haveExplicitlyDisabledDNSPrefetch;
+    bool m_frameElementsShouldIgnoreScrolling;
 
     String m_title;
     bool m_titleSetExplicitly;
@@ -977,6 +984,10 @@ public:
     TextResourceDecoder* decoder() const { return m_decoder.get(); }
 
     UChar backslashAsCurrencySymbol() const;
+
+    // Quirk for the benefit of Apple's Dictionary application.
+    void setFrameElementsShouldIgnoreScrolling(bool ignore) { m_frameElementsShouldIgnoreScrolling = ignore; }
+    bool frameElementsShouldIgnoreScrolling() const { return m_frameElementsShouldIgnoreScrolling; }
 
 #if ENABLE(DASHBOARD_SUPPORT)
     void setDashboardRegionsDirty(bool f) { m_dashboardRegionsDirty = f; }
