@@ -587,6 +587,7 @@ RegisterID* EvalFunctionCallNode::emitBytecode(BytecodeGenerator& generator, Reg
 {
     RefPtr<RegisterID> func = generator.tempDestination(dst);
     RefPtr<RegisterID> thisRegister = generator.newTemporary();
+    generator.emitExpressionInfo(divot() - startOffset() + 4, 4, 0);
     generator.emitResolveWithBase(thisRegister.get(), func.get(), generator.propertyNames().eval);
     return generator.emitCallEval(generator.finalDestination(dst, func.get()), func.get(), thisRegister.get(), m_args.get(), divot(), startOffset(), endOffset());
 }
@@ -2038,7 +2039,8 @@ void WithNode::releaseNodes(NodeReleaser& releaser)
 
 RegisterID* WithNode::emitBytecode(BytecodeGenerator& generator, RegisterID* dst)
 {
-    RefPtr<RegisterID> scope = generator.emitNode(m_expr.get()); // scope must be protected until popped
+    RefPtr<RegisterID> scope = generator.newTemporary();
+    generator.emitNode(scope.get(), m_expr.get()); // scope must be protected until popped
     generator.emitExpressionInfo(m_divot, m_expressionLength, 0);
     generator.emitPushScope(scope.get());
     RegisterID* result = generator.emitNode(dst, m_statement.get());
@@ -2329,7 +2331,13 @@ RegisterID* TryNode::emitBytecode(BytecodeGenerator& generator, RegisterID* dst)
         RefPtr<Label> handlerEndLabel = generator.newLabel();
         generator.emitJump(handlerEndLabel.get());
         RefPtr<RegisterID> exceptionRegister = generator.emitCatch(generator.newTemporary(), tryStartLabel.get(), tryEndLabel.get());
-        generator.emitPushNewScope(exceptionRegister.get(), m_exceptionIdent, exceptionRegister.get());
+        if (m_catchHasEval) {
+            RefPtr<RegisterID> dynamicScopeObject = generator.emitNewObject(generator.newTemporary());
+            generator.emitPutById(dynamicScopeObject.get(), m_exceptionIdent, exceptionRegister.get());
+            generator.emitMove(exceptionRegister.get(), dynamicScopeObject.get());
+            generator.emitPushScope(exceptionRegister.get());
+        } else
+            generator.emitPushNewScope(exceptionRegister.get(), m_exceptionIdent, exceptionRegister.get());
         generator.emitNode(dst, m_catchBlock.get());
         generator.emitPopScope();
         generator.emitLabel(handlerEndLabel.get());

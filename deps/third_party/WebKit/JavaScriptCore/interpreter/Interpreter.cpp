@@ -102,16 +102,7 @@ static int depth(CodeBlock* codeBlock, ScopeChain& sc)
 {
     if (!codeBlock->needsFullScopeChain())
         return 0;
-    int scopeDepth = 0;
-    ScopeChainIterator iter = sc.begin();
-    ScopeChainIterator end = sc.end();
-    while (!(*iter)->isObject(&JSActivation::info)) {
-        ++iter;
-        if (iter == end)
-            break;
-        ++scopeDepth;
-    }
-    return scopeDepth;
+    return sc.localDepth();
 }
 
 // FIXME: This operation should be called "getNumber", not "isNumber" (as it is in JSValue.h).
@@ -390,7 +381,7 @@ NEVER_INLINE bool Interpreter::resolveGlobal(CallFrame* callFrame, Instruction* 
     PropertySlot slot(globalObject);
     if (globalObject->getPropertySlot(callFrame, ident, slot)) {
         JSValue* result = slot.getValue(callFrame, ident);
-        if (slot.isCacheable()) {
+        if (slot.isCacheable() && !globalObject->structure()->isDictionary()) {
             if (vPC[4].u.structure)
                 vPC[4].u.structure->deref();
             globalObject->structure()->ref();
@@ -3639,13 +3630,15 @@ JSValue* Interpreter::privateExecute(ExecutionFlag flag, RegisterFile* registerF
         /* push_scope scope(r)
 
            Converts register scope to object, and pushes it onto the top
-           of the current scope chain.
+           of the current scope chain.  The contents of the register scope
+           are replaced by the result of toObject conversion of the scope.
         */
         int scope = (++vPC)->u.operand;
         JSValue* v = callFrame[scope].jsValue(callFrame);
         JSObject* o = v->toObject(callFrame);
         CHECK_FOR_EXCEPTION();
 
+        callFrame[scope] = o;
         callFrame->setScopeChain(callFrame->scopeChain()->push(o));
 
         ++vPC;
@@ -5325,7 +5318,7 @@ JSValue* Interpreter::cti_op_resolve_global(STUB_ARGS)
     PropertySlot slot(globalObject);
     if (globalObject->getPropertySlot(callFrame, ident, slot)) {
         JSValue* result = slot.getValue(callFrame, ident);
-        if (slot.isCacheable()) {
+        if (slot.isCacheable() && !globalObject->structure()->isDictionary()) {
             GlobalResolveInfo& globalResolveInfo = callFrame->codeBlock()->globalResolveInfo(globalResolveInfoIndex);
             if (globalResolveInfo.structure)
                 globalResolveInfo.structure->deref();
@@ -5738,13 +5731,14 @@ JSValue* Interpreter::cti_op_next_pname(STUB_ARGS)
     return temp;
 }
 
-void Interpreter::cti_op_push_scope(STUB_ARGS)
+JSObject* Interpreter::cti_op_push_scope(STUB_ARGS)
 {
     BEGIN_STUB_FUNCTION();
 
     JSObject* o = ARG_src1->toObject(ARG_callFrame);
-    CHECK_FOR_EXCEPTION_VOID();
+    CHECK_FOR_EXCEPTION();
     ARG_callFrame->setScopeChain(ARG_callFrame->scopeChain()->push(o));
+    return o;
 }
 
 void Interpreter::cti_op_pop_scope(STUB_ARGS)

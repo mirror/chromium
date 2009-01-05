@@ -1,7 +1,7 @@
 /*
  *  Copyright (C) 1999-2001 Harri Porten (porten@kde.org)
  *  Copyright (C) 2001 Peter Kelly (pmk@post.com)
- *  Copyright (C) 2003, 2006, 2007, 2008 Apple Inc. All rights reserved.
+ *  Copyright (C) 2003, 2006, 2007, 2008, 2009 Apple Inc. All rights reserved.
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -31,7 +31,7 @@
 
 using std::auto_ptr;
 
-extern int kjsyyparse(void*);
+extern int jscyyparse(void*);
 
 namespace JSC {
 
@@ -53,7 +53,7 @@ void Parser::parse(JSGlobalData* globalData, int* errLine, UString* errMsg)
     Lexer& lexer = *globalData->lexer;
     lexer.setCode(*m_source);
 
-    int parseError = kjsyyparse(globalData);
+    int parseError = jscyyparse(globalData);
     bool lexError = lexer.sawError();
     lexer.clear();
 
@@ -71,8 +71,10 @@ void Parser::reparse(JSGlobalData* globalData, FunctionBodyNode* functionBodyNod
     ASSERT(!functionBodyNode->data());
 
     m_source = &functionBodyNode->source();
+    globalData->lexer->setIsReparsing();
     parse(globalData, 0, 0);
     ASSERT(m_sourceElements);
+
     functionBodyNode->adoptData(std::auto_ptr<ScopeNodeData>(new ScopeNodeData(m_sourceElements.get(),
                                                                                m_varDeclarations ? &m_varDeclarations->data : 0, 
                                                                                m_funcDeclarations ? &m_funcDeclarations->data : 0,
