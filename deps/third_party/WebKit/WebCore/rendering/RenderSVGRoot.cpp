@@ -1,6 +1,6 @@
 /*
     Copyright (C) 2004, 2005, 2007 Nikolas Zimmermann <zimmermann@kde.org>
-                  2004, 2005, 2007, 2008 Rob Buis <buis@kde.org>
+                  2004, 2005, 2007, 2008, 2009 Rob Buis <buis@kde.org>
                   2007 Eric Seidel <eric@webkit.org>
 
     This file is part of the KDE project
@@ -53,12 +53,12 @@ RenderSVGRoot::~RenderSVGRoot()
 {
 }
 
-int RenderSVGRoot::lineHeight(bool b, bool isRootLineBox) const
+int RenderSVGRoot::lineHeight(bool, bool) const
 {
     return height() + marginTop() + marginBottom();
 }
 
-int RenderSVGRoot::baselinePosition(bool b, bool isRootLineBox) const
+int RenderSVGRoot::baselinePosition(bool, bool) const
 {
     return height() + marginTop() + marginBottom();
 }
@@ -259,7 +259,7 @@ void RenderSVGRoot::absoluteRects(Vector<IntRect>& rects, int, int)
         current->absoluteRects(rects, 0, 0);
 }
 
-void RenderSVGRoot::absoluteQuads(Vector<FloatQuad>& quads, bool topLevel)
+void RenderSVGRoot::absoluteQuads(Vector<FloatQuad>& quads, bool)
 {
     for (RenderObject* current = firstChild(); current != 0; current = current->nextSibling())
         current->absoluteQuads(quads);
@@ -331,6 +331,13 @@ bool RenderSVGRoot::nodeAtPoint(const HitTestRequest& request, HitTestResult& re
     // Spec: Only graphical elements can be targeted by the mouse, period.
     // 16.4: "If there are no graphics elements whose relevant graphics content is under the pointer (i.e., there is no target element), the event is not dispatched."
     return false;
+}
+
+void RenderSVGRoot::position(InlineBox* box)
+{
+    RenderContainer::position(box);
+    if (m_absoluteBounds.isEmpty())
+        setNeedsLayout(true, false);
 }
 
 }

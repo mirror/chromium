@@ -31,12 +31,15 @@
 #include "ApplicationCache.h"
 #include "ApplicationCacheGroup.h"
 #include "ApplicationCacheResource.h"
-#include "FileSystem.h"
 #include "CString.h"
+#include "FileSystem.h"
 #include "KURL.h"
 #include "SQLiteStatement.h"
 #include "SQLiteTransaction.h"
 #include <wtf/StdLibExtras.h>
+#include <wtf/StringExtras.h>
+
+using namespace std;
 
 namespace WebCore {
 
@@ -69,7 +72,7 @@ ApplicationCacheGroup* ApplicationCacheStorage::loadCacheGroup(const KURL& manif
         return 0;
     }
     
-    unsigned newestCacheStorageID = (unsigned)statement.getColumnInt64(2);
+    unsigned newestCacheStorageID = static_cast<unsigned>(statement.getColumnInt64(2));
 
     RefPtr<ApplicationCache> cache = loadCache(newestCacheStorageID);
     if (!cache)
@@ -77,7 +80,7 @@ ApplicationCacheGroup* ApplicationCacheStorage::loadCacheGroup(const KURL& manif
         
     ApplicationCacheGroup* group = new ApplicationCacheGroup(manifestURL);
       
-    group->setStorageID((unsigned)statement.getColumnInt64(0));
+    group->setStorageID(static_cast<unsigned>(statement.getColumnInt64(0)));
     group->setNewestCache(cache.release());
 
     return group;
@@ -129,7 +132,7 @@ void ApplicationCacheStorage::loadManifestHostHashes()
     
     int result;
     while ((result = statement.step()) == SQLResultRow)
-        m_cacheHostSet.add((unsigned)statement.getColumnInt64(0));
+        m_cacheHostSet.add(static_cast<unsigned>(statement.getColumnInt64(0)));
 }    
 
 ApplicationCacheGroup* ApplicationCacheStorage::cacheGroupForURL(const KURL& url)
@@ -149,8 +152,12 @@ ApplicationCacheGroup* ApplicationCacheStorage::cacheGroupForURL(const KURL& url
             continue;
         
         if (ApplicationCache* cache = group->newestCache()) {
-            if (cache->resourceForURL(url))
-                return group;
+            ApplicationCacheResource* resource = cache->resourceForURL(url);
+            if (!resource)
+                continue;
+            if (resource->type() & ApplicationCacheResource::Foreign)
+                continue;
+            return group;
         }
     }
     
@@ -171,7 +178,7 @@ ApplicationCacheGroup* ApplicationCacheStorage::cacheGroupForURL(const KURL& url
 
         // We found a cache group that matches. Now check if the newest cache has a resource with
         // a matching URL.
-        unsigned newestCacheID = (unsigned)statement.getColumnInt64(2);
+        unsigned newestCacheID = static_cast<unsigned>(statement.getColumnInt64(2));
         RefPtr<ApplicationCache> cache = loadCache(newestCacheID);
 
         if (!cache->resourceForURL(url))
@@ -179,7 +186,68 @@ ApplicationCacheGroup* ApplicationCacheStorage::cacheGroupForURL(const KURL& url
 
         ApplicationCacheGroup* group = new ApplicationCacheGroup(manifestURL);
         
-        group->setStorageID((unsigned)statement.getColumnInt64(0));
+        group->setStorageID(static_cast<unsigned>(statement.getColumnInt64(0)));
+        group->setNewestCache(cache.release());
+        
+        ASSERT(!m_cachesInMemory.contains(manifestURL));
+        m_cachesInMemory.set(group->manifestURL(), group);
+        
+        return group;
+    }
+
+    if (result != SQLResultDone)
+        LOG_ERROR("Could not load cache group, error \"%s\"", m_database.lastErrorMsg());
+    
+    return 0;
+}
+
+ApplicationCacheGroup* ApplicationCacheStorage::fallbackCacheGroupForURL(const KURL& url)
+{
+    // Check if an appropriate cache already exists in memory.
+    CacheGroupMap::const_iterator end = m_cachesInMemory.end();
+    for (CacheGroupMap::const_iterator it = m_cachesInMemory.begin(); it != end; ++it) {
+        ApplicationCacheGroup* group = it->second;
+        
+        if (ApplicationCache* cache = group->newestCache()) {
+            KURL fallbackURL;
+            if (!cache->urlMatchesFallbackNamespace(url, &fallbackURL))
+                continue;
+            if (cache->resourceForURL(fallbackURL)->type() & ApplicationCacheResource::Foreign)
+                continue;
+            return group;
+        }
+    }
+    
+    if (!m_database.isOpen())
+        return 0;
+        
+    // Check the database. Look for all cache groups with a newest cache.
+    SQLiteStatement statement(m_database, "SELECT id, manifestURL, newestCache FROM CacheGroups WHERE newestCache IS NOT NULL");
+    if (statement.prepare() != SQLResultOk)
+        return 0;
+    
+    int result;
+    while ((result = statement.step()) == SQLResultRow) {
+        KURL manifestURL = KURL(statement.getColumnText(1));
+
+        // Fallback namespaces always have the same origin as manifest URL, so we can avoid loading caches that cannot match.
+        if (!protocolHostAndPortAreEqual(url, manifestURL))
+            continue;
+
+        // We found a cache group that matches. Now check if the newest cache has a resource with
+        // a matching fallback namespace.
+        unsigned newestCacheID = static_cast<unsigned>(statement.getColumnInt64(2));
+        RefPtr<ApplicationCache> cache = loadCache(newestCacheID);
+
+        KURL fallbackURL;
+        if (!cache->urlMatchesFallbackNamespace(url, &fallbackURL))
+            continue;
+        if (cache->resourceForURL(fallbackURL)->type() & ApplicationCacheResource::Foreign)
+            continue;
+
+        ApplicationCacheGroup* group = new ApplicationCacheGroup(manifestURL);
+        
+        group->setStorageID(static_cast<unsigned>(statement.getColumnInt64(0)));
         group->setNewestCache(cache.release());
         
         ASSERT(!m_cachesInMemory.contains(manifestURL));
@@ -231,30 +299,30 @@ bool ApplicationCacheStorage::executeSQLCommand(const String& sql)
     return result;
 }
 
-static const int SchemaVersion = 3;
+static const int schemaVersion = 3;
     
 void ApplicationCacheStorage::verifySchemaVersion()
 {
-    if (m_database.tableExists("SchemaVersion")) {
-        int version = SQLiteStatement(m_database, "SELECT version from SchemaVersion").getColumnInt(0);
-        
-        if (version == SchemaVersion)
-            return;
-    }
-    
+    int version = SQLiteStatement(m_database, "PRAGMA user_version").getColumnInt(0);
+    if (version == schemaVersion)
+        return;
+
     m_database.clearAllTables();
 
-    SQLiteTransaction createSchemaVersionTable(m_database);
-    createSchemaVersionTable.begin();
+    // Update user version.
+    SQLiteTransaction setDatabaseVersion(m_database);
+    setDatabaseVersion.begin();
 
-    executeSQLCommand("CREATE TABLE SchemaVersion (version INTEGER NOT NULL)");
-    SQLiteStatement statement(m_database, "INSERT INTO SchemaVersion (version) VALUES (?)");
+    char userVersionSQL[32];
+    int numBytes = snprintf(userVersionSQL, sizeof(userVersionSQL), "PRAGMA user_version=%d", schemaVersion);
+    ASSERT_UNUSED(numBytes, static_cast<int>(sizeof(userVersionSQL)) >= numBytes);
+
+    SQLiteStatement statement(m_database, userVersionSQL);
     if (statement.prepare() != SQLResultOk)
         return;
     
-    statement.bindInt64(1, SchemaVersion);
     executeStatement(statement);
-    createSchemaVersionTable.commit();
+    setDatabaseVersion.commit();
 }
     
 void ApplicationCacheStorage::openDatabase(bool createIfDoesNotExist)
@@ -329,7 +397,7 @@ bool ApplicationCacheStorage::store(ApplicationCacheGroup* group)
     if (!executeStatement(statement))
         return false;
 
-    group->setStorageID((unsigned)m_database.lastInsertRowID());
+    group->setStorageID(static_cast<unsigned>(m_database.lastInsertRowID()));
     return true;
 }    
 
@@ -347,7 +415,7 @@ bool ApplicationCacheStorage::store(ApplicationCache* cache)
     if (!executeStatement(statement))
         return false;
     
-    unsigned cacheStorageID = (unsigned)m_database.lastInsertRowID();
+    unsigned cacheStorageID = static_cast<unsigned>(m_database.lastInsertRowID());
 
     // Store all resources
     {
@@ -359,14 +427,14 @@ bool ApplicationCacheStorage::store(ApplicationCache* cache)
     }
     
     // Store the online whitelist
-    const HashSet<String>& onlineWhitelist = cache->onlineWhitelist();
+    const Vector<KURL>& onlineWhitelist = cache->onlineWhitelist();
     {
-        HashSet<String>::const_iterator end = onlineWhitelist.end();
-        for (HashSet<String>::const_iterator it = onlineWhitelist.begin(); it != end; ++it) {
+        size_t whitelistSize = onlineWhitelist.size();
+        for (size_t i = 0; i < whitelistSize; ++i) {
             SQLiteStatement statement(m_database, "INSERT INTO CacheWhitelistURLs (url, cache) VALUES (?, ?)");
             statement.prepare();
 
-            statement.bindText(1, *it);
+            statement.bindText(1, onlineWhitelist[i]);
             statement.bindInt64(2, cacheStorageID);
 
             if (!executeStatement(statement))
@@ -374,6 +442,23 @@ bool ApplicationCacheStorage::store(ApplicationCache* cache)
         }
     }
     
+    // Store fallback URLs.
+    const FallbackURLVector& fallbackURLs = cache->fallbackURLs();
+    {
+        size_t fallbackCount = fallbackURLs.size();
+        for (size_t i = 0; i < fallbackCount; ++i) {
+            SQLiteStatement statement(m_database, "INSERT INTO FallbackURLs (namespace, fallbackURL, cache) VALUES (?, ?, ?)");
+            statement.prepare();
+
+            statement.bindText(1, fallbackURLs[i].first);
+            statement.bindText(2, fallbackURLs[i].second);
+            statement.bindInt64(3, cacheStorageID);
+
+            if (!executeStatement(statement))
+                return false;
+        }
+    }
+
     cache->setStorageID(cacheStorageID);
     return true;
 }
@@ -396,7 +481,7 @@ bool ApplicationCacheStorage::store(ApplicationCacheResource* resource, unsigned
     if (!dataStatement.executeCommand())
         return false;
 
-    unsigned dataId = (unsigned)m_database.lastInsertRowID();
+    unsigned dataId = static_cast<unsigned>(m_database.lastInsertRowID());
 
     // Then, insert the resource
     
@@ -428,7 +513,7 @@ bool ApplicationCacheStorage::store(ApplicationCacheResource* resource, unsigned
     if (!executeStatement(resourceStatement))
         return false;
 
-    unsigned resourceId = (unsigned)m_database.lastInsertRowID();
+    unsigned resourceId = static_cast<unsigned>(m_database.lastInsertRowID());
     
     // Finally, insert the cache entry
     SQLiteStatement entryStatement(m_database, "INSERT INTO CacheEntries (cache, type, resource) VALUES (?, ?, ?)");
@@ -543,7 +628,7 @@ PassRefPtr<ApplicationCache> ApplicationCacheStorage::loadCache(unsigned storage
     while ((result = cacheStatement.step()) == SQLResultRow) {
         KURL url(cacheStatement.getColumnText(0));
         
-        unsigned type = (unsigned)cacheStatement.getColumnInt64(1);
+        unsigned type = static_cast<unsigned>(cacheStatement.getColumnInt64(1));
 
         Vector<char> blob;
         cacheStatement.getColumnBlobAsVector(5, blob);
@@ -575,14 +660,29 @@ PassRefPtr<ApplicationCache> ApplicationCacheStorage::loadCache(unsigned storage
         return 0;
     whitelistStatement.bindInt64(1, storageID);
     
-    HashSet<String> whitelist;
+    Vector<KURL> whitelist;
     while ((result = whitelistStatement.step()) == SQLResultRow) 
-        whitelist.add(whitelistStatement.getColumnText(0));
+        whitelist.append(whitelistStatement.getColumnText(0));
 
     if (result != SQLResultDone)
         LOG_ERROR("Could not load cache online whitelist, error \"%s\"", m_database.lastErrorMsg());
 
     cache->setOnlineWhitelist(whitelist);
+
+    // Load fallback URLs.
+    SQLiteStatement fallbackStatement(m_database, "SELECT namespace, fallbackURL FROM FallbackURLs WHERE cache=?");
+    if (fallbackStatement.prepare() != SQLResultOk)
+        return 0;
+    fallbackStatement.bindInt64(1, storageID);
+    
+    FallbackURLVector fallbackURLs;
+    while ((result = fallbackStatement.step()) == SQLResultRow) 
+        fallbackURLs.append(make_pair(fallbackStatement.getColumnText(0), fallbackStatement.getColumnText(1)));
+
+    if (result != SQLResultDone)
+        LOG_ERROR("Could not load fallback URLs, error \"%s\"", m_database.lastErrorMsg());
+
+    cache->setFallbackURLs(fallbackURLs);
     
     cache->setStorageID(storageID);
 
@@ -630,10 +730,10 @@ bool ApplicationCacheStorage::storeCopyOfCache(const String& cacheDirectory, App
 {
     // Create a new cache.
     RefPtr<ApplicationCache> cacheCopy = ApplicationCache::create();
-    
-    // Set the online whitelist
+
     cacheCopy->setOnlineWhitelist(cache->onlineWhitelist());
-    
+    cacheCopy->setFallbackURLs(cache->fallbackURLs());
+
     // Traverse the cache and add copies of all resources.
     ApplicationCache::ResourceMap::const_iterator end = cache->end();
     for (ApplicationCache::ResourceMap::const_iterator it = cache->begin(); it != end; ++it) {

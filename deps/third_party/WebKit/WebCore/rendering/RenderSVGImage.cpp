@@ -193,7 +193,7 @@ void RenderSVGImage::paint(PaintInfo& paintInfo, int, int)
     paintInfo.context->restore();
 }
 
-bool RenderSVGImage::nodeAtPoint(const HitTestRequest& request, HitTestResult& result, int _x, int _y, int, int, HitTestAction hitTestAction)
+bool RenderSVGImage::nodeAtPoint(const HitTestRequest&, HitTestResult& result, int _x, int _y, int, int, HitTestAction hitTestAction)
 {
     // We only draw in the forground phase, so we only hit-test then.
     if (hitTestAction != HitTestForeground)
@@ -227,9 +227,9 @@ FloatRect RenderSVGImage::relativeBBox(bool) const
     return m_localBounds;
 }
 
-void RenderSVGImage::imageChanged(WrappedImagePtr image)
+void RenderSVGImage::imageChanged(WrappedImagePtr image, const IntRect* rect)
 {
-    RenderImage::imageChanged(image);
+    RenderImage::imageChanged(image, rect);
 
     // We override to invalidate a larger rect, since SVG images can draw outside their "bounds"
     repaintRectangle(absoluteClippedOverflowRect());
@@ -258,7 +258,7 @@ IntRect RenderSVGImage::absoluteClippedOverflowRect()
     return m_absoluteBounds;
 }
 
-void RenderSVGImage::addFocusRingRects(GraphicsContext* graphicsContext, int tx, int ty)
+void RenderSVGImage::addFocusRingRects(GraphicsContext* graphicsContext, int, int)
 {
     // this is called from paint() after the localTransform has already been applied
     IntRect contentRect = enclosingIntRect(relativeBBox());
@@ -270,7 +270,7 @@ void RenderSVGImage::absoluteRects(Vector<IntRect>& rects, int, int, bool)
     rects.append(absoluteClippedOverflowRect());
 }
 
-void RenderSVGImage::absoluteQuads(Vector<FloatQuad>& quads, bool topLevel)
+void RenderSVGImage::absoluteQuads(Vector<FloatQuad>& quads, bool)
 {
     quads.append(FloatRect(absoluteClippedOverflowRect()));
 }

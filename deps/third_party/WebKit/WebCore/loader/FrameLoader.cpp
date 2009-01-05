@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2006, 2007, 2008, 2009 Apple Inc. All rights reserved.
  * Copyright (C) 2008 Nokia Corporation and/or its subsidiary(-ies)
  * Copyright (C) 2008 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
  *
@@ -55,6 +55,7 @@
 #include "FramePrivate.h"
 #include "FrameTree.h"
 #include "FrameView.h"
+#include "HTMLAnchorElement.h"
 #include "HTMLFormElement.h"
 #include "HTMLFrameElement.h"
 #include "HTMLNames.h"
@@ -816,10 +817,6 @@ void FrameLoader::cancelAndClear()
 
 void FrameLoader::clear(bool clearWindowProperties, bool clearScriptObjects)
 {
-    // FIXME: Commenting out the below line causes <http://bugs.webkit.org/show_bug.cgi?id=11212>, but putting it
-    // back causes a measurable performance regression which we will need to fix to restore the correct behavior
-    // urlsBridgeKnowsAbout.clear();
-
     m_frame->editor()->clear();
 
     if (!m_needsClear)
@@ -1639,9 +1636,7 @@ bool FrameLoader::gotoAnchor(const String& name)
 
     m_frame->document()->setGotoAnchorNeededAfterStylesheetsLoad(false);
 
-    Node* anchorNode = m_frame->document()->getElementById(AtomicString(name));
-    if (!anchorNode && !name.isEmpty())
-        anchorNode = m_frame->document()->anchors()->namedItem(name, !m_frame->document()->inCompatMode());
+    Element* anchorNode = m_frame->document()->findAnchor(name);
 
 #if ENABLE(SVG)
     if (m_frame->document()->isSVGDocument()) {
@@ -3444,35 +3439,6 @@ void FrameLoader::tokenizerProcessedData()
     checkCompleted();
 }
 
-void FrameLoader::didTellClientAboutLoad(const String& url)
-{
-#if 0
-    // This hash table is unused in our fork. The only reader is
-    // haveToldClientAboutLoad, and the only caller of that is
-    // loadedResourceFromMemoryCache. We have commented out that location
-    // because we want to send every URL to the client for mixed content
-    // detection. Therefore, this hash table is unused.
-    //
-    // The table stores every URL ever loaded, or which has been attempted to be
-    // loaded by a frame. For some apps like gmail, this can get into the
-    // thousands after it has been running for a while. With Gmail URLs often
-    // being more than 100 characters (and 2-bytes per char in a String), this
-    // can quickly use a lot of memory we don't need.
-    m_urlsClientKnowsAbout.add(url);
-#endif
-}
-
-bool FrameLoader::haveToldClientAboutLoad(const String& url)
-{
-#if 0
-    // See didTellClientAboutLoad() above for why this is removed in our fork.
-    // This is commented out for consistency only. All lookups will fail anyway.
-    return m_urlsClientKnowsAbout.contains(url);
-#else
-    return false;
-#endif
-}
-
 void FrameLoader::handledOnloadEvents()
 {
     m_client->dispatchDidHandleOnloadEvents();
@@ -3663,7 +3629,6 @@ unsigned long FrameLoader::loadResourceSynchronously(const ResourceRequest& requ
 
     if (error.isNull()) {
         ASSERT(!newRequest.isNull());
-        didTellClientAboutLoad(newRequest.url().string());
         
 #if ENABLE(OFFLINE_WEB_APPLICATIONS)
         ApplicationCacheResource* resource;
@@ -3673,9 +3638,25 @@ unsigned long FrameLoader::loadResourceSynchronously(const ResourceRequest& requ
                 data.append(resource->data()->data(), resource->data()->size());
             } else
                 error = cannotShowURLError(newRequest);
-        } else 
+        } else {
 #endif
             ResourceHandle::loadResourceSynchronously(newRequest, error, response, data, m_frame);
+
+#if ENABLE(OFFLINE_WEB_APPLICATIONS)
+            // If normal loading results in a redirect to a resource with another origin (indicative of a captive portal), or a 4xx or 5xx status code or equivalent,
+            // or if there were network errors (but not if the user canceled the download), then instead get, from the cache, the resource of the fallback entry
+            // corresponding to the matched namespace.
+            if ((!error.isNull() && !error.isCancellation())
+                 || response.httpStatusCode() / 100 == 4 || response.httpStatusCode() / 100 == 5
+                 || !protocolHostAndPortAreEqual(newRequest.url(), response.url())) {
+                if (documentLoader()->getApplicationCacheFallbackResource(newRequest, resource)) {
+                    response = resource->response();
+                    data.clear();
+                    data.append(resource->data()->data(), resource->data()->size());
+                }
+            }
+        }
+#endif
     }
     
     sendRemainingDelegateMessages(identifier, response, data.size(), error);
@@ -3964,7 +3945,7 @@ void FrameLoader::callContinueLoadAfterNavigationPolicy(void* argument,
     loader->continueLoadAfterNavigationPolicy(request, formState, shouldContinue);
 }
 
-void FrameLoader::continueLoadAfterNavigationPolicy(const ResourceRequest& request, PassRefPtr<FormState> formState, bool shouldContinue)
+void FrameLoader::continueLoadAfterNavigationPolicy(const ResourceRequest&, PassRefPtr<FormState> formState, bool shouldContinue)
 {
     // If we loaded an alternate page to replace an unreachableURL, we'll get in here with a
     // nil policyDataSource because loading the alternate page will have passed
@@ -4108,12 +4089,12 @@ void FrameLoader::loadedResourceFromMemoryCache(const CachedResource* resource)
     // We want to be notified every time a resource is loaded from the cache
     // (this is needed to detect mixed-contents), so we removed it.
     
-    if (!resource->sendResourceLoadCallbacks() || haveToldClientAboutLoad(resource->url()))
+    if (!resource->sendResourceLoadCallbacks() || m_documentLoader->haveToldClientAboutLoad(request.url()))
         return;
 #endif
 
     if (m_client->dispatchDidLoadResourceFromMemoryCache(m_documentLoader.get(), request, response, length)) {
-        didTellClientAboutLoad(resource->url());
+        m_documentLoader->didTellClientAboutLoad(request.url());
         return;
     }
 
@@ -4122,8 +4103,6 @@ void FrameLoader::loadedResourceFromMemoryCache(const CachedResource* resource)
     ResourceRequest r(request);
     requestFromDelegate(r, identifier, error);
     sendRemainingDelegateMessages(identifier, response, length, error);
-
-    didTellClientAboutLoad(resource->url());
 }
 
 void FrameLoader::applyUserAgent(ResourceRequest& request)
@@ -4895,7 +4874,7 @@ void FrameLoader::setMainDocumentError(DocumentLoader* loader, const ResourceErr
     m_client->setMainDocumentError(loader, error);
 }
 
-void FrameLoader::mainReceivedCompleteError(DocumentLoader* loader, const ResourceError& error)
+void FrameLoader::mainReceivedCompleteError(DocumentLoader* loader, const ResourceError&)
 {
     loader->setPrimaryLoadComplete(true);
     m_client->dispatchDidLoadMainResource(activeDocumentLoader());
@@ -5204,7 +5183,14 @@ void FrameLoader::dispatchAssignIdentifierToInitialRequest(unsigned long identif
 
 void FrameLoader::dispatchWillSendRequest(DocumentLoader* loader, unsigned long identifier, ResourceRequest& request, const ResourceResponse& redirectResponse)
 {
+    StringImpl* oldRequestURL = request.url().string().impl();
+    m_documentLoader->didTellClientAboutLoad(request.url());
+
     m_client->dispatchWillSendRequest(loader, identifier, request, redirectResponse);
+
+    // If the URL changed, then we want to put that new URL in the "did tell client" set too.
+    if (oldRequestURL != request.url().string().impl())
+        m_documentLoader->didTellClientAboutLoad(request.url());
 
     if (Page* page = m_frame->page())
         page->inspectorController()->willSendRequest(loader, identifier, request, redirectResponse);
