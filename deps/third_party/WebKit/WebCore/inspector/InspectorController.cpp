@@ -1358,7 +1358,12 @@ void InspectorController::addScriptConsoleMessage(const ConsoleMessage* message)
     // Create an instance of WebInspector.ConsoleMessage passing the variable
     // number of arguments available.
     static unsigned kArgcFixed = 6;
-    unsigned argc = kArgcFixed + message->arguments.size();
+    unsigned argc = kArgcFixed;
+    if (!message->arguments.isEmpty()) {
+        argc += message->arguments.size();
+    } else {
+        argc += 1;
+    }
     v8::Handle<v8::Value> *args = new v8::Handle<v8::Value>[argc];
     if (args == 0)
         return;
@@ -1370,8 +1375,12 @@ void InspectorController::addScriptConsoleMessage(const ConsoleMessage* message)
     args[i++] = v8::Number::New(message->groupLevel);
     args[i++] = v8::Number::New(message->repeatCount);
     ASSERT(kArgcFixed == i);
-    for (unsigned i = 0; i < message->arguments.size(); ++i) {
-      args[kArgcFixed + i] = message->arguments[i].v8Value();
+    if (!message->arguments.isEmpty()) {
+        for (unsigned i = 0; i < message->arguments.size(); ++i) {
+          args[kArgcFixed + i] = message->arguments[i].v8Value();
+        }
+    } else {
+        args[i++] = v8StringOrNull(message->message);
     }
 
     v8::Handle<v8::Object> consoleMessage = 
