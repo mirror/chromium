@@ -3,8 +3,8 @@
 opt=-q
 
 # NOTE: we take and arg ($1) as what needs updating, but the reality is
-# the url used below is hard coded to work for updating release/$RELEASE_ARCH, so the
-# arg pretty much has to be "release".
+# the url used below is hard coded to work for updating
+# release/$RELEASE_ARCH, so the arg pretty much has to be "release".
 
 # We silently update the depot_tools when it already exists.
 if [ ! -e "$1" ]
@@ -20,18 +20,18 @@ then
     # ...it means we need to pull it clean.
     
     # Find the directory this script lives in.
-    base_dir=$(dirname "$0")
+    base_dir=`dirname "$0"`
     # 1. Bounce into the directory this script lives in.
-    # 2. Pull it's svn URL from what's on disk (send error output to /dev/null)
-    # 3. Change the url from the "$RELEASE_ARCH/bootstrap to "release/$RELEASE_ARCH" so we have the
-    #    right thing.
+    # 2. Pull its svn URL from what's on disk (send error output to /dev/null)
+    # 3. Change the url from the "$RELEASE_ARCH/bootstrap to
+    #    "release/$RELEASE_ARCH" so we have the right thing.
     our_url=`(cd $base_dir ; svn info 2> /dev/null | sed -n -e '/^URL: /s///p')`
-    url=`echo $our_url | sed -n -e 's/$RELEASE_ARCH\/bootstrap/release\/$RELEASE_ARCH/p'`
+    url=`echo $our_url | sed 's;$RELEASE_ARCH/bootstrap;release/$RELEASE_ARCH;'`
   else
-    # ...it existed, so it is already setup for svn, just collect it's url
+    # ...it existed, so it is already setup for svn, just collect its url
     
     # 1. Bounce into the target directory
-    # 2. Pull it's svn URL from what's on disk (send error output to /dev/null)
+    # 2. Pull its svn URL from what's on disk (send error output to /dev/null)
     url=`(cd $1 ; svn info 2> /dev/null | sed -n -e '/^URL: /s///p')`
   fi
   # Make sure we got an url
