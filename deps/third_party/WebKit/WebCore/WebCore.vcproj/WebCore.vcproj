@@ -4166,6 +4166,22 @@
 					<File
 						RelativePath="..\platform\graphics\win\FontDatabase.cpp"
 						>
+						<FileConfiguration
+							Name="Debug_Cairo|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
+						<FileConfiguration
+							Name="Release_Cairo|Win32"
+							ExcludedFromBuild="true"
+							>
+							<Tool
+								Name="VCCLCompilerTool"
+							/>
+						</FileConfiguration>
 					</File>
 					<File
 						RelativePath="..\platform\graphics\win\FontDatabase.h"
@@ -7946,22 +7962,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\css\CSSNthSelector.cpp"
-				>
-				<FileConfiguration
-					Name="Release_PGO|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						WholeProgramOptimization="true"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\css\CSSNthSelector.h"
-				>
-			</File>
-			<File
 				RelativePath="..\css\CSSPageRule.cpp"
 				>
 				<FileConfiguration
@@ -8131,6 +8131,22 @@
 			</File>
 			<File
 				RelativePath="..\css\CSSSelector.h"
+				>
+			</File>
+			<File
+				RelativePath="..\css\CSSSelectorList.cpp"
+				>
+				<FileConfiguration
+					Name="Release_PGO|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						WholeProgramOptimization="true"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\css\CSSSelectorList.h"
 				>
 			</File>
 			<File
@@ -16004,26 +16020,6 @@
 						</FileConfiguration>
 					</File>
 					<File
-						RelativePath="..\svg\graphics\cg\SVGPaintServerGradientCg.cpp"
-						>
-						<FileConfiguration
-							Name="Debug_Cairo|Win32"
-							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release_Cairo|Win32"
-							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
 						RelativePath="..\svg\graphics\cg\SVGPaintServerPatternCg.cpp"
 						>
 						<FileConfiguration
@@ -16281,42 +16277,6 @@
 					</File>
 					<File
 						RelativePath="..\svg\graphics\cairo\SVGPaintServerCairo.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Debug_Internal|Win32"
-							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release_PGO|Win32"
-							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
-						RelativePath="..\svg\graphics\cairo\SVGPaintServerGradientCairo.cpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
@@ -17598,8 +17558,3 @@
 	<Globals>
 	</Globals>
 </VisualStudioProject>
-
-
-
-
-
