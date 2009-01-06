@@ -33,6 +33,7 @@ struct CodecFormat {
     SkImageDecoder::Format      fFormat;
 };
 
+#ifdef SK_SUPPORT_IMAGE_DECODE
 static const CodecFormat gPairs[] = {
     { SkImageDecoder_GIF_Factory,   SkImageDecoder::kGIF_Format },
     { SkImageDecoder_PNG_Factory,   SkImageDecoder::kPNG_Format },
@@ -41,8 +42,10 @@ static const CodecFormat gPairs[] = {
     { SkImageDecoder_BMP_Factory,   SkImageDecoder::kBMP_Format },
     { SkImageDecoder_JPEG_Factory,  SkImageDecoder::kJPEG_Format }
 };
+#endif
 
 SkImageDecoder* SkImageDecoder::Factory(SkStream* stream) {
+#ifdef SK_SUPPORT_IMAGE_DECODE
     for (size_t i = 0; i < SK_ARRAY_COUNT(gPairs); i++) {
         SkImageDecoder* codec = gPairs[i].fProc(stream);
         stream->rewind();
@@ -50,15 +53,18 @@ SkImageDecoder* SkImageDecoder::Factory(SkStream* stream) {
             return codec;
         }
     }
+#endif
     return NULL;
 }
 
 bool SkImageDecoder::SupportsFormat(Format format) {
+#ifdef SK_SUPPORT_IMAGE_DECODE
     for (size_t i = 0; i < SK_ARRAY_COUNT(gPairs); i++) {
         if (gPairs[i].fFormat == format) {
             return true;
         }
     }
+#endif
     return false;
 }
 
@@ -72,6 +78,7 @@ typedef SkMovie* (*SkMovieMemoryProc)(const void*, size_t);
 extern SkMovie* SkMovie_GIF_StreamFactory(SkStream*);
 extern SkMovie* SkMovie_GIF_MemoryFactory(const void*, size_t);
 
+#ifdef SK_SUPPORT_IMAGE_DECODE
 static const SkMovieStreamProc gStreamProc[] = {
     SkMovie_GIF_StreamFactory
 };
@@ -79,8 +86,10 @@ static const SkMovieStreamProc gStreamProc[] = {
 static const SkMovieMemoryProc gMemoryProc[] = {
     SkMovie_GIF_MemoryFactory
 };
+#endif
 
 SkMovie* SkMovie::DecodeStream(SkStream* stream) {
+#ifdef SK_SUPPORT_IMAGE_DECODE
     for (unsigned i = 0; i < SK_ARRAY_COUNT(gStreamProc); i++) {
         SkMovie* movie = gStreamProc[i](stream);
         if (NULL != movie) {
@@ -88,17 +97,20 @@ SkMovie* SkMovie::DecodeStream(SkStream* stream) {
         }
         stream->rewind();
     }
+#endif
     return NULL;
 }
 
 SkMovie* SkMovie::DecodeMemory(const void* data, size_t length)
 {
+#ifdef SK_SUPPORT_IMAGE_DECODE
     for (unsigned i = 0; i < SK_ARRAY_COUNT(gMemoryProc); i++) {
         SkMovie* movie = gMemoryProc[i](data, length);
         if (NULL != movie) {
             return movie;
         }
     }
+#endif
     return NULL;
 }
 

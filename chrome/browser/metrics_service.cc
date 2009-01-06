@@ -38,7 +38,7 @@
 // the MS was first constructed.  Note that even though the initial log is
 // commonly sent a full minute after startup, the initial log does not include
 // much in the way of user stats.   The most common interlog period (delay)
-// is 5 minutes. That time period starts when the first user action causes a
+// is 20 minutes. That time period starts when the first user action causes a
 // logging event.  This means that if there is no user action, there may be long
 // periods without any (ongoing) log transmissions.  Ongoing log typically
 // contain very detailed records of user activities (ex: opened tab, closed
@@ -122,7 +122,7 @@
 // logs from the current session (see next state).
 //
 //    SENDING_CURRENT_LOGS,   // Sending standard current logs as they accrue.
-// Current logs are being accumulated.  Typically every 5 minutes a log is
+// Current logs are being accumulated.  Typically every 20 minutes a log is
 // closed and finalized for transmission, at the same time as a new log is
 // started.
 //
@@ -158,6 +158,7 @@
 
 #include "chrome/browser/metrics_service.h"
 
+#include "base/file_path.h"
 #include "base/histogram.h"
 #include "base/path_service.h"
 #include "base/string_util.h"
@@ -198,7 +199,7 @@ static const char kMetricsType[] = "application/vnd.mozilla.metrics.bz2";
 static const int kInitialInterlogDuration = 60;  // one minute
 
 // The default maximum number of events in a log uploaded to the UMA server.
-static const int kInitialEventLimit = 600;
+static const int kInitialEventLimit = 2400;
 
 // If an upload fails, and the transmission was over this byte count, then we
 // will discard the log, and not try to retransmit it.  We also don't persist
@@ -216,7 +217,7 @@ static const int kUnsentLogDelay = 15;  // 15 seconds
 // sending the next log.  If the channel is busy, such as when there is a
 // failure during an attempt to transmit a previous log, then a log may wait
 // (and continue to accrue now log entries) for a much greater period of time.
-static const int kMinSecondsPerLog = 5 * 60;  // five minutes
+static const int kMinSecondsPerLog = 20 * 60;  // twenty minutes
 
 // When we don't succeed at transmitting a log to a server, we progressively
 // wait longer and longer before sending the next log.  This backoff process
@@ -678,10 +679,13 @@ void MetricsService::StopRecording(MetricsLog** log) {
     StartRecording();  // Start trivial log to hold our histograms.
   }
 
-  // Put incremental histogram data at the end of every log transmission.
+  // Put incremental data (histogram deltas, and realtime stats deltas) at the
+  // end of all log transmissions (initial log handles this separately).
   // Don't bother if we're going to discard current_log_.
-  if (log)
+  if (log) {
+    current_log_->RecordIncrementalStabilityElements();
     RecordCurrentHistograms();
+  }
 
   current_log_->CloseLog();
   if (log)
@@ -1189,6 +1193,10 @@ void MetricsService::OnURLFetchComplete(const URLFetcher* source,
       local_state->ScheduleSavePersistentPrefs(
           g_browser_process->file_thread());
 
+    // Provide a default (free of exponetial backoff, other varances) in case
+    // the server does not specify a value.
+    interlog_duration_ = TimeDelta::FromSeconds(kMinSecondsPerLog);
+
     GetSettingsFromResponseData(data);
     // Override server specified interlog delay if there are unsent logs to
     // transmit.
@@ -1369,7 +1377,7 @@ bool MetricsService::NodeProbabilityTest(xmlNodePtr node,
   // If a probability is specified in the node, we use it instead.
   xmlChar* probability_value = xmlGetProp(node, BAD_CAST "probability");
   if (probability_value)
-      probability = atoi(reinterpret_cast<char*>(probability_value));
+    probability = atoi(reinterpret_cast<char*>(probability_value));
 
   return ProbabilityTest(probability, props.salt, props.denominator);
 }
@@ -1480,8 +1488,8 @@ void MetricsService::IncrementPrefValue(const wchar_t* path) {
 
 void MetricsService::LogLoadStarted() {
   IncrementPrefValue(prefs::kStabilityPageLoadCount);
-  // We need to save the prefs, as page load count is a critical stat, and
-  // it might be lost due to a crash :-(.
+  // We need to save the prefs, as page load count is a critical stat, and it
+  // might be lost due to a crash :-(.
 }
 
 void MetricsService::LogRendererInSandbox(bool on_sandbox_desktop) {
@@ -1504,7 +1512,7 @@ void MetricsService::LogRendererHang() {
 void MetricsService::LogPluginChange(NotificationType type,
                                      const NotificationSource& source,
                                      const NotificationDetails& details) {
-  std::wstring plugin = Details<PluginProcessInfo>(details)->dll_path();
+  FilePath plugin = Details<PluginProcessInfo>(details)->plugin_path();
 
   if (plugin_stats_buffer_.find(plugin) == plugin_stats_buffer_.end()) {
     plugin_stats_buffer_[plugin] = PluginStats();
@@ -1588,13 +1596,14 @@ void MetricsService::RecordPluginChanges(PrefService* pref) {
     }
 
     DictionaryValue* plugin_dict = static_cast<DictionaryValue*>(*value_iter);
-    std::wstring plugin_path;
-    plugin_dict->GetString(prefs::kStabilityPluginPath, &plugin_path);
-    if (plugin_path.empty()) {
+    FilePath::StringType plugin_path_str;
+    plugin_dict->GetString(prefs::kStabilityPluginPath, &plugin_path_str);
+    if (plugin_path_str.empty()) {
       NOTREACHED();
       continue;
     }
 
+    FilePath plugin_path(plugin_path_str);
     if (plugin_stats_buffer_.find(plugin_path) == plugin_stats_buffer_.end())
       continue;
 
@@ -1623,14 +1632,14 @@ void MetricsService::RecordPluginChanges(PrefService* pref) {
 
   // Now go through and add dictionaries for plugins that didn't already have
   // reports in Local State.
-  for (std::map<std::wstring, PluginStats>::iterator cache_iter =
+  for (std::map<FilePath, PluginStats>::iterator cache_iter =
            plugin_stats_buffer_.begin();
        cache_iter != plugin_stats_buffer_.end(); ++cache_iter) {
-    std::wstring plugin_path = cache_iter->first;
+    FilePath plugin_path = cache_iter->first;
     PluginStats stats = cache_iter->second;
     DictionaryValue* plugin_dict = new DictionaryValue;
 
-    plugin_dict->SetString(prefs::kStabilityPluginPath, plugin_path);
+    plugin_dict->SetString(prefs::kStabilityPluginPath, plugin_path.value());
     plugin_dict->SetInteger(prefs::kStabilityPluginLaunches,
                             stats.process_launches);
     plugin_dict->SetInteger(prefs::kStabilityPluginCrashes,
@@ -1677,10 +1686,9 @@ void MetricsService::RecordCurrentHistograms() {
        histograms.end() != it;
        ++it) {
     if ((*it)->flags() & kUmaTargetedHistogramFlag)
-      // TODO(petersont):
+      // TODO(petersont): Only record historgrams if they are not precluded by
+      // the UMA response data.
       // Bug http://code.google.com/p/chromium/issues/detail?id=2739.
-      // Only record historgrams if they are not
-      // precluded by the UMA response data.
       RecordHistogram(**it);
   }
 }

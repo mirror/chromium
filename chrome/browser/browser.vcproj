@@ -554,14 +554,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\resource_dispatcher_host.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\resource_dispatcher_host.h"
-				>
-			</File>
-			<File
 				RelativePath=".\resource_message_filter.cc"
 				>
 			</File>
@@ -1958,6 +1950,14 @@
 			Name="Net"
 			>
 			<File
+				RelativePath=".\net\chrome_url_request_context.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\net\chrome_url_request_context.h"
+				>
+			</File>
+			<File
 				RelativePath=".\net\dns_global.cc"
 				>
 			</File>
@@ -2246,11 +2246,117 @@
 				>
 			</File>
 			<File
+				RelativePath=".\extensions\extension_protocol.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\extensions\extension_protocol.h"
+				>
+			</File>
+			<File
 				RelativePath=".\extensions\extensions_service.cc"
 				>
 			</File>
 			<File
 				RelativePath=".\extensions\extensions_service.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Renderer Host"
+			>
+			<File
+				RelativePath=".\renderer_host\async_resource_handler.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\async_resource_handler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\buffered_resource_handler.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\buffered_resource_handler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\cross_site_resource_handler.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\cross_site_resource_handler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\download_resource_handler.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\download_resource_handler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\download_throttling_resource_handler.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\download_throttling_resource_handler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\resource_dispatcher_host.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\renderer_host\resource_dispatcher_host.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\resource_handler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\safe_browsing_resource_handler.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\safe_browsing_resource_handler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\save_file_resource_handler.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\save_file_resource_handler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\sync_resource_handler.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\sync_resource_handler.h"
 				>
 			</File>
 		</Filter>

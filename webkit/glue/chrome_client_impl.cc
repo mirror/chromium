@@ -409,7 +409,7 @@ WebCore::IntRect ChromeClientImpl::windowToScreen(
 
 PlatformWidget ChromeClientImpl::platformWindow() const {
   WebViewDelegate* d = webview_->delegate();
-  return d ? d->GetContainingWindow(webview_) : NULL;
+  return d ? d->GetContainingView(webview_) : NULL;
 }
 
 void ChromeClientImpl::mouseDidMoveOverElement(
@@ -487,4 +487,10 @@ void ChromeClientImpl::disableSuddenTermination() {
   WebViewDelegate* d = webview_->delegate();
   if (d)
     d->DisableSuddenTermination();
+}
+
+void ChromeClientImpl::formStateDidChange(const WebCore::Node*) {
+  WebViewDelegate* d = webview_->delegate();
+  if (d)
+    d->OnNavStateChanged(webview_);
 }

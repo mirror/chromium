@@ -5,6 +5,7 @@
 #ifndef CHROME_RENDERER_RENDER_THREAD_H_
 #define CHROME_RENDERER_RENDER_THREAD_H_
 
+#include "base/file_path.h"
 #include "base/ref_counted.h"
 #include "base/shared_memory.h"
 #include "base/task.h"
@@ -20,9 +21,9 @@ class RenderDnsMaster;
 class NotificationService;
 class GreasemonkeySlave;
 
-// The RenderThreadBase is the minimal interface that a RenderWidget expects
-// from a render thread. The interface basically abstracts a way to send and
-// receive messages. It is currently only used for testing.
+// The RenderThreadBase is the minimal interface that a RenderView/Widget
+// expects from a render thread. The interface basically abstracts a way to send
+// and receive messages.
 class RenderThreadBase : public IPC::Message::Sender {
  public:
   virtual ~RenderThreadBase() {}
@@ -34,6 +35,9 @@ class RenderThreadBase : public IPC::Message::Sender {
   // These methods normally get delegated to a MessageRouter.
   virtual void AddRoute(int32 routing_id, IPC::Channel::Listener* listener) = 0;
   virtual void RemoveRoute(int32 routing_id) = 0;
+
+  virtual void AddFilter(IPC::ChannelProxy::MessageFilter* filter) = 0;
+  virtual void RemoveFilter(IPC::ChannelProxy::MessageFilter* filter) = 0;
 };
 
 // The RenderThread class represents a background thread where RenderView
@@ -59,8 +63,9 @@ class RenderThread : public IPC::Channel::Listener,
   // IPC::Message::Sender implementation:
   virtual bool Send(IPC::Message* msg);
 
-  void AddFilter(IPC::ChannelProxy::MessageFilter* filter);
-  void RemoveFilter(IPC::ChannelProxy::MessageFilter* filter);
+  // Overridded from RenderThreadBase.
+  virtual void AddFilter(IPC::ChannelProxy::MessageFilter* filter);
+  virtual void RemoveFilter(IPC::ChannelProxy::MessageFilter* filter);
 
   // Gets the VisitedLinkSlave instance for this thread
   VisitedLinkSlave* visited_link_slave() const { return visited_link_slave_; }
@@ -93,7 +98,7 @@ class RenderThread : public IPC::Channel::Listener,
   void OnUpdateVisitedLinks(base::SharedMemoryHandle table);
   void OnUpdateGreasemonkeyScripts(base::SharedMemoryHandle table);
 
-  void OnPluginMessage(const std::wstring& dll_path,
+  void OnPluginMessage(const FilePath& plugin_path,
                        const std::vector<uint8>& data);
   void OnSetNextPageID(int32 next_page_id);
   void OnCreateNewView(HWND parent_hwnd,

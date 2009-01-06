@@ -573,7 +573,8 @@ void WebContents::OnSavePage() {
 
   // TODO(rocking): Use new asynchronous dialog boxes to prevent the SaveAs
   // dialog blocking the UI thread. See bug: http://b/issue?id=1129694.
-  if (SavePackage::GetSaveInfo(suggest_name, GetContainerHWND(), &param))
+  if (SavePackage::GetSaveInfo(suggest_name, GetContainerHWND(), &param,
+                               profile()->GetDownloadManager()))
     SavePage(param.saved_main_file_path, param.dir, param.save_type);
 }
 
@@ -1257,10 +1258,10 @@ void WebContents::OnMissingPluginStatus(int status) {
   GetPluginInstaller()->OnMissingPluginStatus(status);
 }
 
-void WebContents::OnCrashedPlugin(const std::wstring& plugin_path) {
-  DCHECK(!plugin_path.empty());
+void WebContents::OnCrashedPlugin(const FilePath& plugin_path) {
+  DCHECK(!plugin_path.value().empty());
 
-  std::wstring plugin_name = plugin_path;
+  std::wstring plugin_name = plugin_path.ToWStringHack();
   scoped_ptr<FileVersionInfo> version_info(
       FileVersionInfo::CreateFileVersionInfo(plugin_path));
   if (version_info.get()) {

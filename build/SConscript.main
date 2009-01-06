@@ -113,6 +113,7 @@ root_env = Environment(
     SKIA_DIR              = '$OBJ_ROOT/skia',
     TESTING_DIR           = '$OBJ_ROOT/testing',
     THIRD_PARTY_DIR       = '$OBJ_ROOT/third_party',
+    TOOLS_DIR             = '$OBJ_ROOT/tools',
     V8_DIR                = '$OBJ_ROOT/v8',
     WEBKIT_DIR            = '$OBJ_ROOT/webkit',
 
@@ -134,6 +135,9 @@ root_env = Environment(
     ZLIB_DIR              = '$THIRD_PARTY_DIR/zlib',
 
     THIRD_PARTY_WEBKIT_DIR = '$THIRD_PARTY_DIR/WebKit',
+
+    GTK_CLIP_DUMP_DIR     = '$TOOLS_DIR/gtk_clipboard_dump',
+    GRIT_DIR              = '$TOOLS_DIR/grit',
 
     PYTHON=sys.executable,
 
@@ -213,6 +217,7 @@ sconscripts = root_env.ChromiumLoadComponentSConscripts(
         '$MODP_B64_DIR/modp_b64.scons',
         '$ZLIB_DIR/zlib.scons',
     ],
+    tools = '$GTK_CLIP_DUMP_DIR/gcd.scons',
     v8 = '$OBJ_ROOT/build/SConscript.v8',
     webkit = '$WEBKIT_DIR/webkit.scons',
 )
@@ -269,16 +274,16 @@ else:
 visual_studio_path = msvs_drive + ':/Program Files/Microsoft Visual Studio 8'
 
 # If side-by-side platform sdk is not available try local copy.
-platform_sdk_path = '$CHROME_SRC_DIR/third_party/platformsdk_vista_6_0/files'
+platform_sdk_path = '$CHROME_SRC_DIR/third_party/platformsdk_win2008_6_1/files'
 if (root_env['PLATFORM'] in ['win32', 'cygwin'] and
     not os.path.exists(windows_env.subst(platform_sdk_path))):
   platform_sdk_path = (
-      msvs_drive + ':\\Program Files\\Microsoft SDKs\\Windows\\v6.0')
+      msvs_drive + ':\\Program Files\\Microsoft SDKs\\Windows\\v6.1')
 
 windows_env.Replace(
     CSCRIPT = 'c:\\Windows\\System32\\cscript',
 
-    PLATFORMSDK_VISTA = platform_sdk_path,
+    PLATFORMSDK_6_1 = platform_sdk_path,
     VISUAL_STUDIO = visual_studio_path,
 
     CYGWIN_DIR = windows_env.Dir('$CHROME_SRC_DIR/third_party/cygwin'),
@@ -513,6 +518,10 @@ if ARGUMENTS.get('PROFILE') == '1':
 if ARGUMENTS.get('SYMBOLS') == '1':
   linux_env.Append(CCFLAGS=['-g'])
 
+# Build shared libraries (useful for fast links) when SHARED=1.
+if ARGUMENTS.get('SHARED') == '1':
+  linux_env.Replace(COMPONENT_STATIC=False)
+
 # Build with system-provided NSS and GTK.
 if root_env['PLATFORM'] in ['linux', 'linux2', 'posix']:
   try:
@@ -746,7 +755,7 @@ if set(modes) - set(['msvs', 'xcode']):
 
 if 'msvs' in modes:
   # We're in --mode=msvs, so add its Alias(es) to the default targets.
-  Default(Alias('solutions'))
+  Default(Alias('msvs'))
 
 # -------------------------------------------------------------------------
 

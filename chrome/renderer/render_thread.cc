@@ -71,8 +71,8 @@ void RenderThread::RemoveFilter(IPC::ChannelProxy::MessageFilter* filter) {
 }
 
 void RenderThread::Resolve(const char* name, size_t length) {
-    return render_dns_master_->Resolve(name, length);
-  }
+  return render_dns_master_->Resolve(name, length);
+}
 
 void RenderThread::AddRoute(int32 routing_id,
                             IPC::Channel::Listener* listener) {
@@ -175,10 +175,10 @@ void RenderThread::OnMessageReceived(const IPC::Message& msg) {
   }
 }
 
-void RenderThread::OnPluginMessage(const std::wstring& dll_path,
+void RenderThread::OnPluginMessage(const FilePath& plugin_path,
                                    const std::vector<uint8>& data) {
   CHECK(ChromePluginLib::IsPluginThread());
-  ChromePluginLib *chrome_plugin = ChromePluginLib::Find(dll_path);
+  ChromePluginLib *chrome_plugin = ChromePluginLib::Find(plugin_path);
   if (chrome_plugin) {
     void *data_ptr = const_cast<void*>(reinterpret_cast<const void*>(&data[0]));
     uint32 data_len = static_cast<uint32>(data.size());
@@ -199,7 +199,7 @@ void RenderThread::OnCreateNewView(HWND parent_hwnd,
   // TODO(darin): once we have a RenderThread per RenderView, this will need to
   // change to assert that we are not creating more than one view.
   RenderView::Create(
-      parent_hwnd, modal_dialog_event, MSG_ROUTING_NONE, webkit_prefs,
+      this, parent_hwnd, modal_dialog_event, MSG_ROUTING_NONE, webkit_prefs,
       new SharedRenderViewCounter(0), view_id);
 }
 

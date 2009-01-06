@@ -51,9 +51,9 @@ bool WebPluginDelegateImpl::track_popup_menu_patched_ = false;
 iat_patch::IATPatchFunction WebPluginDelegateImpl::iat_patch_helper_;
 
 WebPluginDelegateImpl* WebPluginDelegateImpl::Create(
-    const std::wstring& filename,
+    const FilePath& filename,
     const std::string& mime_type,
-    HWND containing_window) {
+    gfx::NativeView containing_view) {
   scoped_refptr<NPAPI::PluginLib> plugin =
       NPAPI::PluginLib::CreatePluginLib(filename);
   if (plugin.get() == NULL)
@@ -65,7 +65,7 @@ WebPluginDelegateImpl* WebPluginDelegateImpl::Create(
 
   scoped_refptr<NPAPI::PluginInstance> instance =
       plugin->CreateInstance(mime_type);
-  return new WebPluginDelegateImpl(containing_window, instance.get());
+  return new WebPluginDelegateImpl(containing_view, instance.get());
 }
 
 bool WebPluginDelegateImpl::IsPluginDelegateWindow(HWND window) {
@@ -120,9 +120,9 @@ LRESULT CALLBACK WebPluginDelegateImpl::HandleEventMessageFilterHook(
 }
 
 WebPluginDelegateImpl::WebPluginDelegateImpl(
-    HWND containing_window,
+    gfx::NativeView containing_view,
     NPAPI::PluginInstance *instance)
-    : parent_(containing_window),
+    : parent_(containing_view),
       instance_(instance),
       quirks_(0),
       plugin_(NULL),
@@ -145,7 +145,7 @@ WebPluginDelegateImpl::WebPluginDelegateImpl(
   memset(&window_, 0, sizeof(window_));
 
   const WebPluginInfo& plugin_info = instance_->plugin_lib()->plugin_info();
-  std::wstring filename = file_util::GetFilenameFromPath(plugin_info.file);
+  std::wstring filename = plugin_info.file.BaseName().value();
 
   if (instance_->mime_type() == "application/x-shockwave-flash" ||
       filename == L"npswf32.dll") {
@@ -365,7 +365,7 @@ void WebPluginDelegateImpl::DidManualLoadFail() {
   instance()->DidManualLoadFail();
 }
 
-std::wstring WebPluginDelegateImpl::GetPluginPath() {
+FilePath WebPluginDelegateImpl::GetPluginPath() {
   return instance()->plugin_lib()->plugin_info().file;
 }
 

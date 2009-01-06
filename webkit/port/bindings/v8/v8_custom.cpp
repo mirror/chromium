@@ -1930,7 +1930,7 @@ CALLBACK_FUNC_DECL(CanvasRenderingContext2DSetStrokeColor) {
 }
 
 CALLBACK_FUNC_DECL(CanvasRenderingContext2DSetFillColor) {
-  INC_STATS("DOM.CanvasRenderingContext2D.steFillColor()");
+  INC_STATS("DOM.CanvasRenderingContext2D.setFillColor()");
   CanvasRenderingContext2D* context =
       V8Proxy::ToNativeObject<CanvasRenderingContext2D>(
           V8ClassIndex::CANVASRENDERINGCONTEXT2D, args.Holder());
@@ -2167,7 +2167,7 @@ CALLBACK_FUNC_DECL(CanvasRenderingContext2DCreatePattern) {
         V8Proxy::DOMWrapperToNode<HTMLImageElement>(arg);
     ExceptionCode ec = 0;
     RefPtr<CanvasPattern> pattern =
-        context->createPattern(image_element, ToWebCoreString(args[1]), ec);
+        context->createPattern(image_element, valueToStringWithNullCheck(args[1]), ec);
     if (ec != 0) {
       V8Proxy::SetDOMException(ec);
       return v8::Handle<v8::Value>();
@@ -2180,7 +2180,7 @@ CALLBACK_FUNC_DECL(CanvasRenderingContext2DCreatePattern) {
         V8Proxy::DOMWrapperToNode<HTMLCanvasElement>(arg);
     ExceptionCode ec = 0;
     RefPtr<CanvasPattern> pattern =
-        context->createPattern(canvas_element, ToWebCoreString(args[1]), ec);
+        context->createPattern(canvas_element, valueToStringWithNullCheck(args[1]), ec);
     if (ec != 0) {
       V8Proxy::SetDOMException(ec);
       return v8::Handle<v8::Value>();
@@ -2741,7 +2741,8 @@ CALLBACK_FUNC_DECL(HTMLDocumentOpen) {
 
   Frame* frame = V8Proxy::retrieveActiveFrame();
   imp->open(frame->document());
-  return args.This();
+  // Return the document.
+  return args.Holder();
 }
 
 // Document --------------------------------------------------------------------

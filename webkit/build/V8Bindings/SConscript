@@ -341,13 +341,12 @@ inputs = [
     '$PORT_DIR/bindings/v8/v8_vectornodelist.cpp',
     '$PORT_DIR/bindings/v8/V8MessagePortCustom.cpp',
     '$PORT_DIR/bindings/v8/V8XMLHttpRequestCustom.cpp',
-    '$PORT_DIR/page/inspector/InspectorController.cpp',
 ]
 
 if env.Bit('windows'):
   inputs.append('precompiled_v8bindings.cpp')
 
-env.ChromeStaticLibrary('V8Bindings', inputs)
+env.ChromeLibrary('V8Bindings', inputs)
 
 env.ChromeMSVSProject('$WEBKIT_DIR/build/V8Bindings/V8Bindings.vcproj',
                 dependencies = [

@@ -321,7 +321,7 @@ class ListValue : public Value {
 
   // Removes the Value with the specified index from this list.
   // If |out_value| is non-NULL, the removed Value AND ITS OWNERSHIP will be
-  // passed out via out_value.  If |out_value| is NULL, the removed value will
+  // passed out via |out_value|.  If |out_value| is NULL, the removed value will
   // be deleted.  This method returns true if |index| is valid; otherwise
   // it will return false and the ListValue object will be unchanged.
   bool Remove(size_t index, Value** out_value);
@@ -358,13 +358,10 @@ class ValueSerializer {
   virtual bool Serialize(const Value& root) = 0;
 
   // This method deserializes the subclass-specific format into a Value object.
-  // The method should return true if and only if the root parameter is set
-  // to a complete Value representation of the serialized form.  If the
-  // return value is true, the caller takes ownership of the objects pointed
-  // to by root.  If the return value is false, root should be unchanged and if
-  // error_message is non-null, it should be filled with a message describing
-  // the error.
-  virtual bool Deserialize(Value** root, std::string* error_message) = 0;
+  // If the return value is non-NULL, the caller takes ownership of returned
+  // Value. If the return value is NULL, and if error_message is non-NULL,
+  // error_message should be filled with a message describing the error.
+  virtual Value* Deserialize(std::string* error_message) = 0;
 };
 
 #endif  // BASE_VALUES_H_

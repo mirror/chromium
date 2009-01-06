@@ -9,6 +9,7 @@
 #include <vector>
 #include <map>
 
+#include "base/file_path.h"
 #include "base/string_util.h"
 #include "base/tuple.h"
 #include "chrome/common/ipc_sync_message.h"
@@ -160,6 +161,24 @@ struct ParamTraits<size_t> {
     l->append(StringPrintf(L"%u", p));
   }
 };
+
+#if defined(OS_MACOSX)
+// On Linux size_t & uint32 can be the same type.
+// TODO(playmobil): Fix compilation if this is not the case.
+template <>
+struct ParamTraits<uint32> {
+  typedef uint32 param_type;
+  static void Write(Message* m, const param_type& p) {
+    m->WriteUInt32(p);
+  }
+  static bool Read(const Message* m, void** iter, param_type* r) {
+    return m->ReadUInt32(iter, r);
+  }
+  static void Log(const param_type& p, std::wstring* l) {
+    l->append(StringPrintf(L"%u", p));
+  }
+};
+#endif  // defined(OS_MACOSX)
 
 template <>
 struct ParamTraits<int64> {
@@ -586,6 +605,24 @@ struct ParamTraits<POINT> {
 #endif  // defined(OS_WIN)
 
 template <>
+struct ParamTraits<FilePath> {
+  typedef FilePath param_type;
+  static void Write(Message* m, const param_type& p) {
+    ParamTraits<FilePath::StringType>::Write(m, p.value());
+  }
+  static bool Read(const Message* m, void** iter, param_type* r) {
+    FilePath::StringType value;
+    if (!ParamTraits<FilePath::StringType>::Read(m, iter, &value))
+      return false;
+    *r = FilePath(value);
+    return true;
+  }
+  static void Log(const param_type& p, std::wstring* l) {
+    ParamTraits<FilePath::StringType>::Log(p.value(), l);
+  }
+};
+
+template <>
 struct ParamTraits<gfx::Point> {
   typedef gfx::Point param_type;
   static void Write(Message* m, const param_type& p);
@@ -978,9 +1015,11 @@ struct ParamTraits<webkit_glue::WebApplicationInfo> {
 // Generic message subclasses
 
 // Used for asynchronous messages.
-template <class Param>
+template <class ParamType>
 class MessageWithTuple : public Message {
  public:
+  typedef ParamType Param;
+
   MessageWithTuple(int32 routing_id, uint16 type, const Param& p)
       : Message(routing_id, type, PRIORITY_NORMAL) {
     WriteParam(this, p);

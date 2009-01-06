@@ -27,7 +27,6 @@
 
 VPATH = \
     $(PORTROOT)/bindings/v8 \
-    $(PORTROOT)/page/inspector \
     $(WebCore) \
     $(WebCore)/bindings/js \
     $(WebCore)/bindings/v8 \
@@ -35,6 +34,7 @@ VPATH = \
     $(WebCore)/css \
     $(WebCore)/dom \
     $(WebCore)/html \
+    $(WebCore)/inspector \
     $(WebCore)/page \
     $(WebCore)/plugins \
     $(WebCore)/storage \
@@ -1007,7 +1007,20 @@ XPathGrammar.cpp : xml/XPathGrammar.y $(PROJECT_FILE)
 
 # user agent style sheets
 
-USER_AGENT_STYLE_SHEETS = $(WebCore)/css/html4.css $(WebCore)/css/quirks.css $(WebCore)/css/view-source.css $(WebCore)/css/svg.css $(WebCore)/css/wml.css $(WebCore)/css/themeWin.css $(WebCore)/css/themeWinQuirks.css
+USER_AGENT_STYLE_SHEETS = $(WebCore)/css/html4.css $(WebCore)/css/quirks.css $(WebCore)/css/view-source.css $(WebCore)/css/themeWin.css $(WebCore)/css/themeWinQuirks.css 
+
+ifeq ($(findstring ENABLE_SVG,$(FEATURE_DEFINES)), ENABLE_SVG)
+    USER_AGENT_STYLE_SHEETS := $(USER_AGENT_STYLE_SHEETS) $(WebCore)/css/svg.css 
+endif
+
+ifeq ($(findstring ENABLE_WML,$(FEATURE_DEFINES)), ENABLE_WML)
+    USER_AGENT_STYLE_SHEETS := $(USER_AGENT_STYLE_SHEETS) $(WebCore)/css/wml.css
+endif
+
+ifeq ($(findstring ENABLE_VIDEO,$(FEATURE_DEFINES)), ENABLE_VIDEO)
+    USER_AGENT_STYLE_SHEETS := $(USER_AGENT_STYLE_SHEETS) $(WebCore)/css/mediaControls.css
+endif
+
 UserAgentStyleSheets.h : css/make-css-file-arrays.pl $(USER_AGENT_STYLE_SHEETS)
 	perl $< $@ UserAgentStyleSheetsData.cpp $(USER_AGENT_STYLE_SHEETS)
 
@@ -1157,5 +1170,5 @@ V8%.h : %.idl $(V8_SCRIPTS)
 	rm -f $@; \
 	for i in 1 2 3 4 5 6 7 8 9 10; do \
 	  if test -e $@; then break; fi; \
-	  perl -w -I $(PORTROOT)/bindings/scripts -I $(WebCore)/bindings/scripts $(PORTROOT)/bindings/scripts/generate-bindings.pl --defines "$(FEATURE_DEFINES) LANGUAGE_JAVASCRIPT V8_BINDING" --generator V8 --include ../../../webkit/port/page --include svg --include dom --include html --include css --include page --include xml --include plugins --outputdir . $< ; \
+	  perl -w -I $(PORTROOT)/bindings/scripts -I $(WebCore)/bindings/scripts $(PORTROOT)/bindings/scripts/generate-bindings.pl --defines "$(FEATURE_DEFINES) LANGUAGE_JAVASCRIPT V8_BINDING" --generator V8 --include svg --include dom --include html --include css --include page --include xml --include plugins --outputdir . $< ; \
 	done

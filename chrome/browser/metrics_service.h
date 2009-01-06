@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "base/basictypes.h"
+#include "base/file_path.h"
 #include "base/histogram.h"
 #include "base/scoped_ptr.h"
 #include "base/values.h"
@@ -162,7 +163,7 @@ class MetricsService : public NotificationObserver,
   // Called to start recording user experience metrics.
   // Constructs a new, empty current_log_.
   void StartRecording();
-  
+
   // Called to stop recording user experience metrics.  The caller takes
   // ownership of the resulting MetricsLog object via the log parameter,
   // or passes in NULL to indicate that the log should simply be deleted.
@@ -422,7 +423,7 @@ class MetricsService : public NotificationObserver,
 
   // Buffer of plugin notifications for quick access.  See PluginStats
   // documentation above for more details.
-  std::map<std::wstring, PluginStats> plugin_stats_buffer_;
+  std::map<FilePath, PluginStats> plugin_stats_buffer_;
 
   ScopedRunnableMethodFactory<MetricsService> log_sender_factory_;
   ScopedRunnableMethodFactory<MetricsService> state_saver_factory_;

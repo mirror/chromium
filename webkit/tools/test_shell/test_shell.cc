@@ -97,13 +97,13 @@ class URLRequestTestShellFileJob : public URLRequestFileJob {
     file_util::AppendToPath(&path, L"Resources");
     file_util::AppendToPath(&path, L"Inspector");
     file_util::AppendToPath(&path, UTF8ToWide(request->url().path()));
-    return new URLRequestTestShellFileJob(request, path);
+    return new URLRequestTestShellFileJob(request,
+                                          FilePath::FromWStringHack(path));
   }
 
  private:
-  URLRequestTestShellFileJob(URLRequest* request, const std::wstring& path)
-      : URLRequestFileJob(request) {
-    this->file_path_ = FilePath::FromWStringHack(path);
+  URLRequestTestShellFileJob(URLRequest* request, const FilePath& path)
+      : URLRequestFileJob(request, path) {
   }
 
   DISALLOW_COPY_AND_ASSIGN(URLRequestTestShellFileJob);
@@ -574,6 +574,10 @@ bool SpellCheckWord(const wchar_t* word, int word_len,
   *misspelling_start = 0;
   *misspelling_len = 0;
   return true;
+}
+
+ScreenInfo GetScreenInfo(gfx::NativeView window) {
+  return GetScreenInfoHelper(window);
 }
 
 bool IsPluginRunningInRendererProcess() {

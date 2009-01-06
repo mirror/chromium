@@ -12,22 +12,22 @@ deps = {
     "http://googletest.googlecode.com/svn/trunk@63",
 
   "src/third_party/WebKit":
-    "/trunk/deps/third_party/WebKit@7375",
+    "/trunk/deps/third_party/WebKit@7592",
 
   "src/third_party/icu38":
-    "/trunk/deps/third_party/icu38@7121",
+    "/trunk/deps/third_party/icu38@7525",
 
   "src/v8":
     "http://v8.googlecode.com/svn/trunk@968",
 
   "src/webkit/data/layout_tests/LayoutTests":
-    "http://svn.webkit.org/repository/webkit/trunk/LayoutTests@39410",
+    "http://svn.webkit.org/repository/webkit/trunk/LayoutTests@39606",
 
   "src/third_party/WebKit/WebKit":
-    "http://svn.webkit.org/repository/webkit/trunk/WebKit@39410",
+    "http://svn.webkit.org/repository/webkit/trunk/WebKit@39606",
 
   "src/third_party/WebKit/WebKitLibraries":
-    "http://svn.webkit.org/repository/webkit/trunk/WebKitLibraries@39410",
+    "http://svn.webkit.org/repository/webkit/trunk/WebKitLibraries@39606",
 }
 
 
@@ -37,7 +37,7 @@ deps_os = {
       "/trunk/deps/third_party/cygwin@3248",
 
     "src/third_party/python_24":
-      "/trunk/deps/third_party/python_24@5580",
+      "/trunk/deps/third_party/python_24@7444",
 
     "src/third_party/svn":
       "/trunk/deps/third_party/svn@3230",

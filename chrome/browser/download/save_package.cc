@@ -21,7 +21,7 @@
 #include "chrome/browser/render_process_host.h"
 #include "chrome/browser/render_view_host.h"
 #include "chrome/browser/render_view_host_delegate.h"
-#include "chrome/browser/resource_dispatcher_host.h"
+#include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #include "chrome/browser/tab_util.h"
 #include "chrome/browser/web_contents.h"
 #include "chrome/browser/views/download_shelf_view.h"
@@ -916,7 +916,11 @@ std::wstring SavePackage::GetSuggestNameForSaveAs(PrefService* prefs,
 // Static.
 bool SavePackage::GetSaveInfo(const std::wstring& suggest_name,
                               HWND container_hwnd,
-                              SavePackageParam* param) {
+                              SavePackageParam* param,
+                              DownloadManager* download_manager) {
+  // TODO(tc): It might be nice to move this code into the download
+  // manager.  http://crbug.com/6025
+
   // Use "Web Page, Complete" option as default choice of saving page.
   unsigned index = 2;
 
@@ -944,6 +948,12 @@ bool SavePackage::GetSaveInfo(const std::wstring& suggest_name,
     // saved as complete-HTML.
     index = 1;
   }
+
+  DCHECK(download_manager);
+  // Ensure the filename is safe.
+  download_manager->GenerateSafeFilename(param->current_tab_mime_type,
+      &param->saved_main_file_path);
+
   // The option index is not zero-based.
   DCHECK(index > 0 && index < 3);
   param->dir = file_util::GetDirectoryFromPath(param->saved_main_file_path);

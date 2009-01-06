@@ -66,7 +66,6 @@ env = env.Clone(
 
     BINDINGS_INCLUDE_PATH = [
         '$PENDING',
-        '$PORTROOT/page',
         '$WEBCORE/css',
         '$WEBCORE/dom',
         '$WEBCORE/html',
@@ -85,8 +84,14 @@ env = env.Clone(
 
 env.PrependENVPath('PATH', cygwin_posix)
 
-bindings_perl_modules = env.Glob('$BINDINGS_SCRIPTS_DIR/*.pm')
 
+# When we haven't specified --verbose (aka brief_comstr), make the
+# WebKit bindings building step output more brief to match the brief
+# compile/link/etc. lines.
+if env.GetOption('brief_comstr'):
+  env.SetDefault(BINDINGSCOMSTR='________Building bindings in $TARGET')
+
+bindings_perl_modules = env.Glob('$BINDINGS_SCRIPTS_DIR/*.pm')
 
 def BindingsEmitter(target, source, env):
   source.append('$BINDINGS_SCRIPT')
@@ -304,7 +309,7 @@ idl_files = [
     'page/Navigator.idl',
     'page/Screen.idl',
 
-    'page/inspector/InspectorController.idl',
+    'inspector/InspectorController.idl',
 
     'plugins/MimeTypeArray.idl',
     'plugins/MimeType.idl',
@@ -567,13 +572,15 @@ def create_h_wrapper(target, source, env):
 
 # TODO(sgk):  make this a real pseudo-Builder
 def BuildYacc(env, dir, name, file):
-  env.Command(['$DERIVED_DIR/%s.cpp' % file,
-               '$DERIVED_DIR/%s.h'   % file],
-              ['$PORT_DIR/%s/%s.y' % (dir, file)],
-              ['$YACC -d -p %s ${SOURCES[0].posix} ' % name +
-                 '-o ${TARGET.posix}',
-               Action(create_h_wrapper),
-               Delete('${TARGETS[1]}pp')])
+  yacc_env = env.Clone()
+  yacc_env['YACC'] = env.Detect('bison') or 'yacc'
+  yacc_env.Command(['$DERIVED_DIR/%s.cpp' % file,
+                    '$DERIVED_DIR/%s.h'   % file],
+                   ['$PORT_DIR/%s/%s.y' % (dir, file)],
+                   ['$YACC -d -p %s ${SOURCES[0].posix} ' % name +
+                      '-o ${TARGET.posix}',
+                    Action(create_h_wrapper),
+                    Delete('${TARGETS[1]}pp')])
 
 BuildYacc(env, 'xml', 'xpathyy', 'XPathGrammar')
 BuildYacc(env, 'css', 'cssyy',   'CSSGrammar')
