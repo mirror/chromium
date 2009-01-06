@@ -69,6 +69,15 @@ struct TableDirectoryEntry {
     BigEndianULong length;
 };
 
+#if !PLATFORM(CG)
+// Fixed type is not defined on non-CG platforms. |version| in sfntHeader
+// and headTable and |fontRevision| in headTable are of Fixed, but they're
+// not actually refered to anywhere. Therefore, we just have to match
+// the size (4 bytes). For the definition of Fixed type, see
+// http://developer.apple.com/documentation/mac/Legacy/GXEnvironment/GXEnvironment-356.html#HEADING356-6.
+typedef int32_t Fixed;
+#endif
+
 struct sfntHeader {
     Fixed version;
     BigEndianUShort numTables;

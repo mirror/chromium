@@ -30,6 +30,9 @@
 #include <wtf/Forward.h>
 
 namespace WebCore {
+#if !PLATFORM(CG)
+typedef unsigned char UInt8;
+#endif
 
 class SharedBuffer;
 

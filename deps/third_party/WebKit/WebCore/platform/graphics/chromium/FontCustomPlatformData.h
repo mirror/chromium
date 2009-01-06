@@ -31,6 +31,8 @@
 #include <wtf/Noncopyable.h>
 
 #if PLATFORM(WIN_OS)
+#include "FontRenderingMode.h"
+#include "PlatformString.h"
 #include <windows.h>
 #endif
 
@@ -41,17 +43,20 @@ class SharedBuffer;
 
 struct FontCustomPlatformData : Noncopyable {
 #if PLATFORM(WIN_OS)
-    FontCustomPlatformData(HFONT font)
-        : m_font(font)
+    FontCustomPlatformData(HANDLE fontReference, const String& name)
+        : m_fontReference(fontReference)
+        , m_name(name)
     {}
 #endif
 
     ~FontCustomPlatformData();
 
-    FontPlatformData fontPlatformData(int size, bool bold, bool italic);
+    FontPlatformData fontPlatformData(int size, bool bold, bool italic,
+                                      FontRenderingMode = NormalRenderingMode);
 
 #if PLATFORM(WIN_OS)
-    HFONT m_font;
+    HANDLE m_fontReference;
+    String m_name;
 #endif
 };
 
