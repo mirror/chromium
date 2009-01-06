@@ -58,10 +58,13 @@ static Glyph initSpaceGlyph(HDC dc, Glyph* space_glyph)
     return *space_glyph;
 }
 
-// Fills a page of glyphs in the Basic Multilingual Plane (<= U+FFFF). We
-// can use the standard Windows GDI functions here. The input buffer size is
-// assumed to be GlyphPage::size. Returns true if any glyphs were found.
-static bool fillBMPGlyphs(UChar* buffer,
+// Fills |length| glyphs starting at |offset| in a |page| in the Basic 
+// Multilingual Plane (<= U+FFFF). The input buffer size should be the
+// same as |length|. We can use the standard Windows GDI functions here. 
+// Returns true if any glyphs were found.
+static bool fillBMPGlyphs(unsigned offset,
+                          unsigned length,
+                          UChar* buffer,
                           GlyphPage* page,
                           const SimpleFontData* fontData,
                           bool recurse)
@@ -76,7 +79,7 @@ static bool fillBMPGlyphs(UChar* buffer,
 
         if (recurse) {
             if (ChromiumBridge::ensureFontLoaded(fontData->m_font.hfont())) {
-                return fillBMPGlyphs(buffer, page, fontData, false);
+                return fillBMPGlyphs(offset, length, buffer, page, fontData, false);
             } else {
                 fillEmptyGlyphs(page);
                 return false;
@@ -125,7 +128,7 @@ static bool fillBMPGlyphs(UChar* buffer,
     // Also according to Jungshik and Hironori's suggestion and modification
     // we treat turetype and raster Font as different way when windows version
     // is less than Vista.
-    GetGlyphIndices(dc, buffer, GlyphPage::size, localGlyphBuffer,
+    GetGlyphIndices(dc, buffer, length, localGlyphBuffer,
                     GGI_MARK_NONEXISTING_GLYPHS);
 
     // Copy the output to the GlyphPage
@@ -136,7 +139,7 @@ static bool fillBMPGlyphs(UChar* buffer,
 
     Glyph space_glyph = 0;  // Glyph for a space. Lazily filled.
 
-    for (unsigned i = 0; i < GlyphPage::size; i++) {
+    for (unsigned i = 0; i < length; i++) {
         UChar c = buffer[i];
         Glyph glyph = localGlyphBuffer[i];
         const SimpleFontData* glyphFontData = fontData;
@@ -164,7 +167,7 @@ static bool fillBMPGlyphs(UChar* buffer,
                 glyphFontData = fontData->cjkWidthFontData();
             have_glyphs = true;
         }
-        page->setGlyphDataForCharacter(i, glyph, glyphFontData);
+        page->setGlyphDataForCharacter(offset + i, glyph, glyphFontData);
     }
 
     SelectObject(dc, old_font);
@@ -172,8 +175,8 @@ static bool fillBMPGlyphs(UChar* buffer,
     return have_glyphs;
 }
 
-// For non-BMP characters, each is two words (UTF-16) and the input buffer size
-// is (GlyphPage::size * 1). Since GDI doesn't know how to handle non-BMP
+// For non-BMP characters, each is two words (UTF-16) and the input buffer
+// size is 2 * |length|. Since GDI doesn't know how to handle non-BMP
 // characters, we must use Uniscribe to tell us the glyph indices.
 //
 // We don't want to call this in the case of "regular" characters since some
@@ -188,55 +191,59 @@ static bool fillBMPGlyphs(UChar* buffer,
 // since they may be missing.
 //
 // Returns true if any glyphs were found.
-static bool fillNonBMPGlyphs(UChar* buffer,
+static bool fillNonBMPGlyphs(unsigned offset,
+                             unsigned length,
+                             UChar* buffer,
                              GlyphPage* page,
                              const SimpleFontData* fontData)
 {
     bool haveGlyphs = false;
 
-    UniscribeHelperTextRun state(buffer, GlyphPage::size * 2, false,
+    UniscribeHelperTextRun state(buffer, length * 2, false,
                                  fontData->m_font.hfont(),
                                  fontData->m_font.scriptCache(),
                                  fontData->m_font.scriptFontProperties());
     state.setInhibitLigate(true);
     state.Init();
 
-    for (unsigned i = 0; i < GlyphPage::size; i++) {
+    for (unsigned i = 0; i < length; i++) {
         // Each character in this input buffer is a surrogate pair, which
         // consists of two UChars. So, the offset for its i-th character is
         // (i * 2).
         WORD glyph = state.FirstGlyphForCharacter(i * 2);
         if (glyph) {
             haveGlyphs = true;
-            page->setGlyphDataForIndex(i, glyph, fontData);
+            page->setGlyphDataForIndex(offset + i, glyph, fontData);
         } else {
             // Clear both glyph and fontData fields.
-            page->setGlyphDataForIndex(i, 0, 0);
+            page->setGlyphDataForIndex(offset + i, 0, 0);
         }
     }
     return haveGlyphs;
 }
 
-// We're supposed to return true if there are any glyphs in this page in our
-// font, false if there are none.
+// We're supposed to return true if there are any glyphs in the range
+// specified by |offset| and |length| in  our font,
+// false if there are none.
 bool GlyphPage::fill(unsigned offset, unsigned length, UChar* characterBuffer,
                      unsigned bufferLength, const SimpleFontData* fontData)
 {
-    // This function's parameters are kind of stupid. We always fill this page,
-    // which is a fixed size. The source character indices are in the given
-    // input buffer. For non-BMP characters each character will be represented
-    // by a surrogate pair (two characters), so the input bufferLength will be
-    // twice as big, even though the output size is the same.
-    //
-    // We have to handle BMP and non-BMP characters differently anyway...
-    if (bufferLength == GlyphPage::size) {
-        return fillBMPGlyphs(characterBuffer, this, fontData, true);
-    } else if (bufferLength == GlyphPage::size * 2) {
-        return fillNonBMPGlyphs(characterBuffer, this, fontData);
-    } else {
-        // TODO: http://b/1007391 make use of offset and length
-        return false;
+    // We have to handle BMP and non-BMP characters differently.
+    // FIXME: Add assertions to make sure that buffer is entirely in BMP
+    // or entirely in non-BMP. 
+    if (bufferLength == length) {
+        return fillBMPGlyphs(offset, length, characterBuffer, this,
+                             fontData, true);
     }
+    if (bufferLength == 2 * length) {
+        // A non-BMP input buffer will be twice as long as output glyph buffer
+        // because each character in the non-BMP input buffer will be 
+        // represented by a surrogate pair (two UChar's).
+        return fillNonBMPGlyphs(offset, length, characterBuffer,
+                                this, fontData);
+    }
+    ASSERT_NOT_REACHED();
+    return false;
 }
 
 }  // namespace WebCore
