@@ -78,7 +78,7 @@ RenderPath::~RenderPath()
 {
 }
 
-AffineTransform RenderPath::localTransform() const
+TransformationMatrix RenderPath::localTransform() const
 {
     return m_localTransform;
 }
@@ -145,7 +145,7 @@ const Path& RenderPath::path() const
 
 bool RenderPath::calculateLocalTransform()
 {
-    AffineTransform oldTransform = m_localTransform;
+    TransformationMatrix oldTransform = m_localTransform;
     m_localTransform = static_cast<SVGStyledTransformableElement*>(element())->animatedLocalTransform();
     return (m_localTransform != oldTransform);
 }
@@ -282,7 +282,7 @@ bool RenderPath::nodeAtPoint(const HitTestRequest&, HitTestResult& result, int _
     
     IntPoint absolutePoint(_x, _y);
 
-    PointerEventsHitRules hitRules(PointerEventsHitRules::SVG_PATH_HITTESTING, style()->svgStyle()->pointerEvents());
+    PointerEventsHitRules hitRules(PointerEventsHitRules::SVG_PATH_HITTESTING, style()->pointerEvents());
 
     bool isVisible = (style()->visibility() == VISIBLE);
     if (isVisible || !hitRules.requireVisible) {

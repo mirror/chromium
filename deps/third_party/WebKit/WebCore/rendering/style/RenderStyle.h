@@ -25,7 +25,7 @@
 #ifndef RenderStyle_h
 #define RenderStyle_h
 
-#include "AffineTransform.h"
+#include "TransformationMatrix.h"
 #include "AnimationList.h"
 #include "BorderData.h"
 #include "BorderValue.h"
@@ -140,7 +140,8 @@ protected:
                    (_box_direction == other._box_direction) &&
                    (_visuallyOrdered == other._visuallyOrdered) &&
                    (_htmlHacks == other._htmlHacks) &&
-                   (_force_backgrounds_to_white == other._force_backgrounds_to_white);
+                   (_force_backgrounds_to_white == other._force_backgrounds_to_white) &&
+                   (_pointerEvents == other._pointerEvents);
         }
 
         bool operator!=(const InheritedFlags& other) const { return !(*this == other); }
@@ -163,6 +164,7 @@ protected:
         bool _visuallyOrdered : 1;
         bool _htmlHacks :1;
         bool _force_backgrounds_to_white : 1;
+        unsigned _pointerEvents : 4; // EPointerEvents
     } inherited_flags;
 
 // don't inherit
@@ -269,6 +271,7 @@ protected:
         inherited_flags._htmlHacks=false;
         inherited_flags._box_direction = initialBoxDirection();
         inherited_flags._force_backgrounds_to_white = false;
+        inherited_flags._pointerEvents = initialPointerEvents();
 
         noninherited_flags._effectiveDisplay = noninherited_flags._originalDisplay = initialDisplay();
         noninherited_flags._overflowX = initialOverflowX();
@@ -625,11 +628,12 @@ public:
     Length transformOriginX() const { return rareNonInheritedData->m_transform->m_x; }
     Length transformOriginY() const { return rareNonInheritedData->m_transform->m_y; }
     bool hasTransform() const { return !rareNonInheritedData->m_transform->m_operations.operations().isEmpty(); }
-    void applyTransform(AffineTransform&, const IntSize& borderBoxSize, bool includeTransformOrigin = true) const;
+    void applyTransform(TransformationMatrix&, const IntSize& borderBoxSize, bool includeTransformOrigin = true) const;
     bool hasMask() const { return rareNonInheritedData->m_mask.hasImage() || rareNonInheritedData->m_maskBoxImage.hasImage(); }
     // End CSS3 Getters
 
     // Apple-specific property getter methods
+    EPointerEvents pointerEvents() const { return static_cast<EPointerEvents>(inherited_flags._pointerEvents); }
     const AnimationList* animations() const { return rareNonInheritedData->m_animations.get(); }
     const AnimationList* transitions() const { return rareNonInheritedData->m_transitions.get(); }
 
@@ -920,6 +924,8 @@ public:
     // End CSS3 Setters
 
     // Apple-specific property setters
+    void setPointerEvents(EPointerEvents p) { inherited_flags._pointerEvents = p; }
+
     void clearAnimations()
     {
         rareNonInheritedData.access()->m_animations.clear();
@@ -1103,6 +1109,7 @@ public:
     static const TransformOperations& initialTransform() { DEFINE_STATIC_LOCAL(TransformOperations, ops, ()); return ops; }
     static Length initialTransformOriginX() { return Length(50.0, Percent); }
     static Length initialTransformOriginY() { return Length(50.0, Percent); }
+    static EPointerEvents initialPointerEvents() { return PE_AUTO; }
 
     // Keep these at the end.
     static float initialAnimationDelay() { return 0; }

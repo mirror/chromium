@@ -72,7 +72,7 @@ bool RenderSVGText::requiresLayer()
 
 bool RenderSVGText::calculateLocalTransform()
 {
-    AffineTransform oldTransform = m_localTransform;
+    TransformationMatrix oldTransform = m_localTransform;
     m_localTransform = static_cast<SVGTextElement*>(element())->animatedLocalTransform();
     return (oldTransform != m_localTransform);
 }
@@ -129,12 +129,12 @@ InlineBox* RenderSVGText::createInlineBox(bool, bool, bool)
 
 bool RenderSVGText::nodeAtPoint(const HitTestRequest& request, HitTestResult& result, int _x, int _y, int _tx, int _ty, HitTestAction hitTestAction)
 {
-    PointerEventsHitRules hitRules(PointerEventsHitRules::SVG_TEXT_HITTESTING, style()->svgStyle()->pointerEvents());
+    PointerEventsHitRules hitRules(PointerEventsHitRules::SVG_TEXT_HITTESTING, style()->pointerEvents());
     bool isVisible = (style()->visibility() == VISIBLE);
     if (isVisible || !hitRules.requireVisible) {
         if ((hitRules.canHitStroke && (style()->svgStyle()->hasStroke() || !hitRules.requireStroke))
             || (hitRules.canHitFill && (style()->svgStyle()->hasFill() || !hitRules.requireFill))) {
-            AffineTransform totalTransform = absoluteTransform();
+            TransformationMatrix totalTransform = absoluteTransform();
             double localX, localY;
             totalTransform.inverse().map(_x, _y, &localX, &localY);
             FloatPoint hitPoint(_x, _y);
@@ -153,7 +153,7 @@ void RenderSVGText::absoluteRects(Vector<IntRect>& rects, int, int, bool)
 
     FloatPoint absPos = localToAbsolute();
 
-    AffineTransform htmlParentCtm = root->RenderContainer::absoluteTransform();
+    TransformationMatrix htmlParentCtm = root->RenderContainer::absoluteTransform();
  
     // Don't use relativeBBox here, as it's unites the selection rects. Makes it hard
     // to spot errors, if there are any using WebInspector. Individually feed them into 'rects'.
@@ -178,7 +178,7 @@ void RenderSVGText::absoluteQuads(Vector<FloatQuad>& quads, bool)
 
     FloatPoint absPos = localToAbsolute();
 
-    AffineTransform htmlParentCtm = root->RenderContainer::absoluteTransform();
+    TransformationMatrix htmlParentCtm = root->RenderContainer::absoluteTransform();
  
     // Don't use relativeBBox here, as it's unites the selection rects. Makes it hard
     // to spot errors, if there are any using WebInspector. Individually feed them into 'rects'.

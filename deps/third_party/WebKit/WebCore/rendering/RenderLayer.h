@@ -51,7 +51,7 @@
 
 namespace WebCore {
 
-class AffineTransform;
+class TransformationMatrix;
 class CachedResource;
 class HitTestResult;
 class RenderFrameSet;
@@ -368,7 +368,7 @@ public:
     void setStaticY(int staticY) { m_staticY = staticY; }
 
     bool hasTransform() const { return m_object->hasTransform(); }
-    AffineTransform* transform() const { return m_transform.get(); }
+    TransformationMatrix* transform() const { return m_transform.get(); }
 
     void destroy(RenderArena*);
 
@@ -478,6 +478,9 @@ protected:
     Vector<RenderLayer*>* m_overflowList;
 
     ClipRects* m_clipRects;      // Cached clip rects used when painting and hit testing.
+#ifndef NDEBUG
+    const RenderLayer* m_clipRectsRoot;   // Root layer used to compute clip rects.
+#endif
 
     bool m_scrollDimensionsDirty : 1;
     bool m_zOrderListsDirty : 1;
@@ -505,7 +508,7 @@ protected:
     int m_staticX;
     int m_staticY;
     
-    OwnPtr<AffineTransform> m_transform;
+    OwnPtr<TransformationMatrix> m_transform;
     
     // May ultimately be extended to many replicas (with their own paint order).
     RenderReplica* m_reflection;

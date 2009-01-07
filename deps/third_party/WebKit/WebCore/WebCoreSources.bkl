@@ -222,7 +222,6 @@ This file contains the list of files needed to build WebCore.
         DerivedSources/WebCore/JSCSSVariablesRule.cpp
         DerivedSources/WebCore/JSCanvasGradient.cpp
         DerivedSources/WebCore/JSCanvasPattern.cpp
-        DerivedSources/WebCore/JSCanvasPixelArray.cpp
         DerivedSources/WebCore/JSCanvasRenderingContext2D.cpp
         DerivedSources/WebCore/JSCharacterData.cpp
         DerivedSources/WebCore/JSClipboard.cpp
@@ -510,7 +509,6 @@ This file contains the list of files needed to build WebCore.
     <set append="1" var="WEBCORE_SOURCES_HTML">
         html/CanvasGradient.cpp
         html/CanvasPattern.cpp
-        html/CanvasPixelArray.cpp
         html/CanvasRenderingContext2D.cpp
         html/CanvasStyle.cpp
         html/File.cpp
@@ -765,7 +763,7 @@ This file contains the list of files needed to build WebCore.
         platform/graphics/PathTraversalState.cpp
         platform/graphics/Pattern.cpp
         platform/graphics/Pen.cpp
-        platform/graphics/transforms/AffineTransform.cpp
+        platform/graphics/transforms/TransformationMatrix.cpp
         platform/graphics/transforms/MatrixTransformOperation.cpp
         platform/graphics/transforms/RotateTransformOperation.cpp
         platform/graphics/transforms/ScaleTransformOperation.cpp

@@ -110,6 +110,7 @@ static const int computedProperties[] = {
     CSSPropertyPageBreakAfter,
     CSSPropertyPageBreakBefore,
     CSSPropertyPageBreakInside,
+    CSSPropertyPointerEvents,
     CSSPropertyPosition,
     CSSPropertyResize,
     CSSPropertyRight,
@@ -220,7 +221,6 @@ static const int computedProperties[] = {
     CSSPropertyLightingColor,
     CSSPropertyStopColor,
     CSSPropertyStopOpacity,
-    CSSPropertyPointerEvents,
     CSSPropertyColorInterpolation,
     CSSPropertyColorInterpolationFilters,
     CSSPropertyColorRendering,
@@ -405,7 +405,7 @@ static PassRefPtr<CSSValue> computedTransform(RenderObject* renderer)
     
     IntRect box = sizingBox(renderer);
 
-    AffineTransform transform;
+    TransformationMatrix transform;
     renderer->style()->applyTransform(transform, box.size(), false);
 
     RefPtr<WebKitCSSTransformValue> transformVal = WebKitCSSTransformValue::create(WebKitCSSTransformValue::MatrixTransformOperation);
@@ -1192,6 +1192,8 @@ PassRefPtr<CSSValue> CSSComputedStyleDeclaration::getPropertyCSSValue(int proper
         }
         case CSSPropertyWebkitTransitionTimingFunction:
             return getTimingFunctionValue(style->transitions());
+        case CSSPropertyPointerEvents:
+            return CSSPrimitiveValue::create(style->pointerEvents());
         case CSSPropertyBackground:
         case CSSPropertyBorder:
         case CSSPropertyBorderBottom:

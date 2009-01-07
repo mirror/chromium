@@ -35,7 +35,7 @@
 
 namespace WebCore {
 
-class AffineTransform;
+class TransformationMatrix;
 class AnimationController;
 class Color;
 class Document;
@@ -312,8 +312,8 @@ public:
 
     virtual FloatRect relativeBBox(bool includeStroke = true) const;
 
-    virtual AffineTransform localTransform() const;
-    virtual AffineTransform absoluteTransform() const;
+    virtual TransformationMatrix localTransform() const;
+    virtual TransformationMatrix absoluteTransform() const;
 #endif
 
     virtual bool isEditable() const;
@@ -915,6 +915,8 @@ public:
 
     AnimationController* animation() const;
 
+    bool visibleToHitTesting() const { return style()->visibility() == VISIBLE && style()->pointerEvents() != PE_NONE; }
+    
 protected:
     // Overrides should call the superclass at the end
     virtual void styleWillChange(RenderStyle::Diff, const RenderStyle* newStyle);

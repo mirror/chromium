@@ -30,12 +30,11 @@
 #include "config.h"
 #include "CanvasRenderingContext2D.h"
 
-#include "AffineTransform.h"
+#include "TransformationMatrix.h"
 #include "CSSParser.h"
 #include "CachedImage.h"
 #include "CanvasGradient.h"
 #include "CanvasPattern.h"
-#include "CanvasPixelArray.h"
 #include "CanvasStyle.h"
 #include "CSSPropertyNames.h"
 #include "CSSStyleSelector.h"
@@ -58,6 +57,8 @@
 #include "StrokeStyleApplier.h"
 #include "TextMetrics.h"
 #include <stdio.h>
+
+#include <runtime/ByteArray.h>
 #include <wtf/MathExtras.h>
 
 using namespace std;
@@ -355,7 +356,7 @@ void CanvasRenderingContext2D::scale(float sx, float sy)
     if (!state().m_invertibleCTM)
         return;
 
-    AffineTransform newTransform = state().m_transform;
+    TransformationMatrix newTransform = state().m_transform;
     newTransform.scale(sx, sy);
     if (!newTransform.isInvertible()) {
         state().m_invertibleCTM = false;
@@ -364,7 +365,7 @@ void CanvasRenderingContext2D::scale(float sx, float sy)
 
     state().m_transform = newTransform;
     c->scale(FloatSize(sx, sy));
-    m_path.transform(AffineTransform().scale(1.0/sx, 1.0/sy));
+    m_path.transform(TransformationMatrix().scale(1.0/sx, 1.0/sy));
 }
 
 void CanvasRenderingContext2D::rotate(float angleInRadians)
@@ -375,7 +376,7 @@ void CanvasRenderingContext2D::rotate(float angleInRadians)
     if (!state().m_invertibleCTM)
         return;
 
-    AffineTransform newTransform = state().m_transform;
+    TransformationMatrix newTransform = state().m_transform;
     newTransform.rotate(angleInRadians / piDouble * 180.0);
     if (!newTransform.isInvertible()) {
         state().m_invertibleCTM = false;
@@ -384,7 +385,7 @@ void CanvasRenderingContext2D::rotate(float angleInRadians)
 
     state().m_transform = newTransform;
     c->rotate(angleInRadians);
-    m_path.transform(AffineTransform().rotate(-angleInRadians / piDouble * 180.0));
+    m_path.transform(TransformationMatrix().rotate(-angleInRadians / piDouble * 180.0));
 }
 
 void CanvasRenderingContext2D::translate(float tx, float ty)
@@ -395,7 +396,7 @@ void CanvasRenderingContext2D::translate(float tx, float ty)
     if (!state().m_invertibleCTM)
         return;
 
-    AffineTransform newTransform = state().m_transform;
+    TransformationMatrix newTransform = state().m_transform;
     newTransform.translate(tx, ty);
     if (!newTransform.isInvertible()) {
         state().m_invertibleCTM = false;
@@ -404,7 +405,7 @@ void CanvasRenderingContext2D::translate(float tx, float ty)
 
     state().m_transform = newTransform;
     c->translate(tx, ty);
-    m_path.transform(AffineTransform().translate(-tx, -ty));
+    m_path.transform(TransformationMatrix().translate(-tx, -ty));
 }
 
 void CanvasRenderingContext2D::transform(float m11, float m12, float m21, float m22, float dx, float dy)
@@ -420,9 +421,9 @@ void CanvasRenderingContext2D::transform(float m11, float m12, float m21, float 
         !isfinite(m12) | !isfinite(m22) | !isfinite(dy))
         return;
 
-    AffineTransform transform(m11, m12, m21, m22, dx, dy);
+    TransformationMatrix transform(m11, m12, m21, m22, dx, dy);
 
-    AffineTransform newTransform = state().m_transform;
+    TransformationMatrix newTransform = state().m_transform;
     newTransform.multiply(transform);
     if (!newTransform.isInvertible()) {
         state().m_invertibleCTM = false;
@@ -445,7 +446,7 @@ void CanvasRenderingContext2D::setTransform(float m11, float m12, float m21, flo
         !isfinite(m12) | !isfinite(m22) | !isfinite(dy))
         return;
 
-    AffineTransform ctm = state().m_transform;
+    TransformationMatrix ctm = state().m_transform;
     if (!ctm.isInvertible())
         return;
     c->concatCTM(c->getCTM().inverse());
@@ -695,7 +696,7 @@ bool CanvasRenderingContext2D::isPointInPath(const float x, const float y)
         return false;
 
     FloatPoint point(x, y);
-    AffineTransform ctm = state().m_transform;
+    TransformationMatrix ctm = state().m_transform;
     FloatPoint transformedPoint = ctm.inverse().mapPoint(point);
     return m_path.contains(transformedPoint);
 }
@@ -1143,7 +1144,7 @@ void CanvasRenderingContext2D::willDraw(const FloatRect& r, unsigned options)
 
     FloatRect dirtyRect = r;
     if (options & CanvasWillDrawApplyTransform) {
-        AffineTransform ctm = state().m_transform;
+        TransformationMatrix ctm = state().m_transform;
         dirtyRect = ctm.mapRect(r);
     }
     
@@ -1172,7 +1173,7 @@ GraphicsContext* CanvasRenderingContext2D::drawingContext() const
 static PassRefPtr<ImageData> createEmptyImageData(const IntSize& size)
 {
     PassRefPtr<ImageData> data = ImageData::create(size.width(), size.height());
-    memset(data->data()->data().data(), 0, data->data()->length());
+    memset(data->data()->data(), 0, data->data()->length());
     return data;
 }
 
