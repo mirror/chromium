@@ -464,7 +464,7 @@ class StatusResourceBuilder(builder.StatusResourceBuilder):
     data += ('<h1><a href="%swaterfall?builder=%s">Builder: %s</a></h1>\n' %
              (self.path_to_root(req),
               urllib.quote(b.getName(), safe=''),
-              html.escape(b.getName()))
+              html.escape(b.getName())))
 
     # the first section shows builds which are currently running, if any.
 
