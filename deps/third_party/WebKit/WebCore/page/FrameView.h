@@ -77,6 +77,8 @@ public:
 
     virtual PassRefPtr<Scrollbar> createScrollbar(ScrollbarOrientation);
 
+    virtual void setContentsSize(const IntSize&);
+
     void layout(bool allowSubtree = true);
     bool didFirstLayout() const;
     void layoutTimerFired(Timer<FrameView>*);
@@ -110,6 +112,7 @@ public:
 
     void adjustViewSize();
     void initScrollbars();
+    void updateDefaultScrollbarState();
     
     virtual IntRect windowClipRect(bool clipToContents = true) const;
     IntRect windowClipRectForLayer(const RenderLayer*, bool clipToLayerContents) const;

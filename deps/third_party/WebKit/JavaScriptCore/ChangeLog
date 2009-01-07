@@ -1,3 +1,114 @@
+2009-01-06  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by Cameron Zwarich.
+
+        <https://bugs.webkit.org/show_bug.cgi?id=23085> [jsfunfuzz] Over released ScopeChainNode
+        <rdar://problem/6474110>
+
+        So this delightful bug was caused by our unwind code using a ScopeChain to perform
+        the unwind.  The ScopeChain would ref the initial top of the scope chain, then deref
+        the resultant top of scope chain, which is incorrect.
+
+        This patch removes the dependency on ScopeChain for the unwind, and i've filed
+        <https://bugs.webkit.org/show_bug.cgi?id=23144> to look into the unintuitive
+        ScopeChain behaviour.
+
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::throwException):
+
+2009-01-06  Adam Roben  <aroben@apple.com>
+
+        Hopeful Windows crash-on-launch fix
+
+        * wtf/Platform.h: Force a world rebuild by touching this file.
+
+2009-01-06  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by NOBODY (Build fix).
+
+        * GNUmakefile.am:Add ByteArray.cpp too
+
+2009-01-06  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by NOBODY (Speculative build fix).
+
+        AllInOneFile.cpp does not include the JSByteArray.cpp include it...
+
+        * GNUmakefile.am:
+
+2009-01-05  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by NOBODY (Build fix).
+
+        Fix Wx build
+
+        * JavaScriptCoreSources.bkl:
+
+2009-01-05  Oliver Hunt  <oliver@apple.com>
+
+        Windows build fixes
+
+        Rubber-stamped by Alice Liu.
+
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::Interpreter):
+        * runtime/ByteArray.cpp:
+        (JSC::ByteArray::create):
+        * runtime/ByteArray.h:
+
+2009-01-05  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by Gavin Barraclough.
+
+        CanvasPixelArray performance is too slow 
+        <https://bugs.webkit.org/show_bug.cgi?id=23123>
+
+        The fix to this is to devirtualise get and put in a manner similar to
+        JSString and JSArray.  To do this I've added a ByteArray implementation
+        and JSByteArray wrapper to JSC.  We can then do vptr comparisons to
+        devirtualise the calls.
+
+        This devirtualisation improves performance by 1.5-2x in my somewhat ad
+        hoc tests.
+
+        * GNUmakefile.am:
+        * JavaScriptCore.exp:
+        * JavaScriptCore.pri:
+        * JavaScriptCore.scons:
+        * JavaScriptCore.vcproj/JavaScriptCore/JavaScriptCore.vcproj:
+        * JavaScriptCore.xcodeproj/project.pbxproj:
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::Interpreter):
+        (JSC::Interpreter::privateExecute):
+        (JSC::Interpreter::cti_op_get_by_val):
+        (JSC::Interpreter::cti_op_put_by_val):
+        * interpreter/Interpreter.h:
+        (JSC::Interpreter::isJSByteArray):
+        * runtime/ByteArray.cpp: Added.
+        (JSC::ByteArray::create):
+        * runtime/ByteArray.h: Added.
+        (JSC::ByteArray::length):
+        (JSC::ByteArray::set):
+        (JSC::ByteArray::get):
+        (JSC::ByteArray::data):
+        (JSC::ByteArray::ByteArray):
+        * runtime/JSByteArray.cpp: Added.
+        (JSC::):
+        (JSC::JSByteArray::JSByteArray):
+        (JSC::JSByteArray::createStructure):
+        (JSC::JSByteArray::getOwnPropertySlot):
+        (JSC::JSByteArray::put):
+        (JSC::JSByteArray::getPropertyNames):
+        * runtime/JSByteArray.h: Added.
+        (JSC::JSByteArray::canAccessIndex):
+        (JSC::JSByteArray::getIndex):
+        (JSC::JSByteArray::setIndex):
+        (JSC::JSByteArray::classInfo):
+        (JSC::JSByteArray::length):
+        (JSC::JSByteArray::):
+        (JSC::JSByteArray::JSByteArray):
+        (JSC::asByteArray):
+
 2009-01-05  Alexey Proskuryakov  <ap@webkit.org>
 
         Reviewed by Darin Adler.

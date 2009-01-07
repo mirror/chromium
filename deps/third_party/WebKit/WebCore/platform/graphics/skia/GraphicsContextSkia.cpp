@@ -22,7 +22,6 @@
 #include "GraphicsContextPrivate.h"
 
 #include "Assertions.h"
-#include "AffineTransform.h"
 #include "Color.h"
 #include "FloatRect.h"
 #include "Gradient.h"
@@ -36,6 +35,7 @@
 #include "skia/ext/platform_canvas.h"
 #include "SkiaUtils.h"
 #include "SkShader.h"
+#include "TransformationMatrix.h"
 #include "wtf/MathExtras.h"
 
 using namespace std;
@@ -412,7 +412,7 @@ void GraphicsContext::clipToImageBuffer(const FloatRect& rect,
     notImplemented();
 }
 
-void GraphicsContext::concatCTM(const AffineTransform& xform)
+void GraphicsContext::concatCTM(const TransformationMatrix& xform)
 {
     if (paintingDisabled())
         return;
@@ -778,7 +778,7 @@ void GraphicsContext::fillRoundedRect(const IntRect& rect,
     return fillRect(rect, color);
 }
 
-AffineTransform GraphicsContext::getCTM() const
+TransformationMatrix GraphicsContext::getCTM() const
 {
     return platformContext()->canvas()->getTotalMatrix();
 }
@@ -941,7 +941,7 @@ void GraphicsContext::setPlatformShadow(const IntSize& size,
     double blur = blur_int;
 
     if (!m_common->state.shadowsIgnoreTransforms)  {
-        AffineTransform transform = getCTM();
+        TransformationMatrix transform = getCTM();
         transform.map(width, height, &width, &height);
 
         // Transform for the blur

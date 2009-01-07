@@ -29,7 +29,6 @@
 
 #include "config.h"
 
-#include "AffineTransform.h"
 #include "BitmapImage.h"
 #include "BitmapImageSingleFrameSkia.h"
 #include "ChromiumBridge.h"
@@ -43,6 +42,8 @@
 #include "PlatformString.h"
 #include "SkiaUtils.h"
 #include "SkShader.h"
+#include "TransformationMatrix.h"
+
 
 #include "skia/ext/image_operations.h"
 #include "skia/ext/platform_canvas.h"
@@ -322,7 +323,7 @@ PassRefPtr<Image> Image::loadPlatformResource(const char *name)
 
 void Image::drawPattern(GraphicsContext* context,
                         const FloatRect& floatSrcRect,
-                        const AffineTransform& patternTransform,
+                        const TransformationMatrix& patternTransform,
                         const FloatPoint& phase,
                         CompositeOperator compositeOp,
                         const FloatRect& destRect)

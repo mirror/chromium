@@ -28,7 +28,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "config.h"
-#include "AffineTransform.h"
+#include "TransformationMatrix.h"
 
 #include "FloatRect.h"
 #include "IntRect.h"
@@ -39,22 +39,22 @@ namespace WebCore {
 
 static const double deg2rad = 0.017453292519943295769; // pi/180
 
-AffineTransform::AffineTransform()
+TransformationMatrix::TransformationMatrix()
 {
     m_transform.reset();
 }
 
-AffineTransform::AffineTransform(double a, double b, double c, double d,
+TransformationMatrix::TransformationMatrix(double a, double b, double c, double d,
                                  double e, double f)
 {
     setMatrix(a, b, c, d, e, f);
 }
 
-AffineTransform::AffineTransform(const SkMatrix& matrix) : m_transform(matrix)
+TransformationMatrix::TransformationMatrix(const SkMatrix& matrix) : m_transform(matrix)
 {
 }
 
-void AffineTransform::setMatrix(double a, double b, double c, double d,
+void TransformationMatrix::setMatrix(double a, double b, double c, double d,
                                 double e, double f)
 {
     m_transform.reset();
@@ -68,7 +68,7 @@ void AffineTransform::setMatrix(double a, double b, double c, double d,
     m_transform.setTranslateY(WebCoreDoubleToSkScalar(f));
 }
 
-void AffineTransform::map(double x, double y, double *x2, double *y2) const
+void TransformationMatrix::map(double x, double y, double *x2, double *y2) const
 {
     SkPoint src, dst;
     src.set(WebCoreDoubleToSkScalar(x), WebCoreDoubleToSkScalar(y));
@@ -78,141 +78,141 @@ void AffineTransform::map(double x, double y, double *x2, double *y2) const
     *y2 = SkScalarToDouble(dst.fY);
 }
 
-IntRect AffineTransform::mapRect(const IntRect& src) const
+IntRect TransformationMatrix::mapRect(const IntRect& src) const
 {
     SkRect  dst;
     m_transform.mapRect(&dst, src);
     return enclosingIntRect(dst);
 }
 
-FloatRect AffineTransform::mapRect(const FloatRect& src) const
+FloatRect TransformationMatrix::mapRect(const FloatRect& src) const
 {
     SkRect dst;
     m_transform.mapRect(&dst, src);
     return dst;
 }
 
-bool AffineTransform::isIdentity() const
+bool TransformationMatrix::isIdentity() const
 {
     return m_transform.isIdentity();
 }
 
-void AffineTransform::reset()
+void TransformationMatrix::reset()
 {
     m_transform.reset();
 }
 
-AffineTransform &AffineTransform::scale(double sx, double sy)
+TransformationMatrix &TransformationMatrix::scale(double sx, double sy)
 {
     m_transform.preScale(WebCoreDoubleToSkScalar(sx), WebCoreDoubleToSkScalar(sy), 0, 0);
     return *this;
 }
 
-AffineTransform &AffineTransform::rotate(double d)
+TransformationMatrix &TransformationMatrix::rotate(double d)
 {
     m_transform.preRotate(WebCoreDoubleToSkScalar(d), 0, 0);
     return *this;
 }
 
-AffineTransform &AffineTransform::translate(double tx, double ty)
+TransformationMatrix &TransformationMatrix::translate(double tx, double ty)
 {
     m_transform.preTranslate(WebCoreDoubleToSkScalar(tx), WebCoreDoubleToSkScalar(ty));
     return *this;
 }
 
-AffineTransform &AffineTransform::shear(double sx, double sy)
+TransformationMatrix &TransformationMatrix::shear(double sx, double sy)
 {
     m_transform.preSkew(WebCoreDoubleToSkScalar(sx), WebCoreDoubleToSkScalar(sy), 0, 0);
     return *this;
 }
 
-double AffineTransform::det() const
+double TransformationMatrix::det() const
 {
     return  SkScalarToDouble(m_transform.getScaleX()) * SkScalarToDouble(m_transform.getScaleY()) -
             SkScalarToDouble(m_transform.getSkewY())  * SkScalarToDouble(m_transform.getSkewX());
 }
 
-AffineTransform AffineTransform::inverse() const
+TransformationMatrix TransformationMatrix::inverse() const
 {
-    AffineTransform inverse;
+    TransformationMatrix inverse;
     m_transform.invert(&inverse.m_transform);
     return inverse;
 }
 
-AffineTransform::operator SkMatrix() const
+TransformationMatrix::operator SkMatrix() const
 {
     return m_transform;
 }
 
-bool AffineTransform::operator==(const AffineTransform& m2) const
+bool TransformationMatrix::operator==(const TransformationMatrix& m2) const
 {
     return m_transform == m2.m_transform;
 }
 
-AffineTransform &AffineTransform::operator*=(const AffineTransform& m2)
+TransformationMatrix &TransformationMatrix::operator*=(const TransformationMatrix& m2)
 {
     m_transform.setConcat(m2.m_transform, m_transform);
     return *this;
 }
 
-AffineTransform AffineTransform::operator*(const AffineTransform& m2)
+TransformationMatrix TransformationMatrix::operator*(const TransformationMatrix& m2)
 {
-    AffineTransform cat;
+    TransformationMatrix cat;
     
     cat.m_transform.setConcat(m2.m_transform, m_transform);
     return cat;
 }
 
-double AffineTransform::a() const
+double TransformationMatrix::a() const
 {
     return SkScalarToDouble(m_transform.getScaleX());
 }
-void AffineTransform::setA(double a)
+void TransformationMatrix::setA(double a)
 {
     m_transform.setScaleX(WebCoreDoubleToSkScalar(a));
 }
 
-double AffineTransform::b() const
+double TransformationMatrix::b() const
 {
     return SkScalarToDouble(m_transform.getSkewY());
 }
-void AffineTransform::setB(double b)
+void TransformationMatrix::setB(double b)
 {
     m_transform.setSkewY(WebCoreDoubleToSkScalar(b));
 }
 
-double AffineTransform::c() const
+double TransformationMatrix::c() const
 {
     return SkScalarToDouble(m_transform.getSkewX());
 }
-void AffineTransform::setC(double c)
+void TransformationMatrix::setC(double c)
 {
     m_transform.setSkewX(WebCoreDoubleToSkScalar(c));
 }
 
-double AffineTransform::d() const
+double TransformationMatrix::d() const
 {
     return SkScalarToDouble(m_transform.getScaleY());
 }
-void AffineTransform::setD(double d)
+void TransformationMatrix::setD(double d)
 {
     m_transform.setScaleY(WebCoreDoubleToSkScalar(d));
 }
 
-double AffineTransform::e() const
+double TransformationMatrix::e() const
 {
     return SkScalarToDouble(m_transform.getTranslateX());
 }
-void AffineTransform::setE(double e)
+void TransformationMatrix::setE(double e)
 {
     m_transform.setTranslateX(WebCoreDoubleToSkScalar(e));
 }
 
-double AffineTransform::f() const
+double TransformationMatrix::f() const
 {
     return SkScalarToDouble(m_transform.getTranslateY());
 }
-void AffineTransform::setF(double f)
+void TransformationMatrix::setF(double f)
 {
     m_transform.setTranslateY(WebCoreDoubleToSkScalar(f));
 }

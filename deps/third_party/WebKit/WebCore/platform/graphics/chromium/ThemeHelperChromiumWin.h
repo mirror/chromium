@@ -26,7 +26,7 @@
 #ifndef ThemeHelperWin_h
 #define ThemeHelperWin_h
 
-#include "AffineTransform.h"
+#include "TransformationMatrix.h"
 #include "ImageBuffer.h"
 #include "IntRect.h"
 #include "WTF/OwnPtr.h"
@@ -77,7 +77,7 @@ private:
 
     // The original canvas to wrote to. Not owned by this class.
     GraphicsContext* m_orgContext;
-    AffineTransform m_orgMatrix;
+    TransformationMatrix m_orgMatrix;
     IntRect m_orgRect;
 
     // When m_type == COPY, this will be a new surface owned by this class that

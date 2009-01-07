@@ -224,7 +224,7 @@ void Path::apply(void* info, PathApplierFunction function) const
     }
 }
 
-void Path::transform(const AffineTransform& xform)
+void Path::transform(const TransformationMatrix& xform)
 {
     m_path->transform(xform);
 }

@@ -31,7 +31,6 @@
 #endif
 #include "FrameChromium.h"
 
-#include "AffineTransform.h"
 #include "FloatRect.h"
 #include "Document.h"
 #include "FramePrivate.h"

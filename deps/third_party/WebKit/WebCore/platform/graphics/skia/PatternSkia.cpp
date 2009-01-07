@@ -29,9 +29,9 @@
 #include "config.h"
 #include "Pattern.h"
 
-#include "AffineTransform.h"
 #include "Image.h"
 #include "NativeImageSkia.h"
+#include "TransformationMatrix.h"
 
 #include "SkShader.h"
 
@@ -44,7 +44,7 @@ static inline SkShader::TileMode shaderRule(bool shouldRepeat)
     return shouldRepeat ? SkShader::kRepeat_TileMode : SkShader::kClamp_TileMode;
 }
 
-PlatformPatternPtr Pattern::createPlatformPattern(const AffineTransform& patternTransform) const
+PlatformPatternPtr Pattern::createPlatformPattern(const TransformationMatrix& patternTransform) const
 {
     SkBitmap* bm = m_tileImage->nativeImageForCurrentFrame();
     SkShader* shader = SkShader::CreateBitmapShader(*bm,

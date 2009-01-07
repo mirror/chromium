@@ -26,7 +26,7 @@
 #include "config.h"
 #include <windows.h>
 
-#include "AffineTransform.h"
+#include "TransformationMatrix.h"
 #include "ChromiumBridge.h"
 #include "Font.h"
 #include "FontFallbackList.h"
@@ -49,7 +49,7 @@ static bool windowsCanHandleTextDrawing(GraphicsContext* context)
     // in using Skia will show you the hinted outlines for the smaller size,
     // which look weird. All else being equal, it's better to use Windows' text
     // drawing, so we don't check for zooms.
-    const AffineTransform& xform = context->getCTM();
+    const TransformationMatrix& xform = context->getCTM();
     if (xform.b() != 0 ||  // Y skew
         xform.c() != 0)    // X skew
         return false;

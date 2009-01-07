@@ -1,3 +1,388 @@
+2009-01-06  Eric Seidel  <eric@webkit.org>
+
+        Build fix only, no review.
+
+        Bring the Chromium-WebCore build back closer to building
+        by adding files from recent commits.
+
+        * WebCore.scons:
+
+2009-01-06  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        <rdar://problem/6474973> REGRESSION: PLT ~2% slower due to 39465 (consolidate thread data)
+
+        I could not reproduce the slowdown on my PowerPC test machine, but the change should bring
+        performance back.
+
+        * platform/ThreadGlobalData.cpp: (WebCore::threadGlobalData): Don't use AtomicallyInitializedStatic.
+        Prior to r39465, it was only used for cached converters, which was necessary because the
+        first access to ICU or TEC one could happen on a secondary thread, but now they are all
+        initialized from ThreadGlobalData constructor.
+
+2009-01-06  David Smith  <catfish.man@gmail.com>
+
+        Reviewed by Darin Adler.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=23129
+        Devirtualize Node::childNodes().
+
+2009-01-06  Simon Hausmann  <simon.hausmann@nokia.com>
+
+        Unreviewed build fix.
+
+        Fix the Qt build with Qt 4.4.x, the HTTP-only cookie support was
+        added in Qt 4.5.
+
+        * platform/qt/CookieJarQt.cpp:
+        (WebCore::setCookies):
+        (WebCore::cookies):
+
+2009-01-06  Zalan Bujtas  <zbujtas@gmail.com>
+
+        Reviewed by David Kilzer.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23133
+        Fix SVG disabled build. Move 'pointer-events' from SVGCSSPropertyNames.in to
+        CSSPropertyNames.in and move PointerEvents functions out of #if ENABLE(SVG)
+
+        NOTE: Property name fixes landed as part of r39648.
+
+        * css/CSSPrimitiveValueMappings.h:
+        (WebCore::CSSPrimitiveValue::CSSPrimitiveValue):
+        (WebCore::CSSPrimitiveValue::operator EPointerEvents):
+        * css/CSSPropertyNames.in:
+        * css/SVGCSSPropertyNames.in:
+
+2009-01-06  David Kilzer  <ddkilzer@apple.com>
+
+        BUILD FIX (r39634): Fix build for non-SVG builds (Wx)
+
+        * css/CSSPropertyNames.in: Added 'pointer-events'.
+        * css/SVGCSSPropertyNames.in: Commented out pointer-events
+        since it's now a plain CSS property.
+
+2009-01-06  Simon Hausmann  <simon.hausmann@nokia.com>
+
+        Reviewed by Lars Knoll.
+
+        Added support for HTTP-only cookies to the Qt build.
+
+        * platform/qt/CookieJarQt.cpp:
+        (WebCore::setCookies): Don't set HTTP-only cookies through the DOM.
+        (WebCore::cookies): Don't return HTTP-only cookies to the DOM.
+
+2009-01-05  David Smith  <catfish.man@gmail.com>
+
+        Reviewed by Oliver Hunt.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23084
+        Avoid redundant AtomicString conversions
+
+        * dom/Node.cpp: Create an AtomicString early to avoid converting twice
+        (WebCore::Node::getElementsByTagNameNS):
+        * dom/QualifiedName.h: Use the appropriate AtomicString constructor instead of converting from a String
+
+2009-01-05  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+
+        https://bugs.webkit.org/show_bug.cgi?id=22985
+        
+        Add an assertion that clip rects are being used when painting with the same
+        rootLayer that they were computed with.
+        
+        Fix two issues detected by the assertion:
+
+        RenderLayer::updateClipRects() should not unconditionally update the clip rects
+        on its parent, but stop when reaching rootLayer (just like calculateClipRects()).
+        
+        We need to pass the temporaryClipRects flag down through reflection painting
+        to handle the case of nested reflections.
+        
+        Also use temporary clip rects in RenderTreeAsText, since that code does not
+        reset the painting root for transformed layers, so cached clip rects will not
+        match those used for painting.
+
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::RenderLayer):
+        (WebCore::RenderLayer::paintLayer):
+        (WebCore::RenderLayer::updateClipRects):
+        (WebCore::RenderLayer::clearClipRects):
+        * rendering/RenderLayer.h:
+        * rendering/RenderTreeAsText.cpp:
+        (WebCore::writeLayers):
+
+2009-01-05  Adam Treat  <adam.treat@torchmobile.com>
+
+        Fix the Qt build
+
+        * platform/graphics/qt/AffineTransformQt.cpp:
+        (WebCore::TransformationMatrix::TransformationMatrix):
+
+2009-01-05  Mark Rowe  <mrowe@apple.com>
+
+        Fix the build some more.
+
+        * platform/graphics/cairo/AffineTransformCairo.cpp:
+        (WebCore::TransformationMatrix::TransformationMatrix):
+
+2009-01-05  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by NOBODY (Build fix).
+
+        Fix Cairo/Gtk build
+
+        * platform/graphics/cairo/ImageBufferCairo.cpp:
+        (WebCore::ImageBuffer::putImageData):
+
+2009-01-05  Dean Jackson  <dino@apple.com>
+
+        Reviewed by Darin Adler.
+
+        Rename AffineTransform to TransformationMatrix in
+        preparation for future enhancements (non-affine matrices)
+
+        https://bugs.webkit.org/show_bug.cgi?id=22943
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.scons:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+        * platform/graphics/transforms/AffineTransform.cpp: Removed.
+        * platform/graphics/transforms/AffineTransform.h: Removed.
+        * platform/graphics/transforms/TransformationMatrix.cpp: Copied from WebCore/platform/graphics/transforms/AffineTransform.cpp.
+        * platform/graphics/transforms/TransformationMatrix.h: Copied from WebCore/platform/graphics/transforms/AffineTransform.h.
+        * lots of other files with s/AffineTransform/TransformationMatrix/g
+
+2008-01-05  Dean Jackson  <dino@apple.com>
+
+        Reviewed by David Hyatt.
+
+        Implement 'pointer-events' for HTML content. This involved
+        adding a new value 'auto' which behaves as 'visiblePainted'
+        in SVG content. 
+        
+        Moved the property out of the SVG CSS code and into
+        the general CSS (both parsing and RenderStyle). 
+        
+        Changes to the hit testing functionality of the Render tree,
+        specifically the nodeAtPoint methods. Where they used to 
+        test for visibility, they now use a helper function defined
+        on base classes (RenderObject and InlineBox) that checks both
+        visibility and pointer-events.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=11395
+
+        Tests: fast/events/pointer-events-2.html
+               fast/events/pointer-events.html
+
+        * css/CSSComputedStyleDeclaration.cpp:
+        (WebCore::):
+        (WebCore::CSSComputedStyleDeclaration::getPropertyCSSValue):
+        * css/CSSParser.cpp:
+        (WebCore::CSSParser::parseValue):
+        * css/CSSPrimitiveValueMappings.h:
+        (WebCore::CSSPrimitiveValue::CSSPrimitiveValue):
+        (WebCore::CSSPrimitiveValue::operator EPointerEvents):
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::applyProperty):
+        * css/SVGCSSComputedStyleDeclaration.cpp:
+        (WebCore::CSSComputedStyleDeclaration::getSVGPropertyCSSValue):
+        * css/SVGCSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::applySVGProperty):
+        * manual-tests/pointer-events.html: Added.
+        * rendering/EllipsisBox.cpp:
+        (WebCore::EllipsisBox::nodeAtPoint):
+        * rendering/InlineBox.h:
+        (WebCore::InlineBox::visibleToHitTesting):
+        * rendering/InlineFlowBox.cpp:
+        (WebCore::InlineFlowBox::nodeAtPoint):
+        * rendering/InlineTextBox.cpp:
+        (WebCore::InlineTextBox::nodeAtPoint):
+        * rendering/PointerEventsHitRules.cpp:
+        (WebCore::PointerEventsHitRules::PointerEventsHitRules):
+        * rendering/PointerEventsHitRules.h:
+        (WebCore::PointerEventsHitRules::):
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::nodeAtPoint):
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::nodeAtPoint):
+        * rendering/RenderObject.h:
+        (WebCore::RenderObject::visibleToHitTesting):
+        * rendering/RenderPath.cpp:
+        (WebCore::RenderPath::nodeAtPoint):
+        * rendering/RenderSVGImage.cpp:
+        (WebCore::RenderSVGImage::nodeAtPoint):
+        * rendering/RenderSVGText.cpp:
+        (WebCore::RenderSVGText::nodeAtPoint):
+        * rendering/RootInlineBox.cpp:
+        (WebCore::RootInlineBox::nodeAtPoint):
+        * rendering/TextControlInnerElements.cpp:
+        (WebCore::SearchFieldCancelButtonElement::defaultEventHandler):
+        * rendering/style/RenderStyle.h:
+        (WebCore::):
+        (WebCore::InheritedFlags::setBitDefaults):
+        (WebCore::InheritedFlags::pointerEvents):
+        (WebCore::InheritedFlags::setPointerEvents):
+        (WebCore::InheritedFlags::initialPointerEvents):
+        * rendering/style/RenderStyleConstants.h:
+        (WebCore::):
+        * rendering/style/SVGRenderStyle.h:
+        (WebCore::SVGRenderStyle::InheritedFlags::operator==):
+        (WebCore::SVGRenderStyle::setBitDefaults):
+        * rendering/style/SVGRenderStyleDefs.h:
+        * css/CSSValueKeywords.in:
+        * css/SVGCSSValueKeywords.in:
+
+2009-01-05  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by NOBODY (Build fix).
+
+        Fix Cairo/Gtk build
+
+        * platform/graphics/cairo/ImageBufferCairo.cpp:
+        (WebCore::ImageBuffer::getImageData):
+
+2009-01-05  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by Gavin Barraclough.
+
+        CanvasPixelArray performance is too slow 
+        <https://bugs.webkit.org/show_bug.cgi?id=23123>
+
+        Remove the WebCore CanvasPixelArray implementation and replace
+        CPA usage with JSC::ByteArray.  Replace the JSCanvasPixelArray
+        wrapper with an explicitly instantiated JSByteArray put on the
+        JSImageData object as an ordinary ReadOnly, DontDelete property.
+
+        * DerivedSources.make:
+        * ForwardingHeaders/runtime/ByteArray.h: Added.
+        * ForwardingHeaders/runtime/JSByteArray.h: Added.
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.scons:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * bindings/js/JSCanvasPixelArrayCustom.h: Removed.
+        * bindings/js/JSImageDataCustom.cpp:
+        (WebCore::toJS):
+        * html/CanvasPixelArray.cpp: Removed.
+        * html/CanvasPixelArray.h: Removed.
+        * html/CanvasPixelArray.idl: Removed.
+        * html/CanvasRenderingContext2D.cpp:
+        (WebCore::createEmptyImageData):
+        * html/ImageData.cpp:
+        (WebCore::ImageData::ImageData):
+        * html/ImageData.h:
+        (WebCore::ImageData::data):
+        * html/ImageData.idl:
+        * platform/graphics/cg/ImageBufferCG.cpp:
+        (WebCore::ImageBuffer::getImageData):
+        (WebCore::ImageBuffer::putImageData):
+
+2009-01-05  Adam Treat  <adam.treat@torchmobile.com>
+
+        Reviewed by George Staikos.
+
+        Add notification for contentsSizeChanged which the Qt API will
+        introduce.
+
+        * loader/EmptyClients.h:
+        (WebCore::EmptyChromeClient::contentsSizeChanged):
+        * page/Chrome.cpp:
+        (WebCore::Chrome::contentsSizeChanged):
+        * page/Chrome.h:
+        * page/ChromeClient.h:
+        * page/FrameView.cpp:
+        (WebCore::FrameView::setContentsSize):
+        * page/FrameView.h:
+        * platform/HostWindow.h:
+        * platform/ScrollView.h:
+
+2009-01-05  Anders Carlsson  <andersca@apple.com>
+
+        Build fix.
+        
+        * plugins/PluginView.h:
+        (WebCore::PluginManualLoader::~PluginManualLoader):
+
+2009-01-05  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Kevin Decker.
+        
+        Add an abstract PluginManualLoader class and make PluginView inherit from it. 
+        
+        Add some error checking that currently exists in WebKit (but not for long!)
+        
+        * plugins/PluginView.cpp:
+        (WebCore::PluginView::didReceiveResponse):
+        (WebCore::PluginView::didReceiveData):
+        (WebCore::PluginView::didFinishLoading):
+        (WebCore::PluginView::didFail):
+        * plugins/PluginView.h:
+
+2009-01-05  Adam Treat  <adam.treat@torchmobile.com>
+
+        Reviewed by George Staikos.
+
+        Fixes FrameView to respect the state of scrollbarmode when it is explicitly
+        set programatically via a webkit API.
+
+        * loader/FrameLoaderClient.cpp:
+        (WebCore::FrameLoaderClient::transitionToCommittedForNewPage):
+        * loader/FrameLoaderClient.h:
+        * page/FrameView.cpp:
+        (WebCore::FrameView::initScrollbars):
+        (WebCore::FrameView::updateDefaultScrollbarState):
+        * page/FrameView.h:
+
+2009-01-05  Darin Adler  <darin@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Bug 23109: REGRESSION: Backwards search in a long document matches incorrectly
+        https://bugs.webkit.org/show_bug.cgi?id=23109
+
+        Test: fast/text/find-backwards.html
+
+        * editing/TextIterator.cpp:
+        (WebCore::SearchBuffer::append): Fix incorrect size passed to memcpy.
+        (WebCore::SearchBuffer::search): Handle case where we have an empty buffer but
+        we're at a break; must not try to search because ICU will give us an error.
+        Fix incorrect size passed to memcpy and memmove.
+        (WebCore::findPlainText): Fix case where we found a match and need to search
+        again because we want to find the last match. We need to try again without
+        adding any more text or handling the break before moving on.
+
+2009-01-05  Adam Treat  <adam.treat@torchmobile.com>
+
+        Fix the Qt build
+
+        * bridge/runtime_object.cpp:
+        (JSC::RuntimeObjectImp::put):
+
+2009-01-05  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Sam Weinig.
+
+        Fix platforms that don't have Workers enabled.
+
+        * platform/ThreadGlobalData.cpp: (WebCore::threadGlobalData): Create ThreadGlobalData in
+        two stages, so that EventNames constructor can access the just-created atomic string table.
+        This matches what happens in ThreadSpecific case.
+
+2009-01-05  Alexey Proskuryakov  <ap@webkit.org>
+
+        Suggested by Dave Levin.
+
+        Mac release build fix.
+
+        * WebCore.base.exp: Remove ThreadGlobalData::eventNames(), which is now inline.
+
 2009-01-05  Darin Adler  <darin@apple.com>
 
         * dom/Document.cpp: Fix build. Oops again.
@@ -147,7 +532,7 @@
 
         * loader/appcache/ApplicationCacheStorage.cpp: Include wtf/StringExtras.h for snprintf.
 
-2009-01-05  Adam Treat  <treat@kde.org>
+2009-01-05  Adam Treat  <adam.treat@torchmobile.com>
 
         Reviewed by George Staikos.
 
@@ -174,6 +559,7 @@
 
         Reviewed by Oliver Hunt.
 
+        https://bugs.webkit.org/show_bug.cgi?id=23084
         Avoid redundant AtomicString conversions
 
         * dom/Node.cpp:
@@ -250,7 +636,7 @@
         * bindings/objc/DOMHTML.mm:
         (-[DOMHTMLSelectElement _activateItemAtIndex:]): Implemented this.
 
-2009-01-04  Adam Treat  <treat@kde.org>
+2009-01-04  Adam Treat  <adam.treat@torchmobile.com>
 
         Reviewed by George Staikos.
 
