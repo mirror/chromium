@@ -30,11 +30,11 @@
 #include "config.h"
 #include "ScrollbarThemeChromium.h"
 
-#include "AffineTransform.h"
 #include "NotImplemented.h"
 #include "PlatformContextSkia.h"
 #include "PlatformMouseEvent.h"
 #include "Scrollbar.h"
+#include "TransformationMatrix.h"
 
 #include "gtkdrawing.h"
 #include "GdkSkia.h"
@@ -94,7 +94,7 @@ static void paintScrollbarWidget(GraphicsContext* gc, const IntRect& rect,
     GdkRectangle gdkRect = { rect.x(), rect.y(), rect.width(), rect.height() };
 
     const SkIRect clip_region = pcs->canvas()->getTotalClip().getBounds();
-    AffineTransform ctm = gc->getCTM().inverse();
+    TransformationMatrix ctm = gc->getCTM().inverse();
     IntPoint pos = ctm.mapPoint(
         IntPoint(SkScalarRound(clip_region.fLeft), SkScalarRound(clip_region.fTop)));
     GdkRectangle gdkClipRect;
