@@ -523,6 +523,26 @@ bool UniscribeHelper::Shape(const UChar* input,
         shaping.m_glyphs.resize(numGlyphs);
         shaping.m_visattr.resize(numGlyphs);
 
+#ifdef PURIFY
+        // http://code.google.com/p/chromium/issues/detail?id=5309
+        // Purify isn't able to track the assignments that ScriptShape makes to
+        // shaping.m_glyphs. Consequently, any bytes with value 0xCD that it
+        // writes, will be considered un-initialized data.
+        //
+        // This hack avoid the false-positive UMRs by marking the buffer as
+        // initialized.
+        //
+        // TODO: A better solution would be to use Purify's API and mark only
+        // the populated range as initialized:
+        //
+        //     PurifyMarkAsInitialized(
+        //         &shaping.m_glyphs[0],
+        //         sizeof(shaping.m_glyphs[0] * generatedGlyphs);
+        
+        ZeroMemory(&shaping.m_glyphs[0],
+                   sizeof(shaping.m_glyphs[0]) * shaping.m_glyphs.size());
+#endif
+
         // Firefox sets SCRIPT_ANALYSIS.SCRIPT_STATE.fDisplayZWG to true
         // here. Is that what we want? It will display control characters.
         hr = ScriptShape(tempDC, scriptCache, input, itemLength,
