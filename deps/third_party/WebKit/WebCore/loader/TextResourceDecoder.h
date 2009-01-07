@@ -42,7 +42,7 @@ public:
 
     static PassRefPtr<TextResourceDecoder> create(const String& mimeType, const TextEncoding& defaultEncoding = TextEncoding(), bool usesEncodingDetector = false, const TextResourceDecoder* hintDecoder = NULL)
     {
-        return adoptRef(new TextResourceDecoder(mimeType, defaultEncoding));
+        return adoptRef(new TextResourceDecoder(mimeType, defaultEncoding, usesEncodingDetector, hintDecoder));
     }
     ~TextResourceDecoder();
 
