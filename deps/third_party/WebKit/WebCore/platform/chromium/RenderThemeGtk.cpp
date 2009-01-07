@@ -23,7 +23,6 @@
 #include "config.h"
 #include "RenderThemeGtk.h"
 
-#include "AffineTransform.h"
 #include "ChromiumBridge.h"
 #include "CSSValueKeywords.h"
 #include "GraphicsContext.h"
@@ -33,6 +32,7 @@
 #include "ScrollbarTheme.h"
 #include "gtkdrawing.h"
 #include "GdkSkia.h"
+#include "TransformationMatrix.h"
 #include "UserAgentStyleSheets.h"
 
 #include <gdk/gdk.h>
@@ -186,7 +186,7 @@ static bool paintMozWidget(RenderTheme* theme, GtkThemeWidgetType type, RenderOb
     // to get the page coordinates that our gtk widget rendering expects.
     // We invert it because we want to map from device coordinates to page coordinates.
     const SkIRect clip_region = canvas->getTotalClip().getBounds();
-    AffineTransform ctm = i.context->getCTM().inverse();
+    TransformationMatrix ctm = i.context->getCTM().inverse();
     IntPoint pos = ctm.mapPoint(IntPoint(SkScalarRound(clip_region.fLeft), SkScalarRound(clip_region.fTop)));
     GdkRectangle gdkClipRect;
     gdkClipRect.x = pos.x();
