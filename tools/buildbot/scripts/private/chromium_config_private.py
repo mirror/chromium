@@ -23,6 +23,7 @@ class Master(object):
   class Chromium(object):
     # Actual server name.
     master_host = 'localhost'
+    tree_closing_notification_recipients = []
 
   class TryServer(object):
     master_host = 'localhost'
