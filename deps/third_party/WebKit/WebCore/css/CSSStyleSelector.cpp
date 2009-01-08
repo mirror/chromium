@@ -906,7 +906,7 @@ Node* CSSStyleSelector::locateCousinList(Element* parent, unsigned depth)
                 r = r->previousSibling();
             }
             if (!r && depth < cStyleSearchThreshold)
-                r = locateCousinList(static_cast<Element*>(parent->parentNode()), depth + 1);
+                r = locateCousinList(parent->parentElement(), depth + 1);
             while (r) {
                 if (r->renderStyle() == st)
                     return r->lastChild();
@@ -999,7 +999,7 @@ RenderStyle* CSSStyleSelector::locateSharedStyle()
             for (n = n->previousSibling(); n && !n->isElementNode(); n = n->previousSibling()) { }
         }
         if (!n) 
-            n = locateCousinList(static_cast<Element*>(m_element->parentNode()));
+            n = locateCousinList(m_element->parentElement());
         while (n) {
             if (canShareStyleWithElement(n))
                 return n->renderStyle();
@@ -1979,10 +1979,9 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
             }
             case CSSSelector::PseudoLastChild: {
                 // last-child matches the last child that is an element
-                if (e->parentNode() && e->parentNode()->isElementNode()) {
-                    Element* parentNode = static_cast<Element*>(e->parentNode());
+                if (Element* parentElement = e->parentElement()) {
                     bool result = false;
-                    if (parentNode->isFinishedParsingChildren()) {
+                    if (parentElement->isFinishedParsingChildren()) {
                         Node* n = e->nextSibling();
                         while (n && !n->isElementNode())
                             n = n->nextSibling();
@@ -1991,7 +1990,7 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
                     }
                     if (!m_collectRulesOnly) {
                         RenderStyle* childStyle = elementStyle ? elementStyle : e->renderStyle();
-                        RenderStyle* parentStyle = elementStyle ? elementParentStyle : parentNode->renderStyle();
+                        RenderStyle* parentStyle = elementStyle ? elementParentStyle : parentElement->renderStyle();
                         if (parentStyle)
                             parentStyle->setChildrenAffectedByLastChildRules();
                         if (result && childStyle)
@@ -2003,14 +2002,13 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
             }
             case CSSSelector::PseudoLastOfType: {
                 // last-of-type matches the last element of its type
-                if (e->parentNode() && e->parentNode()->isElementNode()) {
-                    Element* parentNode = static_cast<Element*>(e->parentNode());
+                if (Element* parentElement = e->parentElement()) {
                     if (!m_collectRulesOnly) {
-                        RenderStyle* parentStyle = elementStyle ? elementParentStyle : parentNode->renderStyle();
+                        RenderStyle* parentStyle = elementStyle ? elementParentStyle : parentElement->renderStyle();
                         if (parentStyle)
                             parentStyle->setChildrenAffectedByBackwardPositionalRules();
                     }
-                    if (!parentNode->isFinishedParsingChildren())
+                    if (!parentElement->isFinishedParsingChildren())
                         return false;
                     bool result = false;
                     const QualifiedName& type = e->tagQName();
@@ -2027,8 +2025,7 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
                 break;
             }
             case CSSSelector::PseudoOnlyChild: {
-                if (e->parentNode() && e->parentNode()->isElementNode()) {
-                    Element* parentNode = static_cast<Element*>(e->parentNode());
+                if (Element* parentElement = e->parentElement()) {
                     bool firstChild = false;
                     bool lastChild = false;
                     
@@ -2037,7 +2034,7 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
                         n = n->previousSibling();
                     if (!n)
                         firstChild = true;
-                    if (firstChild && parentNode->isFinishedParsingChildren()) {
+                    if (firstChild && parentElement->isFinishedParsingChildren()) {
                         n = e->nextSibling();
                         while (n && !n->isElementNode())
                             n = n->nextSibling();
@@ -2046,7 +2043,7 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
                     }
                     if (!m_collectRulesOnly) {
                         RenderStyle* childStyle = elementStyle ? elementStyle : e->renderStyle();
-                        RenderStyle* parentStyle = elementStyle ? elementParentStyle : parentNode->renderStyle();
+                        RenderStyle* parentStyle = elementStyle ? elementParentStyle : parentElement->renderStyle();
                         if (parentStyle) {
                             parentStyle->setChildrenAffectedByFirstChildRules();
                             parentStyle->setChildrenAffectedByLastChildRules();
@@ -2062,16 +2059,15 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
             }
             case CSSSelector::PseudoOnlyOfType: {
                 // FIXME: This selector is very slow.
-                if (e->parentNode() && e->parentNode()->isElementNode()) {
-                    Element* parentNode = static_cast<Element*>(e->parentNode());
+                if (Element* parentElement = e->parentElement()) {
                     if (!m_collectRulesOnly) {
-                        RenderStyle* parentStyle = elementStyle ? elementParentStyle : parentNode->renderStyle();
+                        RenderStyle* parentStyle = elementStyle ? elementParentStyle : parentElement->renderStyle();
                         if (parentStyle) {
                             parentStyle->setChildrenAffectedByForwardPositionalRules();
                             parentStyle->setChildrenAffectedByBackwardPositionalRules();
                         }
                     }
-                    if (!parentNode->isFinishedParsingChildren())
+                    if (!parentElement->isFinishedParsingChildren())
                         return false;
                     bool firstChild = false;
                     bool lastChild = false;
@@ -2101,7 +2097,7 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
             case CSSSelector::PseudoNthChild: {
                 if (!sel->parseNth())
                     break;
-                if (e->parentNode() && e->parentNode()->isElementNode()) {
+                if (Element* parentElement = e->parentElement()) {
                     int count = 1;
                     Node* n = e->previousSibling();
                     while (n) {
@@ -2119,7 +2115,7 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
                     
                     if (!m_collectRulesOnly) {
                         RenderStyle* childStyle = elementStyle ? elementStyle : e->renderStyle();
-                        RenderStyle* parentStyle = elementStyle ? elementParentStyle : e->parentNode()->renderStyle();
+                        RenderStyle* parentStyle = elementStyle ? elementParentStyle : parentElement->renderStyle();
                         if (childStyle)
                             childStyle->setChildIndex(count);
                         if (parentStyle)
@@ -2134,7 +2130,7 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
             case CSSSelector::PseudoNthOfType: {
                 if (!sel->parseNth())
                     break;
-                if (e->parentNode() && e->parentNode()->isElementNode()) {
+                if (Element* parentElement = e->parentElement()) {
                     int count = 1;
                     const QualifiedName& type = e->tagQName();
                     Node* n = e->previousSibling();
@@ -2145,7 +2141,7 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
                     }
                     
                     if (!m_collectRulesOnly) {
-                        RenderStyle* parentStyle = elementStyle ? elementParentStyle : e->parentNode()->renderStyle();
+                        RenderStyle* parentStyle = elementStyle ? elementParentStyle : parentElement->renderStyle();
                         if (parentStyle)
                             parentStyle->setChildrenAffectedByForwardPositionalRules();
                     }
@@ -2158,14 +2154,13 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
             case CSSSelector::PseudoNthLastChild: {
                 if (!sel->parseNth())
                     break;
-                if (e->parentNode() && e->parentNode()->isElementNode()) {
-                    Element* parentNode = static_cast<Element*>(e->parentNode());
+                if (Element* parentElement = e->parentElement()) {
                     if (!m_collectRulesOnly) {
-                        RenderStyle* parentStyle = elementStyle ? elementParentStyle : parentNode->renderStyle();
+                        RenderStyle* parentStyle = elementStyle ? elementParentStyle : parentElement->renderStyle();
                         if (parentStyle)
                             parentStyle->setChildrenAffectedByBackwardPositionalRules();
                     }
-                    if (!parentNode->isFinishedParsingChildren())
+                    if (!parentElement->isFinishedParsingChildren())
                         return false;
                     int count = 1;
                     Node* n = e->nextSibling();
@@ -2182,14 +2177,13 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
             case CSSSelector::PseudoNthLastOfType: {
                 if (!sel->parseNth())
                     break;
-                if (e->parentNode() && e->parentNode()->isElementNode()) {
-                    Element* parentNode = static_cast<Element*>(e->parentNode());
+                if (Element* parentElement = e->parentElement()) {
                     if (!m_collectRulesOnly) {
-                        RenderStyle* parentStyle = elementStyle ? elementParentStyle : parentNode->renderStyle();
+                        RenderStyle* parentStyle = elementStyle ? elementParentStyle : parentElement->renderStyle();
                         if (parentStyle)
                             parentStyle->setChildrenAffectedByBackwardPositionalRules();
                     }
-                    if (!parentNode->isFinishedParsingChildren())
+                    if (!parentElement->isFinishedParsingChildren())
                         return false;
                     int count = 1;
                     const QualifiedName& type = e->tagQName();
@@ -5959,6 +5953,3 @@ bool CSSStyleSelector::createTransformOperations(CSSValue* inValue, RenderStyle*
 }
 
 } // namespace WebCore
-
-
-
