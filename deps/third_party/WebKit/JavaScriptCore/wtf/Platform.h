@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 Apple Inc.  All rights reserved.
+ * Copyright (C) 2006, 2007, 2008, 2009 Apple Inc.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -87,16 +87,24 @@
 #define WTF_PLATFORM_SYMBIAN 1
 #endif
 
+
+/* PLATFORM(NETBSD) */
+/* Operating system level dependencies for NetBSD that should be used */
+/* regardless of operating environment */
+#if defined(__NetBSD__)
+#define WTF_PLATFORM_NETBSD 1
+#endif
+
 /* PLATFORM(UNIX) */
 /* Operating system level dependencies for Unix-like systems that */
 /* should be used regardless of operating environment */
 #if   PLATFORM(DARWIN)     \
    || PLATFORM(FREEBSD)    \
    || PLATFORM(S60)        \
+   || PLATFORM(NETBSD)     \
    || defined(unix)        \
    || defined(__unix)      \
    || defined(__unix__)    \
-   || defined (__NetBSD__) \
    || defined(_AIX)
 #define WTF_PLATFORM_UNIX 1
 #endif

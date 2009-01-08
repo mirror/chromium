@@ -32,11 +32,13 @@
 #include "CSSParser.h"
 #include "EventNames.h"
 #include "Frame.h"
+#include "SystemTime.h"
 #include "Timer.h"
 
 namespace WebCore {
 
 static const double cAnimationTimerDelay = 0.025;
+static const double cBeginAnimationUpdateTimeNotSet = -1;
 
 class AnimationControllerPrivate {
 public:
@@ -64,7 +66,17 @@ public:
 
     bool pauseAnimationAtTime(RenderObject*, const String& name, double t);
     bool pauseTransitionAtTime(RenderObject*, const String& property, double t);
+    unsigned numberOfActiveAnimations() const;
 
+    double beginAnimationUpdateTime()
+    {
+        if (m_beginAnimationUpdateTime == cBeginAnimationUpdateTimeNotSet)
+            m_beginAnimationUpdateTime = currentTime();
+        return m_beginAnimationUpdateTime;
+    }
+    
+    void setBeginAnimationUpdateTime(double t) { m_beginAnimationUpdateTime = t; }
+    
 private:
     typedef HashMap<RenderObject*, RefPtr<CompositeAnimation> > RenderObjectAnimationMap;
 
@@ -82,12 +94,15 @@ private:
     };
     
     Vector<EventToDispatch> m_eventsToDispatch;
+    
+    double m_beginAnimationUpdateTime;
 };
 
 AnimationControllerPrivate::AnimationControllerPrivate(Frame* frame)
     : m_animationTimer(this, &AnimationControllerPrivate::animationTimerFired)
     , m_updateRenderingDispatcher(this, &AnimationControllerPrivate::updateRenderingDispatcherFired)
     , m_frame(frame)
+    , m_beginAnimationUpdateTime(cBeginAnimationUpdateTimeNotSet)
 {
 }
 
@@ -218,6 +233,10 @@ void AnimationControllerPrivate::addEventToDispatch(PassRefPtr<Element> element,
 
 void AnimationControllerPrivate::animationTimerFired(Timer<AnimationControllerPrivate>*)
 {
+    // Make sure animationUpdateTime is updated, so that it is current even if no
+    // styleChange has happened (e.g. hardware animations)
+    setBeginAnimationUpdateTime(cBeginAnimationUpdateTimeNotSet);
+
     // When the timer fires, all we do is call setChanged on all DOM nodes with running animations and then do an immediate
     // updateRendering.  It will then call back to us with new information.
     updateAnimationTimer(true);
@@ -292,6 +311,19 @@ bool AnimationControllerPrivate::pauseTransitionAtTime(RenderObject* renderer, c
     return false;
 }
 
+unsigned AnimationControllerPrivate::numberOfActiveAnimations() const
+{
+    unsigned count = 0;
+    
+    RenderObjectAnimationMap::const_iterator animationsEnd = m_compositeAnimations.end();
+    for (RenderObjectAnimationMap::const_iterator it = m_compositeAnimations.begin(); it != animationsEnd; ++it) {
+        CompositeAnimation* compAnim = it->second.get();
+        count += compAnim->numberOfActiveAnimations();
+    }
+    
+    return count;
+}
+
 AnimationController::AnimationController(Frame* frame)
     : m_data(new AnimationControllerPrivate(frame))
     , m_numStyleAvailableWaiters(0)
@@ -316,7 +348,7 @@ void AnimationController::cancelAnimations(RenderObject* renderer)
 }
 
 PassRefPtr<RenderStyle> AnimationController::updateAnimations(RenderObject* renderer, RenderStyle* newStyle)
-{    
+{
     // Don't do anything if we're in the cache
     if (!renderer->document() || renderer->document()->inPageCache())
         return newStyle;
@@ -364,6 +396,11 @@ bool AnimationController::pauseAnimationAtTime(RenderObject* renderer, const Str
     return m_data->pauseAnimationAtTime(renderer, name, t);
 }
 
+unsigned AnimationController::numberOfActiveAnimations() const
+{
+    return m_data->numberOfActiveAnimations();
+}
+
 bool AnimationController::pauseTransitionAtTime(RenderObject* renderer, const String& property, double t)
 {
     return m_data->pauseTransitionAtTime(renderer, property, t);
@@ -400,6 +437,20 @@ void AnimationController::styleAvailable()
         return;
 
     m_data->styleAvailable();
+}
+
+double AnimationController::beginAnimationUpdateTime()
+{
+    return m_data->beginAnimationUpdateTime();
+}
+
+void AnimationController::beginAnimationUpdate()
+{
+    m_data->setBeginAnimationUpdateTime(cBeginAnimationUpdateTimeNotSet);
+}
+
+void AnimationController::endAnimationUpdate()
+{
 }
 
 } // namespace WebCore

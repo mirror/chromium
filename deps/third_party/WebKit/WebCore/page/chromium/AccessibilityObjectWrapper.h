@@ -29,7 +29,6 @@
 namespace WebCore {
 
     class AccessibilityObject;
- 
     class AccessibilityObjectWrapper : public RefCounted<AccessibilityObjectWrapper> {
     public:
         virtual ~AccessibilityObjectWrapper() {}

@@ -431,7 +431,7 @@ static inline void* currentThreadStackBase()
     if (stackBase == 0 || thread != stackThread) {
         pthread_attr_t sattr;
         pthread_attr_init(&sattr);
-#if HAVE(PTHREAD_NP_H)
+#if HAVE(PTHREAD_NP_H) || PLATFORM(NETBSD)
         // e.g. on FreeBSD 5.4, neundorf@kde.org
         pthread_attr_get_np(thread, &sattr);
 #else
@@ -803,7 +803,7 @@ void Heap::setGCProtectNeedsLocking()
         m_protectedValuesMutex.set(new Mutex);
 }
 
-void Heap::protect(JSValue* k)
+void Heap::protect(JSValuePtr k)
 {
     ASSERT(k);
     ASSERT(JSLock::currentThreadIsHoldingLock() || !m_globalData->isSharedInstance);
@@ -820,7 +820,7 @@ void Heap::protect(JSValue* k)
         m_protectedValuesMutex->unlock();
 }
 
-void Heap::unprotect(JSValue* k)
+void Heap::unprotect(JSValuePtr k)
 {
     ASSERT(k);
     ASSERT(JSLock::currentThreadIsHoldingLock() || !m_globalData->isSharedInstance);
@@ -837,7 +837,7 @@ void Heap::unprotect(JSValue* k)
         m_protectedValuesMutex->unlock();
 }
 
-Heap* Heap::heap(JSValue* v)
+Heap* Heap::heap(JSValuePtr v)
 {
     if (JSImmediate::isImmediate(v))
         return 0;

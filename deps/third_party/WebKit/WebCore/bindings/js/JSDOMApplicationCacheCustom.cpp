@@ -78,7 +78,20 @@ void JSDOMApplicationCache::mark()
     }
 }
 
-JSValue* JSDOMApplicationCache::add(ExecState* exec, const ArgList& args)
+JSValuePtr JSDOMApplicationCache::hasItem(ExecState* exec, const ArgList& args)
+{
+    Frame* frame = asJSDOMWindow(exec->dynamicGlobalObject())->impl()->frame();
+    if (!frame)
+        return jsUndefined();
+    const KURL& url = frame->loader()->completeURL(args.at(exec, 0)->toString(exec));
+
+    ExceptionCode ec = 0;
+    bool result = impl()->hasItem(url, ec);
+    setDOMException(exec, ec);
+    return jsBoolean(result);
+}
+
+JSValuePtr JSDOMApplicationCache::add(ExecState* exec, const ArgList& args)
 {
     Frame* frame = asJSDOMWindow(exec->dynamicGlobalObject())->impl()->frame();
     if (!frame)
@@ -91,7 +104,7 @@ JSValue* JSDOMApplicationCache::add(ExecState* exec, const ArgList& args)
     return jsUndefined();
 }
 
-JSValue* JSDOMApplicationCache::remove(ExecState* exec, const ArgList& args)
+JSValuePtr JSDOMApplicationCache::remove(ExecState* exec, const ArgList& args)
 {
     Frame* frame = asJSDOMWindow(exec->dynamicGlobalObject())->impl()->frame();
     if (!frame)
@@ -104,7 +117,7 @@ JSValue* JSDOMApplicationCache::remove(ExecState* exec, const ArgList& args)
     return jsUndefined();
 }
 
-JSValue* JSDOMApplicationCache::addEventListener(ExecState* exec, const ArgList& args)
+JSValuePtr JSDOMApplicationCache::addEventListener(ExecState* exec, const ArgList& args)
 {
     JSDOMGlobalObject* globalObject = toJSDOMGlobalObject(impl()->scriptExecutionContext());
     if (!globalObject)
@@ -116,7 +129,7 @@ JSValue* JSDOMApplicationCache::addEventListener(ExecState* exec, const ArgList&
     return jsUndefined();
 }
 
-JSValue* JSDOMApplicationCache::removeEventListener(ExecState* exec, const ArgList& args)
+JSValuePtr JSDOMApplicationCache::removeEventListener(ExecState* exec, const ArgList& args)
 {
     JSDOMGlobalObject* globalObject = toJSDOMGlobalObject(impl()->scriptExecutionContext());
     if (!globalObject)

@@ -95,8 +95,10 @@ ImageSource::~ImageSource()
     clear(true);
 }
 
-void ImageSource::clear(bool destroyAll, size_t clearBeforeFrame)
+void ImageSource::clear(bool destroyAll, size_t clearBeforeFrame, SharedBuffer* data, bool allDataReceived)
 {
+    // TODO(darin): Figure out what to do with the |data| and |allDataReceived| params.
+
     if (destroyAll) {
         delete m_decoder;
         m_decoder = 0;

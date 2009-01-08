@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2008, 2009 Apple Inc. All rights reserved.
  * Copyright (C) 2008 Cameron Zwarich <cwzwarich@uwaterloo.ca>
  *
  * Redistribution and use in source and binary forms, with or without
@@ -151,9 +151,15 @@ void BytecodeGenerator::generate()
     }
 #endif
 
-    m_codeBlock->shrinkToFit();
     if ((m_codeType == FunctionCode && !m_codeBlock->needsFullScopeChain() && !m_codeBlock->usesArguments()) || m_codeType == EvalCode)
         symbolTable().clear();
+
+#if !ENABLE(OPCODE_SAMPLING)
+    if (!m_regeneratingForExceptionInfo && (m_codeType == FunctionCode || m_codeType == EvalCode))
+        m_codeBlock->clearExceptionInfo();
+#endif
+
+    m_codeBlock->shrinkToFit();
 }
 
 bool BytecodeGenerator::addVar(const Identifier& ident, bool isConstant, RegisterID*& r0)
@@ -205,6 +211,7 @@ void BytecodeGenerator::allocateConstants(size_t count)
 BytecodeGenerator::BytecodeGenerator(ProgramNode* programNode, const Debugger* debugger, const ScopeChain& scopeChain, SymbolTable* symbolTable, ProgramCodeBlock* codeBlock)
     : m_shouldEmitDebugHooks(!!debugger)
     , m_shouldEmitProfileHooks(scopeChain.globalObject()->supportsProfiling())
+    , m_regeneratingForExceptionInfo(false)
     , m_scopeChain(&scopeChain)
     , m_symbolTable(symbolTable)
     , m_scopeNode(programNode)
@@ -287,6 +294,7 @@ BytecodeGenerator::BytecodeGenerator(ProgramNode* programNode, const Debugger* d
 BytecodeGenerator::BytecodeGenerator(FunctionBodyNode* functionBody, const Debugger* debugger, const ScopeChain& scopeChain, SymbolTable* symbolTable, CodeBlock* codeBlock)
     : m_shouldEmitDebugHooks(!!debugger)
     , m_shouldEmitProfileHooks(scopeChain.globalObject()->supportsProfiling())
+    , m_regeneratingForExceptionInfo(false)
     , m_scopeChain(&scopeChain)
     , m_symbolTable(symbolTable)
     , m_scopeNode(functionBody)
@@ -358,6 +366,7 @@ BytecodeGenerator::BytecodeGenerator(FunctionBodyNode* functionBody, const Debug
 BytecodeGenerator::BytecodeGenerator(EvalNode* evalNode, const Debugger* debugger, const ScopeChain& scopeChain, SymbolTable* symbolTable, EvalCodeBlock* codeBlock)
     : m_shouldEmitDebugHooks(!!debugger)
     , m_shouldEmitProfileHooks(scopeChain.globalObject()->supportsProfiling())
+    , m_regeneratingForExceptionInfo(false)
     , m_scopeChain(&scopeChain)
     , m_symbolTable(symbolTable)
     , m_scopeNode(evalNode)
@@ -705,22 +714,22 @@ unsigned BytecodeGenerator::addConstant(const Identifier& ident)
     return result.first->second;
 }
 
-RegisterID* BytecodeGenerator::addConstant(JSValue* v)
+RegisterID* BytecodeGenerator::addConstant(JSValuePtr v)
 {
-    pair<JSValueMap::iterator, bool> result = m_jsValueMap.add(v, m_nextConstantIndex);
+    pair<JSValueMap::iterator, bool> result = m_jsValueMap.add(JSValuePtr::encode(v), m_nextConstantIndex);
     if (result.second) {
         RegisterID& constant = m_calleeRegisters[m_nextConstantIndex];
         
         ++m_nextConstantIndex;
 
-        m_codeBlock->addConstantRegister(v);
+        m_codeBlock->addConstantRegister(JSValuePtr(v));
         return &constant;
     }
 
     return &registerFor(result.first->second);
 }
 
-unsigned BytecodeGenerator::addUnexpectedConstant(JSValue* v)
+unsigned BytecodeGenerator::addUnexpectedConstant(JSValuePtr v)
 {
     return m_codeBlock->addUnexpectedConstant(v);
 }
@@ -867,7 +876,7 @@ RegisterID* BytecodeGenerator::emitLoad(RegisterID* dst, double number)
     // Later we can do the extra work to handle that like the other cases.
     if (number == HashTraits<double>::emptyValue() || HashTraits<double>::isDeletedValue(number))
         return emitLoad(dst, jsNumber(globalData(), number));
-    JSValue*& valueInMap = m_numberMap.add(number, noValue()).first->second;
+    JSValuePtr& valueInMap = m_numberMap.add(number, noValue()).first->second;
     if (!valueInMap)
         valueInMap = jsNumber(globalData(), number);
     return emitLoad(dst, valueInMap);
@@ -875,24 +884,18 @@ RegisterID* BytecodeGenerator::emitLoad(RegisterID* dst, double number)
 
 RegisterID* BytecodeGenerator::emitLoad(RegisterID* dst, const Identifier& identifier)
 {
-    JSString*& valueInMap = m_stringMap.add(identifier.ustring().rep(), 0).first->second;
-    if (!valueInMap)
-        valueInMap = jsOwnedString(globalData(), identifier.ustring());
-    return emitLoad(dst, valueInMap);
+    JSString*& stringInMap = m_stringMap.add(identifier.ustring().rep(), 0).first->second;
+    if (!stringInMap)
+        stringInMap = jsOwnedString(globalData(), identifier.ustring());
+    return emitLoad(dst, JSValuePtr(stringInMap));
 }
 
-RegisterID* BytecodeGenerator::emitLoad(RegisterID* dst, JSValue* v)
+RegisterID* BytecodeGenerator::emitLoad(RegisterID* dst, JSValuePtr v)
 {
     RegisterID* constantID = addConstant(v);
     if (dst)
         return emitMove(dst, constantID);
     return constantID;
-}
-
-RegisterID* BytecodeGenerator::emitLoad(RegisterID* dst, JSCell* cell)
-{
-    JSValue* value = cell;
-    return emitLoad(dst, value);
 }
 
 RegisterID* BytecodeGenerator::emitUnexpectedLoad(RegisterID* dst, bool b)
@@ -1017,13 +1020,16 @@ RegisterID* BytecodeGenerator::emitResolve(RegisterID* dst, const Identifier& pr
     return dst;
 }
 
-RegisterID* BytecodeGenerator::emitGetScopedVar(RegisterID* dst, size_t depth, int index, JSValue* globalObject)
+RegisterID* BytecodeGenerator::emitGetScopedVar(RegisterID* dst, size_t depth, int index, JSValuePtr globalObject)
 {
     if (globalObject) {
+        // op_get_global_var must be the same length as op_resolve_global.
         emitOpcode(op_get_global_var);
         instructions().append(dst->index());
         instructions().append(asCell(globalObject));
         instructions().append(index);
+        instructions().append(0);
+        instructions().append(0);
         return dst;
     }
 
@@ -1034,7 +1040,7 @@ RegisterID* BytecodeGenerator::emitGetScopedVar(RegisterID* dst, size_t depth, i
     return dst;
 }
 
-RegisterID* BytecodeGenerator::emitPutScopedVar(size_t depth, int index, RegisterID* value, JSValue* globalObject)
+RegisterID* BytecodeGenerator::emitPutScopedVar(size_t depth, int index, RegisterID* value, JSValuePtr globalObject)
 {
     if (globalObject) {
         emitOpcode(op_put_global_var);
@@ -1602,7 +1608,7 @@ RegisterID* BytecodeGenerator::emitCatch(RegisterID* targetRegister, Label* star
     return targetRegister;
 }
 
-RegisterID* BytecodeGenerator::emitNewError(RegisterID* dst, ErrorType type, JSValue* message)
+RegisterID* BytecodeGenerator::emitNewError(RegisterID* dst, ErrorType type, JSValuePtr message)
 {
     emitOpcode(op_new_error);
     instructions().append(dst->index());
