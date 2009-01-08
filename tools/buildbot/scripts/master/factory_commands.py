@@ -135,8 +135,9 @@ class FactoryCommands(object):
     # _taskkill_python too.
     self._script_dir = os.path.join('..', '..', '..', 'scripts', 'slave')
 
+    self._perl = self.GetExecutableName('perl')
+
     if self._target_platform == 'win32':
-      self._perl = 'perl.exe'
       # Steps run using a separate copy of python.exe, so it can be killed at
       # the start of a build. But the kill_processes (taskkill) step has to use
       # the original python.exe, or it kills itself.
@@ -150,7 +151,6 @@ class FactoryCommands(object):
                                            'depot_tools', 'release',
                                            'python_24', 'python.exe'])
     else:
-      self._perl = 'perl'
       self._python = 'python'
       self._depot_tools_python = 'python'
 
@@ -199,8 +199,9 @@ class FactoryCommands(object):
     # The _update_scripts_command will be run in the _update_scripts_dir to
     # udpate the slave's own script checkout.
     self._update_scripts_dir = '..'
-    self._update_scripts_command = [chromium_utils.GetGClientCommand(),
-                                    'sync', '--verbose']
+    self._update_scripts_command = [
+        chromium_utils.GetGClientCommand(self._target_platform),
+        'sync', '--verbose']
 
   #######
   # Generic commands
@@ -208,15 +209,23 @@ class FactoryCommands(object):
   def GetTestCommand(self, executable, arg_list=None):
     """Returns a command list to call the _test_tool on the given executable,
     passing the arg_list, if any, to that executable under test.
+    
+    Automatically fix the executable name on Windows by adding '.exe'.
     """
     cmd = [self._python, self._test_tool,
            '--target', self._target,
            '--build-dir', self._build_dir,
-           executable]
+           self.GetExecutableName(executable)]
     if arg_list is not None:
       cmd.extend(arg_list)
     return cmd
 
+  def GetExecutableName(self, executable):
+    """The executable name must be executable plus '.exe' on Windows, or else
+    just the test name."""
+    if self._target_platform == 'win32':
+      return executable + '.exe'
+    return executable
 
   def AddTestStep(self, command_class, test_name, timeout, test_command,
                   test_description='', workdir=None, env=None):
@@ -251,18 +260,14 @@ class FactoryCommands(object):
 
   def AddBasicGTestTestStep(self, test_name, timeout=300, arg_list=None):
     """Adds a step to the factory to run a simple GTest test with standard
-    defaults.  The executable name must be test_name plus '.exe' on
-    Windows, or else just the test name.
+    defaults.
     """
-    if self._target_platform == 'win32':
-      test_name = test_name + '.exe'
-
     self.AddTestStep(gtest_command.GTestCommand, test_name, timeout,
                      test_command=self.GetTestCommand(test_name,
                                                       arg_list=arg_list))
 
   def AddSvnKillStep(self):
-    """Adds a step to the factory to kill svn.exe."""
+    """Adds a step to the factory to kill svn.exe. Windows-only."""
     self._factory.addStep(shell.ShellCommand, description='svnkill',
                           timeout=60,
                           workdir='',  # The build subdir may not exist yet.
@@ -291,7 +296,7 @@ class FactoryCommands(object):
                           rm_timeout=60*15) # The step can take a long time.
 
   def AddTaskkillStep(self):
-    """Adds a step to kill the running processes before a build"""
+    """Adds a step to kill the running processes before a build."""
     self._factory.addStep(shell.ShellCommand, description='taskkill',
                           timeout=60,
                           workdir='',  # Doesn't really matter where we are.
@@ -579,7 +584,7 @@ class FactoryCommands(object):
       cmd.extend(['--with-httpd', os.path.join('src', 'data', 'page_cycler')])
     else:
       test_type = 'File'
-    cmd.extend(['page_cycler_tests.exe',
+    cmd.extend([self.GetExecutableName('page_cycler_tests'),
                 '--gtest_filter=PageCycler*.%s%s' % (test_name, test_type)])
     return cmd
 
@@ -590,7 +595,7 @@ class FactoryCommands(object):
     Args:
       http: If True, launch an httpd server and run the Httpd tests. Otherwise,
           run the File tests.  (These names are used in the GTest filters and
-          correspond to test names in page_cycler_tests.exe.)
+          correspond to test names in page_cycler_tests.)
 
     The meaning of the other arguments depends on the implementation of a
     subclass of this class; by default they have no effect.
@@ -656,7 +661,7 @@ class FactoryCommands(object):
     self.AddTestStep(command_class=c,
                      test_name='startup_test',
                      timeout=timeout,
-                     test_command=self.GetTestCommand('startup_tests.exe',
+                     test_command=self.GetTestCommand('startup_tests',
                                                       options))
 
   def AddMemoryTests(self, show_results, perf_id=None, timeout=300):
@@ -665,7 +670,7 @@ class FactoryCommands(object):
     self.AddTestStep(command_class=c,
                      test_name='memory_test',
                      timeout=timeout,
-                     test_command=self.GetTestCommand('memory_test.exe'))
+                     test_command=self.GetTestCommand('memory_test'))
 
   def AddNewTabUITests(self, show_results, perf_id=None, timeout=300):
     """Adds a step to the factory to run the new tab test."""
@@ -676,7 +681,7 @@ class FactoryCommands(object):
         timeout=timeout,
         test_name='new_tab_ui_cold_test',
         test_command=self.GetTestCommand(
-            'startup_tests.exe',
+            'startup_tests',
             ['--gtest_filter=NewTabUIStartupTest.*Cold']))
 
     c = self.GetNewTabUITestCommand(perf_id, show_results,
@@ -686,7 +691,7 @@ class FactoryCommands(object):
         timeout=timeout,
         test_name='new_tab_ui_warm_test',
         test_command=self.GetTestCommand(
-            'startup_tests.exe',
+            'startup_tests',
             ['--gtest_filter=NewTabUIStartupTest.*Warm']))
 
   def AddTabSwitchingTests(self, show_results, perf_id=None, timeout=300):
@@ -697,7 +702,7 @@ class FactoryCommands(object):
     self.AddTestStep(command_class=c,
                      timeout=timeout,
                      test_name='tab_switching_test',
-                     test_command=self.GetTestCommand('tab_switching_test.exe',
+                     test_command=self.GetTestCommand('tab_switching_test',
                                                       options))
 
   #######
@@ -748,7 +753,7 @@ class FactoryCommands(object):
   def AddUITests(self, with_pageheap, run_single_process=True):
     """Adds a step to the factory to run the UI tests in both regular and
     single-process modes.  If with_pageheap is True, page-heap checking will be
-    enabled for chrome.exe.
+    enabled for chrome.
     """
     pageheap_description = ''
     options = []
@@ -761,7 +766,7 @@ class FactoryCommands(object):
         'ui_tests',
         timeout=300,
         test_description=pageheap_description,
-        test_command=self.GetTestCommand('ui_tests.exe', options))
+        test_command=self.GetTestCommand('ui_tests', options))
 
     if run_single_process:
       options = ['--single-process']
@@ -770,7 +775,7 @@ class FactoryCommands(object):
           'ui_tests_singleproc',
           timeout=300,
           test_description=' (--single-process)',
-          test_command=self.GetTestCommand('ui_tests.exe', options))
+          test_command=self.GetTestCommand('ui_tests', options))
 
   def AddInteractiveUITests(self):
     """Adds a step to the factory to run the interactive UI tests."""
@@ -780,7 +785,7 @@ class FactoryCommands(object):
     """Adds a step to the factory to run the Omnibox tests.
     """
     # This is not a UI unit test.  Rather, it is a long-running test that
-    # scores Omnibox results.  It's part of ui_tests.exe because it uses much
+    # scores Omnibox results.  It's part of ui_tests because it uses much
     # of the UI test framework, so putting it there made more sense than
     # creating a new project.  This test needs a special command-line switch
     # in order to run, which prevents it from running by default.
@@ -790,7 +795,7 @@ class FactoryCommands(object):
         gtest_command.GTestCommand,
         'omnibox_tests',
         timeout=300,
-        test_command=self.GetTestCommand('ui_tests.exe', options))
+        test_command=self.GetTestCommand('ui_tests', options))
 
   def AddPluginTests(self):
     """Adds a step to the factory to run the plugin tests."""
@@ -816,7 +821,7 @@ class FactoryCommands(object):
         shell.ShellCommand,
         timeout=timeout,
         test_name='selenium_tests',
-        test_command=self.GetTestCommand('selenium_tests.exe'))
+        test_command=self.GetTestCommand('selenium_tests'))
 
   #######
   # Purify Tests
@@ -881,7 +886,7 @@ class FactoryCommands(object):
   def GetWebkitTestCommand(self, with_pageheap):
     """Returns a command list to call the _layout_test_tool to run the WebKit
     layout tests.  If with_pageheap is True, page-heap checking will be enabled
-    for test_shell.exe.
+    for test_shell.
 
     The presence of 'jsc' anywhere in the identifier is used to determine when
     to tell the script it's testing a JSC build.
@@ -937,8 +942,7 @@ class FactoryCommands(object):
     """Adds a step to the factory to run the WebKit layout tests.
 
     Args:
-      with_pageheap: if True, page-heap checking will be enabled for
-          test_shell.exe
+      with_pageheap: if True, page-heap checking will be enabled for test_shell
       test_timeout: buildbot timeout for the test step
       archive_timeout: buildbot timeout for archiving the test results and
           crashes, if requested

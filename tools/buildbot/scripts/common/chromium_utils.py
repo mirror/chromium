@@ -430,10 +430,12 @@ def GetCommandOutput(command):
     raise ExternalError('%s: %s' % (subprocess.list2cmdline(command), output))
   return output
 
-def GetGClientCommand():
+def GetGClientCommand(platform=None):
   """Returns the executable command name, depending on the platform.
   """
-  if sys.platform == 'win32':
+  if not platform:
+    platform = sys.platform
+  if platform == 'win32':
     # Windows doesn't want to depend on bash.
     return 'gclient.bat'
   else:
