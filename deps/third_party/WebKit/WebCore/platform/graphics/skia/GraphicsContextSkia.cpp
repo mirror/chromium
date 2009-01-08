@@ -940,20 +940,17 @@ void GraphicsContext::setPlatformShadow(const IntSize& size,
     double height = size.height();
     double blur = blur_int;
 
-    if (!m_common->state.shadowsIgnoreTransforms)  {
-        TransformationMatrix transform = getCTM();
-        transform.map(width, height, &width, &height);
-
-        // Transform for the blur
-        double a = transform.a() * transform.a() + transform.b() * transform.b();
-        double b = transform.a() * transform.c() + transform.b() * transform.d();
-        double c = b;
-        double d = transform.c() * transform.c() + transform.d() * transform.d();
-        double eigenvalue = sqrt(0.5 * ((a + d) - sqrt(4 * b * c + (a - d) * (a - d))));
-        blur *= eigenvalue;
-    } else {
-        // This is weird, but shadows get dropped in the wrong direction for
-        // canvas elements without this.
+    // TODO(tc): This still does not address the issue that shadows
+    // within canvas elements should ignore transforms.
+    if (m_common->state.shadowsIgnoreTransforms)  {
+        // Currently only the GraphicsContext associated with the
+        // CanvasRenderingContext for HTMLCanvasElement have shadows ignore
+        // Transforms. So with this flag set, we know this state is associated
+        // with a CanvasRenderingContext.
+        // CG uses natural orientation for Y axis, but the HTML5 canvas spec
+        // does not.
+        // So we now flip the height since it was flipped in
+        // CanvasRenderingContext in order to work with CG.
         height = -height;
     }
 
