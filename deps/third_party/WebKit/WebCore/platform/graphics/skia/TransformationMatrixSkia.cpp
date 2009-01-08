@@ -37,25 +37,22 @@
 
 namespace WebCore {
 
-static const double deg2rad = 0.017453292519943295769; // pi/180
-
 TransformationMatrix::TransformationMatrix()
 {
     m_transform.reset();
 }
 
-TransformationMatrix::TransformationMatrix(double a, double b, double c, double d,
-                                 double e, double f)
+TransformationMatrix::TransformationMatrix(double a, double b, double c, double d, double e, double f)
 {
     setMatrix(a, b, c, d, e, f);
 }
 
-TransformationMatrix::TransformationMatrix(const SkMatrix& matrix) : m_transform(matrix)
+TransformationMatrix::TransformationMatrix(const SkMatrix& matrix)
+    : m_transform(matrix)
 {
 }
 
-void TransformationMatrix::setMatrix(double a, double b, double c, double d,
-                                double e, double f)
+void TransformationMatrix::setMatrix(double a, double b, double c, double d, double e, double f)
 {
     m_transform.reset();
 
@@ -68,7 +65,7 @@ void TransformationMatrix::setMatrix(double a, double b, double c, double d,
     m_transform.setTranslateY(WebCoreDoubleToSkScalar(f));
 }
 
-void TransformationMatrix::map(double x, double y, double *x2, double *y2) const
+void TransformationMatrix::map(double x, double y, double* x2, double* y2) const
 {
     SkPoint src, dst;
     src.set(WebCoreDoubleToSkScalar(x), WebCoreDoubleToSkScalar(y));
@@ -80,7 +77,7 @@ void TransformationMatrix::map(double x, double y, double *x2, double *y2) const
 
 IntRect TransformationMatrix::mapRect(const IntRect& src) const
 {
-    SkRect  dst;
+    SkRect dst;
     m_transform.mapRect(&dst, src);
     return enclosingIntRect(dst);
 }
@@ -128,8 +125,8 @@ TransformationMatrix &TransformationMatrix::shear(double sx, double sy)
 
 double TransformationMatrix::det() const
 {
-    return  SkScalarToDouble(m_transform.getScaleX()) * SkScalarToDouble(m_transform.getScaleY()) -
-            SkScalarToDouble(m_transform.getSkewY())  * SkScalarToDouble(m_transform.getSkewX());
+    return SkScalarToDouble(m_transform.getScaleX()) * SkScalarToDouble(m_transform.getScaleY()) -
+           SkScalarToDouble(m_transform.getSkewY()) * SkScalarToDouble(m_transform.getSkewX());
 }
 
 TransformationMatrix TransformationMatrix::inverse() const
@@ -158,7 +155,6 @@ TransformationMatrix &TransformationMatrix::operator*=(const TransformationMatri
 TransformationMatrix TransformationMatrix::operator*(const TransformationMatrix& m2)
 {
     TransformationMatrix cat;
-    
     cat.m_transform.setConcat(m2.m_transform, m_transform);
     return cat;
 }
@@ -167,6 +163,7 @@ double TransformationMatrix::a() const
 {
     return SkScalarToDouble(m_transform.getScaleX());
 }
+
 void TransformationMatrix::setA(double a)
 {
     m_transform.setScaleX(WebCoreDoubleToSkScalar(a));
@@ -176,6 +173,7 @@ double TransformationMatrix::b() const
 {
     return SkScalarToDouble(m_transform.getSkewY());
 }
+
 void TransformationMatrix::setB(double b)
 {
     m_transform.setSkewY(WebCoreDoubleToSkScalar(b));
@@ -185,6 +183,7 @@ double TransformationMatrix::c() const
 {
     return SkScalarToDouble(m_transform.getSkewX());
 }
+
 void TransformationMatrix::setC(double c)
 {
     m_transform.setSkewX(WebCoreDoubleToSkScalar(c));
@@ -194,6 +193,7 @@ double TransformationMatrix::d() const
 {
     return SkScalarToDouble(m_transform.getScaleY());
 }
+
 void TransformationMatrix::setD(double d)
 {
     m_transform.setScaleY(WebCoreDoubleToSkScalar(d));
@@ -203,6 +203,7 @@ double TransformationMatrix::e() const
 {
     return SkScalarToDouble(m_transform.getTranslateX());
 }
+
 void TransformationMatrix::setE(double e)
 {
     m_transform.setTranslateX(WebCoreDoubleToSkScalar(e));
@@ -212,6 +213,7 @@ double TransformationMatrix::f() const
 {
     return SkScalarToDouble(m_transform.getTranslateY());
 }
+
 void TransformationMatrix::setF(double f)
 {
     m_transform.setTranslateY(WebCoreDoubleToSkScalar(f));
