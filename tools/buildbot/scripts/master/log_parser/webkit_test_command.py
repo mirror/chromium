@@ -26,22 +26,27 @@ class TestObserver(buildstep.LogLineObserver):
     # Did we see any unexpectedly passing tests?
     self.had_unexpected_passing = False
 
+    # Counts of all fixable tests and those that were skipped. These will
+    # be unchanged if log-file parsing fails.
+    self.fixable_all = '??'
+    self.fixable_skipped = 0
+
     # Headers and regular expressions for parsing logs.  We don't
     # distinguish among failures, crashes, and hangs in the display.
     self._passing_start = re.compile('Expected to .+, but passed')
     self._regressions_start = re.compile('(Regressions: Unexpected'
                                          '|Missing expected results) .+')
     self._section_end = '-' * 78
+    self._summary_end = '=> Tests '
 
     self._test_path_line = re.compile('  (\S+)')
 
+    self._summary_start = re.compile(
+        '=> Tests to be fixed for the current release \((\d+)\):')
+    self._summary_skipped = re.compile('(\d+) test cases? .* Skipped')
+
   def outLineReceived(self, line):
     """This is called once with each line of the test log."""
-
-    # Are we starting or ending a new section?
-    if line.startswith(self._section_end):
-      self._current_category = ''
-      return
 
     results = self._passing_start.match(line)
     if results:
@@ -52,6 +57,32 @@ class TestObserver(buildstep.LogLineObserver):
     results = self._regressions_start.match(line)
     if results:
       self._current_category = 'regressions'
+      return
+
+    results = self._summary_start.match(line)
+    if results:
+      self._current_category = 'summary'
+      try:
+        self.fixable_all = int(results.group(1))
+      except ValueError:
+        pass
+      return
+
+    # Are we starting or ending a new section?
+    # Check this after checking for the start of the summary section.
+    if (line.startswith(self._section_end) or
+        line.startswith(self._summary_end)):
+      self._current_category = ''
+      return
+
+    # Are we looking at the summary section?
+    if self._current_category == 'summary':
+      results = self._summary_skipped.match(line)
+      if results:
+        try:
+          self.fixable_skipped = int(results.group(1))
+        except ValueError:
+          pass
       return
 
     # Are we collecting the list of regressions?
@@ -91,10 +122,14 @@ class WebKitCommand(shell.ShellCommand):
     return short_path
 
   def getText(self, cmd, results):
+    basic_info = self.describe(True)
+    basic_info.extend(['%s fixable' % self.test_observer.fixable_all,
+                       '(%s skipped)' % self.test_observer.fixable_skipped])
+
     if results == builder.SUCCESS:
-      return self.describe(True)
+      return basic_info
     elif results == builder.WARNINGS:
-      return self.describe(True) + ['unexpected pass']
+      return basic_info + ['unexpected pass']
     else:
       failures = self.test_observer.failed_tests
       if len(failures) > 0:
@@ -109,4 +144,4 @@ class WebKitCommand(shell.ShellCommand):
         failure_text.append('</div>')
       else:
         failure_text = ['crashed or hung']
-      return self.describe(True) + failure_text
+      return basic_info + failure_text

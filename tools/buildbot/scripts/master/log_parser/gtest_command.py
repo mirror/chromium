@@ -21,6 +21,10 @@ class TestObserver(buildstep.LogLineObserver):
     self._current_test = ''
     self._current_failure = None
 
+    # This may be either text or a number. It will be used in the phrase
+    # '%s disabled' on the waterfall display.
+    self.disabled_tests = 0
+
     # Failures are stored here as 'test name': [failure description]
     self.failed_tests = {}
 
@@ -28,6 +32,7 @@ class TestObserver(buildstep.LogLineObserver):
     self._test_case_start = re.compile('\[----------\] .+ test.+from (\w+)')
     self._test_start = re.compile('^\[ RUN      \] .+\.(\w+)')
     self._test_end   = re.compile('^^\[(       OK |  FAILED  )] .+\.(\w+)')
+    self._disabled   = re.compile('  YOU HAVE(.*)DISABLED TEST')
     self._suite_end  = re.compile(
         '^\[----------\] Global test environment tear-down')
 
@@ -48,6 +53,21 @@ class TestObserver(buildstep.LogLineObserver):
       self._current_test_case = ''
       self._current_test = ''
       self._failure_description = []
+      return
+
+    # Is it a line reporting disabled tests?
+    results = self._disabled.search(line)
+    if results:
+      try:
+        disabled = int(results.group(1))
+      except ValueError:
+        disabled = 0
+      if disabled > 0 and isinstance(self.disabled_tests, int):
+        self.disabled_tests += disabled
+      else:
+        # If we can't parse the line, at least give a heads-up. This is a
+        # safety net for a case that shouldn't happen but isn't a fatal error.
+        self.disabled_tests = 'some'
       return
 
     # Is it the start of an individual test?
@@ -81,16 +101,21 @@ class GTestCommand(shell.ShellCommand):
     self.addLogObserver('stdio', self.test_observer)
 
   def getText(self, cmd, results):
+    basic_info = self.describe(True)
+    disabled = self.test_observer.disabled_tests
+    if disabled:
+      basic_info.append('%s disabled' % str(disabled))
+
     if results == builder.SUCCESS:
-      return self.describe(True)
+      return basic_info
     elif results == builder.WARNINGS:
-      return self.describe(True) + ['warnings']
+      return basic_info + ['warnings']
 
     if len(self.test_observer.failed_tests) > 0:
       failure_text = ['failed %d' % len(self.test_observer.failed_tests)]
     else:
       failure_text = ['crashed or hung']
-    return self.describe(True) + failure_text
+    return basic_info + failure_text
 
   def _TestAbbrFromTestID(self, id):
     """Split the test's individual name from GTest's full identifier.
