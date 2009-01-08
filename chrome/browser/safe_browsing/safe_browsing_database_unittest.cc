@@ -5,7 +5,6 @@
 // Unit tests for the SafeBrowsing storage system.
 
 #include "base/command_line.h"
-#include "base/file_path.h"
 #include "base/file_util.h"
 #include "base/logging.h"
 #include "base/path_service.h"
@@ -19,10 +18,8 @@
 #include "chrome/common/chrome_switches.h"
 #include "googleurl/src/gurl.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "testing/platform_test.h"
 
-using base::Time;
-
+static const wchar_t kSafeBrowsingTestDatabase[] = L"SafeBrowsingTestDatabase";
 static const wchar_t kBloomSuffix[] = L" Bloom";
 
 namespace {
@@ -60,10 +57,11 @@ namespace {
 
   // Common database test set up code.
   std::wstring GetTestDatabaseName() {
-    FilePath filename;
+    std::wstring filename;
     PathService::Get(base::DIR_TEMP, &filename);
-    filename = filename.Append(FILE_PATH_LITERAL("SafeBrowsingTestDatabase"));
-    return filename.ToWStringHack();
+    filename.push_back(file_util::kPathSeparator);
+    filename.append(kSafeBrowsingTestDatabase);
+    return filename;
   }
 
   SafeBrowsingDatabase* SetupTestDatabase() {
@@ -96,11 +94,8 @@ namespace {
 
 }  // namespace
 
-class SafeBrowsingDatabasePlatformTest : public PlatformTest {
-};
-
 // Tests retrieving list name information.
-TEST_F(SafeBrowsingDatabasePlatformTest, ListName) {
+TEST(SafeBrowsingDatabase, ListName) {
   SafeBrowsingDatabase* database = SetupTestDatabase();
 
   // Insert some malware add chunks.
@@ -318,7 +313,7 @@ TEST(SafeBrowsingDatabase, Database) {
                                     &matching_list, &prefix_hits,
                                     &full_hashes, now));
   EXPECT_EQ(prefix_hits[0], Sha256Prefix("www.evil.com/phishing.html"));
-  EXPECT_EQ(prefix_hits.size(), 1U);
+  EXPECT_EQ(prefix_hits.size(), 1);
 
   EXPECT_TRUE(database->ContainsUrl(GURL("http://www.evil.com/malware.html"),
                                     &matching_list, &prefix_hits,
@@ -347,7 +342,7 @@ TEST(SafeBrowsingDatabase, Database) {
   EXPECT_FALSE(database->ContainsUrl(GURL("http://www.evil.com/"),
                                      &matching_list, &prefix_hits,
                                      &full_hashes, now));
-  EXPECT_EQ(prefix_hits.size(), 0U);
+  EXPECT_EQ(prefix_hits.size(), 0);
 
   EXPECT_FALSE(database->ContainsUrl(GURL("http://www.evil.com/robots.txt"),
                                      &matching_list, &prefix_hits,
@@ -371,7 +366,7 @@ TEST(SafeBrowsingDatabase, Database) {
   chunks = new std::deque<SBChunk>;
   chunks->push_back(chunk);
   database->UpdateStarted();
-  database->GetListsInfo(&lists);
+  GetListsInfo(database, &lists);
   database->InsertChunks(safe_browsing_util::kMalwareList, chunks);
   database->UpdateFinished(true);
   lists.clear();
@@ -408,12 +403,12 @@ TEST(SafeBrowsingDatabase, Database) {
                                     &matching_list, &prefix_hits,
                                     &full_hashes, now));
   EXPECT_EQ(prefix_hits[0], Sha256Prefix("www.evil.com/phishing.html"));
-  EXPECT_EQ(prefix_hits.size(), 1U);
+  EXPECT_EQ(prefix_hits.size(), 1);
 
   EXPECT_FALSE(database->ContainsUrl(GURL("http://www.evil.com/notevil1.html"),
                                      &matching_list, &prefix_hits,
                                      &full_hashes, now));
-  EXPECT_EQ(prefix_hits.size(), 0U);
+  EXPECT_EQ(prefix_hits.size(), 0);
 
   EXPECT_TRUE(database->ContainsUrl(GURL("http://www.evil.com/notevil2.html"),
                                     &matching_list, &prefix_hits,
@@ -860,7 +855,7 @@ TEST(SafeBrowsingDatabase, HashCaching) {
   EXPECT_EQ(hash_cache->size(), 2U);
 
   // Now adjust one of the entries times to be in the past.
-  base::Time expired = base::Time::Now() - base::TimeDelta::FromMinutes(60);
+  Time expired = Time::Now() - TimeDelta::FromMinutes(60);
   SBPrefix key;
   memcpy(&key, &full_hash.hash, sizeof(SBPrefix));
   SafeBrowsingDatabase::HashList& entries = (*hash_cache)[key];
@@ -909,7 +904,7 @@ TEST(SafeBrowsingDatabase, HashCaching) {
 
   // Test receiving a full add chunk. The old implementation doesn't support
   // this test, so we bail here.
-  if (CommandLine().HasSwitch(switches::kUseOldSafeBrowsing)) {
+  if (!CommandLine().HasSwitch(switches::kUseNewSafeBrowsing)) {
     TearDownTestDatabase(database);
     return;
   }
@@ -1014,18 +1009,16 @@ TEST(SafeBrowsingDatabase, HashCaching) {
   TearDownTestDatabase(database);
 }
 
-void PrintStat(const char* name) {
+void PrintStat(const wchar_t* name) {
   int value = StatsTable::current()->GetCounterValue(name);
-  LOG(INFO) << StringPrintf("%s %d", name, value);
+  std::wstring out = StringPrintf(L"%ls %d\r\n", name, value);
+  OutputDebugStringW(out.c_str());
 }
 
 std::wstring GetFullSBDataPath(const std::wstring& path) {
   std::wstring full_path;
   CHECK(PathService::Get(base::DIR_SOURCE_ROOT, &full_path));
-  file_util::AppendToPath(&full_path, L"chrome");
-  file_util::AppendToPath(&full_path, L"test");
-  file_util::AppendToPath(&full_path, L"data");
-  file_util::AppendToPath(&full_path, L"safe_browsing");
+  file_util::AppendToPath(&full_path, L"chrome\\test\\data\\safe_browsing");
   file_util::AppendToPath(&full_path, path);
   CHECK(file_util::PathExists(full_path));
   return full_path;
@@ -1039,19 +1032,13 @@ struct ChunksInfo {
 void PeformUpdate(const std::wstring& initial_db,
                   const std::vector<ChunksInfo>& chunks,
                   std::vector<SBChunkDelete>* deletes) {
-// TODO(pinkerton): I don't think posix has any concept of IO counters, but
-// we can uncomment this when we implement ProcessMetrics::GetIOCounters
-#if defined(OS_WIN) || defined(OS_LINUX)
   IoCounters before, after;
-#endif
 
-  FilePath path;
-  PathService::Get(base::DIR_TEMP, &path);
-  path = path.Append(FILE_PATH_LITERAL("SafeBrowsingTestDatabase"));
-  std::wstring filename = path.ToWStringHack();
-
-  // In case it existed from a previous run.
-  file_util::Delete(filename, false);
+  std::wstring filename;
+  PathService::Get(base::DIR_TEMP, &filename);
+  filename.push_back(file_util::kPathSeparator);
+  filename.append(L"SafeBrowsingTestDatabase");
+  DeleteFile(filename.c_str());  // In case it existed from a previous run.
 
   if (!initial_db.empty()) {
     std::wstring full_initial_db = GetFullSBDataPath(initial_db);
@@ -1063,12 +1050,10 @@ void PeformUpdate(const std::wstring& initial_db,
   EXPECT_TRUE(database->Init(filename, NULL));
 
   Time before_time = Time::Now();
-  base::ProcessHandle handle = base::Process::Current().handle();
-  scoped_ptr<base::ProcessMetrics> metric(
-      base::ProcessMetrics::CreateProcessMetrics(handle));
-#if defined(OS_WIN) || defined(OS_LINUX)
+  ProcessHandle handle = Process::Current().handle();
+  scoped_ptr<process_util::ProcessMetrics> metric(
+      process_util::ProcessMetrics::CreateProcessMetrics(handle));
   CHECK(metric->GetIOCounters(&before));
-#endif
 
   std::vector<SBListChunkRanges> lists;
   database->UpdateStarted();
@@ -1080,30 +1065,28 @@ void PeformUpdate(const std::wstring& initial_db,
   database->UpdateFinished(true);
   lists.clear();
 
-#if defined(OS_WIN) || defined(OS_LINUX)
   CHECK(metric->GetIOCounters(&after));
 
-  LOG(INFO) << StringPrintf("I/O Read Bytes: %d",
-      after.ReadTransferCount - before.ReadTransferCount);
-  LOG(INFO) << StringPrintf("I/O Write Bytes: %d",
-      after.WriteTransferCount - before.WriteTransferCount);
-  LOG(INFO) << StringPrintf("I/O Reads: %d",
-      after.ReadOperationCount - before.ReadOperationCount);
-  LOG(INFO) << StringPrintf("I/O Writes: %d",
-      after.WriteOperationCount - before.WriteOperationCount);
-  LOG(INFO) << StringPrintf("Finished in %d ms",
-      (Time::Now() - before_time).InMilliseconds());
-#endif
+  OutputDebugStringA(StringPrintf("I/O Read Bytes: %d\r\n",
+      after.ReadTransferCount - before.ReadTransferCount).c_str());
+  OutputDebugStringA(StringPrintf("I/O Write Bytes: %d\r\n",
+      after.WriteTransferCount - before.WriteTransferCount).c_str());
+  OutputDebugStringA(StringPrintf("I/O Reads: %d\r\n",
+      after.ReadOperationCount - before.ReadOperationCount).c_str());
+  OutputDebugStringA(StringPrintf("I/O Writes: %d\r\n",
+      after.WriteOperationCount - before.WriteOperationCount).c_str());
+  OutputDebugStringA(StringPrintf("Finished in %d ms\r\n",
+    (Time::Now() - before_time).InMilliseconds()).c_str());
 
-  PrintStat("c:SB.HostSelect");
-  PrintStat("c:SB.HostSelectForBloomFilter");
-  PrintStat("c:SB.HostReplace");
-  PrintStat("c:SB.HostInsert");
-  PrintStat("c:SB.HostDelete");
-  PrintStat("c:SB.ChunkSelect");
-  PrintStat("c:SB.ChunkInsert");
-  PrintStat("c:SB.ChunkDelete");
-  PrintStat("c:SB.TransactionCommit");
+  PrintStat(L"c:SB.HostSelect");
+  PrintStat(L"c:SB.HostSelectForBloomFilter");
+  PrintStat(L"c:SB.HostReplace");
+  PrintStat(L"c:SB.HostInsert");
+  PrintStat(L"c:SB.HostDelete");
+  PrintStat(L"c:SB.ChunkSelect");
+  PrintStat(L"c:SB.ChunkInsert");
+  PrintStat(L"c:SB.ChunkDelete");
+  PrintStat(L"c:SB.TransactionCommit");
 
   delete database;
 }
@@ -1118,10 +1101,9 @@ void UpdateDatabase(const std::wstring& initial_db,
   if (!updates_path.empty()) {
     std::wstring data_dir = GetFullSBDataPath(updates_path);
     file_util::FileEnumerator file_enum(
-        FilePath::FromWStringHack(data_dir), false,
-        file_util::FileEnumerator::FILES);
+        data_dir, false, file_util::FileEnumerator::FILES);
     while (true) {
-      std::wstring file = file_enum.Next().ToWStringHack();
+      std::wstring file = file_enum.Next();
       if (file.empty())
         break;
 
@@ -1175,28 +1157,6 @@ void UpdateDatabase(const std::wstring& initial_db,
   PeformUpdate(initial_db, chunks, deletes);
 }
 
-namespace {
-
-const wchar_t* GetOldSafeBrowsingPath() {
-  std::wstring path = L"old";
-  file_util::AppendToPath(&path, L"SafeBrowsing");
-  return path.c_str();
-}
-
-const wchar_t* GetOldResponsePath() {
-  std::wstring path = L"old";
-  file_util::AppendToPath(&path, L"response");
-  return path.c_str();
-}
-
-const wchar_t* GetOldUpdatesPath() {
-  std::wstring path = L"old";
-  file_util::AppendToPath(&path, L"updates");
-  return path.c_str();
-}
-
-}  // namespace
-
 // Counts the IO needed for the initial update of a database.
 // test\data\safe_browsing\download_update.py was used to fetch the add/sub
 // chunks that are read, in order to get repeatable runs.
@@ -1204,36 +1164,23 @@ TEST(SafeBrowsingDatabase, DISABLED_DatabaseInitialIO) {
   UpdateDatabase(L"", L"", L"initial");
 }
 
-// TODO(port): For now on Linux the test below would fail with error below:
-// [1004/201323:FATAL:browser/safe_browsing/safe_browsing_database_impl.cc(712)]
-// Check failed: false.
-//
 // Counts the IO needed to update a month old database.
 // The data files were generated by running "..\download_update.py postdata"
 // in the "safe_browsing\old" directory.
 TEST(SafeBrowsingDatabase, DISABLED_DatabaseOldIO) {
-  UpdateDatabase(GetOldSafeBrowsingPath(), GetOldResponsePath(),
-                 GetOldUpdatesPath());
+  UpdateDatabase(L"old\\SafeBrowsing", L"old\\response", L"old\\updates");
 }
 
-// TODO(port): For now on Linux the test below would fail with error below:
-// [1004/201323:FATAL:browser/safe_browsing/safe_browsing_database_impl.cc(712)]
-// Check failed: false.
-//
 // Like DatabaseOldIO but only the deletes.
 TEST(SafeBrowsingDatabase, DISABLED_DatabaseOldDeletesIO) {
-  UpdateDatabase(GetOldSafeBrowsingPath(), GetOldResponsePath(), L"");
+  UpdateDatabase(L"old\\SafeBrowsing", L"old\\response", L"");
 }
 
 // Like DatabaseOldIO but only the updates.
 TEST(SafeBrowsingDatabase, DISABLED_DatabaseOldUpdatesIO) {
-  UpdateDatabase(GetOldSafeBrowsingPath(), L"", GetOldUpdatesPath());
+  UpdateDatabase(L"old\\SafeBrowsing", L"", L"old\\updates");
 }
 
-// TODO(port): For now on Linux the test below would fail with error below:
-// [1004/201323:FATAL:browser/safe_browsing/safe_browsing_database_impl.cc(712)]
-// Check failed: false.
-//
 // Does a a lot of addel's on very large chunks.
 TEST(SafeBrowsingDatabase, DISABLED_DatabaseOldLotsofDeletesIO) {
   std::vector<ChunksInfo> chunks;
@@ -1243,5 +1190,5 @@ TEST(SafeBrowsingDatabase, DISABLED_DatabaseOldLotsofDeletesIO) {
   del.list_name = safe_browsing_util::kMalwareList;
   del.chunk_del.push_back(ChunkRange(3539, 3579));
   deletes->push_back(del);
-  PeformUpdate(GetOldSafeBrowsingPath(), chunks, deletes);
+  PeformUpdate(L"old\\SafeBrowsing", chunks, deletes);
 }

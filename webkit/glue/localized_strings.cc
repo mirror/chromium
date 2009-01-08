@@ -29,21 +29,18 @@
 #include "IntSize.h"
 
 #undef LOG
-
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/webkit_glue.h"
 #include "base/logging.h"
-#include "base/file_util.h"
 #include "base/string_util.h"
 #include "build/build_config.h"
-#include "webkit/glue/glue_util.h"
 
-#if defined(OS_MACOSX)
+#if defined(OS_WIN)
+#include "webkit_strings.h"
+#else
 // TODO:(pinkerton): only windows has the GRIT machinery, so we've created a
 // temporary generated header until we can figure out the l10n strategy.
 #include "bogus_webkit_strings.h"
-#else
-#include "webkit_strings.h"
 #endif
 
 using namespace WebCore;
@@ -53,6 +50,7 @@ inline String GetLocalizedString(int message_id) {
   return webkit_glue::StdWStringToString(str);
 }
 
+#if defined(OS_WIN)
 String WebCore::searchableIndexIntroduction() {
   return GetLocalizedString(IDS_SEARCHABLE_INDEX_INTRO);
 }
@@ -72,6 +70,7 @@ String WebCore::fileButtonNoFileSelectedLabel() {
   return GetLocalizedString(IDS_FORM_FILE_NO_FILE_LABEL);
 }
 
+// TODO(tc): Do we actually plan on implementing search menu items?
 String WebCore::searchMenuNoRecentSearchesText() {
   return GetLocalizedString(IDS_RECENT_SEARCHES_NONE);
 }
@@ -98,14 +97,7 @@ String WebCore::AXImageMapText() {
 String WebCore::AXHeadingText() {
   return GetLocalizedString(IDS_AX_ROLE_HEADING);
 }
-String WebCore::AXDefinitionListTermText() {
-  NOTIMPLEMENTED();
-  return String("term");
-}
-String WebCore::AXDefinitionListDefinitionText() {
-  NOTIMPLEMENTED();
-  return String("definition");
-}
+#endif  // OS_WIN
 String WebCore::AXButtonActionVerb() {
   return GetLocalizedString(IDS_AX_BUTTON_ACTION_VERB);
 }
@@ -125,11 +117,6 @@ String WebCore::AXLinkActionVerb() {
   return GetLocalizedString(IDS_AX_LINK_ACTION_VERB);
 }
 
-// Used in FTPDirectoryDocument.cpp
-String WebCore::unknownFileSizeText() {
-  return String();
-}
-
 // The following two functions are not declared in LocalizedStrings.h.
 // They are used by the menu for the HTML keygen tag.
 namespace WebCore {
@@ -139,17 +126,9 @@ String keygenMenuHighGradeKeySize() {
 String keygenMenuMediumGradeKeySize() {
   return GetLocalizedString(IDS_KEYGEN_MED_GRADE_KEY);
 }
-
-// Used in ImageDocument.cpp as the title for pages when that page is an image.
-String imageTitle(const String& filename, const IntSize& size) {
-  // C3 97 is UTF-8 for U+00D7 (multiplication sign).
-  std::string size_str = StringPrintf(" (%d\xC3\x97%d)",
-                                      size.width(), size.height());
-  return filename + webkit_glue::StdStringToString(size_str);
-}
-
 } //namespace WebCore
 
+#if defined(OS_WIN)
 // We don't use these strings, so they return an empty String. We can't just
 // make them asserts because webcore still calls them.
 String WebCore::contextMenuItemTagOpenLinkInNewWindow() { return String(); }
@@ -183,9 +162,9 @@ String WebCore::contextMenuItemTagItalic() { return String(); }
 String WebCore::contextMenuItemTagUnderline() { return String(); }
 String WebCore::contextMenuItemTagOutline() { return String(); }
 String WebCore::contextMenuItemTagWritingDirectionMenu() { return String(); }
-String WebCore::contextMenuItemTagTextDirectionMenu() { return String(); }
 String WebCore::contextMenuItemTagDefaultDirection() { return String(); }
 String WebCore::contextMenuItemTagLeftToRight() { return String(); }
 String WebCore::contextMenuItemTagRightToLeft() { return String(); }
 String WebCore::contextMenuItemTagInspectElement() { return String(); }
 String WebCore::contextMenuItemTagShowSpellingPanel(bool show) { return String(); }
+#endif  // OS_WIN

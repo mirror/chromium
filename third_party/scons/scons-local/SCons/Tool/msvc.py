@@ -31,7 +31,7 @@ selection method.
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-__revision__ = "src/engine/SCons/Tool/msvc.py 3842 2008/12/20 22:59:52 scons"
+__revision__ = "src/engine/SCons/Tool/msvc.py 3424 2008/09/15 11:22:20 scons"
 
 import os.path
 import re
@@ -45,7 +45,6 @@ import SCons.Tool
 import SCons.Tool.msvs
 import SCons.Util
 import SCons.Warnings
-import SCons.Scanner.RC
 
 CSuffixes = ['.c', '.C']
 CXXSuffixes = ['.cc', '.cpp', '.cxx', '.c++', '.C++']
@@ -661,17 +660,13 @@ pch_action = SCons.Action.Action('$PCHCOM', '$PCHCOMSTR')
 pch_builder = SCons.Builder.Builder(action=pch_action, suffix='.pch',
                                     emitter=pch_emitter,
                                     source_scanner=SCons.Tool.SourceFileScanner)
-
-
-# Logic to build .rc files into .res files (resource files)
-res_scanner = SCons.Scanner.RC.RCScan()
-res_action  = SCons.Action.Action('$RCCOM', '$RCCOMSTR')
+res_action = SCons.Action.Action('$RCCOM', '$RCCOMSTR')
 res_builder = SCons.Builder.Builder(action=res_action,
                                     src_suffix='.rc',
                                     suffix='.res',
                                     src_builder=[],
-                                    source_scanner=res_scanner)
-
+                                    source_scanner=SCons.Tool.SourceFileScanner)
+SCons.Tool.SourceFileScanner.add_scanner('.rc', SCons.Defaults.CScan)
 
 def generate(env):
     """Add Builders and construction variables for MSVC++ to an Environment."""
@@ -716,7 +711,6 @@ def generate(env):
 
     env['RC'] = 'rc'
     env['RCFLAGS'] = SCons.Util.CLVar('')
-    env['RCSUFFIXES']=['.rc','.rc2']
     env['RCCOM'] = '$RC $_CPPDEFFLAGS $_CPPINCFLAGS $RCFLAGS /fo$TARGET $SOURCES'
     env['BUILDERS']['RES'] = res_builder
     env['OBJPREFIX']      = ''

@@ -48,15 +48,10 @@
   CGContextSetRGBFillColor (context, 1, 0, 1, 1);
   CGContextFillRect(context, NSRectToCGRect(rect));
 
-  if (shell_ && shell_->webView()) {
-    gfx::Rect client_rect(NSRectToCGRect(rect));
-    // flip from cocoa coordinates
-    client_rect.set_y([self frame].size.height -
-                      client_rect.height() - client_rect.y());
-    
-    shell_->webViewHost()->UpdatePaintRect(client_rect);
+  // uncomment when we stop passing the wrong kinds of GraphicsContext to
+  // WebCore
+  if (shell_ && shell_->webView())
     shell_->webViewHost()->Paint();
-  }
 }
 
 - (IBAction)goBack:(id)sender {
@@ -81,12 +76,6 @@
 
 - (IBAction)takeURLStringValueFrom:(NSTextField *)sender {
   NSString *url = [sender stringValue];
-  
-  // if it doesn't already have a prefix, add http. If we can't parse it, 
-  // just don't bother rather than making things worse.
-  NSURL* tempUrl = [NSURL URLWithString:url];
-  if (tempUrl && ![tempUrl scheme])
-    url = [@"http://" stringByAppendingString:url];
   shell_->LoadURL(UTF8ToWide([url UTF8String]).c_str());
 }
 

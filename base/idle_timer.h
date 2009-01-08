@@ -28,9 +28,7 @@
 #ifndef BASE_IDLE_TIMER_H_
 #define BASE_IDLE_TIMER_H_
 
-#if defined(OS_WIN)
 #include <windows.h>
-#endif
 
 #include "base/basictypes.h"
 #include "base/task.h"
@@ -38,9 +36,8 @@
 
 namespace base {
 
-// Function prototype - Get the number of milliseconds that the user has been
-// idle.
-typedef bool (*IdleTimeSource)(int32 *milliseconds_interval_since_last_event);
+// Function prototype for GetLastInputInfo.
+typedef BOOL (__stdcall *GetLastInputInfoFunction)(PLASTINPUTINFO plii);
 
 class IdleTimer {
  public:
@@ -63,9 +60,9 @@ class IdleTimer {
   virtual void OnIdle() = 0;
 
  protected:
-  // Override the IdleTimeSource.
-  void set_idle_time_source(IdleTimeSource idle_time_source) {
-    idle_time_source_ = idle_time_source;
+  // Override the GetLastInputInfo function.
+  void set_last_input_info_fn(GetLastInputInfoFunction function) {
+    get_last_input_info_fn_ = function;
   }
 
  private:
@@ -87,7 +84,7 @@ class IdleTimer {
                           // will be 0 until the timer fires the first time.
   OneShotTimer<IdleTimer> timer_;
 
-  IdleTimeSource idle_time_source_;
+  GetLastInputInfoFunction get_last_input_info_fn_;
 
   DISALLOW_COPY_AND_ASSIGN(IdleTimer);
 };

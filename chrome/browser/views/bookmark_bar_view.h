@@ -135,11 +135,8 @@ class BookmarkBarView : public views::View,
   // page).
   bool IsAlwaysShown();
 
-  // True if we're on a page where the bookmarks bar is always visible.
-  bool OnNewTabPage();
-
-  // How much we want the bookmark bar to overlap the toolbar.
-  int GetToolbarOverlap();
+  // True if we're supposed to draw the bookmarks bar in the new tab style.
+  bool IsNewTabPage();
 
   // Whether or not we are animating.
   bool IsAnimating() { return size_animation_->IsAnimating(); }

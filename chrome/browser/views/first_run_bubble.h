@@ -29,8 +29,7 @@ class FirstRunBubble : public InfoBubble,
   virtual void OnActivate(UINT action, BOOL minimized, HWND window);
 
   // InfoBubbleDelegate.
-  virtual void InfoBubbleClosing(InfoBubble* info_bubble,
-                                 bool closed_by_escape);
+  virtual void InfoBubbleClosing(InfoBubble* info_bubble);
   virtual bool CloseOnEscape() { return true; }
 
  private:

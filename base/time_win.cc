@@ -47,10 +47,6 @@
 #include "base/singleton.h"
 #include "base/system_monitor.h"
 
-using base::Time;
-using base::TimeDelta;
-using base::TimeTicks;
-
 namespace {
 
 // From MSDN, FILETIME "Contains a 64-bit value representing the number of
@@ -233,9 +229,7 @@ class NowSingleton : public base::SystemMonitor::PowerObserver {
 
   ~NowSingleton() {
     UseHiResClock(false);
-    base::SystemMonitor* monitor = base::SystemMonitor::Get();
-    if (monitor)
-      monitor->RemoveObserver(this);
+    base::SystemMonitor::Get()->RemoveObserver(this);
   }
 
   TimeDelta Now() {

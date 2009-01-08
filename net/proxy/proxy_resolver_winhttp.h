@@ -19,8 +19,9 @@ class ProxyResolverWinHttp : public ProxyResolver {
   ~ProxyResolverWinHttp();
 
   // ProxyResolver implementation:
-  virtual int GetProxyForURL(const GURL& query_url,
-                             const GURL& pac_url,
+  virtual int GetProxyConfig(ProxyConfig* config);
+  virtual int GetProxyForURL(const std::string& query_url,
+                             const std::string& pac_url,
                              ProxyInfo* results);
 
  private:

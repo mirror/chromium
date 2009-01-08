@@ -1,6 +1,6 @@
 /* libs/corecg/SkMatrix.cpp
 **
-** Copyright 2006, The Android Open Source Project
+** Copyright 2006, Google Inc.
 **
 ** Licensed under the Apache License, Version 2.0 (the "License"); 
 ** you may not use this file except in compliance with the License. 
@@ -65,21 +65,19 @@ enum {
 uint8_t SkMatrix::computeTypeMask() const {
     unsigned mask = 0;
 
-    if (SkScalarAs2sCompliment(fMat[kMPersp0]) |
-            SkScalarAs2sCompliment(fMat[kMPersp1]) |
-            (SkScalarAs2sCompliment(fMat[kMPersp2]) - kPersp1Int)) {
+    if (SkScalarAsInt(fMat[kMPersp0]) | SkScalarAsInt(fMat[kMPersp1]) |
+            (SkScalarAsInt(fMat[kMPersp2]) - kPersp1Int)) {
         mask |= kPerspective_Mask;
     }
     
-    if (SkScalarAs2sCompliment(fMat[kMTransX]) |
-            SkScalarAs2sCompliment(fMat[kMTransY])) {
+    if (SkScalarAsInt(fMat[kMTransX]) | SkScalarAsInt(fMat[kMTransY])) {
         mask |= kTranslate_Mask;
     }
 
-    int m00 = SkScalarAs2sCompliment(fMat[SkMatrix::kMScaleX]);
-    int m01 = SkScalarAs2sCompliment(fMat[SkMatrix::kMSkewX]);
-    int m10 = SkScalarAs2sCompliment(fMat[SkMatrix::kMSkewY]);
-    int m11 = SkScalarAs2sCompliment(fMat[SkMatrix::kMScaleY]);
+    int m00 = SkScalarAsInt(fMat[SkMatrix::kMScaleX]);
+    int m01 = SkScalarAsInt(fMat[SkMatrix::kMSkewX]);
+    int m10 = SkScalarAsInt(fMat[SkMatrix::kMSkewY]);
+    int m11 = SkScalarAsInt(fMat[SkMatrix::kMScaleY]);
     
     if (m01 | m10) {
         mask |= kAffine_Mask;
@@ -114,7 +112,7 @@ uint8_t SkMatrix::computeTypeMask() const {
 ///////////////////////////////////////////////////////////////////////////////
 
 void SkMatrix::setTranslate(SkScalar dx, SkScalar dy) {
-    if (SkScalarAs2sCompliment(dx) | SkScalarAs2sCompliment(dy)) {
+    if (SkScalarAsInt(dx) | SkScalarAsInt(dy)) {
         fMat[kMTransX] = dx;
         fMat[kMTransY] = dy;
 
@@ -136,7 +134,7 @@ bool SkMatrix::preTranslate(SkScalar dx, SkScalar dy) {
         return this->preConcat(m);
     }
     
-    if (SkScalarAs2sCompliment(dx) | SkScalarAs2sCompliment(dy)) {
+    if (SkScalarAsInt(dx) | SkScalarAsInt(dy)) {
         fMat[kMTransX] += SkScalarMul(fMat[kMScaleX], dx) +
                           SkScalarMul(fMat[kMSkewX], dy);
         fMat[kMTransY] += SkScalarMul(fMat[kMSkewY], dx) +
@@ -154,7 +152,7 @@ bool SkMatrix::postTranslate(SkScalar dx, SkScalar dy) {
         return this->postConcat(m);
     }
     
-    if (SkScalarAs2sCompliment(dx) | SkScalarAs2sCompliment(dy)) {
+    if (SkScalarAsInt(dx) | SkScalarAsInt(dy)) {
         fMat[kMTransX] += dx;
         fMat[kMTransY] += dy;
         this->setTypeMask(kUnknown_Mask);
@@ -645,15 +643,11 @@ bool SkMatrix::setConcat(const SkMatrix& a, const SkMatrix& b) {
 }
 
 bool SkMatrix::preConcat(const SkMatrix& mat) {
-    // check for identity first, so we don't do a needless copy of ourselves
-    // to ourselves inside setConcat()
-    return mat.isIdentity() || this->setConcat(*this, mat);
+    return this->setConcat(*this, mat);
 }
 
 bool SkMatrix::postConcat(const SkMatrix& mat) {
-    // check for identity first, so we don't do a needless copy of ourselves
-    // to ourselves inside setConcat()
-    return mat.isIdentity() || this->setConcat(mat, *this);
+    return this->setConcat(mat, *this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -678,6 +672,7 @@ bool SkMatrix::postConcat(const SkMatrix& mat) {
         if (SkScalarNearlyZero((float)det, SK_ScalarNearlyZero * SK_ScalarNearlyZero)) {
             return 0;
         }
+
         return (float)(1.0 / det);
     }
 #else

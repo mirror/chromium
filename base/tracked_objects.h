@@ -39,7 +39,7 @@ class BirthOnThread {
   // allowed to access birth_count_ (which changes over time).
   const ThreadData* birth_thread_;  // The thread this birth took place on.
 
-  DISALLOW_COPY_AND_ASSIGN(BirthOnThread);
+  DISALLOW_EVIL_CONSTRUCTORS(BirthOnThread);
 };
 
 //------------------------------------------------------------------------------
@@ -62,7 +62,7 @@ class Births: public BirthOnThread {
   // The number of births on this thread for our location_.
   int birth_count_;
 
-  DISALLOW_COPY_AND_ASSIGN(Births);
+  DISALLOW_EVIL_CONSTRUCTORS(Births);
 };
 
 //------------------------------------------------------------------------------
@@ -80,11 +80,11 @@ class DeathData {
   // a corrosponding death.
   explicit DeathData(int count) : count_(count), square_duration_(0) {}
 
-  void RecordDeath(const base::TimeDelta& duration);
+  void RecordDeath(const TimeDelta& duration);
 
   // Metrics accessors.
   int count() const { return count_; }
-  base::TimeDelta life_duration() const { return life_duration_; }
+  TimeDelta life_duration() const { return life_duration_; }
   int64 square_duration() const { return square_duration_; }
   int AverageMsDuration() const;
   double StandardDeviation() const;
@@ -99,7 +99,7 @@ class DeathData {
 
  private:
   int count_;                // Number of destructions.
-  base::TimeDelta life_duration_;    // Sum of all lifetime durations.
+  TimeDelta life_duration_;    // Sum of all lifetime durations.
   int64 square_duration_;  // Sum of squares in milliseconds.
 };
 
@@ -128,7 +128,7 @@ class Snapshot {
   const std::string DeathThreadName() const;
 
   int count() const { return death_data_.count(); }
-  base::TimeDelta life_duration() const { return death_data_.life_duration(); }
+  TimeDelta life_duration() const { return death_data_.life_duration(); }
   int64 square_duration() const { return death_data_.square_duration(); }
   int AverageMsDuration() const { return death_data_.AverageMsDuration(); }
 
@@ -183,7 +183,7 @@ class DataCollector {
 
   Lock accumulation_lock_;  // Protects access during accumulation phase.
 
-  DISALLOW_COPY_AND_ASSIGN(DataCollector);
+  DISALLOW_EVIL_CONSTRUCTORS(DataCollector);
 };
 
 //------------------------------------------------------------------------------
@@ -209,7 +209,7 @@ class Aggregation: public DeathData {
   DeathData death_data_;
   std::map<const ThreadData*, int> death_threads_;
 
-  DISALLOW_COPY_AND_ASSIGN(Aggregation);
+  DISALLOW_EVIL_CONSTRUCTORS(Aggregation);
 };
 
 //------------------------------------------------------------------------------
@@ -339,7 +339,7 @@ class ThreadData {
   Births* FindLifetime(const Location& location);
 
   // Find a place to record a death on this thread.
-  void TallyADeath(const Births& lifetimes, const base::TimeDelta& duration);
+  void TallyADeath(const Births& lifetimes, const TimeDelta& duration);
 
   // (Thread safe) Get start of list of instances.
   static ThreadData* first();
@@ -428,7 +428,7 @@ class ThreadData {
     // Make sure enough tasks are called before completion is signaled.
     ThreadSafeDownCounter* counter_;
 
-    DISALLOW_COPY_AND_ASSIGN(RunTheStatic);
+    DISALLOW_EVIL_CONSTRUCTORS(RunTheStatic);
   };
 #endif
 
@@ -480,34 +480,8 @@ class ThreadData {
   // data, but that is considered acceptable errors (mis-information).
   Lock lock_;
 
-  DISALLOW_COPY_AND_ASSIGN(ThreadData);
+  DISALLOW_EVIL_CONSTRUCTORS(ThreadData);
 };
-
-
-//------------------------------------------------------------------------------
-// Provide simple way to to start global tracking, and to tear down tracking
-// when done.  Note that construction and destruction of this object must be
-// done when running in single threaded mode (before spawning a lot of threads
-// for construction, and after shutting down all the threads for destruction).
-
-class AutoTracking {
- public:
-  AutoTracking() { ThreadData::StartTracking(true); }
-
-  ~AutoTracking() {
-#ifndef NDEBUG  // Don't call these in a Release build: they just waste time.
-    // The following should ONLY be called when in single threaded mode. It is
-    // unsafe to do this cleanup if other threads are still active.
-    // It is also very unnecessary, so I'm only doing this in debug to satisfy
-    // purify (if we need to!).
-    ThreadData::ShutdownSingleThreadedCleanup();
-#endif
-  }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(AutoTracking);
-};
-
 
 }  // namespace tracked_objects
 

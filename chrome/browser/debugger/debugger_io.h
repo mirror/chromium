@@ -6,13 +6,11 @@
 #define CHROME_BROWSER_DEBUGGER_DEBUGGER_IO_H_
 
 #include <string>
-#include <vector>
 
 #include "base/basictypes.h"
 #include "base/ref_counted.h"
 
-class DebuggerHost;
-class ListValue;
+class DebuggerShell;
 
 class DebuggerInputOutput
     : public base::RefCountedThreadSafe<DebuggerInputOutput> {
@@ -21,7 +19,7 @@ public:
   virtual ~DebuggerInputOutput() {}
 
   // Called when Debugger is ready to begin.
-  virtual void Start(DebuggerHost* debugger) { debugger_ = debugger; }
+  virtual void Start(DebuggerShell* debugger) { debugger_ = debugger; }
 
   // Called when Debugger is shutting down
   virtual void Stop() {}
@@ -41,12 +39,8 @@ public:
   // is running, and true when the page is stopped at a breakpoint
   virtual void SetDebuggerBreak(bool brk) {}
 
-  // sends message to debugger UI page in order to invoke JS function in it
-  virtual void CallFunctionInPage(const std::wstring& name, 
-                                  ListValue* argv) {}
-
 protected:
-  DebuggerHost* debugger_;
+  DebuggerShell* debugger_;
 
 private:
   DISALLOW_COPY_AND_ASSIGN(DebuggerInputOutput);

@@ -11,9 +11,9 @@
 
 namespace views {
 
+class Container;
 class PaintTask;
 class RootViewDropTarget;
-class Widget;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -30,12 +30,13 @@ class FocusListener {
 //
 // RootView class
 //
-//   The RootView is the root of a View hierarchy. A RootView is always the
-//   first and only child of a Widget.
+//   The RootView is the root of a View hierarchy. Its parent is not
+//   necessarily a Container, but the Container's View child is always a
+//   RootView.
 //
-//   The RootView manages the View hierarchy's interface with the Widget
-//   and also maintains the current invalid rect - the region that needs
-//   repainting.
+//   The RootView manages the View hierarchy's interface with the
+//   Container, and also maintains the current invalid rect - the region
+//   that needs repainting.
 //
 /////////////////////////////////////////////////////////////////////////////
 class RootView : public View,
@@ -43,7 +44,7 @@ class RootView : public View,
  public:
   static const char kViewClassName[];
 
-  explicit RootView(Widget* widget);
+  explicit RootView(Container* container);
 
   virtual ~RootView();
 
@@ -70,7 +71,8 @@ class RootView : public View,
   // returns whether this root view needs to paint as soon as possible.
   virtual bool NeedsPainting(bool urgent);
 
-  // Invoked by the Widget to discover what rectangle should be painted.
+  // Invoked by the Container to discover what rectangle should be
+  // painted
   const gfx::Rect& GetScheduledPaintRect();
 
   // Returns the region scheduled to paint clipped to the RootViews bounds.
@@ -78,8 +80,8 @@ class RootView : public View,
 
   // Tree functions
 
-  // Get the Widget that hosts this View.
-  virtual Widget* GetWidget() const;
+  // Get the Container that hosts this View.
+  virtual Container* GetContainer() const;
 
   // The following event methods are overridden to propagate event to the
   // control tree
@@ -89,23 +91,24 @@ class RootView : public View,
   virtual void OnMouseMoved(const MouseEvent& e);
   virtual void SetMouseHandler(View* new_mouse_handler);
 
-  // Invoked when the Widget has been fully initialized.
-  // At the time the constructor is invoked the Widget may not be completely
-  // initialized, when this method is invoked, it is.
-  void OnWidgetCreated();
+  // Invoked when the Containers has been fully initialized.
+  // At the time the constructor is invoked the Container may not be
+  // completely initialized, when this method is invoked, it is.
+  void OnContainerCreated();
 
-  // Invoked prior to the Widget being destroyed.
-  void OnWidgetDestroyed();
+  // Invoked prior to the Container being destroyed.
+  void OnContainerDestroyed();
 
-  // Invoked By the Widget if the mouse drag is interrupted by
+  // Invoked By the Container if the mouse drag is interrupted by
   // the system. Invokes OnMouseReleased with a value of true for canceled.
   void ProcessMouseDragCanceled();
 
-  // Invoked by the Widget instance when the mouse moves outside of the Widget
-  // bounds.
+  // Invoked by the Container instance when the mouse moves outside of
+  // the container bounds
   virtual void ProcessOnMouseExited();
 
-  // Make the provided view focused. Also make sure that our Widget is focused.
+  // Make the provided view focused. Also make sure that our container
+  // is focused.
   void FocusView(View* view);
 
   // Check whether the provided view is in the focus path. The focus path is the
@@ -164,10 +167,10 @@ class RootView : public View,
   virtual std::string GetClassName() const;
 
   // Clears the region that is schedule to be painted. You nearly never need
-  // to invoke this. This is primarily intended for Widgets.
+  // to invoke this. This is primarily intended for Containers.
   void ClearPaintRect();
 
-  // Invoked from the Widget to service a WM_PAINT call.
+  // Invoked from the Container to service a WM_PAINT call.
   void OnPaint(HWND hwnd);
 
   // Returns the MSAA role of the current view. The role is what assistive
@@ -199,7 +202,7 @@ class RootView : public View,
   DISALLOW_EVIL_CONSTRUCTORS(RootView);
 
   // Convert a point to our current mouse handler. Returns false if the
-  // mouse handler is not connected to a Widget. In that case, the
+  // mouse handler is not connected to a Container. In that case, the
   // conversion cannot take place and *p is unchanged
   bool ConvertPointToMouseHandler(const gfx::Point& l, gfx::Point *p);
 
@@ -264,8 +267,8 @@ class RootView : public View,
   // The view currently handling enter / exit
   View* mouse_move_handler_;
 
-  // The host Widget
-  Widget* widget_;
+  // The host Container
+  Container* container_;
 
   // The rectangle that should be painted
   gfx::Rect invalid_rect_;

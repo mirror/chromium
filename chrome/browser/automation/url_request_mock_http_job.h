@@ -11,7 +11,7 @@
 
 class URLRequestMockHTTPJob : public URLRequestFileJob {
  public:
-  URLRequestMockHTTPJob(URLRequest* request, const FilePath& file_path);
+  URLRequestMockHTTPJob(URLRequest* request);
   virtual ~URLRequestMockHTTPJob() { }
 
   virtual bool GetMimeType(std::string* mime_type);

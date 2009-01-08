@@ -36,7 +36,7 @@ env = env.Clone()
 env.Prepend(
     CPPPATH = [
         '$ICU38_DIR/public/common',
-        '$CHROME_SRC_DIR',
+        '#/..',
     ],
 )
 
@@ -48,7 +48,7 @@ env.Append(
     ],
 )
 
-if env.Bit('windows'):
+if env['PLATFORM'] == 'win32':
   env.Append(
       CPPDEFINES = [
           'W32',
@@ -60,7 +60,7 @@ if env.Bit('windows'):
       ],
   )
 
-if env.Bit('linux'):
+if env['PLATFORM'] == 'posix':
   env.Append(
       CCFLAGS = [
           '-Wno-parentheses',
@@ -82,17 +82,15 @@ input_files = [
     'src/parsers/textparser.cxx',
 ]
 
-env.ChromeLibrary('hunspell', input_files)
+env.ChromeStaticLibrary('hunspell', input_files)
+
 
 
 dictionaries = [
-    'dictionaries/en-US-1-1.bdic',
+    'dictionaries/en-US.bdic',
     'dictionaries/en-US.dic',
     'dictionaries/en-US.aff',
 ]
 
-i = env.Install('$DESTINATION_ROOT/Dictionaries', dictionaries)
-env.Alias('chrome_Dictionaries', i)
-
-env.ChromeMSVSProject('$CHROME_DIR/third_party/hunspell/hunspell.vcproj',
-                guid='{D5E8DCB2-9C61-446F-8BEE-B18CA0E0936E}')
+i = env.Install('$TARGET_ROOT/Dictionaries', dictionaries)
+env.Alias('chrome', i)

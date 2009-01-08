@@ -9,8 +9,6 @@
 #include "base/lock.h"
 #include "base/logging.h"
 
-using base::TimeDelta;
-
 ConditionVariable::ConditionVariable(Lock* user_lock)
   : user_lock_(*user_lock),
     run_state_(RUNNING),

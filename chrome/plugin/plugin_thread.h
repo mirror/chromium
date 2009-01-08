@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_PLUGIN_PLUGIN_THREAD_H_
-#define CHROME_PLUGIN_PLUGIN_THREAD_H_
+#ifndef CHROME_PLUGIN_PLUGIN_THREAD_H__
+#define CHROME_PLUGIN_PLUGIN_THREAD_H__
 
 #include "base/thread.h"
 #include "chrome/common/ipc_sync_channel.h"
@@ -35,9 +35,7 @@ class PluginThread : public IPC::Channel::Listener,
   static PluginThread* GetPluginThread() { return plugin_thread_; }
 
   // Returns the one true dispatcher.
-  ResourceDispatcher* resource_dispatcher() {
-    return resource_dispatcher_.get();
-  }
+  ResourceDispatcher* resource_dispatcher() { return resource_dispatcher_.get(); }
 
  private:
    // Thread implementation:
@@ -73,4 +71,5 @@ class PluginThread : public IPC::Channel::Listener,
   DISALLOW_EVIL_CONSTRUCTORS(PluginThread);
 };
 
-#endif  // CHROME_PLUGIN_PLUGIN_THREAD_H_
+#endif  // CHROME_PLUGIN_PLUGIN_THREAD_H__
+

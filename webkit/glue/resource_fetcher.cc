@@ -5,13 +5,11 @@
 #include "config.h"
 #include "webkit/glue/resource_fetcher.h"
 
-#include "base/compiler_specific.h"
-
-MSVC_PUSH_WARNING_LEVEL(0);
+#pragma warning(push, 0)
 #include "FrameLoader.h"
 #include "ResourceHandle.h"
 #include "ResourceRequest.h"
-MSVC_POP_WARNING();
+#pragma warning(pop)
 
 #undef LOG
 #include "base/logging.h"

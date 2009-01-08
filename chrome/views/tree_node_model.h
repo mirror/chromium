@@ -5,12 +5,11 @@
 #ifndef CHROME_VIEWS_TREE_NODE_MODEL_H__
 #define CHROME_VIEWS_TREE_NODE_MODEL_H__
 
-#include <algorithm>
 #include <vector>
 
 #include "base/basictypes.h"
 #include "chrome/common/scoped_vector.h"
-#include "chrome/views/tree_model.h"
+#include "chrome/views/tree_view.h"
 
 namespace views {
 
@@ -116,8 +115,8 @@ class TreeNode : public TreeModelNode {
   // Returns the index of the specified child, or -1 if node is a not a child.
   int IndexOfChild(const NodeType* node) {
     DCHECK(node);
-    typename std::vector<NodeType*>::iterator i =
-        std::find(children_->begin(), children_->end(), node);
+    std::vector<NodeType*>::iterator i =
+        find(children_->begin(), children_->end(), node);
     if (i != children_->end())
       return static_cast<int>(i - children_->begin());
     return -1;
@@ -155,29 +154,26 @@ class TreeNode : public TreeModelNode {
   // Children.
   ScopedVector<NodeType> children_;
 
-  DISALLOW_COPY_AND_ASSIGN(TreeNode);
+  DISALLOW_EVIL_CONSTRUCTORS(TreeNode);
 };
 
 // TreeNodeWithValue ----------------------------------------------------------
 
 template <class ValueType>
-class TreeNodeWithValue : public TreeNode< TreeNodeWithValue<ValueType> > {
- private:
-  typedef TreeNode< TreeNodeWithValue<ValueType> > ParentType;
-
+class TreeNodeWithValue : public TreeNode<TreeNodeWithValue<ValueType>> {
  public:
   TreeNodeWithValue() { }
 
   TreeNodeWithValue(const ValueType& value)
-      : ParentType(std::wstring()), value(value) { }
+      : TreeNode(std::wstring()), value(value) { }
 
   TreeNodeWithValue(const std::wstring& title, const ValueType& value)
-      : ParentType(title), value(value) { }
+      : TreeNode(title), value(value) { }
 
   ValueType value;
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(TreeNodeWithValue);
+  DISALLOW_EVIL_CONSTRUCTORS(TreeNodeWithValue);
 };
 
 // TreeNodeModel --------------------------------------------------------------
@@ -268,7 +264,7 @@ class TreeNodeModel : public TreeModel {
   // The observer.
   TreeModelObserver* observer_;
 
-  DISALLOW_COPY_AND_ASSIGN(TreeNodeModel);
+  DISALLOW_EVIL_CONSTRUCTORS(TreeNodeModel);
 };
 
 }  // namespace views

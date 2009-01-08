@@ -76,7 +76,7 @@ NTSTATUS WINAPI TargetNtCreateFile(NtCreateFileFunction orig_CreateFile,
       break;
 
     if (!NT_SUCCESS(answer.nt_status))
-        return answer.nt_status;
+        break;
 
     __try {
       *file = answer.handle;
@@ -144,7 +144,7 @@ NTSTATUS WINAPI TargetNtOpenFile(NtOpenFileFunction orig_OpenFile, PHANDLE file,
       break;
 
     if (!NT_SUCCESS(answer.nt_status))
-      return answer.nt_status;
+      break;
 
     __try {
       *file = answer.handle;
@@ -208,6 +208,9 @@ NTSTATUS WINAPI TargetNtQueryAttributesFile(
     if (SBOX_ALL_OK != code)
       break;
 
+    if (!NT_SUCCESS(answer.nt_status))
+      break;
+
     return answer.nt_status;
 
   } while (false);
@@ -264,6 +267,9 @@ NTSTATUS WINAPI TargetNtQueryFullAttributesFile(
     operator delete(name, NT_ALLOC);
 
     if (SBOX_ALL_OK != code)
+      break;
+
+    if (!NT_SUCCESS(answer.nt_status))
       break;
 
     return answer.nt_status;
@@ -340,6 +346,9 @@ NTSTATUS WINAPI TargetNtSetInformationFile(
                                 file_info_class, &answer);
 
     if (SBOX_ALL_OK != code)
+      break;
+
+    if (!NT_SUCCESS(answer.nt_status))
       break;
 
     status = answer.nt_status;

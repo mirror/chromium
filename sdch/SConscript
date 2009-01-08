@@ -12,7 +12,7 @@ cpppath = [
     '$OPEN_VCDIFF_DIR/src',
 ]
 
-if env.Bit('windows'):
+if env['PLATFORM'] == 'win32':
   cpppath.append('$OPEN_VCDIFF_DIR/vsprojects')
 
 env.Prepend(CPPPATH = cpppath)
@@ -25,19 +25,15 @@ input_files = [
     '$OPEN_VCDIFF_DIR/src/decodetable.cc',
     '$OPEN_VCDIFF_DIR/src/encodetable.cc',
     '$OPEN_VCDIFF_DIR/src/headerparser.cc',
-    '$OPEN_VCDIFF_DIR/src/instruction_map.cc',
     '$OPEN_VCDIFF_DIR/src/logging.cc',
     '$OPEN_VCDIFF_DIR/src/varint_bigendian.cc',
     '$OPEN_VCDIFF_DIR/src/vcdecoder.cc',
     '$OPEN_VCDIFF_DIR/src/vcdiffengine.cc',
 ]
 
-env.ChromeLibrary('sdch', input_files)
+env.ChromeStaticLibrary('sdch', input_files)
 
-env.ChromeMSVSProject('$SDCH_DIR/sdch.vcproj',
-                guid='{F54ABC59-5C00-414A-A9BA-BAF26D1699F0}')
-
-if env.Bit('posix'):
+if env['PLATFORM'] in ('posix', 'darwin'):
 
   # Generate a target config.h file from a source config.h.in file.
   #
@@ -77,14 +73,14 @@ if env.Bit('posix'):
       'STDC_HEADERS',
   ]
 
-  if env.Bit('linux'):
+  if env['PLATFORM'] == 'posix':
     defines.extend([
         'HAVE_MALLOC_H',
         'HAVE_MEMALIGN',
         'HAVE_POSIX_MEMALIGN',
     ])
 
-  if env.Bit('mac'):
+  if env['PLATFORM'] == 'darwin':
     defines.extend([
         'HAVE_WORKING_KQUEUE',
     ])

@@ -16,8 +16,7 @@ class URLRequestMockNetErrorJob : public URLRequestMockHTTPJob {
  public:
   URLRequestMockNetErrorJob(URLRequest* request,
                             const std::vector<int>& errors,
-                            net::X509Certificate* ssl_cert,
-                            const FilePath& file_path);
+                            net::X509Certificate* ssl_cert);
   virtual ~URLRequestMockNetErrorJob();
 
   virtual void Start();

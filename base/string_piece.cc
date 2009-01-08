@@ -213,3 +213,4 @@ StringPiece StringPiece::substr(size_type pos, size_type n) const {
 }
 
 const StringPiece::size_type StringPiece::npos = size_type(-1);
+

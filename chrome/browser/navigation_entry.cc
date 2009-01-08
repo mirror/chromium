@@ -59,6 +59,6 @@ NavigationEntry::NavigationEntry(TabContentsType type,
 
 const std::wstring& NavigationEntry::GetTitleForDisplay() {
   if (title_.empty())
-    return display_url_as_string_;
+    return url_as_string_;
   return title_;
 }

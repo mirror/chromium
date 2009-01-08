@@ -171,6 +171,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\test_file_util.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\testing_profile.cc"
 				>
 			</File>
@@ -211,7 +215,7 @@
 			Name="TestFindInPage"
 			>
 			<File
-				RelativePath="..\..\browser\views\find_bar_win_interactive_uitest.cc"
+				RelativePath="..\..\browser\find_in_page_controller_interactive_uitest.cc"
 				>
 			</File>
 		</Filter>

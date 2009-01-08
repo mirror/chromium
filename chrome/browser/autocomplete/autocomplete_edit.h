@@ -46,10 +46,10 @@ class AutocompleteEditController {
   // |alternate_nav_url|, if non-empty, contains the alternate navigation URL
   // for |url|, which the controller can check for existence.  See comments on
   // AutocompleteResult::GetAlternateNavURL().
-  virtual void OnAutocompleteAccept(const GURL& url,
+  virtual void OnAutocompleteAccept(const std::wstring& url,
       WindowOpenDisposition disposition,
       PageTransition::Type transition,
-      const GURL& alternate_nav_url) = 0;
+      const std::wstring& alternate_nav_url) = 0;
 
   // Called when anything has changed that might affect the layout or contents
   // of the views around the edit, including the text of the edit and the
@@ -227,10 +227,10 @@ class AutocompleteEditModel {
   // AutomationProvider::AutocompleteEditIsQueryInProgress.
   bool query_in_progress() const;
 
-  // Returns the current autocomplete result.  This logic should in the future
+  // Returns the lastest autocomplete results.  This logic should in the future
   // live in AutocompleteController but resides here for now.  This method is
   // used by AutomationProvider::AutocompleteEditGetMatches.
-  const AutocompleteResult& result() const;
+  const AutocompleteResult* latest_result() const;
 
   // Called when the view is gaining focus.  |control_down| is whether the
   // control key is down (at the time we're gaining focus).
@@ -260,18 +260,22 @@ class AutocompleteEditModel {
   //   |text| is either the new temporary text (if |is_temporary_text| is true)
   //     from the user manually selecting a different match, or the inline
   //     autocomplete text (if |is_temporary_text| is false).
+  //   |previous_selected_match| is only used when changing the temporary text;
+  //     it is the match that was (manually or automatically) selected before
+  //     the current manual selection, and is saved to be restored later if the
+  //     user hits <esc>.
+  //   |can_show_search_hint| is true if the current choice is nonexistent or a
+  //     search result; in these cases it may be OK to show the "Type to search"
+  //     hint (see comments on show_search_hint_).
   //   |keyword| is the keyword to show a hint for if |is_keyword_hint| is true,
   //     or the currently selected keyword if |is_keyword_hint| is false (see
   //     comments on keyword_ and is_keyword_hint_).
-  //   |type| is the type of match selected; this is used to determine whether
-  //     we can show the "Type to search" hint (see comments on
-  //     show_search_hint_).
   void OnPopupDataChanged(
       const std::wstring& text,
       bool is_temporary_text,
       const std::wstring& keyword,
       bool is_keyword_hint,
-      AutocompleteMatch::Type type);
+      bool can_show_search_hint);
 
   // Called by the AutocompleteEditView after something changes, with details
   // about what state changes occured.  Updates internal state, updates the
@@ -325,9 +329,9 @@ class AutocompleteEditModel {
   //
   // See AutocompleteEdit for a description of the args (they may be null if
   // not needed).
-  GURL GetURLForCurrentText(PageTransition::Type* transition,
-                            bool* is_history_what_you_typed_match,
-                            GURL* alternate_nav_url);
+  std::wstring GetURLForCurrentText(PageTransition::Type* transition,
+                                    bool* is_history_what_you_typed_match,
+                                    std::wstring* alternate_nav_url);
 
   AutocompleteEditView* view_;
 
@@ -394,7 +398,7 @@ class AutocompleteEditModel {
   // arrows to a different item with the same text, we can still distinguish
   // them and not revert all the way to the permanent_text_.
   bool has_temporary_text_;
-  GURL original_url_;
+  std::wstring original_url_;
   KeywordUIState original_keyword_ui_state_;
 
   // When the user's last action was to paste and replace all the text, we
@@ -427,9 +431,9 @@ class AutocompleteEditModel {
   bool show_search_hint_;
 
   // Paste And Go-related state.  See CanPasteAndGo().
-  mutable GURL paste_and_go_url_;
+  mutable std::wstring paste_and_go_url_;
   mutable PageTransition::Type paste_and_go_transition_;
-  mutable GURL paste_and_go_alternate_nav_url_;
+  mutable std::wstring paste_and_go_alternate_nav_url_;
 
   Profile* profile_;
 
@@ -494,10 +498,10 @@ class AutocompleteEditView
   // If the URL was expanded from a keyword, |keyword| is that keyword.
   //
   // This may close the popup.
-  void OpenURL(const GURL& url,
+  void OpenURL(const std::wstring& url,
                WindowOpenDisposition disposition,
                PageTransition::Type transition,
-               const GURL& alternate_nav_url,
+               const std::wstring& alternate_nav_url,
                size_t selected_line,
                const std::wstring& keyword);
 

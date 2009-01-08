@@ -18,8 +18,6 @@
 
 #ifdef IPC_MESSAGE_LOG_ENABLED
 
-using base::Time;
-
 // IPC::Logging is allocated as a singleton, so we don't need any kind of
 // special retention program.
 template <>
@@ -269,3 +267,4 @@ void GenerateLogData(const std::wstring& channel, const Message& message,
 }
 
 #endif  // IPC_MESSAGE_LOG_ENABLED
+

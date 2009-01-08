@@ -26,8 +26,6 @@
 #include "generated_resources.h"
 #include "net/base/net_util.h"
 
-using base::Time;
-using base::TimeDelta;
 using views::ColumnSet;
 using views::GridLayout;
 
@@ -252,10 +250,10 @@ ShelfItemDialog::ShelfItemDialog(ShelfItemDialogDelegate* delegate,
   url_table_model_.reset(new PossibleURLModel());
 
   views::TableColumn col1(IDS_ASI_PAGE_COLUMN, views::TableColumn::LEFT, -1,
-                          50);
+                                50);
   col1.sortable = true;
   views::TableColumn col2(IDS_ASI_URL_COLUMN, views::TableColumn::LEFT, -1,
-                          50);
+                                50);
   col2.sortable = true;
   std::vector<views::TableColumn> cols;
   cols.push_back(col1);
@@ -263,7 +261,7 @@ ShelfItemDialog::ShelfItemDialog(ShelfItemDialogDelegate* delegate,
 
   url_table_ = new views::TableView(url_table_model_.get(), cols,
                                     views::ICON_AND_TEXT, true, true,
-                                    true);
+                                          true);
   url_table_->SetObserver(this);
 
   // Yummy layout code.
@@ -455,7 +453,7 @@ bool ShelfItemDialog::AcceleratorPressed(
     window()->Close();
   } else if (accelerator.GetKeyCode() == VK_RETURN) {
     views::FocusManager* fm = views::FocusManager::GetFocusManager(
-        GetWidget()->GetHWND());
+        GetContainer()->GetHWND());
     if (fm->GetFocusedView() == url_table_) {
       // Return on table behaves like a double click.
       OnDoubleClick();

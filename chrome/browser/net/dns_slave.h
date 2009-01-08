@@ -15,8 +15,8 @@
 // This class does no "de-duping," and merely slavishly services
 // items supplied by its DnsMaster.
 
-#ifndef CHROME_BROWSER_NET_DNS_SLAVE_H_
-#define CHROME_BROWSER_NET_DNS_SLAVE_H_
+#ifndef CHROME_BROWSER_NET_DNS_SLAVE_H__
+#define CHROME_BROWSER_NET_DNS_SLAVE_H__
 
 #include <windows.h>
 #include <string>
@@ -42,9 +42,9 @@ FreeAddrInfoFunction get_freeaddrinfo();
 
 class DnsSlave {
  public:
-  DnsSlave(DnsMaster* master, size_t slave_index)
-      : master_(master),
-        slave_index_(slave_index) {
+  DnsSlave(DnsMaster* master, int slave_index)
+      : slave_index_(slave_index),
+        master_(master) {
   }
 
   ~DnsSlave() {
@@ -59,14 +59,14 @@ class DnsSlave {
   std::string hostname_;  // Name being looked up.
 
   DnsMaster* master_;  // Master that started us.
-  size_t slave_index_;  // Our index into DnsMaster's array.
+  int slave_index_;  // Our index into DnsMaster's array.
 
   void BlockingDnsLookup();
 
-  DISALLOW_COPY_AND_ASSIGN(DnsSlave);
+  DISALLOW_EVIL_CONSTRUCTORS(DnsSlave);
 };
 
 }  // namespace chrome_browser_net
 
-#endif  // CHROME_BROWSER_NET_DNS_SLAVE_H_
+#endif  // CHROME_BROWSER_NET_DNS_SLAVE_H__
 

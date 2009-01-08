@@ -22,8 +22,6 @@
 #include "net/disk_cache/disk_cache_test_util.h"
 #include "net/disk_cache/rankings.h"
 
-using base::Time;
-
 enum Errors {
   GENERIC = -1,
   ALL_GOOD = 0,

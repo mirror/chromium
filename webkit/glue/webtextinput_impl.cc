@@ -5,12 +5,10 @@
 #include <ctype.h>
 #include "config.h"
 
-#include "base/compiler_specific.h"
-
-MSVC_PUSH_WARNING_LEVEL(0);
+#pragma warning(push, 0)
 #include "Frame.h"
 #include "Editor.h"
-MSVC_POP_WARNING();
+#pragma warning(pop)
 
 #undef LOG
 
@@ -84,6 +82,7 @@ void WebTextInputImpl::SetMarkedText(const std::string& text,
 
   editor->confirmComposition(str);
 
+  WebCore::Frame* frame = GetFrame();
   WTF::Vector<WebCore::CompositionUnderline> decorations;
 
   editor->setComposition(str, decorations, location, length);
@@ -118,7 +117,7 @@ void WebTextInputImpl::MarkedRange(std::string* range_str) {
 
 void WebTextInputImpl::SelectedRange(std::string* range_str) {
   WTF::RefPtr<WebCore::Range> range
-      = GetFrame()->selection()->toRange();
+      = GetFrame()->selectionController()->toRange();
 
   // Range::toString() returns a string different from what test expects.
   // So we need to construct the string ourselves.

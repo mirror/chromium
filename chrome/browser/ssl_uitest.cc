@@ -11,18 +11,28 @@
 #include "chrome/test/automation/browser_proxy.h"
 #include "chrome/test/automation/tab_proxy.h"
 #include "chrome/test/ui/ui_test.h"
-#include "net/base/ssl_test_util.h"
 #include "net/url_request/url_request_unittest.h"
 
 namespace {
 
 const wchar_t kDocRoot[] = L"chrome/test/data";
+const char kHostName[] = "127.0.0.1";
+
+const int kOKHTTPSPort = 9443;
+const int kBadHTTPSPort = 9666;
+
+// The issuer name of the cert that should be trusted for the test to work.
+const wchar_t kCertIssuerName[] = L"Test CA";
 
 class SSLUITest : public UITest {
  protected:
   SSLUITest() {
+    CheckCATrusted();
     dom_automation_enabled_ = true;
-    EXPECT_TRUE(util_.CheckCATrusted());
+    PathService::Get(base::DIR_SOURCE_ROOT, &cert_dir_);
+    cert_dir_ += L"/chrome/test/data/ssl/certificates/";
+    std::replace(cert_dir_.begin(), cert_dir_.end(),
+                 L'/', file_util::kPathSeparator);
   }
 
   TabProxy* GetActiveTabProxy() {
@@ -41,34 +51,61 @@ class SSLUITest : public UITest {
     EXPECT_TRUE(browser_proxy->AppendTab(url));
   }
 
-  TestServer* PlainServer() {
-    return new TestServer(kDocRoot);
+  std::wstring GetOKCertPath() {
+    std::wstring path(cert_dir_);
+    file_util::AppendToPath(&path, L"ok_cert.pem");
+    return path;
   }
 
-  HTTPSTestServer* GoodCertServer() {
-    return new HTTPSTestServer(util_.kHostName, util_.kOKHTTPSPort,
-        kDocRoot, util_.GetOKCertPath().ToWStringHack());
+  std::wstring GetInvalidCertPath() {
+    std::wstring path(cert_dir_);
+    file_util::AppendToPath(&path, L"invalid_cert.pem");
+    return path;
   }
 
-  HTTPSTestServer* BadCertServer() {
-    return new HTTPSTestServer(util_.kHostName, util_.kBadHTTPSPort,
-        kDocRoot, util_.GetExpiredCertPath().ToWStringHack());
+  std::wstring GetExpiredCertPath() {
+    std::wstring path(cert_dir_);
+    file_util::AppendToPath(&path, L"expired_cert.pem");
+    return path;
   }
 
- protected:
-  SSLTestUtil util_;
+ private:
+  void CheckCATrusted() {
+    HCERTSTORE cert_store = CertOpenSystemStore(NULL, L"ROOT");
+    if (!cert_store) {
+      FAIL() << " could not open trusted root CA store";
+      return;
+    }
+    PCCERT_CONTEXT cert =
+        CertFindCertificateInStore(cert_store,
+                                   X509_ASN_ENCODING | PKCS_7_ASN_ENCODING,
+                                   0,
+                                   CERT_FIND_ISSUER_STR,
+                                   kCertIssuerName,
+                                   NULL);
+    if (cert)
+      CertFreeCertificateContext(cert);
+    CertCloseStore(cert_store, 0);
 
-  DISALLOW_COPY_AND_ASSIGN(SSLUITest);
+    if (!cert) {
+      FAIL() << " TEST CONFIGURATION ERROR: you need to import the test ca "
+          "certificate to your trusted roots for this test to work. For more "
+          "info visit:\n"
+          "http://wiki.corp.google.com/twiki/bin/view/Main/ChromeUnitUITests\n";
+    }
+  }
+
+  std::wstring cert_dir_;
 };
 
 }  // namespace
 
 // Visits a regular page over http.
 TEST_F(SSLUITest, TestHTTP) {
-  scoped_ptr<TestServer> server(PlainServer());
+  TestServer server(kDocRoot);
 
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
-  NavigateTab(tab.get(), server->TestServerPageW(L"files/ssl/google.html"));
+  NavigateTab(tab.get(), server.TestServerPageW(L"files/ssl/google.html"));
 
   NavigationEntry::PageType page_type;
   EXPECT_TRUE(tab->GetPageType(&page_type));
@@ -87,12 +124,13 @@ TEST_F(SSLUITest, TestHTTP) {
 // Visits a page over http which includes broken https resources (status should
 // be OK).
 TEST_F(SSLUITest, TestHTTPWithBrokenHTTPSResource) {
-  scoped_ptr<TestServer> http_server(PlainServer());
-  scoped_ptr<HTTPSTestServer> bad_https_server(BadCertServer());
+  TestServer http_server(kDocRoot);
+  HTTPSTestServer httpsServer(kHostName, kBadHTTPSPort,
+                              kDocRoot, GetExpiredCertPath());
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
 
   NavigateTab(tab.get(),
-      http_server->TestServerPageW(L"files/ssl/page_with_unsafe_contents.html"));
+      http_server.TestServerPageW(L"files/ssl/page_with_unsafe_contents.html"));
 
   SecurityStyle security_style;
   int cert_status;
@@ -106,10 +144,11 @@ TEST_F(SSLUITest, TestHTTPWithBrokenHTTPSResource) {
 
 // Visits a page over OK https:
 TEST_F(SSLUITest, TestOKHTTPS) {
-  scoped_ptr<HTTPSTestServer> https_server(GoodCertServer());
+  HTTPSTestServer https_server(kHostName, kOKHTTPSPort,
+                               kDocRoot, GetOKCertPath());
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
   NavigateTab(tab.get(),
-              https_server->TestServerPageW(L"files/ssl/google.html"));
+              https_server.TestServerPageW(L"files/ssl/google.html"));
 
   NavigationEntry::PageType page_type;
   EXPECT_TRUE(tab->GetPageType(&page_type));
@@ -127,10 +166,11 @@ TEST_F(SSLUITest, TestOKHTTPS) {
 
 // Visits a page with https error:
 TEST_F(SSLUITest, TestHTTPSExpiredCert) {
-  scoped_ptr<HTTPSTestServer> bad_https_server(BadCertServer());
+  HTTPSTestServer https_server(kHostName, kBadHTTPSPort,
+                               kDocRoot, GetExpiredCertPath());
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
   NavigateTab(tab.get(),
-              bad_https_server->TestServerPageW(L"files/ssl/google.html"));
+              https_server.TestServerPageW(L"files/ssl/google.html"));
 
   NavigationEntry::PageType page_type;
   EXPECT_TRUE(tab->GetPageType(&page_type));
@@ -163,14 +203,15 @@ TEST_F(SSLUITest, TestHTTPSExpiredCert) {
 
 // Visits a page with mixed content.
 TEST_F(SSLUITest, TestMixedContents) {
-  scoped_ptr<HTTPSTestServer> https_server(GoodCertServer());
-  scoped_ptr<TestServer> http_server(PlainServer());
+  HTTPSTestServer https_server(kHostName, kOKHTTPSPort,
+                               kDocRoot, GetOKCertPath());
+  TestServer http_server(kDocRoot);
 
   // Load a page with mixed-content, the default behavior is to show the mixed
   // content.
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
   NavigateTab(tab.get(),
-      https_server->TestServerPageW(L"files/ssl/page_with_mixed_contents.html"));
+      https_server.TestServerPageW(L"files/ssl/page_with_mixed_contents.html"));
   NavigationEntry::PageType page_type;
   EXPECT_TRUE(tab->GetPageType(&page_type));
   EXPECT_EQ(NavigationEntry::NORMAL_PAGE, page_type);
@@ -195,7 +236,8 @@ TEST_F(SSLUITest, TestMixedContents) {
   // The image should be filtered.
   int img_width;
   EXPECT_TRUE(tab->ExecuteAndExtractInt(L"",
-      L"window.domAutomationController.send(ImageWidth());",
+      L"javascript:void(window.domAutomationController)"
+      L".send(ImageWidth());",
       &img_width));
   // In order to check that the image was not loaded, we check its width.
   // The actual image (Google logo) is 114 pixels wide, we assume the broken
@@ -219,7 +261,8 @@ TEST_F(SSLUITest, TestMixedContents) {
 
   // The image should show now.
   EXPECT_TRUE(tab->ExecuteAndExtractInt(L"",
-      L"window.domAutomationController.send(ImageWidth());",
+      L"javascript:void(window.domAutomationController)"
+      L".send(ImageWidth());",
       &img_width));
   EXPECT_LT(100, img_width);
 
@@ -235,12 +278,14 @@ TEST_F(SSLUITest, TestMixedContents) {
 // - frames content is replaced with warning
 // - images and scripts are filtered out entirely
 TEST_F(SSLUITest, TestUnsafeContents) {
-  scoped_ptr<HTTPSTestServer> good_https_server(GoodCertServer());
-  scoped_ptr<HTTPSTestServer> bad_https_server(BadCertServer());
+  HTTPSTestServer good_https_server(kHostName, kOKHTTPSPort,
+                                    kDocRoot, GetOKCertPath());
+  HTTPSTestServer bad_https_server(kHostName, kBadHTTPSPort,
+                                   kDocRoot, GetExpiredCertPath());
 
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
   NavigateTab(tab.get(),
-      good_https_server->TestServerPageW(
+      good_https_server.TestServerPageW(
           L"files/ssl/page_with_unsafe_contents.html"));
   NavigationEntry::PageType page_type;
   EXPECT_TRUE(tab->GetPageType(&page_type));
@@ -269,7 +314,8 @@ TEST_F(SSLUITest, TestUnsafeContents) {
 
   int img_width;
   EXPECT_TRUE(tab->ExecuteAndExtractInt(L"",
-      L"window.domAutomationController.send(ImageWidth());",
+      L"javascript:void(window.domAutomationController)"
+      L".send(ImageWidth());",
       &img_width));
   // In order to check that the image was not loaded, we check its width.
   // The actual image (Google logo) is 114 pixels wide, we assume the broken
@@ -278,18 +324,20 @@ TEST_F(SSLUITest, TestUnsafeContents) {
 
   bool js_result = false;
   EXPECT_TRUE(tab->ExecuteAndExtractBool(L"",
-      L"window.domAutomationController.send(IsFooSet());",
+      L"javascript:void(window.domAutomationController)"
+      L".send(IsFooSet());",
       &js_result));
   EXPECT_FALSE(js_result);
 }
 
 // Visits a page with mixed content loaded by JS (after the initial page load).
 TEST_F(SSLUITest, TestMixedContentsLoadedFromJS) {
-  scoped_ptr<HTTPSTestServer> https_server(GoodCertServer());
-  scoped_ptr<TestServer> http_server(PlainServer());
+  HTTPSTestServer https_server(kHostName, kOKHTTPSPort,
+                               kDocRoot, GetOKCertPath());
+  TestServer http_server(kDocRoot);
 
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
-  NavigateTab(tab.get(), https_server->TestServerPageW(
+  NavigateTab(tab.get(), https_server.TestServerPageW(
       L"files/ssl/page_with_dynamic_mixed_contents.html"));
   NavigationEntry::PageType page_type;
   EXPECT_TRUE(tab->GetPageType(&page_type));
@@ -307,7 +355,7 @@ TEST_F(SSLUITest, TestMixedContentsLoadedFromJS) {
   // Load the insecure image.
   bool js_result = false;
   EXPECT_TRUE(tab->ExecuteAndExtractBool(L"",
-                                         L"loadBadImage();",
+                                         L"javascript:loadBadImage();",
                                          &js_result));
   EXPECT_TRUE(js_result);
 
@@ -324,11 +372,12 @@ TEST_F(SSLUITest, TestMixedContentsLoadedFromJS) {
 // referencing that same image over http (hoping it is coming from the webcore
 // memory cache).
 TEST_F(SSLUITest, TestCachedMixedContents) {
-  scoped_ptr<HTTPSTestServer> https_server(GoodCertServer());
-  scoped_ptr<TestServer> http_server(PlainServer());
+  HTTPSTestServer https_server(kHostName, kOKHTTPSPort,
+                               kDocRoot, GetOKCertPath());
+  TestServer http_server(kDocRoot);
 
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
-  NavigateTab(tab.get(), http_server->TestServerPageW(
+  NavigateTab(tab.get(), http_server.TestServerPageW(
       L"files/ssl/page_with_mixed_contents.html"));
 
   NavigationEntry::PageType page_type;
@@ -346,7 +395,7 @@ TEST_F(SSLUITest, TestCachedMixedContents) {
 
   // Load again but over SSL.  It should have mixed-contents (even though the
   // image comes from the WebCore memory cache).
-  NavigateTab(tab.get(), https_server->TestServerPageW(
+  NavigateTab(tab.get(), https_server.TestServerPageW(
       L"files/ssl/page_with_mixed_contents.html"));
 
   EXPECT_TRUE(tab->GetSecurityState(&security_style, &cert_status,
@@ -361,17 +410,16 @@ TEST_F(SSLUITest, TestCachedMixedContents) {
 
 // This test ensures the CN invalid status does not 'stick' to a certificate
 // (see bug #1044942) and that it depends on the host-name.
-// TODO(jcampan): this test is flacky and fails sometimes (bug #1065095)
+// TODO (jcampan): this test is flacky and fails sometimes (bug #1065095)
 TEST_F(SSLUITest, DISABLED_TestCNInvalidStickiness) {
   const std::string kLocalHost = "localhost";
-  scoped_ptr<HTTPSTestServer> https_server(
-    new HTTPSTestServer(kLocalHost, util_.kOKHTTPSPort,
-    kDocRoot, util_.GetOKCertPath().ToWStringHack()));
+  HTTPSTestServer https_server(kLocalHost, kOKHTTPSPort,
+                               kDocRoot, GetOKCertPath());
 
   // First we hit the server with hostname, this generates an invalid policy
   // error.
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
-  NavigateTab(tab.get(), https_server->TestServerPageW(
+  NavigateTab(tab.get(), https_server.TestServerPageW(
       L"files/ssl/google.html"));
 
   // We get an interstitial page as a result.
@@ -397,12 +445,12 @@ TEST_F(SSLUITest, DISABLED_TestCNInvalidStickiness) {
   // Now we try again with the right host name this time.
 
   // Let's change the host-name in the url.
-  GURL url = https_server->TestServerPageW(L"files/ssl/google.html");
+  GURL url = https_server.TestServerPageW(L"files/ssl/google.html");
   std::string::size_type hostname_index = url.spec().find(kLocalHost);
   ASSERT_TRUE(hostname_index != std::string::npos);  // Test sanity check.
   std::string new_url;
   new_url.append(url.spec().substr(0, hostname_index));
-  new_url.append(util_.kHostName);
+  new_url.append(kHostName);
   new_url.append(url.spec().substr(hostname_index + kLocalHost.size()));
 
   NavigateTab(tab.get(), GURL(new_url));
@@ -416,7 +464,7 @@ TEST_F(SSLUITest, DISABLED_TestCNInvalidStickiness) {
   EXPECT_EQ(NavigationEntry::SSLStatus::NORMAL_CONTENT, mixed_content_state);
 
   // Now try again the broken one to make sure it is still broken.
-  NavigateTab(tab.get(), https_server->TestServerPageW(
+  NavigateTab(tab.get(), https_server.TestServerPageW(
       L"files/ssl/google.html"));
 
   EXPECT_TRUE(tab->GetPageType(&page_type));
@@ -432,10 +480,11 @@ TEST_F(SSLUITest, DISABLED_TestCNInvalidStickiness) {
 
 // Test that navigating to a #ref does not change a bad security state.
 TEST_F(SSLUITest, TestRefNavigation) {
-  scoped_ptr<HTTPSTestServer> bad_https_server(BadCertServer());
+  HTTPSTestServer https_server(kHostName, kBadHTTPSPort,
+                               kDocRoot, GetExpiredCertPath());
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
   NavigateTab(tab.get(),
-              bad_https_server->TestServerPageW(L"files/ssl/page_with_refs.html"));
+              https_server.TestServerPageW(L"files/ssl/page_with_refs.html"));
 
   NavigationEntry::PageType page_type;
   EXPECT_TRUE(tab->GetPageType(&page_type));
@@ -462,7 +511,7 @@ TEST_F(SSLUITest, TestRefNavigation) {
 
   // Now navigate to a ref in the page.
   NavigateTab(tab.get(),
-      bad_https_server->TestServerPageW(L"files/ssl/page_with_refs.html#jp"));
+      https_server.TestServerPageW(L"files/ssl/page_with_refs.html#jp"));
   EXPECT_TRUE(tab->GetSecurityState(&security_style, &cert_status,
                                     &mixed_content_state));
   EXPECT_EQ(SECURITY_STYLE_AUTHENTICATION_BROKEN, security_style);
@@ -475,12 +524,13 @@ TEST_F(SSLUITest, TestRefNavigation) {
 // (bug #1966).
 // Disabled because flaky (bug #2136).
 TEST_F(SSLUITest, DISABLED_TestCloseTabWithUnsafePopup) {
-  scoped_ptr<TestServer> http_server(PlainServer());
-  scoped_ptr<HTTPSTestServer> bad_https_server(BadCertServer());
+  TestServer http_server(kDocRoot);
+  HTTPSTestServer bad_https_server(kHostName, kBadHTTPSPort,
+                                   kDocRoot, GetExpiredCertPath());
 
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
   NavigateTab(tab.get(),
-              http_server->TestServerPageW(
+              http_server.TestServerPageW(
                   L"files/ssl/page_with_unsafe_popup.html"));
 
   int popup_count = 0;
@@ -492,7 +542,7 @@ TEST_F(SSLUITest, DISABLED_TestCloseTabWithUnsafePopup) {
   scoped_ptr<BrowserProxy> browser_proxy(automation()->GetBrowserWindow(0));
   EXPECT_TRUE(browser_proxy.get());
   browser_proxy->AppendTab(
-      http_server->TestServerPageW(L"files/ssl/google.html"));
+      http_server.TestServerPageW(L"files/ssl/google.html"));
 
   // Close the first tab.
   tab->Close();
@@ -500,12 +550,14 @@ TEST_F(SSLUITest, DISABLED_TestCloseTabWithUnsafePopup) {
 
 // Visit a page over bad https that is a redirect to a page with good https.
 TEST_F(SSLUITest, TestRedirectBadToGoodHTTPS) {
-  scoped_ptr<HTTPSTestServer> good_https_server(GoodCertServer());
-  scoped_ptr<HTTPSTestServer> bad_https_server(BadCertServer());
+  HTTPSTestServer good_https_server(kHostName, kOKHTTPSPort,
+                                    kDocRoot, GetOKCertPath());
+  HTTPSTestServer bad_https_server(kHostName, kBadHTTPSPort,
+                                   kDocRoot, GetExpiredCertPath());
 
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
-  GURL url1 = bad_https_server->TestServerPageW(L"server-redirect?");
-  GURL url2 = good_https_server->TestServerPageW(L"files/ssl/google.html");
+  GURL url1 = bad_https_server.TestServerPageW(L"server-redirect?");
+  GURL url2 = good_https_server.TestServerPageW(L"files/ssl/google.html");
   NavigateTab(tab.get(), GURL(url1.spec() + url2.spec()));
 
   NavigationEntry::PageType page_type;
@@ -533,12 +585,14 @@ TEST_F(SSLUITest, TestRedirectBadToGoodHTTPS) {
 
 // Visit a page over good https that is a redirect to a page with bad https.
 TEST_F(SSLUITest, TestRedirectGoodToBadHTTPS) {
-  scoped_ptr<HTTPSTestServer> good_https_server(GoodCertServer());
-  scoped_ptr<HTTPSTestServer> bad_https_server(BadCertServer());
+  HTTPSTestServer good_https_server(kHostName, kOKHTTPSPort,
+                                    kDocRoot, GetOKCertPath());
+  HTTPSTestServer bad_https_server(kHostName, kBadHTTPSPort,
+                                   kDocRoot, GetExpiredCertPath());
 
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
-  GURL url1 = good_https_server->TestServerPageW(L"server-redirect?");
-  GURL url2 = bad_https_server->TestServerPageW(L"files/ssl/google.html");
+  GURL url1 = good_https_server.TestServerPageW(L"server-redirect?");
+  GURL url2 = bad_https_server.TestServerPageW(L"files/ssl/google.html");
   NavigateTab(tab.get(), GURL(url1.spec() + url2.spec()));
 
   NavigationEntry::PageType page_type;
@@ -561,15 +615,17 @@ TEST_F(SSLUITest, TestRedirectGoodToBadHTTPS) {
 // Visit a page over http that is a redirect to a page with https (good and
 // bad).
 TEST_F(SSLUITest, TestRedirectHTTPToHTTPS) {
-  scoped_ptr<TestServer> http_server(PlainServer());
-  scoped_ptr<HTTPSTestServer> good_https_server(GoodCertServer());
-  scoped_ptr<HTTPSTestServer> bad_https_server(BadCertServer());
+  TestServer http_server(kDocRoot);
+  HTTPSTestServer good_https_server(kHostName, kOKHTTPSPort,
+                                    kDocRoot, GetOKCertPath());
+  HTTPSTestServer bad_https_server(kHostName, kBadHTTPSPort,
+                                   kDocRoot, GetExpiredCertPath());
 
   // HTTP redirects to good HTTPS.
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
-  GURL http_url = http_server->TestServerPageW(L"server-redirect?");
+  GURL http_url = http_server.TestServerPageW(L"server-redirect?");
   GURL good_https_url =
-      good_https_server->TestServerPageW(L"files/ssl/google.html");
+      good_https_server.TestServerPageW(L"files/ssl/google.html");
   NavigateTab(tab.get(), GURL(http_url.spec() + good_https_url.spec()));
 
   SecurityStyle security_style;
@@ -583,7 +639,7 @@ TEST_F(SSLUITest, TestRedirectHTTPToHTTPS) {
 
   // HTTP redirects to bad HTTPS.
   GURL bad_https_url =
-      bad_https_server->TestServerPageW(L"files/ssl/google.html");
+      bad_https_server.TestServerPageW(L"files/ssl/google.html");
   NavigateTab(tab.get(), GURL(http_url.spec() + bad_https_url.spec()));
 
   NavigationEntry::PageType page_type;
@@ -604,12 +660,13 @@ TEST_F(SSLUITest, TestRedirectHTTPToHTTPS) {
 // Visit a page over https that is a redirect to a page with http (to make sure
 // we don't keep the secure state).
 TEST_F(SSLUITest, TestRedirectHTTPSToHTTP) {
-  scoped_ptr<TestServer> http_server(PlainServer());
-  scoped_ptr<HTTPSTestServer> https_server(GoodCertServer());
+  TestServer http_server(kDocRoot);
+  HTTPSTestServer https_server(kHostName, kOKHTTPSPort,
+                               kDocRoot, GetOKCertPath());
 
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
-  GURL https_url = https_server->TestServerPageW(L"server-redirect?");
-  GURL http_url = http_server->TestServerPageW(L"files/ssl/google.html");
+  GURL https_url = https_server.TestServerPageW(L"server-redirect?");
+  GURL http_url = http_server.TestServerPageW(L"files/ssl/google.html");
   NavigateTab(tab.get(), GURL(https_url.spec() + http_url.spec()));
 
   SecurityStyle security_style;
@@ -657,16 +714,18 @@ TEST_F(SSLUITest, TestConnectToBadPort) {
 // From a good HTTPS top frame:
 // - navigate to an OK HTTPS frame
 // - navigate to a bad HTTPS (expect unsafe content and filtered frame), then
-//   back
+//   back 
 // - navigate to HTTP (expect mixed content), then back
 TEST_F(SSLUITest, TestGoodFrameNavigation) {
-  scoped_ptr<TestServer> http_server(PlainServer());
-  scoped_ptr<HTTPSTestServer> good_https_server(GoodCertServer());
-  scoped_ptr<HTTPSTestServer> bad_https_server(BadCertServer());
-
+  TestServer http_server(kDocRoot);
+  HTTPSTestServer good_https_server(kHostName, kOKHTTPSPort,
+                                    kDocRoot, GetOKCertPath());
+  HTTPSTestServer bad_https_server(kHostName, kBadHTTPSPort,
+                                   kDocRoot, GetExpiredCertPath());
+  
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
   NavigateTab(tab.get(),
-              good_https_server->TestServerPageW(L"files/ssl/top_frame.html"));
+              good_https_server.TestServerPageW(L"files/ssl/top_frame.html"));
 
   SecurityStyle security_style;
   int cert_status;
@@ -682,7 +741,8 @@ TEST_F(SSLUITest, TestGoodFrameNavigation) {
   int64 last_nav_time = 0;
   EXPECT_TRUE(tab->GetLastNavigationTime(&last_nav_time));
   EXPECT_TRUE(tab->ExecuteAndExtractBool(L"",
-      L"window.domAutomationController.send(clickLink('goodHTTPSLink'));",
+      L"javascript:void(window.domAutomationController)"
+      L".send(clickLink('goodHTTPSLink'));",
       &success));
   EXPECT_TRUE(success);
   EXPECT_TRUE(tab->WaitForNavigation(last_nav_time));
@@ -697,7 +757,8 @@ TEST_F(SSLUITest, TestGoodFrameNavigation) {
   // Now let's hit a bad page.
   EXPECT_TRUE(tab->GetLastNavigationTime(&last_nav_time));
   EXPECT_TRUE(tab->ExecuteAndExtractBool(L"",
-      L"window.domAutomationController.send(clickLink('badHTTPSLink'));",
+      L"javascript:void(window.domAutomationController)"
+      L".send(clickLink('badHTTPSLink'));",
       &success));
   EXPECT_TRUE(success);
   EXPECT_TRUE(tab->WaitForNavigation(last_nav_time));
@@ -713,7 +774,7 @@ TEST_F(SSLUITest, TestGoodFrameNavigation) {
   bool is_content_evil = true;
   std::wstring content_frame_xpath(L"html/frameset/frame[2]");
   std::wstring is_frame_evil_js(
-      L"window.domAutomationController"
+      L"javascript:void(window.domAutomationController)"
       L".send(document.getElementById('evilDiv') != null);");
   EXPECT_TRUE(tab->ExecuteAndExtractBool(content_frame_xpath,
                                          is_frame_evil_js,
@@ -731,7 +792,8 @@ TEST_F(SSLUITest, TestGoodFrameNavigation) {
   // Navigate to a page served over HTTP.
   EXPECT_TRUE(tab->GetLastNavigationTime(&last_nav_time));
   EXPECT_TRUE(tab->ExecuteAndExtractBool(L"",
-      L"window.domAutomationController.send(clickLink('HTTPLink'));",
+      L"javascript:void(window.domAutomationController)"
+      L".send(clickLink('HTTPLink'));",
       &success));
   EXPECT_TRUE(success);
   EXPECT_TRUE(tab->WaitForNavigation(last_nav_time));
@@ -756,12 +818,14 @@ TEST_F(SSLUITest, TestGoodFrameNavigation) {
 // From a bad HTTPS top frame:
 // - navigate to an OK HTTPS frame (expected to be still authentication broken).
 TEST_F(SSLUITest, TestBadFrameNavigation) {
-  scoped_ptr<HTTPSTestServer> good_https_server(GoodCertServer());
-  scoped_ptr<HTTPSTestServer> bad_https_server(BadCertServer());
-
+  HTTPSTestServer good_https_server(kHostName, kOKHTTPSPort,
+                                    kDocRoot, GetOKCertPath());
+  HTTPSTestServer bad_https_server(kHostName, kBadHTTPSPort,
+                                   kDocRoot, GetExpiredCertPath());
+  
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
   NavigateTab(tab.get(),
-              bad_https_server->TestServerPageW(L"files/ssl/top_frame.html"));
+              bad_https_server.TestServerPageW(L"files/ssl/top_frame.html"));
 
   SecurityStyle security_style;
   int cert_status;
@@ -777,11 +841,12 @@ TEST_F(SSLUITest, TestBadFrameNavigation) {
   EXPECT_TRUE(tab->TakeActionOnSSLBlockingPage(true));
 
   // Navigate to a good frame.
-  bool success = false;
+   bool success = false;
   int64 last_nav_time = 0;
   EXPECT_TRUE(tab->GetLastNavigationTime(&last_nav_time));
   EXPECT_TRUE(tab->ExecuteAndExtractBool(L"",
-      L"window.domAutomationController.send(clickLink('goodHTTPSLink'));",
+      L"javascript:void(window.domAutomationController)"
+      L".send(clickLink('goodHTTPSLink'));",
       &success));
   EXPECT_TRUE(success);
   EXPECT_TRUE(tab->WaitForNavigation(last_nav_time));
@@ -798,13 +863,15 @@ TEST_F(SSLUITest, TestBadFrameNavigation) {
 // From an HTTP top frame, navigate to good and bad HTTPS (security state should
 // stay unauthenticated).
 TEST_F(SSLUITest, TestUnauthenticatedFrameNavigation) {
-  scoped_ptr<TestServer> http_server(PlainServer());
-  scoped_ptr<HTTPSTestServer> good_https_server(GoodCertServer());
-  scoped_ptr<HTTPSTestServer> bad_https_server(BadCertServer());
-
+  TestServer http_server(kDocRoot);
+  HTTPSTestServer good_https_server(kHostName, kOKHTTPSPort,
+                                    kDocRoot, GetOKCertPath());
+  HTTPSTestServer bad_https_server(kHostName, kBadHTTPSPort,
+                                   kDocRoot, GetExpiredCertPath());
+  
   scoped_ptr<TabProxy> tab(GetActiveTabProxy());
   NavigateTab(tab.get(),
-              http_server->TestServerPageW(L"files/ssl/top_frame.html"));
+              http_server.TestServerPageW(L"files/ssl/top_frame.html"));
 
   SecurityStyle security_style;
   int cert_status;
@@ -820,7 +887,8 @@ TEST_F(SSLUITest, TestUnauthenticatedFrameNavigation) {
   int64 last_nav_time = 0;
   EXPECT_TRUE(tab->GetLastNavigationTime(&last_nav_time));
   EXPECT_TRUE(tab->ExecuteAndExtractBool(L"",
-      L"window.domAutomationController.send(clickLink('goodHTTPSLink'));",
+      L"javascript:void(window.domAutomationController)"
+      L".send(clickLink('goodHTTPSLink'));",
       &success));
   EXPECT_TRUE(success);
   EXPECT_TRUE(tab->WaitForNavigation(last_nav_time));
@@ -835,7 +903,8 @@ TEST_F(SSLUITest, TestUnauthenticatedFrameNavigation) {
   // Now navigate to a bad HTTPS frame.
   EXPECT_TRUE(tab->GetLastNavigationTime(&last_nav_time));
   EXPECT_TRUE(tab->ExecuteAndExtractBool(L"",
-      L"window.domAutomationController.send(clickLink('badHTTPSLink'));",
+      L"javascript:void(window.domAutomationController)"
+      L".send(clickLink('badHTTPSLink'));",
       &success));
   EXPECT_TRUE(success);
   EXPECT_TRUE(tab->WaitForNavigation(last_nav_time));
@@ -851,7 +920,7 @@ TEST_F(SSLUITest, TestUnauthenticatedFrameNavigation) {
   bool is_content_evil = true;
   std::wstring content_frame_xpath(L"html/frameset/frame[2]");
   std::wstring is_frame_evil_js(
-      L"window.domAutomationController"
+      L"javascript:void(window.domAutomationController)"
       L".send(document.getElementById('evilDiv') != null);");
   EXPECT_TRUE(tab->ExecuteAndExtractBool(content_frame_xpath,
                                          is_frame_evil_js,
@@ -860,7 +929,7 @@ TEST_F(SSLUITest, TestUnauthenticatedFrameNavigation) {
 }
 
 
-// TODO(jcampan): more tests to do below.
+// TODO (jcampan): more tests to do below.
 
 // Visit a page over https that contains a frame with a redirect.
 

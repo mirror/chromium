@@ -27,13 +27,10 @@
 #include "webkit/glue/webhistoryitem_impl.h"
 
 #include "webkit/glue/glue_serialize.h"
-#include "webkit/glue/glue_util.h"
 
-#include "base/compiler_specific.h"
-
-MSVC_PUSH_WARNING_LEVEL(0);
+#pragma warning(push, 0)
 #include "HistoryItem.h"
-MSVC_POP_WARNING();
+#pragma warning(pop)
 
 
 WebHistoryItem* WebHistoryItem::Create(const GURL& url,
@@ -73,15 +70,7 @@ WebCore::HistoryItem* WebHistoryItemImpl::GetHistoryItem() const {
   if (history_item_)
     return history_item_.get();
 
-  if (history_state_.size() > 0) {
-    history_item_ = webkit_glue::HistoryItemFromString(history_state_);
-  } else {
-    history_item_ = WebCore::HistoryItem::create(
-      webkit_glue::StdStringToString(url_.spec()),
-      webkit_glue::StdWStringToString(title_),
-      0.0);
-  }
-
+  history_item_ = webkit_glue::HistoryItemFromString(history_state_);
   return history_item_.get();
 }
 

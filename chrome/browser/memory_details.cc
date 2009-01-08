@@ -79,9 +79,9 @@ void MemoryDetails::CollectPluginInformation() {
       continue;
 
     PluginProcessInformation info;
-    info.pid = base::GetProcId(plugin->process());
+    info.pid = process_util::GetProcId(plugin->process());
     if (info.pid != 0) {
-      info.plugin_path = plugin->plugin_path();
+      info.dll_path = plugin->dll_path();
       plugins_.push_back(info);
     }
   }
@@ -129,8 +129,9 @@ void MemoryDetails::CollectProcessData() {
             // Get Memory Information.
             ProcessMemoryInformation info;
             info.pid = process_list[index];
-            scoped_ptr<base::ProcessMetrics> metrics;
-            metrics.reset(base::ProcessMetrics::CreateProcessMetrics(handle));
+            scoped_ptr<process_util::ProcessMetrics> metrics;
+            metrics.reset(
+              process_util::ProcessMetrics::CreateProcessMetrics(handle));
             metrics->GetCommittedKBytes(&info.committed);
             metrics->GetWorkingSetKBytes(&info.working_set);
 
@@ -180,7 +181,7 @@ void MemoryDetails::CollectRenderHostInformation() {
          RenderProcessHost::end(); ++renderer_iter) {
       DCHECK(renderer_iter->second);
       if (process_data_[CHROME_BROWSER].processes[index].pid ==
-          renderer_iter->second->process().pid()) {
+          renderer_iter->second->pid()) {
         // The RenderProcessHost may host multiple TabContents.  Any
         // of them which contain diagnostics information make the whole
         // process be considered a diagnostics process.

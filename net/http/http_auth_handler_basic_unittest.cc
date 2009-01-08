@@ -16,21 +16,17 @@ TEST(HttpAuthHandlerBasicTest, GenerateCredentials) {
     const char* expected_credentials;
   } tests[] = {
     { L"foo", L"bar", "Basic Zm9vOmJhcg==" },
-    // Empty username
-    { L"", L"foobar", "Basic OmZvb2Jhcg==" },
     // Empty password
     { L"anon", L"", "Basic YW5vbjo=" },
-    // Empty username and empty password.
-    { L"", L"", "Basic Og==" },
   };
   for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
     std::string challenge = "Basic realm=\"Atlantis\"";
-    scoped_refptr<HttpAuthHandlerBasic> basic = new HttpAuthHandlerBasic;
-    basic->InitFromChallenge(challenge.begin(), challenge.end(),
-                             HttpAuth::AUTH_SERVER);
-    std::string credentials = basic->GenerateCredentials(tests[i].username,
-                                                         tests[i].password,
-                                                         NULL, NULL);
+    HttpAuthHandlerBasic basic;
+    basic.InitFromChallenge(challenge.begin(), challenge.end(),
+                            HttpAuth::AUTH_SERVER);
+    std::string credentials = basic.GenerateCredentials(tests[i].username,
+                                                        tests[i].password,
+                                                        NULL, NULL);
     EXPECT_STREQ(tests[i].expected_credentials, credentials.c_str());
   }
 }

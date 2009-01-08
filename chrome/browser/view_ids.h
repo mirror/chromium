@@ -5,8 +5,8 @@
 // This defines an enumeration of IDs that can uniquely identify a view within
 // the scope of a container view.
 
-#ifndef CHROME_BROWSER_VIEW_IDS_H_
-#define CHROME_BROWSER_VIEW_IDS_H_
+#ifndef CHROME_BROWSER_VIEW_IDS_H__
+#define CHROME_BROWSER_VIEW_IDS_H__
 
 enum ViewID {
   VIEW_ID_NONE = 0,
@@ -32,7 +32,6 @@ enum ViewID {
   VIEW_ID_BACK_BUTTON,
   VIEW_ID_FORWARD_BUTTON,
   VIEW_ID_RELOAD_BUTTON,
-  VIEW_ID_HOME_BUTTON,
   VIEW_ID_STAR_BUTTON,
   VIEW_ID_LOCATION_BAR,
   VIEW_ID_GO_BUTTON,
@@ -43,13 +42,11 @@ enum ViewID {
   // The Bookmark Bar.
   VIEW_ID_BOOKMARK_BAR,
 
-  // Find in page.
-  VIEW_ID_FIND_IN_PAGE_TEXT_FIELD,
-
   // Tab Container window.
   VIEW_ID_TAB_CONTAINER,
 
   VIEW_ID_PREDEFINED_COUNT
 };
 
-#endif  // CHROME_BROWSER_VIEW_IDS_H_
+#endif  // CHROME_BROWSER_VIEW_IDS_H__
+

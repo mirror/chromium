@@ -6,8 +6,14 @@
 #define NET_DISK_CACHE_DISK_CACHE_TEST_BASE_H_
 
 #include "base/basictypes.h"
+#include "base/platform_test.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "testing/platform_test.h"
+
+// These tests can use the path service, which uses autoreleased objects on the
+// Mac, so this needs to be a PlatformTest.  Even tests that do not require a
+// cache (and that do not need to be a DiskCacheTestWithCache) are susceptible
+// to this problem; all such tests should use TEST_F(DiskCacheTest, ...).
+typedef PlatformTest DiskCacheTest;
 
 namespace disk_cache {
 
@@ -16,14 +22,6 @@ class BackendImpl;
 class MemBackendImpl;
 
 }  // namespace disk_cache
-
-// These tests can use the path service, which uses autoreleased objects on the
-// Mac, so this needs to be a PlatformTest.  Even tests that do not require a
-// cache (and that do not need to be a DiskCacheTestWithCache) are susceptible
-// to this problem; all such tests should use TEST_F(DiskCacheTest, ...).
-class DiskCacheTest : public PlatformTest {
-  virtual void TearDown();
-};
 
 // Provides basic support for cache related tests.
 class DiskCacheTestWithCache : public DiskCacheTest {

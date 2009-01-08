@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_PLUGIN_PLUGIN_CHANNEL_H_
-#define CHROME_PLUGIN_PLUGIN_CHANNEL_H_
+#ifndef CHROME_PLUGIN_PLUGIN_CHANNEL_H__
+#define CHROME_PLUGIN_PLUGIN_CHANNEL_H__
 
 #include <vector>
 #include "base/scoped_handle.h"
@@ -56,4 +56,5 @@ class PluginChannel : public PluginChannelBase {
   DISALLOW_EVIL_CONSTRUCTORS(PluginChannel);
 };
 
-#endif  // CHROME_PLUGIN_PLUGIN_CHANNEL_H_
+#endif  // CHROME_PLUGIN_PLUGIN_CHANNEL_H__
+

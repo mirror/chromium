@@ -14,17 +14,15 @@
 #include <string>
 #include "windows.h"
 
-#include "base/file_path.h"
-
 class PluginProcessInfo {
  public:
-  PluginProcessInfo(FilePath plugin_path, HANDLE process)
-    : plugin_path_(plugin_path),
+  PluginProcessInfo(std::wstring dll_path, HANDLE process)
+    : dll_path_(dll_path),
       process_(process) {
   }
 
   PluginProcessInfo(const PluginProcessInfo& ppi) {
-    plugin_path_ = ppi.plugin_path_;
+    dll_path_ = ppi.dll_path_;
     process_ = ppi.process_;
   }
 
@@ -33,7 +31,7 @@ class PluginProcessInfo {
   PluginProcessInfo&
   PluginProcessInfo::operator=(const PluginProcessInfo& ppi) {
     if (this != &ppi) {
-      plugin_path_ = ppi.plugin_path_;
+      dll_path_ = ppi.dll_path_;
       process_ = ppi.process_;
     }
     return *this;
@@ -44,19 +42,19 @@ class PluginProcessInfo {
   bool operator <(const PluginProcessInfo& rhs) const {
     if (process_ != rhs.process_)
       return process_ < rhs.process_;
-    return plugin_path_ < rhs.plugin_path_;
+    return dll_path_ < rhs.dll_path_;
   }
 
   bool operator ==(const PluginProcessInfo& rhs) const {
-    return (process_ == rhs.process_) && (plugin_path_ == rhs.plugin_path_);
+    return (process_ == rhs.process_) && (dll_path_ == rhs.dll_path_);
   }
 
-  FilePath plugin_path() const { return plugin_path_; }
+  std::wstring dll_path() const { return dll_path_; }
 
   HANDLE process() const { return process_; }
 
  private:
-  FilePath plugin_path_;
+  std::wstring dll_path_;
   HANDLE process_;
 };
 

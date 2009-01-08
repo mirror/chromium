@@ -16,27 +16,29 @@
 
 namespace {
 
-// A scoper to manage acquiring and automatically releasing the clipboard.
-class ScopedClipboard {
+// A small object to ensure we close the clipboard after opening it.
+class ClipboardLock {
  public:
-  ScopedClipboard() : opened_(false) { }
+  ClipboardLock() : we_own_the_lock_(false) { }
 
-  ~ScopedClipboard() {
-    if (opened_)
+  ~ClipboardLock() {
+    if (we_own_the_lock_)
       Release();
   }
 
   bool Acquire(HWND owner) {
+    // We shouldn't be calling this if we already own the clipboard lock.
+    DCHECK(!we_own_the_lock_);
+
+    // We already have the lock.  We don't want to stomp on the other use.
+    if (we_own_the_lock_)
+      return false;
+
     const int kMaxAttemptsToOpenClipboard = 5;
 
-    if (opened_) {
-      NOTREACHED();
-      return false;
-    }
-
-    // Attempt to open the clipboard, which will acquire the Windows clipboard
-    // lock.  This may fail if another process currently holds this lock.
-    // We're willing to try a few times in the hopes of acquiring it.
+    // Attempt to acquire the clipboard lock.  This may fail if another process
+    // currently holds the lock.  We're willing to try a few times in the hopes
+    // of acquiring it.
     //
     // This turns out to be an issue when using remote desktop because the
     // rdpclip.exe process likes to read what we've written to the clipboard and
@@ -46,17 +48,18 @@ class ScopedClipboard {
     //
     // In fact, we believe we'll only spin this loop over remote desktop.  In
     // normal situations, the user is initiating clipboard operations and there
-    // shouldn't be contention.
+    // shouldn't be lock contention.
 
     for (int attempts = 0; attempts < kMaxAttemptsToOpenClipboard; ++attempts) {
-      // If we didn't manage to open the clipboard, sleep a bit and be hopeful.
-      if (attempts != 0)
-        ::Sleep(5);
-
       if (::OpenClipboard(owner)) {
-        opened_ = true;
-        return true;
+        we_own_the_lock_ = true;
+        return we_own_the_lock_;
       }
+
+      // Having failed, we yield our timeslice to other processes. ::Yield seems
+      // to be insufficient here, so we sleep for 5 ms.
+      if (attempts < (kMaxAttemptsToOpenClipboard - 1))
+        ::Sleep(5);
     }
 
     // We failed to acquire the clipboard.
@@ -64,16 +67,19 @@ class ScopedClipboard {
   }
 
   void Release() {
-    if (opened_) {
-      ::CloseClipboard();
-      opened_ = false;
-    } else {
-      NOTREACHED();
-    }
+    // We should only be calling this if we already own the clipboard lock.
+    DCHECK(we_own_the_lock_);
+
+    // We we don't have the lock, there is nothing to release.
+    if (!we_own_the_lock_)
+      return;
+
+    ::CloseClipboard();
+    we_own_the_lock_ = false;
   }
 
  private:
-  bool opened_;
+  bool we_own_the_lock_;
 };
 
 LRESULT CALLBACK ClipboardOwnerWndProc(HWND hwnd,
@@ -131,103 +137,96 @@ Clipboard::Clipboard() {
   wcex.lpszClassName = L"ClipboardOwnerWindowClass";
   ::RegisterClassEx(&wcex);
 
-  clipboard_owner_ = NULL;
+  clipboard_owner_ = ::CreateWindow(L"ClipboardOwnerWindowClass",
+                                    L"ClipboardOwnerWindow",
+                                    0, 0, 0, 0, 0,
+                                    HWND_MESSAGE,
+                                    0, 0, 0);
 }
 
 Clipboard::~Clipboard() {
-  if (clipboard_owner_)
-    ::DestroyWindow(clipboard_owner_);
+  ::DestroyWindow(clipboard_owner_);
   clipboard_owner_ = NULL;
 }
 
-void Clipboard::WriteObjects(const ObjectMap& objects) {
-  WriteObjects(objects, NULL);
-}
-
-void Clipboard::WriteObjects(const ObjectMap& objects,
-                             base::ProcessHandle process) {
-  ScopedClipboard clipboard;
-  if (!clipboard.Acquire(GetClipboardWindow()))
+void Clipboard::Clear() {
+  // Acquire the clipboard.
+  ClipboardLock lock;
+  if (!lock.Acquire(clipboard_owner_))
     return;
 
   ::EmptyClipboard();
+}
 
-  for (ObjectMap::const_iterator iter = objects.begin();
-       iter != objects.end(); ++iter) {
-    if (iter->first == CBF_SMBITMAP)
-      WriteBitmapFromSharedMemory(&(iter->second[0].front()),
-                                  &(iter->second[1].front()),
-                                  process);
-    else 
-      DispatchObject(static_cast<ObjectType>(iter->first), iter->second);
+void Clipboard::WriteText(const std::wstring& text) {
+  ClipboardLock lock;
+  if (!lock.Acquire(clipboard_owner_))
+    return;
+
+  HGLOBAL glob = CreateGlobalData(text);
+  if (glob && !::SetClipboardData(CF_UNICODETEXT, glob))
+    ::GlobalFree(glob);
+}
+
+void Clipboard::WriteHTML(const std::wstring& markup,
+                          const std::string& url) {
+  // Acquire the clipboard.
+  ClipboardLock lock;
+  if (!lock.Acquire(clipboard_owner_))
+    return;
+
+  std::string html_fragment;
+  MarkupToHTMLClipboardFormat(markup, url, &html_fragment);
+  HGLOBAL glob = CreateGlobalData(html_fragment);
+  if (glob && !::SetClipboardData(ClipboardUtil::GetHtmlFormat()->cfFormat,
+                                  glob)) {
+    ::GlobalFree(glob);
   }
 }
 
-void Clipboard::WriteText(const char* text_data, size_t text_len) {
-  std::wstring text;
-  UTF8ToWide(text_data, text_len, &text);
-  HGLOBAL glob = CreateGlobalData(text);
+void Clipboard::WriteBookmark(const std::wstring& title,
+                              const std::string& url) {
+  // Acquire the clipboard.
+  ClipboardLock lock;
+  if (!lock.Acquire(clipboard_owner_))
+    return;
 
-  WriteToClipboard(CF_UNICODETEXT, glob);
-}
-
-void Clipboard::WriteHTML(const char* markup_data,
-                          size_t markup_len,
-                          const char* url_data,
-                          size_t url_len) {
-  std::string markup(markup_data, markup_len);
-  std::string url;
-
-  if (url_len > 0)
-    url.assign(url_data, url_len);
-
-  std::string html_fragment = ClipboardUtil::HtmlToCFHtml(markup, url);
-  HGLOBAL glob = CreateGlobalData(html_fragment);
-
-  WriteToClipboard(GetHtmlFormatType(), glob);
-}
-
-void Clipboard::WriteBookmark(const char* title_data,
-                              size_t title_len,
-                              const char* url_data,
-                              size_t url_len) {
-  std::string bookmark(title_data, title_len);
+  std::wstring bookmark(title);
   bookmark.append(1, L'\n');
-  bookmark.append(url_data, url_len);
-
-  std::wstring wide_bookmark = UTF8ToWide(bookmark);
-  HGLOBAL glob = CreateGlobalData(wide_bookmark);
-
-  WriteToClipboard(GetUrlWFormatType(), glob);
+  bookmark.append(UTF8ToWide(url));
+  HGLOBAL glob = CreateGlobalData(bookmark);
+  if (glob && !::SetClipboardData(ClipboardUtil::GetUrlWFormat()->cfFormat,
+                                  glob)) {
+    ::GlobalFree(glob);
+  }
 }
 
-void Clipboard::WriteHyperlink(const char* title_data,
-                               size_t title_len,
-                               const char* url_data,
-                               size_t url_len) {
-  // Store as a bookmark.
-  WriteBookmark(title_data, title_len, url_data, url_len);
+void Clipboard::WriteHyperlink(const std::wstring& title,
+                               const std::string& url) {
+  // Write as a bookmark.
+  WriteBookmark(title, url);
 
-  std::string title(title_data, title_len),
-      url(url_data, url_len),
-      link("<a href=\"");
-
-  // Construct the hyperlink.
-  link.append(url);
-  link.append("\">");
+  // Build the HTML link.
+  std::wstring link(L"<a href=\"");
+  link.append(UTF8ToWide(url));
+  link.append(L"\">");
   link.append(title);
-  link.append("</a>");
+  link.append(L"</a>");
 
-  // Store hyperlink as html.
-  WriteHTML(link.c_str(), link.size(), NULL, 0);
+  // Write as an HTML link.
+  WriteHTML(link, std::string());
 }
 
 void Clipboard::WriteWebSmartPaste() {
-  ::SetClipboardData(GetWebKitSmartPasteFormatType(), NULL);
+  // Acquire the clipboard.
+  ClipboardLock lock;
+  if (!lock.Acquire(clipboard_owner_))
+    return;
+
+  SetClipboardData(ClipboardUtil::GetWebKitSmartPasteFormat()->cfFormat, NULL);
 }
 
-void Clipboard::WriteBitmap(const char* pixel_data, const char* size_data) {
-  const gfx::Size* size = reinterpret_cast<const gfx::Size*>(size_data);
+void Clipboard::WriteBitmap(const void* pixels, const gfx::Size& size) {
   HDC dc = ::GetDC(NULL);
 
   // This doesn't actually cost us a memcpy when the bitmap comes from the
@@ -237,8 +236,8 @@ void Clipboard::WriteBitmap(const char* pixel_data, const char* size_data) {
   // TODO(darin): share data in gfx/bitmap_header.cc somehow
   BITMAPINFO bm_info = {0};
   bm_info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-  bm_info.bmiHeader.biWidth = size->width();
-  bm_info.bmiHeader.biHeight = -size->height();  // sets vertical orientation
+  bm_info.bmiHeader.biWidth = size.width();
+  bm_info.bmiHeader.biHeight = -size.height();  // sets vertical orientation
   bm_info.bmiHeader.biPlanes = 1;
   bm_info.bmiHeader.biBitCount = 32;
   bm_info.bmiHeader.biCompression = BI_RGB;
@@ -252,30 +251,23 @@ void Clipboard::WriteBitmap(const char* pixel_data, const char* size_data) {
 
   if (bits && source_hbitmap) {
     // Copy the bitmap out of shared memory and into GDI
-    memcpy(bits, pixel_data, 4 * size->width() * size->height());
+    memcpy(bits, pixels, 4 * size.width() * size.height());
 
     // Now we have an HBITMAP, we can write it to the clipboard
-    WriteBitmapFromHandle(source_hbitmap, *size);
+    WriteBitmapFromHandle(source_hbitmap, size);
   }
 
   ::DeleteObject(source_hbitmap);
   ::ReleaseDC(NULL, dc);
 }
 
-void Clipboard::WriteBitmapFromSharedMemory(const char* bitmap_data,
-                                            const char* size_data,
-                                            base::ProcessHandle process) {
-  const base::SharedMemoryHandle* remote_bitmap_handle =
-      reinterpret_cast<const base::SharedMemoryHandle*>(bitmap_data);
-  const gfx::Size* size = reinterpret_cast<const gfx::Size*>(size_data);
-
-  base::SharedMemory bitmap(*remote_bitmap_handle, false, process);
-
+void Clipboard::WriteBitmapFromSharedMemory(const SharedMemory& bitmap,
+                                            const gfx::Size& size) {
   // TODO(darin): share data in gfx/bitmap_header.cc somehow
   BITMAPINFO bm_info = {0};
   bm_info.bmiHeader.biSize = sizeof(BITMAPINFOHEADER);
-  bm_info.bmiHeader.biWidth = size->width();
-  bm_info.bmiHeader.biHeight = -size->height();  // Sets the vertical orientation
+  bm_info.bmiHeader.biWidth = size.width();
+  bm_info.bmiHeader.biHeight = -size.height();  // Sets the vertical orientation
   bm_info.bmiHeader.biPlanes = 1;
   bm_info.bmiHeader.biBitCount = 32;
   bm_info.bmiHeader.biCompression = BI_RGB;
@@ -285,12 +277,11 @@ void Clipboard::WriteBitmapFromSharedMemory(const char* bitmap_data,
   // We can create an HBITMAP directly using the shared memory handle, saving
   // a memcpy.
   HBITMAP source_hbitmap =
-      ::CreateDIBSection(dc, &bm_info, DIB_RGB_COLORS, NULL,
-                         bitmap.handle(), 0);
+      ::CreateDIBSection(dc, &bm_info, DIB_RGB_COLORS, NULL, bitmap.handle(), 0);
 
   if (source_hbitmap) {
     // Now we can write the HBITMAP to the clipboard
-    WriteBitmapFromHandle(source_hbitmap, *size);
+    WriteBitmapFromHandle(source_hbitmap, size);
   }
 
   ::DeleteObject(source_hbitmap);
@@ -299,6 +290,11 @@ void Clipboard::WriteBitmapFromSharedMemory(const char* bitmap_data,
 
 void Clipboard::WriteBitmapFromHandle(HBITMAP source_hbitmap,
                                       const gfx::Size& size) {
+  // Acquire the clipboard.
+  ClipboardLock lock;
+  if (!lock.Acquire(clipboard_owner_))
+    return;
+
   // We would like to just call ::SetClipboardData on the source_hbitmap,
   // but that bitmap might not be of a sort we can write to the clipboard.
   // For this reason, we create a new bitmap, copy the bits over, and then
@@ -323,8 +319,8 @@ void Clipboard::WriteBitmapFromHandle(HBITMAP source_hbitmap,
 
   // Now we need to blend it into an HBITMAP we can place on the clipboard
   BLENDFUNCTION bf = {AC_SRC_OVER, 0, 255, AC_SRC_ALPHA};
-  ::GdiAlphaBlend(compatible_dc, 0, 0, size.width(), size.height(),
-                  source_dc, 0, 0, size.width(), size.height(), bf);
+  ::AlphaBlend(compatible_dc, 0, 0, size.width(), size.height(),
+               source_dc, 0, 0, size.width(), size.height(), bf);
 
   // Clean up all the handles we just opened
   ::SelectObject(compatible_dc, old_hbitmap);
@@ -335,37 +331,52 @@ void Clipboard::WriteBitmapFromHandle(HBITMAP source_hbitmap,
   ::DeleteDC(source_dc);
   ::ReleaseDC(NULL, dc);
 
-  WriteToClipboard(CF_BITMAP, hbitmap);
+  // Actually write the bitmap to the clipboard
+  ::SetClipboardData(CF_BITMAP, hbitmap);
 }
 
 // Write a file or set of files to the clipboard in HDROP format. When the user
 // invokes a paste command (in a Windows explorer shell, for example), the files
 // will be copied to the paste location.
-void Clipboard::WriteFiles(const char* file_data, size_t file_len) {
-  std::wstring filenames(UTF8ToWide(std::string(file_data, file_len)));
-  // Calculate the amount of space we'll need store the strings and
-  // a DROPFILES struct.
-  size_t bytes = sizeof(DROPFILES) + filenames.length() * sizeof(wchar_t);
+void Clipboard::WriteFile(const std::wstring& file) {
+  std::vector<std::wstring> files;
+  files.push_back(file);
+  WriteFiles(files);
+}
+
+void Clipboard::WriteFiles(const std::vector<std::wstring>& files) {
+  ClipboardLock lock;
+  if (!lock.Acquire(clipboard_owner_))
+    return;
+
+  // Calculate the amount of space we'll need store the strings: require
+  // NULL terminator between strings, and double null terminator at the end.
+  size_t bytes = sizeof(DROPFILES);
+  for (size_t i = 0; i < files.size(); ++i)
+    bytes += (files[i].length() + 1) * sizeof(wchar_t);
+  bytes += sizeof(wchar_t);
 
   HANDLE hdata = ::GlobalAlloc(GMEM_MOVEABLE, bytes);
   if (!hdata)
     return;
 
-  char* data = static_cast<char*>(::GlobalLock(hdata));
-  DROPFILES* drop_files = reinterpret_cast<DROPFILES*>(data);
+  DROPFILES* drop_files = static_cast<DROPFILES*>(::GlobalLock(hdata));
   drop_files->pFiles = sizeof(DROPFILES);
   drop_files->fWide = TRUE;
+  BYTE* data = reinterpret_cast<BYTE*>(drop_files) + sizeof(DROPFILES);
 
-  memcpy(data + sizeof DROPFILES, filenames.c_str(),
-         filenames.length() * sizeof(wchar_t));
+  // Copy the strings stored in 'files' with proper NULL separation.
+  wchar_t* data_pos = reinterpret_cast<wchar_t*>(data);
+  for (size_t i = 0; i < files.size(); ++i) {
+    size_t offset = files[i].length() + 1;
+    memcpy(data_pos, files[i].c_str(), offset * sizeof(wchar_t));
+    data_pos += offset;
+  }
+  data_pos[0] = L'\0';  // Double NULL termination after the last string.
 
   ::GlobalUnlock(hdata);
-  WriteToClipboard(CF_HDROP, hdata);
-}
-
-void Clipboard::WriteToClipboard(FormatType format, HANDLE handle) {
-  if (handle && !::SetClipboardData(format, handle))
-    FreeData(format, handle);
+  if (!::SetClipboardData(CF_HDROP, hdata))
+    ::GlobalFree(hdata);
 }
 
 bool Clipboard::IsFormatAvailable(unsigned int format) const {
@@ -381,8 +392,8 @@ void Clipboard::ReadText(std::wstring* result) const {
   result->clear();
 
   // Acquire the clipboard.
-  ScopedClipboard clipboard;
-  if (!clipboard.Acquire(GetClipboardWindow()))
+  ClipboardLock lock;
+  if (!lock.Acquire(clipboard_owner_))
     return;
 
   HANDLE data = ::GetClipboardData(CF_UNICODETEXT);
@@ -402,8 +413,8 @@ void Clipboard::ReadAsciiText(std::string* result) const {
   result->clear();
 
   // Acquire the clipboard.
-  ScopedClipboard clipboard;
-  if (!clipboard.Acquire(GetClipboardWindow()))
+  ClipboardLock lock;
+  if (!lock.Acquire(clipboard_owner_))
     return;
 
   HANDLE data = ::GetClipboardData(CF_TEXT);
@@ -422,20 +433,18 @@ void Clipboard::ReadHTML(std::wstring* markup, std::string* src_url) const {
     src_url->clear();
 
   // Acquire the clipboard.
-  ScopedClipboard clipboard;
-  if (!clipboard.Acquire(GetClipboardWindow()))
+  ClipboardLock lock;
+  if (!lock.Acquire(clipboard_owner_))
     return;
 
-  HANDLE data = ::GetClipboardData(GetHtmlFormatType());
+  HANDLE data = ::GetClipboardData(ClipboardUtil::GetHtmlFormat()->cfFormat);
   if (!data)
     return;
 
   std::string html_fragment(static_cast<const char*>(::GlobalLock(data)));
   ::GlobalUnlock(data);
 
-  std::string markup_utf8;
-  ClipboardUtil::CFHtmlToHtml(html_fragment, &markup_utf8, src_url);
-  markup->assign(UTF8ToWide(markup_utf8));
+  ParseHTMLClipboardFormat(html_fragment, markup, src_url);
 }
 
 void Clipboard::ReadBookmark(std::wstring* title, std::string* url) const {
@@ -446,11 +455,11 @@ void Clipboard::ReadBookmark(std::wstring* title, std::string* url) const {
     url->clear();
 
   // Acquire the clipboard.
-  ScopedClipboard clipboard;
-  if (!clipboard.Acquire(GetClipboardWindow()))
+  ClipboardLock lock;
+  if (!lock.Acquire(clipboard_owner_))
     return;
 
-  HANDLE data = ::GetClipboardData(GetUrlWFormatType());
+  HANDLE data = ::GetClipboardData(ClipboardUtil::GetUrlWFormat()->cfFormat);
   if (!data)
     return;
 
@@ -485,8 +494,8 @@ void Clipboard::ReadFiles(std::vector<std::wstring>* files) const {
 
   files->clear();
 
-  ScopedClipboard clipboard;
-  if (!clipboard.Acquire(GetClipboardWindow()))
+  ClipboardLock lock;
+  if (!lock.Acquire(clipboard_owner_))
     return;
 
   HDROP drop = static_cast<HDROP>(::GetClipboardData(CF_HDROP));
@@ -507,6 +516,106 @@ void Clipboard::ReadFiles(std::vector<std::wstring>* files) const {
 }
 
 // static
+void Clipboard::MarkupToHTMLClipboardFormat(const std::wstring& markup,
+                                            const std::string& src_url,
+                                            std::string* html_fragment) {
+  DCHECK(html_fragment);
+  // Documentation for the CF_HTML format is available at
+  // http://msdn.microsoft.com/workshop/networking/clipboard/htmlclipboard.asp
+
+  if (markup.empty()) {
+    html_fragment->clear();
+    return;
+  }
+
+  std::string markup_utf8 = WideToUTF8(markup);
+
+  html_fragment->assign("Version:0.9");
+
+  std::string start_html("\nStartHTML:");
+  std::string end_html("\nEndHTML:");
+  std::string start_fragment("\nStartFragment:");
+  std::string end_fragment("\nEndFragment:");
+  std::string source_url("\nSourceURL:");
+
+  bool has_source_url = !src_url.empty() &&
+                        !StartsWithASCII(src_url, "about:", false);
+  if (has_source_url)
+    source_url.append(src_url);
+
+  std::string start_markup("\n<HTML>\n<BODY>\n<!--StartFragment-->\n");
+  std::string end_markup("\n<!--EndFragment-->\n</BODY>\n</HTML>");
+
+  // calculate offsets
+  const size_t kMaxDigits = 10; // number of digits in UINT_MAX in base 10
+
+  size_t start_html_offset, start_fragment_offset;
+  size_t end_fragment_offset, end_html_offset;
+
+  start_html_offset = html_fragment->length() +
+                      start_html.length() + end_html.length() +
+                      start_fragment.length() + end_fragment.length() +
+                      (has_source_url ? source_url.length() : 0) +
+                      (4*kMaxDigits);
+
+  start_fragment_offset = start_html_offset + start_markup.length();
+  end_fragment_offset = start_fragment_offset + markup_utf8.length();
+  end_html_offset = end_fragment_offset + end_markup.length();
+
+  // fill in needed data
+  start_html.append(StringPrintf("%010u", start_html_offset));
+  end_html.append(StringPrintf("%010u", end_html_offset));
+  start_fragment.append(StringPrintf("%010u", start_fragment_offset));
+  end_fragment.append(StringPrintf("%010u", end_fragment_offset));
+  start_markup.append(markup_utf8);
+
+  // create full html_fragment string from the fragments
+  html_fragment->append(start_html);
+  html_fragment->append(end_html);
+  html_fragment->append(start_fragment);
+  html_fragment->append(end_fragment);
+  if (has_source_url)
+    html_fragment->append(source_url);
+  html_fragment->append(start_markup);
+  html_fragment->append(end_markup);
+}
+
+// static
+void Clipboard::ParseHTMLClipboardFormat(const std::string& html_frag,
+                                         std::wstring* markup,
+                                         std::string* src_url) {
+  if (src_url) {
+    // Obtain SourceURL, if present
+    std::string src_url_str("SourceURL:");
+    size_t line_start = html_frag.find(src_url_str, 0);
+    if (line_start != std::string::npos) {
+      size_t src_start = line_start+src_url_str.length();
+      size_t src_end = html_frag.find("\n", line_start);
+
+      if (src_end != std::string::npos)
+        *src_url = html_frag.substr(src_start, src_end - src_start);
+    }
+  }
+
+  if (markup) {
+    // Find the markup between "<!--StartFragment -->" and
+    // "<!--EndFragment -->", accounting for browser quirks
+    size_t markup_start = html_frag.find('<', 0);
+    size_t tag_start = html_frag.find("StartFragment", markup_start);
+    size_t frag_start = html_frag.find('>', tag_start) + 1;
+    // Here we do something slightly differently than WebKit.  Webkit does a
+    // forward find for EndFragment, but that seems to be a bug if the html
+    // fragment actually includes the string "EndFragment"
+    size_t tag_end = html_frag.rfind("EndFragment", std::string::npos);
+    size_t frag_end = html_frag.rfind('<', tag_end);
+
+    TrimWhitespace(UTF8ToWide(html_frag.substr(frag_start,
+                                               frag_end - frag_start)),
+                   TRIM_ALL, markup);
+  }
+}
+
+// static
 void Clipboard::ParseBookmarkClipboardFormat(const std::wstring& bookmark,
                                              std::wstring* title,
                                              std::string* url) {
@@ -523,93 +632,3 @@ void Clipboard::ParseBookmarkClipboardFormat(const std::wstring& bookmark,
   }
 }
 
-// static
-Clipboard::FormatType Clipboard::GetUrlFormatType() {
-  return ClipboardUtil::GetUrlFormat()->cfFormat;
-}
-
-// static
-Clipboard::FormatType Clipboard::GetUrlWFormatType() {
-  return ClipboardUtil::GetUrlWFormat()->cfFormat;
-}
-
-// static
-Clipboard::FormatType Clipboard::GetMozUrlFormatType() {
-  return ClipboardUtil::GetMozUrlFormat()->cfFormat;
-}
-
-// static
-Clipboard::FormatType Clipboard::GetPlainTextFormatType() {
-  return ClipboardUtil::GetPlainTextFormat()->cfFormat;
-}
-
-// static
-Clipboard::FormatType Clipboard::GetPlainTextWFormatType() {
-  return ClipboardUtil::GetPlainTextWFormat()->cfFormat;
-}
-
-// static
-Clipboard::FormatType Clipboard::GetFilenameFormatType() {
-  return ClipboardUtil::GetFilenameFormat()->cfFormat;
-}
-
-// static
-Clipboard::FormatType Clipboard::GetFilenameWFormatType() {
-  return ClipboardUtil::GetFilenameWFormat()->cfFormat;
-}
-
-// MS HTML Format
-// static
-Clipboard::FormatType Clipboard::GetHtmlFormatType() {
-  return ClipboardUtil::GetHtmlFormat()->cfFormat;
-}
-
-// static
-Clipboard::FormatType Clipboard::GetBitmapFormatType() {
-  return CF_BITMAP;
-}
-
-// Firefox text/html
-// static
-Clipboard::FormatType Clipboard::GetTextHtmlFormatType() {
-  return ClipboardUtil::GetTextHtmlFormat()->cfFormat;
-}
-
-// static
-Clipboard::FormatType Clipboard::GetCFHDropFormatType() {
-  return ClipboardUtil::GetCFHDropFormat()->cfFormat;
-}
-
-// static
-Clipboard::FormatType Clipboard::GetFileDescriptorFormatType() {
-  return ClipboardUtil::GetFileDescriptorFormat()->cfFormat;
-}
-
-// static
-Clipboard::FormatType Clipboard::GetFileContentFormatZeroType() {
-  return ClipboardUtil::GetFileContentFormatZero()->cfFormat;
-}
-
-// static
-Clipboard::FormatType Clipboard::GetWebKitSmartPasteFormatType() {
-  return ClipboardUtil::GetWebKitSmartPasteFormat()->cfFormat;
-}
-
-// static
-void Clipboard::FreeData(FormatType format, HANDLE data) {
-  if (format == CF_BITMAP)
-    ::DeleteObject(static_cast<HBITMAP>(data));
-  else
-    ::GlobalFree(data);
-}
-
-HWND Clipboard::GetClipboardWindow() const {
-  if (!clipboard_owner_) {
-    clipboard_owner_ = ::CreateWindow(L"ClipboardOwnerWindowClass",
-                                      L"ClipboardOwnerWindow",
-                                      0, 0, 0, 0, 0,
-                                      HWND_MESSAGE,
-                                      0, 0, 0);
-  }
-  return clipboard_owner_;
-}

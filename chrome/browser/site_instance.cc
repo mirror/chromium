@@ -81,7 +81,7 @@ GURL SiteInstance::GetSiteForURL(const GURL& url) {
   GURL site;
 
   // TODO(creis): For many protocols, we should just treat the scheme as the
-  // site, since there is no host.  e.g., file:, about:, chrome:
+  // site, since there is no host.  e.g., file:, about:, chrome-resource:
 
   // If the url has a host, then determine the site.
   if (url.has_host()) {

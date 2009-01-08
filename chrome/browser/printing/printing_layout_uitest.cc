@@ -3,9 +3,8 @@
 // found in the LICENSE file.
 
 #include "base/command_line.h"
-#include "base/file_util.h"
 #include "base/gfx/gdi_util.h"
-#include "skia/ext/platform_device.h"
+#include "base/gfx/platform_device_win.h"
 #include "base/gfx/png_decoder.h"
 #include "base/gfx/png_encoder.h"
 #include "base/time.h"
@@ -18,9 +17,6 @@
 #include "chrome/test/ui/ui_test.h"
 #include "chrome/browser/printing/printing_test.h"
 #include "net/url_request/url_request_unittest.h"
-
-using base::Time;
-using base::TimeDelta;
 
 namespace {
 
@@ -62,9 +58,11 @@ class Image {
                                    true,
                                    &compressed));
     ASSERT_TRUE(compressed.size());
-    ASSERT_EQ(compressed.size(), file_util::WriteFile(
-        filename,
-        reinterpret_cast<char*>(&*compressed.begin()), compressed.size()));
+    FILE* f;
+    ASSERT_EQ(_wfopen_s(&f, filename.c_str(), L"wbS"), 0);
+    ASSERT_EQ(fwrite(&*compressed.begin(), 1, compressed.size(), f),
+              compressed.size());
+    fclose(f);
   }
 
   double PercentageDifferent(const Image& rhs) const {
@@ -172,7 +170,7 @@ class Image {
                                       &bits, NULL, 0);
     EXPECT_TRUE(bitmap);
     EXPECT_TRUE(SelectObject(hdc, bitmap));
-    skia::PlatformDeviceWin::InitializeDC(hdc);
+    gfx::PlatformDeviceWin::InitializeDC(hdc);
     EXPECT_TRUE(emf.Playback(hdc, NULL));
     row_length_ = size_.width() * sizeof(uint32);
     size_t bytes = row_length_ * size_.height();
@@ -332,15 +330,14 @@ class PrintingLayoutTest : public PrintingTest<UITest> {
     bool found_emf = false;
     bool found_prn = false;
     for (int i = 0; i < 100; ++i) {
-      file_util::FileEnumerator enumerator(
-          FilePath::FromWStringHack(emf_path()), false,
-          file_util::FileEnumerator::FILES);
+      file_util::FileEnumerator enumerator(emf_path(), false,
+                                           file_util::FileEnumerator::FILES);
       emf_file.clear();
       prn_file.clear();
       found_emf = false;
       found_prn = false;
       std::wstring file;
-      while (!(file = enumerator.Next().ToWStringHack()).empty()) {
+      while (!(file = enumerator.Next()).empty()) {
         std::wstring ext = file_util::GetFileExtensionFromPath(file);
         if (!_wcsicmp(ext.c_str(), L"emf")) {
           EXPECT_FALSE(found_emf) << "Found a leftover .EMF file: \"" <<
@@ -568,7 +565,7 @@ TEST_F(PrintingLayoutTest, DISABLED_Delayed) {
     scoped_ptr<base::Thread> worker(
         new base::Thread("PrintingLayoutTest_worker"));
     scoped_refptr<DismissTheWindow> dismiss_task =
-        new DismissTheWindow(base::GetProcId(process()));
+        new DismissTheWindow(process_util::GetProcId(process()));
     // We need to start the thread to be able to set the timer.
     worker->Start();
     worker->message_loop()->PostTask(FROM_HERE,
@@ -606,7 +603,7 @@ TEST_F(PrintingLayoutTest, DISABLED_IFrame) {
     scoped_ptr<base::Thread> worker(
         new base::Thread("PrintingLayoutTest_worker"));
     scoped_refptr<DismissTheWindow> dismiss_task =
-        new DismissTheWindow(base::GetProcId(process()));
+        new DismissTheWindow(process_util::GetProcId(process()));
     // We need to start the thread to be able to set the timer.
     worker->Start();
     worker->message_loop()->PostTask(FROM_HERE,

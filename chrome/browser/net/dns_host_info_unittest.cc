@@ -11,8 +11,6 @@
 #include "chrome/browser/net/dns_host_info.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-using base::TimeDelta;
-
 namespace {
 
 class DnsHostInfoTest : public testing::Test {
@@ -28,7 +26,7 @@ TEST(DnsHostInfoTest, StateChangeTest) {
   // Some tests involve timing function performance, and DLL time can overwhelm
   // test durations (which are considering network vs cache response times).
   info_practice.SetHostname(hostname2);
-  info_practice.SetQueuedState(DnsHostInfo::UNIT_TEST_MOTIVATED);
+  info_practice.SetQueuedState();
   info_practice.SetAssignedState();
   info_practice.SetFoundState();
   PlatformThread::Sleep(500);  // Allow time for DLLs to fully load.
@@ -37,7 +35,7 @@ TEST(DnsHostInfoTest, StateChangeTest) {
   info.SetHostname(hostname1);
 
   EXPECT_TRUE(info.NeedsDnsUpdate(hostname1)) << "error in construction state";
-  info.SetQueuedState(DnsHostInfo::UNIT_TEST_MOTIVATED);
+  info.SetQueuedState();
   EXPECT_FALSE(info.NeedsDnsUpdate(hostname1))
     << "update needed after being queued";
   info.SetAssignedState();
@@ -67,7 +65,7 @@ TEST(DnsHostInfoTest, StateChangeTest) {
 
   // That was a nice life when the object was found.... but next time it won't
   // be found.  We'll sleep for a while, and then come back with not-found.
-  info.SetQueuedState(DnsHostInfo::UNIT_TEST_MOTIVATED);
+  info.SetQueuedState();
   info.SetAssignedState();
   EXPECT_FALSE(info.NeedsDnsUpdate(hostname1))
     << "update needed while assigned to slave";

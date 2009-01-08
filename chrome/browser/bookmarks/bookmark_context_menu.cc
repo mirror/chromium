@@ -19,6 +19,7 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
+#include "chrome/views/container.h"
 #include "chrome/views/window.h"
 
 #include "generated_resources.h"
@@ -253,13 +254,8 @@ BookmarkContextMenu::BookmarkContextMenu(
     menu_->AppendSeparator();
   }
 
-  if (selection.size() == 1 && selection[0]->is_folder()) {
-    menu_->AppendMenuItemWithLabel(IDS_BOOKMARK_BAR_RENAME_FOLDER,
-        l10n_util::GetString(IDS_BOOKMARK_BAR_RENAME_FOLDER));
-  } else {
-    menu_->AppendMenuItemWithLabel(IDS_BOOKMARK_BAR_EDIT,
-                                   l10n_util::GetString(IDS_BOOKMARK_BAR_EDIT));
-  }
+  menu_->AppendMenuItemWithLabel(IDS_BOOKMARK_BAR_EDIT,
+                                 l10n_util::GetString(IDS_BOOKMARK_BAR_EDIT));
   menu_->AppendMenuItemWithLabel(
       IDS_BOOKMARK_BAR_REMOVE,
       l10n_util::GetString(IDS_BOOKMARK_BAR_REMOVE));
@@ -351,7 +347,6 @@ void BookmarkContextMenu::ExecuteCommand(int id) {
       break;
     }
 
-    case IDS_BOOKMARK_BAR_RENAME_FOLDER:
     case IDS_BOOKMARK_BAR_EDIT:
       UserMetrics::RecordAction(L"BookmarkBar_ContextMenu_Edit", profile_);
 
@@ -479,7 +474,6 @@ bool BookmarkContextMenu::IsCommandEnabled(int id) const {
     case IDS_BOOMARK_BAR_OPEN_ALL_NEW_WINDOW:
       return HasURLs();
 
-    case IDS_BOOKMARK_BAR_RENAME_FOLDER:
     case IDS_BOOKMARK_BAR_EDIT:
       return selection_.size() == 1 && !is_root_node;
 

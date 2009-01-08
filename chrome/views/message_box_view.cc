@@ -9,7 +9,6 @@
 #include "chrome/browser/controller.h"
 #include "chrome/browser/views/standard_layout.h"
 #include "chrome/common/l10n_util.h"
-#include "chrome/views/checkbox.h"
 #include "chrome/views/client_view.h"
 
 #include "generated_resources.h"
@@ -70,12 +69,6 @@ void MessageBoxView::SetCheckBoxLabel(const std::wstring& label) {
   else
     check_box_->SetLabel(label);
   ResetLayoutManager();
-}
-
-void MessageBoxView::SetCheckBoxSelected(bool selected) {
-  if (!check_box_)
-    return;
-  check_box_->SetIsSelected(selected);
 }
 
 ///////////////////////////////////////////////////////////////////////////////

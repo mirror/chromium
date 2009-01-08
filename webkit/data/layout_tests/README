@@ -1,5 +1,5 @@
-This directory contains layout tests.  It also contains platform-specific
-results until we can move them into LayoutTests/platform/.
+This directory contains layout tests.  Next to this directory is
+layout_test_results which contains custom kjs and v8 results.
 
   chrome/
     contains webkit tests and results for chrome specific issues
@@ -9,10 +9,3 @@ results until we can move them into LayoutTests/platform/.
 
   LayoutTests/
     pulled in via gclient DEPS from svn.webkit.org
-
-  platform/
-    contains platform-specifc results, in platform directories exactly as we
-    will be upstreaming them to webkit.org:
-      platform/chromium-win/
-      platform/chromium-mac/
-      etc.

@@ -68,7 +68,12 @@ class PageInfoWindow : public views::DialogDelegate,
   // views::DialogDelegate methods:
   virtual int GetDialogButtons() const;
   virtual std::wstring GetWindowTitle() const;
-  virtual std::wstring GetWindowName() const;
+  virtual void SaveWindowPosition(const CRect& bounds,
+                                  bool maximized,
+                                  bool always_on_top);
+  virtual bool RestoreWindowPosition(CRect* bounds,
+                                     bool* maximized,
+                                     bool* always_on_top);
   virtual views::View* GetContentsView();
 
  private:

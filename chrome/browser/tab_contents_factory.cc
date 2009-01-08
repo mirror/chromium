@@ -7,7 +7,6 @@
 #include "chrome/browser/about_internets_status_view.h"
 #include "chrome/browser/browser_about_handler.h"
 #include "chrome/browser/browser_url_handler.h"
-#include "chrome/browser/dom_ui/dom_ui_contents.h"
 #include "chrome/browser/dom_ui/html_dialog_contents.h"
 #include "chrome/browser/dom_ui/new_tab_ui.h"
 #include "chrome/browser/ipc_status_view.h"
@@ -39,6 +38,7 @@ TabContentsType TabContentsFactory::NextUnusedType() {
 
 /*static*/
 TabContents* TabContents::CreateWithType(TabContentsType type,
+                                         HWND parent,
                                          Profile* profile,
                                          SiteInstance* instance) {
   TabContents* contents;
@@ -76,9 +76,6 @@ TabContents* TabContents::CreateWithType(TabContentsType type,
     case TAB_CONTENTS_DEBUGGER:
       contents = new DebuggerContents(profile, instance);
       break;
-    case TAB_CONTENTS_DOM_UI:
-      contents = new DOMUIContents(profile, instance, NULL);
-      break;
     default:
       if (g_extra_types) {
         TabContentsFactoryMap::const_iterator it = g_extra_types->find(type);
@@ -92,7 +89,7 @@ TabContents* TabContents::CreateWithType(TabContentsType type,
   }
 
   if (contents)
-    contents->CreateView();
+    contents->CreateView(parent, gfx::Rect());
 
   return contents;
 }
@@ -122,9 +119,6 @@ TabContentsType TabContents::TypeForURL(GURL* url) {
 
   if (DebuggerContents::IsDebuggerUrl(*url))
     return TAB_CONTENTS_DEBUGGER;
-
-  if (url->SchemeIs(DOMUIContents::GetScheme().c_str()))
-    return TAB_CONTENTS_DOM_UI;
 
   if (url->SchemeIs("view-source")) {
     // Load the inner URL instead, but render it using a ViewSourceContents.

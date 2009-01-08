@@ -1,18 +1,19 @@
-/*
- * Copyright (C) 2006 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+/* include/corecg/SkScalar.h
+**
+** Copyright 2006, Google Inc.
+**
+** Licensed under the Apache License, Version 2.0 (the "License"); 
+** you may not use this file except in compliance with the License. 
+** You may obtain a copy of the License at 
+**
+**     http://www.apache.org/licenses/LICENSE-2.0 
+**
+** Unless required by applicable law or agreed to in writing, software 
+** distributed under the License is distributed on an "AS IS" BASIS, 
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+** See the License for the specific language governing permissions and 
+** limitations under the License.
+*/
 
 #ifndef SkScalar_DEFINED
 #define SkScalar_DEFINED
@@ -81,13 +82,13 @@
     #define SkScalarFraction(x)     sk_float_mod(x, 1.0f)
     /** Rounds the SkScalar to the nearest integer value
     */
-    #define SkScalarRound(x)        sk_float_round2int(x)
+    #define SkScalarRound(x)        (int)sk_float_floor((x) + 0.5f)
     /** Returns the smallest integer that is >= the specified SkScalar
     */
-    #define SkScalarCeil(x)         sk_float_ceil2int(x)
+    #define SkScalarCeil(x)         (int)sk_float_ceil(x)
     /** Returns the largest integer that is <= the specified SkScalar
     */
-    #define SkScalarFloor(x)        sk_float_floor2int(x)
+    #define SkScalarFloor(x)        (int)sk_float_floor(x)
     /** Returns the absolute value of the specified SkScalar
     */
     #define SkScalarAbs(x)          sk_float_abs(x)
@@ -227,7 +228,13 @@
     #define SkMinScalar(a, b)       SkMin32(a, b)
 #endif
 
-#define SK_ScalarNearlyZero         (SK_Scalar1 / (1 << 12))
+#ifndef SK_SCALAR_IS_FLOAT
+#define SK_ScalarNearlyZero         SK_FixedNearlyZero
+#else
+/*  Allow a little more flexibility for floating-point scalars
+ */
+#define SK_ScalarNearlyZero         (SK_Scalar1 / (1<<15))
+#endif
 
 /*  <= is slower than < for floats, so we use < for our tolerance test
 */

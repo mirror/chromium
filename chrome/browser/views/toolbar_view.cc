@@ -19,7 +19,6 @@
 #include "chrome/browser/navigation_controller.h"
 #include "chrome/browser/navigation_entry.h"
 #include "chrome/browser/profile.h"
-#include "chrome/browser/user_data_manager.h"
 #include "chrome/browser/user_metrics.h"
 #include "chrome/browser/views/dom_view.h"
 #include "chrome/browser/views/go_button.h"
@@ -35,12 +34,12 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
-#include "chrome/views/background.h"
+#include "chrome/views/container.h"
 #include "chrome/views/button_dropdown.h"
 #include "chrome/views/hwnd_view.h"
+#include "chrome/views/background.h"
 #include "chrome/views/label.h"
 #include "chrome/views/tooltip_manager.h"
-#include "chrome/views/widget.h"
 #include "net/base/net_util.h"
 
 #include "chromium_strings.h"
@@ -75,22 +74,19 @@ BrowserToolbarView::BrowserToolbarView(CommandController* controller,
       profile_(NULL),
       acc_focused_view_(NULL),
       browser_(browser),
-      tab_(NULL),
-      profiles_helper_(new GetProfilesHelper(this)),
-      profiles_menu_(NULL) {
+      tab_(NULL) {
   back_menu_model_.reset(new BackForwardMenuModel(
       browser, BackForwardMenuModel::BACKWARD_MENU_DELEGATE));
   forward_menu_model_.reset(new BackForwardMenuModel(
       browser, BackForwardMenuModel::FORWARD_MENU_DELEGATE));
 
-  if (browser->type() == Browser::TYPE_NORMAL)
+  if (browser->GetType() == BrowserType::TABBED_BROWSER)
     display_mode_ = DISPLAYMODE_NORMAL;
   else
     display_mode_ = DISPLAYMODE_LOCATION;
 }
 
 BrowserToolbarView::~BrowserToolbarView() {
-  profiles_helper_->OnDelegateDeleted();
 }
 
 void BrowserToolbarView::Init(Profile* profile) {
@@ -116,8 +112,6 @@ void BrowserToolbarView::CreateLeftSideControls() {
   ResourceBundle &rb = ResourceBundle::GetSharedInstance();
 
   back_ = new views::ButtonDropDown(back_menu_model_.get());
-  back_->SetImageAlignment(views::Button::ALIGN_RIGHT,
-                           views::Button::ALIGN_TOP);
   back_->SetImage(views::Button::BS_NORMAL, rb.GetBitmapNamed(IDR_BACK));
   back_->SetImage(views::Button::BS_HOT, rb.GetBitmapNamed(IDR_BACK_H));
   back_->SetImage(views::Button::BS_PUSHED, rb.GetBitmapNamed(IDR_BACK_P));
@@ -157,7 +151,6 @@ void BrowserToolbarView::CreateLeftSideControls() {
   home_->SetImage(views::Button::BS_PUSHED, rb.GetBitmapNamed(IDR_HOME_P));
   home_->SetTooltipText(l10n_util::GetString(IDS_TOOLTIP_HOME));
   home_->SetAccessibleName(l10n_util::GetString(IDS_ACCNAME_HOME));
-  home_->SetID(VIEW_ID_HOME_BUTTON);
   AddChildView(home_);
   controller_->AddManagedButton(home_, IDC_HOME);
 }
@@ -264,20 +257,8 @@ void BrowserToolbarView::Layout() {
   int right_side_width = 0;
   if (IsDisplayModeNormal()) {
     sz = back_->GetPreferredSize();
-    // TODO(abarth):  If the window becomes maximized but is not resized,
-    //                then Layout() might not be called and the back button
-    //                will be slightly the wrong size.  We should force a
-    //                Layout() in this case.
-    //                http://crbug.com/5540
-    if (browser_->window() && browser_->window()->IsMaximized()) {
-      // If the window is maximized, we extend the back button to the left so
-      // that clicking on the left-most pixel will activate the back button.
-      back_->SetBounds(0, kControlVertOffset, sz.width() + kControlIndent,
-                       sz.height());
-    } else {
-      back_->SetBounds(kControlIndent, kControlVertOffset, sz.width(),
-                       sz.height());
-    }
+    back_->SetBounds(kControlIndent, kControlVertOffset, sz.width(),
+                     sz.height());
 
     sz = forward_->GetPreferredSize();
     forward_->SetBounds(back_->x() + back_->width(), kControlVertOffset,
@@ -360,14 +341,16 @@ void BrowserToolbarView::DidGainFocus() {
     acc_focused_view_->SetHotTracked(true);
 
     // Show the tooltip for the view that got the focus.
-    if (GetWidget()->GetTooltipManager())
-      GetWidget()->GetTooltipManager()->ShowKeyboardTooltip(acc_focused_view_);
+    if (GetContainer()->GetTooltipManager()) {
+      GetContainer()->GetTooltipManager()->
+          ShowKeyboardTooltip(acc_focused_view_);
+    }
 
     // Update focused_view with MSAA-adjusted child id.
     view_index = acc_focused_view_->GetID();
   }
 
-  HWND hwnd = GetWidget()->GetHWND();
+  HWND hwnd = GetContainer()->GetHWND();
 
   // Notify Access Technology that there was a change in keyboard focus.
   ::NotifyWinEvent(EVENT_OBJECT_FOCUS, hwnd, OBJID_CLIENT,
@@ -378,8 +361,8 @@ void BrowserToolbarView::WillLoseFocus() {
   // Resetting focus state.
   acc_focused_view_->SetHotTracked(false);
   // Any tooltips that are active should be hidden when toolbar loses focus.
-  if (GetWidget() && GetWidget()->GetTooltipManager())
-    GetWidget()->GetTooltipManager()->HideKeyboardTooltip();
+  if (GetContainer() && GetContainer()->GetTooltipManager())
+    GetContainer()->GetTooltipManager()->HideKeyboardTooltip();
   acc_focused_view_ = NULL;
 }
 
@@ -405,8 +388,8 @@ bool BrowserToolbarView::OnKeyPressed(const views::KeyEvent& e) {
           acc_focused_view_->GetID() == VIEW_ID_APP_MENU) {
         // If a menu button in toolbar is activated and its menu is displayed,
         // then active tooltip should be hidden.
-        if (GetWidget()->GetTooltipManager())
-          GetWidget()->GetTooltipManager()->HideKeyboardTooltip();
+        if (GetContainer()->GetTooltipManager())
+          GetContainer()->GetTooltipManager()->HideKeyboardTooltip();
         // Safe to cast, given to above view id check.
         static_cast<views::MenuButton*>(acc_focused_view_)->Activate();
         if (!acc_focused_view_) {
@@ -439,11 +422,11 @@ bool BrowserToolbarView::OnKeyPressed(const views::KeyEvent& e) {
 
     // Retrieve information to generate an MSAA focus event.
     int view_id = acc_focused_view_->GetID();
-    HWND hwnd = GetWidget()->GetHWND();
+    HWND hwnd = GetContainer()->GetHWND();
 
     // Show the tooltip for the view that got the focus.
-    if (GetWidget()->GetTooltipManager()) {
-      GetWidget()->GetTooltipManager()->
+    if (GetContainer()->GetTooltipManager()) {
+      GetContainer()->GetTooltipManager()->
           ShowKeyboardTooltip(GetChildViewAt(next_view));
     }
     // Notify Access Technology that there was a change in keyboard focus.
@@ -483,8 +466,10 @@ void BrowserToolbarView::RunPageMenu(const CPoint& pt, HWND hwnd) {
     anchor = Menu::TOPLEFT;
 
   Menu menu(this, anchor, hwnd);
-  menu.AppendMenuItemWithLabel(IDC_CREATE_SHORTCUTS,
-      l10n_util::GetString(IDS_CREATE_SHORTCUTS));
+  // The install menu may be dynamically generated with a contextual label.
+  // See browser_commands.cc.
+  menu.AppendMenuItemWithLabel(IDC_CREATE_SHORTCUT,
+      l10n_util::GetString(IDS_DEFAULT_INSTALL_SITE_LABEL));
   menu.AppendSeparator();
   menu.AppendMenuItemWithLabel(IDC_CUT, l10n_util::GetString(IDS_CUT));
   menu.AppendMenuItemWithLabel(IDC_COPY, l10n_util::GetString(IDS_COPY));
@@ -492,14 +477,14 @@ void BrowserToolbarView::RunPageMenu(const CPoint& pt, HWND hwnd) {
   menu.AppendSeparator();
 
   menu.AppendMenuItemWithLabel(IDC_FIND,
-                               l10n_util::GetString(IDS_FIND));
-  menu.AppendMenuItemWithLabel(IDC_SAVE_PAGE,
-                               l10n_util::GetString(IDS_SAVE_PAGE));
+                               l10n_util::GetString(IDS_FIND_IN_PAGE));
+  menu.AppendMenuItemWithLabel(IDC_SAVEPAGE,
+                               l10n_util::GetString(IDS_SAVEPAGEAS));
   menu.AppendMenuItemWithLabel(IDC_PRINT, l10n_util::GetString(IDS_PRINT));
   menu.AppendSeparator();
 
-  Menu* zoom_menu = menu.AppendSubMenu(IDC_ZOOM_MENU,
-                                       l10n_util::GetString(IDS_ZOOM_MENU));
+  Menu* zoom_menu = menu.AppendSubMenu(IDC_ZOOM,
+                                       l10n_util::GetString(IDS_ZOOM));
   zoom_menu->AppendMenuItemWithLabel(IDC_ZOOM_PLUS,
                                      l10n_util::GetString(IDS_ZOOM_PLUS));
   zoom_menu->AppendMenuItemWithLabel(IDC_ZOOM_NORMAL,
@@ -508,8 +493,8 @@ void BrowserToolbarView::RunPageMenu(const CPoint& pt, HWND hwnd) {
                                      l10n_util::GetString(IDS_ZOOM_MINUS));
 
   // Create encoding menu.
-  Menu* encoding_menu = menu.AppendSubMenu(
-      IDC_ENCODING_MENU, l10n_util::GetString(IDS_ENCODING_MENU));
+  Menu* encoding_menu = menu.AppendSubMenu(IDC_ENCODING,
+                                           l10n_util::GetString(IDS_ENCODING));
 
   EncodingMenuControllerDelegate::BuildEncodingMenu(profile_, encoding_menu);
 
@@ -518,15 +503,15 @@ void BrowserToolbarView::RunPageMenu(const CPoint& pt, HWND hwnd) {
     unsigned int menu_label_id;
   };
   struct MenuCreateMaterial developer_menu_materials[] = {
-    { IDC_VIEW_SOURCE, IDS_VIEW_SOURCE },
+    { IDC_VIEWSOURCE, IDS_VIEWPAGESOURCE },
     { IDC_DEBUGGER, IDS_DEBUGGER },
-    { IDC_JS_CONSOLE, IDS_JS_CONSOLE },
-    { IDC_TASK_MANAGER, IDS_TASK_MANAGER }
+    { IDC_SHOW_JS_CONSOLE, IDS_VIEWJSCONSOLE },
+    { IDC_TASKMANAGER, IDS_TASKMANAGER }
   };
   // Append developer menu.
   menu.AppendSeparator();
-  Menu* developer_menu = menu.AppendSubMenu(IDC_DEVELOPER_MENU,
-      l10n_util::GetString(IDS_DEVELOPER_MENU));
+  Menu* developer_menu =
+    menu.AppendSubMenu(IDC_DEVELOPER, l10n_util::GetString(IDS_DEVELOPER));
   for (int i = 0; i < arraysize(developer_menu_materials); ++i) {
     if (developer_menu_materials[i].menu_id) {
       developer_menu->AppendMenuItemWithLabel(
@@ -539,8 +524,8 @@ void BrowserToolbarView::RunPageMenu(const CPoint& pt, HWND hwnd) {
 
   menu.AppendSeparator();
 
-  menu.AppendMenuItemWithLabel(IDC_REPORT_BUG,
-                               l10n_util::GetString(IDS_REPORT_BUG));
+  menu.AppendMenuItemWithLabel(IDS_COMMANDS_REPORTBUG,
+                               l10n_util::GetString(IDS_COMMANDS_REPORTBUG));
   menu.RunMenuAt(pt.x, pt.y);
 }
 
@@ -550,21 +535,13 @@ void BrowserToolbarView::RunAppMenu(const CPoint& pt, HWND hwnd) {
     anchor = Menu::TOPLEFT;
 
   Menu menu(this, anchor, hwnd);
-  menu.AppendMenuItemWithLabel(IDC_NEW_TAB, l10n_util::GetString(IDS_NEW_TAB));
-  menu.AppendMenuItemWithLabel(IDC_NEW_WINDOW,
-                               l10n_util::GetString(IDS_NEW_WINDOW));
-  menu.AppendMenuItemWithLabel(IDC_NEW_INCOGNITO_WINDOW,
-                               l10n_util::GetString(IDS_NEW_INCOGNITO_WINDOW));
-
-  // Enumerate profiles asynchronously and then create the parent menu item.
-  // We will create the child menu items for this once the asynchronous call is
-  // done.  See OnGetProfilesDone().
-  profiles_helper_->GetProfiles(NULL);
-  profiles_menu_ = menu.AppendSubMenu(IDC_PROFILE_MENU,
-                                      l10n_util::GetString(IDS_PROFILE_MENU));
-
+  menu.AppendMenuItemWithLabel(IDC_NEWTAB, l10n_util::GetString(IDS_NEWTAB));
+  menu.AppendMenuItemWithLabel(IDC_NEWWINDOW,
+                               l10n_util::GetString(IDS_NEWWINDOW));
+  menu.AppendMenuItemWithLabel(IDC_GOOFFTHERECORD,
+                               l10n_util::GetString(IDS_GOOFFTHERECORD));
   menu.AppendSeparator();
-  menu.AppendMenuItemWithLabel(IDC_SHOW_BOOKMARK_BAR,
+  menu.AppendMenuItemWithLabel(IDC_SHOW_BOOKMARKS_BAR,
                                l10n_util::GetString(IDS_SHOW_BOOKMARK_BAR));
   menu.AppendSeparator();
   menu.AppendMenuItemWithLabel(IDC_SHOW_HISTORY,
@@ -579,27 +556,26 @@ void BrowserToolbarView::RunAppMenu(const CPoint& pt, HWND hwnd) {
   menu.AppendMenuItemWithLabel(IDC_IMPORT_SETTINGS,
                                l10n_util::GetString(IDS_IMPORT_SETTINGS));
   menu.AppendSeparator();
-  menu.AppendMenuItemWithLabel(IDC_OPTIONS, l10n_util::GetStringF(IDS_OPTIONS,
-                               l10n_util::GetString(IDS_PRODUCT_NAME)));
-  menu.AppendMenuItemWithLabel(IDC_ABOUT, l10n_util::GetStringF(IDS_ABOUT,
-                               l10n_util::GetString(IDS_PRODUCT_NAME)));
-  menu.AppendMenuItemWithLabel(IDC_HELP_PAGE,
-                               l10n_util::GetString(IDS_HELP_PAGE));
+  menu.AppendMenuItemWithLabel(IDC_OPTIONS,
+      l10n_util::GetStringF(IDS_OPTIONS,
+      l10n_util::GetString(IDS_PRODUCT_NAME)));
+  menu.AppendMenuItemWithLabel(IDC_ABOUT,
+      l10n_util::GetStringF(IDS_ABOUT,
+      l10n_util::GetString(IDS_PRODUCT_NAME)));
+  menu.AppendMenuItemWithLabel(IDC_HELPMENU, l10n_util::GetString(IDS_HELP));
   menu.AppendSeparator();
   menu.AppendMenuItemWithLabel(IDC_EXIT, l10n_util::GetString(IDS_EXIT));
 
   menu.RunMenuAt(pt.x, pt.y);
-
-  // Menu is going away, so set the profiles menu pointer to NULL.
-  profiles_menu_ = NULL;
 }
 
 bool BrowserToolbarView::IsItemChecked(int id) const {
   if (!profile_)
     return false;
-  if (id == IDC_SHOW_BOOKMARK_BAR)
+  if (id == IDC_SHOW_BOOKMARKS_BAR)
     return profile_->GetPrefs()->GetBoolean(prefs::kShowBookmarkBar);
-  return EncodingMenuControllerDelegate::IsItemChecked(id);
+  else
+    return EncodingMenuControllerDelegate::IsItemChecked(id);
 }
 
 void BrowserToolbarView::RunMenu(views::View* source, const CPoint& pt,
@@ -614,36 +590,6 @@ void BrowserToolbarView::RunMenu(views::View* source, const CPoint& pt,
     default:
       NOTREACHED() << "Invalid source menu.";
   }
-}
-
-void BrowserToolbarView::OnGetProfilesDone(
-    const std::vector<std::wstring>& profiles) {
-  // Nothing to do if the menu has gone away.
-  if (!profiles_menu_)
-    return;
-
-  // Store the latest list of profiles in the browser.
-  browser_->set_user_data_dir_profiles(profiles);
-
-  // Add direct sub menu items for profiles.
-  std::vector<std::wstring>::const_iterator iter = profiles.begin();
-  for (int i = IDC_NEW_WINDOW_PROFILE_0;
-       (i <= IDC_NEW_WINDOW_PROFILE_LAST) && (iter != profiles.end());
-       ++i, ++iter)
-    profiles_menu_->AppendMenuItemWithLabel(i, *iter);
-
-  // If there are more profiles then show "Other" link.
-  if (iter != profiles.end()) {
-    profiles_menu_->AppendSeparator();
-    profiles_menu_->AppendMenuItemWithLabel(
-        IDC_SELECT_PROFILE, l10n_util::GetString(IDS_SELECT_PROFILE));
-  }
-
-  // Always show a link to select a new profile.
-  profiles_menu_->AppendSeparator();
-  profiles_menu_->AppendMenuItemWithLabel(
-      IDC_NEW_PROFILE,
-      l10n_util::GetString(IDS_SELECT_PROFILE_DIALOG_NEW_PROFILE_ENTRY));
 }
 
 bool BrowserToolbarView::GetAccessibleRole(VARIANT* role) {
@@ -771,6 +717,6 @@ bool BrowserToolbarView::GetAcceleratorInfo(int id,
       return true;
   }
   // Else, we retrieve the accelerator information from the frame.
-  return GetWidget()->GetAccelerator(id, accel);
+  return GetContainer()->GetAccelerator(id, accel);
 }
 

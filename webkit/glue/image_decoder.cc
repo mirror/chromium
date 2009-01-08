@@ -5,10 +5,8 @@
 #include "config.h"
 #include "webkit/glue/image_decoder.h"
 
-#include "base/compiler_specific.h"
-
-MSVC_PUSH_WARNING_LEVEL(0);
-#if defined(OS_WIN) || defined(OS_LINUX)
+#pragma warning(push, 0)
+#if defined(OS_WIN)
 #include "ImageSourceSkia.h"
 #elif defined(OS_MACOSX)
 #include "ImageSource.h"
@@ -17,7 +15,7 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "IntSize.h"
 #include "RefPtr.h"
 #include "SharedBuffer.h"
-MSVC_POP_WARNING();
+#pragma warning(pop)
 
 #include "SkBitmap.h"
 
@@ -42,12 +40,12 @@ SkBitmap ImageDecoder::Decode(const unsigned char* data, size_t size) {
   // but in the future we will need to replumb to get CGImageRefs (or whatever
   // the native type is) everywhere, directly.
   
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN)
   WebCore::ImageSourceSkia source;
 #elif defined(OS_MACOSX)
   WebCore::ImageSource source;
 #endif
-  WTF::RefPtr<WebCore::SharedBuffer> buffer(WebCore::SharedBuffer::create(
+  WTF::RefPtr<WebCore::SharedBuffer> buffer(new WebCore::SharedBuffer(
       data, static_cast<int>(size)));
 #if defined(OS_WIN)
   source.setData(buffer.get(), true,
@@ -64,7 +62,7 @@ SkBitmap ImageDecoder::Decode(const unsigned char* data, size_t size) {
   if (!frame0)
     return SkBitmap();
   
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN)
   return *reinterpret_cast<SkBitmap*>(frame0);
 #elif defined(OS_MACOSX)
   // BitmapImage releases automatically, but we're bypassing it so we'll need

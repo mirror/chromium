@@ -22,7 +22,7 @@ void RegisterTestPrefs(PrefService* prefs) {
 
 class PrefMemberTestClass : public NotificationObserver {
  public:
-  PrefMemberTestClass(PrefService* prefs) : observe_cnt_(0), prefs_(prefs) {
+  PrefMemberTestClass(PrefService* prefs) : prefs_(prefs), observe_cnt_(0) {
     str_.Init(kStringPref, prefs, this);
   }
 

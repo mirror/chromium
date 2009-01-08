@@ -4,7 +4,7 @@
 
 #include "testing/gtest/include/gtest/gtest.h"
 
-#include "base/ref_counted.h"
+#include "base/scoped_ptr.h"
 #include "net/http/http_auth.h"
 #include "net/http/http_auth_handler.h"
 #include "net/http/http_response_headers.h"
@@ -52,12 +52,10 @@ TEST(HttpAuthTest, ChooseBestChallenge) {
                 headers_with_status_line.c_str(),
                 headers_with_status_line.length())));
 
-    scoped_refptr<HttpAuthHandler> handler;
-    HttpAuth::ChooseBestChallenge(headers.get(),
-                                  HttpAuth::AUTH_SERVER,
-                                  &handler);
+    scoped_ptr<HttpAuthHandler> handler(HttpAuth::ChooseBestChallenge(
+      headers.get(), HttpAuth::AUTH_SERVER));
 
-    if (handler) {
+    if (handler.get()) {
       EXPECT_STREQ(tests[i].challenge_realm, handler->realm().c_str());
     } else {
       EXPECT_STREQ("", tests[i].challenge_realm);
@@ -159,27 +157,24 @@ TEST(HttpAuthTest, GetAuthorizationHeaderName) {
 
 TEST(HttpAuthTest, CreateAuthHandler) {
   {
-    scoped_refptr<HttpAuthHandler> handler;
-    HttpAuth::CreateAuthHandler("Basic realm=\"FooBar\"",
-                                HttpAuth::AUTH_SERVER,
-                                &handler);
+    scoped_ptr<HttpAuthHandler> handler(
+        HttpAuth::CreateAuthHandler("Basic realm=\"FooBar\"",
+        HttpAuth::AUTH_SERVER));
     EXPECT_FALSE(handler.get() == NULL);
     EXPECT_STREQ("basic", handler->scheme().c_str());
     EXPECT_STREQ("FooBar", handler->realm().c_str());
     EXPECT_EQ(HttpAuth::AUTH_SERVER, handler->target());
   }
   {
-    scoped_refptr<HttpAuthHandler> handler;
-    HttpAuth::CreateAuthHandler("UNSUPPORTED realm=\"FooBar\"",
-                                HttpAuth::AUTH_SERVER,
-                                &handler);
+    scoped_ptr<HttpAuthHandler> handler(
+        HttpAuth::CreateAuthHandler("UNSUPPORTED realm=\"FooBar\"",
+        HttpAuth::AUTH_SERVER));
     EXPECT_TRUE(handler.get() == NULL);
   }
   {
-    scoped_refptr<HttpAuthHandler> handler;
-    HttpAuth::CreateAuthHandler("Digest realm=\"FooBar\", nonce=\"xyz\"",
-                                HttpAuth::AUTH_PROXY,
-                                &handler);
+    scoped_ptr<HttpAuthHandler> handler(HttpAuth::CreateAuthHandler(
+        "Digest realm=\"FooBar\", nonce=\"xyz\"",
+        HttpAuth::AUTH_PROXY));
     EXPECT_FALSE(handler.get() == NULL);
     EXPECT_STREQ("digest", handler->scheme().c_str());
     EXPECT_STREQ("FooBar", handler->realm().c_str());

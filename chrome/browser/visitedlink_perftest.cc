@@ -6,16 +6,13 @@
 #include <string>
 #include <vector>
 
-#include "base/file_path.h"
 #include "base/file_util.h"
 #include "base/perftimer.h"
 #include "base/shared_memory.h"
 #include "base/string_util.h"
-#include "base/test_file_util.h"
 #include "chrome/browser/visitedlink_master.h"
+#include "chrome/test/test_file_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
-
-using base::TimeDelta;
 
 namespace {
 
@@ -32,15 +29,17 @@ GURL TestURL(const char* prefix, int i) {
 
 // we have no slaves, so this broadcase is a NOP
 VisitedLinkMaster::PostNewTableEvent DummyBroadcastNewTableEvent;
-void DummyBroadcastNewTableEvent(base::SharedMemory *table) {
+void DummyBroadcastNewTableEvent(SharedMemory *table) {
 }
 
-// Call at the beginning of the test to retrieve the database name.
-void InitDBName(std::wstring* db_name) {
-  FilePath db_path;
-  ASSERT_TRUE(file_util::GetCurrentDirectory(&db_path));
-  db_path = db_path.Append(FILE_PATH_LITERAL("TempVisitedLinks"));
-  *db_name = db_path.ToWStringHack();
+// Call at the beginning of the test to retrieve the database name and to
+// delete any old databases left by previous unit tests. The input buffer
+// should be MAX_PATH long.
+void InitDBName(wchar_t* db_name) {
+  ASSERT_TRUE(GetCurrentDirectory(MAX_PATH, db_name));
+  if (db_name[wcslen(db_name) - 1] != file_util::kPathSeparator)
+    wcsncat_s(db_name, MAX_PATH, &file_util::kPathSeparator, 1);
+  wcscat_s(db_name, MAX_PATH, L"TempVisitedLinks");
 }
 
 // this checks IsVisited for the URLs starting with the given prefix and
@@ -61,13 +60,13 @@ void FillTable(VisitedLinkMaster& master, const char* prefix,
 
 class VisitedLink : public testing::Test {
  protected:
-  std::wstring db_name_;
+  wchar_t db_name_[MAX_PATH];
   virtual void SetUp() {
-    InitDBName(&db_name_);
-    file_util::Delete(db_name_, false);
+    InitDBName(db_name_);
+    DeleteFile(db_name_);
   }
   virtual void TearDown() {
-    file_util::Delete(db_name_, false);
+    DeleteFile(db_name_);
   }
 };
 
@@ -144,8 +143,7 @@ TEST_F(VisitedLink, TestLoad) {
   for (int i = 0; i < load_count; i++)
   {
     // make sure the file has to be re-loaded
-    file_util::EvictFileFromSystemCache(
-        FilePath::FromWStringHack(std::wstring(db_name_)));
+    file_util::EvictFileFromSystemCache(db_name_);
 
     // cold load (no OS cache, hopefully)
     {

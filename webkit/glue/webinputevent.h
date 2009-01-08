@@ -10,20 +10,13 @@
 #if defined(OS_WIN)
 #include <windows.h>
 #elif defined(OS_MACOSX)
-#include <vector>
+#include <wtf/RetainPtr.h>
 #ifdef __OBJC__
 @class NSEvent;
-@class NSView;
 #else
 class NSEvent;
-class NSView;
 #endif  // __OBJC__
-#elif defined(OS_LINUX)
-typedef struct _GdkEventButton GdkEventButton;
-typedef struct _GdkEventMotion GdkEventMotion;
-typedef struct _GdkEventScroll GdkEventScroll;
-typedef struct _GdkEventKey GdkEventKey;
-#endif
+#endif  // OS_MACOSX
 
 // The classes defined in this file are intended to be used with WebView's
 // HandleInputEvent method.  These event types are cross-platform; however,
@@ -69,6 +62,11 @@ class WebInputEvent {
 
   Type type;
   int modifiers;
+#if defined(OS_MACOSX)
+  // For now, good enough for the test shell. TODO(avi): Revisit when we need
+  // to start sending this over an IPC pipe.
+  RetainPtr<NSEvent> mac_event;
+#endif
 };
 
 // WebMouseEvent --------------------------------------------------------------
@@ -95,10 +93,7 @@ class WebMouseEvent : public WebInputEvent {
 #if defined(OS_WIN)
   WebMouseEvent(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
 #elif defined(OS_MACOSX)
-  WebMouseEvent(NSEvent *event, NSView* view);
-#elif defined(OS_LINUX)
-  explicit WebMouseEvent(const GdkEventButton* event);
-  explicit WebMouseEvent(const GdkEventMotion* event);
+  WebMouseEvent(NSEvent *event);
 #endif
 };
 
@@ -113,9 +108,7 @@ class WebMouseWheelEvent : public WebMouseEvent {
 #if defined(OS_WIN)
   WebMouseWheelEvent(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
 #elif defined(OS_MACOSX)
-  WebMouseWheelEvent(NSEvent *event, NSView* view);
-#elif defined(OS_LINUX)
-  explicit WebMouseWheelEvent(const GdkEventScroll* event);
+  WebMouseWheelEvent(NSEvent *event);
 #endif
 };
 
@@ -123,35 +116,16 @@ class WebMouseWheelEvent : public WebMouseEvent {
 
 class WebKeyboardEvent : public WebInputEvent {
  public:
-  // The key_code field is the Windows key code associated with this key event.
-  // This sometimes matches the ASCII value of the key (for e.g. a-z) but
-  // officially ignores case, and has its own set of codes for control keys as
-  // well as other visible letters like punctuation.
-  // webkit/port/platform/chromium/KeyboardCodes* is an attempt at defining all
-  // of these keys, but it's not all the way there yet.  (E.g., the Windows
-  // implementation there just passes through the code from the windows message
-  // directly.)
   int key_code;
-
-#if defined(OS_MACOSX)
-  // text arrays extracted from the native event. On Mac, there may be
-  // multiple keys sent as a single event if the flags don't change.
-  std::vector<unsigned short> text;
-  std::vector<unsigned short> unmodified_text;
-  std::vector<unsigned short> key_identifier;
-#elif defined(OS_WIN)
+  int key_data;
+#if defined(OS_WIN)
   bool system_key;  // Set if we receive a SYSKEYDOWN/WM_SYSKEYUP message.
   MSG actual_message; // Set to the current keyboard message.
-#elif defined(OS_LINUX)
-  // The unicode character, if available, corresponding to this key event.
-  // TODO(evanm): temporary hack for test_shell.  Ideally we'd either manage
-  // to stuff everything into key_code, or make this field shared by all
-  // implementations, but this will have to do for now.
-  wchar_t text;
 #endif
 
   WebKeyboardEvent() 
-      : key_code(0)
+      : key_code(0),
+        key_data(0)
 #if defined(OS_WIN)
         , system_key(false) {
     memset(&actual_message, 0, sizeof(actual_message));
@@ -164,8 +138,6 @@ class WebKeyboardEvent : public WebInputEvent {
   WebKeyboardEvent(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
 #elif defined(OS_MACOSX)
   WebKeyboardEvent(NSEvent *event);
-#elif defined(OS_LINUX)
-  explicit WebKeyboardEvent(const GdkEventKey* event);
 #endif
 };
 

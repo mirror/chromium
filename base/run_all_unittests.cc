@@ -6,6 +6,6 @@
 #include "base/test_suite.h"
 
 int main(int argc, char** argv) {
-  base::EnableTerminationOnHeapCorruption();
+  process_util::EnableTerminationOnHeapCorruption();
   return TestSuite(argc, argv).Run();
 }

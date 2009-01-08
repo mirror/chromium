@@ -18,8 +18,6 @@
 
 #ifdef IPC_MESSAGE_LOG_ENABLED
 
-using base::Time;
-
 namespace {
 const wchar_t kTitleMsg[] = L"IPC Messages";
 

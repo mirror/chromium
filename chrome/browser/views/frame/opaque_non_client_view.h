@@ -10,7 +10,7 @@
 #include "chrome/views/non_client_view.h"
 #include "chrome/views/button.h"
 
-class BrowserView;
+class BrowserView2;
 class OpaqueFrame;
 class TabContents;
 class TabStrip;
@@ -20,12 +20,12 @@ class WindowResources;
 
 class OpaqueNonClientView : public views::NonClientView,
                             public views::BaseButton::ButtonListener,
-                            public TabIconView::TabIconViewModel {
+                            public TabIconView::TabContentsProvider {
  public:
   // Constructs a non-client view for an OpaqueFrame. |is_otr| specifies if the
   // frame was created "off-the-record" and as such different bitmaps should be
   // used to render the frame.
-  OpaqueNonClientView(OpaqueFrame* frame, BrowserView* browser_view);
+  OpaqueNonClientView(OpaqueFrame* frame, BrowserView2* browser_view);
   virtual ~OpaqueNonClientView();
 
   // Retrieve the bounds of the window for the specified contents bounds.
@@ -39,9 +39,9 @@ class OpaqueNonClientView : public views::NonClientView,
   void UpdateWindowIcon();
 
  protected:
-  // Overridden from TabIconView::TabIconViewModel:
-  virtual bool ShouldTabIconViewAnimate() const;
-  virtual SkBitmap GetFavIconForTabIconView();
+  // Overridden from TabIconView::TabContentsProvider:
+  virtual TabContents* GetCurrentTabContents();
+  virtual SkBitmap GetFavIcon();
 
   // Overridden from views::BaseButton::ButtonListener:
   virtual void ButtonPressed(views::BaseButton* sender);
@@ -54,14 +54,13 @@ class OpaqueNonClientView : public views::NonClientView,
   virtual int NonClientHitTest(const gfx::Point& point);
   virtual void GetWindowMask(const gfx::Size& size, gfx::Path* window_mask);
   virtual void EnableClose(bool enable);
-  virtual void ResetWindowControls();
 
   // Overridden from views::View:
   virtual void Paint(ChromeCanvas* canvas);
   virtual void Layout();
   virtual gfx::Size GetPreferredSize();
   virtual views::View* GetViewForPoint(const gfx::Point& point,
-                                       bool can_create_floating);
+                                             bool can_create_floating);
   virtual void ViewHierarchyChanged(bool is_add,
                                     views::View* parent,
                                     views::View* child);
@@ -124,7 +123,7 @@ class OpaqueNonClientView : public views::NonClientView,
   OpaqueFrame* frame_;
 
   // The BrowserView hosted within this View.
-  BrowserView* browser_view_;
+  BrowserView2* browser_view_;
 
   // The resources currently used to paint this view.
   views::WindowResources* current_active_resources_;

@@ -16,7 +16,6 @@
 #include "chrome/browser/rlz/rlz.h"
 #include "chrome/browser/template_url.h"
 #include "chrome/browser/template_url_prepopulate_data.h"
-#include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/stl_util-inl.h"
@@ -26,13 +25,11 @@
 #include "unicode/rbbi.h"
 #include "unicode/uchar.h"
 
-using base::Time;
-
 // String in the URL that is replaced by the search term.
 static const wchar_t kSearchTermParameter[] = L"{searchTerms}";
 
 // String in Initializer that is replaced with kSearchTermParameter.
-static const wchar_t kTemplateParameter[] = L"%s";
+static const wchar_t kTemplateParameter[](L"%s");
 
 // Term used when generating a search url. Use something obscure so that on
 // the rare case the term replaces the URL it's unlikely another keyword would
@@ -173,7 +170,7 @@ std::wstring TemplateURLModel::CleanUserInputKeyword(
   // Remove the scheme.
   std::wstring result(l10n_util::ToLower(keyword));
   url_parse::Component scheme_component;
-  if (url_parse::ExtractScheme(WideToUTF8(keyword).c_str(),
+  if (url_parse::ExtractScheme(keyword.c_str(),
                                static_cast<int>(keyword.length()),
                                &scheme_component)) {
     // Include trailing ':'.
@@ -200,12 +197,10 @@ GURL TemplateURLModel::GenerateSearchURL(const TemplateURL* t_url) {
     return GURL();
 
   if (!search_ref->SupportsReplacement())
-    return GURL(WideToUTF8(search_ref->url()));
+    return GURL(search_ref->url());
 
-  return search_ref->ReplaceSearchTerms(
-      *t_url,
-      kReplacementTerm,
-      TemplateURLRef::NO_SUGGESTIONS_AVAILABLE, std::wstring());
+  return GURL(search_ref->ReplaceSearchTerms(*t_url, kReplacementTerm,
+      TemplateURLRef::NO_SUGGESTIONS_AVAILABLE, std::wstring()));
 }
 
 bool TemplateURLModel::CanReplaceKeyword(
@@ -229,7 +224,7 @@ bool TemplateURLModel::CanReplaceKeyword(
   // be replaced. We do this to ensure that if the user assigns a different
   // keyword to a generated TemplateURL, we won't regenerate another keyword for
   // the same host.
-  GURL gurl(WideToUTF8(url));
+  GURL gurl(url);
   if (gurl.is_valid() && !gurl.host().empty())
     return CanReplaceKeywordForHost(gurl.host(), template_url_to_replace);
   return true;
@@ -604,12 +599,11 @@ void TemplateURLModel::OnWebDataServiceRequestDone(
   // loading. Now that we've loaded we can nuke it.
   prefs_default_search_provider_.reset();
 
-  // Compiler won't implicitly convert std::vector<TemplateURL*> to
-  // std::vector<const TemplateURL*>, and reinterpret_cast is unsafe,
-  // so we just copy it.
-  std::vector<const TemplateURL*> template_urls(keyword_result.keywords.begin(),
-                                                keyword_result.keywords.end());
-
+  // Compiler won't convert std::vector<TemplateURL*> to
+  // std::vector<const TemplateURL*>.
+  std::vector<const TemplateURL*> template_urls =
+      *reinterpret_cast<std::vector<const TemplateURL*>* >(
+          &keyword_result.keywords);
   const int resource_keyword_version =
       TemplateURLPrepopulateData::GetDataVersion();
   if (keyword_result.builtin_keyword_version != resource_keyword_version) {
@@ -978,3 +972,4 @@ void TemplateURLModel::GoogleBaseURLChanged() {
                       OnTemplateURLModelChanged());
   }
 }
+

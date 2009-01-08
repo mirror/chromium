@@ -57,10 +57,8 @@ HANDLE WINAPI TargetCreateNamedPipeW(
     if (SBOX_ALL_OK != code)
       break;
 
-    ::SetLastError(answer.win32_result);
-
     if (ERROR_SUCCESS != answer.win32_result)
-      return INVALID_HANDLE_VALUE;
+      break;
 
     return answer.handle;
   } while (false);

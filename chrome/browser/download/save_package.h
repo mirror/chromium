@@ -22,7 +22,6 @@
 class SaveFileManager;
 class SavePackage;
 class DownloadItem;
-class DownloadManager;
 class GURL;
 class MessageLoop;
 class PrefService;
@@ -30,10 +29,10 @@ class Profile;
 class WebContents;
 class URLRequestContext;
 class WebContents;
+class Time;
 
 namespace base {
 class Thread;
-class Time;
 }
 
 // The SavePackage object manages the process of saving a page as only-html or
@@ -159,8 +158,7 @@ class SavePackage : public base::RefCountedThreadSafe<SavePackage>,
   };
   static bool GetSaveInfo(const std::wstring& suggest_name,
                           HWND container_hwnd,
-                          SavePackageParam* param,
-                          DownloadManager* download_manager);
+                          SavePackageParam* param);
 
   // File name is consist of pure file name, dot and file extension name. File
   // name might has no dot and file extension, or has multiple dot inside file

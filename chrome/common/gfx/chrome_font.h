@@ -11,21 +11,6 @@
 
 #if defined(OS_WIN)
 typedef struct HFONT__* HFONT;
-#elif defined(OS_LINUX)
-#include "skia/include/SkRefCnt.h"
-class SkPaint;
-class SkTypeface;
-#endif
-
-#if defined(OS_WIN)
-typedef struct HFONT__* NativeFont;
-#elif defined(OS_MACOSX)
-typedef void* NativeFont;  // TODO(port): set the correct type here
-#elif defined(OS_LINUX)
-class SkTypeface;
-typedef SkTypeface* NativeFont;
-#else  // null port.
-#error No known OS defined
 #endif
 
 #include "base/basictypes.h"
@@ -36,17 +21,20 @@ typedef SkTypeface* NativeFont;
 class ChromeFont {
  public:
   // The following constants indicate the font style.
-  enum {
-    NORMAL = 0,
-    BOLD = 1,
-    ITALIC = 2,
-    UNDERLINED = 4,
-    WEB = 8,  // TODO(agl): what does this mean?
-  };
+  static const int BOLD = 1;
+  static const int ITALIC = 2;
+  static const int UNDERLINED = 4;
+  static const int WEB = 8;
+
+  // Creates a ChromeFont from the specified HFONT. The supplied HFONT is
+  // effectively copied.
+  static ChromeFont CreateFont(HFONT hfont);
 
   // Creates a ChromeFont given font name (e.g. arial), font size (e.g. 12).
   static ChromeFont CreateFont(const std::wstring& font_name, int font_size);
 
+  // Creates a font with the default name and style.
+  ChromeFont() : font_ref_(GetBaseFontRef()) { }
   ~ChromeFont() { }
 
   // Returns a new Font derived from the existing font.
@@ -65,13 +53,13 @@ class ChromeFont {
 
   // Returns the number of vertical pixels needed to display characters from
   // the specified font.
-  int height() const;
+  int height() const { return font_ref_->height(); }
 
   // Returns the baseline, or ascent, of the font.
-  int baseline() const;
+  int baseline() const { return font_ref_->baseline(); }
 
   // Returns the average character width for the font.
-  int ave_char_width() const;
+  int ave_char_width() const { return font_ref_->ave_char_width(); }
 
   // Returns the number of horizontal pixels needed to display the specified
   // string.
@@ -79,27 +67,13 @@ class ChromeFont {
 
   // Returns the expected number of horizontal pixels needed to display
   // the specified length of characters.
-  // Call GetStringWidth() to retrieve the actual number.
-  int GetExpectedTextWidth(int length) const;
+  // Call the GetStringWidth() function to retrieve the actual number.
+  int GetExpectedTextWidth(int length) const {
+    return length * font_ref_->dlu_base_x();
+  }
 
   // Returns the style of the font.
-  int style() const;
-
-  // Font Name.
-  std::wstring FontName();
-
-  // Font Size.
-  int FontSize();
-
-  NativeFont nativeFont() const;
-
-#if defined(OS_WIN)
-  // Creates a font with the default name and style.
-  ChromeFont();
-
-  // Creates a ChromeFont from the specified HFONT. The supplied HFONT is
-  // effectively copied.
-  static ChromeFont CreateFont(HFONT hfont);
+  int style() const { return font_ref_->style(); }
 
   // Returns the handle to the underlying HFONT. This is used by ChromeCanvas to
   // draw text.
@@ -113,16 +87,14 @@ class ChromeFont {
   int vertical_dlus_to_pixels(int dlus) {
     return dlus * font_ref_->height() / 8;
   }
-#elif defined(OS_LINUX)
-  // We need a copy constructor to deal with the Skia reference counting.
-  ChromeFont(const ChromeFont& other);
-  // Setup a Skia context to use the current typeface
-  void PaintSetup(SkPaint* paint) const;
-#endif
+
+  // Font Name.
+  std::wstring FontName();
+
+  // Font Size.
+  int FontSize();
 
  private:
-
-#if defined(OS_WIN)
   // Chrome text drawing bottoms out in the Windows GDI functions that take an
   // HFONT (an opaque handle into Windows). To avoid lots of GDI object
   // allocation and destruction, ChromeFont indirectly refers to the HFONT
@@ -180,29 +152,6 @@ class ChromeFont {
 
   // Indirect reference to the HFontRef, which references the underlying HFONT.
   scoped_refptr<HFontRef> font_ref_;
-#elif defined(OS_LINUX)
-  explicit ChromeFont(SkTypeface* typeface, const std::wstring& name,
-                      int size, int style);
-  // Calculate and cache the font metrics
-  void calculateMetrics();
-
-  // These two both point to the same SkTypeface. We use the SkAutoUnref to
-  // handle the reference counting, but without @typeface_ we would have to
-  // cast the SkRefCnt from @typeface_helper_ every time.
-  SkAutoUnref typeface_helper_;
-  SkTypeface *typeface_;
-
-  // Additional information about the face
-  const std::wstring font_name_;
-  const int font_size_;
-  const int style_;
-
-  // Cached metrics, generated at construction
-  int height_;
-  int ascent_;
-  int avg_width_;
-#endif
-
 };
 
 #endif  // CHROME_COMMON_GFX_CHROME_FONT_H_

@@ -1,6 +1,6 @@
 /* libs/graphics/images/SkImageDecoder_libgif.cpp
 **
-** Copyright 2006, The Android Open Source Project
+** Copyright 2006, Google Inc.
 **
 ** Licensed under the Apache License, Version 2.0 (the "License"); 
 ** you may not use this file except in compliance with the License. 
@@ -143,7 +143,7 @@ bool SkGIFMovie::onGetBitmap(SkBitmap* bm)
     if (NULL == gif)
         return false;
 
-    // should we check for the Image cmap or the global (SColorMap) first? 
+    // should we check for the Image cmap or the global (SColorMap) first? <reed>
     ColorMapObject* cmap = gif->SColorMap;
     if (cmap == NULL)
         cmap = gif->Image.ColorMap;
@@ -154,22 +154,15 @@ bool SkGIFMovie::onGetBitmap(SkBitmap* bm)
         return false;
     }
 
+    SavedImage* gif_image = fCurrSavedImage;
     const int width = gif->SWidth;
     const int height = gif->SHeight;
-    if (width <= 0 || height <= 0) {
-        return false;
-    }
-
-    SavedImage*      gif_image = fCurrSavedImage;
-    SkBitmap::Config config = SkBitmap::kIndex8_Config;
+    SkBitmap::Config    config = SkBitmap::kIndex8_Config;
 
     SkColorTable* colorTable = SkNEW_ARGS(SkColorTable, (cmap->ColorCount));
-    SkAutoUnref aur(colorTable);
-
     bm->setConfig(config, width, height, 0);
-    if (!bm->allocPixels(colorTable)) {
-        return false;
-    }
+    bm->allocPixels(colorTable);
+    colorTable->unref();
 
     int transparent = -1;
     for (int i = 0; i < gif_image->ExtensionBlockCount; ++i) {

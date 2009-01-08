@@ -37,10 +37,7 @@ SkImageRef_ashmem::SkImageRef_ashmem(SkStream* stream,
 
 SkImageRef_ashmem::~SkImageRef_ashmem() {
     fCT->safeUnref();
-    this->closeFD();
-}
 
-void SkImageRef_ashmem::closeFD() {
     if (-1 != fRec.fFD) {
 #ifdef DUMP_ASHMEM_LIFECYCLE
         SkDebugf("=== ashmem close %d\n", fRec.fFD);
@@ -49,7 +46,6 @@ void SkImageRef_ashmem::closeFD() {
         SkASSERT(fRec.fSize);
         munmap(fRec.fAddr, fRec.fSize);
         close(fRec.fFD);
-        fRec.fFD = -1;
     }
 }
 
@@ -140,7 +136,6 @@ bool SkImageRef_ashmem::onDecode(SkImageDecoder* codec, SkStream* stream,
             ashmem_unpin_region(fRec.fFD, 0, 0);
             fRec.fPinned = false;
         }
-        this->closeFD();
         return false;
     }
 }
@@ -188,16 +183,13 @@ void* SkImageRef_ashmem::onLockPixels(SkColorTable** ct) {
 void SkImageRef_ashmem::onUnlockPixels() {
     this->INHERITED::onUnlockPixels();
     
-    if (-1 != fRec.fFD) {
-        SkASSERT(fRec.fAddr);
-        SkASSERT(fRec.fPinned);
-        
-        ashmem_unpin_region(fRec.fFD, 0, 0);
-        fRec.fPinned = false;
-    }
+    SkASSERT(-1 != fRec.fFD);
+    SkASSERT(fRec.fAddr);
+    SkASSERT(fRec.fPinned);
     
-    // we clear this with or without an error, since we've either closed or
-    // unpinned the region
+    ashmem_unpin_region(fRec.fFD, 0, 0);
+    fRec.fPinned = false;
+    
     fBitmap.setPixels(NULL, NULL);
 }
 

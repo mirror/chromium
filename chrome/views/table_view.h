@@ -489,9 +489,6 @@ class TableView : public NativeControl,
   // content.
   int content_offset() const { return content_offset_; }
 
-  // Size (width and height) of images.
-  static const int kImageSize;
-
  private:
   // Direction of a sort.
   enum SortDirection {

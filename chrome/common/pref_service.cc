@@ -4,7 +4,6 @@
 
 #include "chrome/common/pref_service.h"
 
-#include "base/compiler_specific.h"
 #include "base/file_util.h"
 #include "base/logging.h"
 #include "base/message_loop.h"
@@ -41,10 +40,13 @@ class SaveLaterTask : public Task {
     int bytes_written = file_util::WriteFile(tmp_file_name, data_.c_str(),
                                              static_cast<int>(data_.length()));
     if (bytes_written != -1) {
-      if (!file_util::Move(tmp_file_name, file_name_)) {
+      if (!MoveFileEx(tmp_file_name.c_str(), file_name_.c_str(),
+                      MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING)) {
         // Rename failed. Try again on the off chance someone has locked either
         // file and hope we're successful the second time through.
-        bool move_result = file_util::Move(tmp_file_name, file_name_);
+        BOOL move_result =
+            MoveFileEx(tmp_file_name.c_str(), file_name_.c_str(),
+                       MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING);
         DCHECK(move_result);
       }
     }
@@ -54,7 +56,7 @@ class SaveLaterTask : public Task {
   std::wstring file_name_;
   std::string data_;
 
-  DISALLOW_COPY_AND_ASSIGN(SaveLaterTask);
+  DISALLOW_EVIL_CONSTRUCTORS(SaveLaterTask);
 };
 
 // A helper function for RegisterLocalized*Pref that creates a Value* based on
@@ -73,12 +75,23 @@ Value* CreateLocaleDefaultValue(Value::ValueType type, int message_id) {
     }
 
     case Value::TYPE_INTEGER: {
-      return Value::CreateIntegerValue(StringToInt(resource_string));
+      int num_int = 0;
+      int parsed_values = swscanf_s(resource_string.c_str(), L"%d", &num_int);
+      // This is a trusted value (comes from our locale dll), so it should
+      // successfully parse.
+      DCHECK(parsed_values == 1);
+      return Value::CreateIntegerValue(num_int);
       break;
     }
 
     case Value::TYPE_REAL: {
-      return Value::CreateRealValue(StringToDouble(resource_string));
+      double num_double = 0.0;
+      int parsed_values = swscanf_s(resource_string.c_str(), L"%lf",
+                                    &num_double);
+      // This is a trusted value (comes from our locale dll), so it should
+      // successfully parse.
+      DCHECK(parsed_values == 1);
+      return Value::CreateRealValue(num_double);
       break;
     }
 
@@ -108,7 +121,8 @@ PrefService::PrefService(const std::wstring& pref_filename)
     : persistent_(new DictionaryValue),
       transient_(new DictionaryValue),
       pref_filename_(pref_filename),
-      ALLOW_THIS_IN_INITIALIZER_LIST(save_preferences_factory_(this)) {
+#pragma warning(suppress: 4355)  // Okay to pass "this" here.
+      save_preferences_factory_(this) {
   LoadPersistentPrefs(pref_filename_);
 }
 
@@ -136,34 +150,38 @@ bool PrefService::LoadPersistentPrefs(const std::wstring& file_path) {
   DCHECK(CalledOnValidThread());
 
   JSONFileValueSerializer serializer(file_path);
-  scoped_ptr<Value> root(serializer.Deserialize(NULL));
-  if (!root.get())
-    return false;
+  Value* root = NULL;
+  if (serializer.Deserialize(&root)) {
+    // Preferences should always have a dictionary root.
+    if (!root->IsType(Value::TYPE_DICTIONARY)) {
+      delete root;
+      return false;
+    }
 
-  // Preferences should always have a dictionary root.
-  if (!root->IsType(Value::TYPE_DICTIONARY))
-    return false;
+    persistent_.reset(static_cast<DictionaryValue*>(root));
+    return true;
+  }
 
-  persistent_.reset(static_cast<DictionaryValue*>(root.release()));
-  return true;
+  return false;
 }
 
 void PrefService::ReloadPersistentPrefs() {
   DCHECK(CalledOnValidThread());
 
   JSONFileValueSerializer serializer(pref_filename_);
-  scoped_ptr<Value> root(serializer.Deserialize(NULL));
-  if (!root.get())
-    return;
+  Value* root;
+  if (serializer.Deserialize(&root)) {
+    // Preferences should always have a dictionary root.
+    if (!root->IsType(Value::TYPE_DICTIONARY)) {
+      delete root;
+      return;
+    }
 
-  // Preferences should always have a dictionary root.
-  if (!root->IsType(Value::TYPE_DICTIONARY))
-    return;
-
-  persistent_.reset(static_cast<DictionaryValue*>(root.release()));
-  for (PreferenceSet::iterator it = prefs_.begin();
-       it != prefs_.end(); ++it) {
-    (*it)->root_pref_ = persistent_.get();
+    persistent_.reset(static_cast<DictionaryValue*>(root));
+    for (PreferenceSet::iterator it = prefs_.begin();
+         it != prefs_.end(); ++it) {
+      (*it)->root_pref_ = persistent_.get();
+    }
   }
 }
 
@@ -416,7 +434,7 @@ void PrefService::AddPrefObserver(const wchar_t* path,
   // Verify that this observer doesn't already exist.
   NotificationObserverList::Iterator it(*observer_list);
   NotificationObserver* existing_obs;
-  while ((existing_obs = it.GetNext()) != NULL) {
+  while (existing_obs = it.GetNext()) {
     DCHECK(existing_obs != obs) << path << " observer already registered";
     if (existing_obs == obs)
       return;
@@ -622,7 +640,7 @@ void PrefService::FireObservers(const wchar_t* path) {
 
   NotificationObserverList::Iterator it(*(observer_iterator->second));
   NotificationObserver* observer;
-  while ((observer = it.GetNext()) != NULL) {
+  while (observer = it.GetNext()) {
     observer->Observe(NOTIFY_PREF_CHANGED,
                       Source<PrefService>(this),
                       Details<std::wstring>(&path_str));
@@ -635,10 +653,10 @@ void PrefService::FireObservers(const wchar_t* path) {
 PrefService::Preference::Preference(DictionaryValue* root_pref,
                                     const wchar_t* name,
                                     Value* default_value)
-      : type_(Value::TYPE_NULL),
+      : root_pref_(root_pref),
         name_(name),
         default_value_(default_value),
-        root_pref_(root_pref) {
+        type_(Value::TYPE_NULL) {
   DCHECK(name);
 
   if (default_value) {

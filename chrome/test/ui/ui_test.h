@@ -38,10 +38,6 @@ class UITest : public testing::Test {
   // Delay to let the browser complete the test.
   static const int kMaxTestExecutionTime = 30000;
 
-  // String to display when a test fails because the crash service isn't
-  // running.
-  static const wchar_t kFailedNoCrashService[];
-
   // Tries to delete the specified file/directory returning true on success.
   // This differs from file_util::Delete in that it repeatedly invokes Delete
   // until successful, or a timeout is reached. Returns true on success.
@@ -56,9 +52,6 @@ class UITest : public testing::Test {
 
   // Closes the browser window.
   virtual void TearDown();
-
-  // Set up the test time out values.
-  virtual void InitializeTimeouts();
 
   // ********* Utility functions *********
 
@@ -134,22 +127,16 @@ class UITest : public testing::Test {
   // as possible.
   bool WaitForDownloadShelfVisible(TabProxy* tab);
 
-  // Waits until the Find window has become fully visible (if |wait_for_open| is
-  // true) or fully hidden (if |wait_for_open| is false). This function can time
-  // out (return false) if the window doesn't appear within a specific time.
-  bool WaitForFindWindowVisibilityChange(TabProxy* tab,
-                                         bool wait_for_open);
+  // Waits until the Find window has become fully visible (and stopped
+  // animating) in the specified tab. This function can time out (return false)
+  // if the window doesn't appear within a specific time.
+  bool WaitForFindWindowFullyVisible(TabProxy* tab);
 
   // Waits until the Bookmark bar has stopped animating and become fully visible
   // (if |wait_for_open| is true) or fully hidden (if |wait_for_open| is false).
   // This function can time out (in which case it returns false).
   bool WaitForBookmarkBarVisibilityChange(BrowserProxy* browser,
                                           bool wait_for_open);
-
-  // Sends the request to close the browser without blocking.
-  // This is so we can interact with dialogs opened on browser close,
-  // e.g. the beforeunload confirm dialog.
-  void CloseBrowserAsync(BrowserProxy* browser) const;
 
   // Closes the specified browser.  Returns true if the browser was closed.
   // This call is blocking.  |application_closed| is set to true if this was
@@ -177,27 +164,6 @@ class UITest : public testing::Test {
                    size_t value,
                    const std::wstring& units,
                    bool important);
-
-  // Like PrintResult(), but prints a (mean, standard deviation) result pair.
-  // The |<values>| should be two comma-seaprated numbers, the mean and
-  // standard deviation (or other error metric) of the measurement.
-  void PrintResultMeanAndError(const std::wstring& measurement,
-                               const std::wstring& modifier,
-                               const std::wstring& trace,
-                               const std::wstring& mean_and_error,
-                               const std::wstring& units,
-                               bool important);
-
-  // Like PrintResult(), but prints an entire list of results. The |values|
-  // will generally be a list of comma-separated numbers. A typical
-  // post-processing step might produce plots of their mean and standard
-  // deviation.
-  void PrintResultList(const std::wstring& measurement,
-                       const std::wstring& modifier,
-                       const std::wstring& trace,
-                       const std::wstring& values,
-                       const std::wstring& units,
-                       bool important);
 
   // Gets the directory for the currently active profile in the browser.
   std::wstring GetDownloadDirectory();
@@ -298,15 +264,6 @@ class UITest : public testing::Test {
   // UITest::SetUp().
   std::wstring user_data_dir() const { return user_data_dir_; }
 
-  // Timeout accessors.
-  int command_execution_timeout_ms() const {
-    return command_execution_timeout_ms_;
-  }
-
-  int action_timeout_ms() const { return action_timeout_ms_; }
-
-  int action_max_timeout_ms() const { return action_max_timeout_ms_; }
-
   // Count the number of active browser processes.  This function only counts
   // browser processes that share the same profile directory as the current
   // process.  The count includes browser sub-processes.
@@ -339,16 +296,6 @@ class UITest : public testing::Test {
   // the given message if any do.
   void AssertAppNotRunning(const std::wstring& error_message);
 
-  // Common functionality for the public PrintResults methods.
-  void PrintResultsImpl(const std::wstring& measurement,
-                        const std::wstring& modifier,
-                        const std::wstring& trace,
-                        const std::wstring& values,
-                        const std::wstring& prefix,
-                        const std::wstring& suffix,
-                        const std::wstring& units,
-                        bool important);
-
  protected:
   AutomationProxy* automation() {
     EXPECT_TRUE(server_.get());
@@ -380,7 +327,7 @@ class UITest : public testing::Test {
   std::wstring homepage_;               // Homepage used for testing.
   bool wait_for_initial_loads_;         // Wait for initial loads to complete
                                         // in SetUp() before running test body.
-  base::TimeTicks browser_launch_time_; // Time when the browser was run.
+  TimeTicks browser_launch_time_;       // Time when the browser was run.
   bool dom_automation_enabled_;         // This can be set to true to have the
                                         // test run the dom automation case.
   std::wstring template_user_data_;     // See set_template_user_data().
@@ -420,10 +367,6 @@ class UITest : public testing::Test {
   ::scoped_ptr<AutomationProxy> server_;
 
   MessageLoop message_loop_;            // Enables PostTask to main thread.
-
-  int command_execution_timeout_ms_;
-  int action_timeout_ms_;
-  int action_max_timeout_ms_;
 };
 
 // These exist only to support the gTest assertion macros, and

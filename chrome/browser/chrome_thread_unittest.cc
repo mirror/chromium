@@ -6,11 +6,8 @@
 
 #include "chrome/browser/chrome_thread.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "testing/platform_test.h"
 
-typedef PlatformTest ChromeThreadTest;
-
-TEST_F(ChromeThreadTest, Get) {
+TEST(ChromeThreadTest, Get) {
   scoped_ptr<ChromeThread> io_thread;
   scoped_ptr<ChromeThread> file_thread;
   scoped_ptr<ChromeThread> db_thread;
@@ -78,3 +75,4 @@ TEST_F(ChromeThreadTest, Get) {
   EXPECT_TRUE(ChromeThread::GetMessageLoop(ChromeThread::DB) == NULL);
   EXPECT_TRUE(ChromeThread::GetMessageLoop(ChromeThread::HISTORY) == NULL);
 }
+

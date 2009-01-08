@@ -84,13 +84,11 @@ void CheckBox::Paint(ChromeCanvas* canvas) {
   gfx::Rect r;
   ComputeTextRect(&r);
   // Paint the focus border if any.
-  if (HasFocus()) {
-    // Mirror left point for rectangle to draw focus for RTL text.
-    canvas->DrawFocusRect(MirroredLeftPointForRect(r) - kFocusPaddingHorizontal,
+  if (HasFocus())
+    canvas->DrawFocusRect(r.x() - kFocusPaddingHorizontal,
                           r.y() - kFocusPaddingVertical,
                           r.width() + kFocusPaddingHorizontal * 2,
                           r.height() + kFocusPaddingVertical * 2);
-  }
   PaintFloatingView(canvas, label_, r.x(), r.y(), r.width(), r.height());
 }
 

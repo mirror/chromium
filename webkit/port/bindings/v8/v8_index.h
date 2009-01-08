@@ -10,23 +10,13 @@
 
 namespace WebCore {
 
+class Node;
+class XMLHttpRequest;
+
 typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
 
-#if ENABLE(VIDEO)
-#define VIDEO_HTMLELEMENT_TYPES(V)                                      \
-  V(HTMLAUDIOELEMENT, HTMLAudioElement)                                 \
-  V(HTMLMEDIAELEMENT, HTMLMediaElement)                                 \
-  V(HTMLSOURCEELEMENT, HTMLSourceElement)                               \
-  V(HTMLVIDEOELEMENT, HTMLVideoElement)
-#define VIDEO_NONNODE_TYPES(V)                                          \
-  V(MEDIAERROR, MediaError)                                             \
-  V(TIMERANGES, TimeRanges)
-#else
-#define VIDEO_HTMLELEMENT_TYPES(V)
-#define VIDEO_NONNODE_TYPES(V)
-#endif
 
-#define DOM_NODE_TYPES(V)                                               \
+#define NODE_WRAPPER_TYPES(V)                                           \
   V(ATTR, Attr)                                                         \
   V(CHARACTERDATA, CharacterData)                                       \
   V(CDATASECTION, CDATASection)                                         \
@@ -42,8 +32,9 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(NODE, Node)                                                         \
   V(NOTATION, Notation)                                                 \
   V(PROCESSINGINSTRUCTION, ProcessingInstruction)                       \
-  V(TEXT, Text)                                                         \
-    \
+  V(TEXT, Text)
+
+#define HTMLELEMENT_TYPES(V)                                            \
   V(HTMLANCHORELEMENT, HTMLAnchorElement)                               \
   V(HTMLAPPLETELEMENT, HTMLAppletElement)                               \
   V(HTMLAREAELEMENT, HTMLAreaElement)                                   \
@@ -70,6 +61,7 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(HTMLIFRAMEELEMENT, HTMLIFrameElement)                               \
   V(HTMLIMAGEELEMENT, HTMLImageElement)                                 \
   V(HTMLINPUTELEMENT, HTMLInputElement)                                 \
+  V(HTMLSELECTIONINPUTELEMENT, HTMLSelectionInputElement)               \
   V(HTMLISINDEXELEMENT, HTMLIsIndexElement)                             \
   V(HTMLLABELELEMENT, HTMLLabelElement)                                 \
   V(HTMLLEGENDELEMENT, HTMLLegendElement)                               \
@@ -100,8 +92,7 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(HTMLTEXTAREAELEMENT, HTMLTextAreaElement)                           \
   V(HTMLTITLEELEMENT, HTMLTitleElement)                                 \
   V(HTMLULISTELEMENT, HTMLUListElement)                                 \
-  V(HTMLELEMENT, HTMLElement)                                           \
-  VIDEO_HTMLELEMENT_TYPES(V)
+  V(HTMLELEMENT, HTMLElement)
 
 #if ENABLE(SVG_ANIMATION)
 #define SVG_ANIMATION_ELEMENT_TYPES(V)                                  \
@@ -171,14 +162,13 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
 #endif
 
 #if ENABLE(SVG)
-#define SVG_NODE_TYPES(V)                                               \
+#define SVGELEMENT_TYPES(V)                                             \
   SVG_ANIMATION_ELEMENT_TYPES(V)                                        \
   SVG_FILTERS_ELEMENT_TYPES(V)                                          \
   SVG_FONTS_ELEMENT_TYPES(V)                                            \
   SVG_FOREIGN_OBJECT_ELEMENT_TYPES(V)                                   \
   SVG_USE_ELEMENT_TYPES(V)                                              \
   V(SVGAELEMENT, SVGAElement)                                           \
-  V(SVGALTGLYPHELEMENT, SVGAltGlyphElement)                             \
   V(SVGCIRCLEELEMENT, SVGCircleElement)                                 \
   V(SVGCLIPPATHELEMENT, SVGClipPathElement)                             \
   V(SVGCURSORELEMENT, SVGCursorElement)                                 \
@@ -186,7 +176,6 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(SVGDESCELEMENT, SVGDescElement)                                     \
   V(SVGELLIPSEELEMENT, SVGEllipseElement)                               \
   V(SVGGELEMENT, SVGGElement)                                           \
-  V(SVGGLYPHELEMENT, SVGGlyphElement)                                   \
   V(SVGGRADIENTELEMENT, SVGGradientElement)                             \
   V(SVGIMAGEELEMENT, SVGImageElement)                                   \
   V(SVGLINEARGRADIENTELEMENT, SVGLinearGradientElement)                 \
@@ -214,27 +203,14 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(SVGTREFELEMENT, SVGTRefElement)                                     \
   V(SVGTSPANELEMENT, SVGTSpanElement)                                   \
   V(SVGVIEWELEMENT, SVGViewElement)                                     \
-  V(SVGELEMENT, SVGElement)                                             \
-    \
-  V(SVGDOCUMENT, SVGDocument)
-#endif  // SVG
+  V(SVGELEMENT, SVGElement)
+#endif
 
 
-// ACTIVE_DOM_OBJECT_TYPES are DOM_OBJECT_TYPES that need special treatement
-// during GC.
-#define ACTIVE_DOM_OBJECT_TYPES(V)                                      \
-  V(MESSAGEPORT, MessagePort)                                           \
-  V(XMLHTTPREQUEST, XMLHttpRequest)
-
-// NOTE: DOM_OBJECT_TYPES is split into two halves because 
-//       Visual Studio's Intellinonsense crashes when macros get 
-//       too large.  10-29-08
-// DOM_OBJECT_TYPES are non-node DOM types.
-#define DOM_OBJECT_TYPES_1(V)                                           \
+#define NONNODE_WRAPPER_TYPES(V)                                        \
   V(BARINFO, BarInfo)                                                   \
   V(CANVASGRADIENT, CanvasGradient)                                     \
   V(CANVASPATTERN, CanvasPattern)                                       \
-  V(CANVASPIXELARRAY, CanvasPixelArray)                                 \
   V(CANVASRENDERINGCONTEXT2D, CanvasRenderingContext2D)                 \
   V(CLIPBOARD, Clipboard)                                               \
   V(CONSOLE, Console)                                                   \
@@ -252,8 +228,6 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(CSSSTYLESHEET, CSSStyleSheet)                                       \
   V(CSSVALUE, CSSValue)                                                 \
   V(CSSVALUELIST, CSSValueList)                                         \
-  V(CSSVARIABLESDECLARATION, CSSVariablesDeclaration)                   \
-  V(CSSVARIABLESRULE, CSSVariablesRule)                                 \
   V(DOMCOREEXCEPTION, DOMCoreException)                                 \
   V(DOMIMPLEMENTATION, DOMImplementation)                               \
   V(DOMPARSER, DOMParser)                                               \
@@ -261,20 +235,14 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(DOMWINDOW, DOMWindow)                                               \
   V(EVENT, Event)                                                       \
   V(EVENTEXCEPTION, EventException)                                     \
-  V(FILE, File)                                                         \
-  V(FILELIST, FileList)                                                 \
   V(HISTORY, History)                                                   \
   V(UNDETECTABLEHTMLCOLLECTION, UndetectableHTMLCollection)             \
   V(HTMLCOLLECTION, HTMLCollection)                                     \
   V(HTMLOPTIONSCOLLECTION, HTMLOptionsCollection)                       \
-  V(IMAGEDATA, ImageData)                                               \
   V(INSPECTORCONTROLLER, InspectorController)                           \
   V(KEYBOARDEVENT, KeyboardEvent)                                       \
   V(LOCATION, Location)                                                 \
-  V(MEDIALIST, MediaList)
-
-#define DOM_OBJECT_TYPES_2(V)                                           \
-  V(MESSAGECHANNEL, MessageChannel)                                     \
+  V(MEDIALIST, MediaList)                                               \
   V(MESSAGEEVENT, MessageEvent)                                         \
   V(MIMETYPE, MimeType)                                                 \
   V(MIMETYPEARRAY, MimeTypeArray)                                       \
@@ -297,37 +265,24 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(STYLESHEET, StyleSheet)                                             \
   V(STYLESHEETLIST, StyleSheetList)                                     \
   V(TEXTEVENT, TextEvent)                                               \
-  V(TEXTMETRICS, TextMetrics)                                           \
   V(TREEWALKER, TreeWalker)                                             \
   V(UIEVENT, UIEvent)                                                   \
-  V(WEBKITANIMATIONEVENT, WebKitAnimationEvent)                         \
-  V(WEBKITCSSKEYFRAMERULE, WebKitCSSKeyframeRule)                       \
-  V(WEBKITCSSKEYFRAMESRULE, WebKitCSSKeyframesRule)                     \
-  V(WEBKITCSSTRANSFORMVALUE, WebKitCSSTransformValue)                   \
-  V(WEBKITTRANSITIONEVENT, WebKitTransitionEvent)                       \
   V(WHEELEVENT, WheelEvent)                                             \
-  V(XMLHTTPREQUESTUPLOAD, XMLHttpRequestUpload)                         \
+  V(XMLHTTPREQUEST, XMLHttpRequest)                                     \
   V(XMLHTTPREQUESTEXCEPTION, XMLHttpRequestException)                   \
-  V(XMLHTTPREQUESTPROGRESSEVENT, XMLHttpRequestProgressEvent)           \
   V(XMLSERIALIZER, XMLSerializer)                                       \
   V(XPATHEVALUATOR, XPathEvaluator)                                     \
   V(XPATHEXCEPTION, XPathException)                                     \
   V(XPATHEXPRESSION, XPathExpression)                                   \
   V(XPATHNSRESOLVER, XPathNSResolver)                                   \
   V(XPATHRESULT, XPathResult)                                           \
-  V(XSLTPROCESSOR, XSLTProcessor)                                       \
-  ACTIVE_DOM_OBJECT_TYPES(V)                                            \
-  VIDEO_NONNODE_TYPES(V)
-
-
-#define DOM_OBJECT_TYPES(V)                                             \
-  DOM_OBJECT_TYPES_1(V)                                                 \
-  DOM_OBJECT_TYPES_2(V)
-
+  V(XSLTPROCESSOR, XSLTProcessor)
 
 #if ENABLE(SVG)
-// SVG_OBJECT_TYPES are svg non-node, non-pod types.
-#define SVG_OBJECT_TYPES(V)                                             \
+#define SVGNODE_WRAPPER_TYPES(V)                                        \
+  V(SVGDOCUMENT, SVGDocument)
+
+#define SVGNONNODE_WRAPPER_TYPES(V)                                     \
   V(SVGANGLE, SVGAngle)                                                 \
   V(SVGANIMATEDANGLE, SVGAnimatedAngle)                                 \
   V(SVGANIMATEDBOOLEAN, SVGAnimatedBoolean)                             \
@@ -337,6 +292,7 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(SVGANIMATEDLENGTHLIST, SVGAnimatedLengthList)                       \
   V(SVGANIMATEDNUMBER, SVGAnimatedNumber)                               \
   V(SVGANIMATEDNUMBERLIST, SVGAnimatedNumberList)                       \
+  V(SVGANIMATEDPOINTS, SVGAnimatedPoints)                               \
   V(SVGANIMATEDPRESERVEASPECTRATIO, SVGAnimatedPreserveAspectRatio)     \
   V(SVGANIMATEDRECT, SVGAnimatedRect)                                   \
   V(SVGANIMATEDSTRING, SVGAnimatedString)                               \
@@ -345,7 +301,10 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(SVGELEMENTINSTANCE, SVGElementInstance)                             \
   V(SVGELEMENTINSTANCELIST, SVGElementInstanceList)                     \
   V(SVGEXCEPTION, SVGException)                                         \
+  V(SVGLENGTH, SVGLength)                                               \
   V(SVGLENGTHLIST, SVGLengthList)                                       \
+  V(SVGMATRIX, SVGMatrix)                                               \
+  V(SVGNUMBER, SVGNumber)                                               \
   V(SVGNUMBERLIST, SVGNumberList)                                       \
   V(SVGPAINT, SVGPaint)                                                 \
   V(SVGPATHSEG, SVGPathSeg)                                             \
@@ -369,66 +328,39 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(SVGPATHSEGLIST, SVGPathSegList)                                     \
   V(SVGPATHSEGMOVETOABS, SVGPathSegMovetoAbs)                           \
   V(SVGPATHSEGMOVETOREL, SVGPathSegMovetoRel)                           \
+  V(SVGPOINT, SVGPoint)                                                 \
   V(SVGPOINTLIST, SVGPointList)                                         \
   V(SVGPRESERVEASPECTRATIO, SVGPreserveAspectRatio)                     \
+  V(SVGRECT, SVGRect)                                                   \
   V(SVGRENDERINGINTENT, SVGRenderingIntent)                             \
   V(SVGSTRINGLIST, SVGStringList)                                       \
+  V(SVGTRANSFORM, SVGTransform)                                         \
   V(SVGTRANSFORMLIST, SVGTransformList)                                 \
   V(SVGUNITTYPES, SVGUnitTypes)                                         \
-  V(SVGZOOMEVENT, SVGZoomEvent)
-
-// SVG POD types should list all types whose IDL has PODType declaration.
-#define SVG_POD_TYPES(V)                                                \
-  V(SVGLENGTH, SVGLength)                                               \
-  V(SVGTRANSFORM, SVGTransform)                                         \
-  V(SVGMATRIX, SVGMatrix)                                               \
-  V(SVGNUMBER, SVGNumber)                                               \
-  V(SVGPOINT, SVGPoint)                                                 \
-  V(SVGRECT, SVGRect)
-
-// POD types can have different implementation names, see CodeGenerateV8.pm.
-#define SVG_POD_NATIVE_TYPES(V)                                         \
-  V(SVGLENGTH, SVGLength)                                               \
-  V(SVGTRANSFORM, SVGTransform)                                         \
-  V(SVGMATRIX, AffineTransform)                                         \
-  V(SVGNUMBER, float)                                                   \
-  V(SVGPOINT, FloatPoint)                                               \
-  V(SVGRECT, FloatRect)
-
-// Shouldn't generate code for these two types.
-#define SVG_NO_WRAPPER_TYPES(V)                                         \
   V(SVGURIREFERENCE, SVGURIReference)                                   \
-  V(SVGANIMATEDPOINTS, SVGAnimatedPoints)
-
-// SVG_NONNODE_TYPES are SVG non-node object types, pod typs and 
-// numerical types.
-#define SVG_NONNODE_TYPES(V)                                            \
-  SVG_OBJECT_TYPES(V)                                                   \
-  SVG_POD_TYPES(V)
-#endif  // SVG
+  V(SVGZOOMEVENT, SVGZoomEvent)
+#endif
 
 // EVENTTARGET, EVENTLISTENER, and NPOBJECT do not have V8 wrappers.
-#define DOM_NO_WRAPPER_TYPES(V)                                         \
+#define NO_WRAPPER_TYPES(V)                                             \
   V(EVENTTARGET, EventTarget)                                           \
   V(EVENTLISTENER, EventListener)                                       \
   V(NPOBJECT, NPObject)
 
 #if ENABLE(SVG)
 #define WRAPPER_TYPES(V)                                \
-    DOM_NODE_TYPES(V)                                   \
-    DOM_OBJECT_TYPES(V)                                 \
-    SVG_NODE_TYPES(V)                                   \
-    SVG_NONNODE_TYPES(V)
-#define NO_WRAPPER_TYPES(V)                             \
-    DOM_NO_WRAPPER_TYPES(V)                             \
-    SVG_NO_WRAPPER_TYPES(V)
-#else  // SVG
+    NODE_WRAPPER_TYPES(V)                               \
+    HTMLELEMENT_TYPES(V)                                \
+    NONNODE_WRAPPER_TYPES(V)                            \
+    SVGNODE_WRAPPER_TYPES(V)                            \
+    SVGELEMENT_TYPES(V)                                 \
+    SVGNONNODE_WRAPPER_TYPES(V)
+#else
 #define WRAPPER_TYPES(V)                                \
-    DOM_NODE_TYPES(V)                                   \
-    DOM_OBJECT_TYPES(V)
-#define NO_WRAPPER_TYPES(V)                             \
-    DOM_NO_WRAPPER_TYPES(V)
-#endif  // SVG
+    NODE_WRAPPER_TYPES(V)                               \
+    HTMLELEMENT_TYPES(V)                                \
+    NONNODE_WRAPPER_TYPES(V)
+#endif
 
 #define ALL_WRAPPER_TYPES(V)                            \
   WRAPPER_TYPES(V)                                      \
@@ -440,11 +372,15 @@ class V8ClassIndex {
   enum V8WrapperType {
     INVALID_CLASS_INDEX = 0,
 #define DEFINE_ENUM(name, type) name,
-    ALL_WRAPPER_TYPES(DEFINE_ENUM)
+ALL_WRAPPER_TYPES(DEFINE_ENUM)
 #undef DEFINE_ENUM
     CLASSINDEX_END,
     WRAPPER_TYPE_COUNT = CLASSINDEX_END
   };
+  static inline V8WrapperType ToWrapperType(v8::Handle<v8::Value> obj) {
+    return static_cast<V8WrapperType>(
+        reinterpret_cast<int>(v8::Handle<v8::External>::Cast(obj)->Value()));
+  }
 
   static int ToInt(V8WrapperType type) { return static_cast<int>(type); }
 
@@ -457,7 +393,6 @@ class V8ClassIndex {
   // Returns a field to be used as cache for the template for the given type
   static v8::Persistent<v8::FunctionTemplate>* GetCache(V8WrapperType type);
 };
-
 }
 
 #endif  // V8_INDEX_H__

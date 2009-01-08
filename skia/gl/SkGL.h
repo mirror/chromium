@@ -23,11 +23,15 @@ class SkGLClipIter;
 
 //#define TRACE_TEXTURE_CREATE
 
-///////////////////////////////////////////////////////////////////////////////
-
-#if GL_OES_compressed_paletted_texture
-    #define SK_GL_SUPPORT_COMPRESSEDTEXIMAGE2D
+static inline void* SkGetGLContext() {
+#ifdef ANDROID
+    return (void*)eglGetCurrentContext();
+#else
+    return NULL;
 #endif
+}
+
+///////////////////////////////////////////////////////////////////////////////
 
 #if GL_OES_fixed_point && defined(SK_SCALAR_IS_FIXED)
     #define SK_GLType   GL_FIXED

@@ -4,7 +4,6 @@
 
 #include "base/command_line.h"
 #include "base/message_loop.h"
-#include "base/system_monitor.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/logging_chrome.h"
@@ -14,15 +13,12 @@
 #include "sandbox/src/sandbox.h"
 
 // mainline routine for running as the plugin process
-int PluginMain(CommandLine &parsed_command_line,
+int PluginMain(CommandLine &parsed_command_line, int show_command,
                sandbox::TargetServices* target_services) {
   // The main thread of the plugin services IO.
   MessageLoopForIO main_message_loop;
   std::wstring app_name = chrome::kBrowserAppName;
   PlatformThread::SetName(WideToASCII(app_name + L"_PluginMain").c_str());
-
-  // Initialize the SystemMonitor
-  base::SystemMonitor::Start();
 
   CoInitialize(NULL);
   DLOG(INFO) << "Started plugin with " <<
@@ -50,9 +46,8 @@ int PluginMain(CommandLine &parsed_command_line,
 
   std::wstring channel_name =
       parsed_command_line.GetSwitchValue(switches::kProcessChannelID);
-  FilePath plugin_path =
-      FilePath::FromWStringHack(
-      parsed_command_line.GetSwitchValue(switches::kPluginPath));
+  std::wstring plugin_path =
+      parsed_command_line.GetSwitchValue(switches::kPluginPath);
   if (PluginProcess::GlobalInit(channel_name, plugin_path)) {
     if (!no_sandbox && target_services) {
       target_services->LowerToken();

@@ -19,12 +19,6 @@
 #if defined(OS_POSIX)
 #include "base/message_pump_libevent.h"
 #endif
-#if defined(OS_LINUX)
-#include "base/message_pump_glib.h"
-#endif
-
-using base::Time;
-using base::TimeDelta;
 
 // A lazily created thread local storage for quick access to a thread's message
 // loop, if one exists.  This should be safe and free of static constructors.
@@ -95,17 +89,18 @@ MessageLoop::MessageLoop(Type type)
     pump_ = new base::MessagePumpForUI();
   }
 #elif defined(OS_POSIX)
-  if (type_ == TYPE_UI) {
 #if defined(OS_MACOSX)
+  if (type_ == TYPE_UI) {
     pump_ = base::MessagePumpMac::Create();
-#elif defined(OS_LINUX)
-    pump_ = new base::MessagePumpForUI();
-#endif  // OS_LINUX
-  } else if (type_ == TYPE_IO) {
+  } else
+#endif  // OS_MACOSX
+  if (type_ == TYPE_IO) {
     pump_ = new base::MessagePumpLibevent();
   } else {
     pump_ = new base::MessagePumpDefault();
   }
+#else  // OS_POSIX
+  pump_ = new base::MessagePumpDefault();
 #endif  // OS_POSIX
 }
 
@@ -193,7 +188,7 @@ void MessageLoop::RunInternal() {
     return;
   }
 #endif
-
+  
   pump_->Run(this);
 }
 
@@ -206,10 +201,10 @@ bool MessageLoop::ProcessNextDelayedNonNestableTask() {
 
   if (deferred_non_nestable_work_queue_.empty())
     return false;
-
+  
   Task* task = deferred_non_nestable_work_queue_.front().task;
   deferred_non_nestable_work_queue_.pop();
-
+  
   RunTask(task);
   return true;
 }
@@ -420,7 +415,7 @@ bool MessageLoop::DoDelayedWork(Time* next_delayed_work_time) {
     *next_delayed_work_time = Time();
     return false;
   }
-
+  
   if (delayed_work_queue_.top().delayed_run_time > Time::Now()) {
     *next_delayed_work_time = delayed_work_queue_.top().delayed_run_time;
     return false;
@@ -428,7 +423,7 @@ bool MessageLoop::DoDelayedWork(Time* next_delayed_work_time) {
 
   PendingTask pending_task = delayed_work_queue_.top();
   delayed_work_queue_.pop();
-
+  
   if (!delayed_work_queue_.empty())
     *next_delayed_work_time = delayed_work_queue_.top().delayed_run_time;
 
@@ -573,7 +568,7 @@ void MessageLoopForUI::DidProcessMessage(const MSG& message) {
   pump_win()->DidProcessMessage(message);
 }
 void MessageLoopForUI::PumpOutPendingPaintMessages() {
-  pump_ui()->PumpOutPendingPaintMessages();
+  pump_win()->PumpOutPendingPaintMessages();
 }
 
 #endif  // defined(OS_WIN)
@@ -583,27 +578,18 @@ void MessageLoopForUI::PumpOutPendingPaintMessages() {
 
 #if defined(OS_WIN)
 
-void MessageLoopForIO::RegisterIOHandler(HANDLE file, IOHandler* handler) {
-  pump_io()->RegisterIOHandler(file, handler);
-}
-
-bool MessageLoopForIO::WaitForIOCompletion(DWORD timeout, IOHandler* filter) {
-  return pump_io()->WaitForIOCompletion(timeout, filter);
+void MessageLoopForIO::WatchObject(HANDLE object, Watcher* watcher) {
+  pump_io()->WatchObject(object, watcher);
 }
 
 #elif defined(OS_POSIX)
 
-bool MessageLoopForIO::WatchFileDescriptor(int fd,
-                                           bool persistent,
-                                           Mode mode,
-                                           FileDescriptorWatcher *controller,
-                                           Watcher *delegate) {
-  return pump_libevent()->WatchFileDescriptor(
-      fd,
-      persistent,
-      static_cast<base::MessagePumpLibevent::Mode>(mode),
-      controller,
-      delegate);
+void MessageLoopForIO::WatchSocket(int socket, short interest_mask, 
+                                   struct event* e, Watcher* watcher) {
+  pump_libevent()->WatchSocket(socket, interest_mask, e, watcher);
 }
 
+void MessageLoopForIO::UnwatchSocket(struct event* e) {
+  pump_libevent()->UnwatchSocket(e);
+}
 #endif

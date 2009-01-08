@@ -5,16 +5,13 @@
 #ifndef NET_URL_REQUEST_URL_REQUEST_FILE_DIR_JOB_H__
 #define NET_URL_REQUEST_URL_REQUEST_FILE_DIR_JOB_H__
 
-#include "base/file_path.h"
-#include "base/file_util.h"
 #include "net/base/directory_lister.h"
 #include "net/url_request/url_request_job.h"
 
-class URLRequestFileDirJob
-  : public URLRequestJob,
-    public net::DirectoryLister::DirectoryListerDelegate {
+class URLRequestFileDirJob : public URLRequestJob,
+                             public net::DirectoryLister::Delegate {
  public:
-  URLRequestFileDirJob(URLRequest* request, const FilePath& dir_path);
+  URLRequestFileDirJob(URLRequest* request, const std::wstring& dir_path);
   virtual ~URLRequestFileDirJob();
 
   // URLRequestJob methods:
@@ -24,10 +21,9 @@ class URLRequestFileDirJob
   virtual bool ReadRawData(char* buf, int buf_size, int *bytes_read);
   virtual bool GetMimeType(std::string* mime_type);
   virtual bool GetCharset(std::string* charset);
-  virtual bool IsRedirectResponse(GURL* location, int* http_status_code);
 
-  // DirectoryLister::DirectoryListerDelegate methods:
-  virtual void OnListFile(const file_util::FileEnumerator::FindInfo& data);
+  // DirectoryLister::Delegate methods:
+  virtual void OnListFile(const WIN32_FIND_DATA& data);
   virtual void OnListDone(int error);
 
  private:
@@ -41,7 +37,7 @@ class URLRequestFileDirJob
   bool FillReadBuffer(char *buf, int buf_size, int *bytes_read);
 
   scoped_refptr<net::DirectoryLister> lister_;
-  FilePath dir_path_;
+  std::wstring dir_path_;
   std::string data_;
   bool canceled_;
 

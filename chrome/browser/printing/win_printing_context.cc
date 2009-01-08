@@ -7,12 +7,10 @@
 #include <winspool.h>
 
 #include "base/file_util.h"
+#include "base/gfx/platform_device_win.h"
 #include "base/time_format.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/printing/print_job_manager.h"
-#include "skia/ext/platform_device_win.h"
-
-using base::Time;
 
 namespace {
 
@@ -137,7 +135,7 @@ class PrintingContext::CallbackHandler
 
 PrintingContext::PrintingContext()
     : hdc_(NULL),
-#ifndef NDEBUG
+#ifdef _DEBUG
       page_number_(-1),
 #endif
       dialog_box_(NULL),
@@ -242,7 +240,7 @@ void PrintingContext::ResetSettings() {
   settings_.Clear();
   in_print_job_ = false;
 
-#ifndef NDEBUG
+#ifdef _DEBUG
   page_number_ = -1;
 #endif
 }
@@ -297,7 +295,7 @@ PrintingContext::Result PrintingContext::NewDocument(
   if (StartDoc(hdc_, &di) <= 0)
     return OnErrror();
 
-#ifndef NDEBUG
+#ifdef _DEBUG
   page_number_ = 0;
 #endif
   return OK;
@@ -312,7 +310,7 @@ PrintingContext::Result PrintingContext::NewPage() {
   if (StartPage(hdc_) <= 0)
     return OnErrror();
 
-#ifndef NDEBUG
+#ifdef _DEBUG
   ++page_number_;
 #endif
 
@@ -377,7 +375,7 @@ bool PrintingContext::InitializeSettings(const DEVMODE& dev_mode,
                                          const std::wstring& new_device_name,
                                          const PRINTPAGERANGE* ranges,
                                          int number_ranges) {
-  skia::PlatformDeviceWin::InitializeDC(hdc_);
+  gfx::PlatformDeviceWin::InitializeDC(hdc_);
   DCHECK(GetDeviceCaps(hdc_, CLIPCAPS));
   DCHECK(GetDeviceCaps(hdc_, RASTERCAPS) & RC_STRETCHDIB);
   DCHECK(GetDeviceCaps(hdc_, RASTERCAPS) & RC_BITMAP64);

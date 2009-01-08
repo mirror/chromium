@@ -39,8 +39,7 @@ class HistoryBackend;
 //         -> DoAutocomplete (for inline autocomplete)
 //           -> URLDatabase::AutocompleteForPrefix (on in-memory DB)
 //         -> HistoryService::ScheduleAutocomplete
-//         (return to controller) ----
-//                                   /
+//         (return to controller) \
 //                              HistoryBackend::ScheduleAutocomplete
 //                                -> HistoryURLProvider::ExecuteWithDB
 //                                  -> DoAutocomplete
@@ -151,7 +150,8 @@ class HistoryURLProvider : public AutocompleteProvider {
 
   // AutocompleteProvider
   virtual void Start(const AutocompleteInput& input,
-                     bool minimal_changes);
+                     bool minimal_changes,
+                     bool synchronous_only);
   virtual void Stop();
   virtual void DeleteMatch(const AutocompleteMatch& match);
 
@@ -313,7 +313,8 @@ class HistoryURLProvider : public AutocompleteProvider {
 
   // Helper function that actually launches the two autocomplete passes.
   void RunAutocompletePasses(const AutocompleteInput& input,
-                             bool fixup_input_and_run_pass_1);
+                             bool fixup_input_and_run_pass_1,
+                             bool run_pass_2);
 
   // Returns the best prefix that begins |text|.  "Best" means "greatest number
   // of components".  This may return NULL if no prefix begins |text|.
@@ -321,7 +322,7 @@ class HistoryURLProvider : public AutocompleteProvider {
   // |prefix_suffix| (which may be empty) is appended to every attempted
   // prefix.  This is useful when you need to figure out the innermost match
   // for some user input in a URL.
-  const Prefix* BestPrefix(const GURL& text,
+  const Prefix* BestPrefix(const std::wstring& text,
                            const std::wstring& prefix_suffix) const;
 
   // Adds the exact input for what the user has typed as input. This is

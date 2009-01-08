@@ -61,7 +61,9 @@ ShowUnsafeContentTask::~ShowUnsafeContentTask() {
 void ShowUnsafeContentTask::Run() {
   error_handler_->manager()->AllowShowInsecureContentForURL(main_frame_url_);
   // Reload the page.
-  error_handler_->GetWebContents()->controller()->Reload(true);
+  DCHECK(error_handler_->GetTabContents()->type() == TAB_CONTENTS_WEB);
+  WebContents* tab = error_handler_->GetTabContents()->AsWebContents();
+  tab->controller()->Reload(true);
 }
 
 static void ShowErrorPage(SSLPolicy* policy, SSLManager::CertError* error) {
@@ -89,7 +91,8 @@ static void ShowErrorPage(SSLPolicy* policy, SSLManager::CertError* error) {
   std::string html_text(jstemplate_builder::GetTemplateHtml(html, &strings,
                                                             "template_root"));
 
-  WebContents* tab  = error->GetWebContents();
+  DCHECK(error->GetTabContents()->type() == TAB_CONTENTS_WEB);
+  WebContents* tab  = error->GetTabContents()->AsWebContents();
   int cert_id = CertStore::GetSharedInstance()->StoreCert(
       error->ssl_info().cert, tab->render_view_host()->process()->host_id());
   std::string security_info =
@@ -123,7 +126,8 @@ class CommonNameInvalidPolicy : public SSLPolicy {
 
   void OnCertError(const GURL& main_frame_url,
                    SSLManager::CertError* error) {
-    OnOverridableCertError(main_frame_url, error);
+    // We need to ask the user to approve this certificate.
+    ShowBlockingPage(this, error);
   }
 };
 
@@ -135,7 +139,8 @@ class DateInvalidPolicy : public SSLPolicy {
 
   void OnCertError(const GURL& main_frame_url,
                    SSLManager::CertError* error) {
-    OnOverridableCertError(main_frame_url, error);
+    // We need to ask the user to approve this certificate.
+    ShowBlockingPage(this, error);
   }
 };
 
@@ -147,7 +152,8 @@ class AuthorityInvalidPolicy : public SSLPolicy {
 
   void OnCertError(const GURL& main_frame_url,
                    SSLManager::CertError* error) {
-    OnOverridableCertError(main_frame_url, error);
+    // We need to ask the user to approve this certificate.
+    ShowBlockingPage(this, error);
   }
 };
 
@@ -159,7 +165,9 @@ class ContainsErrorsPolicy : public SSLPolicy {
 
   void OnCertError(const GURL& main_frame_url,
                    SSLManager::CertError* error) {
-    OnFatalCertError(main_frame_url, error);
+    error->CancelRequest();
+    ShowErrorPage(this, error);
+    // No need to degrade our security indicators because we didn't continue.
   }
 };
 
@@ -184,7 +192,7 @@ class UnableToCheckRevocationPolicy : public SSLPolicy {
 
   void OnCertError(const GURL& main_frame_url,
                    SSLManager::CertError* error) {
-    // We ignore this error and display an info-bar.
+    // We keep the style as secure and we display an info-bar.
     error->ContinueRequest();
     error->manager()->ShowMessage(l10n_util::GetString(
         IDS_CERT_ERROR_UNABLE_TO_CHECK_REVOCATION_INFO_BAR));
@@ -199,7 +207,10 @@ class RevokedPolicy : public SSLPolicy {
 
   void OnCertError(const GURL& main_frame_url,
                    SSLManager::CertError* error) {
-    OnFatalCertError(main_frame_url, error);
+    error->CancelRequest();
+    DCHECK(error->GetTabContents()->type() == TAB_CONTENTS_WEB);
+    ShowErrorPage(this, error);
+    // No need to degrade our security indicators because we didn't continue.
   }
 };
 
@@ -211,7 +222,10 @@ class InvalidPolicy : public SSLPolicy {
 
   void OnCertError(const GURL& main_frame_url,
                    SSLManager::CertError* error) {
-    OnFatalCertError(main_frame_url, error);
+    error->CancelRequest();
+    DCHECK(error->GetTabContents()->type() == TAB_CONTENTS_WEB);
+    ShowErrorPage(this, error);
+    // No need to degrade our security indicators because we didn't continue.
   }
 };
 
@@ -269,6 +283,14 @@ class DefaultPolicy : public SSLPolicy {
         // For now we handle the DENIED as the UNKNOWN, which means a blocking
         // page is shown to the user every time he comes back to the page.
       case net::X509Certificate::Policy::UNKNOWN:
+        if (error->resource_type() != ResourceType::MAIN_FRAME) {
+          // A sub-resource has a certificate error.  The user doesn't really
+          // have a context for making the right decision, so block the
+          // request hard, without an info bar to allow showing the insecure
+          // content.
+          error->DenyRequest();
+          break;
+        }
         // We don't know how to handle this error.  Ask our sub-policies.
         sub_policies_[index]->OnCertError(main_frame_url, error);
         break;
@@ -457,27 +479,3 @@ void SSLPolicy::OnAllowCertificate(SSLManager::CertError* error) {
                                      error->request_url().host());
 }
 
-void SSLPolicy::OnOverridableCertError(const GURL& main_frame_url,
-                                       SSLManager::CertError* error) {
-  if (error->resource_type() != ResourceType::MAIN_FRAME) {
-    // A sub-resource has a certificate error.  The user doesn't really
-    // have a context for making the right decision, so block the
-    // request hard, without an info bar to allow showing the insecure
-    // content.
-    error->DenyRequest();
-    return;
-  }
-  // We need to ask the user to approve this certificate.
-  ShowBlockingPage(this, error);
-}
-
-void SSLPolicy::OnFatalCertError(const GURL& main_frame_url,
-                                 SSLManager::CertError* error) {
-  if (error->resource_type() != ResourceType::MAIN_FRAME) {
-    error->DenyRequest();
-    return;
-  }
-  error->CancelRequest();
-  ShowErrorPage(this, error);
-  // No need to degrade our security indicators because we didn't continue.
-}

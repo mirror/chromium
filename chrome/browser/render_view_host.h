@@ -11,12 +11,10 @@
 #include "base/scoped_handle.h"
 #include "chrome/browser/render_view_host_delegate.h"
 #include "chrome/browser/render_widget_host.h"
-#include "chrome/common/page_zoom.h"
 #ifdef CHROME_PERSONALIZATION
 #include "chrome/personalization/personalization.h"
 #endif
 #include "webkit/glue/password_form_dom_manager.h"
-#include "webkit/glue/autofill_form.h"
 
 enum ConsoleMessageLevel;
 class NavigationEntry;
@@ -39,6 +37,10 @@ class Point;
 
 namespace net {
 enum LoadState;
+}
+
+namespace text_zoom {
+enum TextSize;
 }
 
 namespace webkit_glue {
@@ -191,8 +193,8 @@ class RenderViewHost : public RenderWidgetHost {
   // clear the selection on the focused frame.
   void StopFinding(bool clear_selection);
 
-  // Change the zoom level of a page.
-  void Zoom(PageZoom::Function function);
+  // Change the text size of the page.
+  void AlterTextSize(text_zoom::TextSize size);
 
   // Change the encoding of the page.
   void SetPageEncoding(const std::wstring& encoding);
@@ -251,7 +253,6 @@ class RenderViewHost : public RenderWidgetHost {
   void Copy();
   void Paste();
   void Replace(const std::wstring& text);
-  void ToggleSpellCheck();
   void AddToDictionary(const std::wstring& word);
   void Delete();
   void SelectAll();
@@ -393,24 +394,14 @@ class RenderViewHost : public RenderWidgetHost {
   // as a popup.
   void DisassociateFromPopupCount();
 
-  // Notifies the Renderer that we've either displayed or hidden the popup
-  // notification.
-  void PopupNotificationVisibilityChanged(bool visible);
-
-  // Called by the AutofillManager when the list of suggestions is ready.
-  void AutofillSuggestionsReturned(const std::vector<std::wstring>& suggestions,
-                                   int64 node_id,
-                                   int request_id,
-                                   int default_suggestion_index);
-
  protected:
   // Overridden from RenderWidgetHost:
   virtual void UnhandledInputEvent(const WebInputEvent& event);
   virtual void ForwardKeyboardEvent(const WebKeyboardEvent& key_event);
 
   // IPC message handlers:
-  void OnMsgCreateWindow(int route_id, HANDLE modal_dialog_event);
-  void OnMsgCreateWidget(int route_id, bool focus_on_show);
+  void OnMsgCreateView(int route_id, HANDLE modal_dialog_event);
+  void OnMsgCreateWidget(int route_id);
   void OnMsgShowView(int route_id,
                      WindowOpenDisposition disposition,
                      const gfx::Rect& initial_pos,
@@ -421,6 +412,8 @@ class RenderViewHost : public RenderWidgetHost {
   void OnMsgRendererGone();
   void OnMsgNavigate(const IPC::Message& msg);
   void OnMsgUpdateState(int32 page_id,
+                        const GURL& url,
+                        const std::wstring& title,
                         const std::string& state);
   void OnMsgUpdateTitle(int32 page_id, const std::wstring& title);
   void OnMsgUpdateEncoding(const std::wstring& encoding);
@@ -477,7 +470,6 @@ class RenderViewHost : public RenderWidgetHost {
                                 const std::string& json_arguments,
                                 IPC::Message* reply_msg);
   void OnMsgPasswordFormsSeen(const std::vector<PasswordForm>& forms);
-  void OnMsgAutofillFormSubmitted(const AutofillForm& forms);
   void OnMsgStartDragging(const WebDropData& drop_data);
   void OnUpdateDragCursor(bool is_drop_target);
   void OnTakeFocus(bool reverse);
@@ -507,10 +499,7 @@ class RenderViewHost : public RenderWidgetHost {
                                const webkit_glue::WebApplicationInfo& info);
   void OnMsgShouldCloseACK(bool proceed);
   void OnUnloadListenerChanged(bool has_handler);
-  void OnQueryFormFieldAutofill(const std::wstring& field_name,
-                                const std::wstring& user_text,
-                                int64 node_id,
-                                int request_id);
+
   virtual void NotifyRendererUnresponsive();
   virtual void NotifyRendererResponsive();
 

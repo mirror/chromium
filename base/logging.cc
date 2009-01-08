@@ -8,14 +8,13 @@
 #include <windows.h>
 typedef HANDLE FileHandle;
 typedef HANDLE MutexHandle;
-#elif defined(OS_MACOSX)
+#endif
+
+#if defined(OS_MACOSX)
 #include <CoreFoundation/CoreFoundation.h>
 #include <mach/mach.h>
 #include <mach/mach_time.h>
 #include <mach-o/dyld.h>
-#elif defined(OS_LINUX)
-#include <sys/syscall.h>
-#include <time.h>
 #endif
 
 #if defined(OS_POSIX)
@@ -120,8 +119,9 @@ int32 CurrentThreadId() {
   return GetCurrentThreadId();
 #elif defined(OS_MACOSX)
   return mach_thread_self();
-#elif defined(OS_LINUX)
-  return syscall(__NR_gettid);
+#else
+  NOTIMPLEMENTED();
+  return 0;
 #endif
 }
 
@@ -130,15 +130,9 @@ uint64 TickCount() {
   return GetTickCount();
 #elif defined(OS_MACOSX)
   return mach_absolute_time();
-#elif defined(OS_LINUX)
-  struct timespec ts;
-  clock_gettime(CLOCK_MONOTONIC, &ts);
-
-  uint64 absolute_micro =
-    static_cast<int64>(ts.tv_sec) * 1000000 +
-    static_cast<int64>(ts.tv_nsec) / 1000;
-
-  return absolute_micro;
+#else
+  NOTIMPLEMENTED();
+  return 0;
 #endif
 }
 

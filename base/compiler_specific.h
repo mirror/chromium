@@ -37,9 +37,6 @@
 // Pop effects of innermost MSVC_PUSH_* macro.
 #define MSVC_POP_WARNING() __pragma(warning(pop))
 
-#define MSVC_DISABLE_OPTIMIZE() __pragma(optimize("", off))
-#define MSVC_ENABLE_OPTIMIZE() __pragma(optimize("", on))
-
 // Allows |this| to be passed as an argument in constructor initializer lists.
 // This uses push/pop instead of the seemingly simpler suppress feature to avoid
 // having the warning be disabled for more than just |code|.
@@ -53,25 +50,15 @@
                                              code \
                                              MSVC_POP_WARNING()
 
-#else  // Not MSVC
+#else  // COMPILER_MSVC
 
 #define MSVC_SUPPRESS_WARNING(n)
 #define MSVC_PUSH_DISABLE_WARNING(n)
 #define MSVC_PUSH_WARNING_LEVEL(n)
 #define MSVC_POP_WARNING()
-#define MSVC_DISABLE_OPTIMIZE()
-#define MSVC_ENABLE_OPTIMIZE()
 #define ALLOW_THIS_IN_INITIALIZER_LIST(code) code
 
 #endif  // COMPILER_MSVC
 
-
-#if defined(COMPILER_GCC)
-#define ALLOW_UNUSED __attribute__((unused))
-#define WARN_UNUSED_RESULT __attribute__((warn_unused_result))
-#else  // Not GCC
-#define ALLOW_UNUSED
-#define WARN_UNUSED_RESULT
-#endif
-
 #endif  // BASE_COMPILER_SPECIFIC_H_
+

@@ -6,6 +6,7 @@
 
 #include <set>
 
+#include "base/gfx/platform_device_win.h"
 #include "base/message_loop.h"
 #include "base/time.h"
 #include "chrome/browser/printing/page_number.h"
@@ -19,9 +20,6 @@
 #include "chrome/common/time_format.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/win_util.h"
-#include "skia/ext/platform_device.h"
-
-using base::Time;
 
 namespace printing {
 
@@ -91,7 +89,7 @@ bool PrintedDocument::GetPage(int page_number,
 
 void PrintedDocument::RenderPrintedPage(const PrintedPage& page,
                                         HDC context) const {
-#ifndef NDEBUG
+#ifdef _DEBUG
   {
     // Make sure the page is from our list.
     AutoLock lock(lock_);
@@ -103,7 +101,7 @@ void PrintedDocument::RenderPrintedPage(const PrintedPage& page,
   // the device context.
   int saved_state = SaveDC(context);
   DCHECK_NE(saved_state, 0);
-  skia::PlatformDeviceWin::InitializeDC(context);
+  gfx::PlatformDeviceWin::InitializeDC(context);
   {
     // Save the state (again) to apply the necessary world transformation.
     int saved_state = SaveDC(context);

@@ -1,5 +1,5 @@
 /*
-** Copyright 2007, The Android Open Source Project
+** Copyright 2007, Google Inc.
 **
 ** Licensed under the Apache License, Version 2.0 (the "License"); 
 ** you may not use this file except in compliance with the License. 
@@ -39,8 +39,9 @@ struct SkBitmapProcState {
                                  int count,
                                  uint16_t colors[]);
     
-    typedef U16CPU (*FixedTileProc)(SkFixed);   // returns 0..0xFFFF
-    
+    typedef SkFixed (*FixedTileProc)(SkFixed, int);
+    typedef int (*IntTileProc)(int, int);
+
     MatrixProc          fMatrixProc;        // chooseProcs
     SampleProc32        fSampleProc32;      // chooseProcs
     SampleProc16        fSampleProc16;      // chooseProcs
@@ -48,6 +49,8 @@ struct SkBitmapProcState {
     SkMatrix            fUnitInvMatrix;     // chooseProcs
     FixedTileProc       fTileProcX;         // chooseProcs
     FixedTileProc       fTileProcY;         // chooseProcs
+    IntTileProc         iTileProcX;         // chooseProcs
+    IntTileProc         iTileProcY;         // chooseProcs
     SkFixed             fFilterOneX;
     SkFixed             fFilterOneY;
 

@@ -6,7 +6,6 @@
 
 #import <Cocoa/Cocoa.h>
 
-#include "base/file_path.h"
 #include "base/file_util.h"
 #include "base/logging.h"
 #include "base/path_service.h"
@@ -14,13 +13,14 @@
 
 namespace base {
 
-bool PathProviderMac(int key, FilePath* result) {
-  std::string cur;
+bool PathProviderMac(int key, std::wstring* result) {
+  std::wstring cur;
   switch (key) {
     case base::FILE_EXE:
     case base::FILE_MODULE: {
       NSString* path = [[NSBundle mainBundle] executablePath];
-      cur = [path fileSystemRepresentation];
+      cur = reinterpret_cast<const wchar_t*>(
+          [path cStringUsingEncoding:NSUTF32StringEncoding]);
       break;
     }
     case base::DIR_APP_DATA:
@@ -34,23 +34,22 @@ bool PathProviderMac(int key, FilePath* result) {
       DCHECK([dirs count] == 1);
       NSString* tail = [[NSString alloc] initWithCString:"Google/Chrome"];
       NSString* path = [[dirs lastObject] stringByAppendingPathComponent:tail];
-      cur = [path fileSystemRepresentation];
+      cur = reinterpret_cast<const wchar_t*>(
+          [path cStringUsingEncoding:NSUTF32StringEncoding]);
       break;
     }
-    case base::DIR_SOURCE_ROOT: {
-      FilePath path;
+    case base::DIR_SOURCE_ROOT:
       // On the mac, unit tests execute two levels deep from the source root.
       // For example: src/xcodebuild/{Debug|Release}/base_unittests
-      PathService::Get(base::DIR_EXE, &path);
-      path = path.DirName();
-      *result = path.DirName();
-      return true;
-    }
+      PathService::Get(base::DIR_EXE, &cur);
+      file_util::UpOneDirectory(&cur);
+      file_util::UpOneDirectory(&cur);
+      break;
     default:
       return false;
   }
 
-  *result = FilePath(cur);
+  result->swap(cur);
   return true;
 }
 

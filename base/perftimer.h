@@ -31,16 +31,16 @@ void LogPerfResult(const char* test_name, double value, const char* units);
 class PerfTimer {
  public:
   PerfTimer() {
-    begin_ = base::TimeTicks::Now();
+    begin_ = TimeTicks::Now();
   }
 
   // Returns the time elapsed since object construction
-  base::TimeDelta Elapsed() const {
-    return base::TimeTicks::Now() - begin_;
+  TimeDelta Elapsed() const {
+    return TimeTicks::Now() - begin_;
   }
 
  private:
-  base::TimeTicks begin_;
+  TimeTicks begin_;
 };
 
 // ----------------------------------------------------------------------

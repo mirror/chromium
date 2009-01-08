@@ -6,12 +6,9 @@
 
 #include "base/histogram.h"
 #include "base/string_util.h"
-#include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/history/query_parser.h"
 #include "chrome/browser/profile.h"
 #include "net/base/net_util.h"
-
-using base::TimeTicks;
 
 namespace {
 
@@ -23,11 +20,6 @@ const int kDaysToSearch = 30;
 // a single result. It allows the results to be sorted and processed without
 // modifying the larger and slower results structure.
 struct MatchReference {
-  MatchReference(const history::URLResult* result, int relevance)
-      : result(result),
-        relevance(relevance) {
-  }
-
   const history::URLResult* result;
   int relevance;  // Score of relevance computed by CalculateRelevance.
 };
@@ -46,11 +38,11 @@ bool CompareMatchRelevance(const MatchReference& a, const MatchReference& b) {
 using history::HistoryDatabase;
 
 void HistoryContentsProvider::Start(const AutocompleteInput& input,
-                                    bool minimal_changes) {
+                                    bool minimal_changes,
+                                    bool synchronous_only) {
   matches_.clear();
 
   if (input.text().empty() || (input.type() == AutocompleteInput::INVALID) ||
-      !profile_ ||
       // The history service or bookmark bar model must exist.
       !(profile_->GetHistoryService(Profile::EXPLICIT_ACCESS) ||
         profile_->GetBookmarkModel())) {
@@ -88,7 +80,7 @@ void HistoryContentsProvider::Start(const AutocompleteInput& input,
     // allowed to keep running it, do so, and when it finishes, its results will
     // get marked up for this new input.  In synchronous_only mode, cancel the
     // history query.
-    if (input.synchronous_only()) {
+    if (synchronous_only) {
       done_ = true;
       request_consumer_.CancelAllRequests();
     }
@@ -108,7 +100,7 @@ void HistoryContentsProvider::Start(const AutocompleteInput& input,
   // Convert the bookmark results.
   ConvertResults();
 
-  if (!input.synchronous_only()) {
+  if (!synchronous_only) {
     HistoryService* history =
         profile_->GetHistoryService(Profile::EXPLICIT_ACCESS);
     if (history) {
@@ -150,7 +142,9 @@ void HistoryContentsProvider::ConvertResults() {
   std::vector<MatchReference> result_refs;
   result_refs.reserve(results_.size());
   for (size_t i = 0; i < results_.size(); i++) {
-    MatchReference ref(&results_[i], CalculateRelevance(results_[i]));
+    MatchReference ref;
+    ref.result = &results_[i];
+    ref.relevance = CalculateRelevance(*ref.result);
     result_refs.push_back(ref);
   }
 
@@ -184,19 +178,14 @@ void HistoryContentsProvider::ConvertResults() {
       matches_[i].relevance = -matches_[i].relevance;
 }
 
-static bool MatchInTitle(const history::URLResult& result) {
-  return !result.title_match_positions().empty();
-}
-
 AutocompleteMatch HistoryContentsProvider::ResultToMatch(
     const history::URLResult& result,
     int score) {
   // TODO(sky): if matched title highlight matching words in title.
   // Also show star in popup.
-  AutocompleteMatch match(this, score, false, MatchInTitle(result) ?
-      AutocompleteMatch::HISTORY_TITLE : AutocompleteMatch::HISTORY_BODY);
+  AutocompleteMatch match(this, score, false);
   match.fill_into_edit = StringForURLDisplay(result.url(), true);
-  match.destination_url = result.url();
+  match.destination_url = UTF8ToWide(result.url().spec());
   match.contents = match.fill_into_edit;
   match.contents_class.push_back(
       ACMatchClassification(0, ACMatchClassification::URL));
@@ -236,8 +225,8 @@ void HistoryContentsProvider::ClassifyDescription(
 
 int HistoryContentsProvider::CalculateRelevance(
     const history::URLResult& result) {
-  const bool in_title = MatchInTitle(result);
-  const bool is_starred =
+  bool in_title = !!result.title_match_positions().size();
+  bool is_starred =
       (profile_->GetBookmarkModel() &&
        profile_->GetBookmarkModel()->IsBookmarked(result.url()));
 
@@ -245,18 +234,22 @@ int HistoryContentsProvider::CalculateRelevance(
     case AutocompleteInput::UNKNOWN:
     case AutocompleteInput::REQUESTED_URL:
       if (is_starred) {
-        return in_title ?
-            (1000 + star_title_count_++) : (550 + star_contents_count_++);
+        return in_title ? 1000 + star_title_count_++ :
+                          550 + star_contents_count_++;
+      } else {
+        return in_title ? 700 + title_count_++ :
+                          500 + contents_count_++;
       }
-      return in_title ? (700 + title_count_++) : (500 + contents_count_++);
 
     case AutocompleteInput::QUERY:
     case AutocompleteInput::FORCED_QUERY:
       if (is_starred) {
-        return in_title ?
-            (1200 + star_title_count_++) : (750 + star_contents_count_++);
+        return in_title ? 1200 + star_title_count_++ :
+                          750 + star_contents_count_++;
+      } else {
+        return in_title ? 900 + title_count_++ :
+                          700 + contents_count_++;
       }
-      return in_title ? (900 + title_count_++) : (700 + contents_count_++);
 
     default:
       NOTREACHED();
@@ -273,9 +266,9 @@ void HistoryContentsProvider::QueryBookmarks(const AutocompleteInput& input) {
                                  // empty.
 
   TimeTicks start_time = TimeTicks::Now();
-  std::vector<bookmark_utils::TitleMatch> matches;
-  bookmark_utils::GetBookmarksMatchingText(bookmark_model, input.text(),
-                                           kMaxMatchCount, &matches);
+  std::vector<BookmarkModel::TitleMatch> matches;
+  bookmark_model->GetBookmarksMatchingText(input.text(), kMaxMatchCount,
+                                           &matches);
   for (size_t i = 0; i < matches.size(); ++i)
     AddBookmarkTitleMatchToResults(matches[i]);
   UMA_HISTOGRAM_TIMES(L"Omnibox.QueryBookmarksTime",
@@ -283,7 +276,7 @@ void HistoryContentsProvider::QueryBookmarks(const AutocompleteInput& input) {
 }
 
 void HistoryContentsProvider::AddBookmarkTitleMatchToResults(
-    const bookmark_utils::TitleMatch& match) {
+    const BookmarkModel::TitleMatch& match) {
   history::URLResult url_result(match.node->GetURL(), match.match_positions);
   url_result.set_title(match.node->GetTitle());
   results_.AppendURLBySwapping(&url_result);

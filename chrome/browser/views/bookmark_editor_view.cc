@@ -23,7 +23,6 @@
 #include "chromium_strings.h"
 #include "generated_resources.h"
 
-using base::Time;
 using views::ColumnSet;
 using views::GridLayout;
 using views::Label;
@@ -221,7 +220,8 @@ void BookmarkEditorView::ShowContextMenu(View* source,
   running_menu_for_root_ =
       (tree_model_->GetParent(tree_view_->GetSelectedNode()) ==
        tree_model_->GetRoot());
-  context_menu_.reset(new Menu(this, Menu::TOPLEFT, GetWidget()->GetHWND()));
+  context_menu_.reset(new Menu(this, Menu::TOPLEFT,
+                               GetContainer()->GetHWND()));
   context_menu_->AppendMenuItemWithLabel(IDS_EDIT,
       l10n_util::GetString(IDS_EDIT));
   context_menu_->AppendMenuItemWithLabel(

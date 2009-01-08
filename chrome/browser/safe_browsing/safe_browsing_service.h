@@ -16,7 +16,6 @@
 #include "base/hash_tables.h"
 #include "base/ref_counted.h"
 #include "base/scoped_ptr.h"
-#include "base/system_monitor.h"
 #include "base/thread.h"
 #include "base/time.h"
 #include "chrome/browser/safe_browsing/safe_browsing_util.h"
@@ -32,8 +31,7 @@ class SafeBrowsingProtocolManager;
 
 // Construction needs to happen on the main thread.
 class SafeBrowsingService
-    : public base::RefCountedThreadSafe<SafeBrowsingService>,
-      public base::SystemMonitor::PowerObserver {
+    : public base::RefCountedThreadSafe<SafeBrowsingService> {
  public:
   // Users of this service implement this interface to be notified
   // asynchronously of the result.
@@ -53,18 +51,6 @@ class SafeBrowsingService
     // Called when the user has made a decision about how to handle the
     // SafeBrowsing interstitial page.
     virtual void OnBlockingPageComplete(bool proceed) = 0;
-  };
-
-  // Structure used to pass parameters between the IO and UI thread when
-  // interacting with the blocking page.
-  struct BlockingPageParam {
-    GURL url;
-    bool proceed;
-    UrlCheckResult result;
-    Client* client;
-    int render_process_host_id;
-    int render_view_id;
-    ResourceType::Type resource_type;
   };
 
   // Creates the safe browsing service.  Need to initialize before using.
@@ -121,8 +107,8 @@ class SafeBrowsingService
     GURL url;
     Client* client;
     bool need_get_hash;
-    base::Time start;  // Time that check was sent to SB service.
-    base::TimeDelta db_time;  // How long DB look-up took.
+    Time start;  // Time that check was sent to SB service.
+    TimeDelta db_time;  // How long DB look-up took.
     UrlCheckResult result;
     std::vector<SBPrefix> prefix_hits;
     std::vector<SBFullHashResult> full_hits;
@@ -142,7 +128,9 @@ class SafeBrowsingService
   void UpdateFinished(bool update_succeeded);
 
   // The blocking page on the UI thread has completed.
-  void OnBlockingPageDone(const BlockingPageParam& param);
+  void OnBlockingPageDone(SafeBrowsingBlockingPage* page,
+                          Client* client,
+                          bool proceed);
 
   // Called when the SafeBrowsingProtocolManager has received updated MAC keys.
   void OnNewMacKeys(const std::string& client_key,
@@ -169,14 +157,12 @@ class SafeBrowsingService
   // delta starting from when we would have started reading data from the
   // network, and ending when the SafeBrowsing check completes indicating that
   // the current page is 'safe'.
-  void LogPauseDelay(base::TimeDelta time);
+  void LogPauseDelay(TimeDelta time);
 
-  // PowerObserver notifications
   // We defer SafeBrowsing work for a short duration when the computer comes
   // out of a suspend state to avoid thrashing the disk.
-  void OnPowerStateChange(base::SystemMonitor*) {};
-  void OnSuspend(base::SystemMonitor*);
-  void OnResume(base::SystemMonitor*);
+  void OnSuspend();
+  void OnResume();
 
   bool new_safe_browsing() const { return new_safe_browsing_; }
 
@@ -189,7 +175,7 @@ class SafeBrowsingService
   void ReleaseDatabase(SafeBrowsingDatabase* database);
 
   // Called on the database thread to check a url.
-  void CheckDatabase(SafeBrowsingCheck* info, base::Time last_update);
+  void CheckDatabase(SafeBrowsingCheck* info, Time last_update);
 
   // Called on the IO thread with the check result.
   void OnCheckDone(SafeBrowsingCheck* info);
@@ -240,9 +226,6 @@ class SafeBrowsingService
   // Runs on the database thread to inform the database we've resumed from a low
   // power state.
   void HandleResume();
-
-  // Invoked on the UI thread to show the blocking page.
-  void DoDisplayBlockingPage(const BlockingPageParam& param);
 
   // During a reset or the initial load we may have to queue checks until the
   // database is ready. This method is run once the database has loaded (or if
@@ -301,7 +284,7 @@ class SafeBrowsingService
   typedef struct {
     Client* client;
     GURL url;
-    base::Time start;
+    Time start;
   } QueuedCheck;
   std::deque<QueuedCheck> queued_checks_;
 

@@ -5,8 +5,17 @@
 #ifndef BASE_GFX_PLATFORM_DEVICE_LINUX_H_
 #define BASE_GFX_PLATFORM_DEVICE_LINUX_H_
 
-// TODO(brettw) this file should be removed and the includes changed to this
-// new location.
-#include "skia/ext/platform_device_linux.h"
+#include "SkDevice.h"
+
+namespace gfx {
+
+// Blindly copying the mac hierarchy.
+class PlatformDeviceLinux : public SkDevice {
+ protected:
+  // Forwards |bitmap| to SkDevice's constructor.
+  PlatformDeviceLinux(const SkBitmap& bitmap);
+};
+
+}  // namespace gfx
 
 #endif  // BASE_GFX_PLATFORM_DEVICE_LINUX_H_

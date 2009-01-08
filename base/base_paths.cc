@@ -4,24 +4,23 @@
 
 #include "base/base_paths.h"
 
-#include "base/file_path.h"
 #include "base/file_util.h"
 #include "base/path_service.h"
 
 namespace base {
 
-bool PathProvider(int key, FilePath* result) {
+bool PathProvider(int key, std::wstring* result) {
   // NOTE: DIR_CURRENT is a special cased in PathService::Get
 
-  FilePath cur;
+  std::wstring cur;
   switch (key) {
     case base::DIR_EXE:
       PathService::Get(base::FILE_EXE, &cur);
-      cur = cur.DirName();
+      file_util::TrimFilename(&cur);
       break;
     case base::DIR_MODULE:
       PathService::Get(base::FILE_MODULE, &cur);
-      cur = cur.DirName();
+      file_util::TrimFilename(&cur);
       break;
     case base::DIR_TEMP:
       if (!file_util::GetTempDir(&cur))
@@ -31,7 +30,7 @@ bool PathProvider(int key, FilePath* result) {
       return false;
   }
 
-  *result = cur;
+  result->swap(cur);
   return true;
 }
 

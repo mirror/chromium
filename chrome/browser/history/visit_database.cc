@@ -12,8 +12,6 @@
 #include "chrome/browser/history/url_database.h"
 #include "chrome/common/page_transition_types.h"
 
-using base::Time;
-
 // Rows, in order, of the visit table.
 #define HISTORY_VISIT_ROW_FIELDS \
   " id,url,visit_time,from_visit,transition,segment_id,is_indexed "
@@ -367,3 +365,4 @@ bool VisitDatabase::GetVisitCountToHost(const GURL& url,
 }
 
 }  // namespace history
+

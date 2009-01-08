@@ -38,6 +38,7 @@ static const int kDefaultAnimationDurationMs = 100;
 static const int kResizeLayoutAnimationDurationMs = 166;
 static const int kReorderAnimationDurationMs = 166;
 
+static const int kLoadingAnimationFrameTimeMs = 30;
 static const int kNewTabButtonHOffset = -5;
 static const int kNewTabButtonVOffset = 5;
 static const int kResizeTabsTimeMs = 300;
@@ -293,11 +294,8 @@ class RemoveTabAnimation : public TabStrip::TabAnimation {
       // of the animation.
       // Removed animated Tabs are never selected.
       double start_width = start_unselected_width_;
-      // Make sure target_width is at least abs(kTabHOffset), otherwise if
-      // less than kTabHOffset during layout tabs get negatively offset.
       double target_width =
-          std::max(abs(kTabHOffset),
-                   Tab::GetMinimumUnselectedSize().width() + kTabHOffset);
+          Tab::GetMinimumUnselectedSize().width() + kTabHOffset;
       double delta = start_width - target_width;
       return start_width - (delta * animation_.GetCurrentValue());
     }
@@ -357,15 +355,15 @@ class RemoveTabAnimation : public TabStrip::TabAnimation {
 
     POINT pt;
     GetCursorPos(&pt);
-    views::Widget* widget = tabstrip_->GetWidget();
+    views::Container* vc = tabstrip_->GetContainer();
     RECT wr;
-    GetWindowRect(widget->GetHWND(), &wr);
+    GetWindowRect(vc->GetHWND(), &wr);
     pt.x -= wr.left;
     pt.y -= wr.top;
 
     // Return to message loop - otherwise we may disrupt some operation that's
     // in progress.
-    PostMessage(widget->GetHWND(), WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
+    PostMessage(vc->GetHWND(), WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
   }
 
   int index_;
@@ -517,6 +515,12 @@ bool TabStrip::HasAvailableDragActions() const {
   return model_->delegate()->GetDragActions() != 0;
 }
 
+void TabStrip::ShowApplicationMenu(const gfx::Point& p) {
+  TabStripModelDelegate* delegate = model_->delegate();
+  if (delegate)
+    delegate->ShowApplicationMenu(p);
+}
+
 bool TabStrip::CanProcessInputEvents() const {
   return IsAnimating() == NULL;
 }
@@ -573,8 +577,7 @@ void TabStrip::DestroyDraggedSourceTab(Tab* tab) {
   std::vector<TabData>::iterator it = tab_data_.begin();
   for (; it != tab_data_.end(); ++it) {
     if (it->tab == tab) {
-      if (!model_->closing_all())
-        NOTREACHED() << "Leaving in an inconsistent state!";
+      NOTREACHED() << "Leaving in an inconsistent state!";
       tab_data_.erase(it);
       break;
     }
@@ -590,24 +593,6 @@ void TabStrip::DestroyDraggedSourceTab(Tab* tab) {
 gfx::Rect TabStrip::GetIdealBounds(int index) {
   DCHECK(index >= 0 && index < GetTabCount());
   return tab_data_.at(index).ideal_bounds;
-}
-
-void TabStrip::UpdateLoadingAnimations() {
-  for (int i = 0, index = 0; i < GetTabCount(); ++i, ++index) {
-    Tab* current_tab = GetTabAt(i);
-    if (current_tab->closing()) {
-      --index;
-    } else {
-      TabContents* contents = model_->GetTabContentsAt(index);
-      if (!contents || !contents->is_loading()) {
-        current_tab->ValidateLoadingAnimation(Tab::ANIMATION_NONE);
-      } else if (contents->waiting_for_response()) {
-        current_tab->ValidateLoadingAnimation(Tab::ANIMATION_WAITING);
-      } else {
-        current_tab->ValidateLoadingAnimation(Tab::ANIMATION_LOADING);
-      }
-    }
-  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -848,7 +833,7 @@ void TabStrip::TabInsertedAt(TabContents* contents,
 
   // Don't animate the first tab, it looks weird, and don't animate anything
   // if the containing window isn't visible yet.
-  if (GetTabCount() > 1 && IsWindowVisible(GetWidget()->GetHWND())) {
+  if (GetTabCount() > 1 && IsWindowVisible(GetContainer()->GetHWND())) {
     StartInsertTabAnimation(index);
   } else {
     Layout();
@@ -899,6 +884,23 @@ void TabStrip::TabChangedAt(TabContents* contents, int index) {
   Tab* tab = GetTabAtAdjustForAnimation(index);
   tab->UpdateData(contents);
   tab->UpdateFromModel();
+}
+
+void TabStrip::TabValidateAnimations() {
+  if (model_->TabsAreLoading()) {
+    if (!loading_animation_timer_.IsRunning()) {
+      // Loads are happening, and the timer isn't running, so start it.
+      loading_animation_timer_.Start(
+          TimeDelta::FromMilliseconds(kLoadingAnimationFrameTimeMs), this,
+          &TabStrip::LoadingAnimationCallback);
+    }
+  } else {
+    if (loading_animation_timer_.IsRunning()) {
+      loading_animation_timer_.Stop();
+      // Loads are now complete, update the state if a task was scheduled.
+      LoadingAnimationCallback();
+    }
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1256,6 +1258,29 @@ void TabStrip::RemoveMessageLoopObserver() {
   }
 }
 
+void TabStrip::LoadingAnimationCallback() {
+  for (int i = 0, index = 0; i < GetTabCount(); ++i, ++index) {
+    Tab* current_tab = GetTabAt(i);
+    if (current_tab->closing()) {
+      --index;
+    } else {
+      TabContents* contents = model_->GetTabContentsAt(index);
+      if (!contents || !contents->is_loading()) {
+        current_tab->ValidateLoadingAnimation(Tab::ANIMATION_NONE);
+      } else if (contents->waiting_for_response()) {
+        current_tab->ValidateLoadingAnimation(Tab::ANIMATION_WAITING);
+      } else {
+        current_tab->ValidateLoadingAnimation(Tab::ANIMATION_LOADING);
+      }
+    }
+  }
+
+  // Make sure the model delegates updates the animation as well.
+  TabStripModelDelegate* delegate;
+  if (model_ && (delegate = model_->delegate()))
+    delegate->ValidateLoadingAnimations();
+}
+
 gfx::Rect TabStrip::GetDropBounds(int drop_index,
                                   bool drop_before,
                                   bool* is_beneath) {
@@ -1372,7 +1397,7 @@ TabStrip::DropInfo::DropInfo(int drop_index, bool drop_before, bool point_down)
     : drop_index(drop_index),
       drop_before(drop_before),
       point_down(point_down) {
-  arrow_window = new views::WidgetWin;
+  arrow_window = new views::ContainerWin;
   arrow_window->set_window_style(WS_POPUP);
   arrow_window->set_window_ex_style(WS_EX_TOPMOST | WS_EX_NOACTIVATE |
                                     WS_EX_LAYERED | WS_EX_TRANSPARENT);

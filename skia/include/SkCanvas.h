@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006 The Android Open Source Project
+ * Copyright (C) 2006-2008 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,6 @@
 #include "SkPorterDuff.h"
 #include "SkPath.h"
 #include "SkRegion.h"
-#include "SkScalarCompare.h"
 
 class SkBounder;
 class SkDevice;
@@ -64,16 +63,7 @@ public:
 
     ///////////////////////////////////////////////////////////////////////////
 
-    /** If this subclass of SkCanvas supports GL viewports, return true and set
-        size (if not null) to the size of the viewport. If it is not supported,
-        ignore vp and return false.
-    */
-    virtual bool getViewport(SkIPoint* size) const;
-    
-    /** If this subclass of SkCanvas supports GL viewports, return true and set
-        the viewport to the specified x and y dimensions. If it is not
-        supported, ignore x and y and return false.
-    */
+    virtual bool getViewport(SkIPoint*) const;
     virtual bool setViewport(int x, int y);
 
     /** Return the canvas' device object, which may be null. The device holds
@@ -311,7 +301,7 @@ public:
         in a way similar to quickReject, in that it tells you that drawing
         outside of these bounds will be clipped out.
     */
-    bool getClipBounds(SkRect* bounds, EdgeType et = kAA_EdgeType) const;
+    bool getClipBounds(SkRect* bounds) const;
 
     /** Fill the entire canvas' bitmap (restricted to the current clip) with the
         specified ARGB color, using the specified PorterDuff mode.
@@ -444,9 +434,7 @@ public:
                     const SkPaint& paint);
 
     /** Draw the specified arc, which will be scaled to fit inside the
-        specified oval. If the sweep angle is >= 360, then the oval is drawn
-        completely. Note that this differs slightly from SkPath::arcTo, which
-        treats the sweep angle mod 360.
+        specified oval.
         @param oval The bounds of oval used to define the shape of the arc
         @param startAngle Starting angle (in degrees) where the arc begins
         @param sweepAngle Sweep angle (in degrees) measured clockwise
@@ -705,7 +693,6 @@ public:
         SkDevice*       device() const;
         const SkMatrix& matrix() const;
         const SkRegion& clip() const;
-        const SkPaint&  paint() const;
         int             x() const;
         int             y() const;
         
@@ -713,11 +700,9 @@ public:
         // used to embed the SkDrawIter object directly in our instance, w/o
         // having to expose that class def to the public. There is an assert
         // in our constructor to ensure that fStorage is large enough
-        // (though needs to be a compile-time-assert!). We use intptr_t to work
-        // safely with 32 and 64 bit machines (to ensure the storage is enough)
-        intptr_t          fStorage[12];
+        // (though needs to be a compile-time-assert!)
+        uint32_t          fStorage[11];
         class SkDrawIter* fImpl;    // this points at fStorage
-        SkPaint           fDefaultPaint;
         bool              fDone;
     };
 
@@ -751,21 +736,6 @@ private:
     // shared by save() and saveLayer()
     int internalSave(SaveFlags flags);
     void internalRestore();
-    
-    /*  These maintain a cache of the clip bounds in local coordinates,
-        (converted to 2s-compliment if floats are slow).
-     */
-    mutable SkRectCompareType fLocalBoundsCompareType;
-    mutable bool              fLocalBoundsCompareTypeDirty;
-
-    const SkRectCompareType& getLocalClipBoundsCompareType() const {
-        if (fLocalBoundsCompareTypeDirty) {
-            this->computeLocalClipBoundsCompareType();
-            fLocalBoundsCompareTypeDirty = false;
-        }
-        return fLocalBoundsCompareType;
-    }
-    void computeLocalClipBoundsCompareType() const;
 };
 
 /** Stack helper class to automatically call restoreToCount() on the canvas

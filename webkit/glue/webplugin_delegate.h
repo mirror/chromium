@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "base/basictypes.h"
-#include "base/file_path.h"
 #include "base/gfx/native_widget_types.h"
 #include "base/gfx/rect.h"
 #include "third_party/npapi/bindings/npapi.h"
@@ -105,7 +104,7 @@ class WebPluginDelegate {
   virtual void DidManualLoadFail() = 0;
 
   // Only Available after Initialize is called.
-  virtual FilePath GetPluginPath() = 0;
+  virtual std::wstring GetPluginPath() = 0;
 
   // Only Supported when the plugin is the default plugin.
   virtual void InstallMissingPlugin() = 0;

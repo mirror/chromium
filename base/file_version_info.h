@@ -8,7 +8,6 @@
 #include <string>
 
 #include "base/basictypes.h"
-#include "base/file_path.h"
 #include "base/scoped_ptr.h"
 
 #ifdef OS_MACOSX
@@ -28,9 +27,6 @@ class FileVersionInfo {
   // Creates a FileVersionInfo for the specified path. Returns NULL if something
   // goes wrong (typically the file does not exit or cannot be opened). The
   // returned object should be deleted when you are done with it.
-  static FileVersionInfo* CreateFileVersionInfo(const FilePath& file_path);
-  // This version, taking a wstring, is deprecated and only kept around
-  // until we can fix all callers.
   static FileVersionInfo* CreateFileVersionInfo(const std::wstring& file_path);
 
   // Creates a FileVersionInfo for the current module. Returns NULL in case
@@ -81,6 +77,7 @@ class FileVersionInfo {
   VS_FIXEDFILEINFO* fixed_file_info_;
 #elif defined(OS_MACOSX)
   explicit FileVersionInfo(NSBundle *bundle);
+  explicit FileVersionInfo(const std::wstring& file_path);
   
   NSBundle *bundle_;
 #endif

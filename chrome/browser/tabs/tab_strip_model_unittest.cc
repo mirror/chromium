@@ -4,7 +4,6 @@
 
 #include "base/file_util.h"
 #include "base/path_service.h"
-#include "chrome/browser/dock_info.h"
 #include "chrome/browser/dom_ui/new_tab_ui.h"
 #include "chrome/browser/navigation_controller.h"
 #include "chrome/browser/navigation_entry.h"
@@ -993,10 +992,8 @@ class TabStripDummyDelegate : public TabStripModelDelegate {
   virtual ~TabStripDummyDelegate() {}
 
   // Overridden from TabStripModelDelegate:
-  virtual GURL GetBlankTabURL() const { return NewTabUIURL(); }
   virtual void CreateNewStripWithContents(TabContents* contents,
-                                          const gfx::Rect& window_bounds,
-                                          const DockInfo& dock_info) {}
+                                          const gfx::Point& creation_point) {}
   virtual int GetDragActions() const { return 0; }
   virtual TabContents* CreateTabContentsForURL(
       const GURL& url,
@@ -1009,8 +1006,10 @@ class TabStripDummyDelegate : public TabStripModelDelegate {
       return dummy_contents_;
     return NULL;
   }
+  virtual void ShowApplicationMenu(const gfx::Point& p) {}
   virtual bool CanDuplicateContentsAt(int index) { return false; }
   virtual void DuplicateContentsAt(int index) {}
+  virtual void ValidateLoadingAnimations() {}
   virtual void CloseFrameAfterDragSession() {}
 
  private:

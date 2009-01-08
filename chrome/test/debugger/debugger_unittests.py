@@ -1,4 +1,3 @@
-#!/usr/bin/python
 # debugger_unittests.py
 #
 # Run chrome debugger front-end tests.

@@ -21,9 +21,6 @@
 #include "unicode/plurrule.h"
 #include "unicode/smpdtfmt.h"
 
-using base::Time;
-using base::TimeDelta;
-
 class TimeRemainingFormat {
   public:
     const std::vector<PluralFormat*>& formatter(bool short_version) {
@@ -40,8 +37,8 @@ class TimeRemainingFormat {
       STLDeleteContainerPointers(long_formatter_.begin(),
                                  long_formatter_.end());
     }
-    friend class Singleton<TimeRemainingFormat>;
-    friend struct DefaultSingletonTraits<TimeRemainingFormat>;
+    friend Singleton<TimeRemainingFormat>;
+    friend DefaultSingletonTraits<TimeRemainingFormat>;
 
     std::vector<PluralFormat*> long_formatter_;
     std::vector<PluralFormat*> short_formatter_;
@@ -116,7 +113,7 @@ void TimeRemainingFormat::BuildFormats(
   }
   for (int i = 0; i < 4; ++i) {
     UnicodeString pattern;
-    for (size_t j = 0; j < arraysize(kKeywords); ++j) {
+    for (int j = 0; j < arraysize(kKeywords); ++j) {
       int msg_id = short_version ? kTimeMsgIds[i][j] : kTimeLeftMsgIds[i][j];
       if (msg_id == kInvalidMsgId) continue;
       std::string sub_pattern = WideToUTF8(l10n_util::GetString(msg_id));
@@ -213,12 +210,11 @@ static std::wstring TimeRemainingImpl(const TimeDelta& delta,
   // With the fallback added, this should never fail.
   DCHECK(U_SUCCESS(error));
   int capacity = time_string.length() + 1;
-  string16 result_utf16;
-  time_string.extract(static_cast<UChar*>(
-                      WriteInto(&result_utf16, capacity)),
+  std::wstring formatted;
+  time_string.extract(static_cast<UChar*>(WriteInto(&formatted, capacity)),
                       capacity, error);
   DCHECK(U_SUCCESS(error));
-  return UTF16ToWide(result_utf16);
+  return formatted;
 }
 
 // static

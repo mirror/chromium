@@ -1,6 +1,6 @@
 /* libs/graphics/sgl/SkRegion_path.cpp
 **
-** Copyright 2006, The Android Open Source Project
+** Copyright 2006, Google Inc.
 **
 ** Licensed under the Apache License, Version 2.0 (the "License"); 
 ** you may not use this file except in compliance with the License. 
@@ -25,8 +25,7 @@ class SkRgnBuilder : public SkBlitter {
 public:
     virtual ~SkRgnBuilder();
     
-    // returns true if it could allocate the working storage needed
-    bool init(int maxHeight, int maxTransitions);
+    void init(int maxHeight, int maxTransitions);
 
     void done() {
         if (fCurrScanline != NULL) {
@@ -97,33 +96,15 @@ SkRgnBuilder::~SkRgnBuilder() {
     sk_free(fStorage);
 }
 
-bool SkRgnBuilder::init(int maxHeight, int maxTransitions) {
-    if ((maxHeight | maxTransitions) < 0) {
-        return false;
-    }
+void SkRgnBuilder::init(int maxHeight, int maxTransitions) {
+    int count = maxHeight * (3 + maxTransitions);
 
-    Sk64 count, size;
-
-    // compute the count with +1 and +3 slop for the working buffer
-    count.setMul(maxHeight + 1, 3 + maxTransitions);
-    if (!count.is32() || count.isNeg()) {
-        return false;
-    }
-    fStorageCount = count.get32();
-
-    size.setMul(fStorageCount, sizeof(SkRegion::RunType));
-    if (!size.is32() || size.isNeg()) {
-        return false;
-    }
-
-    fStorage = (SkRegion::RunType*)sk_malloc_flags(size.get32(), 0);
-    if (NULL == fStorage) {
-        return false;
-    }
+    // add maxTransitions to have slop for working buffer
+    fStorageCount = count + 3 + maxTransitions;
+    fStorage = (SkRegion::RunType*)sk_malloc_throw(fStorageCount * sizeof(SkRegion::RunType));
 
     fCurrScanline = NULL;    // signal empty collection
     fPrevScanline = NULL;    // signal first scanline
-    return true;
 }
 
 void SkRgnBuilder::blitH(int x, int y, int width) {
@@ -294,11 +275,7 @@ bool SkRegion::setPath(const SkPath& path, const SkRegion& clip) {
 
     SkRgnBuilder builder;
     
-    if (!builder.init(bot - top, SkMax32(pathTransitions, clipTransitions))) {
-        // can't allocate working space, so return false
-        return this->setEmpty();
-    }
-
+    builder.init(bot - top, SkMax32(pathTransitions, clipTransitions));
     SkScan::FillPath(path, clip, &builder);
     builder.done();
 

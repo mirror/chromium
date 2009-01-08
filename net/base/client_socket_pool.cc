@@ -9,15 +9,10 @@
 #include "net/base/client_socket_handle.h"
 #include "net/base/net_errors.h"
 
-using base::TimeDelta;
-
 namespace {
 
 // The timeout value, in seconds, used to clean up disconnected idle sockets.
-const int kCleanupInterval = 10;
-
-// The maximum duration, in seconds, to keep idle persistent sockets alive.
-const int kIdleTimeout = 300; // 5 minutes.
+const int kCleanupInterval = 5;
 
 }  // namespace
 
@@ -29,9 +24,9 @@ ClientSocketPool::ClientSocketPool(int max_sockets_per_group)
 }
 
 ClientSocketPool::~ClientSocketPool() {
-  // Clean up any idle sockets.  Assert that we have no remaining active
-  // sockets or pending requests.  They should have all been cleaned up prior
-  // to the manager being destroyed.
+  // Clean up any idle sockets.  Assert that we have no remaining active sockets
+  // or pending requests.  They should have all been cleaned up prior to the
+  // manager being destroyed.
   CloseIdleSockets();
   DCHECK(group_map_.empty());
 }
@@ -56,15 +51,15 @@ int ClientSocketPool::RequestSocket(ClientSocketHandle* handle,
   // Use idle sockets in LIFO order because they're more likely to be
   // still connected.
   while (!group.idle_sockets.empty()) {
-    IdleSocket idle_socket = group.idle_sockets.back();
+    ClientSocketPtr* ptr = group.idle_sockets.back();
     group.idle_sockets.pop_back();
     DecrementIdleCount();
-    if ((*idle_socket.ptr)->IsConnected()) {
+    if ((*ptr)->IsConnected()) {
       // We found one we can reuse!
-      handle->socket_ = idle_socket.ptr;
+      handle->socket_ = ptr;
       return OK;
     }
-    delete idle_socket.ptr;
+    delete ptr;
   }
 
   handle->socket_ = new ClientSocketPtr();
@@ -99,31 +94,22 @@ void ClientSocketPool::ReleaseSocket(ClientSocketHandle* handle) {
 }
 
 void ClientSocketPool::CloseIdleSockets() {
-  CleanupIdleSockets(true);
+  MaybeCloseIdleSockets(false);
 }
 
-bool ClientSocketPool::IdleSocket::ShouldCleanup(base::TimeTicks now) const {
-  bool timed_out = (now - start_time) >= 
-      base::TimeDelta::FromSeconds(kIdleTimeout);
-  return timed_out || !(*ptr)->IsConnected();
-}
-
-void ClientSocketPool::CleanupIdleSockets(bool force) {
+void ClientSocketPool::MaybeCloseIdleSockets(
+    bool only_if_disconnected) {
   if (idle_socket_count_ == 0)
     return;
-
-  // Current time value. Retrieving it once at the function start rather than
-  // inside the inner loop, since it shouldn't change by any meaningful amount.
-  base::TimeTicks now = base::TimeTicks::Now();
 
   GroupMap::iterator i = group_map_.begin();
   while (i != group_map_.end()) {
     Group& group = i->second;
 
-    std::deque<IdleSocket>::iterator j = group.idle_sockets.begin();
+    std::deque<ClientSocketPtr*>::iterator j = group.idle_sockets.begin();
     while (j != group.idle_sockets.end()) {
-      if (force || j->ShouldCleanup(now)) {
-        delete j->ptr;
+      if (!only_if_disconnected || !(*j)->get()->IsConnected()) {
+        delete *j;
         j = group.idle_sockets.erase(j);
         DecrementIdleCount();
       } else {
@@ -144,7 +130,7 @@ void ClientSocketPool::CleanupIdleSockets(bool force) {
 void ClientSocketPool::IncrementIdleCount() {
   if (++idle_socket_count_ == 1)
     timer_.Start(TimeDelta::FromSeconds(kCleanupInterval), this,
-                 &ClientSocketPool::OnCleanupTimerFired);
+                 &ClientSocketPool::DoTimeout);
 }
 
 void ClientSocketPool::DecrementIdleCount() {
@@ -164,11 +150,7 @@ void ClientSocketPool::DoReleaseSocket(const std::string& group_name,
 
   bool can_reuse = ptr->get() && (*ptr)->IsConnected();
   if (can_reuse) {
-    IdleSocket idle_socket;
-    idle_socket.ptr = ptr;
-    idle_socket.start_time = base::TimeTicks::Now();
-
-    group.idle_sockets.push_back(idle_socket);
+    group.idle_sockets.push_back(ptr);
     IncrementIdleCount();
   } else {
     delete ptr;
@@ -189,6 +171,10 @@ void ClientSocketPool::DoReleaseSocket(const std::string& group_name,
     DCHECK(group.pending_requests.empty());
     group_map_.erase(i);
   }
+}
+
+void ClientSocketPool::DoTimeout() {
+  MaybeCloseIdleSockets(true);
 }
 
 }  // namespace net

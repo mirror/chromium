@@ -23,7 +23,8 @@ template<typename T> StorageBlock<T>::StorageBlock(MappedFile* file,
 template<typename T> StorageBlock<T>::~StorageBlock() {
   if (modified_)
     Store();
-  DeleteData();
+  if (own_data_)
+    delete data_;
 }
 
 template<typename T> void* StorageBlock<T>::buffer() const {
@@ -57,7 +58,10 @@ template<typename T> bool StorageBlock<T>::LazyInit(MappedFile* file,
 
 template<typename T> void StorageBlock<T>::SetData(T* other) {
   DCHECK(!modified_);
-  DeleteData();
+  if (own_data_) {
+    delete data_;
+    own_data_ = false;
+  }
   data_ = other;
 }
 
@@ -116,18 +120,6 @@ template<typename T> void StorageBlock<T>::AllocateData() {
     data_ = new(buffer) T;
   }
   own_data_ = true;
-}
-
-template<typename T> void StorageBlock<T>::DeleteData() {
-  if (own_data_) {
-    if (!extended_) {
-      delete data_;
-    } else {
-      data_->~T();
-      delete[] reinterpret_cast<char*>(data_);
-    }
-    own_data_ = false;
-  }
 }
 
 }  // namespace disk_cache

@@ -12,7 +12,6 @@
 // and returns a short (ACCEPT, SKIP, REJECT) as the result.
 namespace WebCore {
 class Node;
-class ScriptState;
 
 // NodeFilterCondition is a wrapper around a NodeFilter JS function.
 class V8NodeFilterCondition : public NodeFilterCondition {
@@ -20,7 +19,7 @@ class V8NodeFilterCondition : public NodeFilterCondition {
   explicit V8NodeFilterCondition(v8::Handle<v8::Value> filter);
   virtual ~V8NodeFilterCondition();
 
-  virtual short acceptNode(ScriptState*, Node*) const;
+  virtual short acceptNode(Node* node) const;
 
  private:
   mutable v8::Persistent<v8::Value> m_filter;

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006-2008 The Android Open Source Project
+ * Copyright (C) 2006-2008 Google Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -80,7 +80,7 @@ SkInterpolatorBase::Result SkInterpolatorBase::timeToT(SkMSec time, SkScalar* T,
     SkASSERT(fFrameCount > 0);
     Result  result = kNormal_Result;
     if (fRepeat != SK_Scalar1) {
-        SkMSec startTime, endTime;
+        SkMSec startTime = 0, endTime = 0;
         this->getDuration(&startTime, &endTime);
         SkMSec totalTime = endTime - startTime;
         SkMSec offsetTime = time - startTime;

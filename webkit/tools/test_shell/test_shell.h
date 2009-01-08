@@ -20,7 +20,7 @@
  * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
  * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
 #ifndef WEBKIT_TOOLS_TEST_SHELL_TEST_SHELL_H_
@@ -45,7 +45,7 @@
 #include "webkit/tools/test_shell/webview_host.h"
 #include "webkit/tools/test_shell/webwidget_host.h"
 
-typedef std::list<gfx::NativeWindow> WindowList;
+typedef std::list<gfx::WindowHandle> WindowList;
 
 struct WebPreferences;
 class TestNavigationEntry;
@@ -70,20 +70,14 @@ public:
     virtual ~TestShell();
 
     // Initialization and clean up of logging.
-    static void InitLogging(bool suppress_error_dialogs,
-                            bool running_layout_tests,
-                            bool enable_gp_fault_error_box);
+    static void InitLogging(bool suppress_error_dialogs);
     static void CleanupLogging();
 
-    // Initialization and clean up of a static member variable.
-    static void InitializeTestShell(bool layout_test_mode);
+    // Initialization and clean up of a static member variable.	
+    static void InitializeTestShell(bool interactive);	
     static void ShutdownTestShell();
 
-    static bool layout_test_mode() { return layout_test_mode_; }
-
-    // Called from the destructor to let each platform do any necessary
-    // cleanup.
-    void PlatformCleanUp();
+    static bool interactive() { return interactive_; }
 
     WebView* webView() {
       return m_webViewHost.get() ? m_webViewHost->webview() : NULL;
@@ -100,7 +94,8 @@ public:
 
     void Show(WebView* webview, WindowOpenDisposition disposition);
 
-    // We use this to avoid relying on Windows focus during layout test mode.
+    // We use this to avoid relying on Windows focus during non-interactive
+    // mode.
     void SetFocus(WebWidgetHost* host, bool enable);
 
     LayoutTestController* layout_test_controller() {
@@ -119,32 +114,24 @@ public:
     void ResetTestController() {
       layout_test_controller_->Reset();
       event_sending_controller_->Reset();
-
-      // Reset state in the test webview delegate.
-      delegate()->SetSmartInsertDeleteEnabled(true);
-#if defined(OS_WIN)
-      delegate()->SetSelectTrailingWhitespaceEnabled(true);
-#else
-      delegate()->SetSelectTrailingWhitespaceEnabled(false);
-#endif
     }
 
     // Passes options from LayoutTestController through to the delegate (or
     // any other caller).
     bool ShouldDumpEditingCallbacks() {
-      return layout_test_mode_ &&
+      return !interactive_ &&
              layout_test_controller_->ShouldDumpEditingCallbacks();
     }
     bool ShouldDumpFrameLoadCallbacks() {
-      return layout_test_mode_ && (test_is_preparing_ || test_is_pending_) &&
+      return !interactive_ && (test_is_preparing_ || test_is_pending_) &&
              layout_test_controller_->ShouldDumpFrameLoadCallbacks();
     }
     bool ShouldDumpResourceLoadCallbacks() {
-      return layout_test_mode_ && (test_is_preparing_ || test_is_pending_) &&
+      return !interactive_ && (test_is_preparing_ || test_is_pending_) &&
              layout_test_controller_->ShouldDumpResourceLoadCallbacks();
     }
     bool ShouldDumpTitleChanges() {
-      return layout_test_mode_ &&
+      return !interactive_ &&
              layout_test_controller_->ShouldDumpTitleChanges();
     }
     bool AcceptsEditing() {
@@ -162,22 +149,18 @@ public:
     void DumpDocumentText();
     void DumpRenderTree();
 
-    gfx::NativeWindow mainWnd() const { return m_mainWnd; }
-    gfx::NativeView webViewWnd() const { return m_webViewHost->view_handle(); }
-    gfx::NativeEditView editWnd() const { return m_editWnd; }
-    gfx::NativeView popupWnd() const { return m_popupHost->view_handle(); }
+    gfx::WindowHandle mainWnd() const { return m_mainWnd; }
+    gfx::ViewHandle webViewWnd() const { return m_webViewHost->window_handle(); }
+    gfx::EditViewHandle editWnd() const { return m_editWnd; }
+    gfx::ViewHandle popupWnd() const { return m_popupHost->window_handle(); }
 
     static WindowList* windowList() { return window_list_; }
 
     // If shell is non-null, then *shell is assigned upon successful return
     static bool CreateNewWindow(const std::wstring& startingURL,
                                 TestShell** shell = NULL);
-
-    static void DestroyWindow(gfx::NativeWindow windowHandle);
-
-    // Remove the given window from window_list_, return true if it was in the
-    // list and was removed and false otherwise.
-    static bool RemoveWindowFromList(gfx::NativeWindow window);
+    
+    static void DestroyWindow(gfx::WindowHandle windowHandle);
 
     // Implements CreateWebView for TestWebViewDelegate, which in turn
     // is called as a WebViewDelegate.
@@ -189,13 +172,13 @@ public:
     static ATOM RegisterWindowClass();
 #endif
 
-    // Called by the WebView delegate WindowObjectCleared() method, this
+    // Called by the WebView delegate WindowObjectCleared() method, this 
     // binds the layout_test_controller_ and other C++ controller classes to
     // window JavaScript objects so they can be accessed by layout tests.
     virtual void BindJSObjectsToWindow(WebFrame* frame);
 
     // Runs a layout test.  Loads a single file into the first available
-    // window, then dumps the requested text representation to stdout.
+    // window, then dumps the requested text representation to stdout.  
     // Returns false if the test cannot be run because no windows are open.
     static bool RunFileTest(const char* filename, const TestParams& params);
 
@@ -223,12 +206,7 @@ public:
     }
 
     // Get the timeout for running a test.
-    static int GetLayoutTestTimeout() { return file_test_timeout_ms_; }
-
-    // Get the timeout for running a test in seconds
-    static int GetLayoutTestTimeoutInSeconds() {
-      return file_test_timeout_ms_ / 1000;
-    }
+    static int GetFileTestTimeout() { return file_test_timeout_ms_; }
 
 #if defined(OS_WIN)
     // Access to the finished event.  Used by the static WatchDog
@@ -244,36 +222,20 @@ public:
     void set_is_modal(bool value) { is_modal_ = value; }
     bool is_modal() const { return is_modal_; }
 
-#if defined(OS_MACOSX)
-    // handle cleaning up a shell given the associated window
-    static void DestroyAssociatedShell(gfx::NativeWindow handle);
-#endif
-
-    // Show the "attach to me" dialog, for debugging test shell startup.
-    static void ShowStartupDebuggingDialog();
-
 protected:
     bool Initialize(const std::wstring& startingURL);
-    void SizeToSVG();
     void SizeToDefault();
     void SizeTo(int width, int height);
     void ResizeSubViews();
-
-    // Set the focus in interactive mode (pass through to relevant system call).
-    void InteractiveSetFocus(WebWidgetHost* host, bool enable);
 
 #if defined(OS_WIN)
     static LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
     static LRESULT CALLBACK EditWndProc(HWND, UINT, WPARAM, LPARAM);
 #endif
 
-#if defined(OS_WIN) || defined(OS_MACOSX)
-    static void PlatformShutdown();
-#endif
-
 protected:
-    gfx::NativeWindow       m_mainWnd;
-    gfx::NativeEditView     m_editWnd;
+    gfx::WindowHandle       m_mainWnd;
+    gfx::EditViewHandle     m_editWnd;
     scoped_ptr<WebViewHost> m_webViewHost;
     WebWidgetHost*          m_popupHost;
 #if defined(OS_WIN)
@@ -287,7 +249,7 @@ private:
     // A set of all our windows.
     static WindowList* window_list_;
 #if defined(OS_MACOSX)
-    static base::LazyInstance<std::map<gfx::NativeWindow, TestShell *> >
+    static base::LazyInstance<std::map<gfx::WindowHandle, TestShell *> >
         window_map_;
 #endif
 
@@ -295,16 +257,16 @@ private:
     static HINSTANCE instance_handle_;
 #endif
 
-    // True when the app is being run using the --layout-tests switch.
-    static bool layout_test_mode_;
+    // False when the app is being run using the --layout-tests switch.
+    static bool interactive_;
 
-    // Default timeout in ms for file page loads when in layout test mode.
+    // Timeout for page load when running non-interactive file tests, in ms.
     static int file_test_timeout_ms_;
 
     scoped_ptr<LayoutTestController> layout_test_controller_;
 
     scoped_ptr<EventSendingController> event_sending_controller_;
-
+    
     scoped_ptr<TextInputController> text_input_controller_;
 
     scoped_ptr<TestNavigationController> navigation_controller_;
@@ -330,11 +292,6 @@ private:
 
     // Dump the stats table counters on exit.
     bool dump_stats_table_on_exit_;
-
-#if defined(OS_LINUX)
-    // The height of the non-rendering area of the main window, in pixels.
-    int toolbar_height_;
-#endif
 };
 
 #endif // WEBKIT_TOOLS_TEST_SHELL_TEST_SHELL_H_

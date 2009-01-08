@@ -84,6 +84,12 @@ class RenderProcessHost : public IPC::Channel::Listener,
   // the process has been created, it should just call Init().
   bool Init();
 
+  // Send the child process its initial visited link database.
+  void InitVisitedLinks(HANDLE target_process);
+
+  // Send the child process its initial greasemonkey scripts.
+  void InitGreasemonkeyScripts(HANDLE target_process);
+
   // Used for refcounting, each holder of this object must Attach and Release
   // just like it would for a COM object. This object should be allocated on
   // the heap; when no listeners own it any more, it will delete itself.
@@ -97,13 +103,17 @@ class RenderProcessHost : public IPC::Channel::Listener,
   // goes away we'll know that it was intentional rather than a crash.
   void ReportExpectingClose(int32 listener_id);
 
-  // May return NULL if there is no connection.
+  // getters, these may return NULL if there is no connection
   IPC::SyncChannel* channel() {
     return channel_.get();
   }
+  HANDLE process() {
+    return process_.handle();
+  }
 
-  const base::Process& process() const {
-    return process_;
+  // Get the process id of this renderer.
+  int pid() const {
+    return process_.pid();
   }
 
   // Try to shutdown the associated renderer process as fast as possible.
@@ -178,7 +188,7 @@ class RenderProcessHost : public IPC::Channel::Listener,
   // to register/unregister visibility.
   void WidgetRestored();
   void WidgetHidden();
-
+  
   // Add a word in the spellchecker.
   void AddWord(const std::wstring& word);
 
@@ -194,27 +204,12 @@ class RenderProcessHost : public IPC::Channel::Listener,
   // Clipboard messages
   void OnClipboardWriteHTML(const std::wstring& markup, const GURL& src_url);
   void OnClipboardWriteBookmark(const std::wstring& title, const GURL& url);
-  void OnClipboardWriteBitmap(base::SharedMemoryHandle bitmap, gfx::Size size);
+  void OnClipboardWriteBitmap(SharedMemoryHandle bitmap, gfx::Size size);
   void OnClipboardIsFormatAvailable(unsigned int format, bool* result);
   void OnClipboardReadText(std::wstring* result);
   void OnClipboardReadAsciiText(std::string* result);
   void OnClipboardReadHTML(std::wstring* markup, GURL* src_url);
   void OnUpdatedCacheStats(const CacheManager::UsageStats& stats);
-
-  // Initialize support for visited links. Send the renderer process its initial
-  // set of visited links.
-  void InitVisitedLinks();
-
-  // Initialize support for Greasemonkey scripts. Send the renderer process its
-  // initial set of scripts and listen for updates to scripts.
-  void InitGreasemonkeyScripts();
-
-  // Sends the renderer process a new set of Greasemonkey scripts.
-  void SendGreasemonkeyScriptsUpdate(base::SharedMemory* shared_memory);
-
-  // Gets a handle to the renderer process, normalizing the case where we were
-  // started with --single-process.
-  base::ProcessHandle GetRendererProcessHandle();
 
   // Callers can reduce the RenderProcess' priority.
   // Returns true if the priority is backgrounded; false otherwise.
@@ -237,7 +232,7 @@ class RenderProcessHost : public IPC::Channel::Listener,
   scoped_ptr<IPC::SyncChannel> channel_;
 
   // Our renderer process.
-  base::Process process_;
+  Process process_;
 
   // Used to watch the renderer process handle.
   base::ObjectWatcher watcher_;

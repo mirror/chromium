@@ -63,7 +63,6 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-                                AdditionalManifestFiles="$(SolutionDir)\app\chrome.dll.manifest"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -130,7 +129,6 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
-                                AdditionalManifestFiles="$(SolutionDir)\app\chrome.dll.manifest"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"

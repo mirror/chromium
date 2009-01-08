@@ -2,9 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#if defined(OS_WIN)
 #include <windows.h>
-#endif
 #include <stdio.h>
 #include <iostream>
 #include <string>
@@ -17,14 +15,12 @@
 #include "base/debug_on_start.h"
 #include "base/perftimer.h"
 #include "base/process_util.h"
-#include "base/scoped_nsautorelease_pool.h"
-#include "base/test_suite.h"
 #include "base/thread.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/ipc_channel.h"
 #include "chrome/common/ipc_channel_proxy.h"
 #include "chrome/common/ipc_message_utils.h"
-#include "testing/multiprocess_func_list.h"
+#include "testing/gtest/include/gtest/gtest.h"
 
 // Define to enable IPC performance testing instead of the regular unit tests
 // #define PERFORMANCE_TEST
@@ -33,86 +29,13 @@ const wchar_t kTestClientChannel[] = L"T1";
 const wchar_t kReflectorChannel[] = L"T2";
 const wchar_t kFuzzerChannel[] = L"F3";
 
+const wchar_t kChild[] = L"child";
+const wchar_t kReflector[] = L"reflector";
+const wchar_t kFuzzer[] = L"fuzzer";
+
 #ifndef PERFORMANCE_TEST
 
-void IPCChannelTest::SetUp() {
-  MultiProcessTest::SetUp();
-
-  // Construct a fresh IO Message loop for the duration of each test.
-  message_loop_ = new MessageLoopForIO();
-}
-
-void IPCChannelTest::TearDown() {
-  delete message_loop_;
-  message_loop_ = NULL;
-
-  MultiProcessTest::TearDown();
-}
-
-#if defined(OS_WIN)
-base::ProcessHandle IPCChannelTest::SpawnChild(ChildType child_type,
-                                               IPC::Channel *channel) {
-  // kDebugChildren support.
-  bool debug_on_start = CommandLine().HasSwitch(switches::kDebugChildren);
-
-  switch (child_type) {
-  case TEST_CLIENT:
-    return MultiProcessTest::SpawnChild(L"RunTestClient", debug_on_start);
-    break;
-  case TEST_REFLECTOR:
-    return MultiProcessTest::SpawnChild(L"RunReflector", debug_on_start);
-    break;
-  case FUZZER_SERVER:
-    return MultiProcessTest::SpawnChild(L"RunFuzzServer", debug_on_start);
-    break;
-  default:
-    return NULL;
-    break;
-  }
-}
-#elif defined(OS_POSIX)
-base::ProcessHandle IPCChannelTest::SpawnChild(ChildType child_type,
-                                               IPC::Channel *channel) {
-  // kDebugChildren support.
-  bool debug_on_start = CommandLine().HasSwitch(switches::kDebugChildren);
-
-  base::file_handle_mapping_vector fds_to_map;
-  int src_fd;
-  int dest_fd;
-  channel->GetClientFileDescriptorMapping(&src_fd, &dest_fd);
-  if (src_fd > -1) {
-    fds_to_map.push_back(std::pair<int,int>(src_fd, dest_fd));
-  }
-
-  base::ProcessHandle ret = NULL;
-  switch (child_type) {
-  case TEST_CLIENT:
-    ret = MultiProcessTest::SpawnChild(L"RunTestClient",
-                                       fds_to_map,
-                                       debug_on_start);
-    channel->OnClientConnected();
-    break;
-  case TEST_REFLECTOR:
-    ret = MultiProcessTest::SpawnChild(L"RunReflector",
-                                       fds_to_map,
-                                       debug_on_start);
-    channel->OnClientConnected();
-    break;
-  case FUZZER_SERVER:
-    ret = MultiProcessTest::SpawnChild(L"RunFuzzServer",
-                                       fds_to_map,
-                                       debug_on_start);
-    channel->OnClientConnected();
-    break;
-  default:
-    return NULL;
-    break;
-  }
-  return ret;
-}
-#endif  // defined(OS_POSIX)
-
-TEST_F(IPCChannelTest, BasicMessageTest) {
+TEST(IPCChannelTest, BasicMessageTest) {
   int v1 = 10;
   std::string v2("foobar");
   std::wstring v3(L"hello world");
@@ -166,19 +89,14 @@ class MyChannelListener : public IPC::Channel::Listener {
   virtual void OnMessageReceived(const IPC::Message& message) {
     IPC::MessageIterator iter(message);
 
-    iter.NextInt();
+    int index = iter.NextInt();
     const std::string data = iter.NextString();
+
     if (--messages_left_ == 0) {
       MessageLoop::current()->Quit();
     } else {
       Send(sender_, "Foo");
     }
-  }
-
-  virtual void OnChannelError() {
-    // There is a race when closing the channel so the last message may be lost.
-    EXPECT_LE(messages_left_, 1);
-    MessageLoop::current()->Quit();
   }
 
   void Init(IPC::Message::Sender* s) {
@@ -192,7 +110,7 @@ class MyChannelListener : public IPC::Channel::Listener {
 };
 static MyChannelListener channel_listener;
 
-TEST_F(IPCChannelTest, ChannelTest) {
+TEST(IPCChannelTest, ChannelTest) {
   // setup IPC channel
   IPC::Channel chan(kTestClientChannel, IPC::Channel::MODE_SERVER,
                     &channel_listener);
@@ -200,7 +118,7 @@ TEST_F(IPCChannelTest, ChannelTest) {
 
   channel_listener.Init(&chan);
 
-  base::ProcessHandle process_handle = SpawnChild(TEST_CLIENT, &chan);
+  HANDLE process_handle = SpawnChild(TEST_CLIENT);
   ASSERT_TRUE(process_handle);
 
   Send(&chan, "hello from parent");
@@ -209,10 +127,11 @@ TEST_F(IPCChannelTest, ChannelTest) {
   MessageLoop::current()->Run();
 
   // cleanup child process
-  EXPECT_TRUE(base::WaitForSingleProcess(process_handle, 5000));
+  WaitForSingleObject(process_handle, 5000);
+  CloseHandle(process_handle);
 }
 
-TEST_F(IPCChannelTest, ChannelProxyTest) {
+TEST(IPCChannelTest, ChannelProxyTest) {
   // The thread needs to out-live the ChannelProxy.
   base::Thread thread("ChannelProxyTestServer");
   base::Thread::Options options;
@@ -225,25 +144,7 @@ TEST_F(IPCChannelTest, ChannelProxyTest) {
 
     channel_listener.Init(&chan);
 
-#if defined(OS_WIN)
-  base::ProcessHandle process_handle = SpawnChild(TEST_CLIENT, NULL);
-#elif defined(OS_POSIX)
-    bool debug_on_start = CommandLine().HasSwitch(switches::kDebugChildren);
-    base::file_handle_mapping_vector fds_to_map;
-    int src_fd;
-    int dest_fd;
-    chan.GetClientFileDescriptorMapping(&src_fd, &dest_fd);
-    if (src_fd > -1) {
-      fds_to_map.push_back(std::pair<int,int>(src_fd, dest_fd));
-    }
-
-    base::ProcessHandle process_handle = MultiProcessTest::SpawnChild(
-        L"RunTestClient",
-        fds_to_map,
-        debug_on_start);
-    chan.OnClientConnected();
-#endif  // defined(OS_POXIX)
-
+    HANDLE process_handle = SpawnChild(TEST_CLIENT);
     ASSERT_TRUE(process_handle);
 
     Send(&chan, "hello from parent");
@@ -252,14 +153,13 @@ TEST_F(IPCChannelTest, ChannelProxyTest) {
     MessageLoop::current()->Run();
 
     // cleanup child process
-    EXPECT_TRUE(base::WaitForSingleProcess(process_handle, 5000));
+    WaitForSingleObject(process_handle, 5000);
+    CloseHandle(process_handle);
   }
   thread.Stop();
 }
 
-MULTIPROCESS_TEST_MAIN(RunTestClient) {
-  MessageLoopForIO main_message_loop;
-
+static bool RunTestClient() {
   // setup IPC channel
   IPC::Channel chan(kTestClientChannel, IPC::Channel::MODE_CLIENT,
                     &channel_listener);
@@ -268,9 +168,9 @@ MULTIPROCESS_TEST_MAIN(RunTestClient) {
   Send(&chan, "hello from child");
   // run message loop
   MessageLoop::current()->Run();
-  // return true;
-  return NULL;
+  return true;
 }
+
 #endif  // !PERFORMANCE_TEST
 
 #ifdef PERFORMANCE_TEST
@@ -293,7 +193,7 @@ MULTIPROCESS_TEST_MAIN(RunTestClient) {
 // "quit" is sent, it will exit.
 class ChannelReflectorListener : public IPC::Channel::Listener {
  public:
-  explicit ChannelReflectorListener(IPC::Channel *channel) :
+  ChannelReflectorListener(IPC::Channel *channel) :
     channel_(channel),
     count_messages_(0),
     latency_messages_(0) {
@@ -390,14 +290,14 @@ class ChannelPerfListener : public IPC::Channel::Listener {
   int latency_messages_;
 };
 
-TEST_F(IPCChannelTest, Performance) {
+TEST(IPCChannelTest, Performance) {
   // setup IPC channel
   IPC::Channel chan(kReflectorChannel, IPC::Channel::MODE_SERVER, NULL);
   ChannelPerfListener perf_listener(&chan, 10000, 100000);
   chan.set_listener(&perf_listener);
   chan.Connect();
 
-  HANDLE process = SpawnChild(TEST_REFLECTOR, &chan);
+  HANDLE process = SpawnChild(TEST_REFLECTOR);
   ASSERT_TRUE(process);
 
   Sleep(1000);
@@ -422,8 +322,7 @@ TEST_F(IPCChannelTest, Performance) {
 }
 
 // This message loop bounces all messages back to the sender
-MULTIPROCESS_TEST_MAIN(RunReflector) {
-  MessageLoopForIO main_message_loop;
+static bool RunReflector() {
   IPC::Channel chan(kReflectorChannel, IPC::Channel::MODE_CLIENT, NULL);
   ChannelReflectorListener channel_reflector_listener(&chan);
   chan.set_listener(&channel_reflector_listener);
@@ -435,7 +334,6 @@ MULTIPROCESS_TEST_MAIN(RunReflector) {
 
 #endif  // PERFORMANCE_TEST
 
-#if defined(OS_WIN)
 // All fatal log messages (e.g. DCHECK failures) imply unit test failures
 static void IPCTestAssertHandler(const std::string& str) {
   FAIL() << str;
@@ -451,25 +349,62 @@ static void SuppressErrorDialogs() {
   UINT existing_flags = SetErrorMode(new_flags);
   SetErrorMode(existing_flags | new_flags);
 }
-#endif  // defined(OS_WIN)
+
+HANDLE SpawnChild(ChildType child_type) {
+  // spawn child process
+  std::wstring cl(GetCommandLineW());
+  switch(child_type) {
+  case TEST_CLIENT:
+    CommandLine::AppendSwitch(&cl, kChild);
+  	break;
+  case TEST_REFLECTOR:
+    CommandLine::AppendSwitch(&cl, kReflector);
+  	break;
+  case FUZZER_SERVER:
+    CommandLine::AppendSwitch(&cl, kFuzzer);
+    break;
+  default:
+      return NULL;
+  }
+  // kDebugChildren support.
+  if (CommandLine().HasSwitch(switches::kDebugChildren)) {
+    CommandLine::AppendSwitch(&cl, switches::kDebugOnStart);
+  }
+  HANDLE process = NULL;
+  if (!process_util::LaunchApp(cl, false, true, &process))
+    return NULL;
+
+  return process;
+}
 
 int main(int argc, char** argv) {
-  base::ScopedNSAutoreleasePool scoped_pool;
-  base::EnableTerminationOnHeapCorruption();
+  process_util::EnableTerminationOnHeapCorruption();
+  // Some tests may use base::Singleton<>, thus we need to instanciate
+  // the AtExitManager or else we will leak objects.
+  base::AtExitManager at_exit_manager;  
 
-#if defined(OS_WIN)
+  MessageLoopForIO main_message_loop;
+
   // suppress standard crash dialogs and such unless a debugger is present.
   if (!IsDebuggerPresent()) {
     SuppressErrorDialogs();
     logging::SetLogAssertHandler(IPCTestAssertHandler);
   }
-#endif  // defined(OS_WIN)
 
-  int retval = TestSuite(argc, argv).Run();
+#ifndef PERFORMANCE_TEST
+  if (CommandLine().HasSwitch(kChild))
+    return RunTestClient();
+  if (CommandLine().HasSwitch(kFuzzer))
+    return RunFuzzServer();
+#else
+  if (CommandLine().HasSwitch(kReflector))
+    return RunReflector();
 
-#ifdef PERFORMANCE_TEST
   if (!InitPerfLog("ipc_perf_child.log"))
     return 1;
 #endif
-  return retval;
+
+  testing::InitGoogleTest(&argc, argv);
+  return RUN_ALL_TESTS();
 }
+

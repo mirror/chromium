@@ -22,21 +22,21 @@
 
 #include "base/condition_variable.h"
 #include "base/lock.h"
-#include "base/platform_thread.h"
 #include "base/time.h"
 
 class Watchdog {
  public:
+  // TODO(JAR)change default arg to required arg after all users have migrated.
   // Constructor specifies how long the Watchdog will wait before alarming.
-  Watchdog(const base::TimeDelta& duration,
-           const std::string& thread_watched_name,
-           bool enabled);
+  Watchdog(const TimeDelta& duration,
+           const std::wstring& thread_watched_name,
+           bool enabled = true);
   virtual ~Watchdog();
 
   // Start timing, and alarm when time expires (unless we're disarm()ed.)
   void Arm();  // Arm  starting now.
-  void ArmSomeTimeDeltaAgo(const base::TimeDelta& time_delta);
-  void ArmAtStartTime(const base::TimeTicks start_time);
+  void ArmSomeTimeDeltaAgo(const TimeDelta& time_delta);
+  void ArmAtStartTime(const TimeTicks start_time);
 
   // Reset time, and do not set off the alarm.
   void Disarm();
@@ -48,30 +48,24 @@ class Watchdog {
   }
 
  private:
-  class ThreadDelegate : public PlatformThread::Delegate {
-   public:
-    explicit ThreadDelegate(Watchdog* watchdog) : watchdog_(watchdog) {
-    }
-    virtual void ThreadMain();
-   private:
-    Watchdog* watchdog_;
-
-    void SetThreadName() const;
-  };
-
   enum State {ARMED, DISARMED, SHUTDOWN };
 
-  bool init_successful_;
+  // Windows thread start callback
+  static DWORD WINAPI ThreadStart(void* pThis);
+
+  // Loop and test function for our watchdog thread.
+  unsigned Run();
+  void Watchdog::SetThreadName() const;
 
   Lock lock_;  // Mutex for state_.
   ConditionVariable condition_variable_;
   State state_;
-  const base::TimeDelta duration_;  // How long after start_time_ do we alarm?
-  const std::string thread_watched_name_;
-  PlatformThreadHandle handle_;
-  ThreadDelegate delegate_;  // Store it, because it must outlive the thread.
+  const TimeDelta duration_;  // How long after start_time_ do we alarm?
+  const std::wstring thread_watched_name_;
+  HANDLE handle_;  // Handle for watchdog thread.
+  DWORD thread_id_;  // Also for watchdog thread.
 
-  base::TimeTicks start_time_;  // Start of epoch, and alarm after duration_.
+  TimeTicks start_time_;  // Start of epoch, and alarm after duration_.
 
   // When the debugger breaks (when we alarm), all the other alarms that are
   // armed will expire (also alarm).  To diminish this effect, we track any
@@ -81,11 +75,12 @@ class Watchdog {
   // on alarms from callers that specify old times.
   static Lock static_lock_;  // Lock for access of static data...
   // When did we last alarm and get stuck (for a while) in a debugger?
-  static base::TimeTicks last_debugged_alarm_time_;
+  static TimeTicks last_debugged_alarm_time_;
   // How long did we sit on a break in the debugger?
-  static base::TimeDelta last_debugged_alarm_delay_;
+  static TimeDelta last_debugged_alarm_delay_;
 
-  DISALLOW_COPY_AND_ASSIGN(Watchdog);
+
+  DISALLOW_EVIL_CONSTRUCTORS(Watchdog);
 };
 
 #endif  // BASE_WATCHDOG_H__

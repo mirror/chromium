@@ -12,8 +12,8 @@ function run_test() {
   xhr.send(null);
 
   xhr = null;
-  if (window.GCController) {
-    window.GCController.collect();
+  if (window.gc) {
+    gc();
   } else {
     // allocate 4000 objects to trigger GC
     for (var i = 0; i < 4000; i++)

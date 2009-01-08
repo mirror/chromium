@@ -11,10 +11,8 @@
 
 #include "unicode/smpdtfmt.h"
 
-namespace base {
 class Time;
 class TimeDelta;
-}
 
 class TimeFormat {
  public:
@@ -22,10 +20,10 @@ class TimeFormat {
   // are simpler than PastTime since this is used for in-progress operations
   // and users have different expectations of units.
   // Ex: "3 mins left", "2 days left".
-  static std::wstring TimeRemaining(const base::TimeDelta& delta);
+  static std::wstring TimeRemaining(const TimeDelta& delta);
 
   // Same as TimeRemaining without the "left".
-  static std::wstring TimeRemainingShort(const base::TimeDelta& delta);
+  static std::wstring TimeRemainingShort(const TimeDelta& delta);
 
   // For displaying a relative time in the past.  This method returns either
   // "Today", "Yesterday", or an empty string if it's older than that.
@@ -40,8 +38,9 @@ class TimeFormat {
   // If NULL, the current day's midnight will be retrieved, which can be
   // slow. If many items are being processed, it is best to get the current
   // time once at the beginning and pass it for each computation.
-  static std::wstring RelativeDate(const base::Time& time,
-                                   const base::Time* optional_midnight_today);
+  static std::wstring RelativeDate(const Time& time,
+                                   const Time* optional_midnight_today);
 };
 
 #endif  // CHROME_COMMON_TIME_FORMAT_H__
+

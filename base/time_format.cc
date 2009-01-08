@@ -9,8 +9,6 @@
 #include "base/time.h"
 #include "unicode/datefmt.h"
 
-using base::Time;
-
 namespace {
 
 std::wstring TimeFormat(const DateFormat* formatter,

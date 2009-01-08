@@ -4,9 +4,7 @@
 
 #include "base/message_loop.h"
 #include "base/ref_counted.h"
-#include "base/string_util.h"
 #include "chrome/browser/autocomplete/autocomplete.h"
-#include "chrome/common/notification_registrar.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 // identifiers for known autocomplete providers
@@ -28,7 +26,8 @@ class TestProvider : public AutocompleteProvider {
   }
 
   virtual void Start(const AutocompleteInput& input,
-                     bool minimal_changes);
+                     bool minimal_changes,
+                     bool synchronous_only);
 
   void set_listener(ACProviderListener* listener) {
     listener_ = listener;
@@ -44,7 +43,8 @@ class TestProvider : public AutocompleteProvider {
 };
 
 void TestProvider::Start(const AutocompleteInput& input,
-                         bool minimal_changes) {
+                         bool minimal_changes,
+                         bool synchronous_only) {
   if (minimal_changes)
     return;
 
@@ -53,7 +53,7 @@ void TestProvider::Start(const AutocompleteInput& input,
   // Generate one result synchronously, the rest later.
   AddResults(0, 1);
 
-  if (!input.synchronous_only()) {
+  if (!synchronous_only) {
     done_ = false;
     MessageLoop::current()->PostTask(FROM_HERE, NewRunnableMethod(
         this, &TestProvider::Run));
@@ -70,18 +70,17 @@ void TestProvider::Run() {
 
 void TestProvider::AddResults(int start_at, int num) {
   for (int i = start_at; i < num; i++) {
-    AutocompleteMatch match(this, relevance_ - i, false,
-                            AutocompleteMatch::URL_WHAT_YOU_TYPED);
+    AutocompleteMatch match(this, relevance_ - i, false);
 
     wchar_t str[16];
     swprintf_s(str, L"%d", i);
     match.fill_into_edit = prefix_ + str;
-    match.destination_url = GURL(WideToUTF8(match.fill_into_edit));
+    match.destination_url = match.fill_into_edit;
 
-    match.contents = match.fill_into_edit;
+    match.contents = match.destination_url;
     match.contents_class.push_back(
         ACMatchClassification(0, ACMatchClassification::NONE));
-    match.description = match.fill_into_edit;
+    match.description = match.destination_url;
     match.description_class.push_back(
         ACMatchClassification(0, ACMatchClassification::NONE));
 
@@ -90,7 +89,11 @@ void TestProvider::AddResults(int start_at, int num) {
 }
 
 class AutocompleteProviderTest : public testing::Test,
-                                 public NotificationObserver {
+                                 public ACControllerListener {
+ public:
+  // ACControllerListener
+  virtual void OnAutocompleteUpdate(bool updated_result, bool query_complete);
+
  protected:
   // testing::Test
   virtual void SetUp();
@@ -107,22 +110,11 @@ class AutocompleteProviderTest : public testing::Test,
   AutocompleteResult result_;
 
  private:
-  // NotificationObserver
-  virtual void Observe(NotificationType type,
-                       const NotificationSource& source,
-                       const NotificationDetails& details);
-
   MessageLoopForUI message_loop_;
   scoped_ptr<AutocompleteController> controller_;
-  NotificationRegistrar registrar_;
 };
 
 void AutocompleteProviderTest::SetUp() {
-  registrar_.Add(this, NOTIFY_AUTOCOMPLETE_CONTROLLER_RESULT_UPDATED,
-                 NotificationService::AllSources());
-  registrar_.Add(this,
-                 NOTIFY_AUTOCOMPLETE_CONTROLLER_SYNCHRONOUS_MATCHES_AVAILABLE,
-                 NotificationService::AllSources());
   ResetController(false);
 }
 
@@ -132,39 +124,38 @@ void AutocompleteProviderTest::ResetController(bool same_destinations) {
   providers_.clear();
 
   // Construct two new providers, with either the same or different prefixes.
-  TestProvider* providerA = new TestProvider(num_results_per_provider,
-                                             L"http://a");
+  TestProvider* providerA = new TestProvider(num_results_per_provider, L"a");
   providerA->AddRef();
   providers_.push_back(providerA);
 
   TestProvider* providerB = new TestProvider(num_results_per_provider * 2,
-      same_destinations ? L"http://a" : L"http://b");
+                                             same_destinations ? L"a" : L"b");
   providerB->AddRef();
   providers_.push_back(providerB);
 
   // Reset the controller to contain our new providers.
-  AutocompleteController* controller = new AutocompleteController(providers_);
+  AutocompleteController* controller =
+      new AutocompleteController(this, providers_);
   controller_.reset(controller);
   providerA->set_listener(controller);
   providerB->set_listener(controller);
 }
 
+void AutocompleteProviderTest::OnAutocompleteUpdate(bool updated_result,
+                                                    bool query_complete) {
+  controller_->GetResult(&result_);
+  if (query_complete)
+    MessageLoop::current()->Quit();
+}
+
 void AutocompleteProviderTest::RunTest() {
   result_.Reset();
-  controller_->Start(L"a", std::wstring(), true, false, false);
+  const AutocompleteInput input(L"a", std::wstring(), true, false);
+  EXPECT_FALSE(controller_->Start(input, false, false));
 
   // The message loop will terminate when all autocomplete input has been
   // collected.
   MessageLoop::current()->Run();
-}
-
-void AutocompleteProviderTest::Observe(NotificationType type,
-                                       const NotificationSource& source,
-                                       const NotificationDetails& details) {
-  if (controller_->done()) {
-    result_.CopyFrom(controller_->result());
-    MessageLoop::current()->Quit();
-  }
 }
 
 }  // namespace
@@ -237,8 +228,7 @@ TEST(AutocompleteTest, InputType) {
   };
 
   for (int i = 0; i < arraysize(input_cases); ++i) {
-    AutocompleteInput input(input_cases[i].input, std::wstring(), true, false,
-                            false);
+    AutocompleteInput input(input_cases[i].input, std::wstring(), true, false);
     EXPECT_EQ(input_cases[i].type, input.type()) << "Input: " <<
         input_cases[i].input;
   }
@@ -260,8 +250,8 @@ TEST(AutocompleteMatch, MoreRelevant) {
     {  -5, -10, false },
   };
 
-  AutocompleteMatch m1(NULL, 0, false, AutocompleteMatch::URL_WHAT_YOU_TYPED);
-  AutocompleteMatch m2(NULL, 0, false, AutocompleteMatch::URL_WHAT_YOU_TYPED);
+  AutocompleteMatch m1;
+  AutocompleteMatch m2;
 
   for (int i = 0; i < arraysize(cases); ++i) {
     m1.relevance = cases[i].r1;

@@ -251,19 +251,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\test_shell_win.cc"
-				>
-			</File>
-			<File
 				RelativePath=".\test_webview_delegate.cc"
 				>
 			</File>
 			<File
 				RelativePath=".\test_webview_delegate.h"
-				>
-			</File>
-			<File
-				RelativePath=".\test_webview_delegate_win.cc"
 				>
 			</File>
 			<File
@@ -275,19 +267,19 @@
 				>
 			</File>
 			<File
+				RelativePath=".\webview_host.cc"
+				>
+			</File>
+			<File
 				RelativePath=".\webview_host.h"
 				>
 			</File>
 			<File
-				RelativePath=".\webview_host_win.cc"
+				RelativePath=".\webwidget_host.cc"
 				>
 			</File>
 			<File
 				RelativePath=".\webwidget_host.h"
-				>
-			</File>
-			<File
-				RelativePath=".\webwidget_host_win.cc"
 				>
 			</File>
 		</Filter>
@@ -295,7 +287,11 @@
 			Name="tests"
 			>
 			<File
-				RelativePath="..\webcore_unit_tests\BMPImageDecoder_unittest.cpp"
+				RelativePath="..\..\glue\autocomplete_input_listener_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\port\platform\image-decoders\bmp\BMPImageDecoder_unittest.cpp"
 				>
 			</File>
 			<File
@@ -323,7 +319,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\webcore_unit_tests\GKURL_unittest.cpp"
+				RelativePath="..\..\port\platform\GKURL_unittest.cpp"
 				>
 			</File>
 			<File
@@ -331,7 +327,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\webcore_unit_tests\ICOImageDecoder_unittest.cpp"
+				RelativePath="..\..\port\platform\image-decoders\ico\ICOImageDecoder_unittest.cpp"
 				>
 			</File>
 			<File
@@ -363,10 +359,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\skia\ext\platform_canvas_unittest.cc"
-				>
-			</File>
-			<File
 				RelativePath=".\plugin_tests.cc"
 				>
 			</File>
@@ -383,14 +375,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\webcore_unit_tests\UniscribeHelper_unittest.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\skia\ext\vector_canvas_unittest.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\..\glue\webframe_unittest.cc"
 				>
 			</File>
@@ -399,7 +383,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\webcore_unit_tests\XBMImageDecoder_unittest.cpp"
+				RelativePath="..\..\port\platform\image-decoders\xbm\XBMImageDecoder_unittest.cpp"
 				>
 			</File>
 		</Filter>

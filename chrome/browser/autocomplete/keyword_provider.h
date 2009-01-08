@@ -62,7 +62,8 @@ class KeywordProvider : public AutocompleteProvider {
 
   // AutocompleteProvider
   virtual void Start(const AutocompleteInput& input,
-                     bool minimal_changes);
+                     bool minimal_changes,
+                     bool synchronous_only);
 
  private:
   // Helper functor for Start(), for sorting keyword matches by quality.
@@ -82,12 +83,11 @@ class KeywordProvider : public AutocompleteProvider {
       AutocompleteMatch* match);
 
   // Determines the relevance for some input, given its type, whether the user
-  // typed the complete keyword, and whether the keyword needs query text (true
-  // if the keyword supports replacement and the user isn't in "prefer keyword
-  // matches" mode).
+  // typed the complete keyword, and whether the keyword is a bookmark keyword
+  // (i.e. one that does not support replacement).
   static int CalculateRelevance(AutocompleteInput::Type type,
                                 bool complete,
-                                bool no_query_text_needed);
+                                bool is_bookmark_keyword);
 
   // Creates a fully marked-up AutocompleteMatch from the user's input.
   AutocompleteMatch CreateAutocompleteMatch(

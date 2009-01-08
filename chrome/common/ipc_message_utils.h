@@ -9,7 +9,6 @@
 #include <vector>
 #include <map>
 
-#include "base/file_path.h"
 #include "base/string_util.h"
 #include "base/tuple.h"
 #include "chrome/common/ipc_sync_message.h"
@@ -17,12 +16,12 @@
 #include "webkit/glue/cache_manager.h"
 #include "webkit/glue/console_message_level.h"
 #include "webkit/glue/find_in_page_request.h"
-#include "webkit/glue/webcursor.h"
 #include "webkit/glue/window_open_disposition.h"
 
 // Forward declarations.
 class GURL;
 class SkBitmap;
+class WebCursor;
 
 namespace gfx {
 class Point;
@@ -162,24 +161,6 @@ struct ParamTraits<size_t> {
   }
 };
 
-#if defined(OS_MACOSX)
-// On Linux size_t & uint32 can be the same type.
-// TODO(playmobil): Fix compilation if this is not the case.
-template <>
-struct ParamTraits<uint32> {
-  typedef uint32 param_type;
-  static void Write(Message* m, const param_type& p) {
-    m->WriteUInt32(p);
-  }
-  static bool Read(const Message* m, void** iter, param_type* r) {
-    return m->ReadUInt32(iter, r);
-  }
-  static void Log(const param_type& p, std::wstring* l) {
-    l->append(StringPrintf(L"%u", p));
-  }
-};
-#endif  // defined(OS_MACOSX)
-
 template <>
 struct ParamTraits<int64> {
   typedef int64 param_type;
@@ -257,8 +238,8 @@ struct ParamTraits<wchar_t> {
 };
 
 template <>
-struct ParamTraits<base::Time> {
-  typedef base::Time param_type;
+struct ParamTraits<Time> {
+  typedef Time param_type;
   static void Write(Message* m, const param_type& p) {
     ParamTraits<int64>::Write(m, p.ToInternalValue());
   }
@@ -266,7 +247,7 @@ struct ParamTraits<base::Time> {
     int64 value;
     if (!ParamTraits<int64>::Read(m, iter, &value))
       return false;
-    *r = base::Time::FromInternalValue(value);
+    *r = Time::FromInternalValue(value);
     return true;
   }
   static void Log(const param_type& p, std::wstring* l) {
@@ -274,7 +255,6 @@ struct ParamTraits<base::Time> {
   }
 };
 
-#if defined(OS_WIN)
 template <>
 struct ParamTraits<LOGFONT> {
   typedef LOGFONT param_type;
@@ -319,7 +299,6 @@ struct ParamTraits<MSG> {
     return result;
   }
 };
-#endif  // defined(OS_WIN)
 
 template <>
 struct ParamTraits<SkBitmap> {
@@ -331,6 +310,30 @@ struct ParamTraits<SkBitmap> {
   static bool Read(const Message* m, void** iter, param_type* r);
 
   static void Log(const param_type& p, std::wstring* l);
+};
+
+template <>
+struct ParamTraits<MONITORINFOEX> {
+  typedef MONITORINFOEX param_type;
+  static void Write(Message* m, const param_type& p) {
+    m->WriteData(reinterpret_cast<const char*>(&p), sizeof(MONITORINFOEX));
+  }
+  static bool Read(const Message* m, void** iter, param_type* r) {
+    const char *data;
+    int data_size = 0;
+    bool result = m->ReadData(iter, &data, &data_size);
+    if (result && data_size == sizeof(MONITORINFOEX)) {
+      memcpy(r, data, sizeof(MONITORINFOEX));
+    } else {
+      result = false;
+      NOTREACHED();
+    }
+
+    return result;
+  }
+  static void Log(const param_type& p, std::wstring* l) {
+    l->append(StringPrintf(L"<MONITORINFOEX>"));
+  }
 };
 
 template <>
@@ -444,7 +447,7 @@ struct ParamTraits<std::map<K, V> > {
   typedef std::map<K, V> param_type;
   static void Write(Message* m, const param_type& p) {
     WriteParam(m, static_cast<int>(p.size()));
-    typename param_type::const_iterator iter;
+    param_type::const_iterator iter;
     for (iter = p.begin(); iter != p.end(); ++iter) {
       WriteParam(m, iter->first);
       WriteParam(m, iter->second);
@@ -492,7 +495,6 @@ struct ParamTraits<GURL> {
 };
 
 // and, a few more useful types...
-#if defined(OS_WIN)
 template <>
 struct ParamTraits<HANDLE> {
   typedef HANDLE param_type;
@@ -602,25 +604,6 @@ struct ParamTraits<POINT> {
     l->append(StringPrintf(L"(%d, %d)", p.x, p.y));
   }
 };
-#endif  // defined(OS_WIN)
-
-template <>
-struct ParamTraits<FilePath> {
-  typedef FilePath param_type;
-  static void Write(Message* m, const param_type& p) {
-    ParamTraits<FilePath::StringType>::Write(m, p.value());
-  }
-  static bool Read(const Message* m, void** iter, param_type* r) {
-    FilePath::StringType value;
-    if (!ParamTraits<FilePath::StringType>::Read(m, iter, &value))
-      return false;
-    *r = FilePath(value);
-    return true;
-  }
-  static void Log(const param_type& p, std::wstring* l) {
-    ParamTraits<FilePath::StringType>::Log(p.value(), l);
-  }
-};
 
 template <>
 struct ParamTraits<gfx::Point> {
@@ -653,16 +636,16 @@ struct ParamTraits<ThumbnailScore> {
     IPC::ParamTraits<double>::Write(m, p.boring_score);
     IPC::ParamTraits<bool>::Write(m, p.good_clipping);
     IPC::ParamTraits<bool>::Write(m, p.at_top);
-    IPC::ParamTraits<base::Time>::Write(m, p.time_at_snapshot);
+    IPC::ParamTraits<Time>::Write(m, p.time_at_snapshot);
   }
   static bool Read(const Message* m, void** iter, param_type* r) {
     double boring_score;
     bool good_clipping, at_top;
-    base::Time time_at_snapshot;
+    Time time_at_snapshot;
     if (!IPC::ParamTraits<double>::Read(m, iter, &boring_score) ||
         !IPC::ParamTraits<bool>::Read(m, iter, &good_clipping) ||
         !IPC::ParamTraits<bool>::Read(m, iter, &at_top) ||
-        !IPC::ParamTraits<base::Time>::Read(m, iter, &time_at_snapshot))
+        !IPC::ParamTraits<Time>::Read(m, iter, &time_at_snapshot))
       return false;
 
     r->boring_score = boring_score;
@@ -764,7 +747,6 @@ struct ParamTraits<CacheManager::ResourceTypeStats> {
   }
 };
 
-#if defined(OS_WIN)
 template <>
 struct ParamTraits<XFORM> {
   typedef XFORM param_type;
@@ -788,20 +770,13 @@ struct ParamTraits<XFORM> {
     l->append(L"<XFORM>");
   }
 };
-#endif  // defined(OS_WIN)
 
 template <>
 struct ParamTraits<WebCursor> {
   typedef WebCursor param_type;
-  static void Write(Message* m, const param_type& p) {
-    p.Serialize(m);
-  }
-  static bool Read(const Message* m, void** iter, param_type* r) {
-    return r->Deserialize(m, iter);
-  }
-  static void Log(const param_type& p, std::wstring* l) {
-    l->append(L"<WebCursor>");
-  }
+  static void Write(Message* m, const param_type& p);
+  static bool Read(const Message* m, void** iter, param_type* r);
+  static void Log(const param_type& p, std::wstring* l);
 };
 
 struct LogData {
@@ -1015,12 +990,10 @@ struct ParamTraits<webkit_glue::WebApplicationInfo> {
 // Generic message subclasses
 
 // Used for asynchronous messages.
-template <class ParamType>
+template <class Param>
 class MessageWithTuple : public Message {
  public:
-  typedef ParamType Param;
-
-  MessageWithTuple(int32 routing_id, uint16 type, const Param& p)
+  MessageWithTuple(int32 routing_id, WORD type, const Param& p)
       : Message(routing_id, type, PRIORITY_NORMAL) {
     WriteParam(this, p);
   }
@@ -1131,7 +1104,7 @@ void GenerateLogData(const std::wstring& channel, const Message& message,
 template <class SendParam, class ReplyParam>
 class MessageWithReply : public SyncMessage {
  public:
-  MessageWithReply(int32 routing_id, uint16 type,
+  MessageWithReply(int32 routing_id, WORD type,
                    const SendParam& send, const ReplyParam& reply)
       : SyncMessage(routing_id, type, PRIORITY_NORMAL,
                     new ParamDeserializer<ReplyParam>(reply)) {
@@ -1145,17 +1118,15 @@ class MessageWithReply : public SyncMessage {
       ReadParam(msg, &iter, &p);
       LogParam(p, l);
 
-#if defined(IPC_MESSAGE_LOG_ENABLED)
       const std::wstring& output_params = msg->output_params();
       if (!l->empty() && !output_params.empty())
         l->append(L", ");
 
       l->append(output_params);
-#endif
     } else {
       // This is an outgoing reply.  Now that we have the output parameters, we
       // can finally log the message.
-      typename ReplyParam::ValueTuple p;
+      ReplyParam::ValueTuple p;
       void* iter = SyncMessage::GetDataIterator(msg);
       ReadParam(msg, &iter, &p);
       LogParam(p, l);
@@ -1169,7 +1140,7 @@ class MessageWithReply : public SyncMessage {
     Message* reply = GenerateReply(msg);
     bool error;
     if (ReadParam(msg, &iter, &send_params)) {
-      typename ReplyParam::ValueTuple reply_params;
+      ReplyParam::ValueTuple reply_params;
       DispatchToMethod(obj, func, send_params, &reply_params);
       WriteParam(reply, reply_params);
       error = false;

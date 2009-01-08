@@ -52,7 +52,9 @@ HANDLE WINAPI TargetCreateEventW(CreateEventWFunction orig_CreateEvent,
     if (SBOX_ALL_OK != code)
       break;
 
-    ::SetLastError(answer.win32_result);
+    if (NULL == answer.handle)
+      break;
+
     return answer.handle;
   } while (false);
 
@@ -96,7 +98,9 @@ HANDLE WINAPI TargetOpenEventW(OpenEventWFunction orig_OpenEvent,
     if (SBOX_ALL_OK != code)
       break;
 
-    ::SetLastError(answer.win32_result);
+    if (NULL == answer.handle)
+      break;
+
     return answer.handle;
   } while (false);
 

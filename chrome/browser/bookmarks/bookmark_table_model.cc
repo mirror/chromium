@@ -10,7 +10,6 @@
 #include "base/time.h"
 #include "base/time_format.h"
 #include "chrome/app/theme/theme_resources.h"
-#include "chrome/browser/bookmarks/bookmark_utils.h"
 #include "chrome/common/resource_bundle.h"
 #include "googleurl/src/gurl.h"
 
@@ -186,9 +185,7 @@ class RecentlyBookmarkedTableModel : public VectorBackedBookmarkTableModel {
  private:
   void UpdateRecentlyBookmarked() {
     nodes().clear();
-    bookmark_utils::GetMostRecentlyAddedEntries(model(),
-                                                kRecentlyBookmarkedCount,
-                                                &nodes());
+    model()->GetMostRecentlyAddedEntries(kRecentlyBookmarkedCount, &nodes());
     if (observer())
       observer()->OnModelChanged();
   }
@@ -204,15 +201,18 @@ class BookmarkSearchTableModel : public VectorBackedBookmarkTableModel {
                            const std::wstring& search_text)
       : VectorBackedBookmarkTableModel(model),
         search_text_(search_text) {
-    bookmark_utils::GetBookmarksContainingText(
-        model, search_text, std::numeric_limits<int>::max(), &nodes());
+    std::vector<BookmarkModel::TitleMatch> matches;
+    model->GetBookmarksMatchingText(search_text,
+                                    std::numeric_limits<int>::max(), &matches);
+    for (size_t i = 0; i < matches.size(); ++i)
+      nodes().push_back(matches[i].node);
   }
 
   virtual void BookmarkNodeAdded(BookmarkModel* model,
                                  BookmarkNode* parent,
                                  int index) {
     BookmarkNode* node = parent->GetChild(index);
-    if (bookmark_utils::DoesBookmarkContainText(node, search_text_)) {
+    if (model->DoesBookmarkMatchText(search_text_, node)) {
       nodes().push_back(node);
       if (observer())
         observer()->OnItemsAdded(static_cast<int>(nodes().size() - 1), 1);

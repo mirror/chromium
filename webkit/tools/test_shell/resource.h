@@ -16,7 +16,6 @@
 #define IDI_TESTSHELL             107
 #define IDI_SMALL                 108
 #define IDC_TESTSHELL             109
-#define IDR_AHEM_FONT             113
 #define IDC_MYICON                2
 #define IDC_NAV_BACK              1001
 #define IDC_NAV_FORWARD           1002
@@ -34,6 +33,6 @@
 #define _APS_NEXT_RESOURCE_VALUE    129
 #define _APS_NEXT_COMMAND_VALUE        32771
 #define _APS_NEXT_CONTROL_VALUE        1000
-#define _APS_NEXT_SYMED_VALUE        114
+#define _APS_NEXT_SYMED_VALUE        113
 #endif
 #endif

@@ -10,11 +10,12 @@
 #include "base/trace_event.h"
 #include "build/build_config.h"
 #include "net/base/client_socket_factory.h"
-#include "net/base/dns_resolution_observer.h"
 #include "net/base/host_resolver.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_util.h"
+#if defined(OS_WIN)
 #include "net/base/ssl_client_socket.h"
+#endif
 #include "net/base/upload_data_stream.h"
 #include "net/http/http_auth.h"
 #include "net/http/http_auth_handler.h"
@@ -23,7 +24,10 @@
 #include "net/http/http_request_info.h"
 #include "net/http/http_util.h"
 
-using base::Time;
+// TODO(darin):
+//  - authentication
+//    + pre-emptive authorization
+//    + use the username/password encoded in the URL.
 
 namespace net {
 
@@ -55,9 +59,15 @@ HttpNetworkTransaction::HttpNetworkTransaction(HttpNetworkSession* session,
       read_buf_len_(0),
       next_state_(STATE_NONE) {
 #if defined(OS_WIN)
-  // TODO(port): Port the SSLConfigService class to Linux and Mac OS X.
-  session->ssl_config_service()->GetSSLConfig(&ssl_config_);
+  // TODO(wtc): Use SSL settings (bug 3003).
+  ssl_version_mask_ = SSLClientSocket::SSL3 | SSLClientSocket::TLS1;
+#else
+  ssl_version_mask_ = 0;  // A dummy value so that the code compiles.
 #endif
+}
+
+void HttpNetworkTransaction::Destroy() {
+  delete this;
 }
 
 int HttpNetworkTransaction::Start(const HttpRequestInfo* request_info,
@@ -79,7 +89,7 @@ int HttpNetworkTransaction::RestartIgnoringLastError(
   int rv = DoLoop(OK);
   if (rv == ERR_IO_PENDING)
     user_callback_ = callback;
-  return rv;
+  return rv; 
 }
 
 int HttpNetworkTransaction::RestartWithAuth(
@@ -96,32 +106,9 @@ int HttpNetworkTransaction::RestartWithAuth(
       HttpAuth::AUTH_PROXY : HttpAuth::AUTH_SERVER;
 
   // Update the username/password.
-  auth_identity_[target].source = HttpAuth::IDENT_SRC_EXTERNAL;
-  auth_identity_[target].invalid = false;
-  auth_identity_[target].username = username;
-  auth_identity_[target].password = password;
-
-  PrepareForAuthRestart(target);
-
-  DCHECK(user_callback_ == NULL);
-  int rv = DoLoop(OK);
-  if (rv == ERR_IO_PENDING)
-    user_callback_ = callback;
-
-  return rv;
-}
-
-void HttpNetworkTransaction::PrepareForAuthRestart(HttpAuth::Target target) {
-  DCHECK(HaveAuth(target));
-  DCHECK(auth_identity_[target].source != HttpAuth::IDENT_SRC_PATH_LOOKUP);
-
-  // Add the auth entry to the cache before restarting. We don't know whether
-  // the identity is valid yet, but if it is valid we want other transactions
-  // to know about it. If an entry for (origin, handler->realm()) already
-  // exists, we update it.
-  session_->auth_cache()->Add(AuthOrigin(target), auth_handler_[target],
-      auth_identity_[target].username, auth_identity_[target].password,
-      AuthPath(target));
+  auth_data_[target]->state = AUTH_STATE_HAVE_AUTH;
+  auth_data_[target]->username = username;
+  auth_data_[target]->password = password;
 
   next_state_ = STATE_INIT_CONNECTION;
   connection_.set_socket(NULL);
@@ -129,6 +116,13 @@ void HttpNetworkTransaction::PrepareForAuthRestart(HttpAuth::Target target) {
 
   // Reset the other member variables.
   ResetStateForRestart();
+
+  DCHECK(user_callback_ == NULL);
+  int rv = DoLoop(OK);
+  if (rv == ERR_IO_PENDING)
+    user_callback_ = callback;
+
+  return rv;
 }
 
 int HttpNetworkTransaction::Read(char* buf, int buf_len,
@@ -253,12 +247,13 @@ void HttpNetworkTransaction::BuildRequestHeaders() {
 // in draft-luotonen-web-proxy-tunneling-01.txt and RFC 2817, Sections 5.2 and
 // 5.3.
 void HttpNetworkTransaction::BuildTunnelRequest() {
+  std::string port = GetImplicitPort(request_->url);
+
   // RFC 2616 Section 9 says the Host request-header field MUST accompany all
   // HTTP/1.1 requests.
-  request_headers_ = StringPrintf("CONNECT %s:%d HTTP/1.1\r\n",
-      request_->url.host().c_str(), request_->url.EffectiveIntPort());
-  request_headers_ += "Host: " + request_->url.host();
-  if (request_->url.has_port())
+  request_headers_ = "CONNECT " + request_->url.host() + ":" + port +
+      " HTTP/1.1\r\nHost: " + request_->url.host();
+  if (request_->url.IntPort() != -1)
     request_headers_ += ":" + request_->url.port();
   request_headers_ += "\r\n";
 
@@ -390,11 +385,6 @@ int HttpNetworkTransaction::DoResolveProxy() {
 
   next_state_ = STATE_RESOLVE_PROXY_COMPLETE;
 
-  if (request_->load_flags & LOAD_BYPASS_PROXY) {
-    proxy_info_.UseDirect();
-    return OK;
-  }
-
   return session_->proxy_service()->ResolveProxy(
       request_->url, &proxy_info_, &io_callback_, &pac_request_);
 }
@@ -440,8 +430,7 @@ int HttpNetworkTransaction::DoInitConnectionComplete(int result) {
   // Set the reused_socket_ flag to indicate that we are using a keep-alive
   // connection.  This flag is used to handle errors that occur while we are
   // trying to reuse a keep-alive connection.
-  reused_socket_ = (connection_.socket() != NULL);
-  if (reused_socket_) {
+  if (reused_socket_ = (connection_.socket() != NULL)) {
     next_state_ = STATE_WRITE_HEADERS;
   } else {
     next_state_ = STATE_RESOLVE_HOST;
@@ -464,21 +453,25 @@ int HttpNetworkTransaction::DoResolveHost() {
     t.GetNext();
     host = t.token();
     t.GetNext();
-    port = StringToInt(t.token());
+    port = static_cast<int>(StringToInt64(t.token()));
   } else {
     // Direct connection
     host = request_->url.host();
-    port = request_->url.EffectiveIntPort();
+    port = request_->url.IntPort();
+    if (port == url_parse::PORT_UNSPECIFIED) {
+      if (using_ssl_) {
+        port = 443;  // Default HTTPS port
+      } else {
+        port = 80;   // Default HTTP port
+      }
+    }
   }
 
-  DidStartDnsResolution(host, this);
   return resolver_.Resolve(host, port, &addresses_, &io_callback_);
 }
 
 int HttpNetworkTransaction::DoResolveHostComplete(int result) {
-  bool ok = (result == OK);
-  DidFinishDnsResolutionWithStatus(ok, request_->referrer, this);
-  if (ok) {
+  if (result == OK) {
     next_state_ = STATE_CONNECT;
   } else {
     result = ReconsiderProxyAfterError(result);
@@ -497,7 +490,7 @@ int HttpNetworkTransaction::DoConnect() {
   // wrapper socket now.  Otherwise, we need to first issue a CONNECT request.
   if (using_ssl_ && !using_tunnel_)
     s = socket_factory_->CreateSSLClientSocket(s, request_->url.host(),
-                                               ssl_config_);
+                                               ssl_version_mask_);
 
   connection_.set_socket(s);
   return connection_.socket()->Connect(&io_callback_);
@@ -525,7 +518,7 @@ int HttpNetworkTransaction::DoSSLConnectOverTunnel() {
   // Add a SSL socket on top of our existing transport socket.
   ClientSocket* s = connection_.release_socket();
   s = socket_factory_->CreateSSLClientSocket(s, request_->url.host(),
-                                             ssl_config_);
+                                             ssl_version_mask_);
   connection_.set_socket(s);
   return connection_.socket()->Connect(&io_callback_);
 }
@@ -625,33 +618,6 @@ int HttpNetworkTransaction::DoReadHeaders() {
   return connection_.socket()->Read(buf, buf_len, &io_callback_);
 }
 
-int HttpNetworkTransaction::HandleConnectionClosedBeforeEndOfHeaders() {
-  if (establishing_tunnel_) {
-    // The connection was closed before the tunnel could be established.
-    return ERR_TUNNEL_CONNECTION_FAILED;
-  }
-
-  if (has_found_status_line_start()) {
-    // Assume EOF is end-of-headers.
-    header_buf_body_offset_ = header_buf_len_;
-    return OK;
-  }
-
-  // No status line was matched yet. Could have been a HTTP/0.9 response, or
-  // a partial HTTP/1.x response.
-
-  if (header_buf_len_ == 0) {
-    // The connection was closed before any data was sent. Likely an error
-    // rather than empty HTTP/0.9 response.
-    return ERR_EMPTY_RESPONSE;
-  }
-
-  // Assume everything else is a HTTP/0.9 response (including responses
-  // of 'h', 'ht', 'htt').
-  header_buf_body_offset_ = 0;
-  return OK;
-}
-
 int HttpNetworkTransaction::DoReadHeadersComplete(int result) {
   if (result < 0)
     return HandleIOError(result);
@@ -666,9 +632,18 @@ int HttpNetworkTransaction::DoReadHeadersComplete(int result) {
 
   // The socket was closed before we found end-of-headers.
   if (result == 0) {
-    int rv = HandleConnectionClosedBeforeEndOfHeaders();
-    if (rv != OK)
-      return rv;
+    if (establishing_tunnel_) {
+      // The socket was closed before the tunnel could be established.
+      return ERR_TUNNEL_CONNECTION_FAILED;
+    }
+    if (has_found_status_line_start()) {
+      // Assume EOF is end-of-headers.
+      header_buf_body_offset_ = header_buf_len_;
+    } else {
+      // No status line was matched yet, assume HTTP/0.9
+      // (this will also match a HTTP/1.x that got closed early).
+      header_buf_body_offset_ = 0;
+    }
   } else {
     header_buf_len_ += result;
     DCHECK(header_buf_len_ <= header_buf_capacity_);
@@ -683,10 +658,6 @@ int HttpNetworkTransaction::DoReadHeadersComplete(int result) {
       int eoh = HttpUtil::LocateEndOfHeaders(
           header_buf_.get(), header_buf_len_, header_buf_http_offset_);
       if (eoh == -1) {
-        // Prevent growing the headers buffer indefinitely.
-        if (header_buf_len_ >= kMaxHeaderBufSize)
-          return ERR_RESPONSE_HEADERS_TOO_BIG;
-
         // Haven't found the end of headers yet, keep reading.
         next_state_ = STATE_READ_HEADERS;
         return OK;
@@ -763,17 +734,15 @@ int HttpNetworkTransaction::DoReadBodyComplete(int result) {
       done = true;
       keep_alive = response_.headers->IsKeepAlive();
       // We can't reuse the connection if we read more than the advertised
-      // content length, or if the tunnel was not established successfully.
+      // content length.
       if (unfiltered_eof ||
-          (content_length_ != -1 && content_read_ > content_length_) ||
-          establishing_tunnel_)
+          (content_length_ != -1 && content_read_ > content_length_))
         keep_alive = false;
     }
   }
 
   // Clean up the HttpConnection if we are done.
   if (done) {
-    LogTransactionMetrics();
     if (!keep_alive)
       connection_.set_socket(NULL);
     connection_.Reset();
@@ -785,17 +754,6 @@ int HttpNetworkTransaction::DoReadBodyComplete(int result) {
   read_buf_len_ = 0;
 
   return result;
-}
-
-void HttpNetworkTransaction::LogTransactionMetrics() const {
-  base::TimeDelta duration = base::Time::Now() - response_.request_time;
-  if (60 < duration.InMinutes())
-    return;
-  UMA_HISTOGRAM_LONG_TIMES(L"Net.Transaction_Latency", duration);
-  if (!duration.InMilliseconds())
-    return;
-  UMA_HISTOGRAM_COUNTS(L"Net.Transaction_Bandwidth",
-      static_cast<int> (content_read_ / duration.InMilliseconds()));
 }
 
 int HttpNetworkTransaction::DidReadResponseHeaders() {
@@ -856,11 +814,7 @@ int HttpNetworkTransaction::DidReadResponseHeaders() {
   response_.headers = headers;
   response_.vary_data.Init(*request_, *response_.headers);
 
-  int rv = HandleAuthChallenge();
-  if (rv == WILL_RESTART_TRANSACTION) {
-    DCHECK(next_state_ == STATE_INIT_CONNECTION);
-    return OK;
-  }
+  int rv = PopulateAuthChallenge();
   if (rv != OK)
     return rv;
 
@@ -888,11 +842,13 @@ int HttpNetworkTransaction::DidReadResponseHeaders() {
     }
   }
 
+#if defined(OS_WIN)
   if (using_ssl_ && !establishing_tunnel_) {
     SSLClientSocket* ssl_socket =
         reinterpret_cast<SSLClientSocket*>(connection_.socket());
     ssl_socket->GetSSLInfo(&response_.ssl_info);
   }
+#endif
 
   return OK;
 }
@@ -921,22 +877,25 @@ int HttpNetworkTransaction::HandleCertificateError(int error) {
     }
   }
 
+#if defined(OS_WIN)
   if (error != OK) {
     SSLClientSocket* ssl_socket =
         reinterpret_cast<SSLClientSocket*>(connection_.socket());
     ssl_socket->GetSSLInfo(&response_.ssl_info);
   }
+#endif
   return error;
 }
 
 int HttpNetworkTransaction::HandleSSLHandshakeError(int error) {
+#if defined(OS_WIN)
   switch (error) {
     case ERR_SSL_PROTOCOL_ERROR:
     case ERR_SSL_VERSION_OR_CIPHER_MISMATCH:
-      if (ssl_config_.tls1_enabled) {
+      if (ssl_version_mask_ & SSLClientSocket::TLS1) {
         // This could be a TLS-intolerant server or an SSL 3.0 server that
         // chose a TLS-only cipher suite.  Turn off TLS 1.0 and retry.
-        ssl_config_.tls1_enabled = false;
+        ssl_version_mask_ &= ~SSLClientSocket::TLS1;
         connection_.set_socket(NULL);
         connection_.Reset();
         next_state_ = STATE_INIT_CONNECTION;
@@ -944,6 +903,7 @@ int HttpNetworkTransaction::HandleSSLHandshakeError(int error) {
       }
       break;
   }
+#endif
   return error;
 }
 
@@ -980,9 +940,6 @@ void HttpNetworkTransaction::ResetStateForRestart() {
   request_headers_.clear();
   request_headers_bytes_sent_ = 0;
   chunked_decoder_.reset();
-  // Reset the scoped_refptr
-  response_.headers = NULL;
-  response_.auth_challenge = NULL;
 }
 
 bool HttpNetworkTransaction::ShouldResendRequest() {
@@ -996,13 +953,9 @@ bool HttpNetworkTransaction::ShouldResendRequest() {
   }
   connection_.set_socket(NULL);
   connection_.Reset();
-  // There are two reasons we need to clear request_headers_.  1) It contains
-  // the real request headers, but we may need to resend the CONNECT request
-  // first to recreate the SSL tunnel.  2) An empty request_headers_ causes
-  // BuildRequestHeaders to be called, which rewinds request_body_stream_ to
-  // the beginning of request_->upload_data.
-  request_headers_.clear();
   request_headers_bytes_sent_ = 0;
+  if (request_body_stream_.get())
+    request_body_stream_->Reset();
   next_state_ = STATE_INIT_CONNECTION;  // Resend the request.
   return true;
 }
@@ -1033,10 +986,6 @@ int HttpNetworkTransaction::ReconsiderProxyAfterError(int error) {
       return error;
   }
 
-  if (request_->load_flags & LOAD_BYPASS_PROXY) {
-    return error;
-  }
-
   int rv = session_->proxy_service()->ReconsiderProxyAfterError(
       request_->url, &proxy_info_, &io_callback_, &pac_request_);
   if (rv == OK || rv == ERR_IO_PENDING) {
@@ -1052,17 +1001,16 @@ int HttpNetworkTransaction::ReconsiderProxyAfterError(int error) {
 }
 
 void HttpNetworkTransaction::AddAuthorizationHeader(HttpAuth::Target target) {
-  // If we have no authentication information, check if we can select
-  // a cache entry preemptively (based on the path).
-  if(!HaveAuth(target) && !SelectPreemptiveAuth(target))
-    return;
-
   DCHECK(HaveAuth(target));
+  DCHECK(!auth_cache_key_[target].empty());
 
+  // Add auth data to cache
+  session_->auth_cache()->Add(auth_cache_key_[target], auth_data_[target]);
+  
   // Add a Authorization/Proxy-Authorization header line.
   std::string credentials = auth_handler_[target]->GenerateCredentials(
-      auth_identity_[target].username,
-      auth_identity_[target].password,
+      auth_data_[target]->username,
+      auth_data_[target]->password,
       request_,
       &proxy_info_);
   request_headers_ += HttpAuth::GetAuthorizationHeaderName(target) +
@@ -1079,127 +1027,15 @@ void HttpNetworkTransaction::ApplyAuth() {
   // Don't send origin server auth while establishing tunnel.
   bool should_apply_server_auth = !establishing_tunnel_;
 
-  if (should_apply_proxy_auth)
+  if (should_apply_proxy_auth && HaveAuth(HttpAuth::AUTH_PROXY))
     AddAuthorizationHeader(HttpAuth::AUTH_PROXY);
-  if (should_apply_server_auth)
+  if (should_apply_server_auth && HaveAuth(HttpAuth::AUTH_SERVER))
     AddAuthorizationHeader(HttpAuth::AUTH_SERVER);
 }
 
-GURL HttpNetworkTransaction::AuthOrigin(HttpAuth::Target target) const {
-  return target == HttpAuth::AUTH_PROXY ?
-      GURL("http://" + proxy_info_.proxy_server()) :
-      request_->url.GetOrigin();
-}
-
-std::string HttpNetworkTransaction::AuthPath(HttpAuth::Target target)
-    const {
-  // Proxy authentication realms apply to all paths. So we will use
-  // empty string in place of an absolute path.
-  return target == HttpAuth::AUTH_PROXY ?
-      std::string() : request_->url.path();
-}
-
-void HttpNetworkTransaction::InvalidateRejectedAuthFromCache(
-    HttpAuth::Target target) {
-  DCHECK(HaveAuth(target));
-
-  // TODO(eroman): this short-circuit can be relaxed. If the realm of
-  // the preemptively used auth entry matches the realm of the subsequent
-  // challenge, then we can invalidate the preemptively used entry.
-  // Otherwise as-is we may send the failed credentials one extra time.
-  if (auth_identity_[target].source == HttpAuth::IDENT_SRC_PATH_LOOKUP)
-    return;
-
-  // Clear the cache entry for the identity we just failed on.
-  // Note: we require the username/password to match before invalidating
-  // since the entry in the cache may be newer than what we used last time.
-  session_->auth_cache()->Remove(AuthOrigin(target),
-                                 auth_handler_[target]->realm(), 
-                                 auth_identity_[target].username,
-                                 auth_identity_[target].password);
-}
-
-bool HttpNetworkTransaction::SelectPreemptiveAuth(HttpAuth::Target target) {
-  DCHECK(!HaveAuth(target));
-
-  // Don't do preemptive authorization if the URL contains a username/password,
-  // since we must first be challenged in order to use the URL's identity.
-  if (request_->url.has_username())
-    return false;
-
-  // SelectPreemptiveAuth() is on the critical path for each request, so it
-  // is expected to be fast. LookupByPath() is fast in the common case, since
-  // the number of http auth cache entries is expected to be very small.
-  // (For most users in fact, it will be 0.)
-
-  HttpAuthCache::Entry* entry = session_->auth_cache()->LookupByPath(
-      AuthOrigin(target), AuthPath(target));
-
-  if (entry) {
-    auth_identity_[target].source = HttpAuth::IDENT_SRC_PATH_LOOKUP;
-    auth_identity_[target].invalid = false;
-    auth_identity_[target].username = entry->username();
-    auth_identity_[target].password = entry->password();
-    auth_handler_[target] = entry->handler();
-    return true;
-  }
-  return false;
-}
-
-bool HttpNetworkTransaction::SelectNextAuthIdentityToTry(
-    HttpAuth::Target target) {
-  DCHECK(auth_handler_[target]);
-  DCHECK(auth_identity_[target].invalid);
-
-  // Try to use the username/password encoded into the URL first.
-  // (By checking source == IDENT_SRC_NONE, we make sure that this
-  // is only done once for the transaction.)
-  if (target == HttpAuth::AUTH_SERVER && request_->url.has_username() &&
-      auth_identity_[target].source == HttpAuth::IDENT_SRC_NONE) {
-    auth_identity_[target].source = HttpAuth::IDENT_SRC_URL;
-    auth_identity_[target].invalid = false;
-    // TODO(wtc) It may be necessary to unescape the username and password
-    // after extracting them from the URL.  We should be careful about
-    // embedded nulls in that case.
-    auth_identity_[target].username = ASCIIToWide(request_->url.username());
-    auth_identity_[target].password = ASCIIToWide(request_->url.password());
-    // TODO(eroman): If the password is blank, should we also try combining
-    // with a password from the cache?
-    return true;
-  }
-
-  // Check the auth cache for a realm entry.
-  HttpAuthCache::Entry* entry = session_->auth_cache()->LookupByRealm(
-      AuthOrigin(target), auth_handler_[target]->realm());
-
-  if (entry) {
-    // Disallow re-using of identity if the scheme of the originating challenge
-    // does not match. This protects against the following situation:
-    // 1. Browser prompts user to sign into DIGEST realm="Foo".
-    // 2. Since the auth-scheme is not BASIC, the user is reasured that it
-    //    will not be sent over the wire in clear text. So they use their
-    //    most trusted password.
-    // 3. Next, the browser receives a challenge for BASIC realm="Foo". This
-    //    is the same realm that we have a cached identity for. However if
-    //    we use that identity, it would get sent over the wire in
-    //    clear text (which isn't what the user agreed to when entering it).
-    if (entry->handler()->scheme() != auth_handler_[target]->scheme()) {
-      LOG(WARNING) << "The scheme of realm " << auth_handler_[target]->realm()
-                   << " has changed from " << entry->handler()->scheme()
-                   << " to " << auth_handler_[target]->scheme();
-      return false;
-    }
-
-    auth_identity_[target].source = HttpAuth::IDENT_SRC_REALM_LOOKUP;
-    auth_identity_[target].invalid = false;
-    auth_identity_[target].username = entry->username();
-    auth_identity_[target].password = entry->password();
-    return true;
-  }
-  return false;
-}
-
-int HttpNetworkTransaction::HandleAuthChallenge() {
+// Populates response_.auth_challenge with the authentication challenge info.
+// This info is consumed by URLRequestHttpJob::GetAuthChallengeInfo().
+int HttpNetworkTransaction::PopulateAuthChallenge() {
   DCHECK(response_.headers);
 
   int status = response_.headers->response_code();
@@ -1208,60 +1044,51 @@ int HttpNetworkTransaction::HandleAuthChallenge() {
   HttpAuth::Target target = status == 407 ?
       HttpAuth::AUTH_PROXY : HttpAuth::AUTH_SERVER;
 
-  if (target == HttpAuth::AUTH_PROXY && proxy_info_.is_direct())
-    return ERR_UNEXPECTED_PROXY_AUTH;
-
-  // The auth we tried just failed, hence it can't be valid. Remove it from
-  // the cache so it won't be used again.
-  if (HaveAuth(target))
-    InvalidateRejectedAuthFromCache(target);
-
-  auth_identity_[target].invalid = true;
+  if (target == HttpAuth::AUTH_PROXY && proxy_info_.is_direct()) {
+    // TODO(eroman): Add a unique error code.
+    return ERR_INVALID_RESPONSE;
+  }
 
   // Find the best authentication challenge that we support.
-  HttpAuth::ChooseBestChallenge(response_.headers.get(),
-                                target,
-                                &auth_handler_[target]);
+  scoped_ptr<HttpAuthHandler> auth_handler(
+      HttpAuth::ChooseBestChallenge(response_.headers.get(), target));
 
   // We found no supported challenge -- let the transaction continue
   // so we end up displaying the error page.
-  if (!auth_handler_[target])
+  if (!auth_handler.get())
     return OK;
 
-  // Pick a new auth identity to try, by looking to the URL and auth cache.
-  // If an identity to try is found, it is saved to auth_identity_[target].
-  bool has_identity_to_try = SelectNextAuthIdentityToTry(target);
-  DCHECK(has_identity_to_try == !auth_identity_[target].invalid);
-
-  if (has_identity_to_try) {
-    DCHECK(user_callback_);
-    PrepareForAuthRestart(target);
-    return WILL_RESTART_TRANSACTION;
-  } else {
-    // We have exhausted all identity possibilities, all we can do now is
-    // pass the challenge information back to the client.
-    PopulateAuthChallenge(target);
-  }
-
-  return OK;
-}
-
-void HttpNetworkTransaction::PopulateAuthChallenge(HttpAuth::Target target) {
-  // Populates response_.auth_challenge with the authentication challenge info.
-  // This info is consumed by URLRequestHttpJob::GetAuthChallengeInfo().
-
-  AuthChallengeInfo* auth_info = new AuthChallengeInfo;
+  // Construct an AuthChallengeInfo.
+  scoped_refptr<AuthChallengeInfo> auth_info = new AuthChallengeInfo;
   auth_info->is_proxy = target == HttpAuth::AUTH_PROXY;
-  auth_info->scheme = ASCIIToWide(auth_handler_[target]->scheme());
+  auth_info->scheme = ASCIIToWide(auth_handler->scheme());
   // TODO(eroman): decode realm according to RFC 2047.
-  auth_info->realm = ASCIIToWide(auth_handler_[target]->realm());
+  auth_info->realm = ASCIIToWide(auth_handler->realm());
   if (target == HttpAuth::AUTH_PROXY) {
     auth_info->host = ASCIIToWide(proxy_info_.proxy_server());
   } else {
     DCHECK(target == HttpAuth::AUTH_SERVER);
     auth_info->host = ASCIIToWide(request_->url.host());
   }
-  response_.auth_challenge = auth_info;
+
+  // Update the auth cache key and remove any data in the auth cache.
+  if (!auth_data_[target])
+    auth_data_[target] = new AuthData;
+  auth_cache_key_[target] = AuthCache::HttpKey(request_->url, *auth_info);
+  DCHECK(!auth_cache_key_[target].empty());
+  auth_data_[target]->scheme = auth_info->scheme;
+  if (auth_data_[target]->state == AUTH_STATE_HAVE_AUTH) {
+    // The cached identity probably isn't valid so remove it.
+    // The assumption here is that the cached auth data is what we
+    // just used.
+    session_->auth_cache()->Remove(auth_cache_key_[target]);
+    auth_data_[target]->state = AUTH_STATE_NEED_AUTH;
+  }
+
+  response_.auth_challenge.swap(auth_info);
+  auth_handler_[target].reset(auth_handler.release());
+
+  return OK;
 }
 
 }  // namespace net

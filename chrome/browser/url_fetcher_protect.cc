@@ -4,25 +4,23 @@
 
 #include "chrome/browser/url_fetcher_protect.h"
 
-// URLFetcherProtectEntry ----------------------------------------------------
+// ProtectEntry --------------------------------------------------------------
 
-using base::TimeDelta;
-using base::TimeTicks;
 
 // Default parameters.  Time is in milliseconds.
 // static
-const int URLFetcherProtectEntry::kDefaultSlidingWindowPeriod = 2000;
+const int ProtectEntry::kDefaultSlidingWindowPeriod = 2000;
 
-const int URLFetcherProtectEntry::kDefaultMaxSendThreshold = 20;
-const int URLFetcherProtectEntry::kDefaultMaxRetries = 0;
+const int ProtectEntry::kDefaultMaxSendThreshold = 20;
+const int ProtectEntry::kDefaultMaxRetries = 0;
 
-const int URLFetcherProtectEntry::kDefaultInitialTimeout = 100;
-const double URLFetcherProtectEntry::kDefaultMultiplier = 2.0;
-const int URLFetcherProtectEntry::kDefaultConstantFactor = 100;
-const int URLFetcherProtectEntry::kDefaultMaximumTimeout = 60000;
+const int ProtectEntry::kDefaultInitialTimeout = 100;
+const double ProtectEntry::kDefaultMultiplier = 2.0;
+const int ProtectEntry::kDefaultConstantFactor = 100;
+const int ProtectEntry::kDefaultMaximumTimeout = 60000;
 
 
-URLFetcherProtectEntry::URLFetcherProtectEntry()
+ProtectEntry::ProtectEntry()
     : sliding_window_period_(kDefaultSlidingWindowPeriod),
       max_send_threshold_(kDefaultMaxSendThreshold),
       max_retries_(kDefaultMaxRetries),
@@ -33,13 +31,10 @@ URLFetcherProtectEntry::URLFetcherProtectEntry()
   ResetBackoff();
 }
 
-URLFetcherProtectEntry::URLFetcherProtectEntry(int sliding_window_period,
-                                               int max_send_threshold,
-                                               int max_retries,
-                                               int initial_timeout,
-                                               double multiplier,
-                                               int constant_factor,
-                                               int maximum_timeout)
+ProtectEntry::ProtectEntry(int sliding_window_period, int max_send_threshold,
+                           int max_retries, int initial_timeout,
+                           double multiplier, int constant_factor,
+                           int maximum_timeout)
     : sliding_window_period_(sliding_window_period),
       max_send_threshold_(max_send_threshold),
       max_retries_(max_retries),
@@ -50,7 +45,7 @@ URLFetcherProtectEntry::URLFetcherProtectEntry(int sliding_window_period,
   ResetBackoff();
 }
 
-int URLFetcherProtectEntry::UpdateBackoff(EventType event_type) {
+int ProtectEntry::UpdateBackoff(EventType event_type) {
   // request may be sent in different threads
   AutoLock lock(lock_);
 
@@ -74,7 +69,7 @@ int URLFetcherProtectEntry::UpdateBackoff(EventType event_type) {
   return wait;
 }
 
-TimeDelta URLFetcherProtectEntry::AntiOverload() {
+TimeDelta ProtectEntry::AntiOverload() {
   TimeDelta sw = TimeDelta::FromMilliseconds(sliding_window_period_);
   TimeTicks now = TimeTicks::Now();
   // Estimate when the next request will be sent.
@@ -96,13 +91,13 @@ TimeDelta URLFetcherProtectEntry::AntiOverload() {
   return release_time_ - now;
 }
 
-TimeDelta URLFetcherProtectEntry::ResetBackoff() {
+TimeDelta ProtectEntry::ResetBackoff() {
   timeout_period_ = initial_timeout_;
   release_time_ = TimeTicks::Now();
   return TimeDelta::FromMilliseconds(0);
 }
 
-TimeDelta URLFetcherProtectEntry::IncreaseBackoff() {
+TimeDelta ProtectEntry::IncreaseBackoff() {
   TimeTicks now = TimeTicks::Now();
 
   release_time_ = std::max(release_time_, now) +
@@ -117,13 +112,13 @@ TimeDelta URLFetcherProtectEntry::IncreaseBackoff() {
   return release_time_ - now;
 }
 
-// URLFetcherProtectManager --------------------------------------------------
+// ProtectManager ------------------------------------------------------------
 
 // static
-scoped_ptr<URLFetcherProtectManager> URLFetcherProtectManager::protect_manager_;
-Lock URLFetcherProtectManager::lock_;
+scoped_ptr<ProtectManager> ProtectManager::protect_manager_;
+Lock ProtectManager::lock_;
 
-URLFetcherProtectManager::~URLFetcherProtectManager() {
+ProtectManager::~ProtectManager() {
   // Deletes all entries
   ProtectService::iterator i;
   for (i = services_.begin(); i != services_.end(); ++i) {
@@ -133,16 +128,16 @@ URLFetcherProtectManager::~URLFetcherProtectManager() {
 }
 
 // static
-URLFetcherProtectManager* URLFetcherProtectManager::GetInstance() {
+ProtectManager* ProtectManager::GetInstance() {
   AutoLock lock(lock_);
 
   if (protect_manager_.get() == NULL) {
-    protect_manager_.reset(new URLFetcherProtectManager());
+    protect_manager_.reset(new ProtectManager());
   }
   return protect_manager_.get();
 }
 
-URLFetcherProtectEntry* URLFetcherProtectManager::Register(std::string id) {
+ProtectEntry* ProtectManager::Register(std::string id) {
   AutoLock lock(lock_);
 
   ProtectService::iterator i = services_.find(id);
@@ -153,13 +148,12 @@ URLFetcherProtectEntry* URLFetcherProtectManager::Register(std::string id) {
   }
 
   // Creates a new entry.
-  URLFetcherProtectEntry* entry = new URLFetcherProtectEntry();
+  ProtectEntry* entry = new ProtectEntry();
   services_[id] = entry;
   return entry;
 }
 
-URLFetcherProtectEntry* URLFetcherProtectManager::Register(
-    std::string id, URLFetcherProtectEntry* entry) {
+ProtectEntry* ProtectManager::Register(std::string id, ProtectEntry* entry) {
   AutoLock lock(lock_);
 
   ProtectService::iterator i = services_.find(id);
@@ -171,3 +165,4 @@ URLFetcherProtectEntry* URLFetcherProtectManager::Register(
   services_[id] = entry;
   return entry;
 }
+

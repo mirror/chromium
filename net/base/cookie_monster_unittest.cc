@@ -6,16 +6,12 @@
 
 #include <string>
 
-#include "base/basictypes.h"
-#include "base/platform_thread.h"
 #include "base/string_util.h"
 #include "base/time.h"
+#include "base/basictypes.h"
 #include "googleurl/src/gurl.h"
 #include "net/base/cookie_monster.h"
 #include "testing/gtest/include/gtest/gtest.h"
-
-using base::Time;
-using base::TimeDelta;
 
 namespace {
   class ParsedCookieTest : public testing::Test { };
@@ -468,29 +464,10 @@ TEST(CookieMonsterTest, PathTest) {
 TEST(CookieMonsterTest, HttpOnlyTest) {
   GURL url_google(kUrlGoogle);
   net::CookieMonster cm;
-  net::CookieMonster::CookieOptions options;
-  options.set_include_httponly();
-
-  // Create a httponly cookie.
-  EXPECT_TRUE(cm.SetCookieWithOptions(url_google, "A=B; httponly", options));
-  
-  // Check httponly read protection.
+  EXPECT_TRUE(cm.SetCookie(url_google, "A=B; httponly"));
   EXPECT_EQ("", cm.GetCookies(url_google));
-  EXPECT_EQ("A=B", cm.GetCookiesWithOptions(url_google, options));
-
-  // Check httponly overwrite protection.
-  EXPECT_FALSE(cm.SetCookie(url_google, "A=C"));
-  EXPECT_EQ("", cm.GetCookies(url_google));
-  EXPECT_EQ("A=B", cm.GetCookiesWithOptions(url_google, options));
-  EXPECT_TRUE(cm.SetCookieWithOptions(url_google, "A=C", options));
-  EXPECT_EQ("A=C", cm.GetCookies(url_google));
-
-  // Check httponly create protection.
-  EXPECT_FALSE(cm.SetCookie(url_google, "B=A; httponly"));
-  EXPECT_EQ("A=C", cm.GetCookiesWithOptions(url_google, options));
-  EXPECT_TRUE(cm.SetCookieWithOptions(url_google, "B=A; httponly", options));
-  EXPECT_EQ("A=C; B=A", cm.GetCookiesWithOptions(url_google, options));
-  EXPECT_EQ("A=C", cm.GetCookies(url_google));
+  EXPECT_EQ("A=B", cm.GetCookiesWithOptions(url_google,
+      net::CookieMonster::INCLUDE_HTTPONLY));
 }
 
 namespace {
@@ -633,17 +610,15 @@ TEST(CookieMonsterTest, TestCookieDeletion) {
 TEST(CookieMonsterTest, TestCookieDeleteAll) {
   GURL url_google(kUrlGoogle);
   net::CookieMonster cm;
-  net::CookieMonster::CookieOptions options;
-  options.set_include_httponly();
 
   EXPECT_TRUE(cm.SetCookie(url_google, kValidCookieLine));
   EXPECT_EQ("A=B", cm.GetCookies(url_google));
 
-  EXPECT_TRUE(cm.SetCookieWithOptions(url_google, "C=D; httponly", options));
-  EXPECT_EQ("A=B; C=D", cm.GetCookiesWithOptions(url_google, options));
+  EXPECT_TRUE(cm.SetCookie(url_google, "C=D"));
+  EXPECT_EQ("A=B; C=D", cm.GetCookies(url_google));
 
   EXPECT_EQ(2, cm.DeleteAll(false));
-  EXPECT_EQ("", cm.GetCookiesWithOptions(url_google, options));
+  EXPECT_EQ("", cm.GetCookies(url_google));
 }
 
 TEST(CookieMonsterTest, TestCookieDeleteAllCreatedAfterTimestamp) {
@@ -760,7 +735,7 @@ TEST(CookieMonsterTest, TestLastAccess) {
   EXPECT_TRUE(last_access_date == GetFirstCookieAccessDate(&cm));
 
   // Reading after a short wait should update the access date.
-  PlatformThread::Sleep(1500);
+  Sleep(1500);
   EXPECT_EQ("A=B", cm.GetCookies(url_google));
   EXPECT_FALSE(last_access_date == GetFirstCookieAccessDate(&cm));
 }
@@ -802,8 +777,7 @@ TEST(CookieMonsterTest, TestTotalGarbageCollection) {
     // Keep touching the first cookie to ensure it's not purged (since it will
     // always have the most recent access time).
     if (!(i % 500)) {
-      PlatformThread::Sleep(1500);  // Ensure the timestamps will be different
-                                    // enough to update.
+      Sleep(1500);  // Ensure the timestamps will be different enough to update.
       EXPECT_EQ("a=b", cm.GetCookies(sticky_cookie));
     }
   }

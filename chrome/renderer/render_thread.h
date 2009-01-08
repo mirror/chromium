@@ -2,10 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_RENDERER_RENDER_THREAD_H_
-#define CHROME_RENDERER_RENDER_THREAD_H_
+#ifndef CHROME_RENDERER_RENDER_THREAD_H__
+#define CHROME_RENDERER_RENDER_THREAD_H__
 
-#include "base/file_path.h"
 #include "base/ref_counted.h"
 #include "base/shared_memory.h"
 #include "base/task.h"
@@ -21,9 +20,9 @@ class RenderDnsMaster;
 class NotificationService;
 class GreasemonkeySlave;
 
-// The RenderThreadBase is the minimal interface that a RenderView/Widget
-// expects from a render thread. The interface basically abstracts a way to send
-// and receive messages.
+// The RenderThreadBase is the minimal interface that a RenderWidget expects
+// from a render thread. The interface basically abstracts a way to send and
+// receive messages. It is currently only used for testing.
 class RenderThreadBase : public IPC::Message::Sender {
  public:
   virtual ~RenderThreadBase() {}
@@ -35,9 +34,6 @@ class RenderThreadBase : public IPC::Message::Sender {
   // These methods normally get delegated to a MessageRouter.
   virtual void AddRoute(int32 routing_id, IPC::Channel::Listener* listener) = 0;
   virtual void RemoveRoute(int32 routing_id) = 0;
-
-  virtual void AddFilter(IPC::ChannelProxy::MessageFilter* filter) = 0;
-  virtual void RemoveFilter(IPC::ChannelProxy::MessageFilter* filter) = 0;
 };
 
 // The RenderThread class represents a background thread where RenderView
@@ -63,9 +59,11 @@ class RenderThread : public IPC::Channel::Listener,
   // IPC::Message::Sender implementation:
   virtual bool Send(IPC::Message* msg);
 
-  // Overridded from RenderThreadBase.
-  virtual void AddFilter(IPC::ChannelProxy::MessageFilter* filter);
-  virtual void RemoveFilter(IPC::ChannelProxy::MessageFilter* filter);
+  void AddFilter(IPC::ChannelProxy::MessageFilter* filter);
+  void RemoveFilter(IPC::ChannelProxy::MessageFilter* filter);
+
+  // The RenderThread instance for the current thread.
+  static RenderThread* current();
 
   // Gets the VisitedLinkSlave instance for this thread
   VisitedLinkSlave* visited_link_slave() const { return visited_link_slave_; }
@@ -95,10 +93,10 @@ class RenderThread : public IPC::Channel::Listener,
   virtual void CleanUp();
 
  private:
-  void OnUpdateVisitedLinks(base::SharedMemoryHandle table);
-  void OnUpdateGreasemonkeyScripts(base::SharedMemoryHandle table);
+  void OnUpdateVisitedLinks(SharedMemoryHandle table);
+  void OnUpdateGreasemonkeyScripts(SharedMemoryHandle table);
 
-  void OnPluginMessage(const FilePath& plugin_path,
+  void OnPluginMessage(const std::wstring& dll_path,
                        const std::vector<uint8>& data);
   void OnSetNextPageID(int32 next_page_id);
   void OnCreateNewView(HWND parent_hwnd,
@@ -141,8 +139,5 @@ class RenderThread : public IPC::Channel::Listener,
   DISALLOW_EVIL_CONSTRUCTORS(RenderThread);
 };
 
-// The global RenderThread object for this process. Note that this should only
-// be accessed when running on the render thread itself.
-extern RenderThread* g_render_thread;
+#endif  // CHROME_RENDERER_RENDER_THREAD_H__
 
-#endif  // CHROME_RENDERER_RENDER_THREAD_H_

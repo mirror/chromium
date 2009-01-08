@@ -11,7 +11,7 @@ env.Prepend(
     CPPPATH = [
         '$ICU38_DIR/public/common',
         '$ICU38_DIR/public/i18n',
-        '$CHROME_SRC_DIR',
+        '..',
     ],
 )
 
@@ -28,7 +28,7 @@ env.Append(
     ],
 )
 
-if env.Bit('windows'):
+if env['PLATFORM'] == 'win32':
   env.Append(
       CCFLAGS = [
           '/TC',
@@ -91,9 +91,6 @@ input_files = [
     'where.c',
 ]
 
-env.ChromeLibrary('sqlite', input_files)
-
-env.ChromeMSVSProject('$SQLITE_DIR/sqlite.vcproj',
-                guid='{6EAD4A4B-2BBC-4974-8E45-BB5C16CC2AC9}')
+env.ChromeStaticLibrary('sqlite', input_files)
 
 # TODO(tc): There should be a target to build the stand alone sqlite shell.

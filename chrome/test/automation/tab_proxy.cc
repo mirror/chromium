@@ -121,8 +121,7 @@ bool TabProxy::GetFindWindowLocation(int* x, int* y) {
 int TabProxy::FindInPage(const std::wstring& search_string,
                          FindInPageDirection forward,
                          FindInPageCase match_case,
-                         bool find_next,
-                         int* active_ordinal) {
+                         bool find_next) {
   if (!is_valid())
     return -1;
 
@@ -137,18 +136,14 @@ int TabProxy::FindInPage(const std::wstring& search_string,
   bool succeeded = sender_->SendAndWaitForResponse(
       new AutomationMsg_FindRequest(0, handle_, request),
       &response,
-      AutomationMsg_FindInPageResponse2::ID);
+      AutomationMsg_FindInPageResponse::ID);
   if (!succeeded)
     return -1;
 
   void* iter = NULL;
-  int ordinal;
   int matches_found;
-  response->ReadInt(&iter, &ordinal);
-  response->ReadInt(&iter, &matches_found);
-  if (active_ordinal)
-    *active_ordinal = ordinal;
-  delete response;
+  AutomationMsg_FindInPageResponse::Read(response, &matches_found);
+
   return matches_found;
 }
 
@@ -555,10 +550,10 @@ bool TabProxy::ExecuteAndExtractValue(const std::wstring& frame_xpath,
   json.append("]");
 
   JSONStringValueSerializer deserializer(json);
-  *value = deserializer.Deserialize(NULL);
+  succeeded = deserializer.Deserialize(value);
 
   delete response;
-  return *value != NULL;
+  return succeeded;
 }
 
 bool TabProxy::GetConstrainedWindowCount(int* count) const {
@@ -723,17 +718,17 @@ bool TabProxy::GetDownloadDirectory(std::wstring* download_directory) {
   return true;
 }
 
-bool TabProxy::ShowInterstitialPage(const std::string& html_text,
-                                    int timeout_ms) {
+bool TabProxy::ShowInterstitialPage(const std::string& html_text) {
   if (!is_valid())
     return false;
 
+  const int kTimeout = 2000;
   bool is_timeout = false;
   IPC::Message* response = NULL;
   bool succeeded = sender_->SendAndWaitForResponseWithTimeout(
       new AutomationMsg_ShowInterstitialPageRequest(0, handle_, html_text),
       &response,
-      AutomationMsg_ShowInterstitialPageResponse::ID, timeout_ms, &is_timeout);
+      AutomationMsg_ShowInterstitialPageResponse::ID, kTimeout, &is_timeout);
 
   if (!succeeded || !is_timeout)
     return false;
@@ -1046,43 +1041,4 @@ bool TabProxy::WaitForNavigation(int64 last_navigation_time) {
   void* iter = NULL;
   response->ReadBool(&iter, &success);
   return success;
-}
-
-bool TabProxy::GetPageCurrentEncoding(std::wstring* encoding) {
-  if (!is_valid())
-    return false;
-
-  IPC::Message* response;
-  bool succeeded = sender_->SendAndWaitForResponse(
-      new AutomationMsg_GetPageCurrentEncodingRequest(0, handle_),
-      &response,
-      AutomationMsg_GetPageCurrentEncodingResponse::ID);
-
-  scoped_ptr<IPC::Message> response_deleter(response);  // Delete on return.
-  if (!succeeded)
-    return false;
-
-  void* iter = NULL;
-  succeeded = response->ReadWString(&iter, encoding);
-  return succeeded;
-}
-
-bool TabProxy::OverrideEncoding(const std::wstring& encoding) {
-  if (!is_valid())
-    return false;
-
-  IPC::Message* response;
-  bool succeeded = sender_->SendAndWaitForResponse(
-      new AutomationMsg_OverrideEncodingRequest(0, handle_, encoding),
-      &response,
-      AutomationMsg_OverrideEncodingResponse::ID);
-
-  scoped_ptr<IPC::Message> response_deleter(response);  // Delete on return.
-  if (!succeeded)
-    return false;
-
-  void* iter = NULL;
-  bool successed_set_value = false;
-  succeeded = response->ReadBool(&iter, &successed_set_value);
-  return succeeded && successed_set_value;
 }

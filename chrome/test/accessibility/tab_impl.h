@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_ACCESSIBILITY_TAB_IMPL_H_
-#define CHROME_TEST_ACCESSIBILITY_TAB_IMPL_H_
-
-#include <wtypes.h>
+#ifndef CHROME_TEST_ACCISSIBILITY_TAB_IMPL_H__
+#define CHROME_TEST_ACCISSIBILITY_TAB_IMPL_H__
 
 #include "constants.h"
 
+#include <oleauto.h>
+
 /////////////////////////////////////////////////////////////////////
-// TabImpl
+// CTabImpl
 // It is a wrapper to Tab specific functionalities.
 // Note:
 // In most of the tasks, keyboard messages are used for now.
@@ -20,7 +20,7 @@
 /////////////////////////////////////////////////////////////////////
 
 // Forward declaration.
-class BrowserImpl;
+class CBrowserImpl;
 
 // Structure storing Tab parameters.
 struct ChromeTab {
@@ -28,11 +28,10 @@ struct ChromeTab {
   BSTR title_;
 };
 
-class TabImpl {
+class CTabImpl {
  public:
-  TabImpl(): tab_(NULL), browser_(NULL) {}
-
-  ~TabImpl();
+  CTabImpl(): tab_(NULL), my_browser_(NULL) {
+  }
 
  public:
   // Close this tab.
@@ -54,7 +53,7 @@ class TabImpl {
   bool Reload(void);
 
   // Duplicates this tab.
-  bool Duplicate(TabImpl** tab);
+  bool Duplicate(CTabImpl** tab);
 
   // Returns true of Authentication dialog is opena nd visible.
   bool IsAuthDialogVisible();
@@ -80,11 +79,8 @@ class TabImpl {
   // loaded with URL.
   bool WaitForTabToGetLoaded(const INT64 interval, const INT64 timeout);
 
-  // Sets title of this tab.
-  void set_title(BSTR title);
-
   // Sets index of this tab.
-  void set_index(INT64 index) {
+  void PutIndex(INT64 index) {
     if (index < 0)
       return;
     if (!tab_)
@@ -92,10 +88,17 @@ class TabImpl {
     tab_->index_ = index;
   }
 
+  // Sets title of this tab.
+  void PutTitle(BSTR title) {
+    if (!tab_)
+      InitTabData();
+     tab_->title_ = SysAllocString(title);
+  }
+
   // Sets browser to which tab belongs.
-  bool set_browser(BrowserImpl* browser) {
+  bool SetBrowser(CBrowserImpl *browser) {
     if (browser)
-      browser_ = browser;
+      my_browser_ = browser;
     else
       return false;
 
@@ -115,7 +118,7 @@ class TabImpl {
     return tab_;
   }
 
-  // To be implemeted.
+  // TODO
   bool IsSSLLockPresent(bool* present);
   bool IsSSLSoftError(bool* soft_err);
   bool OpenPageCertificateDialog(void);
@@ -125,12 +128,12 @@ class TabImpl {
 
  private:
   // Structure to store tab data.
-  ChromeTab* tab_;
+  ChromeTab *tab_;
 
   // Pointer to browser to which this tab belongs.
-  BrowserImpl* browser_;
+  CBrowserImpl *my_browser_;
 };
 
 
-#endif  // CHROME_TEST_ACCISSIBILITY_TAB_IMPL_H_
+#endif  // CHROME_TEST_ACCISSIBILITY_TAB_IMPL_H__
 

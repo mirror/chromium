@@ -5,7 +5,6 @@
 #include "base/basictypes.h"
 #include "base/logging.h"
 #include "base/string_util.h"
-#include "base/time.h"
 #include "googleurl/src/gurl.h"
 #include "net/base/net_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -699,15 +698,43 @@ TEST(NetUtilTest, GetSuggestedFilename) {
   }
 }
 
+TEST(NetUtilTest, GetImplicitPort) {
+  {
+    GURL url("http://foo.bar/baz");
+    EXPECT_STREQ("80", net::GetImplicitPort(url).c_str());
+  }
+  {
+    GURL url("http://foo.bar:443/baz");
+    EXPECT_STREQ("443", net::GetImplicitPort(url).c_str());
+  }
+  {
+    GURL url("https://foo.bar/baz");
+    EXPECT_STREQ("443", net::GetImplicitPort(url).c_str());
+  }
+  {
+    GURL url("https://foo.bar:80/baz");
+    EXPECT_STREQ("80", net::GetImplicitPort(url).c_str());
+  }
+  {
+    // Invalid input.
+    GURL url("file://foobar/baz");
+    EXPECT_STREQ("", net::GetImplicitPort(url).c_str());
+  }
+  {
+    GURL url("ftp://google.com");
+    EXPECT_STREQ("21", net::GetImplicitPort(url).c_str());
+  }
+}
+
 // This is currently a windows specific function.
 #if defined(OS_WIN)
 namespace {
 
 struct GetDirectoryListingEntryCase {
   const char* name;
-  bool is_dir;
+  DWORD file_attrib;
   int64 filesize;
-  base::Time time;
+  FILETIME* modified;
   const char* expected;
 };
 
@@ -715,23 +742,21 @@ struct GetDirectoryListingEntryCase {
 TEST(NetUtilTest, GetDirectoryListingEntry) {
   const GetDirectoryListingEntryCase test_cases[] = {
     {"Foo",
-     false,
+     0,
      10000,
-     base::Time(),
+     NULL,
      "<script>addRow(\"Foo\",\"Foo\",0,\"9.8 kB\",\"\");</script>\n"},
     {"quo\"tes",
-     false,
+     0,
      10000,
-     base::Time(),
+     NULL,
      "<script>addRow(\"quo\\\"tes\",\"quo%22tes\",0,\"9.8 kB\",\"\");</script>\n"},
   };
 
   for (size_t i = 0; i < ARRAYSIZE_UNSAFE(test_cases); ++i) {
     const std::string results = net::GetDirectoryListingEntry(
-        test_cases[i].name,
-        test_cases[i].is_dir,
-        test_cases[i].filesize,
-        test_cases[i].time);
+        test_cases[i].name, test_cases[i].file_attrib,
+        test_cases[i].filesize, test_cases[i].modified);
     EXPECT_EQ(test_cases[i].expected, results);
   }
 }

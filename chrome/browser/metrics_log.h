@@ -44,6 +44,8 @@ class MetricsLog {
     WINDOW_DESTROY
   };
 
+  static const char* WindowEventTypeToString(WindowEventType type);
+
   void RecordWindowEvent(WindowEventType type, int window_id, int parent_id);
 
   // Records a page load.
@@ -55,7 +57,7 @@ class MetricsLog {
                        const GURL& url,
                        PageTransition::Type origin,
                        int session_index,
-                       base::TimeDelta load_time);
+                       TimeDelta load_time);
 
   // Records the current operating environment.  Takes the list of installed
   // plugins as a parameter because that can't be obtained synchronously
@@ -134,8 +136,6 @@ class MetricsLog {
   };
   friend class ScopedElement;
 
-  static const char* WindowEventTypeToString(WindowEventType type);
-
   // Convenience versions of xmlWriter functions
   void StartElement(const char* name);
   void EndElement();
@@ -157,23 +157,16 @@ class MetricsLog {
   // NOTE: Has the side-effect of clearing those counts.
   void WriteStabilityElement();
 
-  // Within stability group, write plugin crash stats.
-  void WritePluginStabilityElements(PrefService* pref);
-
-  // Within the stability group, write required attributes.
-  void WriteRequiredStabilityAttributes(PrefService* pref);
-
-  // Within the stability group, write attributes that need to be updated asap
+  // Within the stability group, write required elements.
+  void WriteRequiredStabilityElements(PrefService* pref);
+  // Within the stability group, write elements that need to be updated asap
   // and can't be delayed until the user decides to restart chromium.
   // Delaying these stats would bias metrics away from happy long lived
   // chromium processes (ones that don't crash, and keep on running).
-  void WriteRealtimeStabilityAttributes(PrefService* pref);
+  void WriteRealtimeStabilityElements(PrefService* pref);
 
   // Writes the list of installed plugins.
   void WritePluginList(const std::vector<WebPluginInfo>& plugin_list);
-
-  // Within the profile group, write basic install info including appversion.
-  void WriteInstallElement();
 
   // Writes all profile metrics. This invokes WriteProfileMetrics for each key
   // in all_profiles_metrics that starts with kProfilePrefix.
@@ -184,8 +177,8 @@ class MetricsLog {
   void WriteProfileMetrics(const std::wstring& key,
                            const DictionaryValue& profile_metrics);
 
-  base::Time start_time_;
-  base::Time end_time_;
+  Time start_time_;
+  Time end_time_;
 
   std::string client_id_;
   std::string session_id_;

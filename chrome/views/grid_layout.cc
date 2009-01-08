@@ -763,7 +763,7 @@ void GridLayout::Layout(View* host) {
   DCHECK(host_ == host);
   // SizeRowsAndColumns sets the size and location of each row/column, but
   // not of the views.
-  gfx::Size pref;
+  CSize pref;
   SizeRowsAndColumns(true, host_->width(), host_->height(), &pref);
 
   // Size each view.
@@ -790,23 +790,23 @@ void GridLayout::Layout(View* host) {
 
 gfx::Size GridLayout::GetPreferredSize(View* host) {
   DCHECK(host_ == host);
-  gfx::Size out;
+  CSize out;
   SizeRowsAndColumns(false, 0, 0, &out);
-  return out;
+  return gfx::Size(out.cx, out.cy);
 }
 
 int GridLayout::GetPreferredHeightForWidth(View* host, int width) {
   DCHECK(host_ == host);
-  gfx::Size pref;
+  CSize pref;
   SizeRowsAndColumns(false, width, 0, &pref);
-  return pref.height();
+  return pref.cy;
 }
 
 void GridLayout::SizeRowsAndColumns(bool layout, int width, int height,
-                                    gfx::Size* pref) {
+                                    CSize* pref) {
   // Make sure the master columns have been calculated.
   CalculateMasterColumnsIfNecessary();
-  pref->SetSize(0, 0);
+  pref->cx = pref->cy = 0;
   if (rows_.empty())
     return;
 
@@ -822,9 +822,9 @@ void GridLayout::SizeRowsAndColumns(bool layout, int width, int height,
       // And reset the x coordinates.
       (*i)->ResetColumnXCoordinates();
     }
-    pref->set_width(std::max(pref->width(), (*i)->LayoutWidth()));
+    pref->cx = std::max(static_cast<int>(pref->cx), (*i)->LayoutWidth());
   }
-  pref->set_width(pref->width() + left_inset_ + right_inset_);
+  pref->cx += left_inset_ + right_inset_;
 
   // Reset the height of each row.
   LayoutElement::ResetSizes(&rows_);
@@ -879,13 +879,13 @@ void GridLayout::SizeRowsAndColumns(bool layout, int width, int height,
   LayoutElement::CalculateLocationsFromSize(&rows_);
 
   // We now know the preferred height, set it here.
-  pref->set_height(rows_[rows_.size() - 1]->Location() +
-             rows_[rows_.size() - 1]->Size() + top_inset_ + bottom_inset_);
+  pref->cy = rows_[rows_.size() - 1]->Location() +
+             rows_[rows_.size() - 1]->Size() + top_inset_ + bottom_inset_;
 
-  if (layout && height != pref->height()) {
+  if (layout && height != pref->cy) {
     // We're doing a layout, and the height differs from the preferred height,
     // divy up the extra space.
-    LayoutElement::DistributeDelta(height - pref->height(), &rows_);
+    LayoutElement::DistributeDelta(height - pref->cy, &rows_);
 
     // Reset y locations.
     LayoutElement::CalculateLocationsFromSize(&rows_);

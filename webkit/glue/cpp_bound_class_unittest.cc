@@ -140,6 +140,8 @@ protected:
   }
 };
 
+} // namespace
+
 // Ensures that the example object has been bound to JS.
 TEST_F(CppBoundClassTest, ObjectExists) {
   std::string js = BuildJSCondition("typeof window.example", "'object'");
@@ -239,4 +241,3 @@ TEST_F(CppBoundClassWithFallbackMethodTest,
   CheckJavaScriptSuccess(js);
 }
 
-}  // namespace

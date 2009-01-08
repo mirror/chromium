@@ -23,15 +23,19 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "ImageSource.h"
 #endif
 #include "KURL.h"
+#include "LogWin.h"
 #include "Page.h"
 #include "PlatformString.h"
 #include "RenderTreeAsText.h"
-#include "RenderView.h"
-#include "ScriptController.h"
 #include "SharedBuffer.h"
 MSVC_POP_WARNING();
 
+#if USE(V8_BINDING) || USE(JAVASCRIPTCORE_BINDINGS)
+#include "JSBridge.h"  // for set flags
+#endif
+
 #undef LOG
+#undef notImplemented
 #include "webkit/glue/webkit_glue.h"
 
 #include "base/file_version_info.h"
@@ -52,22 +56,15 @@ namespace webkit_glue {
 bool g_forcefully_terminate_plugin_process = false;
 
 void SetJavaScriptFlags(const std::wstring& str) {
-#if USE(V8)
+#if USE(V8_BINDING) || USE(JAVASCRIPTCORE_BINDINGS)
   std::string utf8_str = WideToUTF8(str);
-  WebCore::ScriptController::setFlags(utf8_str.data(), static_cast<int>(utf8_str.size()));
+  WebCore::JSBridge::setFlags(utf8_str.data(), static_cast<int>(utf8_str.size()));
 #endif
 }
 
 void SetRecordPlaybackMode(bool value) {
-#if USE(V8)
-  WebCore::ScriptController::setRecordPlaybackMode(value);
-#endif
-}
-
-
-void SetShouldExposeGCController(bool enable) {
-#if USE(V8)
-  WebCore::ScriptController::setShouldExposeGCController(enable);
+#if USE(V8_BINDING) || USE(JAVASCRIPTCORE_BINDINGS)
+  WebCore::JSBridge::setRecordPlaybackMode(value);
 #endif
 }
 
@@ -81,14 +78,51 @@ bool IsLayoutTestMode() {
   return layout_test_mode_;
 }
 
-void InitializeForTesting() {
-  WTF::initializeThreading();
-  WebCore::AtomicString::init();
+#if defined(OS_WIN)
+MONITORINFOEX GetMonitorInfoForWindowHelper(HWND window) {
+  HMONITOR monitor = MonitorFromWindow(window, MONITOR_DEFAULTTOPRIMARY);
+  MONITORINFOEX monitorInfo;
+  monitorInfo.cbSize = sizeof(MONITORINFOEX);
+  GetMonitorInfo(monitor, &monitorInfo);
+  return monitorInfo;
 }
 
-void EnableWebCoreNotImplementedLogging() {
-  WebCore::LogNotYetImplemented.state = WTFLogChannelOn;
+IMLangFontLink2* GetLangFontLinkHelper() {
+  // TODO(hbono): http://b/1072298 Experimentally disabled this code to
+  // prevent registry leaks caused by this IMLangFontLink2 interface.
+  // If you find any font-rendering regressions. Please feel free to blame me.
+  // TODO(hbono): http://b/1072298 The test shell does not use our font metrics
+  // but it uses its own font metrics which heavily depend on this
+  // IMLangFontLink2 interface. Even though we should change the test shell to
+  // use out font metrics and re-baseline such tests, we temporarily let the
+  // test shell use this interface until we complete the said change.
+  if (!IsLayoutTestMode())
+    return NULL;
+
+  static IMultiLanguage *multi_language = NULL;
+
+  if (!multi_language) {
+    if (CoCreateInstance(CLSID_CMultiLanguage, 
+                         0, 
+                         CLSCTX_ALL, 
+                         IID_IMultiLanguage, 
+                         reinterpret_cast<void**>(&multi_language)) != S_OK) {
+        return 0;
+    }
+  }
+
+  static IMLangFontLink2* lang_font_link;
+  if (!lang_font_link) {
+    if (multi_language->QueryInterface(
+            IID_IMLangFontLink2, 
+            reinterpret_cast<void**>(&lang_font_link)) != S_OK) {
+      return 0;
+    }
+  }
+
+  return lang_font_link;
 }
+#endif  // defined(OS_WIN)
 
 std::wstring DumpDocumentText(WebFrame* web_frame) {
   WebFrameImpl* webFrameImpl = static_cast<WebFrameImpl*>(web_frame);
@@ -96,20 +130,15 @@ std::wstring DumpDocumentText(WebFrame* web_frame) {
 
   // We use the document element's text instead of the body text here because
   // not all documents have a body, such as XML documents.
-  WebCore::Element* documentElement = frame->document()->documentElement();
-  if (!documentElement) {
-    return std::wstring();
-  }
-  return StringToStdWString(documentElement->innerText());
+  return StringToStdWString(frame->document()->documentElement()->innerText());
 }
 
 std::wstring DumpFramesAsText(WebFrame* web_frame, bool recursive) {
   WebFrameImpl* webFrameImpl = static_cast<WebFrameImpl*>(web_frame);
   std::wstring result;
 
-  // Add header for all but the main frame. Skip empty frames.
-  if (webFrameImpl->GetParent() &&
-      webFrameImpl->frame()->document()->documentElement()) {
+  // Add header for all but the main frame.
+  if (webFrameImpl->GetParent()) {
     result.append(L"\n--------\nFrame: '");
     result.append(webFrameImpl->GetName());
     result.append(L"'\n--------\n");
@@ -133,9 +162,8 @@ std::wstring DumpRenderer(WebFrame* web_frame) {
   WebFrameImpl* webFrameImpl = static_cast<WebFrameImpl*>(web_frame);
   WebCore::Frame* frame = webFrameImpl->frame();
 
-  WebCore::String frameText =
-      WebCore::externalRepresentation(frame->contentRenderer());
-  return StringToStdWString(frameText);
+  // This implicitly converts from a DeprecatedString.
+  return StringToStdWString(WebCore::externalRepresentation(frame->renderer()));
 }
 
 std::wstring DumpFrameScrollPosition(WebFrame* web_frame, bool recursive) {
@@ -243,8 +271,8 @@ void ResetBeforeTestRun(WebView* view) {
 
   // This is papering over b/850700.  But it passes a few more tests, so we'll
   // keep it for now.
-  if (frame && frame->script())
-    frame->script()->setEventHandlerLineno(0);
+  if (frame && frame->scriptBridge())
+    frame->scriptBridge()->setEventHandlerLineno(0);
 
   // Reset the last click information so the clicks generated from previous
   // test aren't inherited (otherwise can mistake single/double/triple clicks)
@@ -271,8 +299,8 @@ void CheckForLeaks() {
 bool DecodeImage(const std::string& image_data, SkBitmap* image) {
 #if defined(OS_WIN)  // TODO(port): unnecessary after the webkit merge lands.
    RefPtr<WebCore::SharedBuffer> buffer(
-       WebCore::SharedBuffer::create(image_data.data(),
-                                     static_cast<int>(image_data.length())));
+       new WebCore::SharedBuffer(image_data.data(),
+                                 static_cast<int>(image_data.length())));
   WebCore::ImageSource image_source;
   image_source.setData(buffer.get(), true);
 
@@ -345,9 +373,9 @@ void SetUserAgentToDefault() {
   // maximally compatible with Safari, we hope!!
   std::string product;
 
-  scoped_ptr<FileVersionInfo> version_info(
-      FileVersionInfo::CreateFileVersionInfoForCurrentModule());
-  if (version_info.get())
+  FileVersionInfo* version_info =
+      FileVersionInfo::CreateFileVersionInfoForCurrentModule();
+  if (version_info)
     product = "Chrome/" + WideToASCII(version_info->product_version());
 
   if (product.empty())
@@ -374,15 +402,6 @@ void SetUserAgentToDefault() {
       WEBKIT_VERSION_MAJOR,
       WEBKIT_VERSION_MINOR
       );
-#elif defined(OS_LINUX)
-  // TODO(agl): We don't have version information embedded in files under Linux
-  // so we use the following string which is based off the UA string for
-  // Windows. Some solution for embedding the Chrome version number needs to be
-  // found here.
-  StringAppendF(
-      &default_user_agent,
-      "Mozilla/5.0 (Linux; U; en-US) AppleWebKit/525.13 "
-      "(KHTML, like Gecko) Chrome/0.2.149.27 Safari/525.13");
 #else
   // TODO(port): we need something like FileVersionInfo for our UA string.
   NOTIMPLEMENTED();

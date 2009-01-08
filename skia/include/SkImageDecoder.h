@@ -1,18 +1,19 @@
-/*
- * Copyright (C) 2006 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+/* include/graphics/SkImageDecoder.h
+**
+** Copyright 2006, Google Inc.
+**
+** Licensed under the Apache License, Version 2.0 (the "License"); 
+** you may not use this file except in compliance with the License. 
+** You may obtain a copy of the License at 
+**
+**     http://www.apache.org/licenses/LICENSE-2.0 
+**
+** Unless required by applicable law or agreed to in writing, software 
+** distributed under the License is distributed on an "AS IS" BASIS, 
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+** See the License for the specific language governing permissions and 
+** limitations under the License.
+*/
 
 #ifndef SkImageDecoder_DEFINED
 #define SkImageDecoder_DEFINED
@@ -100,27 +101,7 @@ public:
     // approximate the sample size.
     int getSampleSize() const { return fSampleSize; }
     void setSampleSize(int size);
-    
-    /** Reset the sampleSize to its default of 1
-     */
     void resetSampleSize() { this->setSampleSize(1); }
-
-    /** Decoding is synchronous, but for long decodes, a different thread can
-        call this method safely. This sets a state that the decoders will
-        periodically check, and if they see it changed to cancel, they will
-        cancel. This will result in decode() returning false. However, there is
-        no guarantee that the decoder will see the state change in time, so
-        it is possible that cancelDecode() will be called, but will be ignored
-        and decode() will return true (assuming no other problems were
-        encountered).
-     
-        This state is automatically reset at the beginning of decode().
-     */
-    void cancelDecode() {
-        // now the subclass must query shouldCancelDecode() to be informed
-        // of the request
-        fShouldCancelDecode = true;
-    }
 
     /** Passed to the decode method. If kDecodeBounds_Mode is passed, then
         only the bitmap's width/height/config need be set. If kDecodePixels_Mode
@@ -139,9 +120,10 @@ public:
         bitmap. It can then set the pixels with the decompressed image.
         If the image cannot be decompressed, return false.
         
-        note: document use of Allocator, Peeker and Chooser 
+        note: document use of Allocator, Peeker and Chooser <reed>
     */
-    bool decode(SkStream*, SkBitmap* bitmap, SkBitmap::Config pref, Mode);
+    virtual bool onDecode(SkStream*, SkBitmap* bitmap, SkBitmap::Config pref,
+                          Mode) = 0;
 
     /** Given a stream, this will try to find an appropriate decoder object.
         If none is found, the method returns NULL.
@@ -224,23 +206,6 @@ public:
   /** @endcond */
 
 protected:
-    // must be overridden in subclasses. This guy is called by decode(...)
-    virtual bool onDecode(SkStream*, SkBitmap* bitmap, SkBitmap::Config pref,
-                          Mode) = 0;
-
-    /** Can be queried from within onDecode, to see if the user (possibly in
-        a different thread) has requested the decode to cancel. If this returns
-        true, your onDecode() should stop and return false.
-        Each subclass needs to decide how often it can query this, to balance
-        responsiveness with performance.
-     
-        Calling this outside of onDecode() may return undefined values.
-     */
-
-public:
-    bool shouldCancelDecode() const { return fShouldCancelDecode; }
-
-protected:    
     SkImageDecoder();
 
     // helper function for decoders to handle the (common) case where there is only
@@ -259,7 +224,6 @@ private:
     SkBitmap::Allocator*    fAllocator;
     int                     fSampleSize;
     bool                    fDitherImage;
-    mutable bool            fShouldCancelDecode;
 
     // illegal
     SkImageDecoder(const SkImageDecoder&);
@@ -294,3 +258,4 @@ protected:
 ///////////////////////////////////////////////////////////////////////
 
 #endif
+

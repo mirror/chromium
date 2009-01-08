@@ -11,6 +11,6 @@
 	/>
 	<Tool
 		Name="VCResourceCompilerTool"
-		AdditionalIncludeDirectories="$(OutDir)\grit_derived_sources"
+		AdditionalIncludeDirectories="$(IntDir)\..\generated_resources\"
 	/>
 </VisualStudioPropertySheet>

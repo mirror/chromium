@@ -24,7 +24,7 @@
 #include "chrome/browser/profile.h"
 #include "chrome/browser/render_process_host.h"
 #include "chrome/browser/render_view_host.h"
-#include "chrome/browser/renderer_host/resource_dispatcher_host.h"
+#include "chrome/browser/resource_dispatcher_host.h"
 #include "chrome/browser/tab_util.h"
 #include "chrome/browser/web_contents.h"
 #include "chrome/common/chrome_paths.h"
@@ -40,9 +40,6 @@
 #include "net/url_request/url_request_context.h"
 
 #include "generated_resources.h"
-
-using base::Time;
-using base::TimeDelta;
 
 // Periodically update our observers.
 class DownloadItemUpdateTask : public Task {
@@ -519,24 +516,18 @@ void DownloadManager::StartDownload(DownloadCreateInfo* info) {
   DCHECK(MessageLoop::current() == ui_loop_);
   DCHECK(info);
 
-  // Freeze the user's preference for showing a Save As dialog.  We're going to
-  // bounce around a bunch of threads and we don't want to worry about race
-  // conditions where the user changes this pref out from under us.
-  if (*prompt_for_download_)
-    info->save_as = true;
-
   // Determine the proper path for a download, by choosing either the default
   // download directory, or prompting the user.
   std::wstring generated_name;
   GenerateFilename(info, &generated_name);
-  if (info->save_as && !last_download_path_.empty())
+  if (*prompt_for_download_ && !last_download_path_.empty())
     info->suggested_path = last_download_path_;
   else
     info->suggested_path = *download_path_;
   file_util::AppendToPath(&info->suggested_path, generated_name);
 
-  if (!info->save_as) {
-    // Let's check if this download is dangerous, based on its name.
+  // Let's check if this download is dangerous, based on its name.
+  if (!*prompt_for_download_ && !info->save_as) {
     const std::wstring filename =
         file_util::GetFilenameFromPath(info->suggested_path);
     info->is_dangerous = IsDangerous(filename);
@@ -576,10 +567,10 @@ void DownloadManager::CheckIfSuggestedPathExists(DownloadCreateInfo* info) {
     while (path.empty()) {
       SStringPrintf(&file_name, L"unconfirmed %d.download",
                     base::RandInt(0, 100000));
-      path = dir;
-      file_util::AppendToPath(&path, file_name);
-      if (file_util::PathExists(path))
-        path.clear();
+       path = dir;
+       file_util::AppendToPath(&path, file_name);
+       if (file_util::PathExists(path))
+         path.clear();
     }
     info->suggested_path = path;
   } else {
@@ -589,17 +580,7 @@ void DownloadManager::CheckIfSuggestedPathExists(DownloadCreateInfo* info) {
       // Setting path_uniquifier to 0 to make sure we don't try to unique it
       // later on.
       info->path_uniquifier = 0;
-    } else if (info->path_uniquifier == -1) {
-      // We failed to find a unique path.  We have to prompt the user.
-      info->save_as = true;
     }
-  }
-
-  if (!info->save_as) {
-    // Create an empty file at the suggested path so that we don't allocate the
-    // same "non-existant" path to multiple downloads.
-    // See: http://code.google.com/p/chromium/issues/detail?id=3662
-    file_util::WriteFile(info->suggested_path, "", 0);
   }
 
   // Now we return to the UI thread.
@@ -613,12 +594,12 @@ void DownloadManager::OnPathExistenceAvailable(DownloadCreateInfo* info) {
   DCHECK(MessageLoop::current() == ui_loop_);
   DCHECK(info);
 
-  if (info->save_as) {
+  if (*prompt_for_download_ || info->save_as || info->path_uniquifier == -1) {
     // We must ask the user for the place to put the download.
     if (!select_file_dialog_.get())
       select_file_dialog_ = SelectFileDialog::Create(this);
 
-    WebContents* contents = tab_util::GetWebContentsByID(
+    TabContents* contents = tab_util::GetTabContentsByID(
         info->render_process_id, info->render_view_id);
     std::wstring filter = win_util::GetFileFilterFromPath(info->suggested_path);
     HWND owning_hwnd =
@@ -1121,7 +1102,15 @@ void DownloadManager::GenerateFilename(DownloadCreateInfo* info,
                                 L"download");
   DCHECK(!file_name.empty());
 
-  GenerateSafeFilename(info->mime_type, &file_name);
+  // Make sure we get the right file extension.
+  std::wstring extension;
+  GenerateExtension(file_name, info->mime_type, &extension);
+  file_util::ReplaceExtension(&file_name, extension);
+
+  // Prepend "_" to the file name if it's a reserved name
+  if (win_util::IsReservedName(file_name))
+    file_name = std::wstring(L"_") + file_name;
+
   generated_name->assign(file_name);
 }
 
@@ -1169,33 +1158,29 @@ bool DownloadManager::ShouldOpenFileExtension(const std::wstring& extension) {
   return false;
 }
 
-static const char* kExecutableWhiteList[] = {
-  // JavaScript is just as powerful as EXE.
-  "text/javascript",
-  "text/javascript;version=*",
-  // Some sites use binary/octet-stream to mean application/octet-stream.
-  // See http://code.google.com/p/chromium/issues/detail?id=1573
-  "binary/octet-stream"
-};
-
-static const char* kExecutableBlackList[] = {
-  // These application types are not executable.
-  "application/*+xml",
-  "application/xml"
-};
-
 // static
 bool DownloadManager::IsExecutableMimeType(const std::string& mime_type) {
-  for (int i=0; i < arraysize(kExecutableWhiteList); ++i) {
-    if (net::MatchesMimeType(kExecutableWhiteList[i], mime_type))
-      return true;
-  }
-  for (int i=0; i < arraysize(kExecutableBlackList); ++i) {
-    if (net::MatchesMimeType(kExecutableBlackList[i], mime_type))
-      return false;
-  }
-  // We consider only other application types to be executable.
-  return net::MatchesMimeType("application/*", mime_type);
+  // JavaScript is just as powerful as EXE.
+  if (net::MatchesMimeType("text/javascript", mime_type))
+    return true;
+  if (net::MatchesMimeType("text/javascript;version=*", mime_type))
+    return true;
+  // Some sites use binary/octet-stream to mean application/octet-stream.
+  // See http://code.google.com/p/chromium/issues/detail?id=1573
+  if (net::MatchesMimeType("binary/octet-stream", mime_type))
+    return true;
+
+  // We don't consider other non-application types to be executable.
+  if (!net::MatchesMimeType("application/*", mime_type))
+    return false;
+
+  // These application types are not executable.
+  if (net::MatchesMimeType("application/*+xml", mime_type))
+    return false;
+  if (net::MatchesMimeType("application/xml", mime_type))
+    return false;
+
+  return true;
 }
 
 bool DownloadManager::IsExecutable(const std::wstring& extension) {
@@ -1227,7 +1212,7 @@ void DownloadManager::SaveAutoOpens() {
 
 void DownloadManager::FileSelected(const std::wstring& path, void* params) {
   DownloadCreateInfo* info = reinterpret_cast<DownloadCreateInfo*>(params);
-  if (info->save_as)
+  if (*prompt_for_download_)
     last_download_path_ = file_util::GetDirectoryFromPath(path);
   ContinueStartDownload(info, path);
 }
@@ -1262,26 +1247,6 @@ void DownloadManager::DangerousDownloadValidated(DownloadItem* download) {
                         &DownloadManager::ProceedWithFinishedDangerousDownload,
                         download->db_handle(), download->full_path(),
                         download->original_name()));
-}
-
-void DownloadManager::GenerateSafeFilename(const std::string& mime_type,
-                                           std::wstring* file_name) {
-  // Make sure we get the right file extension.
-  std::wstring extension;
-  GenerateExtension(*file_name, mime_type, &extension);
-  file_util::ReplaceExtension(file_name, extension);
-
-  // Prepend "_" to the file name if it's a reserved name
-  std::wstring leaf_name = file_util::GetFilenameFromPath(*file_name);
-  DCHECK(!leaf_name.empty());
-  if (win_util::IsReservedName(leaf_name)) {
-    file_util::UpOneDirectoryOrEmpty(file_name);
-    if (file_name->empty()) {
-      file_name->assign(std::wstring(L"_") + leaf_name);
-    } else {
-      file_util::AppendToPath(file_name, std::wstring(L"_") + leaf_name);
-    }
-  }
 }
 
 // Operations posted to us from the history service ----------------------------
@@ -1320,7 +1285,7 @@ void DownloadManager::OnCreateDownloadEntryComplete(DownloadCreateInfo info,
   // this start completion event. If it does, tell the origin WebContents to
   // display its download shelf.
   TabContents* contents =
-      tab_util::GetWebContentsByID(info.render_process_id, info.render_view_id);
+      tab_util::GetTabContentsByID(info.render_process_id, info.render_view_id);
 
   // If the contents no longer exists or is no longer active, we start the
   // download in the last active browser. This is not ideal but better than
@@ -1372,7 +1337,3 @@ void DownloadManager::OnSearchComplete(HistoryService::Handle handle,
   requestor->SetDownloads(searched_downloads);
 }
 
-// Clears the last download path, used to initialize "save as" dialogs.
-void DownloadManager::ClearLastDownloadPath() {
-  last_download_path_.clear();
-}

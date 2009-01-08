@@ -8,12 +8,12 @@ env = env.Clone()
 
 env.Prepend(
     CPPPATH = [
-        '$CHROME_SRC_DIR/webkit/glue',
+        '#/../webkit/glue',
         '$ICU38/public/common',
         '$ICU38/public/i18n',
-        '$CHROME_SRC_DIR/third_party/libxml/include',
-        '$CHROME_SRC_DIR/third_party/npapi',
-        '$CHROME_SRC_DIR',
+        '#/../third_party/libxml/include',
+        '#/../third_party/npapi',
+        '#/..',
     ],
 )
 
@@ -24,7 +24,7 @@ env.Append(
   ],
 )
 
-if env.Bit('windows'):
+if env['PLATFORM'] == 'win32':
   env.Append(
       CCFLAGS = [
           '/TP',
@@ -39,7 +39,7 @@ input_files = [
 ]
 
 # TODO: Quarantine files -- need porting to platform-specific blocks above.
-if env.Bit('windows'):
+if env['PLATFORM'] == 'win32':
   input_files.extend([
       'activex_installer.cc',
       'default_plugin.cc',
@@ -50,12 +50,5 @@ if env.Bit('windows'):
       'install_dialog.cc',
   ])
 
-env.ChromeLibrary('default_plugin', input_files)
+env.ChromeStaticLibrary('default_plugin', input_files)
 
-env.ChromeMSVSProject('$WEBKIT_DIR/default_plugin/default_plugin.vcproj',
-                dependencies = [
-                    '$LIBXML_DIR/build/libxml_config.vcproj',
-                    ('$WEBKIT_DIR/build/localized_strings/' +
-                         'localized_strings.vcproj'),
-                ],
-                guid='{5916D37D-8C97-424F-A904-74E52594C2D6}')

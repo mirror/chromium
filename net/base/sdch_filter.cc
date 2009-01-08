@@ -23,8 +23,7 @@ SdchFilter::SdchFilter()
       dest_buffer_excess_index_(0),
       source_bytes_(0),
       output_bytes_(0),
-      time_of_last_read_(),
-      size_of_last_read_(0) {
+      time_of_last_read_() {
 }
 
 SdchFilter::~SdchFilter() {
@@ -39,8 +38,8 @@ SdchFilter::~SdchFilter() {
       decoding_status_ = DECODING_ERROR;
   }
 
-  if (base::Time() != connect_time() && base::Time() != time_of_last_read_) {
-    base::TimeDelta duration = time_of_last_read_ - connect_time();
+  if (Time() != connect_time() && Time() != time_of_last_read_) {
+    TimeDelta duration = time_of_last_read_ - connect_time();
     // Note: connect_time may be somewhat incorrect if this is cached data, as
     // it will reflect the time the connect was done for the original read :-(.
     // To avoid any chances of overflow, and since SDCH is meant to primarilly
@@ -55,10 +54,6 @@ SdchFilter::~SdchFilter() {
       if (PASS_THROUGH == decoding_status_)
         UMA_HISTOGRAM_MEDIUM_TIMES(L"Sdch.Transit_Pass-through_Latency_M",
                                    duration);
-      // Look at sizes of the 20% of blocks that arrive with large latency.
-      if (15 < duration.InSeconds())
-        UMA_HISTOGRAM_COUNTS(L"Sdch.Transit_Belated_Final_Block_Size",
-                             size_of_last_read_);
     }
   }
 
@@ -97,10 +92,8 @@ Filter::FilterStatus SdchFilter::ReadFilteredData(char* dest_buffer,
     return FILTER_ERROR;
 
   // Don't update when we're called to just flush out our internal buffers.
-  if (next_stream_data_ && stream_data_len_ > 0) {
-    time_of_last_read_ = base::Time::Now();
-    size_of_last_read_ = stream_data_len_;
-  }
+  if (next_stream_data_ && stream_data_len_ > 0)
+    time_of_last_read_ = Time::Now();
 
   if (WAITING_FOR_DICTIONARY_SELECTION == decoding_status_) {
     FilterStatus status = InitializeDictionary();

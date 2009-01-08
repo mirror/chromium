@@ -45,9 +45,12 @@ class WordIterator {
 
   // Return the current break position within the string,
   // or WordIterator::npos when done.
-  size_t pos() const { return pos_; }
+  int pos() const { return pos_; }
   // Return the value of pos() returned before Advance() was last called.
-  size_t prev() const { return prev_; }
+  int prev() const { return prev_; }
+
+  // A special position value indicating "end of string".
+  static const int npos;
 
   // Advance to the next break.  Returns false if we've run past the end of
   // the string.  (Note that the very last "word break" is after the final
@@ -79,7 +82,7 @@ class WordIterator {
   BreakType break_type_;
 
   // Previous and current iterator positions.
-  size_t prev_, pos_;
+  int prev_, pos_;
 
   DISALLOW_EVIL_CONSTRUCTORS(WordIterator);
 };

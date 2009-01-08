@@ -7,11 +7,9 @@
 
 #include <string>
 
-#include "base/compiler_specific.h"
-
-MSVC_PUSH_WARNING_LEVEL(0);
+#pragma warning(push, 0)
 #include "Timer.h"
-MSVC_POP_WARNING();
+#pragma warning(pop)
 
 #include "base/basictypes.h"
 #include "base/scoped_ptr.h"
@@ -19,6 +17,7 @@ MSVC_POP_WARNING();
 #include "webkit/glue/weberror_impl.h"
 #include "webkit/glue/weburlrequest.h"
 
+class WebCore::ResourceResponse;
 class WebFrameImpl;
 class WebView;
 

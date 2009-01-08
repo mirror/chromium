@@ -14,13 +14,12 @@
 #include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/resource_bundle.h"
-#include "net/base/mime_util.h"
 
 class DebuggerHTMLSource : public ChromeURLDataManager::DataSource {
  public:
   // Creates our datasource and sets our user message to a specific message
   // from our string bundle.
-  DebuggerHTMLSource()
+  DebuggerHTMLSource() 
       : DataSource("debugger", MessageLoop::current()) { }
 
   // Called when the network layer has requested a resource underneath
@@ -38,7 +37,7 @@ class DebuggerHTMLSource : public ChromeURLDataManager::DataSource {
       SendResponse(request_id, NULL);
       return;
     }
-
+    
     std::wstring debugger_path =
         CommandLine().GetSwitchValue(switches::kJavaScriptDebuggerPath);
     std::string data_str;
@@ -62,14 +61,6 @@ class DebuggerHTMLSource : public ChromeURLDataManager::DataSource {
     SendResponse(request_id, data_bytes);
   }
 
-  virtual std::string GetMimeType(const std::string& path) const {
-    // Currently but three choices {"", "debugger.js", "debugger.css"}.
-    // Map the extension to mime-type, defaulting to "text/html".
-    std::string mime_type("text/html");
-    net::GetMimeTypeFromFile(ASCIIToWide(path), &mime_type);
-    return mime_type;
-  }
-
  private:
   DISALLOW_EVIL_CONSTRUCTORS(DebuggerHTMLSource);
 };
@@ -78,32 +69,33 @@ class DebuggerHTMLSource : public ChromeURLDataManager::DataSource {
 class DebuggerHandler : public DOMMessageHandler {
  public:
   explicit DebuggerHandler(DOMUIHost* host) {
-    host->RegisterMessageCallback("DebuggerHostMessage",
-        NewCallback(this, &DebuggerHandler::HandleDebuggerHostMessage));
+    host->RegisterMessageCallback("command",
+        NewCallback(this, &DebuggerHandler::HandleCommand));
   }
 
-  void HandleDebuggerHostMessage(const Value* content) {
+  void HandleCommand(const Value* content) {
+    // Extract the parameters out of the input list.
     if (!content || !content->IsType(Value::TYPE_LIST)) {
       NOTREACHED();
       return;
     }
     const ListValue* args = static_cast<const ListValue*>(content);
-    if (args->GetSize() < 1) {
+    if (args->GetSize() != 1) {
       NOTREACHED();
       return;
     }
-
+    std::wstring command;
+    Value* value = NULL;
+    if (!args->Get(0, &value) || !value->GetAsString(&command)) {
+      NOTREACHED();
+      return;
+    }
 #ifndef CHROME_DEBUGGER_DISABLED
     DebuggerWrapper* wrapper = g_browser_process->debugger_wrapper();
-    DebuggerHost* debugger_host = wrapper->GetDebugger();
-    if (!debugger_host) {
-      NOTREACHED();
-      return;
-    }
-    debugger_host->OnDebuggerHostMsg(args);
+    DebuggerShell* shell = wrapper->GetDebugger();
+    shell->ProcessCommand(command);
 #endif
   }
-
  private:
   DISALLOW_EVIL_CONSTRUCTORS(DebuggerHandler);
 };
@@ -126,6 +118,8 @@ void DebuggerContents::AttachMessageHandlers() {
 
 // static
 bool DebuggerContents::IsDebuggerUrl(const GURL& url) {
-  return (url.SchemeIs("chrome") && url.host() == "inspector");
+  if (url.SchemeIs("chrome-resource") && url.host() == "debugger")
+    return true;
+  return false;
 }
 

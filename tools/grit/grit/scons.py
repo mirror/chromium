@@ -22,17 +22,9 @@ def _SourceToFile(source):
   # Get the filename of the source.  The 'source' parameter can be a string,
   # a "node", or a list of strings or nodes.
   if isinstance(source, types.ListType):
-    # TODO(gspencer):  Had to add the .rfile() method to the following
-    # line to get this to work with Repository() directories.
-    # Get this functionality folded back into the upstream grit tool.
-    #source = str(source[0])
-    source = str(source[0].rfile())
+    source = str(source[0])
   else:
-    # TODO(gspencer):  Had to add the .rfile() method to the following
-    # line to get this to work with Repository() directories.
-    # Get this functionality folded back into the upstream grit tool.
-    #source = str(source))
-    source = str(source.rfile())
+    source = str(source)
   return source
 
 
@@ -49,7 +41,7 @@ def _Builder(target, source, env):
   builder = build.RcBuilder()
   
   # Get the CPP defines from the environment.
-  for flag in env.get('RCFLAGS', []):
+  for flag in env['RCFLAGS']:
     if flag.startswith('/D'):
       flag = flag[2:]
     name, val = build.ParseDefine(flag)
@@ -73,11 +65,7 @@ def _Emitter(target, source, env):
   from grit import util
   from grit import grd_reader
   
-  # TODO(gspencer):  Had to use .abspath, not str(target[0]), to get
-  # this to work with Repository() directories.
-  # Get this functionality folded back into the upstream grit tool.
-  #base_dir = util.dirname(str(target[0]))
-  base_dir = util.dirname(target[0].abspath)
+  base_dir = util.dirname(str(target[0]))
   
   grd = grd_reader.Parse(_SourceToFile(source), debug=_IsDebugEnabled())
   
@@ -117,11 +105,7 @@ def _Scanner(file_node, env, path):
   '''
   from grit import grd_reader
   
-  # TODO(gspencer):  Had to add the .rfile() method to the following
-  # line to get this to work with Repository() directories.
-  # Get this functionality folded back into the upstream grit tool.
-  #grd = grd_reader.Parse(str(file_node)), debug=_IsDebugEnabled())
-  grd = grd_reader.Parse(str(file_node.rfile()), debug=_IsDebugEnabled())
+  grd = grd_reader.Parse(str(file_node), debug=_IsDebugEnabled())
   files = []
   for node in grd:
     if (node.name == 'structure' or node.name == 'skeleton' or
@@ -133,15 +117,18 @@ def _Scanner(file_node, env, path):
 
 # Function name is mandated by newer versions of SCons.
 def generate(env):
+  # Importing this module should be possible whenever this function is invoked
+  # since it should only be invoked by SCons.
+  import SCons.Builder
+  import SCons.Action
+  
   # The varlist parameter tells SCons that GRIT needs to be invoked again
   # if RCFLAGS has changed since last compilation.
-
-  # TODO(gspencer):  change to use the public SCons API Action()
-  # and Builder(), instead of reaching directly into internal APIs.
-  # Get this change folded back into the upstream grit tool.
-  action = env.Action(_Builder, varlist=['RCFLAGS'])
+  action = SCons.Action.FunctionAction(_Builder, varlist=['RCFLAGS'])
   
-  builder = env.Builder(action=action, emitter=_Emitter, src_suffix='.grd')
+  builder = SCons.Builder.Builder(action=action,
+                              emitter=_Emitter,
+                              src_suffix='.grd')
   
   scanner = env.Scanner(function=_Scanner, name='GRIT', skeys=['.grd'])
   

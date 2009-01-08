@@ -5,52 +5,41 @@
 #ifndef BASE_SYSTEM_MONITOR_H_
 #define BASE_SYSTEM_MONITOR_H_
 
-#include "base/observer_list_threadsafe.h"
+#include "base/logging.h"
+#include "base/observer_list.h"
 #include "base/singleton.h"
 
 namespace base {
 
-// Class for monitoring various system-related subsystems
+// Singleton class for monitoring various system-related subsystems
 // such as power management, network status, etc.
 // TODO(mbelshe):  Add support beyond just power management.
 class SystemMonitor {
  public:
   // Access to the Singleton
   static SystemMonitor* Get() {
-    // Uses the LeakySingletonTrait because cleanup is optional.
-    return 
-        Singleton<SystemMonitor, LeakySingletonTraits<SystemMonitor> >::get();
+    return Singleton<SystemMonitor>::get();
   }
-
-  // Start the System Monitor within a process.  This method
-  // is provided so that the battery check can be deferred.
-  // The MessageLoop must be started before calling this
-  // method.
-  static void Start();
 
   //
   // Power-related APIs
   //
 
   // Is the computer currently on battery power.
-  // Can be called on any thread.
-  bool BatteryPower() { 
-    // Using a lock here is not necessary for just a bool.
-    return battery_in_use_;
-  }
+  bool BatteryPower() { return battery_in_use_; }
 
   // Normalized list of power events.
   enum PowerEvent {
-    POWER_STATE_EVENT,  // The Power status of the system has changed.
-    SUSPEND_EVENT,      // The system is being suspended.
-    RESUME_EVENT        // The system is being resumed.
+    // The Power status of the system has changed.
+    PowerStateEvent,
+
+    // The system is being suspended.
+    SuspendEvent,
+
+    // The system is being resumed.
+    ResumeEvent
   };
 
-  // Callbacks will be called on the thread which creates the SystemMonitor.
-  // During the callback, Add/RemoveObserver will block until the callbacks
-  // are finished. Observers should implement quick callback functions; if
-  // lengthy operations are needed, the observer should take care to invoke
-  // the operation on an appropriate thread.
   class PowerObserver {
   public:
     // Notification of a change in power status of the computer, such
@@ -64,15 +53,32 @@ class SystemMonitor {
     virtual void OnResume(SystemMonitor*) = 0;
   };
 
-  // Add a new observer.
-  // Can be called from any thread.
-  // Must not be called from within a notification callback.
-  void AddObserver(PowerObserver* obs);
+  void AddObserver(PowerObserver* obs) {
+    observer_list_.AddObserver(obs);
+  }
 
-  // Remove an existing observer.
-  // Can be called from any thread.
-  // Must not be called from within a notification callback.
-  void RemoveObserver(PowerObserver* obs);
+  void RemoveObserver(PowerObserver* obs) {
+    observer_list_.RemoveObserver(obs);
+  }
+
+  void NotifyPowerStateChange() {
+    LOG(INFO) << L"PowerStateChange: " 
+             << (BatteryPower() ? L"On" : L"Off") << L" battery";
+    FOR_EACH_OBSERVER(PowerObserver, observer_list_,
+      OnPowerStateChange(this));
+  }
+
+  void NotifySuspend() {
+    FOR_EACH_OBSERVER(PowerObserver, observer_list_, OnSuspend(this));
+  }
+
+  void NotifyResume() {
+    FOR_EACH_OBSERVER(PowerObserver, observer_list_, OnResume(this));
+  }
+
+  // Constructor.  
+  // Don't use this; access SystemMonitor via the Singleton.
+  SystemMonitor();
 
 #if defined(OS_WIN)
   // Windows-specific handling of a WM_POWERBROADCAST message.
@@ -82,11 +88,8 @@ class SystemMonitor {
 #endif
 
   // Cross-platform handling of a power event.
+  // This is only exposed for testing.
   void ProcessPowerMessage(PowerEvent event_id);
-
-  // Constructor.  
-  // Don't use this; access SystemMonitor via the Singleton.
-  SystemMonitor();
 
  private:
   // Platform-specific method to check whether the system is currently
@@ -94,20 +97,9 @@ class SystemMonitor {
   // false otherwise.
   bool IsBatteryPower();
 
-  // Checks the battery status and notifies observers if the battery
-  // status has changed.
-  void BatteryCheck();
-
-  // Functions to trigger notifications.
-  void NotifyPowerStateChange();
-  void NotifySuspend();
-  void NotifyResume();
-
-  scoped_refptr<ObserverListThreadSafe<PowerObserver> > observer_list_;
+  ObserverList<PowerObserver> observer_list_;
   bool battery_in_use_;
   bool suspended_;
-
-  base::OneShotTimer<SystemMonitor> delayed_battery_check_;
 
   DISALLOW_COPY_AND_ASSIGN(SystemMonitor);
 };

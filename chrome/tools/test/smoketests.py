@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/bin/env python
 # Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
@@ -28,14 +28,10 @@ import subprocess
 import sys
 import time
 
-try:
-  import google.httpd_utils
-  import google.path_utils
-  import google.process_utils
-except ImportError:
-  print ("\n>> You must have your local path of trunk/src/tools/python added"
-         " to your PYTHONPATH.<<\n")
-  raise
+import google.httpd_utils
+import google.path_utils
+import google.process_utils
+
 
 # Keep a global httpd object so it can be killed in the event of errors.
 _httpd = None

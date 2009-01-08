@@ -43,7 +43,7 @@ class PluginProcessHost : public IPC::Channel::Listener,
   // be called before the object can be used. If dll is the ActiveX-shim, then
   // activex_clsid is the class id of ActiveX control, otherwise activex_clsid
   // is ignored.
-  bool Init(const FilePath& dll,
+  bool Init(const std::wstring& dll,
             const std::string& activex_clsid,
             const std::wstring& locale);
 
@@ -68,13 +68,13 @@ class PluginProcessHost : public IPC::Channel::Listener,
                            const std::string& mime_type,
                            IPC::Message* reply_msg);
 
-  const FilePath& plugin_path() const { return plugin_path_; }
+  const std::wstring& dll_path() const { return dll_path_; }
 
   // Sends the reply to an open channel request to the renderer with the given
   // channel name.
   static void ReplyToRenderer(ResourceMessageFilter* renderer_message_filter,
                               const std::wstring& channel,
-                              const FilePath& plugin_path,
+                              const std::wstring& plugin_path,
                               IPC::Message* reply_msg);
 
   // This function is called on the IO thread once we receive a reply from the
@@ -87,8 +87,6 @@ class PluginProcessHost : public IPC::Channel::Listener,
   void Shutdown();
 
  private:
-  friend class PluginResolveProxyHelper;
-
   // Sends a message to the plugin process to request creation of a new channel
   // for the given mime type.
   void RequestPluginChannel(ResourceMessageFilter* renderer_message_filter,
@@ -110,7 +108,6 @@ class PluginProcessHost : public IPC::Channel::Listener,
                   IPC::Message* sync_result);
   void OnGetCookies(uint32 request_context, const GURL& url,
                     std::string* cookies);
-  void OnResolveProxy(const GURL& url, IPC::Message* reply_msg);
 
   void OnPluginShutdownRequest();
   void OnPluginMessage(const std::vector<uint8>& data);
@@ -135,7 +132,7 @@ class PluginProcessHost : public IPC::Channel::Listener,
   std::vector<ChannelRequest> sent_requests_;
 
   // The handle to our plugin process.
-  base::Process process_;
+  Process process_;
 
   // Used to watch the plugin process handle.
   base::ObjectWatcher watcher_;
@@ -150,17 +147,12 @@ class PluginProcessHost : public IPC::Channel::Listener,
   // IPC Channel's id.
   std::wstring channel_id_;
 
-  // Path to the file of that plugin.
-  FilePath plugin_path_;
+  // Path to the DLL of that plugin.
+  std::wstring dll_path_;
 
   PluginService* plugin_service_;
 
   ResourceDispatcherHost* resource_dispatcher_host_;
-
-  // This RevocableStore prevents ResolveProxy completion callbacks from
-  // accessing a deleted PluginProcessHost (since we do not cancel the
-  // in-progress resolve requests during destruction).
-  RevocableStore revocable_store_;
 
   DISALLOW_EVIL_CONSTRUCTORS(PluginProcessHost);
 };

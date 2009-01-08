@@ -16,44 +16,42 @@
 namespace net {
 
 // static
-void HttpAuth::ChooseBestChallenge(const HttpResponseHeaders* headers,
-                                   Target target,
-                                   scoped_refptr<HttpAuthHandler>* handler) {
+HttpAuthHandler* HttpAuth::ChooseBestChallenge(
+    const HttpResponseHeaders* headers, Target target) {
   // Choose the challenge whose authentication handler gives the maximum score.
-  scoped_refptr<HttpAuthHandler> best;
+  scoped_ptr<HttpAuthHandler> best;
   const std::string header_name = GetChallengeHeaderName(target);
   std::string cur_challenge;
   void* iter = NULL;
   while (headers->EnumerateHeader(&iter, header_name, &cur_challenge)) {
-    scoped_refptr<HttpAuthHandler> cur;
-    CreateAuthHandler(cur_challenge, target, &cur);
-    if (cur && (!best || best->score() < cur->score()))
-      best.swap(cur);
+    scoped_ptr<HttpAuthHandler> cur(
+        CreateAuthHandler(cur_challenge, target));
+    if (cur.get() && (!best.get() || best->score() < cur->score()))
+      best.reset(cur.release());
   }
-  handler->swap(best);
+  return best.release();
 }
 
 // static
-void HttpAuth::CreateAuthHandler(const std::string& challenge,
-                                 Target target,
-                                 scoped_refptr<HttpAuthHandler>* handler) {
+HttpAuthHandler* HttpAuth::CreateAuthHandler(const std::string& challenge,
+                                             Target target) {
   // Find the right auth handler for the challenge's scheme.
   ChallengeTokenizer props(challenge.begin(), challenge.end());
-  scoped_refptr<HttpAuthHandler> tmp_handler;
+  scoped_ptr<HttpAuthHandler> handler;
 
   if (LowerCaseEqualsASCII(props.scheme(), "basic")) {
-    tmp_handler = new HttpAuthHandlerBasic();
+    handler.reset(new HttpAuthHandlerBasic());
   } else if (LowerCaseEqualsASCII(props.scheme(), "digest")) {
-    tmp_handler = new HttpAuthHandlerDigest();
+    handler.reset(new HttpAuthHandlerDigest());
   }
-  if (tmp_handler) {
-    if (!tmp_handler->InitFromChallenge(challenge.begin(), challenge.end(),
-                                        target)) {
+  if (handler.get()) {
+    if (!handler->InitFromChallenge(challenge.begin(), challenge.end(),
+                                    target)) {
       // Invalid/unsupported challenge.
-      tmp_handler = NULL;
+      return NULL; 
     }
   }
-  handler->swap(tmp_handler);
+  return handler.release();
 }
 
 void HttpAuth::ChallengeTokenizer::Init(std::string::const_iterator begin,

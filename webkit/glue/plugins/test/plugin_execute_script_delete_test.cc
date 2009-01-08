@@ -31,9 +31,17 @@ int16 ExecuteScriptDeleteTest::HandleEvent(void* event) {
   if (WM_PAINT == np_event->event && 
       base::strcasecmp(test_name_.c_str(),
                        "execute_script_delete_in_paint") == 0) {
-    NPUTF8* urlString = "javascript:DeletePluginWithinScript()";
-    NPUTF8* targetString = NULL;
-    browser->geturl(id(), urlString, targetString);
+
+    NPBool supports_windowless = 0;
+    NPError result = browser->getvalue(id(), NPNVSupportsWindowless,
+                                       &supports_windowless);
+    if ((result != NPERR_NO_ERROR) || (supports_windowless != TRUE)) {
+      SetError("Failed to read NPNVSupportsWindowless value");
+    } else {
+      NPUTF8* urlString = "javascript:DeletePluginWithinScript()";
+      NPUTF8* targetString = NULL;
+      browser->geturl(id(), urlString, targetString);
+    }
     SignalTestCompleted();
   } else if (WM_MOUSEMOVE == np_event->event && 
              base::strcasecmp(test_name_.c_str(),

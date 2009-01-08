@@ -14,8 +14,8 @@
 // use several DnsSlave threads to concurrently perform the
 // lookups.
 
-#ifndef CHROME_BROWSER_NET_DNS_MASTER_H_
-#define CHROME_BROWSER_NET_DNS_MASTER_H_
+#ifndef CHROME_BROWSER_NET_DNS_MASTER_H__
+#define CHROME_BROWSER_NET_DNS_MASTER_H__
 
 #include <map>
 #include <queue>
@@ -24,7 +24,6 @@
 #include "base/condition_variable.h"
 #include "base/scoped_ptr.h"
 #include "chrome/browser/net/dns_host_info.h"
-#include "chrome/browser/net/referrer.h"
 #include "chrome/common/net/dns.h"
 #include "googleurl/src/url_canon.h"
 
@@ -38,9 +37,9 @@ typedef std::map<std::string, DnsHostInfo> Results;
 class DnsMaster {
  public:
   // The number of slave processes that will do DNS prefetching
-  static const size_t kSlaveCountMax = 8;
+  static const int kSlaveCountMax = 8;
 
-  explicit DnsMaster(base::TimeDelta shutdown_wait_time);
+  explicit DnsMaster(TimeDelta shutdown_wait_time);
 
   ~DnsMaster() {
     if (!shutdown_)
@@ -64,28 +63,12 @@ class DnsMaster {
   void DiscardAllResults();
 
   // Add hostname(s) to the queue for processing by slaves
-  void ResolveList(const NameList& hostnames,
-                   DnsHostInfo::ResolutionMotivation motivation);
-  void Resolve(const std::string& hostname,
-               DnsHostInfo::ResolutionMotivation motivation);
+  void ResolveList(const NameList& hostnames);
+  void Resolve(const std::string& hostname);
 
   // Get latency benefit of the prefetch that we are navigating to.
-  bool AccruePrefetchBenefits(const GURL& referrer,
-                              DnsHostInfo* navigation_info);
+  bool AcruePrefetchBenefits(DnsHostInfo* host_info);
 
-  // Instigate prefetch of any domains we predict will be needed after this
-  // navigation.
-  void NavigatingTo(const std::string& host_name);
-
-  // Record details of a navigation so that we can preresolve the host name
-  // ahead of time the next time the users navigates to the indicated host.
-  void NonlinkNavigation(const GURL& referrer, DnsHostInfo* navigation_info);
-
-  // Dump HTML table containing list of referrers for about:dns.
-  void GetHtmlReferrerLists(std::string* output);
-
-  // Dump the list of currently know referrer domains and related prefetchable
-  // domains.
   void GetHtmlInfo(std::string* output);
 
   // For testing only...
@@ -99,21 +82,21 @@ class DnsMaster {
   // Accessor methods, used mostly for testing.
   // Both functions return DnsHostInfo::kNullDuration if name was not yet
   // processed enough.
-  base::TimeDelta GetResolutionDuration(const std::string hostname) {
+  TimeDelta GetResolutionDuration(const std::string hostname) {
     AutoLock auto_lock(lock_);
     if (results_.find(hostname) == results_.end())
       return DnsHostInfo::kNullDuration;
     return results_[hostname].resolve_duration();
   }
 
-  base::TimeDelta GetQueueDuration(const std::string hostname) {
+  TimeDelta GetQueueDuration(const std::string hostname) {
     AutoLock auto_lock(lock_);
     if (results_.find(hostname) == results_.end())
       return DnsHostInfo::kNullDuration;
     return results_[hostname].queue_duration();
   }
 
-  size_t running_slave_count() {
+  int running_slave_count() {
     AutoLock auto_lock(lock_);
     return running_slave_count_;
   }
@@ -137,42 +120,31 @@ class DnsMaster {
   void SetSlaveHasTerminated(int slave_index);
 
  private:
-  // A map that is keyed with the hostnames that we've learned were the cause
-  // of loading additional hostnames.  The list of additional hostnames in held
-  // in a Referrer instance, which is found in this type.
-  typedef std::map<std::string, Referrer> Referrers;
+  //----------------------------------------------------------------------------
+  // Internal helper functions
 
   // "PreLocked" means that the caller has already Acquired lock_ in the
   // following method names.
-  // Queue hostname for resolution.  If queueing was done, return the pointer
-  // to the queued instance, otherwise return NULL.
-  DnsHostInfo* PreLockedResolve(const std::string& hostname,
-                                DnsHostInfo::ResolutionMotivation motivation);
+  void PreLockedResolve(const std::string& hostname);
   bool PreLockedCreateNewSlaveIfNeeded();  // Lazy slave processes creation.
 
   // Number of slave processes started early (to help with startup prefetch).
-  static const size_t kSlaveCountMin = 4;
+  static const int kSlaveCountMin = 4;
 
-  // Synchronize access to results_, referrers_, and slave control data.
   Lock lock_;
 
   // name_buffer_ holds a list of names we need to look up.
   std::queue<std::string> name_buffer_;
 
-  // results_ contains information for existing/prior prefetches.
+  // results_ contains information progress for existing/prior prefetches.
   Results results_;
-
-  // For each hostname that we might navigate to (that we've "learned about")
-  // we have a Referrer list. Each Referrer list has all hostnames we need to
-  // pre-resolve when there is a navigation to the orginial hostname.
-  Referrers referrers_;
 
   // Signaling slaves to process elements in the queue, or to terminate,
   // is done using ConditionVariables.
   ConditionVariable slaves_have_work_;
 
-  size_t slave_count_;  // Count of slave processes started.
-  size_t running_slave_count_;  // Count of slaves process still running.
+  int slave_count_;  // Count of slave processes started.
+  int running_slave_count_;  // Count of slaves process still running.
 
   // The following arrays are only initialized as
   // slave_count_ grows (up to the indicated max).
@@ -185,7 +157,7 @@ class DnsMaster {
 
   // The following is the maximum time the ShutdownSlaves method
   // will wait for all the slave processes to terminate.
-  const base::TimeDelta kShutdownWaitTime_;
+  const TimeDelta kShutdownWaitTime_;
 
   // A list of successful events resulting from pre-fetching.
   DnsHostInfo::DnsInfoTable cache_hits_;
@@ -193,10 +165,10 @@ class DnsMaster {
   // and before the HTTP stack tried to look them up.
   Results cache_eviction_map_;
 
-  DISALLOW_COPY_AND_ASSIGN(DnsMaster);
+  DISALLOW_EVIL_CONSTRUCTORS(DnsMaster);
 };
 
 }  // namespace chrome_browser_net
 
-#endif  // CHROME_BROWSER_NET_DNS_MASTER_H_
+#endif  // CHROME_BROWSER_NET_DNS_MASTER_H__
 

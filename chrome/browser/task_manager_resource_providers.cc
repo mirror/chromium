@@ -33,8 +33,8 @@ TaskManagerWebContentsResource::TaskManagerWebContentsResource(
     : web_contents_(web_contents) {
   // We cache the process as when the WebContents is closed the process
   // becomes NULL and the TaskManager still needs it.
-  process_ = web_contents_->process()->process().handle();
-  pid_ = base::GetProcId(process_);
+  process_ = web_contents_->process()->process();
+  pid_ = process_util::GetProcId(process_);
 }
 
 TaskManagerWebContentsResource::~TaskManagerWebContentsResource() {
@@ -85,19 +85,22 @@ TaskManager::Resource* TaskManagerWebContentsResourceProvider::GetResource(
     int render_process_host_id,
     int routing_id) {
 
-  WebContents* web_contents =
-      tab_util::GetWebContentsByID(render_process_host_id, routing_id);
-  if (!web_contents)  // Not one of our resource.
+  TabContents* tab_contents =
+      tab_util::GetTabContentsByID(render_process_host_id, routing_id);
+  if (!tab_contents)  // Not one of our resource.
+    return NULL;
+  WebContents* web_contents = tab_contents->AsWebContents();
+  if (!web_contents)
     return NULL;
 
-  if (!web_contents->process()->process().handle()) {
+  if (!web_contents->process()->process()) {
     // We should not be holding on to a dead tab (it should have been removed
     // through the NOTIFY_WEB_CONTENTS_DISCONNECTED notification.
     NOTREACHED();
     return NULL;
   }
 
-  int pid = web_contents->process()->process().pid();
+  int pid = process_util::GetProcId(web_contents->process()->process());
   if (pid != origin_pid)
     return NULL;
 
@@ -118,7 +121,7 @@ void TaskManagerWebContentsResourceProvider::StartUpdating() {
   for (WebContentsIterator iterator; !iterator.done(); iterator++) {
     WebContents* web_contents = *iterator;
     // Don't add dead tabs or tabs that haven't yet connected.
-    if (web_contents->process()->process().handle() &&
+    if (web_contents->process()->process() &&
         web_contents->notify_disconnection())
       AddToTaskManager(web_contents);
   }
@@ -163,7 +166,7 @@ void TaskManagerWebContentsResourceProvider::Add(WebContents* web_contents) {
   if (!updating_)
     return;
 
-  if (!web_contents->process()->process().handle()) {
+  if (!web_contents->process()->process()) {
     // Don't add sad tabs, we would have no information to show for them since
     // they have no associated process.
     return;
@@ -233,7 +236,7 @@ TaskManagerPluginProcessResource::TaskManagerPluginProcessResource(
     : plugin_process_(plugin_proc),
       title_(),
       network_usage_support_(false) {
-  pid_ = base::GetProcId(plugin_proc.process());
+  pid_ = process_util::GetProcId(plugin_proc.process());
   if (!default_icon_) {
     ResourceBundle& rb = ResourceBundle::GetSharedInstance();
     default_icon_ = rb.GetBitmapNamed(IDR_PLUGIN);
@@ -249,7 +252,7 @@ std::wstring TaskManagerPluginProcessResource::GetTitle() const {
     std::wstring plugin_name;
     WebPluginInfo info;
     if (PluginService::GetInstance()->
-            GetPluginInfoByDllPath(plugin_process_.plugin_path(), &info))
+            GetPluginInfoByDllPath(plugin_process_.dll_path(), &info))
       plugin_name = info.name;
     else
       plugin_name = l10n_util::GetString(IDS_TASK_MANAGER_UNKNOWN_PLUGIN_NAME);
@@ -396,7 +399,7 @@ void TaskManagerPluginProcessResourceProvider::AddToTaskManager(
   TaskManagerPluginProcessResource* resource =
       new TaskManagerPluginProcessResource(plugin_process_info);
   resources_[plugin_process_info] = resource;
-  pid_to_resources_[base::GetProcId(plugin_process_info.process())] =
+  pid_to_resources_[process_util::GetProcId(plugin_process_info.process())] =
       resource;
   task_manager_->AddResource(resource);
 }
@@ -406,7 +409,7 @@ void TaskManagerPluginProcessResourceProvider::RetrievePluginProcessInfo() {
   for (PluginProcessHostIterator iter; !iter.Done(); ++iter) {
     PluginProcessHost* plugin = const_cast<PluginProcessHost*>(*iter);
     DCHECK(plugin->process());
-    PluginProcessInfo plugin_info(plugin->plugin_path(), plugin->process());
+    PluginProcessInfo plugin_info(plugin->dll_path(), plugin->process());
     existing_plugin_process_info.push_back(plugin_info);
   }
   // Now notify the UI thread that we have retrieved the PluginProcessHosts.

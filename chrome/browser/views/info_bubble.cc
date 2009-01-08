@@ -7,13 +7,12 @@
 #include "base/win_util.h"
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/browser_window.h"
-#include "chrome/browser/views/frame/browser_view.h"
+#include "chrome/browser/frame_util.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/path.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
 #include "chrome/views/root_view.h"
-#include "chrome/views/window.h"
 
 using views::View;
 
@@ -71,14 +70,16 @@ InfoBubble* InfoBubble::Show(HWND parent_hwnd,
                              views::View* content,
                              InfoBubbleDelegate* delegate) {
   InfoBubble* window = new InfoBubble();
-  DLOG(WARNING) << "new bubble=" << window;
   window->Init(parent_hwnd, position_relative_to, content);
+  BrowserWindow* frame = window->GetHostingWindow();
+  if (frame)
+    frame->InfoBubbleShowing();
   window->ShowWindow(SW_SHOW);
   window->delegate_ = delegate;
   return window;
 }
 
-InfoBubble::InfoBubble() : content_view_(NULL), closed_(false) {
+InfoBubble::InfoBubble() : content_view_(NULL) {
 }
 
 InfoBubble::~InfoBubble() {
@@ -87,15 +88,6 @@ InfoBubble::~InfoBubble() {
 void InfoBubble::Init(HWND parent_hwnd,
                       const gfx::Rect& position_relative_to,
                       views::View* content) {
-  HWND owning_frame_hwnd = GetAncestor(parent_hwnd, GA_ROOTOWNER);
-  // We should always have a frame, but there was a bug elsewhere that
-  // made it possible for the frame to be NULL, so we have the check. If
-  // you hit this, file a bug.
-  DCHECK(BrowserView::GetBrowserWindowForHWND(owning_frame_hwnd));
-  parent_ = reinterpret_cast<views::Window*>(win_util::GetWindowUserData(
-      owning_frame_hwnd));
-  parent_->DisableInactiveRendering(true);
-
   if (kInfoBubbleCornerTopLeft == NULL) {
     kInfoBubbleCornerTopLeft = ResourceBundle::GetSharedInstance()
         .GetBitmapNamed(IDR_INFO_BUBBLE_CORNER_TOP_LEFT);
@@ -108,9 +100,6 @@ void InfoBubble::Init(HWND parent_hwnd,
   }
   set_window_style(WS_POPUP | WS_CLIPCHILDREN);
   set_window_ex_style(WS_EX_LAYERED | WS_EX_TOOLWINDOW);
-  // Because we're going to change the alpha value of the layered window we
-  // don't want to use the offscreen buffer provided by WidgetWin.
-  SetUseLayeredBuffer(false);
   content_view_ = CreateContentView(content);
   gfx::Rect bounds = content_view_->
       CalculateWindowBounds(parent_hwnd, position_relative_to);
@@ -118,12 +107,17 @@ void InfoBubble::Init(HWND parent_hwnd,
       (win_util::GetWinVersion() < win_util::WINVERSION_XP) ?
       0 : CS_DROPSHADOW);
 
-  WidgetWin::Init(parent_hwnd, bounds, true);
+  ContainerWin::Init(parent_hwnd, bounds, true);
   SetContentsView(content_view_);
   // The preferred size may differ when parented. Ask for the bounds again
   // and if they differ reset the bounds.
   gfx::Rect parented_bounds = content_view_->
       CalculateWindowBounds(parent_hwnd, position_relative_to);
+
+  // Set our initial alpha to zero so we don't flicker at the user. This
+  // doesn't trigger UpdateLayeredWindow, which would explode our native
+  // controls.
+  SetLayeredAlpha(kMinimumAlpha);
 
   if (bounds != parented_bounds) {
     SetWindowPos(NULL, parented_bounds.x(), parented_bounds.y(),
@@ -140,18 +134,18 @@ void InfoBubble::Init(HWND parent_hwnd,
                                                         false, false),
                                      this);
 
-  // Set initial alpha value of the layered window.
-  SetLayeredWindowAttributes(GetHWND(),
-                             RGB(0xFF, 0xFF, 0xFF),
-                             kMinimumAlpha,
-                             LWA_ALPHA);
-
   fade_animation_.reset(new SlideAnimation(this));
   fade_animation_->Show();
 }
 
 void InfoBubble::Close() {
-  Close(false);
+  // We don't fade out because it looks terrible.
+  BrowserWindow* frame = GetHostingWindow();
+  if (delegate_)
+    delegate_->InfoBubbleClosing(this);
+  if (frame)
+    frame->InfoBubbleClosing();
+  ContainerWin::Close();
 }
 
 void InfoBubble::AnimationProgressed(const Animation* animation) {
@@ -163,14 +157,13 @@ void InfoBubble::AnimationProgressed(const Animation* animation) {
                              RGB(0xFF, 0xFF, 0xFF),
                              alpha,
                              LWA_ALPHA);
-  // Don't need to invoke paint as SetLayeredWindowAttributes handles that for
-  // us.
+  content_view_->SchedulePaint();
 }
 
 bool InfoBubble::AcceleratorPressed(const views::Accelerator& accelerator) {
   DCHECK(accelerator.GetKeyCode() == VK_ESCAPE);
   if (!delegate_ || delegate_->CloseOnEscape()) {
-    Close(true);
+    Close();
     return true;
   }
   return false;
@@ -182,7 +175,7 @@ void InfoBubble::OnSize(UINT param, const CSize& size) {
 
 void InfoBubble::OnActivate(UINT action, BOOL minimized, HWND window) {
   // The popup should close when it is deactivated.
-  if (action == WA_INACTIVE && !closed_) {
+  if (action == WA_INACTIVE) {
     Close();
   } else if (action == WA_ACTIVE) {
     DCHECK(GetRootView()->GetChildViewCount() > 0);
@@ -194,16 +187,16 @@ InfoBubble::ContentView* InfoBubble::CreateContentView(View* content) {
   return new ContentView(content, this);
 }
 
-void InfoBubble::Close(bool closed_by_escape) {
-  if (closed_)
-    return;
-
-  // We don't fade out because it looks terrible.
-  if (delegate_)
-    delegate_->InfoBubbleClosing(this, closed_by_escape);
-  parent_->DisableInactiveRendering(false);
-  closed_ = true;
-  WidgetWin::Close();
+BrowserWindow* InfoBubble::GetHostingWindow() {
+  HWND owning_frame_hwnd = GetAncestor(GetHWND(), GA_ROOTOWNER);
+  BrowserWindow* frame = FrameUtil::GetBrowserWindowForHWND(owning_frame_hwnd);
+  if (!frame) {
+    // We should always have a frame, but there was a bug else where that
+    // made it possible for the frame to be NULL, so we have the check. If
+    // you hit this, file a bug.
+    NOTREACHED();
+  }
+  return frame;
 }
 
 // ContentView ----------------------------------------------------------------
@@ -424,3 +417,4 @@ gfx::Rect InfoBubble::ContentView::CalculateWindowBounds(
   }
   return gfx::Rect(x, y, pref.width(), pref.height());
 }
+

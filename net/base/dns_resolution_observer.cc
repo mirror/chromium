@@ -5,9 +5,10 @@
 // This file supports network stack independent notification of progress
 // towards resolving a hostname.
 
-#include "net/base/dns_resolution_observer.h"
-
+#include <windows.h>
 #include <string>
+
+#include "net/base/dns_resolution_observer.h"
 
 #include "base/logging.h"
 
@@ -47,13 +48,10 @@ void DidStartDnsResolution(const std::string& name, void* context) {
     current_observer->OnStartResolution(name, context);
 }
 
-void DidFinishDnsResolutionWithStatus(bool was_resolved,
-                                      const GURL& referrer,
-                                      void* context) {
+void DidFinishDnsResolutionWithStatus(bool was_resolved, void* context) {
   DnsResolutionObserver* current_observer = dns_resolution_observer;
   if (current_observer) {
-    current_observer->OnFinishResolutionWithStatus(was_resolved, referrer,
-                                                   context);
+    current_observer->OnFinishResolutionWithStatus(was_resolved, context);
   }
 }
 

@@ -32,11 +32,11 @@ class WebRequestImpl : public WebRequest {
   virtual GURL GetMainDocumentURL() const;
   virtual WebRequestCachePolicy GetCachePolicy() const;
   virtual void SetCachePolicy(WebRequestCachePolicy policy);
-  virtual std::string GetHttpMethod() const;
-  virtual void SetHttpMethod(const std::string& method);
-  virtual std::string GetHttpHeaderValue(const std::string& field) const;
-  virtual void SetHttpHeaderValue(const std::string& field,
-      const std::string& value);
+  virtual std::wstring GetHttpMethod() const;
+  virtual void SetHttpMethod(const std::wstring& method);
+  virtual std::wstring GetHttpHeaderValue(const std::wstring& field) const;
+  virtual void SetHttpHeaderValue(const std::wstring& field,
+      const std::wstring& value);
   virtual void GetHttpHeaders(HeaderMap* headers) const;
   virtual void SetHttpHeaders(const HeaderMap& headers);
   virtual std::wstring GetHttpReferrer() const;
@@ -44,9 +44,7 @@ class WebRequestImpl : public WebRequest {
   virtual void SetHistoryState(const std::string& value);
   virtual std::string GetSecurityInfo() const;
   virtual void SetSecurityInfo(const std::string& value);
-  virtual bool HasUploadData() const;
-  virtual void GetUploadData(net::UploadData* data) const;
-  virtual void SetUploadData(const net::UploadData& data);
+  virtual bool HasFormData() const;
 
   // WebRequestImpl
   const WebCore::FrameLoadRequest& frame_load_request() const {

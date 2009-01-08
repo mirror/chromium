@@ -9,8 +9,6 @@
 #include "testing/gtest/include/gtest/gtest.h"
 #include "webkit/glue/cache_manager.h"
 
-using base::Time;
-
 class CacheManagerHostTest : public testing::Test {
  protected:
   typedef CacheManagerHost::StatsMap StatsMap;

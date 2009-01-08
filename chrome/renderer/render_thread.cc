@@ -7,7 +7,9 @@
 
 #include "chrome/renderer/render_thread.h"
 
+#include "base/lazy_instance.h"
 #include "base/shared_memory.h"
+#include "base/thread_local.h"
 #include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/common/ipc_logging.h"
 #include "chrome/common/notification_service.h"
@@ -19,15 +21,21 @@
 #include "chrome/renderer/visitedlink_slave.h"
 #include "webkit/glue/cache_manager.h"
 
-RenderThread* g_render_thread;
-
 static const unsigned int kCacheStatsDelayMS = 2000 /* milliseconds */;
 
 // V8 needs a 1MB stack size.
 static const size_t kStackSize = 1024 * 1024;
 
+static base::LazyInstance<base::ThreadLocalPointer<RenderThread> >
+    lazy_tls_ptr(base::LINKER_INITIALIZED);
+
 //-----------------------------------------------------------------------------
 // Methods below are only called on the owner's thread:
+
+// static
+RenderThread* RenderThread::current() {
+  return lazy_tls_ptr.Pointer()->Get();
+}
 
 RenderThread::RenderThread(const std::wstring& channel_name)
     : Thread("Chrome_RenderThread"),
@@ -71,8 +79,8 @@ void RenderThread::RemoveFilter(IPC::ChannelProxy::MessageFilter* filter) {
 }
 
 void RenderThread::Resolve(const char* name, size_t length) {
-  return render_dns_master_->Resolve(name, length);
-}
+    return render_dns_master_->Resolve(name, length);
+  }
 
 void RenderThread::AddRoute(int32 routing_id,
                             IPC::Channel::Listener* listener) {
@@ -89,8 +97,7 @@ void RenderThread::RemoveRoute(int32 routing_id) {
 }
 
 void RenderThread::Init() {
-  DCHECK(!g_render_thread);
-  g_render_thread = this;
+  DCHECK(!current()) << "should only have one RenderThread per thread";
 
   notification_service_.reset(new NotificationService);
 
@@ -100,6 +107,8 @@ void RenderThread::Init() {
   channel_.reset(new IPC::SyncChannel(channel_name_,
       IPC::Channel::MODE_CLIENT, this, NULL, owner_loop_, true,
       RenderProcess::GetShutDownEvent()));
+
+  lazy_tls_ptr.Pointer()->Set(this);
 
   // The renderer thread should wind-up COM.
   CoInitialize(0);
@@ -115,8 +124,7 @@ void RenderThread::Init() {
 }
 
 void RenderThread::CleanUp() {
-  DCHECK(g_render_thread == this);
-  g_render_thread = NULL;
+  DCHECK(current() == this);
 
   // Need to destruct the SyncChannel to the browser before we go away because
   // it caches a pointer to this thread.
@@ -140,15 +148,14 @@ void RenderThread::CleanUp() {
   CoUninitialize();
 }
 
-void RenderThread::OnUpdateVisitedLinks(base::SharedMemoryHandle table) {
+void RenderThread::OnUpdateVisitedLinks(SharedMemoryHandle table) {
   DCHECK(table) << "Bad table handle";
   visited_link_slave_->Init(table);
 }
 
-void RenderThread::OnUpdateGreasemonkeyScripts(
-    base::SharedMemoryHandle scripts) {
+void RenderThread::OnUpdateGreasemonkeyScripts(SharedMemoryHandle scripts) {
   DCHECK(scripts) << "Bad scripts handle";
-  greasemonkey_slave_->UpdateScripts(scripts);
+  greasemonkey_slave_->UpdateScripts(scripts);  
 }
 
 void RenderThread::OnMessageReceived(const IPC::Message& msg) {
@@ -175,10 +182,10 @@ void RenderThread::OnMessageReceived(const IPC::Message& msg) {
   }
 }
 
-void RenderThread::OnPluginMessage(const FilePath& plugin_path,
+void RenderThread::OnPluginMessage(const std::wstring& dll_path,
                                    const std::vector<uint8>& data) {
   CHECK(ChromePluginLib::IsPluginThread());
-  ChromePluginLib *chrome_plugin = ChromePluginLib::Find(plugin_path);
+  ChromePluginLib *chrome_plugin = ChromePluginLib::Find(dll_path);
   if (chrome_plugin) {
     void *data_ptr = const_cast<void*>(reinterpret_cast<const void*>(&data[0]));
     uint32 data_len = static_cast<uint32>(data.size());
@@ -199,7 +206,7 @@ void RenderThread::OnCreateNewView(HWND parent_hwnd,
   // TODO(darin): once we have a RenderThread per RenderView, this will need to
   // change to assert that we are not creating more than one view.
   RenderView::Create(
-      this, parent_hwnd, modal_dialog_event, MSG_ROUTING_NONE, webkit_prefs,
+      parent_hwnd, modal_dialog_event, MSG_ROUTING_NONE, webkit_prefs,
       new SharedRenderViewCounter(0), view_id);
 }
 

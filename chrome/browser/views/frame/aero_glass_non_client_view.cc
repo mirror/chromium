@@ -5,7 +5,7 @@
 #include "chrome/browser/views/frame/aero_glass_non_client_view.h"
 
 #include "chrome/app/theme/theme_resources.h"
-#include "chrome/browser/views/frame/browser_view.h"
+#include "chrome/browser/views/frame/browser_view2.h"
 #include "chrome/browser/views/tabs/tab_strip.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/chrome_font.h"
@@ -126,7 +126,7 @@ static const int kNoTitleOTRZoomedTopSpacing = 3;
 // AeroGlassNonClientView, public:
 
 AeroGlassNonClientView::AeroGlassNonClientView(AeroGlassFrame* frame,
-                                               BrowserView* browser_view)
+                                               BrowserView2* browser_view)
     : frame_(frame),
       browser_view_(browser_view) {
   InitClass();
@@ -145,7 +145,9 @@ gfx::Rect AeroGlassNonClientView::GetBoundsForTabStrip(TabStrip* tabstrip) {
     titlebar_info.cbSize = sizeof(TITLEBARINFOEX);
     SendMessage(frame_->GetHWND(), WM_GETTITLEBARINFOEX, 0,
       reinterpret_cast<WPARAM>(&titlebar_info));
-    tabstrip_width = titlebar_info.rgrect[2].left;  // Edge of minimize button
+
+    // rgrect[2] refers to the minimize button.
+    tabstrip_width -= (tabstrip_width - titlebar_info.rgrect[2].left);
   }
   int tabstrip_height = tabstrip->GetPreferredHeight();
   int tabstrip_x = otr_avatar_bounds_.width() + kOTRAvatarIconTabStripSpacing;
@@ -179,7 +181,7 @@ gfx::Size AeroGlassNonClientView::CalculateWindowSizeForClientSize(
 
 CPoint AeroGlassNonClientView::GetSystemMenuPoint() const {
   CPoint offset(0, 0);
-  MapWindowPoints(GetWidget()->GetHWND(), HWND_DESKTOP, &offset, 1);
+  MapWindowPoints(GetContainer()->GetHWND(), HWND_DESKTOP, &offset, 1);
   return offset;
 }
 
@@ -217,15 +219,9 @@ int AeroGlassNonClientView::NonClientHitTest(const gfx::Point& point) {
 
 void AeroGlassNonClientView::GetWindowMask(const gfx::Size& size,
                                            gfx::Path* window_mask) {
-  // We use the native window region.
 }
 
 void AeroGlassNonClientView::EnableClose(bool enable) {
-  // This is handled exclusively by Window.
-}
-
-void AeroGlassNonClientView::ResetWindowControls() {
-  // Our window controls are rendered by the system and do not require reset.
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -258,7 +254,7 @@ void AeroGlassNonClientView::ViewHierarchyChanged(bool is_add,
                                                   views::View* parent,
                                                   views::View* child) {
   if (is_add && child == this) {
-    DCHECK(GetWidget());
+    DCHECK(GetContainer());
     DCHECK(frame_->client_view()->GetParent() != this);
     AddChildView(frame_->client_view());
   }

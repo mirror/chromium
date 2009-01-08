@@ -4,7 +4,6 @@
 
 #include "chrome/browser/bookmarks/bookmark_storage.h"
 
-#include "base/compiler_specific.h"
 #include "base/file_util.h"
 #include "base/json_writer.h"
 #include "base/message_loop.h"
@@ -32,7 +31,8 @@ const int kSaveDelayMS = 2500;
 
 BookmarkStorage::BookmarkStorage(Profile* profile, BookmarkModel* model)
     : model_(model),
-      ALLOW_THIS_IN_INITIALIZER_LIST(save_factory_(this)),
+#pragma warning(suppress: 4355)  // Okay to pass "this" here.
+      save_factory_(this),
       backend_thread_(g_browser_process->file_thread()) {
   std::wstring path = profile->GetPath();
   file_util::AppendToPath(&path, chrome::kBookmarksFileName);
@@ -139,10 +139,13 @@ void BookmarkStorageBackend::Write(Value* value) {
   int bytes_written = file_util::WriteFile(tmp_file, content.c_str(),
                                            static_cast<int>(content.length()));
   if (bytes_written != -1) {
-    if (!file_util::Move(tmp_file, path_)) {
+    if (!MoveFileEx(tmp_file.c_str(), path_.c_str(),
+                    MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING)) {
       // Rename failed. Try again on the off chance someone has locked either
       // file and hope we're successful the second time through.
-      bool move_result = file_util::Move(tmp_file, path_);
+      BOOL move_result =
+          MoveFileEx(tmp_file.c_str(), path_.c_str(),
+                     MOVEFILE_COPY_ALLOWED | MOVEFILE_REPLACE_EXISTING);
       DCHECK(move_result);
       if (!move_result)
         LOG(WARNING) << " writing bookmarks failed, result=" << move_result;
@@ -167,7 +170,7 @@ void BookmarkStorageBackend::Read(scoped_refptr<BookmarkStorage> service,
   Value* root = NULL;
   if (bookmark_file_exists) {
     JSONFileValueSerializer serializer(path);
-    root = serializer.Deserialize(NULL);
+    serializer.Deserialize(&root);
   }
 
   // BookmarkStorage takes ownership of root.

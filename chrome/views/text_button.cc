@@ -10,6 +10,7 @@
 #include "chrome/common/throb_animation.h"
 #include "chrome/common/win_util.h"
 #include "chrome/views/button.h"
+#include "chrome/views/container.h"
 #include "chrome/views/event.h"
 #include "chrome/views/view_menu_delegate.h"
 
@@ -149,7 +150,7 @@ TextButton::TextButton(const std::wstring& text)
       max_width_(0),
       alignment_(ALIGN_LEFT) {
   SetText(text);
-  set_border(new TextButtonBorder);
+  SetBorder(new TextButtonBorder);
   SetAnimationDuration(kHoverAnimationDurationMs);
 }
 

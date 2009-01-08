@@ -1,6 +1,6 @@
 /* libs/graphics/sgl/SkScan_Antihair.cpp
 **
-** Copyright 2006, The Android Open Source Project
+** Copyright 2006, Google Inc.
 **
 ** Licensed under the Apache License, Version 2.0 (the "License"); 
 ** you may not use this file except in compliance with the License. 
@@ -22,12 +22,6 @@
 #include "SkFDot6.h"
 
 #define HLINE_STACK_BUFFER      100
-
-static inline int SmallDot6Scale(int value, int dot6) {
-    SkASSERT((int16_t)value == value);
-    SkASSERT((unsigned)dot6 <= 64);
-    return SkMulS16(value, dot6) >> 6;
-}
 
 //#define TEST_GAMMA
 
@@ -58,9 +52,8 @@ static inline int SmallDot6Scale(int value, int dot6) {
     #define ApplyGamma(table, alpha)    SkToU8(alpha)
 #endif
 
-///////////////////////////////////////////////////////////////////////////////
 
-static void call_hline_blitter(SkBlitter* blitter, int x, int y, int count, U8CPU alpha)
+static void call_hline_blitter(SkBlitter* blitter, int x, int y, int count, uint8_t alpha)
 {
     SkASSERT(count > 0);
 
@@ -81,7 +74,7 @@ static void call_hline_blitter(SkBlitter* blitter, int x, int y, int count, U8CP
     } while (count > 0);
 }
 
-static SkFixed hline(int x, int stopx, SkFixed fy, SkFixed /*slope*/, SkBlitter* blitter, int mod64)
+static void hline(int x, int stopx, SkFixed fy, SkFixed /*slope*/, SkBlitter* blitter)
 {
     SkASSERT(x < stopx);
     int count = stopx - x;
@@ -91,21 +84,16 @@ static SkFixed hline(int x, int stopx, SkFixed fy, SkFixed /*slope*/, SkBlitter*
     uint8_t  a = (uint8_t)(fy >> 8);
 
     // lower line
-    unsigned ma = SmallDot6Scale(a, mod64);
-    if (ma) {
-        call_hline_blitter(blitter, x, y, count, ma);
-    }
+    if (a)
+        call_hline_blitter(blitter, x, y, count, a);
 
     // upper line
-    ma = SmallDot6Scale(255 - a, mod64);
-    if (ma) {
-        call_hline_blitter(blitter, x, y - 1, count, ma);
-    }
-    
-    return fy - SK_Fixed1/2;
+    a = (uint8_t)(255 - a);
+    if (a)
+        call_hline_blitter(blitter, x, y - 1, count, a);
 }
 
-static SkFixed horish(int x, int stopx, SkFixed fy, SkFixed dy, SkBlitter* blitter, int mod64)
+static void horish(int x, int stopx, SkFixed fy, SkFixed dy, SkBlitter* blitter)
 {
     SkASSERT(x < stopx);
 
@@ -122,19 +110,19 @@ static SkFixed horish(int x, int stopx, SkFixed fy, SkFixed dy, SkBlitter* blitt
     do {
         int lower_y = fy >> 16;
         uint8_t  a = (uint8_t)(fy >> 8);
-        unsigned ma = SmallDot6Scale(a, mod64);
-        if (ma)
+
+        if (a)
         {
-            aa[0] = ApplyGamma(gamma, ma);
+            aa[0] = ApplyGamma(gamma, a);
             blitter->blitAntiH(x, lower_y, aa, runs);
             // the clipping blitters might edit runs, but should not affect us
             SkASSERT(runs[0] == 1);
             SkASSERT(runs[1] == 0);
         }
-        ma = SmallDot6Scale(255 - a, mod64);
-        if (ma)
+        a = (uint8_t)(255 - a);
+        if (a)
         {
-            aa[0] = ApplyGamma(gamma, ma);
+            aa[0] = ApplyGamma(gamma, a);
             blitter->blitAntiH(x, lower_y - 1, aa, runs);
             // the clipping blitters might edit runs, but should not affect us
             SkASSERT(runs[0] == 1);
@@ -142,11 +130,9 @@ static SkFixed horish(int x, int stopx, SkFixed fy, SkFixed dy, SkBlitter* blitt
         }
         fy += dy;
     } while (++x < stopx);
-    
-    return fy - SK_Fixed1/2;
 }
 
-static SkFixed vline(int y, int stopy, SkFixed fx, SkFixed /*slope*/, SkBlitter* blitter, int mod64)
+static void vline(int y, int stopy, SkFixed fx, SkFixed /*slope*/, SkBlitter* blitter)
 {
     SkASSERT(y < stopy);
     fx += SK_Fixed1/2;
@@ -154,17 +140,14 @@ static SkFixed vline(int y, int stopy, SkFixed fx, SkFixed /*slope*/, SkBlitter*
     int x = fx >> 16;
     int a = (uint8_t)(fx >> 8);
 
-    unsigned ma = SmallDot6Scale(a, mod64);
-    if (ma)
-        blitter->blitV(x, y, stopy - y, ApplyGamma(gGammaTable, ma));
-    ma = SmallDot6Scale(255 - a, mod64);
-    if (ma)
-        blitter->blitV(x - 1, y, stopy - y, ApplyGamma(gGammaTable, ma));
-    
-    return fx - SK_Fixed1/2;
+    if (a)
+        blitter->blitV(x, y, stopy - y, ApplyGamma(gGammaTable, a));
+    a = 255 - a;
+    if (a)
+        blitter->blitV(x - 1, y, stopy - y, ApplyGamma(gGammaTable, a));
 }
 
-static SkFixed vertish(int y, int stopy, SkFixed fx, SkFixed dx, SkBlitter* blitter, int mod64)
+static void vertish(int y, int stopy, SkFixed fx, SkFixed dx, SkBlitter* blitter)
 {
     SkASSERT(y < stopy);
 #ifdef TEST_GAMMA
@@ -181,8 +164,8 @@ static SkFixed vertish(int y, int stopy, SkFixed fx, SkFixed dx, SkBlitter* blit
         int x = fx >> 16;
         uint8_t  a = (uint8_t)(fx >> 8);
 
-        aa[0] = ApplyGamma(gamma, SmallDot6Scale(255 - a, mod64));
-        aa[1] = ApplyGamma(gamma, SmallDot6Scale(a, mod64));
+        aa[0] = ApplyGamma(gamma, 255 - a);
+        aa[1] = ApplyGamma(gamma, a);
         // the clippng blitters might overwrite this guy, so we have to reset it each time
         runs[1] = 1;
         blitter->blitAntiH(x - 1, y, aa, runs);
@@ -191,17 +174,20 @@ static SkFixed vertish(int y, int stopy, SkFixed fx, SkFixed dx, SkBlitter* blit
         SkASSERT(runs[2] == 0);
         fx += dx;
     } while (++y < stopy);
-
-    return fx - SK_Fixed1/2;
 }
 
-typedef SkFixed (*LineProc)(int istart, int istop, SkFixed fstart, SkFixed slope, SkBlitter*, int);
+typedef void (*LineProc)(int istart, int istop, SkFixed fstart, SkFixed slope, SkBlitter*);
 
 static inline SkFixed fastfixdiv(SkFDot6 a, SkFDot6 b)
 {
     SkASSERT((a << 16 >> 16) == a);
     SkASSERT(b != 0);
     return (a << 16) / b;
+}
+static inline SkFDot6 fastfixmul(SkFixed fixed, SkFDot6 b)
+{
+    SkASSERT(SkAbs32(fixed) <= SK_Fixed1 && SkAbs32(b) <= SkIntToFDot6(511));
+    return (fixed * b + 0x8000) >> 16;
 }
 
 static void do_anti_hairline(SkFDot6 x0, SkFDot6 y0, SkFDot6 x1, SkFDot6 y1,
@@ -219,39 +205,34 @@ static void do_anti_hairline(SkFDot6 x0, SkFDot6 y0, SkFDot6 x1, SkFDot6 y1,
         return;
     }
 
-    int         scaleStart, scaleStop;
     int         istart, istop;
     SkFixed     fstart, slope; 
     LineProc    proc;
 
     if (SkAbs32(x1 - x0) > SkAbs32(y1 - y0))    // mostly horizontal
     {
-        if (x0 > x1) {    // we want to go left-to-right
+        if (x0 > x1)    // we want to go left-to-right
+        {
             SkTSwap<SkFDot6>(x0, x1);
             SkTSwap<SkFDot6>(y0, y1);
         }
+        istart = SkFDot6Round(x0);
+        istop = SkFDot6Round(x1);
+        if (istart == istop)    // too short to draw
+            return;
 
-        istart = SkFDot6Floor(x0);
-        istop = SkFDot6Ceil(x1);
-        fstart = SkFDot6ToFixed(y0);
-        if (y0 == y1) {   // completely horizontal, take fast case
+        if (y0 == y1)   // completely horizontal, take fast case
+        {
             slope = 0;
+            fstart = SkFDot6ToFixed(y0);
             proc = hline;
-        } else {
+        }
+        else
+        {
             slope = fastfixdiv(y1 - y0, x1 - x0);
             SkASSERT(slope >= -SK_Fixed1 && slope <= SK_Fixed1);
-            fstart += (slope * (32 - (x0 & 63)) + 32) >> 6;
+            fstart = SkFDot6ToFixed(y0 + fastfixmul(slope, (32 - x0) & 63));
             proc = horish;
-        }
-        
-        SkASSERT(istop > istart);
-        if (istop - istart == 1) {
-            scaleStart = x1 - x0;
-            SkASSERT(scaleStart >= 0 && scaleStart <= 64);
-            scaleStop = 0;
-        } else {
-            scaleStart = 64 - (x0 & 63);
-            scaleStop = x1 & 63;
         }
 
         if (clip)
@@ -262,16 +243,12 @@ static void do_anti_hairline(SkFDot6 x0, SkFDot6 y0, SkFDot6 x1, SkFDot6 y1,
             {
                 fstart += slope * (clip->fLeft - istart);
                 istart = clip->fLeft;
-                scaleStart = 64;
             }
-            if (istop > clip->fRight) {
+            if (istop > clip->fRight)
                 istop = clip->fRight;
-                scaleStop = 64;
-            }
             SkASSERT(istart <= istop);
             if (istart == istop)
                 return;
-
             // now test if our Y values are completely inside the clip
             int top, bottom;
             if (slope >= 0) // T2B
@@ -297,36 +274,25 @@ static void do_anti_hairline(SkFDot6 x0, SkFDot6 y0, SkFDot6 x1, SkFDot6 y1,
             SkTSwap<SkFDot6>(x0, x1);
             SkTSwap<SkFDot6>(y0, y1);
         }
+        istart = SkFDot6Round(y0);
+        istop = SkFDot6Round(y1);
+        if (istart == istop)    // too short to draw
+            return;
 
-        istart = SkFDot6Floor(y0);
-        istop = SkFDot6Ceil(y1);
-        fstart = SkFDot6ToFixed(x0);
         if (x0 == x1)
         {
-            if (y0 == y1) { // are we zero length?
-                return;     // nothing to do
-            }
             slope = 0;
+            fstart = SkFDot6ToFixed(x0);
             proc = vline;
         }
         else
         {
             slope = fastfixdiv(x1 - x0, y1 - y0);
             SkASSERT(slope <= SK_Fixed1 && slope >= -SK_Fixed1);
-            fstart += (slope * (32 - (y0 & 63)) + 32) >> 6;
+            fstart = SkFDot6ToFixed(x0 + fastfixmul(slope, (32 - y0) & 63));
             proc = vertish;
         }
 
-        SkASSERT(istop > istart);
-        if (istop - istart == 1) {
-            scaleStart = y1 - y0;
-            SkASSERT(scaleStart >= 0 && scaleStart <= 64);
-            scaleStop = 0;
-        } else {
-            scaleStart = 64 - (y0 & 63);
-            scaleStop = y1 & 63;
-        }
-        
         if (clip)
         {
             if (istart >= clip->fBottom || istop <= clip->fTop)
@@ -335,16 +301,12 @@ static void do_anti_hairline(SkFDot6 x0, SkFDot6 y0, SkFDot6 x1, SkFDot6 y1,
             {
                 fstart += slope * (clip->fTop - istart);
                 istart = clip->fTop;
-                scaleStart = 64;
             }
-            if (istop > clip->fBottom) {
+            if (istop > clip->fBottom)
                 istop = clip->fBottom;
-                scaleStop = 64;
-            }
             SkASSERT(istart <= istop);
             if (istart == istop)
                 return;
-
             // now test if our X values are completely inside the clip
             int left, right;
             if (slope >= 0) // L2R
@@ -370,16 +332,7 @@ static void do_anti_hairline(SkFDot6 x0, SkFDot6 y0, SkFDot6 x1, SkFDot6 y1,
         rectClipper.init(blitter, *clip);
         blitter = &rectClipper;
     }
-    
-    fstart = proc(istart, istart + 1, fstart, slope, blitter, scaleStart);
-    istart += 1;
-    int fullSpans = istop - istart - 1;
-    if (fullSpans > 0) {
-        fstart = proc(istart, istart + fullSpans, fstart, slope, blitter, 64);
-    }
-    if (scaleStop > 0) {
-        proc(istop - 1, istop, fstart, slope, blitter, scaleStop);
-    }
+    proc(istart, istop, fstart, slope, blitter);
 }
 
 void SkScan::AntiHairLine(const SkPoint& pt0, const SkPoint& pt1,
@@ -407,10 +360,10 @@ void SkScan::AntiHairLine(const SkPoint& pt0, const SkPoint& pt1,
         SkFDot6     bottom = SkMax32(y0, y1);
         SkIRect     ir;
 
-        ir.set( SkFDot6Floor(left) - 1,
-                SkFDot6Floor(top) - 1,
-                SkFDot6Ceil(right) + 1,
-                SkFDot6Ceil(bottom) + 1);
+        ir.set( SkFDot6Round(left) - 1,
+                SkFDot6Round(top) - 1,
+                SkFDot6Round(right) + 1,
+                SkFDot6Round(bottom) + 1);
 
         if (clip->quickReject(ir))
             return;
@@ -583,61 +536,12 @@ void SkScan::AntiFillXRect(const SkXRect& xr, const SkRegion* clip,
 
 #ifdef SK_SCALAR_IS_FLOAT
 
-/*  This guy takes a float-rect, but with the key improvement that it has
-    already been clipped, so we know that it is safe to convert it into a
-    XRect (fixedpoint), as it won't overflow.
-*/
-static void antifillrect(const SkRect& r, SkBlitter* blitter) {
+void SkScan::AntiFillRect(const SkRect& r, const SkRegion* clip,
+                          SkBlitter* blitter) {
     SkXRect xr;
     
     XRect_set(&xr, r);
-    antifillrect(xr, blitter);
-}
-
-/*  We repeat the clipping logic of AntiFillXRect because the float rect might
-    overflow if we blindly converted it to an XRect. This sucks that we have to
-    repeat the clipping logic, but I don't see how to share the code/logic.
- 
-    We clip r (as needed) into one or more (smaller) float rects, and then pass
-    those to our version of antifillrect, which converts it into an XRect and
-    then calls the blit.
-*/
-void SkScan::AntiFillRect(const SkRect& r, const SkRegion* clip,
-                          SkBlitter* blitter) {
-    if (clip) {
-        SkIRect outerBounds;
-        r.roundOut(&outerBounds);
-        
-        if (clip->isRect()) {
-            const SkIRect& clipBounds = clip->getBounds();
-            
-            if (clipBounds.contains(outerBounds)) {
-                antifillrect(r, blitter);
-            } else {
-                SkRect tmpR;
-                // this keeps our original edges fractional
-                tmpR.set(clipBounds);
-                if (tmpR.intersect(r)) {
-                    antifillrect(tmpR, blitter);
-                }
-            }
-        } else {
-            SkRegion::Cliperator clipper(*clip, outerBounds);
-            const SkIRect&       rr = clipper.rect();
-            
-            while (!clipper.done()) {
-                SkRect  tmpR;
-                // this keeps our original edges fractional
-                tmpR.set(rr);
-                if (tmpR.intersect(r)) {
-                    antifillrect(tmpR, blitter);
-                }
-                clipper.next();
-            }
-        }
-    } else {
-        antifillrect(r, blitter);
-    }
+    SkScan::AntiFillXRect(xr, clip, blitter);
 }
 
 #endif

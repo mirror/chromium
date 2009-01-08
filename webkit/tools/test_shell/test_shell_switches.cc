@@ -18,14 +18,10 @@ const wchar_t kCrashDumps[] = L"crash-dumps";  // Enable crash dumps
 const wchar_t kNoTree[] = L"notree";  // Don't dump the render tree.
 const wchar_t kDumpPixels[] = L"pixel-tests";  // Enable pixel tests.
 // Optional command line switch that specifies timeout time for page load when
-// running file tests in layout test mode, in ms.
+// running non-interactive file tests, in ms.
 const wchar_t kTestShellTimeOut[] = L"time-out-ms";
 
 const wchar_t kStartupDialog[] = L"testshell-startup-dialog";
-
-// Enable the Windows dialogs for GP faults in the test shell. This allows makes
-// it possible to attach a crashed test shell to a debugger.
-const wchar_t kGPFaultErrorBox[] = L"gp-fault-error-box";
 
 // JavaScript flags passed to engine.
 const wchar_t kJavaScriptFlags[] = L"js-flags";
@@ -52,23 +48,14 @@ const wchar_t kDebugMemoryInUse[] = L"debug-memory-in-use";
 // Enable cookies on the file:// scheme.  --layout-tests also enables this.
 const wchar_t kEnableFileCookies[] = L"enable-file-cookies";
 
-// Enable the winhttp network stack.
-const wchar_t kUseWinHttp[] = L"winhttp";
+// Enable new HTTP stack.
+const wchar_t kUseNewHttp[] = L"new-http";
 
 // Enable tracing events (see base/trace_event.h)
 const wchar_t kEnableTracing[] = L"enable-tracing";
 
 // Allow scripts to close windows in all cases.
 const wchar_t kAllowScriptsToCloseWindows[] = L"allow-scripts-to-close-windows";
-
-// Test the system dependencies (themes, fonts, ...). When this flag is
-// specified, the test shell will exit immediately with either 0 (success) or
-// 1 (failure). Combining with other flags has no effect.
-extern const wchar_t kCheckLayoutTestSystemDeps[] =
-    L"check-layout-test-sys-deps";
-
-// Enable the media player by having this switch.
-extern const wchar_t kEnableVideo[] = L"enable-video";
 
 }  // namespace test_shell
 

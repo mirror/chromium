@@ -10,10 +10,9 @@
 #ifndef CHROME_TEST_TESTING_BROWSER_PROCESS_H__
 #define CHROME_TEST_TESTING_BROWSER_PROCESS_H__
 
-#include "build/build_config.h"
-
 #include <string>
 
+#include "base/shared_event.h"
 #include "base/string_util.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/common/notification_service.h"
@@ -22,9 +21,7 @@
 class TestingBrowserProcess : public BrowserProcess {
  public:
   TestingBrowserProcess() {
-#if defined(OS_WIN)
     shutdown_event_ = ::CreateEvent(NULL, TRUE, FALSE, NULL);
-#endif
   }
   virtual ~TestingBrowserProcess() {
   }
@@ -122,16 +119,16 @@ class TestingBrowserProcess : public BrowserProcess {
 
   virtual MemoryModel memory_model() { return HIGH_MEMORY_MODEL; }
 
-#if defined(OS_WIN)
+  virtual SuspendController* suspend_controller() { return NULL; }
+
+  virtual bool IsUsingNewFrames() { return false; }
+
   virtual HANDLE shutdown_event() { return shutdown_event_; }
-#endif
 
  private:
   NotificationService notification_service_;
-#if defined(OS_WIN)
   HANDLE shutdown_event_;
-#endif
-  DISALLOW_COPY_AND_ASSIGN(TestingBrowserProcess);
+  DISALLOW_EVIL_CONSTRUCTORS(TestingBrowserProcess);
 };
 
 #endif  // CHROME_TEST_TESTING_BROWSER_PROCESS_H__

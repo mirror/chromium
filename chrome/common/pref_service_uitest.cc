@@ -82,12 +82,13 @@ TEST_F(PreferenceServiceTest, PreservedWindowPlacementIsLoaded) {
   ASSERT_TRUE(file_util::PathExists(tmp_pref_file_));
 
   JSONFileValueSerializer deserializer(tmp_pref_file_);
-  scoped_ptr<Value> root(deserializer.Deserialize(NULL));
+  Value* root = NULL;
+  ASSERT_TRUE(deserializer.Deserialize(&root));
 
-  ASSERT_TRUE(root.get());
+  ASSERT_TRUE(root);
   ASSERT_TRUE(root->IsType(Value::TYPE_DICTIONARY));
 
-  DictionaryValue* root_dict = static_cast<DictionaryValue*>(root.get());
+  DictionaryValue* root_dict = static_cast<DictionaryValue*>(root);
 
   // Retrieve the screen rect for the launched window
   scoped_ptr<BrowserProxy> browser(automation()->GetBrowserWindow(0));
@@ -129,5 +130,6 @@ TEST_F(PreferenceServiceTest, PreservedWindowPlacementIsLoaded) {
   ASSERT_TRUE(root_dict->GetBoolean(kBrowserWindowPlacement + L".maximized",
       &is_maximized));
   ASSERT_EQ(is_maximized, is_window_maximized);
+  delete root;
 }
 

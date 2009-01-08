@@ -9,8 +9,14 @@
 #include "base/logging.h"
 #include "base/string_util.h"
 
+FileVersionInfo::FileVersionInfo(const std::wstring& file_path) {
+  NSString* path = [[NSString alloc]
+      initWithCString:reinterpret_cast<const char*>(file_path.c_str())
+             encoding:NSUTF32StringEncoding];
+  bundle_ = [NSBundle bundleWithPath: path];
+}
+
 FileVersionInfo::FileVersionInfo(NSBundle *bundle) : bundle_(bundle) {
-  [bundle_ retain];
 }
 
 FileVersionInfo::~FileVersionInfo() {
@@ -28,17 +34,7 @@ FileVersionInfo* FileVersionInfo::CreateFileVersionInfoForCurrentModule() {
 // static
 FileVersionInfo* FileVersionInfo::CreateFileVersionInfo(
     const std::wstring& file_path) {
-  NSString* path = [NSString stringWithCString:
-      reinterpret_cast<const char*>(file_path.c_str())
-        encoding:NSUTF32StringEncoding];
-  return new FileVersionInfo([NSBundle bundleWithPath:path]);
-}
-
-// static
-FileVersionInfo* FileVersionInfo::CreateFileVersionInfo(
-    const FilePath& file_path) {
-  NSString* path = [NSString stringWithUTF8String:file_path.value().c_str()];
-  return new FileVersionInfo([NSBundle bundleWithPath:path]);
+  return new FileVersionInfo(file_path);
 }
 
 std::wstring FileVersionInfo::company_name() {

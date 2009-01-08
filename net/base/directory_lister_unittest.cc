@@ -2,23 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/file_path.h"
-#include "base/file_util.h"
 #include "base/message_loop.h"
 #include "base/path_service.h"
 #include "net/base/directory_lister.h"
-#include "net/base/net_errors.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace {
-class DirectoryListerTest : public testing::Test {};
+
+class DirectoryListerTest : public testing::Test {
+};
+
 }
 
-class ListerDelegate : public net::DirectoryLister::DirectoryListerDelegate {
+class DirectoryListerDelegate : public net::DirectoryLister::Delegate {
  public:
-  ListerDelegate() : error_(-1) {
+  DirectoryListerDelegate() : error_(-1) {
   }
-  void OnListFile(const file_util::FileEnumerator::FindInfo& data) {
+  void OnListFile(const WIN32_FIND_DATA& data) {
   }
   void OnListDone(int error) {
     error_ = error;
@@ -30,32 +30,34 @@ class ListerDelegate : public net::DirectoryLister::DirectoryListerDelegate {
 };
 
 TEST(DirectoryListerTest, BigDirTest) {
-  FilePath path;
-  ASSERT_TRUE(PathService::Get(base::DIR_SOURCE_ROOT, &path));
+  std::wstring windows_path;
+  ASSERT_TRUE(PathService::Get(base::DIR_WINDOWS, &windows_path));
 
-  ListerDelegate delegate;
+  DirectoryListerDelegate delegate;
   scoped_refptr<net::DirectoryLister> lister =
-      new net::DirectoryLister(path, &delegate);
+      new net::DirectoryLister(windows_path, &delegate);
 
   lister->Start();
 
   MessageLoop::current()->Run();
 
-  EXPECT_EQ(delegate.error(), net::OK);
+  EXPECT_EQ(delegate.error(), ERROR_SUCCESS);
 }
 
 TEST(DirectoryListerTest, CancelTest) {
-  FilePath path;
-  ASSERT_TRUE(PathService::Get(base::DIR_SOURCE_ROOT, &path));
+  std::wstring windows_path;
+  ASSERT_TRUE(PathService::Get(base::DIR_WINDOWS, &windows_path));
 
-  ListerDelegate delegate;
+  DirectoryListerDelegate delegate;
   scoped_refptr<net::DirectoryLister> lister =
-      new net::DirectoryLister(path, &delegate);
+      new net::DirectoryLister(windows_path, &delegate);
 
   lister->Start();
   lister->Cancel();
 
   MessageLoop::current()->Run();
 
-  EXPECT_EQ(delegate.error(), net::ERR_ABORTED);
+  EXPECT_EQ(delegate.error(), ERROR_OPERATION_ABORTED);
+  EXPECT_EQ(lister->was_canceled(), true);
 }
+

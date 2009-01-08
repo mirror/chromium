@@ -8,8 +8,6 @@
 #include <windows.h>
 #elif defined(OS_MACOSX)
 #include <CoreGraphics/CGGeometry.h>
-#elif defined(OS_LINUX)
-#include <gdk/gdk.h>
 #endif
 
 #include "base/logging.h"
@@ -72,19 +70,6 @@ Rect& Rect::operator=(const CGRect& r) {
   origin_.SetPoint(r.origin.x, r.origin.y);
   set_width(r.size.width);
   set_height(r.size.height);
-  return *this;
-}
-#elif defined(OS_LINUX)
-Rect::Rect(const GdkRectangle& r)
-    : origin_(r.x, r.y) {
-  set_width(r.width);
-  set_height(r.height);
-}
-
-Rect& Rect::operator=(const GdkRectangle& r) {
-  origin_.SetPoint(r.x, r.y);
-  set_width(r.width);
-  set_height(r.height);
   return *this;
 }
 #endif
@@ -241,3 +226,4 @@ Point Rect::CenterPoint() const {
 }
 
 }  // namespace gfx
+

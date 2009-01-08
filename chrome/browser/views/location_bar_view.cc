@@ -26,8 +26,8 @@
 #include "chrome/common/win_util.h"
 #include "chrome/views/background.h"
 #include "chrome/views/border.h"
+#include "chrome/views/container.h"
 #include "chrome/views/root_view.h"
-#include "chrome/views/widget.h"
 #include "generated_resources.h"
 
 using views::View;
@@ -123,9 +123,10 @@ void LocationBarView::Init() {
   }
 
   // URL edit field.
-  views::Widget* widget = GetWidget();
+  views::Container* vc = GetContainer();
+  DCHECK(vc) << "LocationBarView::Init - vc is NULL!";
   location_entry_.reset(new AutocompleteEditView(font_, this, model_, this,
-                                                 widget->GetHWND(),
+                                                 vc->GetHWND(),
                                                  profile_, controller_,
                                                  popup_window_mode_));
 
@@ -308,20 +309,20 @@ void LocationBarView::OnMouseReleased(const views::MouseEvent& event,
 }
 
 void LocationBarView::OnAutocompleteAccept(
-    const GURL& url,
+    const std::wstring& url,
     WindowOpenDisposition disposition,
     PageTransition::Type transition,
-    const GURL& alternate_nav_url) {
-  if (!url.is_valid())
+    const std::wstring& alternate_nav_url) {
+  if (url.empty())
     return;
 
-  location_input_ = UTF8ToWide(url.spec());
+  location_input_ = url;
   disposition_ = disposition;
   transition_ = transition;
 
   if (controller_) {
-    if (!alternate_nav_url.is_valid()) {
-      controller_->ExecuteCommand(IDC_OPEN_CURRENT_URL);
+    if (alternate_nav_url.empty()) {
+      controller_->ExecuteCommand(IDC_OPENURL);
       return;
     }
 
@@ -330,7 +331,7 @@ void LocationBarView::OnAutocompleteAccept(
     // The AlternateNavURLFetcher will listen for the pending navigation
     // notification that will be issued as a result of the "open URL." It
     // will automatically install itself into that navigation controller.
-    controller_->ExecuteCommand(IDC_OPEN_CURRENT_URL);
+    controller_->ExecuteCommand(IDC_OPENURL);
     if (fetcher->state() == AlternateNavURLFetcher::NOT_STARTED) {
       // I'm not sure this should be reachable, but I'm not also sure enough
       // that it shouldn't to stick in a NOTREACHED().  In any case, this is
@@ -609,10 +610,10 @@ LocationBarView::SelectedKeywordView::SelectedKeywordView(Profile* profile)
   partial_label_.SetParentOwned(false);
   full_label_.SetVisible(false);
   partial_label_.SetVisible(false);
-  full_label_.set_border(
+  full_label_.SetBorder(
       views::Border::CreateEmptyBorder(kTopInset, kLeftInset, kBottomInset,
                                        kRightInset));
-  partial_label_.set_border(
+  partial_label_.SetBorder(
       views::Border::CreateEmptyBorder(kTopInset, kLeftInset, kBottomInset,
                                        kRightInset));
 }
@@ -825,7 +826,7 @@ void LocationBarView::ShowInfoBubbleTask::Run() {
   if (cancelled_)
     return;
 
-  if (!image_view_->GetWidget()->IsActive()) {
+  if (!image_view_->GetContainer()->IsActive()) {
     // The browser is no longer active.  Let's not show the info bubble, this
     // would make the browser the active window again.  Also makes sure we NULL
     // show_info_bubble_task_ to prevent the SecurityImageView from keeping a
@@ -846,7 +847,7 @@ void LocationBarView::ShowInfoBubbleTask::Cancel() {
 void LocationBarView::ShowFirstRunBubbleInternal() {
   if (!location_entry_view_)
     return;
-  if (!location_entry_view_->GetWidget()->IsActive()) {
+  if (!location_entry_view_->GetContainer()->IsActive()) {
     // The browser is no longer active.  Let's not show the info bubble, this
     // would make the browser the active window again.
     return;
@@ -871,7 +872,7 @@ void LocationBarView::ShowFirstRunBubbleInternal() {
     bounds.set_x(location.x() - 20);
 
   FirstRunBubble::Show(
-      location_entry_view_->GetRootView()->GetWidget()->GetHWND(),
+      location_entry_view_->GetRootView()->GetContainer()->GetHWND(),
       bounds);
 }
 
@@ -944,7 +945,7 @@ void LocationBarView::SecurityImageView::ShowInfoBubble() {
   label->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
   label->SizeToFit(0);
   DCHECK(info_bubble_ == NULL);
-  info_bubble_ = InfoBubble::Show(GetRootView()->GetWidget()->GetHWND(),
+  info_bubble_ = InfoBubble::Show(GetRootView()->GetContainer()->GetHWND(),
                                   bounds, label, this);
   show_info_bubble_task_ = NULL;
 }
@@ -988,14 +989,13 @@ bool LocationBarView::SecurityImageView::OnMousePressed(
   }
   PageInfoWindow::CreatePageInfo(profile_,
                                  nav_entry,
-                                 GetRootView()->GetWidget()->GetHWND(),
+                                 GetRootView()->GetContainer()->GetHWND(),
                                  PageInfoWindow::SECURITY);
   return true;
 }
 
 void LocationBarView::SecurityImageView::InfoBubbleClosing(
-    InfoBubble* info_bubble,
-    bool closed_by_escape) {
+    InfoBubble* info_bubble) {
   info_bubble_ = NULL;
 }
 

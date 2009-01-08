@@ -38,7 +38,7 @@ DnsQueue::PushResult DnsQueue::Push(const char* source,
   if (0 < size_ && readable_ + length < buffer_sentinel_ &&
     0 == strncmp(source, &buffer_[readable_], unsigned_length) &&
     '\0' == buffer_[readable_ + unsigned_length]) {
-    SIMPLE_STATS_COUNTER("DNS.PrefetchDnsRedundantPush");
+    SIMPLE_STATS_COUNTER(L"DNS.PrefetchDnsRedundantPush");
 
     // We already wrote this name to the queue, so we'll skip this repeat.
     return REDUNDANT_PUSH;
@@ -56,7 +56,7 @@ DnsQueue::PushResult DnsQueue::Push(const char* source,
   }
 
   if (length + 1 >= available_space) {
-    SIMPLE_STATS_COUNTER("DNS.PrefetchDnsQueueFull");
+    SIMPLE_STATS_COUNTER(L"DNS.PrefetchDnsQueueFull");
     return OVERFLOW_PUSH;  // Not enough space to push.
   }
 
@@ -67,8 +67,7 @@ DnsQueue::PushResult DnsQueue::Push(const char* source,
     std::memcpy(&buffer_[dest], source, space_till_wrap);
     // Ensure caller didn't have embedded '\0' and also
     // ensure trailing sentinel was in place.
-    // Relies on sentinel.
-    DCHECK(static_cast<size_t>(space_till_wrap) == strlen(&buffer_[dest]));
+    DCHECK(space_till_wrap == strlen(&buffer_[dest]));  // Relies on sentinel.
 
     length -= space_till_wrap;
     source += space_till_wrap;
@@ -79,8 +78,7 @@ DnsQueue::PushResult DnsQueue::Push(const char* source,
   std::memcpy(&buffer_[dest], source, length);
   DCHECK(dest + length < buffer_sentinel_);
   buffer_[dest + length] = '\0';  // We need termination in our buffer.
-  // Preclude embedded '\0'.
-  DCHECK(static_cast<size_t>(length) == strlen(&buffer_[dest]));
+  DCHECK(length == strlen(&buffer_[dest]));  // Preclude embedded '\0'.
 
   dest += length + 1;
   if (dest == buffer_sentinel_)

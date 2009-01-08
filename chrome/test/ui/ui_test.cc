@@ -13,7 +13,6 @@
 #include "base/process_util.h"
 #include "base/scoped_ptr.h"
 #include "base/string_util.h"
-#include "base/test_file_util.h"
 #include "base/time.h"
 #include "chrome/app/chrome_dll_resource.h"
 #include "chrome/browser/url_fixer_upper.h"
@@ -27,15 +26,10 @@
 #include "chrome/test/automation/browser_proxy.h"
 #include "chrome/test/automation/tab_proxy.h"
 #include "chrome/test/automation/window_proxy.h"
+#include "chrome/test/test_file_util.h"
 #include "googleurl/src/gurl.h"
 #include "net/base/net_util.h"
 
-using base::TimeTicks;
-
-const wchar_t UITest::kFailedNoCrashService[] =
-    L"NOTE: This test is expected to fail if crash_service.exe is not "
-    L"running. Start it manually before running this test (see the build "
-    L"output directory).";
 bool UITest::in_process_renderer_ = false;
 bool UITest::in_process_plugins_ = false;
 bool UITest::no_sandbox_ = false;
@@ -49,16 +43,6 @@ bool UITest::silent_dump_on_dcheck_ = false;
 bool UITest::disable_breakpad_ = false;
 int UITest::timeout_ms_ = 20 * 60 * 1000;
 std::wstring UITest::js_flags_ = L"";
-
-
-// Specify the time (in milliseconds) that the ui_tests should wait before
-// timing out. This is used to specify longer timeouts when running under Purify
-// which requires much more time.
-const wchar_t kUiTestTimeout[] = L"ui-test-timeout";
-const wchar_t kUiTestActionTimeout[] = L"ui-test-action-timeout";
-const wchar_t kUiTestActionMaxTimeout[] = L"ui-test-action-max-timeout";
-
-const wchar_t kExtraChromeFlagsSwitch[] = L"extra-chrome-flags";
 
 // Uncomment this line to have the spawned process wait for the debugger to
 // attach.
@@ -89,10 +73,7 @@ UITest::UITest()
       show_window_(false),
       clear_profile_(true),
       include_testing_id_(true),
-      use_existing_browser_(default_use_existing_browser_),
-      command_execution_timeout_ms_(kMaxTestExecutionTime),
-      action_timeout_ms_(kWaitForActionMsec),
-      action_max_timeout_ms_(kWaitForActionMaxMsec) {
+      use_existing_browser_(default_use_existing_browser_) {
   PathService::Get(chrome::DIR_APP, &browser_directory_);
   PathService::Get(chrome::DIR_TEST_DATA, &test_data_directory_);
   GetSystemTimeAsFileTime(&test_start_time_);
@@ -104,7 +85,6 @@ void UITest::SetUp() {
                         L"of the app before testing.");
   }
 
-  InitializeTimeouts();
   LaunchBrowserAndServer();
 }
 
@@ -135,38 +115,16 @@ void UITest::TearDown() {
     file_util::CountFilesCreatedAfter(crash_dump_path, test_start_time_) / 2;
   std::wstring error_msg =
       L"Encountered an unexpected crash in the program during this test.";
-  if (expected_crashes_ > 0 && actual_crashes == 0) {
-    error_msg += L"  ";
-    error_msg += kFailedNoCrashService;
-  }
+  if (expected_crashes_ > 0 && actual_crashes == 0)
+    error_msg += L"  NOTE: This test is expected to fail if crash_service.exe "
+                 L"is not running. Start it manually before running this "
+                 L"test (see the build output directory).";
   EXPECT_EQ(expected_crashes_, actual_crashes) << error_msg;
-}
-
-// Pick up the various test time out values from the command line.
-void UITest::InitializeTimeouts() {
-  if (CommandLine().HasSwitch(kUiTestTimeout)) {
-    std::wstring timeout_str = CommandLine().GetSwitchValue(kUiTestTimeout);
-    int timeout = StringToInt(timeout_str);
-    command_execution_timeout_ms_ = std::max(kMaxTestExecutionTime, timeout);
-  }
-
-  if (CommandLine().HasSwitch(kUiTestActionTimeout)) {
-    std::wstring act_str = CommandLine().GetSwitchValue(kUiTestActionTimeout);
-    int act_timeout = StringToInt(act_str);
-    action_timeout_ms_ = std::max(kWaitForActionMsec, act_timeout);
-  }
-
-  if (CommandLine().HasSwitch(kUiTestActionMaxTimeout)) {
-    std::wstring action_max_str =
-        CommandLine().GetSwitchValue(kUiTestActionMaxTimeout);
-    int max_timeout = StringToInt(action_max_str);
-    action_max_timeout_ms_ = std::max(kWaitForActionMaxMsec, max_timeout);
-  }
 }
 
 void UITest::LaunchBrowserAndServer() {
   // Set up IPC testing interface server.
-  server_.reset(new AutomationProxy(command_execution_timeout_ms_));
+  server_.reset(new AutomationProxy);
 
   LaunchBrowser(launch_arguments_, clear_profile_);
   if (wait_for_initial_loads_)
@@ -189,12 +147,6 @@ void UITest::LaunchBrowser(const std::wstring& arguments, bool clear_profile) {
   std::wstring command_line(browser_directory_);
   file_util::AppendToPath(&command_line,
                           chrome::kBrowserProcessExecutableName);
-
-  // Add any explict command line flags passed to the process.
-  std::wstring extra_chrome_flags =
-      CommandLine().GetSwitchValue(kExtraChromeFlagsSwitch);
-  if (!extra_chrome_flags.empty())
-    command_line.append(L" " + extra_chrome_flags);
 
   // We need cookies on file:// for things like the page cycler.
   CommandLine::AppendSwitch(&command_line, switches::kEnableFileCookies);
@@ -285,11 +237,12 @@ void UITest::LaunchBrowser(const std::wstring& arguments, bool clear_profile) {
 
   browser_launch_time_ = TimeTicks::Now();
 
-  bool started = base::LaunchApp(command_line,
-                                 false,  // Don't wait for process object
-                                         // (doesn't work for us)
-                                 !show_window_,
-                                 &process_);
+  bool started = process_util::LaunchApp(
+                     command_line,
+                     false,  // Don't wait for process object (doesn't work for
+                             // us)
+                     !show_window_,
+                     &process_);
   ASSERT_EQ(started, true);
 
   if (use_existing_browser_) {
@@ -298,7 +251,7 @@ void UITest::LaunchBrowser(const std::wstring& arguments, bool clear_profile) {
                          user_data_dir_.c_str());
     GetWindowThreadProcessId(hwnd, &pid);
     // This mode doesn't work if we wound up launching a new browser ourselves.
-    ASSERT_NE(pid, base::GetProcId(process_));
+    ASSERT_NE(pid, process_util::GetProcId(process_));
     CloseHandle(process_);
     process_ = OpenProcess(SYNCHRONIZE, false, pid);
   }
@@ -326,7 +279,7 @@ void UITest::QuitBrowser() {
     for (BrowserVector::iterator iter = browsers.begin();
       iter != browsers.end(); ++iter) {
       // Use ApplyAccelerator since it doesn't wait
-      (*iter)->ApplyAccelerator(IDC_CLOSE_WINDOW);
+      (*iter)->ApplyAccelerator(IDC_CLOSEWINDOW);
       delete (*iter);
     }
 
@@ -362,9 +315,9 @@ void UITest::CleanupAppProcesses() {
   // Make sure that no instances of the browser remain.
   const int kExitTimeoutMs = 5000;
   const int kExitCode = 1;
-  base::CleanupProcesses(
-      chrome::kBrowserProcessExecutableName, kExitTimeoutMs, kExitCode,
-      &filter);
+  process_util::CleanupProcesses(
+    chrome::kBrowserProcessExecutableName, kExitTimeoutMs, kExitCode,
+    &filter);
 
   // Suppress spammy failures that seem to be occurring when running
   // the UI tests in single-process mode.
@@ -403,8 +356,8 @@ void UITest::NavigateToURL(const GURL& url) {
     return;
 
   bool is_timeout = true;
-  ASSERT_TRUE(tab_proxy->NavigateToURLWithTimeout(
-      url, command_execution_timeout_ms(), &is_timeout)) << url.spec();
+  ASSERT_TRUE(tab_proxy->NavigateToURLWithTimeout(url, kMaxTestExecutionTime,
+                                                  &is_timeout)) << url.spec();
   ASSERT_FALSE(is_timeout) << url.spec();
 }
 
@@ -423,15 +376,14 @@ bool UITest::WaitForDownloadShelfVisible(TabProxy* tab) {
   return false;
 }
 
-bool UITest::WaitForFindWindowVisibilityChange(TabProxy* tab,
-                                               bool wait_for_open) {
+bool UITest::WaitForFindWindowFullyVisible(TabProxy* tab) {
   const int kCycles = 20;
   for (int i = 0; i < kCycles; i++) {
     bool visible = false;
     if (!tab->IsFindWindowFullyVisible(&visible))
       return false;  // Some error.
-    if (visible == wait_for_open)
-      return true;  // Find window visibility change complete.
+    if (visible)
+      return true;  // Find window is visible.
 
     // Give it a chance to catch up.
     Sleep(kWaitForActionMaxMsec / kCycles);
@@ -488,8 +440,8 @@ bool UITest::CrashAwareSleep(int time_out_ms) {
 /*static*/
 int UITest::GetBrowserProcessCount() {
   BrowserProcessFilter filter(L"");
-  return base::GetProcessCount(chrome::kBrowserProcessExecutableName,
-                               &filter);
+  return process_util::GetProcessCount(chrome::kBrowserProcessExecutableName,
+                                       &filter);
 }
 
 static DictionaryValue* LoadDictionaryValueFromPath(const std::wstring& path) {
@@ -497,11 +449,13 @@ static DictionaryValue* LoadDictionaryValueFromPath(const std::wstring& path) {
     return NULL;
 
   JSONFileValueSerializer serializer(path);
-  scoped_ptr<Value> root_value(serializer.Deserialize(NULL));
-  if (!root_value.get() || root_value->GetType() != Value::TYPE_DICTIONARY)
+  Value* root_value = NULL;
+  if (serializer.Deserialize(&root_value) &&
+      root_value->GetType() != Value::TYPE_DICTIONARY) {
+    delete root_value;
     return NULL;
-
-  return static_cast<DictionaryValue*>(root_value.release());
+  }
+  return static_cast<DictionaryValue*>(root_value);
 }
 
 DictionaryValue* UITest::GetLocalState() {
@@ -602,11 +556,6 @@ std::wstring UITest::GetDownloadDirectory() {
   return download_directory;
 }
 
-void UITest::CloseBrowserAsync(BrowserProxy* browser) const {
-  server_->Send(
-      new AutomationMsg_CloseBrowserRequest(0, browser->handle()));
-}
-
 bool UITest::CloseBrowser(BrowserProxy* browser,
                           bool* application_closed) const {
   DCHECK(application_closed);
@@ -642,29 +591,9 @@ void UITest::PrintResult(const std::wstring& measurement,
                          size_t value,
                          const std::wstring& units,
                          bool important) {
-  std::wstring value_str = StringPrintf(L"%d", value);
-  PrintResultsImpl(measurement, modifier, trace, value_str,
-                   L"", L"", units, important);
-}
-
-void UITest::PrintResultMeanAndError(const std::wstring& measurement,
-                                     const std::wstring& modifier,
-                                     const std::wstring& trace,
-                                     const std::wstring& mean_and_error,
-                                     const std::wstring& units,
-                                     bool important) {
-  PrintResultsImpl(measurement, modifier, trace, mean_and_error,
-                   L"{", L"}", units, important);
-}
-
-void UITest::PrintResultList(const std::wstring& measurement,
-                             const std::wstring& modifier,
-                             const std::wstring& trace,
-                             const std::wstring& values,
-                             const std::wstring& units,
-                             bool important) {
-  PrintResultsImpl(measurement, modifier, trace, values,
-                   L"[", L"]", units, important);
+  wprintf(L"%lsRESULT %ls%ls: %ls= %d %ls\n",
+          important ? L"*" : L"", measurement.c_str(), modifier.c_str(),
+          trace.c_str(), value, units.c_str());
 }
 
 GURL UITest::GetTestUrl(const std::wstring& test_directory,
@@ -703,19 +632,4 @@ void UITest::WaitForFinish(const std::string &name,
   EXPECT_EQ(true, test_result);
 }
 
-void UITest::PrintResultsImpl(const std::wstring& measurement,
-                              const std::wstring& modifier,
-                              const std::wstring& trace,
-                              const std::wstring& values,
-                              const std::wstring& prefix,
-                              const std::wstring& suffix,
-                              const std::wstring& units,
-                              bool important) {
-  // <*>RESULT <graph_name>: <trace_name>= <value> <units>
-  // <*>RESULT <graph_name>: <trace_name>= {<mean>, <std deviation>} <units>
-  // <*>RESULT <graph_name>: <trace_name>= [<value>,value,value,...,] <units>
-  wprintf(L"%lsRESULT %ls%ls: %ls= %ls%ls%ls %ls\n",
-          important ? L"*" : L"", measurement.c_str(), modifier.c_str(),
-          trace.c_str(), prefix.c_str(), values.c_str(), suffix.c_str(),
-          units.c_str());
-}
+

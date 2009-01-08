@@ -30,7 +30,6 @@
 #include "config.h"
 
 #include "v8_vectornodelist.h"
-#include "Element.h"
 #include "NamedAttrMap.h"  // Node::attributes
 
 namespace WebCore {

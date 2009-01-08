@@ -154,8 +154,7 @@ int HttpChunkedDecoder::ScanForChunkRemaining(const char* buf, int buf_len) {
 
 // While the HTTP 1.1 specification defines chunk-size as 1*HEX
 // some sites rely on more lenient parsing.
-// http://www.yahoo.com/, for example, pads chunk-size with trailing spaces
-// (0x20) to be 7 characters long, such as "819b   ".
+// http://www.yahoo.com/ for example, includes trailing spaces (0x20).
 //
 // A comparison of browsers running on WindowsXP shows that
 // they will parse the following inputs (egrep syntax):

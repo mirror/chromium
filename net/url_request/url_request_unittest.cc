@@ -4,13 +4,9 @@
 
 #include "net/url_request/url_request_unittest.h"
 
-#include "build/build_config.h"
-
 #if defined(OS_WIN)
 #include <windows.h>
 #include <shlobj.h>
-#elif defined(OS_LINUX)
-#include "base/nss_init.h"
 #endif
 
 #include <algorithm>
@@ -19,37 +15,32 @@
 #include "base/message_loop.h"
 #include "base/path_service.h"
 #include "base/process_util.h"
-#include "base/string_piece.h"
 #include "base/string_util.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_errors.h"
 #include "net/base/net_module.h"
 #include "net/base/net_util.h"
-#include "net/base/ssl_test_util.h"
 #include "net/disk_cache/disk_cache.h"
 #include "net/http/http_cache.h"
 #include "net/http/http_network_layer.h"
-#include "net/proxy/proxy_service.h"
 #include "net/url_request/url_request.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "testing/platform_test.h"
-
-using base::Time;
 
 namespace {
+
+class URLRequestTest : public testing::Test {
+};
 
 class URLRequestHttpCacheContext : public URLRequestContext {
  public:
   URLRequestHttpCacheContext() {
-    proxy_service_ = net::ProxyService::CreateNull();
     http_transaction_factory_ =
-        new net::HttpCache(net::HttpNetworkLayer::CreateFactory(proxy_service_),
+        new net::HttpCache(net::HttpNetworkLayer::CreateFactory(NULL),
                            disk_cache::CreateInMemoryCacheBackend(0));
   }
 
   virtual ~URLRequestHttpCacheContext() {
     delete http_transaction_factory_;
-    delete proxy_service_;
   }
 };
 
@@ -61,7 +52,7 @@ class TestURLRequest : public URLRequest {
    }
 };
 
-StringPiece TestNetResourceProvider(int key) {
+std::string TestNetResourceProvider(int key) {
   return "header";
 }
 
@@ -78,13 +69,8 @@ bool ContainsString(const std::string& haystack, const char* needle) {
 
 }  // namespace
 
-// Inherit PlatformTest since we require the autorelease pool on Mac OS X.f
-class URLRequestTest : public PlatformTest {
-};
-
-TEST_F(URLRequestTest, GetTest_NoCache) {
+TEST(URLRequestTest, GetTest_NoCache) {
   TestServer server(L"");
-  ASSERT_TRUE(server.init_successful());
   TestDelegate d;
   {
     TestURLRequest r(server.TestServerPage(""), &d);
@@ -103,9 +89,8 @@ TEST_F(URLRequestTest, GetTest_NoCache) {
 #endif
 }
 
-TEST_F(URLRequestTest, GetTest) {
+TEST(URLRequestTest, GetTest) {
   TestServer server(L"");
-  ASSERT_TRUE(server.init_successful());
   TestDelegate d;
   {
     TestURLRequest r(server.TestServerPage(""), &d);
@@ -124,49 +109,7 @@ TEST_F(URLRequestTest, GetTest) {
 #endif
 }
 
-class HTTPSRequestTest : public testing::Test {
- protected:
-   HTTPSRequestTest() : util_() {};
- 
-   SSLTestUtil util_;
-};
-
-#if defined(OS_MACOSX)
-// TODO(port): support temporary root cert on mac
-#define MAYBE_HTTPSGetTest DISABLED_HTTPSGetTest
-#else
-#define MAYBE_HTTPSGetTest HTTPSGetTest
-#endif
-
-TEST_F(HTTPSRequestTest, MAYBE_HTTPSGetTest) {
-  // Note: tools/testserver/testserver.py does not need
-  // a working document root to server the pages / and /hello.html,
-  // so this test doesn't really need to specify a document root.
-  // But if it did, a good one would be net/data/ssl.
-  HTTPSTestServer https_server(util_.kHostName, util_.kOKHTTPSPort,
-                               L"net/data/ssl",
-                               util_.GetOKCertPath().ToWStringHack());
-
-  EXPECT_TRUE(util_.CheckCATrusted());
-  TestDelegate d;
-  {
-    TestURLRequest r(https_server.TestServerPage(""), &d);
-
-    r.Start();
-    EXPECT_TRUE(r.is_pending());
-
-    MessageLoop::current()->Run();
-
-    EXPECT_EQ(1, d.response_started_count());
-    EXPECT_FALSE(d.received_data_before_response());
-    EXPECT_NE(0, d.bytes_received());
-  }
-#ifndef NDEBUG
-  DCHECK_EQ(url_request_metrics.object_count,0);
-#endif
-}
-
-TEST_F(URLRequestTest, CancelTest) {
+TEST(URLRequestTest, CancelTest) {
   TestDelegate d;
   {
     TestURLRequest r(GURL("http://www.google.com/"), &d);
@@ -189,9 +132,8 @@ TEST_F(URLRequestTest, CancelTest) {
 #endif
 }
 
-TEST_F(URLRequestTest, CancelTest2) {
+TEST(URLRequestTest, CancelTest2) {
   TestServer server(L"");
-  ASSERT_TRUE(server.init_successful());
   TestDelegate d;
   {
     TestURLRequest r(server.TestServerPage(""), &d);
@@ -213,9 +155,8 @@ TEST_F(URLRequestTest, CancelTest2) {
 #endif
 }
 
-TEST_F(URLRequestTest, CancelTest3) {
+TEST(URLRequestTest, CancelTest3) {
   TestServer server(L"");
-  ASSERT_TRUE(server.init_successful());
   TestDelegate d;
   {
     TestURLRequest r(server.TestServerPage(""), &d);
@@ -240,9 +181,8 @@ TEST_F(URLRequestTest, CancelTest3) {
 #endif
 }
 
-TEST_F(URLRequestTest, CancelTest4) {
+TEST(URLRequestTest, CancelTest4) {
   TestServer server(L"");
-  ASSERT_TRUE(server.init_successful());
   TestDelegate d;
   {
     TestURLRequest r(server.TestServerPage(""), &d);
@@ -265,9 +205,8 @@ TEST_F(URLRequestTest, CancelTest4) {
   EXPECT_EQ(0, d.bytes_received());
 }
 
-TEST_F(URLRequestTest, CancelTest5) {
+TEST(URLRequestTest, CancelTest5) {
   TestServer server(L"");
-  ASSERT_TRUE(server.init_successful());
   scoped_refptr<URLRequestContext> context = new URLRequestHttpCacheContext();
 
   // populate cache
@@ -300,9 +239,8 @@ TEST_F(URLRequestTest, CancelTest5) {
 #endif
 }
 
-TEST_F(URLRequestTest, PostTest) {
+TEST(URLRequestTest, PostTest) {
   TestServer server(L"net/data");
-  ASSERT_TRUE(server.init_successful());
 
   const int kMsgSize = 20000;  // multiple of 10
   const int kIterations = 50;
@@ -352,9 +290,8 @@ TEST_F(URLRequestTest, PostTest) {
 #endif
 }
 
-TEST_F(URLRequestTest, PostEmptyTest) {
+TEST(URLRequestTest, PostEmptyTest) {
   TestServer server(L"net/data");
-  ASSERT_TRUE(server.init_successful());
   TestDelegate d;
   {
     TestURLRequest r(server.TestServerPage("echo"), &d);
@@ -376,9 +313,8 @@ TEST_F(URLRequestTest, PostEmptyTest) {
 #endif
 }
 
-TEST_F(URLRequestTest, PostFileTest) {
+TEST(URLRequestTest, PostFileTest) {
   TestServer server(L"net/data");
-  ASSERT_TRUE(server.init_successful());
   TestDelegate d;
   {
     TestURLRequest r(server.TestServerPage("echo"), &d);
@@ -404,13 +340,19 @@ TEST_F(URLRequestTest, PostFileTest) {
 
     MessageLoop::current()->Run();
 
-    int64 longsize;
-    ASSERT_EQ(true, file_util::GetFileSize(path, &longsize));
-    int size = static_cast<int>(longsize);
+    HANDLE file = CreateFile(path.c_str(), GENERIC_READ, FILE_SHARE_READ, NULL,
+                             OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL);
+    ASSERT_NE(INVALID_HANDLE_VALUE, file);
+
+    DWORD size = GetFileSize(file, NULL);
     scoped_array<char> buf(new char[size]);
 
-    int size_read = static_cast<int>(file_util::ReadFile(path, buf.get(), size));
-    ASSERT_EQ(size, size_read);
+    DWORD size_read;
+    EXPECT_TRUE(ReadFile(file, buf.get(), size, &size_read, NULL));
+
+    CloseHandle(file);
+
+    EXPECT_EQ(size, size_read);
 
     ASSERT_EQ(1, d.response_started_count()) << "request failed: " <<
         (int) r.status().status() << ", os error: " << r.status().os_error();
@@ -425,7 +367,7 @@ TEST_F(URLRequestTest, PostFileTest) {
 #endif
 }
 
-TEST_F(URLRequestTest, AboutBlankTest) {
+TEST(URLRequestTest, AboutBlankTest) {
   TestDelegate d;
   {
     TestURLRequest r(GURL("about:blank"), &d);
@@ -444,14 +386,18 @@ TEST_F(URLRequestTest, AboutBlankTest) {
 #endif
 }
 
-TEST_F(URLRequestTest, FileTest) {
-  FilePath app_path;
+TEST(URLRequestTest, FileTest) {
+  std::wstring app_path;
   PathService::Get(base::FILE_EXE, &app_path);
-  GURL app_url = net::FilePathToFileURL(app_path.ToWStringHack());
+
+  std::string app_url = WideToUTF8(app_path);
+  std::replace(app_url.begin(), app_url.end(),
+               file_util::kPathSeparator, L'/');
+  app_url.insert(0, "file:///");
 
   TestDelegate d;
   {
-    TestURLRequest r(app_url, &d);
+    TestURLRequest r(GURL(app_url), &d);
 
     r.Start();
     EXPECT_TRUE(r.is_pending());
@@ -471,7 +417,7 @@ TEST_F(URLRequestTest, FileTest) {
 #endif
 }
 
-TEST_F(URLRequestTest, InvalidUrlTest) {
+TEST(URLRequestTest, InvalidUrlTest) {
   TestDelegate d;
   {
     TestURLRequest r(GURL("invalid url"), &d);
@@ -487,9 +433,9 @@ TEST_F(URLRequestTest, InvalidUrlTest) {
 #endif
 }
 
-// This test is disabled because it fails on some computers due to proxies
-// returning a page in response to this request rather than reporting failure.
-TEST_F(URLRequestTest, DISABLED_DnsFailureTest) {
+/* This test is disabled because it fails on some computers due to proxies
+   returning a page in response to this request rather than reporting failure.
+TEST(URLRequestTest, DnsFailureTest) {
   TestDelegate d;
   {
     URLRequest r(GURL("http://thisisnotavalidurl0123456789foo.com/"), &d);
@@ -504,10 +450,10 @@ TEST_F(URLRequestTest, DISABLED_DnsFailureTest) {
   DCHECK_EQ(url_request_metrics.object_count,0);
 #endif
 }
+*/
 
-TEST_F(URLRequestTest, ResponseHeadersTest) {
+TEST(URLRequestTest, ResponseHeadersTest) {
   TestServer server(L"net/data/url_request_unittest");
-  ASSERT_TRUE(server.init_successful());
   TestDelegate d;
   TestURLRequest req(server.TestServerPage("files/with-headers.html"), &d);
   req.Start();
@@ -529,9 +475,8 @@ TEST_F(URLRequestTest, ResponseHeadersTest) {
   EXPECT_EQ("a, b", header);
 }
 
-TEST_F(URLRequestTest, BZip2ContentTest) {
+TEST(URLRequestTest, BZip2ContentTest) {
   TestServer server(L"net/data/filter_unittests");
-  ASSERT_TRUE(server.init_successful());
 
   // for localhost domain, we also should support bzip2 encoding
   // first, get the original file
@@ -554,9 +499,8 @@ TEST_F(URLRequestTest, BZip2ContentTest) {
   EXPECT_EQ(got_content, got_bz2_content);
 }
 
-TEST_F(URLRequestTest, BZip2ContentTest_IncrementalHeader) {
+TEST(URLRequestTest, BZip2ContentTest_IncrementalHeader) {
   TestServer server(L"net/data/filter_unittests");
-  ASSERT_TRUE(server.init_successful());
 
   // for localhost domain, we also should support bzip2 encoding
   // first, get the original file
@@ -581,7 +525,7 @@ TEST_F(URLRequestTest, BZip2ContentTest_IncrementalHeader) {
 }
 
 #if defined(OS_WIN)
-TEST_F(URLRequestTest, ResolveShortcutTest) {
+TEST(URLRequestTest, ResolveShortcutTest) {
   std::wstring app_path;
   PathService::Get(base::DIR_SOURCE_ROOT, &app_path);
   file_util::AppendToPath(&app_path, L"net");
@@ -653,9 +597,8 @@ TEST_F(URLRequestTest, ResolveShortcutTest) {
 }
 #endif  // defined(OS_WIN)
 
-TEST_F(URLRequestTest, ContentTypeNormalizationTest) {
+TEST(URLRequestTest, ContentTypeNormalizationTest) {
   TestServer server(L"net/data/url_request_unittest");
-  ASSERT_TRUE(server.init_successful());
   TestDelegate d;
   TestURLRequest req(server.TestServerPage(
       "files/content-type-normalization.html"), &d);
@@ -672,7 +615,7 @@ TEST_F(URLRequestTest, ContentTypeNormalizationTest) {
   req.Cancel();
 }
 
-TEST_F(URLRequestTest, FileDirCancelTest) {
+TEST(URLRequestTest, FileDirCancelTest) {
   // Put in mock resource provider.
   net::NetModule::SetResourceProvider(TestNetResourceProvider);
 
@@ -700,9 +643,8 @@ TEST_F(URLRequestTest, FileDirCancelTest) {
   net::NetModule::SetResourceProvider(NULL);
 }
 
-TEST_F(URLRequestTest, RestrictRedirects) {
+TEST(URLRequestTest, RestrictRedirects) {
   TestServer server(L"net/data/url_request_unittest");
-  ASSERT_TRUE(server.init_successful());
   TestDelegate d;
   TestURLRequest req(server.TestServerPage(
       "files/redirect-to-file.html"), &d);
@@ -713,9 +655,8 @@ TEST_F(URLRequestTest, RestrictRedirects) {
   EXPECT_EQ(net::ERR_UNSAFE_REDIRECT, req.status().os_error());
 }
 
-TEST_F(URLRequestTest, NoUserPassInReferrer) {
+TEST(URLRequestTest, NoUserPassInReferrer) {
   TestServer server(L"net/data/url_request_unittest");
-  ASSERT_TRUE(server.init_successful());
   TestDelegate d;
   TestURLRequest req(server.TestServerPage(
       "echoheader?Referer"), &d);
@@ -726,9 +667,8 @@ TEST_F(URLRequestTest, NoUserPassInReferrer) {
   EXPECT_EQ(std::string("http://foo.com/"), d.data_received());
 }
 
-TEST_F(URLRequestTest, CancelRedirect) {
+TEST(URLRequestTest, CancelRedirect) {
   TestServer server(L"net/data/url_request_unittest");
-  ASSERT_TRUE(server.init_successful());
   TestDelegate d;
   {
     d.set_cancel_in_received_redirect(true);
@@ -744,9 +684,8 @@ TEST_F(URLRequestTest, CancelRedirect) {
   }
 }
 
-TEST_F(URLRequestTest, VaryHeader) {
+TEST(URLRequestTest, VaryHeader) {
   TestServer server(L"net/data/url_request_unittest");
-  ASSERT_TRUE(server.init_successful());
 
   scoped_refptr<URLRequestContext> context = new URLRequestHttpCacheContext();
 
@@ -766,7 +705,7 @@ TEST_F(URLRequestTest, VaryHeader) {
 
   // Make sure that the response time of a future response will be in the
   // future!
-  PlatformThread::Sleep(10);
+  Sleep(10);
 
   // expect a cache hit
   {
@@ -793,10 +732,9 @@ TEST_F(URLRequestTest, VaryHeader) {
   }
 }
 
-TEST_F(URLRequestTest, BasicAuth) {
+TEST(URLRequestTest, BasicAuth) {
   scoped_refptr<URLRequestContext> context = new URLRequestHttpCacheContext();
   TestServer server(L"");
-  ASSERT_TRUE(server.init_successful());
 
   Time response_time;
 
@@ -819,7 +757,7 @@ TEST_F(URLRequestTest, BasicAuth) {
 
   // Let some time pass so we can ensure that a future response will have a
   // response time value in the future.
-  PlatformThread::Sleep(10 /* milliseconds */);
+  Sleep(10 /* milliseconds */);
 
   // repeat request with end-to-end validation.  since auth-basic results in a
   // cachable page, we expect this test to result in a 304.  in which case, the
@@ -848,7 +786,7 @@ TEST_F(URLRequestTest, BasicAuth) {
 // The subsequent transaction should use GET, and should not send the
 // Content-Type header.
 // http://code.google.com/p/chromium/issues/detail?id=843
-TEST_F(URLRequestTest, Post302RedirectGet) {
+TEST(URLRequestTest, Post302RedirectGet) {
   TestServer server(L"net/data/url_request_unittest");
   TestDelegate d;
   TestURLRequest req(server.TestServerPage("files/redirect-to-echoall"), &d);
@@ -884,12 +822,3 @@ TEST_F(URLRequestTest, Post302RedirectGet) {
   EXPECT_TRUE(ContainsString(data, "Accept-Charset:"));
 }
 
-TEST_F(URLRequestTest, Post307RedirectPost) {
-  TestServer server(L"net/data/url_request_unittest");
-  TestDelegate d;
-  TestURLRequest req(server.TestServerPage("files/redirect307-to-echoall"), &d);
-  req.set_method("POST");
-  req.Start();
-  MessageLoop::current()->Run();
-  EXPECT_EQ(req.method(), "POST");
-}

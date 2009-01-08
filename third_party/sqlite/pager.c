@@ -4451,27 +4451,6 @@ int sqlite3PagerMovepage(Pager *pPager, DbPage *pPg, Pgno pgno){
 #endif
 
 /**
-** When making large allocations, there is no need to stress the heap and
-** potentially hold its lock while we allocate a bunch of memory.  If we know
-** the allocation will be large, go directly to the OS instead of the heap.
-**/
-static void* allocLarge(size_t size) {
-#if OS_WIN
-  return VirtualAlloc(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
-#else
-  return sqliteMallocRaw(size);
-#endif
-}
-
-static void freeLarge(void* ptr) {
-#if OS_WIN
-  VirtualFree(ptr, 0, MEM_RELEASE);
-#else
-  sqliteFree(ptr);
-#endif
-}
-
-/**
 ** Addition: This will attempt to populate the database cache with
 ** the first N bytes of the file, where N is the total size of the cache.
 ** Because we can load this as one chunk from the disk, this is much faster
@@ -4506,12 +4485,12 @@ int sqlite3PagerLoadall(Pager* pPager)
     return rc;
 
   /* load the file as one chunk */
-  fileData = allocLarge(loadSize);
+  fileData = sqliteMallocRaw(loadSize);
   if (! fileData)
     return SQLITE_NOMEM;
   rc = sqlite3OsRead(pPager->fd, fileData, loadSize);
   if (rc != SQLITE_OK) {
-    freeLarge(fileData);
+    sqliteFree(fileData);
     return rc;
   }
 
@@ -4529,7 +4508,7 @@ int sqlite3PagerLoadall(Pager* pPager)
       break;
     sqlite3PagerUnref(pPage);
   }
-  freeLarge(fileData);
+  sqliteFree(fileData);
   return SQLITE_OK;
 }
 

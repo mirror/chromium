@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <windows.h>
+
 #include "base/basictypes.h"
 #include "base/file_util.h"
 #include "base/path_service.h"
@@ -13,9 +15,6 @@
 #include "googleurl/src/gurl.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "SkBitmap.h"
-
-using base::Time;
-using base::TimeDelta;
 
 namespace history {
 
@@ -33,15 +32,16 @@ class ThumbnailDatabaseTest : public testing::Test {
   virtual void SetUp() {
     // get an empty file for the test DB
     PathService::Get(chrome::DIR_TEST_DATA, &file_name_);
-    file_util::AppendToPath(&file_name_, L"TestThumbnails.db");
-    file_util::Delete(file_name_, false);
+    file_name_.push_back(file_util::kPathSeparator);
+    file_name_.append(L"TestThumbnails.db");
+    DeleteFile(file_name_.c_str());
 
     google_bitmap_.reset(
         JPEGCodec::Decode(kGoogleThumbnail, sizeof(kGoogleThumbnail)));
   }
 
   virtual void TearDown() {
-    file_util::Delete(file_name_, false);
+    DeleteFile(file_name_.c_str());
   }
 
   scoped_ptr<SkBitmap> google_bitmap_;
@@ -61,7 +61,17 @@ const double kWorseBoringness = 0.50;
 const double kBetterBoringness = 0.10;
 const double kTotallyBoring = 1.0;
 
-const int64 kPage1 = 1234;
+const __int64 kPage1 = 1234;
+
+// converts out constant data above to a vector for SetPageThumbnail
+static std::vector<unsigned char> StringToVector(const unsigned char* str) {
+  size_t len = strlen(reinterpret_cast<const char*>(str));
+  std::vector<unsigned char> vect;
+  vect.resize(len);
+
+  memcpy(&vect[0], str, len);
+  return vect;
+}
 
 }  // namespace
 
@@ -80,7 +90,7 @@ TEST_F(ThumbnailDatabaseTest, AddDelete) {
   ASSERT_TRUE(boring.Equals(score_output));
 
   // Verify a random page is not found.
-  int64 page2 = 5678;
+  __int64 page2 = 5678;
   std::vector<unsigned char> jpeg_data;
   EXPECT_FALSE(db.GetPageThumbnail(page2, &jpeg_data));
   EXPECT_FALSE(db.ThumbnailScoreForId(page2, &score_output));

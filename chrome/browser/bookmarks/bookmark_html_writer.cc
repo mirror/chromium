@@ -4,9 +4,8 @@
 
 #include "chrome/browser/bookmarks/bookmark_html_writer.h"
 
-#include "base/file_util.h"
 #include "base/message_loop.h"
-#include "base/platform_file.h"
+#include "base/scoped_handle.h"
 #include "base/scoped_ptr.h"
 #include "base/string_util.h"
 #include "base/time.h"
@@ -15,8 +14,6 @@
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/history/history_types.h"
 #include "net/base/escape.h"
-#include "net/base/file_stream.h"
-#include "net/base/net_errors.h"
 
 namespace bookmark_html_writer {
 
@@ -132,8 +129,12 @@ class Writer : public Task {
 
   // Opens the file, returning true on success.
   bool OpenFile() {
-    int flags = base::PLATFORM_FILE_CREATE_ALWAYS | base::PLATFORM_FILE_WRITE;
-    return (file_stream_.Open(path_, flags) == net::OK);
+    handle_.Set(
+        CreateFile(path_.c_str(), GENERIC_WRITE, 0, NULL,
+                   CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL));
+    if (!handle_.IsValid())
+      return false;
+    return true;
   }
 
   // Increments the indent.
@@ -150,8 +151,10 @@ class Writer : public Task {
   // Writes raw text out returning true on success. This does not escape
   // the text in anyway.
   bool Write(const std::string& text) {
-    size_t wrote = file_stream_.Write(text.c_str(), text.length(), NULL);
-    bool result = (wrote == text.length());
+    DWORD wrote;
+    bool result =
+        (WriteFile(handle_, text.c_str(), text.length(), &wrote, NULL) &&
+         wrote == text.length());
     DCHECK(result);
     return result;
   }
@@ -192,8 +195,8 @@ class Writer : public Task {
   // Converts a time string written to the JSON codec into a time_t string
   // (used by bookmarks.html) and writes it.
   bool WriteTime(const std::wstring& time_string) {
-    base::Time time =
-        base::Time::FromInternalValue(StringToInt64(time_string));
+    Time time =
+        Time::FromInternalValue(StringToInt64(time_string));
     return Write(Int64ToString(time.ToTimeT()));
   }
 
@@ -303,7 +306,7 @@ class Writer : public Task {
   std::wstring path_;
 
   // File we're writing to.
-  net::FileStream file_stream_;
+  ScopedHandle handle_;
 
   // How much we indent when writing a bookmark/folder. This is modified
   // via IncrementIndent and DecrementIndent.

@@ -14,15 +14,12 @@
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
 #include "chrome/views/button.h"
+#include "chrome/views/container.h"
 #include "chrome/views/event.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/view_menu_delegate.h"
-#include "chrome/views/widget.h"
 
 #include "generated_resources.h"
-
-using base::Time;
-using base::TimeDelta;
 
 namespace views {
 
@@ -105,14 +102,14 @@ void MenuButton::Paint(ChromeCanvas* canvas, bool for_drag) {
 ////////////////////////////////////////////////////////////////////////////////
 
 int MenuButton::GetMaximumScreenXCoordinate() {
-  Widget* widget = GetWidget();
+  Container* vc = GetContainer();
 
-  if (!widget) {
+  if (!vc) {
     NOTREACHED();
     return 0;
   }
 
-  HWND hwnd = widget->GetHWND();
+  HWND hwnd = vc->GetHWND();
   CRect t;
   ::GetWindowRect(hwnd, &t);
 
@@ -158,7 +155,7 @@ bool MenuButton::Activate() {
 
     menu_visible_ = true;
     menu_delegate_->RunMenu(this, menu_position.ToPOINT(),
-                            GetWidget()->GetHWND());
+                            GetContainer()->GetHWND());
     menu_visible_ = false;
     menu_closed_time_ = Time::Now();
 
@@ -170,6 +167,7 @@ bool MenuButton::Activate() {
     // or selected an item) and we will inevitably refresh the hot state
     // in the event the mouse _is_ over the view.
     SetState(BS_NORMAL);
+    SchedulePaint();
 
     // We must return false here so that the RootView does not get stuck
     // sending all mouse pressed events to us instead of the appropriate
@@ -216,17 +214,6 @@ bool MenuButton::OnKeyReleased(const KeyEvent& e) {
   return true;
 }
 
-// The reason we override View::OnMouseExited is because we get this event when
-// we display the menu. If we don't override this method then
-// BaseButton::OnMouseExited will get the event and will set the button's state
-// to BS_NORMAL instead of keeping the state BM_PUSHED. This, in turn, will
-// cause the button to appear depressed while the menu is displayed.
-void MenuButton::OnMouseExited(const MouseEvent& event) {
-  if ((state_ != BS_DISABLED) && (!menu_visible_) && (!InDrag())) {
-    SetState(BS_NORMAL);
-  }
-}
-
 ////////////////////////////////////////////////////////////////////////////////
 //
 // MenuButton - accessibility
@@ -253,6 +240,17 @@ bool MenuButton::GetAccessibleState(VARIANT* state) {
 
   state->lVal |= STATE_SYSTEM_HASPOPUP;
   return true;
+}
+
+// The reason we override View::OnMouseExited is because we get this event when
+// we display the menu. If we don't override this method then
+// BaseButton::OnMouseExited will get the event and will set the button's state
+// to BS_NORMAL instead of keeping the state BM_PUSHED. This, in turn, will
+// cause the button to appear depressed while the menu is displayed.
+void MenuButton::OnMouseExited(const MouseEvent& event) {
+  if ((state_ != BS_DISABLED) && (!menu_visible_) && (!InDrag())) {
+    SetState(BS_NORMAL);
+  }
 }
 
 }  // namespace views

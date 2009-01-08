@@ -12,7 +12,6 @@
 #include "chrome/browser/browser_prefs.h"
 #include "chrome/browser/history/history.h"
 #include "chrome/browser/profile.h"
-#include "chrome/browser/sessions/session_service.h"
 #include "chrome/browser/template_url_model.h"
 #include "chrome/common/pref_service.h"
 
@@ -67,12 +66,6 @@ class TestingProfile : public Profile {
   virtual VisitedLinkMaster* GetVisitedLinkMaster() {
     return NULL;
   }
-  virtual ExtensionsService* GetExtensionsService() {
-    return NULL;
-  }
-  virtual GreasemonkeyMaster* GetGreasemonkeyMaster() {
-    return NULL;
-  }
   virtual HistoryService* GetHistoryService(ServiceAccessType access) {
     return history_service_.get();
   }
@@ -108,16 +101,13 @@ class TestingProfile : public Profile {
   virtual URLRequestContext* GetRequestContext() {
     return NULL;
   }
-  void set_session_service(SessionService* session_service) {
-    session_service_ = session_service;
-  }
   virtual SessionService* GetSessionService() {
-    return session_service_.get();
+    return NULL;
   }
   virtual void ShutdownSessionService() {
   }
   virtual bool HasSessionService() const {
-    return (session_service_.get() != NULL);
+    return false;
   }
   virtual std::wstring GetName() {
     return std::wstring();
@@ -130,11 +120,8 @@ class TestingProfile : public Profile {
   virtual void SetID(const std::wstring& id) {
     id_ = id;
   }
-  void set_last_session_exited_cleanly(bool value) {
-    last_session_exited_cleanly_ = value;
-  }
   virtual bool DidLastSessionExitCleanly() {
-    return last_session_exited_cleanly_;
+    return true;
   }
   virtual void MergeResourceString(int message_id,
                                    std::wstring* output_string) {
@@ -149,7 +136,7 @@ class TestingProfile : public Profile {
   virtual bool Profile::IsSameProfile(Profile *p) {
     return this == p;
   }
-  virtual base::Time GetStartTime() const {
+  virtual Time GetStartTime() const {
     return start_time_;
   }
   virtual TabRestoreService* GetTabRestoreService() {
@@ -175,7 +162,7 @@ class TestingProfile : public Profile {
   // The path of the profile; the various database and other files are relative
   // to this.
   std::wstring path_;
-  base::Time start_time_;
+  Time start_time_;
   scoped_ptr<PrefService> prefs_;
 
  private:
@@ -192,9 +179,6 @@ class TestingProfile : public Profile {
   // The TemplateURLFetcher. Only created if CreateTemplateURLModel is invoked.
   scoped_ptr<TemplateURLModel> template_url_model_;
 
-  // The SessionService. Defaults to NULL, but can be set using the setter.
-  scoped_refptr<SessionService> session_service_;
-
   // Do we have a history service? This defaults to the value of
   // history_service, but can be explicitly set.
   bool has_history_service_;
@@ -202,9 +186,6 @@ class TestingProfile : public Profile {
   std::wstring id_;
 
   bool off_the_record_;
-
-  // Did the last session exit cleanly? Default is true.
-  bool last_session_exited_cleanly_;
 };
 
 #endif  // CHROME_TEST_TESTING_PROFILE_H__

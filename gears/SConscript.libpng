@@ -14,7 +14,6 @@ env.Replace(
     CPPPATH = [
         '$LIBPNG_DIR',
         '$THIRD_PARTY_DIR/zlib',
-        '$VC80_CPPPATH',
     ],
 )
 
@@ -50,4 +49,4 @@ if not env['OFFICIAL_BUILD']:
       '$LIBPNG_DIR/pngwutil.c',
   ]
 
-env.GearsStaticLibrary('png-gears', input_files)
+env.ChromeStaticLibrary('png-gears', input_files)

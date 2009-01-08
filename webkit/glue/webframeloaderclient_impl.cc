@@ -6,9 +6,7 @@
 #include <string>
 #include <vector>
 
-#include "base/compiler_specific.h"
-
-MSVC_PUSH_WARNING_LEVEL(0);
+#pragma warning(push, 0)
 #include "Chrome.h"
 #include "CString.h"
 #include "Document.h"
@@ -16,9 +14,6 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "Element.h"
 #include "HistoryItem.h"
 #include "HTMLFormElement.h"  // needed by FormState.h
-#include "HTMLFormControlElement.h"
-#include "HTMLInputElement.h"
-#include "HTMLNames.h"
 #include "FormState.h"
 #include "FrameLoader.h"
 #include "FrameLoadRequest.h"
@@ -30,7 +25,7 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "PluginInfoStore.h"
 #include "RefPtr.h"
 #include "WindowFeatures.h"
-MSVC_POP_WARNING();
+#pragma warning(pop)
 
 #undef LOG
 #include "base/basictypes.h"
@@ -42,7 +37,7 @@ MSVC_POP_WARNING();
 #if defined(OS_WIN)
 #include "webkit/activex_shim/activex_shared.h"
 #endif
-#include "webkit/glue/autofill_form.h"
+#include "webkit/glue/webframeloaderclient_impl.h"
 #include "webkit/glue/alt_404_page_resource_fetcher.h"
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/password_form_dom_manager.h"
@@ -51,7 +46,6 @@ MSVC_POP_WARNING();
 #include "webkit/glue/webdatasource_impl.h"
 #include "webkit/glue/webdocumentloader_impl.h"
 #include "webkit/glue/weberror_impl.h"
-#include "webkit/glue/webframeloaderclient_impl.h"
 #include "webkit/glue/webhistoryitem_impl.h"
 #include "webkit/glue/webkit_glue.h"
 #include "webkit/glue/webplugin_impl.h"
@@ -84,12 +78,13 @@ WebFrameLoaderClient::~WebFrameLoaderClient() {
 }
 
 void WebFrameLoaderClient::frameLoaderDestroyed() {
-  // When the WebFrame was created, it had an extra reference given to it on
-  // behalf of the Frame.  Since the WebFrame owns us, this extra ref also
-  // serves to keep us alive until the FrameLoader is done with us.  The
-  // FrameLoader calls this method when it's going away.  Therefore, we balance
-  // out that extra reference, which may cause 'this' to be deleted.
-  webframe_->Closing();
+  // When the WebFrame was created, it had an extra ref() given to it on behalf
+  // of the FrameWin, which accesses it via the FrameWinClient interface.
+  // Since the WebFrame owns us, this extra ref also serves to keep us alive
+  // until the FrameLoader is done with us.  The FrameLoader calls this method
+  // when it's going away.  Therefore, we balance out that extra ref.
+  //
+  // May delete 'this'
   webframe_->Release();
 }
 
@@ -106,6 +101,13 @@ void WebFrameLoaderClient::didPerformFirstNavigation() const {
 void WebFrameLoaderClient::registerForIconNotification(bool listen){
 }
 
+void WebFrameLoaderClient::unloadListenerChanged() {
+  WebViewImpl* webview = webframe_->webview_impl();
+  WebViewDelegate* d = webview->delegate();
+  if (d)
+    d->OnUnloadListenerChanged(webview, webframe_);
+}
+
 bool WebFrameLoaderClient::hasWebView() const {
   return webframe_->webview_impl() != NULL;
 }
@@ -117,6 +119,11 @@ bool WebFrameLoaderClient::hasFrameView() const {
   return webframe_->webview_impl() != NULL;
 }
 
+bool WebFrameLoaderClient::privateBrowsingEnabled() const {
+  // FIXME
+  return false;
+}
+
 void WebFrameLoaderClient::makeDocumentView() {
   webframe_->CreateFrameView();
 }
@@ -125,6 +132,9 @@ void WebFrameLoaderClient::makeRepresentation(DocumentLoader*) {
   has_representation_ = true;
 }
 
+void WebFrameLoaderClient::setDocumentViewFromCachedPage(CachedPage*) {
+  // FIXME
+}
 void WebFrameLoaderClient::forceLayout() {
   // FIXME
 }
@@ -137,11 +147,20 @@ void WebFrameLoaderClient::setCopiesOnScroll() {
 }
 
 void WebFrameLoaderClient::detachedFromParent2() {
-  // Nothing to do here.
+  // FIXME
+}
+void WebFrameLoaderClient::detachedFromParent3() {
+  // FIXME
 }
 
-void WebFrameLoaderClient::detachedFromParent3() {
-  // Nothing to do here.
+void WebFrameLoaderClient::detachedFromParent4() {
+  // Called during the last part of frame detaching, to indicate that we should
+  // destroy various objects (including the FrameWin).
+  webframe_->Closing();
+}
+
+void WebFrameLoaderClient::loadedFromCachedPage() {
+  // FIXME
 }
 
 // This function is responsible for associating the |identifier| with a given
@@ -159,25 +178,25 @@ void WebFrameLoaderClient::assignIdentifierToInitialRequest(
   }
 }
 
-// Determines whether the request being loaded by |loader| is a frame or a
-// subresource. A subresource in this context is anything other than a frame --
-// this includes images and xmlhttp requests.  It is important to note that a
-// subresource is NOT limited to stuff loaded through the frame's subresource
-// loader. Synchronous xmlhttp requests for example, do not go through the
-// subresource loader, but we still label them as TargetIsSubResource.
+// Determines whether the request being loaded by |loader| is a frame
+// or a subresource. A subresource in this context is anything other
+// than a frame -- this includes images and xmlhttp requests.
+// It is important to note that a subresource is NOT limited to stuff
+// loaded through the frame's subresource loader. Synchronous xmlhttp
+// requests for example, do not go through the subresource loader,
+// but we still label them as SUB_RESOURCE.
 //
 // The important edge cases to consider when modifying this function are
 // how synchronous resource loads are treated during load/unload threshold.
-static ResourceRequest::TargetType DetermineTargetTypeFromLoader(
-    DocumentLoader* loader) {
+static ResourceType::Type DetermineResourceTypeFromLoader(DocumentLoader* loader) {
   if (loader == loader->frameLoader()->provisionalDocumentLoader()) {
     if (loader->frameLoader()->isLoadingMainFrame()) {
-      return ResourceRequest::TargetIsMainFrame;
+      return ResourceType::MAIN_FRAME;
     } else {
-      return ResourceRequest::TargetIsSubFrame;
+      return ResourceType::SUB_FRAME;
     }
   }
-  return ResourceRequest::TargetIsSubResource;
+  return ResourceType::SUB_RESOURCE;
 }
 
 void WebFrameLoaderClient::dispatchWillSendRequest(
@@ -189,7 +208,7 @@ void WebFrameLoaderClient::dispatchWillSendRequest(
 
   // We want to distinguish between a request for a document to be loaded into
   // the main frame, a sub-frame, or the sub-objects in that document.
-  request.setTargetType(DetermineTargetTypeFromLoader(loader));
+  request.setResourceType(DetermineResourceTypeFromLoader(loader));
 
   // FrameLoader::loadEmptyDocumentSynchronously() creates an empty document
   // with no URL.  We don't like that, so we'll rename it to about:blank.
@@ -206,21 +225,6 @@ void WebFrameLoaderClient::dispatchWillSendRequest(
     d->WillSendRequest(webview, identifier, &webreq);
     request = webreq.frame_load_request().resourceRequest();
   }
-}
-
-bool WebFrameLoaderClient::shouldUseCredentialStorage(DocumentLoader*,
-    unsigned long identifier) {
-  // FIXME
-  // Intended to pass through to a method on the resource load delegate.
-  // If implemented, that method controls whether the browser should ask the
-  // networking layer for a stored default credential for the page (say from
-  // the Mac OS keychain). If the method returns false, the user should be
-  // presented with an authentication challenge whether or not the networking
-  // layer has a credential stored.
-  // This returns true for backward compatibility: the ability to override the
-  // system credential store is new. (Actually, not yet fully implemented in
-  // WebKit, as of this writing.)
-  return true;   
 }
 
 void WebFrameLoaderClient::dispatchDidReceiveAuthenticationChallenge(
@@ -240,7 +244,7 @@ void WebFrameLoaderClient::dispatchDidReceiveResponse(DocumentLoader* loader,
 
   /* TODO(evanm): reenable this once we properly sniff XHTML from text/xml documents.
   // True if the request was for the page's main frame, or a subframe.
-  bool is_frame = ResourceType::IsFrame(DetermineTargetTypeFromLoader(loader));
+  bool is_frame = ResourceType::IsFrame(DetermineResourceTypeFromLoader(loader));
   if (is_frame &&
       response.httpStatusCode() == 200 &&
       mime_util::IsViewSourceMimeType(
@@ -249,7 +253,7 @@ void WebFrameLoaderClient::dispatchDidReceiveResponse(DocumentLoader* loader,
   }*/
 
   // When the frame request first 404's, chrome may replace it with the alternate
-  // 404 page's contents. It does this using substitute data in the document
+  // 404 page's contents. It does this using substitute data in the document 
   // loader, so the original response and url of the request can be preserved.
   // We need to avoid replacing the current page, if it has already been
   // replaced (otherwise could loop on setting alt-404 page!)
@@ -258,10 +262,8 @@ void WebFrameLoaderClient::dispatchDidReceiveResponse(DocumentLoader* loader,
   // If it's a 404 page, we wait until we get 512 bytes of data before trying
   // to load the document.  This allows us to put up an alternate 404 page if
   // there's short text.
-  ResourceRequest::TargetType target_type =
-      DetermineTargetTypeFromLoader(loader);
   postpone_loading_data_ =
-      ResourceRequest::TargetIsMainFrame == target_type &&
+      ResourceType::MAIN_FRAME == DetermineResourceTypeFromLoader(loader) &&
       !is_substitute_data &&
       response.httpStatusCode() == 404 &&
       GetAlt404PageUrl(loader).is_valid();
@@ -296,6 +298,16 @@ void WebFrameLoaderClient::dispatchDidFinishLoading(DocumentLoader* loader,
   if (d)
     d->DidFinishLoading(webview, identifier);
 }
+
+#if defined(OS_MACOSX)
+// This is TEMPORARY until we can pull this upstream. TODO(avi): do it
+NSCachedURLResponse* WebFrameLoaderClient::willCacheResponse(
+      WebCore::DocumentLoader*,
+      unsigned long identifier,
+      NSCachedURLResponse*) const {
+  return nil;
+}
+#endif
 
 GURL WebFrameLoaderClient::GetAlt404PageUrl(DocumentLoader* loader) {
   WebViewImpl* webview = webframe_->webview_impl();
@@ -341,18 +353,12 @@ void WebFrameLoaderClient::dispatchDidFailLoading(DocumentLoader* loader,
 void WebFrameLoaderClient::dispatchDidFinishDocumentLoad() {
   WebViewImpl* webview = webframe_->webview_impl();
   WebViewDelegate* d = webview->delegate();
-
-  // A frame may be reused.  This call ensures we don't hold on to our password
-  // listeners and their associated HTMLInputElements.
-  webframe_->ClearPasswordListeners();
-
   // The document has now been fully loaded.
   // Scan for password forms to be sent to the browser
   PassRefPtr<WebCore::HTMLCollection> forms =
       webframe_->frame()->document()->forms();
 
-  std::vector<PasswordForm> passwordForms;
-
+  std::vector<PasswordForm> actions;
   unsigned int form_count = forms->length();
   for (unsigned int i = 0; i < form_count; ++i) {
     // Strange but true, sometimes item can be NULL.
@@ -360,21 +366,19 @@ void WebFrameLoaderClient::dispatchDidFinishDocumentLoad() {
     if (item) {
       WebCore::HTMLFormElement* form =
           static_cast<WebCore::HTMLFormElement*>(item);
-
+      
       // Honour autocomplete=off.
       if (!form->autoComplete())
         continue;
 
-      scoped_ptr<PasswordForm> passwordFormPtr(
+      scoped_ptr<PasswordForm> data(
           PasswordFormDomManager::CreatePasswordForm(form));
-
-      if (passwordFormPtr.get())
-        passwordForms.push_back(*passwordFormPtr);
+      if (data.get())
+        actions.push_back(*data);
     }
   }
-
-  if (d && (passwordForms.size() > 0))
-    d->OnPasswordFormsSeen(webview, passwordForms);
+  if (d && (actions.size() > 0)) 
+    d->OnPasswordFormsSeen(webview, actions);
   if (d)
     d->DidFinishDocumentLoadForFrame(webview, webframe_);
 }
@@ -397,13 +401,9 @@ bool WebFrameLoaderClient::dispatchDidLoadResourceFromMemoryCache(
 }
 
 void WebFrameLoaderClient::dispatchDidHandleOnloadEvents() {
-  // During the onload event of a subframe, the subframe can be removed.  In
-  // that case, it has no page.  This is covered by
-  // LayoutTests/fast/dom/replaceChild.html
-  if (!webframe_->frame()->page())
-    return;
   WebViewImpl* webview = webframe_->webview_impl();
   WebViewDelegate* d = webview->delegate();
+
   if (d)
     d->DidHandleOnloadEventsForFrame(webview, webframe_);
 }
@@ -439,15 +439,15 @@ void WebFrameLoaderClient::dispatchDidHandleOnloadEvents() {
 //   dispatchDidCancelClientRedirect()   -> clears expected redirect
 //   dispatchDidCommitLoad()             -> DISPATCHES
 //
-// Client redirect (cancelled)
+// Client redirect (cancelled) 
 // (e.g meta-refresh trumped by manual doc.location change, or just cancelled
 // because a link was clicked that requires the meta refresh to be rescheduled
 // (the SOURCE URL may have changed).
 // ---------------------------
 //   dispatchDidCancelClientRedirect()                 -> clears expected redirect
-//   dispatchDidStartProvisionalLoad()                 -> adds only URL to redirect list
-//   dispatchDidCommitLoad()                           -> DISPATCHES & clears list
-//   rescheduled ? dispatchWillPerformClientRedirect() -> saves expected redirect
+//   dispatchDidStartProvisionalLoad()                 -> adds only URL to redirect list   
+//   dispatchDidCommitLoad()                           -> DISPATCHES & clears list 
+//   rescheduled ? dispatchWillPerformClientRedirect() -> saves expected redirect 
 //               : nothing
 
 // Client redirect (failure)
@@ -483,7 +483,7 @@ void WebFrameLoaderClient::dispatchDidHandleOnloadEvents() {
 //   dispatchDidStartProvisionalLoad()                            -> adds 1#anchor source
 //   dispatchDidCommitLoad()                                      -> DISPATCHES 1#anchor
 //   dispatchWillPerformClientRedirect()                          -> saves exp. source (1#anchor)
-//   -- redirect timer fires
+//   -- redirect timer fires  
 //   dispatchDidStartProvisionalLoad()                            -> appends 1#anchor (src) and 1 (dest)
 //   dispatchDidCancelClientRedirect()                            -> clears expected redirect
 //   dispatchDidCommitLoad()                                      -> DISPATCHES 1#anchor + 1
@@ -574,20 +574,20 @@ void WebFrameLoaderClient::dispatchDidChangeLocationWithinPage() {
     GURL url = ds->GetRequest().GetURL();
     GURL chain_end = ds->GetRedirectChain().back();
     ds->ClearRedirectChain();
-
+    
     // Figure out if this location change is because of a JS-initiated client
-    // redirect (e.g onload/setTimeout document.location.href=).
+    // redirect (e.g onload/setTimeout document.location.href=).     
     // TODO(timsteele): (bugs 1085325, 1046841) We don't get proper redirect
     // performed/cancelled notifications across anchor navigations, so the
-    // other redirect-tracking code in this class (see dispatch*ClientRedirect()
-    // and dispatchDidStartProvisionalLoad) is insufficient to catch and
-    // properly flag these transitions. Once a proper fix for this bug is
+    // other redirect-tracking code in this class (see dispatch*ClientRedirect() 
+    // and dispatchDidStartProvisionalLoad) is insufficient to catch and 
+    // properly flag these transitions. Once a proper fix for this bug is 
     // identified and applied the following block may no longer be required.
     bool was_client_redirect =
         ((url == expected_client_redirect_dest_) &&
          (chain_end == expected_client_redirect_src_)) ||
         (NavigationGestureForLastLoad() == NavigationGestureAuto);
-
+    
     if (was_client_redirect) {
       if (d)
         d->DidCompleteClientRedirect(webview, webframe_, chain_end);
@@ -596,7 +596,7 @@ void WebFrameLoaderClient::dispatchDidChangeLocationWithinPage() {
       // completed it.
       expected_client_redirect_src_ = GURL();
       expected_client_redirect_dest_ = GURL();
-     }
+     } 
 
     // Regardless of how we got here, we are navigating to a URL so we need to
     // add it to the redirect chain.
@@ -662,10 +662,10 @@ void WebFrameLoaderClient::dispatchDidStartProvisionalLoad() {
   // cleared by DidCancelClientRedirect.
   bool completing_client_redirect = false;
   if (expected_client_redirect_src_.is_valid()) {
-    // expected_client_redirect_dest_ could be something like
+    // expected_client_redirect_dest_ could be something like 
     // "javascript:history.go(-1)" thus we need to exclude url starts with
     // "javascript:". See bug: 1080873
-    DCHECK(expected_client_redirect_dest_.SchemeIs("javascript") ||
+    DCHECK(expected_client_redirect_dest_.SchemeIs("javascript") || 
            expected_client_redirect_dest_ == url);
     ds->AppendRedirect(expected_client_redirect_src_);
     completing_client_redirect = true;
@@ -681,7 +681,7 @@ void WebFrameLoaderClient::dispatchDidStartProvisionalLoad() {
     d->DidStartProvisionalLoadForFrame(webview, webframe_,
                                        NavigationGestureForLastLoad());
     if (completing_client_redirect)
-      d->DidCompleteClientRedirect(webview, webframe_,
+      d->DidCompleteClientRedirect(webview, webframe_, 
                                    expected_client_redirect_src_);
   }
 
@@ -693,10 +693,10 @@ void WebFrameLoaderClient::dispatchDidStartProvisionalLoad() {
 NavigationGesture WebFrameLoaderClient::NavigationGestureForLastLoad() {
   // TODO(timsteele): userGestureHint returns too many false positives
   // (see bug 1051891) to trust it and assign NavigationGestureUser, so
-  // for now we assign Unknown in those cases and Auto otherwise.
+  // for now we assign Unknown in those cases and Auto otherwise. 
   // (Issue 874811 known false negative as well).
-  return webframe_->frame()->loader()->userGestureHint() ?
-      NavigationGestureUnknown :
+  return webframe_->frame()->loader()->userGestureHint() ? 
+      NavigationGestureUnknown : 
       NavigationGestureAuto;
 }
 
@@ -763,12 +763,6 @@ void WebFrameLoaderClient::dispatchDidFinishLoad() {
 void WebFrameLoaderClient::dispatchDidFirstLayout() {
  // FIXME: called when webkit finished layout of page.
  // All resources have not necessarily finished loading.
-}
-
-void WebFrameLoaderClient::dispatchDidFirstVisuallyNonEmptyLayout() {
-  // FIXME: called when webkit finished layout of a page that was visually
-  // non-empty.
-  // All resources have not necessarily finished loading.
 }
 
 Frame* WebFrameLoaderClient::dispatchCreatePage() {
@@ -862,7 +856,6 @@ void WebFrameLoaderClient::dispatchDecidePolicyForNewWindowAction(
     WebCore::FramePolicyFunction function,
     const WebCore::NavigationAction& action,
     const WebCore::ResourceRequest& request,
-    PassRefPtr<WebCore::FormState> form_state,
     const WebCore::String& frame_name) {
   WindowOpenDisposition disposition;
   if (!ActionSpecifiesDisposition(action, &disposition))
@@ -906,8 +899,7 @@ static WebNavigationType NavigationTypeToWebNavigationType(
 void WebFrameLoaderClient::dispatchDecidePolicyForNavigationAction(
     WebCore::FramePolicyFunction function,
     const WebCore::NavigationAction& action,
-    const WebCore::ResourceRequest& request,
-    PassRefPtr<WebCore::FormState> form_state) {
+    const WebCore::ResourceRequest& request) {
   PolicyAction policy_action = PolicyUse;
 
   WebViewImpl* wv = webframe_->webview_impl();
@@ -931,7 +923,7 @@ void WebFrameLoaderClient::dispatchDecidePolicyForNavigationAction(
 
       disposition = d->DispositionForNavigationAction(
           wv, webframe_, &ds->GetRequest(), webnav_type, disposition, is_redirect);
-
+    
       if (disposition != IGNORE_ACTION) {
         if (disposition == CURRENT_TAB) {
           policy_action = PolicyUse;
@@ -967,30 +959,17 @@ void WebFrameLoaderClient::dispatchUnableToImplementPolicy(const ResourceError&)
 }
 
 void WebFrameLoaderClient::dispatchWillSubmitForm(FramePolicyFunction function,
-    PassRefPtr<FormState> form_ref) {
+                                                  PassRefPtr<FormState> form_ref) {
   SearchableFormData* form_data = SearchableFormData::Create(form_ref->form());
   WebDocumentLoaderImpl* loader = static_cast<WebDocumentLoaderImpl*>(
-      webframe_->frame()->loader()->provisionalDocumentLoader());
+    webframe_->frame()->loader()->provisionalDocumentLoader());
   // Don't free the SearchableFormData, the loader will do that.
   loader->set_searchable_form_data(form_data);
 
-  PasswordForm* pass_data =
+  PasswordForm* pass_data = 
       PasswordFormDomManager::CreatePasswordForm(form_ref->form());
   // Don't free the PasswordFormData, the loader will do that.
   loader->set_password_form_data(pass_data);
-
-  WebViewImpl* webview = webframe_->webview_impl();
-  WebViewDelegate* d = webview->delegate();
-
-  // Unless autocomplete=off, record what the user put in it for future
-  // autofilling.
-  if (form_ref->form()->autoComplete()) {
-    scoped_ptr<AutofillForm> autofill_form(
-        AutofillForm::CreateAutofillForm(form_ref->form()));
-    if (autofill_form.get()) {
-      d->OnAutofillFormSubmitted(webview, *autofill_form);
-    }
-  }
 
   loader->set_form_submit(true);
 
@@ -1005,7 +984,7 @@ void WebFrameLoaderClient::revertToProvisionalState(DocumentLoader*) {
   has_representation_ = true;
 }
 
-void WebFrameLoaderClient::setMainDocumentError(DocumentLoader*,
+void WebFrameLoaderClient::setMainDocumentError(DocumentLoader*, 
                                                 const ResourceError& error) {
   if (plugin_widget_) {
     if (sent_initial_response_to_plugin_) {
@@ -1014,6 +993,10 @@ void WebFrameLoaderClient::setMainDocumentError(DocumentLoader*,
     }
     plugin_widget_ = NULL;
   }
+}
+
+void WebFrameLoaderClient::clearUnarchivingState(DocumentLoader*) {
+  // FIXME
 }
 
 void WebFrameLoaderClient::postProgressStartedNotification() {
@@ -1085,7 +1068,7 @@ void WebFrameLoaderClient::committedLoad(DocumentLoader* loader, const char* dat
           webframe_->frame()->loader()->activeDocumentLoader()->response());
     }
     plugin_widget_->didReceiveData(data, length);
-  }
+  } 
 }
 
 void WebFrameLoaderClient::finishedLoading(DocumentLoader* dl) {
@@ -1102,7 +1085,15 @@ void WebFrameLoaderClient::finishedLoading(DocumentLoader* dl) {
   }
 }
 
-void WebFrameLoaderClient::updateGlobalHistory() {
+void WebFrameLoaderClient::finalSetupForReplace(DocumentLoader*) {
+  // FIXME
+}
+
+void WebFrameLoaderClient::updateGlobalHistoryForStandardLoad(const KURL& kurl) {
+}
+
+void WebFrameLoaderClient::updateGlobalHistoryForReload(const KURL&) {
+  // FIXME: this is for updating the visit time.
 }
 
 bool WebFrameLoaderClient::shouldGoToHistoryItem(HistoryItem*) const {
@@ -1134,13 +1125,7 @@ ResourceError WebFrameLoaderClient::cannotShowMIMETypeError(const ResourceRespon
   // FIXME
   return ResourceError();
 }
-
 ResourceError WebFrameLoaderClient::fileDoesNotExistError(const ResourceResponse&) {
-  // FIXME
-  return ResourceError();
-}
-
-ResourceError WebFrameLoaderClient::pluginWillHandleLoadError(const WebCore::ResourceResponse&) {
   // FIXME
   return ResourceError();
 }
@@ -1153,6 +1138,25 @@ bool WebFrameLoaderClient::shouldFallBack(const ResourceError& error) {
   // request.
   // Note: The mac version also has a case for "WebKitErrorPluginWillHandleLoad"
   return error.errorCode() != net::ERR_ABORTED;
+}
+
+void WebFrameLoaderClient::setDefersLoading(bool) {
+  // FIXME
+}
+
+bool WebFrameLoaderClient::willUseArchive(ResourceLoader*, const ResourceRequest&, const KURL& originalURL) const {
+  // FIXME
+  return false;
+}
+bool WebFrameLoaderClient::isArchiveLoadPending(ResourceLoader*) const {
+  // FIXME
+  return false;
+}
+void WebFrameLoaderClient::cancelPendingArchiveLoad(ResourceLoader*) {
+  // FIXME
+}
+void WebFrameLoaderClient::clearArchivedResources() {
+  // FIXME
 }
 
 bool WebFrameLoaderClient::canHandleRequest(const ResourceRequest&) const {
@@ -1231,17 +1235,16 @@ void WebFrameLoaderClient::prepareForDataSourceReplacement() {
 PassRefPtr<DocumentLoader> WebFrameLoaderClient::createDocumentLoader(
     const ResourceRequest& request,
     const SubstituteData& data) {
-  RefPtr<WebDocumentLoaderImpl> loader = WebDocumentLoaderImpl::create(request,
-                                                                       data);
+  WebDocumentLoaderImpl* loader = new WebDocumentLoaderImpl(request, data);
 
   // Attach a datasource to the loader as a way of accessing requests.
   WebDataSourceImpl* datasource =
-      WebDataSourceImpl::CreateInstance(webframe_, loader.get());
+      WebDataSourceImpl::CreateInstance(webframe_, loader);
   loader->SetDataSource(datasource);
 
   webframe_->CacheCurrentRequestInfo(datasource);
 
-  return loader.release();
+  return loader;
 }
 
 void WebFrameLoaderClient::setTitle(const String& title, const KURL& url) {
@@ -1271,7 +1274,7 @@ void WebFrameLoaderClient::transitionToCommittedFromCachedPage(WebCore::CachedPa
 }
 
 // Called when the FrameLoader goes into a state in which a new page load
-// will occur.
+// will occur.  
 void WebFrameLoaderClient::transitionToCommittedForNewPage() {
   WebViewImpl* webview = webframe_->webview_impl();
   WebViewDelegate* d = webview->delegate();
@@ -1298,14 +1301,19 @@ void WebFrameLoaderClient::download(ResourceHandle* handle,
 
 PassRefPtr<Frame> WebFrameLoaderClient::createFrame(
     const KURL& url,
-    const String& name,
+    const String& name, 
     HTMLFrameOwnerElement* owner_element,
-    const String& referrer,
+    const String& referrer, 
     bool allows_scrolling,
-    int margin_width,
+    int margin_width, 
     int margin_height) {
   FrameLoadRequest frame_request(ResourceRequest(url, referrer), name);
-  return webframe_->CreateChildFrame(frame_request, owner_element);
+
+  Frame* new_frame = NULL;
+  if (webframe_) 
+    webframe_->CreateChildFrame(frame_request, owner_element, allows_scrolling,
+                                margin_width, margin_height, new_frame);
+  return new_frame;
 }
 
 // Utility function to convert a vector to an array of char*'s.
@@ -1367,7 +1375,7 @@ Widget* WebFrameLoaderClient::createPlugin(const IntSize& size, // TODO(erikkay)
     // We only allowed specific ActiveX controls to run from certain websites.
     if (!activex_shim::IsActiveXAllowed(clsid, url))
       return NULL;
-    // We need to pass the combined clsid + version to PluginsList, so that it
+    // We need to pass the combined clsid + version to PluginsList, so that it 
     // would detect if the requested version is installed. If not, it needs
     // to use the default plugin to update the control.
     if (!version.empty())
@@ -1393,7 +1401,7 @@ Widget* WebFrameLoaderClient::createPlugin(const IntSize& size, // TODO(erikkay)
   char **argv = NULL;
   int argc = 0;
   // There is a bug in Webkit which occurs when a plugin instance is defined
-  // with an OBJECT tag containing the "DATA" attribute". Please refer to the
+  // with an OBJECT tag containing the "DATA" attribute". Please refer to the 
   // webkit issue http://bugs.webkit.org/show_bug.cgi?id=15457 for more info.
   // The code below is a patch which should be taken out when a fix is
   // available in webkit. The logic is to add the "src" attribute to the list
@@ -1424,8 +1432,8 @@ Widget* WebFrameLoaderClient::createPlugin(const IntSize& size, // TODO(erikkay)
   }
 
   Widget* result = WebPluginImpl::Create(gurl, argn, argv, argc, element,
-                                         webframe_, plugin_delegate,
-                                         load_manually, actual_mime_type);
+                                         webframe_, plugin_delegate, 
+                                         load_manually);
 
   DeleteToArray(argn);
   DeleteToArray(argv);
@@ -1441,19 +1449,19 @@ void WebFrameLoaderClient::redirectDataToPlugin(Widget* pluginWidget) {
 }
 
 Widget* WebFrameLoaderClient::createJavaAppletWidget(
-                                           const IntSize& size,
+                                           const IntSize& size, 
                                            Element *element, const KURL &url,
                                            const Vector<String> &param_names,
                                            const Vector<String> &param_values) {
-  return createPlugin(size, element, url, param_names, param_values,
+  return createPlugin(size, element, url, param_names, param_values, 
     "application/x-java-applet", false);
 }
 
 ObjectContentType WebFrameLoaderClient::objectContentType(
-                                       const KURL& url,
+                                       const KURL& url, 
                                        const String& explicit_mime_type) {
   // This code is based on Apple's implementation from
-  // WebCoreSupport/WebFrameBridge.mm.
+  // WebCoreSupport/WebFrameBridge.mm. 
 
   String mime_type = explicit_mime_type;
   if (mime_type.isEmpty()) {
@@ -1506,3 +1514,4 @@ bool WebFrameLoaderClient::ActionSpecifiesDisposition(
     *disposition = shift ? NEW_WINDOW : SAVE_TO_DISK;
   return true;
 }
+

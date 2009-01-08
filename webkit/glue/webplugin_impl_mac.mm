@@ -4,9 +4,6 @@
 
 #include "config.h"
 
-#include "wtf/ASCIICType.h"
-
-#undef LOG
 #include "webkit/glue/webplugin_impl.h"
 
 // TODO(pinkerton): all of this needs to be filled in. webplugin_impl.cc has
@@ -50,8 +47,7 @@ WebCore::Widget* WebPluginImpl::Create(const GURL& url,
                                        WebCore::Element* element,
                                        WebFrameImpl* frame,
                                        WebPluginDelegate* delegate,
-                                       bool load_manually,
-                                       const std::string& mime_type) {
+                                       bool load_manually) {
   // TODO(pinkerton): delete delegate when stubbing out?
   NSLog(@"WebPluginImpl::Create");
   return NULL;

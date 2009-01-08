@@ -1,6 +1,6 @@
 /* libs/graphics/sgl/SkScan.cpp
 **
-** Copyright 2006, The Android Open Source Project
+** Copyright 2006, Google Inc.
 **
 ** Licensed under the Apache License, Version 2.0 (the "License"); 
 ** you may not use this file except in compliance with the License. 
@@ -65,10 +65,10 @@ void SkScan::FillXRect(const SkXRect& xr, const SkRegion* clip,
 
 void SkScan::FillRect(const SkRect& r, const SkRegion* clip,
                        SkBlitter* blitter) {
-    SkIRect ir;
+    SkXRect xr;
     
-    r.round(&ir);
-    SkScan::FillIRect(ir, clip, blitter);
+    XRect_set(&xr, r);
+    SkScan::FillXRect(xr, clip, blitter);
 }
 
 #endif

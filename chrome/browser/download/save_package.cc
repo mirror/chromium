@@ -21,7 +21,7 @@
 #include "chrome/browser/render_process_host.h"
 #include "chrome/browser/render_view_host.h"
 #include "chrome/browser/render_view_host_delegate.h"
-#include "chrome/browser/renderer_host/resource_dispatcher_host.h"
+#include "chrome/browser/resource_dispatcher_host.h"
 #include "chrome/browser/tab_util.h"
 #include "chrome/browser/web_contents.h"
 #include "chrome/browser/views/download_shelf_view.h"
@@ -31,14 +31,11 @@
 #include "chrome/common/pref_service.h"
 #include "chrome/common/stl_util-inl.h"
 #include "chrome/common/win_util.h"
-#include "net/base/mime_util.h"
 #include "net/base/net_util.h"
 #include "net/url_request/url_request_context.h"
 #include "webkit/glue/dom_serializer_delegate.h"
 
 #include "generated_resources.h"
-
-using base::Time;
 
 // Default name which will be used when we can not get proper name from
 // resource URL.
@@ -916,11 +913,7 @@ std::wstring SavePackage::GetSuggestNameForSaveAs(PrefService* prefs,
 // Static.
 bool SavePackage::GetSaveInfo(const std::wstring& suggest_name,
                               HWND container_hwnd,
-                              SavePackageParam* param,
-                              DownloadManager* download_manager) {
-  // TODO(tc): It might be nice to move this code into the download
-  // manager.  http://crbug.com/6025
-
+                              SavePackageParam* param) {
   // Use "Web Page, Complete" option as default choice of saving page.
   unsigned index = 2;
 
@@ -948,12 +941,6 @@ bool SavePackage::GetSaveInfo(const std::wstring& suggest_name,
     // saved as complete-HTML.
     index = 1;
   }
-
-  DCHECK(download_manager);
-  // Ensure the filename is safe.
-  download_manager->GenerateSafeFilename(param->current_tab_mime_type,
-      &param->saved_main_file_path);
-
   // The option index is not zero-based.
   DCHECK(index > 0 && index < 3);
   param->dir = file_util::GetDirectoryFromPath(param->saved_main_file_path);
@@ -1040,9 +1027,7 @@ bool SavePackage::IsSavableContents(const std::string& contents_mime_type) {
   return contents_mime_type == "text/html" ||
          contents_mime_type == "text/xml" ||
          contents_mime_type == "application/xhtml+xml" ||
-         contents_mime_type == "text/plain" ||
-         contents_mime_type == "text/css" ||
-         net::IsSupportedJavascriptMimeType(contents_mime_type.c_str());
+         contents_mime_type == "text/plain";
 }
 
 // Static
@@ -1078,3 +1063,4 @@ bool SavePackage::GetSafePureFileName(const std::wstring& dir_path,
     return false;
   }
 }
+

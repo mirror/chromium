@@ -73,8 +73,6 @@ class WebDataSourceImpl : public WebDataSource {
 
   virtual bool IsFormSubmit() const;
 
-  virtual std::wstring GetPageTitle() const;
-
 private:
   WebFrameImpl* frame_;
   WebDocumentLoaderImpl* loader_;

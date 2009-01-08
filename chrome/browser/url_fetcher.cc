@@ -4,19 +4,19 @@
 
 #include "chrome/browser/url_fetcher.h"
 
-#include "base/compiler_specific.h"
 #include "base/string_util.h"
 #include "base/thread.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_thread.h"
+#include "chrome/browser/net/dns_master.h"
 #include "googleurl/src/gurl.h"
 #include "net/base/load_flags.h"
 
 URLFetcher::URLFetcher(const GURL& url,
                        RequestType request_type,
                        Delegate* d)
-    : ALLOW_THIS_IN_INITIALIZER_LIST(
-      core_(new Core(this, url, request_type, d))) {
+#pragma warning(suppress: 4355)  // Okay to pass "this" here.
+  : core_(new Core(this, url, request_type, d)) {
 }
 
 URLFetcher::~URLFetcher() {
@@ -34,9 +34,9 @@ URLFetcher::Core::Core(URLFetcher* fetcher,
       delegate_loop_(MessageLoop::current()),
       io_loop_(ChromeThread::GetMessageLoop(ChromeThread::IO)),
       request_(NULL),
-      load_flags_(net::LOAD_NORMAL),
       response_code_(-1),
-      protect_entry_(URLFetcherProtectManager::GetInstance()->Register(
+      load_flags_(net::LOAD_NORMAL),
+      protect_entry_(ProtectManager::GetInstance()->Register(
           original_url_.host())),
       num_retries_(0) {
 }
@@ -47,7 +47,7 @@ void URLFetcher::Core::Start() {
   DCHECK(request_context_) << "We need an URLRequestContext!";
   io_loop_->PostDelayedTask(FROM_HERE, NewRunnableMethod(
           this, &Core::StartURLRequest),
-      protect_entry_->UpdateBackoff(URLFetcherProtectEntry::SEND));
+      protect_entry_->UpdateBackoff(ProtectEntry::SEND));
 }
 
 void URLFetcher::Core::Stop() {
@@ -120,7 +120,8 @@ void URLFetcher::Core::StartURLRequest() {
       if (!extra_request_headers_.empty())
         extra_request_headers_ += "\r\n";
       StringAppendF(&extra_request_headers_,
-                    "Content-Type: %s", upload_content_type_.c_str());
+                    "Content-Length: %d\r\nContent-Type: %s",
+                    upload_content_.size(), upload_content_type_.c_str());
       request_->AppendBytesToUpload(upload_content_.data(),
                                     static_cast<int>(upload_content_.size()));
       break;
@@ -160,8 +161,7 @@ void URLFetcher::Core::OnCompletedURLRequest(const URLRequestStatus& status) {
   if (response_code_ >= 500) {
     // When encountering a server error, we will send the request again
     // after backoff time.
-    const int wait =
-        protect_entry_->UpdateBackoff(URLFetcherProtectEntry::FAILURE);
+    const int wait = protect_entry_->UpdateBackoff(ProtectEntry::FAILURE);
     ++num_retries_;
     // Restarts the request if we still need to notify the delegate.
     if (delegate_) {
@@ -174,7 +174,7 @@ void URLFetcher::Core::OnCompletedURLRequest(const URLRequestStatus& status) {
       }
     }
   } else {
-    protect_entry_->UpdateBackoff(URLFetcherProtectEntry::SUCCESS);
+    protect_entry_->UpdateBackoff(ProtectEntry::SUCCESS);
     if (delegate_)
       delegate_->OnURLFetchComplete(fetcher_, url_, status, response_code_,
                                     cookies_, data_);

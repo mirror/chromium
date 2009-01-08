@@ -4,9 +4,9 @@
 
 #include "chrome/browser/importer/firefox2_importer.h"
 
-#include "base/file_path.h"
 #include "base/file_util.h"
 #include "base/path_service.h"
+#include "base/registry.h"
 #include "base/string_util.h"
 #include "base/values.h"
 #include "chrome/browser/importer/firefox_importer_utils.h"
@@ -18,8 +18,6 @@
 #include "generated_resources.h"
 #include "net/base/data_url.h"
 
-using base::Time;
-
 // Firefox2Importer.
 
 Firefox2Importer::Firefox2Importer() : parsing_bookmarks_html_file_(false) {
@@ -30,7 +28,6 @@ Firefox2Importer::~Firefox2Importer() {
 
 void Firefox2Importer::StartImport(ProfileInfo profile_info,
                                    uint16 items, ProfileWriter* writer,
-                                   MessageLoop* delagate_loop,
                                    ImporterHost* host) {
   writer_ = writer;
   source_path_ = profile_info.source_path;
@@ -69,19 +66,16 @@ void Firefox2Importer::StartImport(ProfileInfo profile_info,
 // static
 void Firefox2Importer::LoadDefaultBookmarks(const std::wstring& app_path,
                                             std::set<GURL> *urls) {
-  // TODO(port): Code below is correct only on Windows.
   // Firefox keeps its default bookmarks in a bookmarks.html file that
   // lives at: <Firefox install dir>\defaults\profile\bookmarks.html
-  FilePath file = FilePath::FromWStringHack(app_path);
-  file.Append(FILE_PATH_LITERAL("defaults"));
-  file.Append(FILE_PATH_LITERAL("profile"));
-  file.Append(FILE_PATH_LITERAL("bookmarks.html"));
+  std::wstring file = app_path;
+  file_util::AppendToPath(&file, L"defaults\\profile\\bookmarks.html");
 
   urls->clear();
 
   // Read the whole file.
   std::string content;
-  file_util::ReadFileToString(file.ToWStringHack(), &content);
+  file_util::ReadFileToString(file, &content);
   std::vector<std::string> lines;
   SplitString(content, '\n', &lines);
 
@@ -203,10 +197,10 @@ void Firefox2Importer::ImportBookmarksFile(
         DataURLToFaviconUsage(url, favicon, favicons);
 
       if (template_urls) {
-        // If there is a SHORTCUT attribute for this bookmark, we
-        // add it as our keywords.
-        TemplateURL* t_url = CreateTemplateURL(title, shortcut, url);
-        if (t_url)
+      // If there is a SHORTCUT attribute for this bookmark, we
+      // add it as our keywords.
+      TemplateURL* t_url = CreateTemplateURL(title, shortcut, url);
+      if (t_url)
           template_urls->push_back(t_url);
       }
 
@@ -511,13 +505,13 @@ void Firefox2Importer::HTMLUnescape(std::wstring *text) {
 void Firefox2Importer::FindXMLFilesInDir(
     const std::wstring& dir,
     std::vector<std::wstring>* xml_files) {
-  file_util::FileEnumerator file_enum(FilePath::FromWStringHack(dir), false,
+  file_util::FileEnumerator file_enum(dir, false,
                                       file_util::FileEnumerator::FILES,
-                                      FILE_PATH_LITERAL("*.xml"));
-  std::wstring file(file_enum.Next().ToWStringHack());
+                                      L"*.xml");
+  std::wstring file(file_enum.Next());
   while (!file.empty()) {
     xml_files->push_back(file);
-    file = file_enum.Next().ToWStringHack();
+    file = file_enum.Next();
   }
 }
 
@@ -550,3 +544,4 @@ void Firefox2Importer::DataURLToFaviconUsage(
 
   favicons->push_back(usage);
 }
+

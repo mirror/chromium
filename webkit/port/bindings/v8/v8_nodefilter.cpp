@@ -33,7 +33,6 @@
 #include "v8_proxy.h"
 #include "NodeFilter.h"
 #include "Node.h"
-#include "ScriptState.h"
 
 namespace WebCore {
 
@@ -52,8 +51,7 @@ V8NodeFilterCondition::~V8NodeFilterCondition() {
   m_filter.Clear();
 }
 
-short V8NodeFilterCondition::acceptNode(ScriptState* state,
-                                        Node* node) const {
+short V8NodeFilterCondition::acceptNode(Node* node) const {
   ASSERT(v8::Context::InContext());
 
   if (!m_filter->IsFunction()) return NodeFilter::FILTER_ACCEPT;
@@ -61,8 +59,7 @@ short V8NodeFilterCondition::acceptNode(ScriptState* state,
   v8::TryCatch exception_catcher;
 
   v8::Handle<v8::Object> this_obj = v8::Context::GetCurrent()->Global();
-  v8::Handle<v8::Function> callback =
-      v8::Handle<v8::Function>::Cast(m_filter);
+  v8::Handle<v8::Function> callback = v8::Handle<v8::Function>::Cast(m_filter);
   v8::Handle<v8::Value>* args = new v8::Handle<v8::Value>[1];
   args[0] = V8Proxy::ToV8Object(V8ClassIndex::NODE, node);
 
@@ -73,8 +70,9 @@ short V8NodeFilterCondition::acceptNode(ScriptState* state,
       proxy->CallFunction(callback, this_obj, 1, args);
   delete[] args;
 
+  // TODO(fqian): this code can be removed when issue 1042294 is fixed.
+  // See also 1068243.
   if (exception_catcher.HasCaught()) {
-    state->setException(exception_catcher.Exception());
     return NodeFilter::FILTER_REJECT;
   }
 

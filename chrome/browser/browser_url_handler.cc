@@ -6,7 +6,6 @@
 
 #include "chrome/browser/browser_about_handler.h"
 #include "chrome/browser/dom_ui/new_tab_ui.h"
-#include "chrome/browser/dom_ui/dom_ui_contents.h"
 
 std::vector<BrowserURLHandler::URLHandler> BrowserURLHandler::url_handlers_;
 
@@ -18,10 +17,8 @@ void BrowserURLHandler::InitURLHandlers() {
   // Here is where we initialize the global list of handlers for special URLs.
   // about:*
   url_handlers_.push_back(&BrowserAboutHandler::MaybeHandle);
-  // chrome-internal:*
-  url_handlers_.push_back(&NewTabUIHandleURL);
   // chrome:*
-  url_handlers_.push_back(&DOMUIContentsCanHandleURL);
+  url_handlers_.push_back(&NewTabUIHandleURL);
 }
 
 // static

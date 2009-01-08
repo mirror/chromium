@@ -11,11 +11,9 @@
 
 #include <string>
 
-#include "base/compiler_specific.h"
-
-MSVC_PUSH_WARNING_LEVEL(0);
+#pragma warning(push, 0)
 #include "ResourceHandleClient.h"
-MSVC_POP_WARNING();
+#pragma warning(pop)
 
 namespace WebCore {
 

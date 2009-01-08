@@ -32,7 +32,7 @@ class StatusView : public TabContents,
     MSG_WM_SIZE(OnSize)
   END_MSG_MAP()
 
-  virtual void CreateView();
+  virtual void CreateView(HWND parent_hwnd, const gfx::Rect& initial_bounds);
   virtual HWND GetContainerHWND() const { return m_hWnd; }
 
   // Derived classes should implement the following functions

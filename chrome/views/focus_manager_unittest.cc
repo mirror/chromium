@@ -14,6 +14,7 @@
 #include "chrome/views/background.h"
 #include "chrome/views/border.h"
 #include "chrome/views/checkbox.h"
+#include "chrome/views/container_win.h"
 #include "chrome/views/label.h"
 #include "chrome/views/link.h"
 #include "chrome/views/native_button.h"
@@ -22,7 +23,6 @@
 #include "chrome/views/scroll_view.h"
 #include "chrome/views/tabbed_pane.h"
 #include "chrome/views/text_field.h"
-#include "chrome/views/widget_win.h"
 #include "chrome/views/window.h"
 #include "chrome/views/window_delegate.h"
 #include "SkColor.h"
@@ -114,10 +114,10 @@ class BorderView : public views::NativeControl {
                                         0, 0, width(), height(),
                                         parent_container, NULL, NULL, NULL);
     // Create the view container which is a child of the TabControl.
-    widget_ = new views::WidgetWin();
-    widget_->Init(tab_control, gfx::Rect(), false);
-    widget_->SetContentsView(child_);
-    widget_->SetFocusTraversableParentView(this);
+    view_container_ = new views::ContainerWin();
+    view_container_->Init(tab_control, gfx::Rect(), false);
+    view_container_->SetContentsView(child_);
+    view_container_->SetFocusTraversableParentView(this);
     ResizeContents(tab_control);
     return tab_control;
   }
@@ -132,11 +132,11 @@ class BorderView : public views::NativeControl {
   }
 
   virtual views::RootView* GetContentsRootView() {
-    return widget_->GetRootView();
+    return view_container_->GetRootView();
   }
 
   virtual views::FocusTraversable* GetFocusTraversable() {
-    return widget_;
+    return view_container_;
   }
 
   virtual void ViewHierarchyChanged(bool is_add, View *parent, View *child) {
@@ -145,7 +145,7 @@ class BorderView : public views::NativeControl {
     if (child == this && is_add) {
       // We have been added to a view hierarchy, update the FocusTraversable
       // parent.
-      widget_->SetFocusTraversableParent(GetRootView());
+      view_container_->SetFocusTraversableParent(GetRootView());
     }
   }
 
@@ -156,18 +156,18 @@ private:
     if (!GetClientRect(tab_control, &content_bounds))
       return;
     TabCtrl_AdjustRect(tab_control, FALSE, &content_bounds);
-    widget_->MoveWindow(content_bounds.left, content_bounds.top,
+    view_container_->MoveWindow(content_bounds.left, content_bounds.top,
       content_bounds.Width(), content_bounds.Height(),
       TRUE);
   }
 
   View* child_;
-  views::WidgetWin* widget_;
+  views::ContainerWin* view_container_;
 
   DISALLOW_EVIL_CONSTRUCTORS(BorderView);
 };
 
-class TestViewWindow : public views::WidgetWin {
+class TestViewWindow : public views::ContainerWin {
  public:
   explicit TestViewWindow(FocusManagerTest* test);
   ~TestViewWindow() { }
@@ -236,10 +236,10 @@ TestViewWindow::TestViewWindow(FocusManagerTest* test)
 void TestViewWindow::Init() {
   gfx::Rect bounds(0, 0, 600, 460);
   contents_ = new views::View();
-  contents_->set_background(
+  contents_->SetBackground(
       views::Background::CreateSolidBackground(255, 255, 255));
 
-  WidgetWin::Init(NULL, bounds, true);
+  ContainerWin::Init(NULL, bounds, true);
   SetContentsView(contents_);
 
   views::CheckBox* cb =
@@ -250,9 +250,9 @@ void TestViewWindow::Init() {
   cb->SetID(kTopCheckBoxID);
 
   views::View* left_container = new views::View();
-  left_container->set_border(
+  left_container->SetBorder(
       views::Border::CreateSolidBorder(1, SK_ColorBLACK));
-  left_container->set_background(
+  left_container->SetBackground(
       views::Background::CreateSolidBackground(240, 240, 240));
   left_container->SetID(kLeftContainerID);
   contents_->AddChildView(left_container);
@@ -330,9 +330,9 @@ void TestViewWindow::Init() {
   left_container->AddChildView(cb);
 
   views::View* right_container = new views::View();
-  right_container->set_border(
+  right_container->SetBorder(
       views::Border::CreateSolidBorder(1, SK_ColorBLACK));
-  right_container->set_background(
+  right_container->SetBackground(
       views::Background::CreateSolidBackground(240, 240, 240));
   right_container->SetID(kRightContainerID);
   contents_->AddChildView(right_container);
@@ -362,9 +362,9 @@ void TestViewWindow::Init() {
   y += radio_button_height + gap_between_radio_buttons;
 
   views::View* inner_container = new views::View();
-  inner_container->set_border(
+  inner_container->SetBorder(
       views::Border::CreateSolidBorder(1, SK_ColorBLACK));
-  inner_container->set_background(
+  inner_container->SetBackground(
       views::Background::CreateSolidBackground(230, 230, 230));
   inner_container->SetID(kInnerContainerID);
   right_container->AddChildView(inner_container);
@@ -377,7 +377,7 @@ void TestViewWindow::Init() {
 
   views::View* scroll_content = new views::View();
   scroll_content->SetBounds(0, 0, 200, 200);
-  scroll_content->set_background(
+  scroll_content->SetBackground(
       views::Background::CreateSolidBackground(200, 200, 200));
   scroll_view->SetContents(scroll_content);
 
@@ -429,7 +429,7 @@ void TestViewWindow::Init() {
 
   // Left bottom box with style checkboxes.
   views::View* contents = new views::View();
-  contents->set_background(
+  contents->SetBackground(
       views::Background::CreateSolidBackground(SK_ColorWHITE));
   cb = new views::CheckBox(L"Bold");
   contents->AddChildView(cb);
@@ -455,7 +455,7 @@ void TestViewWindow::Init() {
 
   // Right bottom box with search.
   contents = new views::View();
-  contents->set_background(
+  contents->SetBackground(
       views::Background::CreateSolidBackground(SK_ColorWHITE));
   text_field = new views::TextField();
   contents->AddChildView(text_field);
@@ -483,7 +483,7 @@ void TestViewWindow::Init() {
 
   contents = new views::View();
   contents->SetFocusable(true);
-  contents->set_background(
+  contents->SetBackground(
       views::Background::CreateSolidBackground(SK_ColorBLUE));
   contents->SetID(kThumbnailContainerID);
   button = new views::NativeButton(L"Star");

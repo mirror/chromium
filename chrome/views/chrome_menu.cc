@@ -10,6 +10,7 @@
 
 #include "base/base_drag_source.h"
 #include "base/gfx/native_theme.h"
+#include "base/gfx/skia_utils.h"
 #include "base/message_loop.h"
 #include "base/task.h"
 #include "base/timer.h"
@@ -20,17 +21,13 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/os_exchange_data.h"
 #include "chrome/views/border.h"
+#include "chrome/views/container_win.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/view_constants.h"
-#include "chrome/views/widget_win.h"
 #include "generated_resources.h"
-#include "skia/ext/skia_utils_win.h"
 
 #undef min
 #undef max
-
-using base::Time;
-using base::TimeDelta;
 
 // Margins between the top of the item and the label.
 static const int kItemTopMargin = 3;
@@ -422,9 +419,9 @@ class MenuScrollViewContainer : public View {
     scroll_view_ = new MenuScrollView(content_view);
     AddChildView(scroll_view_);
 
-    set_border(Border::CreateEmptyBorder(
-        kSubmenuBorderSize, kSubmenuBorderSize,
-        kSubmenuBorderSize, kSubmenuBorderSize));
+    SetBorder(
+        Border::CreateEmptyBorder(kSubmenuBorderSize, kSubmenuBorderSize,
+                                  kSubmenuBorderSize, kSubmenuBorderSize));
   }
 
   virtual void Paint(ChromeCanvas* canvas) {
@@ -542,9 +539,9 @@ class MenuSeparator : public View {
 
 class MenuHostRootView : public RootView {
  public:
-  explicit MenuHostRootView(Widget* widget,
+  explicit MenuHostRootView(Container* container,
                             SubmenuView* submenu)
-      : RootView(widget),
+      : RootView(container),
         submenu_(submenu),
         forward_drag_to_menu_controller_(true),
         suspend_events_(false) {
@@ -648,7 +645,7 @@ class MenuHostRootView : public RootView {
 // DelayedClosed, which avoids timing issues with deleting the window while
 // capture or events are directed at it.
 
-class MenuHost : public WidgetWin {
+class MenuHost : public ContainerWin {
  public:
   MenuHost(SubmenuView* submenu)
       : closed_(false),
@@ -672,7 +669,7 @@ class MenuHost : public WidgetWin {
             const gfx::Rect& bounds,
             View* contents_view,
             bool do_capture) {
-    WidgetWin::Init(parent, bounds, true);
+    ContainerWin::Init(parent, bounds, true);
     SetContentsView(contents_view);
     // We don't want to take focus away from the hosting window.
     ShowWindow(SW_SHOWNA);
@@ -699,17 +696,17 @@ class MenuHost : public WidgetWin {
     GetRootView()->RemoveAllChildViews(false);
     closed_ = true;
     ReleaseCapture();
-    WidgetWin::Hide();
+    ContainerWin::Hide();
   }
 
   virtual void HideWindow() {
     // Make sure we release capture before hiding.
     ReleaseCapture();
-    WidgetWin::Hide();
+    ContainerWin::Hide();
   }
 
   virtual void OnCaptureChanged(HWND hwnd) {
-    WidgetWin::OnCaptureChanged(hwnd);
+    ContainerWin::OnCaptureChanged(hwnd);
     owns_capture_ = false;
 #ifdef DEBUG_MENU
     DLOG(INFO) << "Capture changed";
@@ -2058,13 +2055,8 @@ void MenuController::SetActiveInstance(MenuController* controller) {
 bool MenuController::Dispatch(const MSG& msg) {
   DCHECK(blocking_run_);
 
-  if (exit_all_) {
-    // We must translate/dispatch the message here, otherwise we would drop
-    // the message on the floor.
-    TranslateMessage(&msg);
-    DispatchMessage(&msg);
+  if (exit_all_)
     return false;
-  }
 
   // NOTE: we don't get WM_ACTIVATE or anything else interesting in here.
   switch (msg.message) {
@@ -2643,7 +2635,7 @@ bool MenuController::IsMenuWindow(MenuItemView* item, HWND window) {
   if (!item)
     return false;
   return ((item->HasSubmenu() && item->GetSubmenu()->IsShowing() &&
-           item->GetSubmenu()->GetWidget()->GetHWND() == window) ||
+           item->GetSubmenu()->GetContainer()->GetHWND() == window) ||
            IsMenuWindow(item->GetParentMenuItem(), window));
 }
 
@@ -2802,3 +2794,4 @@ void MenuController::StopScrolling() {
 }
 
 }  // namespace views
+

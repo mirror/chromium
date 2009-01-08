@@ -1,6 +1,6 @@
 /* libs/corecg/SkDebug_stdio.cpp
 **
-** Copyright 2006, The Android Open Source Project
+** Copyright 2006, Google Inc.
 **
 ** Licensed under the Apache License, Version 2.0 (the "License"); 
 ** you may not use this file except in compliance with the License. 
@@ -42,12 +42,11 @@ void Android_SkDebugf(const char* file, int line, const char* function,
     va_end(args);
 }
 
-#else
+#elif defined(SK_DEBUG)
 
 #include <stdarg.h>
 #include <stdio.h>
 
-#if 0
 void SkDebugf(const char format[], ...)
 {
     char    buffer[kBufferSize + 1];
@@ -57,7 +56,6 @@ void SkDebugf(const char format[], ...)
     va_end(args);
     fprintf(stderr, buffer);
 }
-#endif
 
 #endif
 

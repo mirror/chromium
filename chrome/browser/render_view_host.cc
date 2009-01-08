@@ -27,8 +27,6 @@
 #include "net/base/net_util.h"
 #include "skia/include/SkBitmap.h"
 
-using base::TimeDelta;
-
 namespace {
 
 void FilterURL(RendererSecurityPolicy* policy, int renderer_id, GURL* url) {
@@ -129,7 +127,7 @@ bool RenderViewHost::CreateRenderView() {
   renderer_initialized_ = true;
 
   HANDLE modal_dialog_event;
-  HANDLE renderer_process_handle = process()->process().handle();
+  HANDLE renderer_process_handle = process()->process();
   if (renderer_process_handle == NULL)
     renderer_process_handle = GetCurrentProcess();
 
@@ -230,22 +228,16 @@ void RenderViewHost::SetNavigationsSuspended(bool suspend) {
 }
 
 void RenderViewHost::FirePageBeforeUnload() {
-  if (!IsRenderViewLive()) {
-    // This RenderViewHost doesn't have a live renderer, so just skip running
-    // the onbeforeunload handler.
-    OnMsgShouldCloseACK(true);
-    return;
-  }
-
-  // This may be called more than once (if the user clicks the tab close button
-  // several times, or if she clicks the tab close button than the browser close
-  // button), so this test makes sure we only send the message once.
-  if (!is_waiting_for_unload_ack_) {
+  if (IsRenderViewLive()) {
     // Start the hang monitor in case the renderer hangs in the beforeunload
     // handler.
     is_waiting_for_unload_ack_ = true;
     StartHangMonitorTimeout(TimeDelta::FromMilliseconds(kUnloadTimeoutMS));
     Send(new ViewMsg_ShouldClose(routing_id_));
+  } else {
+    // This RenderViewHost doesn't have a live renderer, so just skip running
+    // the onbeforeunload handler.
+    OnMsgShouldCloseACK(true);
   }
 }
 
@@ -340,8 +332,8 @@ void RenderViewHost::StopFinding(bool clear_selection) {
   Send(new ViewMsg_StopFinding(routing_id_, clear_selection));
 }
 
-void RenderViewHost::Zoom(PageZoom::Function function) {
-  Send(new ViewMsg_Zoom(routing_id_, function));
+void RenderViewHost::AlterTextSize(text_zoom::TextSize size) {
+  Send(new ViewMsg_AlterTextSize(routing_id_, size));
 }
 
 void RenderViewHost::SetPageEncoding(const std::wstring& encoding_name) {
@@ -448,10 +440,6 @@ void RenderViewHost::Paste() {
 
 void RenderViewHost::Replace(const std::wstring& text_to_replace) {
   Send(new ViewMsg_Replace(routing_id_, text_to_replace));
-}
-
-void RenderViewHost::ToggleSpellCheck() {
-  Send(new ViewMsg_ToggleSpellCheck(routing_id_));
 }
 
 void RenderViewHost::AddToDictionary(const std::wstring& word) {
@@ -624,7 +612,7 @@ void RenderViewHost::OnMessageReceived(const IPC::Message& msg) {
 
   bool msg_is_ok = true;
   IPC_BEGIN_MESSAGE_MAP_EX(RenderViewHost, msg, msg_is_ok)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_CreateWindowWithRoute, OnMsgCreateWindow)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_CreateViewWithRoute, OnMsgCreateView)
     IPC_MESSAGE_HANDLER(ViewHostMsg_CreateWidgetWithRoute, OnMsgCreateWidget)
     IPC_MESSAGE_HANDLER(ViewHostMsg_ShowView, OnMsgShowView)
     IPC_MESSAGE_HANDLER(ViewHostMsg_ShowWidget, OnMsgShowWidget)
@@ -675,8 +663,6 @@ void RenderViewHost::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER_DELAY_REPLY(ViewHostMsg_ShowModalHTMLDialog,
                                     OnMsgShowModalHTMLDialog)
     IPC_MESSAGE_HANDLER(ViewHostMsg_PasswordFormsSeen, OnMsgPasswordFormsSeen)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_AutofillFormSubmitted,
-                        OnMsgAutofillFormSubmitted)
     IPC_MESSAGE_HANDLER(ViewHostMsg_StartDragging, OnMsgStartDragging)
     IPC_MESSAGE_HANDLER(ViewHostMsg_UpdateDragCursor, OnUpdateDragCursor)
     IPC_MESSAGE_HANDLER(ViewHostMsg_TakeFocus, OnTakeFocus)
@@ -706,8 +692,6 @@ void RenderViewHost::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(ViewHostMsg_ShouldClose_ACK, OnMsgShouldCloseACK);
     IPC_MESSAGE_HANDLER(ViewHostMsg_UnloadListenerChanged,
                         OnUnloadListenerChanged);
-    IPC_MESSAGE_HANDLER(ViewHostMsg_QueryFormFieldAutofill,
-                        OnQueryFormFieldAutofill)
     // Have the super handle all other messages.
     IPC_MESSAGE_UNHANDLED(RenderWidgetHost::OnMessageReceived(msg))
   IPC_END_MESSAGE_MAP_EX()
@@ -730,34 +714,24 @@ void RenderViewHost::Shutdown() {
   RenderWidgetHost::Shutdown();
 }
 
-void RenderViewHost::OnMsgCreateWindow(int route_id,
-                                       HANDLE modal_dialog_event) {
-  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
-  if (view)
-    view->CreateNewWindow(route_id, modal_dialog_event);
+void RenderViewHost::OnMsgCreateView(int route_id, HANDLE modal_dialog_event) {
+  delegate_->CreateView(route_id, modal_dialog_event);
 }
 
-void RenderViewHost::OnMsgCreateWidget(int route_id,
-                                       bool focus_on_show) {
-  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
-  if (view)
-    view->CreateNewWidget(route_id, focus_on_show);
+void RenderViewHost::OnMsgCreateWidget(int route_id) {
+  delegate_->CreateWidget(route_id);
 }
 
 void RenderViewHost::OnMsgShowView(int route_id,
                                    WindowOpenDisposition disposition,
                                    const gfx::Rect& initial_pos,
                                    bool user_gesture) {
-  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
-  if (view)
-    view->ShowCreatedWindow(route_id, disposition, initial_pos, user_gesture);
+  delegate_->ShowView(route_id, disposition, initial_pos, user_gesture);
 }
 
 void RenderViewHost::OnMsgShowWidget(int route_id,
                                      const gfx::Rect& initial_pos) {
-  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
-  if (view)
-    view->ShowCreatedWidget(route_id, initial_pos);
+  delegate_->ShowWidget(route_id, initial_pos);
 }
 
 void RenderViewHost::OnMsgRunModal(IPC::Message* reply_msg) {
@@ -842,8 +816,14 @@ void RenderViewHost::OnMsgNavigate(const IPC::Message& msg) {
 }
 
 void RenderViewHost::OnMsgUpdateState(int32 page_id,
+                                      const GURL& url,
+                                      const std::wstring& title,
                                       const std::string& state) {
-  delegate_->UpdateState(this, page_id, state);
+  GURL validated_url(url);
+  FilterURL(RendererSecurityPolicy::GetInstance(),
+            process()->host_id(), &validated_url);
+
+  delegate_->UpdateState(this, page_id, validated_url, title, state);
 }
 
 void RenderViewHost::OnMsgUpdateTitle(int32 page_id,
@@ -947,11 +927,12 @@ void RenderViewHost::OnMsgFindReply(int request_id,
                                     const gfx::Rect& selection_rect,
                                     int active_match_ordinal,
                                     bool final_update) {
-  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
-  if (!view)
+  RenderViewHostDelegate::FindInPage* delegate =
+      delegate_->GetFindInPageDelegate();
+  if (!delegate)
     return;
-  view->OnFindReply(request_id, number_of_matches, selection_rect,
-                        active_match_ordinal, final_update);
+  delegate->FindReply(request_id, number_of_matches, selection_rect,
+                      active_match_ordinal, final_update);
 
   // Send a notification to the renderer that we are ready to receive more
   // results from the scoping effort of the Find operation. The FindInPage
@@ -977,10 +958,6 @@ void RenderViewHost::OnMsgDidDownloadImage(
 
 void RenderViewHost::OnMsgContextMenu(
     const ViewHostMsg_ContextMenu_Params& params) {
-  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
-  if (!view)
-    return;
-
   // Validate the URLs in |params|.  If the renderer can't request the URLs
   // directly, don't show them in the context menu.
   ViewHostMsg_ContextMenu_Params validated_params(params);
@@ -992,7 +969,7 @@ void RenderViewHost::OnMsgContextMenu(
   FilterURL(policy, renderer_id, &validated_params.page_url);
   FilterURL(policy, renderer_id, &validated_params.frame_url);
 
-  view->ShowContextMenu(validated_params);
+  delegate_->ShowContextMenu(validated_params);
 }
 
 void RenderViewHost::OnMsgOpenURL(const GURL& url,
@@ -1035,10 +1012,6 @@ void RenderViewHost::OnPersonalizationEvent(const std::string& message,
 
 void RenderViewHost::DisassociateFromPopupCount() {
   Send(new ViewMsg_DisassociateFromPopupCount(routing_id_));
-}
-
-void RenderViewHost::PopupNotificationVisibilityChanged(bool visible) {
-  Send(new ViewMsg_PopupNotificationVisiblityChanged(routing_id_, visible));
 }
 
 void RenderViewHost::OnMsgGoToEntryAtOffset(int offset) {
@@ -1090,28 +1063,17 @@ void RenderViewHost::OnMsgPasswordFormsSeen(
   delegate_->PasswordFormsSeen(forms);
 }
 
-void RenderViewHost::OnMsgAutofillFormSubmitted(
-    const AutofillForm& form) {
-  delegate_->AutofillFormSubmitted(form);
-}
-
 void RenderViewHost::OnMsgStartDragging(
     const WebDropData& drop_data) {
-  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
-  if (view)
-    view->StartDragging(drop_data);
+  delegate_->StartDragging(drop_data);
 }
 
 void RenderViewHost::OnUpdateDragCursor(bool is_drop_target) {
-  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
-  if (view)
-    view->UpdateDragCursor(is_drop_target);
+  delegate_->UpdateDragCursor(is_drop_target);
 }
 
 void RenderViewHost::OnTakeFocus(bool reverse) {
-  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
-  if (view)
-    view->TakeFocus(reverse);
+  delegate_->TakeFocus(reverse);
 }
 
 void RenderViewHost::OnMsgPageHasOSDD(int32 page_id, const GURL& doc_url,
@@ -1155,22 +1117,15 @@ void RenderViewHost::OnUserMetricsRecordAction(const std::wstring& action) {
 }
 
 void RenderViewHost::UnhandledInputEvent(const WebInputEvent& event) {
-  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
-  if (view) {
-    // TODO(brettw) why do we have to filter these types of events here. Can't
-    // the renderer just send us the ones we care abount, or maybe the view
-    // should be able to decide which ones it wants or not?
-    if ((event.type == WebInputEvent::KEY_DOWN) ||
-        (event.type == WebInputEvent::CHAR)) {
-      view->HandleKeyboardEvent(
-          static_cast<const WebKeyboardEvent&>(event));
-    }
-  }
+  if ((event.type == WebInputEvent::KEY_DOWN) ||
+      (event.type == WebInputEvent::CHAR))
+    delegate_->HandleKeyboardEvent(
+        static_cast<const WebKeyboardEvent&>(event));
 }
 
 void RenderViewHost::ForwardKeyboardEvent(const WebKeyboardEvent& key_event) {
   if (key_event.type == WebKeyboardEvent::CHAR &&
-      (key_event.key_code == VK_RETURN || key_event.key_code == VK_SPACE)) {
+      (key_event.key_data == '\n' || key_event.key_data == ' ')) {
     delegate_->OnEnterOrSpace();
   }
   RenderWidgetHost::ForwardKeyboardEvent(key_event);
@@ -1235,21 +1190,6 @@ void RenderViewHost::OnMsgShouldCloseACK(bool proceed) {
 
 void RenderViewHost::OnUnloadListenerChanged(bool has_listener) {
   has_unload_listener_ = has_listener;
-}
-
-void RenderViewHost::OnQueryFormFieldAutofill(const std::wstring& field_name,
-                                              const std::wstring& user_text,
-                                              int64 node_id,
-                                              int request_id) {
-  delegate_->GetAutofillSuggestions(field_name, user_text, node_id, request_id);
-}
-
-void RenderViewHost::AutofillSuggestionsReturned(
-    const std::vector<std::wstring>& suggestions,
-    int64 node_id, int request_id, int default_suggestion_index) {
-  Send(new ViewMsg_AutofillSuggestions(routing_id_, node_id,
-      request_id, suggestions, -1));
-  // Default index -1 means no default suggestion.
 }
 
 void RenderViewHost::NotifyRendererUnresponsive() {

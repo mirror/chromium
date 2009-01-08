@@ -8,18 +8,15 @@
 #include <set>
 #include <vector>
 
-#include "build/build_config.h"
-
 #include "base/basictypes.h"
 #include "base/message_loop.h"
 #include "base/ref_counted.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/history/history_types.h"
-#if defined(OS_WIN)
 #include "chrome/browser/ie7_password.h"
-#endif
 #include "chrome/browser/profile.h"
 #include "chrome/browser/template_url.h"
+#include "chrome/browser/views/importer_lock_view.h"
 #include "chrome/common/notification_service.h"
 #include "googleurl/src/gurl.h"
 #include "webkit/glue/password_form.h"
@@ -44,7 +41,6 @@ enum ImportItem {
   PASSWORDS      = 0x0008,
   SEARCH_ENGINES = 0x0010,
   HOME_PAGE      = 0x0020,
-  ALL            = 0x003f
 };
 
 typedef struct {
@@ -52,7 +48,6 @@ typedef struct {
   ProfileType browser_type;
   std::wstring source_path;
   std::wstring app_path;
-  uint16 services_supported;  // bitmap of ImportItem
 } ProfileInfo;
 
 class FirefoxProfileLock;
@@ -93,16 +88,14 @@ class ProfileWriter : public base::RefCounted<ProfileWriter> {
     GURL url;
     std::vector<std::wstring> path;
     std::wstring title;
-    base::Time creation_time;
+    Time creation_time;
 
     BookmarkEntry() : in_toolbar(false) {}
   };
 
   // Helper methods for adding data to local stores.
   virtual void AddPasswordForm(const PasswordForm& form);
-#if defined(OS_WIN)
   virtual void AddIE7PasswordInfo(const IE7PasswordInfo& info);
-#endif
   virtual void AddHistoryPage(const std::vector<history::URLRow>& page);
   virtual void AddHomepage(const GURL& homepage);
   // Adds the bookmarks to the BookmarkModel.  
@@ -138,8 +131,6 @@ class ProfileWriter : public base::RefCounted<ProfileWriter> {
 
   // Shows the bookmarks toolbar.
   void ShowBookmarkBar();
-
-  Profile* GetProfile() const { return profile_; }
 
  private:
   // Generates a unique folder name. If folder_name is not unique, then this
@@ -279,7 +270,6 @@ class ImporterHost : public base::RefCounted<ImporterHost>,
   // Helper methods for detecting available profiles.
   void DetectIEProfiles();
   void DetectFirefoxProfiles();
-  void DetectGoogleToolbarProfiles();
 
   // The list of profiles with the default one first.
   std::vector<ProfileInfo*> source_profiles_;
@@ -326,11 +316,10 @@ class Importer : public base::RefCounted<Importer> {
   virtual void StartImport(ProfileInfo profile_info,
                            uint16 items,
                            ProfileWriter* writer,
-                           MessageLoop* delegate_loop,
                            ImporterHost* host) = 0;
 
   // Cancels the import process.
-  virtual void Cancel() { cancelled_ = true; }
+  void Cancel() { cancelled_ = true; }
 
   void set_first_run(bool first_run) { first_run_ = first_run; }
 
@@ -339,7 +328,6 @@ class Importer : public base::RefCounted<Importer> {
  protected:
   Importer()
       : main_loop_(MessageLoop::current()),
-        delagate_loop_(NULL),
         importer_host_(NULL),
         cancelled_(false),
         first_run_(false) {}
@@ -381,9 +369,6 @@ class Importer : public base::RefCounted<Importer> {
   // The importer should know the main thread so that ProfileWriter
   // will be invoked in thread instead.
   MessageLoop* main_loop_;
-  
-  // The message loop in which the importer operates.
-  MessageLoop* delagate_loop_;
 
   // The coordinator host for this importer.
   ImporterHost* importer_host_;
@@ -412,9 +397,6 @@ class ImportObserver {
 };
 
 
-#if defined(OS_WIN)
-// TODO(port): Make StartImportingWithUI portable.
-
 // Shows a UI for importing and begins importing the specified items from
 // source_profile to target_profile. observer is notified when the process is
 // complete, can be NULL. parent is the window to parent the UI to, can be NULL
@@ -427,6 +409,5 @@ void StartImportingWithUI(HWND parent_window,
                           Profile* target_profile,
                           ImportObserver* observer,
                           bool first_run);
-#endif
 
 #endif  // CHROME_BROWSER_IMPORTER_IMPORTER_H_

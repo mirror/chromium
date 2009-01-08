@@ -22,7 +22,7 @@
 #include "webkit/glue/plugins/plugin_stream_url.h"
 #include "webkit/glue/webkit_glue.h"
 
-static StatsCounter windowless_queue("Plugin.ThrottleQueue");
+static StatsCounter windowless_queue(L"Plugin.ThrottleQueue");
 
 static const wchar_t kNativeWindowClassName[] = L"NativeWindowClass";
 static const wchar_t kWebPluginDelegateProperty[] =
@@ -51,9 +51,9 @@ bool WebPluginDelegateImpl::track_popup_menu_patched_ = false;
 iat_patch::IATPatchFunction WebPluginDelegateImpl::iat_patch_helper_;
 
 WebPluginDelegateImpl* WebPluginDelegateImpl::Create(
-    const FilePath& filename,
+    const std::wstring& filename,
     const std::string& mime_type,
-    gfx::NativeView containing_view) {
+    HWND containing_window) {
   scoped_refptr<NPAPI::PluginLib> plugin =
       NPAPI::PluginLib::CreatePluginLib(filename);
   if (plugin.get() == NULL)
@@ -65,7 +65,7 @@ WebPluginDelegateImpl* WebPluginDelegateImpl::Create(
 
   scoped_refptr<NPAPI::PluginInstance> instance =
       plugin->CreateInstance(mime_type);
-  return new WebPluginDelegateImpl(containing_view, instance.get());
+  return new WebPluginDelegateImpl(containing_window, instance.get());
 }
 
 bool WebPluginDelegateImpl::IsPluginDelegateWindow(HWND window) {
@@ -120,9 +120,9 @@ LRESULT CALLBACK WebPluginDelegateImpl::HandleEventMessageFilterHook(
 }
 
 WebPluginDelegateImpl::WebPluginDelegateImpl(
-    gfx::NativeView containing_view,
+    HWND containing_window,
     NPAPI::PluginInstance *instance)
-    : parent_(containing_view),
+    : parent_(containing_window),
       instance_(instance),
       quirks_(0),
       plugin_(NULL),
@@ -145,7 +145,7 @@ WebPluginDelegateImpl::WebPluginDelegateImpl(
   memset(&window_, 0, sizeof(window_));
 
   const WebPluginInfo& plugin_info = instance_->plugin_lib()->plugin_info();
-  std::wstring filename = plugin_info.file.BaseName().value();
+  std::wstring filename = file_util::GetFilenameFromPath(plugin_info.file);
 
   if (instance_->mime_type() == "application/x-shockwave-flash" ||
       filename == L"npswf32.dll") {
@@ -365,7 +365,7 @@ void WebPluginDelegateImpl::DidManualLoadFail() {
   instance()->DidManualLoadFail();
 }
 
-FilePath WebPluginDelegateImpl::GetPluginPath() {
+std::wstring WebPluginDelegateImpl::GetPluginPath() {
   return instance()->plugin_lib()->plugin_info().file;
 }
 
@@ -910,7 +910,7 @@ void WebPluginDelegateImpl::WindowlessPaint(HDC hdc,
   // NOTE: NPAPI is not 64bit safe.  It puts pointers into 32bit values.
   paint_event.wParam = PtrToUlong(hdc);
   paint_event.lParam = PtrToUlong(&damage_rect_win);
-  static StatsRate plugin_paint("Plugin.Paint");
+  static StatsRate plugin_paint(L"Plugin.Paint");
   StatsScope<StatsRate> scope(plugin_paint);
   instance()->NPP_HandleEvent(&paint_event);
 }
@@ -998,14 +998,6 @@ bool WebPluginDelegateImpl::HandleEvent(NPEvent* event,
 
   bool ret = instance()->NPP_HandleEvent(event) != 0;
 
-  // Snag a reference to the current cursor ASAP in case the plugin modified
-  // it.  There is a nasty race condition here with the multiprocess browser
-  // as someone might be setting the cursor in the main process as well.
-  HCURSOR last_cursor;
-  if (WM_MOUSEMOVE == event->event) {
-    last_cursor = ::GetCursor();
-  }
-
   if (pop_user_gesture) {
     instance()->PopPopupsEnabledState();
   }
@@ -1033,10 +1025,41 @@ bool WebPluginDelegateImpl::HandleEvent(NPEvent* event,
   }
 
   if (WM_MOUSEMOVE == event->event) {
-    cursor->InitFromCursor(last_cursor);
+    HCURSOR actual_cursor = ::GetCursor();
+    *cursor = GetCursorType(actual_cursor);
   }
 
   return ret;
+}
+
+WebCursor::Type WebPluginDelegateImpl::GetCursorType(
+    HCURSOR cursor) const {
+  static HCURSOR standard_cursors[] = {
+    LoadCursor(NULL, IDC_ARROW),
+    LoadCursor(NULL, IDC_IBEAM),
+    LoadCursor(NULL, IDC_WAIT),
+    LoadCursor(NULL, IDC_CROSS),
+    LoadCursor(NULL, IDC_UPARROW),
+    LoadCursor(NULL, IDC_SIZE),
+    LoadCursor(NULL, IDC_ICON),
+    LoadCursor(NULL, IDC_SIZENWSE),
+    LoadCursor(NULL, IDC_SIZENESW),
+    LoadCursor(NULL, IDC_SIZEWE),
+    LoadCursor(NULL, IDC_SIZENS),
+    LoadCursor(NULL, IDC_SIZEALL),
+    LoadCursor(NULL, IDC_NO),
+    LoadCursor(NULL, IDC_HAND),
+    LoadCursor(NULL, IDC_APPSTARTING),
+    LoadCursor(NULL, IDC_HELP),
+  };
+
+  for (int cursor_index = 0; cursor_index < arraysize(standard_cursors);
+      cursor_index++) {
+    if (cursor == standard_cursors[cursor_index])
+      return static_cast<WebCursor::Type>(cursor_index);
+  }
+
+  return WebCursor::ARROW;
 }
 
 WebPluginResourceClient* WebPluginDelegateImpl::CreateResourceClient(

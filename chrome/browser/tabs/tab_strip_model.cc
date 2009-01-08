@@ -9,12 +9,13 @@
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_about_handler.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/dom_ui/new_tab_ui.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/navigation_controller.h"
 #include "chrome/browser/navigation_entry.h"
 #include "chrome/browser/render_view_host.h"
-#include "chrome/browser/sessions/tab_restore_service.h"
 #include "chrome/browser/tab_contents_factory.h"
+#include "chrome/browser/tab_restore_service.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
 #include "chrome/browser/tabs/tab_strip_model_order_controller.h"
 #include "chrome/browser/user_metrics.h"
@@ -217,6 +218,11 @@ void TabStripModel::UpdateTabContentsStateAt(int index) {
       TabChangedAt(GetContentsAt(index), index));
 }
 
+void TabStripModel::UpdateTabContentsLoadingAnimations() {
+  FOR_EACH_OBSERVER(TabStripModelObserver, observers_,
+      TabValidateAnimations());
+}
+
 void TabStripModel::CloseAllTabs() {
   // Set state so that observers can adjust their behavior to suit this
   // specific condition when CloseTabContentsAt causes a flurry of
@@ -328,8 +334,7 @@ bool TabStripModel::ShouldResetGroupOnSelect(TabContents* contents) const {
 TabContents* TabStripModel::AddBlankTab(bool foreground) {
   DCHECK(delegate_);
   TabContents* contents = delegate_->CreateTabContentsForURL(
-      delegate_->GetBlankTabURL(), GURL(), profile_, PageTransition::TYPED,
-      false, NULL);
+      NewTabUIURL(), GURL(), profile_, PageTransition::TYPED, false, NULL);
   AddTabContents(contents, -1, PageTransition::TYPED, foreground);
   return contents;
 }
@@ -337,8 +342,7 @@ TabContents* TabStripModel::AddBlankTab(bool foreground) {
 TabContents* TabStripModel::AddBlankTabAt(int index, bool foreground) {
   DCHECK(delegate_);
   TabContents* contents = delegate_->CreateTabContentsForURL(
-      delegate_->GetBlankTabURL(), GURL(), profile_, PageTransition::LINK,
-      false, NULL);
+      NewTabUIURL(), GURL(), profile_, PageTransition::LINK, false, NULL);
   AddTabContents(contents, index, PageTransition::LINK, foreground);
   return contents;
 }
@@ -401,11 +405,9 @@ void TabStripModel::SelectLastTab() {
 }
 
 void TabStripModel::TearOffTabContents(TabContents* detached_contents,
-                                       const gfx::Rect& window_bounds,
-                                       const DockInfo& dock_info) {
+                                       const gfx::Point& drop_point) {
   DCHECK(detached_contents);
-  delegate_->CreateNewStripWithContents(detached_contents, window_bounds,
-                                        dock_info);
+  delegate_->CreateNewStripWithContents(detached_contents, drop_point);
 }
 
 // Context menu functions.
@@ -599,7 +601,7 @@ bool TabStripModel::ShouldAddToTabRestoreService(TabContents* contents) {
       Browser::GetBrowserForController(contents->controller(), NULL);
   if (!browser)
     return false; // Browser is null during unit tests.
-  return browser->type() == Browser::TYPE_NORMAL;
+  return browser->GetType() == BrowserType::TABBED_BROWSER;
 }
 
 // static

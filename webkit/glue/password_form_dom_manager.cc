@@ -4,9 +4,8 @@
 
 #include "config.h"
 
-#include "base/compiler_specific.h"
-
-MSVC_PUSH_WARNING_LEVEL(0);
+#pragma warning(push, 0)
+#include "csshelper.h"
 #include "Document.h"
 #include "DocumentLoader.h"
 #include "Frame.h"
@@ -15,7 +14,7 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "HTMLInputElement.h"
 #include "HTMLNames.h"
 #include "KURL.h"
-MSVC_POP_WARNING();
+#pragma warning(pop)
 
 #undef LOG
 
@@ -26,7 +25,7 @@ MSVC_POP_WARNING();
 
 // Maximum number of password fields we will observe before throwing our
 // hands in the air and giving up with a given form.
-static const size_t kMaxPasswords = 3;
+static const int kMaxPasswords = 3;
 
 PasswordForm* PasswordFormDomManager::CreatePasswordForm(
     WebCore::HTMLFormElement* form) {
@@ -183,10 +182,10 @@ void PasswordFormDomManager::FindPasswordFormFields(
   DCHECK(form && fields);
   int first_password_index = 0;
   // First, find the password fields and activated submit button
-  const WTF::Vector<WebCore::HTMLFormControlElement*>& form_elements =
+  const WTF::Vector<WebCore::HTMLGenericFormElement*>& form_elements =
       form->formElements;
   for (size_t i = 0; i < form_elements.size(); i++) {
-    WebCore::HTMLFormControlElement* form_element = form_elements[i];
+    WebCore::HTMLGenericFormElement* form_element = form_elements[i];
     if (form_element->isActivatedSubmit())
       fields->submit = form_element;
 
@@ -210,7 +209,7 @@ void PasswordFormDomManager::FindPasswordFormFields(
   if (!fields->passwords.empty()) {
     // Then, search backwards for the username field
     for (int i = first_password_index - 1; i >= 0; i--) {
-      WebCore::HTMLFormControlElement* form_element = form_elements[i];
+      WebCore::HTMLGenericFormElement* form_element = form_elements[i];
       if (!form_element->hasLocalName(WebCore::HTMLNames::inputTag))
         continue;
 
@@ -232,7 +231,7 @@ void PasswordFormDomManager::FindPasswordFormFields(
 PasswordForm* PasswordFormDomManager::AssemblePasswordFormResult(
     const GURL& full_origin, 
     const GURL& full_action,
-    WebCore::HTMLFormControlElement* submit,
+    WebCore::HTMLGenericFormElement* submit,
     WebCore::HTMLInputElement* username,
     WebCore::HTMLInputElement* old_password,
     WebCore::HTMLInputElement* password) {

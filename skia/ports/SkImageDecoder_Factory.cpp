@@ -1,6 +1,6 @@
 /* libs/graphics/ports/SkImageDecoder_Factory.cpp
 **
-** Copyright 2006, The Android Open Source Project
+** Copyright 2006, Google Inc.
 **
 ** Licensed under the Apache License, Version 2.0 (the "License"); 
 ** you may not use this file except in compliance with the License. 
@@ -19,12 +19,19 @@
 #include "SkMovie.h"
 #include "SkStream.h"
 
+//#define USE_PV_FOR_JPEG
+
 extern SkImageDecoder* SkImageDecoder_GIF_Factory(SkStream*);
 extern SkImageDecoder* SkImageDecoder_BMP_Factory(SkStream*);
 extern SkImageDecoder* SkImageDecoder_ICO_Factory(SkStream*);
 extern SkImageDecoder* SkImageDecoder_PNG_Factory(SkStream*);
 extern SkImageDecoder* SkImageDecoder_WBMP_Factory(SkStream*);
-extern SkImageDecoder* SkImageDecoder_JPEG_Factory(SkStream*);
+#ifdef USE_PV_FOR_JPEG
+    extern SkImageDecoder* SkImageDecoder_PVJPEG_Factory(SkStream*);
+#else
+    extern SkImageDecoder* SkImageDecoder_JPEG_Factory(SkStream*);
+#endif
+
 
 typedef SkImageDecoder* (*SkImageDecoderFactoryProc)(SkStream*);
 
@@ -33,19 +40,21 @@ struct CodecFormat {
     SkImageDecoder::Format      fFormat;
 };
 
-#ifdef SK_SUPPORT_IMAGE_DECODE
 static const CodecFormat gPairs[] = {
     { SkImageDecoder_GIF_Factory,   SkImageDecoder::kGIF_Format },
     { SkImageDecoder_PNG_Factory,   SkImageDecoder::kPNG_Format },
     { SkImageDecoder_ICO_Factory,   SkImageDecoder::kICO_Format },
     { SkImageDecoder_WBMP_Factory,  SkImageDecoder::kWBMP_Format },
     { SkImageDecoder_BMP_Factory,   SkImageDecoder::kBMP_Format },
+    // jpeg must be last, as it doesn't have a good sniffer yet
+#ifdef USE_PV_FOR_JPEG
+    { SkImageDecoder_PVJPEG_Factory,  SkImageDecoder::kJPEG_Format }
+#else
     { SkImageDecoder_JPEG_Factory,  SkImageDecoder::kJPEG_Format }
-};
 #endif
+};
 
 SkImageDecoder* SkImageDecoder::Factory(SkStream* stream) {
-#ifdef SK_SUPPORT_IMAGE_DECODE
     for (size_t i = 0; i < SK_ARRAY_COUNT(gPairs); i++) {
         SkImageDecoder* codec = gPairs[i].fProc(stream);
         stream->rewind();
@@ -53,18 +62,15 @@ SkImageDecoder* SkImageDecoder::Factory(SkStream* stream) {
             return codec;
         }
     }
-#endif
     return NULL;
 }
 
 bool SkImageDecoder::SupportsFormat(Format format) {
-#ifdef SK_SUPPORT_IMAGE_DECODE
     for (size_t i = 0; i < SK_ARRAY_COUNT(gPairs); i++) {
         if (gPairs[i].fFormat == format) {
             return true;
         }
     }
-#endif
     return false;
 }
 
@@ -78,7 +84,6 @@ typedef SkMovie* (*SkMovieMemoryProc)(const void*, size_t);
 extern SkMovie* SkMovie_GIF_StreamFactory(SkStream*);
 extern SkMovie* SkMovie_GIF_MemoryFactory(const void*, size_t);
 
-#ifdef SK_SUPPORT_IMAGE_DECODE
 static const SkMovieStreamProc gStreamProc[] = {
     SkMovie_GIF_StreamFactory
 };
@@ -86,10 +91,8 @@ static const SkMovieStreamProc gStreamProc[] = {
 static const SkMovieMemoryProc gMemoryProc[] = {
     SkMovie_GIF_MemoryFactory
 };
-#endif
 
 SkMovie* SkMovie::DecodeStream(SkStream* stream) {
-#ifdef SK_SUPPORT_IMAGE_DECODE
     for (unsigned i = 0; i < SK_ARRAY_COUNT(gStreamProc); i++) {
         SkMovie* movie = gStreamProc[i](stream);
         if (NULL != movie) {
@@ -97,20 +100,17 @@ SkMovie* SkMovie::DecodeStream(SkStream* stream) {
         }
         stream->rewind();
     }
-#endif
     return NULL;
 }
 
 SkMovie* SkMovie::DecodeMemory(const void* data, size_t length)
 {
-#ifdef SK_SUPPORT_IMAGE_DECODE
     for (unsigned i = 0; i < SK_ARRAY_COUNT(gMemoryProc); i++) {
         SkMovie* movie = gMemoryProc[i](data, length);
         if (NULL != movie) {
             return movie;
         }
     }
-#endif
     return NULL;
 }
 

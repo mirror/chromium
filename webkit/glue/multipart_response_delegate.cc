@@ -5,14 +5,12 @@
 #include "config.h"
 #include <string>
 
-#include "base/compiler_specific.h"
-
-MSVC_PUSH_WARNING_LEVEL(0);
+#pragma warning(push, 0)
 #include "HTTPHeaderMap.h"
 #include "ResourceHandle.h"
 #include "ResourceHandleClient.h"
-#include "PlatformString.h"
-MSVC_POP_WARNING();
+#include "String.h"
+#pragma warning(pop)
 
 #undef LOG
 #include "base/logging.h"
@@ -33,12 +31,7 @@ MultipartResponseDelegate::MultipartResponseDelegate(
       first_received_data_(true),
       processing_headers_(false),
       stop_sending_(false) {
-  // Some servers report a boundary prefixed with "--".  See bug 5786.
-  if (StartsWithASCII(boundary, "--", true)) {
-    boundary_.assign(boundary);
-  } else {
-    boundary_.append(boundary);
-  }
+  boundary_.append(boundary);
 }
 
 void MultipartResponseDelegate::OnReceivedData(const char* data, int data_len) {
@@ -94,6 +87,7 @@ void MultipartResponseDelegate::OnReceivedData(const char* data, int data_len) {
   }
   DCHECK(!processing_headers_);
 
+  int token_line_feed = 1;
   size_t boundary_pos;
   while ((boundary_pos = FindBoundary()) != std::string::npos) {
     if (boundary_pos > 0) {
@@ -206,7 +200,7 @@ bool MultipartResponseDelegate::ParseHeaders() {
     "Range",
     "Set-Cookie"
   };
-  for (size_t i = 0; i < arraysize(replace_headers); ++i) {
+  for (int i = 0; i < arraysize(replace_headers); ++i) {
     std::string name(replace_headers[i]);
     std::string value = net::GetSpecificHeader(headers, name);
     if (!value.empty()) {

@@ -13,7 +13,6 @@ env.Replace(
     ZLIB_DIR = '$THIRD_PARTY_DIR/zlib',
     CPPPATH = [
         '$ZLIB_DIR',
-        '$VC80_CPPPATH',
     ],
 )
 
@@ -45,4 +44,4 @@ if not env['OFFICIAL_BUILD']:
       '$ZLIB_DIR/trees.c',
   ]
 
-env.GearsStaticLibrary('zlib-gears', input_files)
+env.ChromeStaticLibrary('zlib-gears', input_files)

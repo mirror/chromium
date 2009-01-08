@@ -162,6 +162,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\test_file_util.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\testing_browser_process.h"
 				>
 			</File>

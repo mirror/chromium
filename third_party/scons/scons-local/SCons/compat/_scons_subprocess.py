@@ -394,11 +394,7 @@ if mswindows:
                                  STARTF_USESHOWWINDOW, CREATE_NEW_CONSOLE
         from win32event import WaitForSingleObject, INFINITE, WAIT_OBJECT_0
     else:
-        # SCons:  don't die on Python versions that don't have _subprocess.
-        try:
-            from _subprocess import *
-        except ImportError:
-            pass
+        from _subprocess import *
         class STARTUPINFO:
             dwFlags = 0
             hStdInput = None

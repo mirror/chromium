@@ -8,7 +8,6 @@
 #include "SkMatrix.h"
 #include "SkPaint.h"
 #include "SkPath.h"
-#include "SkPathHeap.h"
 #include "SkRegion.h"
 #include "SkPictureFlat.h"
 
@@ -30,10 +29,6 @@ public:
     void serialize(SkWStream*) const;
 
     void dumpSize() const;
-    
-    // Can be called in the middle of playback (the draw() call). WIll abort the
-    // drawing and return from draw() after the "current" op code is done
-    void abort();
 
 private:
 
@@ -64,7 +59,9 @@ private:
     }
 
     const SkPath& getPath() {
-        return (*fPathHeap)[getInt() - 1];
+        int index = getInt();
+        SkASSERT(index > 0 && index <= fPathCount);
+        return fPaths[index - 1];
     }
 
     SkPicture& getPicture() {
@@ -146,13 +143,14 @@ public:
 #endif
 
 private:
-    SkPathHeap* fPathHeap;  // reference counted
     SkBitmap* fBitmaps;
     int fBitmapCount;
     SkMatrix* fMatrices;
     int fMatrixCount;
     SkPaint* fPaints;
     int fPaintCount;
+    SkPath* fPaths;
+    int fPathCount;
     SkRegion* fRegions;
     int fRegionCount;
     mutable SkFlattenableReadBuffer fReader;

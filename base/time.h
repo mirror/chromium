@@ -33,8 +33,6 @@
 #include <windows.h>
 #endif
 
-namespace base {
-
 class Time;
 class TimeTicks;
 
@@ -439,7 +437,5 @@ class TimeTicks {
 inline TimeTicks TimeDelta::operator+(TimeTicks t) const {
   return TimeTicks(t.ticks_ + delta_);
 }
-
-}  // namespace base
 
 #endif  // BASE_TIME_H_

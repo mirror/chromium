@@ -33,7 +33,7 @@
 //             maximum backoff time      (when backoff > maximum backoff time)
 //
 // where |k| is the multiplier, and |c| is the constant factor.
-class URLFetcherProtectEntry {
+class ProtectEntry {
  public:
   enum EventType {
     SEND,      // request will be sent out
@@ -41,14 +41,14 @@ class URLFetcherProtectEntry {
     FAILURE    // no response or error
   };
 
-  URLFetcherProtectEntry();
-  URLFetcherProtectEntry(int sliding_window_period, int max_send_threshold,
-                         int max_retries, int initial_timeout,
-                         double multiplier, int constant_factor,
-                         int maximum_timeout);
+  ProtectEntry();
+  ProtectEntry(int sliding_window_period, int max_send_threshold,
+               int max_retries, int initial_timeout,
+               double multiplier, int constant_factor,
+               int maximum_timeout);
 
 
-  virtual ~URLFetcherProtectEntry() { }
+  virtual ~ProtectEntry() { }
 
   // When a connection event happens, log it to the queue, and recalculate
   // the timeout period. It returns the backoff time, in milliseconds, that
@@ -64,13 +64,13 @@ class URLFetcherProtectEntry {
  private:
   // When a request comes, calculate the release time for it.
   // Returns the backoff time before sending.
-  base::TimeDelta AntiOverload();
+  TimeDelta AntiOverload();
   // Resets backoff when service is ok.
   // Returns the backoff time before sending.
-  base::TimeDelta ResetBackoff();
+  TimeDelta ResetBackoff();
   // Calculates new backoff when encountering a failure.
   // Returns the backoff time before sending.
-  base::TimeDelta IncreaseBackoff();
+  TimeDelta IncreaseBackoff();
 
   // Default parameters.  Time is in milliseconds.
   static const int kDefaultSlidingWindowPeriod;
@@ -101,45 +101,45 @@ class URLFetcherProtectEntry {
   // current exponential backoff period
   int timeout_period_;
   // time that protection is scheduled to end
-  base::TimeTicks release_time_;
+  TimeTicks release_time_;
 
   // Sets up a lock to ensure thread safe.
   Lock lock_;
 
   // A list of the recent send events. We ues them to decide whether
   // there are too many requests sent in sliding window.
-  std::queue<base::TimeTicks> send_log_;
+  std::queue<TimeTicks> send_log_;
 
-  DISALLOW_COPY_AND_ASSIGN(URLFetcherProtectEntry);
+  DISALLOW_EVIL_CONSTRUCTORS(ProtectEntry);
 };
 
 
 // This singleton class is used to manage all protect entries.
 // Now we use the host name as service id.
-class URLFetcherProtectManager {
+class ProtectManager {
  public:
-  ~URLFetcherProtectManager();
+  ~ProtectManager();
 
   // Returns the global instance of this class.
-  static URLFetcherProtectManager* GetInstance();
+  static ProtectManager* GetInstance();
 
   // Registers a new entry in this service. If the entry already exists,
   // just returns it.
-  URLFetcherProtectEntry* Register(std::string id);
+  ProtectEntry* Register(std::string id);
   // Always registers the entry even when it exists.
-  URLFetcherProtectEntry* Register(std::string id,
-                                   URLFetcherProtectEntry* entry);
+  ProtectEntry* Register(std::string id, ProtectEntry* entry);
 
  private:
-  URLFetcherProtectManager() { }
+  ProtectManager() { }
 
-  typedef std::map<const std::string, URLFetcherProtectEntry*> ProtectService;
+  typedef std::map<const std::string, ProtectEntry*> ProtectService;
 
   static Lock lock_;
-  static scoped_ptr<URLFetcherProtectManager> protect_manager_;
+  static scoped_ptr<ProtectManager> protect_manager_;
   ProtectService services_;
 
-  DISALLOW_COPY_AND_ASSIGN(URLFetcherProtectManager);
+  DISALLOW_EVIL_CONSTRUCTORS(ProtectManager);
 };
 
 #endif  // CHROME_BROWSER_URL_FETCHER_PROTECT_H__
+

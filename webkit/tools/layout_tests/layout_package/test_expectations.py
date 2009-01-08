@@ -3,12 +3,10 @@
 # found in the LICENSE file.
 
 """A helper class for reading in and dealing with tests expectations
-for layout tests.
-"""
+for layout tests. """
 
 import os
 import re
-import sys
 import path_utils
 import compare_failures
 
@@ -24,12 +22,11 @@ class TestExpectations:
   FIXABLE = "tests_fixable.txt"
   IGNORED = "tests_ignored.txt"
 
-  def __init__(self, tests, directory, platform, is_debug_mode):
+  def __init__(self, tests, directory, build_type):
     """Reads the test expectations files from the given directory."""
     self._tests = tests
     self._directory = directory
-    self._platform = platform
-    self._is_debug_mode = is_debug_mode
+    self._build_type = build_type
     self._ReadFiles()
     self._ValidateLists()
 
@@ -90,14 +87,13 @@ class TestExpectations:
     """
     
     path = os.path.join(self._directory, filename)
-    return TestExpectationsFile(path, self._tests, self._platform,
-        self._is_debug_mode)
+    return TestExpectationsFile(path, self._tests, self._build_type)
 
   def _ValidateLists(self):
     # Make sure there's no overlap between the tests in the two files.
     overlap = self._fixable.GetTests() & self._ignored.GetTests()
     message = "Files contained in both " + self.FIXABLE + " and " + self.IGNORED
-    compare_failures.PrintFilesFromSet(overlap, message, sys.stdout)
+    compare_failures.PrintFilesFromSet(overlap, message)
     assert(len(overlap) == 0)
     # Make sure there are no ignored tests expected to crash.
     assert(len(self._ignored.GetTestsExpectedTo(CRASH)) == 0)
@@ -116,6 +112,7 @@ def StripComments(line):
   if line == '': return None
   else: return line
 
+
 class TestExpectationsFile:
   """Test expectation files consist of lines with specifications of what
   to expect from layout test cases. The test cases can be directories
@@ -123,23 +120,14 @@ class TestExpectationsFile:
   directory and any subdirectory. The format of the file is along the
   lines of:
   
-    LayoutTests/fast/js/fixme.js = FAIL
-    LayoutTests/fast/js/flaky.js = FAIL PASS
-    LayoutTests/fast/js/crash.js = CRASH TIMEOUT FAIL PASS
+    KJS # LayoutTests/fast/js/fixme.js = FAIL
+    V8 # LayoutTests/fast/js/flaky.js = FAIL | PASS
+    V8 | KJS # LayoutTests/fast/js/crash.js = CRASH | TIMEOUT | FAIL | PASS
     ...
 
-  To add other options:
-    SKIP : LayoutTests/fast/js/no-good.js = TIMEOUT PASS
-    DEBUG : LayoutTests/fast/js/no-good.js = TIMEOUT PASS
-    DEBUG SKIP : LayoutTests/fast/js/no-good.js = TIMEOUT PASS
-    LINUX DEBUG SKIP : LayoutTests/fast/js/no-good.js = TIMEOUT PASS
-    LINUX WIN : LayoutTests/fast/js/no-good.js = TIMEOUT PASS
-
-  SKIP: Doesn't run the test.
-  DEBUG: Expectations apply only to the debug build.
-  RELEASE: Expectations apply only to release build.
-  LINUX/WIN/MAC: Expectations apply only to these platforms.
-
+  In case you want to skip tests completely, add a SKIP:
+    V8 | KJS # SKIP : LayoutTests/fast/js/no-good.js = TIMEOUT | PASS
+    
   A test can be included twice, but not via the same path. If a test is included
   twice, then the more precise path wins.
   """
@@ -148,17 +136,18 @@ class TestExpectationsFile:
                    'fail': FAIL,
                    'timeout': TIMEOUT,
                    'crash': CRASH }
+                   
+  BUILD_TYPES = [ 'kjs', 'v8' ]
   
-  PLATFORMS = [ 'mac', 'linux', 'win' ]
-
-  def __init__(self, path, full_test_list, platform, is_debug_mode):
-    """
-    path: The path to the expectation file. An error is thrown if a test is
-        listed more than once. 
-    full_test_list: The list of all tests to be run pending processing of the
-        expections for those tests.
-    platform: Which platform from self.PLATFORMS to filter tests for.
-    is_debug_mode: Whether we testing a test_shell built debug mode.
+  
+  def __init__(self, path, full_test_list, build_type):
+    """path is the path to the expectation file. An error is thrown if a test
+    is listed more than once for a given build_type. 
+    full_test_list is the list of all tests to be run pending processing of the
+    expections for those tests.
+    build_type is used to filter out tests that only have expectations for
+    a different build_type.
+    
     """
     
     self._full_test_list = full_test_list
@@ -166,12 +155,9 @@ class TestExpectationsFile:
     self._expectations = {}
     self._test_list_paths = {}
     self._tests = {}
-    self._errors = []
-    self._platform = platform
-    self._is_debug_mode = is_debug_mode
     for expectation in self.EXPECTATIONS.itervalues():
       self._tests[expectation] = set()
-    self._Read(path)
+    self._Read(path, build_type)
 
   def GetSkipped(self):
     return self._skipped
@@ -194,89 +180,53 @@ class TestExpectationsFile:
       for expectation in self._expectations[test]:
         self._tests[expectation].remove(test)
       del self._expectations[test]
-
-  def _HasCurrentPlatform(self, options):
-    """ Returns true if the current platform is in the options list or if no
-    platforms are listed.
-    """
-    has_any_platforms = False
-    
-    for platform in self.PLATFORMS:
-      if platform in options:
-        has_any_platforms = True
-        break
-
-    if not has_any_platforms:
-      return True
-
-    return self._platform in options
-
-  def _Read(self, path):
+  
+  def _Read(self, path, build_type):
     """For each test in an expectations file, generate the expectations for it.
-
+    
     """
-
+    
     lineno = 0
     for line in open(path):
       lineno += 1
       line = StripComments(line)
       if not line: continue
 
-      if line.find(':') is -1:
-        test_and_expectations = line
-        is_skipped = False
-      else:
-        parts = line.split(':')
+      parts = line.split('#')
+      if len(parts) is not 2:
+        self._ReportSyntaxError(path, lineno, "Test must have build types")
+
+      if build_type not in self._GetOptionsList(parts[0]): continue
+
+      parts = parts[1].split(':')
+
+      if len(parts) is 2:
         test_and_expectations = parts[1]
-        options = self._GetOptionsList(parts[0])
-        is_skipped = 'skip' in options
-        if 'release' in options or 'debug' in options:
-          if self._is_debug_mode and 'debug' not in options:
-            continue
-          if not self._is_debug_mode and 'release' not in options:
-            continue
-        if not self._HasCurrentPlatform(options):
-          continue
+        skip_options = self._GetOptionsList(parts[0])
+        is_skipped = 'skip' in skip_options
+      else:
+        test_and_expectations = parts[0]
+        is_skipped = False
 
       tests_and_expecation_parts = test_and_expectations.split('=')
       if (len(tests_and_expecation_parts) is not 2):
-        self._AddError(lineno, 'Missing expectations.', test_and_expectations)
-        continue
+        self._ReportSyntaxError(path, lineno, "Test is missing expectations")
 
       test_list_path = tests_and_expecation_parts[0].strip()
-      try:
-        expectations = self._ParseExpectations(tests_and_expecation_parts[1])
-      except SyntaxError, err:
-        self._AddError(lineno, err[0], test_list_path)
-        continue
-
-      full_path = os.path.join(path_utils.LayoutDataDir(), test_list_path)
-      full_path = os.path.normpath(full_path)
-      # WebKit's way of skipping tests is to add a -disabled suffix.
-      # So we should consider the path existing if the path or the -disabled
-      # version exists.
-      if not os.path.exists(full_path) and not \
-        os.path.exists(full_path + '-disabled'):
-        self._AddError(lineno, 'Path does not exist.', test_list_path)
-        continue
-
-      if not self._full_test_list:
-        tests = [test_list_path]
-      else:
-        tests = self._ExpandTests(test_list_path)
+      tests = self._ExpandTests(test_list_path)
 
       if is_skipped:    
         self._AddSkippedTests(tests)
       else:
-        self._AddTests(tests, expectations, test_list_path, lineno)
-
-    if len(self._errors) is not 0:
-      print "\nFAILURES FOR PLATFORM: %s, IS_DEBUG_MODE: %s" \
-          % (self._platform.upper(), self._is_debug_mode)        
-      raise SyntaxError('\n'.join(map(str, self._errors)))
+        try:
+          self._AddTests(tests,
+                         self._ParseExpectations(tests_and_expecation_parts[1]), 
+                         test_list_path)
+        except SyntaxError, err:
+          self._ReportSyntaxError(path, lineno, str(err))
 
   def _GetOptionsList(self, listString):
-    return [part.strip().lower() for part in listString.strip().split(' ')]
+    return [part.strip().lower() for part in listString.split('|')]
 
   def _ParseExpectations(self, string):
     result = set()
@@ -302,13 +252,19 @@ class TestExpectationsFile:
       if test.startswith(path): result.append(test)
     return result
 
-  def _AddTests(self, tests, expectations, test_list_path, lineno):
+  def _AddTests(self, tests, expectations, test_list_path):
+    # Do not add tests that we expect only to pass to the lists.
+    # This makes it easier to account for tests that we expect to
+    # consistently pass, because they'll never be represented in 
+    # any of the lists.
+    if len(expectations) == 1 and PASS in expectations: return
+    # Traverse all tests and add them with the given expectations.
+
     for test in tests:
       if test in self._test_list_paths:
         prev_base_path = self._test_list_paths[test]
         if (prev_base_path == os.path.normpath(test_list_path)):
-          self._AddError(lineno, 'Duplicate expecations.', test)
-          continue
+          raise SyntaxError('Already seen expectations for path ' + test)
         if prev_base_path.startswith(test_list_path):
           # already seen a more precise path
           continue
@@ -330,5 +286,6 @@ class TestExpectationsFile:
     for test in tests:
       self._skipped.add(test)
 
-  def _AddError(self, lineno, msg, path):
-    self._errors.append('\nLine:%s %s\n%s' % (lineno, msg, path))
+  def _ReportSyntaxError(self, path, lineno, message):
+    raise SyntaxError(path + ':' + str(lineno) + ': ' + message)
+

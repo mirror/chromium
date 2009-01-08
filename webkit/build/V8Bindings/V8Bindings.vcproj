@@ -200,14 +200,6 @@
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\V8CanvasPixelArray.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8CanvasPixelArray.h"
-				>
-			</File>
-			<File
 				RelativePath="$(IntDir)\DerivedSources\V8CanvasRenderingContext2D.cpp"
 				>
 			</File>
@@ -368,22 +360,6 @@
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\V8CSSVariablesDeclaration.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8CSSVariablesDeclaration.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8CSSVariablesRule.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8CSSVariablesRule.h"
-				>
-			</File>
-			<File
 				RelativePath="$(IntDir)\DerivedSources\V8Document.cpp"
 				>
 			</File>
@@ -496,22 +472,6 @@
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\V8File.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8File.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8FileList.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8FileList.h"
-				>
-			</File>
-			<File
 				RelativePath="$(IntDir)\DerivedSources\V8History.cpp"
 				>
 			</File>
@@ -541,14 +501,6 @@
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\V8HTMLAreaElement.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8HTMLAudioElement.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8HTMLAudioElement.h"
 				>
 			</File>
 			<File
@@ -816,14 +768,6 @@
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\V8HTMLMediaElement.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8HTMLMediaElement.h"
-				>
-			</File>
-			<File
 				RelativePath="$(IntDir)\DerivedSources\V8HTMLMenuElement.cpp"
 				>
 			</File>
@@ -936,11 +880,11 @@
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\V8HTMLSourceElement.cpp"
+				RelativePath="$(IntDir)\DerivedSources\V8HTMLSelectionInputElement.cpp"
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\V8HTMLSourceElement.h"
+				RelativePath="$(IntDir)\DerivedSources\V8HTMLSelectionInputElement.h"
 				>
 			</File>
 			<File
@@ -1024,22 +968,6 @@
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\V8HTMLVideoElement.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8HTMLVideoElement.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8ImageData.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8ImageData.h"
-				>
-			</File>
-			<File
 				RelativePath="$(IntDir)\DerivedSources\V8InspectorController.cpp"
 				>
 			</File>
@@ -1064,14 +992,6 @@
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\V8MediaError.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8MediaError.h"
-				>
-			</File>
-			<File
 				RelativePath="$(IntDir)\DerivedSources\V8MediaList.cpp"
 				>
 			</File>
@@ -1080,27 +1000,11 @@
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\V8MessageChannel.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8MessageChannel.h"
-				>
-			</File>
-			<File
 				RelativePath="$(IntDir)\DerivedSources\V8MessageEvent.cpp"
 				>
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\V8MessageEvent.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8MessagePort.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8MessagePort.h"
 				>
 			</File>
 			<File
@@ -1296,27 +1200,11 @@
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\V8SVGAltGlyphElement.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8SVGAltGlyphElement.h"
-				>
-			</File>
-			<File
 				RelativePath="$(IntDir)\DerivedSources\V8SVGAngle.cpp"
 				>
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\V8SVGAngle.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8SVGAnimateColorElement.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8SVGAnimateColorElement.h"
 				>
 			</File>
 			<File
@@ -1421,30 +1309,6 @@
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\V8SVGAnimatedTransformList.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8SVGAnimateElement.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8SVGAnimateElement.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8SVGAnimateTransformElement.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8SVGAnimateTransformElement.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8SVGAnimationElement.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8SVGAnimationElement.h"
 				>
 			</File>
 			<File
@@ -1605,14 +1469,6 @@
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\V8SVGGElement.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8SVGGlyphElement.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8SVGGlyphElement.h"
 				>
 			</File>
 			<File
@@ -1984,14 +1840,6 @@
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\V8SVGSetElement.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8SVGSetElement.h"
-				>
-			</File>
-			<File
 				RelativePath="$(IntDir)\DerivedSources\V8SVGStopElement.cpp"
 				>
 			</File>
@@ -2168,22 +2016,6 @@
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\DerivedSources\V8TextMetrics.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8TextMetrics.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8TimeRanges.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8TimeRanges.h"
-				>
-			</File>
-			<File
 				RelativePath="$(IntDir)\DerivedSources\V8TreeWalker.cpp"
 				>
 			</File>
@@ -2205,46 +2037,6 @@
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\V8UndetectableHTMLCollection.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8WebKitAnimationEvent.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8WebKitAnimationEvent.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8WebKitCSSKeyframeRule.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8WebKitCSSKeyframeRule.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8WebKitCSSKeyframesRule.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8WebKitCSSKeyframesRule.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8WebKitCSSTransformValue.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8WebKitCSSTransformValue.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8WebKitTransitionEvent.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8WebKitTransitionEvent.h"
 				>
 			</File>
 			<File
@@ -2277,22 +2069,6 @@
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\V8XMLHttpRequestException.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8XMLHttpRequestProgressEvent.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8XMLHttpRequestProgressEvent.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8XMLHttpRequestUpload.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8XMLHttpRequestUpload.h"
 				>
 			</File>
 			<File
@@ -2379,7 +2155,15 @@
 		<Filter
 			Name="SharedSources"
 			>
-		</Filter>
+			<File
+				RelativePath="$(IntDir)\SharedSources\PausedTimeouts.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\SharedSources\PausedTimeouts.h"
+				>
+			</File>
+                </Filter>
 		<Filter
 			Name="c_binding"
 			>
@@ -2429,11 +2213,7 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\JSDOMBinding.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\JSDOMBinding.h"
+			RelativePath="..\..\port\page\inspector\InspectorController.cpp"
 			>
 		</File>
 		<File
@@ -2466,74 +2246,6 @@
 		</File>
 		<File
 			RelativePath=".\precompiled_v8bindings.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\RGBColor.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\RGBColor.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\ScheduledAction.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\ScriptCachedPageData.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\ScriptCallFrame.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\ScriptCallFrame.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\ScriptCallStack.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\ScriptCallStack.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\ScriptController.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\ScriptController.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\ScriptInstance.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\ScriptInstance.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\ScriptSourceCode.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\ScriptString.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\ScriptState.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\ScriptValue.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\ScriptValue.h"
 			>
 		</File>
 		<File
@@ -2593,11 +2305,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\V8MessagePortCustom.cpp"
+			RelativePath="..\..\port\bridge\V8Bridge.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\V8XMLHttpRequestCustom.cpp"
+			RelativePath="..\..\port\bridge\V8Bridge.h"
 			>
 		</File>
 	</Files>

@@ -109,16 +109,6 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     BaseHTTPServer.BaseHTTPRequestHandler.__init__(self, request, client_address, socket_server)
 
-  def _ShouldHandleRequest(self, handler_name):
-    """Determines if the path can be handled by the handler.
-
-    We consider a handler valid if the path begins with the
-    handler name. It can optionally be followed by "?*", "/*".
-    """
-
-    pattern = re.compile('%s($|\?|/).*' % handler_name)
-    return pattern.match(self.path)
-
   def GetMIMETypeFromName(self, file_name):
     """Returns the mime type for the specified file_name. So far it only looks
     at the file extension."""
@@ -150,7 +140,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """This request handler yields a page with the title set to the current
     system time, and no caching requested."""
 
-    if not self._ShouldHandleRequest("/nocachetime/maxage"):
+    if (self.path.find("/nocachetime/maxage") != 0):
       return False
 
     self.send_response(200)
@@ -166,7 +156,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """This request handler yields a page with the title set to the current
     system time, and no caching requested."""
 
-    if not self._ShouldHandleRequest("/nocachetime"):
+    if (self.path.find("/nocachetime") != 0):
       return False
 
     self.send_response(200)
@@ -182,7 +172,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """This request handler yields a page with the title set to the current
     system time, and allows caching for one minute."""
 
-    if not self._ShouldHandleRequest("/cachetime"):
+    if self.path.find("/cachetime") != 0:
       return False
 
     self.send_response(200)
@@ -198,7 +188,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """This request handler yields a page with the title set to the current
     system time, and set the page to expire on 1 Jan 2099."""
 
-    if not self._ShouldHandleRequest("/cache/expires"):
+    if (self.path.find("/cache/expires") != 0):
       return False
 
     self.send_response(200)
@@ -214,7 +204,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """This request handler yields a page with the title set to the current
     system time, and allows caching for 60 seconds"""
 
-    if not self._ShouldHandleRequest("/cache/proxy-revalidate"):
+    if (self.path.find("/cache/proxy-revalidate") != 0):
       return False
 
     self.send_response(200)
@@ -230,7 +220,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """This request handler yields a page with the title set to the current
     system time, and allows caching for 5 seconds."""
 
-    if not self._ShouldHandleRequest("/cache/private"):
+    if (self.path.find("/cache/private") != 0):
       return False
 
     self.send_response(200)
@@ -246,7 +236,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """This request handler yields a page with the title set to the current
     system time, and allows caching for 5 seconds."""
 
-    if not self._ShouldHandleRequest("/cache/public"):
+    if (self.path.find("/cache/public") != 0):
       return False
 
     self.send_response(200)
@@ -262,7 +252,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """This request handler yields a page with the title set to the current
     system time, and does not allow for caching."""
 
-    if not self._ShouldHandleRequest("/cache/s-maxage"):
+    if (self.path.find("/cache/s-maxage") != 0):
       return False
 
     self.send_response(200)
@@ -278,7 +268,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """This request handler yields a page with the title set to the current
     system time, and does not allow caching."""
 
-    if not self._ShouldHandleRequest("/cache/must-revalidate"):
+    if (self.path.find("/cache/must-revalidate") != 0):
       return False
 
     self.send_response(200)
@@ -295,7 +285,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     system time, and does not allow caching event though max-age of 60
     seconds is specified."""
 
-    if not self._ShouldHandleRequest("/cache/must-revalidate/max-age"):
+    if (self.path.find("/cache/must-revalidate/max-age") != 0):
       return False
 
     self.send_response(200)
@@ -307,11 +297,12 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
     return True
 
+
   def CacheNoStoreHandler(self):
     """This request handler yields a page with the title set to the current
     system time, and does not allow the page to be stored."""
 
-    if not self._ShouldHandleRequest("/cache/no-store"):
+    if (self.path.find("/cache/no-store") != 0):
       return False
 
     self.send_response(200)
@@ -328,7 +319,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     system time, and does not allow the page to be stored even though max-age
     of 60 seconds is specified."""
 
-    if not self._ShouldHandleRequest("/cache/no-store/max-age"):
+    if (self.path.find("/cache/no-store/max-age") != 0):
       return False
 
     self.send_response(200)
@@ -346,7 +337,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     system time, and does not allow the content to transformed during
     user-agent caching"""
 
-    if not self._ShouldHandleRequest("/cache/no-transform"):
+    if (self.path.find("/cache/no-transform") != 0):
       return False
 
     self.send_response(200)
@@ -361,7 +352,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
   def EchoHeader(self):
     """This handler echoes back the value of a specific request header."""
 
-    if not self._ShouldHandleRequest("/echoheader"):
+    if self.path.find("/echoheader") != 0:
       return False
 
     query_char = self.path.find('?')
@@ -386,7 +377,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """This handler just echoes back the payload of the request, for testing
     form submission."""
 
-    if not self._ShouldHandleRequest("/echo"):
+    if self.path.find("/echo") != 0:
       return False
 
     self.send_response(200)
@@ -400,7 +391,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
   def EchoTitleHandler(self):
     """This handler is like Echo, but sets the page title to the request."""
 
-    if not self._ShouldHandleRequest("/echotitle"):
+    if self.path.find("/echotitle") != 0:
       return False
 
     self.send_response(200)
@@ -417,7 +408,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """This handler yields a (more) human-readable page listing information
     about the request header & contents."""
 
-    if not self._ShouldHandleRequest("/echoall"):
+    if self.path.find("/echoall") != 0:
       return False
 
     self.send_response(200)
@@ -490,7 +481,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
   def DownloadFinishHandler(self):
     """This handler just tells the server to finish the current download."""
 
-    if not self._ShouldHandleRequest("/download-finish"):
+    if not self.path.startswith("/download-finish"):
       return False
 
     self.server.waitForDownload = False
@@ -625,7 +616,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """This handler tests 'Basic' authentication.  It just sends a page with
     title 'user/pass' if you succeed."""
 
-    if not self._ShouldHandleRequest("/auth-basic"):
+    if not self.path.startswith("/auth-basic"):
       return False
 
     username = userpass = password = b64str = ""
@@ -681,7 +672,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """This handler tests 'Digest' authentication.  It just sends a page with
     title 'user/pass' if you succeed."""
 
-    if not self._ShouldHandleRequest("/auth-digest"):
+    if not self.path.startswith("/auth-digest"):
       return False
 
     # Periodically generate a new nonce.  Technically we should incorporate
@@ -769,7 +760,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
   def SlowServerHandler(self):
     """Wait for the user suggested time before responding. The syntax is
     /slow?0.5 to wait for half a second."""
-    if not self._ShouldHandleRequest("/slow"):
+    if not self.path.startswith("/slow"):
       return False
     query_char = self.path.find('?')
     wait_sec = 1.0
@@ -789,7 +780,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     """Returns a string of html with the given content type.  E.g.,
     /contenttype?text/css returns an html file with the Content-Type
     header set to text/css."""
-    if not self._ShouldHandleRequest("/contenttype"):
+    if not self.path.startswith('/contenttype'):
       return False
     query_char = self.path.find('?')
     content_type = self.path[query_char + 1:].strip()
@@ -806,7 +797,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     '/server-redirect?http://foo.bar/asdf' to redirect to 'http://foo.bar/asdf'"""
 
     test_name = "/server-redirect"
-    if not self._ShouldHandleRequest(test_name):
+    if not self.path.startswith(test_name):
       return False
 
     query_char = self.path.find('?')
@@ -829,7 +820,7 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     '/client-redirect?http://foo.bar/asdf' to redirect to 'http://foo.bar/asdf'"""
 
     test_name = "/client-redirect"
-    if not self._ShouldHandleRequest(test_name):
+    if not self.path.startswith(test_name):
       return False
 
     query_char = self.path.find('?');

@@ -7,7 +7,6 @@
 #include <algorithm>
 #include <set>
 
-#include "base/file_util.h"
 #include "base/string_util.h"
 #include "chrome/tools/convert_dict/aff_reader.h"
 #include "chrome/tools/convert_dict/hunspell_reader.h"
@@ -43,39 +42,43 @@ void SplitDicLine(const std::string& line, std::vector<std::string>* output) {
     output->push_back(line.substr(slash_index + 1));
 }
 
-// This function reads words from a .dic file, or a .dic_delta file. Note that 
-// we read 'all' the words in the file, irrespective of the word count given
-// in the first non empty line of a .dic file. Also note that, for a .dic_delta
-// file, the first line actually does _not_ have the number of words. In order
-// to control this, we use the |file_has_word_count_in_the_first_line| 
-// parameter to tell this method whether the first non empty line in the file 
-// contains the number of words or not. If it does, skip the first line. If it
-// does not, then the first line contains a word.
-bool PopulateWordSet(WordSet* word_set, FILE* file, AffReader* aff_reader,
-                     const char* file_type, 
-                     bool file_has_word_count_in_the_first_line) {
-  printf("Extracting words from %s file...\n", file_type);
+}  // namespace
 
+DicReader::DicReader(const std::string& filename) {
+  fopen_s(&file_, filename.c_str(), "r");
+}
+
+DicReader::~DicReader() {
+  if (file_)
+    fclose(file_);
+}
+
+bool DicReader::Read(AffReader* aff_reader) {
+  if (!file_)
+    return false;
+
+  bool got_count = false;
   int line_number = 0;
-  while (!feof(file)) {
-    std::string line = ReadLine(file);
+
+  WordSet word_set;
+  while (!feof(file_)) {
+    std::string line = ReadLine(file_);
     line_number++;
     StripComment(&line);
     if (line.empty())
       continue;
 
-    if (file_has_word_count_in_the_first_line) {
+    if (!got_count) {
       // Skip the first nonempty line, this is the line count. We don't bother
       // with it and just read all the lines.
-      file_has_word_count_in_the_first_line = false;
+      got_count = true;
       continue;
     }
 
     std::vector<std::string> split;
     SplitDicLine(line, &split);
     if (split.size() == 0 || split.size() > 2) {
-      printf("Line %d has extra slashes in the %s file\n", line_number,
-             file_type);
+      printf("Line %d has extra slashes in the dic file\n", line_number);
       return false;
     }
 
@@ -83,8 +86,8 @@ bool PopulateWordSet(WordSet* word_set, FILE* file, AffReader* aff_reader,
     // always use UTF-8 as the encoding to simplify life.
     std::string utf8word;
     if (!aff_reader->EncodingToUTF8(split[0], &utf8word)) {
-      printf("Unable to convert line %d from %s to UTF-8 in the %s file\n",
-             line_number, aff_reader->encoding(), file_type);
+      printf("Unable to convert line %d from %s to UTF-8 in the dic file\n",
+             line_number, aff_reader->encoding());
       return false;
     }
 
@@ -105,49 +108,14 @@ bool PopulateWordSet(WordSet* word_set, FILE* file, AffReader* aff_reader,
         affix_index = aff_reader->GetAFIndexForAFString(split[1]);
     }
 
-    WordSet::iterator found = word_set->find(utf8word);
-    if (found == word_set->end()) {
+    WordSet::iterator found = word_set.find(utf8word);
+    if (found == word_set.end()) {
       std::set<int> affix_vector;
       affix_vector.insert(affix_index);
-      word_set->insert(std::make_pair(utf8word, affix_vector));
+      word_set.insert(std::make_pair(utf8word, affix_vector));
     } else {
       found->second.insert(affix_index);
     }
-  }
-
-  return true;
-}
-
-}  // namespace
-
-DicReader::DicReader(const std::string& filename) {
-  file_ = file_util::OpenFile(filename, "r");
-  additional_words_file_ = file_util::OpenFile(filename + "_delta", "r");
-}
-
-DicReader::~DicReader() {
-  if (file_)
-    file_util::CloseFile(file_);
-  if (additional_words_file_)
-    file_util::CloseFile(additional_words_file_);
-}
-
-bool DicReader::Read(AffReader* aff_reader) {
-  if (!file_)
-    return false;
-
-  WordSet word_set;
-
-  // Add words from the dic file to the word set.
-  // Note that the first line is the word count in the file.
-  if (!PopulateWordSet(&word_set, file_, aff_reader, "dic", true))
-    return false;
-
-  // Add words from the dic delta file to the word set, if it exists.
-  // The first line is the first word to add. Word count line is not present.
-  if (additional_words_file_ != NULL) {
-    PopulateWordSet(&word_set, additional_words_file_, aff_reader, "dic delta",
-                    false);
   }
 
   // Make sure the words are sorted, they may be unsorted in the input.

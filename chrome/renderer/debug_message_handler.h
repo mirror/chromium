@@ -22,7 +22,7 @@ class DebugMessageHandler : public IPC::ChannelProxy::MessageFilter,
 
  private:
   // Evaluate javascript URL in the renderer
-  void EvaluateScript(const std::wstring& script);
+  void EvaluateScriptUrl(const std::wstring& url);
 
   // Attach in the renderer
   void Attach();

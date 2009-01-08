@@ -28,11 +28,10 @@ namespace views {
 // TODO(glen): Resolve this with Microsoft.
 class AeroTooltipManager : public TooltipManager {
  public:
-  AeroTooltipManager(Widget* widget, HWND parent);
+  AeroTooltipManager(Container* container, HWND parent);
   virtual ~AeroTooltipManager();
 
-  virtual void OnMouse(UINT u_msg, WPARAM w_param, LPARAM l_param);
-  virtual void OnMouseLeave();
+  void OnMouse(UINT u_msg, WPARAM w_param, LPARAM l_param);
 
  private:
   void Init();

@@ -1,18 +1,19 @@
-/*
- * Copyright (C) 2006 The Android Open Source Project
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
+/* include/graphics/SkScalerContext.h
+**
+** Copyright 2006, Google Inc.
+**
+** Licensed under the Apache License, Version 2.0 (the "License"); 
+** you may not use this file except in compliance with the License. 
+** You may obtain a copy of the License at 
+**
+**     http://www.apache.org/licenses/LICENSE-2.0 
+**
+** Unless required by applicable law or agreed to in writing, software 
+** distributed under the License is distributed on an "AS IS" BASIS, 
+** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
+** See the License for the specific language governing permissions and 
+** limitations under the License.
+*/
 
 #ifndef SkScalerContext_DEFINED
 #define SkScalerContext_DEFINED
@@ -89,10 +90,7 @@ struct SkGlyph {
         kSubBits = 2,
         kSubMask = ((1 << kSubBits) - 1),
         kSubShift = 24, // must be large enough for glyphs and unichars
-        kCodeMask = ((1 << kSubShift) - 1),
-        // relative offsets for X and Y subpixel bits
-        kSubShiftX = kSubBits,
-        kSubShiftY = 0
+        kCodeMask = ((1 << kSubShift) - 1)
     };
 
     static unsigned ID2Code(uint32_t id) {
@@ -100,11 +98,11 @@ struct SkGlyph {
     }
     
     static unsigned ID2SubX(uint32_t id) {
-        return id >> (kSubShift + kSubShiftX);
+        return id >> (kSubShift + kSubBits);
     }
     
     static unsigned ID2SubY(uint32_t id) {
-        return (id >> (kSubShift + kSubShiftY)) & kSubMask;
+        return (id >> kSubShift) & kSubMask;
     }
     
     static unsigned FixedToSub(SkFixed n) {
@@ -124,9 +122,7 @@ struct SkGlyph {
         SkASSERT(code <= kCodeMask);
         x = FixedToSub(x);
         y = FixedToSub(y);
-        return (x << (kSubShift + kSubShiftX)) |
-               (y << (kSubShift + kSubShiftY)) |
-               code;
+        return (x << (kSubShift + kSubBits)) | (y << kSubShift) | code;
     }
     
     void toMask(SkMask* mask) const;

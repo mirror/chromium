@@ -43,8 +43,6 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				BasicRuntimeChecks="0"
-				BufferSecurityCheck="false"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

@@ -39,7 +39,7 @@ TEST_F(ChromeMainTest, SecondLaunch) {
 
   int window_count;
   ASSERT_TRUE(automation()->WaitForWindowCountToChange(1, &window_count,
-                                                       action_timeout_ms()));
+                                                       kWaitForActionMsec));
   ASSERT_EQ(2, window_count);
 }
 

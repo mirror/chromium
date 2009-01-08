@@ -29,8 +29,6 @@
 #pragma comment(lib, "winhttp.lib")
 #pragma warning(disable: 4355)
 
-using base::Time;
-
 namespace net {
 
 static int TranslateOSError(DWORD error) {
@@ -172,7 +170,7 @@ class HttpTransactionWinHttp::Session
                                  WINHTTP_FLAG_SECURE_PROTOCOL_TLS1
   };
 
-  Session(ProxyService* proxy_service);
+  Session();
 
   // Opens the primary WinHttp session handle.
   bool Init(const std::string& user_agent);
@@ -195,7 +193,7 @@ class HttpTransactionWinHttp::Session
   // The message loop of the thread where the session was created.
   MessageLoop* message_loop() { return message_loop_; }
 
-  ProxyService* proxy_service() { return proxy_service_; }
+  ProxyService* proxy_service() { return proxy_service_.get(); }
 
   // Gets the HTTP authentication cache for the session.
   AuthCache* auth_cache() { return &auth_cache_; }
@@ -240,7 +238,8 @@ class HttpTransactionWinHttp::Session
   HINTERNET internet_;
   HINTERNET internet_no_tls_;
   MessageLoop* message_loop_;
-  ProxyService* proxy_service_;
+  scoped_ptr<ProxyService> proxy_service_;
+  scoped_ptr<ProxyResolver> proxy_resolver_;
   AuthCache auth_cache_;
 
   // This event object is used when destroying a transaction.  It is given
@@ -295,12 +294,14 @@ class HttpTransactionWinHttp::Session
   WinHttpRequestThrottle request_throttle_;
 };
 
-HttpTransactionWinHttp::Session::Session(ProxyService* proxy_service)
+HttpTransactionWinHttp::Session::Session()
     : internet_(NULL),
       internet_no_tls_(NULL),
-      proxy_service_(proxy_service),
       session_callback_ref_count_(0),
       quitting_(false) {
+  proxy_resolver_.reset(new ProxyResolverWinHttp());
+  proxy_service_.reset(new ProxyService(proxy_resolver_.get()));
+
   GetSSLConfig();
 
   // Save the current message loop for callback notifications.
@@ -318,6 +319,13 @@ HttpTransactionWinHttp::Session::Session(ProxyService* proxy_service)
 }
 
 HttpTransactionWinHttp::Session::~Session() {
+  // It is important to shutdown the proxy service before closing the WinHTTP
+  // session handle since the proxy service uses the WinHTTP session handle.
+  proxy_service_.reset();
+
+  // Next, the resolver which also references our session handle.
+  proxy_resolver_.reset();
+
   if (internet_) {
     WinHttpCloseHandle(internet_);
     if (internet_no_tls_)
@@ -692,7 +700,6 @@ void HttpTransactionWinHttp::StatusCallback(HINTERNET handle,
       if (API_SEND_REQUEST == result->dwResult &&
           ERROR_WINHTTP_NAME_NOT_RESOLVED == result->dwError)
         DidFinishDnsResolutionWithStatus(false,
-                                         GURL(),  // null referrer URL.
                                          reinterpret_cast<void*>(context));
       break;
     }
@@ -716,9 +723,7 @@ void HttpTransactionWinHttp::StatusCallback(HINTERNET handle,
     }
     // Successfully found the IP address of the server.
     case WINHTTP_CALLBACK_STATUS_NAME_RESOLVED:
-      DidFinishDnsResolutionWithStatus(true,
-                                       GURL(),  // null referrer URL.
-                                       reinterpret_cast<void*>(context));
+      DidFinishDnsResolutionWithStatus(true, reinterpret_cast<void*>(context));
       break;
   }
 }
@@ -735,14 +740,18 @@ HttpTransaction* HttpTransactionWinHttp::Factory::CreateTransaction() {
     return NULL;
 
   if (!session_) {
-    session_ = new Session(proxy_service_);
+    session_ = new Session();
     session_->AddRef();
   }
-  return new HttpTransactionWinHttp(session_, proxy_service_->proxy_info());
+  return new HttpTransactionWinHttp(session_, proxy_info_.get());
 }
 
 HttpCache* HttpTransactionWinHttp::Factory::GetCache() {
   return NULL;
+}
+
+AuthCache* HttpTransactionWinHttp::Factory::GetAuthCache() {
+  return session_->auth_cache();
 }
 
 void HttpTransactionWinHttp::Factory::Suspend(bool suspend) {
@@ -811,6 +820,10 @@ HttpTransactionWinHttp::~HttpTransactionWinHttp() {
   }
   if (session_)
     session_->Release();
+}
+
+void HttpTransactionWinHttp::Destroy() {
+  delete this;
 }
 
 int HttpTransactionWinHttp::Start(const HttpRequestInfo* request_info,
@@ -1355,10 +1368,10 @@ int HttpTransactionWinHttp::DidReceiveError(DWORD error,
   }
   if (rv == ERR_SSL_CLIENT_AUTH_CERT_NEEDED) {
     // TODO(wtc): Bug 1230409: We don't support SSL client authentication yet.
-    // For now we set a null client certificate, which works on XP SP3, Vista
-    // and later.  On XP SP2 and below, this fails with ERROR_INVALID_PARAMETER
-    // (87).  This allows us to access servers that request but do not require
-    // client certificates.
+    // For now we set a null client certificate, which works on Vista and
+    // later.  On XP, this fails with ERROR_INVALID_PARAMETER (87).  This
+    // allows us to access servers that request but do not require client
+    // certificates.
     if (WinHttpSetOption(request_handle_,
                          WINHTTP_OPTION_CLIENT_CERT_CONTEXT,
                          WINHTTP_NO_CLIENT_CERT_CONTEXT, 0))
@@ -1441,7 +1454,7 @@ int HttpTransactionWinHttp::DidReadData(DWORD num_bytes) {
 }
 
 void HttpTransactionWinHttp::LogTransactionMetrics() const {
-  base::TimeDelta duration = base::Time::Now() - response_.request_time;
+  TimeDelta duration = Time::Now() - response_.request_time;
   if (60 < duration.InMinutes())
     return;
   UMA_HISTOGRAM_LONG_TIMES(L"Net.Transaction_Latency_WinHTTP", duration);
@@ -1592,15 +1605,6 @@ int HttpTransactionWinHttp::PopulateAuthChallenge() {
     auth->state = AUTH_STATE_HAVE_AUTH;
     auth->username = ASCIIToWide(request_->url.username());
     auth->password = ASCIIToWide(request_->url.password());
-    return RestartInternal();
-  }
-
-  // Check the auth cache for an entry.
-  AuthData* cached_auth = session_->auth_cache()->Lookup(*auth_cache_key);
-  if (cached_auth) {
-    auth->state = AUTH_STATE_HAVE_AUTH;
-    auth->username = cached_auth->username;
-    auth->password = cached_auth->password;
     return RestartInternal();
   }
 

@@ -10,8 +10,6 @@
 #include "chrome/common/resource_bundle.h"
 #include "skia/include/SkBitmap.h"
 
-using base::TimeDelta;
-
 namespace views {
 
 Throbber::Throbber(int frame_time_ms,

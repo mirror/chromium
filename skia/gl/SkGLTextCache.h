@@ -9,13 +9,8 @@ class SkGLTextCache {
 public:
     SkGLTextCache();
     ~SkGLTextCache();
-    
-    /** Delete all of the strikes in the cache. Pass true if the texture IDs are
-        still valid, in which case glDeleteTextures will be called. Pass false
-        if they are invalid (e.g. the gl-context has changed), in which case
-        they will just be abandoned.
-    */
-    void deleteAllStrikes(bool texturesAreValid);
+
+    void* getCtx() const { return fCtx; }
 
     class Strike {
     public:
@@ -27,7 +22,7 @@ public:
 
         // call this to force us to ignore the texture name in our destructor
         // only call it right before our destructor
-        void abandonTexture() { fTexName = 0; }
+        void zapTexture() { fTexName = 0; }
 
     private:
         // if next is non-null, its height must match our height
@@ -71,6 +66,8 @@ public:
     Strike* addGlyphAndBind(const SkGlyph&, const uint8_t image[], int* offset);
 
 private:
+    void*   fCtx;
+
     enum {
         // greater than this we won't cache
         kMaxGlyphHeightShift = 9,

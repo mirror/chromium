@@ -5,12 +5,9 @@
 #ifndef NET_URL_REQUEST_URL_REQUEST_UNITTEST_H_
 #define NET_URL_REQUEST_URL_REQUEST_UNITTEST_H_
 
-#include <stdlib.h>
-
 #include <sstream>
 #include <string>
 
-#include "base/file_path.h"
 #include "base/file_util.h"
 #include "base/message_loop.h"
 #include "base/path_service.h"
@@ -18,14 +15,11 @@
 #include "base/process_util.h"
 #include "base/string_util.h"
 #include "base/thread.h"
-#include "base/time.h"
 #include "base/waitable_event.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_network_layer.h"
 #include "net/url_request/url_request.h"
-#include "net/proxy/proxy_service.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "googleurl/src/url_util.h"
 
 const int kDefaultPort = 1337;
 const std::string kDefaultHostName("localhost");
@@ -34,14 +28,11 @@ const std::string kDefaultHostName("localhost");
 class TestURLRequestContext : public URLRequestContext {
  public:
   TestURLRequestContext() {
-    proxy_service_ = net::ProxyService::CreateNull();
-    http_transaction_factory_ =
-        net::HttpNetworkLayer::CreateFactory(proxy_service_);
+    http_transaction_factory_ = net::HttpNetworkLayer::CreateFactory(NULL);
   }
 
   virtual ~TestURLRequestContext() {
     delete http_transaction_factory_;
-    delete proxy_service_;
   }
 };
 
@@ -192,7 +183,7 @@ class TestDelegate : public URLRequest::Delegate {
 
 // This object bounds the lifetime of an external python-based HTTP server
 // that can provide various responses useful for testing.
-class TestServer : public base::ProcessFilter {
+class TestServer : public process_util::ProcessFilter {
  public:
   TestServer(const std::wstring& document_root)
       : process_handle_(NULL),
@@ -211,8 +202,7 @@ class TestServer : public base::ProcessFilter {
     // filter.
     if (!process_handle_)
       return false;
-    // TODO(port): rationalize return value of GetProcId
-    return pid == (uint32)base::GetProcId(process_handle_);
+    return pid == process_util::GetProcId(process_handle_);
   }
 
   GURL TestServerPage(const std::string& path) {
@@ -220,7 +210,7 @@ class TestServer : public base::ProcessFilter {
   }
 
   GURL TestServerPageW(const std::wstring& path) {
-    return GURL(base_address_ + WideToUTF8(path));
+    return GURL(UTF8ToWide(base_address_) + path);
   }
 
   // A subclass may wish to send the request in a different manner
@@ -244,8 +234,6 @@ class TestServer : public base::ProcessFilter {
     return d.did_succeed();
   }
 
-  bool init_successful() const { return init_successful_; }
-
  protected:
   struct ManualInit {};
 
@@ -254,7 +242,6 @@ class TestServer : public base::ProcessFilter {
   // its constructor).
   TestServer(ManualInit)
       : process_handle_(NULL),
-        init_successful_(false),
         is_shutdown_(true) {
   }
 
@@ -267,7 +254,7 @@ class TestServer : public base::ProcessFilter {
             const std::wstring& cert_path) {
     std::stringstream ss;
     std::string port_str;
-    ss << (port ? port : kDefaultPort);
+    ss << port ? port : kDefaultPort;
     ss >> port_str;
     base_address_ = scheme() + "://" + host_name + ":" + port_str + "/";
 
@@ -286,14 +273,11 @@ class TestServer : public base::ProcessFilter {
     std::wstring test_data_directory;
     PathService::Get(base::DIR_SOURCE_ROOT, &test_data_directory);
     std::wstring normalized_document_root = document_root;
-#if defined(OS_WIN)
     std::replace(normalized_document_root.begin(),
                  normalized_document_root.end(),
-                 L'/', FilePath::kSeparators[0]);
-#endif
+                 L'/', file_util::kPathSeparator);
     file_util::AppendToPath(&test_data_directory, normalized_document_root);
 
-#if defined(OS_WIN)
     std::wstring command_line =
         L"\"" + python_runtime_ + L"\" " + L"\"" + testserver_path +
         L"\" --port=" + UTF8ToWide(port_str) + L" --data-dir=\"" +
@@ -305,47 +289,8 @@ class TestServer : public base::ProcessFilter {
     }
 
     ASSERT_TRUE(
-        base::LaunchApp(command_line, false, true, &process_handle_)) <<
+        process_util::LaunchApp(command_line, false, true, &process_handle_)) <<
         "Failed to launch " << command_line;
-#elif defined(OS_POSIX)
-    // Set up PYTHONPATH so that Python is able to find the in-tree copy of
-    // tlslite.
-
-    static bool set_python_path = false;
-    if (!set_python_path) {
-      FilePath tlslite_path;
-      ASSERT_TRUE(PathService::Get(base::DIR_SOURCE_ROOT, &tlslite_path));
-      tlslite_path = tlslite_path.Append("third_party");
-      tlslite_path = tlslite_path.Append("tlslite");
-
-      const char kPythonPath[] = "PYTHONPATH";
-      char* python_path_c = getenv(kPythonPath);
-      if (python_path_c) {
-        // PYTHONPATH is already set, append to it.
-        std::string python_path(python_path_c);
-        python_path.append(":");
-        python_path.append(tlslite_path.value());
-        setenv(kPythonPath, python_path.c_str(), 1);
-      } else {
-        setenv(kPythonPath, tlslite_path.value().c_str(), 1);
-      }
-
-      set_python_path = true;
-    }
-
-    std::vector<std::string> command_line;
-    command_line.push_back("python");
-    command_line.push_back(WideToUTF8(testserver_path));
-    command_line.push_back("--port=" + port_str);
-    command_line.push_back("--data-dir=" + WideToUTF8(test_data_directory));
-    if (!cert_path.empty()) 
-      command_line.push_back("--https=" + WideToUTF8(cert_path));
-
-    base::file_handle_mapping_vector no_mappings;
-    ASSERT_TRUE(
-        base::LaunchApp(command_line, no_mappings, false, &process_handle_)) <<
-        "Failed to launch " << command_line[0] << " ...";
-#endif
 
     // Verify that the webserver is actually started.
     // Otherwise tests can fail if they run faster than Python can start.
@@ -357,7 +302,6 @@ class TestServer : public base::ProcessFilter {
     }
     ASSERT_TRUE(success) << "Webserver not starting properly.";
 
-    init_successful_ = true;
     is_shutdown_ = false;
   }
 
@@ -368,7 +312,7 @@ class TestServer : public base::ProcessFilter {
     // here we append the time to avoid problems where the kill page
     // is being cached rather than being executed on the server
     std::ostringstream page_name;
-    page_name << "kill?" << (unsigned int)(base::Time::Now().ToInternalValue());
+    page_name << "kill?" << GetTickCount();
     int retry_count = 5;
     while (retry_count > 0) {
       bool r = MakeGETRequest(page_name.str());
@@ -384,17 +328,15 @@ class TestServer : public base::ProcessFilter {
     DCHECK(retry_count > 0);
 
     if (process_handle_) {
-#if defined(OS_WIN)
       CloseHandle(process_handle_);
-#endif
       process_handle_ = NULL;
     }
 
     // Make sure we don't leave any stray testserver processes laying around.
     std::wstring testserver_name =
         file_util::GetFilenameFromPath(python_runtime_);
-    base::CleanupProcesses(testserver_name, 10000, 1, this);
-    EXPECT_EQ(0, base::GetProcessCount(testserver_name, this));
+    process_util::CleanupProcesses(testserver_name, 10000, 1, this);
+    EXPECT_EQ(0, process_util::GetProcessCount(testserver_name, this));
 
     is_shutdown_ = true;
   }
@@ -427,8 +369,7 @@ class TestServer : public base::ProcessFilter {
 
   std::string base_address_;
   std::wstring python_runtime_;
-  base::ProcessHandle process_handle_;
-  bool init_successful_;
+  HANDLE process_handle_;
   bool is_shutdown_;
 };
 

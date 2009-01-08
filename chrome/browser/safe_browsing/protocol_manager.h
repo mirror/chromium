@@ -74,7 +74,7 @@ class SafeBrowsingProtocolManager : public URLFetcher::Delegate {
   void OnChunkInserted();
 
   // The last time we received an update.
-  base::Time last_update() const { return last_update_; }
+  Time last_update() const { return last_update_; }
 
  private:
   // Internal API for fetching information from the SafeBrowsing servers. The
@@ -196,16 +196,16 @@ class SafeBrowsingProtocolManager : public URLFetcher::Delegate {
   std::string wrapped_key_;
 
   // The last time we successfully received an update.
-  base::Time last_update_;
+  Time last_update_;
 
   // While in GetHash backoff, we can't make another GetHash until this time.
-  base::Time next_gethash_time_;
+  Time next_gethash_time_;
 
   // Current product version sent in each request.
   std::string version_;
 
   // Used for measuring chunk request latency.
-  base::Time chunk_request_start_;
+  Time chunk_request_start_;
 
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingProtocolManager);
 };

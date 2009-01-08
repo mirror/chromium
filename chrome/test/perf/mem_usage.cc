@@ -81,7 +81,7 @@ size_t GetSystemCommitCharge() {
 void PrintChromeMemoryUsageInfo() {
   printf("\n");
   BrowserProcessFilter chrome_filter(L"");
-  base::NamedProcessIterator
+  process_util::NamedProcessIterator
       chrome_process_itr(chrome::kBrowserProcessExecutableName, &chrome_filter);
 
   const PROCESSENTRY32* chrome_entry;

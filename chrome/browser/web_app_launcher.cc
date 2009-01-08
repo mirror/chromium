@@ -10,13 +10,18 @@
 #include "chrome/browser/web_app.h"
 
 // static
-void WebAppLauncher::Launch(Profile* profile, const GURL& url) {
-  (new WebAppLauncher(profile, url))->Run();
+void WebAppLauncher::Launch(Profile* profile,
+                            const GURL& url,
+                            int show_command) {
+  (new WebAppLauncher(profile, url, show_command))->Run();
 }
 
-WebAppLauncher::WebAppLauncher(Profile* profile, const GURL& url)
+WebAppLauncher::WebAppLauncher(Profile* profile,
+                               const GURL& url,
+                               int show_command)
     : profile_(profile),
-      url_(url) {
+      url_(url),
+      show_command_(show_command) {
 }
 
 void WebAppLauncher::Run() {
@@ -40,7 +45,7 @@ void WebAppLauncher::OnGotApps(GearsShortcutList* apps) {
     app = new WebApp(profile_, url_, std::wstring());
   }
 
-  Browser::OpenWebApplication(profile_, app);
+  Browser::OpenWebApplication(profile_, app, show_command_);
 
   delete this;
 }

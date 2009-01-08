@@ -6,7 +6,7 @@
 
 SkPictureRecord::SkPictureRecord() :
         fHeap(HEAP_BLOCK_SIZE), fWriter(MIN_WRITER_SIZE) {
-    fBitmapIndex = fMatrixIndex = fPaintIndex = fRegionIndex = 1;
+    fBitmapIndex = fMatrixIndex = fPaintIndex = fPathIndex = fRegionIndex = 1;
 #ifdef SK_DEBUG_SIZE
     fPointBytes = fRectBytes = fTextBytes = 0;
     fPointWrites = fRectWrites = fTextWrites = 0;
@@ -14,8 +14,6 @@ SkPictureRecord::SkPictureRecord() :
 
     fRestoreOffsetStack.setReserve(32);
     fRestoreOffsetStack.push(0);
-            
-    fPathHeap = NULL;   // lazy allocate
 }
 
 SkPictureRecord::~SkPictureRecord() {
@@ -160,8 +158,17 @@ void SkPictureRecord::drawPoints(PointMode mode, size_t count, const SkPoint pts
     validate();
 }
 
+// return true if geometry drawn with this paint will just be filled
+// i.e. its bounding rect will not be larger than the original geometry
+static bool is_simple_fill(const SkPaint& paint) {
+    return  paint.getStyle() == SkPaint::kFill_Style &&
+    paint.getPathEffect() == NULL &&
+    paint.getMaskFilter() == NULL &&
+    paint.getRasterizer() == NULL;
+}
+
 void SkPictureRecord::drawRect(const SkRect& rect, const SkPaint& paint) {
-    addDraw(DRAW_RECT);
+    addDraw(is_simple_fill(paint) ? DRAW_RECT_SIMPLE : DRAW_RECT_GENERAL);
     addPaint(paint);
     addRect(rect);
     validate();
@@ -217,29 +224,18 @@ void SkPictureRecord::addFontMetricsTopBottom(const SkPaint& paint,
                                               SkScalar baselineY) {
     SkPaint::FontMetrics metrics;
     paint.getFontMetrics(&metrics);
-    SkRect bounds;
-    // construct a rect so we can see any adjustments from the paint.
-    // we use 0,1 for left,right, just so the rect isn't empty
-    bounds.set(0, metrics.fTop + baselineY,
-               SK_Scalar1, metrics.fBottom + baselineY);
-    (void)paint.computeFastBounds(bounds, &bounds);
-    // now record the top and bottom
-    addScalar(bounds.fTop);
-    addScalar(bounds.fBottom);
+    addScalar(metrics.fTop + baselineY);
+    addScalar(metrics.fBottom + baselineY);
 }
 
 void SkPictureRecord::drawText(const void* text, size_t byteLength, SkScalar x, 
                       SkScalar y, const SkPaint& paint) {
-    bool fast = paint.canComputeFastBounds();
-    
-    addDraw(fast ? DRAW_TEXT_TOP_BOTTOM : DRAW_TEXT);
+    addDraw(DRAW_TEXT);
     addPaint(paint);
     addText(text, byteLength);
     addScalar(x);
     addScalar(y);
-    if (fast) {
-        addFontMetricsTopBottom(paint, y);
-    }
+    addFontMetricsTopBottom(paint, y);
     validate();
 }
 
@@ -261,13 +257,7 @@ void SkPictureRecord::drawPosText(const void* text, size_t byteLength,
         }
     }
     
-    bool fast = canUseDrawH && paint.canComputeFastBounds();
-
-    if (fast) {
-        addDraw(DRAW_POS_TEXT_H_TOP_BOTTOM);
-    } else {
-        addDraw(canUseDrawH ? DRAW_POS_TEXT_H : DRAW_POS_TEXT);
-    }
+    addDraw(canUseDrawH ? DRAW_POS_TEXT_H : DRAW_POS_TEXT);
     addPaint(paint);
     addText(text, byteLength);
     addInt(points);
@@ -276,9 +266,7 @@ void SkPictureRecord::drawPosText(const void* text, size_t byteLength,
     size_t start = fWriter.size();
 #endif
     if (canUseDrawH) {
-        if (fast) {
-            addFontMetricsTopBottom(paint, pos[0].fY);
-        }
+        addFontMetricsTopBottom(paint, pos[0].fY);
         addScalar(pos[0].fY);
         SkScalar* xptr = (SkScalar*)fWriter.reserve(points * sizeof(SkScalar));
         for (size_t index = 0; index < points; index++) 
@@ -301,9 +289,7 @@ void SkPictureRecord::drawPosTextH(const void* text, size_t byteLength,
     if (0 == points)
         return;
     
-    bool fast = paint.canComputeFastBounds();
-
-    addDraw(fast ? DRAW_POS_TEXT_H_TOP_BOTTOM : DRAW_POS_TEXT_H);
+    addDraw(DRAW_POS_TEXT_H);
     addPaint(paint);
     addText(text, byteLength);
     addInt(points);
@@ -311,9 +297,7 @@ void SkPictureRecord::drawPosTextH(const void* text, size_t byteLength,
 #ifdef SK_DEBUG_SIZE
     size_t start = fWriter.size();
 #endif
-    if (fast) {
-        addFontMetricsTopBottom(paint, constY);
-    }
+    addFontMetricsTopBottom(paint, constY);
     addScalar(constY);
     fWriter.writeMul4(xpos, points * sizeof(SkScalar));
 #ifdef SK_DEBUG_SIZE
@@ -377,12 +361,10 @@ void SkPictureRecord::drawVertices(VertexMode vmode, int vertexCount,
 ///////////////////////////////////////////////////////////////////////////////
     
 void SkPictureRecord::reset() {
-    fPathHeap->safeUnref();
-    fPathHeap = NULL;
-
     fBitmaps.reset();
     fMatrices.reset();
     fPaints.reset();
+    fPaths.reset();
     fPictureRefs.unrefAll();
     fRegions.reset();
     fWriter.reset();
@@ -416,10 +398,7 @@ void SkPictureRecord::addPaintPtr(const SkPaint* paint) {
 }
 
 void SkPictureRecord::addPath(const SkPath& path) {
-    if (NULL == fPathHeap) {
-        fPathHeap = SkNEW(SkPathHeap);
-    }
-    addInt(fPathHeap->append(path));
+    addInt(find(fPaths, path));
 }
 
 void SkPictureRecord::addPicture(SkPicture& picture) {
@@ -537,6 +516,17 @@ int SkPictureRecord::find(SkTDArray<const SkFlatPaint* >& paints, const SkPaint*
     index = ~index;
     *paints.insert(index) = flat;
     return fPaintIndex++;
+}
+
+int SkPictureRecord::find(SkTDArray<const SkFlatPath* >& paths, const SkPath& path) {
+    SkFlatPath* flat = SkFlatPath::Flatten(&fHeap, path, fPathIndex);
+    int index = SkTSearch<SkFlatData>((const SkFlatData**) paths.begin(), 
+        paths.count(), (SkFlatData*) flat, sizeof(flat), &SkFlatData::Compare);
+    if (index >= 0)
+        return paths[index]->index();
+    index = ~index;
+    *paths.insert(index) = flat;
+    return fPathIndex++;
 }
 
 int SkPictureRecord::find(SkTDArray<const SkFlatRegion* >& regions, const SkRegion& region) {

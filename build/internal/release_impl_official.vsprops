@@ -7,7 +7,6 @@
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-                PreprocessorDefinitions="OFFICIAL_BUILD"
 		Optimization="3"
 		InlineFunctionExpansion="2"
 		EnableIntrinsicFunctions="true"

@@ -11,7 +11,6 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 using namespace std;
-using base::Time;
 using net::HttpResponseHeaders;
 using net::HttpVersion;
 
@@ -290,29 +289,24 @@ TEST(HttpResponseHeadersTest, GetNormalizedHeader) {
 
 TEST(HttpResponseHeadersTest, Persist) {
   const struct {
-    net::HttpResponseHeaders::PersistOptions options;
     const char* raw_headers;
     const char* expected_headers;
   } tests[] = {
-    { net::HttpResponseHeaders::PERSIST_ALL,
-      "HTTP/1.1 200 OK\n"
+    { "HTTP/1.1 200 OK\n"
       "Cache-control:private\n"
       "cache-Control:no-store\n",
 
       "HTTP/1.1 200 OK\n"
       "Cache-control: private, no-store\n"
     },
-    { net::HttpResponseHeaders::PERSIST_SANS_HOP_BY_HOP,
-      "HTTP/1.1 200 OK\n"
+    { "HTTP/1.1 200 OK\n"
       "connection: keep-alive\n"
       "server: blah\n",
 
       "HTTP/1.1 200 OK\n"
       "server: blah\n"
     },
-    { net::HttpResponseHeaders::PERSIST_SANS_NON_CACHEABLE |
-      net::HttpResponseHeaders::PERSIST_SANS_HOP_BY_HOP,
-      "HTTP/1.1 200 OK\n"
+    { "HTTP/1.1 200 OK\n"
       "fOo: 1\n"
       "Foo: 2\n"
       "Transfer-Encoding: chunked\n"
@@ -322,8 +316,7 @@ TEST(HttpResponseHeadersTest, Persist) {
       "HTTP/1.1 200 OK\n"
       "cache-control: private, no-cache=\"foo\"\n"
     },
-    { net::HttpResponseHeaders::PERSIST_SANS_NON_CACHEABLE,
-      "HTTP/1.1 200 OK\n"
+    { "HTTP/1.1 200 OK\n"
       "Foo: 2\n"
       "Cache-Control: private,no-cache=\"foo, bar\"\n"
       "bar",
@@ -332,8 +325,7 @@ TEST(HttpResponseHeadersTest, Persist) {
       "Cache-Control: private,no-cache=\"foo, bar\"\n"
     },
     // ignore bogus no-cache value
-    { net::HttpResponseHeaders::PERSIST_SANS_NON_CACHEABLE,
-      "HTTP/1.1 200 OK\n"
+    { "HTTP/1.1 200 OK\n"
       "Foo: 2\n"
       "Cache-Control: private,no-cache=foo\n",
 
@@ -342,8 +334,7 @@ TEST(HttpResponseHeadersTest, Persist) {
       "Cache-Control: private,no-cache=foo\n"
     },
     // ignore bogus no-cache value
-    { net::HttpResponseHeaders::PERSIST_SANS_NON_CACHEABLE,
-      "HTTP/1.1 200 OK\n"
+    { "HTTP/1.1 200 OK\n"
       "Foo: 2\n"
       "Cache-Control: private, no-cache=\n",
 
@@ -352,8 +343,7 @@ TEST(HttpResponseHeadersTest, Persist) {
       "Cache-Control: private, no-cache=\n"
     },
     // ignore empty no-cache value
-    { net::HttpResponseHeaders::PERSIST_SANS_NON_CACHEABLE,
-      "HTTP/1.1 200 OK\n"
+    { "HTTP/1.1 200 OK\n"
       "Foo: 2\n"
       "Cache-Control: private, no-cache=\"\"\n",
 
@@ -362,8 +352,7 @@ TEST(HttpResponseHeadersTest, Persist) {
       "Cache-Control: private, no-cache=\"\"\n"
     },
     // ignore wrong quotes no-cache value
-    { net::HttpResponseHeaders::PERSIST_SANS_NON_CACHEABLE,
-      "HTTP/1.1 200 OK\n"
+    { "HTTP/1.1 200 OK\n"
       "Foo: 2\n"
       "Cache-Control: private, no-cache=\'foo\'\n",
 
@@ -372,8 +361,7 @@ TEST(HttpResponseHeadersTest, Persist) {
       "Cache-Control: private, no-cache=\'foo\'\n"
     },
     // ignore unterminated quotes no-cache value
-    { net::HttpResponseHeaders::PERSIST_SANS_NON_CACHEABLE,
-      "HTTP/1.1 200 OK\n"
+    { "HTTP/1.1 200 OK\n"
       "Foo: 2\n"
       "Cache-Control: private, no-cache=\"foo\n",
 
@@ -382,8 +370,7 @@ TEST(HttpResponseHeadersTest, Persist) {
       "Cache-Control: private, no-cache=\"foo\n"
     },
     // accept sloppy LWS
-    { net::HttpResponseHeaders::PERSIST_SANS_NON_CACHEABLE,
-      "HTTP/1.1 200 OK\n"
+    { "HTTP/1.1 200 OK\n"
       "Foo: 2\n"
       "Cache-Control: private, no-cache=\" foo\t, bar\"\n",
 
@@ -391,8 +378,7 @@ TEST(HttpResponseHeadersTest, Persist) {
       "Cache-Control: private, no-cache=\" foo\t, bar\"\n"
     },
     // header name appears twice, separated by another header
-    { net::HttpResponseHeaders::PERSIST_ALL,
-      "HTTP/1.1 200 OK\n"
+    { "HTTP/1.1 200 OK\n"
       "Foo: 1\n"
       "Bar: 2\n"
       "Foo: 3\n",
@@ -402,8 +388,7 @@ TEST(HttpResponseHeadersTest, Persist) {
       "Bar: 2\n"
     },
     // header name appears twice, separated by another header (type 2)
-    { net::HttpResponseHeaders::PERSIST_ALL,
-      "HTTP/1.1 200 OK\n"
+    { "HTTP/1.1 200 OK\n"
       "Foo: 1, 3\n"
       "Bar: 2\n"
       "Foo: 4\n",
@@ -411,17 +396,6 @@ TEST(HttpResponseHeadersTest, Persist) {
       "HTTP/1.1 200 OK\n"
       "Foo: 1, 3, 4\n"
       "Bar: 2\n"
-    },
-    // Test filtering of cookie headers.
-    { net::HttpResponseHeaders::PERSIST_SANS_COOKIES,
-      "HTTP/1.1 200 OK\n"
-      "Set-Cookie: foo=bar; httponly\n"
-      "Set-Cookie: bar=foo\n"
-      "Bar: 1\n"
-      "Set-Cookie2: bar2=foo2\n",
-
-      "HTTP/1.1 200 OK\n"
-      "Bar: 1\n"
     },
   };
 
@@ -432,7 +406,7 @@ TEST(HttpResponseHeadersTest, Persist) {
         new HttpResponseHeaders(headers);
 
     Pickle pickle;
-    parsed1->Persist(&pickle, tests[i].options);
+    parsed1->Persist(&pickle, true);
 
     void* iter = NULL;
     scoped_refptr<HttpResponseHeaders> parsed2 =

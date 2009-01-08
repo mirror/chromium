@@ -31,15 +31,14 @@
 // that the test passes, even if load varies, and external events vary.
 
 #define SPIN_FOR_1_SECOND_OR_UNTIL_TRUE(expression) \
-    SPIN_FOR_TIMEDELTA_OR_UNTIL_TRUE(base::TimeDelta::FromSeconds(1), \
-                                     (expression))
+    SPIN_FOR_TIMEDELTA_OR_UNTIL_TRUE(TimeDelta::FromSeconds(1), (expression))
 
 #define SPIN_FOR_TIMEDELTA_OR_UNTIL_TRUE(delta, expression) do { \
-  base::Time start = base::Time::Now(); \
-  const base::TimeDelta kTimeout = delta; \
+  Time start = Time::Now(); \
+  const TimeDelta kTimeout = delta; \
     while(!(expression)) { \
-      if (kTimeout < base::Time::Now() - start) { \
-      EXPECT_LE((base::Time::Now() - start).InMilliseconds(), \
+      if (kTimeout < Time::Now() - start) { \
+      EXPECT_LE((Time::Now() - start).InMilliseconds(), \
                 kTimeout.InMilliseconds()) << "Timed out"; \
         break; \
       } \
@@ -49,3 +48,4 @@
   while(0)
 
 #endif  // BASE_SPIN_WAIT_H__
+

@@ -7,13 +7,9 @@ setlocal
 
 set InFile=%~1
 set SolutionDir=%~2
-set OutDir=%~3
-
-IF NOT EXIST %OutDir% (
-mkdir %OutDir%
-)
+set InputDir=%~3
 
 :: Put cygwin in the path
 call %SolutionDir%\..\third_party\cygwin\setup_env.bat
 
-%SolutionDir%\..\third_party\python_24\python.exe %SolutionDir%\..\tools\grit\grit.py -i %InFile% build -o %OutDir%
+%SolutionDir%\..\third_party\python_24\python.exe %SolutionDir%\..\tools\grit\grit.py -i %InFile% build -o %InputDir%

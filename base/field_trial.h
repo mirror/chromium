@@ -70,11 +70,11 @@ class FieldTrialList : NonThreadSafe {
   // of the application.  In some experiments it may be useful to discount
   // data that is gathered before the application has reach sufficient
   // stability (example: most DLL have loaded, etc.)
-  static base::Time application_start_time() {
+  static Time application_start_time() {
     if (global_)
       return global_->application_start_time_;
     // For testing purposes only, or when we don't yet have a start time.
-    return base::Time::Now();
+    return Time::Now();
   }
 
  private:
@@ -86,7 +86,7 @@ class FieldTrialList : NonThreadSafe {
   static FieldTrialList* global_;  // The singleton of this class.
   static int constructor_count_;   // Prevent having more than one.
 
-  base::Time application_start_time_;
+  Time application_start_time_;
   RegistrationList registered_;
 
   DISALLOW_COPY_AND_ASSIGN(FieldTrialList);

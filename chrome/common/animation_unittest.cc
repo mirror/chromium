@@ -9,9 +9,11 @@
 
 using namespace std;
 
-class AnimationTest: public testing::Test {
- private:
-  MessageLoopForUI message_loop_;
+namespace {
+  class AnimationTest: public testing::Test {
+   private:
+    MessageLoopForUI message_loop_;
+  };
 };
 
 ///////////////////////////////////////////////////////////////////////////////

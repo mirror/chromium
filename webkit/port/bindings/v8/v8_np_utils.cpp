@@ -33,9 +33,10 @@
 
 #include "DOMWindow.h"
 #include "Frame.h"
-#include "PlatformString.h"
 #undef LOG
 
+#include "base/scoped_ptr.h"
+#include "base/string_util.h"
 #include "npruntime_priv.h"
 #include "np_v8object.h"
 #include "v8_npobject.h"
@@ -68,9 +69,14 @@ void ConvertV8ObjectToNPVariant(v8::Local<v8::Value> object, NPObject *owner,
     VOID_TO_NPVARIANT(*result);
 
   } else if (object->IsString()) {
-    v8::String::Utf8Value utf8(object);
-    char* utf8_chars = strdup(*utf8);
+    v8::Handle<v8::String> str = object->ToString();
+    uint16_t* buf = new uint16_t[str->Length() + 1];
+    str->Write(buf);
+    std::string utf8;
+    UTF16ToUTF8(reinterpret_cast<char16*>(buf), str->Length(), &utf8);
+    char* utf8_chars = strdup(utf8.c_str());
     STRINGN_TO_NPVARIANT(utf8_chars, utf8.length(), *result);
+    delete[] buf;
   } else if (object->IsObject()) {
     WebCore::DOMWindow* window = WebCore::V8Proxy::retrieveWindow();
     NPObject* npobject = NPN_CreateScriptObject(
@@ -130,6 +136,7 @@ NPIdentifier GetStringIdentifier(v8::Handle<v8::String> str) {
     return NPN_GetStringIdentifier(stack_buf);
   }
 
-  v8::String::AsciiValue ascii(str);
-  return NPN_GetStringIdentifier(*ascii);
+  scoped_array<char> heap_buf(new char[buf_len]);
+  str->WriteAscii(heap_buf.get());
+  return NPN_GetStringIdentifier(heap_buf.get());
 }

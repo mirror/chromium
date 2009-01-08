@@ -12,7 +12,7 @@
 
 #include "npruntime_priv.h" // for NPN_InitializeVariantWithStringCopy
 
-#if USE(JSC)
+#if USE(JAVASCRIPTCORE_BINDINGS)
 #define _NPN_InitializeVariantWithStringCopy NPN_InitializeVariantWithStringCopy
 #endif
 

@@ -18,16 +18,15 @@
 #include "base/scoped_ptr.h"
 #include "googleurl/src/gurl.h"
 
-#include "base/compiler_specific.h"
-
-MSVC_PUSH_WARNING_LEVEL(0);
+#pragma warning(push, 0)
 #include "Frame.h"
 #include "Timer.h"
 #include "ResourceHandleClient.h"
 #include "ResourceResponse.h"
-MSVC_POP_WARNING();
+#pragma warning(pop)
 
 class GURL;
+class WebCore::ResourceHandle;
 
 class ResourceFetcher : public WebCore::ResourceHandleClient {
  public:

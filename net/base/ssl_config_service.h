@@ -34,7 +34,7 @@ struct SSLConfig {
 class SSLConfigService {
  public:
   SSLConfigService();
-  explicit SSLConfigService(base::TimeTicks now);  // Used for testing.
+  explicit SSLConfigService(TimeTicks now);  // Used for testing.
   ~SSLConfigService() { }
 
   // Get the current SSL configuration settings.  Can be called on any
@@ -50,18 +50,18 @@ class SSLConfigService {
   // we don't need the absolutely current configuration settings.  This
   // method is not thread-safe, so it must be called on the same thread.
   void GetSSLConfig(SSLConfig* config) {
-    GetSSLConfigAt(config, base::TimeTicks::Now());
+    GetSSLConfigAt(config, TimeTicks::Now());
   }
 
   // Used for testing.
-  void GetSSLConfigAt(SSLConfig* config, base::TimeTicks now);
+  void GetSSLConfigAt(SSLConfig* config, TimeTicks now);
 
  private:
-  void UpdateConfig(base::TimeTicks now);
+  void UpdateConfig(TimeTicks now);
 
   // We store the IE SSL config and the time that we fetched it.
   SSLConfig config_info_;
-  base::TimeTicks config_time_;
+  TimeTicks config_time_;
 
   DISALLOW_EVIL_CONSTRUCTORS(SSLConfigService);
 };

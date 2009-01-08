@@ -4,14 +4,10 @@
 
 #include "base/file_util.h"
 #include "base/path_service.h"
-#include "base/string_util.h"
 #include "base/time.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/test/ui/ui_test.h"
 #include "net/base/net_util.h"
-
-using base::TimeDelta;
-using base::TimeTicks;
 
 namespace {
 
@@ -36,8 +32,7 @@ class StartupTest : public UITest {
   void SetUp() {}
   void TearDown() {}
 
-  void RunStartupTest(const wchar_t* graph, const wchar_t* trace,
-      bool test_cold, bool important) {
+  void RunStartupTest(const char* label, bool test_cold) {
     const int kNumCycles = 20;
 
     // Make a backup of gears.dll so we can overwrite the original, which
@@ -78,10 +73,14 @@ class StartupTest : public UITest {
     ASSERT_TRUE(file_util::Delete(chrome_dll_copy, false));
     ASSERT_TRUE(file_util::Delete(gears_dll_copy, false));
 
-    std::wstring times;
-    for (int i = 0; i < kNumCycles; ++i)
-      StringAppendF(&times, L"%.2f,", timings[i].InMillisecondsF());
-    PrintResultList(graph, L"", trace, times, L"ms", important);
+    printf("\n__ts_pages = [%s]\n", pages_.c_str());
+    printf("\n%s = [", label);
+    for (int i = 0; i < kNumCycles; ++i) {
+      if (i > 0)
+        printf(",");
+      printf("%.2f", timings[i].InMillisecondsF());
+    }
+    printf("]\n");
   }
 
  protected:
@@ -118,27 +117,24 @@ class StartupFileTest : public StartupTest {
 }  // namespace
 
 TEST_F(StartupTest, Perf) {
-  RunStartupTest(L"warm", L"t", false /* not cold */, true /* important */);
+  RunStartupTest("__ts_timings", false);
 }
 
 TEST_F(StartupReferenceTest, Perf) {
-  RunStartupTest(L"warm", L"t_ref", false /* not cold */,
-                 true /* important */);
+  RunStartupTest("__ts_reference_timings", false);
 }
 
 // TODO(mpcomplete): Should we have reference timings for all these?
 
 TEST_F(StartupTest, PerfCold) {
-  RunStartupTest(L"cold", L"t", true /* cold */, false /* not important */);
+  RunStartupTest("__ts_cold_timings", true);
 }
 
 TEST_F(StartupFileTest, PerfGears) {
-  RunStartupTest(L"warm", L"gears", false /* not cold */,
-                 false /* not important */);
+  RunStartupTest("__ts_gears_timings", false);
 }
 
 TEST_F(StartupFileTest, PerfColdGears) {
-  RunStartupTest(L"cold", L"gears", true /* cold */,
-                 false /* not important */);
+  RunStartupTest("__ts_cold_gears_timings", true);
 }
 

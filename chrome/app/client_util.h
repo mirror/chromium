@@ -16,7 +16,7 @@
 
 namespace client_util {
 typedef int (*DLL_MAIN)(HINSTANCE instance, sandbox::SandboxInterfaceInfo*,
-                        TCHAR*);
+                        TCHAR*, int);
 
 extern const wchar_t kProductVersionKey[];
 

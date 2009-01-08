@@ -12,7 +12,6 @@
 #include <vsstyle.h>
 
 #include "base/gfx/native_theme.h"
-#include "base/scoped_clipboard_writer.h"
 #include "base/string_util.h"
 #include "base/win_util.h"
 #include "chrome/browser/browser_process.h"
@@ -21,10 +20,9 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/logging_chrome.h"
 #include "chrome/common/win_util.h"
+#include "chrome/views/container.h"
 #include "chrome/views/hwnd_view.h"
 #include "chrome/views/menu.h"
-#include "chrome/views/widget.h"
-#include "skia/ext/skia_utils_win.h"
 
 #include "generated_resources.h"
 
@@ -61,8 +59,6 @@ class TextField::Edit
   void RemoveBorder();
 
   void SetEnabled(bool enabled);
-
-  void SetBackgroundColor(COLORREF bg_color);
 
   // CWindowImpl
   BEGIN_MSG_MAP(Edit)
@@ -199,8 +195,6 @@ class TextField::Edit
   int ime_composition_start_;
   int ime_composition_length_;
 
-  COLORREF bg_color_;
-
   DISALLOW_EVIL_CONSTRUCTORS(Edit);
 };
 
@@ -247,8 +241,7 @@ TextField::Edit::Edit(TextField* parent, bool draw_border)
       draw_border_(draw_border),
       ime_discard_composition_(false),
       ime_composition_start_(0),
-      ime_composition_length_(0),
-      bg_color_(0) {
+      ime_composition_length_(0) {
   if (!did_load_library_)
     did_load_library_ = !!LoadLibrary(L"riched20.dll");
 
@@ -267,7 +260,7 @@ TextField::Edit::Edit(TextField* parent, bool draw_border)
   DWORD ex_style = l10n_util::GetExtendedStyles();
 
   RECT r = {0, 0, parent_->width(), parent_->height()};
-  Create(parent_->GetWidget()->GetHWND(), r, NULL, style, ex_style);
+  Create(parent_->GetContainer()->GetHWND(), r, NULL, style, ex_style);
 
   if (parent->GetStyle() & TextField::STYLE_LOWERCASE) {
     DCHECK((parent->GetStyle() & TextField::STYLE_PASSWORD) == 0);
@@ -290,8 +283,8 @@ TextField::Edit::Edit(TextField* parent, bool draw_border)
   context_menu_->AppendMenuItemWithLabel(IDS_PASTE,
                                          l10n_util::GetString(IDS_PASTE));
   context_menu_->AppendSeparator();
-  context_menu_->AppendMenuItemWithLabel(IDS_SELECT_ALL,
-                                         l10n_util::GetString(IDS_SELECT_ALL));
+  context_menu_->AppendMenuItemWithLabel(IDS_SELECTALL,
+                                         l10n_util::GetString(IDS_SELECTALL));
 }
 
 TextField::Edit::~Edit() {
@@ -353,20 +346,15 @@ void TextField::Edit::SetEnabled(bool enabled) {
               static_cast<WPARAM>(enabled), 0);
 }
 
-void TextField::Edit::SetBackgroundColor(COLORREF bg_color) {
-  CRichEditCtrl::SetBackgroundColor(bg_color);
-  bg_color_ = bg_color;
-}
-
 bool TextField::Edit::IsCommandEnabled(int id) const {
   switch (id) {
-    case IDS_UNDO:       return !parent_->IsReadOnly() && !!CanUndo();
-    case IDS_CUT:        return !parent_->IsReadOnly() && !!CanCut();
-    case IDS_COPY:       return !!CanCopy();
-    case IDS_PASTE:      return !parent_->IsReadOnly() && !!CanPaste();
-    case IDS_SELECT_ALL: return !!CanSelectAll();
-    default:             NOTREACHED();
-                         return false;
+    case IDS_UNDO:      return !parent_->IsReadOnly() && !!CanUndo();
+    case IDS_CUT:       return !parent_->IsReadOnly() && !!CanCut();
+    case IDS_COPY:      return !!CanCopy();
+    case IDS_PASTE:     return !parent_->IsReadOnly() && !!CanPaste();
+    case IDS_SELECTALL: return !!CanSelectAll();
+    default:            NOTREACHED();
+                        return false;
   }
 }
 
@@ -374,12 +362,12 @@ void TextField::Edit::ExecuteCommand(int id) {
   ScopedFreeze freeze(this, GetTextObjectModel());
   OnBeforePossibleChange();
   switch (id) {
-    case IDS_UNDO:       Undo();       break;
-    case IDS_CUT:        Cut();        break;
-    case IDS_COPY:       Copy();       break;
-    case IDS_PASTE:      Paste();      break;
-    case IDS_SELECT_ALL: SelectAll();  break;
-    default:             NOTREACHED(); break;
+    case IDS_UNDO:      Undo();       break;
+    case IDS_CUT:       Cut();        break;
+    case IDS_COPY:      Copy();       break;
+    case IDS_PASTE:     Paste();      break;
+    case IDS_SELECTALL: SelectAll();  break;
+    default:            NOTREACHED(); break;
   }
   OnAfterPossibleChange();
 }
@@ -401,8 +389,10 @@ void TextField::Edit::OnCopy() {
   const std::wstring text(GetSelectedText());
 
   if (!text.empty()) {
-    ScopedClipboardWriter scw(g_browser_process->clipboard_service());
-    scw.WriteText(text);
+    ClipboardService* clipboard = g_browser_process->clipboard_service();
+
+    clipboard->Clear();
+    clipboard->WriteText(text);
   }
 }
 
@@ -680,9 +670,7 @@ void TextField::Edit::OnNCPaint(HRGN region) {
                   window_rect.right - content_insets_.right(),
                   window_rect.bottom - content_insets_.bottom());
 
-  HBRUSH brush = CreateSolidBrush(bg_color_);
-  FillRect(hdc, &window_rect, brush);
-  DeleteObject(brush);
+  FillRect(hdc, &window_rect, (HBRUSH) (COLOR_WINDOW+1));
 
   int part;
   int state;
@@ -716,8 +704,7 @@ void TextField::Edit::OnNCPaint(HRGN region) {
       (!parent_->IsEnabled() || parent_->IsReadOnly()) ? DFCS_INACTIVE : 0;
 
   NativeTheme::instance()->PaintTextField(hdc, part, state, classic_state,
-                                          &window_rect, bg_color_, false,
-                                          true);
+                                          &window_rect, NULL, false, true);
 
   // NOTE: I tried checking the transparent property of the theme and invoking
   // drawParentBackground, but it didn't seem to make a difference.
@@ -892,9 +879,9 @@ TextField::~TextField() {
 }
 
 void TextField::ViewHierarchyChanged(bool is_add, View* parent, View* child) {
-  Widget* widget;
+  Container* vc;
 
-  if (is_add && (widget = GetWidget())) {
+  if (is_add && (vc = GetContainer())) {
     // This notification is called from the AddChildView call below. Ignore it.
     if (native_view_ && !edit_)
       return;
@@ -920,7 +907,8 @@ void TextField::ViewHierarchyChanged(bool is_add, View* parent, View* child) {
       native_view_->Attach(*edit_);
       if (!text_.empty())
         edit_->SetText(text_);
-      UpdateEditBackgroundColor();
+      if (!use_default_background_color_)
+        SetBackgroundColor(background_color_);
       Layout();
     }
   } else if (!is_add && edit_ && IsWindow(edit_->m_hWnd)) {
@@ -989,12 +977,12 @@ bool TextField::IsMultiLine() const {
 }
 
 void TextField::SetReadOnly(bool read_only) {
-  read_only_ = read_only;
-  if (edit_) {
+  if (edit_)
     edit_->SetReadOnly(read_only);
-    UpdateEditBackgroundColor();
-  }
+  else
+    read_only_ = read_only;
 }
+
 
 void TextField::Focus() {
   ::SetFocus(native_view_->GetHWND());
@@ -1017,12 +1005,17 @@ HWND TextField::GetNativeComponent() {
 void TextField::SetBackgroundColor(SkColor color) {
   background_color_ = color;
   use_default_background_color_ = false;
-  UpdateEditBackgroundColor();
+  if (edit_) {
+    edit_->SetBackgroundColor(RGB(SkColorGetR(color),
+                                  SkColorGetG(color),
+                                  SkColorGetB(color)));
+  }
 }
 
 void TextField::SetDefaultBackgroundColor() {
   use_default_background_color_ = true;
-  UpdateEditBackgroundColor();
+  if (edit_)
+    edit_->SetBackgroundColor();
 }
 
 void TextField::SetFont(const ChromeFont& font) {
@@ -1061,6 +1054,7 @@ void TextField::RemoveBorder() {
 
 void TextField::SetEnabled(bool enabled) {
   View::SetEnabled(enabled);
+  SetReadOnly(enabled);
   edit_->SetEnabled(enabled);
 }
 
@@ -1081,16 +1075,5 @@ bool TextField::ShouldLookupAccelerators(const KeyEvent& e) {
   return !win_util::IsNumPadDigit(e.GetCharacter(), e.IsExtendedKey());
 }
 
-void TextField::UpdateEditBackgroundColor() {
-  if (!edit_)
-    return;
-
-  COLORREF bg_color;
-  if (!use_default_background_color_)
-    bg_color = skia::SkColorToCOLORREF(background_color_);
-  else
-    bg_color = GetSysColor(read_only_ ? COLOR_3DFACE : COLOR_WINDOW);
-  edit_->SetBackgroundColor(bg_color);
-}
-
 }  // namespace views
+

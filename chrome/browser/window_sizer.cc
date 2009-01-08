@@ -7,6 +7,7 @@
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/browser_type.h"
 #include "chrome/browser/browser_window.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
@@ -139,7 +140,8 @@ class DefaultStateProvider : public WindowSizer::StateProvider {
     BrowserList::const_reverse_iterator end = BrowserList::end_last_active();
     for (; it != end; ++it) {
       Browser* last_active = *it;
-      if (last_active && last_active->type() == Browser::TYPE_NORMAL) {
+      if (last_active &&
+          last_active->GetType() == BrowserType::TABBED_BROWSER) {
         BrowserWindow* frame = last_active->window();
         DCHECK(frame);
         *bounds = frame->GetNormalBounds();
@@ -203,6 +205,7 @@ void WindowSizer::DetermineWindowBounds(const gfx::Rect& specified_bounds,
   *bounds = specified_bounds;
   if (bounds->IsEmpty()) {
     // See if there's saved placement information.
+    *maximized = false;  // Default off; GetSavedWindowBounds() may set this.
     if (!GetLastWindowBounds(bounds)) {
       if (!GetSavedWindowBounds(bounds, maximized)) {
         // No saved placement, figure out some sensible default size based on

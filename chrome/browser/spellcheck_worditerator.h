@@ -9,7 +9,6 @@
 #include <string>
 
 #include "base/basictypes.h"
-#include "base/string16.h"
 
 #include "unicode/uscript.h"
 
@@ -94,7 +93,7 @@ class SpellcheckWordIterator {
   //   * attribute [in] (const SpellcheckCharAttribute*)
   //     Represents a set of character attributes used for filtering out
   //     non-word characters.
-  //   * word [in] (const char16*)
+  //   * word [in] (const wchar_t*)
   //     Represents a string from which this object extracts words.
   //     (This string does not have to be NUL-terminated.)
   //   * length [in] (size_t)
@@ -109,20 +108,20 @@ class SpellcheckWordIterator {
   //   * false
   //     An error occured while initializing this object.
   void Initialize(const SpellcheckCharAttribute* attribute,
-                  const char16* word,
+                  const wchar_t* word,
                   size_t length,
                   bool allow_contraction);
 
   // Retrieves a word (or a contraction).
   // Parameters
-  //   * word_string [out] (string16*)
+  //   * word_string [out] (std::wstring*)
   //     Represents a word (or a contraction) to be checked its spelling.
   //     This |word_string| has been already normalized to its canonical form
   //     (i.e. decomposed ligatures, replaced full-width latin characters to
   //     its ASCII alternatives, etc.) so that a SpellChecker object can check
   //     its spelling without any additional operations.
   //     On the other hand, a substring of the input string
-  //       string16 str(&word[word_start], word_length);
+  //       std::wstring str(&word[word_start], word_length);
   //     represents the non-normalized version of this extracted word.
   //   * word_start [out] (int*)
   //     Represents the offset of this word from the beginning of the input
@@ -137,7 +136,7 @@ class SpellcheckWordIterator {
   //     Found a word (or a contraction) to be checked its spelling.
   //   * false
   //     Not found any more words or contractions to be checked their spellings.
-  bool GetNextWord(string16* word_string,
+  bool GetNextWord(std::wstring* word_string,
                    int* word_start,
                    int* word_length);
 
@@ -158,11 +157,11 @@ class SpellcheckWordIterator {
   // canonical form to the |output_string|.
   bool Normalize(int input_start,
                  int input_length,
-                 string16* output_string) const;
+                 std::wstring* output_string) const;
 
  private:
   // The pointer to the input string from which we are extracting words.
-  const char16* word_;
+  const wchar_t* word_;
 
   // The length of the original string.
   int length_;

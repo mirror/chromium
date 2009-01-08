@@ -13,7 +13,6 @@
 
 #include <stdio.h>
 
-#include "base/file_util.h"
 #include "base/icu_util.h"
 #include "base/process_util.h"
 #include "base/string_util.h"
@@ -71,7 +70,7 @@ int PrintHelp() {
 }  // namespace
 
 int main(int argc, char* argv[]) {
-  base::EnableTerminationOnHeapCorruption();
+  process_util::EnableTerminationOnHeapCorruption();
   if (argc != 2)
     return PrintHelp();
 
@@ -114,13 +113,14 @@ int main(int argc, char* argv[]) {
 
   std::string out_name = file_base + ".bdic";
   printf("Writing %s ...\n", out_name.c_str());
-  FILE* out_file = file_util::OpenFile(out_name, "wb");
+  FILE* out_file;
+  fopen_s(&out_file, out_name.c_str(), "wb");
   if (!out_file) {
     printf("ERROR writing file\n");
     return 1;
   }
   fwrite(&serialized[0], 1, serialized.size(), out_file);
-  file_util::CloseFile(out_file);
+  fclose(out_file);
 
   return 0;
 }

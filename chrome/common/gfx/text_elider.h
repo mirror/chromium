@@ -7,6 +7,7 @@
 
 #include <unicode/coll.h>
 #include <unicode/uchar.h>
+#include <windows.h>
 
 #include "base/basictypes.h"
 #include "chrome/common/gfx/chrome_font.h"

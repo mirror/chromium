@@ -7,7 +7,6 @@
 #include <algorithm>
 #include <limits>
 
-#include "base/compiler_specific.h"
 #include "base/file_util.h"
 #include "chrome/browser/bookmarks/bookmark_service.h"
 #include "chrome/browser/history/archived_database.h"
@@ -16,9 +15,6 @@
 #include "chrome/browser/history/text_database_manager.h"
 #include "chrome/browser/history/thumbnail_database.h"
 #include "chrome/common/notification_types.h"
-
-using base::Time;
-using base::TimeDelta;
 
 namespace history {
 
@@ -75,7 +71,8 @@ ExpireHistoryBackend::ExpireHistoryBackend(
       archived_db_(NULL),
       thumb_db_(NULL),
       text_db_(NULL),
-      ALLOW_THIS_IN_INITIALIZER_LIST(factory_(this)),
+#pragma warning(suppress: 4355)  // Okay to pass "this" here.
+      factory_(this),
       bookmark_service_(bookmark_service) {
 }
 
@@ -297,21 +294,16 @@ URLID ExpireHistoryBackend::ArchiveOneURL(const URLRow& url_row) {
   return archived_db_->AddURL(url_row);
 }
 
-namespace {
-
-struct ChangedURL {
-  ChangedURL() : visit_count(0), typed_count(0) {}
-  int visit_count;
-  int typed_count;
-};
-
-}  // namespace
-
 void ExpireHistoryBackend::ExpireURLsForVisits(
     const VisitVector& visits,
     DeleteDependencies* dependencies) {
   // First find all unique URLs and the number of visits we're deleting for
   // each one.
+  struct ChangedURL {
+    ChangedURL() : visit_count(0), typed_count(0) {}
+    int visit_count;
+    int typed_count;
+  };
   std::map<URLID, ChangedURL> changed_urls;
   for (size_t i = 0; i < visits.size(); i++) {
     ChangedURL& cur = changed_urls[visits[i].url_id];

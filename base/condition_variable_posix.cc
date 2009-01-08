@@ -11,9 +11,6 @@
 #include "base/lock_impl.h"
 #include "base/logging.h"
 
-using base::Time;
-using base::TimeDelta;
-
 ConditionVariable::ConditionVariable(Lock* user_lock)
     : user_mutex_(user_lock->lock_impl()->os_lock()) {
   int rv = pthread_cond_init(&condition_, NULL);

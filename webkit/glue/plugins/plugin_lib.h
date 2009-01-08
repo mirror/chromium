@@ -5,12 +5,9 @@
 #ifndef WEBKIT_GLUE_PLUGIN_PLUGIN_LIB_H__
 #define WEBKIT_GLUE_PLUGIN_PLUGIN_LIB_H__
 
-#include "build/build_config.h"
-
 #include <string>
 
 #include "base/basictypes.h"
-#include "base/file_path.h"
 #include "base/hash_tables.h"
 #include "base/ref_counted.h"
 #include "base/scoped_ptr.h"
@@ -50,7 +47,7 @@ struct InternalPluginInfo {
 class PluginLib : public base::RefCounted<PluginLib> {
  public:
   virtual ~PluginLib();
-  static PluginLib* CreatePluginLib(const FilePath& filename);
+  static PluginLib* CreatePluginLib(const std::wstring& filename);
 
   // Unloads all the loaded plugin dlls and cleans up the plugin map.
   static void UnloadAllPlugins();
@@ -86,12 +83,10 @@ class PluginLib : public base::RefCounted<PluginLib> {
   // NPAPI method to shutdown a Plugin.
   void NP_Shutdown(void);
 
-#if defined(OS_WIN)
   // Helper function to load a plugin.
   // Returns the module handle on success.
-  static HMODULE LoadPluginHelper(const FilePath plugin_file);
-#endif
-
+  static HMODULE LoadPluginHelper(const std::wstring plugin_file);
+ 
   int instance_count() const { return instance_count_; }
 
  private:
@@ -113,23 +108,21 @@ class PluginLib : public base::RefCounted<PluginLib> {
 
   // Returns a WebPluginInfo structure given a plugin's path.  Returns NULL if
   // the dll couldn't be found, or if it's not a plugin.
-  static WebPluginInfo* ReadWebPluginInfo(const FilePath &filename);
+  static WebPluginInfo* ReadWebPluginInfo(const std::wstring &filename);
   // Creates WebPluginInfo structure based on read in or built in
   // PluginVersionInfo.
   static WebPluginInfo* CreateWebPluginInfo(const PluginVersionInfo& info);
 
   bool             internal_;         // Whether this an internal plugin.
   scoped_ptr<WebPluginInfo> web_plugin_info_;  // supported mime types, description
-#if defined(OS_WIN)
   HMODULE          module_;           // the opened DLL handle
-#endif
   NPPluginFuncs    plugin_funcs_;     // the struct of plugin side functions
   bool             initialized_;      // is the plugin initialized
   NPSavedData     *saved_data_;       // persisted plugin info for NPAPI
   int              instance_count_;   // count of plugins in use
 
-  // A map of all the instantiated plugins.
-  typedef base::hash_map<FilePath, scoped_refptr<PluginLib> > PluginMap;
+  // A map of all the insantiated plugins.
+  typedef base::hash_map<std::wstring, scoped_refptr<PluginLib> > PluginMap;
   static PluginMap* loaded_libs_;
 
   // C-style function pointers

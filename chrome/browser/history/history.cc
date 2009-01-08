@@ -47,7 +47,6 @@
 #include "chromium_strings.h"
 #include "generated_resources.h"
 
-using base::Time;
 using history::HistoryBackend;
 
 // Sends messages from the backend to us on the main thread. This must be a
@@ -569,7 +568,7 @@ bool HistoryService::CanAddURL(const GURL& url) const {
     return false;
 
   if (url.SchemeIs("javascript") ||
-      url.SchemeIs("chrome") ||
+      url.SchemeIs("chrome-resource") ||
       url.SchemeIs("view-source"))
     return false;
 
@@ -597,11 +596,7 @@ void HistoryService::SetInMemoryBackend(
 void HistoryService::NotifyTooNew() {
   // Find the last browser window to display our message box from.
   Browser* cur_browser = BrowserList::GetLastActive();
-  // TODO(brettw): Do this some other way or beng will kick you. e.g. move to
-  //               BrowserView.
-  HWND parent_hwnd =
-      reinterpret_cast<HWND>(cur_browser->window()->GetNativeHandle());
-  HWND cur_hwnd = cur_browser ? parent_hwnd : NULL;
+  HWND cur_hwnd = cur_browser ? cur_browser->GetTopLevelHWND() : NULL;
 
   std::wstring title = l10n_util::GetString(IDS_PRODUCT_NAME);
   std::wstring message = l10n_util::GetString(IDS_PROFILE_TOO_NEW_ERROR);

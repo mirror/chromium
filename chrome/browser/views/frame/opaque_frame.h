@@ -8,7 +8,7 @@
 #include "chrome/browser/views/frame/browser_frame.h"
 #include "chrome/views/custom_frame_window.h"
 
-class BrowserView;
+class BrowserView2;
 namespace views {
 class Window;
 }
@@ -26,10 +26,8 @@ class TabStrip;
 class OpaqueFrame : public BrowserFrame,
                     public views::CustomFrameWindow {
  public:
-  explicit OpaqueFrame(BrowserView* browser_view);
+  explicit OpaqueFrame(BrowserView2* browser_view);
   virtual ~OpaqueFrame();
-
-  void Init();
 
  protected:
   // Overridden from BrowserFrame:
@@ -42,12 +40,12 @@ class OpaqueFrame : public BrowserFrame,
 
   // Overridden from views::CustomFrameWindow:
   virtual void UpdateWindowIcon();
-  virtual int GetShowState() const;
 
-  // Overridden from views::WidgetWin:
+  // Overridden from views::ContainerWin:
   virtual bool AcceleratorPressed(views::Accelerator* accelerator);
   virtual bool GetAccelerator(int cmd_id, views::Accelerator* accelerator);
   virtual void OnEndSession(BOOL ending, UINT logoff);
+  virtual void OnExitMenuLoop(bool is_track_popup_menu);
   virtual void OnInitMenuPopup(HMENU menu, UINT position, BOOL is_system_menu);
   virtual LRESULT OnMouseActivate(HWND window,
                                   UINT hittest_code,
@@ -61,8 +59,8 @@ class OpaqueFrame : public BrowserFrame,
   // Return a pointer to the concrete type of our non-client view.
   OpaqueNonClientView* GetOpaqueNonClientView() const;
 
-  // The BrowserView is our ClientView. This is a pointer to it.
-  BrowserView* browser_view_;
+  // The BrowserView2 is our ClientView. This is a pointer to it.
+  BrowserView2* browser_view_;
 
   DISALLOW_EVIL_CONSTRUCTORS(OpaqueFrame);
 };

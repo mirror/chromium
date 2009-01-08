@@ -267,6 +267,7 @@ WebKeyboardEvent::WebKeyboardEvent(HWND hwnd, UINT message, WPARAM wparam,
   actual_message.lParam = lparam;
 
   key_code = static_cast<int>(wparam);
+  key_data = static_cast<int>(lparam);
 
   switch (message) {
     case WM_SYSKEYDOWN:
@@ -280,6 +281,7 @@ WebKeyboardEvent::WebKeyboardEvent(HWND hwnd, UINT message, WPARAM wparam,
       type = KEY_UP;
       break;
     case WM_IME_CHAR:
+      key_data = static_cast<int>(wparam);
       type = CHAR;
       break;
     case WM_SYSCHAR:

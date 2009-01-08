@@ -23,7 +23,6 @@ class HttpAuthHandlerDigest : public HttpAuthHandler {
  protected:
   virtual bool Init(std::string::const_iterator challenge_begin,
                     std::string::const_iterator challenge_end) {
-    nonce_count_ = 0;
     return ParseChallenge(challenge_begin, challenge_end);
   }
 
@@ -99,8 +98,6 @@ class HttpAuthHandlerDigest : public HttpAuthHandler {
   bool stale_;
   DigestAlgorithm algorithm_;
   int qop_; // Bitfield of QualityOfProtection
-
-  int nonce_count_;
 };
 
 }  // namespace net

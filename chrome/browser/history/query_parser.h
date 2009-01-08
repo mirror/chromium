@@ -21,7 +21,7 @@ struct QueryWord {
   std::wstring word;
 
   // The starting position of the word in the original text.
-  size_t position;
+  int position;
 };
 
 // QueryNode is used by QueryNodeParser to represent the elements that

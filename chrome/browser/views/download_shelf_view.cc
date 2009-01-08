@@ -100,7 +100,7 @@ void DownloadShelfView::Init() {
                           rb.GetBitmapNamed(IDR_CLOSE_BAR_P));
   close_button_->SetListener(this, 0);
   AddChildView(close_button_);
-  set_background(views::Background::CreateSolidBackground(kBackgroundColor));
+  SetBackground(views::Background::CreateSolidBackground(kBackgroundColor));
 
   new_item_animation_.reset(new SlideAnimation(this));
   new_item_animation_->SetSlideDuration(kNewItemAnimationDurationMs);
@@ -125,6 +125,13 @@ void DownloadShelfView::ChangeTabContents(TabContents* old_contents,
                                           TabContents* new_contents) {
   DCHECK(old_contents == tab_contents_);
   tab_contents_ = new_contents;
+}
+
+void DownloadShelfView::ViewHierarchyChanged(bool is_add,
+                                             View* parent,
+                                             View* child) {
+  if (is_add && child == this)
+    Layout();
 }
 
 void DownloadShelfView::AddDownload(DownloadItem* download) {
@@ -203,8 +210,8 @@ void DownloadShelfView::Layout() {
   // Otherwise, we can have problems when for example the user switches to
   // another tab (that doesn't have a download shelf) _before_ the download
   // has started and we'll crash when calling SetVisible() below because
-  // the NativeControlContainer ctor tries to use the Container.
-  if (!GetWidget())
+  // the NativeControlContainer ctor tries to use the ViewContainer.
+  if (!GetContainer())
     return;
 
   gfx::Size image_size = arrow_image_->GetPreferredSize();
@@ -263,7 +270,7 @@ void DownloadShelfView::LinkActivated(views::Link* source, int event_flags) {
   NavigationController* controller = tab_contents_->controller();
   Browser* browser = Browser::GetBrowserForController(controller, &index);
   DCHECK(browser);
-  browser->ShowNativeUITab(DownloadTabUI::GetURL());
+  browser->ShowNativeUI(DownloadTabUI::GetURL());
 }
 
 void DownloadShelfView::ButtonPressed(views::BaseButton* button) {

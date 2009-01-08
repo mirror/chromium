@@ -4,6 +4,7 @@
 
 #include "sandbox/wow_helper/service64_resolver.h"
 
+#include "base/logging.h"
 #include "base/scoped_ptr.h"
 #include "sandbox/wow_helper/target_code.h"
 
@@ -240,6 +241,7 @@ NTSTATUS Service64ResolverThunk::ResolveInterceptor(
 NTSTATUS Service64ResolverThunk::ResolveTarget(const void* module,
                                              const char* function_name,
                                              void** address) {
+  DCHECK(address);
   if (NULL == module)
     return STATUS_UNSUCCESSFUL;
 

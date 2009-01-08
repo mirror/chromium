@@ -1,6 +1,6 @@
 /* libs/graphics/sgl/SkBlitter_ARGB32.cpp
  **
- ** Copyright 2006, The Android Open Source Project
+ ** Copyright 2006, Google Inc.
  **
  ** Licensed under the Apache License, Version 2.0 (the "License"); 
  ** you may not use this file except in compliance with the License. 
@@ -379,14 +379,11 @@ class SkARGB4444_Shader_Blitter : public SkShaderBlitter {
     SkBlitRow::Proc fOpaqueProc;
     SkBlitRow::Proc fAlphaProc;
     SkPMColor*      fBuffer;
-    uint8_t*        fAAExpand;
 public:
 SkARGB4444_Shader_Blitter(const SkBitmap& device, const SkPaint& paint)
     : INHERITED(device, paint)
 {
-    const int width = device.width();
-    fBuffer = (SkPMColor*)sk_malloc_throw(width * sizeof(SkPMColor) + width);
-    fAAExpand = (uint8_t*)(fBuffer + width);
+    fBuffer = (SkPMColor*)sk_malloc_throw(device.width() * (sizeof(SkPMColor)));
     
     (fXfermode = paint.getXfermode())->safeRef();
     
@@ -426,8 +423,7 @@ virtual void blitH(int x, int y, int width)
 
 virtual void blitAntiH(int x, int y, const SkAlpha antialias[], const int16_t runs[])
 {
-    SkPMColor* SK_RESTRICT span = fBuffer;
-    uint8_t* SK_RESTRICT aaExpand = fAAExpand;
+    SkPMColor*   span = fBuffer;
     SkPMColor16* device = fDevice.getAddr16(x, y);
     SkShader*    shader = fShader;
     SkXfermode*  xfer = fXfermode;
@@ -443,12 +439,10 @@ virtual void blitAntiH(int x, int y, const SkAlpha antialias[], const int16_t ru
                 if (255 == aa) {
                     xfer->xfer4444(device, span, count, NULL);
                 } else {
-                    const uint8_t* aaBuffer = antialias;
-                    if (count > 1) {
-                        memset(aaExpand, aa, count);
-                        aaBuffer = aaExpand;
+                    // count is almost always 1
+                    for (int i = count - 1; i >= 0; --i) {
+                        xfer->xfer4444(&device[i], &span[i], count, antialias);
                     }
-                    xfer->xfer4444(device, span, count, aaBuffer);
                 }
             }
             device += count;

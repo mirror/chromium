@@ -9,26 +9,17 @@ namespace base {
 void SystemMonitor::ProcessWmPowerBroadcastMessage(int event_id) {
   PowerEvent power_event;
   switch (event_id) {
-    case PBT_APMPOWERSTATUSCHANGE:  // The power status changed.
-      power_event = POWER_STATE_EVENT;
+    case PBT_APMPOWERSTATUSCHANGE:
+      power_event = PowerStateEvent;
       break;
-    case PBT_APMRESUMEAUTOMATIC:  // Non-user initiated resume from suspend.
-    case PBT_APMRESUMESUSPEND:    // User initiated resume from suspend.
-      power_event = RESUME_EVENT;
+    case PBT_APMRESUMEAUTOMATIC:
+      power_event = ResumeEvent;
       break;
-    case PBT_APMSUSPEND:  // System has been suspended.
-      power_event = SUSPEND_EVENT;
+    case PBT_APMSUSPEND:
+      power_event = SuspendEvent;
       break;
     default:
-      return;
-
-    // Other Power Events:
-    // PBT_APMBATTERYLOW - removed in Vista.
-    // PBT_APMOEMEVENT - removed in Vista.
-    // PBT_APMQUERYSUSPEND - removed in Vista.
-    // PBT_APMQUERYSUSPENDFAILED - removed in Vista.
-    // PBT_APMRESUMECRITICAL - removed in Vista.
-    // PBT_POWERSETTINGCHANGE - user changed the power settings.
+      DCHECK(false);
   }
   ProcessPowerMessage(power_event);
 }

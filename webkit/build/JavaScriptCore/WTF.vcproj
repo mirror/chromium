@@ -126,10 +126,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\ASCIICType.h"
-			>
-		</File>
-		<File
 			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\Assertions.cpp"
 			>
 		</File>
@@ -138,31 +134,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\unicode\Collator.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\unicode\icu\CollatorICU.cpp"
-			>
-		</File>
-		<File
 			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\Deque.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\dtoa.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\dtoa.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\FastMalloc.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\FastMalloc.h"
+			RelativePath="..\..\pending\wtf\FastMalloc.h"
 			>
 		</File>
 		<File
@@ -206,14 +182,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\MainThread.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\MainThread.h"
-			>
-		</File>
-		<File
 			RelativePath="..\..\pending\wtf\MathExtras.h"
 			>
 		</File>
@@ -234,7 +202,7 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\Platform.h"
+			RelativePath="..\..\pending\wtf\Platform.h"
 			>
 		</File>
 		<File
@@ -262,19 +230,7 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\RandomNumber.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\RandomNumber.h"
-			>
-		</File>
-		<File
 			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\RefCounted.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\RefCountedLeakCounter.cpp"
 			>
 		</File>
 		<File
@@ -283,10 +239,6 @@
 		</File>
 		<File
 			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\RefPtrHashMap.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\StdLibExtras.h"
 			>
 		</File>
 		<File
@@ -311,18 +263,6 @@
 		</File>
 		<File
 			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\TCSystemAlloc.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\Threading.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\Threading.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\ThreadingWin.cpp"
 			>
 		</File>
 		<File

@@ -65,8 +65,7 @@ class FailureWithType(TestFailure):
     Args:
       filename: the test filename, used to construct the result file names
       out_names: list of filename suffixes for the files. If three or more
-          suffixes are in the list, they should be [actual, expected, diff,
-          wdiff].
+          suffixes are in the list, they should be [actual, expected, diff].
           Two suffixes should be [actual, expected], and a single item is the
           [actual] filename suffix.  If out_names is empty, returns the empty
           string.
@@ -80,8 +79,6 @@ class FailureWithType(TestFailure):
       links.append("<a href='%s'>actual</a>" % uris[0])
     if len(uris) > 2:
       links.append("<a href='%s'>diff</a>" % uris[2])
-    if len(uris) > 3:
-      links.append("<a href='%s'>wdiff</a>" % uris[3])
     return ' '.join(links)
 
   def ResultHtmlOutput(self, filename):
@@ -133,13 +130,6 @@ class FailureTextMismatch(FailureWithType):
   """Text diff output failed."""
   # Filename suffixes used by ResultHtmlOutput.
   OUT_FILENAMES = ["-actual-win.txt", "-expected.txt", "-diff-win.txt"]
-  OUT_FILENAMES_WDIFF = ["-actual-win.txt", "-expected.txt", "-diff-win.txt",
-                         "-wdiff-win.html"]
-
-  def __init__(self, test_type, has_wdiff):
-    FailureWithType.__init__(self, test_type)
-    if has_wdiff:
-      self.OUT_FILENAMES = self.OUT_FILENAMES_WDIFF
 
   @staticmethod
   def Message():
@@ -156,9 +146,6 @@ class FailureSimplifiedTextMismatch(FailureTextMismatch):
 
   OUT_FILENAMES = ["-simp-actual-win.txt", "-simp-expected.txt",
                    "-simp-diff-win.txt"]
-  def __init__(self, test_type):
-    # Don't run wdiff on simplified text diffs.
-    FailureTextMismatch.__init__(self, test_type, False)
 
   @staticmethod
   def Message():
@@ -202,10 +189,3 @@ class FailureImageHashMismatch(FailureWithType):
     # to the PNGs rather than the checksums.
     return "Image mismatch"
 
-class FailureFuzzyFailure(FailureWithType):
-  """Image hashes didn't match."""
-  OUT_FILENAMES = ["-actual-win.png", "-expected.png"]
-
-  @staticmethod
-  def Message():
-    return "Fuzzy image match also failed"

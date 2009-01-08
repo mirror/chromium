@@ -7,11 +7,9 @@
 
 #include "build/build_config.h"
 
-#include "base/compiler_specific.h"
-
-MSVC_PUSH_WARNING_LEVEL(0);
+#pragma warning(push, 0)
 #include "ContextMenuClient.h"
-MSVC_POP_WARNING();
+#pragma warning(pop)
 
 class WebViewImpl;
 

@@ -78,7 +78,6 @@ class BookmarkBarViewEventTestBase : public ViewEventTestBase {
     profile_->GetPrefs()->SetBoolean(prefs::kShowBookmarkBar, true);
 
     model_ = profile_->GetBookmarkModel();
-    model_->ClearStore();
 
     bb_view_ = new BookmarkBarView(profile_.get(), NULL);
     bb_view_->SetPageNavigator(&navigator_);
@@ -939,36 +938,22 @@ class BookmarkBarViewTest12 : public BookmarkBarViewEventTestBase {
     ASSERT_TRUE(child_menu != NULL);
     ui_controls::MoveMouseToCenterAndPress(child_menu, ui_controls::LEFT,
         ui_controls::DOWN | ui_controls::UP, NULL);
-    
-    // Delay until we send tab, otherwise the message box doesn't appear
-    // correctly.
-    MessageLoop::current()->PostDelayedTask(FROM_HERE,
-        CreateEventTask(this, &BookmarkBarViewTest12::Step4), 1000);
-  }
 
-  void Step4() {
     // Press tab to give focus to the cancel button.
     ui_controls::SendKeyPressNotifyWhenDone(VK_TAB, false, false, false,
         NULL);
+    // And press enter so that the cancel button is selected.
+    ui_controls::SendKeyPressNotifyWhenDone(VK_RETURN, false, false, false,
+        CreateEventTask(this, &BookmarkBarViewTest12::Step4));
+  }
 
-    // For some reason return isn't processed correctly unless we delay.
-    MessageLoop::current()->PostDelayedTask(FROM_HERE,
-        CreateEventTask(this, &BookmarkBarViewTest12::Step5), 1000);
+  void Step4() {
+    // Do a delayed task to give the dialog time to exit.
+    MessageLoop::current()->PostTask(
+        FROM_HERE, CreateEventTask(this, &BookmarkBarViewTest12::Step5));
   }
 
   void Step5() {
-    // And press enter so that the cancel button is selected.
-    ui_controls::SendKeyPressNotifyWhenDone(VK_RETURN, false, false, false,
-        CreateEventTask(this, &BookmarkBarViewTest12::Step6));
-  }
-
-  void Step6() {
-    // Do a delayed task to give the dialog time to exit.
-    MessageLoop::current()->PostTask(
-        FROM_HERE, CreateEventTask(this, &BookmarkBarViewTest12::Step7));
-  }
-
-  void Step7() {
     Done();
   }
 };

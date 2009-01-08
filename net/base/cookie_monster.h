@@ -49,17 +49,12 @@ class CookieMonster {
   typedef std::pair<std::string, CanonicalCookie> CookieListPair;
   typedef std::vector<CookieListPair> CookieList;
 
-  class CookieOptions {
-   public:
-    // Default is to exclude httponly, which means:
-    // - reading operations will not return httponly cookies.
-    // - writing operations will not write httponly cookies. 
-    CookieOptions() : exclude_httponly_(true) {}
-    void set_exclude_httponly() { exclude_httponly_ = true; }
-    void set_include_httponly() { exclude_httponly_ = false; }
-    bool exclude_httponly() const { return exclude_httponly_; }
-   private:
-    bool exclude_httponly_;
+  enum CookieOptions {
+    // Normal cookie behavior, decides which cookies to return based on
+    // the URL and whether it's https, etc.  Never returns HttpOnly cookies
+    NORMAL = 0,
+    // Include HttpOnly cookies
+    INCLUDE_HTTPONLY = 1,
   };
 
   CookieMonster();
@@ -71,48 +66,36 @@ class CookieMonster {
   CookieMonster(PersistentCookieStore* store);
 
 #ifdef UNIT_TEST
-  CookieMonster(int last_access_threshold_seconds)
+  CookieMonster::CookieMonster(int last_access_threshold_seconds)
       : initialized_(false),
         store_(NULL),
         last_access_threshold_(
-            base::TimeDelta::FromSeconds(last_access_threshold_seconds)) {
+            TimeDelta::FromSeconds(last_access_threshold_seconds)) {
   }
 #endif
 
   ~CookieMonster();
 
   // Parse the string with the cookie time (very forgivingly).
-  static base::Time ParseCookieTime(const std::string& time_string);
+  static Time ParseCookieTime(const std::string& time_string);
 
   // Set a single cookie.  Expects a cookie line, like "a=1; domain=b.com".
   bool SetCookie(const GURL& url, const std::string& cookie_line);
-  bool SetCookieWithOptions(const GURL& url,
-                            const std::string& cookie_line,
-                            const CookieOptions& options);
   // Sets a single cookie with a specific creation date. To set a cookie with
   // a creation date of Now() use SetCookie() instead (it calls this function
   // internally).
   bool SetCookieWithCreationTime(const GURL& url,
                                  const std::string& cookie_line,
-                                 const base::Time& creation_time);
-  bool SetCookieWithCreationTimeWithOptions(
-                                 const GURL& url,
-                                 const std::string& cookie_line,
-                                 const base::Time& creation_time,
-                                 const CookieOptions& options);
+                                 const Time& creation_time);
   // Set a vector of response cookie values for the same URL.
   void SetCookies(const GURL& url, const std::vector<std::string>& cookies);
-  void SetCookiesWithOptions(const GURL& url,
-                             const std::vector<std::string>& cookies,
-                             const CookieOptions& options);
 
   // TODO what if the total size of all the cookies >4k, can we have a header
   // that big or do we need multiple Cookie: headers?
   // Simple interface, get a cookie string "a=b; c=d" for the given URL.
-  // It will _not_ return httponly cookies, see CookieOptions.
+  // It will _not_ return httponly cookies, see GetCookiesWithOptions
   std::string GetCookies(const GURL& url);
-  std::string GetCookiesWithOptions(const GURL& url,
-                                    const CookieOptions& options);
+  std::string GetCookiesWithOptions(const GURL& url, CookieOptions options);
   // Returns all the cookies, for use in management UI, etc.  This does not mark
   // the cookies as having been accessed.
   CookieList GetAllCookies();
@@ -121,12 +104,12 @@ class CookieMonster {
   int DeleteAll(bool sync_to_store);
   // Delete all of the cookies that have a creation_date greater than or equal
   // to |delete_begin| and less than |delete_end|
-  int DeleteAllCreatedBetween(const base::Time& delete_begin,
-                              const base::Time& delete_end,
+  int DeleteAllCreatedBetween(const Time& delete_begin,
+                              const Time& delete_end,
                               bool sync_to_store);
   // Delete all of the cookies that have a creation_date more recent than the
   // one passed into the function via |delete_after|.
-  int DeleteAllCreatedAfter(const base::Time& delete_begin, bool sync_to_store);
+  int DeleteAllCreatedAfter(const Time& delete_begin, bool sync_to_store);
 
   // Delete one specific cookie.
   bool DeleteCookie(const std::string& domain,
@@ -157,22 +140,17 @@ class CookieMonster {
   void InitStore();
 
   void FindCookiesForHostAndDomain(const GURL& url,
-                                   const CookieOptions& options,
+                                   CookieOptions options,
                                    std::vector<CanonicalCookie*>* cookies);
 
   void FindCookiesForKey(const std::string& key,
                          const GURL& url,
-                         const CookieOptions& options,
-                         const base::Time& current,
+                         CookieOptions options,
+                         const Time& current,
                          std::vector<CanonicalCookie*>* cookies);
 
-  // Delete any cookies that are equivalent to |ecc| (same path, key, etc).
-  // If |skip_httponly| is true, httponly cookies will not be deleted.  The
-  // return value with be true if |skip_httponly| skipped an httponly cookie.
-  // NOTE: There should never be more than a single matching equivalent cookie.
-  bool DeleteAnyEquivalentCookie(const std::string& key,
-                                 const CanonicalCookie& ecc,
-                                 bool skip_httponly);
+  void DeleteAnyEquivalentCookie(const std::string& key,
+                              const CanonicalCookie& ecc);
 
   void InternalInsertCookie(const std::string& key,
                             CanonicalCookie* cc,
@@ -188,7 +166,7 @@ class CookieMonster {
   // at the top of the function body.
   //
   // Returns the number of cookies deleted (useful for debugging).
-  int GarbageCollect(const base::Time& current, const std::string& key);
+  int GarbageCollect(const Time& current, const std::string& key);
 
   // Deletes all expired cookies in |itpair|;
   // then, if the number of remaining cookies is greater than |num_max|,
@@ -196,7 +174,7 @@ class CookieMonster {
   // (|num_max| - |num_purge|) cookies remain.
   //
   // Returns the number of cookies deleted.
-  int GarbageCollectRange(const base::Time& current,
+  int GarbageCollectRange(const Time& current,
                           const CookieMapItPair& itpair,
                           size_t num_max,
                           size_t num_purge);
@@ -206,7 +184,7 @@ class CookieMonster {
   // populated with all the non-expired cookies from |itpair|.
   //
   // Returns the number of cookies deleted.
-  int GarbageCollectExpired(const base::Time& current,
+  int GarbageCollectExpired(const Time& current,
                             const CookieMapItPair& itpair,
                             std::vector<CookieMap::iterator>* cookie_its);
 
@@ -220,12 +198,12 @@ class CookieMonster {
 
   // The resolution of our time isn't enough, so we do something
   // ugly and increment when we've seen the same time twice.
-  base::Time CurrentTime();
-  base::Time last_time_seen_;
+  Time CurrentTime();
+  Time last_time_seen_;
 
   // Minimum delay after updating a cookie's LastAccessDate before we will
   // update it again.
-  const base::TimeDelta last_access_threshold_;
+  const TimeDelta last_access_threshold_;
 
   // Lock for thread-safety
   Lock lock_;
@@ -296,10 +274,10 @@ class CookieMonster::CanonicalCookie {
                   const std::string& path,
                   bool secure,
                   bool httponly,
-                  const base::Time& creation,
-                  const base::Time& last_access,
+                  const Time& creation,
+                  const Time& last_access,
                   bool has_expires,
-                  const base::Time& expires)
+                  const Time& expires)
       : name_(name),
         value_(value),
         path_(path),
@@ -325,15 +303,15 @@ class CookieMonster::CanonicalCookie {
   const std::string& Name() const { return name_; }
   const std::string& Value() const { return value_; }
   const std::string& Path() const { return path_; }
-  const base::Time& CreationDate() const { return creation_date_; }
-  const base::Time& LastAccessDate() const { return last_access_date_; }
+  const Time& CreationDate() const { return creation_date_; }
+  const Time& LastAccessDate() const { return last_access_date_; }
   bool DoesExpire() const { return has_expires_; }
   bool IsPersistent() const { return DoesExpire(); }
-  const base::Time& ExpiryDate() const { return expiry_date_; }
+  const Time& ExpiryDate() const { return expiry_date_; }
   bool IsSecure() const { return secure_; }
   bool IsHttpOnly() const { return httponly_; }
 
-  bool IsExpired(const base::Time& current) {
+  bool IsExpired(const Time& current) {
     return has_expires_ && current >= expiry_date_;
   }
 
@@ -345,7 +323,7 @@ class CookieMonster::CanonicalCookie {
     return name_ == ecc.Name() && path_ == ecc.Path();
   }
 
-  void SetLastAccessDate(const base::Time& date) {
+  void SetLastAccessDate(const Time& date) {
     last_access_date_ = date;
   }
 
@@ -356,9 +334,9 @@ class CookieMonster::CanonicalCookie {
   std::string name_;
   std::string value_;
   std::string path_;
-  base::Time creation_date_;
-  base::Time last_access_date_;
-  base::Time expiry_date_;
+  Time creation_date_;
+  Time last_access_date_;
+  Time expiry_date_;
   bool has_expires_;
   bool secure_;
   bool httponly_;

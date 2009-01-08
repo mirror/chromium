@@ -13,8 +13,6 @@
 #include "chrome/common/ipc_logging.h"
 #include "chrome/common/ipc_sync_message.h"
 
-using base::TimeDelta;
-using base::TimeTicks;
 
 namespace IPC {
 // When we're blocked in a Send(), we need to process incoming synchronous

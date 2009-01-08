@@ -8,8 +8,10 @@
 #include "net/base/client_socket_factory.h"
 #include "net/http/http_network_session.h"
 #include "net/http/http_network_transaction.h"
+#include "net/proxy/proxy_resolver_fixed.h"
 #if defined(OS_WIN)
 #include "net/http/http_transaction_winhttp.h"
+#include "net/proxy/proxy_resolver_winhttp.h"
 #endif
 
 namespace net {
@@ -18,19 +20,18 @@ namespace net {
 
 #if defined(OS_WIN)
 // static
-bool HttpNetworkLayer::use_winhttp_ = false;
+bool HttpNetworkLayer::use_winhttp_ = true;
 #endif
 
 // static
 HttpTransactionFactory* HttpNetworkLayer::CreateFactory(
-    ProxyService* proxy_service) {
-  DCHECK(proxy_service);
+    const ProxyInfo* pi) {
 #if defined(OS_WIN)
   if (use_winhttp_)
-    return new HttpTransactionWinHttp::Factory(proxy_service);
+    return new HttpTransactionWinHttp::Factory(pi);
 #endif
 
-  return new HttpNetworkLayer(proxy_service);
+  return new HttpNetworkLayer(pi);
 }
 
 #if defined(OS_WIN)
@@ -42,9 +43,20 @@ void HttpNetworkLayer::UseWinHttp(bool value) {
 
 //-----------------------------------------------------------------------------
 
-HttpNetworkLayer::HttpNetworkLayer(ProxyService* proxy_service)
-    : proxy_service_(proxy_service), suspended_(false) {
-  DCHECK(proxy_service_);
+HttpNetworkLayer::HttpNetworkLayer(const ProxyInfo* pi)
+    : suspended_(false) {
+  ProxyResolver* proxy_resolver;
+  if (pi) {
+    proxy_resolver = new ProxyResolverFixed(*pi);
+  } else {
+#if defined(OS_WIN)
+    proxy_resolver = new ProxyResolverWinHttp();
+#else
+    NOTIMPLEMENTED();
+    proxy_resolver = NULL;
+#endif
+  }
+  session_ = new HttpNetworkSession(proxy_resolver);
 }
 
 HttpNetworkLayer::~HttpNetworkLayer() {
@@ -54,9 +66,6 @@ HttpTransaction* HttpNetworkLayer::CreateTransaction() {
   if (suspended_)
     return NULL;
 
-  if (!session_)
-    session_ = new HttpNetworkSession(proxy_service_);
-
   return new HttpNetworkTransaction(
       session_, ClientSocketFactory::GetDefaultFactory());
 }
@@ -65,10 +74,14 @@ HttpCache* HttpNetworkLayer::GetCache() {
   return NULL;
 }
 
+AuthCache* HttpNetworkLayer::GetAuthCache() {
+  return session_->auth_cache();
+}
+
 void HttpNetworkLayer::Suspend(bool suspend) {
   suspended_ = suspend;
 
-  if (suspend && session_)
+  if (suspend)
     session_->connection_pool()->CloseIdleSockets();
 }
 

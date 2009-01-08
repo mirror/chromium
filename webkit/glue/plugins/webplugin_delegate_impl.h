@@ -8,13 +8,11 @@
 #include <string>
 #include <list>
 
-#include "base/file_path.h"
-#include "base/gfx/native_widget_types.h"
 #include "base/iat_patch.h"
 #include "base/ref_counted.h"
 #include "base/task.h"
-#include "third_party/npapi/bindings/npapi.h"
 #include "webkit/glue/webplugin_delegate.h"
+#include "third_party/npapi/bindings/npapi.h"
 #include "webkit/glue/webcursor.h"
 
 namespace NPAPI {
@@ -25,9 +23,9 @@ namespace NPAPI {
 // the plugin process.
 class WebPluginDelegateImpl : public WebPluginDelegate {
  public:
-  static WebPluginDelegateImpl* Create(const FilePath& filename,
+  static WebPluginDelegateImpl* Create(const std::wstring& filename,
                                        const std::string& mime_type,
-                                       gfx::NativeView containing_view);
+                                       HWND containing_window);
   static bool IsPluginDelegateWindow(HWND window);
   static bool GetPluginNameFromWindow(HWND window, std::wstring *plugin_name);
 
@@ -71,7 +69,7 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
   virtual void DidReceiveManualData(const char* buffer, int length);
   virtual void DidFinishManualLoading();
   virtual void DidManualLoadFail();
-  virtual FilePath GetPluginPath();
+  virtual std::wstring GetPluginPath();
   virtual void InstallMissingPlugin();
   virtual WebPluginResourceClient* CreateResourceClient(int resource_id,
                                                         const std::string &url,
@@ -104,7 +102,7 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
                          bool visible);
 
  private:
-  WebPluginDelegateImpl(gfx::NativeView containing_view,
+  WebPluginDelegateImpl(HWND containing_window,
                         NPAPI::PluginInstance *instance);
   ~WebPluginDelegateImpl();
 
@@ -168,6 +166,10 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
 
   // Closes down and destroys our plugin instance.
   void DestroyInstance();
+
+  // Returns the cursor type.
+  // TODO(iyengar) Add support for custom cursors.
+  WebCursor::Type GetCursorType(HCURSOR cursor) const;
 
   // used for windowed plugins
   HWND windowed_handle_;

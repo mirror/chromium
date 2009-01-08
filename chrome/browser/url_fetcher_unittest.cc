@@ -6,16 +6,14 @@
 #include "base/time.h"
 #include "chrome/browser/url_fetcher.h"
 #include "chrome/browser/url_fetcher_protect.h"
-#include "net/base/ssl_test_util.h"
 #include "net/url_request/url_request_unittest.h"
 #include "testing/gtest/include/gtest/gtest.h"
-
-using base::Time;
-using base::TimeDelta;
 
 namespace {
 
 const wchar_t kDocRoot[] = L"chrome/test/data";
+const char kHostName[] = "127.0.0.1";
+const int kBadHTTPSPort = 9666;
 
 class URLFetcherTest : public testing::Test, public URLFetcher::Delegate {
  public:
@@ -98,7 +96,6 @@ class URLFetcherBadHTTPSTest : public URLFetcherTest {
 
  protected:
   std::wstring GetExpiredCertPath();
-  SSLTestUtil util_;
 
  private:
   std::wstring cert_dir_;
@@ -263,7 +260,7 @@ URLFetcherBadHTTPSTest::URLFetcherBadHTTPSTest() {
   PathService::Get(base::DIR_SOURCE_ROOT, &cert_dir_);
   cert_dir_ += L"/chrome/test/data/ssl/certificates/";
   std::replace(cert_dir_.begin(), cert_dir_.end(),
-               L'/', FilePath::kSeparators[0]);
+               L'/', file_util::kPathSeparator);
 }
 
 // The "server certificate expired" error should result in automatic
@@ -379,9 +376,8 @@ TEST_F(URLFetcherProtectTest, Overload) {
 
   // Registers an entry for test url. It only allows 3 requests to be sent
   // in 200 milliseconds.
-  URLFetcherProtectManager* manager = URLFetcherProtectManager::GetInstance();
-  URLFetcherProtectEntry* entry =
-      new URLFetcherProtectEntry(200, 3, 11, 1, 2.0, 0, 256);
+  ProtectManager* manager = ProtectManager::GetInstance();
+  ProtectEntry* entry = new ProtectEntry(200, 3, 11, 1, 2.0, 0, 256);
   manager->Register(url.host(), entry);
 
   CreateFetcher(url);
@@ -397,9 +393,8 @@ TEST_F(URLFetcherProtectTest, ServerUnavailable) {
   //     new_backoff = 2.0 * old_backoff + 0
   // and maximum backoff time is 256 milliseconds.
   // Maximum retries allowed is set to 11.
-  URLFetcherProtectManager* manager = URLFetcherProtectManager::GetInstance();
-  URLFetcherProtectEntry* entry =
-      new URLFetcherProtectEntry(200, 3, 11, 1, 2.0, 0, 256);
+  ProtectManager* manager = ProtectManager::GetInstance();
+  ProtectEntry* entry = new ProtectEntry(200, 3, 11, 1, 2.0, 0, 256);
   manager->Register(url.host(), entry);
 
   CreateFetcher(url);
@@ -408,8 +403,8 @@ TEST_F(URLFetcherProtectTest, ServerUnavailable) {
 }
 
 TEST_F(URLFetcherBadHTTPSTest, BadHTTPSTest) {
-  HTTPSTestServer server(util_.kHostName, util_.kBadHTTPSPort,
-                         kDocRoot, util_.GetExpiredCertPath().ToWStringHack());
+  HTTPSTestServer server(kHostName, kBadHTTPSPort,
+                         kDocRoot, GetExpiredCertPath());
 
   CreateFetcher(GURL(server.TestServerPage("defaultresponse")));
 
@@ -424,9 +419,8 @@ TEST_F(URLFetcherCancelTest, ReleasesContext) {
   //     new_backoff = 2.0 * old_backoff + 0
   // The initial backoff is 2 seconds and maximum backoff is 4 seconds.
   // Maximum retries allowed is set to 2.
-  URLFetcherProtectManager* manager = URLFetcherProtectManager::GetInstance();
-  URLFetcherProtectEntry* entry =
-      new URLFetcherProtectEntry(200, 3, 2, 2000, 2.0, 0, 4000);
+  ProtectManager* manager = ProtectManager::GetInstance();
+  ProtectEntry* entry = new ProtectEntry(200, 3, 2, 2000, 2.0, 0, 4000);
   manager->Register(url.host(), entry);
 
   // Create a separate thread that will create the URLFetcher.  The current

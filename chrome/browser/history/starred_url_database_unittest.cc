@@ -66,19 +66,18 @@ class StarredURLDatabaseTest : public testing::Test,
   // Test setup.
   void SetUp() {
     PathService::Get(base::DIR_TEMP, &db_file_);
-    db_file_ = db_file_.Append(FILE_PATH_LITERAL("VisitTest.db"));
+    db_file_.push_back(file_util::kPathSeparator);
+    db_file_.append(L"VisitTest.db");
     file_util::Delete(db_file_, false);
 
     // Copy db file over that contains starred table.
-    FilePath old_history_path;
+    std::wstring old_history_path;
     PathService::Get(chrome::DIR_TEST_DATA, &old_history_path);
-    old_history_path = old_history_path.Append(FILE_PATH_LITERAL("bookmarks"));
-    old_history_path = old_history_path.Append(
-        FILE_PATH_LITERAL("History_with_empty_starred"));
+    file_util::AppendToPath(&old_history_path, L"bookmarks");
+    file_util::AppendToPath(&old_history_path, L"History_with_empty_starred");
     file_util::CopyFile(old_history_path, db_file_);
 
-    EXPECT_EQ(SQLITE_OK, 
-        sqlite3_open(WideToUTF8(db_file_.ToWStringHack()).c_str(), &db_));
+    EXPECT_EQ(SQLITE_OK, sqlite3_open(WideToUTF8(db_file_).c_str(), &db_));
     statement_cache_ = new SqliteStatementCache(db_);
 
     // Initialize the tables for this test.
@@ -100,7 +99,7 @@ class StarredURLDatabaseTest : public testing::Test,
     return *statement_cache_;
   }
 
-  FilePath db_file_;
+  std::wstring db_file_;
   sqlite3* db_;
   SqliteStatementCache* statement_cache_;
 };

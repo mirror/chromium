@@ -27,7 +27,7 @@ SCons string substitution.
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-__revision__ = "src/engine/SCons/Subst.py 3842 2008/12/20 22:59:52 scons"
+__revision__ = "src/engine/SCons/Subst.py 3424 2008/09/15 11:22:20 scons"
 
 import re
 import string
@@ -270,13 +270,7 @@ def subst_dict(target, source):
     dict = {}
 
     if target:
-        def get_tgt_subst_proxy(thing):
-            try:
-                subst_proxy = thing.get_subst_proxy()
-            except AttributeError:
-                subst_proxy = thing # probably a string, just return it
-            return subst_proxy
-        tnl = NLWrapper(target, get_tgt_subst_proxy)
+        tnl = NLWrapper(target, lambda x: x.get_subst_proxy())
         dict['TARGETS'] = Targets_or_Sources(tnl)
         dict['TARGET'] = Target_or_Source(tnl)
     else:
@@ -291,10 +285,7 @@ def subst_dict(target, source):
                 pass
             else:
                 node = rfile()
-            try:
-                return node.get_subst_proxy()
-            except AttributeError:
-                return node     # probably a String, just return it
+            return node.get_subst_proxy()
         snl = NLWrapper(source, get_src_subst_proxy)
         dict['SOURCES'] = Targets_or_Sources(snl)
         dict['SOURCE'] = Target_or_Source(snl)

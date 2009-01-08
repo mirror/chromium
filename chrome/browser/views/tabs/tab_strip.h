@@ -9,9 +9,9 @@
 #include "chrome/browser/tabs/tab_strip_model.h"
 #include "chrome/browser/views/tabs/tab.h"
 #include "chrome/views/button.h"
+#include "chrome/views/container_win.h"
 #include "chrome/views/menu.h"
 #include "chrome/views/view.h"
-#include "chrome/views/widget_win.h"
 
 class DraggedTabController;
 class ScopedMouseCloseWidthCalculator;
@@ -53,6 +53,10 @@ class TabStrip : public views::View,
   // non drag-able Tab.
   bool HasAvailableDragActions() const;
 
+  // Ask the delegate to show the application menu at the provided point.
+  // The point is in screen coordinate system.
+  void ShowApplicationMenu(const gfx::Point& p);
+
   // Returns true if the TabStrip can accept input events. This returns false
   // when the TabStrip is animating to a new state and as such the user should
   // not be allowed to interact with the TabStrip.
@@ -92,9 +96,6 @@ class TabStrip : public views::View,
   // Retrieve the ideal bounds for the Tab at the specified index.
   gfx::Rect GetIdealBounds(int index);
 
-  // Updates loading animations for the TabStrip.
-  void UpdateLoadingAnimations();
-
   // views::View overrides:
   virtual void PaintChildren(ChromeCanvas* canvas);
   virtual views::View* GetViewByID(int id) const;
@@ -125,6 +126,7 @@ class TabStrip : public views::View,
                              bool user_gesture);
   virtual void TabMoved(TabContents* contents, int from_index, int to_index);
   virtual void TabChangedAt(TabContents* contents, int index);
+  virtual void TabValidateAnimations();
 
   // Tab::Delegate implementation:
   virtual bool IsTabSelected(const Tab* tab) const;
@@ -205,6 +207,9 @@ class TabStrip : public views::View,
   // removed appropriately so we can tell when to resize layout the tab strip.
   void AddMessageLoopObserver();
   void RemoveMessageLoopObserver();
+
+  // Called to update the frame of the Loading animations.
+  void LoadingAnimationCallback();
 
   // -- Link Drag & Drop ------------------------------------------------------
 
@@ -289,6 +294,9 @@ class TabStrip : public views::View,
   // TODO(beng): (Cleanup) this would be better named "needs_resize_layout_".
   bool resize_layout_scheduled_;
 
+  // The timer used to update frames for the Loading Animation.
+  base::RepeatingTimer<TabStrip> loading_animation_timer_;
+
   // The "New Tab" button.
   views::Button* newtab_button_;
   gfx::Size newtab_button_size_;
@@ -332,7 +340,7 @@ class TabStrip : public views::View,
     bool point_down;
 
     // Renders the drop indicator.
-    views::WidgetWin* arrow_window;
+    views::ContainerWin* arrow_window;
     views::ImageView* arrow_view;
 
    private:

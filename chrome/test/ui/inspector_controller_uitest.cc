@@ -29,8 +29,7 @@ class InspectorControllerTest : public NoWindows2000Test<UITest> {
 };
 
 // This test also does not work in single process. See http://b/1214920
-// Disabled, see http://crbug.com/4655
-TEST_F(InspectorControllerTest, DISABLED_InspectElement) {
+TEST_F(InspectorControllerTest, InspectElement) {
   if (IsTestCaseDisabled())
     return;
 

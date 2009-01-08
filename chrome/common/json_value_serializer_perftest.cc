@@ -52,9 +52,10 @@ TEST_F(JSONValueSerializerTests, Reading) {
   PerfTimeLogger chrome_timer("chrome");
   for (int i = 0; i < kIterations; ++i) {
     for (size_t j = 0; j < test_cases_.size(); ++j) {
+      Value* root = NULL;
       JSONStringValueSerializer reader(test_cases_[j]);
-      scoped_ptr<Value> root(reader.Deserialize(NULL));
-      ASSERT_TRUE(root.get());
+      ASSERT_TRUE(reader.Deserialize(&root));
+      delete root;
     }
   }
   chrome_timer.Done();
@@ -66,9 +67,9 @@ TEST_F(JSONValueSerializerTests, CompactWriting) {
   // Convert test cases to Value objects.
   std::vector<Value*> test_cases;
   for (size_t i = 0; i < test_cases_.size(); ++i) {
+    Value* root = NULL;
     JSONStringValueSerializer reader(test_cases_[i]);
-    Value* root = reader.Deserialize(NULL);
-    ASSERT_TRUE(root);
+    ASSERT_TRUE(reader.Deserialize(&root));
     test_cases.push_back(root);
   }
 

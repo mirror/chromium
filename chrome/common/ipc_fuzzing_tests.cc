@@ -2,20 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <windows.h>
 #include <stdio.h>
 #include <iostream>
 #include <string>
 #include <sstream>
 
-#include "base/message_loop.h"
-#include "base/platform_thread.h"
-#include "base/process_util.h"
+#include "chrome/common/ipc_tests.h"
+
 #include "chrome/common/ipc_channel.h"
 #include "chrome/common/ipc_channel_proxy.h"
 #include "chrome/common/ipc_message_utils.h"
-#include "chrome/common/ipc_tests.h"
 #include "testing/gtest/include/gtest/gtest.h"
-#include "testing/multiprocess_func_list.h"
 
 TEST(IPCMessageIntegrity, ReadBeyondBufferStr) {
   //This was BUG 984408.
@@ -211,7 +209,7 @@ class FuzzerServerListener : public SimpleListener {
     std::wostringstream wos;
     wos << L"IPC fuzzer:" << caller << " [" << value << L" " << text << L"]\n";
     std::wstring output = wos.str();
-    LOG(WARNING) << output.c_str();
+    ::OutputDebugStringW(output.c_str());
   };
 
   int message_count_;
@@ -265,30 +263,24 @@ class FuzzerClientListener : public SimpleListener {
   IPC::Message* last_msg_;
 };
 
-// Runs the fuzzing server child mode. Returns when the preset number
-// of messages have been received.
-MULTIPROCESS_TEST_MAIN(RunFuzzServer) {
-  MessageLoopForIO main_message_loop;
+bool RunFuzzServer() {
   FuzzerServerListener listener;
-  IPC::Channel chan(kFuzzerChannel, IPC::Channel::MODE_CLIENT, &listener);
+  IPC::Channel chan(kFuzzerChannel, IPC::Channel::MODE_SERVER, &listener);
   chan.Connect();
   listener.Init(&chan);
   MessageLoop::current()->Run();
-  return 0;
+  return true;
 }
-
-class IPCFuzzingTest : public IPCChannelTest {
-};
 
 // This test makes sure that the FuzzerClientListener and FuzzerServerListener
 // are working properly by generating two well formed IPC calls.
-TEST_F(IPCFuzzingTest, SanityTest) {
-  FuzzerClientListener listener;
-  IPC::Channel chan(kFuzzerChannel, IPC::Channel::MODE_SERVER,
-                    &listener);
-  base::ProcessHandle server_process = SpawnChild(FUZZER_SERVER, &chan);
+TEST(IPCFuzzingTest, SanityTest) {
+  HANDLE server_process = SpawnChild(FUZZER_SERVER);
   ASSERT_TRUE(server_process);
-  PlatformThread::Sleep(1000);
+  ::Sleep(1000);
+  FuzzerClientListener listener;
+  IPC::Channel chan(kFuzzerChannel, IPC::Channel::MODE_CLIENT,
+                    &listener);
   ASSERT_TRUE(chan.Connect());
   listener.Init(&chan);
 
@@ -302,7 +294,7 @@ TEST_F(IPCFuzzingTest, SanityTest) {
   chan.Send(msg);
   EXPECT_TRUE(listener.ExpectMessage(value, MsgClassSI::ID));
 
-  EXPECT_TRUE(base::WaitForSingleProcess(server_process, 5000));
+  ASSERT_EQ(WAIT_OBJECT_0, ::WaitForSingleObject(server_process, 5000));
 }
 
 // This test uses a payload that is smaller than expected.
@@ -311,13 +303,13 @@ TEST_F(IPCFuzzingTest, SanityTest) {
 // after we generate another valid IPC to make sure framing is working
 // properly.
 #ifdef NDEBUG
-TEST_F(IPCFuzzingTest, MsgBadPayloadShort) {
-  FuzzerClientListener listener;
-  IPC::Channel chan(kFuzzerChannel, IPC::Channel::MODE_SERVER,
-                    &listener);
-  base::ProcessHandle server_process = SpawnChild(FUZZER_SERVER, &chan);
+TEST(IPCFuzzingTest, MsgBadPayloadShort) {
+  HANDLE server_process = SpawnChild(FUZZER_SERVER);
   ASSERT_TRUE(server_process);
-  PlatformThread::Sleep(1000);
+  ::Sleep(1000);
+  FuzzerClientListener listener;
+  IPC::Channel chan(kFuzzerChannel, IPC::Channel::MODE_CLIENT,
+                    &listener);
   ASSERT_TRUE(chan.Connect());
   listener.Init(&chan);
 
@@ -331,41 +323,39 @@ TEST_F(IPCFuzzingTest, MsgBadPayloadShort) {
   chan.Send(msg);
   EXPECT_TRUE(listener.ExpectMessage(1, MsgClassSI::ID));
 
-  EXPECT_TRUE(base::WaitForSingleProcess(server_process, 5000));
+  ASSERT_EQ(WAIT_OBJECT_0, ::WaitForSingleObject(server_process, 5000));
 }
 #endif  // NDEBUG
 
-// This test uses a payload that has too many arguments, but so the payload
+// This test uses a payload that has the wrong arguments, but so the payload
 // size is big enough so the unpacking routine does not generate an error as
 // in the case of MsgBadPayloadShort test.
 // This test does not pinpoint a flaw (per se) as by design we don't carry
 // type information on the IPC message.
-TEST_F(IPCFuzzingTest, MsgBadPayloadArgs) {
-  FuzzerClientListener listener;
-  IPC::Channel chan(kFuzzerChannel, IPC::Channel::MODE_SERVER,
-                    &listener);
-  base::ProcessHandle server_process = SpawnChild(FUZZER_SERVER, &chan);
+TEST(IPCFuzzingTest, MsgBadPayloadArgs) {
+  HANDLE server_process = SpawnChild(FUZZER_SERVER);
   ASSERT_TRUE(server_process);
-  PlatformThread::Sleep(1000);
+  ::Sleep(1000);
+  FuzzerClientListener listener;
+  IPC::Channel chan(kFuzzerChannel, IPC::Channel::MODE_CLIENT,
+                    &listener);
   ASSERT_TRUE(chan.Connect());
   listener.Init(&chan);
 
   IPC::Message* msg = new IPC::Message(MSG_ROUTING_CONTROL, MsgClassSI::ID,
                                        IPC::Message::PRIORITY_NORMAL);
-  msg->WriteWString(L"d");
+  msg->WriteInt(2);
+  msg->WriteInt(0x64);
   msg->WriteInt(0);
-  msg->WriteInt(0x65);  // Extra argument.
-
+  msg->WriteInt(0x65);
   chan.Send(msg);
   EXPECT_TRUE(listener.ExpectMessage(0, MsgClassSI::ID));
 
-  // Now send a well formed message to make sure the receiver wasn't
-  // thrown out of sync by the extra argument.
   msg = new MsgClassIS(3, L"expect three");
   chan.Send(msg);
   EXPECT_TRUE(listener.ExpectMessage(3, MsgClassIS::ID));
 
-  EXPECT_TRUE(base::WaitForSingleProcess(server_process, 5000));
+  ASSERT_EQ(WAIT_OBJECT_0, ::WaitForSingleObject(server_process, 5000));
 }
 
 // This class is for testing the IPC_BEGIN_MESSAGE_MAP_EX macros.
@@ -396,7 +386,7 @@ class ServerMacroExTest {
   int unhandled_msgs_;
 };
 
-TEST_F(IPCFuzzingTest, MsgMapExMacro) {
+TEST(IPCFuzzingTest, MsgMapExMacro) {
   IPC::Message* msg = NULL;
   ServerMacroExTest server;
 

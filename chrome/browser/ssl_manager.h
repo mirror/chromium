@@ -12,8 +12,9 @@
 #include "base/observer_list.h"
 #include "base/ref_counted.h"
 #include "chrome/browser/provisional_load_details.h"
+#include "chrome/browser/resource_dispatcher_host.h"
 #include "chrome/browser/security_style.h"
-#include "chrome/browser/renderer_host/resource_dispatcher_host.h"
+#include "chrome/browser/views/info_bar_message_view.h"
 #include "chrome/common/notification_registrar.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/render_messages.h"
@@ -26,6 +27,7 @@
 #include "webkit/glue/resource_type.h"
 
 class AutomationProvider;
+class InfoBarItemView;
 class NavigationEntry;
 class LoadFromMemoryCacheDetails;
 class LoadNotificationDetails;
@@ -34,9 +36,9 @@ class PrefService;
 class ResourceRedirectDetails;
 class ResourceRequestDetails;
 class SSLErrorInfo;
+class TabContents;
 class Task;
 class URLRequest;
-class WebContents;
 
 // The SSLManager SSLManager controls the SSL UI elements in a TabContents.  It
 // listens for various events that influence when these elements should or
@@ -75,9 +77,9 @@ class SSLManager : public NotificationObserver {
     // Call on the UI thread.
     SSLManager* manager() const { return manager_; };
 
-    // Returns the WebContents this object is associated with.  Should be
+    // Returns the TabContents this object is associated with.  Should be
     // called from the UI thread.
-    WebContents* GetWebContents();
+    TabContents* GetTabContents();
 
     // Cancels the associated URLRequest.
     // This method can be called from OnDispatchFailed and OnDispatched.
@@ -260,6 +262,32 @@ class SSLManager : public NotificationObserver {
     virtual SecurityStyle GetDefaultStyle(const GURL& url) = 0;
   };
 
+  // An info bar with a message and an optional link that runs a task when
+  // clicked.
+  class SSLInfoBar : public InfoBarItemView,
+                     public views::LinkController {
+   public:
+    SSLInfoBar(SSLManager* manager,
+               const std::wstring& message,
+               const std::wstring& link_text,
+               Task* task);
+
+    virtual ~SSLInfoBar();
+
+    const std::wstring GetMessageText() const;
+
+    // views::LinkController method.
+    virtual void LinkActivated(views::Link* source, int event_flags);
+
+   private:
+    views::Label* label_;
+    views::Link* link_;
+    SSLManager* manager_;
+    scoped_ptr<Task> task_;
+
+    DISALLOW_COPY_AND_ASSIGN(SSLInfoBar);
+  };
+
   static void RegisterUserPrefs(PrefService* prefs);
 
   // Construct an SSLManager for the specified tab.
@@ -374,6 +402,9 @@ class SSLManager : public NotificationObserver {
   // Called on the UI thread.
   void NavigationStateChanged();
 
+  // Called when one of our infobars closes.
+  void OnInfoBarClose(SSLInfoBar* info_bar);
+
   // Called to determine if there were any processed SSL errors from request.
   bool ProcessedSSLErrorFromRequest() const;
 
@@ -396,6 +427,9 @@ class SSLManager : public NotificationObserver {
                              std::wstring* ca_name);
 
  private:
+  // The AutomationProvider needs to access the InfoBars.
+  friend class AutomationProvider;
+
   // SSLMessageInfo contains the information necessary for displaying a message
   // in an info-bar.
   struct SSLMessageInfo {
@@ -445,6 +479,9 @@ class SSLManager : public NotificationObserver {
   // The NavigationController that owns this SSLManager.  We are responsible
   // for the security UI of this tab.
   NavigationController* controller_;
+
+  // The list of currently visible SSL InfoBars.
+  ObserverList<SSLInfoBar> visible_info_bars_;
 
   // Handles registering notifications with the NotificationService.
   NotificationRegistrar registrar_;

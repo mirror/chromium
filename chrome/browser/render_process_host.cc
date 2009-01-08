@@ -20,6 +20,7 @@
 #include "base/path_service.h"
 #include "base/process_util.h"
 #include "base/rand_util.h"
+#include "base/shared_event.h"
 #include "base/shared_memory.h"
 #include "base/singleton.h"
 #include "base/string_util.h"
@@ -166,10 +167,6 @@ RenderProcessHost::RenderProcessHost(Profile* profile)
   widget_helper_->set_block_popups(
       profile->GetPrefs()->GetBoolean(prefs::kBlockPopups));
 
-  NotificationService::current()->AddObserver(this,
-      NOTIFY_GREASEMONKEY_SCRIPTS_LOADED,
-      NotificationService::AllSources());
-
   // Note: When we create the RenderProcessHost, it's technically backgrounded,
   //       because it has no visible listeners.  But the process doesn't
   //       actually exist yet, so we'll Background it later, after creation.
@@ -189,10 +186,6 @@ RenderProcessHost::~RenderProcessHost() {
   }
 
   profile_->GetPrefs()->RemovePrefObserver(prefs::kBlockPopups, this);
-
-  NotificationService::current()->RemoveObserver(this,
-      NOTIFY_GREASEMONKEY_SCRIPTS_LOADED,
-      NotificationService::AllSources());
 }
 
 void RenderProcessHost::Unregister() {
@@ -279,7 +272,6 @@ bool RenderProcessHost::Init() {
     switches::kUseLowFragHeapCrt,
     switches::kGearsInRenderer,
     switches::kEnableGreasemonkey,
-    switches::kEnableVideo,
   };
 
   for (int i = 0; i < arraysize(switch_names); ++i) {
@@ -383,14 +375,6 @@ bool RenderProcessHost::Init() {
           return false;
         }
 
-        CommandLine command_line;
-        if (command_line.HasSwitch(switches::kGearsInRenderer)) {
-          if (!AddPolicyForGearsInRenderer(policy)) {
-            NOTREACHED();
-            return false;
-          }
-        }
-
         if (!AddDllEvictionPolicy(policy)) {
           NOTREACHED();
           return false;          
@@ -423,7 +407,7 @@ bool RenderProcessHost::Init() {
       } else {
         // spawn child process
         HANDLE process;
-        if (!base::LaunchApp(cmd_line, false, false, &process))
+        if (!process_util::LaunchApp(cmd_line, false, false, &process))
           return false;
         process_.set_handle(process);
       }
@@ -435,8 +419,16 @@ bool RenderProcessHost::Init() {
   // Now that the process is created, set it's backgrounding accordingly.
   SetBackgrounded(backgrounded_);
 
-  InitVisitedLinks();
-  InitGreasemonkeyScripts();
+  // Send the process its initial VisitedLink and Greasemonkey data.
+  HANDLE target_process = process_.handle();
+  if (!target_process) {
+    // Target process can be null if it's started with the --single-process
+    // flag.
+    target_process = GetCurrentProcess();
+  }
+
+  InitVisitedLinks(target_process);
+  InitGreasemonkeyScripts(target_process);
 
   if (max_page_id_ != -1)
     channel_->Send(new ViewMsg_SetNextPageID(max_page_id_ + 1));
@@ -444,28 +436,21 @@ bool RenderProcessHost::Init() {
   return true;
 }
 
-base::ProcessHandle RenderProcessHost::GetRendererProcessHandle() {
-  if (run_renderer_in_process_)
-    return base::Process::Current().handle();
-  return process_.handle();
-}
-
-void RenderProcessHost::InitVisitedLinks() {
+void RenderProcessHost::InitVisitedLinks(HANDLE target_process) {
   VisitedLinkMaster* visitedlink_master = profile_->GetVisitedLinkMaster();
   if (!visitedlink_master) {
     return;
   }
 
-  base::SharedMemoryHandle handle_for_process = NULL;
-  visitedlink_master->ShareToProcess(GetRendererProcessHandle(),
-                                     &handle_for_process);
+  SharedMemoryHandle handle_for_process = NULL;
+  visitedlink_master->ShareToProcess(target_process, &handle_for_process);
   DCHECK(handle_for_process);
   if (handle_for_process) {
     channel_->Send(new ViewMsg_VisitedLink_NewTable(handle_for_process));
   }
 }
 
-void RenderProcessHost::InitGreasemonkeyScripts() {
+void RenderProcessHost::InitGreasemonkeyScripts(HANDLE target_process) {
   CommandLine command_line;
   if (!command_line.HasSwitch(switches::kEnableGreasemonkey)) {
     return;
@@ -477,25 +462,17 @@ void RenderProcessHost::InitGreasemonkeyScripts() {
   // - File IO should be asynchronous (see VisitedLinkMaster), but how do we
   //   get scripts to the first renderer without blocking startup? Should we
   //   cache some information across restarts?
-  GreasemonkeyMaster* greasemonkey_master = profile_->GetGreasemonkeyMaster();
+  GreasemonkeyMaster* greasemonkey_master =
+      Singleton<GreasemonkeyMaster>::get();
   if (!greasemonkey_master) {
     return;
   }
 
-  if (!greasemonkey_master->ScriptsReady()) {
-    // No scripts ready.  :(
-    return;
-  }
+  // TODO(aa): This does blocking IO. Move to background thread.
+  greasemonkey_master->UpdateScripts();
 
-  // Update the renderer process with the current scripts.
-  SendGreasemonkeyScriptsUpdate(greasemonkey_master->GetSharedMemory());
-}
-
-void RenderProcessHost::SendGreasemonkeyScriptsUpdate(
-    base::SharedMemory *shared_memory) {
-  base::SharedMemoryHandle handle_for_process = NULL;
-  shared_memory->ShareToProcess(GetRendererProcessHandle(),
-                                &handle_for_process);
+  SharedMemoryHandle handle_for_process = NULL;
+  greasemonkey_master->ShareToProcess(target_process, &handle_for_process);
   DCHECK(handle_for_process);
   if (handle_for_process) {
     channel_->Send(new ViewMsg_Greasemonkey_NewScripts(handle_for_process));
@@ -533,10 +510,12 @@ void RenderProcessHost::ReportExpectingClose(int32 listener_id) {
 }
 
 bool RenderProcessHost::FastShutdownIfPossible() {
-  if (!process_.handle())
-    return false;  // Render process is probably crashed.
+  HANDLE proc = process();
+  if (!proc)
+    return false;
+  // If we're in single process mode, do nothing.
   if (RenderProcessHost::run_renderer_in_process())
-    return false;  // Since process mode can't do fast shutdown.
+    return false;
 
   // Test if there's an unload listener
   RenderProcessHost::listeners_iterator iter;
@@ -556,10 +535,9 @@ bool RenderProcessHost::FastShutdownIfPossible() {
       return false;
     }
   }
-
-  // Otherwise, we're allowed to just terminate the process. Using exit code 0
-  // means that UMA won't treat this as a renderer crash.
-  process_.Terminate(ResultCodes::NORMAL_EXIT);
+  // Otherwise, call TerminateProcess.  Using exit code 0 means that UMA won't
+  // treat this as a renderer crash.
+  ::TerminateProcess(proc, ResultCodes::NORMAL_EXIT);
   return true;
 }
 
@@ -647,7 +625,7 @@ void RenderProcessHost::OnObjectSignaled(HANDLE object) {
   DCHECK(channel_.get());
   DCHECK_EQ(object, process_.handle());
 
-  bool clean_shutdown = !base::DidProcessCrash(object);
+  bool clean_shutdown = !process_util::DidProcessCrash(object);
 
   process_.Close();
 
@@ -816,15 +794,6 @@ void RenderProcessHost::Observe(NotificationType type,
             profile()->GetPrefs()->GetBoolean(prefs::kBlockPopups));
       } else {
         NOTREACHED() << "unexpected pref change notification" << *pref_name_in;
-      }
-      break;
-    }
-    case NOTIFY_GREASEMONKEY_SCRIPTS_LOADED: {
-      base::SharedMemory* shared_memory =
-          Details<base::SharedMemory>(details).ptr();
-      DCHECK(shared_memory);
-      if (shared_memory) {
-        SendGreasemonkeyScriptsUpdate(shared_memory);
       }
       break;
     }

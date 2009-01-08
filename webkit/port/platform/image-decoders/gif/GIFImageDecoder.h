@@ -54,8 +54,6 @@ public:
 
     virtual RGBA32Buffer* frameBufferAtIndex(size_t index);
 
-    virtual void clearFrameBufferCache(size_t clearBeforeFrame);
-
     virtual unsigned frameDurationAtIndex(size_t index) { return 0; }
 
     enum GIFQuery { GIFFullQuery, GIFSizeQuery, GIFFrameCountQuery };

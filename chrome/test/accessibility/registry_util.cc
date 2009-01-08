@@ -2,13 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/test/accessibility/registry_util.h"
-
-#include <ocidl.h>
-
-#include "chrome/test/accessibility/constants.h"
+#include "registry_util.h"
+#include "constants.h"
 
 BSTR GetChromeExePath() {
+  // TODO: once registry contains chrome exe path.
   BSTR chrome_exe_path = SysAllocString(CHROME_PATH);
   return chrome_exe_path;
 }

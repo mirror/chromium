@@ -553,7 +553,8 @@ void KeywordEditorView::OnDoubleClick() {
 void KeywordEditorView::ButtonPressed(views::NativeButton* sender) {
   if (sender == add_button_) {
     EditKeywordController* controller =
-        new EditKeywordController(GetWidget()->GetHWND(), NULL, this, profile_);
+        new EditKeywordController(GetContainer()->GetHWND(), NULL, this,
+                                  profile_);
     controller->Show();
   } else if (sender == remove_button_) {
     DCHECK(table_view_->SelectedRowCount() > 0);
@@ -581,7 +582,7 @@ void KeywordEditorView::ButtonPressed(views::NativeButton* sender) {
     const TemplateURL* template_url =
         &table_model_->GetTemplateURL(selected_row);
     EditKeywordController* controller =
-        new EditKeywordController(GetWidget()->GetHWND(), template_url,
+        new EditKeywordController(GetContainer()->GetHWND(), template_url,
                                   this, profile_);
     controller->Show();
   } else if (sender == make_default_button_) {

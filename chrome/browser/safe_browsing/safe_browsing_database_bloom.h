@@ -45,7 +45,7 @@ class SafeBrowsingDatabaseBloom : public SafeBrowsingDatabase {
                            std::string* matching_list,
                            std::vector<SBPrefix>* prefix_hits,
                            std::vector<SBFullHashResult>* full_hits,
-                           base::Time last_update);
+                           Time last_update);
 
   // Processes add/sub commands.  Database will free the chunks when it's done.
   virtual void InsertChunks(const std::string& list_name,
@@ -149,7 +149,7 @@ class SafeBrowsingDatabaseBloom : public SafeBrowsingDatabase {
   // Looks up any cached full hashes we may have.
   void GetCachedFullHashes(const std::vector<SBPrefix>* prefix_hits,
                            std::vector<SBFullHashResult>* full_hits,
-                           base::Time last_update);
+                           Time last_update);
 
   // Remove cached entries that have prefixes contained in the entry.
   bool ClearCachedEntry(SBPrefix, int add_chunk_id, HashCache* hash_cache);
@@ -170,7 +170,7 @@ class SafeBrowsingDatabaseBloom : public SafeBrowsingDatabase {
   void InsertAddPrefix(SBPrefix prefix, int encoded_chunk);
   void InsertAddFullHash(SBPrefix prefix,
                          int encoded_chunk,
-                         base::Time received_time,
+                         Time received_time,
                          SBFullHash full_prefix);
 
   // Adding sub entries to the database.

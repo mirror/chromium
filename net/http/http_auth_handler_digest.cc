@@ -89,7 +89,8 @@ std::string HttpAuthHandlerDigest::GenerateCredentials(
   // This may not be possible when there are multiple connections to the
   // server though:
   // https://bugzilla.mozilla.org/show_bug.cgi?id=114451
-  int nonce_count = ++nonce_count_;
+  // TODO(eroman): leave as 1 for now, and possibly permanently.
+  int nonce_count = 1;
 
   // Extract the request method and path -- the meaning of 'path' is overloaded
   // in certain cases, to be a hostname.
@@ -116,7 +117,7 @@ void HttpAuthHandlerDigest::GetRequestMethodAndPath(
 
   if (target_ == HttpAuth::AUTH_PROXY && url.SchemeIs("https")) {
     *method = "CONNECT";
-    *path = url.host() + ":" + IntToString(url.EffectiveIntPort());
+    *path = url.host() + ":" + GetImplicitPort(url);
   } else {
     *method = request->method;
     *path = HttpUtil::PathForRequest(url);
