@@ -1,27 +1,38 @@
 /*
-** Copyright 2006, Google Inc.
-**
-** Licensed under the Apache License, Version 2.0 (the "License");
-** you may not use this file except in compliance with the License.
-** You may obtain a copy of the License at
-**
-**     http://www.apache.org/licenses/LICENSE-2.0
-**
-** Unless required by applicable law or agreed to in writing, software
-** distributed under the License is distributed on an "AS IS" BASIS,
-** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-** See the License for the specific language governing permissions and
-** limitations under the License.
-*/
+ * Copyright (c) 2006, Google Inc. All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ * 
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include "config.h"
-#include <math.h>
-
 #include "GraphicsContext.h"
+
 #include "GraphicsContextPlatformPrivate.h"
 #include "GraphicsContextPrivate.h"
-
-#include "Assertions.h"
 #include "Color.h"
 #include "FloatRect.h"
 #include "Gradient.h"
@@ -29,14 +40,18 @@
 #include "NativeImageSkia.h"
 #include "NotImplemented.h"
 #include "PlatformContextSkia.h"
+#include "TransformationMatrix.h"
+
 #include "SkBitmap.h"
 #include "SkBlurDrawLooper.h"
 #include "SkCornerPathEffect.h"
 #include "skia/ext/platform_canvas.h"
 #include "SkiaUtils.h"
 #include "SkShader.h"
-#include "TransformationMatrix.h"
-#include "wtf/MathExtras.h"
+
+#include <math.h>
+#include <wtf/Assertions.h>
+#include <wtf/MathExtras.h>
 
 using namespace std;
 
@@ -44,21 +59,20 @@ namespace WebCore {
 
 namespace {
 
-// "Reasonable" functions ------------------------------------------------------
+// "Seatbelt" functions ------------------------------------------------------
 //
-// These functions check certain graphics primitives for being "reasonable".
-// We don't like to send crazy data to the graphics layer that might overflow,
-// and this helps us avoid some of those cases.
+// These functions check certain graphics primitives for being "safe".
+// Skia has historically crashed when sent crazy data. These functions do
+// additional checking to prevent crashes.
 //
-// THESE ARE NOT PERFECT. We can't guarantee what the graphics layer is doing.
 // Ideally, all of these would be fixed in the graphics layer and we would not
-// have to do any checking. You can uncomment the CHECK_REASONABLE flag to
-// check the graphics layer.
-#define CHECK_REASONABLE
+// have to do any checking. You can uncomment the ENSURE_VALUE_SAFETY_FOR_SKIA
+// flag to check the graphics layer.
+#define ENSURE_VALUE_SAFETY_FOR_SKIA
 
-static bool IsCoordinateReasonable(float coord)
+static bool isCoordinateSkiaSafe(float coord)
 {
-#ifdef CHECK_REASONABLE
+#ifdef ENSURE_VALUE_SAFETY_FOR_SKIA
     // First check for valid floats.
 #if defined(_MSC_VER)
     if (!_finite(coord))
@@ -80,34 +94,33 @@ static bool IsCoordinateReasonable(float coord)
 #endif
 }
 
-static bool IsPointReasonable(const SkMatrix& transform, const SkPoint& pt)
+static bool isPointSkiaSafe(const SkMatrix& transform, const SkPoint& pt)
 {
-#ifdef CHECK_REASONABLE
+#ifdef ENSURE_VALUE_SAFETY_FOR_SKIA
     // Now check for points that will overflow. We check the *transformed*
     // points since this is what will be rasterized.
     SkPoint xPt;
     transform.mapPoints(&xPt, &pt, 1);
-    return IsCoordinateReasonable(xPt.fX) && IsCoordinateReasonable(xPt.fY);
+    return isCoordinateSkiaSafe(xPt.fX) && isCoordinateSkiaSafe(xPt.fY);
 #else
     return true;
 #endif
 }
 
-static bool IsRectReasonable(const SkMatrix& transform, const SkRect& rc)
+static bool isRectSkiaSafe(const SkMatrix& transform, const SkRect& rc)
 {
-#ifdef CHECK_REASONABLE
+#ifdef ENSURE_VALUE_SAFETY_FOR_SKIA
     SkPoint topleft = {rc.fLeft, rc.fTop};
     SkPoint bottomright = {rc.fRight, rc.fBottom};
-    return IsPointReasonable(transform, topleft) &&
-           IsPointReasonable(transform, bottomright);
+    return isPointSkiaSafe(transform, topleft) && isPointSkiaSafe(transform, bottomright);
 #else
     return true;
 #endif
 }
 
-bool IsPathReasonable(const SkMatrix& transform, const SkPath& path)
+bool isPathSkiaSafe(const SkMatrix& transform, const SkPath& path)
 {
-#ifdef CHECK_REASONABLE
+#ifdef ENSURE_VALUE_SAFETY_FOR_SKIA
     SkPoint current_points[4];
     SkPath::Iter iter(path, false);
     for (SkPath::Verb verb = iter.next(current_points);
@@ -119,23 +132,23 @@ bool IsPathReasonable(const SkMatrix& transform, const SkPath& path)
             break;
         case SkPath::kLine_Verb:
             // iter.next returns 2 points.
-            if (!IsPointReasonable(transform, current_points[0]) ||
-                !IsPointReasonable(transform, current_points[1]))
+            if (!isPointSkiaSafe(transform, current_points[0])
+                || !isPointSkiaSafe(transform, current_points[1]))
                 return false;
             break;
         case SkPath::kQuad_Verb:
             // iter.next returns 3 points.
-            if (!IsPointReasonable(transform, current_points[0]) ||
-                !IsPointReasonable(transform, current_points[1]) ||
-                !IsPointReasonable(transform, current_points[2]))
+            if (!isPointSkiaSafe(transform, current_points[0])
+                || !isPointSkiaSafe(transform, current_points[1])
+                || !isPointSkiaSafe(transform, current_points[2]))
                 return false;
             break;
         case SkPath::kCubic_Verb:
             // iter.next returns 4 points.
-            if (!IsPointReasonable(transform, current_points[0]) ||
-                !IsPointReasonable(transform, current_points[1]) ||
-                !IsPointReasonable(transform, current_points[2]) ||
-                !IsPointReasonable(transform, current_points[3]))
+            if (!isPointSkiaSafe(transform, current_points[0])
+                || !isPointSkiaSafe(transform, current_points[1])
+                || !isPointSkiaSafe(transform, current_points[2])
+                || !isPointSkiaSafe(transform, current_points[3]))
                 return false;
             break;
         case SkPath::kClose_Verb:
@@ -152,10 +165,7 @@ bool IsPathReasonable(const SkMatrix& transform, const SkPath& path)
 
 // Local helper functions ------------------------------------------------------
 
-void addCornerArc(SkPath* path,
-                  const SkRect& rect,
-                  const IntSize& size,
-                  int startAngle)
+void addCornerArc(SkPath* path, const SkRect& rect, const IntSize& size, int startAngle)
 {
     SkIRect ir;
     int rx = SkMin32(SkScalarRound(rect.width()), size.width());
@@ -205,7 +215,7 @@ inline float square(float n)
 
 // This may be called with a NULL pointer to create a graphics context that has
 // no painting.
-GraphicsContext::GraphicsContext(PlatformGraphicsContext *gc)
+GraphicsContext::GraphicsContext(PlatformGraphicsContext* gc)
     : m_common(createGraphicsContextPrivate())
     , m_data(new GraphicsContextPlatformPrivate(gc))
 {
@@ -280,7 +290,7 @@ void GraphicsContext::addInnerRoundedRectClip(const IntRect& rect, int thickness
         return;
 
     SkRect r(rect);
-    if (!IsRectReasonable(getCTM(), r))
+    if (!isRectSkiaSafe(getCTM(), r))
         return;
 
     SkPath path;
@@ -320,7 +330,7 @@ void GraphicsContext::clearRect(const FloatRect& rect)
         return;
 
     SkRect r = rect;
-    if (!IsRectReasonable(getCTM(), r))
+    if (!isRectSkiaSafe(getCTM(), r))
         ClipRectToCanvas(*platformContext()->canvas(), r, &r);
 
     SkPaint paint;
@@ -335,7 +345,7 @@ void GraphicsContext::clip(const FloatRect& rect)
         return;
 
     SkRect r(rect);
-    if (!IsRectReasonable(getCTM(), r))
+    if (!isRectSkiaSafe(getCTM(), r))
         return;
 
     platformContext()->canvas()->clipRect(r);
@@ -347,7 +357,7 @@ void GraphicsContext::clip(const Path& path)
         return;
 
     const SkPath& p = *path.platformPath();
-    if (!IsPathReasonable(getCTM(), p))
+    if (!isPathSkiaSafe(getCTM(), p))
         return;
 
     platformContext()->canvas()->clipPath(p);
@@ -359,7 +369,7 @@ void GraphicsContext::clipOut(const IntRect& rect)
         return;
 
     SkRect r(rect);
-    if (!IsRectReasonable(getCTM(), r))
+    if (!isRectSkiaSafe(getCTM(), r))
         return;
 
     platformContext()->canvas()->clipRect(r, SkRegion::kDifference_Op);
@@ -371,7 +381,7 @@ void GraphicsContext::clipOut(const Path& p)
         return;
 
     const SkPath& path = *p.platformPath();
-    if (!IsPathReasonable(getCTM(), path))
+    if (!isPathSkiaSafe(getCTM(), path))
         return;
 
     platformContext()->canvas()->clipPath(path, SkRegion::kDifference_Op);
@@ -383,7 +393,7 @@ void GraphicsContext::clipOutEllipseInRect(const IntRect& rect)
         return;
 
     SkRect oval(rect);
-    if (!IsRectReasonable(getCTM(), oval))
+    if (!isRectSkiaSafe(getCTM(), oval))
         return;
 
     SkPath path;
@@ -408,7 +418,7 @@ void GraphicsContext::clipToImageBuffer(const FloatRect& rect,
     if (paintingDisabled())
         return;
 
-    // TODO(eseidel): This is needed for image masking and complex text fills.
+    // FIXME: This is needed for image masking and complex text fills.
     notImplemented();
 }
 
@@ -439,11 +449,11 @@ void GraphicsContext::drawConvexPolygon(size_t numPoints,
                     WebCoreFloatToSkScalar(points[i].y()));
     }
 
-    if (!IsPathReasonable(getCTM(), path))
+    if (!isPathSkiaSafe(getCTM(), path))
         return;
 
     SkPaint paint;
-    if (fillColor().rgb() & 0xFF000000) {
+    if (fillColor().alpha() > 0) {
         platformContext()->setupPaintForFilling(&paint);
         platformContext()->canvas()->drawPath(path, paint);
     }
@@ -462,14 +472,15 @@ void GraphicsContext::drawEllipse(const IntRect& elipseRect)
         return;
 
     SkRect rect = elipseRect;
-    if (!IsRectReasonable(getCTM(), rect))
+    if (!isRectSkiaSafe(getCTM(), rect))
         return;
 
     SkPaint paint;
-    if (fillColor().rgb() & 0xFF000000) {
+    if (fillColor().alpha() > 0) {
         platformContext()->setupPaintForFilling(&paint);
         platformContext()->canvas()->drawOval(rect, paint);
     }
+
     if (strokeStyle() != NoStroke) {
         paint.reset();
         platformContext()->setupPaintForStroking(&paint, &rect, 0);
@@ -481,17 +492,18 @@ void GraphicsContext::drawFocusRing(const Color& color)
 {
     if (paintingDisabled())
         return;
+
     const Vector<IntRect>& rects = focusRingRects();
     unsigned rectCount = rects.size();
     if (0 == rectCount)
         return;
 
-    SkRegion exterior_region;
-    const SkScalar exterior_offset = WebCoreFloatToSkScalar(0.5);
+    SkRegion focusRingRegion;
+    const SkScalar focusRingOutset = WebCoreFloatToSkScalar(0.5);
     for (unsigned i = 0; i < rectCount; i++) {
         SkIRect r = rects[i];
-        r.inset(-exterior_offset, -exterior_offset);
-        exterior_region.op(r, SkRegion::kUnion_Op);
+        r.inset(-focusRingOutset, -focusRingOutset);
+        focusRingRegion.op(r, SkRegion::kUnion_Op);
     }
 
     SkPath path;
@@ -500,9 +512,9 @@ void GraphicsContext::drawFocusRing(const Color& color)
     paint.setStyle(SkPaint::kStroke_Style);
 
     paint.setColor(focusRingColor().rgb());
-    paint.setStrokeWidth(exterior_offset * 2);
-    paint.setPathEffect(new SkCornerPathEffect(exterior_offset * 2))->unref();
-    exterior_region.getBoundaryPath(&path);
+    paint.setStrokeWidth(focusRingOutset * 2);
+    paint.setPathEffect(new SkCornerPathEffect(focusRingOutset * 2))->unref();
+    focusRingRegion.getBoundaryPath(&path);
     platformContext()->canvas()->drawPath(path, paint);
 }
 
@@ -518,8 +530,7 @@ void GraphicsContext::drawLine(const IntPoint& point1, const IntPoint& point2)
 
     SkPaint paint;
     SkPoint pts[2] = { (SkPoint)point1, (SkPoint)point2 };
-    if (!IsPointReasonable(getCTM(), pts[0]) ||
-        !IsPointReasonable(getCTM(), pts[1]))
+    if (!isPointSkiaSafe(getCTM(), pts[0]) || !isPointSkiaSafe(getCTM(), pts[1]))
         return;
 
     // We know these are vertical or horizontal lines, so the length will just
@@ -547,8 +558,7 @@ void GraphicsContext::drawLine(const IntPoint& point1, const IntPoint& point2)
             pts[1].fY = pts[0].fY;
         }
     }
-    platformContext()->canvas()->drawPoints(
-        SkCanvas::kLines_PointMode, 2, pts, paint);
+    platformContext()->canvas()->drawPoints(SkCanvas::kLines_PointMode, 2, pts, paint);
 }
 
 void GraphicsContext::drawLineForMisspellingOrBadGrammar(const IntPoint& pt,
@@ -559,58 +569,58 @@ void GraphicsContext::drawLineForMisspellingOrBadGrammar(const IntPoint& pt,
         return;
 
     // Create the pattern we'll use to draw the underline.
-    static SkBitmap* misspell_bitmap = 0;
-    if (!misspell_bitmap) {
+    static SkBitmap* misspellBitmap = 0;
+    if (!misspellBitmap) {
         // We use a 2-pixel-high misspelling indicator because that seems to be
         // what WebKit is designed for, and how much room there is in a typical
         // page for it.
-        const int row_pixels = 32;  // Must be multiple of 4 for pattern below.
-        const int col_pixels = 2;
-        misspell_bitmap = new SkBitmap;
-        misspell_bitmap->setConfig(SkBitmap::kARGB_8888_Config,
-                                   row_pixels, col_pixels);
-        misspell_bitmap->allocPixels();
+        const int rowPixels = 32;  // Must be multiple of 4 for pattern below.
+        const int colPixels = 2;
+        misspellBitmap = new SkBitmap;
+        misspellBitmap->setConfig(SkBitmap::kARGB_8888_Config,
+                                   rowPixels, colPixels);
+        misspellBitmap->allocPixels();
 
-        misspell_bitmap->eraseARGB(0, 0, 0, 0);
-        const uint32_t line_color = 0xFFFF0000;  // Opaque red.
-        const uint32_t anti_color = 0x60600000;  // Semitransparent red.
+        misspellBitmap->eraseARGB(0, 0, 0, 0);
+        const uint32_t lineColor = 0xFFFF0000;  // Opaque red.
+        const uint32_t antiColor = 0x60600000;  // Semitransparent red.
 
         // Pattern:  X o   o X o   o X
         //             o X o   o X o
-        uint32_t* row1 = misspell_bitmap->getAddr32(0, 0);
-        uint32_t* row2 = misspell_bitmap->getAddr32(0, 1);
-        for (int x = 0; x < row_pixels; x ++) {
+        uint32_t* row1 = misspellBitmap->getAddr32(0, 0);
+        uint32_t* row2 = misspellBitmap->getAddr32(0, 1);
+        for (int x = 0; x < rowPixels; x++) {
             switch (x % 4) {
             case 0:
-                row1[x] = line_color;
+                row1[x] = lineColor;
                 break;
             case 1:
-                row1[x] = anti_color;
-                row2[x] = anti_color;
+                row1[x] = antiColor;
+                row2[x] = antiColor;
                 break;
             case 2:
-                row2[x] = line_color;
+                row2[x] = lineColor;
                 break;
             case 3:
-                row1[x] = anti_color;
-                row2[x] = anti_color;
+                row1[x] = antiColor;
+                row2[x] = antiColor;
                 break;
             }
         }
     }
 
     // Offset it vertically by 1 so that there's some space under the text.
-    SkScalar origin_x = SkIntToScalar(pt.x());
-    SkScalar origin_y = SkIntToScalar(pt.y()) + 1;
+    SkScalar originX = SkIntToScalar(pt.x());
+    SkScalar originY = SkIntToScalar(pt.y()) + 1;
 
     // Make a shader for the bitmap with an origin of the box we'll draw. This
     // shader is refcounted and will have an initial refcount of 1.
     SkShader* shader = SkShader::CreateBitmapShader(
-        *misspell_bitmap, SkShader::kRepeat_TileMode,
+        *misspellBitmap, SkShader::kRepeat_TileMode,
         SkShader::kRepeat_TileMode);
     SkMatrix matrix;
     matrix.reset();
-    matrix.postTranslate(origin_x, origin_y);
+    matrix.postTranslate(originX, originY);
     shader->setLocalMatrix(matrix);
 
     // Assign the shader to the paint & release our reference. The paint will
@@ -621,10 +631,10 @@ void GraphicsContext::drawLineForMisspellingOrBadGrammar(const IntPoint& pt,
     shader->unref();
 
     SkRect rect;
-    rect.set(origin_x,
-             origin_y,
-             origin_x + SkIntToScalar(width),
-             origin_y + SkIntToScalar(misspell_bitmap->height()));
+    rect.set(originX,
+             originY,
+             originX + SkIntToScalar(width),
+             originY + SkIntToScalar(misspellBitmap->height()));
     platformContext()->canvas()->drawRect(rect, paint);
 }
 
@@ -643,7 +653,7 @@ void GraphicsContext::drawLineForText(const IntPoint& pt,
     r.fBottom = r.fTop + SkIntToScalar(thickness);
 
     SkPaint paint;
-    paint.setColor(this->strokeColor().rgb());
+    paint.setColor(strokeColor().rgb());
     platformContext()->canvas()->drawRect(r, paint);
 }
 
@@ -654,10 +664,9 @@ void GraphicsContext::drawRect(const IntRect& rect)
         return;
 
     SkRect r = rect;
-    if (!IsRectReasonable(getCTM(), r)) {
+    if (!isRectSkiaSafe(getCTM(), r))
         // See the fillRect below.
         ClipRectToCanvas(*platformContext()->canvas(), r, &r);
-    }
 
     platformContext()->drawRect(r);
 }
@@ -666,8 +675,9 @@ void GraphicsContext::fillPath()
 {
     if (paintingDisabled())
         return;
+
     const SkPath& path = *platformContext()->currentPath();
-    if (!IsPathReasonable(getCTM(), path))
+    if (!isPathSkiaSafe(getCTM(), path))
       return;
 
     const GraphicsContextState& state = m_common->state;
@@ -698,10 +708,9 @@ void GraphicsContext::fillRect(const FloatRect& rect)
         return;
 
     SkRect r = rect;
-    if (!IsRectReasonable(getCTM(), r)) {
+    if (!isRectSkiaSafe(getCTM(), r))
         // See the other version of fillRect below.
         ClipRectToCanvas(*platformContext()->canvas(), r, &r);
-    }
 
     const GraphicsContextState& state = m_common->state;
     ColorSpace colorSpace = state.fillColorSpace;
@@ -727,27 +736,28 @@ void GraphicsContext::fillRect(const FloatRect& rect, const Color& color)
     if (paintingDisabled())
         return;
 
-    if (color.rgb() & 0xFF000000) {
-        SkRect r = rect;
-        if (!IsRectReasonable(getCTM(), r)) {
-            // Special case when the rectangle overflows fixed point. This is a
-            // workaround to fix bug 1212844. When the input rectangle is very
-            // large, it can overflow Skia's internal fixed point rect. This
-            // should be fixable in Skia (since the output bitmap isn't that
-            // large), but until that is fixed, we try to handle it ourselves.
-            //
-            // We manually clip the rectangle to the current clip rect. This
-            // will prevent overflow. The rectangle will be transformed to the
-            // canvas' coordinate space before it is converted to fixed point
-            // so we are guaranteed not to overflow after doing this.
-            ClipRectToCanvas(*platformContext()->canvas(), r, &r);
-        }
+    if (!color.alpha())
+        return;
 
-        SkPaint paint;
-        platformContext()->setupPaintCommon(&paint);
-        paint.setColor(color.rgb());
-        platformContext()->canvas()->drawRect(r, paint);
+    SkRect r = rect;
+    if (!isRectSkiaSafe(getCTM(), r)) {
+        // Special case when the rectangle overflows fixed point. This is a
+        // workaround to fix bug 1212844. When the input rectangle is very
+        // large, it can overflow Skia's internal fixed point rect. This
+        // should be fixable in Skia (since the output bitmap isn't that
+        // large), but until that is fixed, we try to handle it ourselves.
+        //
+        // We manually clip the rectangle to the current clip rect. This
+        // will prevent overflow. The rectangle will be transformed to the
+        // canvas' coordinate space before it is converted to fixed point
+        // so we are guaranteed not to overflow after doing this.
+        ClipRectToCanvas(*platformContext()->canvas(), r, &r);
     }
+
+    SkPaint paint;
+    platformContext()->setupPaintCommon(&paint);
+    paint.setColor(color.rgb());
+    platformContext()->canvas()->drawRect(r, paint);
 }
 
 void GraphicsContext::fillRoundedRect(const IntRect& rect,
@@ -761,10 +771,9 @@ void GraphicsContext::fillRoundedRect(const IntRect& rect,
         return;
 
     SkRect r = rect;
-    if (!IsRectReasonable(getCTM(), r)) {
+    if (!isRectSkiaSafe(getCTM(), r))
         // See fillRect().
         ClipRectToCanvas(*platformContext()->canvas(), r, &r);
-    }
 
     SkPath path;
     addCornerArc(&path, r, topRight, 270);
@@ -793,8 +802,7 @@ FloatRect GraphicsContext::roundToDevicePixels(const FloatRect& rect)
     // widget. We just need the scale, so we get the affine transform matrix and
     // extract the scale.
 
-    const SkMatrix& deviceMatrix =
-        platformContext()->canvas()->getTotalMatrix();
+    const SkMatrix& deviceMatrix = platformContext()->canvas()->getTotalMatrix();
     if (deviceMatrix.isIdentity())
         return rect;
 
@@ -876,9 +884,9 @@ void GraphicsContext::setLineDash(const DashArray& dashes, float dashOffset)
 {
     if (paintingDisabled())
         return;
-    // TODO(dglazkov): This is lifted directly off SkiaSupport, lines 49-74
-    // so it is not guaranteed to work correctly. I made some minor cosmetic
-    // refactoring, but not much else. Please fix this?
+
+    // FIXME: This is lifted directly off SkiaSupport, lines 49-74
+    // so it is not guaranteed to work correctly.
     size_t dashLength = dashes.size();
     if (!dashLength)
         return;
@@ -889,8 +897,7 @@ void GraphicsContext::setLineDash(const DashArray& dashes, float dashOffset)
     for (unsigned int i = 0; i < count; i++)
         intervals[i] = dashes[i % dashLength];
 
-    platformContext()->setDashPathEffect(new SkDashPathEffect(intervals,
-                                                   count, dashOffset));
+    platformContext()->setDashPathEffect(new SkDashPathEffect(intervals, count, dashOffset));
 
     delete[] intervals;
 }
@@ -930,7 +937,7 @@ void GraphicsContext::setPlatformFillColor(const Color& color)
 }
 
 void GraphicsContext::setPlatformShadow(const IntSize& size,
-                                        int blur_int,
+                                        int blurInt,
                                         const Color& color)
 {
     if (paintingDisabled())
@@ -938,7 +945,7 @@ void GraphicsContext::setPlatformShadow(const IntSize& size,
 
     double width = size.width();
     double height = size.height();
-    double blur = blur_int;
+    double blur = blurInt;
 
     // TODO(tc): This still does not address the issue that shadows
     // within canvas elements should ignore transforms.
@@ -971,6 +978,7 @@ void GraphicsContext::setPlatformStrokeColor(const Color& strokecolor)
 {
     if (paintingDisabled())
         return;
+
     platformContext()->setStrokeColor(strokecolor.rgb());
 }
 
@@ -978,6 +986,7 @@ void GraphicsContext::setPlatformStrokeStyle(const StrokeStyle& stroke)
 {
     if (paintingDisabled())
         return;
+
     platformContext()->setStrokeStyle(stroke);
 }
 
@@ -985,6 +994,7 @@ void GraphicsContext::setPlatformStrokeThickness(float thickness)
 {
     if (paintingDisabled())
         return;
+
     platformContext()->setStrokeThickness(thickness);
 }
 
@@ -992,6 +1002,7 @@ void GraphicsContext::setPlatformTextDrawingMode(int mode)
 {
     if (paintingDisabled())
         return;
+
     platformContext()->setTextDrawingMode(mode);
 }
 
@@ -1003,6 +1014,7 @@ void GraphicsContext::setUseAntialiasing(bool enable)
 {
     if (paintingDisabled())
         return;
+
     platformContext()->setUseAntialiasing(enable);
 }
 
@@ -1028,7 +1040,7 @@ void GraphicsContext::strokeArc(const IntRect& r, int startAngle, int angleSpan)
 
     SkPath path;
     path.addArc(oval, SkIntToScalar(-startAngle), SkIntToScalar(-angleSpan));
-    if (!IsPathReasonable(getCTM(), path))
+    if (!isPathSkiaSafe(getCTM(), path))
         return;
     platformContext()->canvas()->drawPath(path, paint);
 }
@@ -1037,8 +1049,9 @@ void GraphicsContext::strokePath()
 {
     if (paintingDisabled())
         return;
+
     const SkPath& path = *platformContext()->currentPath();
-    if (!IsPathReasonable(getCTM(), path))
+    if (!isPathSkiaSafe(getCTM(), path))
         return;
 
     const GraphicsContextState& state = m_common->state;
@@ -1064,7 +1077,8 @@ void GraphicsContext::strokeRect(const FloatRect& rect, float lineWidth)
 {
     if (paintingDisabled())
         return;
-    if (!IsRectReasonable(getCTM(), rect))
+
+    if (!isRectSkiaSafe(getCTM(), rect))
         return;
 
     const GraphicsContextState& state = m_common->state;
@@ -1091,6 +1105,7 @@ void GraphicsContext::rotate(float angleInRadians)
 {
     if (paintingDisabled())
         return;
+
     platformContext()->canvas()->rotate(WebCoreFloatToSkScalar(
         angleInRadians * (180.0f / 3.14159265f)));
 }
@@ -1099,6 +1114,7 @@ void GraphicsContext::translate(float w, float h)
 {
     if (paintingDisabled())
         return;
+
     platformContext()->canvas()->translate(WebCoreFloatToSkScalar(w),
                                            WebCoreFloatToSkScalar(h));
 }
