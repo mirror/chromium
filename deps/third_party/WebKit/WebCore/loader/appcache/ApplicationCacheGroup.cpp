@@ -80,11 +80,6 @@ ApplicationCache* ApplicationCacheGroup::cacheForMainRequest(const ResourceReque
 {
     if (!ApplicationCache::requestIsHTTPOrHTTPSGet(request))
         return 0;
- 
-    ASSERT(loader->frame());
-    ASSERT(loader->frame()->page());
-    if (loader->frame() != loader->frame()->page()->mainFrame())
-        return 0;
 
     if (ApplicationCacheGroup* group = cacheStorage().cacheGroupForURL(request.url())) {
         ASSERT(group->newestCache());
@@ -125,20 +120,6 @@ void ApplicationCacheGroup::selectCache(Frame* frame, const KURL& manifestURL)
     }
     
     ApplicationCache* mainResourceCache = documentLoader->mainResourceApplicationCache();
-    
-    // Check if the main resource is being loaded as part of navigation of the main frame
-    bool isMainFrame = frame->page()->mainFrame() == frame;
-    
-    if (!isMainFrame) {
-        if (mainResourceCache && manifestURL != mainResourceCache->group()->manifestURL()) {
-            ApplicationCacheResource* resource = mainResourceCache->resourceForURL(documentLoader->originalURL());
-            ASSERT(resource);
-            
-            resource->addType(ApplicationCacheResource::Foreign);
-        }
-
-        return;
-    }
     
     if (mainResourceCache) {
         if (manifestURL == mainResourceCache->group()->m_manifestURL) {
@@ -214,9 +195,8 @@ void ApplicationCacheGroup::selectCacheWithoutManifestURL(Frame* frame)
     ASSERT(!documentLoader->applicationCache());
 
     ApplicationCache* mainResourceCache = documentLoader->mainResourceApplicationCache();
-    bool isMainFrame = frame->page()->mainFrame() == frame;
 
-    if (isMainFrame && mainResourceCache) {
+    if (mainResourceCache) {
         mainResourceCache->group()->associateDocumentLoaderWithCache(documentLoader, mainResourceCache);
         mainResourceCache->group()->update(frame);
     }
@@ -590,11 +570,8 @@ void ApplicationCacheGroup::checkIfLoadIsComplete()
     
     m_cacheBeingUpdated->setManifestResource(m_manifestResource.release());
     
-    m_status = Idle;
-    m_frame = 0;
-    
     Vector<RefPtr<DocumentLoader> > documentLoaders;
-    
+
     if (isUpgradeAttempt) {
         ASSERT(m_cacheCandidates.isEmpty());
         
@@ -622,6 +599,9 @@ void ApplicationCacheGroup::checkIfLoadIsComplete()
     
     callListeners(isUpgradeAttempt ? &DOMApplicationCache::callUpdateReadyListener : &DOMApplicationCache::callCachedListener, 
                   documentLoaders);
+
+    m_status = Idle;
+    m_frame = 0;
 }
 
 void ApplicationCacheGroup::startLoadingEntry()

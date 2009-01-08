@@ -36,7 +36,7 @@ using namespace std;
 
 namespace WebCore {
 
-enum Mode { Explicit, Fallback, OnlineWhitelist };
+enum Mode { Explicit, Fallback, OnlineWhitelist, Unknown };
     
 bool parseManifest(const KURL& manifestURL, const char* data, int length, Manifest& manifest)
 {
@@ -106,8 +106,19 @@ bool parseManifest(const KURL& manifestURL, const char* data, int length, Manife
             mode = Fallback;
         else if (line == "NETWORK:")
             mode = OnlineWhitelist;
+        else if (line.endsWith(":"))
+            mode = Unknown;
+        else if (mode == Unknown)
+            continue;
         else if (mode == Explicit || mode == OnlineWhitelist) {
-            KURL url(manifestURL, line);
+            const UChar* p = line.characters();
+            const UChar* lineEnd = p + line.length();
+            
+            // Look for whitespace separating the URL from subsequent ignored tokens.
+            while (p < lineEnd && *p != '\t' && *p != ' ') 
+                p++;
+
+            KURL url(manifestURL, String(line.characters(), p - line.characters()));
             
             if (!url.isValid())
                 continue;
@@ -124,8 +135,8 @@ bool parseManifest(const KURL& manifestURL, const char* data, int length, Manife
                 manifest.onlineWhitelistedURLs.append(url);
             
         } else if (mode == Fallback) {
-            const UChar *p = line.characters();
-            const UChar *lineEnd = p + line.length();
+            const UChar* p = line.characters();
+            const UChar* lineEnd = p + line.length();
             
             // Look for whitespace separating the two URLs
             while (p < lineEnd && *p != '\t' && *p != ' ') 
@@ -145,10 +156,16 @@ bool parseManifest(const KURL& manifestURL, const char* data, int length, Manife
             if (!protocolHostAndPortAreEqual(manifestURL, namespaceURL))
                 continue;
                                    
+            // Skip whitespace separating fallback namespace from URL.
             while (p < lineEnd && (*p == '\t' || *p == ' '))
                 p++;
 
-            KURL fallbackURL(String(fallbackStart, fallbackStart - p));
+            // Look for whitespace separating the URL from subsequent ignored tokens.
+            const UChar* fallbackStart = p;
+            while (p < lineEnd && *p != '\t' && *p != ' ') 
+                p++;
+
+            KURL fallbackURL(manifestURL, String(fallbackStart, p - fallbackStart));
             if (!fallbackURL.isValid())
                 continue;
             if (fallbackURL.hasRef())
