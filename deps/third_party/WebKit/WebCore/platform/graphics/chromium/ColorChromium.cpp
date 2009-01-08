@@ -26,13 +26,7 @@
 #include "config.h"
 #include "Color.h"
 
-#include "SkColor.h"
-
-#include <wtf/Assertions.h>
-
 namespace WebCore {
-
-COMPILE_ASSERT(SK_ColorBLACK == Color::black, SkColorAndColorAreLaidOutTheSame);
 
 Color focusRingColor()
 {
