@@ -44,8 +44,10 @@ def _CollectArchiveFiles(output_dir):
   for (path, dirs, files) in os.walk(output_dir):
     rel_path = path[len(output_dir + '\\'):]
     for file in files:
-      if ('-actual-' in file and file.endswith('.txt') and
-          '-simp-actual-' not in file and '-jsfilt-actual-' not in file):
+      if ('-actual-' in file and
+          (file.endswith('.txt') or file.endswith('.png')) and
+          '-simp-actual-' not in file and
+          '-jsfilt-actual-' not in file):
         file_list.append(os.path.join(rel_path, file))
   if os.path.exists(os.path.join(output_dir, 'results.html')):
     file_list.append('results.html')
