@@ -43,6 +43,8 @@ processes=[
     # When VC crashes during compilation, this process which manages the .pdb
     # file generation sometime hangs.
     'mspdbsrv.exe',
+    # The JIT debugger may start when devenv.exe crashes.
+    'vsjitdebugger.exe',
 
     # Things built by/for Chromium.
     'base_unittests.exe',
