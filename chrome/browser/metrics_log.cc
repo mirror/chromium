@@ -311,9 +311,18 @@ void MetricsLog::RecordIncrementalStabilityElements() {
   PrefService* pref = g_browser_process->local_state();
   DCHECK(pref);
 
-  OPEN_ELEMENT_FOR_SCOPE("stability");
-  WriteRequiredStabilityElements(pref);
-  WriteRealtimeStabilityElements(pref);
+  OPEN_ELEMENT_FOR_SCOPE("profile");
+  WriteCommonEventAttributes();
+
+  WriteInstallElement();  // Supply appversion.
+
+  {
+    OPEN_ELEMENT_FOR_SCOPE("stability");  // Minimal set of stability elements.
+    WriteRequiredStabilityAttributes(pref);
+    WriteRealtimeStabilityAttributes(pref);
+
+    WritePluginStabilityElements(pref);
+  }
 }
 
 void MetricsLog::WriteStabilityElement() {
@@ -327,8 +336,8 @@ void MetricsLog::WriteStabilityElement() {
   //       sent, but that's true for all the metrics.
 
   StartElement("stability");
-  WriteRequiredStabilityElements(pref);
-  WriteRealtimeStabilityElements(pref);
+  WriteRequiredStabilityAttributes(pref);
+  WriteRealtimeStabilityAttributes(pref);
 
   // TODO(jar): The following are all optional, so we *could* optimize them for
   // values of zero (and not include them).
@@ -356,7 +365,11 @@ void MetricsLog::WriteStabilityElement() {
                  WideToUTF8(pref->GetString(prefs::kStabilityUptimeSec)));
   pref->SetString(prefs::kStabilityUptimeSec, L"0");
 
-  // Now log plugin stability info
+  WritePluginStabilityElements(pref);
+}
+
+void MetricsLog::WritePluginStabilityElements(PrefService* pref) {
+  // Now log plugin stability info.
   const ListValue* plugin_stats_list = pref->GetList(
       prefs::kStabilityPluginStats);
   if (plugin_stats_list) {
@@ -401,7 +414,7 @@ void MetricsLog::WriteStabilityElement() {
   EndElement();
 }
 
-void MetricsLog::WriteRequiredStabilityElements(PrefService* pref) {
+void MetricsLog::WriteRequiredStabilityAttributes(PrefService* pref) {
   // The server refuses data that doesn't have certain values.  crashcount and
   // launchcount are currently "required" in the "stability" group.
   WriteIntAttribute("launchcount",
@@ -412,7 +425,7 @@ void MetricsLog::WriteRequiredStabilityElements(PrefService* pref) {
   pref->SetInteger(prefs::kStabilityCrashCount, 0);
 }
 
-void MetricsLog::WriteRealtimeStabilityElements(PrefService* pref) {
+void MetricsLog::WriteRealtimeStabilityAttributes(PrefService* pref) {
   // Update the stats which are critical for real-time stability monitoring.
   // Since these are "optional," only list ones that are non-zero, as the counts
   // are aggergated (summed) server side.
@@ -460,6 +473,13 @@ void MetricsLog::WritePluginList(
   EndElement();
 }
 
+void MetricsLog::WriteInstallElement() {
+  OPEN_ELEMENT_FOR_SCOPE("install");
+  WriteAttribute("installdate", GetInstallDate());
+  WriteIntAttribute("buildid", 0);  // We're using appversion instead.
+  WriteAttribute("appversion", GetVersionString());
+}
+
 void MetricsLog::RecordEnvironment(
          const std::vector<WebPluginInfo>& plugin_list,
          const DictionaryValue* profile_metrics) {
@@ -470,11 +490,7 @@ void MetricsLog::RecordEnvironment(
   StartElement("profile");
   WriteCommonEventAttributes();
 
-  StartElement("install");
-  WriteAttribute("installdate", GetInstallDate());
-  WriteIntAttribute("buildid", 0);  // means that we're using appversion instead
-  WriteAttribute("appversion", GetVersionString());
-  EndElement();
+  WriteInstallElement();
 
   WritePluginList(plugin_list);
 
