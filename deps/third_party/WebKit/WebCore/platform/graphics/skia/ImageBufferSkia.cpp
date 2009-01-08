@@ -1,31 +1,32 @@
-// Copyright (c) 2008, Google Inc.
-// All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-// 
-//     * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/*
+ * Copyright (c) 2008, Google Inc. All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ * 
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include "config.h"
 #include "ImageBuffer.h"
@@ -47,8 +48,7 @@ namespace WebCore {
 // PlatformContext doesn't actually need to use the object, and this makes all
 // the ownership easier to manage.
 ImageBufferData::ImageBufferData(const IntSize& size)
-    : m_canvas()
-    , m_platformContext(NULL)  // Canvas is set in ImageBuffer constructor.
+    : m_platformContext(0)  // Canvas is set in ImageBuffer constructor.
 {
 }
 
@@ -108,37 +108,37 @@ PassRefPtr<ImageData> ImageBuffer::getImageData(const IntRect& rect) const
         (rect.y() + rect.height()) > m_size.height())
         memset(data, 0, result->data()->length());
 
-    int originx = rect.x();
-    int destx = 0;
-    if (originx < 0) {
-        destx = -originx;
-        originx = 0;
+    int originX = rect.x();
+    int destX = 0;
+    if (originX < 0) {
+        destX = -originX;
+        originX = 0;
     }
-    int endx = rect.x() + rect.width();
-    if (endx > m_size.width())
-        endx = m_size.width();
-    int numColumns = endx - originx;
+    int endX = rect.x() + rect.width();
+    if (endX > m_size.width())
+        endX = m_size.width();
+    int numColumns = endX - originX;
 
-    int originy = rect.y();
-    int desty = 0;
-    if (originy < 0) {
-        desty = -originy;
-        originy = 0;
+    int originY = rect.y();
+    int destY = 0;
+    if (originY < 0) {
+        destY = -originY;
+        originY = 0;
     }
-    int endy = rect.y() + rect.height();
-    if (endy > m_size.height())
-        endy = m_size.height();
-    int numRows = endy - originy;
+    int endY = rect.y() + rect.height();
+    if (endY > m_size.height())
+        endY = m_size.height();
+    int numRows = endY - originY;
 
     const SkBitmap& bitmap = *context()->platformContext()->bitmap();
     ASSERT(bitmap.config() == SkBitmap::kARGB_8888_Config);
     SkAutoLockPixels bitmapLock(bitmap);
 
     unsigned destBytesPerRow = 4 * rect.width();
-    unsigned char* destRow = data + desty * destBytesPerRow + destx * 4;
+    unsigned char* destRow = data + destY * destBytesPerRow + destX * 4;
 
     for (int y = 0; y < numRows; ++y) {
-        uint32_t* srcRow = bitmap.getAddr32(originx, originy + y);
+        uint32_t* srcRow = bitmap.getAddr32(originX, originY + y);
         for (int x = 0; x < numColumns; ++x) {
             SkColor color = SkPMColorToColor(srcRow[x]);
             unsigned char* destPixel = &destRow[x * 4];
@@ -159,28 +159,28 @@ void ImageBuffer::putImageData(ImageData* source, const IntRect& sourceRect,
     ASSERT(sourceRect.width() > 0);
     ASSERT(sourceRect.height() > 0);
 
-    int originx = sourceRect.x();
-    int destx = destPoint.x() + sourceRect.x();
-    ASSERT(destx >= 0);
-    ASSERT(destx < m_size.width());
-    ASSERT(originx >= 0);
-    ASSERT(originx < sourceRect.right());
+    int originX = sourceRect.x();
+    int destX = destPoint.x() + sourceRect.x();
+    ASSERT(destX >= 0);
+    ASSERT(destX < m_size.width());
+    ASSERT(originX >= 0);
+    ASSERT(originX < sourceRect.right());
 
-    int endx = destPoint.x() + sourceRect.right();
-    ASSERT(endx <= m_size.width());
+    int endX = destPoint.x() + sourceRect.right();
+    ASSERT(endX <= m_size.width());
 
-    int numColumns = endx - destx;
+    int numColumns = endX - destX;
 
-    int originy = sourceRect.y();
-    int desty = destPoint.y() + sourceRect.y();
-    ASSERT(desty >= 0);
-    ASSERT(desty < m_size.height());
-    ASSERT(originy >= 0);
-    ASSERT(originy < sourceRect.bottom());
+    int originY = sourceRect.y();
+    int destY = destPoint.y() + sourceRect.y();
+    ASSERT(destY >= 0);
+    ASSERT(destY < m_size.height());
+    ASSERT(originY >= 0);
+    ASSERT(originY < sourceRect.bottom());
 
-    int endy = destPoint.y() + sourceRect.bottom();
-    ASSERT(endy <= m_size.height());
-    int numRows = endy - desty;
+    int endY = destPoint.y() + sourceRect.bottom();
+    ASSERT(endY <= m_size.height());
+    int numRows = endY - destY;
 
     const SkBitmap& bitmap = *context()->platformContext()->bitmap();
     ASSERT(bitmap.config() == SkBitmap::kARGB_8888_Config);
@@ -188,11 +188,10 @@ void ImageBuffer::putImageData(ImageData* source, const IntRect& sourceRect,
 
     unsigned srcBytesPerRow = 4 * source->width();
 
-    const unsigned char* srcRow = source->data()->data() +
-        originy * srcBytesPerRow + originx * 4;
+    const unsigned char* srcRow = source->data()->data() + originY * srcBytesPerRow + originX * 4;
 
     for (int y = 0; y < numRows; ++y) {
-        uint32_t* destRow = bitmap.getAddr32(destx, desty + y);
+        uint32_t* destRow = bitmap.getAddr32(destX, destY + y);
         for (int x = 0; x < numColumns; ++x) {
             const unsigned char* srcPixel = &srcRow[x * 4];
             destRow[x] = SkPreMultiplyARGB(srcPixel[3], srcPixel[0],

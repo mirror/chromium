@@ -1,31 +1,32 @@
-// Copyright (c) 2008, Google Inc.
-// All rights reserved.
-//
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-//
-//     * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-//
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/*
+ * Copyright (c) 2008, Google Inc. All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ * 
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include "config.h"
 
@@ -44,13 +45,10 @@
 #include "SkShader.h"
 #include "TransformationMatrix.h"
 
-
 #include "skia/ext/image_operations.h"
 #include "skia/ext/platform_canvas.h"
 
 namespace WebCore {
-
-namespace {
 
 // Used by computeResamplingMode to tell how bitmaps should be resampled.
 enum ResamplingMode {
@@ -66,10 +64,7 @@ enum ResamplingMode {
     RESAMPLE_AWESOME,
 };
 
-// static
-ResamplingMode computeResamplingMode(const NativeImageSkia& bitmap,
-                                     int srcWidth, int srcHeight,
-                                     float destWidth, float destHeight)
+static ResamplingMode computeResamplingMode(const NativeImageSkia& bitmap, int srcWidth, int srcHeight, float destWidth, float destHeight)
 {
     int destIWidth = static_cast<int>(destWidth);
     int destIHeight = static_cast<int>(destHeight);
@@ -96,17 +91,16 @@ ResamplingMode computeResamplingMode(const NativeImageSkia& bitmap,
         return RESAMPLE_NONE;
     }
 
-    if (srcWidth <= kSmallImageSizeThreshold ||
-        srcHeight <= kSmallImageSizeThreshold ||
-        destWidth <= kSmallImageSizeThreshold ||
-        destHeight <= kSmallImageSizeThreshold) {
+    if (srcWidth <= kSmallImageSizeThreshold
+        || srcHeight <= kSmallImageSizeThreshold
+        || destWidth <= kSmallImageSizeThreshold
+        || destHeight <= kSmallImageSizeThreshold) {
         // Never resample small images. These are often used for borders and
         // rules (think 1x1 images used to make lines).
         return RESAMPLE_NONE;
     }
 
-    if (srcHeight * kLargeStretch <= destHeight ||
-        srcWidth * kLargeStretch <= destWidth) {
+    if (srcHeight * kLargeStretch <= destHeight || srcWidth * kLargeStretch <= destWidth) {
         // Large image detected.
 
         // Don't resample if it is being stretched a lot in only one direction.
@@ -121,10 +115,8 @@ ResamplingMode computeResamplingMode(const NativeImageSkia& bitmap,
         return RESAMPLE_LINEAR;
     }
 
-    if ((fabs(destWidth - srcWidth) / srcWidth <
-         kFractionalChangeThreshold) &&
-       (fabs(destHeight - srcHeight) / srcHeight <
-        kFractionalChangeThreshold)) {
+    if ((fabs(destWidth - srcWidth) / srcWidth < kFractionalChangeThreshold)
+        && (fabs(destHeight - srcHeight) / srcHeight < kFractionalChangeThreshold)) {
         // It is disappointingly common on the web for image sizes to be off by
         // one or two pixels. We don't bother resampling if the size difference
         // is a small fraction of the original size.
@@ -151,11 +143,7 @@ ResamplingMode computeResamplingMode(const NativeImageSkia& bitmap,
 // scrolling, for example, we are only drawing a small strip of the image.
 // Resampling the whole image every time is very slow, so this speeds up things
 // dramatically.
-void drawResampledBitmap(SkCanvas& canvas,
-                         SkPaint& paint,
-                         const NativeImageSkia& bitmap,
-                         const SkIRect& srcIRect,
-                         const SkRect& destRect)
+static void drawResampledBitmap(SkCanvas& canvas, SkPaint& paint, const NativeImageSkia& bitmap, const SkIRect& srcIRect, const SkRect& destRect)
 {
     // First get the subset we need. This is efficient and does not copy pixels.
     SkBitmap subset;
@@ -164,23 +152,19 @@ void drawResampledBitmap(SkCanvas& canvas,
     srcRect.set(srcIRect);
 
     // Whether we're doing a subset or using the full source image.
-    bool srcIsFull = srcIRect.fLeft == 0 && srcIRect.fTop == 0 &&
-        srcIRect.width() == bitmap.width() &&
-        srcIRect.height() == bitmap.height();
+    bool srcIsFull = srcIRect.fLeft == 0 && srcIRect.fTop == 0
+        && srcIRect.width() == bitmap.width()
+        && srcIRect.height() == bitmap.height();
 
     // We will always draw in integer sizes, so round the destination rect.
     SkIRect destRectRounded;
     destRect.round(&destRectRounded);
     SkIRect resizedImageRect;  // Represents the size of the resized image.
-    resizedImageRect.set(0, 0,
-                         destRectRounded.width(), destRectRounded.height());
+    resizedImageRect.set(0, 0, destRectRounded.width(), destRectRounded.height());
 
-    if (srcIsFull &&
-        bitmap.hasResizedBitmap(destRectRounded.width(),
-                                destRectRounded.height())) {
+    if (srcIsFull && bitmap.hasResizedBitmap(destRectRounded.width(), destRectRounded.height())) {
         // Yay, this bitmap frame already has a resized version.
-        SkBitmap resampled = bitmap.resizedBitmap(destRectRounded.width(),
-                                                  destRectRounded.height());
+        SkBitmap resampled = bitmap.resizedBitmap(destRectRounded.width(), destRectRounded.height());
         canvas.drawBitmapRect(resampled, 0, destRect, &paint);
         return;
     }
@@ -237,11 +221,7 @@ void drawResampledBitmap(SkCanvas& canvas,
     }
 }
 
-void paintSkBitmap(PlatformContextSkia* platformContext,
-                   const NativeImageSkia& bitmap,
-                   const SkIRect& srcRect,
-                   const SkRect& destRect,
-                   const SkPorterDuff::Mode& compOp)
+static void paintSkBitmap(PlatformContextSkia* platformContext, const NativeImageSkia& bitmap, const SkIRect& srcRect, const SkRect& destRect, const SkPorterDuff::Mode& compOp)
 {
     SkPaint paint;
     paint.setPorterDuffXfermode(compOp);
@@ -268,28 +248,24 @@ void paintSkBitmap(PlatformContextSkia* platformContext,
 
 // Transforms the given dimensions with the given matrix. Used to see how big
 // images will be once transformed.
-void TransformDimensions(const SkMatrix& matrix,
-                         float src_width,
-                         float src_height,
-                         float* dest_width,
-                         float* dest_height) {
+static void TransformDimensions(const SkMatrix& matrix, float srcWidth, float srcHeight, float* destWidth, float* destHeight) {
     // Transform 3 points to see how long each side of the bitmap will be.
     SkPoint src_points[3];  // (0, 0), (width, 0), (0, height).
     src_points[0].set(0, 0);
-    src_points[1].set(SkFloatToScalar(src_width), 0);
-    src_points[2].set(0, SkFloatToScalar(src_height));
+    src_points[1].set(SkFloatToScalar(srcWidth), 0);
+    src_points[2].set(0, SkFloatToScalar(srcHeight));
 
     // Now measure the length of the two transformed vectors relative to the
     // transformed origin to see how big the bitmap will be. Note: for skews,
     // this isn't the best thing, but we don't have skews.
     SkPoint dest_points[3];
     matrix.mapPoints(dest_points, src_points, 3);
-    *dest_width = SkScalarToFloat((dest_points[1] - dest_points[0]).length());
-    *dest_height = SkScalarToFloat((dest_points[2] - dest_points[0]).length());
+    *destWidth = SkScalarToFloat((dest_points[1] - dest_points[0]).length());
+    *destHeight = SkScalarToFloat((dest_points[2] - dest_points[0]).length());
 }
 
 // A helper method for translating negative width and height values.
-FloatRect normalizeRect(const FloatRect& rect)
+static FloatRect normalizeRect(const FloatRect& rect)
 {
     FloatRect norm = rect;
     if (norm.width() < 0) {
@@ -302,8 +278,6 @@ FloatRect normalizeRect(const FloatRect& rect)
     }
     return norm;
 }
-
-}  // namespace
 
 void FrameData::clear()
 {
@@ -338,9 +312,9 @@ void Image::drawPattern(GraphicsContext* context,
     // This is a very inexpensive operation. It will generate a new bitmap but
     // it will internally reference the old bitmap's pixels, adjusting the row
     // stride so the extra pixels appear as padding to the subsetted bitmap.
-    SkBitmap src_subset;
+    SkBitmap srcSubset;
     SkIRect srcRect = enclosingIntRect(floatSrcRect);
-    bitmap->extractSubset(&src_subset, srcRect);
+    bitmap->extractSubset(&srcSubset, srcRect);
 
     SkBitmap resampled;
     SkShader* shader;
@@ -348,9 +322,9 @@ void Image::drawPattern(GraphicsContext* context,
     // Figure out what size the bitmap will be in the destination. The
     // destination rect is the bounds of the pattern, we need to use the
     // matrix to see how bit it will be.
-    float dest_bitmap_width, dest_bitmap_height;
+    float destBitmapWidth, destBitmapHeight;
     TransformDimensions(patternTransform, srcRect.width(), srcRect.height(),
-                        &dest_bitmap_width, &dest_bitmap_height);
+                        &destBitmapWidth, &destBitmapHeight);
 
     // Compute the resampling mode.
     ResamplingMode resampling;
@@ -359,7 +333,7 @@ void Image::drawPattern(GraphicsContext* context,
     else {
       resampling = computeResamplingMode(*bitmap,
                                          srcRect.width(), srcRect.height(),
-                                         dest_bitmap_width, dest_bitmap_height);
+                                         destBitmapWidth, destBitmapHeight);
     }
 
     // Load the transform WebKit requested.
@@ -367,12 +341,11 @@ void Image::drawPattern(GraphicsContext* context,
 
     if (resampling == RESAMPLE_AWESOME) {
         // Do nice resampling.
-        SkBitmap resampled = skia::ImageOperations::Resize(src_subset,
+        SkBitmap resampled = skia::ImageOperations::Resize(srcSubset,
             skia::ImageOperations::RESIZE_LANCZOS3,
-            static_cast<int>(dest_bitmap_width),
-            static_cast<int>(dest_bitmap_height));
-        shader = SkShader::CreateBitmapShader(
-            resampled, SkShader::kRepeat_TileMode, SkShader::kRepeat_TileMode);
+            static_cast<int>(destBitmapWidth),
+            static_cast<int>(destBitmapHeight));
+        shader = SkShader::CreateBitmapShader(resampled, SkShader::kRepeat_TileMode, SkShader::kRepeat_TileMode);
 
         // Since we just resized the bitmap, we need to undo the scale set in
         // the image transform.
@@ -380,8 +353,7 @@ void Image::drawPattern(GraphicsContext* context,
         matrix.setScaleY(SkIntToScalar(1));
     } else {
         // No need to do nice resampling.
-        shader = SkShader::CreateBitmapShader(
-            src_subset, SkShader::kRepeat_TileMode, SkShader::kRepeat_TileMode);
+        shader = SkShader::CreateBitmapShader(srcSubset, SkShader::kRepeat_TileMode, SkShader::kRepeat_TileMode);
     }
 
     // We also need to translate it such that the origin of the pattern is the
@@ -407,6 +379,8 @@ void Image::drawPattern(GraphicsContext* context,
 // ================================================
 // BitmapImage Class
 // ================================================
+
+// FIXME: These should go to BitmapImageSkia.cpp
 
 void BitmapImage::initPlatformData()
 {
@@ -453,6 +427,8 @@ void BitmapImage::draw(GraphicsContext* ctxt, const FloatRect& dstRect,
                   WebCoreCompositeToSkiaComposite(compositeOp));
 }
 
+// FIXME: These should go into BitmapImageSingleFrameSkia.cpp
+
 void BitmapImageSingleFrameSkia::draw(GraphicsContext* ctxt,
                                       const FloatRect& dstRect,
                                       const FloatRect& srcRect,
@@ -471,8 +447,7 @@ void BitmapImageSingleFrameSkia::draw(GraphicsContext* ctxt,
                   WebCoreCompositeToSkiaComposite(compositeOp));
 }
 
-PassRefPtr<BitmapImageSingleFrameSkia> BitmapImageSingleFrameSkia::create(
-    const SkBitmap& bitmap)
+PassRefPtr<BitmapImageSingleFrameSkia> BitmapImageSingleFrameSkia::create(const SkBitmap& bitmap)
 {
     RefPtr<BitmapImageSingleFrameSkia> image(adoptRef(new BitmapImageSingleFrameSkia()));
     if (!bitmap.copyTo(&image->m_nativeImage, bitmap.config()))
