@@ -34,7 +34,6 @@ namespace WebCore {
 
 class IntPoint;
 class IntRect;
-class Frame;
 
 class HostWindow : Noncopyable {
 public:
@@ -56,9 +55,10 @@ public:
 
     // Method for retrieving the native window.
     virtual PlatformWidget platformWindow() const = 0;
-
-    // Method for notifying the window when a frame's contents size changes
-    virtual void contentsSizeChanged(Frame* frame, const IntSize& size) const = 0;
+    
+    // For scrolling a rect into view recursively.  Useful in the cases where a WebView is embedded inside some containing
+    // platform-specific ScrollView.
+    virtual void scrollRectIntoView(const IntRect&, const ScrollView*) const = 0;
 };
 
 } // namespace WebCore

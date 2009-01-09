@@ -1,3 +1,441 @@
+2009-01-09  Simon Hausmann  <simon.hausmann@nokia.com>
+
+        Reviewed by Tor Arne Vestbø.
+
+        Fix qmake warning about missing test function, a contains() call was
+        missing.
+
+        * WebCore.pro:
+
+2009-01-09  Simon Hausmann  <simon.hausmann@nokia.com>
+
+        Rubber-stamped by Tor Arne Vestbø.
+
+        Add the Qt API headers to HEADERS, too, for improved completion in IDEs.
+
+        * WebCore.pro:
+
+2009-01-09  David Levin  <levin@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23199
+
+        Fix deref's of string happening on two different threads.
+
+        No observable change in behavior, so no test.  However, there are asserts
+        being added for https://bugs.webkit.org/show_bug.cgi?id=23175 which
+        will detect this issue while running the normal worker tests.
+
+        * dom/WorkerThread.cpp:
+        (WebCore::WorkerThreadStartupData::create):
+        (WebCore::WorkerThreadStartupData::WorkerThreadStartupData):
+        (WebCore::WorkerThread::WorkerThread):
+        (WebCore::WorkerThread::workerThread):
+        * dom/WorkerThread.h:
+
+2009-01-08  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Adam Roben.
+
+        - use native glyph support in Core Graphics when available
+
+        * platform/graphics/win/FontCGWin.cpp:
+        (WebCore::Font::drawGlyphs): Changed to use drawGDIGlyphs() only if
+        native glyph support is not available or stroking is required. Changed
+        to pass the font's useGDI() flag to wkSetCGContextFontRenderingStyle to
+        request the use of native glyphs.
+        * platform/graphics/win/FontCustomPlatformData.cpp:
+        (WebCore::FontCustomPlatformData::fontPlatformData): Added a call to
+        wkSetFontPlatformInfo to attach the LOGFONT to the CGFont.
+        * platform/graphics/win/FontPlatformDataCGWin.cpp:
+        (WebCore::FontPlatformData::platformDataInit): Ditto.
+
+2009-01-08  Peter Kasting  <pkasting@google.com>
+
+        Reviewed by Sam Weinig.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22929
+        Fix memory regression when decoding large animated GIFs.
+
+        * platform/graphics/cg/ImageSourceCG.cpp:
+        (WebCore::ImageSource::clear):
+
+2009-01-08  Scott Violet  <sky@chromium.org>
+
+        Reviewed by Eric Seidel (and Adam Barth).
+
+        Fix Images to return their file extension
+        http://code.google.com/p/chromium/issues/detail?id=5827
+
+        * platform/graphics/skia/ImageSourceSkia.cpp:
+        (WebCore::ImageSource::filenameExtension):
+
+2009-01-08  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Add PathSkia and PatternSkia implementations to WebCore
+        https://bugs.webkit.org/show_bug.cgi?id=23200
+
+        * platform/graphics/skia/PathSkia.cpp: Added.
+        (WebCore::Path::Path):
+        (WebCore::Path::~Path):
+        (WebCore::Path::operator=):
+        (WebCore::Path::isEmpty):
+        (WebCore::Path::contains):
+        (WebCore::Path::translate):
+        (WebCore::Path::boundingRect):
+        (WebCore::Path::moveTo):
+        (WebCore::Path::addLineTo):
+        (WebCore::Path::addQuadCurveTo):
+        (WebCore::Path::addBezierCurveTo):
+        (WebCore::Path::addArcTo):
+        (WebCore::Path::closeSubpath):
+        (WebCore::Path::addArc):
+        (WebCore::Path::addRect):
+        (WebCore::Path::addEllipse):
+        (WebCore::Path::clear):
+        (WebCore::convertPathPoints):
+        (WebCore::Path::apply):
+        (WebCore::Path::transform):
+        (WebCore::Path::debugString):
+        (WebCore::boundingBoxForCurrentStroke):
+        (WebCore::Path::strokeBoundingRect):
+        * platform/graphics/skia/PatternSkia.cpp: Added.
+        (WebCore::shaderRule):
+        (WebCore::Pattern::createPlatformPattern):
+
+2009-01-08  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Add ImageSourceSkia to platform/graphics/skia
+        https://bugs.webkit.org/show_bug.cgi?id=23200
+        
+        ImageSourceSkia is mostly a hack to support our
+        ICO decoder model.  See ImageSourceSkia.h for more
+        explanation.  Eventually we'd like to make our ICO
+        decoder lazy.
+
+        * platform/graphics/ImageSource.h: mark m_decoder as protected
+        * platform/graphics/skia/ImageSourceSkia.cpp: Added.
+        (WebCore::createDecoder):
+        (WebCore::ImageSource::ImageSource):
+        (WebCore::ImageSource::~ImageSource):
+        (WebCore::ImageSource::clear):
+        (WebCore::ImageSource::initialized):
+        (WebCore::ImageSource::setData):
+        (WebCore::ImageSource::isSizeAvailable):
+        (WebCore::ImageSource::size):
+        (WebCore::ImageSource::frameSizeAtIndex):
+        (WebCore::ImageSource::repetitionCount):
+        (WebCore::ImageSource::frameCount):
+        (WebCore::ImageSource::createFrameAtIndex):
+        (WebCore::ImageSource::frameIsCompleteAtIndex):
+        (WebCore::ImageSource::frameDurationAtIndex):
+        (WebCore::ImageSource::frameHasAlphaAtIndex):
+        (WebCore::ImageSourceSkia::setData):
+        (WebCore::ImageSource::filenameExtension):
+        * platform/graphics/skia/ImageSourceSkia.h: Added.
+
+2009-01-08  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Add NativeImageSkia (PlatformImagePtr) to platform/graphics/skia
+        https://bugs.webkit.org/show_bug.cgi?id=23200
+
+        * platform/graphics/skia/NativeImageSkia.cpp: Added.
+        (NativeImageSkia::NativeImageSkia):
+        (NativeImageSkia::decodedSize):
+        (NativeImageSkia::hasResizedBitmap):
+        (NativeImageSkia::resizedBitmap):
+        (NativeImageSkia::shouldCacheResampling):
+        * platform/graphics/skia/NativeImageSkia.h: Added.
+        (NativeImageSkia::setDataComplete):
+        (NativeImageSkia::isDataComplete):
+
+2009-01-08  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Add ImageBufferSkia and ImageSkia files.
+        https://bugs.webkit.org/show_bug.cgi?id=23200
+        For now we've left BitmapImage and BitmapImageSingleFrameSkia
+        implementations in the ImageSkia file (like ImageCG has), but
+        we intend to break them out into their own files.
+
+        * platform/graphics/skia/ImageBufferSkia.cpp: Added.
+        (WebCore::ImageBufferData::ImageBufferData):
+        (WebCore::ImageBuffer::ImageBuffer):
+        (WebCore::ImageBuffer::~ImageBuffer):
+        (WebCore::ImageBuffer::context):
+        (WebCore::ImageBuffer::image):
+        (WebCore::ImageBuffer::getImageData):
+        (WebCore::ImageBuffer::putImageData):
+        (WebCore::ImageBuffer::toDataURL):
+        * platform/graphics/skia/ImageSkia.cpp: Added.
+        (WebCore::):
+        (WebCore::FrameData::clear):
+        (WebCore::Image::loadPlatformResource):
+        (WebCore::Image::drawPattern):
+        (WebCore::BitmapImage::initPlatformData):
+        (WebCore::BitmapImage::invalidatePlatformData):
+        (WebCore::BitmapImage::checkForSolidColor):
+        (WebCore::BitmapImage::draw):
+        (WebCore::BitmapImageSingleFrameSkia::draw):
+        (WebCore::BitmapImageSingleFrameSkia::create):
+
+2009-01-08  James Robinson  <jamesr@google.com>
+
+        Reviewed by Mark Rowe.
+        Landed by Pamela Greene.
+
+        WebCore::Event::timeStamp() is a simple accessor and should be const
+
+        https://bugs.webkit.org/show_bug.cgi?id=23176
+
+        * dom/Event.h:
+        (WebCore::Event::timeStamp):
+
+2009-01-08  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Fix <rdar://problem/6467206> 
+        Resources loaded from the memory cache do not get correctly inserted into the DocLoader resource map (22994)
+        
+        Use CachedResourceHandle in document resource map so resources get updated correctly when using
+        using cache validation conditionals.
+
+        * loader/Cache.cpp:
+        (WebCore::Cache::evict):
+        * loader/DocLoader.cpp:
+        (WebCore::DocLoader::~DocLoader):
+        (WebCore::DocLoader::requestResource):
+        (WebCore::DocLoader::setAutoLoadImages):
+        (WebCore::DocLoader::removeCachedResource):
+        * loader/DocLoader.h:
+        (WebCore::DocLoader::cachedResource):
+        (WebCore::DocLoader::allCachedResources):
+        * loader/DocumentLoader.cpp:
+        (WebCore::DocumentLoader::getSubresources):
+        * loader/ImageLoader.cpp:
+        (WebCore::ImageLoader::updateFromElement):
+
+2009-01-08  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Add a cleaned-up GraphicsContextSkia implementation to WebKit.
+        https://bugs.webkit.org/show_bug.cgi?id=23191
+
+        * platform/graphics/skia/GraphicsContextSkia.cpp: Added.
+        (WebCore::):
+        (WebCore::GraphicsContext::GraphicsContext):
+        (WebCore::GraphicsContext::~GraphicsContext):
+        (WebCore::GraphicsContext::platformContext):
+        (WebCore::GraphicsContext::savePlatformState):
+        (WebCore::GraphicsContext::restorePlatformState):
+        (WebCore::GraphicsContext::beginTransparencyLayer):
+        (WebCore::GraphicsContext::endTransparencyLayer):
+        (WebCore::GraphicsContext::addInnerRoundedRectClip):
+        (WebCore::GraphicsContext::addPath):
+        (WebCore::GraphicsContext::beginPath):
+        (WebCore::GraphicsContext::clearPlatformShadow):
+        (WebCore::GraphicsContext::clearRect):
+        (WebCore::GraphicsContext::clip):
+        (WebCore::GraphicsContext::clipOut):
+        (WebCore::GraphicsContext::clipOutEllipseInRect):
+        (WebCore::GraphicsContext::clipPath):
+        (WebCore::GraphicsContext::clipToImageBuffer):
+        (WebCore::GraphicsContext::concatCTM):
+        (WebCore::GraphicsContext::drawConvexPolygon):
+        (WebCore::GraphicsContext::drawEllipse):
+        (WebCore::GraphicsContext::drawFocusRing):
+        (WebCore::GraphicsContext::drawLine):
+        (WebCore::GraphicsContext::drawLineForMisspellingOrBadGrammar):
+        (WebCore::GraphicsContext::drawLineForText):
+        (WebCore::GraphicsContext::drawRect):
+        (WebCore::GraphicsContext::fillPath):
+        (WebCore::GraphicsContext::fillRect):
+        (WebCore::GraphicsContext::fillRoundedRect):
+        (WebCore::GraphicsContext::getCTM):
+        (WebCore::GraphicsContext::roundToDevicePixels):
+        (WebCore::GraphicsContext::scale):
+        (WebCore::GraphicsContext::setAlpha):
+        (WebCore::GraphicsContext::setCompositeOperation):
+        (WebCore::GraphicsContext::setImageInterpolationQuality):
+        (WebCore::GraphicsContext::setLineCap):
+        (WebCore::GraphicsContext::setLineDash):
+        (WebCore::GraphicsContext::setLineJoin):
+        (WebCore::GraphicsContext::setMiterLimit):
+        (WebCore::GraphicsContext::setPlatformFillColor):
+        (WebCore::GraphicsContext::setPlatformShadow):
+        (WebCore::GraphicsContext::setPlatformStrokeColor):
+        (WebCore::GraphicsContext::setPlatformStrokeStyle):
+        (WebCore::GraphicsContext::setPlatformStrokeThickness):
+        (WebCore::GraphicsContext::setPlatformTextDrawingMode):
+        (WebCore::GraphicsContext::setURLForRect):
+        (WebCore::GraphicsContext::setUseAntialiasing):
+        (WebCore::GraphicsContext::strokeArc):
+        (WebCore::GraphicsContext::strokePath):
+        (WebCore::GraphicsContext::strokeRect):
+        (WebCore::GraphicsContext::rotate):
+        (WebCore::GraphicsContext::translate):
+
+2009-01-08  David Hyatt  <hyatt@apple.com>
+
+        Fix for <rdar://problem/6465682> REGRESSION: In Mail, can't force a message to auto scroll.
+
+        Make scrollRectIntoViewRecursively call out to the HostWindow to continue the recursive scroll for
+        any scrollable views that may contain a WebView.  Does nothing on platforms other than the Mac, but
+        might eventually be of interest to other platforms.
+
+        Reviewed by Oliver Hunt
+
+        * WebCore.base.exp:
+        * page/Chrome.cpp:
+        (WebCore::Chrome::scrollRectIntoView):
+        * page/Chrome.h:
+        * page/ChromeClient.h:
+        (WebCore::ChromeClient::scrollRectIntoView):
+        * platform/HostWindow.h:
+        * platform/ScrollView.cpp:
+        (WebCore::ScrollView::scrollRectIntoViewRecursively):
+
+2009-01-08  Adam Treat  <adam.treat@torchmobile.com>
+
+        Reviewed by David Hyatt.
+
+        No need to make this part of HostWindow and moreover HostWindow should
+        not have any reference to non-platform parts of WebCore.
+
+        * page/Chrome.h:
+        * page/FrameView.cpp:
+        (WebCore::FrameView::setContentsSize):
+        * platform/HostWindow.h:
+
+2009-01-08  Eric Carlson  <eric.carlson@apple.com>
+
+        Reviewed by Adele Peterson.
+
+        Simplify Mac interfaces for drawing media controller elements
+
+        <rdar://problem/6293969>
+
+        * WebCore.base.exp: update for changed WebKitSystemInterface media controller functions
+
+        * platform/mac/WebCoreSystemInterface.h: Ditto
+        * platform/mac/WebCoreSystemInterface.mm: Ditto
+
+        * rendering/MediaControlElements.h:
+        (WebCore::): Add MediaControlElements enum
+
+        * rendering/RenderThemeMac.mm:
+        (WebCore::RenderThemeMac::paintMediaFullscreenButton):  update for changed WebKitSystemInterface
+        media controller functions
+        (WebCore::RenderThemeMac::paintMediaMuteButton): Ditto
+        (WebCore::RenderThemeMac::paintMediaPlayButton): Ditto
+        (WebCore::RenderThemeMac::paintMediaSeekBackButton): Ditto
+        (WebCore::RenderThemeMac::paintMediaSeekForwardButton): Ditto
+        (WebCore::RenderThemeMac::paintMediaSliderTrack): Ditto
+        (WebCore::RenderThemeMac::paintMediaSliderThumb): Ditto
+
+2009-01-08  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Add two more files for platform/graphics/skia.
+        https://bugs.webkit.org/show_bug.cgi?id=23191
+
+        * platform/graphics/skia/GradientSkia.cpp: Added.
+        (WebCore::Gradient::platformDestroy):
+        (WebCore::F2B):
+        (WebCore::makeSkColor):
+        (WebCore::totalStopsNeeded):
+        (WebCore::fillStops):
+        (WebCore::compareStops):
+        (WebCore::Gradient::platformGradient):
+        (WebCore::Gradient::fill):
+        * platform/graphics/skia/GraphicsContextPlatformPrivate.h: Copied from WebCore/bindings/js/ScriptValue.h.
+        (WebCore::GraphicsContextPlatformPrivate::GraphicsContextPlatformPrivate):
+        (WebCore::GraphicsContextPlatformPrivate::context):
+
+2009-01-08  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Commit the right files this time!  (Instead of the ugly unfixed ones.)
+        https://bugs.webkit.org/show_bug.cgi?id=23191
+
+        * platform/graphics/skia/BitmapImageSingleFrameSkia.h:
+        * platform/graphics/skia/FloatPointSkia.cpp:
+        * platform/graphics/skia/FloatRectSkia.cpp:
+        * platform/graphics/skia/IntPointSkia.cpp:
+        * platform/graphics/skia/IntRectSkia.cpp:
+        (WebCore::IntRect::operator SkRect):
+        * platform/graphics/skia/SkiaUtils.cpp:
+        (WebCore::):
+        (WebCore::WebCoreCompositeToSkiaComposite):
+        (WebCore::SkPMColorToWebCoreColor):
+        (WebCore::IntersectRectAndRegion):
+        (WebCore::ClipRectToCanvas):
+        (WebCore::SkPathContainsPoint):
+        (WebCore::scratchContext):
+        * platform/graphics/skia/SkiaUtils.h:
+        (WebCore::WebCoreFloatToSkScalar):
+        (WebCore::WebCoreDoubleToSkScalar):
+
+2009-01-08  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Add the first few files from platform/graphics/skia
+        https://bugs.webkit.org/show_bug.cgi?id=23191
+
+        These are all pretty simple.
+        Eventually BitmapImageSingleFrameSkia might grow a .cpp file, for now it's just a header.
+        SkiaUtils needs to die, but that can come later, no need to block up-streaming now.
+
+        * platform/graphics/skia/BitmapImageSingleFrameSkia.h: Added.
+        (WebCore::BitmapImageSingleFrameSkia::isBitmapImage):
+        (WebCore::BitmapImageSingleFrameSkia::size):
+        (WebCore::BitmapImageSingleFrameSkia::destroyDecodedData):
+        (WebCore::BitmapImageSingleFrameSkia::decodedSize):
+        (WebCore::BitmapImageSingleFrameSkia::nativeImageForCurrentFrame):
+        (WebCore::BitmapImageSingleFrameSkia::BitmapImageSingleFrameSkia):
+        * platform/graphics/skia/FloatPointSkia.cpp: Copied from WebCore/platform/graphics/mac/FloatPointMac.mm.
+        (WebCore::FloatPoint::FloatPoint):
+        (WebCore::FloatPoint::operator SkPoint):
+        * platform/graphics/skia/FloatRectSkia.cpp: Copied from WebCore/platform/graphics/qt/IntRectQt.cpp.
+        (WebCore::FloatRect::FloatRect):
+        (WebCore::FloatRect::operator SkRect):
+        * platform/graphics/skia/IntPointSkia.cpp: Copied from WebCore/platform/graphics/win/IntPointWin.cpp.
+        (WebCore::IntPoint::IntPoint):
+        (WebCore::IntPoint::operator SkIPoint):
+        (WebCore::IntPoint::operator SkPoint):
+        * platform/graphics/skia/IntRectSkia.cpp: Copied from WebCore/platform/graphics/qt/IntRectQt.cpp.
+        (WebCore::IntRect::operator SkIRect):
+        (WebCore::IntRect::operator SkRect):
+        (WebCore::IntRect::IntRect):
+        * platform/graphics/skia/SkiaUtils.cpp: Added.
+        (WebCore::WebCorePointToSkiaPoint):
+        (WebCore::WebCoreRectToSkiaRect):
+        (WebCore::):
+        (WebCore::WebCoreCompositeToSkiaComposite):
+        (WebCore::InvScaleByte):
+        (WebCore::SkPMColorToColor):
+        (WebCore::SkPMColorToWebCoreColor):
+        (WebCore::IntersectRectAndRegion):
+        (WebCore::ClipRectToCanvas):
+        (WebCore::SkPathContainsPoint):
+        (WebCore::scratchContext):
+        * platform/graphics/skia/SkiaUtils.h: Added.
+        (WebCore::WebCoreFloatToSkScalar):
+        (WebCore::WebCoreDoubleToSkScalar):
+
 2009-01-08  Pierre-Olivier Latour  <pol@apple.com>
 
         Reviewed by Dan Bernstein.
@@ -2291,7 +2729,7 @@
         (WebCore::mapRect): new method to map a rect contained
         in one rect to an equivalent rect inside another rect.
 
-2008-12-29  Konstantin KÃ¤fer  <kkaefer@gmail.com>
+2008-12-29  Konstantin Käfer  <kkaefer@gmail.com>
 
         Reviewed by Tim Hatcher.
 
@@ -4131,7 +4569,7 @@
 
 2008-12-19  Jade Han <jade.han@nokia.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         [Qt] Allow conversion of JavaScript Number and Boolean types to Qt types
 
@@ -4140,7 +4578,7 @@
         * bridge/qt/qt_runtime.cpp:
         (JSC::Bindings::convertValueToQVariant):
 
-2008-12-19  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-19  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Holger Freyther.
 
@@ -4652,7 +5090,7 @@
 
 2008-12-16 Yael Aharon <yael.aharon@nokia.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Qt/Win build fix
 
@@ -5446,7 +5884,7 @@
         (WebCore::setSharedTimerFireTime): Always delete and create the timer instead of using ChangeTimerQueueTimer.
         (WebCore::stopSharedTimer): Call DeleteTimerQueueTimer directly.
 
-2008-12-12  Kai BrÃ¼ning  <kai@granus.net>
+2008-12-12  Kai Brüning  <kai@granus.net>
 
         Reviewed and tweaked by Darin Adler.
 
@@ -5515,7 +5953,7 @@
         (WebCore::HTMLCanvasElement::createImageBuffer):
         (WebCore::HTMLCanvasElement::baseTransform):
 
-2008-12-12  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-12  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Oliver Hunt.
 
@@ -5533,7 +5971,7 @@
         (WebCore::PluginView::paint):
         * plugins/win/PluginViewWin.cpp:
 
-2008-12-12  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-12  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -5547,7 +5985,7 @@
         (WebCore::PluginView::setNPWindowIfNeeded):
         (WebCore::PluginView::updatePluginWidget):
 
-2008-12-12  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-12  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Oliver Hunt.
 
@@ -5570,7 +6008,7 @@
         * plugins/wx/PluginViewWx.cpp:
         (WebCore::PluginView::updatePluginWidget):
 
-2008-12-12  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-12  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -5970,7 +6408,7 @@
         (WebCore::screenDepth):
         (WebCore::screenRect):
 
-2008-12-08  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-08  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Darin Adler and Holger Freyther.
 
@@ -5995,7 +6433,7 @@
 
 2008-12-11  Holger Hans Peter Freyther  <zecke@selfish.org>
 
-        Reviewed and implemented with Tor Arne VestbÃ¸.
+        Reviewed and implemented with Tor Arne Vestbø.
 
         Reimplement RenderTheme::caretBlinkInterval for Qt.
 
@@ -6008,7 +6446,7 @@
 
 2008-12-09  Trenton Schulz <trenton.schulz@nokia.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         [Qt/Mac] Don't call HIGetScaleFactor() if we're not on Tiger or better
 
@@ -6908,7 +7346,7 @@
 
 2008-12-08  Trenton Schulz <trenton.schulz@nokia.com>
 
-        Rubber-stamped by Tor Arne VestbÃ¸.
+        Rubber-stamped by Tor Arne Vestbø.
 
         Fix build warning on Mac
 
@@ -7661,7 +8099,7 @@
         reverts a recent change that made the behavior slightly closer to Firefox - but the
         compatibility effect should be very minor if any, and Firefox itself behaves inconsistently.
 
-2008-12-05  Tobias KÃ¶nig <tobias.koenig@nokia.com>
+2008-12-05  Tobias König <tobias.koenig@nokia.com>
 
         Reviewed by Simon Hausmann.
 
@@ -7670,7 +8108,7 @@
 
         * WebCore.pro:
 
-2008-12-05  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-05  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -7965,14 +8403,14 @@
 
 2008-12-04  Friedemann Kleint  <friedemann.kleint@nokia.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Fix small translation glitch in the Qt file chooser.
 
         * platform/qt/FileChooserQt.cpp:
         (WebCore::FileChooser::basenameForWidth):
 
-2008-12-04  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-04  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -8388,7 +8826,7 @@
         * page/Console.h: Add WMLMessageSource.
         (WebCore::):
 
-2008-12-03  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-03  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -8791,7 +9229,7 @@
 
 2008-12-01 Laszlo Gombos <laszlo.1.gombos@nokia.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         MinGW compilation fix for PluginPackageWin.cpp
 
@@ -8809,7 +9247,7 @@
 
 2008-12-02  Simon Hausmann  <hausmann@webkit.org>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Build JavaScriptCore into libQtWebKit.so through a direct build
         instead of a static library. When linking a static library into
@@ -8863,7 +9301,7 @@
         (WebCore::XMLHttpRequest::didReceiveResponsePreflight):
         Change XMLHttpRequest to use ScriptExecutionContext instead of Document to access securityOrigin().
 
-2008-12-02  AndrÃ© PÃ¶nitz  <apoenitz@trolltech.com>
+2008-12-02  André Pönitz  <apoenitz@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -9166,7 +9604,7 @@
         (WebCore::KeyframeAnimation::sendAnimationEvent):
         (WebCore::KeyframeAnimation::resumeOverriddenAnimations):
 
-2008-12-01  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-01  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -9391,7 +9829,7 @@
 
 2008-11-27  Laszlo Gombos  <laszlo.1.gombos@nokia.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Regression seen on QtWebKit - causes a build failure on Win using MinGW
 
@@ -9401,7 +9839,7 @@
 
 2008-11-28  Simon Hausmann  <hausmann@webkit.org>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Fix compilation and linking on Windows CE.
 
@@ -11935,7 +12373,7 @@
 
         * WebCore.base.exp: Export __ZTVN7WebCore17FrameLoaderClientE
 
-2008-11-18  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-18  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -11949,7 +12387,7 @@
         * platform/qt/WidgetQt.cpp:
         (WebCore::Widget::setFrameRect):
 
-2008-11-18  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-18  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -12018,7 +12456,7 @@
 
 2008-11-18  Ariya Hidayat  <ariya.hidayat@trolltech.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Fix the bug where select elements are painted without border.
         http://trolltech.com/developer/task-tracker/index_html?id=218957&method=entry
@@ -13384,7 +13822,7 @@
         * platform/text/String.cpp:
         (WebCore::charactersToDouble):
 
-2008-11-14  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -13393,7 +13831,7 @@
         * platform/qt/ScrollbarQt.cpp:
         (WebCore::Scrollbar::contextMenu):
 
-2008-11-14  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -13456,7 +13894,7 @@
         (WebCore::AnimationBase::playStatePlaying):
         * page/animation/AnimationBase.h:
 
-2008-11-12  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-12  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -13949,7 +14387,7 @@
         (WebCore::numEnclosingMailBlockquotes): Added.
         * editing/htmlediting.h:
 
-2008-11-10  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-10  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -13964,7 +14402,7 @@
         * platform/mac/WebCoreNSStringExtras.mm:
         (stringEncodingForResource):
 
-2008-11-10  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-10  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -14232,7 +14670,7 @@
 
 2008-11-11  Ariya Hidayat  <ariya.hidayat@trolltech.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Fix crash when rendering the file chooser.
         Also proper implementation for multi-selected files.
@@ -14371,7 +14809,7 @@
 
 2008-11-10  Tom Cooksey  <thomas.cooksey@trolltech.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Fix QtWebkit build failure on arm.
 
@@ -14380,7 +14818,7 @@
         * platform/graphics/qt/GraphicsContextQt.cpp:
         (WebCore::GraphicsContext::setLineDash):
 
-2008-11-10  Morten SÃ¸rvig  <msorvig@trolltech.com>
+2008-11-10  Morten Sørvig  <msorvig@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -14612,14 +15050,14 @@
         (WebCore::LayoutStateMaintainer::push):
         (WebCore::LayoutStateMaintainer::didPush):
 
-2008-11-07  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-07  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Fix the QtWebKit build on Mac
 
         * platform/qt/TemporaryLinkStubs.cpp:
         (PluginView::invalidateRect):
 
-2008-11-07  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-07  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -15029,7 +15467,7 @@
         * xml/XPathValue.cpp:
         (WebCore::XPath::Value::toNodeSet): Ditto
 
-2008-11-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -15127,14 +15565,14 @@
 
         * WebCore.pro:
 
-2008-11-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Fix build break in debug mode when XSLT is not enabled
 
         * loader/Cache.cpp:
         (WebCore::Cache::dumpStats):
 
-2008-11-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -15534,7 +15972,7 @@
 
 2008-11-05  Simon Hausmann  <hausmann@webkit.org>
 
-        Reviewed by Tor Arne VestbÃ¸
+        Reviewed by Tor Arne Vestbø
 
         Unify determineQuirks between the Qt and the Gtk PluginPackage.
         Share the code for parsing the module version from the description.
@@ -21537,7 +21975,7 @@
         <input type=file> to use File objects instead of path strings and
         also to append multiple files if the file list has them.
 
-2008-10-14  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-10-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
         
@@ -21547,7 +21985,7 @@
         (WebCore::ScrollbarThemeQt::paint):
         (WebCore::ScrollbarThemeQt::paintScrollCorner):
 
-2008-10-14  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-10-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -21556,7 +21994,7 @@
         * platform/qt/ScrollbarThemeQt.cpp:
         (WebCore::styleOptionSlider):
 
-2008-10-14  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-10-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -23301,7 +23739,7 @@
         (.toolbar-item:active .toolbar-label): Make this rule also require the
         toggleable class with the toolbar-item class.
 
-2008-10-08  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-10-08  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -23538,7 +23976,7 @@
 
         * GNUmakefile.am:
 
-2008-10-07  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-10-07  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -23699,7 +24137,7 @@
         (WebCore::drawControl):
         * rendering/RenderThemeWin.h:
 
-2008-10-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-10-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -23717,7 +24155,7 @@
         * platform/wx/KeyboardEventWx.cpp:
         (WebCore::PlatformKeyboardEvent::PlatformKeyboardEvent):
 
-2008-10-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-10-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -23728,7 +24166,7 @@
         * platform/text/cf/StringCF.cpp:
         * platform/text/cf/StringImplCF.cpp:
 
-2008-10-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-10-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -26661,7 +27099,7 @@
 
         * platform/qt/PlatformKeyboardEventQt.cpp:
 
-2008-09-29  Morten SÃ¸rvig  <msorvig@trolltech.com>
+2008-09-29  Morten Sørvig  <msorvig@trolltech.com>
 
         Reviewed by Simon.
 
@@ -28966,7 +29404,7 @@
         to the WebInspector.ConsoleMessage constructor call.
         (WebInspector.Resource.prototype._checkWarning): Ditto.
 
-2008-09-23  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-23  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -30001,7 +30439,7 @@
         (WebCore::JSHTMLAllCollection::createStructureID):
         (WebCore::JSHTMLAllCollection::toBoolean):
 
-2008-09-22  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-22  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -32595,7 +33033,7 @@
         * platform/text/TextCodecICU.cpp:
         (WebCore::TextCodecICU::registerExtendedEncodingNames): Updated for new encoding names.
 
-2008-09-17  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-17  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Fix the QtWebKit/Mac build
 
@@ -32853,7 +33291,7 @@
         (WebCore::writeFunction):
         (WebCore::ImageBuffer::toDataURL):
 
-2008-09-16  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-16  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -33387,7 +33825,7 @@
         * platform/graphics/cg/ImageCG.cpp:
         (WebCore::BitmapImage::draw):
 
-2008-09-15  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-15  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -33414,7 +33852,7 @@
         c'tor and will only be deleted in the c'tor. The Q_ASSERTs would
         only check if we use the MediaPlayerPrivate after it has been deleted.
 
-        Acked-by: Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+        Acked-by: Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         * platform/graphics/qt/MediaPlayerPrivatePhonon.cpp:
         (WebCore::MediaPlayerPrivate::play):
@@ -33434,7 +33872,7 @@
         * html/CanvasRenderingContext2D.cpp:
         (WebCore::CanvasRenderingContext2D::createPattern):
 
-2008-09-15  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-15  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -33455,7 +33893,7 @@
         * platform/graphics/qt/MediaPlayerPrivatePhonon.cpp:
         (WebCore::MediaPlayerPrivate::updateStates):
 
-2008-09-15  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-15  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -33463,7 +33901,7 @@
 
         * WebCore.pro:
 
-2008-09-15  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-15  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -35848,7 +36286,7 @@
         * platform/text/PlatformString.h: Added a missing #include of
         PassRefPtr.h.
 
-2008-09-04  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-04  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -35861,7 +36299,7 @@
         (KJS::Bindings::convertQVariantToValue):
         (KJS::Bindings::QtConnectionObject::execute):
 
-2008-09-04  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-04  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -39196,7 +39634,7 @@
         (WebCore::InspectorController::setWindowVisible): Call stopDebugging()
         if the window is no longer visible.
 
-2008-08-15  HÃ¥vard Wall  <hwall@trolltech.com>
+2008-08-15  Håvard Wall  <hwall@trolltech.com>
 
         Reviewed by Simon.
 
@@ -39208,7 +39646,7 @@
         (WebCore::PlatformScrollbar::handleMouseMoveEvent):
         (WebCore::PlatformScrollbar::handleContextMenuEvent):
 
-2008-08-15  HÃ¥vard Wall  <hwall@trolltech.com>
+2008-08-15  Håvard Wall  <hwall@trolltech.com>
 
         Reviewed by Simon.
 

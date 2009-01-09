@@ -44,8 +44,7 @@
 
 namespace WebCore {
 
-ImageDecoder* createDecoder(const Vector<char>& data,
-                            const IntSize& preferredIconSize)
+ImageDecoder* createDecoder(const Vector<char>& data, const IntSize& preferredIconSize)
 {
     // We need at least 4 bytes to figure out what kind of image we're dealing with.
     int length = data.size();

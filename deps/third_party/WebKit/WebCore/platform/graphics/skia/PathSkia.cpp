@@ -70,9 +70,7 @@ bool Path::isEmpty() const
 
 bool Path::contains(const FloatPoint& point, WindRule rule) const
 {
-    return SkPathContainsPoint(
-      m_path,
-      point, 
+    return SkPathContainsPoint(m_path, point,
       rule == RULE_NONZERO ? SkPath::kWinding_FillType : SkPath::kEvenOdd_FillType);
 }
 
@@ -83,13 +81,9 @@ void Path::translate(const FloatSize& size)
 
 FloatRect Path::boundingRect() const
 {
-    SkRect  r;
-    
-    m_path->computeBounds(&r, SkPath::kExact_BoundsType);
-    return FloatRect(SkScalarToFloat(r.fLeft),
-                     SkScalarToFloat(r.fTop),
-                     SkScalarToFloat(r.width()),
-                     SkScalarToFloat(r.height()));
+    SkRect rect;
+    m_path->computeBounds(&rect, SkPath::kExact_BoundsType);
+    return rect;
 }
 
 void Path::moveTo(const FloatPoint& point)
@@ -129,7 +123,7 @@ void Path::addArc(const FloatPoint& p, float r, float sa, float ea, bool anticlo
 
     SkRect oval;
     oval.set(cx - radius, cy - radius, cx + radius, cy + radius);
-    
+
     float sweep = ea - sa;
     // check for a circle
     if (sweep >= 2 * piFloat || sweep <= -2 * piFloat)
@@ -180,7 +174,6 @@ void Path::apply(void* info, PathApplierFunction function) const
 {
     SkPath::Iter iter(*m_path, false);
     SkPoint pts[4];
-    
     PathElement pathElement;
     FloatPoint pathPoints[3];
 
