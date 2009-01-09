@@ -23,32 +23,32 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
+
 #ifndef AuthenticationChallenge_h
 #define AuthenticationChallenge_h
 
 #include "AuthenticationChallengeBase.h"
 #include "ResourceHandle.h"
-
 #include <wtf/RefPtr.h>
 
 namespace WebCore {
 
-class ResourceHandle;
+    class ResourceHandle;
 
-class AuthenticationChallenge : public AuthenticationChallengeBase {
-public:
-    AuthenticationChallenge() {}
-    AuthenticationChallenge(const ProtectionSpace& protectionSpace, const Credential& proposedCredential, unsigned previousFailureCount, const ResourceResponse& response, const ResourceError& error);
+    class AuthenticationChallenge : public AuthenticationChallengeBase {
+    public:
+        AuthenticationChallenge() {}
+        AuthenticationChallenge(const ProtectionSpace&, const Credential& proposedCredential, unsigned previousFailureCount, const ResourceResponse&, const ResourceError&);
 
-    ResourceHandle* sourceHandle() const { return m_sourceHandle.get(); }
+        ResourceHandle* sourceHandle() const { return m_sourceHandle.get(); }
 
-private:
-    friend class AuthenticationChallengeBase;
-    static bool platformCompare(const AuthenticationChallenge& a, const AuthenticationChallenge& b);
+    private:
+        friend class AuthenticationChallengeBase;
+        static bool platformCompare(const AuthenticationChallenge&, const AuthenticationChallenge&);
 
-    RefPtr<ResourceHandle> m_sourceHandle;
-};
+        RefPtr<ResourceHandle> m_sourceHandle;
+    };
 
-}
+} // namespace WebCore
 
 #endif

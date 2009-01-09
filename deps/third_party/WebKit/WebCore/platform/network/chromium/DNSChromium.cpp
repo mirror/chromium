@@ -35,4 +35,4 @@ void prefetchDNS(const String& hostname)
     ChromiumBridge::prefetchDNS(hostname);
 }
 
-}
+} // namespace WebCore

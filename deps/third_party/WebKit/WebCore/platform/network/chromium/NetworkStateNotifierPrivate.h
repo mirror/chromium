@@ -33,8 +33,8 @@
 
 namespace WebCore {
 
-struct NetworkStateNotifierPrivate {};
+    struct NetworkStateNotifierPrivate {};
 
-}
+} // namespace WebCore
 
 #endif

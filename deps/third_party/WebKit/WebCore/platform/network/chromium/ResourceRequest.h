@@ -125,4 +125,4 @@ namespace WebCore {
 
 } // namespace WebCore
 
-#endif // ResourceRequest_h
+#endif

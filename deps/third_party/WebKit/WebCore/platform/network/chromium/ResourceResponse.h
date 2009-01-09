@@ -28,56 +28,54 @@
 #define ResourceResponse_h
 
 #include "CString.h"
-#include "ResourceResponseBase.h"
-
 #include "NotImplemented.h"
+#include "ResourceResponseBase.h"
 
 namespace WebCore {
 
-class ResourceResponse : public ResourceResponseBase {
-public:
-    ResourceResponse()
-        : ResourceResponseBase(),
-          m_isContentFiltered(false)
-    {
-    }
+    class ResourceResponse : public ResourceResponseBase {
+    public:
+        ResourceResponse()
+            : m_isContentFiltered(false)
+        {
+        }
 
-    ResourceResponse(const KURL& url, const String& mimeType, long long expectedLength, const String& textEncodingName, const String& filename)
-        : ResourceResponseBase(url, mimeType, expectedLength, textEncodingName, filename),
-          m_isContentFiltered(false)
-    {
-    }
+        ResourceResponse(const KURL& url, const String& mimeType, long long expectedLength, const String& textEncodingName, const String& filename)
+            : ResourceResponseBase(url, mimeType, expectedLength, textEncodingName, filename),
+              m_isContentFiltered(false)
+        {
+        }
 
-    const CString& getSecurityInfo() const { return m_securityInfo; }
-    void setSecurityInfo(const CString& securityInfo)
-    {
-        m_securityInfo = securityInfo;
-    }
+        const CString& getSecurityInfo() const { return m_securityInfo; }
+        void setSecurityInfo(const CString& securityInfo)
+        {
+            m_securityInfo = securityInfo;
+        }
 
-    bool isContentFiltered() const { return m_isContentFiltered; }
-    void setIsContentFiltered(bool isContentFiltered)
-    {
-        m_isContentFiltered = isContentFiltered;
-    }
+        bool isContentFiltered() const { return m_isContentFiltered; }
+        void setIsContentFiltered(bool isContentFiltered)
+        {
+            m_isContentFiltered = isContentFiltered;
+        }
 
-private:
-    friend class ResourceResponseBase;
+    private:
+        friend class ResourceResponseBase;
 
-    // An opaque value that contains some information regarding the security of
-    // the connection for this request, such as SSL connection info (empty
-    // string if not over HTTPS).
-    CString m_securityInfo;
+        // An opaque value that contains some information regarding the security of
+        // the connection for this request, such as SSL connection info (empty
+        // string if not over HTTPS).
+        CString m_securityInfo;
 
-    void doUpdateResourceResponse()
-    {
-        notImplemented();
-    }
+        void doUpdateResourceResponse()
+        {
+            notImplemented();
+        }
 
-    // Whether the contents for this response has been altered/blocked (usually
-    // for security reasons.
-    bool m_isContentFiltered;
-};
+        // Whether the contents for this response has been altered/blocked (usually
+        // for security reasons.
+        bool m_isContentFiltered;
+    };
 
 } // namespace WebCore
 
-#endif // ResourceResponse_h
+#endif
