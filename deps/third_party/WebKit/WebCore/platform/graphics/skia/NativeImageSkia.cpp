@@ -44,7 +44,7 @@ NativeImageSkia::NativeImageSkia()
 
 int NativeImageSkia::decodedSize() const
 {
-  return getSize() + m_resizedImage.getSize();
+    return getSize() + m_resizedImage.getSize();
 }
 
 bool NativeImageSkia::hasResizedBitmap(int w, int h) const
