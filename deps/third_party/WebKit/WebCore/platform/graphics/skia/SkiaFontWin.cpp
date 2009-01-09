@@ -1,24 +1,47 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+/*
+ * Copyright (c) 2008, Google Inc. All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ * 
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
-#include <windows.h>
-
-#include "WTF/ListHashSet.h"
-#include "WTF/Vector.h"
-
+#include "config.h"
 #include "SkiaFontWin.h"
 
 #include "SkCanvas.h"
 #include "SkPaint.h"
 
+#include <wtf/ListHashSet.h>
+#include <wtf/Vector.h>
+
 namespace WebCore {
 
-namespace {
-
 struct CachedOutlineKey {
-    CachedOutlineKey() : font(NULL), glyph(0), path(NULL) {}
-    CachedOutlineKey(HFONT f, WORD g) : font(f), glyph(g), path(NULL) {}
+    CachedOutlineKey() : font(0), glyph(0), path(0) {}
+    CachedOutlineKey(HFONT f, WORD g) : font(f), glyph(g), path(0) {}
 
     HFONT font;
     WORD glyph;
@@ -41,8 +64,7 @@ struct CachedOutlineKeyHash {
         return keyBytes + key.glyph;
     }
 
-    static unsigned equal(const CachedOutlineKey& a,
-                          const CachedOutlineKey& b)
+    static unsigned equal(const CachedOutlineKey& a, const CachedOutlineKey& b)
     {
         return a.font == b.font && a.glyph == b.glyph;
     }
@@ -51,20 +73,15 @@ struct CachedOutlineKeyHash {
 };
 
 typedef ListHashSet<CachedOutlineKey, CachedOutlineKeyHash> OutlineCache;
-OutlineCache outlineCache;
+
+// FIXME: Convert from static constructor to accessor function. WebCore tries to
+// avoid global constructors to save on start-up time.
+static OutlineCache outlineCache;
 
 // The global number of glyph outlines we'll cache.
-const int outlineCacheSize = 256;
+static const int outlineCacheSize = 256;
 
-inline FIXED SkScalarToFIXED(SkScalar x)
-{
-    FIXED fixed;
-    SkFixed skFixed = SkScalarToFixed(x);
-    memcpy(&fixed, &skFixed, sizeof(FIXED));
-    return fixed;
-}
-
-inline SkScalar FIXEDToSkScalar(FIXED fixed)
+static SkScalar FIXEDToSkScalar(FIXED fixed)
 {
     SkFixed skFixed;
     memcpy(&skFixed, &fixed, sizeof(SkFixed));
@@ -72,24 +89,23 @@ inline SkScalar FIXEDToSkScalar(FIXED fixed)
 }
 
 // Removes the given key from the cached outlines, also deleting the path.
-void DeleteOutline(OutlineCache::iterator deleteMe)
+static void deleteOutline(OutlineCache::iterator deleteMe)
 {
     delete deleteMe->path;
     outlineCache.remove(deleteMe);
 }
 
-void AddPolyCurveToPath(const TTPOLYCURVE* polyCurve, SkPath* path)
+static void addPolyCurveToPath(const TTPOLYCURVE* polyCurve, SkPath* path)
 {
     switch (polyCurve->wType) {
     case TT_PRIM_LINE:
         for (WORD i = 0; i < polyCurve->cpfx; i++) {
-          path->lineTo(FIXEDToSkScalar(polyCurve->apfx[i].x),
-                       -FIXEDToSkScalar(polyCurve->apfx[i].y));
+          path->lineTo(FIXEDToSkScalar(polyCurve->apfx[i].x), -FIXEDToSkScalar(polyCurve->apfx[i].y));
         }
         break;
 
     case TT_PRIM_QSPLINE:
-        // FIXME(brettw) doesn't this duplicate points if we do the loop > once?
+        // FIXME: doesn't this duplicate points if we do the loop > once?
         for (WORD i = 0; i < polyCurve->cpfx - 1; i++) {
             SkScalar bx = FIXEDToSkScalar(polyCurve->apfx[i].x);
             SkScalar by = FIXEDToSkScalar(polyCurve->apfx[i].y);
@@ -114,12 +130,12 @@ void AddPolyCurveToPath(const TTPOLYCURVE* polyCurve, SkPath* path)
     }
 }
 
-// The size of the glyph outline buffer.
-const int glyphPathBufferSize = 4096;
+// The size of the glyph path buffer.
+static const int glyphPathBufferSize = 4096;
 
 // Fills the given SkPath with the outline for the given glyph index. The font
 // currently selected into the given DC is used. Returns true on success.
-bool GetPathForGlyph(HDC dc, WORD glyph, SkPath* path)
+static bool getPathForGlyph(HDC dc, WORD glyph, SkPath* path)
 {
     char buffer[glyphPathBufferSize];
     GLYPHMETRICS gm;
@@ -143,7 +159,7 @@ bool GetPathForGlyph(HDC dc, WORD glyph, SkPath* path)
         while (curPoly < endPoly) {
             const TTPOLYCURVE* polyCurve =
                 reinterpret_cast<const TTPOLYCURVE*>(curPoly);
-            AddPolyCurveToPath(polyCurve, path);
+            addPolyCurveToPath(polyCurve, path);
             curPoly += sizeof(WORD) * 2 + sizeof(POINTFX) * polyCurve->cpfx;
         }
         curGlyph += polyHeader->cb;
@@ -155,8 +171,8 @@ bool GetPathForGlyph(HDC dc, WORD glyph, SkPath* path)
 
 // Returns a SkPath corresponding to the give glyph in the given font. The font
 // should be selected into the given DC. The returned path is owned by the
-// hashtable. Returns NULL on error.
-const SkPath* GetCachedPathForGlyph(HDC hdc, HFONT font, WORD glyph)
+// hashtable. Returns 0 on error.
+const SkPath* SkiaWinOutlineCache::lookupOrCreatePathForGlyph(HDC hdc, HFONT font, WORD glyph)
 {
     CachedOutlineKey key(font, glyph);
     OutlineCache::iterator found = outlineCache.find(key);
@@ -169,90 +185,19 @@ const SkPath* GetCachedPathForGlyph(HDC hdc, HFONT font, WORD glyph)
     }
 
     key.path = new SkPath;
-    if (!GetPathForGlyph(hdc, glyph, key.path))
-      return NULL;
+    if (!getPathForGlyph(hdc, glyph, key.path))
+      return 0;
 
-    if (outlineCache.size() > outlineCacheSize) {
+    if (outlineCache.size() > outlineCacheSize)
         // The cache is too big, find the oldest value (first in the list).
-        DeleteOutline(outlineCache.begin());
-    }
+        deleteOutline(outlineCache.begin());
 
     outlineCache.add(key);
     return key.path;
 }
 
-}  // namespace
 
-bool SkiaDrawText(HFONT hfont,
-                  SkCanvas* canvas,
-                  const SkPoint& point,
-                  SkPaint* paint,
-                  const WORD* glyphs,
-                  const int* advances,
-                  int num_glyphs)
-{
-    HDC dc = GetDC(0);
-    HGDIOBJ old_font = SelectObject(dc, hfont);
-
-    canvas->save();
-    canvas->translate(point.fX, point.fY);
-
-    for (int i = 0; i < num_glyphs; i++) {
-        const SkPath* path = GetCachedPathForGlyph(dc, hfont, glyphs[i]);
-        if (!path)
-            return false;
-        canvas->drawPath(*path, *paint);
-        canvas->translate(advances[i], 0);
-    }
-
-    canvas->restore();
-
-    SelectObject(dc, old_font);
-    ReleaseDC(0, dc);
-    return true;
-}
-
-/* TODO(brettw) finish this implementation
-bool SkiaDrawComplexText(HFONT font,
-                         SkCanvas* canvas,
-                         const SkPoint& point,
-                         SkPaint* paint
-                         UINT fuOptions,
-                         const SCRIPT_ANALYSIS* psa,
-                         const WORD* pwGlyphs,
-                         int cGlyphs,
-                         const int* advances,
-                         const int* justifies,
-                         const GOFFSET* glyph_offsets)
-{
-    HDC dc = GetDC(0);
-    HGDIOBJ old_font = SelectObject(dc, hfont);
-
-    canvas->save();
-    canvas->translate(point.fX, point.fY);
-
-    for (int i = 0; i < cGlyphs; i++) {
-        canvas->translate(glyph_offsets[i].du, glyph_offsets[i].dv);
-
-
-        
-
-        // Undo the offset for this glyph.
-        canvas->translate(-glyph_offsets[i].du, -glyph_offsets[i].dv);
-
-        // And advance to where we're drawing the next one. We use the justifies
-        // run since that is the justified advances for each character, rather than
-        // the adnvaces one.
-        canvas->translate(justifies[i], 0);
-    }
-
-    canvas->restore();
-
-    SelectObject(dc, old_font);
-    ReleaseDC(0, dc);
-}*/
-
-void RemoveFontFromSkiaFontWinCache(HFONT hfont)
+void SkiaWinOutlineCache::removePathsForFont(HFONT hfont)
 {
     // ListHashSet isn't the greatest structure for deleting stuff out of, but
     // removing entries will be relatively rare (we don't remove fonts much, nor
@@ -267,7 +212,7 @@ void RemoveFontFromSkiaFontWinCache(HFONT hfont)
 
     for (Vector<CachedOutlineKey>::iterator i = outlinesToDelete.begin();
          i != outlinesToDelete.end(); ++i)
-        DeleteOutline(outlineCache.find(*i));
+        deleteOutline(outlineCache.find(*i));
 }
 
 }  // namespace WebCore

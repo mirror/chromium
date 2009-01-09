@@ -1,63 +1,54 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+/*
+ * Copyright (c) 2008, Google Inc. All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ * 
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
-#ifndef SkiaFont_Win_h
-#define SkiaFont_Win_h
+#ifndef SkiaWinOutlineCache_h
+#define SkiaWinOutlineCache_h
 
 #include <windows.h>
-#include <usp10.h>
 
-class SkCanvas;
-class SkPaint;
-struct SkPoint;
+class SkPath;
 
-// This file provices Skia equivalents to Windows text drawing functions. They
-// will get the outlines from Windows and draw then using Skia using the given
-// parameters in the paint arguments. This allows more complex effects and
-// transforms to be drawn than Windows allows.
-//
-// These functions will be significantly slower than Windows GDI, and the text
-// will look different (no ClearType), so use only when necessary.
-//
-// When you call a Skia* text drawing function, various glyph outlines will be
-// cached. As a result, you should call RemoveFontFromSkiaFontWinCache when
-// the font is destroyed so that the cache does not outlive the font (since the
-// HFONTs are recycled).
 namespace WebCore {
 
-// Analog of the Windows GDI function DrawText, except using the given SkPaint
-// attributes for the text. See above for more.
-//
-// Returns true of the text was drawn successfully. False indicates an error
-// from Windows.
-bool SkiaDrawText(HFONT hfont,
-                  SkCanvas* canvas,
-                  const SkPoint& point,
-                  SkPaint* paint,
-                  const WORD* glyphs,
-                  const int* advances,
-                  int num_glyphs);
+// FIXME: Rename file to SkiaWinOutlineCache
+class SkiaWinOutlineCache {
+public:
+    static const SkPath* lookupOrCreatePathForGlyph(HDC, HFONT, WORD);
+    // Removes any cached glyphs from the outline cache corresponding to the
+    // given font handle.
+    static void removePathsForFont(HFONT);
 
-// This mirrors the features of ScriptTextOut.
-/* TODO(brettw) finish this implementation.
-bool SkiaDrawComplexText(HFONT font,
-                         SkCanvas* canvas,
-                         const SkPoint& point,
-                         SkPaint* paint,
-                         UINT fuOptions,
-                         const SCRIPT_ANALYSIS* psa,
-                         const WORD* pwGlyphs,
-                         int cGlyphs,
-                         const int* advances,
-                         const int* justifies,
-                         const GOFFSET* glyph_offsets);
-*/
-
-// Removes any cached glyphs from the outline cache corresponding to the given
-// font handle.
-void RemoveFontFromSkiaFontWinCache(HFONT hfont);
+private:
+    SkiaWinOutlineCache();
+};
 
 }  // namespace WebCore
 
-#endif  // SkiaFont_Win_h
+#endif  // SkiaWinOutlineCache_h

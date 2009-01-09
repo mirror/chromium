@@ -65,6 +65,53 @@ static bool windowsCanHandleTextDrawing(GraphicsContext* context)
     return true;
 }
 
+// Skia equivalents to Windows text drawing functions. They
+// will get the outlines from Windows and draw then using Skia using the given
+// parameters in the paint arguments. This allows more complex effects and
+// transforms to be drawn than Windows allows.
+//
+// These functions will be significantly slower than Windows GDI, and the text
+// will look different (no ClearType), so use only when necessary.
+//
+// When you call a Skia* text drawing function, various glyph outlines will be
+// cached. As a result, you should call SkiaWinOutlineCache::removePathsForFont 
+// when the font is destroyed so that the cache does not outlive the font (since
+// the HFONTs are recycled).
+
+// Analog of the Windows GDI function DrawText, except using the given SkPaint
+// attributes for the text. See above for more.
+//
+// Returns true of the text was drawn successfully. False indicates an error
+// from Windows.
+static bool skiaDrawText(HFONT hfont,
+                  SkCanvas* canvas,
+                  const SkPoint& point,
+                  SkPaint* paint,
+                  const WORD* glyphs,
+                  const int* advances,
+                  int numGlyphs)
+{
+    HDC dc = GetDC(0);
+    HGDIOBJ oldFont = SelectObject(dc, hfont);
+
+    canvas->save();
+    canvas->translate(point.fX, point.fY);
+
+    for (int i = 0; i < numGlyphs; i++) {
+        const SkPath* path = SkiaWinOutlineCache::lookupOrCreatePathForGlyph(dc, hfont, glyphs[i]);
+        if (!path)
+            return false;
+        canvas->drawPath(*path, *paint);
+        canvas->translate(advances[i], 0);
+    }
+
+    canvas->restore();
+
+    SelectObject(dc, oldFont);
+    ReleaseDC(0, dc);
+    return true;
+}
+
 static bool PaintSkiaText(PlatformContextSkia* platformContext,
                           HFONT hfont,
                           int numGlyphs,
@@ -80,7 +127,7 @@ static bool PaintSkiaText(PlatformContextSkia* platformContext,
     paint.setFlags(SkPaint::kAntiAlias_Flag);
     bool didFill = false;
     if ((textMode & cTextFill) && SkColorGetA(paint.getColor())) {
-        if (!SkiaDrawText(hfont, platformContext->canvas(), origin, &paint,
+        if (!skiaDrawText(hfont, platformContext->canvas(), origin, &paint,
                           &glyphs[0], &advances[0], numGlyphs))
             return false;
         didFill = true;
@@ -107,7 +154,7 @@ static bool PaintSkiaText(PlatformContextSkia* platformContext,
             paint.setLooper(NULL)->safeUnref();
         }
 
-        if (!SkiaDrawText(hfont, platformContext->canvas(), origin,
+        if (!skiaDrawText(hfont, platformContext->canvas(), origin,
                           &paint, &glyphs[0], &advances[0], numGlyphs))
             return false;
     }

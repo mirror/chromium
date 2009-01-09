@@ -104,7 +104,7 @@ FontPlatformData::~FontPlatformData()
 FontPlatformData::RefCountedHFONT::~RefCountedHFONT()
 {
     if (m_hfont != reinterpret_cast<HFONT>(-1)) {
-        RemoveFontFromSkiaFontWinCache(m_hfont);
+        SkiaWinOutlineCache::removePathsForFont(m_hfont);
         DeleteObject(m_hfont);
     }
 }
