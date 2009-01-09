@@ -215,7 +215,8 @@ class FactoryCommands(object):
     cmd = [self._python, self._test_tool,
            '--target', self._target,
            '--build-dir', self._build_dir,
-           self.GetExecutableName(executable)]
+           self.GetExecutableName(executable),
+           '--gtest_print_time']
     if arg_list is not None:
       cmd.extend(arg_list)
     return cmd
