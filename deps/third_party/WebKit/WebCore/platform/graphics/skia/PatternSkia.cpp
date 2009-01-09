@@ -47,9 +47,7 @@ static inline SkShader::TileMode shaderRule(bool shouldRepeat)
 PlatformPatternPtr Pattern::createPlatformPattern(const TransformationMatrix& patternTransform) const
 {
     SkBitmap* bm = m_tileImage->nativeImageForCurrentFrame();
-    SkShader* shader = SkShader::CreateBitmapShader(*bm,
-                                                    shaderRule(m_repeatX),
-                                                    shaderRule(m_repeatY));
+    SkShader* shader = SkShader::CreateBitmapShader(*bm, shaderRule(m_repeatX), shaderRule(m_repeatY));
     shader->setLocalMatrix(patternTransform);
     return shader;
 }

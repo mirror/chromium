@@ -29,14 +29,16 @@
 
 #include "config.h"
 #include "Path.h"
+
 #include "FloatRect.h"
 #include "ImageBuffer.h"
 #include "StrokeStyleApplier.h"
 
 #include "SkPath.h"
 #include "SkRegion.h"
-
 #include "SkiaUtils.h"
+
+#include <wtf/MathExtras.h>
 
 namespace WebCore {
 
@@ -84,40 +86,35 @@ FloatRect Path::boundingRect() const
     SkRect  r;
     
     m_path->computeBounds(&r, SkPath::kExact_BoundsType);
-    return FloatRect(   SkScalarToFloat(r.fLeft),
-                        SkScalarToFloat(r.fTop),
-                        SkScalarToFloat(r.width()),
-                        SkScalarToFloat(r.height()));
+    return FloatRect(SkScalarToFloat(r.fLeft),
+                     SkScalarToFloat(r.fTop),
+                     SkScalarToFloat(r.width()),
+                     SkScalarToFloat(r.height()));
 }
 
 void Path::moveTo(const FloatPoint& point)
 {
-    m_path->moveTo(WebCoreFloatToSkScalar(point.x()), WebCoreFloatToSkScalar(point.y()));
+    m_path->moveTo(point);
 }
 
-void Path::addLineTo(const FloatPoint& p)
+void Path::addLineTo(const FloatPoint& point)
 {
-    m_path->lineTo(WebCoreFloatToSkScalar(p.x()), WebCoreFloatToSkScalar(p.y()));
+    m_path->lineTo(point);
 }
 
 void Path::addQuadCurveTo(const FloatPoint& cp, const FloatPoint& ep)
 {
-    m_path->quadTo(WebCoreFloatToSkScalar(cp.x()), WebCoreFloatToSkScalar(cp.y()),
-                            WebCoreFloatToSkScalar(ep.x()), WebCoreFloatToSkScalar(ep.y()));
+    m_path->quadTo(cp, ep);
 }
 
 void Path::addBezierCurveTo(const FloatPoint& p1, const FloatPoint& p2, const FloatPoint& ep)
 {
-    m_path->cubicTo(WebCoreFloatToSkScalar(p1.x()), WebCoreFloatToSkScalar(p1.y()),
-                             WebCoreFloatToSkScalar(p2.x()), WebCoreFloatToSkScalar(p2.y()),
-                             WebCoreFloatToSkScalar(ep.x()), WebCoreFloatToSkScalar(ep.y()));
+    m_path->cubicTo(p1, p2, ep);
 }
 
 void Path::addArcTo(const FloatPoint& p1, const FloatPoint& p2, float radius)
 {
-    m_path->arcTo(WebCoreFloatToSkScalar(p1.x()), WebCoreFloatToSkScalar(p1.y()),
-                           WebCoreFloatToSkScalar(p2.x()), WebCoreFloatToSkScalar(p2.y()),
-                           WebCoreFloatToSkScalar(radius));
+    m_path->arcTo(p1, p2, WebCoreFloatToSkScalar(radius));
 }
 
 void Path::closeSubpath()
@@ -125,24 +122,21 @@ void Path::closeSubpath()
     m_path->close();
 }
 
-static const float gPI = 3.1415926f;
+void Path::addArc(const FloatPoint& p, float r, float sa, float ea, bool anticlockwise) {
+    SkScalar cx = WebCoreFloatToSkScalar(p.x());
+    SkScalar cy = WebCoreFloatToSkScalar(p.y());
+    SkScalar radius = WebCoreFloatToSkScalar(r);
 
-void Path::addArc(const FloatPoint& p, float r, float sa, float ea,
-                  bool anticlockwise) {
-    SkScalar    cx = WebCoreFloatToSkScalar(p.x());
-    SkScalar    cy = WebCoreFloatToSkScalar(p.y());
-    SkScalar    radius = WebCoreFloatToSkScalar(r);
-
-    SkRect  oval;
+    SkRect oval;
     oval.set(cx - radius, cy - radius, cx + radius, cy + radius);
     
     float sweep = ea - sa;
     // check for a circle
-    if (sweep >= 2*gPI || sweep <= -2*gPI) {
+    if (sweep >= 2 * piFloat || sweep <= -2 * piFloat)
         m_path->addOval(oval);
-    } else {
-        SkScalar startDegrees = WebCoreFloatToSkScalar(sa * 180 / gPI);
-        SkScalar sweepDegrees = WebCoreFloatToSkScalar(sweep * 180 / gPI);
+    else {
+        SkScalar startDegrees = WebCoreFloatToSkScalar(sa * 180 / piFloat);
+        SkScalar sweepDegrees = WebCoreFloatToSkScalar(sweep * 180 / piFloat);
 
         // Counterclockwise arcs should be drawn with negative sweeps, while
         // clockwise arcs should be drawn with positive sweeps. Check to see
@@ -153,9 +147,6 @@ void Path::addArc(const FloatPoint& p, float r, float sa, float ea,
         } else if (!anticlockwise && sweepDegrees < 0) {
             sweepDegrees += SkIntToScalar(360);
         }
-
-//        SkDebugf("addArc sa=%g ea=%g cw=%d start=%g sweep=%g\n", sa, ea, clockwise,
-//                 SkScalarToFloat(startDegrees), SkScalarToFloat(sweepDegrees));
 
         m_path->arcTo(oval, startDegrees, sweepDegrees, false);
     }
@@ -176,10 +167,9 @@ void Path::clear()
     m_path->reset();
 }
 
-static FloatPoint* setfpts(FloatPoint dst[], const SkPoint src[], int count)
+static FloatPoint* convertPathPoints(FloatPoint dst[], const SkPoint src[], int count)
 {
-    for (int i = 0; i < count; i++)
-    {
+    for (int i = 0; i < count; i++) {
         dst[i].setX(SkScalarToFloat(src[i].fX));
         dst[i].setY(SkScalarToFloat(src[i].fY));
     }
@@ -188,39 +178,38 @@ static FloatPoint* setfpts(FloatPoint dst[], const SkPoint src[], int count)
 
 void Path::apply(void* info, PathApplierFunction function) const
 {
-    SkPath::Iter    iter(*m_path, false);
-    SkPoint         pts[4];
+    SkPath::Iter iter(*m_path, false);
+    SkPoint pts[4];
     
-    PathElement     elem;
-    FloatPoint      fpts[3];
+    PathElement pathElement;
+    FloatPoint pathPoints[3];
 
-    for (;;)
-    {
+    for (;;) {
         switch (iter.next(pts)) {
         case SkPath::kMove_Verb:
-            elem.type = PathElementMoveToPoint;
-            elem.points = setfpts(fpts, &pts[0], 1);
+            pathElement.type = PathElementMoveToPoint;
+            pathElement.points = convertPathPoints(pathPoints, &pts[0], 1);
             break;
         case SkPath::kLine_Verb:
-            elem.type = PathElementAddLineToPoint;
-            elem.points = setfpts(fpts, &pts[1], 1);
+            pathElement.type = PathElementAddLineToPoint;
+            pathElement.points = convertPathPoints(pathPoints, &pts[1], 1);
             break;
         case SkPath::kQuad_Verb:
-            elem.type = PathElementAddQuadCurveToPoint;
-            elem.points = setfpts(fpts, &pts[1], 2);
+            pathElement.type = PathElementAddQuadCurveToPoint;
+            pathElement.points = convertPathPoints(pathPoints, &pts[1], 2);
             break;
         case SkPath::kCubic_Verb:
-            elem.type = PathElementAddCurveToPoint;
-            elem.points = setfpts(fpts, &pts[1], 3);
+            pathElement.type = PathElementAddCurveToPoint;
+            pathElement.points = convertPathPoints(pathPoints, &pts[1], 3);
             break;
         case SkPath::kClose_Verb:
-            elem.type = PathElementCloseSubpath;
-            elem.points = setfpts(fpts, NULL, 0);
+            pathElement.type = PathElementCloseSubpath;
+            pathElement.points = convertPathPoints(pathPoints, 0, 0);
             break;
         case SkPath::kDone_Verb:
             return;
         }
-        function(info, &elem);
+        function(info, &pathElement);
     }
 }
 
@@ -233,11 +222,11 @@ String Path::debugString() const
 {
     String result;
 
-    SkPath::Iter    iter(*m_path, false);
-    SkPoint         pts[4];
+    SkPath::Iter iter(*m_path, false);
+    SkPoint pts[4];
 
-    int             numPoints = m_path->getPoints(NULL, 0);
-    SkPath::Verb    verb;
+    int numPoints = m_path->getPoints(0, 0);
+    SkPath::Verb verb;
 
     do {
         verb = iter.next(pts);
@@ -292,8 +281,7 @@ static FloatRect boundingBoxForCurrentStroke(const GraphicsContext* context)
     SkPaint paint;
     context->platformContext()->setupPaintForStroking(&paint, 0, 0);
     SkPath boundingPath;
-    paint.getFillPath(*context->platformContext()->currentPath(),
-                      &boundingPath);
+    paint.getFillPath(*context->platformContext()->currentPath(), &boundingPath);
     SkRect r;
     boundingPath.computeBounds(&r, SkPath::kExact_BoundsType);
     return r;
