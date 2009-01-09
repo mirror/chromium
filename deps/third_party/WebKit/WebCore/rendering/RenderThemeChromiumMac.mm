@@ -38,6 +38,7 @@
 #import "HTMLNames.h"
 #import "Image.h"
 #import "LocalCurrentGraphicsContext.h"
+#import "MediaControlElements.h"
 #import "RenderSlider.h"
 #import "RenderView.h"
 #import "SharedBuffer.h"
@@ -1759,12 +1760,14 @@ bool RenderThemeMac::paintSearchFieldResultsButton(RenderObject* o, const Render
 
 bool RenderThemeMac::paintMediaFullscreenButton(RenderObject* o, const RenderObject::PaintInfo& paintInfo, const IntRect& r)
 {
+#if ENABLE(VIDEO)
     Node* node = o->element();
     if (!node)
         return false;
 
     LocalCurrentGraphicsContext localContext(paintInfo.context);
-    wkDrawMediaFullscreenButton(paintInfo.context->platformContext(), r, node->active());
+    wkDrawMediaUIPart(MediaFullscreenButton, paintInfo.context->platformContext(), r, node->active());
+#endif
     return false;
 }
 
@@ -1781,10 +1784,7 @@ bool RenderThemeMac::paintMediaMuteButton(RenderObject* o, const RenderObject::P
         return false;
     
     LocalCurrentGraphicsContext localContext(paintInfo.context);
-    if (mediaElement->muted())
-        wkDrawMediaUnMuteButton(paintInfo.context->platformContext(), r, node->active());
-    else
-        wkDrawMediaMuteButton(paintInfo.context->platformContext(), r, node->active());        
+    wkDrawMediaUIPart(mediaElement->muted() ? MediaUnMuteButton : MediaMuteButton, paintInfo.context->platformContext(), r, node->active());
 #endif
     return false;
 }
@@ -1802,33 +1802,34 @@ bool RenderThemeMac::paintMediaPlayButton(RenderObject* o, const RenderObject::P
         return false;
 
     LocalCurrentGraphicsContext localContext(paintInfo.context);
-    if (mediaElement->canPlay())
-        wkDrawMediaPlayButton(paintInfo.context->platformContext(), r, node->active());
-    else
-        wkDrawMediaPauseButton(paintInfo.context->platformContext(), r, node->active());        
+    wkDrawMediaUIPart(mediaElement->canPlay() ? MediaPlayButton : MediaPauseButton, paintInfo.context->platformContext(), r, node->active());
 #endif
     return false;
 }
 
 bool RenderThemeMac::paintMediaSeekBackButton(RenderObject* o, const RenderObject::PaintInfo& paintInfo, const IntRect& r)
 {
+#if ENABLE(VIDEO)
     Node* node = o->element();
     if (!node)
         return false;
 
     LocalCurrentGraphicsContext localContext(paintInfo.context);
-    wkDrawMediaSeekBackButton(paintInfo.context->platformContext(), r, node->active());
+    wkDrawMediaUIPart(MediaSeekBackButton, paintInfo.context->platformContext(), r, node->active());
+#endif
     return false;
 }
 
 bool RenderThemeMac::paintMediaSeekForwardButton(RenderObject* o, const RenderObject::PaintInfo& paintInfo, const IntRect& r)
 {
+#if ENABLE(VIDEO)
     Node* node = o->element();
     if (!node)
         return false;
 
     LocalCurrentGraphicsContext localContext(paintInfo.context);
-    wkDrawMediaSeekForwardButton(paintInfo.context->platformContext(), r, node->active());
+    wkDrawMediaUIPart(MediaSeekForwardButton, paintInfo.context->platformContext(), r, node->active());
+#endif
     return false;
 }
 
@@ -1844,24 +1845,30 @@ bool RenderThemeMac::paintMediaSliderTrack(RenderObject* o, const RenderObject::
     if (!mediaElement)
         return false;
 
-    float percentLoaded = 0;
-    if (MediaPlayer* player = mediaElement->player())
-        if (player->duration())
-            percentLoaded = player->maxTimeBuffered() / player->duration();
+    float timeLoaded = 0;
+    float currentTime = 0;
+    float duration = 0;
+    if (MediaPlayer* player = mediaElement->player()) {
+        duration = player->duration();
+        timeLoaded = player->maxTimeBuffered();
+        currentTime = player->currentTime();
+    }
 
-    wkDrawMediaSliderTrack(paintInfo.context->platformContext(), r, percentLoaded);
+    wkDrawMediaSliderTrack(paintInfo.context->platformContext(), r, timeLoaded, currentTime, duration);
 #endif
     return false;
 }
 
 bool RenderThemeMac::paintMediaSliderThumb(RenderObject* o, const RenderObject::PaintInfo& paintInfo, const IntRect& r)
 {
+#if ENABLE(VIDEO)
     Node* node = o->element();
     if (!node)
         return false;
 
     LocalCurrentGraphicsContext localContext(paintInfo.context);
-    wkDrawMediaSliderThumb(paintInfo.context->platformContext(), r, node->active());
+    wkDrawMediaUIPart(MediaSliderThumb, paintInfo.context->platformContext(), r, node->active());
+#endif
     return false;
 }
 
