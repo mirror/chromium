@@ -16,7 +16,6 @@ it and also reuse some of its methods to send emails.
 """
 
 import urllib
-import urllib2
 
 from buildbot import interfaces
 from buildbot import util
@@ -48,7 +47,7 @@ class GateKeeper(MailNotifier):
 
   _CATEGORY_SPLITTER = '|'
   _TREE_STATUS_URL = 'http://chromium-status.appspot.com/status'
-  _TREE_CLOSER_URL = 'chromium-status.appspot.com'
+  _TREE_CLOSER_URL = 'http://chromium-status.appspot.com'
   
   # Attributes we want to set from provided arguments, or set to None
   params = ['reply_to', 'lookup', 'categories_steps', 'exclusions']
@@ -138,14 +137,12 @@ class GateKeeper(MailNotifier):
 
   def closeTree(self, name, build, step_text):
     # Check if the tree is already closed or not:
-    status = urllib2.urlopen(self._TREE_STATUS_URL).read()
+    status = urllib.urlopen(self._TREE_STATUS_URL).read()
     if status.find('0') == -1:
       # Post a request to close the tree
       message = 'Tree is closed (Automatic: "%s" on "%s")' % (step_text, name)
       params = urllib.urlencode({'message': message, "change": "Change"})
-      http_connect = urllib2.httplib.HTTPConnection(self._TREE_CLOSER_URL)
-      http_connect.connect()
-      http_connect.request('POST', '/', params)
+      urllib.urlopen(self._TREE_CLOSER_URL, params)
       # Send the notification email
       return self.buildMessage(name, build, step_text)
 
