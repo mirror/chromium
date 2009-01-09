@@ -133,7 +133,7 @@ class FactoryCommands(object):
     # Starting from e.g. C:\b\slave\build_slave_path\build, find
     # C:\b\scripts\slave. If you change this, you need to change
     # _taskkill_python too.
-    self._script_dir = os.path.join('..', '..', '..', 'scripts', 'slave')
+    self._script_dir = self.PathJoin('..', '..', '..', 'scripts', 'slave')
 
     self._perl = self.GetExecutableName('perl')
 
@@ -143,13 +143,12 @@ class FactoryCommands(object):
       # the original python.exe, or it kills itself.
       # Starting from e.g. C:\b\slave\chrome-release\build, find
       # c:\b\slave\chrome-release\build\third_party\python_24.
-      # os.path.join() doesn't work here because cmd.exe needs '\'.
-      python_path = '\\'.join(['src', 'third_party', 'python_24'])
-      self._python = '\\'.join([python_path, 'python_slave.exe'])
+      python_path = self.PathJoin('src', 'third_party', 'python_24')
+      self._python = self.PathJoin(python_path, 'python_slave.exe')
       # This should fit with the self._script_dir definition.
-      self._depot_tools_python = '\\'.join(['..', '..', '..',
-                                           'depot_tools', 'release',
-                                           'python_24', 'python.exe'])
+      self._depot_tools_python = self.PathJoin('..', '..', '..',
+                                               'depot_tools', 'release',
+                                               'python_24', 'python.exe')
     else:
       self._python = 'python'
       self._depot_tools_python = 'python'
@@ -161,40 +160,40 @@ class FactoryCommands(object):
     self._archive_url = config.Master.archive_url
 
     # Purify isn't in the script_dir, it's out on its own.
-    self._purify_tool = os.path.join('src', 'tools', 'purify',
-                                     'chrome_tests.py')
+    self._purify_tool = self.PathJoin('src', 'tools', 'purify',
+                                      'chrome_tests.py')
 
     # These tools aren't in the script_dir either.
     # TODO(pamg): For consistency, move them into the script_dir if possible.
-    self._check_deps_tool = os.path.join('src', 'tools', 'checkdeps',
-                                         'checkdeps.py')
-    self._debugger_test_tool = os.path.join('test', 'debugger',
-                                            'debugger_unittests.py')
+    self._check_deps_tool = self.PathJoin('src', 'tools', 'checkdeps',
+                                          'checkdeps.py')
+    self._debugger_test_tool = self.PathJoin('test', 'debugger',
+                                             'debugger_unittests.py')
 
-    self._kill_tool = os.path.join(self._script_dir, 'kill_processes.py')
-    self._differential_installer_tool = os.path.join(
+    self._kill_tool = self.PathJoin(self._script_dir, 'kill_processes.py')
+    self._differential_installer_tool = self.PathJoin(
         self._script_dir,
         'differential_installer.py')
-    self._crash_handler_tool = os.path.join(self._script_dir,
-                                            'run_crash_handler.py')
-    self._compile_tool = os.path.join(self._script_dir, 'compile.py')
-    self._archive_tool = os.path.join(self._script_dir, 'archive_build.py')
-    self._test_tool = os.path.join(self._script_dir, 'runtest.py')
-    self._crash_dump_tool = os.path.join(self._script_dir,
-                                         'archive_crash_dumps.py')
-    self._layout_test_tool = os.path.join(self._script_dir,
-                                          'layout_test_wrapper.py')
-    self._layout_archive_tool = os.path.join(self._script_dir,
-                                             'archive_layout_test_results.py')
-    self._node_leak_test_tool = os.path.join(self._script_dir,
-                                             'node_leak_test_wrapper.py')
-    self._qemu_tool = os.path.join(self._script_dir, '..', 'private',
-                                   'query_qemu_results.py')
-    self._playback_tool = os.path.join(self._script_dir, 'playback_tests.py')
-    self._extract_tool = os.path.join(self._script_dir, 'extract_build.py')
+    self._crash_handler_tool = self.PathJoin(self._script_dir,
+                                             'run_crash_handler.py')
+    self._compile_tool = self.PathJoin(self._script_dir, 'compile.py')
+    self._archive_tool = self.PathJoin(self._script_dir, 'archive_build.py')
+    self._test_tool = self.PathJoin(self._script_dir, 'runtest.py')
+    self._crash_dump_tool = self.PathJoin(self._script_dir,
+                                          'archive_crash_dumps.py')
+    self._layout_test_tool = self.PathJoin(self._script_dir,
+                                           'layout_test_wrapper.py')
+    self._layout_archive_tool = self.PathJoin(self._script_dir,
+                                              'archive_layout_test_results.py')
+    self._node_leak_test_tool = self.PathJoin(self._script_dir,
+                                              'node_leak_test_wrapper.py')
+    self._qemu_tool = self.PathJoin(self._script_dir, '..', 'private',
+                                    'query_qemu_results.py')
+    self._playback_tool = self.PathJoin(self._script_dir, 'playback_tests.py')
+    self._extract_tool = self.PathJoin(self._script_dir, 'extract_build.py')
 
     # chrome_staging directory, relative to the build directory.
-    self._staging_dir = os.path.join('..', 'chrome_staging')
+    self._staging_dir = self.PathJoin('..', 'chrome_staging')
 
     # The _update_scripts_command will be run in the _update_scripts_dir to
     # udpate the slave's own script checkout.
@@ -227,6 +226,13 @@ class FactoryCommands(object):
     if self._target_platform == 'win32':
       return executable + '.exe'
     return executable
+
+  def PathJoin(self, *args):
+    if self._target_platform == 'win32':
+      return '\\'.join(args)
+    else:
+      return '/'.join(args)
+
 
   def AddTestStep(self, command_class, test_name, timeout, test_command,
                   test_description='', workdir=None, env=None):
@@ -376,12 +382,12 @@ class FactoryCommands(object):
     relative to the master.xxx base directory.
     """
     zip_name = '%s.zip' % self._identifier
-    return os.path.join('build_output', zip_name)
+    return self.PathJoin('build_output', zip_name)
 
   def AddUploadBuild(self):
     """Adds a step to upload the target folder.
     """
-    zip_src = os.path.join(self._staging_dir, 'full-build-win32.zip')
+    zip_src = self.PathJoin(self._staging_dir, 'full-build-win32.zip')
     zip_dest = self.GetMasterZip()
     self._factory.addStep(transfer.FileUpload,
                           name='Upload Build',
@@ -582,7 +588,7 @@ class FactoryCommands(object):
            '--build-dir', self._build_dir]
     if http:
       test_type = 'Http'
-      cmd.extend(['--with-httpd', os.path.join('src', 'data', 'page_cycler')])
+      cmd.extend(['--with-httpd', self.PathJoin('src', 'data', 'page_cycler')])
     else:
       test_type = 'File'
     cmd.extend([self.GetExecutableName('page_cycler_tests'),
@@ -732,9 +738,9 @@ class FactoryCommands(object):
   def GetDebuggerTestCommand(self):
     """Returns a command list to call the _debugger_test_tool.
     """
-    cmd = [self._python, os.path.join(self._build_dir,
-                                      self._debugger_test_tool),
-           '--build_dir', os.path.join(self._build_dir, self._target)]
+    cmd = [self._python, self.PathJoin(self._build_dir,
+                                       self._debugger_test_tool),
+           '--build_dir', self.PathJoin(self._build_dir, self._target)]
     return cmd
 
   def AddChromeUnitTests(self):
@@ -832,7 +838,7 @@ class FactoryCommands(object):
     passing the arg_list, if any, to that executable.
     """
     cmd = [self._python, self._purify_tool,
-           '--build_dir', os.path.join(self._build_dir, self._target),
+           '--build_dir', self.PathJoin(self._build_dir, self._target),
            '--test', test_name]
     return cmd
 
