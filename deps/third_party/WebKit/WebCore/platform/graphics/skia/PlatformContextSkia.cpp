@@ -1,38 +1,39 @@
-// Copyright (c) 2008, Google Inc. All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-// 
-//     * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/*
+ * Copyright (c) 2008, Google Inc. All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ * 
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include "config.h"
+
 #include "GraphicsContext.h"
 #include "NativeImageSkia.h"
 #include "PlatformContextSkia.h"
-#undef LOG
 #include "SkiaUtils.h"
-#include "wtf/MathExtras.h"
 
 #include "skia/ext/image_operations.h"
 #include "skia/ext/platform_canvas.h"
@@ -42,7 +43,9 @@
 #include "SkShader.h"
 #include "SkDashPathEffect.h"
 
-#if defined(OS_LINUX)
+#include <wtf/MathExtras.h>
+
+#if defined(__linux__)
 #include "GdkSkia.h"
 #endif
 
@@ -81,7 +84,7 @@ struct PlatformContextSkia::State {
 
     // Helper function for applying the state's alpha value to the given input
     // color to produce a new output color.
-    SkColor applyAlpha(SkColor c) const;
+    SkColor applyAlpha(SkColor) const;
 
 private:
     // Not supported.
@@ -98,7 +101,7 @@ PlatformContextSkia::State::State()
     , m_looper(0)
     , m_fillColor(0xFF000000)
     , m_strokeStyle(WebCore::SolidStroke)
-    , m_strokeColor(0x0FF000000)
+    , m_strokeColor(WebCore::Color::black)
     , m_strokeThickness(0)
     , m_dashRatio(3)
     , m_miterLimit(4)
@@ -149,7 +152,7 @@ PlatformContextSkia::PlatformContextSkia(skia::PlatformCanvas* canvas)
     m_stateStack.append(State());
     m_state = &m_stateStack.last();
 #if defined(OS_LINUX)
-    m_gdkskia = m_canvas ? gdk_skia_new(m_canvas) : NULL;
+    m_gdkskia = m_canvas ? gdk_skia_new(m_canvas) : 0;
 #endif
 }
 
@@ -158,7 +161,7 @@ PlatformContextSkia::~PlatformContextSkia()
 #if defined(OS_LINUX)
     if (m_gdkskia) {
         g_object_unref(m_gdkskia);
-        m_gdkskia = NULL;
+        m_gdkskia = 0;
     }
 #endif
 }
@@ -231,9 +234,7 @@ void PlatformContextSkia::setupPaintForFilling(SkPaint* paint) const
     paint->setColor(m_state->applyAlpha(m_state->m_fillColor));
 }
 
-float PlatformContextSkia::setupPaintForStroking(SkPaint* paint,
-                                                 SkRect* rect,
-                                                 int length) const
+float PlatformContextSkia::setupPaintForStroking(SkPaint* paint, SkRect* rect, int length) const
 {
     setupPaintCommon(paint);
     float width = m_state->m_strokeThickness;
@@ -252,9 +253,9 @@ float PlatformContextSkia::setupPaintForStroking(SkPaint* paint,
     if (rect != 0 && (static_cast<int>(roundf(width)) & 1))
         rect->inset(-SK_ScalarHalf, -SK_ScalarHalf);
 
-    if (m_state->m_dash) {
+    if (m_state->m_dash)
         paint->setPathEffect(m_state->m_dash);
-    } else {
+    else {
         switch (m_state->m_strokeStyle) {
         case WebCore::NoStroke:
         case WebCore::SolidStroke:
@@ -271,16 +272,14 @@ float PlatformContextSkia::setupPaintForStroking(SkPaint* paint,
                     numDashes++;    // Make it odd so we end on a dash/dot.
                 // Use the number of dashes to determine the length of a
                 // dash/dot, which will be approximately width
-                dashLength = SkScalarDiv(SkIntToScalar(length),
-                                         SkIntToScalar(numDashes));
-            } else {
+                dashLength = SkScalarDiv(SkIntToScalar(length), SkIntToScalar(numDashes));
+            } else
                 dashLength = SkFloatToScalar(width);
-            }
             SkScalar intervals[2] = { dashLength, dashLength };
-            paint->setPathEffect(
-                new SkDashPathEffect(intervals, 2, 0))->unref();
+            paint->setPathEffect(new SkDashPathEffect(intervals, 2, 0))->unref();
         }
     }
+
     return width;
 }
 
@@ -329,14 +328,14 @@ WebCore::StrokeStyle PlatformContextSkia::getStrokeStyle() const
     return m_state->m_strokeStyle;
 }
 
-void PlatformContextSkia::setStrokeStyle(WebCore::StrokeStyle strokestyle)
+void PlatformContextSkia::setStrokeStyle(WebCore::StrokeStyle strokeStyle)
 {
-    m_state->m_strokeStyle = strokestyle;
+    m_state->m_strokeStyle = strokeStyle;
 }
 
-void PlatformContextSkia::setStrokeColor(SkColor strokecolor)
+void PlatformContextSkia::setStrokeColor(SkColor strokeColor)
 {
-    m_state->m_strokeColor = strokecolor;
+    m_state->m_strokeColor = strokeColor;
 }
 
 float PlatformContextSkia::getStrokeThickness() const
@@ -422,7 +421,7 @@ const SkBitmap* PlatformContextSkia::bitmap() const
     return &m_canvas->getDevice()->accessBitmap(false);
 }
 
-bool PlatformContextSkia::IsPrinting()
+bool PlatformContextSkia::isPrinting()
 {
     return m_canvas->getTopPlatformDevice().IsVectorial();
 }

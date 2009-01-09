@@ -228,7 +228,7 @@ static void paintSkBitmap(PlatformContextSkia* platformContext, const NativeImag
 
     skia::PlatformCanvas* canvas = platformContext->canvas();
 
-    ResamplingMode resampling = platformContext->IsPrinting() ? RESAMPLE_NONE :
+    ResamplingMode resampling = platformContext->isPrinting() ? RESAMPLE_NONE :
         computeResamplingMode(bitmap, srcRect.width(), srcRect.height(),
                               SkScalarToFloat(destRect.width()),
                               SkScalarToFloat(destRect.height()));
@@ -328,7 +328,7 @@ void Image::drawPattern(GraphicsContext* context,
 
     // Compute the resampling mode.
     ResamplingMode resampling;
-    if (context->platformContext()->IsPrinting())
+    if (context->platformContext()->isPrinting())
       resampling = RESAMPLE_LINEAR;
     else {
       resampling = computeResamplingMode(*bitmap,
