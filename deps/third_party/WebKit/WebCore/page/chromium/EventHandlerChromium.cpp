@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2008 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -36,12 +37,12 @@
 #include "HitTestRequest.h"
 #include "HitTestResult.h"
 #include "MouseEventWithHitTestResults.h"
+#include "NotImplemented.h"
 #include "Page.h"
 #include "PlatformKeyboardEvent.h"
 #include "PlatformWheelEvent.h"
 #include "RenderWidget.h"
 #include "SelectionController.h"
-#include "NotImplemented.h"
 
 namespace WebCore {
 
@@ -86,17 +87,15 @@ bool EventHandler::passMouseReleaseEventToSubframe(MouseEventWithHitTestResults&
 
 bool EventHandler::passWheelEventToWidget(PlatformWheelEvent& wheelEvent, Widget* widget)
 {
-    if (!widget) {
-        // We can sometimes get a null widget!  EventHandlerMac handles a null
-        // widget by returning false, so we do the same.
+    // We can sometimes get a null widget!  EventHandlerMac handles a null
+    // widget by returning false, so we do the same.
+    if (!widget)
         return false;
-    }
 
-    if (!widget->isFrameView()) {
-        // Probably a plugin widget.  They will receive the event via an
-        // EventTargetNode dispatch when this returns false.
+    // If not a FrameView, then probably a plugin widget.  Those will receive
+    // the event via an EventTargetNode dispatch when this returns false.
+    if (!widget->isFrameView())
         return false;
-    }
 
     return static_cast<FrameView*>(widget)->frame()->eventHandler()->handleWheelEvent(wheelEvent);
 }
@@ -123,7 +122,7 @@ bool EventHandler::tabsToAllControls(KeyboardEvent*) const
 
 bool EventHandler::eventActivatedView(const PlatformMouseEvent& event) const
 {
-    // TODO(darin): Apple's EventHandlerWin.cpp does the following:
+    // FIXME: EventHandlerWin.cpp does the following:
     // return event.activatedWebView();
     return false;
 }
@@ -152,4 +151,4 @@ unsigned EventHandler::accessKeyModifiers()
     return PlatformKeyboardEvent::AltKey;
 }
 
-}
+} // namespace WebCore

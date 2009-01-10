@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2007 Apple Inc.  All rights reserved.
+ * Copyright (C) 2008 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -45,17 +46,16 @@ const float DragController::DragImageAlpha = 0.75f;
 
 DragOperation DragController::dragOperation(DragData* dragData)
 {
-    //FIXME: to match the macos behaviour we should return DragOperationNone
-    //if we are a modal window, we are the drag source, or the window is an attached sheet
-    //If this can be determined from within WebCore operationForDrag can be pulled into 
-    //WebCore itself
+    // FIXME: To match the macos behaviour we should return DragOperationNone
+    // if we are a modal window, we are the drag source, or the window is an
+    // attached sheet If this can be determined from within WebCore
+    // operationForDrag can be pulled into WebCore itself
     ASSERT(dragData);
     return dragData->containsURL() && !m_didInitiateDrag ? DragOperationCopy : DragOperationNone;
 }
 
 bool DragController::isCopyKeyDown() {
-    // TODO(darin): This should not be OS specific.  Delegate to the embedder
-    // instead.
+    // FIXME: This should not be OS specific.  Delegate to the embedder instead.
 #if PLATFORM(WIN_OS)
     return ::GetAsyncKeyState(VK_CONTROL);
 #else
@@ -66,7 +66,6 @@ bool DragController::isCopyKeyDown() {
 const IntSize& DragController::maxDragImageSize()
 {
     static const IntSize maxDragImageSize(200, 200);
-    
     return maxDragImageSize;
 }
 
@@ -74,4 +73,4 @@ void DragController::cleanupAfterSystemDrag()
 {
 }
 
-}
+} // namespace WebCore

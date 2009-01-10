@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 Apple Inc. All Rights Reserved.
+ * Copyright (C) 2008 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +24,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-
 #include "config.h"
 #include "AXObjectCache.h"
 
@@ -33,17 +33,14 @@ namespace WebCore {
 
 void AXObjectCache::detachWrapper(AccessibilityObject* obj)
 {
-    // On Windows, AccessibilityObjects are created when get_accChildCount is
-    // called, but they are not wrapped until get_accChild is called, so this
-    // object may not have a wrapper.
+    // In Chromium, AccessibilityObjects are wrapped lazily.
     if (AccessibilityObjectWrapper* wrapper = obj->wrapper())
         wrapper->detach();
 }
 
 void AXObjectCache::attachWrapper(AccessibilityObject*)
 {
-    // On Windows, AccessibilityObjects are wrapped when the accessibility
-    // software requests them via get_accChild.
+    // In Chromium, AccessibilityObjects are wrapped lazily.
 }
 
 void AXObjectCache::postNotification(RenderObject*, const String&)

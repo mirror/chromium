@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2008 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,15 +25,10 @@
  */
 
 #include "config.h"
-#if USE(JSC)
-#include "runtime.h"
-#elif USE(V8)
-#include "npruntime_priv.h"
-#endif
 #include "FrameChromium.h"
 
-#include "FloatRect.h"
 #include "Document.h"
+#include "FloatRect.h"
 #include "FramePrivate.h"
 #include "RenderView.h"
 #include "Settings.h"
@@ -95,7 +91,7 @@ void computePageRectsForFrame(Frame* frame, const IntRect& printRect, float head
 DragImageRef Frame::dragImageForSelection()
 {    
     if (selection()->isRange())
-        return 0;  // TODO(pkasting): http://b/119669 Implement me!
+        return 0;  // FIXME: implement me!
 
     return 0;
 }

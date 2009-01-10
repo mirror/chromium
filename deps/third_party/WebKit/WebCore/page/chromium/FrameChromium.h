@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006, 2007 Apple Inc.  All rights reserved.
+ * Copyright (C) 2008 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,8 +24,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-#ifndef FrameChromium_H
-#define FrameChromium_H
+#ifndef FrameChromium_h
+#define FrameChromium_h
 
 #include "Frame.h"
 
