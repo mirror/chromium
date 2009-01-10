@@ -156,7 +156,7 @@ FontPlatformData* FontCache::createFontPlatformData(const FontDescription& fontD
     if (fontDescription.italic())
         style |= SkTypeface::kItalic;
 
-    SkTypeface* tf = SkTypeface::Create(name, (SkTypeface::Style>)style);
+    SkTypeface* tf = SkTypeface::Create(name, static_cast<SkTypeface::Style>(style));
     if (!tf)
         return 0;
 
