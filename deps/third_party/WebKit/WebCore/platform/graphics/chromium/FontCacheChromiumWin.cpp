@@ -1,29 +1,32 @@
 /*
- * Copyright (C) 2006, 2007 Apple Inc.  All rights reserved.
- *
+ * Copyright (C) 2006, 2007 Apple Computer, Inc.
+ * Copyright (c) 2006, 2007, 2008, 2009 Google Inc. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- *
- * 1.  Redistributions of source code must retain the above copyright
- *     notice, this list of conditions and the following disclaimer. 
- * 2.  Redistributions in binary form must reproduce the above copyright
- *     notice, this list of conditions and the following disclaimer in the
- *     documentation and/or other materials provided with the distribution. 
- * 3.  Neither the name of Apple Computer, Inc. ("Apple") nor the names of
- *     its contributors may be used to endorse or promote products derived
- *     from this software without specific prior written permission. 
- *
- * THIS SOFTWARE IS PROVIDED BY APPLE AND ITS CONTRIBUTORS "AS IS" AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
- * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
- * DISCLAIMED. IN NO EVENT SHALL APPLE OR ITS CONTRIBUTORS BE LIABLE FOR ANY
- * DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
- * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
- * ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
- * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
- * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ * modification, are permitted provided that the following conditions are
+ * met:
+ * 
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include "config.h"
@@ -52,14 +55,10 @@ void FontCache::platformInit()
     // Not needed on Windows.
 }
 
-// FIXME(jungshik) : consider adding to WebKit String class
-static bool isStringASCII(const String& s)
+// FIXME: consider adding to WebKit String class
+static bool charactersAreAllASCII(const String& s)
 {
-    for (int i = 0; i < static_cast<int>(s.length()); ++i) {
-        if (s[i] > 0x7f)
-            return false;
-    }
-    return true;
+    return charactersAreAllASCII(s.characters(), s.length());
 }
 
 // When asked for a CJK font with a native name under a non-CJK locale or
@@ -75,134 +74,138 @@ static bool isStringASCII(const String& s)
 static bool LookupAltName(const String& name, String& altName)
 {
     struct FontCodepage {
-        WCHAR *name;
-        int   codePage;
+        WCHAR* name;
+        int codePage;
     };
 
     struct NamePair {
-        WCHAR *name;
-        FontCodepage altNameCp; 
+        WCHAR* name;
+        FontCodepage altNameCodepage;
     };
 
-    // FIXME(jungshik) : This list probably covers 99% of cases. 
-    // To cover the remaining 1% and cut down the file size, 
+    const int japaneseCodepage = 932;
+    const int simplifiedChineseCodepage = 936;
+    const int koreanCodepage = 949;
+    const int traditionalChineseCodepage = 950;
+
+    // FIXME(jungshik) : This list probably covers 99% of cases.
+    // To cover the remaining 1% and cut down the file size,
     // consider accessing 'NAME' table of a truetype font
-    // using |GetFontData| and caching the mapping. 
-    // 932 : Japanese, 936 : Simp. Chinese, 949 : Korean, 950 : Trad. Chinese
+    // using |GetFontData| and caching the mapping.
     // In the table below, the ASCII keys are all lower-cased for
     // case-insensitive matching.
     static const NamePair namePairs[] = {
         // ＭＳ Ｐゴシック, MS PGothic
-        {L"\xFF2D\xFF33 \xFF30\x30B4\x30B7\x30C3\x30AF", {L"MS PGothic", 932}},
-        {L"ms pgothic", {L"\xFF2D\xFF33 \xFF30\x30B4\x30B7\x30C3\x30AF", 932}},
+        {L"\xFF2D\xFF33 \xFF30\x30B4\x30B7\x30C3\x30AF", {L"MS PGothic", japaneseCodepage}},
+        {L"ms pgothic", {L"\xFF2D\xFF33 \xFF30\x30B4\x30B7\x30C3\x30AF", japaneseCodepage}},
         // ＭＳ Ｐ明朝, MS PMincho
-        {L"\xFF2D\xFF33 \xFF30\x660E\x671D", {L"MS PMincho", 932}},
-        {L"ms pmincho", {L"\xFF2D\xFF33 \xFF30\x660E\x671D", 932}},
+        {L"\xFF2D\xFF33 \xFF30\x660E\x671D", {L"MS PMincho", japaneseCodepage}},
+        {L"ms pmincho", {L"\xFF2D\xFF33 \xFF30\x660E\x671D", japaneseCodepage}},
         // ＭＳゴシック, MS Gothic
-        {L"\xFF2D\xFF33 \x30B4\x30B7\x30C3\x30AF", {L"MS Gothic", 932}},
-        {L"ms gothic", {L"\xFF2D\xFF33 \x30B4\x30B7\x30C3\x30AF", 932}},
+        {L"\xFF2D\xFF33 \x30B4\x30B7\x30C3\x30AF", {L"MS Gothic", japaneseCodepage}},
+        {L"ms gothic", {L"\xFF2D\xFF33 \x30B4\x30B7\x30C3\x30AF", japaneseCodepage}},
         // ＭＳ 明朝, MS Mincho
-        {L"\xFF2D\xFF33 \x660E\x671D", {L"MS Mincho", 932}},
-        {L"ms mincho", {L"\xFF2D\xFF33 \x660E\x671D", 932}},
+        {L"\xFF2D\xFF33 \x660E\x671D", {L"MS Mincho", japaneseCodepage}},
+        {L"ms mincho", {L"\xFF2D\xFF33 \x660E\x671D", japaneseCodepage}},
         // メイリオ, Meiryo
-        {L"\x30E1\x30A4\x30EA\x30AA", {L"Meiryo", 932}},
-        {L"meiryo", {L"\x30E1\x30A4\x30EA\x30AA", 932}},
+        {L"\x30E1\x30A4\x30EA\x30AA", {L"Meiryo", japaneseCodepage}},
+        {L"meiryo", {L"\x30E1\x30A4\x30EA\x30AA", japaneseCodepage}},
         // 바탕, Batang
-        {L"\xBC14\xD0D5", {L"Batang", 949}},
-        {L"batang", {L"\xBC14\xD0D5", 949}},
+        {L"\xBC14\xD0D5", {L"Batang", koreanCodepage}},
+        {L"batang", {L"\xBC14\xD0D5", koreanCodepage}},
         // 바탕체, Batangche
-        {L"\xBC14\xD0D5\xCCB4", {L"Batangche", 949}},
-        {L"batangche", {L"\xBC14\xD0D5\xCCB4", 949}},
+        {L"\xBC14\xD0D5\xCCB4", {L"Batangche", koreanCodepage}},
+        {L"batangche", {L"\xBC14\xD0D5\xCCB4", koreanCodepage}},
         // 굴림, Gulim
-        {L"\xAD74\xB9BC", {L"Gulim", 949}},
-        {L"gulim", {L"\xAD74\xB9BC", 949}},
+        {L"\xAD74\xB9BC", {L"Gulim", koreanCodepage}},
+        {L"gulim", {L"\xAD74\xB9BC", koreanCodepage}},
         // 굴림체, Gulimche
-        {L"\xAD74\xB9BC\xCCB4", {L"Gulimche", 949}},
-        {L"gulimche", {L"\xAD74\xB9BC\xCCB4", 949}},
+        {L"\xAD74\xB9BC\xCCB4", {L"Gulimche", koreanCodepage}},
+        {L"gulimche", {L"\xAD74\xB9BC\xCCB4", koreanCodepage}},
         // 돋움, Dotum
-        {L"\xB3CB\xC6C0", {L"Dotum", 949}},
-        {L"dotum", {L"\xB3CB\xC6C0", 949}},
+        {L"\xB3CB\xC6C0", {L"Dotum", koreanCodepage}},
+        {L"dotum", {L"\xB3CB\xC6C0", koreanCodepage}},
         // 돋움체, Dotumche
-        {L"\xB3CB\xC6C0\xCCB4", {L"Dotumche", 949}},
-        {L"dotumche", {L"\xB3CB\xC6C0\xCCB4", 949}},
+        {L"\xB3CB\xC6C0\xCCB4", {L"Dotumche", koreanCodepage}},
+        {L"dotumche", {L"\xB3CB\xC6C0\xCCB4", koreanCodepage}},
         // 궁서, Gungsuh
-        {L"\xAD81\xC11C", {L"Gungsuh", 949}},
-        {L"gungsuh", {L"\xAD81\xC11C", 949}},
+        {L"\xAD81\xC11C", {L"Gungsuh", koreanCodepage}},
+        {L"gungsuh", {L"\xAD81\xC11C", koreanCodepage}},
         // 궁서체, Gungsuhche
-        {L"\xAD81\xC11C\xCCB4", {L"Gungsuhche", 949}},
-        {L"gungsuhche", {L"\xAD81\xC11C\xCCB4", 949}},
+        {L"\xAD81\xC11C\xCCB4", {L"Gungsuhche", koreanCodepage}},
+        {L"gungsuhche", {L"\xAD81\xC11C\xCCB4", koreanCodepage}},
         // 맑은 고딕, Malgun Gothic
-        {L"\xB9D1\xC740 \xACE0\xB515", {L"Malgun Gothic", 949}},
-        {L"malgun gothic", {L"\xB9D1\xC740 \xACE0\xB515", 949}},
+        {L"\xB9D1\xC740 \xACE0\xB515", {L"Malgun Gothic", koreanCodepage}},
+        {L"malgun gothic", {L"\xB9D1\xC740 \xACE0\xB515", koreanCodepage}},
         // 宋体, SimSun
-        {L"\x5B8B\x4F53", {L"SimSun", 936}},
-        {L"simsun", {L"\x5B8B\x4F53", 936}},
+        {L"\x5B8B\x4F53", {L"SimSun", simplifiedChineseCodepage}},
+        {L"simsun", {L"\x5B8B\x4F53", simplifiedChineseCodepage}},
         // 黑体, SimHei
-        {L"\x9ED1\x4F53", {L"SimHei", 936}},
-        {L"simhei", {L"\x9ED1\x4F53", 936}},
+        {L"\x9ED1\x4F53", {L"SimHei", simplifiedChineseCodepage}},
+        {L"simhei", {L"\x9ED1\x4F53", simplifiedChineseCodepage}},
         // 新宋体, NSimSun
-        {L"\x65B0\x5B8B\x4F53", {L"NSimSun", 936}},
-        {L"nsimsun", {L"\x65B0\x5B8B\x4F53", 936}},
+        {L"\x65B0\x5B8B\x4F53", {L"NSimSun", simplifiedChineseCodepage}},
+        {L"nsimsun", {L"\x65B0\x5B8B\x4F53", simplifiedChineseCodepage}},
         // 微软雅黑, Microsoft Yahei
-        {L"\x5FAE\x8F6F\x96C5\x9ED1", {L"Microsoft Yahei", 936}},
-        {L"microsoft yahei", {L"\x5FAE\x8F6F\x96C5\x9ED1", 936}},
+        {L"\x5FAE\x8F6F\x96C5\x9ED1", {L"Microsoft Yahei", simplifiedChineseCodepage}},
+        {L"microsoft yahei", {L"\x5FAE\x8F6F\x96C5\x9ED1", simplifiedChineseCodepage}},
         // 仿宋, FangSong
-        {L"\x4EFF\x5B8B",  {L"FangSong", 936}},
-        {L"fangsong", {L"\x4EFF\x5B8B", 936}},
+        {L"\x4EFF\x5B8B",  {L"FangSong", simplifiedChineseCodepage}},
+        {L"fangsong", {L"\x4EFF\x5B8B", simplifiedChineseCodepage}},
         // 楷体, KaiTi
-        {L"\x6977\x4F53", {L"KaiTi", 936}},
-        {L"kaiti", {L"\x6977\x4F53", 936}},
+        {L"\x6977\x4F53", {L"KaiTi", simplifiedChineseCodepage}},
+        {L"kaiti", {L"\x6977\x4F53", simplifiedChineseCodepage}},
         // 仿宋_GB2312, FangSong_GB2312
-        {L"\x4EFF\x5B8B_GB2312",  {L"FangSong_GB2312", 936}},
-        {L"fangsong_gb2312", {L"\x4EFF\x5B8B_gb2312", 936}},
+        {L"\x4EFF\x5B8B_GB2312",  {L"FangSong_GB2312", simplifiedChineseCodepage}},
+        {L"fangsong_gb2312", {L"\x4EFF\x5B8B_gb2312", simplifiedChineseCodepage}},
         // 楷体_GB2312, KaiTi_GB2312
-        {L"\x6977\x4F53", {L"KaiTi_GB2312", 936}},
-        {L"kaiti_gb2312", {L"\x6977\x4F53_gb2312", 936}},
+        {L"\x6977\x4F53", {L"KaiTi_GB2312", simplifiedChineseCodepage}},
+        {L"kaiti_gb2312", {L"\x6977\x4F53_gb2312", simplifiedChineseCodepage}},
         // 新細明體, PMingLiu
-        {L"\x65B0\x7D30\x660E\x9AD4", {L"PMingLiu", 950}},
-        {L"pmingliu", {L"\x65B0\x7D30\x660E\x9AD4", 950}},
+        {L"\x65B0\x7D30\x660E\x9AD4", {L"PMingLiu", traditionalChineseCodepage}},
+        {L"pmingliu", {L"\x65B0\x7D30\x660E\x9AD4", traditionalChineseCodepage}},
         // 細明體, MingLiu
-        {L"\x7D30\x660E\x9AD4", {L"MingLiu", 950}},
-        {L"mingliu", {L"\x7D30\x660E\x9AD4", 950}},
+        {L"\x7D30\x660E\x9AD4", {L"MingLiu", traditionalChineseCodepage}},
+        {L"mingliu", {L"\x7D30\x660E\x9AD4", traditionalChineseCodepage}},
         // 微軟正黑體, Microsoft JhengHei
-        {L"\x5FAE\x8EDF\x6B63\x9ED1\x9AD4", {L"Microsoft JhengHei", 950}},
-        {L"microsoft jhengHei", {L"\x5FAE\x8EDF\x6B63\x9ED1\x9AD4", 950}},
+        {L"\x5FAE\x8EDF\x6B63\x9ED1\x9AD4", {L"Microsoft JhengHei", traditionalChineseCodepage}},
+        {L"microsoft jhengHei", {L"\x5FAE\x8EDF\x6B63\x9ED1\x9AD4", traditionalChineseCodepage}},
         // 標楷體, DFKai-SB
-        {L"\x6A19\x6977\x9AD4", {L"DFKai-SB", 950}},
-        {L"dfkai-sb", {L"\x6A19\x6977\x9AD4", 950}},
+        {L"\x6A19\x6977\x9AD4", {L"DFKai-SB", traditionalChineseCodepage}},
+        {L"dfkai-sb", {L"\x6A19\x6977\x9AD4", traditionalChineseCodepage}},
         // WenQuanYi Zen Hei
-        {L"\x6587\x6cc9\x9a5b\x6b63\x9ed1", {L"WenQuanYi Zen Hei", 950}},
-        {L"wenquanyi zen hei", {L"\x6587\x6cc9\x9a5b\x6b63\x9ed1", 950}},
+        {L"\x6587\x6cc9\x9a5b\x6b63\x9ed1", {L"WenQuanYi Zen Hei", traditionalChineseCodepage}},
+        {L"wenquanyi zen hei", {L"\x6587\x6cc9\x9a5b\x6b63\x9ed1", traditionalChineseCodepage}},
         // WenQuanYi Zen Hei
-        {L"\x6587\x6cc9\x9a7f\x6b63\x9ed1", {L"WenQuanYi Zen Hei", 936}},
-        {L"wenquanyi zen hei", {L"\x6587\x6cc9\x9a7f\x6b63\x9ed1", 936}},
+        {L"\x6587\x6cc9\x9a7f\x6b63\x9ed1", {L"WenQuanYi Zen Hei", simplifiedChineseCodepage}},
+        {L"wenquanyi zen hei", {L"\x6587\x6cc9\x9a7f\x6b63\x9ed1", simplifiedChineseCodepage}},
         // AR PL ShanHeiSun Uni,
         {L"\x6587\x9f0e\x0050\x004c\x7d30\x4e0a\x6d77\x5b8b\x0055\x006e\x0069",
-         {L"AR PL ShanHeiSun Uni", 950}},
+         {L"AR PL ShanHeiSun Uni", traditionalChineseCodepage}},
         {L"ar pl shanheisun uni",
-         {L"\x6587\x9f0e\x0050\x004c\x7d30\x4e0a\x6d77\x5b8b\x0055\x006e\x0069", 950}},
+         {L"\x6587\x9f0e\x0050\x004c\x7d30\x4e0a\x6d77\x5b8b\x0055\x006e\x0069", traditionalChineseCodepage}},
         // AR PL ShanHeiSun Uni,
         {L"\x6587\x9f0e\x0050\x004c\x7ec6\x4e0a\x6d77\x5b8b\x0055\x006e\x0069",
-         {L"AR PL ShanHeiSun Uni", 936}},
+         {L"AR PL ShanHeiSun Uni", simplifiedChineseCodepage}},
         {L"ar pl shanheisun uni",
-         {L"\x6587\x9f0e\x0050\x004c\x7ec6\x4e0a\x6d77\x5b8b\x0055\x006e\x0069", 936}},
+         {L"\x6587\x9f0e\x0050\x004c\x7ec6\x4e0a\x6d77\x5b8b\x0055\x006e\x0069", simplifiedChineseCodepage}},
         // AR PL ZenKai Uni
-        // Traditional Chinese (950) and Simplified Chinese (936) names are
+        // Traditional Chinese and Simplified Chinese names are
         // identical.
-        {L"\x6587\x0050\x004C\x4E2D\x6977\x0055\x006E\x0069", {L"AR PL ZenKai Uni", 950}},
-        {L"ar pl zenkai uni", {L"\x6587\x0050\x004C\x4E2D\x6977\x0055\x006E\x0069", 950}},
-        {L"\x6587\x0050\x004C\x4E2D\x6977\x0055\x006E\x0069", {L"AR PL ZenKai Uni", 936}},
-        {L"ar pl zenkai uni", {L"\x6587\x0050\x004C\x4E2D\x6977\x0055\x006E\x0069", 936}},
+        {L"\x6587\x0050\x004C\x4E2D\x6977\x0055\x006E\x0069", {L"AR PL ZenKai Uni", traditionalChineseCodepage}},
+        {L"ar pl zenkai uni", {L"\x6587\x0050\x004C\x4E2D\x6977\x0055\x006E\x0069", traditionalChineseCodepage}},
+        {L"\x6587\x0050\x004C\x4E2D\x6977\x0055\x006E\x0069", {L"AR PL ZenKai Uni", simplifiedChineseCodepage}},
+        {L"ar pl zenkai uni", {L"\x6587\x0050\x004C\x4E2D\x6977\x0055\x006E\x0069", simplifiedChineseCodepage}},
     };
 
     typedef HashMap<String, const FontCodepage*> NameMap;
-    static NameMap* fontNameMap = NULL;
+    static NameMap* fontNameMap = 0;
 
     if (!fontNameMap) {
         size_t numElements = sizeof(namePairs) / sizeof(NamePair);
         fontNameMap = new NameMap;
         for (size_t i = 0; i < numElements; ++i)
-            fontNameMap->set(String(namePairs[i].name), &(namePairs[i].altNameCp));
+            fontNameMap->set(String(namePairs[i].name), &(namePairs[i].altNameCodepage));
     }
 
     bool isAscii = false; 
@@ -210,7 +213,7 @@ static bool LookupAltName(const String& name, String& altName)
     // use |lower| only for ASCII names 
     // For non-ASCII names, we don't want to invoke an expensive 
     // and unnecessary |lower|. 
-    if (isStringASCII(name)) {
+    if (charactersAreAllASCII(name)) {
         isAscii = true;
         n = name.lower();
     } else
@@ -231,8 +234,7 @@ static bool LookupAltName(const String& name, String& altName)
     return false;
 }
 
-static HFONT createFontIndirectAndGetWinName(const String& family,
-                                             LOGFONT* winfont, String* winName)
+static HFONT createFontIndirectAndGetWinName(const String& family, LOGFONT* winfont, String* winName)
 {
     int len = min(static_cast<int>(family.length()), LF_FACESIZE - 1);
     memcpy(winfont->lfFaceName, family.characters(), len * sizeof(WORD));
@@ -240,7 +242,7 @@ static HFONT createFontIndirectAndGetWinName(const String& family,
 
     HFONT hfont = CreateFontIndirect(winfont);
     if (!hfont)
-        return NULL;
+        return 0;
 
     HDC dc = GetDC(0);
     HGDIOBJ oldFont = static_cast<HFONT>(SelectObject(dc, hfont));
@@ -261,26 +263,25 @@ static HFONT createFontIndirectAndGetWinName(const String& family,
 // has a different repertoire from another face of the same family. 
 typedef HashMap<const wchar_t*, UnicodeSet*> FontCmapCache;
 
-static bool fontContainsCharacter(const FontPlatformData* font_data,
+static bool fontContainsCharacter(const FontPlatformData* fontData,
                                   const wchar_t* family, UChar32 character)
 {
-    // TODO(jungshik) : For non-BMP characters, GetFontUnicodeRanges is of
+    // FIXME: For non-BMP characters, GetFontUnicodeRanges is of
     // no use. We have to read directly from the cmap table of a font.
     // Return true for now.
     if (character > 0xFFFF)
         return true;
 
     // This cache is just leaked on shutdown.
-    static FontCmapCache* fontCmapCache = NULL;
+    static FontCmapCache* fontCmapCache = 0;
     if (!fontCmapCache)
         fontCmapCache = new FontCmapCache;
 
-    HashMap<const wchar_t*, UnicodeSet*>::iterator it =
-        fontCmapCache->find(family);
+    HashMap<const wchar_t*, UnicodeSet*>::iterator it = fontCmapCache->find(family);
     if (it != fontCmapCache->end()) 
         return it->second->contains(character);
     
-    HFONT hfont = font_data->hfont(); 
+    HFONT hfont = fontData->hfont(); 
     HDC hdc = GetDC(0);
     HGDIOBJ oldFont = static_cast<HFONT>(SelectObject(hdc, hfont));
     int count = GetFontUnicodeRanges(hdc, 0);
@@ -303,7 +304,7 @@ static bool fontContainsCharacter(const FontPlatformData* font_data,
     SelectObject(hdc, oldFont);
     ReleaseDC(0, hdc);
 
-    // TODO(jungshik) : consider doing either of the following two:
+    // FIXME: consider doing either of the following two:
     // 1) port back ICU 4.0's faster look-up code for UnicodeSet
     // 2) port Mozilla's CompressedCharMap or gfxSparseBitset
     unsigned i = 0;
@@ -322,23 +323,18 @@ static bool fontContainsCharacter(const FontPlatformData* font_data,
 
 // Given the desired base font, this will create a SimpleFontData for a specific
 // font that can be used to render the given range of characters.
-const SimpleFontData* FontCache::getFontDataForCharacters(const Font& font,
-                                                    const UChar* characters,
-                                                    int length)
+const SimpleFontData* FontCache::getFontDataForCharacters(const Font& font, const UChar* characters, int length)
 {
-    // TODO(jungshik) : Consider passing fontDescription.dominantScript()
+    // FIXME: Consider passing fontDescription.dominantScript()
     // to GetFallbackFamily here.
     FontDescription fontDescription = font.fontDescription();
     UChar32 c;
     UScriptCode script;
     const wchar_t* family = getFallbackFamily(characters, length,
         fontDescription.genericFamily(), &c, &script);
-    FontPlatformData* data = NULL;
-    if (family) {
-        data = getCachedFontPlatformData(font.fontDescription(), 
-                                         AtomicString(family, wcslen(family)),
-                                         false); 
-    }
+    FontPlatformData* data = 0;
+    if (family)
+        data = getCachedFontPlatformData(font.fontDescription(),  AtomicString(family, wcslen(family)), false); 
 
     // Last resort font list : PanUnicode. CJK fonts have a pretty
     // large repertoire. Eventually, we need to scan all the fonts
@@ -380,7 +376,7 @@ const SimpleFontData* FontCache::getFontDataForCharacters(const Font& font,
         L"code2000",
     };
 
-    const wchar_t* const* panUniFonts = NULL;
+    const wchar_t* const* panUniFonts = 0;
     int numFonts = 0;
     if (script == USCRIPT_HAN) {
         panUniFonts = cjkFonts;
@@ -394,16 +390,14 @@ const SimpleFontData* FontCache::getFontDataForCharacters(const Font& font,
     // critical enough for non-Latin scripts (especially Han) to
     // warrant an additional (real coverage) check with fontCotainsCharacter.
     int i;
-    for (i = 0; (!data || !fontContainsCharacter(data, family, c))
-         && i < numFonts; ++i) {
+    for (i = 0; (!data || !fontContainsCharacter(data, family, c)) && i < numFonts; ++i) {
         family = panUniFonts[i]; 
-        data = getCachedFontPlatformData(font.fontDescription(),
-                                         AtomicString(family, wcslen(family)));
+        data = getCachedFontPlatformData(font.fontDescription(), AtomicString(family, wcslen(family)));
     }
     if (i < numFonts) // we found the font that covers this character !
        return getCachedFontData(data);
 
-    return NULL;
+    return 0;
 
 }
 
@@ -443,7 +437,7 @@ const AtomicString& FontCache::alternateFamilyName(const AtomicString& familyNam
     if (equalIgnoringCase(familyName, msSerif))
         return timesNewRoman;
 
-    // TODO(jungshik) : should we map 'system' to something ('Tahoma') ? 
+    // FIXME: should we map 'system' to something ('Tahoma') ? 
     return emptyAtom;
 }
 
@@ -452,16 +446,14 @@ FontPlatformData* FontCache::getSimilarFontPlatformData(const Font& font)
     return 0;
 }
 
-FontPlatformData* FontCache::getLastResortFallbackFont(
-    const FontDescription& description)
+FontPlatformData* FontCache::getLastResortFallbackFont(const FontDescription& description)
 {
     FontDescription::GenericFamilyType generic = description.genericFamily();
-    // TODO(jungshik): Mapping webkit generic to GenericFamilyType needs to
+    // FIXME: Mapping webkit generic to GenericFamilyType needs to
     // be more intelligent. 
     // This spot rarely gets reached. GetFontDataForCharacters() gets hit a lot
-    // more often (see TODO comment there). 
-    const wchar_t* family = getFontFamilyForScript(description.dominantScript(),
-        generic);
+    // more often (see FIXME comment there). 
+    const wchar_t* family = getFontFamilyForScript(description.dominantScript(), generic);
 
     if (family)
         return getCachedFontPlatformData(description, AtomicString(family, wcslen(family)));
@@ -498,12 +490,10 @@ static LONG toGDIFontWeight(FontWeight fontWeight)
     return gdiFontWeights[fontWeight];
 }
 
-// TODO(jungshik): This may not be the best place to put this function. See
-// TODO in pending/FontCache.h.
+// FIXME: This may not be the best place to put this function
 AtomicString FontCache::getGenericFontForScript(UScriptCode script, const FontDescription& description)
 {
-    const wchar_t* scriptFont = getFontFamilyForScript(
-        script, description.genericFamily());
+    const wchar_t* scriptFont = getFontFamilyForScript( script, description.genericFamily());
     return scriptFont ? AtomicString(scriptFont, wcslen(scriptFont)) : emptyAtom;
 }
 
@@ -520,8 +510,7 @@ static void FillLogFont(const FontDescription& fontDescription, LOGFONT* winfont
     winfont->lfStrikeOut = false;
     winfont->lfCharSet = DEFAULT_CHARSET;
     winfont->lfOutPrecision = OUT_TT_ONLY_PRECIS;
-    winfont->lfQuality = ChromiumBridge::layoutTestMode() ? NONANTIALIASED_QUALITY
-        : DEFAULT_QUALITY; // Honor user's desktop settings.
+    winfont->lfQuality = ChromiumBridge::layoutTestMode() ? NONANTIALIASED_QUALITY : DEFAULT_QUALITY; // Honor user's desktop settings.
     winfont->lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
     winfont->lfItalic = fontDescription.italic();
     winfont->lfWeight = toGDIFontWeight(fontDescription.weight());
@@ -611,7 +600,7 @@ FontPlatformData* FontCache::createFontPlatformData(const FontDescription& fontD
     if (!hfont)
         return 0;
 
-    // TODO(pamg): Do we need to use predefined fonts "guaranteed" to exist
+    // FIXME: Do we need to use predefined fonts "guaranteed" to exist
     // when we're running in layout-test mode?
     if (!equalIgnoringCase(family, winName)) {
         // For CJK fonts with both English and native names, 

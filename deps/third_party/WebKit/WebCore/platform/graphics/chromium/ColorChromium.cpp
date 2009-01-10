@@ -30,6 +30,7 @@ namespace WebCore {
 
 Color focusRingColor()
 {
+// FIXME: This should be split up to ColorChromiumWin and ColorChromiumMac.
 #if PLATFORM(DARWIN)
     // To avoid the Mac Chromium build having to rebasline 500+ layout tests and
     // continue to do this w/ new tests that get landed in WebKit, we want to

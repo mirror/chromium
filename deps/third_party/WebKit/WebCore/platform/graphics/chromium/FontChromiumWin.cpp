@@ -1,34 +1,39 @@
 /*
- * Copyright (C) 2006, 2007 Apple Inc.  All rights reserved.
- *
+ * Copyright (C) 2006, 2007 Apple Computer, Inc.
+ * Copyright (c) 2006, 2007, 2008, 2009, Google Inc. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY APPLE COMPUTER, INC. ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL APPLE COMPUTER, INC. OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
- * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * modification, are permitted provided that the following conditions are
+ * met:
+ * 
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include "config.h"
-#include <windows.h>
+#include "Font.h"
 
 #include "TransformationMatrix.h"
 #include "ChromiumBridge.h"
-#include "Font.h"
 #include "FontFallbackList.h"
 #include "GlyphBuffer.h"
 #include "PlatformContextSkia.h"
@@ -38,7 +43,9 @@
 #include "UniscribeHelperTextRun.h"
 
 #include "skia/ext/platform_canvas_win.h"
-#include "skia/ext/skia_utils_win.h"  // TODO(brettw) remove this dependency.
+#include "skia/ext/skia_utils_win.h"  // FIXME: remove this dependency.
+
+#include <windows.h>
 
 namespace WebCore {
 
@@ -49,9 +56,9 @@ static bool windowsCanHandleTextDrawing(GraphicsContext* context)
     // in using Skia will show you the hinted outlines for the smaller size,
     // which look weird. All else being equal, it's better to use Windows' text
     // drawing, so we don't check for zooms.
-    const TransformationMatrix& xform = context->getCTM();
-    if (xform.b() != 0 ||  // Y skew
-        xform.c() != 0)    // X skew
+    const TransformationMatrix& matrix = context->getCTM();
+    if (matrix.b() != 0 ||  // Y skew
+        matrix.c() != 0)    // X skew
         return false;
 
     // Check for stroke effects.
@@ -112,7 +119,7 @@ static bool skiaDrawText(HFONT hfont,
     return true;
 }
 
-static bool PaintSkiaText(PlatformContextSkia* platformContext,
+static bool paintSkiaText(PlatformContextSkia* platformContext,
                           HFONT hfont,
                           int numGlyphs,
                           const WORD* glyphs,
@@ -127,19 +134,18 @@ static bool PaintSkiaText(PlatformContextSkia* platformContext,
     paint.setFlags(SkPaint::kAntiAlias_Flag);
     bool didFill = false;
     if ((textMode & cTextFill) && SkColorGetA(paint.getColor())) {
-        if (!skiaDrawText(hfont, platformContext->canvas(), origin, &paint,
-                          &glyphs[0], &advances[0], numGlyphs))
+        if (!skiaDrawText(hfont, platformContext->canvas(), origin, &paint, &glyphs[0], &advances[0], numGlyphs))
             return false;
         didFill = true;
     }
 
     // Stroking on top (if necessary).
-    if ((textMode & WebCore::cTextStroke) &&
-        platformContext->getStrokeStyle() != NoStroke &&
-        platformContext->getStrokeThickness() > 0) {
+    if ((textMode & WebCore::cTextStroke)
+        && platformContext->getStrokeStyle() != NoStroke
+        && platformContext->getStrokeThickness() > 0) {
 
         paint.reset();
-        platformContext->setupPaintForStroking(&paint, NULL, 0);
+        platformContext->setupPaintForStroking(&paint, 0, 0);
         paint.setFlags(SkPaint::kAntiAlias_Flag);
         if (didFill) {
             // If there is a shadow and we filled above, there will already be
@@ -151,11 +157,10 @@ static bool PaintSkiaText(PlatformContextSkia* platformContext,
             // thing would be to draw to a new layer and then draw that layer
             // with a shadow. But this is a lot of extra work for something
             // that isn't normally an issue.
-            paint.setLooper(NULL)->safeUnref();
+            paint.setLooper(0)->safeUnref();
         }
 
-        if (!skiaDrawText(hfont, platformContext->canvas(), origin,
-                          &paint, &glyphs[0], &advances[0], numGlyphs))
+        if (!skiaDrawText(hfont, platformContext->canvas(), origin, &paint, &glyphs[0], &advances[0], numGlyphs))
             return false;
     }
     return true;
@@ -187,9 +192,7 @@ void Font::drawGlyphs(GraphicsContext* graphicsContext,
 
     // TODO(maruel): http://b/700464 SetTextColor doesn't support transparency.
     // Enforce non-transparent color.
-    color = SkColorSetRGB(SkColorGetR(color),
-                          SkColorGetG(color),
-                          SkColorGetB(color));
+    color = SkColorSetRGB(SkColorGetR(color), SkColorGetG(color), SkColorGetB(color));
     SetTextColor(hdc, skia::SkColorToCOLORREF(color));
     SetBkMode(hdc, TRANSPARENT);
 
@@ -221,25 +224,19 @@ void Font::drawGlyphs(GraphicsContext* graphicsContext,
         int curWidth = 0;
         for (int i = 0; i < curLen; ++i, ++glyphIndex) {
             glyphs[i] = glyphBuffer.glyphAt(from + glyphIndex);
-            advances[i] =
-                static_cast<int>(glyphBuffer.advanceAt(from + glyphIndex));
+            advances[i] = static_cast<int>(glyphBuffer.advanceAt(from + glyphIndex));
             curWidth += advances[i];
         }
 
         bool success = false;
         for (int executions = 0; executions < 2; ++executions) {
-            if (canUseGDI) {
-                success = !!ExtTextOut(hdc, x, lineTop, ETO_GLYPH_INDEX, NULL,
-                                       reinterpret_cast<const wchar_t*>(&glyphs[0]),
-                                       curLen, &advances[0]);
-            } else {
+            if (canUseGDI)
+                success = !!ExtTextOut(hdc, x, lineTop, ETO_GLYPH_INDEX, 0, reinterpret_cast<const wchar_t*>(&glyphs[0]), curLen, &advances[0]);
+            else {
                 // Skia's text draing origin is the baseline, like WebKit, not
                 // the top, like Windows.
                 SkPoint origin = { x, point.y() };
-                success = PaintSkiaText(context,
-                                        font->platformData().hfont(), numGlyphs,
-                                        reinterpret_cast<const WORD*>(&glyphs[0]),
-                                        &advances[0], origin);
+                success = paintSkiaText(context, font->platformData().hfont(), numGlyphs, reinterpret_cast<const WORD*>(&glyphs[0]), &advances[0], origin);
             }
 
             if (!success && executions == 0) {
@@ -270,10 +267,10 @@ FloatRect Font::selectionRectForComplexText(const TextRun& run,
     float right = static_cast<float>(point.x() + state.CharacterToX(to));
 
     // If the text is RTL, left will actually be after right.
-    if (left < right) {
+    if (left < right)
       return FloatRect(left, static_cast<float>(point.y()),
                        right - left, static_cast<float>(h));
-    }
+
     return FloatRect(right, static_cast<float>(point.y()),
                      left - right, static_cast<float>(h));
 }
@@ -297,19 +294,13 @@ void Font::drawComplexText(GraphicsContext* graphicsContext,
 
     // TODO(maruel): http://b/700464 SetTextColor doesn't support transparency.
     // Enforce non-transparent color.
-    color = SkColorSetRGB(SkColorGetR(color),
-                          SkColorGetG(color),
-                          SkColorGetB(color));
+    color = SkColorSetRGB(SkColorGetR(color), SkColorGetG(color), SkColorGetB(color));
     SetTextColor(hdc, skia::SkColorToCOLORREF(color));
     SetBkMode(hdc, TRANSPARENT);
 
     // Uniscribe counts the coordinates from the upper left, while WebKit uses
     // the baseline, so we have to subtract off the ascent.
-    state.Draw(hdc,
-               static_cast<int>(point.x()),
-               static_cast<int>(point.y() - ascent()),
-               from,
-               to);
+    state.Draw(hdc, static_cast<int>(point.x()), static_cast<int>(point.y() - ascent()), from, to);
     context->canvas()->endPlatformPaint();
 }
 
