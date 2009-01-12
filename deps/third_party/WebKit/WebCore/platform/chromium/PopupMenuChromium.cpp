@@ -85,6 +85,9 @@ public:
     // ScrollView
     virtual HostWindow* hostWindow() const;
 
+    // Widget
+    virtual void invalidateRect(const IntRect&);
+
     // PopupListBox methods
 
     // Show the popup
@@ -652,6 +655,15 @@ HostWindow* PopupListBox::hostWindow() const
     // Our parent is the root ScrollView, so it is the one that has a
     // HostWindow.  FrameView::hostWindow() works similarly.
     return parent() ? parent()->hostWindow() : 0;
+}
+
+void PopupListBox::invalidateRect(const IntRect& rect)
+{
+    // Since we are returning the HostWindow of our parent as our own in
+    // hostWindow(), we need to invalidate in our parent's coordinates.
+    IntRect newRect(rect);
+    newRect.move(kBorderSize, kBorderSize);
+    FramelessScrollView::invalidateRect(newRect);
 }
 
 // From HTMLSelectElement.cpp
