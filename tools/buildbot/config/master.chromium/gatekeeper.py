@@ -161,51 +161,25 @@ class GateKeeper(MailNotifier):
     if job_stamp and job_stamp.patch:
       patch_url_text = 'Patch: %s/steps/gclient/logs/patch\n\n' % build_url
 
-    if job_stamp is None:
-      source = 'unavailable'
-    else:
-      source = ''
-      if job_stamp.branch:
-        source += '[branch %s] ' % job_stamp.branch
-      if job_stamp.revision:
-        source += job_stamp.revision
-      else:
-        # TODO(maruel): Tell the exact rev?
-        #               That'd require feedback from the bot :/
-        source += 'HEAD'
-      if job_stamp.patch is not None:
-        source += ' (plus patch)'
-
     status_text = ('Automatically closing tree for "%s" on "%s"' %
                    (step_text, name))
     res = 'failure'
 
-    text = """Slave: %s
-
-Run details: %s
+    text = """Run details: %s
 
 %sSlave history: %swaterfall?builder=%s
 
 Build Reason: %s
 
-Build Source Stamp: %s
-
 --=>  %s  <=--
 
 Buildbot waterfall: http://build.chromium.org/
-
-Sincerely,
-
- - The monkey which sends all these emails manually
-
-Automated text version 0.1""" % (name,
-                                 build_url,
-                                 patch_url_text,
-                                 urllib.quote(waterfall_url, '/:'),
-                                 urllib.quote(name),
-                                 build.getReason(),
-                                 source,
-                                 status_text)
+""" % (build_url,
+       patch_url_text,
+       urllib.quote(waterfall_url, '/:'),
+       urllib.quote(name),
+       build.getReason(),
+       status_text)
     # TODO(maruel): Add the content of the steps in the email instead of forcing
     # users to clicks a link.
 
