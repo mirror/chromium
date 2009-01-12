@@ -116,7 +116,8 @@ public:
 
     void beginPath();
     void addPath(const SkPath&);
-    const SkPath* currentPath() const { return &m_path; }
+    const SkPath* currentPathInGlobalCoordinates() const { return &m_path; }
+    SkPath currentPathInLocalCoordinates() const;
 
     SkColor fillColor() const;
 
