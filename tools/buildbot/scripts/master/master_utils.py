@@ -185,6 +185,8 @@ class MasterFactory(object):
       factory_cmd_obj.AddNetTests()
     if self._ShouldRunTest(tests, 'googleurl'):
       factory_cmd_obj.AddGoogleURLTests()
+    if self._ShouldRunTest(tests, 'media'):
+      factory_cmd_obj.AddMediaTests()
     # When adding a test that uses a new executable, update kill_processes.py.
 
   def _BuildGClientSolution(self, svnurl, custom_deps_list):
@@ -304,7 +306,7 @@ class MasterFactory(object):
                 'purify_webkit', 'purify_base', 'purify_net', 'purify_unit',
                 'purify_layout', 'purify_ui', 'playback', 'node_leak',
                 'tab_switching', 'omnibox', 'memory, 'interactive_ui', 'base',
-                'net', 'reliability').
+                'net', 'reliability', 'media').
          The 'unit' suite includes the IPC tests.
       arhive_webkit_results: whether to archive the webkit test output
       show_perf_results: whether to add links to the test perf result graphs
@@ -465,7 +467,7 @@ class MasterFactory(object):
       if mode == 'purify':
         factory_cmd_obj.AddPurifyTest('base')
       else:
-        factory_cmd_obj.AddBasicGTestTestStep('base_unittests')
+        factory_cmd_obj.AddBaseTests()
 
     if 'net' in modules:
       factory_cmd_obj = factory_commands.FactoryCommands(factory, identifier,
@@ -480,7 +482,7 @@ class MasterFactory(object):
       if mode == 'purify':
         factory_cmd_obj.AddPurifyTest('net')
       else:
-        factory_cmd_obj.AddBasicGTestTestStep('net_unittests')
+        factory_cmd_obj.AddNetTests()
 
     if 'sandbox' in modules and mode != 'purify':
       factory_cmd_obj = factory_commands.FactoryCommands(factory, identifier,

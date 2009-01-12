@@ -809,13 +809,15 @@ class FactoryCommands(object):
     self.AddBasicGTestTestStep('plugin_tests')
 
   def AddBaseTests(self):
-    """Adds a step to the factory to run the base tests.  Only works for
-    Hammer builds because chrome.sln doesn't build base_unittests."""
+    """Adds a step to the factory to run the base tests."""
     self.AddBasicGTestTestStep('base_unittests')
 
+  def AddMediaTests(self):
+    """Adds a step to the factory to run the media tests."""
+    self.AddBasicGTestTestStep('media_unittests')
+
   def AddNetTests(self):
-    """Adds a step to the factory to run the net tests.  Only works for
-    Hammer builds because chrome.sln doesn't build net_unittests."""
+    """Adds a step to the factory to run the net tests."""
     self.AddBasicGTestTestStep('net_unittests')
 
   def AddGoogleURLTests(self):
