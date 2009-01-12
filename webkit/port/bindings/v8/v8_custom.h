@@ -6,8 +6,21 @@
 #define V8_CUSTOM_H__
 
 #include <v8.h>
+#include "v8_index.h"
 
 struct NPObject;
+
+#define CALLBACK_FUNC_DECL(NAME)                \
+v8::Handle<v8::Value> V8Custom::v8##NAME##Callback(const v8::Arguments& args)
+
+#define ACCESSOR_GETTER(NAME) \
+v8::Handle<v8::Value> V8Custom::v8##NAME##AccessorGetter(\
+    v8::Local<v8::String> name, const v8::AccessorInfo& info)
+
+#define ACCESSOR_SETTER(NAME) \
+void V8Custom::v8##NAME##AccessorSetter(v8::Local<v8::String> name, \
+                                        v8::Local<v8::Value> value, \
+                                        const v8::AccessorInfo& info)
 
 namespace WebCore {
 
@@ -20,9 +33,12 @@ class V8Custom {
  public:
 
   // Constants.
-  static const int kDOMWrapperObjectIndex = 0;
-  static const int kDOMWrapperTypeIndex = 1;
+  static const int kDOMWrapperTypeIndex = 0;
+  static const int kDOMWrapperObjectIndex = 1;
   static const int kDefaultWrapperInternalFieldCount = 2;
+
+  static const int kNPObjectInternalFieldCount =
+                      kDefaultWrapperInternalFieldCount + 0;
 
   static const int kDocumentImplementationIndex =
                       kDefaultWrapperInternalFieldCount + 0;
@@ -40,6 +56,20 @@ class V8Custom {
                       kDefaultWrapperInternalFieldCount + 0;
   static const int kXMLHttpRequestInternalFieldCount =
                       kDefaultWrapperInternalFieldCount + 1;
+
+  static const int kMessageChannelPort1Index = 
+                      kDefaultWrapperInternalFieldCount + 0;
+  static const int kMessageChannelPort2Index = 
+                      kDefaultWrapperInternalFieldCount + 1;
+  static const int kMessageChannelInternalFieldCount =
+                      kDefaultWrapperInternalFieldCount + 2;
+
+  static const int kMessagePortRequestCacheIndex =
+                      kDefaultWrapperInternalFieldCount + 0;
+  static const int kMessagePortEntangledPortIndex =
+                      kDefaultWrapperInternalFieldCount + 1;
+  static const int kMessagePortInternalFieldCount =
+                      kDefaultWrapperInternalFieldCount + 2;
 
   static const int kDOMWindowLocationIndex =
                       kDefaultWrapperInternalFieldCount + 0;
@@ -157,7 +187,11 @@ DECLARE_PROPERTY_ACCESSOR_SETTER(HTMLIFrameElementSrc)
 DECLARE_PROPERTY_ACCESSOR_SETTER(AttrValue)
 
 // Customized setter of HTMLOptionsCollection length
-DECLARE_PROPERTY_ACCESSOR_SETTER(HTMLOptionsCollectionLength)
+DECLARE_PROPERTY_ACCESSOR(HTMLOptionsCollectionLength)
+
+// Customized accessors for HTMLInputElement
+DECLARE_PROPERTY_ACCESSOR_GETTER(HTMLInputElementSelectionStart)
+DECLARE_PROPERTY_ACCESSOR_GETTER(HTMLInputElementSelectionEnd)
 
 DECLARE_NAMED_ACCESS_CHECK(Location)
 DECLARE_INDEXED_ACCESS_CHECK(History)
@@ -182,10 +216,13 @@ DECLARE_CALLBACK(HTMLOptionsCollectionAdd)
 DECLARE_CALLBACK(HTMLDocumentWrite)
 DECLARE_CALLBACK(HTMLDocumentWriteln)
 DECLARE_CALLBACK(HTMLDocumentOpen)
-DECLARE_CALLBACK(HTMLDocumentClear)
 
 // Document customized functions
 DECLARE_CALLBACK(DocumentEvaluate)
+DECLARE_CALLBACK(DocumentQuerySelector)
+DECLARE_CALLBACK(DocumentQuerySelectorAll)
+DECLARE_CALLBACK(DocumentFragmentQuerySelector)
+DECLARE_CALLBACK(DocumentFragmentQuerySelectorAll)
 
 // Window customized functions
 DECLARE_CALLBACK(DOMWindowAddEventListener)
@@ -201,6 +238,7 @@ DECLARE_CALLBACK(DOMWindowShowModalDialog)
 DECLARE_CALLBACK(DOMWindowOpen)
 
 DECLARE_CALLBACK(DOMParserConstructor)
+DECLARE_CALLBACK(MessageChannelConstructor)
 DECLARE_CALLBACK(XMLHttpRequestConstructor)
 DECLARE_CALLBACK(XMLSerializerConstructor)
 DECLARE_CALLBACK(XPathEvaluatorConstructor)
@@ -225,13 +263,20 @@ DECLARE_CALLBACK(CanvasRenderingContext2DSetShadow)
 DECLARE_CALLBACK(CanvasRenderingContext2DDrawImage)
 DECLARE_CALLBACK(CanvasRenderingContext2DDrawImageFromRect)
 DECLARE_CALLBACK(CanvasRenderingContext2DCreatePattern)
+DECLARE_CALLBACK(CanvasRenderingContext2DFillText)
+DECLARE_CALLBACK(CanvasRenderingContext2DStrokeText)
+DECLARE_CALLBACK(CanvasRenderingContext2DPutImageData)
 
-// Implementation of Clipboard methods.
+// Implementation of Clipboard attributes and methods.
+DECLARE_PROPERTY_ACCESSOR_GETTER(ClipboardTypes)
 DECLARE_CALLBACK(ClipboardClearData)
 DECLARE_CALLBACK(ClipboardGetData)
 DECLARE_CALLBACK(ClipboardSetData)
+DECLARE_CALLBACK(ClipboardSetDragImage);
 
 // Implementation of Element methods.
+DECLARE_CALLBACK(ElementQuerySelector)
+DECLARE_CALLBACK(ElementQuerySelectorAll)
 DECLARE_CALLBACK(ElementSetAttribute)
 DECLARE_CALLBACK(ElementSetAttributeNode)
 DECLARE_CALLBACK(ElementSetAttributeNS)
@@ -245,9 +290,20 @@ DECLARE_CALLBACK(LocationValueOf)
 DECLARE_CALLBACK(EventTargetNodeAddEventListener)
 DECLARE_CALLBACK(EventTargetNodeRemoveEventListener)
 
+// Custom implementation is Navigator properties.
+// We actually only need this because WebKit has
+// navigator.appVersion as custom. Our version just
+// passes through.
+DECLARE_PROPERTY_ACCESSOR(NavigatorAppVersion)
+
 // Custom implementation of XMLHttpRequest properties
-DECLARE_PROPERTY_ACCESSOR_SETTER(XMLHttpRequestOnreadystatechange)
-DECLARE_PROPERTY_ACCESSOR_SETTER(XMLHttpRequestOnload)
+DECLARE_PROPERTY_ACCESSOR(XMLHttpRequestOnabort)
+DECLARE_PROPERTY_ACCESSOR(XMLHttpRequestOnerror)
+DECLARE_PROPERTY_ACCESSOR(XMLHttpRequestOnload)
+DECLARE_PROPERTY_ACCESSOR(XMLHttpRequestOnloadstart)
+DECLARE_PROPERTY_ACCESSOR(XMLHttpRequestOnprogress)
+DECLARE_PROPERTY_ACCESSOR(XMLHttpRequestOnreadystatechange)
+DECLARE_PROPERTY_ACCESSOR(XMLHttpRequestResponseText)
 DECLARE_CALLBACK(XMLHttpRequestAddEventListener)
 DECLARE_CALLBACK(XMLHttpRequestRemoveEventListener)
 DECLARE_CALLBACK(XMLHttpRequestOpen)
@@ -255,6 +311,17 @@ DECLARE_CALLBACK(XMLHttpRequestSend)
 DECLARE_CALLBACK(XMLHttpRequestSetRequestHeader)
 DECLARE_CALLBACK(XMLHttpRequestGetResponseHeader)
 DECLARE_CALLBACK(XMLHttpRequestOverrideMimeType)
+DECLARE_CALLBACK(XMLHttpRequestDispatchEvent)
+
+// Custom implementation of XMLHttpRequestUpload properties
+DECLARE_PROPERTY_ACCESSOR(XMLHttpRequestUploadOnabort)
+DECLARE_PROPERTY_ACCESSOR(XMLHttpRequestUploadOnerror)
+DECLARE_PROPERTY_ACCESSOR(XMLHttpRequestUploadOnload)
+DECLARE_PROPERTY_ACCESSOR(XMLHttpRequestUploadOnloadstart)
+DECLARE_PROPERTY_ACCESSOR(XMLHttpRequestUploadOnprogress)
+DECLARE_CALLBACK(XMLHttpRequestUploadAddEventListener)
+DECLARE_CALLBACK(XMLHttpRequestUploadRemoveEventListener)
+DECLARE_CALLBACK(XMLHttpRequestUploadDispatchEvent)
 
 // Custom implementation of TreeWalker functions
 DECLARE_CALLBACK(TreeWalkerParentNode)
@@ -271,6 +338,9 @@ DECLARE_CALLBACK(NodeIteratorPreviousNode)
 
 // Custom implementation of NodeFilter function
 DECLARE_CALLBACK(NodeFilterAcceptNode)
+
+DECLARE_INDEXED_PROPERTY_GETTER(DOMStringList)
+DECLARE_CALLBACK(DOMStringListItem)
 
 DECLARE_NAMED_PROPERTY_GETTER(DOMWindow)
 DECLARE_INDEXED_PROPERTY_GETTER(DOMWindow)
@@ -302,10 +372,21 @@ DECLARE_INDEXED_PROPERTY_SETTER(HTMLOptionsCollection)
 DECLARE_INDEXED_PROPERTY_SETTER(HTMLSelectElementCollection)
 DECLARE_NAMED_PROPERTY_GETTER(HTMLCollection)
 
+// MessagePort
+DECLARE_PROPERTY_ACCESSOR(MessagePortOnmessage)
+DECLARE_PROPERTY_ACCESSOR(MessagePortOnclose)
+DECLARE_CALLBACK(MessagePortStartConversation)
+DECLARE_CALLBACK(MessagePortAddEventListener)
+DECLARE_CALLBACK(MessagePortRemoveEventListener)
+
 // SVG custom properties and callbacks
 #if ENABLE(SVG)
+DECLARE_PROPERTY_ACCESSOR_GETTER(SVGLengthValue)
+DECLARE_CALLBACK(SVGLengthConvertToSpecifiedUnits)
 DECLARE_CALLBACK(SVGMatrixInverse)
 DECLARE_CALLBACK(SVGMatrixRotateFromVector)
+DECLARE_CALLBACK(SVGElementInstanceAddEventListener)
+DECLARE_CALLBACK(SVGElementInstanceRemoveEventListener)
 #endif
 
 #undef DECLARE_INDEXED_ACCESS_CHECK

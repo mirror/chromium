@@ -29,6 +29,9 @@
 #include "googleurl/src/gurl.h"
 #include "generated_resources.h"
 
+using base::Time;
+using base::TimeDelta;
+
 // Approximate spacing, in pixels, taken from initial UI mock up screens
 static const int kVerticalPadding = 5;
 static const int kHorizontalLinkPadding = 15;
@@ -282,7 +285,8 @@ void DownloadItemTabView::LayoutComplete() {
   ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   ChromeFont font = rb.GetFont(ResourceBundle::WebFont);
   file_name_->SetText(
-    gfx::ElideFilename(model_->GetFileName(), font, kFilenameSize));
+    gfx::ElideFilename(model_->GetFileName().ToWStringHack(), font,
+                       kFilenameSize));
 
   gfx::Size file_name_size = file_name_->GetPreferredSize();
 
@@ -336,7 +340,7 @@ void DownloadItemTabView::LayoutCancelled() {
   // File name and URL, truncated to show cancelled status
   ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   ChromeFont font = rb.GetFont(ResourceBundle::WebFont);
-  file_name_->SetText(gfx::ElideFilename(model_->GetFileName(), 
+  file_name_->SetText(gfx::ElideFilename(model_->GetFileName().ToWStringHack(),
                                          font, 
                                          kFilenameSize));
   gfx::Size file_name_size = file_name_->GetPreferredSize();
@@ -427,7 +431,7 @@ void DownloadItemTabView::LayoutInProgress() {
   // File name and URL, truncated to show progress status
   ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   ChromeFont font = rb.GetFont(ResourceBundle::WebFont);
-  file_name_->SetText(gfx::ElideFilename(model_->GetFileName(),
+  file_name_->SetText(gfx::ElideFilename(model_->GetFileName().ToWStringHack(),
                                          font,
                                          kFilenameSize));
   gfx::Size file_name_size = file_name_->GetPreferredSize();
@@ -587,7 +591,7 @@ void DownloadItemTabView::LayoutPromptDangerousDownload() {
 
   // Warning message and URL.
   std::wstring file_name;
-  ElideString(model_->original_name(), kFileNameMaxLength, &file_name);
+  ElideString(model_->original_name().ToWStringHack(), kFileNameMaxLength, &file_name);
   dangerous_download_warning_->SetText(
       l10n_util::GetStringF(IDS_PROMPT_DANGEROUS_DOWNLOAD, file_name));
   gfx::Size warning_size = dangerous_download_warning_->GetPreferredSize();
@@ -713,7 +717,7 @@ bool DownloadItemTabView::OnMousePressed(const views::MouseEvent& event) {
       views::View::ConvertPointToScreen(this, &point);
 
       download_util::DownloadDestinationContextMenu menu(
-          model_, GetContainer()->GetHWND(), point.ToPOINT());
+          model_, GetWidget()->GetHWND(), point.ToPOINT());
     }
   } else {
     parent_->ItemBecameSelected(NULL);
@@ -755,8 +759,8 @@ bool DownloadItemTabView::OnMouseDragged(const views::MouseEvent& event) {
 void DownloadItemTabView::LinkActivated(views::Link* source, int event_flags) {
   // There are several links in our view that could have been clicked:
   if (source == file_name_) {
-    views::Container* container = this->GetContainer();
-    HWND parent_window = container ? container->GetHWND() : NULL;
+    views::Widget* widget = this->GetWidget();
+    HWND parent_window = widget ? widget->GetHWND() : NULL;
     model_->manager()->OpenDownloadInShell(model_, parent_window);
   } else if (source == pause_) {
     model_->TogglePause();
@@ -874,7 +878,10 @@ void DownloadTabView::Paint(ChromeCanvas* canvas) {
   if (canvas->getClipBounds(&clip)) {
     int row_start = (SkScalarRound(clip.fTop) - kSpacer) /
                     (big_icon_size_ + kSpacer);
-    int row_stop = SkScalarRound(clip.fBottom) / (big_icon_size_ + kSpacer);
+    int row_stop =
+        std::min(static_cast<int>(downloads_.size()) - 1,
+                 (SkScalarRound(clip.fBottom) - kSpacer) /
+                 (big_icon_size_ + kSpacer));
     SkRect download_rect;
     for (int i = row_start; i <= row_stop; ++i) {
       int y = i * (big_icon_size_ + kSpacer) + kSpacer;
@@ -1068,7 +1075,8 @@ void DownloadTabView::SetDownloads(std::vector<DownloadItem*>& downloads) {
 SkBitmap* DownloadTabView::LookupIcon(DownloadItem* download) {
   IconManager* im = g_browser_process->icon_manager();
   // Fast look up.
-  SkBitmap* icon = im->LookupIcon(download->full_path(), IconLoader::NORMAL);
+  SkBitmap* icon = im->LookupIcon(download->full_path().ToWStringHack(),
+                                  IconLoader::NORMAL);
 
   // Expensive look up.
   if (!icon)
@@ -1083,7 +1091,7 @@ SkBitmap* DownloadTabView::LookupIcon(DownloadItem* download) {
 void DownloadTabView::LoadIcon(DownloadItem* download) {
   IconManager* im = g_browser_process->icon_manager();
   IconManager::Handle h =
-      im->LoadIcon(download->full_path(), IconLoader::NORMAL,
+      im->LoadIcon(download->full_path().ToWStringHack(), IconLoader::NORMAL,
                    &icon_consumer_,
                    NewCallback(this, &DownloadTabView::OnExtractIconComplete));
   icon_consumer_.SetClientData(im, h, download);

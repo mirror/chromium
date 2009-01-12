@@ -63,7 +63,20 @@
 #define COOKIE_DLOG(severity) DLOG_IF(INFO, 0)
 #endif
 
+using base::Time;
+using base::TimeDelta;
+
 namespace net {
+
+// Cookie garbage collection thresholds.  Based off of the Mozilla defaults.
+// It might seem scary to have a high purge value, but really it's not.  You
+// just make sure that you increase the max to cover the increase in purge,
+// and we would have been purging the same amount of cookies.  We're just
+// going through the garbage collection process less often.
+static const size_t kNumCookiesPerHost      = 70;  // ~50 cookies
+static const size_t kNumCookiesPerHostPurge = 20;
+static const size_t kNumCookiesTotal        = 1100;  // ~1000 cookies
+static const size_t kNumCookiesTotalPurge   = 100;
 
 // Default minimum delay after updating a cookie's LastAccessDate before we
 // will update it again.
@@ -102,6 +115,9 @@ void CookieMonster::InitStore() {
   // care if it's expired, insert it so it can be garbage collected, removed,
   // and sync'd.
   std::vector<KeyedCanonicalCookie> cookies;
+  // Reserve space for the maximum amount of cookies a database should have.
+  // This prevents multiple vector growth / copies as we append cookies.
+  cookies.reserve(kNumCookiesTotal);
   store_->Load(&cookies);
   for (std::vector<KeyedCanonicalCookie>::const_iterator it = cookies.begin();
        it != cookies.end(); ++it) {
@@ -157,7 +173,7 @@ Time CookieMonster::ParseCookieTime(const std::string& time_string) {
       if (!found_month) {
         for (int i = 0; i < kMonthsLen; ++i) {
           // Match prefix, so we could match January, etc
-          if (StrNCaseCmp(token.c_str(), kMonths[i], 3) == 0) {
+          if (base::strncasecmp(token.c_str(), kMonths[i], 3) == 0) {
             exploded.month = i + 1;
             found_month = true;
             break;
@@ -363,14 +379,36 @@ static bool HasCookieableScheme(const GURL& url) {
 
 bool CookieMonster::SetCookie(const GURL& url,
                               const std::string& cookie_line) {
+  CookieOptions options;
+  return SetCookieWithOptions(url, cookie_line, options);
+}
+
+bool CookieMonster::SetCookieWithOptions(const GURL& url,
+                                         const std::string& cookie_line,
+                                         const CookieOptions& options) {
   Time creation_date = CurrentTime();
   last_time_seen_ = creation_date;
-  return SetCookieWithCreationTime(url, cookie_line, creation_date);
+  return SetCookieWithCreationTimeWithOptions(url,
+                                              cookie_line,
+                                              creation_date,
+                                              options);
 }
 
 bool CookieMonster::SetCookieWithCreationTime(const GURL& url,
                                               const std::string& cookie_line,
                                               const Time& creation_time) {
+  CookieOptions options;
+  return SetCookieWithCreationTimeWithOptions(url,
+                                              cookie_line,
+                                              creation_time,
+                                              options);
+}
+
+bool CookieMonster::SetCookieWithCreationTimeWithOptions(
+                                              const GURL& url,
+                                              const std::string& cookie_line,
+                                              const Time& creation_time,
+                                              const CookieOptions& options) {
   DCHECK(!creation_time.is_null());
 
   if (!HasCookieableScheme(url)) {
@@ -388,6 +426,11 @@ bool CookieMonster::SetCookieWithCreationTime(const GURL& url,
 
   if (!pc.IsValid()) {
     COOKIE_DLOG(WARNING) << "Couldn't parse cookie";
+    return false;
+  }
+
+  if (options.exclude_httponly() && pc.IsHttpOnly()) {
+    COOKIE_DLOG(INFO) << "SetCookie() not setting httponly cookie";
     return false;
   }
 
@@ -411,7 +454,12 @@ bool CookieMonster::SetCookieWithCreationTime(const GURL& url,
     return false;
   }
 
-  DeleteAnyEquivalentCookie(cookie_domain, *cc);
+  if (DeleteAnyEquivalentCookie(cookie_domain,
+                                *cc,
+                                options.exclude_httponly())) {
+    COOKIE_DLOG(INFO) << "SetCookie() not clobbering httponly cookie";
+    return false;
+  }
 
   COOKIE_DLOG(INFO) << "SetCookie() cc: " << cc->DebugString();
 
@@ -432,9 +480,17 @@ bool CookieMonster::SetCookieWithCreationTime(const GURL& url,
 
 void CookieMonster::SetCookies(const GURL& url,
                                const std::vector<std::string>& cookies) {
+  CookieOptions options;
+  SetCookiesWithOptions(url, cookies, options);
+}
+
+void CookieMonster::SetCookiesWithOptions(
+    const GURL& url,
+    const std::vector<std::string>& cookies,
+    const CookieOptions& options) {
   for (std::vector<std::string>::const_iterator iter = cookies.begin();
        iter != cookies.end(); ++iter)
-    SetCookie(url, *iter);
+    SetCookieWithOptions(url, *iter, options);
 }
 
 void CookieMonster::InternalInsertCookie(const std::string& key,
@@ -469,9 +525,11 @@ void CookieMonster::InternalDeleteCookie(CookieMap::iterator it,
   delete cc;
 }
 
-void CookieMonster::DeleteAnyEquivalentCookie(const std::string& key,
-                                              const CanonicalCookie& ecc) {
+bool CookieMonster::DeleteAnyEquivalentCookie(const std::string& key,
+                                              const CanonicalCookie& ecc,
+                                              bool skip_httponly) {
   bool found_equivalent_cookie = false;
+  bool skipped_httponly = false;
   for (CookieMapItPair its = cookies_.equal_range(key);
        its.first != its.second; ) {
     CookieMap::iterator curit = its.first;
@@ -483,7 +541,11 @@ void CookieMonster::DeleteAnyEquivalentCookie(const std::string& key,
       // overwrite each other.
       DCHECK(!found_equivalent_cookie) <<
           "Duplicate equivalent cookies found, cookie store is corrupted.";
-      InternalDeleteCookie(curit, true);
+      if (skip_httponly && cc->IsHttpOnly()) {
+        skipped_httponly = true;
+      } else {
+        InternalDeleteCookie(curit, true);
+      }
       found_equivalent_cookie = true;
 #ifdef NDEBUG
       // Speed optimization: No point looping through the rest of the cookies
@@ -492,20 +554,11 @@ void CookieMonster::DeleteAnyEquivalentCookie(const std::string& key,
 #endif
     }
   }
+  return skipped_httponly;
 }
 
 int CookieMonster::GarbageCollect(const Time& current,
                                   const std::string& key) {
-  // Based off of the Mozilla defaults.
-  // It might seem scary to have a high purge value, but really it's not.  You
-  // just make sure that you increase the max to cover the increase in purge,
-  // and we would have been purging the same amount of cookies.  We're just
-  // going through the garbage collection process less often.
-  static const size_t kNumCookiesPerHost      = 70;  // ~50 cookies
-  static const size_t kNumCookiesPerHostPurge = 20;
-  static const size_t kNumCookiesTotal        = 1100;  // ~1000 cookies
-  static const size_t kNumCookiesTotalPurge   = 100;
-
   int num_deleted = 0;
 
   // Collect garbage for this key.
@@ -653,10 +706,6 @@ static bool CookieSorter(CookieMonster::CanonicalCookie* cc1,
   return cc1->Path().length() > cc2->Path().length();
 }
 
-std::string CookieMonster::GetCookies(const GURL& url) {
-  return GetCookiesWithOptions(url, NORMAL);
-}
-
 // Currently our cookie datastructure is based on Mozilla's approach.  We have a
 // hash keyed on the cookie's domain, and for any query we walk down the domain
 // components and probe for cookies until we reach the TLD, where we stop.
@@ -669,8 +718,13 @@ std::string CookieMonster::GetCookies(const GURL& url) {
 // search/prefix trie, where we reverse the hostname and query for all
 // keys that are a prefix of our hostname.  I think the hash probing
 // should be fast and simple enough for now.
+std::string CookieMonster::GetCookies(const GURL& url) {
+  CookieOptions options;
+  return GetCookiesWithOptions(url, options);
+}
+
 std::string CookieMonster::GetCookiesWithOptions(const GURL& url,
-                                                 CookieOptions options) {
+                                                 const CookieOptions& options) {
   if (!HasCookieableScheme(url)) {
     DLOG(WARNING) << "Unsupported cookie scheme: " << url.scheme();
     return std::string();
@@ -724,7 +778,7 @@ CookieMonster::CookieList CookieMonster::GetAllCookies() {
 
 void CookieMonster::FindCookiesForHostAndDomain(
     const GURL& url,
-    CookieOptions options,
+    const CookieOptions& options,
     std::vector<CanonicalCookie*>* cookies) {
   AutoLock autolock(lock_);
   InitIfNecessary();
@@ -759,7 +813,7 @@ void CookieMonster::FindCookiesForHostAndDomain(
 void CookieMonster::FindCookiesForKey(
     const std::string& key,
     const GURL& url,
-    CookieOptions options,
+    const CookieOptions& options,
     const Time& current,
     std::vector<CanonicalCookie*>* cookies) {
   bool secure = url.SchemeIsSecure();
@@ -776,8 +830,8 @@ void CookieMonster::FindCookiesForKey(
       continue;
     }
 
-    // Filter out HttpOnly cookies unless they where explicitly requested.
-    if ((options & INCLUDE_HTTPONLY) == 0 && cc->IsHttpOnly())
+    // Filter out HttpOnly cookies, per options.
+    if (options.exclude_httponly() && cc->IsHttpOnly())
       continue;
 
     // Filter out secure cookies unless we're https.
@@ -850,7 +904,6 @@ void CookieMonster::ParsedCookie::ParseTokenValuePairs(
   static const char kTerminator[]      = "\n\r\0";
   static const int  kTerminatorLen     = sizeof(kTerminator) - 1;
   static const char kWhitespace[]      = " \t";
-  static const char kQuoteTerminator[] = "\"";
   static const char kValueSeparator[]  = ";";
   static const char kTokenSeparator[]  = ";=";
 
@@ -933,36 +986,35 @@ void CookieMonster::ParsedCookie::ParseTokenValuePairs(
     // value_start should point at the first character of the value.
     value_start = it;
 
-    // The value is double quoted, process <quoted-string>.
-    if (it != end && *it == '"') {
-      // Skip over the first double quote, and parse until
-      // a terminating double quote or the end.
-      for (++it; it != end && !CharIsA(*it, kQuoteTerminator); ++it) {
-        // Allow an escaped \" in a double quoted string.
-        if (*it == '\\') {
-          ++it;
-          if (it == end)
-            break;
-        }
-      }
+    // It is unclear exactly how quoted string values should be handled.
+    // Major browsers do different things, for example, Firefox supports
+    // semicolons embedded in a quoted value, while IE does not.  Looking at
+    // the specs, RFC 2109 and 2965 allow for a quoted-string as the value.
+    // However, these specs were apparently written after browsers had
+    // implemented cookies, and they seem very distant from the reality of
+    // what is actually implemented and used on the web.  The original spec
+    // from Netscape is possibly what is closest to the cookies used today.
+    // This spec didn't have explicit support for double quoted strings, and
+    // states that ; is not allowed as part of a value.  We had originally
+    // implement the Firefox behavior (A="B;C"; -> A="B;C";).  However, since
+    // there is no standard that makes sense, we decided to follow the behavior
+    // of IE and Safari, which is closer to the original Netscape proposal.
+    // This means that A="B;C" -> A="B;.  This also makes the code much simpler
+    // and reduces the possibility for invalid cookies, where other browsers
+    // like Opera currently reject those invalid cookies (ex A="B" "C";).
 
-      SeekTo(&it, end, kValueSeparator);
-      // We could seek to the end, that's ok.
-      value_end = it;
-    } else {
-      // The value is non-quoted, process <token-value>.
-      // Just look for ';' to terminate ('=' allowed).
-      // We can hit the end, maybe they didn't terminate.
-      SeekTo(&it, end, kValueSeparator);
+    // Just look for ';' to terminate ('=' allowed).
+    // We can hit the end, maybe they didn't terminate.
+    SeekTo(&it, end, kValueSeparator);
 
-      // Ignore any whitespace between the value and the value separator
-      if (it != value_start) {  // Could have an empty value
-        --it;
-        SeekBackPast(&it, value_start, kWhitespace);
-        ++it;
-      }
+    // Will be pointed at the ; seperator or the end.
+    value_end = it;
 
-      value_end = it;
+    // Ignore any unwanted whitespace after the value.
+    if (value_end != value_start) {  // Could have an empty value
+      --value_end;
+      SeekBackPast(&value_end, value_start, kWhitespace);
+      ++value_end;
     }
 
     // OK, we're finished with a Token/Value.

@@ -9,16 +9,15 @@
 
 #include "base/string_util.h"
 #include "base/win_util.h"
-#include "base/gfx/skia_utils.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/favicon_size.h"
 #include "chrome/common/gfx/icon_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/container.h"
 #include "chrome/views/hwnd_view.h"
 #include "SkBitmap.h"
 #include "SkColorFilter.h"
+#include "skia/ext/skia_utils_win.h"
 
 namespace views {
 
@@ -27,9 +26,10 @@ const int kListViewTextPadding = 15;
 // Additional column width necessary if column has icons.
 const int kListViewIconWidthAndPadding = 18;
 
-const int kImageSize = 18;
-
 // TableModel -----------------------------------------------------------------
+
+// static
+const int TableView::kImageSize = 18;
 
 // Used for sorting.
 static Collator* collator = NULL;
@@ -438,7 +438,7 @@ void TableView::SetColumnVisibility(int id, bool is_visible) {
         int index = static_cast<int>(i - visible_columns_.begin());
         // This could be called before the native list view has been created
         // (in CreateNativeControl, called when the view is added to a
-        // container). In that case since the column is not in
+        // Widget). In that case since the column is not in
         // visible_columns_ it will not be added later on when it is created.
         if (list_view_)
           SendMessage(list_view_, LVM_DELETECOLUMN, index, 0);
@@ -1206,10 +1206,10 @@ LRESULT TableView::OnCustomDraw(NMLVCUSTOMDRAW* draw_info) {
           custom_cell_font_ = CreateFontIndirect(&logfont);
           SelectObject(draw_info->nmcd.hdc, custom_cell_font_);
           draw_info->clrText = foreground.color_is_set
-                               ? gfx::SkColorToCOLORREF(foreground.color)
+                               ? skia::SkColorToCOLORREF(foreground.color)
                                : CLR_DEFAULT;
           draw_info->clrTextBk = background.color_is_set
-                                 ? gfx::SkColorToCOLORREF(background.color)
+                                 ? skia::SkColorToCOLORREF(background.color)
                                  : CLR_DEFAULT;
           return CDRF_NEWFONT;
         }
@@ -1259,7 +1259,7 @@ LRESULT TableView::OnCustomDraw(NMLVCUSTOMDRAW* draw_info) {
               // background (or rather windows paints background, then invokes
               // this twice). As such, we always fill in the background.
               canvas.drawColor(
-                  gfx::COLORREFToSkColor(GetSysColor(bg_color_index)),
+                  skia::COLORREFToSkColor(GetSysColor(bg_color_index)),
                   SkPorterDuff::kSrc_Mode);
               // + 1 for padding (we declared the image as 18x18 in the list-
               // view when they are 16x16 so we get an extra pixel of padding).

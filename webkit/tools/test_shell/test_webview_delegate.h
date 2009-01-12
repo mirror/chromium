@@ -16,8 +16,13 @@
 #endif
 #include <map>
 
+#if defined(OS_LINUX)
+#include <gdk/gdkcursor.h>
+#endif
+
 #include "base/basictypes.h"
 #include "base/ref_counted.h"
+#include "webkit/glue/webcursor.h"
 #include "webkit/glue/webview_delegate.h"
 #include "webkit/glue/webwidget_delegate.h"
 #if defined(OS_WIN)
@@ -51,14 +56,19 @@ class TestWebViewDelegate : public base::RefCounted<TestWebViewDelegate>,
   typedef std::vector<CapturedContextMenuEvent> CapturedContextMenuEvents;
 
   TestWebViewDelegate(TestShell* shell) 
-    : page_is_loading_(false),
-      is_custom_policy_delegate_(false),
+    : is_custom_policy_delegate_(false),
       shell_(shell),
       top_loading_frame_(NULL),
       page_id_(-1),
-      last_page_id_updated_(-1)
+      last_page_id_updated_(-1),
+      smart_insert_delete_enabled_(true)
 #if defined(OS_WIN)
-      , custom_cursor_(NULL)
+      , select_trailing_whitespace_enabled_(true)
+#else
+      , select_trailing_whitespace_enabled_(false)
+#endif
+#if defined(OS_LINUX)
+      , cursor_type_(GDK_X_CURSOR)
 #endif
       { 
   }
@@ -66,7 +76,7 @@ class TestWebViewDelegate : public base::RefCounted<TestWebViewDelegate>,
 
   // WebViewDelegate
   virtual WebView* CreateWebView(WebView* webview, bool user_gesture);
-  virtual WebWidget* CreatePopupWidget(WebView* webview);
+  virtual WebWidget* CreatePopupWidget(WebView* webview, bool activatable);
   virtual WebPluginDelegate* CreatePluginDelegate(
     WebView* webview,
     const GURL& url,
@@ -170,8 +180,11 @@ class TestWebViewDelegate : public base::RefCounted<TestWebViewDelegate>,
                                 std::wstring style,
                                 std::wstring range);
   virtual bool SmartInsertDeleteEnabled();
+  virtual void SetSmartInsertDeleteEnabled(bool enabled);
+  virtual bool IsSelectTrailingWhitespaceEnabled();
+  virtual void SetSelectTrailingWhitespaceEnabled(bool enabled);
   virtual void DidBeginEditing();
-  virtual void DidChangeSelection();
+  virtual void DidChangeSelection(bool is_empty_selection);
   virtual void DidChangeContents();
   virtual void DidEndEditing();
 
@@ -188,12 +201,11 @@ class TestWebViewDelegate : public base::RefCounted<TestWebViewDelegate>,
     bool is_redirect);
   void SetCustomPolicyDelegate(bool isCustom);
   virtual WebHistoryItem* GetHistoryEntryAtOffset(int offset);
-  virtual void GoToEntryAtOffsetAsync(int offset);
   virtual int GetHistoryBackListCount();
   virtual int GetHistoryForwardListCount();
 
   // WebWidgetDelegate
-  virtual gfx::ViewHandle GetContainingWindow(WebWidget* webwidget);
+  virtual gfx::NativeView GetContainingView(WebWidget* webwidget);
   virtual void DidInvalidateRect(WebWidget* webwidget, const gfx::Rect& rect);
   virtual void DidScrollRect(WebWidget* webwidget, int dx, int dy,
                              const gfx::Rect& clip_rect);
@@ -206,6 +218,7 @@ class TestWebViewDelegate : public base::RefCounted<TestWebViewDelegate>,
   virtual void GetWindowRect(WebWidget* webwidget, gfx::Rect* rect);
   virtual void SetWindowRect(WebWidget* webwidget, const gfx::Rect& rect);
   virtual void GetRootWindowRect(WebWidget *,gfx::Rect *);
+  virtual void GetRootWindowResizerRect(WebWidget* webwidget, gfx::Rect* rect);
   virtual void DidMove(WebWidget* webwidget, const WebPluginGeometry& move);
   virtual void RunModal(WebWidget* webwidget);
   virtual bool IsHidden();
@@ -232,13 +245,27 @@ class TestWebViewDelegate : public base::RefCounted<TestWebViewDelegate>,
   // Methods for modifying WebPreferences
   void SetUserStyleSheetEnabled(bool is_enabled);
   void SetUserStyleSheetLocation(const GURL& location);
-  void SetDashboardCompatibilityMode(bool use_mode);
 
   // Sets the webview as a drop target.
   void RegisterDragDrop();
 
  protected:
+  // Called the title of the page changes.
+  // Can be used to update the title of the window.
+  void SetPageTitle(const std::wstring& title);
+
+  // Called when the URL of the page changes.
+  // Extracts the URL and forwards on to SetAddressBarURL().
   void UpdateAddressBar(WebView* webView);
+
+  // Called when the URL of the page changes.
+  // Should be used to update the text of the URL bar.
+  void SetAddressBarURL(const GURL& url);
+
+  // Show a JavaScript alert as a popup message.
+  // The caller should test whether we're in layout test mode and only
+  // call this function when we really want a message to pop up.
+  void ShowJavaScriptAlert(const std::wstring& message);
 
   // In the Mac code, this is called to trigger the end of a test after the
   // page has finished loading.  From here, we can generate the dump for the
@@ -250,16 +277,12 @@ class TestWebViewDelegate : public base::RefCounted<TestWebViewDelegate>,
   void UpdateForCommittedLoad(WebFrame* webframe, bool is_new_navigation);
   void UpdateURL(WebFrame* frame);
   void UpdateSessionHistory(WebFrame* frame);
+  void UpdateSelectionClipboard(bool is_empty_selection);
 
   // Get a string suitable for dumping a frame to the console.
   std::wstring GetFrameDescription(WebFrame* webframe);
 
  private:
-  // True while a page is in the process of being loaded.  This flag should
-  // not be necessary, but it helps guard against mismatched messages for 
-  // starting and ending loading frames.
-  bool page_is_loading_;
-
   // Causes navigation actions just printout the intended navigation instead 
   // of taking you to the page. This is used for cases like mailto, where you
   // don't actually want to open the mail program.
@@ -280,12 +303,24 @@ class TestWebViewDelegate : public base::RefCounted<TestWebViewDelegate>,
   ResourceMap resource_identifier_map_;
   std::string GetResourceDescription(uint32 identifier);
 
-#if defined(OS_WIN)
-  HCURSOR custom_cursor_;
+  // true if we want to enable smart insert/delete.
+  bool smart_insert_delete_enabled_;
 
+  // true if we want to enable selection of trailing whitespaces
+  bool select_trailing_whitespace_enabled_;
+
+  WebCursor current_cursor_;
+#if defined(OS_WIN)
   // Classes needed by drag and drop.
   scoped_refptr<TestDragDelegate> drag_delegate_;
   scoped_refptr<TestDropDelegate> drop_delegate_;
+#endif
+
+#if defined(OS_LINUX)
+  // The type of cursor the window is currently using.
+  // Used for judging whether a new SetCursor call is actually changing the
+  // cursor.
+  GdkCursorType cursor_type_;
 #endif
   
   CapturedContextMenuEvents captured_context_menu_events_;

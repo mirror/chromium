@@ -10,9 +10,9 @@
 #include "base/gfx/size.h"
 #include "base/logging.h"
 #include "base/message_loop.h"
-#include "base/gfx/platform_canvas_win.h"
 #include "base/scoped_ptr.h"
 #include "chrome/renderer/render_process.h"
+#include "skia/ext/platform_canvas_win.h"
 
 #include "webkit/glue/webinputevent.h"
 #include "webkit/glue/webwidget.h"
@@ -69,7 +69,7 @@ DeferredCloses* DeferredCloses::current_ = NULL;
 
 ///////////////////////////////////////////////////////////////////////////////
 
-RenderWidget::RenderWidget(RenderThreadBase* render_thread)
+RenderWidget::RenderWidget(RenderThreadBase* render_thread, bool activatable)
     : routing_id_(MSG_ROUTING_NONE),
       opener_id_(MSG_ROUTING_NONE),
       render_thread_(render_thread),
@@ -89,7 +89,8 @@ RenderWidget::RenderWidget(RenderThreadBase* render_thread)
       ime_control_y_(-1),
       ime_control_new_state_(false),
       ime_control_updated_(false),
-      ime_control_busy_(false){
+      ime_control_busy_(false),
+      activatable_(activatable) {
   RenderProcess::AddRefProcess();
   DCHECK(render_thread_);
 }
@@ -108,9 +109,11 @@ RenderWidget::~RenderWidget() {
 
 /*static*/
 RenderWidget* RenderWidget::Create(int32 opener_id,
-                                   RenderThreadBase* render_thread) {
+                                   RenderThreadBase* render_thread,
+                                   bool activatable) {
   DCHECK(opener_id != MSG_ROUTING_NONE);
-  scoped_refptr<RenderWidget> widget = new RenderWidget(render_thread);
+  scoped_refptr<RenderWidget> widget = new RenderWidget(render_thread,
+                                                        activatable);
   widget->Init(opener_id);  // adds reference
   return widget;
 }
@@ -126,7 +129,7 @@ void RenderWidget::Init(int32 opener_id) {
   webwidget_.swap(&webwidget);
 
   bool result = render_thread_->Send(
-      new ViewHostMsg_CreateWidget(opener_id, &routing_id_));
+      new ViewHostMsg_CreateWidget(opener_id, activatable_, &routing_id_));
   if (result) {
     render_thread_->AddRoute(routing_id_, this);
     // Take a reference on behalf of the RenderThread.  This will be balanced
@@ -351,8 +354,9 @@ void RenderWidget::ClearFocus() {
     webwidget_->SetFocus(false);
 }
 
-void RenderWidget::PaintRect(const gfx::Rect& rect, SharedMemory* paint_buf) {
-  gfx::PlatformCanvasWin canvas(rect.width(), rect.height(), true,
+void RenderWidget::PaintRect(const gfx::Rect& rect,
+                             base::SharedMemory* paint_buf) {
+  skia::PlatformCanvasWin canvas(rect.width(), rect.height(), true,
       paint_buf->handle());
   // Bring the canvas into the coordinate system of the paint rect
   canvas.translate(static_cast<SkScalar>(-rect.x()),
@@ -499,7 +503,7 @@ void RenderWidget::DoDeferredScroll() {
 ///////////////////////////////////////////////////////////////////////////////
 // WebWidgetDelegate
 
-HWND RenderWidget::GetContainingWindow(WebWidget* webwidget) {
+gfx::NativeView RenderWidget::GetContainingView(WebWidget* webwidget) {
   return host_window_;
 }
 
@@ -650,6 +654,11 @@ void RenderWidget::SetWindowRect(WebWidget* webwidget, const gfx::Rect& pos) {
 
 void RenderWidget::GetRootWindowRect(WebWidget* webwidget, gfx::Rect* rect) {
   Send(new ViewHostMsg_GetRootWindowRect(routing_id_, host_window_, rect));
+}
+
+void RenderWidget::GetRootWindowResizerRect(WebWidget* webwidget, 
+                                            gfx::Rect* rect) {
+  Send(new ViewHostMsg_GetRootWindowResizerRect(routing_id_, host_window_, rect));
 }
 
 void RenderWidget::OnImeSetInputMode(bool is_active) {

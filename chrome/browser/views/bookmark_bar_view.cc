@@ -7,7 +7,6 @@
 #include <limits>
 
 #include "base/base_drag_source.h"
-#include "base/gfx/skia_utils.h"
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/bookmarks/bookmark_context_menu.h"
 #include "chrome/browser/bookmarks/bookmark_utils.h"
@@ -39,12 +38,13 @@
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
 #include "chrome/views/chrome_menu.h"
-#include "chrome/views/container.h"
 #include "chrome/views/menu_button.h"
 #include "chrome/views/tooltip_manager.h"
 #include "chrome/views/view_constants.h"
+#include "chrome/views/widget.h"
 #include "chrome/views/window.h"
 #include "generated_resources.h"
+#include "skia/ext/skia_utils.h"
 
 using views::BaseButton;
 using views::DropTargetEvent;
@@ -52,9 +52,13 @@ using views::MenuButton;
 using views::MenuItemView;
 using views::View;
 
+// How much we want the bookmark bar to overlap the toolbar when in its
+// 'always shown' mode.
+static const double kToolbarOverlap = 4.0;
+
 // Margins around the content.
-static const int kTopMargin = 2;
-static const int kBottomMargin = 3;
+static const int kTopMargin = 1;
+static const int kBottomMargin = 2;
 static const int kLeftMargin = 1;
 static const int kRightMargin = 1;
 
@@ -255,7 +259,7 @@ class BookmarkButton : public views::TextButton {
     // the parent's actual bounds because they differ from what is painted.
     SkPaint paint;
     paint.setAlpha(static_cast<int>((1.0 - animation_value) * 255));
-    paint.setShader(gfx::CreateGradientShader(0,
+    paint.setShader(skia::CreateGradientShader(0,
         view->height() + kTopMargin + kBottomMargin,
         kTopBorderColor,
         kBackgroundColor))->safeUnref();
@@ -532,7 +536,7 @@ class MenuRunner : public views::MenuDelegate,
     std::vector<BookmarkNode*> nodes;
     nodes.push_back(menu_id_to_node_map_[id]);
     context_menu_.reset(
-        new BookmarkContextMenu(view_->GetContainer()->GetHWND(),
+        new BookmarkContextMenu(view_->GetWidget()->GetHWND(),
                                 view_->GetProfile(),
                                 view_->browser(),
                                 view_->GetPageNavigator(),
@@ -603,16 +607,16 @@ class ButtonSeparatorView : public views::View {
 
   virtual void Paint(ChromeCanvas* canvas) {
     SkPaint paint;
-    paint.setShader(gfx::CreateGradientShader(0,
-                                              height() / 2,
-                                              kTopBorderColor,
-                                              kSeparatorColor))->safeUnref();
+    paint.setShader(skia::CreateGradientShader(0,
+                                               height() / 2,
+                                               kTopBorderColor,
+                                               kSeparatorColor))->safeUnref();
     SkRect rc = {SkIntToScalar(kSeparatorStartX),  SkIntToScalar(0),
                  SkIntToScalar(1), SkIntToScalar(height() / 2) };
     canvas->drawRect(rc, paint);
 
     SkPaint paint_down;
-    paint_down.setShader(gfx::CreateGradientShader(height() / 2,
+    paint_down.setShader(skia::CreateGradientShader(height() / 2,
         height(),
         kSeparatorColor,
         kBackgroundColor))->safeUnref();
@@ -757,7 +761,7 @@ gfx::Size BookmarkBarView::GetPreferredSize() {
   }
 
   gfx::Size prefsize;
-  if (IsNewTabPage()) {
+  if (OnNewTabPage()) {
     prefsize.set_height(kBarHeight + static_cast<int>(static_cast<double>
                         (kNewtabBarHeight - kBarHeight) *
                         (1 - size_animation_->GetCurrentValue())));
@@ -786,7 +790,7 @@ void BookmarkBarView::Layout() {
   int height = View::height() - kTopMargin - kBottomMargin;
   int separator_margin = kSeparatorMargin;
 
-  if (IsNewTabPage()) {
+  if (OnNewTabPage()) {
     double current_state = 1 - size_animation_->GetCurrentValue();
     x += static_cast<int>(static_cast<double>
         (kNewtabHorizontalPadding) * current_state);
@@ -874,7 +878,7 @@ void BookmarkBarView::ViewHierarchyChanged(bool is_add,
 }
 
 void BookmarkBarView::Paint(ChromeCanvas* canvas) {
-  if (IsNewTabPage() && (!IsAlwaysShown() || size_animation_->IsAnimating())) {
+  if (OnNewTabPage() && (!IsAlwaysShown() || size_animation_->IsAnimating())) {
     // Draw the background to match the new tab page.
     canvas->FillRectInt(kNewtabBackgroundColor, 0, 0, width(), height());
 
@@ -904,10 +908,10 @@ void BookmarkBarView::Paint(ChromeCanvas* canvas) {
     // Draw our background.
     SkPaint paint;
     paint.setAntiAlias(true);
-    paint.setShader(gfx::CreateGradientShader(0,
-                                              height(),
-                                              kTopBorderColor,
-                                              kBackgroundColor))->safeUnref();
+    paint.setShader(skia::CreateGradientShader(0,
+                                               height(),
+                                               kTopBorderColor,
+                                               kBackgroundColor))->safeUnref();
 
     canvas->drawRoundRect(rect,
                           SkDoubleToScalar(roundness),
@@ -924,10 +928,10 @@ void BookmarkBarView::Paint(ChromeCanvas* canvas) {
                           SkDoubleToScalar(roundness), border_paint);
   } else {
     SkPaint paint;
-    paint.setShader(gfx::CreateGradientShader(0,
-                                              height(),
-                                              kTopBorderColor,
-                                              kBackgroundColor))->safeUnref();
+    paint.setShader(skia::CreateGradientShader(0,
+                                               height(),
+                                               kTopBorderColor,
+                                               kBackgroundColor))->safeUnref();
     canvas->FillRectInt(0, 0, width(), height(), paint);
 
     canvas->FillRectInt(kTopBorderColor, 0, 0, width(), 1);
@@ -1106,9 +1110,13 @@ bool BookmarkBarView::IsAlwaysShown() {
   return profile_->GetPrefs()->GetBoolean(prefs::kShowBookmarkBar);
 }
 
-bool BookmarkBarView::IsNewTabPage() {
+bool BookmarkBarView::OnNewTabPage() {
   return (browser_ && browser_->GetSelectedTabContents() &&
           browser_->GetSelectedTabContents()->IsBookmarkBarAlwaysVisible());
+}
+
+int BookmarkBarView::GetToolbarOverlap() {
+  return static_cast<int>(size_animation_->GetCurrentValue() * kToolbarOverlap);
 }
 
 void BookmarkBarView::AnimationProgressed(const Animation* animation) {
@@ -1368,7 +1376,7 @@ void BookmarkBarView::RunMenu(views::View* view,
   int x = view->GetX(APPLY_MIRRORING_TRANSFORMATION);
   int bar_height = height() - kMenuOffset;
 
-  if (IsNewTabPage() && !IsAlwaysShown())
+  if (OnNewTabPage() && !IsAlwaysShown())
     bar_height -= kNewtabVerticalPadding;
 
   int start_index = 0;
@@ -1403,7 +1411,7 @@ void BookmarkBarView::RunMenu(views::View* view,
   gfx::Point screen_loc(x, 0);
   View::ConvertPointToScreen(this, &screen_loc);
   menu_runner_.reset(new MenuRunner(this, node, start_index));
-  HWND parent_hwnd = GetContainer()->GetHWND();
+  HWND parent_hwnd = GetWidget()->GetHWND();
   menu_runner_->RunMenuAt(parent_hwnd,
                           gfx::Rect(screen_loc.x(), screen_loc.y(),
                                     view->width(), bar_height),
@@ -1428,7 +1436,7 @@ void BookmarkBarView::ButtonPressed(views::BaseButton* sender) {
         PageTransition::AUTO_BOOKMARK);
   } else {
     bookmark_utils::OpenAll(
-        GetContainer()->GetHWND(), profile_, GetPageNavigator(), node,
+        GetWidget()->GetHWND(), profile_, GetPageNavigator(), node,
         event_utils::DispositionFromEventFlags(sender->mouse_event_flags()));
   }
   UserMetrics::RecordAction(L"ClickedBookmarkBarURLButton", profile_);
@@ -1462,8 +1470,9 @@ void BookmarkBarView::ShowContextMenu(View* source,
     parent = node->GetParent();
   } else {
     parent = model_->GetBookmarkBarNode();
+    nodes.push_back(parent);
   }
-  BookmarkContextMenu controller(GetContainer()->GetHWND(),
+  BookmarkContextMenu controller(GetWidget()->GetHWND(),
                                  GetProfile(), browser(), GetPageNavigator(),
                                  parent, nodes,
                                  BookmarkContextMenu::BOOKMARK_BAR);
@@ -1598,7 +1607,7 @@ void BookmarkBarView::ShowDropFolderForNode(BookmarkNode* node) {
   gfx::Point screen_loc;
   View::ConvertPointToScreen(view_to_position_menu_from, &screen_loc);
   drop_menu_runner_->RunMenuAt(
-      GetContainer()->GetHWND(),
+      GetWidget()->GetHWND(),
       gfx::Rect(screen_loc.x(), screen_loc.y(),
                 view_to_position_menu_from->width(),
                 view_to_position_menu_from->height()),
@@ -1807,7 +1816,7 @@ void BookmarkBarView::StartThrobbing() {
   if (bubble_url_.is_empty())
     return;  // Bubble isn't showing; nothing to throb.
 
-  if (!GetContainer())
+  if (!GetWidget())
     return;  // We're not showing, don't do anything.
 
   BookmarkNode* node = model_->GetMostRecentlyAddedNodeForURL(bubble_url_);

@@ -9,7 +9,7 @@ env = env.Clone()
 env.Prepend(
     CPPPATH = [
         '$NPAPI_DIR',
-        '#/..',
+        '$CHROME_SRC_DIR',
     ],
 )
 
@@ -23,9 +23,8 @@ env.Append(
         '/WX',
         '/Wp64',
     ],
-# TODO(bradnelson): Scons should really have a way to handle this.
-    ARFLAGS = [
-        '/LIBPATH:$PLATFORMSDK_VISTA_REL', 'Urlmon.Lib',
+    LIBS = [
+        'Urlmon',
     ],
 )
 
@@ -40,5 +39,12 @@ input_files = [
     'web_activex_site.cc',
 ]
 
-env.ChromeStaticLibrary('activex_shim', input_files)
+env.ChromeLibrary('activex_shim', input_files)
 
+env.ChromeMSVSProject('$WEBKIT_DIR/activex_shim/activex_shim.vcproj',
+                dependencies = [
+                    '$BASE_DIR/build/base.vcproj',
+                    '$ICU38_DIR/build/icu.vcproj',
+                    '$GOOGLEURL_DIR/build/googleurl.vcproj',
+                ],
+                guid='{F4F4BCAA-EA59-445C-A119-3E6C29647A51}')

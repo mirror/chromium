@@ -33,6 +33,8 @@
 #include "skia/include/SkColor.h"
 #include "generated_resources.h"
 
+using base::Time;
+
 const int kVerticalPadding = 10;
 const int kHorizontalPadding = 10;
 
@@ -521,7 +523,7 @@ void PageInfoWindow::Init(Profile* profile,
   DWORD sys_color = ::GetSysColor(COLOR_3DFACE);
   SkColor color = SkColorSetRGB(GetRValue(sys_color), GetGValue(sys_color),
                                 GetBValue(sys_color));
-  contents_->SetBackground(views::Background::CreateSolidBackground(color));
+  contents_->set_background(views::Background::CreateSolidBackground(color));
 
   views::GridLayout* layout = new views::GridLayout(contents_);
   contents_->SetLayoutManager(layout);
@@ -552,11 +554,12 @@ void PageInfoWindow::Init(Profile* profile,
     // There already is a PageInfo window opened.  Let's shift the location of
     // the new PageInfo window so they don't overlap entirely.
     // Window::Init will position the window from the stored location.
-    CRect bounds;
-    bool maximized, always_on_top;
-    if (RestoreWindowPosition(&bounds, &maximized, &always_on_top)) {
-      CalculateWindowBounds(&bounds);
-      SaveWindowPosition(bounds, maximized, always_on_top);
+    gfx::Rect bounds;
+    bool maximized = false;
+    if (GetSavedWindowBounds(&bounds) && GetSavedMaximizedState(&maximized)) {
+      CRect bounds_crect(bounds.ToRECT());
+      CalculateWindowBounds(&bounds_crect);
+      SaveWindowPlacement(gfx::Rect(bounds_crect), maximized, false);
     }
   }
 
@@ -602,34 +605,8 @@ std::wstring PageInfoWindow::GetWindowTitle() const {
   return l10n_util::GetString(IDS_PAGEINFO_WINDOW_TITLE);
 }
 
-void PageInfoWindow::SaveWindowPosition(const CRect& bounds,
-                                        bool maximized,
-                                        bool always_on_top) {
-  window()->SaveWindowPositionToPrefService(g_browser_process->local_state(),
-                                            prefs::kPageInfoWindowPlacement,
-                                            bounds, maximized, always_on_top);
-}
-
-bool PageInfoWindow::RestoreWindowPosition(CRect* bounds,
-                                           bool* maximized,
-                                           bool* always_on_top) {
-  bool restore = window()->RestoreWindowPositionFromPrefService(
-      g_browser_process->local_state(),
-      prefs::kPageInfoWindowPlacement,
-      bounds, maximized, always_on_top);
-
-  if (restore) {
-    // Force the correct width and height in case we've changed it
-    // or the pref got messed up (we know that some users will have
-    // the wrong preference if they ran into bug 3509). This isn't 
-    // a resizable dialog, so overriding the saved width and height
-    // shouldn't be noticable.
-    gfx::Size size = contents_->GetPreferredSize();
-    bounds->right = bounds->left + size.width();
-    bounds->bottom = bounds->top + size.height();
-  }
-
-  return restore;
+std::wstring PageInfoWindow::GetWindowName() const {
+  return prefs::kPageInfoWindowPlacement;
 }
 
 views::View* PageInfoWindow::GetContentsView() {

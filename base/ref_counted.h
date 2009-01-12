@@ -106,6 +106,7 @@ class RefCountedThreadSafe : public subtle::RefCountedThreadSafeBase {
     }
   }
 
+ private:
   DISALLOW_COPY_AND_ASSIGN(RefCountedThreadSafe<T>);
 };
 
@@ -221,7 +222,7 @@ class scoped_refptr {
     swap(&r.ptr_);
   }
 
- private:
+ protected:
   T* ptr_;
 };
 

@@ -6,21 +6,27 @@
 // and I'm not really sure what to do about most of them.
 
 #include "config.h"
-#pragma warning(push, 0)
+
+#include "base/compiler_specific.h"
+
+MSVC_PUSH_WARNING_LEVEL(0);
 #include "Document.h"
 #include "EditCommand.h"
 #include "Editor.h"
 #include "EventHandler.h"
 #include "EventNames.h"
+#include "Frame.h"
+#include "KeyboardCodes.h"
 #include "HTMLInputElement.h"
+#include "HTMLNames.h"
 #include "Frame.h"
 #include "KeyboardEvent.h"
 #include "PlatformKeyboardEvent.h"
 #include "PlatformString.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 
 #undef LOG
-
+#include "base/message_loop.h"
 #include "base/string_util.h"
 #include "webkit/glue/editor_client_impl.h"
 #include "webkit/glue/glue_util.h"
@@ -28,16 +34,15 @@
 #include "webkit/glue/webview.h"
 #include "webkit/glue/webview_impl.h"
 
-// The notImplemented() from NotImplemented.h is now being dragged in via
-// webview_impl.h.  We want the one from LogWin.h instead.
-#undef notImplemented
-#include "LogWin.h"
-
 // Arbitrary depth limit for the undo stack, to keep it from using
 // unbounded memory.  This is the maximum number of distinct undoable
 // actions -- unbroken stretches of typed characters are coalesced
 // into a single action.
-static const int kMaximumUndoStackDepth = 1000;
+static const size_t kMaximumUndoStackDepth = 1000;
+
+// The size above which we stop triggering autofill for an input text field
+// (so to avoid sending long strings through IPC).
+static const size_t kMaximumTextSizeForAutofill = 1000;
 
 namespace {
 
@@ -65,8 +70,12 @@ EditorClientImpl::EditorClientImpl(WebView* web_view)
     : web_view_(static_cast<WebViewImpl*>(web_view)),
       use_editor_delegate_(false),
       in_redo_(false),
-      preserve_(false),
-      pending_inline_autocompleted_element_(NULL) {
+      backspace_pressed_(false),
+      spell_check_this_field_status_(SPELLCHECK_AUTOMATIC),
+// Don't complain about using "this" in initializer list.
+MSVC_PUSH_DISABLE_WARNING(4355)
+      autofill_factory_(this) {
+MSVC_POP_WARNING()
 }
 
 EditorClientImpl::~EditorClientImpl() {
@@ -96,34 +105,69 @@ bool EditorClientImpl::smartInsertDeleteEnabled() {
   return true;
 }
 
-bool EditorClientImpl::isContinuousSpellCheckingEnabled() {
-  // Spell check everything if possible.
-  // FIXME(brettw) This should be modified to do reasonable defaults depending
-  // on input type, and probably also allow the user to turn spellchecking on
-  // for individual fields.
+bool EditorClientImpl::isSelectTrailingWhitespaceEnabled() {
+  if (use_editor_delegate_) {
+  WebViewDelegate* d = web_view_->delegate();
+  if (d)
+    return d->IsSelectTrailingWhitespaceEnabled();
+  }
   return true;
 }
 
+bool EditorClientImpl::ShouldSpellcheckByDefault() {
+  const WebCore::Frame* frame = web_view_->GetFocusedWebCoreFrame();
+  if (!frame)
+    return false;
+  const WebCore::Editor* editor = frame->editor();
+  if (!editor)
+    return false;
+  const WebCore::Document* document = frame->document();
+  if (!document)
+    return false;
+  const WebCore::Node* node = document->focusedNode();
+  if (!node)
+    return false;
+  const WebCore::RenderObject* renderer = node->renderer();
+  if (!renderer)
+    return false;
+  // We should also retrieve the contenteditable attribute of this element to
+  // determine if this element needs spell-checking.
+  const WebCore::EUserModify user_modify = renderer->style()->userModify();
+  return (renderer->isTextArea() && editor->canEdit()) ||
+         user_modify == WebCore::READ_WRITE ||
+         user_modify == WebCore::READ_WRITE_PLAINTEXT_ONLY;
+}
+
+bool EditorClientImpl::isContinuousSpellCheckingEnabled() {
+  if (spell_check_this_field_status_ == SPELLCHECK_FORCED_OFF)
+    return false;
+  else if (spell_check_this_field_status_ == SPELLCHECK_FORCED_ON)
+    return true;
+  else 
+    return ShouldSpellcheckByDefault();
+}
+
 void EditorClientImpl::toggleContinuousSpellChecking() {
-  notImplemented();
+  if (isContinuousSpellCheckingEnabled())
+    spell_check_this_field_status_ = SPELLCHECK_FORCED_OFF;
+  else
+    spell_check_this_field_status_ = SPELLCHECK_FORCED_ON;
 }
 
 bool EditorClientImpl::isGrammarCheckingEnabled() {
-  notImplemented();
   return false;
 }
 
 void EditorClientImpl::toggleGrammarChecking() {
-  notImplemented();
+  NOTIMPLEMENTED();
 }
 
 int EditorClientImpl::spellCheckerDocumentTag() {
-  notImplemented();
+  NOTIMPLEMENTED();
   return 0;
 }
 
 bool EditorClientImpl::isEditable() {
-  notImplemented();
   return false;
 }
 
@@ -160,7 +204,7 @@ bool EditorClientImpl::shouldInsertNode(WebCore::Node* node,
   return true;
 }
 
-bool EditorClientImpl::shouldInsertText(WebCore::String text,
+bool EditorClientImpl::shouldInsertText(const WebCore::String& text,
                                         WebCore::Range* range,
                                         WebCore::EditorInsertAction action) {
   if (use_editor_delegate_) {
@@ -186,10 +230,6 @@ bool EditorClientImpl::shouldDeleteRange(WebCore::Range* range) {
   return true;
 }
 
-void EditorClientImpl::PreserveSelection() {
-  preserve_ = true;
-}
-
 bool EditorClientImpl::shouldChangeSelectedRange(WebCore::Range* fromRange, 
                                                  WebCore::Range* toRange, 
                                                  WebCore::EAffinity affinity, 
@@ -203,12 +243,6 @@ bool EditorClientImpl::shouldChangeSelectedRange(WebCore::Range* fromRange,
                                           Describe(affinity), 
                                           stillSelecting);
     }
-  }
-  // Have we been told to preserve the selection? 
-  // (See comments for PreserveSelection in header).
-  if (preserve_) {
-    preserve_ = false;
-    return false;
   }
   return true;
 }
@@ -226,7 +260,6 @@ bool EditorClientImpl::shouldApplyStyle(WebCore::CSSStyleDeclaration* style,
 bool EditorClientImpl::shouldMoveRangeAfterDelete(
     WebCore::Range* /*range*/,
     WebCore::Range* /*rangeToBeReplaced*/) {
-  notImplemented();
   return true;
 }
 
@@ -241,31 +274,15 @@ void EditorClientImpl::didBeginEditing() {
 void EditorClientImpl::respondToChangedSelection() {
   if (use_editor_delegate_) {
     WebViewDelegate* d = web_view_->delegate();
-    if (d)
-      d->DidChangeSelection();
+    if (d) {
+      WebCore::Frame* frame = web_view_->GetFocusedWebCoreFrame();
+      if (frame)
+        d->DidChangeSelection(!frame->selection()->isRange());
+    }
   }
 }
 
 void EditorClientImpl::respondToChangedContents() {
-  // Ugly Hack. (See also webkit bug #16976).
-  // Something is wrong with webcore's focusController in that when selection
-  // is set to a region within a text element when handling an input event, if
-  // you don't re-focus the node then it only _APPEARS_ to have successfully
-  // changed the selection (the UI "looks" right) but in reality there is no
-  // selection of text. And to make matters worse, you can't just re-focus it,
-  // you have to re-focus it in code executed after the entire event listener 
-  // loop has finished; and hence here we are. Oh, and to make matters worse, 
-  // this sequence of events _doesn't_ happen when you debug through the code 
-  // -- in that case it works perfectly fine -- because swapping to the debugger 
-  // causes the refocusing we artificially reproduce here.
-  // TODO (timsteele): Clean this up once root webkit problem is identified and
-  // the bug is patched. 
-  if (pending_inline_autocompleted_element_) {
-    pending_inline_autocompleted_element_->blur();
-    pending_inline_autocompleted_element_->focus();
-    pending_inline_autocompleted_element_ = NULL; 
-  }
-
   if (use_editor_delegate_) {
     WebViewDelegate* d = web_view_->delegate();
     if (d)
@@ -282,11 +299,9 @@ void EditorClientImpl::didEndEditing() {
 }
 
 void EditorClientImpl::didWriteSelectionToPasteboard() {
-  notImplemented();
 }
 
 void EditorClientImpl::didSetSelectionTypesForPasteboard() {
-  notImplemented();
 }
 
 void EditorClientImpl::registerCommandForUndo(
@@ -338,17 +353,6 @@ void EditorClientImpl::redo() {
   }
 }
 
-// Get the distance we should go (in pixels) when doing a pageup/pagedown.
-static int GetVerticalPageDistance(WebCore::KeyboardEvent* event) {
-  if (event->target()) {
-    WebCore::Node* node = event->target()->toNode();
-    if (node && node->renderer())
-      return node->renderer()->contentHeight();
-  }
-
-  return 0;
-}
-
 // The below code was adapted from the WebKit file webview.cpp
 // provided by Apple, Inc, and is subject to the following copyright
 // notice and disclaimer.
@@ -381,6 +385,13 @@ static int GetVerticalPageDistance(WebCore::KeyboardEvent* event) {
 static const unsigned CtrlKey = 1 << 0;
 static const unsigned AltKey = 1 << 1;
 static const unsigned ShiftKey = 1 << 2;
+static const unsigned MetaKey = 1 << 3;
+#if defined(OS_MACOSX)
+// Aliases for the generic key defintions to make kbd shortcuts definitions more
+// readable on OS X.
+static const unsigned OptionKey  = AltKey;
+static const unsigned CommandKey = MetaKey;
+#endif
 
 // Keys with special meaning. These will be delegated to the editor using
 // the execCommand() method
@@ -397,67 +408,115 @@ struct KeyPressEntry {
 };
 
 static const KeyDownEntry keyDownEntries[] = {
-#if defined(OS_WIN)
-  { VK_LEFT,   0,                  "MoveLeft"                                    },
-  { VK_LEFT,   ShiftKey,           "MoveLeftAndModifySelection"                  },
-  { VK_LEFT,   CtrlKey,            "MoveWordLeft"                                },
-  { VK_LEFT,   CtrlKey | ShiftKey, "MoveWordLeftAndModifySelection"              },
-  { VK_RIGHT,  0,                  "MoveRight"                                   },
-  { VK_RIGHT,  ShiftKey,           "MoveRightAndModifySelection"                 },
-  { VK_RIGHT,  CtrlKey,            "MoveWordRight"                               },
-  { VK_RIGHT,  CtrlKey | ShiftKey, "MoveWordRightAndModifySelection"             },
-  { VK_UP,     0,                  "MoveUp"                                      },
-  { VK_UP,     ShiftKey,           "MoveUpAndModifySelection"                    },
-  { VK_PRIOR,  ShiftKey,           "MovePageUpAndModifySelection"                },
-  { VK_DOWN,   0,                  "MoveDown"                                    },
-  { VK_DOWN,   ShiftKey,           "MoveDownAndModifySelection"                  },
-  { VK_NEXT,   ShiftKey,           "MovePageDownAndModifySelection"              },
-  { VK_PRIOR,  0,                  "MovePageUp"                                  },
-  { VK_NEXT,   0,                  "MovePageDown"                                },
-  { VK_HOME,   0,                  "MoveToBeginningOfLine"                       },
-  { VK_HOME,   ShiftKey,           "MoveToBeginningOfLineAndModifySelection"     },
-  { VK_HOME,   CtrlKey,            "MoveToBeginningOfDocument"                   },
-  { VK_HOME,   CtrlKey | ShiftKey, "MoveToBeginningOfDocumentAndModifySelection" },
-	
-  { VK_END,    0,                  "MoveToEndOfLine"                             },
-  { VK_END,    ShiftKey,           "MoveToEndOfLineAndModifySelection"           },
-  { VK_END,    CtrlKey,            "MoveToEndOfDocument"                         },
-  { VK_END,    CtrlKey | ShiftKey, "MoveToEndOfDocumentAndModifySelection"       },
-	
-  { VK_BACK,   0,                  "DeleteBackward"                              },
-  { VK_BACK,   ShiftKey,           "DeleteBackward"                              },
-  { VK_DELETE, 0,                  "DeleteForward"                               },
-  { VK_BACK,   CtrlKey,            "DeleteWordBackward"                          },
-  { VK_DELETE, CtrlKey,            "DeleteWordForward"                           },
+  { WebCore::VKEY_LEFT,   0,                  "MoveLeft"                      },
+  { WebCore::VKEY_LEFT,   ShiftKey,           "MoveLeftAndModifySelection"    },
+#if defined(OS_MACOSX)
+  { WebCore::VKEY_LEFT,   OptionKey,          "MoveWordLeft"                  },
+  { WebCore::VKEY_LEFT,   OptionKey | ShiftKey, 
+        "MoveWordLeftAndModifySelection"                                      },
+#else
+  { WebCore::VKEY_LEFT,   CtrlKey,            "MoveWordLeft"                  },
+  { WebCore::VKEY_LEFT,   CtrlKey | ShiftKey, "MoveWordLeftAndModifySelection"},
 #endif
-	   
-  { 'B',       CtrlKey,            "ToggleBold"                                  },
-  { 'I',       CtrlKey,            "ToggleItalic"                                },
-  { 'U',       CtrlKey,            "ToggleUnderline"                             },
-
-#if defined(OS_WIN)
-  { VK_ESCAPE, 0,                  "Cancel"                                      },
-  { VK_OEM_PERIOD, CtrlKey,        "Cancel"                                      },
-  { VK_TAB,    0,                  "InsertTab"                                   },
-  { VK_TAB,    ShiftKey,           "InsertBacktab"                               },
-  { VK_RETURN, 0,                  "InsertNewline"                               },
-  { VK_RETURN, CtrlKey,            "InsertNewline"                               },
-  { VK_RETURN, AltKey,             "InsertNewline"                               },
-  { VK_RETURN, AltKey | ShiftKey,  "InsertNewline"                               },
-  { VK_RETURN, ShiftKey,           "InsertLineBreak"                             },	
-
-  { VK_INSERT, CtrlKey,            "Copy"                                        },	
-  { VK_INSERT, ShiftKey,           "Paste"                                       },	
-  { VK_DELETE, ShiftKey,           "Cut"                                         },	
+  { WebCore::VKEY_RIGHT,  0,                  "MoveRight"                     },
+  { WebCore::VKEY_RIGHT,  ShiftKey,           "MoveRightAndModifySelection"   },
+#if defined(OS_MACOSX)
+  { WebCore::VKEY_RIGHT,  OptionKey,          "MoveWordRight"                 },
+  { WebCore::VKEY_RIGHT,  OptionKey | ShiftKey,
+        "MoveWordRightAndModifySelection"                                     },
+#else
+  { WebCore::VKEY_RIGHT,  CtrlKey,            "MoveWordRight"                 },
+  { WebCore::VKEY_RIGHT,  CtrlKey | ShiftKey,
+        "MoveWordRightAndModifySelection"                                     },
 #endif
-  { 'C',       CtrlKey,            "Copy"                                        },
-  { 'V',       CtrlKey,            "Paste"                                       },
-  { 'V',       CtrlKey | ShiftKey, "PasteAndMatchStyle"                          },
-  { 'X',       CtrlKey,            "Cut"                                         },
-  { 'A',       CtrlKey,            "SelectAll"                                   },
-  { 'Z',       CtrlKey,            "Undo"                                        },
-  { 'Z',       CtrlKey | ShiftKey, "Redo"                                        },
-  { 'Y',       CtrlKey,            "Redo"                                        },
+  { WebCore::VKEY_UP,     0,                  "MoveUp"                        },
+  { WebCore::VKEY_UP,     ShiftKey,           "MoveUpAndModifySelection"      },
+  { WebCore::VKEY_PRIOR,  ShiftKey,           "MovePageUpAndModifySelection"  },
+  { WebCore::VKEY_DOWN,   0,                  "MoveDown"                      },
+  { WebCore::VKEY_DOWN,   ShiftKey,           "MoveDownAndModifySelection"    },
+  { WebCore::VKEY_NEXT,   ShiftKey,           "MovePageDownAndModifySelection"},
+  { WebCore::VKEY_PRIOR,  0,                  "MovePageUp"                    },
+  { WebCore::VKEY_NEXT,   0,                  "MovePageDown"                  },
+  { WebCore::VKEY_HOME,   0,                  "MoveToBeginningOfLine"         },
+  { WebCore::VKEY_HOME,   ShiftKey,
+        "MoveToBeginningOfLineAndModifySelection"                             },
+#if defined(OS_MACOSX)
+  { WebCore::VKEY_LEFT,   CommandKey,         "MoveToBeginningOfLine"         },
+  { WebCore::VKEY_LEFT,   CommandKey | ShiftKey,
+        "MoveToBeginningOfLineAndModifySelection"                             },
+#endif
+#if defined(OS_MACOSX)
+  { WebCore::VKEY_UP,     CommandKey,         "MoveToBeginningOfDocument"     },
+  { WebCore::VKEY_UP,     CommandKey | ShiftKey,
+        "MoveToBeginningOfDocumentAndModifySelection"                         },  
+#else
+  { WebCore::VKEY_HOME,   CtrlKey,            "MoveToBeginningOfDocument"     },
+  { WebCore::VKEY_HOME,   CtrlKey | ShiftKey,
+        "MoveToBeginningOfDocumentAndModifySelection"                         },
+#endif
+  { WebCore::VKEY_END,    0,                  "MoveToEndOfLine"               },
+  { WebCore::VKEY_END,    ShiftKey,
+        "MoveToEndOfLineAndModifySelection"                                   },
+#if defined(OS_MACOSX)
+  { WebCore::VKEY_DOWN,   CommandKey,         "MoveToEndOfDocument"           },
+  { WebCore::VKEY_DOWN,   CommandKey | ShiftKey,
+        "MoveToEndOfDocumentAndModifySelection"                               },
+#else
+  { WebCore::VKEY_END,    CtrlKey,            "MoveToEndOfDocument"           },
+  { WebCore::VKEY_END,    CtrlKey | ShiftKey,
+        "MoveToEndOfDocumentAndModifySelection"                               },
+#endif
+#if defined(OS_MACOSX)
+  { WebCore::VKEY_RIGHT,  CommandKey,            "MoveToEndOfLine"            },
+  { WebCore::VKEY_RIGHT,  CommandKey | ShiftKey,
+        "MoveToEndOfLineAndModifySelection"                                   },
+#endif
+  { WebCore::VKEY_BACK,   0,                  "DeleteBackward"                },
+  { WebCore::VKEY_BACK,   ShiftKey,           "DeleteBackward"                },
+  { WebCore::VKEY_DELETE, 0,                  "DeleteForward"                 },
+#if defined(OS_MACOSX)
+  { WebCore::VKEY_BACK,   OptionKey,          "DeleteWordBackward"            },
+  { WebCore::VKEY_DELETE, OptionKey,          "DeleteWordForward"             },
+#else
+  { WebCore::VKEY_BACK,   CtrlKey,            "DeleteWordBackward"            },
+  { WebCore::VKEY_DELETE, CtrlKey,            "DeleteWordForward"             },
+#endif
+  { 'B',                  CtrlKey,            "ToggleBold"                    },
+  { 'I',                  CtrlKey,            "ToggleItalic"                  },
+  { 'U',                  CtrlKey,            "ToggleUnderline"               },
+  { WebCore::VKEY_ESCAPE, 0,                  "Cancel"                        },
+  { WebCore::VKEY_OEM_PERIOD, CtrlKey,        "Cancel"                        },
+  { WebCore::VKEY_TAB,    0,                  "InsertTab"                     },
+  { WebCore::VKEY_TAB,    ShiftKey,           "InsertBacktab"                 },
+  { WebCore::VKEY_RETURN, 0,                  "InsertNewline"                 },
+  { WebCore::VKEY_RETURN, CtrlKey,            "InsertNewline"                 },
+  { WebCore::VKEY_RETURN, AltKey,             "InsertNewline"                 },
+  { WebCore::VKEY_RETURN, AltKey | ShiftKey,  "InsertNewline"                 },
+  { WebCore::VKEY_RETURN, ShiftKey,           "InsertLineBreak"               },
+  { WebCore::VKEY_INSERT, CtrlKey,            "Copy"                          },	
+  { WebCore::VKEY_INSERT, ShiftKey,           "Paste"                         },	
+  { WebCore::VKEY_DELETE, ShiftKey,           "Cut"                           },	
+#if defined(OS_MACOSX)
+  { 'C',                  CommandKey,         "Copy"                          },
+  { 'V',                  CommandKey,         "Paste"                         },
+  { 'V',                  CommandKey | ShiftKey,
+        "PasteAndMatchStyle"                                                  },
+  { 'X',                  CommandKey,         "Cut"                           },
+  { 'A',                  CommandKey,         "SelectAll"                     },
+  { 'Z',                  CommandKey,         "Undo"                          },
+  { 'Z',                  CommandKey | ShiftKey,
+        "Redo"                                                                },
+  { 'Y',                  CommandKey,         "Redo"                          },
+#else
+  { 'C',                  CtrlKey,            "Copy"                          },
+  { 'V',                  CtrlKey,            "Paste"                         },
+  { 'V',                  CtrlKey | ShiftKey, "PasteAndMatchStyle"            },
+  { 'X',                  CtrlKey,            "Cut"                           },
+  { 'A',                  CtrlKey,            "SelectAll"                     },
+  { 'Z',                  CtrlKey,            "Undo"                          },
+  { 'Z',                  CtrlKey | ShiftKey, "Redo"                          },
+  { 'Y',                  CtrlKey,            "Redo"                          },
+#endif
 };
 
 static const KeyPressEntry keyPressEntries[] = {
@@ -503,10 +562,12 @@ const char* EditorClientImpl::interpretKeyEvent(
     modifiers |= AltKey;
   if (keyEvent->ctrlKey())
     modifiers |= CtrlKey;
+  if (keyEvent->metaKey())
+    modifiers |= MetaKey;
 
-  if (evt->type() == WebCore::EventNames::keydownEvent) {
+  if (keyEvent->type() == WebCore::PlatformKeyboardEvent::RawKeyDown) {
     int mapKey = modifiers << 16 | evt->keyCode();
-      return mapKey ? keyDownCommandsMap->get(mapKey) : 0;
+    return mapKey ? keyDownCommandsMap->get(mapKey) : 0;
   }
 
   int mapKey = modifiers << 16 | evt->charCode();
@@ -514,13 +575,11 @@ const char* EditorClientImpl::interpretKeyEvent(
 }
 
 bool EditorClientImpl::handleEditingKeyboardEvent(
-  WebCore::KeyboardEvent* evt) {
+    WebCore::KeyboardEvent* evt) {
   const WebCore::PlatformKeyboardEvent* keyEvent = evt->keyEvent();
-#if defined(OS_WIN)
   // do not treat this as text input if it's a system key event
   if (!keyEvent || keyEvent->isSystemKey())
       return false;
-#endif
 
   WebCore::Frame* frame = evt->target()->toNode()->document()->frame();
   if (!frame)
@@ -568,33 +627,125 @@ bool EditorClientImpl::handleEditingKeyboardEvent(
 //
 
 void EditorClientImpl::handleKeyboardEvent(WebCore::KeyboardEvent* evt) {
+  if (evt->keyCode() == WebCore::VKEY_DOWN ||
+      evt->keyCode() == WebCore::VKEY_UP) {
+    DCHECK(evt->target()->toNode());
+    ShowAutofillForNode(evt->target()->toNode());
+  }
+
   if (handleEditingKeyboardEvent(evt))
     evt->setDefaultHandled();
 }
 
 void EditorClientImpl::handleInputMethodKeydown(WebCore::KeyboardEvent* keyEvent) {
-  notImplemented();
+  // We handle IME within chrome.
 }
 
 void EditorClientImpl::textFieldDidBeginEditing(WebCore::Element*) {
-  notImplemented();
 }
 
 void EditorClientImpl::textFieldDidEndEditing(WebCore::Element*) {
-  // Notification that focus was lost.
-  // Be careful with this, it's also sent when the page is being closed.
-  notImplemented();
+  // Notification that focus was lost.  Be careful with this, it's also sent
+  // when the page is being closed.
+
+  // Cancel any pending DoAutofill calls.
+  autofill_factory_.RevokeAll();
+
+  // Hide any showing popup.
+  web_view_->HideAutoCompletePopup();
 }
 
 void EditorClientImpl::textDidChangeInTextField(WebCore::Element* element) {
-  // Track the element so we can blur/focus it in respondToChangedContents
-  // so that the selected range is properly set. (See respondToChangedContents).
-  if (static_cast<WebCore::HTMLInputElement*>(element)->autofilled())
-    pending_inline_autocompleted_element_ = element;
+  DCHECK(element->hasLocalName(WebCore::HTMLNames::inputTag));
+  Autofill(static_cast<WebCore::HTMLInputElement*>(element), false);
 }
 
-bool EditorClientImpl::doTextFieldCommandFromEvent(WebCore::Element*,
-                                                   WebCore::KeyboardEvent*) {
+void EditorClientImpl::ShowAutofillForNode(WebCore::Node* node) {
+  if (node->nodeType() == WebCore::Node::ELEMENT_NODE) {
+    WebCore::Element* element = static_cast<WebCore::Element*>(node);
+    if (element->hasLocalName(WebCore::HTMLNames::inputTag)) {
+      WebCore::HTMLInputElement* input_element =
+          static_cast<WebCore::HTMLInputElement*>(element);
+      if (input_element->value().isEmpty())
+        Autofill(input_element, true);
+    }
+  }
+}
+
+void EditorClientImpl::Autofill(WebCore::HTMLInputElement* input_element,
+                                bool autofill_on_empty_value) {
+  // Cancel any pending DoAutofill calls.
+  autofill_factory_.RevokeAll();
+
+  // Let's try to trigger autofill for that field, if applicable.
+  if (!input_element->isEnabled() || !input_element->isTextField() ||
+      input_element->isPasswordField() || !input_element->autoComplete()) {
+    return;
+  }
+
+  std::wstring name = webkit_glue::StringToStdWString(input_element->name());
+  if (name.empty())  // If the field has no name, then we won't have values.
+    return;
+
+  // Don't attempt to autofill with values that are too large.
+  if (input_element->value().length() > kMaximumTextSizeForAutofill)
+    return;
+
+  // We post a task for doing the autofill as the caret position is not set
+  // properly at this point ( http://bugs.webkit.org/show_bug.cgi?id=16976)
+  // and we need it to determine whether or not to trigger autofill.
+  std::wstring value = webkit_glue::StringToStdWString(input_element->value());
+  MessageLoop::current()->PostTask(
+      FROM_HERE,
+      autofill_factory_.NewRunnableMethod(&EditorClientImpl::DoAutofill,
+                                          input_element,
+                                          autofill_on_empty_value,
+                                          backspace_pressed_));
+}
+
+void EditorClientImpl::DoAutofill(WebCore::HTMLInputElement* input_element,
+                                  bool autofill_on_empty_value,
+                                  bool backspace) {
+  std::wstring value = webkit_glue::StringToStdWString(input_element->value());
+
+  // Only autofill when there is some text and the caret is at the end.
+  bool caret_at_end =
+      input_element->selectionStart() == input_element->selectionEnd() &&
+      input_element->selectionEnd() == static_cast<int>(value.length());
+  if ((!autofill_on_empty_value && value.empty()) || !caret_at_end) {
+    web_view_->HideAutoCompletePopup();
+    return;
+  }
+
+  // First let's see if there is a password listener for that element.
+  WebFrameImpl* webframe =
+      WebFrameImpl::FromFrame(input_element->document()->frame());
+  webkit_glue::PasswordAutocompleteListener* listener =
+      webframe->GetPasswordListener(input_element);
+  if (listener) {
+    if (backspace)  // No autocomplete for password on backspace.
+      return;
+
+    listener->OnInlineAutocompleteNeeded(input_element, value);
+    return;
+  }
+
+  // Then trigger form autofill.
+  std::wstring name = webkit_glue::StringToStdWString(input_element->
+      name().string());
+  web_view_->delegate()->QueryFormFieldAutofill(name, value,
+      reinterpret_cast<int64>(input_element));
+}
+
+bool EditorClientImpl::doTextFieldCommandFromEvent(
+    WebCore::Element* element,
+    WebCore::KeyboardEvent* event) {
+  // Remember if backspace was pressed for the autofill.  It is not clear how to
+  // find if backspace was pressed from textFieldDidBeginEditing and
+  // textDidChangeInTextField as when these methods are called the value of the
+  // input element already contains the type character.
+  backspace_pressed_ = (event->keyCode() == WebCore::VKEY_BACK);
+
   // The Mac code appears to use this method as a hook to implement special
   // keyboard commands specific to Safari's auto-fill implementation.  We
   // just return false to allow the default action.
@@ -602,36 +753,17 @@ bool EditorClientImpl::doTextFieldCommandFromEvent(WebCore::Element*,
 }
 
 void EditorClientImpl::textWillBeDeletedInTextField(WebCore::Element*) {
-  notImplemented();
 }
 
 void EditorClientImpl::textDidChangeInTextArea(WebCore::Element*) {
-  notImplemented();
 }
-
-#if defined(OS_MACOSX)
-// TODO(pinkerton): implement these when we get to copy/paste
-NSData* EditorClientImpl::dataForArchivedSelection(WebCore::Frame*) {
-  notImplemented();
-}
-
-NSString* EditorClientImpl::userVisibleString(NSURL*) {
-  notImplemented();
-}
-
-#ifdef BUILDING_ON_TIGER
-NSArray* EditorClientImpl::pasteboardTypesForSelection(WebCore::Frame*) {
-  notImplemented();
-}
-#endif
-#endif
 
 void EditorClientImpl::ignoreWordInSpellDocument(const WebCore::String&) {
-  notImplemented();
+  NOTIMPLEMENTED();
 }
 
 void EditorClientImpl::learnWord(const WebCore::String&) {
-  notImplemented();
+  NOTIMPLEMENTED();
 }
 
 void EditorClientImpl::checkSpellingOfString(const UChar* str, int length,
@@ -642,7 +774,7 @@ void EditorClientImpl::checkSpellingOfString(const UChar* str, int length,
   int spell_location = -1;
   int spell_length = 0;
   WebViewDelegate* d = web_view_->delegate();
-  if (web_view_->FocusedFrameNeedsSpellchecking() && d) {
+  if (isContinuousSpellCheckingEnabled() && d) {
     std::wstring word = 
         webkit_glue::StringToStdWString(WebCore::String(str, length));
     d->SpellCheck(word, spell_location, spell_length);
@@ -663,7 +795,7 @@ void EditorClientImpl::checkGrammarOfString(const UChar*, int length,
                                             WTF::Vector<WebCore::GrammarDetail>&,
                                             int* badGrammarLocation,
                                             int* badGrammarLength) {
-  notImplemented();
+  NOTIMPLEMENTED();
   if (badGrammarLocation)
     *badGrammarLocation = 0;
   if (badGrammarLength)
@@ -672,15 +804,15 @@ void EditorClientImpl::checkGrammarOfString(const UChar*, int length,
 
 void EditorClientImpl::updateSpellingUIWithGrammarString(const WebCore::String&,
                                                          const WebCore::GrammarDetail& detail) {
-  notImplemented();
+  NOTIMPLEMENTED();
 }
 
 void EditorClientImpl::updateSpellingUIWithMisspelledWord(const WebCore::String&) {
-  notImplemented();
+  NOTIMPLEMENTED();
 }
 
 void EditorClientImpl::showSpellingUI(bool show) {
-  notImplemented();
+  NOTIMPLEMENTED();
 }
 
 bool EditorClientImpl::spellingUIIsShowing() {
@@ -689,7 +821,7 @@ bool EditorClientImpl::spellingUIIsShowing() {
 
 void EditorClientImpl::getGuessesForWord(const WebCore::String&,
                                          WTF::Vector<WebCore::String>& guesses) {
-  notImplemented();
+  NOTIMPLEMENTED();
 }
 
 void EditorClientImpl::setInputMethodState(bool enabled) {
@@ -781,4 +913,3 @@ std::wstring EditorClientImpl::Describe(WebCore::CSSStyleDeclaration* style) {
   // an example.  But because none of them use it, it's not yet important.
   return std::wstring();
 }
-

@@ -103,7 +103,6 @@ class TestTransactionConsumer : public CallbackRunner< Tuple1<int> > {
   }
 
   ~TestTransactionConsumer() {
-    trans_->Destroy();
   }
 
   void Start(const net::HttpRequestInfo* request) {
@@ -175,7 +174,7 @@ class TestTransactionConsumer : public CallbackRunner< Tuple1<int> > {
     DONE
   } state_;
 
-  net::HttpTransaction* trans_;
+  scoped_ptr<net::HttpTransaction> trans_;
   std::string content_;
   char read_buf_[1024];
   int error_;
@@ -196,10 +195,6 @@ class MockNetworkTransaction : public net::HttpTransaction {
       ALLOW_THIS_IN_INITIALIZER_LIST(task_factory_(this)), data_cursor_(0) {
   }
 
-  virtual void Destroy() {
-    delete this;
-  }
-
   virtual int Start(const net::HttpRequestInfo* request,
                     net::CompletionCallback* callback) {
     const MockTransaction* t = FindMockTransaction(request->url);
@@ -216,8 +211,8 @@ class MockNetworkTransaction : public net::HttpTransaction {
         StringPrintf("%s\n%s\n", resp_status.c_str(), resp_headers.c_str());
     std::replace(header_data.begin(), header_data.end(), '\n', '\0');
 
-    response_.request_time = Time::Now();
-    response_.response_time = Time::Now();
+    response_.request_time = base::Time::Now();
+    response_.response_time = base::Time::Now();
     response_.headers = new net::HttpResponseHeaders(header_data);
     response_.ssl_info.cert_status = t->cert_status;
     data_ = resp_data;
@@ -294,10 +289,6 @@ class MockNetworkLayer : public net::HttpTransactionFactory {
   }
 
   virtual net::HttpCache* GetCache() {
-    return NULL;
-  }
-
-  virtual net::AuthCache* GetAuthCache() {
     return NULL;
   }
 

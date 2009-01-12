@@ -184,7 +184,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\directory_watcher_unittest.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\field_trial_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\file_path_unittest.cc"
 				>
 			</File>
 			<File
@@ -236,6 +244,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\observer_list_unittest.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\path_service_unittest.cc"
 				>
 			</File>
@@ -256,11 +268,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\gfx\rect_unittest.cc"
+				RelativePath="..\rand_util_unittest.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\rand_util_unittest.cc"
+				RelativePath="..\gfx\rect_unittest.cc"
 				>
 			</File>
 			<File
@@ -273,10 +285,6 @@
 			</File>
 			<File
 				RelativePath="..\sha2_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\shared_event_unittest.cc"
 				>
 			</File>
 			<File
@@ -320,11 +328,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\sys_string_conversions_win_unittest.cc"
+				RelativePath="..\sys_string_conversions_unittest.cc"
 				>
 			</File>
 			<File
 				RelativePath="..\system_monitor_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\thread_collision_warner_unittest.cc"
 				>
 			</File>
 			<File
@@ -388,27 +400,7 @@
 			Name="gfx_tests"
 			>
 			<File
-				RelativePath="..\gfx\convolver_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\gfx\image_operations_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\gfx\platform_canvas_unittest.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\gfx\png_codec_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\gfx\uniscribe_unittest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\gfx\vector_canvas_unittest.cc"
 				>
 			</File>
 		</Filter>

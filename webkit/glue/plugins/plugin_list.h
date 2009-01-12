@@ -31,15 +31,18 @@ namespace NPAPI
 #define kActivexShimFileNameForMediaPlayer \
     L"Microsoft® Windows Media Player Firefox Plugin"
 
-#define kDefaultPluginDllName L"default_plugin"
+#define kDefaultPluginLibraryName L"default_plugin"
 
 class PluginLib;
 class PluginInstance;
 
-// The PluginList is responsible for loading our NPAPI based plugins.
-// It loads plugins from a known directory by looking for DLLs
-// which start with "NP", and checking to see if they are valid
-// NPAPI libraries.
+// The PluginList is responsible for loading our NPAPI based plugins. It does
+// so in whatever manner is appropriate for the platform. On Windows, it loads
+// plugins from a known directory by looking for DLLs which start with "NP",
+// and checking to see if they are valid NPAPI libraries. On the Mac, it walks
+// the machine-wide and user plugin directories and loads anything that has
+// the correct types. On Linux, it walks the plugin directories as well
+// (e.g. /usr/lib/browser-plugins/).
 class PluginList : public base::RefCounted<PluginList> {
  public:
   // Gets the one instance of the PluginList.
@@ -53,7 +56,7 @@ class PluginList : public base::RefCounted<PluginList> {
   // Add an extra plugin to load when we actually do the loading.  This is
   // static because we want to be able to add to it without searching the disk
   // for plugins.  Must be called before the plugins have been loaded.
-  static void AddExtraPluginPath(const std::wstring& plugin_path);
+  static void AddExtraPluginPath(const FilePath& plugin_path);
 
   virtual ~PluginList();
 
@@ -102,10 +105,10 @@ class PluginList : public base::RefCounted<PluginList> {
                      WebPluginInfo* info,
                      std::string* actual_mime_type);
 
-  // Get plugin info by plugin dll path. Returns true if the plugin is found and
+  // Get plugin info by plugin path. Returns true if the plugin is found and
   // WebPluginInfo has been filled in |info|
-  bool GetPluginInfoByDllPath(const std::wstring& dll_path,
-                              WebPluginInfo* info);
+  bool GetPluginInfoByPath(const FilePath& plugin_path,
+                           WebPluginInfo* info);
  private:
   // Constructors are private for singletons
   PluginList();
@@ -114,27 +117,26 @@ class PluginList : public base::RefCounted<PluginList> {
   void LoadPlugins(bool refresh);
 
   // Load all plugins from a specific directory
-  void LoadPlugins(const std::wstring &path);
+  void LoadPlugins(const FilePath& path);
 
-  // Load a specific plugin with full path.  filename can be mixed case.
-  void LoadPlugin(const std::wstring &filename);
+  // Load a specific plugin with full path.
+  void LoadPlugin(const FilePath& filename);
 
   // Returns true if we should load the given plugin, or false otherwise.
-  // filename must be lower case.
-  bool ShouldLoadPlugin(const std::wstring& filename);
+  bool ShouldLoadPlugin(const FilePath& filename);
 
   // Load internal plugins. Right now there is only one: activex_shim.
   void LoadInternalPlugins();
 
   // Find a plugin by filename.  Returns -1 if it's not found, otherwise its
-  // index in plugins_.  filename needs to be lower case.
+  // index in plugins_.
   int FindPluginFile(const std::wstring& filename);
 
   // The application path where we expect to find plugins.
-  static std::wstring GetPluginAppDirectory();
+  static FilePath GetPluginAppDirectory();
 
   // The executable path where we expect to find plugins.
-  static std::wstring GetPluginExeDirectory();
+  static FilePath GetPluginExeDirectory();
 
   // Load plugins from the Firefox install path.  This is kind of
   // a kludge, but it helps us locate the flash player for users that

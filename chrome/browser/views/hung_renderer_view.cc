@@ -21,6 +21,7 @@
 #include "chrome/views/grid_layout.h"
 #include "chrome/views/group_table_view.h"
 #include "chrome/views/image_view.h"
+#include "chrome/views/label.h"
 #include "chrome/views/native_button.h"
 
 #include "chromium_strings.h"
@@ -303,7 +304,7 @@ views::View* HungRendererWarningView::GetContentsView() {
 void HungRendererWarningView::ButtonPressed(views::NativeButton* sender) {
   if (sender == kill_button_) {
     // Kill the process.
-    HANDLE process = contents_->process()->process();
+    HANDLE process = contents_->process()->process().handle();
     TerminateProcess(process, ResultCodes::HUNG);
   }
 }
@@ -314,7 +315,7 @@ void HungRendererWarningView::ButtonPressed(views::NativeButton* sender) {
 void HungRendererWarningView::ViewHierarchyChanged(bool is_add,
                                                    views::View* parent,
                                                    views::View* child) {
-  if (!initialized_ && is_add && child == this && GetContainer())
+  if (!initialized_ && is_add && child == this && GetWidget())
     Init();
 }
 
@@ -398,14 +399,14 @@ gfx::Rect HungRendererWarningView::GetDisplayBounds(
   CRect contents_bounds;
   GetWindowRect(contents_hwnd, &contents_bounds);
 
-  CRect window_bounds;
+  gfx::Rect window_bounds;
   window()->GetBounds(&window_bounds, true);
 
   int window_x = contents_bounds.left +
-      (contents_bounds.Width() - window_bounds.Width()) / 2;
+      (contents_bounds.Width() - window_bounds.width()) / 2;
   int window_y = contents_bounds.top + kOverlayContentsOffsetY;
-  return gfx::Rect(window_x, window_y, window_bounds.Width(),
-                   window_bounds.Height());
+  return gfx::Rect(window_x, window_y, window_bounds.width(),
+                   window_bounds.height());
 }
 
 // static

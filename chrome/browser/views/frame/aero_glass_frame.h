@@ -9,7 +9,7 @@
 #include "chrome/views/window.h"
 
 class AeroGlassNonClientView;
-class BrowserView2;
+class BrowserView;
 
 ///////////////////////////////////////////////////////////////////////////////
 // AeroGlassFrame
@@ -21,10 +21,10 @@ class BrowserView2;
 class AeroGlassFrame : public BrowserFrame,
                        public views::Window {
  public:
-  explicit AeroGlassFrame(BrowserView2* browser_view);
+  explicit AeroGlassFrame(BrowserView* browser_view);
   virtual ~AeroGlassFrame();
 
-  void Init(const gfx::Rect& bounds);
+  void Init();
 
   // Determine the distance of the left edge of the minimize button from the
   // right edge of the window. Used in our Non-Client View's Layout.
@@ -38,15 +38,12 @@ class AeroGlassFrame : public BrowserFrame,
   virtual void UpdateThrobber(bool running);
   virtual views::Window* GetWindow();
 
-  // Overridden from views::ContainerWin:
+ protected:
+  // Overridden from views::WidgetWin:
   virtual bool AcceleratorPressed(views::Accelerator* accelerator);
   virtual bool GetAccelerator(int cmd_id, views::Accelerator* accelerator);
-
- protected:
-  // Overridden from views::ContainerWin:
   virtual void OnInitMenuPopup(HMENU menu, UINT position, BOOL is_system_menu);
   virtual void OnEndSession(BOOL ending, UINT logoff);
-  virtual void OnExitMenuLoop(bool is_track_popup_menu);
   virtual LRESULT OnMouseActivate(HWND window,
                                   UINT hittest_code,
                                   UINT message);
@@ -55,6 +52,9 @@ class AeroGlassFrame : public BrowserFrame,
   virtual LRESULT OnNCActivate(BOOL active);
   virtual LRESULT OnNCCalcSize(BOOL mode, LPARAM l_param);
   virtual LRESULT OnNCHitTest(const CPoint& pt);
+
+  // Overridden from views::CustomFrameWindow:
+  virtual int GetShowState() const;
 
  private:
   // Updates the DWM with the frame bounds.
@@ -70,8 +70,8 @@ class AeroGlassFrame : public BrowserFrame,
   // Displays the next throbber frame.
   void DisplayNextThrobberFrame();
 
-  // The BrowserView2 is our ClientView. This is a pointer to it.
-  BrowserView2* browser_view_;
+  // The BrowserView is our ClientView. This is a pointer to it.
+  BrowserView* browser_view_;
 
   bool frame_initialized_;
 

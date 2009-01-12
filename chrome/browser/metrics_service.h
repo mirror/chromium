@@ -15,6 +15,7 @@
 #include <vector>
 
 #include "base/basictypes.h"
+#include "base/file_path.h"
 #include "base/histogram.h"
 #include "base/scoped_ptr.h"
 #include "base/values.h"
@@ -107,7 +108,7 @@ class MetricsService : public NotificationObserver,
   // See metrics_service.cc for description of this lifecycle.
   enum State {
     INITIALIZED,            // Constructor was called.
-    PLUGIN_LIST_REQUESTED,  // Waiting for DLL list to be loaded.
+    PLUGIN_LIST_REQUESTED,  // Waiting for plugin list to be loaded.
     PLUGIN_LIST_ARRIVED,    // Waiting for timer to send initial log.
     INITIAL_LOG_READY,      // Initial log generated, and waiting for reply.
     SEND_OLD_INITIAL_LOGS,  // Sending unsent logs from previous session.
@@ -422,7 +423,7 @@ class MetricsService : public NotificationObserver,
 
   // Buffer of plugin notifications for quick access.  See PluginStats
   // documentation above for more details.
-  std::map<std::wstring, PluginStats> plugin_stats_buffer_;
+  std::map<FilePath, PluginStats> plugin_stats_buffer_;
 
   ScopedRunnableMethodFactory<MetricsService> log_sender_factory_;
   ScopedRunnableMethodFactory<MetricsService> state_saver_factory_;
@@ -439,7 +440,7 @@ class MetricsService : public NotificationObserver,
   // outbound network link).  This is usually also the duration for which we
   // build up a log, but if other unsent-logs from previous sessions exist, we
   // quickly transmit those unsent logs while we continue to build a log.
-  TimeDelta interlog_duration_;
+  base::TimeDelta interlog_duration_;
 
   // The maximum number of events which get transmitted in a log.  This defaults
   // to a constant and otherwise is provided by the UMA server in the server

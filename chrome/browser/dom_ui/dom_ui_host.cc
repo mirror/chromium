@@ -78,9 +78,10 @@ void DOMUIHost::ProcessDOMUIMessage(const std::string& message,
     return;
 
   // Convert the content JSON into a Value.
-  Value* value = NULL;
+  scoped_ptr<Value> value;
   if (!content.empty()) {
-    if (!JSONReader::Read(content, &value, false)) {
+    value.reset(JSONReader::Read(content, false));
+    if (!value.get()) {
       // The page sent us something that we didn't understand.
       // This probably indicates a programming error.
       NOTREACHED();
@@ -89,8 +90,7 @@ void DOMUIHost::ProcessDOMUIMessage(const std::string& message,
   }
 
   // Forward this message and content on.
-  callback->second->Run(value);
-  delete value;
+  callback->second->Run(value.get());
 }
 
 WebPreferences DOMUIHost::GetWebkitPrefs() {
@@ -102,16 +102,6 @@ WebPreferences DOMUIHost::GetWebkitPrefs() {
 }
 
 void DOMUIHost::ExecuteJavascript(const std::wstring& javascript) {
-  // We're taking a string and making a javascript URL out of it. This means
-  // that escaping will follow the rules of a URL. Yet, the JSON text may have
-  // stuff in it that would be interpreted as escaped characters in a URL, but
-  // we want to preserve them literally.
-  //
-  // We just escape all the percents to avoid this, since when this javascript
-  // URL is interpreted, it will be unescaped.
-  std::wstring escaped_js(javascript);
-  ReplaceSubstringsAfterOffset(&escaped_js, 0, L"%", L"%25");
-  render_view_host()->ExecuteJavascriptInWebFrame(std::wstring(),
-                                                  L"javascript:" + escaped_js);
+  render_view_host()->ExecuteJavascriptInWebFrame(std::wstring(), javascript);
 }
 

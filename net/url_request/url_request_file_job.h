@@ -5,16 +5,17 @@
 #ifndef NET_URL_REQUEST_URL_REQUEST_FILE_JOB_H_
 #define NET_URL_REQUEST_URL_REQUEST_FILE_JOB_H_
 
+#include "base/file_path.h"
 #include "base/file_util.h"
 #include "net/base/completion_callback.h"
-#include "net/base/file_input_stream.h"
+#include "net/base/file_stream.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_job.h"
 
 // A request job that handles reading file URLs
 class URLRequestFileJob : public URLRequestJob {
  public:
-  URLRequestFileJob(URLRequest* request);
+  URLRequestFileJob(URLRequest* request, const FilePath& file_path);
   virtual ~URLRequestFileJob();
 
   virtual void Start();
@@ -27,14 +28,14 @@ class URLRequestFileJob : public URLRequestJob {
 
  protected:
   // The OS-specific full path name of the file
-  std::wstring file_path_;
+  FilePath file_path_;
 
  private:
   void DidResolve(bool exists, const file_util::FileInfo& file_info);
   void DidRead(int result);
 
   net::CompletionCallbackImpl<URLRequestFileJob> io_callback_;
-  net::FileInputStream stream_;
+  net::FileStream stream_;
   bool is_directory_;
 
 #if defined(OS_WIN)

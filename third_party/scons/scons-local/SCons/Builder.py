@@ -98,7 +98,7 @@ There are the following methods for internal use within this module:
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-__revision__ = "src/engine/SCons/Builder.py 3424 2008/09/15 11:22:20 scons"
+__revision__ = "src/engine/SCons/Builder.py 3842 2008/12/20 22:59:52 scons"
 
 import UserDict
 import UserList
@@ -232,7 +232,7 @@ def Builder(**kw):
     if kw.has_key('generator'):
         if kw.has_key('action'):
             raise UserError, "You must not specify both an action and a generator."
-        kw['action'] = SCons.Action.CommandGeneratorAction(kw['generator'])
+        kw['action'] = SCons.Action.CommandGeneratorAction(kw['generator'], {})
         del kw['generator']
     elif kw.has_key('action'):
         source_ext_match = kw.get('source_ext_match', 1)
@@ -240,7 +240,7 @@ def Builder(**kw):
             del kw['source_ext_match']
         if SCons.Util.is_Dict(kw['action']):
             composite = DictCmdGenerator(kw['action'], source_ext_match)
-            kw['action'] = SCons.Action.CommandGeneratorAction(composite)
+            kw['action'] = SCons.Action.CommandGeneratorAction(composite, {})
             kw['src_suffix'] = composite.src_suffixes()
         else:
             kw['action'] = SCons.Action.Action(kw['action'])
@@ -505,7 +505,7 @@ class BuilderBase:
                 tlist = [ t_from_s(pre, suf, splitext) ]
         else:
             target = self._adjustixes(target, pre, suf, self.ensure_suffix)
-            tlist = env.arg2nodes(target, target_factory)
+            tlist = env.arg2nodes(target, target_factory, target=target, source=source)
 
         if self.emitter:
             # The emitter is going to do str(node), but because we're

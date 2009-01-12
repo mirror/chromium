@@ -18,13 +18,17 @@
 #include "chrome/common/drag_drop_types.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/favicon_size.h"
+#include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/time_format.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/container.h"
 #include "chrome/views/link.h"
+#include "chrome/views/widget.h"
 
 #include "generated_resources.h"
+
+using base::Time;
+using base::TimeDelta;
 
 // The extra-wide space between groups of entries for each new day.
 static const int kDayHeadingHeight = 50;
@@ -118,8 +122,8 @@ class SnippetRenderer : public views::View {
                  int x,
                  int y,
                  Snippet::MatchPositions::const_iterator match_iter,
-                 int start,
-                 int end);
+                 size_t start,
+                 size_t end);
 
   DISALLOW_EVIL_CONSTRUCTORS(SnippetRenderer);
 };
@@ -175,9 +179,12 @@ void SnippetRenderer::Paint(ChromeCanvas* canvas) {
 }
 
 int SnippetRenderer::ProcessRun(
-    ChromeCanvas* canvas, int x, int y,
+    ChromeCanvas* canvas,
+    int x,
+    int y,
     Snippet::MatchPositions::const_iterator match_iter,
-    int start, int end) {
+    size_t start,
+    size_t end) {
   int total_width = 0;
 
   while (start < end) {
@@ -191,7 +198,7 @@ int SnippetRenderer::ProcessRun(
     // Determine the next substring to process by examining whether
     // we're before a match or within a match.
     ChromeFont* font = &text_font_;
-    int next = end;
+    size_t next = end;
     if (match_iter != snippet_.matches().end()) {
       if (match_iter->first > start) {
         // We're in a plain region.
@@ -562,7 +569,7 @@ void HistoryItemRenderer::StarStateChanged(bool state) {
   gfx::Rect star_bounds(star_location.x(), star_location.y() + 4,
                         star_toggle_->width(),
                         star_toggle_->height());
-  HWND parent = GetContainer()->GetHWND();
+  HWND parent = GetWidget()->GetHWND();
   Profile* profile = model_->profile();
   GURL url = model_->GetURL(model_index_);
 
@@ -835,8 +842,8 @@ views::VariableRowHeightScrollHelper::RowInfo
 }
 
 bool HistoryView::IsVisible() {
-  views::Container* vc = GetContainer();
-  return vc && vc->IsVisible();
+  views::Widget* widget = GetWidget();
+  return widget && widget->IsVisible();
 }
 
 void HistoryView::DidChangeBounds(const gfx::Rect& previous,
@@ -1242,7 +1249,7 @@ void HistoryView::DeleteDayAtModelIndex(int index) {
       IDS_HISTORY_DELETE_PRIOR_VISITS_WARNING_TITLE);
   UINT flags = MB_OKCANCEL | MB_ICONWARNING | MB_TOPMOST | MB_SETFOREGROUND;
 
-  if (win_util::MessageBox(GetContainer()->GetHWND(),
+  if (win_util::MessageBox(GetWidget()->GetHWND(),
                            text, caption, flags) !=  IDOK) {
     return;
   }
@@ -1308,4 +1315,3 @@ gfx::Rect HistoryView::CalculateDeleteControlBounds(int base_y) {
                    delete_width,
                    kBrowseResultsHeight);
 }
-

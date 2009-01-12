@@ -12,16 +12,21 @@
 #include "base/path_service.h"
 #include "base/string_util.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/chrome_thread.h"
 #include "chrome/browser/profile_manager.h"
 #include "chrome/browser/safe_browsing/protocol_manager.h"
 #include "chrome/browser/safe_browsing/safe_browsing_blocking_page.h"
 #include "chrome/browser/safe_browsing/safe_browsing_database.h"
+#include "chrome/browser/tab_util.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "net/base/registry_controlled_domain.h"
+
+using base::Time;
+using base::TimeDelta;
 
 SafeBrowsingService::SafeBrowsingService()
     : io_loop_(NULL),
@@ -31,10 +36,17 @@ SafeBrowsingService::SafeBrowsingService()
       resetting_(false),
       database_loaded_(false),
       update_in_progress_(false) {
-  new_safe_browsing_ = CommandLine().HasSwitch(switches::kUseNewSafeBrowsing);
+  new_safe_browsing_ = !CommandLine().HasSwitch(switches::kUseOldSafeBrowsing);
+  base::SystemMonitor* monitor = base::SystemMonitor::Get();
+  DCHECK(monitor);
+  if (monitor)
+    monitor->AddObserver(this);
 }
 
 SafeBrowsingService::~SafeBrowsingService() {
+  base::SystemMonitor* monitor = base::SystemMonitor::Get();
+  if (monitor)
+    monitor->RemoveObserver(this);
 }
 
 // Only called on the UI thread.
@@ -59,9 +71,6 @@ void SafeBrowsingService::Start() {
   if (!db_thread_->Start())
     return;
 
-  db_thread_->message_loop()->PostTask(FROM_HERE, NewRunnableMethod(
-      this, &SafeBrowsingService::OnDBInitialize));
-
   // Retrieve client MAC keys.
   PrefService* local_state = g_browser_process->local_state();
   std::string client_key, wrapped_key;
@@ -75,6 +84,9 @@ void SafeBrowsingService::Start() {
   io_loop_->PostTask(FROM_HERE, NewRunnableMethod(
       this, &SafeBrowsingService::OnIOInitialize, MessageLoop::current(),
       client_key, wrapped_key));
+
+  db_thread_->message_loop()->PostTask(FROM_HERE, NewRunnableMethod(
+      this, &SafeBrowsingService::OnDBInitialize));
 }
 
 void SafeBrowsingService::ShutDown() {
@@ -203,12 +215,12 @@ bool SafeBrowsingService::CheckUrlNew(const GURL& url, Client* client) {
   std::string list;
   std::vector<SBPrefix> prefix_hits;
   std::vector<SBFullHashResult> full_hits;
-  Time check_start = Time::Now();
+  base::Time check_start = base::Time::Now();
   bool prefix_match = database_->ContainsUrl(url, &list, &prefix_hits,
                                              &full_hits,
                                              protocol_manager_->last_update());
   
-  UMA_HISTOGRAM_TIMES(L"SB2.FilterCheck", Time::Now() - check_start);
+  UMA_HISTOGRAM_TIMES(L"SB2.FilterCheck", base::Time::Now() - check_start);
 
   if (!prefix_match)
     return true;  // URL is okay.
@@ -254,12 +266,39 @@ void SafeBrowsingService::DisplayBlockingPage(const GURL& url,
     }
   }
 
-  SafeBrowsingBlockingPage* blocking_page = new SafeBrowsingBlockingPage(
-      this, client, render_process_host_id, render_view_id, url, resource_type,
-      result);
-  blocking_page->AddRef();
-  ui_loop->PostTask(FROM_HERE, NewRunnableMethod(
-      blocking_page, &SafeBrowsingBlockingPage::DisplayBlockingPage));
+  BlockingPageParam param;
+  param.url = url;
+  param.resource_type = resource_type;
+  param.result = result;
+  param.client = client;
+  param.render_process_host_id = render_process_host_id;
+  param.render_view_id = render_view_id;
+  // The blocking page must be created from the UI thread.
+  ui_loop->PostTask(FROM_HERE, NewRunnableMethod(this,
+      &SafeBrowsingService::DoDisplayBlockingPage,
+      param));
+}
+
+// Invoked on the UI thread.
+void SafeBrowsingService::DoDisplayBlockingPage(
+    const BlockingPageParam& param) {
+  // The tab might have been closed.
+  if (!tab_util::GetWebContentsByID(param.render_process_host_id,
+                                    param.render_view_id)) {
+    // The tab is gone and we did not have a chance at showing the interstitial.
+    // Just act as "Don't Proceed" was chosen.
+    base::Thread* io_thread = g_browser_process->io_thread();
+    if (!io_thread)
+      return;
+    BlockingPageParam response_param = param;
+    response_param.proceed = false;
+    io_thread->message_loop()->PostTask(FROM_HERE, NewRunnableMethod(
+        this, &SafeBrowsingService::OnBlockingPageDone, response_param));
+    return;
+  }
+  SafeBrowsingBlockingPage* blocking_page = new SafeBrowsingBlockingPage(this,
+                                                                         param);
+  blocking_page->Show();
 }
 
 void SafeBrowsingService::CancelCheck(Client* client) {
@@ -479,23 +518,19 @@ void SafeBrowsingService::DatabaseUpdateFinished(bool update_succeeded) {
     GetDatabase()->UpdateFinished(update_succeeded);
 }
 
-void SafeBrowsingService::OnBlockingPageDone(SafeBrowsingBlockingPage* page,
-                                             Client* client,
-                                             bool proceed) {
-  NotifyClientBlockingComplete(client, proceed);
+void SafeBrowsingService::OnBlockingPageDone(const BlockingPageParam& param) {
+  NotifyClientBlockingComplete(param.client, param.proceed);
 
-  if (proceed) {
+  if (param.proceed) {
     // Whitelist this domain and warning type for the given tab.
     WhiteListedEntry entry;
-    entry.render_process_host_id = page->render_process_host_id();
-    entry.render_view_id = page->render_view_id();
-    entry.domain = net::RegistryControlledDomainService::GetDomainAndRegistry(
-        page->url());
-    entry.result = page->result();
+    entry.render_process_host_id = param.render_process_host_id;
+    entry.render_view_id = param.render_view_id;
+    entry.domain =
+        net::RegistryControlledDomainService::GetDomainAndRegistry(param.url);
+    entry.result = param.result;
     white_listed_entries_.push_back(entry);
   }
-
-  page->Release();
 }
 
 void SafeBrowsingService::NotifyClientBlockingComplete(Client* client,
@@ -542,7 +577,7 @@ void SafeBrowsingService::DatabaseLoadComplete(bool database_error) {
 }
 
 // static
-void SafeBrowsingService::RegisterUserPrefs(PrefService* prefs) {
+void SafeBrowsingService::RegisterPrefs(PrefService* prefs) {
   prefs->RegisterStringPref(prefs::kSafeBrowsingClientKey, L"");
   prefs->RegisterStringPref(prefs::kSafeBrowsingWrappedKey, L"");
 }
@@ -656,18 +691,17 @@ void SafeBrowsingService::CacheHashResults(
   GetDatabase()->CacheHashResults(prefixes, full_hashes);
 }
 
-void SafeBrowsingService::OnSuspend() {
+void SafeBrowsingService::OnSuspend(base::SystemMonitor*) {
 }
 
 // Tell the SafeBrowsing database not to do expensive disk operations for a few
 // minutes after waking up. It's quite likely that the act of resuming from a
 // low power state will involve much disk activity, which we don't want to
 // exacerbate.
-void SafeBrowsingService::OnResume() {
-  DCHECK(MessageLoop::current() == io_loop_);
+void SafeBrowsingService::OnResume(base::SystemMonitor*) {
   if (enabled_) {
-    db_thread_->message_loop()->PostTask(FROM_HERE,
-        NewRunnableMethod(this, &SafeBrowsingService::HandleResume));
+    ChromeThread::GetMessageLoop(ChromeThread::DB)->PostTask(FROM_HERE,
+      NewRunnableMethod(this, &SafeBrowsingService::HandleResume));
   }
 }
 

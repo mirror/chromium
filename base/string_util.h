@@ -105,15 +105,6 @@ bool IsWprintfFormatPortable(const wchar_t* format);
 #error Define string operations appropriately for your platform
 #endif
 
-// Old names for the above string functions, kept for compatibility.
-// TODO(evanm): excise all references to these old names.
-#define StrNCaseCmp base::strncasecmp
-#define SWPrintF base::swprintf
-#define VSNPrintF base::vsnprintf
-#define SNPrintF base::snprintf
-#define SWPrintF base::swprintf
-
-
 // Returns a reference to a globally unique empty string that functions can
 // return.  Use this to avoid static construction of strings, not to replace
 // any and all uses of "std::string()" as nicer-looking sugar.
@@ -274,11 +265,9 @@ bool LowerCaseEqualsASCII(const wchar_t* a_begin,
                           const char* b);
 
 // Returns true if str starts with search, or false otherwise.
-// This only works on ASCII strings.
 bool StartsWithASCII(const std::string& str,
                      const std::string& search,
                      bool case_sensitive);
-
 bool StartsWith(const std::wstring& str,
                 const std::wstring& search,
                 bool case_sensitive);
@@ -355,6 +344,10 @@ std::string Int64ToString(int64 value);
 std::wstring Int64ToWString(int64 value);
 std::string Uint64ToString(uint64 value);
 std::wstring Uint64ToWString(uint64 value);
+// The DoubleToString methods convert the double to a string format that
+// ignores the locale.  If you want to use locale specific formatting, use ICU.
+std::string DoubleToString(double value);
+std::wstring DoubleToWString(double value);
 
 // Perform a best-effort conversion of the input string to a numeric type,
 // setting |*output| to the result of the conversion.  Returns true for
@@ -375,9 +368,10 @@ bool HexStringToInt(const std::wstring& input, int* output);
 
 // For floating-point conversions, only conversions of input strings in decimal
 // form are defined to work.  Behavior with strings representing floating-point
-// numbers in hexadecimal, and strings representing non-fininte values (such
-// as NaN and inf) is undefined.  Otherwise, these behave the same as the
-// integral variants above.
+// numbers in hexadecimal, and strings representing non-fininte values (such as
+// NaN and inf) is undefined.  Otherwise, these behave the same as the integral
+// variants.  This expects the input string to NOT be specific to the locale.
+// If your input is locale specific, use ICU to read the number.
 bool StringToDouble(const std::string& input, double* output);
 bool StringToDouble(const std::wstring& input, double* output);
 
@@ -431,6 +425,12 @@ inline char_type* WriteInto(
     std::basic_string<char_type, std::char_traits<char_type>,
                       std::allocator<char_type> >* str,
     size_t length_including_null) {
+  str->reserve(length_including_null);
+  str->resize(length_including_null - 1);
+  return &((*str)[0]);
+}
+
+inline char16* WriteInto(string16* str, size_t length_including_null) {
   str->reserve(length_including_null);
   str->resize(length_including_null - 1);
   return &((*str)[0]);

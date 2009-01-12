@@ -7,6 +7,8 @@
 
 #include <windows.h>
 
+#include <vector>
+
 #include "base/gfx/size.h"
 #include "base/timer.h"
 #include "chrome/common/ipc_channel.h"
@@ -51,17 +53,17 @@ struct WebPluginGeometry;
 // - WebContents - the TabContents itself, and its associated HWND.
 // - RenderViewHost - representing the communication conduit with the child
 //   process.
-// - RenderWidgetHostHWND - the view of the web page content, message handler,
+// - RenderWidgetHostView - the view of the web page content, message handler,
 //   and plugin root.
 //
-// Normally, the WebContents contains a child RenderWidgetHostHWND that renders
+// Normally, the WebContents contains a child RenderWidgetHostView that renders
 // the contents of the loaded page. It has a WS_CLIPCHILDREN style so that it
 // does no painting of its own.
 //
-// The lifetime of the RenderWidgetHostHWND is tied to the render process. If
-// the render process dies, the RenderWidgetHostHWND goes away and all
+// The lifetime of the RenderWidgetHostView is tied to the render process. If
+// the render process dies, the RenderWidgetHostView goes away and all
 // references to it must become NULL. If the WebContents finds itself without a
-// RenderWidgetHostHWND, it paints Sad Tab instead.
+// RenderWidgetHostView, it paints Sad Tab instead.
 //
 // RenderViewHost (a RenderWidgetHost subclass) is the conduit used to
 // communicate with the RenderView and is owned by the WebContents. If the
@@ -81,7 +83,7 @@ struct WebPluginGeometry;
 // shut down the render process and die.
 //
 // When the render process is destroyed it destroys the View: the
-// RenderWidgetHostHWND, which destroys its HWND and deletes that object.
+// RenderWidgetHostView, which destroys its HWND and deletes that object.
 //
 // For select popups, the situation is a little different. The RenderWidgetHost
 // associated with the select popup owns the view and itself (is responsible
@@ -98,7 +100,7 @@ struct WebPluginGeometry;
 // It should be noted that the RenderViewHost, not the RenderWidgetHost,
 // handles IPC messages relating to the render process going away, since the
 // way a RenderViewHost (WebContents) handles the process dying is different to
-// the way a select popup does. As such the RenderWidgetHostHWND handles these
+// the way a select popup does. As such the RenderWidgetHostView handles these
 // messages for select popups. This placement is more out of convenience than
 // anything else. When the view is live, these messages are forwarded to it by
 // the RenderWidgetHost's IPC message map.
@@ -194,7 +196,7 @@ class RenderWidgetHost : public IPC::Channel::Listener {
   // Starts a hang monitor timeout. If there's already a hang monitor timeout
   // the new one will only fire if it has a shorter delay than the time
   // left on the existing timeouts.
-  void StartHangMonitorTimeout(TimeDelta delay);
+  void StartHangMonitorTimeout(base::TimeDelta delay);
 
   // Called when we receive a notification indicating that the renderer
   // process has gone.
@@ -228,9 +230,9 @@ class RenderWidgetHost : public IPC::Channel::Listener {
       const std::vector<WebPluginGeometry>& plugin_window_moves);
 
   // TODO(beng): (Cleanup) remove this friendship once we expose a clean API to
-  // RenderWidgetHost Views. This exists only to give RenderWidgetHostHWND
+  // RenderWidgetHost Views. This exists only to give RenderWidgetHostView
   // access to Forward*Event.
-  friend class RenderWidgetHostHWND;
+  friend class RenderWidgetHostViewWin;
 
   void ForwardMouseEvent(const WebMouseEvent& mouse_event);
   virtual void ForwardKeyboardEvent(const WebKeyboardEvent& key_event);
@@ -283,7 +285,7 @@ class RenderWidgetHost : public IPC::Channel::Listener {
   RenderWidgetHostView* view_;
 
   // The time when an input event was sent to the RenderWidget.
-  TimeTicks input_event_start_time_;
+  base::TimeTicks input_event_start_time_;
 
   // Indicates whether a page is loading or not.
   bool is_loading_;
@@ -301,7 +303,7 @@ class RenderWidgetHost : public IPC::Channel::Listener {
 
   // The following value indicates a time in the future when we would consider
   // the renderer hung if it does not generate an appropriate response message.
-  Time time_when_considered_hung_;
+  base::Time time_when_considered_hung_;
 
   // This timer runs to check if time_when_considered_hung_ has past.
   base::OneShotTimer<RenderWidgetHost> hung_renderer_timer_;
@@ -320,7 +322,7 @@ class RenderWidgetHost : public IPC::Channel::Listener {
 
   // Used for UMA histogram logging to measure the time for a repaint view
   // operation to finish.
-  TimeTicks repaint_start_time_;
+  base::TimeTicks repaint_start_time_;
 
   DISALLOW_EVIL_CONSTRUCTORS(RenderWidgetHost);
 };

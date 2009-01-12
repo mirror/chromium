@@ -5,28 +5,15 @@
 #ifndef V8_BINDING_H__
 #define V8_BINDING_H__
 
-#include "base/compiler_specific.h"
-#include "build/build_config.h"
+#include "config.h"
 
-#include <v8.h>
-#include "PlatformString.h"
+#include "CString.h"
+#include "KURL.h"
 #include "MathExtras.h"
+#include "PlatformString.h"
 #include "StringBuffer.h"
 
-// Suppress warnings in CString of converting size_t to unsigned int.
-// TODO(fqian): fix CString.h.
-MSVC_PUSH_WARNING_LEVEL(0);
-#include "CString.h"
-MSVC_POP_WARNING();
-
-#if defined(OS_LINUX)
-// Use the platform.h for linux.
-#include "unicode/plinux.h"
-#elif defined(OS_WIN) || defined(OS_MACOSX)
-// WebKit ships a hacked up version of one of the ICU header files, with all
-// options set for OSX.
-#include "platform.h"
-#endif
+#include <v8.h>
 
 namespace WebCore {
 
@@ -129,6 +116,14 @@ inline int ToInt32(v8::Handle<v8::Value> value, bool& ok) {
 inline int ToInt32(v8::Handle<v8::Value> value) {
   bool ok;
   return ToInt32(value, ok);
+}
+
+inline String ToString(const String& string) {
+  return string;
+}
+
+inline String ToString(const KURL& url) {
+  return url.string();
 }
 
 // If a WebCore string length is greater than the threshold,

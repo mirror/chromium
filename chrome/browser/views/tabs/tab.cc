@@ -7,10 +7,11 @@
 #include "base/gfx/size.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/path.h"
+#include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/chrome_menu.h"
-#include "chrome/views/container.h"
 #include "chrome/views/tooltip_manager.h"
+#include "chrome/views/widget.h"
 #include "generated_resources.h"
 
 const std::string Tab::kTabClassName = "browser/tabs/Tab";
@@ -19,9 +20,9 @@ static const SkScalar kTabCapWidth = 15;
 static const SkScalar kTabTopCurveWidth = 4;
 static const SkScalar kTabBottomCurveWidth = 3;
 
-class TabContextMenuController : public views::MenuDelegate {
+class Tab::ContextMenuController : public views::MenuDelegate {
  public:
-  explicit TabContextMenuController(Tab* tab)
+  explicit ContextMenuController(Tab* tab)
       : tab_(tab),
         last_command_(TabStripModel::CommandFirst) {
     menu_.reset(new views::MenuItemView(this));
@@ -47,16 +48,24 @@ class TabContextMenuController : public views::MenuDelegate {
         TabStripModel::CommandCloseTabsOpenedBy,
         l10n_util::GetString(IDS_TAB_CXMENU_CLOSETABSOPENEDBY));
   }
-  virtual ~TabContextMenuController() {
-    tab_->delegate()->StopAllHighlighting();
-  }
 
   void RunMenuAt(int x, int y) {
-    menu_->RunMenuAt(tab_->GetContainer()->GetHWND(), gfx::Rect(x, y, 0, 0),
+    menu_->RunMenuAt(tab_->GetWidget()->GetHWND(), gfx::Rect(x, y, 0, 0),
                      views::MenuItemView::TOPLEFT, true);
+    if (tab_)
+      tab_->ContextMenuClosed();
+    delete this;
+  }
+
+  void Cancel() {
+    tab_ = NULL;
+    menu_->Cancel();
   }
 
  private:
+  virtual ~ContextMenuController() {
+  }
+
   // views::MenuDelegate implementation:
   virtual bool IsCommandEnabled(int id) const {
     // The MenuItemView used to contain the contents of the Context Menu itself
@@ -64,7 +73,7 @@ class TabContextMenuController : public views::MenuDelegate {
     // some reason during its construction. The TabStripModel can't handle
     // command indices it doesn't know about, so we need to filter this out
     // here.
-    if (id == 0)
+    if (id == 0 || !tab_)
       return false;
     return tab_->delegate()->IsCommandEnabledForTab(
         static_cast<TabStripModel::ContextMenuCommand>(id),
@@ -72,12 +81,18 @@ class TabContextMenuController : public views::MenuDelegate {
   }
 
   virtual void ExecuteCommand(int id) {
+    if (!tab_)
+      return;
+
     tab_->delegate()->ExecuteCommandForTab(
         static_cast<TabStripModel::ContextMenuCommand>(id),
         tab_);
   }
 
   virtual void SelectionChanged(views::MenuItemView* menu) {
+    if (!tab_)
+      return;
+
     TabStripModel::ContextMenuCommand command =
         static_cast<TabStripModel::ContextMenuCommand>(menu->GetCommand());
     tab_->delegate()->StopHighlightTabsForCommand(last_command_, tab_);
@@ -89,14 +104,15 @@ class TabContextMenuController : public views::MenuDelegate {
   // The context menu.
   scoped_ptr<views::MenuItemView> menu_;
 
-  // The Tab the context menu was brought up for.
+  // The Tab the context menu was brought up for. Set to NULL when the menu
+  // is canceled.
   Tab* tab_;
 
   // The last command that was selected, so that we can start/stop highlighting
   // appropriately as the user moves through the menu.
   TabStripModel::ContextMenuCommand last_command_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(TabContextMenuController);
+  DISALLOW_COPY_AND_ASSIGN(ContextMenuController);
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -105,7 +121,8 @@ class TabContextMenuController : public views::MenuDelegate {
 Tab::Tab(TabDelegate* delegate)
     : TabRenderer(),
       delegate_(delegate),
-      closing_(false) {
+      closing_(false),
+      menu_controller_(NULL) {
   close_button()->SetListener(this, 0);
   close_button()->SetAccessibleName(l10n_util::GetString(IDS_ACCNAME_CLOSE));
   close_button()->SetAnimationDuration(0);
@@ -113,6 +130,13 @@ Tab::Tab(TabDelegate* delegate)
 }
 
 Tab::~Tab() {
+  if (menu_controller_) {
+    // The menu is showing. Close the menu.
+    menu_controller_->Cancel();
+
+    // Invoke this so that we hide the highlight.
+    ContextMenuClosed();
+  }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -154,10 +178,14 @@ bool Tab::OnMouseDragged(const views::MouseEvent& event) {
 void Tab::OnMouseReleased(const views::MouseEvent& event, bool canceled) {
   // Notify the drag helper that we're done with any potential drag operations.
   // Clean up the drag helper, which is re-created on the next mouse press.
-  delegate_->EndDrag(canceled);
+  // In some cases, ending the drag will schedule the tab for destruction; if
+  // so, bail immediately, since our members are already dead and we shouldn't
+  // do anything else except drop the tab where it is.
+  if (delegate_->EndDrag(canceled))
+    return;
 
-  // Close tabs on middle click, but only if the button is released over the tab 
-  // (normal windows behavior is to discard presses of a UI element where the 
+  // Close tab on middle click, but only if the button is released over the tab
+  // (normal windows behavior is to discard presses of a UI element where the
   // releases happen off the element).
   if (event.IsMiddleMouseButton() && HitTest(event.location()))
     delegate_->CloseTab(this);
@@ -201,10 +229,12 @@ bool Tab::GetAccessibleName(std::wstring* name) {
 
 void Tab::ShowContextMenu(views::View* source, int x, int y,
                           bool is_mouse_gesture) {
-  TabContextMenuController controller(this);
-  controller.RunMenuAt(x, y);
+  if (menu_controller_)
+    return;
+  menu_controller_ = new ContextMenuController(this);
+  menu_controller_->RunMenuAt(x, y);
+  // ContextMenuController takes care of deleting itself.
 }
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // views::BaseButton::ButtonListener implementation:
@@ -241,4 +271,9 @@ void Tab::MakePathForTab(gfx::Path* path) const {
   // Close out the path.
   path->lineTo(0, h);
   path->close();
+}
+
+void Tab::ContextMenuClosed() {
+  delegate()->StopAllHighlighting();
+  menu_controller_ = NULL;
 }

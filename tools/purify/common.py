@@ -48,6 +48,16 @@ QUANTIFYW_PATH = os.path.join(PPLUS_PATH, "quantifyw.exe")
 
 class TimeoutError(Exception): pass
 
+
+def _print_line(line, flush=True):
+  # Printing to a text file (including stdout) on Windows always winds up
+  # using \r\n automatically.  On buildbot, this winds up being read by a master
+  # running on Linux, so this is a pain.  Unfortunately, it doesn't matter what
+  # we do here, so just leave this comment for future reference.
+  print line.rstrip() + '\n',
+  if flush:
+    sys.stdout.flush()
+
 def RunSubprocess(proc, timeout=0, detach=False):
   """ Runs a subprocess, polling every .2 seconds until it finishes or until
   timeout is reached.  Then kills the process with taskkill.  A timeout <= 0
@@ -66,26 +76,48 @@ def RunSubprocess(proc, timeout=0, detach=False):
     DETACHED_PROCESS = 0x8
     p = subprocess.Popen(proc, creationflags=DETACHED_PROCESS)
   else:
-    p = subprocess.Popen(proc)
+    # For non-detached processes, manually read and print out stdout and stderr.
+    # By default, the subprocess is supposed to inherit these from its parent,
+    # however when run under buildbot, it seems unable to read data from a
+    # grandchild process, so we have to read the child and print the data as if
+    # it came from us for buildbot to read it.  We're not sure why this is
+    # necessary.
+    # TODO(erikkay): should we buffer stderr and stdout separately?
+    p = subprocess.Popen(proc, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
   if timeout <= 0:
     while p.poll() is None:
+      if not detach:
+        line = p.stdout.readline()
+        while line:
+          _print_line(line)
+          line = p.stdout.readline()
       time.sleep(0.2)
   else:
     wait_until = time.time() + timeout
     while p.poll() is None and time.time() < wait_until:
+      if not detach:
+        line = p.stdout.readline()
+        while line:
+          _print_line(line)
+          line = p.stdout.readline()
       time.sleep(0.2)
+  if not detach:
+    for line in p.stdout.readlines():
+      _print_line(line, False)
+    p.stdout.flush()
   result = p.poll()
   if result is None:
     subprocess.call(["taskkill", "/T", "/F", "/PID", str(p.pid)])
-    logging.error("KILLED %d" % (p.pid))
+    logging.error("KILLED %d" % p.pid)
     # give the process a chance to actually die before continuing
     # so that cleanup can happen safely
     time.sleep(1.0)
-    logging.error("TIMEOUT waiting for %s" % (proc[0]))
+    logging.error("TIMEOUT waiting for %s" % proc[0])
     raise TimeoutError(proc[0])
   if result:
     logging.error("%s exited with non-zero result code %d" % (proc[0], result))
   return result
+
 
 def FixPath(path):
   """We pass computed paths to Rational as arguments, so these paths must be
@@ -97,6 +129,7 @@ def FixPath(path):
     return path
   p = subprocess.Popen(["cygpath", "-a", "-m", path], stdout=subprocess.PIPE)
   return p.communicate()[0].rstrip()
+
 
 class Rational(object):
   ''' Common superclass for Purify and Quantify automation objects.  Handles
@@ -114,17 +147,7 @@ class Rational(object):
     start = datetime.datetime.now()
     retcode = -1
     if self.Setup():
-      if self.Instrument():
-        if self.Execute():
-          retcode = self.Analyze()
-          if not retcode:
-            logging.info("instrumentation and execution completed successfully.")
-          else:
-            logging.error("Analyze failed")
-        else:
-          logging.error("Execute failed")
-      else:
-        logging.error("Instrument failed")
+      retcode = self._Run()
       self.Cleanup()
     else:
       logging.error("Setup failed")
@@ -136,6 +159,24 @@ class Rational(object):
     seconds = seconds % 60
     logging.info("elapsed time: %02d:%02d:%02d" % (hours, minutes, seconds))
     return retcode
+
+  def _Run(self):
+    retcode = -1
+    if not self.Instrument():
+      logging.error("Instrumentation failed.")
+      return retcode
+    if self._instrument_only:
+      logging.info("Instrumentation completed successfully.")
+      return 0
+    if not self.Execute():
+      logging.error("Execute failed.")
+      return
+    retcode = self.Analyze()
+    if retcode:
+      logging.error("Analyze failed.")
+      return retcode
+    logging.info("Instrumentation and execution completed successfully.")
+    return 0
 
   def CreateOptionParser(self):
     '''Creates OptionParser with shared arguments.  Overridden by subclassers
@@ -161,6 +202,9 @@ class Rational(object):
                       help="timeout in seconds for the run (default 10000)")
     parser.add_option("-v", "--verbose", action="store_true", default=False,
                       help="verbose output - enable debug log messages")
+    parser.add_option("", "--instrument_only", action="store_true",
+                      default=False,
+                      help="Only instrument the target without running")
     self._parser = parser
 
   def Setup(self):
@@ -185,6 +229,9 @@ class Rational(object):
       if "/Replace=yes" in proc:
         if os.path.exists(self._exe + ".Original"):
           return True
+      elif self._instrument_only:
+        # TODO(paulg): Catch instrumentation errors and clean up properly.
+        return True
       elif os.path.isdir(self._cache_dir):
         for cfile in os.listdir(self._cache_dir):
           # TODO(erikkay): look for the actual munged purify filename
@@ -216,7 +263,7 @@ class Rational(object):
     '''Parses arguments according to CreateOptionParser
     Subclassers must override if they have extra arguments.'''
     self.CreateOptionParser()
-    (self._options, self._args) = self._parser.parse_args()
+    self._options, self._args = self._parser.parse_args()
     if self._options.verbose:
       google.logging_utils.config_root(logging.DEBUG)
     self._save_cache = self._options.save_cache
@@ -245,6 +292,7 @@ class Rational(object):
       return False
     self._exe = self._args[0]
     self._exe_dir = FixPath(os.path.abspath(os.path.dirname(self._exe)))
+    self._instrument_only = self._options.instrument_only
     return True
 
   def Cleanup(self):

@@ -13,7 +13,7 @@
 #include "chrome/browser/navigation_controller.h"
 #include "chrome/browser/password_manager.h"
 #include "chrome/browser/render_process_host.h"
-#include "chrome/browser/resource_dispatcher_host.h"
+#include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #include "chrome/browser/web_contents.h"
 #include "chrome/browser/tab_util.h"
 #include "chrome/browser/views/login_view.h"
@@ -84,11 +84,11 @@ class LoginHandlerImpl : public LoginHandler,
     SendNotifications();
   }
 
-  // Returns the TabContents that needs authentication.
-  TabContents* GetTabContentsForLogin() {
+  // Returns the WebContents that needs authentication.
+  WebContents* GetWebContentsForLogin() {
     DCHECK(MessageLoop::current() == ui_loop_);
 
-    return tab_util::GetTabContentsByID(render_process_host_id_,
+    return tab_util::GetWebContentsByID(render_process_host_id_,
                                         tab_contents_id_);
   }
 
@@ -238,7 +238,7 @@ class LoginHandlerImpl : public LoginHandler,
     DCHECK(MessageLoop::current() == ui_loop_);
 
     NotificationService* service = NotificationService::current();
-    TabContents* requesting_contents = GetTabContentsForLogin();
+    WebContents* requesting_contents = GetWebContentsForLogin();
     if (!requesting_contents)
       return;
 
@@ -311,7 +311,7 @@ class LoginDialogTask : public Task {
   }
 
   void Run() {
-    TabContents* parent_contents = handler_->GetTabContentsForLogin();
+    WebContents* parent_contents = handler_->GetWebContentsForLogin();
     if (!parent_contents) {
       // The request was probably cancelled.
       return;

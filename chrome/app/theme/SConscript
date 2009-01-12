@@ -10,7 +10,7 @@ env_res = env_res.Clone()
 env_res.Append(
     CPPPATH = [
         '.',
-        '#/..',
+        '$CHROME_SRC_DIR',
     ],
     RCFLAGS = [
         ['/l', '0x409'],
@@ -42,10 +42,8 @@ env.Append(
     ],
 )
 
-themes_default = env.ChromeSharedLibrary("$CHROME_DIR/themes/default", res)
+themes_default = env.ChromeSharedLibrary("default", res)
+env.Install("$DESTINATION_ROOT/themes", themes_default)
 
-env.AddPostAction(themes_default[1], Touch(themes_default[1:]))
-
-i = env.Install("$TARGET_ROOT/themes", themes_default)
-env.Alias('chrome', i)
-
+# TODO(bradnelson): figure out why this was needed
+#env.AddPostAction(themes_default[1], Touch(themes_default[1:]))

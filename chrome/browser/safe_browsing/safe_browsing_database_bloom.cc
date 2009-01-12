@@ -4,9 +4,11 @@
 
 #include "chrome/browser/safe_browsing/safe_browsing_database_bloom.h"
 
+#include "base/compiler_specific.h"
 #include "base/file_util.h"
 #include "base/logging.h"
 #include "base/message_loop.h"
+#include "base/platform_thread.h"
 #include "base/process_util.h"
 #include "base/sha2.h"
 #include "base/stats_counters.h"
@@ -16,6 +18,9 @@
 #include "chrome/common/sqlite_compiled_statement.h"
 #include "chrome/common/sqlite_utils.h"
 #include "googleurl/src/gurl.h"
+
+using base::Time;
+using base::TimeDelta;
 
 // Database version.  If this is different than what's stored on disk, the
 // database is reset.
@@ -45,11 +50,8 @@ static const wchar_t kBloomFilterFileSuffix[] = L" Bloom";
 SafeBrowsingDatabaseBloom::SafeBrowsingDatabaseBloom()
     : db_(NULL),
       init_(false),
-      chunk_inserted_callback_(NULL),
-#pragma warning(suppress: 4355)  // can use this
-      reset_factory_(this),
-#pragma warning(suppress: 4355)  // can use this
-      resume_factory_(this),
+      ALLOW_THIS_IN_INITIALIZER_LIST(reset_factory_(this)),
+      ALLOW_THIS_IN_INITIALIZER_LIST(resume_factory_(this)),
       add_count_(0),
       did_resume_(false) {
 }
@@ -357,9 +359,9 @@ void SafeBrowsingDatabaseBloom::InsertChunks(const std::string& list_name,
   if (chunks->empty())
     return;
 
-  Time insert_start = Time::Now();
+  base::Time insert_start = base::Time::Now();
 
-  int list_id = GetListId(list_name);
+  int list_id = safe_browsing_util::GetListId(list_name);
   ChunkType chunk_type = chunks->front().is_add ? ADD_CHUNK : SUB_CHUNK;
 
   while (!chunks->empty()) {
@@ -401,7 +403,7 @@ void SafeBrowsingDatabaseBloom::InsertChunks(const std::string& list_name,
     chunks->pop_front();
   }
 
-  UMA_HISTOGRAM_TIMES(L"SB2.ChunkInsert", Time::Now() - insert_start);
+  UMA_HISTOGRAM_TIMES(L"SB2.ChunkInsert", base::Time::Now() - insert_start);
 
   delete chunks;
 
@@ -439,11 +441,11 @@ void SafeBrowsingDatabaseBloom::UpdateFinished(bool update_succeeded) {
 }
 
 void SafeBrowsingDatabaseBloom::InsertAdd(SBPrefix host, SBEntry* entry) {
-  STATS_COUNTER(L"SB.HostInsert", 1);
+  STATS_COUNTER("SB.HostInsert", 1);
   int encoded = EncodeChunkId(entry->chunk_id(), entry->list_id());
 
   if (entry->type() == SBEntry::ADD_FULL_HASH) {
-    Time receive_time = Time::Now();
+    base::Time receive_time = base::Time::Now();
     for (int i = 0; i < entry->prefix_count(); ++i) {
       SBPrefix prefix;
       SBFullHash full_hash = entry->FullHashAt(i);
@@ -468,7 +470,7 @@ void SafeBrowsingDatabaseBloom::InsertAdd(SBPrefix host, SBEntry* entry) {
 
 void SafeBrowsingDatabaseBloom::InsertAddPrefix(SBPrefix prefix,
                                                 int encoded_chunk) {
-  STATS_COUNTER(L"SB.PrefixAdd", 1);
+  STATS_COUNTER("SB.PrefixAdd", 1);
   std::string sql = "INSERT INTO add_prefix (chunk, prefix) VALUES (?, ?)";
   SQLITE_UNIQUE_STATEMENT(statement, *statement_cache_, sql.c_str());
   if (!statement.is_valid()) {
@@ -489,9 +491,9 @@ void SafeBrowsingDatabaseBloom::InsertAddPrefix(SBPrefix prefix,
 
 void SafeBrowsingDatabaseBloom::InsertAddFullHash(SBPrefix prefix,
                                                   int encoded_chunk,
-                                                  Time receive_time,
+                                                  base::Time receive_time,
                                                   SBFullHash full_prefix) {
-  STATS_COUNTER(L"SB.PrefixAddFull", 1);
+  STATS_COUNTER("SB.PrefixAddFull", 1);
   std::string sql = "INSERT INTO add_full_hash "
                     "(chunk, prefix, receive_time, full_hash) "
                     "VALUES (?,?,?,?)";
@@ -516,7 +518,7 @@ void SafeBrowsingDatabaseBloom::InsertAddFullHash(SBPrefix prefix,
 
 void SafeBrowsingDatabaseBloom::InsertSub(
     int chunk_id, SBPrefix host, SBEntry* entry) {
-  STATS_COUNTER(L"SB.HostDelete", 1);
+  STATS_COUNTER("SB.HostDelete", 1);
   int encoded = EncodeChunkId(chunk_id, entry->list_id());
   int encoded_add;
 
@@ -548,7 +550,7 @@ void SafeBrowsingDatabaseBloom::InsertSub(
 void SafeBrowsingDatabaseBloom::InsertSubPrefix(SBPrefix prefix,
                                                 int encoded_chunk,
                                                 int encoded_add_chunk) {
-  STATS_COUNTER(L"SB.PrefixSub", 1);
+  STATS_COUNTER("SB.PrefixSub", 1);
   std::string sql =
     "INSERT INTO sub_prefix (chunk, add_chunk, prefix) VALUES (?,?,?)";
   SQLITE_UNIQUE_STATEMENT(statement, *statement_cache_, sql.c_str());
@@ -573,7 +575,7 @@ void SafeBrowsingDatabaseBloom::InsertSubFullHash(SBPrefix prefix,
                                                   int encoded_add_chunk,
                                                   SBFullHash full_prefix,
                                                   bool use_temp_table) {
-  STATS_COUNTER(L"SB.PrefixSubFull", 1);
+  STATS_COUNTER("SB.PrefixSubFull", 1);
   std::string sql = "INSERT INTO ";
   if (use_temp_table) {
     sql += "sub_full_tmp";
@@ -635,7 +637,7 @@ void SafeBrowsingDatabaseBloom::DeleteChunks(
   if (chunk_deletes->empty())
     return;
 
-  int list_id = GetListId(chunk_deletes->front().list_name);
+  int list_id = safe_browsing_util::GetListId(chunk_deletes->front().list_name);
 
   for (size_t i = 0; i < chunk_deletes->size(); ++i) {
     const SBChunkDelete& chunk = (*chunk_deletes)[i];
@@ -656,7 +658,7 @@ void SafeBrowsingDatabaseBloom::DeleteChunks(
 bool SafeBrowsingDatabaseBloom::ChunkExists(int list_id,
                                             ChunkType type,
                                             int chunk_id) {
-  STATS_COUNTER(L"SB.ChunkSelect", 1);
+  STATS_COUNTER("SB.ChunkSelect", 1);
   int encoded = EncodeChunkId(chunk_id, list_id);
   bool ret;
   if (type == ADD_CHUNK)
@@ -701,38 +703,14 @@ void SafeBrowsingDatabaseBloom::GetListsInfo(
   ReadChunkNumbers();
 
   lists->push_back(SBListChunkRanges(safe_browsing_util::kMalwareList));
-  GetChunkIds(MALWARE, ADD_CHUNK, &lists->back().adds);
-  GetChunkIds(MALWARE, SUB_CHUNK, &lists->back().subs);
+  GetChunkIds(safe_browsing_util::MALWARE, ADD_CHUNK, &lists->back().adds);
+  GetChunkIds(safe_browsing_util::MALWARE, SUB_CHUNK, &lists->back().subs);
 
   lists->push_back(SBListChunkRanges(safe_browsing_util::kPhishingList));
-  GetChunkIds(PHISH, ADD_CHUNK, &lists->back().adds);
-  GetChunkIds(PHISH, SUB_CHUNK, &lists->back().subs);
+  GetChunkIds(safe_browsing_util::PHISH, ADD_CHUNK, &lists->back().adds);
+  GetChunkIds(safe_browsing_util::PHISH, SUB_CHUNK, &lists->back().subs);
 
   return;
-}
-
-/* static */
-int SafeBrowsingDatabaseBloom::GetListId(const std::string& name) {
-  if (name == safe_browsing_util::kMalwareList)
-    return MALWARE;
-  else if (name == safe_browsing_util::kPhishingList)
-    return PHISH;
-
-  NOTREACHED();
-  return -1;
-}
-
-/* static */
-std::string SafeBrowsingDatabaseBloom::GetListName(int list_id) {
-  switch (list_id) {
-    case MALWARE:
-      return safe_browsing_util::kMalwareList;
-    case PHISH:
-      return safe_browsing_util::kPhishingList;
-    default:
-      NOTREACHED();
-      return "";
-  }
 }
 
 void SafeBrowsingDatabaseBloom::ReadChunkNumbers() {
@@ -864,7 +842,7 @@ int SafeBrowsingDatabaseBloom::PairCompare(const void* arg1, const void* arg2) {
 
 bool SafeBrowsingDatabaseBloom::BuildAddPrefixList(SBPair* adds) {
   // Read add_prefix into memory and sort it.
-  STATS_COUNTER(L"SB.HostSelectForBloomFilter", 1);
+  STATS_COUNTER("SB.HostSelectForBloomFilter", 1);
   SQLITE_UNIQUE_STATEMENT(add_prefix, *statement_cache_,
                           "SELECT chunk, prefix FROM add_prefix");
   if (!add_prefix.is_valid()) {
@@ -931,7 +909,7 @@ bool SafeBrowsingDatabaseBloom::RemoveSubs(
   SQLITE_UNIQUE_STATEMENT(
       sub_prefix_tmp,
       *statement_cache_,
-      "INSERT INTO sub_prefix_tmp (chunk,add_chunk,prefix) VALUES (?,?,?)");
+      "INSERT INTO sub_prefix_tmp (chunk, add_chunk, prefix) VALUES (?,?,?)");
   if (!sub_prefix_tmp.is_valid()) {
     NOTREACHED();
     return false;
@@ -1183,7 +1161,7 @@ bool SafeBrowsingDatabaseBloom::BuildAddFullHashCache(HashCache* add_cache) {
     if (add_del_cache_.find(entry.add_chunk_id) != add_del_cache_.end())
       continue;  // This entry's chunk was deleted so we skip it.
     SBPrefix prefix = full_add_entry->column_int(1);
-    entry.received = Time::FromTimeT(full_add_entry->column_int64(2));
+    entry.received = base::Time::FromTimeT(full_add_entry->column_int64(2));
     int chunk, list_id;
     DecodeChunkId(entry.add_chunk_id, &chunk, &list_id);
     entry.list_id = list_id;
@@ -1269,9 +1247,9 @@ void SafeBrowsingDatabaseBloom::BuildBloomFilter() {
 #if defined(OS_WIN)
   // For measuring the amount of IO during the bloom filter build.
   IoCounters io_before, io_after;
-  ProcessHandle handle = Process::Current().handle();
-  scoped_ptr<process_util::ProcessMetrics> metric;
-  metric.reset(process_util::ProcessMetrics::CreateProcessMetrics(handle));
+  base::ProcessHandle handle = base::Process::Current().handle();
+  scoped_ptr<base::ProcessMetrics> metric;
+  metric.reset(base::ProcessMetrics::CreateProcessMetrics(handle));
   metric->GetIOCounters(&io_before);
 #endif
 
@@ -1411,7 +1389,7 @@ void SafeBrowsingDatabaseBloom::GetCachedFullHashes(
           memcpy(&full_hash.hash.full_hash,
                  &eit->full_hash.full_hash,
                  sizeof(SBFullHash));
-          full_hash.list_name = GetListName(eit->list_id);
+          full_hash.list_name = safe_browsing_util::GetListName(eit->list_id);
           full_hash.add_chunk_id = eit->add_chunk_id;
           full_hits->push_back(full_hash);
         }
@@ -1447,7 +1425,7 @@ void SafeBrowsingDatabaseBloom::CacheHashResults(
     HashList& entries = (*hash_cache_)[prefix];
     HashCacheEntry entry;
     entry.received = now;
-    entry.list_id = GetListId(it->list_name);
+    entry.list_id = safe_browsing_util::GetListId(it->list_name);
     entry.add_chunk_id = EncodeChunkId(it->add_chunk_id, entry.list_id);
     memcpy(&entry.full_hash, &it->hash.full_hash, sizeof(SBFullHash));
     entries.push_back(entry);
@@ -1509,7 +1487,7 @@ void SafeBrowsingDatabaseBloom::OnResumeDone() {
 
 void SafeBrowsingDatabaseBloom::WaitAfterResume() {
   if (did_resume_) {
-    Sleep(kOnResumeHoldupMs);
+    PlatformThread::Sleep(kOnResumeHoldupMs);
     did_resume_ = false;
   }
 }

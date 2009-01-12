@@ -4,12 +4,14 @@
 
 #include "config.h"
 
-#pragma warning(push, 0)
+#include "base/compiler_specific.h"
+
+MSVC_PUSH_WARNING_LEVEL(0);
+#include "AnimationController.h"
 #include "FrameLoader.h"
 #include "FrameTree.h"
 #include "Document.h"
 #include "Element.h"
-#include "Event.h"
 #include "EventListener.h"
 #include "EventNames.h"
 #include "HTMLCollection.h"
@@ -20,18 +22,14 @@
 #include "HTMLInputElement.h"
 #include "HTMLLinkElement.h"
 #include "HTMLMetaElement.h"
+#include "HTMLOptionElement.h"
 #include "HTMLNames.h"
 #include "KURL.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 #undef LOG
 
-// Brings in more WebKit headers and #undefs LOG again, so this needs to come
-// first.
-#include "webkit/glue/autocomplete_input_listener.h"
-
-#include "webkit/glue/dom_operations.h"
-
 #include "base/string_util.h"
+#include "webkit/glue/dom_operations.h"
 #include "webkit/glue/form_data.h"
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/password_autocomplete_listener.h"
@@ -88,8 +86,7 @@ void GetSavableResourceLinkForElement(WebCore::Element* element,
   if (!value)
     return;
   // Get absolute URL.
-  GURL u(webkit_glue::KURLToGURL(current_doc->completeURL((*value).
-                                 deprecatedString())));
+  GURL u(webkit_glue::KURLToGURL(current_doc->completeURL((*value).string())));
   // ignore invalid URL
   if (!u.is_valid())
     return;
@@ -105,8 +102,7 @@ void GetSavableResourceLinkForElement(WebCore::Element* element,
   // Insert referrer for above new resource link.
   if (current_doc->frame()) {
     GURL u(webkit_glue::KURLToGURL(
-        current_doc->frame()->loader()->outgoingReferrer().
-        deprecatedString()));
+        WebCore::KURL(current_doc->frame()->loader()->outgoingReferrer())));
     result->referrers_list->push_back(u);
   } else {
     // Insert blank referrer.
@@ -153,69 +149,19 @@ void GetAllSavableResourceLinksForFrame(WebFrameImpl* current_frame,
   }
 }
 
+template <class HTMLNodeType>
+HTMLNodeType* CastHTMLElement(WebCore::Node* node,
+                              const WebCore::QualifiedName& name) {
+  if (node->isHTMLElement() &&
+      static_cast<typename WebCore::HTMLElement*>(node)->hasTagName(name)) {
+    return static_cast<HTMLNodeType*>(node);
+  }
+  return NULL;
+}
+
 }  // namespace
 
 namespace webkit_glue {
-
-// Returns true if the node is an html input element.
-static bool IsInputElement(WebCore::Node* node) {
-  return (node->nodeType() == WebCore::Node::ELEMENT_NODE &&
-      static_cast<WebCore::Element*>(node)->hasTagName(
-                WebCore::HTMLNames::inputTag));
-}
-
-// Helper function to cast a Node as an HTMLInputElement.
-static WebCore::HTMLInputElement* GetNodeAsInputElement(WebCore::Node* node) {
-  DCHECK(IsInputElement(node));
-  return static_cast<WebCore::HTMLInputElement*>(node);
-}
-
-// The listener accesses the username element by looking to the
-// event's target. Since the listener was registered on the username element,
-// it should always be the target.
-class ACEDelegateForUsernameFactory : public AutocompleteEditDelegateFactory {
- public:
-  virtual AutocompleteEditDelegate* Create(WebCore::Event* event) {
-    return new HTMLInputDelegate(
-        GetNodeAsInputElement(event->target()->toNode()));
-  }
-};
-
-// The listener accesses the password element by searching for it
-// by name, within the same form where the username lives. This prevents us
-// from having to hold a reference to the password field.
-// TODO(eroman): Really we should also check if it is of type "password",
-// but the other code doesn't enforce this constraint either.
-class ACEDelegateForPasswordFactory : public AutocompleteEditDelegateFactory {
- public:
-  // password_name is the password element's name.
-  explicit ACEDelegateForPasswordFactory(const std::wstring& password_name)
-      : password_name_(password_name) { }
-
-  virtual AutocompleteEditDelegate* Create(WebCore::Event* event) {
-    WebCore::HTMLInputElement* username =
-        GetNodeAsInputElement(event->target()->toNode());
-
-    WebCore::HTMLFormElement* form = username->form();
-    if (form) {
-      Vector<RefPtr<WebCore::Node> > form_nodes;
-      form->getNamedElements(StdWStringToString(password_name_), form_nodes);
-      if (!form_nodes.isEmpty()) {
-        WebCore::Node* node = form_nodes[0].get();
-        if (IsInputElement(node)) {
-          return new HTMLInputDelegate(GetNodeAsInputElement(node));
-        }
-      }
-    }
-
-    // We couldn't find the password element. Since the caller does not
-    // expect a NULL result, give them a dummy delegate.
-    return new DummyAutocompleteEditDelegate();
-  }
-
- private:
-  std::wstring password_name_;
-};
 
 // Map element name to a list of pointers to corresponding elements to simplify
 // form filling.
@@ -351,6 +297,8 @@ static bool FillFormImpl(FormElements* fe, const FormData& data, bool submit) {
       submit_found = true;
       continue;
     }
+    if (!it->second->value().isEmpty())  // Don't overwrite pre-filled values.
+      continue;
     it->second->setValue(StdWStringToString(data_map[it->first]));
     it->second->setAutofilled(true);
     it->second->onChange();
@@ -363,13 +311,20 @@ static bool FillFormImpl(FormElements* fe, const FormData& data, bool submit) {
   return false;
 }
 
+// Helper function to cast a Node as an HTMLInputElement.
+static WebCore::HTMLInputElement* GetNodeAsInputElement(WebCore::Node* node) {
+  DCHECK(node->nodeType() == WebCore::Node::ELEMENT_NODE);
+  DCHECK(static_cast<WebCore::Element*>(node)->hasTagName(
+      WebCore::HTMLNames::inputTag));
+  return static_cast<WebCore::HTMLInputElement*>(node);
+}
+
 // Helper to search the given form element for the specified input elements
 // in |data|, and add results to |result|.
 static bool FindFormInputElements(WebCore::HTMLFormElement* fe,
                                   const FormData& data,
                                   FormElements* result) {
   Vector<RefPtr<WebCore::Node> > temp_elements;
-  bool found_elements = true;
   // Loop through the list of elements we need to find on the form in
   // order to autofill it. If we don't find any one of them, abort 
   // processing this form; it can't be the right one.
@@ -417,7 +372,7 @@ static void FindFormElements(WebView* view,
     if (!doc->isHTMLDocument()) 
       continue;
 
-    GURL full_origin(StringToStdWString(doc->documentURI()));
+    GURL full_origin(StringToStdString(doc->documentURI()));
     if (data.origin != full_origin.ReplaceComponents(rep))
       continue;
 
@@ -484,19 +439,37 @@ void FillPasswordForm(WebView* view,
     WebCore::HTMLInputElement* username_element =
         form_elements->input_elements[data.basic_data.elements[0]].get();
 
-    // Get the password element's name (We currently only support single
+    // Get pointer to password element. (We currently only support single
     // password forms).
-    std::wstring password_element_name = data.basic_data.elements[1];
-    std::wstring username_text = StringToStdWString(username_element->value());
+    WebCore::HTMLInputElement* password_element =
+        form_elements->input_elements[data.basic_data.elements[1]].get();
 
-    AttachForInlineAutocomplete(username_element,
-                                new PasswordAutocompleteListener(
-                                    username_text,
-                                    new ACEDelegateForUsernameFactory(),
-                                    new ACEDelegateForPasswordFactory(
-                                        password_element_name),
-                                    data));
+    WebFrameLoaderClient* frame_loader_client =
+        static_cast<WebFrameLoaderClient*>(username_element->document()->
+                                           frame()->loader()->client());
+    WebFrameImpl* webframe_impl = frame_loader_client->webframe();
+    webframe_impl->RegisterPasswordListener(
+        username_element,
+        new PasswordAutocompleteListener(
+            new HTMLInputDelegate(username_element),
+            new HTMLInputDelegate(password_element),
+            data));
   }
+}
+
+WebCore::HTMLLinkElement* CastToHTMLLinkElement(WebCore::Node* node) {
+  return CastHTMLElement<WebCore::HTMLLinkElement>(node,
+      WebCore::HTMLNames::linkTag);
+}
+
+WebCore::HTMLMetaElement* CastToHTMLMetaElement(WebCore::Node* node) {
+  return CastHTMLElement<WebCore::HTMLMetaElement>(node,
+      WebCore::HTMLNames::metaTag);
+}
+
+WebCore::HTMLOptionElement* CastToHTMLOptionElement(WebCore::Node* node) {
+  return CastHTMLElement<WebCore::HTMLOptionElement>(node,
+      WebCore::HTMLNames::optionTag);
 }
 
 WebFrameImpl* GetWebFrameImplFromElement(WebCore::Element* element,
@@ -560,7 +533,7 @@ const WebCore::AtomicString* GetSubResourceLinkFromElement(
   // If value has content and not start with "javascript:" then return it,
   // otherwise return NULL.
   if (value && !value->isEmpty() &&
-      !value->domString().startsWith("javascript:", false))
+      !value->startsWith("javascript:", false))
     return value;
 
   return NULL;
@@ -711,7 +684,10 @@ static int ParseSingleIconSize(const std::wstring& text) {
     if (!(text[i] >= L'0' && text[i] <= L'9'))
       return 0;
   }
-  return _wtoi(text.c_str());
+  int output;
+  if (!StringToInt(text, &output))
+    return 0;
+  return output;
 }
 
 // Parses an icon size. An icon size must match the following regex:
@@ -756,7 +732,7 @@ static void AddInstallIcon(WebCore::HTMLLinkElement* link,
   if (href.isEmpty() || href.isNull())
     return;
 
-  GURL url(webkit_glue::StringToStdWString(href));
+  GURL url(webkit_glue::StringToStdString(href));
   if (!url.is_valid())
     return;
 
@@ -809,7 +785,7 @@ void GetApplicationInfo(WebView* view, WebApplicationInfo* app_info) {
           app_info->description =
               webkit_glue::StringToStdWString(meta->content());
         } else if (meta->name() == String("application-url")) {
-          std::wstring url = webkit_glue::StringToStdWString(meta->content());
+          std::string url = webkit_glue::StringToStdString(meta->content());
           GURL main_url = main_frame->GetURL();
           app_info->app_url = main_url.is_valid() ?
               main_url.Resolve(url) : GURL(url);
@@ -821,5 +797,50 @@ void GetApplicationInfo(WebView* view, WebApplicationInfo* app_info) {
   }
 }
 
-} // webkit_glue
+bool PauseAnimationAtTimeOnElementWithId(WebView* view,
+                                         const std::string& animation_name,
+                                         double time,
+                                         const std::string& element_id) {
+  WebFrame* web_frame = view->GetMainFrame();
+  if (!web_frame)
+    return false;
 
+  WebCore::Frame* frame = static_cast<WebFrameImpl*>(web_frame)->frame();
+  WebCore::AnimationController* controller = frame->animation();
+  if (!controller)
+    return false;
+
+  WebCore::Element* element =
+      frame->document()->getElementById(StdStringToString(element_id));
+  if (!element)
+    return false;
+
+  return controller->pauseAnimationAtTime(element->renderer(),
+                                          StdStringToString(animation_name),
+                                          time);
+}
+
+bool PauseTransitionAtTimeOnElementWithId(WebView* view,
+                                          const std::string& property_name,
+                                          double time,
+                                          const std::string& element_id) {
+  WebFrame* web_frame = view->GetMainFrame();
+  if (!web_frame)
+    return false;
+
+  WebCore::Frame* frame = static_cast<WebFrameImpl*>(web_frame)->frame();
+  WebCore::AnimationController* controller = frame->animation();
+  if (!controller)
+    return false;
+
+  WebCore::Element* element =
+      frame->document()->getElementById(StdStringToString(element_id));
+  if (!element)
+    return false;
+
+  return controller->pauseTransitionAtTime(element->renderer(),
+                                           StdStringToString(property_name),
+                                           time);
+}
+
+} // webkit_glue

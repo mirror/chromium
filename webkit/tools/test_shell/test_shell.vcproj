@@ -145,7 +145,43 @@
 			Name="resources"
 			>
 			<File
-				RelativePath="..\..\..\net\base\net_resources.rc"
+				RelativePath="$(OutDir)\grit_derived_sources\net_resources.rc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\resources\pan_east.cur"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\resources\pan_middle.cur"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\resources\pan_north.cur"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\resources\pan_north_east.cur"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\resources\pan_north_west.cur"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\resources\pan_south.cur"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\resources\pan_south_east.cur"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\resources\pan_south_west.cur"
+				>
+			</File>
+			<File
+				RelativePath="..\..\glue\resources\pan_west.cur"
 				>
 			</File>
 			<File
@@ -165,7 +201,11 @@
 				>
 			</File>
 			<File
-				RelativePath="$(IntDir)\..\localized_strings\webkit_strings_en-US.rc"
+				RelativePath="..\..\glue\webkit_resources.rc"
+				>
+			</File>
+			<File
+				RelativePath="$(OutDir)\grit_derived_sources\webkit_strings_en-US.rc"
 				>
 			</File>
 		</Filter>
@@ -242,11 +282,19 @@
 			>
 		</File>
 		<File
+			RelativePath=".\test_shell_win.cc"
+			>
+		</File>
+		<File
 			RelativePath=".\test_webview_delegate.cc"
 			>
 		</File>
 		<File
 			RelativePath=".\test_webview_delegate.h"
+			>
+		</File>
+		<File
+			RelativePath=".\test_webview_delegate_win.cc"
 			>
 		</File>
 		<File
@@ -258,19 +306,19 @@
 			>
 		</File>
 		<File
-			RelativePath=".\webview_host.cc"
-			>
-		</File>
-		<File
 			RelativePath=".\webview_host.h"
 			>
 		</File>
 		<File
-			RelativePath=".\webwidget_host.cc"
+			RelativePath=".\webview_host_win.cc"
 			>
 		</File>
 		<File
 			RelativePath=".\webwidget_host.h"
+			>
+		</File>
+		<File
+			RelativePath=".\webwidget_host_win.cc"
 			>
 		</File>
 	</Files>

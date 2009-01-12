@@ -5,14 +5,20 @@
 #ifndef CHROME_TEST_UNIT_CHROME_TEST_SUITE_H_
 #define CHROME_TEST_UNIT_CHROME_TEST_SUITE_H_
 
+#include "build/build_config.h"
+
 #include "base/stats_table.h"
 #include "base/file_util.h"
 #include "base/path_service.h"
+#include "base/scoped_nsautorelease_pool.h"
 #include "base/test_suite.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
+#if defined(OS_WIN)
+// TODO(port): Remove the #ifdef when ResourceBundle is ported.
 #include "chrome/common/resource_bundle.h"
+#endif
 #include "chrome/test/testing_browser_process.h"
 
 class ChromeTestSuite : public TestSuite {
@@ -23,6 +29,8 @@ public:
 protected:
 
   virtual void Initialize() {
+    base::ScopedNSAutoreleasePool autorelease_pool;
+
     TestSuite::Initialize();
 
     chrome::RegisterPathProvider();
@@ -40,18 +48,25 @@ protected:
     if (!user_data_dir.empty())
       PathService::Override(chrome::DIR_USER_DATA, user_data_dir);
 
+#if defined(OS_WIN)
+    // TODO(port): Remove the #ifdef when ResourceBundle is ported.
+    //
     // Force unittests to run using en-us so if we test against string
     // output, it'll pass regardless of the system language.
     ResourceBundle::InitSharedInstance(L"en-us");
     ResourceBundle::GetSharedInstance().LoadThemeResources();
+#endif
 
     // initialize the global StatsTable for unit_tests
-    stats_table_ = new StatsTable(L"unit_tests", 20, 200);
+    stats_table_ = new StatsTable("unit_tests", 20, 200);
     StatsTable::set_current(stats_table_);
   }
 
   virtual void Shutdown() {
+#if defined(OS_WIN)
+    // TODO(port): Remove the #ifdef when ResourceBundle is ported.
     ResourceBundle::CleanupSharedInstance();
+#endif
 
     delete g_browser_process;
     g_browser_process = NULL;

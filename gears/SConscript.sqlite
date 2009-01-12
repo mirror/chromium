@@ -18,6 +18,7 @@ env.Replace(
 
 	'$SQLITE_DIR/src',
 	'$SQLITE_DIR/preprocessed',
+        '$VC80_CPPPATH',
     ],
 )
 
@@ -41,14 +42,13 @@ env.Append(
         'SQLITE_ENABLE_BROKEN_FTS2',
         'THREADSAFE=1',
         'SQLITE_DEFAULT_FILE_PERMISSIONS=0600',
-        'SQLITE_OMIT_ATTACH=1',
         'SQLITE_OMIT_LOAD_EXTENSION=1',
-        'SQLITE_OMIT_VACUUM=1',
         'SQLITE_TRANSACTION_DEFAULT_IMMEDIATE=1',
+        'SQLITE_GEARS_DISABLE_SHELL_ICU',
     ],
 )
 
-if env['OS'] == 'win32':
+if env['OS'] in ['win32', 'wince']:
   env.Append(
       CPPFLAGS = [
           # from Chrome
@@ -61,11 +61,22 @@ if env['OS'] == 'win32':
           '/wd4146',
       ],
   )
+  env.Append(CPPFLAGS = ['/wd4146'])
 elif env['OS'] == 'linux':
   env.Append(
       CPPFLAGS = [
           '-Wno-uninitialized',
           '-Wno-unused-value',
+      ],
+      CPPDEFINES = [
+          'HAVE_USLEEP=1',
+      ],
+  )
+elif env['OS'] == 'osx':
+  env.Append(
+      CCFLAGS = [
+          '-Wno-uninitialized',
+          '-Wno-pointer-sign',
       ],
       CPPDEFINES = [
           'HAVE_USLEEP=1',
@@ -120,6 +131,8 @@ input_files = [
     '$SQLITE_DIR/src/mutex_w32.c',
     '$SQLITE_DIR/preprocessed/opcodes.c',
     '$SQLITE_DIR/src/os.c',
+    '$SQLITE_DIR/src/os_os2.c',
+    '$SQLITE_DIR/src/os_unix.c',
     '$SQLITE_DIR/src/os_win.c',
     '$SQLITE_DIR/src/pager.c',
     '$SQLITE_DIR/preprocessed/parse.c',
@@ -147,4 +160,7 @@ input_files = [
     '$SQLITE_DIR/src/where.c',
 ]
 
-env.ChromeStaticLibrary('sqlite-gears', input_files)
+if env['OS'] == 'symbian':
+  input_files += ['os_symbian.cc']
+
+env.GearsStaticLibrary('sqlite-gears', input_files)

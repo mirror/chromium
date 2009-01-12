@@ -2,11 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// See http://wiki.corp.google.com/twiki/bin/view/Main/ChromeMultiProcessResourceLoading
+// See http://dev.chromium.org/developers/design-documents/multi-process-resource-loading
 
 #include "chrome/common/resource_dispatcher.h"
 
 #include "base/basictypes.h"
+#include "base/compiler_specific.h"
+#include "base/message_loop.h"
 #include "base/shared_memory.h"
 #include "base/string_util.h"
 #include "chrome/common/render_messages.h"
@@ -234,8 +236,7 @@ void IPCResourceLoaderBridge::SyncLoad(SyncLoadResponse* response) {
 
 ResourceDispatcher::ResourceDispatcher(IPC::Message::Sender* sender)
     : message_sender_(sender),
-#pragma warning(suppress: 4355)
-      method_factory_(this) {
+      ALLOW_THIS_IN_INITIALIZER_LIST(method_factory_(this)) {
 }
 
 ResourceDispatcher::~ResourceDispatcher() {
@@ -334,7 +335,7 @@ void ResourceDispatcher::OnReceivedResponse(
 }
 
 void ResourceDispatcher::OnReceivedData(int request_id,
-                                        SharedMemoryHandle shm_handle,
+                                        base::SharedMemoryHandle shm_handle,
                                         int data_len) {
   // Acknowlegde the reception of this data.
   IPC::Message::Sender* sender = message_sender();
@@ -343,7 +344,7 @@ void ResourceDispatcher::OnReceivedData(int request_id,
         new ViewHostMsg_DataReceived_ACK(MSG_ROUTING_NONE, request_id));
 
   DCHECK((shm_handle && data_len > 0) || (!shm_handle && !data_len));
-  SharedMemory shared_mem(shm_handle, true);  // read only
+  base::SharedMemory shared_mem(shm_handle, true);  // read only
 
   PendingRequestList::iterator it = pending_requests_.find(request_id);
   if (it == pending_requests_.end()) {
@@ -517,3 +518,4 @@ bool ResourceDispatcher::IsResourceMessage(const IPC::Message& message) const {
 
   return false;
 }
+

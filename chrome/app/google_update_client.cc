@@ -48,7 +48,6 @@ const wchar_t* GoogleUpdateClient::GetVersion() const {
 bool GoogleUpdateClient::Launch(HINSTANCE instance,
                                 sandbox::SandboxInterfaceInfo* sandbox,
                                 wchar_t* command_line,
-                                int show_command,
                                 const char* entry_name,
                                 int* ret) {
   if (client_util::FileExists(dll_path_)) {
@@ -91,7 +90,7 @@ bool GoogleUpdateClient::Launch(HINSTANCE instance,
       ::RegCloseKey(reg_key);
     }
 
-    int rc = (entry)(instance, sandbox, command_line, show_command);
+    int rc = (entry)(instance, sandbox, command_line);
     if (ret) {
       *ret = rc;
     }
@@ -117,8 +116,7 @@ bool GoogleUpdateClient::Init(const wchar_t* client_guid,
       ret = true;
     } else {
       std::wstring key(google_update::kRegPathClients);
-      key.append(L"\\");
-      key.append(guid_);
+      key.append(L"\\" + guid_);
       if (client_util::GetChromiumVersion(dll_path_, key.c_str(), &version_))
         ret = true;
     }
@@ -130,4 +128,3 @@ bool GoogleUpdateClient::Init(const wchar_t* client_guid,
   return ret;
 }
 }  // namespace google_update
-

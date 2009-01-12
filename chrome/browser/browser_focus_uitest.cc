@@ -55,10 +55,12 @@ bool ActivateTabByClick(AutomationProxy* automation,
 }  // namespace
 
 TEST_F(BrowserFocusTest, BrowsersRememberFocus) {
-  TestServer server(kDocRoot);
+  scoped_refptr<HTTPTestServer> server =
+      HTTPTestServer::CreateServer(kDocRoot);
+  ASSERT_TRUE(NULL != server.get());
 
   // First we navigate to our test page.
-  GURL url = server.TestServerPageW(kSimplePage);
+  GURL url = server->TestServerPageW(kSimplePage);
   scoped_ptr<TabProxy> tab(GetActiveTab());
   EXPECT_NE(AUTOMATION_MSG_NAVIGATION_ERROR, tab->NavigateToURL(url));
 
@@ -130,7 +132,9 @@ TEST_F(BrowserFocusTest, BrowsersRememberFocus) {
 
 // Tabs remember focus.
 TEST_F(BrowserFocusTest, TabsRememberFocus) {
-  TestServer server(kDocRoot);
+  scoped_refptr<HTTPTestServer> server =
+      HTTPTestServer::CreateServer(kDocRoot);
+  ASSERT_TRUE(NULL != server.get());
 
   scoped_ptr<WindowProxy> window(automation()->GetActiveWindow());
   ASSERT_TRUE(window.get() != NULL);
@@ -139,7 +143,7 @@ TEST_F(BrowserFocusTest, TabsRememberFocus) {
   ASSERT_TRUE(browser.get() != NULL);
 
   // First we navigate to our test page.
-  GURL url = server.TestServerPageW(kSimplePage);
+  GURL url = server->TestServerPageW(kSimplePage);
   scoped_ptr<TabProxy> tab(GetActiveTab());
   tab->NavigateToURL(url);
 
@@ -194,10 +198,12 @@ TEST_F(BrowserFocusTest, TabsRememberFocus) {
 
 // Background window does not steal focus.
 TEST_F(BrowserFocusTest, BackgroundBrowserDontStealFocus) {
-  TestServer server(kDocRoot);
+  scoped_refptr<HTTPTestServer> server =
+      HTTPTestServer::CreateServer(kDocRoot);
+  ASSERT_TRUE(NULL != server.get());
 
   // First we navigate to our test page.
-  GURL simple_page_url = server.TestServerPageW(kSimplePage);
+  GURL simple_page_url = server->TestServerPageW(kSimplePage);
   scoped_ptr<TabProxy> tab(GetActiveTab());
   tab->NavigateToURL(simple_page_url);
 
@@ -215,7 +221,7 @@ TEST_F(BrowserFocusTest, BackgroundBrowserDontStealFocus) {
       automation()->GetBrowserForWindow(new_window.get()));
   ASSERT_TRUE(new_browser.get() != NULL);
 
-  GURL steal_focus_url = server.TestServerPageW(kStealFocusPage);
+  GURL steal_focus_url = server->TestServerPageW(kStealFocusPage);
   new_browser->AppendTab(steal_focus_url);
 
   // Make the first browser active
@@ -232,10 +238,12 @@ TEST_F(BrowserFocusTest, BackgroundBrowserDontStealFocus) {
 
 // Page cannot steal focus when focus is on location bar.
 TEST_F(BrowserFocusTest, LocationBarLockFocus) {
-  TestServer server(kDocRoot);
+  scoped_refptr<HTTPTestServer> server =
+      HTTPTestServer::CreateServer(kDocRoot);
+  ASSERT_TRUE(NULL != server.get());
 
   // Open the page that steals focus.
-  GURL url = server.TestServerPageW(kStealFocusPage);
+  GURL url = server->TestServerPageW(kStealFocusPage);
   scoped_ptr<TabProxy> tab(GetActiveTab());
   tab->NavigateToURL(url);
 
@@ -245,7 +253,7 @@ TEST_F(BrowserFocusTest, LocationBarLockFocus) {
       automation()->GetBrowserForWindow(window.get()));
   ASSERT_TRUE(browser.get() != NULL);
 
- // Click on the location bar.
+  // Click on the location bar.
   gfx::Rect bounds;
   EXPECT_TRUE(window->GetViewBounds(VIEW_ID_LOCATION_BAR, &bounds, true));
   POINT click(bounds.CenterPoint().ToPOINT());
@@ -264,10 +272,12 @@ TEST_F(BrowserFocusTest, LocationBarLockFocus) {
 
 // Focus traversal
 TEST_F(BrowserFocusTest, FocusTraversal) {
-  TestServer server(kDocRoot);
+  scoped_refptr<HTTPTestServer> server =
+      HTTPTestServer::CreateServer(kDocRoot);
+  ASSERT_TRUE(NULL != server.get());
 
   // Open the page the test page.
-  GURL url = server.TestServerPageW(kTypicalPage);
+  GURL url = server->TestServerPageW(kTypicalPage);
   scoped_ptr<TabProxy> tab(GetActiveTab());
   tab->NavigateToURL(url);
 
@@ -304,8 +314,7 @@ TEST_F(BrowserFocusTest, FocusTraversal) {
       // Let's make sure the focus is on the expected element in the page.
       std::wstring actual;
       ASSERT_TRUE(tab->ExecuteAndExtractString(L"",
-          L"javascript:void(window.domAutomationController)"
-          L".send(getFocusedElement());",
+          L"window.domAutomationController.send(getFocusedElement());",
           &actual));
       ASSERT_STREQ(kExpElementIDs[j], actual.c_str());
 
@@ -329,12 +338,67 @@ TEST_F(BrowserFocusTest, FocusTraversal) {
       // Let's make sure the focus is on the expected element in the page.
       std::wstring actual;
       ASSERT_TRUE(tab->ExecuteAndExtractString(L"",
-          L"javascript:void(window.domAutomationController)"
-          L".send(getFocusedElement());",
+          L"window.domAutomationController.send(getFocusedElement());",
           &actual));
       ASSERT_STREQ(kExpElementIDs[6 - j], actual.c_str());
     }
   }
 }
 
+// Make sure Find box can request focus, even when it is already open.
+TEST_F(BrowserFocusTest, FindFocusTest) {
+  scoped_refptr<HTTPTestServer> server =
+      HTTPTestServer::CreateServer(kDocRoot);
+  ASSERT_TRUE(NULL != server.get());
 
+  // Open some page (any page that doesn't steal focus).
+  GURL url = server->TestServerPageW(kTypicalPage);
+  scoped_ptr<TabProxy> tab(GetActiveTab());
+  tab->NavigateToURL(url);
+
+  scoped_ptr<WindowProxy> window(automation()->GetActiveWindow());
+  ASSERT_TRUE(window.get() != NULL);
+  scoped_ptr<BrowserProxy> browser(
+      automation()->GetBrowserForWindow(window.get()));
+  ASSERT_TRUE(browser.get() != NULL);
+
+  // Press Ctrl+F, which will make the Find box open and request focus.
+  static const int VK_F = 0x46;
+  EXPECT_TRUE(window->SimulateOSKeyPress(VK_F, views::Event::EF_CONTROL_DOWN));
+  ::Sleep(kActionDelayMs);
+  int focused_view_id;
+  EXPECT_TRUE(window->GetFocusedViewID(&focused_view_id));
+  EXPECT_EQ(VIEW_ID_FIND_IN_PAGE_TEXT_FIELD, focused_view_id);
+
+  // Click on the location bar.
+  gfx::Rect bounds;
+  EXPECT_TRUE(window->GetViewBounds(VIEW_ID_LOCATION_BAR, &bounds, true));
+  POINT click(bounds.CenterPoint().ToPOINT());
+  EXPECT_TRUE(window->SimulateOSClick(click,
+              views::Event::EF_LEFT_BUTTON_DOWN));
+  ::Sleep(kActionDelayMs);
+  // Make sure the location bar is focused.
+  EXPECT_TRUE(window->GetFocusedViewID(&focused_view_id));
+  EXPECT_EQ(VIEW_ID_LOCATION_BAR, focused_view_id);
+
+  // Now press Ctrl+F again and focus should move to the Find box.
+  EXPECT_TRUE(window->SimulateOSKeyPress(VK_F, views::Event::EF_CONTROL_DOWN));
+  ::Sleep(kActionDelayMs);
+  EXPECT_TRUE(window->GetFocusedViewID(&focused_view_id));
+  EXPECT_EQ(VIEW_ID_FIND_IN_PAGE_TEXT_FIELD, focused_view_id);
+
+  // Set focus to the page.
+  EXPECT_TRUE(window->GetViewBounds(VIEW_ID_TAB_CONTAINER, &bounds, true));
+  click = bounds.CenterPoint().ToPOINT();
+  EXPECT_TRUE(window->SimulateOSClick(click,
+                                      views::Event::EF_LEFT_BUTTON_DOWN));
+  ::Sleep(kActionDelayMs);
+  EXPECT_TRUE(window->GetFocusedViewID(&focused_view_id));
+  EXPECT_EQ(VIEW_ID_TAB_CONTAINER, focused_view_id);
+
+  // Now press Ctrl+F again and focus should move to the Find box.
+  EXPECT_TRUE(window->SimulateOSKeyPress(VK_F, views::Event::EF_CONTROL_DOWN));
+  ::Sleep(kActionDelayMs);
+  EXPECT_TRUE(window->GetFocusedViewID(&focused_view_id));
+  EXPECT_EQ(VIEW_ID_FIND_IN_PAGE_TEXT_FIELD, focused_view_id);
+}

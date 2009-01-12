@@ -5,8 +5,17 @@
 #ifndef BASE_SHARED_MEMORY_H_
 #define BASE_SHARED_MEMORY_H_
 
+#include "build/build_config.h"
+
+#if defined(OS_POSIX)
+#include <semaphore.h>
+#endif
+#include <string>
+
 #include "base/basictypes.h"
-#include "base/process_util.h"
+#include "base/process.h"
+
+namespace base {
 
 // SharedMemoryHandle is a platform specific type which represents
 // the underlying OS handle to a shared memory segment.
@@ -14,7 +23,6 @@
 typedef HANDLE SharedMemoryHandle;
 typedef HANDLE SharedMemoryLock;
 #elif defined(OS_POSIX)
-#include <semaphore.h>
 typedef int SharedMemoryHandle;
 typedef sem_t* SharedMemoryLock;
 #endif
@@ -34,7 +42,7 @@ class SharedMemory {
   // shared memory file that was created by a remote process and not shared
   // to the current process.
   SharedMemory(SharedMemoryHandle handle, bool read_only,
-      ProcessHandle process);
+      base::ProcessHandle process);
 
   // Destructor.  Will close any open files.
   ~SharedMemory();
@@ -44,13 +52,13 @@ class SharedMemory {
   // If open_existing is true, and the shared memory already exists,
   // opens the existing shared memory and ignores the size parameter.
   // Returns true on success, false on failure.
-  bool Create(const std::wstring &name, bool read_only, bool open_existing,
-      size_t size);
+  bool Create(const std::wstring& name, bool read_only, bool open_existing,
+              size_t size);
 
   // Opens a shared memory segment based on a name.
   // If read_only is true, opens for read-only access.
   // Returns true on success, false on failure.
-  bool Open(const std::wstring &name, bool read_only);
+  bool Open(const std::wstring& name, bool read_only);
 
   // Maps the shared memory into the caller's address space.
   // Returns true on success, false otherwise.  The memory address
@@ -88,8 +96,8 @@ class SharedMemory {
   // file.  new_handle is an ouput parameter to receive
   // the handle for use in the remote process.
   // Returns true on success, false otherwise.
-  bool ShareToProcess(ProcessHandle process,
-      SharedMemoryHandle *new_handle) {
+  bool ShareToProcess(base::ProcessHandle process,
+                      SharedMemoryHandle* new_handle) {
     return ShareToProcessCommon(process, new_handle, false);
   }
 
@@ -98,7 +106,7 @@ class SharedMemory {
   //   Close();
   //   return ok;
   bool GiveToProcess(ProcessHandle process,
-      SharedMemoryHandle *new_handle) {
+                     SharedMemoryHandle* new_handle) {
     return ShareToProcessCommon(process, new_handle, true);
   }
 
@@ -115,7 +123,8 @@ class SharedMemory {
   bool CreateOrOpen(const std::wstring &name, int posix_flags);
 #endif
   bool ShareToProcessCommon(ProcessHandle process,
-      SharedMemoryHandle *new_handle, bool close_self);
+                            SharedMemoryHandle* new_handle,
+                            bool close_self);
 
   std::wstring       name_;
   SharedMemoryHandle mapped_file_;
@@ -145,6 +154,6 @@ class SharedMemoryAutoLock {
   DISALLOW_EVIL_CONSTRUCTORS(SharedMemoryAutoLock);
 };
 
+}  // namespace base
 
 #endif  // BASE_SHARED_MEMORY_H_
-

@@ -27,15 +27,15 @@ The main package for the SCons software construction utility.
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-__revision__ = "src/engine/SCons/__init__.py 3424 2008/09/15 11:22:20 scons"
+__revision__ = "src/engine/SCons/__init__.py 3842 2008/12/20 22:59:52 scons"
 
-__version__ = "1.0.1.d20080915"
+__version__ = "1.2.0"
 
-__build__ = "r3424"
+__build__ = "r3842"
 
 __buildsys__ = "scons-dev"
 
-__date__ = "2008/09/15 11:22:20"
+__date__ = "2008/12/20 22:59:52"
 
 __developer__ = "scons"
 

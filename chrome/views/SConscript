@@ -10,7 +10,7 @@ env = env.Clone()
 env.Prepend(
     CPPPATH = [
         '$CHROME_DIR/tools/build/win',
-        '#/..',
+        '$CHROME_SRC_DIR',
     ],
     CCFLAGS = [
         '/TP',
@@ -20,7 +20,9 @@ env.Prepend(
 
 env.Append(
     CPPPATH = [
-        '../app/resources',
+        '$TARGET_ROOT/grit_derived_sources',
+        '$ICU38_DIR/public/common',
+        '$ICU38_DIR/public/i18n',
         '$SKIA_DIR/include',
         '$SKIA_DIR/include/corecg',
         '$SKIA_DIR/include/platform',
@@ -32,7 +34,6 @@ input_files = [
     'accelerator.cc',
     'accelerator_handler.cc',
     'accessibility/accessible_wrapper.cc',
-    'accessibility/autocomplete_accessibility.cc',
     'accessibility/view_accessibility.cc',
     'aero_tooltip_manager.cc',
     'background.cc',
@@ -45,7 +46,6 @@ input_files = [
     'chrome_menu.cc',
     'client_view.cc',
     'combo_box.cc',
-    'container_win.cc',
     'custom_frame_window.cc',
     'dialog_delegate.cc',
     'dialog_client_view.cc',
@@ -76,6 +76,7 @@ input_files = [
     'scroll_bar.cc',
     'scroll_view.cc',
     'separator.cc',
+    'single_split_view.cc',
     'tabbed_pane.cc',
     'table_view.cc',
     'text_button.cc',
@@ -84,10 +85,17 @@ input_files = [
     'tooltip_manager.cc',
     'tree_view.cc',
     'view.cc',
+    'view_constants.cc',
     'view_storage.cc',
+    'widget_win.cc',
     'window.cc',
     'window_delegate.cc',
 ]
 
-env.ChromeStaticLibrary('views', input_files)
+env.ChromeLibrary('views', input_files)
 
+env.ChromeMSVSProject('$CHROME_DIR/views/views.vcproj',
+                dependencies = [
+                    '$CHROME_DIR/app/generated_resources.vcproj',
+                ],
+                guid='{6F9258E5-294F-47B2-919D-17FFE7A8B751}')

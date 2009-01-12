@@ -5,7 +5,7 @@
 #ifndef CHROME_VIEWS_WINDOW_H__
 #define CHROME_VIEWS_WINDOW_H__
 
-#include "chrome/views/container_win.h"
+#include "chrome/views/widget_win.h"
 
 namespace gfx {
 class Size;
@@ -26,11 +26,11 @@ class WindowDelegate;
 //
 // Window
 //
-//  A Window is a ContainerWin that has a caption and a border. The frame is
+//  A Window is a WidgetWIn that has a caption and a border. The frame is
 //  rendered by the operating system.
 //
 ///////////////////////////////////////////////////////////////////////////////
-class Window : public ContainerWin {
+class Window : public WidgetWin {
  public:
   virtual ~Window();
 
@@ -51,7 +51,15 @@ class Window : public ContainerWin {
   gfx::Size CalculateMaximumSize() const;
 
   // Show the window.
-  virtual void Show();
+  void Show();
+  void Show(int show_state);
+
+  // Retrieve the show state of the window. This is one of the SW_SHOW* flags
+  // passed into Windows' ShowWindow method. For normal windows this defaults
+  // to SW_SHOWNORMAL, however windows (e.g. the main window) can override this
+  // method to provide different values (e.g. retrieve the user's specified
+  // show state from the shortcut starutp info).
+  virtual int GetShowState() const;
 
   // Activate the window, assuming it already exists and is visible.
   void Activate();
@@ -103,29 +111,13 @@ class Window : public ContainerWin {
   // The parent of this window.
   HWND owning_window() const { return owning_hwnd_; }
 
-  // Convenience methods for storing/retrieving window location information
-  // to/from a PrefService using the specified |entry| name.
-  // WindowDelegate instances can use these methods in their implementation of
-  // SaveWindowPosition/RestoreWindowPosition to save windows' location to
-  // preferences.
-  static bool SaveWindowPositionToPrefService(PrefService* pref_service,
-                                              const std::wstring& entry,
-                                              const CRect& bounds,
-                                              bool maximized,
-                                              bool always_on_top);
-  // Returns true if the window location was retrieved from the PrefService and
-  // set in |bounds|, |maximized| and |always_on_top|.
-  static bool RestoreWindowPositionFromPrefService(PrefService* pref_service,
-                                                   const std::wstring& entry,
-                                                   CRect* bounds,
-                                                   bool* maximized,
-                                                   bool* always_on_top);
-
   // Returns the preferred size of the contents view of this window based on
   // its localized size data. The width in cols is held in a localized string
   // resource identified by |col_resource_id|, the height in the same fashion.
   // TODO(beng): This should eventually live somewhere else, probably closer to
   //             ClientView.
+  static int GetLocalizedContentsWidth(int col_resource_id);
+  static int GetLocalizedContentsHeight(int row_resource_id);
   static gfx::Size GetLocalizedContentsSize(int col_resource_id,
                                             int row_resource_id);
 
@@ -156,13 +148,12 @@ class Window : public ContainerWin {
   // Shows the system menu at the specified screen point.
   void RunSystemMenu(const CPoint& point);
 
-  // Overridden from ContainerWin:
+  // Overridden from WidgetWin:
   virtual void OnActivate(UINT action, BOOL minimized, HWND window);
   virtual LRESULT OnAppCommand(HWND window, short app_command, WORD device,
                                int keystate);
   virtual void OnCommand(UINT notification_code, int command_id, HWND window);
   virtual void OnDestroy();
-  virtual LRESULT OnEraseBkgnd(HDC dc);
   virtual LRESULT OnNCActivate(BOOL active);
   virtual LRESULT OnNCHitTest(const CPoint& point);
   virtual void OnNCLButtonDown(UINT ht_component, const CPoint& point);
@@ -194,6 +185,10 @@ class Window : public ContainerWin {
   // Place and size the window when it is created. |create_bounds| are the
   // bounds used when the window was created.
   void SetInitialBounds(const gfx::Rect& create_bounds);
+
+  // Restore saved always on stop state and add the always on top system menu
+  // if needed.
+  void InitAlwaysOnTopState();
 
   // Add an item for "Always on Top" to the System Menu.
   void AddAlwaysOnTopSystemMenuItem();
@@ -255,6 +250,10 @@ class Window : public ContainerWin {
   // True when the window should be rendered as active, regardless of whether
   // or not it actually is.
   bool disable_inactive_rendering_;
+
+  // The saved maximized state for this window. See note in SetInitialBounds
+  // that explains why we save this.
+  bool saved_maximized_state_;
 
   DISALLOW_EVIL_CONSTRUCTORS(Window);
 };

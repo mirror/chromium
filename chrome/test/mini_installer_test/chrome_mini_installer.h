@@ -24,8 +24,8 @@ class ChromeMiniInstaller {
   // Installs Chrome Mini Installer.
   void InstallMiniInstaller(bool over_install = false);
 
-  // Installs ChromeSetupDev.exe.
-  void InstallChromeSetupDev();
+  // Installs Google Chrome through meta installer.
+  void InstallMetaInstaller();
 
   // This method takes care of all overinstall cases.
   void OverInstall();
@@ -43,8 +43,8 @@ class ChromeMiniInstaller {
   // Closes Chrome browser.
   void CloseChromeBrowser(LPCWSTR window_name);
 
-  // Closes all running Chrome processes.
-  void CloseChromeProcesses();
+  // Closes specified process.
+  void CloseProcesses(const std::wstring& executable_name);
 
   // Checks for registry key.
   bool CheckRegistryKey(std::wstring key_path);
@@ -55,11 +55,17 @@ class ChromeMiniInstaller {
   // This method verifies Chrome shortcut.
   void FindChromeShortcut();
 
+  // Get path for mini_installer.exe.
+  std::wstring GetMiniInstallerExePath();
+
   // Get path for uninstall.
   std::wstring GetUninstallPath();
 
   // Reads registry key.
   std::wstring GetRegistryKey();
+
+  // Checks for the build type
+  bool IsChromiumBuild();
 
   // Launches the given EXE and waits for it to end.
   void LaunchExe(std::wstring install_path, const wchar_t process_name[]);

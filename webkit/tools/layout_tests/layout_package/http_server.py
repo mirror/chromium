@@ -9,8 +9,10 @@
 import logging
 import optparse
 import os
+import platform_utils
 import subprocess
 import sys
+import tempfile
 import time
 import urllib
 
@@ -27,12 +29,20 @@ class HttpdNotStarted(Exception):
   pass
 
 class Lighttpd:
-  # Webkit tests 
-  _webkit_tests = PathFromBase('webkit', 'data', 'layout_tests',
-                               'LayoutTests', 'http', 'tests')
+  # Webkit tests
+  try:
+    _webkit_tests = PathFromBase('webkit', 'data', 'layout_tests',
+                                 'LayoutTests', 'http', 'tests')
+  except google.path_utils.PathNotFound:
+    _webkit_tests = None
+
   # New tests for Chrome
-  _pending_tests = PathFromBase('webkit', 'data', 'layout_tests',
-                                'pending', 'http', 'tests')
+  try:
+    _pending_tests = PathFromBase('webkit', 'data', 'layout_tests',
+                                  'pending', 'http', 'tests')
+  except google.path_utils.PathNotFound:
+    _pending_tests = None
+
   # Path where we can access all of the tests
   _all_tests = PathFromBase('webkit', 'data', 'layout_tests')
   # Self generated certificate for SSL server (for client cert get
@@ -40,24 +50,36 @@ class Lighttpd:
   _pem_file = PathFromBase('tools', 'python', 'google', 'httpd_config',
                            'httpd2.pem')
   VIRTUALCONFIG = [
-    # Three mappings (one with SSL enabled) for LayoutTests http tests
-    {'port': 8000, 'docroot': _webkit_tests},
-    {'port': 8080, 'docroot': _webkit_tests},
-    {'port': 8443, 'docroot': _webkit_tests, 'sslcert': _pem_file},
-    # Three similar mappings (one with SSL enabled) for pending http tests
-    {'port': 9000, 'docroot': _pending_tests},
-    {'port': 9080, 'docroot': _pending_tests},
-    {'port': 9443, 'docroot': _pending_tests, 'sslcert': _pem_file},
     # One mapping where we can get to everything
     {'port': 8081, 'docroot': _all_tests}
   ]
 
-  def __init__(self, output_dir, background=False):
+  if _webkit_tests:
+    VIRTUALCONFIG.extend(
+      # Three mappings (one with SSL enabled) for LayoutTests http tests
+      [{'port': 8000, 'docroot': _webkit_tests},
+       {'port': 8080, 'docroot': _webkit_tests},
+       {'port': 8443, 'docroot': _webkit_tests, 'sslcert': _pem_file}]
+    )
+  if _pending_tests:
+    VIRTUALCONFIG.extend(
+      # Three similar mappings (one with SSL enabled) for pending http tests
+      [{'port': 9000, 'docroot': _pending_tests},
+       {'port': 9080, 'docroot': _pending_tests},
+       {'port': 9443, 'docroot': _pending_tests, 'sslcert': _pem_file}]
+    )
+
+
+  def __init__(self, output_dir, background=False, port=None, root=None):
     """Args:
       output_dir: the absolute path to the layout test result directory
     """
     self._output_dir = output_dir
     self._process = None
+    self._port = port
+    self._root = root
+    if self._port:
+      self._port = int(self._port)
 
   def IsRunning(self):
     return self._process != None
@@ -82,18 +104,23 @@ class Lighttpd:
     # Write out our cgi handlers.  Run perl through env so that it processes
     # the #! line and runs perl with the proper command line arguments.
     # Emulate apache's mod_asis with a cat cgi handler.
+    platform_util = platform_utils.PlatformUtility('')
     f.write(('cgi.assign = ( ".cgi"  => "/usr/bin/env",\n'
              '               ".pl"   => "/usr/bin/env",\n'
-             '               ".asis" => "/usr/bin/cat",\n'
+             '               ".asis" => "/bin/cat",\n'
              '               ".php"  => "%s" )\n\n') %
-            PathFromBase('third_party', 'lighttpd', 'php5', 'php-cgi.exe'))
+                                 platform_util.LigHTTPdPHPPath())
 
     # Setup log files
     f.write(('server.errorlog = "%s"\n'
              'accesslog.filename = "%s"\n\n') % (error_log, access_log))
 
     # dump out of virtual host config at the bottom.
-    for mapping in self.VIRTUALCONFIG:
+    if self._port and self._root:
+      mappings = [{'port': self._port, 'docroot': self._root}]
+    else:
+      mappings = self.VIRTUALCONFIG
+    for mapping in mappings:
       ssl_setup = ''
       if 'sslcert' in mapping:
         ssl_setup = ('  ssl.engine = "enable"\n'
@@ -105,28 +132,32 @@ class Lighttpd:
                '}\n\n') % (mapping['port'], mapping['docroot']))
     f.close()
 
-    start_cmd = [ PathFromBase('third_party', 'lighttpd', 'LightTPD.exe'),
+    executable = platform_util.LigHTTPdExecutablePath()
+    module_path = platform_util.LigHTTPdModulePath()
+    start_cmd = [ executable,
                   # Newly written config file
                   '-f', PathFromBase(self._output_dir, 'lighttpd.conf'),
-                  # Where it can find it's module dynamic libraries
-                  '-m', PathFromBase('third_party', 'lighttpd', 'lib'),
+                  # Where it can find its module dynamic libraries
+                  '-m', module_path,
                   # Don't background
                   '-D' ]
 
     # Put the cygwin directory first in the path to find cygwin1.dll
     env = os.environ
-    env['PATH'] = '%s;%s' % (
-        PathFromBase('third_party', 'cygwin', 'bin'), env['PATH'])
+    if sys.platform in ('cygwin', 'win32'):
+      env['PATH'] = '%s;%s' % (
+          PathFromBase('third_party', 'cygwin', 'bin'), env['PATH'])
 
     logging.info('Starting http server')
     self._process = subprocess.Popen(start_cmd, env=env)
 
     # Ensure that the server is running on all the desired ports.
-    for mapping in self.VIRTUALCONFIG:
+    for mapping in mappings:
       url = 'http%s://127.0.0.1:%d/' % ('sslcert' in mapping and 's' or '',
                                         mapping['port'])
       if not self._UrlIsAlive(url):
-        raise HttpdNotStarted('Failed to start httpd on port %s' % str(port))
+        raise HttpdNotStarted('Failed to start httpd on port %s' %
+                               str(mapping['port']))
 
     # Our process terminated already
     if self._process.returncode != None:
@@ -164,10 +195,8 @@ class Lighttpd:
       return
 
     logging.info('Shutting down http server')
-
-    subprocess.Popen(('taskkill.exe', '/f', '/im', 'LightTPD.exe'),
-                     stdout=subprocess.PIPE,
-                     stderr=subprocess.PIPE).wait()
+    platform_util = platform_utils.PlatformUtility('')
+    platform_util.ShutDownHTTPServer(self._process)
 
     if self._process:
       self._process.wait()
@@ -182,14 +211,21 @@ if '__main__' == __name__:
   # manually.
   option_parser = optparse.OptionParser()
   option_parser.add_option('-k', '--server', help='Server action (start|stop)')
+  option_parser.add_option('-p', '--port',
+      help='Port to listen on (overrides layout test ports)')
+  option_parser.add_option('-r', '--root',
+      help='Absolute path to DocumentRoot (overrides layout test roots)')
   options, args = option_parser.parse_args()
-  
+
   if not options.server:
     print "Usage: %s --server {start|stop} [--apache2]" % sys.argv[0]
   else:
-    httpd = Lighttpd('c:/cygwin/tmp')
-  if 'start' == options.server:
-    httpd.Start()
-  else:
-    httpd.Stop(force=True)
-
+    if (options.root is None) != (options.port is None):
+      raise 'Either port or root is missing (need both, or neither)'
+    httpd = Lighttpd(tempfile.gettempdir(),
+                     port=options.port,
+                     root=options.root)
+    if 'start' == options.server:
+      httpd.Start()
+    else:
+      httpd.Stop(force=True)

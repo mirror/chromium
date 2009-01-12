@@ -31,7 +31,7 @@ selection method.
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-__revision__ = "src/engine/SCons/Tool/g++.py 3424 2008/09/15 11:22:20 scons"
+__revision__ = "src/engine/SCons/Tool/g++.py 3842 2008/12/20 22:59:52 scons"
 
 import os.path
 import re
@@ -63,9 +63,12 @@ def generate(env):
         env['SHOBJSUFFIX'] = '.pic.o'
     # determine compiler version
     if env['CXX']:
+        #pipe = SCons.Action._subproc(env, [env['CXX'], '-dumpversion'],
         pipe = SCons.Action._subproc(env, [env['CXX'], '--version'],
-                                     stderr = subprocess.PIPE,
+                                     stdin = 'devnull',
+                                     stderr = 'devnull',
                                      stdout = subprocess.PIPE)
+        if pipe.wait() != 0: return
         # -dumpversion was added in GCC 3.0.  As long as we're supporting
         # GCC versions older than that, we should use --version and a
         # regular expression.

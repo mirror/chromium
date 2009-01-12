@@ -10,10 +10,7 @@
 
 #include "base/command_line.h"
 #include "base/gfx/gdi_util.h"
-#include "base/gfx/bitmap_platform_device_win.h"
-#include "base/gfx/image_operations.h"
 #include "base/gfx/native_theme.h"
-#include "base/gfx/vector_canvas.h"
 #include "base/gfx/png_encoder.h"
 #include "base/string_piece.h"
 #include "base/string_util.h"
@@ -24,21 +21,25 @@
 #include "chrome/common/gfx/color_utils.h"
 #include "chrome/common/jstemplate_builder.h"
 #include "chrome/common/l10n_util.h"
+#include "chrome/common/page_zoom.h"
 #include "chrome/common/resource_bundle.h"
-#include "chrome/common/text_zoom.h"
 #include "chrome/common/thumbnail_score.h"
 #include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/renderer/about_handler.h"
 #include "chrome/renderer/chrome_plugin_host.h"
 #include "chrome/renderer/debug_message_handler.h"
-#include "chrome/renderer/greasemonkey_slave.h"
 #include "chrome/renderer/localized_error.h"
 #include "chrome/renderer/renderer_resources.h"
+#include "chrome/renderer/user_script_slave.h"
 #include "chrome/renderer/visitedlink_slave.h"
+#include "chrome/renderer/webmediaplayer_delegate_impl.h"
 #include "chrome/renderer/webplugin_delegate_proxy.h"
 #include "chrome/views/message_box_view.h"
 #include "net/base/escape.h"
 #include "net/base/net_errors.h"
+#include "skia/ext/bitmap_platform_device.h"
+#include "skia/ext/image_operations.h"
+#include "skia/ext/vector_canvas.h"
 #include "webkit/default_plugin/default_plugin_shared.h"
 #include "webkit/glue/dom_operations.h"
 #include "webkit/glue/dom_serializer.h"
@@ -57,9 +58,11 @@
 #include "webkit/glue/weburlrequest.h"
 #include "webkit/glue/webview.h"
 #include "webkit/glue/plugins/webplugin_delegate_impl.h"
-#include "webkit/port/platform/graphics/PlatformContextSkia.h"
+//#include "webkit/port/platform/graphics/PlatformContextSkia.h"
 
 #include "generated_resources.h"
+
+using base::TimeDelta;
 
 //-----------------------------------------------------------------------------
 
@@ -86,9 +89,9 @@ static const int kDelayForCaptureMs = 500;
 // delay.
 static const int kDelayForForcedCaptureMs = 6000;
 
-// How often we will sync the navigation state when the user is changing form
-// elements or scroll position.
-const TimeDelta kDelayForNavigationSync = TimeDelta::FromSeconds(5);
+// The default value for RenderView.delay_seconds_for_form_state_sync_, see
+// that variable for more.
+const int kDefaultDelaySecondsForFormStateSync = 5;
 
 // The next available page ID to use. This ensures that the page IDs are
 // globally unique in the renderer.
@@ -98,7 +101,9 @@ static int32 next_page_id_ = 1;
 static const int kMaximumNumberOfUnacknowledgedPopups = 25;
 
 static const char* const kUnreachableWebDataURL =
-    "chrome-resource://chromewebdata/";
+    "chrome://chromewebdata/";
+
+static const char* const kBackForwardNavigationScheme = "history";
 
 namespace {
 
@@ -137,27 +142,31 @@ class RenderViewExtraRequestData : public WebRequest::ExtraData {
 
 ///////////////////////////////////////////////////////////////////////////////
 
-RenderView::RenderView()
-  : RenderWidget(RenderThread::current()),
-    is_loading_(false),
-    page_id_(-1),
-    last_page_id_sent_to_browser_(-1),
-    last_indexed_page_id_(-1),
-    method_factory_(this),
-    opened_by_user_gesture_(true),
-    enable_dom_automation_(false),
-    enable_dom_ui_bindings_(false),
-    target_url_status_(TARGET_NONE),
-    printed_document_width_(0),
-    first_default_plugin_(NULL),
-    navigation_gesture_(NavigationGestureUnknown),
-    history_back_list_count_(0),
-    history_forward_list_count_(0),
-    disable_popup_blocking_(false),
-    has_unload_listener_(false),
-    greasemonkey_enabled_(false),
-    decrement_shared_popup_at_destruction_(false),
-    waiting_for_create_window_ack_(false){
+RenderView::RenderView(RenderThreadBase* render_thread)
+    : RenderWidget(render_thread, true),
+      enable_dom_automation_(false),
+      enable_dom_ui_bindings_(false),
+      enable_external_host_bindings_(false),
+      target_url_status_(TARGET_NONE),
+      is_loading_(false),
+      navigation_gesture_(NavigationGestureUnknown),
+      page_id_(-1),
+      last_page_id_sent_to_browser_(-1),
+      last_indexed_page_id_(-1),
+      opened_by_user_gesture_(true),
+      method_factory_(this),
+      first_default_plugin_(NULL),
+      printed_document_width_(0),
+      history_back_list_count_(0),
+      history_forward_list_count_(0),
+      disable_popup_blocking_(false),
+      has_unload_listener_(false),
+      decrement_shared_popup_at_destruction_(false),
+      user_scripts_enabled_(false),
+      waiting_for_create_window_ack_(false),
+      form_field_autofill_request_id_(0),
+      popup_notification_visible_(false),
+      delay_seconds_for_form_state_sync_(kDefaultDelaySecondsForFormStateSync) {
   resource_dispatcher_ = new ResourceDispatcher(this);
 #ifdef CHROME_PERSONALIZATION
   personalization_ = Personalization::CreateRendererPersonalization();
@@ -176,7 +185,7 @@ RenderView::~RenderView() {
     it = plugin_delegates_.erase(it);
   }
 
-  RenderThread::current()->RemoveFilter(debug_message_handler_);
+  render_thread_->RemoveFilter(debug_message_handler_);
 
 #ifdef CHROME_PERSONALIZATION
   Personalization::CleanupRendererPersonalization(personalization_);
@@ -186,14 +195,15 @@ RenderView::~RenderView() {
 
 /*static*/
 RenderView* RenderView::Create(
+    RenderThreadBase* render_thread,
     HWND parent_hwnd,
-                               HANDLE modal_dialog_event,
-                               int32 opener_id,
-                               const WebPreferences& webkit_prefs,
+    HANDLE modal_dialog_event,
+    int32 opener_id,
+    const WebPreferences& webkit_prefs,
     SharedRenderViewCounter* counter,
-                               int32 routing_id) {
+    int32 routing_id) {
   DCHECK(routing_id != MSG_ROUTING_NONE);
-  scoped_refptr<RenderView> view = new RenderView();
+  scoped_refptr<RenderView> view = new RenderView(render_thread);
   view->Init(parent_hwnd,
              modal_dialog_event,
              opener_id,
@@ -225,7 +235,7 @@ void RenderView::PluginDestroyed(WebPluginDelegateProxy* proxy) {
     first_default_plugin_ = NULL;
 }
 
-void RenderView::PluginCrashed(const std::wstring& plugin_path) {
+void RenderView::PluginCrashed(const FilePath& plugin_path) {
   Send(new ViewHostMsg_CrashedPlugin(routing_id_, plugin_path));
 }
 
@@ -264,7 +274,7 @@ void RenderView::Init(HWND parent_hwnd,
   webview()->SetBackForwardListSize(1);
 
   routing_id_ = routing_id;
-  RenderThread::current()->AddRoute(routing_id_, this);
+  render_thread_->AddRoute(routing_id_, this);
   // Take a reference on behalf of the RenderThread.  This will be balanced
   // when we receive ViewMsg_Close.
   AddRef();
@@ -284,11 +294,11 @@ void RenderView::Init(HWND parent_hwnd,
       command_line.HasSwitch(switches::kDomAutomationController);
   disable_popup_blocking_ =
       command_line.HasSwitch(switches::kDisablePopupBlocking);
-  greasemonkey_enabled_ =
-      command_line.HasSwitch(switches::kEnableGreasemonkey);
+  user_scripts_enabled_ =
+      command_line.HasSwitch(switches::kEnableUserScripts);
 
   debug_message_handler_ = new DebugMessageHandler(this);
-  RenderThread::current()->AddFilter(debug_message_handler_);
+  render_thread_->AddFilter(debug_message_handler_);
 }
 
 void RenderView::OnMessageReceived(const IPC::Message& message) {
@@ -323,11 +333,12 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewMsg_Copy, OnCopy)
     IPC_MESSAGE_HANDLER(ViewMsg_Paste, OnPaste)
     IPC_MESSAGE_HANDLER(ViewMsg_Replace, OnReplace)
+    IPC_MESSAGE_HANDLER(ViewMsg_ToggleSpellCheck, OnToggleSpellCheck)
     IPC_MESSAGE_HANDLER(ViewMsg_Delete, OnDelete)
     IPC_MESSAGE_HANDLER(ViewMsg_SelectAll, OnSelectAll)
     IPC_MESSAGE_HANDLER(ViewMsg_CopyImageAt, OnCopyImageAt)
     IPC_MESSAGE_HANDLER(ViewMsg_Find, OnFind)
-    IPC_MESSAGE_HANDLER(ViewMsg_AlterTextSize, OnAlterTextSize)
+    IPC_MESSAGE_HANDLER(ViewMsg_Zoom, OnZoom)
     IPC_MESSAGE_HANDLER(ViewMsg_SetPageEncoding, OnSetPageEncoding)
     IPC_MESSAGE_HANDLER(ViewMsg_InspectElement, OnInspectElement)
     IPC_MESSAGE_HANDLER(ViewMsg_ShowJavaScriptConsole, OnShowJavaScriptConsole)
@@ -380,6 +391,11 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
                         OnMessageFromExternalHost)
     IPC_MESSAGE_HANDLER(ViewMsg_DisassociateFromPopupCount,
                         OnDisassociateFromPopupCount)
+    IPC_MESSAGE_HANDLER(ViewMsg_AutofillSuggestions,
+                        OnReceivedAutofillSuggestions)
+    IPC_MESSAGE_HANDLER(ViewMsg_PopupNotificationVisiblityChanged,
+                        OnPopupNotificationVisiblityChanged)
+
     // Have the super handle all other messages.
     IPC_MESSAGE_UNHANDLED(RenderWidget::OnMessageReceived(message))
   IPC_END_MESSAGE_MAP()
@@ -446,6 +462,7 @@ int RenderView::SwitchFrameToPrintMediaType(const ViewMsg_Print_Params& params,
     NOTREACHED();
     pages = 0;
   } else {
+    DCHECK_GT(printed_document_width_, 0);
     // Force to recalculate the height, otherwise it reuse the current window
     // height as the default.
     float effective_shrink = printed_document_width_ / paper_width;
@@ -499,7 +516,7 @@ void RenderView::PrintPage(const ViewMsg_PrintPage_Params& params,
   emf.CreateDc(NULL, NULL);
   HDC hdc = emf.hdc();
   DCHECK(hdc);
-  gfx::PlatformDeviceWin::InitializeDC(hdc);
+  skia::PlatformDeviceWin::InitializeDC(hdc);
 
   gfx::Rect rect;
   frame->GetPageRect(params.page_number, &rect);
@@ -523,7 +540,7 @@ void RenderView::PrintPage(const ViewMsg_PrintPage_Params& params,
   // GDI drawing code fails.
 
   // Mix of Skia and GDI based.
-  gfx::PlatformCanvasWin canvas(src_size_x, src_size_y, true);
+  skia::PlatformCanvasWin canvas(src_size_x, src_size_y, true);
   canvas.drawARGB(255, 255, 255, 255, SkPorterDuff::kSrc_Mode);
   PlatformContextSkia context(&canvas);
   if (!frame->SpoolPage(params.page_number, &context)) {
@@ -549,13 +566,12 @@ void RenderView::PrintPage(const ViewMsg_PrintPage_Params& params,
   DCHECK(retval != GDI_ERROR);
 #else
   // 100% GDI based.
-  gfx::VectorCanvas canvas(hdc, src_size_x, src_size_y);
-  PlatformContextSkia context(&canvas);
+  skia::VectorCanvas canvas(hdc, src_size_x, src_size_y);
   // Set the clipping region to be sure to not overflow.
   SkRect clip_rect;
   clip_rect.set(0, 0, SkIntToScalar(src_size_x), SkIntToScalar(src_size_y));
   canvas.clipRect(clip_rect);
-  if (!frame->SpoolPage(params.page_number, &context)) {
+  if (!frame->SpoolPage(params.page_number, &canvas)) {
     NOTREACHED() << "Printing page " << params.page_number << " failed.";
     return;
   }
@@ -575,7 +591,7 @@ void RenderView::PrintPage(const ViewMsg_PrintPage_Params& params,
   page_params.page_number = params.page_number;
   page_params.document_cookie = params.params.document_cookie;
   page_params.actual_shrink = shrink;
-  SharedMemory shared_buf;
+  base::SharedMemory shared_buf;
 
   // http://msdn2.microsoft.com/en-us/library/ms535522.aspx
   // Windows 2000/XP: When a page in a spooled file exceeds approximately 350
@@ -744,7 +760,7 @@ bool RenderView::CaptureThumbnail(WebFrame* frame,
   double begin = time_util::GetHighResolutionTimeNow();
 #endif
 
-  scoped_ptr<gfx::BitmapPlatformDevice> device;
+  scoped_ptr<skia::BitmapPlatformDevice> device;
   if (!frame->CaptureImage(&device, true))
     return false;
 
@@ -787,8 +803,8 @@ bool RenderView::CaptureThumbnail(WebFrame* frame,
   device->accessBitmap(false).extractSubset(&subset, src_rect);
 
   // Resample the subset that we want to get it the right size.
-  *thumbnail = gfx::ImageOperations::Resize(
-      subset, gfx::ImageOperations::RESIZE_LANCZOS3, gfx::Size(w, h));
+  *thumbnail = skia::ImageOperations::Resize(
+      subset, skia::ImageOperations::RESIZE_LANCZOS3, w, h);
 
   score->boring_score = CalculateBoringScore(thumbnail);
 
@@ -819,7 +835,7 @@ void RenderView::OnNavigate(const ViewMsg_Navigate_Params& params) {
   bool is_reload = params.reload;
 
   WebFrame* main_frame = webview()->GetMainFrame();
-  if (is_reload && !main_frame->HasCurrentState()) {
+  if (is_reload && !main_frame->HasCurrentHistoryState()) {
     // We cannot reload if we do not have any history state.  This happens, for
     // example, when recovering from a crash.  Our workaround here is a bit of
     // a hack since it means that reload after a crashed tab does not cause an
@@ -847,8 +863,8 @@ void RenderView::OnNavigate(const ViewMsg_Navigate_Params& params) {
     request->SetHistoryState(params.state);
 
   if (params.referrer.is_valid()) {
-    request->SetHttpHeaderValue(L"Referer",
-                                UTF8ToWide(params.referrer.spec()));
+    request->SetHttpHeaderValue("Referer",
+                                params.referrer.spec());
   }
 
   main_frame->LoadRequest(request.get());
@@ -963,6 +979,13 @@ void RenderView::OnReplace(const std::wstring& text) {
     return;
 
   webview()->GetFocusedFrame()->Replace(text);
+}
+
+void RenderView::OnToggleSpellCheck() {
+  if (!webview())
+    return;
+
+  webview()->GetFocusedFrame()->ToggleSpellCheck();
 }
 
 void RenderView::OnDelete() {
@@ -1087,8 +1110,8 @@ void RenderView::UpdateURL(WebFrame* frame) {
       params.referrer = GURL(initial_request.GetHttpReferrer());
     }
 
-    std::wstring method = request.GetHttpMethod();
-    if (method == L"POST")
+    std::string method = request.GetHttpMethod();
+    if (method == "POST")
       params.is_post = true;
 
     Send(new ViewHostMsg_FrameNavigate(routing_id_, params));
@@ -1151,13 +1174,10 @@ void RenderView::UpdateSessionHistory(WebFrame* frame) {
   if (page_id_ == -1)
     return;
 
-  GURL url;
-  std::wstring title;
   std::string state;
-  if (!webview()->GetMainFrame()->GetPreviousState(&url, &title, &state))
+  if (!webview()->GetMainFrame()->GetPreviousHistoryState(&state))
     return;
-
-  Send(new ViewHostMsg_UpdateState(routing_id_, page_id_, url, title, state));
+  Send(new ViewHostMsg_UpdateState(routing_id_, page_id_, state));
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1437,14 +1457,15 @@ void RenderView::DidFinishDocumentLoadForFrame(WebView* webview,
   // Check whether we have new encoding name.
   UpdateEncoding(frame, webview->GetMainFrameEncodingName());
 
-  // Inject any Greasemonkey scripts. Do not inject into chrome UI pages, but
-  // do inject into any other document.
-  if (greasemonkey_enabled_) {
+  // Inject any user scripts. Do not inject into chrome UI pages, but do inject
+  // into any other document.
+  if (user_scripts_enabled_) {
     const GURL &gurl = frame->GetURL();
-    if (gurl.SchemeIs("file") ||
-        gurl.SchemeIs("http") ||
-        gurl.SchemeIs("https")) {
-      RenderThread::current()->greasemonkey_slave()->InjectScripts(frame);
+    if (g_render_thread &&  // Will be NULL when testing.
+        (gurl.SchemeIs("file") ||
+         gurl.SchemeIs("http") ||
+         gurl.SchemeIs("https"))) {
+      g_render_thread->user_script_slave()->InjectScripts(frame);
     }
   }
 }
@@ -1457,6 +1478,9 @@ void RenderView::DidChangeLocationWithinPageForFrame(WebView* webview,
                                                      WebFrame* frame,
                                                      bool is_new_navigation) {
   DidCommitLoadForFrame(webview, frame, is_new_navigation);
+  const std::wstring& title =
+      webview->GetMainFrame()->GetDataSource()->GetPageTitle();
+  UpdateTitle(frame, title);
 }
 
 void RenderView::DidReceiveIconForFrame(WebView* webview,
@@ -1538,6 +1562,13 @@ WindowOpenDisposition RenderView::DispositionForNavigationAction(
           url.SchemeIs("view-source")) {
         OpenURL(webview, url, GURL(), disposition);
         return IGNORE_ACTION;  // Suppress the load here.
+      } else if (url.SchemeIs(kBackForwardNavigationScheme)) {
+        std::string offset_str = url.ExtractFileName();
+        int offset;
+        if (StringToInt(offset_str, &offset)) {
+          GoToEntryAtOffset(offset);
+          return IGNORE_ACTION;  // The browser process handles this one.
+        }
       }
     }
   }
@@ -1644,24 +1675,39 @@ bool RenderView::RunBeforeUnloadConfirm(WebView* webview,
   return success;
 }
 
-void RenderView::OnUnloadListenerChanged(WebView* webview, WebFrame* webframe) {
-  bool has_listener = false;
-  if (!has_unload_listener_) {
-    has_listener = webframe->HasUnloadListener();
-  } else {
-    WebFrame* frame = webview->GetMainFrame();
-    while (frame != NULL) {
-      if (frame->HasUnloadListener()) {
-        has_listener = true;
-        break;
-      }
-      frame = webview->GetNextFrameAfter(frame, false);
-    }
-  }
-  if (has_listener != has_unload_listener_) {
-    has_unload_listener_ = has_listener;
-    Send(new ViewHostMsg_UnloadListenerChanged(routing_id_, has_listener));
-  }
+void RenderView::EnableSuddenTermination() {
+  Send(new ViewHostMsg_UnloadListenerChanged(routing_id_, false));
+}
+
+void RenderView::DisableSuddenTermination() {
+  Send(new ViewHostMsg_UnloadListenerChanged(routing_id_, true));
+}
+
+void RenderView::QueryFormFieldAutofill(const std::wstring& field_name,
+                                        const std::wstring& text,
+                                        int64 node_id) {
+  static int message_id_counter = 0;
+  form_field_autofill_request_id_ = message_id_counter++;
+  Send(new ViewHostMsg_QueryFormFieldAutofill(routing_id_,
+                                              field_name, text,
+                                              node_id,
+                                              form_field_autofill_request_id_));
+}
+
+void RenderView::OnReceivedAutofillSuggestions(
+    int64 node_id,
+    int request_id,
+    const std::vector<std::wstring>& suggestions,
+    int default_suggestion_index) {
+  if (!webview() || request_id != form_field_autofill_request_id_)
+    return;
+
+  webview()->AutofillSuggestionsForNode(node_id, suggestions,
+                                        default_suggestion_index);
+}
+
+void RenderView::OnPopupNotificationVisiblityChanged(bool visible) {
+  popup_notification_visible_ = visible;
 }
 
 void RenderView::ShowModalHTMLDialog(const GURL& url, int width, int height,
@@ -1737,11 +1783,15 @@ WebView* RenderView::CreateWebView(WebView* webview, bool user_gesture) {
   if (shared_popup_counter_->data > kMaximumNumberOfUnacknowledgedPopups)
     return NULL;
 
+  // This window can't be closed from a window.close() call until we receive a
+  // message from the Browser process explicitly allowing it.
+  popup_notification_visible_ = true;
+
   int32 routing_id = MSG_ROUTING_NONE;
   HANDLE modal_dialog_event = NULL;
-  bool result = RenderThread::current()->Send(
-      new ViewHostMsg_CreateView(routing_id_, user_gesture, &routing_id,
-                                 &modal_dialog_event));
+  bool result = render_thread_->Send(
+      new ViewHostMsg_CreateWindow(routing_id_, user_gesture, &routing_id,
+                                   &modal_dialog_event));
   if (routing_id == MSG_ROUTING_NONE) {
     DCHECK(modal_dialog_event == NULL);
     return NULL;
@@ -1749,7 +1799,8 @@ WebView* RenderView::CreateWebView(WebView* webview, bool user_gesture) {
 
   // The WebView holds a reference to this new RenderView
   const WebPreferences& prefs = webview->GetPreferences();
-  RenderView* view = RenderView::Create(NULL, modal_dialog_event, routing_id_,
+  RenderView* view = RenderView::Create(render_thread_,
+                                        NULL, modal_dialog_event, routing_id_,
                                         prefs, shared_popup_counter_,
                                         routing_id);
   view->set_opened_by_user_gesture(user_gesture);
@@ -1762,9 +1813,11 @@ WebView* RenderView::CreateWebView(WebView* webview, bool user_gesture) {
   return view->webview();
 }
 
-WebWidget* RenderView::CreatePopupWidget(WebView* webview) {
+WebWidget* RenderView::CreatePopupWidget(WebView* webview,
+                                         bool activatable) {
   RenderWidget* widget = RenderWidget::Create(routing_id_,
-                                              RenderThread::current());
+                                              render_thread_,
+                                              activatable);
   return widget->webwidget();
 }
 
@@ -1790,11 +1843,11 @@ WebPluginDelegate* RenderView::CreatePluginDelegate(
     std::string* actual_mime_type) {
   bool is_gears = false;
   if (ShouldLoadPluginInProcess(mime_type, &is_gears)) {
-    std::wstring path;
-    RenderThread::current()->Send(
+    FilePath path;
+    render_thread_->Send(
         new ViewHostMsg_GetPluginPath(url, mime_type, clsid, &path,
                                       actual_mime_type));
-    if (path.empty())
+    if (path.value().empty())
       return NULL;
 
     std::string mime_type_to_use;
@@ -1805,7 +1858,8 @@ WebPluginDelegate* RenderView::CreatePluginDelegate(
 
     if (is_gears)
       ChromePluginLib::Create(path, GetCPBrowserFuncsForRenderer());
-    return WebPluginDelegateImpl::Create(path, mime_type_to_use, host_window_);
+    return WebPluginDelegateImpl::Create(path,
+                                         mime_type_to_use, host_window_);
   }
 
   WebPluginDelegateProxy* proxy =
@@ -1818,6 +1872,10 @@ WebPluginDelegate* RenderView::CreatePluginDelegate(
   plugin_delegates_.push_back(proxy);
 
   return proxy;
+}
+
+webkit_glue::WebMediaPlayerDelegate* RenderView::CreateMediaPlayerDelegate() {
+  return new WebMediaPlayerDelegateImpl();
 }
 
 void RenderView::OnMissingPluginStatus(WebPluginDelegate* delegate,
@@ -1866,6 +1924,11 @@ void RenderView::Show(WebWidget* webwidget, WindowOpenDisposition disposition) {
       WasOpenedByUserGestureHelper()));
 }
 
+void RenderView::CloseWidgetSoon(WebWidget* webwidget) {
+  if (popup_notification_visible_ == false)
+    RenderWidget::CloseWidgetSoon(webwidget);
+}
+
 void RenderView::RunModal(WebWidget* webwidget) {
   DCHECK(did_show_) << "should already have shown the view";
 
@@ -1879,13 +1942,10 @@ void RenderView::SyncNavigationState() {
   if (!webview())
     return;
 
-  GURL url;
-  std::wstring title;
   std::string state;
-  if (!webview()->GetMainFrame()->GetCurrentState(&url, &title, &state))
+  if (!webview()->GetMainFrame()->GetCurrentHistoryState(&state))
     return;
-
-  Send(new ViewHostMsg_UpdateState(routing_id_, page_id_, url, title, state));
+  Send(new ViewHostMsg_UpdateState(routing_id_, page_id_, state));
 }
 
 void RenderView::ShowContextMenu(WebView* webview,
@@ -1910,6 +1970,8 @@ void RenderView::ShowContextMenu(WebView* webview,
   params.frame_url = frame_url;
   params.selection_text = selection_text;
   params.misspelled_word = misspelled_word;
+  params.spellcheck_enabled = 
+      webview->GetFocusedFrame()->SpellCheckEnabled();
   params.edit_flags = edit_flags;
   params.security_info = security_info;
   Send(new ViewHostMsg_ContextMenu(routing_id_, params));
@@ -2028,10 +2090,7 @@ void RenderView::OnFind(const FindInPageRequest& request) {
   bool result = false;
 
   do {
-    if (request.find_next)
-      result = search_frame->FindNext(request, wrap_within_frame);
-    else
-      result = search_frame->Find(request, wrap_within_frame, &selection_rect);
+    result = search_frame->Find(request, wrap_within_frame, &selection_rect);
 
     if (!result) {
       // don't leave text selected as you move to the next frame.
@@ -2046,7 +2105,7 @@ void RenderView::OnFind(const FindInPageRequest& request) {
             webview()->GetPreviousFrameBefore(search_frame, true);
       } while (!search_frame->Visible() && search_frame != focused_frame);
 
-      // make sure selection doesn't affect the search operation in new frame.
+      // Make sure selection doesn't affect the search operation in new frame.
       search_frame->ClearSelection();
 
       // If we have multiple frames and we have wrapped back around to the
@@ -2055,11 +2114,8 @@ void RenderView::OnFind(const FindInPageRequest& request) {
       // reported matches, but no frames after the focused_frame contain a
       // match for the search word(s).
       if (multi_frame && search_frame == focused_frame) {
-        if (request.find_next)
-          result = search_frame->FindNext(request, true);  // Force wrapping.
-        else
-          result = search_frame->Find(request, true,  // Force wrapping.
-                                      &selection_rect);
+        result = search_frame->Find(request, true,  // Force wrapping.
+                                    &selection_rect);
       }
     }
 
@@ -2259,16 +2315,17 @@ void RenderView::DnsPrefetch(const std::vector<std::string>& host_names) {
   Send(new ViewHostMsg_DnsPrefetch(host_names));
 }
 
-void RenderView::OnAlterTextSize(int size) {
-  switch (size) {
-    case text_zoom::TEXT_SMALLER:
-      webview()->MakeTextSmaller();
+void RenderView::OnZoom(int function) {
+  static const bool kZoomIsTextOnly = false;
+  switch (function) {
+    case PageZoom::SMALLER:
+      webview()->ZoomOut(kZoomIsTextOnly);
       break;
-    case text_zoom::TEXT_STANDARD:
-      webview()->MakeTextStandardSize();
+    case PageZoom::STANDARD:
+      webview()->ResetZoom();
       break;
-    case text_zoom::TEXT_LARGER:
-      webview()->MakeTextLarger();
+    case PageZoom::LARGER:
+      webview()->ZoomIn(kZoomIsTextOnly);
       break;
     default:
       NOTREACHED();
@@ -2284,13 +2341,25 @@ void RenderView::OnPasswordFormsSeen(WebView* webview,
   Send(new ViewHostMsg_PasswordFormsSeen(routing_id_, forms));
 }
 
-WebHistoryItem* RenderView::GetHistoryEntryAtOffset(int offset) {
-  // This doesn't work in the multi-process case because we don't want to
-  // hang, as it might lead to deadlocks.  Use GoToEntryAtOffsetAsync.
-  return NULL;
+void RenderView::OnAutofillFormSubmitted(WebView* webview,
+                                         const AutofillForm& form) {
+  Send(new ViewHostMsg_AutofillFormSubmitted(routing_id_, form));
 }
 
-void RenderView::GoToEntryAtOffsetAsync(int offset) {
+WebHistoryItem* RenderView::GetHistoryEntryAtOffset(int offset) {
+  // Our history list is kept in the browser process on the UI thread.  Since
+  // we can't make a sync IPC call to that thread without risking deadlock,
+  // we use a trick: construct a fake history item of the form:
+  //   history://go/OFFSET
+  // When WebCore tells us to navigate to it, we tell the browser process to
+  // do a back/forward navigation instead.
+
+  GURL url(StringPrintf("%s://go/%d", kBackForwardNavigationScheme, offset));
+  history_navigation_item_ = WebHistoryItem::Create(url, L"", "", NULL);
+  return history_navigation_item_.get();
+}
+
+void RenderView::GoToEntryAtOffset(int offset) {
   history_back_list_count_ += offset;
   history_forward_list_count_ -= offset;
 
@@ -2306,9 +2375,11 @@ int RenderView::GetHistoryForwardListCount() {
 }
 
 void RenderView::OnNavStateChanged(WebView* webview) {
-  if (!nav_state_sync_timer_.IsRunning())
-    nav_state_sync_timer_.Start(kDelayForNavigationSync, this,
-                                &RenderView::SyncNavigationState);
+  if (!nav_state_sync_timer_.IsRunning()) {
+    nav_state_sync_timer_.Start(
+        TimeDelta::FromSeconds(delay_seconds_for_form_state_sync_), this,
+        &RenderView::SyncNavigationState);
+  }
 }
 
 void RenderView::SetTooltipText(WebView* webview,
@@ -2331,19 +2402,18 @@ WebFrame* RenderView::GetChildFrame(const std::wstring& frame_xpath) const {
   return web_frame;
 }
 
-void RenderView::EvaluateScriptUrl(const std::wstring& frame_xpath,
-                                   const std::wstring& js_url) {
+void RenderView::EvaluateScript(const std::wstring& frame_xpath,
+                                const std::wstring& script) {
   WebFrame* web_frame = GetChildFrame(frame_xpath);
   if (!web_frame)
     return;
 
-  scoped_ptr<WebRequest> request(WebRequest::Create(GURL(js_url)));
-  web_frame->LoadRequest(request.get());
+  web_frame->ExecuteJavaScript(WideToUTF8(script), GURL());
 }
 
 void RenderView::OnScriptEvalRequest(const std::wstring& frame_xpath,
                                      const std::wstring& jscript) {
-  EvaluateScriptUrl(frame_xpath, jscript);
+  EvaluateScript(frame_xpath, jscript);
 }
 
 void RenderView::OnAddMessageToConsole(const std::wstring& frame_xpath,

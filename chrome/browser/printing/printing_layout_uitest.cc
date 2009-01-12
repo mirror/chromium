@@ -3,8 +3,9 @@
 // found in the LICENSE file.
 
 #include "base/command_line.h"
+#include "base/file_util.h"
 #include "base/gfx/gdi_util.h"
-#include "base/gfx/platform_device_win.h"
+#include "skia/ext/platform_device.h"
 #include "base/gfx/png_decoder.h"
 #include "base/gfx/png_encoder.h"
 #include "base/time.h"
@@ -17,6 +18,9 @@
 #include "chrome/test/ui/ui_test.h"
 #include "chrome/browser/printing/printing_test.h"
 #include "net/url_request/url_request_unittest.h"
+
+using base::Time;
+using base::TimeDelta;
 
 namespace {
 
@@ -58,11 +62,9 @@ class Image {
                                    true,
                                    &compressed));
     ASSERT_TRUE(compressed.size());
-    FILE* f;
-    ASSERT_EQ(_wfopen_s(&f, filename.c_str(), L"wbS"), 0);
-    ASSERT_EQ(fwrite(&*compressed.begin(), 1, compressed.size(), f),
-              compressed.size());
-    fclose(f);
+    ASSERT_EQ(compressed.size(), file_util::WriteFile(
+        filename,
+        reinterpret_cast<char*>(&*compressed.begin()), compressed.size()));
   }
 
   double PercentageDifferent(const Image& rhs) const {
@@ -170,7 +172,7 @@ class Image {
                                       &bits, NULL, 0);
     EXPECT_TRUE(bitmap);
     EXPECT_TRUE(SelectObject(hdc, bitmap));
-    gfx::PlatformDeviceWin::InitializeDC(hdc);
+    skia::PlatformDeviceWin::InitializeDC(hdc);
     EXPECT_TRUE(emf.Playback(hdc, NULL));
     row_length_ = size_.width() * sizeof(uint32);
     size_t bytes = row_length_ * size_.height();
@@ -330,14 +332,15 @@ class PrintingLayoutTest : public PrintingTest<UITest> {
     bool found_emf = false;
     bool found_prn = false;
     for (int i = 0; i < 100; ++i) {
-      file_util::FileEnumerator enumerator(emf_path(), false,
-                                           file_util::FileEnumerator::FILES);
+      file_util::FileEnumerator enumerator(
+          FilePath::FromWStringHack(emf_path()), false,
+          file_util::FileEnumerator::FILES);
       emf_file.clear();
       prn_file.clear();
       found_emf = false;
       found_prn = false;
       std::wstring file;
-      while (!(file = enumerator.Next()).empty()) {
+      while (!(file = enumerator.Next().ToWStringHack()).empty()) {
         std::wstring ext = file_util::GetFileExtensionFromPath(file);
         if (!_wcsicmp(ext.c_str(), L"emf")) {
           EXPECT_FALSE(found_emf) << "Found a leftover .EMF file: \"" <<
@@ -454,7 +457,8 @@ class DismissTheWindow : public base::RefCountedThreadSafe<DismissTheWindow> {
             dialog_window,
             WM_COMMAND,
             print_button_id,
-            reinterpret_cast<LPARAM>(GetDlgItem(dialog_window, print_button_id)));
+            reinterpret_cast<LPARAM>(GetDlgItem(dialog_window,
+                print_button_id)));
         // Try again.
         if (res)
           return;
@@ -495,8 +499,11 @@ TEST_F(PrintingLayoutTextTest, DISABLED_Complex) {
     return;
 
   // Print a document, check its output.
-  TestServer server(kDocRoot);
-  NavigateToURL(server.TestServerPage("files/printing/test1.html"));
+  scoped_refptr<HTTPTestServer> server =
+      HTTPTestServer::CreateServer(kDocRoot);
+  ASSERT_TRUE(NULL != server.get());
+
+  NavigateToURL(server->TestServerPage("files/printing/test1.html"));
   PrintNowTab();
   EXPECT_EQ(0., CompareWithResult(L"test1"));
 }
@@ -521,13 +528,16 @@ TEST_F(PrintingLayoutTestHidden, ManyTimes) {
   if (IsTestCaseDisabled())
     return;
 
-  TestServer server(kDocRoot);
+  scoped_refptr<HTTPTestServer> server =
+    HTTPTestServer::CreateServer(kDocRoot);
+  ASSERT_TRUE(NULL != server.get());
+
   ASSERT_GT(arraysize(kTestPool), 0u);
   for (int i = 0; i < arraysize(kTestPool); ++i) {
     if (i)
       CleanupDumpDirectory();
     const TestPool& test = kTestPool[i % arraysize(kTestPool)];
-    NavigateToURL(server.TestServerPageW(test.source));
+    NavigateToURL(server->TestServerPageW(test.source));
     PrintNowTab();
     EXPECT_EQ(0., CompareWithResult(test.result)) << test.result;
     CleanupDumpDirectory();
@@ -551,13 +561,15 @@ TEST_F(PrintingLayoutTest, DISABLED_Delayed) {
   if (win_util::GetWinVersion() < win_util::WINVERSION_XP)
     return;
 
-  TestServer server(kDocRoot);
+  scoped_refptr<HTTPTestServer> server =
+      HTTPTestServer::CreateServer(kDocRoot);
+  ASSERT_TRUE(NULL != server.get());
 
   {
     scoped_ptr<TabProxy> tab_proxy(GetActiveTab());
     ASSERT_TRUE(tab_proxy.get());
     bool is_timeout = true;
-    GURL url = server.TestServerPage("files/printing/popup_delayed_print.htm");
+    GURL url = server->TestServerPage("files/printing/popup_delayed_print.htm");
     EXPECT_EQ(AUTOMATION_MSG_NAVIGATION_SUCCESS,
               tab_proxy->NavigateToURL(url));
 
@@ -565,7 +577,7 @@ TEST_F(PrintingLayoutTest, DISABLED_Delayed) {
     scoped_ptr<base::Thread> worker(
         new base::Thread("PrintingLayoutTest_worker"));
     scoped_refptr<DismissTheWindow> dismiss_task =
-        new DismissTheWindow(process_util::GetProcId(process()));
+        new DismissTheWindow(base::GetProcId(process()));
     // We need to start the thread to be able to set the timer.
     worker->Start();
     worker->message_loop()->PostTask(FROM_HERE,
@@ -576,7 +588,7 @@ TEST_F(PrintingLayoutTest, DISABLED_Delayed) {
     worker->Stop();
 
     // Force a navigation elsewhere to verify that it's fine with it.
-    url = server.TestServerPage("files/printing/test1.html");
+    url = server->TestServerPage("files/printing/test1.html");
     EXPECT_EQ(AUTOMATION_MSG_NAVIGATION_SUCCESS,
               tab_proxy->NavigateToURL(url));
   }
@@ -591,19 +603,21 @@ TEST_F(PrintingLayoutTest, DISABLED_IFrame) {
   if (IsTestCaseDisabled())
     return;
 
-  TestServer server(kDocRoot);
+  scoped_refptr<HTTPTestServer> server =
+      HTTPTestServer::CreateServer(kDocRoot);
+  ASSERT_TRUE(NULL != server.get());
 
   {
     scoped_ptr<TabProxy> tab_proxy(GetActiveTab());
     ASSERT_TRUE(tab_proxy.get());
-    GURL url = server.TestServerPage("files/printing/iframe.htm");
+    GURL url = server->TestServerPage("files/printing/iframe.htm");
     EXPECT_EQ(AUTOMATION_MSG_NAVIGATION_SUCCESS,
               tab_proxy->NavigateToURL(url));
 
     scoped_ptr<base::Thread> worker(
         new base::Thread("PrintingLayoutTest_worker"));
     scoped_refptr<DismissTheWindow> dismiss_task =
-        new DismissTheWindow(process_util::GetProcId(process()));
+        new DismissTheWindow(base::GetProcId(process()));
     // We need to start the thread to be able to set the timer.
     worker->Start();
     worker->message_loop()->PostTask(FROM_HERE,
@@ -614,7 +628,7 @@ TEST_F(PrintingLayoutTest, DISABLED_IFrame) {
     worker->Stop();
 
     // Force a navigation elsewhere to verify that it's fine with it.
-    url = server.TestServerPage("files/printing/test1.html");
+    url = server->TestServerPage("files/printing/test1.html");
     EXPECT_EQ(AUTOMATION_MSG_NAVIGATION_SUCCESS,
               tab_proxy->NavigateToURL(url));
   }

@@ -4,6 +4,7 @@
 
 #include "chrome/browser/resource_message_filter.h"
 
+#include "base/clipboard.h"
 #include "base/histogram.h"
 #include "base/thread.h"
 #include "chrome/browser/chrome_plugin_browsing_context.h"
@@ -25,56 +26,8 @@
 #include "chrome/common/render_messages.h"
 #include "net/base/cookie_monster.h"
 #include "net/base/mime_util.h"
+#include "webkit/glue/webkit_glue.h"
 #include "webkit/glue/webplugin.h"
-
-void ResourceMessageFilter::OnGetMonitorInfoForWindow(
-    HWND window, MONITORINFOEX* monitor_info) {
-  HMONITOR monitor = MonitorFromWindow(window, MONITOR_DEFAULTTOPRIMARY);
-  monitor_info->cbSize = sizeof(MONITORINFOEX);
-  GetMonitorInfo(monitor, monitor_info);
-}
-
-void ResourceMessageFilter::OnLoadFont(LOGFONT font) {
-  // If renderer is running in a sandbox, GetTextMetrics
-  // can sometimes fail. If a font has not been loaded
-  // previously, GetTextMetrics will try to load the font
-  // from the font file. However, the sandboxed renderer does
-  // not have permissions to access any font files and
-  // the call fails. So we make the browser pre-load the
-  // font for us by using a dummy call to GetTextMetrics of
-  // the same font.
-
-  // Maintain a circular queue for the fonts and DCs to be cached.
-  // font_index maintains next available location in the queue.
-  static const int kFontCacheSize = 32;
-  static HFONT fonts[kFontCacheSize] = {0};
-  static HDC hdcs[kFontCacheSize] = {0};
-  static size_t font_index = 0;
-
-  UMA_HISTOGRAM_COUNTS_100(L"Memory.CachedFontAndDC",
-      fonts[kFontCacheSize-1] ? kFontCacheSize : static_cast<int>(font_index));
-
-  HDC hdc = GetDC(NULL);
-  HFONT font_handle = CreateFontIndirect(&font);
-  DCHECK(NULL != font_handle);
-
-  HGDIOBJ old_font = SelectObject(hdc, font_handle);
-  DCHECK(NULL != old_font);
-
-  TEXTMETRIC tm;
-  BOOL ret = GetTextMetrics(hdc, &tm);
-  DCHECK(ret);
-
-  if (fonts[font_index] || hdcs[font_index]) {
-    // We already have too many fonts, we will delete one and take it's place.
-    DeleteObject(fonts[font_index]);
-    ReleaseDC(NULL, hdcs[font_index]);
-  }
-
-  fonts[font_index] = font_handle;
-  hdcs[font_index] = hdc;
-  font_index = (font_index + 1) % kFontCacheSize;
-}
 
 ResourceMessageFilter::ResourceMessageFilter(
     ResourceDispatcherHost* resource_dispatcher_host,
@@ -143,7 +96,7 @@ bool ResourceMessageFilter::OnMessageReceived(const IPC::Message& message) {
   bool handled = true;
   bool msg_is_ok = true;
   IPC_BEGIN_MESSAGE_MAP_EX(ResourceMessageFilter, message, msg_is_ok)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_CreateView, OnMsgCreateView)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_CreateWindow, OnMsgCreateWindow)
     IPC_MESSAGE_HANDLER(ViewHostMsg_CreateWidget, OnMsgCreateWidget)
     // TODO(brettw): we should get the view ID for this so the resource
     // dispatcher can prioritize things based on the visible view.
@@ -161,8 +114,7 @@ bool ResourceMessageFilter::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewHostMsg_PluginMessage, OnPluginMessage)
     IPC_MESSAGE_HANDLER(ViewHostMsg_PluginSyncMessage, OnPluginSyncMessage)
     IPC_MESSAGE_HANDLER(ViewHostMsg_LoadFont, OnLoadFont)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_GetMonitorInfoForWindow,
-                        OnGetMonitorInfoForWindow)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_GetScreenInfo, OnGetScreenInfo)
     IPC_MESSAGE_HANDLER(ViewHostMsg_GetPlugins, OnGetPlugins)
     IPC_MESSAGE_HANDLER(ViewHostMsg_GetPluginPath, OnGetPluginPath)
     IPC_MESSAGE_HANDLER(ViewHostMsg_DownloadUrl, OnDownloadUrl)
@@ -174,22 +126,10 @@ bool ResourceMessageFilter::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewHostMsg_DnsPrefetch, OnDnsPrefetch)
     IPC_MESSAGE_HANDLER_GENERIC(ViewHostMsg_PaintRect,
         render_widget_helper_->DidReceivePaintMsg(message))
-    IPC_MESSAGE_FORWARD(ViewHostMsg_ClipboardClear,
-                        static_cast<Clipboard*>(GetClipboardService()),
-                        Clipboard::Clear)
-    IPC_MESSAGE_FORWARD(ViewHostMsg_ClipboardWriteText,
-                        static_cast<Clipboard*>(GetClipboardService()),
-                        Clipboard::WriteText)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_ClipboardWriteHTML,
-                        OnClipboardWriteHTML)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_ClipboardWriteBookmark,
-                        OnClipboardWriteBookmark)
-    // We need to do more work to marshall around bitmaps
-    IPC_MESSAGE_HANDLER(ViewHostMsg_ClipboardWriteBitmap,
-                        OnClipboardWriteBitmap)
-    IPC_MESSAGE_FORWARD(ViewHostMsg_ClipboardWriteWebSmartPaste,
-                        static_cast<Clipboard*>(GetClipboardService()),
-                        Clipboard::WriteWebSmartPaste)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_ClipboardWriteObjectsAsync,
+                        OnClipboardWriteObjects)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_ClipboardWriteObjectsSync,
+                        OnClipboardWriteObjects)
     IPC_MESSAGE_HANDLER(ViewHostMsg_ClipboardIsFormatAvailable,
                         OnClipboardIsFormatAvailable)
     IPC_MESSAGE_HANDLER(ViewHostMsg_ClipboardReadText, OnClipboardReadText)
@@ -199,6 +139,7 @@ bool ResourceMessageFilter::OnMessageReceived(const IPC::Message& message) {
                         OnClipboardReadHTML)
     IPC_MESSAGE_HANDLER(ViewHostMsg_GetWindowRect, OnGetWindowRect)
     IPC_MESSAGE_HANDLER(ViewHostMsg_GetRootWindowRect, OnGetRootWindowRect)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_GetRootWindowResizerRect, OnGetRootWindowResizerRect)
     IPC_MESSAGE_HANDLER(ViewHostMsg_GetMimeTypeFromExtension,
                         OnGetMimeTypeFromExtension)
     IPC_MESSAGE_HANDLER(ViewHostMsg_GetMimeTypeFromFile,
@@ -256,7 +197,7 @@ void ResourceMessageFilter::OnReceiveContextMenuMsg(const IPC::Message& msg) {
 
   // Fill in the dictionary suggestions if required.
   if (!params.misspelled_word.empty() &&
-      spellchecker_ != NULL) {
+      spellchecker_ != NULL && params.spellcheck_enabled) {
     int misspell_location, misspell_length;
     bool is_misspelled = !spellchecker_->SpellCheckWord(
         params.misspelled_word.c_str(),
@@ -286,16 +227,18 @@ bool ResourceMessageFilter::Send(IPC::Message* message) {
   return channel_->Send(message);
 }
 
-void ResourceMessageFilter::OnMsgCreateView(int opener_id,
-                                            bool user_gesture,
-                                            int* route_id,
-                                            HANDLE* modal_dialog_event) {
-  render_widget_helper_->CreateView(opener_id, user_gesture, route_id,
-                                    modal_dialog_event, render_handle_);
+void ResourceMessageFilter::OnMsgCreateWindow(int opener_id,
+                                              bool user_gesture,
+                                              int* route_id,
+                                              HANDLE* modal_dialog_event) {
+  render_widget_helper_->CreateNewWindow(opener_id, user_gesture, route_id,
+                                         modal_dialog_event, render_handle_);
 }
 
-void ResourceMessageFilter::OnMsgCreateWidget(int opener_id, int* route_id) {
-  render_widget_helper_->CreateWidget(opener_id, route_id);
+void ResourceMessageFilter::OnMsgCreateWidget(int opener_id,
+                                              bool activatable,
+                                              int* route_id) {
+  render_widget_helper_->CreateNewWidget(opener_id, activatable, route_id);
 }
 
 void ResourceMessageFilter::OnRequestResource(
@@ -365,12 +308,12 @@ void ResourceMessageFilter::OnGetDataDir(std::wstring* data_dir) {
   *data_dir = plugin_service_->GetChromePluginDataDir();
 }
 
-void ResourceMessageFilter::OnPluginMessage(const std::wstring& dll_path,
+void ResourceMessageFilter::OnPluginMessage(const FilePath& plugin_path,
                                             const std::vector<uint8>& data) {
   DCHECK(MessageLoop::current() ==
          ChromeThread::GetMessageLoop(ChromeThread::IO));
 
-  ChromePluginLib *chrome_plugin = ChromePluginLib::Find(dll_path);
+  ChromePluginLib *chrome_plugin = ChromePluginLib::Find(plugin_path);
   if (chrome_plugin) {
     void *data_ptr = const_cast<void*>(reinterpret_cast<const void*>(&data[0]));
     uint32 data_len = static_cast<uint32>(data.size());
@@ -378,13 +321,13 @@ void ResourceMessageFilter::OnPluginMessage(const std::wstring& dll_path,
   }
 }
 
-void ResourceMessageFilter::OnPluginSyncMessage(const std::wstring& dll_path,
+void ResourceMessageFilter::OnPluginSyncMessage(const FilePath& plugin_path,
                                                 const std::vector<uint8>& data,
                                                 std::vector<uint8> *retval) {
   DCHECK(MessageLoop::current() ==
          ChromeThread::GetMessageLoop(ChromeThread::IO));
 
-  ChromePluginLib *chrome_plugin = ChromePluginLib::Find(dll_path);
+  ChromePluginLib *chrome_plugin = ChromePluginLib::Find(plugin_path);
   if (chrome_plugin) {
     void *data_ptr = const_cast<void*>(reinterpret_cast<const void*>(&data[0]));
     uint32 data_len = static_cast<uint32>(data.size());
@@ -400,6 +343,53 @@ void ResourceMessageFilter::OnPluginSyncMessage(const std::wstring& dll_path,
   }
 }
 
+void ResourceMessageFilter::OnLoadFont(LOGFONT font) {
+  // If renderer is running in a sandbox, GetTextMetrics
+  // can sometimes fail. If a font has not been loaded
+  // previously, GetTextMetrics will try to load the font
+  // from the font file. However, the sandboxed renderer does
+  // not have permissions to access any font files and
+  // the call fails. So we make the browser pre-load the
+  // font for us by using a dummy call to GetTextMetrics of
+  // the same font.
+
+  // Maintain a circular queue for the fonts and DCs to be cached.
+  // font_index maintains next available location in the queue.
+  static const int kFontCacheSize = 32;
+  static HFONT fonts[kFontCacheSize] = {0};
+  static HDC hdcs[kFontCacheSize] = {0};
+  static size_t font_index = 0;
+
+  UMA_HISTOGRAM_COUNTS_100(L"Memory.CachedFontAndDC",
+      fonts[kFontCacheSize-1] ? kFontCacheSize : static_cast<int>(font_index));
+
+  HDC hdc = GetDC(NULL);
+  HFONT font_handle = CreateFontIndirect(&font);
+  DCHECK(NULL != font_handle);
+
+  HGDIOBJ old_font = SelectObject(hdc, font_handle);
+  DCHECK(NULL != old_font);
+
+  TEXTMETRIC tm;
+  BOOL ret = GetTextMetrics(hdc, &tm);
+  DCHECK(ret);
+
+  if (fonts[font_index] || hdcs[font_index]) {
+    // We already have too many fonts, we will delete one and take it's place.
+    DeleteObject(fonts[font_index]);
+    ReleaseDC(NULL, hdcs[font_index]);
+  }
+
+  fonts[font_index] = font_handle;
+  hdcs[font_index] = hdc;
+  font_index = (font_index + 1) % kFontCacheSize;
+}
+
+void ResourceMessageFilter::OnGetScreenInfo(
+	gfx::NativeView window, webkit_glue::ScreenInfo* results) {
+  *results = webkit_glue::GetScreenInfoHelper(window);
+}
+
 void ResourceMessageFilter::OnGetPlugins(bool refresh,
                                          std::vector<WebPluginInfo>* plugins) {
   plugin_service_->GetPlugins(refresh, plugins);
@@ -408,7 +398,7 @@ void ResourceMessageFilter::OnGetPlugins(bool refresh,
 void ResourceMessageFilter::OnGetPluginPath(const GURL& url,
                                             const std::string& mime_type,
                                             const std::string& clsid,
-                                            std::wstring* filename,
+                                            FilePath* filename,
                                             std::string* url_mime_type) {
   *filename = plugin_service_->GetPluginPath(url, mime_type, clsid,
                                              url_mime_type);
@@ -433,26 +423,12 @@ void ResourceMessageFilter::OnDownloadUrl(const IPC::Message& message,
                                            request_context_);
 }
 
-void ResourceMessageFilter::OnClipboardWriteHTML(const std::wstring& markup,
-                                                 const GURL& src_url) {
-  GetClipboardService()->WriteHTML(markup, src_url.spec());
-}
-
-void ResourceMessageFilter::OnClipboardWriteBookmark(const std::wstring& title,
-                                                     const GURL& url) {
-  GetClipboardService()->WriteBookmark(title, url.spec());
-}
-
-void ResourceMessageFilter::OnClipboardWriteBitmap(
-    SharedMemoryHandle bitmap_buf, gfx::Size size) {
-  // hbitmap here is only valid in the context of the renderer.  We need to
-  // import it into our process using SharedMemory in order to get a handle
-  // that is valid.
-  //
-  // We need to ask for write permission to the shared memory in order to
-  // call WriteBitmapFromSharedMemory
-  SharedMemory shared_mem(bitmap_buf, false, render_handle_);
-  GetClipboardService()->WriteBitmapFromSharedMemory(shared_mem, size);
+void ResourceMessageFilter::OnClipboardWriteObjects(
+    const Clipboard::ObjectMap& objects) {
+  // We pass the render_handle_ to assist the clipboard with using shared
+  // memory objects. render_handle_ is a handle to the process that would
+  // own any shared memory that might be in the object list.
+  GetClipboardService()->WriteObjects(objects, render_handle_);
 }
 
 void ResourceMessageFilter::OnClipboardIsFormatAvailable(unsigned int format,
@@ -489,6 +465,11 @@ void ResourceMessageFilter::OnGetRootWindowRect(HWND window, gfx::Rect *rect) {
   *rect = window_rect;
 }
 
+void ResourceMessageFilter::OnGetRootWindowResizerRect(HWND window, gfx::Rect *rect) {
+  RECT window_rect = {0};
+  *rect = window_rect;
+}
+
 void ResourceMessageFilter::OnGetMimeTypeFromExtension(
     const std::wstring& ext, std::string* mime_type) {
   net::GetMimeTypeFromExtension(ext, mime_type);
@@ -512,11 +493,11 @@ void ResourceMessageFilter::OnGetCPBrowsingContext(uint32* context) {
 }
 
 void ResourceMessageFilter::OnDuplicateSection(
-    SharedMemoryHandle renderer_handle,
-    SharedMemoryHandle* browser_handle) {
+    base::SharedMemoryHandle renderer_handle,
+    base::SharedMemoryHandle* browser_handle) {
   // Duplicate the handle in this process right now so the memory is kept alive
   // (even if it is not mapped)
-  SharedMemory shared_buf(renderer_handle, true, render_handle_);
+  base::SharedMemory shared_buf(renderer_handle, true, render_handle_);
   shared_buf.GiveToProcess(GetCurrentProcess(), browser_handle);
 }
 

@@ -5,6 +5,7 @@
 #include "sandbox/src/broker_services.h"
 
 #include "base/logging.h"
+#include "base/platform_thread.h"
 #include "sandbox/src/sandbox_policy_base.h"
 #include "sandbox/src/sandbox.h"
 #include "sandbox/src/target_process.h"
@@ -89,7 +90,8 @@ BrokerServicesBase::~BrokerServicesBase() {
   ::CloseHandle(job_port_);
 
   if (WAIT_TIMEOUT == ::WaitForSingleObject(job_thread_, 1000)) {
-    NOTREACHED() << "Cannot clean broker services";
+    // Cannot clean broker services.
+    NOTREACHED();
     return;
   }
 
@@ -132,6 +134,8 @@ void BrokerServicesBase::FreeResources(JobTracker* tracker) {
 DWORD WINAPI BrokerServicesBase::TargetEventsThread(PVOID param) {
   if (NULL == param)
     return 1;
+
+  PlatformThread::SetName("BrokerEventThread");
 
   BrokerServicesBase* broker = reinterpret_cast<BrokerServicesBase*>(param);
   HANDLE port = broker->job_port_;

@@ -66,8 +66,9 @@ class Tab : public TabRenderer,
     virtual void ContinueDrag(const views::MouseEvent& event) = 0;
 
     // Ends dragging a Tab. |canceled| is true if the drag was aborted in a way
-    // other than the user releasing the mouse.
-    virtual void EndDrag(bool canceled) = 0;
+    // other than the user releasing the mouse. Returns whether the tab has been
+    // destroyed.
+    virtual bool EndDrag(bool canceled) = 0;
   };
 
   explicit Tab(TabDelegate* delegate);
@@ -84,6 +85,10 @@ class Tab : public TabRenderer,
   virtual bool IsSelected() const;
 
  private:
+  class ContextMenuController;
+
+  friend class ContextMenuController;
+
   // views::View overrides:
   virtual bool HasHitTestMask() const;
   virtual void GetHitTestMask(gfx::Path* mask) const;
@@ -110,12 +115,18 @@ class Tab : public TabRenderer,
   // representation. Used by GetViewForPoint for hit-testing.
   void MakePathForTab(gfx::Path* path) const;
 
+  // Invoked when the context menu closes.
+  void ContextMenuClosed();
+
   // An instance of a delegate object that can perform various actions based on
   // user gestures.
   TabDelegate* delegate_;
 
   // True if the tab is being animated closed.
   bool closing_;
+
+  // If non-null it means we're showing a menu for the tab.
+  ContextMenuController* menu_controller_;
 
   DISALLOW_COPY_AND_ASSIGN(Tab);
 };

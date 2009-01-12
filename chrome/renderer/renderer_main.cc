@@ -7,11 +7,13 @@
 #include "base/path_service.h"
 #include "base/platform_thread.h"
 #include "base/string_util.h"
+#include "base/system_monitor.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_counters.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/logging_chrome.h"
+#include "chrome/common/main_function_params.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/renderer/render_process.h"
 #include "chrome/test/injection_test_dll.h"
@@ -43,8 +45,11 @@ static void HandleRendererErrorTestParameters(const CommandLine& command_line) {
 }
 
 // mainline routine for running as the Rendererer process
-int RendererMain(CommandLine &parsed_command_line, int show_command,
-                 sandbox::TargetServices* target_services) {
+int RendererMain(const MainFunctionParams& parameters) {
+  CommandLine& parsed_command_line = parameters.command_line_;
+  sandbox::TargetServices* target_services = 
+      parameters.sandbox_info_.TargetServices();
+
   StatsScope<StatsCounterTimer>
       startup_timer(chrome::Counters::renderer_main());
 
@@ -52,6 +57,9 @@ int RendererMain(CommandLine &parsed_command_line, int show_command,
   MessageLoopForIO main_message_loop;
   std::wstring app_name = chrome::kBrowserAppName;
   PlatformThread::SetName(WideToASCII(app_name + L"_RendererMain").c_str());
+
+  // Initialize the SystemMonitor
+  base::SystemMonitor::Start();
 
   CoInitialize(NULL);
 
@@ -107,8 +115,9 @@ int RendererMain(CommandLine &parsed_command_line, int show_command,
       // message loop to use it when translating messages.
       MessageLoop::current()->Run();
     }
+
+    RenderProcess::GlobalCleanup();
   }
-  RenderProcess::GlobalCleanup();
 
   CoUninitialize();
   return 0;

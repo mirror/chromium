@@ -6,7 +6,6 @@
 
 #include <algorithm>
 
-#include "base/gfx/skia_utils.h"
 #include "chrome/app/locales/locale_settings.h"
 #include "chrome/browser/bookmarks/bookmark_folder_tree_model.h"
 #include "chrome/browser/bookmarks/bookmark_html_writer.h"
@@ -27,11 +26,12 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/container_win.h"
 #include "chrome/views/grid_layout.h"
+#include "chrome/views/label.h"
 #include "chrome/views/menu_button.h"
 #include "chrome/views/single_split_view.h"
 #include "chrome/views/window.h"
+#include "skia/ext/skia_utils.h"
 
 #include "generated_resources.h"
 
@@ -138,7 +138,7 @@ BookmarkManagerView::BookmarkManagerView(Profile* profile)
       tree_view_(NULL),
       search_factory_(this) {
   search_tf_ = new views::TextField();
-  search_tf_->set_default_width_in_chars(40);
+  search_tf_->set_default_width_in_chars(30);
 
   table_view_ = new BookmarkTableView(profile_, NULL);
   table_view_->SetObserver(this);
@@ -159,7 +159,7 @@ BookmarkManagerView::BookmarkManagerView(Profile* profile)
   tools_menu_button->SetID(kToolsMenuButtonID);
 
   split_view_ = new views::SingleSplitView(tree_view_, table_view_);
-  split_view_->SetBackground(
+  split_view_->set_background(
       views::Background::CreateSolidBackground(kBackgroundColorBottom));
 
   views::GridLayout* layout = new views::GridLayout(this);
@@ -173,8 +173,11 @@ BookmarkManagerView::BookmarkManagerView(Profile* profile)
   column_set->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER,
                         0, views::GridLayout::USE_PREF, 0, 0);
   column_set->AddPaddingColumn(1, kUnrelatedControlHorizontalSpacing);
+  column_set->AddColumn(views::GridLayout::LEADING, views::GridLayout::CENTER,
+                        0, views::GridLayout::USE_PREF, 0, 0);
+  column_set->AddPaddingColumn(0, kRelatedControlHorizontalSpacing);
   column_set->AddColumn(views::GridLayout::TRAILING, views::GridLayout::CENTER,
-                        1, views::GridLayout::USE_PREF, 0, 0);
+                        0, views::GridLayout::USE_PREF, 0, 0);
   column_set->AddPaddingColumn(0, 3); // 3px padding at end of row.
 
   column_set = layout->AddColumnSet(split_cs_id);
@@ -184,6 +187,8 @@ BookmarkManagerView::BookmarkManagerView(Profile* profile)
   layout->StartRow(0, top_id);
   layout->AddView(organize_menu_button);
   layout->AddView(tools_menu_button);
+  layout->AddView(new views::Label(
+      l10n_util::GetString(IDS_BOOKMARK_MANAGER_SEARCH_TITLE)));
   layout->AddView(search_tf_);
 
   layout->AddPaddingRow(0, 3); // 3px padding between rows.
@@ -300,7 +305,7 @@ void BookmarkManagerView::PaintBackground(ChromeCanvas* canvas) {
   canvas->drawColor(kBackgroundColorBottom, SkPorterDuff::kSrc_Mode);
 
   SkPaint paint;
-  paint.setShader(gfx::CreateGradientShader(0, kBackgroundGradientHeight,
+  paint.setShader(skia::CreateGradientShader(0, kBackgroundGradientHeight,
       kBackgroundColorTop,
       kBackgroundColorBottom))->safeUnref();
   canvas->FillRectInt(0, 0, width(), kBackgroundGradientHeight, paint);
@@ -316,21 +321,8 @@ std::wstring BookmarkManagerView::GetWindowTitle() const {
   return l10n_util::GetString(IDS_BOOKMARK_MANAGER_TITLE);
 }
 
-void BookmarkManagerView::SaveWindowPosition(const CRect& bounds,
-                                             bool maximized,
-                                             bool always_on_top) {
-  window()->SaveWindowPositionToPrefService(g_browser_process->local_state(),
-                                            prefs::kBookmarkManagerPlacement,
-                                            bounds, maximized, always_on_top);
-}
-
-bool BookmarkManagerView::RestoreWindowPosition(CRect* bounds,
-                                                bool* maximized,
-                                                bool* always_on_top) {
-  return window()->RestoreWindowPositionFromPrefService(
-      g_browser_process->local_state(),
-      prefs::kBookmarkManagerPlacement,
-      bounds, maximized, always_on_top);
+std::wstring BookmarkManagerView::GetWindowName() const {
+  return prefs::kBookmarkManagerPlacement;
 }
 
 void BookmarkManagerView::WindowClosing() {
@@ -351,7 +343,7 @@ void BookmarkManagerView::OnDoubleClick() {
   // we can use
   // event_utils::DispositionFromEventFlags(sender->mouse_event_flags()) .
   bookmark_utils::OpenAll(
-      GetContainer()->GetHWND(), profile_, NULL, nodes, CURRENT_TAB);
+      GetWidget()->GetHWND(), profile_, NULL, nodes, CURRENT_TAB);
 }
 
 void BookmarkManagerView::OnTableViewDelete(views::TableView* table) {
@@ -372,7 +364,7 @@ void BookmarkManagerView::OnKeyDown(unsigned short virtual_keycode) {
         SelectInTree(selected_nodes[0]);
       } else {
         bookmark_utils::OpenAll(
-            GetContainer()->GetHWND(), profile_, NULL, selected_nodes,
+            GetWidget()->GetHWND(), profile_, NULL, selected_nodes,
             CURRENT_TAB);
       }
       break;
@@ -399,6 +391,7 @@ void BookmarkManagerView::OnTreeViewSelectionChanged(
 
   BookmarkTableModel* new_table_model = NULL;
   BookmarkNode* table_parent_node = NULL;
+  bool is_search = false;
 
   if (node) {
     switch (tree_model_->GetNodeType(node)) {
@@ -416,6 +409,7 @@ void BookmarkManagerView::OnTreeViewSelectionChanged(
         break;
 
       case BookmarkFolderTreeModel::SEARCH:
+        is_search = true;
         search_factory_.RevokeAll();
         new_table_model = CreateSearchTableModel();
         break;
@@ -426,7 +420,7 @@ void BookmarkManagerView::OnTreeViewSelectionChanged(
     }
   }
 
-  SetTableModel(new_table_model, table_parent_node);
+  SetTableModel(new_table_model, table_parent_node, is_search);
 }
 
 void BookmarkManagerView::OnTreeViewKeyDown(unsigned short virtual_keycode) {
@@ -476,7 +470,7 @@ void BookmarkManagerView::ShowContextMenu(views::View* source,
                                           bool is_mouse_gesture) {
   DCHECK(source == table_view_ || source == tree_view_);
   bool is_table = (source == table_view_);
-  ShowMenu(GetContainer()->GetHWND(), x, y,
+  ShowMenu(GetWidget()->GetHWND(), x, y,
            is_table ? BookmarkContextMenu::BOOKMARK_MANAGER_TABLE :
                       BookmarkContextMenu::BOOKMARK_MANAGER_TREE);
 }
@@ -490,11 +484,14 @@ void BookmarkManagerView::RunMenu(views::View* source,
   if (!GetBookmarkModel()->IsLoaded())
     return;
 
+  int menu_x = pt.x;
+  menu_x += UILayoutIsRightToLeft() ? (source->width() - 5) :
+                                      (-source->width() + 5);
   if (source->GetID() == kOrganizeMenuButtonID) {
-    ShowMenu(hwnd, pt.x - source->width() + 5, pt.y + 2,
+    ShowMenu(hwnd, menu_x, pt.y + 2,
              BookmarkContextMenu::BOOKMARK_MANAGER_ORGANIZE_MENU);
   } else if (source->GetID() == kToolsMenuButtonID) {
-    ShowToolsMenu(hwnd, pt.x - source->width() + 5, pt.y + 2);
+    ShowToolsMenu(hwnd, menu_x, pt.y + 2);
   } else {
     NOTREACHED();
   }
@@ -527,7 +524,7 @@ void BookmarkManagerView::FileSelected(const std::wstring& path,
     ProfileInfo profile_info;
     profile_info.browser_type = BOOKMARKS_HTML;
     profile_info.source_path = path;
-    StartImportingWithUI(GetContainer()->GetHWND(), FAVORITES, host,
+    StartImportingWithUI(GetWidget()->GetHWND(), FAVORITES, host,
                          profile_info, profile_,
                          new ImportObserverImpl(profile()), false);
   } else if (id == IDS_BOOKMARK_MANAGER_EXPORT_MENU) {
@@ -554,7 +551,8 @@ BookmarkTableModel* BookmarkManagerView::CreateSearchTableModel() {
 }
 
 void BookmarkManagerView::SetTableModel(BookmarkTableModel* new_table_model,
-                                        BookmarkNode* parent_node) {
+                                        BookmarkNode* parent_node,
+                                        bool is_search) {
   // Be sure and reset the model on the view before updating table_model_.
   // Otherwise the view will attempt to use the deleted model when we set the
   // new one.
@@ -563,6 +561,16 @@ void BookmarkManagerView::SetTableModel(BookmarkTableModel* new_table_model,
   table_view_->SetModel(new_table_model);
   table_view_->set_parent_node(parent_node);
   table_model_.reset(new_table_model);
+  if (!is_search || (new_table_model && new_table_model->RowCount() > 0)) {
+    table_view_->SetAltText(std::wstring());
+  } else if (search_tf_->GetText().empty()) {
+    table_view_->SetAltText(
+        l10n_util::GetString(IDS_BOOKMARK_MANAGER_NO_SEARCH_TEXT));
+  } else {
+    table_view_->SetAltText(
+        l10n_util::GetStringF(IDS_BOOKMARK_MANAGER_NO_RESULTS,
+                              search_tf_->GetText()));
+  }
 }
 
 void BookmarkManagerView::PerformSearch() {
@@ -572,7 +580,7 @@ void BookmarkManagerView::PerformSearch() {
   tree_view_->SetController(NULL);
   tree_view_->SetSelectedNode(tree_model_->search_node());
   tree_view_->SetController(this);
-  SetTableModel(CreateSearchTableModel(), NULL);
+  SetTableModel(CreateSearchTableModel(), NULL, true);
 }
 
 void BookmarkManagerView::PrepareForShow() {
@@ -653,7 +661,7 @@ void BookmarkManagerView::ShowMenu(
     std::vector<BookmarkNode*> nodes;
     if (node)
       nodes.push_back(node);
-    BookmarkContextMenu menu(GetContainer()->GetHWND(), profile_, NULL, NULL,
+    BookmarkContextMenu menu(GetWidget()->GetHWND(), profile_, NULL, NULL,
                              node, nodes, config);
     menu.RunMenuAt(x, y);
   }
@@ -692,24 +700,22 @@ void BookmarkManagerView::ShowToolsMenu(HWND host, int x, int y) {
   menu.AppendMenuItemWithLabel(
           IDS_BOOKMARK_MANAGER_EXPORT_MENU,
           l10n_util::GetString(IDS_BOOKMARK_MANAGER_EXPORT_MENU));
-  menu.RunMenuAt(GetContainer()->GetHWND(), gfx::Rect(x, y, 0, 0),
-                 views::MenuItemView::TOPLEFT, true);
+  views::MenuItemView::AnchorPosition anchor =
+      UILayoutIsRightToLeft() ? views::MenuItemView::TOPRIGHT :
+                                views::MenuItemView::TOPLEFT;
+  menu.RunMenuAt(GetWidget()->GetHWND(), gfx::Rect(x, y, 0, 0), anchor, true);
 }
-
-// The filter used when opening a file.
-// TODO(sky): need a textual description here once we can add new
-// strings.
-static const wchar_t KFilterString[] = L"*.html\0*.html;*.htm\0";
 
 void BookmarkManagerView::ShowImportBookmarksFileChooser() {
   if (select_file_dialog_.get())
     select_file_dialog_->ListenerDestroyed();
 
-  std::wstring filter_string(KFilterString, arraysize(KFilterString));
+  std::wstring filter_string =
+      win_util::GetFileFilterFromExtensions(L"*.html;*.htm", true);
   select_file_dialog_ = SelectFileDialog::Create(this);
   select_file_dialog_->SelectFile(
       SelectFileDialog::SELECT_OPEN_FILE, std::wstring(), L"bookmarks.html",
-      filter_string, std::wstring(), GetContainer()->GetHWND(),
+      filter_string, std::wstring(), GetWidget()->GetHWND(),
       reinterpret_cast<void*>(IDS_BOOKMARK_MANAGER_IMPORT_MENU));
 }
 
@@ -721,6 +727,6 @@ void BookmarkManagerView::ShowExportBookmarksFileChooser() {
   select_file_dialog_->SelectFile(
       SelectFileDialog::SELECT_SAVEAS_FILE, std::wstring(), L"bookmarks.html",
       win_util::GetFileFilterFromPath(L"bookmarks.html"), L"html",
-      GetContainer()->GetHWND(),
+      GetWidget()->GetHWND(),
       reinterpret_cast<void*>(IDS_BOOKMARK_MANAGER_EXPORT_MENU));
 }

@@ -26,15 +26,7 @@
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 VPATH = \
-    $(PORTROOT)/../pending \
-    $(PORTROOT)/css \
-    $(PORTROOT)/dom \
-    $(PORTROOT)/html \
-    $(PORTROOT)/page \
-    $(PORTROOT)/page/inspector \
-    $(PORTROOT)/xml \
-    $(PORTROOT)/ksvg2/svg \
-    $(PORTROOT)/ksvg2/events \
+    $(PORTROOT)/bindings/v8 \
     $(WebCore) \
     $(WebCore)/bindings/js \
     $(WebCore)/bindings/v8 \
@@ -42,7 +34,9 @@ VPATH = \
     $(WebCore)/css \
     $(WebCore)/dom \
     $(WebCore)/html \
+    $(WebCore)/inspector \
     $(WebCore)/page \
+    $(WebCore)/plugins \
     $(WebCore)/storage \
     $(WebCore)/xml \
     $(WebCore)/svg \
@@ -624,7 +618,6 @@ all : \
     ColorData.c \
     DocTypeStrings.cpp \
     HTMLEntityNames.c \
-    HTMLEntityCodes.c \
     V8Attr.h \
     V8BarInfo.h \
     V8CDATASection.h \
@@ -648,10 +641,13 @@ all : \
     V8Console.h \
     V8Counter.h \
     V8CSSStyleDeclaration.h \
+    V8CSSVariablesDeclaration.h \
+    V8CSSVariablesRule.h \
     V8DOMCoreException.h \
     V8DOMImplementation.h \
     V8DOMParser.h \
     V8DOMSelection.h \
+    V8DOMStringList.h \
     V8DOMWindow.h \
     V8Database.h \
     V8Document.h \
@@ -663,9 +659,12 @@ all : \
     V8Event.h \
     V8EventException.h \
     V8EventTargetNode.h \
+    V8File.h \
+    V8FileList.h \
     V8HTMLAnchorElement.h \
     V8HTMLAppletElement.h \
     V8HTMLAreaElement.h \
+    V8HTMLAudioElement.h \
     V8HTMLBaseElement.h \
     V8HTMLBaseFontElement.h \
     V8HTMLBlockquoteElement.h \
@@ -699,6 +698,7 @@ all : \
     V8HTMLLinkElement.h \
     V8HTMLMapElement.h \
     V8HTMLMarqueeElement.h \
+    V8HTMLMediaElement.h \
     V8HTMLMenuElement.h \
     V8HTMLMetaElement.h \
     V8HTMLModElement.h \
@@ -713,6 +713,7 @@ all : \
     V8HTMLQuoteElement.h \
     V8HTMLScriptElement.h \
     V8HTMLSelectElement.h \
+    V8HTMLSourceElement.h \
     V8HTMLStyleElement.h \
     V8HTMLTableCaptionElement.h \
     V8HTMLTableCellElement.h \
@@ -723,10 +724,15 @@ all : \
     V8HTMLTextAreaElement.h \
     V8HTMLTitleElement.h \
     V8HTMLUListElement.h \
+    V8HTMLVideoElement.h \
     V8History.h \
+    V8ImageData.h \
     V8KeyboardEvent.h \
+    V8MediaError.h \
     V8MediaList.h \
+    V8MessageChannel.h \
     V8MessageEvent.h \
+    V8MessagePort.h \
     V8MouseEvent.h \
     V8MutationEvent.h \
     V8NamedNodeMap.h \
@@ -742,6 +748,7 @@ all : \
     V8RangeException.h \
     V8Rect.h \
     V8SVGAElement.h \
+    V8SVGAltGlyphElement.h \
     V8SVGAngle.h \
     V8SVGAnimatedAngle.h \
     V8SVGAnimateColorElement.h \
@@ -878,13 +885,22 @@ all : \
     V8StyleSheet.h \
     V8StyleSheetList.h \
     V8Text.h \
+    V8TextMetrics.h \
     V8TextEvent.h \
+    V8TimeRanges.h \
     V8TreeWalker.h \
     V8UIEvent.h \
     V8VoidCallback.h \
+    V8WebKitAnimationEvent.h \
+    V8WebKitCSSKeyframeRule.h \
+    V8WebKitCSSKeyframesRule.h \
+    V8WebKitCSSTransformValue.h \
+    V8WebKitTransitionEvent.h \
     V8WheelEvent.h \
     V8XMLHttpRequest.h \
     V8XMLHttpRequestException.h \
+    V8XMLHttpRequestProgressEvent.h \
+    V8XMLHttpRequestUpload.h \
     V8XMLSerializer.h \
     V8XPathEvaluator.h \
     V8XPathException.h \
@@ -901,10 +917,13 @@ all : \
     XPathGrammar.cpp \
     tokenizer.cpp \
     V8Clipboard.h \
-    V8HTMLSelectionInputElement.h \
     V8InspectorController.h \
     V8Location.h \
     V8Navigator.h \
+    V8MimeType.h \
+    V8MimeTypeArray.h \
+    V8Plugin.h \
+    V8PluginArray.h \
     V8RGBColor.h \
     V8SVGAnimatedPoints.h \
     V8SVGURIReference.h \
@@ -913,32 +932,29 @@ all : \
 
 # CSS property names and value keywords
 
+WEBCORE_CSS_PROPERTY_NAMES := $(WebCore)/css/CSSPropertyNames.in
+WEBCORE_CSS_VALUE_KEYWORDS := $(WebCore)/css/CSSValueKeywords.in
+
 ifeq ($(findstring ENABLE_SVG,$(FEATURE_DEFINES)), ENABLE_SVG)
+    WEBCORE_CSS_PROPERTY_NAMES := $(WEBCORE_CSS_PROPERTY_NAMES) $(WebCore)/css/SVGCSSPropertyNames.in
+    WEBCORE_CSS_VALUE_KEYWORDS := $(WEBCORE_CSS_VALUE_KEYWORDS) $(WebCore)/css/SVGCSSValueKeywords.in
+endif
 
-CSSPropertyNames.h : css/CSSPropertyNames.in css/SVGCSSPropertyNames.in
-	if sort $< $(WebCore)/css/SVGCSSPropertyNames.in | uniq -d | grep -E '^[^#]'; then echo 'Duplicate value!'; exit 1; fi
-	cat $< $(WebCore)/css/SVGCSSPropertyNames.in > CSSPropertyNames.in
-	perl "$(WebCore)/../../../webkit/pending/makeprop.pl"
+# Chromium does not support this.
+#ifeq ($(ENABLE_DASHBOARD_SUPPORT), 1)
+#    WEBCORE_CSS_PROPERTY_NAMES := $(WEBCORE_CSS_PROPERTY_NAMES) $(WebCore)/css/DashboardSupportCSSPropertyNames.in
+#endif
 
-CSSValueKeywords.h : css/CSSValueKeywords.in css/SVGCSSValueKeywords.in
+CSSPropertyNames.h : $(WEBCORE_CSS_PROPERTY_NAMES) css/makeprop.pl
+	if sort $(WEBCORE_CSS_PROPERTY_NAMES) | uniq -d | grep -E '^[^#]'; then echo 'Duplicate value!'; exit 1; fi
+	cat $(WEBCORE_CSS_PROPERTY_NAMES) > CSSPropertyNames.in
+	perl "$(WebCore)/css/makeprop.pl"
+
+CSSValueKeywords.h : $(WEBCORE_CSS_VALUE_KEYWORDS) css/makevalues.pl
 	# Lower case all the values, as CSS values are case-insensitive
-	perl -ne 'print lc' $(WebCore)/css/SVGCSSValueKeywords.in > SVGCSSValueKeywords.in
-	if sort $< SVGCSSValueKeywords.in | uniq -d | grep -E '^[^#]'; then echo 'Duplicate value!'; exit 1; fi
-	cat $< SVGCSSValueKeywords.in > CSSValueKeywords.in
-	perl "$(WebCore)/../../../webkit/pending/makevalues.pl"
-
-else
-
-CSSPropertyNames.h : css/CSSPropertyNames.in ../../../webkit/pending/makeprop.pl
-	cp $< CSSPropertyNames.in
-	perl "$(WebCore)/../../../webkit/pending/makeprop.pl"
-
-CSSValueKeywords.h : css/CSSValueKeywords.in ../../../webkit/pending/makevalues.pl
-	cp $< CSSValueKeywords.in
-	perl "$(WebCore)/../../../pending/makevalues.pl"
-
-endif 
-
+	perl -ne 'print lc' $(WEBCORE_CSS_VALUE_KEYWORDS) > CSSValueKeywords.in
+	if sort CSSValueKeywords.in | uniq -d | grep -E '^[^#]'; then echo 'Duplicate value!'; exit 1; fi
+	perl "$(WebCore)/css/makevalues.pl"
 
 # DOCTYPE strings
 
@@ -949,9 +965,6 @@ DocTypeStrings.cpp : html/DocTypeStrings.gperf
 
 HTMLEntityNames.c : html/HTMLEntityNames.gperf
 	gperf -a -L ANSI-C -C -G -c -o -t -k '*' -N findEntity -D -s 2 $< > $@
-
-HTMLEntityCodes.c : html/HTMLEntityNames.gperf
-	perl $(WebCore)/../../../webkit/build/WebCore/generate_entitycodes.pl $< > $@
 
 # color names
 
@@ -991,11 +1004,22 @@ XPathGrammar.cpp : xml/XPathGrammar.y $(PROJECT_FILE)
 
 # user agent style sheets
 
-USER_AGENT_STYLE_SHEETS = $(WebCore)/css/view-source.css $(WebCore)/css/svg.css 
-UserAgentStyleSheets.h : css/make-css-file-arrays.pl $(USER_AGENT_STYLE_SHEETS) $(WebCore)/css/html4.css $(PORTROOT)/css/html4-overrides.css $(PORTROOT)/css/quirks-overrides.css
-	cat $(WebCore)/css/html4.css $(PORTROOT)/css/html4-overrides.css > $(DerivedSourcesDir)/html4.css
-	cat $(WebCore)/css/quirks.css $(PORTROOT)/css/quirks-overrides.css > $(DerivedSourcesDir)/quirks.css
-	perl $< $@ UserAgentStyleSheetsData.cpp $(DerivedSourcesDir)/html4.css $(DerivedSourcesDir)/quirks.css $(USER_AGENT_STYLE_SHEETS)
+USER_AGENT_STYLE_SHEETS = $(WebCore)/css/html4.css $(WebCore)/css/quirks.css $(WebCore)/css/view-source.css $(WebCore)/css/themeWin.css $(WebCore)/css/themeWinQuirks.css 
+
+ifeq ($(findstring ENABLE_SVG,$(FEATURE_DEFINES)), ENABLE_SVG)
+    USER_AGENT_STYLE_SHEETS := $(USER_AGENT_STYLE_SHEETS) $(WebCore)/css/svg.css 
+endif
+
+ifeq ($(findstring ENABLE_WML,$(FEATURE_DEFINES)), ENABLE_WML)
+    USER_AGENT_STYLE_SHEETS := $(USER_AGENT_STYLE_SHEETS) $(WebCore)/css/wml.css
+endif
+
+ifeq ($(findstring ENABLE_VIDEO,$(FEATURE_DEFINES)), ENABLE_VIDEO)
+    USER_AGENT_STYLE_SHEETS := $(USER_AGENT_STYLE_SHEETS) $(WebCore)/css/mediaControls.css
+endif
+
+UserAgentStyleSheets.h : css/make-css-file-arrays.pl $(USER_AGENT_STYLE_SHEETS)
+	perl $< $@ UserAgentStyleSheetsData.cpp $(USER_AGENT_STYLE_SHEETS)
 
 # character set name table
 
@@ -1009,62 +1033,79 @@ CharsetData.cpp : platform/text/mac/make-charset-table.pl platform/text/mac/char
 %Table.cpp: %.cpp $(CREATE_HASH_TABLE)
 	$(CREATE_HASH_TABLE) $< > $@
 
+# --------
+
 # HTML tag and attribute names
 
+ifeq ($(findstring ENABLE_VIDEO,$(FEATURE_DEFINES)), ENABLE_VIDEO)
+    HTML_FLAGS := $(HTML_FLAGS) ENABLE_VIDEO=1
+endif
+
+ifdef HTML_FLAGS
+
 HTMLNames.cpp : dom/make_names.pl html/HTMLTagNames.in html/HTMLAttributeNames.in
-	perl $< --tags $(WebCore)/html/HTMLTagNames.in --attrs $(WebCore)/html/HTMLAttributeNames.in \
-            --namespace HTML --namespacePrefix xhtml --cppNamespace WebCore --namespaceURI "http://www.w3.org/1999/xhtml" --attrsNullNamespace --output .
+	perl -I $(WebCore)/bindings/scripts $< --tags $(WebCore)/html/HTMLTagNames.in --attrs $(WebCore)/html/HTMLAttributeNames.in --wrapperFactory --extraDefines "$(HTML_FLAGS)"
+
+else
+
+HTMLNames.cpp : dom/make_names.pl html/HTMLTagNames.in html/HTMLAttributeNames.in
+	perl -I $(WebCore)/bindings/scripts $< --tags $(WebCore)/html/HTMLTagNames.in --attrs $(WebCore)/html/HTMLAttributeNames.in --wrapperFactory
+
+endif
 
 XMLNames.cpp : dom/make_names.pl xml/xmlattrs.in
-	perl $< --attrs $(WebCore)/xml/xmlattrs.in \
-            --namespace XML --cppNamespace WebCore --namespaceURI "http://www.w3.org/XML/1998/namespace" --output .
+	perl -I $(WebCore)/bindings/scripts $< --attrs $(WebCore)/xml/xmlattrs.in
+
+# --------
 
 ifeq ($(findstring ENABLE_SVG,$(FEATURE_DEFINES)), ENABLE_SVG)
 
+WEBCORE_EXPORT_DEPENDENCIES := $(WEBCORE_EXPORT_DEPENDENCIES) WebCore.SVG.exp
+
 ifeq ($(findstring ENABLE_SVG_USE,$(FEATURE_DEFINES)), ENABLE_SVG_USE)
-  SVG_FLAGS := $(SVG_FLAGS) ENABLE_SVG_USE=1
+    SVG_FLAGS := $(SVG_FLAGS) ENABLE_SVG_USE=1
 endif
 
 ifeq ($(findstring ENABLE_SVG_FONTS,$(FEATURE_DEFINES)), ENABLE_SVG_FONTS)
-  SVG_FLAGS := $(SVG_FLAGS) ENABLE_SVG_FONTS=1
+    SVG_FLAGS := $(SVG_FLAGS) ENABLE_SVG_FONTS=1
 endif
 
 ifeq ($(findstring ENABLE_SVG_FILTERS,$(FEATURE_DEFINES)), ENABLE_SVG_FILTERS)
-  SVG_FLAGS := $(SVG_FLAGS) ENABLE_SVG_FILTERS=1
+    SVG_FLAGS := $(SVG_FLAGS) ENABLE_SVG_FILTERS=1
+    WEBCORE_EXPORT_DEPENDENCIES := $(WEBCORE_EXPORT_DEPENDENCIES) WebCore.SVG.Filters.exp
 endif
 
 ifeq ($(findstring ENABLE_SVG_AS_IMAGE,$(FEATURE_DEFINES)), ENABLE_SVG_AS_IMAGE)
-  SVG_FLAGS := $(SVG_FLAGS) ENABLE_SVG_AS_IMAGE=1
+    SVG_FLAGS := $(SVG_FLAGS) ENABLE_SVG_AS_IMAGE=1
 endif
-  
+
 ifeq ($(findstring ENABLE_SVG_ANIMATION,$(FEATURE_DEFINES)), ENABLE_SVG_ANIMATION)
-  SVG_FLAGS := $(SVG_FLAGS) ENABLE_SVG_ANIMATION=1
-  endif
+    SVG_FLAGS := $(SVG_FLAGS) ENABLE_SVG_ANIMATION=1
+    WEBCORE_EXPORT_DEPENDENCIES := $(WEBCORE_EXPORT_DEPENDENCIES) WebCore.SVG.Animation.exp
+endif
 
 ifeq ($(findstring ENABLE_SVG_FOREIGN_OBJECT,$(FEATURE_DEFINES)), ENABLE_SVG_FOREIGN_OBJECT)
-  SVG_FLAGS := $(SVG_FLAGS) ENABLE_SVG_FOREIGN_OBJECT=1
+    SVG_FLAGS := $(SVG_FLAGS) ENABLE_SVG_FOREIGN_OBJECT=1
+    WEBCORE_EXPORT_DEPENDENCIES := $(WEBCORE_EXPORT_DEPENDENCIES) WebCore.SVG.ForeignObject.exp
 endif
 
 # SVG tag and attribute names (need to pass an extra flag if svg experimental features are enabled)
+
 ifdef SVG_FLAGS
+
 SVGElementFactory.cpp SVGNames.cpp : dom/make_names.pl svg/svgtags.in svg/svgattrs.in
-	perl $< --tags $(WebCore)/svg/svgtags.in --attrs $(WebCore)/svg/svgattrs.in --extraDefines "$(SVG_FLAGS)" \
-            --namespace SVG --cppNamespace WebCore --namespaceURI "http://www.w3.org/2000/svg" --factory --attrsNullNamespace --output .
+	perl -I $(WebCore)/bindings/scripts $< --tags $(WebCore)/svg/svgtags.in --attrs $(WebCore)/svg/svgattrs.in --extraDefines "$(SVG_FLAGS)" --factory --wrapperFactory
 else
-# SVG tag and attribute names
+
 SVGElementFactory.cpp SVGNames.cpp : dom/make_names.pl svg/svgtags.in svg/svgattrs.in
-	perl $< --tags $(WebCore)/svg/svgtags.in --attrs $(WebCore)/svg/svgattrs.in \
-            --namespace SVG --cppNamespace WebCore --namespaceURI "http://www.w3.org/2000/svg" --factory --attrsNullNamespace --output .
+	perl -I $(WebCore)/bindings/scripts $< --tags $(WebCore)/svg/svgtags.in --attrs $(WebCore)/svg/svgattrs.in --factory --wrapperFactory
+
 endif
 
+JSSVGElementWrapperFactory.cpp : SVGNames.cpp
+
 XLinkNames.cpp : dom/make_names.pl svg/xlinkattrs.in
-	perl $< --attrs $(WebCore)/svg/xlinkattrs.in \
-            --namespace XLink --cppNamespace WebCore --namespaceURI "http://www.w3.org/1999/xlink" --output .
-
-# Add SVG Symbols to the WebCore exported symbols file
-
-WebCore.exp : WebCore.base.exp WebCore.SVG.exp
-	cat $^ > $@
+	perl -I $(WebCore)/bindings/scripts $< --attrs $(WebCore)/svg/xlinkattrs.in
 
 else
 
@@ -1077,8 +1118,10 @@ SVGNames.cpp :
 XLinkNames.cpp :
 	echo > $@
 
-WebCore.exp : WebCore.base.exp
-	cat $^ > $@
+# This file is autogenerated by make_names.pl when SVG is enabled.
+
+JSSVGElementWrapperFactory.cpp :
+	echo > $@
 
 endif
 
@@ -1093,7 +1136,7 @@ OBJC_BINDINGS_SCRIPTS = \
 #
 
 DOM%.h : %.idl $(OBJC_BINDINGS_SCRIPTS) $(PUBLICDOMINTERFACES)
-	perl -I $(WebCore)/bindings/scripts $(WebCore)/bindings/scripts/generate-bindings.pl --defines "$(FEATURE_DEFINES) LANGUAGE_OBJECTIVE_C" --generator ObjC --include dom --include html --include css --include page --include xml --include svg --include bindings/js --outputdir . $<
+	perl -I $(WebCore)/bindings/scripts $(WebCore)/bindings/scripts/generate-bindings.pl --defines "$(FEATURE_DEFINES) LANGUAGE_OBJECTIVE_C" --generator ObjC --include dom --include html --include css --include page --include xml --include svg --include bindings/js  --include plugins --outputdir . $<
 
 # new-style JavaScript bindings
 
@@ -1106,11 +1149,11 @@ JS_BINDINGS_SCRIPTS = \
 #
 
 JS%.h : %.idl $(JS_BINDINGS_SCRIPTS)
-	perl -I $(WebCore)/bindings/scripts $(WebCore)/bindings/scripts/generate-bindings.pl --defines "$(FEATURE_DEFINES) LANGUAGE_JAVASCRIPT" --generator JS --include dom --include html --include css --include page --include xml --include svg --include bindings/js --outputdir . $<
+	perl -I $(WebCore)/bindings/scripts $(WebCore)/bindings/scripts/generate-bindings.pl --defines "$(FEATURE_DEFINES) LANGUAGE_JAVASCRIPT" --generator JS --include dom --include html --include css --include page --include xml --include svg --include bindings/js --include plugins --outputdir . $<
 
 # new-style V8 bindings
 
-V8_BINDINGS_SCRIPTS = \
+V8_SCRIPTS = \
     $(PORTROOT)/bindings/scripts/CodeGenerator.pm \
     $(PORTROOT)/bindings/scripts/CodeGeneratorV8.pm \
     $(PORTROOT)/bindings/scripts/IDLParser.pm \
@@ -1120,8 +1163,9 @@ V8_BINDINGS_SCRIPTS = \
 
 # Sometimes script silently fails (Cygwin problem?), 
 # use a bounded loop to retry if so, but not do so forever.
-V8%.h : %.idl $(V8_BINDINGS_SCRIPTS)
+V8%.h : %.idl $(V8_SCRIPTS)
+	rm -f $@; \
 	for i in 1 2 3 4 5 6 7 8 9 10; do \
 	  if test -e $@; then break; fi; \
-	  perl -w -I $(PORTROOT)/bindings/scripts -I $(WebCore)/bindings/scripts $(PORTROOT)/bindings/scripts/generate-bindings.pl --defines "$(FEATURE_DEFINES) LANGUAGE_JAVASCRIPT V8_BINDING" --generator V8 --include ../../../webkit/pending --include ../../../webkit/port/dom --include ../../../webkit/port/html --include ../../../webkit/port/page --include ../../../webkit/port/xml --include svg --include dom --include html --include css --include page --include xml --outputdir . $< ; \
+	  perl -w -I $(PORTROOT)/bindings/scripts -I $(WebCore)/bindings/scripts $(PORTROOT)/bindings/scripts/generate-bindings.pl --defines "$(FEATURE_DEFINES) LANGUAGE_JAVASCRIPT V8_BINDING" --generator V8 --include svg --include dom --include html --include css --include page --include xml --include plugins --outputdir . $< ; \
 	done

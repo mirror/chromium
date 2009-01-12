@@ -6,12 +6,15 @@
 
 #include "base/command_line.h"
 #include "base/path_service.h"
+#include "base/scoped_clipboard_writer.h"
 #include "base/string_util.h"
 #include "chrome/app/chrome_dll_resource.h"
+#include "chrome/browser/views/options/fonts_languages_window_view.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/spellchecker.h"
 #include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/download/save_package.h"
 #include "chrome/browser/navigation_controller.h"
@@ -65,8 +68,8 @@ void RenderViewContextMenuController::WriteTextToClipboard(
   if (!clipboard)
     return;
 
-  clipboard->Clear();
-  clipboard->WriteText(text);
+  ScopedClipboardWriter scw(clipboard);
+  scw.WriteText(text);
 }
 
 void RenderViewContextMenuController::WriteURLToClipboard(const GURL& url) {
@@ -100,18 +103,24 @@ std::wstring RenderViewContextMenuController::GetLabel(int id) const {
 }
 
 bool RenderViewContextMenuController::IsCommandEnabled(int id) const {
+  // Allow Spell Check language items on sub menu for text area context menu.
+  if ((id >= IDC_SPELLCHECK_LANGUAGES_FIRST) &&
+      (id < IDC_SPELLCHECK_LANGUAGES_LAST)) {
+    return true;
+  }
+
   switch (id) {
     case IDS_CONTENT_CONTEXT_BACK:
       return source_web_contents_->controller()->CanGoBack();
 
     case IDS_CONTENT_CONTEXT_FORWARD:
       return source_web_contents_->controller()->CanGoForward();
-    case IDS_CONTENT_CONTEXT_RELOAD:
-      return true;
+
     case IDS_CONTENT_CONTEXT_VIEWPAGESOURCE:
     case IDS_CONTENT_CONTEXT_VIEWFRAMESOURCE:
     case IDS_CONTENT_CONTEXT_INSPECTELEMENT:
       return IsDevCommandEnabled(id);
+
     case IDS_CONTENT_CONTEXT_OPENLINKNEWTAB:
     case IDS_CONTENT_CONTEXT_OPENLINKNEWWINDOW:
     case IDS_CONTENT_CONTEXT_COPYLINKLOCATION:
@@ -128,8 +137,10 @@ bool RenderViewContextMenuController::IsCommandEnabled(int id) const {
     case IDS_CONTENT_CONTEXT_OPENIMAGENEWTAB:
     case IDS_CONTENT_CONTEXT_COPYIMAGELOCATION:
       return params_.image_url.is_valid();
+
     case IDS_CONTENT_CONTEXT_SAVEPAGEAS:
       return SavePackage::IsSavableURL(source_web_contents_->GetURL());
+
     case IDS_CONTENT_CONTEXT_OPENFRAMENEWTAB:
     case IDS_CONTENT_CONTEXT_OPENFRAMENEWWINDOW:
       return params_.frame_url.is_valid();
@@ -163,27 +174,50 @@ bool RenderViewContextMenuController::IsCommandEnabled(int id) const {
       return !source_web_contents_->profile()->IsOffTheRecord() &&
              params_.frame_url.is_valid();
 
+    case IDS_CONTENT_CONTEXT_ADD_TO_DICTIONARY:
+      return !params_.misspelled_word.empty();
+
+    case IDS_CONTENT_CONTEXT_VIEWPAGEINFO:
+      return (source_web_contents_->controller()->GetActiveEntry() != NULL);
+
+    case IDS_CONTENT_CONTEXT_RELOAD:
     case IDS_CONTENT_CONTEXT_COPYIMAGE:
     case IDS_CONTENT_CONTEXT_PRINT:
     case IDS_CONTENT_CONTEXT_SEARCHWEBFOR:
-    case IDC_USESPELLCHECKSUGGESTION_0:
-    case IDC_USESPELLCHECKSUGGESTION_1:
-    case IDC_USESPELLCHECKSUGGESTION_2:
-    case IDC_USESPELLCHECKSUGGESTION_3:
-    case IDC_USESPELLCHECKSUGGESTION_4:
-      return true;
-    case IDS_CONTENT_CONTEXT_ADD_TO_DICTIONARY:
-      return !params_.misspelled_word.empty();
-    case IDS_CONTENT_CONTEXT_VIEWPAGEINFO:
-      return (source_web_contents_->controller()->GetActiveEntry() != NULL);
+    case IDC_SPELLCHECK_SUGGESTION_0:
+    case IDC_SPELLCHECK_SUGGESTION_1:
+    case IDC_SPELLCHECK_SUGGESTION_2:
+    case IDC_SPELLCHECK_SUGGESTION_3:
+    case IDC_SPELLCHECK_SUGGESTION_4:
+    case IDC_SPELLCHECK_MENU:
+    case IDC_CHECK_SPELLING_OF_THIS_FIELD:
+    case IDS_CONTENT_CONTEXT_LANGUAGE_SETTINGS:
     case IDS_CONTENT_CONTEXT_VIEWFRAMEINFO:
       return true;
+
     case IDS_CONTENT_CONTEXT_SAVEFRAMEAS:
     case IDS_CONTENT_CONTEXT_PRINTFRAME:
     case IDS_CONTENT_CONTEXT_ADDSEARCHENGINE:  // Not implemented.
     default:
       return false;
   }
+}
+
+bool RenderViewContextMenuController::IsItemChecked(int id) const {
+  // Check box for 'Check the Spelling of this field'.
+  if (id == IDC_CHECK_SPELLING_OF_THIS_FIELD)
+    return params_.spellcheck_enabled;
+  
+  // Don't bother getting the display language vector if this isn't a spellcheck
+  // language.
+  if ((id < IDC_SPELLCHECK_LANGUAGES_FIRST) ||
+      (id >= IDC_SPELLCHECK_LANGUAGES_LAST))
+    return false;
+
+  SpellChecker::Languages display_languages;
+  return SpellChecker::GetSpellCheckLanguagesToDisplayInContextMenu(
+      source_web_contents_->profile(), &display_languages) ==
+      (id - IDC_SPELLCHECK_LANGUAGES_FIRST);
 }
 
 bool RenderViewContextMenuController::GetAcceleratorInfo(
@@ -221,6 +255,23 @@ bool RenderViewContextMenuController::GetAcceleratorInfo(
 }
 
 void RenderViewContextMenuController::ExecuteCommand(int id) {
+  // Check to see if one of the spell check language ids have been clicked.
+  if (id >= IDC_SPELLCHECK_LANGUAGES_FIRST &&
+      id < IDC_SPELLCHECK_LANGUAGES_LAST) {
+    const size_t language_number = id - IDC_SPELLCHECK_LANGUAGES_FIRST;
+    SpellChecker::Languages display_languages; 
+    SpellChecker::GetSpellCheckLanguagesToDisplayInContextMenu(
+        source_web_contents_->profile(), &display_languages);
+    if (language_number < display_languages.size()) {
+      StringPrefMember dictionary_language;
+      dictionary_language.Init(prefs::kSpellCheckDictionary,
+          source_web_contents_->profile()->GetPrefs(), NULL);
+      dictionary_language.SetValue(display_languages[language_number]);
+    }
+      
+    return;
+  }
+
   switch (id) {
     case IDS_CONTENT_CONTEXT_OPENLINKNEWTAB:
       OpenURL(params_.link_url, NEW_BACKGROUND_TAB, PageTransition::LINK);
@@ -391,19 +442,31 @@ void RenderViewContextMenuController::ExecuteCommand(int id) {
       break;
     }
 
-    case IDC_USESPELLCHECKSUGGESTION_0:
-    case IDC_USESPELLCHECKSUGGESTION_1:
-    case IDC_USESPELLCHECKSUGGESTION_2:
-    case IDC_USESPELLCHECKSUGGESTION_3:
-    case IDC_USESPELLCHECKSUGGESTION_4:
+    case IDC_SPELLCHECK_SUGGESTION_0:
+    case IDC_SPELLCHECK_SUGGESTION_1:
+    case IDC_SPELLCHECK_SUGGESTION_2:
+    case IDC_SPELLCHECK_SUGGESTION_3:
+    case IDC_SPELLCHECK_SUGGESTION_4:
       source_web_contents_->render_view_host()->Replace(
-          params_.dictionary_suggestions[id - IDC_USESPELLCHECKSUGGESTION_0]);
+          params_.dictionary_suggestions[id - IDC_SPELLCHECK_SUGGESTION_0]);
       break;
 
+    case IDC_CHECK_SPELLING_OF_THIS_FIELD:
+      source_web_contents_->render_view_host()->ToggleSpellCheck();
+      break;
     case IDS_CONTENT_CONTEXT_ADD_TO_DICTIONARY:
       source_web_contents_->render_view_host()->AddToDictionary(
           params_.misspelled_word);
       break;
+
+    case IDS_CONTENT_CONTEXT_LANGUAGE_SETTINGS: {
+      FontsLanguagesWindowView* window_ = new FontsLanguagesWindowView(
+          source_web_contents_->profile());
+      views::Window::CreateChromeWindow(source_web_contents_->GetContentHWND(),
+                                        gfx::Rect(), window_)->Show();
+      window_->SelectLanguagesTab();
+      break;
+    }
 
     case IDS_CONTENT_CONTEXT_ADDSEARCHENGINE:  // Not implemented.
     default:
@@ -430,7 +493,7 @@ bool RenderViewContextMenuController::IsDevCommandEnabled(int id) const {
     return false;
 
   // Don't inspect inspector, new tab UI, etc.
-  if (active_entry->url().SchemeIs("chrome-resource"))
+  if (active_entry->url().SchemeIs("chrome"))
     return false;
 
   // Don't inspect about:network, about:memory, etc.

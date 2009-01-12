@@ -4,6 +4,8 @@
 
 #include "base/string_util.h"
 
+#include "build/build_config.h"
+
 #include <ctype.h>
 #include <errno.h>
 #include <math.h>
@@ -21,6 +23,7 @@
 #include "base/basictypes.h"
 #include "base/logging.h"
 #include "base/singleton.h"
+#include "base/third_party/dmg_fp/dmg_fp.h"
 
 namespace {
 
@@ -211,7 +214,7 @@ class StringToDoubleTraits {
   typedef double value_type;
   static inline value_type convert_func(const string_type::value_type* str,
                                         string_type::value_type** endptr) {
-    return strtod(str, endptr);
+    return dmg_fp::strtod(str, endptr);
   }
   static inline bool valid_func(const string_type& str) {
     return !str.empty() && !isspace(str[0]);
@@ -224,7 +227,19 @@ class WStringToDoubleTraits {
   typedef double value_type;
   static inline value_type convert_func(const string_type::value_type* str,
                                         string_type::value_type** endptr) {
-    return wcstod(str, endptr);
+    // Because dmg_fp::strtod does not like wchar_t, we convert it to ASCII.
+    // In theory, this should be safe, but it's possible that wide chars
+    // might get ignored by accident causing something to be parsed when it
+    // shouldn't.
+    std::string ascii_string = WideToASCII(std::wstring(str));
+    char* ascii_end = NULL;
+    value_type ret = dmg_fp::strtod(ascii_string.c_str(), &ascii_end);
+    if (ascii_string.c_str() + ascii_string.length() == ascii_end) {
+      // Put endptr at end of input string, so it's not recognized as an error.
+      *endptr = const_cast<string_type::value_type*>(str) + wcslen(str);
+    }
+
+    return ret;
   }
   static inline bool valid_func(const string_type& str) {
     return !str.empty() && !iswspace(str[0]);
@@ -272,6 +287,7 @@ bool IsWprintfFormatPortable(const wchar_t* format) {
 
   return true;
 }
+
 
 }  // namespace base
 
@@ -982,6 +998,17 @@ std::wstring Uint64ToWString(uint64 value) {
       IntToString(value);
 }
 
+std::string DoubleToString(double value) {
+  // According to g_fmt.cc, it is sufficient to declare a buffer of size 32.
+  char buffer[32];
+  dmg_fp::g_fmt(buffer, value);
+  return std::string(buffer);
+}
+
+std::wstring DoubleToWString(double value) {
+  return ASCIIToWide(DoubleToString(value));
+}
+
 inline void StringAppendV(std::string* dst, const char* format, va_list ap) {
   StringAppendVT<char>(dst, format, ap);
 }
@@ -1360,14 +1387,6 @@ bool HexStringToInt(const std::wstring& input, int* output) {
       input, reinterpret_cast<long*>(output));
 }
 
-bool StringToDouble(const std::string& input, double* output) {
-  return StringToNumber<StringToDoubleTraits>(input, output);
-}
-
-bool StringToDouble(const std::wstring& input, double* output) {
-  return StringToNumber<WStringToDoubleTraits>(input, output);
-}
-
 int StringToInt(const std::string& value) {
   int result;
   StringToInt(value, &result);
@@ -1402,6 +1421,14 @@ int HexStringToInt(const std::wstring& value) {
   int result;
   HexStringToInt(value, &result);
   return result;
+}
+
+bool StringToDouble(const std::string& input, double* output) {
+  return StringToNumber<StringToDoubleTraits>(input, output);
+}
+
+bool StringToDouble(const std::wstring& input, double* output) {
+  return StringToNumber<WStringToDoubleTraits>(input, output);
 }
 
 double StringToDouble(const std::string& value) {

@@ -1,0 +1,73 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+Import('env')
+
+env = env.Clone()
+
+env.SConscript([
+    '$BREAKPAD_DIR/using_breakpad.scons',
+    '$CHROME_DIR/third_party/wtl/using_wtl.scons',
+    '$GRIT_DIR/build/using_generated_resources.scons',
+    '$ICU38_DIR/using_icu38.scons',
+    '$LIBPNG_DIR/using_libpng.scons',
+    '$LIBXML_DIR/using_libxml.scons',
+    '$NPAPI_DIR/using_npapi.scons',
+    '$SKIA_DIR/using_skia.scons',
+    '$ZLIB_DIR/using_zlib.scons',
+], {'env':env})
+
+env.Prepend(
+    CPPPATH = [
+        '$CHROME_DIR/app',
+        '$CHROME_SRC_DIR',
+    ],
+)
+
+input_files = [
+    'debugger_contents.cc',
+    'debugger_host_impl.cpp',
+    'debugger_io_socket.cc',
+    'debugger_node.cc',
+    'debugger_shell.cc',
+    'debugger_view.cc',
+    'debugger_window.cc',
+    'debugger_wrapper.cc',
+]
+
+if env.Bit('linux'):
+  # TODO(port): Port these.
+  remove_list = [
+      'debugger_contents.cc',
+      'debugger_host_impl.cpp',
+      'debugger_node.cc',
+      'debugger_shell.cc',
+      'debugger_view.cc',
+      'debugger_window.cc',
+  ]
+  for file in remove_list:
+    input_files.remove(file)
+
+if env.Bit('mac'):
+  # TODO(port): Port these.
+  remove_list = [
+      'debugger_contents.cc',
+      'debugger_host_impl.cpp',
+      'debugger_node.cc',
+      'debugger_shell.cc',
+      'debugger_view.cc',
+      'debugger_window.cc',
+  ]
+  for file in remove_list:
+    input_files.remove(file)
+
+if not env.Bit('mac'):
+  # TODO(port): Enable for Mac.
+  env.ChromeLibrary('debugger', input_files)
+
+env.ChromeMSVSProject('$CHROME_DIR/browser/debugger/debugger.vcproj',
+                dependencies = [
+                    '$CHROME_DIR/app/generated_resources.vcproj',
+                ],
+                guid='{57823D8C-A317-4713-9125-2C91FDFD12D6}')

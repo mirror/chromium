@@ -15,6 +15,10 @@
 #include "chrome/test/automation/browser_proxy.h"
 #include "chrome/test/automation/tab_proxy.h"
 #include "chrome/test/automation/window_proxy.h"
+#include "chrome/views/dialog_delegate.h"
+
+using base::TimeDelta;
+using base::TimeTicks;
 
 // This class exists to group together the data and functionality used for
 // synchronous automation requests.
@@ -137,9 +141,9 @@ class AutomationMessageFilter : public IPC::ChannelProxy::MessageFilter {
 }  // anonymous namespace
 
 
-const int AutomationProxy::kMaxCommandExecutionTime = 30000;
-
-AutomationProxy::AutomationProxy() : current_request_(NULL) {
+AutomationProxy::AutomationProxy(int command_execution_timeout_ms)
+    : current_request_(NULL),
+      command_execution_timeout_ms_(command_execution_timeout_ms) {
   InitializeEvents();
   InitializeChannelID();
   InitializeThread();
@@ -206,7 +210,7 @@ void AutomationProxy::InitializeHandleTracker() {
 
 bool AutomationProxy::WaitForAppLaunch() {
   return ::WaitForSingleObject(app_launched_,
-                               kMaxCommandExecutionTime) == WAIT_OBJECT_0;
+                               command_execution_timeout_ms_) == WAIT_OBJECT_0;
 }
 
 void AutomationProxy::SignalAppLaunch() {
@@ -215,12 +219,12 @@ void AutomationProxy::SignalAppLaunch() {
 
 bool AutomationProxy::WaitForInitialLoads() {
   return ::WaitForSingleObject(initial_loads_complete_,
-                               kMaxCommandExecutionTime) == WAIT_OBJECT_0;
+                               command_execution_timeout_ms_) == WAIT_OBJECT_0;
 }
 
 bool AutomationProxy::WaitForInitialNewTabUILoad(int* load_time) {
   if (::WaitForSingleObject(new_tab_ui_load_complete_,
-                            kMaxCommandExecutionTime) == WAIT_OBJECT_0) {
+                            command_execution_timeout_ms_) == WAIT_OBJECT_0) {
     *load_time = new_tab_ui_load_time_;
     ::ResetEvent(new_tab_ui_load_complete_);
     return true;
@@ -237,6 +241,10 @@ void AutomationProxy::SignalNewTabUITab(int load_time) {
   ::SetEvent(new_tab_ui_load_complete_);
 }
 
+bool AutomationProxy::SavePackageShouldPromptUser(bool should_prompt) {
+  return Send(new AutomationMsg_SavePackageShouldPromptUser(0, should_prompt));
+}
+
 bool AutomationProxy::GetBrowserWindowCount(int* num_windows) {
   if (!num_windows) {
     NOTREACHED();
@@ -248,7 +256,7 @@ bool AutomationProxy::GetBrowserWindowCount(int* num_windows) {
   bool succeeded = SendAndWaitForResponseWithTimeout(
       new AutomationMsg_BrowserWindowCountRequest(0), &response,
       AutomationMsg_BrowserWindowCountResponse::ID,
-      kMaxCommandExecutionTime, &is_timeout);
+      command_execution_timeout_ms_, &is_timeout);
   if (!succeeded)
     return false;
 
@@ -299,32 +307,56 @@ bool AutomationProxy::WaitForWindowCountToBecome(int count,
   return false;
 }
 
-bool AutomationProxy::GetShowingAppModalDialog(bool* showing_app_modal_dialog) {
-  if (!showing_app_modal_dialog) {
+bool AutomationProxy::GetShowingAppModalDialog(
+    bool* showing_app_modal_dialog,
+    views::DialogDelegate::DialogButton* button) {
+  if (!showing_app_modal_dialog || !button) {
     NOTREACHED();
     return false;
   }
 
   IPC::Message* response = NULL;
   bool is_timeout = true;
-  bool succeeded = SendAndWaitForResponseWithTimeout(
-      new AutomationMsg_ShowingAppModalDialogRequest(0), &response,
-      AutomationMsg_ShowingAppModalDialogResponse::ID,
-      kMaxCommandExecutionTime, &is_timeout);
-  if (!succeeded)
+  if (!SendAndWaitForResponseWithTimeout(
+          new AutomationMsg_ShowingAppModalDialogRequest(0), &response,
+          AutomationMsg_ShowingAppModalDialogResponse::ID,
+          command_execution_timeout_ms_, &is_timeout)) {
     return false;
+  }
 
+  scoped_ptr<IPC::Message> response_deleter(response);  // Delete on exit.
   if (is_timeout) {
     DLOG(ERROR) << "ShowingAppModalDialog did not complete in a timely fashion";
     return false;
   }
 
   void* iter = NULL;
-  if (!response->ReadBool(&iter, showing_app_modal_dialog)) {
-    succeeded = false;
+  int button_int = 0;
+  if (!response->ReadBool(&iter, showing_app_modal_dialog) ||
+      !response->ReadInt(&iter, &button_int))
+    return false;
+
+  *button = static_cast<views::DialogDelegate::DialogButton>(button_int);
+  return true;
+}
+
+bool AutomationProxy::ClickAppModalDialogButton(
+    views::DialogDelegate::DialogButton button) {
+  IPC::Message* response = NULL;
+  bool is_timeout = true;
+  if (!SendAndWaitForResponseWithTimeout(
+          new AutomationMsg_ClickAppModalDialogButtonRequest(0, button),
+          &response,
+          AutomationMsg_ClickAppModalDialogButtonResponse::ID,
+          command_execution_timeout_ms_, &is_timeout)) {
+    return false;
   }
 
-  delete response;
+  bool succeeded = false;
+  void* iter = NULL;
+  if (!response->ReadBool(&iter, &succeeded))
+    return false;
+
   return succeeded;
 }
 
@@ -333,7 +365,9 @@ bool AutomationProxy::WaitForAppModalDialog(int wait_timeout) {
   const TimeDelta timeout = TimeDelta::FromMilliseconds(wait_timeout);
   while (TimeTicks::Now() - start < timeout) {
     bool dialog_shown = false;
-    bool succeeded = GetShowingAppModalDialog(&dialog_shown);
+    views::DialogDelegate::DialogButton button =
+        views::DialogDelegate::DIALOGBUTTON_NONE;
+    bool succeeded = GetShowingAppModalDialog(&dialog_shown, &button);
     if (!succeeded) {
       // Try again next round, but log it.
       DLOG(ERROR) << "GetShowingAppModalDialog returned false";
@@ -370,7 +404,7 @@ WindowProxy* AutomationProxy::GetActiveWindow() {
   bool succeeded = SendAndWaitForResponseWithTimeout(
       new AutomationMsg_ActiveWindowRequest(0), &response,
       AutomationMsg_ActiveWindowResponse::ID,
-      kMaxCommandExecutionTime, &is_timeout);
+      command_execution_timeout_ms_, &is_timeout);
   if (!succeeded)
     return NULL;
 
@@ -395,7 +429,7 @@ BrowserProxy* AutomationProxy::GetBrowserWindow(int window_index) {
   bool succeeded = SendAndWaitForResponseWithTimeout(
     new AutomationMsg_BrowserWindowRequest(0, window_index), &response,
     AutomationMsg_BrowserWindowResponse::ID,
-    kMaxCommandExecutionTime, &is_timeout);
+    command_execution_timeout_ms_, &is_timeout);
   if (!succeeded)
     return NULL;
 
@@ -420,7 +454,7 @@ BrowserProxy* AutomationProxy::GetLastActiveBrowserWindow() {
   bool succeeded = SendAndWaitForResponseWithTimeout(
     new AutomationMsg_LastActiveBrowserWindowRequest(0),
     &response, AutomationMsg_LastActiveBrowserWindowResponse::ID,
-    kMaxCommandExecutionTime, &is_timeout);
+    command_execution_timeout_ms_, &is_timeout);
   if (!succeeded)
     return NULL;
 
@@ -603,4 +637,3 @@ TabProxy* AutomationProxy::CreateExternalTab(HWND* external_tab_container) {
   delete response;
   return tab_proxy;
 }
-

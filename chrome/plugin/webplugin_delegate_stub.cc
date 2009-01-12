@@ -6,7 +6,6 @@
 
 #include "base/command_line.h"
 #include "base/time.h"
-#include "base/gfx/platform_device_win.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/gfx/emf.h"
 #include "chrome/common/plugin_messages.h"
@@ -17,6 +16,7 @@
 #include "chrome/plugin/webplugin_proxy.h"
 #include "third_party/npapi/bindings/npapi.h"
 #include "third_party/npapi/bindings/npruntime.h"
+#include "skia/ext/platform_device.h"
 #include "webkit/glue/plugins/webplugin_delegate_impl.h"
 #include "webkit/glue/webcursor.h"
 
@@ -124,7 +124,8 @@ void WebPluginDelegateStub::OnInit(const PluginMsg_Init_Params& params,
   }
 
   CommandLine command_line;
-  std::wstring path = command_line.GetSwitchValue(switches::kPluginPath);
+  FilePath path =
+      FilePath(command_line.GetSwitchValue(switches::kPluginPath));
   delegate_ = WebPluginDelegateImpl::Create(
       path, mime_type_, params.containing_window);
   if (delegate_) {
@@ -157,6 +158,7 @@ void WebPluginDelegateStub::OnDidReceiveResponse(
                              params.headers,
                              params.expected_length,
                              params.last_modified,
+                             params.request_is_seekable,
                              cancel);
 }
 
@@ -216,7 +218,7 @@ void WebPluginDelegateStub::OnPrint(PluginMsg_PrintResponse_Params* params) {
     return;
   }
   HDC hdc = emf.hdc();
-  gfx::PlatformDeviceWin::InitializeDC(hdc);
+  skia::PlatformDeviceWin::InitializeDC(hdc);
   delegate_->Print(hdc);
   if (!emf.CloseDc()) {
     NOTREACHED();
@@ -226,7 +228,7 @@ void WebPluginDelegateStub::OnPrint(PluginMsg_PrintResponse_Params* params) {
   size_t size = emf.GetDataSize();
   DCHECK(size);
   params->size = size;
-  SharedMemory shared_buf;
+  base::SharedMemory shared_buf;
   CreateSharedBuffer(size, &shared_buf, &params->shared_memory);
 
   // Retrieve a copy of the data.
@@ -239,8 +241,8 @@ void WebPluginDelegateStub::OnUpdateGeometry(
     const gfx::Rect& clip_rect,
     const std::vector<gfx::Rect>& cutout_rects,
     bool visible,
-    const SharedMemoryHandle& windowless_buffer,
-    const SharedMemoryHandle& background_buffer) {
+    const base::SharedMemoryHandle& windowless_buffer,
+    const base::SharedMemoryHandle& background_buffer) {
   webplugin_->UpdateGeometry(
       window_rect, clip_rect, cutout_rects, visible, windowless_buffer, 
       background_buffer);
@@ -301,8 +303,8 @@ void WebPluginDelegateStub::OnInstallMissingPlugin() {
 
 void WebPluginDelegateStub::CreateSharedBuffer(
     size_t size,
-    SharedMemory* shared_buf,
-    SharedMemoryHandle* remote_handle) {
+    base::SharedMemory* shared_buf,
+    base::SharedMemoryHandle* remote_handle) {
   if (!shared_buf->Create(std::wstring(), false, false, size)) {
     NOTREACHED();
     return;
@@ -319,6 +321,7 @@ void WebPluginDelegateStub::CreateSharedBuffer(
                                 remote_handle, 0, FALSE,
                                 DUPLICATE_SAME_ACCESS);
   DCHECK_NE(result, 0);
+
   // If the calling function's shared_buf is on the stack, its destructor will
   // close the shared memory buffer handle. This is fine since we already
   // duplicated the handle to the renderer process so it will stay "alive".

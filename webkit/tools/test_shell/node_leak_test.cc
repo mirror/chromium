@@ -36,6 +36,8 @@ class NodeLeakTest : public TestShellTest {
       parsed_command_line.GetSwitchValue(test_shell::kJavaScriptFlags);
     CommandLine::AppendSwitch(&js_flags, L"expose-gc");
     webkit_glue::SetJavaScriptFlags(js_flags);
+    // Expose GCController to JavaScript as well.
+    webkit_glue::SetShouldExposeGCController(true);
 
     std::wstring cache_path =
         parsed_command_line.GetSwitchValue(test_shell::kCacheDir);
@@ -57,7 +59,7 @@ class NodeLeakTest : public TestShellTest {
         parsed_command_line.HasSwitch(test_shell::kPlaybackMode) ?
         net::HttpCache::PLAYBACK : net::HttpCache::NORMAL;
     SimpleResourceLoaderBridge::Init(
-        new TestShellRequestContext(cache_path, mode));
+        new TestShellRequestContext(cache_path, mode, false));
 
     TestShellTest::SetUp();
   }
@@ -77,13 +79,11 @@ class NodeLeakTest : public TestShellTest {
   }
 };
 
-}  // namespace
-
 TEST_F(NodeLeakTest, TestURL) {
   CommandLine parsed_command_line;
-
   if (parsed_command_line.HasSwitch(kTestUrlSwitch)) {
     NavigateToURL(parsed_command_line.GetSwitchValue(kTestUrlSwitch).c_str());
   }
 }
 
+}  // namespace

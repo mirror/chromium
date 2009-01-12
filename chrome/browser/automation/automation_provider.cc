@@ -5,13 +5,14 @@
 #include "chrome/browser/automation/automation_provider.h"
 
 #include "base/path_service.h"
-#include "chrome/app/chrome_dll_resource.h"
+#include "chrome/app/chrome_dll_resource.h" 
 #include "chrome/browser/automation/automation_provider_list.h"
 #include "chrome/browser/automation/ui_controls.h"
 #include "chrome/browser/automation/url_request_failed_dns_job.h"
 #include "chrome/browser/automation/url_request_mock_http_job.h"
 #include "chrome/browser/automation/url_request_slow_download_job.h"
 #include "chrome/browser/browser_window.h"
+#include "chrome/browser/character_encoding.h"
 #include "chrome/browser/dom_operation_notification_details.h"
 #include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/download/save_package.h"
@@ -24,13 +25,19 @@
 #include "chrome/browser/ssl_manager.h"
 #include "chrome/browser/ssl_blocking_page.h"
 #include "chrome/browser/web_contents.h"
+#include "chrome/browser/web_contents_view.h"
 #include "chrome/browser/views/bookmark_bar_view.h"
 #include "chrome/browser/views/location_bar_view.h"
 #include "chrome/common/chrome_paths.h"
+#include "chrome/common/notification_registrar.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/test/automation/automation_messages.h"
+#include "chrome/views/app_modal_dialog_delegate.h"
+#include "chrome/views/window.h"
 #include "net/base/cookie_monster.h"
 #include "net/url_request/url_request_filter.h"
+
+using base::Time;
 
 class InitialLoadObserver : public NotificationObserver {
  public:
@@ -39,28 +46,19 @@ class InitialLoadObserver : public NotificationObserver {
         automation_(automation) {
     if (outstanding_tab_count_ > 0) {
       NotificationService* service = NotificationService::current();
-      service->AddObserver(this, NOTIFY_LOAD_START,
-                           NotificationService::AllSources());
-      service->AddObserver(this, NOTIFY_LOAD_STOP,
-                          NotificationService::AllSources());
+      registrar_.Add(this, NOTIFY_LOAD_START,
+                     NotificationService::AllSources());
+      registrar_.Add(this, NOTIFY_LOAD_STOP,
+                     NotificationService::AllSources());
     }
   }
 
   ~InitialLoadObserver() {
-    Unregister();
   }
 
   void ConditionMet() {
-    Unregister();
+    registrar_.RemoveAll();
     automation_->Send(new AutomationMsg_InitialLoadsComplete(0));
-  }
-
-  void Unregister() {
-    NotificationService* service = NotificationService::current();
-    service->RemoveObserver(this, NOTIFY_LOAD_START,
-                            NotificationService::AllSources());
-    service->RemoveObserver(this, NOTIFY_LOAD_STOP,
-                            NotificationService::AllSources());
   }
 
   virtual void Observe(NotificationType type,
@@ -83,6 +81,8 @@ class InitialLoadObserver : public NotificationObserver {
 
  private:
   typedef std::set<uintptr_t> TabSet;
+
+  NotificationRegistrar registrar_;
 
   AutomationProvider* automation_;
   size_t outstanding_tab_count_;
@@ -407,7 +407,8 @@ class FindInPageNotificationObserver : public NotificationObserver {
                                  int32 routing_id)
       : automation_(automation),
         parent_tab_(parent_tab),
-        routing_id_(routing_id) {
+        routing_id_(routing_id),
+        active_match_ordinal_(-1) {
     NotificationService::current()->
         AddObserver(this, NOTIFY_FIND_RESULT_AVAILABLE,
                     Source<TabContents>(parent_tab_));
@@ -428,8 +429,13 @@ class FindInPageNotificationObserver : public NotificationObserver {
     if (type == NOTIFY_FIND_RESULT_AVAILABLE) {
       Details<FindNotificationDetails> find_details(details);
       if (find_details->request_id() == kFindInPageRequestId) {
+        // We get multiple responses and one of those will contain the ordinal.
+        // This message comes to us before the final update is sent.
+        if (find_details->active_match_ordinal() > -1)
+          active_match_ordinal_ = find_details->active_match_ordinal();
         if (find_details->final_update()) {
-          automation_->Send(new AutomationMsg_FindInPageResponse(routing_id_,
+          automation_->Send(new AutomationMsg_FindInPageResponse2(routing_id_,
+              active_match_ordinal_,
               find_details->number_of_matches()));
         } else {
           DLOG(INFO) << "Ignoring, since we only care about the final message";
@@ -452,6 +458,9 @@ class FindInPageNotificationObserver : public NotificationObserver {
   AutomationProvider* automation_;
   TabContents* parent_tab_;
   int32 routing_id_;
+  // We will at some point (before final update) be notified of the ordinal and
+  // we need to preserve it so we can send it later.
+  int active_match_ordinal_;
 };
 
 const int FindInPageNotificationObserver::kFindInPageRequestId = -1;
@@ -570,6 +579,23 @@ class DocumentPrintedNotificationObserver : public NotificationObserver {
   scoped_refptr<AutomationProvider> automation_;
   int32 routing_id_;
   bool success_;
+};
+
+class AutomationInterstitialPage : public InterstitialPage {
+ public:
+  AutomationInterstitialPage(WebContents* tab,
+                             const GURL& url,
+                             const std::string& contents)
+      : InterstitialPage(tab, true, url),
+        contents_(contents) {
+  }
+
+  virtual std::string GetHTMLContents() { return contents_; }
+
+ private:
+  std::string contents_;
+  
+  DISALLOW_COPY_AND_ASSIGN(AutomationInterstitialPage);
 };
 
 AutomationProvider::AutomationProvider(Profile* profile)
@@ -782,6 +808,20 @@ void AutomationProvider::OnMessageReceived(const IPC::Message& message) {
                         SetIntPreference)
     IPC_MESSAGE_HANDLER(AutomationMsg_ShowingAppModalDialogRequest,
                         GetShowingAppModalDialog)
+    IPC_MESSAGE_HANDLER(AutomationMsg_ClickAppModalDialogButtonRequest,
+                        ClickAppModalDialogButton)
+    IPC_MESSAGE_HANDLER(AutomationMsg_SetStringPreferenceRequest,
+                        SetStringPreference)
+    IPC_MESSAGE_HANDLER(AutomationMsg_GetBooleanPreferenceRequest,
+                        GetBooleanPreference)
+    IPC_MESSAGE_HANDLER(AutomationMsg_SetBooleanPreferenceRequest,
+                        SetBooleanPreference)
+    IPC_MESSAGE_HANDLER(AutomationMsg_GetPageCurrentEncodingRequest,
+                        GetPageCurrentEncoding)
+    IPC_MESSAGE_HANDLER(AutomationMsg_OverrideEncodingRequest,
+                        OverrideEncoding)
+    IPC_MESSAGE_HANDLER(AutomationMsg_SavePackageShouldPromptUser,
+                        SavePackageShouldPromptUser)
   IPC_END_MESSAGE_MAP()
 }
 
@@ -1045,9 +1085,38 @@ void AutomationProvider::GetBrowserWindowCount(const IPC::Message& message) {
 }
 
 void AutomationProvider::GetShowingAppModalDialog(const IPC::Message& message) {
+  views::AppModalDialogDelegate* dialog_delegate =
+      BrowserList::GetShowingAppModalDialog();
   Send(new AutomationMsg_ShowingAppModalDialogResponse(
-           message.routing_id(),
-           static_cast<bool>(BrowserList::IsShowingAppModalDialog())));
+           message.routing_id(), dialog_delegate != NULL,
+           dialog_delegate ? dialog_delegate->GetDialogButtons() :
+                             views::DialogDelegate::DIALOGBUTTON_NONE));
+}
+
+void AutomationProvider::ClickAppModalDialogButton(const IPC::Message& message,
+                                                   int button) {
+  bool success = false;
+
+  views::AppModalDialogDelegate* dialog_delegate =
+      BrowserList::GetShowingAppModalDialog();
+  if (dialog_delegate &&
+      (dialog_delegate->GetDialogButtons() & button) == button) {
+    views::DialogClientView* client_view =
+        dialog_delegate->window()->client_view()->AsDialogClientView();
+    if ((button & views::DialogDelegate::DIALOGBUTTON_OK) ==
+        views::DialogDelegate::DIALOGBUTTON_OK) {
+      client_view->AcceptWindow();
+      success =  true;
+    }
+    if ((button & views::DialogDelegate::DIALOGBUTTON_CANCEL) ==
+        views::DialogDelegate::DIALOGBUTTON_CANCEL) {
+      DCHECK(!success) << "invalid param, OK and CANCEL specified";
+      client_view->CancelWindow();
+      success =  true;
+    }
+  }
+  Send(new AutomationMsg_ClickAppModalDialogButtonResponse(
+      message.routing_id(), success));
 }
 
 void AutomationProvider::GetBrowserWindow(const IPC::Message& message,
@@ -1132,7 +1201,7 @@ void AutomationProvider::WindowGetViewBounds(const IPC::Message& message,
   void* iter = NULL;
   if (window_tracker_->ContainsHandle(handle)) {
     HWND hwnd = window_tracker_->GetResource(handle);
-    views::RootView* root_view = views::ContainerWin::FindRootView(hwnd);
+    views::RootView* root_view = views::WidgetWin::FindRootView(hwnd);
     if (root_view) {
       views::View* view = root_view->GetViewByID(view_id);
       if (view) {
@@ -1283,14 +1352,14 @@ void AutomationProvider::WindowSimulateDrag(const IPC::Message& message,
                                             bool press_escape_en_route) {
   bool succeeded = false;
   if (browser_tracker_->ContainsHandle(handle) && (drag_path.size() > 1)) {
-      succeeded = true;
+    succeeded = true;
 
     UINT down_message = 0;
     UINT up_message = 0;
     WPARAM wparam_flags = 0;
-      if (flags & views::Event::EF_SHIFT_DOWN)
+    if (flags & views::Event::EF_SHIFT_DOWN)
       wparam_flags |= MK_SHIFT;
-      if (flags & views::Event::EF_CONTROL_DOWN)
+    if (flags & views::Event::EF_CONTROL_DOWN)
       wparam_flags |= MK_CONTROL;
     if (flags & views::Event::EF_LEFT_BUTTON_DOWN) {
       wparam_flags |= MK_LBUTTON;
@@ -1310,7 +1379,8 @@ void AutomationProvider::WindowSimulateDrag(const IPC::Message& message,
 
     Browser* browser = browser_tracker_->GetResource(handle);
     DCHECK(browser);
-    HWND top_level_hwnd = browser->GetTopLevelHWND();
+    HWND top_level_hwnd =
+        reinterpret_cast<HWND>(browser->window()->GetNativeHandle());
     POINT temp = drag_path[0];
     MapWindowPoints(top_level_hwnd, HWND_DESKTOP, &temp, 1);
     SetCursorPos(temp.x, temp.y);
@@ -1327,7 +1397,7 @@ void AutomationProvider::WindowSimulateDrag(const IPC::Message& message,
     MapWindowPoints(top_level_hwnd, HWND_DESKTOP, &end, 1);
     SetCursorPos(end.x, end.y);
 
-      if (press_escape_en_route) {
+    if (press_escape_en_route) {
       // Press Escape.
       ui_controls::SendKeyPress(VK_ESCAPE,
                                ((flags & views::Event::EF_CONTROL_DOWN)
@@ -1336,7 +1406,7 @@ void AutomationProvider::WindowSimulateDrag(const IPC::Message& message,
                                 views::Event::EF_SHIFT_DOWN),
                                ((flags & views::Event::EF_ALT_DOWN) ==
                                 views::Event::EF_ALT_DOWN));
-      }
+    }
     SendMessage(top_level_hwnd, up_message, wparam_flags,
                 MAKELPARAM(end.x, end.y));
 
@@ -1568,10 +1638,8 @@ void AutomationProvider::GetTabProcessID(
     NavigationController* tab = tab_tracker_->GetResource(handle);
     if (tab->active_contents()->AsWebContents()) {
       WebContents* web_contents = tab->active_contents()->AsWebContents();
-      if (web_contents->process()) {
-        process_id =
-            process_util::GetProcId(web_contents->process()->process());
-      }
+      if (web_contents->process())
+        process_id = web_contents->process()->process().pid();
     }
   }
 
@@ -1597,13 +1665,13 @@ void AutomationProvider::ExecuteJavascript(const IPC::Message& message,
     // This routing id needs to be remembered for the reverse
     // communication while sending back the response of
     // this javascript execution.
-    std::wstring url;
-    SStringPrintf(&url,
-      L"javascript:void(window.domAutomationController.setAutomationId(%d));",
+    std::wstring set_automation_id;
+    SStringPrintf(&set_automation_id,
+      L"window.domAutomationController.setAutomationId(%d);",
       message.routing_id());
 
     web_contents->render_view_host()->ExecuteJavascriptInWebFrame(
-        frame_xpath, url);
+        frame_xpath, set_automation_id);
     web_contents->render_view_host()->ExecuteJavascriptInWebFrame(
         frame_xpath, script);
     succeeded = true;
@@ -1693,14 +1761,14 @@ void AutomationProvider::HandleFindInPageRequest(
     int forward, int match_case) {
   NOTREACHED() << "This function has been deprecated."
     << "Please use HandleFindRequest instead.";
-  Send(new AutomationMsg_FindInPageResponse(message.routing_id(), -1));
+  Send(new AutomationMsg_FindInPageResponse2(message.routing_id(), -1, -1));
   return;
 }
 
 void AutomationProvider::HandleFindRequest(const IPC::Message& message,
     int handle, const FindInPageRequest& request) {
   if (!tab_tracker_->ContainsHandle(handle)) {
-    Send(new AutomationMsg_FindInPageResponse(message.routing_id(), -1));
+    Send(new AutomationMsg_FindInPageResponse2(message.routing_id(), -1, -1));
     return;
   }
 
@@ -1711,17 +1779,18 @@ void AutomationProvider::HandleFindRequest(const IPC::Message& message,
       FindInPageNotificationObserver(this, tab_contents, message.routing_id()));
 
   // The find in page dialog must be up for us to get the notification that the
-  // find was complete
-  if (tab_contents->AsWebContents()) {
+  // find was complete.
+  WebContents* web_contents = tab_contents->AsWebContents();
+  if (web_contents) {
     NavigationController* tab = tab_tracker_->GetResource(handle);
     Browser* browser = Browser::GetBrowserForController(tab, NULL);
-    tab_contents->AsWebContents()->OpenFindInPageWindow(*browser);
-  }
+    web_contents->view()->FindInPage(*browser, true, request.forward);
 
-  tab_contents->StartFinding(
-      FindInPageNotificationObserver::kFindInPageRequestId,
-      request.search_string, request.forward, request.match_case,
-      request.find_next);
+    web_contents->render_view_host()->StartFinding(
+        FindInPageNotificationObserver::kFindInPageRequestId,
+        request.search_string, request.forward, request.match_case,
+        request.find_next);
+  }
 }
 
 void AutomationProvider::HandleOpenFindInPageRequest(
@@ -1730,16 +1799,17 @@ void AutomationProvider::HandleOpenFindInPageRequest(
   WebContents* web_contents = GetWebContentsForHandle(handle, &tab);
   if (web_contents) {
     Browser* browser = Browser::GetBrowserForController(tab, NULL);
-    web_contents->OpenFindInPageWindow(*browser);
+    web_contents->view()->FindInPage(*browser, false, false);
   }
 }
 
 void AutomationProvider::GetFindWindowVisibility(const IPC::Message& message,
                                                  int handle) {
+  gfx::Point position;
   bool visible = false;
   WebContents* web_contents = GetWebContentsForHandle(handle, NULL);
   if (web_contents)
-    visible = web_contents->IsFindWindowFullyVisible();
+    web_contents->view()->GetFindBarWindowInfo(&position, &visible);
 
   Send(new AutomationMsg_FindWindowVisibilityResponse(message.routing_id(),
                                                       visible));
@@ -1747,13 +1817,15 @@ void AutomationProvider::GetFindWindowVisibility(const IPC::Message& message,
 
 void AutomationProvider::HandleFindWindowLocationRequest(
     const IPC::Message& message, int handle) {
-  int x = -1, y = -1;
+  gfx::Point position(0, 0);
+  bool visible = false;
   WebContents* web_contents = GetWebContentsForHandle(handle, NULL);
   if (web_contents)
-    web_contents->GetFindInPageWindowLocation(&x, &y);
+    web_contents->view()->GetFindBarWindowInfo(&position, &visible);
 
   Send(new AutomationMsg_FindWindowLocationResponse(message.routing_id(),
-                                                    x, y));
+                                                    position.x(),
+                                                    position.y()));
 }
 
 void AutomationProvider::GetBookmarkBarVisitility(const IPC::Message& message,
@@ -1833,7 +1905,7 @@ void AutomationProvider::GetDownloadDirectory(const IPC::Message& message,
     NavigationController* tab = tab_tracker_->GetResource(handle);
     DownloadManager* dlm = tab->profile()->GetDownloadManager();
     DCHECK(dlm);
-    download_directory = dlm->download_path();
+    download_directory = dlm->download_path().ToWStringHack();
   }
 
   Send(new AutomationMsg_DownloadDirectoryResponse(message.routing_id(),
@@ -1843,7 +1915,10 @@ void AutomationProvider::GetDownloadDirectory(const IPC::Message& message,
 void AutomationProvider::OpenNewBrowserWindow(int show_command) {
   // We may have no current browser windows open so don't rely on
   // asking an existing browser to execute the IDC_NEWWINDOW command
-  Browser::OpenNewBrowserWindow(profile_, show_command);
+  Browser* browser = Browser::Create(profile_);
+  browser->AddBlankTab(true);
+  if (show_command != SW_HIDE)
+    browser->window()->Show();
 }
 
 void AutomationProvider::GetWindowForBrowser(const IPC::Message& message,
@@ -1853,7 +1928,7 @@ void AutomationProvider::GetWindowForBrowser(const IPC::Message& message,
 
   if (browser_tracker_->ContainsHandle(browser_handle)) {
     Browser* browser = browser_tracker_->GetResource(browser_handle);
-    HWND hwnd = browser->GetTopLevelHWND();
+    HWND hwnd = reinterpret_cast<HWND>(browser->window()->GetNativeHandle());
     // Add() returns the existing handle for the resource if any.
     window_handle = window_tracker_->Add(hwnd);
     success = true;
@@ -1890,7 +1965,8 @@ void AutomationProvider::GetBrowserForWindow(const IPC::Message& message,
     BrowserList::const_iterator iter = BrowserList::begin();
     Browser* browser = NULL;
     for (;iter != BrowserList::end(); ++iter) {
-      if (window == (*iter)->GetTopLevelHWND()) {
+      HWND hwnd = reinterpret_cast<HWND>((*iter)->window()->GetNativeHandle());
+      if (window == hwnd) {
         browser = *iter;
         break;
       }
@@ -1917,7 +1993,11 @@ void AutomationProvider::ShowInterstitialPage(const IPC::Message& message,
                                                          true),
           NULL);
       WebContents* web_contents = tab_contents->AsWebContents();
-      web_contents->ShowInterstitialPage(html_text, NULL);
+      AutomationInterstitialPage* interstitial =
+          new AutomationInterstitialPage(web_contents,
+                                         GURL("about:interstitial"),
+                                         html_text);
+      interstitial->Show();
       return;
     }
   }
@@ -1928,8 +2008,8 @@ void AutomationProvider::ShowInterstitialPage(const IPC::Message& message,
 void AutomationProvider::HideInterstitialPage(const IPC::Message& message,
                                               int tab_handle) {
   WebContents* web_contents = GetWebContentsForHandle(tab_handle, NULL);
-  if (web_contents) {
-    web_contents->HideInterstitialPage(false, false);
+  if (web_contents && web_contents->interstitial_page()) {
+    web_contents->interstitial_page()->DontProceed();
     Send(new AutomationMsg_HideInterstitialPageResponse(message.routing_id(),
                                                         true));
     return;
@@ -2087,8 +2167,8 @@ void AutomationProvider::ActionOnSSLBlockingPage(const IPC::Message& message,
     NavigationEntry* entry = tab->GetActiveEntry();
     if (entry->page_type() == NavigationEntry::INTERSTITIAL_PAGE) {
       TabContents* tab_contents = tab->GetTabContents(TAB_CONTENTS_WEB);
-      SSLBlockingPage* ssl_blocking_page =
-          SSLBlockingPage::GetSSLBlockingPage(tab_contents);
+      InterstitialPage* ssl_blocking_page =
+          InterstitialPage::GetInterstitialPage(tab_contents->AsWebContents());
       if (ssl_blocking_page) {
         if (proceed) {
           AddNavigationStatusListener(tab,
@@ -2115,7 +2195,7 @@ void AutomationProvider::BringBrowserToFront(const IPC::Message& message,
                                              int browser_handle) {
   if (browser_tracker_->ContainsHandle(browser_handle)) {
     Browser* browser = browser_tracker_->GetResource(browser_handle);
-    browser->MoveToFront(true);
+    browser->window()->Activate();
     Send(new AutomationMsg_BringBrowserToFrontResponse(message.routing_id(),
                                                        true));
   } else {
@@ -2165,7 +2245,7 @@ void AutomationProvider::SavePage(const IPC::Message& message,
   NavigationController* nav = tab_tracker_->GetResource(tab_handle);
   Browser* browser = FindAndActivateTab(nav);
   DCHECK(browser);
-  if (!browser->IsCommandEnabled(IDC_SAVEPAGE)) {
+  if (!browser->IsCommandEnabled(IDC_SAVE_PAGE)) {
     Send(new AutomationMsg_SavePageResponse(message.routing_id(), false));
     return;
   }
@@ -2218,10 +2298,10 @@ void AutomationProvider::AutocompleteEditGetMatches(
   bool success = false;
   std::vector<AutocompleteMatchData> matches;
   if (autocomplete_edit_tracker_->ContainsHandle(autocomplete_edit_handle)) {
-    const AutocompleteResult* result = autocomplete_edit_tracker_->
-        GetResource(autocomplete_edit_handle)->model()->latest_result();
-    for (AutocompleteResult::const_iterator i = result->begin();
-        i != result->end(); ++i)
+    const AutocompleteResult& result = autocomplete_edit_tracker_->
+        GetResource(autocomplete_edit_handle)->model()->result();
+    for (AutocompleteResult::const_iterator i = result.begin();
+        i != result.end(); ++i)
       matches.push_back(AutocompleteMatchData(*i));
     success = true;
   }
@@ -2335,10 +2415,8 @@ void AutomationProvider::GetSSLInfoBarCount(const IPC::Message& message,
   int count = -1;  // -1 means error.
   if (tab_tracker_->ContainsHandle(handle)) {
     NavigationController* nav_controller = tab_tracker_->GetResource(handle);
-    if (nav_controller) {
-      count = static_cast<int>(nav_controller->ssl_manager()->
-          visible_info_bars_.size());
-    }
+    if (nav_controller)
+      count = nav_controller->active_contents()->infobar_delegate_count();
   }
   Send(new AutomationMsg_GetSSLInfoBarCountResponse(message.routing_id(),
                                                     count));
@@ -2352,8 +2430,7 @@ void AutomationProvider::ClickSSLInfoBarLink(const IPC::Message& message,
   if (tab_tracker_->ContainsHandle(handle)) {
     NavigationController* nav_controller = tab_tracker_->GetResource(handle);
     if (nav_controller) {
-      int count = static_cast<int>(nav_controller->ssl_manager()->
-          visible_info_bars_.size());
+      int count = nav_controller->active_contents()->infobar_delegate_count();
       if (info_bar_index >= 0 && info_bar_index < count) {
         if (wait_for_navigation) {
           AddNavigationStatusListener(nav_controller,
@@ -2362,10 +2439,11 @@ void AutomationProvider::ClickSSLInfoBarLink(const IPC::Message& message,
               new AutomationMsg_ClickSSLInfoBarLinkResponse(
                   message.routing_id(), true));
         }
-        SSLManager::SSLInfoBar* info_bar = 
-          nav_controller->ssl_manager()->visible_info_bars_.
-          GetElementAt(info_bar_index);
-        info_bar->LinkActivated(NULL, 0);  // Parameters are not used.
+        InfoBarDelegate* delegate =
+            nav_controller->active_contents()->GetInfoBarDelegateAt(
+                info_bar_index);
+        if (delegate->AsConfirmInfoBarDelegate())
+          delegate->AsConfirmInfoBarDelegate()->Accept();
         success = true;
       }
     }
@@ -2405,7 +2483,7 @@ void AutomationProvider::WaitForNavigation(const IPC::Message& message,
 
 void AutomationProvider::SetIntPreference(const IPC::Message& message,
                                           int handle,
-                                          std::wstring name,
+                                          const std::wstring& name,
                                           int value) {
   bool success = false;
   if (browser_tracker_->ContainsHandle(handle)) {
@@ -2415,4 +2493,95 @@ void AutomationProvider::SetIntPreference(const IPC::Message& message,
   }
   Send(new AutomationMsg_SetIntPreferenceResponse(message.routing_id(),
                                                   success));
+}
+
+void AutomationProvider::SetStringPreference(const IPC::Message& message,
+                                             int handle,
+                                             const std::wstring& name,
+                                             const std::wstring& value) {
+  bool success = false;
+  if (browser_tracker_->ContainsHandle(handle)) {
+    Browser* browser = browser_tracker_->GetResource(handle);
+    browser->profile()->GetPrefs()->SetString(name.c_str(), value);
+    success = true;
+  }
+  Send(new AutomationMsg_SetStringPreferenceResponse(message.routing_id(),
+                                                     success));
+}
+
+void AutomationProvider::GetBooleanPreference(const IPC::Message& message,
+                                              int handle,
+                                              const std::wstring& name) {
+  bool success = false;
+  bool value = false;
+  if (browser_tracker_->ContainsHandle(handle)) {
+    Browser* browser = browser_tracker_->GetResource(handle);
+    value = browser->profile()->GetPrefs()->GetBoolean(name.c_str());
+    success = true;
+  }
+  Send(new AutomationMsg_GetBooleanPreferenceResponse(message.routing_id(),
+                                                      success, value));
+}
+
+void AutomationProvider::SetBooleanPreference(const IPC::Message& message,
+                                              int handle,
+                                              const std::wstring& name,
+                                              bool value) {
+  bool success = false;
+  if (browser_tracker_->ContainsHandle(handle)) {
+    Browser* browser = browser_tracker_->GetResource(handle);
+    browser->profile()->GetPrefs()->SetBoolean(name.c_str(), value);
+    success = true;
+  }
+  Send(new AutomationMsg_SetBooleanPreferenceResponse(message.routing_id(),
+                                                      success));
+}
+
+// Gets the current used encoding name of the page in the specified tab.
+void AutomationProvider::GetPageCurrentEncoding(const IPC::Message& message,
+                                                int tab_handle) {
+  std::wstring current_encoding;
+  if (tab_tracker_->ContainsHandle(tab_handle)) {
+    NavigationController* nav = tab_tracker_->GetResource(tab_handle);
+    Browser* browser = FindAndActivateTab(nav);
+    DCHECK(browser);
+
+    if (browser->IsCommandEnabled(IDC_ENCODING_MENU)) {
+      TabContents* tab_contents = nav->active_contents();
+      DCHECK(tab_contents->type() == TAB_CONTENTS_WEB);
+      current_encoding = tab_contents->AsWebContents()->encoding();
+    }
+  }
+  Send(new AutomationMsg_GetPageCurrentEncodingResponse(message.routing_id(),
+                                                        current_encoding));
+}
+
+// Gets the current used encoding name of the page in the specified tab.
+void AutomationProvider::OverrideEncoding(const IPC::Message& message,
+                                          int tab_handle,
+                                          const std::wstring& encoding_name) {
+  bool succeed = false;
+  if (tab_tracker_->ContainsHandle(tab_handle)) {
+    NavigationController* nav = tab_tracker_->GetResource(tab_handle);
+    Browser* browser = FindAndActivateTab(nav);
+    DCHECK(browser);
+
+    if (browser->IsCommandEnabled(IDC_ENCODING_MENU)) {
+      TabContents* tab_contents = nav->active_contents();
+      DCHECK(tab_contents->type() == TAB_CONTENTS_WEB);
+      int selected_encoding_id =
+          CharacterEncoding::GetCommandIdByCanonicalEncodingName(encoding_name);
+      if (selected_encoding_id) {
+        browser->OverrideEncoding(selected_encoding_id);
+        succeed = true;
+      }
+    }
+  }
+  Send(new AutomationMsg_OverrideEncodingResponse(message.routing_id(),
+                                                  succeed));
+}
+
+void AutomationProvider::SavePackageShouldPromptUser(
+    const IPC::Message& message, bool should_prompt) {
+  SavePackage::SetShouldPromptUser(should_prompt);
 }

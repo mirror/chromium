@@ -11,11 +11,11 @@
 #include "base/file_util.h"
 #include "base/string_util.h"
 #include "base/gfx/native_theme.h"
-#include "base/gfx/skia_utils.h"
 #include "base/string_util.h"
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/shell_dialogs.h"
+#include "chrome/browser/spellchecker.h"
 #include "chrome/browser/views/options/language_combobox_model.h"
 #include "chrome/browser/views/password_manager_view.h"
 #include "chrome/browser/views/restart_message_box.h"
@@ -28,54 +28,17 @@
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/checkbox.h"
 #include "chrome/views/combo_box.h"
-#include "chrome/views/container.h"
 #include "chrome/views/grid_layout.h"
 #include "chrome/views/native_button.h"
 #include "chrome/views/radio_button.h"
 #include "chrome/views/tabbed_pane.h"
 #include "chrome/views/text_field.h"
+#include "chrome/views/widget.h"
 #include "skia/include/SkBitmap.h"
 #include "unicode/uloc.h"
 
 #include "chromium_strings.h"
 #include "generated_resources.h"
-
-static const wchar_t* const g_supported_spellchecker_languages[] = {
-  L"en-US",
-  L"en-GB",
-  L"fr-FR",
-  L"it-IT",
-  L"de-DE",
-  L"es-ES",
-  L"nl-NL",
-  L"pt-BR",
-  L"ru-RU",
-  L"pl-PL",
-  // L"th-TH",  // Not to be included in Spellchecker as per B=1277824
-  L"sv-SE",
-  L"da-DK",
-  L"pt-PT",
-  L"ro-RO",
-  // L"hu-HU",  // Not to be included in Spellchecker as per B=1277824
-  L"he-IL",
-  L"id-ID",
-  L"cs-CZ",
-  L"el-GR",
-  L"nb-NO",
-  L"vi-VN",
-  // L"bg-BG",  // Not to be included in Spellchecker as per B=1277824
-  L"hr-HR",
-  L"lt-LT",
-  L"sk-SK",
-  L"sl-SI",
-  L"ca-ES",
-  L"lv-LV",
-  // L"uk-UA",  // Not to be included in Spellchecker as per B=1277824
-  L"hi-IN",
-  //
-  // TODO(Sidchat): Uncomment/remove languages as and when they get resolved.
-  //
-};
 
 static const wchar_t* const accept_language_list[] = {
   L"af",     // Afrikaans
@@ -318,7 +281,7 @@ gfx::Size AddLanguageWindowView::GetPreferredSize() {
 void AddLanguageWindowView::ViewHierarchyChanged(bool is_add,
                                                  views::View* parent,
                                                  views::View* child) {
-  // Can't init before we're inserted into a Container, because we require
+  // Can't init before we're inserted into a Widget, because we require
   // a HWND to parent native child controls to.
   if (is_add && child == this)
     Init();
@@ -523,7 +486,7 @@ void LanguagesPageView::ButtonPressed(views::NativeButton* sender) {
     language_table_edited_ = true;
   } else if (sender == add_button_) {
     views::Window::CreateChromeWindow(
-        GetContainer()->GetHWND(),
+        GetWidget()->GetHWND(),
         gfx::Rect(),
         new AddLanguageWindowView(this, profile()))->Show();
     language_table_edited_ = true;
@@ -650,11 +613,20 @@ void LanguagesPageView::InitControlLayout() {
       l10n_util::GetString(IDS_OPTIONS_ENABLE_SPELLCHECK));
   enable_spellchecking_checkbox_->SetListener(this);
   enable_spellchecking_checkbox_->SetMultiLine(true);
-  
-  layout->StartRow(0, single_column_view_set_id);
-  layout->AddView(language_info_label_);
-  layout->AddPaddingRow(0, kRelatedControlVerticalSpacing);
 
+  // Determine Locale Codes.
+  SpellChecker::Languages spell_check_languages;
+  SpellChecker::SpellCheckLanguages(&spell_check_languages);
+  dictionary_language_model_.reset(new LanguageComboboxModel(profile(),
+      spell_check_languages));
+  change_dictionary_language_combobox_ =
+      new views::ComboBox(dictionary_language_model_.get());
+  change_dictionary_language_combobox_->SetListener(this);
+
+  // SpellCheck language settings.
+  layout->StartRow(0, single_column_view_set_id);
+  layout->AddView(enable_spellchecking_checkbox_);
+  layout->AddPaddingRow(0, kRelatedControlVerticalSpacing);
   const int double_column_view_set_2_id = 2;
   column_set = layout->AddColumnSet(double_column_view_set_2_id);
   column_set->AddColumn(GridLayout::FILL, GridLayout::FILL, 0,
@@ -663,28 +635,20 @@ void LanguagesPageView::InitControlLayout() {
   column_set->AddColumn(GridLayout::FILL, GridLayout::FILL, 1,
                         GridLayout::USE_PREF, 0, 0);
 
-  // Determine Locale Codes.
-  std::vector<std::wstring> locale_codes;
-  for (size_t i = 0; i < arraysize(g_supported_spellchecker_languages); ++i)
-    locale_codes.push_back(g_supported_spellchecker_languages[i]);
-  dictionary_language_model_.reset(new LanguageComboboxModel(profile(),
-                                                             locale_codes));
-  change_dictionary_language_combobox_ =
-      new views::ComboBox(dictionary_language_model_.get());
-  change_dictionary_language_combobox_->SetListener(this);
+  layout->StartRow(0, double_column_view_set_2_id);
+  layout->AddView(dictionary_language_label_);
+  layout->AddView(change_dictionary_language_combobox_);
+
+  // UI language settings.
+  layout->AddPaddingRow(0, kUnrelatedControlLargeVerticalSpacing);
+  layout->StartRow(0, single_column_view_set_id);
+  layout->AddView(language_info_label_);
+  layout->AddPaddingRow(0, kRelatedControlVerticalSpacing);
 
   layout->StartRow(0, double_column_view_set_2_id);
   layout->AddView(ui_language_label_);
   layout->AddView(change_ui_language_combobox_);
   layout->AddPaddingRow(0, kRelatedControlVerticalSpacing);
-
-  // SpellChecker settings.
-  layout->StartRow(0, single_column_view_set_id);
-  layout->AddView(enable_spellchecking_checkbox_);
-  layout->AddPaddingRow(0, kRelatedControlVerticalSpacing);
-  layout->StartRow(0, double_column_view_set_2_id);
-  layout->AddView(dictionary_language_label_);
-  layout->AddView(change_dictionary_language_combobox_);
 
   // Init member prefs so we can update the controls if prefs change.
   app_locale_.Init(prefs::kApplicationLocale,

@@ -21,6 +21,8 @@
 #include "net/base/base64.h"
 #include "net/base/load_flags.h"
 
+using base::Time;
+using base::TimeDelta;
 
 // Maximum time, in seconds, from start up before we must issue an update query.
 static const int kSbTimerStartIntervalSec = 5 * 60;
@@ -66,7 +68,8 @@ SafeBrowsingProtocolManager::SafeBrowsingProtocolManager(
       chunk_pending_to_write_(false),
       notify_loop_(notify_loop),
       client_key_(client_key),
-      wrapped_key_(wrapped_key) {
+      wrapped_key_(wrapped_key),
+      update_size_(0) {
   // Set the backoff multiplier fuzz to a random value between 0 and 1.
   back_off_fuzz_ = static_cast<float>(base::RandDouble());
 
@@ -216,7 +219,7 @@ void SafeBrowsingProtocolManager::OnURLFetchComplete(
                       << "failed parse.";
         must_back_off = true;
         chunk_request_urls_.clear();
-        sb_service_->UpdateFinished(false);
+        UpdateFinished(false);
       }
 
       if (request_type_ == CHUNK_REQUEST && parsed_ok) {
@@ -233,7 +236,7 @@ void SafeBrowsingProtocolManager::OnURLFetchComplete(
       must_back_off = true;
       if (request_type_ == CHUNK_REQUEST)
         chunk_request_urls_.clear();
-      sb_service_->UpdateFinished(false);
+      UpdateFinished(false);
       SB_DLOG(INFO) << "SafeBrowsing request for: " << source->url()
                     << ", failed with error: " << response_code;
     }
@@ -290,6 +293,7 @@ bool SafeBrowsingProtocolManager::HandleServiceResponse(const GURL& url,
 
       // New chunks to download.
       if (!chunk_urls.empty()) {
+        UMA_HISTOGRAM_COUNTS(L"SB2.UpdateUrls", chunk_urls.size());
         for (size_t i = 0; i < chunk_urls.size(); ++i)
           chunk_request_urls_.push_back(chunk_urls[i]);
       }
@@ -313,11 +317,13 @@ bool SafeBrowsingProtocolManager::HandleServiceResponse(const GURL& url,
     case CHUNK_REQUEST: {
       if (sb_service_->new_safe_browsing())
         UMA_HISTOGRAM_TIMES(L"SB2.ChunkRequest",
-                            Time::Now() - chunk_request_start_);
+                            base::Time::Now() - chunk_request_start_);
 
       const ChunkUrl chunk_url = chunk_request_urls_.front();
       bool re_key = false;
       std::deque<SBChunk>* chunks = new std::deque<SBChunk>;
+      UMA_HISTOGRAM_COUNTS(L"SB2.ChunkSize", length);
+      update_size_ += length;
       if (!parser.ParseChunk(data, length,
                              client_key_, chunk_url.mac,
                              &re_key, chunks)) {
@@ -452,7 +458,7 @@ void SafeBrowsingProtocolManager::IssueChunkRequest() {
   request_.reset(new URLFetcher(chunk_url, URLFetcher::GET, this));
   request_->set_load_flags(net::LOAD_DISABLE_CACHE);
   request_->set_request_context(Profile::GetDefaultRequestContext());
-  chunk_request_start_ = Time::Now();
+  chunk_request_start_ = base::Time::Now();
   request_->Start();
 }
 
@@ -526,7 +532,7 @@ void SafeBrowsingProtocolManager::OnChunkInserted() {
       UMA_HISTOGRAM_LONG_TIMES(L"SB2.Update", Time::Now() - last_update_);
     else
       UMA_HISTOGRAM_LONG_TIMES(L"SB.Update", Time::Now() - last_update_);
-    sb_service_->UpdateFinished(true);
+    UpdateFinished(true);
   } else {
     IssueChunkRequest();
   }
@@ -564,4 +570,10 @@ void SafeBrowsingProtocolManager::HandleReKey() {
 void SafeBrowsingProtocolManager::HandleGetHashError() {
   int next = GetNextBackOffTime(&gethash_error_count_, &gethash_back_off_mult_);
   next_gethash_time_ = Time::Now() + TimeDelta::FromSeconds(next);
+}
+
+void SafeBrowsingProtocolManager::UpdateFinished(bool success) {
+  UMA_HISTOGRAM_COUNTS(L"SB2.UpdateSize", update_size_);
+  update_size_ = 0;
+  sb_service_->UpdateFinished(success);
 }

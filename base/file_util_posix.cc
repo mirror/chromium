@@ -9,20 +9,23 @@
 #include <fnmatch.h>
 #include <fts.h>
 #include <libgen.h>
+#include <stdio.h>
 #include <string.h>
 #include <sys/errno.h>
+#include <sys/mman.h>
 #include <sys/stat.h>
 #include <time.h>
 
 #include <fstream>
 
 #include "base/basictypes.h"
+#include "base/file_path.h"
 #include "base/logging.h"
 #include "base/string_util.h"
 
 namespace file_util {
 
-static const wchar_t* kTempFileName = L"com.google.chrome.XXXXXX";
+static const char* kTempFileName = "com.google.chrome.XXXXXX";
 
 std::wstring GetDirectoryFromPath(const std::wstring& path) {
   if (EndsWithSeparator(path)) {
@@ -36,11 +39,11 @@ std::wstring GetDirectoryFromPath(const std::wstring& path) {
   }
 }
   
-bool AbsolutePath(std::wstring* path) {
+bool AbsolutePath(FilePath* path) {
   char full_path[PATH_MAX];
-  if (realpath(WideToUTF8(*path).c_str(), full_path) == NULL)
+  if (realpath(path->value().c_str(), full_path) == NULL)
     return false;
-  *path = UTF8ToWide(full_path);
+  *path = FilePath(full_path);
   return true;
 }
 
@@ -48,25 +51,24 @@ bool AbsolutePath(std::wstring* path) {
 // which works both with and without the recursive flag.  I'm not sure we need
 // that functionality. If not, remove from file_util_win.cc, otherwise add it
 // here.
-bool Delete(const std::wstring& path, bool recursive) {
-  std::string utf8_path_string = WideToUTF8(path);
-  const char* utf8_path = utf8_path_string.c_str();
+bool Delete(const FilePath& path, bool recursive) {
+  const char* path_str = path.value().c_str();
   struct stat64 file_info;
-  int test = stat64(utf8_path, &file_info);
+  int test = stat64(path_str, &file_info);
   if (test != 0) {
     // The Windows version defines this condition as success.
     bool ret = (errno == ENOENT || errno == ENOTDIR); 
     return ret;
   }
   if (!S_ISDIR(file_info.st_mode))
-    return (unlink(utf8_path) == 0);
+    return (unlink(path_str) == 0);
   if (!recursive)
-    return (rmdir(utf8_path) == 0);
+    return (rmdir(path_str) == 0);
 
   bool success = true;
   int ftsflags = FTS_PHYSICAL | FTS_NOSTAT;
   char top_dir[PATH_MAX];
-  if (base::strlcpy(top_dir, utf8_path,
+  if (base::strlcpy(top_dir, path_str,
                     arraysize(top_dir)) >= arraysize(top_dir)) {
     return false;
   }
@@ -83,7 +85,7 @@ bool Delete(const std::wstring& path, bool recursive) {
           continue;
           break;
         case FTS_DP:
-          rmdir(fts_ent->fts_accpath);
+          success = (rmdir(fts_ent->fts_accpath) == 0);
           break;
         case FTS_D:
           break;
@@ -91,7 +93,7 @@ bool Delete(const std::wstring& path, bool recursive) {
         case FTS_F:
         case FTS_SL:
         case FTS_SLNONE:
-          unlink(fts_ent->fts_accpath);
+          success = (unlink(fts_ent->fts_accpath) == 0);
           break;
         default:
           DCHECK(false);
@@ -104,26 +106,23 @@ bool Delete(const std::wstring& path, bool recursive) {
   return success;
 }
 
-bool Move(const std::wstring& from_path, const std::wstring& to_path) {
-  return (rename(WideToUTF8(from_path).c_str(),
-                 WideToUTF8(to_path).c_str()) == 0);
+bool Move(const FilePath& from_path, const FilePath& to_path) {
+  return (rename(from_path.value().c_str(),
+                 to_path.value().c_str()) == 0);
 }
 
-bool CopyDirectory(const std::wstring& from_path_wide,
-                   const std::wstring& to_path_wide,
+bool CopyDirectory(const FilePath& from_path,
+                   const FilePath& to_path,
                    bool recursive) {
-  const std::string to_path = WideToUTF8(to_path_wide);
-  const std::string from_path = WideToUTF8(from_path_wide);
-
   // Some old callers of CopyDirectory want it to support wildcards.
   // After some discussion, we decided to fix those callers.
   // Break loudly here if anyone tries to do this.
   // TODO(evanm): remove this once we're sure it's ok.
-  DCHECK(to_path.find('*') == std::string::npos);
-  DCHECK(from_path.find('*') == std::string::npos);
+  DCHECK(to_path.value().find('*') == std::string::npos);
+  DCHECK(from_path.value().find('*') == std::string::npos);
 
   char top_dir[PATH_MAX];
-  if (base::strlcpy(top_dir, from_path.c_str(),
+  if (base::strlcpy(top_dir, from_path.value().c_str(),
                     arraysize(top_dir)) >= arraysize(top_dir)) {
     return false;
   }
@@ -140,7 +139,8 @@ bool CopyDirectory(const std::wstring& from_path_wide,
   while (!error && (ent = fts_read(fts)) != NULL) {
     // ent->fts_path is the source path, including from_path, so paste
     // the suffix after from_path onto to_path to create the target_path.
-    const std::string target_path = to_path + &ent->fts_path[from_path.size()];
+    const std::string target_path =
+        to_path.value() + &ent->fts_path[from_path.value().size()];
     switch (ent->fts_info) {
       case FTS_D:  // Preorder directory.
         // If we encounter a subdirectory in a non-recursive copy, prune it
@@ -210,14 +210,34 @@ bool CopyDirectory(const std::wstring& from_path_wide,
   return true;
 }
 
-bool PathExists(const std::wstring& path) {
+bool PathExists(const FilePath& path) {
   struct stat64 file_info;
-  return (stat64(WideToUTF8(path).c_str(), &file_info) == 0);
+  return (stat64(path.value().c_str(), &file_info) == 0);
 }
 
-bool DirectoryExists(const std::wstring& path) {
+bool PathIsWritable(const FilePath& path) {
+  FilePath test_path(path);
   struct stat64 file_info;
-  if (stat64(WideToUTF8(path).c_str(), &file_info) == 0)
+  if (stat64(test_path.value().c_str(), &file_info) != 0) {
+    // If the path doesn't exist, test the parent dir.
+    test_path = test_path.DirName();
+    // If the parent dir doesn't exist, then return false (the path is not
+    // directly writable).
+    if (stat64(test_path.value().c_str(), &file_info) != 0)
+      return false;
+  }
+  if (S_IWOTH & file_info.st_mode)
+    return true;
+  if (getegid() == file_info.st_gid && (S_IWGRP & file_info.st_mode))
+    return true;
+  if (geteuid() == file_info.st_uid && (S_IWUSR & file_info.st_mode))
+    return true;
+  return false;
+}
+
+bool DirectoryExists(const FilePath& path) {
+  struct stat64 file_info;
+  if (stat64(path.value().c_str(), &file_info) == 0)
     return S_ISDIR(file_info.st_mode);
   return false;
 }
@@ -250,19 +270,20 @@ bool GetFileCreationLocalTime(const std::string& filename,
 }
 #endif
 
-bool CreateTemporaryFileName(std::wstring* temp_file) {
-  std::wstring tmpdir;
-  if (!GetTempDir(&tmpdir))
+bool CreateTemporaryFileName(FilePath* path) {
+  if (!GetTempDir(path))
     return false;
-  AppendToPath(&tmpdir, kTempFileName);
-  std::string tmpdir_string = WideToUTF8(tmpdir);
+
+  *path = path->Append(kTempFileName);
+  std::string tmpdir_string = path->value();
   // this should be OK since mkstemp just replaces characters in place
   char* buffer = const_cast<char*>(tmpdir_string.c_str());
+
   int fd = mkstemp(buffer);
   if (fd < 0)
     return false;
-  *temp_file = UTF8ToWide(buffer);
-  close(fd); 
+
+  close(fd);
   return true;
 }
 
@@ -273,54 +294,67 @@ bool CreateTemporaryFileNameInDir(const std::wstring& dir,
   return false;
 }
 
-bool CreateNewTempDirectory(const std::wstring& prefix,
-                            std::wstring* new_temp_path) {
-  std::wstring tmpdir;
+bool CreateNewTempDirectory(const FilePath::StringType& prefix,
+                            FilePath* new_temp_path) {
+  FilePath tmpdir;
   if (!GetTempDir(&tmpdir))
     return false;
-  AppendToPath(&tmpdir, kTempFileName);
-  std::string tmpdir_string = WideToUTF8(tmpdir);
+  tmpdir = tmpdir.Append(kTempFileName);
+  std::string tmpdir_string = tmpdir.value();
   // this should be OK since mkdtemp just replaces characters in place
   char* buffer = const_cast<char*>(tmpdir_string.c_str());
   char* dtemp = mkdtemp(buffer);
   if (!dtemp)
     return false;
-  *new_temp_path = UTF8ToWide(dtemp);
+  *new_temp_path = FilePath(dtemp);
   return true;
 }
 
-bool CreateDirectory(const std::wstring& full_path) {
-  std::vector<std::wstring> components;
-  PathComponents(full_path, &components);
-  std::wstring path;
-  std::vector<std::wstring>::iterator i = components.begin();
-  for (; i != components.end(); ++i) {
-    if (path.length() == 0)
-      path = *i;
-    else
-      AppendToPath(&path, *i);
-    if (!DirectoryExists(path)) {
-      if (mkdir(WideToUTF8(path).c_str(), 0777) != 0)
+bool CreateDirectory(const FilePath& full_path) {
+  std::vector<FilePath> subpaths;
+
+  // Collect a list of all parent directories.
+  FilePath last_path = full_path;
+  subpaths.push_back(full_path);
+  for (FilePath path = full_path.DirName();
+       path.value() != last_path.value(); path = path.DirName()) {
+    subpaths.push_back(path);
+    last_path = path;
+  }
+
+  // Iterate through the parents and create the missing ones.
+  for (std::vector<FilePath>::reverse_iterator i = subpaths.rbegin();
+       i != subpaths.rend(); ++i) {
+    if (!DirectoryExists(*i)) {
+      if (mkdir(i->value().c_str(), 0777) != 0)
         return false;
     }
   }
   return true;
 }
 
-bool GetFileInfo(const std::wstring& file_path, FileInfo* results) {
+bool GetFileInfo(const FilePath& file_path, FileInfo* results) {
   struct stat64 file_info;
-  if (stat64(WideToUTF8(file_path).c_str(), &file_info) != 0)
+  if (stat64(file_path.value().c_str(), &file_info) != 0)
     return false;
   results->is_directory = S_ISDIR(file_info.st_mode);
   results->size = file_info.st_size;
   return true;
 }
 
+FILE* OpenFile(const std::string& filename, const char* mode) {
+  return OpenFile(FilePath(filename), mode);
+}
+
+FILE* OpenFile(const FilePath& filename, const char* mode) {
+  return fopen(filename.value().c_str(), mode);
+}
+
 int ReadFile(const std::wstring& filename, char* data, int size) {
   int fd = open(WideToUTF8(filename).c_str(), O_RDONLY);
   if (fd < 0)
     return -1;
-  
+
   int ret_value = read(fd, data, size);
   close(fd);
   return ret_value;
@@ -339,7 +373,7 @@ int WriteFile(const std::wstring& filename, const char* data, int size) {
                                           size - bytes_written_total);
     if (bytes_written_partial < 0) {
       close(fd);
-      return -1;      
+      return -1;
     }
     bytes_written_total += bytes_written_partial;
   } while (bytes_written_total < size);
@@ -349,20 +383,26 @@ int WriteFile(const std::wstring& filename, const char* data, int size) {
 }
 
 // Gets the current working directory for the process.
-bool GetCurrentDirectory(std::wstring* dir) {
+bool GetCurrentDirectory(FilePath* dir) {
   char system_buffer[PATH_MAX] = "";
-  getcwd(system_buffer, sizeof(system_buffer));
-  *dir = UTF8ToWide(system_buffer);
+  if (!getcwd(system_buffer, sizeof(system_buffer))) {
+    NOTREACHED();
+    return false;
+  }
+  *dir = FilePath(system_buffer);
   return true;
 }
 
 // Sets the current working directory for the process.
-bool SetCurrentDirectory(const std::wstring& current_directory) {
-  int ret = chdir(WideToUTF8(current_directory).c_str());
-  return (ret == 0);
+bool SetCurrentDirectory(const FilePath& path) {
+  int ret = chdir(path.value().c_str());
+  return !ret;
 }
-  
-FileEnumerator::FileEnumerator(const std::wstring& root_path,
+
+///////////////////////////////////////////////
+// FileEnumerator
+
+FileEnumerator::FileEnumerator(const FilePath& root_path,
                                bool recursive,
                                FileEnumerator::FILE_TYPE file_type)
     : recursive_(recursive),
@@ -372,86 +412,132 @@ FileEnumerator::FileEnumerator(const std::wstring& root_path,
   pending_paths_.push(root_path);
 }
 
-FileEnumerator::FileEnumerator(const std::wstring& root_path,
+FileEnumerator::FileEnumerator(const FilePath& root_path,
                                bool recursive,
                                FileEnumerator::FILE_TYPE file_type,
-                               const std::wstring& pattern)
+                               const FilePath::StringType& pattern)
     : recursive_(recursive),
       file_type_(file_type),
-      pattern_(root_path),
+      pattern_(root_path.value()),
       is_in_find_op_(false),
       fts_(NULL) {
   // The Windows version of this code only matches against items in the top-most
   // directory, and we're comparing fnmatch against full paths, so this is the
   // easiest way to get the right pattern.
-  AppendToPath(&pattern_, pattern);
+  pattern_ = pattern_.Append(pattern);
   pending_paths_.push(root_path);
 }
-  
+
 FileEnumerator::~FileEnumerator() {
   if (fts_)
     fts_close(fts_);
+}
+
+void FileEnumerator::GetFindInfo(FindInfo* info) {
+  DCHECK(info);
+
+  if (!is_in_find_op_)
+    return;
+
+  memcpy(&(info->stat), fts_ent_->fts_statp, sizeof(info->stat));
+  info->filename.assign(fts_ent_->fts_name);
 }
 
 // As it stands, this method calls itself recursively when the next item of
 // the fts enumeration doesn't match (type, pattern, etc.).  In the case of
 // large directories with many files this can be quite deep.
 // TODO(erikkay) - get rid of this recursive pattern
-std::wstring FileEnumerator::Next() {
+FilePath FileEnumerator::Next() {
   if (!is_in_find_op_) {
     if (pending_paths_.empty())
-      return std::wstring();
-    
+      return FilePath();
+
     // The last find FindFirstFile operation is done, prepare a new one.
     root_path_ = pending_paths_.top();
-    TrimTrailingSeparator(&root_path_);
+    root_path_ = root_path_.StripTrailingSeparators();
     pending_paths_.pop();
-    
+
     // Start a new find operation.
     int ftsflags = FTS_LOGICAL;
     char top_dir[PATH_MAX];
-    base::strlcpy(top_dir, WideToUTF8(root_path_).c_str(), sizeof(top_dir));
+    base::strlcpy(top_dir, root_path_.value().c_str(), arraysize(top_dir));
     char* dir_list[2] = { top_dir, NULL };
     fts_ = fts_open(dir_list, ftsflags, NULL);
     if (!fts_)
       return Next();
     is_in_find_op_ = true;
   }
-  
-  FTSENT* fts_ent = fts_read(fts_);
-  if (fts_ent == NULL) {
+
+  fts_ent_ = fts_read(fts_);
+  if (fts_ent_ == NULL) {
     fts_close(fts_);
     fts_ = NULL;
     is_in_find_op_ = false;
     return Next();
   }
-  
+
   // Level 0 is the top, which is always skipped.
-  if (fts_ent->fts_level == 0)
+  if (fts_ent_->fts_level == 0)
     return Next();
-  
+
   // Patterns are only matched on the items in the top-most directory.
   // (see Windows implementation)
-  if (fts_ent->fts_level == 1 && pattern_.length() > 0) {
-    if (fnmatch(WideToUTF8(pattern_).c_str(), fts_ent->fts_path, 0) != 0) {
-      if (fts_ent->fts_info == FTS_D)
-        fts_set(fts_, fts_ent, FTS_SKIP);
+  if (fts_ent_->fts_level == 1 && pattern_.value().length() > 0) {
+    if (fnmatch(pattern_.value().c_str(), fts_ent_->fts_path, 0) != 0) {
+      if (fts_ent_->fts_info == FTS_D)
+        fts_set(fts_, fts_ent_, FTS_SKIP);
       return Next();
     }
   }
-  
-  std::wstring cur_file(UTF8ToWide(fts_ent->fts_path));
-  if (fts_ent->fts_info == FTS_D) {
+
+  FilePath cur_file(fts_ent_->fts_path);
+  if (fts_ent_->fts_info == FTS_D) {
     // If not recursive, then prune children.
     if (!recursive_)
-      fts_set(fts_, fts_ent, FTS_SKIP);
+      fts_set(fts_, fts_ent_, FTS_SKIP);
     return (file_type_ & FileEnumerator::DIRECTORIES) ? cur_file : Next();
-  } else if (fts_ent->fts_info == FTS_F) {
+  } else if (fts_ent_->fts_info == FTS_F) {
     return (file_type_ & FileEnumerator::FILES) ? cur_file : Next();
   }
   // TODO(erikkay) - verify that the other fts_info types aren't interesting
   return Next();
 }
-  
-  
+
+///////////////////////////////////////////////
+// MemoryMappedFile
+
+MemoryMappedFile::MemoryMappedFile()
+    : file_(-1),
+      data_(NULL),
+      length_(0) {
+}
+
+bool MemoryMappedFile::MapFileToMemory(const FilePath& file_name) {
+  file_ = open(file_name.value().c_str(), O_RDONLY);
+  if (file_ == -1)
+    return false;
+
+  struct stat file_stat;
+  if (fstat(file_, &file_stat) == -1)
+    return false;
+  length_ = file_stat.st_size;
+
+  data_ = static_cast<uint8*>(
+      mmap(NULL, length_, PROT_READ, MAP_SHARED, file_, 0));
+  if (data_ == MAP_FAILED)
+    data_ = NULL;
+  return data_ != NULL;
+}
+
+void MemoryMappedFile::CloseHandles() {
+  if (data_ != NULL)
+    munmap(data_, length_);
+  if (file_ != -1)
+    close(file_);
+
+  data_ = NULL;
+  length_ = 0;
+  file_ = -1;
+}
+
 } // namespace file_util

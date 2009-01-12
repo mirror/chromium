@@ -21,7 +21,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)..\build\common.vsprops;$(SolutionDir)..\build\debug.vsprops;$(SolutionDir)..\third_party\icu38\build\using_icu.vsprops;$(SolutionDir)..\third_party\zlib\using_zlib.vsprops;$(SolutionDir)..\sdch\using_sdch.vsprops"
+			InheritedPropertySheets="$(SolutionDir)..\build\debug.vsprops;.\net.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -78,7 +78,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)..\build\common.vsprops;$(SolutionDir)..\build\release.vsprops;$(SolutionDir)..\third_party\icu38\build\using_icu.vsprops;$(SolutionDir)..\third_party\zlib\using_zlib.vsprops;$(SolutionDir)..\sdch\using_sdch.vsprops"
+			InheritedPropertySheets="$(SolutionDir)..\build\release.vsprops;.\net.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -269,11 +269,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\base\file_input_stream.h"
+				RelativePath="..\base\file_stream.h"
 				>
 			</File>
 			<File
-				RelativePath="..\base\file_input_stream_win.cc"
+				RelativePath="..\base\file_stream_win.cc"
 				>
 			</File>
 			<File
@@ -413,6 +413,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\base\scoped_cert_chain_context.h"
+				>
+			</File>
+			<File
 				RelativePath="..\base\sdch_filter.cc"
 				>
 			</File>
@@ -433,11 +437,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\base\ssl_client_socket.cc"
+				RelativePath="..\base\ssl_client_socket.h"
 				>
 			</File>
 			<File
-				RelativePath="..\base\ssl_client_socket.h"
+				RelativePath="..\base\ssl_client_socket_win.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\base\ssl_client_socket_win.h"
 				>
 			</File>
 			<File
@@ -453,11 +461,15 @@
 				>
 			</File>
 			<File
-				RelativePath="..\base\tcp_client_socket.cc"
+				RelativePath="..\base\ssl_test_util.cc"
 				>
 			</File>
 			<File
 				RelativePath="..\base\tcp_client_socket.h"
+				>
+			</File>
+			<File
+				RelativePath="..\base\tcp_client_socket_win.cc"
 				>
 			</File>
 			<File
@@ -761,6 +773,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\http\http_auth_cache.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_cache.h"
+				>
+			</File>
+			<File
 				RelativePath="..\http\http_auth_handler.h"
 				>
 			</File>
@@ -885,6 +905,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\disk_cache\eviction.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\disk_cache\eviction.h"
+				>
+			</File>
+			<File
 				RelativePath="..\disk_cache\file.h"
 				>
 			</File>
@@ -945,14 +973,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\disk_cache\os_file.h"
-				>
-			</File>
-			<File
-				RelativePath="..\disk_cache\os_file_win.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\disk_cache\rankings.cc"
 				>
 			</File>
@@ -997,11 +1017,15 @@
 			Name="proxy"
 			>
 			<File
-				RelativePath="..\proxy\proxy_resolver_fixed.cc"
+				RelativePath="..\proxy\proxy_config_service_fixed.h"
 				>
 			</File>
 			<File
-				RelativePath="..\proxy\proxy_resolver_fixed.h"
+				RelativePath="..\proxy\proxy_config_service_win.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\proxy\proxy_config_service_win.h"
 				>
 			</File>
 			<File
@@ -1013,11 +1037,59 @@
 				>
 			</File>
 			<File
+				RelativePath="..\proxy\proxy_script_fetcher.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\proxy\proxy_script_fetcher.h"
+				>
+			</File>
+			<File
 				RelativePath="..\proxy\proxy_service.cc"
 				>
 			</File>
 			<File
 				RelativePath="..\proxy\proxy_service.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="ftp"
+			>
+			<File
+				RelativePath="..\ftp\ftp_network_layer.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\ftp\ftp_network_layer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\ftp\ftp_network_session.h"
+				>
+			</File>
+			<File
+				RelativePath="..\ftp\ftp_network_transaction.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\ftp\ftp_network_transaction.h"
+				>
+			</File>
+			<File
+				RelativePath="..\ftp\ftp_request_info.h"
+				>
+			</File>
+			<File
+				RelativePath="..\ftp\ftp_response_info.h"
+				>
+			</File>
+			<File
+				RelativePath="..\ftp\ftp_transaction.h"
+				>
+			</File>
+			<File
+				RelativePath="..\ftp\ftp_transaction_factory.h"
 				>
 			</File>
 		</Filter>

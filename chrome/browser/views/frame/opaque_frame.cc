@@ -4,8 +4,8 @@
 
 #include "chrome/browser/views/frame/opaque_frame.h"
 
-#include "chrome/browser/frame_util.h"
-#include "chrome/browser/views/frame/browser_view2.h"
+#include "chrome/browser/browser_list.h"
+#include "chrome/browser/views/frame/browser_view.h"
 #include "chrome/browser/views/frame/opaque_non_client_view.h"
 #include "chrome/browser/views/tabs/tab_strip.h"
 #include "chrome/views/window_delegate.h"
@@ -13,7 +13,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 // OpaqueFrame, public:
 
-OpaqueFrame::OpaqueFrame(BrowserView2* browser_view)
+OpaqueFrame::OpaqueFrame(BrowserView* browser_view)
     : CustomFrameWindow(browser_view, new OpaqueNonClientView(this,
                                                               browser_view)),
       browser_view_(browser_view) {
@@ -21,6 +21,10 @@ OpaqueFrame::OpaqueFrame(BrowserView2* browser_view)
 }
 
 OpaqueFrame::~OpaqueFrame() {
+}
+
+void OpaqueFrame::Init() {
+  CustomFrameWindow::Init(NULL, gfx::Rect());
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -62,8 +66,12 @@ void OpaqueFrame::UpdateWindowIcon() {
   GetOpaqueNonClientView()->UpdateWindowIcon();
 }
 
+int OpaqueFrame::GetShowState() const {
+  return browser_view_->GetShowState();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
-// OpaqueFrame, views::ContainerWin overrides:
+// OpaqueFrame, views::WidgetWin overrides:
 
 bool OpaqueFrame::AcceleratorPressed(views::Accelerator* accelerator) {
   return browser_view_->AcceleratorPressed(*accelerator);
@@ -74,11 +82,7 @@ bool OpaqueFrame::GetAccelerator(int cmd_id, views::Accelerator* accelerator) {
 }
 
 void OpaqueFrame::OnEndSession(BOOL ending, UINT logoff) {
-  FrameUtil::EndSession();
-}
-
-void OpaqueFrame::OnExitMenuLoop(bool is_track_popup_menu) {
-  browser_view_->SystemMenuEnded();
+  BrowserList::WindowsSessionEnding();
 }
 
 void OpaqueFrame::OnInitMenuPopup(HMENU menu, UINT position,
@@ -113,7 +117,7 @@ void OpaqueFrame::OnSysCommand(UINT notification_code, CPoint click) {
   if (!browser_view_->SystemCommandReceived(notification_code,
                                             gfx::Point(click))) {
     // Use the default implementation for any other command.
-    SetMsgHandled(FALSE);
+    CustomFrameWindow::OnSysCommand(notification_code, click);
   }
 }
 

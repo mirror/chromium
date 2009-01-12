@@ -70,6 +70,10 @@ class AboutSource : public ChromeURLDataManager::DataSource {
   // the path we registered.
   virtual void StartDataRequest(const std::string& path, int request_id);
 
+  virtual std::string GetMimeType(const std::string&) const {
+    return "text/html";
+  }
+
   // Send the response data.
   void FinishDataRequest(const std::string& html, int request_id);
 
@@ -195,7 +199,7 @@ bool BrowserAboutHandler::MaybeHandle(GURL* url,
     return false;
 
   *result_type = TAB_CONTENTS_ABOUT_UI;
-  std::string about_url = "chrome-resource://about/";
+  std::string about_url = "chrome://about/";
   about_url.append(url->path());
   *url = GURL(about_url);
   return true;
@@ -379,17 +383,17 @@ std::string BrowserAboutHandler::AboutStats() {
   // NOTE: Counters start at index 1.
   for (int index = 1; index <= table->GetMaxCounters(); index++) {
     // Get the counter's full name
-    std::wstring full_name = table->GetRowName(index);
+    std::string full_name = table->GetRowName(index);
     if (full_name.length() == 0)
       break;
-    DCHECK(full_name[1] == L':');
-    wchar_t counter_type = full_name[0];
-    std::wstring name = full_name.substr(2);
+    DCHECK(full_name[1] == ':');
+    char counter_type = full_name[0];
+    std::string name = full_name.substr(2);
 
     // JSON doesn't allow '.' in names.
     size_t pos;
-    while ( ( pos = name.find(L".") ) != -1 )
-      name.replace(pos, 1, L":");
+    while ((pos = name.find(".")) != -1)
+      name.replace(pos, 1, ":");
 
     // Try to see if this name already exists.
     DictionaryValue* counter = NULL;
@@ -399,7 +403,7 @@ std::string BrowserAboutHandler::AboutStats() {
       if (counters->GetDictionary(scan_index, &dictionary)) {
         std::wstring scan_name;
         if (dictionary->GetString(L"name", &scan_name) &&
-            scan_name == name) {
+            WideToASCII(scan_name) == name) {
           counter = dictionary;
         }
       } else {
@@ -409,12 +413,12 @@ std::string BrowserAboutHandler::AboutStats() {
 
     if (counter == NULL) {
       counter = new DictionaryValue();
-      counter->SetString(L"name", name);
+      counter->SetString(L"name", ASCIIToWide(name));
       counters->Append(counter);
     }
 
     switch (counter_type) {
-      case L'c':
+      case 'c':
         {
           int new_value = table->GetRowValue(index);
           int prior_value = 0;
@@ -426,12 +430,12 @@ std::string BrowserAboutHandler::AboutStats() {
           counter->SetInteger(L"delta", delta);
         }
         break;
-      case L'm':
+      case 'm':
         {
           // TODO(mbelshe): implement me.
         }
         break;
-      case L't':
+      case 't':
         {
           int time = table->GetRowValue(index);
           counter->SetInteger(L"time", time);
@@ -538,7 +542,7 @@ void AboutMemoryHandler::AppendProcess(ListValue* renderers,
   RenderProcessHost::iterator renderer_iter;
   for (renderer_iter = RenderProcessHost::begin(); renderer_iter !=
        RenderProcessHost::end(); ++renderer_iter) {
-    if (renderer_iter->second->pid() == info->pid)
+    if (renderer_iter->second->process().pid() == info->pid)
       break;
   }
   if (renderer_iter != RenderProcessHost::end()) {
@@ -562,7 +566,7 @@ void AboutMemoryHandler::AppendProcess(ListValue* renderers,
       renderer->SetString(L"renderer_id", label);
       FileVersionInfo* version_info =
           FileVersionInfo::CreateFileVersionInfo(
-              (*plugins())[index].dll_path);
+              (*plugins())[index].plugin_path);
       if (version_info)
         name = version_info->product_name();
       ListValue* titles = new ListValue();

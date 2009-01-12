@@ -29,8 +29,10 @@ class RenderWidget : public IPC::Channel::Listener,
  public:
   // Creates a new RenderWidget.  The opener_id is the routing ID of the
   // RenderView that this widget lives inside. The render_thread is any
-  // RenderThreadBase implementation, mostly commonly RenderThread::current().
-  static RenderWidget* Create(int32 opener_id, RenderThreadBase* render_thread);
+  // RenderThreadBase implementation, mostly commonly g_render_thread.
+  static RenderWidget* Create(int32 opener_id,
+                              RenderThreadBase* render_thread,
+                              bool activatable);
 
   // The routing ID assigned by the RenderProcess. Will be MSG_ROUTING_NONE if
   // not yet assigned a view ID, in which case, the process MUST NOT send
@@ -62,7 +64,7 @@ class RenderWidget : public IPC::Channel::Listener,
   bool InSend() const;
 
   // WebWidgetDelegate
-  virtual HWND GetContainingWindow(WebWidget* webwidget);
+  virtual gfx::NativeView GetContainingView(WebWidget* webwidget);
   virtual void DidInvalidateRect(WebWidget* webwidget, const gfx::Rect& rect);
   virtual void DidScrollRect(WebWidget* webwidget, int dx, int dy,
                              const gfx::Rect& clip_rect);
@@ -74,6 +76,7 @@ class RenderWidget : public IPC::Channel::Listener,
   virtual void GetWindowRect(WebWidget* webwidget, gfx::Rect* rect);
   virtual void SetWindowRect(WebWidget* webwidget, const gfx::Rect& rect);
   virtual void GetRootWindowRect(WebWidget* webwidget, gfx::Rect* rect);
+  virtual void GetRootWindowResizerRect(WebWidget* webwidget, gfx::Rect* rect);
   virtual void DidMove(WebWidget* webwidget, const WebPluginGeometry& move);
   virtual void RunModal(WebWidget* webwidget) {}
   virtual bool IsHidden() { return is_hidden_; }
@@ -86,7 +89,7 @@ class RenderWidget : public IPC::Channel::Listener,
   // without ref-counting is an error.
   friend class base::RefCounted<RenderWidget>;
 
-  RenderWidget(RenderThreadBase* render_thread);
+  RenderWidget(RenderThreadBase* render_thread, bool activatable);
   virtual ~RenderWidget();
 
   // Initializes this view with the given opener.  CompleteInit must be called
@@ -99,7 +102,7 @@ class RenderWidget : public IPC::Channel::Listener,
   // Paints the given rectangular region of the WebWidget into paint_buf (a
   // shared memory segment returned by AllocPaintBuf). The caller must ensure
   // that the given rect fits within the bounds of the WebWidget.
-  void PaintRect(const gfx::Rect& rect, SharedMemory* paint_buf);
+  void PaintRect(const gfx::Rect& rect, base::SharedMemory* paint_buf);
 
   // Get the size of the paint buffer for the given rectangle, rounding up to
   // the allocation granularity of the system.
@@ -202,8 +205,8 @@ class RenderWidget : public IPC::Channel::Listener,
 
   // Shared memory handles that are currently in use to transfer an image to
   // the browser.
-  SharedMemory* current_paint_buf_;
-  SharedMemory* current_scroll_buf_;
+  base::SharedMemory* current_paint_buf_;
+  base::SharedMemory* current_scroll_buf_;
 
   // The smallest bounding rectangle that needs to be re-painted.  This is non-
   // empty if a paint event is pending.
@@ -261,6 +264,9 @@ class RenderWidget : public IPC::Channel::Listener,
   bool ime_control_new_state_;
   bool ime_control_updated_;
   bool ime_control_busy_;
+
+  // Whether the window for this RenderWidget can be activated.
+  bool activatable_;
 
   // Holds all the needed plugin window moves for a scroll.
   std::vector<WebPluginGeometry> plugin_window_moves_;

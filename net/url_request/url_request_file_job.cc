@@ -38,7 +38,7 @@ class URLRequestFileJob::AsyncResolver :
       : owner_(owner), owner_loop_(MessageLoop::current()) {
   }
 
-  void Resolve(const std::wstring& file_path) {
+  void Resolve(const FilePath& file_path) {
     file_util::FileInfo file_info;
     bool exists = file_util::GetFileInfo(file_path, &file_info);
     AutoLock locked(lock_);
@@ -71,23 +71,20 @@ class URLRequestFileJob::AsyncResolver :
 // static
 URLRequestJob* URLRequestFileJob::Factory(
     URLRequest* request, const std::string& scheme) {
-  std::wstring file_path;
-  if (net::FileURLToFilePath(request->url(), &file_path)) {
-    if (file_path[file_path.size() - 1] == file_util::kPathSeparator) {
-      // Only directories have trailing slashes.
+  FilePath file_path;
+  if (net::FileURLToFilePath(request->url(), &file_path) &&
+      file_util::EnsureEndsWithSeparator(&file_path))
       return new URLRequestFileDirJob(request, file_path);
-    }
-  }
 
   // Use a regular file request job for all non-directories (including invalid
   // file names).
-  URLRequestFileJob* job = new URLRequestFileJob(request);
-  job->file_path_ = file_path;
-  return job;
+  return new URLRequestFileJob(request, file_path);
 }
 
-URLRequestFileJob::URLRequestFileJob(URLRequest* request)
+URLRequestFileJob::URLRequestFileJob(URLRequest* request,
+                                     const FilePath& file_path)
     : URLRequestJob(request),
+      file_path_(file_path),
       ALLOW_THIS_IN_INITIALIZER_LIST(
           io_callback_(this, &URLRequestFileJob::DidRead)),
       is_directory_(false) {
@@ -100,20 +97,22 @@ URLRequestFileJob::~URLRequestFileJob() {
 }
 
 void URLRequestFileJob::Start() {
+#if defined(OS_WIN)
   // Resolve UNC paths on a background thread.
-  if (!file_path_.compare(0, 2, L"\\\\")) {
+  if (!file_path_.value().compare(0, 2, L"\\\\")) {
     DCHECK(!async_resolver_);
     async_resolver_ = new AsyncResolver(this);
     WorkerPool::PostTask(FROM_HERE, NewRunnableMethod(
         async_resolver_.get(), &AsyncResolver::Resolve, file_path_), true);
-  } else {
-    file_util::FileInfo file_info;
-    bool exists = file_util::GetFileInfo(file_path_, &file_info);
-
-    // Continue asynchronously.
-    MessageLoop::current()->PostTask(FROM_HERE, NewRunnableMethod(
-        this, &URLRequestFileJob::DidResolve, exists, file_info));
+    return;
   }
+#endif
+  file_util::FileInfo file_info;
+  bool exists = file_util::GetFileInfo(file_path_, &file_info);
+
+  // Continue asynchronously.
+  MessageLoop::current()->PostTask(FROM_HERE, NewRunnableMethod(
+      this, &URLRequestFileJob::DidResolve, exists, file_info));
 }
 
 void URLRequestFileJob::Kill() {
@@ -152,7 +151,7 @@ bool URLRequestFileJob::ReadRawData(
 
 bool URLRequestFileJob::GetMimeType(std::string* mime_type) {
   DCHECK(request_);
-  return net::GetMimeTypeFromFile(file_path_, mime_type);
+  return net::GetMimeTypeFromFile(file_path_.ToWStringHack(), mime_type);
 }
 
 void URLRequestFileJob::DidResolve(
@@ -165,13 +164,15 @@ void URLRequestFileJob::DidResolve(
   if (!request_)
     return;
 
-  is_directory_ = file_info.is_directory;
-
   int rv = net::OK;
   if (!exists) {
     rv = net::ERR_FILE_NOT_FOUND;
-  } else if (!is_directory_) {
-    rv = stream_.Open(file_path_, true);
+  } else {
+    DCHECK(!file_info.is_directory);
+    int flags = base::PLATFORM_FILE_OPEN |
+                base::PLATFORM_FILE_READ |
+                base::PLATFORM_FILE_ASYNC;
+    rv = stream_.Open(file_path_.ToWStringHack(), flags);
   }
 
   if (rv == net::OK) {
@@ -195,30 +196,16 @@ void URLRequestFileJob::DidRead(int result) {
 
 bool URLRequestFileJob::IsRedirectResponse(
     GURL* location, int* http_status_code) {
-  if (is_directory_) {
-    // This happens when we discovered the file is a directory, so needs a
-    // slash at the end of the path.
-    std::string new_path = request_->url().path();
-    new_path.push_back('/');
-    GURL::Replacements replacements;
-    replacements.SetPathStr(new_path);
-
-    *location = request_->url().ReplaceComponents(replacements);
-    *http_status_code = 301;  // simulate a permanent redirect
-    return true;
-  }
-
 #if defined(OS_WIN)
-  // Follow a Windows shortcut.
-  size_t found;
-  found = file_path_.find_last_of('.');
+  std::wstring extension =
+      file_util::GetFileExtensionFromPath(file_path_.value());
 
-  // We just resolve .lnk file, ignor others.
-  if (found == std::string::npos ||
-      !LowerCaseEqualsASCII(file_path_.substr(found), ".lnk"))
+  // Follow a Windows shortcut.
+  // We just resolve .lnk file, ignore others.
+  if (!LowerCaseEqualsASCII(extension, "lnk"))
     return false;
 
-  std::wstring new_path = file_path_;
+  std::wstring new_path = file_path_.value();
   bool resolved;
   resolved = file_util::ResolveShortcut(&new_path);
 

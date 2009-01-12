@@ -9,7 +9,6 @@
 
 #include "base/basictypes.h"
 #include "base/time.h"
-#include "chrome/common/l10n_util.h"
 #include "googleurl/src/gurl.h"
 
 class TemplateURL;
@@ -64,7 +63,7 @@ class TemplateURLRef {
   // returns false), an empty string is returned.
   //
   // The TemplateURL is used to determine the input encoding for the term.
-  std::wstring ReplaceSearchTerms(
+  GURL ReplaceSearchTerms(
       const TemplateURL& host,
       const std::wstring& terms,
       int accepted_suggestion,
@@ -256,7 +255,7 @@ class TemplateURL {
         show_in_default_list_(false),
         safe_for_autoreplace_(false),
         id_(0),
-        date_created_(Time::Now()),
+        date_created_(base::Time::Now()),
         usage_count_(0),
         prepopulate_id_(0) {}
   ~TemplateURL() {}
@@ -307,12 +306,7 @@ class TemplateURL {
   const GURL& originating_url() const { return originating_url_; }
 
   // The shortcut for this template url. May be empty.
-  void set_keyword(const std::wstring& keyword) {
-    // Case sensitive keyword matching is confusing. As such, we force all
-    // keywords to be lower case.
-    keyword_ = l10n_util::ToLower(keyword);
-    autogenerate_keyword_ = false;
-  }
+  void set_keyword(const std::wstring& keyword);
   const std::wstring& keyword() const;
 
   // Whether to autogenerate a keyword from the url() in GetKeyword().  Most
@@ -374,8 +368,8 @@ class TemplateURL {
   //
   // NOTE: this may be 0, which indicates the keyword was created before we
   // started tracking creation time.
-  void set_date_created(Time time) { date_created_ = time; }
-  Time date_created() const { return date_created_; }
+  void set_date_created(base::Time time) { date_created_ = time; }
+  base::Time date_created() const { return date_created_; }
 
   // Number of times this keyword has been explicitly used to load a URL.  We
   // don't increment this for uses as the "default search engine" since that's
@@ -431,7 +425,7 @@ class TemplateURL {
   // List of supported input encodings.
   std::vector<std::string> input_encodings_;
   IDType id_;
-  Time date_created_;
+  base::Time date_created_;
   int usage_count_;
   int prepopulate_id_;
 

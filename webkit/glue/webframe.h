@@ -9,8 +9,10 @@
 
 #include "base/basictypes.h"
 #include "base/ref_counted.h"
-#include "base/gfx/bitmap_platform_device.h"
+#include "base/scoped_ptr.h"
 #include "base/gfx/size.h"
+#include "skia/ext/bitmap_platform_device.h"
+#include "skia/ext/platform_canvas.h"
 #include "webkit/glue/console_message_level.h"
 #include "webkit/glue/find_in_page_request.h"
 
@@ -24,8 +26,8 @@ class WebTextInput;
 struct NPObject;
 
 namespace gfx {
-class Size;
 class Rect;
+class Size;
 }
 
 // TODO(darin): use GURL everywhere a URL string appears
@@ -95,24 +97,28 @@ class WebFrame : public base::RefCounted<WebFrame> {
   // the URL where the script in question can be found, if any. The renderer may
   // request this URL to show the developer the source of the error.
   virtual void ExecuteJavaScript(const std::string& js_code,
-                                 const std::string& script_url) = 0;
+                                 const GURL& script_url) = 0;
 
   // Returns a string representing the state of the previous page load for
-  // later use when loading as well as the uri and title of the page.  The
-  // previous page is the page that was loaded before DidCommitLoadForFrame was
-  // received.  Returns false if there is no state.
-  virtual bool GetPreviousState(GURL* url, std::wstring* title,
-                                std::string* history_state) const = 0;
+  // later use when loading. The previous page is the page that was loaded
+  // before DidCommitLoadForFrame was received.
+  //
+  // Returns false if there is no valid state to return (for example, there is
+  // no previous item). Returns true if the previous item's state was retrieved,
+  // even if that state may be empty.
+  virtual bool GetPreviousHistoryState(std::string* history_state) const = 0;
 
   // Returns a string representing the state of the current page load for later
-  // use when loading as well as the url and title of the page.  Returns false
-  // if there is no state.
-  virtual bool GetCurrentState(GURL* url, std::wstring* title,
-                               std::string* history_state) const = 0;
+  // use when loading as well as the url and title of the page.
+  //
+  // Returns false if there is no valid state to return (for example, there is
+  // no previous item). Returns true if the current item's state was retrieved,
+  // even if that state may be empty.
+  virtual bool GetCurrentHistoryState(std::string* history_state) const = 0;
 
   // Returns true if there is a current history item.  A newly created WebFrame
   // lacks a history item.  Otherwise, this will always be true.
-  virtual bool HasCurrentState() const = 0;
+  virtual bool HasCurrentHistoryState() const = 0;
 
   // Returns the current URL of the frame, or the empty string if there is no
   // URL to retrieve (for example, the frame may never have had any content).
@@ -196,16 +202,6 @@ class WebFrame : public base::RefCounted<WebFrame> {
                     bool wrap_within_frame,
                     gfx::Rect* selection_rect) = 0;
 
-  // Searches a frame for the next (or previous occurrence of a given string.
-  //
-  // This function works similarly to Find (documented above), except that it
-  // uses an index into the tick-mark vector to figure out what the next
-  // match is, alleviating the need to call findString on the content again.
-  //
-  // Returns true if the search string was found, false otherwise.
-  virtual bool FindNext(const FindInPageRequest& request,
-                        bool wrap_within_frame) = 0;
-
   // Notifies the frame that we are no longer interested in searching. This will
   // abort any asynchronous scoping effort already under way (see the function
   // ScopeStringMatches for details) and erase all tick-marks and highlighting
@@ -267,6 +263,12 @@ class WebFrame : public base::RefCounted<WebFrame> {
   // Replace the selection text by a given text.
   virtual void Replace(const std::wstring& text) = 0;
 
+  // Toggle spell check on and off.
+  virtual void ToggleSpellCheck() = 0;
+
+  // Return whether spell check is enabled or not in this frame.
+  virtual bool SpellCheckEnabled() = 0;
+
   //
   //  - (void)delete:(id)sender;
   // Delete as in similar to Cut, not as in teardown
@@ -281,6 +283,10 @@ class WebFrame : public base::RefCounted<WebFrame> {
   // Clear any text selection in the frame.
   virtual void ClearSelection() = 0;
 
+  // Returns the selected text if there is any.  If |as_html| is true, returns
+  // the selection as HTML.  The return value is encoded in utf-8.
+  virtual std::string GetSelection(bool as_html) = 0;
+
   // Paints the contents of this web view in a bitmapped image. This image
   // will not have plugins drawn. Devices are cheap to copy because the data is
   // internally refcounted so we allocate and return a new copy
@@ -293,7 +299,7 @@ class WebFrame : public base::RefCounted<WebFrame> {
   //
   // Returns false on failure. CaptureImage can fail if 'image' argument
   // is not valid or due to failure to allocate a canvas.
-  virtual bool CaptureImage(scoped_ptr<gfx::BitmapPlatformDevice>* image,
+  virtual bool CaptureImage(scoped_ptr<skia::BitmapPlatformDevice>* image,
                             bool scroll_to_zero) = 0;
 
   // This function sets a flag within WebKit to instruct it to render the page
@@ -316,6 +322,11 @@ class WebFrame : public base::RefCounted<WebFrame> {
   // javascript:layoutTestController.execCommand()
   virtual bool ExecuteCoreCommandByName(const std::string& name,
                                         const std::string& value) = 0;
+
+  // Checks whether a webkit editor command is currently enabled. This
+  // method is exposed in order to implement
+  // javascript:layoutTestController.isCommandEnabled()
+  virtual bool IsCoreCommandEnabled(const std::string& name) = 0;
 
   // Adds a message to the frame's console.
   virtual void AddMessageToConsole(const std::wstring& msg,
@@ -353,16 +364,15 @@ class WebFrame : public base::RefCounted<WebFrame> {
   virtual void GetPageRect(int page, gfx::Rect* page_size) const = 0;
 
   // Prints one page. |page| is 0-based.
-  virtual bool SpoolPage(int page,
-                         PlatformContextSkia* context) = 0;
-
-  // Does this frame have an onunload or unbeforeunload event listener?
-  virtual bool HasUnloadListener() = 0;
+  virtual bool SpoolPage(int page, skia::PlatformCanvas* canvas) = 0;
 
   // Is this frame reloading with allowing stale data? This will be true when
   // the encoding of the page is changed and it needs to be re-interpreted,
   // but no additional loads should occur.
   virtual bool IsReloadAllowingStaleData() const = 0;
+
+  // Only for test_shell
+  virtual int PendingFrameUnloadEventCount() const = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(WebFrame);

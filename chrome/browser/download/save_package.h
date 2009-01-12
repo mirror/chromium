@@ -22,6 +22,7 @@
 class SaveFileManager;
 class SavePackage;
 class DownloadItem;
+class DownloadManager;
 class GURL;
 class MessageLoop;
 class PrefService;
@@ -29,10 +30,10 @@ class Profile;
 class WebContents;
 class URLRequestContext;
 class WebContents;
-class Time;
 
 namespace base {
 class Thread;
+class Time;
 }
 
 // The SavePackage object manages the process of saving a page as only-html or
@@ -133,6 +134,10 @@ class SavePackage : public base::RefCountedThreadSafe<SavePackage>,
 
   // Statics -------------------------------------------------------------------
 
+  // Used to disable prompting the user for a directory/filename of the saved
+  // web page.  This is available for testing.
+  static void SetShouldPromptUser(bool should_prompt);
+
   // Helper function for preparing suggested name for the SaveAs Dialog. The
   // suggested name is composed of the default save path and the web document's
   // title.
@@ -158,7 +163,8 @@ class SavePackage : public base::RefCountedThreadSafe<SavePackage>,
   };
   static bool GetSaveInfo(const std::wstring& suggest_name,
                           HWND container_hwnd,
-                          SavePackageParam* param);
+                          SavePackageParam* param,
+                          DownloadManager* download_manager);
 
   // File name is consist of pure file name, dot and file extension name. File
   // name might has no dot and file extension, or has multiple dot inside file

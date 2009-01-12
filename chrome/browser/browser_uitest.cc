@@ -12,7 +12,6 @@
 #include "chrome/test/automation/tab_proxy.h"
 #include "chrome/test/automation/window_proxy.h"
 #include "chrome/test/ui/ui_test.h"
-#include "chrome/views/container.h"
 #include "net/base/net_util.h"
 #include "net/url_request/url_request_unittest.h"
 
@@ -47,20 +46,6 @@ class BrowserTest : public UITest {
      int length = ::GetWindowTextLength(window_handle) + 1;
      ::GetWindowText(window_handle, WriteInto(&result, length), length);
      return result;
-   }
-
-   void LoadUnloadPageAndQuitBrowser(const std::wstring& test_filename) {
-     scoped_ptr<BrowserProxy> browser(automation()->GetBrowserWindow(0));
- 
-     std::wstring test_file = test_data_directory_;
-     file_util::AppendToPath(&test_file, L"unload");
-     file_util::AppendToPath(&test_file, test_filename);
-
-     NavigateToURL(net::FilePathToFileURL(test_file));
-     Sleep(kWaitForActionMsec);
-
-     bool application_closed = false;
-     EXPECT_TRUE(CloseBrowser(browser.get(), &application_closed));
    }
 };
 
@@ -100,53 +85,20 @@ TEST_F(BrowserTest, Title) {
   EXPECT_EQ(test_title, GetActiveTabTitle());
 }
 
-// Tests closing the browser on a page with no unload listeners registered.
-TEST_F(BrowserTest, BrowserCloseNoUnloadListeners) {
-  LoadUnloadPageAndQuitBrowser(L"nolisteners.html");
-}
-
-// Tests closing the browser on a page with an unload listener registered.
-TEST_F(BrowserTest, BrowserCloseUnload) {
-  LoadUnloadPageAndQuitBrowser(L"unload.html");
-}
-
-// Tests closing the browser on a page with an unload listener registered where
-// the unload handler has an infinite loop.
-TEST_F(BrowserTest, BrowserCloseUnloadLooping) {
-  LoadUnloadPageAndQuitBrowser(L"unloadlooping.html");
-}
-
-// Tests closing the browser on a page with an unload listener registered where
-// the unload handler has an infinite loop followed by an alert.
-TEST_F(BrowserTest, BrowserCloseUnloadLoopingAlert) {
-  LoadUnloadPageAndQuitBrowser(L"unloadloopingalert.html");
-}
-
-// Tests closing the browser on a page with an unload listener registered where
-// the unload handler has an 2 second long loop followed by an alert.
-TEST_F(BrowserTest, BrowserCloseUnloadLoopingTwoSecondsAlert) {
-  LoadUnloadPageAndQuitBrowser(L"unloadloopingtwosecondsalert.html");
-}
-
-// TODO(ojan): Test popping up an alert in the unload handler and test
-// beforeunload. In addition add tests where we open all of these pages
-// in the browser and then close it, as well as having two windows and
-// closing only one of them.
-
 // The browser should quit quickly if it receives a WM_ENDSESSION message.
 TEST_F(BrowserTest, WindowsSessionEnd) {
   std::wstring test_file = test_data_directory_;
   file_util::AppendToPath(&test_file, L"title1.html");
 
   NavigateToURL(net::FilePathToFileURL(test_file));
-  Sleep(kWaitForActionMsec);
+  Sleep(action_timeout_ms());
 
   // Simulate an end of session. Normally this happens when the user
   // shuts down the pc or logs off.
   HWND window_handle = GetMainWindow();
   ASSERT_TRUE(::PostMessageW(window_handle, WM_ENDSESSION, 0, 0));
 
-  Sleep(kWaitForActionMsec);
+  Sleep(action_timeout_ms());
   ASSERT_FALSE(IsBrowserRunning());
 
   // Make sure the UMA metrics say we didn't crash.
@@ -181,14 +133,16 @@ TEST_F(BrowserTest, TabNavigationAccelerators) {
   // to.
   int old_tab_count = -1;
   ASSERT_TRUE(window->GetTabCount(&old_tab_count));
-  ASSERT_TRUE(window->ApplyAccelerator(IDC_NEWTAB));
+  ASSERT_TRUE(window->ApplyAccelerator(IDC_NEW_TAB));
   int new_tab_count;
-  ASSERT_TRUE(window->WaitForTabCountToChange(old_tab_count, &new_tab_count,
-      5000));
-  ASSERT_TRUE(window->ApplyAccelerator(IDC_NEWTAB));
+  ASSERT_TRUE(window->WaitForTabCountToChange(old_tab_count,
+                                              &new_tab_count,
+                                              action_max_timeout_ms()));
+  ASSERT_TRUE(window->ApplyAccelerator(IDC_NEW_TAB));
   old_tab_count = new_tab_count;
-  ASSERT_TRUE(window->WaitForTabCountToChange(old_tab_count, &new_tab_count,
-      5000));
+  ASSERT_TRUE(window->WaitForTabCountToChange(old_tab_count,
+                                              &new_tab_count,
+                                              action_max_timeout_ms()));
   ASSERT_GE(new_tab_count, 2);
 
   // Activate the second tab.
@@ -196,19 +150,20 @@ TEST_F(BrowserTest, TabNavigationAccelerators) {
 
   // Navigate to the first tab using an accelerator.
   ASSERT_TRUE(window->ApplyAccelerator(IDC_SELECT_TAB_0));
-  ASSERT_TRUE(window->WaitForTabToBecomeActive(0, 5000));
+  ASSERT_TRUE(window->WaitForTabToBecomeActive(0, action_max_timeout_ms()));
 
   // Navigate to the second tab using the next accelerators.
   ASSERT_TRUE(window->ApplyAccelerator(IDC_SELECT_NEXT_TAB));
-  ASSERT_TRUE(window->WaitForTabToBecomeActive(1, 5000));
+  ASSERT_TRUE(window->WaitForTabToBecomeActive(1, action_max_timeout_ms()));
 
   // Navigate back to the first tab using the previous accelerators.
-  ASSERT_TRUE(window->ApplyAccelerator(IDC_SELECT_PREV_TAB));
-  ASSERT_TRUE(window->WaitForTabToBecomeActive(0, 5000));
+  ASSERT_TRUE(window->ApplyAccelerator(IDC_SELECT_PREVIOUS_TAB));
+  ASSERT_TRUE(window->WaitForTabToBecomeActive(0, action_max_timeout_ms()));
 
   // Navigate to the last tab using the select last accelerator.
   ASSERT_TRUE(window->ApplyAccelerator(IDC_SELECT_LAST_TAB));
-  ASSERT_TRUE(window->WaitForTabToBecomeActive(new_tab_count - 1, 5000));
+  ASSERT_TRUE(window->WaitForTabToBecomeActive(new_tab_count - 1,
+                                               action_max_timeout_ms()));
 }
 
 TEST_F(BrowserTest, JavascriptAlertActivatesTab) {
@@ -225,13 +180,13 @@ TEST_F(BrowserTest, JavascriptAlertActivatesTab) {
   ASSERT_TRUE(
       javascript_tab->NavigateToURLAsync(GURL("javascript:alert('Alert!')")));
   ASSERT_TRUE(window->WaitForTabToBecomeActive(javascript_tab_index,
-                                               kWaitForActionMaxMsec));
+                                               action_max_timeout_ms()));
 }
 
 TEST_F(BrowserTest, DuplicateTab) {
   std::wstring path_prefix = test_data_directory_;
   file_util::AppendToPath(&path_prefix, L"session_history");
-  path_prefix += file_util::kPathSeparator;
+  path_prefix += FilePath::kSeparators[0];
   GURL url1 = net::FilePathToFileURL(path_prefix + L"bot1.html");
   GURL url2 = net::FilePathToFileURL(path_prefix + L"bot2.html");
   GURL url3 = GURL("about:blank");
@@ -249,7 +204,7 @@ TEST_F(BrowserTest, DuplicateTab) {
   ASSERT_TRUE(automation()->GetBrowserWindowCount(&initial_window_count));
 
   // Duplicate the tab.
-  ASSERT_TRUE(browser_proxy->ApplyAccelerator(IDC_DUPLICATE));
+  ASSERT_TRUE(browser_proxy->ApplyAccelerator(IDC_DUPLICATE_TAB));
 
   // The duplicated tab should not end up in a new window.
   int window_count;
@@ -257,8 +212,8 @@ TEST_F(BrowserTest, DuplicateTab) {
   ASSERT_TRUE(window_count == initial_window_count);
 
   tab_proxy.reset(browser_proxy->GetTab(1));
-
-  ASSERT_TRUE(tab_proxy->WaitForTabToBeRestored(kWaitForActionMsec));
+  ASSERT_TRUE(tab_proxy != NULL);
+  ASSERT_TRUE(tab_proxy->WaitForTabToBeRestored(action_timeout_ms()));
 
   // Verify the stack of urls.
   GURL url;
@@ -288,7 +243,9 @@ TEST_F(BrowserTest, NullOpenerRedirectForksProcess) {
     return;
 
   const wchar_t kDocRoot[] = L"chrome/test/data";
-  TestServer server(kDocRoot);
+  scoped_refptr<HTTPTestServer> server =
+      HTTPTestServer::CreateServer(kDocRoot);
+  ASSERT_TRUE(NULL != server.get());
   std::wstring test_file(test_data_directory_);
   scoped_ptr<BrowserProxy> window(automation()->GetBrowserWindow(0));
   scoped_ptr<TabProxy> tab(window->GetActiveTab());
@@ -310,7 +267,7 @@ TEST_F(BrowserTest, NullOpenerRedirectForksProcess) {
   // Make sure that a new tab has been created and that we have a new renderer
   // process for it.
   tab->NavigateToURLAsync(fork_url);
-  Sleep(kWaitForActionMsec);
+  Sleep(action_timeout_ms());
   ASSERT_EQ(orig_process_count + 1, GetBrowserProcessCount());
   int new_tab_count = -1;
   ASSERT_TRUE(window->GetTabCount(&new_tab_count));
@@ -326,7 +283,9 @@ TEST_F(BrowserTest, OtherRedirectsDontForkProcess) {
     return;
 
   const wchar_t kDocRoot[] = L"chrome/test/data";
-  TestServer server(kDocRoot);
+  scoped_refptr<HTTPTestServer> server =
+      HTTPTestServer::CreateServer(kDocRoot);
+  ASSERT_TRUE(NULL != server.get());
   std::wstring test_file(test_data_directory_);
   scoped_ptr<BrowserProxy> window(automation()->GetBrowserWindow(0));
   scoped_ptr<TabProxy> tab(window->GetActiveTab());
@@ -347,7 +306,7 @@ TEST_F(BrowserTest, OtherRedirectsDontForkProcess) {
 
   // Make sure that a new tab but not new process has been created.
   tab->NavigateToURLAsync(dont_fork_url);
-  Sleep(kWaitForActionMsec);
+  Sleep(action_timeout_ms());
   ASSERT_EQ(orig_process_count, GetBrowserProcessCount());
   int new_tab_count = -1;
   ASSERT_TRUE(window->GetTabCount(&new_tab_count));
@@ -359,7 +318,7 @@ TEST_F(BrowserTest, OtherRedirectsDontForkProcess) {
 
   // Make sure that no new process has been created.
   tab->NavigateToURLAsync(dont_fork_url2);
-  Sleep(kWaitForActionMsec);
+  Sleep(action_timeout_ms());
   ASSERT_EQ(orig_process_count, GetBrowserProcessCount());
 }
 
@@ -371,7 +330,7 @@ TEST_F(VisibleBrowserTest, WindowOpenClose) {
 
   int i;
   for (i = 0; i < 10; ++i) {
-    Sleep(kWaitForActionMaxMsec / 10);
+    Sleep(action_max_timeout_ms() / 10);
     std::wstring title = GetActiveTabTitle();
     if (title == L"PASSED") {
       // Success, bail out.

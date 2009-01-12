@@ -10,6 +10,7 @@
 #include "chrome/browser/character_encoding.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/web_contents.h"
+#include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 
@@ -41,7 +42,7 @@ bool EncodingMenuControllerDelegate::IsItemChecked(int id) const {
     case IDC_ENCODING_UTF16LE:
     case IDC_ENCODING_ISO88591:
     case IDC_ENCODING_WINDOWS1252:
-    case IDC_ENCODING_GB2312:
+    case IDC_ENCODING_GBK:
     case IDC_ENCODING_GB18030:
     case IDC_ENCODING_BIG5:
     case IDC_ENCODING_BIG5HKSCS:
@@ -67,7 +68,6 @@ bool EncodingMenuControllerDelegate::IsItemChecked(int id) const {
     case IDC_ENCODING_ISO885910:
     case IDC_ENCODING_ISO885914:
     case IDC_ENCODING_ISO885916:
-    case IDC_ENCODING_ISO88599:
     case IDC_ENCODING_WINDOWS1254:
     case IDC_ENCODING_ISO88596:
     case IDC_ENCODING_WINDOWS1256:

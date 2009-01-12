@@ -2,15 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/history/download_database.h"
+
 #include <limits>
 #include <vector>
-
-#include "chrome/browser/history/download_database.h"
 
 #include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/history/download_types.h"
 #include "chrome/common/sqlite_utils.h"
 #include "chrome/common/sqlite_compiled_statement.h"
+
+using base::Time;
 
 // Download schema:
 //
@@ -67,7 +69,8 @@ void DownloadDatabase::QueryDownloads(std::vector<DownloadCreateInfo>* results) 
   while (statement->step() == SQLITE_ROW) {
     DownloadCreateInfo info;
     info.db_handle = statement->column_int64(0);
-    statement->column_string16(1, &info.path);
+    std::wstring path_str = info.path.ToWStringHack();
+    statement->column_string16(1, &path_str);
     statement->column_string16(2, &info.url);
     info.start_time = Time::FromTimeT(statement->column_int64(3));
     info.received_bytes = statement->column_int64(4);
@@ -115,7 +118,7 @@ int64 DownloadDatabase::CreateDownload(const DownloadCreateInfo& info) {
   if (!statement.is_valid())
     return 0;
 
-  statement->bind_wstring(0, info.path);
+  statement->bind_wstring(0, info.path.ToWStringHack());
   statement->bind_wstring(1, info.url);
   statement->bind_int64(2, info.start_time.ToTimeT());
   statement->bind_int64(3, info.received_bytes);
@@ -175,4 +178,3 @@ void DownloadDatabase::SearchDownloads(std::vector<int64>* results,
 }
 
 }  // namespace history
-

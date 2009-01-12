@@ -2,15 +2,22 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef WEBKIT_GLUE_H__
-#define WEBKIT_GLUE_H__
+#ifndef WEBKIT_GLUE_WEBKIT_GLUE_H_
+#define WEBKIT_GLUE_WEBKIT_GLUE_H_
+
+#include "base/basictypes.h"
+
+#if defined(OS_WIN)
+#include <windows.h>
+#endif
 
 #include <string>
 #include <vector>
-#ifdef _WIN32
-#include <windows.h>
-#endif
+
+#include "base/clipboard.h"
+#include "base/gfx/native_widget_types.h"
 #include "base/string16.h"
+#include "webkit/glue/screen_info.h"
 #include "webkit/glue/webplugin.h"
 
 // We do not include the header files for these interfaces since this header
@@ -25,18 +32,24 @@ class GURL;
 struct _NPNetscapeFuncs;
 typedef _NPNetscapeFuncs NPNetscapeFuncs;
 
-#ifdef _WIN32
+#if defined(OS_WIN)
 struct IMLangFontLink2;
 #endif
 
+// TODO(darin): This file should not be dealing in WebCore types!!
 namespace WebCore {
-
 class Document;
 class Frame;
-
-}  // namespace WebCore
+}
 
 class SkBitmap;
+
+#if defined(OS_MACOSX)
+typedef struct CGImage* CGImageRef;
+typedef CGImageRef GlueBitmap;
+#else
+typedef SkBitmap* GlueBitmap;
+#endif
 
 namespace webkit_glue {
 
@@ -44,6 +57,7 @@ namespace webkit_glue {
 // Functions implemented by JS engines.
 void SetJavaScriptFlags(const std::wstring& flags);
 void SetRecordPlaybackMode(bool value);
+void SetShouldExposeGCController(bool enable);
 
 //-----------------------------------------------------------------------------
 // Functions implemented by WebKit, called by the embedder:
@@ -53,16 +67,14 @@ void SetRecordPlaybackMode(bool value);
 void SetLayoutTestMode(bool enable);
 bool IsLayoutTestMode();
 
-#if defined(OS_WIN)
-// Returns the com object pointer for the FontLink interface. This is the
-// default way to do this operation. It can be called directly from
-// GetLangFontLink.
-IMLangFontLink2* GetLangFontLinkHelper();
+void InitializeForTesting();
 
-// Returns the monitor information corresponding to the window.
-// This is the default implementation.
-MONITORINFOEX GetMonitorInfoForWindowHelper(HWND window);
-#endif
+// Turn on the logging for notImplemented() calls from WebCore.
+void EnableWebCoreNotImplementedLogging();
+
+// Returns screen information corresponding to the given window.  This is the
+// default implementation.
+ScreenInfo GetScreenInfoHelper(gfx::NativeView window);
 
 // Returns the text of the document element.
 std::wstring DumpDocumentText(WebFrame* web_frame);
@@ -115,20 +127,13 @@ bool DecodeImage(const std::string& image_data, SkBitmap* image);
 //-----------------------------------------------------------------------------
 // Functions implemented by the embedder, called by WebKit:
 
-// This function is called to check if the given URL string exists in the
-// user's browsing history db.  The given URL may NOT be in canonical form and
-// it will NOT be null-terminated; use the length instead.  This function also
-// causes the hostnames' DNS record to be prefetched if is_dns_prefetch_enabled
-// is true or document_host matches the URL being checked. The hostname will
-// likewise not be null-terminated; use document_host_length instead.
-bool HistoryContains(const char16* url, int url_length, 
-                     const char* document_host, int document_host_length,
-                     bool is_dns_prefetch_enabled);
+// This function is called from WebCore::MediaPlayerPrivate, 
+// Returns true if media player is available and can be created.
+bool IsMediaPlayerAvailable();
 
 // This function is called to request a prefetch of the DNS resolution for the
-// embedded URL's hostname.  The given URL may NOT be in canonical form and
-// it will NOT be null-terminated; use the length instead.
-void DnsPrefetchUrl(const char16* url, int url_length);
+// provided hostname.
+void PrefetchDns(const std::string& hostname);
 
 // This function is called to request a prefetch of the entire URL, loading it
 // into our cache for (expected) future needs.  The given URL may NOT be in 
@@ -140,21 +145,16 @@ void AppendToLog(const char* filename, int line, const char* message);
 
 // Get the mime type (if any) that is associated with the given file extension.
 // Returns true if a corresponding mime type exists.
-bool GetMimeTypeFromExtension(std::wstring &ext, std::string *mime_type);
+bool GetMimeTypeFromExtension(const std::wstring& ext, std::string* mime_type);
 
 // Get the mime type (if any) that is associated with the given file.  
 // Returns true if a corresponding mime type exists.
-bool GetMimeTypeFromFile(const std::wstring &file_path, std::string *mime_type);
+bool GetMimeTypeFromFile(const std::wstring& file_path, std::string* mime_type);
 
 // Get the preferred extension (if any) associated with the given mime type.
 // Returns true if a corresponding file extension exists.
 bool GetPreferredExtensionForMimeType(const std::string& mime_type,
-                                      std::wstring *ext);
-
-#ifdef _WIN32
-// Returns the com object pointer for the FontLink interface
-IMLangFontLink2* GetLangFontLink();
-#endif
+                                      std::wstring* ext);
 
 // Sets a cookie string for the given URL.  The policy_url argument indicates
 // the URL of the topmost frame, which may be useful for determining whether or
@@ -182,35 +182,22 @@ std::wstring GetLocalizedString(int message_id);
 // specified as BINDATA in the relevant .rc file.
 std::string GetDataResource(int resource_id);
 
-#ifdef _WIN32
+// Returns a GlueBitmap for a resource.  This resource must have been
+// specified as BINDATA in the relevant .rc file.
+GlueBitmap GetBitmapResource(int resource_id);
+
+#if defined(OS_WIN)
 // Loads and returns a cursor.
 HCURSOR LoadCursor(int cursor_id);
 #endif
 
 // Glue to access the clipboard.
 
-// Clear the clipboard.  It is usually a good idea to clear the clipboard
-// before writing content to the clipboard.
-void ClipboardClear();
-
-// Adds UNICODE and ASCII text to the clipboard.
-void ClipboardWriteText(const std::wstring& text);
-
-// Adds HTML to the clipboard.  The url parameter is optional, but especially
-// useful if the HTML fragment contains relative links
-void ClipboardWriteHTML(const std::wstring& html, const GURL& url);
-
-// Adds a bookmark to the clipboard
-void ClipboardWriteBookmark(const std::wstring& title, const GURL& url);
-
-// Adds a bitmap to the clipboard
-void ClipboardWriteBitmap(const SkBitmap& bitmap);
-
-// Used by WebKit to determine whether WebKit wrote the clipboard last
-void ClipboardWriteWebSmartPaste();
+// Get a clipboard that can be used to construct a ScopedClipboardWriterGlue.
+Clipboard* ClipboardGetClipboard();
 
 // Tests whether the clipboard contains a certain format
-bool ClipboardIsFormatAvailable(unsigned int format);
+bool ClipboardIsFormatAvailable(Clipboard::FormatType format);
 
 // Reads UNICODE text from the clipboard, if available.
 void ClipboardReadText(std::wstring* result);
@@ -226,7 +213,7 @@ void ClipboardReadHTML(std::wstring* markup, GURL* url);
 // GetExeDirectory(), depending on the embedder's implementation.
 // Path is an output parameter to receive the path.
 // Returns true if successful, false otherwise.
-bool GetApplicationDirectory(std::wstring *path);
+bool GetApplicationDirectory(std::wstring* path);
 
 // Gets the URL where the inspector's HTML file resides. It must use the
 // protocol returned by GetUIResourceProtocol.
@@ -239,7 +226,7 @@ std::string GetUIResourceProtocol();
 // Gets the directory where the launching executable resides on disk.
 // Path is an output parameter to receive the path.
 // Returns true if successful, false otherwise.
-bool GetExeDirectory(std::wstring *path);
+bool GetExeDirectory(std::wstring* path);
 
 // Embedders implement this function to return the list of plugins to Webkit.
 bool GetPlugins(bool refresh, std::vector<WebPluginInfo>* plugins);
@@ -248,25 +235,20 @@ bool GetPlugins(bool refresh, std::vector<WebPluginInfo>* plugins);
 // false otherwise.
 bool IsPluginRunningInRendererProcess();
 
-#ifdef _WIN32
+#if defined(OS_WIN)
 // Asks the browser to load the font.
 bool EnsureFontLoaded(HFONT font);
-
-// Returns the monitor information corresponding to the window.
-MONITORINFOEX GetMonitorInfoForWindow(HWND window);
 #endif
 
-// Functions implemented by webkit_glue for WebKit ----------------------------
+// Returns screen information corresponding to the given window.
+ScreenInfo GetScreenInfo(gfx::NativeView window);
 
-// Notifies the embedder that a form element value has changed. The document
-// pointer, which MAY BE NULL, indicates the document that owns the form
-// element that changed, if any.
-void NotifyFormStateChanged(const WebCore::Document* document);
+// Functions implemented by webkit_glue for WebKit ----------------------------
 
 // Returns a bool indicating if the Null plugin should be enabled or not.
 bool IsDefaultPluginEnabled();
 
-#ifdef _WIN32
+#if defined(OS_WIN)
 // Downloads the file specified by the URL. On sucess a WM_COPYDATA message
 // will be sent to the caller_window.
 bool DownloadUrl(const std::string& url, HWND caller_window);
@@ -290,6 +272,14 @@ void SetForcefullyTerminatePluginProcess(bool value);
 // instead of exiting cleanly.
 bool ShouldForcefullyTerminatePluginProcess();
 
+// Returns the hash for the given canonicalized URL for use in visited link
+// coloring.
+uint64 VisitedLinkHash(const char* canonical_url, size_t length);
+
+// Returns whether the given link hash is in the user's history. The hash must
+// have been generated by calling VisitedLinkHash().
+bool IsLinkVisited(uint64 link_hash);
+
 } // namespace webkit_glue
 
-#endif  // WEBKIT_GLUE_H__
+#endif  // WEBKIT_GLUE_WEBKIT_GLUE_H_

@@ -4,265 +4,161 @@
 
 #include "config.h"
 
-#pragma warning(push, 0)
-#include "EventNames.h"
+#include "base/compiler_specific.h"
+
+MSVC_PUSH_WARNING_LEVEL(0);
 #include "EventTarget.h"
+#include "KeyboardCodes.h"
 #include "KeyboardEvent.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
+
+#undef LOG
 
 #include "webkit/glue/editor_client_impl.h"
 #include "webkit/glue/event_conversion.h"
 #include "webkit/glue/webinputevent.h"
-
 #include "testing/gtest/include/gtest/gtest.h"
 
-TEST(KeyboardUnitTestKeyDown, TestCtrlReturn) {
-  WebCore::EventNames::init();
+using WebCore::PlatformKeyboardEvent;
+using WebCore::KeyboardEvent;
 
-  EditorClientImpl editor_impl(NULL);
+class KeyboardTest : public testing::Test {
+ public:
+  void SetUp() {
+    WTF::initializeThreading();
+  }
 
-  WebKeyboardEvent keyboard_event;
-  keyboard_event.key_code = 0xD;
-  keyboard_event.key_data = 0xD;
-  keyboard_event.modifiers = WebInputEvent::CTRL_KEY;
-  keyboard_event.type = WebInputEvent::KEY_DOWN;
-  
-  MakePlatformKeyboardEvent evt(keyboard_event);
-  evt.SetKeyType(WebCore::PlatformKeyboardEvent::RawKeyDown);
-  WebCore::KeyboardEvent keyboardEvent(evt, NULL);
-  const char* result = editor_impl.interpretKeyEvent(&keyboardEvent);
-  EXPECT_STREQ(result, "InsertNewline");
+  // Pass a WebKeyboardEvent into the EditorClient and get back the string
+  // name of which editing event that key causes.
+  // E.g., sending in the enter key gives back "InsertNewline".
+  const char* InterpretKeyEvent(
+      const WebKeyboardEvent& keyboard_event,
+      PlatformKeyboardEvent::Type key_type) {
+    EditorClientImpl editor_impl(NULL);
+
+    MakePlatformKeyboardEvent evt(keyboard_event);
+    evt.SetKeyType(key_type);
+    RefPtr<KeyboardEvent> keyboardEvent = KeyboardEvent::create(evt, NULL);
+    return editor_impl.interpretKeyEvent(keyboardEvent.get());
+  }
+
+  // Set up a WebKeyboardEvent KEY_DOWN event with key code and modifiers.
+  void SetupKeyDownEvent(WebKeyboardEvent* keyboard_event,
+                         char key_code,
+                         int modifiers) {
+    keyboard_event->key_code = key_code;
+    keyboard_event->modifiers = modifiers;
+    keyboard_event->type = WebInputEvent::KEY_DOWN;
+#if defined(OS_LINUX)
+    keyboard_event->text = key_code;
+#elif defined(OS_MACOSX)
+    keyboard_event->text.clear();
+    keyboard_event->text.push_back(key_code);
+#endif
+  }
+
+  // Like InterpretKeyEvent, but with pressing down OSModifier+|key_code|.
+  // OSModifier is the platform's standard modifier key: control on most
+  // platforms, but meta (command) on Mac.
+  const char* InterpretOSModifierKeyPress(char key_code) {
+    WebKeyboardEvent keyboard_event;
+#if defined(OS_WIN) || defined(OS_LINUX)
+    WebInputEvent::Modifiers os_modifier = WebInputEvent::CTRL_KEY;
+#elif defined(OS_MACOSX)
+    WebInputEvent::Modifiers os_modifier = WebInputEvent::META_KEY;
+#endif
+    SetupKeyDownEvent(&keyboard_event, key_code, os_modifier);
+    return InterpretKeyEvent(keyboard_event, PlatformKeyboardEvent::RawKeyDown);
+  }
+
+  // Like InterpretKeyEvent, but with pressing down ctrl+|key_code|.
+  const char* InterpretCtrlKeyPress(char key_code) {
+    WebKeyboardEvent keyboard_event;
+    SetupKeyDownEvent(&keyboard_event, key_code, WebInputEvent::CTRL_KEY);
+    return InterpretKeyEvent(keyboard_event, PlatformKeyboardEvent::RawKeyDown);
+  }
+
+  // Like InterpretKeyEvent, but with typing a tab.
+  const char* InterpretTab(int modifiers) {
+    WebKeyboardEvent keyboard_event;
+    SetupKeyDownEvent(&keyboard_event, '\t', modifiers);
+    return InterpretKeyEvent(keyboard_event, PlatformKeyboardEvent::Char);
+  }
+
+  // Like InterpretKeyEvent, but with typing a newline.
+  const char* InterpretNewLine(int modifiers) {
+    WebKeyboardEvent keyboard_event;
+    SetupKeyDownEvent(&keyboard_event, '\r', modifiers);
+    return InterpretKeyEvent(keyboard_event, PlatformKeyboardEvent::Char);
+  }
+
+  // A name for "no modifiers set".
+  static const int kNoModifiers = 0;
+};
+
+TEST_F(KeyboardTest, TestCtrlReturn) {
+  EXPECT_STREQ("InsertNewline", InterpretCtrlKeyPress(0xD));
 }
 
-TEST(KeyboardUnitTestKeyDown, TestCtrlZ) {
-  EditorClientImpl editor_impl(NULL);
-
-  WebKeyboardEvent keyboard_event;
-  keyboard_event.key_code = 'Z';
-  keyboard_event.key_data = 'Z';
-  keyboard_event.modifiers = WebInputEvent::CTRL_KEY;
-  keyboard_event.type = WebInputEvent::KEY_DOWN;
-  
-  MakePlatformKeyboardEvent evt(keyboard_event);
-  evt.SetKeyType(WebCore::PlatformKeyboardEvent::RawKeyDown);
-  WebCore::KeyboardEvent keyboardEvent(evt, NULL);
-  const char* result = editor_impl.interpretKeyEvent(&keyboardEvent);
-  EXPECT_STREQ(result, "Undo");
+TEST_F(KeyboardTest, TestOSModifierZ) {
+  EXPECT_STREQ("Undo", InterpretOSModifierKeyPress('Z'));
 }
 
-TEST(KeyboardUnitTestKeyDown, TestCtrlA) {
-  EditorClientImpl editor_impl(NULL);
-
-  WebKeyboardEvent keyboard_event;
-  keyboard_event.key_code = 'A';
-  keyboard_event.key_data = 'A';
-  keyboard_event.modifiers = WebInputEvent::CTRL_KEY;
-  keyboard_event.type = WebInputEvent::KEY_DOWN;
-  
-  MakePlatformKeyboardEvent evt(keyboard_event);
-  evt.SetKeyType(WebCore::PlatformKeyboardEvent::RawKeyDown);
-  WebCore::KeyboardEvent keyboardEvent(evt, NULL);
-  const char* result = editor_impl.interpretKeyEvent(&keyboardEvent);
-  EXPECT_STREQ(result, "SelectAll");
+TEST_F(KeyboardTest, TestOSModifierY) {
+  EXPECT_STREQ("Redo", InterpretOSModifierKeyPress('Y'));
 }
 
-TEST(KeyboardUnitTestKeyDown, TestCtrlX) {
-  EditorClientImpl editor_impl(NULL);
-
-  WebKeyboardEvent keyboard_event;
-  keyboard_event.key_code = 'X';
-  keyboard_event.key_data = 'X';
-  keyboard_event.modifiers = WebInputEvent::CTRL_KEY;
-  keyboard_event.type = WebInputEvent::KEY_DOWN;
-  
-  MakePlatformKeyboardEvent evt(keyboard_event);
-  evt.SetKeyType(WebCore::PlatformKeyboardEvent::RawKeyDown);
-  WebCore::KeyboardEvent keyboardEvent(evt, NULL);
-  const char* result = editor_impl.interpretKeyEvent(&keyboardEvent);
-
-  EXPECT_STREQ(result, "Cut");
+TEST_F(KeyboardTest, TestOSModifierA) {
+  EXPECT_STREQ("SelectAll", InterpretOSModifierKeyPress('A'));
 }
 
-TEST(KeyboardUnitTestKeyDown, TestCtrlC) {
-  EditorClientImpl editor_impl(NULL);
-
-  WebKeyboardEvent keyboard_event;
-  keyboard_event.key_code = 'C';
-  keyboard_event.key_data = 'C';
-  keyboard_event.modifiers = WebInputEvent::CTRL_KEY;
-  keyboard_event.type = WebInputEvent::KEY_DOWN;
-  
-  MakePlatformKeyboardEvent evt(keyboard_event);
-  evt.SetKeyType(WebCore::PlatformKeyboardEvent::RawKeyDown);
-  WebCore::KeyboardEvent keyboardEvent(evt, NULL);
-  const char* result = editor_impl.interpretKeyEvent(&keyboardEvent);
-  EXPECT_STREQ(result, "Copy");
+TEST_F(KeyboardTest, TestOSModifierX) {
+  EXPECT_STREQ("Cut", InterpretOSModifierKeyPress('X'));
 }
 
-TEST(KeyboardUnitTestKeyDown, TestCtrlV) {
-  EditorClientImpl editor_impl(NULL);
-
-  WebKeyboardEvent keyboard_event;
-  keyboard_event.key_code = 'V';
-  keyboard_event.key_data = 'V';
-  keyboard_event.modifiers = WebInputEvent::CTRL_KEY;
-  keyboard_event.type = WebInputEvent::KEY_DOWN;
-  
-  MakePlatformKeyboardEvent evt(keyboard_event);
-  evt.SetKeyType(WebCore::PlatformKeyboardEvent::RawKeyDown);
-  WebCore::KeyboardEvent keyboardEvent(evt, NULL);
-  const char* result = editor_impl.interpretKeyEvent(&keyboardEvent);
-  EXPECT_STREQ(result, "Paste");
+TEST_F(KeyboardTest, TestOSModifierC) {
+  EXPECT_STREQ("Copy", InterpretOSModifierKeyPress('C'));
 }
 
-TEST(KeyboardUnitTestKeyDown, TestEscape) {
-  EditorClientImpl editor_impl(NULL);
-
-  WebKeyboardEvent keyboard_event;
-  keyboard_event.key_code = VK_ESCAPE;
-  keyboard_event.key_data = VK_ESCAPE;
-  keyboard_event.modifiers = 0;
-  keyboard_event.type = WebInputEvent::KEY_DOWN;
-  
-  MakePlatformKeyboardEvent evt(keyboard_event);
-  evt.SetKeyType(WebCore::PlatformKeyboardEvent::RawKeyDown);
-  WebCore::KeyboardEvent keyboardEvent(evt, NULL);
-  const char* result = editor_impl.interpretKeyEvent(&keyboardEvent);
-  EXPECT_STREQ(result, "Cancel");
+TEST_F(KeyboardTest, TestOSModifierV) {
+  EXPECT_STREQ("Paste", InterpretOSModifierKeyPress('V'));
 }
 
-TEST(KeyboardUnitTestKeyDown, TestRedo) {
-  EditorClientImpl editor_impl(NULL);
-
+TEST_F(KeyboardTest, TestEscape) {
   WebKeyboardEvent keyboard_event;
-  keyboard_event.key_code = 'Y';
-  keyboard_event.key_data = 'Y';
-  keyboard_event.modifiers = WebInputEvent::CTRL_KEY;
-  keyboard_event.type = WebInputEvent::KEY_DOWN;
-  
-  MakePlatformKeyboardEvent evt(keyboard_event);
-  evt.SetKeyType(WebCore::PlatformKeyboardEvent::RawKeyDown);
-  WebCore::KeyboardEvent keyboardEvent(evt, NULL);
-  const char* result = editor_impl.interpretKeyEvent(&keyboardEvent);
-  EXPECT_STREQ(result, "Redo");
+  SetupKeyDownEvent(&keyboard_event, WebCore::VKEY_ESCAPE, kNoModifiers);
+
+  const char* result = InterpretKeyEvent(keyboard_event,
+                                         PlatformKeyboardEvent::RawKeyDown);
+  EXPECT_STREQ("Cancel", result);
 }
 
-
-TEST(KeyboardUnitTestKeyPress, TestInsertTab) {
-  EditorClientImpl editor_impl(NULL);
-
-  WebKeyboardEvent keyboard_event;
-  keyboard_event.key_code = '\t';
-  keyboard_event.key_data = '\t';
-  keyboard_event.modifiers = 0;
-  keyboard_event.type = WebInputEvent::KEY_DOWN;
-
-  MakePlatformKeyboardEvent evt(keyboard_event);
-  evt.SetKeyType(WebCore::PlatformKeyboardEvent::Char); 
-
-  WebCore::KeyboardEvent keyboardEvent(evt, NULL);
-  const char* result = editor_impl.interpretKeyEvent(&keyboardEvent);
-  EXPECT_STREQ(result, "InsertTab");
+TEST_F(KeyboardTest, TestInsertTab) {
+  EXPECT_STREQ("InsertTab", InterpretTab(kNoModifiers));
 }
 
-TEST(KeyboardUnitTestKeyPress, TestInsertBackTab) {
-  EditorClientImpl editor_impl(NULL);
-
-  WebKeyboardEvent keyboard_event;
-  keyboard_event.key_code = '\t';
-  keyboard_event.key_data = '\t';
-  keyboard_event.modifiers = WebInputEvent::SHIFT_KEY;
-  keyboard_event.type = WebInputEvent::KEY_DOWN;
-
-  MakePlatformKeyboardEvent evt(keyboard_event);
-  evt.SetKeyType(WebCore::PlatformKeyboardEvent::Char); 
-
-  WebCore::KeyboardEvent keyboardEvent(evt, NULL);
-  const char* result = editor_impl.interpretKeyEvent(&keyboardEvent);
-  EXPECT_STREQ(result, "InsertBacktab");
+TEST_F(KeyboardTest, TestInsertBackTab) {
+  EXPECT_STREQ("InsertBacktab", InterpretTab(WebInputEvent::SHIFT_KEY));
 }
 
-TEST(KeyboardUnitTestKeyPress, TestInsertNewline) {
-  EditorClientImpl editor_impl(NULL);
-
-  WebKeyboardEvent keyboard_event;
-  keyboard_event.key_code = '\r';
-  keyboard_event.key_data = '\r';
-  keyboard_event.modifiers = 0;
-  keyboard_event.type = WebInputEvent::KEY_DOWN;
-
-  MakePlatformKeyboardEvent evt(keyboard_event);
-  evt.SetKeyType(WebCore::PlatformKeyboardEvent::Char); 
-
-  WebCore::KeyboardEvent keyboardEvent(evt, NULL);
-  const char* result = editor_impl.interpretKeyEvent(&keyboardEvent);
-  EXPECT_STREQ(result, "InsertNewline");
+TEST_F(KeyboardTest, TestInsertNewline) {
+  EXPECT_STREQ("InsertNewline", InterpretNewLine(kNoModifiers));
 }
 
-TEST(KeyboardUnitTestKeyPress, TestInsertNewline2) {
-  EditorClientImpl editor_impl(NULL);
-
-  WebKeyboardEvent keyboard_event;
-  keyboard_event.key_code = '\r';
-  keyboard_event.key_data = '\r';
-  keyboard_event.modifiers = WebInputEvent::CTRL_KEY;
-  keyboard_event.type = WebInputEvent::KEY_DOWN;
-
-  MakePlatformKeyboardEvent evt(keyboard_event);
-  evt.SetKeyType(WebCore::PlatformKeyboardEvent::Char); 
-
-  WebCore::KeyboardEvent keyboardEvent(evt, NULL);
-  const char* result = editor_impl.interpretKeyEvent(&keyboardEvent);
-  EXPECT_STREQ(result, "InsertNewline");
+TEST_F(KeyboardTest, TestInsertNewline2) {
+  EXPECT_STREQ("InsertNewline", InterpretNewLine(WebInputEvent::CTRL_KEY));
 }
 
-TEST(KeyboardUnitTestKeyPress, TestInsertlinebreak) {
-  EditorClientImpl editor_impl(NULL);
-
-  WebKeyboardEvent keyboard_event;
-  keyboard_event.key_code = '\r';
-  keyboard_event.key_data = '\r';
-  keyboard_event.modifiers = WebInputEvent::SHIFT_KEY;
-  keyboard_event.type = WebInputEvent::KEY_DOWN;
-
-  MakePlatformKeyboardEvent evt(keyboard_event);
-  evt.SetKeyType(WebCore::PlatformKeyboardEvent::Char); 
-
-  WebCore::KeyboardEvent keyboardEvent(evt, NULL);
-  const char* result = editor_impl.interpretKeyEvent(&keyboardEvent);
-  EXPECT_STREQ(result, "InsertLineBreak");
+TEST_F(KeyboardTest, TestInsertLineBreak) {
+  EXPECT_STREQ("InsertLineBreak", InterpretNewLine(WebInputEvent::SHIFT_KEY));
 }
 
-TEST(KeyboardUnitTestKeyPress, TestInsertNewline3) {
-  EditorClientImpl editor_impl(NULL);
-
-  WebKeyboardEvent keyboard_event;
-  keyboard_event.key_code = '\r';
-  keyboard_event.key_data = '\r';
-  keyboard_event.modifiers = WebInputEvent::ALT_KEY;
-  keyboard_event.type = WebInputEvent::KEY_DOWN;
-
-  MakePlatformKeyboardEvent evt(keyboard_event);
-  evt.SetKeyType(WebCore::PlatformKeyboardEvent::Char); 
-
-  WebCore::KeyboardEvent keyboardEvent(evt, NULL);
-  const char* result = editor_impl.interpretKeyEvent(&keyboardEvent);
-  EXPECT_STREQ(result, "InsertNewline");
+TEST_F(KeyboardTest, TestInsertNewline3) {
+  EXPECT_STREQ("InsertNewline", InterpretNewLine(WebInputEvent::ALT_KEY));
 }
 
-TEST(KeyboardUnitTestKeyPress, TestInsertNewline4) {
-  EditorClientImpl editor_impl(NULL);
-
-  WebKeyboardEvent keyboard_event;
-  keyboard_event.key_code = '\r';
-  keyboard_event.key_data = '\r';
-  keyboard_event.modifiers = WebInputEvent::ALT_KEY | WebInputEvent::SHIFT_KEY;
-  keyboard_event.type = WebInputEvent::KEY_DOWN;
-
-  MakePlatformKeyboardEvent evt(keyboard_event);
-  evt.SetKeyType(WebCore::PlatformKeyboardEvent::Char); 
-
-  WebCore::KeyboardEvent keyboardEvent(evt, NULL);
-  const char* result = editor_impl.interpretKeyEvent(&keyboardEvent);
-  EXPECT_STREQ(result, "InsertNewline");
+TEST_F(KeyboardTest, TestInsertNewline4) {
+  int modifiers = WebInputEvent::ALT_KEY | WebInputEvent::SHIFT_KEY;
+  const char* result = InterpretNewLine(modifiers);
+  EXPECT_STREQ("InsertNewline", result);
 }

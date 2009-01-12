@@ -31,7 +31,7 @@ purposes, anyway).  In fact, this module will raise an ImportError if
 the underlying md5 module isn't available.
 """
 
-__revision__ = "src/engine/SCons/compat/_scons_hashlib.py 3424 2008/09/15 11:22:20 scons"
+__revision__ = "src/engine/SCons/compat/_scons_hashlib.py 3842 2008/12/20 22:59:52 scons"
 
 import md5
 import string

@@ -206,6 +206,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\clipboard.cc"
+			>
+		</File>
+		<File
 			RelativePath="..\clipboard.h"
 			>
 		</File>
@@ -270,6 +274,38 @@
 			>
 		</File>
 		<File
+			RelativePath="..\directory_watcher.h"
+			>
+		</File>
+		<File
+			RelativePath="..\directory_watcher_win.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\third_party\dmg_fp\dmg_fp.h"
+			>
+		</File>
+		<File
+			RelativePath="..\third_party\dmg_fp\dtoa.cc"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					DisableSpecificWarnings="4244;4554;4018;4102"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					DisableSpecificWarnings="4244;4554;4018;4102"
+				/>
+			</FileConfiguration>
+		</File>
+		<File
 			RelativePath="..\event_recorder.cc"
 			>
 		</File>
@@ -283,6 +319,14 @@
 		</File>
 		<File
 			RelativePath="..\field_trial.h"
+			>
+		</File>
+		<File
+			RelativePath="..\file_path.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\file_path.h"
 			>
 		</File>
 		<File
@@ -312,6 +356,26 @@
 		<File
 			RelativePath="..\float_util.h"
 			>
+		</File>
+		<File
+			RelativePath="..\third_party\dmg_fp\g_fmt.cc"
+			>
+			<FileConfiguration
+				Name="Debug|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					DisableSpecificWarnings="4102"
+				/>
+			</FileConfiguration>
+			<FileConfiguration
+				Name="Release|Win32"
+				>
+				<Tool
+					Name="VCCLCompilerTool"
+					DisableSpecificWarnings="4102"
+				/>
+			</FileConfiguration>
 		</File>
 		<File
 			RelativePath="..\hash_tables.h"
@@ -486,6 +550,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\observer_list_threadsafe.h"
+			>
+		</File>
+		<File
 			RelativePath="..\path_service.cc"
 			>
 		</File>
@@ -510,6 +578,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\platform_file.h"
+			>
+		</File>
+		<File
+			RelativePath="..\platform_file_win.cc"
+			>
+		</File>
+		<File
 			RelativePath="..\platform_thread.h"
 			>
 		</File>
@@ -530,10 +606,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\process.cc"
-			>
-		</File>
-		<File
 			RelativePath="..\process.h"
 			>
 		</File>
@@ -543,6 +615,10 @@
 		</File>
 		<File
 			RelativePath="..\process_util_win.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\process_win.cc"
 			>
 		</File>
 		<File
@@ -610,6 +686,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\scoped_clipboard_writer.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\scoped_clipboard_writer.h"
+			>
+		</File>
+		<File
 			RelativePath="..\scoped_handle.h"
 			>
 		</File>
@@ -638,14 +722,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\shared_event.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\shared_event.h"
-			>
-		</File>
-		<File
 			RelativePath="..\shared_memory.h"
 			>
 		</File>
@@ -654,11 +730,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\simple_thread.h"
+			RelativePath="..\simple_thread.cc"
 			>
 		</File>
 		<File
-			RelativePath="..\simple_thread.cc"
+			RelativePath="..\simple_thread.h"
 			>
 		</File>
 		<File
@@ -758,6 +834,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\test_file_util_win.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\test_file_util.h"
+			>
+		</File>
+		<File
 			RelativePath="..\thread.cc"
 			>
 		</File>
@@ -766,15 +850,23 @@
 			>
 		</File>
 		<File
+			RelativePath="..\thread_collision_warner.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\thread_collision_warner.h"
+			>
+		</File>
+		<File
+			RelativePath="..\thread_local.h"
+			>
+		</File>
+		<File
 			RelativePath="..\thread_local_storage.h"
 			>
 		</File>
 		<File
 			RelativePath="..\thread_local_storage_win.cc"
-			>
-		</File>
-		<File
-			RelativePath="..\thread_local.h"
 			>
 		</File>
 		<File

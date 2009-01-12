@@ -30,23 +30,30 @@
 #include <vector>
 
 #include "base/basictypes.h"
+#include "base/logging.h"
 #include "googleurl/src/gurl.h"
 #include "webkit/glue/context_node_types.h"
 #include "webkit/glue/webwidget_delegate.h"
 #include "webkit/glue/window_open_disposition.h"
 
 namespace gfx {
-  class Point;
-  class Rect;
+class Point;
+class Rect;
+}
+
+namespace webkit_glue {
+class WebMediaPlayerDelegate;
 }
 
 struct PasswordForm;
 struct WebDropData;
 struct WebPreferences;
+class AutofillForm;
 class SkBitmap;
 class WebError;
 class WebFrame;
 class WebHistoryItem;
+class WebMediaPlayerDelegate;
 class WebPluginDelegate;
 class WebRequest;
 class WebResponse;
@@ -107,7 +114,7 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
 
   // This method is called to create a new WebWidget to act as a popup
   // (like a drop-down menu).
-  virtual WebWidget* CreatePopupWidget(WebView* webview) {
+  virtual WebWidget* CreatePopupWidget(WebView* webview, bool activatable) {
     return NULL;
   }
 
@@ -122,6 +129,11 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
       const std::string& mime_type,
       const std::string& clsid,
       std::string* actual_mime_type) {
+    return NULL;
+  }
+
+  // Called when a WebMediaPlayerDelegate is needed.
+  virtual webkit_glue::WebMediaPlayerDelegate* CreateMediaPlayerDelegate() {
     return NULL;
   }
 
@@ -446,8 +458,24 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
                                    const std::vector<PasswordForm>& forms) {
   }
 
-  //
-  virtual void OnUnloadListenerChanged(WebView* webview, WebFrame* webframe) {
+  // Notification of the submission of a form so that its contents can be
+  // recorded for future autofilling.
+  virtual void OnAutofillFormSubmitted(WebView* webview,
+                                       const AutofillForm& form) {
+  }
+
+  virtual void EnableSuddenTermination() {
+  }
+
+  virtual void DisableSuddenTermination() {
+  }
+
+  // Queries the browser for suggestions to be shown for the form text field
+  // named |field_name|.  |text| is the text entered by the user so far and
+  // |node_id| is the id of the node of the input field.
+  virtual void QueryFormFieldAutofill(const std::wstring& field_name,
+                                      const std::wstring& text,
+                                      int64 node_id) {
   }
 
   // UIDelegate --------------------------------------------------------------
@@ -613,10 +641,31 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
   }
 
   virtual bool SmartInsertDeleteEnabled() {
-    return false;
+    return true;
   }
+
+  virtual void SetSmartInsertDeleteEnabled(bool enabled) {
+    // This method is only used in test shell, which overrides this
+    // method.
+    NOTREACHED();
+  }
+
+  virtual bool IsSelectTrailingWhitespaceEnabled() {
+#if defined(OS_WIN)
+    return true;
+#else
+    return false;
+#endif
+  }
+
+  virtual void SetSelectTrailingWhitespaceEnabled(bool enabled) {
+    // This method is only used in test shell, which overrides this
+    // method.
+    NOTREACHED();
+  }
+
   virtual void DidBeginEditing() { }
-  virtual void DidChangeSelection() { }
+  virtual void DidChangeSelection(bool is_empty_selection) { }
   virtual void DidChangeContents() { }
   virtual void DidEndEditing() { }
 
@@ -659,10 +708,6 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
   // current entry.  Returns NULL on failure.
   virtual WebHistoryItem* GetHistoryEntryAtOffset(int offset) {
     return NULL;
-  }
-
-  // Asynchronously navigates to the history entry at the given offset.
-  virtual void GoToEntryAtOffsetAsync(int offset) {
   }
 
   // Returns how many entries are in the back and forward lists, respectively.

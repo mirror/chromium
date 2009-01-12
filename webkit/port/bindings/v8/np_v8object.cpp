@@ -32,22 +32,20 @@
 #include <sstream>
 #include <v8.h>
 #include "np_v8object.h"
+#include "ChromiumBridge.h"
 #include "Frame.h"
 #include "bindings/npruntime.h"
 #include "npruntime_priv.h"
 #include "PlatformString.h"
+#include "ScriptController.h"
+#include "v8_custom.h"
 #include "v8_helpers.h"
 #include "v8_np_utils.h"
 #include "v8_proxy.h"
-#include "V8Bridge.h"
 #include "DOMWindow.h"
-#include "glue/plugins/plugin_instance.h"
-
-#ifdef OS_WIN
-#include "webkit/glue/plugins/plugin_instance.h"
-#endif // OS_WIN
 
 using WebCore::V8ClassIndex;
+using WebCore::V8Custom;
 using WebCore::V8Proxy;
 
 namespace {
@@ -104,9 +102,10 @@ NPClass* NPScriptObjectClass = &V8NPObjectClass;
 NPObject* NPN_CreateScriptObject(NPP npp, v8::Handle<v8::Object> object,
                                  WebCore::DOMWindow* root) {
   // Check to see if this object is already wrapped.
-  if (object->InternalFieldCount() == 3 &&
-      object->GetInternalField(1)->IsNumber() &&
-      object->GetInternalField(1)->Uint32Value() == V8ClassIndex::NPOBJECT) {
+  if (object->InternalFieldCount() == V8Custom::kNPObjectInternalFieldCount &&
+      object->GetInternalField(V8Custom::kDOMWrapperTypeIndex)->IsNumber() &&
+      object->GetInternalField(V8Custom::kDOMWrapperTypeIndex)->Uint32Value() ==
+          V8ClassIndex::NPOBJECT) {
     NPObject* rv = V8Proxy::ToNativeObject<NPObject>(V8ClassIndex::NPOBJECT,
                                                      object);
     NPN_RetainObject(rv);
@@ -247,22 +246,12 @@ bool NPN_InvokeDefault(NPP npp, NPObject *npobj, const NPVariant *args,
 
 bool NPN_Evaluate(NPP npp, NPObject *npobj, NPString *npscript,
                   NPVariant *result) {
-  bool popups_allowed = false;
-
-#ifdef OS_WIN
-  if (npp) {
-    NPAPI::PluginInstance* plugin_instance =
-        reinterpret_cast<NPAPI::PluginInstance*>(npp->ndata);
-    if (plugin_instance)
-      popups_allowed = plugin_instance->popups_allowed();
-  }
-#endif // OS_WIN
-
+  bool popups_allowed = WebCore::ChromiumBridge::popupsAllowed(npp);
   return NPN_EvaluateHelper(npp, popups_allowed, npobj, npscript, result);
 }
 
-bool NPN_EvaluateHelper(NPP npp, bool popups_allowed, NPObject *npobj,
-                        NPString *npscript, NPVariant *result) {
+bool NPN_EvaluateHelper(NPP npp, bool popups_allowed, NPObject* npobj, 
+                        NPString* npscript, NPVariant *result) {
   VOID_TO_NPVARIANT(*result);
   if (npobj == NULL)
     return false;
@@ -278,9 +267,6 @@ bool NPN_EvaluateHelper(NPP npp, bool popups_allowed, NPObject *npobj,
 
     v8::Context::Scope scope(context);
 
-    // Passing in a NULL filename is the trick used in V8 to indicate
-    // user gesture. See the inline_code/setInlineCode functions in V8Proxy
-    // for more information.
     WebCore::String filename;
     if (!popups_allowed)
       filename = "npscript";
@@ -353,7 +339,7 @@ bool NPN_SetProperty(NPP npp, NPObject *npobj, NPIdentifier propertyName,
     NPIdentifierToV8Identifier(propertyName, identifier);
     obj->Set(v8::String::New(identifier.c_str()),
         ConvertNPVariantToV8Object(value,
-            object->root_object->frame()->windowScriptNPObject()));
+            object->root_object->frame()->script()->windowScriptNPObject()));
     return true;
   }
 
@@ -436,8 +422,6 @@ bool NPN_HasMethod(NPP npp, NPObject *npobj, NPIdentifier methodName) {
 
 void NPN_SetException(NPObject *npobj, const NPUTF8 *message) {
   if (npobj->_class == NPScriptObjectClass) {
-    V8NPObject *object = reinterpret_cast<V8NPObject*>(npobj);
-
     v8::HandleScope handle_scope;
     v8::Handle<v8::Context> context = GetV8Context(NULL, npobj);
     if (context.IsEmpty()) return;
@@ -503,6 +487,24 @@ bool NPN_Enumerate(NPP npp, NPObject *npobj, NPIdentifier **identifier,
   if (NP_CLASS_STRUCT_VERSION_HAS_ENUM(npobj->_class) &&
       npobj->_class->enumerate) {
      return npobj->_class->enumerate(npobj, identifier, count);
+  }
+
+  return false;
+}
+
+bool NPN_Construct(NPP npp, NPObject* npobj, const NPVariant* args,
+                   uint32_t argCount, NPVariant* result) {
+  if (npobj == NULL) return false;
+
+  // TODO(estade): implement this case.
+  if (npobj->_class == NPScriptObjectClass) {
+    VOID_TO_NPVARIANT(*result);
+    return false;
+  }
+
+  if (NP_CLASS_STRUCT_VERSION_HAS_CTOR(npobj->_class) &&
+      npobj->_class->construct) {
+     return npobj->_class->construct(npobj, args, argCount, result);
   }
 
   return false;

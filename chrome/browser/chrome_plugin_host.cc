@@ -40,6 +40,8 @@
 #include "net/base/base64.h"
 #include "skia/include/SkBitmap.h"
 
+using base::TimeDelta;
+
 // This class manages the interception of network requests.  It queries the
 // plugin on every request, and creates an intercept job if the plugin can
 // intercept the request.
@@ -276,6 +278,7 @@ class ModelessHtmlDialogDelegate : public HtmlDialogContentsDelegate {
 
   // views::WindowDelegate implementation:
   virtual bool IsModal() const { return false; }
+  virtual std::wstring GetWindowTitle() const { return L"Google Gears"; }
 
   // HtmlDialogContentsDelegate implementation:
   virtual GURL GetDialogContentURL() const { return params_.url; }
@@ -755,4 +758,3 @@ void CPHandleCommand(int command, CPCommandInterface* data,
       NewRunnableFunction(PluginCommandHandler::HandleCommand,
                           command, data, context_as_int32));
 }
-

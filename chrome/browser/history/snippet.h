@@ -8,14 +8,15 @@
 #ifndef CHROME_BROWSER_HISTORY_SNIPPET_H__
 #define CHROME_BROWSER_HISTORY_SNIPPET_H__
 
+#include <string>
 #include <vector>
 
 class Snippet {
  public:
-  // Each pair in MatchPositions is the [begin, end) positions of a match
-  // within a string.
-  typedef std::pair<int, int> MatchPosition;
-  typedef std::vector<std::pair<int, int> > MatchPositions;
+  // Each MatchPosition is the [begin, end) positions of a match within a
+  // string.
+  typedef std::pair<size_t, size_t> MatchPosition;
+  typedef std::vector<MatchPosition> MatchPositions;
 
   // Parses an offsets string as returned from a sqlite full text index. An
   // offsets string encodes information about why a row matched a text query.
@@ -65,3 +66,4 @@ class Snippet {
 };
 
 #endif  // CHROME_BROWSER_HISTORY_SNIPPET_H__
+

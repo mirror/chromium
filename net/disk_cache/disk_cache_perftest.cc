@@ -2,63 +2,32 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <string>
+
+#include "base/basictypes.h"
+#include "base/file_path.h"
 #include "base/file_util.h"
 #include "base/perftimer.h"
-#include "base/scoped_handle.h"
+#include "base/string_util.h"
+#include "base/test_file_util.h"
 #include "base/timer.h"
 #include "net/base/net_errors.h"
 #include "net/disk_cache/block_files.h"
 #include "net/disk_cache/disk_cache.h"
-#include "net/disk_cache/disk_cache_test_base.h"
 #include "net/disk_cache/disk_cache_test_util.h"
 #include "net/disk_cache/hash.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "testing/platform_test.h"
+
+using base::Time;
 
 extern int g_cache_tests_max_id;
 extern volatile int g_cache_tests_received;
 extern volatile bool g_cache_tests_error;
 
+typedef PlatformTest DiskCacheTest;
+
 namespace {
-
-bool EvictFileFromSystemCache(const wchar_t* name) {
-  // Overwrite it with no buffering.
-  ScopedHandle file(CreateFile(name, GENERIC_READ | GENERIC_WRITE,
-                               FILE_SHARE_READ | FILE_SHARE_WRITE, NULL,
-                               OPEN_EXISTING, FILE_FLAG_NO_BUFFERING, NULL));
-  if (!file.IsValid())
-    return false;
-
-  // Execute in chunks. It could be optimized. We want to do few of these since
-  // these opterations will be slow without the cache.
-  char buffer[128 * 1024];
-  int total_bytes = 0;
-  DWORD bytes_read;
-  for (;;) {
-    if (!ReadFile(file, buffer, sizeof(buffer), &bytes_read, NULL))
-      return false;
-    if (bytes_read == 0)
-      break;
-
-    bool final = false;
-    if (bytes_read < sizeof(buffer))
-      final = true;
-
-    DWORD to_write = final ? sizeof(buffer) : bytes_read;
-
-    DWORD actual;
-    SetFilePointer(file, total_bytes, 0, FILE_BEGIN);
-    if (!WriteFile(file, buffer, to_write, &actual, NULL))
-      return false;
-    total_bytes += bytes_read;
-
-    if (final) {
-      SetFilePointer(file, total_bytes, 0, FILE_BEGIN);
-      SetEndOfFile(file);
-      break;
-    }
-  }
-  return true;
-}
 
 struct TestEntry {
   std::string key;
@@ -178,7 +147,7 @@ TEST_F(DiskCacheTest, Hash) {
   PerfTimeLogger timer("Hash disk cache keys");
   for (int i = 0; i < 300000; i++) {
     std::string key = GenerateKey(true);
-    uint32 hash = disk_cache::Hash(key);
+    disk_cache::Hash(key);
   }
   timer.Done();
 }
@@ -186,9 +155,10 @@ TEST_F(DiskCacheTest, Hash) {
 TEST_F(DiskCacheTest, CacheBackendPerformance) {
   MessageLoopForIO message_loop;
 
-  std::wstring path = GetCachePath();
-  ASSERT_TRUE(DeleteCache(path.c_str()));
-  disk_cache::Backend* cache = disk_cache::CreateCacheBackend(path, false, 0);
+  std::wstring path_wstring = GetCachePath();
+  ASSERT_TRUE(DeleteCache(path_wstring.c_str()));
+  disk_cache::Backend* cache = disk_cache::CreateCacheBackend(path_wstring,
+                                                              false, 0);
   ASSERT_TRUE(NULL != cache);
 
   int seed = static_cast<int>(Time::Now().ToInternalValue());
@@ -200,29 +170,23 @@ TEST_F(DiskCacheTest, CacheBackendPerformance) {
   int ret = TimeWrite(num_entries, cache, &entries);
   EXPECT_EQ(ret, g_cache_tests_received);
 
+  MessageLoop::current()->RunAllPending();
   delete cache;
 
-  std::wstring filename(path);
-  file_util::AppendToPath(&filename, L"index");
-  ASSERT_TRUE(EvictFileFromSystemCache(filename.c_str()));
+  FilePath path = FilePath::FromWStringHack(path_wstring);
 
-  filename = path;
-  file_util::AppendToPath(&filename, L"data_0");
-  ASSERT_TRUE(EvictFileFromSystemCache(filename.c_str()));
+  ASSERT_TRUE(file_util::EvictFileFromSystemCache(
+              path.Append(FILE_PATH_LITERAL("index"))));
+  ASSERT_TRUE(file_util::EvictFileFromSystemCache(
+              path.Append(FILE_PATH_LITERAL("data_0"))));
+  ASSERT_TRUE(file_util::EvictFileFromSystemCache(
+              path.Append(FILE_PATH_LITERAL("data_1"))));
+  ASSERT_TRUE(file_util::EvictFileFromSystemCache(
+              path.Append(FILE_PATH_LITERAL("data_2"))));
+  ASSERT_TRUE(file_util::EvictFileFromSystemCache(
+              path.Append(FILE_PATH_LITERAL("data_3"))));
 
-  filename = path;
-  file_util::AppendToPath(&filename, L"data_1");
-  ASSERT_TRUE(EvictFileFromSystemCache(filename.c_str()));
-
-  filename = path;
-  file_util::AppendToPath(&filename, L"data_2");
-  ASSERT_TRUE(EvictFileFromSystemCache(filename.c_str()));
-
-  filename = path;
-  file_util::AppendToPath(&filename, L"data_3");
-  ASSERT_TRUE(EvictFileFromSystemCache(filename.c_str()));
-
-  cache = disk_cache::CreateCacheBackend(path, false, 0);
+  cache = disk_cache::CreateCacheBackend(path_wstring, false, 0);
   ASSERT_TRUE(NULL != cache);
 
   ret = TimeRead(num_entries, cache, entries, true);
@@ -231,6 +195,7 @@ TEST_F(DiskCacheTest, CacheBackendPerformance) {
   ret = TimeRead(num_entries, cache, entries, false);
   EXPECT_EQ(ret, g_cache_tests_received);
 
+  MessageLoop::current()->RunAllPending();
   delete cache;
 }
 
@@ -240,6 +205,7 @@ TEST_F(DiskCacheTest, CacheBackendPerformance) {
 // fragmented, or if we have multiple files. This test measures that scenario,
 // by using multiple, highly fragmented files.
 TEST_F(DiskCacheTest, BlockFilesPerformance) {
+  MessageLoopForIO message_loop;
   std::wstring path = GetCachePath();
   ASSERT_TRUE(DeleteCache(path.c_str()));
 
@@ -277,4 +243,5 @@ TEST_F(DiskCacheTest, BlockFilesPerformance) {
   }
 
   timer2.Done();
+  MessageLoop::current()->RunAllPending();
 }

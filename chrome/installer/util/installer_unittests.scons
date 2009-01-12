@@ -1,0 +1,70 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+Import('env')
+
+env = env.Clone()
+
+env.ApplySConscript([
+    '$BASE_DIR/using_base.scons',
+    '$GTEST_DIR/../using_gtest.scons',
+    '$ICU38_DIR/using_icu38.scons',
+])
+
+env.Prepend(
+    CPPPATH = [
+        '$CHROME_SRC_DIR',
+    ],
+    LIBS = [
+        'common',
+        'util',
+    ],
+)
+
+if env.Bit('windows'):
+  env.FilterOut(
+      LIBS = ['DelayImp.lib'],
+  )
+
+  env.Prepend(
+      LINKFLAGS = [
+          '/INCREMENTAL',
+          '/DEBUG',
+
+          '/DELAYLOAD:"dwmapi.dll"',
+          '/DELAYLOAD:"uxtheme.dll"',
+
+          '/MACHINE:X86',
+          '/FIXED:No',
+
+          '/safeseh',
+          '/dynamicbase',
+          '/ignore:4199',
+          '/nxcompat',
+      ],
+      LIBS = [
+          'comsupp',
+          'oleacc',
+          'rpcrt4',
+          'shlwapi',
+      ],
+  )
+
+input_files = [
+    '../setup/setup_constants$OBJSUFFIX',
+    'copy_tree_work_item_unittest.cc',
+    'create_dir_work_item_unittest.cc',
+    'create_reg_key_work_item_unittest.cc',
+    'delete_reg_value_work_item_unittest.cc',
+    'delete_tree_work_item_unittest.cc',
+    'google_chrome_distribution_unittest.cc',
+    'helper_unittest.cc',
+    'run_all_unittests.cc',
+    'set_reg_value_work_item_unittest.cc',
+    'work_item_list_unittest.cc',
+]
+
+# TODO(port):
+if env.Bit('windows'):
+  env.ChromeTestProgram('installer_unittests', input_files)

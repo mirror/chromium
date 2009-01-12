@@ -10,6 +10,8 @@
 #include "chrome/common/sqlite_compiled_statement.h"
 #include "chrome/common/sqlite_utils.h"
 
+using base::Time;
+
 // The following tables are used to store url segment information.
 //
 // segments
@@ -240,7 +242,7 @@ void VisitSegmentDatabase::QuerySegmentUsage(
   // does as well.
 
   // How many results we return, as promised in the header file.
-  const int kResultCount = 9;
+  const size_t kResultCount = 9;
 
   // Gather all the segment scores:
   SQLITE_UNIQUE_STATEMENT(statement, GetStatementCache(),
@@ -386,4 +388,3 @@ bool VisitSegmentDatabase::DeleteSegmentForURL(URLID url_id) {
 }
 
 }  // namespace history
-

@@ -37,7 +37,8 @@ class ResourceClientProxy : public WebPluginResourceClient {
  public:
   ResourceClientProxy(PluginChannelHost* channel, int instance_id)
     : channel_(channel), instance_id_(instance_id), resource_id_(0),
-      notify_needed_(false), notify_data_(NULL) {
+      notify_needed_(false), notify_data_(NULL),
+      multibyte_response_expected_(false) {
   }
 
   ~ResourceClientProxy() {
@@ -57,6 +58,8 @@ class ResourceClientProxy : public WebPluginResourceClient {
     params.notify_data = notify_data_;
     params.stream = existing_stream;
 
+    multibyte_response_expected_ = (existing_stream != NULL);
+
     channel_->Send(new PluginMsg_HandleURLRequestReply(instance_id_, params));
   }
 
@@ -71,6 +74,7 @@ class ResourceClientProxy : public WebPluginResourceClient {
                           const std::string& headers,
                           uint32 expected_length,
                           uint32 last_modified,
+                          bool request_is_seekable,
                           bool* cancel) {
     DCHECK(channel_ != NULL);
     PluginMsg_DidReceiveResponseParams params;
@@ -79,6 +83,7 @@ class ResourceClientProxy : public WebPluginResourceClient {
     params.headers = headers;
     params.expected_length = expected_length;
     params.last_modified = last_modified;
+    params.request_is_seekable = request_is_seekable;
     // Grab a reference on the underlying channel so it does not get
     // deleted from under us.
     scoped_refptr<PluginChannelHost> channel_ref(channel_);
@@ -113,6 +118,10 @@ class ResourceClientProxy : public WebPluginResourceClient {
     MessageLoop::current()->DeleteSoon(FROM_HERE, this);
   }
 
+  bool IsMultiByteResponseExpected() {
+    return multibyte_response_expected_;
+  }
+
 private:
   int resource_id_;
   int instance_id_;
@@ -120,6 +129,9 @@ private:
   std::string url_;
   bool notify_needed_;
   void* notify_data_;
+  // Set to true if the response expected is a multibyte response.
+  // For e.g. response for a HTTP byte range request.
+  bool multibyte_response_expected_;
 };
 
 WebPluginDelegateProxy* WebPluginDelegateProxy::Create(
@@ -195,13 +207,14 @@ bool WebPluginDelegateProxy::Initialize(const GURL& url, char** argn,
                                         char** argv, int argc,
                                         WebPlugin* plugin,
                                         bool load_manually) {
-  std::wstring channel_name, plugin_path;
-  if (!RenderThread::current()->Send(new ViewHostMsg_OpenChannelToPlugin(
-      url, mime_type_, clsid_, webkit_glue::GetWebKitLocale(),
-      &channel_name, &plugin_path)))
+  std::wstring channel_name;
+  FilePath plugin_path;
+  if (!g_render_thread->Send(new ViewHostMsg_OpenChannelToPlugin(
+          url, mime_type_, clsid_, webkit_glue::GetWebKitLocale(),
+          &channel_name, &plugin_path)))
     return false;
 
-  MessageLoop* ipc_message_loop = RenderThread::current()->owner_loop();
+  MessageLoop* ipc_message_loop = g_render_thread->owner_loop();
   scoped_refptr<PluginChannelHost> channel_host =
       PluginChannelHost::GetPluginChannelHost(channel_name, ipc_message_loop);
   if (!channel_host.get())
@@ -296,7 +309,7 @@ void WebPluginDelegateProxy::DidManualLoadFail() {
   Send(new PluginMsg_DidManualLoadFail(instance_id_));
 }
 
-std::wstring WebPluginDelegateProxy::GetPluginPath() {
+FilePath WebPluginDelegateProxy::GetPluginPath() {
   return plugin_path_;
 }
 
@@ -397,14 +410,14 @@ void WebPluginDelegateProxy::ResetWindowlessBitmaps() {
 }
 
 bool WebPluginDelegateProxy::CreateBitmap(
-    scoped_ptr<SharedMemory>* memory,
-    scoped_ptr<gfx::PlatformCanvasWin>* canvas) {
+    scoped_ptr<base::SharedMemory>* memory,
+    scoped_ptr<skia::PlatformCanvasWin>* canvas) {
   size_t size = GetPaintBufSize(plugin_rect_);
-  scoped_ptr<SharedMemory> new_shared_memory(new SharedMemory());
+  scoped_ptr<base::SharedMemory> new_shared_memory(new base::SharedMemory());
   if (!new_shared_memory->Create(L"", false, true, size))
     return false;
 
-  scoped_ptr<gfx::PlatformCanvasWin> new_canvas(new gfx::PlatformCanvasWin);
+  scoped_ptr<skia::PlatformCanvasWin> new_canvas(new skia::PlatformCanvasWin);
   if (!new_canvas->initialize(plugin_rect_.width(), plugin_rect_.height(),
                               true, new_shared_memory->handle())) {
     return false;
@@ -509,7 +522,7 @@ void WebPluginDelegateProxy::Print(HDC hdc) {
   PluginMsg_PrintResponse_Params params = { 0 };
   Send(new PluginMsg_Print(instance_id_, &params));
 
-  SharedMemory memory(params.shared_memory, true);
+  base::SharedMemory memory(params.shared_memory, true);
   if (!memory.Map(params.size)) {
     NOTREACHED();
     return;
@@ -675,7 +688,7 @@ void WebPluginDelegateProxy::PaintSadPlugin(HDC hdc, const gfx::Rect& rect) {
 
   if (!sad_plugin_) {
     sad_plugin_ = ResourceBundle::LoadBitmap(
-        _AtlBaseModule.GetResourceInstance(), IDR_CRASHED_PLUGIN);
+        _AtlBaseModule.GetResourceInstance(), IDR_SAD_PLUGIN);
   }
 
   if (sad_plugin_) {

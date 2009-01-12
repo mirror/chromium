@@ -83,7 +83,7 @@ class SimplifiedTextDiff(text_diff.TestTextDiff):
 
     return text
 
-  def CompareOutput(self, filename, proc, output, unused_test_args):
+  def CompareOutput(self, filename, proc, output, test_args):
     """Implementation of CompareOutput that removes most numbers before
     computing the diff.
 
@@ -92,9 +92,15 @@ class SimplifiedTextDiff(text_diff.TestTextDiff):
     """
     failures = []
 
+    # If we're generating a new baseline, we pass.
+    if test_args.new_baseline:
+      return failures
+
     # Normalize text to diff
     output = self.GetNormalizedOutputText(output)
-    expected = self.GetNormalizedExpectedText(filename)
+    # The full text diff already gave the result file if requested, so we'll
+    # ignore the |show_sources| option here.
+    expected = self.GetNormalizedExpectedText(filename, show_sources=False)
 
     # Don't bother with the simplified text diff if we match before simplifying
     # the text.

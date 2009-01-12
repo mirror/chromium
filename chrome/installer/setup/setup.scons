@@ -1,0 +1,106 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+Import('env')
+
+env = env.Clone()
+
+env.ApplySConscript([
+    '$BASE_DIR/using_base.scons',
+    '$BSPATCH_DIR/using_bspatch.scons',
+    '$ICU38_DIR/using_icu38.scons',
+    '$LZMA_SDK_DIR/using_lzma_sdk.scons',
+])
+
+if env.Bit('windows'):
+  env_res = env.Clone()
+
+  env_res.Append(
+      CPPPATH = [
+          ".",
+          "$CHROME_SRC_DIR",
+          "$CHROME_DIR/installer/util",
+      ],
+      RCFLAGS = [
+          ["/l", "0x409"],
+      ],
+  )
+
+  resources = env_res.RES('setup.rc')
+
+  # TODO(sgk):  implicit dependency should be picked up automatically
+  env_res.Depends(resources,
+                  '$CHROME_DIR/installer/util/installer_util_strings.rc')
+
+
+env.Prepend(
+    CPPPATH = [
+        '../util',
+        '.',
+        '$CHROME_SRC_DIR',
+    ],
+    LIBS = [
+        'common',
+        'util',
+    ],
+)
+
+if env.Bit('windows'):
+  env.Prepend(
+      LINKFLAGS = [
+          '/INCREMENTAL',
+          '/DEBUG',
+
+          '/DELAYLOAD:"dwmapi.dll"',
+          '/DELAYLOAD:"uxtheme.dll"',
+
+          '/OPT:NOWIN98',
+          '/SUBSYSTEM:WINDOWS',
+          '/MACHINE:X86',
+          '/FIXED:No',
+
+          '/safeseh',
+          '/dynamicbase',
+          '/ignore:4199',
+          '/nxcompat',
+
+          '/PDB:${TARGETS[1]}',
+      ],
+      LIBS = [
+          'msi',
+      ],
+  )
+
+
+input_files = [
+    'install.cc',
+    'main.cc',
+    'setup.cc',
+    'setup_constants.cc',
+    'uninstall.cc',
+]
+
+# TODO(port):
+if env.Bit('windows'):
+  env.ChromeProgram('setup', resources + input_files)
+
+env.ChromeMSVSProject('$CHROME_DIR/installer/setup/setup.vcproj',
+                      dependencies = [
+                          '$BASE_DIR/build/base.vcproj',
+                          '$CHROME_DIR/common/common.vcproj',
+                          '$ICU38_DIR/build/icu.vcproj',
+                          '$LZMA_SDK_DIR/7z_C.vcproj',
+                          '$BSPATCH_DIR/bspatch.vcproj',
+                          '$CHROME_DIR/installer/util/util.vcproj',
+                      ],
+                      guid='{21C76E6E-8B38-44D6-8148-B589C13B9554}')
+
+# TODO(port):
+if env.Bit('windows'):
+  exe_version_rc = env.ChromeVersionRC('setup_exe_version.rc',
+                                     'setup_exe_version.rc.version',
+                                     PWD = env.Dir('.'))
+
+  # TODO(sgk):  implicit dependency should be picked up automatically
+  env_res.Depends(resources, exe_version_rc)

@@ -9,10 +9,10 @@ env = env.Clone()
 
 env.Prepend(
     CPPPATH = [
-        '$CHROME_DIR/app/resources',
+        '$TARGET_ROOT/grit_derived_sources',
         #'$OBJ_ROOT/google_update',
-        '#/tools/build/win',
-        '#/..',
+        '$OBJ_ROOT/chrome/tools/build/win',
+        '$CHROME_SRC_DIR',
     ],
     CPPDEFINES = [
         'U_STATIC_IMPLEMENTATION',
@@ -35,7 +35,7 @@ env.Append(
         '$CHROME_DIR/third_party/hunspell/src/hunspell',
         '$CHROME_DIR/third_party/wtl/include',
         '$NPAPI_DIR',
-        '$LIBXML_DIR/scons/include',
+        '$LIBXML_DIR/DerivedSources/include',
         '$LIBXML_DIR/include',
         '$ICU38_DIR/public/common',
         '$ICU38_DIR/public/i18n',
@@ -56,6 +56,9 @@ input_files = [
     'bookmark_bar_view.cc',
     'bookmark_bubble_view.cc',
     'bookmark_editor_view.cc',
+    'bookmark_folder_tree_view.cc',
+    'bookmark_manager_view.cc',
+    'bookmark_table_view.cc',
     'bug_report_view.cc',
     'clear_browsing_data.cc',
     'constrained_window_impl.cc',
@@ -68,6 +71,7 @@ input_files = [
     'edit_keyword_controller.cc',
     'event_utils.cc',
     'external_protocol_dialog.cc',
+    'find_bar_view.cc',
     'first_run_bubble.cc',
     'first_run_customize_view.cc',
     'first_run_view.cc',
@@ -75,7 +79,6 @@ input_files = [
     'frame/aero_glass_frame.cc',
     'frame/aero_glass_non_client_view.cc',
     'frame/browser_view.cc',
-    'frame/browser_view2.cc',
     'frame/browser_window_factory.cc',
     'frame/opaque_frame.cc',
     'frame/opaque_non_client_view.cc',
@@ -86,22 +89,14 @@ input_files = [
     'importer_lock_view.cc',
     'importer_view.cc',
     'importing_progress_view.cc',
-    'info_bar_alternate_nav_url_view.cc',
-    'info_bar_confirm_view.cc',
-    'info_bar_item_view.cc',
-    'info_bar_message_view.cc',
-    'info_bar_view.cc',
     'info_bubble.cc',
+    'infobars/infobar_container.cc',
+    'infobars/infobars.cc',
     'input_window.cc',
     'keyword_editor_view.cc',
     'location_bar_view.cc',
     'login_view.cc',
-    'old_frames/frame_view.cc',
-    'old_frames/point_buffer.cc',
-    'old_frames/simple_vista_frame.cc',
-    'old_frames/simple_xp_frame.cc',
-    'old_frames/vista_frame.cc',
-    'old_frames/xp_frame.cc',
+    'new_profile_dialog.cc',
     'options/advanced_contents_view.cc',
     'options/advanced_page_view.cc',
     'options/content_page_view.cc',
@@ -118,6 +113,7 @@ input_files = [
     'password_manager_view.cc',
     'restart_message_box.cc',
     'sad_tab_view.cc',
+    'select_profile_dialog.cc',
     'shelf_item_dialog.cc',
     'shell_dialogs.cc',
     'star_toggle.cc',
@@ -136,8 +132,17 @@ input_files = [
     'user_data_dir_dialog.cc',
 ]
 
-env.ChromeStaticLibrary('browser_views', input_files)
+if env.Bit('windows'):
+  input_files.extend([
+      'find_bar_win.cc',
+  ])
 
+env.ChromeLibrary('browser_views', input_files)
 
-SConscript('debugger/SConscript', exports=['env'])
-
+env.ChromeMSVSProject('$CHROME_DIR/browser/views/browser_views.vcproj',
+                dependencies = [
+                    '$LIBXML_DIR/build/libxml_config.vcproj',
+                    '$GOOGLE_UPDATE_DIR/ondemand_updates.vcproj',
+                    '$CHROME_DIR/app/generated_resources.vcproj',
+                ],
+                guid='{FA537565-7B03-4FFC-AF15-F7A979B72E22}')

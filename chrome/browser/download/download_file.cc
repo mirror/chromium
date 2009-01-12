@@ -15,9 +15,9 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/profile.h"
-#include "chrome/browser/resource_dispatcher_host.h"
-#include "chrome/browser/tab_contents.h"
+#include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #include "chrome/browser/tab_util.h"
+#include "chrome/browser/web_contents.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/stl_util-inl.h"
 #include "chrome/common/win_util.h"
@@ -25,6 +25,8 @@
 #include "googleurl/src/gurl.h"
 #include "net/base/net_util.h"
 #include "net/url_request/url_request_context.h"
+
+using base::TimeDelta;
 
 // Throttle updates to the UI thread so that a fast moving download doesn't
 // cause it to become unresponsive (ins milliseconds).
@@ -67,7 +69,7 @@ DownloadFile::~DownloadFile() {
 
 bool DownloadFile::Initialize() {
   if (file_util::CreateTemporaryFileName(&full_path_))
-    return Open(L"wb");
+    return Open("wb");
   return false;
 }
 
@@ -83,22 +85,21 @@ bool DownloadFile::AppendDataToFile(const char* data, int data_len) {
 
 void DownloadFile::Cancel() {
   Close();
-  DeleteFile(full_path_.c_str());
+  file_util::Delete(full_path_, false);
 }
 
 // The UI has provided us with our finalized name.
-bool DownloadFile::Rename(const std::wstring& new_path) {
+bool DownloadFile::Rename(const FilePath& new_path) {
   Close();
 
   // We cannot rename because rename will keep the same security descriptor
   // on the destination file. We want to recreate the security descriptor
   // with the security that makes sense in the new path.
-  if (!file_util::RenameFileAndResetSecurityDescriptor(full_path_.c_str(),
-                                                       new_path.c_str())) {
+  if (!file_util::RenameFileAndResetSecurityDescriptor(full_path_, new_path)) {
     return false;
   }
 
-  DeleteFile(full_path_.c_str());
+  file_util::Delete(full_path_, false);
 
   full_path_ = new_path;
   path_renamed_ = true;
@@ -107,22 +108,22 @@ bool DownloadFile::Rename(const std::wstring& new_path) {
   if (!in_progress_)
     return true;
 
-  if (!Open(L"a+b"))
+  if (!Open("a+b"))
     return false;
   return true;
 }
 
 void DownloadFile::Close() {
   if (file_) {
-    fclose(file_);
+    file_util::CloseFile(file_);
     file_ = NULL;
   }
 }
 
-bool DownloadFile::Open(const wchar_t* open_mode) {
+bool DownloadFile::Open(const char* open_mode) {
   DCHECK(!full_path_.empty());
-  if (_wfopen_s(&file_, full_path_.c_str(), open_mode)) {
-    file_ = NULL;
+  file_ = file_util::OpenFile(full_path_, open_mode);
+  if (!file_) {
     return false;
   }
   // Sets the Zone to tell Windows that this file comes from the internet.
@@ -456,9 +457,9 @@ void DownloadFileManager::RemoveDownload(int id, DownloadManager* manager) {
 // static
 DownloadManager* DownloadFileManager::DownloadManagerFromRenderIds(
     int render_process_id, int render_view_id) {
-  TabContents* contents = tab_util::GetTabContentsByID(render_process_id,
+  WebContents* contents = tab_util::GetWebContentsByID(render_process_id,
                                                        render_view_id);
-  if (contents && contents->type() == TAB_CONTENTS_WEB) {
+  if (contents) {
     Profile* profile = contents->profile();
     if (profile)
       return profile->GetDownloadManager();
@@ -510,15 +511,15 @@ void DownloadFileManager::OnDownloadUrl(const GURL& url,
 // Open a download, or show it in a Windows Explorer window. We run on this
 // thread to avoid blocking the UI with (potentially) slow Shell operations.
 // TODO(paulg): File 'stat' operations.
-void DownloadFileManager::OnShowDownloadInShell(const std::wstring full_path) {
+void DownloadFileManager::OnShowDownloadInShell(const FilePath& full_path) {
   DCHECK(MessageLoop::current() == file_loop_);
-  win_util::ShowItemInFolder(full_path);
+  win_util::ShowItemInFolder(full_path.value());
 }
 
 // Launches the selected download using ShellExecute 'open' verb. If there is
 // a valid parent window, the 'safer' version will be used which can
 // display a modal dialog asking for user consent on dangerous files.
-void DownloadFileManager::OnOpenDownloadInShell(const std::wstring full_path,
+void DownloadFileManager::OnOpenDownloadInShell(const FilePath& full_path,
                                                 const std::wstring& url,
                                                 HWND parent_window) {
   DCHECK(MessageLoop::current() == file_loop_);
@@ -533,15 +534,13 @@ void DownloadFileManager::OnOpenDownloadInShell(const std::wstring full_path,
 // download specified by 'id'. Rename the in progress download, and remove it
 // from our table if it has been completed or cancelled already.
 void DownloadFileManager::OnFinalDownloadName(int id,
-                                              const std::wstring& full_path) {
+                                              const FilePath& full_path) {
   DCHECK(MessageLoop::current() == file_loop_);
   DownloadFileMap::iterator it = downloads_.find(id);
   if (it == downloads_.end())
     return;
 
-  std::wstring download_dir = file_util::GetDirectoryFromPath(full_path);
-  if (!file_util::PathExists(download_dir))
-    file_util::CreateDirectory(download_dir);
+  file_util::CreateDirectory(full_path.DirName());
 
   DownloadFile* download = it->second;
   if (!download->Rename(full_path)) {
@@ -574,13 +573,9 @@ void DownloadFileManager::OnFinalDownloadName(int id,
         this, &DownloadFileManager::StopUpdateTimer));
 }
 
-void DownloadFileManager::CreateDirectory(const std::wstring& directory) {
-  if (!file_util::PathExists(directory))
-    file_util::CreateDirectory(directory);
-}
-
-void DownloadFileManager::DeleteFile(const std::wstring& path) {
+// static
+void DownloadFileManager::DeleteFile(const FilePath& path) {
   // Make sure we only delete files.
-  if (file_util::PathExists(path) && !file_util::DirectoryExists(path))
+  if (!file_util::DirectoryExists(path))
     file_util::Delete(path, false);
 }

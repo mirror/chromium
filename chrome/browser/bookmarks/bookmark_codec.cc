@@ -7,9 +7,12 @@
 #include "base/string_util.h"
 #include "base/values.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
+#include "chrome/common/l10n_util.h"
 #include "googleurl/src/gurl.h"
 
 #include "generated_resources.h"
+
+using base::Time;
 
 const wchar_t* BookmarkCodec::kRootsKey = L"roots";
 const wchar_t* BookmarkCodec::kRootFolderNameKey = L"bookmark_bar";
@@ -131,7 +134,6 @@ bool BookmarkCodec::DecodeNode(BookmarkModel* model,
                                const DictionaryValue& value,
                                BookmarkNode* parent,
                                BookmarkNode* node) {
-  bool created_node = (node == NULL);
   std::wstring title;
   if (!value.GetString(kNameKey, &title))
     return false;
@@ -155,7 +157,7 @@ bool BookmarkCodec::DecodeNode(BookmarkModel* model,
       return false;
     // TODO(sky): this should ignore the node if not a valid URL.
     if (!node)
-      node = new BookmarkNode(model, GURL(url_string));
+      node = new BookmarkNode(model, GURL(WideToUTF8(url_string)));
     if (parent)
       parent->Add(parent->GetChildCount(), node);
     node->type_ = history::StarredEntry::URL;
@@ -189,4 +191,3 @@ bool BookmarkCodec::DecodeNode(BookmarkModel* model,
       Time::FromInternalValue(StringToInt64(date_added_string));
   return true;
 }
-

@@ -202,14 +202,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\greasemonkey_slave.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\greasemonkey_slave.h"
-			>
-		</File>
-		<File
 			RelativePath=".\localized_error.cc"
 			>
 		</File>
@@ -286,11 +278,27 @@
 			>
 		</File>
 		<File
+			RelativePath=".\user_script_slave.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\user_script_slave.h"
+			>
+		</File>
+		<File
 			RelativePath=".\visitedlink_slave.cc"
 			>
 		</File>
 		<File
 			RelativePath=".\visitedlink_slave.h"
+			>
+		</File>
+		<File
+			RelativePath=".\webmediaplayer_delegate_impl.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\webmediaplayer_delegate_impl.h"
 			>
 		</File>
 		<File

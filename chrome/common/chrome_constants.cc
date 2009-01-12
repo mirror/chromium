@@ -10,10 +10,10 @@ namespace chrome {
 const wchar_t kBrowserProcessExecutableName[] = L"chrome.exe";
 #if defined(GOOGLE_CHROME_BUILD)
 const wchar_t kBrowserAppName[] = L"Chrome";
-const wchar_t kStatsFilename[] = L"ChromeStats";
+const char    kStatsFilename[] = "ChromeStats2";
 #else
 const wchar_t kBrowserAppName[] = L"Chromium";
-const wchar_t kStatsFilename[] = L"ChromiumStats";
+const char    kStatsFilename[] = "ChromiumStats2";
 #endif
 const wchar_t kExternalTabWindowClass[] = L"Chrome_ExternalTabContainer";
 const wchar_t kMessageWindowClass[] = L"Chrome_MessageWindow";
@@ -34,6 +34,7 @@ const wchar_t kPreferencesFilename[] = L"Preferences";
 const wchar_t kSafeBrowsingFilename[] = L"Safe Browsing";
 const wchar_t kThumbnailsFilename[] = L"Thumbnails";
 const wchar_t kUserDataDirname[] = L"User Data";
+const wchar_t kUserScriptsDirname[] = L"User Scripts";
 const wchar_t kWebDataFilename[] = L"Web Data";
 const wchar_t kBookmarksFileName[] = L"Bookmarks";
 const wchar_t kHistoryBookmarksFileName[] = L"Bookmarks From History";

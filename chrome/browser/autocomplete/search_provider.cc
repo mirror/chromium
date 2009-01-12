@@ -10,6 +10,7 @@
 #include "chrome/browser/google_util.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/template_url_model.h"
+#include "chrome/browser/url_fixer_upper.h"
 #include "chrome/common/json_value_serializer.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
@@ -19,11 +20,13 @@
 
 #include "generated_resources.h"
 
+using base::Time;
+using base::TimeDelta;
+
 const int SearchProvider::kQueryDelayMs = 200;
 
 void SearchProvider::Start(const AutocompleteInput& input,
-                           bool minimal_changes,
-                           bool synchronous_only) {
+                           bool minimal_changes) {
   matches_.clear();
 
   // Can't return search/suggest results for bogus input or if there is no
@@ -59,7 +62,8 @@ void SearchProvider::Start(const AutocompleteInput& input,
   if (input.text().empty()) {
     // User typed "?" alone.  Give them a placeholder result indicating what
     // this syntax does.
-    AutocompleteMatch match;
+    AutocompleteMatch match(this, 0, false,
+                            AutocompleteMatch::SEARCH_WHAT_YOU_TYPED);
     static const std::wstring kNoQueryInput(
         l10n_util::GetString(IDS_AUTOCOMPLETE_NO_QUERY));
     match.contents.assign(l10n_util::GetStringF(
@@ -67,7 +71,6 @@ void SearchProvider::Start(const AutocompleteInput& input,
         kNoQueryInput));
     match.contents_class.push_back(
         ACMatchClassification(0, ACMatchClassification::DIM));
-    match.type = AutocompleteMatch::SEARCH;
     matches_.push_back(match);
     Stop();
     return;
@@ -75,8 +78,8 @@ void SearchProvider::Start(const AutocompleteInput& input,
 
   input_ = input;
 
-  StartOrStopHistoryQuery(minimal_changes, synchronous_only);
-  StartOrStopSuggestQuery(minimal_changes, synchronous_only);
+  StartOrStopHistoryQuery(minimal_changes);
+  StartOrStopSuggestQuery(minimal_changes);
   ConvertResultsToAutocompleteMatches();
 }
 
@@ -86,9 +89,9 @@ void SearchProvider::Run() {
   const TemplateURLRef* const suggestions_url =
       default_provider_.suggestions_url();
   DCHECK(suggestions_url->SupportsReplacement());
-  fetcher_.reset(new URLFetcher(GURL(suggestions_url->ReplaceSearchTerms(
+  fetcher_.reset(new URLFetcher(suggestions_url->ReplaceSearchTerms(
       default_provider_, input_.text(),
-      TemplateURLRef::NO_SUGGESTIONS_AVAILABLE, std::wstring())),
+      TemplateURLRef::NO_SUGGESTIONS_AVAILABLE, std::wstring()),
       URLFetcher::GET, this));
   fetcher_->set_request_context(profile_->GetRequestContext());
   fetcher_->Start();
@@ -127,30 +130,31 @@ void SearchProvider::OnURLFetchComplete(const URLFetcher* source,
     }
   }
 
-  JSONStringValueSerializer deserializer(json_data);
-  deserializer.set_allow_trailing_comma(true);
-  Value* root_val = NULL;
-  have_suggest_results_ = status.is_success() && (response_code == 200) &&
-      deserializer.Deserialize(&root_val) && ParseSuggestResults(root_val);
-  delete root_val;
+  if (status.is_success() && response_code == 200) {
+    JSONStringValueSerializer deserializer(json_data);
+    deserializer.set_allow_trailing_comma(true);
+    scoped_ptr<Value> root_val(deserializer.Deserialize(NULL));
+    have_suggest_results_ =
+        root_val.get() && ParseSuggestResults(root_val.get());
+  }
+
   ConvertResultsToAutocompleteMatches();
   listener_->OnProviderUpdate(!suggest_results_.empty());
 }
 
-void SearchProvider::StartOrStopHistoryQuery(bool minimal_changes,
-                                             bool synchronous_only) {
+void SearchProvider::StartOrStopHistoryQuery(bool minimal_changes) {
   // For the minimal_changes case, if we finished the previous query and still
   // have its results, or are allowed to keep running it, just do that, rather
   // than starting a new query.
   if (minimal_changes &&
-      (have_history_results_ || (!done_ && !synchronous_only)))
+      (have_history_results_ || (!done_ && !input_.synchronous_only())))
     return;
 
   // We can't keep running any previous query, so halt it.
   StopHistory();
 
   // We can't start a new query if we're only allowed synchronous results.
-  if (synchronous_only)
+  if (input_.synchronous_only())
     return;
 
   // Start the history query.
@@ -163,8 +167,7 @@ void SearchProvider::StartOrStopHistoryQuery(bool minimal_changes,
   history_request_pending_ = true;
 }
 
-void SearchProvider::StartOrStopSuggestQuery(bool minimal_changes,
-                                             bool synchronous_only) {
+void SearchProvider::StartOrStopSuggestQuery(bool minimal_changes) {
   if (!IsQuerySuitableForSuggest()) {
     StopSuggest();
     return;
@@ -174,14 +177,14 @@ void SearchProvider::StartOrStopSuggestQuery(bool minimal_changes,
   // have its results, or are allowed to keep running it, just do that, rather
   // than starting a new query.
   if (minimal_changes &&
-      (have_suggest_results_ || (!done_ && !synchronous_only)))
+      (have_suggest_results_ || (!done_ && !input_.synchronous_only())))
     return;
 
   // We can't keep running any previous query, so halt it.
   StopSuggest();
 
   // We can't start a new query if we're only allowed synchronous results.
-  if (synchronous_only)
+  if (input_.synchronous_only())
     return;
 
   // Kick off a timer that will start the URL fetch if it completes before
@@ -315,12 +318,17 @@ bool SearchProvider::ParseSuggestResults(Value* root_val) {
         type_val->GetAsString(&type_str) && (type_str == L"NAVIGATION")) {
       Value* site_val;
       std::wstring site_name;
-      if (navigation_results_.size() < max_matches() &&
+      if ((navigation_results_.size() < max_matches()) &&
           description_list && description_list->Get(i, &site_val) &&
           site_val->IsType(Value::TYPE_STRING) &&
           site_val->GetAsString(&site_name)) {
-        navigation_results_.push_back(NavigationResult(suggestion_str,
-                                                       site_name));
+        // We can't blindly trust the URL coming from the server to be valid.
+        GURL result_url =
+            GURL(URLFixerUpper::FixupURL(suggestion_str, std::wstring()));
+        if (result_url.is_valid()) {
+          navigation_results_.push_back(NavigationResult(result_url,
+                                                         site_name));
+        }
       }
     } else {
       // TODO(kochi): Currently we treat a calculator result as a query, but it
@@ -342,16 +350,19 @@ void SearchProvider::ConvertResultsToAutocompleteMatches() {
       TemplateURLRef::NO_SUGGESTION_CHOSEN;
   const Time no_time;
   AddMatchToMap(input_.text(), CalculateRelevanceForWhatYouTyped(),
+                AutocompleteMatch::SEARCH_WHAT_YOU_TYPED,
                 did_not_accept_suggestion, &map);
 
   for (HistoryResults::const_iterator i(history_results_.begin());
        i != history_results_.end(); ++i) {
     AddMatchToMap(i->term, CalculateRelevanceForHistory(i->time),
-                  did_not_accept_suggestion, &map);
+                  AutocompleteMatch::SEARCH_HISTORY, did_not_accept_suggestion,
+                  &map);
   }
 
   for (size_t i = 0; i < suggest_results_.size(); ++i) {
     AddMatchToMap(suggest_results_[i], CalculateRelevanceForSuggestion(i),
+                  AutocompleteMatch::SEARCH_SUGGEST,
                   static_cast<int>(i), &map);
   }
 
@@ -360,11 +371,11 @@ void SearchProvider::ConvertResultsToAutocompleteMatches() {
   for (MatchMap::const_iterator i(map.begin()); i != map.end(); ++i)
     matches_.push_back(i->second);
 
-  if (navigation_results_.size()) {
+  if (!navigation_results_.empty()) {
     // TODO(kochi): http://b/1170574  We add only one results for navigational
     // suggestions. If we can get more useful information about the score,
     // consider adding more results.
-    matches_.push_back(NavigationToMatch(navigation_results_[0],
+    matches_.push_back(NavigationToMatch(navigation_results_.front(),
                                          CalculateRelevanceForNavigation(0)));
   }
 
@@ -373,7 +384,7 @@ void SearchProvider::ConvertResultsToAutocompleteMatches() {
       matches_.begin() + std::min(max_total_matches, matches_.size()),
       matches_.end(), &AutocompleteMatch::MoreRelevant);
   if (matches_.size() > max_total_matches)
-    matches_.resize(max_total_matches);
+    matches_.erase(matches_.begin() + max_total_matches, matches_.end());
 
   UpdateStarredStateOfMatches();
 
@@ -485,10 +496,10 @@ int SearchProvider::CalculateRelevanceForNavigation(
 
 void SearchProvider::AddMatchToMap(const std::wstring& query_string,
                                    int relevance,
+                                   AutocompleteMatch::Type type,
                                    int accepted_suggestion,
                                    MatchMap* map) {
-  AutocompleteMatch match(this, relevance, false);
-  match.type = AutocompleteMatch::SEARCH;
+  AutocompleteMatch match(this, relevance, false, type);
   std::vector<size_t> content_param_offsets;
   match.contents.assign(l10n_util::GetStringF(IDS_AUTOCOMPLETE_SEARCH_CONTENTS,
                                               default_provider_.short_name(),
@@ -559,9 +570,10 @@ void SearchProvider::AddMatchToMap(const std::wstring& query_string,
 AutocompleteMatch SearchProvider::NavigationToMatch(
     const NavigationResult& navigation,
     int relevance) {
-  AutocompleteMatch match(this, relevance, false);
+  AutocompleteMatch match(this, relevance, false,
+                          AutocompleteMatch::NAVSUGGEST);
   match.destination_url = navigation.url;
-  match.contents = StringForURLDisplay(GURL(navigation.url), true);
+  match.contents = StringForURLDisplay(navigation.url, true);
   // TODO(kochi): Consider moving HistoryURLProvider::TrimHttpPrefix() to some
   // public utility function.
   if (!url_util::FindAndCompareScheme(input_.text(), "http", NULL))

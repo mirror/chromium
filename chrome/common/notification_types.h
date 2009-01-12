@@ -134,15 +134,6 @@ enum NotificationType {
   NOTIFY_DOWNLOAD_START,
   NOTIFY_DOWNLOAD_STOP,
 
-  // This is sent when an interstitial page showing in a WebContents is closed
-  // (as the result of a navigation to another page).  The source is the
-  // WebContents the interstitial page is in.
-  // Note that you should not initiate a navigation as part of the processing of
-  // this notification, since this notification may be triggered as part of the
-  // destruction of the tab contents (the navigation controller would reuse
-  // the tab contents right before it would be destroyed).
-  NOTIFY_INTERSTITIAL_PAGE_CLOSED,
-
   // Views ---------------------------------------------------------------------
 
   // Notification that a view was removed from a view hierarchy.  The source is
@@ -209,6 +200,20 @@ enum NotificationType {
   // No details are expected.
   NOTIFY_WEB_CONTENTS_DISCONNECTED,
 
+  // This message is sent when a new InfoBar has been added to a TabContents.
+  // The source is a Source<TabContents> with a pointer to the TabContents the
+  // InfoBar was added to. The details is a Details<InfoBarDelegate> with a
+  // pointer to an object implementing the InfoBarDelegate interface for the
+  // InfoBar that was added.
+  NOTIFY_TAB_CONTENTS_INFOBAR_ADDED,
+
+  // This message is sent when an InfoBar is about to be removed from a
+  // TabContents. The source is a Source<TabContents> with a pointer to the
+  // TabContents the InfoBar was removed from. The details is a
+  // Details<InfoBarDelegate> with a pointer to an object implementing the
+  // InfoBarDelegate interface for the InfoBar that was removed.
+  NOTIFY_TAB_CONTENTS_INFOBAR_REMOVED,
+
   // This is sent when an externally hosted tab is created. The details contain
   // the ExternalTabContainer that contains the tab
   NOTIFY_EXTERNAL_TAB_CREATED,
@@ -263,6 +268,10 @@ enum NotificationType {
   // details is the previous RenderViewHost (can be NULL when the first
   // RenderViewHost is set).
   NOTIFY_RENDER_VIEW_HOST_CHANGED,
+
+  // This is sent when a RenderWidgetHost is being destroyed. The source
+  // is the RenderWidgetHost, the details are not used.
+  NOTIFY_RENDER_WIDGET_HOST_DESTROYED,
 
   // Notification from WebContents that we have received a response from
   // the renderer after using the dom inspector.
@@ -438,6 +447,15 @@ enum NotificationType {
 
   // Autocomplete --------------------------------------------------------------
 
+  // Sent by the autocomplete controller at least once per query, each time new
+  // matches are available, subject to rate-limiting/coalescing to reduce the
+  // number of updates.  There are no details.
+  NOTIFY_AUTOCOMPLETE_CONTROLLER_RESULT_UPDATED,
+
+  // Sent by the autocomplete controller once per query, immediately after
+  // synchronous matches become available.  There are no details.
+  NOTIFY_AUTOCOMPLETE_CONTROLLER_SYNCHRONOUS_MATCHES_AVAILABLE,
+
   // This is sent when an item of the Omnibox popup is selected. The source is
   // the profile.
   NOTIFY_OMNIBOX_OPENED_URL,
@@ -476,6 +494,17 @@ enum NotificationType {
 
   // Personalization -----------------------------------------------------------
   NOTIFY_PERSONALIZATION,
+
+  // User Scripts --------------------------------------------------------------
+
+  // Sent when there are new user scripts available.
+  // The details are a pointer to SharedMemory containing the new scripts.
+  NOTIFY_USER_SCRIPTS_LOADED,
+
+  // Extensions ----------------------------------------------------------------
+
+  // Sent when new extensions are loaded. The details are an ExtensionList*.
+  NOTIFY_EXTENSIONS_LOADED,
 
   // Count (must be last) ------------------------------------------------------
   // Used to determine the number of notification types.  Not valid as

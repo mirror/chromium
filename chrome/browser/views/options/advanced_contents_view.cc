@@ -23,7 +23,6 @@
 #include "chrome/browser/gears_integration.h"
 #include "chrome/browser/metrics_service.h"
 #include "chrome/browser/net/dns_global.h"
-#include "chrome/browser/resource_dispatcher_host.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/views/options/cookies_view.h"
 #include "chrome/browser/views/options/language_combobox_model.h"
@@ -443,14 +442,9 @@ void PrivacySection::LinkActivated(views::Link* source, int event_flags) {
   if (source == learn_more_link_) {
     // We open a new browser window so the Options dialog doesn't get lost
     // behind other windows.
-    Browser* browser = new Browser(gfx::Rect(), SW_SHOWNORMAL, profile(),
-                                   BrowserType::TABBED_BROWSER,
-                                   std::wstring());
-    browser->OpenURL(
-        GURL(l10n_util::GetString(IDS_LEARN_MORE_PRIVACY_URL)),
-        GURL(),
-        NEW_WINDOW,
-        PageTransition::LINK);
+    Browser* browser = Browser::Create(profile());
+    browser->OpenURL(GURL(l10n_util::GetString(IDS_LEARN_MORE_PRIVACY_URL)),
+                     GURL(), NEW_WINDOW, PageTransition::LINK);
   }
 }
 
@@ -680,7 +674,7 @@ void WebContentSection::ButtonPressed(views::NativeButton* sender) {
     disable_popup_blocked_notification_pref_.SetValue(!notification_disabled);
   } else if (sender == gears_settings_button_) {
     UserMetricsRecordAction(L"Options_GearsSettings", NULL);
-    GearsSettingsPressed(GetAncestor(GetContainer()->GetHWND(), GA_ROOT));
+    GearsSettingsPressed(GetAncestor(GetWidget()->GetHWND(), GA_ROOT));
   }
 }
 
@@ -1192,7 +1186,7 @@ AdvancedScrollViewContainer::AdvancedScrollViewContainer(Profile* profile)
       scroll_view_(new views::ScrollView) {
   AddChildView(scroll_view_);
   scroll_view_->SetContents(contents_view_);
-  SetBackground(new ListBackground());
+  set_background(new ListBackground());
 }
 
 AdvancedScrollViewContainer::~AdvancedScrollViewContainer() {

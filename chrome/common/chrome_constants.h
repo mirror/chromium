@@ -17,7 +17,7 @@ extern const wchar_t kCrashReportLog[];
 extern const wchar_t kTestingInterfaceDLL[];
 extern const wchar_t kNotSignedInProfile[];
 extern const wchar_t kNotSignedInID[];
-extern const wchar_t kStatsFilename[];
+extern const char    kStatsFilename[];
 extern const wchar_t kBrowserResourcesDll[];
 
 // filenames
@@ -31,6 +31,7 @@ extern const wchar_t kPreferencesFilename[];
 extern const wchar_t kSafeBrowsingFilename[];
 extern const wchar_t kThumbnailsFilename[];
 extern const wchar_t kUserDataDirname[];
+extern const wchar_t kUserScriptsDirname[];
 extern const wchar_t kWebDataFilename[];
 extern const wchar_t kBookmarksFileName[];
 extern const wchar_t kHistoryBookmarksFileName[];

@@ -39,17 +39,16 @@ class SearchProvider : public AutocompleteProvider,
   SearchProvider(ACProviderListener* listener, Profile* profile)
       : AutocompleteProvider(listener, profile, "Search"),
         last_default_provider_(NULL),
-        fetcher_(NULL),
-        history_request_pending_(false),
         have_history_results_(false),
+        history_request_pending_(false),
         suggest_results_pending_(false),
+        fetcher_(NULL),
         have_suggest_results_(false) {
   }
 
   // AutocompleteProvider
   virtual void Start(const AutocompleteInput& input,
-                     bool minimal_changes,
-                     bool synchronous_only);
+                     bool minimal_changes);
   virtual void Stop();
 
   // URLFetcher::Delegate
@@ -62,13 +61,13 @@ class SearchProvider : public AutocompleteProvider,
 
  private:
   struct NavigationResult {
-    NavigationResult(const std::wstring& url, const std::wstring& site_name)
+    NavigationResult(const GURL& url, const std::wstring& site_name)
         : url(url),
           site_name(site_name) {
     }
 
     // The URL.
-    std::wstring url;
+    GURL url;
 
     // Name for the site.
     std::wstring site_name;
@@ -85,8 +84,8 @@ class SearchProvider : public AutocompleteProvider,
   // Determines whether an asynchronous subcomponent query should run for the
   // current input.  If so, starts it if necessary; otherwise stops it.
   // NOTE: These functions do not update |done_|.  Callers must do so.
-  void StartOrStopHistoryQuery(bool minimal_changes, bool synchronous_only);
-  void StartOrStopSuggestQuery(bool minimal_changes, bool synchronous_only);
+  void StartOrStopHistoryQuery(bool minimal_changes);
+  void StartOrStopSuggestQuery(bool minimal_changes);
 
   // Returns true when the current query can be sent to the Suggest service.
   // This will be false e.g. when Suggest is disabled, the query contains
@@ -117,7 +116,7 @@ class SearchProvider : public AutocompleteProvider,
   // algorithms for the different types of matches.
   int CalculateRelevanceForWhatYouTyped() const;
   // |time| is the time at which this query was last seen.
-  int CalculateRelevanceForHistory(const Time& time) const;
+  int CalculateRelevanceForHistory(const base::Time& time) const;
   // |suggestion_value| is which suggestion this is in the list returned from
   // the server; the best suggestion is suggestion number 0.
   int CalculateRelevanceForSuggestion(size_t suggestion_value) const;
@@ -129,6 +128,7 @@ class SearchProvider : public AutocompleteProvider,
   // exists, whichever one has lower relevance is eliminated.
   void AddMatchToMap(const std::wstring& query_string,
                      int relevance,
+                     AutocompleteMatch::Type type,
                      int accepted_suggestion,
                      MatchMap* map);
   // Returns an AutocompleteMatch for a navigational suggestion.

@@ -11,11 +11,12 @@
 #define CHROME_BROWSER_BROWSER_PROCESS_H__
 
 #include <string>
+#include <vector>
 
 #include "base/basictypes.h"
 #include "base/message_loop.h"
 #if defined(OS_WIN)
-#include "chrome/browser/resource_dispatcher_host.h"
+#include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #endif  // defined(OS_WIN)
 
 class AutomationProviderList;
@@ -31,7 +32,6 @@ class RenderProcessHost;
 class DebuggerWrapper;
 class ResourceDispatcherHost;
 class WebAppInstallerService;
-class SharedEvent;
 class SuspendController;
 
 namespace base {
@@ -123,11 +123,6 @@ class BrowserProcess {
 
   virtual MemoryModel memory_model() = 0;
 
-  virtual SuspendController* suspend_controller() = 0;
-
-  // TODO(beng): remove once XPFrame/VistaFrame are gone.
-  virtual bool IsUsingNewFrames() = 0;
-
 #if defined(OS_WIN)
   DownloadRequestManager* download_request_manager() {
     ResourceDispatcherHost* rdh = resource_dispatcher_host();
@@ -138,7 +133,15 @@ class BrowserProcess {
   virtual HANDLE shutdown_event() = 0;
 #endif
 
+  // Returns a reference to the user-data-dir based profiles vector.
+  std::vector<std::wstring>& user_data_dir_profiles() {
+    return user_data_dir_profiles_;
+  }
+
  private:
+  // User-data-dir based profiles.
+  std::vector<std::wstring> user_data_dir_profiles_;
+
   DISALLOW_EVIL_CONSTRUCTORS(BrowserProcess);
 };
 

@@ -8,11 +8,13 @@
 #include <string>
 #include <list>
 
+#include "base/file_path.h"
+#include "base/gfx/native_widget_types.h"
 #include "base/iat_patch.h"
 #include "base/ref_counted.h"
 #include "base/task.h"
-#include "webkit/glue/webplugin_delegate.h"
 #include "third_party/npapi/bindings/npapi.h"
+#include "webkit/glue/webplugin_delegate.h"
 #include "webkit/glue/webcursor.h"
 
 namespace NPAPI {
@@ -23,9 +25,9 @@ namespace NPAPI {
 // the plugin process.
 class WebPluginDelegateImpl : public WebPluginDelegate {
  public:
-  static WebPluginDelegateImpl* Create(const std::wstring& filename,
+  static WebPluginDelegateImpl* Create(const FilePath& filename,
                                        const std::string& mime_type,
-                                       HWND containing_window);
+                                       gfx::NativeView containing_view);
   static bool IsPluginDelegateWindow(HWND window);
   static bool GetPluginNameFromWindow(HWND window, std::wstring *plugin_name);
 
@@ -69,7 +71,7 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
   virtual void DidReceiveManualData(const char* buffer, int length);
   virtual void DidFinishManualLoading();
   virtual void DidManualLoadFail();
-  virtual std::wstring GetPluginPath();
+  virtual FilePath GetPluginPath();
   virtual void InstallMissingPlugin();
   virtual WebPluginResourceClient* CreateResourceClient(int resource_id,
                                                         const std::string &url,
@@ -91,6 +93,7 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
     PLUGIN_QUIRK_DONT_ALLOW_MULTIPLE_INSTANCES = 16,
     PLUGIN_QUIRK_DIE_AFTER_UNLOAD = 32,
     PLUGIN_QUIRK_PATCH_TRACKPOPUP_MENU = 64,
+    PLUGIN_QUIRK_PATCH_SETCURSOR = 128,
   };
 
   int quirks() { return quirks_; }
@@ -102,7 +105,7 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
                          bool visible);
 
  private:
-  WebPluginDelegateImpl(HWND containing_window,
+  WebPluginDelegateImpl(gfx::NativeView containing_view,
                         NPAPI::PluginInstance *instance);
   ~WebPluginDelegateImpl();
 
@@ -166,10 +169,6 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
 
   // Closes down and destroys our plugin instance.
   void DestroyInstance();
-
-  // Returns the cursor type.
-  // TODO(iyengar) Add support for custom cursors.
-  WebCursor::Type GetCursorType(HCURSOR cursor) const;
 
   // used for windowed plugins
   HWND windowed_handle_;
@@ -266,17 +265,23 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
   // The plugin module handle.
   HMODULE plugin_module_handle_;
 
-  // Indicates whether we IAT patched the TrackPopupMenu function.
-  static bool track_popup_menu_patched_;
-
-  // Helper object for patching the import table of Silverlight.
-  static iat_patch::IATPatchFunction iat_patch_helper_;
+  // Helper object for patching the TrackPopupMenu API
+  static iat_patch::IATPatchFunction iat_patch_track_popup_menu_;
 
   // TrackPopupMenu interceptor. Parameters are the same as the Win32 function
   // TrackPopupMenu.
   static BOOL WINAPI TrackPopupMenuPatch(HMENU menu, unsigned int flags, int x,
                                          int y, int reserved, HWND window,
                                          const RECT* rect);
+
+  // SetCursor interceptor for windowless plugins.
+  static HCURSOR WINAPI SetCursorPatch(HCURSOR cursor);
+
+  // Helper object for patching the SetCursor API
+  static iat_patch::IATPatchFunction iat_patch_set_cursor_;
+
+  // Holds the current cursor set by the windowless plugin.
+  WebCursor current_windowless_cursor_;
 
   DISALLOW_EVIL_CONSTRUCTORS(WebPluginDelegateImpl);
 };

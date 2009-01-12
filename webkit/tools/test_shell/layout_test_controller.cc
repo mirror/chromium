@@ -9,10 +9,12 @@
 #include "webkit/tools/test_shell/layout_test_controller.h"
 
 #include "base/basictypes.h"
+#include "base/file_util.h"
 #include "base/logging.h"
 #include "base/message_loop.h"
-#include "base/string_util.h"
 #include "base/path_service.h"
+#include "base/string_util.h"
+#include "webkit/glue/dom_operations.h"
 #include "webkit/glue/webframe.h"
 #include "webkit/glue/webpreferences.h"
 #include "webkit/glue/webview.h"
@@ -49,6 +51,7 @@ bool LayoutTestController::wait_until_done_ = false;
 bool LayoutTestController::can_open_windows_ = false;
 bool LayoutTestController::close_remaining_windows_ = true;
 bool LayoutTestController::should_add_file_to_pasteboard_ = false;
+bool LayoutTestController::stop_provisional_frame_loads_ = false;
 LayoutTestController::WorkQueue LayoutTestController::work_queue_;
 CppVariant LayoutTestController::globalFlag_;
 
@@ -90,6 +93,13 @@ LayoutTestController::LayoutTestController(TestShell* shell) {
   BindMethod("pathToLocalResource", &LayoutTestController::pathToLocalResource);
   BindMethod("addFileToPasteboardOnDrag", &LayoutTestController::addFileToPasteboardOnDrag);
   BindMethod("execCommand", &LayoutTestController::execCommand);
+  BindMethod("isCommandEnabled", &LayoutTestController::isCommandEnabled);
+  BindMethod("setPopupBlockingEnabled", &LayoutTestController::setPopupBlockingEnabled);
+  BindMethod("setStopProvisionalFrameLoads", &LayoutTestController::setStopProvisionalFrameLoads);
+  BindMethod("setSmartInsertDeleteEnabled", &LayoutTestController::setSmartInsertDeleteEnabled);
+  BindMethod("setSelectTrailingWhitespaceEnabled", &LayoutTestController::setSelectTrailingWhitespaceEnabled);
+  BindMethod("pauseAnimationAtTimeOnElementWithId", &LayoutTestController::pauseAnimationAtTimeOnElementWithId);
+  BindMethod("pauseTransitionAtTimeOnElementWithId", &LayoutTestController::pauseTransitionAtTimeOnElementWithId);
 
   // The following are stubs.
   BindMethod("dumpAsWebArchive", &LayoutTestController::dumpAsWebArchive);
@@ -124,6 +134,18 @@ LayoutTestController::LayoutTestController(TestShell* shell) {
 
 LayoutTestController::WorkQueue::~WorkQueue() {
   Reset();
+}
+
+void LayoutTestController::WorkQueue::ProcessWorkSoon() {
+  if (shell_->delegate()->top_loading_frame())
+    return;
+
+  if (!queue_.empty()) {
+    // We delay processing queued work to avoid recursion problems.
+    timer_.Start(base::TimeDelta(), this, &WorkQueue::ProcessWork);
+  } else if (!wait_until_done_) {
+    shell_->TestFinished();
+  }
 }
 
 void LayoutTestController::WorkQueue::ProcessWork() {
@@ -218,7 +240,7 @@ void LayoutTestController::waitUntilDone(
   // finishes successfully.
   if (!::IsDebuggerPresent()) {
     UINT_PTR timer_id = reinterpret_cast<UINT_PTR>(shell_);
-    SetTimer(shell_->mainWnd(), timer_id, shell_->GetFileTestTimeout(),
+    SetTimer(shell_->mainWnd(), timer_id, shell_->GetLayoutTestTimeout(),
              &TestTimeout);
   }
 #else
@@ -230,7 +252,7 @@ void LayoutTestController::waitUntilDone(
 
 void LayoutTestController::notifyDone(
     const CppArgumentList& args, CppVariant* result) {
-  if (!shell_->interactive() && wait_until_done_ &&
+  if (shell_->layout_test_mode() && wait_until_done_ &&
       !shell_->delegate()->top_loading_frame() && work_queue_.empty()) {
     shell_->TestFinished();
   }
@@ -333,7 +355,7 @@ void LayoutTestController::objCIdentityIsEqual(
 
 void LayoutTestController::Reset() {
   if (shell_) {
-    shell_->webView()->MakeTextStandardSize();
+    shell_->webView()->ResetZoom();
     shell_->webView()->SetTabKeyCyclesThroughElements(true);
   }
   dump_as_text_ = false;
@@ -348,6 +370,7 @@ void LayoutTestController::Reset() {
   wait_until_done_ = false;
   can_open_windows_ = false;
   should_add_file_to_pasteboard_ = false;
+  stop_provisional_frame_loads_ = false;
   globalFlag_.Set(false);
 
   if (close_remaining_windows_) {
@@ -355,7 +378,7 @@ void LayoutTestController::Reset() {
     // shell.  We don't want to delete elements as we're iterating, so we copy
     // to a temp vector first.
     WindowList* windows = TestShell::windowList();
-    std::vector<gfx::WindowHandle> windows_to_delete;
+    std::vector<gfx::NativeWindow> windows_to_delete;
     for (WindowList::iterator i = windows->begin(); i != windows->end(); ++i) {
       if (*i != shell_->mainWnd())
         windows_to_delete.push_back(*i);
@@ -377,7 +400,7 @@ void LayoutTestController::LocationChangeDone() {
   work_queue_.set_frozen(true);
 
   if (!wait_until_done_)
-    work_queue_.ProcessWork();
+    work_queue_.ProcessWorkSoon();
 }
 
 void LayoutTestController::setCanOpenWindows(
@@ -453,12 +476,33 @@ void LayoutTestController::execCommand(
   result->SetNull();
 }
 
-void LayoutTestController::setUseDashboardCompatibilityMode(
+void LayoutTestController::isCommandEnabled(
     const CppArgumentList& args, CppVariant* result) {
-  if (args.size() > 0 && args[0].isBool()) {
-    shell_->delegate()->SetDashboardCompatibilityMode(args[0].value.boolValue);
+  if (args.size() <= 0 || !args[0].isString()) {
+    result->SetNull();
+    return;
   }
 
+  std::string command = args[0].ToString();
+  bool rv = shell_->webView()->GetFocusedFrame()->IsCoreCommandEnabled(command);
+  result->Set(rv);
+}
+
+void LayoutTestController::setPopupBlockingEnabled(
+    const CppArgumentList& args, CppVariant* result) {
+  if (args.size() > 0 && args[0].isBool()) {
+    bool block_popups = args[0].ToBoolean();
+    WebPreferences* prefs = shell_->GetWebPreferences();
+    prefs->javascript_can_open_windows_automatically = !block_popups;
+
+    shell_->webView()->SetPreferences(*prefs);
+  }
+  result->SetNull();
+}
+
+void LayoutTestController::setUseDashboardCompatibilityMode(
+    const CppArgumentList& args, CppVariant* result) {
+  // We have no need to support Dashboard Compatibility Mode (mac-only)
   result->SetNull();
 }
 
@@ -478,6 +522,15 @@ void LayoutTestController::pathToLocalResource(
     return;
 
   std::string url = args[0].ToString();
+  if (StartsWithASCII(url, "/tmp/", true)) {
+    // We want a temp file.
+    std::wstring path;
+    PathService::Get(base::DIR_TEMP, &path);
+    file_util::AppendToPath(&path, UTF8ToWide(url.substr(5)));
+    result->Set(WideToUTF8(path));
+    return;
+  }
+
   // Some layout tests use file://// which we resolve as a UNC path.  Normalize
   // them to just file:///.
   while (StartsWithASCII(url, "file:////", false)) {
@@ -491,6 +544,64 @@ void LayoutTestController::addFileToPasteboardOnDrag(
     const CppArgumentList& args, CppVariant* result) {
   result->SetNull();
   should_add_file_to_pasteboard_ = true;
+}
+
+void LayoutTestController::setStopProvisionalFrameLoads(
+    const CppArgumentList& args, CppVariant* result) {
+  result->SetNull();
+  stop_provisional_frame_loads_ = true;
+}
+
+void LayoutTestController::setSmartInsertDeleteEnabled(
+    const CppArgumentList& args, CppVariant* result) {
+  if (args.size() > 0 && args[0].isBool()) {
+    shell_->delegate()->SetSmartInsertDeleteEnabled(args[0].value.boolValue);
+  }
+
+  result->SetNull();
+}
+
+void LayoutTestController::setSelectTrailingWhitespaceEnabled(
+    const CppArgumentList& args, CppVariant* result) {
+  if (args.size() > 0 && args[0].isBool()) {
+    shell_->delegate()->SetSelectTrailingWhitespaceEnabled(
+        args[0].value.boolValue);
+  }
+
+  result->SetNull();
+}
+
+void LayoutTestController::pauseAnimationAtTimeOnElementWithId(
+    const CppArgumentList& args,
+    CppVariant* result) {
+  if (args.size() > 2 && args[0].isString() && args[1].isNumber() &&
+      args[2].isString()) {
+    std::string animation_name = args[0].ToString();
+    double time = args[1].ToDouble();
+    std::string element_id = args[2].ToString();
+
+    result->Set(
+        webkit_glue::PauseAnimationAtTimeOnElementWithId(
+            shell_->webView(), animation_name, time, element_id));
+  } else {
+    result->Set(false);
+  }
+}
+
+void LayoutTestController::pauseTransitionAtTimeOnElementWithId(
+    const CppArgumentList& args,
+    CppVariant* result) {
+  if (args.size() > 2 && args[0].isString() && args[1].isNumber() &&
+      args[2].isString()) {
+    std::string property_name = args[0].ToString();
+    double time = args[1].ToDouble();
+    std::string element_id = args[2].ToString();
+
+    webkit_glue::PauseTransitionAtTimeOnElementWithId(
+        shell_->webView(), property_name, time, element_id);
+  } else {
+    result->Set(false);
+  }
 }
 
 //
@@ -567,11 +678,10 @@ void LayoutTestController::setPrivateBrowsingEnabled(
 void LayoutTestController::fallbackMethod(
     const CppArgumentList& args, CppVariant* result) {
   std::wstring message(L"JavaScript ERROR: unknown method called on LayoutTestController");
-  if (shell_->interactive()) {
+  if (!shell_->layout_test_mode()) {
     logging::LogMessage("CONSOLE:", 0).stream() << message;
   } else {
     printf("CONSOLE MESSAGE: %S\n", message.c_str());
   }
   result->SetNull();
 }
-

@@ -23,8 +23,8 @@ void PasswordManager::RegisterUserPrefs(PrefService* prefs) {
 }
 
 PasswordManager::PasswordManager(WebContents* web_contents)
-    : web_contents_(web_contents),
-      current_bar_(NULL),
+    : ConfirmInfoBarDelegate(web_contents),
+      web_contents_(web_contents),
       observer_(NULL),
       login_managers_deleter_(&pending_login_managers_) {
   password_manager_enabled_.Init(prefs::kPasswordManagerEnabled,
@@ -32,7 +32,8 @@ PasswordManager::PasswordManager(WebContents* web_contents)
 }
 
 PasswordManager::~PasswordManager() {
-  CloseBars();
+  // Remove any InfoBars we may be showing.
+  web_contents_->RemoveInfoBar(this);
 }
 
 void PasswordManager::ProvisionallySavePassword(PasswordForm form) {
@@ -76,33 +77,30 @@ void PasswordManager::ProvisionallySavePassword(PasswordForm form) {
           ProcessedSSLErrorFromRequest();
   form.preferred = true;
   manager->ProvisionallySave(form);
-  pending_save_manager_.reset(manager);
+  provisional_save_manager_.reset(manager);
   pending_login_managers_.erase(iter);
   // We don't care about the rest of the forms on the page now that one
   // was selected.
   STLDeleteElements(&pending_login_managers_);
-  pending_login_managers_.clear();
 }
 
 void PasswordManager::DidNavigate() {
   // As long as this navigation isn't due to a currently pending
   // password form submit, we're ready to reset and move on.
-  if (!pending_save_manager_.get() && !pending_login_managers_.empty()) {
+  if (!provisional_save_manager_.get() && !pending_login_managers_.empty())
     STLDeleteElements(&pending_login_managers_);
-    pending_login_managers_.clear();
-  }
 }
 
 void PasswordManager::ClearProvisionalSave() {
-  pending_save_manager_.reset();
+  provisional_save_manager_.reset();
 }
 
 void PasswordManager::DidStopLoading() {
-  if (!pending_save_manager_.get())
+  if (!provisional_save_manager_.get())
     return;
 
   DCHECK(!web_contents_->profile()->IsOffTheRecord());
-  DCHECK(!pending_save_manager_->IsBlacklisted());
+  DCHECK(!provisional_save_manager_->IsBlacklisted());
 
   if (!web_contents_->profile() ||
       !web_contents_->profile()->GetWebDataService(Profile::IMPLICIT_ACCESS))
@@ -110,14 +108,14 @@ void PasswordManager::DidStopLoading() {
   if (!web_contents_->controller())
     return;
 
-  if (pending_save_manager_->IsNewLogin()) {
-    // Transfer ownership of the pending_save_manager_ to the PasswordBar.
-    ReplaceInfoBar(new SavePasswordBar(pending_save_manager_.release(), this));
+  if (provisional_save_manager_->IsNewLogin()) {
+    web_contents_->AddInfoBar(this);
+    pending_decision_manager_.reset(provisional_save_manager_.release());
   } else {
     // If the save is not a new username entry, then we just want to save this
     // data (since the user already has related data saved), so don't prompt.
-    pending_save_manager_->Save();
-    pending_save_manager_.reset();
+    provisional_save_manager_->Save();
+    provisional_save_manager_.reset();
   }
 }
 
@@ -136,12 +134,12 @@ void PasswordManager::PasswordFormsSeen(const std::vector<PasswordForm>& forms) 
 
   std::vector<PasswordForm>::const_iterator iter;
   for (iter = forms.begin(); iter != forms.end(); iter++) {
-    if (pending_save_manager_.get() &&
-        pending_save_manager_->DoesManage(*iter)) {
+    if (provisional_save_manager_.get() &&
+        provisional_save_manager_->DoesManage(*iter)) {
       // The form trying to be saved has immediately re-appeared. Assume
       // login failure and abort this save.  Fallback to pending login state
       // since the user may try again.
-      pending_login_managers_.push_back(pending_save_manager_.release());
+      pending_login_managers_.push_back(provisional_save_manager_.release());
       // Don't delete the login managers since the user may try again
       // and we want to be able to save in that case.
       break;
@@ -181,44 +179,41 @@ void PasswordManager::Autofill(const PasswordForm& form_for_autofill,
   }
 }
 
-void PasswordManager::CloseBars() {
-  if (current_bar_)
-    current_bar_->Close();
+// PasswordManager, ConfirmInfoBarDelegate implementation: ---------------------
+
+void PasswordManager::InfoBarClosed() {
+  pending_decision_manager_.reset(NULL);
 }
 
-void PasswordManager::ReplaceInfoBar(InfoBarItemView* bar) {
-  CloseBars();
-  InfoBarView* view = web_contents_->GetInfoBarView();
-  view->AddChildView(bar);
-  current_bar_ = bar;
+std::wstring PasswordManager::GetMessageText() const {
+  return l10n_util::GetString(IDS_PASSWORD_MANAGER_SAVE_PASSWORD_PROMPT);
 }
 
-PasswordManager::SavePasswordBar
-               ::SavePasswordBar(PasswordFormManager* form_manager,
-                                 PasswordManager* password_manager)
-    : form_manager_(form_manager),
-      password_manager_(password_manager),
-      InfoBarConfirmView(
-          l10n_util::GetString(IDS_PASSWORD_MANAGER_SAVE_PASSWORD_PROMPT)) {
-  SetOKButtonLabel(l10n_util::GetString(IDS_PASSWORD_MANAGER_SAVE_BUTTON));
-  SetCancelButtonLabel(l10n_util::GetString(
-      IDS_PASSWORD_MANAGER_BLACKLIST_BUTTON));
-  ResourceBundle &rb = ResourceBundle::GetSharedInstance();
-  SetIcon(*rb.GetBitmapNamed(IDR_INFOBAR_SAVE_PASSWORD));
+SkBitmap* PasswordManager::GetIcon() const {
+  return ResourceBundle::GetSharedInstance().GetBitmapNamed(
+      IDR_INFOBAR_SAVE_PASSWORD);
 }
 
-PasswordManager::SavePasswordBar::~SavePasswordBar() {
-  password_manager_->current_bar_ = NULL;
-  if (form_manager_)
-    delete form_manager_;
+int PasswordManager::GetButtons() const {
+  return BUTTON_OK | BUTTON_CANCEL;
 }
 
-void PasswordManager::SavePasswordBar::OKButtonPressed() {
-  form_manager_->Save();
-  BeginClose();
+std::wstring PasswordManager::GetButtonLabel(InfoBarButton button) const {
+  if (button == BUTTON_OK)
+    return l10n_util::GetString(IDS_PASSWORD_MANAGER_SAVE_BUTTON);
+  if (button == BUTTON_CANCEL)
+    return l10n_util::GetString(IDS_PASSWORD_MANAGER_BLACKLIST_BUTTON);
+  NOTREACHED();
+  return std::wstring();
 }
 
-void PasswordManager::SavePasswordBar::CancelButtonPressed() {
-  form_manager_->PermanentlyBlacklist();
-  BeginClose();
+bool PasswordManager::Accept() {
+  pending_decision_manager_->Save();
+  return true;
 }
+
+bool PasswordManager::Cancel() {
+  pending_decision_manager_->PermanentlyBlacklist();
+  return true;
+}
+

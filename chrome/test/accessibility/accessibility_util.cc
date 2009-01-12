@@ -5,23 +5,21 @@
 #include "chrome/test/accessibility/accessibility_util.h"
 
 #include "base/win_util.h"
-#include "chrome/common/win_util.h"
+#include "chrome/browser/view_ids.h"
 #include "chrome/common/l10n_util.h"
-#include "chrome/browser/views/old_frames/xp_frame.h"
-#include "chrome/browser/views/old_frames/vista_frame.h"
 #include "chrome/test/accessibility/constants.h"
 
 #include "chromium_strings.h"
 #include "generated_resources.h"
 
-VARIANT g_var_self = {VT_I4, CHILDID_SELF};
+VARIANT id_self = {VT_I4, CHILDID_SELF};
 
 // TODO(beng): clean this up
 static const wchar_t* kBrowserWindowKey = L"__BROWSER_WINDOW__";
 
 static BOOL CALLBACK WindowEnumProc(HWND hwnd, LPARAM data) {
   std::wstring class_name = win_util::GetClassName(hwnd);
-  if (class_name == L"Chrome_ContainerWin_0") {
+  if (class_name == CHROME_HWND_VIEW_CONTAINER) {
     HANDLE window_interface = GetProp(hwnd, kBrowserWindowKey);
     if (window_interface) {
       HWND* out = reinterpret_cast<HWND*>(data);
@@ -32,255 +30,240 @@ static BOOL CALLBACK WindowEnumProc(HWND hwnd, LPARAM data) {
   return TRUE;
 }
 
-HWND GetChromeBrowserWnd(IAccessible** ppi_access) {
-  HRESULT      hr   = S_OK;
-  HWND         hwnd = NULL;
-  BSTR         str_name;
-  std::wstring str_role;
-
-  const std::wstring product_name = l10n_util::GetString(IDS_PRODUCT_NAME);
+HWND GetChromeBrowserWnd(IAccessible** acc_obj) {
+  HWND hwnd = NULL;
 
   EnumWindows(WindowEnumProc, reinterpret_cast<LPARAM>(&hwnd));
-  if (!IsWindow(hwnd)) {
-    // Didn't find the window handle by looking for the new frames, assume the
-    // old frames are being used instead...
-    if (win_util::ShouldUseVistaFrame()) {
-      hwnd = FindWindow(VISTA_FRAME_CLASSNAME, NULL);
-    } else {
-      hwnd = FindWindow(XP_FRAME_CLASSNAME, NULL);
-    }
+
+  if (!hwnd) {
+    CHK_RELEASE(*acc_obj);
+    return NULL;
   }
 
-  if (NULL == hwnd) {
-    if (ppi_access)
-      *ppi_access = NULL;
+  // Get accessibility object for Chrome, only if requested (not NULL).
+  if (!acc_obj)
     return hwnd;
-  }
 
-  // Get accessibility object for Chrome, only if requested.
-  if (!ppi_access) {
-    return hwnd;
-  }
-  *ppi_access = NULL;
+  *acc_obj = NULL;
 
   // Get accessibility object for Chrome Main Window. If failed to get it,
   // return only window handle.
-  IAccessible *pi_acc_root_win = NULL;
+  IAccessible* root_acc_obj = NULL;
+  HRESULT hr = S_OK;
   hr = AccessibleObjectFromWindow(hwnd, OBJID_WINDOW, IID_IAccessible,
-                                  reinterpret_cast<void**>
-                                  (&pi_acc_root_win));
-  if ((S_OK != hr) || !pi_acc_root_win) {
+                                  reinterpret_cast<void**>(&root_acc_obj));
+  if ((S_OK != hr) || !root_acc_obj)
     return hwnd;
-  }
 
+  const std::wstring product_name = l10n_util::GetString(IDS_PRODUCT_NAME);
+  BSTR name;
 
-  // Confirm if it is Chrome window using it's accessibility object's
+  // Confirm if it is Chrome Main Window using its accessibility object's
   // Name and Role property. If it's not the desired object, return only
   // window handle.
-  hr = pi_acc_root_win->get_accName(g_var_self, &str_name);
-  if ((S_OK != hr) || (!str_name) ||
-      (0 != _wcsicmp(str_name, product_name.c_str())) ) {
-    CHK_RELEASE(pi_acc_root_win);
+  hr = root_acc_obj->get_accName(id_self, &name);
+  if ((S_OK != hr) || (!name) ||
+      (0 != _wcsicmp(name, product_name.c_str())) ) {
+    CHK_RELEASE(root_acc_obj);
     return hwnd;
   }
-  str_role = GetRole(pi_acc_root_win);
-  if (0 != str_role.compare(BROWSER_WIN_ROLE)) {
-    CHK_RELEASE(pi_acc_root_win);
-    return hwnd;
-  }
-
-  // Get accessibility object for Chrome Window. If failed to get it,
-  // return only window handle.
-  INT64 child_cnt = GetChildCount(pi_acc_root_win);
-  VARIANT *var_array_child =
-      reinterpret_cast<VARIANT*>(calloc(size_t(child_cnt),
-                                     sizeof(VARIANT)));
-
-  if (!var_array_child) {
-    CHK_RELEASE(pi_acc_root_win);
+  if (ROLE_SYSTEM_WINDOW != GetRole(root_acc_obj)) {
+    CHK_RELEASE(root_acc_obj);
     return hwnd;
   }
 
-  hr = GetChildrenArray(pi_acc_root_win, var_array_child);
+  // Get accessibility child objects for Chrome Main Window. If failed, return
+  // only window handle.
+  INT64 child_cnt = GetChildCount(root_acc_obj);
+  VARIANT* children = reinterpret_cast<VARIANT*>(calloc(size_t(child_cnt),
+                                                        sizeof(VARIANT)));
+
+  if (!children) {
+    CHK_RELEASE(root_acc_obj);
+    return hwnd;
+  }
+
+  hr = GetChildrenArray(root_acc_obj, children);
   if (S_OK != hr) {
-    CHK_RELEASE(pi_acc_root_win);
+    CHK_RELEASE(root_acc_obj);
+    free(children);
     return hwnd;
   }
 
-  // Fetch desired child (Chrome window) of Chrome Main Window.
-  IAccessible *pi_acc_app = NULL;
-  GetChildObject(pi_acc_root_win, var_array_child[CHROME_APP_ACC_INDEX],
-                 &pi_acc_app);
-  if (!pi_acc_app) {
-    CHK_RELEASE(pi_acc_app);
+  // Fetch desired child (Chrome App Window) of Chrome Main Window.
+  IAccessible* app_acc_obj = NULL;
+  GetChildAccObject(root_acc_obj, children[CHROME_APP_ACC_INDEX], &app_acc_obj);
+  if (!app_acc_obj) {
+    CHK_RELEASE(app_acc_obj);
+    free(children);
     return hwnd;
   }
 
-  // Confirm if it is Chrome application using it's accessibility object's
+  // Confirm if it is Chrome App Window by using it's accessibility object's
   // Name and Role property. If it's not the desired object, return only
   // window handle.
-  hr = pi_acc_app->get_accName(g_var_self, &str_name);
-  if ((S_OK != hr) || (!str_name) ||
-      (0 != _wcsicmp(str_name, product_name.c_str())) ) {
-    CHK_RELEASE(pi_acc_app);
-    CHK_RELEASE(pi_acc_root_win);
+  hr = app_acc_obj->get_accName(id_self, &name);
+  if ((S_OK != hr) || (!name) ||
+      (0 != _wcsicmp(name, product_name.c_str())) ) {
+    CHK_RELEASE(app_acc_obj);
+    CHK_RELEASE(root_acc_obj);
+    free(children);
     return hwnd;
   }
-  str_role = GetRole(pi_acc_app);
-  if (0 != str_role.compare(BROWSER_APP_ROLE)) {
-    CHK_RELEASE(pi_acc_app);
-    CHK_RELEASE(pi_acc_root_win);
+  if (ROLE_SYSTEM_APPLICATION != GetRole(app_acc_obj)) {
+    CHK_RELEASE(app_acc_obj);
+    CHK_RELEASE(root_acc_obj);
+    free(children);
     return hwnd;
   }
 
   // Get accessibility object for Chrome Client. If failed, return only
   // window handle.
-  hr = GetChildrenArray(pi_acc_app, var_array_child);
-    if (S_OK != hr) {
-      CHK_RELEASE(pi_acc_app);
-      CHK_RELEASE(pi_acc_root_win);
-      return hwnd;
-    }
+  hr = GetChildrenArray(app_acc_obj, children);
+  if (S_OK != hr) {
+    CHK_RELEASE(app_acc_obj);
+    CHK_RELEASE(root_acc_obj);
+    free(children);
+    return hwnd;
+  }
 
   // Chrome Window has only one child which is Chrome Client.
-  GetChildObject(pi_acc_app, var_array_child[CHROME_CLIENT_ACC_INDEX],
-                 ppi_access);
+  GetChildAccObject(app_acc_obj, children[CHROME_CLIENT_ACC_INDEX], acc_obj);
+
+  // Done using [children] array.
+  free(children);
 
   // Confirm if it is Chrome client using it's accessibility object's Name
   // and Role property. If it's not the desired object, return only window
   // handle.
-  hr = (*ppi_access)->get_accName(g_var_self, &str_name);
-  if ((S_OK != hr) || (!str_name) ||
-      (0 != _wcsicmp(str_name, product_name.c_str())) ) {
-    CHK_RELEASE(*ppi_access);
+  hr = (*acc_obj)->get_accName(id_self, &name);
+  if ((S_OK != hr) || (!name) ||
+      (0 != _wcsicmp(name, product_name.c_str())) ) {
+    CHK_RELEASE(*acc_obj);
   }
-  str_role = GetRole(*ppi_access);
-  if (0 != str_role.compare(BROWSER_CLIENT_ROLE)) {
-    CHK_RELEASE(*ppi_access);
-  }
+  if (ROLE_SYSTEM_CLIENT != GetRole(*acc_obj))
+    CHK_RELEASE(*acc_obj);
 
-  CHK_RELEASE(pi_acc_app);
-  CHK_RELEASE(pi_acc_root_win);
+  CHK_RELEASE(app_acc_obj);
+  CHK_RELEASE(root_acc_obj);
   return hwnd;
 }
 
-HRESULT GetChildWndOf(std::wstring parent_name, unsigned int child_index,
-                      IAccessible** ppi_access, VARIANT* child_var_id) {
-  HRESULT hr = S_OK;
-
+HRESULT GetChildAccessible(std::wstring parent_name, unsigned int child_index,
+                           IAccessible** acc_obj) {
   // Validate input and initialize.
-  if (!ppi_access && !child_var_id)
+  if (!acc_obj)
     return E_INVALIDARG;
-  if (ppi_access)
-    *ppi_access = NULL;
-  if (child_var_id)
-    VariantInit(child_var_id);
+
+  *acc_obj = NULL;
 
   // Get accessibility object and window handle for Chrome parent.
-  IAccessible *pi_parent = NULL;
+  IAccessible* parent = NULL;
   if (0 == parent_name.compare(BROWSER_STR))
-    GetChromeBrowserWnd(&pi_parent);
+    GetChromeBrowserWnd(&parent);
   if (0 == parent_name.compare(BROWSER_VIEW_STR))
-    GetBrowserViewWnd(&pi_parent);
+    GetBrowserViewAccessible(&parent);
   if (0 == parent_name.compare(TOOLBAR_STR))
-    GetToolbarWnd(&pi_parent);
+    GetToolbarAccessible(&parent);
   if (0 == parent_name.compare(TABSTRIP_STR))
-    GetTabStripWnd(&pi_parent);
+    GetTabStripAccessible(&parent);
 
-  if (!pi_parent)
+  if (!parent)
     return E_FAIL;
 
+  bool get_iaccessible = false;
+
   // Validate child index.
-  INT64 child_cnt = GetChildCount(pi_parent);
-  if (child_index >= child_cnt) {
-    CHK_RELEASE(pi_parent);
-    VariantClear(child_var_id);
-    return E_INVALIDARG;
-  }
+  INT64 child_cnt = GetChildCount(parent);
+  if (child_index >= child_cnt)
+    get_iaccessible = true;
 
-  // Get array of child items of parent object.
-  VARIANT *var_array_child =
-      reinterpret_cast<VARIANT*>(calloc(size_t(child_cnt), sizeof(VARIANT)));
-  if (var_array_child) {
-    hr = GetChildrenArray(pi_parent, var_array_child);
-    if (S_OK == hr) {
-      // Fetch Tabstrip which is child_index'th child of parent object.
-      if (ppi_access) {
-        hr = GetChildObject(pi_parent, var_array_child[child_index],
-                            ppi_access);
+  HRESULT hr = S_OK;
+
+  if (get_iaccessible) {
+    // Child retrieved by child index, potentially further down the hierarchy.
+    VARIANT child_var;
+    child_var.vt = VT_I4;
+    child_var.lVal = child_index;
+    hr = GetChildAccObject(parent, child_var, acc_obj);
+  } else {
+    // Get array of child items of parent object.
+    VARIANT* children = reinterpret_cast<VARIANT*>(calloc(size_t(child_cnt),
+                                                          sizeof(VARIANT)));
+    if (children) {
+      hr = GetChildrenArray(parent, children);
+      if (S_OK == hr) {
+        // Fetch child IAccessible.
+        if (acc_obj)
+          hr = GetChildAccObject(parent, children[child_index], acc_obj);
       }
-      if (child_var_id) {
-        VariantCopy(child_var_id, var_array_child+child_index);
-      }
+      free(children);
     }
-    free(var_array_child);
   }
 
-  CHK_RELEASE(pi_parent);
+  CHK_RELEASE(parent);
   return hr;
 }
 
-HRESULT GetTabStripWnd(IAccessible** ppi_access) {
-#ifdef NEW_FRAMES
-  return GetChildWndOf(BROWSER_VIEW_STR, TABSTRIP_ACC_INDEX, ppi_access, NULL);
-#else
-  return GetChildWndOf(BROWSER_STR, TABSTRIP_ACC_INDEX, ppi_access, NULL);
-#endif
+HRESULT GetTabStripAccessible(IAccessible** acc_obj) {
+  return GetChildAccessible(BROWSER_VIEW_STR, TABSTRIP_ACC_INDEX, acc_obj);
 }
 
-HRESULT GetBrowserViewWnd(IAccessible** ppi_access) {
-  return GetChildWndOf(BROWSER_STR, BROWSER_VIEW_ACC_INDEX, ppi_access, NULL);
+HRESULT GetBrowserViewAccessible(IAccessible** acc_obj) {
+  return GetChildAccessible(BROWSER_STR, BROWSER_VIEW_ACC_INDEX, acc_obj);
 }
 
-HRESULT GetToolbarWnd(IAccessible** ppi_access) {
-  return GetChildWndOf(BROWSER_VIEW_STR, TOOLBAR_ACC_INDEX, ppi_access, NULL);
+HRESULT GetToolbarAccessible(IAccessible** acc_obj) {
+  return GetChildAccessible(BROWSER_VIEW_STR, VIEW_ID_TOOLBAR, acc_obj);
 }
 
-HRESULT GetBrowserMinimizeButton(IAccessible** ppi_access,
-                                 VARIANT* child_var_id) {
-  return GetChildWndOf(BROWSER_STR, CHROME_MIN_ACC_INDEX, ppi_access,
-                       child_var_id);
+HRESULT GetBrowserMinimizeButton(IAccessible** acc_obj) {
+  return GetChildAccessible(BROWSER_STR, CHROME_MIN_ACC_INDEX, acc_obj);
 }
 
-HRESULT GetBrowserMaximizeButton(IAccessible** ppi_access,
-                                 VARIANT* child_var_id) {
-  return GetChildWndOf(BROWSER_STR, CHROME_MAX_ACC_INDEX, ppi_access,
-                       child_var_id);
+HRESULT GetBrowserMaximizeButton(IAccessible** acc_obj) {
+  return GetChildAccessible(BROWSER_STR, CHROME_MAX_ACC_INDEX, acc_obj);
 }
 
-HRESULT GetBrowserRestoreButton(IAccessible** ppi_access,
-                                VARIANT* child_var_id) {
-  return GetChildWndOf(BROWSER_STR, CHROME_RESTORE_ACC_INDEX, ppi_access,
-                       child_var_id);
+HRESULT GetBrowserRestoreButton(IAccessible** acc_obj) {
+  return GetChildAccessible(BROWSER_STR, CHROME_RESTORE_ACC_INDEX, acc_obj);
 }
 
-HRESULT GetBrowserCloseButton(IAccessible** ppi_access,
-                              VARIANT* child_var_id) {
-  return GetChildWndOf(BROWSER_STR, CHROME_CLOSE_ACC_INDEX, ppi_access,
-                       child_var_id);
+HRESULT GetBrowserCloseButton(IAccessible** acc_obj) {
+  return GetChildAccessible(BROWSER_STR, CHROME_CLOSE_ACC_INDEX, acc_obj);
 }
 
-HRESULT GetStarButton(IAccessible** ppi_access, VARIANT* child_var_id) {
-  return GetChildWndOf(TOOLBAR_STR, STAR_BTN_INDEX, ppi_access, child_var_id);
+HRESULT GetBackButton(IAccessible** acc_obj) {
+  return GetChildAccessible(TOOLBAR_STR, VIEW_ID_BACK_BUTTON, acc_obj);
 }
 
-HRESULT GetBackButton(IAccessible** ppi_access, VARIANT* child_var_id) {
-  return GetChildWndOf(TOOLBAR_STR, BACK_BTN_INDEX, ppi_access, child_var_id);
+HRESULT GetForwardButton(IAccessible** acc_obj) {
+  return GetChildAccessible(TOOLBAR_STR, VIEW_ID_FORWARD_BUTTON, acc_obj);
 }
 
-HRESULT GetForwardButton(IAccessible** ppi_access, VARIANT* child_var_id) {
-  return GetChildWndOf(TOOLBAR_STR, FORWARD_BTN_INDEX, ppi_access,
-                       child_var_id);
+HRESULT GetStarButton(IAccessible** acc_obj) {
+  return GetChildAccessible(TOOLBAR_STR, VIEW_ID_STAR_BUTTON, acc_obj);
 }
 
-HWND GetAddressBarWnd(IAccessible** ppi_access) {
-  HWND    hwnd          = NULL;
-  HWND    hwnd_addr_bar = NULL;
+HRESULT GetGoButton(IAccessible** acc_obj) {
+  return GetChildAccessible(TOOLBAR_STR, VIEW_ID_GO_BUTTON, acc_obj);
+}
 
-  // // Initialize, if requested.
-  if (ppi_access) {
-    *ppi_access = NULL;
-  }
+HRESULT GetPageMenuButton(IAccessible** acc_obj) {
+  return GetChildAccessible(TOOLBAR_STR, VIEW_ID_PAGE_MENU, acc_obj);
+}
+
+HRESULT GetAppMenuButton(IAccessible** acc_obj) {
+  return GetChildAccessible(TOOLBAR_STR, VIEW_ID_APP_MENU, acc_obj);
+}
+
+HWND GetAddressBarWnd(IAccessible** acc_obj) {
+  // Initialize, if requested.
+  if (acc_obj)
+    *acc_obj = NULL;
+
+  HWND hwnd = NULL;
+  HWND hwnd_addr_bar = NULL;
 
   // Get window handle for Chrome Browser.
   hwnd = GetChromeBrowserWnd(NULL);
@@ -289,23 +272,22 @@ HWND GetAddressBarWnd(IAccessible** ppi_access) {
     hwnd_addr_bar = FindWindowEx(hwnd, 0, CHROME_AUTOCOMPLETE_EDIT, NULL);
 
     // Get accessibility object for address bar, if requested.
-    if (ppi_access && hwnd_addr_bar) {
+    if (acc_obj && hwnd_addr_bar) {
       AccessibleObjectFromWindow(hwnd_addr_bar, OBJID_WINDOW, IID_IAccessible,
-                                 reinterpret_cast<void**>(ppi_access));
+                                 reinterpret_cast<void**>(acc_obj));
     }
   }
 
   return hwnd_addr_bar;
 }
 
-HWND GetFindTextWnd(IAccessible** ppi_access) {
-  HWND    hwnd      = NULL;
-  HWND    hwnd_find = NULL;
-
+HWND GetFindTextWnd(IAccessible** acc_obj) {
   // Initialize, if requested.
-  if (ppi_access) {
-    *ppi_access = NULL;
-  }
+  if (acc_obj)
+    *acc_obj = NULL;
+
+  HWND hwnd = NULL;
+  HWND hwnd_find = NULL;
 
   // Get window handle for Chrome Browser.
   hwnd = GetChromeBrowserWnd(NULL);
@@ -314,28 +296,27 @@ HWND GetFindTextWnd(IAccessible** ppi_access) {
     hwnd_find = FindWindowEx(hwnd, 0, CHROME_HWND_VIEW_CONTAINER, NULL);
 
     // Get accessibility object, if requested.
-    if (ppi_access && hwnd_find) {
+    if (acc_obj && hwnd_find) {
       AccessibleObjectFromWindow(hwnd_find, OBJID_WINDOW, IID_IAccessible,
-                                 reinterpret_cast<void**>(ppi_access));
+                                 reinterpret_cast<void**>(acc_obj));
     }
   }
 
   return hwnd_find;
 }
 
-HWND GetAuthWnd(IAccessible** ppi_access) {
-  HWND    hwnd      = NULL;
-  HWND    hwnd_tab  = NULL;
-  HWND    hwnd_auth = NULL;
-
+HWND GetAuthWnd(IAccessible** acc_obj) {
   // Initialize, if requested.
-  if (ppi_access) {
-    *ppi_access = NULL;
-  }
+  if (acc_obj)
+    *acc_obj = NULL;
+
+  HWND hwnd = NULL;
+  HWND hwnd_tab = NULL;
+  HWND hwnd_auth = NULL;
 
   // Get window handle for Chrome Browser.
   hwnd = GetChromeBrowserWnd(NULL);
-  if (NULL != hwnd) {
+  if (hwnd) {
     // Get window handle for tab.
     hwnd_tab = FindWindowEx(hwnd, 0, CHROME_TAB_CONTENTS, NULL);
     if (!hwnd_tab)
@@ -346,167 +327,150 @@ HWND GetAuthWnd(IAccessible** ppi_access) {
                              AUTH_TITLE);
 
     // Get accessibility object, if requested.
-    if (ppi_access && hwnd_auth) {
+    if (acc_obj && hwnd_auth) {
       AccessibleObjectFromWindow(hwnd_auth, OBJID_WINDOW, IID_IAccessible,
-                                 reinterpret_cast<void**>(ppi_access));
+                                 reinterpret_cast<void**>(acc_obj));
     }
   }
 
   return hwnd_auth;
 }
 
-HRESULT GetChildObject(IAccessible* pi_access, VARIANT var_child,
-                       IAccessible** ppi_child_access) {
-  HRESULT   hr          = S_OK;
-  IDispatch *p_dispatch = NULL;
-
+HRESULT GetChildAccObject(IAccessible* acc_obj, VARIANT child,
+                          IAccessible** child_acc_obj) {
   // Validate input.
-  if ( (pi_access == NULL) ||
-       (ppi_child_access == NULL) ) {
+  if (!acc_obj || !child_acc_obj)
     return E_INVALIDARG;
-  }
+
+  HRESULT hr = S_OK;
+  IDispatch* disp = NULL;
 
   // Check the child type and fetch object accordingly.
-  if (var_child.vt == VT_DISPATCH) {
-    var_child.pdispVal->
-    QueryInterface(IID_IAccessible,
-                   reinterpret_cast<void**>(ppi_child_access));
-  } else if (var_child.vt == VT_I4) {
-    hr = pi_access->get_accChild(var_child, &p_dispatch);
-    if ( (hr == S_OK) &&
-         (p_dispatch != NULL) ) {
-      p_dispatch->QueryInterface(IID_IAccessible,
-                                 reinterpret_cast<void**>(ppi_child_access));
-      CHK_RELEASE(p_dispatch);
+  if (child.vt == VT_DISPATCH) {
+    child.pdispVal->
+        QueryInterface(IID_IAccessible,
+                       reinterpret_cast<void**>(child_acc_obj));
+  } else if (child.vt == VT_I4) {
+    hr = acc_obj->get_accChild(child, &disp);
+    if ((hr == S_OK) && disp) {
+      disp->QueryInterface(IID_IAccessible,
+                           reinterpret_cast<void**>(child_acc_obj));
+      CHK_RELEASE(disp);
     }
   }
 
   return hr;
 }
 
-HRESULT GetParentObject(IAccessible* pi_access,
-                        IAccessible** ppi_parent_access) {
-  HRESULT   hr          = S_OK;
-  IDispatch *p_dispatch = NULL;
-
+HRESULT GetParentAccObject(IAccessible* acc_obj, IAccessible** parent_acc_obj) {
   // Validate input.
-  if ( (pi_access == NULL) ||
-       (ppi_parent_access == NULL) ) {
+  if (!acc_obj || !parent_acc_obj)
     return E_INVALIDARG;
-  }
+
+  HRESULT hr = S_OK;
+  IDispatch* disp = NULL;
 
   // Fetch parent object.
-  hr = pi_access->get_accParent(&p_dispatch);
-  if ( (hr == S_OK) &&
-       (p_dispatch != NULL) ) {
-    p_dispatch->QueryInterface(IID_IAccessible,
-                               reinterpret_cast<void**>(ppi_parent_access));
-    CHK_RELEASE(p_dispatch);
+  hr = acc_obj->get_accParent(&disp);
+  if ((hr == S_OK) && disp) {
+    disp->QueryInterface(IID_IAccessible,
+                         reinterpret_cast<void**>(parent_acc_obj));
+    CHK_RELEASE(disp);
   }
 
   return hr;
 }
 
-INT64 GetChildCount(IAccessible* pi_access) {
-  HRESULT hr        = S_OK;
-  long    child_cnt = 0;
+INT64 GetChildCount(IAccessible* acc_obj) {
+  HRESULT hr = S_OK;
+  LONG child_cnt = 0;
 
-  // Validate input. Object can have 0 children. So return -1 on invalid input.
-  if (pi_access == NULL) {
+  // Validate input. Object can have 0 children, so return -1 on invalid input.
+  if (!acc_obj)
     return -1;
-  }
 
   // Get child count.
-  pi_access->get_accChildCount(&child_cnt);
+  acc_obj->get_accChildCount(&child_cnt);
   return child_cnt;
 }
 
-HRESULT GetChildrenArray(IAccessible* pi_access, VARIANT* var_array_child) {
-  HRESULT hr              = S_OK;
-  INT64    child_start    = 0;
-  long     child_obtained = 0;
-  INT64    child_cnt      = GetChildCount(pi_access);
+HRESULT GetChildrenArray(IAccessible* acc_obj, VARIANT* children) {
+  HRESULT hr = S_OK;
+  INT64 child_start = 0;
+  LONG child_obtained = 0;
+  INT64 child_cnt = GetChildCount(acc_obj);
 
   // Validate input.
-  if ((pi_access == NULL) || (var_array_child == NULL)) {
+  if (!acc_obj || !children)
     return E_INVALIDARG;
-  }
 
   // Validate every item and initialize it.
   int i = 0;
-  for (; (i < child_cnt) && (var_array_child+i); i++) {
-    VariantInit(var_array_child+i);
+  for (; (i < child_cnt) && (children + i); i++) {
+    VariantInit(children + i);
   }
 
   // If all items in array are not initialized, return error.
-  if (i != child_cnt) {
-    return E_INVALIDARG;
-  }
+  if (i != child_cnt)
+    return E_FAIL;
 
   // Get IDs of child items.
-  AccessibleChildren(pi_access,
-                     LONG(child_start),
-                     LONG(child_cnt),
-                     var_array_child,
+  AccessibleChildren(acc_obj, LONG(child_start), LONG(child_cnt), children,
                      &child_obtained);
   return hr;
 }
 
-HRESULT ActivateWnd(IAccessible *pi_access, HWND hwnd) {
+HRESULT ActivateWnd(IAccessible* acc_obj, HWND hwnd) {
   HRESULT hr = S_OK;
 
   // Select and focus the object, if accessibility object is specified.
-  if (pi_access) {
-    hr = pi_access->accSelect(SELFLAG_TAKEFOCUS | SELFLAG_TAKESELECTION,
-                              g_var_self);
-  }
+  if (acc_obj)
+    hr = acc_obj->accSelect(SELFLAG_TAKEFOCUS | SELFLAG_TAKESELECTION, id_self);
 
   // Send message to window, if window handle is specified.
-  if (hwnd) {
+  if (hwnd)
     SetActiveWindow(hwnd);
-  }
 
   return hr;
 }
 
 BSTR GetTabName(INT64 tab_index) {
   HRESULT hr = S_OK;
-  BSTR    str_name;
+  BSTR name;
 
   // Validate tab index specified.
   if (tab_index < 1)
     return NULL;
 
   // Get accessibility object for Tabstrip.
-  IAccessible *pi_acc_strip = NULL;
-  GetTabStripWnd(&pi_acc_strip);
+  IAccessible* tab_strip_acc_obj = NULL;
+  GetTabStripAccessible(&tab_strip_acc_obj);
 
   // Get Tab from Tabstrip and return it's Name.
-  if (pi_acc_strip) {
-    INT64   child_cnt = GetChildCount(pi_acc_strip);
-    VARIANT *var_array_child =
-        reinterpret_cast<VARIANT*>(calloc(size_t(child_cnt), sizeof(VARIANT)));
-    if (var_array_child) {
+  if (tab_strip_acc_obj) {
+    INT64 child_cnt = GetChildCount(tab_strip_acc_obj);
+    VARIANT* children = reinterpret_cast<VARIANT*>(calloc(size_t(child_cnt),
+                                                          sizeof(VARIANT)));
+    if (children) {
       // Get tab object. tab_index = index in child array, because first child
       // in tabstrip is '+' button.
-      hr = GetChildrenArray(pi_acc_strip, var_array_child);
+      hr = GetChildrenArray(tab_strip_acc_obj, children);
       if (S_OK == hr) {
-        IAccessible *pi_access_temp = NULL;
-        hr = GetChildObject(pi_acc_strip, var_array_child[tab_index],
-                            &pi_access_temp);
-        if ((S_OK == hr) &&
-            (var_array_child[tab_index].vt == VT_DISPATCH) &&
-            (pi_access_temp) ) {
-          hr = pi_access_temp->get_accName(g_var_self, &str_name);
-        } else if (var_array_child[tab_index].vt == VT_I4) {
-          hr = pi_acc_strip->get_accName(var_array_child[1], &str_name);
+        IAccessible* temp_acc_obj = NULL;
+        hr = GetChildAccObject(tab_strip_acc_obj, children[tab_index],
+                            &temp_acc_obj);
+        if ((S_OK == hr) && (children[tab_index].vt == VT_DISPATCH) &&
+            (temp_acc_obj)) {
+          hr = temp_acc_obj->get_accName(id_self, &name);
+        } else if (children[tab_index].vt == VT_I4) {
+          hr = tab_strip_acc_obj->get_accName(children[1], &name);
         }
-        CHK_RELEASE(pi_acc_strip);
-        return str_name;
+        CHK_RELEASE(temp_acc_obj);
+        CHK_RELEASE(tab_strip_acc_obj);
+        return name;
       }
     }
-
-    CHK_RELEASE(pi_acc_strip);
+    CHK_RELEASE(tab_strip_acc_obj);
   }
 
   return NULL;
@@ -514,117 +478,78 @@ BSTR GetTabName(INT64 tab_index) {
 
 INT64 GetTabCnt() {
   // Get accessibility object for Tabstrip.
-  IAccessible *pi_acc_strip = NULL;
-  GetTabStripWnd(&pi_acc_strip);
+  IAccessible* tab_strip_acc_obj = NULL;
+  GetTabStripAccessible(&tab_strip_acc_obj);
 
-  // If Tabstrip is invalid, return -1, to indicate error.
-  if (!pi_acc_strip) {
+  // If Tabstrip is invalid, return -1 to indicate error.
+  if (!tab_strip_acc_obj)
     return -1;
-  }
 
   // Get child count.
-  INT64   child_cnt = 0;
-  if (pi_acc_strip) {
-    child_cnt = GetChildCount(pi_acc_strip);
-    CHK_RELEASE(pi_acc_strip);
-  }
+  INT64 child_cnt = 0;
+  child_cnt = GetChildCount(tab_strip_acc_obj);
+  CHK_RELEASE(tab_strip_acc_obj);
 
   // Don't count 1st child as it is '+' button.
-  return (child_cnt-1);
+  return (child_cnt - 1);
 }
 
-std::wstring GetName(IAccessible* pi_access, VARIANT child) {
+std::wstring GetName(IAccessible* acc_obj, VARIANT child) {
   HRESULT hr = S_OK;
 
   // Validate input.
-  if (NULL == pi_access) {
+  if (!acc_obj)
     return std::wstring();
-  }
 
   // Get Name.
   BSTR name;
-  hr = pi_access->get_accName(child, &name);
+  hr = acc_obj->get_accName(child, &name);
   if (S_OK != hr)
     return std::wstring();
 
   return std::wstring(name);
 }
 
-std::wstring GetRole(IAccessible* pi_access, VARIANT child) {
-  HRESULT hr       = S_OK;
-  LPTSTR  role_str = NULL;
+LONG GetRole(IAccessible* acc_obj, VARIANT child) {
+  HRESULT hr = S_OK;
+  LPTSTR role_str = NULL;
 
   // Validate input.
-  if (NULL == pi_access) {
-    return std::wstring();
-  }
+  if (!acc_obj)
+    return -1;
 
   // Get Role.
   VARIANT role;
   VariantInit(&role);
-  hr = pi_access->get_accRole(child, &role);
+  hr = acc_obj->get_accRole(child, &role);
   if (S_OK != hr || VT_I4 != role.vt) {
     VariantClear(&role);
-    return std::wstring();
+    return -1;
   }
 
-  // Get Role string.
-  unsigned int role_length = GetRoleText(role.lVal, NULL, 0);
-  role_str = (LPTSTR)calloc(role_length + 1, sizeof(TCHAR));
-  if (role_str)
-    GetRoleText(role.lVal, role_str, role_length + 1);
-
-  VariantClear(&role);
-  return std::wstring(role_str);
+  // Return the role value
+  return role.lVal;
 }
 
-std::wstring GetState(IAccessible* pi_access, VARIANT child) {
-  HRESULT      hr        = S_OK;
-  LPTSTR       state_str = NULL;
+LONG GetState(IAccessible* acc_obj, VARIANT child) {
+  HRESULT hr = S_OK;
+  LPTSTR state_str = NULL;
   std::wstring complete_state;
 
   // Validate input.
-  if (NULL == pi_access) {
-    return std::wstring();
-  }
+  if (!acc_obj)
+    return -1;
 
   // Get State.
   VARIANT state;
   VariantInit(&state);
-  hr = pi_access->get_accState(child, &state);
+  hr = acc_obj->get_accState(child, &state);
   if (S_OK != hr || VT_I4 != state.vt) {
     VariantClear(&state);
-    return std::wstring();
-  }
-
-  // Treat the "normal" state separately.
-  if (state.vt == 0) {
-    unsigned int state_length = GetStateText(state.lVal, NULL, 0);
-    state_str = (LPTSTR)calloc(state_length + 1, sizeof(TCHAR));
-    if (state_str) {
-      GetStateText(state.lVal, state_str, state_length + 1);
-      complete_state = std::wstring(state_str);
-    }
-  } else {
-    // Number of bits.
-    UINT bit_cnt = 32;
-    // Convert state flags to comma separated list.
-    for (DWORD dwStateBit = 0x80000000; bit_cnt; bit_cnt--, dwStateBit >>= 1) {
-      if (state.lVal & dwStateBit) {
-        unsigned int state_length = GetStateText(dwStateBit, NULL, 0);
-        state_str = (LPTSTR)calloc(state_length + 1, sizeof(TCHAR));
-        if (state_str) {
-          GetStateText(dwStateBit, state_str, state_length + 1);
-          if (complete_state.length() > 0)
-            complete_state.append(L", ");
-          complete_state.append(state_str);
-          free(state_str);
-        }
-      }
-    }
+    return -1;
   }
 
   VariantClear(&state);
-  return complete_state;
+  return state.lVal;
 }
 

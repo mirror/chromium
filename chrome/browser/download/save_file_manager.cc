@@ -15,7 +15,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/save_file.h"
 #include "chrome/browser/download/save_package.h"
-#include "chrome/browser/resource_dispatcher_host.h"
+#include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #include "chrome/browser/tab_contents.h"
 #include "chrome/browser/tab_util.h"
 #include "chrome/browser/web_contents.h"
@@ -215,14 +215,10 @@ void SaveFileManager::RemoveSaveFile(int save_id, const std::wstring& save_url,
 // only on the UI thread.
 SavePackage* SaveFileManager::GetSavePackageFromRenderIds(
     int render_process_id, int render_view_id) {
-  TabContents* contents = tab_util::GetTabContentsByID(render_process_id,
+  WebContents* contents = tab_util::GetWebContentsByID(render_process_id,
                                                        render_view_id);
-  if (contents && contents->type() == TAB_CONTENTS_WEB) {
-    // Convert const pointer of WebContents to pointer of WebContents.
-    const WebContents* web_contents = contents->AsWebContents();
-    if (web_contents)
-      return web_contents->save_package();
-  }
+  if (contents)
+    return contents->save_package();
 
   return NULL;
 }

@@ -8,8 +8,8 @@
 // provided by DnsMaster to be left as more generally usable code, and possibly
 // be shared across multiple client projects.
 
-#ifndef CHROME_BROWSER_NET_DNS_GLOBAL_H__
-#define CHROME_BROWSER_NET_DNS_GLOBAL_H__
+#ifndef CHROME_BROWSER_NET_DNS_GLOBAL_H_
+#define CHROME_BROWSER_NET_DNS_GLOBAL_H_
 
 #include "chrome/browser/net/dns_master.h"
 
@@ -23,21 +23,25 @@ namespace chrome_browser_net {
 void InitDnsPrefetch(PrefService* user_prefs);
 void ShutdownDnsPrefetch();
 
-// Global API relating to Prefetching in browser
+//------------------------------------------------------------------------------
+// Global APIs relating to Prefetching in browser
 void EnableDnsPrefetch(bool enable);
 void RegisterPrefs(PrefService* local_state);
 void RegisterUserPrefs(PrefService* user_prefs);
+// Renderer bundles up list and sends to this browser API via IPC.
 void DnsPrefetchList(const NameList& hostnames);
-void DnsPrefetchUrlString(const url_canon::UTF16String& url_string);
-void DnsPrefetch(const std::string& hostname);
+// This API is used by the autocomplete popup box (as user types).
+void DnsPrefetchUrl(const GURL& url);
 void DnsPrefetchGetHtmlInfo(std::string* output);
 
+//------------------------------------------------------------------------------
 // Save the hostnames actually used at the start of this session to prefetch
 // during the next startup.
 void SaveHostNamesForNextStartup(PrefService* local_state);
-void DnsPretchHostNamesAtStartup(PrefService* user_prefs,
-                                 PrefService* local_state);
+void DnsPrefetchHostNamesAtStartup(PrefService* user_prefs,
+                                   PrefService* local_state);
 
+//------------------------------------------------------------------------------
 // Helper class to handle global init and shutdown.
 class DnsPrefetcherInit {
  public:
@@ -47,10 +51,10 @@ class DnsPrefetcherInit {
   ~DnsPrefetcherInit() {ShutdownDnsPrefetch();}
 
  private:
-  DISALLOW_EVIL_CONSTRUCTORS(DnsPrefetcherInit);
+  DISALLOW_COPY_AND_ASSIGN(DnsPrefetcherInit);
 };
 
 }  // namespace chrome_browser_net
 
-#endif  // CHROME_BROWSER_NET_DNS_GLOBAL_H__
+#endif  // CHROME_BROWSER_NET_DNS_GLOBAL_H_
 

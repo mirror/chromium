@@ -4,7 +4,9 @@
 
 #include "config.h"
 
-#pragma warning(push, 0)
+#include "base/compiler_specific.h"
+
+MSVC_PUSH_WARNING_LEVEL(0);
 #include "ContextMenu.h"
 #include "Document.h"
 #include "DocumentLoader.h"
@@ -15,7 +17,7 @@
 #include "HitTestResult.h"
 #include "KURL.h"
 #include "Widget.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 #undef LOG
 
 #include "webkit/glue/context_menu_client_impl.h"
@@ -85,7 +87,7 @@ std::wstring GetMisspelledWord(const WebCore::ContextMenu* default_menu,
   }
         
   if (selected_frame->shouldChangeSelection(selection))
-    selected_frame->selectionController()->setSelection(selection);
+    selected_frame->selection()->setSelection(selection);
        
   misspelled_word_string = CollapseWhitespace(
       webkit_glue::StringToStdWString(selected_frame->selectedText()),                  
@@ -182,7 +184,8 @@ WebCore::PlatformMenuDescription
   if (type == ContextNode::NONE) {
     if (r.isContentEditable()) {
       type = ContextNode::EDITABLE;
-      if (webview_->FocusedFrameNeedsSpellchecking()) {
+      if (webview_->GetFocusedWebCoreFrame()->editor()->
+          isContinuousSpellCheckingEnabled()) {
         misspelled_word_string = GetMisspelledWord(default_menu,
                                                    selected_frame);
       }

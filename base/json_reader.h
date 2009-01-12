@@ -21,11 +21,12 @@
 //   character, the function skips a Unicode BOM at the beginning of the
 //   Unicode string (converted from the input UTF-8 string) before parsing it.
 //
-// TODO(tc): It would be nice to give back an error string when we fail to
-//   parse JSON.
 // TODO(tc): Add a parsing option to to relax object keys being wrapped in
 //   double quotes
 // TODO(tc): Add an option to disable comment stripping
+// TODO(aa): Consider making the constructor public and the static Read() method
+// only a convenience for the common uses with more complex configuration going
+// on the instance.
 
 #ifndef BASE_JSON_READER_H_
 #define BASE_JSON_READER_H_
@@ -74,30 +75,53 @@ class JSONReader {
     }
   };
 
-  // Reads and parses |json| and populates |root|.  If |json| is not a properly
-  // formed JSON string, returns false and leaves root unaltered.  If
-  // allow_trailing_comma is true, we will ignore trailing commas in objects
-  // and arrays even though this goes against the RFC.
-  static bool Read(const std::string& json,
-                   Value** root,
-                   bool allow_trailing_comma);
+  // Error messages that can be returned.
+  static const char* kBadRootElementType;
+  static const char* kInvalidEscape;
+  static const char* kSyntaxError;
+  static const char* kTrailingComma;
+  static const char* kTooMuchNesting;
+  static const char* kUnexpectedDataAfterRoot;
+  static const char* kUnsupportedEncoding;
+  static const char* kUnquotedDictionaryKey;
+
+  // Reads and parses |json|, returning a Value. The caller owns the returned
+  // instance. If |json| is not a properly formed JSON string, returns NULL.
+  // If |allow_trailing_comma| is true, we will ignore trailing commas in
+  // objects and arrays even though this goes against the RFC.
+  static Value* Read(const std::string& json, bool allow_trailing_comma);
+
+  // Reads and parses |json| like Read(). |error_message_out| is optional. If
+  // specified and NULL is returned, |error_message_out| will be populated with
+  // a string describing the error. Otherwise, |error_message_out| is
+  // unmodified.
+  static Value* ReadAndReturnError(const std::string& json,
+                                   bool allow_trailing_comma,
+                                   std::string* error_message_out);
 
  private:
-  JSONReader(const wchar_t* json_start_pos, bool allow_trailing_comma);
+  static std::string FormatErrorMessage(int line, int column,
+                                        const char* description);
+
+  JSONReader();
   DISALLOW_EVIL_CONSTRUCTORS(JSONReader);
 
   FRIEND_TEST(JSONReaderTest, Reading);
+  FRIEND_TEST(JSONReaderTest, ErrorMessages);
+
+  // Returns the error message if the last call to JsonToValue() failed. If the
+  // last call did not fail, returns a valid empty string.
+  std::string error_message() { return error_message_; }
 
   // Pass through method from JSONReader::Read.  We have this so unittests can
   // disable the root check.
-  static bool JsonToValue(const std::string& json, Value** root,
-                          bool check_root,
-                          bool allow_trailing_comma);
+  Value* JsonToValue(const std::string& json, bool check_root,
+                     bool allow_trailing_comma);
 
-  // Recursively build Value.  Returns false if we don't have a valid JSON
+  // Recursively build Value.  Returns NULL if we don't have a valid JSON
   // string.  If |is_root| is true, we verify that the root element is either
   // an object or an array.
-  bool BuildValue(Value** root, bool is_root);
+  Value* BuildValue(bool is_root);
 
   // Parses a sequence of characters into a Token::NUMBER. If the sequence of
   // characters is not a valid number, returns a Token::INVALID_TOKEN. Note
@@ -106,9 +130,8 @@ class JSONReader {
   Token ParseNumberToken();
 
   // Try and convert the substring that token holds into an int or a double. If
-  // we can (ie., no overflow), return true and create the appropriate value
-  // for |node|.  Return false if we can't do the conversion.
-  bool DecodeNumber(const Token& token, Value** node);
+  // we can (ie., no overflow), return the value, else return NULL.
+  Value* DecodeNumber(const Token& token);
 
   // Parses a sequence of characters into a Token::STRING. If the sequence of
   // characters is not a valid string, returns a Token::INVALID_TOKEN. Note
@@ -117,23 +140,29 @@ class JSONReader {
   Token ParseStringToken();
 
   // Convert the substring into a value string.  This should always succeed
-  // (otherwise ParseStringToken would have failed), but returns a success bool
-  // just in case.
-  bool DecodeString(const Token& token, Value** node);
+  // (otherwise ParseStringToken would have failed).
+  Value* DecodeString(const Token& token);
 
   // Grabs the next token in the JSON stream.  This does not increment the
   // stream so it can be used to look ahead at the next token.
   Token ParseToken();
 
-  // Increments json_pos_ past leading whitespace and comments.
+  // Increments |json_pos_| past leading whitespace and comments.
   void EatWhitespaceAndComments();
 
-  // If json_pos_ is at the start of a comment, eat it, otherwise, returns
+  // If |json_pos_| is at the start of a comment, eat it, otherwise, returns
   // false.
   bool EatComment();
 
-  // Checks if json_pos_ matches str.
+  // Checks if |json_pos_| matches str.
   bool NextStringMatch(const std::wstring& str);
+
+  // Creates the error message that will be returned to the caller. The current
+  // line and column are determined and added into the final message.
+  void SetErrorMessage(const char* description, const wchar_t* error_pos);
+
+  // Pointer to the starting position in the input string.
+  const wchar_t* start_pos_;
 
   // Pointer to the current position in the input string.
   const wchar_t* json_pos_;
@@ -143,6 +172,9 @@ class JSONReader {
 
   // A parser flag that allows trailing commas in objects and arrays.
   bool allow_trailing_comma_;
+
+  // Contains the error message for the last call to JsonToValue(), if any.
+  std::string error_message_;
 };
 
 #endif  // BASE_JSON_READER_H_

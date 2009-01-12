@@ -5,9 +5,12 @@
 #ifndef CHROME_BROWSER_RENDERER_RESOURCE_MSG_FILTER_H__
 #define CHROME_BROWSER_RENDERER_RESOURCE_MSG_FILTER_H__
 
+#include "base/clipboard.h"
+#include "base/file_path.h"
 #include "base/gfx/rect.h"
+#include "base/gfx/native_widget_types.h"
 #include "base/ref_counted.h"
-#include "chrome/browser/resource_dispatcher_host.h"
+#include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #include "chrome/common/ipc_channel_proxy.h"
 #include "chrome/common/notification_service.h"
 #include "webkit/glue/cache_manager.h"
@@ -21,6 +24,10 @@ struct WebPluginInfo;
 namespace printing {
 class PrinterQuery;
 class PrintJobManager;
+}
+
+namespace webkit_glue {
+struct ScreenInfo;
 }
 
 // This class filters out incoming IPC messages for network requests and
@@ -69,9 +76,9 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
                        const NotificationDetails& details);
 
  private:
-  void OnMsgCreateView(int opener_id, bool user_gesture, int* route_id,
-                       HANDLE* modal_dialog_event);
-  void OnMsgCreateWidget(int opener_id, int* route_id);
+  void OnMsgCreateWindow(int opener_id, bool user_gesture, int* route_id,
+                         HANDLE* modal_dialog_event);
+  void OnMsgCreateWidget(int opener_id, bool activatable, int* route_id);
   void OnRequestResource(const IPC::Message& msg, int request_id,
                          const ViewHostMsg_Resource_Request& request);
   void OnCancelRequest(int request_id);
@@ -86,21 +93,22 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   void OnGetCookies(const GURL& url, const GURL& policy_url,
                     std::string* cookies);
   void OnGetDataDir(std::wstring* data_dir);
-  void OnPluginMessage(const std::wstring& dll_path,
+  void OnPluginMessage(const FilePath& plugin_path,
                        const std::vector<uint8>& message);
-  void OnPluginSyncMessage(const std::wstring& dll_path,
+  void OnPluginSyncMessage(const FilePath& plugin_path,
                            const std::vector<uint8>& message,
                            std::vector<uint8> *retval);
 
   // Cache fonts for the renderer. See ResourceMessageFilter::OnLoadFont
   // implementation for more details
   void OnLoadFont(LOGFONT font);
-  void OnGetMonitorInfoForWindow(HWND window, MONITORINFOEX* monitor_info);
+  void OnGetScreenInfo(gfx::NativeView window,
+                       webkit_glue::ScreenInfo* results);
   void OnGetPlugins(bool refresh, std::vector<WebPluginInfo>* plugins);
   void OnGetPluginPath(const GURL& url,
                        const std::string& mime_type,
                        const std::string& clsid,
-                       std::wstring* filename,
+                       FilePath* filename,
                        std::string* actual_mime_type);
   void OnOpenChannelToPlugin(const GURL& url,
                              const std::string& mime_type,
@@ -115,15 +123,14 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   void OnDnsPrefetch(const std::vector<std::string>& hostnames);
   void OnReceiveContextMenuMsg(const IPC::Message& msg);
   // Clipboard messages
-  void OnClipboardWriteHTML(const std::wstring& markup, const GURL& src_url);
-  void OnClipboardWriteBookmark(const std::wstring& title, const GURL& url);
-  void OnClipboardWriteBitmap(SharedMemoryHandle bitmap, gfx::Size size);
+  void OnClipboardWriteObjects(const Clipboard::ObjectMap& objects);
   void OnClipboardIsFormatAvailable(unsigned int format, bool* result);
   void OnClipboardReadText(std::wstring* result);
   void OnClipboardReadAsciiText(std::string* result);
   void OnClipboardReadHTML(std::wstring* markup, GURL* src_url);
   void OnGetWindowRect(HWND window, gfx::Rect *rect);
   void OnGetRootWindowRect(HWND window, gfx::Rect *rect);
+  void OnGetRootWindowResizerRect(HWND window, gfx::Rect *rect);
   void OnGetMimeTypeFromExtension(const std::wstring& ext,
                                   std::string* mime_type);
   void OnGetMimeTypeFromFile(const std::wstring& file_path,
@@ -131,8 +138,8 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   void OnGetPreferredExtensionForMimeType(const std::string& mime_type,
                                           std::wstring* ext);
   void OnGetCPBrowsingContext(uint32* context);
-  void OnDuplicateSection(SharedMemoryHandle renderer_handle,
-                          SharedMemoryHandle* browser_handle);
+  void OnDuplicateSection(base::SharedMemoryHandle renderer_handle,
+                          base::SharedMemoryHandle* browser_handle);
   void OnResourceTypeStats(const CacheManager::ResourceTypeStats& stats);
 
   // A javascript code requested to print the current page. This is done in two

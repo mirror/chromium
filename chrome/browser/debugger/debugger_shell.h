@@ -17,6 +17,7 @@
 
 #include "base/basictypes.h"
 #include "base/ref_counted.h"
+#include "chrome/browser/debugger/debugger_host.h"
 
 #ifdef CHROME_DEBUGGER_DISABLED
 
@@ -44,7 +45,7 @@ class DebuggerInputOutput;
 class MessageLoop;
 class TabContents;
 
-class DebuggerShell : public base::RefCountedThreadSafe<DebuggerShell> {
+class DebuggerShell : public DebuggerHost {
  public:
   DebuggerShell(DebuggerInputOutput *io);
   virtual ~DebuggerShell();
@@ -78,7 +79,7 @@ class DebuggerShell : public base::RefCountedThreadSafe<DebuggerShell> {
   // For C++ objects which are tied to JS objects (e.g. DebuggerNode),
   // we need to know when the underlying JS objects have been collected
   // so that we can clean up the C++ object as well.
-  static void HandleWeakReference(v8::Persistent<v8::Object> obj, void* data);
+  static void HandleWeakReference(v8::Persistent<v8::Value> obj, void* data);
 
   // populates str with the ascii string value of result
   static void ObjectToString(v8::Handle<v8::Value> result, std::string* str);

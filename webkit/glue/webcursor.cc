@@ -2,143 +2,145 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/gfx/gdi_util.h"
 #include "webkit/glue/webcursor.h"
-#include "webkit/glue/webkit_resources.h"
+
+#include "config.h"
+#include "NativeImageSkia.h"
+#include "PlatformCursor.h"
+
+#undef LOG
+#include "base/logging.h"
+#include "base/pickle.h"
 
 WebCursor::WebCursor()
-  : type_(ARROW),
-    hotspot_x_(0),
-    hotspot_y_(0) {
-  memset(&bitmap_, 0, sizeof(bitmap_));
+    : type_(WebCore::PlatformCursor::typePointer) {
+  InitPlatformData();
 }
 
-WebCursor::WebCursor(Type cursor_type)
-  : type_(cursor_type),
-    hotspot_x_(0),
-    hotspot_y_(0) {
-  memset(&bitmap_, 0, sizeof(bitmap_));
-}
+WebCursor::WebCursor(const WebCore::PlatformCursor& platform_cursor)
+    : type_(platform_cursor.type()),
+      hotspot_(platform_cursor.hotSpot().x(), platform_cursor.hotSpot().y()) {
+  if (IsCustom())
+    SetCustomData(platform_cursor.customImage().get());
 
-WebCursor::WebCursor(const SkBitmap* bitmap, int hotspot_x, int hotspot_y)
-  : type_(CUSTOM) {
-  hotspot_x_ = hotspot_x;
-  hotspot_y_ = hotspot_y;
-  bitmap_ = *bitmap;
+  InitPlatformData();
 }
 
 WebCursor::~WebCursor() {
+  Clear();
 }
 
 WebCursor::WebCursor(const WebCursor& other) {
-  type_ = other.type_;
-  hotspot_x_ = other.hotspot_x_;
-  hotspot_y_ = other.hotspot_y_;
-  bitmap_ = other.bitmap_;
+  InitPlatformData();
+  Copy(other);
 }
 
-WebCursor& WebCursor::operator=(const WebCursor& other) {
-  if (this != &other) {
-    type_ = other.type_;
-    hotspot_x_ = other.hotspot_x_;
-    hotspot_y_ = other.hotspot_y_;
-    bitmap_ = other.bitmap_;
-  }
+const WebCursor& WebCursor::operator=(const WebCursor& other) {
+  if (this == &other)
+    return *this;
+
+  Clear();
+  Copy(other);
   return *this;
 }
 
-HCURSOR WebCursor::GetCursor(HINSTANCE module_handle) const {
-  if (type_ == CUSTOM) 
-    return NULL;
+bool WebCursor::Deserialize(const Pickle* pickle, void** iter) {
+  int type, hotspot_x, hotspot_y, size_x, size_y, data_len;
 
-  static LPCWSTR cursor_resources[] = {
-    IDC_ARROW,
-    IDC_IBEAM,
-    IDC_WAIT,
-    IDC_CROSS,
-    IDC_UPARROW,
-    IDC_SIZE,
-    IDC_ICON,
-    IDC_SIZENWSE,
-    IDC_SIZENESW,
-    IDC_SIZEWE,
-    IDC_SIZENS,
-    IDC_SIZEALL,
-    IDC_NO,
-    IDC_HAND,
-    IDC_APPSTARTING,
-    IDC_HELP,
-    // webkit resources
-    MAKEINTRESOURCE(IDC_ALIAS),
-    MAKEINTRESOURCE(IDC_CELL),
-    MAKEINTRESOURCE(IDC_COLRESIZE),
-    MAKEINTRESOURCE(IDC_COPYCUR),
-    MAKEINTRESOURCE(IDC_ROWRESIZE),
-    MAKEINTRESOURCE(IDC_VERTICALTEXT),
-    MAKEINTRESOURCE(IDC_ZOOMIN),
-    MAKEINTRESOURCE(IDC_ZOOMOUT)
-  };
+  const char* data;
 
-  HINSTANCE instance_to_use = NULL;
-  if (type_ > HELP)
-    instance_to_use = module_handle;
+  // Leave |this| unmodified unless we are going to return success.
+  if (!pickle->ReadInt(iter, &type) ||
+      !pickle->ReadInt(iter, &hotspot_x) ||
+      !pickle->ReadInt(iter, &hotspot_y) ||
+      !pickle->ReadInt(iter, &size_x) ||
+      !pickle->ReadInt(iter, &size_y) ||
+      !pickle->ReadData(iter, &data, &data_len))
+    return false;
 
-  HCURSOR cursor_handle = LoadCursor(instance_to_use, 
-                                     cursor_resources[type_]);
-  return cursor_handle;
+  type_ = type;
+  hotspot_.set_x(hotspot_x);
+  hotspot_.set_y(hotspot_y);
+  custom_size_.set_width(size_x);
+  custom_size_.set_height(size_y);
+
+  custom_data_.clear();
+  if (data_len > 0) {
+    custom_data_.resize(data_len);
+    memcpy(&custom_data_[0], data, data_len);
+  }
+
+  return DeserializePlatformData(pickle, iter);
 }
 
-HCURSOR WebCursor::GetCustomCursor() const {
-  if (type_ != CUSTOM)
-    return NULL;
+bool WebCursor::Serialize(Pickle* pickle) const {
+  if (!pickle->WriteInt(type_) ||
+      !pickle->WriteInt(hotspot_.x()) ||
+      !pickle->WriteInt(hotspot_.y()) ||
+      !pickle->WriteInt(custom_size_.width()) ||
+      !pickle->WriteInt(custom_size_.height()))
+    return false;
 
-  BITMAPINFO cursor_bitmap_info = {0};
-  gfx::CreateBitmapHeader(bitmap_.width(), bitmap_.height(), 
-                          reinterpret_cast<BITMAPINFOHEADER*>(&cursor_bitmap_info));
-  HDC dc = ::GetDC(0);
-  HDC workingDC = CreateCompatibleDC(dc);
-  HBITMAP bitmap_handle = CreateDIBSection(dc, &cursor_bitmap_info, 
-                                           DIB_RGB_COLORS, 0, 0, 0);
-  SkAutoLockPixels bitmap_lock(bitmap_); 
-  SetDIBits(0, bitmap_handle, 0, bitmap_.height(), 
-            bitmap_.getPixels(), &cursor_bitmap_info, DIB_RGB_COLORS);
+  const char* data = NULL;
+  if (!custom_data_.empty())
+    data = &custom_data_[0];
+  if (!pickle->WriteData(data, custom_data_.size()))
+    return false;
 
-  HBITMAP old_bitmap = reinterpret_cast<HBITMAP>(SelectObject(workingDC, 
-                                                              bitmap_handle));
-  SetBkMode(workingDC, TRANSPARENT);
-  SelectObject(workingDC, old_bitmap);
-
-  HBITMAP mask = CreateBitmap(bitmap_.width(), bitmap_.height(),
-                              1, 1, NULL);
-  ICONINFO ii = {0};
-  ii.fIcon = FALSE;
-  ii.xHotspot = hotspot_x_;
-  ii.yHotspot = hotspot_y_;
-  ii.hbmMask = mask;
-  ii.hbmColor = bitmap_handle;
-
-  HCURSOR cursor_handle = CreateIconIndirect(&ii);
-
-  DeleteObject(mask); 
-  DeleteObject(bitmap_handle); 
-  DeleteDC(workingDC);
-  ::ReleaseDC(0, dc);
-  return cursor_handle;
+  return SerializePlatformData(pickle);
 }
 
-bool WebCursor::IsSameBitmap(const SkBitmap& bitmap) const {
-  SkAutoLockPixels new_bitmap_lock(bitmap);
-  SkAutoLockPixels bitmap_lock(bitmap_); 
-  return (memcmp(bitmap_.getPixels(), bitmap.getPixels(), 
-                 bitmap_.getSize()) == 0);
+bool WebCursor::IsCustom() const {
+  return type_ == WebCore::PlatformCursor::typeCustom;
 }
 
 bool WebCursor::IsEqual(const WebCursor& other) const {
   if (type_ != other.type_)
     return false;
 
-  if(type_ == CUSTOM)
-    return IsSameBitmap(other.bitmap_);
-  return true;
+  if (!IsPlatformDataEqual(other))
+    return false;
+
+  return hotspot_ == other.hotspot_ &&
+         custom_size_ == other.custom_size_ &&
+         custom_data_ == other.custom_data_;
 }
 
+void WebCursor::Clear() {
+  type_ = WebCore::PlatformCursor::typePointer;
+  hotspot_.set_x(0);
+  hotspot_.set_y(0);
+  custom_size_.set_width(0);
+  custom_size_.set_height(0);
+  custom_data_.clear();
+  CleanupPlatformData();
+}
+
+void WebCursor::Copy(const WebCursor& other) {
+  type_ = other.type_;
+  hotspot_ = other.hotspot_;
+  custom_size_ = other.custom_size_;
+  custom_data_ = other.custom_data_;
+  CopyPlatformData(other);
+}
+
+#if !defined(OS_MACOSX)
+// The Mac version of Chromium is built with PLATFORM(CG) while all other
+// versions are PLATFORM(SKIA). We'll keep this Skia implementation here for
+// common use and put the Mac implementation in webcursor_mac.mm.
+void WebCursor::SetCustomData(WebCore::Image* image) {
+  if (!image)
+    return;
+
+  WebCore::NativeImagePtr image_ptr = image->nativeImageForCurrentFrame();
+  if (!image_ptr)
+    return;
+
+  // Fill custom_data_ directly with the NativeImage pixels.
+  SkAutoLockPixels bitmap_lock(*image_ptr);
+  custom_data_.resize(image_ptr->getSize());
+  memcpy(&custom_data_[0], image_ptr->getPixels(), image_ptr->getSize());
+  custom_size_.set_width(image_ptr->width());
+  custom_size_.set_height(image_ptr->height());
+}
+#endif

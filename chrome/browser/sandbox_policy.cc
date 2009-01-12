@@ -70,10 +70,10 @@ const wchar_t* const kTroublesomeDlls[] = {
 }  // namespace
 
 PluginPolicyCategory GetPolicyCategoryForPlugin(
-    const std::wstring& dll,
+    const FilePath& dll,
     const std::wstring& clsid,
     const std::wstring& list) {
-  std::wstring filename = file_util::GetFilenameFromPath(dll);
+  std::wstring filename = dll.BaseName().value();
   std::wstring plugin_dll = StringToLowerASCII(filename);
   std::wstring trusted_plugins = StringToLowerASCII(list);
   std::wstring activex_clsid = StringToLowerASCII(clsid);
@@ -157,6 +157,37 @@ bool AddDllEvictionPolicy(sandbox::TargetPolicy* policy) {
         return false;
     }
   }
+
+  return true;
+}
+
+bool AddPolicyForGearsInRenderer(sandbox::TargetPolicy* policy) {
+  sandbox::ResultCode result;
+
+  // TODO(mpcomplete): need to restrict access to database files only.  This
+  // is just temporary for debugging purposes.
+  std::wstring plugin_data;
+  if (!PathService::Get(chrome::DIR_USER_DATA, &plugin_data))
+    return false;
+  if (!win_util::ConvertToLongPath(plugin_data, &plugin_data))
+    return false;
+
+  file_util::AppendToPath(&plugin_data, L"*");
+  result = policy->AddRule(sandbox::TargetPolicy::SUBSYS_FILES,
+                           sandbox::TargetPolicy::FILES_ALLOW_ANY,
+                           plugin_data.c_str());
+  if (result != sandbox::SBOX_ALL_OK)
+    return false;
+
+  std::wstring temppath;
+  if (!file_util::GetTempDir(&temppath))
+    return false;
+  file_util::AppendToPath(&temppath, L"*");
+  result = policy->AddRule(sandbox::TargetPolicy::SUBSYS_FILES,
+                           sandbox::TargetPolicy::FILES_ALLOW_ANY,
+                           temppath.c_str());
+  if (result != sandbox::SBOX_ALL_OK)
+    return false;
 
   return true;
 }
@@ -266,7 +297,7 @@ bool ApplyPolicyForUntrustedPlugin(sandbox::TargetPolicy* policy) {
   return true;
 }
 
-bool AddPolicyForPlugin(const std::wstring &plugin_dll,
+bool AddPolicyForPlugin(const FilePath &plugin_dll,
                         const std::string &activex_clsid,
                         const std::wstring &trusted_plugins,
                         sandbox::TargetPolicy* policy) {

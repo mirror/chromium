@@ -153,14 +153,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\frame\browser_view2.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\frame\browser_view2.h"
-				>
-			</File>
-			<File
 				RelativePath=".\frame\browser_window_factory.cc"
 				>
 			</File>
@@ -185,51 +177,19 @@
 			Name="Info Bars"
 			>
 			<File
-				RelativePath=".\info_bar_alternate_nav_url_view.cc"
+				RelativePath=".\infobars\infobar_container.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\info_bar_alternate_nav_url_view.h"
+				RelativePath=".\infobars\infobar_container.h"
 				>
 			</File>
 			<File
-				RelativePath=".\info_bar_confirm_view.cc"
+				RelativePath=".\infobars\infobars.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\info_bar_confirm_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\info_bar_item_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\info_bar_item_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\info_bar_message_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\info_bar_message_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\info_bar_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\info_bar_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_icon_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_icon_view.h"
+				RelativePath=".\infobars\infobars.h"
 				>
 			</File>
 		</Filter>
@@ -382,54 +342,22 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Frame (Old)"
+			Name="Find Bar"
 			>
 			<File
-				RelativePath=".\old_frames\frame_view.cc"
+				RelativePath=".\find_bar_view.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\old_frames\frame_view.h"
+				RelativePath=".\find_bar_view.h"
 				>
 			</File>
 			<File
-				RelativePath=".\old_frames\point_buffer.cc"
+				RelativePath=".\find_bar_win.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\old_frames\point_buffer.h"
-				>
-			</File>
-			<File
-				RelativePath=".\old_frames\simple_vista_frame.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\old_frames\simple_vista_frame.h"
-				>
-			</File>
-			<File
-				RelativePath=".\old_frames\simple_xp_frame.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\old_frames\simple_xp_frame.h"
-				>
-			</File>
-			<File
-				RelativePath=".\old_frames\vista_frame.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\old_frames\vista_frame.h"
-				>
-			</File>
-			<File
-				RelativePath=".\old_frames\xp_frame.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\old_frames\xp_frame.h"
+				RelativePath=".\find_bar_win.h"
 				>
 			</File>
 		</Filter>
@@ -458,6 +386,22 @@
 			>
 		</File>
 		<File
+			RelativePath=".\bookmark_bubble_view.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\bookmark_bubble_view.h"
+			>
+		</File>
+		<File
+			RelativePath=".\bookmark_editor_view.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\bookmark_editor_view.h"
+			>
+		</File>
+		<File
 			RelativePath=".\bookmark_folder_tree_view.cc"
 			>
 		</File>
@@ -479,22 +423,6 @@
 		</File>
 		<File
 			RelativePath=".\bookmark_table_view.h"
-			>
-		</File>
-		<File
-			RelativePath=".\bookmark_bubble_view.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\bookmark_bubble_view.h"
-			>
-		</File>
-		<File
-			RelativePath=".\bookmark_editor_view.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\bookmark_editor_view.h"
 			>
 		</File>
 		<File
@@ -722,6 +650,14 @@
 			>
 		</File>
 		<File
+			RelativePath=".\new_profile_dialog.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\new_profile_dialog.h"
+			>
+		</File>
+		<File
 			RelativePath=".\page_info_window.cc"
 			>
 		</File>
@@ -778,6 +714,14 @@
 			>
 		</File>
 		<File
+			RelativePath=".\select_profile_dialog.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\select_profile_dialog.h"
+			>
+		</File>
+		<File
 			RelativePath=".\shelf_item_dialog.cc"
 			>
 		</File>
@@ -815,6 +759,14 @@
 		</File>
 		<File
 			RelativePath=".\tab_contents_container_view.h"
+			>
+		</File>
+		<File
+			RelativePath=".\tab_icon_view.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\tab_icon_view.h"
 			>
 		</File>
 		<File

@@ -10,17 +10,20 @@
 
 #include "chrome/browser/autocomplete/autocomplete_edit.h"
 #include "chrome/browser/constrained_window.h"
+#include "chrome/browser/infobar_delegate.h"
 #include "chrome/browser/navigation_controller.h"
 #include "chrome/browser/page_navigator.h"
 #include "chrome/browser/tab_contents_type.h"
 #include "chrome/common/navigation_types.h"
-#include "chrome/common/text_zoom.h"
+#include "chrome/common/notification_registrar.h"
+#include "chrome/common/property_bag.h"
 
 namespace gfx {
 class Rect;
 class Size;
 }
 namespace views {
+class RootView;
 class WindowDelegate;
 }
 
@@ -54,7 +57,8 @@ class WebContents;
 // the NavigationController makes the active TabContents inactive, notifies the
 // TabContentsDelegate that the TabContents is being replaced, and then
 // activates the new TabContents.
-class TabContents : public PageNavigator {
+class TabContents : public PageNavigator,
+                    public NotificationObserver {
  public:
   // Flags passed to the TabContentsDelegate.NavigationStateChanged to tell it
   // what has changed. Combine them to update more than one thing.
@@ -76,7 +80,6 @@ class TabContents : public PageNavigator {
   // Creates a new TabContents of the given type.  Will reuse the given
   // instance's renderer, if it is not null.
   static TabContents* CreateWithType(TabContentsType type,
-                                     HWND parent,
                                      Profile* profile,
                                      SiteInstance* instance);
 
@@ -111,6 +114,12 @@ class TabContents : public PageNavigator {
 
   // Returns the type of tab this is. See also the As* functions following.
   TabContentsType type() const { return type_; }
+
+  // Returns the property bag for this tab contents, where callers can add
+  // extra data they may wish to associate with the tab. Returns a pointer
+  // rather than a reference since the PropertyAccessors expect this.
+  const PropertyBag* property_bag() const { return &property_bag_; }
+  PropertyBag* property_bag() { return &property_bag_; }
 
   // Returns this object as a WebContents if it is one, and NULL otherwise.
   virtual WebContents* AsWebContents() { return NULL; }
@@ -220,16 +229,6 @@ class TabContents : public PageNavigator {
 
   // Internal state ------------------------------------------------------------
 
-  // For use when switching tabs, these functions allow the tab contents to
-  // hold the per-tab state of the location bar.  The tab contents takes
-  // ownership of the pointer.
-  void set_saved_location_bar_state(const AutocompleteEditState* state) {
-    saved_location_bar_state_.reset(state);
-  }
-  const AutocompleteEditState* saved_location_bar_state() const {
-    return saved_location_bar_state_.get();
-  }
-
   // This flag indicates whether the tab contents is currently being
   // screenshotted by the DraggedTabController.
   bool capturing_contents() const { return capturing_contents_; }
@@ -247,7 +246,7 @@ class TabContents : public PageNavigator {
   void set_is_active(bool active) { is_active_ = active; }
 
   // Whether the tab is in the process of being destroyed.
-  // Added as a tentative work-around for focus related bug #4633. This allows
+  // Added as a tentative work-around for focus related bug #4633.  This allows
   // us not to store focus when a tab is being closed.
   bool is_being_destroyed() const { return is_being_destroyed_; }
 
@@ -289,20 +288,6 @@ class TabContents : public PageNavigator {
 
   // Stop any pending navigation.
   virtual void Stop() {}
-
-  // An asynchronous call to trigger the string search in the page.
-  // It sends an IPC message to the Renderer that handles the string
-  // search, selecting the matches and setting the caret positions.
-  // This function also starts the asynchronous scoping effort.
-  virtual void StartFinding(int request_id,
-                            const std::wstring& string,
-                            bool forward, bool match_case,
-                            bool find_next) { }
-
-  // An asynchronous call to stop the string search in the page. If
-  // |clear_selection| is true, it will also clear the selection on the
-  // focused frame.
-  virtual void StopFinding(bool clear_selection) { }
 
   // TODO(erg): HACK ALERT! This was thrown together for beta and
   // needs to be completely removed after we ship it. Right now, the
@@ -351,14 +336,8 @@ class TabContents : public PageNavigator {
   // of unwanted popups.
   void CloseAllSuppressedPopups();
 
-  // Show, Hide and Size the TabContents.
-  // TODO(beng): (Cleanup) Show/Size TabContents should be made to actually
-  //             show and size the View. For simplicity sake, for now they're
-  //             just empty. This is currently a bit of a mess and is just a
-  //             band-aid.
-  virtual void ShowContents() {}
-  virtual void HideContents();
-  virtual void SizeContents(const gfx::Size& size) {}
+  // Called when the blocked popup notification is shown or hidden.
+  virtual void PopupNotificationVisibilityChanged(bool visible) { }
 
   // Views and focus -----------------------------------------------------------
 
@@ -369,7 +348,7 @@ class TabContents : public PageNavigator {
 
   // Tell the subclass to set up the view (e.g. create the container HWND if
   // applicable) and any other create-time setup.
-  virtual void CreateView(HWND parent_hwnd, const gfx::Rect& initial_bounds) {}
+  virtual void CreateView() {}
 
   // Returns the HWND associated with this TabContents. Outside of automation
   // in the context of the UI, this is required to be implemented.
@@ -412,18 +391,24 @@ class TabContents : public PageNavigator {
   // the focus is passed to the RootView.
   virtual views::RootView* GetContentsRootView() { return NULL; }
 
+  // Infobars ------------------------------------------------------------------
+
+  // Adds an InfoBar for the specified |delegate|.
+  void AddInfoBar(InfoBarDelegate* delegate);
+
+  // Removes the InfoBar for the specified |delegate|.
+  void RemoveInfoBar(InfoBarDelegate* delegate);
+  
+  // Enumeration and access functions.
+  int infobar_delegate_count() const { return infobar_delegates_.size(); }
+  InfoBarDelegate* GetInfoBarDelegateAt(int index) {
+    return infobar_delegates_.at(index);
+  }
+
   // Toolbars and such ---------------------------------------------------------
  
   // Returns whether the bookmark bar should be visible.
   virtual bool IsBookmarkBarAlwaysVisible() { return false; }
-
-  // Returns the View to display at the top of the tab.
-  virtual InfoBarView* GetInfoBarView() { return NULL; }
-
-  // Returns whether the info bar is visible.
-  // If the visibility dynamically changes, invoke ToolbarSizeChanged
-  // on the delegate. Which forces the frame to layout if size has changed.
-  virtual bool IsInfoBarVisible() { return false; }
 
   // Whether or not the shelf view is visible.
   virtual void SetDownloadShelfVisible(bool visible);
@@ -455,6 +440,11 @@ class TabContents : public PageNavigator {
   void DidMoveOrResize(ConstrainedWindow* window);
 
  protected:
+  // NotificationObserver implementation:
+  virtual void Observe(NotificationType type,
+                       const NotificationSource& source,
+                       const NotificationDetails& details);
+
   friend class NavigationController;
   // Used to access the child_windows_ (ConstrainedWindowList) for testing
   // automation purposes.
@@ -502,13 +492,28 @@ class TabContents : public PageNavigator {
   typedef std::vector<ConstrainedWindow*> ConstrainedWindowList;
   ConstrainedWindowList child_windows_;
 
+  // Whether we have a notification AND the notification owns popups windows.
+  // (We keep the notification object around even when it's not shown since it
+  // determines whether to show itself).
+  bool ShowingBlockedPopupNotification() const;
+
  private:
+  // Expires InfoBars that need to be expired, according to the state carried
+  // in |details|, in response to a new NavigationEntry being committed (the
+  // user navigated to another page).
+  void ExpireInfoBars(
+      const NavigationController::LoadCommittedDetails& details);
+
   // Data ----------------------------------------------------------------------
 
   TabContentsType type_;
 
   TabContentsDelegate* delegate_;
   NavigationController* controller_;
+
+  PropertyBag property_bag_;
+
+  NotificationRegistrar registrar_;
 
   // Indicates whether we're currently loading a resource.
   bool is_loading_;
@@ -520,8 +525,6 @@ class TabContents : public PageNavigator {
 
   // See waiting_for_response() above.
   bool waiting_for_response_;
-
-  scoped_ptr<const AutocompleteEditState> saved_location_bar_state_;
 
   // The download shelf view (view at the bottom of the page).
   scoped_ptr<DownloadShelfView> download_shelf_view_;
@@ -544,6 +547,9 @@ class TabContents : public PageNavigator {
   // popups. This pointer alsog goes in |child_windows_| for ownership,
   // repositioning, etc.
   BlockedPopupContainer* blocked_popups_;
+
+  // Delegates for InfoBars associated with this TabContents.
+  std::vector<InfoBarDelegate*> infobar_delegates_;
 
   // See getter above.
   bool is_being_destroyed_;

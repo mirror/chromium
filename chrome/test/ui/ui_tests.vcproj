@@ -174,10 +174,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\test_file_util.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\testing_browser_process.h"
 				>
 			</File>
@@ -310,7 +306,7 @@
 			Name="TestSessionRestore"
 			>
 			<File
-				RelativePath="..\..\browser\session_restore_uitest.cc"
+				RelativePath="..\..\browser\sessions\session_restore_uitest.cc"
 				>
 			</File>
 		</Filter>
@@ -366,7 +362,7 @@
 			Name="TestResourceDispatcherHost"
 			>
 			<File
-				RelativePath="..\..\browser\resource_dispatcher_host_uitest.cc"
+				RelativePath="..\..\browser\renderer_host\resource_dispatcher_host_uitest.cc"
 				>
 			</File>
 		</Filter>
@@ -374,7 +370,7 @@
 			Name="TestFindInPage"
 			>
 			<File
-				RelativePath="..\..\browser\find_in_page_controller_uitest.cc"
+				RelativePath="..\..\browser\views\find_bar_win_uitest.cc"
 				>
 			</File>
 		</Filter>

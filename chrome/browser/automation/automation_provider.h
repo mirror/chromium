@@ -106,6 +106,8 @@ class AutomationProvider : public base::RefCounted<AutomationProvider>,
                  int handle);
   void GetBrowserWindowCount(const IPC::Message& message);
   void GetShowingAppModalDialog(const IPC::Message& message);
+  void ClickAppModalDialogButton(const IPC::Message& message,
+                                 int button);
   void GetBrowserWindow(const IPC::Message& message, int index);
   void GetLastActiveBrowserWindow(const IPC::Message& message);
   void GetActiveWindow(const IPC::Message& message);
@@ -328,8 +330,37 @@ class AutomationProvider : public base::RefCounted<AutomationProvider>,
   // Sets the int value for preference with name |name|.
   void SetIntPreference(const IPC::Message& message,
                         int handle,
-                        std::wstring name,
+                        const std::wstring& name,
                         int value);
+
+  // Sets the string value for preference with name |name|.
+  void SetStringPreference(const IPC::Message& message,
+                           int handle,
+                           const std::wstring& name,
+                           const std::wstring& value);
+
+  // Gets the bool value for preference with name |name|.
+  void GetBooleanPreference(const IPC::Message& message,
+                            int handle,
+                            const std::wstring& name);
+
+  // Sets the bool value for preference with name |name|.
+  void SetBooleanPreference(const IPC::Message& message,
+                            int handle,
+                            const std::wstring& name,
+                            bool value);
+
+  // Gets the current used encoding name of the page in the specified tab.
+  void GetPageCurrentEncoding(const IPC::Message& message, int tab_handle);
+
+  // Uses the specified encoding to override the encoding of the page in the
+  // specified tab.
+  void OverrideEncoding(const IPC::Message& message,
+                        int tab_handle,
+                        const std::wstring& encoding_name);
+
+  void SavePackageShouldPromptUser(const IPC::Message& message,
+                                   bool should_prompt);
 
   // Convert a tab handle into a WebContents. If |tab| is non-NULL a pointer
   // to the tab is also returned. Returns NULL in case of failure or if the tab

@@ -4,11 +4,79 @@
 
 #define _CRT_SECURE_NO_WARNINGS
 
-#include "testing/gtest/include/gtest/gtest.h"
+#include "base/multiprocess_test.h"
+#include "base/platform_thread.h"
 #include "base/process_util.h"
+#include "testing/gtest/include/gtest/gtest.h"
 
-TEST(ProcessUtilTest, EnableLFH) {
-  ASSERT_TRUE(process_util::EnableLowFragmentationHeap());
+#if defined(OS_LINUX)
+#include <dlfcn.h>
+#endif
+#if defined(OS_POSIX)
+#include <fcntl.h>
+#include <sys/socket.h>
+#endif
+#if defined(OS_WIN)
+#include <windows.h>
+#endif
+
+namespace base {
+
+class ProcessUtilTest : public MultiProcessTest {
+};
+
+MULTIPROCESS_TEST_MAIN(SimpleChildProcess) {
+  return 0;
+}
+
+TEST_F(ProcessUtilTest, SpawnChild) {
+  ProcessHandle handle = this->SpawnChild(L"SimpleChildProcess");
+
+  ASSERT_NE(static_cast<ProcessHandle>(NULL), handle);
+  EXPECT_TRUE(WaitForSingleProcess(handle, 5000));
+}
+
+MULTIPROCESS_TEST_MAIN(SlowChildProcess) {
+  // Sleep until file "SlowChildProcess.die" is created.
+  FILE *fp;
+  do {
+    PlatformThread::Sleep(100);
+    fp = fopen("SlowChildProcess.die", "r");
+  } while (!fp);
+  fclose(fp);
+  remove("SlowChildProcess.die");
+  exit(0);
+  return 0;
+}
+
+#if defined(OS_WIN)
+#define EXE_SUFFIX L".exe"
+#else
+#define EXE_SUFFIX L""
+#endif
+
+// TODO(port): finish port on Mac
+#if !defined(OS_MACOSX)
+TEST_F(ProcessUtilTest, KillSlowChild) {
+  remove("SlowChildProcess.die");
+  int oldcount = GetProcessCount(L"base_unittests" EXE_SUFFIX, 0);
+
+  ProcessHandle handle = this->SpawnChild(L"SlowChildProcess");
+
+  ASSERT_NE(static_cast<ProcessHandle>(NULL), handle);
+  EXPECT_EQ(oldcount+1, GetProcessCount(L"base_unittests" EXE_SUFFIX, 0));
+  FILE *fp = fopen("SlowChildProcess.die", "w");
+  fclose(fp);
+  // TODO(port): do something less racy here
+  PlatformThread::Sleep(1000);
+  EXPECT_EQ(oldcount, GetProcessCount(L"base_unittests" EXE_SUFFIX, 0));
+}
+#endif
+
+// TODO(estade): if possible, port these 2 tests.
+#if defined(OS_WIN)
+TEST_F(ProcessUtilTest, EnableLFH) {
+  ASSERT_TRUE(EnableLowFragmentationHeap());
   if (IsDebuggerPresent()) {
     // Under these conditions, LFH can't be enabled. There's no point to test
     // anything.
@@ -38,14 +106,14 @@ TEST(ProcessUtilTest, EnableLFH) {
   }
 }
 
-TEST(ProcessUtilTest, CalcFreeMemory) {
-  process_util::ProcessMetrics* metrics =
-    process_util::ProcessMetrics::CreateProcessMetrics(::GetCurrentProcess());
+TEST_F(ProcessUtilTest, CalcFreeMemory) {
+  ProcessMetrics* metrics =
+      ProcessMetrics::CreateProcessMetrics(::GetCurrentProcess());
   ASSERT_TRUE(NULL != metrics);
 
   // Typical values here is ~1900 for total and ~1000 for largest. Obviously
   // it depends in what other tests have done to this process.
-  process_util::FreeMBytes free_mem1 = {0};
+  FreeMBytes free_mem1 = {0};
   EXPECT_TRUE(metrics->CalculateFreeMemory(&free_mem1));
   EXPECT_LT(10u, free_mem1.total);
   EXPECT_LT(10u, free_mem1.largest);
@@ -62,7 +130,7 @@ TEST(ProcessUtilTest, CalcFreeMemory) {
   size_t expected_total = free_mem1.total - kAllocMB;
   size_t expected_largest = free_mem1.largest;
 
-  process_util::FreeMBytes free_mem2 = {0};
+  FreeMBytes free_mem2 = {0};
   EXPECT_TRUE(metrics->CalculateFreeMemory(&free_mem2));
   EXPECT_GE(free_mem2.total, free_mem2.largest);
   EXPECT_GE(expected_total, free_mem2.total);
@@ -72,4 +140,74 @@ TEST(ProcessUtilTest, CalcFreeMemory) {
   delete[] alloc;
   delete metrics;
 }
+#endif  // defined(OS_WIN)
 
+#if defined(OS_POSIX)
+const int kChildPipe = 20;  // FD # for write end of pipe in child process.
+MULTIPROCESS_TEST_MAIN(ProcessUtilsLeakFDChildProcess) {
+  // This child process counts the number of open FDs, it then writes that
+  // number out to a pipe connected to the parent.
+  int num_open_files = 0;
+  int write_pipe = kChildPipe;
+  int max_files = GetMaxFilesOpenInProcess();
+  for (int i = STDERR_FILENO + 1; i < max_files; i++) {
+    if (i != kChildPipe) {
+      if (close(i) != -1) {
+        LOG(WARNING) << "Leaked FD " << i;
+        num_open_files += 1;
+      }
+    }
+  }
+
+#if defined(OS_LINUX)
+  // On Linux, '/etc/localtime' is opened before the test's main() enters.
+  const int expected_num_open_fds = 1;
+  num_open_files -= expected_num_open_fds;
+#endif  // defined(OS_LINUX)
+
+  write(write_pipe, &num_open_files, sizeof(num_open_files));
+  close(write_pipe);
+
+  return 0;
+}
+
+TEST_F(ProcessUtilTest, FDRemapping) {
+  // Open some files to check they don't get leaked to the child process.
+  int fds[2];
+  pipe(fds);
+  int pipe_read_fd = fds[0];
+  int pipe_write_fd = fds[1];
+
+  // open some dummy fds to make sure they don't propogate over to the
+  // child process.
+  int dev_null = open("/dev/null", O_RDONLY);
+  int sockets[2];
+  socketpair(AF_UNIX, SOCK_STREAM, 0, sockets);
+
+  file_handle_mapping_vector fd_mapping_vec;
+  fd_mapping_vec.push_back(std::pair<int,int>(pipe_write_fd, kChildPipe));
+  ProcessHandle handle = this->SpawnChild(L"ProcessUtilsLeakFDChildProcess",
+                                          fd_mapping_vec,
+                                          false);
+  ASSERT_NE(static_cast<ProcessHandle>(NULL), handle);
+  close(pipe_write_fd);
+
+  // Read number of open files in client process from pipe;
+  int num_open_files = -1;
+  ssize_t bytes_read = read(pipe_read_fd, &num_open_files,
+                            sizeof(num_open_files));
+  ASSERT_EQ(bytes_read, static_cast<ssize_t>(sizeof(num_open_files)));
+
+  // Make sure 0 fds are leaked to the client.
+  ASSERT_EQ(0, num_open_files);
+
+  EXPECT_TRUE(WaitForSingleProcess(handle, 1000));
+  close(fds[0]);
+  close(sockets[0]);
+  close(sockets[1]);
+  close(dev_null);
+}
+
+#endif  // defined(OS_POSIX)
+
+}  // namespace base

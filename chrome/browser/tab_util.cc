@@ -6,7 +6,7 @@
 
 #include "chrome/browser/render_view_host.h"
 #include "chrome/browser/render_process_host.h"
-#include "chrome/browser/resource_dispatcher_host.h"
+#include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #include "chrome/browser/web_contents.h"
 #include "net/url_request/url_request.h"
 
@@ -27,7 +27,7 @@ bool tab_util::GetTabContentsID(URLRequest* request,
   return true;
 }
 
-TabContents* tab_util::GetTabContentsByID(int render_process_id,
+WebContents* tab_util::GetWebContentsByID(int render_process_id,
                                           int render_view_id) {
   RenderViewHost* render_view_host =
       RenderViewHost::FromID(render_process_id, render_view_id);

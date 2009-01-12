@@ -31,8 +31,11 @@
 */
 
 #include "config.h"
+#include "build/build_config.h"
 
-#pragma warning(push, 0)
+#include "base/compiler_specific.h"
+MSVC_PUSH_WARNING_LEVEL(0);
+#include "CSSStyleSelector.h"
 #include "Cursor.h"
 #include "Document.h"
 #include "DocumentLoader.h"
@@ -46,27 +49,32 @@
 #include "FrameTree.h"
 #include "FrameView.h"
 #include "GraphicsContext.h"
+#include "HTMLNames.h"
+#include "HTMLInputElement.h"
 #include "HitTestResult.h"
 #include "Image.h"
 #include "InspectorController.h"
 #include "IntRect.h"
 #include "KeyboardEvent.h"
 #include "MIMETypeRegistry.h"
+#include "NodeRenderStyle.h"
 #include "Page.h"
-#include "Pasteboard.h"
+#include "PlatformContextSkia.h"
 #include "PlatformKeyboardEvent.h"
 #include "PlatformMouseEvent.h"
 #include "PlatformWheelEvent.h"
 #include "PluginInfoStore.h"
+#include "PopupMenuChromium.h"
+#include "PopupMenuClient.h"
 #if defined(OS_WIN)
-#include "RenderThemeWin.h"
+#include "RenderThemeChromiumWin.h"
 #endif
+#include "RenderView.h"
 #include "ResourceHandle.h"
 #include "SelectionController.h"
 #include "Settings.h"
 #include "TypingCommand.h"
-#include "event_conversion.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 #undef LOG
 
 #include "base/gfx/rect.h"
@@ -74,6 +82,7 @@
 #include "base/message_loop.h"
 #include "base/string_util.h"
 #include "webkit/glue/chrome_client_impl.h"
+#include "webkit/glue/clipboard_conversion.h"
 #include "webkit/glue/context_menu_client_impl.h"
 #include "webkit/glue/dragclient_impl.h"
 #include "webkit/glue/editor_client_impl.h"
@@ -91,7 +100,6 @@
 #include "webkit/glue/webview_delegate.h"
 #include "webkit/glue/webview_impl.h"
 #include "webkit/glue/webwidget_impl.h"
-#include "webkit/port/platform/graphics/PlatformContextSkia.h"
 
 // Get rid of WTF's pow define so we can use std::pow.
 #undef pow
@@ -112,6 +120,138 @@ static const double kMaxTextSizeMultiplier = 3.0;
 static const WebCore::DragOperation kDropTargetOperation =
     static_cast<WebCore::DragOperation>(DragOperationCopy | DragOperationLink);
 
+// AutocompletePopupMenuClient
+class AutocompletePopupMenuClient
+    : public RefCounted<AutocompletePopupMenuClient>,
+      public WebCore::PopupMenuClient {
+ public:
+  AutocompletePopupMenuClient(WebViewImpl* webview,
+                              WebCore::HTMLInputElement* text_field,
+                              const std::vector<std::wstring>& suggestions,
+                              int default_suggestion_index)
+      : text_field_(text_field),
+        selected_index_(default_suggestion_index),
+        webview_(webview) {
+    SetSuggestions(suggestions);
+  }
+  virtual ~AutocompletePopupMenuClient() {
+  }
+
+  virtual void valueChanged(unsigned listIndex, bool fireEvents = true) {
+    text_field_->setValue(suggestions_[listIndex]);
+  }  
+
+  virtual WebCore::String itemText(unsigned list_index) const {
+    return suggestions_[list_index];
+  }
+  
+  virtual bool itemIsEnabled(unsigned listIndex) const {
+    return true;
+  }
+
+  virtual PopupMenuStyle itemStyle(unsigned listIndex) const {
+    return menuStyle();
+  }
+
+  virtual PopupMenuStyle menuStyle() const {
+    RenderStyle* style = text_field_->renderStyle() ?
+                            text_field_->renderStyle() :
+                            text_field_->computedStyle();
+    return PopupMenuStyle(style->color(), Color::white, style->font(),
+                          style->visibility() == VISIBLE);
+  }
+
+  virtual int clientInsetLeft() const {
+    return 0;
+  }
+  virtual int clientInsetRight() const {
+    return 0;
+  }
+  virtual int clientPaddingLeft() const {
+#if defined(OS_WIN)
+    return theme()->popupInternalPaddingLeft(text_field_->computedStyle());
+#else
+    NOTIMPLEMENTED();
+    return 0;
+#endif
+  }
+  virtual int clientPaddingRight() const {
+#if defined(OS_WIN)
+    return theme()->popupInternalPaddingRight(text_field_->computedStyle());
+#else
+    NOTIMPLEMENTED();
+    return 0;
+#endif
+  }
+  virtual int listSize() const {
+    return suggestions_.size();
+  }
+  virtual int selectedIndex() const {
+    return selected_index_;
+  }
+  virtual void hidePopup() {
+    webview_->HideAutoCompletePopup();
+  }
+  virtual bool itemIsSeparator(unsigned listIndex) const {
+    return false;
+  }
+  virtual bool itemIsLabel(unsigned listIndex) const {
+    return false;
+  }
+  virtual bool itemIsSelected(unsigned listIndex) const {
+    return false;
+  }
+  virtual bool shouldPopOver() const {
+    return false;
+  }
+  virtual bool valueShouldChangeOnHotTrack() const {
+    return false;
+  }
+
+  virtual FontSelector* fontSelector() const {
+    return text_field_->document()->styleSelector()->fontSelector();
+  }
+
+  virtual void setTextFromItem(unsigned listIndex) {
+    text_field_->setValue(suggestions_[listIndex]);
+  }
+
+  virtual HostWindow* hostWindow() const {
+    return text_field_->document()->view()->hostWindow();
+  }
+
+  virtual PassRefPtr<Scrollbar> createScrollbar(
+      ScrollbarClient* client,
+      ScrollbarOrientation orientation,
+      ScrollbarControlSize size) {
+    RefPtr<Scrollbar> widget = Scrollbar::createNativeScrollbar(client, 
+                                                                orientation,
+                                                                size);
+    return widget.release();
+  }
+
+  void SetSuggestions(const std::vector<std::wstring>& suggestions) {
+    suggestions_.clear();
+    for (std::vector<std::wstring>::const_iterator iter = suggestions.begin();
+         iter != suggestions.end(); ++iter) {
+      suggestions_.push_back(webkit_glue::StdWStringToString(*iter));
+    }
+    // Try to preserve selection if possible.
+    if (selected_index_ >= static_cast<int>(suggestions.size()))
+      selected_index_ = -1;
+  }
+
+  WebCore::HTMLInputElement* text_field() const {
+    return text_field_.get();
+  }
+
+ private:
+  RefPtr<WebCore::HTMLInputElement> text_field_;
+  std::vector<WebCore::String> suggestions_;
+  int selected_index_;
+  WebViewImpl* webview_;
+};
+
 // WebView ----------------------------------------------------------------
 
 /*static*/
@@ -120,29 +260,40 @@ WebView* WebView::Create(WebViewDelegate* delegate,
   WebViewImpl* instance = new WebViewImpl();
   instance->AddRef();
   instance->SetPreferences(prefs);
-  instance->main_frame_->InitMainFrame(instance);
+
+  // Here, we construct a new WebFrameImpl with a reference count of 0.  That
+  // is bumped up to 1 by InitMainFrame.  The reference count is decremented
+  // when the corresponding WebCore::Frame object is destroyed.
+  WebFrameImpl* main_frame = new WebFrameImpl();
+  main_frame->InitMainFrame(instance);
+
   // Set the delegate after initializing the main frame, to avoid trying to
   // respond to notifications before we're fully initialized.
   instance->delegate_ = delegate;
   // Restrict the access to the local file system
   // (see WebView.mm WebView::_commonInitializationWithFrameName).
-  FrameLoader::setRestrictAccessToLocal(true);
+  FrameLoader::setLocalLoadPolicy(
+      FrameLoader::AllowLocalLoadsForLocalOnly);
   return instance;
 }
 
 WebViewImpl::WebViewImpl()
-    : delegate_(NULL),
-      pending_history_item_(NULL),
+    : ALLOW_THIS_IN_INITIALIZER_LIST(back_forward_list_client_impl_(this)),
+      observed_new_navigation_(false),
 #ifndef NDEBUG
       new_navigation_loader_(NULL),
 #endif
-      observed_new_navigation_(false),
-      text_zoom_level_(0),
+      zoom_level_(0),
       context_menu_allowed_(false),
       doing_drag_and_drop_(false),
       suppress_next_keypress_event_(false),
       window_open_disposition_(IGNORE_ACTION),
       ime_accept_events_(true) {
+  // WebKit/win/WebView.cpp does the same thing, except they call the
+  // KJS specific wrapper around this method. We need to have threading
+  // initialized because CollatorICU requires it.
+  WTF::initializeThreading();
+
   // set to impossible point so we always get the first mouse pos
   last_mouse_position_.SetPoint(-1, -1);
 
@@ -153,22 +304,14 @@ WebViewImpl::WebViewImpl()
                        new DragClientImpl(this),
                        new WebInspectorClient(this)));
 
-  page_->backForwardList()->setClient(this);
+  page_->backForwardList()->setClient(&back_forward_list_client_impl_);
 
   // The group name identifies a namespace of pages.  I'm not sure how it's
   // intended to be used, but keeping all pages in the same group works for us.
   page_->setGroupName("default");
-
-  // This is created with a refcount of 1, and we assign it to a RefPtr,
-  // giving a refcount of 2. The ref is done on behalf of
-  // FrameWin/FrameLoaderWin which references the WebFrame via the
-  // FrameWinClient/FrameLoaderClient interfaces. See the comment at the
-  // top of webframe_impl.cc
-  main_frame_ = new WebFrameImpl();
 }
 
 WebViewImpl::~WebViewImpl() {
-  DCHECK(main_frame_ == NULL);
   DCHECK(page_ == NULL);
   ReleaseFocusReferences();
   for (std::set<ImageResourceFetcher*>::iterator i = image_fetchers_.begin();
@@ -192,7 +335,7 @@ void WebViewImpl::SetTabKeyCyclesThroughElements(bool value) {
 }
 
 void WebViewImpl::MouseMove(const WebMouseEvent& event) {
-  if (!main_frame_->frameview())
+  if (!main_frame() || !main_frame()->frameview())
     return;
 
   last_mouse_position_.SetPoint(event.x, event.y);
@@ -200,49 +343,68 @@ void WebViewImpl::MouseMove(const WebMouseEvent& event) {
   // We call mouseMoved here instead of handleMouseMovedEvent because we need
   // our ChromeClientImpl to receive changes to the mouse position and
   // tooltip text, and mouseMoved handles all of that.
-  main_frame_->frameview()->frame()->eventHandler()->mouseMoved(
-      MakePlatformMouseEvent(main_frame_->frameview(), event));
+  main_frame()->frame()->eventHandler()->mouseMoved(
+      MakePlatformMouseEvent(main_frame()->frameview(), event));
 }
 
 void WebViewImpl::MouseLeave(const WebMouseEvent& event) {
   // This event gets sent as the main frame is closing.  In that case, just
   // ignore it.
-  if (!main_frame_ || !main_frame_->frameview())
+  if (!main_frame() || !main_frame()->frameview())
     return;
 
   delegate_->UpdateTargetURL(this, GURL());
 
-  main_frame_->frameview()->frame()->eventHandler()->handleMouseMoveEvent(
-      MakePlatformMouseEvent(main_frame_->frameview(), event));
+  main_frame()->frame()->eventHandler()->handleMouseMoveEvent(
+      MakePlatformMouseEvent(main_frame()->frameview(), event));
 }
 
 void WebViewImpl::MouseDown(const WebMouseEvent& event) {
-  if (!main_frame_->frameview())
+  if (!main_frame() || !main_frame()->frameview())
     return;
 
   last_mouse_down_point_ = gfx::Point(event.x, event.y);
-  main_frame_->frame()->eventHandler()->handleMousePressEvent(
-      MakePlatformMouseEvent(main_frame_->frameview(), event));
+  // We need to remember who has focus, as if the user left-clicks an already
+  // focused text-field, we may want to show the auto-fill popup.
+  RefPtr<Node> focused_node;
+  if (event.button == WebMouseEvent::BUTTON_LEFT)
+    focused_node = GetFocusedNode();
+
+  main_frame()->frame()->eventHandler()->handleMousePressEvent(
+      MakePlatformMouseEvent(main_frame()->frameview(), event));
+
+  if (focused_node.get() && focused_node == GetFocusedNode()) {
+    // Already focused node was clicked, ShowAutofillForNode will determine
+    // whether to show the autofill (typically, if the node is a text-field and
+    // is empty).
+    static_cast<EditorClientImpl*>(page_->editorClient())->
+        ShowAutofillForNode(focused_node.get());
+  }
 }
 
 void WebViewImpl::MouseContextMenu(const WebMouseEvent& event) {
+  if (!main_frame() || !main_frame()->frameview())
+    return;
+
   page_->contextMenuController()->clearContextMenu();
 
-  MakePlatformMouseEvent pme(main_frame_->frameview(), event);
+  MakePlatformMouseEvent pme(main_frame()->frameview(), event);
 
   // Find the right target frame. See issue 1186900.
   IntPoint doc_point(
-      main_frame_->frame()->view()->windowToContents(pme.pos()));
+      page_->mainFrame()->view()->windowToContents(pme.pos()));
   HitTestResult result =
-      main_frame_->frame()->eventHandler()->hitTestResultAtPoint(doc_point,
-                                                                 false);
+      page_->mainFrame()->eventHandler()->hitTestResultAtPoint(
+          doc_point, false);
   Frame* target_frame;
   if (result.innerNonSharedNode())
-      target_frame = result.innerNonSharedNode()->document()->frame();
+    target_frame = result.innerNonSharedNode()->document()->frame();
   else
-      target_frame = page_->focusController()->focusedOrMainFrame();
+    target_frame = page_->focusController()->focusedOrMainFrame();
 
+#if defined(OS_WIN)
   target_frame->view()->setCursor(pointerCursor());
+#endif
 
   context_menu_allowed_ = true;
   target_frame->eventHandler()->sendContextMenuEvent(pme);
@@ -252,12 +414,12 @@ void WebViewImpl::MouseContextMenu(const WebMouseEvent& event) {
 }
 
 void WebViewImpl::MouseUp(const WebMouseEvent& event) {
-  if (!main_frame_->frameview())
+  if (!main_frame() || !main_frame()->frameview())
     return;
 
   MouseCaptureLost();
-  main_frame_->frameview()->frame()->eventHandler()->handleMouseReleaseEvent(
-      MakePlatformMouseEvent(main_frame_->frameview(), event));
+  main_frame()->frame()->eventHandler()->handleMouseReleaseEvent(
+      MakePlatformMouseEvent(main_frame()->frameview(), event));
 
   // Dispatch the contextmenu event regardless of if the click was swallowed.
   if (event.button == WebMouseEvent::BUTTON_RIGHT)
@@ -265,8 +427,8 @@ void WebViewImpl::MouseUp(const WebMouseEvent& event) {
 }
 
 void WebViewImpl::MouseWheel(const WebMouseWheelEvent& event) {
-  MakePlatformWheelEvent platform_event(main_frame_->frameview(), event);
-  main_frame_->frame()->eventHandler()->handleWheelEvent(platform_event);
+  MakePlatformWheelEvent platform_event(main_frame()->frameview(), event);
+  main_frame()->frame()->eventHandler()->handleWheelEvent(platform_event);
 }
 
 bool WebViewImpl::KeyEvent(const WebKeyboardEvent& event) {
@@ -280,6 +442,20 @@ bool WebViewImpl::KeyEvent(const WebKeyboardEvent& event) {
   // event and a keyUp event. We reset this flag here as this is a new keyDown
   // event.
   suppress_next_keypress_event_ = false;
+
+  // Give autocomplete a chance to consume the key events it is interested in.
+  if (autocomplete_popup_ &&
+      autocomplete_popup_->isInterestedInEventForKey(event.key_code)) {
+    if (autocomplete_popup_->handleKeyEvent(MakePlatformKeyboardEvent(event))) {
+#if defined(OS_WIN)
+      // We need to ignore the next CHAR event after this otherwise pressing
+      // enter when selecting an item in the menu will go to the page.
+      if (WebInputEvent::KEY_DOWN == event.type)
+        suppress_next_keypress_event_ = true;
+#endif
+      return true;
+    }
+  }
 
   Frame* frame = GetFocusedWebCoreFrame();
   if (!frame)
@@ -301,7 +477,7 @@ bool WebViewImpl::KeyEvent(const WebKeyboardEvent& event) {
 
   MakePlatformKeyboardEvent evt(event);
 
-#if defined(OS_WIN)
+#if !defined(OS_MACOSX)
   if (WebInputEvent::KEY_DOWN == event.type) {
     MakePlatformKeyboardEvent evt_rawkeydown = evt;
     evt_rawkeydown.SetKeyType(WebCore::PlatformKeyboardEvent::RawKeyDown);
@@ -314,7 +490,7 @@ bool WebViewImpl::KeyEvent(const WebKeyboardEvent& event) {
       return true;
     }
   }
-#elif defined(OS_MACOSX)
+#else
   // Windows and Cocoa handle events in rather different ways. On Windows,
   // you get two events: WM_KEYDOWN/WM_KEYUP and WM_CHAR. In
   // PlatformKeyboardEvent, RawKeyDown represents the raw messages. When
@@ -357,12 +533,12 @@ bool WebViewImpl::CharEvent(const WebKeyboardEvent& event) {
   if (!evt.IsCharacterKey())
     return true;
 
-#if defined(OS_WIN)
-  // Safari 3.1 does not pass off WM_SYSCHAR messages to the
-  // eventHandler::keyEvent. We mimic this behavior.
+  // Safari 3.1 does not pass off windows system key messages (WM_SYSCHAR) to
+  // the eventHandler::keyEvent. We mimic this behavior on all platforms since
+  // for now we are converting other platform's key events to windows key
+  // events.
   if (evt.isSystemKey())
     return handler->handleAccessKey(evt);
-#endif
 
   if (!handler->keyEvent(evt))
     return KeyEventDefault(event);
@@ -377,24 +553,27 @@ bool WebViewImpl::CharEvent(const WebKeyboardEvent& event) {
 * webkit\webkit\win\WebView.cpp. The only significant change in this
 * function is the code to convert from a Keyboard event to the Right
 * Mouse button up event.
+* 
+* This function is an ugly copy/paste and should be cleaned up when the
+* WebKitWin version is cleaned: https://bugs.webkit.org/show_bug.cgi?id=20438
 */
 #if defined(OS_WIN)
 // TODO(pinkerton): implement on non-windows
 bool WebViewImpl::SendContextMenuEvent(const WebKeyboardEvent& event) {
   static const int kContextMenuMargin = 1;
-  FrameView* view = page()->mainFrame()->view();
+  Frame* main_frame = page()->mainFrame();
+  FrameView* view = main_frame->view();
   if (!view)
     return false;
 
-  POINT coords = {-1, -1};
+  IntPoint coords(-1, -1);
   int right_aligned = ::GetSystemMetrics(SM_MENUDROPALIGNMENT);
   IntPoint location;
 
   // The context menu event was generated from the keyboard, so show the
   // context menu by the current selection.
-  Position start =
-      page()->mainFrame()->selectionController()->selection().start();
-  Position end = page()->mainFrame()->selectionController()->selection().end();
+  Position start = main_frame->selection()->selection().start();
+  Position end = main_frame->selection()->selection().end();
 
   if (!start.node() || !end.node()) {
     location =
@@ -404,26 +583,12 @@ bool WebViewImpl::SendContextMenuEvent(const WebKeyboardEvent& event) {
     RenderObject* renderer = start.node()->renderer();
     if (!renderer)
       return false;
-    // Calculate the rect of the first line of the selection (cribbed from
-    // -[WebCoreFrameBridge firstRectForDOMRange:]).
-    int extra_width_to_EOL = 0;
-    IntRect start_caret_rect = renderer->caretRect(start.offset(), DOWNSTREAM,
-                                                   &extra_width_to_EOL);
-    IntRect end_caret_rect = renderer->caretRect(end.offset(), UPSTREAM);
-    IntRect first_rect;
-    if (start_caret_rect.y() == end_caret_rect.y()) {
-      first_rect = IntRect(std::min(start_caret_rect.x(), end_caret_rect.x()),
-                           start_caret_rect.y(),
-                           abs(end_caret_rect.x() - start_caret_rect.x()),
-                           max(start_caret_rect.height(),
-                               end_caret_rect.height()));
-    } else {
-      first_rect = IntRect(start_caret_rect.x(), start_caret_rect.y(),
-                           start_caret_rect.width() + extra_width_to_EOL,
-                           start_caret_rect.height());
-    }
-    location = IntPoint(right_aligned ? first_rect.right() :
-                            first_rect.x(), first_rect.bottom());
+
+    RefPtr<Range> selection = main_frame->selection()->toRange();
+    IntRect first_rect = main_frame->firstRectForRange(selection.get());
+
+    int x = right_aligned ? first_rect.right() : first_rect.x();
+    location = IntPoint(x, first_rect.bottom());
   }
 
   location = view->contentsToWindow(location);
@@ -444,8 +609,8 @@ bool WebViewImpl::SendContextMenuEvent(const WebKeyboardEvent& event) {
   focused_frame->view()->setCursor(pointerCursor());
   WebMouseEvent mouse_event;
   mouse_event.button = WebMouseEvent::BUTTON_RIGHT;
-  mouse_event.x = coords.x;
-  mouse_event.y = coords.y;
+  mouse_event.x = coords.x();
+  mouse_event.y = coords.y();
   mouse_event.type = WebInputEvent::MOUSE_UP;
 
   MakePlatformMouseEvent platform_event(view, mouse_event);
@@ -578,11 +743,7 @@ bool WebViewImpl::ScrollViewWithKeyboard(int key_code) {
 }
 
 Frame* WebViewImpl::GetFocusedWebCoreFrame() {
-  if (!main_frame_ || !main_frame_->frame())
-    return NULL;
-
-  return
-    main_frame_->frame()->page()->focusController()->focusedOrMainFrame();
+  return page_.get() ? page_->focusController()->focusedOrMainFrame() : NULL;
 }
 
 // static
@@ -608,14 +769,13 @@ void WebViewImpl::Close() {
   // initiator of the close.
   delegate_ = NULL;
 
-  // Initiate shutdown for the entire frameset.
-  if (main_frame_) {
-    // This will cause a lot of notifications to be sent.
-    main_frame_->frame()->loader()->frameDetached();
-    main_frame_ = NULL;
+  if (page_.get()) {
+    // Initiate shutdown for the entire frameset.  This will cause a lot of
+    // notifications to be sent.
+    if (page_->mainFrame())
+      page_->mainFrame()->loader()->frameDetached();
+    page_.reset();
   }
-
-  page_.reset();
 }
 
 WebViewDelegate* WebViewImpl::GetDelegate() {
@@ -623,7 +783,7 @@ WebViewDelegate* WebViewImpl::GetDelegate() {
 }
 
 WebFrame* WebViewImpl::GetMainFrame() {
-  return main_frame_.get();
+  return main_frame();
 }
 
 WebFrame* WebViewImpl::GetFocusedFrame() {
@@ -636,7 +796,7 @@ void WebViewImpl::SetFocusedFrame(WebFrame* frame) {
     // Clears the focused frame if any.
     Frame* frame = GetFocusedWebCoreFrame();
     if (frame)
-      frame->selectionController()->setFocused(false);
+      frame->selection()->setFocused(false);
     return;
   }
   WebFrameImpl* frame_impl = static_cast<WebFrameImpl*>(frame);
@@ -646,7 +806,7 @@ void WebViewImpl::SetFocusedFrame(WebFrame* frame) {
 
 WebFrame* WebViewImpl::GetFrameWithName(const std::wstring& name) {
   String name_str = webkit_glue::StdWStringToString(name);
-  Frame* frame = main_frame_->frame()->tree()->find(name_str);
+  Frame* frame = page_->mainFrame()->tree()->find(name_str);
   return frame ? WebFrameImpl::FromFrame(frame) : NULL;
 }
 
@@ -669,9 +829,9 @@ void WebViewImpl::Resize(const gfx::Size& new_size) {
     return;
   size_ = new_size;
 
-  if (main_frame_->frameview()) {
-    main_frame_->frameview()->resize(size_.width(), size_.height());
-    main_frame_->frame()->sendResizeEvent();
+  if (main_frame()->frameview()) {
+    main_frame()->frameview()->resize(size_.width(), size_.height());
+    main_frame()->frame()->sendResizeEvent();
   }
 
   if (delegate_) {
@@ -681,27 +841,29 @@ void WebViewImpl::Resize(const gfx::Size& new_size) {
 }
 
 void WebViewImpl::Layout() {
-  if (main_frame_) {
+  WebFrameImpl* webframe = main_frame();
+  if (webframe) {
     // In order for our child HWNDs (NativeWindowWidgets) to update properly,
     // they need to be told that we are updating the screen.  The problem is
     // that the native widgets need to recalculate their clip region and not
     // overlap any of our non-native widgets.  To force the resizing, call
-    // setFrameGeometry().  This will be a quick operation for most frames, but
+    // setFrameRect().  This will be a quick operation for most frames, but
     // the NativeWindowWidgets will update a proper clipping region.
-    FrameView* frameview = main_frame_->frameview();
-    if (frameview)
-      frameview->setFrameGeometry(frameview->frameGeometry());
+    FrameView* view = webframe->frameview();
+    if (view)
+      view->setFrameRect(view->frameRect());
 
-    // setFrameGeometry may have the side-effect of causing existing page
+    // setFrameRect may have the side-effect of causing existing page
     // layout to be invalidated, so layout needs to be called last.
 
-    main_frame_->Layout();
+    webframe->Layout();
   }
 }
 
-void WebViewImpl::Paint(gfx::PlatformCanvas* canvas, const gfx::Rect& rect) {
-  if (main_frame_)
-    main_frame_->Paint(canvas, rect);
+void WebViewImpl::Paint(skia::PlatformCanvas* canvas, const gfx::Rect& rect) {
+  WebFrameImpl* webframe = main_frame();
+  if (webframe)
+    webframe->Paint(canvas, rect);
 }
 
 // TODO(eseidel): g_current_input_event should be removed once
@@ -714,7 +876,6 @@ bool WebViewImpl::HandleInputEvent(const WebInputEvent* input_event) {
   // we're done.
   if (doing_drag_and_drop_)
     return true;
-
   // TODO(eseidel): Remove g_current_input_event.
   // This only exists to allow ChromeClient::show() to know which mouse button
   // triggered a window.open event.
@@ -773,7 +934,7 @@ void WebViewImpl::MouseCaptureLost() {
 // TODO(darin): these navigation methods should be killed
 
 void WebViewImpl::StopLoading() {
-  main_frame_->StopLoading();
+  main_frame()->StopLoading();
 }
 
 void WebViewImpl::SetBackForwardListSize(int size) {
@@ -786,33 +947,33 @@ void WebViewImpl::SetFocus(bool enable) {
     // frame as the focused frame if it is not already focused.  Otherwise, if
     // there is already a focused frame, then this does nothing.
     GetFocusedFrame();
-    if (main_frame_ && main_frame_->frame()) {
-      Frame* frame = main_frame_->frame();
-      if (!frame->selectionController()->isFocusedAndActive()) {
+    if (page_.get() && page_->mainFrame()) {
+      Frame* frame = page_->mainFrame();
+      if (!frame->selection()->isFocusedAndActive()) {
         // No one has focus yet, try to restore focus.
         RestoreFocus();
-        frame->page()->focusController()->setActive(true);
+        page_->focusController()->setActive(true);
       }
-      Frame* focused_frame =
-          frame->page()->focusController()->focusedOrMainFrame();
-      frame->selectionController()->setFocused(frame == focused_frame);
+      Frame* focused_frame = page_->focusController()->focusedOrMainFrame();
+      frame->selection()->setFocused(frame == focused_frame);
     }
     ime_accept_events_ = true;
   } else {
+    HideAutoCompletePopup();
+
     // Clear out who last had focus. If someone has focus, the refs will be
     // updated below.
     ReleaseFocusReferences();
 
     // Clear focus on the currently focused frame if any.
-
-    if (!main_frame_)
+    if (!page_.get())
       return;
 
-    Frame* frame = main_frame_->frame();
+    Frame* frame = page_->mainFrame();
     if (!frame)
       return;
 
-    RefPtr<Frame> focused = frame->page()->focusController()->focusedFrame();
+    RefPtr<Frame> focused = page_->focusController()->focusedFrame();
     if (focused.get()) {
       // Update the focus refs, this way we can give focus back appropriately.
       // It's entirely possible to have a focused document, but not a focused
@@ -829,7 +990,8 @@ void WebViewImpl::SetFocus(bool enable) {
           // document->setFocusedNode(NULL);
         }
       }
-      frame->page()->focusController()->setFocusedFrame(0);
+      page_->focusController()->setFocusedFrame(0);
+
       // Finish an ongoing composition to delete the composition node.
       Editor* editor = focused->editor();
       if (editor && editor->hasComposition())
@@ -838,7 +1000,7 @@ void WebViewImpl::SetFocus(bool enable) {
     }
     // Make sure the main frame doesn't think it has focus.
     if (frame != focused.get())
-      frame->selectionController()->setFocused(false);
+      frame->selection()->setFocused(false);
   }
 }
 
@@ -968,7 +1130,7 @@ bool WebViewImpl::ImeUpdateStatus(bool* enable_ime,
   const Editor* editor = focused->editor();
   if (!editor || !editor->canEdit())
     return false;
-  const SelectionController* controller = focused->selectionController();
+  const SelectionController* controller = focused->selection();
   if (!controller)
     return false;
   const Node* node = controller->start().node();
@@ -979,7 +1141,7 @@ bool WebViewImpl::ImeUpdateStatus(bool* enable_ime,
   const FrameView* view = node->document()->view();
   if (!view)
     return false;
-  const IntRect rect(view->contentsToWindow(controller->caretRect()));
+  const IntRect rect(view->contentsToWindow(controller->localCaretRect()));
   caret_rect->SetRect(rect.x(), rect.y(), rect.width(), rect.height());
   return true;
 }
@@ -1012,44 +1174,19 @@ void WebViewImpl::SetInitialFocus(bool reverse) {
     keyboard_event.type = WebInputEvent::KEY_DOWN;
     if (reverse)
       keyboard_event.modifiers = WebInputEvent::SHIFT_KEY;
-#if defined(OS_WIN)
-    keyboard_event.key_code = VK_TAB;
-#endif
-    keyboard_event.key_data = L'\t';
+    // VK_TAB which is only defined on Windows.
+    keyboard_event.key_code = 0x09;
     MakePlatformKeyboardEvent platform_event(keyboard_event);
     // We have to set the key type explicitly to avoid an assert in the
     // KeyboardEvent constructor.
     platform_event.SetKeyType(PlatformKeyboardEvent::RawKeyDown);
-    KeyboardEvent webkit_event(platform_event, NULL);
+    RefPtr<KeyboardEvent> webkit_event = KeyboardEvent::create(platform_event,
+                                                               NULL);
     page()->focusController()->setInitialFocus(
         reverse ? WebCore::FocusDirectionBackward :
                   WebCore::FocusDirectionForward,
-        &webkit_event);
+        webkit_event.get());
   }
-}
-
-bool WebViewImpl::FocusedFrameNeedsSpellchecking() {
-  const WebCore::Frame* frame = GetFocusedWebCoreFrame();
-  if (!frame)
-    return false;
-  const WebCore::Editor* editor = frame->editor();
-  if (!editor)
-    return false;
-  const WebCore::Document* document = frame->document();
-  if (!document)
-    return false;
-  const WebCore::Node* node = document->focusedNode();
-  if (!node)
-    return false;
-  const WebCore::RenderObject* renderer = node->renderer();
-  if (!renderer)
-    return false;
-  // We should also retrieve the contenteditable attribute of this element to
-  // determine if this element needs spell-checking.
-  const WebCore::EUserModify user_modify = renderer->style()->userModify();
-  return (renderer->isTextArea() && editor->canEdit()) ||
-         user_modify == WebCore::READ_WRITE ||
-         user_modify == WebCore::READ_WRITE_PLAINTEXT_ONLY;
 }
 
 // Releases references used to restore focus.
@@ -1061,7 +1198,7 @@ void WebViewImpl::ReleaseFocusReferences() {
 }
 
 bool WebViewImpl::DownloadImage(int id, const GURL& image_url, int image_size) {
-  if (!main_frame_ || !main_frame_->frame())
+  if (!page_.get())
     return false;
   image_fetchers_.insert(
       new ImageResourceFetcher(this, id, image_url, image_size));
@@ -1123,23 +1260,17 @@ void WebViewImpl::SetPreferences(const WebPreferences& preferences) {
   // change this, since it would break existing rich text editors.
   settings->setEditableLinkBehavior(WebCore::EditableLinkNeverLive);
 
-  settings->setUsesDashboardBackwardCompatibilityMode(
-      preferences.dashboard_compatibility_mode);
   settings->setFontRenderingMode(NormalRenderingMode);
   settings->setJavaEnabled(preferences.java_enabled);
+
+  // Turn this on to cause WebCore to paint the resize corner for us.
+  settings->setShouldPaintCustomScrollbars(true);
 
 #if defined(OS_WIN)
   // RenderTheme is a singleton that needs to know the default font size to
   // draw some form controls.  We let it know each time the size changes.
   WebCore::RenderThemeWin::setDefaultFontSize(preferences.default_font_size);
 #endif
-
-  // Used to make sure if the frameview needs layout, layout is triggered
-  // during Document::updateLayout().  TODO(tc): See bug 1199269 for more
-  // details.
-  FrameView* frameview = main_frame()->frameview();
-  if (frameview && frameview->needsLayout())
-    frameview->setNeedsLayout();
 }
 
 const WebPreferences& WebViewImpl::GetPreferences() {
@@ -1149,61 +1280,66 @@ const WebPreferences& WebViewImpl::GetPreferences() {
 // Set the encoding of the current main frame to the one selected by
 // a user in the encoding menu.
 void WebViewImpl::SetPageEncoding(const std::wstring& encoding_name) {
-  if (!main_frame_)
+  if (!page_.get())
     return;
 
   if (!encoding_name.empty()) {
     // only change override encoding, don't change default encoding
     // TODO(brettw) use std::string for encoding names.
     String new_encoding_name(webkit_glue::StdWStringToString(encoding_name));
-    main_frame_->frame()->loader()->reloadAllowingStaleData(new_encoding_name);
+    page_->mainFrame()->loader()->reloadAllowingStaleData(new_encoding_name);
   }
 }
 
 // Return the canonical encoding name of current main webframe in webview.
 std::wstring WebViewImpl::GetMainFrameEncodingName() {
-  if (!main_frame_)
-    return std::wstring(L"");
+  if (!page_.get())
+    return std::wstring();
 
-  String encoding_name = main_frame_->frame()->loader()->encoding();
+  String encoding_name = page_->mainFrame()->loader()->encoding();
   return webkit_glue::StringToStdWString(encoding_name);
 }
 
-void WebViewImpl::MakeTextLarger() {
+void WebViewImpl::ZoomIn(bool text_only) {
   Frame* frame = main_frame()->frame();
   double multiplier = std::min(std::pow(kTextSizeMultiplierRatio,
-                                        text_zoom_level_ + 1),
+                                        zoom_level_ + 1),
                                kMaxTextSizeMultiplier);
-  int zoom_factor = static_cast<int>(100.0 * multiplier);
+  float zoom_factor = static_cast<float>(multiplier);
   if (zoom_factor != frame->zoomFactor()) {
-    ++text_zoom_level_;
-    frame->setZoomFactor(zoom_factor);
+    ++zoom_level_;
+    frame->setZoomFactor(zoom_factor, text_only);
   }
 }
 
-void WebViewImpl::MakeTextSmaller() {
+void WebViewImpl::ZoomOut(bool text_only) {
   Frame* frame = main_frame()->frame();
   double multiplier = std::max(std::pow(kTextSizeMultiplierRatio,
-                                        text_zoom_level_ - 1),
+                                        zoom_level_ - 1),
                                kMinTextSizeMultiplier);
-  int zoom_factor = static_cast<int>(100.0 * multiplier);
+  float zoom_factor = static_cast<float>(multiplier);
   if (zoom_factor != frame->zoomFactor()) {
-    --text_zoom_level_;
-    frame->setZoomFactor(zoom_factor);
+    --zoom_level_;
+    frame->setZoomFactor(zoom_factor, text_only);
   }
 }
 
-void WebViewImpl::MakeTextStandardSize() {
-  text_zoom_level_ = 0;
-  main_frame()->frame()->setZoomFactor(100);
+void WebViewImpl::ResetZoom() {
+  // We don't change the zoom mode (text only vs. full page) here. We just want
+  // to reset whatever is already set.
+  zoom_level_ = 0;
+  main_frame()->frame()->setZoomFactor(
+      1.0f,
+      main_frame()->frame()->isZoomFactorTextOnly());
 }
 
 void WebViewImpl::CopyImageAt(int x, int y) {
+  if (!page_.get())
+    return;
+
   IntPoint point = IntPoint(x, y);
 
-  Frame* frame = main_frame_->frame();
-  if (!frame)
-    return;
+  Frame* frame = page_->mainFrame();
 
   HitTestResult result =
       frame->eventHandler()->hitTestResultAtPoint(point, false);
@@ -1223,14 +1359,16 @@ void WebViewImpl::CopyImageAt(int x, int y) {
 }
 
 void WebViewImpl::InspectElement(int x, int y) {
+  if (!page_.get())
+    return;
+
   if (x == -1 || y == -1) {
     page_->inspectorController()->inspect(NULL);
   } else {
     IntPoint point = IntPoint(x, y);
     HitTestResult result(point);
 
-    if (Frame* frame = main_frame_->frame())
-      result = frame->eventHandler()->hitTestResultAtPoint(point, false);
+    result = page_->mainFrame()->eventHandler()->hitTestResultAtPoint(point, false);
 
     if (!result.innerNonSharedNode())
       return;
@@ -1240,7 +1378,7 @@ void WebViewImpl::InspectElement(int x, int y) {
 }
 
 void WebViewImpl::ShowJavaScriptConsole() {
-  page_->inspectorController()->showConsole();
+  page_->inspectorController()->showPanel(InspectorController::ConsolePanel);
 }
 
 void WebViewImpl::DragSourceEndedAt(
@@ -1249,8 +1387,7 @@ void WebViewImpl::DragSourceEndedAt(
                          IntPoint(screen_x, screen_y),
                          NoButton, MouseEventMoved, 0, false, false, false,
                          false, 0);
-  main_frame_->frame()->eventHandler()->dragSourceEndedAt(pme,
-      DragOperationCopy);
+  page_->mainFrame()->eventHandler()->dragSourceEndedAt(pme, DragOperationCopy);
 }
 
 void WebViewImpl::DragSourceMovedTo(
@@ -1259,7 +1396,7 @@ void WebViewImpl::DragSourceMovedTo(
                          IntPoint(screen_x, screen_y),
                          LeftButton, MouseEventMoved, 0, false, false, false,
                          false, 0);
-  main_frame_->frame()->eventHandler()->dragSourceMovedTo(pme);
+  page_->mainFrame()->eventHandler()->dragSourceMovedTo(pme);
 }
 
 void WebViewImpl::DragSourceSystemDragEnded() {
@@ -1272,20 +1409,10 @@ bool WebViewImpl::DragTargetDragEnter(const WebDropData& drop_data,
     int client_x, int client_y, int screen_x, int screen_y) {
   DCHECK(!current_drop_data_.get());
 
-  // Copy drop_data into current_drop_data_.
-  WebDropData* drop_data_copy = new WebDropData;
-  *drop_data_copy = drop_data;
-  current_drop_data_.reset(drop_data_copy);
+  current_drop_data_ = webkit_glue::WebDropDataToChromiumDataObject(drop_data);
 
-#if defined(OS_WIN)
-  DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
-      IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
-      kDropTargetOperation);
-#elif defined(OS_MACOSX)
-  DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
-      IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
-      kDropTargetOperation, nil);
-#endif
+  DragData drag_data(current_drop_data_.get(), IntPoint(client_x, client_y),
+      IntPoint(screen_x, screen_y), kDropTargetOperation);
   DragOperation effect = page_->dragController()->dragEntered(&drag_data);
   return effect != DragOperationNone;
 }
@@ -1293,58 +1420,34 @@ bool WebViewImpl::DragTargetDragEnter(const WebDropData& drop_data,
 bool WebViewImpl::DragTargetDragOver(
     int client_x, int client_y, int screen_x, int screen_y) {
   DCHECK(current_drop_data_.get());
-#if defined(OS_WIN)
-  DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
-      IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
-      kDropTargetOperation);
-#elif defined(OS_MACOSX)
-  DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
-      IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
-      kDropTargetOperation, nil);
-#endif
+  DragData drag_data(current_drop_data_.get(), IntPoint(client_x, client_y),
+      IntPoint(screen_x, screen_y), kDropTargetOperation);
   DragOperation effect = page_->dragController()->dragUpdated(&drag_data);
   return effect != DragOperationNone;
 }
 
 void WebViewImpl::DragTargetDragLeave() {
   DCHECK(current_drop_data_.get());
-#if defined(OS_WIN)
-  DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
-      IntPoint(), IntPoint(), DragOperationNone);
-#elif defined(OS_MACOSX)
-  DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
-      IntPoint(), IntPoint(), DragOperationNone, nil);
-#endif
+  DragData drag_data(current_drop_data_.get(), IntPoint(), IntPoint(),
+                     DragOperationNone);
   page_->dragController()->dragExited(&drag_data);
-  current_drop_data_.reset(NULL);
+  current_drop_data_ = NULL;
 }
 
 void WebViewImpl::DragTargetDrop(
     int client_x, int client_y, int screen_x, int screen_y) {
   DCHECK(current_drop_data_.get());
-#if defined(OS_WIN)
-  DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
-      IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
-      kDropTargetOperation);
-#elif defined(OS_MACOSX)
-  DragData drag_data(reinterpret_cast<DragDataRef>(current_drop_data_.get()),
-      IntPoint(client_x, client_y), IntPoint(screen_x, screen_y),
-      kDropTargetOperation, nil);
-#endif
+  DragData drag_data(current_drop_data_.get(), IntPoint(client_x, client_y),
+      IntPoint(screen_x, screen_y), kDropTargetOperation);
   page_->dragController()->performDrag(&drag_data);
-  current_drop_data_.reset(NULL);
+  current_drop_data_ = NULL;
 }
 
 SearchableFormData* WebViewImpl::CreateSearchableFormDataForFocusedNode() {
-  if (!main_frame_)
+  if (!page_.get())
     return NULL;
 
-  Frame* frame = main_frame_->frame();
-  if (!frame)
-    return NULL;
-
-  if (RefPtr<Frame> focused =
-      frame->page()->focusController()->focusedFrame()) {
+  if (RefPtr<Frame> focused = page_->focusController()->focusedFrame()) {
     RefPtr<Document> document = focused->document();
     if (document.get()) {
       RefPtr<Node> focused_node = document->focusedNode();
@@ -1358,13 +1461,81 @@ SearchableFormData* WebViewImpl::CreateSearchableFormDataForFocusedNode() {
   return NULL;
 }
 
+void WebViewImpl::AutofillSuggestionsForNode(
+      int64 node_id,
+      const std::vector<std::wstring>& suggestions,
+      int default_suggestion_index) {
+  if (!page_.get() || suggestions.empty()) {
+    HideAutoCompletePopup();
+    return;
+  }
+
+  DCHECK(default_suggestion_index < static_cast<int>(suggestions.size()));
+
+  if (RefPtr<Frame> focused = page_->focusController()->focusedFrame()) {
+    RefPtr<Document> document = focused->document();
+    if (!document.get()) {
+      HideAutoCompletePopup();
+      return;
+    }
+
+    RefPtr<Node> focused_node = document->focusedNode();
+    // If the node for which we queried the autofill suggestions is not the
+    // focused node, then we have nothing to do.
+    // TODO(jcampan): also check the carret is at the end and that the text has
+    // not changed.
+    if (!focused_node.get() ||
+        reinterpret_cast<int64>(focused_node.get()) != node_id) {
+      HideAutoCompletePopup();
+      return;
+    }
+
+    if (!focused_node->hasTagName(WebCore::HTMLNames::inputTag)) {
+      NOTREACHED();
+      return;
+    }
+
+    WebCore::HTMLInputElement* input_elem =
+        static_cast<WebCore::HTMLInputElement*>(focused_node.get());
+    if (!autocomplete_popup_client_.get() ||
+        autocomplete_popup_client_->text_field() != input_elem) {
+      autocomplete_popup_client_ =
+          adoptRef(new AutocompletePopupMenuClient(this, input_elem,
+                                                   suggestions,
+                                                   default_suggestion_index));
+      // The autocomplete popup is not activated.  We need the page to still
+      // have focus so the user can keep typing when the popup is showing.
+      autocomplete_popup_ =
+          WebCore::PopupContainer::create(autocomplete_popup_client_.get(),
+                                          false);
+      autocomplete_popup_->setTextOnIndexChange(false);
+      autocomplete_popup_->setAcceptOnAbandon(false);
+      autocomplete_popup_->show(focused_node->getRect(), 
+                                page_->mainFrame()->view(), 0);
+    } else {
+      // There is already a popup, reuse it.
+      autocomplete_popup_client_->SetSuggestions(suggestions);
+      IntRect old_bounds = autocomplete_popup_->boundsRect();
+      autocomplete_popup_->refresh();
+      IntRect new_bounds = autocomplete_popup_->boundsRect();
+      // Let's resize the backing window if necessary.
+      if (old_bounds != new_bounds) {
+        WebWidgetImpl* web_widget =
+            static_cast<WebWidgetImpl*>(autocomplete_popup_->client());
+        web_widget->delegate()->SetWindowRect(
+            web_widget, webkit_glue::FromIntRect(new_bounds));
+      }
+    }
+  }
+}
+
 void WebViewImpl::DidCommitLoad(bool* is_new_navigation) {
   if (is_new_navigation)
     *is_new_navigation = observed_new_navigation_;
 
 #ifndef NDEBUG
   DCHECK(!observed_new_navigation_ ||
-    main_frame_->frame()->loader()->documentLoader() == new_navigation_loader_);
+    page_->mainFrame()->loader()->documentLoader() == new_navigation_loader_);
   new_navigation_loader_ = NULL;
 #endif
   observed_new_navigation_ = false;
@@ -1400,54 +1571,8 @@ void WebViewImpl::ImageResourceDownloadDone(ImageResourceFetcher* fetcher,
 //-----------------------------------------------------------------------------
 // WebCore::WidgetClientWin
 
-gfx::ViewHandle WebViewImpl::containingWindow() {
-  return delegate_ ? delegate_->GetContainingWindow(this) : NULL;
-}
-
-void WebViewImpl::invalidateRect(const IntRect& damaged_rect) {
-  if (delegate_)
-    delegate_->DidInvalidateRect(this, gfx::Rect(damaged_rect.x(),
-                                                 damaged_rect.y(),
-                                                 damaged_rect.width(),
-                                                 damaged_rect.height()));
-}
-
-void WebViewImpl::scrollRect(int dx, int dy, const IntRect& clip_rect) {
-  if (delegate_)
-    delegate_->DidScrollRect(this, dx, dy, gfx::Rect(clip_rect.x(),
-                                                     clip_rect.y(),
-                                                     clip_rect.width(),
-                                                     clip_rect.height()));
-}
-
-void WebViewImpl::popupOpened(WebCore::Widget* widget,
-                              const WebCore::IntRect& bounds) {
-  if (!delegate_)
-    return;
-
-  WebWidgetImpl* webwidget =
-      static_cast<WebWidgetImpl*>(delegate_->CreatePopupWidget(this));
-  webwidget->Init(widget, gfx::Rect(bounds.x(), bounds.y(),
-                                    bounds.width(), bounds.height()));
-}
-
-void WebViewImpl::popupClosed(WebCore::Widget* widget) {
-  NOTREACHED() << "popupClosed called on a non-popup";
-}
-
-void WebViewImpl::setCursor(const WebCore::Cursor& cursor) {
-#if defined(OS_WIN)
-  // TODO(pinkerton): figure out the cursor delegate methods
-  if (delegate_)
-    delegate_->SetCursor(this, cursor.impl());
-#endif
-}
-
-void WebViewImpl::setFocus() {
-  if (delegate_)
-    delegate_->Focus(this);
-}
-
+// TODO(darin): Figure out what to do with these methods.
+#if 0
 const SkBitmap* WebViewImpl::getPreloadedResourceBitmap(int resource_id) {
   if (!delegate_)
     return NULL;
@@ -1461,91 +1586,27 @@ void WebViewImpl::onScrollPositionChanged(WebCore::Widget* widget) {
     delegate_->OnNavStateChanged(this);
 }
 
-const WTF::Vector<RefPtr<WebCore::Range> >* WebViewImpl::getTickmarks(
-    WebCore::Frame* frame) {
-  DCHECK(frame);
-  WebFrameImpl* webframe_impl = WebFrameImpl::FromFrame(frame);
-  if (!webframe_impl)
-    return NULL;
-
-  return &webframe_impl->tickmarks();
-}
-
-size_t WebViewImpl::getActiveTickmarkIndex(WebCore::Frame* frame) {
-  DCHECK(frame);
-  WebFrameImpl* webframe_impl = WebFrameImpl::FromFrame(frame);
-  if (!webframe_impl)
-    return kNoTickmark;
-
-  // The mainframe can tell us if we are the frame with the active tick-mark.
-  if (webframe_impl != main_frame_->active_tickmark_frame())
-    return kNoTickmark;
-
-  return webframe_impl->active_tickmark_index();
-}
-
 bool WebViewImpl::isHidden() {
   if (!delegate_)
     return true;
 
   return delegate_->IsHidden();
 }
+#endif
 
-//-----------------------------------------------------------------------------
-// WebCore::BackForwardListClient
+void WebViewImpl::SetCurrentHistoryItem(WebCore::HistoryItem* item) {
+  back_forward_list_client_impl_.SetCurrentHistoryItem(item);
+}
 
-void WebViewImpl::didAddHistoryItem(WebCore::HistoryItem* item) {
-  // If WebCore adds a new HistoryItem, it means this is a new navigation
-  // (ie, not a reload or back/forward).
+WebCore::HistoryItem* WebViewImpl::GetPreviousHistoryItem() {
+  return back_forward_list_client_impl_.GetPreviousHistoryItem();
+}
+
+void WebViewImpl::ObserveNewNavigation() {
   observed_new_navigation_ = true;
 #ifndef NDEBUG
-  new_navigation_loader_ = main_frame_->frame()->loader()->documentLoader();
+  new_navigation_loader_ = page_->mainFrame()->loader()->documentLoader();
 #endif
-  delegate_->DidAddHistoryItem();
-}
-
-void WebViewImpl::willGoToHistoryItem(WebCore::HistoryItem* item) {
-  if (pending_history_item_) {
-    if (item == pending_history_item_->GetHistoryItem()) {
-      // Let the main frame know this HistoryItem is loading, so it can cache
-      // any ExtraData when the DataSource is created.
-      main_frame_->set_currently_loading_history_item(pending_history_item_);
-      pending_history_item_ = 0;
-    }
-  }
-}
-
-WebCore::HistoryItem* WebViewImpl::itemAtIndex(int index) {
-  if (!delegate_)
-    return NULL;
-
-  WebHistoryItem* item = delegate_->GetHistoryEntryAtOffset(index);
-  if (!item)
-    return NULL;
-
-  // If someone has asked for a history item, we probably want to navigate to
-  // it soon.  Keep track of it until willGoToHistoryItem is called.
-  pending_history_item_ = static_cast<WebHistoryItemImpl*>(item);
-  return pending_history_item_->GetHistoryItem();
-}
-
-void WebViewImpl::goToItemAtIndexAsync(int index) {
-  if (delegate_)
-    delegate_->GoToEntryAtOffsetAsync(index);
-}
-
-int WebViewImpl::backListCount() {
-  if (!delegate_)
-    return 0;
-
-  return delegate_->GetHistoryBackListCount();
-}
-
-int WebViewImpl::forwardListCount() {
-  if (!delegate_)
-    return 0;
-
-  return delegate_->GetHistoryForwardListCount();
 }
 
 void WebViewImpl::DeleteImageResourceFetcher(ImageResourceFetcher* fetcher) {
@@ -1555,4 +1616,24 @@ void WebViewImpl::DeleteImageResourceFetcher(ImageResourceFetcher* fetcher) {
   // We're in the callback from the ImageResourceFetcher, best to delay
   // deletion.
   MessageLoop::current()->DeleteSoon(FROM_HERE, fetcher);
+}
+
+void WebViewImpl::HideAutoCompletePopup() {
+  if (autocomplete_popup_) {
+    autocomplete_popup_->hidePopup();
+    autocomplete_popup_.clear();
+    autocomplete_popup_client_.clear();
+  }
+}
+
+Node* WebViewImpl::GetFocusedNode() {
+  Frame* frame = page_->focusController()->focusedFrame();
+  if (!frame)
+    return NULL;
+
+  Document* document = frame->document();
+  if (!document)
+    return NULL;
+
+  return document->focusedNode();
 }

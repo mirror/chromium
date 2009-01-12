@@ -157,11 +157,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\gfx\chrome_font.cc"
+				RelativePath=".\gfx\chrome_canvas_win.cc"
 				>
 			</File>
 			<File
 				RelativePath=".\gfx\chrome_font.h"
+				>
+			</File>
+			<File
+				RelativePath=".\gfx\chrome_font_win.cc"
 				>
 			</File>
 			<File
@@ -221,10 +225,6 @@
 			Name="ipc"
 			>
 			<File
-				RelativePath=".\ipc_channel.cc"
-				>
-			</File>
-			<File
 				RelativePath=".\ipc_channel.h"
 				>
 			</File>
@@ -234,6 +234,10 @@
 			</File>
 			<File
 				RelativePath=".\ipc_channel_proxy.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ipc_channel_win.cc"
 				>
 			</File>
 			<File
@@ -390,10 +394,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\clipboard_service.cc"
-			>
-		</File>
-		<File
 			RelativePath=".\clipboard_service.h"
 			>
 		</File>
@@ -542,6 +542,10 @@
 			>
 		</File>
 		<File
+			RelativePath=".\page_zoom.h"
+			>
+		</File>
+		<File
 			RelativePath="..\tools\build\win\precompiled.cc"
 			>
 			<FileConfiguration
@@ -590,6 +594,14 @@
 			>
 		</File>
 		<File
+			RelativePath=".\property_bag.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\property_bag.h"
+			>
+		</File>
+		<File
 			RelativePath=".\ref_counted_util.h"
 			>
 		</File>
@@ -607,6 +619,14 @@
 		</File>
 		<File
 			RelativePath=".\resource_dispatcher.h"
+			>
+		</File>
+		<File
+			RelativePath=".\sandbox_init_wrapper.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\sandbox_init_wrapper.h"
 			>
 		</File>
 		<File
@@ -658,10 +678,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\text_zoom.h"
-			>
-		</File>
-		<File
 			RelativePath=".\throb_animation.cc"
 			>
 		</File>
@@ -683,6 +699,14 @@
 		</File>
 		<File
 			RelativePath=".\time_format.h"
+			>
+		</File>
+		<File
+			RelativePath=".\unzip.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\unzip.h"
 			>
 		</File>
 		<File

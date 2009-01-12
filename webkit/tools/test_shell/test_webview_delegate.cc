@@ -8,10 +8,7 @@
 
 #include "webkit/tools/test_shell/test_webview_delegate.h"
 
-#include <objidl.h>
-#include <shlobj.h>
-#include <shlwapi.h>
-
+#include "base/file_util.h"
 #include "base/gfx/point.h"
 #include "base/message_loop.h"
 #include "base/string_util.h"
@@ -26,16 +23,29 @@
 #include "webkit/glue/webkit_glue.h"
 #include "webkit/glue/webview.h"
 #include "webkit/glue/plugins/plugin_list.h"
-#include "webkit/glue/plugins/webplugin_delegate_impl.h"
 #include "webkit/glue/window_open_disposition.h"
-#include "webkit/tools/test_shell/drag_delegate.h"
-#include "webkit/tools/test_shell/drop_delegate.h"
 #include "webkit/tools/test_shell/test_navigation_controller.h"
 #include "webkit/tools/test_shell/test_shell.h"
 
+#if defined(OS_WIN)
+// TODO(port): make these files work everywhere.
+#include "webkit/glue/plugins/webplugin_delegate_impl.h"
+#include "webkit/tools/test_shell/drag_delegate.h"
+#include "webkit/tools/test_shell/drop_delegate.h"
+#endif
+
 namespace {
 
-static int next_page_id_ = 1;
+// WebNavigationType debugging strings taken from PolicyDelegate.mm.
+const char* kLinkClickedString = "link clicked";
+const char* kFormSubmittedString = "form submitted";
+const char* kBackForwardString = "back/forward";
+const char* kReloadString = "reload";
+const char* kFormResubmittedString = "form resubmitted";
+const char* kOtherString = "other";
+const char* kIllegalString = "illegal value";
+
+int next_page_id_ = 1;
 
 // Used to write a platform neutral file:/// URL by only taking the filename
 // (e.g., converts "file:///tmp/foo.txt" to just "foo.txt").
@@ -43,72 +53,49 @@ std::wstring UrlSuitableForTestResult(const std::wstring& url) {
   if (url.empty() || std::wstring::npos == url.find(L"file://"))
     return url;
 
-  return PathFindFileNameW(url.c_str());
+  std::wstring filename = file_util::GetFilenameFromPath(url);
+  if (filename.empty())
+    return L"file:";  // A WebKit test has this in its expected output.
+  return filename;
 }
 
 // Adds a file called "DRTFakeFile" to |data_object| (CF_HDROP).  Use to fake
 // dragging a file.
-void AddDRTFakeFileToDataObject(IDataObject* data_object) {
-  STGMEDIUM medium = {0};
-  medium.tymed = TYMED_HGLOBAL;
+void AddDRTFakeFileToDataObject(WebDropData* drop_data) {
+  drop_data->filenames.push_back(L"DRTFakeFile");
+}
 
-  const char filename[] = "DRTFakeFile";
-  const int filename_len = arraysize(filename);
-
-  // Allocate space for the DROPFILES struct, filename, and 2 null characters.
-  medium.hGlobal = GlobalAlloc(GPTR, sizeof(DROPFILES) + filename_len + 2);
-  DCHECK(medium.hGlobal);
-  DROPFILES* drop_files = static_cast<DROPFILES*>(GlobalLock(medium.hGlobal));
-  drop_files->pFiles = sizeof(DROPFILES);
-  drop_files->fWide = 0;  // Filenames are ascii
-  strcpy_s(reinterpret_cast<char*>(drop_files) + sizeof(DROPFILES),
-           filename_len, filename);
-  GlobalUnlock(medium.hGlobal);
-
-  FORMATETC file_desc_fmt = {CF_HDROP, 0, DVASPECT_CONTENT, -1, TYMED_HGLOBAL};
-  data_object->SetData(&file_desc_fmt, &medium, TRUE);
+// Get a debugging string from a WebNavigationType.
+const char* WebNavigationTypeToString(WebNavigationType type) {
+  switch (type) {
+    case WebNavigationTypeLinkClicked:
+      return kLinkClickedString;
+    case WebNavigationTypeFormSubmitted:
+      return kFormSubmittedString;
+    case WebNavigationTypeBackForward:
+      return kBackForwardString;
+    case WebNavigationTypeReload:
+      return kReloadString;
+    case WebNavigationTypeFormResubmitted:
+      return kFormResubmittedString;
+    case WebNavigationTypeOther:
+      return kOtherString;
+  }
+  return kIllegalString;
 }
 
 }  // namespace
 
 // WebViewDelegate -----------------------------------------------------------
 
-TestWebViewDelegate::~TestWebViewDelegate() {
-  if (custom_cursor_)
-    DestroyIcon(custom_cursor_);
-  RevokeDragDrop(shell_->webViewWnd());
-}
-
 WebView* TestWebViewDelegate::CreateWebView(WebView* webview,
                                             bool user_gesture) {
   return shell_->CreateWebView(webview);
 }
 
-WebWidget* TestWebViewDelegate::CreatePopupWidget(WebView* webview) {
+WebWidget* TestWebViewDelegate::CreatePopupWidget(WebView* webview,
+                                                  bool activatable) {
   return shell_->CreatePopupWidget(webview);
-}
-
-WebPluginDelegate* TestWebViewDelegate::CreatePluginDelegate(
-    WebView* webview,
-    const GURL& url,
-    const std::string& mime_type,
-    const std::string& clsid,
-    std::string* actual_mime_type) {
-  HWND hwnd = GetContainingWindow(webview);
-  if (!hwnd)
-    return NULL;
-
-  bool allow_wildcard = true;
-  WebPluginInfo info;
-  if (!NPAPI::PluginList::Singleton()->GetPluginInfo(url, mime_type, clsid,
-                                                     allow_wildcard, &info,
-                                                     actual_mime_type))
-    return NULL;
-
-  if (actual_mime_type && !actual_mime_type->empty())
-    return WebPluginDelegateImpl::Create(info.file, *actual_mime_type, hwnd);
-  else
-    return WebPluginDelegateImpl::Create(info.file, mime_type, hwnd);
 }
 
 void TestWebViewDelegate::OpenURL(WebView* webview, const GURL& url,
@@ -117,25 +104,17 @@ void TestWebViewDelegate::OpenURL(WebView* webview, const GURL& url,
   DCHECK_NE(disposition, CURRENT_TAB);  // No code for this
   if (disposition == SUPPRESS_OPEN)
     return;
-  TestShell* shell;
+  TestShell* shell = NULL;
   if (TestShell::CreateNewWindow(UTF8ToWide(url.spec()), &shell))
     shell->Show(shell->webView(), disposition);
 }
 
 void TestWebViewDelegate::DidStartLoading(WebView* webview) {
-  if (page_is_loading_) {
-    LOG(ERROR) << "DidStartLoading called while loading";
-    return;
-  }
-  page_is_loading_ = true;
+  // Ignored
 }
 
 void TestWebViewDelegate::DidStopLoading(WebView* webview) {
-  if (!page_is_loading_) {
-    LOG(ERROR) << "DidStopLoading called while not loading";
-    return;
-  }
-  page_is_loading_ = false;
+  // Ignored
 }
 
 void TestWebViewDelegate::WindowObjectCleared(WebFrame* webframe) {
@@ -151,14 +130,15 @@ WindowOpenDisposition TestWebViewDelegate::DispositionForNavigationAction(
     bool is_redirect) {
   if (is_custom_policy_delegate_) {
     std::wstring frame_name = frame->GetName();
-    printf("Policy delegate: attempt to load %s\n",
-        request->GetURL().spec().c_str());
+    printf("Policy delegate: attempt to load %s with navigation type '%s'\n",
+           request->GetURL().spec().c_str(), WebNavigationTypeToString(type));
     return IGNORE_ACTION;
   } else {
     return WebViewDelegate::DispositionForNavigationAction(
       webview, frame, request, type, disposition, is_redirect);
   }
 }
+
 
 void TestWebViewDelegate::SetCustomPolicyDelegate(bool isCustom) {
   is_custom_policy_delegate_ = isCustom;
@@ -230,6 +210,12 @@ void TestWebViewDelegate::DidStartProvisionalLoadForFrame(
   if (!top_loading_frame_) {
     top_loading_frame_ = frame;
   }
+
+  if (shell_->layout_test_controller()->StopProvisionalFrameLoads()) {
+    printf("%S - stopping load in didStartProvisionalLoadForFrame callback\n",
+           GetFrameDescription(frame).c_str());
+    frame->StopLoading();
+  }
   UpdateAddressBar(webview);
 }
 
@@ -253,13 +239,11 @@ void TestWebViewDelegate::DidFailProvisionalLoadWithError(
            GetFrameDescription(frame).c_str());
   }
 
-  if (page_is_loading_)
-    DidStopLoading(webview);
   LocationChangeDone(frame->GetProvisionalDataSource());
 
   // Don't display an error page if we're running layout tests, because
   // DumpRenderTree doesn't.
-  if (!shell_->interactive())
+  if (shell_->layout_test_mode())
     return;
 
   // Don't display an error page if this is simply a cancelled load.  Aside
@@ -274,10 +258,11 @@ void TestWebViewDelegate::DidFailProvisionalLoadWithError(
   bool replace = extra_data && extra_data->pending_page_id != -1;
 
   scoped_ptr<WebRequest> request(failed_request.Clone());
-  request->SetURL(GURL("testshell-error:"));
 
   std::string error_text =
-      StringPrintf("Error loading url: %d", error.GetErrorCode());
+      StringPrintf("Error %d when loading url %s", error.GetErrorCode(),
+      request->GetURL().spec().c_str());
+  request->SetURL(GURL("testshell-error:"));
 
   frame->LoadAlternateHTMLString(request.get(), error_text,
                                  error.GetFailedURL(), replace);
@@ -305,6 +290,8 @@ void TestWebViewDelegate::DidReceiveTitle(WebView* webview,
   if (shell_->ShouldDumpTitleChanges()) {
     printf("TITLE CHANGED: %S\n", title.c_str());
   }
+
+  SetPageTitle(title);
 }
 
 void TestWebViewDelegate::DidFinishLoadForFrame(WebView* webview,
@@ -327,8 +314,6 @@ void TestWebViewDelegate::DidFailLoadWithError(WebView* webview,
            GetFrameDescription(frame).c_str());
   }
 
-  if (page_is_loading_)
-    DidStopLoading(webview);
   LocationChangeDone(frame->GetDataSource());
 }
 
@@ -337,6 +322,12 @@ void TestWebViewDelegate::DidFinishDocumentLoadForFrame(WebView* webview,
   if (shell_->ShouldDumpFrameLoadCallbacks()) {
     printf("%S - didFinishDocumentLoadForFrame\n",
            GetFrameDescription(frame).c_str());
+  } else {
+    unsigned pending_unload_events = frame->PendingFrameUnloadEventCount();
+    if (pending_unload_events) {
+      printf("%S - has %u onunload handler(s)\n",
+          GetFrameDescription(frame).c_str(), pending_unload_events);
+    }
   }
 }
 
@@ -390,7 +381,7 @@ void TestWebViewDelegate::AddMessageToConsole(WebView* webview,
                                               const std::wstring& message,
                                               unsigned int line_no,
                                               const std::wstring& source_id) {
-  if (shell_->interactive()) {
+  if (!shell_->layout_test_mode()) {
     logging::LogMessage("CONSOLE", 0).stream() << "\"" 
                                                << message.c_str() 
                                                << ",\" source: " 
@@ -406,7 +397,7 @@ void TestWebViewDelegate::AddMessageToConsole(WebView* webview,
       size_t file_protocol = new_message.find(L"file://");
       if (file_protocol != std::wstring::npos) {
         new_message = new_message.substr(0, file_protocol) +
-            UrlSuitableForTestResult(new_message);
+            UrlSuitableForTestResult(new_message.substr(file_protocol));
       }
     }
 
@@ -417,11 +408,8 @@ void TestWebViewDelegate::AddMessageToConsole(WebView* webview,
 
 void TestWebViewDelegate::RunJavaScriptAlert(WebView* webview,
                                              const std::wstring& message) {
-  if (shell_->interactive()) {
-    MessageBox(shell_->mainWnd(),
-               message.c_str(), 
-               L"JavaScript Alert", 
-               MB_OK);
+  if (!shell_->layout_test_mode()) {
+    ShowJavaScriptAlert(message);
   } else {
     std::string utf8 = WideToUTF8(message);
     printf("ALERT: %s\n", utf8.c_str());
@@ -430,7 +418,7 @@ void TestWebViewDelegate::RunJavaScriptAlert(WebView* webview,
 
 bool TestWebViewDelegate::RunJavaScriptConfirm(WebView* webview,
                                                const std::wstring& message) {
-  if (!shell_->interactive()) {
+  if (shell_->layout_test_mode()) {
     // When running tests, write to stdout.
     std::string utf8 = WideToUTF8(message);
     printf("CONFIRM: %s\n", utf8.c_str());
@@ -442,7 +430,7 @@ bool TestWebViewDelegate::RunJavaScriptConfirm(WebView* webview,
 bool TestWebViewDelegate::RunJavaScriptPrompt(WebView* webview,
     const std::wstring& message, const std::wstring& default_value,
     std::wstring* result) {
-  if (!shell_->interactive()) {
+  if (shell_->layout_test_mode()) {
     // When running tests, write to stdout.
     std::string utf8_message = WideToUTF8(message);
     std::string utf8_default_value = WideToUTF8(default_value);
@@ -455,25 +443,27 @@ bool TestWebViewDelegate::RunJavaScriptPrompt(WebView* webview,
 
 void TestWebViewDelegate::StartDragging(WebView* webview,
                                         const WebDropData& drop_data) {
-  
-  if (!drag_delegate_)
-    drag_delegate_ = new TestDragDelegate(shell_->webViewWnd(),
-                                          shell_->webView());
   if (webkit_glue::IsLayoutTestMode()) {
+    WebDropData mutable_drop_data = drop_data;
     if (shell_->layout_test_controller()->ShouldAddFileToPasteboard()) {
       // Add a file called DRTFakeFile to the drag&drop clipboard.
-      AddDRTFakeFileToDataObject(drop_data.data_object);
+      AddDRTFakeFileToDataObject(&mutable_drop_data);
     }
 
     // When running a test, we need to fake a drag drop operation otherwise
     // Windows waits for real mouse events to know when the drag is over.
-    EventSendingController::DoDragDrop(drop_data.data_object);
+    EventSendingController::DoDragDrop(mutable_drop_data);
   } else {
-    const DWORD ok_effect = DROPEFFECT_COPY | DROPEFFECT_LINK | DROPEFFECT_MOVE;
-    DWORD effect;
-    HRESULT res = DoDragDrop(drop_data.data_object, drag_delegate_.get(),
-                             ok_effect, &effect);
-    DCHECK(DRAGDROP_S_DROP == res || DRAGDROP_S_CANCEL == res);
+    // TODO(tc): Drag and drop is disabled in the test shell because we need
+    // to be able to convert from WebDragData to an IDataObject.
+    //if (!drag_delegate_)
+    //  drag_delegate_ = new TestDragDelegate(shell_->webViewWnd(),
+    //                                        shell_->webView());
+    //const DWORD ok_effect = DROPEFFECT_COPY | DROPEFFECT_LINK | DROPEFFECT_MOVE;
+    //DWORD effect;
+    //HRESULT res = DoDragDrop(drop_data.data_object, drag_delegate_.get(),
+    //                         ok_effect, &effect);
+    //DCHECK(DRAGDROP_S_DROP == res || DRAGDROP_S_CANCEL == res);
   }
   webview->DragSourceSystemDragEnded();
 }
@@ -494,7 +484,7 @@ void TestWebViewDelegate::ShowContextMenu(WebView* webview,
   captured_context_menu_events_.push_back(context);
 }
 
-// The output from these methods in non-interactive mode should match that
+// The output from these methods in layout test mode should match that
 // expected by the layout tests.  See EditingDelegate.m in DumpRenderTree.
 bool TestWebViewDelegate::ShouldBeginEditing(WebView* webview, 
                                              std::wstring range) {
@@ -587,7 +577,25 @@ bool TestWebViewDelegate::ShouldApplyStyle(WebView* webview,
 }
 
 bool TestWebViewDelegate::SmartInsertDeleteEnabled() {
-  return true;
+  return smart_insert_delete_enabled_;
+}
+
+void TestWebViewDelegate::SetSmartInsertDeleteEnabled(bool enabled) {
+  smart_insert_delete_enabled_ = enabled;
+  // In upstream WebKit, smart insert/delete is mutually exclusive with select
+  // trailing whitespace, however, we allow both because Chromium on Windows
+  // allows both.
+}
+
+bool TestWebViewDelegate::IsSelectTrailingWhitespaceEnabled() {
+  return select_trailing_whitespace_enabled_;
+}
+
+void TestWebViewDelegate::SetSelectTrailingWhitespaceEnabled(bool enabled) {
+  select_trailing_whitespace_enabled_ = enabled;
+  // In upstream WebKit, smart insert/delete is mutually exclusive with select
+  // trailing whitespace, however, we allow both because Chromium on Windows
+  // allows both.
 }
 
 void TestWebViewDelegate::DidBeginEditing() { 
@@ -597,11 +605,12 @@ void TestWebViewDelegate::DidBeginEditing() {
   }
 }
 
-void TestWebViewDelegate::DidChangeSelection() {
+void TestWebViewDelegate::DidChangeSelection(bool is_empty_selection) {
   if (shell_->ShouldDumpEditingCallbacks()) {
     printf("EDITING DELEGATE: "
     "webViewDidChangeSelection:WebViewDidChangeSelectionNotification\n");
   }
+  UpdateSelectionClipboard(is_empty_selection);
 }
 
 void TestWebViewDelegate::DidChangeContents() {
@@ -625,10 +634,6 @@ WebHistoryItem* TestWebViewDelegate::GetHistoryEntryAtOffset(int offset) {
     return NULL;
 
   return entry->GetHistoryItem();
-}
-
-void TestWebViewDelegate::GoToEntryAtOffsetAsync(int offset) {
-  shell_->navigation_controller()->GoToOffset(offset);
 }
 
 int TestWebViewDelegate::GetHistoryBackListCount() {
@@ -656,17 +661,11 @@ void TestWebViewDelegate::SetUserStyleSheetLocation(const GURL& location) {
   shell_->webView()->SetPreferences(*prefs);
 }
 
-void TestWebViewDelegate::SetDashboardCompatibilityMode(bool use_mode) {
-  WebPreferences* prefs = shell_->GetWebPreferences();
-  prefs->dashboard_compatibility_mode = use_mode;
-  shell_->webView()->SetPreferences(*prefs);
-}
-
 // WebWidgetDelegate ---------------------------------------------------------
 
-HWND TestWebViewDelegate::GetContainingWindow(WebWidget* webwidget) {
+gfx::NativeView TestWebViewDelegate::GetContainingView(WebWidget* webwidget) {
   if (WebWidgetHost* host = GetHostForWidget(webwidget))
-    return host->window_handle();
+    return host->view_handle();
 
   return NULL;
 }
@@ -683,24 +682,6 @@ void TestWebViewDelegate::DidScrollRect(WebWidget* webwidget, int dx, int dy,
     host->DidScrollRect(dx, dy, clip_rect);
 }
 
-void TestWebViewDelegate::Show(WebWidget* webwidget, WindowOpenDisposition) {
-  if (webwidget == shell_->webView()) {
-    ShowWindow(shell_->mainWnd(), SW_SHOW);
-    UpdateWindow(shell_->mainWnd());
-  } else if (webwidget == shell_->popup()) {
-    ShowWindow(shell_->popupWnd(), SW_SHOW);
-    UpdateWindow(shell_->popupWnd());
-  }
-}
-
-void TestWebViewDelegate::CloseWidgetSoon(WebWidget* webwidget) {
-  if (webwidget == shell_->webView()) {
-    PostMessage(shell_->mainWnd(), WM_CLOSE, 0, 0);
-  } else if (webwidget == shell_->popup()) {
-    shell_->ClosePopup();
-  }
-}
-
 void TestWebViewDelegate::Focus(WebWidget* webwidget) {
   if (WebWidgetHost* host = GetHostForWidget(webwidget))
     shell_->SetFocus(host, true);
@@ -711,73 +692,15 @@ void TestWebViewDelegate::Blur(WebWidget* webwidget) {
     shell_->SetFocus(host, false);
 }
 
-void TestWebViewDelegate::SetCursor(WebWidget* webwidget, 
-                                    const WebCursor& cursor) {
-  if (WebWidgetHost* host = GetHostForWidget(webwidget)) {
-    if (custom_cursor_) {
-      DestroyIcon(custom_cursor_);
-      custom_cursor_ = NULL;
-    }
-    if (cursor.type() == WebCursor::CUSTOM) {
-      custom_cursor_ = cursor.GetCustomCursor();
-      host->SetCursor(custom_cursor_);
-    } else {
-      HINSTANCE mod_handle = GetModuleHandle(NULL);
-      host->SetCursor(cursor.GetCursor(mod_handle));
-    }
-  }
-}
-
-void TestWebViewDelegate::GetWindowRect(WebWidget* webwidget,
-                                        gfx::Rect* out_rect) {
-  if (WebWidgetHost* host = GetHostForWidget(webwidget)) {
-    RECT rect;
-    ::GetWindowRect(host->window_handle(), &rect);
-    *out_rect = gfx::Rect(rect);
-  }
-}
-
-void TestWebViewDelegate::SetWindowRect(WebWidget* webwidget,
-                                        const gfx::Rect& rect) {
-  if (webwidget == shell_->webView()) {
-    // ignored
-  } else if (webwidget == shell_->popup()) {
-    MoveWindow(shell_->popupWnd(),
-               rect.x(), rect.y(), rect.width(), rect.height(), FALSE);
-  }
-}
-
-void TestWebViewDelegate::GetRootWindowRect(WebWidget* webwidget,
-                                            gfx::Rect* out_rect) {
-  if (WebWidgetHost* host = GetHostForWidget(webwidget)) {
-    RECT rect;
-    HWND root_window = ::GetAncestor(host->window_handle(), GA_ROOT);
-    ::GetWindowRect(root_window, &rect);
-    *out_rect = gfx::Rect(rect);
-  }
-}
 
 void TestWebViewDelegate::DidMove(WebWidget* webwidget,
                                   const WebPluginGeometry& move) {
+#if defined(OS_WIN)
+  // TODO(port): add me once plugins work.
   WebPluginDelegateImpl::MoveWindow(
       move.window, move.window_rect, move.clip_rect, move.cutout_rects,
       move.visible);
-}
-
-void TestWebViewDelegate::RunModal(WebWidget* webwidget) {
-  Show(webwidget, NEW_WINDOW);
-
-  WindowList* wl = TestShell::windowList();
-  for (WindowList::const_iterator i = wl->begin(); i != wl->end(); ++i) {
-    if (*i != shell_->mainWnd())
-      EnableWindow(*i, FALSE);
-  }
-
-  shell_->set_is_modal(true);
-  MessageLoop::current()->Run();
-
-  for (WindowList::const_iterator i = wl->begin(); i != wl->end(); ++i)
-    EnableWindow(*i, TRUE);
+#endif
 }
 
 bool TestWebViewDelegate::IsHidden() {
@@ -785,9 +708,12 @@ bool TestWebViewDelegate::IsHidden() {
 }
 
 void TestWebViewDelegate::RegisterDragDrop() {
+#if defined(OS_WIN)
+  // TODO(port): add me once drag and drop works.
   DCHECK(!drop_delegate_);
   drop_delegate_ = new TestDropDelegate(shell_->webViewWnd(),
                                         shell_->webView());
+#endif
 }
 
 // Private methods -----------------------------------------------------------
@@ -801,17 +727,14 @@ void TestWebViewDelegate::UpdateAddressBar(WebView* webView) {
   if (!dataSource)
     return;
 
-  std::wstring frameURL =
-      UTF8ToWide(dataSource->GetRequest().GetMainDocumentURL().spec());
-  SendMessage(shell_->editWnd(), WM_SETTEXT, 0,
-              reinterpret_cast<LPARAM>(frameURL.c_str()));
+  SetAddressBarURL(dataSource->GetRequest().GetMainDocumentURL());
 }
 
 void TestWebViewDelegate::LocationChangeDone(WebDataSource* data_source) {
   if (data_source->GetWebFrame() == top_loading_frame_) {
     top_loading_frame_ = NULL;
 
-    if (!shell_->interactive())
+    if (shell_->layout_test_mode())
       shell_->layout_test_controller()->LocationChangeDone();
   }
 }
@@ -858,11 +781,6 @@ void TestWebViewDelegate::UpdateURL(WebFrame* frame) {
 
   const WebRequest& request = ds->GetRequest();
 
-  // We don't hold a reference to the extra data. The request's reference will
-  // be sufficient because we won't modify it during our call. MAY BE NULL.
-  TestShellExtraRequestData* extra_data =
-      static_cast<TestShellExtraRequestData*>(request.GetExtraData());
-
   // Type is unused.
   scoped_ptr<TestNavigationEntry> entry(new TestNavigationEntry);
 
@@ -892,15 +810,9 @@ void TestWebViewDelegate::UpdateSessionHistory(WebFrame* frame) {
   if (!entry)
     return;
 
-  GURL url;
-  std::wstring title;
   std::string state;
-  if (!shell_->webView()->GetMainFrame()->
-      GetPreviousState(&url, &title, &state))
+  if (!shell_->webView()->GetMainFrame()->GetPreviousHistoryState(&state))
     return;
-
-  entry->SetURL(url);
-  entry->SetTitle(title);
   entry->SetContentState(state);
 }
 

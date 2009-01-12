@@ -13,8 +13,8 @@
 #include "chrome/browser/tab_contents.h"
 #include "chrome/browser/view_ids.h"
 #include "chrome/browser/web_contents.h"
-#include "chrome/views/container.h"
 #include "chrome/views/root_view.h"
+#include "chrome/views/widget.h"
 
 using views::FocusTraversable;
 using views::FocusManager;
@@ -31,14 +31,21 @@ TabContentsContainerView::~TabContentsContainerView() {
 
 void TabContentsContainerView::SetTabContents(TabContents* tab_contents) {
   if (tab_contents_) {
-    // TODO(beng): (Cleanup) We want to call the _base_ class' version here.
-    //             WebContents' WM_WINDOWPOSCHANGED handler will ensure its
-    //             version is called. The correct thing to do here is to
-    //             rationalize all TabContents Hide/Show/Size etc into a single
-    //             API, but that's too complex for this first phase.
-    tab_contents_->TabContents::HideContents();
+    // TODO(brettw) should this move to HWNDView::Detach which is called below?
+    // It needs cleanup regardless.
+    HWND container_hwnd = tab_contents_->GetContainerHWND();
+
+    // Hide the contents before adjusting its parent to avoid a full desktop
+    // flicker.
+    ::ShowWindow(container_hwnd, SW_HIDE);
+
+    // Reset the parent to NULL to ensure hidden tabs don't receive messages.
+    ::SetParent(container_hwnd, NULL);
+
+    tab_contents_->WasHidden();
 
     // Unregister the tab contents window from the FocusManager.
+    views::FocusManager::UninstallFocusSubclass(container_hwnd);
     HWND hwnd = tab_contents_->GetContentHWND();
     if (hwnd) {
       // We may not have an HWND anymore, if the renderer crashed and we are
@@ -228,7 +235,7 @@ void TabContentsContainerView::RenderViewHostChanged(RenderViewHost* old_host,
 
   // If we are focused, we need to pass the focus to the new RenderViewHost.
   FocusManager* focus_manager =
-      FocusManager::GetFocusManager(GetRootView()->GetContainer()->GetHWND());
+      FocusManager::GetFocusManager(GetRootView()->GetWidget()->GetHWND());
   if (focus_manager->GetFocusedView() == this)
     Focus();
 }

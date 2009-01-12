@@ -6,18 +6,20 @@
 
 #include "chrome/browser/cert_store.h"
 #include "chrome/browser/navigation_entry.h"
+#include "chrome/browser/infobar_delegate.h"
 #include "chrome/browser/views/download_shelf_view.h"
 #include "chrome/browser/views/download_started_animation.h"
 #include "chrome/browser/views/blocked_popup_container.h"
 #include "chrome/browser/web_contents.h"
 #include "chrome/browser/tab_contents_delegate.h"
+#include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
-#include "chrome/views/container.h"
 #include "chrome/views/native_scroll_bar.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/view.h"
 #include "chrome/views/view_storage.h"
+#include "chrome/views/widget.h"
 
 #include "generated_resources.h"
 
@@ -40,7 +42,6 @@ TabContents::TabContents(TabContentsType type)
       is_active_(true),
       is_crashed_(false),
       waiting_for_response_(false),
-      saved_location_bar_state_(NULL),
       shelf_visible_(false),
       max_page_id_(-1),
       blocked_popups_(NULL),
@@ -64,7 +65,6 @@ TabContents::~TabContents() {
 void TabContents::RegisterUserPrefs(PrefService* prefs) {
   prefs->RegisterBooleanPref(prefs::kBlockPopups, false);
 }
-
 
 void TabContents::CloseContents() {
   // Destroy our NavigationController, which will Destroy all tabs it owns.
@@ -129,11 +129,17 @@ const GURL& TabContents::GetURL() const {
 }
 
 const std::wstring& TabContents::GetTitle() const {
-  // We always want to use the title for the last committed entry rather than
-  // a pending navigation entry. For example, when the user types in a URL, we
-  // want to keep the old page's title until the new load has committed and we
-  // get a new title.
-  NavigationEntry* entry = controller_->GetLastCommittedEntry();
+  // We use the title for the last committed entry rather than a pending
+  // navigation entry. For example, when the user types in a URL, we want to
+  // keep the old page's title until the new load has committed and we get a new
+  // title.
+  // The exception is with transient pages, for which we really want to use
+  // their title, as they are not committed.
+  NavigationEntry* entry = controller_->GetTransientEntry();
+  if (entry)
+    return entry->GetTitleForDisplay();
+  
+  entry = controller_->GetLastCommittedEntry();
   if (entry)
     return entry->GetTitleForDisplay();
   else if (controller_->LoadingURLLazily())
@@ -168,7 +174,11 @@ const std::wstring TabContents::GetDefaultTitle() const {
 SkBitmap TabContents::GetFavIcon() const {
   // Like GetTitle(), we also want to use the favicon for the last committed
   // entry rather than a pending navigation entry.
-  NavigationEntry* entry = controller_->GetLastCommittedEntry();
+  NavigationEntry* entry = controller_->GetTransientEntry();
+  if (entry)
+    return entry->favicon().bitmap();
+
+  entry = controller_->GetLastCommittedEntry();
   if (entry)
     return entry->favicon().bitmap();
   else if (controller_->LoadingURLLazily())
@@ -280,6 +290,8 @@ void TabContents::AddNewContents(TabContents* new_contents,
 
     delegate_->AddNewContents(this, new_contents, disposition, initial_pos,
                               user_gesture);
+
+    PopupNotificationVisibilityChanged(ShowingBlockedPopupNotification());
   }
 }
 
@@ -299,25 +311,12 @@ void TabContents::AddConstrainedPopup(TabContents* new_contents,
   }
 
   blocked_popups_->AddTabContents(new_contents, initial_pos);
+  PopupNotificationVisibilityChanged(ShowingBlockedPopupNotification());
 }
 
 void TabContents::CloseAllSuppressedPopups() {
   if (blocked_popups_)
     blocked_popups_->CloseAllPopups();
-}
-
-void TabContents::HideContents() {
-  // Hide the contents before adjusting its parent to avoid a full desktop
-  // flicker.
-  ShowWindow(GetContainerHWND(), SW_HIDE);
-
-  // Reset the parent to NULL to ensure hidden tabs don't receive messages.
-  SetParent(GetContainerHWND(), NULL);
-
-  // Remove any focus manager related information.
-  views::FocusManager::UninstallFocusSubclass(GetContainerHWND());
-
-  WasHidden();
 }
 
 void TabContents::Focus() {
@@ -349,11 +348,12 @@ void TabContents::StoreFocus() {
 
     // If the focus was on the page, explicitly clear the focus so that we
     // don't end up with the focused HWND not part of the window hierarchy.
+    // TODO(brettw) this should move to the view somehow.
     HWND container_hwnd = GetContainerHWND();
     if (container_hwnd) {
       views::View* focused_view = focus_manager->GetFocusedView();
       if (focused_view) {
-        HWND hwnd = focused_view->GetRootView()->GetContainer()->GetHWND();
+        HWND hwnd = focused_view->GetRootView()->GetWidget()->GetHWND();
         if (container_hwnd == hwnd || ::IsChild(container_hwnd, hwnd))
           focus_manager->ClearFocus();
       }
@@ -390,6 +390,47 @@ void TabContents::RestoreFocus() {
 
 void TabContents::SetInitialFocus() {
   ::SetFocus(GetContainerHWND());
+}
+
+void TabContents::AddInfoBar(InfoBarDelegate* delegate) {
+  // Look through the existing InfoBarDelegates we have for a match. If we've
+  // already got one that matches, then we don't add the new one.
+  for (int i = 0; i < infobar_delegate_count(); ++i) {
+    if (GetInfoBarDelegateAt(i)->EqualsDelegate(delegate))
+      return;
+  }
+
+  infobar_delegates_.push_back(delegate);
+  NotificationService::current()->Notify(NOTIFY_TAB_CONTENTS_INFOBAR_ADDED,
+                                         Source<TabContents>(this),
+                                         Details<InfoBarDelegate>(delegate));
+
+  // Add ourselves as an observer for navigations the first time a delegate is
+  // added. We use this notification to expire InfoBars that need to expire on
+  // page transitions.
+  if (infobar_delegates_.size() == 1) {
+    DCHECK(controller());
+    registrar_.Add(this, NOTIFY_NAV_ENTRY_COMMITTED,
+                   Source<NavigationController>(controller()));
+  }
+}
+
+void TabContents::RemoveInfoBar(InfoBarDelegate* delegate) {
+  std::vector<InfoBarDelegate*>::iterator it =
+      find(infobar_delegates_.begin(), infobar_delegates_.end(), delegate);
+  if (it != infobar_delegates_.end()) {
+    InfoBarDelegate* delegate = *it;
+    NotificationService::current()->Notify(NOTIFY_TAB_CONTENTS_INFOBAR_REMOVED,
+                                           Source<TabContents>(this),
+                                           Details<InfoBarDelegate>(delegate));
+    infobar_delegates_.erase(it);
+
+    // Remove ourselves as an observer if we are tracking no more InfoBars.
+    if (infobar_delegates_.empty()) {
+      registrar_.Remove(this, NOTIFY_NAV_ENTRY_COMMITTED,
+                        Source<NavigationController>(controller()));
+    }
+  }
 }
 
 void TabContents::SetDownloadShelfVisible(bool visible) {
@@ -473,6 +514,17 @@ void TabContents::DidMoveOrResize(ConstrainedWindow* window) {
   UpdateWindow(GetContainerHWND());
 }
 
+void TabContents::Observe(NotificationType type,
+                          const NotificationSource& source,
+                          const NotificationDetails& details) {
+  DCHECK(type == NOTIFY_NAV_ENTRY_COMMITTED);
+  DCHECK(controller() == Source<NavigationController>(source).ptr());
+
+  NavigationController::LoadCommittedDetails& committed_details =
+      *(Details<NavigationController::LoadCommittedDetails>(details).ptr());
+  ExpireInfoBars(committed_details);
+}
+
 // static
 void TabContents::MigrateShelfView(TabContents* from, TabContents* to) {
   bool was_shelf_visible = from->IsDownloadShelfVisible();
@@ -503,6 +555,7 @@ void TabContents::SetIsLoading(bool is_loading,
                         NotificationService::NoDetails());
 }
 
+// TODO(brettw) This should be on the WebContentsView.
 void TabContents::RepositionSupressedPopupsToFit(const gfx::Size& new_size) {
   // TODO(erg): There's no way to detect whether scroll bars are
   // visible, so for beta, we're just going to assume that the
@@ -520,4 +573,30 @@ void TabContents::RepositionSupressedPopupsToFit(const gfx::Size& new_size) {
 
 void TabContents::ReleaseDownloadShelfView() {
   download_shelf_view_.release();
+}
+
+bool TabContents::ShowingBlockedPopupNotification() const {
+  return blocked_popups_ != NULL &&
+      blocked_popups_->GetTabContentsCount() != 0;
+}
+
+namespace {
+bool TransitionIsReload(PageTransition::Type transition) {
+  return PageTransition::StripQualifier(transition) == PageTransition::RELOAD;
+}
+}
+
+void TabContents::ExpireInfoBars(
+    const NavigationController::LoadCommittedDetails& details) {
+  // Only hide InfoBars when the user has done something that makes the main
+  // frame load. We don't want various automatic or subframe navigations making
+  // it disappear.
+  if (!details.is_user_initiated_main_frame_load())
+    return;
+
+  for (int i = infobar_delegate_count() - 1; i >= 0; --i) {
+    InfoBarDelegate* delegate = GetInfoBarDelegateAt(i);
+    if (delegate->ShouldExpire(details))
+      RemoveInfoBar(delegate);
+  }
 }

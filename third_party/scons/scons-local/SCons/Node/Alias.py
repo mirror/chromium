@@ -30,7 +30,7 @@ This creates a hash of global Aliases (dummy targets).
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-__revision__ = "src/engine/SCons/Node/Alias.py 3424 2008/09/15 11:22:20 scons"
+__revision__ = "src/engine/SCons/Node/Alias.py 3842 2008/12/20 22:59:52 scons"
 
 import string
 import UserDict

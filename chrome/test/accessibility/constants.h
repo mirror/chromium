@@ -2,79 +2,45 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_ACCISSIBILITY_CONSTANTS_H__
-#define CHROME_TEST_ACCISSIBILITY_CONSTANTS_H__
+#ifndef CHROME_TEST_ACCESSIBILITY_CONSTANTS_H_
+#define CHROME_TEST_ACCESSIBILITY_CONSTANTS_H_
 
 #include <windows.h>
 #include <tchar.h>
 
 ///////////////////////////////////////////////////////////////////
-// Constant Definitations specific to Chrome Accessibility Tests.
+// Constants definitions specific to Chrome Accessibility Tests.
 ///////////////////////////////////////////////////////////////////
 
 // Safe delete and release operations.
-#define CHK_RELEASE(obj)  { if (obj) { (obj)->Release(); (obj) = NULL; } }
-#define CHK_DELETE(obj)  { if (obj) { delete (obj); (obj) = NULL; } }
-
+#define CHK_RELEASE(obj) { if (obj) { (obj)->Release(); (obj) = NULL; } }
+#define CHK_DELETE(obj) { if (obj) { delete (obj); (obj) = NULL; } }
 
 // Chrome Accessibility Tests specific strings.
 #define CHROME_PATH         _T("C:\\Program Files\\Google\\Chrome\\Chrome.exe")
 #define CHROME_VIEWS_TEXT_FIELD_EDIT    _T("ChromeViewsTextFieldEdit")
 #define CHROME_AUTOCOMPLETE_EDIT        _T("Chrome_AutocompleteEdit")
 #define CHROME_VIEWS_NATIVE_CTRL_CONTNR _T("ChromeViewsNativeControlContainer")
-#define CHROME_HWND_VIEW_CONTAINER      _T("Chrome_ContainerWin_0")
+#define CHROME_HWND_VIEW_CONTAINER      _T("Chrome_WidgetWin_0")
 #define STD_BUTTON                      _T("Button")
 #define AUTH_TITLE                      _T("Authentication Required - Chrome")
 #define CHROME_TAB_CONTENTS             _T("Chrome_TabContents")
 
-#define BROWSER_WIN_ROLE                _T("window")
-#define BROWSER_APP_ROLE                _T("application")
-#define BROWSER_CLIENT_ROLE             _T("client")
-
+// Index for accessing specific children in the MSAA hierarchy.
+// TODO(klink): Remove the need for these.
 #define CHROME_APP_ACC_INDEX            (3)
 #define CHROME_CLIENT_ACC_INDEX         (0)
-
-// Chrome Client chidren.
-#ifdef NEW_FRAMES
 #define BROWSER_VIEW_ACC_INDEX          (4)
+
+// Chrome Client chidren. These UI elements cannot take MSAA focus, and
+// therefore have no ViewID associated.
 #define TABSTRIP_ACC_INDEX              (0)
 #define CHROME_MIN_ACC_INDEX            (0)
 #define CHROME_MAX_ACC_INDEX            (1)
 #define CHROME_RESTORE_ACC_INDEX        (2)
 #define CHROME_CLOSE_ACC_INDEX          (3)
-#else
-#define BROWSER_VIEW_ACC_INDEX          (0)
-#define TABSTRIP_ACC_INDEX              (1)
-#if defined(GOOGLE_CHROME_BUILD)
-#define CHROME_MIN_ACC_INDEX            (4)
-#define CHROME_MAX_ACC_INDEX            (5)
-#define CHROME_RESTORE_ACC_INDEX        (6)
-#define CHROME_CLOSE_ACC_INDEX          (7)
-#else
-#define CHROME_MIN_ACC_INDEX            (3)
-#define CHROME_MAX_ACC_INDEX            (4)
-#define CHROME_RESTORE_ACC_INDEX        (5)
-#define CHROME_CLOSE_ACC_INDEX          (6)
-#endif
-#endif
 
-// Browser View children.
-#ifdef NEW_FRAMES
-#define TOOLBAR_ACC_INDEX               (1)
-#else
-#define TOOLBAR_ACC_INDEX               (0)
-#endif
-
-// Toolbar children.
-#define BACK_BTN_INDEX                  (0)
-#define FORWARD_BTN_INDEX               (1)
-#define RELOAD_BTN_INDEX                (2)
-#define STAR_BTN_INDEX                  (4)
-#define GO_BTN_INDEX                    (6)
-#define PAGE_BTN_INDEX                  (7)
-#define MENU_BTN_INDEX                  (8)
-
-// Digit limits for tab index which can be used in accelerator.
+// Tab index limits for bounds checking in Accessibility Tests.
 #define MAX_TAB_INDEX_DIGIT             (9)
 #define MIN_TAB_INDEX_DIGIT             (1)
 
@@ -129,6 +95,5 @@ enum KEYBD_KEYS {
     KEY_INVALID = -1
 };
 
-
-#endif  // CHROME_TEST_ACCISSIBILITY_CONSTANTS_H__
+#endif  // CHROME_TEST_ACCESSIBILITY_CONSTANTS_H_
 

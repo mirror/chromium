@@ -16,9 +16,6 @@
 
 #include "generated_resources.h"
 
-static const wchar_t kSearchDescriptionParameter[](L"%1");
-static const wchar_t kSearchValueParameter[](L"%2");
-
 // static
 std::wstring KeywordProvider::SplitReplacementStringFromInput(
     const std::wstring& input) {
@@ -60,8 +57,7 @@ class KeywordProvider::CompareQuality {
 };
 
 void KeywordProvider::Start(const AutocompleteInput& input,
-                            bool minimal_changes,
-                            bool synchronous_only) {
+                            bool minimal_changes) {
   matches_.clear();
 
   if ((input.type() == AutocompleteInput::INVALID) ||
@@ -172,7 +168,7 @@ void KeywordProvider::FillInURLAndContents(
           ACMatchClassification(0, ACMatchClassification::DIM));
     } else {
       // Keyword that has no replacement text (aka a shorthand for a URL).
-      match->destination_url.assign(element->url()->url());
+      match->destination_url = GURL(WideToUTF8(element->url()->url()));
       match->contents.assign(element->short_name());
       AutocompleteMatch::ClassifyLocationInString(0, match->contents.length(),
           match->contents.length(), ACMatchClassification::NONE,
@@ -184,9 +180,9 @@ void KeywordProvider::FillInURLAndContents(
     // input, but we rely on later canonicalization functions to do more
     // fixup to make the URL valid if necessary.
     DCHECK(element->url()->SupportsReplacement());
-    match->destination_url.assign(element->url()->ReplaceSearchTerms(
+    match->destination_url = element->url()->ReplaceSearchTerms(
       *element, remaining_input, TemplateURLRef::NO_SUGGESTIONS_AVAILABLE,
-      std::wstring()));
+      std::wstring());
     std::vector<size_t> content_param_offsets;
     match->contents.assign(l10n_util::GetStringF(IDS_KEYWORD_SEARCH,
                                                  element->short_name(),
@@ -228,7 +224,7 @@ int KeywordProvider::CalculateRelevance(AutocompleteInput::Type type,
 }
 
 AutocompleteMatch KeywordProvider::CreateAutocompleteMatch(
-    TemplateURLModel *model,
+    TemplateURLModel* model,
     const std::wstring keyword,
     const AutocompleteInput& input,
     size_t prefix_length,
@@ -249,8 +245,8 @@ AutocompleteMatch KeywordProvider::CreateAutocompleteMatch(
                          // preference, score them highly regardless of whether
                          // the input provides query text.
                          input.prefer_keyword() || !supports_replacement),
-      false);
-  result.type = AutocompleteMatch::KEYWORD;
+      false, supports_replacement ? AutocompleteMatch::SEARCH_OTHER_ENGINE :
+                                    AutocompleteMatch::HISTORY_KEYWORD);
   result.fill_into_edit.assign(keyword);
   if (!remaining_input.empty() || !keyword_complete || supports_replacement)
     result.fill_into_edit.push_back(L' ');

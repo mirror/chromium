@@ -8,6 +8,9 @@
 #include "chrome/browser/history/history.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using base::Time;
+using base::TimeDelta;
+
 // Tests the history service for querying functionality.
 
 namespace history {
@@ -241,6 +244,21 @@ TEST_F(HistoryQueryTest, FTSTitle) {
   EXPECT_TRUE(NthResultIs(results, 0, 2));
   EXPECT_TRUE(NthResultIs(results, 1, 3));
   EXPECT_TRUE(NthResultIs(results, 2, 1));
+}
+
+// Tests prefix searching for Full Text Search queries.
+TEST_F(HistoryQueryTest, FTSPrefix) {
+  ASSERT_TRUE(history_.get());
+
+  QueryOptions options;
+  QueryResults results;
+
+  // Query with a prefix search.  Should return matches for "PAGETWO" and
+  // "PAGETHREE".
+  QueryHistory(std::wstring(L"PAGET"), options, &results);
+  EXPECT_EQ(2, results.size());
+  EXPECT_TRUE(NthResultIs(results, 0, 2));
+  EXPECT_TRUE(NthResultIs(results, 1, 3));
 }
 
 // Tests max_count feature for Full Text Search queries.

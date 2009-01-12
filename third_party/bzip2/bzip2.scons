@@ -1,0 +1,44 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+__doc__ = """
+Configuration for building bzip2.lib / libbzip2.a.
+"""
+
+Import('env')
+
+if env.WantSystemLib('bzip2'):
+  Return()
+
+env = env.Clone()
+
+env.Append(
+    CPPDEFINES = [
+        'BZ_NO_STDIO',
+    ],
+)
+
+if env.Bit('windows'):
+  env.Append(
+      CCFLAGS = [
+          '/TC',
+          '/wd4996',
+          '/wd4800',
+      ],
+  )
+
+input_files = [
+    'blocksort.c',
+    'bzlib.c',
+    'compress.c',
+    'crctable.c',
+    'decompress.c',
+    'huffman.c',
+    'randtable.c',
+]
+
+env.ChromeLibrary('bzip2', input_files)
+
+env.ChromeMSVSProject('$BZIP2_DIR/bzip2.vcproj',
+                guid='{2A70CBF0-847E-4E3A-B926-542A656DC7FE}')

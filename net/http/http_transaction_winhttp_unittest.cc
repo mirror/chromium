@@ -7,34 +7,35 @@
 #include "testing/gtest/include/gtest/gtest.h"
 
 TEST(HttpTransactionWinHttp, CreateAndDestroy) {
-  net::HttpTransactionWinHttp::Factory factory;
+  scoped_ptr<net::ProxyService> proxy_service(net::ProxyService::CreateNull());
+  net::HttpTransactionWinHttp::Factory factory(proxy_service.get());
 
-  net::HttpTransaction* trans = factory.CreateTransaction();
-  trans->Destroy();
+  scoped_ptr<net::HttpTransaction> trans(factory.CreateTransaction());
 }
 
 TEST(HttpTransactionWinHttp, Suspend) {
-  net::HttpTransactionWinHttp::Factory factory;
+  scoped_ptr<net::ProxyService> proxy_service(net::ProxyService::CreateNull());
+  net::HttpTransactionWinHttp::Factory factory(proxy_service.get());
 
-  net::HttpTransaction* trans = factory.CreateTransaction();
-  trans->Destroy();
+  scoped_ptr<net::HttpTransaction> trans(factory.CreateTransaction());
+  trans.reset();
 
   factory.Suspend(true);
 
-  trans = factory.CreateTransaction();
+  trans.reset(factory.CreateTransaction());
   ASSERT_TRUE(trans == NULL);
 
   factory.Suspend(false);
 
-  trans = factory.CreateTransaction();
-  trans->Destroy();
+  trans.reset(factory.CreateTransaction());
 }
 
 TEST(HttpTransactionWinHttp, GoogleGET) {
-  net::HttpTransactionWinHttp::Factory factory;
+  scoped_ptr<net::ProxyService> proxy_service(net::ProxyService::CreateNull());
+  net::HttpTransactionWinHttp::Factory factory(proxy_service.get());
   TestCompletionCallback callback;
 
-  net::HttpTransaction* trans = factory.CreateTransaction();
+  scoped_ptr<net::HttpTransaction> trans(factory.CreateTransaction());
 
   net::HttpRequestInfo request_info;
   request_info.url = GURL("http://www.google.com/");
@@ -48,9 +49,7 @@ TEST(HttpTransactionWinHttp, GoogleGET) {
   EXPECT_EQ(net::OK, rv);
 
   std::string contents;
-  rv = ReadTransaction(trans, &contents);
+  rv = ReadTransaction(trans.get(), &contents);
   EXPECT_EQ(net::OK, rv);
-
-  trans->Destroy();
 }
 

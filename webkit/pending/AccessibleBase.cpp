@@ -29,10 +29,10 @@
 #include <oleacc.h>
 #include "AccessibilityObject.h"
 #include "AXObjectCache.h"
-#include "BString.h"
 #include "Element.h"
 #include "EventHandler.h"
 #include "FrameView.h"
+#include "HostWindow.h"
 #include "HTMLNames.h"
 #include "HTMLFrameElementBase.h"
 #include "HTMLInputElement.h"
@@ -45,9 +45,27 @@
 
 using namespace WebCore;
 
+namespace {
+
+// TODO(darin): Eliminate use of COM in this file, and then this class can die.
+class BString {
+public:
+    BString(const String& s)
+    {
+        if (s.isNull())
+            m_bstr = 0;
+        else
+            m_bstr = SysAllocStringLen(s.characters(), s.length());
+    }
+    BSTR release() { BSTR s = m_bstr; m_bstr = 0; return s; }
+private:
+    BSTR m_bstr;
+};
+
+}
+
 AccessibleBase::AccessibleBase(AccessibilityObject* obj)
     : AccessibilityObjectWrapper(obj)
-    , m_refCount(0)
 {
     ASSERT_ARG(obj, obj);
     m_object->setWrapper(this);
@@ -81,12 +99,15 @@ HRESULT STDMETHODCALLTYPE AccessibleBase::QueryInterface(REFIID riid, void** ppv
     return S_OK;
 }
 
+ULONG STDMETHODCALLTYPE AccessibleBase::AddRef(void)
+{
+    ref();
+    return 0;
+}
+
 ULONG STDMETHODCALLTYPE AccessibleBase::Release(void)
 {
-    ASSERT(m_refCount > 0);
-    if (--m_refCount)
-        return m_refCount;
-    delete this;
+    deref();
     return 0;
 }
 
@@ -106,13 +127,18 @@ HRESULT STDMETHODCALLTYPE AccessibleBase::get_accParent(IDispatch** parent)
         return S_OK;
     }
 
-		HMODULE accessibilityLib = ::LoadLibrary(TEXT("oleacc.dll"));
+	HMODULE accessibilityLib = ::LoadLibrary(TEXT("oleacc.dll"));
 
     static LPFNACCESSIBLEOBJECTFROMWINDOW procPtr = reinterpret_cast<LPFNACCESSIBLEOBJECTFROMWINDOW>(::GetProcAddress(accessibilityLib, "AccessibleObjectFromWindow"));
-		if (!procPtr)
-		    return E_FAIL;
+    if (!procPtr)
+        return E_FAIL;
 
-		return procPtr(m_object->topRenderer()->view()->frameView()->containingWindow(), OBJID_WINDOW, __uuidof(IAccessible), reinterpret_cast<void**>(parent));
+    // TODO(eseidel): platformWindow returns a void* which is an opaque
+    // identifier corresponding to the HWND WebKit is embedded in.  It happens
+    // to be the case that platformWindow is a valid HWND pointer (inaccessible
+    // from the sandboxed renderer).
+    HWND window = static_cast<HWND>(m_object->topDocumentFrameView()->hostWindow()->platformWindow());
+	return procPtr(window, OBJID_WINDOW, __uuidof(IAccessible), reinterpret_cast<void**>(parent));
 }
 
 HRESULT STDMETHODCALLTYPE AccessibleBase::get_accChildCount(long* count)
@@ -131,9 +157,9 @@ HRESULT STDMETHODCALLTYPE AccessibleBase::get_accChild(VARIANT vChild, IDispatch
         return E_POINTER;
 
     if (vChild.vt != VT_I4) {
-		    *ppChild = NULL;
-				return E_INVALIDARG;
-	  }
+        *ppChild = NULL;
+		return E_INVALIDARG;
+    }
 
     *ppChild = 0;
 

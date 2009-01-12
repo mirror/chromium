@@ -18,12 +18,14 @@
 #include "chrome/common/chrome_paths.h"
 #include "webkit/glue/plugins/plugin_list.h"
 
+using base::TimeDelta;
+
 const TCHAR ChromePluginLib::kRegistryChromePlugins[] =
     _T("Software\\Google\\Chrome\\Plugins");
 static const TCHAR kRegistryLoadOnStartup[] = _T("LoadOnStartup");
 static const TCHAR kRegistryPath[] = _T("Path");
 
-typedef base::hash_map<std::wstring, scoped_refptr<ChromePluginLib> >
+typedef base::hash_map<FilePath, scoped_refptr<ChromePluginLib> >
     PluginMap;
 
 // A map of all the instantiated plugins.
@@ -41,7 +43,7 @@ static bool IsSingleProcessMode() {
 }
 
 // static
-ChromePluginLib* ChromePluginLib::Create(const std::wstring& filename,
+ChromePluginLib* ChromePluginLib::Create(const FilePath& filename,
                                          const CPBrowserFuncs* bfuncs) {
   // Keep a map of loaded plugins to ensure we only load each library once.
   if (!g_loaded_libs) {
@@ -51,8 +53,13 @@ ChromePluginLib* ChromePluginLib::Create(const std::wstring& filename,
   }
   DCHECK(IsPluginThread());
 
-  // Lower case to match how PluginList::LoadPlugin stores the path.
-  std::wstring filename_lc = StringToLowerASCII(filename);
+#if defined(OS_WIN)
+  // Lower case to match how PluginLib::CreatePluginLib stores the path. See
+  // there for the rationale behind this.
+  FilePath filename_lc(StringToLowerASCII(filename.value()));
+#else
+  FilePath filename_lc = filename;
+#endif  // OS_WIN
 
   PluginMap::const_iterator iter = g_loaded_libs->find(filename_lc);
   if (iter != g_loaded_libs->end())
@@ -67,7 +74,7 @@ ChromePluginLib* ChromePluginLib::Create(const std::wstring& filename,
 }
 
 // static
-ChromePluginLib* ChromePluginLib::Find(const std::wstring& filename) {
+ChromePluginLib* ChromePluginLib::Find(const FilePath& filename) {
   if (g_loaded_libs) {
     PluginMap::const_iterator iter = g_loaded_libs->find(filename);
     if (iter != g_loaded_libs->end())
@@ -77,7 +84,7 @@ ChromePluginLib* ChromePluginLib::Find(const std::wstring& filename) {
 }
 
 // static
-void ChromePluginLib::Destroy(const std::wstring& filename) {
+void ChromePluginLib::Destroy(const FilePath& filename) {
   DCHECK(g_loaded_libs);
   PluginMap::iterator iter = g_loaded_libs->find(filename);
   if (iter != g_loaded_libs->end()) {
@@ -102,7 +109,7 @@ void ChromePluginLib::RegisterPluginsWithNPAPI() {
   if (IsSingleProcessMode())
     return;
 
-  std::wstring path;
+  FilePath path;
   if (!PathService::Get(chrome::FILE_GEARS_PLUGIN, &path))
     return;
   // Note: we can only access the NPAPI list because the PluginService has done
@@ -125,7 +132,7 @@ void ChromePluginLib::LoadChromePlugins(const CPBrowserFuncs* bfuncs) {
   if (IsSingleProcessMode())
     return;
 
-  std::wstring path;
+  FilePath path;
   if (!PathService::Get(chrome::FILE_GEARS_PLUGIN, &path))
     return;
 
@@ -175,7 +182,7 @@ const CPPluginFuncs& ChromePluginLib::functions() const {
   return plugin_funcs_;
 }
 
-ChromePluginLib::ChromePluginLib(const std::wstring& filename)
+ChromePluginLib::ChromePluginLib(const FilePath& filename)
     : filename_(filename),
       module_(0),
       initialized_(false),
@@ -227,7 +234,7 @@ int ChromePluginLib::CP_Test(void* param) {
 
 bool ChromePluginLib::Load() {
   DCHECK(module_ == 0);
-  module_ = LoadLibrary(filename_.c_str());
+  module_ = LoadLibrary(filename_.value().c_str());
   if (module_ == 0)
     return false;
 

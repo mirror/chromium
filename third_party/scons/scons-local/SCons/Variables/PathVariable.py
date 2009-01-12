@@ -68,7 +68,7 @@ Usage example:
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-__revision__ = "src/engine/SCons/Variables/PathVariable.py 3424 2008/09/15 11:22:20 scons"
+__revision__ = "src/engine/SCons/Variables/PathVariable.py 3842 2008/12/20 22:59:52 scons"
 
 __all__ = ['PathVariable',]
 

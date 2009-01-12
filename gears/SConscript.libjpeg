@@ -14,10 +14,11 @@ env.Replace(
     LIBJPEG_DIR = '$THIRD_PARTY_DIR/libjpeg',
     CPPPATH = [
         '$LIBJPEG_DIR',
+        '$VC80_CPPPATH',
     ],
 )
 
-if env['OS'] == 'linux':
+if env['OS'] in ['osx', 'linux']:
   env.Append(
       CCFLAGS = [
           '-Wno-main',
@@ -73,4 +74,4 @@ input_files = [
     '$LIBJPEG_DIR/jmemnobs.c',
 ]
 
-env.ChromeStaticLibrary('jpeg-gears', input_files)
+env.GearsStaticLibrary('jpeg-gears', input_files)

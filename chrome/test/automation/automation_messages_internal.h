@@ -11,6 +11,7 @@
 #include <string>
 #include <vector>
 
+#include "base/basictypes.h"
 #include "base/gfx/rect.h"
 #include "chrome/common/ipc_message_macros.h"
 #include "chrome/common/navigation_types.h"
@@ -147,6 +148,9 @@ IPC_BEGIN_MESSAGES(Automation, 0)
                       bool /* success flag*/,
                       GURL)
 
+#if defined(OS_WIN)
+  // TODO(port): Port these messages.
+  //
   // This message requests the HWND of the top-level window that corresponds
   // to the given automation handle.
   // The response contains the HWND value, which is 0 if the call fails.
@@ -154,6 +158,15 @@ IPC_BEGIN_MESSAGES(Automation, 0)
                       int /* automation handle */)
   IPC_MESSAGE_ROUTED1(AutomationMsg_WindowHWNDResponse,
                       HWND /* Win32 handle */)
+
+  // This message requests the HWND of the tab that corresponds
+  // to the given automation handle.
+  // The response contains the HWND value, which is 0 if the call fails.
+  IPC_MESSAGE_ROUTED1(AutomationMsg_TabHWNDRequest,
+                      int /* tab_handle */)
+  IPC_MESSAGE_ROUTED1(AutomationMsg_TabHWNDResponse,
+                      HWND /* win32 Window Handle*/)
+#endif  // defined(OS_WIN)
 
   // This message notifies the AutomationProxy that a handle that it has
   // previously been given is now invalid.  (For instance, if the handle
@@ -165,14 +178,6 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   // longer being used, so it can stop paying attention to the
   // associated resource.  The parameter value is the handle.
   IPC_MESSAGE_ROUTED1(AutomationMsg_HandleUnused, int)
-
-  // This message requests the HWND of the tab that corresponds
-  // to the given automation handle.
-  // The response contains the HWND value, which is 0 if the call fails.
-  IPC_MESSAGE_ROUTED1(AutomationMsg_TabHWNDRequest,
-                      int /* tab_handle */)
-  IPC_MESSAGE_ROUTED1(AutomationMsg_TabHWNDResponse,
-                      HWND /* win32 Window Handle*/)
 
   // This message tells the AutomationProvider to provide the given
   // authentication data to the specified tab, in response to an HTTP/FTP
@@ -284,6 +289,9 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   IPC_MESSAGE_ROUTED3(AutomationMsg_WindowViewBoundsRequest, int, int, bool)
   IPC_MESSAGE_ROUTED2(AutomationMsg_WindowViewBoundsResponse, bool, gfx::Rect)
 
+#if defined(OS_WIN)
+  // TODO(port): Port these messages.
+  //
   // This message requests that a drag be performed in window coordinate space
   // Request:
   //   int - the handle of the window that's the context for this drag
@@ -296,6 +304,7 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   IPC_MESSAGE_ROUTED4(AutomationMsg_WindowDragRequest,
                       int, std::vector<POINT>, int, bool)
   IPC_MESSAGE_ROUTED1(AutomationMsg_WindowDragResponse, bool)
+#endif  // defined(OS_WIN)
 
   // Similar to AutomationMsg_InitialLoadsComplete, this indicates that the
   // new tab ui has completed the initial load of its data.
@@ -311,15 +320,15 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   // (1=case sensitive, 0=case insensitive). If an error occurs, matches_found
   // will be -1.
   //
-  // NOTE: This message has been deprecated, please use the new message
-  // AutomationMsg_FindRequest below.
+  // NOTE: These two messages have been deprecated, please use the new messages
+  // AutomationMsg_FindRequest and AutomationMsg_FindInPageResponse2 below.
   //
-  IPC_MESSAGE_ROUTED4(AutomationMsg_FindInPageRequest,
+  IPC_MESSAGE_ROUTED4(AutomationMsg_FindInPageRequest,   // DEPRECATED.
                       int, /* tab_handle */
                       std::wstring, /* find_request */
                       int, /* forward */
                       int /* match_case */)
-  IPC_MESSAGE_ROUTED1(AutomationMsg_FindInPageResponse,
+  IPC_MESSAGE_ROUTED1(AutomationMsg_FindInPageResponse,  // DEPRECATED.
                       int /* matches_found */)
 
   // This message sends a inspect element request for a given tab. The response
@@ -408,6 +417,9 @@ IPC_BEGIN_MESSAGES(Automation, 0)
                       bool /* success flag */,
                       int /* AutocompleteEdit handle */)
 
+#if defined(OS_WIN)
+  // TODO(port): Port this message.
+  //
   // This message requests that a mouse click be performed in window coordinate
   // space.
   // Request:
@@ -416,6 +428,7 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   //   int - the flags which identify the mouse button(s) for the click, as
   //       defined in chrome/views/event.h
   IPC_MESSAGE_ROUTED3(AutomationMsg_WindowClickRequest, int, POINT, int)
+#endif  // defined(OS_WIN)
 
   // This message requests that a key press be performed.
   // Request:
@@ -425,6 +438,9 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   //         associated for, as defined in chrome/views/event.h
   IPC_MESSAGE_ROUTED3(AutomationMsg_WindowKeyPressRequest, int, wchar_t, int)
 
+#if defined(OS_WIN)
+  // TODO(port): Port these messages.
+  //
   // This message notifies the AutomationProvider to create a tab which is
   // hosted by an external process. The response contains the HWND of the
   // window that contains the external tab and the handle to the newly
@@ -432,6 +448,7 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   // The second parameter is the url to be loaded in the new tab.
   IPC_MESSAGE_ROUTED0(AutomationMsg_CreateExternalTab)
   IPC_MESSAGE_ROUTED2(AutomationMsg_CreateExternalTabResponse, HWND, int)
+#endif  // defined(OS_WIN)
 
   // This message notifies the AutomationProvider to navigate to a specified
   // url in the external tab with given handle. The first parameter is the
@@ -494,6 +511,9 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   IPC_MESSAGE_ROUTED1(AutomationMsg_CloseBrowserRequest, int)
   IPC_MESSAGE_ROUTED2(AutomationMsg_CloseBrowserResponse, bool, bool)
 
+#if defined(OS_WIN)
+  // TODO(port): Port these messages.
+  //
   // This message sets the keyboard accelarators to be used by an externally
   // hosted tab. This call is not valid on a regular tab hosted within
   // Chrome.
@@ -516,16 +536,6 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   // host saying whether it processed the accelerator
   IPC_MESSAGE_ROUTED1(AutomationMsg_HandleAccelerator, MSG)
 
-  // This message is an outgoing message from Chrome to an external host.
-  // It is a request to open a url
-  // Request:
-  //   -GURL: The URL to open
-  //   -int: The WindowOpenDisposition that specifies where the URL should
-  //         be opened (new tab, new window etc).
-  // Response:
-  //   None expected
-  IPC_MESSAGE_ROUTED2(AutomationMsg_OpenURL, GURL, int)
-
   // This message is sent by the container of an externally hosted tab to
   // reflect any accelerator keys that it did not process. This gives the
   // tab a chance to handle the keys
@@ -535,6 +545,17 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   // Response:
   //   None expected
   IPC_MESSAGE_ROUTED2(AutomationMsg_ProcessUnhandledAccelerator, int, MSG)
+#endif  // defined(OS_WIN)
+
+  // This message is an outgoing message from Chrome to an external host.
+  // It is a request to open a url
+  // Request:
+  //   -GURL: The URL to open
+  //   -int: The WindowOpenDisposition that specifies where the URL should
+  //         be opened (new tab, new window etc).
+  // Response:
+  //   None expected
+  IPC_MESSAGE_ROUTED2(AutomationMsg_OpenURL, GURL, int)
 
   // This message requests the provider to wait until the specified tab has
   // finished restoring after session restore.
@@ -600,7 +621,8 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   IPC_MESSAGE_ROUTED2(AutomationMsg_ActionOnSSLBlockingPage, int, bool)
   IPC_MESSAGE_ROUTED1(AutomationMsg_ActionOnSSLBlockingPageResponse, bool)
 
-  // Message to request that a browser window is brought to the front and activated.
+  // Message to request that a browser window is brought to the front and
+  // activated.
   // Request:
   //   - int: handle of the browser window.
   // Response:
@@ -608,8 +630,8 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   IPC_MESSAGE_ROUTED1(AutomationMsg_BringBrowserToFront, int)
   IPC_MESSAGE_ROUTED1(AutomationMsg_BringBrowserToFrontResponse, bool)
 
-  // Message to request whether a certain item is enabled of disabled in the "Page"
-  // menu in the browser window
+  // Message to request whether a certain item is enabled of disabled in the
+  // "Page" menu in the browser window
   //
   // Request:
   //   - int: handle of the browser window.
@@ -641,8 +663,8 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   IPC_MESSAGE_ROUTED1(AutomationMsg_LastActiveBrowserWindowResponse, int)
 
   // This message requests the bounds of a constrained window (relative to its
-  // containing TabContents). On an internal error, the boolean in the result will
-  // be set to false.
+  // containing TabContents). On an internal error, the boolean in the result
+  // will be set to false.
   IPC_MESSAGE_ROUTED1(AutomationMsg_ConstrainedWindowBoundsRequest,
                       int /* tab_handle */)
   IPC_MESSAGE_ROUTED2(AutomationMsg_ConstrainedWindowBoundsResponse,
@@ -733,7 +755,7 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   // This message starts a find within a tab corresponding to the supplied
   // tab handle. The parameter |request| specifies what to search for.
   // If an error occurs, |matches_found| will be -1 (see response message
-  // AutomationMsg_FindInPageResponse).
+  // AutomationMsg_FindInPageResponse2).
   //
   IPC_MESSAGE_ROUTED2(AutomationMsg_FindRequest,
                       int, /* tab_handle */
@@ -802,9 +824,67 @@ IPC_BEGIN_MESSAGES(Automation, 0)
                       bool /* success */)
 
   // Queries whether an app modal dialog is currently being shown. (i.e. a
-  // javascript alert).
+  // javascript alert) and which buttons it contains.
   IPC_MESSAGE_ROUTED0(AutomationMsg_ShowingAppModalDialogRequest)
-  IPC_MESSAGE_ROUTED1(AutomationMsg_ShowingAppModalDialogResponse,
-                      bool /* showing dialog */)
+  IPC_MESSAGE_ROUTED2(AutomationMsg_ShowingAppModalDialogResponse,
+                      bool /* showing dialog */,
+                      int /* view::DelegateDialog::DialogButton */)
+
+  // Returns the ordinal and the number of matches found as a response to
+  // a AutomationMsg_FindRequest.
+  IPC_MESSAGE_ROUTED2(AutomationMsg_FindInPageResponse2,
+                      int /* active_ordinal */,
+                      int /* matches_found */)
+
+  // This message triggers the specified button for the currently showing
+  // modal dialog.
+  IPC_MESSAGE_ROUTED1(AutomationMsg_ClickAppModalDialogButtonRequest,
+                      int /* view::DelegateDialog::DialogButton */)
+  IPC_MESSAGE_ROUTED1(AutomationMsg_ClickAppModalDialogButtonResponse,
+                      bool /* success */)
+
+  // This messages sets a string-value preference.
+  IPC_MESSAGE_ROUTED3(AutomationMsg_SetStringPreferenceRequest,
+                      int /* browser handle */,
+                      std::wstring /* pref name */,
+                      std::wstring /* pref value */)
+  IPC_MESSAGE_ROUTED1(AutomationMsg_SetStringPreferenceResponse,
+                      bool /* success */)
+
+  // This messages gets a boolean-value preference.
+  IPC_MESSAGE_ROUTED2(AutomationMsg_GetBooleanPreferenceRequest,
+                      int /* browser handle */,
+                      std::wstring /* pref name */)
+  IPC_MESSAGE_ROUTED2(AutomationMsg_GetBooleanPreferenceResponse,
+                      bool /* success */,
+                      bool /* pref value */)
+
+  // This messages sets a boolean-value preference.
+  IPC_MESSAGE_ROUTED3(AutomationMsg_SetBooleanPreferenceRequest,
+                      int /* browser handle */,
+                      std::wstring /* pref name */,
+                      bool /* pref value */)
+  IPC_MESSAGE_ROUTED1(AutomationMsg_SetBooleanPreferenceResponse,
+                      bool /* success */)
+
+  // Queries the current used encoding name of the page in the specified
+  // web content tab.
+  IPC_MESSAGE_ROUTED1(AutomationMsg_GetPageCurrentEncodingRequest,
+                      int /* tab handle */)
+  IPC_MESSAGE_ROUTED1(AutomationMsg_GetPageCurrentEncodingResponse,
+                      std::wstring /* current used encoding name */)
+
+  // Uses the specified encoding to override the encoding of the page in the
+  // specified web content tab.
+  IPC_MESSAGE_ROUTED2(AutomationMsg_OverrideEncodingRequest,
+                      int /* tab handle */,
+                      std::wstring /* overrided encoding name */)
+  IPC_MESSAGE_ROUTED1(AutomationMsg_OverrideEncodingResponse,
+                      bool /* success */)
+
+  // Used to disable the dialog box that prompts the user for a path when
+  // saving a web page.
+  IPC_MESSAGE_ROUTED1(AutomationMsg_SavePackageShouldPromptUser,
+                      bool /* false if we want to not show the dialog */)
 
 IPC_END_MESSAGES(Automation)

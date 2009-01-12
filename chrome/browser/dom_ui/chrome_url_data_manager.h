@@ -14,9 +14,10 @@
 class GURL;
 class MessageLoop;
 class URLRequest;
+class URLRequestChromeJob;
 class URLRequestJob;
 
-// To serve dynamic data off of chrome-resource: URLs, implement the
+// To serve dynamic data off of chrome: URLs, implement the
 // ChromeURLDataManager::DataSource interface and register your handler
 // with AddDataSource.
 
@@ -47,6 +48,10 @@ class ChromeURLDataManager {
     // call SendResponse() when the data is available or if the request could
     // not be satisfied.
     virtual void StartDataRequest(const std::string& path, int request_id) = 0;
+
+    // Return the mimetype that should be sent with this response, or empty
+    // string to specify no mime type.
+    virtual std::string GetMimeType(const std::string& path) const = 0;
 
     // Report that a request has resulted in the data |bytes|.
     // If the request can't be satisfied, pass NULL for |bytes| to indicate

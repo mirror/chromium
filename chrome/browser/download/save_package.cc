@@ -21,7 +21,7 @@
 #include "chrome/browser/render_process_host.h"
 #include "chrome/browser/render_view_host.h"
 #include "chrome/browser/render_view_host_delegate.h"
-#include "chrome/browser/resource_dispatcher_host.h"
+#include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #include "chrome/browser/tab_util.h"
 #include "chrome/browser/web_contents.h"
 #include "chrome/browser/views/download_shelf_view.h"
@@ -31,29 +31,40 @@
 #include "chrome/common/pref_service.h"
 #include "chrome/common/stl_util-inl.h"
 #include "chrome/common/win_util.h"
+#include "net/base/mime_util.h"
 #include "net/base/net_util.h"
 #include "net/url_request/url_request_context.h"
 #include "webkit/glue/dom_serializer_delegate.h"
 
 #include "generated_resources.h"
 
+using base::Time;
+
+namespace {
+
 // Default name which will be used when we can not get proper name from
 // resource URL.
-static const wchar_t kDefaultSaveName[] = L"saved_resource";
+const wchar_t kDefaultSaveName[] = L"saved_resource";
 
 // Maximum number of file ordinal number. I think it's big enough for resolving
 // name-conflict files which has same base file name.
-static const int32 kMaxFileOrdinalNumber = 9999;
+const int32 kMaxFileOrdinalNumber = 9999;
 
 // Maximum length for file path. Since Windows have MAX_PATH limitation for
 // file path, we need to make sure length of file path of every saved file
 // is less than MAX_PATH
-static const uint32 kMaxFilePathLength = MAX_PATH - 1;
+const uint32 kMaxFilePathLength = MAX_PATH - 1;
 
 // Maximum length for file ordinal number part. Since we only support the
 // maximum 9999 for ordinal number, which means maximum file ordinal number part
 // should be "(9998)", so the value is 6.
-static const uint32 kMaxFileOrdinalNumberPartLength = 6;
+const uint32 kMaxFileOrdinalNumberPartLength = 6;
+
+// If false, we don't prompt the user as to where to save the file.  This
+// exists only for testing.
+bool g_should_prompt_for_filename = true;
+
+}  // namespace
 
 SavePackage::SavePackage(WebContents* web_content,
                          SavePackageType save_type,
@@ -174,8 +185,9 @@ bool SavePackage::Init() {
   }
 
   // Create the fake DownloadItem and display the view.
-  download_ = new DownloadItem(1, saved_main_file_path_, 0, page_url_,
-                               std::wstring(), Time::Now(), 0, -1, -1, false);
+  download_ = new DownloadItem(1,
+      FilePath::FromWStringHack(saved_main_file_path_), 0, page_url_,
+      FilePath(), Time::Now(), 0, -1, -1, false);
   download_->set_manager(web_contents_->profile()->GetDownloadManager());
   DownloadShelfView* shelf = web_contents_->GetDownloadShelfView();
   shelf->AddDownloadView(new DownloadItemView(
@@ -881,6 +893,10 @@ void SavePackage::OnReceivedSavableResourceLinksForCurrentPage(
   }
 }
 
+void SavePackage::SetShouldPromptUser(bool should_prompt) {
+  g_should_prompt_for_filename = should_prompt;
+}
+
 std::wstring SavePackage::GetSuggestNameForSaveAs(PrefService* prefs,
                                                   const std::wstring& name) {
   // Check whether the preference has the preferred directory for saving file.
@@ -913,7 +929,11 @@ std::wstring SavePackage::GetSuggestNameForSaveAs(PrefService* prefs,
 // Static.
 bool SavePackage::GetSaveInfo(const std::wstring& suggest_name,
                               HWND container_hwnd,
-                              SavePackageParam* param) {
+                              SavePackageParam* param,
+                              DownloadManager* download_manager) {
+  // TODO(tc): It might be nice to move this code into the download
+  // manager.  http://crbug.com/6025
+
   // Use "Web Page, Complete" option as default choice of saving page.
   unsigned index = 2;
 
@@ -926,21 +946,36 @@ bool SavePackage::GetSaveInfo(const std::wstring& suggest_name,
     filter[filter.size() - 1] = L'\0';
     filter[filter.size() - 2] = L'\0';
 
-    if (!win_util::SaveFileAsWithFilter(container_hwnd,
-                                        suggest_name,
-                                        filter,
-                                        L"htm",
-                                        &index,
-                                        &param->saved_main_file_path))
-      return false;
+    if (g_should_prompt_for_filename) {
+      if (!win_util::SaveFileAsWithFilter(container_hwnd,
+                                          suggest_name,
+                                          filter,
+                                          L"htm",
+                                          &index,
+                                          &param->saved_main_file_path))
+        return false;
+    } else {
+      param->saved_main_file_path = suggest_name;
+    }
   } else {
-    if (!win_util::SaveFileAs(container_hwnd, suggest_name,
-                              &param->saved_main_file_path))
-      return false;
+    if (g_should_prompt_for_filename) {
+      if (!win_util::SaveFileAs(container_hwnd, suggest_name,
+                                &param->saved_main_file_path))
+        return false;
+    } else {
+      param->saved_main_file_path = suggest_name;
+    }
     // Set save-as type to only-HTML if the contents of current tab can not be
     // saved as complete-HTML.
     index = 1;
   }
+
+  DCHECK(download_manager);
+  // Ensure the filename is safe.
+  FilePath path(param->saved_main_file_path);
+  download_manager->GenerateSafeFilename(param->current_tab_mime_type, &path);
+  param->saved_main_file_path = path.ToWStringHack();
+
   // The option index is not zero-based.
   DCHECK(index > 0 && index < 3);
   param->dir = file_util::GetDirectoryFromPath(param->saved_main_file_path);
@@ -1027,7 +1062,9 @@ bool SavePackage::IsSavableContents(const std::string& contents_mime_type) {
   return contents_mime_type == "text/html" ||
          contents_mime_type == "text/xml" ||
          contents_mime_type == "application/xhtml+xml" ||
-         contents_mime_type == "text/plain";
+         contents_mime_type == "text/plain" ||
+         contents_mime_type == "text/css" ||
+         net::IsSupportedJavascriptMimeType(contents_mime_type.c_str());
 }
 
 // Static
@@ -1063,4 +1100,3 @@ bool SavePackage::GetSafePureFileName(const std::wstring& dir_path,
     return false;
   }
 }
-

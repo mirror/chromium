@@ -22,10 +22,10 @@ class GURL;
 struct PluginHostMsg_RouteToFrame_Params;
 class RenderView;
 class SkBitmap;
-namespace gfx {
+
+namespace skia {
 class PlatformCanvasWin;
 }
-
 
 // An implementation of WebPluginDelegate that proxies all calls to
 // the plugin process.
@@ -83,7 +83,7 @@ class WebPluginDelegateProxy : public WebPluginDelegate,
   virtual void DidReceiveManualData(const char* buffer, int length);
   virtual void DidFinishManualLoading();
   virtual void DidManualLoadFail();
-  virtual std::wstring GetPluginPath();
+  virtual FilePath GetPluginPath();
   virtual void InstallMissingPlugin();
   virtual WebPluginResourceClient* CreateResourceClient(int resource_id,
                                                         const std::string &url,
@@ -144,8 +144,8 @@ class WebPluginDelegateProxy : public WebPluginDelegate,
   void ResetWindowlessBitmaps();
 
   // Creates a shared memory section and canvas.
-  bool CreateBitmap(scoped_ptr<SharedMemory>* memory,
-                    scoped_ptr<gfx::PlatformCanvasWin>* canvas);
+  bool CreateBitmap(scoped_ptr<base::SharedMemory>* memory,
+                    scoped_ptr<skia::PlatformCanvasWin>* canvas);
 
   RenderView* render_view_;
   WebPlugin* plugin_;
@@ -154,7 +154,7 @@ class WebPluginDelegateProxy : public WebPluginDelegate,
   std::string mime_type_;
   std::string clsid_;
   int instance_id_;
-  std::wstring plugin_path_;
+  FilePath plugin_path_;
 
   gfx::Rect plugin_rect_;
   gfx::Rect deferred_clip_rect_;
@@ -181,12 +181,12 @@ class WebPluginDelegateProxy : public WebPluginDelegate,
   // store when we get an invalidate from it.  The background bitmap is used
   // for transparent plugins, as they need the backgroud data during painting.
   bool transparent_;
-  scoped_ptr<SharedMemory> backing_store_;
-  scoped_ptr<gfx::PlatformCanvasWin> backing_store_canvas_;
-  scoped_ptr<SharedMemory> transport_store_;
-  scoped_ptr<gfx::PlatformCanvasWin> transport_store_canvas_;
-  scoped_ptr<SharedMemory> background_store_;
-  scoped_ptr<gfx::PlatformCanvasWin> background_store_canvas_;
+  scoped_ptr<base::SharedMemory> backing_store_;
+  scoped_ptr<skia::PlatformCanvasWin> backing_store_canvas_;
+  scoped_ptr<base::SharedMemory> transport_store_;
+  scoped_ptr<skia::PlatformCanvasWin> transport_store_canvas_;
+  scoped_ptr<base::SharedMemory> background_store_;
+  scoped_ptr<skia::PlatformCanvasWin> background_store_canvas_;
   // This lets us know which portion of the backing store has been painted into.
   gfx::Rect backing_store_painted_;
 

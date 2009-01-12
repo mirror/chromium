@@ -44,7 +44,7 @@ class SafeBrowsingDatabaseImpl : public SafeBrowsingDatabase {
                            std::string* matching_list,
                            std::vector<SBPrefix>* prefix_hits,
                            std::vector<SBFullHashResult>* full_hits,
-                           Time last_update);
+                           base::Time last_update);
 
   // Processes add/sub commands.  Database will free the chunks when it's done.
   virtual void InsertChunks(const std::string& list_name,
@@ -181,7 +181,7 @@ class SafeBrowsingDatabaseImpl : public SafeBrowsingDatabase {
   // Looks up any cached full hashes we may have.
   void GetCachedFullHashes(const std::vector<SBPrefix>* prefix_hits,
                            std::vector<SBFullHashResult>* full_hits,
-                           Time last_update);
+                           base::Time last_update);
 
   // Remove cached entries that have prefixes contained in the entry.
   void ClearCachedHashes(const SBEntry* entry);
@@ -219,7 +219,7 @@ class SafeBrowsingDatabaseImpl : public SafeBrowsingDatabase {
   // These are temp variables used when rebuilding the bloom filter.
   bool bloom_filter_building_;
   std::vector<int> bloom_filter_temp_hostkeys_;
-  Time bloom_filter_rebuild_time_;
+  base::Time bloom_filter_rebuild_time_;
 
   // Used to store throttled work for commands that write to the database.
   std::queue<std::deque<SBChunk>*> pending_chunks_;

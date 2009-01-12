@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// See http://wiki.corp.google.com/twiki/bin/view/Main/ChromeMultiProcessResourceLoading
+// See http://dev.chromium.org/developers/design-documents/multi-process-resource-loading
 
 #ifndef CHROME_COMMON_RESOURCE_DISPATCHER_H__
 #define CHROME_COMMON_RESOURCE_DISPATCHER_H__
 
-#include <windows.h>
+#include <queue>
 
 #include "base/hash_tables.h"
 #include "base/task.h"
@@ -101,7 +101,8 @@ class ResourceDispatcher : public base::RefCounted<ResourceDispatcher> {
   void OnUploadProgress(int request_id, int64 position, int64 size);
   void OnReceivedResponse(int request_id, const ViewMsg_Resource_ResponseHead&);
   void OnReceivedRedirect(int request_id, const GURL& new_url);
-  void OnReceivedData(int request_id, SharedMemoryHandle data, int data_len);
+  void OnReceivedData(int request_id, base::SharedMemoryHandle data,
+                      int data_len);
   void OnRequestComplete(int request_id, const URLRequestStatus& status);
 
   // Dispatch the message to one of the message response handlers.

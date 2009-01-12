@@ -14,23 +14,26 @@
 #include "chrome/browser/views/download_shelf_view.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/text_elider.h"
+#include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/container.h"
 #include "chrome/views/native_button.h"
 #include "chrome/views/root_view.h"
+#include "chrome/views/widget.h"
 
 #include "generated_resources.h"
+
+using base::TimeDelta;
 
 // TODO(paulg): These may need to be adjusted when download progress
 //              animation is added, and also possibly to take into account
 //              different screen resolutions.
-static const int kTextWidth = 140;           // Pixels
-static const int kDangerousTextWidth = 200;  // Pixels
-static const int kHorizontalTextPadding = 2; // Pixels
-static const int kVerticalPadding = 3;       // Pixels
-static const int kVerticalTextSpacer = 2;    // Pixels
-static const int kVerticalTextPadding = 2;   // Pixels
+static const int kTextWidth = 140;            // Pixels
+static const int kDangerousTextWidth = 200;   // Pixels
+static const int kHorizontalTextPadding = 2;  // Pixels
+static const int kVerticalPadding = 3;        // Pixels
+static const int kVerticalTextSpacer = 2;     // Pixels
+static const int kVerticalTextPadding = 2;    // Pixels
 
 // The maximum number of characters we show in a file name when displaying the
 // dangerous download message.
@@ -198,7 +201,7 @@ DownloadItemView::DownloadItemView(DownloadItem* download,
     discard_button_->set_enforce_dlu_min_size(false);
     AddChildView(save_button_);
     AddChildView(discard_button_);
-    std::wstring file_name = download->original_name();
+    std::wstring file_name = download->original_name().ToWStringHack();
 
     // Ensure the file name is not too long.
 
@@ -454,7 +457,7 @@ void DownloadItemView::Paint(ChromeCanvas* canvas) {
   // Note that in dangerous mode we use a label (as the text is multi-line).
   if (!IsDangerousMode()) {
     std::wstring filename = 
-        gfx::ElideFilename(download_->GetFileName(),
+        gfx::ElideFilename(download_->GetFileName().ToWStringHack(),
                            font_,
                            kTextWidth);
 
@@ -484,7 +487,7 @@ void DownloadItemView::Paint(ChromeCanvas* canvas) {
   // Paint the icon.
   IconManager* im = g_browser_process->icon_manager();
   SkBitmap* icon = IsDangerousMode() ? warning_icon_ :
-      im->LookupIcon(download_->full_path(), IconLoader::SMALL);
+      im->LookupIcon(download_->full_path().ToWStringHack(), IconLoader::SMALL);
 
   // We count on the fact that the icon manager will cache the icons and if one
   // is available, it will be cached here. We *don't* want to request the icon
@@ -584,7 +587,6 @@ gfx::Size DownloadItemView::GetPreferredSize() {
     width += warning_icon_->width() + kLabelPadding;
     width += dangerous_download_label_->width() + kLabelPadding;
     gfx::Size button_size = GetButtonSize();
-
     // Make sure the button fits.
     height = std::max<int>(height, 2 * kVerticalPadding + button_size.height());
     // Then we make sure the warning icon fits.
@@ -657,7 +659,7 @@ bool DownloadItemView::OnMousePressed(const views::MouseEvent& event) {
 
     views::View::ConvertPointToScreen(this, &point);
     download_util::DownloadShelfContextMenu menu(download_,
-                                                 GetContainer()->GetHWND(),
+                                                 GetWidget()->GetHWND(),
                                                  model_.get(),
                                                  point.ToPOINT());
     drop_down_pressed_ = false;
@@ -714,7 +716,7 @@ bool DownloadItemView::OnMouseDragged(const views::MouseEvent& event) {
   if (dragging_) {
     if (download_->state() == DownloadItem::COMPLETE) {
       IconManager* im = g_browser_process->icon_manager();
-      SkBitmap* icon = im->LookupIcon(download_->full_path(),
+      SkBitmap* icon = im->LookupIcon(download_->full_path().ToWStringHack(),
                                       IconLoader::SMALL);
       if (icon)
         download_util::DragDownload(download_, icon);
@@ -748,7 +750,7 @@ void DownloadItemView::OnExtractIconComplete(IconManager::Handle handle,
 
 void DownloadItemView::LoadIcon() {
   IconManager* im = g_browser_process->icon_manager();
-  im->LoadIcon(download_->full_path(), IconLoader::SMALL,
+  im->LoadIcon(download_->full_path().ToWStringHack(), IconLoader::SMALL,
                &icon_consumer_,
                NewCallback(this, &DownloadItemView::OnExtractIconComplete));
 }

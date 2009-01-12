@@ -18,7 +18,6 @@
 #include "base/non_thread_safe.h"
 #include "base/ref_counted.h"
 #include "base/scoped_ptr.h"
-#include "base/shared_event.h"
 #include "chrome/browser/automation/automation_provider_list.h"
 #include "chrome/browser/browser_process.h"
 #include "sandbox/src/sandbox.h"
@@ -168,21 +167,6 @@ class BrowserProcessImpl : public BrowserProcess, public NonThreadSafe {
     return memory_model_;
   }
 
-  virtual SuspendController* suspend_controller() {
-    DCHECK(CalledOnValidThread());
-    return suspend_controller_.get();
-  }
-
-  // TODO(beng): remove once XPFrame/VistaFrame are gone.
-  virtual bool IsUsingNewFrames() {
-    DCHECK(CalledOnValidThread());
-    if (!checked_for_new_frames_) {
-      using_new_frames_ = CommandLine().HasSwitch(L"magic_browzR");
-      checked_for_new_frames_ = true;
-    }
-    return using_new_frames_;
-  }
-
   virtual HANDLE shutdown_event() { return shutdown_event_; }
 
  private:
@@ -253,8 +237,6 @@ class BrowserProcessImpl : public BrowserProcess, public NonThreadSafe {
   std::wstring locale_;
 
   MemoryModel memory_model_;
-
-  scoped_refptr<SuspendController> suspend_controller_;
 
   bool checked_for_new_frames_;
   bool using_new_frames_;

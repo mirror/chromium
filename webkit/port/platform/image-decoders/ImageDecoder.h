@@ -30,26 +30,30 @@
 #include "IntRect.h"
 #include "ImageSource.h"
 #include "NativeImageSkia.h"
+#include "PlatformString.h"
 #include "SharedBuffer.h"
+#include <wtf/PassRefPtr.h>
+#include <wtf/RefCounted.h>
+#include <wtf/RefPtr.h>
 #include <wtf/Vector.h>
 
 #undef LOG
-#include "base/basictypes.h"
-#include "base/ref_counted.h"
 #include "SkBitmap.h"
 
 namespace WebCore {
 
-class RefCountedNativeImageSkia
-    : public base::RefCounted<RefCountedNativeImageSkia> {
+class RefCountedNativeImageSkia : public RefCounted<RefCountedNativeImageSkia> {
  public:
-  RefCountedNativeImageSkia() {}
+    static PassRefPtr<RefCountedNativeImageSkia> create() {
+        return adoptRef(new RefCountedNativeImageSkia);
+    }
 
-  const NativeImageSkia& bitmap() const { return bitmap_; }
-  NativeImageSkia& bitmap() { return bitmap_; }
+    const NativeImageSkia& bitmap() const { return m_bitmap; }
+    NativeImageSkia& bitmap() { return m_bitmap; }
 
  private:
-  NativeImageSkia bitmap_;
+    RefCountedNativeImageSkia() {}
+    NativeImageSkia m_bitmap;
 };
 
 // The RGBA32Buffer object represents the decoded image data in RGBA32 format.
@@ -83,15 +87,14 @@ public:
 
     RGBA32Buffer() : m_status(FrameEmpty),
                      m_duration(0),
-                     m_disposalMethod(DisposeNotSpecified)
-    {
-        m_bitmapRef = new RefCountedNativeImageSkia();
+                     m_disposalMethod(DisposeNotSpecified) {
+        m_bitmapRef = RefCountedNativeImageSkia::create();
     }
 
     // This constructor doesn't create a new copy of the image data, it only
     // increases the ref count of the existing bitmap.
     RGBA32Buffer(const RGBA32Buffer& other) {
-        m_bitmapRef = new RefCountedNativeImageSkia();
+        m_bitmapRef = RefCountedNativeImageSkia::create();
         operator=(other);
     }
 
@@ -117,13 +120,21 @@ public:
         return *this;
     }
 
+    void clear() {
+      m_bitmapRef = RefCountedNativeImageSkia::create();
+      m_rect = IntRect();
+      m_status = FrameEmpty;
+      m_duration = 0;
+      m_disposalMethod = DisposeNotSpecified;
+    }
+
     // This function creates a new copy of the image data in |other|, so the
     // two images can be modified independently.
     void copyBitmapData(const RGBA32Buffer& other) {
         if (this == &other)
             return;
 
-        m_bitmapRef = new RefCountedNativeImageSkia();
+        m_bitmapRef = RefCountedNativeImageSkia::create();
         SkBitmap& bmp = bitmap();
         const SkBitmap& otherBmp = other.bitmap();
         bmp.setConfig(SkBitmap::kARGB_8888_Config, other.width(),
@@ -136,8 +147,8 @@ public:
         }
     }
 
-    SkBitmap& bitmap() { return m_bitmapRef->bitmap(); }
-    const SkBitmap& bitmap() const { return m_bitmapRef->bitmap(); }
+    NativeImageSkia& bitmap() { return m_bitmapRef->bitmap(); }
+    const NativeImageSkia& bitmap() const { return m_bitmapRef->bitmap(); }
 
     // Must be called before any pixels are written. Will return true on
     // success, false if the memory allocation fails.
@@ -200,7 +211,7 @@ public:
     }
 
 private:
-    scoped_refptr<RefCountedNativeImageSkia> m_bitmapRef;
+    RefPtr<RefCountedNativeImageSkia> m_bitmapRef;
     IntRect m_rect;    // The rect of the original specified frame within the overall buffer.
                        // This will always just be the entire buffer except for GIF frames
                        // whose original rect was smaller than the overall image size.
@@ -217,6 +228,9 @@ class ImageDecoder
 public:
     ImageDecoder() : m_failed(false), m_sizeAvailable(false)  {}
     virtual ~ImageDecoder() {}
+
+    // The the filename extension usually associated with an undecoded image of this type.
+    virtual String filenameExtension() const = 0;
 
     // All specific decoder plugins must do something with the data they are given.
     virtual void setData(SharedBuffer* data, bool allDataReceived) { m_data = data; }
@@ -255,6 +269,14 @@ public:
     bool failed() const { return m_failed; }
     void setFailed() { m_failed = true; }
 
+    // Wipe out frames in the frame buffer cache before |clearBeforeFrame|,
+    // assuming this can be done without breaking decoding.  Different decoders
+    // place different restrictions on what frames are safe to destroy, so this
+    // is left to them to implement.
+    // For convenience's sake, we provide a default (empty) implementation,
+    // since in practice only GIFs will ever use this.
+    virtual void clearFrameBufferCache(size_t clearBeforeFrame) { }
+
 protected:
     // Called by the image decoders to set their decoded size, this also check
     // the size for validity. It will return true if the size was set, or false
@@ -285,10 +307,11 @@ private:
     // based on the width and height. Because of this, our total computed image
     // byte size must never overflow an int.
     static bool isOverSize(unsigned width, unsigned height) {
-      uint64 total_size = static_cast<uint64>(width) * static_cast<uint64>(height);
-      if (total_size > 32 * 1024 * 1024)  // 32M = 128MB memory total (32 bpp).
-        return true;
-      return false;
+        unsigned long long total_size = static_cast<unsigned long long>(width) * 
+                                        static_cast<unsigned long long>(height);
+        if (total_size > 32 * 1024 * 1024)  // 32M = 128MB memory total (32 bpp).
+            return true;
+        return false;
     }
 
     IntSize m_size;

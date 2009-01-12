@@ -9,6 +9,10 @@
 #include "base/time.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using base::Time;
+using base::TimeDelta;
+using base::TimeTicks;
+
 namespace {
 
 class MockTimeTicks : public TimeTicks {
@@ -186,7 +190,13 @@ TEST(TimeTicks, TimerPerformance) {
     for (int index = 0; index < kLoops; index++)
       cases[test_case].func();
     TimeTicks stop = TimeTicks::HighResNow();
-    EXPECT_LT((stop - start).InMilliseconds(), kMaxTime);
+    // Turning off the check for acceptible delays.  Without this check,
+    // the test really doesn't do much other than measure.  But the
+    // measurements are still useful for testing timers on various platforms.
+    // The reason to remove the check is because the tests run on many 
+    // buildbots, some of which are VMs.  These machines can run horribly
+    // slow, and there is really no value for checking against a max timer.
+    //EXPECT_LT((stop - start).InMilliseconds(), kMaxTime);
     printf("%s: %1.2fus per call\n", cases[test_case].description, 
       (stop - start).InMillisecondsF() * 1000 / kLoops);
     test_case++;

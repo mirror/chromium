@@ -47,8 +47,7 @@ class CustomFrameWindow : public Window {
   virtual void EnableClose(bool enable);
   virtual void DisableInactiveRendering(bool disable);
 
-  // Overridden from ContainerWin:
-  virtual void OnGetMinMaxInfo(MINMAXINFO* minmax_info);
+  // Overridden from WidgetWin:
   virtual void OnInitMenu(HMENU menu);
   virtual void OnMouseLeave();
   virtual LRESULT OnNCActivate(BOOL active);
@@ -56,19 +55,41 @@ class CustomFrameWindow : public Window {
   virtual LRESULT OnNCHitTest(const CPoint& point);
   virtual void OnNCPaint(HRGN rgn);
   virtual void OnNCLButtonDown(UINT ht_component, const CPoint& point);
+  virtual void OnNCMButtonDown(UINT ht_component, const CPoint& point);
   virtual LRESULT OnNCUAHDrawCaption(UINT msg, WPARAM w_param, LPARAM l_param);
   virtual LRESULT OnNCUAHDrawFrame(UINT msg, WPARAM w_param, LPARAM l_param);
   virtual LRESULT OnSetCursor(HWND window, UINT hittest_code, UINT message);
   virtual LRESULT OnSetIcon(UINT size_type, HICON new_icon);
   virtual LRESULT OnSetText(const wchar_t* text);
   virtual void OnSize(UINT param, const CSize& size);
+  virtual void OnSysCommand(UINT notification_code, CPoint click);
 
  private:
+  class ScopedRedrawLock;
+
+  // Lock or unlock the window from being able to redraw itself in response to
+  // updates to its invalid region.
+  void LockUpdates();
+  void UnlockUpdates();
+
   // Resets the window region.
   void ResetWindowRegion();
 
+  // Converts a non-client mouse down message to a regular ChromeViews event
+  // and handle it. |point| is the mouse position of the message in screen
+  // coords. |flags| are flags that would be passed with a WM_L/M/RBUTTON*
+  // message and relate to things like which button was pressed. These are
+  // combined with flags relating to the current key state.
+  void ProcessNCMousePress(const CPoint& point, int flags);
+
   // True if this window is the active top level window.
   bool is_active_;
+
+  // True if updates to this window are currently locked.
+  bool lock_updates_;
+
+  // The window styles of the window before updates were locked.
+  DWORD saved_window_style_;
 
   // Static resource initialization.
   static void InitClass();

@@ -96,7 +96,7 @@ std::wstring TaskManagerTableModel::GetText(int row, int col_id) {
   ResourceList* group = group_map_[resource->GetProcess()];
   DCHECK(group && !group->empty());
   bool first_in_group = ((*group)[0] == resource);
-  process_util::ProcessMetrics* process_metrics = NULL;
+  base::ProcessMetrics* process_metrics = NULL;
   if (first_in_group) {
     MetricsMap::iterator iter = metrics_map_.find(resource->GetProcess());
     DCHECK(iter != metrics_map_.end());
@@ -148,7 +148,7 @@ std::wstring TaskManagerTableModel::GetText(int row, int col_id) {
     case IDS_TASK_MANAGER_PROCESS_ID_COLUMN:
       if (!first_in_group)
         return std::wstring();
-      return IntToWString(process_util::GetProcId(resource->GetProcess()));
+      return IntToWString(base::GetProcId(resource->GetProcess()));
       
     case kGoatsTeleportedColumn:  // Goats Teleported.
       goats_teleported_ += rand();
@@ -175,23 +175,23 @@ int TaskManagerTableModel::GetCPUUsage(TaskManager::Resource* resource) {
 }
 
 size_t TaskManagerTableModel::GetPrivateMemory(
-    process_util::ProcessMetrics* process_metrics) {
+    base::ProcessMetrics* process_metrics) {
   return process_metrics->GetPrivateBytes() / 1024;
 }
 
 size_t TaskManagerTableModel::GetSharedMemory(
-    process_util::ProcessMetrics* process_metrics) {
-  process_util::WorkingSetKBytes ws_usage;
+    base::ProcessMetrics* process_metrics) {
+  base::WorkingSetKBytes ws_usage;
   process_metrics->GetWorkingSetKBytes(&ws_usage);
   return ws_usage.shared;
 }
 
 size_t TaskManagerTableModel::GetPhysicalMemory(
-    process_util::ProcessMetrics* process_metrics) {
+    base::ProcessMetrics* process_metrics) {
   // Memory = working_set.private + working_set.shareable.
   // We exclude the shared memory.
   size_t total_kbytes = process_metrics->GetWorkingSetSize() / 1024;
-  process_util::WorkingSetKBytes ws_usage;
+  base::WorkingSetKBytes ws_usage;
   process_metrics->GetWorkingSetKBytes(&ws_usage);
   total_kbytes -= ws_usage.shared;
   return total_kbytes;
@@ -201,10 +201,10 @@ int TaskManagerTableModel::GetStatsValue(TaskManager::Resource* resource,
                                          int col_id) {
   StatsTable* table = StatsTable::current();
   if (table != NULL) {
-    const wchar_t* counter = table->GetRowName(col_id);
+    const char* counter = table->GetRowName(col_id);
     if (counter != NULL && counter[0] != '\0') {
       return table->GetCounterValue(counter,
-          process_util::GetProcId(resource->GetProcess()));
+          base::GetProcId(resource->GetProcess()));
      } else {
         NOTREACHED() << "Invalid column.";
      }
@@ -344,8 +344,8 @@ void TaskManagerTableModel::AddResource(TaskManager::Resource* resource) {
     new_entry_index = static_cast<int>(iter - resources_.begin());
     resources_.insert(++iter, resource);
   }
-  process_util::ProcessMetrics* pm =
-      process_util::ProcessMetrics::CreateProcessMetrics(process);
+  base::ProcessMetrics* pm =
+      base::ProcessMetrics::CreateProcessMetrics(process);
   metrics_map_[process] = pm;
 
   // Notify the table that the contents have changed for it to redraw.
@@ -503,8 +503,8 @@ int TaskManagerTableModel::CompareValues(int row1, int row2, int column_id) {
                                GetCPUUsage(resources_[row2]));
 
     case IDS_TASK_MANAGER_PRIVATE_MEM_COLUMN: {
-      process_util::ProcessMetrics* pm1;
-      process_util::ProcessMetrics* pm2;
+      base::ProcessMetrics* pm1;
+      base::ProcessMetrics* pm2;
       if (!GetProcessMetricsForRows(row1, row2, &pm1, &pm2))
         return 0;
       return ValueCompare<size_t>(GetPrivateMemory(pm1),
@@ -512,8 +512,8 @@ int TaskManagerTableModel::CompareValues(int row1, int row2, int column_id) {
     }
 
     case IDS_TASK_MANAGER_SHARED_MEM_COLUMN: {
-      process_util::ProcessMetrics* pm1;
-      process_util::ProcessMetrics* pm2;
+      base::ProcessMetrics* pm1;
+      base::ProcessMetrics* pm2;
       if (!GetProcessMetricsForRows(row1, row2, &pm1, &pm2))
         return 0;
       return ValueCompare<size_t>(GetSharedMemory(pm1),
@@ -521,8 +521,8 @@ int TaskManagerTableModel::CompareValues(int row1, int row2, int column_id) {
     }
 
     case IDS_TASK_MANAGER_PHYSICAL_MEM_COLUMN: {
-      process_util::ProcessMetrics* pm1;
-      process_util::ProcessMetrics* pm2;
+      base::ProcessMetrics* pm1;
+      base::ProcessMetrics* pm2;
       if (!GetProcessMetricsForRows(row1, row2, &pm1, &pm2))
         return 0;
       return ValueCompare<size_t>(GetPhysicalMemory(pm1),
@@ -530,8 +530,8 @@ int TaskManagerTableModel::CompareValues(int row1, int row2, int column_id) {
     }
 
     case IDS_TASK_MANAGER_PROCESS_ID_COLUMN: {
-      int proc1_id = process_util::GetProcId(resources_[row1]->GetProcess());
-      int proc2_id = process_util::GetProcId(resources_[row2]->GetProcess());
+      int proc1_id = base::GetProcId(resources_[row1]->GetProcess());
+      int proc2_id = base::GetProcId(resources_[row2]->GetProcess());
       return ValueCompare<int>(proc1_id, proc2_id);
     }
       
@@ -632,8 +632,8 @@ void TaskManagerTableModel::OnBytesRead(URLRequestJob* job, int byte_count) {
 
 bool TaskManagerTableModel::GetProcessMetricsForRows(
     int row1, int row2,
-    process_util::ProcessMetrics** proc_metrics1,
-    process_util::ProcessMetrics** proc_metrics2) {
+    base::ProcessMetrics** proc_metrics1,
+    base::ProcessMetrics** proc_metrics2) {
 
   DCHECK(row1 < static_cast<int>(resources_.size()) &&
          row2 < static_cast<int>(resources_.size()));
@@ -783,14 +783,15 @@ void TaskManagerContents::UpdateStatsCounters() {
     int max = stats->GetMaxCounters();
     // skip the first row (it's header data)
     for (int i = 1; i < max; i++) {
-      const wchar_t* row = stats->GetRowName(i);
-      if (row != NULL && row[0] != L'\0' && !tab_table_->HasColumn(i)) {
+      const char* row = stats->GetRowName(i);
+      if (row != NULL && row[0] != '\0' && !tab_table_->HasColumn(i)) {
         // TODO(erikkay): Use l10n to get display names for stats.  Right
         // now we're just displaying the internal counter name.  Perhaps
         // stat names not in the string table would be filtered out.
         // TODO(erikkay): Width is hard-coded right now, so many column
         // names are clipped.
-        views::TableColumn col(i, row, views::TableColumn::RIGHT, 90, 0);
+        views::TableColumn col(i, ASCIIToWide(row), views::TableColumn::RIGHT,
+                               90, 0);
         col.sortable = true;
         columns_.push_back(col);
         tab_table_->AddColumn(col);
@@ -915,7 +916,7 @@ void TaskManagerContents::ShowContextMenu(views::View* source,
                                           int y,
                                           bool is_mouse_gesture) {
   UpdateStatsCounters();
-  Menu menu(this, Menu::TOPLEFT, source->GetContainer()->GetHWND());
+  Menu menu(this, Menu::TOPLEFT, source->GetWidget()->GetHWND());
   for (std::vector<views::TableColumn>::iterator i =
        columns_.begin(); i != columns_.end(); ++i) {
     menu.AppendMenuItem(i->id, i->title, Menu::CHECKBOX);
@@ -1062,21 +1063,8 @@ std::wstring TaskManager::GetWindowTitle() const {
   return l10n_util::GetString(IDS_TASK_MANAGER_TITLE);
 }
 
-void TaskManager::SaveWindowPosition(const CRect& bounds,
-                                     bool maximized,
-                                     bool always_on_top) {
-  window()->SaveWindowPositionToPrefService(g_browser_process->local_state(),
-                                            prefs::kTaskManagerWindowPlacement,
-                                            bounds, maximized, always_on_top);
-}
-
-bool TaskManager::RestoreWindowPosition(CRect* bounds,
-                                        bool* maximized,
-                                        bool* always_on_top) {
-  return window()->RestoreWindowPositionFromPrefService(
-      g_browser_process->local_state(),
-      prefs::kTaskManagerWindowPlacement,
-      bounds, maximized, always_on_top);
+std::wstring TaskManager::GetWindowName() const {
+  return prefs::kTaskManagerWindowPlacement;
 }
 
 int TaskManager::GetDialogButtons() const {

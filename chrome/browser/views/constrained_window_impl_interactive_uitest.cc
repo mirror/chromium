@@ -39,23 +39,23 @@ class InteractiveConstrainedWindowTest : public UITest {
   }
 
   void NavigateMainTabTo(const std::wstring& file_name) {
-  std::wstring filename(test_data_directory_);
-  file_util::AppendToPath(&filename, L"constrained_files");
+    std::wstring filename(test_data_directory_);
+    file_util::AppendToPath(&filename, L"constrained_files");
     file_util::AppendToPath(&filename, file_name);
     ASSERT_TRUE(tab_->NavigateToURL(net::FilePathToFileURL(filename)));
   }
 
   void SimulateClickInCenterOf(const scoped_ptr<WindowProxy>& window) {
-  gfx::Rect tab_view_bounds;
-  ASSERT_TRUE(window->GetViewBounds(VIEW_ID_TAB_CONTAINER,
-                                    &tab_view_bounds, true));
+    gfx::Rect tab_view_bounds;
+    ASSERT_TRUE(window->GetViewBounds(VIEW_ID_TAB_CONTAINER,
+                                      &tab_view_bounds, true));
 
-  // Simulate a click of the actual link to force user_gesture to be
-  // true; if we don't, the resulting popup will be constrained, which
-  // isn't what we want to test.
-  POINT link_point(tab_view_bounds.CenterPoint().ToPOINT());
-  ASSERT_TRUE(window->SimulateOSClick(link_point,
-                                      views::Event::EF_LEFT_BUTTON_DOWN));
+    // Simulate a click of the actual link to force user_gesture to be
+    // true; if we don't, the resulting popup will be constrained, which
+    // isn't what we want to test.
+    POINT link_point(tab_view_bounds.CenterPoint().ToPOINT());
+    ASSERT_TRUE(window->SimulateOSClick(link_point,
+                                        views::Event::EF_LEFT_BUTTON_DOWN));
   }
 
   scoped_ptr<BrowserProxy> browser_;
@@ -103,8 +103,7 @@ TEST_F(InteractiveConstrainedWindowTest, TestOpenAndResizeTo) {
 
 // Helper function used to get the number of blocked popups out of the window
 // title.
-bool ParseCountOutOfTitle(const std::wstring& title, int* output)
-{
+bool ParseCountOutOfTitle(const std::wstring& title, int* output) {
   // Since we will be reading the number of popup windows open by grabbing the
   // number out of the window title, and that format string is localized, we
   // need to find out the offset into that string.
@@ -246,4 +245,17 @@ TEST_F(InteractiveConstrainedWindowTest, ShowAlertFromNormalPopup) {
 
   // Wait for there to be an app modal dialog.
   ASSERT_TRUE(automation()->WaitForAppModalDialog(5000));
+}
+
+// Make sure that window focus works while creating a popup window so that we
+// don't
+TEST_F(InteractiveConstrainedWindowTest, DontBreakOnBlur) {
+  NavigateMainTabTo(L"window_blur_test.html");
+  SimulateClickInCenterOf(window_);
+
+  // Wait for the popup window to open.
+  ASSERT_TRUE(automation()->WaitForWindowCountToBecome(2, 1000));
+
+  // We popup shouldn't be closed by the onblur handler.
+  ASSERT_FALSE(automation()->WaitForWindowCountToBecome(1, 1500));
 }

@@ -136,13 +136,10 @@ class SdchManager {
     Dictionary(const std::string& dictionary_text, size_t offset,
                const std::string& client_hash, const GURL& url,
                const std::string& domain, const std::string& path,
-               const Time& expiration, const std::set<int> ports);
+               const base::Time& expiration, const std::set<int> ports);
 
     const GURL& url() const { return url_; }
     const std::string& client_hash() const { return client_hash_; }
-
-    // For a given URL, get the actual or default port.
-    static int GetPortIncludingDefault(const GURL& url);
 
     // Security method to check if we can advertise this dictionary for use
     // if the |target_url| returns SDCH compressed data.
@@ -181,7 +178,7 @@ class SdchManager {
     // of the dictionary.  The following are the known headers.
     const std::string domain_;
     const std::string path_;
-    const Time expiration_;  // Implied by max-age.
+    const base::Time expiration_;  // Implied by max-age.
     const std::set<int> ports_;
 
     DISALLOW_COPY_AND_ASSIGN(Dictionary);

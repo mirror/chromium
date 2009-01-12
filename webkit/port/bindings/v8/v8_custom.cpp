@@ -1,11 +1,10 @@
 /*
- *  This file is part of the KDE libraries
  *  Copyright (C) 2000 Harri Porten (porten@kde.org)
  *  Copyright (C) 2001 Peter Kelly (pmk@post.com)
  *  Copyright (C) 2004-2006 Apple Computer, Inc.
  *  Copyright (C) 2006 James G. Speth (speth@end.com)
  *  Copyright (C) 2006 Samuel Weinig (sam@webkit.org)
- *  Copyright 2007 Google Inc. All Rights Reserved.
+ *  Copyright 2007, 2008 Google Inc. All Rights Reserved.
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Lesser General Public
@@ -25,6 +24,7 @@
 #include "config.h"
 
 #include <Assertions.h>
+#include <wtf/ASCIICType.h>
 
 #include "v8_proxy.h"
 #include "v8_events.h"
@@ -46,95 +46,86 @@
 #include "V8XPathNSResolver.h"
 #include "V8XPathResult.h"
 
+#include "Base64.h"
 #include "CanvasGradient.h"
 #include "CanvasPattern.h"
-#include "CanvasStyle.h"
 #include "CanvasRenderingContext2D.h"
-
+#include "CanvasStyle.h"
 #include "Clipboard.h"
 #include "ClipboardEvent.h"
-
-#include "Base64.h"
-#include "FloatRect.h"
-#include "Frame.h"
-#include "FrameTree.h"
-#include "FrameLoader.h"
-#include "FrameView.h"
+#include "Console.h"
+#include "DOMParser.h"
+#include "DOMStringList.h"
+#include "DOMWindow.h"
 #include "Document.h"
 #include "DocumentFragment.h"
-#include "DOMParser.h"
-#include "DOMWindow.h"
-#include "Location.h"
-#include "History.h"
-#include "ScheduledAction.h"
 #include "Event.h"
 #include "EventListener.h"
-#include "EventTargetNode.h"
 #include "EventTarget.h"
+#include "EventTargetNode.h"
 #include "ExceptionCode.h"
-#include "XMLHttpRequest.h"
-#include "XMLSerializer.h"
-#include "KURL.h"
-#include "DeprecatedString.h"
-#include "HTMLDocument.h"
-#include "HTMLNames.h"
+#include "FloatRect.h"
+#include "Frame.h"
+#include "FrameLoader.h"
+#include "FrameLoadRequest.h"
+#include "FrameTree.h"
+#include "FrameView.h"
 #include "HTMLBodyElement.h"
+#include "HTMLCanvasElement.h"
+#include "HTMLDocument.h"
 #include "HTMLEmbedElement.h"
-#include "HTMLIFrameElement.h"
+#include "HTMLFormElement.h"
 #include "HTMLFrameElement.h"
 #include "HTMLFrameElementBase.h"
 #include "HTMLFrameSetElement.h"
+#include "HTMLIFrameElement.h"
 #include "HTMLImageElement.h"
-#include "HTMLCanvasElement.h"
-#include "HTMLFormElement.h"
+#include "HTMLInputElement.h"
+#include "HTMLNames.h"
 #include "HTMLOptionElement.h"
 #include "HTMLOptionsCollection.h"
 #include "HTMLSelectElement.h"
+#include "History.h"
+#include "JSXPathNSResolver.h"
+#include "JSDOMBinding.h"
+#include "KURL.h"
+#include "Location.h"
+#include "MessageChannel.h"
+#include "MessagePort.h"
 #include "MouseEvent.h"
 #include "NodeIterator.h"
 #include "Page.h"
 #include "PlatformScreen.h"
-#include "RenderWidget.h"
-#include "RenderPartObject.h"
 #include "RGBColor.h"
+#include "RenderPartObject.h"
+#include "RenderWidget.h"
+#include "ScheduledAction.h"
+#include "ScriptState.h"
+#include "ScriptController.h"
 #include "SecurityOrigin.h"
 #include "Settings.h"
 #include "StyleSheetList.h"
 #include "TreeWalker.h"
 #include "WindowFeatures.h"
+#include "XMLSerializer.h"
 #include "XPathEvaluator.h"
-#include "JSXPathNSResolver.h"
 #include "XPathResult.h"
 #include "XSLTProcessor.h"
-#include "V8Bridge.h"
 
 #if ENABLE(SVG)
 #include "V8SVGPODTypeWrapper.h"
+#include "SVGElementInstance.h"
 #include "SVGException.h"
 #include "SVGPathSeg.h"
 #endif
 
-#undef LOG
-
-#include "webkit/glue/webplugin_impl.h"
+#include "Navigator.h"
 
 // Horizontal and vertical offset, from the parent content area, around newly
 // opened popups that don't specify a location.
 static const int kPopupTilePixels = 10;
 
 namespace WebCore {
-
-#define CALLBACK_FUNC_DECL(NAME)                \
-v8::Handle<v8::Value> V8Custom::v8##NAME##Callback(const v8::Arguments& args)
-
-#define ACCESSOR_GETTER(NAME) \
-v8::Handle<v8::Value> V8Custom::v8##NAME##AccessorGetter(\
-    v8::Local<v8::String> name, const v8::AccessorInfo& info)
-
-#define ACCESSOR_SETTER(NAME) \
-void V8Custom::v8##NAME##AccessorSetter(v8::Local<v8::String> name, \
-                                        v8::Local<v8::Value> value, \
-                                        const v8::AccessorInfo& info)
 
 #define NAMED_PROPERTY_GETTER(NAME)  \
 v8::Handle<v8::Value> V8Custom::v8##NAME##NamedPropertyGetter(\
@@ -177,8 +168,8 @@ class V8ScheduledAction : public ScheduledAction {
  public:
   V8ScheduledAction(v8::Handle<v8::Function> func, int argc,
                     v8::Handle<v8::Value> argv[]);
-  explicit V8ScheduledAction(const WebCore::String& code) : m_code(code),
-      m_argc(0), m_argv(NULL) { }
+  explicit V8ScheduledAction(const WebCore::String& code) : m_argc(0),
+      m_argv(0), m_code(code) { }
   virtual ~V8ScheduledAction();
   virtual void execute(DOMWindow* window);
 
@@ -264,57 +255,81 @@ void V8ScheduledAction::execute(DOMWindow* window) {
 }
 
 
-CALLBACK_FUNC_DECL(XMLHttpRequestConstructor) {
-  INC_STATS(L"DOM.XMLHttpRequest.Constructor");
+CALLBACK_FUNC_DECL(DOMParserConstructor) {
+  INC_STATS("DOM.DOMParser.Contructor");
+  return V8Proxy::ConstructDOMObject<V8ClassIndex::DOMPARSER,
+                                     DOMParser>(args);
+}
 
+CALLBACK_FUNC_DECL(MessageChannelConstructor) {
+  INC_STATS("DOM.MessageChannel.Constructor");
   if (!args.IsConstructCall()) {
     V8Proxy::ThrowError(V8Proxy::TYPE_ERROR,
         "DOM object constructor cannot be called as a function.");
     return v8::Undefined();
   }
-  // Expect no parameters.
-  // Allocate a XMLHttpRequest object as its internal field.
-  Document* doc = V8Proxy::retrieveFrame()->document();
-  XMLHttpRequest* xhr = new XMLHttpRequest(doc);
-  V8Proxy::SetDOMWrapper(args.Holder(),
-      V8ClassIndex::ToInt(V8ClassIndex::XMLHTTPREQUEST), xhr);
-  // Set object as the peer.
-  V8Proxy::SetJSWrapperForDOMObject(xhr,
-      v8::Persistent<v8::Object>::New(args.Holder()));
-  return args.Holder();
-}
 
+  // Get the document.
+  Frame* frame = V8Proxy::retrieveFrame();
+  if (!frame)
+    return v8::Undefined();
+  Document* document = frame->document();
 
-CALLBACK_FUNC_DECL(DOMParserConstructor) {
-  INC_STATS(L"DOM.DOMParser.Contructor");
-  return V8Proxy::ConstructDOMObject<V8ClassIndex::DOMPARSER,
-                                     DOMParser>(args);
+  // Note: it's OK to let this RefPtr go out of scope because we also call
+  // SetDOMWrapper(), which effectively holds a reference to obj.
+  RefPtr<MessageChannel> obj = MessageChannel::create(document);
+  
+  // Create wrappers for the two associated MessagePorts.
+  v8::Handle<v8::Value> port1_wrapper =
+    V8Proxy::ToV8Object(V8ClassIndex::MESSAGEPORT, obj->port1());
+  v8::Handle<v8::Value> port2_wrapper =
+    V8Proxy::ToV8Object(V8ClassIndex::MESSAGEPORT, obj->port2());
+  
+  v8::Handle<v8::Object> wrapper_object = args.Holder();
+
+  // Setup the standard wrapper object internal fields.
+  V8Proxy::SetDOMWrapper(
+      wrapper_object, V8ClassIndex::MESSAGECHANNEL, obj.get());
+
+  obj->ref();
+  V8Proxy::SetJSWrapperForDOMObject(
+      obj.get(), v8::Persistent<v8::Object>::New(wrapper_object));
+
+  // Create references from the MessageChannel wrapper to the two
+  // MessagePort wrappers to make sure that the MessagePort wrappers
+  // stay alive as long as the MessageChannel wrapper is around.
+  wrapper_object->SetInternalField(kMessageChannelPort1Index, port1_wrapper);
+  wrapper_object->SetInternalField(kMessageChannelPort2Index, port2_wrapper);
+
+  // Return the wrapper object which will be the result of the call to
+  // new.
+  return wrapper_object;
 }
 
 
 CALLBACK_FUNC_DECL(XMLSerializerConstructor) {
-  INC_STATS(L"DOM.XMLSerializer.Constructor");
+  INC_STATS("DOM.XMLSerializer.Constructor");
   return V8Proxy::ConstructDOMObject<V8ClassIndex::XMLSERIALIZER,
                                      XMLSerializer>(args);
 }
 
 
 CALLBACK_FUNC_DECL(XPathEvaluatorConstructor) {
-  INC_STATS(L"DOM.XPathEvaluator.Constructor");
+  INC_STATS("DOM.XPathEvaluator.Constructor");
   return V8Proxy::ConstructDOMObject<V8ClassIndex::XPATHEVALUATOR,
                                      XPathEvaluator>(args);
 }
 
 
 CALLBACK_FUNC_DECL(XSLTProcessorConstructor) {
-  INC_STATS(L"DOM.XSLTProcessor.Constructor");
+  INC_STATS("DOM.XSLTProcessor.Constructor");
   return V8Proxy::ConstructDOMObject<V8ClassIndex::XSLTPROCESSOR,
                                      XSLTProcessor>(args);
 }
 
 
 CALLBACK_FUNC_DECL(XSLTProcessorImportStylesheet) {
-  INC_STATS(L"DOM.XSLTProcessor.importStylesheet");
+  INC_STATS("DOM.XSLTProcessor.importStylesheet");
   // Return undefined if argument does not have the correct type.
   if (!V8Node::HasInstance(args[0]))
     return v8::Undefined();
@@ -329,7 +344,7 @@ CALLBACK_FUNC_DECL(XSLTProcessorImportStylesheet) {
 
 
 CALLBACK_FUNC_DECL(XSLTProcessorTransformToFragment) {
-  INC_STATS(L"DOM.XSLTProcessor.transformToFragment");
+  INC_STATS("DOM.XSLTProcessor.transformToFragment");
   // Return undefined if arguments do not have correct types.
   if (!V8Node::HasInstance(args[0]) || !V8Document::HasInstance(args[1]))
     return v8::Undefined();
@@ -346,7 +361,7 @@ CALLBACK_FUNC_DECL(XSLTProcessorTransformToFragment) {
 
 
 CALLBACK_FUNC_DECL(XSLTProcessorTransformToDocument) {
-  INC_STATS(L"DOM.XSLTProcessor.transformToDocument");
+  INC_STATS("DOM.XSLTProcessor.transformToDocument");
   // Return undefined if argument does not have the correct type.
   if (!V8Node::HasInstance(args[0]))
     return v8::Undefined();
@@ -355,16 +370,18 @@ CALLBACK_FUNC_DECL(XSLTProcessorTransformToDocument) {
       V8ClassIndex::XSLTPROCESSOR, args.Holder());
 
   Node* source = V8Proxy::DOMWrapperToNode<Node>(args[0]);
-  if (!source) return v8::Undefined();
+  if (!source)
+      return v8::Undefined();
   RefPtr<Document> result = imp->transformToDocument(source);
   // Return undefined if no result was found.
-  if (!result) return v8::Undefined();
+  if (!result)
+      return v8::Undefined();
   return V8Proxy::NodeToV8Object(result.get());
 }
 
 
 CALLBACK_FUNC_DECL(XSLTProcessorSetParameter) {
-  INC_STATS(L"DOM.XSLTProcessor.setParameter");
+  INC_STATS("DOM.XSLTProcessor.setParameter");
   // Bail out if localName or value is null or undefined.
   if (args[1]->IsNull() || args[1]->IsUndefined() ||
       args[2]->IsNull() || args[2]->IsUndefined()) {
@@ -383,7 +400,7 @@ CALLBACK_FUNC_DECL(XSLTProcessorSetParameter) {
 
 
 CALLBACK_FUNC_DECL(XSLTProcessorGetParameter) {
-  INC_STATS(L"DOM.XSLTProcessor.getParameter");
+  INC_STATS("DOM.XSLTProcessor.getParameter");
   // Bail out if localName is null or undefined.
   if (args[1]->IsNull() || args[1]->IsUndefined()) {
     return v8::Undefined();
@@ -402,11 +419,10 @@ CALLBACK_FUNC_DECL(XSLTProcessorGetParameter) {
 
 
 CALLBACK_FUNC_DECL(XSLTProcessorRemoveParameter) {
-  INC_STATS(L"DOM.XSLTProcessor.removeParameter");
+  INC_STATS("DOM.XSLTProcessor.removeParameter");
   // Bail out if localName is null or undefined.
-  if (args[1]->IsNull() || args[1]->IsUndefined()) {
+  if (args[1]->IsNull() || args[1]->IsUndefined())
     return v8::Undefined();
-  }
 
   XSLTProcessor* imp = V8Proxy::ToNativeObject<XSLTProcessor>(
       V8ClassIndex::XSLTPROCESSOR, args.Holder());
@@ -420,32 +436,32 @@ CALLBACK_FUNC_DECL(XSLTProcessorRemoveParameter) {
 
 // ---- Canvas support ----
 static v8::Handle<v8::Value> CanvasStyleToV8Object(CanvasStyle* style) {
-  if (style->gradient()) {
+  if (style->canvasGradient()) {
     return V8Proxy::ToV8Object(V8ClassIndex::CANVASGRADIENT,
-                               static_cast<Peerable*>(style->gradient()));
+                               style->canvasGradient());
   }
-  if (style->pattern()) {
+  if (style->canvasPattern()) {
     return V8Proxy::ToV8Object(V8ClassIndex::CANVASPATTERN,
-                               static_cast<Peerable*>(style->pattern()));
+                               style->canvasPattern());
   }
   return v8String(style->color());
 }
 
-
-static PassRefPtr<CanvasStyle> V8ObjectToCanvasStyle(
-    v8::Handle<v8::Value> value) {
-  if (value->IsString()) return new CanvasStyle(ToWebCoreString(value));
+static PassRefPtr<CanvasStyle> V8ObjectToCanvasStyle(v8::Handle<v8::Value> value)
+{
+  if (value->IsString())
+      return CanvasStyle::create(ToWebCoreString(value));
 
   if (V8CanvasGradient::HasInstance(value)) {
     CanvasGradient* gradient =
         V8Proxy::DOMWrapperToNative<CanvasGradient>(value);
-    return new CanvasStyle(gradient);
+    return CanvasStyle::create(gradient);
   }
 
   if (V8CanvasPattern::HasInstance(value)) {
     CanvasPattern* pattern =
         V8Proxy::DOMWrapperToNative<CanvasPattern>(value);
-    return new CanvasStyle(pattern);
+    return CanvasStyle::create(pattern);
   }
 
   return 0;
@@ -515,8 +531,7 @@ ACCESSOR_GETTER(DocumentLocation) {
     return v8::Null();
 
   DOMWindow* window = imp->frame()->domWindow();
-  return V8Proxy::ToV8Object(V8ClassIndex::LOCATION,
-                             static_cast<Peerable*>(window->location()));
+  return V8Proxy::ToV8Object(V8ClassIndex::LOCATION, window->location());
 }
 
 
@@ -547,7 +562,7 @@ ACCESSOR_SETTER(DOMWindowOpener) {
   DOMWindow* imp = V8Proxy::ToNativeObject<DOMWindow>(
       V8ClassIndex::DOMWINDOW, info.Holder());
 
-  if (!V8Proxy::IsFromSameOrigin(imp->frame(), true))
+  if (!V8Proxy::CanAccessFrame(imp->frame(), true))
     return;
   
   // Opener can be shadowed if it is in the same domain.
@@ -625,8 +640,7 @@ static v8::Handle<v8::Value> HTMLCollectionGetNamedItems(
       return V8Proxy::NodeToV8Object(namedItems.at(0).get());
     default:
       NodeList* list = new V8VectorNodeList(namedItems);
-      return V8Proxy::ToV8Object(V8ClassIndex::NODELIST,
-                                 static_cast<Peerable*>(list));
+      return V8Proxy::ToV8Object(V8ClassIndex::NODELIST, list);
   }
 }
 
@@ -650,7 +664,7 @@ static v8::Handle<v8::Value> HTMLCollectionGetItem(
 
 
 NAMED_PROPERTY_GETTER(HTMLCollection) {
-  INC_STATS(L"DOM.HTMLCollection.NamedPropertyGetter");
+  INC_STATS("DOM.HTMLCollection.NamedPropertyGetter");
   // Search the prototype chain first.
   v8::Handle<v8::Value> value =
       info.Holder()->GetRealNamedPropertyInPrototypeChain(name);
@@ -672,9 +686,8 @@ NAMED_PROPERTY_GETTER(HTMLCollection) {
   return HTMLCollectionGetNamedItems(imp, key);
 }
 
-
 CALLBACK_FUNC_DECL(HTMLCollectionItem) {
-  INC_STATS(L"DOM.HTMLCollection.item()");
+  INC_STATS("DOM.HTMLCollection.item()");
   HTMLCollection* imp = V8Proxy::ToNativeObject<HTMLCollection>(
       V8ClassIndex::HTMLCOLLECTION, args.Holder());
   return HTMLCollectionGetItem(imp, args[0]);
@@ -682,7 +695,7 @@ CALLBACK_FUNC_DECL(HTMLCollectionItem) {
 
 
 CALLBACK_FUNC_DECL(HTMLCollectionNamedItem) {
-  INC_STATS(L"DOM.HTMLCollection.namedItem()");
+  INC_STATS("DOM.HTMLCollection.namedItem()");
   HTMLCollection* imp = V8Proxy::ToNativeObject<HTMLCollection>(
       V8ClassIndex::HTMLCOLLECTION, args.Holder());
   String name = ToWebCoreString(args[0]);
@@ -696,7 +709,7 @@ CALLBACK_FUNC_DECL(HTMLCollectionNamedItem) {
 
 
 CALLBACK_FUNC_DECL(HTMLCollectionCallAsFunction) {
-  INC_STATS(L"DOM.HTMLCollection.callAsFunction()");
+  INC_STATS("DOM.HTMLCollection.callAsFunction()");
   if (args.Length() < 1) return v8::Undefined();
 
   HTMLCollection* imp = V8Proxy::ToNativeObject<HTMLCollection>(
@@ -737,14 +750,14 @@ static v8::Handle<v8::Value> V8HTMLSelectElementRemoveHelper(
 }
 
 CALLBACK_FUNC_DECL(HTMLSelectElementRemove) {
-  INC_STATS(L"DOM.HTMLSelectElement.remove");
+  INC_STATS("DOM.HTMLSelectElement.remove");
   HTMLSelectElement* imp =
       V8Proxy::DOMWrapperToNode<HTMLSelectElement>(args.Holder());
   return V8HTMLSelectElementRemoveHelper(imp, args);
 }
 
 CALLBACK_FUNC_DECL(HTMLOptionsCollectionRemove) {
-  INC_STATS(L"DOM.HTMLOptionsCollection.remove()");
+  INC_STATS("DOM.HTMLOptionsCollection.remove()");
   HTMLOptionsCollection* imp =
       V8Proxy::ToNativeObject<HTMLOptionsCollection>(
           V8ClassIndex::HTMLOPTIONSCOLLECTION, args.Holder());
@@ -754,7 +767,7 @@ CALLBACK_FUNC_DECL(HTMLOptionsCollectionRemove) {
 
 
 CALLBACK_FUNC_DECL(HTMLOptionsCollectionAdd) {
-  INC_STATS(L"DOM.HTMLOptionsCollection.add()");
+  INC_STATS("DOM.HTMLOptionsCollection.add()");
   if (!V8HTMLOptionElement::HasInstance(args[0])) {
     V8Proxy::SetDOMException(TYPE_MISMATCH_ERR);
     return v8::Undefined();
@@ -788,16 +801,36 @@ CALLBACK_FUNC_DECL(HTMLOptionsCollectionAdd) {
 }
 
 
+INDEXED_PROPERTY_GETTER(DOMStringList) {
+  INC_STATS("DOM.DOMStringList.IndexedPropertyGetter");
+  DOMStringList* imp =
+    V8Proxy::DOMWrapperToNative<DOMStringList>(info.Holder());
+  return v8String(imp->item(index));
+}
+
+
+CALLBACK_FUNC_DECL(DOMStringListItem) {
+  INC_STATS("DOM.DOMStringListItem()");
+  if (args.Length() == 0)
+    return v8::Null();
+  uint32_t index = args[0]->Uint32Value();
+
+  DOMStringList* imp =
+    V8Proxy::DOMWrapperToNative<DOMStringList>(args.Holder());
+  if (index >= imp->length())
+    return v8::Null();
+
+  return v8String(imp->item(index));
+}
+
+
 CALLBACK_FUNC_DECL(DOMWindowAddEventListener) {
-  INC_STATS(L"DOM.DOMWindow.addEventListener()");
+  INC_STATS("DOM.DOMWindow.addEventListener()");
   DOMWindow* imp = V8Proxy::ToNativeObject<DOMWindow>(
       V8ClassIndex::DOMWINDOW, args.Holder());
 
-  // Fast check This argument with the global object of security context.
-  if ((args.This() != v8::Context::GetCurrentSecurityContext()->Global()) &&
-      !V8Proxy::IsFromSameOrigin(imp->frame(), true)) {
+  if (!V8Proxy::CanAccessFrame(imp->frame(), true))
     return v8::Undefined();
-  }
 
   if (!imp->frame())
     return v8::Undefined();  // DOMWindow could be disconnected from the frame
@@ -811,7 +844,7 @@ CALLBACK_FUNC_DECL(DOMWindowAddEventListener) {
   if (!proxy)
     return v8::Undefined();
 
-  EventListener* listener =
+  RefPtr<EventListener> listener =
     proxy->FindOrCreateV8EventListener(args[1], false);
 
   if (listener) {
@@ -825,15 +858,12 @@ CALLBACK_FUNC_DECL(DOMWindowAddEventListener) {
 
 
 CALLBACK_FUNC_DECL(DOMWindowRemoveEventListener) {
-  INC_STATS(L"DOM.DOMWindow.removeEventListener()");
+  INC_STATS("DOM.DOMWindow.removeEventListener()");
   DOMWindow* imp = V8Proxy::ToNativeObject<DOMWindow>(
       V8ClassIndex::DOMWINDOW, args.Holder());
 
-  // Fast check This argument with the global object of security context.
-  if ((args.This() != v8::Context::GetCurrentSecurityContext()->Global()) &&
-      !V8Proxy::IsFromSameOrigin(imp->frame(), true)) {
+  if (!V8Proxy::CanAccessFrame(imp->frame(), true))
     return v8::Undefined();
-  }
 
   if (!imp->frame())
     return v8::Undefined();
@@ -846,40 +876,57 @@ CALLBACK_FUNC_DECL(DOMWindowRemoveEventListener) {
   if (!proxy)
     return v8::Undefined();
 
-  EventListener* listener =
+  RefPtr<EventListener> listener =
     proxy->FindV8EventListener(args[1], false);
 
   if (listener) {
     String event_type = ToWebCoreString(args[0]);
     bool useCapture = args[2]->BooleanValue();
-    doc->removeWindowEventListener(event_type, listener, useCapture);
+    doc->removeWindowEventListener(event_type, listener.get(), useCapture);
   }
 
   return v8::Undefined();
 }
 
 CALLBACK_FUNC_DECL(DOMWindowPostMessage) {
-  INC_STATS(L"DOM.DOMWindow.postMessage()");
+  INC_STATS("DOM.DOMWindow.postMessage()");
   DOMWindow* window = V8Proxy::ToNativeObject<DOMWindow>(
       V8ClassIndex::DOMWINDOW, args.Holder());
 
   DOMWindow* source = V8Proxy::retrieveActiveFrame()->domWindow();
   ASSERT(source->frame());
 
-  String domain = source->frame()->loader()->url().host();
   String uri = source->frame()->loader()->url().string();
 
   v8::TryCatch try_catch;
 
   String message = ToWebCoreString(args[0]);
+  MessagePort* port = NULL;
+  String domain;
+
+  // This function has variable arguments and can either be:
+  //   postMessage(message, port, domain);
+  // or
+  //   postMessage(message, domain);
+  if (args.Length() > 2) {
+    if (V8Proxy::IsWrapperOfType(args[1], V8ClassIndex::MESSAGEPORT)) {
+      port = V8Proxy::ToNativeObject<MessagePort>(
+          V8ClassIndex::MESSAGEPORT, args[1]);
+    }
+    domain = valueToStringWithNullOrUndefinedCheck(args[2]);
+  } else {
+    domain = valueToStringWithNullOrUndefinedCheck(args[1]);
+  }
 
   if (try_catch.HasCaught()) return v8::Undefined();
 
-  window->postMessage(message, domain, uri, source);
+  ExceptionCode ec = 0;
+  window->postMessage(message, port, domain, source, ec);
+  if (ec)
+    V8Proxy::SetDOMException(ec);
 
   return v8::Undefined();
 }
-
 
 static bool canShowModalDialogNow(const Frame* frame) {
   // A frame can out live its page. See bug 1219613.
@@ -892,7 +939,7 @@ static bool allowPopUp() {
   Frame* frame = V8Proxy::retrieveActiveFrame();
 
   ASSERT(frame);
-  if (frame->scriptBridge()->wasRunByUserGesture()) return true;
+  if (frame->script()->processingUserGesture()) return true;
   Settings* settings = frame->settings();
   return settings && settings->JavaScriptCanOpenWindowsAutomatically();
 }
@@ -901,7 +948,8 @@ static HashMap<String, String> parseModalDialogFeatures(
     const String& features_arg) {
   HashMap<String, String> map;
 
-  Vector<String> features = features_arg.split(';');
+  Vector<String> features;
+  features_arg.split(';', features);
   Vector<String>::const_iterator end = features.end();
   for (Vector<String>::const_iterator it = features.begin(); it != end; ++it) {
     String s = *it;
@@ -956,9 +1004,8 @@ static Frame* createWindow(Frame* opener_frame,
   // "_self" or "_parent".
   Frame* new_frame = active_frame->loader()->createWindow(
       opener_frame->loader(), frame_request, window_features, created);
-  if (!new_frame) {
+  if (!new_frame)
     return 0;
-  }
 
   new_frame->loader()->setOpener(opener_frame);
   new_frame->loader()->setOpenedByDOM();
@@ -973,23 +1020,20 @@ static Frame* createWindow(Frame* opener_frame,
   }
 
   if (!parseURL(url).startsWith("javascript:", false) ||
-      JSBridge::isSafeScript(new_frame)) {
-    String completed_url =
-        url.isEmpty() ? url : active_frame->document()->completeURL(url);
-    bool user_gesture = active_frame->scriptBridge()->wasRunByUserGesture();
+      ScriptController::isSafeScript(new_frame)) {
+    KURL completed_url =
+        url.isEmpty() ? KURL("") : active_frame->document()->completeURL(url);
+    bool user_gesture = active_frame->script()->processingUserGesture();
 
     if (created) {
       new_frame->loader()->changeLocation(
-          KURL(completed_url.deprecatedString()),
+          completed_url,
           active_frame->loader()->outgoingReferrer(),
           false,
           user_gesture);
-      if (Document* old_doc = opener_frame->document()) {
-        new_frame->document()->setBaseURL(old_doc->baseURL());
-      }
     } else if (!url.isEmpty()) {
       new_frame->loader()->scheduleLocationChange(
-          completed_url,
+          completed_url.string(),
           active_frame->loader()->outgoingReferrer(),
           false,
           user_gesture);
@@ -1001,12 +1045,12 @@ static Frame* createWindow(Frame* opener_frame,
 
 
 CALLBACK_FUNC_DECL(DOMWindowShowModalDialog) {
-  INC_STATS(L"DOM.DOMWindow.showModalDialog()");
+  INC_STATS("DOM.DOMWindow.showModalDialog()");
   DOMWindow* window = V8Proxy::ToNativeObject<DOMWindow>(
       V8ClassIndex::DOMWINDOW, args.Holder());
   Frame* frame = window->frame();
 
-  if (!frame)
+  if (!frame || !V8Proxy::CanAccessFrame(frame, true)) 
     return v8::Undefined();
 
   if (!canShowModalDialogNow(frame) || !allowPopUp())
@@ -1091,18 +1135,13 @@ CALLBACK_FUNC_DECL(DOMWindowShowModalDialog) {
 
 
 CALLBACK_FUNC_DECL(DOMWindowOpen) {
-  INC_STATS(L"DOM.DOMWindow.open()");
+  INC_STATS("DOM.DOMWindow.open()");
   DOMWindow* parent = V8Proxy::ToNativeObject<DOMWindow>(
       V8ClassIndex::DOMWINDOW, args.Holder());
   Frame* frame = parent->frame();
-  if (!frame)
-    return v8::Undefined();
 
-  // Fast check This argument with the global object of security context.
-  if ((args.This() != v8::Context::GetCurrentSecurityContext()->Global()) &&
-      !V8Proxy::IsFromSameOrigin(frame, true)) {
+  if (!V8Proxy::CanAccessFrame(frame, true))
     return v8::Undefined();
-  }
 
   Frame* active_frame = V8Proxy::retrieveActiveFrame();
   if (!active_frame)
@@ -1149,8 +1188,8 @@ CALLBACK_FUNC_DECL(DOMWindowOpen) {
 
     if (!completed_url.isEmpty() &&
         (!parseURL(url_string).startsWith("javascript:", false) ||
-         JSBridge::isSafeScript(frame))) {
-      bool user_gesture = active_frame->scriptBridge()->wasRunByUserGesture();
+         ScriptController::isSafeScript(frame))) {
+      bool user_gesture = active_frame->script()->processingUserGesture();
       frame->loader()->scheduleLocationChange(
           completed_url,
           active_frame->loader()->outgoingReferrer(),
@@ -1224,7 +1263,7 @@ CALLBACK_FUNC_DECL(DOMWindowOpen) {
 
 
 INDEXED_PROPERTY_GETTER(DOMWindow) {
-  INC_STATS(L"DOM.DOMWindow.IndexedPropertyGetter");
+  INC_STATS("DOM.DOMWindow.IndexedPropertyGetter");
   v8::Handle<v8::Object> holder = V8Proxy::LookupDOMWrapper(
       V8ClassIndex::DOMWINDOW, info.This());
   if (holder.IsEmpty())
@@ -1249,7 +1288,7 @@ INDEXED_PROPERTY_GETTER(DOMWindow) {
 
 
 NAMED_PROPERTY_GETTER(DOMWindow) {
-  INC_STATS(L"DOM.DOMWindow.NamedPropertyGetter");
+  INC_STATS("DOM.DOMWindow.NamedPropertyGetter");
   // The key must be a string.
   if (!name->IsString())
     return v8::Handle<v8::Value>();
@@ -1350,8 +1389,7 @@ NAMED_PROPERTY_GETTER(DOMWindow) {
       if (items->length() == 1) {
         return V8Proxy::NodeToV8Object(items->firstItem());
       } else {
-        return V8Proxy::ToV8Object(V8ClassIndex::HTMLCOLLECTION,
-                                   static_cast<Peerable*>(items.get()));
+        return V8Proxy::ToV8Object(V8ClassIndex::HTMLCOLLECTION, items.get());
       }
     }
   }
@@ -1377,8 +1415,9 @@ NAMED_PROPERTY_DELETER(HTMLDocument) {
 }
 
 
-NAMED_PROPERTY_SETTER(HTMLDocument) {
-  INC_STATS(L"DOM.HTMLDocument.NamedPropertySetter");
+NAMED_PROPERTY_SETTER(HTMLDocument)
+{
+  INC_STATS("DOM.HTMLDocument.NamedPropertySetter");
   // Only handle document.all.  We insert the value into the shadow
   // internal field from which the getter will retrieve it.
   String key = ToWebCoreString(name);
@@ -1391,51 +1430,46 @@ NAMED_PROPERTY_SETTER(HTMLDocument) {
 }
 
 
-NAMED_PROPERTY_GETTER(HTMLDocument) {
-  INC_STATS(L"DOM.HTMLDocument.NamedPropertyGetter");
-  String key = ToWebCoreString(name);
+NAMED_PROPERTY_GETTER(HTMLDocument)
+{
+    INC_STATS("DOM.HTMLDocument.NamedPropertyGetter");
+    AtomicString key = ToWebCoreString(name);
 
-  // Special case for document.all.  If the value in the shadow
-  // internal field is not the marker object, then document.all has
-  // been temporarily shadowed and we return the value.
-  if (key == "all") {
-    ASSERT(info.Holder()->InternalFieldCount() ==
-           kHTMLDocumentInternalFieldCount);
-    v8::Local<v8::Value> marker =
-        info.Holder()->GetInternalField(kHTMLDocumentMarkerIndex);
-    v8::Local<v8::Value> value =
-        info.Holder()->GetInternalField(kHTMLDocumentShadowIndex);
-    if (marker != value) {
-      return value;
+    // Special case for document.all.  If the value in the shadow
+    // internal field is not the marker object, then document.all has
+    // been temporarily shadowed and we return the value.
+    if (key == "all") {
+        ASSERT(info.Holder()->InternalFieldCount() == kHTMLDocumentInternalFieldCount);
+        v8::Local<v8::Value> marker = info.Holder()->GetInternalField(kHTMLDocumentMarkerIndex);
+        v8::Local<v8::Value> value = info.Holder()->GetInternalField(kHTMLDocumentShadowIndex);
+        if (marker != value)
+            return value;
     }
-  }
 
-  HTMLDocument* imp = V8Proxy::DOMWrapperToNode<HTMLDocument>(info.Holder());
+    HTMLDocument* imp = V8Proxy::DOMWrapperToNode<HTMLDocument>(info.Holder());
 
-  // Fast case for named elements that are not there.
-  if (!imp->hasNamedItem(key) && !imp->hasDocExtraNamedItem(key)) {
-    return v8::Handle<v8::Value>();
-  }
+    // Fast case for named elements that are not there.
+    if (!imp->hasNamedItem(key.impl()) && !imp->hasExtraNamedItem(key.impl()))
+        return v8::Handle<v8::Value>();
 
-
-  RefPtr<HTMLCollection> items = imp->documentNamedItems(key);
-  if (items->length() == 0) return v8::Handle<v8::Value>();
-  if (items->length() == 1) {
-    Node* node = items->firstItem();
-    Frame* frame = 0;
-    if (node->hasTagName(HTMLNames::iframeTag) &&
-        (frame = static_cast<HTMLIFrameElement*>(node)->contentFrame())) {
-      return V8Proxy::ToV8Object(V8ClassIndex::DOMWINDOW, frame->domWindow());
+    RefPtr<HTMLCollection> items = imp->documentNamedItems(key);
+    if (items->length() == 0)
+        return v8::Handle<v8::Value>();
+    if (items->length() == 1) {
+        Node* node = items->firstItem();
+        Frame* frame = 0;
+        if (node->hasTagName(HTMLNames::iframeTag) &&
+           (frame = static_cast<HTMLIFrameElement*>(node)->contentFrame()))
+            return V8Proxy::ToV8Object(V8ClassIndex::DOMWINDOW, frame->domWindow());
+        return V8Proxy::NodeToV8Object(node);
     }
-    return V8Proxy::NodeToV8Object(node);
-  }
-  return V8Proxy::ToV8Object(V8ClassIndex::HTMLCOLLECTION,
-                             static_cast<Peerable*>(items.get()));
+    return V8Proxy::ToV8Object(V8ClassIndex::HTMLCOLLECTION, items.get());
 }
 
 
-NAMED_PROPERTY_GETTER(HTMLFrameSetElement) {
-  INC_STATS(L"DOM.HTMLFrameSetElement.NamedPropertyGetter");
+NAMED_PROPERTY_GETTER(HTMLFrameSetElement)
+{
+  INC_STATS("DOM.HTMLFrameSetElement.NamedPropertyGetter");
   HTMLFrameSetElement* imp =
       V8Proxy::DOMWrapperToNode<HTMLFrameSetElement>(info.Holder());
   String key = ToWebCoreString(name);
@@ -1444,10 +1478,8 @@ NAMED_PROPERTY_GETTER(HTMLFrameSetElement) {
     Document* doc = static_cast<HTMLFrameElement*>(frame)->contentDocument();
     if (doc) {
       Frame* content_frame = doc->frame();
-      if (content_frame) {
-        return V8Proxy::ToV8Object(V8ClassIndex::DOMWINDOW,
-                                   content_frame->domWindow());
-      }
+      if (content_frame)
+        return V8Proxy::ToV8Object(V8ClassIndex::DOMWINDOW, content_frame->domWindow());
     }
     return v8::Undefined();
   }
@@ -1456,7 +1488,7 @@ NAMED_PROPERTY_GETTER(HTMLFrameSetElement) {
 
 
 NAMED_PROPERTY_GETTER(HTMLFormElement) {
-  INC_STATS(L"DOM.HTMLFormElement.NamedPropertyGetter");
+  INC_STATS("DOM.HTMLFormElement.NamedPropertyGetter");
   HTMLFormElement* imp =
       V8Proxy::DOMWrapperToNode<HTMLFormElement>(info.Holder());
   String v = ToWebCoreString(name);
@@ -1479,14 +1511,13 @@ NAMED_PROPERTY_GETTER(HTMLFormElement) {
     return V8Proxy::NodeToV8Object(elements.at(0).get());
   } else {
     NodeList* collection = new V8VectorNodeList(elements);
-    return V8Proxy::ToV8Object(V8ClassIndex::NODELIST,
-                               static_cast<Peerable*>(collection));
+    return V8Proxy::ToV8Object(V8ClassIndex::NODELIST, collection);
   }
 }
 
 
 INDEXED_PROPERTY_GETTER(NamedNodeMap) {
-  INC_STATS(L"DOM.NamedNodeMap.IndexedPropertyGetter");
+  INC_STATS("DOM.NamedNodeMap.IndexedPropertyGetter");
   NamedNodeMap* imp = V8Proxy::ToNativeObject<NamedNodeMap>(
       V8ClassIndex::NAMEDNODEMAP, info.Holder());
   RefPtr<Node> result = imp->item(index);
@@ -1496,7 +1527,7 @@ INDEXED_PROPERTY_GETTER(NamedNodeMap) {
 }
 
 NAMED_PROPERTY_GETTER(NamedNodeMap) {
-  INC_STATS(L"DOM.NamedNodeMap.NamedPropertyGetter");
+  INC_STATS("DOM.NamedNodeMap.NamedPropertyGetter");
   // Search the prototype chain first.
   v8::Handle<v8::Value> value =
       info.Holder()->GetRealNamedPropertyInPrototypeChain(name);
@@ -1519,7 +1550,7 @@ NAMED_PROPERTY_GETTER(NamedNodeMap) {
 
 
 NAMED_PROPERTY_GETTER(NodeList) {
-  INC_STATS(L"DOM.NodeList.NamedPropertyGetter");
+  INC_STATS("DOM.NodeList.NamedPropertyGetter");
   NodeList* list = V8Proxy::ToNativeObject<NodeList>(
       V8ClassIndex::NODELIST, info.Holder());
   String prop_name = ToWebCoreString(name);
@@ -1537,7 +1568,7 @@ NAMED_PROPERTY_GETTER(NodeList) {
 
 
 INDEXED_PROPERTY_GETTER(HTMLFormElement) {
-  INC_STATS(L"DOM.HTMLFormElement.IndexedPropertyGetter");
+  INC_STATS("DOM.HTMLFormElement.IndexedPropertyGetter");
   HTMLFormElement* form =
       V8Proxy::DOMWrapperToNode<HTMLFormElement>(info.Holder());
 
@@ -1548,7 +1579,7 @@ INDEXED_PROPERTY_GETTER(HTMLFormElement) {
 
 
 INDEXED_PROPERTY_GETTER(HTMLOptionsCollection) {
-  INC_STATS(L"DOM.HTMLOptionsCollection.IndexedPropertyGetter");
+  INC_STATS("DOM.HTMLOptionsCollection.IndexedPropertyGetter");
   HTMLOptionsCollection* collection =
       V8Proxy::ToNativeObject<HTMLOptionsCollection>(
           V8ClassIndex::HTMLOPTIONSCOLLECTION, info.Holder());
@@ -1586,7 +1617,7 @@ static v8::Handle<v8::Value> OptionsCollectionSetter(uint32_t index,
 
 
 INDEXED_PROPERTY_SETTER(HTMLOptionsCollection) {
-  INC_STATS(L"DOM.HTMLOptionsCollection.IndexedPropertySetter");
+  INC_STATS("DOM.HTMLOptionsCollection.IndexedPropertySetter");
   HTMLOptionsCollection* collection =
       V8Proxy::ToNativeObject<HTMLOptionsCollection>(
           V8ClassIndex::HTMLOPTIONSCOLLECTION, info.Holder());
@@ -1596,12 +1627,38 @@ INDEXED_PROPERTY_SETTER(HTMLOptionsCollection) {
 
 
 INDEXED_PROPERTY_SETTER(HTMLSelectElementCollection) {
-  INC_STATS(L"DOM.HTMLSelectElementCollection.IndexedPropertySetter");
+  INC_STATS("DOM.HTMLSelectElementCollection.IndexedPropertySetter");
   HTMLSelectElement* select =
       V8Proxy::DOMWrapperToNode<HTMLSelectElement>(info.Holder());
   return OptionsCollectionSetter(index, value, select);
 }
 
+// Check for a CSS prefix.
+// Passed prefix is all lowercase.
+// First character of the prefix within the property name may be upper or lowercase.
+// Other characters in the prefix within the property name must be lowercase.
+// The prefix within the property name must be followed by a capital letter.
+static bool hasCSSPropertyNamePrefix(const String& propertyName, const char* prefix)
+{
+#ifndef NDEBUG
+    ASSERT(*prefix);
+    for (const char* p = prefix; *p; ++p)
+        ASSERT(WTF::isASCIILower(*p));
+    ASSERT(propertyName.length());
+#endif
+
+    if (WTF::toASCIILower(propertyName[0]) != prefix[0])
+        return false;
+
+    unsigned length = propertyName.length();
+    for (unsigned i = 1; i < length; ++i) {
+        if (!prefix[i])
+            return WTF::isASCIIUpper(propertyName[i]);
+        if (propertyName[i] != prefix[i])
+            return false;
+    }
+    return false;
+}
 
 // When getting properties on CSSStyleDeclarations, the name used from
 // Javascript and the actual name of the property are not the same, so
@@ -1614,48 +1671,60 @@ INDEXED_PROPERTY_SETTER(HTMLSelectElementCollection) {
 // Also, certain prefixes such as 'pos', 'css-' and 'pixel-' are stripped
 // and the pixel_or_pos_prefix out parameter is used to indicate whether or
 // not the property name was prefixed with 'pos-' or 'pixel-'.
-static String CSSPropertyName(const String &p, bool *pixel_or_pos_prefix = 0) {
-  DeprecatedString prop = p.deprecatedString();
+static String cssPropertyName(const String& propertyName, bool* hadPixelOrPosPrefix = 0)
+{
+    if (hadPixelOrPosPrefix)
+        *hadPixelOrPosPrefix = false;
 
-  int i = prop.length();
-  while (--i > 0) {
-    ::UChar c = prop[i].unicode();
-    if (c >= 'A' && c <= 'Z')
-      prop.insert(i, '-');
-  }
+    unsigned length = propertyName.length();
+    if (!length)
+        return String();
 
-  prop = prop.lower();
+    Vector<UChar> name;
+    name.reserveCapacity(length);
 
-  if (pixel_or_pos_prefix)
-    *pixel_or_pos_prefix = false;
+    unsigned i = 0;
 
-  if (prop.startsWith("css-")) {
-    prop = prop.mid(4);
-  } else if (prop.startsWith("pixel-")) {
-    prop = prop.mid(6);
-    if (pixel_or_pos_prefix)
-      *pixel_or_pos_prefix = true;
-  } else if (prop.startsWith("pos-")) {
-    prop = prop.mid(4);
-    if (pixel_or_pos_prefix)
-      *pixel_or_pos_prefix = true;
-  } else if (prop.startsWith("khtml-") ||
-             prop.startsWith("apple-") ||
-             prop.startsWith("webkit-")) {
-    prop.insert(0, '-');
-  }
+    if (hasCSSPropertyNamePrefix(propertyName, "css"))
+        i += 3;
+    else if (hasCSSPropertyNamePrefix(propertyName, "pixel")) {
+        i += 5;
+        if (hadPixelOrPosPrefix)
+            *hadPixelOrPosPrefix = true;
+    } else if (hasCSSPropertyNamePrefix(propertyName, "pos")) {
+        i += 3;
+        if (hadPixelOrPosPrefix)
+            *hadPixelOrPosPrefix = true;
+    } else if (hasCSSPropertyNamePrefix(propertyName, "webkit")
+            || hasCSSPropertyNamePrefix(propertyName, "khtml")
+            || hasCSSPropertyNamePrefix(propertyName, "apple"))
+        name.append('-');
+    else {
+        if (WTF::isASCIIUpper(propertyName[0]))
+            return String();
+    }
 
-  return prop;
+    name.append(WTF::toASCIILower(propertyName[i++]));
+
+    for (; i < length; ++i) {
+        UChar c = propertyName[i];
+        if (!WTF::isASCIIUpper(c))
+            name.append(c);
+        else {
+            name.append('-');
+            name.append(WTF::toASCIILower(c));
+        }
+    }
+
+    return String::adopt(name);
 }
 
-
 NAMED_PROPERTY_GETTER(CSSStyleDeclaration) {
-  INC_STATS(L"DOM.CSSStyleDeclaration.NamedPropertyGetter");
+  INC_STATS("DOM.CSSStyleDeclaration.NamedPropertyGetter");
   // First look for API defined attributes on the style declaration
   // object.
-  if (info.Holder()->HasRealNamedCallbackProperty(name)) {
+  if (info.Holder()->HasRealNamedCallbackProperty(name))
     return v8::Handle<v8::Value>();
-  }
 
   // Search the style declaration.
   CSSStyleDeclaration* imp = V8Proxy::ToNativeObject<CSSStyleDeclaration>(
@@ -1663,7 +1732,7 @@ NAMED_PROPERTY_GETTER(CSSStyleDeclaration) {
 
   bool pixel_or_pos;
   String p = ToWebCoreString(name);
-  String prop = CSSPropertyName(p, &pixel_or_pos);
+  String prop = cssPropertyName(p, &pixel_or_pos);
 
   // Do not handle non-property names.
   if (!CSSStyleDeclaration::isPropertyName(prop)) {
@@ -1695,14 +1764,14 @@ NAMED_PROPERTY_GETTER(CSSStyleDeclaration) {
 
 
 NAMED_PROPERTY_SETTER(CSSStyleDeclaration) {
-  INC_STATS(L"DOM.CSSStyleDeclaration.NamedPropertySetter");
+  INC_STATS("DOM.CSSStyleDeclaration.NamedPropertySetter");
   CSSStyleDeclaration* imp = V8Proxy::ToNativeObject<CSSStyleDeclaration>(
       V8ClassIndex::CSSSTYLEDECLARATION, info.Holder());
   String property_name = ToWebCoreString(name);
   int ec = 0;
 
   bool pixel_or_pos;
-  String prop = CSSPropertyName(property_name, &pixel_or_pos);
+  String prop = cssPropertyName(property_name, &pixel_or_pos);
   if (!CSSStyleDeclaration::isPropertyName(prop)) {
     return v8::Handle<v8::Value>();  // do not block the call
   }
@@ -1717,62 +1786,76 @@ NAMED_PROPERTY_SETTER(CSSStyleDeclaration) {
 
 
 NAMED_PROPERTY_GETTER(HTMLPlugInElement) {
-  INC_STATS(L"DOM.HTMLPlugInElement.NamedPropertyGetter");
+  INC_STATS("DOM.HTMLPlugInElement.NamedPropertyGetter");
   HTMLPlugInElement* imp =
       V8Proxy::DOMWrapperToNode<HTMLPlugInElement>(info.Holder());
-  v8::Local<v8::Object> instance =
-      v8::Local<v8::Object>::New(imp->getInstance());
-  if (instance.IsEmpty()) return v8::Handle<v8::Object>();
-  return NPObjectGetNamedProperty(instance, name);
+  ScriptInstance script_instance = imp->getInstance();
+  if (script_instance) {
+    v8::Local<v8::Object> instance =
+        v8::Local<v8::Object>::New(script_instance->instance());
+    if (!instance.IsEmpty()) {
+      return NPObjectGetNamedProperty(instance, name);
+    }
+  }
+  return v8::Handle<v8::Object>();
 }
 
 
 NAMED_PROPERTY_SETTER(HTMLPlugInElement) {
-  INC_STATS(L"DOM.HTMLPlugInElement.NamedPropertySetter");
+  INC_STATS("DOM.HTMLPlugInElement.NamedPropertySetter");
   HTMLPlugInElement* imp =
       V8Proxy::DOMWrapperToNode<HTMLPlugInElement>(info.Holder());
-  v8::Local<v8::Object> instance =
-      v8::Local<v8::Object>::New(imp->getInstance());
-  if (instance.IsEmpty()) {
-    return v8::Handle<v8::Value>();  // do not block the call
+  ScriptInstance script_instance = imp->getInstance();
+  if (script_instance) {
+    v8::Local<v8::Object> instance =
+        v8::Local<v8::Object>::New(script_instance->instance());
+    if (!instance.IsEmpty()) {
+      return NPObjectSetNamedProperty(instance, name, value);
+    }
   }
-
-  return NPObjectSetNamedProperty(instance, name, value);
+  return v8::Handle<v8::Value>();  // do not block the call
 }
 
 
 CALLBACK_FUNC_DECL(HTMLPlugInElement) {
-  INC_STATS(L"DOM.HTMLPluginElement()");
+  INC_STATS("DOM.HTMLPluginElement()");
   return NPObjectInvokeDefaultHandler(args);
 }
 
 
 INDEXED_PROPERTY_GETTER(HTMLPlugInElement) {
-  INC_STATS(L"DOM.HTMLPlugInElement.IndexedPropertyGetter");
+  INC_STATS("DOM.HTMLPlugInElement.IndexedPropertyGetter");
   HTMLPlugInElement* imp =
       V8Proxy::DOMWrapperToNode<HTMLPlugInElement>(info.Holder());
-  v8::Local<v8::Object> instance =
-      v8::Local<v8::Object>::New(imp->getInstance());
-  if (instance.IsEmpty()) return v8::Handle<v8::Object>();
-  return NPObjectGetIndexedProperty(instance, index);
+  ScriptInstance script_instance = imp->getInstance();
+  if (script_instance) {
+    v8::Local<v8::Object> instance =
+        v8::Local<v8::Object>::New(script_instance->instance());
+    if (!instance.IsEmpty()) {
+      return NPObjectGetIndexedProperty(instance, index);
+    }
+  }
+  return v8::Handle<v8::Object>();
 }
 
 
 INDEXED_PROPERTY_SETTER(HTMLPlugInElement) {
-  INC_STATS(L"DOM.HTMLPlugInElement.IndexedPropertySetter");
+  INC_STATS("DOM.HTMLPlugInElement.IndexedPropertySetter");
   HTMLPlugInElement* imp =
       V8Proxy::DOMWrapperToNode<HTMLPlugInElement>(info.Holder());
-  v8::Local<v8::Object> instance =
-      v8::Local<v8::Object>::New(imp->getInstance());
-  if (instance.IsEmpty()) {
-    return v8::Handle<v8::Value>();  // do not block the call
+  ScriptInstance script_instance = imp->getInstance();
+  if (script_instance) {
+    v8::Local<v8::Object> instance =
+        v8::Local<v8::Object>::New(script_instance->instance());
+    if (!instance.IsEmpty()) {
+      return NPObjectSetIndexedProperty(instance, index, value);
+    }
   }
-
-  return NPObjectSetIndexedProperty(instance, index, value);
+  return v8::Handle<v8::Value>();  // do not block the call
 }
 
 NAMED_PROPERTY_GETTER(StyleSheetList) {
-  INC_STATS(L"DOM.StyleSheetList.NamedPropertyGetter");
+  INC_STATS("DOM.StyleSheetList.NamedPropertyGetter");
   // Look for local properties first.
   if (info.Holder()->HasRealNamedProperty(name)) {
     return v8::Handle<v8::Value>();
@@ -1790,19 +1873,7 @@ NAMED_PROPERTY_GETTER(StyleSheetList) {
 }
 
 
-CALLBACK_FUNC_DECL(CSSPrimitiveValueGetRGBColorValue) {
-  INC_STATS(L"DOM.CSSPrimitiveValue.getRGBColorValue()");
-  CSSPrimitiveValue* value = V8Proxy::ToNativeObject<CSSPrimitiveValue>(
-      V8ClassIndex::CSSPRIMITIVEVALUE, args.Holder());
-  ExceptionCode ec = 0;
-  unsigned int rgbcolor = value->getRGBColorValue(ec);
-  if (ec != 0) {
-    V8Proxy::SetDOMException(ec);
-    return v8::Handle<v8::Value>();
-  }
-  return V8Proxy::ToV8Object(V8ClassIndex::RGBCOLOR,
-                             static_cast<Peerable*>(new RGBColor(rgbcolor)));
-}
+// CanvasRenderingContext2D ----------------------------------------------------
 
 // Helper macro for converting v8 values into floats (expected by many of the
 // canvas functions).
@@ -1811,7 +1882,7 @@ CALLBACK_FUNC_DECL(CSSPrimitiveValueGetRGBColorValue) {
 // TODO: SetStrokeColor and SetFillColor are similar except function names,
 // consolidate them into one.
 CALLBACK_FUNC_DECL(CanvasRenderingContext2DSetStrokeColor) {
-  INC_STATS(L"DOM.CanvasRenderingContext2D.setStrokeColor()");
+  INC_STATS("DOM.CanvasRenderingContext2D.setStrokeColor()");
   CanvasRenderingContext2D* context =
       V8Proxy::ToNativeObject<CanvasRenderingContext2D>(
           V8ClassIndex::CANVASRENDERINGCONTEXT2D, args.Holder());
@@ -1853,9 +1924,8 @@ CALLBACK_FUNC_DECL(CanvasRenderingContext2DSetStrokeColor) {
   return v8::Undefined();
 }
 
-
 CALLBACK_FUNC_DECL(CanvasRenderingContext2DSetFillColor) {
-  INC_STATS(L"DOM.CanvasRenderingContext2D.steFillColor()");
+  INC_STATS("DOM.CanvasRenderingContext2D.setFillColor()");
   CanvasRenderingContext2D* context =
       V8Proxy::ToNativeObject<CanvasRenderingContext2D>(
           V8ClassIndex::CANVASRENDERINGCONTEXT2D, args.Holder());
@@ -1895,41 +1965,32 @@ CALLBACK_FUNC_DECL(CanvasRenderingContext2DSetFillColor) {
   return v8::Undefined();
 }
 
-
 CALLBACK_FUNC_DECL(CanvasRenderingContext2DStrokeRect) {
-  INC_STATS(L"DOM.CanvasRenderingContext2D.strokeRect()");
+  INC_STATS("DOM.CanvasRenderingContext2D.strokeRect()");
   CanvasRenderingContext2D* context =
       V8Proxy::ToNativeObject<CanvasRenderingContext2D>(
           V8ClassIndex::CANVASRENDERINGCONTEXT2D, args.Holder());
-  ExceptionCode ec = 0;
-  double x = 0, y = 0, width = 0, height = 0, line_width = 0;
   if (args.Length() == 5) {
     context->strokeRect(TO_FLOAT(args[0]),
                         TO_FLOAT(args[1]),
                         TO_FLOAT(args[2]),
                         TO_FLOAT(args[3]),
-                        TO_FLOAT(args[4]),
-                        ec);
+                        TO_FLOAT(args[4]));
   } else if (args.Length() == 4) {
     context->strokeRect(TO_FLOAT(args[0]),
                         TO_FLOAT(args[1]),
                         TO_FLOAT(args[2]),
-                        TO_FLOAT(args[3]),
-                        ec);
+                        TO_FLOAT(args[3]));
   } else {
-    // Should throw index error
-    ec = INDEX_SIZE_ERR;
-  }
-  if (ec != 0) {
-    V8Proxy::SetDOMException(ec);
+    V8Proxy::SetDOMException(INDEX_SIZE_ERR);
     return v8::Handle<v8::Value>();
   }
+
   return v8::Undefined();
 }
 
-
 CALLBACK_FUNC_DECL(CanvasRenderingContext2DSetShadow) {
-  INC_STATS(L"DOM.CanvasRenderingContext2D.setShadow()");
+  INC_STATS("DOM.CanvasRenderingContext2D.setShadow()");
   CanvasRenderingContext2D* context =
       V8Proxy::ToNativeObject<CanvasRenderingContext2D>(
           V8ClassIndex::CANVASRENDERINGCONTEXT2D, args.Holder());
@@ -1978,9 +2039,8 @@ CALLBACK_FUNC_DECL(CanvasRenderingContext2DSetShadow) {
     return v8::Undefined();
 }
 
-
 CALLBACK_FUNC_DECL(CanvasRenderingContext2DDrawImage) {
-  INC_STATS(L"DOM.CanvasRenderingContext2D.drawImage()");
+  INC_STATS("DOM.CanvasRenderingContext2D.drawImage()");
   CanvasRenderingContext2D* context =
       V8Proxy::ToNativeObject<CanvasRenderingContext2D>(
           V8ClassIndex::CANVASRENDERINGCONTEXT2D, args.Holder());
@@ -2064,9 +2124,8 @@ CALLBACK_FUNC_DECL(CanvasRenderingContext2DDrawImage) {
   return v8::Handle<v8::Value>();
 }
 
-
 CALLBACK_FUNC_DECL(CanvasRenderingContext2DDrawImageFromRect) {
-  INC_STATS(L"DOM.CanvasRenderingContext2D.drawImageFromRect()");
+  INC_STATS("DOM.CanvasRenderingContext2D.drawImageFromRect()");
   CanvasRenderingContext2D* context =
       V8Proxy::ToNativeObject<CanvasRenderingContext2D>(
           V8ClassIndex::CANVASRENDERINGCONTEXT2D, args.Holder());
@@ -2090,11 +2149,8 @@ CALLBACK_FUNC_DECL(CanvasRenderingContext2DDrawImageFromRect) {
   return v8::Undefined();
 }
 
-// Remove the macro since we don't need it anymore.
-#undef TO_FLOAT
-
 CALLBACK_FUNC_DECL(CanvasRenderingContext2DCreatePattern) {
-  INC_STATS(L"DOM.CanvasRenderingContext2D.createPattern()");
+  INC_STATS("DOM.CanvasRenderingContext2D.createPattern()");
   CanvasRenderingContext2D* context =
       V8Proxy::ToNativeObject<CanvasRenderingContext2D>(
           V8ClassIndex::CANVASRENDERINGCONTEXT2D, args.Holder());
@@ -2106,13 +2162,12 @@ CALLBACK_FUNC_DECL(CanvasRenderingContext2DCreatePattern) {
         V8Proxy::DOMWrapperToNode<HTMLImageElement>(arg);
     ExceptionCode ec = 0;
     RefPtr<CanvasPattern> pattern =
-        context->createPattern(image_element, ToWebCoreString(args[1]), ec);
+        context->createPattern(image_element, valueToStringWithNullCheck(args[1]), ec);
     if (ec != 0) {
       V8Proxy::SetDOMException(ec);
       return v8::Handle<v8::Value>();
     }
-    return V8Proxy::ToV8Object(V8ClassIndex::CANVASPATTERN,
-                               static_cast<Peerable*>(pattern.get()));
+    return V8Proxy::ToV8Object(V8ClassIndex::CANVASPATTERN, pattern.get());
   }
 
   if (V8HTMLCanvasElement::HasInstance(arg)) {
@@ -2120,65 +2175,242 @@ CALLBACK_FUNC_DECL(CanvasRenderingContext2DCreatePattern) {
         V8Proxy::DOMWrapperToNode<HTMLCanvasElement>(arg);
     ExceptionCode ec = 0;
     RefPtr<CanvasPattern> pattern =
-        context->createPattern(canvas_element, ToWebCoreString(args[1]), ec);
+        context->createPattern(canvas_element, valueToStringWithNullCheck(args[1]), ec);
     if (ec != 0) {
       V8Proxy::SetDOMException(ec);
       return v8::Handle<v8::Value>();
     }
-    return V8Proxy::ToV8Object(V8ClassIndex::CANVASPATTERN,
-                               static_cast<Peerable*>(pattern.get()));
+    return V8Proxy::ToV8Object(V8ClassIndex::CANVASPATTERN, pattern.get());
   }
 
   V8Proxy::SetDOMException(TYPE_MISMATCH_ERR);
   return v8::Handle<v8::Value>();
 }
 
+CALLBACK_FUNC_DECL(CanvasRenderingContext2DFillText) {
+  INC_STATS("DOM.CanvasRenderingContext2D.fillText()");
+
+  CanvasRenderingContext2D* context =
+      V8Proxy::ToNativeObject<CanvasRenderingContext2D>(
+          V8ClassIndex::CANVASRENDERINGCONTEXT2D, args.Holder());
+
+  // Two forms:
+  // * fillText(text, x, y)
+  // * fillText(text, x, y, maxWidth)
+  if (args.Length() < 3 || args.Length() > 4) {
+    V8Proxy::SetDOMException(SYNTAX_ERR);
+    return v8::Handle<v8::Value>();
+  }
+
+  String text = ToWebCoreString(args[0]);
+  float x = TO_FLOAT(args[1]);
+  float y = TO_FLOAT(args[2]);
+
+  if (args.Length() == 4) {
+    float maxWidth = TO_FLOAT(args[3]);
+    context->fillText(text, x, y, maxWidth);
+  } else {
+    context->fillText(text, x, y);
+  }
+
+  return v8::Undefined();
+}
+
+CALLBACK_FUNC_DECL(CanvasRenderingContext2DStrokeText) {
+  INC_STATS("DOM.CanvasRenderingContext2D.strokeText()");
+
+  CanvasRenderingContext2D* context =
+      V8Proxy::ToNativeObject<CanvasRenderingContext2D>(
+          V8ClassIndex::CANVASRENDERINGCONTEXT2D, args.Holder());
+
+  // Two forms:
+  // * strokeText(text, x, y)
+  // * strokeText(text, x, y, maxWidth)
+  if (args.Length() < 3 || args.Length() > 4) {
+    V8Proxy::SetDOMException(SYNTAX_ERR);
+    return v8::Handle<v8::Value>();
+  }
+
+  String text = ToWebCoreString(args[0]);
+  float x = TO_FLOAT(args[1]);
+  float y = TO_FLOAT(args[2]);
+
+  if (args.Length() == 4) {
+    float maxWidth = TO_FLOAT(args[3]);
+    context->strokeText(text, x, y, maxWidth);
+  } else {
+    context->strokeText(text, x, y);
+  }
+
+  return v8::Undefined();
+}
+
+CALLBACK_FUNC_DECL(CanvasRenderingContext2DPutImageData) {
+  INC_STATS("DOM.CanvasRenderingContext2D.putImageData()");
+  
+  // Two froms:
+  // * putImageData(ImageData, x, y)
+  // * putImageData(ImageData, x, y, dirtyX, dirtyY, dirtyWidth, dirtyHeight)
+  if (args.Length() != 3 && args.Length() != 7) {
+    V8Proxy::SetDOMException(SYNTAX_ERR);
+    return v8::Handle<v8::Value>();
+  }
+
+  CanvasRenderingContext2D* context =
+      V8Proxy::ToNativeObject<CanvasRenderingContext2D>(
+          V8ClassIndex::CANVASRENDERINGCONTEXT2D, args.Holder());
+
+  ImageData* imageData = 0;
+
+  // Need to check that the argument is of the correct type, since
+  // ToNativeObject() expects it to be correct. If the argument was incorrect
+  // we leave it null, and putImageData() will throw the correct exception
+  // (TYPE_MISMATCH_ERR).
+  if (V8Proxy::IsWrapperOfType(args[0], V8ClassIndex::IMAGEDATA)) {
+    imageData = V8Proxy::ToNativeObject<ImageData>(
+        V8ClassIndex::IMAGEDATA, args[0]);
+  }
+
+  ExceptionCode ec = 0;
+
+  if (args.Length() == 7) {
+    context->putImageData(imageData,
+        TO_FLOAT(args[1]), TO_FLOAT(args[2]), TO_FLOAT(args[3]),
+        TO_FLOAT(args[4]), TO_FLOAT(args[5]), TO_FLOAT(args[6]), ec);
+  } else {
+    context->putImageData(imageData, TO_FLOAT(args[1]), TO_FLOAT(args[2]), ec);
+  }
+
+  if (ec != 0) {
+    V8Proxy::SetDOMException(ec);
+    return v8::Handle<v8::Value>();
+  }
+
+  return v8::Undefined();
+}
+
+
+// Clipboard -------------------------------------------------------------------
+
+
+ACCESSOR_GETTER(ClipboardTypes) {
+  INC_STATS("DOM.Clipboard.types()");
+  Clipboard* imp =
+    V8Proxy::ToNativeObject<Clipboard>(V8ClassIndex::CLIPBOARD,
+                                       info.Holder());
+
+  HashSet<String> types = imp->types();
+  if (types.isEmpty())
+    return v8::Null();
+
+  v8::Local<v8::Array> result = v8::Array::New(types.size());
+  HashSet<String>::const_iterator end = types.end();
+  int index = 0;
+  for (HashSet<String>::const_iterator it = types.begin();
+       it != end;
+       ++it, ++index) {
+    result->Set(v8::Integer::New(index), v8String(*it));
+  }
+  return result;
+}
+
 
 CALLBACK_FUNC_DECL(ClipboardClearData) {
-  INC_STATS(L"DOM.Clipboard.clearData()");
+  INC_STATS("DOM.Clipboard.clearData()");
   Clipboard* imp = V8Proxy::ToNativeObject<Clipboard>(
       V8ClassIndex::CLIPBOARD, args.Holder());
+
   if (args.Length() == 0) {
     imp->clearAllData();
-  } else {
+    return v8::Undefined();
+  } 
+
+  if (args.Length() == 1) {
     String v = ToWebCoreString(args[0]);
     imp->clearData(v);
+    return v8::Undefined();
   }
+  
+  V8Proxy::ThrowError(V8Proxy::SYNTAX_ERROR,
+                      "clearData: Invalid number of arguments");
   return v8::Undefined();
 }
 
 
 CALLBACK_FUNC_DECL(ClipboardGetData) {
-  INC_STATS(L"DOM.Clipboard.getData()");
+  INC_STATS("DOM.Clipboard.getData()");
   Clipboard* imp = V8Proxy::ToNativeObject<Clipboard>(
       V8ClassIndex::CLIPBOARD, args.Holder());
-  if (args.Length() == 1) {
-    bool success;
-    String v = ToWebCoreString(args[0]);
-    String result = imp->getData(v, success);
-    if (success) return v8String(result);
+  
+  if (args.Length() != 1) {
+    V8Proxy::ThrowError(V8Proxy::SYNTAX_ERROR,
+                        "getData: Invalid number of arguments");
     return v8::Undefined();
   }
 
-  V8Proxy::ThrowError(V8Proxy::SYNTAX_ERROR,
-                     "getData: Invalid number of arguments");
-
+  bool success;
+  String v = ToWebCoreString(args[0]);
+  String result = imp->getData(v, success);
+  if (success) return v8String(result);
   return v8::Undefined();
 }
 
 CALLBACK_FUNC_DECL(ClipboardSetData) {
-  INC_STATS(L"DOM.Clipboard.setData()");
+  INC_STATS("DOM.Clipboard.setData()");
   Clipboard* imp = V8Proxy::ToNativeObject<Clipboard>(
       V8ClassIndex::CLIPBOARD, args.Holder());
-  if (args.Length() == 2) {
-    String type = ToWebCoreString(args[0]);
-    String data = ToWebCoreString(args[1]);
-    bool result = imp->setData(type, data);
-    return result?v8::True():v8::False();
+
+  if (args.Length() != 2) {
+    V8Proxy::ThrowError(V8Proxy::SYNTAX_ERROR,
+                        "setData: Invalid number of arguments");
+    return v8::Undefined();
   }
 
-  V8Proxy::ThrowError(V8Proxy::SYNTAX_ERROR,
-                     "setData: Invalid number of arguments");
+  String type = ToWebCoreString(args[0]);
+  String data = ToWebCoreString(args[1]);
+  bool result = imp->setData(type, data);
+  return result ? v8::True() : v8::False();
+}
+
+
+CALLBACK_FUNC_DECL(ClipboardSetDragImage) {
+  INC_STATS("DOM.Clipboard.setDragImage()");
+  Clipboard* imp = V8Proxy::ToNativeObject<Clipboard>(
+      V8ClassIndex::CLIPBOARD, args.Holder());
+  
+  if (!imp->isForDragging())
+    return v8::Undefined();
+
+  if (args.Length() != 3) {
+    V8Proxy::ThrowError(V8Proxy::SYNTAX_ERROR,
+                        "setDragImage: Invalid number of arguments");
+    return v8::Undefined();
+  }
+
+  int x = ToInt32(args[1]);
+  int y = ToInt32(args[2]);
+
+  Node* node = 0;
+  if (V8Node::HasInstance(args[0]))
+    node = V8Proxy::DOMWrapperToNode<Node>(args[0]);
+  if (!node) {
+    V8Proxy::ThrowError(V8Proxy::TYPE_ERROR,
+                        "setDragImageFromElement: Invalid first argument");
+    return v8::Undefined();
+  }
+
+  if (!node->isElementNode()) {
+    V8Proxy::ThrowError(V8Proxy::SYNTAX_ERROR,
+                        "setDragImageFromElement: Invalid first argument");
+    return v8::Undefined();
+  }
+   
+  if (static_cast<Element*>(node)->hasLocalName(HTMLNames::imgTag) &&
+      !node->inDocument())
+    imp->setDragImage(static_cast<HTMLImageElement*>(node)->cachedImage(),
+                      IntPoint(x, y));
+  else
+    imp->setDragImageElement(node, IntPoint(x, y));
 
   return v8::Undefined();
 }
@@ -2219,8 +2451,10 @@ static bool AllowSettingFrameSrcToJavascriptUrl(HTMLFrameElementBase* frame,
 }
 
 
+// Element ---------------------------------------------------------------------
+
 CALLBACK_FUNC_DECL(ElementSetAttribute) {
-  INC_STATS(L"DOM.Element.setAttribute()");
+  INC_STATS("DOM.Element.setAttribute()");
   Element* imp = V8Proxy::DOMWrapperToNode<Element>(args.Holder());
   ExceptionCode ec = 0;
   String name = ToWebCoreString(args[0]);
@@ -2238,9 +2472,8 @@ CALLBACK_FUNC_DECL(ElementSetAttribute) {
   return v8::Undefined();
 }
 
-
 CALLBACK_FUNC_DECL(ElementSetAttributeNode) {
-  INC_STATS(L"DOM.Element.setAttributeNode()");
+  INC_STATS("DOM.Element.setAttributeNode()");
   if (!V8Attr::HasInstance(args[0])) {
     V8Proxy::SetDOMException(TYPE_MISMATCH_ERR);
     return v8::Handle<v8::Value>();
@@ -2262,9 +2495,8 @@ CALLBACK_FUNC_DECL(ElementSetAttributeNode) {
   return V8Proxy::NodeToV8Object(result.get());
 }
 
-
 CALLBACK_FUNC_DECL(ElementSetAttributeNS) {
-  INC_STATS(L"DOM.Element.setAttributeNS()");
+  INC_STATS("DOM.Element.setAttributeNS()");
   Element* imp = V8Proxy::DOMWrapperToNode<Element>(args.Holder());
   ExceptionCode ec = 0;
   String namespaceURI = valueToStringWithNullCheck(args[0]);
@@ -2283,9 +2515,8 @@ CALLBACK_FUNC_DECL(ElementSetAttributeNS) {
   return v8::Undefined();
 }
 
-
 CALLBACK_FUNC_DECL(ElementSetAttributeNodeNS) {
-  INC_STATS(L"DOM.Element.setAttributeNodeNS()");
+  INC_STATS("DOM.Element.setAttributeNodeNS()");
   if (!V8Attr::HasInstance(args[0])) {
     V8Proxy::SetDOMException(TYPE_MISMATCH_ERR);
     return v8::Handle<v8::Value>();
@@ -2336,6 +2567,8 @@ ACCESSOR_SETTER(AttrValue) {
 }
 
 
+// HTMLFrameElement ------------------------------------------------------------
+
 ACCESSOR_SETTER(HTMLFrameElementSrc) {
   HTMLFrameElement* imp =
       V8Proxy::DOMWrapperToNode<HTMLFrameElement>(info.Holder());
@@ -2345,7 +2578,6 @@ ACCESSOR_SETTER(HTMLFrameElementSrc) {
 
   imp->setSrc(v);
 }
-
 
 ACCESSOR_SETTER(HTMLFrameElementLocation) {
   HTMLFrameElement* imp =
@@ -2357,6 +2589,8 @@ ACCESSOR_SETTER(HTMLFrameElementLocation) {
   imp->setLocation(v);
 }
 
+
+// HTMLIFrameElement -----------------------------------------------------------
 
 ACCESSOR_SETTER(HTMLIFrameElementSrc) {
   HTMLIFrameElement* imp =
@@ -2378,11 +2612,8 @@ v8::Handle<v8::Value> V8Custom::WindowSetTimeoutImpl(const v8::Arguments& args,
   DOMWindow* imp = V8Proxy::ToNativeObject<DOMWindow>(
       V8ClassIndex::DOMWINDOW, args.Holder());
 
-  // Fast check This argument with the global object of security context.
-  if ((args.This() != v8::Context::GetCurrentSecurityContext()->Global()) &&
-      !V8Proxy::IsFromSameOrigin(imp->frame(), true)) {
+  if (!V8Proxy::CanAccessFrame(imp->frame(), true))
     return v8::Undefined();
-  }
 
   v8::Handle<v8::Value> function = args[0];
 
@@ -2425,15 +2656,18 @@ v8::Handle<v8::Value> V8Custom::WindowSetTimeoutImpl(const v8::Arguments& args,
 
 
 CALLBACK_FUNC_DECL(DOMWindowSetTimeout) {
-  INC_STATS(L"DOM.DOMWindow.setTimeout()");
+  INC_STATS("DOM.DOMWindow.setTimeout()");
   return WindowSetTimeoutImpl(args, true);
 }
 
 
 CALLBACK_FUNC_DECL(DOMWindowSetInterval) {
-  INC_STATS(L"DOM.DOMWindow.setInterval()");
+  INC_STATS("DOM.DOMWindow.setInterval()");
   return WindowSetTimeoutImpl(args, false);
 }
+
+
+// HTMLDocument ----------------------------------------------------------------
 
 // Concatenates "args" to a string. If args is empty, returns empty string.
 // Firefox/Safari/IE support non-standard arguments to document.write, ex:
@@ -2447,29 +2681,26 @@ static String WriteHelper_GetString(const v8::Arguments& args) {
   return str;
 }
 
-
 CALLBACK_FUNC_DECL(HTMLDocumentWrite) {
-  INC_STATS(L"DOM.HTMLDocument.write()");
+  INC_STATS("DOM.HTMLDocument.write()");
   HTMLDocument* imp = V8Proxy::DOMWrapperToNode<HTMLDocument>(args.Holder());
   Frame* frame = V8Proxy::retrieveActiveFrame();
   ASSERT(frame);
-  imp->write(WriteHelper_GetString(args));
+  imp->write(WriteHelper_GetString(args), frame->document());
   return v8::Undefined();
 }
-
 
 CALLBACK_FUNC_DECL(HTMLDocumentWriteln) {
-  INC_STATS(L"DOM.HTMLDocument.writeln()");
+  INC_STATS("DOM.HTMLDocument.writeln()");
   HTMLDocument* imp = V8Proxy::DOMWrapperToNode<HTMLDocument>(args.Holder());
   Frame* frame = V8Proxy::retrieveActiveFrame();
   ASSERT(frame);
-  imp->writeln(WriteHelper_GetString(args));
+  imp->writeln(WriteHelper_GetString(args), frame->document());
   return v8::Undefined();
 }
 
-
 CALLBACK_FUNC_DECL(HTMLDocumentOpen) {
-  INC_STATS(L"DOM.HTMLDocument.open()");
+  INC_STATS("DOM.HTMLDocument.open()");
   HTMLDocument* imp = V8Proxy::DOMWrapperToNode<HTMLDocument>(args.Holder());
 
   if (args.Length() > 2) {
@@ -2503,25 +2734,16 @@ CALLBACK_FUNC_DECL(HTMLDocumentOpen) {
     }
   }
 
-  imp->open();
-  return v8::Undefined();
+  Frame* frame = V8Proxy::retrieveActiveFrame();
+  imp->open(frame->document());
+  // Return the document.
+  return args.Holder();
 }
 
-
-CALLBACK_FUNC_DECL(HTMLDocumentClear) {
-  INC_STATS(L"DOM.HTMLDocument.clear()");
-  // Do nothing (unimplemented)
-
-  // KJS's bindings do do the same thing in JSHTMLDocument::clear().
-  // Invoking HTMLDocument::clear() can cause a crash, since it
-  // deletes the document's tokenizer while it may still be in use.
-  // See b:1055485 for details.
-  return v8::Undefined();
-}
-
+// Document --------------------------------------------------------------------
 
 CALLBACK_FUNC_DECL(DocumentEvaluate) {
-  INC_STATS(L"DOM.Document.evaluate()");
+  INC_STATS("DOM.Document.evaluate()");
 
   Document* imp = V8Proxy::DOMWrapperToNode<Document>(args.Holder());
   ExceptionCode ec = 0;
@@ -2548,16 +2770,19 @@ CALLBACK_FUNC_DECL(DocumentEvaluate) {
     inResult = V8Proxy::ToNativeObject<XPathResult>(
         V8ClassIndex::XPATHRESULT, args[4]);
   }
+
+  v8::TryCatch try_catch;
   RefPtr<XPathResult> result =
       imp->evaluate(expression, contextNode, resolver, type, inResult, ec);
-  if (ec != 0) {
-    V8Proxy::SetDOMException(ec);
+  if (try_catch.HasCaught() || ec != 0) {
+    if (!try_catch.HasCaught())
+      V8Proxy::SetDOMException(ec);
     return v8::Handle<v8::Value>();
   }
-  return V8Proxy::ToV8Object(V8ClassIndex::XPATHRESULT,
-                             static_cast<Peerable*>(result.get()));
+  return V8Proxy::ToV8Object(V8ClassIndex::XPATHRESULT, result.get());
 }
 
+// DOMWindow -------------------------------------------------------------------
 
 static bool IsAscii(const String& str) {
   for (size_t i = 0; i < str.length(); i++) {
@@ -2566,7 +2791,6 @@ static bool IsAscii(const String& str) {
   }
   return true;
 }
-
 
 static v8::Handle<v8::Value> Base64Convert(const String& str, bool encode) {
   if (!IsAscii(str)) {
@@ -2592,17 +2816,13 @@ static v8::Handle<v8::Value> Base64Convert(const String& str, bool encode) {
   return v8String(String(out.data(), out.size()));
 }
 
-
 CALLBACK_FUNC_DECL(DOMWindowAtob) {
-  INC_STATS(L"DOM.DOMWindow.atob()");
+  INC_STATS("DOM.DOMWindow.atob()");
   DOMWindow* imp = V8Proxy::ToNativeObject<DOMWindow>(
       V8ClassIndex::DOMWINDOW, args.Holder());
 
-  // Fast check This argument with the global object of security context.
-  if ((args.This() != v8::Context::GetCurrentSecurityContext()->Global()) &&
-      !V8Proxy::IsFromSameOrigin(imp->frame(), true)) {
+  if (!V8Proxy::CanAccessFrame(imp->frame(), true))
     return v8::Undefined();
-  }
 
   if (args.Length() < 1) {
     V8Proxy::ThrowError(V8Proxy::SYNTAX_ERROR, "Not enough arguments");
@@ -2615,17 +2835,13 @@ CALLBACK_FUNC_DECL(DOMWindowAtob) {
   return Base64Convert(str, false);
 }
 
-
 CALLBACK_FUNC_DECL(DOMWindowBtoa) {
-  INC_STATS(L"DOM.DOMWindow.btoa()");
+  INC_STATS("DOM.DOMWindow.btoa()");
   DOMWindow* imp = V8Proxy::ToNativeObject<DOMWindow>(
       V8ClassIndex::DOMWINDOW, args.Holder());
 
-  // Fast check This argument with the global object of security context.
-  if ((args.This() != v8::Context::GetCurrentSecurityContext()->Global()) &&
-      !V8Proxy::IsFromSameOrigin(imp->frame(), true)) {
+  if (!V8Proxy::CanAccessFrame(imp->frame(), true))
     return v8::Undefined();
-  }
 
   if (args.Length() < 1) {
     V8Proxy::ThrowError(V8Proxy::SYNTAX_ERROR, "Not enough arguments");
@@ -2638,25 +2854,27 @@ CALLBACK_FUNC_DECL(DOMWindowBtoa) {
   return Base64Convert(str, true);
 }
 
-
 // TODO(fqian): returning string is cheating, and we should
 // fix this by calling toString function on the receiver.
 // However, V8 implements toString in JavaScript, which requires
 // switching context of receiver. I consider it is dangerous.
-CALLBACK_FUNC_DECL(DOMWindowToString) {
-  INC_STATS(L"DOM.DOMWindow.toString()");
-  return args.This()->ObjectProtoToString();
+CALLBACK_FUNC_DECL(DOMWindowToString)
+{
+    INC_STATS("DOM.DOMWindow.toString()");
+    return args.This()->ObjectProtoToString();
+}
+
+CALLBACK_FUNC_DECL(DOMWindowNOP)
+{
+    INC_STATS("DOM.DOMWindow.nop()");
+    return v8::Undefined();
 }
 
 
-CALLBACK_FUNC_DECL(DOMWindowNOP) {
-  INC_STATS(L"DOM.DOMWindow.nop()");
-  return v8::Undefined();
-}
-
+// EventTargetNode -------------------------------------------------------------
 
 CALLBACK_FUNC_DECL(EventTargetNodeAddEventListener) {
-  INC_STATS(L"DOM.EventTargetNode.addEventListener()");
+  INC_STATS("DOM.EventTargetNode.addEventListener()");
   EventTargetNode* node =
       V8Proxy::DOMWrapperToNode<EventTargetNode>(args.Holder());
 
@@ -2664,7 +2882,7 @@ CALLBACK_FUNC_DECL(EventTargetNodeAddEventListener) {
   if (!proxy)
     return v8::Undefined();
 
-  EventListener* listener =
+  RefPtr<EventListener> listener =
     proxy->FindOrCreateV8EventListener(args[1], false);
   if (listener) {
     String type = ToWebCoreString(args[0]);
@@ -2674,9 +2892,8 @@ CALLBACK_FUNC_DECL(EventTargetNodeAddEventListener) {
   return v8::Undefined();
 }
 
-
 CALLBACK_FUNC_DECL(EventTargetNodeRemoveEventListener) {
-  INC_STATS(L"DOM.EventTargetNode.removeEventListener()");
+  INC_STATS("DOM.EventTargetNode.removeEventListener()");
   EventTargetNode* node =
       V8Proxy::DOMWrapperToNode<EventTargetNode>(args.Holder());
 
@@ -2687,378 +2904,207 @@ CALLBACK_FUNC_DECL(EventTargetNodeRemoveEventListener) {
   if (!proxy)
     return v8::Undefined();
 
-  EventListener* listener =
+  RefPtr<EventListener> listener =
     proxy->FindV8EventListener(args[1], false);
   if (listener) {
     String type = ToWebCoreString(args[0]);
     bool useCapture = args[2]->BooleanValue();
-    node->removeEventListener(type, listener, useCapture);
+    node->removeEventListener(type, listener.get(), useCapture);
   }
 
   return v8::Undefined();
 }
 
 
-// ------------------------------------------------------------------
-// Customized XMLHttpRequest binding implementation
-
-// Use an array to hold dependents. It works like a ref-counted scheme.
-// A value can be added more than once to the xhr object.
-static void CreateHiddenXHRDependency(v8::Local<v8::Object> xhr,
-                                      v8::Local<v8::Value> value) {
-  ASSERT(V8Proxy::GetDOMWrapperType(xhr) == V8ClassIndex::XMLHTTPREQUEST);
-  v8::Local<v8::Value> cache =
-      xhr->GetInternalField(V8Custom::kXMLHttpRequestCacheIndex);
-  if (cache->IsNull() || cache->IsUndefined()) {
-    cache = v8::Array::New();
-    xhr->SetInternalField(V8Custom::kXMLHttpRequestCacheIndex, cache);
-  }
-
-  v8::Local<v8::Array> cache_array = v8::Local<v8::Array>::Cast(cache);
-  cache_array->Set(v8::Integer::New(cache_array->Length()), value);
+// Navigator ------------------------------------------------------------------
+ACCESSOR_GETTER(NavigatorAppVersion) {
+  INC_STATS("DOM.Navigator.appVersion");
+  v8::Handle<v8::Object> holder = info.Holder();
+  Navigator* imp = V8Proxy::ToNativeObject<Navigator>(V8ClassIndex::NAVIGATOR,
+                                                      holder);
+  String v = ToString(imp->appVersion());
+  return v8StringOrUndefined(v);
 }
 
 
-static void RemoveHiddenXHRDependency(v8::Local<v8::Object> xhr,
-                                      v8::Local<v8::Value> value) {
-  ASSERT(V8Proxy::GetDOMWrapperType(xhr) == V8ClassIndex::XMLHTTPREQUEST);
-  v8::Local<v8::Value> cache =
-      xhr->GetInternalField(V8Custom::kXMLHttpRequestCacheIndex);
-  ASSERT(cache->IsArray());
-  v8::Local<v8::Array> cache_array = v8::Local<v8::Array>::Cast(cache);
-  for (int i = cache_array->Length() - 1; i >= 0; i--) {
-    v8::Local<v8::Value> cached = cache_array->Get(v8::Integer::New(i));
-    if (cached->StrictEquals(value)) {
-      cache_array->Delete(i);
-      return;
-    }
-  }
-
-  // Should not reach here.
-  ASSERT(false);
-}
-
-
-ACCESSOR_SETTER(XMLHttpRequestOnreadystatechange) {
-  XMLHttpRequest* imp = V8Proxy::ToNativeObject<XMLHttpRequest>(
-      V8ClassIndex::XMLHTTPREQUEST, info.Holder());
-  if (value->IsNull()) {
-    if (imp->onreadystatechange()) {
-      V8XHREventListener* listener =
-          static_cast<V8XHREventListener*>(imp->onreadystatechange());
-      v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
-      RemoveHiddenXHRDependency(info.Holder(), v8_listener);
-    }
-
-    // Clear the listener
-    imp->setOnreadystatechange(0);
-
-  } else {
-    V8Proxy* proxy = V8Proxy::retrieve(imp->document()->frame());
-    if (!proxy)
-      return;
-
-    EventListener* listener =
-      proxy->FindOrCreateXHREventListener(value, false);
-    if (listener) {
-      imp->setOnreadystatechange(listener);
-      CreateHiddenXHRDependency(info.Holder(), value);
-    }
-  }
-}
-
-
-ACCESSOR_SETTER(XMLHttpRequestOnload) {
-  XMLHttpRequest* imp = V8Proxy::ToNativeObject<XMLHttpRequest>(
-      V8ClassIndex::XMLHTTPREQUEST, info.Holder());
-  if (value->IsNull()) {
-    if (imp->onload()) {
-      V8XHREventListener* listener =
-          static_cast<V8XHREventListener*>(imp->onload());
-      v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
-      RemoveHiddenXHRDependency(info.Holder(), v8_listener);
-    }
-
-    imp->setOnload(0);
-
-  } else {
-    V8Proxy* proxy = V8Proxy::retrieve(imp->document()->frame());
-    if (!proxy)
-      return;
-
-    EventListener* listener =
-      proxy->FindOrCreateXHREventListener(value, false);
-    if (listener) {
-      imp->setOnload(listener);
-      CreateHiddenXHRDependency(info.Holder(), value);
-    }
-  }
-}
-
-
-CALLBACK_FUNC_DECL(XMLHttpRequestAddEventListener) {
-  INC_STATS(L"DOM.XMLHttpRequest.addEventListener()");
-  XMLHttpRequest* imp = V8Proxy::ToNativeObject<XMLHttpRequest>(
-      V8ClassIndex::XMLHTTPREQUEST, args.Holder());
-
-  V8Proxy* proxy = V8Proxy::retrieve(imp->document()->frame());
-  if (!proxy)
-    return v8::Undefined();
-
-  EventListener* listener =
-    proxy->FindOrCreateXHREventListener(args[1], false);
-  if (listener) {
-    String type = ToWebCoreString(args[0]);
-    bool useCapture = args[2]->BooleanValue();
-    imp->addEventListener(type, listener, useCapture);
-
-    CreateHiddenXHRDependency(args.Holder(), args[1]);
-  }
-  return v8::Undefined();
-}
-
-
-CALLBACK_FUNC_DECL(XMLHttpRequestRemoveEventListener) {
-  INC_STATS(L"DOM.XMLHttpRequest.removeEventListener()");
-  XMLHttpRequest* imp = V8Proxy::ToNativeObject<XMLHttpRequest>(
-      V8ClassIndex::XMLHTTPREQUEST, args.Holder());
-
-  V8Proxy* proxy = V8Proxy::retrieve(imp->document()->frame());
-  if (!proxy)
-    return v8::Undefined();  // probably leaked
-
-  EventListener* listener =
-    proxy->FindXHREventListener(args[1], false);
-
-  if (listener) {
-    String type = ToWebCoreString(args[0]);
-    bool useCapture = args[2]->BooleanValue();
-    imp->removeEventListener(type, listener, useCapture);
-
-    RemoveHiddenXHRDependency(args.Holder(), args[1]);
-  }
-
-  return v8::Undefined();
-}
-
-
-CALLBACK_FUNC_DECL(XMLHttpRequestOpen) {
-  INC_STATS(L"DOM.XMLHttpRequest.open()");
-  // Four cases:
-  // open(method, url)
-  // open(method, url, async)
-  // open(method, url, async, user)
-  // open(method, url, async, user, passwd)
-
-  if (args.Length() < 2) {
-    V8Proxy::ThrowError(V8Proxy::SYNTAX_ERROR, "Not enough arguments");
-    return v8::Undefined();
-  }
-
-  // get the implementation
-  XMLHttpRequest* xhr = V8Proxy::ToNativeObject<XMLHttpRequest>(
-      V8ClassIndex::XMLHTTPREQUEST, args.Holder());
-
-  // retrieve parameters
-  String method = ToWebCoreString(args[0]);
-  String urlstring = ToWebCoreString(args[1]);
-  V8Proxy* proxy = V8Proxy::retrieve();
-  KURL url =
-    proxy->frame()->document()->completeURL(urlstring).deprecatedString();
-
-  bool async = (args.Length() < 3) ? true : args[2]->BooleanValue();
-
-  ExceptionCode ec = 0;
-  String user, passwd;
-  if (args.Length() >= 4 && !args[3]->IsUndefined()) {
-    user = valueToStringWithNullCheck(args[3]);
-
-    if (args.Length() >= 5 && !args[4]->IsUndefined()) {
-      passwd = valueToStringWithNullCheck(args[4]);
-      xhr->open(method, url, async, user, passwd, ec);
-    } else {
-      xhr->open(method, url, async, user, ec);
-    }
-  } else {
-    xhr->open(method, url, async, ec);
-  }
-
-  if (ec != 0) {
-    V8Proxy::SetDOMException(ec);
-    return v8::Handle<v8::Value>();
-  }
-
-  return v8::Undefined();
-}
-
-
-static bool IsDocumentType(v8::Handle<v8::Value> value) {
-  // TODO(fqian): add other document types.
-  return V8Document::HasInstance(value) || V8HTMLDocument::HasInstance(value);
-}
-
-
-CALLBACK_FUNC_DECL(XMLHttpRequestSend) {
-  INC_STATS(L"DOM.XMLHttpRequest.send()");
-  // Two cases:
-  // send(document)
-  // send(string)
-
-  // get implementation
-  XMLHttpRequest* xhr = V8Proxy::ToNativeObject<XMLHttpRequest>(
-      V8ClassIndex::XMLHTTPREQUEST, args.Holder());
-
-  String body;
-  if (args.Length() >= 1) {
-    v8::Handle<v8::Value> arg = args[0];
-    if (IsDocumentType(arg)) {
-      v8::Handle<v8::Object> obj = v8::Handle<v8::Object>::Cast(arg);
-      Document* doc = V8Proxy::DOMWrapperToNode<Document>(obj);
-      ASSERT(doc);
-      body = doc->toString();
-    } else {
-      body = valueToStringWithNullCheck(arg);
-    }
-  }
-
-  ExceptionCode ec = 0;
-  xhr->send(body, ec);
-  if (ec != 0) {
-    V8Proxy::SetDOMException(ec);
-    return v8::Handle<v8::Value>();
-  }
-
-  return v8::Undefined();
-}
-
-
-CALLBACK_FUNC_DECL(XMLHttpRequestSetRequestHeader) {
-  INC_STATS(L"DOM.XMLHttpRequest.setRequestHeader()");
-  if (args.Length() < 2) {
-    V8Proxy::ThrowError(V8Proxy::SYNTAX_ERROR, "Not enough arguments");
-    return v8::Undefined();
-  }
-
-  XMLHttpRequest* imp = V8Proxy::ToNativeObject<XMLHttpRequest>(
-      V8ClassIndex::XMLHTTPREQUEST, args.Holder());
-  ExceptionCode ec = 0;
-  String header = ToWebCoreString(args[0]);
-  String value = ToWebCoreString(args[1]);
-  imp->setRequestHeader(header, value, ec);
-  if (ec != 0) {
-    V8Proxy::SetDOMException(ec);
-    return v8::Handle<v8::Value>();
-  }
-  return v8::Undefined();
-}
-
-
-CALLBACK_FUNC_DECL(XMLHttpRequestGetResponseHeader) {
-  INC_STATS(L"DOM.XMLHttpRequest.getResponseHeader()");
-  if (args.Length() < 1) {
-    V8Proxy::ThrowError(V8Proxy::SYNTAX_ERROR, "Not enough arguments");
-    return v8::Undefined();
-  }
-
-  XMLHttpRequest* imp = V8Proxy::ToNativeObject<XMLHttpRequest>(
-      V8ClassIndex::XMLHTTPREQUEST, args.Holder());
-  ExceptionCode ec = 0;
-  String header = ToWebCoreString(args[0]);
-  String result = imp->getResponseHeader(header, ec);
-  if (ec != 0) {
-    V8Proxy::SetDOMException(ec);
-    return v8::Handle<v8::Value>();
-  }
-  return v8StringOrNull(result);
-}
-
-
-CALLBACK_FUNC_DECL(XMLHttpRequestOverrideMimeType) {
-  INC_STATS(L"DOM.XMLHttpRequest.overrideMimeType()");
-  if (args.Length() < 1) {
-    V8Proxy::ThrowError(V8Proxy::SYNTAX_ERROR, "Not enough arguments");
-    return v8::Undefined();
-  }
-
-  XMLHttpRequest* imp = V8Proxy::ToNativeObject<XMLHttpRequest>(
-      V8ClassIndex::XMLHTTPREQUEST, args.Holder());
-  String value = ToWebCoreString(args[0]);
-  imp->overrideMIMEType(value);
-  return v8::Undefined();
-}
+// TreeWalker ------------------------------------------------------------------
 
 CALLBACK_FUNC_DECL(TreeWalkerParentNode) {
-  INC_STATS(L"DOM.TreeWalker.parentNode()");
-  TreeWalker* imp = V8Proxy::ToNativeObject<TreeWalker>(
+  INC_STATS("DOM.TreeWalker.parentNode()");
+  TreeWalker* treeWalker = V8Proxy::ToNativeObject<TreeWalker>(
       V8ClassIndex::TREEWALKER, args.Holder());
-  return V8Proxy::NodeToV8Object(imp->parentNode());
+
+  ScriptState state;
+  RefPtr<Node> result = treeWalker->parentNode(&state);
+  if (state.hadException()) {
+    v8::ThrowException(state.exception());
+    return v8::Undefined();
+  }
+  if (!result) return v8::Null();
+  return V8Proxy::NodeToV8Object(result.get());
 }
 
 CALLBACK_FUNC_DECL(TreeWalkerFirstChild) {
-  INC_STATS(L"DOM.TreeWalker.firstChild()");
-  TreeWalker* imp = V8Proxy::ToNativeObject<TreeWalker>(
+  INC_STATS("DOM.TreeWalker.firstChild()");
+  TreeWalker* treeWalker = V8Proxy::ToNativeObject<TreeWalker>(
       V8ClassIndex::TREEWALKER, args.Holder());
-  return V8Proxy::NodeToV8Object(imp->firstChild());
+
+  ScriptState state;
+  RefPtr<Node> result = treeWalker->firstChild(&state);
+  if (state.hadException()) {
+    v8::ThrowException(state.exception());
+    return v8::Undefined();
+  }
+  if (!result) return v8::Null();
+  return V8Proxy::NodeToV8Object(result.get());
 }
 
 CALLBACK_FUNC_DECL(TreeWalkerLastChild) {
-  INC_STATS(L"DOM.TreeWalker.lastChild()");
-  TreeWalker* imp = V8Proxy::ToNativeObject<TreeWalker>(
+  INC_STATS("DOM.TreeWalker.lastChild()");
+  TreeWalker* treeWalker = V8Proxy::ToNativeObject<TreeWalker>(
       V8ClassIndex::TREEWALKER, args.Holder());
-  return V8Proxy::NodeToV8Object(imp->lastChild());
+
+  ScriptState state;
+  RefPtr<Node> result = treeWalker->lastChild(&state);
+  if (state.hadException()) {
+    v8::ThrowException(state.exception());
+    return v8::Undefined();
+  }
+  if (!result) return v8::Null();
+  return V8Proxy::NodeToV8Object(result.get());
 }
 
 CALLBACK_FUNC_DECL(TreeWalkerNextNode) {
-  INC_STATS(L"DOM.TreeWalker.nextNode()");
-  TreeWalker* imp = V8Proxy::ToNativeObject<TreeWalker>(
+  INC_STATS("DOM.TreeWalker.nextNode()");
+  TreeWalker* treeWalker = V8Proxy::ToNativeObject<TreeWalker>(
       V8ClassIndex::TREEWALKER, args.Holder());
-  return V8Proxy::NodeToV8Object(imp->nextNode());
+
+  ScriptState state;
+  RefPtr<Node> result = treeWalker->nextNode(&state);
+  if (state.hadException()) {
+    v8::ThrowException(state.exception());
+    return v8::Undefined();
+  }
+  if (!result) return v8::Null();
+  return V8Proxy::NodeToV8Object(result.get());
 }
 
 CALLBACK_FUNC_DECL(TreeWalkerPreviousNode) {
-  INC_STATS(L"DOM.TreeWalker.previousNode()");
-  TreeWalker* imp = V8Proxy::ToNativeObject<TreeWalker>(
+  INC_STATS("DOM.TreeWalker.previousNode()");
+  TreeWalker* treeWalker = V8Proxy::ToNativeObject<TreeWalker>(
       V8ClassIndex::TREEWALKER, args.Holder());
-  return V8Proxy::NodeToV8Object(imp->previousNode());
+
+  ScriptState state;
+  RefPtr<Node> result = treeWalker->previousNode(&state);
+  if (state.hadException()) {
+    v8::ThrowException(state.exception());
+    return v8::Undefined();
+  }
+  if (!result) return v8::Null();
+  return V8Proxy::NodeToV8Object(result.get());
 }
 
 CALLBACK_FUNC_DECL(TreeWalkerNextSibling) {
-  INC_STATS(L"DOM.TreeWalker.nextSibling()");
-  TreeWalker* imp = V8Proxy::ToNativeObject<TreeWalker>(
+  INC_STATS("DOM.TreeWalker.nextSibling()");
+  TreeWalker* treeWalker = V8Proxy::ToNativeObject<TreeWalker>(
       V8ClassIndex::TREEWALKER, args.Holder());
-  return V8Proxy::NodeToV8Object(imp->nextSibling());
+
+  ScriptState state;
+  RefPtr<Node> result = treeWalker->nextSibling(&state);
+  if (state.hadException()) {
+    v8::ThrowException(state.exception());
+    return v8::Undefined();
+  }
+  if (!result) return v8::Null();
+  return V8Proxy::NodeToV8Object(result.get());
 }
 
 CALLBACK_FUNC_DECL(TreeWalkerPreviousSibling) {
-  INC_STATS(L"DOM.TreeWalker.previousSibling()");
-  TreeWalker* imp = V8Proxy::ToNativeObject<TreeWalker>(
+  INC_STATS("DOM.TreeWalker.previousSibling()");
+  TreeWalker* treeWalker = V8Proxy::ToNativeObject<TreeWalker>(
       V8ClassIndex::TREEWALKER, args.Holder());
-  return V8Proxy::NodeToV8Object(imp->previousSibling());
+
+  ScriptState state;
+  RefPtr<Node> result = treeWalker->previousSibling(&state);
+  if (state.hadException()) {
+    v8::ThrowException(state.exception());
+    return v8::Undefined();
+  }
+  if (!result) return v8::Null();
+  return V8Proxy::NodeToV8Object(result.get());
 }
 
 CALLBACK_FUNC_DECL(NodeIteratorNextNode) {
-  INC_STATS(L"DOM.NodeIterator.nextNode()");
-  NodeIterator* imp = V8Proxy::ToNativeObject<NodeIterator>(
+  INC_STATS("DOM.NodeIterator.nextNode()");
+  NodeIterator* nodeIterator = V8Proxy::ToNativeObject<NodeIterator>(
       V8ClassIndex::NODEITERATOR, args.Holder());
+
   ExceptionCode ec = 0;
-  return V8Proxy::NodeToV8Object(imp->nextNode(ec));
+  ScriptState state;
+  RefPtr<Node> result = nodeIterator->nextNode(&state, ec);
+  if (ec != 0) {
+      V8Proxy::SetDOMException(ec);
+      return v8::Null();
+  }
+  if (state.hadException()) {
+    v8::ThrowException(state.exception());
+    return v8::Undefined();
+  }
+  if (!result) return v8::Null();
+  return V8Proxy::NodeToV8Object(result.get());
 }
 
 CALLBACK_FUNC_DECL(NodeIteratorPreviousNode) {
-  INC_STATS(L"DOM.NodeIterator.previousNode()");
-  NodeIterator* imp = V8Proxy::ToNativeObject<NodeIterator>(
+  INC_STATS("DOM.NodeIterator.previousNode()");
+  NodeIterator* nodeIterator = V8Proxy::ToNativeObject<NodeIterator>(
       V8ClassIndex::NODEITERATOR, args.Holder());
+
   ExceptionCode ec = 0;
-  return V8Proxy::NodeToV8Object(imp->previousNode(ec));
+  ScriptState state;
+  RefPtr<Node> result = nodeIterator->previousNode(&state, ec);
+  if (ec != 0) {
+      V8Proxy::SetDOMException(ec);
+      return v8::Null();
+  }
+  if (state.hadException()) {
+    v8::ThrowException(state.exception());
+    return v8::Undefined();
+  }
+  if (!result) return v8::Null();
+  return V8Proxy::NodeToV8Object(result.get());
 }
 
 CALLBACK_FUNC_DECL(NodeFilterAcceptNode) {
-  INC_STATS(L"DOM.NodeFilter.acceptNode()");
-  NodeFilter* imp = V8Proxy::ToNativeObject<NodeFilter>(
-      V8ClassIndex::NODEFILTER, args.Holder());
-  Node* node = V8Proxy::DOMWrapperToNode<Node>(args[0]);
-  return v8::Local<v8::Integer>(v8::Integer::New(imp->acceptNode(node)));
+  INC_STATS("DOM.NodeFilter.acceptNode()");
+  V8Proxy::SetDOMException(NOT_SUPPORTED_ERR);  
+  return v8::Undefined();
 }
+
+static String EventNameFromAttributeName(const String& name) {
+  ASSERT(name.startsWith("on"));
+  String event_type = name.substring(2);
+
+  if (event_type.startsWith("w")) {
+    switch(event_type[event_type.length() - 1]) {
+      case 't':
+        event_type = "webkitAnimationStart";
+        break;
+      case 'n':
+        event_type = "webkitAnimationIteration";
+        break;
+      case 'd':
+        ASSERT(event_type.length() > 7);
+        if (event_type[7] == 'a') 
+          event_type = "webkitAnimationEnd";
+        else 
+          event_type = "webkitTransitionEnd";
+        break;
+    }
+  }
+
+  return event_type;
+}
+
 
 ACCESSOR_SETTER(DOMWindowEventHandler) {
   v8::Handle<v8::Object> holder = V8Proxy::LookupDOMWrapper(
@@ -3075,23 +3121,21 @@ ACCESSOR_SETTER(DOMWindowEventHandler) {
   if (!doc)
     return;
 
-  // Name starts with 'on', remove them.
   String key = ToWebCoreString(name);
-  ASSERT(key.startsWith("on"));
-  String event_type = key.substring(2);
-
+  String event_type = EventNameFromAttributeName(key);
+ 
   if (value->IsNull()) {
     // Clear the event listener
-    doc->removeHTMLWindowEventListener(event_type);
+    doc->removeWindowInlineEventListenerForType(event_type);
   } else {
     V8Proxy* proxy = V8Proxy::retrieve(imp->frame());
     if (!proxy)
       return;
 
-    EventListener* listener =
+    RefPtr<EventListener> listener =
       proxy->FindOrCreateV8EventListener(value, true);
     if (listener) {
-      doc->setHTMLWindowEventListener(event_type, listener);
+      doc->setWindowInlineEventListenerForType(event_type, listener);
     }
   }
 }
@@ -3112,12 +3156,10 @@ ACCESSOR_GETTER(DOMWindowEventHandler) {
   if (!doc)
     return v8::Undefined();
 
-  // Name starts with 'on', remove them.
   String key = ToWebCoreString(name);
-  ASSERT(key.startsWith("on"));
-  String event_type = key.substring(2);
+  String event_type = EventNameFromAttributeName(key);
 
-  EventListener* listener = doc->getHTMLWindowEventListener(event_type);
+  EventListener* listener = doc->windowInlineEventListenerForType(event_type);
   return V8Proxy::EventListenerToV8Object(listener);
 }
 
@@ -3142,13 +3184,13 @@ ACCESSOR_SETTER(ElementEventHandler) {
     if (!proxy)
       return;
 
-    EventListener* listener =
+    RefPtr<EventListener> listener =
       proxy->FindOrCreateV8EventListener(value, true);
     if (listener) {
-      node->setHTMLEventListener(event_type, listener);
+      node->setInlineEventListenerForType(event_type, listener);
     }
   } else {
-    node->removeHTMLEventListener(event_type);
+    node->removeInlineEventListenerForType(event_type);
   }
 }
 
@@ -3162,15 +3204,26 @@ ACCESSOR_GETTER(ElementEventHandler) {
   ASSERT(key.startsWith("on"));
   String event_type = key.substring(2);
 
-  EventListener* listener = node->getHTMLEventListener(event_type);
+  EventListener* listener = node->inlineEventListenerForType(event_type);
   return V8Proxy::EventListenerToV8Object(listener);
 }
 
 
-ACCESSOR_SETTER(HTMLOptionsCollectionLength) {
+ACCESSOR_GETTER(HTMLOptionsCollectionLength) {
+  INC_STATS("DOM.HTMLOptionsCollection.length._get");
   HTMLOptionsCollection* imp =
-      V8Proxy::ToNativeObject<HTMLOptionsCollection>(
-          V8ClassIndex::HTMLOPTIONSCOLLECTION, info.Holder());
+    V8Proxy::ToNativeObject<HTMLOptionsCollection>(
+        V8ClassIndex::HTMLOPTIONSCOLLECTION, info.Holder());
+  int v = imp->length();
+  return v8::Integer::New(v);
+}
+
+
+ACCESSOR_SETTER(HTMLOptionsCollectionLength) {
+  INC_STATS("DOM.HTMLOptionsCollection.length._set");
+  HTMLOptionsCollection* imp =
+    V8Proxy::ToNativeObject<HTMLOptionsCollection>(
+        V8ClassIndex::HTMLOPTIONSCOLLECTION, info.Holder());
   double v = value->NumberValue();
   unsigned newLength = 0;
   ExceptionCode ec = 0;
@@ -3187,14 +3240,56 @@ ACCESSOR_SETTER(HTMLOptionsCollectionLength) {
   V8Proxy::SetDOMException(ec);
 }
 
+ACCESSOR_GETTER(HTMLInputElementSelectionStart) {
+  INC_STATS("DOM.HTMLInputElement.selectionStart._get");
+  v8::Handle<v8::Object> holder = info.Holder();
+  HTMLInputElement* imp = V8Proxy::DOMWrapperToNode<HTMLInputElement>(holder);
+
+  if (!imp->canHaveSelection())
+    return v8::Undefined();
+
+  int v = imp->selectionStart();
+  return v8::Integer::New(v);
+}
+
+ACCESSOR_GETTER(HTMLInputElementSelectionEnd) {
+  INC_STATS("DOM.HTMLInputElement.selectionEnd._get");
+  v8::Handle<v8::Object> holder = info.Holder();
+  HTMLInputElement* imp = V8Proxy::DOMWrapperToNode<HTMLInputElement>(holder);
+
+  if (!imp->canHaveSelection())
+    return v8::Undefined();
+
+  int v = imp->selectionEnd();
+  return v8::Integer::New(v);
+}
+
 #if ENABLE(SVG)
+
+ACCESSOR_GETTER(SVGLengthValue) {
+  INC_STATS("DOM.SVGLength.value");
+  V8SVGPODTypeWrapper<SVGLength>* wrapper = V8Proxy::ToNativeObject<V8SVGPODTypeWrapper<SVGLength> >(V8ClassIndex::SVGLENGTH, info.Holder());
+  SVGLength imp = *wrapper;
+  return v8::Number::New(imp.value(V8Proxy::GetSVGContext(wrapper)));
+}
+
+CALLBACK_FUNC_DECL(SVGLengthConvertToSpecifiedUnits) {
+  INC_STATS("DOM.SVGLength.convertToSpecifiedUnits");
+  V8SVGPODTypeWrapper<SVGLength>* wrapper = V8Proxy::ToNativeObject<V8SVGPODTypeWrapper<SVGLength> >(V8ClassIndex::SVGLENGTH, args.Holder());
+  SVGLength imp = *wrapper;
+  SVGElement* context = V8Proxy::GetSVGContext(wrapper);
+  imp.convertToSpecifiedUnits(ToInt32(args[0]), context);
+  wrapper->commitChange(imp, context);
+  return v8::Undefined();
+}
+
 CALLBACK_FUNC_DECL(SVGMatrixInverse) {
-  INC_STATS(L"DOM.SVGMatrix.inverse()");
-  AffineTransform imp =
-      *V8Proxy::ToNativeObject<V8SVGPODTypeWrapper<AffineTransform> >(
+  INC_STATS("DOM.SVGMatrix.inverse()");
+  TransformationMatrix imp =
+      *V8Proxy::ToNativeObject<V8SVGPODTypeWrapper<TransformationMatrix> >(
           V8ClassIndex::SVGMATRIX, args.Holder());
   ExceptionCode ec = 0;
-  AffineTransform result = imp.inverse();
+  TransformationMatrix result = imp.inverse();
   if (!imp.isInvertible()) {
     ec = SVGException::SVG_MATRIX_NOT_INVERTABLE;
   }
@@ -3203,20 +3298,19 @@ CALLBACK_FUNC_DECL(SVGMatrixInverse) {
     return v8::Handle<v8::Value>();
   }
 
-  Peerable* peer = static_cast<Peerable*>(
-      new V8SVGPODTypeWrapperCreatorReadOnly<AffineTransform>(result));
-  return V8Proxy::ToV8Object(V8ClassIndex::SVGMATRIX, peer);
+  return V8Proxy::ToV8Object(V8ClassIndex::SVGMATRIX,
+      new V8SVGStaticPODTypeWrapper<TransformationMatrix>(result));
 }
 
 CALLBACK_FUNC_DECL(SVGMatrixRotateFromVector) {
-  INC_STATS(L"DOM.SVGMatrix.rotateFromVector()");
-  AffineTransform imp =
-      *V8Proxy::ToNativeObject<V8SVGPODTypeWrapper<AffineTransform> >(
+  INC_STATS("DOM.SVGMatrix.rotateFromVector()");
+  TransformationMatrix imp =
+      *V8Proxy::ToNativeObject<V8SVGPODTypeWrapper<TransformationMatrix> >(
           V8ClassIndex::SVGMATRIX, args.Holder());
   ExceptionCode ec = 0;
-  float x = static_cast<float>(args[0]->NumberValue());
-  float y = static_cast<float>(args[1]->NumberValue());
-  AffineTransform result = imp;
+  float x = TO_FLOAT(args[0]);
+  float y = TO_FLOAT(args[1]);
+  TransformationMatrix result = imp;
   result.rotateFromVector(x, y);
   if (x == 0.0 || y == 0.0) {
     ec = SVGException::SVG_INVALID_VALUE_ERR;
@@ -3226,17 +3320,62 @@ CALLBACK_FUNC_DECL(SVGMatrixRotateFromVector) {
     return v8::Handle<v8::Value>();
   }
 
-  Peerable* peer = static_cast<Peerable*>(
-      new V8SVGPODTypeWrapperCreatorReadOnly<AffineTransform>(result));
-  return V8Proxy::ToV8Object(V8ClassIndex::SVGMATRIX, peer);
+  return V8Proxy::ToV8Object(V8ClassIndex::SVGMATRIX,
+      new V8SVGStaticPODTypeWrapper<TransformationMatrix>(result));
+}
+
+CALLBACK_FUNC_DECL(SVGElementInstanceAddEventListener) {
+  INC_STATS("DOM.SVGElementInstance.AddEventListener()");
+  SVGElementInstance* instance =
+      V8Proxy::DOMWrapperToNative<SVGElementInstance>(args.Holder());
+
+  V8Proxy* proxy = V8Proxy::retrieve(instance->scriptExecutionContext());
+  if (!proxy)
+    return v8::Undefined();
+
+  RefPtr<EventListener> listener =
+    proxy->FindOrCreateV8EventListener(args[1], false);
+  if (listener) {
+    String type = ToWebCoreString(args[0]);
+    bool useCapture = args[2]->BooleanValue();
+    instance->addEventListener(type, listener, useCapture);
+  }
+  return v8::Undefined();
+}
+
+CALLBACK_FUNC_DECL(SVGElementInstanceRemoveEventListener) {
+  INC_STATS("DOM.SVGElementInstance.RemoveEventListener()");
+  SVGElementInstance* instance =
+      V8Proxy::DOMWrapperToNative<SVGElementInstance>(args.Holder());
+
+  V8Proxy* proxy = V8Proxy::retrieve(instance->scriptExecutionContext());
+  // It is possbile that the owner document of the node is detached
+  // from the frame, return immediately in this case.
+  // See issue 878909
+  if (!proxy)
+    return v8::Undefined();
+
+  RefPtr<EventListener> listener =
+    proxy->FindV8EventListener(args[1], false);
+  if (listener) {
+    String type = ToWebCoreString(args[0]);
+    bool useCapture = args[2]->BooleanValue();
+    instance->removeEventListener(type, listener.get(), useCapture);
+  }
+
+  return v8::Undefined();
 }
 
 #endif  // ENABLE(SVG)
 
 // --------------- Security Checks -------------------------
 NAMED_ACCESS_CHECK(DOMWindow) {
-  ASSERT(V8ClassIndex::ToWrapperType(data) == V8ClassIndex::DOMWINDOW);
-  v8::Handle<v8::Value> window = host->GetPrototype();
+  ASSERT(V8ClassIndex::FromInt(data->Int32Value()) == V8ClassIndex::DOMWINDOW);
+  v8::Handle<v8::Value> window =
+    V8Proxy::LookupDOMWrapper(V8ClassIndex::DOMWINDOW, host);
+  if (window.IsEmpty())
+      return false;  // the frame is gone.
+
   DOMWindow* target_win =
     V8Proxy::ToNativeObject<DOMWindow>(V8ClassIndex::DOMWINDOW, window);
 
@@ -3256,13 +3395,17 @@ NAMED_ACCESS_CHECK(DOMWindow) {
     }
   }
 
-  return V8Proxy::CanAccess(target);
+  return V8Proxy::CanAccessFrame(target, false);
 }
 
 
 INDEXED_ACCESS_CHECK(DOMWindow) {
-  ASSERT(V8ClassIndex::ToWrapperType(data) == V8ClassIndex::DOMWINDOW);
-  v8::Handle<v8::Value> window = host->GetPrototype();
+  ASSERT(V8ClassIndex::FromInt(data->Int32Value()) == V8ClassIndex::DOMWINDOW);
+  v8::Handle<v8::Value> window =
+    V8Proxy::LookupDOMWrapper(V8ClassIndex::DOMWINDOW, host);
+  if (window.IsEmpty())
+      return false;
+
   DOMWindow* target_win =
     V8Proxy::ToNativeObject<DOMWindow>(V8ClassIndex::DOMWINDOW, window);
 
@@ -3278,51 +3421,48 @@ INDEXED_ACCESS_CHECK(DOMWindow) {
     return true;
   }
 
-  return V8Proxy::CanAccess(target);
+  return V8Proxy::CanAccessFrame(target, false);
 }
 
 
 INDEXED_ACCESS_CHECK(History) {
-  ASSERT(V8ClassIndex::ToWrapperType(data) == V8ClassIndex::HISTORY);
+  ASSERT(V8ClassIndex::FromInt(data->Int32Value()) == V8ClassIndex::HISTORY);
   // Only allow same origin access
   History* imp =
       V8Proxy::ToNativeObject<History>(V8ClassIndex::HISTORY, host);
-  return V8Proxy::IsFromSameOrigin(imp->frame(), false);
+  return V8Proxy::CanAccessFrame(imp->frame(), false);
 }
 
 
 NAMED_ACCESS_CHECK(History) {
-  ASSERT(V8ClassIndex::ToWrapperType(data) == V8ClassIndex::HISTORY);
+  ASSERT(V8ClassIndex::FromInt(data->Int32Value()) == V8ClassIndex::HISTORY);
   // Only allow same origin access
   History* imp =
       V8Proxy::ToNativeObject<History>(V8ClassIndex::HISTORY, host);
-  return V8Proxy::IsFromSameOrigin(imp->frame(), false);
+  return V8Proxy::CanAccessFrame(imp->frame(), false);
 }
 
 
 INDEXED_ACCESS_CHECK(Location) {
-  ASSERT(V8ClassIndex::ToWrapperType(data) == V8ClassIndex::LOCATION);
+  ASSERT(V8ClassIndex::FromInt(data->Int32Value()) == V8ClassIndex::LOCATION);
   // Only allow same origin access
   Location* imp =
       V8Proxy::ToNativeObject<Location>(V8ClassIndex::LOCATION, host);
-  return V8Proxy::IsFromSameOrigin(imp->frame(), false);
+  return V8Proxy::CanAccessFrame(imp->frame(), false);
 }
 
 
 NAMED_ACCESS_CHECK(Location) {
-  ASSERT(V8ClassIndex::ToWrapperType(data) == V8ClassIndex::LOCATION);
+  ASSERT(V8ClassIndex::FromInt(data->Int32Value()) == V8ClassIndex::LOCATION);
   // Only allow same origin access
   Location* imp =
       V8Proxy::ToNativeObject<Location>(V8ClassIndex::LOCATION, host);
-  return V8Proxy::IsFromSameOrigin(imp->frame(), false);
+  return V8Proxy::CanAccessFrame(imp->frame(), false);
 }
 
 
 #undef INDEXED_ACCESS_CHECK
 #undef NAMED_ACCESS_CHECK
-#undef ACCESSOR_GETTER
-#undef ACCESSOR_SETTER
-#undef CALLBACK_FUNC_DECL
 #undef NAMED_PROPERTY_GETTER
 #undef NAMED_PROPERTY_SETTER
 #undef INDEXED_PROPERTY_GETTER
@@ -3333,9 +3473,13 @@ NAMED_ACCESS_CHECK(Location) {
 Frame* V8Custom::GetTargetFrame(v8::Local<v8::Object> host,
                                 v8::Local<v8::Value> data) {
   Frame* target = 0;
-  switch (V8ClassIndex::ToWrapperType(data)) {
+  switch (V8ClassIndex::FromInt(data->Int32Value())) {
     case V8ClassIndex::DOMWINDOW: {
-      v8::Handle<v8::Value> window = host->GetPrototype();
+      v8::Handle<v8::Value> window =
+          V8Proxy::LookupDOMWrapper(V8ClassIndex::DOMWINDOW, host);
+      if (window.IsEmpty())
+          return target;
+
       DOMWindow* target_win =
         V8Proxy::ToNativeObject<DOMWindow>(V8ClassIndex::DOMWINDOW, window);
       target = target_win->frame();
@@ -3353,6 +3497,8 @@ Frame* V8Custom::GetTargetFrame(v8::Local<v8::Object> host,
       target = imp->frame();
       break;
     }
+    default:
+      break;
   }
   return target;
 }

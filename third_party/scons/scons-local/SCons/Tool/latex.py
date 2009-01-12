@@ -31,7 +31,7 @@ selection method.
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 
-__revision__ = "src/engine/SCons/Tool/latex.py 3424 2008/09/15 11:22:20 scons"
+__revision__ = "src/engine/SCons/Tool/latex.py 3842 2008/12/20 22:59:52 scons"
 
 import SCons.Action
 import SCons.Defaults
@@ -58,11 +58,14 @@ def generate(env):
     import dvi
     dvi.generate(env)
 
+    import pdf
+    pdf.generate(env)
+
     bld = env['BUILDERS']['DVI']
     bld.add_action('.ltx', LaTeXAuxAction)
     bld.add_action('.latex', LaTeXAuxAction)
-    bld.add_emitter('.ltx', SCons.Tool.tex.tex_emitter)
-    bld.add_emitter('.latex', SCons.Tool.tex.tex_emitter)
+    bld.add_emitter('.ltx', SCons.Tool.tex.tex_eps_emitter)
+    bld.add_emitter('.latex', SCons.Tool.tex.tex_eps_emitter)
 
     env['LATEX']        = 'latex'
     env['LATEXFLAGS']   = SCons.Util.CLVar('-interaction=nonstopmode')

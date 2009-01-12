@@ -29,6 +29,7 @@
 
 #include "config.h"
 
+#include "v8_custom.h"
 #include "v8_helpers.h"
 #include "v8_npobject.h"
 #include "v8_np_utils.h"
@@ -61,14 +62,19 @@ static v8::Handle<v8::Value> NPObjectInvokeImpl(
     // The holder object is a subtype of HTMLPlugInElement.
     HTMLPlugInElement* imp =
         V8Proxy::DOMWrapperToNode<HTMLPlugInElement>(args.Holder());
-    v8::Handle<v8::Object> instance = imp->getInstance();
-    npobject = V8Proxy::ToNativeObject<NPObject>(
-        V8ClassIndex::NPOBJECT, instance);
+    ScriptInstance script_instance = imp->getInstance();
+    if (script_instance) {
+      npobject = V8Proxy::ToNativeObject<NPObject>(
+          V8ClassIndex::NPOBJECT, script_instance->instance());
+    } else {
+      npobject = NULL;
+    }
 
   } else {
     // The holder object is not a subtype of HTMLPlugInElement, it
     // must be an NPObject which has three internal fields.
-    if (args.Holder()->InternalFieldCount() != 3) {
+    if (args.Holder()->InternalFieldCount() !=
+            V8Custom::kNPObjectInternalFieldCount) {
       V8Proxy::ThrowError(V8Proxy::REFERENCE_ERROR,
                           "NPMethod called on non-NPObject");
       return v8::Undefined();
@@ -135,13 +141,13 @@ v8::Handle<v8::Value> NPObjectInvokeDefaultHandler(const v8::Arguments& args) {
 }
 
 
-static void WeakTemplateCallback(v8::Persistent<v8::Object> obj, void* param);
+static void WeakTemplateCallback(v8::Persistent<v8::Value> obj, void* param);
 
 // NPIdentifier is PrivateIdentifier*.
 static WeakReferenceMap<PrivateIdentifier, v8::FunctionTemplate> \
     static_template_map(&WeakTemplateCallback);
 
-static void WeakTemplateCallback(v8::Persistent<v8::Object> obj,
+static void WeakTemplateCallback(v8::Persistent<v8::Value> obj,
                                  void* param) {
   PrivateIdentifier* iden = static_cast<PrivateIdentifier*>(param);
   ASSERT(iden != NULL);
@@ -281,11 +287,11 @@ v8::Handle<v8::Value> NPObjectSetIndexedProperty(v8::Local<v8::Object> self,
 }
 
 
-static void WeakNPObjectCallback(v8::Persistent<v8::Object> obj, void* param);
+static void WeakNPObjectCallback(v8::Persistent<v8::Value> obj, void* param);
 
 static DOMWrapperMap<NPObject> static_npobject_map(&WeakNPObjectCallback);
 
-static void WeakNPObjectCallback(v8::Persistent<v8::Object> obj,
+static void WeakNPObjectCallback(v8::Persistent<v8::Value> obj,
                                  void* param) {
   NPObject* npobject = static_cast<NPObject*>(param);
   ASSERT(static_npobject_map.contains(npobject));
@@ -325,7 +331,8 @@ v8::Local<v8::Object> CreateV8ObjectForNPObject(NPObject* object,
   if (np_object_desc.IsEmpty()) {
     np_object_desc =
         v8::Persistent<v8::FunctionTemplate>::New(v8::FunctionTemplate::New());
-    np_object_desc->InstanceTemplate()->SetInternalFieldCount(3);
+    np_object_desc->InstanceTemplate()->SetInternalFieldCount(
+        V8Custom::kNPObjectInternalFieldCount);
     np_object_desc->InstanceTemplate()->SetNamedPropertyHandler(
         NPObjectNamedPropertyGetter, NPObjectNamedPropertySetter);
     np_object_desc->InstanceTemplate()->SetIndexedPropertyHandler(

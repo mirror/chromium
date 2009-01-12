@@ -17,7 +17,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)..\build\common.vsprops;$(SolutionDir)..\build\debug.vsprops;..\..\tools\build\win\precompiled_wtl.vsprops;..\..\tools\build\win\unit_test.vsprops;$(SolutionDir)..\third_party\libpng\using_libpng.vsprops;$(SolutionDir)..\third_party\zlib\using_zlib.vsprops;$(SolutionDir)..\skia\using_skia.vsprops;$(SolutionDir)..\third_party\libxml\build\using_libxml.vsprops;..\..\..\third_party\icu38\build\using_icu.vsprops;$(SolutionDir)..\testing\using_gtest.vsprops;..\..\third_party\hunspell\using_hunspell.vsprops"
+			InheritedPropertySheets="$(SolutionDir)..\build\common.vsprops;$(SolutionDir)..\build\debug.vsprops;..\..\tools\build\win\precompiled_wtl.vsprops;..\..\tools\build\win\unit_test.vsprops;$(SolutionDir)..\third_party\libpng\using_libpng.vsprops;$(SolutionDir)..\third_party\zlib\using_zlib.vsprops;$(SolutionDir)..\skia\using_skia.vsprops;$(SolutionDir)..\third_party\libxml\build\using_libxml.vsprops;$(SolutionDir)..\third_party\icu38\build\using_icu.vsprops;$(SolutionDir)..\testing\using_gtest.vsprops;..\..\third_party\hunspell\using_hunspell.vsprops;..\..\..\third_party\npapi\using_npapi.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -79,7 +79,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="1"
-			InheritedPropertySheets="$(SolutionDir)..\build\common.vsprops;$(SolutionDir)..\build\release.vsprops;..\..\tools\build\win\unit_test.vsprops;$(SolutionDir)..\third_party\libpng\using_libpng.vsprops;$(SolutionDir)..\third_party\zlib\using_zlib.vsprops;$(SolutionDir)..\skia\using_skia.vsprops;$(SolutionDir)..\third_party\libxml\build\using_libxml.vsprops;..\..\..\third_party\icu38\build\using_icu.vsprops;$(SolutionDir)..\testing\using_gtest.vsprops;..\..\third_party\hunspell\using_hunspell.vsprops"
+			InheritedPropertySheets="$(SolutionDir)..\build\common.vsprops;$(SolutionDir)..\build\release.vsprops;..\..\tools\build\win\unit_test.vsprops;$(SolutionDir)..\third_party\libpng\using_libpng.vsprops;$(SolutionDir)..\third_party\zlib\using_zlib.vsprops;$(SolutionDir)..\skia\using_skia.vsprops;$(SolutionDir)..\third_party\libxml\build\using_libxml.vsprops;$(SolutionDir)..\third_party\icu38\build\using_icu.vsprops;$(SolutionDir)..\testing\using_gtest.vsprops;..\..\third_party\hunspell\using_hunspell.vsprops;..\..\..\third_party\npapi\using_npapi.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -186,6 +186,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\test_tab_contents.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\test_tab_contents.h"
+				>
+			</File>
+			<File
 				RelativePath="..\testing_browser_process.h"
 				>
 			</File>
@@ -195,14 +203,6 @@
 			</File>
 			<File
 				RelativePath="..\testing_profile.h"
-				>
-			</File>
-			<File
-				RelativePath="..\test_tab_contents.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\test_tab_contents.h"
 				>
 			</File>
 			<File
@@ -235,6 +235,14 @@
 			>
 			<File
 				RelativePath="..\..\browser\bookmarks\bookmark_html_writer_unittest.cc"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="TestBookmarkUtils"
+			>
+			<File
+				RelativePath="..\..\browser\bookmarks\bookmark_utils_unittest.cc"
 				>
 			</File>
 		</Filter>
@@ -282,7 +290,7 @@
 			Name="TestResourceDispatcher"
 			>
 			<File
-				RelativePath="..\..\browser\resource_dispatcher_host_unittest.cc"
+				RelativePath="..\..\browser\renderer_host\resource_dispatcher_host_unittest.cc"
 				>
 			</File>
 			<File
@@ -474,19 +482,27 @@
 			Name="TestSessionService"
 			>
 			<File
-				RelativePath="..\..\browser\session_backend_unittest.cc"
+				RelativePath="..\..\browser\sessions\session_backend_unittest.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\browser\session_service_test_helper.cc"
+				RelativePath="..\..\browser\sessions\session_service_test_helper.cc"
 				>
 			</File>
 			<File
-				RelativePath="..\..\browser\session_service_test_helper.h"
+				RelativePath="..\..\browser\sessions\session_service_test_helper.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\browser\session_service_unittest.cc"
+				RelativePath="..\..\browser\sessions\session_service_unittest.cc"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="TestTabRestoreService"
+			>
+			<File
+				RelativePath="..\..\browser\sessions\tab_restore_service_unittest.cc"
 				>
 			</File>
 		</Filter>
@@ -718,7 +734,7 @@
 			Name="TestSpellCheck"
 			>
 			<File
-				RelativePath="..\..\renderer\spellcheck_unittest.cc"
+				RelativePath="..\..\browser\spellcheck_unittest.cc"
 				>
 			</File>
 		</Filter>
@@ -743,6 +759,14 @@
 			>
 			<File
 				RelativePath="..\..\common\gfx\icon_util_unittest.cc"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="TreeTreeNodeIterator"
+			>
+			<File
+				RelativePath="..\..\views\tree_node_iterator_unittest.cc"
 				>
 			</File>
 		</Filter>
@@ -779,6 +803,10 @@
 			</File>
 			<File
 				RelativePath="..\..\browser\printing\page_setup_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\browser\printing\print_job_unittest.cc"
 				>
 			</File>
 			<File
@@ -1003,10 +1031,66 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="TestRenderWidget"
+			Name="TestRenderer"
 			>
 			<File
+				RelativePath="..\..\renderer\mock_render_process.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\renderer\mock_render_thread.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\renderer\mock_render_thread.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\renderer\render_view_unittest.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\..\renderer\render_widget_unittest.cc"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="TestExtension"
+			>
+			<File
+				RelativePath="..\..\browser\extensions\extension_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\browser\extensions\extension_protocols_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\browser\extensions\extensions_service_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\browser\extensions\user_script_master_unittest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\..\renderer\user_script_slave_unittest.cc"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="TestPropertBag"
+			>
+			<File
+				RelativePath="..\..\common\property_bag_unittest.cc"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="TestUnzip"
+			>
+			<File
+				RelativePath="..\..\common\unzip_unittest.cc"
 				>
 			</File>
 		</Filter>

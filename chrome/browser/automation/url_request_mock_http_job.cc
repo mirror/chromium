@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <windows.h>
-
 #include "chrome/browser/automation/url_request_mock_http_job.h"
 
 #include "base/file_util.h"
@@ -34,10 +32,9 @@ URLRequestJob* URLRequestMockHTTPJob::Factory(URLRequest* request,
 
   // Convert the file:/// URL to a path on disk.
   std::wstring file_path;
-  net::FileURLToFilePath(GURL(file_url), &file_path);
-  URLRequestMockHTTPJob* job = new URLRequestMockHTTPJob(request);
-  job->file_path_ = file_path;
-  return job;
+  net::FileURLToFilePath(GURL(WideToUTF8(file_url)), &file_path);
+  return new URLRequestMockHTTPJob(request,
+                                   FilePath::FromWStringHack(file_path));
 }
 
 /* static */
@@ -52,18 +49,19 @@ void URLRequestMockHTTPJob::AddUITestUrls(const std::wstring& base_path) {
 
 /* static */
 GURL URLRequestMockHTTPJob::GetMockUrl(const std::wstring& path) {
-  std::wstring url = L"http://";
-  url.append(UTF8ToWide(kMockHostname));
-  url.append(L"/");
-  url.append(path);
+  std::string url = "http://";
+  url.append(kMockHostname);
+  url.append("/");
+  url.append(WideToUTF8(path));
   return GURL(url);
 }
 
-URLRequestMockHTTPJob::URLRequestMockHTTPJob(URLRequest* request)
-    : URLRequestFileJob(request) { }
+URLRequestMockHTTPJob::URLRequestMockHTTPJob(URLRequest* request,
+                                             const FilePath& file_path)
+    : URLRequestFileJob(request, file_path) { }
 
 void URLRequestMockHTTPJob::GetResponseInfo(net::HttpResponseInfo* info) {
-  std::wstring header_file = file_path_ + kMockHeaderFileSuffix;
+  std::wstring header_file = file_path_.ToWStringHack() + kMockHeaderFileSuffix;
   std::string raw_headers;
   if (!file_util::ReadFileToString(header_file, &raw_headers))
     return;

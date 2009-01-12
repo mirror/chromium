@@ -10,6 +10,8 @@
 #include "base/ref_counted.h"
 #include "chrome/common/ipc_channel.h"
 
+class MessageLoop;
+
 namespace IPC {
 
 //-----------------------------------------------------------------------------
@@ -111,6 +113,14 @@ class ChannelProxy : public Message::Sender {
   void AddFilter(MessageFilter* filter);
   void RemoveFilter(MessageFilter* filter);
 
+#if defined(OS_POSIX)
+  // Calls through to the underlying channel's methods.
+  // TODO(playmobil): For now this is only implemented in the case of
+  // create_pipe_now = true, we need to figure this out for the latter case.
+  void GetClientFileDescriptorMapping(int *src_fd, int *dest_fd);
+  void OnClientConnected();
+#endif  // defined(OS_POSIX)
+
  protected:
   class Context;
   // A subclass uses this constructor if it needs to add more information
@@ -170,7 +180,7 @@ class ChannelProxy : public Message::Sender {
     Channel::Listener* listener_;
 
     // List of filters.  This is only accessed on the IPC thread.
-    std::vector<scoped_refptr<MessageFilter>> filters_;
+    std::vector<scoped_refptr<MessageFilter> > filters_;
     MessageLoop* ipc_message_loop_;
     Channel* channel_;
     std::wstring channel_id_;

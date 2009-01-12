@@ -12,7 +12,7 @@ namespace views {
 // The TabbedPane class is a view that shows tabs.  When the user clicks on a
 // tab, the associated view is displayed.
 // TODO (jcampan): implement GetPreferredSize().
-class ContainerWin;
+class WidgetWin;
 
 class TabbedPane : public NativeControl {
  public:
@@ -48,8 +48,11 @@ class TabbedPane : public NativeControl {
   // view.  The caller becomes the owner of the returned view.
   View* RemoveTabAtIndex(int index);
 
-  // Selects the tab at the specified |index|.
+  // Selects the tab at the specified |index|, which must be valid.
   void SelectTabAt(int index);
+
+  // Selects the tab containing the specified |contents|, which must be valid.
+  void SelectTabForContents(const View* contents);
 
   // Returns the number of tabs.
   int GetTabCount();
@@ -67,6 +70,9 @@ class TabbedPane : public NativeControl {
   // Changes the contents view to the view associated with the tab at |index|.
   void DoSelectTabAt(int index);
 
+  // Returns the index of the tab containing the specified |contents|.
+  int GetIndexForContents(const View* contents) const;
+
   void ResizeContents(HWND tab_control);
 
   HWND tab_control_;
@@ -75,7 +81,7 @@ class TabbedPane : public NativeControl {
   std::vector<View*> tab_views_;
 
   // The window displayed in the tab.
-  ContainerWin* content_window_;
+  WidgetWin* content_window_;
 
   // The listener we notify about tab selection changes.
   Listener* listener_;

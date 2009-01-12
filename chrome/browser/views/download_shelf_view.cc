@@ -100,7 +100,7 @@ void DownloadShelfView::Init() {
                           rb.GetBitmapNamed(IDR_CLOSE_BAR_P));
   close_button_->SetListener(this, 0);
   AddChildView(close_button_);
-  SetBackground(views::Background::CreateSolidBackground(kBackgroundColor));
+  set_background(views::Background::CreateSolidBackground(kBackgroundColor));
 
   new_item_animation_.reset(new SlideAnimation(this));
   new_item_animation_->SetSlideDuration(kNewItemAnimationDurationMs);
@@ -111,6 +111,8 @@ void DownloadShelfView::Init() {
 }
 
 void DownloadShelfView::AddDownloadView(View* view) {
+  shelf_animation_->Show();
+
   DCHECK(view);
   download_views_.push_back(view);
   AddChildView(view);
@@ -127,16 +129,7 @@ void DownloadShelfView::ChangeTabContents(TabContents* old_contents,
   tab_contents_ = new_contents;
 }
 
-void DownloadShelfView::ViewHierarchyChanged(bool is_add,
-                                             View* parent,
-                                             View* child) {
-  if (is_add && child == this)
-    Layout();
-}
-
 void DownloadShelfView::AddDownload(DownloadItem* download) {
-  shelf_animation_->Show();
-
   DownloadItemView* view = new DownloadItemView(
       download, this, new DownloadItemModel(download));
   AddDownloadView(view);
@@ -210,8 +203,8 @@ void DownloadShelfView::Layout() {
   // Otherwise, we can have problems when for example the user switches to
   // another tab (that doesn't have a download shelf) _before_ the download
   // has started and we'll crash when calling SetVisible() below because
-  // the NativeControlContainer ctor tries to use the ViewContainer.
-  if (!GetContainer())
+  // the NativeControlContainer ctor tries to use the Container.
+  if (!GetWidget())
     return;
 
   gfx::Size image_size = arrow_image_->GetPreferredSize();
@@ -270,9 +263,10 @@ void DownloadShelfView::LinkActivated(views::Link* source, int event_flags) {
   NavigationController* controller = tab_contents_->controller();
   Browser* browser = Browser::GetBrowserForController(controller, &index);
   DCHECK(browser);
-  browser->ShowNativeUI(DownloadTabUI::GetURL());
+  browser->ShowNativeUITab(DownloadTabUI::GetURL());
 }
 
 void DownloadShelfView::ButtonPressed(views::BaseButton* button) {
   shelf_animation_->Hide();
 }
+

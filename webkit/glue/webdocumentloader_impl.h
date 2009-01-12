@@ -29,9 +29,11 @@
 #ifndef WEBKIT_GLUE_WEBDOCUMENTLOADER_IMPL_H__
 #define WEBKIT_GLUE_WEBDOCUMENTLOADER_IMPL_H__
 
-#pragma warning(push, 0)
+#include "base/compiler_specific.h"
+
+MSVC_PUSH_WARNING_LEVEL(0);
 #include "DocumentLoader.h"
-#pragma warning(pop)
+MSVC_POP_WARNING();
 
 #include "base/basictypes.h"
 #include "base/scoped_ptr.h"
@@ -41,10 +43,10 @@
 
 class WebDataSource;
 
-class WebDocumentLoaderImpl : public WebCore::DocumentLoader
-{
+class WebDocumentLoaderImpl : public WebCore::DocumentLoader {
  public:
-  WebDocumentLoaderImpl(const WebCore::ResourceRequest&, const WebCore::SubstituteData&);
+  static PassRefPtr<WebDocumentLoaderImpl> create(
+      const WebCore::ResourceRequest&, const WebCore::SubstituteData&);
 
   void SetDataSource(WebDataSource*);
   WebDataSource* GetDataSource() const;
@@ -86,6 +88,9 @@ class WebDocumentLoaderImpl : public WebCore::DocumentLoader
   }
 
  private:
+  WebDocumentLoaderImpl(const WebCore::ResourceRequest&,
+                        const WebCore::SubstituteData&);
+
   scoped_ptr<WebDataSource> datasource_;
   scoped_ptr<WebDataSource> detached_datasource_;
   scoped_ptr<const SearchableFormData> searchable_form_data_;

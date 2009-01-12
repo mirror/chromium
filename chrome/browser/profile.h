@@ -23,7 +23,9 @@
 #include "chrome/common/pref_service.h"
 
 class BookmarkModel;
+class ChromeURLRequestContext;
 class DownloadManager;
+class ExtensionsService;
 class HistoryService;
 class NavigationController;
 class PrefService;
@@ -33,6 +35,7 @@ class TabRestoreService;
 class TemplateURLFetcher;
 class TemplateURLModel;
 class URLRequestContext;
+class UserScriptMaster;
 class VisitedLinkMaster;
 class WebDataService;
 
@@ -63,6 +66,7 @@ class Profile {
     // off the record mode.
     IMPLICIT_ACCESS
   };
+  Profile() : restored_last_session_(false) {}
   virtual ~Profile() {}
 
   // Profile prefs are registered as soon as the prefs are loaded for the first
@@ -100,6 +104,15 @@ class Profile {
   // profile.  The VisitedLinkMaster is lazily created the first time
   // that this method is called.
   virtual VisitedLinkMaster* GetVisitedLinkMaster() = 0;
+
+  // Retrieves a pointer to the ExtensionsService associated with this
+  // profile. The ExtensionsService is created at startup.
+  virtual ExtensionsService* GetExtensionsService() = 0;
+
+  // Retrieves a pointer to the UserScriptMaster associated with this
+  // profile.  The UserScriptMaster is lazily created the first time
+  // that this method is called.
+  virtual UserScriptMaster* GetUserScriptMaster() = 0;
 
   // Retrieves a pointer to the HistoryService associated with this
   // profile.  The HistoryService is lazily created the first time
@@ -190,7 +203,7 @@ class Profile {
   // was created, rather it is the time the user started chrome and logged into
   // this profile. For the single profile case, this corresponds to the time
   // the user started chrome.
-  virtual Time GetStartTime() const = 0;
+  virtual base::Time GetStartTime() const = 0;
 
   // Returns the TabRestoreService. This returns NULL when off the record.
   virtual TabRestoreService* GetTabRestoreService() = 0;
@@ -218,8 +231,19 @@ class Profile {
   }
 #endif
 
+  // Did the user restore the last session? This is set by SessionRestore.
+  void set_restored_last_session(bool restored_last_session) {
+    restored_last_session_ = restored_last_session;
+  }
+  bool restored_last_session() const {
+    return restored_last_session_;
+  }
+
  protected:
   static URLRequestContext* default_request_context_;
+
+ private:
+  bool restored_last_session_;
 };
 
 class OffTheRecordProfileImpl;
@@ -236,6 +260,8 @@ class ProfileImpl : public Profile,
   virtual Profile* GetOffTheRecordProfile();
   virtual Profile* GetOriginalProfile();
   virtual VisitedLinkMaster* GetVisitedLinkMaster();
+  virtual UserScriptMaster* GetUserScriptMaster();
+  virtual ExtensionsService* GetExtensionsService();
   virtual HistoryService* GetHistoryService(ServiceAccessType sat);
   virtual WebDataService* GetWebDataService(ServiceAccessType sat);
   virtual PrefService* GetPrefs();
@@ -254,7 +280,7 @@ class ProfileImpl : public Profile,
   virtual bool DidLastSessionExitCleanly();
   virtual BookmarkModel* GetBookmarkModel();
   virtual bool IsSameProfile(Profile* profile);
-  virtual Time GetStartTime() const;
+  virtual base::Time GetStartTime() const;
   virtual TabRestoreService* GetTabRestoreService();
   virtual void ResetTabRestoreService();
   virtual void ReinitializeSpellChecker();
@@ -269,8 +295,6 @@ class ProfileImpl : public Profile,
                        const NotificationDetails& details);  
 
  private:
-  class RequestContext;
-
   friend class Profile;
 
   explicit ProfileImpl(const std::wstring& path);
@@ -296,6 +320,8 @@ class ProfileImpl : public Profile,
   std::wstring path_;
   bool off_the_record_;
   scoped_ptr<VisitedLinkMaster> visited_link_master_;
+  scoped_refptr<ExtensionsService> extensions_service_;
+  scoped_refptr<UserScriptMaster> user_script_master_;
   scoped_ptr<PrefService> prefs_;
   scoped_ptr<TemplateURLFetcher> template_url_fetcher_;
   scoped_ptr<TemplateURLModel> template_url_model_;
@@ -305,7 +331,7 @@ class ProfileImpl : public Profile,
   scoped_ptr<ProfilePersonalization> personalization_;
 #endif
 
-  RequestContext* request_context_;
+  ChromeURLRequestContext* request_context_;
 
   scoped_refptr<DownloadManager> download_manager_;
   scoped_refptr<HistoryService> history_service_;
@@ -322,9 +348,9 @@ class ProfileImpl : public Profile,
   scoped_ptr<OffTheRecordProfileImpl> off_the_record_profile_;
 
   // See GetStartTime for details.
-  Time start_time_;
+  base::Time start_time_;
 
-  scoped_ptr<TabRestoreService> tab_restore_service_;
+  scoped_refptr<TabRestoreService> tab_restore_service_;
 
   // This can not be a scoped_refptr because we must release it on the I/O
   // thread.

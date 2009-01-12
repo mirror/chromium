@@ -10,13 +10,17 @@
 
 #include <algorithm>
 #include <vector>
+#include <string>
+#include <iostream>
 
 #include "base/basictypes.h"
 #include "base/command_line.h"
+#include "base/file_util.h"
 #include "base/gfx/png_decoder.h"
 #include "base/logging.h"
 #include "base/process_util.h"
 #include "base/scoped_ptr.h"
+#include "base/string_util.h"
 
 // Causes the app to remain open, waiting for pairs of filenames on stdin.
 // The caller is then responsible for terminating this app.
@@ -46,8 +50,8 @@ class Image {
 
   // Creates the image from stdin with the given data length. On success, it
   // will return true. On failure, no other methods should be accessed.
-  bool CreateFromStdin(int byte_length) {
-    if (byte_length <= 0)
+  bool CreateFromStdin(size_t byte_length) {
+    if (byte_length == 0)
       return false;
 
     scoped_array<unsigned char> source(new unsigned char[byte_length]);
@@ -65,8 +69,8 @@ class Image {
   // Creates the image from the given filename on disk, and returns true on
   // success.
   bool CreateFromFilename(const char* filename) {
-    FILE* f;
-    if (fopen_s(&f, filename, "rb") != 0)
+    FILE* f = file_util::OpenFile(std::string(filename), "rb");
+    if (!f)
       return false;
 
     std::vector<unsigned char> compressed;
@@ -77,7 +81,7 @@ class Image {
       std::copy(buf, &buf[num_read], std::back_inserter(compressed));
     }
 
-    fclose(f);
+    file_util::CloseFile(f);
 
     if (!PNGDecoder::Decode(&compressed[0], compressed.size(),
                           PNGDecoder::FORMAT_RGBA, &data_, &w_, &h_)) {
@@ -229,30 +233,32 @@ int CompareImages(const char* file1, const char* file2) {
 }
 
 int main(int argc, const char* argv[]) {
-  process_util::EnableTerminationOnHeapCorruption();
+  base::EnableTerminationOnHeapCorruption();
+#if defined(OS_WIN)
   CommandLine parsed_command_line;
+#elif defined(OS_POSIX)
+  CommandLine parsed_command_line(argc, argv);
+#endif
   if (parsed_command_line.HasSwitch(kOptionPollStdin)) {
     // Watch stdin for filenames.
-    char stdin_buffer[2048];
-    char filename1_buffer[2048];
+    std::string stdin_buffer;
+    std::string filename1_buffer;
     bool have_filename1 = false;
-    while (fgets(stdin_buffer, sizeof(stdin_buffer), stdin)) {
-      char *newLine = strchr(stdin_buffer, '\n');
-      if (newLine)
-        *newLine = '\0';
-      if (!*stdin_buffer)
+    while (std::getline(std::cin, stdin_buffer)) {
+      if (stdin_buffer.empty())
         continue;
 
       if (have_filename1) {
         // CompareImages writes results to stdout unless an error occurred.
-        if (CompareImages(filename1_buffer, stdin_buffer) == kStatusError)
+        if (CompareImages(filename1_buffer.c_str(), stdin_buffer.c_str()) ==
+            kStatusError)
           printf("error\n");
         fflush(stdout);
         have_filename1 = false;
       } else {
         // Save the first filename in another buffer and wait for the second
         // filename to arrive via stdin.
-        strcpy_s(filename1_buffer, sizeof(filename1_buffer), stdin_buffer);
+        filename1_buffer = stdin_buffer;
         have_filename1 = true;
       }
     }
@@ -266,4 +272,3 @@ int main(int argc, const char* argv[]) {
   PrintHelp();
   return kStatusError;
 }
-

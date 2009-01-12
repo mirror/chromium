@@ -113,6 +113,11 @@ void AboutChromeView::Init() {
   }
 
   current_version_ = version_info->file_version();
+#if !defined(GOOGLE_CHROME_BUILD)
+  current_version_ += L" (";
+  current_version_ += version_info->last_change();
+  current_version_ += L")";
+#endif
 
   // Views we will add to the *parent* of this dialog, since it will display
   // next to the buttons which we don't draw ourselves.
@@ -161,6 +166,7 @@ void AboutChromeView::Init() {
   version_label_->SetText(current_version_);
   version_label_->SetReadOnly(true);
   version_label_->RemoveBorder();
+  version_label_->SetBackgroundColor(SK_ColorWHITE);
   version_label_->SetFont(ResourceBundle::GetSharedInstance().GetFont(
       ResourceBundle::BaseFont).DeriveFont(0, BOLD_FONTTYPE));
   AddChildView(version_label_);
@@ -710,6 +716,12 @@ void AboutChromeView::OnReportResults(GoogleUpdateUpgradeResult result,
 
 void AboutChromeView::UpdateStatus(GoogleUpdateUpgradeResult result,
                                    GoogleUpdateErrorCode error_code) {
+#if !defined(GOOGLE_CHROME_BUILD)
+  // For Chromium builds it would show an error message.
+  // But it looks weird because in fact there is no error,
+  // just the update server is not available for non-official builds.
+  return;
+#endif
   bool show_success_indicator = false;
   bool show_update_available_indicator = false;
   bool show_timeout_indicator = false;

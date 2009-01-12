@@ -12,9 +12,9 @@ env.Replace(
     CPPPATH = [
         '$GURL_DIR',
         '$GURL_DIR/..',
-#        '#/..',
         '$ICU38_DIR/public/common',
         '$ICU38_DIR/public/i18n',
+        '$VC80_CPPPATH',
     ],
 )
 
@@ -42,7 +42,7 @@ input_files = [
 #    '$GURL_DIR/src/url_canon_icu.cc',
     '$GURL_DIR/src/url_canon_internal.cc',
     '$GURL_DIR/src/url_canon_ip.cc',
-#    '$GURL_DIR/src/url_canon_mailtourl.cc',
+    '$GURL_DIR/src/url_canon_mailtourl.cc',
     '$GURL_DIR/src/url_canon_path.cc',
     '$GURL_DIR/src/url_canon_pathurl.cc',
     '$GURL_DIR/src/url_canon_query.cc',
@@ -58,7 +58,7 @@ input_files += [
     '$ICU38_DIR/source/common/utf_impl.cc',
 ]
 
-env.ChromeStaticLibrary('googleurl-gears', input_files)
+env.GearsStaticLibrary('googleurl-gears', input_files)
 
 #env_tests = env.Clone()
 #
@@ -85,7 +85,7 @@ env.ChromeStaticLibrary('googleurl-gears', input_files)
 #
 #   # The version of gtest that googleurl uses provides a main() function; ours
 #   # doesn't so include our own main function.
-#   '#/../base/run_all_unittests.cc'
+#   '$CHROME_SRC_DIR/base/run_all_unittests.cc'
 #]
 #
 #gurl_unittests = env_tests.ChromeTestProgram('googleurl_unittests', test_files)

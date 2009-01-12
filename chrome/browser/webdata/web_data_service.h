@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_WEBDATA_WEB_DATA_SERVICE_H__
 #define CHROME_BROWSER_WEBDATA_WEB_DATA_SERVICE_H__
 
+#include <map>
+
 #include "base/basictypes.h"
 #include "base/lock.h"
 #include "base/message_loop.h"
@@ -12,11 +14,11 @@
 #include "base/thread.h"
 #include "chrome/browser/webdata/web_database.h"
 #include "chrome/common/scoped_vector.h"
-#include <map>
+#include "webkit/glue/autofill_form.h"
 
-class GURL;
-struct PasswordForm;
 struct IE7PasswordInfo;
+struct PasswordForm;
+class GURL;
 class ShutdownTask;
 class TemplateURL;
 
@@ -46,6 +48,7 @@ typedef enum {
   PASSWORD_RESULT,       // WDResult<std::vector<PasswordForm*>>
   PASSWORD_IE7_RESULT,   // WDResult<IE7PasswordInfo>
   WEB_APP_IMAGES,        // WDResult<WDAppImagesResult>
+  AUTOFILL_VALUE_RESULT, // WDResult<std::vector<std::wstring>>
 } WDResultType;
 
 // Result from GetWebAppImages.
@@ -314,11 +317,11 @@ class WebDataService : public base::RefCountedThreadSafe<WebDataService> {
   void RemoveIE7Login(const IE7PasswordInfo& info);
 
   // Removes all logins created in the specified daterange
-  void RemoveLoginsCreatedBetween(const Time delete_begin,
-                                  const Time delete_end);
+  void RemoveLoginsCreatedBetween(const base::Time delete_begin,
+                                  const base::Time delete_end);
 
   // Removes all logins created on or after the date passed in.
-  void RemoveLoginsCreatedAfter(const Time delete_begin);
+  void RemoveLoginsCreatedAfter(const base::Time delete_begin);
 
   // Gets a list of password forms that match |form|.
   // |consumer| will be notified when the request is done. The result is of
@@ -350,6 +353,29 @@ class WebDataService : public base::RefCountedThreadSafe<WebDataService> {
   // WebDataServiceConsumer is about to be deleted.
   void CancelRequest(Handle h);
 
+  //////////////////////////////////////////////////////////////////////////////
+  //
+  // Autofill.
+  //
+  //////////////////////////////////////////////////////////////////////////////
+
+  // Schedules a task to add form elements to the web database.
+  void AddAutofillFormElements(
+      const std::vector<AutofillForm::Element>& elements);
+
+  // Initiates the request for a vector of values which have been entered in
+  // form input fields named |name|.  The method OnWebDataServiceRequestDone of
+  // |consumer| gets called back when the request is finished, with the vector
+  // included in the argument |result|.
+  Handle GetFormValuesForElementName(const std::wstring& name,
+                                     const std::wstring& prefix,
+                                     int limit,
+                                     WebDataServiceConsumer* consumer);
+
+  // Removes form elements recorded for autofill from the database.
+  void RemoveFormElementsAddedBetween(const base::Time& delete_begin,
+                                      const base::Time& delete_end);
+
  protected:
   friend class TemplateURLModelTest;
   friend class TemplateURLModelTestingProfile;
@@ -357,7 +383,7 @@ class WebDataService : public base::RefCountedThreadSafe<WebDataService> {
   friend class WebDataRequest;
 
   // This is invoked by the unit test; path is the path of the Web Data file.
-  bool WebDataService::InitWithPath(const std::wstring& path);
+  bool InitWithPath(const std::wstring& path);
 
   // Invoked by request implementations when a request has been processed.
   void RequestCompleted(Handle h);
@@ -374,13 +400,13 @@ class WebDataService : public base::RefCountedThreadSafe<WebDataService> {
   friend class ShutdownTask;
 
   typedef GenericRequest2<std::vector<const TemplateURL*>,
-                          std::vector<TemplateURL*>> SetKeywordsRequest;
+                          std::vector<TemplateURL*> > SetKeywordsRequest;
 
   // Initialize the database with the provided path.
   void InitializeDatabase(const std::wstring& path);
 
   // Commit any pending transaction and deletes the database.
-  void WebDataService::ShutdownDatabase();
+  void ShutdownDatabase();
 
   // Commit the current transaction and creates a new one.
   void Commit();
@@ -407,11 +433,24 @@ class WebDataService : public base::RefCountedThreadSafe<WebDataService> {
   void UpdateLoginImpl(GenericRequest<PasswordForm>* request);
   void RemoveLoginImpl(GenericRequest<PasswordForm>* request);
   void RemoveIE7LoginImpl(GenericRequest<IE7PasswordInfo>* request);
-  void RemoveLoginsCreatedBetweenImpl(GenericRequest2<Time, Time>* request);
+  void RemoveLoginsCreatedBetweenImpl(
+      GenericRequest2<base::Time, base::Time>* request);
   void GetLoginsImpl(GenericRequest<PasswordForm>* request);
   void GetIE7LoginImpl(GenericRequest<IE7PasswordInfo>* request);
   void GetAllAutofillableLoginsImpl(WebDataRequest* request);
   void GetAllLoginsImpl(WebDataRequest* request);
+
+  //////////////////////////////////////////////////////////////////////////////
+  //
+  // Autofill.
+  //
+  //////////////////////////////////////////////////////////////////////////////
+  void AddAutofillFormElementsImpl(
+      GenericRequest<std::vector<AutofillForm::Element> >* request);
+  void GetFormValuesForElementNameImpl(WebDataRequest* request,
+      const std::wstring& name, const std::wstring& prefix, int limit);
+  void RemoveFormElementsAddedBetweenImpl(
+      GenericRequest2<base::Time, base::Time>* request);
 
   //////////////////////////////////////////////////////////////////////////////
   //
@@ -481,4 +520,3 @@ class WebDataServiceConsumer {
 };
 
 #endif  // CHROME_BROWSER_WEBDATA_WEB_DATA_SERVICE_H__
-

@@ -9,8 +9,8 @@
 //   autoupdates
 
 
-#ifndef CHROME_APP_GOOGLE_UPDATE_CLIENT_H__
-#define CHROME_APP_GOOGLE_UPDATE_CLIENT_H__
+#ifndef CHROME_APP_GOOGLE_UPDATE_CLIENT_H_
+#define CHROME_APP_GOOGLE_UPDATE_CLIENT_H_
 
 #include <windows.h>
 #include <tchar.h>
@@ -50,14 +50,12 @@ class GoogleUpdateClient {
   // - instance is handle to the current instance of application
   // - sandbox provides information about sandbox services
   // - command_line contains command line parameters
-  // - show_command specifies how the window is to be shown
   // - entry_name is the function of type DLL_MAIN that is called
   //   from chrome.dll
   // - ret is an out param with the return value of entry
   // Returns false if unable to load the dll or find entry_name's proc addr.
   bool Launch(HINSTANCE instance, sandbox::SandboxInterfaceInfo* sandbox,
-              wchar_t* command_line, int show_command, const char* entry_name,
-              int* ret);
+              wchar_t* command_line, const char* entry_name, int* ret);
 
  private:
   // disallow copy ctor and operator=
@@ -76,5 +74,5 @@ class GoogleUpdateClient {
 
 }  // namespace google_update
 
-#endif  // CHROME_APP_GOOGLE_UPDATE_CLIENT_H__
+#endif  // CHROME_APP_GOOGLE_UPDATE_CLIENT_H_
 

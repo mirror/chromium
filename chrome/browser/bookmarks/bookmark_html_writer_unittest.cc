@@ -29,7 +29,7 @@ class BookmarkHTMLWriterTest : public testing::Test {
                                  bool on_toolbar,
                                  const GURL& url,
                                  const std::wstring& title,
-                                 Time creation_time,
+                                 base::Time creation_time,
                                  const std::wstring& f1,
                                  const std::wstring& f2,
                                  const std::wstring& f3) {
@@ -83,9 +83,9 @@ TEST_F(BookmarkHTMLWriterTest, Test) {
   GURL url2("http://url2");
   GURL url3("http://url3");
   BookmarkModel model(NULL);
-  Time t1(Time::Now());
-  Time t2(t1 + TimeDelta::FromHours(1));
-  Time t3(t1 + TimeDelta::FromHours(1));
+  base::Time t1(base::Time::Now());
+  base::Time t2(t1 + base::TimeDelta::FromHours(1));
+  base::Time t3(t1 + base::TimeDelta::FromHours(1));
   BookmarkNode* f1 = model.AddGroup(model.GetBookmarkBarNode(), 0, f1_title);
   model.AddURLWithCreationTime(f1, 0, url1_title, url1, t1);
   BookmarkNode* f2 = model.AddGroup(f1, 1, f2_title);
@@ -109,7 +109,7 @@ TEST_F(BookmarkHTMLWriterTest, Test) {
                                         NULL);
 
   // Verify we got back what we wrote.
-  ASSERT_EQ(6, parsed_bookmarks.size());
+  ASSERT_EQ(6U, parsed_bookmarks.size());
   AssertBookmarkEntryEquals(parsed_bookmarks[0], false, url1, url1_title, t1,
                             L"Bookmark Bar", f1_title, std::wstring());
   AssertBookmarkEntryEquals(parsed_bookmarks[1], false, url2, url2_title, t2,

@@ -23,6 +23,7 @@
 #include "chrome/browser/views/bookmark_bar_view.h"
 #include "chrome/browser/views/bookmark_manager_view.h"
 #include "chrome/browser/views/bookmark_table_view.h"
+#include "chrome/browser/views/frame/browser_view.h"
 #include "chrome/browser/views/keyword_editor_view.h"
 #include "chrome/browser/views/page_info_window.h"
 #include "chrome/browser/web_contents.h"
@@ -33,6 +34,8 @@ void RegisterAllPrefs(PrefService* user_prefs, PrefService* local_state) {
   // Prefs in Local State
   BookmarkManagerView::RegisterPrefs(local_state);
   Browser::RegisterPrefs(local_state);
+  BrowserView::RegisterBrowserViewPrefs(local_state);
+  browser_shutdown::RegisterPrefs(local_state);
   CacheManagerHost::RegisterPrefs(local_state);
   chrome_browser_net::RegisterPrefs(local_state);
   GoogleURLTracker::RegisterPrefs(local_state);
@@ -42,8 +45,7 @@ void RegisterAllPrefs(PrefService* user_prefs, PrefService* local_state) {
   RenderProcessHost::RegisterPrefs(local_state);
   TaskManager::RegisterPrefs(local_state);
   ExternalProtocolHandler::RegisterPrefs(local_state);
-  SafeBrowsingService::RegisterUserPrefs(local_state);
-  browser_shutdown::RegisterPrefs(local_state);
+  SafeBrowsingService::RegisterPrefs(local_state);
 
   // User prefs
   BookmarkBarView::RegisterUserPrefs(user_prefs);
@@ -58,5 +60,5 @@ void RegisterAllPrefs(PrefService* user_prefs, PrefService* local_state) {
   TemplateURLPrepopulateData::RegisterUserPrefs(user_prefs);
   WebContents::RegisterUserPrefs(user_prefs);
 }
-}  // namespace browser
 
+}  // namespace browser

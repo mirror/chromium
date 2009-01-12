@@ -7,16 +7,23 @@ Import('env', 'env_res')
 env = env.Clone()
 env_res = env_res.Clone()
 
-env_res.Append(
-    CPPPATH = [
-        '.',
-        '#/..',
-        '$NET_DIR',
-    ],
-    RCFLAGS = [
-        ['/l', '0x409'],
-    ],
-)
+env.SConscript([
+    '$BZIP2_DIR/using_bzip2.scons',
+    '$LIBXML_DIR/using_libxml.scons',
+    '$CHROME_SRC_DIR/build/using_v8.scons',
+], {'env':env})
+
+if env.Bit('windows'):
+  env_res.Append(
+      CPPPATH = [
+          '.',
+          '$CHROME_SRC_DIR',
+          '$NET_DIR',
+      ],
+      RCFLAGS = [
+          ['/l', '0x409'],
+      ],
+  )
 
 env.Append(
     CPPPATH = [
@@ -25,120 +32,176 @@ env.Append(
         '$GTEST_DIR/include',
     ],
     LIBS = [
-        'test_shell',
+        'glue',
+        'port',
         'base',
         'base_gfx',
-        'breakpad_handler',
-        'breakpad_sender',
         'googleurl',
         'net',
         'sdch',
         'skia',
         'gtest',
-        'bzip2',
+        'V8Bindings',
+        'WebCore',
+        'WTF',
         env['ICU_LIBS'],  # TODO(sgk):  '$ICU_LIBS' when scons is fixed
         'libjpeg',
         'libpng',
-        'libxml',
         'libxslt',
         'modp_b64',
         'zlib',
-        'v8',
+        'sqlite',
         'JavaScriptCore_pcre',
-        'port',
-        'activex_shim',
-        'WTF',
-        'V8Bindings',
-        'WebCore',
         'default_plugin',
-        'glue',
     ],
 )
 
-env.Append(
-    LIBS = [
-        'comctl32.lib',
-        'rpcrt4.lib',
-        'shlwapi.lib',
-        'winmm.lib',
-    ],
+if env.Bit('windows'):
+  # TODO(port): put portable libs in above declaration.
+  env.Append(
+      LIBS = [
+          'activex_shim',
+          'breakpad_handler',
+          'breakpad_sender',
+      ]
+  )
 
-    LINKFLAGS = [
-        '/DELAYLOAD:"ws2_32.dll"',
-        '/DELAYLOAD:"dwmapi.dll"',
-        '/DELAYLOAD:"uxtheme.dll"',
-        '/FIXED:No',
-        '/SUBSYSTEM:CONSOLE',
-        '/MACHINE:X86',
-        '/safeseh',
-        '/dynamicbase',
-        '/ignore:4199',
-        '/nxcompat',
-    ],
-)
+if env.Bit('windows'):
+  env.Append(
+      LIBS = [
+          'comctl32.lib',
+          'rpcrt4.lib',
+          'shlwapi.lib',
+          'winmm.lib',
+          'Urlmon',
+      ],
+
+      LINKFLAGS = [
+          '/DELAYLOAD:"ws2_32.dll"',
+          '/DELAYLOAD:"dwmapi.dll"',
+          '/DELAYLOAD:"uxtheme.dll"',
+          '/FIXED:No',
+          '/SUBSYSTEM:CONSOLE',
+          '/MACHINE:X86',
+          '/safeseh',
+          '/dynamicbase',
+          '/ignore:4199',
+          '/nxcompat',
+      ],
+  )
+elif env.Bit('posix'):
+  env.Append(
+      LIBS = [
+          'event',
+      ]
+  )
+
+if env.Bit('mac'):
+  env.Append(
+      CPPPATH = [
+          '$THIRD_PARTY_DIR/WebKit/WebKit/mac/WebCoreSupport',
+      ],
+  )
 
 input_files = [
-    'drag_delegate.cc',
-    'drop_delegate.cc',
     'event_sending_controller.cc',
     'layout_test_controller.cc',
     'simple_resource_loader_bridge.cc',
     'test_navigation_controller.cc',
-    'test_shell.cc',
-    'test_shell_switches.cc',
     'test_shell_request_context.cc',
+    'test_shell_switches.cc',
+    'test_shell.cc',
     'test_webview_delegate.cc',
     'text_input_controller.cc',
-    'webview_host.cc',
-    'webwidget_host.cc',
 ]
+if env.Bit('windows'):
+  # TODO(port): Consider porting drag_delegate.cc and drop_delecate.cc.
+  input_files.extend([
+      'drag_delegate.cc',
+      'drop_delegate.cc',
+      'test_shell_win.cc',
+      'test_webview_delegate_win.cc',
+      'webview_host_win.cc',
+      'webwidget_host_win.cc',
+  ])
+elif env.Bit('linux'):
+  input_files.extend([
+      'webview_host_gtk.cc',
+      'webwidget_host_gtk.cc',
+      'test_shell_gtk.cc',
+      'test_webview_delegate_gtk.cc',
+  ])
 
-lib = env.ChromeStaticLibrary('test_shell', input_files)
+lib = env.ChromeLibrary('test_shell', input_files)
+
+env.Append(LIBS = ['test_shell'])
+
+env.ChromeMSVSProject('$WEBKIT_DIR/tools/test_shell/test_shell.vcproj',
+                dependencies = [
+                    '$BASE_DIR/build/base.vcproj',
+                    '$WEBKIT_DIR/build/WebCore/WebCore.vcproj',
+                    '$LIBJPEG_DIR/libjpeg.vcproj',
+                    '$BZIP2_DIR/bzip2.vcproj',
+                    '$NET_DIR/build/net.vcproj',
+                    ('$WEBKIT_DIR/build/JavaScriptCore/' +
+                         'JavaScriptCore_pcre.vcproj'),
+                    '$WEBKIT_DIR/build/port/port.vcproj',
+                    '$WEBKIT_DIR/default_plugin/default_plugin.vcproj',
+                    '$WEBKIT_DIR/build/V8Bindings/V8Bindings.vcproj',
+                    '$MODP_B64_DIR/modp_b64.vcproj',
+                    '$ZLIB_DIR/zlib.vcproj',
+                    '$ICU38_DIR/build/icu.vcproj',
+                    '$BASE_DIR/build/base_gfx.vcproj',
+                    '$WEBKIT_DIR/build/JavaScriptCore/WTF.vcproj',
+                    '$BREAKPAD_DIR/breakpad_handler.vcproj',
+                    ('$WEBKIT_DIR/tools/npapi_layout_test_plugin/' +
+                         'npapi_layout_test_plugin.vcproj'),
+                    '$TESTING_DIR/gtest.vcproj',
+                    '$V8_DIR/tools/visual_studio/v8_snapshot.vcproj',
+                    '$LIBPNG_DIR/libpng.vcproj',
+                    '$WEBKIT_DIR/build/glue/glue.vcproj',
+                    '$SKIA_DIR/skia.vcproj',
+                    '$GOOGLEURL_DIR/build/googleurl.vcproj',
+                    '$WEBKIT_DIR/activex_shim/activex_shim.vcproj',
+                    '$SDCH_DIR/sdch.vcproj',
+                    '$LIBXSLT_DIR/build/libxslt.vcproj',
+                ],
+                guid='{FA39524D-3067-4141-888D-28A86C66F2B9}')
 
 
-
-resources = [
-    env_res.RES('resources/test_shell.rc'),
-    '$NET_DIR/net_resources.res',
-    '$WEBKIT_DIR/build/localized_strings/webkit_strings_en-US.res',
-]
-
-
+resources = []
 exe_input_files = [
-    'test_shell_main.cc',
-    '$V8_DIR/snapshot-empty$OBJSUFFIX'
+  'test_shell_main.cc',
 ]
+
+if env.Bit('windows'):
+  # TODO(port): figure out what to do with resources.
+  resources = [
+      env_res.RES('resources/test_shell.rc'),
+      '$TARGET_ROOT/grit_derived_sources/net_resources.res',
+      '$TARGET_ROOT/grit_derived_sources/webkit_strings_en-US.res',
+  ]
+
+  exe_input_files += [
+      '$V8_DIR/snapshot-empty$OBJSUFFIX'
+  ]
 
 test_shell = env.ChromeProgram('test_shell', resources + exe_input_files)
+
 i = env.Install('$TARGET_ROOT', test_shell)
 env.Alias('webkit', i)
 
-env.Depends(test_shell, '$V8_DIR/vc80.pdb')
-
+if env.Bit('windows'):
+  env.Depends(test_shell, '$V8_DIR/vc80.pdb')
 
 test_files = [
-    'drag_delegate.cc',
-    'drop_delegate.cc',
-    'event_sending_controller.cc',
     'image_decoder_unittest.cc',
     'keyboard_unittest.cc',
-    'layout_test_controller.cc',
     'layout_test_controller_unittest.cc',
     'node_leak_test.cc',
-    'plugin_tests.cc',
     'run_all_tests.cc',
-    'simple_resource_loader_bridge.cc',
-    'test_navigation_controller.cc',
-    'test_shell.cc',
-    'test_shell_request_context.cc',
-    'test_shell_switches.cc',
     'test_shell_test.cc',
-    'test_webview_delegate.cc',
-    'text_input_controller.cc',
     'text_input_controller_unittest.cc',
-    'webview_host.cc',
-    'webwidget_host.cc',
-    '$WEBKIT_DIR/glue/autocomplete_input_listener_unittest.cc',
     '$WEBKIT_DIR/glue/bookmarklet_unittest.cc',
     '$WEBKIT_DIR/glue/context_menu_unittest.cc',
     '$WEBKIT_DIR/glue/cpp_bound_class_unittest.cc',
@@ -152,20 +215,56 @@ test_files = [
     '$WEBKIT_DIR/glue/password_autocomplete_listener_unittest.cc',
     '$WEBKIT_DIR/glue/regular_expression_unittest.cc',
     '$WEBKIT_DIR/glue/resource_fetcher_unittest.cc',
-    # Commented out until a regression is fixed and this file is restored.
-    #'$WEBKIT_DIR/glue/stringimpl_unittest.cc',
     '$WEBKIT_DIR/glue/webframe_unittest.cc',
-    '$WEBKIT_DIR/glue/webplugin_impl_unittest.cc',
-    '$WEBKIT_DIR/port/platform/GKURL_unittest.cpp',
-    '$WEBKIT_DIR/port/platform/image-decoders/bmp/BMPImageDecoder_unittest.cpp',
-    '$WEBKIT_DIR/port/platform/image-decoders/ico/ICOImageDecoder_unittest.cpp',
-    '$WEBKIT_DIR/port/platform/image-decoders/xbm/XBMImageDecoder_unittest.cpp',
-
+    '$WEBKIT_DIR/tools/webcore_unit_tests/GKURL_unittest.cpp',
+    '$WEBKIT_DIR/tools/webcore_unit_tests/BMPImageDecoder_unittest.cpp',
+    '$WEBKIT_DIR/tools/webcore_unit_tests/ICOImageDecoder_unittest.cpp',
+    '$WEBKIT_DIR/tools/webcore_unit_tests/XBMImageDecoder_unittest.cpp',
     '$V8_DIR/snapshot-empty$OBJSUFFIX',
 ]
+
+if env.Bit('windows'):
+  # TODO(port): put portable files in above test_files declaration.
+  test_files.extend([
+      'plugin_tests.cc',
+      # Commented out until a regression is fixed and this file is restored.
+      #'$WEBKIT_DIR/glue/stringimpl_unittest.cc',
+      '$WEBKIT_DIR/glue/webplugin_impl_unittest.cc',
+      '$WEBKIT_DIR/tools/webcore_unit_tests/UniscribeHelper_unittest.cpp',
+  ])
 
 test_shell_tests = env.ChromeTestProgram('test_shell_tests',
                                          resources + test_files)
 i = env.Install('$TARGET_ROOT', test_shell_tests)
 env.Alias('webkit', i)
 
+env.ChromeMSVSProject('$WEBKIT_DIR/tools/test_shell/test_shell_tests.vcproj',
+                dependencies = [
+                    '$WEBKIT_DIR/glue/plugins/test/npapi_test_plugin.vcproj',
+                    '$BASE_DIR/build/base.vcproj',
+                    '$WEBKIT_DIR/build/WebCore/WebCore.vcproj',
+                    '$LIBJPEG_DIR/libjpeg.vcproj',
+                    '$BZIP2_DIR/bzip2.vcproj',
+                    '$NET_DIR/build/net.vcproj'           ,
+                    ('$WEBKIT_DIR/build/JavaScriptCore/' +
+                         'JavaScriptCore_pcre.vcproj'),
+                    '$WEBKIT_DIR/build/port/port.vcproj',
+                    '$WEBKIT_DIR/default_plugin/default_plugin.vcproj',
+                    '$WEBKIT_DIR/build/V8Bindings/V8Bindings.vcproj',
+                    '$MODP_B64_DIR/modp_b64.vcproj',
+                    '$ZLIB_DIR/zlib.vcproj',
+                    '$ICU38_DIR/build/icu.vcproj',
+                    '$BASE_DIR/build/base_gfx.vcproj',
+                    '$WEBKIT_DIR/build/JavaScriptCore/WTF.vcproj',
+                    '$BREAKPAD_DIR/breakpad_handler.vcproj',
+                    '$TESTING_DIR/gtest.vcproj',
+                    '$V8_DIR/tools/visual_studio/v8_snapshot.vcproj',
+                    '$LIBPNG_DIR/libpng.vcproj',
+                    '$WEBKIT_DIR/build/glue/glue.vcproj',
+                    '$SKIA_DIR/skia.vcproj',
+                    '$GOOGLEURL_DIR/build/googleurl.vcproj',
+                    '$WEBKIT_DIR/activex_shim/activex_shim.vcproj',
+                    '$SDCH_DIR/sdch.vcproj',
+                    '$LIBXSLT_DIR/build/libxslt.vcproj',
+                ],
+                guid='{E6766F81-1FCD-4CD7-BC16-E36964A14867}')

@@ -7,16 +7,15 @@ import re
 
 Import('env')
 
-webcore = env.Dir('#../third_party/WebKit/WebCore')
+webcore = env.Dir('$CHROME_SRC_DIR/third_party/WebKit/WebCore')
 webcore_posix = webcore.abspath.replace('\\', '/')
 
 cygwin = env.Dir('$CYGWIN_DIR/bin')
 cygwin_posix = cygwin.abspath.replace('\\', '/')
 
-pending = env.Dir('#../webkit/pending')
-portroot = env.Dir('#../webkit/port')
-webkit_build = env.Dir('#../webkit/build')
-bindings_output_dir = env.Dir('#/../webkit/$BUILD_TYPE/scons/V8Bindings')
+pending = env.Dir('$CHROME_SRC_DIR/webkit/pending')
+portroot = env.Dir('$CHROME_SRC_DIR/webkit/port')
+webkit_build = env.Dir('$CHROME_SRC_DIR/webkit/build')
 
 
 def PosixIncludes(env, prefix, files, suffix):
@@ -42,40 +41,36 @@ env = env.Clone(
     BINDINGS_SCRIPTS_DIR = '$WEBKIT_DIR/port/bindings/scripts',
     BINDINGS_SCRIPT = '$BINDINGS_SCRIPTS_DIR/generate-bindings.pl',
 
-    PERL_INCLUDE_PATH = ['$BINDINGS_SCRIPTS_DIR',
-                         '#/../third_party/WebKit/WebCore/bindings/scripts'],
-
-    WEBKIT_PORT_DIR = '$WEBKIT_DIR/port',
+    PERL_INCLUDE_PATH = ['$BINDINGS_SCRIPTS_DIR', 
+                         '$CHROME_SRC_DIR/third_party/WebKit/WebCore/bindings/scripts'],
 
     FEATURE_DEFINES = [
         'ENABLE_CROSS_DOCUMENT_MESSAGING',
         'ENABLE_XSLT',
         'ENABLE_XPATH',
         'ENABLE_SVG',
-        'ENABLE_SVG_FOREIGN_OBJECT',
-        'ENABLE_SVG_USE',
+        'ENABLE_SVG_ANIMATION',
         'ENABLE_SVG_AS_IMAGE',
         'ENABLE_SVG_FONTS',
+        'ENABLE_SVG_FOREIGN_OBJECT',
+        'ENABLE_SVG_USE',
     ],
 
     SVG_FLAGS = [
-        'ENABLE_SVG_FOREIGN_OBJECT=1',
-        'ENABLE_SVG_USE=1',
+        'ENABLE_SVG_ANIMATION=1',
         'ENABLE_SVG_AS_IMAGE=1',
         'ENABLE_SVG_FONTS=1',
+        'ENABLE_SVG_FOREIGN_OBJECT=1',
+        'ENABLE_SVG_USE=1',
     ],
 
     BINDINGS_INCLUDE_PATH = [
         '$PENDING',
-        '$PORTROOT/dom',
-        '$PORTROOT/html',
-        '$PORTROOT/page',
-        '$PORTROOT/xml',
-        '$WEBCORE/svg',
+        '$WEBCORE/css',
         '$WEBCORE/dom',
         '$WEBCORE/html',
-        '$WEBCORE/css',
         '$WEBCORE/page',
+        '$WEBCORE/svg',
         '$WEBCORE/xml',
     ],
     BINDINGS_INCLUDE_FLAG = '--include ',
@@ -89,8 +84,14 @@ env = env.Clone(
 
 env.PrependENVPath('PATH', cygwin_posix)
 
-bindings_perl_modules = env.Glob('$BINDINGS_SCRIPTS_DIR/*.pm')
 
+# When we haven't specified --verbose (aka brief_comstr), make the
+# WebKit bindings building step output more brief to match the brief
+# compile/link/etc. lines.
+if env.GetOption('brief_comstr'):
+  env.SetDefault(BINDINGSCOMSTR='________Building bindings in $TARGET')
+
+bindings_perl_modules = env.Glob('$BINDINGS_SCRIPTS_DIR/*.pm')
 
 def BindingsEmitter(target, source, env):
   source.append('$BINDINGS_SCRIPT')
@@ -129,7 +130,7 @@ env.Replace(
                   '${SOURCES[0].posix}',
 )
 
-if env['PLATFORM'] == 'mac':  # Mac OS X
+if env.Bit('mac'):  # Mac OS X
   env['BINDINGSPREFIX'] = 'DOM'
   env['BINDINGS_GENERATOR_ARG'] = 'ObjC'
   env['BINDINGS_LANGUAGE'] = 'LANGUAGE_OBJECTIVE_C'
@@ -149,6 +150,8 @@ else:
 
 
 idl_files = [
+    'bindings/v8/UndetectableHTMLCollection.idl',
+
     'css/Counter.idl',
     'css/CSSCharsetRule.idl',
     'css/CSSFontFaceRule.idl',
@@ -164,22 +167,28 @@ idl_files = [
     'css/CSSUnknownRule.idl',
     'css/CSSValue.idl',
     'css/CSSValueList.idl',
+    'css/CSSVariablesDeclaration.idl',
+    'css/CSSVariablesRule.idl',
     'css/MediaList.idl',
     'css/Rect.idl',
     'css/RGBColor.idl',
     'css/StyleSheet.idl',
     'css/StyleSheetList.idl',
+    'css/WebKitCSSKeyframeRule.idl',
+    'css/WebKitCSSKeyframesRule.idl',
+    'css/WebKitCSSTransformValue.idl',
 
     'dom/Attr.idl',
     'dom/CDATASection.idl',
     'dom/CharacterData.idl',
-    'dom/Clipboard.idl',                          # port only
+    'dom/Clipboard.idl',
     'dom/Comment.idl',
     'dom/Document.idl',
     'dom/DocumentFragment.idl',
     'dom/DocumentType.idl',
     'dom/DOMCoreException.idl',
     'dom/DOMImplementation.idl',
+    'dom/DOMStringList.idl',
     'dom/Element.idl',
     'dom/Entity.idl',
     'dom/EntityReference.idl',
@@ -187,9 +196,11 @@ idl_files = [
     'dom/EventException.idl',
     'dom/EventListener.idl',
     'dom/EventTarget.idl',
-    'dom/EventTargetNode.idl',                    # port only
+    'dom/EventTargetNode.idl',
     'dom/KeyboardEvent.idl',
+    'dom/MessageChannel.idl',
     'dom/MessageEvent.idl',
+    'dom/MessagePort.idl',
     'dom/MouseEvent.idl',
     'dom/MutationEvent.idl',
     'dom/NamedNodeMap.idl',
@@ -207,11 +218,15 @@ idl_files = [
     'dom/TextEvent.idl',
     'dom/TreeWalker.idl',
     'dom/UIEvent.idl',
+    'dom/WebKitAnimationEvent.idl',
+    'dom/WebKitTransitionEvent.idl',
     'dom/WheelEvent.idl',
 
     'html/CanvasGradient.idl',
     'html/CanvasPattern.idl',
     'html/CanvasRenderingContext2D.idl',
+    'html/File.idl',
+    'html/FileList.idl',
     'html/HTMLAnchorElement.idl',
     'html/HTMLAppletElement.idl',
     'html/HTMLAreaElement.idl',
@@ -264,7 +279,6 @@ idl_files = [
     'html/HTMLQuoteElement.idl',
     'html/HTMLScriptElement.idl',
     'html/HTMLSelectElement.idl',
-    'html/HTMLSelectionInputElement.idl',         # port only
     'html/HTMLSourceElement.idl',
     'html/HTMLStyleElement.idl',
     'html/HTMLTableCaptionElement.idl',
@@ -276,11 +290,14 @@ idl_files = [
     'html/HTMLTextAreaElement.idl',
     'html/HTMLTitleElement.idl',
     'html/HTMLUListElement.idl',
-    'html/UndetectableHTMLCollection.idl',        # port only
     'html/HTMLVideoElement.idl',
+    'html/ImageData.idl',
     'html/MediaError.idl',
+    'html/TextMetrics.idl',
     'html/TimeRanges.idl',
     'html/VoidCallback.idl',
+
+    # 'loader/appcache/DOMApplicationCache.idl',
 
     'page/AbstractView.idl',
     'page/BarInfo.idl',
@@ -288,42 +305,22 @@ idl_files = [
     'page/DOMSelection.idl',
     'page/DOMWindow.idl',
     'page/History.idl',
+    'page/Location.idl',
+    'page/Navigator.idl',
     'page/Screen.idl',
 
-    'page/inspector/InspectorController.idl',     # port only
+    'inspector/InspectorController.idl',
 
-    'page/Navigator.idl',                          # port only
-    'page/Location.idl',                           # port only
+    'plugins/MimeTypeArray.idl',
+    'plugins/MimeType.idl',
+    'plugins/PluginArray.idl',
+    'plugins/Plugin.idl',
 
-
-    'xml/DOMParser.idl',
-    'xml/DOMParser.idl',
-    'xml/XMLHttpRequest.idl',                     # port only
-    'xml/XMLHttpRequestException.idl',
-    'xml/XMLSerializer.idl',
-    'xml/XPathEvaluator.idl',
-    'xml/XPathException.idl',
-    'xml/XPathExpression.idl',
-    'xml/XPathNSResolver.idl',
-    'xml/XPathResult.idl',
-    'xml/XSLTProcessor.idl',                      # port only
-
-    'ksvg2/svg/SVGMatrix.idl',                    # port only
-    'ksvg2/svg/SVGPathSegList.idl',               # port only
-    'ksvg2/svg/SVGPointList.idl',                 # port only
-    'ksvg2/svg/SVGTransformList.idl',             # port only
-
-    'svg/SVGLength.idl',
-    'svg/SVGElement.idl',
+    'svg/ElementTimeControl.idl',
     'svg/SVGAElement.idl',
-    'svg/SVGURIReference.idl',
-    'svg/SVGRect.idl',
-    'svg/SVGRectElement.idl',
-    'svg/SVGRenderingIntent.idl',
+    'svg/SVGAltGlyphElement.idl',
     'svg/SVGAngle.idl',
     'svg/SVGAnimateColorElement.idl',
-    'svg/SVGAnimateElement.idl',
-    'svg/SVGAnimateTransformElement.idl',
     'svg/SVGAnimatedAngle.idl',
     'svg/SVGAnimatedBoolean.idl',
     'svg/SVGAnimatedEnumeration.idl',
@@ -338,6 +335,8 @@ idl_files = [
     'svg/SVGAnimatedRect.idl',
     'svg/SVGAnimatedString.idl',
     'svg/SVGAnimatedTransformList.idl',
+    'svg/SVGAnimateElement.idl',
+    'svg/SVGAnimateTransformElement.idl',
     'svg/SVGAnimationElement.idl',
     'svg/SVGCircleElement.idl',
     'svg/SVGClipPathElement.idl',
@@ -376,28 +375,30 @@ idl_files = [
     'svg/SVGFESpotLightElement.idl',
     'svg/SVGFETileElement.idl',
     'svg/SVGFETurbulenceElement.idl',
+    'svg/SVGFilterElement.idl',
+    'svg/SVGFilterPrimitiveStandardAttributes.idl',
+    'svg/SVGFitToViewBox.idl',
     'svg/SVGFontElement.idl',
     'svg/SVGFontFaceElement.idl',
     'svg/SVGFontFaceFormatElement.idl',
     'svg/SVGFontFaceNameElement.idl',
     'svg/SVGFontFaceSrcElement.idl',
     'svg/SVGFontFaceUriElement.idl',
-    'svg/SVGFilterElement.idl',
-    'svg/SVGFilterPrimitiveStandardAttributes.idl',
-    'svg/SVGFitToViewBox.idl',
     'svg/SVGForeignObjectElement.idl',
     'svg/SVGGElement.idl',
     'svg/SVGGlyphElement.idl',
     'svg/SVGGradientElement.idl',
+    'svg/SVGHKernElement.idl',
     'svg/SVGImageElement.idl',
     'svg/SVGLangSpace.idl',
     'svg/SVGLength.idl',
     'svg/SVGLengthList.idl',
-    'svg/SVGLineElement.idl',
     'svg/SVGLinearGradientElement.idl',
+    'svg/SVGLineElement.idl',
     'svg/SVGLocatable.idl',
     'svg/SVGMarkerElement.idl',
     'svg/SVGMaskElement.idl',
+    'svg/SVGMatrix.idl',
     'svg/SVGMetadataElement.idl',
     'svg/SVGMissingGlyphElement.idl',
     'svg/SVGNumber.idl',
@@ -422,10 +423,12 @@ idl_files = [
     'svg/SVGPathSegLinetoRel.idl',
     'svg/SVGPathSegLinetoVerticalAbs.idl',
     'svg/SVGPathSegLinetoVerticalRel.idl',
+    'svg/SVGPathSegList.idl',
     'svg/SVGPathSegMovetoAbs.idl',
     'svg/SVGPathSegMovetoRel.idl',
     'svg/SVGPatternElement.idl',
     'svg/SVGPoint.idl',
+    'svg/SVGPointList.idl',
     'svg/SVGPolygonElement.idl',
     'svg/SVGPolylineElement.idl',
     'svg/SVGPreserveAspectRatio.idl',
@@ -433,17 +436,15 @@ idl_files = [
     'svg/SVGRect.idl',
     'svg/SVGRectElement.idl',
     'svg/SVGRenderingIntent.idl',
-    'svg/SVGSVGElement.idl',
     'svg/SVGScriptElement.idl',
     'svg/SVGSetElement.idl',
     'svg/SVGStopElement.idl',
     'svg/SVGStringList.idl',
     'svg/SVGStylable.idl',
     'svg/SVGStyleElement.idl',
+    'svg/SVGSVGElement.idl',
     'svg/SVGSwitchElement.idl',
     'svg/SVGSymbolElement.idl',
-    'svg/SVGTRefElement.idl',
-    'svg/SVGTSpanElement.idl',
     'svg/SVGTests.idl',
     'svg/SVGTextContentElement.idl',
     'svg/SVGTextElement.idl',
@@ -452,81 +453,85 @@ idl_files = [
     'svg/SVGTitleElement.idl',
     'svg/SVGTransform.idl',
     'svg/SVGTransformable.idl',
-    'svg/SVGURIReference.idl',
+    'svg/SVGTransformList.idl',
+    'svg/SVGTRefElement.idl',
+    'svg/SVGTSpanElement.idl',
     'svg/SVGUnitTypes.idl',
+    'svg/SVGURIReference.idl',
     'svg/SVGUseElement.idl',
     'svg/SVGViewElement.idl',
+    'svg/SVGViewSpec.idl',
     'svg/SVGZoomAndPan.idl',
     'svg/SVGZoomEvent.idl',
+
+    'xml/DOMParser.idl',
+    'xml/DOMParser.idl',
+    'xml/XMLHttpRequest.idl',
+    'xml/XMLHttpRequestException.idl',
+    'xml/XMLHttpRequestProgressEvent.idl',
+    'xml/XMLHttpRequestUpload.idl',
+    'xml/XMLSerializer.idl',
+    'xml/XPathEvaluator.idl',
+    'xml/XPathException.idl',
+    'xml/XPathExpression.idl',
+    'xml/XPathNSResolver.idl',
+    'xml/XPathResult.idl',
+    'xml/XSLTProcessor.idl',
 ]
-
-for subdir in set([os.path.dirname(n) for n in idl_files]):
-  dir = env.Dir('#/$BUILD_TYPE/webkit/port/' + subdir)
-
-  dir.addRepository(env.Dir('#/../webkit/pending'))
-  dir.addRepository(env.Dir('#/../webkit/port/' + subdir))
-  dir.addRepository(env.Dir('#/../third_party/WebKit/WebCore/' + subdir))
 
 for name in idl_files:
   env.Bindings('$WEBKIT_DIR/port/' + name)
 
 
 # copy over some files
-i = env.Install('$SHARED_DIR',
-                ['$WEBKIT_PORT_DIR/bindings/js/PausedTimeouts.h',
-                 '$WEBKIT_PORT_DIR/bindings/js/PausedTimeouts.cpp'])
+# TODO(eroman): can probably get rid of this.
+i = env.Install('$SHARED_DIR', [])
 env.Alias('webkit', i)
 
-
-
 # HTML tag and attribute names
+# If we add ENABLE_ flags via HTML_FLAGS, we need to pass in
+# --extraDefines $HTML_FLAGS.
 env.Command(['$DERIVED_DIR/HTMLNames.cpp',
              '$DERIVED_DIR/HTMLNames.h'],
-            ['$WEBKIT_PORT_DIR/dom/make_names.pl',
-             '$WEBKIT_PORT_DIR/html/HTMLTagNames.in',
-             '$WEBKIT_PORT_DIR/html/HTMLAttributeNames.in'],
-            '$PERL ${SOURCES[0].posix} ' + \
-            '--tags ${SOURCES[1].posix} ' + \
-            '--attrs ${SOURCES[2].posix} ' + \
-            '--namespace HTML --namespacePrefix xhtml ' + \
-            '--cppNamespace WebCore ' + \
-            '--namespaceURI "http://www.w3.org/1999/xhtml" ' + \
-            '--attrsNullNamespace --output $DERIVED_DIR')
+            ['$PORT_DIR/dom/make_names.pl',
+             '$PORT_DIR/html/HTMLTagNames.in',
+             '$PORT_DIR/html/HTMLAttributeNames.in'],
+            '$PERL $_PERL_INCLUDE_FLAGS ${SOURCES[0].posix} '
+            '--tags ${SOURCES[1].posix} '
+            '--attrs ${SOURCES[2].posix} '
+            '--wrapperFactory '
+            '--outputDir $DERIVED_DIR')
 
 env.Command(['$DERIVED_DIR/XMLNames.cpp',
              '$DERIVED_DIR/XMLNames.h'],
-            ['$WEBKIT_PORT_DIR/dom/make_names.pl',
-             '$WEBKIT_PORT_DIR/xml/xmlattrs.in'],
-            '$PERL ${SOURCES[0].posix} ' + \
-            '--attrs ${SOURCES[1].posix} ' + \
-            '--namespace XML --cppNamespace WebCore ' + \
-            '--namespaceURI "http://www.w3.org/XML/1998/namespace" ' + \
-            '--output $DERIVED_DIR')
+            ['$PORT_DIR/dom/make_names.pl',
+             '$PORT_DIR/xml/xmlattrs.in'],
+            '$PERL $_PERL_INCLUDE_FLAGS ${SOURCES[0].posix} '
+            '--attrs ${SOURCES[1].posix} '
+            '--outputDir $DERIVED_DIR')
 
 env.Command(['$DERIVED_DIR/SVGElementFactory.cpp',
              '$DERIVED_DIR/SVGElementFactory.h',
              '$DERIVED_DIR/SVGNames.cpp',
              '$DERIVED_DIR/SVGNames.h'],
-            ['$WEBKIT_PORT_DIR/dom/make_names.pl',
-             '$WEBKIT_PORT_DIR/svg/svgtags.in',
-             '$WEBKIT_PORT_DIR/svg/svgattrs.in'],
-            '$PERL ${SOURCES[0].posix} ' + \
-            '--tags ${SOURCES[1].posix} ' + \
-            '--attrs ${SOURCES[2].posix} ' + \
-            '--extraDefines "$SVG_FLAGS" ' +  \
-            '--namespace SVG --cppNamespace WebCore ' + \
-            '--namespaceURI "http://www.w3.org/2000/svg" ' + \
-            '--factory --attrsNullNamespace --output $DERIVED_DIR')
+            ['$PORT_DIR/dom/make_names.pl',
+             '$PORT_DIR/svg/svgtags.in',
+             '$PORT_DIR/svg/svgattrs.in'],
+            '$PERL $_PERL_INCLUDE_FLAGS ${SOURCES[0].posix} '
+            '--tags ${SOURCES[1].posix} '
+            '--attrs ${SOURCES[2].posix} '
+            '--extraDefines "$SVG_FLAGS" '
+            '--factory '
+            '--wrapperFactory '
+            '--outputDir $DERIVED_DIR')
 
 env.Command(['$DERIVED_DIR/XLinkNames.cpp',
              '$DERIVED_DIR/XLinkNames.h'],
-            ['$WEBKIT_PORT_DIR/dom/make_names.pl',
-             '$WEBKIT_PORT_DIR/svg/xlinkattrs.in'],
-            '$PERL ${SOURCES[0].posix} ' + \
-            '--attrs ${SOURCES[1].posix} ' + \
-            '--namespace XLink --cppNamespace WebCore ' + \
-            '--namespaceURI "http://www.w3.org/1999/xlink" ' + \
-            '--output $DERIVED_DIR')
+            ['$PORT_DIR/dom/make_names.pl',
+             '$PORT_DIR/svg/xlinkattrs.in'],
+            '$PERL $_PERL_INCLUDE_FLAGS ${SOURCES[0].posix} '
+            '--attrs ${SOURCES[1].posix} '
+            '--outputDir $DERIVED_DIR')
 
 # Add SVG Symbols to the WebCore exported symbols file
 # TODO(bradnelson): fix this
@@ -541,23 +546,15 @@ def cat_files(target, source, env):
     fin.close()
   fout.close()
 
-env.Command('$DERIVED_DIR/html4.css',
-            ['$WEBKIT_PORT_DIR/css/html4.css',
-             '$PORTROOT/css/html4-overrides.css'],
-            cat_files)
-
-env.Command('$DERIVED_DIR/quirks.css',
-            ['$WEBKIT_PORT_DIR/css/quirks.css',
-             '$PORTROOT/css/quirks-overrides.css'],
-            cat_files)
-
 env.Command(['$DERIVED_DIR/UserAgentStyleSheets.h',
              '$DERIVED_DIR/UserAgentStyleSheetsData.cpp'],
-            ['$WEBKIT_PORT_DIR/css/make-css-file-arrays.pl',
-             '$WEBKIT_PORT_DIR/css/view-source.css',
-             '$WEBKIT_PORT_DIR/css/svg.css',
-             '$DERIVED_DIR/html4.css',
-             '$DERIVED_DIR/quirks.css'],
+            ['$PORT_DIR/css/make-css-file-arrays.pl',
+             '$PORT_DIR/css/view-source.css',
+             '$PORT_DIR/css/svg.css',
+             '$PORT_DIR/css/html4.css',
+             '$PORT_DIR/css/quirks.css',
+             '$PORT_DIR/css/themeWin.css',
+             '$PORT_DIR/css/themeWinQuirks.css'],
             '$PERL ${SOURCES[0].posix} ${TARGETS.posix} ${SOURCES[1:].posix}')
 
 def create_h_wrapper(target, source, env):
@@ -575,46 +572,48 @@ def create_h_wrapper(target, source, env):
 
 # TODO(sgk):  make this a real pseudo-Builder
 def BuildYacc(env, dir, name, file):
-  env.Command(['$DERIVED_DIR/%s.cpp' % file,
-               '$DERIVED_DIR/%s.h'   % file],
-              ['$WEBKIT_PORT_DIR/%s/%s.y' % (dir, file)],
-              ['$YACC -d -p %s ${SOURCES[0].posix} ' % name +
-                 '-o ${TARGET.posix}',
-               Action(create_h_wrapper),
-               Delete('${TARGETS[1]}pp')])
+  yacc_env = env.Clone()
+  yacc_env['YACC'] = env.Detect('bison') or 'yacc'
+  yacc_env.Command(['$DERIVED_DIR/%s.cpp' % file,
+                    '$DERIVED_DIR/%s.h'   % file],
+                   ['$PORT_DIR/%s/%s.y' % (dir, file)],
+                   ['$YACC -d -p %s ${SOURCES[0].posix} ' % name +
+                      '-o ${TARGET.posix}',
+                    Action(create_h_wrapper),
+                    Delete('${TARGETS[1]}pp')])
 
 BuildYacc(env, 'xml', 'xpathyy', 'XPathGrammar')
 BuildYacc(env, 'css', 'cssyy',   'CSSGrammar')
 
 # TODO(bradnelson): need to add in error checking
 
-env.Command('$WEBKIT_PORT_DIR/SVGCSSValueKeywords.in',
-            '$WEBKIT_PORT_DIR/css/SVGCSSValueKeywords.in',
+env.Command('$PORT_DIR/SVGCSSValueKeywords.in',
+            '$PORT_DIR/css/SVGCSSValueKeywords.in',
             '$PERL -ne "print lc" $SOURCES > $TARGET')
 
-env.Command('$WEBKIT_PORT_DIR/CSSValueKeywords.in',
-            ['$WEBKIT_PORT_DIR/css/CSSValueKeywords.in',
-             '$WEBKIT_PORT_DIR/css/SVGCSSValueKeywords.in'],
+env.Command('$PORT_DIR/CSSValueKeywords.in',
+            ['$PORT_DIR/css/CSSValueKeywords.in',
+             '$PORT_DIR/css/SVGCSSValueKeywords.in'],
             '$PERL -ne "print lc" $SOURCES > $TARGET')
 
-env.Command('$WEBKIT_PORT_DIR/CSSPropertyNames.in',
-            ['$WEBKIT_PORT_DIR/css/CSSPropertyNames.in',
-             '$WEBKIT_PORT_DIR/css/SVGCSSPropertyNames.in'],
+env.Command('$PORT_DIR/CSSPropertyNames.in',
+            ['$PORT_DIR/css/CSSPropertyNames.in',
+             '$PORT_DIR/css/SVGCSSPropertyNames.in'],
             '$PERL -ne "print lc" $SOURCES > $TARGET')
 
 env.Command(['$DERIVED_DIR/CSSValueKeywords.c',
              '$DERIVED_DIR/CSSValueKeywords.h'],
-            ['#/../webkit/pending/makevalues.pl',
-             '$WEBKIT_PORT_DIR/CSSValueKeywords.in'],
+            ['$PORT_DIR/css/makevalues.pl',
+             '$PORT_DIR/CSSValueKeywords.in'],
             ['cd ${SOURCES[1].dir} && $PERL ${str(SOURCES[0].abspath).replace("\\\\", "/")}',
              Move('${TARGETS[0]}', '${SOURCES[1].dir}/${TARGETS[0].file}'),
              Move('${TARGETS[1]}', '${SOURCES[1].dir}/${TARGETS[1].file}'),
             ])
 
-env.Command(['$DERIVED_DIR/CSSPropertyNames.c',
+env.Command(['$DERIVED_DIR/CSSPropertyNames.cpp',
              '$DERIVED_DIR/CSSPropertyNames.h'],
-            ['#/../webkit/pending/makeprop.pl',
-             '$WEBKIT_PORT_DIR/CSSPropertyNames.in'],
+            ['$PORT_DIR/css/makeprop.pl',
+             '$PORT_DIR/CSSPropertyNames.in'],
             ['cd ${SOURCES[1].dir} && $PERL ${str(SOURCES[0].abspath).replace("\\\\", "/")}',
              Move('${TARGETS[0]}', '${SOURCES[1].dir}/${TARGETS[0].file}'),
              Move('${TARGETS[1]}', '${SOURCES[1].dir}/${TARGETS[1].file}'),
@@ -623,30 +622,25 @@ env.Command(['$DERIVED_DIR/CSSPropertyNames.c',
 
 # DOCTYPE strings
 env.Command('$DERIVED_DIR/DocTypeStrings.cpp',
-            '$WEBKIT_PORT_DIR/html/DocTypeStrings.gperf',
+            '$PORT_DIR/html/DocTypeStrings.gperf',
             'gperf -CEot -L ANSI-C -k "*" -N findDoctypeEntry -F ' + \
             ',PubIDInfo::eAlmostStandards,PubIDInfo::eAlmostStandards ' + \
             '$SOURCE > $TARGET')
 
 # color names
 env.Command('$DERIVED_DIR/ColorData.c',
-            '$WEBKIT_PORT_DIR/platform/ColorData.gperf',
+            '$PORT_DIR/platform/ColorData.gperf',
             'gperf -CDEot -L ANSI-C -k "*" -N findColor -D -s 2 ' + \
             '$SOURCE > $TARGET')
 
 # HTML entity names
 env.Command('$DERIVED_DIR/HTMLEntityNames.c',
-            '$WEBKIT_PORT_DIR/html/HTMLEntityNames.gperf',
+            '$PORT_DIR/html/HTMLEntityNames.gperf',
             'gperf -a -L ANSI-C -C -G -c -o -t -k "*" -N findEntity ' + \
             '-D -s 2 $SOURCE > $TARGET')
 
-env.Command('$DERIVED_DIR/HTMLEntityCodes.c',
-            '$WEBKIT_PORT_DIR/html/HTMLEntityNames.gperf',
-            'perl $WEBKIT_BUILD/WebCore/generate_entitycodes.pl ' + \
-            '$SOURCE > $TARGET')
-
 # CSS tokenizer
 env.Command('$DERIVED_DIR/tokenizer.cpp',
-            ['$WEBKIT_PORT_DIR/css/tokenizer.flex',
-             '$WEBKIT_PORT_DIR/css/maketokenizer'],
-            'flex -t $SOURCE | perl ${SOURCES[1]} > $TARGET')
+            ['$PORT_DIR/css/tokenizer.flex',
+             '$PORT_DIR/css/maketokenizer'],
+            'flex --nowarn -t $SOURCE | perl ${SOURCES[1]} > $TARGET')

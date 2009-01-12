@@ -1,19 +1,18 @@
-/* include/graphics/SkPaint.h
-**
-** Copyright 2006, Google Inc.
-**
-** Licensed under the Apache License, Version 2.0 (the "License"); 
-** you may not use this file except in compliance with the License. 
-** You may obtain a copy of the License at 
-**
-**     http://www.apache.org/licenses/LICENSE-2.0 
-**
-** Unless required by applicable law or agreed to in writing, software 
-** distributed under the License is distributed on an "AS IS" BASIS, 
-** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. 
-** See the License for the specific language governing permissions and 
-** limitations under the License.
-*/
+/*
+ * Copyright (C) 2006 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 #ifndef SkPaint_DEFINED
 #define SkPaint_DEFINED
@@ -368,6 +367,35 @@ public:
     */
     bool getFillPath(const SkPath& src, SkPath* dst) const;
 
+    /** Returns true if the current paint settings allow for fast computation of
+        bounds (i.e. there is nothing complex like a patheffect that would make
+        the bounds computation expensive.
+    */
+    bool canComputeFastBounds() const;
+    
+    /** Only call this if canComputeFastBounds() returned true. This takes a
+        raw rectangle (the raw bounds of a shape), and adjusts it for stylistic
+        effects in the paint (e.g. stroking). If needed, it uses the storage
+        rect parameter. It returns the adjusted bounds that can then be used
+        for quickReject tests.
+     
+        The returned rect will either be orig or storage, thus the caller
+        should not rely on storage being set to the result, but should always
+        use the retured value. It is legal for orig and storage to be the same
+        rect.
+        
+        e.g.
+        if (paint.canComputeFastBounds()) {
+            SkRect r, storage;
+            path.computeBounds(&r, SkPath::kFast_BoundsType);
+            const SkRect& fastR = paint.computeFastBounds(r, &storage);
+            if (canvas->quickReject(fastR, ...)) {
+                // don't draw the path
+            }
+        }
+    */
+    const SkRect& computeFastBounds(const SkRect& orig, SkRect* storage) const;
+
     /** Get the paint's shader object.
         <p />
       The shader's reference count is not affected.
@@ -586,6 +614,19 @@ public:
         SkScalar    fDescent;   //!< The recommended distance below the baseline (will be >= 0)
         SkScalar    fBottom;    //!< The greatest distance below the baseline for any glyph (will be >= 0)
         SkScalar    fLeading;   //!< The recommended distance to add between lines of text (will be >= 0)
+        SkScalar    fHeight;    //!< the vertical distance between two consecutive baselines (>= 0)
+        SkScalar    fAvgCharWidth;  //!< the average charactor width (>= 0)
+        SkScalar    fXRange;        //!< This is the maximum range of X bounding box points
+                                    //   in units of em. It's used to calculate a value which
+                                    //   matches Windows's GetTextMetrics tmMaxCharWidth
+                                    //   member exactly.
+        SkScalar    fXHeight;   //!< the height of an 'x' in px, or 0 if no 'x' in face
+
+        // VDMX values are exact ascent and descent values for scalable fonts at
+        // a certain pixel size.
+        bool        fVDMXMetricsValid;  //!< If true, the following members are valid
+        unsigned    fVDMXAscent;
+        unsigned    fVDMXDescent;
     };
     
     /** Return the recommend spacing between lines (which will be
