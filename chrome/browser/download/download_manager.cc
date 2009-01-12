@@ -56,8 +56,8 @@ static const int kUpdateTimeMs = 1000;
 
 // Our download table ID starts at 1, so we use 0 to represent a download that
 // has started, but has not yet had its data persisted in the table. We use fake
-// database handles in incognito mode starting at -1 and progressly getting more
-// negative.
+// database handles in incognito mode starting at -1 and progressively getting
+// more negative.
 static const int kUninitializedHandle = 0;
 
 // Appends the passed the number between parenthesis the path before the
@@ -195,7 +195,7 @@ void DownloadItem::Update(int64 bytes_so_far) {
   UpdateObservers();
 }
 
-// Triggered by a user action
+// Triggered by a user action.
 void DownloadItem::Cancel(bool update_history) {
   if (state_ != IN_PROGRESS) {
     // Small downloads might be complete before this method has a chance to run.
@@ -221,7 +221,7 @@ void DownloadItem::Remove(bool delete_on_disk) {
   if (delete_on_disk)
     manager_->DeleteDownload(full_path_);
   manager_->RemoveDownload(db_handle_);
-  // We are now deleted.
+  // We have now been deleted.
 }
 
 void DownloadItem::StartProgressTimer() {
@@ -304,7 +304,7 @@ void DownloadManager::RegisterUserPrefs(PrefService* prefs) {
   // the user if he really wants it on an unsafe place such as the desktop.
 
   if (!prefs->GetBoolean(prefs::kDownloadDirUpgraded)) {
-    std::wstring current_download_dir = 
+    std::wstring current_download_dir =
         prefs->GetString(prefs::kDownloadDefaultDirectory);
     if (DownloadPathIsDangerous(current_download_dir)) {
       prefs->SetString(prefs::kDownloadDefaultDirectory,
@@ -557,7 +557,7 @@ void DownloadManager::CheckIfSuggestedPathExists(DownloadCreateInfo* info) {
 
   info->path_uniquifier = GetUniquePathNumber(info->suggested_path);
 
-  // If the download is deemmed dangerous, we'll use a temporary name for it.
+  // If the download is deemed dangerous, we'll use a temporary name for it.
   if (info->is_dangerous) {
     info->original_name = file_util::GetFilenameFromPath(info->suggested_path);
     // Create a temporary file to hold the file until the user approves its
@@ -601,11 +601,12 @@ void DownloadManager::OnPathExistenceAvailable(DownloadCreateInfo* info) {
 
     TabContents* contents = tab_util::GetTabContentsByID(
         info->render_process_id, info->render_view_id);
+    std::wstring filter = win_util::GetFileFilterFromPath(info->suggested_path);
     HWND owning_hwnd =
         contents ? GetAncestor(contents->GetContainerHWND(), GA_ROOT) : NULL;
     select_file_dialog_->SelectFile(SelectFileDialog::SELECT_SAVEAS_FILE,
                                     std::wstring(), info->suggested_path,
-                                    std::wstring(), std::wstring(),
+                                    filter, std::wstring(),
                                     owning_hwnd, info);
   } else {
     // No prompting for download, just continue with the suggested name.
@@ -663,7 +664,7 @@ void DownloadManager::ContinueStartDownload(DownloadCreateInfo* info,
     OnCreateDownloadEntryComplete(*info, fake_db_handle--);
   } else {
     // Update the history system with the new download.
-    // FIXME(acw|paulg) see bug 958058. EXPLICIT_ACCESS below is wrong.
+    // FIXME(paulg) see bug 958058. EXPLICIT_ACCESS below is wrong.
     HistoryService* hs = profile_->GetHistoryService(Profile::EXPLICIT_ACCESS);
     if (hs) {
       hs->CreateDownload(
@@ -682,7 +683,7 @@ void DownloadManager::UpdateHistoryForDownload(DownloadItem* download) {
   if (download->db_handle() <= kUninitializedHandle)
     return;
 
-  // FIXME(acw|paulg) see bug 958058. EXPLICIT_ACCESS below is wrong.
+  // FIXME(paulg) see bug 958058. EXPLICIT_ACCESS below is wrong.
   HistoryService* hs = profile_->GetHistoryService(Profile::EXPLICIT_ACCESS);
   if (hs) {
     hs->UpdateDownload(download->received_bytes(),
@@ -693,7 +694,7 @@ void DownloadManager::UpdateHistoryForDownload(DownloadItem* download) {
 
 void DownloadManager::RemoveDownloadFromHistory(DownloadItem* download) {
   DCHECK(download);
-  // FIXME(acw|paulg) see bug 958058. EXPLICIT_ACCESS below is wrong.
+  // FIXME(paulg) see bug 958058. EXPLICIT_ACCESS below is wrong.
   HistoryService* hs = profile_->GetHistoryService(Profile::EXPLICIT_ACCESS);
   if (download->db_handle() > kUninitializedHandle && hs)
     hs->RemoveDownload(download->db_handle());
@@ -701,7 +702,7 @@ void DownloadManager::RemoveDownloadFromHistory(DownloadItem* download) {
 
 void DownloadManager::RemoveDownloadsFromHistoryBetween(const Time remove_begin,
                                                         const Time remove_end) {
-  // FIXME(acw|paulg) see bug 958058. EXPLICIT_ACCESS below is wrong.
+  // FIXME(paulg) see bug 958058. EXPLICIT_ACCESS below is wrong.
   HistoryService* hs = profile_->GetHistoryService(Profile::EXPLICIT_ACCESS);
   if (hs)
     hs->RemoveDownloadsBetween(remove_begin, remove_end);
@@ -756,7 +757,7 @@ void DownloadManager::DownloadFinished(int32 download_id, int64 size) {
   }
 
   if (download->safety_state() == DownloadItem::DANGEROUS_BUT_VALIDATED) {
-    // We first need to rename the donwloaded file from its temporary name to
+    // We first need to rename the downloaded file from its temporary name to
     // its final name before we can continue.
     file_loop_->PostTask(FROM_HERE,
         NewRunnableMethod(
@@ -809,7 +810,7 @@ void DownloadManager::ProceedWithFinishedDangerousDownload(
   } else {
     NOTREACHED();
   }
-  
+
   ui_loop_->PostTask(FROM_HERE,
       NewRunnableMethod(this, &DownloadManager::DangerousDownloadRenamed,
                         download_handle, success, new_path, uniquifier));
@@ -841,7 +842,7 @@ void DownloadManager::DangerousDownloadRenamed(int64 download_handle,
 
 // static
 // We have to tell the ResourceDispatcherHost to cancel the download from this
-// thread, since we can't forward tasks from the file thread to the io thread
+// thread, since we can't forward tasks from the file thread to the IO thread
 // reliably (crash on shutdown race condition).
 void DownloadManager::CancelDownloadRequest(int render_process_id,
                                             int request_id) {
@@ -932,7 +933,7 @@ void DownloadManager::RenameDownload(DownloadItem* download,
   if (download->db_handle() <= kUninitializedHandle)
     return;
 
-  // FIXME(acw|paulg) see bug 958058. EXPLICIT_ACCESS below is wrong.
+  // FIXME(paulg) see bug 958058. EXPLICIT_ACCESS below is wrong.
   HistoryService* hs = profile_->GetHistoryService(Profile::EXPLICIT_ACCESS);
   if (hs)
     hs->UpdateDownloadPath(new_path, download->db_handle());
@@ -1075,7 +1076,7 @@ void DownloadManager::GenerateExtension(const std::wstring& file_name,
   if (extension.empty()) {
     net::GetPreferredExtensionForMimeType(mime_type, &extension);
   } else {
-    // Append entension generated from the mime type if:
+    // Append extension generated from the mime type if:
     // 1. New extension is not ".txt"
     // 2. New extension is not the same as the already existing extension.
     // 3. New extension is not executable. This action mitigates the case when
@@ -1163,6 +1164,10 @@ bool DownloadManager::IsExecutableMimeType(const std::string& mime_type) {
   if (net::MatchesMimeType("text/javascript", mime_type))
     return true;
   if (net::MatchesMimeType("text/javascript;version=*", mime_type))
+    return true;
+  // Some sites use binary/octet-stream to mean application/octet-stream.
+  // See http://code.google.com/p/chromium/issues/detail?id=1573
+  if (net::MatchesMimeType("binary/octet-stream", mime_type))
     return true;
 
   // We don't consider other non-application types to be executable.

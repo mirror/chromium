@@ -235,6 +235,9 @@ class V8Proxy {
                                     int argc,
                                     v8::Handle<v8::Value> argv[]);
 
+  // Returns the dom constructor function for the given node type.
+  v8::Local<v8::Function> GetConstructor(V8ClassIndex::V8WrapperType type);
+
   // Returns the window object of the currently executing context.
   static DOMWindow* retrieveWindow();
   // Returns V8Proxy object of the currently executing context.
@@ -410,6 +413,8 @@ class V8Proxy {
  private:
   void initContextIfNeeded();
   void DisconnectEventListeners();
+  // Dispose global handles of m_contexts and friends.
+  void DisposeContextHandles();
 
   // Check whether a V8 value is a DOM Event wrapper
   static bool IsDOMEventWrapper(v8::Handle<v8::Value> obj);
@@ -481,9 +486,25 @@ class V8Proxy {
   }
 
   Frame* m_frame;
-  v8::Persistent<v8::Context> m_context;
-  v8::Persistent<v8::Object> m_global;
 
+  v8::Persistent<v8::Context> m_context;
+  // DOM constructors are cached per context. A DOM constructor is a function
+  // instance created from a DOM constructor template. There is one instance
+  // per context. A DOM constructor is different from a normal function in
+  // two ways: 1) it cannot be called as constructor (aka, used to create
+  // a DOM object); 2) its __proto__ points to Object.prototype rather than
+  // Function.prototype. The reason for 2) is that, in Safari, a DOM constructor
+  // is a normal JS object, but not a function. Hotmail relies on the fact
+  // that, in Safari, HTMLElement.__proto__ == Object.prototype.
+  //
+  // m_object_prototype is a cache of the original Object.prototype.
+  //
+  // Both handles must be disposed when the context is disposed. Otherwise,
+  // it can keep all objects alive.
+  v8::Persistent<v8::Array> m_dom_constructor_cache;
+  v8::Persistent<v8::Value> m_object_prototype;
+  
+  v8::Persistent<v8::Object> m_global;
   // Special handling of document wrapper;
   v8::Persistent<v8::Object> m_document;
 

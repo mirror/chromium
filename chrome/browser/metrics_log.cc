@@ -305,6 +305,26 @@ std::string MetricsLog::GetInstallDate() const {
   }
 }
 
+void MetricsLog::RecordIncrementalStabilityElements() {
+  DCHECK(!locked_);
+
+  PrefService* pref = g_browser_process->local_state();
+  DCHECK(pref);
+
+  OPEN_ELEMENT_FOR_SCOPE("profile");
+  WriteCommonEventAttributes();
+
+  WriteInstallElement();  // Supply appversion.
+
+  {
+    OPEN_ELEMENT_FOR_SCOPE("stability");  // Minimal set of stability elements.
+    WriteRequiredStabilityAttributes(pref);
+    WriteRealtimeStabilityAttributes(pref);
+
+    WritePluginStabilityElements(pref);
+  }
+}
+
 void MetricsLog::WriteStabilityElement() {
   DCHECK(!locked_);
 
@@ -316,26 +336,17 @@ void MetricsLog::WriteStabilityElement() {
   //       sent, but that's true for all the metrics.
 
   StartElement("stability");
+  WriteRequiredStabilityAttributes(pref);
+  WriteRealtimeStabilityAttributes(pref);
 
-  WriteIntAttribute("launchcount",
-                    pref->GetInteger(prefs::kStabilityLaunchCount));
-  pref->SetInteger(prefs::kStabilityLaunchCount, 0);
-  WriteIntAttribute("crashcount",
-                    pref->GetInteger(prefs::kStabilityCrashCount));
-  pref->SetInteger(prefs::kStabilityCrashCount, 0);
+  // TODO(jar): The following are all optional, so we *could* optimize them for
+  // values of zero (and not include them).
   WriteIntAttribute("incompleteshutdowncount",
                     pref->GetInteger(
                         prefs::kStabilityIncompleteSessionEndCount));
   pref->SetInteger(prefs::kStabilityIncompleteSessionEndCount, 0);
-  WriteIntAttribute("pageloadcount",
-                    pref->GetInteger(prefs::kStabilityPageLoadCount));
-  pref->SetInteger(prefs::kStabilityPageLoadCount, 0);
-  WriteIntAttribute("renderercrashcount",
-                    pref->GetInteger(prefs::kStabilityRendererCrashCount));
-  pref->SetInteger(prefs::kStabilityRendererCrashCount, 0);
-  WriteIntAttribute("rendererhangcount",
-                    pref->GetInteger(prefs::kStabilityRendererHangCount));
-  pref->SetInteger(prefs::kStabilityRendererHangCount, 0);
+
+
   WriteIntAttribute("breakpadregistrationok",
       pref->GetInteger(prefs::kStabilityBreakpadRegistrationSuccess));
   pref->SetInteger(prefs::kStabilityBreakpadRegistrationSuccess, 0);
@@ -354,7 +365,11 @@ void MetricsLog::WriteStabilityElement() {
                  WideToUTF8(pref->GetString(prefs::kStabilityUptimeSec)));
   pref->SetString(prefs::kStabilityUptimeSec, L"0");
 
-  // Now log plugin stability info
+  WritePluginStabilityElements(pref);
+}
+
+void MetricsLog::WritePluginStabilityElements(PrefService* pref) {
+  // Now log plugin stability info.
   const ListValue* plugin_stats_list = pref->GetList(
       prefs::kStabilityPluginStats);
   if (plugin_stats_list) {
@@ -399,6 +414,41 @@ void MetricsLog::WriteStabilityElement() {
   EndElement();
 }
 
+void MetricsLog::WriteRequiredStabilityAttributes(PrefService* pref) {
+  // The server refuses data that doesn't have certain values.  crashcount and
+  // launchcount are currently "required" in the "stability" group.
+  WriteIntAttribute("launchcount",
+                    pref->GetInteger(prefs::kStabilityLaunchCount));
+  pref->SetInteger(prefs::kStabilityLaunchCount, 0);
+  WriteIntAttribute("crashcount",
+                    pref->GetInteger(prefs::kStabilityCrashCount));
+  pref->SetInteger(prefs::kStabilityCrashCount, 0);
+}
+
+void MetricsLog::WriteRealtimeStabilityAttributes(PrefService* pref) {
+  // Update the stats which are critical for real-time stability monitoring.
+  // Since these are "optional," only list ones that are non-zero, as the counts
+  // are aggergated (summed) server side.
+
+  int count = pref->GetInteger(prefs::kStabilityPageLoadCount);
+  if (count) {
+    WriteIntAttribute("pageloadcount", count);
+    pref->SetInteger(prefs::kStabilityPageLoadCount, 0);
+  }
+
+  count = pref->GetInteger(prefs::kStabilityRendererCrashCount);
+  if (count) {
+    WriteIntAttribute("renderercrashcount", count);
+    pref->SetInteger(prefs::kStabilityRendererCrashCount, 0);
+  }
+
+  count = pref->GetInteger(prefs::kStabilityRendererHangCount);
+  if (count) {
+    WriteIntAttribute("rendererhangcount", count);
+    pref->SetInteger(prefs::kStabilityRendererHangCount, 0);
+  }
+}
+
 void MetricsLog::WritePluginList(
          const std::vector<WebPluginInfo>& plugin_list) {
   DCHECK(!locked_);
@@ -423,6 +473,13 @@ void MetricsLog::WritePluginList(
   EndElement();
 }
 
+void MetricsLog::WriteInstallElement() {
+  OPEN_ELEMENT_FOR_SCOPE("install");
+  WriteAttribute("installdate", GetInstallDate());
+  WriteIntAttribute("buildid", 0);  // We're using appversion instead.
+  WriteAttribute("appversion", GetVersionString());
+}
+
 void MetricsLog::RecordEnvironment(
          const std::vector<WebPluginInfo>& plugin_list,
          const DictionaryValue* profile_metrics) {
@@ -433,11 +490,7 @@ void MetricsLog::RecordEnvironment(
   StartElement("profile");
   WriteCommonEventAttributes();
 
-  StartElement("install");
-  WriteAttribute("installdate", GetInstallDate());
-  WriteIntAttribute("buildid", 0);  // means that we're using appversion instead
-  WriteAttribute("appversion", GetVersionString());
-  EndElement();
+  WriteInstallElement();
 
   WritePluginList(plugin_list);
 

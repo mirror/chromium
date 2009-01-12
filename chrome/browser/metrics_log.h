@@ -72,8 +72,15 @@ class MetricsLog {
   // user uses the Omnibox to open a URL.
   void RecordOmniboxOpenedURL(const AutocompleteLog& log);
 
+  // Record any changes in a given histogram for transmission.
   void RecordHistogramDelta(const Histogram& histogram,
                             const Histogram::SampleSet& snapshot);
+
+  // Record recent delta for critical stability metrics.  We can't wait for a
+  // restart to gather these, as that delay biases our observation away from
+  // users that run happily for a looooong time.  We send increments with each
+  // uma log upload, just as we send histogram data.
+  void RecordIncrementalStabilityElements();
 
   // Stop writing to this record and generate the encoded representation.
   // None of the Record* methods can be called after this is called.
@@ -150,8 +157,23 @@ class MetricsLog {
   // NOTE: Has the side-effect of clearing those counts.
   void WriteStabilityElement();
 
+  // Within stability group, write plugin crash stats.
+  void WritePluginStabilityElements(PrefService* pref);
+
+  // Within the stability group, write required attributes.
+  void WriteRequiredStabilityAttributes(PrefService* pref);
+
+  // Within the stability group, write attributes that need to be updated asap
+  // and can't be delayed until the user decides to restart chromium.
+  // Delaying these stats would bias metrics away from happy long lived
+  // chromium processes (ones that don't crash, and keep on running).
+  void WriteRealtimeStabilityAttributes(PrefService* pref);
+
   // Writes the list of installed plugins.
   void WritePluginList(const std::vector<WebPluginInfo>& plugin_list);
+
+  // Within the profile group, write basic install info including appversion.
+  void WriteInstallElement();
 
   // Writes all profile metrics. This invokes WriteProfileMetrics for each key
   // in all_profiles_metrics that starts with kProfilePrefix.

@@ -1068,6 +1068,56 @@ v8::Local<v8::Value> V8Proxy::CallFunction(v8::Handle<v8::Function> function,
 }
 
 
+v8::Local<v8::Function> V8Proxy::GetConstructor(V8ClassIndex::V8WrapperType t)
+{
+    ASSERT(ContextInitialized());
+    v8::Local<v8::Value> cached =
+        m_dom_constructor_cache->Get(v8::Integer::New(V8ClassIndex::ToInt(t)));
+    if (cached->IsFunction()) {
+        return v8::Local<v8::Function>::Cast(cached);
+    }
+
+    // Not in cache.
+    {
+        v8::Handle<v8::FunctionTemplate> templ = GetTemplate(t);
+        v8::TryCatch try_catch;
+        // This might fail if we're running out of stack or memory.
+        v8::Local<v8::Function> value = templ->GetFunction();
+        if (value.IsEmpty())
+            return v8::Local<v8::Function>();
+        m_dom_constructor_cache->Set(v8::Integer::New(t), value);
+        // Hotmail fix, see comments in v8_proxy.h above
+        // m_dom_constructor_cache.
+        value->Set(v8::String::New("__proto__"), m_object_prototype);
+        return value;
+    }
+}
+
+
+// Get the string 'toString'.
+static v8::Persistent<v8::String> GetToStringName() {
+  static v8::Persistent<v8::String> value;
+  if (value.IsEmpty())
+    value = v8::Persistent<v8::String>::New(v8::String::New("toString"));
+  return value;
+}
+
+
+static v8::Handle<v8::Value> ConstructorToString(const v8::Arguments& args) {
+  // The DOM constructors' toString functions grab the current toString
+  // for Functions by taking the toString function of itself and then
+  // calling it with the constructor as its receiver.  This means that
+  // changes to the Function prototype chain or toString function are
+  // reflected when printing DOM constructors.  The only wart is that
+  // changes to a DOM constructor's toString's toString will cause the
+  // toString of the DOM constructor itself to change.  This is extremely
+  // obscure and unlikely to be a problem.
+  v8::Handle<v8::Value> val = args.Callee()->Get(GetToStringName());
+  if (!val->IsFunction()) return v8::String::New("");
+  return v8::Handle<v8::Function>::Cast(val)->Call(args.This(), 0, NULL);
+}
+
+
 v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
     V8ClassIndex::V8WrapperType type) {
   v8::Persistent<v8::FunctionTemplate>* cache_cell =
@@ -1077,6 +1127,18 @@ v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
   // not found
   FunctionTemplateFactory factory = V8ClassIndex::GetFactory(type);
   v8::Persistent<v8::FunctionTemplate> desc = factory();
+  // DOM constructors are functions and should print themselves as such.
+  // However, we will later replace their prototypes with Object
+  // prototypes so we need to explicitly override toString on the
+  // instance itself.  If we later make DOM constructors full objects
+  // we can give them class names instead and Object.prototype.toString
+  // will work so we can remove this code.
+  static v8::Persistent<v8::FunctionTemplate> to_string_template;
+  if (to_string_template.IsEmpty()) {
+    to_string_template = v8::Persistent<v8::FunctionTemplate>::New(
+        v8::FunctionTemplate::New(ConstructorToString));
+  }
+  desc->Set(GetToStringName(), to_string_template);
   switch (type) {
     case V8ClassIndex::CSSSTYLEDECLARATION:
       // The named property handler for style declarations has a
@@ -1311,6 +1373,12 @@ v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
 
 
 bool V8Proxy::ContextInitialized() {
+  // m_context, m_global, m_object_prototype, and
+  // m_dom_constructor_cache should all be non-empty if m_context is
+  // non-empty.
+  ASSERT(m_context.IsEmpty() || !m_global.IsEmpty());
+  ASSERT(m_context.IsEmpty() || !m_object_prototype.IsEmpty());
+  ASSERT(m_context.IsEmpty() || !m_dom_constructor_cache.IsEmpty());
   return !m_context.IsEmpty();
 }
 
@@ -1435,7 +1503,28 @@ void V8Proxy::DomainChanged(Frame* frame) {
   V8Proxy* proxy = retrieve(frame);
   proxy->ClearSecurityToken();
 }
+void V8Proxy::DisposeContextHandles() {
+    if (!m_context.IsEmpty()) {
+      m_context.Dispose();
+      m_context.Clear();
+    }
 
+    if (!m_dom_constructor_cache.IsEmpty()) {
+#ifndef NDEBUG
+      UnregisterGlobalHandle(this, m_dom_constructor_cache);
+#endif
+      m_dom_constructor_cache.Dispose();
+      m_dom_constructor_cache.Clear();
+    }
+
+    if (!m_object_prototype.IsEmpty()) {
+#ifndef NDEBUG
+      UnregisterGlobalHandle(this, m_object_prototype);
+#endif
+      m_object_prototype.Dispose();
+      m_object_prototype.Clear();
+    }
+}
 
 void V8Proxy::ClearSecurityToken() {
   m_context->SetSecurityToken(m_global);
@@ -1452,8 +1541,7 @@ void V8Proxy::clear() {
     clearDocumentWrapper();
 
     // Corresponds to the context creation in initContextIfNeeded().
-    m_context.Dispose();
-    m_context.Clear();
+        DisposeContextHandles();
   }
 }
 
@@ -1599,8 +1687,6 @@ void V8Proxy::initContextIfNeeded() {
   // to be done once.
   static bool v8_initialized = false;
   if (!v8_initialized) {
-    v8_initialized = true;
-
     // Tells V8 not to call the default OOM handler, binding code
     // will handle it.
     v8::V8::IgnoreOutOfMemoryException();
@@ -1612,6 +1698,8 @@ void V8Proxy::initContextIfNeeded() {
     v8::V8::AddMessageListener(HandleConsoleMessage);
 
     v8::V8::SetFailedAccessCheckCallbackFunction(ReportUnsafeJavaScriptAccess);
+
+    v8_initialized = true;
   }
 
   // Create a new environment using an empty template for the shadow
@@ -1644,19 +1732,56 @@ void V8Proxy::initContextIfNeeded() {
   // Store the first global object created so we can reuse it.
   if (m_global.IsEmpty()) {
     m_global = v8::Persistent<v8::Object>::New(context->Global());
+    // Bail out if allocation of the first global objects fails.
+    if (m_global.IsEmpty()) {
+      DisposeContextHandles();
+      return;
+    }
 #ifndef NDEBUG
     RegisterGlobalHandle(PROXY, this, m_global);
 #endif
   }
 
+  // Allocate strings used during initialization.
+  v8::Handle<v8::String> object_string = v8::String::New("Object");
+  v8::Handle<v8::String> prototype_string = v8::String::New("prototype");
+  v8::Handle<v8::String> implicit_proto_string = v8::String::New("__proto__");
+  // Bail out if allocation failed.
+  if (object_string.IsEmpty() ||
+      prototype_string.IsEmpty() ||
+      implicit_proto_string.IsEmpty()) {
+    DisposeContextHandles();
+    return;
+  }
+
+  // Allocate DOM constructor cache.
+  v8::Handle<v8::Object> object = v8::Handle<v8::Object>::Cast(
+      m_global->Get(object_string));
+  m_object_prototype = v8::Persistent<v8::Value>::New(
+      object->Get(prototype_string));
+  m_dom_constructor_cache = v8::Persistent<v8::Array>::New(
+      v8::Array::New(V8ClassIndex::WRAPPER_TYPE_COUNT));
+  // Bail out if allocation failed.
+  if (m_object_prototype.IsEmpty() || m_dom_constructor_cache.IsEmpty()) {
+    DisposeContextHandles();
+    return;
+  }
+#ifndef NDEBUG
+  RegisterGlobalHandle(PROXY, this, m_object_prototype);
+  RegisterGlobalHandle(PROXY, this, m_dom_constructor_cache);
+#endif
+
   // Create a new JS window object and use it as the prototype for the
   // shadow global object.
-  v8::Persistent<v8::FunctionTemplate> window_descriptor =
-      GetTemplate(V8ClassIndex::DOMWINDOW);
+  v8::Handle<v8::Function> window_constructor =
+      GetConstructor(V8ClassIndex::DOMWINDOW);
   v8::Local<v8::Object> window_peer =
-      SafeAllocation::NewInstance(window_descriptor->GetFunction());
-  if (window_peer.IsEmpty())
+      SafeAllocation::NewInstance(window_constructor);
+  // Bail out if allocation failed.
+  if (window_peer.IsEmpty()) {
+    DisposeContextHandles();
     return;
+  }
 
   DOMWindow* window = m_frame->domWindow();
 
@@ -1671,7 +1796,7 @@ void V8Proxy::initContextIfNeeded() {
                 window);
   // Insert the window instance as the prototype of the shadow object.
   v8::Handle<v8::Object> v8_global = context->Global();
-  v8_global->Set(v8::String::New("__proto__"), window_peer);
+  v8_global->Set(implicit_proto_string, window_peer);
 
   context->SetSecurityToken(GenerateSecurityToken(context));
 
@@ -1989,8 +2114,16 @@ v8::Local<v8::Object> V8Proxy::InstantiateV8Object(
     }
   }
 
-  v8::Persistent<v8::FunctionTemplate> desc = GetTemplate(desc_type);
-  v8::Local<v8::Function> function = desc->GetFunction();
+  v8::Local<v8::Function> function;
+  V8Proxy* proxy = V8Proxy::retrieve();
+  if (proxy) {
+    // Make sure that the context of the proxy has been initialized.
+    proxy->initContextIfNeeded();
+    // Constructor is configured.
+    function = proxy->GetConstructor(desc_type);
+  } else {
+    function = GetTemplate(desc_type)->GetFunction();
+  }
   v8::Local<v8::Object> instance = SafeAllocation::NewInstance(function);
   if (!instance.IsEmpty()) {
     // Avoid setting the DOM wrapper for failed allocations.
@@ -2394,10 +2527,28 @@ v8::Handle<v8::Value> V8Proxy::NodeToV8Object(Node* node) {
       type = V8ClassIndex::NODE;
   }
 
+  // Find the context to which the node belongs and create the wrapper
+  // in that context.  If the node is not in a document, the current
+  // context is used.
+  v8::Local<v8::Context> context;
+  Document* doc = node->document();
+  if (doc) {
+    context = V8Proxy::GetContext(doc->frame());
+  }
+  if (!context.IsEmpty()) {
+    context->Enter();
+  }
+
   // Set the peer object for future access.
   // InstantiateV8Object automatically casts node to Peerable*.
   v8::Local<v8::Object> result =
       InstantiateV8Object(type, V8ClassIndex::NODE, node);
+
+  // Exit the node's context if it was entered.
+  if (!context.IsEmpty()) {
+    context->Exit();
+  }
+
   if (result.IsEmpty()) {
     // If instantiation failed it's important not to add the result
     // to the DOM node map. Instead we return an empty handle, which

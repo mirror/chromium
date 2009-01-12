@@ -72,19 +72,21 @@ bool PathProvider(int key, std::wstring* result) {
   wchar_t system_buffer[MAX_PATH];
   system_buffer[0] = 0;
 
-  // Assume that we will need to create the directory if it does not already
-  // exist.  This flag can be set to true to prevent checking.
-  bool exists = false;
+  // Assume that we will not need to create the directory if it does not exist.
+  // This flag can be set to true for the cases where we want to create it.
+  bool create_dir = false;
 
   std::wstring cur;
   switch (key) {
     case chrome::DIR_USER_DATA:
       if (!GetDefaultUserDataDirectory(&cur))
         return false;
+      create_dir = true;
       break;
     case chrome::DIR_USER_DOCUMENTS:
       if (!GetUserDirectory(CSIDL_MYDOCUMENTS, &cur))
         return false;
+      create_dir = true;
       break;
     case chrome::DIR_DEFAULT_DOWNLOADS:
       // On Vista, we can get the download path using a Win API
@@ -108,57 +110,57 @@ bool PathProvider(int key, std::wstring* result) {
       if (!GetDefaultUserDataDirectory(&cur))
         return false;
       file_util::AppendToPath(&cur, L"Crash Reports");
+      create_dir = true;
       break;
     case chrome::DIR_USER_DESKTOP:
       if (FAILED(SHGetFolderPath(NULL, CSIDL_DESKTOPDIRECTORY, NULL,
                                  SHGFP_TYPE_CURRENT, system_buffer)))
         return false;
       cur = system_buffer;
-      exists = true;
       break;
     case chrome::DIR_RESOURCES:
       if (!PathService::Get(chrome::DIR_APP, &cur))
         return false;
       file_util::AppendToPath(&cur, L"resources");
+      create_dir = true;
       break;
     case chrome::DIR_INSPECTOR:
       if (!PathService::Get(chrome::DIR_APP, &cur))
         return false;
       file_util::AppendToPath(&cur, L"Resources");
       file_util::AppendToPath(&cur, L"Inspector");
-      exists = true;
       break;
     case chrome::DIR_THEMES:
       if (!PathService::Get(chrome::DIR_APP, &cur))
         return false;
       file_util::AppendToPath(&cur, L"themes");
+      create_dir = true;
       break;
     case chrome::DIR_LOCALES:
       if (!PathService::Get(chrome::DIR_APP, &cur))
         return false;
       file_util::AppendToPath(&cur, L"locales");
+      create_dir = true;
       break;
     case chrome::DIR_APP_DICTIONARIES:
       if (!PathService::Get(base::DIR_EXE, &cur))
         return false;
       file_util::AppendToPath(&cur, L"Dictionaries");
+      create_dir = true;
       break;
     case chrome::DIR_USER_SCRIPTS:
       // TODO(aa): Figure out where the script directory should live.
       cur = L"C:\\SCRIPTS\\";
-      exists = true;  // don't trigger directory creation code
       break;
     case chrome::FILE_LOCAL_STATE:
       if (!PathService::Get(chrome::DIR_USER_DATA, &cur))
         return false;
       file_util::AppendToPath(&cur, chrome::kLocalStateFilename);
-      exists = true;  // don't trigger directory creation code
       break;
     case chrome::FILE_RECORDED_SCRIPT:
       if (!PathService::Get(chrome::DIR_USER_DATA, &cur))
         return false;
       file_util::AppendToPath(&cur, L"script.log");
-      exists = true;
       break;
     case chrome::FILE_GEARS_PLUGIN:
       if (!GetGearsPluginPathFromCommandLine(&cur)) {
@@ -177,7 +179,6 @@ bool PathProvider(int key, std::wstring* result) {
           file_util::AppendToPath(&cur, L"gears.dll");
         }
       }
-      exists = true;
       break;
     // The following are only valid in the development environment, and
     // will fail if executed from an installed executable (because the
@@ -190,7 +191,6 @@ bool PathProvider(int key, std::wstring* result) {
       file_util::AppendToPath(&cur, L"data");
       if (!file_util::PathExists(cur))  // we don't want to create this
         return false;
-      exists = true;
       break;
     case chrome::DIR_TEST_TOOLS:
       if (!PathService::Get(chrome::DIR_APP, &cur))
@@ -200,7 +200,6 @@ bool PathProvider(int key, std::wstring* result) {
       file_util::AppendToPath(&cur, L"test");
       if (!file_util::PathExists(cur))  // we don't want to create this
         return false;
-      exists = true;
       break;
     case chrome::FILE_PYTHON_RUNTIME:
       if (!PathService::Get(chrome::DIR_APP, &cur))
@@ -212,7 +211,6 @@ bool PathProvider(int key, std::wstring* result) {
       file_util::AppendToPath(&cur, L"python.exe");
       if (!file_util::PathExists(cur))  // we don't want to create this
         return false;
-      exists = true;
       break;
     case chrome::FILE_TEST_SERVER:
       if (!PathService::Get(chrome::DIR_APP, &cur))
@@ -224,13 +222,12 @@ bool PathProvider(int key, std::wstring* result) {
       file_util::AppendToPath(&cur, L"testserver.py");
       if (!file_util::PathExists(cur))  // we don't want to create this
         return false;
-      exists = true;
       break;
     default:
       return false;
   }
 
-  if (!exists && !file_util::PathExists(cur) && !file_util::CreateDirectory(cur))
+  if (create_dir && !file_util::PathExists(cur) && !file_util::CreateDirectory(cur))
     return false;
 
   result->swap(cur);

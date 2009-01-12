@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include <algorithm>
+
 #include "chrome/browser/history/query_parser.h"
 
 #include "base/logging.h"
@@ -11,6 +13,49 @@
 #include "chrome/common/scoped_vector.h"
 #include "unicode/uscript.h"
 
+namespace {
+
+// Returns true if |mp1.first| is less than |mp2.first|. This is used to
+// sort match positions.
+int CompareMatchPosition(const Snippet::MatchPosition& mp1,
+                         const Snippet::MatchPosition& mp2) {
+  return mp1.first < mp2.first;
+}
+
+// Returns true if |mp2| intersects |mp1|. This is intended for use by
+// CoalesceMatchesFrom and isn't meant as a general intersectpion comparison
+// function.
+bool SnippetIntersects(const Snippet::MatchPosition& mp1,
+                       const Snippet::MatchPosition& mp2) {
+  return mp2.first >= mp1.first && mp2.first <= mp1.second;
+}
+
+// Coalesces match positions in |matches| after index that intersect the match
+// position at |index|.
+void CoalesceMatchesFrom(size_t index,
+                         Snippet::MatchPositions* matches) {
+  Snippet::MatchPosition& mp = (*matches)[index];
+  for (Snippet::MatchPositions::iterator i = matches->begin() + index + 1;
+       i != matches->end(); ) {
+    if (SnippetIntersects(mp, *i)) {
+      mp.second = i->second;
+      i = matches->erase(i);
+    } else {
+      return;
+    }
+  }
+}
+
+// Sorts the match positions in |matches| by their first index, then coalesces
+// any match positions that intersect each other.
+void CoalseAndSortMatchPositions(Snippet::MatchPositions* matches) {
+  std::sort(matches->begin(), matches->end(), &CompareMatchPosition);
+  // WARNING: we don't use iterator here as CoalesceMatchesFrom may remove
+  // from matches.
+  for (size_t i = 0; i < matches->size(); ++i)
+    CoalesceMatchesFrom(i, matches);
+}
+
 // For CJK ideographs and Korean Hangul, even a single character
 // can be useful in prefix matching, but that may give us too many
 // false positives. Moreover, the current ICU word breaker gives us
@@ -18,7 +63,7 @@
 // point doing anything for them and we only adjust the minimum length
 // to 2 for Korean Hangul while using 3 for others. This is a temporary
 // hack until we have a segmentation support.
-static inline bool IsWordLongEnoughForPrefixSearch(const std::wstring& word)
+inline bool IsWordLongEnoughForPrefixSearch(const std::wstring& word)
 {
   DCHECK(word.size() > 0);
   size_t minimum_length = 3;
@@ -29,6 +74,8 @@ static inline bool IsWordLongEnoughForPrefixSearch(const std::wstring& word)
     minimum_length = 2;
   return word.size() >= minimum_length;
 }
+
+} // namespace
 
 // Inheritance structure:
 // Queries are represented as trees of QueryNodes.
@@ -50,6 +97,7 @@ class QueryNodeWord : public QueryNode {
                           Snippet::MatchPositions* match_positions) const;
 
   virtual bool Matches(const std::wstring& word, bool exact) const;
+  virtual void AppendWords(std::vector<std::wstring>* words) const;
 
  private:
   std::wstring word_;
@@ -75,6 +123,10 @@ bool QueryNodeWord::Matches(const std::wstring& word, bool exact) const {
     return word == word_;
   return word.size() >= word_.size() &&
          (word_.compare(0, word_.size(), word, 0, word_.size()) == 0);
+}
+
+void QueryNodeWord::AppendWords(std::vector<std::wstring>* words) const {
+  words->push_back(word_);
 }
 
 int QueryNodeWord::AppendToSQLiteQuery(std::wstring* query) const {
@@ -115,6 +167,7 @@ class QueryNodeList : public QueryNode {
     NOTREACHED();
     return false;
   }
+  virtual void AppendWords(std::vector<std::wstring>* words) const;
 
  protected:
   int AppendChildrenToString(std::wstring* query) const;
@@ -126,6 +179,26 @@ QueryNodeList::~QueryNodeList() {
   for (QueryNodeVector::iterator node = children_.begin();
        node != children_.end(); ++node)
     delete *node;
+}
+
+void QueryNodeList::RemoveEmptySubnodes() {
+  for (size_t i = 0; i < children_.size(); ++i) {
+    if (children_[i]->IsWord())
+      continue;
+
+    QueryNodeList* list_node = static_cast<QueryNodeList*>(children_[i]);
+    list_node->RemoveEmptySubnodes();
+    if (list_node->children()->empty()) {
+      children_.erase(children_.begin() + i);
+      --i;
+      delete list_node;
+    }
+  }
+}
+
+void QueryNodeList::AppendWords(std::vector<std::wstring>* words) const {
+  for (size_t i = 0; i < children_.size(); ++i)
+    children_[i]->AppendWords(words);
 }
 
 int QueryNodeList::AppendChildrenToString(std::wstring* query) const {
@@ -212,6 +285,15 @@ void QueryParser::ParseQuery(const std::wstring& query,
     nodes->swap(*root.children());
 }
 
+
+void QueryParser::ExtractQueryWords(const std::wstring& query,
+                                    std::vector<std::wstring>* words) {
+  QueryNodeList root;
+  if (!ParseQueryImpl(query, &root))
+    return;
+  root.AppendWords(words);  
+}
+
 bool QueryParser::DoesQueryMatch(const std::wstring& text,
                                  const std::vector<QueryNode*>& query_nodes,
                                  Snippet::MatchPositions* match_positions) {
@@ -229,6 +311,7 @@ bool QueryParser::DoesQueryMatch(const std::wstring& text,
     if (!query_nodes[i]->HasMatchIn(query_words, &matches))
       return false;
   }
+  CoalseAndSortMatchPositions(&matches);
   match_positions->swap(matches);
   return true;
 }
@@ -294,21 +377,6 @@ void QueryParser::ExtractQueryWords(const std::wstring& text,
         words->back().word = word;
         words->back().position = iter.prev();
       }
-    }
-  }
-}
-
-void QueryNodeList::RemoveEmptySubnodes() {
-  for (size_t i = 0; i < children_.size(); ++i) {
-    if (children_[i]->IsWord())
-      continue;
-
-    QueryNodeList* list_node = static_cast<QueryNodeList*>(children_[i]);
-    list_node->RemoveEmptySubnodes();
-    if (list_node->children()->empty()) {
-      children_.erase(children_.begin() + i);
-      --i;
-      delete list_node;
     }
   }
 }

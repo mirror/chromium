@@ -3047,6 +3047,9 @@ each locale. -->
       <message name="IDS_ENTER_KEY" desc="Enter key">
         Enter
       </message>
+      <message name="IDS_F1_KEY" desc="F1 key">
+        F1
+      </message>
 
       <!-- Strings used in local directory listings -->
       <message name="IDS_DIRECTORY_LISTING_HEADER" desc="When viewing a local directory, this is the title of the page.">
@@ -3175,7 +3178,7 @@ each locale. -->
         Pop-ups Blocked: <ph name="COUNT">$1<ex>2</ex></ph>
       </message>
       <message name="IDS_POPUP_TITLE_FORMAT" desc="Order of URL - Title on the popup">
-        <ph name="URL">$1</ph> - <ph name="Window Title">$2</ph>
+        <ph name="URL">$1</ph> - <ph name="WINDOW_TITLE">$2</ph>
       </message>
 
       <!-- Multiple download warning-->
