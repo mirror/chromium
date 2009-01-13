@@ -116,8 +116,8 @@ public:
 
     void beginPath();
     void addPath(const SkPath&);
-    const SkPath* currentPathInGlobalCoordinates() const { return &m_path; }
-    SkPath currentPathInLocalCoordinates() const;
+    // Returns the current path in local coordinates.
+    SkPath currentPath() const;
 
     SkColor fillColor() const;
 
@@ -162,7 +162,7 @@ private:
     // mStateStack.back().
     State* m_state;
 
-    // Current path.
+    // Current path in global coordinates.
     SkPath m_path;
 
 #if defined(__linux__)
