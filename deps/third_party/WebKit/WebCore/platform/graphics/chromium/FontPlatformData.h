@@ -31,12 +31,9 @@
 #ifndef FontPlatformData_h
 #define FontPlatformData_h
 
-#include "config.h"
-#include "build/build_config.h"
-
-#if defined(OS_WIN)
+#if PLATFORM(WIN_OS)
 #include "FontPlatformDataChromiumWin.h"
-#elif defined(OS_LINUX)
+#elif defined(__linux__)
 #include "FontPlatformDataLinux.h"
 #endif
 
