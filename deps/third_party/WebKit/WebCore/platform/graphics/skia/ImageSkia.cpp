@@ -279,15 +279,19 @@ static FloatRect normalizeRect(const FloatRect& rect)
     return norm;
 }
 
-void FrameData::clear()
+bool FrameData::clear(bool clearMetadata)
 {
-    // ImageSource::createFrameAtIndex() allocated |m_frame| and passed
-    // ownership to BitmapImage; we must delete it here.
-    delete m_frame;
-    m_frame = 0;
-    // NOTE: We purposefully don't reset metadata here, so that even if we
-    // throw away previously-decoded data, animation loops can still access
-    // properties like frame durations without re-decoding.
+    if (clearMetadata)
+        m_haveMetadata = false;
+
+    if (m_frame) {
+        // ImageSource::createFrameAtIndex() allocated |m_frame| and passed
+        // ownership to BitmapImage; we must delete it here.
+        delete m_frame;
+        m_frame = 0;
+        return true;
+    }
+    return false;
 }
 
 PassRefPtr<Image> Image::loadPlatformResource(const char *name)

@@ -295,4 +295,22 @@ FloatRect Path::strokeBoundingRect(StrokeStyleApplier* applier)
     return r;
 }
 
+bool Path::strokeContains(StrokeStyleApplier* applier, const FloatPoint& point) const
+{
+    ASSERT(applier);
+    GraphicsContext* scratch = scratchContext();
+    scratch->save();
+
+    applier->strokeStyle(scratch);
+
+    SkPaint paint;
+    scratch->platformContext()->setupPaintForStroking(&paint, 0, 0);
+    SkPath strokePath;
+    paint.getFillPath(*platformPath(), &strokePath);
+    bool contains = SkPathContainsPoint(&strokePath, point,
+                                        SkPath::kWinding_FillType);
+
+    scratch->restore();
+    return contains;
+}
 } // namespace WebCore

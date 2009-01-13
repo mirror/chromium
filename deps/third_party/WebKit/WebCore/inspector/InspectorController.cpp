@@ -67,9 +67,9 @@
 #include "ScriptController.h"
 #include "Settings.h"
 #include "SharedBuffer.h"
-#include "SystemTime.h"
 #include "TextEncoding.h"
 #include "TextIterator.h"
+#include <wtf/CurrentTime.h>
 #include <wtf/RefCounted.h>
 
 #if ENABLE(DATABASE)

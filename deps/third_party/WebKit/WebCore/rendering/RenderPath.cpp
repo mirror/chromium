@@ -67,14 +67,8 @@ private:
 };
 
 // RenderPath
-RenderPath::RenderPath(RenderStyle* style, SVGStyledTransformableElement* node)
+RenderPath::RenderPath(SVGStyledTransformableElement* node)
     : RenderObject(node)
-{
-    ASSERT(style != 0);
-    ASSERT(static_cast<SVGElement*>(node)->isStyledTransformable());
-}
-
-RenderPath::~RenderPath()
 {
 }
 
@@ -102,6 +96,18 @@ bool RenderPath::fillContains(const FloatPoint& point, bool requiresFill) const
         return false;
 
     return m_path.contains(point, style()->svgStyle()->fillRule());
+}
+
+bool RenderPath::strokeContains(const FloatPoint& point, bool requiresStroke) const
+{
+    if (m_path.isEmpty())
+        return false;
+
+    if (requiresStroke && !SVGPaintServer::strokePaintServer(style(), this))
+        return false;
+
+    BoundingRectStrokeStyleApplier strokeStyle(this, style());
+    return m_path.strokeContains(&strokeStyle, point);
 }
 
 FloatRect RenderPath::relativeBBox(bool includeStroke) const

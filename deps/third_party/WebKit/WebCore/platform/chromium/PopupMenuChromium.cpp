@@ -55,6 +55,8 @@
 #include "SystemTime.h"
 #include "Widget.h"
 
+#include <wtf/CurrentTime.h>
+
 using namespace WTF;
 using namespace Unicode;
 
