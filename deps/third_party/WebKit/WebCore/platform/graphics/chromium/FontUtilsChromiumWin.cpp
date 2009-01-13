@@ -1,30 +1,32 @@
-// Copyright (c) 2006-2008, Google Inc. All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-// 
-//     * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/*
+ * Copyright (c) 2006, 2007, 2008, Google Inc. All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ * 
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include "config.h"
 #include "FontUtilsChromiumWin.h"
@@ -58,7 +60,6 @@ void initializeScriptFontMap(ScriptToFontMap& scriptFontMap)
         {USCRIPT_GREEK, L"times new roman"},
         {USCRIPT_CYRILLIC, L"times new roman"},
         {USCRIPT_SIMPLIFIED_HAN, L"simsun"},
-        //{USCRIPT_TRADITIONAL_HAN, L"pmingliu"},
         {USCRIPT_HIRAGANA, L"ms pgothic"},
         {USCRIPT_KATAKANA, L"ms pgothic"},
         {USCRIPT_KATAKANA_OR_HIRAGANA, L"ms pgothic"},
@@ -100,15 +101,17 @@ void initializeScriptFontMap(ScriptToFontMap& scriptFontMap)
     // Since Chrome synchronizes the ICU default locale with its UI locale,
     // this ICU locale tells the current UI locale of Chrome.
     Locale locale = Locale::getDefault();
-    const UChar* localeFamily = NULL;
-    if (locale == Locale::getJapanese()) {
+    const UChar* localeFamily = 0;
+    if (locale == Locale::getJapanese())
         localeFamily = scriptFontMap[USCRIPT_HIRAGANA];
-    } else if (locale == Locale::getKorean()) {
+    else if (locale == Locale::getKorean())
         localeFamily = scriptFontMap[USCRIPT_HANGUL];
-    } else {
+    else {
         // Use Simplified Chinese font for all other locales including
         // Traditional Chinese because Simsun (SC font) has a wider
         // coverage (covering both SC and TC) than PMingLiu (TC font).
+        // Note that |fontMap| does not have a separate entry for
+        // USCRIPT_TRADITIONAL_HAN for that reason.
         // This also speeds up the TC version of Chrome when rendering SC
         // pages.
         localeFamily = scriptFontMap[USCRIPT_SIMPLIFIED_HAN];
@@ -123,17 +126,23 @@ const int kUndefinedAscent = std::numeric_limits<int>::min();
 // kUndefinedAscent is returned, instead.
 int getAscent(HFONT hfont)
 {
-    HDC dc = GetDC(NULL);
+    HDC dc = GetDC(0);
     HGDIOBJ oldFont = SelectObject(dc, hfont);
     TEXTMETRIC tm;
     BOOL gotMetrics = GetTextMetrics(dc, &tm);
     SelectObject(dc, oldFont);
-    ReleaseDC(NULL, dc);
+    ReleaseDC(0, dc);
     return gotMetrics ? tm.tmAscent : kUndefinedAscent;
 }
 
 struct FontData {
-    FontData() : hfont(NULL), ascent(kUndefinedAscent), scriptCache(NULL) {}
+    FontData()
+        : hfont(0)
+        , ascent(kUndefinedAscent)
+        , scriptCache(0)
+    {
+    }
+
     HFONT hfont;
     int ascent;
     mutable SCRIPT_CACHE scriptCache;
@@ -148,7 +157,7 @@ typedef HashMap<String, FontData> FontDataCache;
 
 }  // namespace
 
-// TODO(jungshik) : this is font fallback code version 0.1
+// FIXME: this is font fallback code version 0.1
 //  - Cover all the scripts
 //  - Get the default font for each script/generic family from the
 //    preference instead of hardcoding in the source.
@@ -173,12 +182,12 @@ const UChar* getFontFamilyForScript(UScriptCode script,
         initialized = true;
     }
     if (script == USCRIPT_INVALID_CODE)
-        return NULL;
+        return 0;
     ASSERT(script < USCRIPT_CODE_LIMIT);
     return scriptFontMap[script];
 }
 
-// TODO(jungshik)
+// FIXME:
 //  - Handle 'Inherited', 'Common' and 'Unknown'
 //    (see http://www.unicode.org/reports/tr24/#Usage_Model )
 //    For 'Inherited' and 'Common', perhaps we need to
@@ -186,11 +195,11 @@ const UChar* getFontFamilyForScript(UScriptCode script,
 //    and just return it.
 //  - All the characters (or characters up to the point a single
 //    font can cover) need to be taken into account
-const UChar* getFallbackFamily(const UChar *characters,
+const UChar* getFallbackFamily(const UChar* characters,
                                int length,
                                FontDescription::GenericFamilyType generic,
-                               UChar32 *charChecked,
-                               UScriptCode *scriptChecked)
+                               UChar32* charChecked,
+                               UScriptCode* scriptChecked)
 {
     ASSERT(characters && characters[0] && length > 0);
     UScriptCode script = USCRIPT_COMMON;
@@ -200,23 +209,24 @@ const UChar* getFallbackFamily(const UChar *characters,
     // to get a font required to render the string.
     int i = 0;
     UChar32 ucs4 = 0;
-    while (i < length && script == USCRIPT_COMMON ||
-           script == USCRIPT_INVALID_CODE) {
+    while (i < length && script == USCRIPT_COMMON || script == USCRIPT_INVALID_CODE) {
         U16_NEXT(characters, i, length, ucs4);
         UErrorCode err = U_ZERO_ERROR;
         script = uscript_getScript(ucs4, &err);
         // silently ignore the error
     }
 
-    // hack for full width ASCII. For the full-width ASCII, use the font
-    // for Han (which is locale-dependent).
+    // For the full-width ASCII characters (U+FF00 - U+FF5E), use the font for
+    // Han (determined in a locale-dependent way above). Full-width ASCII
+    // characters are rather widely used in Japanese and Chinese documents and
+    // they're fully covered by Chinese, Japanese and Korean fonts.
     if (0xFF00 < ucs4 && ucs4 < 0xFF5F)
         script = USCRIPT_HAN;
 
     // There are a lot of characters in USCRIPT_COMMON that can be covered
     // by fonts for scripts closely related to them. See
     // http://unicode.org/cldr/utility/list-unicodeset.jsp?a=[:Script=Common:]
-    // TODO(jungshik): make this more efficient with a wider coverage
+    // FIXME: make this more efficient with a wider coverage
     if (script == USCRIPT_COMMON || script == USCRIPT_INHERITED) {
         UBlockCode block = ublock_getCode(ucs4);
         switch (block) {
@@ -278,27 +288,29 @@ const UChar* getFallbackFamily(const UChar *characters,
 }
 
 // Be aware that this is not thread-safe.
-bool getDerivedFontData(const UChar *family,
+bool getDerivedFontData(const UChar* family,
                         int style,
-                        LOGFONT *logfont,
-                        int *ascent,
-                        HFONT *hfont,
-                        SCRIPT_CACHE **scriptCache) {
-    ASSERT(logfont && family && *family);
+                        LOGFONT* logfont,
+                        int* ascent,
+                        HFONT* hfont,
+                        SCRIPT_CACHE** scriptCache) {
+    ASSERT(logfont);
+    ASSERT(family);
+    ASSERT(*family);
 
     // It does not matter that we leak font data when we exit.
     static FontDataCache fontDataCache;
 
-    // TODO(jungshik) : This comes up pretty high in the profile so that
+    // FIXME: This comes up pretty high in the profile so that
     // we need to measure whether using SHA256 (after coercing all the
     // fields to char*) is faster than String::format.
     String fontKey = String::format("%1d:%d:%ls", style, logfont->lfHeight, family);
     FontDataCache::iterator iter = fontDataCache.find(fontKey);
-    FontData *derived;
+    FontData* derived;
     if (iter == fontDataCache.end()) {
         ASSERT(wcslen(family) < LF_FACESIZE);
         wcscpy_s(logfont->lfFaceName, LF_FACESIZE, family);
-        // TODO(jungshik): CreateFontIndirect always comes up with
+        // FIXME: CreateFontIndirect always comes up with
         // a font even if there's no font matching the name. Need to
         // check it against what we actually want (as is done in
         // FontCacheWin.cpp)
@@ -324,8 +336,8 @@ bool getDerivedFontData(const UChar *family,
 }
 
 int getStyleFromLogfont(const LOGFONT* logfont) {
-    // TODO(jungshik) : consider defining UNDEFINED or INVALID for style and
-    //                  returning it when logfont is NULL
+    // FIXME: consider defining UNDEFINED or INVALID for style and
+    //                  returning it when logfont is 0
     if (!logfont) {
         ASSERT_NOT_REACHED();
         return FontStyleNormal;
