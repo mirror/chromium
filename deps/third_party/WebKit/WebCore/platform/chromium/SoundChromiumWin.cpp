@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006, 2007 Apple Inc.  All rights reserved.
+ * Copyright (C) 2008, 2009 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -26,10 +27,13 @@
 #include "config.h"
 #include "Sound.h"
 
-#include <Windows.h>
+#include <windows.h>
 
 namespace WebCore {
 
-void systemBeep() { MessageBeep(static_cast<UINT>(-1)); }
+void systemBeep()
+{
+    MessageBeep(static_cast<UINT>(-1));
+}
 
 } // namespace WebCore

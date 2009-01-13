@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006, 2007 Apple Inc. All rights reserved.
+ * Copyright (C) 2008, 2009 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,22 +25,11 @@
  */
 
 #include "config.h"
-
-#if COMPILER(MSVC)
-__pragma(warning(push, 0))
-#endif
-#include "ChromeClientChromium.h"
-#include "Document.h"
-#include "Frame.h"
 #include "FileChooser.h"
+
 #include "FileSystem.h"
 #include "LocalizedStrings.h"
-#include "NotImplemented.h"
-#include "Page.h"
 #include "StringTruncator.h"
-#if COMPILER(MSVC)
-__pragma(warning(pop))
-#endif
 
 namespace WebCore {
 
@@ -57,4 +47,4 @@ String FileChooser::basenameForWidth(const Font& font, int width) const
     return StringTruncator::centerTruncate(string, static_cast<float>(width), font, false);
 }
 
-}
+} // namespace WebCore

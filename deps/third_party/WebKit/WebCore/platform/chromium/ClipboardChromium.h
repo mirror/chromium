@@ -44,8 +44,8 @@ namespace WebCore {
     public:
         ~ClipboardChromium() {}
 
-        static PassRefPtr<ClipboardChromium> create(bool, ChromiumDataObject*,
-                                                    ClipboardAccessPolicy);
+        static PassRefPtr<ClipboardChromium> create(
+            bool isForDragging, PassRefPtr<ChromiumDataObject>, ClipboardAccessPolicy);
 
         virtual void clearData(const String& type);
         void clearAllData();
@@ -58,20 +58,20 @@ namespace WebCore {
         void setDragImage(CachedImage*, const IntPoint&);
         void setDragImageElement(Node*, const IntPoint&);
 
-        PassRefPtr<ChromiumDataObject> dataObject() {
+        PassRefPtr<ChromiumDataObject> dataObject()
+        {
             return m_dataObject;
         }
 
         virtual DragImageRef createDragImage(IntPoint& dragLoc) const;
-        virtual void declareAndWriteDragImage(Element*, const KURL&,
-                                              const String& title, Frame*);
+        virtual void declareAndWriteDragImage(Element*, const KURL&, const String& title, Frame*);
         virtual void writeURL(const KURL&, const String&, Frame*);
         virtual void writeRange(Range*, Frame*);
 
         virtual bool hasData();
 
     private:
-        ClipboardChromium(bool, ChromiumDataObject*, ClipboardAccessPolicy);
+        ClipboardChromium(bool, PassRefPtr<ChromiumDataObject>, ClipboardAccessPolicy);
 
         void resetFromClipboard();
         void setDragImage(CachedImage*, Node*, const IntPoint&);
