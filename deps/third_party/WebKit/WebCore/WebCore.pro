@@ -1048,7 +1048,6 @@ HEADERS += \
     $$PWD/platform/graphics/qt/StillImageQt.h \
     $$PWD/platform/qt/QWebPopup.h \
     $$PWD/platform/qt/MenuEventProxy.h \
-    $$PWD/platform/qt/SharedTimerQt.h \
     $$PWD/../WebKit/qt/Api/qwebpluginfactory.h \
     $$PWD/../WebKit/qt/WebCoreSupport/FrameLoaderClientQt.h \
     $$PWD/platform/network/qt/QNetworkReplyHandler.h \
@@ -1153,9 +1152,6 @@ SOURCES += \
     ../WebKit/qt/Api/qwebsecurityorigin.cpp \
     ../WebKit/qt/Api/qwebdatabase.cpp
 
-
-    win32-*|wince*: SOURCES += platform/win/SystemTimeWin.cpp
-    else: SOURCES += platform/qt/SystemTimeQt.cpp
 
     mac {
         SOURCES += \
@@ -1797,7 +1793,6 @@ contains(DEFINES, ENABLE_SVG=1) {
         rendering/SVGRootInlineBox.cpp
 
 SOURCES += \
-        svg/graphics/qt/RenderPathQt.cpp \
         svg/graphics/qt/SVGPaintServerPatternQt.cpp \
         svg/graphics/qt/SVGPaintServerQt.cpp \
         svg/graphics/qt/SVGResourceFilterQt.cpp \
@@ -1980,8 +1975,10 @@ addExtraCompiler(colordata)
 
 # GENERATOR 9:
 stylesheets.output = $$GENERATED_SOURCES_DIR/UserAgentStyleSheetsData.cpp
-stylesheets.commands = perl $$PWD/css/make-css-file-arrays.pl --preprocessor \"$${QMAKE_MOC} -E\" $$GENERATED_SOURCES_DIR/UserAgentStyleSheets.h $$GENERATED_SOURCES_DIR/UserAgentStyleSheetsData.cpp $$PWD/css/html4.css $$PWD/css/quirks.css $$PWD/css/svg.css $$PWD/css/view-source.css $$PWD/css/wml.css $$PWD/css/mediaControls.css
-stylesheets.input = STYLESHEETS_EMBED
+stylesheets.commands = perl $$PWD/css/make-css-file-arrays.pl --preprocessor \"$${QMAKE_MOC} -E\" ${QMAKE_VAR_GENERATED_SOURCES_DIR_SLASH}UserAgentStyleSheets.h ${QMAKE_FILE_OUT} $$STYLESHEETS_EMBED
+STYLESHEETS_EMBED_GENERATOR_SCRIPT = $$PWD/css/make-css-file-arrays.pl
+stylesheets.input = STYLESHEETS_EMBED_GENERATOR_SCRIPT
+stylesheets.depends = $$STYLESHEETS_EMBED
 stylesheets.CONFIG = target_predeps
 stylesheets.variable_out = GENERATED_SOURCES
 stylesheets.clean = ${QMAKE_FILE_OUT} ${QMAKE_VAR_GENERATED_SOURCES_DIR_SLASH}UserAgentStyleSheets.h

@@ -1,3 +1,1040 @@
+2009-01-12  Darin Fisher  <darin@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23254
+        Upstream page/chromium/
+
+        * page/chromium/AXObjectCacheChromium.cpp: Added.
+        (WebCore::AXObjectCache::detachWrapper):
+        (WebCore::AXObjectCache::attachWrapper):
+        (WebCore::AXObjectCache::postNotification):
+        (WebCore::AXObjectCache::postNotificationToElement):
+        (WebCore::AXObjectCache::handleFocusedUIElementChanged):
+        * page/chromium/AccessibilityObjectChromium.cpp:
+        * page/chromium/AccessibilityObjectWrapper.h:
+        * page/chromium/ChromeClientChromium.h: Added.
+        * page/chromium/DragControllerChromium.cpp: Added.
+        (WebCore::DragController::dragOperation):
+        (WebCore::DragController::isCopyKeyDown):
+        (WebCore::DragController::maxDragImageSize):
+        (WebCore::DragController::cleanupAfterSystemDrag):
+        * page/chromium/EventHandlerChromium.cpp: Added.
+        (WebCore::EventHandler::passMousePressEventToSubframe):
+        (WebCore::EventHandler::passMouseMoveEventToSubframe):
+        (WebCore::EventHandler::passMouseReleaseEventToSubframe):
+        (WebCore::EventHandler::passWheelEventToWidget):
+        (WebCore::EventHandler::passWidgetMouseDownEventToWidget):
+        (WebCore::EventHandler::passMouseDownEventToWidget):
+        (WebCore::EventHandler::tabsToAllControls):
+        (WebCore::EventHandler::eventActivatedView):
+        (WebCore::EventHandler::createDraggingClipboard):
+        (WebCore::EventHandler::focusDocumentView):
+        (WebCore::EventHandler::accessKeyModifiers):
+        * page/chromium/FrameChromium.cpp: Added.
+        (WebCore::computePageRectsForFrame):
+        (WebCore::Frame::dragImageForSelection):
+        * page/chromium/FrameChromium.h: Added.
+
+2009-01-12  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22936
+        Fix uninitialized memory read error, reported by Purify.
+
+        * platform/graphics/SimpleFontData.cpp:
+        (WebCore::SimpleFontData::SimpleFontData): Added initializer for
+            m_unitsPerEm using cDefaultUnitsPerEm constant.
+        * svg/SVGFontFaceElement.cpp:
+        (WebCore::SVGFontFaceElement::unitsPerEm): Replaced literal value with
+            the constant.
+        * svg/SVGFontFaceElement.h: Added cDefaultUnitsPerEm constant.
+
+2009-01-12  Adam Treat  <adam.treat@torchmobile.com>
+
+        Reviewed by George Staikos.
+
+        Do not set fixedLayoutSize for anything other than the mainframe during
+        the transition as this is a page level state like the viewportSize.
+
+        * loader/FrameLoaderClient.cpp:
+        (WebCore::FrameLoaderClient::transitionToCommittedForNewPage):
+
+2009-01-12  Julien Chaffraix  <jchaffraix@pleyo.com>
+
+        Reviewed by Darin Adler.
+
+        Bug 22861: Turn the FontCache into a singleton
+        https://bugs.webkit.org/show_bug.cgi?id=22861
+
+        - Added fontCache() to get the global FontCache.
+
+        - Made all the methods in FontCache instance method.
+
+        - Changed FontCache:: to fontCache()-> in WebCore.
+
+        * WebCore.base.exp: Now export fontCache().
+        * css/CSSFontFaceSource.cpp:
+        (WebCore::CSSFontFaceSource::getFontData):
+        * css/CSSFontSelector.cpp:
+        (WebCore::CSSFontSelector::CSSFontSelector):
+        (WebCore::CSSFontSelector::~CSSFontSelector):
+        (WebCore::CSSFontSelector::addFontFaceRule):
+        (WebCore::fontDataForGenericFamily):
+        * platform/graphics/Font.cpp:
+        (WebCore::Font::glyphDataForCharacter):
+        * platform/graphics/FontCache.cpp:
+        (WebCore::fontCache):
+        (WebCore::FontCache::FontCache):
+        * platform/graphics/FontCache.h:
+        * platform/graphics/FontFallbackList.cpp:
+        (WebCore::FontFallbackList::FontFallbackList):
+        (WebCore::FontFallbackList::invalidate):
+        (WebCore::FontFallbackList::releaseFontData):
+        (WebCore::FontFallbackList::fontDataAt):
+        (WebCore::FontFallbackList::fontDataForCharacters):
+        (WebCore::FontFallbackList::setPlatformFont):
+        * platform/graphics/SimpleFontData.cpp:
+        (WebCore::SimpleFontData::~SimpleFontData):
+        * platform/graphics/mac/FontCacheMac.mm:
+        (WebCore::fontCacheATSNotificationCallback):
+        * platform/graphics/mac/SimpleFontDataMac.mm:
+        (WebCore::SimpleFontData::smallCapsFontData):
+        * platform/graphics/win/FontCacheWin.cpp:
+        (WebCore::getCJKCodePageMasks):
+        * platform/graphics/win/SimpleFontDataWin.cpp:
+        (WebCore::SimpleFontData::containsCharacters):
+
+2009-01-11  Darin Adler  <darin@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Bug 23247: createSVGPathSegCurvetoCubicSmoothAbs doesn't set y2 correctly
+        https://bugs.webkit.org/show_bug.cgi?id=23247
+
+        Also fix problems where partially parsed paths will still have an effect
+        rather than failing parsing and being ignored.
+
+        Test: dom/path-segments.html
+
+        * platform/graphics/Path.h:
+        (WebCore::Path::swap): Added.
+
+        * svg/SVGParserUtilities.cpp:
+        (WebCore::SVGPathParser::parseSVG): Removed unneeded special case for empty string.
+        (WebCore::PathBuilder::build): Changed to not modify the path if parsing fails.
+        (WebCore::SVGPathSegListBuilder::build): Changed to not modify the segment list if
+        parsing fails.
+        (WebCore::SVGPathSegListBuilder::svgMoveTo): Put the path element into the vector,
+        not directly into the segment list.
+        (WebCore::SVGPathSegListBuilder::svgLineTo): Ditto.
+        (WebCore::SVGPathSegListBuilder::svgLineToHorizontal): Ditto.
+        (WebCore::SVGPathSegListBuilder::svgLineToVertical): Ditto.
+        (WebCore::SVGPathSegListBuilder::svgCurveToCubic): Ditto.
+        (WebCore::SVGPathSegListBuilder::svgCurveToCubicSmooth): Ditto.
+        (WebCore::SVGPathSegListBuilder::svgCurveToQuadratic): Ditto.
+        (WebCore::SVGPathSegListBuilder::svgCurveToQuadraticSmooth): Ditto.
+        (WebCore::SVGPathSegListBuilder::svgArcTo): Ditto.
+        (WebCore::SVGPathSegListBuilder::svgClosePath): Ditto.
+
+        * svg/SVGPathSegCurvetoCubicSmooth.h:
+        (WebCore::SVGPathSegCurvetoCubicSmooth::SVGPathSegCurvetoCubicSmooth):
+        Set y2 to y2, not to y.
+
+2009-01-11  Darin Adler  <darin@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Bug 23102: turn on unused parameter warnings in WebCore
+        https://bugs.webkit.org/show_bug.cgi?id=23102
+
+        Fourth step: Remove arguments entirely in the many cases where they are not
+        needed at all. This step is a little less mechanical than the earlier ones.
+
+        * dom/DOMImplementation.cpp:
+        (WebCore::DOMImplementation::isXMLMIMEType): Pass TextCaseSensitive when creating
+        the regular expression, since we already specify a-zA-Z in our expression.
+
+        * dom/Document.cpp:
+        (WebCore::Document::databaseThread): Don't pass in the document when creating
+        a DatabaseThread.
+
+        * dom/Element.cpp:
+        (WebCore::Element::createRareData): Don't pass the element when creating an
+        ElementRareData.
+        (WebCore::Element::detach): Don't pass the element when calling resetComputedStyle.
+        (WebCore::Element::recalcStyle): Ditto.
+
+        * dom/ElementRareData.h: Remove the unused Element* from the constructor and
+        the resetComputedStyle function.
+
+        * dom/EventTargetNode.cpp:
+        (WebCore::EventTargetNode::dispatchEvent): Don't pass ec to dispatchGenericEvent.
+        (WebCore::EventTargetNode::dispatchGenericEvent): Remove the unused ec argument.
+        (WebCore::EventTargetNode::dispatchWindowEvent): Don't pass ec to dispatchGenericEvent.
+        * dom/EventTargetNode.h: Remove the ExceptionCode& argument form disaptchGenericEvent.
+
+        * editing/ApplyStyleCommand.cpp: Remove the empty removeBlockStyle function.
+        (WebCore::ApplyStyleCommand::pushDownTextDecorationStyleAroundNode): Remove the unused
+        start and end arguments.
+        (WebCore::ApplyStyleCommand::pushDownTextDecorationStyleAtBoundaries): Don't pass start
+        and end to pushDownTextDecorationStyleAroundNode.
+
+        * editing/ApplyStyleCommand.h: Remove the empty removeBlockStyle function. Removed the
+        unused start and end arguments from pushDownTextDecorationStyleAroundNode.
+
+        * editing/htmlediting.cpp: Removed include of unused RegularExpression.h header.
+
+        * html/HTMLTokenizer.cpp:
+        (WebCore::Token::addAttribute): Removed unused Document* argument.
+        (WebCore::HTMLTokenizer::parseTag): Don't pass document to addAttribute.
+
+        * html/HTMLTokenizer.h: Removed unused Document* argument to to addAttribute.
+
+        * page/DOMWindow.cpp:
+        (WebCore::DOMWindow::localStorage): Don't pass the frame to storageArea.
+
+        * page/DragController.cpp:
+        (WebCore::DragController::dragIsMove): Removed unused DragData argument.
+        (WebCore::DragController::performDrag): Call concludeEditDrag rather than
+        concludeDrag.
+        (WebCore::DragController::tryDocumentDrag): Don't pass dragData to dragIsMove.
+        (WebCore::DragController::concludeEditDrag): Renamed to make it clear this
+        should only be called for edit drags. Removed the action mask argument. Also
+        changed dragIsMove call sites to not pass dragData.
+
+        * page/DragController.h: Updated for above changes and tweaked comment format.
+
+        * page/Frame.cpp:
+        (WebCore::createRegExpForLabels): Pass TextCaseSensitive and TextCaseInsensitive
+        when creating regular expressions for clarity. Call match instead of search,
+        since both do the same thing except for with negative start offsets, and none
+        used here are negative.
+        (WebCore::Frame::matchLabelsAgainstElement): Ditto.
+
+        * page/Page.h: Moved TextCaseSensitivity from here to StringImpl.h in platform.
+
+        * page/mac/AccessibilityObjectWrapper.mm:
+        (AXAttributeStringSetHeadingLevel): Removed unused object argument.
+        (AXAttributedStringAppendText): Ditto.
+        (-[AccessibilityObjectWrapper doAXAttributedStringForTextMarkerRange:]): Ditto.
+
+        * page/mac/FrameMac.mm:
+        (WebCore::regExpForLabels): Pass TextCaseSensitive and TextCaseInsensitive
+        when creating regular expressions for clarity. Call match instead of search,
+        since both do the same thing except for with negative start offsets, and none
+        used here are negative.
+        (WebCore::Frame::matchLabelsAgainstElement): Ditto.
+
+        * platform/graphics/SegmentedFontData.cpp:
+        (WebCore::SegmentedFontData::containsCharacter): Added.
+        (WebCore::SegmentedFontData::containsCharacters): Updated to check all characters
+        instead of just the first one, using containsCharacter.
+
+        * platform/graphics/SegmentedFontData.h: Made more members private.
+        Added containsCharacter function member.
+
+        * platform/mac/DragImageMac.mm:
+        (WebCore::dragImageSize): Changed to use RetainPtr<NSImage> directly instead of
+        DragImageRef for clarity, since this is platform-specific code.
+        (WebCore::deleteDragImage): Ditto. Also remove argument name to get rid of unused
+        variable warning.
+        (WebCore::scaleDragImage): Ditto.
+        (WebCore::dissolveDragImageToFraction): Ditto.
+        (WebCore::createDragImageFromImage): Ditto.
+        (WebCore::createDragImageIconForCachedImage): Ditto.
+
+        * platform/mac/WebFontCache.mm:
+        (acceptableChoice): Removed the unused weight-related arguments.
+        (betterChoice): Ditto.
+        (+[WebFontCache internalFontWithFamily:traits:weight:size:]): Ditto.
+
+        * platform/posix/FileSystemPOSIX.cpp: Removed the implementation of listDirectory
+        because we'd rather get a link error rather than a runtime error if we use it
+        for anything, and right now it's not used.
+
+        * platform/text/RegularExpression.cpp: Removed unused private data,
+        including pattern, lastMatchString, lastMatchOffsets, lastMatchCount,
+        and lastMatchPos. Made the RegularExpression::Private::regex be private
+        and use an accessor function to get at it.
+        (WebCore::RegularExpression::RegularExpression): Removed the const char* version
+        of the constructor because it's not any more efficient. Changed the boolean
+        constructor argument to use TextCaseSensitivity instead to make it less likely
+        we'll use it wrong.
+        (WebCore::RegularExpression::operator=): Since the only member is a single RefPtr,
+        just use plain old assignment on it. The only reason we do this instead of using
+        the compiler generated assignment operator is that we want the Private structure
+        to be internal to the .cpp file.
+        (WebCore::RegularExpression::match): Added a null check so we won't crash if
+        we fail to compile the regular expression. Removed the code to handle multiple
+        match strings, since that was unused.
+
+        * platform/text/RegularExpression.h: Changed the case sensitivity argument to use
+        TextCaseSensitivity and not have a default value. Removed the default constructor,
+        and the pattern, match, and pos functions.
+
+        * platform/text/StringImpl.h: Moved the TextCaseSensitivity enum here from
+        Page.h, because we should eventually use it in all the places where we have
+        an argument to control case sensitivity, starting with the functions in this
+        class.
+
+        * platform/text/mac/ShapeArabic.c:
+        (shapeUnicode): Removed the unused options and pErrorCode arguments. Even though
+        this is code borrowed from ICU, this seems like a simple safe change to make.
+        (shapeArabic): Don't pass options or pErrorCode in to shapeUnicode.
+
+        * rendering/RenderPath.cpp:
+        (WebCore::RenderPath::RenderPath): Removed the unused style argument.
+        Also removed the type check. The argument already has the correct type,
+        so it's not helpful to upcast it and then check its type again, unless
+        we have some reason to believe the type is not reliable. And we don't.
+
+        * rendering/RenderPath.h: Removed the RenderStyle* argument to the
+        constructor. Also removed the explicit declaration of the destructor.
+        It's not helpful or needed.
+
+        * rendering/RenderSVGInlineText.cpp:
+        (WebCore::RenderSVGInlineText::localCaretRect): Updated the comment here to
+        make it clear that just returning an empty rect is not a good implementation.
+        Removed the argument names to get rid of the warning.
+
+        * rendering/RenderTreeAsText.cpp:
+        (WebCore::printBorderStyle): Removed the unused RenderObject argument.
+        (WebCore::operator<<): Updated for the change to printBorderStyle function.
+
+        * storage/DatabaseThread.cpp:
+        (WebCore::DatabaseThread::DatabaseThread): Removed the unused document argument.
+        * storage/DatabaseThread.h: Ditto.
+
+        * storage/LocalStorage.cpp:
+        (WebCore::LocalStorage::storageArea): Removed the unused Frame* argument.
+        * storage/LocalStorage.h: Ditto.
+
+        * svg/SVGElement.cpp:
+        (WebCore::SVGElement::sendSVGLoadEventIfPossible): Don't pass an exception
+        code location to dispatchGenericEvent.
+        * svg/SVGElementInstance.cpp:
+        (WebCore::SVGElementInstance::dispatchEvent): Ditto.
+
+        * svg/SVGStyledTransformableElement.cpp: Removed include of unused RegularExpression.h.
+        (WebCore::SVGStyledTransformableElement::createRenderer): Don't pass style in to
+        the RenderPath constructor.
+
+        * svg/SVGTransformable.cpp: Removed include of unused RegularExpression.h.
+
+        * xml/XSLTProcessor.cpp:
+        (WebCore::createFragmentFromSource): Removed unused sourceNode argument.
+        (WebCore::XSLTProcessor::transformToFragment): Don't pass sourceNode to createFragmentFromSource.
+
+2009-01-11  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23165
+        Disable application cache dynamic entries support.
+
+        * bindings/js/JSDOMApplicationCacheCustom.cpp:
+        * loader/appcache/DOMApplicationCache.idl:
+
+2009-01-11  Adam Treat  <adam.treat@torchmobile.com>
+
+        Reviewed by Darin Adler.
+
+        Correct coordinate transformation for deeply nested frames on resizing.  This
+        fixes https://bugs.webkit.org/show_bug.cgi?id=20766.
+
+        Test: fast/frames/frame-deep-nested-resize.html
+
+        * rendering/RenderFrameSet.cpp:
+        (WebCore::RenderFrameSet::userResize):
+
+2009-01-11  Mark Rowe  <mrowe@apple.com>
+
+        Tiger build fix.  The connection parameter is still used on Tiger in this method.
+
+        * platform/network/mac/ResourceHandleMac.mm:
+        (-[WebCoreResourceHandleAsDelegate connection:willCacheResponse:]):
+
+2009-01-11  Darin Adler  <darin@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Bug 23102: turn on unused parameter warnings in WebCore
+        https://bugs.webkit.org/show_bug.cgi?id=23102
+
+        Third step: Deal with cases of arguments used only in assertions.
+
+        * dom/MessagePort.cpp:
+        (WebCore::MessagePortCloseEventTask::performTask): Use ASSERT_UNUSED.
+        * dom/Worker.cpp:
+        (WebCore::Worker::notifyFinished): Ditto.
+        * dom/XMLTokenizer.cpp:
+        (WebCore::XMLTokenizer::notifyFinished): Ditto.
+        * loader/appcache/ApplicationCacheGroup.cpp:
+        (WebCore::ApplicationCacheGroup::failedLoadingMainResource): Ditto.
+        * loader/appcache/ApplicationCacheStorage.cpp:
+        (WebCore::ApplicationCacheStorage::verifySchemaVersion): Ditto.
+        * loader/icon/IconLoader.cpp:
+        (WebCore::IconLoader::didReceiveData): Since loader and size are only
+        used when logging, use UNUSED_PARAM when logging is disabled.
+        * platform/mac/WidgetMac.mm:
+        (WebCore::Widget::beforeMouseDown): Use ASSERT_UNUSED.
+        * platform/network/mac/ResourceHandleMac.mm:
+        (WebCore::ResourceHandle::didCancelAuthenticationChallenge): Use the
+        argument since it's probably a tiny bit more efficient and gets rid
+        of the unused argument warning.
+        * rendering/RenderListMarker.cpp:
+        (WebCore::RenderListMarker::createInlineBox): Use ASSERT_UNUSED.
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::createInlineBox): Ditto.
+        * rendering/RenderSVGInline.cpp:
+        (WebCore::RenderSVGInline::createInlineBox): Use UNUSED_PARAM.
+        I couldn't use ASSERT_UNUSED because it's a single assertion, but it's
+        the only use for two different arguments.
+        * rendering/RenderText.cpp:
+        (WebCore::RenderText::createInlineBox): Use ASSERT_UNUSED.
+        * rendering/RenderThemeMac.mm:
+        (-[WebCoreRenderThemeNotificationObserver systemColorsDidChange:]): Ditto.
+
+2009-01-11  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Oliver Hunt
+
+        https://bugs.webkit.org/show_bug.cgi?id=23242
+        
+        Fix CanvasRenderingContext2D::transform to do a pre-multiply,
+        rather than a post-multiply into m_transform. This bug did not affect
+        drawing, but did cause m_transform to be incorrect, which impacted
+        willDraw(), and isPointInPath.
+        
+        Test: fast/canvas/canvas-incremental-repaint-2.html
+
+        * html/CanvasRenderingContext2D.cpp:
+        (WebCore::CanvasRenderingContext2D::transform):
+
+2009-01-11  Darin Adler  <darin@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Bug 23102: turn on unused parameter warnings in WebCore
+        https://bugs.webkit.org/show_bug.cgi?id=23102
+
+        Second step: Fix simple Objective-C cases where we need to use UNUSED_PARAM.
+        That's because you can't omit an argument name in Objective-C methods.
+
+        * bindings/objc/DOMObject.mm:
+        (-[DOMObject copyWithZone:]): Use UNUSED_PARAM. Also rename argument to include
+        the word "unused" so we don't just start using it without removing the macro.
+        * bindings/objc/WebScriptObject.mm:
+        (+[WebUndefined allocWithZone:]): Ditto.
+        (-[WebUndefined initWithCoder:]): Ditto.
+        (-[WebUndefined encodeWithCoder:]): Ditto.
+        (-[WebUndefined copyWithZone:]): Ditto.
+        * page/mac/WebDashboardRegion.m:
+        (-[WebDashboardRegion copyWithZone:]): Ditto.
+        * platform/graphics/mac/MediaPlayerPrivateQTKit.mm:
+        (WebCore::mainThreadSetNeedsDisplay): Omit argument name.
+        (-[WebCoreMovieObserver loadStateChanged:]): Use UNUSED_PARAM as above.
+        (-[WebCoreMovieObserver rateChanged:]): Ditto.
+        (-[WebCoreMovieObserver sizeChanged:]): Ditto.
+        (-[WebCoreMovieObserver timeChanged:]): Ditto.
+        (-[WebCoreMovieObserver didEnd:]): Ditto.
+        (-[WebCoreMovieObserver newImageAvailable:]): Ditto.
+        * platform/mac/ScrollbarThemeMac.mm:
+        (+[ScrollbarPrefsObserver appearancePrefsChanged:]): Ditto.
+        (+[ScrollbarPrefsObserver behaviorPrefsChanged:]): Ditto.
+        * platform/mac/SharedTimerMac.mm:
+        (-[WebCorePowerNotifier didWake:]): Ditto.
+        * platform/mac/WebCoreKeyGenerator.m:
+        (-[WebCoreKeyGenerator signedPublicKeyAndChallengeStringWithStrengthIndex:challenge:pageURL:]): Ditto.
+        * platform/network/mac/ResourceHandleMac.mm:
+        (-[WebCoreResourceHandleAsDelegate connection:willSendRequest:redirectResponse:]): Ditto.
+        (-[WebCoreResourceHandleAsDelegate connectionShouldUseCredentialStorage:]): Ditto.
+        (-[WebCoreResourceHandleAsDelegate connection:didReceiveAuthenticationChallenge:]): Ditto.
+        (-[WebCoreResourceHandleAsDelegate connection:didCancelAuthenticationChallenge:]): Ditto.
+        (-[WebCoreResourceHandleAsDelegate connection:didReceiveResponse:]): Ditto.
+        (-[WebCoreResourceHandleAsDelegate connection:didReceiveData:lengthReceived:]): Ditto.
+        (-[WebCoreResourceHandleAsDelegate connection:willStopBufferingData:]): Ditto.
+        (-[WebCoreResourceHandleAsDelegate connection:didSendBodyData:totalBytesWritten:totalBytesExpectedToWrite:]): Ditto.
+        (-[WebCoreResourceHandleAsDelegate connectionDidFinishLoading:]): Ditto.
+        (-[WebCoreResourceHandleAsDelegate connection:didFailWithError:]): Ditto.
+        (-[WebCoreResourceHandleAsDelegate connection:willCacheResponse:]): Ditto.
+        (-[WebCoreSynchronousLoader connection:willSendRequest:redirectResponse:]): Ditto.
+        (-[WebCoreSynchronousLoader connection:didReceiveAuthenticationChallenge:]): Ditto.
+        (-[WebCoreSynchronousLoader connection:didReceiveResponse:]): Ditto.
+        (-[WebCoreSynchronousLoader connection:didReceiveData:]): Ditto.
+        (-[WebCoreSynchronousLoader connectionDidFinishLoading:]): Ditto.
+        (-[WebCoreSynchronousLoader connection:didFailWithError:]): Ditto.
+
+2009-01-11  Dirk Schulze  <krit@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Move platform dependent strokeContains back to RenderPath, Path and delete
+        unneeded Code in svg.
+
+        RenderPath clean-up for strokeContains
+        [https://bugs.webkit.org/show_bug.cgi?id=22957]
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * platform/graphics/Path.h:
+        * platform/graphics/cairo/PathCairo.cpp:
+        (WebCore::Path::strokeContains):
+        * platform/graphics/cg/PathCG.cpp:
+        (WebCore::Path::strokeContains):
+        * platform/graphics/qt/PathQt.cpp:
+        (WebCore::Path::strokeContains):
+        * rendering/RenderPath.cpp:
+        (WebCore::RenderPath::strokeContains):
+        * svg/graphics/cairo/RenderPathCairo.cpp: Removed.
+        * svg/graphics/cg/CgSupport.cpp: Removed.
+        * svg/graphics/cg/CgSupport.h: Removed.
+        * svg/graphics/cg/RenderPathCg.cpp: Removed.
+        * svg/graphics/cg/SVGPaintServerPatternCg.cpp:
+        * svg/graphics/cg/SVGResourceMaskerCg.mm:
+        * svg/graphics/qt/RenderPathQt.cpp: Removed.
+
+2009-01-11  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by Anders Carlsson.
+
+        [GTK] make distcheck complains that distclean is not deleting JSWorkerContextBase.lut.h
+
+        make distcheck pass by adding JSWorkerContextBase.lut.h to the
+        CLEANFILES that will be cleaned on a make distclean.
+
+        * GNUmakefile.am:
+
+2009-01-11  Zalan Bujtas  <zbujtas@gmail.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23235
+        Build fix for non-VIDEO builds.
+
+        * rendering/RenderTheme.cpp:
+        * rendering/RenderTheme.h:
+
+2009-01-11  Gabriella Toth  <gtoth@inf.u-szeged.hu>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=19287
+        return value of malloc() is not checked in npruntime.cpp
+
+        Checking whether malloc can allocate memory or not. If it can't, CRASH macro is invoked
+        (like in fastMalloc).
+   
+        * bridge/npruntime.cpp:
+        (_NPN_GetStringIdentifier):
+        (_NPN_GetIntIdentifier):
+        (NPN_InitializeVariantWithStringCopy):
+        (_NPN_CreateObject):
+
+2009-01-11  Glenn Wilson  <gwilson@google.com>
+
+        Reviewed by Darin Adler.
+
+        Changes radio buttons so they can be 'checked' even if they
+        don't have the name attribute set.
+
+        See https://bugs.webkit.org/show_bug.cgi?id=21534
+
+        Test: fast/html/select-unnamed-radio.html
+
+        * html/HTMLInputElement.cpp:
+        (WebCore::HTMLInputElement::preDispatchEventHandler):
+
+2009-01-11  Bernhard Rosenkraenzer <bero@arklinux.ch>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22205
+        Fix compatibility with bison 2.4, partially based on older patch by
+        Priit Laes <amd@store20.com>
+
+        * WebCore/css/CSSGrammar.y: Made compatible with bison 2.4
+
+2009-01-11  Jeremy Moskovich  <jeremy@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=16001
+        Incorrect assumption that selection is always contiguous LTR.
+
+        Test: editing/selection/extend-selection-bidi.html
+
+        * rendering/RootInlineBox.cpp: (WebCore::RootInlineBox::fillLineSelectionGap):
+        Make this function  not assume a contiguous visual LTR selection range. 
+
+2009-01-11  Dmitry Titov  <dimich@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23207
+        Moved currentTime() to from WebCore to WTF.
+
+        Most of these files only have a different header file included.
+        Various build files reflect removal of SystemTimeGtk, Wx, Qt and Linux
+        which were removed since they only implemented currentTime().
+
+        * ForwardingHeaders/wtf/CurrentTime.h: Added.
+        * GNUmakefile.am:
+        * WebCore.base.exp:
+        * WebCore.pro:
+        * dom/ContainerNode.cpp:
+        * dom/Document.cpp:
+        * dom/Event.cpp:
+        * history/CachedPage.cpp:
+        * history/PageCache.cpp:
+        * html/HTMLMediaElement.cpp:
+        (WebCore::HTMLMediaElement::load):
+        (WebCore::HTMLMediaElement::progressEventTimerFired):
+        * html/HTMLTokenizer.cpp:
+        * html/PreloadScanner.cpp:
+        * inspector/InspectorController.cpp:
+        * loader/Cache.cpp:
+        (WebCore::Cache::pruneLiveResources):
+        * loader/CachedImage.cpp:
+        * loader/CachedResource.cpp:
+        * loader/FrameLoader.cpp:
+        * loader/ProgressTracker.cpp:
+        * loader/icon/IconDatabase.cpp:
+        * loader/icon/IconRecord.cpp:
+        * page/DragController.cpp:
+        * page/Frame.cpp:
+        * page/FrameView.cpp:
+        * page/animation/AnimationBase.cpp:
+        * page/animation/AnimationController.cpp:
+        * page/animation/KeyframeAnimation.cpp:
+        * platform/SystemTime.h:
+        * platform/Timer.cpp:
+        * platform/graphics/BitmapImage.cpp:
+        * platform/gtk/MouseEventGtk.cpp:
+        * platform/gtk/SharedTimerGtk.cpp:
+        * platform/gtk/SystemTimeGtk.cpp: Removed.
+        * platform/gtk/SystemTimeLinux.cpp: Removed.
+        * platform/mac/SystemTimeMac.cpp:
+        * platform/qt/PlatformMouseEventQt.cpp:
+        (WebCore::PlatformMouseEvent::PlatformMouseEvent):
+        * platform/qt/SharedTimerQt.cpp:
+        * platform/qt/SharedTimerQt.h:
+        * platform/qt/SystemTimeQt.cpp: Removed.
+        * platform/win/SharedTimerWin.cpp:
+        * platform/win/SystemTimeWin.cpp:
+        * platform/wx/MouseEventWx.cpp:
+        (WebCore::PlatformMouseEvent::PlatformMouseEvent):
+        * platform/wx/SharedTimerWx.cpp:
+        * platform/wx/SystemTimeWx.cpp: Removed.
+        * rendering/RenderImage.cpp:
+        * rendering/RenderMedia.cpp:
+        * svg/animation/SMILTimeContainer.cpp:
+        * webcore-wx.bkl:
+        * xml/XMLHttpRequest.cpp:
+
+2009-01-11  Dmitry Titov  <dimich@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        Make ScheduledAction (Timeout callback) able to execute the callback under WorkerContext.
+        Part of 'Timers in Workers' work.
+        https://bugs.webkit.org/show_bug.cgi?id=23223
+
+        * bindings/js/ScheduledAction.cpp:
+        (WebCore::ScheduledAction::execute): new method that takes WorkerContext.
+        (WebCore::ScheduledAction::executeFunctionInContext): Executes a JSFunction in proper context with 'this' object.
+        * bindings/js/ScheduledAction.h:
+
+2009-01-10  Eric Carlson  <eric.carlson@apple.com>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23210
+        Make it easier for ports to define custom UI for media controls
+
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::styleForElement): call theme()->styleSheetForMediaControls to
+        get the media controller style sheet 
+
+        * rendering/MediaControlElements.cpp:
+        (WebCore::MediaControlInputElement::hitTest): Added
+        * rendering/MediaControlElements.h: Updated
+
+        * rendering/RenderMedia.cpp:
+        (WebCore::RenderMedia::forwardEvent): Call element hitTest() method instead of local function
+        so control elements don't necessarily have to be rectangular
+
+        * rendering/RenderTheme.cpp:
+        (WebCore::RenderTheme::styleSheetForMediaControls):  Added
+        (WebCore::RenderTheme::hitTestMediaControlPart):  Added
+        * rendering/RenderTheme.h: Updated
+
+2009-01-10  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dan Bernstein
+
+        https://bugs.webkit.org/show_bug.cgi?id=23222
+        
+        We need to disable LayoutState when an object has transforms,
+        because LayoutState is not transform-aware and therefore
+        repaint rects can be computed incorrectly.
+        
+        Test: fast/repaint/transform-disable-layoutstate.html
+
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::layoutBlock):
+        (WebCore::RenderBlock::layoutOnlyPositionedObjects):
+        * rendering/RenderFlexibleBox.cpp:
+        (WebCore::RenderFlexibleBox::layoutBlock):
+
+2009-01-09  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by Simon Hausmann.
+
+        [QT] Make SharedTimer use QBasicTimer
+
+        Kill the SharedTimerQt.h and the usage of signal and slots
+        by using QBasicTimer.
+
+        * WebCore.pro:
+        * platform/qt/SharedTimerQt.cpp:
+        (WebCore::SharedTimerQt::SharedTimerQt):
+        (WebCore::SharedTimerQt::inst):
+        (WebCore::SharedTimerQt::start):
+        (WebCore::SharedTimerQt::stop):
+        (WebCore::SharedTimerQt::timerEvent):
+        (WebCore::setSharedTimerFiredFunction):
+        (WebCore::setSharedTimerFireTime):
+        (WebCore::stopSharedTimer):
+        * platform/qt/SharedTimerQt.h: Removed.
+
+2009-01-09  Adam Bergkvist <adam.bergkvist@ericsson.com>
+
+        Reviewed by Holger Freyther.
+
+        [CURL] POST without body becomes GET
+        https://bugs.webkit.org/show_bug.cgi?id=23182
+
+        Make sure that method is always set to POST even when the body is
+        empty. Cleaned up httpBody null check.
+
+        * platform/network/curl/ResourceHandleManager.cpp:
+        (WebCore::ResourceHandleManager::setupPOST):
+
+2009-01-09  Adam Treat  <adam.treat@torchmobile.com>
+
+        Build fix.
+
+        * plugins/PluginView.cpp:
+
+2009-01-09  Adele Peterson  <adele@apple.com>
+
+        Reviewed by Darin Adler.
+
+        Fix infinite recursion in clientPaddingLeft and clientPaddingRight.  This changes the code back to
+        how it was before RenderTextControlSingleLine was split out from RenderTextControl.
+        
+        No test added since this code is only exercised when trying to place a search field's recent searches popup menu.
+
+        * rendering/RenderTextControlSingleLine.cpp:
+        (WebCore::RenderTextControlSingleLine::clientPaddingLeft):
+        (WebCore::RenderTextControlSingleLine::clientPaddingRight):
+
+2009-01-09  Darin Adler  <darin@apple.com>
+
+        Reviewed by Jon Honeycutt.
+
+        Bug 22913: REGRESSION: Space bar doesn't scroll on windows
+        https://bugs.webkit.org/show_bug.cgi?id=22913
+        rdar://problem/6479834
+
+        * page/EventHandler.cpp:
+        (WebCore::EventHandler::defaultKeyboardEventHandler): Added code to call
+        defaultSpaceEventHandler.
+        (WebCore::EventHandler::defaultSpaceEventHandler): Added. Scrolls down or up based
+        on the shift key.
+        * page/EventHandler.h: Added defaultSpaceEventHandler.
+
+        * platform/mac/ScrollViewMac.mm:
+        (WebCore::ScrollView::platformScroll): Return false, because this function does
+        not scroll. In an earlier version of this patch, I used this to prevent the
+        patch from affecting the Mac, but I decided to use #if instead.
+
+2009-01-09  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Delete references to JSValue, removing this class.
+
+        * bindings/js/JSWorkerContextCustom.cpp:
+        (WebCore::JSWorkerContext::self):
+        * bindings/js/ScriptCallStack.h:
+
+2009-01-09  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Add svg/graphics/skia files.
+        https://bugs.webkit.org/show_bug.cgi?id=23147
+
+        * svg/graphics/skia/RenderPathSkia.cpp: Added.
+        (WebCore::RenderPath::strokeContains):
+        * svg/graphics/skia/SVGPaintServerPatternSkia.cpp: Added.
+        (WebCore::SVGPaintServerPattern::setup):
+        * svg/graphics/skia/SVGPaintServerSkia.cpp: Added.
+        (WebCore::SVGPaintServer::draw):
+        (WebCore::SVGPaintServer::teardown):
+        (WebCore::SVGPaintServer::renderPath):
+        * svg/graphics/skia/SVGResourceFilterSkia.cpp: Added.
+        (WebCore::SVGResourceFilter::createPlatformData):
+        (WebCore::SVGResourceFilter::prepareFilter):
+        (WebCore::SVGResourceFilter::applyFilter):
+        * svg/graphics/skia/SVGResourceMaskerSkia.cpp: Added.
+        (WebCore::SVGResourceMasker::applyMask):
+
+2009-01-09  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Add SkiaFontWin to platform/graphics/chromium
+        https://bugs.webkit.org/show_bug.cgi?id=23215
+
+        * platform/graphics/skia/SkiaFontWin.cpp: Added.
+        (WebCore::CachedOutlineKey::CachedOutlineKey):
+        (WebCore::operator==):
+        (WebCore::CachedOutlineKeyHash::hash):
+        (WebCore::CachedOutlineKeyHash::equal):
+        (WebCore::FIXEDToSkScalar):
+        (WebCore::deleteOutline):
+        (WebCore::addPolyCurveToPath):
+        (WebCore::getPathForGlyph):
+        (WebCore::SkiaWinOutlineCache::lookupOrCreatePathForGlyph):
+        (WebCore::SkiaWinOutlineCache::removePathsForFont):
+        * platform/graphics/skia/SkiaFontWin.h: Added.
+
+2009-01-09  Anders Carlsson  <andersca@apple.com>
+
+        Fix build.
+        
+        * WebCore.LP64.exp:
+
+2009-01-09  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Add PlatformContextSkia and PlatformGraphics.h to platform/graphics/skia
+        https://bugs.webkit.org/show_bug.cgi?id=23215
+
+        * platform/graphics/skia/PlatformContextSkia.cpp: Added.
+        (PlatformContextSkia::State::State):
+        (PlatformContextSkia::State::~State):
+        (PlatformContextSkia::State::applyAlpha):
+        (PlatformContextSkia::PlatformContextSkia):
+        (PlatformContextSkia::~PlatformContextSkia):
+        (PlatformContextSkia::setCanvas):
+        (PlatformContextSkia::save):
+        (PlatformContextSkia::restore):
+        (PlatformContextSkia::drawRect):
+        (PlatformContextSkia::setupPaintCommon):
+        (PlatformContextSkia::setupPaintForFilling):
+        (PlatformContextSkia::setupPaintForStroking):
+        (PlatformContextSkia::setDrawLooper):
+        (PlatformContextSkia::setMiterLimit):
+        (PlatformContextSkia::setAlpha):
+        (PlatformContextSkia::setLineCap):
+        (PlatformContextSkia::setLineJoin):
+        (PlatformContextSkia::setPorterDuffMode):
+        (PlatformContextSkia::setFillColor):
+        (PlatformContextSkia::getDrawLooper):
+        (PlatformContextSkia::getStrokeStyle):
+        (PlatformContextSkia::setStrokeStyle):
+        (PlatformContextSkia::setStrokeColor):
+        (PlatformContextSkia::getStrokeThickness):
+        (PlatformContextSkia::setStrokeThickness):
+        (PlatformContextSkia::getTextDrawingMode):
+        (PlatformContextSkia::setTextDrawingMode):
+        (PlatformContextSkia::setUseAntialiasing):
+        (PlatformContextSkia::fillColor):
+        (PlatformContextSkia::beginPath):
+        (PlatformContextSkia::addPath):
+        (PlatformContextSkia::setFillRule):
+        (PlatformContextSkia::setGradient):
+        (PlatformContextSkia::setPattern):
+        (PlatformContextSkia::setDashPathEffect):
+        (PlatformContextSkia::paintSkPaint):
+        (PlatformContextSkia::bitmap):
+        (PlatformContextSkia::isPrinting):
+        * platform/graphics/skia/PlatformContextSkia.h: Added.
+        (PlatformContextSkia::currentPath):
+        (PlatformContextSkia::canvas):
+        (PlatformContextSkia::gdk_skia):
+        * platform/graphics/skia/PlatformGraphics.h: Added.
+
+2009-01-09  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Add TransformationMatrixSkia to platform/graphics/skia
+        https://bugs.webkit.org/show_bug.cgi?id=23215
+
+        * platform/graphics/skia/TransformationMatrixSkia.cpp: Added.
+        (WebCore::TransformationMatrix::TransformationMatrix):
+        (WebCore::TransformationMatrix::setMatrix):
+        (WebCore::TransformationMatrix::map):
+        (WebCore::TransformationMatrix::mapRect):
+        (WebCore::TransformationMatrix::isIdentity):
+        (WebCore::TransformationMatrix::reset):
+        (WebCore::TransformationMatrix::scale):
+        (WebCore::TransformationMatrix::rotate):
+        (WebCore::TransformationMatrix::translate):
+        (WebCore::TransformationMatrix::shear):
+        (WebCore::TransformationMatrix::det):
+        (WebCore::TransformationMatrix::inverse):
+        (WebCore::TransformationMatrix::operator SkMatrix):
+        (WebCore::TransformationMatrix::operator==):
+        (WebCore::TransformationMatrix::operator*=):
+        (WebCore::TransformationMatrix::operator*):
+        (WebCore::TransformationMatrix::a):
+        (WebCore::TransformationMatrix::setA):
+        (WebCore::TransformationMatrix::b):
+        (WebCore::TransformationMatrix::setB):
+        (WebCore::TransformationMatrix::c):
+        (WebCore::TransformationMatrix::setC):
+        (WebCore::TransformationMatrix::d):
+        (WebCore::TransformationMatrix::setD):
+        (WebCore::TransformationMatrix::e):
+        (WebCore::TransformationMatrix::setE):
+        (WebCore::TransformationMatrix::f):
+        (WebCore::TransformationMatrix::setF):
+
+2009-01-09  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        <rdar://problem/6477502> Repro crash reloading page using HTML5 AppCache on Windows
+
+        Test: http/tests/appcache/reload.html
+
+        On Windows, reloading resulted in the following sequence of events:
+        1) A new main resource loader was created and associated with the cache. Its document loader
+        was not associated with the cache yet.
+        2) The old document loader was destroyed, and since it was the last one, ApplicationCacheGroup
+        teardown started, with newestCache being zeroed out.
+        3) The new document loader was associated with the cache group, and cache update started.
+        4) Since newestCache was null, this caused many problems.
+
+        * loader/appcache/ApplicationCacheGroup.cpp:
+        (WebCore::ApplicationCacheGroup::documentLoaderDestroyed): Improve comments and assertions,
+        no functional changes.
+        (WebCore::ApplicationCacheGroup::associateDocumentLoaderWithCache): Revive the cache group
+        if its newest cache pointer is already saved for teardown. Note that the cache pointer
+        validity is ensured by MainResourceLoader that holds a reference to it.
+
+2009-01-09  Darin Fisher  <darin@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23214
+        Upstream platform/network/chromium/
+
+        * platform/network/chromium/AuthenticationChallenge.h: Added.
+        (WebCore::AuthenticationChallenge::AuthenticationChallenge):
+        (WebCore::AuthenticationChallenge::sourceHandle):
+        * platform/network/chromium/AuthenticationChallengeChromium.cpp: Added.
+        (WebCore::AuthenticationChallenge::platformCompare):
+        * platform/network/chromium/CookieJarChromium.cpp: Added.
+        (WebCore::setCookies):
+        (WebCore::cookies):
+        (WebCore::cookiesEnabled):
+        * platform/network/chromium/DNSChromium.cpp: Added.
+        (WebCore::prefetchDNS):
+        * platform/network/chromium/NetworkStateNotifierChromium.cpp: Added.
+        (WebCore::NetworkStateNotifier::updateState):
+        (WebCore::NetworkStateNotifier::NetworkStateNotifier):
+        * platform/network/chromium/NetworkStateNotifierPrivate.h: Added.
+        * platform/network/chromium/ResourceError.h: Added.
+        (WebCore::ResourceError::ResourceError):
+        * platform/network/chromium/ResourceRequest.h: Added.
+        (WebCore::ResourceRequest::):
+        (WebCore::ResourceRequest::ResourceRequest):
+        (WebCore::ResourceRequest::frame):
+        (WebCore::ResourceRequest::setFrame):
+        (WebCore::ResourceRequest::setTargetType):
+        (WebCore::ResourceRequest::targetType):
+        (WebCore::ResourceRequest::originPid):
+        (WebCore::ResourceRequest::setOriginPid):
+        (WebCore::ResourceRequest::securityInfo):
+        (WebCore::ResourceRequest::setSecurityInfo):
+        (WebCore::ResourceRequest::doUpdatePlatformRequest):
+        (WebCore::ResourceRequest::doUpdateResourceRequest):
+        * platform/network/chromium/ResourceResponse.h:
+        (WebCore::ResourceResponse::ResourceResponse):
+        (WebCore::ResourceResponse::getSecurityInfo):
+        (WebCore::ResourceResponse::setSecurityInfo):
+        (WebCore::ResourceResponse::isContentFiltered):
+        (WebCore::ResourceResponse::setIsContentFiltered):
+        (WebCore::ResourceResponse::doUpdateResourceResponse):
+
+2009-01-09  Peter Kasting  <pkasting@google.com>
+
+        Reviewed by David Hyatt.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22995
+        Fix flaky image animation by resetting the metadata for a frame when
+        we get new data for that frame.  This fixes animations that halted
+        when the next frame of the animation wasn't complete by the time the
+        current frame's duration expired.
+
+        * platform/graphics/BitmapImage.cpp:
+        (WebCore::BitmapImage::destroyDecodedData):
+        (WebCore::BitmapImage::dataChanged):
+        * platform/graphics/BitmapImage.h:
+        (WebCore::FrameData::~FrameData):
+        * platform/graphics/cairo/ImageCairo.cpp:
+        (WebCore::FrameData::clear):
+        * platform/graphics/cg/ImageCG.cpp:
+        (WebCore::FrameData::clear):
+        * platform/graphics/qt/ImageQt.cpp:
+        (WebCore::FrameData::clear):
+        * platform/graphics/wx/ImageWx.cpp:
+        (WebCore::FrameData::clear):
+
+2009-01-09  Simon Hausmann  <simon.hausmann@nokia.com>
+
+        Rubber-stamped by Tor Arne Vestbø.
+
+        Swap the .h and the .cpp output in the Qt build for the
+        UserAgentStyleSheetData files, to put the definition in the .cpp file
+        and the declaration in the header file.
+
+        * WebCore.pro:
+
+2009-01-09  David Levin  <levin@chromium.org>
+
+        Reviewed by Oliver Hunt.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23175
+
+        Added forwarding header.
+
+        * ForwardingHeaders/wtf/PtrAndFlags.h: Added.
+
+2009-01-09  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Reviewed by Simon Hausmann.
+
+        Prevent qmake from generating duplicate rules for embedded stylesheets
+        
+        The STYLESHEETS_EMBED variable used to contain only one file name, but
+        now that it is a list of files we need to change it to be a dependency
+        for the stylesheet generator instead of the input.
+
+        * WebCore.pro:
+
 2009-01-09  Simon Hausmann  <simon.hausmann@nokia.com>
 
         Reviewed by Tor Arne Vestbø.

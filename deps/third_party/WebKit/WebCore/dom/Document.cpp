@@ -94,7 +94,6 @@
 #include "ProcessingInstruction.h"
 #include "ProgressEvent.h"
 #include "RegisteredEventListener.h"
-#include "RegularExpression.h"
 #include "RenderArena.h"
 #include "RenderView.h"
 #include "RenderWidget.h"
@@ -105,7 +104,6 @@
 #include "Settings.h"
 #include "StorageEvent.h"
 #include "StyleSheetList.h"
-#include "SystemTime.h"
 #include "TextEvent.h"
 #include "TextIterator.h"
 #include "TextResourceDecoder.h"
@@ -122,6 +120,7 @@
 #include "JSDOMBinding.h"
 #endif
 #include "ScriptController.h"
+#include <wtf/CurrentTime.h>
 #include <wtf/HashFunctions.h>
 #include <wtf/MainThread.h>
 #include <wtf/StdLibExtras.h>
@@ -4314,7 +4313,7 @@ DatabaseThread* Document::databaseThread()
     if (!m_databaseThread && !m_hasOpenDatabases) {
         // Create the database thread on first request - but not if at least one database was already opened,
         // because in that case we already had a database thread and terminated it and should not create another.
-        m_databaseThread = DatabaseThread::create(this);
+        m_databaseThread = DatabaseThread::create();
         if (!m_databaseThread->start())
             m_databaseThread = 0;
     }

@@ -49,7 +49,7 @@ namespace WebCore {
 
 static void fontCacheATSNotificationCallback(ATSFontNotificationInfoRef, void*)
 {
-    FontCache::invalidate();
+    fontCache()->invalidate();
 }
 
 void FontCache::platformInit()

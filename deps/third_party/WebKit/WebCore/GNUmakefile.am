@@ -1731,7 +1731,6 @@ webcoregtk_sources += \
 	WebCore/platform/gtk/SharedBufferGtk.cpp \
 	WebCore/platform/gtk/SharedTimerGtk.cpp \
 	WebCore/platform/gtk/SoundGtk.cpp \
-	WebCore/platform/gtk/SystemTimeGtk.cpp \
 	WebCore/platform/gtk/TemporaryLinkStubs.cpp \
 	WebCore/platform/gtk/WheelEventGtk.cpp \
 	WebCore/platform/gtk/WidgetGtk.cpp \
@@ -2829,7 +2828,6 @@ webcore_sources += \
 	WebCore/svg/graphics/filters/SVGSpotLightSource.h
 
 webcoregtk_sources += \
-	WebCore/svg/graphics/cairo/RenderPathCairo.cpp \
 	WebCore/svg/graphics/cairo/SVGPaintServerCairo.cpp \
 	WebCore/svg/graphics/cairo/SVGPaintServerPatternCairo.cpp \
 	WebCore/svg/graphics/cairo/SVGResourceFilterCairo.cpp \
@@ -3106,7 +3104,8 @@ dist_webinspectorimages_DATA = \
 CLEANFILES += \
 	libWebCoreJS.la \
 	WebCore/bindings/js/JSDOMWindowBase.lut.h \
-	WebCore/bindings/js/JSRGBColor.lut.h
+	WebCore/bindings/js/JSRGBColor.lut.h \
+	WebCore/bindings/js/JSWorkerContextBase.lut.h
 
 
 

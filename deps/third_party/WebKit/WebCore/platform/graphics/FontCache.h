@@ -52,28 +52,30 @@ class SimpleFontData;
 
 class FontCache {
 public:
-    static const FontData* getFontData(const Font&, int& familyIndex, FontSelector*);
-    static void releaseFontData(const SimpleFontData*);
+    friend FontCache* fontCache();
+
+    const FontData* getFontData(const Font&, int& familyIndex, FontSelector*);
+    void releaseFontData(const SimpleFontData*);
     
     // This method is implemented by the platform.
     // FIXME: Font data returned by this method never go inactive because callers don't track and release them.
-    static const SimpleFontData* getFontDataForCharacters(const Font&, const UChar* characters, int length);
+    const SimpleFontData* getFontDataForCharacters(const Font&, const UChar* characters, int length);
     
     // Also implemented by the platform.
-    static void platformInit();
+    void platformInit();
 
 #if PLATFORM(WIN)
-    static IMLangFontLink2* getFontLinkInterface();
+    IMLangFontLink2* getFontLinkInterface();
 #endif
 
-    static void getTraitsInFamily(const AtomicString&, Vector<unsigned>&);
+    void getTraitsInFamily(const AtomicString&, Vector<unsigned>&);
 
-    static FontPlatformData* getCachedFontPlatformData(const FontDescription&, const AtomicString& family, bool checkingAlternateName = false);
-    static SimpleFontData* getCachedFontData(const FontPlatformData*);
-    static FontPlatformData* getLastResortFallbackFont(const FontDescription&);
+    FontPlatformData* getCachedFontPlatformData(const FontDescription&, const AtomicString& family, bool checkingAlternateName = false);
+    SimpleFontData* getCachedFontData(const FontPlatformData*);
+    FontPlatformData* getLastResortFallbackFont(const FontDescription&);
 
-    bool fontExists(const FontDescription&, const AtomicString& family);
-
+    void addClient(FontSelector*);
+    void removeClient(FontSelector*);
     // TODO(jungshik): Is this the best place to put this function? It may
     // or may not be. Font.h is another place we can cosider.
     // Return a font family for |script| and |FontDescription.genericFamily()|.
@@ -81,26 +83,28 @@ public:
     // script and genericFamily in FontDescription. A caller should check
     // the emptyness before using it.
     static AtomicString getGenericFontForScript(UScriptCode script, const FontDescription&);
-    static void addClient(FontSelector*);
-    static void removeClient(FontSelector*);
 
-    static unsigned generation();
-    static void invalidate();
+    unsigned generation();
+    void invalidate();
 
-    static size_t fontDataCount();
-    static size_t inactiveFontDataCount();
-    static void purgeInactiveFontData(int count = INT_MAX);
+    size_t fontDataCount();
+    size_t inactiveFontDataCount();
+    void purgeInactiveFontData(int count = INT_MAX);
 
 private:
+    FontCache();
+
     // These methods are implemented by each platform.
-    static FontPlatformData* getSimilarFontPlatformData(const Font&);
-    static FontPlatformData* createFontPlatformData(const FontDescription&, const AtomicString& family);
+    FontPlatformData* getSimilarFontPlatformData(const Font&);
+    FontPlatformData* createFontPlatformData(const FontDescription&, const AtomicString& family);
     static const AtomicString& alternateFamilyName(const AtomicString& family);
 
     friend class SimpleFontData;
     friend class FontFallbackList;
 };
 
+// Get the global fontCache.
+FontCache* fontCache();
 }
 
 #endif

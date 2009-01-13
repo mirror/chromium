@@ -46,7 +46,7 @@ const float DragController::DragImageAlpha = 0.75f;
 
 DragOperation DragController::dragOperation(DragData* dragData)
 {
-    // FIXME: To match the macos behaviour we should return DragOperationNone
+    // FIXME: To match the MacOS behaviour we should return DragOperationNone
     // if we are a modal window, we are the drag source, or the window is an
     // attached sheet If this can be determined from within WebCore
     // operationForDrag can be pulled into WebCore itself
@@ -54,7 +54,8 @@ DragOperation DragController::dragOperation(DragData* dragData)
     return dragData->containsURL() && !m_didInitiateDrag ? DragOperationCopy : DragOperationNone;
 }
 
-bool DragController::isCopyKeyDown() {
+bool DragController::isCopyKeyDown()
+{
     // FIXME: This should not be OS specific.  Delegate to the embedder instead.
 #if PLATFORM(WIN_OS)
     return ::GetAsyncKeyState(VK_CONTROL);

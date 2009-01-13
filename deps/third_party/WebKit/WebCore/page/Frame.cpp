@@ -67,7 +67,6 @@
 #include "RenderView.h"
 #include "ScriptController.h"
 #include "Settings.h"
-#include "SystemTime.h"
 #include "TextIterator.h"
 #include "TextResourceDecoder.h"
 #include "XMLNames.h"
@@ -342,7 +341,7 @@ static RegularExpression* createRegExpForLabels(const Vector<String>& labels)
     // REVIEW- version of this call in FrameMac.mm caches based on the NSArray ptrs being
     // the same across calls.  We can't do that.
 
-    DEFINE_STATIC_LOCAL(RegularExpression, wordRegExp, ("\\w"));
+    DEFINE_STATIC_LOCAL(RegularExpression, wordRegExp, ("\\w", TextCaseSensitive));
     String pattern("(");
     unsigned int numLabels = labels.size();
     unsigned int i;
@@ -352,8 +351,8 @@ static RegularExpression* createRegExpForLabels(const Vector<String>& labels)
         bool startsWithWordChar = false;
         bool endsWithWordChar = false;
         if (label.length() != 0) {
-            startsWithWordChar = wordRegExp.search(label.substring(0, 1)) >= 0;
-            endsWithWordChar = wordRegExp.search(label.substring(label.length() - 1, 1)) >= 0;
+            startsWithWordChar = wordRegExp.match(label.substring(0, 1)) >= 0;
+            endsWithWordChar = wordRegExp.match(label.substring(label.length() - 1, 1)) >= 0;
         }
         
         if (i != 0)
@@ -370,7 +369,7 @@ static RegularExpression* createRegExpForLabels(const Vector<String>& labels)
         }
     }
     pattern.append(")");
-    return new RegularExpression(pattern, false);
+    return new RegularExpression(pattern, TextCaseInsensitive);
 }
 
 String Frame::searchForLabelsAboveCell(RegularExpression* regExp, HTMLTableCellElement* cell)
@@ -462,7 +461,7 @@ String Frame::matchLabelsAgainstElement(const Vector<String>& labels, Element* e
         return String();
 
     // Make numbers and _'s in field names behave like word boundaries, e.g., "address2"
-    replace(name, RegularExpression("\\d"), " ");
+    replace(name, RegularExpression("\\d", TextCaseSensitive), " ");
     name.replace('_', ' ');
     
     OwnPtr<RegularExpression> regExp(createRegExpForLabels(labels));
@@ -473,7 +472,7 @@ String Frame::matchLabelsAgainstElement(const Vector<String>& labels, Element* e
     int bestLength = -1;
     int start = 0;
     do {
-        pos = regExp->search(name, start);
+        pos = regExp->match(name, start);
         if (pos != -1) {
             length = regExp->matchedLength();
             if (length >= bestLength) {

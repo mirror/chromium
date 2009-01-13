@@ -42,7 +42,7 @@
 namespace WebCore {
 
 SimpleFontData::SimpleFontData(const FontPlatformData& f, bool customFont, bool loading, SVGFontData* svgFontData)
-    : m_unitsPerEm(cDefaultUnitsPerEm)
+    : m_unitsPerEm(defaultUnitsPerEm)
     , m_font(f)
     , m_treatAsFixedPitch(false)
 #if ENABLE(SVG_FONTS)
@@ -159,7 +159,7 @@ SimpleFontData::~SimpleFontData()
 {
     if (!isCustomFont()) {
         if (m_smallCapsFontData)
-            FontCache::releaseFontData(m_smallCapsFontData);
+            fontCache()->releaseFontData(m_smallCapsFontData);
         GlyphPageTreeNode::pruneTreeFontData(this);
     }
 

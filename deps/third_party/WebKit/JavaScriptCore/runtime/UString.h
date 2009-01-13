@@ -1,6 +1,7 @@
 /*
  *  Copyright (C) 1999-2000 Harri Porten (porten@kde.org)
  *  Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights reserved.
+ *  Copyright (c) 2009, Google Inc. All rights reserved.
  *
  *  This library is free software; you can redistribute it and/or
  *  modify it under the terms of the GNU Library General Public
@@ -26,8 +27,8 @@
 #include <stdint.h>
 #include <string.h>
 #include <wtf/Assertions.h>
-#include <wtf/FastMalloc.h>
 #include <wtf/PassRefPtr.h>
+#include <wtf/PtrAndFlags.h>
 #include <wtf/RefPtr.h>
 #include <wtf/Vector.h>
 #include <wtf/unicode/Unicode.h>
@@ -74,7 +75,8 @@ namespace JSC {
         friend class JIT;
 
     public:
-        struct Rep {
+        struct BaseString;
+        struct Rep : Noncopyable {
             friend class JIT;
 
             static PassRefPtr<Rep> create(UChar*, int);
@@ -87,8 +89,8 @@ namespace JSC {
 
             void destroy();
 
-            bool baseIsSelf() const { return baseString == this; }
-            UChar* data() const { return baseString->buf + baseString->preCapacity + offset; }
+            bool baseIsSelf() const { return m_identifierTableAndFlags.isFlagSet(BaseStringFlag); }
+            UChar* data() const;
             int size() const { return len; }
 
             unsigned hash() const { if (_hash == 0) _hash = computeHash(data(), len); return _hash; }
@@ -98,35 +100,55 @@ namespace JSC {
             static unsigned computeHash(const char*, int length);
             static unsigned computeHash(const char* s) { return computeHash(s, strlen(s)); }
 
-            IdentifierTable* identifierTable() const { return reinterpret_cast<IdentifierTable*>(m_identifierTable & ~static_cast<uintptr_t>(1)); }
-            void setIdentifierTable(IdentifierTable* table) { ASSERT(!isStatic()); m_identifierTable = reinterpret_cast<intptr_t>(table); }
+            IdentifierTable* identifierTable() const { return m_identifierTableAndFlags.get(); }
+            void setIdentifierTable(IdentifierTable* table) { ASSERT(!isStatic()); m_identifierTableAndFlags.set(table); }
 
-            bool isStatic() const { return m_identifierTable & 1; }
-            void setStatic(bool v) { ASSERT(!identifierTable()); m_identifierTable = v; }
+            bool isStatic() const { return m_identifierTableAndFlags.isFlagSet(StaticFlag); }
+            void setStatic(bool);
+            void setBaseString(PassRefPtr<BaseString>);
+            BaseString* baseString();
+            const BaseString* baseString() const;
 
             Rep* ref() { ++rc; return this; }
             ALWAYS_INLINE void deref() { if (--rc == 0) destroy(); }
 
             void checkConsistency() const;
+            enum UStringFlags {
+                StaticFlag,
+                BaseStringFlag
+            };
 
             // unshared data
             int offset;
             int len;
             int rc; // For null and empty static strings, this field does not reflect a correct count, because ref/deref are not thread-safe. A special case in destroy() guarantees that these do not get deleted.
             mutable unsigned _hash;
-            intptr_t m_identifierTable; // A pointer to identifier table. The lowest bit is used to indicate whether the string is static (null or empty).
-            UString::Rep* baseString;
-            size_t reportedCost;
+            PtrAndFlags<IdentifierTable, UStringFlags> m_identifierTableAndFlags;
+            void* m_baseString; // If "this" is a BaseString instance, it is 0. BaseString* otherwise.
 
-            // potentially shared data. 0 if backed up by a base string.
+            static BaseString& null() { return *nullBaseString; }
+            static BaseString& empty() { return *emptyBaseString; }
+
+        private:
+            friend void initializeUString();
+            static BaseString* nullBaseString;
+            static BaseString* emptyBaseString;
+        };
+
+        struct BaseString : public Rep {
+            BaseString()
+            {
+                m_identifierTableAndFlags.setFlag(BaseStringFlag);
+            }
+
+            // potentially shared data.
             UChar* buf;
-            int usedCapacity;
-            int capacity;
-            int usedPreCapacity;
             int preCapacity;
+            int usedPreCapacity;
+            int capacity;
+            int usedCapacity;
 
-            static Rep null;
-            static Rep empty;
+            size_t reportedCost;
         };
 
     public:
@@ -204,7 +226,7 @@ namespace JSC {
 
         const UChar* data() const { return m_rep->data(); }
 
-        bool isNull() const { return (m_rep == &Rep::null); }
+        bool isNull() const { return (m_rep == &Rep::null()); }
         bool isEmpty() const { return (!m_rep->len); }
 
         bool is8Bit() const;
@@ -230,7 +252,7 @@ namespace JSC {
 
         UString substr(int pos = 0, int len = -1) const;
 
-        static const UString& null();
+        static const UString& null() { return *nullUString; }
 
         Rep* rep() const { return m_rep.get(); }
         static Rep* nullRep();
@@ -244,14 +266,14 @@ namespace JSC {
         size_t cost() const;
 
     private:
-        int usedCapacity() const;
-        int usedPreCapacity() const;
         void expandCapacity(int requiredLength);
         void expandPreCapacity(int requiredPreCap);
         void makeNull();
 
         RefPtr<Rep> m_rep;
+        static UString* nullUString;
 
+        friend void initializeUString();
         friend bool operator==(const UString&, const UString&);
         friend PassRefPtr<Rep> concatenate(Rep*, Rep*); // returns 0 if out of memory
     };
@@ -298,6 +320,37 @@ namespace JSC {
 
     bool equal(const UString::Rep*, const UString::Rep*);
 
+    inline UChar* UString::Rep::data() const
+    {
+        const BaseString* base = baseString();
+        return base->buf + base->preCapacity + offset;
+    }
+
+    inline void UString::Rep::setStatic(bool v)
+    {
+        ASSERT(!identifierTable());
+        if (v)
+            m_identifierTableAndFlags.setFlag(StaticFlag);
+        else
+            m_identifierTableAndFlags.clearFlag(StaticFlag);
+    }
+
+    inline void UString::Rep::setBaseString(PassRefPtr<BaseString> base)
+    {
+        ASSERT(base != this);
+        m_baseString = base.releaseRef();
+    }
+
+    inline UString::BaseString* UString::Rep::baseString()
+    {
+        return reinterpret_cast<BaseString*>(baseIsSelf() ? this : m_baseString);
+    }
+
+    inline const UString::BaseString* UString::Rep::baseString() const
+    {
+        return const_cast<const BaseString*>(const_cast<Rep*>(this)->baseString());
+    }
+
 #ifdef NDEBUG
     inline void UString::Rep::checkConsistency() const
     {
@@ -305,7 +358,7 @@ namespace JSC {
 #endif
 
     inline UString::UString()
-        : m_rep(&Rep::null)
+        : m_rep(&Rep::null())
     {
     }
 
@@ -328,8 +381,9 @@ namespace JSC {
 
     inline size_t UString::cost() const
     {
-        size_t capacity = (m_rep->baseString->capacity + m_rep->baseString->preCapacity) * sizeof(UChar);
-        size_t reportedCost = m_rep->baseString->reportedCost;
+        BaseString* base = m_rep->baseString();
+        size_t capacity = (base->capacity + base->preCapacity) * sizeof(UChar);
+        size_t reportedCost = base->reportedCost;
         ASSERT(capacity >= reportedCost);
 
         size_t capacityDelta = capacity - reportedCost;
@@ -337,7 +391,7 @@ namespace JSC {
         if (capacityDelta < static_cast<size_t>(minShareSize))
             return 0;
 
-        m_rep->baseString->reportedCost = capacity;
+        base->reportedCost = capacity;
 
         return capacityDelta;
     }
@@ -347,6 +401,7 @@ namespace JSC {
         static unsigned hash(JSC::UString::Rep* key) { return key->computedHash(); }
     };
 
+    void initializeUString();
 } // namespace JSC
 
 namespace WTF {
