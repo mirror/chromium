@@ -719,7 +719,7 @@ class FactoryCommands(object):
     """Returns a command list to call the _qemu_tool to report QEMU results."""
     return [self._depot_tools_python, self._qemu_tool]
 
-  def AddQueryQemu(self, timeout=240):
+  def AddQueryQemu(self, timeout=360):
     """Adds a step to the factory to query the QEMU distributed-testing
     results.
     """
