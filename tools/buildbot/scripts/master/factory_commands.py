@@ -163,6 +163,10 @@ class FactoryCommands(object):
     self._purify_tool = self.PathJoin('src', 'tools', 'purify',
                                       'chrome_tests.py')
 
+    # Valgrind isn't in the script_dir, it's out on its own.
+    self._valgrind_tool = self.PathJoin('src', 'tools', 'valgrind',
+                                        'chrome_tests.py')
+
     # These tools aren't in the script_dir either.
     # TODO(pamg): For consistency, move them into the script_dir if possible.
     self._check_deps_tool = self.PathJoin('src', 'tools', 'checkdeps',
@@ -851,6 +855,26 @@ class FactoryCommands(object):
                      timeout=timeout,
                      test_name=full_test_name,
                      test_command=self.GetPurifyCommand(test_name))
+
+  #######
+  # Valgrind Tests
+
+  def GetValgrindCommand(self, test_name):
+    """Returns a command list to call the _valgrind_tool on the given exe,
+    passing the arg_list, if any, to that executable.
+    """
+    cmd = [self._python, self._valgrind_tool,
+           '--build_dir', os.path.join(self._build_dir, self._target),
+           '--test', test_name]
+    return cmd
+
+  def AddValgrindTest(self, test_name, timeout=1200):
+    """Adds a step to the factory to run the Valgrind tests."""
+    full_test_name = 'valgrind test: %s' % test_name
+    self.AddTestStep(retcode_command.ReturnCodeCommand,
+                     timeout=timeout,
+                     test_name=full_test_name,
+                     test_command=self.GetValgrindCommand(test_name))
 
   #######
   # Webkit tests

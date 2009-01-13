@@ -165,6 +165,14 @@ class MasterFactory(object):
       factory_cmd_obj.AddPurifyTest('net')
     if self._ShouldRunTest(tests, 'purify_unit'):
       factory_cmd_obj.AddPurifyTest('unit')
+    if self._ShouldRunTest(tests, 'valgrind_base'):
+      factory_cmd_obj.AddValgrindTest('base')
+    if self._ShouldRunTest(tests, 'valgrind_unit'):
+      factory_cmd_obj.AddValgrindTest('unit')
+    if self._ShouldRunTest(tests, 'valgrind_net'):
+      factory_cmd_obj.AddValgrindTest('bet')
+    if self._ShouldRunTest(tests, 'valgrind_ipc'):
+      factory_cmd_obj.AddValgrindTest('ipc')
     if self._ShouldRunTest(tests, 'purify_ui'):
       factory_cmd_obj.AddPurifyTest('ui')
     if self._ShouldRunTest(tests, 'purify_layout'):
@@ -306,7 +314,8 @@ class MasterFactory(object):
                 'purify_webkit', 'purify_base', 'purify_net', 'purify_unit',
                 'purify_layout', 'purify_ui', 'playback', 'node_leak',
                 'tab_switching', 'omnibox', 'memory, 'interactive_ui', 'base',
-                'net', 'reliability', 'media').
+                'net', 'reliability', 'media', 'valgrind_net', 'valgrind_ipc',
+                'valgrind_unit', 'valgrind_base').
          The 'unit' suite includes the IPC tests.
       arhive_webkit_results: whether to archive the webkit test output
       show_perf_results: whether to add links to the test perf result graphs
