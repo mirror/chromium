@@ -59,8 +59,11 @@ bool SVGPaintServerPattern::setup(GraphicsContext*& context, const RenderObject*
     if (!tile())
         return false;
 
+    // Respect local pattern transformation and pattern start coordinates.
+    context->save();
     TransformationMatrix transform = patternTransform();
     transform.translate(patternBoundaries().x(), patternBoundaries().y());
+    context->concatCTM(transform);
 
     RefPtr<Pattern> pattern(Pattern::create(tile()->image(), true, true));
 
@@ -78,6 +81,11 @@ bool SVGPaintServerPattern::setup(GraphicsContext*& context, const RenderObject*
     }
 
     return true;
+}
+
+void SVGPaintServerPattern::teardown(GraphicsContext*& context, const RenderObject*, SVGPaintTargetType, bool) const
+{
+    context->restore();
 }
 
 } // namespace WebCore
