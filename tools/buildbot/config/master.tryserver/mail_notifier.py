@@ -12,10 +12,12 @@ from buildbot import interfaces
 from buildbot import util
 from buildbot.status import mail
 from buildbot.status.builder import FAILURE, SUCCESS, WARNINGS
-from email.Message import Message
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEText import MIMEText
 from email.Utils import formatdate
 from twisted.internet import defer
 from zope.interface import implements
+from buildbot.status.web.base import IBox
 
 
 class Domain(util.ComparableMixin):
@@ -50,106 +52,81 @@ class MailNotifier(mail.MailNotifier):
     mail.MailNotifier.__init__(self, lookup=self.lookup, *args, **kwargs)
 
   def buildMessage(self, name, build, results):
-    """Send an email about the result. Don't attach the patch as
-    MailNotifier.buildMessage do."""
+    """Send an email about the result. Send it as a nice HTML message."""
 
     projectName = self.status.getProjectName()
     job_stamp = build.getSourceStamp()
     build_url = self.status.getURLForThing(build)
     waterfall_url = self.status.getBuildbotURL()
-    # build.getSlavename()
-
-    patch_url_text = ""
-    if job_stamp and job_stamp.patch:
-      patch_url_text = "Patch: %s/steps/gclient/logs/patch\n\n" % build_url
-    failure_bot = ""
-    failure_tree = ""
-    if results != SUCCESS:
-      failure_bot = "(In case the bot is broken)\n"
-      failure_tree = "(in case the tree is broken)\n"
-
-    if job_stamp is None:
-      source = "unavailable"
-    else:
-      source = ""
-      if job_stamp.branch:
-        source += "[branch %s] " % job_stamp.branch
-      if job_stamp.revision:
-        source += job_stamp.revision
-      else:
-        source += "HEAD" # TODO(maruel): Tell the exact rev? That'd require feedback from the bot :/
-      if job_stamp.patch is not None:
-        source += " (plus patch)"
-
-    t = build.getText()
-    if t:
-      t = ": " + " ".join(t)
-    else:
-      t = ""
-
     if results == SUCCESS:
       status_text = "You are awesome! Try succeeded!"
       res = "success"
     elif results == WARNINGS:
-      status_text = "Try Had Warnings%s" % t
+      status_text = "Try Had Warnings"
       res = "warnings"
     else:
-      status_text = "TRY FAILED%s" % t
+      status_text = "TRY FAILED"
       res = "failure"
-      
-    text = """Slave: %s
 
-Run details: %s
-
-%sSlave history: %swaterfall?builder=%s
-%s
-Build Reason: %s
-
-Build Source Stamp: %s
-
---=>  %s  <=--
-
-Try server waterfall: %s
-Buildbot waterfall: http://build.chromium.org/
-%s
-Sincerely,
-
- - The monkey which sends all these emails manually
-
-
-Reminders:
- - Patching is done inside the update step.
- - So if the update step failed, that may be that the patch step failed.
-   The patch can fail because of svn property change or binary file change.
- - The patch will fail if the tree has conflicting changes since your last upload.
- - On Windows, the execution order is compile debug, test debug, compile release.
- - On Mac/linux, the execution order is compile debug, test debug.
- - To disable automatic test on gcl upload, use --no_try
-
-Automated text version 0.3""" % (name,
-       build_url,
-       patch_url_text,
-       urllib.quote(waterfall_url, '/:'),
-       urllib.quote(name),
-       failure_bot,
-       build.getReason(),
-       source,
-       status_text,
-       urllib.quote(waterfall_url, '/:'),
-       failure_tree)
-    # TODO(maruel): Add the content of the steps in the email instead of forcing
-    # users to clicks a link.
-
-    m = Message()
-    m.set_payload(text)
-
-    m['Date'] = formatdate(localtime=True)
-    m['Subject'] = self.subject % {
+    subject = self.subject % {
       'result': res,
       'projectName': projectName,
       'builder': name,
       'reason': build.getReason(),
     }
+
+    class DummyObject(object):
+      pass
+    request = DummyObject()
+    request.prepath = None
+
+    # Generate a HTML table looking like the waterfall.
+    # WARNING: Gmail ignores embedded CSS style. I don't know how to fix that so
+    # meanwhile, I will just not embedded the CSS style.
+    html_content = (
+"""<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>%s</title>
+</head>
+<body>
+  <a href="%s">%s</a><p>
+  %s<p>
+  <a href="%s">%s</a><p>
+  <table border="0" cellspacing="0">
+    <tr>
+    """ % (subject, css, waterfall_url, waterfall_url, status_text, build_url,
+           build_url)
+
+    # With a hack to fix the url root.
+    html_content += IBox(build).getBox(request).td(align='center').replace(
+        'href="builders/',
+        'href="' + waterfall_url + 'builders/')
+    html_content += '    </tr>\n'
+    for step in build.getSteps():
+      if step.getText():
+        html_content += '    <tr>\n    '
+        # With a hack to fix the url root.
+        html_content += IBox(step).getBox(request).td(align='center').replace(
+            'href="builders/',
+            'href="' + waterfall_url + 'builders/')
+        html_content += '    </tr>\n'
+    html_content += """  </table>
+</body>
+</html>
+"""
+
+    # Simpler text content for non-html aware clients.
+    text_content = """%s
+%s
+""" % (status_text, build_url)
+
+    m = MIMEMultipart('alternative')
+    # The HTML message, is best and preferred.
+    m.attach(MIMEText(text_content, 'plain', 'iso-8859-1'))
+    m.attach(MIMEText(html_content, 'html', 'iso-8859-1'))
+    m['Date'] = formatdate(localtime=True)
+    m['Subject'] = subject
     m['From'] = self.fromaddr
     if self.reply_to:
       m['Reply-To'] = self.reply_to
@@ -158,6 +135,9 @@ Automated text version 0.3""" % (name,
     recipients = self.extraRecipients[:]
     if getattr(job_stamp, 'author_emails', None):
       # Try jobs override the interested users.
+      assert type(job_stamp.author_emails) is list
+      print "Sending to:"
+      print job_stamp.author_emails
       recipients.extend(job_stamp.author_emails)
     else:
       if self.sendToInterestedUsers and self.lookup:
