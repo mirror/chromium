@@ -96,7 +96,7 @@ class MailNotifier(mail.MailNotifier):
   <table border="0" cellspacing="0">
     <tr>
     """ % (subject, css, waterfall_url, waterfall_url, status_text, build_url,
-           build_url)
+           build_url))
 
     # With a hack to fix the url root.
     html_content += IBox(build).getBox(request).td(align='center').replace(
