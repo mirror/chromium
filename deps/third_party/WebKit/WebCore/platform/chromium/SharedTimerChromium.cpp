@@ -23,8 +23,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-#include "ChromiumBridge.h"
+#include "config.h"
 #include "SharedTimer.h"
+
+#include "ChromiumBridge.h"
 
 namespace WebCore {
 
