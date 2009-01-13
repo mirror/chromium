@@ -21,7 +21,7 @@
  */
 
 #include "config.h"
-#include "RenderThemeGtk.h"
+#include "RenderThemeChromiumGtk.h"
 
 #include "ChromiumBridge.h"
 #include "CSSValueKeywords.h"
