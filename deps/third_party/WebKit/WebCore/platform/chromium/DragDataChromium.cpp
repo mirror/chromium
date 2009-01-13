@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2007 Apple Inc.  All rights reserved.
+ * Copyright (C) 2008, 2009 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,7 +24,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-// Modified from Apple's version to not directly call any windows methods as
+// Modified from DragDataWin.cpp to not directly call any windows methods as
 // they may not be available to us in the multiprocess 
 
 #include "config.h"
@@ -34,18 +35,16 @@
 #include "ClipboardChromium.h"
 #include "DocumentFragment.h"
 #include "KURL.h"
-#include "PlatformString.h"
 #include "markup.h"
-
-namespace {
-
-bool containsHTML(const WebCore::ChromiumDataObject* drop_data) {
-    return drop_data->text_html.length() > 0;
-}
-
-}
+#include "NotImplemented.h"
+#include "PlatformString.h"
 
 namespace WebCore {
+
+static bool containsHTML(const ChromiumDataObject* dropData)
+{
+    return dropData->textHtml.length() > 0;
+}
 
 PassRefPtr<Clipboard> DragData::createClipboard(ClipboardAccessPolicy policy) const
 {
@@ -67,7 +66,7 @@ String DragData::asURL(String* title) const
  
     // |title| can be NULL
     if (title)
-        *title = m_platformDragData->url_title;
+        *title = m_platformDragData->urlTitle;
     return m_platformDragData->url.string();
 }
 
@@ -84,16 +83,17 @@ void DragData::asFilenames(Vector<String>& result) const
 
 bool DragData::containsPlainText() const
 {
-    return !m_platformDragData->plain_text.isEmpty();
+    return !m_platformDragData->plainText.isEmpty();
 }
 
 String DragData::asPlainText() const
 {
-    return m_platformDragData->plain_text;
+    return m_platformDragData->plainText;
 }
 
 bool DragData::containsColor() const
 {
+    notImplemented();
     return false;
 }
 
@@ -103,14 +103,15 @@ bool DragData::canSmartReplace() const
     // This is allowed whenever the drag data contains a 'range' (ie.,
     // ClipboardWin::writeRange is called).  For example, dragging a link
     // should not result in a space being added.
-    return !m_platformDragData->plain_text.isEmpty() &&
-           !m_platformDragData->url.isValid();
+    return !m_platformDragData->plainText.isEmpty()
+        && !m_platformDragData->url.isValid();
 }
 
 bool DragData::containsCompatibleContent() const
 {
-    return containsPlainText() || containsURL()
-        || ::containsHTML(m_platformDragData)
+    return containsPlainText()
+        || containsURL()
+        || containsHTML(m_platformDragData)
         || containsColor();
 }
 
@@ -127,16 +128,16 @@ PassRefPtr<DocumentFragment> DragData::asFragment(Document* doc) const
      */
 
     if (containsFiles()) {
-        // TODO(tc): Implement this.  Should be pretty simple to make some HTML
+        // FIXME: Implement this.  Should be pretty simple to make some HTML
         // and call createFragmentFromMarkup.
         //if (RefPtr<DocumentFragment> fragment = createFragmentFromMarkup(doc,
         //    ?, KURL()))
         //    return fragment;
     }
 
-    if (!m_platformDragData->text_html.isEmpty()) {
+    if (!m_platformDragData->textHtml.isEmpty()) {
         RefPtr<DocumentFragment> fragment = createFragmentFromMarkup(doc,
-            m_platformDragData->text_html, m_platformDragData->html_base_url);
+            m_platformDragData->textHtml, m_platformDragData->htmlBaseUrl);
         return fragment.release();
     }
 
@@ -145,7 +146,8 @@ PassRefPtr<DocumentFragment> DragData::asFragment(Document* doc) const
 
 Color DragData::asColor() const
 {
+    notImplemented();
     return Color();
 }
 
-}
+} // namespace WebCore

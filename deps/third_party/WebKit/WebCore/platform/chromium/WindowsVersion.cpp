@@ -27,14 +27,13 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "config.h"
-#include "ChromiumUtilsWin.h"
+#include "WindowsVersion.h"
 
 #include <windows.h>
 
 namespace WebCore {
-namespace ChromiumUtils {
 
-bool isVistaOrGreater()
+bool isVistaOrNewer()
 {
     // Cache the result to avoid asking every time.
     static bool haveResult = false;
@@ -50,5 +49,4 @@ bool isVistaOrGreater()
     return result;
 }
 
-} // namespace ChromiumUtils
 } // namespace WebCore

@@ -28,7 +28,6 @@
 #include <vssym32.h>
 
 #include "ChromiumBridge.h"
-#include "ChromiumUtilsWin.h"
 #include "CSSStyleSheet.h"
 #include "CSSValueKeywords.h"
 #include "Document.h"
@@ -39,6 +38,7 @@
 #include "SkiaUtils.h"
 #include "ThemeHelperChromiumWin.h"
 #include "UserAgentStyleSheets.h"
+#include "WindowsVersion.h"
 
 // FIXME(brettw): this dependency should eventually be removed.
 #include "skia/ext/skia_utils_win.h"
@@ -52,7 +52,7 @@ namespace {
     SIZEOF_STRUCT_WITH_SPECIFIED_LAST_MEMBER(NONCLIENTMETRICS, lfMessageFont)
 
 void getNonClientMetrics(NONCLIENTMETRICS* metrics) {
-    static UINT size = WebCore::ChromiumUtils::isVistaOrGreater() ?
+    static UINT size = WebCore::isVistaOrNewer() ?
         sizeof(NONCLIENTMETRICS) : NONCLIENTMETRICS_SIZE_PRE_VISTA;
     metrics->cbSize = size;
     bool success =

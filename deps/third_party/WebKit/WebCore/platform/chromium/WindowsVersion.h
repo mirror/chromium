@@ -28,45 +28,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef ChromiumDataObject_h
-#define ChromiumDataObject_h
-
-#include "KURL.h"
-#include "PlatformString.h"
-#include <wtf/RefPtr.h>
-#include <wtf/Vector.h>
+#ifndef WindowsVersion_h
+#define WindowsVersion_h
 
 namespace WebCore {
 
-    // A data object for holding data that would be in a clipboard or moved
-    // during a drag-n-drop operation.  This is the data that WebCore is aware
-    // of and is not specific to a platform.
-    class ChromiumDataObject : public RefCounted<ChromiumDataObject> {
-    public:
-        static PassRefPtr<ChromiumDataObject> create()
-        {
-            return adoptRef(new ChromiumDataObject);
-        }
-
-        void clear();
-        bool hasData();
-
-        KURL url;
-        String urlTitle;
-
-        Vector<String> filenames;
-
-        String plainText;
-
-        String textHtml;
-        KURL htmlBaseUrl;
-
-        String fileContentFilename;
-        RefPtr<SharedBuffer> fileContent;
-
-    private:
-        ChromiumDataObject() {}
-    };
+    bool isVistaOrNewer();
 
 } // namespace WebCore
 

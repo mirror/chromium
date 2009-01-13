@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 Apple Inc. All Rights Reserved.
+ * Copyright (C) 2008, 2009 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -30,15 +31,13 @@
 #include <vsstyle.h>
 
 #include "ChromiumBridge.h"
-#include "ChromiumUtilsWin.h"
 #include "GraphicsContext.h"
 #include "PlatformContextSkia.h"
 #include "PlatformMouseEvent.h"
 #include "Scrollbar.h"
+#include "WindowsVersion.h"
 
 namespace WebCore {
-
-using ChromiumUtils::isVistaOrGreater;
 
 // The scrollbar size in DumpRenderTree on the Mac - so we can match their
 // layout results.  Entries are for regular, small, and mini scrollbars.
@@ -58,7 +57,7 @@ int ScrollbarThemeChromium::scrollbarThickness(ScrollbarControlSize controlSize)
 
 bool ScrollbarThemeChromium::invalidateOnMouseEnterExit()
 {
-    return isVistaOrGreater();
+    return isVistaOrNewer();
 }
 
 void ScrollbarThemeChromium::paintTrackPiece(GraphicsContext* gc, Scrollbar* scrollbar, const IntRect& rect, ScrollbarPart partType)
@@ -66,11 +65,10 @@ void ScrollbarThemeChromium::paintTrackPiece(GraphicsContext* gc, Scrollbar* scr
     bool horz = scrollbar->orientation() == HorizontalScrollbar;
 
     int partId;
-    if (partType == BackTrackPart) {
+    if (partType == BackTrackPart)
         partId = horz ? SBP_UPPERTRACKHORZ : SBP_UPPERTRACKVERT;
-    } else {
+    else
         partId = horz ? SBP_LOWERTRACKHORZ : SBP_LOWERTRACKVERT;
-    }
 
     IntRect alignRect = trackRect(scrollbar, false);
 
@@ -89,11 +87,10 @@ void ScrollbarThemeChromium::paintButton(GraphicsContext* gc, Scrollbar* scrollb
     bool horz = scrollbar->orientation() == HorizontalScrollbar;
 
     int partId;
-    if (part == BackButtonStartPart || part == ForwardButtonStartPart) {
+    if (part == BackButtonStartPart || part == ForwardButtonStartPart)
         partId = horz ? DFCS_SCROLLLEFT : DFCS_SCROLLUP;
-    } else {
+    else
         partId = horz ? DFCS_SCROLLRIGHT : DFCS_SCROLLDOWN;
-    }
 
     // Draw the thumb (the box you drag in the scroll bar to scroll).
     ChromiumBridge::paintScrollbarArrow(
@@ -132,12 +129,12 @@ int ScrollbarThemeChromium::getThemeState(Scrollbar* scrollbar, ScrollbarPart pa
     if (scrollbar->pressedPart() == ThumbPart) {
         if (part == ThumbPart)
             return SCRBS_PRESSED;
-        return isVistaOrGreater() ? SCRBS_HOVER : SCRBS_NORMAL;
+        return isVistaOrNewer() ? SCRBS_HOVER : SCRBS_NORMAL;
     }
     if (!scrollbar->enabled())
         return SCRBS_DISABLED;
     if (scrollbar->hoveredPart() != part || part == BackTrackPart || part == ForwardTrackPart)
-        return (scrollbar->hoveredPart() == NoPart || !isVistaOrGreater()) ? SCRBS_NORMAL : SCRBS_HOVER;
+        return (scrollbar->hoveredPart() == NoPart || !isVistaOrNewer()) ? SCRBS_NORMAL : SCRBS_HOVER;
     if (scrollbar->pressedPart() == NoPart)
         return SCRBS_HOT;
     return (scrollbar->pressedPart() == part) ? SCRBS_PRESSED : SCRBS_NORMAL;
@@ -151,43 +148,43 @@ int ScrollbarThemeChromium::getThemeArrowState(Scrollbar* scrollbar, ScrollbarPa
     if (part == BackButtonStartPart || part == ForwardButtonStartPart) {
         if (scrollbar->orientation() == HorizontalScrollbar) {
             if (scrollbar->pressedPart() == ThumbPart)
-                return !isVistaOrGreater() ? ABS_LEFTNORMAL : ABS_LEFTHOVER;
+                return !isVistaOrNewer() ? ABS_LEFTNORMAL : ABS_LEFTHOVER;
             if (!scrollbar->enabled())
                 return ABS_LEFTDISABLED;
             if (scrollbar->hoveredPart() != part)
-                return ((scrollbar->hoveredPart() == NoPart) || !isVistaOrGreater()) ? ABS_LEFTNORMAL : ABS_LEFTHOVER;
+                return ((scrollbar->hoveredPart() == NoPart) || !isVistaOrNewer()) ? ABS_LEFTNORMAL : ABS_LEFTHOVER;
             if (scrollbar->pressedPart() == NoPart)
                 return ABS_LEFTHOT;
             return (scrollbar->pressedPart() == part) ?
                 ABS_LEFTPRESSED : ABS_LEFTNORMAL;
         }
         if (scrollbar->pressedPart() == ThumbPart)
-            return !isVistaOrGreater() ? ABS_UPNORMAL : ABS_UPHOVER;
+            return !isVistaOrNewer() ? ABS_UPNORMAL : ABS_UPHOVER;
         if (!scrollbar->enabled())
             return ABS_UPDISABLED;
         if (scrollbar->hoveredPart() != part)
-            return ((scrollbar->hoveredPart() == NoPart) || !isVistaOrGreater()) ? ABS_UPNORMAL : ABS_UPHOVER;
+            return ((scrollbar->hoveredPart() == NoPart) || !isVistaOrNewer()) ? ABS_UPNORMAL : ABS_UPHOVER;
         if (scrollbar->pressedPart() == NoPart)
             return ABS_UPHOT;
         return (scrollbar->pressedPart() == part) ? ABS_UPPRESSED : ABS_UPNORMAL;
     }
     if (scrollbar->orientation() == HorizontalScrollbar) {
         if (scrollbar->pressedPart() == ThumbPart)
-            return !isVistaOrGreater() ? ABS_RIGHTNORMAL : ABS_RIGHTHOVER;
+            return !isVistaOrNewer() ? ABS_RIGHTNORMAL : ABS_RIGHTHOVER;
         if (!scrollbar->enabled())
             return ABS_RIGHTDISABLED;
         if (scrollbar->hoveredPart() != part)
-            return ((scrollbar->hoveredPart() == NoPart) || !isVistaOrGreater()) ? ABS_RIGHTNORMAL : ABS_RIGHTHOVER;
+            return ((scrollbar->hoveredPart() == NoPart) || !isVistaOrNewer()) ? ABS_RIGHTNORMAL : ABS_RIGHTHOVER;
         if (scrollbar->pressedPart() == NoPart)
             return ABS_RIGHTHOT;
         return (scrollbar->pressedPart() == part) ? ABS_RIGHTPRESSED : ABS_RIGHTNORMAL;
     }
     if (scrollbar->pressedPart() == ThumbPart)
-        return !isVistaOrGreater() ? ABS_DOWNNORMAL : ABS_DOWNHOVER;
+        return !isVistaOrNewer() ? ABS_DOWNNORMAL : ABS_DOWNHOVER;
     if (!scrollbar->enabled())
         return ABS_DOWNDISABLED;
     if (scrollbar->hoveredPart() != part)
-        return ((scrollbar->hoveredPart() == NoPart) || !isVistaOrGreater()) ? ABS_DOWNNORMAL : ABS_DOWNHOVER;
+        return ((scrollbar->hoveredPart() == NoPart) || !isVistaOrNewer()) ? ABS_DOWNNORMAL : ABS_DOWNHOVER;
     if (scrollbar->pressedPart() == NoPart)
         return ABS_DOWNHOT;
     return (scrollbar->pressedPart() == part) ? ABS_DOWNPRESSED : ABS_DOWNNORMAL;

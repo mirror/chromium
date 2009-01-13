@@ -31,11 +31,11 @@
 #include <vector>
 
 #include "ChromiumBridge.h"
-#include "ChromiumUtilsWin.h"
 #include "Font.h"
 #include "GlyphPageTreeNode.h"
 #include "SimpleFontData.h"
 #include "UniscribeHelperTextRun.h"
+#include "WindowsVersion.h"
 
 namespace WebCore
 {
@@ -134,7 +134,7 @@ static bool fillBMPGlyphs(unsigned offset,
     // Copy the output to the GlyphPage
     bool have_glyphs = false;
     int invalid_glyph = 0xFFFF;
-    if (!ChromiumUtils::isVistaOrGreater() && !(tm.tmPitchAndFamily & TMPF_TRUETYPE))
+    if (!isVistaOrNewer() && !(tm.tmPitchAndFamily & TMPF_TRUETYPE))
         invalid_glyph = 0x1F;
 
     Glyph space_glyph = 0;  // Glyph for a space. Lazily filled.
