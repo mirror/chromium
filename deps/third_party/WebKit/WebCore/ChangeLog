@@ -1,3 +1,740 @@
+2009-01-13  Darin Adler  <darin@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Bug 23102: turn on unused parameter warnings in WebCore
+        https://bugs.webkit.org/show_bug.cgi?id=23102
+
+        Last step: Turn on the warning and fix the last few instances.
+
+        * Configurations/Base.xcconfig: Removed -Wno-unused-parameter from
+        WARNING_CFLAGS_BASE, so the unused parameter warning will fire.
+
+        * bindings/js/JSDOMWindowBase.cpp:
+        (jsDOMWindowBaseMessageChannel): Separate the version for use when
+        CHANNEL_MESSAGING is turned off, so we can omit the argument names.
+        It would be better to not even have this property in that case,
+        rather than having the function return undefined, but I don't know
+        how to do that with the bindings script.
+
+        * bindings/scripts/CodeGeneratorJS.pm: Leave out argument names in
+        functions where they're not used (the SVG context, and the property
+        name in the index getter). Use UNUSED_PARAM where arguments are
+        sometimes not used.
+
+        * bridge/runtime_object.cpp:
+        (JSC::RuntimeObjectImp::put): Use UNUSED_PARAM for non-QT.
+
+        * css/MediaQueryEvaluator.cpp:
+        (WebCore::animationMediaFeatureEval): Omit argument names for style and frame.
+        (WebCore::transitionMediaFeatureEval): Ditto.
+        (WebCore::transform_2dMediaFeatureEval): Ditto.
+        (WebCore::transform_3dMediaFeatureEval): Ditto.
+
+        * dom/make_names.pl: Leave out the createdByParser property name in
+        cases where it's not used.
+
+        * inspector/JavaScriptDebugServer.cpp:
+        (WebCore::JavaScriptDebugServer::setJavaScriptPaused): Separate the
+        version for the Mac platform so we can omit the argument names.
+
+        * loader/EmptyClients.h:
+        (WebCore::EmptyChromeClient::contentsSizeChanged): Removed argument name.
+
+        * loader/FrameLoaderClient.h:
+        (WebCore::FrameLoaderClient::shouldUsePluginDocument): Commented out
+        argument name.
+
+        * loader/icon/IconFetcher.cpp:
+        (WebCore::IconFetcher::didReceiveResponse): Use ASSERT_UNUSED.
+        (WebCore::IconFetcher::didReceiveData): Ditto.
+        (WebCore::IconFetcher::didFinishLoading): Ditto.
+        (WebCore::IconFetcher::didFail): Ditto.
+
+        * platform/KURL.cpp:
+        (WebCore::assertProtocolIsGood): Separate out the NDEBUG version so
+        we can omit the argument names.
+
+        * platform/Timer.cpp:
+        (WebCore::TimerHeapIterator::checkConsistency): Use ASSERT_UNUSED.
+
+        * platform/graphics/GlyphBuffer.h:
+        (WebCore::GlyphBuffer::offsetAt): Use UNUSED_PARAM in the non-WIN case.
+        (WebCore::GlyphBuffer::add): Use UNUSED_PARAM in the non-CAIRO case.
+
+        * platform/graphics/cg/ImageSourceCG.cpp:
+        (WebCore::ImageSource::clear): Removed argument name.
+
+        * rendering/SVGRenderSupport.cpp:
+        (WebCore::prepareToRenderSVGContent): Use UNUSED_PARAM when SVG_FILTERS
+        is not enabled.
+        (WebCore::finishRenderSVGContent): Ditto.
+
+2009-01-13  Chris Marrin  <cmarrin@apple.com>
+
+        Reviewed by Darin Adler.
+
+        Implemented https://bugs.webkit.org/show_bug.cgi?id=23298
+        Simple fix to convertToLength to catch style==null cases
+
+        * css/CSSStyleSelector.cpp:
+        (WebCore::convertToLength):
+
+2009-01-13  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Mark Rowe.
+
+        Speculative fix for an Uninitialized Memory Read (UMR)
+        seen by purify in chormium's equivalent V8 file.
+
+        * bindings/js/JSSVGPODTypeWrapper.h:
+        (WebCore::PODTypeWrapperCacheInfo::PODTypeWrapperCacheInfo):
+
+2009-01-13  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Land portions of platform/graphics/chromium.
+        https://bugs.webkit.org/show_bug.cgi?id=23297
+
+        * platform/graphics/chromium/FontCustomPlatformData.cpp: Added.
+        (WebCore::FontCustomPlatformData::~FontCustomPlatformData):
+        (WebCore::FontCustomPlatformData::fontPlatformData):
+        (WebCore::EOTStream::EOTStream):
+        (WebCore::EOTStream::read):
+        (WebCore::readEmbedProc):
+        (WebCore::createUniqueFontName):
+        (WebCore::createFontCustomPlatformData):
+        * platform/graphics/chromium/FontCustomPlatformData.h: Added.
+        (WebCore::FontCustomPlatformData::FontCustomPlatformData):
+        * platform/graphics/chromium/FontLinux.cpp: Added.
+        (WebCore::Font::drawGlyphs):
+        (WebCore::Font::drawComplexText):
+        (WebCore::Font::floatWidthForComplexText):
+        (WebCore::Font::offsetForPositionForComplexText):
+        (WebCore::Font::selectionRectForComplexText):
+        * platform/graphics/chromium/FontPlatformData.h: Added.
+
+2009-01-13  Mark Rowe  <mrowe@apple.com>
+
+        Rubber-stamped by Oliver Hunt.
+
+        Don't copy DOMStringList.idl into the framework bundle.
+
+        * WebCore.xcodeproj/project.pbxproj:
+
+2009-01-13  Christian Dywan  <christian@twotoasts.de>
+
+        Build fix, StorageEvent is only defined if we have DOM_STORAGE
+
+        * dom/Document.cpp:
+        (WebCore::Document::createEvent): Conditionalize StorageEvent
+
+2009-01-13  Darin Adler  <darin@apple.com>
+
+        Reviewed by Adele Peterson.
+
+        Bug 23277: space bar scrolls the page when typed in any text field
+        https://bugs.webkit.org/show_bug.cgi?id=23277
+        rdar://problem/6490249
+
+        There's already a regression test for this, since bug 16421 was the same problem, but on
+        Mac. The regression test is fast/events/space-scroll-event.html, so I won't write a new one.
+
+        This bug doesn't affect Mac because the canEdit check in -[WebHTMLView insertText:] prevents
+        a text input event from being generated at all. That difference may in itself be a bug, but
+        the only symptom is that you get text input events in more cases on platforms other than Mac.
+
+        * page/EventHandler.cpp:
+        (WebCore::EventHandler::handleTextInputEvent): Return whether the event's default was
+        handled, not the result of the dispatchEvent function, which indicates only whether the
+        default behavior was prevented, not if the default behavior did some insertion. This fix
+        makes it so the keyboard event handler can detect that no space was inserted and know that
+        the space bar keypress event can be treated as a scrolling command.
+        (WebCore::EventHandler::defaultKeyboardEventHandler): Handle the keypress event, not the
+        keydown event. Without the change above, making this change would have restored the old
+        behavior, reintroducing bug 22913 where the space bar doesn't scroll at all on Windows.
+
+2009-01-13  Darin Fisher  <darin@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Landing portions of platform/chromium/, taken from here:
+        http://src.chromium.org/viewvc/chrome/trunk/deps/third_party/WebKit/WebCore/platform/chromium/
+
+        * platform/chromium/ChromiumBridge.h: Added.
+        * platform/chromium/ChromiumDataObject.cpp: Added.
+        (WebCore::ChromiumDataObject::clear):
+        (WebCore::ChromiumDataObject::hasData):
+        * platform/chromium/ChromiumDataObject.h: Added.
+        (WebCore::ChromiumDataObject::create):
+        (WebCore::ChromiumDataObject::ChromiumDataObject):
+        * platform/chromium/ClipboardChromium.cpp: Added.
+        (WebCore::):
+        (WebCore::clipboardTypeFromMIMEType):
+        (WebCore::ClipboardChromium::ClipboardChromium):
+        (WebCore::ClipboardChromium::create):
+        (WebCore::ClipboardChromium::clearData):
+        (WebCore::ClipboardChromium::clearAllData):
+        (WebCore::ClipboardChromium::getData):
+        (WebCore::ClipboardChromium::setData):
+        (WebCore::ClipboardChromium::types):
+        (WebCore::ClipboardChromium::setDragImage):
+        (WebCore::ClipboardChromium::setDragImageElement):
+        (WebCore::ClipboardChromium::createDragImage):
+        (WebCore::imageToMarkup):
+        (WebCore::getCachedImage):
+        (WebCore::writeImageToDataObject):
+        (WebCore::ClipboardChromium::declareAndWriteDragImage):
+        (WebCore::ClipboardChromium::writeURL):
+        (WebCore::ClipboardChromium::writeRange):
+        (WebCore::ClipboardChromium::hasData):
+        * platform/chromium/ClipboardChromium.h: Added.
+        (WebCore::ClipboardChromium::~ClipboardChromium):
+        (WebCore::ClipboardChromium::dataObject):
+        * platform/chromium/ClipboardUtilitiesChromium.cpp: Added.
+        (WebCore::replaceNewlinesWithWindowsStyleNewlines):
+        (WebCore::replaceNBSPWithSpace):
+        (WebCore::urlToMarkup):
+        * platform/chromium/ClipboardUtilitiesChromium.h: Added.
+        * platform/chromium/ContextMenuChromium.cpp: Added.
+        (WebCore::ContextMenu::ContextMenu):
+        (WebCore::ContextMenu::~ContextMenu):
+        (WebCore::ContextMenu::itemCount):
+        (WebCore::ContextMenu::insertItem):
+        (WebCore::ContextMenu::appendItem):
+        (WebCore::ContextMenu::itemWithAction):
+        (WebCore::ContextMenu::itemAtIndex):
+        (WebCore::ContextMenu::setPlatformDescription):
+        (WebCore::ContextMenu::platformDescription):
+        (WebCore::ContextMenu::releasePlatformDescription):
+        * platform/chromium/ContextMenuItemChromium.cpp: Added.
+        (WebCore::ContextMenuItem::ContextMenuItem):
+        (WebCore::ContextMenuItem::~ContextMenuItem):
+        (WebCore::ContextMenuItem::releasePlatformDescription):
+        (WebCore::ContextMenuItem::type):
+        (WebCore::ContextMenuItem::action):
+        (WebCore::ContextMenuItem::title):
+        (WebCore::ContextMenuItem::platformSubMenu):
+        (WebCore::ContextMenuItem::setType):
+        (WebCore::ContextMenuItem::setAction):
+        (WebCore::ContextMenuItem::setTitle):
+        (WebCore::ContextMenuItem::setSubMenu):
+        (WebCore::ContextMenuItem::setChecked):
+        (WebCore::ContextMenuItem::setEnabled):
+        (WebCore::ContextMenuItem::enabled):
+        * platform/chromium/CursorChromium.cpp: Added.
+        (WebCore::Cursor::Cursor):
+        (WebCore::Cursor::~Cursor):
+        (WebCore::Cursor::operator=):
+        (WebCore::pointerCursor):
+        (WebCore::crossCursor):
+        (WebCore::handCursor):
+        (WebCore::iBeamCursor):
+        (WebCore::waitCursor):
+        (WebCore::helpCursor):
+        (WebCore::eastResizeCursor):
+        (WebCore::northResizeCursor):
+        (WebCore::northEastResizeCursor):
+        (WebCore::northWestResizeCursor):
+        (WebCore::southResizeCursor):
+        (WebCore::southEastResizeCursor):
+        (WebCore::southWestResizeCursor):
+        (WebCore::westResizeCursor):
+        (WebCore::northSouthResizeCursor):
+        (WebCore::eastWestResizeCursor):
+        (WebCore::northEastSouthWestResizeCursor):
+        (WebCore::northWestSouthEastResizeCursor):
+        (WebCore::columnResizeCursor):
+        (WebCore::rowResizeCursor):
+        (WebCore::middlePanningCursor):
+        (WebCore::eastPanningCursor):
+        (WebCore::northPanningCursor):
+        (WebCore::northEastPanningCursor):
+        (WebCore::northWestPanningCursor):
+        (WebCore::southPanningCursor):
+        (WebCore::southEastPanningCursor):
+        (WebCore::southWestPanningCursor):
+        (WebCore::westPanningCursor):
+        (WebCore::moveCursor):
+        (WebCore::verticalTextCursor):
+        (WebCore::cellCursor):
+        (WebCore::contextMenuCursor):
+        (WebCore::aliasCursor):
+        (WebCore::progressCursor):
+        (WebCore::noDropCursor):
+        (WebCore::copyCursor):
+        (WebCore::noneCursor):
+        (WebCore::notAllowedCursor):
+        (WebCore::zoomInCursor):
+        (WebCore::zoomOutCursor):
+        (WebCore::grabCursor):
+        (WebCore::grabbingCursor):
+        * platform/chromium/DragDataChromium.cpp: Added.
+        (WebCore::containsHTML):
+        (WebCore::DragData::createClipboard):
+        (WebCore::DragData::containsURL):
+        (WebCore::DragData::asURL):
+        (WebCore::DragData::containsFiles):
+        (WebCore::DragData::asFilenames):
+        (WebCore::DragData::containsPlainText):
+        (WebCore::DragData::asPlainText):
+        (WebCore::DragData::containsColor):
+        (WebCore::DragData::canSmartReplace):
+        (WebCore::DragData::containsCompatibleContent):
+        (WebCore::DragData::asFragment):
+        (WebCore::DragData::asColor):
+        * platform/chromium/EditorChromium.cpp: Added.
+        (WebCore::Editor::newGeneralClipboard):
+        * platform/chromium/FileChooserChromium.cpp: Added.
+        (WebCore::FileChooser::basenameForWidth):
+        * platform/chromium/FileSystemChromium.cpp: Added.
+        (WebCore::deleteFile):
+        (WebCore::deleteEmptyDirectory):
+        (WebCore::getFileSize):
+        (WebCore::getFileModificationTime):
+        (WebCore::directoryName):
+        (WebCore::pathByAppendingComponent):
+        (WebCore::makeAllDirectories):
+        (WebCore::fileExists):
+        * platform/chromium/FileSystemChromiumLinux.cpp: Added.
+        (WebCore::pathGetFileName):
+        * platform/chromium/FileSystemChromiumMac.mm: Added.
+        (WebCore::pathGetFileName):
+        * platform/chromium/FileSystemChromiumWin.cpp: Added.
+        (WebCore::pathGetFileName):
+        * platform/chromium/FramelessScrollView.cpp: Added.
+        (WebCore::FramelessScrollView::~FramelessScrollView):
+        (WebCore::FramelessScrollView::invalidateScrollbarRect):
+        (WebCore::FramelessScrollView::isActive):
+        (WebCore::FramelessScrollView::invalidateRect):
+        (WebCore::FramelessScrollView::hostWindow):
+        (WebCore::FramelessScrollView::windowClipRect):
+        (WebCore::FramelessScrollView::paintContents):
+        (WebCore::FramelessScrollView::contentsResized):
+        (WebCore::FramelessScrollView::visibleContentsResized):
+        * platform/chromium/FramelessScrollView.h: Added.
+        (WebCore::FramelessScrollView::FramelessScrollView):
+        (WebCore::FramelessScrollView::client):
+        (WebCore::FramelessScrollView::setClient):
+        * platform/chromium/FramelessScrollViewClient.h: Added.
+        * platform/chromium/ScrollbarThemeChromiumWin.cpp: Added.
+        (WebCore::):
+        (WebCore::ScrollbarThemeChromium::scrollbarThickness):
+        (WebCore::ScrollbarThemeChromium::invalidateOnMouseEnterExit):
+        (WebCore::ScrollbarThemeChromium::paintTrackPiece):
+        (WebCore::ScrollbarThemeChromium::paintButton):
+        (WebCore::ScrollbarThemeChromium::paintThumb):
+        (WebCore::ScrollbarThemeChromium::getThemeState):
+        (WebCore::ScrollbarThemeChromium::getThemeArrowState):
+        (WebCore::ScrollbarThemeChromium::getClassicThemeState):
+        * platform/chromium/SoundChromiumPosix.cpp: Added.
+        (WebCore::systemBeep):
+        * platform/chromium/SoundChromiumWin.cpp: Added.
+        (WebCore::systemBeep):
+        * platform/chromium/SystemTimeChromium.cpp: Added.
+        (WebCore::currentTime):
+        (WebCore::userIdleTime):
+        * platform/chromium/WidgetChromium.cpp: Added.
+        (WebCore::Widget::Widget):
+        (WebCore::Widget::~Widget):
+        (WebCore::Widget::show):
+        (WebCore::Widget::hide):
+        (WebCore::Widget::setCursor):
+        (WebCore::Widget::paint):
+        (WebCore::Widget::setFocus):
+        (WebCore::Widget::setIsSelected):
+        (WebCore::Widget::frameRect):
+        (WebCore::Widget::setFrameRect):
+        * platform/chromium/WindowsVersion.cpp: Added.
+        (WebCore::isVistaOrNewer):
+        * platform/chromium/WindowsVersion.h: Added.
+
+2009-01-13  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Reviewed by Simon Hausmann.
+
+        [Qt] Make sure media elements dispatch the 'loaded' event
+        
+        We assume that when Phonon goes into paused state that we have the
+        complete media file. Once we do media loading ourselves we can
+        distinguish between loading the first frame and the complete media.
+
+        * platform/graphics/qt/MediaPlayerPrivatePhonon.cpp:
+        (WebCore::MediaPlayerPrivate::updateStates):
+
+2009-01-13  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Reviewed by Simon Hausmann.
+
+        [Qt] Add more verbose error output when loading NPAPI plugins
+
+        * plugins/qt/PluginPackageQt.cpp:
+        (WebCore::PluginPackage::load):
+
+2009-01-13  Simon Hausmann  <simon.hausmann@nokia.com>
+
+        Reviewed by Tor Arne Vestbø.
+
+        Fix crash in the Qt port when deleting a popup from within a
+        JavaScript onchange handler.
+
+        * platform/qt/QWebPopup.cpp:
+        (WebCore::QWebPopup::QWebPopup): Perform the activation of the
+        combobox item (i.e. the call to the JS handler) from a different
+        call stack by using a queued connection.
+
+2009-01-12  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by Tor Arne Vestbø.
+
+        [GIO] Make sure to untef the GFile and the GInputStream on destruction
+
+        Make sure to call cleanupGioOperation from the ResourceHandleInternal
+        d'tor. Change the signature of cleanupGioOperation so we can do the
+        cleanup of GIO next to the cleanup of SOUP.
+
+        This is happening with many tests from dom/html/level2/html e.g.
+        LayoutTests/dom/html/level2/html/HTMLBodyElement07.html.
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::ResourceHandleInternal::~ResourceHandleInternal):
+        (WebCore::cleanupGioOperation):
+        (WebCore::closeCallback):
+        (WebCore::readCallback):
+        (WebCore::openCallback):
+        (WebCore::queryInfoCallback):
+
+2009-01-12  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by Tor Arne Vestbø.
+
+        [GIO] Attach the ResourceHandle to the GObject and get it from the GObject
+
+        https://bugs.webkit.org/show_bug.cgi?id=23116 discussed with Benjamin Otte
+
+        Sometimes it is not possible to cancel a pending GIO operation and the
+        callback might be invoked with a pointer to an already destructed
+        ResourceHandle. To avoid this issue we will attach the ResourceHandle
+        to the GObject* and in the callback attempt to get the ResourceHandle
+        from the GObject*. If no ResourceHandle is attached we silently fail
+        as the cleanup has been already done.
+
+        This is happening with many tests from dom/html/level2/html e.g.
+        LayoutTests/dom/html/level2/html/HTMLBodyElement07.html.
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::cleanupGioOperation):
+        (WebCore::closeCallback):
+        (WebCore::readCallback):
+        (WebCore::openCallback):
+        (WebCore::queryInfoCallback):
+        (WebCore::ResourceHandle::startGio):
+
+2009-01-12  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by Tor Arne Vestbø.
+
+        [GIO] Invoke cleanupGioOperation before calling didFail to avoid crashes
+
+        https://bugs.webkit.org/show_bug.cgi?id=23116
+
+        The ResourceHandle becomes invalid (e.g. got destructed) from within
+        the invocation of didFail. Avoid this by cleaning up everything before
+        calling didFail and simply return afterwards.
+
+        This is happening with many tests from dom/html/level2/html e.g.
+        LayoutTests/dom/html/level2/html/HTMLBodyElement07.html.
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::readCallback):
+        (WebCore::openCallback):
+        (WebCore::queryInfoCallback):
+
+2009-01-13  Tor Arne Vestbø  <tavestbo@trolltech.com>
+
+        Reviewed by Simon Hausmann.
+
+        Change how themes adjust mediaControls.css to match html4/quicks.css
+        
+        Instead of providing the full style sheet, the themes provide extra
+        overrides to the default style defined in UserAgentStyleSheetsData.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=23210
+        
+        Also, merge WebKitResources.qrc and WebCoreResources.qrc to speed up
+        build time for the Qt port.
+
+        * Resources/WebKitResources.qrc: Removed. Merged into WebCore.qrc
+        * WebCore.pro:
+        * WebCore.qrc: Added.
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::styleForElement):
+        * css/qt/mediaControls-extras.css: Rename from html4-adjustments-qt.css
+        * platform/qt/RenderThemeQt.cpp:
+        (WebCore::RenderThemeQt::extraMediaControlsStyleSheet):
+        * platform/qt/RenderThemeQt.h:
+        * platform/qt/WebCoreResources.qrc: Removed.
+        * platform/qt/html4-adjustments-qt.css: Rename to mediaControls-extras.css
+        * rendering/RenderTheme.cpp:
+        * rendering/RenderTheme.h:
+        (WebCore::RenderTheme::extraMediaControlsStyleSheet):
+
+2009-01-12  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Deprecate JSValuePtr::getNumber() - two ways to get a number should  be enough.
+
+        * bindings/js/JSSQLTransactionCustom.cpp:
+        (WebCore::JSSQLTransaction::executeSql):
+        * bindings/objc/WebScriptObject.mm:
+        (+[WebScriptObject _convertValueToObjcValue:originRootObject:rootObject:]):
+
+2009-01-12  Chris Marrin  <cmarrin@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Fixed https://bugs.webkit.org/show_bug.cgi?id=22919
+
+        I added a common getElapsedTime() function to AnimationBase which uses a combination of
+        the techniques from KeyframeAnimation and AnimationBase to compute elapsedTime in all
+        states.
+
+        * page/animation/AnimationBase.cpp:
+        (WebCore::AnimationBase::progress):
+        (WebCore::AnimationBase::getElapsedTime):
+        * page/animation/AnimationBase.h:
+        * page/animation/KeyframeAnimation.cpp:
+        (WebCore::KeyframeAnimation::animate):
+
+2009-01-12  Robert Blaut  <webkit@blaut.biz>
+
+        Reviewed by Darin Adler
+
+        Fix for <https://bugs.webkit.org/show_bug.cgi?id=22096>
+        Bug 22096: REGRESSION (r35879) scrolldelay is counted in seconds 
+        instead of miliseconds
+
+        Test: fast/css/webkit-marquee-speed-unit-in-quirksmode.html
+
+        * css/CSSParser.cpp:
+        (WebCore::CSSParser::validUnit): treat unitless values in quirks mode 
+        as miliseconds instead of seconds.
+
+2009-01-12  David Hyatt  <hyatt@apple.com>
+
+        Apply the same idea as the previous fix but for matched declarations.
+
+        Reviewed by Dan Bernstein
+
+        * css/CSSStyleSelector.h:
+
+2009-01-12  Brady Eidson  <beidson@apple.com>
+
+        Reviewed by Darin Adler
+
+        <rdar://problem/6468274> - Track Non-get requests in global history
+
+        * WebCore.base.exp:
+
+        * history/HistoryItem.cpp:
+        (WebCore::HistoryItem::HistoryItem):
+        * history/HistoryItem.h:
+        (WebCore::HistoryItem::lastVisitWasHTTPNonGet):
+        (WebCore::HistoryItem::setLastVisitWasHTTPNonGet):
+
+2009-01-12  Kevin Ollivier  <kevino@theolliviers.com>
+
+        !ENABLE(SVG_FONTS) build fix. Move defaultUnitsPerEm into a non-SVG header
+        so it can be used by all builds.
+        
+        * platform/graphics/Font.h:
+        * platform/graphics/SimpleFontData.cpp:
+        * svg/SVGFontFaceElement.cpp:
+        * svg/SVGFontFaceElement.h:
+
+2009-01-12  Kevin Ollivier  <kevino@theolliviers.com>
+
+        wx build typo fix.
+
+        * platform/graphics/wx/TransformationMatrixWx.cpp:
+        (WebCore::TransformationMatrix::TransformationMatrix):
+
+2009-01-12  David Hyatt  <hyatt@apple.com>
+
+        Make sure the set of matched rules has a reserved capacity of 32.  This prevents remalloc thrash as
+        elements are matched, since the Vector is shrinking and growing over and over.  1% PLT speedup.
+
+        Reviewed by Oliver Hunt
+
+        * css/CSSStyleSelector.h:
+
+2009-01-12  David Hyatt  <hyatt@apple.com>
+
+        Optimize Element::attributeChanged to just check if accessibility is enabled up front before looking at the
+        two accessibility-related attributes.  This avoids the rest of the code for all attributes on the PLT.
+        Tiny speedup.
+
+        Reviewed by Oliver Hunt
+
+        * dom/Element.cpp:
+        (WebCore::Element::attributeChanged):
+
+2009-01-12  David Hyatt  <hyatt@apple.com>
+
+        Optimize the retrieval of line height.  If the document is not using any first-line rules, just immediately
+        default to the normal case.  Tiny speedup on PLT.
+
+        Reviewed by Oliver Hunt
+
+        * rendering/RenderFlow.cpp:
+        (WebCore::RenderFlow::lineHeight):
+
+2009-01-12  David Hyatt  <hyatt@apple.com>
+
+        Fix 0.6% regression in PLT.  Make sure not to waste time updating NSScrollView's can blit on scroll state
+        in the ScrollView constructor, since this is always going to be properly updated by FrameView anyway.
+
+        Reviewed by Oliver Hunt
+
+        * platform/ScrollView.cpp:
+        (WebCore::ScrollView::ScrollView):
+
+2009-01-12  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dan Bernstein
+
+        https://bugs.webkit.org/show_bug.cgi?id=23273
+
+        In RenderBox::repaintLayerRectsForImage(), the repaint rect does not have
+        to be computed in absolute coordintes. Instead, we compute a repaintRect
+        relative to the RenderObject, which can repaint itself.
+        
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::repaintLayerRectsForImage):
+
+2009-01-12  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dan Bernstein
+
+        https://bugs.webkit.org/show_bug.cgi?id=23220
+
+        Merge layoutDelta into LayoutState. This requires that we
+        push even when layoutState is disabled, so that layoutDelta
+        can still be stored.
+
+        * rendering/LayoutState.cpp:
+        (WebCore::LayoutState::LayoutState):
+        * rendering/LayoutState.h:
+        (WebCore::LayoutState::LayoutState):
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::layoutBlock):
+        (WebCore::RenderBlock::layoutBlockChildren):
+        (WebCore::RenderBlock::layoutOnlyPositionedObjects):
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::localToAbsolute):
+        (WebCore::RenderBox::absoluteToLocal):
+        (WebCore::RenderBox::computeAbsoluteRepaintRect):
+        * rendering/RenderFlexibleBox.cpp:
+        (WebCore::RenderFlexibleBox::layoutBlock):
+        * rendering/RenderFlow.cpp:
+        (WebCore::RenderFlow::absoluteClippedOverflowRect):
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::updateLayerPositions):
+        * rendering/RenderTableCell.cpp:
+        (WebCore::RenderTableCell::computeAbsoluteRepaintRect):
+        (WebCore::RenderTableCell::localToAbsolute):
+        * rendering/RenderView.cpp:
+        (WebCore::RenderView::pushLayoutState):
+        * rendering/RenderView.h:
+        (WebCore::RenderView::layoutDelta):
+        (WebCore::RenderView::addLayoutDelta):
+        (WebCore::RenderView::doingFullRepaint):
+        (WebCore::RenderView::pushLayoutState):
+        (WebCore::RenderView::popLayoutState):
+        (WebCore::RenderView::layoutStateEnabled):
+        (WebCore::RenderView::layoutState):
+        (WebCore::LayoutStateMaintainer::LayoutStateMaintainer):
+        (WebCore::LayoutStateMaintainer::push):
+        (WebCore::LayoutStateMaintainer::pop):
+        * rendering/bidi.cpp:
+        (WebCore::RenderBlock::layoutInlineChildren):
+
+2009-01-12  Julien Chaffraix  <jchaffraix@pleyo.com>
+
+        Reviewed by Holger Freyther.
+
+        [Qt] Build fix after turning the fontCache to a singleton
+        https://bugs.webkit.org/show_bug.cgi?id=23253
+
+        Add a stub implementation for WebCore::fontCache() and FontCache::FontCache().
+
+        * platform/graphics/qt/FontCacheQt.cpp:
+        (WebCore::fontCache):
+        (WebCore::FontCache::FontCache):
+
+2009-01-12  Eric Roman  <eroman@chromium.org>
+ 
+        Reviewed by Darin Adler.
+ 
+        Fix some bugs with Selection::appendTrailingWhitespace().
+        https://bugs.webkit.org/show_bug.cgi?id=23232
+ 
+        Test: editing/selection/doubleclick-whitespace-crash.html
+ 
+        * editing/Selection.cpp:
+        (WebCore::makeSearchRange):
+        (WebCore::Selection::appendTrailingWhitespace):
+
+2009-01-12  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Add the first pieces of platform/graphics/chromium
+        https://bugs.webkit.org/show_bug.cgi?id=23257
+
+        * platform/graphics/chromium/ColorChromium.cpp: Added.
+        (WebCore::focusRingColor):
+        * platform/graphics/chromium/FontCacheChromiumWin.cpp: Added.
+        (WebCore::FontCache::platformInit):
+        (WebCore::isStringASCII):
+        (WebCore::LookupAltName):
+        (WebCore::FontCodepage::):
+        (WebCore::FontCodepage::if):
+        (WebCore::createFontIndirectAndGetWinName):
+        (WebCore::fontContainsCharacter):
+        (WebCore::FontCache::getFontDataForCharacters):
+        (WebCore::FontCache::alternateFamilyName):
+        (WebCore::FontCache::getSimilarFontPlatformData):
+        (WebCore::FontCache::getLastResortFallbackFont):
+        (WebCore::toGDIFontWeight):
+        (WebCore::FontCache::getGenericFontForScript):
+        (WebCore::FillLogFont):
+        (WebCore::FontCache::fontExists):
+        (WebCore::TraitsInFamilyProcData::TraitsInFamilyProcData):
+        (WebCore::traitsInFamilyEnumProc):
+        (WebCore::FontCache::getTraitsInFamily):
+        (WebCore::FontCache::createFontPlatformData):
+        * platform/graphics/chromium/FontCacheLinux.cpp: Added.
+        (WebCore::FontCache::platformInit):
+        (WebCore::FontCache::getFontDataForCharacters):
+        (WebCore::FontCache::alternateFamilyName):
+        (WebCore::FontCache::getSimilarFontPlatformData):
+        (WebCore::FontCache::getLastResortFallbackFont):
+        (WebCore::FontCache::getTraitsInFamily):
+        (WebCore::FontCache::createFontPlatformData):
+        (WebCore::FontCache::getGenericFontForScript):
+        * platform/graphics/chromium/FontChromiumWin.cpp: Added.
+        (WebCore::windowsCanHandleTextDrawing):
+        (WebCore::skiaDrawText):
+        (WebCore::PaintSkiaText):
+        (WebCore::Font::drawGlyphs):
+        (WebCore::Font::selectionRectForComplexText):
+        (WebCore::Font::drawComplexText):
+        (WebCore::Font::floatWidthForComplexText):
+        (WebCore::Font::offsetForPositionForComplexText):
+
 2009-01-12  Darin Fisher  <darin@chromium.org>
 
         Reviewed by Eric Seidel.

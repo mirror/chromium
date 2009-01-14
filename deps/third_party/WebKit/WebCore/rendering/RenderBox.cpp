@@ -575,7 +575,7 @@ void RenderBox::imageChanged(WrappedImagePtr image, const IntRect*)
 
 bool RenderBox::repaintLayerRectsForImage(WrappedImagePtr image, const FillLayer* layers, bool drawingBackground)
 {
-    IntRect absoluteRect;
+    IntRect rendererRect;
     RenderBox* layerRenderer = 0;
 
     for (const FillLayer* curLayer = layers; curLayer; curLayer = curLayer->next()) {
@@ -597,24 +597,22 @@ bool RenderBox::repaintLayerRectsForImage(WrappedImagePtr image, const FillLayer
                         rw = layerRenderer->width();
                         rh = layerRenderer->height();
                     }
-                    absoluteRect = IntRect(-layerRenderer->marginLeft(),
+                    rendererRect = IntRect(-layerRenderer->marginLeft(),
                         -layerRenderer->marginTop(),
                         max(layerRenderer->width() + layerRenderer->marginLeft() + layerRenderer->marginRight() + layerRenderer->borderLeft() + layerRenderer->borderRight(), rw),
                         max(layerRenderer->height() + layerRenderer->marginTop() + layerRenderer->marginBottom() + layerRenderer->borderTop() + layerRenderer->borderBottom(), rh));
                 } else {
                     layerRenderer = this;
-                    absoluteRect = borderBox();
+                    rendererRect = borderBox();
                 }
-
-                layerRenderer->computeAbsoluteRepaintRect(absoluteRect);
             }
 
             IntRect repaintRect;
             IntPoint phase;
             IntSize tileSize;
-            layerRenderer->calculateBackgroundImageGeometry(curLayer, absoluteRect.x(), absoluteRect.y(), absoluteRect.width(), absoluteRect.height(), repaintRect, phase, tileSize);
-            view()->repaintViewRectangle(repaintRect);
-            if (repaintRect == absoluteRect)
+            layerRenderer->calculateBackgroundImageGeometry(curLayer, rendererRect.x(), rendererRect.y(), rendererRect.width(), rendererRect.height(), repaintRect, phase, tileSize);
+            layerRenderer->repaintRectangle(repaintRect);
+            if (repaintRect == rendererRect)
                 return true;
         }
     }
@@ -996,7 +994,8 @@ IntSize RenderBox::offsetForPositionedInContainer(RenderObject* container) const
 FloatPoint RenderBox::localToAbsolute(FloatPoint localPoint, bool fixed, bool useTransforms) const
 {
     if (RenderView* v = view()) {
-        if (LayoutState* layoutState = v->layoutState()) {
+        if (v->layoutStateEnabled()) {
+            LayoutState* layoutState = v->layoutState();
             IntSize offset = layoutState->m_offset;
             offset.expand(m_x, m_y);
             localPoint += offset;
@@ -1027,7 +1026,7 @@ FloatPoint RenderBox::localToAbsolute(FloatPoint localPoint, bool fixed, bool us
 FloatPoint RenderBox::absoluteToLocal(FloatPoint containerPoint, bool fixed, bool useTransforms) const
 {
     // We don't expect absoluteToLocal() to be called during layout (yet)
-    ASSERT(!view() || !view()->layoutState());
+    ASSERT(!view() || !view()->layoutStateEnabled());
     
     if (style()->position() == FixedPosition)
         fixed = true;
@@ -1188,7 +1187,8 @@ IntRect RenderBox::absoluteClippedOverflowRect()
 void RenderBox::computeAbsoluteRepaintRect(IntRect& rect, bool fixed)
 {
     if (RenderView* v = view()) {
-        if (LayoutState* layoutState = v->layoutState()) {
+        if (v->layoutStateEnabled()) {
+            LayoutState* layoutState = v->layoutState();
             if (style()->position() == RelativePosition && m_layer)
                 rect.move(m_layer->relativePositionOffset());
 

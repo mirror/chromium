@@ -1093,12 +1093,10 @@ PassRefPtr<RenderStyle> CSSStyleSelector::styleForElement(Element* e, RenderStyl
     static bool loadedMediaStyleSheet;
     if (!loadedMediaStyleSheet && (e->hasTagName(videoTag) || e->hasTagName(audioTag))) {
         loadedMediaStyleSheet = true;
-        const String& sheetText = theme()->styleSheetForMediaControls();
-        if (!sheetText.isNull()) {
-            CSSStyleSheet* mediaControlsSheet = parseUASheet(sheetText);
-            defaultStyle->addRulesFromSheet(mediaControlsSheet, screenEval());
-            defaultPrintStyle->addRulesFromSheet(mediaControlsSheet, printEval());
-        }
+        String mediaRules = String(mediaControlsUserAgentStyleSheet, sizeof(mediaControlsUserAgentStyleSheet)) + theme()->extraMediaControlsStyleSheet();
+        CSSStyleSheet* mediaControlsSheet = parseUASheet(mediaRules);
+        defaultStyle->addRulesFromSheet(mediaControlsSheet, screenEval());
+        defaultPrintStyle->addRulesFromSheet(mediaControlsSheet, printEval());
     }
 #endif
 
@@ -2647,13 +2645,20 @@ void CSSRuleSet::addRulesFromSheet(CSSStyleSheet* sheet, const MediaQueryEvaluat
 
 static Length convertToLength(CSSPrimitiveValue *primitiveValue, RenderStyle *style, bool *ok = 0)
 {
+    // This function is tolerant of a null style value. The only place style is used is in
+    // length measurements, like 'ems' and 'px'. And in those cases style is only used
+    // when the units are EMS or EXS. So we will just fail in those cases.
     Length l;
     if (!primitiveValue) {
         if (ok)
             *ok = false;
     } else {
         int type = primitiveValue->primitiveType();
-        if (type > CSSPrimitiveValue::CSS_PERCENTAGE && type < CSSPrimitiveValue::CSS_DEG)
+        
+        if (!style && (type == CSSPrimitiveValue::CSS_EMS || type == CSSPrimitiveValue::CSS_EXS)) {
+            if (ok)
+                *ok = false;
+        } else if (type > CSSPrimitiveValue::CSS_PERCENTAGE && type < CSSPrimitiveValue::CSS_DEG)
             l = Length(primitiveValue->computeLengthIntForLength(style), Fixed);
         else if (type == CSSPrimitiveValue::CSS_PERCENTAGE)
             l = Length(primitiveValue->getDoubleValue(), Percent);

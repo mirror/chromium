@@ -312,7 +312,7 @@ void RenderFlow::dirtyLinesFromChangedChild(RenderObject* child)
 
 int RenderFlow::lineHeight(bool firstLine, bool /*isRootLineBox*/) const
 {
-    if (firstLine) {
+    if (firstLine && document()->usesFirstLineRules()) {
         RenderStyle* s = style(firstLine);
         Length lh = s->lineHeight();
         if (lh.isNegative()) {
@@ -484,7 +484,7 @@ IntRect RenderFlow::absoluteClippedOverflowRect()
 {
     if (isInlineFlow()) {
         // Only compacts and run-ins are allowed in here during layout.
-        ASSERT(!view() || !view()->layoutState() || isCompact() || isRunIn());
+        ASSERT(!view() || !view()->layoutStateEnabled() || isCompact() || isRunIn());
 
         if (!firstLineBox() && !continuation())
             return IntRect();
