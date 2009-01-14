@@ -451,6 +451,9 @@ Basic commands:
    gcl commit change_name [--force]
       Commits the changelist to the repository.
 
+   gcl lint change_name
+      Check all the files in the changelist for possible style violations.
+
 Advanced commands:
 -----------------------------------------
    gcl delete change_name
@@ -711,6 +714,28 @@ def Change(change_info):
   change_info.Save()
   print change_info.name + " changelist saved."
 
+# We don't lint files in these path prefixes.
+IGNORE_PATHS = ("webkit")
+
+# Valid extensions for files we want to lint.
+CPP_EXTENSIONS = ("cpp", "cc", "h")
+
+def Lint(change_info):
+  """Runs cpplint.py on all the files in |change_info|"""
+  try:
+    import cpplint
+  except ImportError:
+    ErrorExit("You need to install cpplint.py to lint C++ files.")
+
+  for file in change_info.files:
+    filename = file[1]
+
+    if (filename for suffix in CPP_EXTENSIONS if filename.endswith(suffix)):
+      if (filename for prefix in IGNORE_PATHS if filename.startswith(prefix)):
+        print "Ignoring non-Google styled file %s" % filename
+      else:
+        cpplint.ProcessFile(filename, 0)
+
 
 def Changes():
   """Print all the changlists and their files."""
@@ -777,6 +802,8 @@ def main(argv=None):
 
   if command == "change":
     Change(change_info)
+  elif command == "lint":
+    Lint(change_info)
   elif command == "upload":
     UploadCL(change_info, argv[3:])
   elif command == "commit":
