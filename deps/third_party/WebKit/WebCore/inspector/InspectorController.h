@@ -83,7 +83,6 @@ class InspectorController : public RefCounted<InspectorController>
 #endif
 {
 public:
-    int m_bug1228513_inspectorState;
 
     typedef HashMap<unsigned long, RefPtr<InspectorResource> > ResourcesMap;
     typedef HashMap<RefPtr<Frame>, ResourcesMap*> FrameResourcesMap;

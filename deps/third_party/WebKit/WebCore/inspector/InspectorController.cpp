@@ -88,41 +88,6 @@ namespace WebCore {
 // Maximum size of the console message cache.
 static const size_t MAX_CONSOLE_MESSAGES = 250;
 
-namespace bug1228513 {
-  // TODO(ericroman): Temporary hacks to help diagnose http://b/1228513
-
-  // To remove all these hacks, search for "bug1228513"
-  // in InspectorController.{cpp,h}
-
-  // The goal is to push useful data onto the stack, so it is available in
-  // the minidump (bug repros occasionally on chrome-bot) to:
-  // (1) distinguish whether "InspectorController* this" is:
-  //    {a valid InspectorController, a freed InspectorController, other}
-  // (2) know whether an inspector window was previously opened.
-  //     We shouldn't see this happening on chrome-bot, yet it appears
-  //     to be the case.
-  
-  enum InspectorControllerState {
-      VALID = 0x18565F18,
-      DELETED = 0x2B197D29
-  };
-  
-  static int g_totalNumShow = 0;
-  static int g_totalNumClose = 0;
-
-  struct Info {
-    int totalNumShow;
-    int totalNumClose;
-    int inspectorState;
-  };
-
-  void getInfo(Info& info, const InspectorController* inspector) {
-    info.totalNumShow = g_totalNumShow;
-    info.totalNumClose = g_totalNumClose;
-    info.inspectorState = inspector->m_bug1228513_inspectorState;
-  }
-} // namespace bug1228513
-
 struct ConsoleMessage {	
     ConsoleMessage(MessageSource s, MessageLevel l, const String& m, unsigned li, const String& u, unsigned g)	
         : source(s)	
@@ -634,7 +599,6 @@ InspectorController::InspectorController(Page* page, InspectorClient* client)
       // using a create method to initialize the InspectorController, we need
       // to start the RefCount at 0.
       RefCounted<InspectorController>(0)
-    , m_bug1228513_inspectorState(bug1228513::VALID)
     , m_trackResources(false)
     , m_inspectedPage(page)
     , m_client(client)
@@ -659,7 +623,6 @@ InspectorController::InspectorController(Page* page, InspectorClient* client)
 
 InspectorController::~InspectorController()
 {
-    m_bug1228513_inspectorState = bug1228513::DELETED;
     m_client->inspectorDestroyed();
 
     if (m_page)
@@ -682,19 +645,10 @@ void InspectorController::inspectedPageDestroyed()
 
 bool InspectorController::enabled() const
 {
-    // Copy some data onto the stack in case we crash on line
-    // "m_inspectedPage->settings()->developerExtrasEnabled();"
-    bug1228513::Info bug1228513_info;
-    bug1228513::getInfo(bug1228513_info, this);
-
     if (!m_inspectedPage)
         return false;
 
     bool b = m_inspectedPage->settings()->developerExtrasEnabled();
-
-    if (bug1228513_info.inspectorState != bug1228513::VALID) {
-        CRASH();
-    }
 
     return b;
 }
@@ -1001,8 +955,6 @@ void InspectorController::show()
     if (!enabled())
         return;
 
-    ++bug1228513::g_totalNumShow;
-
     if (!m_page) {
         m_page = m_client->createPage();
         if (!m_page)
@@ -1077,8 +1029,6 @@ void InspectorController::close()
 {
     if (!enabled())
         return;
-
-    ++bug1228513::g_totalNumClose;
 
 #if ENABLE(JAVASCRIPT_DEBUGGER)
     stopDebugging();
