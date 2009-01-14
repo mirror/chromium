@@ -715,7 +715,7 @@ def Change(change_info):
   print change_info.name + " changelist saved."
 
 # We don't lint files in these path prefixes.
-IGNORE_PATHS = ("webkit")
+IGNORE_PATHS = ("webkit",)
 
 # Valid extensions for files we want to lint.
 CPP_EXTENSIONS = ("cpp", "cc", "h")
@@ -727,14 +727,14 @@ def Lint(change_info):
   except ImportError:
     ErrorExit("You need to install cpplint.py to lint C++ files.")
 
-  for file in change_info.files:
-    filename = file[1]
+  for file_record in change_info.files:
+    file = file_record[1]
 
-    if [filename for suffix in CPP_EXTENSIONS if filename.endswith(suffix)]:
-      if [filename for prefix in IGNORE_PATHS if filename.startswith(prefix)]:
-        print "Ignoring non-Google styled file %s" % filename
+    if len([file for suffix in CPP_EXTENSIONS if file.endswith(suffix)]):
+      if len([file for prefix in IGNORE_PATHS if file.startswith(prefix)]):
+        print "Ignoring non-Google styled file %s" % file
       else:
-        cpplint.ProcessFile(filename, 0)
+        cpplint.ProcessFile(file, 0)
 
 
 def Changes():
