@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006, 2007 Apple Inc.  All rights reserved.
+ * Copyright (C) 2008, 2009 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -69,7 +70,7 @@ void PlatformKeyboardEvent::disambiguateKeyDownEvent(Type type, bool backwardCom
 bool PlatformKeyboardEvent::currentCapsLockState()
 {
 #if PLATFORM(WIN_OS)
-    // TODO(darin): does this even work inside the sandbox?
+    // FIXME: Does this even work inside the sandbox?
     return GetKeyState(VK_CAPITAL) & 1;
 #elif PLATFORM(DARWIN)
     return GetCurrentKeyModifiers() & alphaLock;
@@ -79,4 +80,4 @@ bool PlatformKeyboardEvent::currentCapsLockState()
 #endif
 }
 
-}
+} // namespace WebCore

@@ -1,59 +1,56 @@
-// Copyright (c) 2008, Google Inc.
-// All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-// 
-//     * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/*
+ * Copyright (c) 2008, 2009, Google Inc. All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ * 
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include "config.h"
 #include "PopupMenuChromium.h"
 
 #include "CharacterNames.h"
 #include "ChromeClientChromium.h"
-#include "Document.h"
 #include "Font.h"
-#include "FrameView.h"
 #include "FontSelector.h"
+#include "FrameView.h"
 #include "Frame.h"
 #include "FramelessScrollView.h"
 #include "FramelessScrollViewClient.h"
 #include "GraphicsContext.h"
 #include "IntRect.h"
 #include "KeyboardCodes.h"
-#include "NotImplemented.h"
 #include "Page.h"
 #include "PlatformKeyboardEvent.h"
 #include "PlatformMouseEvent.h"
 #include "PlatformScreen.h"
 #include "PlatformWheelEvent.h"
 #include "PopupMenu.h"
-#include "RenderBlock.h"
 #include "RenderTheme.h"
 #include "ScrollbarTheme.h"
 #include "SystemTime.h"
-#include "Widget.h"
 
 #include <wtf/CurrentTime.h>
 
@@ -120,16 +117,13 @@ public:
     // Returns the number of items in the list.
     int numItems() const { return static_cast<int>(m_items.size()); }
 
-    void setBaseWidth(int width)
-    {
-        m_baseWidth = width;
-    }
+    void setBaseWidth(int width) { m_baseWidth = width; }
 
     // Compute size of widget and children.
     void layout();
 
     // Returns whether the popup wants to process events for the passed key.
-    bool isInterestedInEventForKey(int key_code);
+    bool isInterestedInEventForKey(int keyCode);
 
     // Sets whether the PopupMenuClient should be told to change its text when a
     // new item is selected (by using the arrow keys).  Default is true.
@@ -145,9 +139,9 @@ private:
 
     // A type of List Item
     enum ListItemType {
-        TYPE_OPTION,
-        TYPE_GROUP,
-        TYPE_SEPARATOR
+        TypeOption,
+        TypeGroup,
+        TypeSeparator
     };
 
     // A item (represented by <option> or <optgroup>) in the <select> widget. 
@@ -205,16 +199,16 @@ private:
     IntRect getRowBounds(int index);
 
     // Converts a point to an index of the row the point is over
-    int pointToRowIndex(const IntPoint& point);
+    int pointToRowIndex(const IntPoint&);
 
     // Paint an individual row
-    void paintRow(GraphicsContext* gc, const IntRect& rect, int rowIndex);
+    void paintRow(GraphicsContext*, const IntRect&, int rowIndex);
 
     // Test if the given point is within the bounds of the popup window.
-    bool isPointInBounds(const IntPoint& point);
+    bool isPointInBounds(const IntPoint&);
 
     // Called when the user presses a text key.  Does a prefix-search of the items.
-    void typeAheadFind(const PlatformKeyboardEvent& event);
+    void typeAheadFind(const PlatformKeyboardEvent&);
 
     // Returns the font to use for the given row
     Font getRowFont(int index);
@@ -278,8 +272,7 @@ static PlatformMouseEvent constructRelativeMouseEvent(const PlatformMouseEvent& 
 {
     IntPoint pos = parent->convertSelfToChild(child, e.pos());
 
-    // FIXME(beng): This is a horrible hack since PlatformMouseEvent has no setters for x/y.
-    //              Need to add setters and get patch back upstream to webkit source. 
+    // FIXME: This is a horrible hack since PlatformMouseEvent has no setters for x/y.
     PlatformMouseEvent relativeEvent = e;
     IntPoint& relativePos = const_cast<IntPoint&>(relativeEvent.pos());
     relativePos.setX(pos.x());
@@ -293,8 +286,7 @@ static PlatformWheelEvent constructRelativeWheelEvent(const PlatformWheelEvent& 
 {
     IntPoint pos = parent->convertSelfToChild(child, e.pos());
 
-    // FIXME(beng): This is a horrible hack since PlatformWheelEvent has no setters for x/y.
-    //              Need to add setters and get patch back upstream to webkit source. 
+    // FIXME: This is a horrible hack since PlatformWheelEvent has no setters for x/y.
     PlatformWheelEvent relativeEvent = e;
     IntPoint& relativePos = const_cast<IntPoint&>(relativeEvent.pos());
     relativePos.setX(pos.x());
@@ -383,7 +375,7 @@ void PopupContainer::layout()
     m_listBox->move(kBorderSize, kBorderSize);
 
     // Size ourselves to contain listbox + border.
-    resize(m_listBox->width() + kBorderSize*2, m_listBox->height() + kBorderSize*2);
+    resize(m_listBox->width() + kBorderSize * 2, m_listBox->height() + kBorderSize * 2);
 
     invalidate();
 }
@@ -417,7 +409,8 @@ bool PopupContainer::handleKeyEvent(const PlatformKeyboardEvent& event)
     return m_listBox->handleKeyEvent(event);
 }
 
-void PopupContainer::hide() {
+void PopupContainer::hide()
+{
     m_listBox->abandon();
 }
 
@@ -439,7 +432,7 @@ void PopupContainer::paint(GraphicsContext* gc, const IntRect& rect)
 
 void PopupContainer::paintBorder(GraphicsContext* gc, const IntRect& rect)
 {
-    // FIXME(mpcomplete): where do we get the border color from?
+    // FIXME: Where do we get the border color from?
     Color borderColor(127, 157, 185);
 
     gc->setStrokeStyle(NoStroke);
@@ -455,11 +448,13 @@ void PopupContainer::paintBorder(GraphicsContext* gc, const IntRect& rect)
     gc->drawRect(IntRect(tx + width() - kBorderSize, ty, kBorderSize, height()));
 }
 
-bool PopupContainer::isInterestedInEventForKey(int key_code) {
-    return m_listBox->isInterestedInEventForKey(key_code);
+bool PopupContainer::isInterestedInEventForKey(int keyCode)
+{
+    return m_listBox->isInterestedInEventForKey(keyCode);
 }
 
-void PopupContainer::show(const IntRect& r, FrameView* v, int index) {
+void PopupContainer::show(const IntRect& r, FrameView* v, int index)
+{
     // The rect is the size of the select box. It's usually larger than we need.
     // subtract border size so that usually the container will be displayed 
     // exactly the same width as the select box.
@@ -469,8 +464,8 @@ void PopupContainer::show(const IntRect& r, FrameView* v, int index) {
 
     // We set the selected item in updateFromElement(), and disregard the
     // index passed into this function (same as Webkit's PopupMenuWin.cpp)
-    // TODO(ericroman): make sure this is correct, and add an assertion.
-    // DCHECK(popupWindow(popup)->listBox()->selectedIndex() == index);
+    // FIXME: make sure this is correct, and add an assertion.
+    // ASSERT(popupWindow(popup)->listBox()->selectedIndex() == index);
 
     // Convert point to main window coords.
     IntPoint location = v->contentsToWindow(r.location());
@@ -483,17 +478,20 @@ void PopupContainer::show(const IntRect& r, FrameView* v, int index) {
     showPopup(v);
 }
 
-void PopupContainer::setTextOnIndexChange(bool value) {
-  listBox()->setTextOnIndexChange(value);
+void PopupContainer::setTextOnIndexChange(bool value)
+{
+    listBox()->setTextOnIndexChange(value);
 }
 
-void PopupContainer::setAcceptOnAbandon(bool value) {
-  listBox()->setAcceptOnAbandon(value);
+void PopupContainer::setAcceptOnAbandon(bool value)
+{
+    listBox()->setAcceptOnAbandon(value);
 }
 
-void PopupContainer::refresh() {
-  listBox()->updateFromElement();
-  layout();
+void PopupContainer::refresh()
+{
+    listBox()->updateFromElement();
+    layout();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -570,8 +568,9 @@ bool PopupListBox::handleWheelEvent(const PlatformWheelEvent& event)
 }
 
 // Should be kept in sync with handleKeyEvent().
-bool PopupListBox::isInterestedInEventForKey(int key_code) {
-  switch (key_code) {
+bool PopupListBox::isInterestedInEventForKey(int keyCode)
+{
+    switch (keyCode) {
     case VKEY_ESCAPE:
     case VKEY_RETURN:
     case VKEY_UP:
@@ -581,10 +580,10 @@ bool PopupListBox::isInterestedInEventForKey(int key_code) {
     case VKEY_HOME:
     case VKEY_END:
     case VKEY_TAB:
-      return true;
+        return true;
     default:
-      return false;
-  }
+        return false;
+    }
 }
 
 bool PopupListBox::handleKeyEvent(const PlatformKeyboardEvent& event)
@@ -621,10 +620,9 @@ bool PopupListBox::handleKeyEvent(const PlatformKeyboardEvent& event)
         adjustSelectedIndex(m_items.size());
         break;
     default:
-        if (!event.ctrlKey() && !event.altKey() && !event.metaKey() &&
-            isPrintableChar(event.windowsVirtualKeyCode())) {
+        if (!event.ctrlKey() && !event.altKey() && !event.metaKey()
+            && isPrintableChar(event.windowsVirtualKeyCode()))
             typeAheadFind(event);
-        }
         break;
     }
 
@@ -634,13 +632,12 @@ bool PopupListBox::handleKeyEvent(const PlatformKeyboardEvent& event)
         // IE).  We change the original index so we revert to that when the
         // popup is closed.
         if (m_shouldAcceptOnAbandon)
-          m_willAcceptOnAbandon = true;
+            m_willAcceptOnAbandon = true;
 
         setOriginalIndex(m_selectedIndex);
         if (m_setTextOnIndexChange)
             m_popupClient->setTextFromItem(m_selectedIndex);
-    } else if (!m_setTextOnIndexChange &&
-               event.windowsVirtualKeyCode() == VKEY_TAB) {
+    } else if (!m_setTextOnIndexChange && event.windowsVirtualKeyCode() == VKEY_TAB) {
         // TAB is a special case as it should select the current item if any and
         // advance focus.
         if (m_selectedIndex >= 0)
@@ -674,8 +671,8 @@ static String stripLeadingWhiteSpace(const String& string)
     int length = string.length();
     int i;
     for (i = 0; i < length; ++i)
-        if (string[i] != noBreakSpace &&
-            (string[i] <= 0x7F ? !isspace(string[i]) : (direction(string[i]) != WhiteSpaceNeutral)))
+        if (string[i] != noBreakSpace
+            && (string[i] <= 0x7F ? !isspace(string[i]) : (direction(string[i]) != WhiteSpaceNeutral)))
             break;
 
     return string.substring(i, length - i);
@@ -736,8 +733,8 @@ void PopupListBox::paint(GraphicsContext* gc, const IntRect& rect)
     gc->translate(static_cast<float>(tx), static_cast<float>(ty));
     gc->clip(r);
 
-    // TODO(mpcomplete): Can we optimize scrolling to not require repainting the
-    // entire window?  Should we?
+    // FIXME: Can we optimize scrolling to not require repainting the entire
+    // window?  Should we?
     for (int i = 0; i < numItems(); ++i)
         paintRow(gc, r, i);
 
@@ -801,8 +798,8 @@ void PopupListBox::paintRow(GraphicsContext* gc, const IntRect& rect, int rowInd
 
     TextRun textRun(str, length, false, 0, 0, itemText.defaultWritingDirection() == WTF::Unicode::RightToLeft);
 
-    // TODO(ojan): http://b/1210481 We should get the padding of individual
-    // option elements.  This probably implies changes to PopupMenuClient.
+    // FIXME: http://b/1210481 We should get the padding of individual option
+    // elements.  This probably implies changes to PopupMenuClient.
 
     // Draw the item text
     if (style.isVisible()) {
@@ -845,7 +842,7 @@ int PopupListBox::pointToRowIndex(const IntPoint& point)
 {
     int y = scrollY() + point.y();
 
-    // TODO(mpcomplete): binary search if perf matters.
+    // FIXME: binary search if perf matters.
     for (int i = 0; i < numItems(); ++i) {
         if (y < m_items[i]->y)
             return i-1;
@@ -899,20 +896,18 @@ void PopupListBox::setOriginalIndex(int index)
 
 int PopupListBox::getRowHeight(int index)
 {
-    if (index >= 0) {
-        return m_popupClient->itemStyle(index).font().height();
-    } else {
+    if (index < 0)
         return 0;
-    }
+
+    return m_popupClient->itemStyle(index).font().height();
 }
 
 IntRect PopupListBox::getRowBounds(int index)
 {
-    if (index >= 0) {
-        return IntRect(0, m_items[index]->y, visibleWidth(), getRowHeight(index));
-    } else {
+    if (index < 0)
         return IntRect(0, 0, visibleWidth(), getRowHeight(index));
-    }
+
+    return IntRect(0, m_items[index]->y, visibleWidth(), getRowHeight(index));
 }
 
 void PopupListBox::invalidateRow(int index)
@@ -940,8 +935,7 @@ void PopupListBox::scrollToRevealRow(int index)
 }
 
 bool PopupListBox::isSelectableItem(int index) {
-    return m_items[index]->type == TYPE_OPTION &&
-           m_popupClient->itemIsEnabled(index);
+    return m_items[index]->type == TypeOption && m_popupClient->itemIsEnabled(index);
 }
 
 void PopupListBox::adjustSelectedIndex(int delta)
@@ -995,11 +989,11 @@ void PopupListBox::updateFromElement()
     for (int i = 0; i < size; ++i) {
         ListItemType type;
         if (m_popupClient->itemIsSeparator(i))
-            type = PopupListBox::TYPE_SEPARATOR;
+            type = PopupListBox::TypeSeparator;
         else if (m_popupClient->itemIsLabel(i))
-            type = PopupListBox::TYPE_GROUP;
+            type = PopupListBox::TypeGroup;
         else
-            type = PopupListBox::TYPE_OPTION;
+            type = PopupListBox::TypeOption;
         m_items.append(new ListItem(m_popupClient->itemText(i), type));
     }
 
@@ -1028,7 +1022,7 @@ void PopupListBox::layout()
             int width = itemFont.width(TextRun(text));
             baseWidth = max(baseWidth, width);
         }
-        // TODO(ojan): http://b/1210481 We should get the padding of individual option elements.
+        // FIXME: http://b/1210481 We should get the padding of individual option elements.
         paddingWidth = max(paddingWidth, 
             m_popupClient->clientPaddingLeft() + m_popupClient->clientPaddingRight());
     }
@@ -1081,7 +1075,6 @@ bool PopupListBox::isPointInBounds(const IntPoint& point)
     return numItems() != 0 && IntRect(0, 0, width(), height()).contains(point);
 }
 
-
 ///////////////////////////////////////////////////////////////////////////////
 // PopupMenu implementation
 // 
@@ -1101,21 +1094,21 @@ PopupMenu::~PopupMenu()
 
 void PopupMenu::show(const IntRect& r, FrameView* v, int index) 
 {
-    p.m_popup = PopupContainer::create(client(), true);
-    p.m_popup->show(r, v, index);
+    p.popup = PopupContainer::create(client(), true);
+    p.popup->show(r, v, index);
 }
 
 void PopupMenu::hide()
 {
-    if (p.m_popup) {
-        p.m_popup->hidePopup();
-        p.m_popup = 0;
+    if (p.popup) {
+        p.popup->hidePopup();
+        p.popup = 0;
     }
 }
 
 void PopupMenu::updateFromElement()
 {
-    p.m_popup->listBox()->updateFromElement();
+    p.popup->listBox()->updateFromElement();
 }
 
 bool PopupMenu::itemWritingDirectionIsNatural() 

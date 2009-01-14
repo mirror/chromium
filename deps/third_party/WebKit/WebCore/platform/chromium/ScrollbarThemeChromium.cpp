@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2008 Apple Inc. All Rights Reserved.
+ * Copyright (C) 2008, 2009 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -196,4 +197,4 @@ IntSize ScrollbarThemeChromium::buttonSize(Scrollbar* scrollbar)
     return IntSize(thickness, height);
 }
 
-}  // namespace WebCore
+} // namespace WebCore

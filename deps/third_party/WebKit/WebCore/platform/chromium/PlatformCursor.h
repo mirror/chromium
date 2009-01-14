@@ -40,59 +40,59 @@ namespace WebCore {
     class PlatformCursor {
     public:
         enum Type {
-            typePointer,
-            typeCross,
-            typeHand,
-            typeIBeam,
-            typeWait,
-            typeHelp,
-            typeEastResize,
-            typeNorthResize,
-            typeNorthEastResize,
-            typeNorthWestResize,
-            typeSouthResize,
-            typeSouthEastResize,
-            typeSouthWestResize,
-            typeWestResize,
-            typeNorthSouthResize,
-            typeEastWestResize,
-            typeNorthEastSouthWestResize,
-            typeNorthWestSouthEastResize,
-            typeColumnResize,
-            typeRowResize,
-            typeMiddlePanning,
-            typeEastPanning,
-            typeNorthPanning,
-            typeNorthEastPanning,
-            typeNorthWestPanning,
-            typeSouthPanning,
-            typeSouthEastPanning,
-            typeSouthWestPanning,
-            typeWestPanning,
-            typeMove,
-            typeVerticalText,
-            typeCell,
-            typeContextMenu,
-            typeAlias,
-            typeProgress,
-            typeNoDrop,
-            typeCopy,
-            typeNone,
-            typeNotAllowed,
-            typeZoomIn,
-            typeZoomOut,
-            typeCustom
+            TypePointer,
+            TypeCross,
+            TypeHand,
+            TypeIBeam,
+            TypeWait,
+            TypeHelp,
+            TypeEastResize,
+            TypeNorthResize,
+            TypeNorthEastResize,
+            TypeNorthWestResize,
+            TypeSouthResize,
+            TypeSouthEastResize,
+            TypeSouthWestResize,
+            TypeWestResize,
+            TypeNorthSouthResize,
+            TypeEastWestResize,
+            TypeNorthEastSouthWestResize,
+            TypeNorthWestSouthEastResize,
+            TypeColumnResize,
+            TypeRowResize,
+            TypeMiddlePanning,
+            TypeEastPanning,
+            TypeNorthPanning,
+            TypeNorthEastPanning,
+            TypeNorthWestPanning,
+            TypeSouthPanning,
+            TypeSouthEastPanning,
+            TypeSouthWestPanning,
+            TypeWestPanning,
+            TypeMove,
+            TypeVerticalText,
+            TypeCell,
+            TypeContextMenu,
+            TypeAlias,
+            TypeProgress,
+            TypeNoDrop,
+            TypeCopy,
+            TypeNone,
+            TypeNotAllowed,
+            TypeZoomIn,
+            TypeZoomOut,
+            TypeCustom
         };
 
         // Cursor.h assumes that it can initialize us to 0.
-        explicit PlatformCursor(int type = 0) : m_type(typePointer) {}
+        explicit PlatformCursor(int type = 0) : m_type(TypePointer) {}
         
         PlatformCursor(Type type) : m_type(type) {}
 
         PlatformCursor(Image* image, const IntPoint& hotSpot)
             : m_image(image)
             , m_hotSpot(hotSpot)
-            , m_type(typeCustom) {}
+            , m_type(TypeCustom) {}
 
         PassRefPtr<Image> customImage() const { return m_image; }
         const IntPoint& hotSpot() const { return m_hotSpot; }
