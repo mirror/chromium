@@ -126,9 +126,17 @@ void ApplicationCacheGroup::selectCache(Frame* frame, const KURL& manifestURL)
             mainResourceCache->group()->associateDocumentLoaderWithCache(documentLoader, mainResourceCache);
             mainResourceCache->group()->update(frame);
         } else {
-            // FIXME: If the resource being loaded was loaded from an application cache and the URI of 
-            // that application cache's manifest is not the same as the manifest URI with which the algorithm was invoked
-            // then we should "undo" the navigation.
+            // The main resource was loaded from cache, so the cache must have an entry for it. Mark it as foreign.
+            ApplicationCacheResource* resource = mainResourceCache->resourceForURL(documentLoader->url());
+            bool inStorage = resource->storageID();
+            resource->addType(ApplicationCacheResource::Foreign);
+            if (inStorage)
+                cacheStorage().storeUpdatedType(resource, mainResourceCache);
+
+            // Restart the current navigation from the top of the navigation algorithm, undoing any changes that were made
+            // as part of the initial load.
+            // The navigation will not result in the same resource being loaded, because "foreign" entries are never picked during navigation.
+            frame->loader()->scheduleLocationChange(documentLoader->url(), frame->loader()->referrer(), true);
         }
         
         return;
@@ -275,26 +283,22 @@ void ApplicationCacheGroup::documentLoaderDestroyed(DocumentLoader* loader)
     if (!m_associatedDocumentLoaders.isEmpty() || !m_cacheCandidates.isEmpty())
         return;
 
-    // This was the last document loader referencing the cache group, so there is at most one cache remaining in the group.
-    // If there are none, this was an initial cache attempt.
-
-    if (m_caches.size() == 1) {
-        ASSERT(m_caches.contains(m_newestCache.get()));
-
-        // Release our reference to the newest cache. This could cause us to be deleted.
-        // Any ongoing updates will be stopped from destructor.
-        m_savedNewestCachePointer = m_newestCache.release().get();
-
+    if (m_caches.size() == 0) {
+        // There is an initial cache attempt in progress.
+        ASSERT(m_cacheBeingUpdated);
+        ASSERT(!m_newestCache);
+        // Delete ourselves, causing the cache attempt to be stopped.
+        delete this;
         return;
     }
-    
-    // There is an initial cache attempt in progress
-    ASSERT(m_cacheBeingUpdated);
-    ASSERT(m_caches.size() == 0);
-    
-    // Delete ourselves, causing the cache attempt to be stopped.
-    delete this;
-}    
+
+    ASSERT(m_caches.contains(m_newestCache.get()));
+
+    // Release our reference to the newest cache. This could cause us to be deleted.
+    // Any ongoing updates will be stopped from destructor.
+    m_savedNewestCachePointer = m_newestCache.get();
+    m_newestCache.release();
+}
 
 void ApplicationCacheGroup::cacheDestroyed(ApplicationCache* cache)
 {
@@ -312,11 +316,10 @@ void ApplicationCacheGroup::cacheDestroyed(ApplicationCache* cache)
 }
 
 void ApplicationCacheGroup::setNewestCache(PassRefPtr<ApplicationCache> newestCache)
-{ 
-    ASSERT(!m_newestCache);
+{
     ASSERT(!m_caches.contains(newestCache.get()));
     ASSERT(!newestCache->group());
-           
+
     m_newestCache = newestCache; 
     m_caches.add(m_newestCache.get());
     m_newestCache->setGroup(this);
