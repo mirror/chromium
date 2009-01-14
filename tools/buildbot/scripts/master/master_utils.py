@@ -174,7 +174,7 @@ class MasterFactory(object):
     if self._ShouldRunTest(tests, 'valgrind_ipc'):
       factory_cmd_obj.AddValgrindTest('ipc')
     if self._ShouldRunTest(tests, 'purify_ui'):
-      factory_cmd_obj.AddPurifyTest('ui')
+      factory_cmd_obj.AddPurifyTest('ui', timeout=3600)
     if self._ShouldRunTest(tests, 'purify_layout'):
       factory_cmd_obj.AddPurifyTest('layout', timeout=3600)
     if self._ShouldRunTest(tests, 'selenium'):
