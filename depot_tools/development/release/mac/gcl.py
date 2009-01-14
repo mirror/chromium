@@ -730,8 +730,8 @@ def Lint(change_info):
   for file in change_info.files:
     filename = file[1]
 
-    if (filename for suffix in CPP_EXTENSIONS if filename.endswith(suffix)):
-      if (filename for prefix in IGNORE_PATHS if filename.startswith(prefix)):
+    if [filename for suffix in CPP_EXTENSIONS if filename.endswith(suffix)]:
+      if [filename for prefix in IGNORE_PATHS if filename.startswith(prefix)]:
         print "Ignoring non-Google styled file %s" % filename
       else:
         cpplint.ProcessFile(filename, 0)
