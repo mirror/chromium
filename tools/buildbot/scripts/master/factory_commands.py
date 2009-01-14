@@ -165,7 +165,7 @@ class FactoryCommands(object):
 
     # Valgrind isn't in the script_dir, it's out on its own.
     self._valgrind_tool = self.PathJoin('src', 'tools', 'valgrind',
-                                        'chrome_tests.py')
+                                        'chrome_tests.sh')
 
     # These tools aren't in the script_dir either.
     # TODO(pamg): For consistency, move them into the script_dir if possible.
@@ -386,7 +386,7 @@ class FactoryCommands(object):
     relative to the master.xxx base directory.
     """
     zip_name = '%s.zip' % self._identifier
-    return self.PathJoin('build_output', zip_name)
+    return os.path.join('build_output', zip_name)
 
   def AddUploadBuild(self):
     """Adds a step to upload the target folder.
@@ -863,7 +863,7 @@ class FactoryCommands(object):
     """Returns a command list to call the _valgrind_tool on the given exe,
     passing the arg_list, if any, to that executable.
     """
-    cmd = [self._python, self._valgrind_tool,
+    cmd = ['sh', self._valgrind_tool,
            '--build_dir', os.path.join(self._build_dir, self._target),
            '--test', test_name]
     return cmd
