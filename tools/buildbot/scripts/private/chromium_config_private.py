@@ -27,6 +27,7 @@ class Master(object):
 
   class TryServer(object):
     master_host = 'localhost'
+    svn_url = ''
 
 
 class Installer(object):
