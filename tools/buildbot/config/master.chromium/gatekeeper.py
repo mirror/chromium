@@ -136,15 +136,20 @@ class GateKeeper(MailNotifier):
             return self.closeTree(name, build, step_text)
 
   def closeTree(self, name, build, step_text):
-    # Check if the tree is already closed or not:
-    status = urllib.urlopen(self._TREE_STATUS_URL).read()
-    if status.find('0') == -1:
-      # Post a request to close the tree
-      message = 'Tree is closed (Automatic: "%s" on "%s")' % (step_text, name)
-      params = urllib.urlencode({'message': message, "change": "Change"})
-      urllib.urlopen(self._TREE_CLOSER_URL, params)
+    # Check if the tree is already closed or not.
+    if urllib.urlopen(self._TREE_STATUS_URL).read().find('0') == -1:
       # Send the notification email
-      return self.buildMessage(name, build, step_text)
+      defered_object = self.buildMessage(name, build, step_text)
+
+      # Post a request to close the tree.
+      message = 'Tree is closed (Automatic: "%s" on "%s")' % (step_text, name)
+      password_file = file(".status_password")
+      params = urllib.urlencode({'message': message,
+                                 'username': 'buildbot@chromium.org',
+                                 'password': password_file.read().strip()})
+      urllib.urlopen(self._TREE_CLOSER_URL, params)
+
+      return defered_object
 
   def buildMessage(self, name, build, step_text):
     """Send an email about the tree closing.
@@ -169,8 +174,6 @@ class GateKeeper(MailNotifier):
 
 %sSlave history: %swaterfall?builder=%s
 
-Build Reason: %s
-
 --=>  %s  <=--
 
 Buildbot waterfall: http://build.chromium.org/
@@ -178,7 +181,6 @@ Buildbot waterfall: http://build.chromium.org/
        patch_url_text,
        urllib.quote(waterfall_url, '/:'),
        urllib.quote(name),
-       build.getReason(),
        status_text)
     # TODO(maruel): Add the content of the steps in the email instead of forcing
     # users to clicks a link.
