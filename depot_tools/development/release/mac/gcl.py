@@ -539,7 +539,15 @@ def UploadCL(change_info, args):
 
   desc_file = ""
   if change_info.issue:  # Uploading a new patchset.
-    upload_arg.append("--message=''")
+    found_message = False
+    for arg in args:
+      if arg.startswith("--message") or arg.startswith("-m"):
+        found_message = True
+        break
+
+    if not found_message:
+      upload_arg.append("--message=''")
+
     upload_arg.append("--issue=" + change_info.issue)
   else: # First time we upload.
     handle, desc_file = tempfile.mkstemp(text=True)
