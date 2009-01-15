@@ -12,12 +12,12 @@ from buildbot import interfaces
 from buildbot import util
 from buildbot.status import mail
 from buildbot.status.builder import FAILURE, SUCCESS, WARNINGS
+from buildbot.status.web.base import IBox
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
 from email.Utils import formatdate
 from twisted.internet import defer
 from zope.interface import implements
-from buildbot.status.web.base import IBox
 
 
 class Domain(util.ComparableMixin):
@@ -95,7 +95,7 @@ class MailNotifier(mail.MailNotifier):
   <a href="%s">%s</a><p>
   <table border="0" cellspacing="0">
     <tr>
-    """ % (subject, css, waterfall_url, waterfall_url, status_text, build_url,
+    """ % (subject, waterfall_url, waterfall_url, status_text, build_url,
            build_url))
 
     # With a hack to fix the url root.

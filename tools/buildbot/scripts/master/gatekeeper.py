@@ -21,7 +21,9 @@ from buildbot import interfaces
 from buildbot import util
 from buildbot.status.builder import FAILURE
 from buildbot.status.mail import MailNotifier
-from email.Message import Message
+from buildbot.status.web.base import IBox
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEText import MIMEText
 from email.Utils import formatdate
 from twisted.internet import defer
 from zope.interface import implements
@@ -140,7 +142,7 @@ class GateKeeper(MailNotifier):
     if urllib.urlopen(self._TREE_STATUS_URL).read().find('0') == -1:
       # Send the notification email
       defered_object = self.buildMessage(name, build, step_text)
-
+      
       # Post a request to close the tree.
       message = 'Tree is closed (Automatic: "%s" on "%s")' % (step_text, name)
       password_file = file(".status_password")
@@ -161,36 +163,75 @@ class GateKeeper(MailNotifier):
     job_stamp = build.getSourceStamp()
     build_url = self.status.getURLForThing(build)
     waterfall_url = self.status.getBuildbotURL()
-
-    patch_url_text = ''
-    if job_stamp and job_stamp.patch:
-      patch_url_text = 'Patch: %s/steps/gclient/logs/patch\n\n' % build_url
-
     status_text = ('Automatically closing tree for "%s" on "%s"' %
                    (step_text, name))
-    res = 'failure'
 
-    text = """Run details: %s
+    class DummyObject(object):
+      pass
+    request = DummyObject()
+    request.prepath = None
 
-%sSlave history: %swaterfall?builder=%s
+    # Generate a HTML table looking like the waterfall.
+    # WARNING: Gmail ignores embedded CSS style. I don't know how to fix that so
+    # meanwhile, I will just not embedded the CSS style.
+    html_content = (
+"""<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>%s</title>
+</head>
+<body>
+  <a href="%s">%s</a><p>
+  %s<p>
+  <a href="%s">%s</a><p>
+  <table border="0" cellspacing="0">
+    <tr>
+    """ % (status_text, waterfall_url, waterfall_url, status_text, build_url,
+           build_url))
+
+    # With a hack to fix the url root.
+    html_content += IBox(build).getBox(request).td(align='center').replace(
+        'href="builders/',
+        'href="' + waterfall_url + 'builders/')
+    html_content += '    </tr>\n'
+    for step in build.getSteps():
+      if step.getText():
+        html_content += '    <tr>\n    '
+        # With a hack to fix the url root.
+        html_content += IBox(step).getBox(request).td(align='center').replace(
+            'href="builders/',
+            'href="' + waterfall_url + 'builders/')
+        html_content += '    </tr>\n'
+    html_content += """  </table>
+</body>
+</html>
+"""
+
+    # Simpler text content for non-html aware clients.
+    text_content = (
+"""%s
+
+%s
+
+%swaterfall?builder=%s
 
 --=>  %s  <=--
 
 Buildbot waterfall: http://build.chromium.org/
-""" % (build_url,
-       patch_url_text,
+""" % (status_text,
+       build_url,
        urllib.quote(waterfall_url, '/:'),
        urllib.quote(name),
-       status_text)
-    # TODO(maruel): Add the content of the steps in the email instead of forcing
-    # users to clicks a link.
+       status_text))
 
-    m = Message()
-    m.set_payload(text)
+    m = MIMEMultipart('alternative')
+    # The HTML message, is best and preferred.
+    m.attach(MIMEText(text_content, 'plain', 'iso-8859-1'))
+    m.attach(MIMEText(html_content, 'html', 'iso-8859-1'))    
 
     m['Date'] = formatdate(localtime=True)
     m['Subject'] = self.subject % {
-        'result': res,
+        'result': 'failure',
         'projectName': projectName,
         'builder': name,
         'reason': build.getReason(),
