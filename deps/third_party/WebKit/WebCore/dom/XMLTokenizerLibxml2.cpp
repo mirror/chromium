@@ -972,7 +972,7 @@ static inline bool hackAroundLibXMLEntityBug(void* closure)
 {
 #if LIBXML_VERSION >= 20627
     UNUSED_PARAM(closure);
-    
+
     // This bug has been fixed in libxml 2.6.27.
     return false;
 #else
