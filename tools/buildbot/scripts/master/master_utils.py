@@ -404,6 +404,7 @@ class MasterFactory(object):
     # We want to purify layout test to run over and over
     if 'purify_layout' in tests:
       factory.addStep(trigger.Trigger(schedulerNames=['purify'],
+                                      updateSourceStamp=False,
                                       waitForFinish=False))
 
     return factory
