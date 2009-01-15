@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2007 Apple Inc. All rights reserved.
+ * Copyright (C) 2008, 2009 Google Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -28,4 +29,4 @@ const char* currentTextBreakLocaleID()
     return "en_us";
 }
 
-}
+} // namespace WebCore

@@ -55,6 +55,7 @@
 #include <wtf/Platform.h>
 #include <wtf/StringExtras.h>
 #include <wtf/Threading.h>
+#include <wtf/UnusedParam.h>
 #include <wtf/Vector.h>
 
 #if ENABLE(XSLT)
@@ -970,6 +971,8 @@ static inline XMLTokenizer* getTokenizer(void* closure)
 static inline bool hackAroundLibXMLEntityBug(void* closure)
 {
 #if LIBXML_VERSION >= 20627
+    UNUSED_PARAM(closure);
+    
     // This bug has been fixed in libxml 2.6.27.
     return false;
 #else

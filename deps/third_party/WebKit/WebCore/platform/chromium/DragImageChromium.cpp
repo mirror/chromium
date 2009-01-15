@@ -37,6 +37,7 @@ namespace WebCore {
 
 IntSize dragImageSize(DragImageRef image)
 {
+    notImplemented();
     return IntSize();
 }
 

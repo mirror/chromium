@@ -101,19 +101,18 @@ bool FontPlatformData::operator==(const FontPlatformData& a) const
     // special deleted value) then we test for pointer equality. Otherwise, we
     // call SkTypeface::Equal on the valid pointers.
     bool typefacesEqual;
-    if (m_typeface == hashTableDeletedFontValue() ||
-        a.m_typeface == hashTableDeletedFontValue() ||
-        !m_typeface ||
-        !a.m_typeface) {
+    if (m_typeface == hashTableDeletedFontValue()
+        || a.m_typeface == hashTableDeletedFontValue()
+        || !m_typeface
+        || !a.m_typeface)
         typefacesEqual = m_typeface == a.m_typeface;
-    } else {
+    else
         typefacesEqual = SkTypeface::Equal(m_typeface, a.m_typeface);
-    }
 
-    return typefacesEqual &&
-        m_textSize == a.m_textSize &&
-        m_fakeBold == a.m_fakeBold &&
-        m_fakeItalic == a.m_fakeItalic;
+    return typefacesEqual 
+        && m_textSize == a.m_textSize
+        && m_fakeBold == a.m_fakeBold
+        && m_fakeItalic == a.m_fakeItalic;
 }
 
 unsigned FontPlatformData::hash() const

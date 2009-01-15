@@ -46,8 +46,7 @@ namespace WebCore {
 
 class FontDescription;
 
-class FontPlatformData
-{
+class FontPlatformData {
 public:
     // Used for deleted values in the font cache's hash tables. The hash table
     // will create us with this structure, and it will compare other values

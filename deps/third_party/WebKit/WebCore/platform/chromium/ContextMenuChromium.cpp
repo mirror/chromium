@@ -57,7 +57,7 @@ unsigned ContextMenu::itemCount() const
     return 0;
 }
 
-void ContextMenu::insertItem(unsigned int position, ContextMenuItem& item)
+void ContextMenu::insertItem(unsigned position, ContextMenuItem& item)
 {
 }
 

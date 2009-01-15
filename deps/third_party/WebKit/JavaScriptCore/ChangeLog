@@ -1,3 +1,63 @@
+2009-01-14  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by Cameron Zwarich.
+
+        Bug 22903: REGRESSION (r36267): visiting this site reliably crashes WebKit nightly
+
+        EvalCodeBlock's do not reference the functions that are declared inside the eval
+        code, this means that simply marking the EvalCodeBlock through the global object
+        is insufficient to mark the declared functions.  This patch corrects this by
+        explicitly marking the CodeBlocks of all the functions declared in the cached
+        EvalNode.
+
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::mark):
+        * bytecode/CodeBlock.h:
+        (JSC::CodeBlock::hasFunctions):
+        * bytecode/EvalCodeCache.h:
+        (JSC::EvalCodeCache::mark):
+        * parser/Nodes.cpp:
+        (JSC::ScopeNodeData::mark):
+        (JSC::EvalNode::mark):
+        * parser/Nodes.h:
+
+2009-01-14  Dmitry Titov  <dimich@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23312
+        Implement MessageQueue::waitForMessageTimed()
+        Also fixed ThreadCondition::timedWait() to take absolute time, as discussed on webkit-dev.
+        Win32 version of timedWait still has to be implemented.
+
+        * wtf/MessageQueue.h:
+        (WTF::MessageQueueWaitResult: new enum for the result of MessageQueue::waitForMessageTimed.
+        (WTF::MessageQueue::waitForMessage):
+        (WTF::MessageQueue::waitForMessageTimed): New method.
+        * wtf/Threading.h:
+        * wtf/ThreadingGtk.cpp:
+        (WTF::ThreadCondition::timedWait): changed to use absolute time instead of interval.
+        * wtf/ThreadingNone.cpp:
+        (WTF::ThreadCondition::timedWait): ditto.
+        * wtf/ThreadingPthreads.cpp:
+        (WTF::ThreadCondition::timedWait): ditto.
+        * wtf/ThreadingQt.cpp:
+        (WTF::ThreadCondition::timedWait): ditto.
+        * wtf/ThreadingWin.cpp:
+        (WTF::ThreadCondition::timedWait): ditto. The actual Win32 code is still to be implemented.
+
+2009-01-14  Dean McNamee  <deanm@chromium.org>
+
+        Reviewed by Darin Adler and Oliver hunt.
+
+        Correctly match allocation functions by implementing a custom deref().
+
+        https://bugs.webkit.org/show_bug.cgi?id=23315
+
+        * runtime/ByteArray.h:
+        (JSC::ByteArray::deref):
+        (JSC::ByteArray::ByteArray):
+
 2009-01-14  Dan Bernstein  <mitz@apple.com>
 
         Reviewed by John Sullivan.

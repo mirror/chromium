@@ -38,7 +38,7 @@
 
 namespace WebCore {
 
-int windowsKeyCodeForKeyEvent(unsigned int keycode)
+int windowsKeyCodeForKeyEvent(unsigned keycode)
 {
     switch (keycode) {
     case GDK_KP_0:

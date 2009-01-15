@@ -30,6 +30,9 @@
 
 // A collection of utilities for font handling.
 
+// FIXME: Move all methods to the files that have their callsites and remove this file.
+// *Utils files are not very WebKit-ty.
+
 #ifndef FontUtilsWin_h
 #define FontUtilsWin_h
 

@@ -79,8 +79,7 @@ void Pasteboard::writeSelection(Range* selectedRange, bool canSmartCopyOrDelete,
 #endif
     replaceNBSPWithSpace(plainText);
 
-    ChromiumBridge::clipboardWriteSelection(html, url, plainText,
-                                            canSmartCopyOrDelete);
+    ChromiumBridge::clipboardWriteSelection(html, url, plainText, canSmartCopyOrDelete);
 }
 
 void Pasteboard::writeURL(const KURL& url, const String& titleStr, Frame* frame)

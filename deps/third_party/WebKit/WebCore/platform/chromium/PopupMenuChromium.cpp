@@ -74,12 +74,12 @@ static const TimeStamp kTypeAheadTimeoutMs = 1000;
 class PopupListBox : public FramelessScrollView, public RefCounted<PopupListBox> {
 public:
     // FramelessScrollView
-    virtual void paint(GraphicsContext* gc, const IntRect& rect);
-    virtual bool handleMouseDownEvent(const PlatformMouseEvent& event);
-    virtual bool handleMouseMoveEvent(const PlatformMouseEvent& event);
-    virtual bool handleMouseReleaseEvent(const PlatformMouseEvent& event);
-    virtual bool handleWheelEvent(const PlatformWheelEvent& event);
-    virtual bool handleKeyEvent(const PlatformKeyboardEvent& event);
+    virtual void paint(GraphicsContext*, const IntRect&);
+    virtual bool handleMouseDownEvent(const PlatformMouseEvent&);
+    virtual bool handleMouseMoveEvent(const PlatformMouseEvent&);
+    virtual bool handleMouseReleaseEvent(const PlatformMouseEvent&);
+    virtual bool handleWheelEvent(const PlatformWheelEvent&);
+    virtual bool handleKeyEvent(const PlatformKeyboardEvent&);
 
     // ScrollView
     virtual HostWindow* hostWindow() const;

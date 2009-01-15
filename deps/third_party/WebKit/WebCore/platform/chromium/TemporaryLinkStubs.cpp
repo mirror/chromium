@@ -45,9 +45,6 @@ PassRefPtr<SharedBuffer> SharedBuffer::createWithContentsOfFile(const String&) {
 
 } // namespace WebCore
 
-// Required to use notImplemented() outside of the WebCore namespace.
-using namespace WebCore;
-
 namespace WTF {
 
 #if !defined(__linux__)

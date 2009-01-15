@@ -33,7 +33,7 @@
 
 namespace WebCore {
 
-    int windowsKeyCodeForKeyEvent(unsigned int keycode);
+    int windowsKeyCodeForKeyEvent(unsigned keycode);
 
 } // namespace WebCore
 

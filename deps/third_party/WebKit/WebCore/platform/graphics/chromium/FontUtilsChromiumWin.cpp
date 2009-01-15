@@ -293,7 +293,8 @@ bool getDerivedFontData(const UChar* family,
                         LOGFONT* logfont,
                         int* ascent,
                         HFONT* hfont,
-                        SCRIPT_CACHE** scriptCache) {
+                        SCRIPT_CACHE** scriptCache)
+{
     ASSERT(logfont);
     ASSERT(family);
     ASSERT(*family);
@@ -335,7 +336,8 @@ bool getDerivedFontData(const UChar* family,
     return *ascent != kUndefinedAscent;
 }
 
-int getStyleFromLogfont(const LOGFONT* logfont) {
+int getStyleFromLogfont(const LOGFONT* logfont)
+{
     // FIXME: consider defining UNDEFINED or INVALID for style and
     //                  returning it when logfont is 0
     if (!logfont) {

@@ -48,19 +48,19 @@ Icon::~Icon()
 
 PassRefPtr<Icon> Icon::createIconForFile(const String&)
 {
-  notImplemented();
-  return 0;
+    notImplemented();
+    return 0;
 }
 
 PassRefPtr<Icon> Icon::createIconForFiles(const Vector<String>&)
 {
-  notImplemented();
-  return 0;
+    notImplemented();
+    return 0;
 }
 
 void Icon::paint(GraphicsContext*, const IntRect&)
 {
-  notImplemented();
+    notImplemented();
 }
 
 } // namespace WebCore
