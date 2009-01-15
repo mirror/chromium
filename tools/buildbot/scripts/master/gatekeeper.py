@@ -173,7 +173,7 @@ class GateKeeper(MailNotifier):
 
     # Generate a HTML table looking like the waterfall.
     # WARNING: Gmail ignores embedded CSS style. I don't know how to fix that so
-    # meanwhile, I will just not embedded the CSS style.
+    # meanwhile, I just won't embedded the CSS style.
     html_content = (
 """<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html xmlns="http://www.w3.org/1999/xhtml">
