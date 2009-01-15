@@ -1,6 +1,32 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+/*
+ * Copyright (c) 2008, 2009, Google Inc. All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ * 
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include "config.h"
 #include "SimpleFontData.h"
@@ -19,7 +45,7 @@
 namespace WebCore {
 
 // Smallcaps versions of fonts are 70% the size of the normal font.
-static const float kSmallCapsFraction = 0.7f;
+static const float smallCapsFraction = 0.7f;
 
 void SimpleFontData::platformInit()
 {
@@ -39,12 +65,11 @@ void SimpleFontData::platformInit()
         m_descent = SkScalarRound(metrics.fHeight) - m_ascent;
     }
 
-    if (metrics.fXHeight) {
+    if (metrics.fXHeight)
         m_xHeight = metrics.fXHeight;
-    } else {
+    else
         // hack taken from the Windows port
         m_xHeight = static_cast<float>(m_ascent) * 0.56;
-    }
 
     m_lineGap = SkScalarRound(metrics.fLeading);
     m_lineSpacing = m_ascent + m_descent + m_lineGap;
@@ -55,20 +80,19 @@ void SimpleFontData::platformInit()
 
     m_maxCharWidth = SkScalarRound(metrics.fXRange * SkScalarRound(m_font.size()));
 
-    if (metrics.fAvgCharWidth) {
+    if (metrics.fAvgCharWidth)
         m_avgCharWidth = SkScalarRound(metrics.fAvgCharWidth);
-    } else {
+    else {
         m_avgCharWidth = m_xHeight;
 
         GlyphPage* glyphPageZero = GlyphPageTreeNode::getRootChild(this, 0)->page();
 
         if (glyphPageZero) {
             static const UChar32 x_char = 'x';
-            const Glyph x_glyph = glyphPageZero->glyphDataForCharacter(x_char).glyph;
+            const Glyph xGlyph = glyphPageZero->glyphDataForCharacter(x_char).glyph;
 
-            if (x_glyph) {
-                m_avgCharWidth = widthForGlyph(x_glyph);
-            }
+            if (xGlyph)
+                m_avgCharWidth = widthForGlyph(xGlyph);
         }
     }
 }
@@ -81,18 +105,18 @@ void SimpleFontData::platformDestroy()
 SimpleFontData* SimpleFontData::smallCapsFontData(const FontDescription& fontDescription) const
 {
     if (!m_smallCapsFontData) {
-        const float smallCapsSize = lroundf(fontDescription.computedSize() * kSmallCapsFraction);
-        m_smallCapsFontData =
-            new SimpleFontData(FontPlatformData(m_font, smallCapsSize));
+        const float smallCapsSize = lroundf(fontDescription.computedSize() * smallCapsFraction);
+        m_smallCapsFontData = new SimpleFontData(FontPlatformData(m_font, smallCapsSize));
     }
+
     return m_smallCapsFontData;
 }
 
 bool SimpleFontData::containsCharacters(const UChar* characters, int length) const
 {
     SkPaint paint;
-    static const unsigned kMaxBufferCount = 64;
-    uint16_t glyphs[kMaxBufferCount];
+    static const unsigned maxBufferCount = 64;
+    uint16_t glyphs[maxBufferCount];
 
     m_font.setupPaint(&paint);
     paint.setTextEncoding(SkPaint::kUTF16_TextEncoding);
@@ -103,14 +127,14 @@ bool SimpleFontData::containsCharacters(const UChar* characters, int length) con
         // textToGlyphs takes a byte count so we double the character count.
         int count = paint.textToGlyphs(characters, n * 2, glyphs);
         for (int i = 0; i < count; i++) {
-            if (0 == glyphs[i]) {
+            if (0 == glyphs[i])
                 return false;       // missing glyph
-            }
         }
 
         characters += n;
         length -= n;
     }
+
     return true;
 }
 

@@ -1,24 +1,29 @@
 /*
- * Copyright (C) 2006, 2007 Apple Inc.  All rights reserved.
- *
+ * Copyright (c) 2006, 2007, 2008, 2009, Google Inc. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met:
- * 1. Redistributions of source code must retain the above copyright
- *    notice, this list of conditions and the following disclaimer.
- * 2. Redistributions in binary form must reproduce the above copyright
- *    notice, this list of conditions and the following disclaimer in the
- *    documentation and/or other materials provided with the distribution.
- *
- * THIS SOFTWARE IS PROVIDED BY APPLE COMPUTER, INC. ``AS IS'' AND ANY
- * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
- * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL APPLE COMPUTER, INC. OR
- * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
- * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
- * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
- * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
- * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * modification, are permitted provided that the following conditions are
+ * met:
+ * 
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
@@ -32,8 +37,8 @@
 
 namespace WebCore {
 
-UniscribeHelperTextRun::UniscribeHelperTextRun(const WebCore::TextRun& run,
-                                               const WebCore::Font& font)
+UniscribeHelperTextRun::UniscribeHelperTextRun(const TextRun& run,
+                                               const Font& font)
     : UniscribeHelper(run.characters(), run.length(), run.rtl(),
                       font.primaryFont()->platformData().hfont(),
                       font.primaryFont()->platformData().scriptCache(),
@@ -47,12 +52,12 @@ UniscribeHelperTextRun::UniscribeHelperTextRun(const WebCore::TextRun& run,
     setWordSpacing(font.wordSpacing());
     setAscent(font.primaryFont()->ascent());
 
-    Init();
+    init();
 
     // Padding is the amount to add to make justification happen. This
     // should be done after Init() so all the runs are already measured.
     if (run.padding() > 0)
-        Justify(run.padding());
+        justify(run.padding());
 }
 
 UniscribeHelperTextRun::UniscribeHelperTextRun(
@@ -64,20 +69,20 @@ UniscribeHelperTextRun::UniscribeHelperTextRun(
     SCRIPT_FONTPROPERTIES* fontProperties)
     : UniscribeHelper(input, inputLength, isRtl, hfont,
                       scriptCache, fontProperties)
-    , m_font(NULL)
+    , m_font(0)
     , m_fontIndex(-1)
 {
 }
 
-void UniscribeHelperTextRun::TryToPreloadFont(HFONT font)
+void UniscribeHelperTextRun::tryToPreloadFont(HFONT font)
 {
     // Ask the browser to get the font metrics for this font.
     // That will preload the font and it should now be accessible
     // from the renderer.
-    WebCore::ChromiumBridge::ensureFontLoaded(font);
+    ChromiumBridge::ensureFontLoaded(font);
 }
 
-bool UniscribeHelperTextRun::NextWinFontData(
+bool UniscribeHelperTextRun::nextWinFontData(
     HFONT* hfont,
     SCRIPT_CACHE** scriptCache,
     SCRIPT_FONTPROPERTIES** fontProperties,
@@ -100,23 +105,21 @@ bool UniscribeHelperTextRun::NextWinFontData(
     // other.  That is, when fully populated, hfonts_ and friends have one font
     // fewer than what's contained in font_.
     if (static_cast<size_t>(++m_fontIndex) > m_hfonts.size()) {
-        const WebCore::FontData *fontData = m_font->fontDataAt(m_fontIndex);
+        const FontData *fontData = m_font->fontDataAt(m_fontIndex);
         if (!fontData) {
             // Ran out of fonts.
             m_fontIndex = -1;
             return false;
         }
 
-        // TODO(ericroman): this won't work for SegmentedFontData
-        // http://b/issue?id=1007335
-        const WebCore::SimpleFontData* simpleFontData =
+        // FIXME: this won't work for SegmentedFontData
+        // http://crbug.com/6425
+        const SimpleFontData* simpleFontData =
             fontData->fontDataForCharacter(' ');
 
         m_hfonts.append(simpleFontData->platformData().hfont());
-        m_scriptCaches.append(
-            simpleFontData->platformData().scriptCache());
-        m_fontProperties.append(
-            simpleFontData->platformData().scriptFontProperties());
+        m_scriptCaches.append(simpleFontData->platformData().scriptCache());
+        m_fontProperties.append(simpleFontData->platformData().scriptFontProperties());
         m_ascents.append(simpleFontData->ascent());
     }
 
@@ -127,7 +130,7 @@ bool UniscribeHelperTextRun::NextWinFontData(
     return true;
 }
 
-void UniscribeHelperTextRun::ResetFontIndex()
+void UniscribeHelperTextRun::resetFontIndex()
 {
     m_fontIndex = 0;
 }

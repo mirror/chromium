@@ -1,6 +1,32 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+/*
+ * Copyright (c) 2006, 2007, 2008, 2009, Google Inc. All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ * 
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include "config.h"
 #include "UniscribeHelper.h"
@@ -16,7 +42,7 @@ namespace WebCore {
 // runs. Note that this must match Font::treatAsSpace so we all agree where
 // and how much space this is, so we don't want to do more general Unicode
 // "is this a word break" thing.
-static bool TreatAsSpace(UChar c)
+static bool treatAsSpace(UChar c)
 {
    return c == ' ' || c == '\t' || c == '\n' || c == 0x00A0;
 }
@@ -27,14 +53,14 @@ static bool TreatAsSpace(UChar c)
 // with default/invalid/blank glyphs. Therefore, we need to check if the glyph
 // array returned by ScriptShape contains any of those glyphs to make
 // sure that the text run is rendered successfully.
-static bool ContainsMissingGlyphs(WORD *glyphs,
+static bool containsMissingGlyphs(WORD *glyphs,
                                   int length,
                                   SCRIPT_FONTPROPERTIES* properties)
 {
     for (int i = 0; i < length; ++i) {
-        if (glyphs[i] == properties->wgDefault ||
-            (glyphs[i] == properties->wgInvalid &&
-             glyphs[i] != properties->wgBlank))
+        if (glyphs[i] == properties->wgDefault 
+            || (glyphs[i] == properties->wgInvalid
+            && glyphs[i] != properties->wgBlank))
             return true;
     }
 
@@ -47,7 +73,7 @@ static bool ContainsMissingGlyphs(WORD *glyphs,
 // This function uses GetObject to convert HFONT back to LOGFONT,
 // resets the fields of LOGFONT and calculates style to use later
 // for the creation of a font identical to HFONT other than family name.
-static void SetLogFontAndStyle(HFONT hfont, LOGFONT *logfont, int *style)
+static void setLogFontAndStyle(HFONT hfont, LOGFONT *logfont, int *style)
 {
     ASSERT(hfont && logfont);
     if (!hfont || !logfont)
@@ -94,7 +120,7 @@ UniscribeHelper::~UniscribeHelper()
 {
 }
 
-void UniscribeHelper::InitWithOptionalLengthProtection(bool lengthProtection)
+void UniscribeHelper::initWithOptionalLengthProtection(bool lengthProtection)
 {
     // We cap the input length and just don't do anything. We'll allocate a lot
     // of things of the size of the number of characters, so the allocated
@@ -106,33 +132,30 @@ void UniscribeHelper::InitWithOptionalLengthProtection(bool lengthProtection)
     // The input length protection may be disabled by the unit tests to cause
     // an error condition.
     static const int kMaxInputLength = 65535;
-    if (m_inputLength == 0 ||
-        (lengthProtection && m_inputLength > kMaxInputLength))
+    if (m_inputLength == 0 || (lengthProtection && m_inputLength > kMaxInputLength))
         return;
 
-    FillRuns();
-    FillShapes();
-    FillScreenOrder();
+    fillRuns();
+    fillShapes();
+    fillScreenOrder();
 }
 
-int UniscribeHelper::Width() const
+int UniscribeHelper::width() const
 {
     int width = 0;
-    for (int item_index = 0; item_index < static_cast<int>(m_runs.size());
-         item_index++) {
-        width += AdvanceForItem(item_index);
-    }
+    for (int itemIndex = 0; itemIndex < static_cast<int>(m_runs.size()); itemIndex++)
+        width += advanceForItem(itemIndex);
     return width;
 }
 
-void UniscribeHelper::Justify(int additionalSpace)
+void UniscribeHelper::justify(int additionalSpace)
 {
     // Count the total number of glyphs we have so we know how big to make the
     // buffers below.
     int totalGlyphs = 0;
     for (size_t run = 0; run < m_runs.size(); run++) {
-        int run_idx = m_screenOrder[run];
-        totalGlyphs += static_cast<int>(m_shapes[run_idx].glyphLength());
+        int runIndex = m_screenOrder[run];
+        totalGlyphs += static_cast<int>(m_shapes[runIndex].glyphLength());
     }
     if (totalGlyphs == 0)
         return;  // Nothing to do.
@@ -140,38 +163,38 @@ void UniscribeHelper::Justify(int additionalSpace)
     // We make one big buffer in screen order of all the glyphs we are drawing
     // across runs so that the justification function will adjust evenly across
     // all glyphs.
-    Vector<SCRIPT_VISATTR, 64> visattr;
-    visattr.resize(totalGlyphs);
+    Vector<SCRIPT_VISATTR, 64> visualAttributes;
+    visualAttributes.resize(totalGlyphs);
     Vector<int, 64> advances;
     advances.resize(totalGlyphs);
     Vector<int, 64> justify;
     justify.resize(totalGlyphs);
 
     // Build the packed input.
-    int dest_index = 0;
+    int destIndex = 0;
     for (size_t run = 0; run < m_runs.size(); run++) {
-        int run_idx = m_screenOrder[run];
-        const Shaping& shaping = m_shapes[run_idx];
+        int runIndex = m_screenOrder[run];
+        const Shaping& shaping = m_shapes[runIndex];
 
-        for (int i = 0; i < shaping.glyphLength(); i++, dest_index++) {
-            memcpy(&visattr[dest_index], &shaping.m_visattr[i],
+        for (int i = 0; i < shaping.glyphLength(); i++, destIndex++) {
+            memcpy(&visualAttributes[destIndex], &shaping.m_visualAttributes[i],
                    sizeof(SCRIPT_VISATTR));
-            advances[dest_index] = shaping.m_advance[i];
+            advances[destIndex] = shaping.m_advance[i];
         }
     }
 
-    // The documentation for ScriptJustify is wrong, the parameter is the space
+    // The documentation for Scriptjustify is wrong, the parameter is the space
     // to add and not the width of the column you want.
     const int minKashida = 1;  // How do we decide what this should be?
-    ScriptJustify(&visattr[0], &advances[0], totalGlyphs, additionalSpace,
-                  minKashida, &justify[0]);
+    ScriptJustify(&visualAttributes[0], &advances[0], totalGlyphs,
+                  additionalSpace, minKashida, &justify[0]);
 
     // Now we have to unpack the justification amounts back into the runs so
     // the glyph indices match.
     int globalGlyphIndex = 0;
     for (size_t run = 0; run < m_runs.size(); run++) {
-        int run_idx = m_screenOrder[run];
-        Shaping& shaping = m_shapes[run_idx];
+        int runIndex = m_screenOrder[run];
+        Shaping& shaping = m_shapes[runIndex];
 
         shaping.m_justify.resize(shaping.glyphLength());
         for (int i = 0; i < shaping.glyphLength(); i++, globalGlyphIndex++)
@@ -179,7 +202,7 @@ void UniscribeHelper::Justify(int additionalSpace)
     }
 }
 
-int UniscribeHelper::CharacterToX(int offset) const
+int UniscribeHelper::characterToX(int offset) const
 {
     HRESULT hr;
     ASSERT(offset <= m_inputLength);
@@ -188,21 +211,21 @@ int UniscribeHelper::CharacterToX(int offset) const
     // right, adding in each item's screen width until we find the item with
     // the requested character in it.
     int width = 0;
-    for (size_t screen_idx = 0; screen_idx < m_runs.size(); screen_idx++) {
+    for (size_t screenIndex = 0; screenIndex < m_runs.size(); screenIndex++) {
         // Compute the length of this run.
-        int itemIdx = m_screenOrder[screen_idx];
-        const SCRIPT_ITEM& item = m_runs[itemIdx];
-        const Shaping& shaping = m_shapes[itemIdx];
+        int itemIndex = m_screenOrder[screenIndex];
+        const SCRIPT_ITEM& item = m_runs[itemIndex];
+        const Shaping& shaping = m_shapes[itemIndex];
         int itemLength = shaping.charLength();
 
         if (offset >= item.iCharPos && offset <= item.iCharPos + itemLength) {
             // Character offset is in this run.
-            int char_len = offset - item.iCharPos;
+            int charLength = offset - item.iCharPos;
 
             int curX = 0;
-            hr = ScriptCPtoX(char_len, FALSE, itemLength,
+            hr = ScriptCPtoX(charLength, FALSE, itemLength,
                              shaping.glyphLength(),
-                             &shaping.m_logs[0], &shaping.m_visattr[0],
+                             &shaping.m_logs[0], &shaping.m_visualAttributes[0],
                              shaping.effectiveAdvances(), &item.a, &curX);
             if (FAILED(hr))
                 return 0;
@@ -213,48 +236,48 @@ int UniscribeHelper::CharacterToX(int offset) const
         }
 
         // Move to the next item.
-        width += AdvanceForItem(itemIdx);
+        width += advanceForItem(itemIndex);
     }
     ASSERT(width >= 0);
     return width;
 }
 
-int UniscribeHelper::XToCharacter(int x) const
+int UniscribeHelper::xToCharacter(int x) const
 {
     // We iterate in screen order until we find the item with the given pixel
     // position in it. When we find that guy, we ask Uniscribe for the
     // character index.
     HRESULT hr;
-    for (size_t screen_idx = 0; screen_idx < m_runs.size(); screen_idx++) {
-        int itemIdx = m_screenOrder[screen_idx];
-        int advance_for_item = AdvanceForItem(itemIdx);
+    for (size_t screenIndex = 0; screenIndex < m_runs.size(); screenIndex++) {
+        int itemIndex = m_screenOrder[screenIndex];
+        int itemAdvance = advanceForItem(itemIndex);
 
         // Note that the run may be empty if shaping failed, so we want to skip
         // over it.
-        const Shaping& shaping = m_shapes[itemIdx];
+        const Shaping& shaping = m_shapes[itemIndex];
         int itemLength = shaping.charLength();
-        if (x <= advance_for_item && itemLength > 0) {
+        if (x <= itemAdvance && itemLength > 0) {
             // The requested offset is within this item.
-            const SCRIPT_ITEM& item = m_runs[itemIdx];
+            const SCRIPT_ITEM& item = m_runs[itemIndex];
 
             // Account for the leading space we've added to this run that
             // Uniscribe doesn't know about.
             x -= shaping.m_prePadding;
 
-            int char_x = 0;
+            int charX = 0;
             int trailing;
             hr = ScriptXtoCP(x, itemLength, shaping.glyphLength(),
-                             &shaping.m_logs[0], &shaping.m_visattr[0],
-                             shaping.effectiveAdvances(), &item.a, &char_x,
+                             &shaping.m_logs[0], &shaping.m_visualAttributes[0],
+                             shaping.effectiveAdvances(), &item.a, &charX,
                              &trailing);
 
             // The character offset is within the item. We need to add the
             // item's offset to transform it into the space of the TextRun
-            return char_x + item.iCharPos;
+            return charX + item.iCharPos;
         }
 
         // The offset is beyond this item, account for its length and move on.
-        x -= advance_for_item;
+        x -= itemAdvance;
     }
 
     // Error condition, we don't know what to do if we don't have that X
@@ -262,27 +285,27 @@ int UniscribeHelper::XToCharacter(int x) const
     return 0;
 }
 
-void UniscribeHelper::Draw(HDC dc, int x, int y, int from, int to)
+void UniscribeHelper::draw(HDC dc, int x, int y, int from, int to)
 {
     HGDIOBJ oldFont = 0;
     int curX = x;
     bool firstRun = true;
 
-    for (size_t screen_idx = 0; screen_idx < m_runs.size(); screen_idx++) {
-        int itemIdx = m_screenOrder[screen_idx];
-        const SCRIPT_ITEM& item = m_runs[itemIdx];
-        const Shaping& shaping = m_shapes[itemIdx];
+    for (size_t screenIndex = 0; screenIndex < m_runs.size(); screenIndex++) {
+        int itemIndex = m_screenOrder[screenIndex];
+        const SCRIPT_ITEM& item = m_runs[itemIndex];
+        const Shaping& shaping = m_shapes[itemIndex];
 
         // Character offsets within this run. THESE MAY NOT BE IN RANGE and may
         // be negative, etc. The code below handles this.
         int fromChar = from - item.iCharPos;
-        int to_char = to - item.iCharPos;
+        int toChar = to - item.iCharPos;
 
         // See if we need to draw any characters in this item.
         if (shaping.charLength() == 0 ||
-            fromChar >= shaping.charLength() || to_char <= 0) {
+            fromChar >= shaping.charLength() || toChar <= 0) {
             // No chars in this item to display.
-            curX += AdvanceForItem(itemIdx);
+            curX += advanceForItem(itemIndex);
             continue;
         }
 
@@ -291,14 +314,14 @@ void UniscribeHelper::Draw(HDC dc, int x, int y, int from, int to)
         int fromGlyph, afterGlyph;
         if (item.a.fRTL) {
             // To compute the first glyph when going RTL, we use |to|.
-            if (to_char >= shaping.charLength()) {
+            if (toChar >= shaping.charLength())
                 // The end of the text is after (to the left) of us.
                 fromGlyph = 0;
-            } else {
+            else {
                 // Since |to| is exclusive, the first character we draw on the
                 // left is actually the one right before (to the right) of
                 // |to|.
-                fromGlyph = shaping.m_logs[to_char - 1];
+                fromGlyph = shaping.m_logs[toChar - 1];
             }
 
             // The last glyph is actually the first character in the range.
@@ -319,10 +342,10 @@ void UniscribeHelper::Draw(HDC dc, int x, int y, int from, int to)
             // beginning, and exclusive at the ending. We have to do some
             // computation to see the glyph one past the end.
             fromGlyph = shaping.m_logs[fromChar < 0 ? 0 : fromChar];
-            if (to_char >= shaping.charLength())
+            if (toChar >= shaping.charLength())
                 afterGlyph = shaping.glyphLength();
             else
-                afterGlyph = shaping.m_logs[to_char];
+                afterGlyph = shaping.m_logs[toChar];
         }
 
         // Account for the characters that were skipped in this run. When
@@ -339,23 +362,18 @@ void UniscribeHelper::Draw(HDC dc, int x, int y, int from, int to)
         if (fromGlyph >= 0 && glyphCount > 0) {
             // Account for the preceeding space we need to add to this run. We
             // don't need to count for the following space because that will be
-            // counted in AdvanceForItem below when we move to the next run.
+            // counted in advanceForItem below when we move to the next run.
             innerOffset += shaping.m_prePadding;
 
-            // Pass NULL in when there is no justification.
-            const int* justify = shaping.m_justify.size() == 0 ?
-                NULL : &shaping.m_justify[fromGlyph];
+            // Pass 0 in when there is no justification.
+            const int* justify = shaping.m_justify.size() == 0 ? 0 : &shaping.m_justify[fromGlyph];
 
             if (firstRun) {
                 oldFont = SelectObject(dc, shaping.m_hfont);
                 firstRun = false;
-            } else {
+            } else
                 SelectObject(dc, shaping.m_hfont);
-            }
 
-            // TODO(brettw) bug 698452: if a half a character is selected,
-            // we should set up a clip rect so we draw the half of the glyph
-            // correctly.
             // Fonts with different ascents can be used to render different
             // runs.  'Across-runs' y-coordinate correction needs to be
             // adjusted for each font.
@@ -364,7 +382,7 @@ void UniscribeHelper::Draw(HDC dc, int x, int y, int from, int to)
                 hr = ScriptTextOut(dc, shaping.m_scriptCache,
                                    curX + innerOffset,
                                    y - shaping.m_ascentOffset,
-                                   0, NULL, &item.a, NULL, 0,
+                                   0, 0, &item.a, 0, 0,
                                    &shaping.m_glyphs[fromGlyph],
                                    glyphCount,
                                    &shaping.m_advance[fromGlyph],
@@ -376,7 +394,7 @@ void UniscribeHelper::Draw(HDC dc, int x, int y, int from, int to)
                     // opening the font files.  If we are running in the
                     // renderer, TryToPreloadFont is overridden to ask the
                     // browser to preload the font for us so we can access it.
-                    TryToPreloadFont(shaping.m_hfont);
+                    tryToPreloadFont(shaping.m_hfont);
                     continue;
                 }
                 break;
@@ -385,14 +403,14 @@ void UniscribeHelper::Draw(HDC dc, int x, int y, int from, int to)
             ASSERT(S_OK == hr);
         }
 
-        curX += AdvanceForItem(itemIdx);
+        curX += advanceForItem(itemIndex);
     }
 
     if (oldFont)
         SelectObject(dc, oldFont);
 }
 
-WORD UniscribeHelper::FirstGlyphForCharacter(int charOffset) const
+WORD UniscribeHelper::firstGlyphForCharacter(int charOffset) const
 {
     // Find the run for the given character.
     for (int i = 0; i < static_cast<int>(m_runs.size()); i++) {
@@ -416,10 +434,11 @@ WORD UniscribeHelper::FirstGlyphForCharacter(int charOffset) const
             return shaping.m_glyphs[glyphIndex];
         }
     }
+
     return 0;
 }
 
-void UniscribeHelper::FillRuns()
+void UniscribeHelper::fillRuns()
 {
     HRESULT hr;
     m_runs.resize(UNISCRIBE_HELPER_STACK_RUNS);
@@ -436,7 +455,7 @@ void UniscribeHelper::FillRuns()
     inputState.fGcpClusters = false;
     inputState.fReserved = 0;
     inputState.fEngineReserved = 0;
-    // The psControl argument to ScriptItemize should be non-NULL for RTL text,
+    // The psControl argument to ScriptItemize should be non-0 for RTL text,
     // per http://msdn.microsoft.com/en-us/library/ms776532.aspx . So use a
     // SCRIPT_CONTROL that is set to all zeros.  Zero as a locale ID means the
     // neutral locale per http://msdn.microsoft.com/en-us/library/ms776294.aspx
@@ -451,7 +470,7 @@ void UniscribeHelper::FillRuns()
                                            0, // fLegacyBidiClass    :1;
                                            0, // fMergeNeutralItems  :1;
                                            0};// fReserved           :7;
-    // Calling ScriptApplyDigitSubstitution( NULL, &inputControl, &inputState)
+    // Calling ScriptApplyDigitSubstitution( 0, &inputControl, &inputState)
     // here would be appropriate if we wanted to set the language ID, and get
     // local digit substitution behavior.  For now, don't do it.
 
@@ -495,7 +514,7 @@ void UniscribeHelper::FillRuns()
     }
 }
 
-bool UniscribeHelper::Shape(const UChar* input,
+bool UniscribeHelper::shape(const UChar* input,
                             int itemLength,
                             int numGlyphs,
                             SCRIPT_ITEM& run,
@@ -505,7 +524,7 @@ bool UniscribeHelper::Shape(const UChar* input,
     SCRIPT_CACHE* scriptCache = m_scriptCache;
     SCRIPT_FONTPROPERTIES* fontProperties = m_fontProperties;
     int ascent = m_ascent;
-    HDC tempDC = NULL;
+    HDC tempDC = 0;
     HGDIOBJ oldFont = 0;
     HRESULT hr;
     bool lastFallbackTried = false;
@@ -515,13 +534,13 @@ bool UniscribeHelper::Shape(const UChar* input,
 
     // In case HFONT passed in ctor cannot render this run, we have to scan
     // other fonts from the beginning of the font list.
-    ResetFontIndex();
+    resetFontIndex();
 
     // Compute shapes.
     while (true) {
         shaping.m_logs.resize(itemLength);
         shaping.m_glyphs.resize(numGlyphs);
-        shaping.m_visattr.resize(numGlyphs);
+        shaping.m_visualAttributes.resize(numGlyphs);
 
 #ifdef PURIFY
         // http://code.google.com/p/chromium/issues/detail?id=5309
@@ -532,7 +551,7 @@ bool UniscribeHelper::Shape(const UChar* input,
         // This hack avoid the false-positive UMRs by marking the buffer as
         // initialized.
         //
-        // TODO: A better solution would be to use Purify's API and mark only
+        // FIXME: A better solution would be to use Purify's API and mark only
         // the populated range as initialized:
         //
         //     PurifyMarkAsInitialized(
@@ -548,31 +567,27 @@ bool UniscribeHelper::Shape(const UChar* input,
         hr = ScriptShape(tempDC, scriptCache, input, itemLength,
                          numGlyphs, &run.a,
                          &shaping.m_glyphs[0], &shaping.m_logs[0],
-                         &shaping.m_visattr[0], &generatedGlyphs);
+                         &shaping.m_visualAttributes[0], &generatedGlyphs);
         if (hr == E_PENDING) {
             // Allocate the DC.
-            tempDC = GetDC(NULL);
+            tempDC = GetDC(0);
             oldFont = SelectObject(tempDC, hfont);
             continue;
         } else if (hr == E_OUTOFMEMORY) {
             numGlyphs *= 2;
             continue;
-        } else if (SUCCEEDED(hr) &&
-                   (lastFallbackTried ||
-                    !ContainsMissingGlyphs(&shaping.m_glyphs[0],
-                    generatedGlyphs, fontProperties))) {
+        } else if (SUCCEEDED(hr) && (lastFallbackTried || !containsMissingGlyphs(&shaping.m_glyphs[0], generatedGlyphs, fontProperties)))
             break;
-        }
 
         // The current font can't render this run. clear DC and try
         // next font.
         if (tempDC) {
             SelectObject(tempDC, oldFont);
-            ReleaseDC(NULL, tempDC);
-            tempDC = NULL;
+            ReleaseDC(0, tempDC);
+            tempDC = 0;
         }
 
-        if (NextWinFontData(&hfont, &scriptCache, &fontProperties, &ascent)) {
+        if (nextWinFontData(&hfont, &scriptCache, &fontProperties, &ascent)) {
             // The primary font does not support this run. Try next font.
             // In case of web page rendering, they come from fonts specified in
             // CSS stylesheets.
@@ -584,27 +599,27 @@ bool UniscribeHelper::Shape(const UChar* input,
             // a character to draw while inheriting size and styles
             // from the primary font
             if (!m_logfont.lfFaceName[0])
-                SetLogFontAndStyle(m_hfont, &m_logfont, &m_style);
+                setLogFontAndStyle(m_hfont, &m_logfont, &m_style);
 
             // TODO(jungshik): generic type should come from webkit for
             // UniscribeHelperTextRun (a derived class used in webkit).
             const UChar *family = getFallbackFamily(input, itemLength,
-                FontDescription::StandardFamily, NULL, NULL);
-            bool font_ok = getDerivedFontData(family, m_style, &m_logfont,
+                FontDescription::StandardFamily, 0, 0);
+            bool fontOk = getDerivedFontData(family, m_style, &m_logfont,
                                               &ascent, &hfont, &scriptCache);
 
-            if (!font_ok) {
+            if (!fontOk) {
                 // If this GetDerivedFontData is called from the renderer it
                 // might fail because the sandbox is preventing it from opening
                 // the font files.  If we are running in the renderer,
                 // TryToPreloadFont is overridden to ask the browser to preload
                 // the font for us so we can access it.
-                TryToPreloadFont(hfont);
+                tryToPreloadFont(hfont);
 
                 // Try again.
-                font_ok = getDerivedFontData(family, m_style, &m_logfont,
+                fontOk = getDerivedFontData(family, m_style, &m_logfont,
                                              &ascent, &hfont, &scriptCache);
-                ASSERT(font_ok);
+                ASSERT(fontOk);
             }
 
             // TODO(jungshik) : Currently GetDerivedHFont always returns a
@@ -636,19 +651,19 @@ bool UniscribeHelper::Shape(const UChar* input,
     // The ascent of a font for this run can be different from
     // that of the primary font so that we need to keep track of
     // the difference per run and take that into account when calling
-    // ScriptTextOut in |Draw|. Otherwise, different runs rendered by
+    // ScriptTextOut in |draw|. Otherwise, different runs rendered by
     // different fonts would not be aligned vertically.
     shaping.m_ascentOffset = m_ascent ? ascent - m_ascent : 0;
     result = true;
 
   cleanup:
     shaping.m_glyphs.resize(generatedGlyphs);
-    shaping.m_visattr.resize(generatedGlyphs);
+    shaping.m_visualAttributes.resize(generatedGlyphs);
     shaping.m_advance.resize(generatedGlyphs);
     shaping.m_offsets.resize(generatedGlyphs);
     if (tempDC) {
         SelectObject(tempDC, oldFont);
-        ReleaseDC(NULL, tempDC);
+        ReleaseDC(0, tempDC);
     }
     // On failure, our logs don't mean anything, so zero those out.
     if (!result)
@@ -657,7 +672,7 @@ bool UniscribeHelper::Shape(const UChar* input,
     return result;
 }
 
-void UniscribeHelper::FillShapes()
+void UniscribeHelper::fillShapes()
 {
     m_shapes.resize(m_runs.size());
     for (size_t i = 0; i < m_runs.size(); i++) {
@@ -684,8 +699,7 @@ void UniscribeHelper::FillShapes()
         // Convert a string to a glyph string trying the primary font, fonts in
         // the fallback list and then script-specific last resort font.
         Shaping& shaping = m_shapes[i];
-        if (!Shape(&m_input[startItem], itemLength, numGlyphs, m_runs[i],
-                   shaping))
+        if (!shape(&m_input[startItem], itemLength, numGlyphs, m_runs[i], shaping))
             continue;
 
         // Compute placements. Note that offsets is documented incorrectly
@@ -694,22 +708,22 @@ void UniscribeHelper::FillShapes()
         // DC that we lazily create if Uniscribe commands us to.
         // (this does not happen often because scriptCache is already
         //  updated when calling ScriptShape).
-        HDC tempDC = NULL;
-        HGDIOBJ oldFont = NULL;
+        HDC tempDC = 0;
+        HGDIOBJ oldFont = 0;
         HRESULT hr;
         while (true) {
             shaping.m_prePadding = 0;
             hr = ScriptPlace(tempDC, shaping.m_scriptCache,
                              &shaping.m_glyphs[0],
                              static_cast<int>(shaping.m_glyphs.size()),
-                             &shaping.m_visattr[0], &m_runs[i].a,
+                             &shaping.m_visualAttributes[0], &m_runs[i].a,
                              &shaping.m_advance[0], &shaping.m_offsets[0],
                              &shaping.m_abc);
             if (hr != E_PENDING)
                 break;
 
             // Allocate the DC and run the loop again.
-            tempDC = GetDC(NULL);
+            tempDC = GetDC(0);
             oldFont = SelectObject(tempDC, shaping.m_hfont);
         }
 
@@ -723,17 +737,17 @@ void UniscribeHelper::FillShapes()
 
         if (tempDC) {
             SelectObject(tempDC, oldFont);
-            ReleaseDC(NULL, tempDC);
+            ReleaseDC(0, tempDC);
         }
     }
 
-    AdjustSpaceAdvances();
+    adjustSpaceAdvances();
 
     if (m_letterSpacing != 0 || m_wordSpacing != 0)
-        ApplySpacing();
+        applySpacing();
 }
 
-void UniscribeHelper::FillScreenOrder()
+void UniscribeHelper::fillScreenOrder()
 {
     m_screenOrder.resize(m_runs.size());
 
@@ -748,7 +762,7 @@ void UniscribeHelper::FillScreenOrder()
     }
 }
 
-void UniscribeHelper::AdjustSpaceAdvances()
+void UniscribeHelper::adjustSpaceAdvances()
 {
     if (m_spaceWidth == 0)
         return;
@@ -760,7 +774,7 @@ void UniscribeHelper::AdjustSpaceAdvances()
         Shaping& shaping = m_shapes[run];
 
         for (int i = 0; i < shaping.charLength(); i++) {
-            if (!TreatAsSpace(m_input[m_runs[run].iCharPos + i]))
+            if (!treatAsSpace(m_input[m_runs[run].iCharPos + i]))
                 continue;
 
             int glyphIndex = shaping.m_logs[i];
@@ -782,7 +796,7 @@ void UniscribeHelper::AdjustSpaceAdvances()
     }
 }
 
-void UniscribeHelper::ApplySpacing()
+void UniscribeHelper::applySpacing()
 {
     for (size_t run = 0; run < m_runs.size(); run++) {
         Shaping& shaping = m_shapes[run];
@@ -803,7 +817,7 @@ void UniscribeHelper::ApplySpacing()
             // indic scripts. This behavior is better than Firefox or IE for
             // Hebrew.
             for (int i = 0; i < shaping.glyphLength(); i++) {
-                if (shaping.m_visattr[i].fClusterStart) {
+                if (shaping.m_visualAttributes[i].fClusterStart) {
                     // Ick, we need to assign the extra space so that the glyph
                     // comes first, then is followed by the space. This is
                     // opposite for RTL.
@@ -828,7 +842,7 @@ void UniscribeHelper::ApplySpacing()
         // extra wordspacing amount for the glyphs they correspond to.
         if (m_wordSpacing != 0) {
             for (int i = 0; i < shaping.charLength(); i++) {
-                if (!TreatAsSpace(m_input[m_runs[run].iCharPos + i]))
+                if (!treatAsSpace(m_input[m_runs[run].iCharPos + i]))
                     continue;
 
                 // The char in question is a word separator...
@@ -848,9 +862,9 @@ void UniscribeHelper::ApplySpacing()
                     // LTR is actually more complex here, we apply it to the
                     // previous character if there is one, otherwise we have to
                     // apply it to the leading space of the run.
-                    if (glyphIndex == 0) {
+                    if (glyphIndex == 0)
                         shaping.m_prePadding += m_wordSpacing;
-                    } else {
+                    else {
                         shaping.m_advance[glyphIndex - 1] += m_wordSpacing;
                         shaping.m_abc.abcB += m_wordSpacing;
                     }
@@ -863,10 +877,10 @@ void UniscribeHelper::ApplySpacing()
 }
 
 // The advance is the ABC width of the run
-int UniscribeHelper::AdvanceForItem(int item_index) const
+int UniscribeHelper::advanceForItem(int itemIndex) const
 {
     int accum = 0;
-    const Shaping& shaping = m_shapes[item_index];
+    const Shaping& shaping = m_shapes[itemIndex];
 
     if (shaping.m_justify.size() == 0) {
         // Easy case with no justification, the width is just the ABC width of

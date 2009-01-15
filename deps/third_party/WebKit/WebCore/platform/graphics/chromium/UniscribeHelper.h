@@ -1,30 +1,32 @@
-// Copyright (c) 2006-2008, Google Inc. All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-// 
-//     * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/*
+ * Copyright (c) 2006, 2007, 2008, 2009, Google Inc. All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ * 
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 // A wrapper around Uniscribe that provides a reasonable API.
 
@@ -70,9 +72,9 @@ public:
     UniscribeHelper(const UChar* input,
                     int inputLength,
                     bool isRtl,
-                    HFONT hfont,
-                    SCRIPT_CACHE* scriptCache,
-                    SCRIPT_FONTPROPERTIES* fontProperties);
+                    HFONT,
+                    SCRIPT_CACHE*,
+                    SCRIPT_FONTPROPERTIES*);
 
     virtual ~UniscribeHelper();
 
@@ -145,13 +147,13 @@ public:
 
     // You must call this after setting any options but before doing any
     // other calls like asking for widths or drawing.
-    void Init()
+    void init()
     {
-        InitWithOptionalLengthProtection(true);
+        initWithOptionalLengthProtection(true);
     }
 
     // Returns the total width in pixels of the text run.
-    int Width() const;
+    int width() const;
 
     // Call to justify the text, with the amount of space that should be ADDED
     // to get the desired width that the column should be justified to.
@@ -159,23 +161,23 @@ public:
     // (extra strokes) inserted instead.
     //
     // This function MUST be called AFTER Init().
-    void Justify(int additionalSpace);
+    void justify(int additionalSpace);
 
     // Computes the given character offset into a pixel offset of the beginning
     // of that character.
-    int CharacterToX(int offset) const;
+    int characterToX(int offset) const;
 
     // Converts the given pixel X position into a logical character offset into
     // the run. For positions appearing before the first character, this will
     // return -1.
-    int XToCharacter(int x) const;
+    int xToCharacter(int x) const;
 
     // Draws the given characters to (x, y) in the given DC. The font will be
     // handled by this function, but the font color and other attributes should
     // be pre-set.
     //
     // The y position is the upper left corner, NOT the baseline.
-    void Draw(HDC dc, int x, int y, int from, int to);
+    void draw(HDC, int x, int y, int from, int to);
 
     // Returns the first glyph assigned to the character at the given offset.
     // This function is used to retrieve glyph information when Uniscribe is
@@ -185,18 +187,18 @@ public:
     // Uniscribe is the only way to get glyphs for non-BMP characters.
     //
     // Returns 0 if there is no glyph for the given character.
-    WORD FirstGlyphForCharacter(int charOffset) const;
+    WORD firstGlyphForCharacter(int charOffset) const;
 
 protected:
     // Backend for init. The flag allows the unit test to specify whether we
     // should fail early for very long strings like normal, or try to pass the
     // long string to Uniscribe. The latter provides a way to force failure of
     // shaping.
-    void InitWithOptionalLengthProtection(bool lengthProtection);
+    void initWithOptionalLengthProtection(bool lengthProtection);
 
     // Tries to preload the font when the it is not accessible.
     // This is the default implementation and it does not do anything.
-    virtual void TryToPreloadFont(HFONT font) {}
+    virtual void tryToPreloadFont(HFONT) {}
 
 private:
     friend class UniscribeTest_TooBig_Test;
@@ -263,7 +265,7 @@ private:
         Vector<WORD, UNISCRIBE_HELPER_STACK_CHARS> m_logs;
 
         // Flags and such for each glyph.
-        Vector<SCRIPT_VISATTR, UNISCRIBE_HELPER_STACK_CHARS> m_visattr;
+        Vector<SCRIPT_VISATTR, UNISCRIBE_HELPER_STACK_CHARS> m_visualAttributes;
 
         // Horizontal advances for each glyph listed above, this is basically
         // how wide each glyph is.
@@ -307,26 +309,26 @@ private:
     };
 
     // Computes the runs_ array from the text run.
-    void FillRuns();
+    void fillRuns();
 
     // Computes the shapes_ array given an runs_ array already filled in.
-    void FillShapes();
+    void fillShapes();
 
     // Fills in the screen_order_ array (see below).
-    void FillScreenOrder();
+    void fillScreenOrder();
 
     // Called to update the glyph positions based on the current spacing
     // options that are set.
-    void ApplySpacing();
+    void applySpacing();
 
     // Normalizes all advances for spaces to the same width. This keeps windows
     // from making spaces after Hindi characters larger, which is then
     // inconsistent with our meaure of the width since WebKit doesn't include
     // spaces in text-runs sent to uniscribe unless white-space:pre.
-    void AdjustSpaceAdvances();
+    void adjustSpaceAdvances();
 
     // Returns the total width of a single item.
-    int AdvanceForItem(int item_index) const;
+    int advanceForItem(int) const;
 
     // Shapes a run (pointed to by |input|) using |hfont| first.
     // Tries a series of fonts specified retrieved with NextWinFontData
@@ -334,27 +336,20 @@ private:
     // by |input| comes from ScriptItemize and is supposed to contain
     // characters belonging to a single script aside from characters common to
     // all scripts (e.g. space).
-    bool Shape(const UChar* input,
-               int item_length,
-               int num_glyphs,
-               SCRIPT_ITEM& run,
-               Shaping& shaping);
+    bool shape(const UChar* input, int itemLength, int numGlyphs, SCRIPT_ITEM& run, Shaping&);
 
     // Gets Windows font data for the next best font to try in the list
     // of fonts. When there's no more font available, returns false
     // without touching any of out params. Need to call ResetFontIndex
     // to start scanning of the font list from the beginning.
-    virtual bool NextWinFontData(HFONT* hfont,
-                                 SCRIPT_CACHE** script_cache,
-                                 SCRIPT_FONTPROPERTIES** font_properties,
-                                 int* ascent) {
+    virtual bool nextWinFontData(HFONT*, SCRIPT_CACHE**, SCRIPT_FONTPROPERTIES**, int* ascent) {
         return false;
     }
 
     // Resets the font index to the first in the list of fonts to try after the
     // primaryFont turns out not to work. With fontIndex reset,
     // NextWinFontData scans fallback fonts from the beginning.
-    virtual void ResetFontIndex() {}
+    virtual void resetFontIndex() {}
 
     // The input data for this run of Uniscribe. See the constructor.
     const UChar* m_input;
