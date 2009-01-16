@@ -50,6 +50,8 @@ class GateKeeper(MailNotifier):
   _CATEGORY_SPLITTER = '|'
   _TREE_STATUS_URL = 'http://chromium-status.appspot.com/status'
   _TREE_CLOSER_URL = 'http://chromium-status.appspot.com'
+
+  _last_closure_revision = 0
   
   # Attributes we want to set from provided arguments, or set to None
   params = ['reply_to', 'lookup', 'categories_steps', 'exclusions']
@@ -88,7 +90,7 @@ class GateKeeper(MailNotifier):
       return False
     if not self.categories_steps or '' in self.categories_steps:
       return True
-    
+
     if not builder.category:
       return False
     for category in builder.category.split(self._CATEGORY_SPLITTER):
@@ -140,9 +142,19 @@ class GateKeeper(MailNotifier):
   def closeTree(self, name, build, step_text):
     # Check if the tree is already closed or not.
     if urllib.urlopen(self._TREE_STATUS_URL).read().find('0') == -1:
-      # Send the notification email
+      # If the tree is opened, we don't want to close it again for the same
+      # revision, or an earlier one in case the build that just finished is a
+      # slow one and we already fixed the problem and manually opened the tree.
+      source_stamp = build.getSourceStamp()
+      if source_stamp and source_stamp.revision:
+        if source_stamp.revision <= self._last_closure_revision:
+          return
+        else:
+          self._last_closure_revision = source_stamp.revision
+
+      # Send the notification email.
       defered_object = self.buildMessage(name, build, step_text)
-      
+
       # Post a request to close the tree.
       message = 'Tree is closed (Automatic: "%s" on "%s")' % (step_text, name)
       password_file = file(".status_password")
@@ -167,7 +179,7 @@ class GateKeeper(MailNotifier):
                    (step_text, name))
     blame_list = ",".join(build.getResponsibleUsers())
     revision = ''
-    if source_stamp is not None and source_stamp.revision:
+    if source_stamp and source_stamp.revision:
       revision = str(source_stamp.revision)
 
     class DummyObject(object):
@@ -239,7 +251,7 @@ Buildbot waterfall: http://build.chromium.org/
     m = MIMEMultipart('alternative')
     # The HTML message, is best and preferred.
     m.attach(MIMEText(text_content, 'plain', 'iso-8859-1'))
-    m.attach(MIMEText(html_content, 'html', 'iso-8859-1'))    
+    m.attach(MIMEText(html_content, 'html', 'iso-8859-1'))
 
     m['Date'] = formatdate(localtime=True)
     m['Subject'] = self.subject % {
