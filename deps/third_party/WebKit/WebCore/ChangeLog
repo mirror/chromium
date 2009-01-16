@@ -1,3 +1,236 @@
+2009-01-15  David Hyatt  <hyatt@apple.com>
+
+        Eliminate an extra virtual function call that occurs for every single RenderText by moving the SVG-specific
+        code that was placed into RenderText::styleDidChange into RenderSVGInlineText::styleDidChange.
+
+        Reviewed by Oliver Hunt
+
+        * rendering/RenderSVGInlineText.cpp:
+        (WebCore::RenderSVGInlineText::styleDidChange):
+        * rendering/RenderSVGInlineText.h:
+        * rendering/RenderText.cpp:
+        (WebCore::RenderText::styleDidChange):
+
+2009-01-15  Anders Carlsson  <andersca@apple.com>
+
+        Another attempt at fixing the Qt build.
+        
+        * bridge/qt/qt_instance.cpp:
+        (JSC::Bindings::QtInstance::getOwnPropertySlot):
+        (JSC::Bindings::QtInstance::put):
+        * bridge/qt/qt_instance.h:
+        * bridge/runtime.h:
+        (JSC::Bindings::Instance::getOwnPropertySlot):
+        (JSC::Bindings::Instance::put):
+        * bridge/runtime_object.cpp:
+        (JSC::RuntimeObjectImp::getOwnPropertySlot):
+        (JSC::RuntimeObjectImp::put):
+
+2009-01-15  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Darin Adler.
+
+        Add QtInstance::getInstance and start using it.
+
+        * bridge/qt/qt_instance.cpp:
+        (JSC::Bindings::QtRuntimeObjectImp::mark):
+        (JSC::Bindings::QtRuntimeObjectImp::classInfo):
+        (JSC::Bindings::):
+        (JSC::Bindings::QtInstance::getInstance):
+        * bridge/qt/qt_instance.h:
+        * bridge/qt/qt_runtime.cpp:
+        (JSC::Bindings::convertValueToQVariant):
+
+2009-01-15  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Add the ability for Instance objects to override getOwnPropertySlot/put for runtime objects.
+
+        * bridge/qt/qt_instance.cpp:
+        (JSC::Bindings::QtInstance::getOwnPropertySlot):
+        (JSC::Bindings::QtInstance::put):
+        * bridge/qt/qt_instance.h:
+        * bridge/runtime.h:
+        (JSC::Bindings::Instance::getOwnPropertySlot):
+        (JSC::Bindings::Instance::put):
+        * bridge/runtime_object.cpp:
+        (JSC::RuntimeObjectImp::getOwnPropertySlot):
+        (JSC::RuntimeObjectImp::put):
+
+2009-01-15  Anders Carlsson  <andersca@apple.com>
+
+        Fix the QT build.
+
+        * bridge/qt/qt_instance.cpp:
+        (JSC::Bindings::QtInstance::createRuntimeObject):
+        * bridge/qt/qt_instance.h:
+
+2009-01-15  David Hyatt  <hyatt@apple.com>
+
+        Fix for <rdar://problem/6500278> REGRESSION: 3.5% of samples on iBench in WebCore::Frame::setZoomFactor
+
+        setZoomFactor was supposed to bail if both the zoom factor and mode were the same.  The mode check was
+        buggy and doing the wrong thing.
+
+        Reviewed by Darin Adler
+
+        * page/Frame.cpp:
+        (WebCore::Frame::setZoomFactor):
+
+2009-01-15  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Geoffrey Garen.
+
+        Make Instance::createRuntimeObject a virtual function and override it for QtInstance.
+        
+        * bindings/js/JSPluginElementFunctions.cpp:
+        (WebCore::getRuntimeObject):
+        * bridge/c/c_utility.cpp:
+        (JSC::Bindings::convertNPVariantToValue):
+        * bridge/jni/jni_instance.cpp:
+        (JavaInstance::invokeMethod):
+        * bridge/jni/jni_jsobject.mm:
+        (JavaJSObject::convertJObjectToValue):
+        * bridge/jni/jni_runtime.cpp:
+        (JavaField::valueFromInstance):
+        (JavaArray::valueAt):
+        * bridge/objc/objc_utility.mm:
+        (JSC::Bindings::convertObjcValueToValue):
+        * bridge/qt/qt_instance.cpp:
+        (JSC::Bindings::QtInstance::getRuntimeObject):
+        (JSC::Bindings::QtInstance::createRuntimeObject):
+        * bridge/qt/qt_instance.h:
+        * bridge/qt/qt_runtime.cpp:
+        (JSC::Bindings::convertQVariantToValue):
+        (JSC::Bindings::QtConnectionObject::execute):
+        * bridge/runtime.cpp:
+        (JSC::Bindings::Instance::createRuntimeObject):
+        * bridge/runtime.h:
+
+2009-01-15  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23354
+        Fix up graphics/chromium files to account for Uniscribe style scrubbing.
+
+        * platform/graphics/chromium/FontChromiumWin.cpp:
+        (WebCore::windowsCanHandleTextDrawing):
+        (WebCore::Font::selectionRectForComplexText):
+        (WebCore::Font::drawComplexText):
+        (WebCore::Font::floatWidthForComplexText):
+        (WebCore::Font::offsetForPositionForComplexText):
+        * platform/graphics/chromium/GlyphPageTreeNodeChromiumWin.cpp:
+        (WebCore::fillNonBMPGlyphs):
+
+2009-01-15  David Levin  <levin@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23333
+        Adjust due to a name change that happened in a WebKit.
+
+        * svg/graphics/skia/SVGPaintServerPatternSkia.cpp:
+        (WebCore::SVGPaintServerPattern::setup):
+
+2009-01-15  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23340
+        Add remaining bits of graphics/chromium.
+
+        * platform/graphics/chromium/SimpleFontDataChromiumWin.cpp: Added.
+        (WebCore::scaleEmToUnits):
+        (WebCore::SimpleFontData::platformInit):
+        (WebCore::SimpleFontData::platformDestroy):
+        (WebCore::SimpleFontData::smallCapsFontData):
+        (WebCore::SimpleFontData::containsCharacters):
+        (WebCore::SimpleFontData::determinePitch):
+        (WebCore::SimpleFontData::platformWidthForGlyph):
+        * platform/graphics/chromium/SimpleFontDataLinux.cpp: Added.
+        (WebCore::SimpleFontData::platformInit):
+        (WebCore::SimpleFontData::platformDestroy):
+        (WebCore::SimpleFontData::smallCapsFontData):
+        (WebCore::SimpleFontData::containsCharacters):
+        (WebCore::SimpleFontData::determinePitch):
+        (WebCore::SimpleFontData::platformWidthForGlyph):
+        * platform/graphics/chromium/ThemeHelperChromiumWin.cpp: Added.
+        (WebCore::ThemeHelperWin::ThemeHelperWin):
+        (WebCore::ThemeHelperWin::~ThemeHelperWin):
+        * platform/graphics/chromium/ThemeHelperChromiumWin.h: Added.
+        (WebCore::ThemeHelperWin::):
+        (WebCore::ThemeHelperWin::context):
+        (WebCore::ThemeHelperWin::rect):
+        * platform/graphics/chromium/UniscribeHelper.cpp: Added.
+        (WebCore::treatAsSpace):
+        (WebCore::containsMissingGlyphs):
+        (WebCore::setLogFontAndStyle):
+        (WebCore::UniscribeHelper::UniscribeHelper):
+        (WebCore::UniscribeHelper::~UniscribeHelper):
+        (WebCore::UniscribeHelper::initWithOptionalLengthProtection):
+        (WebCore::UniscribeHelper::width):
+        (WebCore::UniscribeHelper::justify):
+        (WebCore::UniscribeHelper::characterToX):
+        (WebCore::UniscribeHelper::xToCharacter):
+        (WebCore::UniscribeHelper::draw):
+        (WebCore::UniscribeHelper::firstGlyphForCharacter):
+        (WebCore::UniscribeHelper::fillRuns):
+        (WebCore::UniscribeHelper::shape):
+        (WebCore::UniscribeHelper::fillShapes):
+        (WebCore::UniscribeHelper::fillScreenOrder):
+        (WebCore::UniscribeHelper::adjustSpaceAdvances):
+        (WebCore::UniscribeHelper::applySpacing):
+        (WebCore::UniscribeHelper::advanceForItem):
+        * platform/graphics/chromium/UniscribeHelper.h: Added.
+        (WebCore::UniscribeHelper::directionalOverride):
+        (WebCore::UniscribeHelper::setDirectionalOverride):
+        (WebCore::UniscribeHelper::inhibitLigate):
+        (WebCore::UniscribeHelper::setInhibitLigate):
+        (WebCore::UniscribeHelper::letterSpacing):
+        (WebCore::UniscribeHelper::setLetterSpacing):
+        (WebCore::UniscribeHelper::spaceWidth):
+        (WebCore::UniscribeHelper::setSpaceWidth):
+        (WebCore::UniscribeHelper::wordSpacing):
+        (WebCore::UniscribeHelper::setWordSpacing):
+        (WebCore::UniscribeHelper::setAscent):
+        (WebCore::UniscribeHelper::init):
+        (WebCore::UniscribeHelper::tryToPreloadFont):
+        (WebCore::UniscribeHelper::Shaping::Shaping):
+        (WebCore::UniscribeHelper::Shaping::glyphLength):
+        (WebCore::UniscribeHelper::Shaping::charLength):
+        (WebCore::UniscribeHelper::Shaping::effectiveAdvances):
+        (WebCore::UniscribeHelper::nextWinFontData):
+        (WebCore::UniscribeHelper::resetFontIndex):
+        * platform/graphics/chromium/UniscribeHelperTextRun.cpp: Added.
+        (WebCore::UniscribeHelperTextRun::UniscribeHelperTextRun):
+        (WebCore::UniscribeHelperTextRun::tryToPreloadFont):
+        (WebCore::UniscribeHelperTextRun::nextWinFontData):
+        (WebCore::UniscribeHelperTextRun::resetFontIndex):
+        * platform/graphics/chromium/UniscribeHelperTextRun.h: Added.
+
+2009-01-15  Chris Marrin  <cmarrin@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Fixed Windows project file after https://bugs.webkit.org/show_bug.cgi?id=21421
+
+        * WebCore.vcproj/WebCore.vcproj:
+
+2009-01-15  Aaron Boodman  <aa@chromium.org>
+
+        Reviewed by Adam Roben.
+
+        https://bugs.webkit.org/show_bug.cgi?id=15279
+        Right clicking over text (or multiple spaces) auto selects the word
+        (or multiple spaces) under it, which is not a desirable effect for some
+        platforms.
+
+        * page/EventHandler.cpp:
+        (WebCore::EventHandler::sendContextMenuEvent):
+        Don't select words on right-click on Chromium.
+
 2009-01-15  Darin Fisher  <darin@chromium.org>
 
         Reviewed by Eric Seidel.

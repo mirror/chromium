@@ -67,9 +67,10 @@ void SimpleFontData::platformInit()
 
     if (metrics.fXHeight)
         m_xHeight = metrics.fXHeight;
-    else
+    else {
         // hack taken from the Windows port
         m_xHeight = static_cast<float>(m_ascent) * 0.56;
+    }
 
     m_lineGap = SkScalarRound(metrics.fLeading);
     m_lineSpacing = m_ascent + m_descent + m_lineGap;

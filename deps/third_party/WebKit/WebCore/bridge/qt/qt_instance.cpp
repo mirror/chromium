@@ -49,21 +49,29 @@ static InstanceJSObjectMap cachedObjects;
 
 // Derived RuntimeObject
 class QtRuntimeObjectImp : public RuntimeObjectImp {
-    public:
-        QtRuntimeObjectImp(ExecState*, PassRefPtr<Instance>);
-        ~QtRuntimeObjectImp();
-        virtual void invalidate();
+public:
+    QtRuntimeObjectImp(ExecState*, PassRefPtr<Instance>);
+    ~QtRuntimeObjectImp();
+    virtual void invalidate();
 
-        virtual void mark() {
-            QtInstance* instance = static_cast<QtInstance*>(getInternalInstance());
-            if (instance)
-                instance->mark();
-            RuntimeObjectImp::mark();
-        }
+    static const ClassInfo s_info;
 
-    protected:
-        void removeFromCache();
+    virtual void mark()
+    {
+        QtInstance* instance = static_cast<QtInstance*>(getInternalInstance());
+        if (instance)
+            instance->mark();
+        RuntimeObjectImp::mark();
+    }
+
+protected:
+    void removeFromCache();
+        
+private:
+    virtual const ClassInfo* classInfo() const { return &s_info; }
 };
+
+const ClassInfo QtRuntimeObjectImp::s_info = { "QtRuntimeObject", &RuntimeObjectImp::s_info, 0, 0 };
 
 QtRuntimeObjectImp::QtRuntimeObjectImp(ExecState* exec, PassRefPtr<Instance> instance)
     : RuntimeObjectImp(exec, WebCore::getDOMStructure<QtRuntimeObjectImp>(exec), instance)
@@ -130,17 +138,23 @@ PassRefPtr<QtInstance> QtInstance::getQtInstance(QObject* o, PassRefPtr<RootObje
     return ret.release();
 }
 
-RuntimeObjectImp* QtInstance::getRuntimeObject(ExecState* exec, PassRefPtr<QtInstance> instance)
+bool QtInstance::getOwnPropertySlot(JSObject* object, ExecState* exec, const Identifier& propertyName, PropertySlot& slot)
 {
-    JSLock lock(false);
-    QtInstance* qtInstance = instance.get();
-    RuntimeObjectImp* ret = static_cast<RuntimeObjectImp*>(cachedObjects.value(qtInstance));
-    if (!ret) {
-        ret = new (exec) QtRuntimeObjectImp(exec, instance);
-        cachedObjects.insert(qtInstance, ret);
-        ret = static_cast<RuntimeObjectImp*>(cachedObjects.value(qtInstance));
-    }
-    return ret;
+    return object->JSObject::getOwnPropertySlot(exec, propertyName, slot);
+}
+
+void QtInstance::put(JSObject* object, ExecState* exec, const Identifier& propertyName, JSValuePtr value, PutPropertySlot& slot)
+{
+    object->JSObject::put(exec, propertyName, value, slot);
+}
+
+static QtInstance* QtInstance::getInstance(JSObject* object)
+{
+    if (!object)
+        return 0;
+    if (!object->inherits(&QtRuntimeObjectImp::s_info))
+        return 0;
+    return static_cast<QtInstance*>(static_cast<RuntimeObjectImp*>(object)->getInternalInstance());
 }
 
 Class* QtInstance::getClass() const
@@ -148,6 +162,18 @@ Class* QtInstance::getClass() const
     if (!m_class)
         m_class = QtClass::classForObject(m_object);
     return m_class;
+}
+
+RuntimeObjectImp* QtInstance::createRuntimeObject(ExecState* exec)
+{
+    JSLock lock(false);
+    RuntimeObjectImp* ret = static_cast<RuntimeObjectImp*>(cachedObjects.value(this));
+    if (!ret) {
+        ret = new (exec) QtRuntimeObjectImp(exec, this);
+        cachedObjects.insert(this, ret);
+        ret = static_cast<RuntimeObjectImp*>(cachedObjects.value(this));
+    }
+    return ret;
 }
 
 void QtInstance::mark()

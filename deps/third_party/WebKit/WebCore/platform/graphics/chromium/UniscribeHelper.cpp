@@ -44,7 +44,7 @@ namespace WebCore {
 // "is this a word break" thing.
 static bool treatAsSpace(UChar c)
 {
-   return c == ' ' || c == '\t' || c == '\n' || c == 0x00A0;
+    return c == ' ' || c == '\t' || c == '\n' || c == 0x00A0;
 }
 
 // SCRIPT_FONTPROPERTIES contains glyph indices for default, invalid
@@ -475,7 +475,7 @@ void UniscribeHelper::fillRuns()
     // local digit substitution behavior.  For now, don't do it.
 
     while (true) {
-        int num_items = 0;
+        int numberOfItems = 0;
 
         // Ideally, we would have a way to know the runs before and after this
         // one, and put them into the control parameter of ScriptItemize. This
@@ -499,9 +499,9 @@ void UniscribeHelper::fillRuns()
         hr = ScriptItemize(m_input, m_inputLength,
                            static_cast<int>(m_runs.size()) - 1, &inputControl,
                            &inputState,
-                           &m_runs[0], &num_items);
+                           &m_runs[0], &numberOfItems);
         if (SUCCEEDED(hr)) {
-            m_runs.resize(num_items);
+            m_runs.resize(numberOfItems);
             break;
         }
         if (hr != E_OUTOFMEMORY) {

@@ -703,7 +703,7 @@ bool Frame::shouldApplyPageZoom() const
 
 void Frame::setZoomFactor(float percent, bool isTextOnly)
 {  
-    if (d->m_zoomFactor == percent && isZoomFactorTextOnly())
+    if (d->m_zoomFactor == percent && isZoomFactorTextOnly() == isTextOnly)
         return;
 
 #if ENABLE(SVG)

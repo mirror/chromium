@@ -48,7 +48,7 @@ namespace WebCore {
 
 static inline float scaleEmToUnits(float x, int unitsPerEm)
 {
-  return unitsPerEm ? x / (float)unitsPerEm : x;
+    return unitsPerEm ? x / static_cast<float>(unitsPerEm) : x;
 }
 
 void SimpleFontData::platformInit()
@@ -124,7 +124,7 @@ bool SimpleFontData::containsCharacters(const UChar* characters, int length) con
 void SimpleFontData::determinePitch()
 {
     // TEXTMETRICS have this.  Set m_treatAsFixedPitch based off that.
-    HDC dc = GetDC((HWND)0);
+    HDC dc = GetDC(0);
     HGDIOBJ oldFont = SelectObject(dc, m_font.hfont());
 
     // Yes, this looks backwards, but the fixed pitch bit is actually set if the font
