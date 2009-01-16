@@ -27,8 +27,6 @@
 
 namespace WebCore {
 
-    const unsigned cDefaultUnitsPerEm = 1000;
-
     class CSSFontFaceRule;
     class CSSMutableStyleDeclaration;
     class SVGFontElement;
