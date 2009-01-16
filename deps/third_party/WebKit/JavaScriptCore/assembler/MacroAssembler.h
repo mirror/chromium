@@ -574,6 +574,11 @@ public:
         m_assembler.idivl_r(divisor);
     }
 
+    void mul32(RegisterID src, RegisterID dest)
+    {
+        m_assembler.imull_rr(src, dest);
+    }
+    
     void mul32(Imm32 imm, RegisterID src, RegisterID dest)
     {
         m_assembler.imull_i32r(src, imm.m_value, dest);
@@ -691,6 +696,21 @@ public:
 #else
         sub32(imm, dest);
 #endif
+    }
+    
+    void subPtr(ImmPtr imm, RegisterID dest)
+    {
+#if PLATFORM(X86_64)
+        move(imm, scratchRegister);
+        m_assembler.subq_rr(scratchRegister, dest);
+#else
+        sub32(Imm32(imm), dest);
+#endif
+    }
+
+    void sub32(RegisterID src, RegisterID dest)
+    {
+        m_assembler.subl_rr(src, dest);
     }
     
     void sub32(Imm32 imm, RegisterID dest)
@@ -1782,9 +1802,21 @@ public:
         return Jump(m_assembler.jo());
     }
     
+    Jump joMul32(RegisterID src, RegisterID dest)
+    {
+        mul32(src, dest);
+        return Jump(m_assembler.jo());
+    }
+    
     Jump joMul32(Imm32 imm, RegisterID src, RegisterID dest)
     {
         mul32(imm, src, dest);
+        return Jump(m_assembler.jo());
+    }
+    
+    Jump joSub32(RegisterID src, RegisterID dest)
+    {
+        sub32(src, dest);
         return Jump(m_assembler.jo());
     }
     

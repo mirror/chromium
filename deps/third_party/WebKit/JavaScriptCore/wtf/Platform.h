@@ -435,29 +435,27 @@
 #define ENABLE_TEXT_CARET 1
 #endif
 
+#if !defined(WTF_USE_ALTERNATE_JSIMMEDIATE) && PLATFORM(X86_64) && PLATFORM(MAC)
+#define WTF_USE_ALTERNATE_JSIMMEDIATE 1
+#endif
+
 #if !defined(ENABLE_JIT)
 /* x86-64 support is under development. */
 #if PLATFORM(X86_64) && PLATFORM(MAC)
     #define ENABLE_JIT 0
     #define WTF_USE_JIT_STUB_ARGUMENT_REGISTER 1
-    #define ENABLE_JIT_OPTIMIZE_CALL 1
-    #define ENABLE_JIT_OPTIMIZE_PROPERTY_ACCESS 1
-    #define WTF_USE_ALTERNATE_JSIMMEDIATE 1
 /* The JIT is tested & working on x86 Mac */
 #elif PLATFORM(X86) && PLATFORM(MAC)
     #define ENABLE_JIT 1
     #define WTF_USE_JIT_STUB_ARGUMENT_VA_LIST 1
-    #define ENABLE_JIT_OPTIMIZE_CALL 1
-    #define ENABLE_JIT_OPTIMIZE_PROPERTY_ACCESS 1
-    #define ENABLE_JIT_OPTIMIZE_ARITHMETIC 1
 /* The JIT is tested & working on x86 Windows */
 #elif PLATFORM(X86) && PLATFORM(WIN)
     #define ENABLE_JIT 1
     #define WTF_USE_JIT_STUB_ARGUMENT_REGISTER 1
+#endif
     #define ENABLE_JIT_OPTIMIZE_CALL 1
     #define ENABLE_JIT_OPTIMIZE_PROPERTY_ACCESS 1
     #define ENABLE_JIT_OPTIMIZE_ARITHMETIC 1
-#endif
 #endif
 
 #if ENABLE(JIT)

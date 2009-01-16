@@ -1,3 +1,255 @@
+2009-01-16  Adam Roben  <aroben@apple.com>
+
+        Windows build fix
+
+        * wrec/WRECParser.cpp:
+        (JSC::WREC::Parser::parseParentheses): Removed unreachable code.
+
+2009-01-15  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Cameron Zwarich.
+        
+        Fixed <rdar://problem/6471394> REGRESSION (r39164): Discarding quantifier
+        on assertion gives incorrect result (23075)
+        
+        https://bugs.webkit.org/show_bug.cgi?id=23075
+
+        * pcre/pcre_compile.cpp:
+        (compileBranch): Throw away an assertion if it's followed by a quantifier
+        with a 0 minimum, to match SpiderMonkey, v8, and the ECMA spec.
+
+        * wrec/WRECParser.cpp:
+        (JSC::WREC::Parser::parseParentheses): Fall back on PCRE for the rare
+        case of an assertion with a quantifier with a 0 minimum, since we
+        don't handle quantified subexpressions yet, and in this special case,
+        we can't just throw away the quantifier.
+
+2009-01-15  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Add support in ResultType to track that the results of bitops
+        are always of type int32_t.
+
+        * parser/Nodes.cpp:
+        (JSC::ReadModifyResolveNode::emitBytecode):
+        (JSC::ReadModifyDotNode::emitBytecode):
+        (JSC::ReadModifyBracketNode::emitBytecode):
+        * parser/Nodes.h:
+        (JSC::ExpressionNode::):
+        (JSC::BooleanNode::):
+        (JSC::NumberNode::):
+        (JSC::StringNode::):
+        (JSC::PrePostResolveNode::):
+        (JSC::TypeOfResolveNode::):
+        (JSC::TypeOfValueNode::):
+        (JSC::UnaryPlusNode::):
+        (JSC::NegateNode::):
+        (JSC::BitwiseNotNode::):
+        (JSC::LogicalNotNode::):
+        (JSC::MultNode::):
+        (JSC::DivNode::):
+        (JSC::ModNode::):
+        (JSC::SubNode::):
+        (JSC::LeftShiftNode::):
+        (JSC::RightShiftNode::):
+        (JSC::UnsignedRightShiftNode::):
+        (JSC::LessNode::):
+        (JSC::GreaterNode::):
+        (JSC::LessEqNode::):
+        (JSC::GreaterEqNode::):
+        (JSC::InstanceOfNode::):
+        (JSC::EqualNode::):
+        (JSC::NotEqualNode::):
+        (JSC::StrictEqualNode::):
+        (JSC::NotStrictEqualNode::):
+        (JSC::BitAndNode::):
+        (JSC::BitOrNode::):
+        (JSC::BitXOrNode::):
+        (JSC::LogicalOpNode::):
+        * parser/ResultType.h:
+        (JSC::ResultType::isInt32):
+        (JSC::ResultType::isNotNumber):
+        (JSC::ResultType::booleanType):
+        (JSC::ResultType::numberType):
+        (JSC::ResultType::numberTypeCanReuse):
+        (JSC::ResultType::numberTypeCanReuseIsInt32):
+        (JSC::ResultType::stringOrNumberTypeCanReuse):
+        (JSC::ResultType::stringType):
+        (JSC::ResultType::unknownType):
+        (JSC::ResultType::forAdd):
+        (JSC::ResultType::forBitOp):
+        (JSC::OperandTypes::OperandTypes):
+
+2009-01-15  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Add support for integer addition, subtraction and multiplication
+        in JIT code on x86-64.
+
+        * assembler/MacroAssembler.h:
+        (JSC::MacroAssembler::mul32):
+        (JSC::MacroAssembler::sub32):
+        (JSC::MacroAssembler::joMul32):
+        (JSC::MacroAssembler::joSub32):
+        * jit/JIT.cpp:
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompileSlowCases):
+        * jit/JIT.h:
+        * jit/JITArithmetic.cpp:
+        (JSC::JIT::compileFastArith_op_add):
+        (JSC::JIT::compileFastArithSlow_op_add):
+        (JSC::JIT::compileFastArith_op_mul):
+        (JSC::JIT::compileFastArithSlow_op_mul):
+        (JSC::JIT::compileFastArith_op_sub):
+        (JSC::JIT::compileFastArithSlow_op_sub):
+
+2009-01-15  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        On x86-64 allow JSImmediate to encode 64-bit double precision values.
+        This patch only affects builds that set USE(ALTERNATE_JSIMMEDIATE).
+        Updates the implementation of JSValuePtr:: and JSImmediate:: methods
+        that operate on neumeric values to be be aware of the new representation.
+        When this representation is in use, the class JSNumberCell is redundant
+        and is compiled out.
+
+        The format of the new immediate representation is documented in JSImmediate.h.
+
+        * JavaScriptCore.exp:
+        * assembler/MacroAssembler.h:
+        (JSC::MacroAssembler::subPtr):
+        * assembler/X86Assembler.h:
+        (JSC::X86Assembler::):
+        (JSC::X86Assembler::subq_rr):
+        (JSC::X86Assembler::movq_rr):
+        (JSC::X86Assembler::ucomisd_rr):
+        (JSC::X86Assembler::X86InstructionFormatter::twoByteOp64):
+        * interpreter/Interpreter.cpp:
+        (JSC::Interpreter::cti_op_stricteq):
+        (JSC::Interpreter::cti_op_nstricteq):
+        * jit/JIT.cpp:
+        (JSC::JIT::compileOpStrictEq):
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompileSlowCases):
+        * jit/JIT.h:
+        * jit/JITArithmetic.cpp:
+        (JSC::JIT::compileFastArith_op_lshift):
+        (JSC::JIT::compileFastArith_op_rshift):
+        (JSC::JIT::compileFastArith_op_bitand):
+        (JSC::JIT::compileFastArith_op_mod):
+        (JSC::JIT::compileFastArith_op_add):
+        (JSC::JIT::compileFastArith_op_mul):
+        (JSC::JIT::compileFastArith_op_post_inc):
+        (JSC::JIT::compileFastArith_op_post_dec):
+        (JSC::JIT::compileFastArith_op_pre_inc):
+        (JSC::JIT::compileFastArith_op_pre_dec):
+        (JSC::JIT::putDoubleResultToJSNumberCellOrJSImmediate):
+        (JSC::JIT::compileBinaryArithOp):
+        * jit/JITInlineMethods.h:
+        (JSC::JIT::emitJumpIfBothJSCells):
+        (JSC::JIT::emitJumpIfEitherNumber):
+        (JSC::JIT::emitJumpIfNotEitherNumber):
+        (JSC::JIT::emitJumpIfImmediateIntegerNumber):
+        (JSC::JIT::emitJumpIfNotImmediateIntegerNumber):
+        (JSC::JIT::emitJumpIfNotImmediateIntegerNumbers):
+        (JSC::JIT::emitJumpSlowCaseIfNotImmediateIntegerNumber):
+        (JSC::JIT::emitJumpSlowCaseIfNotImmediateIntegerNumbers):
+        (JSC::JIT::emitFastArithDeTagImmediate):
+        (JSC::JIT::emitFastArithDeTagImmediateJumpIfZero):
+        (JSC::JIT::emitFastArithReTagImmediate):
+        (JSC::JIT::emitFastArithIntToImmNoCheck):
+        * runtime/JSCell.h:
+        * runtime/JSGlobalData.cpp:
+        (JSC::JSGlobalData::JSGlobalData):
+        * runtime/JSImmediate.cpp:
+        (JSC::JSImmediate::toThisObject):
+        (JSC::JSImmediate::toObject):
+        (JSC::JSImmediate::toString):
+        * runtime/JSImmediate.h:
+        (JSC::wtf_reinterpret_cast):
+        (JSC::JSImmediate::isNumber):
+        (JSC::JSImmediate::isIntegerNumber):
+        (JSC::JSImmediate::isDoubleNumber):
+        (JSC::JSImmediate::isPositiveIntegerNumber):
+        (JSC::JSImmediate::areBothImmediateIntegerNumbers):
+        (JSC::JSImmediate::makeInt):
+        (JSC::JSImmediate::makeDouble):
+        (JSC::JSImmediate::doubleValue):
+        (JSC::doubleToBoolean):
+        (JSC::JSImmediate::toBoolean):
+        (JSC::JSImmediate::getTruncatedUInt32):
+        (JSC::JSImmediate::makeOutOfIntegerRange):
+        (JSC::JSImmediate::from):
+        (JSC::JSImmediate::getTruncatedInt32):
+        (JSC::JSImmediate::toDouble):
+        (JSC::JSImmediate::getUInt32):
+        (JSC::JSValuePtr::isInt32Fast):
+        (JSC::JSValuePtr::isUInt32Fast):
+        (JSC::JSValuePtr::areBothInt32Fast):
+        (JSC::JSFastMath::canDoFastBitwiseOperations):
+        (JSC::JSFastMath::xorImmediateNumbers):
+        (JSC::JSFastMath::canDoFastRshift):
+        (JSC::JSFastMath::canDoFastUrshift):
+        (JSC::JSFastMath::rightShiftImmediateNumbers):
+        (JSC::JSFastMath::canDoFastAdditiveOperations):
+        (JSC::JSFastMath::addImmediateNumbers):
+        (JSC::JSFastMath::subImmediateNumbers):
+        * runtime/JSNumberCell.cpp:
+        (JSC::jsNumberCell):
+        * runtime/JSNumberCell.h:
+        (JSC::createNumberStructure):
+        (JSC::isNumberCell):
+        (JSC::asNumberCell):
+        (JSC::jsNumber):
+        (JSC::JSValuePtr::isDoubleNumber):
+        (JSC::JSValuePtr::getDoubleNumber):
+        (JSC::JSValuePtr::isNumber):
+        (JSC::JSValuePtr::uncheckedGetNumber):
+        (JSC::jsNaN):
+        (JSC::JSValuePtr::getNumber):
+        (JSC::JSValuePtr::numberToInt32):
+        (JSC::JSValuePtr::numberToUInt32):
+        * runtime/JSValue.h:
+        * runtime/NumberConstructor.cpp:
+        (JSC::numberConstructorNegInfinity):
+        (JSC::numberConstructorPosInfinity):
+        (JSC::numberConstructorMaxValue):
+        (JSC::numberConstructorMinValue):
+        * runtime/NumberObject.cpp:
+        (JSC::constructNumber):
+        * runtime/NumberObject.h:
+        * runtime/Operations.h:
+        (JSC::JSValuePtr::equal):
+        (JSC::JSValuePtr::equalSlowCaseInline):
+        (JSC::JSValuePtr::strictEqual):
+        (JSC::JSValuePtr::strictEqualSlowCaseInline):
+        * wtf/Platform.h:
+
+2009-01-15  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey Garen.
+
+        <rdar://problem/6045018>
+        REGRESSION (r34838): JavaScript objects appear to be leaked after loading google.com
+
+        Subtract the number of JSStrings cached in SmallStrings when calculating the
+        number of live JSObjects.
+
+        * runtime/Collector.cpp:
+        (JSC::Heap::objectCount):
+        * runtime/SmallStrings.cpp:
+        (JSC::SmallStrings::count):
+        * runtime/SmallStrings.h:
+
+2009-01-15  Sam Weinig  <sam@webkit.org>
+
+        Fix Qt build.
+
+        * runtime/Collector.cpp:
+
 2009-01-15  Sam Weinig  <sam@webkit.org>
 
         Reviewed by Gavin Barraclough.

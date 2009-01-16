@@ -351,11 +351,6 @@ namespace JSC {
                 code, registerFile, callFrame, exception, Profiler::enabledProfilerReference(), globalData));
         }
 
-        static bool isStrictEqCaseHandledInJITCode(JSValuePtr src1, JSValuePtr src2)
-        {
-            return JSImmediate::areBothImmediate(src1, src2) || (JSImmediate::isEitherImmediate(src1, src2) & (src1 != js0()) & (src2 != js0()));
-        }
-
     private:
         JIT(JSGlobalData*, CodeBlock* = 0);
 
@@ -396,6 +391,7 @@ namespace JSC {
         void putDoubleResultToJSNumberCellOrJSImmediate(X86Assembler::XMMRegisterID xmmSource, RegisterID jsNumberCell, unsigned dst, X86Assembler::JmpSrc* wroteJSNumberCell, X86Assembler::XMMRegisterID tempXmm, RegisterID tempReg1, RegisterID tempReg2);
 
         void compileFastArith_op_add(Instruction*);
+        void compileFastArith_op_sub(Instruction*);
         void compileFastArith_op_mul(Instruction*);
         void compileFastArith_op_mod(unsigned result, unsigned op1, unsigned op2);
         void compileFastArith_op_bitand(unsigned result, unsigned op1, unsigned op2);
@@ -406,6 +402,7 @@ namespace JSC {
         void compileFastArith_op_post_inc(unsigned result, unsigned srcDst);
         void compileFastArith_op_post_dec(unsigned result, unsigned srcDst);
         void compileFastArithSlow_op_add(Instruction*, Vector<SlowCaseEntry>::iterator&);
+        void compileFastArithSlow_op_sub(Instruction*, Vector<SlowCaseEntry>::iterator&);
         void compileFastArithSlow_op_mul(Instruction*, Vector<SlowCaseEntry>::iterator&);
         void compileFastArithSlow_op_mod(unsigned result, unsigned op1, unsigned op2, Vector<SlowCaseEntry>::iterator&);
         void compileFastArithSlow_op_bitand(unsigned result, unsigned op1, unsigned op2, Vector<SlowCaseEntry>::iterator&);
@@ -415,8 +412,10 @@ namespace JSC {
         void compileFastArithSlow_op_pre_dec(unsigned srcDst, Vector<SlowCaseEntry>::iterator&);
         void compileFastArithSlow_op_post_inc(unsigned result, unsigned srcDst, Vector<SlowCaseEntry>::iterator&);
         void compileFastArithSlow_op_post_dec(unsigned result, unsigned srcDst, Vector<SlowCaseEntry>::iterator&);
+#if ENABLE(JIT_OPTIMIZE_ARITHMETIC) && !USE(ALTERNATE_JSIMMEDIATE)
         void compileBinaryArithOp(OpcodeID, unsigned dst, unsigned src1, unsigned src2, OperandTypes opi);
         void compileBinaryArithOpSlowCase(OpcodeID, Vector<SlowCaseEntry>::iterator&, unsigned dst, unsigned src1, unsigned src2, OperandTypes opi);
+#endif
 
         void emitGetVirtualRegister(int src, RegisterID dst);
         void emitGetVirtualRegisters(int src1, RegisterID dst1, int src2, RegisterID dst2);
@@ -443,10 +442,15 @@ namespace JSC {
         bool isOperandConstantImmediateInt(unsigned src);
 
         Jump emitJumpIfJSCell(RegisterID);
+        Jump emitJumpIfBothJSCells(RegisterID, RegisterID, RegisterID);
         void emitJumpSlowCaseIfJSCell(RegisterID);
         Jump emitJumpIfNotJSCell(RegisterID);
         void emitJumpSlowCaseIfNotJSCell(RegisterID);
         void emitJumpSlowCaseIfNotJSCell(RegisterID, int VReg);
+#if USE(ALTERNATE_JSIMMEDIATE)
+        JIT::Jump emitJumpIfImmediateNumber(RegisterID);
+        JIT::Jump emitJumpIfNotImmediateNumber(RegisterID);
+#endif
 
         Jump getSlowCase(Vector<SlowCaseEntry>::iterator& iter)
         {
@@ -459,9 +463,11 @@ namespace JSC {
         }
         void linkSlowCaseIfNotJSCell(Vector<SlowCaseEntry>::iterator&, int vReg);
 
-        JIT::Jump emitJumpIfImmNum(RegisterID);
-        void emitJumpSlowCaseIfNotImmNum(RegisterID);
-        void emitJumpSlowCaseIfNotImmNums(RegisterID, RegisterID, RegisterID);
+        JIT::Jump emitJumpIfImmediateInteger(RegisterID);
+        JIT::Jump emitJumpIfNotImmediateInteger(RegisterID);
+        JIT::Jump emitJumpIfNotImmediateIntegers(RegisterID, RegisterID, RegisterID);
+        void emitJumpSlowCaseIfNotImmediateInteger(RegisterID);
+        void emitJumpSlowCaseIfNotImmediateIntegers(RegisterID, RegisterID, RegisterID);
 
         Jump checkStructure(RegisterID reg, Structure* structure);
 

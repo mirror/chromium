@@ -1,3 +1,145 @@
+2009-01-16  Thiago Macieira  <thiago.macieira@nokia.com>
+
+        Reviewed by Simon Hausmann.
+
+        [Qt] Fixes QString and 8-bit mix fixes.
+
+        Details:  Make sure we use QLatin1String where appropriate (and don't
+        use QString when not necessary)
+
+        * platform/graphics/qt/ImageDecoderQt.cpp:
+        (WebCore::ImageDecoderQt::create):
+        * platform/graphics/qt/SimpleFontDataQt.cpp:
+        (WebCore::SimpleFontData::platformInit):
+        * platform/qt/FileSystemQt.cpp:
+        (WebCore::openTemporaryFile):
+        * platform/qt/LoggingQt.cpp:
+        (WebCore::InitializeLoggingChannelsIfNecessary):
+        * platform/qt/RenderThemeQt.cpp:
+        (WebCore::RenderThemeQt::extraMediaControlsStyleSheet):
+        * plugins/qt/PluginDataQt.cpp:
+        (WebCore::PluginData::initPlugins):
+
+2009-01-16  Ariya Hidayat  <ariya.hidayat@trolltech.com>
+
+        Reviewed by Adam Roben.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22452
+
+        When plugins are disabled, plugin data should not be available for
+        the page. This ensures that navigator.plugins would not see the
+        additional MIME types supported by the plugins.
+
+        * page/Page.cpp:
+        (WebCore::Page::pluginData):
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::shouldUsePlugin):
+        * rendering/RenderPartObject.cpp:
+        (WebCore::RenderPartObject::updateWidget):
+
+2009-01-15  Chris Marrin  <cmarrin@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Got rid of .idl file in Resources for bug https://bugs.webkit.org/show_bug.cgi?id=21421.
+        Also fixed the test case to work on ppc.
+
+        * WebCore.xcodeproj/project.pbxproj:
+
+2009-01-16  Ariya Hidayat  <ariya.hidayat@trolltech.com>
+
+        Another attempt at fixing the Qt build.
+
+        * bridge/qt/qt_instance.cpp:
+        (JSC::Bindings::QtInstance::getInstance):
+
+2009-01-16  David Hyatt  <hyatt@apple.com>
+
+        Fix for 1.85% PLT regression.  Since asking if a frame is "complete" actually aggressively decodes
+        the frame, we add an optimization when advancing animations.  If we have received all of the animated
+        image's data, then obviously we can go ahead and advance safely.  This prevents the first draw of an image
+        from decoding two frames' worth of data in the case where all of the image's data has been received.
+
+        While this fixes the cached case, there could in fact be a regression on the uncached PLT from this change
+        as well.  It's not immediately clear how that regression would be fixed, though, and it would likely be
+        a much smaller percentage of that overall uncached time.
+
+        Reviewed by Dan Bernstein
+
+        * platform/graphics/BitmapImage.cpp:
+        (WebCore::BitmapImage::startAnimation):
+
+2009-01-15  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Anders Carlsson.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23349
+        Don't store obsolete caches in disk storage
+
+        * loader/ResourceLoader.cpp:
+        (WebCore::ResourceLoader::ResourceLoader):
+        (WebCore::ResourceLoader::load):
+        (WebCore::ResourceLoader::scheduleLoadFallbackResourceFromApplicationCache):
+        * loader/ResourceLoader.h:
+        Don't maintain m_wasLoadedFromApplicationCache, which was never used.
+
+        * loader/appcache/ApplicationCache.cpp: (WebCore::ApplicationCache::addResource):
+        Assert that only implicit and dynamic resources can be added after the cache has been fully
+        loaded and stored to disk database.
+
+        * loader/appcache/ApplicationCacheGroup.cpp:
+        (WebCore::ApplicationCacheGroup::cacheDestroyed): Don't remove non-newest caches from disk
+        database, as this is now done whenever the cache becomes obsolete.
+        (WebCore::ApplicationCacheGroup::setNewestCache): Remove an obsolete cache from disk storage.
+
+        * loader/appcache/ApplicationCacheStorage.cpp: (WebCore::ApplicationCacheStorage::cacheGroupDestroyed):
+        A cache group that has never been saved should not be remembered in m_cacheHostSet. Changed
+        the check to no longer rely on savedNewestCachePointer.
+
+2009-01-15  Dimitri Dupuis-Latour  <dupuislatour@apple.com>
+
+        <rdar://problem/5870656> selectorText and cssText are clipped for :nth-child() and :nth-of-type();
+
+        Reviewed by Timothy Hatcher.
+
+        * css/CSSSelector.cpp:
+        (WebCore::CSSSelector::selectorText):
+
+2009-01-15  Justin Garcia  <justin.garcia@apple.com>
+
+        Reviewed by Oliver Hunt.
+        
+        <rdar://problem/6444148> Styling a selection that ends in a line break can sometimes style what's after the break
+
+        If the range to style ended at [node, 0] or inside node (and if for some reason the node didn't get split),
+        applyInlineStyle would style node.
+
+        * editing/ApplyStyleCommand.cpp:
+        (WebCore::ApplyStyleCommand::applyInlineStyle): Rename pastLast to pastEndNode, since it doesn't come from 
+        Range::pastLastNode() anymore.  pastEndNode is the node after the last one that is fully selected, since
+        the work done in the loop that follows should only be performed on fully selected nodes.
+        * editing/InsertLineBreakCommand.cpp:
+        (WebCore::InsertLineBreakCommand::doApply): Explicitly handle insertion into containers and after non-text nodes.
+        Those were handled accidently before.
+        * editing/htmlediting.cpp:
+        (WebCore::caretMaxOffset): In various places we call this with a container and expect to be given the number 
+        of children in that container, so I changed it to match that.  RenderBR and RenderObject::caretMaxOffset() should 
+        also be eliminated since maxDeepOffset handles non-text nodes.
+
+2009-01-15  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Geoffrey Garen.
+
+        Get rid of the dreaded BindingLanguage once and for all. Also get rid of Instance::getInstance.
+
+        * bridge/c/c_instance.h:
+        * bridge/jni/jni_instance.h:
+        * bridge/objc/objc_instance.h:
+        * bridge/qt/qt_instance.h:
+        * bridge/runtime.cpp:
+        * bridge/runtime.h:
+        * bridge/runtime_object.h:
+
 2009-01-15  David Hyatt  <hyatt@apple.com>
 
         Eliminate an extra virtual function call that occurs for every single RenderText by moving the SVG-specific
