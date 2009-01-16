@@ -691,6 +691,3 @@ namespace WebCore {
 }
 
 #endif
-
-
-

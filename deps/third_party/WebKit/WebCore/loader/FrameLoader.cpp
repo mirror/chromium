@@ -311,9 +311,9 @@ Frame* FrameLoader::createWindow(FrameLoader* frameLoaderForFrameLookup, const F
 { 
     ASSERT(!features.dialog || request.frameName().isEmpty());
 
-    if (!request.frameName().isEmpty() && request.frameName() != "_blank") { 
-        Frame* frame = frameLoaderForFrameLookup->frame()->tree()->find(request.frameName()); 
-        if (frame && shouldAllowNavigation(frame)) { 
+    if (!request.frameName().isEmpty() && request.frameName() != "_blank") {
+        Frame* frame = frameLoaderForFrameLookup->frame()->tree()->find(request.frameName());
+        if (frame && shouldAllowNavigation(frame)) {
             if (!request.resourceRequest().url().isEmpty())
                 frame->loader()->loadFrameRequestWithFormAndValues(request, false, 0, 0, HashMap<String, String>());
             if (Page* page = frame->page())
@@ -322,7 +322,7 @@ Frame* FrameLoader::createWindow(FrameLoader* frameLoaderForFrameLookup, const F
             return frame;
         }
     }
-
+    
     // FIXME: Setting the referrer should be the caller's responsibility.
     FrameLoadRequest requestWithReferrer = request;
     requestWithReferrer.resourceRequest().setHTTPReferrer(m_outgoingReferrer);
@@ -625,8 +625,8 @@ void FrameLoader::stopLoading(bool sendUnload)
 
     if (Document* doc = m_frame->document()) {
         if (DocLoader* docLoader = doc->docLoader())
-            cache()->loader()->cancelRequests(docLoader);        
-        
+            cache()->loader()->cancelRequests(docLoader);
+
         doc->stopActiveDOMObjects();
 #if ENABLE(DATABASE)
         doc->stopDatabases();
@@ -1739,6 +1739,8 @@ bool FrameLoader::shouldUsePlugin(const KURL& url, const String& mimeType, bool 
         return true;
     }
 
+    // Allow other plug-ins to win over QuickTime because if the user has installed a plug-in that
+    // can handle TIFF (which QuickTime can also handle) they probably intended to override QT.
     if (m_frame->page() && (mimeType == "image/tiff" || mimeType == "image/tif" || mimeType == "image/x-tiff")) {
         String pluginName = m_frame->page()->pluginData()->pluginNameForMimeType(mimeType);
         if (!pluginName.isEmpty() && !pluginName.contains("QuickTime", false)) 
@@ -5373,8 +5375,3 @@ void FrameLoader::switchOutLowBandwidthDisplayIfReady()
 #endif
 
 } // namespace WebCore
-
-
-
-
-
