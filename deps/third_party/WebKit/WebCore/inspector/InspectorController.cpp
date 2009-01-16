@@ -1008,20 +1008,16 @@ void InspectorController::showPanel(SpecialPanels panel)
             showFunctionName = 0;
     }
 
-    if (windowVisible() && showFunctionName) {
+    if (showFunctionName) {
         v8::HandleScope handle_scope;
         v8::Handle<v8::Context> context = V8Proxy::GetContext(m_page->mainFrame());
         v8::Context::Scope scope(context);
 
-        // TODO(ojan): Use showFunctionName here. For some reason some of these
-        // are not functions (e.g. showElementsPanel). 
-        v8::Handle<v8::Value> showFunction = m_scriptObject->Get(v8::String::New("showConsole"));
+        v8::Handle<v8::Value> showFunction = m_scriptObject->Get(v8::String::New(showFunctionName));
         ASSERT(showFunction->IsFunction());
 
         v8::Handle<v8::Function> func(v8::Function::Cast(*showFunction));
         func->Call(m_scriptObject, 0, NULL);
-    } else {
-        m_client->showWindow();
     }
 }
 
