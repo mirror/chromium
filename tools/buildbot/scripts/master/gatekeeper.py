@@ -124,6 +124,15 @@ class GateKeeper(MailNotifier):
     if not self.categories_steps:
       return self.closeTree(name, build, results)
 
+    # Check is the slave is still alive.
+    # We should not close the tree for inactive slaves.
+    slave_name = build.getSlavename()
+    if slave_name in self.status.getSlaveNames():
+      slave = self.status.getSlave(slave_name)
+      if slave and not slave.isConnected():
+        print "The slave was disconnected, not closing the tree"
+        return
+
     # Now get all the steps we must check for this builder 
     steps_to_check = []
     for category in builder.category.split(self._CATEGORY_SPLITTER):
