@@ -28,8 +28,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef ChromeClientWin_h
-#define ChromeClientWin_h
+#ifndef ChromeClientChromium_h
+#define ChromeClientChromium_h
 
 #include "ChromeClient.h"
 #include <wtf/Forward.h>
@@ -38,6 +38,8 @@ namespace WebCore {
     class FramelessScrollView;
     class IntRect;
 
+    // Contains Chromium-specific extensions to the ChromeClient.  Only put
+    // things here that don't make sense for other ports.
     class ChromeClientChromium : public ChromeClient {
     public:
         // Notifies the client of a new popup widget.  The client should place
