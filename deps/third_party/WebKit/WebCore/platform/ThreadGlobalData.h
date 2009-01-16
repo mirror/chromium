@@ -50,8 +50,6 @@ namespace WebCore {
         ICUConverterWrapper& cachedConverterICU() { return *m_cachedConverterICU; }
 #endif
 
-// TODO(awalker): TEC isn't really a Darwin feature, so we should look at
-// turning on USE(ICU_UNICODE) instead.
 #if PLATFORM(DARWIN)
         TECConverterWrapper& cachedConverterTEC() { return *m_cachedConverterTEC; }
 #endif
@@ -65,8 +63,6 @@ namespace WebCore {
         ICUConverterWrapper* m_cachedConverterICU;
 #endif
 
-// TODO(awalker): TEC isn't really a Darwin feature, so we should look at
-// turning on USE(ICU_UNICODE) instead.
 #if PLATFORM(DARWIN)
         TECConverterWrapper* m_cachedConverterTEC;
 #endif
