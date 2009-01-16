@@ -2,6 +2,7 @@
  * This file is part of the WebKit project.
  *
  * Copyright (C) 2006 Apple Computer, Inc.
+ * Copyright (C) 2008, 2009 Google, Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -40,10 +41,8 @@
 #include "UserAgentStyleSheets.h"
 #include "WindowsVersion.h"
 
-// FIXME(brettw): this dependency should eventually be removed.
-#include "skia/ext/skia_utils_win.h"
-
-namespace {
+// FIXME: This dependency should eventually be removed.
+#include <skia/ext/skia_utils_win.h>
 
 #define SIZEOF_STRUCT_WITH_SPECIFIED_LAST_MEMBER(structName, member) \
     offsetof(structName, member) + \
@@ -51,12 +50,13 @@ namespace {
 #define NONCLIENTMETRICS_SIZE_PRE_VISTA \
     SIZEOF_STRUCT_WITH_SPECIFIED_LAST_MEMBER(NONCLIENTMETRICS, lfMessageFont)
 
-void getNonClientMetrics(NONCLIENTMETRICS* metrics) {
+namespace WebCore {
+
+static void getNonClientMetrics(NONCLIENTMETRICS* metrics) {
     static UINT size = WebCore::isVistaOrNewer() ?
         sizeof(NONCLIENTMETRICS) : NONCLIENTMETRICS_SIZE_PRE_VISTA;
     metrics->cbSize = size;
-    bool success =
-        !!SystemParametersInfo(SPI_GETNONCLIENTMETRICS, size, metrics, 0);
+    bool success = !!SystemParametersInfo(SPI_GETNONCLIENTMETRICS, size, metrics, 0);
     ASSERT(success);
 }
 
@@ -67,22 +67,18 @@ enum PaddingType {
     LeftPadding
 };
 
-const int kStyledMenuListInternalPadding[4] = { 1, 4, 1, 4 };
+static const int styledMenuListInternalPadding[4] = { 1, 4, 1, 4 };
 
 // The default variable-width font size.  We use this as the default font
 // size for the "system font", and as a base size (which we then shrink) for
 // form control fonts.
-float DefaultFontSize = 16.0;
+static float defaultFontSize = 16.0;
 
-WebCore::FontDescription smallSystemFont;
-WebCore::FontDescription menuFont;
-WebCore::FontDescription labelFont;
+static FontDescription smallSystemFont;
+static FontDescription menuFont;
+static FontDescription labelFont;
 
-}  // namespace
-
-namespace WebCore {
-
-bool RenderThemeWin::m_findInPageMode = false;
+bool RenderThemeChromiumWin::m_findInPageMode = false;
 
 // Internal static helper functions.  We don't put them in an anonymous
 // namespace so they have easier access to the WebCore namespace.
@@ -90,16 +86,13 @@ bool RenderThemeWin::m_findInPageMode = false;
 static bool supportsFocus(ControlPart appearance)
 {
     switch (appearance) {
-        case PushButtonPart:
-        case ButtonPart:
-        case DefaultButtonPart:
-        case TextFieldPart:
-        case TextAreaPart:
-            return true;
-        default:
-            return false;
+    case PushButtonPart:
+    case ButtonPart:
+    case DefaultButtonPart:
+    case TextFieldPart:
+    case TextAreaPart:
+        return true;
     }
-
     return false;
 }
 
@@ -135,11 +128,13 @@ static float systemFontSize(const LOGFONT& font)
     // The "codepage 936" bit here is from Gecko; apparently this helps make
     // fonts more legible in Simplified Chinese where the default font size is
     // too small.
-    // TODO(pkasting): http://b/1119883 Since this is only used for "small
-    // caption", "menu", and "status bar" objects, I'm not sure how much this
-    // even matters.  Plus the Gecko patch went in back in 2002, and maybe this
+    //
+    // FIXME: http://b/1119883 Since this is only used for "small caption",
+    // "menu", and "status bar" objects, I'm not sure how much this even
+    // matters.  Plus the Gecko patch went in back in 2002, and maybe this
     // isn't even relevant anymore.  We should investigate whether this should
     // be removed, or perhaps broadened to be "any CJK locale".
+    //
     return ((size < 12.0f) && (GetACP() == 936)) ? 12.0f : size;
 }
 
@@ -149,17 +144,16 @@ static float systemFontSize(const LOGFONT& font)
 // which returns MS Shell Dlg)
 // -Safari uses Lucida Grande.
 //
-// TODO(ojan): Fix this!
-// The only case where we know we don't match IE is for ANSI encodings. IE uses
-// MS Shell Dlg there, which we render incorrectly at certain pixel sizes
-// (e.g. 15px). So, for now we just use Arial.
+// FIXME: The only case where we know we don't match IE is for ANSI encodings.
+// IE uses MS Shell Dlg there, which we render incorrectly at certain pixel
+// sizes (e.g. 15px). So, for now we just use Arial.
 static wchar_t* defaultGUIFont(Document* document)
 {
     UScriptCode dominantScript = document->dominantScript();
     const wchar_t* family = NULL;
 
-    // TODO(jungshik) : Special-casing of Latin/Greeek/Cyrillic should go away
-    // once GetFontFamilyForScript is enhanced to support GenericFamilyType for
+    // FIXME: Special-casing of Latin/Greeek/Cyrillic should go away once
+    // GetFontFamilyForScript is enhanced to support GenericFamilyType for
     // real. For now, we make sure that we use Arial to match IE for those
     // scripts.
     if (dominantScript != USCRIPT_LATIN &&
@@ -187,8 +181,8 @@ static float pointsToPixels(float points)
         }
     }
 
-    static const float POINTS_PER_INCH = 72.0f;
-    return points / POINTS_PER_INCH * pixelsPerInch;
+    static const float pointsPerInch = 72.0f;
+    return points / pointsPerInch * pixelsPerInch;
 }
 
 static void setSizeIfAuto(RenderStyle* style, const IntSize& size)
@@ -201,7 +195,7 @@ static void setSizeIfAuto(RenderStyle* style, const IntSize& size)
 
 static double querySystemBlinkInterval(double defaultInterval)
 {
-    UINT blinkTime = ::GetCaretBlinkTime();
+    UINT blinkTime = GetCaretBlinkTime();
     if (blinkTime == 0)
         return defaultInterval;
     if (blinkTime == INFINITE)
@@ -212,30 +206,30 @@ static double querySystemBlinkInterval(double defaultInterval)
 // Implement WebCore::theme() for getting the global RenderTheme.
 RenderTheme* theme()
 {
-    static RenderThemeWin winTheme;
+    static RenderThemeChromiumWin winTheme;
     return &winTheme;
 }
 
-String RenderThemeWin::extraDefaultStyleSheet()
+String RenderThemeChromiumWin::extraDefaultStyleSheet()
 {
     return String(themeWinUserAgentStyleSheet, sizeof(themeWinUserAgentStyleSheet));
 }
 
-String RenderThemeWin::extraQuirksStyleSheet()
+String RenderThemeChromiumWin::extraQuirksStyleSheet()
 {
     return String(themeWinQuirksUserAgentStyleSheet, sizeof(themeWinQuirksUserAgentStyleSheet));
 }
 
-bool RenderThemeWin::supportsFocusRing(const RenderStyle* style) const
+bool RenderThemeChromiumWin::supportsFocusRing(const RenderStyle* style) const
 {
    // Let webkit draw one of its halo rings around any focused element,
    // except push buttons. For buttons we use the windows PBS_DEFAULTED
    // styling to give it a blue border.
-   return style->appearance() == ButtonPart ||
-          style->appearance() == PushButtonPart;
+   return style->appearance() == ButtonPart
+       || style->appearance() == PushButtonPart;
 }
 
-Color RenderThemeWin::platformActiveSelectionBackgroundColor() const
+Color RenderThemeChromiumWin::platformActiveSelectionBackgroundColor() const
 {
     if (ChromiumBridge::layoutTestMode())
         return Color("#0000FF");  // Royal blue.
@@ -245,7 +239,7 @@ Color RenderThemeWin::platformActiveSelectionBackgroundColor() const
     return Color(GetRValue(color), GetGValue(color), GetBValue(color), 255);
 }
 
-Color RenderThemeWin::platformInactiveSelectionBackgroundColor() const
+Color RenderThemeChromiumWin::platformInactiveSelectionBackgroundColor() const
 {
     if (ChromiumBridge::layoutTestMode())
         return Color("#999999");  // Medium gray.
@@ -255,7 +249,7 @@ Color RenderThemeWin::platformInactiveSelectionBackgroundColor() const
     return Color(GetRValue(color), GetGValue(color), GetBValue(color), 255);
 }
 
-Color RenderThemeWin::platformActiveSelectionForegroundColor() const
+Color RenderThemeChromiumWin::platformActiveSelectionForegroundColor() const
 {
     if (ChromiumBridge::layoutTestMode())
         return Color("#FFFFCC");  // Pale yellow.
@@ -263,17 +257,17 @@ Color RenderThemeWin::platformActiveSelectionForegroundColor() const
     return Color(GetRValue(color), GetGValue(color), GetBValue(color), 255);
 }
 
-Color RenderThemeWin::platformInactiveSelectionForegroundColor() const
+Color RenderThemeChromiumWin::platformInactiveSelectionForegroundColor() const
 {
     return Color::white;
 }
 
-Color RenderThemeWin::platformTextSearchHighlightColor() const
+Color RenderThemeChromiumWin::platformTextSearchHighlightColor() const
 {
     return Color(255, 255, 150);
 }
 
-double RenderThemeWin::caretBlinkInterval() const
+double RenderThemeChromiumWin::caretBlinkInterval() const
 {
     // Disable the blinking caret in layout test mode, as it introduces
     // a race condition for the pixel tests. http://b/1198440
@@ -285,51 +279,51 @@ double RenderThemeWin::caretBlinkInterval() const
     return blinkInterval;
 }
 
-void RenderThemeWin::systemFont(int propId, Document* document, FontDescription& fontDescription) const
+void RenderThemeChromiumWin::systemFont(int propId, Document* document, FontDescription& fontDescription) const
 {
     // This logic owes much to RenderThemeSafari.cpp.
     FontDescription* cachedDesc = NULL;
     wchar_t* faceName = 0;
     float fontSize = 0;
     switch (propId) {
-        case CSSValueSmallCaption:
-            cachedDesc = &smallSystemFont;
-            if (!smallSystemFont.isAbsoluteSize()) {
-                NONCLIENTMETRICS metrics;
-                getNonClientMetrics(&metrics);
-                faceName = metrics.lfSmCaptionFont.lfFaceName;
-                fontSize = systemFontSize(metrics.lfSmCaptionFont);
-            }
-            break;
-        case CSSValueMenu:
-            cachedDesc = &menuFont;
-            if (!menuFont.isAbsoluteSize()) {
-                NONCLIENTMETRICS metrics;
-                getNonClientMetrics(&metrics);
-                faceName = metrics.lfMenuFont.lfFaceName;
-                fontSize = systemFontSize(metrics.lfMenuFont);
-            }
-            break;
-        case CSSValueStatusBar:
-            cachedDesc = &labelFont;
-            if (!labelFont.isAbsoluteSize()) {
-                NONCLIENTMETRICS metrics;
-                getNonClientMetrics(&metrics);
-                faceName = metrics.lfStatusFont.lfFaceName;
-                fontSize = systemFontSize(metrics.lfStatusFont);
-            }
-            break;
-        case CSSValueWebkitMiniControl:
-        case CSSValueWebkitSmallControl:
-        case CSSValueWebkitControl:
-            faceName = defaultGUIFont(document);
-            // Why 2 points smaller?  Because that's what Gecko does.
-            fontSize = DefaultFontSize - pointsToPixels(2);
-            break;
-        default:
-            faceName = defaultGUIFont(document);
-            fontSize = DefaultFontSize;
-            break;
+    case CSSValueSmallCaption:
+        cachedDesc = &smallSystemFont;
+        if (!smallSystemFont.isAbsoluteSize()) {
+            NONCLIENTMETRICS metrics;
+            getNonClientMetrics(&metrics);
+            faceName = metrics.lfSmCaptionFont.lfFaceName;
+            fontSize = systemFontSize(metrics.lfSmCaptionFont);
+        }
+        break;
+    case CSSValueMenu:
+        cachedDesc = &menuFont;
+        if (!menuFont.isAbsoluteSize()) {
+            NONCLIENTMETRICS metrics;
+            getNonClientMetrics(&metrics);
+            faceName = metrics.lfMenuFont.lfFaceName;
+            fontSize = systemFontSize(metrics.lfMenuFont);
+        }
+        break;
+    case CSSValueStatusBar:
+        cachedDesc = &labelFont;
+        if (!labelFont.isAbsoluteSize()) {
+            NONCLIENTMETRICS metrics;
+            getNonClientMetrics(&metrics);
+            faceName = metrics.lfStatusFont.lfFaceName;
+            fontSize = systemFontSize(metrics.lfStatusFont);
+        }
+        break;
+    case CSSValueWebkitMiniControl:
+    case CSSValueWebkitSmallControl:
+    case CSSValueWebkitControl:
+        faceName = defaultGUIFont(document);
+        // Why 2 points smaller?  Because that's what Gecko does.
+        fontSize = defaultFontSize - pointsToPixels(2);
+        break;
+    default:
+        faceName = defaultGUIFont(document);
+        fontSize = defaultFontSize;
+        break;
     }
 
     if (!cachedDesc)
@@ -348,34 +342,33 @@ void RenderThemeWin::systemFont(int propId, Document* document, FontDescription&
     fontDescription = *cachedDesc;
 }
 
-int RenderThemeWin::minimumMenuListSize(RenderStyle* style) const
+int RenderThemeChromiumWin::minimumMenuListSize(RenderStyle* style) const
 {
     return 0;
 }
 
-void RenderThemeWin::setCheckboxSize(RenderStyle* style) const
+void RenderThemeChromiumWin::setCheckboxSize(RenderStyle* style) const
 {
     // If the width and height are both specified, then we have nothing to do.
     if (!style->width().isIntrinsicOrAuto() && !style->height().isAuto())
         return;
 
-    // FIXME:  A hard-coded size of 13 is used.  This is wrong but necessary for now.  It matches Firefox.
-    // At different DPI settings on Windows, querying the theme gives you a larger size that accounts for
-    // the higher DPI.  Until our entire engine honors a DPI setting other than 96, we can't rely on the theme's
-    // metrics.
+    // FIXME:  A hard-coded size of 13 is used.  This is wrong but necessary
+    // for now.  It matches Firefox.  At different DPI settings on Windows,
+    // querying the theme gives you a larger size that accounts for the higher
+    // DPI.  Until our entire engine honors a DPI setting other than 96, we
+    // can't rely on the theme's metrics.
     const IntSize size(13, 13);
     setSizeIfAuto(style, size);
 }
 
-void RenderThemeWin::setRadioSize(RenderStyle* style) const
+void RenderThemeChromiumWin::setRadioSize(RenderStyle* style) const
 {
     // Use same sizing for radio box as checkbox.
     setCheckboxSize(style);
 }
 
-bool RenderThemeWin::paintButton(RenderObject* o,
-                                 const RenderObject::PaintInfo& i,
-                                 const IntRect& r)
+bool RenderThemeChromiumWin::paintButton(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r)
 {
     const ThemeData& themeData = getThemeData(o);
 
@@ -388,43 +381,42 @@ bool RenderThemeWin::paintButton(RenderObject* o,
     return false;
 }
 
-bool RenderThemeWin::paintTextField(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r)
+bool RenderThemeChromiumWin::paintTextField(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r)
 {
     return paintTextFieldInternal(o, i, r, true);
 }
 
-bool RenderThemeWin::paintSearchField(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r)
+bool RenderThemeChromiumWin::paintSearchField(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r)
 {
     return paintTextField(o, i, r);
 }
 
-void RenderThemeWin::adjustMenuListStyle(CSSStyleSelector* selector, RenderStyle* style, Element* e) const
+void RenderThemeChromiumWin::adjustMenuListStyle(CSSStyleSelector* selector, RenderStyle* style, Element* e) const
 {
     // Height is locked to auto on all browsers.
     style->setLineHeight(RenderStyle::initialLineHeight());
 }
 
 // Used to paint unstyled menulists (i.e. with the default border)
-bool RenderThemeWin::paintMenuList(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r)
+bool RenderThemeChromiumWin::paintMenuList(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r)
 {
     int borderRight = o->borderRight();
     int borderLeft = o->borderLeft();
     int borderTop = o->borderTop();
     int borderBottom = o->borderBottom();
 
-    // If all the borders are 0, then tell skia not to paint the border on the textfield.
-    // TODO(ojan): http://b/1210017 Figure out how to get Windows to not draw individual
-    // borders and then pass that to skia so we can avoid drawing any borders that are
-    // set to 0. For non-zero borders, we draw the border, but webkit just draws
-    // over it.
+    // If all the borders are 0, then tell skia not to paint the border on the
+    // textfield.  FIXME: http://b/1210017 Figure out how to get Windows to not
+    // draw individual borders and then pass that to skia so we can avoid
+    // drawing any borders that are set to 0. For non-zero borders, we draw the
+    // border, but webkit just draws over it.
     bool drawEdges = !(borderRight == 0 && borderLeft == 0 && borderTop == 0 && borderBottom == 0);
 
     paintTextFieldInternal(o, i, r, drawEdges);
 
-    // Take padding and border into account.
-    // If the MenuList is smaller than the size of a button, make sure to
-    // shrink it appropriately and not put its x position to the left of
-    // the menulist.
+    // Take padding and border into account.  If the MenuList is smaller than
+    // the size of a button, make sure to shrink it appropriately and not put
+    // its x position to the left of the menulist.
     const int buttonWidth = GetSystemMetrics(SM_CXVSCROLL);
     int spacingLeft = borderLeft + o->paddingLeft();
     int spacingRight = borderRight + o->paddingRight();
@@ -432,11 +424,10 @@ bool RenderThemeWin::paintMenuList(RenderObject* o, const RenderObject::PaintInf
     int spacingBottom = borderBottom + o->paddingBottom();
 
     int buttonX;
-    if (r.right() - r.x() < buttonWidth) {
+    if (r.right() - r.x() < buttonWidth)
         buttonX = r.x();
-    } else {
+    else
         buttonX = o->style()->direction() == LTR ? r.right() - spacingRight - buttonWidth : r.x() + spacingLeft;
-    }
 
     // Compute the rectangle of the button in the destination image.
     IntRect rect(buttonX,
@@ -454,38 +445,38 @@ bool RenderThemeWin::paintMenuList(RenderObject* o, const RenderObject::PaintInf
     return false;
 }
 
-void RenderThemeWin::adjustMenuListButtonStyle(CSSStyleSelector* selector, RenderStyle* style, Element* e) const
+void RenderThemeChromiumWin::adjustMenuListButtonStyle(CSSStyleSelector* selector, RenderStyle* style, Element* e) const
 {
     adjustMenuListStyle(selector, style, e);
 }
 
 // Used to paint styled menulists (i.e. with a non-default border)
-bool RenderThemeWin::paintMenuListButton(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r)
+bool RenderThemeChromiumWin::paintMenuListButton(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r)
 {
     return paintMenuList(o, i, r);
 }
 
-int RenderThemeWin::popupInternalPaddingLeft(RenderStyle* style) const
+int RenderThemeChromiumWin::popupInternalPaddingLeft(RenderStyle* style) const
 {
     return menuListInternalPadding(style, LeftPadding);
 }
 
-int RenderThemeWin::popupInternalPaddingRight(RenderStyle* style) const
+int RenderThemeChromiumWin::popupInternalPaddingRight(RenderStyle* style) const
 {
     return menuListInternalPadding(style, RightPadding);
 }
 
-int RenderThemeWin::popupInternalPaddingTop(RenderStyle* style) const
+int RenderThemeChromiumWin::popupInternalPaddingTop(RenderStyle* style) const
 {
     return menuListInternalPadding(style, TopPadding);
 }
 
-int RenderThemeWin::popupInternalPaddingBottom(RenderStyle* style) const
+int RenderThemeChromiumWin::popupInternalPaddingBottom(RenderStyle* style) const
 {
     return menuListInternalPadding(style, BottomPadding);
 }
 
-void RenderThemeWin::adjustButtonInnerStyle(RenderStyle* style) const
+void RenderThemeChromiumWin::adjustButtonInnerStyle(RenderStyle* style) const
 {
     // This inner padding matches Firefox.
     style->setPaddingTop(Length(1, Fixed));
@@ -495,14 +486,14 @@ void RenderThemeWin::adjustButtonInnerStyle(RenderStyle* style) const
 }
 
 // static
-void RenderThemeWin::setDefaultFontSize(int fontSize) {
-    DefaultFontSize = static_cast<float>(fontSize);
+void RenderThemeChromiumWin::setDefaultFontSize(int fontSize) {
+    defaultFontSize = static_cast<float>(fontSize);
 
     // Reset cached fonts.
     smallSystemFont = menuFont = labelFont = FontDescription();
 }
 
-unsigned RenderThemeWin::determineState(RenderObject* o)
+unsigned RenderThemeChromiumWin::determineState(RenderObject* o)
 {
     unsigned result = TS_NORMAL;
     ControlPart appearance = o->style()->appearance();
@@ -521,7 +512,7 @@ unsigned RenderThemeWin::determineState(RenderObject* o)
     return result;
 }
 
-unsigned RenderThemeWin::determineClassicState(RenderObject* o)
+unsigned RenderThemeChromiumWin::determineClassicState(RenderObject* o)
 {
     unsigned result = 0;
     if (!isEnabled(o))
@@ -535,29 +526,29 @@ unsigned RenderThemeWin::determineClassicState(RenderObject* o)
     return result;
 }
 
-ThemeData RenderThemeWin::getThemeData(RenderObject* o)
+ThemeData RenderThemeChromiumWin::getThemeData(RenderObject* o)
 {
     ThemeData result;
     switch (o->style()->appearance()) {
-        case PushButtonPart:
-        case ButtonPart:
-            result.m_part = BP_PUSHBUTTON;
-            result.m_classicState = DFCS_BUTTONPUSH;
-            break;
-        case CheckboxPart:
-            result.m_part = BP_CHECKBOX;
-            result.m_classicState = DFCS_BUTTONCHECK;
-            break;
-        case RadioPart:
-            result.m_part = BP_RADIOBUTTON;
-            result.m_classicState = DFCS_BUTTONRADIO;
-            break;
-        case ListboxPart:
-        case MenulistPart:
-        case TextFieldPart:
-        case TextAreaPart:
-            result.m_part = ETS_NORMAL;
-            break;
+    case PushButtonPart:
+    case ButtonPart:
+        result.m_part = BP_PUSHBUTTON;
+        result.m_classicState = DFCS_BUTTONPUSH;
+        break;
+    case CheckboxPart:
+        result.m_part = BP_CHECKBOX;
+        result.m_classicState = DFCS_BUTTONCHECK;
+        break;
+    case RadioPart:
+        result.m_part = BP_RADIOBUTTON;
+        result.m_classicState = DFCS_BUTTONRADIO;
+        break;
+    case ListboxPart:
+    case MenulistPart:
+    case TextFieldPart:
+    case TextAreaPart:
+        result.m_part = ETS_NORMAL;
+        break;
     }
 
     result.m_state = determineState(o);
@@ -566,17 +557,16 @@ ThemeData RenderThemeWin::getThemeData(RenderObject* o)
     return result;
 }
 
-bool RenderThemeWin::paintTextFieldInternal(RenderObject* o,
+bool RenderThemeChromiumWin::paintTextFieldInternal(RenderObject* o,
                                             const RenderObject::PaintInfo& i,
                                             const IntRect& r,
                                             bool drawEdges)
 {
     // Nasty hack to make us not paint the border on text fields with a
     // border-radius. Webkit paints elements with border-radius for us.
-    // TODO(ojan): Get rid of this if-check once we can properly clip rounded
+    // FIXME: Get rid of this if-check once we can properly clip rounded
     // borders: http://b/1112604 and http://b/1108635
-    // TODO(ojan): make sure we do the right thing if css background-clip is
-    // set.
+    // FIXME: make sure we do the right thing if css background-clip is set.
     if (o->style()->hasBorderRadius())
         return false;
 
@@ -594,26 +584,26 @@ bool RenderThemeWin::paintTextFieldInternal(RenderObject* o,
     return false;
 }
 
-int RenderThemeWin::menuListInternalPadding(RenderStyle* style, int paddingType) const
+int RenderThemeChromiumWin::menuListInternalPadding(RenderStyle* style, int paddingType) const
 {
     // This internal padding is in addition to the user-supplied padding.
     // Matches the FF behavior.
-    int padding = kStyledMenuListInternalPadding[paddingType];
+    int padding = styledMenuListInternalPadding[paddingType];
 
-    // Reserve the space for right arrow here. The rest of the padding is
-    // set by adjustMenuListStyle, since PopMenuWin.cpp uses the padding from
-    // RenderMenuList to lay out the individual items in the popup.
-    // If the MenuList actually has appearance "NoAppearance", then that means
-    // we don't draw a button, so don't reserve space for it.
-    const int bar_type = style->direction() == LTR ? RightPadding : LeftPadding;
-    if (paddingType == bar_type && style->appearance() != NoControlPart)
+    // Reserve the space for right arrow here. The rest of the padding is set
+    // by adjustMenuListStyle, since PopupMenuChromium.cpp uses the padding
+    // from RenderMenuList to lay out the individual items in the popup.  If
+    // the MenuList actually has appearance "NoAppearance", then that means we
+    // don't draw a button, so don't reserve space for it.
+    const int barType = style->direction() == LTR ? RightPadding : LeftPadding;
+    if (paddingType == barType && style->appearance() != NoControlPart)
         padding += ScrollbarTheme::nativeTheme()->scrollbarThickness();
 
     return padding;
 }
 
 // static
-void RenderThemeWin::setFindInPageMode(bool enable) {
+void RenderThemeChromiumWin::setFindInPageMode(bool enable) {
   if (m_findInPageMode == enable)
       return;
 
@@ -621,4 +611,4 @@ void RenderThemeWin::setFindInPageMode(bool enable) {
   theme()->platformColorsDidChange();
 }
 
-}  // namespace WebCore
+} // namespace WebCore

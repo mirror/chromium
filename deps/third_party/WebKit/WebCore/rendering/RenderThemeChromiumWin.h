@@ -2,6 +2,7 @@
  * This file is part of the WebKit project.
  *
  * Copyright (C) 2006 Apple Computer, Inc.
+ * Copyright (C) 2008, 2009 Google, Inc.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -20,8 +21,8 @@
  *
  */
 
-#ifndef RenderThemeWin_h
-#define RenderThemeWin_h
+#ifndef RenderThemeChromiumWin_h
+#define RenderThemeChromiumWin_h
 
 #include "RenderTheme.h"
 
@@ -33,104 +34,103 @@ typedef HINSTANCE HMODULE;
 
 namespace WebCore {
 
-struct ThemeData {
-    ThemeData() : m_part(0), m_state(0), m_classicState(0) {}
+    struct ThemeData {
+        ThemeData() : m_part(0), m_state(0), m_classicState(0) {}
 
-    unsigned m_part;
-    unsigned m_state;
-    unsigned m_classicState;
-};
+        unsigned m_part;
+        unsigned m_state;
+        unsigned m_classicState;
+    };
 
-class RenderThemeWin : public RenderTheme {
-public:
-    RenderThemeWin() { }
-    ~RenderThemeWin() { }
+    class RenderThemeChromiumWin : public RenderTheme {
+    public:
+        RenderThemeChromiumWin() { }
+        ~RenderThemeChromiumWin() { }
 
-    virtual String extraDefaultStyleSheet();
-    virtual String extraQuirksStyleSheet();
+        virtual String extraDefaultStyleSheet();
+        virtual String extraQuirksStyleSheet();
 
-    // A method asking if the theme's controls actually care about redrawing when hovered.
-    virtual bool supportsHover(const RenderStyle*) const { return true; }
+        // A method asking if the theme's controls actually care about redrawing when hovered.
+        virtual bool supportsHover(const RenderStyle*) const { return true; }
 
-    // A method asking if the theme is able to draw the focus ring.
-    virtual bool supportsFocusRing(const RenderStyle*) const;
+        // A method asking if the theme is able to draw the focus ring.
+        virtual bool supportsFocusRing(const RenderStyle*) const;
 
-    // The platform selection color.
-    virtual Color platformActiveSelectionBackgroundColor() const;
-    virtual Color platformInactiveSelectionBackgroundColor() const;
-    virtual Color platformActiveSelectionForegroundColor() const;
-    virtual Color platformInactiveSelectionForegroundColor() const;
-    virtual Color platformTextSearchHighlightColor() const;
+        // The platform selection color.
+        virtual Color platformActiveSelectionBackgroundColor() const;
+        virtual Color platformInactiveSelectionBackgroundColor() const;
+        virtual Color platformActiveSelectionForegroundColor() const;
+        virtual Color platformInactiveSelectionForegroundColor() const;
+        virtual Color platformTextSearchHighlightColor() const;
 
-    virtual double caretBlinkInterval() const;
+        virtual double caretBlinkInterval() const;
 
-    // System fonts.
-    virtual void systemFont(int propId, Document*, FontDescription&) const;
+        // System fonts.
+        virtual void systemFont(int propId, Document*, FontDescription&) const;
 
-    virtual int minimumMenuListSize(RenderStyle*) const;
+        virtual int minimumMenuListSize(RenderStyle*) const;
 
-    virtual bool paintCheckbox(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r)
-    { return paintButton(o, i, r); }
-    virtual void setCheckboxSize(RenderStyle*) const;
+        virtual bool paintCheckbox(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r) { return paintButton(o, i, r); }
+        virtual void setCheckboxSize(RenderStyle*) const;
 
-    virtual bool paintRadio(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r)
-    { return paintButton(o, i, r); }
-    virtual void setRadioSize(RenderStyle* style) const;
+        virtual bool paintRadio(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r) { return paintButton(o, i, r); }
+        virtual void setRadioSize(RenderStyle*) const;
 
-    virtual bool paintButton(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
+        virtual bool paintButton(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
 
-    virtual bool paintTextField(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
+        virtual bool paintTextField(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
 
-    virtual bool paintTextArea(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r)
-    { return paintTextField(o, i, r); }
+        virtual bool paintTextArea(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r) { return paintTextField(o, i, r); }
 
-    virtual bool paintSearchField(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
+        virtual bool paintSearchField(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
 
-    // MenuList refers to an unstyled menulist (meaning a menulist without
-    // background-color or border set) and MenuListButton refers to a styled
-    // menulist (a menulist with background-color or border set). They have
-    // this distinction to support showing aqua style themes whenever they
-    // possibly can, which is something we don't want to replicate.
-    //
-    // In short, we either go down the MenuList code path or the MenuListButton
-    // codepath. We never go down both. And in both cases, they render the
-    // entire menulist.
-    virtual void adjustMenuListStyle(CSSStyleSelector* selector, RenderStyle* style, Element* e) const;
-    virtual bool paintMenuList(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
-    virtual void adjustMenuListButtonStyle(CSSStyleSelector* selector, RenderStyle* style, Element* e) const;
-    virtual bool paintMenuListButton(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
+        // MenuList refers to an unstyled menulist (meaning a menulist without
+        // background-color or border set) and MenuListButton refers to a styled
+        // menulist (a menulist with background-color or border set). They have
+        // this distinction to support showing aqua style themes whenever they
+        // possibly can, which is something we don't want to replicate.
+        //
+        // In short, we either go down the MenuList code path or the MenuListButton
+        // codepath. We never go down both. And in both cases, they render the
+        // entire menulist.
+        virtual void adjustMenuListStyle(CSSStyleSelector*, RenderStyle*, Element*) const;
+        virtual bool paintMenuList(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
+        virtual void adjustMenuListButtonStyle(CSSStyleSelector*, RenderStyle*, Element*) const;
+        virtual bool paintMenuListButton(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
 
-    // These methods define the padding for the MenuList's inner block.
-    virtual int popupInternalPaddingLeft(RenderStyle*) const;
-    virtual int popupInternalPaddingRight(RenderStyle*) const;
-    virtual int popupInternalPaddingTop(RenderStyle*) const;
-    virtual int popupInternalPaddingBottom(RenderStyle*) const;
+        // These methods define the padding for the MenuList's inner block.
+        virtual int popupInternalPaddingLeft(RenderStyle*) const;
+        virtual int popupInternalPaddingRight(RenderStyle*) const;
+        virtual int popupInternalPaddingTop(RenderStyle*) const;
+        virtual int popupInternalPaddingBottom(RenderStyle*) const;
 
-    virtual void adjustButtonInnerStyle(RenderStyle* style) const;
+        virtual void adjustButtonInnerStyle(RenderStyle*) const;
 
-    // Provide a way to pass the default font size from the Settings object to
-    // the render theme.  TODO(tc): http://b/1129186 A cleaner way would be to
-    // remove the default font size from this object and have callers that need
-    // the value to get it directly from the appropriate Settings object.
-    static void setDefaultFontSize(int);
+        // Provide a way to pass the default font size from the Settings object
+        // to the render theme.  FIXME: http://b/1129186 A cleaner way would be
+        // to remove the default font size from this object and have callers
+        // that need the value to get it directly from the appropriate Settings
+        // object.
+        static void setDefaultFontSize(int);
 
-    // Enables/Disables FindInPage mode, which (if enabled) overrides the
-    // selection rect color to be orange.
-    static void setFindInPageMode(bool);
-private:
-    unsigned determineState(RenderObject*);
-    unsigned determineClassicState(RenderObject*);
+        // Enables/Disables FindInPage mode, which (if enabled) overrides the
+        // selection rect color to be orange.
+        static void setFindInPageMode(bool);
 
-    ThemeData getThemeData(RenderObject*);
+    private:
+        unsigned determineState(RenderObject*);
+        unsigned determineClassicState(RenderObject*);
 
-    bool paintTextFieldInternal(RenderObject*, const RenderObject::PaintInfo&, const IntRect&, bool);
+        ThemeData getThemeData(RenderObject*);
 
-    int menuListInternalPadding(RenderStyle* style, int paddingType) const;
+        bool paintTextFieldInternal(RenderObject*, const RenderObject::PaintInfo&, const IntRect&, bool);
 
-    // A flag specifying whether we are in Find-in-page mode or not.
-    static bool m_findInPageMode;
-};
+        int menuListInternalPadding(RenderStyle*, int paddingType) const;
 
-}
+        // A flag specifying whether we are in Find-in-page mode or not.
+        static bool m_findInPageMode;
+    };
+
+} // namespace WebCore
 
 #endif
