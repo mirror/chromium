@@ -160,11 +160,15 @@ class GateKeeper(MailNotifier):
     """
 
     projectName = self.status.getProjectName()
-    job_stamp = build.getSourceStamp()
+    source_stamp = build.getSourceStamp()
     build_url = self.status.getURLForThing(build)
     waterfall_url = self.status.getBuildbotURL()
     status_text = ('Automatically closing tree for "%s" on "%s"' %
                    (step_text, name))
+    blame_list = ",".join(build.getResponsibleUsers())
+    revision = ''
+    if source_stamp is not None and source_stamp.revision:
+      revision = str(source_stamp.revision)
 
     class DummyObject(object):
       pass
@@ -184,10 +188,13 @@ class GateKeeper(MailNotifier):
   <a href="%s">%s</a><p>
   %s<p>
   <a href="%s">%s</a><p>
+  Revision: %s<br>
+  Blame list: %s<p>
+
   <table border="0" cellspacing="0">
     <tr>
     """ % (status_text, waterfall_url, waterfall_url, status_text, build_url,
-           build_url))
+           build_url, revision, blame_list))
 
     # With a hack to fix the url root.
     html_content += IBox(build).getBox(request).td(align='center').replace(
@@ -217,12 +224,17 @@ class GateKeeper(MailNotifier):
 
 --=>  %s  <=--
 
+Revision: %s
+Blame list: %s
+
 Buildbot waterfall: http://build.chromium.org/
 """ % (status_text,
        build_url,
        urllib.quote(waterfall_url, '/:'),
        urllib.quote(name),
-       status_text))
+       status_text,
+       revision,
+       blame_list))
 
     m = MIMEMultipart('alternative')
     # The HTML message, is best and preferred.
