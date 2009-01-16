@@ -5,6 +5,7 @@
  * Copyright (C) 2006 Michael Emmel mike.emmel@gmail.com
  * Copyright (C) 2007 Holger Hans Peter Freyther
  * Copyright (C) 2007 Alp Toker <alp@atoker.com>
+ * Copyright (C) 2008, 2009 Google, Inc.
  * All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
@@ -24,119 +25,112 @@
  *
  */
 
-#ifndef RenderThemeGdk_h
-#define RenderThemeGdk_h
+#ifndef RenderThemeChromiumGtk_h
+#define RenderThemeChromiumGtk_h
 
 #include "RenderTheme.h"
-#include "GraphicsContext.h"
 
 #include <gtk/gtk.h>
 
 namespace WebCore {
 
-class RenderThemeGtk : public RenderTheme {
-public:
-    RenderThemeGtk();
-    ~RenderThemeGtk() { }
+    class RenderThemeChromiumGtk : public RenderTheme {
+    public:
+        RenderThemeChromiumGtk();
+        ~RenderThemeChromiumGtk() { }
 
-    virtual String extraDefaultStyleSheet();
-    virtual String extraQuirksStyleSheet();
+        virtual String extraDefaultStyleSheet();
+        virtual String extraQuirksStyleSheet();
 
-    // A method asking if the theme's controls actually care about redrawing when hovered.
-    virtual bool supportsHover(const RenderStyle*) const { return true; }
+        // A method asking if the theme's controls actually care about redrawing when hovered.
+        virtual bool supportsHover(const RenderStyle*) const { return true; }
 
-    // A method asking if the theme is able to draw the focus ring.
-    virtual bool supportsFocusRing(const RenderStyle*) const;
+        // A method asking if the theme is able to draw the focus ring.
+        virtual bool supportsFocusRing(const RenderStyle*) const;
 
-    // The platform selection color.
-    virtual Color platformActiveSelectionBackgroundColor() const;
-    virtual Color platformInactiveSelectionBackgroundColor() const;
-    virtual Color platformActiveSelectionForegroundColor() const;
-    virtual Color platformInactiveSelectionForegroundColor() const;
-    virtual Color platformTextSearchHighlightColor() const;
+        // The platform selection color.
+        virtual Color platformActiveSelectionBackgroundColor() const;
+        virtual Color platformInactiveSelectionBackgroundColor() const;
+        virtual Color platformActiveSelectionForegroundColor() const;
+        virtual Color platformInactiveSelectionForegroundColor() const;
+        virtual Color platformTextSearchHighlightColor() const;
 
-    virtual double caretBlinkInterval() const;
+        virtual double caretBlinkInterval() const;
 
-    // System fonts.
-    virtual void systemFont(int propId, Document*, FontDescription&) const;
+        // System fonts.
+        virtual void systemFont(int propId, Document*, FontDescription&) const;
 
-    virtual int minimumMenuListSize(RenderStyle*) const;
+        virtual int minimumMenuListSize(RenderStyle*) const;
 
-    virtual bool paintCheckbox(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r);
-    virtual void setCheckboxSize(RenderStyle* style) const;
+        virtual bool paintCheckbox(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
+        virtual void setCheckboxSize(RenderStyle*) const;
 
-    virtual bool paintRadio(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r);
-    virtual void setRadioSize(RenderStyle* style) const;
+        virtual bool paintRadio(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
+        virtual void setRadioSize(RenderStyle*) const;
 
-    virtual bool paintButton(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
+        virtual bool paintButton(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
 
-    virtual bool paintTextField(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
+        virtual bool paintTextField(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
 
-    virtual bool paintTextArea(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r)
-    { return paintTextField(o, i, r); }
+        virtual bool paintTextArea(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r) { return paintTextField(o, i, r); }
 
-    virtual bool paintSearchField(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
+        virtual bool paintSearchField(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
 
-    virtual bool paintSearchFieldResultsDecoration(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
-    virtual bool paintSearchFieldResultsButton(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
-    virtual bool paintSearchFieldCancelButton(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
+        virtual bool paintSearchFieldResultsDecoration(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
+        virtual bool paintSearchFieldResultsButton(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
+        virtual bool paintSearchFieldCancelButton(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
 
-    // MenuList refers to an unstyled menulist (meaning a menulist without
-    // background-color or border set) and MenuListButton refers to a styled
-    // menulist (a menulist with background-color or border set). They have
-    // this distinction to support showing aqua style themes whenever they
-    // possibly can, which is something we don't want to replicate.
-    //
-    // In short, we either go down the MenuList code path or the MenuListButton
-    // codepath. We never go down both. And in both cases, they render the
-    // entire menulist.
-    virtual void adjustMenuListStyle(CSSStyleSelector* selector, RenderStyle* style, Element* e) const;
-    virtual bool paintMenuList(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
-    virtual void adjustMenuListButtonStyle(CSSStyleSelector* selector, RenderStyle* style, Element* e) const;
-    virtual bool paintMenuListButton(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
+        // MenuList refers to an unstyled menulist (meaning a menulist without
+        // background-color or border set) and MenuListButton refers to a styled
+        // menulist (a menulist with background-color or border set). They have
+        // this distinction to support showing aqua style themes whenever they
+        // possibly can, which is something we don't want to replicate.
+        //
+        // In short, we either go down the MenuList code path or the MenuListButton
+        // codepath. We never go down both. And in both cases, they render the
+        // entire menulist.
+        virtual void adjustMenuListStyle(CSSStyleSelector*, RenderStyle*, Element*) const;
+        virtual bool paintMenuList(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
+        virtual void adjustMenuListButtonStyle(CSSStyleSelector*, RenderStyle*, Element*) const;
+        virtual bool paintMenuListButton(RenderObject*, const RenderObject::PaintInfo&, const IntRect&);
 
-    // These methods define the padding for the MenuList's inner block.
-    virtual int popupInternalPaddingLeft(RenderStyle*) const;
-    virtual int popupInternalPaddingRight(RenderStyle*) const;
-    virtual int popupInternalPaddingTop(RenderStyle*) const;
-    virtual int popupInternalPaddingBottom(RenderStyle*) const;
+        // These methods define the padding for the MenuList's inner block.
+        virtual int popupInternalPaddingLeft(RenderStyle*) const;
+        virtual int popupInternalPaddingRight(RenderStyle*) const;
+        virtual int popupInternalPaddingTop(RenderStyle*) const;
+        virtual int popupInternalPaddingBottom(RenderStyle*) const;
 
-    virtual void adjustButtonInnerStyle(RenderStyle* style) const;
+        virtual void adjustButtonInnerStyle(RenderStyle* style) const;
 
-    // A method asking if the control changes its tint when the window has focus or not.
-    virtual bool controlSupportsTints(const RenderObject*) const;
+        // A method asking if the control changes its tint when the window has focus or not.
+        virtual bool controlSupportsTints(const RenderObject*) const;
 
-    // A general method asking if any control tinting is supported at all.
-    virtual bool supportsControlTints() const { return true; }
+        // A general method asking if any control tinting is supported at all.
+        virtual bool supportsControlTints() const { return true; }
 
-    // List Box selection color
-    virtual Color activeListBoxSelectionBackgroundColor() const;
-    virtual Color activeListBoxSelectionForegroundColor() const;
-    virtual Color inactiveListBoxSelectionBackgroundColor() const;
-    virtual Color inactiveListBoxSelectionForegroundColor() const;
+        // List Box selection color
+        virtual Color activeListBoxSelectionBackgroundColor() const;
+        virtual Color activeListBoxSelectionForegroundColor() const;
+        virtual Color inactiveListBoxSelectionBackgroundColor() const;
+        virtual Color inactiveListBoxSelectionForegroundColor() const;
 
-private:
-    /*
-     * hold the state
-     */
-    GtkWidget* gtkEntry() const;
-    GtkWidget* gtkTreeView() const;
+    private:
+        // Hold the state
+        GtkWidget* gtkEntry() const;
+        GtkWidget* gtkTreeView() const;
 
-    /*
-     * unmapped GdkWindow having a container. This is holding all
-     * our fake widgets
-     */
-    GtkContainer* gtkContainer() const;
+        // Unmapped GdkWindow having a container. This is holding all our fake widgets
+        GtkContainer* gtkContainer() const;
 
-private:
-    int menuListInternalPadding(RenderStyle* style, int paddingType) const;
+    private:
+        int menuListInternalPadding(RenderStyle*, int paddingType) const;
 
-    mutable GtkWidget* m_gtkWindow;
-    mutable GtkContainer* m_gtkContainer;
-    mutable GtkWidget* m_gtkEntry;
-    mutable GtkWidget* m_gtkTreeView;
-};
+        mutable GtkWidget* m_gtkWindow;
+        mutable GtkContainer* m_gtkContainer;
+        mutable GtkWidget* m_gtkEntry;
+        mutable GtkWidget* m_gtkTreeView;
+    };
 
-}
+} // namespace WebCore
 
 #endif
