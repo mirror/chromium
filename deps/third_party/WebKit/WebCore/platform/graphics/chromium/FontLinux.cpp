@@ -49,14 +49,6 @@ namespace WebCore {
 void Font::drawGlyphs(GraphicsContext* gc, const SimpleFontData* font,
                       const GlyphBuffer& glyphBuffer,  int from, int numGlyphs,
                       const FloatPoint& point) const {
-    SkCanvas* canvas = gc->platformContext()->canvas();
-    SkPaint paint;
-
-    gc->platformContext()->setupPaintCommon(&paint);
-    font->platformData().setupPaint(&paint);
-    paint.setTextEncoding(SkPaint::kGlyphID_TextEncoding);
-    paint.setColor(gc->fillColor().rgb());
-
     SkASSERT(sizeof(GlyphBufferGlyph) == sizeof(uint16_t));  // compile-time assert
 
     const GlyphBufferGlyph* glyphs = glyphBuffer.glyphs(from);
@@ -78,7 +70,38 @@ void Font::drawGlyphs(GraphicsContext* gc, const SimpleFontData* font,
         x += SkFloatToScalar(adv[i].width());
         y += SkFloatToScalar(adv[i].height());
     }
-    canvas->drawPosText(glyphs, numGlyphs << 1, pos, paint);
+
+    SkCanvas* canvas = gc->platformContext()->canvas();
+    SkPaint paint;
+    int textMode = gc->platformContext()->getTextDrawingMode();
+
+    // We draw text up to two times (once for fill, once for stroke).
+    if (textMode & cTextFill) {
+        gc->platformContext()->setupPaintForFilling(&paint);
+        font->platformData().setupPaint(&paint);
+        paint.setTextEncoding(SkPaint::kGlyphID_TextEncoding);
+        paint.setColor(gc->fillColor().rgb());
+        canvas->drawPosText(glyphs, numGlyphs << 1, pos, paint);
+        paint.reset();
+    }
+
+    if ((textMode & cTextStroke)
+        && gc->platformContext()->getStrokeStyle() != NoStroke
+        && gc->platformContext()->getStrokeThickness() > 0) {
+
+        gc->platformContext()->setupPaintForStroking(&paint, 0, 0);
+        font->platformData().setupPaint(&paint);
+        paint.setFlags(SkPaint::kAntiAlias_Flag);
+        paint.setTextEncoding(SkPaint::kGlyphID_TextEncoding);
+        paint.setColor(gc->strokeColor().rgb());
+
+        if (textMode & cTextFill) {
+            // See comment in FontChromiumWin.cpp::paintSkiaText()
+            paint.setLooper(0)->safeUnref();
+        }
+
+        canvas->drawPosText(glyphs, numGlyphs << 1, pos, paint);
+    }
 }
 
 void Font::drawComplexText(GraphicsContext* context, const TextRun& run,
