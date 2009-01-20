@@ -388,10 +388,11 @@ module window {
         attribute XMLHttpRequestUploadConstructor XMLHttpRequestUpload;
         attribute XMLHttpRequestExceptionConstructor XMLHttpRequestException;
 #if defined(V8_BINDING)
-	// KJS adds these to the window object in kjs_window.cpp.
+        // With JSC, these are added in JSDOMWindowBase.cpp.
 	attribute XMLHttpRequestConstructor XMLHttpRequest;
 	attribute XSLTProcessorConstructor XSLTProcessor;
 	attribute MessageChannelConstructor MessageChannel;
+        attribute WebKitCSSMatrixConstructor WebKitCSSMatrix;
 #endif
 
         attribute PluginConstructor Plugin;
