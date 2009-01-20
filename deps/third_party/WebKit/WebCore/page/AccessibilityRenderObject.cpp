@@ -1655,7 +1655,7 @@ IntRect AccessibilityRenderObject::boundsForVisiblePositionRange(const VisiblePo
             ourrect = boundingBox;
     }
     
-#if PLATFORM(MAC) && HAVE(ACCESSIBILITY)
+#if PLATFORM(MAC)
     return m_renderer->document()->view()->contentsToScreen(ourrect);
 #else
     return ourrect;
@@ -1688,7 +1688,7 @@ VisiblePosition AccessibilityRenderObject::visiblePositionForPoint(const IntPoin
     IntPoint pointResult;
     while (1) {
         IntPoint ourpoint;
-#if PLATFORM(MAC) && HAVE(ACCESSIBILITY)
+#if PLATFORM(MAC)
         ourpoint = frameView->screenToContents(point);
 #else
         ourpoint = point;
@@ -2385,5 +2385,3 @@ const String& AccessibilityRenderObject::actionVerb() const
      
     
 } // namespace WebCore
-
-
