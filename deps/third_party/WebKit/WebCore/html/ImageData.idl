@@ -34,6 +34,9 @@ module html {
     ] ImageData {
         readonly attribute long width;
         readonly attribute long height;
+#if defined(LANGUAGE_JAVASCRIPT) && defined(V8_BINDING)
+        readonly attribute CanvasPixelArray data;
+#endif
     };
 
 }
