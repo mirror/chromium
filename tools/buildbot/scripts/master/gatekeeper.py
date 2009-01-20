@@ -160,6 +160,10 @@ class GateKeeper(MailNotifier):
           return
         else:
           self._last_closure_revision = source_stamp.revision
+      elif not build.getResponsibleUsers():
+        # If we don't have a version stamp nor a blame list, then this is most
+        # likely a build started manually, and we don't want to close the tree.
+        return
 
       # Send the notification email.
       defered_object = self.buildMessage(name, build, step_text)
