@@ -38,10 +38,10 @@
 using base::TimeTicks;
 
 // Delay to let browser complete a requested action.
-const int UITest::kWaitForActionMsec = 2000;
-const int UITest::kWaitForActionMaxMsec = 10000;
+static const int kWaitForActionMsec = 2000;
+static const int kWaitForActionMaxMsec = 10000;
 // Delay to let the browser complete the test.
-const int UITest::kMaxTestExecutionTime = 30000;
+static const int kMaxTestExecutionTime = 30000;
 
 const wchar_t UITest::kFailedNoCrashService[] =
     L"NOTE: This test is expected to fail if crash_service.exe is not "
@@ -68,6 +68,7 @@ std::wstring UITest::js_flags_ = L"";
 const wchar_t kUiTestTimeout[] = L"ui-test-timeout";
 const wchar_t kUiTestActionTimeout[] = L"ui-test-action-timeout";
 const wchar_t kUiTestActionMaxTimeout[] = L"ui-test-action-max-timeout";
+const wchar_t kUiTestSleepTimeout[] = L"ui-test-sleep-timeout";
 
 const wchar_t kExtraChromeFlagsSwitch[] = L"extra-chrome-flags";
 
@@ -84,7 +85,7 @@ bool UITest::DieFileDie(const std::wstring& file, bool recurse) {
   for (int i = 0; i < 10; ++i) {
     if (file_util::Delete(file, recurse))
       return true;
-    PlatformThread::Sleep(kWaitForActionMaxMsec / 10);
+    PlatformThread::Sleep(action_max_timeout_ms() / 10);
   }
   return false;
 }
@@ -103,7 +104,8 @@ UITest::UITest()
       use_existing_browser_(default_use_existing_browser_),
       command_execution_timeout_ms_(kMaxTestExecutionTime),
       action_timeout_ms_(kWaitForActionMsec),
-      action_max_timeout_ms_(kWaitForActionMaxMsec) {
+      action_max_timeout_ms_(kWaitForActionMaxMsec),
+      sleep_timeout_ms_(kWaitForActionMsec) {
   PathService::Get(chrome::DIR_APP, &browser_directory_);
   PathService::Get(chrome::DIR_TEST_DATA, &test_data_directory_);
 #if defined(OS_WIN)
@@ -117,6 +119,17 @@ void UITest::SetUp() {
   if (!use_existing_browser_) {
     AssertAppNotRunning(L"Please close any other instances "
                         L"of the app before testing.");
+  }
+
+  // Pass the test case name to chrome.exe on the command line to help with
+  // parsing Purify output.
+  const testing::TestInfo* const test_info =
+      testing::UnitTest::GetInstance()->current_test_info();
+  if (test_info) {
+    std::string test_name = test_info->test_case_name();
+    test_name += ".";
+    test_name += test_info->name();
+    ui_test_name_ = ASCIIToWide(test_name);
   }
 
   InitializeTimeouts();
@@ -181,6 +194,13 @@ void UITest::InitializeTimeouts() {
         CommandLine().GetSwitchValue(kUiTestActionMaxTimeout);
     int max_timeout = StringToInt(action_max_str);
     action_max_timeout_ms_ = std::max(kWaitForActionMaxMsec, max_timeout);
+  }
+
+  if (CommandLine().HasSwitch(kUiTestSleepTimeout)) {
+    std::wstring sleep_timeout_str =
+        CommandLine().GetSwitchValue(kUiTestSleepTimeout);
+    int sleep_timeout = StringToInt(sleep_timeout_str);
+    sleep_timeout_ms_ = std::max(kWaitForActionMsec, sleep_timeout);
   }
 }
 
@@ -298,6 +318,11 @@ void UITest::LaunchBrowser(const std::wstring& arguments, bool clear_profile) {
 #ifdef WAIT_FOR_DEBUGGER_ON_OPEN
   CommandLine::AppendSwitch(&command_line, switches::kDebugOnStart);
 #endif
+
+  if (!ui_test_name_.empty())
+    CommandLine::AppendSwitchWithValue(&command_line,
+                                       switches::kTestName,
+                                       ui_test_name_);
 
   DebugFlags::ProcessDebugFlags(&command_line, DebugFlags::UNKNOWN, false);
   command_line.append(L" " + arguments);
@@ -479,7 +504,7 @@ bool UITest::WaitForDownloadShelfVisible(TabProxy* tab) {
       return true;  // Got the download shelf.
 
     // Give it a chance to catch up.
-    Sleep(kWaitForActionMaxMsec / kCycles);
+    PlatformThread::Sleep(action_max_timeout_ms() / kCycles);
   }
   return false;
 }
@@ -495,7 +520,7 @@ bool UITest::WaitForFindWindowVisibilityChange(TabProxy* tab,
       return true;  // Find window visibility change complete.
 
     // Give it a chance to catch up.
-    Sleep(kWaitForActionMaxMsec / kCycles);
+    Sleep(sleep_timeout_ms() / kCycles);
   }
   return false;
 }
@@ -512,7 +537,7 @@ bool UITest::WaitForBookmarkBarVisibilityChange(BrowserProxy* browser,
       return true;  // Bookmark bar visibility change complete.
 
     // Give it a chance to catch up.
-    Sleep(kWaitForActionMaxMsec / kCycles);
+    Sleep(sleep_timeout_ms() / kCycles);
   }
   return false;
 }
@@ -646,7 +671,7 @@ std::string UITest::WaitUntilCookieNonEmpty(TabProxy* tab,
 
 void UITest::WaitUntilTabCount(int tab_count) {
   for (int i = 0; i < 10; ++i) {
-    Sleep(kWaitForActionMaxMsec / 10);
+    Sleep(sleep_timeout_ms() / 10);
     if (GetTabCount() == tab_count)
       break;
   }

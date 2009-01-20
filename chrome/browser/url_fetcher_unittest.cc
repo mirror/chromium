@@ -6,6 +6,14 @@
 #include "base/time.h"
 #include "chrome/browser/url_fetcher.h"
 #include "chrome/browser/url_fetcher_protect.h"
+#if defined(OS_LINUX)
+// TODO(port): ugly hack for linux
+namespace ChromePluginLib { 
+	void UnloadAllPlugins() {} 
+}
+#else
+#include "chrome/common/chrome_plugin_lib.h"
+#endif
 #include "net/base/ssl_test_util.h"
 #include "net/url_request/url_request_unittest.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -33,6 +41,13 @@ class URLFetcherTest : public testing::Test, public URLFetcher::Delegate {
                                   const std::string& data);
 
  protected:
+  virtual void SetUp() {
+    testing::Test::SetUp();
+
+    // Ensure that any plugin operations done by other tests are cleaned up.
+    ChromePluginLib::UnloadAllPlugins();
+  }
+
   // URLFetcher is designed to run on the main UI thread, but in our tests
   // we assume that the current thread is the IO thread where the URLFetcher
   // dispatches its requests to.  When we wish to simulate being used from

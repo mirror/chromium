@@ -95,6 +95,7 @@ input_files = [
     '$WEBCORE_DIR/css/SVGCSSStyleSelector.cpp',
     '$WEBCORE_DIR/css/WebKitCSSKeyframeRule.cpp',
     '$WEBCORE_DIR/css/WebKitCSSKeyframesRule.cpp',
+    '$WEBCORE_DIR/css/WebKitCSSMatrix.cpp',
     '$WEBCORE_DIR/css/WebKitCSSTransformValue.cpp',
 
     '$WEBCORE_DIR/dom/ActiveDOMObject.cpp',
@@ -170,6 +171,8 @@ input_files = [
     '$WEBCORE_DIR/dom/WheelEvent.cpp',
     '$WEBCORE_DIR/dom/XMLTokenizer.cpp',
     '$WEBCORE_DIR/dom/XMLTokenizerLibxml2.cpp',
+
+    '$WEBCORE_DIR/editing/chromium/EditorChromium.cpp',
 
     '$WEBCORE_DIR/editing/AppendNodeCommand.cpp',
     '$WEBCORE_DIR/editing/ApplyStyleCommand.cpp',
@@ -468,7 +471,6 @@ input_files = [
     '$WEBCORE_DIR/platform/chromium/CursorChromium.cpp',
     '$WEBCORE_DIR/platform/chromium/DragDataChromium.cpp',
     '$WEBCORE_DIR/platform/chromium/DragImageChromium.cpp',
-    '$WEBCORE_DIR/platform/chromium/EditorChromium.cpp',
     '$WEBCORE_DIR/platform/chromium/FileChooserChromium.cpp',
     '$WEBCORE_DIR/platform/chromium/FileSystemChromium.cpp',
     '$WEBCORE_DIR/platform/chromium/FramelessScrollView.cpp',
@@ -483,7 +485,6 @@ input_files = [
     '$WEBCORE_DIR/platform/chromium/SSLKeyGeneratorChromium.cpp',
     '$WEBCORE_DIR/platform/chromium/SystemTimeChromium.cpp',
     '$WEBCORE_DIR/platform/chromium/TemporaryLinkStubs.cpp',
-    '$WEBCORE_DIR/platform/chromium/TextBreakIteratorInternalICUChromium.cpp',
     '$WEBCORE_DIR/platform/chromium/WidgetChromium.cpp',
     '$WEBCORE_DIR/platform/chromium/ScrollbarThemeChromium.cpp',
 
@@ -558,6 +559,8 @@ input_files = [
     '$WEBCORE_DIR/platform/text/TextEncodingRegistry.cpp',
     '$WEBCORE_DIR/platform/text/TextStream.cpp',
     '$WEBCORE_DIR/platform/text/UnicodeRange.cpp',
+
+    '$WEBCORE_DIR/platform/text/chromium/TextBreakIteratorInternalICUChromium.cpp',
 
     '$WEBCORE_DIR/plugins/MimeType.cpp',
     '$WEBCORE_DIR/plugins/MimeTypeArray.cpp',
@@ -845,7 +848,6 @@ input_files = [
     '$WEBCORE_DIR/svg/graphics/SVGResourceMarker.cpp',
     '$WEBCORE_DIR/svg/graphics/SVGResourceMasker.cpp',
 
-    '$WEBCORE_DIR/svg/graphics/skia/RenderPathSkia.cpp',
     '$WEBCORE_DIR/svg/graphics/skia/SVGPaintServerPatternSkia.cpp',
     '$WEBCORE_DIR/svg/graphics/skia/SVGPaintServerSkia.cpp',
     '$WEBCORE_DIR/svg/graphics/skia/SVGResourceFilterSkia.cpp',
@@ -881,10 +883,10 @@ input_files = [
 if env.Bit('windows'):
   # Windows specific implementations.
   input_files.extend([
-    '$WEBCORE_DIR/platform/chromium/ChromiumUtilsWin.cpp',
     '$WEBCORE_DIR/platform/chromium/FileSystemChromiumWin.cpp',
     '$WEBCORE_DIR/platform/chromium/ScrollBarThemeChromiumWin.cpp',
     '$WEBCORE_DIR/platform/chromium/SoundChromiumWin.cpp',
+    '$WEBCORE_DIR/platform/chromium/WindowsVersion.cpp',
 
     '$WEBCORE_DIR/platform/graphics/chromium/FontCacheChromiumWin.cpp',
     '$WEBCORE_DIR/platform/graphics/chromium/FontPlatformDataChromiumWin.cpp',
@@ -908,7 +910,6 @@ if env.Bit('linux'):
     '$WEBCORE_DIR/platform/chromium/FileSystemChromiumLinux.cpp',
     '$WEBCORE_DIR/platform/chromium/gtk2drawing.c',
     '$WEBCORE_DIR/platform/chromium/KeyCodeConversionGtk.cpp',
-    '$WEBCORE_DIR/platform/chromium/RenderThemeGtk.cpp',
     '$WEBCORE_DIR/platform/chromium/ScrollbarThemeChromiumLinux.cpp',
     '$WEBCORE_DIR/platform/chromium/SoundChromiumPosix.cpp',
 
@@ -918,6 +919,8 @@ if env.Bit('linux'):
     '$WEBCORE_DIR/platform/graphics/chromium/GlyphPageTreeNodeLinux.cpp',
     '$WEBCORE_DIR/platform/graphics/chromium/IconChromiumLinux.cpp',
     '$WEBCORE_DIR/platform/graphics/chromium/SimpleFontDataLinux.cpp',
+
+    '$WEBCORE_DIR/rendering/RenderThemeChromiumGtk.cpp',
   ])
   # Remove from the list files that haven't yet been made portable to Linux.
   to_be_ported_files = [

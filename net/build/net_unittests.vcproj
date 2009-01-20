@@ -271,10 +271,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\http\http_transaction_winhttp_unittest.cc"
-					>
-				</File>
-				<File
 					RelativePath="..\http\http_util_unittest.cc"
 					>
 				</File>
@@ -282,18 +278,10 @@
 					RelativePath="..\http\http_vary_data_unittest.cc"
 					>
 				</File>
-				<File
-					RelativePath="..\http\winhttp_request_throttle_unittest.cc"
-					>
-				</File>
 			</Filter>
 			<Filter
 				Name="base"
 				>
-				<File
-					RelativePath="..\base\auth_cache_unittest.cc"
-					>
-				</File>
 				<File
 					RelativePath="..\base\base64_unittest.cc"
 					>
@@ -396,6 +384,14 @@
 				</File>
 				<File
 					RelativePath="..\base\x509_certificate_unittest.cc"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="ftp"
+				>
+				<File
+					RelativePath="..\ftp\ftp_auth_cache_unittest.cc"
 					>
 				</File>
 			</Filter>

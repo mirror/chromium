@@ -8,14 +8,14 @@
 #include "base/lock.h"
 #include "base/message_loop.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/constrained_window.h"
 #include "chrome/browser/controller.h"
-#include "chrome/browser/navigation_controller.h"
-#include "chrome/browser/password_manager.h"
-#include "chrome/browser/render_process_host.h"
+#include "chrome/browser/password_manager/password_manager.h"
+#include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/resource_dispatcher_host.h"
-#include "chrome/browser/web_contents.h"
-#include "chrome/browser/tab_util.h"
+#include "chrome/browser/tab_contents/constrained_window.h"
+#include "chrome/browser/tab_contents/navigation_controller.h"
+#include "chrome/browser/tab_contents/tab_util.h"
+#include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/browser/views/login_view.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/l10n_util.h"
@@ -40,6 +40,31 @@ static void ResetLoginHandlerForRequest(URLRequest* request) {
     return;
 
   info->login_handler = NULL;
+}
+
+// Get the signon_realm under which this auth info should be stored.
+//
+// The format of the signon_realm for proxy auth is:
+//     proxy-host/auth-realm
+// The format of the signon_realm for server auth is:
+//     url-scheme://url-host[:url-port]/auth-realm
+//
+// Be careful when changing this function, since you could make existing
+// saved logins un-retrievable.
+
+std::string GetSignonRealm(const GURL& url,
+                           const net::AuthChallengeInfo& auth_info) {
+  std::string signon_realm;
+  if (auth_info.is_proxy) {
+    signon_realm = WideToASCII(auth_info.host);
+    signon_realm.append("/");
+  } else {
+    // Take scheme, host, and port from the url.
+    signon_realm = url.GetOrigin().spec();
+    // This ends with a "/".
+  }
+  signon_realm.append(WideToUTF8(auth_info.realm));
+  return signon_realm;
 }
 
 // ----------------------------------------------------------------------------
@@ -358,11 +383,7 @@ class LoginDialogTask : public Task {
       dialog_form.scheme = PasswordForm::SCHEME_OTHER;
     }
     dialog_form.origin = origin_url;
-    // TODO(timsteele): Shouldn't depend on HttpKey since a change to the
-    // format would result in not being able to retrieve existing logins
-    // for a site. Refactor HttpKey behavior to be more reusable.
-    dialog_form.signon_realm =
-        net::AuthCache::HttpKey(dialog_form.origin, *auth_info_);
+    dialog_form.signon_realm = GetSignonRealm(dialog_form.origin, *auth_info_);
     password_manager_input->push_back(dialog_form);
     // Set the password form for the handler (by copy).
     handler_->set_password_form(dialog_form);

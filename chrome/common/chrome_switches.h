@@ -119,8 +119,6 @@ extern const wchar_t kGearsPluginPathOverride[];
 
 extern const wchar_t kGearsInRenderer[];
 
-extern const wchar_t kUseWinHttp[];
-
 extern const wchar_t kEnableFastback[];
 
 extern const wchar_t kJavaScriptDebuggerPath[];
@@ -138,6 +136,8 @@ extern const wchar_t kUseOldSafeBrowsing[];
 extern const wchar_t kEnableRendererAccessibility[];
 
 extern const wchar_t kEnableVideo[];
+
+extern const wchar_t kTestName[];
 
 }  // namespace switches
 

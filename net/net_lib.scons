@@ -22,8 +22,6 @@ input_files = ChromeFileList([
     'base/address_list.cc',
     'base/address_list.h',
     'base/auth.h',
-    'base/auth_cache.cc',
-    'base/auth_cache.h',
     'base/base64.cc',
     'base/base64.h',
     'base/bzip2_filter.cc',
@@ -37,6 +35,7 @@ input_files = ChromeFileList([
     'base/client_socket_pool.cc',
     'base/client_socket_pool.h',
     'base/completion_callback.h',
+    'base/connection_type_histograms.cc',
     'base/cookie_monster.cc',
     'base/cookie_monster.h',
     'base/cookie_policy.cc',
@@ -152,8 +151,6 @@ input_files = ChromeFileList([
     'url_request/url_request_view_cache_job.h',
   ]),
   MSVSFilter('http', [
-    'http/cert_status_cache.cc',
-    'http/cert_status_cache.h',
     'http/http_atom_list.h',
     'http/http_cache.cc',
     'http/http_cache.h',
@@ -170,8 +167,6 @@ input_files = ChromeFileList([
     'http/http_response_info.h',
     'http/http_transaction.h',
     'http/http_transaction_factory.h',
-    'http/http_transaction_winhttp.cc',
-    'http/http_transaction_winhttp.h',
     'http/http_util.cc',
     'http/http_util.h',
     'http/http_auth.cc',
@@ -194,8 +189,6 @@ input_files = ChromeFileList([
     'http/http_auth_handler_digest.h',
     'http/http_vary_data.cc',
     'http/http_vary_data.h',
-    'http/winhttp_request_throttle.cc',
-    'http/winhttp_request_throttle.h',
   ]),
   MSVSFilter('disk_cache', [
     'disk_cache/addr.h',
@@ -250,6 +243,8 @@ input_files = ChromeFileList([
     'proxy/proxy_service.h',
   ]),
   MSVSFilter('ftp', [
+    'ftp/ftp_auth_cache.cc',
+    'ftp/ftp_auth_cache.h',
     'ftp/ftp_network_layer.cc',
     'ftp/ftp_network_layer.h',
     'ftp/ftp_network_session.h',
@@ -267,8 +262,6 @@ if env.Bit('posix'):
   # TODO(port): delete files from this list as they get ported.
   input_files.Remove(
       'base/ssl_config_service.cc',
-      'http/http_transaction_winhttp.cc',
-      'http/winhttp_request_throttle.cc',
       'url_request/url_request_ftp_job.cc',
   )
 

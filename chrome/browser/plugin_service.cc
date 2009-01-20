@@ -10,7 +10,7 @@
 #include "chrome/browser/chrome_plugin_host.h"
 #include "chrome/browser/chrome_thread.h"
 #include "chrome/browser/plugin_process_host.h"
-#include "chrome/browser/render_process_host.h"
+#include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/resource_message_filter.h"
 #include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/common/logging_chrome.h"
@@ -23,8 +23,8 @@ PluginService* PluginService::GetInstance() {
 
 PluginService::PluginService()
     : main_message_loop_(MessageLoop::current()),
-      ui_locale_(g_browser_process->GetApplicationLocale()),
       resource_dispatcher_host_(NULL),
+      ui_locale_(g_browser_process->GetApplicationLocale()),
       plugin_shutdown_handler_(new ShutdownHandler) {
   // Have the NPAPI plugin list search for Chrome plugins as well.
   ChromePluginLib::RegisterPluginsWithNPAPI();
@@ -154,7 +154,7 @@ FilePath PluginService::GetPluginPath(const GURL& url,
   NPAPI::PluginList::Singleton()->GetPluginInfo(url, mime_type, clsid,
                                                 allow_wildcard, &info,
                                                 actual_mime_type);
-  return info.file;
+  return info.path;
 }
 
 bool PluginService::GetPluginInfoByPath(const FilePath& plugin_path,

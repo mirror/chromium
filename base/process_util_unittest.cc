@@ -67,8 +67,7 @@ TEST_F(ProcessUtilTest, KillSlowChild) {
   EXPECT_EQ(oldcount+1, GetProcessCount(L"base_unittests" EXE_SUFFIX, 0));
   FILE *fp = fopen("SlowChildProcess.die", "w");
   fclose(fp);
-  // TODO(port): do something less racy here
-  PlatformThread::Sleep(1000);
+  EXPECT_TRUE(base::WaitForSingleProcess(handle, 5000));
   EXPECT_EQ(oldcount, GetProcessCount(L"base_unittests" EXE_SUFFIX, 0));
 }
 #endif
@@ -159,11 +158,13 @@ MULTIPROCESS_TEST_MAIN(ProcessUtilsLeakFDChildProcess) {
     }
   }
 
+  // InitLogging always opens a file at startup.
+  int expected_num_open_fds = 1;
 #if defined(OS_LINUX)
   // On Linux, '/etc/localtime' is opened before the test's main() enters.
-  const int expected_num_open_fds = 1;
-  num_open_files -= expected_num_open_fds;
+  expected_num_open_fds += 1;
 #endif  // defined(OS_LINUX)
+  num_open_files -= expected_num_open_fds;
 
   write(write_pipe, &num_open_files, sizeof(num_open_files));
   close(write_pipe);

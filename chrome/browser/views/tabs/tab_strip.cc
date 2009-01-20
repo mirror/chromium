@@ -6,14 +6,14 @@
 
 #include "base/gfx/size.h"
 #include "chrome/app/theme/theme_resources.h"
+#include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/profile.h"
-#include "chrome/browser/tab_contents.h"
+#include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
-#include "chrome/browser/user_metrics.h"
 #include "chrome/browser/view_ids.h"
 #include "chrome/browser/views/tabs/dragged_tab_controller.h"
 #include "chrome/browser/views/tabs/tab.h"
-#include "chrome/browser/web_contents.h"
+#include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/common/drag_drop_types.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/path.h"
@@ -848,7 +848,8 @@ void TabStrip::TabInsertedAt(TabContents* contents,
 
   // Don't animate the first tab, it looks weird, and don't animate anything
   // if the containing window isn't visible yet.
-  if (GetTabCount() > 1 && IsWindowVisible(GetWidget()->GetHWND())) {
+  if (GetTabCount() > 1 && GetWidget() &&
+      IsWindowVisible(GetWidget()->GetHWND())) {
     StartInsertTabAnimation(index);
   } else {
     Layout();
@@ -1469,8 +1470,17 @@ void TabStrip::StartResizeLayoutAnimation() {
 }
 
 void TabStrip::StartInsertTabAnimation(int index) {
-  // The TabStrip can now use its entire width to lay out Tabs.
-  available_width_for_tabs_ = -1;
+  // Don't shock users by letting all tabs move when they are focused
+  // on the tab-strip. Wait for later, when they aren't looking.
+  int last_tab_index = GetTabCount() - 2;
+  if (last_tab_index > 0) {
+    Tab* last_tab = GetTabAt(last_tab_index);
+	  available_width_for_tabs_ = std::min(
+		  GetAvailableWidthForTabs(last_tab) + last_tab->width(),
+		  width() - (kNewTabButtonHOffset + newtab_button_size_.width()));
+  } else {
+    available_width_for_tabs_ = -1;
+  }
   if (active_animation_.get())
     active_animation_->Stop();
   active_animation_.reset(new InsertTabAnimation(this, index));

@@ -1596,6 +1596,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\opentype\OpenTypeUtilities.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\opentype\OpenTypeUtilities.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\chromium\PlatformIcon.h"
 						>
 					</File>
@@ -1625,14 +1633,6 @@
 					</File>
 					<File
 						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\chromium\UniscribeHelperTextRun.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\opentype\OpenTypeUtilities.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\opentype\OpenTypeUtilities.h"
 						>
 					</File>
 				</Filter>
@@ -2104,6 +2104,14 @@
 					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\WidthIterator.h"
 					>
 				</File>
+				<Filter
+					Name="chromium"
+					>
+					<File
+						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\text\chromium\TextBreakIteratorInternalICUChromium.cpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="sql"
@@ -2185,14 +2193,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\ChromiumUtilsWin.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\ChromiumUtilsWin.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\ClipboardChromium.cpp"
 					>
 				</File>
@@ -2234,10 +2234,6 @@
 				</File>
 				<File
 					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\DragImageRef.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\EditorChromium.cpp"
 					>
 				</File>
 				<File
@@ -2361,11 +2357,15 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\TextBreakIteratorInternalICUChromium.cpp"
+					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\WidgetChromium.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\WidgetChromium.cpp"
+					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\WindowsVersion.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\WindowsVersion.h"
 					>
 				</File>
 			</Filter>
@@ -2895,6 +2895,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\css\WebKitCSSKeyframesRule.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\css\WebKitCSSMatrix.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\css\WebKitCSSMatrix.h"
 				>
 			</File>
 			<File
@@ -4811,6 +4819,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\editing\Editor.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\editing\chromium\EditorChromium.cpp"
 				>
 			</File>
 			<File
@@ -7047,10 +7059,6 @@
 				<Filter
 					Name="skia"
 					>
-					<File
-						RelativePath="..\..\..\third_party\WebKit\WebCore\svg\graphics\skia\RenderPathSkia.cpp"
-						>
-					</File>
 					<File
 						RelativePath="..\..\..\third_party\WebKit\WebCore\svg\graphics\skia\SVGPaintServerPatternSkia.cpp"
 						>

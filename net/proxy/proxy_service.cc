@@ -19,7 +19,6 @@
 #include "net/base/net_errors.h"
 #include "net/proxy/proxy_config_service_fixed.h"
 #if defined(OS_WIN)
-#include "net/http/http_transaction_winhttp.h"
 #include "net/proxy/proxy_config_service_win.h"
 #include "net/proxy/proxy_resolver_winhttp.h"
 #elif defined(OS_MACOSX)
@@ -294,15 +293,7 @@ ProxyService* ProxyService::Create(const ProxyInfo* pi) {
   if (pi) {
     // The ProxyResolver is set to NULL, since it should never be called
     // (because the configuration will never require PAC).
-    ProxyService* proxy_service =
-        new ProxyService(new ProxyConfigServiceFixed(*pi), NULL);
-
-    // TODO(eroman): remove this WinHTTP hack once it is no more.
-    // We keep a copy of the ProxyInfo that was used to create the
-    // proxy service, so we can pass it to WinHTTP.
-    proxy_service->proxy_info_.reset(new ProxyInfo(*pi));
-
-    return proxy_service;
+    return new ProxyService(new ProxyConfigServiceFixed(*pi), NULL);
   }
 #if defined(OS_WIN)
   return new ProxyService(new ProxyConfigServiceWin(),

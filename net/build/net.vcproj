@@ -149,14 +149,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\base\auth_cache.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\base\auth_cache.h"
-				>
-			</File>
-			<File
 				RelativePath="..\base\base64.cc"
 				>
 			</File>
@@ -206,6 +198,14 @@
 			</File>
 			<File
 				RelativePath="..\base\completion_callback.h"
+				>
+			</File>
+			<File
+				RelativePath="..\base\connection_type_histograms.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\base\connection_type_histograms.h"
 				>
 			</File>
 			<File
@@ -677,14 +677,6 @@
 			Name="http"
 			>
 			<File
-				RelativePath="..\http\cert_status_cache.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\http\cert_status_cache.h"
-				>
-			</File>
-			<File
 				RelativePath="..\http\http_atom_list.h"
 				>
 			</File>
@@ -746,14 +738,6 @@
 			</File>
 			<File
 				RelativePath="..\http\http_transaction_factory.h"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_transaction_winhttp.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_transaction_winhttp.h"
 				>
 			</File>
 			<File
@@ -842,14 +826,6 @@
 			</File>
 			<File
 				RelativePath="..\http\http_vary_data.h"
-				>
-			</File>
-			<File
-				RelativePath="..\http\winhttp_request_throttle.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\http\winhttp_request_throttle.h"
 				>
 			</File>
 		</Filter>
@@ -1056,6 +1032,14 @@
 		<Filter
 			Name="ftp"
 			>
+			<File
+				RelativePath="..\ftp\ftp_auth_cache.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\ftp\ftp_auth_cache.h"
+				>
+			</File>
 			<File
 				RelativePath="..\ftp\ftp_network_layer.cc"
 				>

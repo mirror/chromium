@@ -686,11 +686,23 @@
 			>
 		</File>
 		<File
+			RelativePath="..\scoped_bstr_win.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\scoped_bstr_win.h"
+			>
+		</File>
+		<File
 			RelativePath="..\scoped_clipboard_writer.cc"
 			>
 		</File>
 		<File
 			RelativePath="..\scoped_clipboard_writer.h"
+			>
+		</File>
+		<File
+			RelativePath="..\scoped_comptr_win.h"
 			>
 		</File>
 		<File
@@ -834,11 +846,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\test_file_util_win.cc"
+			RelativePath="..\test_file_util.h"
 			>
 		</File>
 		<File
-			RelativePath="..\test_file_util.h"
+			RelativePath="..\test_file_util_win.cc"
 			>
 		</File>
 		<File
@@ -939,6 +951,14 @@
 		</File>
 		<File
 			RelativePath="..\waitable_event.h"
+			>
+		</File>
+		<File
+			RelativePath="..\waitable_event_watcher.h"
+			>
+		</File>
+		<File
+			RelativePath="..\waitable_event_watcher_win.cc"
 			>
 		</File>
 		<File

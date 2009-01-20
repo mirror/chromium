@@ -9,15 +9,15 @@
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_about_handler.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/profile.h"
-#include "chrome/browser/navigation_controller.h"
-#include "chrome/browser/navigation_entry.h"
 #include "chrome/browser/render_view_host.h"
 #include "chrome/browser/sessions/tab_restore_service.h"
-#include "chrome/browser/tab_contents_factory.h"
+#include "chrome/browser/tab_contents/navigation_controller.h"
+#include "chrome/browser/tab_contents/navigation_entry.h"
+#include "chrome/browser/tab_contents/tab_contents_factory.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
 #include "chrome/browser/tabs/tab_strip_model_order_controller.h"
-#include "chrome/browser/user_metrics.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
@@ -533,7 +533,7 @@ bool TabStripModel::InternalCloseTabContentsAt(int index,
     // them. Once they have fired, we'll get a message back saying whether
     // to proceed closing the page or not, which sends us back to this method
     // with the HasUnloadListener bit cleared.
-    WebContents* web_contents = GetContentsAt(index)->AsWebContents();
+    WebContents* web_contents = detached_contents->AsWebContents();
     // If we hit this code path, the tab had better be a WebContents tab.
     DCHECK(web_contents);
     web_contents->render_view_host()->FirePageBeforeUnload();

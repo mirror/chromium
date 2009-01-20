@@ -21,6 +21,7 @@ class MessageLoop;
 // issues a NOTIFY_CHROME_PLUGIN_UNLOADED notification.
 class ChromePluginLib : public base::RefCounted<ChromePluginLib>  {
  public:
+  static bool IsInitialized();
   static ChromePluginLib* Create(const FilePath& filename,
                                  const CPBrowserFuncs* bfuncs);
   static ChromePluginLib* Find(const FilePath& filename);
@@ -57,8 +58,10 @@ class ChromePluginLib : public base::RefCounted<ChromePluginLib>  {
   // Method to call a test function in the plugin, used for unit tests.
   int CP_Test(void* param);
 
-  // The registroy path to search for Chrome Plugins/
+#if defined(OS_WIN)
+  // The registry path to search for Chrome Plugins/
   static const TCHAR kRegistryChromePlugins[];
+#endif  // defined(OS_WIN)
 
  private:
   friend class base::RefCounted<ChromePluginLib>;
@@ -81,7 +84,10 @@ class ChromePluginLib : public base::RefCounted<ChromePluginLib>  {
   void Unload();
 
   FilePath filename_;  // the path to the plugin
+#if defined(OS_WIN)
+  // TODO(port): Remove ifdefs when we have portable replacement for HMODULE.
   HMODULE module_;  // the opened plugin handle
+#endif  // defined(OS_WIN)
   bool initialized_;  // is the plugin initialized
 
   // Exported symbols from the plugin, looked up by name.

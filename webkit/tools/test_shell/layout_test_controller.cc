@@ -100,6 +100,7 @@ LayoutTestController::LayoutTestController(TestShell* shell) {
   BindMethod("setSelectTrailingWhitespaceEnabled", &LayoutTestController::setSelectTrailingWhitespaceEnabled);
   BindMethod("pauseAnimationAtTimeOnElementWithId", &LayoutTestController::pauseAnimationAtTimeOnElementWithId);
   BindMethod("pauseTransitionAtTimeOnElementWithId", &LayoutTestController::pauseTransitionAtTimeOnElementWithId);
+  BindMethod("elementDoesAutoCompleteForElementWithId", &LayoutTestController::elementDoesAutoCompleteForElementWithId);
 
   // The following are stubs.
   BindMethod("dumpAsWebArchive", &LayoutTestController::dumpAsWebArchive);
@@ -597,11 +598,23 @@ void LayoutTestController::pauseTransitionAtTimeOnElementWithId(
     double time = args[1].ToDouble();
     std::string element_id = args[2].ToString();
 
-    webkit_glue::PauseTransitionAtTimeOnElementWithId(
-        shell_->webView(), property_name, time, element_id);
+    result->Set(webkit_glue::PauseTransitionAtTimeOnElementWithId(
+        shell_->webView(), property_name, time, element_id));
   } else {
     result->Set(false);
   }
+}
+
+void LayoutTestController::elementDoesAutoCompleteForElementWithId(
+    const CppArgumentList& args,
+    CppVariant* result) {
+  if (args.size() != 1 || !args[0].isString()) {
+    result->Set(false);
+    return;
+  }
+  std::string element_id = args[0].ToString();
+  result->Set(webkit_glue::ElementDoesAutoCompleteForElementWithId(
+      shell_->webView(), element_id));
 }
 
 //

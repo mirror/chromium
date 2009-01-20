@@ -14,13 +14,13 @@
 #include "chrome/browser/dom_ui/dom_ui_contents.h"
 #include "chrome/browser/history_tab_ui.h"
 #include "chrome/browser/history/page_usage_data.h"
-#include "chrome/browser/navigation_entry.h"
+#include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/render_view_host.h"
 #include "chrome/browser/sessions/session_types.h"
-#include "chrome/browser/template_url.h"
+#include "chrome/browser/tab_contents/navigation_entry.h"
+#include "chrome/browser/search_engines/template_url.h"
 #include "chrome/browser/user_data_manager.h"
-#include "chrome/browser/user_metrics.h"
 #include "chrome/browser/views/keyword_editor_view.h"
 #include "chrome/common/jstemplate_builder.h"
 #include "chrome/common/l10n_util.h"
@@ -72,8 +72,7 @@ class PaintTimer : public RenderWidgetHost::PaintObserver {
     start_ = TimeTicks::Now();
     last_paint_ = start_;
     MessageLoop::current()->PostDelayedTask(FROM_HERE,
-        method_factory_.NewRunnableMethod(&PaintTimer::Timeout),
-        static_cast<int>(kTimeout.InMilliseconds()));
+        method_factory_.NewRunnableMethod(&PaintTimer::Timeout), kTimeoutMs);
   }
 
   // A callback that is invoked whenever our RenderWidgetHost paints.
@@ -85,7 +84,7 @@ class PaintTimer : public RenderWidgetHost::PaintObserver {
   // message, we say we're done painting; otherwise, we keep waiting.
   void Timeout() {
     TimeTicks now = TimeTicks::Now();
-    if ((now - last_paint_) >= kTimeout) {
+    if ((now - last_paint_) >= TimeDelta::FromMilliseconds(kTimeoutMs)) {
       // Painting has quieted down.  Log this as the full time to run.
       TimeDelta load_time = last_paint_ - start_;
       int load_time_ms = static_cast<int>(load_time.InMilliseconds());
@@ -99,15 +98,14 @@ class PaintTimer : public RenderWidgetHost::PaintObserver {
       // Some more paints must've occurred since we set the timeout.
       // Wait some more.
       MessageLoop::current()->PostDelayedTask(FROM_HERE,
-          method_factory_.NewRunnableMethod(&PaintTimer::Timeout),
-          static_cast<int>(kTimeout.InMilliseconds()));
+          method_factory_.NewRunnableMethod(&PaintTimer::Timeout), kTimeoutMs);
     }
   }
 
  private:
   // The amount of time there must be no painting for us to consider painting
   // finished.  Observed times are in the ~1200ms range.
-  static const TimeDelta kTimeout;
+  static const int kTimeoutMs = 2000;
   // The time when we started benchmarking.
   TimeTicks start_;
   // The last time we got a paint notification.
@@ -117,7 +115,6 @@ class PaintTimer : public RenderWidgetHost::PaintObserver {
 
   DISALLOW_EVIL_CONSTRUCTORS(PaintTimer);
 };
-const TimeDelta PaintTimer::kTimeout(TimeDelta::FromMilliseconds(2000));
 
 // Adds "url" and "title" keys on incoming dictionary, setting title
 // as the url as a fallback on empty title.

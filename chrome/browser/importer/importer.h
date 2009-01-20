@@ -16,10 +16,10 @@
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/history/history_types.h"
 #if defined(OS_WIN)
-#include "chrome/browser/ie7_password.h"
+#include "chrome/browser/password_manager/ie7_password.h"
 #endif
 #include "chrome/browser/profile.h"
-#include "chrome/browser/template_url.h"
+#include "chrome/browser/search_engines/template_url.h"
 #include "chrome/common/notification_service.h"
 #include "googleurl/src/gurl.h"
 #include "webkit/glue/password_form.h"

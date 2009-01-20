@@ -246,7 +246,7 @@ bool WebPluginDelegateProxy::Initialize(const GURL& url, char** argn,
     }
   }
   params.load_manually = load_manually;
-  params.modal_dialog_event = render_view_->modal_dialog_event();
+  params.modal_dialog_event = render_view_->modal_dialog_event()->handle();
 
   plugin_ = plugin;
 
@@ -571,7 +571,7 @@ bool WebPluginDelegateProxy::HandleEvent(NPEvent* event, WebCursor* cursor) {
   IPC::SyncMessage* message = new PluginMsg_HandleEvent(instance_id_,
                                                         *event, &handled,
                                                         cursor);
-  message->set_pump_messages_event(modal_loop_pump_messages_event_);
+  message->set_pump_messages_event(modal_loop_pump_messages_event_.get());
   Send(message);
   return handled;
 }
@@ -587,7 +587,7 @@ void WebPluginDelegateProxy::OnSetWindow(
     plugin_->SetWindow(window, modal_loop_pump_messages_event);
 
   DCHECK(modal_loop_pump_messages_event_ == NULL);
-  modal_loop_pump_messages_event_.Set(modal_loop_pump_messages_event);
+  modal_loop_pump_messages_event_.reset();
 }
 
 void WebPluginDelegateProxy::OnCancelResource(int id) {
@@ -687,8 +687,8 @@ void WebPluginDelegateProxy::PaintSadPlugin(HDC hdc, const gfx::Rect& rect) {
                         paint);
 
   if (!sad_plugin_) {
-    sad_plugin_ = ResourceBundle::LoadBitmap(
-        _AtlBaseModule.GetResourceInstance(), IDR_SAD_PLUGIN);
+    sad_plugin_ = ResourceBundle::GetSharedInstance().GetBitmapNamed(
+        IDR_SAD_PLUGIN);
   }
 
   if (sad_plugin_) {

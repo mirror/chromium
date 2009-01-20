@@ -45,20 +45,9 @@ class TabProxy;
 
 class UITest : public testing::Test {
  protected:
-  // Delay to let browser complete a requested action.
-  static const int kWaitForActionMsec;
-  static const int kWaitForActionMaxMsec;
-  // Delay to let the browser complete the test.
-  static const int kMaxTestExecutionTime;
-
   // String to display when a test fails because the crash service isn't
   // running.
   static const wchar_t kFailedNoCrashService[];
-
-  // Tries to delete the specified file/directory returning true on success.
-  // This differs from file_util::Delete in that it repeatedly invokes Delete
-  // until successful, or a timeout is reached. Returns true on success.
-  static bool DieFileDie(const std::wstring& file, bool recurse);
 
   // Constructor
   UITest();
@@ -74,6 +63,11 @@ class UITest : public testing::Test {
   virtual void InitializeTimeouts();
 
   // ********* Utility functions *********
+
+  // Tries to delete the specified file/directory returning true on success.
+  // This differs from file_util::Delete in that it repeatedly invokes Delete
+  // until successful, or a timeout is reached. Returns true on success.
+  bool DieFileDie(const std::wstring& file, bool recurse);
 
   // Launches the browser and IPC testing server.
   void LaunchBrowserAndServer();
@@ -320,6 +314,10 @@ class UITest : public testing::Test {
 
   int action_max_timeout_ms() const { return action_max_timeout_ms_; }
 
+  int sleep_timeout_ms() const { return sleep_timeout_ms_; }
+
+  std::wstring ui_test_name() const { return ui_test_name_; }
+
   // Count the number of active browser processes.  This function only counts
   // browser processes that share the same profile directory as the current
   // process.  The count includes browser sub-processes.
@@ -451,6 +449,9 @@ class UITest : public testing::Test {
   int command_execution_timeout_ms_;
   int action_timeout_ms_;
   int action_max_timeout_ms_;
+  int sleep_timeout_ms_;
+
+  std::wstring ui_test_name_;
 };
 
 // These exist only to support the gTest assertion macros, and
