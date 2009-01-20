@@ -246,7 +246,6 @@ namespace WebCore {
 
         FrameLoadType loadType() const;
         CachePolicy cachePolicy() const;
-        FrameLoadType policyLoadType() const { return m_policyLoadType; }
 
         void didFirstLayout();
         bool firstLayoutDone() const;
