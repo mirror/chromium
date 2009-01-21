@@ -1,5 +1,552 @@
 2009-01-20  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
 
+        Reviewed by George Staikos.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=23444
+
+        Refactor some functionality from HTMLOption/OptGroupElement needed by RenderListBox/RenderMenuList
+        in two abstract base classes: OptionElement & OptionGroupElement living in dom/ - just like it
+        has been done before for FormControlElement and RenderTextControl.
+
+        This is needed to prepare the addtion of WMLOption/OptGroupElement.
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.scons:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+        * dom/OptionElement.cpp: Added.
+        (WebCore::optionElementForElement):
+        * dom/OptionElement.h: Added.
+        (WebCore::OptionElement::~OptionElement):
+        (WebCore::OptionElement::OptionElement):
+        * dom/OptionGroupElement.cpp: Added.
+        (WebCore::optionGroupElementForElement):
+        * dom/OptionGroupElement.h: Added.
+        (WebCore::OptionGroupElement::~OptionGroupElement):
+        (WebCore::OptionGroupElement::OptionGroupElement):
+        * html/HTMLOptGroupElement.h:
+        * html/HTMLOptionElement.cpp:
+        (WebCore::HTMLOptionElement::optionText):
+        * html/HTMLOptionElement.h:
+        (WebCore::HTMLOptionElement::selected):
+        * rendering/RenderListBox.cpp:
+        (WebCore::RenderListBox::updateFromElement):
+        (WebCore::RenderListBox::paintItemForeground):
+        (WebCore::RenderListBox::paintItemBackground):
+        * rendering/RenderMenuList.cpp:
+        (WebCore::RenderMenuList::updateOptionsWidth):
+        (WebCore::RenderMenuList::setTextFromOption):
+        (WebCore::RenderMenuList::itemText):
+        (WebCore::RenderMenuList::itemIsSelected):
+
+2009-01-20  Darin Adler  <darin@apple.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Bug 23448: memory leak in Mac version of preferredExtensionForImageSourceType
+        https://bugs.webkit.org/show_bug.cgi?id=23448
+
+        * platform/graphics/cg/ImageSourceCGMac.mm:
+        (WebCore::preferredExtensionForImageSourceType): Use RetainPtr to avoid the leak.
+
+2009-01-20  Darin Adler  <darin@apple.com>
+
+        Try to fix Wx build.
+
+        * platform/wx/PasteboardWx.cpp:
+        (WebCore::Pasteboard::writeSelection): Removed code that replaces backslash
+        with backslashAsCurrencySymbol. I'm pretty sure this is not needed when writing
+        to the clipboard. Other platforms don't do it. If it was needed, the new function
+        to use would be displayStringModifiedByEncoding.
+
+2009-01-19  Brent Fulgham  <bfulgham@gmail.com>
+
+        Reviewed by Mitz Pettel.
+
+        Fixes https://bugs.webkit.org/show_bug.cgi?id=23423.
+
+        The Windows Cairo post-build targets (Release/Debug) do not
+        copy all of the headers that the CG-based build does.
+
+        * WebCore.vcproj/WebCore.vcproj: Extend WebCore Cairo build targets
+          to copy the page/animation/*.h files into WebKitBuild so that
+          WebKit can find them.
+
+2009-01-20  Dmitry Titov  <dimich@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23413
+        Remove unused WebCore::setDeferringTimers()
+
+        * platform/Timer.cpp:
+        (WebCore::updateSharedTimer):
+        * platform/Timer.h:
+
+2009-01-20  David Hyatt  <hyatt@apple.com>
+
+        Tighten up the type of RenderObject owned by RenderLayer to be a RenderBox.  Rename m_object to
+        m_renderer to be consistent with the corresponding member function.
+
+        Reviewed by Jon Honeycutt
+
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::RenderLayer):
+        (WebCore::RenderLayer::updateLayerPositions):
+        (WebCore::RenderLayer::updateVisibilityStatus):
+        (WebCore::RenderLayer::updateLayerPosition):
+        (WebCore::RenderLayer::stackingContext):
+        (WebCore::RenderLayer::enclosingPositionedAncestor):
+        (WebCore::RenderLayer::enclosingTransformedAncestor):
+        (WebCore::RenderLayer::isTransparent):
+        (WebCore::RenderLayer::convertToLayerCoords):
+        (WebCore::RenderLayer::scrollByRecursively):
+        (WebCore::RenderLayer::scrollToOffset):
+        (WebCore::RenderLayer::scrollRectToVisible):
+        (WebCore::RenderLayer::resize):
+        (WebCore::RenderLayer::scrollbarCornerPresent):
+        (WebCore::RenderLayer::createScrollbar):
+        (WebCore::RenderLayer::setHasHorizontalScrollbar):
+        (WebCore::RenderLayer::setHasVerticalScrollbar):
+        (WebCore::RenderLayer::positionOverflowControls):
+        (WebCore::RenderLayer::computeScrollDimensions):
+        (WebCore::RenderLayer::updateOverflowStatus):
+        (WebCore::RenderLayer::updateScrollInfoAfterLayout):
+        (WebCore::RenderLayer::paintOverflowControls):
+        (WebCore::RenderLayer::paintScrollCorner):
+        (WebCore::RenderLayer::paintResizer):
+        (WebCore::RenderLayer::isPointInResizeControl):
+        (WebCore::RenderLayer::paintLayer):
+        (WebCore::RenderLayer::hitTestLayer):
+        (WebCore::RenderLayer::updateClipRects):
+        (WebCore::RenderLayer::calculateClipRects):
+        (WebCore::RenderLayer::calculateRects):
+        (WebCore::RenderLayer::clearClipRects):
+        (WebCore::RenderLayer::repaintIncludingDescendants):
+        (WebCore::RenderLayer::styleChanged):
+        (WebCore::RenderLayer::updateScrollCornerStyle):
+        (WebCore::RenderLayer::updateResizerStyle):
+        * rendering/RenderLayer.h:
+        (WebCore::RenderLayer::renderer):
+        (WebCore::RenderLayer::hasReflection):
+        (WebCore::RenderLayer::hasTransform):
+
+2009-01-20  David Hyatt  <hyatt@apple.com>
+
+        Fix Mac build bustage from my selection changes.  I forgot to implement the functions on RenderThemeMac
+        for returning the appropriate listbox selection colors.
+
+        Reviewed by Adele
+
+        * rendering/RenderThemeMac.mm:
+        (WebCore::RenderThemeMac::platformActiveListBoxSelectionForegroundColor):
+        (WebCore::RenderThemeMac::platformInactiveListBoxSelectionForegroundColor):
+        (WebCore::RenderThemeMac::platformInactiveListBoxSelectionBackgroundColor):
+
+2009-01-20  Dave Hyatt  <hyatt@apple.com>
+
+        Fix for focus rings on Windows.  Make sure that focus rings draw for all controls but buttons.
+
+        Fix list box selection colors on Windows.  Also add a cache for all of the selection colors (and not just the two
+        background selection colors).
+
+        Reviewed by Adam Roben
+
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::selectionForegroundColor):
+        * rendering/RenderTheme.cpp:
+        (WebCore::RenderTheme::activeSelectionBackgroundColor):
+        (WebCore::RenderTheme::inactiveSelectionBackgroundColor):
+        (WebCore::RenderTheme::activeSelectionForegroundColor):
+        (WebCore::RenderTheme::inactiveSelectionForegroundColor):
+        (WebCore::RenderTheme::activeListBoxSelectionBackgroundColor):
+        (WebCore::RenderTheme::inactiveListBoxSelectionBackgroundColor):
+        (WebCore::RenderTheme::activeListBoxSelectionForegroundColor):
+        (WebCore::RenderTheme::inactiveListBoxSelectionForegroundColor):
+        (WebCore::RenderTheme::platformActiveSelectionForegroundColor):
+        (WebCore::RenderTheme::platformInactiveSelectionBackgroundColor):
+        (WebCore::RenderTheme::platformInactiveSelectionForegroundColor):
+        (WebCore::RenderTheme::platformActiveListBoxSelectionBackgroundColor):
+        (WebCore::RenderTheme::platformActiveListBoxSelectionForegroundColor):
+        (WebCore::RenderTheme::platformInactiveListBoxSelectionBackgroundColor):
+        (WebCore::RenderTheme::platformInactiveListBoxSelectionForegroundColor):
+        (WebCore::RenderTheme::platformColorsDidChange):
+        * rendering/RenderTheme.h:
+        (WebCore::RenderTheme::supportsForegroundSelectionColors):
+        (WebCore::RenderTheme::supportsForegroundListBoxSelectionColors):
+        * rendering/RenderThemeMac.h:
+        (WebCore::RenderThemeMac::supportsForegroundSelectionColors):
+        * rendering/RenderThemeMac.mm:
+        (WebCore::RenderThemeMac::platformActiveListBoxSelectionBackgroundColor):
+        * rendering/RenderThemeWin.cpp:
+        (WebCore::RenderThemeWin::platformInactiveSelectionBackgroundColor):
+        (WebCore::RenderThemeWin::platformInactiveSelectionForegroundColor):
+        (WebCore::RenderThemeWin::supportsFocus):
+        (WebCore::RenderThemeWin::supportsFocusRing):
+        * rendering/RenderThemeWin.h:
+
+2009-01-20  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by George Staikos.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=23434
+
+        Add WML <input> element support - it required a lot of changes to the RenderText*/HTMLInput* code.
+        Now any language can provide <input>-style elements, without having to inherit from HTML* classes.
+
+        No WML specific features/attributes are handled so far. A follow-up patch will provide those bits.
+        Added very simple fast/wml/input.wml, just checking that input elements can be rendered properly now.
+        Detailed testcases will follow in conjunction with the WML specific attribute support.
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::adjustRenderStyle):
+        * dom/FormControlElement.cpp: Activate disabled code from previous checking.
+        (WebCore::formControlElementForElement):
+        * dom/InputElement.cpp: Ditto.
+        (WebCore::inputElementForElement):
+        * wml/WMLInputElement.cpp: Added.
+        (WebCore::WMLInputElement::WMLInputElement):
+        (WebCore::WMLInputElement::~WMLInputElement):
+        (WebCore::isInputFocusable):
+        (WebCore::WMLInputElement::isKeyboardFocusable):
+        (WebCore::WMLInputElement::isMouseFocusable):
+        (WebCore::WMLInputElement::dispatchFocusEvent):
+        (WebCore::WMLInputElement::dispatchBlurEvent):
+        (WebCore::WMLInputElement::updateFocusAppearance):
+        (WebCore::WMLInputElement::aboutToUnload):
+        (WebCore::WMLInputElement::size):
+        (WebCore::WMLInputElement::name):
+        (WebCore::WMLInputElement::value):
+        (WebCore::WMLInputElement::setValue):
+        (WebCore::WMLInputElement::setValueFromRenderer):
+        (WebCore::WMLInputElement::saveState):
+        (WebCore::WMLInputElement::restoreState):
+        (WebCore::WMLInputElement::select):
+        (WebCore::WMLInputElement::accessKeyAction):
+        (WebCore::WMLInputElement::parseMappedAttribute):
+        (WebCore::WMLInputElement::copyNonAttributeProperties):
+        (WebCore::WMLInputElement::createRenderer):
+        (WebCore::WMLInputElement::attach):
+        (WebCore::WMLInputElement::detach):
+        (WebCore::WMLInputElement::appendFormData):
+        (WebCore::WMLInputElement::reset):
+        (WebCore::WMLInputElement::defaultEventHandler):
+        (WebCore::WMLInputElement::cacheSelection):
+        (WebCore::WMLInputElement::constrainValue):
+        (WebCore::WMLInputElement::documentDidBecomeActive):
+        (WebCore::WMLInputElement::placeholderShouldBeVisible):
+        (WebCore::WMLInputElement::willMoveToNewOwnerDocument):
+        (WebCore::WMLInputElement::didMoveToNewOwnerDocument):
+        * wml/WMLInputElement.h: Added.
+        (WebCore::WMLInputElement::valueMatchesRenderer):
+        (WebCore::WMLInputElement::setValueMatchesRenderer):
+        (WebCore::WMLInputElement::shouldUseInputMethod):
+        (WebCore::WMLInputElement::isChecked):
+        (WebCore::WMLInputElement::isIndeterminate):
+        (WebCore::WMLInputElement::isTextControl):
+        (WebCore::WMLInputElement::isRadioButton):
+        (WebCore::WMLInputElement::isTextField):
+        (WebCore::WMLInputElement::isSearchField):
+        (WebCore::WMLInputElement::isInputTypeHidden):
+        (WebCore::WMLInputElement::isPasswordField):
+        (WebCore::WMLInputElement::searchEventsShouldBeDispatched):
+        (WebCore::WMLInputElement::placeholderValue):
+        * wml/WMLTagNames.in:
+
+2009-01-20  Darin Adler  <darin@apple.com>
+
+        Reviewed by John Sullivan.
+
+        Remove a little dead code left over after the fix for
+        https://bugs.webkit.org/show_bug.cgi?id=11395, which
+        moved pointer-events from SVG to be shared with HTML.
+
+        * css/SVGCSSParser.cpp:
+        (WebCore::CSSParser::parseSVGValue): Remove SVG's parsing of this
+        property since it's handled in the non-SVG function now so we'll
+        never get here.
+
+2009-01-20  Julien Chaffraix  <jchaffraix@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Bug 23438: Provide a default value to the .in file parser
+
+        Added the default value 1 as it simplifies some of 
+        the format by removing some "=1" that were awkward.
+
+        This was suggested by Darin Adler as par of a previous
+        review.
+
+        * bindings/scripts/InFilesParser.pm: When no value
+        was entered (the second part of the split is undef),
+        provide the default value.
+
+        * html/HTMLAttributeNames.in: Removed unnecessary "=1".
+        * html/HTMLTagNames.in: Ditto.
+        * svg/svgattrs.in: Ditto.
+        * svg/svgtags.in: Ditto.
+        * svg/xlinkattrs.in: Ditto.
+        * wml/WMLAttributeNames.in: Ditto.
+
+2009-01-20  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Darin Adler.
+
+        * bridge/c/c_class.cpp:
+        * bridge/c/c_class.h:
+        Get rid of CClass::name().
+        
+        * bridge/jni/jni_class.h:
+        Get rid of JavaClass::name().
+        
+        * bridge/objc/objc_class.h:
+        * bridge/objc/objc_class.mm:
+        Get rid of ObjcClass::name().
+        
+        * bridge/objc/objc_instance.h:
+        Get rid of supportsSetValueOfUndefinedField.
+        
+        * bridge/objc/objc_instance.mm:
+        (ObjcInstance::setValueOfUndefinedField):
+        Fold supportsSetValueOfUndefinedField into setValueOfUndefinedField.
+        
+        * bridge/runtime.cpp:
+        Get rid of getValueOfField and setValueOfField.
+        
+        * bridge/runtime.h:
+        (JSC::Bindings::Instance::setValueOfUndefinedField):
+        Have this return a bool and get rid of supportsSetValueOfUndefinedField
+        
+        * bridge/runtime_object.cpp:
+        (JSC::RuntimeObjectImp::fieldGetter):
+        Call Field::valueFromInstance on the field.
+        
+        (JSC::RuntimeObjectImp::put):
+        Call Field::setValueToInstance on the field.
+
+2009-01-20  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Not reviewed. Forgot to land build changes for non-mac platforms.
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.scons:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCoreSources.bkl:
+
+2009-01-20  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Adam Roben.
+
+        Fix last-minute regression, introduced by simplifying max length determination - by
+        clamping using min/max, negative maxLength values got broken.
+
+        * dom/InputElement.cpp:
+        (WebCore::InputElement::parseMaxLengthAttribute):
+
+2009-01-20  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Adam Roben.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=23433
+
+        Add InputElement abstraction, similar to the FormControlElement refactorization
+        done a month ago. The goal is to share as much code as possible between HTML/WMLInputElement.
+        In a previous patch the RenderTextControl class has been split-up in RenderTextControlSingle/MultiLine,
+        RenderTextControl itself only depends on FormControlElement, RenderTextControlSingleLine still
+        depends on HTMLInputElement directly -> change that and make it use the new InputElement abstraction.
+
+        A lot of code from HTMLInputElement now lives in InputElement, as static member functions - the
+        InputElement class itself is an abstract virtual class, just like ScriptElement. HTML/WMLInputElement
+        derive from InputElement, and hold a InputElementData member variable, that they pass to the
+        static functions in InputElement. The abstraction is equal to the one chosen for HTML/SVGScriptElement.
+
+        * WebCore.xcodeproj/project.pbxproj:
+        * dom/FormControlElement.cpp: Added.
+        (WebCore::formControlElementForElement):
+        * dom/FormControlElement.h:
+        * dom/InputElement.cpp: Added.
+        (WebCore::InputElement::dispatchFocusEvent):
+        (WebCore::InputElement::dispatchBlurEvent):
+        (WebCore::InputElement::updatePlaceholderVisibility):
+        (WebCore::InputElement::updateFocusAppearance):
+        (WebCore::InputElement::updateSelectionRange):
+        (WebCore::InputElement::aboutToUnload):
+        (WebCore::InputElement::setValueFromRenderer):
+        (WebCore::numCharactersInGraphemeClusters):
+        (WebCore::InputElement::constrainValue):
+        (WebCore::numGraphemeClusters):
+        (WebCore::InputElement::handleBeforeTextInsertedEvent):
+        (WebCore::InputElement::parseSizeAttribute):
+        (WebCore::InputElement::parseMaxLengthAttribute):
+        (WebCore::InputElement::updateValueIfNeeded):
+        (WebCore::InputElement::notifyFormStateChanged):
+        (WebCore::InputElementData::InputElementData):
+        (WebCore::InputElementData::~InputElementData):
+        (WebCore::InputElementData::name):
+        (WebCore::inputElementForElement):
+        * dom/InputElement.h: Added.
+        (WebCore::InputElement::~InputElement):
+        (WebCore::InputElement::InputElement):
+        (WebCore::InputElementData::inputElement):
+        (WebCore::InputElementData::element):
+        (WebCore::InputElementData::placeholderShouldBeVisible):
+        (WebCore::InputElementData::setPlaceholderShouldBeVisible):
+        (WebCore::InputElementData::setName):
+        (WebCore::InputElementData::value):
+        (WebCore::InputElementData::setValue):
+        (WebCore::InputElementData::size):
+        (WebCore::InputElementData::setSize):
+        (WebCore::InputElementData::maxLength):
+        (WebCore::InputElementData::setMaxLength):
+        (WebCore::InputElementData::cachedSelectionStart):
+        (WebCore::InputElementData::setCachedSelectionStart):
+        (WebCore::InputElementData::cachedSelectionEnd):
+        (WebCore::InputElementData::setCachedSelectionEnd):
+        * html/HTMLInputElement.cpp:
+        (WebCore::HTMLInputElement::HTMLInputElement):
+        (WebCore::HTMLInputElement::name):
+        (WebCore::HTMLInputElement::updateFocusAppearance): Moved to InputElement.
+        (WebCore::HTMLInputElement::aboutToUnload): Ditto.
+        (WebCore::HTMLInputElement::dispatchFocusEvent): Ditto.
+        (WebCore::HTMLInputElement::dispatchBlurEvent): Ditto.
+        (WebCore::HTMLInputElement::setSelectionRange): Moved to InputElement::updateSelectionRange, call it from here.
+        (WebCore::HTMLInputElement::parseMappedAttribute):
+        (WebCore::HTMLInputElement::size): Make virtual and override InputElements abstract version.
+        (WebCore::HTMLInputElement::copyNonAttributeProperties):
+        (WebCore::HTMLInputElement::value): Make virtual and override InputElements abstract version.
+        (WebCore::HTMLInputElement::setValue): Ditto.
+        (WebCore::HTMLInputElement::placeholderValue): Ditto.
+        (WebCore::HTMLInputElement::searchEventsShouldBeDispatched): Ditto.
+        (WebCore::HTMLInputElement::setValueFromRenderer): Ditto.
+        (WebCore::HTMLInputElement::setFileListFromRenderer): Use new code in InputElement::setValueFromRenderer
+        (WebCore::HTMLInputElement::defaultEventHandler):
+        (WebCore::HTMLInputElement::setDefaultName): Added as helper function for HTMLIsIndexElement.
+        (WebCore::HTMLInputElement::maxLength): Added accesor.
+        (WebCore::HTMLInputElement::constrainValue): Move functionality to InputElement::constrainValue.
+        (WebCore::HTMLInputElement::cacheSelection): Move functionality to InputElement::cacheSelection.
+        (WebCore::HTMLInputElement::selection):
+        (WebCore::HTMLInputElement::placeholderShouldBeVisible): Make virtual and override InputElements abstract version.
+        * html/HTMLInputElement.h:
+        (WebCore::HTMLInputElement::isTextField):
+        (WebCore::HTMLInputElement::isSearchField):
+        (WebCore::HTMLInputElement::isAutofilled):
+        * html/HTMLIsIndexElement.cpp:
+        (WebCore::HTMLIsIndexElement::HTMLIsIndexElement):
+        * rendering/RenderTextControl.cpp:
+        (WebCore::RenderTextControl::formControlElement):
+        * rendering/RenderTextControlSingleLine.cpp:
+        (WebCore::RenderTextControlSingleLine::placeholderShouldBeVisible):
+        (WebCore::RenderTextControlSingleLine::addSearchResult):
+        (WebCore::RenderTextControlSingleLine::stopSearchEventTimer):
+        (WebCore::RenderTextControlSingleLine::showPopup):
+        (WebCore::RenderTextControlSingleLine::hidePopup):
+        (WebCore::RenderTextControlSingleLine::subtreeHasChanged):
+        (WebCore::RenderTextControlSingleLine::capsLockStateMayHaveChanged):
+        (WebCore::RenderTextControlSingleLine::preferredContentWidth):
+        (WebCore::RenderTextControlSingleLine::createSubtreeIfNeeded):
+        (WebCore::RenderTextControlSingleLine::updateFromElement):
+        (WebCore::RenderTextControlSingleLine::cacheSelection):
+        (WebCore::RenderTextControlSingleLine::createInnerBlockStyle):
+        (WebCore::RenderTextControlSingleLine::createResultsButtonStyle):
+        (WebCore::RenderTextControlSingleLine::createCancelButtonStyle):
+        (WebCore::RenderTextControlSingleLine::updateCancelButtonVisibility):
+        (WebCore::RenderTextControlSingleLine::startSearchEventTimer):
+        (WebCore::RenderTextControlSingleLine::searchEventTimerFired):
+        (WebCore::RenderTextControlSingleLine::valueChanged):
+        (WebCore::RenderTextControlSingleLine::setTextFromItem):
+        (WebCore::RenderTextControlSingleLine::inputElement):
+        * rendering/RenderTextControlSingleLine.h:
+
+2009-01-20  Dirk Schulze  <krit@webkit.org>
+
+        Reviewed by Nikolas Zimmermann.
+
+        Make SVG pattern platform independent and remove platform code.
+
+        Make SVGPattern platform independent
+        https://bugs.webkit.org/show_bug.cgi?id=21205
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * platform/graphics/GraphicsContext.h:
+        * platform/graphics/cg/GraphicsContextCG.cpp:
+        (WebCore::GraphicsContext::applyStrokePattern):
+        (WebCore::GraphicsContext::applyFillPattern):
+        (WebCore::GraphicsContext::drawPath):
+        (WebCore::GraphicsContext::fillPath):
+        (WebCore::GraphicsContext::strokePath):
+        (WebCore::GraphicsContext::fillRect):
+        (WebCore::GraphicsContext::strokeRect):
+        * svg/graphics/SVGPaintServerPattern.cpp:
+        (WebCore::SVGPaintServerPattern::SVGPaintServerPattern):
+        (WebCore::SVGPaintServerPattern::~SVGPaintServerPattern):
+        (WebCore::SVGPaintServerPattern::setup):
+        (WebCore::SVGPaintServerPattern::renderPath):
+        (WebCore::SVGPaintServerPattern::teardown):
+        * svg/graphics/SVGPaintServerPattern.h:
+        * svg/graphics/cairo/SVGPaintServerPatternCairo.cpp: Removed.
+        * svg/graphics/cg/SVGPaintServerPatternCg.cpp: Removed.
+        * svg/graphics/qt/SVGPaintServerPatternQt.cpp: Removed.
+        * svg/graphics/skia/SVGPaintServerPatternSkia.cpp: Removed.
+
+2009-01-20  Darin Fisher  <darin@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23436
+        Upstream rendering/RenderThemeChromium*
+
+        * rendering/RenderThemeChromiumGtk.cpp: Added.
+        * rendering/RenderThemeChromiumGtk.h: Added.
+        * rendering/RenderThemeChromiumMac.h: Added.
+        * rendering/RenderThemeChromiumMac.mm: Added.
+        * rendering/RenderThemeChromiumWin.cpp: Added.
+        * rendering/RenderThemeChromiumWin.h: Added.
+
+2009-01-20  Darin Adler  <darin@apple.com>
+
+        Reviewed by Mark Rowe.
+
+        Bug 23352: Turn on more compiler warnings in the Mac build
+        https://bugs.webkit.org/show_bug.cgi?id=23352
+
+        First patch: Fix some simple cases of various warnings.
+
+        * platform/DeprecatedPtrListImpl.cpp:
+        (WebCore::DeprecatedPtrListImpl::insert): Use const_cast to change const-ness.
+        * platform/graphics/mac/SimpleFontDataMac.mm:
+        (WebCore::SimpleFontData::containsCharacters): Ditto.
+
+        * platform/text/PlatformString.h: Overload for short and unsigned short to avoid
+        ambiguity leading to warnings.
+        * platform/text/String.cpp:
+        (WebCore::String::number): Implemented overloads.
+
+        * platform/text/TextStream.cpp:
+        (WebCore::TextStream::operator<<): Overload for bool to avoid ambiguity leading
+        to warnings.
+        * platform/text/TextStream.h: Ditto.
+
+        * rendering/InlineFlowBox.h: Fix declaration that was specifying the wrong type.
+
+        * svg/graphics/filters/cg/WKLinearTransferFilter.m: Fix stray characters after
+        #endif that should be a comment instead.
+        * svg/graphics/filters/cg/WKSpecularLightingFilter.h: Ditto.
+
+        * xml/XPathPath.h: Remove unneeded redundant declaration.
+
+2009-01-20  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
         Build fix for WML enabled builds, not reviewed.
 
         Fix unused variable warning.

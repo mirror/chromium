@@ -18,26 +18,33 @@
  *
  */
 
-#ifndef FormControlElement_h
-#define FormControlElement_h
+#include "config.h"
+#include "FormControlElement.h"
+
+#include "Element.h"
+#include "HTMLFormControlElement.h"
+#include <wtf/Assertions.h>
+
+#if ENABLE(WML)
+#include "WMLInputElement.h"
+#include "WMLNames.h"
+#endif
 
 namespace WebCore {
 
-class Element;
+FormControlElement* formControlElementForElement(Element* element)
+{
+    if (element->isHTMLElement()) {
+        if (static_cast<HTMLElement*>(element)->isGenericFormElement())
+            return static_cast<HTMLFormControlElement*>(element);
+    }
 
-class FormControlElement {
-public:
-    virtual ~FormControlElement() { }
+#if ENABLE(WML)
+    if (element->isWMLElement() && element->hasTagName(WMLNames::inputTag))
+        return static_cast<WMLInputElement*>(element);
+#endif
 
-    virtual bool valueMatchesRenderer() const = 0;
-    virtual void setValueMatchesRenderer(bool value = true) = 0;
-
-protected:
-    FormControlElement() { }
-};
-
-FormControlElement* formControlElementForElement(Element*);
-
+    return 0;
 }
 
-#endif
+}

@@ -140,7 +140,7 @@ static inline UString substituteBackreferences(const UString& replacement, const
         if (i + 1 == replacement.size())
             break;
 
-        unsigned short ref = replacement[i + 1];
+        UChar ref = replacement[i + 1];
         if (ref == '$') {
             // "$$" -> "$"
             ++i;

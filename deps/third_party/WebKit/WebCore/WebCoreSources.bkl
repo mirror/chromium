@@ -412,6 +412,8 @@ This file contains the list of files needed to build WebCore.
         dom/EventTargetNode.cpp
         dom/ExceptionBase.cpp
         dom/ExceptionCode.cpp
+        dom/FormControlElement.cpp
+        dom/InputElement.cpp
         dom/KeyboardEvent.cpp
         dom/MappedAttribute.cpp
         dom/MessageChannel.cpp
@@ -428,6 +430,8 @@ This file contains the list of files needed to build WebCore.
         dom/NodeFilterCondition.cpp
         dom/NodeIterator.cpp
         dom/Notation.cpp
+        dom/OptionGroupElement.cpp
+        dom/OptionElement.cpp
         dom/OverflowEvent.cpp
         dom/Position.cpp
         dom/PositionIterator.cpp

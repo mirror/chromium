@@ -582,6 +582,8 @@ SOURCES += \
     dom/EventTargetNode.cpp \
     dom/ExceptionBase.cpp \
     dom/ExceptionCode.cpp \
+    dom/FormControlElement.cpp \
+    dom/InputElement.cpp \
     dom/KeyboardEvent.cpp \
     dom/MappedAttribute.cpp \
     dom/MessageChannel.cpp \
@@ -598,6 +600,8 @@ SOURCES += \
     dom/NodeFilter.cpp \
     dom/NodeIterator.cpp \
     dom/Notation.cpp \
+    dom/OptionGroupElement.cpp \
+    dom/OptionElement.cpp \
     dom/OverflowEvent.cpp \
     dom/Position.cpp \
     dom/PositionIterator.cpp \
@@ -1414,6 +1418,7 @@ contains(DEFINES, ENABLE_WML=1) {
         wml/WMLGoElement.cpp \
         wml/WMLImageElement.cpp \
         wml/WMLImageLoader.cpp \
+        wml/WMLInputElement.cpp \
         wml/WMLInsertedLegendElement.cpp \
         wml/WMLIntrinsicEvent.cpp \
         wml/WMLIntrinsicEventHandler.cpp \
@@ -1796,7 +1801,6 @@ contains(DEFINES, ENABLE_SVG=1) {
         rendering/SVGRootInlineBox.cpp
 
 SOURCES += \
-        svg/graphics/qt/SVGPaintServerPatternQt.cpp \
         svg/graphics/qt/SVGPaintServerQt.cpp \
         svg/graphics/qt/SVGResourceFilterQt.cpp \
         svg/graphics/qt/SVGResourceMaskerQt.cpp

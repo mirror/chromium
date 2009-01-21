@@ -1475,6 +1475,7 @@ void CSSStyleSelector::adjustRenderStyle(RenderStyle* style, Element *e)
               e->hasTagName(selectTag) || e->hasTagName(textareaTag)
 #if ENABLE(WML)
               || e->hasTagName(WMLNames::insertedLegendTag)
+              || e->hasTagName(WMLNames::inputTag)
 #endif
        )) {
         if (style->width().isAuto())

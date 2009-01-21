@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
+ * Copyright (C) 2009 Torch Mobile Inc. All rights reserved. (http://www.torchmobile.com/)
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -18,25 +18,26 @@
  *
  */
 
-#ifndef FormControlElement_h
-#define FormControlElement_h
+#ifndef OptionElement_h
+#define OptionElement_h
 
 namespace WebCore {
 
 class Element;
+class String;
 
-class FormControlElement {
+class OptionElement {
 public:
-    virtual ~FormControlElement() { }
+    virtual ~OptionElement() { }
 
-    virtual bool valueMatchesRenderer() const = 0;
-    virtual void setValueMatchesRenderer(bool value = true) = 0;
+    virtual bool selected() const = 0;
+    virtual String optionText() const = 0;
 
 protected:
-    FormControlElement() { }
+    OptionElement() { }
 };
 
-FormControlElement* formControlElementForElement(Element*);
+OptionElement* optionElementForElement(Element*);
 
 }
 

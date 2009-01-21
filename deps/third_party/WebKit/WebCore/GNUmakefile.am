@@ -596,7 +596,10 @@ webcore_sources += \
 	WebCore/dom/ExceptionBase.h \
 	WebCore/dom/ExceptionCode.cpp \
 	WebCore/dom/ExceptionCode.h \
+	WebCore/dom/FormControlElement.cpp \
 	WebCore/dom/FormControlElement.h \
+	WebCore/dom/InputElement.cpp \
+	WebCore/dom/InputElement.h \
 	WebCore/dom/KeyboardEvent.cpp \
 	WebCore/dom/KeyboardEvent.h \
 	WebCore/dom/MappedAttribute.cpp \
@@ -635,6 +638,10 @@ webcore_sources += \
 	WebCore/dom/NodeWithIndex.h \
 	WebCore/dom/Notation.cpp \
 	WebCore/dom/Notation.h \
+	WebCore/dom/OptionGroupElement.cpp \
+	WebCore/dom/OptionGroupElement.h \
+	WebCore/dom/OptionElement.cpp \
+	WebCore/dom/OptionElement.h \
 	WebCore/dom/OverflowEvent.cpp \
 	WebCore/dom/OverflowEvent.h \
 	WebCore/dom/Position.cpp \
@@ -2210,6 +2217,7 @@ webcore_sources += \
 	WebCore/wml/WMLGoElement.cpp \
 	WebCore/wml/WMLImageElement.cpp \
 	WebCore/wml/WMLImageLoader.cpp \
+	WebCore/wml/WMLInputElement.cpp \
 	WebCore/wml/WMLInsertedLegendElement.cpp \
 	WebCore/wml/WMLIntrinsicEvent.cpp \
 	WebCore/wml/WMLIntrinsicEventHandler.cpp \
@@ -2836,7 +2844,6 @@ webcore_sources += \
 
 webcoregtk_sources += \
 	WebCore/svg/graphics/cairo/SVGPaintServerCairo.cpp \
-	WebCore/svg/graphics/cairo/SVGPaintServerPatternCairo.cpp \
 	WebCore/svg/graphics/cairo/SVGResourceFilterCairo.cpp \
 	WebCore/svg/graphics/cairo/SVGResourceMaskerCairo.cpp
 
