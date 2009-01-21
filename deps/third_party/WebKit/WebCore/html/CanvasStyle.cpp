@@ -146,8 +146,8 @@ void CanvasStyle::applyStrokeColor(GraphicsContext* context)
             clr.setCmykF(m_cyan, m_magenta, m_yellow, m_black, m_alpha);
             currentPen.setColor(clr);
             context->platformContext()->setPen(currentPen);
-#elif PLATFORM(CAIRO)
-            notImplemented();
+#else
+            context->setStrokeColor(cmykToRGB());
 #endif
             break;
         }
@@ -207,6 +207,8 @@ void CanvasStyle::applyFillColor(GraphicsContext* context)
             clr.setCmykF(m_cyan, m_magenta, m_yellow, m_black, m_alpha);
             currentBrush.setColor(clr);
             context->platformContext()->setBrush(currentBrush);
+#else
+            context->setFillColor(cmykToRGB());
 #endif
             break;
         }
@@ -217,6 +219,15 @@ void CanvasStyle::applyFillColor(GraphicsContext* context)
             context->setFillPattern(canvasPattern()->pattern());
             break;
     }
+}
+
+Color CanvasStyle::cmykToRGB() const
+{
+    float colors = 1 - m_black;
+    int r = static_cast<int>(255 * (colors * (1 - m_cyan)));
+    int g = static_cast<int>(255 * (colors * (1 - m_magenta)));
+    int b = static_cast<int>(255 * (colors * (1 - m_yellow)));
+    return Color(r, g, b, static_cast<int>(m_alpha * 255));
 }
 
 }
