@@ -64,7 +64,7 @@ void WMLGoElement::parseMappedAttribute(MappedAttribute* attr)
         WMLTaskElement::parseMappedAttribute(attr);
 }
 
-void WMLGoElement::executeTask(Event*)
+void WMLGoElement::executeTask(Event* event)
 {
     Document* doc = document();
     WMLPageState* pageState = wmlPageStateForDocument(doc);
@@ -212,4 +212,3 @@ PassRefPtr<FormData> WMLGoElement::createFormData(const CString& boundary)
 }
 
 #endif
-
