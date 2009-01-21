@@ -27,7 +27,6 @@
 #define GraphicsContextPrivate_h
 
 #include "TransformationMatrix.h"
-#include "Font.h"
 #include "Gradient.h"
 #include "GraphicsContext.h"
 #include "Pattern.h"
@@ -59,13 +58,13 @@ namespace WebCore {
             , fillRule(RULE_NONZERO)
             , fillColorSpace(SolidColorSpace)
             , fillColor(Color::black)
+            , shouldAntialias(true)
             , paintingDisabled(false)
             , shadowBlur(0)
             , shadowsIgnoreTransforms(false)
         {
         }
 
-        Font font;
         int textDrawingMode;
         
         StrokeStyle strokeStyle;
@@ -86,6 +85,8 @@ namespace WebCore {
         Color fillColor;
         RefPtr<Gradient> fillGradient;
         RefPtr<Pattern> fillPattern;
+
+        bool shouldAntialias;
 
         bool paintingDisabled;
         

@@ -30,6 +30,7 @@
 #include "Document.h"
 #include "RenderCounter.h"
 #include "RenderImageGeneratedContent.h"
+#include "RenderInline.h"
 #include "RenderLayer.h"
 #include "RenderListItem.h"
 #include "RenderTable.h"
@@ -257,6 +258,9 @@ static RenderObject* findBeforeAfterParent(RenderObject* object)
 
 void RenderContainer::updateBeforeAfterContentForContainer(RenderStyle::PseudoId type, RenderContainer* styledObject)
 {
+    // Double check that the document did in fact use generated content rules.  Otherwise we should not have been called.
+    ASSERT(document()->usesBeforeAfterRules());
+
     // In CSS2, before/after pseudo-content cannot nest.  Check this first.
     if (style()->styleType() == RenderStyle::BEFORE || style()->styleType() == RenderStyle::AFTER)
         return;
@@ -277,7 +281,7 @@ void RenderContainer::updateBeforeAfterContentForContainer(RenderStyle::PseudoId
 
     // Similarly, if we're the beginning of a <q>, and there's an inline continuation for our object,
     // then we don't generate the :after content.
-    if (newContentWanted && type == RenderStyle::AFTER && isRenderInline() && continuation())
+    if (newContentWanted && type == RenderStyle::AFTER && isRenderInline() && static_cast<RenderInline*>(this)->continuation())
         newContentWanted = false;
     
     // If we don't want generated content any longer, or if we have generated content, but it's no longer

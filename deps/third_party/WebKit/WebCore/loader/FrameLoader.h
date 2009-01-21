@@ -276,7 +276,7 @@ namespace WebCore {
         
         static void addHTTPOriginIfNeeded(ResourceRequest&, String origin);
 
-        FrameLoaderClient* client() const;
+        FrameLoaderClient* client() const { return m_client; }
 
         void setDefersLoading(bool);
 
@@ -459,6 +459,12 @@ namespace WebCore {
     private:
         PassRefPtr<HistoryItem> createHistoryItem(bool useOriginal);
         PassRefPtr<HistoryItem> createHistoryItemTree(Frame* targetFrame, bool clipAtTarget);
+
+        bool canCachePageContainingThisFrame();
+#ifndef NDEBUG
+        void logCanCachePageDecision();
+        bool logCanCacheFrameDecision();
+#endif
 
         void addBackForwardItemClippedAtTarget(bool doClip);
         void restoreScrollPositionAndViewState();

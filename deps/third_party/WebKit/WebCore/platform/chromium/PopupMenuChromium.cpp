@@ -788,9 +788,6 @@ void PopupListBox::paintRow(GraphicsContext* gc, const IntRect& rect, int rowInd
     
     gc->setFillColor(textColor);
 
-    Font itemFont = getRowFont(rowIndex);
-    gc->setFont(itemFont);
-
     // Bunch of shit to deal with RTL text...
     String itemText = m_popupClient->itemText(rowIndex);
     unsigned length = itemText.length();
@@ -803,9 +800,10 @@ void PopupListBox::paintRow(GraphicsContext* gc, const IntRect& rect, int rowInd
 
     // Draw the item text
     if (style.isVisible()) {
+        Font itemFont = getRowFont(rowIndex);
         int textX = max(0, m_popupClient->clientPaddingLeft() - m_popupClient->clientInsetLeft());
         int textY = rowRect.y() + itemFont.ascent() + (rowRect.height() - itemFont.height()) / 2;
-        gc->drawBidiText(textRun, IntPoint(textX, textY));
+        gc->drawBidiText(itemFont, textRun, IntPoint(textX, textY));
     }
 }
 

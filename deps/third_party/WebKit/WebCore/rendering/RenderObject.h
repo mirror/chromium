@@ -301,7 +301,7 @@ public:
     virtual bool childrenInline() const { return false; }
     virtual void setChildrenInline(bool) { }
 
-    virtual RenderFlow* continuation() const;
+    virtual RenderFlow* virtualContinuation() const { return 0; }
 
 #if ENABLE(SVG)
     virtual bool isSVGRoot() const { return false; }
@@ -874,9 +874,6 @@ public:
     virtual bool isFlexibleBox() const { return false; }
     virtual bool isFlexingChildren() const { return false; }
     virtual bool isStretchingChildren() const { return false; }
-
-    // Convenience, to avoid repeating the code to dig down to get this.
-    UChar backslashAsCurrencySymbol() const;
 
     virtual int caretMinOffset() const;
     virtual int caretMaxOffset() const;

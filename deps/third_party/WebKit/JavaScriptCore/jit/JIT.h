@@ -27,6 +27,7 @@
 #define JIT_h
 
 #include <wtf/Platform.h>
+#include <bytecode/SamplingTool.h>
 
 #if ENABLE(JIT)
 
@@ -40,7 +41,12 @@
 #include <wtf/AlwaysInline.h>
 #include <wtf/Vector.h>
 
+#if PLATFORM(X86_64)
+#define STUB_ARGS_offset 0x10
+#else
 #define STUB_ARGS_offset 0x0C
+#endif
+
 #define STUB_ARGS_code (STUB_ARGS_offset)
 #define STUB_ARGS_registerFile (STUB_ARGS_offset + 1)
 #define STUB_ARGS_callFrame (STUB_ARGS_offset + 2)
@@ -215,6 +221,8 @@ namespace JSC {
 #if PLATFORM(X86_64)
         static const RegisterID timeoutCheckRegister = X86::r12;
         static const RegisterID callFrameRegister = X86::r13;
+        static const RegisterID tagTypeNumberRegister = X86::r14;
+        static const RegisterID tagMaskRegister = X86::r15;
 #else
         static const RegisterID timeoutCheckRegister = X86::esi;
         static const RegisterID callFrameRegister = X86::edi;
@@ -227,7 +235,7 @@ namespace JSC {
 
 #if USE(JIT_STUB_ARGUMENT_REGISTER)
 #if PLATFORM(X86_64)
-        static const int ctiArgumentInitSize = 3;
+        static const int ctiArgumentInitSize = 6;
 #else
         static const int ctiArgumentInitSize = 2;
 #endif
@@ -247,7 +255,7 @@ namespace JSC {
         static const int patchOffsetGetByIdPropertyMapOffset = 31;
         static const int patchOffsetGetByIdPutResult = 31;
 #if ENABLE(OPCODE_SAMPLING)
-        static const int patchOffsetGetByIdSlowCaseCall = 40 + ctiArgumentInitSize;
+        static const int patchOffsetGetByIdSlowCaseCall = 53 + ctiArgumentInitSize;
 #else
         static const int patchOffsetGetByIdSlowCaseCall = 30 + ctiArgumentInitSize;
 #endif
@@ -412,7 +420,7 @@ namespace JSC {
         void compileFastArithSlow_op_pre_dec(unsigned srcDst, Vector<SlowCaseEntry>::iterator&);
         void compileFastArithSlow_op_post_inc(unsigned result, unsigned srcDst, Vector<SlowCaseEntry>::iterator&);
         void compileFastArithSlow_op_post_dec(unsigned result, unsigned srcDst, Vector<SlowCaseEntry>::iterator&);
-#if ENABLE(JIT_OPTIMIZE_ARITHMETIC) && !USE(ALTERNATE_JSIMMEDIATE)
+#if ENABLE(JIT_OPTIMIZE_ARITHMETIC)
         void compileBinaryArithOp(OpcodeID, unsigned dst, unsigned src1, unsigned src2, OperandTypes opi);
         void compileBinaryArithOpSlowCase(OpcodeID, Vector<SlowCaseEntry>::iterator&, unsigned dst, unsigned src1, unsigned src2, OperandTypes opi);
 #endif
@@ -504,6 +512,34 @@ namespace JSC {
 #endif
 
         void killLastResultRegister();
+
+#if ENABLE(CODEBLOCK_SAMPLING)
+        void sampleCodeBlock(CodeBlock* codeBlock)
+        {
+#if PLATFORM(X86_64)
+            move(ImmPtr(m_interpreter->sampler()->codeBlockSlot()), X86::ecx);
+            storePtr(ImmPtr(codeBlock), X86::ecx);
+#else
+            storePtr(ImmPtr(codeBlock), m_interpreter->sampler()->codeBlockSlot());
+#endif
+        }
+#else
+        void sampleCodeBlock(CodeBlock*) {}
+#endif
+
+#if ENABLE(OPCODE_SAMPLING)
+        void sampleInstruction(Instruction* instruction, bool inHostFunction=false)
+        {
+#if PLATFORM(X86_64)
+            move(ImmPtr(m_interpreter->sampler()->sampleSlot()), X86::ecx);
+            storePtr(ImmPtr(m_interpreter->sampler()->encodeSample(instruction, inHostFunction)), X86::ecx);
+#else
+            storePtr(ImmPtr(m_interpreter->sampler()->encodeSample(instruction, inHostFunction)), m_interpreter->sampler()->sampleSlot());
+#endif
+        }
+#else
+        void sampleInstruction(Instruction*, bool) {}
+#endif
 
         Interpreter* m_interpreter;
         JSGlobalData* m_globalData;

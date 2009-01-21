@@ -465,6 +465,16 @@ public:
 #endif
     }
 
+    void addPtr(ImmPtr imm, RegisterID dest)
+    {
+#if PLATFORM(X86_64)
+        move(imm, scratchRegister);
+        m_assembler.addq_rr(scratchRegister, dest);
+#else
+        add32(Imm32(imm), dest);
+#endif
+    }
+
     void addPtr(Imm32 imm, RegisterID src, RegisterID dest)
     {
         m_assembler.leal_mr(imm.m_value, src, dest);
@@ -689,6 +699,15 @@ public:
         m_assembler.sarl_i8r(imm.m_value, dest);
     }
 
+    void subPtr(RegisterID src, RegisterID dest)
+    {
+#if PLATFORM(X86_64)
+        m_assembler.subq_rr(src, dest);
+#else
+        sub32(src, dest);
+#endif
+    }
+    
     void subPtr(Imm32 imm, RegisterID dest)
     {
 #if PLATFORM(X86_64)
@@ -886,6 +905,13 @@ public:
         m_assembler.movl_i32m(imm.asIntptr(), address.offset, address.base);
 #endif
     }
+
+#if !PLATFORM(X86_64)
+    void storePtr(ImmPtr imm, void* address)
+    {
+        store32(Imm32(imm), address);
+    }
+#endif
 
     DataLabelPtr storePtrWithPatch(Address address)
     {
@@ -1572,6 +1598,16 @@ public:
         return Jump(m_assembler.jne());
     }
     
+    Jump jnzPtr(RegisterID reg, RegisterID mask)
+    {
+#if PLATFORM(X86_64)
+        m_assembler.testq_rr(reg, mask);
+        return Jump(m_assembler.jne());
+#else
+        return jnz32(reg, mask);
+#endif
+    }
+
     Jump jnzPtr(RegisterID reg, Imm32 mask = Imm32(-1))
     {
 #if PLATFORM(X86_64)
@@ -1603,6 +1639,12 @@ public:
 #endif
     }
 
+    Jump jnz32(RegisterID reg, RegisterID mask)
+    {
+        m_assembler.testl_rr(reg, mask);
+        return Jump(m_assembler.jne());
+    }
+
     Jump jnz32(RegisterID reg, Imm32 mask = Imm32(-1))
     {
         testImm32(reg, mask);
@@ -1613,6 +1655,16 @@ public:
     {
         testImm32(address, mask);
         return Jump(m_assembler.jne());
+    }
+
+    Jump jzPtr(RegisterID reg, RegisterID mask)
+    {
+#if PLATFORM(X86_64)
+        m_assembler.testq_rr(reg, mask);
+        return Jump(m_assembler.je());
+#else
+        return jz32(reg, mask);
+#endif
     }
 
     Jump jzPtr(RegisterID reg, Imm32 mask = Imm32(-1))
@@ -1654,6 +1706,12 @@ public:
 #else
         return jz32(address, mask);
 #endif
+    }
+
+    Jump jz32(RegisterID reg, RegisterID mask)
+    {
+        m_assembler.testl_rr(reg, mask);
+        return Jump(m_assembler.je());
     }
 
     Jump jz32(RegisterID reg, Imm32 mask = Imm32(-1))

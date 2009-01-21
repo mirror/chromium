@@ -46,6 +46,7 @@ JSCBISON += \
 
 SOURCES += \
     wtf/Assertions.cpp \
+    wtf/ByteArray.cpp \
     wtf/HashTable.cpp \
     wtf/MainThread.cpp \
     wtf/RandomNumber.cpp \
@@ -105,7 +106,6 @@ SOURCES += \
     runtime/BooleanConstructor.cpp \
     runtime/BooleanObject.cpp \
     runtime/BooleanPrototype.cpp \
-    runtime/ByteArray.cpp \
     runtime/CallData.cpp \
     runtime/Collector.cpp \
     runtime/CommonIdentifiers.cpp \

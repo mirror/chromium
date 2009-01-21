@@ -2384,8 +2384,14 @@ bool CSSStyleSelector::SelectorChecker::checkOneSelector(CSSSelector* sel, Eleme
             case CSSSelector::PseudoMediaControlsPlayButton:
                 dynamicPseudo = RenderStyle::MEDIA_CONTROLS_PLAY_BUTTON;
                 return true;
-            case CSSSelector::PseudoMediaControlsTimeDisplay:
-                dynamicPseudo = RenderStyle::MEDIA_CONTROLS_TIME_DISPLAY;
+            case CSSSelector::PseudoMediaControlsTimelineContainer:
+                dynamicPseudo = RenderStyle::MEDIA_CONTROLS_TIMELINE_CONTAINER;
+                 return true;
+            case CSSSelector::PseudoMediaControlsCurrentTimeDisplay:
+                dynamicPseudo = RenderStyle::MEDIA_CONTROLS_CURRENT_TIME_DISPLAY;
+                return true;
+            case CSSSelector::PseudoMediaControlsTimeRemainingDisplay:
+                dynamicPseudo = RenderStyle::MEDIA_CONTROLS_TIME_REMAINING_DISPLAY;
                 return true;
             case CSSSelector::PseudoMediaControlsTimeline:
                 dynamicPseudo = RenderStyle::MEDIA_CONTROLS_TIMELINE;
@@ -3245,7 +3251,7 @@ void CSSStyleSelector::applyProperty(int id, CSSValue *value)
             }
         } else if (primitiveValue) {
             int type = primitiveValue->primitiveType();
-            if (type == CSSPrimitiveValue::CSS_IDENT)
+            if (type == CSSPrimitiveValue::CSS_IDENT && m_style->cursor() != ECursor(*primitiveValue))
                 m_style->setCursor(*primitiveValue);
         }
         return;

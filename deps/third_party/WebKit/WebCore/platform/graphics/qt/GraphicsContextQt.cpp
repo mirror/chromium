@@ -1057,13 +1057,6 @@ void GraphicsContext::setURLForRect(const KURL& link, const IntRect& destRect)
     notImplemented();
 }
 
-void GraphicsContext::setPlatformFont(const Font& aFont)
-{
-    if (paintingDisabled())
-        return;
-    m_data->p()->setFont(aFont.font());
-}
-
 void GraphicsContext::setPlatformStrokeColor(const Color& color)
 {
     if (paintingDisabled())
@@ -1101,7 +1094,7 @@ void GraphicsContext::setPlatformFillColor(const Color& color)
     m_data->p()->setBrush(QBrush(color));
 }
 
-void GraphicsContext::setUseAntialiasing(bool enable)
+void GraphicsContext::setPlatformShouldAntialias(bool enable)
 {
     if (paintingDisabled())
         return;

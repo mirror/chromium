@@ -44,10 +44,10 @@ using namespace std;
 
 namespace JSC {
 
-COMPILE_ASSERT(STUB_ARGS_code == 0xC, STUB_ARGS_code_is_C);
-COMPILE_ASSERT(STUB_ARGS_callFrame == 0xE, STUB_ARGS_callFrame_is_E);
-
 #if COMPILER(GCC) && PLATFORM(X86)
+
+COMPILE_ASSERT(STUB_ARGS_code == 0x0C, STUB_ARGS_code_is_0x0C);
+COMPILE_ASSERT(STUB_ARGS_callFrame == 0x0E, STUB_ARGS_callFrame_is_0x0E);
 
 #if PLATFORM(DARWIN)
 #define SYMBOL_STRING(name) "_" #name
@@ -98,6 +98,9 @@ SYMBOL_STRING(ctiVMThrowTrampoline) ":" "\n"
     
 #elif COMPILER(GCC) && PLATFORM(X86_64)
 
+COMPILE_ASSERT(STUB_ARGS_code == 0x10, STUB_ARGS_code_is_0x10);
+COMPILE_ASSERT(STUB_ARGS_callFrame == 0x12, STUB_ARGS_callFrame_is_0x12);
+
 #if PLATFORM(DARWIN)
 #define SYMBOL_STRING(name) "_" #name
 #else
@@ -111,13 +114,19 @@ SYMBOL_STRING(ctiTrampoline) ":" "\n"
     "movq %rsp, %rbp" "\n"
     "pushq %r12" "\n"
     "pushq %r13" "\n"
+    "pushq %r14" "\n"
+    "pushq %r15" "\n"
     "pushq %rbx" "\n"
-    "subq $0x38, %rsp" "\n"
+    "subq $0x48, %rsp" "\n"
     "movq $512, %r12" "\n"
-    "movq 0x70(%rsp), %r13" "\n" // Ox70 = 0x0E * 8, 0x0E = STUB_ARGS_callFrame (see assertion above)
-    "call *0x60(%rsp)" "\n" // Ox60 = 0x0C * 8, 0x0C = STUB_ARGS_code (see assertion above)
-    "addq $0x38, %rsp" "\n"
+    "movq $0xFFFF000000000000, %r14" "\n"
+    "movq $0xFFFF000000000002, %r15" "\n"
+    "movq 0x90(%rsp), %r13" "\n" // Ox90 = 0x12 * 8, 0x12 = STUB_ARGS_callFrame (see assertion above)
+    "call *0x80(%rsp)" "\n" // Ox80 = 0x10 * 8, 0x10 = STUB_ARGS_code (see assertion above)
+    "addq $0x48, %rsp" "\n"
     "popq %rbx" "\n"
+    "popq %r15" "\n"
+    "popq %r14" "\n"
     "popq %r13" "\n"
     "popq %r12" "\n"
     "popq %rbp" "\n"
@@ -133,8 +142,10 @@ SYMBOL_STRING(ctiVMThrowTrampoline) ":" "\n"
 #else // JIT_STUB_ARGUMENT_VA_LIST or JIT_STUB_ARGUMENT_STACK
 #error "JIT_STUB_ARGUMENT configuration not supported."
 #endif
-    "addq $0x38, %rsp" "\n"
+    "addq $0x48, %rsp" "\n"
     "popq %rbx" "\n"
+    "popq %r15" "\n"
+    "popq %r14" "\n"
     "popq %r13" "\n"
     "popq %r12" "\n"
     "popq %rbp" "\n"
@@ -314,7 +325,7 @@ void JIT::privateCompileMainPass()
 
 #if ENABLE(OPCODE_SAMPLING)
         if (m_bytecodeIndex > 0) // Avoid the overhead of sampling op_enter twice.
-            store32(m_interpreter->sampler()->encodeSample(currentInstruction), m_interpreter->sampler()->sampleSlot());
+            sampleInstruction(currentInstruction);
 #endif
 
         m_labels[m_bytecodeIndex] = label();
@@ -934,8 +945,10 @@ void JIT::privateCompileMainPass()
             emitPutJITStubArgFromVirtualRegister(currentInstruction[1].u.operand, 1, X86::ecx);
             emitCTICall(Interpreter::cti_op_throw);
 #if PLATFORM(X86_64)
-            addPtr(Imm32(0x38), X86::esp);
+            addPtr(Imm32(0x48), X86::esp);
             pop(X86::ebx);
+            pop(X86::r15);
+            pop(X86::r14);
             pop(X86::r13);
             pop(X86::r12);
             pop(X86::ebp);
@@ -1608,11 +1621,9 @@ void JIT::privateCompileSlowCases()
 
 void JIT::privateCompile()
 {
-#if ENABLE(CODEBLOCK_SAMPLING)
-        storePtr(ImmPtr(m_codeBlock), m_interpreter->sampler()->codeBlockSlot());
-#endif
+    sampleCodeBlock(m_codeBlock);
 #if ENABLE(OPCODE_SAMPLING)
-        store32(Imm32(m_interpreter->sampler()->encodeSample(m_codeBlock->instructions().begin())), m_interpreter->sampler()->sampleSlot());
+    sampleInstruction(m_codeBlock->instructions().begin());
 #endif
 
     // Could use a pop_m, but would need to offset the following instruction if so.

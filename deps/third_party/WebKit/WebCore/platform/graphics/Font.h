@@ -27,7 +27,9 @@
 
 #include "TextRun.h"
 #include "FontDescription.h"
+#include "SimpleFontData.h"
 #include <wtf/HashMap.h>
+#include <wtf/MathExtras.h>
 
 #if PLATFORM(QT)
 #include <QFont>
@@ -45,7 +47,6 @@ class GlyphBuffer;
 class GlyphPageTreeNode;
 class GraphicsContext;
 class IntPoint;
-class SimpleFontData;
 class SVGFontElement;
 
 struct GlyphData;
@@ -77,7 +78,7 @@ public:
 
     void drawText(GraphicsContext*, const TextRun&, const FloatPoint&, int from = 0, int to = -1) const;
 
-    int width(const TextRun&) const;
+    int width(const TextRun& run) const { return lroundf(floatWidth(run)); }
     float floatWidth(const TextRun&) const;
     float floatWidth(const TextRun& run, int extraCharsAvailable, int& charsConsumed, String& glyphName) const;
 
@@ -104,14 +105,14 @@ public:
     bool isPlatformFont() const { return m_isPlatformFont; }
 
     // Metrics that we query the FontFallbackList for.
-    int ascent() const;
-    int descent() const;
+    int ascent() const { return primaryFont()->ascent(); }
+    int descent() const { return primaryFont()->descent(); }
     int height() const { return ascent() + descent(); }
-    int lineSpacing() const;
-    int lineGap() const;
-    float xHeight() const;
-    unsigned unitsPerEm() const;
-    int spaceWidth() const;
+    int lineSpacing() const { return primaryFont()->lineSpacing(); }
+    int lineGap() const { return primaryFont()->lineGap(); }
+    float xHeight() const { return primaryFont()->xHeight(); }
+    unsigned unitsPerEm() const { return primaryFont()->unitsPerEm(); }
+    int spaceWidth() const { return (int)ceilf(primaryFont()->m_adjustedSpaceWidth + m_letterSpacing); }
     int tabWidth() const { return 8 * spaceWidth(); }
 
     const SimpleFontData* primaryFont() const {

@@ -49,7 +49,6 @@ sources['runtime'] = [
     'runtime/BooleanConstructor.cpp',
     'runtime/BooleanObject.cpp',
     'runtime/BooleanPrototype.cpp',
-    'runtime/ByteArray.cpp',
     'runtime/CallData.cpp',
     'runtime/Collector.cpp',
     'runtime/Completion.cpp',
@@ -142,6 +141,7 @@ sources['wrec'] = [
 ]
 sources['wtf'] = [
     'wtf/Assertions.cpp',
+    'wtf/ByteArray.cpp',
     'wtf/CurrentTime.cpp',
     'wtf/FastMalloc.cpp',
     'wtf/HashTable.cpp',

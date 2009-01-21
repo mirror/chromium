@@ -78,6 +78,7 @@
 #include "HitTestRequest.h"
 #include "HitTestResult.h"
 #include "ImageLoader.h"
+#include "InspectorController.h"
 #include "KeyboardEvent.h"
 #include "Logging.h"
 #include "MessageEvent.h"
@@ -358,6 +359,7 @@ Document::Document(Frame* frame, bool isXHTML)
     m_usesSiblingRules = false;
     m_usesFirstLineRules = false;
     m_usesFirstLetterRules = false;
+    m_usesBeforeAfterRules = false;
     m_gotoAnchorNeededAfterStylesheetsLoad = false;
  
     m_styleSelector = 0;
@@ -525,16 +527,13 @@ void Document::childrenChanged(bool changedByParser, Node* beforeChange, Node* a
     m_documentElement = 0;
 }
 
-Element* Document::documentElement() const
+void Document::cacheDocumentElement() const
 {
-    if (!m_documentElement) {
-        Node* n = firstChild();
-        while (n && !n->isElementNode())
-            n = n->nextSibling();
-        m_documentElement = static_cast<Element*>(n);
-    }
-
-    return m_documentElement.get();
+    ASSERT(!m_documentElement);
+    Node* n = firstChild();
+    while (n && !n->isElementNode())
+        n = n->nextSibling();
+    m_documentElement = static_cast<Element*>(n);
 }
 
 PassRefPtr<Element> Document::createElement(const AtomicString& name, ExceptionCode& ec)
@@ -3256,13 +3255,6 @@ void Document::setDecoder(PassRefPtr<TextResourceDecoder> decoder)
     m_decoder = decoder;
 }
 
-UChar Document::backslashAsCurrencySymbol() const
-{
-    if (!m_decoder)
-        return '\\';
-    return m_decoder->encoding().backslashAsCurrencySymbol();
-}
-
 KURL Document::completeURL(const String& url) const
 {
     // Always return a null URL when passed a null string.
@@ -3273,11 +3265,6 @@ KURL Document::completeURL(const String& url) const
     if (!m_decoder)
         return KURL(m_baseURL, url);
     return KURL(m_baseURL, url, m_decoder->encoding());
-}
-
-bool Document::inPageCache()
-{
-    return m_inPageCache;
 }
 
 void Document::setInPageCache(bool flag)
@@ -4427,6 +4414,27 @@ void Document::reportException(const String& errorMessage, int lineNumber, const
 {
     if (DOMWindow* window = domWindow())
         window->console()->addMessage(JSMessageSource, ErrorMessageLevel, errorMessage, lineNumber, sourceURL);
+}
+
+void Document::addMessage(MessageDestination destination, MessageSource source, MessageLevel level, const String& message, unsigned lineNumber, const String& sourceURL)
+{
+    switch (destination) {
+    case InspectorControllerDestination:
+        if (page())
+            page()->inspectorController()->addMessageToConsole(source, level, message, lineNumber, sourceURL);
+        return;
+    case ConsoleDestination:
+        if (DOMWindow* window = domWindow())
+            window->console()->addMessage(source, level, message, lineNumber, sourceURL);
+        return;
+    }
+    ASSERT_NOT_REACHED();
+}
+
+void Document::resourceRetrievedByXMLHttpRequest(unsigned long identifier, const ScriptString& sourceString)
+{
+    if (page())
+        page()->inspectorController()->resourceRetrievedByXMLHttpRequest(identifier, sourceString);
 }
 
 class ScriptExecutionContextTaskTimer : public TimerBase {

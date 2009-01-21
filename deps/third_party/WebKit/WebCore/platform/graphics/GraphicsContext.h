@@ -139,9 +139,6 @@ namespace WebCore {
         ~GraphicsContext();
        
         PlatformGraphicsContext* platformContext() const;
-
-        const Font& font() const;
-        void setFont(const Font&);
         
         float strokeThickness() const;
         void setStrokeThickness(float);
@@ -161,6 +158,9 @@ namespace WebCore {
         void setFillPattern(PassRefPtr<Pattern>);
         void setFillGradient(PassRefPtr<Gradient>);
         void setShadowsIgnoreTransforms(bool);
+
+        void setShouldAntialias(bool);
+        bool shouldAntialias() const;
 
         void save();
         void restore();
@@ -215,9 +215,9 @@ namespace WebCore {
         int textDrawingMode();
         void setTextDrawingMode(int);
 
-        void drawText(const TextRun&, const IntPoint&, int from = 0, int to = -1);
-        void drawBidiText(const TextRun&, const FloatPoint&);
-        void drawHighlightForText(const TextRun&, const IntPoint&, int h, const Color& backgroundColor, int from = 0, int to = -1);
+        void drawText(const Font&, const TextRun&, const IntPoint&, int from = 0, int to = -1);
+        void drawBidiText(const Font&, const TextRun&, const FloatPoint&);
+        void drawHighlightForText(const Font&, const TextRun&, const IntPoint&, int h, const Color& backgroundColor, int from = 0, int to = -1);
 
         FloatRect roundToDevicePixels(const FloatRect&);
         
@@ -270,8 +270,6 @@ namespace WebCore {
 
         void concatCTM(const TransformationMatrix&);
         TransformationMatrix getCTM() const;
-
-        void setUseAntialiasing(bool = true);
 
 #if PLATFORM(WIN)
         GraphicsContext(HDC, bool hasAlpha = false); // FIXME: To be removed.
@@ -333,6 +331,8 @@ namespace WebCore {
         void setPlatformStrokeThickness(float);
 
         void setPlatformFillColor(const Color&);
+
+        void setPlatformShouldAntialias(bool b);
 
         void setPlatformShadow(const IntSize&, int blur, const Color&);
         void clearPlatformShadow();

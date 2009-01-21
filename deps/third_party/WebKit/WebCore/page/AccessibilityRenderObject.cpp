@@ -247,6 +247,16 @@ bool AccessibilityRenderObject::isFileUploadButton() const
     
     return false;
 }
+    
+bool AccessibilityRenderObject::isInputImage() const
+{
+    if (m_renderer && m_renderer->element() && m_renderer->element()->hasTagName(inputTag)) {
+        HTMLInputElement* input = static_cast<HTMLInputElement*>(m_renderer->element());
+        return input->inputType() == HTMLInputElement::IMAGE;
+    }
+    
+    return false;
+}
 
 bool AccessibilityRenderObject::isProgressIndicator() const
 {
@@ -459,8 +469,9 @@ Element* AccessibilityRenderObject::anchorElement() const
     
     // Search up the render tree for a RenderObject with a DOM node.  Defer to an earlier continuation, though.
     for (currRenderer = m_renderer; currRenderer && !currRenderer->element(); currRenderer = currRenderer->parent()) {
-        if (currRenderer->continuation())
-            return cache->get(currRenderer->continuation())->anchorElement();
+        RenderFlow* continuation = currRenderer->virtualContinuation();
+        if (continuation)
+            return cache->get(continuation)->anchorElement();
     }
     
     // bail if none found
@@ -480,10 +491,17 @@ Element* AccessibilityRenderObject::anchorElement() const
 
 Element* AccessibilityRenderObject::actionElement() const
 {
-    if (m_renderer->element() && m_renderer->element()->hasTagName(inputTag)) {
-        HTMLInputElement* input = static_cast<HTMLInputElement*>(m_renderer->element());
-        if (!input->disabled() && (isCheckboxOrRadio() || input->isTextButton()))
-            return input;
+    if (!m_renderer)
+        return 0;
+    
+    Node* node = m_renderer->element();
+    if (node) {
+        if (node->hasTagName(inputTag)) {
+            HTMLInputElement* input = static_cast<HTMLInputElement*>(node);
+            if (!input->disabled() && (isCheckboxOrRadio() || input->isTextButton()))
+                return input;
+        } else if (node->hasTagName(buttonTag))
+            return static_cast<Element*>(node);
     }
             
     if (isFileUploadButton())
@@ -847,7 +865,7 @@ String AccessibilityRenderObject::title() const
     
     if (isInputTag || AccessibilityObject::isARIAInput(ariaRole) || isControl()) {
         HTMLLabelElement* label = labelForElement(static_cast<Element*>(node));
-        if (label)
+        if (label && !titleUIElement())
             return label->innerText();
     }
     
@@ -1342,6 +1360,9 @@ KURL AccessibilityRenderObject::url() const
     
     if (isImage() && m_renderer->element() && m_renderer->element()->hasTagName(imgTag))
         return static_cast<HTMLImageElement*>(m_renderer->element())->src();
+    
+    if (isInputImage())
+        return static_cast<HTMLInputElement*>(m_renderer->element())->src();
     
     return KURL();
 }
