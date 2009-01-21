@@ -728,21 +728,28 @@ IGNORE_PATHS = ("webkit",)
 # Valid extensions for files we want to lint.
 CPP_EXTENSIONS = ("cpp", "cc", "h")
 
-def Lint(change_info):
+def Lint(change_info, args):
   """Runs cpplint.py on all the files in |change_info|"""
   try:
     import cpplint
   except ImportError:
     ErrorExit("You need to install cpplint.py to lint C++ files.")
 
-  for file_record in change_info.files:
-    file = file_record[1]
+  # Change the current working directory before calling lint so that it
+  # shows the correct base.
+  os.chdir(GetRepositoryRoot())
 
+  # Process cpplints arguments if any.
+  filenames = cpplint.ParseArguments(args + change_info.FileList())
+
+  for file in filenames:
     if len([file for suffix in CPP_EXTENSIONS if file.endswith(suffix)]):
       if len([file for prefix in IGNORE_PATHS if file.startswith(prefix)]):
         print "Ignoring non-Google styled file %s" % file
       else:
-        cpplint.ProcessFile(file, 0)
+        cpplint.ProcessFile(file, cpplint._cpplint_state.verbose_level)
+
+  print "Total errors found: %d\n" % cpplint._cpplint_state.error_count
 
 
 def Changes():
@@ -811,7 +818,7 @@ def main(argv=None):
   if command == "change":
     Change(change_info)
   elif command == "lint":
-    Lint(change_info)
+    Lint(change_info, argv[3:])
   elif command == "upload":
     UploadCL(change_info, argv[3:])
   elif command == "commit":
