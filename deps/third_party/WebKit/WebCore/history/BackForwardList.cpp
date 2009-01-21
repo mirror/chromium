@@ -40,9 +40,7 @@ static const unsigned NoCurrentItemIndex = UINT_MAX;
 
 BackForwardList::BackForwardList(Page* page)
     : m_page(page)
-#if !PLATFORM(CHROMIUM)
     , m_current(NoCurrentItemIndex)
-#endif
     , m_capacity(DefaultCapacity)
     , m_closed(true)
     , m_enabled(true)
@@ -59,10 +57,7 @@ void BackForwardList::addItem(PassRefPtr<HistoryItem> prpItem)
     ASSERT(prpItem);
     if (m_capacity == 0 || !m_enabled)
         return;
- 
-#if PLATFORM(CHROMIUM)
-    m_client->addItem(prpItem);
-#else
+    
     // Toss anything in the forward list    
     if (m_current != NoCurrentItemIndex) {
         unsigned targetSize = m_current + 1;
@@ -87,36 +82,24 @@ void BackForwardList::addItem(PassRefPtr<HistoryItem> prpItem)
     m_entries.append(prpItem);
     m_entryHash.add(m_entries.last());
     m_current++;
-#endif
 }
 
 void BackForwardList::goBack()
 {
-#if PLATFORM(CHROMIUM)
-    ASSERT_NOT_REACHED();
-#else
     ASSERT(m_current > 0);
     if (m_current > 0)
         m_current--;
-#endif
 }
 
 void BackForwardList::goForward()
 {
-#if PLATFORM(CHROMIUM)
-    ASSERT_NOT_REACHED();
-#else
     ASSERT(m_current < m_entries.size() - 1);
     if (m_current < m_entries.size() - 1)
         m_current++;
-#endif
 }
 
 void BackForwardList::goToItem(HistoryItem* item)
 {
-#if PLATFORM(CHROMIUM)
-    m_client->goToItem(item);
-#else
     if (!m_entries.size() || !item)
         return;
         
@@ -126,65 +109,43 @@ void BackForwardList::goToItem(HistoryItem* item)
             break;
     if (index < m_entries.size())
         m_current = index;
-#endif
 }
 
 HistoryItem* BackForwardList::backItem()
 {
-#if PLATFORM(CHROMIUM)
-    ASSERT_NOT_REACHED();
-    return 0;
-#else
     if (m_current && m_current != NoCurrentItemIndex)
         return m_entries[m_current - 1].get();
     return 0;
-#endif
 }
 
 HistoryItem* BackForwardList::currentItem()
 {
-#if PLATFORM(CHROMIUM)
-    return m_client->currentItem();
-#else
     if (m_current != NoCurrentItemIndex)
         return m_entries[m_current].get();
     return 0;
-#endif
 }
 
 HistoryItem* BackForwardList::forwardItem()
 {
-#if PLATFORM(CHROMIUM)
-    ASSERT_NOT_REACHED();
-    return 0;
-#else
     if (m_entries.size() && m_current < m_entries.size() - 1)
         return m_entries[m_current + 1].get();
     return 0;
-#endif
 }
 
 void BackForwardList::backListWithLimit(int limit, HistoryItemVector& list)
 {
     list.clear();
-#if PLATFORM(CHROMIUM)
-    ASSERT_NOT_REACHED();
-#else
     if (m_current != NoCurrentItemIndex) {
         unsigned first = max((int)m_current - limit, 0);
         for (; first < m_current; ++first)
             list.append(m_entries[first]);
     }
-#endif
 }
 
 void BackForwardList::forwardListWithLimit(int limit, HistoryItemVector& list)
 {
-    list.clear();
-#if PLATFORM(CHROMIUM)
-    ASSERT_NOT_REACHED();
-#else
     ASSERT(limit > -1);
+    list.clear();
     if (!m_entries.size())
         return;
         
@@ -195,7 +156,6 @@ void BackForwardList::forwardListWithLimit(int limit, HistoryItemVector& list)
         for (; limit <= last; ++limit)
             list.append(m_entries[limit]);
     }
-#endif
 }
 
 int BackForwardList::capacity()
@@ -204,8 +164,7 @@ int BackForwardList::capacity()
 }
 
 void BackForwardList::setCapacity(int size)
-{
-#if !PLATFORM(CHROMIUM)
+{    
     while (size < (int)m_entries.size()) {
         RefPtr<HistoryItem> item = m_entries.last();
         m_entries.removeLast();
@@ -217,8 +176,7 @@ void BackForwardList::setCapacity(int size)
         m_current = NoCurrentItemIndex;
     else if (m_current > m_entries.size() - 1)
         m_current = m_entries.size() - 1;
-#endif
-
+        
     m_capacity = size;
 }
 
@@ -239,27 +197,16 @@ void BackForwardList::setEnabled(bool enabled)
 
 int BackForwardList::backListCount()
 {
-#if PLATFORM(CHROMIUM)
-    return m_client->backListCount();
-#else
     return m_current == NoCurrentItemIndex ? 0 : m_current;
-#endif
 }
 
 int BackForwardList::forwardListCount()
 {
-#if PLATFORM(CHROMIUM)
-    return m_client->forwardListCount();
-#else
     return m_current == NoCurrentItemIndex ? 0 : (int)m_entries.size() - (m_current + 1);
-#endif
 }
 
 HistoryItem* BackForwardList::itemAtIndex(int index)
 {
-#if PLATFORM(CHROMIUM)
-    return m_client->itemAtIndex(index);
-#else
     // Do range checks without doing math on index to avoid overflow.
     if (index < -(int)m_current)
         return 0;
@@ -268,30 +215,20 @@ HistoryItem* BackForwardList::itemAtIndex(int index)
         return 0;
         
     return m_entries[index + m_current].get();
-#endif
 }
 
 HistoryItemVector& BackForwardList::entries()
 {
-#if PLATFORM(CHROMIUM)
-    static HistoryItemVector noEntries;
-    return noEntries;
-#else
     return m_entries;
-#endif
 }
 
 void BackForwardList::close()
 {
-#if PLATFORM(CHROMIUM)
-    m_client->close();
-#else
     int size = m_entries.size();
     for (int i = 0; i < size; ++i)
         pageCache()->remove(m_entries[i].get());
     m_entries.clear();
     m_entryHash.clear();
-#endif
     m_page = 0;
     m_closed = true;
 }
@@ -303,9 +240,6 @@ bool BackForwardList::closed()
 
 void BackForwardList::removeItem(HistoryItem* item)
 {
-#if PLATFORM(CHROMIUM)
-    ASSERT_NOT_REACHED();
-#else
     if (!item)
         return;
     
@@ -324,17 +258,11 @@ void BackForwardList::removeItem(HistoryItem* item)
             }
             break;
         }
-#endif
 }
 
 bool BackForwardList::containsItem(HistoryItem* entry)
 {
-#if PLATFORM(CHROMIUM)
-    ASSERT_NOT_REACHED();
-    return false;
-#else
     return m_entryHash.contains(entry);
-#endif
 }
 
 #if ENABLE(WML)
@@ -352,4 +280,3 @@ void BackForwardList::clearWmlPageHistory()
 #endif
 
 }; // namespace WebCore
-
