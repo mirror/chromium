@@ -392,6 +392,9 @@ module window {
 	attribute XMLHttpRequestConstructor XMLHttpRequest;
 	attribute XSLTProcessorConstructor XSLTProcessor;
 	attribute MessageChannelConstructor MessageChannel;
+#if ENABLE_WORKERS
+        attribute WorkerConstructor Worker;
+#endif
         attribute WebKitCSSMatrixConstructor WebKitCSSMatrix;
 #endif
 
