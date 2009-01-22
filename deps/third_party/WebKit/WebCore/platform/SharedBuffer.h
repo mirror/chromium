@@ -29,7 +29,6 @@
 #include <wtf/Forward.h>
 #include <wtf/OwnPtr.h>
 #include <wtf/RefCounted.h>
-#include <wtf/OwnPtr.h>
 #include <wtf/Vector.h>
 
 #if PLATFORM(CF)
@@ -111,4 +110,3 @@ private:
 }
 
 #endif
-
