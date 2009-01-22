@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 Apple Computer, Inc.  All rights reserved.
+ * Copyright (C) 2008, 2009 Google, Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -29,13 +30,12 @@
 
 namespace WebCore {
 
-class GIFImageDecoderPrivate
-{
+class GIFImageDecoderPrivate {
 public:
     GIFImageDecoderPrivate(GIFImageDecoder* decoder = 0)
         : m_reader(decoder)
+        , m_readOffset(0)
     {
-        m_readOffset = 0;
     }
 
     ~GIFImageDecoderPrivate()
@@ -59,7 +59,8 @@ public:
 
     bool isTransparent() const { return m_reader.frame_reader->is_transparent; }
 
-    void getColorMap(unsigned char*& map, unsigned& size) const {
+    void getColorMap(unsigned char*& map, unsigned& size) const
+    {
         if (m_reader.frame_reader->is_local_colormap_defined) {
             map = m_reader.frame_reader->local_colormap;
             size = (unsigned)m_reader.frame_reader->local_colormap_size;
@@ -84,8 +85,11 @@ private:
 };
 
 GIFImageDecoder::GIFImageDecoder()
-: m_frameCountValid(true), m_repetitionCount(cAnimationLoopOnce), m_reader(0)
-{}
+    : m_frameCountValid(true)
+    , m_repetitionCount(cAnimationLoopOnce)
+    , m_reader(0)
+{
+}
 
 GIFImageDecoder::~GIFImageDecoder()
 {
@@ -179,8 +183,7 @@ RGBA32Buffer* GIFImageDecoder::frameBufferAtIndex(size_t index)
 
     RGBA32Buffer& frame = m_frameBufferCache[index];
     if (frame.status() != RGBA32Buffer::FrameComplete && m_reader)
-        // Decode this frame.
-        decode(GIFFullQuery, index+1);
+        decode(GIFFullQuery, index+1); // Decode this frame.
     return &frame;
 }
 
@@ -189,7 +192,7 @@ void GIFImageDecoder::clearFrameBufferCache(size_t clearBeforeFrame)
     // In some cases, like if the decoder was destroyed while animating, we
     // can be asked to clear more frames than we currently have.
     if (m_frameBufferCache.isEmpty())
-        return;  // Nothing to do.
+        return; // Nothing to do.
     // The "-1" here is tricky.  It does not mean that |clearBeforeFrame| is the
     // last frame we wish to preserve, but rather that we never want to clear
     // the very last frame in the cache: it's empty (so clearing it is
@@ -202,7 +205,7 @@ void GIFImageDecoder::clearFrameBufferCache(size_t clearBeforeFrame)
     const Vector<RGBA32Buffer>::iterator end(m_frameBufferCache.begin() + clearBeforeFrame);
     for (Vector<RGBA32Buffer>::iterator i(m_frameBufferCache.begin()); i != end; ++i) {
         if (i->status() == RGBA32Buffer::FrameEmpty)
-            continue;  // Nothing to do.
+            continue; // Nothing to do.
 
         // The layout of frames is:
         // [empty frames][complete frames][partial frame][empty frames]
@@ -278,8 +281,8 @@ bool GIFImageDecoder::initFrameBuffer(unsigned frameIndex)
         ASSERT(prevBuffer->status() == RGBA32Buffer::FrameComplete);
         RGBA32Buffer::FrameDisposalMethod prevMethod =
             prevBuffer->disposalMethod();
-        while ((frameIndex > 0) &&
-                (prevMethod == RGBA32Buffer::DisposeOverwritePrevious)) {
+        while ((frameIndex > 0)
+               && (prevMethod == RGBA32Buffer::DisposeOverwritePrevious)) {
             prevBuffer = &m_frameBufferCache[--frameIndex];
             prevMethod = prevBuffer->disposalMethod();
         }
@@ -296,8 +299,8 @@ bool GIFImageDecoder::initFrameBuffer(unsigned frameIndex)
             // We want to clear the previous frame to transparent, without
             // affecting pixels in the image outside of the frame.
             const IntRect& prevRect = prevBuffer->rect();
-            if ((frameIndex == 0) ||
-                    prevRect.contains(IntRect(IntPoint(0, 0), size()))) {
+            if ((frameIndex == 0)
+                || prevRect.contains(IntRect(IntPoint(0, 0), size()))) {
                 // Clearing the first frame, or a frame the size of the whole
                 // image, results in a completely empty image.
                 prepEmptyFrameBuffer(buffer);
@@ -312,7 +315,7 @@ bool GIFImageDecoder::initFrameBuffer(unsigned frameIndex)
                       buffer->setRGBA(bitmap.getAddr32(x, y), 0, 0, 0, 0);
               }
               if ((prevRect.width() > 0) && (prevRect.height() > 0))
-                buffer->setHasAlpha(true);
+                  buffer->setHasAlpha(true);
             }
         }
     }
@@ -328,7 +331,7 @@ bool GIFImageDecoder::initFrameBuffer(unsigned frameIndex)
 bool GIFImageDecoder::prepEmptyFrameBuffer(RGBA32Buffer* buffer) const
 {
     if (!buffer->setSize(size().width(), size().height()))
-      return false;
+        return false;
     // This next line isn't currently necessary since Skia's eraseARGB() sets
     // this for us, but we do it for similar reasons to the setHasAlpha() calls
     // in initFrameBuffer() above.
@@ -350,7 +353,7 @@ void GIFImageDecoder::haveDecodedRow(unsigned frameIndex,
 
     // Do nothing for bogus data.
     if (rowBuffer == 0 || static_cast<int>(m_reader->frameYOffset() + rowNumber) >= size().height())
-      return;
+        return;
 
     unsigned colorMapSize;
     unsigned char* colorMap;
@@ -425,9 +428,9 @@ void GIFImageDecoder::frameComplete(unsigned frameIndex, unsigned frameDuration,
     if (!m_currentBufferSawAlpha) {
         // The whole frame was non-transparent, so it's possible that the entire
         // resulting buffer was non-transparent, and we can setHasAlpha(false).
-        if (buffer.rect().contains(IntRect(IntPoint(0, 0), size()))) {
+        if (buffer.rect().contains(IntRect(IntPoint(0, 0), size())))
             buffer.setHasAlpha(false);
-        } else if (frameIndex > 0) {
+        else if (frameIndex > 0) {
             // Tricky case.  This frame does not have alpha only if everywhere
             // outside its rect doesn't have alpha.  To know whether this is
             // true, we check the start state of the frame -- if it doesn't have
@@ -437,9 +440,8 @@ void GIFImageDecoder::frameComplete(unsigned frameIndex, unsigned frameDuration,
             // don't affect the start state of this frame) the same way we do in
             // initFrameBuffer().
             const RGBA32Buffer* prevBuffer = &m_frameBufferCache[--frameIndex];
-            while ((frameIndex > 0) &&
-                    (prevBuffer->disposalMethod() ==
-                        RGBA32Buffer::DisposeOverwritePrevious))
+            while ((frameIndex > 0)
+                   && (prevBuffer->disposalMethod() == RGBA32Buffer::DisposeOverwritePrevious))
                 prevBuffer = &m_frameBufferCache[--frameIndex];
 
             // Now, if we're at a DisposeNotSpecified or DisposeKeep frame, then
@@ -450,10 +452,8 @@ void GIFImageDecoder::frameComplete(unsigned frameIndex, unsigned frameDuration,
             // The only remaining case is a DisposeOverwriteBgcolor frame.  If
             // it had no alpha, and its rect is contained in the current frame's
             // rect, we know the current frame has no alpha.
-            if ((prevBuffer->disposalMethod() ==
-                    RGBA32Buffer::DisposeOverwriteBgcolor) &&
-                    !prevBuffer->hasAlpha() &&
-                    buffer.rect().contains(prevBuffer->rect()))
+            if ((prevBuffer->disposalMethod() == RGBA32Buffer::DisposeOverwriteBgcolor)
+                && !prevBuffer->hasAlpha() && buffer.rect().contains(prevBuffer->rect()))
                 buffer.setHasAlpha(false);
         }
     }
@@ -467,4 +467,4 @@ void GIFImageDecoder::gifComplete()
     m_reader = 0;
 }
 
-}
+} // namespace WebCore

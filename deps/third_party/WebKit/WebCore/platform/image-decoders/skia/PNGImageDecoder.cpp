@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 Apple Computer, Inc.
+ * Copyright (C) 2008, 2009 Google, Inc.
  *
  * Portions are Copyright (C) 2001 mozilla.org
  *
@@ -408,4 +409,4 @@ void PNGImageDecoder::pngComplete()
     buffer.setStatus(RGBA32Buffer::FrameComplete);
 }
 
-}
+} // namespace WebCore

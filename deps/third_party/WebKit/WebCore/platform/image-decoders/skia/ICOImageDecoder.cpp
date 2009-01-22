@@ -1,64 +1,57 @@
-// Copyright (c) 2008, Google Inc.
-// All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-// 
-//     * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/*
+ * Copyright (c) 2008, 2009, Google Inc. All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ * 
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include "config.h"
-
 #include "ICOImageDecoder.h"
 
-namespace
-{
+namespace WebCore {
 
 // Number of bits in .ICO/.CUR used to store the directory and its entries,
 // respectively (doesn't match sizeof values for member structs since we omit
 // some fields).
-const size_t SIZEOF_DIRECTORY = 6;
-const size_t SIZEOF_DIRENTRY = 16;
-
-};
-
-namespace WebCore
-{
+static const size_t sizeOfDirectory = 6;
+static const size_t sizeOfDirEntry = 16;
 
 void ICOImageDecoder::decodeImage(SharedBuffer* data)
 {
     // Read and process directory.
-    if ((m_decodedOffset < SIZEOF_DIRECTORY) && !processDirectory(data))
+    if ((m_decodedOffset < sizeOfDirectory) && !processDirectory(data))
         return;
 
     // Read and process directory entries.
-    if ((m_decodedOffset < (SIZEOF_DIRECTORY +
-            (m_directory.idCount * SIZEOF_DIRENTRY))) &&
-            !processDirectoryEntries(data))
+    if ((m_decodedOffset < (sizeOfDirectory + (m_directory.idCount * sizeOfDirEntry)))
+        && !processDirectoryEntries(data))
         return;
 
     // Check if this entry is a PNG; we need 4 bytes to check the magic number.
-    if (m_imageType == UNKNOWN) {
+    if (m_imageType == Unknown) {
         if (data->size() < (m_dirEntry.dwImageOffset + 4))
             return;
         m_imageType =
@@ -67,9 +60,9 @@ void ICOImageDecoder::decodeImage(SharedBuffer* data)
     }
 
     // Decode selected entry.
-    if (m_imageType == PNG) {
+    if (m_imageType == PNG)
         decodePNG(data);
-    } else {
+    else {
         // Note that we don't try to limit the bytes we give to the decoder to
         // just the size specified in the icon directory.  If the size given in
         // the directory is insufficient to decode the whole image, the image is
@@ -102,11 +95,11 @@ bool ICOImageDecoder::processDirectory(SharedBuffer* data)
 {
     // Read directory.
     ASSERT(!m_decodedOffset);
-    if (data->size() < SIZEOF_DIRECTORY)
+    if (data->size() < sizeOfDirectory)
         return false;
     const uint16_t fileType = readUint16(data, 2);
     m_directory.idCount = readUint16(data, 4);
-    m_decodedOffset = SIZEOF_DIRECTORY;
+    m_decodedOffset = sizeOfDirectory;
 
     // See if this is an icon filetype we understand, and make sure we have at
     // least one entry in the directory.
@@ -124,9 +117,9 @@ bool ICOImageDecoder::processDirectory(SharedBuffer* data)
 bool ICOImageDecoder::processDirectoryEntries(SharedBuffer* data)
 {
     // Read directory entries.
-    ASSERT(m_decodedOffset == SIZEOF_DIRECTORY);
+    ASSERT(m_decodedOffset == sizeOfDirectory);
     if ((m_decodedOffset > data->size()) || (data->size() - m_decodedOffset) <
-            (m_directory.idCount * SIZEOF_DIRENTRY))
+            (m_directory.idCount * sizeOfDirEntry))
         return false;
     for (int i = 0; i < m_directory.idCount; ++i) {
         const IconDirectoryEntry dirEntry = readDirectoryEntry(data);
@@ -175,7 +168,7 @@ ICOImageDecoder::IconDirectoryEntry ICOImageDecoder::readDirectoryEntry(
         }
     }
 
-    m_decodedOffset += SIZEOF_DIRENTRY;
+    m_decodedOffset += sizeOfDirEntry;
     return entry;
 }
 
@@ -196,9 +189,8 @@ bool ICOImageDecoder::isBetterEntry(const IconDirectoryEntry& entry) const
         // The icon closest to the preferred area without being smaller is
         // better.
         if (entryArea != dirEntryArea) {
-            return (entryArea < dirEntryArea) &&
-                (entryArea >= (m_preferredIconSize.width() *
-                               m_preferredIconSize.height()));
+            return (entryArea < dirEntryArea)
+                && (entryArea >= (m_preferredIconSize.width() * m_preferredIconSize.height()));
         }
     }
 

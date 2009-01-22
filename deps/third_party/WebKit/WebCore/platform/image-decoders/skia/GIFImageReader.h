@@ -35,8 +35,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-#ifndef _GIF_H_
-#define _GIF_H_
+#ifndef GIFImageReader_h
+#define GIFImageReader_h
 
 // Define ourselves as the clientPtr.  Mozilla just hacked their C++ callback class into this old C decoder,
 // so we will too.
@@ -213,4 +213,3 @@ private:
 };
 
 #endif
-

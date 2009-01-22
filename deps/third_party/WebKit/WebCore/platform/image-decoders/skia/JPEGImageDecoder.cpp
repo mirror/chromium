@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 Apple Computer, Inc.
+ * Copyright (C) 2008, 2009 Google, Inc.
  *
  * Portions are Copyright (C) 2001-6 mozilla.org
  *
