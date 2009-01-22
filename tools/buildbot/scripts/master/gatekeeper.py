@@ -28,6 +28,16 @@ from email.Utils import formatdate
 from twisted.internet import defer
 from zope.interface import implements
 
+def getAllRevisions(build):
+  source_stamp = build.getSourceStamp()
+  if source_stamp and source_stamp.changes:
+    return [change.revision for change in source_stamp.changes]
+
+def getLatestRevision(build):
+  revisions = getAllRevisions(build)
+  if revisions:
+    return max(revisions)
+
 
 class Domain(util.ComparableMixin):
   implements(interfaces.IEmailLookup)
@@ -49,7 +59,6 @@ class GateKeeper(MailNotifier):
 
   _CATEGORY_SPLITTER = '|'
   _TREE_STATUS_URL = 'http://chromium-status.appspot.com/status'
-  _TREE_CLOSER_URL = 'http://chromium-status.appspot.com'
 
   _last_closure_revision = 0
   
@@ -154,12 +163,12 @@ class GateKeeper(MailNotifier):
       # If the tree is opened, we don't want to close it again for the same
       # revision, or an earlier one in case the build that just finished is a
       # slow one and we already fixed the problem and manually opened the tree.
-      source_stamp = build.getSourceStamp()
-      if source_stamp and source_stamp.revision:
-        if source_stamp.revision <= self._last_closure_revision:
+      latest_revision = getLatestRevision(build)
+      if latest_revision:
+        if latest_revision <= self._last_closure_revision:
           return
         else:
-          self._last_closure_revision = source_stamp.revision
+          self._last_closure_revision = latest_revision
       elif not build.getResponsibleUsers():
         # If we don't have a version stamp nor a blame list, then this is most
         # likely a build started manually, and we don't want to close the tree.
@@ -174,7 +183,7 @@ class GateKeeper(MailNotifier):
       params = urllib.urlencode({'message': message,
                                  'username': 'buildbot@chromium.org',
                                  'password': password_file.read().strip()})
-      urllib.urlopen(self._TREE_CLOSER_URL, params)
+      urllib.urlopen(self._TREE_STATUS_URL, params)
 
       return defered_object
 
@@ -185,15 +194,17 @@ class GateKeeper(MailNotifier):
     """
 
     projectName = self.status.getProjectName()
-    source_stamp = build.getSourceStamp()
+    revisions_list = getAllRevisions(build)
     build_url = self.status.getURLForThing(build)
     waterfall_url = self.status.getBuildbotURL()
     status_text = ('Automatically closing tree for "%s" on "%s"' %
                    (step_text, name))
     blame_list = ",".join(build.getResponsibleUsers())
-    revision = ''
-    if source_stamp and source_stamp.revision:
-      revision = str(source_stamp.revision)
+    revisions_string = ''
+    latest_revision = 0
+    if revisions_list:
+      revisions_string = ", ".join([str(rev) for rev in revisions_list])
+      latest_revision = max([rev for rev in revisions_list])
 
     class DummyObject(object):
       pass
@@ -219,7 +230,7 @@ class GateKeeper(MailNotifier):
   <table border="0" cellspacing="0">
     <tr>
     """ % (status_text, waterfall_url, waterfall_url, status_text, build_url,
-           build_url, revision, blame_list))
+           build_url, revisions_string, blame_list))
 
     # With a hack to fix the url root.
     html_content += IBox(build).getBox(request).td(align='center').replace(
@@ -258,7 +269,7 @@ Buildbot waterfall: http://build.chromium.org/
        urllib.quote(waterfall_url, '/:'),
        urllib.quote(name),
        status_text,
-       revision,
+       revisions_string,
        blame_list))
 
     m = MIMEMultipart('alternative')
@@ -272,6 +283,7 @@ Buildbot waterfall: http://build.chromium.org/
         'projectName': projectName,
         'builder': name,
         'reason': build.getReason(),
+        'revision': latest_revision,
     }
     m['From'] = self.fromaddr
     if self.reply_to:
