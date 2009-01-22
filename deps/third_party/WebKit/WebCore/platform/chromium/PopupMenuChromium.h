@@ -95,6 +95,12 @@ namespace WebCore {
         // regardless of this setting.
         void setAcceptOnAbandon(bool value);
 
+        // Sets whether the we should move the selection to the first/last item
+        // when the user presses down/up arrow keys and the last/first item is
+        // selected.
+        // Default is false, causing the first/last item to stay selected.
+        void setLoopSelectionNavigation(bool value);
+
         PopupListBox* listBox() const { return m_listBox.get(); }
 
         // Refresh the popup values from the PopupMenuClient.
