@@ -326,15 +326,57 @@ DebugCommand.prototype.parsePrint_ = function(str) {
 
 /**
  * Handle the response to a "print" command and display output to user.
- * @param {Object} msg - the V8 debugger response object
+ * @param {ProtocolPacket} evaluate_response - the V8 debugger response object
  */
-DebugCommand.responsePrint_ = function(msg) {
-  body = msg["body"];
+DebugCommand.responsePrint_ = function(evaluate_response) {
+  body = evaluate_response.body();
   if (body['text'] != undefined) {
     print(body['text']);
   } else {
     // TODO(erikkay): is "text" ever not set?
     print("can't print response");
+  }
+};
+
+/**
+ * Parse the arguments to "dir" command.
+ * @see DebugCommand.commands
+ * @param {string} str The arguments to be parsed.
+ * @return 1 - always succeeds
+ */
+DebugCommand.prototype.parseDir_ = function(str) {
+  this.command = "evaluate";
+  this.arguments = { "expression" : str };
+  // If the page is in the running state, then we force the expression to
+  // evaluate in the global context to avoid evaluating in a random context.
+  if (shell_.running)
+    this.arguments["global"] = true;
+  return 1;
+};
+
+/**
+ * Handle the response to a "dir" command and display output to user.
+ * @see http://wiki/Main/V8Debugger
+ * @param {ProtocolPacket} evaluate_response - the V8 debugger response object
+ */
+DebugCommand.responseDir_ = function(evaluate_response) {
+  var body = evaluate_response.body();
+  if (body.properties) {
+    print(body.properties.length + ' properties');
+    for (var n in body.properties) {
+      var property_info = body.properties[n].name;
+      property_info += ': ';
+      var value = evaluate_response.lookup(body.properties[n].ref);
+      if (value && value.type) {
+        property_info += value.type;
+      } else {
+        property_info += '<no type>';
+      }
+      property_info += ' (#';
+      property_info += body.properties[n].ref;
+      property_info += '#)';
+      print(property_info);
+    }
   }
 };
 
@@ -402,16 +444,18 @@ DebugCommand.prototype.parseBreak_ = function(str) {
 
 /**
  * Handle the response to a "break" command and display output to user.
- * @param {Object} msg - the V8 debugger response object
+ * @param {ResponsePacket} setbreakpoint_response - the V8 debugger response
+ *     object
  */
-DebugCommand.responseBreak_ = function(msg) {
+DebugCommand.responseBreak_ = function(setbreakpoint_response) {
+  var body = setbreakpoint_response.body();
   var info = new BreakpointInfo(
-      parseInt(msg.body.breakpoint),
-      msg.command.arguments.type,
-      msg.command.arguments.target,
-      msg.command.arguments.line,
-      msg.command.arguments.position,
-      msg.command.arguments.condition);
+      parseInt(body.breakpoint),
+      setbreakpoint_response.command.arguments.type,
+      setbreakpoint_response.command.arguments.target,
+      setbreakpoint_response.command.arguments.line,
+      setbreakpoint_response.command.arguments.position,
+      setbreakpoint_response.command.arguments.condition);
   shell_.addedBreakpoint(info);
 };
 
@@ -446,10 +490,10 @@ DebugCommand.responseBreak_ = function(msg) {
 
 /**
  * Handle the response to a "backtrace" command and display output to user.
- * @param {Object} msg - the V8 debugger response object
+ * @param {ResponsePacket} backtrace_response - the V8 debugger response object
  */
-DebugCommand.responseBacktrace_ = function(msg) {
-  body = msg["body"];
+DebugCommand.responseBacktrace_ = function(backtrace_response) {
+  body = backtrace_response.body();
   if (body && body.totalFrames) {
     print('Frames #' + body.fromFrame + ' to #' + (body.toFrame - 1) +
 	  ' of ' + body.totalFrames + ":");
@@ -483,9 +527,11 @@ DebugCommand.prototype.parseClearCommand_ = function(str) {
 
 /**
  * Handle the response to a "clear" command and display output to user.
- * @param {Object} msg - the V8 debugger response object
+ * @param {ResponsePacket} clearbreakpoint_response - the V8 debugger response
+ *     object
  */
-DebugCommand.responseClear_ = function(msg) {
+DebugCommand.responseClear_ = function(clearbreakpoint_response) {
+  var body = clearbreakpoint_response.body();
   shell_.clearedBreakpoint(parseInt(msg.command.arguments.breakpoint));
 }
 
@@ -525,39 +571,43 @@ DebugCommand.prototype.parseFrame_ = function(str) {
 
 /**
  * Handle the response to a "frame" command and display output to user.
- * @param {Object} msg - the V8 debugger response object
+ * @param {ResponsePacket} frame_response - the V8 debugger response object
  */
-DebugCommand.responseFrame_ = function(msg) {
-  body = msg.body;
-  loc = DebugCommand.getSourceLocation(body.func.script, 
-      body.sourceLineText, body.line, body.func.name);
+DebugCommand.responseFrame_ = function(frame_response) {
+  var body = frame_response.body();
+  var func = frame_response.lookup(body.func.ref);
+  loc = DebugCommand.getSourceLocation(func.script, 
+      body.sourceLineText, body.line, func.name);
   print("#" + (body.index <= 9 ? '0' : '') + body.index + " " + loc[0]);
   print(loc[1]);
   shell_.current_frame = body.index;
   shell_.current_line = loc[2];
-  shell_.current_script = body.func.script;
+  shell_.current_script = func.script;
 };
 
 /**
  * Handle the response to a "args" command and display output to user.
- * @param {Object} msg - the V8 debugger response object (for "frame" command)
+ * @param {ProtocolPacket} frame_response - the V8 debugger response object (for
+ *     "frame" command)
  */
-DebugCommand.responseArgs_ = function(msg) {
-  DebugCommand.printVariables_(msg.body.arguments);
+DebugCommand.responseArgs_ = function(frame_response) {
+  var body = frame_response.body();
+  DebugCommand.printVariables_(body.arguments, frame_response);
 }
 
 /**
  * Handle the response to a "locals" command and display output to user.
  * @param {Object} msg - the V8 debugger response object (for "frame" command)
  */
-DebugCommand.responseLocals_ = function(msg) {
-  DebugCommand.printVariables_(msg.body.locals);
+DebugCommand.responseLocals_ = function(frame_response) {
+  var body = frame_response.body();
+  DebugCommand.printVariables_(body.locals, frame_response);
 }
 
-DebugCommand.printVariables_ = function(variables) {
+DebugCommand.printVariables_ = function(variables, protocol_packet) {
   for (var i = 0; i < variables.length; i++) {
     print(variables[i].name + " = " +
-        DebugCommand.toPreviewString_(variables[i].value));
+        DebugCommand.toPreviewString_(protocol_packet.lookup(variables[i].value.ref)));
   }
 }
 
@@ -583,10 +633,10 @@ DebugCommand.prototype.parseScripts_ = function(str) {
 
 /**
  * Handle the response to a "scripts" command and display output to user.
- * @param {Object} msg - the V8 debugger response object
+ * @param {ResponsePacket} scripts_response - the V8 debugger response object
  */
-DebugCommand.responseScripts_ = function(msg) {
-  scripts = msg.body;
+DebugCommand.responseScripts_ = function(scripts_response) {
+  scripts = scripts_response.body();
   shell_.scripts = [];
   for (var i in scripts) {
     var script = scripts[i];
@@ -595,7 +645,7 @@ DebugCommand.responseScripts_ = function(msg) {
     shell_.scripts.push(script);
     
     // Print result if this response was the result of a user command.
-    if (msg.command.from_user) {
+    if (scripts_response.command.from_user) {
       var name = script.name;
       if (name) {
         if (script.lineOffset > 0) {
@@ -664,10 +714,10 @@ DebugCommand.prototype.parseSource_ = function(str) {
 
 /**
  * Handle the response to a "source" command and display output to user.
- * @param {Object} msg - the V8 debugger response object
+ * @param {ProtocolPacket} source_response - the V8 debugger response object
  */
-DebugCommand.responseSource_ = function(msg) {
-  var body = msg.body;
+DebugCommand.responseSource_ = function(source_response) {
+  var body = source_response.body();
   var from_line = parseInt(body.fromLine) + 1;
   var source = body.source;
   var lines = source.split('\n');
@@ -816,6 +866,10 @@ DebugCommand.commands = {
              'while_running': true },
   'continue': { 'parse': DebugCommand.prototype.parseContinueCommand_, 
                 'usage': 'continue' },
+  'dir': { 'parse': DebugCommand.prototype.parseDir_,
+             'response': DebugCommand.responseDir_,
+             'usage': 'dir <expression>',
+             'while_running': true },
   'frame': { 'parse': DebugCommand.prototype.parseFrame_, 
              'response': DebugCommand.responseFrame_,
              'usage': 'frame <frame #>' },
@@ -876,7 +930,6 @@ function DebugShell(tab) {
   // and silently continue afterwards.
   this.auto_continue = false;
   this.debug = false;
-  this.last_msg = undefined;
   this.current_line = -1;
   this.current_pos = -1;
   this.current_frame = 0;
@@ -955,23 +1008,23 @@ DebugShell.prototype.process_command = function(cmd) {
 
 /**
  * Handle a break event from the debugger.
- * @param msg {Object} - event protocol message to handle
+ * @param msg {ResponsePacket} - break_event protocol message to handle
  */
-DebugShell.prototype.event_break = function(msg) {
+DebugShell.prototype.event_break = function(break_event) {
   this.current_frame = 0;
   this.set_running(false);
-  if (msg.body) {
-    var body = msg.body;
+  var body = break_event.body();
+  if (body) {
     this.current_script = body.script;
     var loc = DebugCommand.getSourceLocation(body.script,
         body.sourceLineText, body.sourceLine, body.invocationText);
     var location = loc[0];
     var source = loc[1];
     this.current_line = loc[2];
-    if (msg.body.breakpoints) {
+    if (body.breakpoints) {
       // Always disable auto continue if a real break point is hit.
       this.auto_continue = false;
-      var breakpoints = msg.body.breakpoints;
+      var breakpoints = body.breakpoints;
       print("paused at breakpoint " + breakpoints.join(",") + ": " + 
             location);
       for (var i = 0; i < breakpoints.length; i++)
@@ -1001,16 +1054,17 @@ DebugShell.prototype.event_break = function(msg) {
 
 /**
  * Handle an exception event from the debugger.
- * @param msg {Object} - event protocol message to handle
+ * @param msg {ResponsePacket} - exception_event protocol message to handle
  */
-DebugShell.prototype.event_exception = function(msg) {
+DebugShell.prototype.event_exception = function(exception_event) {
   this.set_running(false);
   this.set_ready(true);
-  if (msg.body) {
-    if (msg.body["uncaught"]) {
-      print("uncaught exception " + msg.body["exception"].text);
+  var body = exception_event.body();
+  if (body) {
+    if (body["uncaught"]) {
+      print("uncaught exception " + body["exception"].text);
     } else {
-      print("paused at exception " + msg.body["exception"].text);
+      print("paused at exception " + body["exception"].text);
     }
   }
 };
@@ -1081,40 +1135,45 @@ DebugShell.prototype.command = function(str) {
 };
 
 /**
- * Called when a response to a previous command has been received.
+ * Called by Chrome Shell when a response to a previous command has been
+ * received.
  * @param {Object} msg Message object.
  */
 DebugShell.prototype.response = function(msg) {
   dprint("received: " + (msg && msg.type));
-  this.last_msg = msg;
-  if (msg.type == "event") {
-    ev = msg["event"]
+  var response;
+  try {
+    response = new ProtocolPackage(msg);
+  } catch (error) {
+    print(error.toString(), str);
+    return;
+  }
+  if (response.type() == "event") {
+    ev = response.event();
     if (ev == "break") {
-      this.event_break(msg);
+      this.event_break(response);
     } else if (ev == "exception") {
-      this.event_exception(msg);
+      this.event_exception(response);
     }
-  } else if (msg.type == "response") {
-    if (msg.request_seq != undefined) {
-      if (!this.current_command || this.current_command.seq != msg.request_seq){
-        throw("received response to unknown command " + DebugCommand.toJSON(msg));
+  } else if (response.type() == "response") {
+    if (response.requestSeq() != undefined) {
+      if (!this.current_command || this.current_command.seq != response.requestSeq()){
+        throw("received response to unknown command " + str);
       }
     } else {
       // TODO(erikkay): should we reject these when they happen?
-      print(">>no request_seq in response " + DebugCommand.toJSON(msg));
+      print(">>no request_seq in response " + str);
     }
     var cmd = DebugCommand.commands[this.current_command.user_command]
-    msg.command = this.current_command;
+    response.command = this.current_command;
     this.current_command = null
-    if (msg.running != undefined) {
-      this.set_running(msg.running);
-    }
-    if (!msg['success']) {
-      print(msg['message']);
+    this.set_running(response.running());
+    if (!response.success()) {
+      print(response.message());
     } else {
-      var response = cmd['response'];
-      if (response != undefined) {
-        response.call(this, msg);
+      var handler = cmd['response'];
+      if (handler != undefined) {
+        handler.call(this, response);
       }
     }
     this.set_ready(true);
@@ -1225,6 +1284,78 @@ DebugShell.prototype.on_disconnect = function() {
   print(">>lost connection to tab");
   this.tab = null;
 };
+
+
+/**
+ * Protocol packages send from the debugger.
+ * @param {string} json - raw protocol packet as JSON string.
+ * @constructor
+ */
+function ProtocolPackage(msg) {
+  this.packet_ = msg;
+  this.refs_ = [];
+  if (this.packet_.refs) {
+    for (var i = 0; i < this.packet_.refs.length; i++) {
+      this.refs_[this.packet_.refs[i].handle] = this.packet_.refs[i];
+    }
+  }
+}
+
+
+/**
+ * Get the packet type.
+ * @return {String} the packet type
+ */
+ProtocolPackage.prototype.type = function() {
+  return this.packet_.type;
+}
+
+
+/**
+ * Get the packet event.
+ * @return {Object} the packet event
+ */
+ProtocolPackage.prototype.event = function() {
+  return this.packet_.event;
+}
+
+
+/**
+ * Get the packet request sequence.
+ * @return {number} the packet request sequence
+ */
+ProtocolPackage.prototype.requestSeq = function() {
+  return this.packet_.request_seq;
+}
+
+
+/**
+ * Get the packet request sequence.
+ * @return {number} the packet request sequence
+ */
+ProtocolPackage.prototype.running = function() {
+  return this.packet_.running ? true : false;
+}
+
+
+ProtocolPackage.prototype.success = function() {
+  return this.packet_.success ? true : false;
+}
+
+
+ProtocolPackage.prototype.message = function() {
+  return this.packet_.message;
+}
+
+
+ProtocolPackage.prototype.body = function() {
+  return this.packet_.body;
+}
+
+
+ProtocolPackage.prototype.lookup = function(handle) {
+  return this.refs_[handle];
+}
 
 
 /**
