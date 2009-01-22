@@ -174,7 +174,7 @@ SVGFontElement* CachedFont::getSVGFontById(const String& fontName) const
 
 void CachedFont::allClientsRemoved()
 {
-#if PLATFORM(CG) || PLATFORM(QT) || PLATFORM(GTK)
+#if PLATFORM(CG) || PLATFORM(QT) || PLATFORM(GTK) || (PLATFORM(CHROMIUM) && PLATFORM(WIN_OS))
     if (m_fontData) {
         delete m_fontData;
         m_fontData = 0;
