@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2008, Google Inc. All rights reserved.
- * 
+ * Copyright (c) 2009, Google Inc. All rights reserved.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
  *     * Redistributions in binary form must reproduce the above
@@ -14,7 +14,7 @@
  *     * Neither the name of Google Inc. nor the names of its
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -29,48 +29,34 @@
  */
 
 #include "config.h"
+#include "ThreadableLoader.h"
 
-#if ENABLE(SVG)
-#include "SVGPaintServer.h"
-
-#include "GraphicsContext.h"
-#include "RenderPath.h"
-#include "PlatformContextSkia.h"
-#include "SkiaUtils.h"
+#include "DocumentThreadableLoader.h"
+#include "Document.h"
+#include "Frame.h"
+#include "FrameLoader.h"
+#include "ScriptExecutionContext.h"
 
 namespace WebCore {
 
-void SVGPaintServer::draw(GraphicsContext*& context, const RenderObject* object, SVGPaintTargetType type) const
+PassRefPtr<ThreadableLoader> ThreadableLoader::create(ScriptExecutionContext* context, ThreadableLoaderClient* client, const ResourceRequest& request, LoadCallbacks callbacksSetting, ContentSniff contentSniff) 
 {
-    if (!setup(context, object, type))
-        return;
+    ASSERT(client);
+    ASSERT(context);
+    ASSERT(context->isDocument());
 
-    renderPath(context, object, type);
-    teardown(context, object, type);
+    return DocumentThreadableLoader::create(static_cast<Document*>(context), client, request, callbacksSetting, contentSniff);
 }
 
-void SVGPaintServer::teardown(GraphicsContext*& context, const RenderObject*, SVGPaintTargetType, bool isPaintingText) const
+unsigned long ThreadableLoader::loadResourceSynchronously(ScriptExecutionContext* context, const ResourceRequest& request, ResourceError& error, ResourceResponse& response, Vector<char>& data)
 {
-    // WebKit implicitly expects us to reset the path.
-    // For example in fillAndStrokePath() of RenderPath.cpp the path is 
-    // added back to the context after filling. This is because internally it
-    // calls CGContextFillPath() which closes the path.
-    context->beginPath();
-    context->platformContext()->setGradient(0);
-    context->platformContext()->setPattern(0);
-}
+    ASSERT(context);
+    ASSERT(context->isDocument());
 
-void SVGPaintServer::renderPath(GraphicsContext*& context, const RenderObject* object, SVGPaintTargetType type) const
-{
-    RenderStyle* renderStyle = object ? object->style() : 0;
-
-    if ((type & ApplyToFillTargetType) && (!renderStyle || renderStyle->svgStyle()->hasFill()))
-        context->fillPath();
-
-    if ((type & ApplyToStrokeTargetType) && (!renderStyle || renderStyle->svgStyle()->hasStroke()))
-        context->strokePath();
+    Document* document = static_cast<Document*>(context);
+    if (!document->frame())
+        return std::numeric_limits<unsigned long>::max();
+    return document->frame()->loader()->loadResourceSynchronously(request, error, response, data);
 }
 
 } // namespace WebCore
-
-#endif

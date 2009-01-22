@@ -225,14 +225,14 @@ static int verticalScrollDistance(Frame* frame)
     if (!focusedNode)
         return 0;
     RenderObject* renderer = focusedNode->renderer();
-    if (!renderer)
+    if (!renderer || !renderer->isBox())
         return 0;
     RenderStyle* style = renderer->style();
     if (!style)
         return 0;
     if (!(style->overflowY() == OSCROLL || style->overflowY() == OAUTO || renderer->isTextArea()))
         return 0;
-    int height = renderer->clientHeight();
+    int height = RenderBox::toRenderBox(renderer)->clientHeight();
     return max((height + 1) / 2, height - cAmountToKeepWhenPaging);
 }
 
@@ -916,12 +916,12 @@ static bool executeStrikethrough(Frame* frame, Event*, EditorCommandSource sourc
 
 static bool executeSubscript(Frame* frame, Event*, EditorCommandSource source, const String&)
 {
-    return executeApplyStyle(frame, source, EditActionSubscript, CSSPropertyVerticalAlign, "sub");
+    return executeToggleStyle(frame, source, EditActionSubscript, CSSPropertyVerticalAlign, "baseline", "sub");
 }
 
 static bool executeSuperscript(Frame* frame, Event*, EditorCommandSource source, const String&)
 {
-    return executeApplyStyle(frame, source, EditActionSuperscript, CSSPropertyVerticalAlign, "super");
+    return executeToggleStyle(frame, source, EditActionSuperscript, CSSPropertyVerticalAlign, "baseline", "super");
 }
 
 static bool executeSwapWithMark(Frame* frame, Event*, EditorCommandSource, const String&)

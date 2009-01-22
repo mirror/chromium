@@ -1,6 +1,7 @@
 /*
  * Copyright (C) 2006 Nikolas Zimmermann <zimmermann@kde.org>
  *               2007 Rob Buis <buis@kde.org>
+ *               2008 Dirk Schulze <krit@webkit.org>
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -36,6 +37,10 @@
 #include "SVGStyledElement.h"
 #include "SVGURIReference.h"
 
+#if PLATFORM(SKIA)
+// FIXME: See the FIXME below about moving the teardown code into the graphics context.
+#include "PlatformContextSkia.h"
+#endif
 namespace WebCore {
 
 SVGPaintServer::SVGPaintServer()
@@ -156,6 +161,40 @@ void applyStrokeStyleToContext(GraphicsContext* context, RenderStyle* style, con
     const DashArray& dashes = dashArrayFromRenderingStyle(object->style());
     float dashOffset = SVGRenderStyle::cssPrimitiveToLength(object, style->svgStyle()->strokeDashOffset(), 0.0f);
     context->setLineDash(dashes, dashOffset);
+}
+
+void SVGPaintServer::draw(GraphicsContext*& context, const RenderObject* path, SVGPaintTargetType type) const
+{
+    if (!setup(context, path, type))
+        return;
+
+    renderPath(context, path, type);
+    teardown(context, path, type);
+}
+
+void SVGPaintServer::renderPath(GraphicsContext*& context, const RenderObject* path, SVGPaintTargetType type) const
+{
+    const SVGRenderStyle* style = path ? path->style()->svgStyle() : 0;
+
+    if ((type & ApplyToFillTargetType) && (!style || style->hasFill()))
+        context->fillPath();
+
+    if ((type & ApplyToStrokeTargetType) && (!style || style->hasStroke()))
+        context->strokePath();
+}
+
+void SVGPaintServer::teardown(GraphicsContext*& context, const RenderObject*, SVGPaintTargetType, bool) const
+{
+#if PLATFORM(SKIA)
+    // FIXME: Move this into the GraphicsContext
+    // WebKit implicitly expects us to reset the path.
+    // For example in fillAndStrokePath() of RenderPath.cpp the path is 
+    // added back to the context after filling. This is because internally it
+    // calls CGContextFillPath() which closes the path.
+    context->beginPath();
+    context->platformContext()->setGradient(0);
+    context->platformContext()->setPattern(0);
+#endif
 }
 
 DashArray dashArrayFromRenderingStyle(const RenderStyle* style)

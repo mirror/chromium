@@ -2748,6 +2748,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\loader\DocumentThreadableLoader.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\loader\DocumentThreadableLoader.h"
+				>
+			</File>
+			<File
 				RelativePath="..\loader\FormState.cpp"
 				>
 			</File>
@@ -2913,6 +2921,18 @@
 			</File>
 			<File
 				RelativePath="..\loader\TextResourceDecoder.h"
+				>
+			</File>
+			<File
+				RelativePath="..\loader\ThreadableLoader.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\loader\ThreadableLoader.h"
+				>
+			</File>
+			<File
+				RelativePath="..\loader\ThreadableLoaderClient.h"
 				>
 			</File>
 			<Filter
@@ -5802,6 +5822,10 @@
 				</File>
 				<File
 					RelativePath="..\platform\network\FormDataBuilder.h"
+					>
+				</File>
+				<File
+					RelativePath="..\platform\network\HTTPHeaderMap.cpp"
 					>
 				</File>
 				<File
@@ -12590,6 +12614,22 @@
 				>
 			</File>
 			<File
+				RelativePath="..\html\CanvasPixelArray.cpp"
+				>
+				<FileConfiguration
+					Name="Release_PGO|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						WholeProgramOptimization="true"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\html\CanvasPixelArray.h"
+				>
+			</File>
+			<File
 				RelativePath="..\html\CanvasRenderingContext2D.cpp"
 				>
 				<FileConfiguration
@@ -15488,26 +15528,6 @@
 					Name="cg"
 					>
 					<File
-						RelativePath="..\svg\graphics\cg\SVGPaintServerCg.cpp"
-						>
-						<FileConfiguration
-							Name="Debug_Cairo|Win32"
-							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release_Cairo|Win32"
-							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
-					</File>
-					<File
 						RelativePath="..\svg\graphics\cg\SVGResourceFilterCg.cpp"
 						>
 						<FileConfiguration
@@ -15707,42 +15727,6 @@
 				<Filter
 					Name="cairo"
 					>
-					<File
-						RelativePath="..\svg\graphics\cairo\SVGPaintServerCairo.cpp"
-						>
-						<FileConfiguration
-							Name="Debug|Win32"
-							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release|Win32"
-							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Debug_Internal|Win32"
-							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
-						<FileConfiguration
-							Name="Release_PGO|Win32"
-							ExcludedFromBuild="true"
-							>
-							<Tool
-								Name="VCCLCompilerTool"
-							/>
-						</FileConfiguration>
-					</File>
 					<File
 						RelativePath="..\svg\graphics\cairo\SVGResourceFilterCairo.cpp"
 						>

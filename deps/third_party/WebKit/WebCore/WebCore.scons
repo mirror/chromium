@@ -335,6 +335,7 @@ sources['loader'] = [
     'loader/CachedXSLStyleSheet.cpp',
     'loader/DocLoader.cpp',
     'loader/DocumentLoader.cpp',
+    'loader/DocumentThreadableLoader.cpp',
     'loader/FormState.cpp',
     'loader/FrameLoader.cpp',
     'loader/FTPDirectoryDocument.cpp',
@@ -353,6 +354,7 @@ sources['loader'] = [
     'loader/SubresourceLoader.cpp',
     'loader/TextDocument.cpp',
     'loader/TextResourceDecoder.cpp',
+    'loader/ThreadableLoader.cpp',
     'loader/UserStyleSheetLoader.cpp',
 ]
 sources['page'] = [
@@ -797,6 +799,7 @@ sources['platform/network'] = [
     'platform/network/Credential.cpp',
     'platform/network/FormData.cpp',
     'platform/network/FormDataBuilder.cpp',
+    'platform/network/HTTPHeaderMap.cpp',
     'platform/network/HTTPParsers.cpp',
     'platform/network/mac/NetworkStateNotifierMac.cpp',
     'platform/network/NetworkStateNotifier.cpp',

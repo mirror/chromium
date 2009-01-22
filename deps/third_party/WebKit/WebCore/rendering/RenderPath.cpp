@@ -172,9 +172,6 @@ void RenderPath::layout()
 
     m_absoluteBounds = absoluteClippedOverflowRect();
 
-    setWidth(m_absoluteBounds.width());
-    setHeight(m_absoluteBounds.height());
-
     if (checkForRepaint)
         repaintAfterLayoutIfNeeded(oldBounds, oldOutlineBox);
 
@@ -483,6 +480,13 @@ FloatRect RenderPath::drawMarkersIfNeeded(GraphicsContext* context, const FloatR
         bounds.unite(endMarker->cachedBounds());
 
     return bounds;
+}
+
+IntRect RenderPath::absoluteOutlineBounds() const
+{
+    IntRect result = m_absoluteBounds;
+    adjustRectForOutlineAndShadow(result);
+    return result;
 }
 
 }

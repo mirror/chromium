@@ -682,6 +682,7 @@ SOURCES += \
     history/PageCache.cpp \
     html/CanvasGradient.cpp \
     html/CanvasPattern.cpp \
+    html/CanvasPixelArray.cpp \
     html/CanvasRenderingContext2D.cpp \
     html/CanvasStyle.cpp \
     html/File.cpp \
@@ -785,6 +786,7 @@ SOURCES += \
     loader/CachedXSLStyleSheet.cpp \
     loader/DocLoader.cpp \
     loader/DocumentLoader.cpp \
+    loader/DocumentThreadableLoader.cpp \
     loader/FormState.cpp \
     loader/FrameLoader.cpp \
     loader/FrameLoaderClient.cpp \
@@ -805,6 +807,7 @@ SOURCES += \
     loader/SubresourceLoader.cpp \
     loader/TextDocument.cpp \
     loader/TextResourceDecoder.cpp \
+    loader/ThreadableLoader.cpp \
     page/AccessibilityImageMapLink.cpp \
     page/AccessibilityObject.cpp \    
     page/AccessibilityList.cpp \    
@@ -906,6 +909,7 @@ SOURCES += \
     platform/network/Credential.cpp \
     platform/network/FormData.cpp \
     platform/network/FormDataBuilder.cpp \
+    platform/network/HTTPHeaderMap.cpp \
     platform/network/HTTPParsers.cpp \
     platform/network/NetworkStateNotifier.cpp \
     platform/network/ProtectionSpace.cpp \
@@ -1801,7 +1805,6 @@ contains(DEFINES, ENABLE_SVG=1) {
         rendering/SVGRootInlineBox.cpp
 
 SOURCES += \
-        svg/graphics/qt/SVGPaintServerQt.cpp \
         svg/graphics/qt/SVGResourceFilterQt.cpp \
         svg/graphics/qt/SVGResourceMaskerQt.cpp
 

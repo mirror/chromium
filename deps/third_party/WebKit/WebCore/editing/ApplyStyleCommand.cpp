@@ -52,14 +52,16 @@ class StyleChange {
 public:
     enum ELegacyHTMLStyles { DoNotUseLegacyHTMLStyles, UseLegacyHTMLStyles };
 
-    explicit StyleChange(CSSStyleDeclaration *, ELegacyHTMLStyles usesLegacyStyles=UseLegacyHTMLStyles);
-    StyleChange(CSSStyleDeclaration *, const Position &, ELegacyHTMLStyles usesLegacyStyles=UseLegacyHTMLStyles);
+    explicit StyleChange(CSSStyleDeclaration*, ELegacyHTMLStyles usesLegacyStyles=UseLegacyHTMLStyles);
+    StyleChange(CSSStyleDeclaration*, const Position&, ELegacyHTMLStyles usesLegacyStyles=UseLegacyHTMLStyles);
 
     static ELegacyHTMLStyles styleModeForParseMode(bool);
 
     String cssStyle() const { return m_cssStyle; }
     bool applyBold() const { return m_applyBold; }
     bool applyItalic() const { return m_applyItalic; }
+    bool applySubscript() const { return m_applySubscript; }
+    bool applySuperscript() const { return m_applySuperscript; }
     bool applyFontColor() const { return m_applyFontColor.length() > 0; }
     bool applyFontFace() const { return m_applyFontFace.length() > 0; }
     bool applyFontSize() const { return m_applyFontSize.length() > 0; }
@@ -71,13 +73,15 @@ public:
     bool usesLegacyStyles() const { return m_usesLegacyStyles; }
 
 private:
-    void init(PassRefPtr<CSSStyleDeclaration>, const Position &);
-    bool checkForLegacyHTMLStyleChange(const CSSProperty *);
-    static bool currentlyHasStyle(const Position &, const CSSProperty *);
+    void init(PassRefPtr<CSSStyleDeclaration>, const Position&);
+    bool checkForLegacyHTMLStyleChange(const CSSProperty*);
+    static bool currentlyHasStyle(const Position&, const CSSProperty*);
     
     String m_cssStyle;
     bool m_applyBold;
     bool m_applyItalic;
+    bool m_applySubscript;
+    bool m_applySuperscript;
     String m_applyFontColor;
     String m_applyFontFace;
     String m_applyFontSize;
@@ -86,14 +90,22 @@ private:
 
 
 
-StyleChange::StyleChange(CSSStyleDeclaration *style, ELegacyHTMLStyles usesLegacyStyles)
-    : m_applyBold(false), m_applyItalic(false), m_usesLegacyStyles(usesLegacyStyles)
+StyleChange::StyleChange(CSSStyleDeclaration* style, ELegacyHTMLStyles usesLegacyStyles)
+    : m_applyBold(false)
+    , m_applyItalic(false)
+    , m_applySubscript(false)
+    , m_applySuperscript(false)
+    , m_usesLegacyStyles(usesLegacyStyles)
 {
     init(style, Position());
 }
 
-StyleChange::StyleChange(CSSStyleDeclaration *style, const Position &position, ELegacyHTMLStyles usesLegacyStyles)
-    : m_applyBold(false), m_applyItalic(false), m_usesLegacyStyles(usesLegacyStyles)
+StyleChange::StyleChange(CSSStyleDeclaration* style, const Position& position, ELegacyHTMLStyles usesLegacyStyles)
+    : m_applyBold(false)
+    , m_applyItalic(false)
+    , m_applySubscript(false)
+    , m_applySuperscript(false)
+    , m_usesLegacyStyles(usesLegacyStyles)
 {
     init(style, position);
 }
@@ -132,6 +144,7 @@ void StyleChange::init(PassRefPtr<CSSStyleDeclaration> style, const Position &po
 
         if (property->id() == CSSPropertyWebkitTextDecorationsInEffect) {
             // we have to special-case text decorations
+            // FIXME: Why?
             CSSProperty alteredProperty(CSSPropertyTextDecoration, property->value(), property->isImportant());
             styleText += alteredProperty.cssText();
         } else
@@ -152,17 +165,27 @@ StyleChange::ELegacyHTMLStyles StyleChange::styleModeForParseMode(bool isQuirksM
     return isQuirksMode ? UseLegacyHTMLStyles : DoNotUseLegacyHTMLStyles;
 }
 
-bool StyleChange::checkForLegacyHTMLStyleChange(const CSSProperty *property)
+// This function is the mapping from CSS styles to styling tags (like font-weight: bold to <b>)
+bool StyleChange::checkForLegacyHTMLStyleChange(const CSSProperty* property)
 {
-    if (!property || !property->value()) {
+    if (!property || !property->value())
         return false;
-    }
     
     String valueText(property->value()->cssText());
     switch (property->id()) {
         case CSSPropertyFontWeight:
             if (equalIgnoringCase(valueText, "bold")) {
                 m_applyBold = true;
+                return true;
+            }
+            break;
+        case CSSPropertyVerticalAlign:
+            if (equalIgnoringCase(valueText, "sub")) {
+                m_applySubscript = true;
+                return true;
+            }
+            if (equalIgnoringCase(valueText, "super")) {
+                m_applySuperscript = true;
                 return true;
             }
             break;
@@ -265,16 +288,14 @@ static bool isEmptyFontTag(const Node *node)
 
 static PassRefPtr<Element> createFontElement(Document* document)
 {
-    ExceptionCode ec = 0;
-    RefPtr<Element> fontNode = document->createElementNS(xhtmlNamespaceURI, "font", ec);
-    ASSERT(ec == 0);
+    RefPtr<Element> fontNode = createHTMLElement(document, fontTag);
     fontNode->setAttribute(classAttr, styleSpanClassString());
     return fontNode.release();
 }
 
 PassRefPtr<HTMLElement> createStyleSpanElement(Document* document)
 {
-    RefPtr<HTMLElement> styleElement = new HTMLElement(spanTag, document);
+    RefPtr<HTMLElement> styleElement = createHTMLElement(document, spanTag);
     styleElement->setAttribute(classAttr, styleSpanClassString());
     return styleElement.release();
 }
@@ -914,18 +935,24 @@ void ApplyStyleCommand::applyInlineStyleToRange(CSSMutableStyleDeclaration* styl
     }
 }
 
-bool ApplyStyleCommand::isHTMLStyleNode(CSSMutableStyleDeclaration *style, HTMLElement *elem)
+// This function maps from styling tags to CSS styles.  Used for knowing which
+// styling tags should be removed when toggling styles.
+bool ApplyStyleCommand::isHTMLStyleNode(CSSMutableStyleDeclaration* style, HTMLElement* elem)
 {
     CSSMutableStyleDeclaration::const_iterator end = style->end();
     for (CSSMutableStyleDeclaration::const_iterator it = style->begin(); it != end; ++it) {
         switch ((*it).id()) {
-            case CSSPropertyFontWeight:
-                if (elem->hasLocalName(bTag))
-                    return true;
-                break;
-            case CSSPropertyFontStyle:
-                if (elem->hasLocalName(iTag))
-                    return true;
+        case CSSPropertyFontWeight:
+            if (elem->hasLocalName(bTag))
+                return true;
+            break;
+        case CSSPropertyVerticalAlign:
+            if (elem->hasLocalName(subTag) || elem->hasLocalName(supTag))
+                return true;
+            break;
+        case CSSPropertyFontStyle:
+            if (elem->hasLocalName(iTag))
+                return true;
         }
     }
 
@@ -986,12 +1013,12 @@ void ApplyStyleCommand::removeHTMLBidiEmbeddingStyle(CSSMutableStyleDeclaration 
         removeNodePreservingChildren(elem);
 }
 
-void ApplyStyleCommand::removeCSSStyle(CSSMutableStyleDeclaration *style, HTMLElement *elem)
+void ApplyStyleCommand::removeCSSStyle(CSSMutableStyleDeclaration* style, HTMLElement* elem)
 {
     ASSERT(style);
     ASSERT(elem);
 
-    CSSMutableStyleDeclaration *decl = elem->inlineStyleDecl();
+    CSSMutableStyleDeclaration* decl = elem->inlineStyleDecl();
     if (!decl)
         return;
 
@@ -1005,6 +1032,10 @@ void ApplyStyleCommand::removeCSSStyle(CSSMutableStyleDeclaration *style, HTMLEl
                 removeCSSProperty(decl, CSSPropertyDirection);
         }
     }
+
+    // No need to serialize <foo style=""> if we just removed the last css property
+    if (decl->length() == 0)
+        removeNodeAttribute(elem, styleAttr);
 
     if (isUnstyledStyleSpan(elem))
         removeNodePreservingChildren(elem);
@@ -1496,16 +1527,14 @@ void ApplyStyleCommand::addInlineStyleIfNeeded(CSSMutableStyleDeclaration *style
 {
     if (m_removeOnly)
         return;
-        
+
     StyleChange styleChange(style, Position(startNode, 0), StyleChange::styleModeForParseMode(document()->inCompatMode()));
-    ExceptionCode ec = 0;
-    
+
     //
     // Font tags need to go outside of CSS so that CSS font sizes override leagcy font sizes.
     //
     if (styleChange.applyFontColor() || styleChange.applyFontFace() || styleChange.applyFontSize()) {
         RefPtr<Element> fontElement = createFontElement(document());
-        ASSERT(ec == 0);
         RenderStyle* computedStyle = startNode->computedStyle();
 
         // We only want to insert a font element if it will end up changing the style of the
@@ -1531,11 +1560,16 @@ void ApplyStyleCommand::addInlineStyleIfNeeded(CSSMutableStyleDeclaration *style
     }
 
     if (styleChange.applyBold())
-        surroundNodeRangeWithElement(startNode, endNode, document()->createElementNS(xhtmlNamespaceURI, "b", ec));
+        surroundNodeRangeWithElement(startNode, endNode, createHTMLElement(document(), bTag));
 
     if (styleChange.applyItalic())
-        surroundNodeRangeWithElement(startNode, endNode, document()->createElementNS(xhtmlNamespaceURI, "i", ec));
-    
+        surroundNodeRangeWithElement(startNode, endNode, createHTMLElement(document(), iTag));
+
+    if (styleChange.applySubscript())
+        surroundNodeRangeWithElement(startNode, endNode, createHTMLElement(document(), subTag));
+    else if (styleChange.applySuperscript())
+        surroundNodeRangeWithElement(startNode, endNode, createHTMLElement(document(), supTag));
+
     if (m_styledInlineElement)
         surroundNodeRangeWithElement(startNode, endNode, m_styledInlineElement->cloneElement());
 }

@@ -44,7 +44,6 @@ RenderSVGContainer::RenderSVGContainer(SVGStyledElement* node)
     , m_height(0)
     , m_drawsContents(true)
 {
-    setReplaced(true);
 }
 
 RenderSVGContainer::~RenderSVGContainer()
@@ -429,6 +428,13 @@ bool RenderSVGContainer::nodeAtPoint(const HitTestRequest& request, HitTestResul
     // Spec: Only graphical elements can be targeted by the mouse, period.
     // 16.4: "If there are no graphics elements whose relevant graphics content is under the pointer (i.e., there is no target element), the event is not dispatched."
     return false;
+}
+
+IntRect RenderSVGContainer::absoluteOutlineBounds() const
+{
+    IntRect result = m_absoluteBounds;
+    adjustRectForOutlineAndShadow(result);
+    return result;
 }
 
 }

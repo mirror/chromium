@@ -29,8 +29,6 @@
 #include "config.h"
 #include "ImageData.h"
 
-using namespace WTF;
-
 namespace WebCore {
 
 PassRefPtr<ImageData> ImageData::create(unsigned width, unsigned height)

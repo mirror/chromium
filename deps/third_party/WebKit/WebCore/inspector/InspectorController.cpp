@@ -1712,7 +1712,7 @@ void InspectorController::drawNodeHighlight(GraphicsContext& context) const
     if (!m_highlightedNode)
         return;
 
-    RenderObject* renderer = m_highlightedNode->renderer();
+    RenderBox* renderer = m_highlightedNode->renderBox();
     Frame* containingFrame = m_highlightedNode->document()->frame(); 
     if (!renderer || !containingFrame) 
         return;

@@ -1177,12 +1177,12 @@ bool AccessibilityRenderObject::accessibilityIsIgnored() const
         }
         
         // check for one-dimensional image
-        if (m_renderer->height() <= 1 || m_renderer->width() <= 1)
+        RenderImage* image = static_cast<RenderImage*>(m_renderer);
+        if (image->height() <= 1 || image->width() <= 1)
             return true;
         
         // check whether rendered image was stretched from one-dimensional file image
         if (isNativeImage()) {
-            RenderImage* image = static_cast<RenderImage*>(m_renderer);
             if (image->cachedImage()) {
                 IntSize imageSize = image->cachedImage()->imageSize(image->view()->zoomFactor());
                 return imageSize.height() <= 1 || imageSize.width() <= 1;
@@ -2215,12 +2215,20 @@ bool AccessibilityRenderObject::canSetTextRangeAttributes() const
 
 void AccessibilityRenderObject::childrenChanged()
 {
-    clearChildren();
+    // this method is meant as a quick way of marking dirty
+    // a portion of the accessibility tree
     
-    if (accessibilityIsIgnored()) {
-        AccessibilityObject* parent = parentObject();
-        if (parent)
-            parent->childrenChanged();
+    markChildrenDirty();
+    
+    // this object may not be accessible (and thus may not appear
+    // in the hierarchy), which means we need to go up the parent
+    // chain and mark the parent's dirty. Ideally, we would want
+    // to only access the next object that is not ignored, but
+    // asking an element if it's ignored can lead to an examination of the
+    // render tree which is dangerous.
+    for (AccessibilityObject* parent = parentObject(); parent; parent = parent->parentObject()) {
+        if (parent->isAccessibilityRenderObject())
+            static_cast<AccessibilityRenderObject *>(parent)->markChildrenDirty();
     }
 }
     
@@ -2244,6 +2252,11 @@ bool AccessibilityRenderObject::canHaveChildren() const
 
 const AccessibilityObject::AccessibilityChildrenVector& AccessibilityRenderObject::children()
 {
+    if (m_childrenDirty) {
+        clearChildren();        
+        m_childrenDirty = false;
+    }
+    
     if (!m_haveChildren)
         addChildren();
     return m_children;
@@ -2404,5 +2417,11 @@ const String& AccessibilityRenderObject::actionVerb() const
     }
 }
      
+void AccessibilityRenderObject::updateBackingStore()
+{
+    if (!m_renderer)
+        return;
+    m_renderer->view()->layoutIfNeeded();
+}    
     
 } // namespace WebCore
