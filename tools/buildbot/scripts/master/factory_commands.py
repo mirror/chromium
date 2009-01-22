@@ -938,6 +938,10 @@ class FactoryCommands(object):
     # mac.
     if self._target_platform == 'darwin':
       cmd.append('--no-pixel-tests')
+    # Mac has a memory stomp, run in batches to minimize false failure/crashe
+    # reports due to the corruption.
+    if self._target_platform == 'darwin':
+      cmd.append('--batch-size=100')
     if with_pageheap:
       cmd.append('--enable-pageheap')
     return cmd
