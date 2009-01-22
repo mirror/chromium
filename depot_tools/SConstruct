@@ -13,12 +13,11 @@ import zipfile
 
 default_url = 'http://src.chromium.org/svn/trunk/depot_tools'
 
-if ARGUMENTS.get('RELEASE') == '1':
-  depot_tools_dir = ''
-  depot_tools_dir_ = ''
-else:
-  depot_tools_dir = ARGUMENTS.get('DEPOT_TOOLS_DIR', 'development')
+depot_tools_dir = ARGUMENTS.get('DEPOT_TOOLS_DIR', '')
+if depot_tools_dir:
   depot_tools_dir_ = depot_tools_dir + '/'
+else:
+  depot_tools_dir_ = ''
 
 download_url = ARGUMENTS.get('DOWNLOAD_URL')
 if download_url is None:
@@ -203,12 +202,13 @@ for release_arch in release_arches:
   Export('env')
   SConscript('src/wrappers/SConscript')
   SConscript('src/release/SConscript')
-  if release_arch in ('linux', 'mac'):
-    env.TarWrappers('${DEPOT_TOOLS_DIR_}depot_tools_${RELEASE_ARCH}.tar.gz',
-                    '$WRAPPER_DIR')
-  if release_arch in ('win',):
-    env.ZipWrappers('${DEPOT_TOOLS_DIR_}depot_tools_${RELEASE_ARCH}.zip',
-                    '$WRAPPER_DIR')
+  if ARGUMENTS.get('DEPOT_TOOLS_DIR', '') == '1':
+    if release_arch in ('linux', 'mac'):
+      env.TarWrappers('${DEPOT_TOOLS_DIR_}depot_tools_${RELEASE_ARCH}.tar.gz',
+                      '$WRAPPER_DIR')
+    if release_arch in ('win',):
+      env.ZipWrappers('${DEPOT_TOOLS_DIR_}depot_tools_${RELEASE_ARCH}.zip',
+                      '$WRAPPER_DIR')
 
 
 Help("""
@@ -220,10 +220,7 @@ SCons configuration for packaging depot_tools.
 	                appropriate update scripts for depot_tools to
                         sync from.
   DEPOT_TOOLS_DIR=      Specify the directory into which to build/release
-                        the scripts.  Default is 'development'.
-  RELEASE=1             Specifies that you want to release a copy of
-                        what's in src/ publicly.  Causes the linux/,
-                        mac/, release/ and win/ directories to be
-                        upated.  You can then "svn diff" to make sure
-                        things look okay before committing.
+                        the scripts.  Default is ''.
+  TAR=1                 Generates depot_tools_win.zip, depot_tools_mac.tar.gz or
+                        depot_tools_linux.tar.gz
 """)
