@@ -934,13 +934,12 @@ class FactoryCommands(object):
            '-o', self.GetWebkitResultDir(),
            '--build-dir', self._build_dir]
 
-    # Only run pixel tests on windows and linux until we're ready for them on
-    # mac.
     if self._target_platform == 'darwin':
+      # Only run pixel tests on windows and linux until we're ready for them on
+      # mac.
       cmd.append('--no-pixel-tests')
-    # Mac has a memory stomp, run in batches to minimize false failure/crashe
-    # reports due to the corruption.
-    if self._target_platform == 'darwin':
+      # Mac has a memory stomp, run in batches to minimize false failure/crash
+      # reports due to the corruption.
       cmd.append('--batch-size=100')
     if with_pageheap:
       cmd.append('--enable-pageheap')
