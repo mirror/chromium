@@ -341,9 +341,6 @@ public:
     
     bool hasBoxDecorations() const { return m_paintBackground; }
     bool mustRepaintBackgroundOrBorder() const;
-
-    bool hasHorizontalBordersPaddingOrMargin() const { return hasHorizontalBordersOrPadding() || marginLeft() != 0 || marginRight() != 0; }
-    bool hasHorizontalBordersOrPadding() const { return borderLeft() != 0 || borderRight() != 0 || paddingLeft() != 0 || paddingRight() != 0; }
                                                               
     bool needsLayout() const { return m_needsLayout || m_normalChildNeedsLayout || m_posChildNeedsLayout || m_needsPositionedMovementLayout; }
     bool selfNeedsLayout() const { return m_needsLayout; }
@@ -567,15 +564,6 @@ public:
     virtual FloatPoint localToAbsolute(FloatPoint localPoint = FloatPoint(), bool fixed = false, bool useTransforms = false) const;
     virtual FloatPoint absoluteToLocal(FloatPoint, bool fixed = false, bool useTransforms = false) const;
 
-    // This function is used to deal with the extra top space that can occur in table cells (called intrinsicPaddingTop).
-    // The children of the cell do not factor this space in, so we have to add it in.  Any code that wants to
-    // accurately deal with the contents of a cell must call this function instad of absolutePosition.
-    FloatPoint localToAbsoluteForContent(FloatPoint localPoint = FloatPoint(), bool fixed = false, bool useTransforms = false) const
-    {
-        localPoint.move(0.0f, static_cast<float>(borderTopExtra()));
-        return localToAbsolute(localPoint, fixed, useTransforms);
-    }
-
     // Convert a local quad to an absolute quad, taking transforms into account.
     virtual FloatQuad localToAbsoluteQuad(const FloatQuad&, bool fixed = false) const;
 
@@ -590,40 +578,6 @@ public:
     virtual void panScroll(const IntPoint&);
 
     virtual bool isScrollable() const;
-
-    // The following seven functions are used to implement collapsing margins.
-    // All objects know their maximal positive and negative margins.  The
-    // formula for computing a collapsed margin is |maxPosMargin|-|maxNegmargin|.
-    // For a non-collapsing, e.g., a leaf element, this formula will simply return
-    // the margin of the element.  Blocks override the maxTopMargin and maxBottomMargin
-    // methods.
-    virtual bool isSelfCollapsingBlock() const { return false; }
-    virtual int collapsedMarginTop() const { return maxTopMargin(true) - maxTopMargin(false); }
-    virtual int collapsedMarginBottom() const { return maxBottomMargin(true) - maxBottomMargin(false); }
-    virtual bool isTopMarginQuirk() const { return false; }
-    virtual bool isBottomMarginQuirk() const { return false; }
-
-    virtual int maxTopMargin(bool positive) const;
-    virtual int maxBottomMargin(bool positive) const;
-
-    virtual int marginTop() const { return 0; }
-    virtual int marginBottom() const { return 0; }
-    virtual int marginLeft() const { return 0; }
-    virtual int marginRight() const { return 0; }
-
-    // Virtual since table cells override
-    virtual int paddingTop() const;
-    virtual int paddingBottom() const;
-    virtual int paddingLeft() const;
-    virtual int paddingRight() const;
-
-    virtual int borderTopExtra() const { return 0; }
-    virtual int borderBottomExtra() const { return 0; }
-
-    virtual int borderTop() const { return style()->borderTopWidth(); }
-    virtual int borderBottom() const { return style()->borderBottomWidth(); }
-    virtual int borderLeft() const { return style()->borderLeftWidth(); }
-    virtual int borderRight() const { return style()->borderRightWidth(); }
 
     virtual void addLineBoxRects(Vector<IntRect>&, unsigned startOffset = 0, unsigned endOffset = UINT_MAX, bool useSelectionHeight = false);
     
@@ -694,7 +648,6 @@ public:
     virtual bool containsFloats() { return false; }
     virtual bool containsFloat(RenderObject*) { return false; }
     virtual bool hasOverhangingFloats() { return false; }
-    virtual bool expandsToEncloseOverhangingFloats() const { return isFloating() && style()->height().isAuto(); }
 
     virtual void removePositionedObjects(RenderBlock*) { }
 

@@ -43,9 +43,8 @@ RenderTableCell::RenderTableCell(Node* node)
     , m_column(-1)
     , m_rowSpan(1)
     , m_columnSpan(1)
-    , m_topExtra(0)
-    , m_bottomExtra(0)
-    , m_widthChanged(false)
+    , m_intrinsicPaddingTop(0)
+    , m_intrinsicPaddingBottom(0)
     , m_percentageHeight(0)
 {
     updateFromElement();
@@ -127,14 +126,30 @@ void RenderTableCell::updateWidth(int w)
 {
     if (w != width()) {
         setWidth(w);
-        m_widthChanged = true;
+        m_cellWidthChanged = true;
     }
 }
 
 void RenderTableCell::layout()
 {
-    layoutBlock(m_widthChanged);
-    m_widthChanged = false;
+    layoutBlock(m_cellWidthChanged);
+    m_cellWidthChanged = false;
+}
+
+int RenderTableCell::paddingTop(bool includeIntrinsicPadding) const
+{
+    return RenderBlock::paddingTop() + (includeIntrinsicPadding ? intrinsicPaddingTop() : 0);
+}
+
+int RenderTableCell::paddingBottom(bool includeIntrinsicPadding) const
+{
+    return RenderBlock::paddingBottom() + (includeIntrinsicPadding ? intrinsicPaddingBottom() : 0);
+}
+
+void RenderTableCell::setOverrideSize(int size)
+{
+    clearIntrinsicPadding();
+    RenderBlock::setOverrideSize(size);
 }
 
 IntRect RenderTableCell::absoluteClippedOverflowRect()
@@ -177,8 +192,8 @@ IntRect RenderTableCell::absoluteClippedOverflowRect()
         }
     }
     left = max(left, -overflowLeft(false));
-    top = max(top, -overflowTop(false) - borderTopExtra());
-    IntRect r(-left, -borderTopExtra() - top, left + max(width() + right, overflowWidth(false)), borderTopExtra() + top + max(height() + bottom + borderBottomExtra(), overflowHeight(false)));
+    top = max(top, -overflowTop(false));
+    IntRect r(-left, - top, left + max(width() + right, overflowWidth(false)), top + max(height() + bottom, overflowHeight(false)));
 
     if (RenderView* v = view())
         r.move(v->layoutDelta());
@@ -189,7 +204,7 @@ IntRect RenderTableCell::absoluteClippedOverflowRect()
 
 void RenderTableCell::computeAbsoluteRepaintRect(IntRect& r, bool fixed)
 {
-    r.setY(r.y() + m_topExtra);
+    r.setY(r.y());
     RenderView* v = view();
     if ((!v || !v->layoutStateEnabled()) && parent())
         r.move(-parentBox()->x(), -parentBox()->y()); // Rows are in the same coordinate space, so don't add their offset in.
@@ -231,11 +246,9 @@ int RenderTableCell::baselinePosition(bool /*firstLine*/, bool /*isRootLineBox*/
     // <http://www.w3.org/TR/2007/CR-CSS21-20070719/tables.html#height-layout>: The baseline of a cell is the baseline of
     // the first in-flow line box in the cell, or the first in-flow table-row in the cell, whichever comes first. If there
     // is no such line box or table-row, the baseline is the bottom of content edge of the cell box.
-
     int firstLineBaseline = getBaselineOfFirstLineBox();
     if (firstLineBaseline != -1)
         return firstLineBaseline;
-
     return paddingTop() + borderTop() + contentHeight();
 }
 
@@ -631,22 +644,20 @@ int RenderTableCell::borderHalfBottom(bool outer) const
 void RenderTableCell::paint(PaintInfo& paintInfo, int tx, int ty)
 {
     tx += x();
-    ty += m_frameRect.y();
+    ty += y();
 
     // check if we need to do anything at all...
     int os = 2 * maximalOutlineSize(paintInfo.phase);
 
     if (paintInfo.phase == PaintPhaseCollapsedTableBorders && style()->visibility() == VISIBLE) {
         if (ty - table()->outerBorderTop() >= paintInfo.rect.bottom() + os ||
-                ty + m_topExtra + height() + m_bottomExtra + table()->outerBorderBottom() <= paintInfo.rect.y() - os)
+                ty + height() + table()->outerBorderBottom() <= paintInfo.rect.y() - os)
             return;
-        int w = width();
-        int h = height() + borderTopExtra() + borderBottomExtra();
-        paintCollapsedBorder(paintInfo.context, tx, ty, w, h);
+        paintCollapsedBorder(paintInfo.context, tx, ty, width(), height());
     } else {
-        if (ty + overflowTop(false) >= paintInfo.rect.bottom() + os || ty + m_topExtra + overflowHeight(false) + m_bottomExtra <= paintInfo.rect.y() - os)
+        if (ty + overflowTop(false) >= paintInfo.rect.bottom() + os || ty + overflowHeight(false) <= paintInfo.rect.y() - os)
             return;
-        RenderBlock::paintObject(paintInfo, tx, ty + m_topExtra);
+        RenderBlock::paintObject(paintInfo, tx, ty);
     }
 }
 
@@ -808,12 +819,11 @@ void RenderTableCell::paintBackgroundsBehindCell(PaintInfo& paintInfo, int tx, i
 
     if (backgroundObject != this) {
         tx += x();
-        ty += m_frameRect.y() + m_topExtra;
+        ty += y();
     }
 
     int w = width();
-    int h = height() + borderTopExtra() + borderBottomExtra();
-    ty -= borderTopExtra();
+    int h = height();
 
     int my = max(ty, paintInfo.rect.y());
     int end = min(paintInfo.rect.bottom(), ty + h);
@@ -845,10 +855,10 @@ void RenderTableCell::paintBoxDecorations(PaintInfo& paintInfo, int tx, int ty)
         return;
 
     int w = width();
-    int h = height() + borderTopExtra() + borderBottomExtra();
+    int h = height();
    
     if (style()->boxShadow())
-        paintBoxShadow(paintInfo.context, tx, ty - borderTopExtra(), w, h, style());
+        paintBoxShadow(paintInfo.context, tx, ty, w, h, style());
     
     // Paint our cell background.
     paintBackgroundsBehindCell(paintInfo, tx, ty, this);
@@ -856,7 +866,6 @@ void RenderTableCell::paintBoxDecorations(PaintInfo& paintInfo, int tx, int ty)
     if (!style()->hasBorder() || tableElt->collapseBorders())
         return;
 
-    ty -= borderTopExtra();
     paintBorder(paintInfo.context, tx, ty, w, h, style());
 }
 
@@ -870,7 +879,7 @@ void RenderTableCell::paintMask(PaintInfo& paintInfo, int tx, int ty)
         return;
 
     int w = width();
-    int h = height() + borderTopExtra() + borderBottomExtra();
+    int h = height();
    
     int my = max(ty, paintInfo.rect.y());
     int end = min(paintInfo.rect.bottom(), ty + h);

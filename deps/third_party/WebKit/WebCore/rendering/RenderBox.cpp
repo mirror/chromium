@@ -46,6 +46,10 @@
 #include <algorithm>
 #include <math.h>
 
+#if ENABLE(WML)
+#include "WMLNames.h"
+#endif
+
 using namespace std;
 
 namespace WebCore {
@@ -240,7 +244,7 @@ int RenderBox::offsetTop() const
     RenderBox* offsetPar = offsetParent();
     if (!offsetPar)
         return 0;
-    int yPos = m_frameRect.y() - offsetPar->borderTop();
+    int yPos = y() - offsetPar->borderTop();
     if (!isPositioned()) {
         if (isRelPositioned())
             yPos += relativePositionOffsetY();
@@ -339,6 +343,42 @@ void RenderBox::setScrollTop(int newTop)
         m_layer->scrollToYOffset(newTop);
 }
 
+int RenderBox::paddingTop(bool) const
+{
+    int w = 0;
+    Length padding = style()->paddingTop();
+    if (padding.isPercent())
+        w = containingBlock()->availableWidth();
+    return padding.calcMinValue(w);
+}
+
+int RenderBox::paddingBottom(bool) const
+{
+    int w = 0;
+    Length padding = style()->paddingBottom();
+    if (padding.isPercent())
+        w = containingBlock()->availableWidth();
+    return padding.calcMinValue(w);
+}
+
+int RenderBox::paddingLeft(bool) const
+{
+    int w = 0;
+    Length padding = style()->paddingLeft();
+    if (padding.isPercent())
+        w = containingBlock()->availableWidth();
+    return padding.calcMinValue(w);
+}
+
+int RenderBox::paddingRight(bool) const
+{
+    int w = 0;
+    Length padding = style()->paddingRight();
+    if (padding.isPercent())
+        w = containingBlock()->availableWidth();
+    return padding.calcMinValue(w);
+}
+
 void RenderBox::absoluteRects(Vector<IntRect>& rects, int tx, int ty, bool topLevel)
 {
     // For blocks inside inlines, we go ahead and include margins so that we run right up to the
@@ -352,7 +392,7 @@ void RenderBox::absoluteRects(Vector<IntRect>& rects, int tx, int ty, bool topLe
                                     tx - x() + continuation->containingBlock()->x(),
                                     ty - y() + continuation->containingBlock()->y(), topLevel);
     } else
-        rects.append(IntRect(tx, ty, width(), height() + borderTopExtra() + borderBottomExtra()));
+        rects.append(IntRect(tx, ty, width(), height()));
 }
 
 void RenderBox::absoluteQuads(Vector<FloatQuad>& quads, bool topLevel)
@@ -367,13 +407,13 @@ void RenderBox::absoluteQuads(Vector<FloatQuad>& quads, bool topLevel)
         quads.append(localToAbsoluteQuad(localRect));
         continuation->absoluteQuads(quads, topLevel);
     } else
-        quads.append(localToAbsoluteQuad(FloatRect(0, 0, width(), height() + borderTopExtra() + borderBottomExtra())));
+        quads.append(localToAbsoluteQuad(FloatRect(0, 0, width(), height())));
 }
 
 IntRect RenderBox::absoluteContentBox() const
 {
     IntRect rect = contentBoxRect();
-    FloatPoint absPos = localToAbsoluteForContent(FloatPoint());
+    FloatPoint absPos = localToAbsolute(FloatPoint());
     rect.move(absPos.x(), absPos.y());
     return rect;
 }
@@ -552,7 +592,7 @@ int RenderBox::calcContentBoxHeight(int height) const
 bool RenderBox::nodeAtPoint(const HitTestRequest& request, HitTestResult& result, int xPos, int yPos, int tx, int ty, HitTestAction action)
 {
     tx += x();
-    ty += m_frameRect.y();
+    ty += y();
 
     // Check kids first.
     for (RenderObject* child = lastChild(); child; child = child->previousSibling()) {
@@ -581,7 +621,7 @@ bool RenderBox::nodeAtPoint(const HitTestRequest& request, HitTestResult& result
 void RenderBox::paint(PaintInfo& paintInfo, int tx, int ty)
 {
     tx += x();
-    ty += m_frameRect.y();
+    ty += y();
 
     // default implementation. Just pass paint through to the children
     PaintInfo childInfo(paintInfo);
@@ -647,8 +687,7 @@ void RenderBox::paintBoxDecorations(PaintInfo& paintInfo, int tx, int ty)
     }
 
     int w = width();
-    int h = height() + borderTopExtra() + borderBottomExtra();
-    ty -= borderTopExtra();
+    int h = height();
 
     // border-fit can adjust where we paint our border and background.  If set, we snugly fit our line box descendants.  (The iChat
     // balloon layout is an example of this).
@@ -689,8 +728,7 @@ void RenderBox::paintMask(PaintInfo& paintInfo, int tx, int ty)
         return;
 
     int w = width();
-    int h = height() + borderTopExtra() + borderBottomExtra();
-    ty -= borderTopExtra();
+    int h = height();
 
     // border-fit can adjust where we paint our border and background.  If set, we snugly fit our line box descendants.  (The iChat
     // balloon layout is an example of this).
@@ -1136,7 +1174,7 @@ void RenderBox::paintCustomHighlight(int tx, int ty, const AtomicString& type, b
         FloatRect imageRect(tx + x(), rootRect.y(), width(), rootRect.height());
         page->chrome()->client()->paintCustomHighlight(node(), type, imageRect, rootRect, behindText, false);
     } else {
-        FloatRect imageRect(tx + x(), ty + m_frameRect.y(), width(), height());
+        FloatRect imageRect(tx + x(), ty + y(), width(), height());
         page->chrome()->client()->paintCustomHighlight(node(), type, imageRect, imageRect, behindText, false);
     }
 }
@@ -1154,7 +1192,7 @@ IntRect RenderBox::getOverflowClipRect(int tx, int ty)
     int clipX = tx + bLeft;
     int clipY = ty + bTop;
     int clipWidth = width() - bLeft - borderRight();
-    int clipHeight = height() - bTop - borderBottom() + borderTopExtra() + borderBottomExtra();
+    int clipHeight = height() - bTop - borderBottom();
 
     // Subtract out scrollbars if we have them.
     if (m_layer) {
@@ -1199,7 +1237,7 @@ int RenderBox::containingBlockWidth() const
     if (!cb)
         return 0;
     if (shrinkToAvoidFloats())
-        return cb->lineWidth(m_frameRect.y());
+        return cb->lineWidth(y());
     return cb->availableWidth();
 }
 
@@ -1246,7 +1284,7 @@ FloatPoint RenderBox::localToAbsolute(FloatPoint localPoint, bool fixed, bool us
         if (v->layoutStateEnabled()) {
             LayoutState* layoutState = v->layoutState();
             IntSize offset = layoutState->m_offset;
-            offset.expand(x(), m_frameRect.y());
+            offset.expand(x(), y());
             localPoint += offset;
             if (style()->position() == RelativePosition && m_layer)
                 localPoint += m_layer->relativePositionOffset();
@@ -1266,7 +1304,7 @@ FloatPoint RenderBox::localToAbsolute(FloatPoint localPoint, bool fixed, bool us
 
         localPoint += offsetFromContainer(o);
 
-        return o->localToAbsoluteForContent(localPoint, fixed, useTransforms);
+        return o->localToAbsolute(localPoint, fixed, useTransforms);
     }
     
     return FloatPoint();
@@ -1286,16 +1324,9 @@ FloatPoint RenderBox::absoluteToLocal(FloatPoint containerPoint, bool fixed, boo
     RenderObject* o = container();
     if (o) {
         FloatPoint localPoint = o->absoluteToLocal(containerPoint, fixed, useTransforms);
-
-        // Take into account space above a vertically aligned table cell
-        // (see localToAbsoluteForContent())
-        localPoint.move(0.0f, -static_cast<float>(borderTopExtra()));
-
         localPoint -= offsetFromContainer(o);
-
         if (useTransforms && m_layer && m_layer->transform())
             localPoint = m_layer->transform()->inverse().mapPoint(localPoint);
-        
         return localPoint;
     }
     
@@ -1314,13 +1345,7 @@ FloatQuad RenderBox::localToAbsoluteQuad(const FloatQuad& localQuad, bool fixed)
             fixed = false;  // Elements with transforms act as a containing block for fixed position descendants
             quad = m_layer->transform()->mapQuad(quad);
         }
-
         quad += offsetFromContainer(o);
-
-        // Take into account space above a vertically aligned table cell
-        // (see localToAbsoluteForContent())
-        quad.move(0.0f, static_cast<float>(o->borderTopExtra()));
-
         return o->localToAbsoluteQuad(quad, fixed);
     }
     
@@ -1339,11 +1364,11 @@ IntSize RenderBox::offsetFromContainer(RenderObject* o) const
         RenderBlock* cb;
         if (o->isBlockFlow() && style()->position() != AbsolutePosition && style()->position() != FixedPosition
                 && (cb = static_cast<RenderBlock*>(o))->hasColumns()) {
-            IntRect rect(x(), m_frameRect.y(), 1, 1);
+            IntRect rect(x(), y(), 1, 1);
             cb->adjustRectForColumns(rect);
             offset.expand(rect.x(), rect.y());
         } else
-            offset.expand(x(), m_frameRect.y());
+            offset.expand(x(), y());
     }
 
     if (o->hasOverflowClip())
@@ -1440,7 +1465,7 @@ void RenderBox::computeAbsoluteRepaintRect(IntRect& rect, bool fixed)
             if (style()->position() == RelativePosition && m_layer)
                 rect.move(m_layer->relativePositionOffset());
 
-            rect.move(x(), m_frameRect.y());
+            rect.move(x(), y());
             rect.move(layoutState->m_offset);
             if (layoutState->m_clipped)
                 rect.intersect(layoutState->m_clipRect);
@@ -1456,7 +1481,7 @@ void RenderBox::computeAbsoluteRepaintRect(IntRect& rect, bool fixed)
         return;
 
     IntPoint topLeft = rect.location();
-    topLeft.move(x(), m_frameRect.y());
+    topLeft.move(x(), y());
 
     if (style()->position() == FixedPosition)
         fixed = true;
@@ -1478,7 +1503,7 @@ void RenderBox::computeAbsoluteRepaintRect(IntRect& rect, bool fixed)
         rect = m_layer->transform()->mapRect(rect);
         // FIXME: this clobbers topLeft adjustment done for multicol above
         topLeft = rect.location();
-        topLeft.move(x(), m_frameRect.y());
+        topLeft.move(x(), y());
     }
 
     if (style()->position() == AbsolutePosition)
@@ -1513,7 +1538,7 @@ void RenderBox::computeAbsoluteRepaintRect(IntRect& rect, bool fixed)
 void RenderBox::repaintDuringLayoutIfMoved(const IntRect& rect)
 {
     int newX = x();
-    int newY = m_frameRect.y();
+    int newY = y();
     int newWidth = width();
     int newHeight = height();
     if (rect.x() != newX || rect.y() != newY) {
@@ -1797,9 +1822,9 @@ void RenderBox::calcHeight()
         if (isRoot())
             setHeight(max(height(), visHeight - margins));
         else {
-            int marginsBordersPadding = margins + parent()->marginTop() + parent()->marginBottom()
-                + parent()->borderTop() + parent()->borderBottom()
-                + parent()->paddingTop() + parent()->paddingBottom();
+            int marginsBordersPadding = margins + parentBox()->marginTop() + parentBox()->marginBottom()
+                + parentBox()->borderTop() + parentBox()->borderBottom()
+                + parentBox()->paddingTop() + parentBox()->paddingBottom();
             setHeight(max(height(), visHeight - marginsBordersPadding));
         }
     }
@@ -2075,19 +2100,22 @@ int RenderBox::containingBlockWidthForPositioned(const RenderObject* containingB
         return max(0, (fromRight - fromLeft));
     }
 
-    return RenderBox::toConstRenderBox(containingBlock)->width() - containingBlock->borderLeft() - containingBlock->borderRight() - containingBlock->verticalScrollbarWidth();
+    const RenderBox* containingBlockBox = RenderBox::toConstRenderBox(containingBlock);
+    return containingBlockBox->width() - containingBlockBox->borderLeft() - containingBlockBox->borderRight() - containingBlockBox->verticalScrollbarWidth();
 }
 
 int RenderBox::containingBlockHeightForPositioned(const RenderObject* containingBlock) const
 {
+    const RenderBox* containingBlockBox = RenderBox::toConstRenderBox(containingBlock);
+    
     int heightResult;
     if (containingBlock->isRenderInline()) {
         ASSERT(containingBlock->isRelPositioned());
         heightResult = static_cast<const RenderInline*>(containingBlock)->boundingBoxHeight();
     } else
-        heightResult = RenderBox::toConstRenderBox(containingBlock)->height();
+        heightResult = containingBlockBox->height();
     
-    return heightResult - containingBlock->borderTop() - containingBlock->borderBottom();
+    return heightResult - containingBlockBox->borderTop() - containingBlockBox->borderBottom();
 }
 
 void RenderBox::calcAbsoluteHorizontal()
@@ -2124,8 +2152,8 @@ void RenderBox::calcAbsoluteHorizontal()
 
     // We don't use containingBlock(), since we may be positioned by an enclosing
     // relative positioned inline.
-    const RenderObject* containerBlock = container();
-
+    const RenderBox* containerBlock = RenderBox::toRenderBox(container());
+    
     const int containerWidth = containingBlockWidthForPositioned(containerBlock);
 
     // To match WinIE, in quirks mode use the parent's 'direction' property
@@ -2244,7 +2272,7 @@ void RenderBox::calcAbsoluteHorizontal()
     setWidth(width() + bordersPlusPadding);
 }
 
-void RenderBox::calcAbsoluteHorizontalValues(Length width, const RenderObject* containerBlock, TextDirection containerDirection,
+void RenderBox::calcAbsoluteHorizontalValues(Length width, const RenderBox* containerBlock, TextDirection containerDirection,
                                              const int containerWidth, const int bordersPlusPadding,
                                              const Length left, const Length right, const Length marginLeft, const Length marginRight,
                                              int& widthValue, int& marginLeftValue, int& marginRightValue, int& xPos)
@@ -2431,7 +2459,7 @@ void RenderBox::calcAbsoluteVertical()
 
 
     // We don't use containingBlock(), since we may be positioned by an enclosing relpositioned inline.
-    const RenderObject* containerBlock = container();
+    const RenderBox* containerBlock = RenderBox::toConstRenderBox(container());
 
     const int containerHeight = containingBlockHeightForPositioned(containerBlock);
 
@@ -2525,7 +2553,7 @@ void RenderBox::calcAbsoluteVertical()
     setHeight(h + bordersPlusPadding);
 }
 
-void RenderBox::calcAbsoluteVerticalValues(Length h, const RenderObject* containerBlock,
+void RenderBox::calcAbsoluteVerticalValues(Length h, const RenderBox* containerBlock,
                                            const int containerHeight, const int bordersPlusPadding,
                                            const Length top, const Length bottom, const Length marginTop, const Length marginBottom,
                                            int& heightValue, int& marginTopValue, int& marginBottomValue, int& yPos)
@@ -2654,7 +2682,7 @@ void RenderBox::calcAbsoluteHorizontalReplaced()
 
     // We don't use containingBlock(), since we may be positioned by an enclosing
     // relative positioned inline.
-    const RenderObject* containerBlock = container();
+    const RenderBox* containerBlock = RenderBox::toConstRenderBox(container());
 
     const int containerWidth = containingBlockWidthForPositioned(containerBlock);
 
@@ -2827,7 +2855,7 @@ void RenderBox::calcAbsoluteVerticalReplaced()
     // the numbers correspond to numbers in spec)
 
     // We don't use containingBlock(), since we may be positioned by an enclosing relpositioned inline.
-    const RenderObject* containerBlock = container();
+    const RenderBox* containerBlock = RenderBox::toConstRenderBox(container());
 
     const int containerHeight = containingBlockHeightForPositioned(containerBlock);
 

@@ -510,8 +510,8 @@ IntRect RenderBlock::overflowRect(bool includeInterior) const
     if (!includeInterior && hasOverflowClip())
         return borderBoxRect();
     int l = overflowLeft(includeInterior);
-    int t = min(overflowTop(includeInterior), -borderTopExtra());
-    return IntRect(l, t, overflowWidth(includeInterior) - l, max(overflowHeight(includeInterior), height() + borderBottomExtra()) - t);
+    int t = overflowTop(includeInterior);
+    return IntRect(l, t, overflowWidth(includeInterior) - l, max(overflowHeight(includeInterior), height()) - t);
 }
 
 bool RenderBlock::isSelfCollapsingBlock() const
@@ -547,7 +547,7 @@ bool RenderBlock::isSelfCollapsingBlock() const
         
         // Whether or not we collapse is dependent on whether all our normal flow children
         // are also self-collapsing.
-        for (RenderObject* child = firstChild(); child; child = child->nextSibling()) {
+        for (RenderBox* child = firstChildBox(); child; child = child->nextSiblingBox()) {
             if (child->isFloatingOrPositioned())
                 continue;
             if (!child->isSelfCollapsingBlock())
@@ -659,8 +659,7 @@ void RenderBlock::layoutBlock(bool relayoutChildren)
 
     // Expand our intrinsic height to encompass floats.
     int toAdd = borderBottom() + paddingBottom() + horizontalScrollbarHeight();
-    if (floatBottom() > (height() - toAdd) && (isInlineBlockOrInlineTable() || isFloatingOrPositioned() || hasOverflowClip() ||
-                                    (parent() && parent()->isFlexibleBox() || m_hasColumns)))
+    if (floatBottom() > (height() - toAdd) && expandsToEncloseOverhangingFloats())
         setHeight(floatBottom() + toAdd);
     
     // Now lay out our columns within this intrinsic height, since they can slightly affect the intrinsic height as
@@ -692,11 +691,6 @@ void RenderBlock::layoutBlock(bool relayoutChildren)
     }
     if (previousHeight != height())
         relayoutChildren = true;
-
-    // Some classes of objects (floats and fieldsets with no specified heights and table cells) expand to encompass
-    // overhanging floats.
-    if (hasOverhangingFloats() && expandsToEncloseOverhangingFloats())
-        setHeight(floatBottom() + borderBottom() + paddingBottom());
 
     if ((isCell || isInline() || isFloatingOrPositioned() || isRoot()) && !hasOverflowClip() && !hasControlClip())
         addVisualOverflow(floatRect());
@@ -764,7 +758,12 @@ void RenderBlock::layoutBlock(bool relayoutChildren)
     setNeedsLayout(false);
 }
 
-void RenderBlock::adjustPositionedBlock(RenderObject* child, const MarginInfo& marginInfo)
+bool RenderBlock::expandsToEncloseOverhangingFloats() const
+{
+    return isInlineBlockOrInlineTable() || isFloatingOrPositioned() || hasOverflowClip() || (parent() && parent()->isFlexibleBox()) || m_hasColumns || isTableCell() || isFieldset();
+}
+
+void RenderBlock::adjustPositionedBlock(RenderBox* child, const MarginInfo& marginInfo)
 {
     if (child->hasStaticX()) {
         if (style()->direction() == LTR)
@@ -864,13 +863,12 @@ RenderBox* RenderBlock::handleCompactChild(RenderBox* child, CompactInfo& compac
     // compact A followed by another compact B should simply be treated as block A.
     if (child->isCompact() && !compactInfo.compact() && (child->childrenInline() || child->isReplaced())) {
         // Get the next non-positioned/non-floating RenderBlock.
-        RenderObject* next = child->nextSibling();
-        RenderObject* curr = next;
+        RenderBox* next = child->nextSiblingBox();
+        RenderBox* curr = next;
         while (curr && curr->isFloatingOrPositioned())
-            curr = curr->nextSibling();
+            curr = curr->nextSiblingBox();
         if (curr && curr->isRenderBlock() && !curr->isCompact() && !curr->isRunIn()) {
             curr->calcWidth(); // So that horizontal margins are correct.
-                               
             child->setInline(true); // Need to compute the margins/width for the child as though it is an inline, so that it won't try to puff up the margins to
                                     // fill the containing block width.
             child->calcWidth();
@@ -1104,7 +1102,7 @@ void RenderBlock::clearFloatsIfNeeded(RenderBox* child, MarginInfo& marginInfo, 
     child->layoutIfNeeded();
 }
 
-int RenderBlock::estimateVerticalPosition(RenderObject* child, const MarginInfo& marginInfo)
+int RenderBlock::estimateVerticalPosition(RenderBox* child, const MarginInfo& marginInfo)
 {
     // FIXME: We need to eliminate the estimation of vertical position, because when it's wrong we sometimes trigger a pathological
     // relayout if there are intruding floats.
@@ -1484,7 +1482,7 @@ void RenderBlock::repaintOverhangingFloats(bool paintAllDescendants)
 void RenderBlock::paint(PaintInfo& paintInfo, int tx, int ty)
 {
     tx += x();
-    ty += m_frameRect.y();
+    ty += y();
     
     PaintPhase phase = paintInfo.phase;
 
@@ -1896,11 +1894,11 @@ GapRects RenderBlock::selectionGapRects()
         return GapRects();
 
     // FIXME: this is broken with transforms
-    FloatPoint absContentPoint = localToAbsoluteForContent(FloatPoint());
+    FloatPoint absContentPoint = localToAbsolute(FloatPoint());
     if (hasOverflowClip())
         absContentPoint -= layer()->scrolledContentOffset();
 
-    int lastTop = -borderTopExtra();
+    int lastTop = 0;
     int lastLeft = leftSelectionOffset(this, lastTop);
     int lastRight = rightSelectionOffset(this, lastTop);
     
@@ -1910,7 +1908,7 @@ GapRects RenderBlock::selectionGapRects()
 void RenderBlock::paintSelection(PaintInfo& paintInfo, int tx, int ty)
 {
     if (shouldPaintSelectionGaps() && paintInfo.phase == PaintPhaseForeground) {
-        int lastTop = -borderTopExtra();
+        int lastTop = 0;
         int lastLeft = leftSelectionOffset(this, lastTop);
         int lastRight = rightSelectionOffset(this, lastTop);
         paintInfo.context->save();
@@ -1973,7 +1971,7 @@ GapRects RenderBlock::fillSelectionGaps(RenderBlock* rootBlock, int blockX, int 
 
     // Go ahead and fill the vertical gap all the way to the bottom of our block if the selection extends past our block.
     if (rootBlock == this && (m_selectionState != SelectionBoth && m_selectionState != SelectionEnd))
-        result.uniteCenter(fillVerticalSelectionGap(lastTop, lastLeft, lastRight, ty + height() + borderBottomExtra(),
+        result.uniteCenter(fillVerticalSelectionGap(lastTop, lastLeft, lastRight, ty + height(),
                                                     rootBlock, blockX, blockY, paintInfo));
     return result;
 }
@@ -2845,24 +2843,25 @@ void RenderBlock::clearFloats()
     }
 
     // First add in floats from the parent.
-    int offset = m_frameRect.y();
-    if (parentHasFloats)
-        addIntrudingFloats(static_cast<RenderBlock *>(parent()),
-                           parent()->borderLeft() + parent()->paddingLeft(), offset);
-
+    int offset = y();
+    if (parentHasFloats) {
+        RenderBlock* parentBlock = static_cast<RenderBlock *>(parent());
+        addIntrudingFloats(parentBlock, parentBlock->borderLeft() + parentBlock->paddingLeft(), offset);
+    }
     
     int xoffset = 0;
     if (prev)
         offset -= toRenderBox(prev)->y();
-    else {
+    else if (parent()->isBox()) {
         prev = parent();
-        xoffset += prev->borderLeft() + prev->paddingLeft();
+        xoffset += RenderBox::toRenderBox(prev)->borderLeft() + RenderBox::toRenderBox(prev)->paddingLeft();
     }
 
     // Add overhanging floats from the previous RenderBlock, but only if it has a float that intrudes into our space.
-    if (!prev->isRenderBlock()) return;
+    if (!prev || !prev->isRenderBlock())
+        return;
+    
     RenderBlock* block = static_cast<RenderBlock *>(prev);
-
     if (block->m_floatingObjects && block->floatBottom() > offset)
         addIntrudingFloats(block, xoffset, offset);
 
@@ -3164,10 +3163,9 @@ bool RenderBlock::nodeAtPoint(const HitTestRequest& request, HitTestResult& resu
 
     // Now hit test our background
     if (!inlineFlow && (hitTestAction == HitTestBlockBackground || hitTestAction == HitTestChildBlockBackground)) {
-        int topExtra = borderTopExtra();
-        IntRect boundsRect(tx, ty - topExtra, width(), height() + topExtra + borderBottomExtra());
+        IntRect boundsRect(tx, ty, width(), height());
         if (visibleToHitTesting() && boundsRect.contains(_x, _y)) {
-            updateHitTestResult(result, IntPoint(_x - tx, _y - ty + topExtra));
+            updateHitTestResult(result, IntPoint(_x - tx, _y - ty));
             return true;
         }
     }
@@ -3275,7 +3273,7 @@ VisiblePosition RenderBlock::positionForCoordinates(int x, int y)
         return RenderFlow::positionForCoordinates(x, y); 
 
     int top = borderTop();
-    int bottom = top + borderTopExtra() + paddingTop() + contentHeight() + paddingBottom() + borderBottomExtra();
+    int bottom = top + paddingTop() + contentHeight() + paddingBottom();
 
     int left = borderLeft();
     int right = left + paddingLeft() + contentWidth() + paddingRight();
@@ -3386,8 +3384,6 @@ VisiblePosition RenderBlock::positionForCoordinates(int x, int y)
 
 void RenderBlock::offsetForContents(int& tx, int& ty) const
 {
-    ty -= borderTopExtra();
-    
     if (hasOverflowClip())
         m_layer->addScrolledContentOffset(tx, ty);
 
@@ -3804,7 +3800,7 @@ static int getBPMWidth(int childValue, Length cssUnit)
     return 0;
 }
 
-static int getBorderPaddingMargin(const RenderObject* child, bool endOfInline)
+static int getBorderPaddingMargin(const RenderBox* child, bool endOfInline)
 {
     RenderStyle* cstyle = child->style();
     int result = 0;
@@ -3907,7 +3903,7 @@ void RenderBlock::calcInlinePrefWidths()
                 if (child->isInlineFlow()) {
                     // Add in padding/border/margin from the appropriate side of
                     // the element.
-                    int bpm = getBorderPaddingMargin(child, childIterator.endOfInline);
+                    int bpm = getBorderPaddingMargin(static_cast<RenderFlow*>(child), childIterator.endOfInline);
                     childMin += bpm;
                     childMax += bpm;
 

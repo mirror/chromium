@@ -12146,6 +12146,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\dom\WorkerRunLoop.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\dom\WorkerRunLoop.h"
+				>
+			</File>
+			<File
 				RelativePath="..\dom\WorkerTask.cpp"
 				>
 			</File>
@@ -16791,6 +16799,22 @@
 			</File>
 			<File
 				RelativePath="..\wml\WMLOnEventElement.h"
+				>
+			</File>
+			<File
+				RelativePath="..\wml\WMLOptGroupElement.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\wml\WMLOptGroupElement.h"
+				>
+			</File>
+			<File
+				RelativePath="..\wml\WMLOptionElement.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\wml\WMLOptionElement.h"
 				>
 			</File>
 			<File

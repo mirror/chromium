@@ -1,3 +1,708 @@
+2009-01-23  Holger Freyther  <zecke@selfish.org>
+
+        Unreviewed build fix.
+
+        Based on https://bugs.webkit.org/show_bug.cgi?id=23498
+        from craig.schlenter@gmail.com
+
+        * platform/gtk/RenderThemeGtk.cpp:
+        (WebCore::RenderThemeGtk::baselinePosition):
+
+2009-01-23  David Levin  <levin@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Bug 22720: Make XMLHttpRequest work in Workers
+        <https://bugs.webkit.org/show_bug.cgi?id=22720>
+
+        Add copy/adopt for ResourceResponse(Base)/ResourceRequest(Base) to allow the
+        data to be passed across threads.
+
+        No observable change in behavior, so no test.
+
+        * platform/network/FormData.cpp:
+        (WebCore::FormData::deepCopy):
+        * platform/network/FormData.h:
+        * platform/network/HTTPHeaderMap.cpp:
+        (WebCore::HTTPHeaderMap::copyData):
+        (WebCore::HTTPHeaderMap::adopt):
+        * platform/network/HTTPHeaderMap.h:
+        * platform/network/ResourceRequestBase.cpp:
+        (WebCore::ResourceRequestBase::adopt):
+        (WebCore::ResourceRequestBase::copyData):
+        * platform/network/ResourceRequestBase.h:
+        * platform/network/ResourceResponseBase.cpp:
+        (WebCore::ResourceResponseBase::adopt):
+        (WebCore::ResourceResponseBase::copyData):
+        * platform/network/ResourceResponseBase.h:
+
+2009-01-23  Dmitry Titov  <dimich@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23374
+        Add WorkerRunLoop to encapsulate message queue and timer heap.
+        This is first half (timer heap is added as separate patch).
+
+        * GNUmakefile.am: Added WorkerRunLoop.cpp to the build.
+        * WebCore.vcproj/WebCore.vcproj: Same as above.
+        * WebCore.xcodeproj/project.pbxproj: Same as above
+        * dom/WorkerContext.cpp:
+        (WebCore::WorkerContext::postTask):
+        * dom/WorkerContext.h:
+        * dom/WorkerMessagingProxy.cpp:
+        (WebCore::WorkerMessagingProxy::postMessageToWorkerContext):
+        (WebCore::WorkerMessagingProxy::workerThreadCreated):
+        * dom/WorkerRunLoop.cpp: Added.
+        (WebCore::WorkerRunLoop::run): Runs the loop until terminate() is called.
+        (WebCore::WorkerRunLoop::terminate): Causes the loop to exit.
+        (WebCore::WorkerRunLoop::postTask): Adds a task to the internal queue.
+        * dom/WorkerRunLoop.h: Added.
+        (WebCore::WorkerRunLoop::WorkerRunLoop):
+        * dom/WorkerThread.cpp:
+        (WebCore::WorkerThread::workerThread):
+        (WebCore::WorkerThread::stop):
+        * dom/WorkerThread.h:
+        (WebCore::WorkerThread::runLoop):
+
+2009-01-23  Adam Treat  <adam.treat@torchmobile.com>
+
+        Reviewed by Holger Hans Peter Freyther.
+
+        Redo previous patch http://trac.webkit.org/changeset/34260 which fixes a
+        huge memory leak by ensuring that the timer is fired one last time on
+        application tear down thus triggering the GCController thereby freeing
+        JavaScript objects as well as triggering other timer based tear down methods.
+
+        * platform/qt/SharedTimerQt.cpp:
+        (WebCore::SharedTimerQt::~SharedTimerQt):
+
+2009-01-23  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Oliver Hunt.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23459
+        Workers are not properly terminated if execution hasn't begun yet
+
+        Doesn't affect observable behavior, so test case is not possible.
+
+        * dom/WorkerThread.cpp: (WebCore::WorkerThread::workerThread): Call forbidExecution() if
+        it couldn't be called earlier.
+
+2009-01-23  Ariya Hidayat  <ariya.hidayat@trolltech.com>
+
+        [Qt] Fix the build after RenderBox refactoring in r40153.
+
+        * platform/qt/RenderThemeQt.cpp:
+        (WebCore::RenderThemeQt::baselinePosition):
+
+2009-01-23  Ariya Hidayat  <ariya.hidayat@trolltech.com>
+
+        Rubber-stamped by Alexey Proskuryakov.
+
+        Fix the build after RenderBox refactoring in r40153.
+
+        * plugins/PluginView.cpp:
+        (WebCore::PluginView::invalidateWindowlessPluginRect):
+
+2009-01-23  Ariya Hidayat  <ariya.hidayat@trolltech.com>
+
+        Reviewed by Simon Hausmann.
+
+        [Qt] Simplify the assertion.
+
+        * platform/graphics/qt/GraphicsContextQt.cpp:
+        (WebCore::GraphicsContext::getWindowsContext):
+        (WebCore::GraphicsContext::releaseWindowsContext):
+
+2009-01-22  David Hyatt  <hyatt@apple.com>
+
+        Move the border and padding methods from RenderObject to RenderBox.
+
+        Reviewed by Oliver Hunt
+
+        * css/CSSComputedStyleDeclaration.cpp:
+        (WebCore::CSSComputedStyleDeclaration::getPropertyCSSValue):
+        * editing/DeleteButtonController.cpp:
+        (WebCore::DeleteButtonController::createDeletionUI):
+        * page/EventHandler.cpp:
+        (WebCore::EventHandler::hitTestResultAtPoint):
+        * rendering/InlineFlowBox.cpp:
+        (WebCore::InlineFlowBox::placeBoxesVertically):
+        * rendering/InlineFlowBox.h:
+        (WebCore::InlineFlowBox::borderLeft):
+        (WebCore::InlineFlowBox::borderRight):
+        (WebCore::InlineFlowBox::paddingLeft):
+        (WebCore::InlineFlowBox::paddingRight):
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::clearFloats):
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::paddingTop):
+        (WebCore::RenderBox::paddingBottom):
+        (WebCore::RenderBox::paddingLeft):
+        (WebCore::RenderBox::paddingRight):
+        (WebCore::RenderBox::calcHeight):
+        (WebCore::RenderBox::containingBlockWidthForPositioned):
+        (WebCore::RenderBox::containingBlockHeightForPositioned):
+        (WebCore::RenderBox::calcAbsoluteHorizontal):
+        (WebCore::RenderBox::calcAbsoluteHorizontalValues):
+        (WebCore::RenderBox::calcAbsoluteVertical):
+        (WebCore::RenderBox::calcAbsoluteVerticalValues):
+        (WebCore::RenderBox::calcAbsoluteHorizontalReplaced):
+        (WebCore::RenderBox::calcAbsoluteVerticalReplaced):
+        * rendering/RenderBox.h:
+        (WebCore::RenderBox::borderTop):
+        (WebCore::RenderBox::borderBottom):
+        (WebCore::RenderBox::borderLeft):
+        (WebCore::RenderBox::borderRight):
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::repaintAfterLayoutIfNeeded):
+        * rendering/RenderObject.h:
+        * rendering/RenderTextControl.cpp:
+        (WebCore::RenderTextControl::textBlockWidth):
+        (WebCore::RenderTextControl::calcHeight):
+        (WebCore::RenderTextControl::calcPrefWidths):
+        * rendering/RenderTextControlSingleLine.cpp:
+        (WebCore::RenderTextControlSingleLine::preferredContentWidth):
+        * rendering/RenderTreeAsText.cpp:
+        (WebCore::operator<<):
+        * rendering/RenderView.cpp:
+        (WebCore::RenderView::repaintViewRectangle):
+
+2009-01-22  David Hyatt  <hyatt@apple.com>
+
+        Devirtualize the marginTop/Right/Left/Bottom functions and move them to RenderBox (along with some of the
+        other margin functions that have to come along for the ride).
+
+        Reviewed by Oliver Hunt
+
+        * css/CSSComputedStyleDeclaration.cpp:
+        (WebCore::CSSComputedStyleDeclaration::getPropertyCSSValue):
+        * editing/TextIterator.cpp:
+        (WebCore::shouldEmitExtraNewlineForNode):
+        * rendering/InlineBox.cpp:
+        * rendering/InlineBox.h:
+        (WebCore::InlineBox::renderBox):
+        * rendering/InlineFlowBox.cpp:
+        (WebCore::InlineFlowBox::marginLeft):
+        (WebCore::InlineFlowBox::marginRight):
+        (WebCore::InlineFlowBox::placeBoxesHorizontally):
+        (WebCore::InlineFlowBox::computeLogicalBoxHeights):
+        (WebCore::InlineFlowBox::placeBoxesVertically):
+        (WebCore::InlineFlowBox::shrinkBoxesWithNoTextChildren):
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::isSelfCollapsingBlock):
+        (WebCore::RenderBlock::adjustPositionedBlock):
+        (WebCore::RenderBlock::handleCompactChild):
+        (WebCore::RenderBlock::estimateVerticalPosition):
+        (WebCore::getBorderPaddingMargin):
+        (WebCore::RenderBlock::calcInlinePrefWidths):
+        * rendering/RenderBlock.h:
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::calcHeight):
+        * rendering/RenderBox.h:
+        (WebCore::RenderBox::hasHorizontalBordersPaddingOrMargin):
+        (WebCore::RenderBox::hasHorizontalBordersOrPadding):
+        (WebCore::RenderBox::marginTop):
+        (WebCore::RenderBox::marginBottom):
+        (WebCore::RenderBox::marginLeft):
+        (WebCore::RenderBox::marginRight):
+        (WebCore::RenderBox::isSelfCollapsingBlock):
+        (WebCore::RenderBox::collapsedMarginTop):
+        (WebCore::RenderBox::collapsedMarginBottom):
+        (WebCore::RenderBox::isTopMarginQuirk):
+        (WebCore::RenderBox::isBottomMarginQuirk):
+        (WebCore::RenderBox::maxTopMargin):
+        (WebCore::RenderBox::maxBottomMargin):
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::getAbsoluteRepaintRectWithOutline):
+        * rendering/RenderObject.h:
+        * rendering/RenderSVGContainer.cpp:
+        (WebCore::RenderSVGContainer::lineHeight):
+        (WebCore::RenderSVGContainer::baselinePosition):
+        * rendering/RenderTextControl.cpp:
+        (WebCore::RenderTextControl::calcHeight):
+        * rendering/RenderTheme.cpp:
+        (WebCore::RenderTheme::baselinePosition):
+        * rendering/bidi.cpp:
+        (WebCore::getBorderPaddingMargin):
+        (WebCore::inlineWidth):
+        (WebCore::RenderBlock::computeHorizontalPositionsForLine):
+        (WebCore::inlineFlowRequiresLineBox):
+        (WebCore::requiresLineBox):
+        (WebCore::RenderBlock::findNextLineBreak):
+
+2009-01-22  Mark Rowe  <mrowe@apple.com>
+
+        Rubber-stamped by Anders Carlsson.
+
+        Disable GCC_WARN_ABOUT_MISSING_PROTOTYPES temporarily.
+
+        Current versions of Xcode only respect it for C and Objective-C files,
+        and our code doesn't currently compile if it is applied to C++ and
+        Objective-C++ files.
+
+        * Configurations/Base.xcconfig:
+
+2009-01-22  David Hyatt  <hyatt@apple.com>
+
+        Move the m_widthChanged bit on RenderTableCell into RenderFlow's set of bits.  Let intrinsicPaddingTop and
+        intrinsicPaddingBottom just be normal non-bitfield values.
+
+        Reviewed by Oliver Hunt
+
+        * rendering/RenderFlow.h:
+        (WebCore::RenderFlow::RenderFlow):
+        * rendering/RenderTableCell.cpp:
+        (WebCore::RenderTableCell::RenderTableCell):
+        (WebCore::RenderTableCell::updateWidth):
+        (WebCore::RenderTableCell::layout):
+        * rendering/RenderTableCell.h:
+
+2009-01-22  David Hyatt  <hyatt@apple.com>
+
+        Properly encapsulate m_frameRect.y() behind the RenderBox::y() method now that they are the same thing.
+        Make m_frameRect private.
+
+        Reviewed by Oliver Hunt
+
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::paint):
+        (WebCore::RenderBlock::clearFloats):
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::offsetTop):
+        (WebCore::RenderBox::nodeAtPoint):
+        (WebCore::RenderBox::paint):
+        (WebCore::RenderBox::paintCustomHighlight):
+        (WebCore::RenderBox::containingBlockWidth):
+        (WebCore::RenderBox::localToAbsolute):
+        (WebCore::RenderBox::offsetFromContainer):
+        (WebCore::RenderBox::computeAbsoluteRepaintRect):
+        (WebCore::RenderBox::repaintDuringLayoutIfMoved):
+        * rendering/RenderContainer.cpp:
+        (WebCore::RenderContainer::layout):
+        * rendering/RenderFlexibleBox.cpp:
+        (WebCore::RenderFlexibleBox::layoutBlock):
+        * rendering/RenderFrameSet.cpp:
+        (WebCore::RenderFrameSet::paint):
+        * rendering/RenderImage.cpp:
+        (WebCore::RenderImage::paintReplaced):
+        (WebCore::RenderImage::nodeAtPoint):
+        * rendering/RenderListMarker.cpp:
+        (WebCore::RenderListMarker::paint):
+        (WebCore::RenderListMarker::getRelativeMarkerRect):
+        * rendering/RenderReplaced.cpp:
+        (WebCore::RenderReplaced::paint):
+        (WebCore::RenderReplaced::shouldPaint):
+        * rendering/RenderReplica.cpp:
+        (WebCore::RenderReplica::paint):
+        * rendering/RenderSVGRoot.cpp:
+        (WebCore::RenderSVGRoot::applyContentTransforms):
+        (WebCore::RenderSVGRoot::paint):
+        (WebCore::RenderSVGRoot::absoluteTransform):
+        (WebCore::RenderSVGRoot::nodeAtPoint):
+        * rendering/RenderTable.cpp:
+        (WebCore::RenderTable::calcWidth):
+        (WebCore::RenderTable::layout):
+        * rendering/RenderTableCell.cpp:
+        (WebCore::RenderTableCell::paint):
+        (WebCore::RenderTableCell::paintBackgroundsBehindCell):
+        * rendering/RenderTableSection.cpp:
+        (WebCore::RenderTableSection::setCellWidths):
+        (WebCore::RenderTableSection::calcRowHeight):
+        (WebCore::RenderTableSection::layoutRows):
+        (WebCore::RenderTableSection::paint):
+        (WebCore::RenderTableSection::nodeAtPoint):
+        * rendering/RenderWidget.cpp:
+        (WebCore::RenderWidget::paint):
+
+2009-01-22  David Hyatt  <hyatt@apple.com>
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=23487.
+
+        This patch completely reworks vertical alignment of table cells.  The current system uses methods called borderTopExtra() and borderBottomExtra() to
+        add extra space above and below the content of a cell.  This system was not confined to the table code and spilled out into all the other RenderObjects.
+        The y-position of the table cell box was set to the outer edge of the cell, but the y() method of RenderBox lied and added in borderTopExtra().  height()
+        also excluded the extra space, so did not accurately reflect the true size of the cell.
+        
+        With the new system, the table cell box is completely accurate.  The extra space becomes part of the padding of the cell.  Padding has been reworked so that
+        additional intrinsic padding can be added on to the specified padding from style.  Only the table code has to deal with the extra cell padding.
+
+        localToAbsoluteForContent has now been removed, since there no longer has to be a special hacked content box.
+
+        A number of table layout tests progress with this change, since the new layout system actually fixes existing bugs in baseline alignment of cells.
+
+        Reviewed by Oliver Hunt
+
+        * css/CSSComputedStyleDeclaration.cpp:
+        (WebCore::CSSComputedStyleDeclaration::getPropertyCSSValue):
+        Make CSSComputedStyleDeclaration ask for padding values that exclude the built-in intrinsic padding.  This ensures that getComputedStyle continues
+        to give the right answer.
+    
+        * dom/ContainerNode.cpp:
+        (WebCore::ContainerNode::getLowerRightCorner):
+        * editing/visible_units.cpp:
+        (WebCore::previousLinePosition):
+        (WebCore::nextLinePosition):
+        * rendering/LayoutState.cpp:
+        (WebCore::LayoutState::LayoutState):
+        Remove borderTopExtra()/borderBottomExtra() hacks and localToAbsoluteForContent calls.
+        
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::overflowRect):
+        Remove borderTopExtra()/borderBottomExtra() hacks and localToAbsoluteForContent calls.
+        
+        (WebCore::RenderBlock::layoutBlock):
+        (WebCore::RenderBlock::expandsToEncloseOverhangingFloats):
+        The expandsToEncloseOverhangingFloats logic has been reworked.  Table cells and fieldsets did not properly handle floats that spilled into the bottom padding.  The
+        resulting box needed to not only expand to encompass the float, but also needed to place the full bottom padding after the float.  The switch to make the extra table cell
+        space into padding exposed this issue.  No extra layout test is required, since an existing table layout test exposes this issue and progresses to match Firefox with
+        this change.
+    
+        (WebCore::RenderBlock::selectionGapRects):
+        (WebCore::RenderBlock::paintSelection):
+        (WebCore::RenderBlock::fillSelectionGaps):
+        (WebCore::RenderBlock::nodeAtPoint):
+        (WebCore::RenderBlock::positionForCoordinates):
+        (WebCore::RenderBlock::offsetForContents):
+        Remove borderTopExtra()/borderBottomExtra() hacks and localToAbsoluteForContent calls.
+    
+        * rendering/RenderBlock.h:
+        Add the new simplified method for expanding to encompass overhanging floats.  The method has been devirtualized and made to include all of the cases (and not just a subset).
+
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::absoluteRects):
+        (WebCore::RenderBox::absoluteQuads):
+        (WebCore::RenderBox::absoluteContentBox):
+        (WebCore::RenderBox::paintBoxDecorations):
+        (WebCore::RenderBox::paintMask):
+        (WebCore::RenderBox::getOverflowClipRect):
+        (WebCore::RenderBox::localToAbsolute):
+        (WebCore::RenderBox::absoluteToLocal):
+        (WebCore::RenderBox::localToAbsoluteQuad):
+        Remove borderTopExtra()/borderBottomExtra() hacks and localToAbsoluteForContent calls.
+        
+        * rendering/RenderBox.h:
+        (WebCore::RenderBox::y):
+        (WebCore::RenderBox::location):
+        (WebCore::RenderBox::borderBoxRect):
+        (WebCore::RenderBox::offsetHeight):
+        Remove borderTopExtra()/borderBottomExtra() hacks and localToAbsoluteForContent calls.
+
+        * rendering/RenderContainer.cpp:
+        (WebCore::RenderContainer::addLineBoxRects):
+        * rendering/RenderFieldset.cpp:
+        (WebCore::RenderFieldset::paintBoxDecorations):
+        (WebCore::RenderFieldset::paintMask):
+        * rendering/RenderFieldset.h:
+        (WebCore::RenderFieldset::avoidsFloats):
+        * rendering/RenderFlow.cpp:
+        (WebCore::RenderFlow::localCaretRect):
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::updateLayerPosition):
+        (WebCore::RenderLayer::paintLayer):
+        (WebCore::RenderLayer::hitTestLayer):
+        (WebCore::RenderLayer::boundingBox):
+        * rendering/RenderListBox.cpp:
+        (WebCore::RenderListBox::isPointInOverflowControl):
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::localToAbsolute):
+        (WebCore::RenderObject::absoluteToLocal):
+        (WebCore::RenderObject::localToAbsoluteQuad):
+        (WebCore::RenderObject::offsetFromContainer):
+        (WebCore::RenderObject::paddingTop):
+        (WebCore::RenderObject::paddingBottom):
+        (WebCore::RenderObject::paddingLeft):
+        (WebCore::RenderObject::paddingRight):
+        * rendering/RenderObject.h:
+        (WebCore::RenderObject::hasOverhangingFloats):
+        * rendering/RenderReplaced.cpp:
+        (WebCore::RenderReplaced::selectionRect):
+        (WebCore::RenderReplaced::localSelectionRect):
+        Remove borderTopExtra()/borderBottomExtra() hacks and localToAbsoluteForContent calls.  Also modifed paddingLeft/Top/Right/Bottom to take an argument indicating
+        whether or not the intrinsic padding of an object should be included (by default it is).  getComputedStyle needs to exclude it, which is why this argument is
+        necessary.
+
+        * rendering/RenderTableCell.cpp:
+        (WebCore::RenderTableCell::RenderTableCell):
+        (WebCore::RenderTableCell::paddingTop):
+        (WebCore::RenderTableCell::paddingBottom):
+        The new paddingTop() and paddingBottom() methods on table cells include the extra intrinsic padding.
+    
+        (WebCore::RenderTableCell::setOverrideSize):
+        When a table's override size gets altered, the intrinsic padding needs to be cleared.
+        
+        (WebCore::RenderTableCell::absoluteClippedOverflowRect):
+        (WebCore::RenderTableCell::computeAbsoluteRepaintRect):
+        (WebCore::RenderTableCell::baselinePosition):
+        (WebCore::RenderTableCell::paint):
+        (WebCore::RenderTableCell::paintBackgroundsBehindCell):
+        (WebCore::RenderTableCell::paintBoxDecorations):
+        (WebCore::RenderTableCell::paintMask):
+        Remove borderTopExtra()/borderBottomExtra() hacks and localToAbsoluteForContent calls.
+        
+        * rendering/RenderTableCell.h:
+        (WebCore::RenderTableCell::setIntrinsicPaddingTop):
+        (WebCore::RenderTableCell::setIntrinsicPaddingBottom):
+        (WebCore::RenderTableCell::setIntrinsicPadding):
+        (WebCore::RenderTableCell::clearIntrinsicPadding):
+        (WebCore::RenderTableCell::intrinsicPaddingTop):
+        (WebCore::RenderTableCell::intrinsicPaddingBottom):
+        Add new helper methods for getting/setting a cell's intrinsic padding.
+    
+        * rendering/RenderTableSection.cpp:
+        (WebCore::RenderTableSection::calcRowHeight):
+        calcRowHeight has been modified to exclude the intrinsic padding when calculating the base height of rows prior to flexing.  Because a cell now includes that
+        extra space, it has to be subtracted out in this method.
+        
+        (WebCore::RenderTableSection::layoutRows):
+        Modify the code that sets up the intrinsic padding so that it does a relayout if the intrinsic padding changes.   There was also an error where the baseline
+        position mismatched leading to negative intrinsic padding being added in (this error exists in ToT).  The code now properly ignores cells that don't establish
+        a baseline.  A number of tests progress with this change.
+        
+        * rendering/RenderText.cpp:
+        (WebCore::RenderText::addLineBoxRects):
+        Remove borderTopExtra()/borderBottomExtra() hacks and localToAbsoluteForContent calls.
+        
+        * rendering/RenderTreeAsText.cpp:
+        (WebCore::operator<<):
+        (WebCore::writeTextRun):
+        Modify the render tree dumping code to continue to produce the same results as before.  This is really a hack, since we're now capable of indicating the correct
+        position for the descendants of cells with intrinsic padding (and also indicating what the correct cell box is).  A future patch can remove these hacks so that the
+        layout test results can all be regenerated.
+
+2009-01-22  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Justin Garcia.
+
+        Remove <span> turds left by editing commands
+        https://bugs.webkit.org/show_bug.cgi?id=23466
+
+        Tests:
+        * editing/execCommand/empty-span-removal.html
+        * editing/execCommand/toggle-styles.html
+
+        * editing/ApplyStyleCommand.cpp:
+        (WebCore::styleSpanClassString):
+        (WebCore::isStyleSpan):
+        (WebCore::isUnstyledStyleSpan):
+        (WebCore::isSpanWithoutAttributesOrUnstyleStyleSpan):
+        (WebCore::ApplyStyleCommand::applyRelativeFontStyleChange):
+        (WebCore::ApplyStyleCommand::removeEmbeddingUpToEnclosingBlock):
+        (WebCore::ApplyStyleCommand::removeHTMLBidiEmbeddingStyle):
+        (WebCore::ApplyStyleCommand::removeCSSStyle):
+
+2009-01-22  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Eric Seidel.
+
+        Rename some of the casting functions in dom/*Element.cpp:
+        formControlElementForElement -> toFormControlElement
+        inputElementForElement -> toInputElement
+        optionElementForElement -> toOptionElement
+        optionGroupElementForElement -> toOptionGroupElement
+
+        Suggested by Alexey, while refactoring the Element*->ScriptElement* code.
+        The Element*->ScriptElement* helper function is already named 'toScriptElement'.
+
+        * dom/FormControlElement.cpp:
+        (WebCore::toFormControlElement):
+        * dom/FormControlElement.h:
+        * dom/InputElement.cpp:
+        (WebCore::InputElement::setValueFromRenderer):
+        (WebCore::toInputElement):
+        * dom/InputElement.h:
+        * dom/OptionElement.cpp:
+        (WebCore::OptionElement::collectOptionTextRespectingGroupLabel):
+        (WebCore::toOptionElement):
+        * dom/OptionElement.h:
+        * dom/OptionGroupElement.cpp:
+        (WebCore::toOptionGroupElement):
+        * dom/OptionGroupElement.h:
+        * rendering/RenderListBox.cpp:
+        (WebCore::RenderListBox::updateFromElement):
+        (WebCore::RenderListBox::paintItemForeground):
+        (WebCore::RenderListBox::paintItemBackground):
+        * rendering/RenderMenuList.cpp:
+        (WebCore::RenderMenuList::updateOptionsWidth):
+        (WebCore::RenderMenuList::setTextFromOption):
+        (WebCore::RenderMenuList::itemText):
+        (WebCore::RenderMenuList::itemIsSelected):
+        * rendering/RenderTextControl.cpp:
+        (WebCore::RenderTextControl::formControlElement):
+        * rendering/RenderTextControlSingleLine.cpp:
+        (WebCore::RenderTextControlSingleLine::inputElement):
+
+2009-01-22  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Rubber-stamped by George Staikos.
+
+        Forgot to include in my last commit: Activate code depending on WMLOptionElement/WMLOptGroupElement.
+
+        * dom/OptionElement.cpp:
+        (WebCore::optionElementForElement):
+        * dom/OptionGroupElement.cpp:
+        (WebCore::optionGroupElementForElement):
+
+2009-01-22  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by George Staikos.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=23454
+
+        Add WML <option>/<optgroup> element support.
+        Currently the implementation is stubbed, all relevant parts can be enabled
+        once WMLSelectElement/SelectElement has been created.
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * wml/WMLOptGroupElement.cpp: Added.
+        (WebCore::WMLOptGroupElement::WMLOptGroupElement):
+        (WebCore::WMLOptGroupElement::~WMLOptGroupElement):
+        (WebCore::WMLOptGroupElement::insertBefore):
+        (WebCore::WMLOptGroupElement::replaceChild):
+        (WebCore::WMLOptGroupElement::removeChild):
+        (WebCore::WMLOptGroupElement::appendChild):
+        (WebCore::WMLOptGroupElement::removeChildren):
+        (WebCore::ownerSelectElement):
+        (WebCore::WMLOptGroupElement::accessKeyAction):
+        (WebCore::WMLOptGroupElement::childrenChanged):
+        (WebCore::WMLOptGroupElement::parseMappedAttribute):
+        (WebCore::WMLOptGroupElement::attach):
+        (WebCore::WMLOptGroupElement::detach):
+        (WebCore::WMLOptGroupElement::setRenderStyle):
+        (WebCore::WMLOptGroupElement::nonRendererRenderStyle):
+        (WebCore::WMLOptGroupElement::groupLabelText):
+        (WebCore::WMLOptGroupElement::recalcSelectOptions):
+        * wml/WMLOptGroupElement.h: Added.
+        (WebCore::WMLOptGroupElement::title):
+        (WebCore::WMLOptGroupElement::valueMatchesRenderer):
+        (WebCore::WMLOptGroupElement::setValueMatchesRenderer):
+        (WebCore::WMLOptGroupElement::rendererIsNeeded):
+        * wml/WMLOptionElement.cpp: Added.
+        (WebCore::WMLOptionElement::WMLOptionElement):
+        (WebCore::WMLOptionElement::~WMLOptionElement):
+        (WebCore::ownerSelectElement):
+        (WebCore::WMLOptionElement::accessKeyAction):
+        (WebCore::WMLOptionElement::childrenChanged):
+        (WebCore::WMLOptionElement::parseMappedAttribute):
+        (WebCore::WMLOptionElement::attach):
+        (WebCore::WMLOptionElement::detach):
+        (WebCore::WMLOptionElement::setRenderStyle):
+        (WebCore::WMLOptionElement::insertedIntoDocument):
+        (WebCore::WMLOptionElement::selected):
+        (WebCore::WMLOptionElement::setSelectedState):
+        (WebCore::WMLOptionElement::value):
+        (WebCore::WMLOptionElement::textIndentedToRespectGroupLabel):
+        (WebCore::WMLOptionElement::nonRendererRenderStyle):
+        (WebCore::WMLOptionElement::handleIntrinsicEventIfNeeded):
+        * wml/WMLOptionElement.h: Added.
+        (WebCore::WMLOptionElement::valueMatchesRenderer):
+        (WebCore::WMLOptionElement::setValueMatchesRenderer):
+        (WebCore::WMLOptionElement::rendererIsNeeded):
+        * wml/WMLTagNames.in:
+
+2009-01-22  Eric Roman  <eroman@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=20806
+        Send referrer for history navigations.
+
+        Test: http/tests/navigation/back-send-referrer.html
+
+        Consolidates HistoryItem::rssFeedReferrer and HistoryItem::formReferrer into a single HistoryItem::referrer property.
+
+        * history/HistoryItem.cpp:
+        (WebCore::HistoryItem::HistoryItem):
+        (WebCore::HistoryItem::referrer):
+        (WebCore::HistoryItem::setReferrer):
+        (WebCore::HistoryItem::formReferrer):
+        (WebCore::HistoryItem::rssFeedReferrer):
+        (WebCore::HistoryItem::setRSSFeedReferrer):
+        (WebCore::HistoryItem::setFormInfoFromRequest):
+        * history/HistoryItem.h:
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::loadItem):
+
+2009-01-22  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by Eric Seidel.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=23465
+
+        Further enhancments to share code between HTMLOptionElement and the upcoming WMLOptionElement.
+
+        Rename optionText() to textIndentedToRespectGroupLabel() in (HTML)OptionElement, as it fits better.
+        optionText() returns the options text prefixed with some spaces, in case it got an optgroup parent.
+
+        Add two more pure-virtual functions to OptionElement: setSelectedState(bool) & value().
+        These aren't used outside of html/ at the moment (unlike the other pure-virtual functions
+        used by RenderMenuList/RenderListBox) - but they will be used by SelectElement, once it exists.
+
+        * dom/OptionElement.cpp:
+        (WebCore::OptionElement::setSelectedState):
+        (WebCore::OptionElement::collectOptionText):
+        (WebCore::OptionElement::collectOptionTextRespectingGroupLabel):
+        (WebCore::OptionElement::collectOptionValue):
+        (WebCore::OptionElementData::OptionElementData):
+        (WebCore::OptionElementData::~OptionElementData):
+        * dom/OptionElement.h:
+        (WebCore::OptionElementData::element):
+        (WebCore::OptionElementData::value):
+        (WebCore::OptionElementData::setValue):
+        (WebCore::OptionElementData::label):
+        (WebCore::OptionElementData::setLabel):
+        (WebCore::OptionElementData::selected):
+        (WebCore::OptionElementData::setSelected):
+        * html/HTMLOptionElement.cpp:
+        (WebCore::HTMLOptionElement::HTMLOptionElement):
+        (WebCore::HTMLOptionElement::text):
+        (WebCore::HTMLOptionElement::parseMappedAttribute):
+        (WebCore::HTMLOptionElement::value):
+        (WebCore::HTMLOptionElement::selected):
+        (WebCore::HTMLOptionElement::setSelected):
+        (WebCore::HTMLOptionElement::setSelectedState):
+        (WebCore::HTMLOptionElement::label):
+        (WebCore::HTMLOptionElement::textIndentedToRespectGroupLabel):
+        * html/HTMLOptionElement.h:
+        * html/HTMLSelectElement.cpp:
+        (WebCore::HTMLSelectElement::typeAheadFind):
+        * rendering/RenderListBox.cpp:
+        (WebCore::RenderListBox::updateFromElement):
+        (WebCore::RenderListBox::paintItemForeground):
+        * rendering/RenderMenuList.cpp:
+        (WebCore::RenderMenuList::updateOptionsWidth):
+        (WebCore::RenderMenuList::setTextFromOption):
+        (WebCore::RenderMenuList::itemText):
+
+2009-01-22  Chris Fleizach  <cfleizach@apple.com>
+
+        Reviewed by Justin Garcia.
+
+        Bug 23464: Infinite recursion at SelectionController::setSelection
+        https://bugs.webkit.org/show_bug.cgi?id=23464
+
+        Check for conditions leading to infinite recursion.
+
+        * editing/SelectionController.cpp:
+        (WebCore::SelectionController::setSelection):
+
+2009-01-22  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Not reviewed. Fix WML build problem in RenderBox.cpp, WMLNames is undefined.
+
+        * rendering/RenderBox.cpp:
+
+2009-01-22  Adam Treat  <adam.treat@torchmobile.com>
+
+        Fix the Qt build after RenderBox changes.
+
+        * platform/qt/RenderThemeQt.cpp:
+        (WebCore::RenderThemeQt::baselinePosition):
+
 2009-01-22  David Hyatt  <hyatt@apple.com>
 
         Fix regressions in list box selection on Mac.  The wrong color was being used for the list box

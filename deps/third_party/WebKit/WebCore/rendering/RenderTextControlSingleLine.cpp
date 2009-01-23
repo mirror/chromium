@@ -406,11 +406,11 @@ int RenderTextControlSingleLine::preferredContentWidth(float charWidth) const
     // For text inputs, IE adds some extra width.
     result += style()->font().primaryFont()->maxCharWidth() - charWidth;
 
-    if (RenderObject* resultsRenderer = m_resultsButton ? m_resultsButton->renderer() : 0)
+    if (RenderBox* resultsRenderer = m_resultsButton ? m_resultsButton->renderBox() : 0)
         result += resultsRenderer->borderLeft() + resultsRenderer->borderRight() +
                   resultsRenderer->paddingLeft() + resultsRenderer->paddingRight();
 
-    if (RenderObject* cancelRenderer = m_cancelButton ? m_cancelButton->renderer() : 0)
+    if (RenderBox* cancelRenderer = m_cancelButton ? m_cancelButton->renderBox() : 0)
         result += cancelRenderer->borderLeft() + cancelRenderer->borderRight() +
                   cancelRenderer->paddingLeft() + cancelRenderer->paddingRight();
 
@@ -776,7 +776,7 @@ PassRefPtr<Scrollbar> RenderTextControlSingleLine::createScrollbar(ScrollbarClie
 
 InputElement* RenderTextControlSingleLine::inputElement() const
 {
-    return inputElementForElement(static_cast<Element*>(node()));
+    return toInputElement(static_cast<Element*>(node()));
 }
 
 }

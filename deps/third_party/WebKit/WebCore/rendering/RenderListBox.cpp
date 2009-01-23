@@ -104,9 +104,9 @@ void RenderListBox::updateFromElement()
             HTMLElement* element = listItems[i];
             String text;
             Font itemFont = style()->font();
-            if (OptionElement* optionElement = optionElementForElement(element))
-                text = optionElement->optionText();
-            else if (OptionGroupElement* optionGroupElement = optionGroupElementForElement(element)) {
+            if (OptionElement* optionElement = toOptionElement(element))
+                text = optionElement->textIndentedToRespectGroupLabel();
+            else if (OptionGroupElement* optionGroupElement = toOptionGroupElement(element)) {
                 text = optionGroupElement->groupLabelText();
                 FontDescription d = itemFont.fontDescription();
                 d.setWeight(d.bolderWeight());
@@ -296,12 +296,12 @@ void RenderListBox::paintItemForeground(PaintInfo& paintInfo, int tx, int ty, in
     HTMLSelectElement* select = static_cast<HTMLSelectElement*>(node());
     const Vector<HTMLElement*>& listItems = select->listItems();
     HTMLElement* element = listItems[listIndex];
-    OptionElement* optionElement = optionElementForElement(element);
+    OptionElement* optionElement = toOptionElement(element);
 
     String itemText;
     if (optionElement)
-        itemText = optionElement->optionText();
-    else if (OptionGroupElement* optionGroupElement = optionGroupElementForElement(element))
+        itemText = optionElement->textIndentedToRespectGroupLabel();
+    else if (OptionGroupElement* optionGroupElement = toOptionGroupElement(element))
         itemText = optionGroupElement->groupLabelText();      
 
     // Determine where the item text should be placed
@@ -345,7 +345,7 @@ void RenderListBox::paintItemBackground(PaintInfo& paintInfo, int tx, int ty, in
     HTMLSelectElement* select = static_cast<HTMLSelectElement*>(node());
     const Vector<HTMLElement*>& listItems = select->listItems();
     HTMLElement* element = listItems[listIndex];
-    OptionElement* optionElement = optionElementForElement(element);
+    OptionElement* optionElement = toOptionElement(element);
 
     Color backColor;
     if (optionElement && optionElement->selected()) {
@@ -370,9 +370,9 @@ bool RenderListBox::isPointInOverflowControl(HitTestResult& result, int _x, int 
         return false;
 
     IntRect vertRect(_tx + width() - borderRight() - m_vBar->width(),
-                   _ty + borderTop() - borderTopExtra(),
-                   m_vBar->width(),
-                   height() + borderTopExtra() + borderBottomExtra() - borderTop() - borderBottom());
+                     _ty,
+                     m_vBar->width(),
+                     height() - borderTop() - borderBottom());
 
     if (vertRect.contains(_x, _y)) {
         result.setScrollbar(m_vBar.get());

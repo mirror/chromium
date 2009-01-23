@@ -111,7 +111,7 @@ void RenderReplaced::paint(PaintInfo& paintInfo, int tx, int ty)
         return;
     
     tx += x();
-    ty += m_frameRect.y();
+    ty += y();
     
     if (hasBoxDecorations() && (paintInfo.phase == PaintPhaseForeground || paintInfo.phase == PaintPhaseSelection)) 
         paintBoxDecorations(paintInfo, tx, ty);
@@ -160,7 +160,7 @@ bool RenderReplaced::shouldPaint(PaintInfo& paintInfo, int& tx, int& ty)
         return false;
 
     int currentTX = tx + x();
-    int currentTY = ty + m_frameRect.y();
+    int currentTY = ty + y();
 
     // Early exit if the element touches the edges.
     int top = currentTY + overflowTop();
@@ -254,7 +254,7 @@ IntRect RenderReplaced::selectionRect(bool clipToVisibleContent)
     if (clipToVisibleContent)
         computeAbsoluteRepaintRect(rect);
     else {
-        FloatPoint absPos = localToAbsoluteForContent(FloatPoint());
+        FloatPoint absPos = localToAbsolute(FloatPoint());
         rect.move(absPos.x(), absPos.y());
     }
     
@@ -268,7 +268,7 @@ IntRect RenderReplaced::localSelectionRect(bool checkWhetherSelected) const
 
     if (!m_inlineBoxWrapper)
         // We're a block-level replaced element.  Just return our own dimensions.
-        return IntRect(0, 0, width(), height() + borderTopExtra() + borderBottomExtra());
+        return IntRect(0, 0, width(), height());
 
     RenderBlock* cb =  containingBlock();
     if (!cb)

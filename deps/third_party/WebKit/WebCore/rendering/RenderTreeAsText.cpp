@@ -181,25 +181,35 @@ static TextStream &operator<<(TextStream& ts, const RenderObject& o)
         }
     }
 
+    bool adjustForTableCells = o.containingBlock()->isTableCell();
+
     IntRect r;
     if (o.isText()) {
         // FIXME: Would be better to dump the bounding box x and y rather than the first run's x and y, but that would involve updating
         // many test results.
         const RenderText& text = static_cast<const RenderText&>(o);
         r = IntRect(text.firstRunX(), text.firstRunY(), text.boundingBoxWidth(), text.boundingBoxHeight());
+        if (adjustForTableCells && !text.firstTextBox())
+            adjustForTableCells = false;
     } else if (o.isBox()) {
         if (o.isRenderInline()) {
             // FIXME: Would be better not to just dump 0, 0 as the x and y here.
             const RenderInline& inlineFlow = static_cast<const RenderInline&>(o);
             r = IntRect(0, 0, inlineFlow.boundingBoxWidth(), inlineFlow.boundingBoxHeight());
-        } else {
-            // FIXME: We can't just use the actual frameRect of the box because dump render tree dumps the "inner box" of table cells.
-            // Because of the lie we have to call y().  We would like to fix dump render tree to dump the actual dimensions of the table
-            // cell including the extra intrinsic padding.
-            const RenderBox& box = static_cast<const RenderBox&>(o);
-            r = IntRect(box.x(), box.y(), box.width(), box.height());
-        }
+            adjustForTableCells = false;
+        } else if (o.isTableCell()) {
+            // FIXME: Deliberately dump the "inner" box of table cells, since that is what current results reflect.  We'd like
+            // to clean up the results to dump both the outer box and the intrinsic padding so that both bits of information are
+            // captured by the results.
+            const RenderTableCell& cell = static_cast<const RenderTableCell&>(o);
+            r = IntRect(cell.x(), cell.y() + cell.intrinsicPaddingTop(), cell.width(), cell.height() - cell.intrinsicPaddingTop() - cell.intrinsicPaddingBottom());
+        } else
+            r = static_cast<const RenderBox&>(o).frameRect();
     }
+
+    // FIXME: Temporary in order to ensure compatibility with existing layout test results.
+    if (adjustForTableCells)
+        r.move(0, -static_cast<RenderTableCell*>(o.containingBlock())->intrinsicPaddingTop());
 
     ts << " " << r;
 
@@ -226,16 +236,20 @@ static TextStream &operator<<(TextStream& ts, const RenderObject& o)
             o.style()->textStrokeWidth() > 0)
             ts << " [textStrokeWidth=" << o.style()->textStrokeWidth() << "]";
 
-        if (o.borderTop() || o.borderRight() || o.borderBottom() || o.borderLeft()) {
+        if (!o.isBox())
+            return ts;
+
+        const RenderBox& box = static_cast<const RenderBox&>(o);
+        if (box.borderTop() || box.borderRight() || box.borderBottom() || box.borderLeft()) {
             ts << " [border:";
 
             BorderValue prevBorder;
             if (o.style()->borderTop() != prevBorder) {
                 prevBorder = o.style()->borderTop();
-                if (!o.borderTop())
+                if (!box.borderTop())
                     ts << " none";
                 else {
-                    ts << " (" << o.borderTop() << "px ";
+                    ts << " (" << box.borderTop() << "px ";
                     printBorderStyle(ts, o.style()->borderTopStyle());
                     Color col = o.style()->borderTopColor();
                     if (!col.isValid())
@@ -246,10 +260,10 @@ static TextStream &operator<<(TextStream& ts, const RenderObject& o)
 
             if (o.style()->borderRight() != prevBorder) {
                 prevBorder = o.style()->borderRight();
-                if (!o.borderRight())
+                if (!box.borderRight())
                     ts << " none";
                 else {
-                    ts << " (" << o.borderRight() << "px ";
+                    ts << " (" << box.borderRight() << "px ";
                     printBorderStyle(ts, o.style()->borderRightStyle());
                     Color col = o.style()->borderRightColor();
                     if (!col.isValid())
@@ -259,11 +273,11 @@ static TextStream &operator<<(TextStream& ts, const RenderObject& o)
             }
 
             if (o.style()->borderBottom() != prevBorder) {
-                prevBorder = o.style()->borderBottom();
-                if (!o.borderBottom())
+                prevBorder = box.style()->borderBottom();
+                if (!box.borderBottom())
                     ts << " none";
                 else {
-                    ts << " (" << o.borderBottom() << "px ";
+                    ts << " (" << box.borderBottom() << "px ";
                     printBorderStyle(ts, o.style()->borderBottomStyle());
                     Color col = o.style()->borderBottomColor();
                     if (!col.isValid())
@@ -274,10 +288,10 @@ static TextStream &operator<<(TextStream& ts, const RenderObject& o)
 
             if (o.style()->borderLeft() != prevBorder) {
                 prevBorder = o.style()->borderLeft();
-                if (!o.borderLeft())
+                if (!box.borderLeft())
                     ts << " none";
                 else {
-                    ts << " (" << o.borderLeft() << "px ";
+                    ts << " (" << box.borderLeft() << "px ";
                     printBorderStyle(ts, o.style()->borderLeftStyle());
                     Color col = o.style()->borderLeftColor();
                     if (!col.isValid())
@@ -324,7 +338,11 @@ static TextStream &operator<<(TextStream& ts, const RenderObject& o)
 
 static void writeTextRun(TextStream& ts, const RenderText& o, const InlineTextBox& run)
 {
-    ts << "text run at (" << run.m_x << "," << run.m_y << ") width " << run.m_width;
+    // FIXME: Table cell adjustment is temporary until results can be updated.
+    int y = run.m_y;
+    if (o.containingBlock()->isTableCell())
+        y -= static_cast<RenderTableCell*>(o.containingBlock())->intrinsicPaddingTop();
+    ts << "text run at (" << run.m_x << "," << y << ") width " << run.m_width;
     if (run.direction() == RTL || run.m_dirOverride) {
         ts << (run.direction() == RTL ? " RTL" : " LTR");
         if (run.m_dirOverride)

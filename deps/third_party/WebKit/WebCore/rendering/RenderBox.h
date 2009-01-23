@@ -40,7 +40,7 @@ public:
     static const RenderBox* toConstRenderBox(const RenderObject* o) { ASSERT(!o || o->isBox()); return static_cast<const RenderBox*>(o);}
     
     int x() const { return m_frameRect.x(); }
-    int y() const { return m_frameRect.y() + borderTopExtra(); } // FIXME: Need to deal with the borderTopExtra() lie in a sane way.
+    int y() const { return m_frameRect.y(); }
     int width() const { return m_frameRect.width(); }
     int height() const { return m_frameRect.height(); }
     
@@ -49,7 +49,7 @@ public:
     void setWidth(int width) { m_frameRect.setWidth(width); }
     void setHeight(int height) { m_frameRect.setHeight(height); }
     
-    IntPoint location() const { return m_frameRect.location(); } // FIXME: Be aware that this is not equivalent to x(), y() because of y()'s borderTopExtra() lie!
+    IntPoint location() const { return m_frameRect.location(); }
     IntSize size() const { return m_frameRect.size(); }
 
     void setLocation(const IntPoint& location) { m_frameRect.setLocation(location); }
@@ -61,7 +61,7 @@ public:
     IntRect frameRect() const { return m_frameRect; }
     void setFrameRect(const IntRect& rect) { m_frameRect = rect; }
 
-    IntRect borderBoxRect() const { return IntRect(0, -borderTopExtra(), width(), height() + borderTopExtra() + borderBottomExtra()); }
+    IntRect borderBoxRect() const { return IntRect(0, 0, width(), height()); }
     
     // The content area of the box (excludes padding and border).
     IntRect contentBoxRect() const { return IntRect(borderLeft() + paddingLeft(), borderTop() + paddingTop(), contentWidth(), contentHeight()); }
@@ -96,7 +96,7 @@ public:
     // IE extensions. Used to calculate offsetWidth/Height.  Overridden by inlines (RenderFlow)
     // to return the remaining width on a given line (and the height of a single line).
     virtual int offsetWidth() const { return width(); }
-    virtual int offsetHeight() const { return height() + borderTopExtra() + borderBottomExtra(); }
+    virtual int offsetHeight() const { return height(); }
     virtual int offsetLeft() const;
     virtual int offsetTop() const;
     virtual RenderBox* offsetParent() const;
@@ -119,6 +119,39 @@ public:
     virtual int scrollHeight() const;
     virtual void setScrollLeft(int);
     virtual void setScrollTop(int);
+
+    bool hasHorizontalBordersPaddingOrMargin() const { return hasHorizontalBordersOrPadding() || marginLeft() != 0 || marginRight() != 0; }
+    bool hasHorizontalBordersOrPadding() const { return borderLeft() != 0 || borderRight() != 0 || paddingLeft() != 0 || paddingRight() != 0; }
+
+    int marginTop() const { return m_marginTop; }
+    int marginBottom() const { return m_marginBottom; }
+    int marginLeft() const { return m_marginLeft; }
+    int marginRight() const { return m_marginRight; }
+
+    // Virtual since table cells override
+    virtual int paddingTop(bool includeIntrinsicPadding = true) const;
+    virtual int paddingBottom(bool includeIntrinsicPadding = true) const;
+    virtual int paddingLeft(bool includeIntrinsicPadding = true) const;
+    virtual int paddingRight(bool includeIntrinsicPadding = true) const;
+
+    virtual int borderTop() const { return style()->borderTopWidth(); }
+    virtual int borderBottom() const { return style()->borderBottomWidth(); }
+    virtual int borderLeft() const { return style()->borderLeftWidth(); }
+    virtual int borderRight() const { return style()->borderRightWidth(); }
+
+    // The following seven functions are used to implement collapsing margins.
+    // All objects know their maximal positive and negative margins.  The
+    // formula for computing a collapsed margin is |maxPosMargin| - |maxNegmargin|.
+    // For a non-collapsing box, such as a leaf element, this formula will simply return
+    // the margin of the element.  Blocks override the maxTopMargin and maxBottomMargin
+    // methods.
+    virtual bool isSelfCollapsingBlock() const { return false; }
+    int collapsedMarginTop() const { return maxTopMargin(true) - maxTopMargin(false); }
+    int collapsedMarginBottom() const { return maxBottomMargin(true) - maxBottomMargin(false); }
+    virtual bool isTopMarginQuirk() const { return false; }
+    virtual bool isBottomMarginQuirk() const { return false; }
+    virtual int maxTopMargin(bool positive) const { return positive ? std::max(0, marginTop()) : -std::min(0, marginTop()); }
+    virtual int maxBottomMargin(bool positive) const { return positive ? std::max(0, marginBottom()) : -std::min(0, marginBottom()); }
 
     virtual void absoluteRects(Vector<IntRect>&, int tx, int ty, bool topLevel = true);
     virtual void absoluteQuads(Vector<FloatQuad>&, bool topLevel = true);
@@ -146,12 +179,7 @@ public:
     virtual FloatQuad localToAbsoluteQuad(const FloatQuad&, bool fixed = false) const;
 
     virtual IntSize offsetFromContainer(RenderObject*) const;
-
-    virtual int marginTop() const { return m_marginTop; }
-    virtual int marginBottom() const { return m_marginBottom; }
-    virtual int marginLeft() const { return m_marginLeft; }
-    virtual int marginRight() const { return m_marginRight; }
-
+    
     int calcBorderBoxWidth(int width) const;
     int calcBorderBoxHeight(int height) const;
     int calcContentBoxWidth(int width) const;
@@ -291,11 +319,11 @@ private:
     int containingBlockHeightForPositioned(const RenderObject* containingBlock) const;
 
     void calcAbsoluteVertical();
-    void calcAbsoluteHorizontalValues(Length width, const RenderObject* cb, TextDirection containerDirection,
+    void calcAbsoluteHorizontalValues(Length width, const RenderBox* cb, TextDirection containerDirection,
                                       int containerWidth, int bordersPlusPadding,
                                       Length left, Length right, Length marginLeft, Length marginRight,
                                       int& widthValue, int& marginLeftValue, int& marginRightValue, int& xPos);
-    void calcAbsoluteVerticalValues(Length height, const RenderObject* cb,
+    void calcAbsoluteVerticalValues(Length height, const RenderBox* cb,
                                     int containerHeight, int bordersPlusPadding,
                                     Length top, Length bottom, Length marginTop, Length marginBottom,
                                     int& heightValue, int& marginTopValue, int& marginBottomValue, int& yPos);
@@ -308,10 +336,11 @@ private:
     // These include tables, positioned objects, floats and flexible boxes.
     virtual void calcPrefWidths() = 0;
 
-protected:
+private:
     // The width/height of the contents + borders + padding.  The x/y location is relative to our container (which is not always our parent).
     IntRect m_frameRect;
 
+protected:
     int m_marginLeft;
     int m_marginRight;
     int m_marginTop;

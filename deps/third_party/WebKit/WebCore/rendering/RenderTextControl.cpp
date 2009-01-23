@@ -132,7 +132,7 @@ int RenderTextControl::textBlockHeight() const
 int RenderTextControl::textBlockWidth() const
 {
     return width() - paddingLeft() - paddingRight() - borderLeft() - borderRight()
-           - m_innerText->renderer()->paddingLeft() - m_innerText->renderer()->paddingRight();
+           - m_innerText->renderBox()->paddingLeft() - m_innerText->renderBox()->paddingRight();
 }
 
 void RenderTextControl::updateFromElement()
@@ -418,9 +418,9 @@ int RenderTextControl::scrollbarThickness() const
 
 void RenderTextControl::calcHeight()
 {
-    setHeight(m_innerText->renderer()->borderTop() + m_innerText->renderer()->borderBottom() +
-              m_innerText->renderer()->paddingTop() + m_innerText->renderer()->paddingBottom() +
-              m_innerText->renderer()->marginTop() + m_innerText->renderer()->marginBottom());
+    setHeight(m_innerText->renderBox()->borderTop() + m_innerText->renderBox()->borderBottom() +
+              m_innerText->renderBox()->paddingTop() + m_innerText->renderBox()->paddingBottom() +
+              m_innerText->renderBox()->marginTop() + m_innerText->renderBox()->marginBottom());
 
     adjustControlHeightBasedOnLineHeight(m_innerText->renderer()->lineHeight(true, true));
     setHeight(height() + paddingTop() + paddingBottom() + borderTop() + borderBottom());
@@ -466,7 +466,7 @@ void RenderTextControl::calcPrefWidths()
     else {
         // Use average character width. Matches IE.
         int charWidth = style()->font().primaryFont()->avgCharWidth();
-        m_maxPrefWidth = preferredContentWidth(charWidth) + m_innerText->renderer()->paddingLeft() + m_innerText->renderer()->paddingRight();
+        m_maxPrefWidth = preferredContentWidth(charWidth) + m_innerText->renderBox()->paddingLeft() + m_innerText->renderBox()->paddingRight();
     }
 
     if (style()->minWidth().isFixed() && style()->minWidth().value() > 0) {
@@ -574,7 +574,7 @@ HTMLElement* RenderTextControl::innerTextElement() const
 
 FormControlElement* RenderTextControl::formControlElement() const
 {
-    return formControlElementForElement(static_cast<Element*>(node()));
+    return toFormControlElement(static_cast<Element*>(node()));
 }
 
 } // namespace WebCore
