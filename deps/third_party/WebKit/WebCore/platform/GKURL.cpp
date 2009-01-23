@@ -1,45 +1,47 @@
-// Copyright (c) 2008, Google Inc. All rights reserved.
-// 
-// Redistribution and use in source and binary forms, with or without
-// modification, are permitted provided that the following conditions are
-// met:
-// 
-//     * Redistributions of source code must retain the above copyright
-// notice, this list of conditions and the following disclaimer.
-//     * Redistributions in binary form must reproduce the above
-// copyright notice, this list of conditions and the following disclaimer
-// in the documentation and/or other materials provided with the
-// distribution.
-//     * Neither the name of Google Inc. nor the names of its
-// contributors may be used to endorse or promote products derived from
-// this software without specific prior written permission.
-// 
-// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+/*
+ * Copyright (c) 2008, 2009, Google Inc. All rights reserved.
+ * 
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions are
+ * met:
+ * 
+ *     * Redistributions of source code must retain the above copyright
+ * notice, this list of conditions and the following disclaimer.
+ *     * Redistributions in binary form must reproduce the above
+ * copyright notice, this list of conditions and the following disclaimer
+ * in the documentation and/or other materials provided with the
+ * distribution.
+ *     * Neither the name of Google Inc. nor the names of its
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
+ * 
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
 
 #include "config.h"
 #include "KURL.h"
+
 #include "CString.h"
 #include "NotImplemented.h"
 #include "TextEncoding.h"
-#include "Vector.h"
+#include <wtf/Vector.h>
 
 #if USE(GOOGLEURL)
 
-#undef LOG
-#include "googleurl/src/url_canon_internal.h"
-#include "googleurl/src/url_util.h"
+#include <googleurl/src/url_canon_internal.h>
+#include <googleurl/src/url_util.h>
 
-using namespace WTF;
+using WTF::toASCIILower;
 
 namespace WebCore {
 
@@ -52,12 +54,13 @@ public:
     // The encoding parameter may be NULL, but in this case the object must not
     // be called.
     WebCoreCharsetConverter(const TextEncoding* encoding)
-        : m_encoding(encoding) {
+        : m_encoding(encoding)
+    {
     }
 
-    virtual void ConvertFromUTF16(const url_parse::UTF16Char* input,
-                                  int input_len,
-                                  url_canon::CanonOutput* output) {
+    virtual void ConvertFromUTF16(const url_parse::UTF16Char* input, int input_len,
+                                  url_canon::CanonOutput* output)
+    {
         CString encoded = m_encoding->encode(input, input_len, URLEncodedEntitiesForUnencodables);
         output->Append(encoded.data(), static_cast<int>(encoded.length()));
     }
@@ -83,7 +86,8 @@ inline void assertProtocolIsGood(const char* protocol)
 // Returns the characters for the given string, or a pointer to a static empty
 // string if the input string is NULL. This will always ensure we have a non-
 // NULL character pointer since ReplaceComponents has special meaning for NULL.
-inline const url_parse::UTF16Char* CharactersOrEmpty(const String& str) {
+inline const url_parse::UTF16Char* CharactersOrEmpty(const String& str)
+{
     static const url_parse::UTF16Char zero = 0;
     return str.characters() ?
            reinterpret_cast<const url_parse::UTF16Char*>(str.characters()) :
@@ -182,7 +186,7 @@ void GoogleURLPrivate::init(const KURL& base, const char* rel, int rel_len,
                                           charset_converter,
                                           &output, &m_parsed);
 
-    // See TODO in GoogleURLPrivate in the header. If canonicalization has not
+    // See FIXME in GoogleURLPrivate in the header. If canonicalization has not
     // changed the string, we can avoid an extra allocation by using assignment.
     //
     // When KURL encounters an error such that the URL is invalid and empty
@@ -202,7 +206,7 @@ void GoogleURLPrivate::init(const KURL& base, const char* rel, int rel_len,
     }
 }
 
-// Note: code mostly duplicated above. See TODOs and comments there.
+// Note: code mostly duplicated above. See FIXMEs and comments there.
 void GoogleURLPrivate::init(const KURL& base, const UChar* rel, int rel_len,
                             const TextEncoding* query_encoding)
 {
@@ -223,9 +227,8 @@ void GoogleURLPrivate::init(const KURL& base, const UChar* rel, int rel_len,
             setUtf8(output.data(), output.length());
         else
             setAscii(output.data(), output.length());
-    } else {
+    } else
         setUtf8("", 0);
-    }
 }
 
 void GoogleURLPrivate::copyTo(GoogleURLPrivate* dest) const
@@ -299,14 +302,14 @@ const String& GoogleURLPrivate::string() const
 KURL::KURL(const char *url)
 {
     // FIXME(brettw) the Mac code checks for beginning with a slash and
-    // converting to a file: URL. We will want to add this as well once we
-    // can compile on a system like that.
+    // converting to a file: URL. We will want to add this as well once we can
+    // compile on a system like that.
     m_url.init(KURL(), url, strlen(url), NULL);
 
     // The one-argument constructors should never generate a NULL string.
     // This is a funny quirk of KURL (probably a bug) which we preserve.
     if (m_url.utf8String().isNull())
-          m_url.setAscii("", 0);
+        m_url.setAscii("", 0);
 }
 
 // Initializes with a string representing an absolute URL. No encoding
@@ -316,9 +319,9 @@ KURL::KURL(const char *url)
 // UTF-8 just in case.
 KURL::KURL(const String& url)
 {
-    if (!url.isNull()) {
+    if (!url.isNull())
         m_url.init(KURL(), url, NULL);
-    } else {
+    else {
         // WebKit expects us to preserve the nullness of strings when this
         // constructor is used. In all other cases, it expects a non-null
         // empty string, which is what init() will create.
@@ -531,12 +534,10 @@ void KURL::setHostAndPort(const String& s) {
     replacements.SetHost(CharactersOrEmpty(newhost),
                          url_parse::Component(0, newhost.length()));
 
-    if (newport.isEmpty()) {  // Port may be removed, so we support clearing.
+    if (newport.isEmpty())  // Port may be removed, so we support clearing.
         replacements.ClearPort();
-    } else {
-        replacements.SetPort(CharactersOrEmpty(newport),
-                             url_parse::Component(0, newport.length()));
-    }
+    else
+        replacements.SetPort(CharactersOrEmpty(newport), url_parse::Component(0, newport.length()));
     m_url.replaceComponents(replacements);
 }
 
@@ -544,7 +545,7 @@ void KURL::setPort(unsigned short i)
 {
     GoogleURLPrivate::Replacements replacements;
     String portStr;
-    if (i > 0) {
+    if (i) {
         portStr = String::number(static_cast<int>(i));
         replacements.SetPort(
             reinterpret_cast<const url_parse::UTF16Char*>(portStr.characters()),
@@ -595,12 +596,10 @@ void KURL::setRef(const String& ref)
         return;
 
     GoogleURLPrivate::Replacements replacements;
-    if (ref.isNull()) {
+    if (ref.isNull())
         replacements.ClearRef();
-    } else {
-        replacements.SetRef(CharactersOrEmpty(ref),
-                            url_parse::Component(0, ref.length()));
-    }
+    else
+        replacements.SetRef(CharactersOrEmpty(ref), url_parse::Component(0, ref.length()));
     m_url.replaceComponents(replacements);
 }
 
@@ -656,8 +655,8 @@ String KURL::prettyURL() const
 
 // Copy the KURL version here on Sept 12, 2008 while doing the webkit merge.
 // 
-// TODO(erg): Somehow share this with KURL? Like we'd theoretically merge
-// with decodeURLEscapeSequences below?
+// FIXME(erg) Somehow share this with KURL? Like we'd theoretically merge with
+// decodeURLEscapeSequences below?
 #ifdef KURL_DECORATE_GLOBALS
 String KURL::mimeTypeFromDataURL(const String& url)
 #else
@@ -699,20 +698,20 @@ String decodeURLEscapeSequences(const String& str)
 // the same. This also eliminates NULL-related problems should a consumer
 // incorrectly call this function for non-JavaScript.
 //
-// TODO(brettw) these should be merged to the regular KURL implementation.
+// FIXME(brettw) these should be merged to the regular KURL implementation.
 #ifdef KURL_DECORATE_GLOBALS
 String KURL::decodeURLEscapeSequences(const String& str, const TextEncoding& encoding)
 #else
 String decodeURLEscapeSequences(const String& str, const TextEncoding& encoding)
 #endif
 {
-    // TODO(brettw) We can probably use KURL's version of this function
+    // FIXME(brettw) We can probably use KURL's version of this function
     // without modification. However, I'm concerned about
     // https://bugs.webkit.org/show_bug.cgi?id=20559 so am keeping this old
     // custom code for now. Using their version will also fix the bug that
     // we ignore the encoding.
     //
-    // TODO(brettw) bug 1350291: This does not get called very often. We just
+    // FIXME(brettw) bug 1350291: This does not get called very often. We just
     // convert first to 8-bit UTF-8, then unescape, then back to 16-bit. This
     // kind of sucks, and we don't use the encoding properly, which will make
     // some obscure anchor navigations fail.
@@ -730,9 +729,8 @@ String decodeURLEscapeSequences(const String& str, const TextEncoding& encoding)
                     unescaped.push_back('%');
                     unescaped.push_back('0');
                     unescaped.push_back('0');
-                } else {
+                } else
                     unescaped.push_back(ch);
-                }
             } else {
                 // Invalid escape sequence, copy the percent literal.
                 unescaped.push_back('%');
@@ -775,8 +773,7 @@ String decodeURLEscapeSequences(const String& str, const TextEncoding& encoding)
         }
     }
 
-    return String(reinterpret_cast<UChar*>(utf16.data()),
-                            utf16.length());
+    return String(reinterpret_cast<UChar*>(utf16.data()), utf16.length());
 }
 
 bool KURL::protocolIs(const char* protocol) const
@@ -865,8 +862,8 @@ bool equalIgnoringRef(const KURL& a, const KURL& b)
     if (b.m_url.m_parsed.ref.len >= 0)
         b_len = b.m_url.m_parsed.ref.begin - 1;
 
-    return a_len == b_len &&
-        strncmp(a.m_url.utf8String().data(), b.m_url.utf8String().data(), a_len) == 0;
+    return a_len == b_len
+        && strncmp(a.m_url.utf8String().data(), b.m_url.utf8String().data(), a_len) == 0;
 }
 
 unsigned KURL::hostStart() const
@@ -934,6 +931,6 @@ inline bool KURL::protocolIs(const String& string, const char* protocol)
 }
 #endif
 
-}  // namespace WebCore
+} // namespace WebCore
 
-#endif  // USE(GOOGLEURL)
+#endif // USE(GOOGLEURL)
