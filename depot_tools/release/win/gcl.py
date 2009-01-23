@@ -1,4 +1,8 @@
 #!/usr/bin/python
+# Copyright (c) 2006-2009 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
 # Wrapper script around Rietveld's upload.py that groups files into
 # changelists.
 
@@ -25,13 +29,16 @@ CODEREVIEW_SETTINGS = {
 # may be a batch file.
 use_shell = sys.platform.startswith("win")
 
-# globals that store the root of the current repositary and the directory where
+# globals that store the root of the current repository and the directory where
 # we store information about changelists.
 repository_root = ""
 gcl_info_dir = ""
 
 # Filename where we store repository specific information for gcl.
 CODEREVIEW_SETTINGS_FILE = "codereview.settings"
+
+# Warning message when the change appears to be missing tests.
+MISSING_TEST_MSG = "Change contains new or modified methods, but no new tests!"
 
 # Caches whether we read the codereview.settings file yet or not.
 read_gcl_info = False
@@ -121,8 +128,12 @@ def IsTreeOpen():
   return status.find('0') == -1
 
 
-def ErrorExit(msg):
-  """Print an error message to stderr and exit."""
+def Warn(msg):
+  ErrorExit(msg, exit=False)
+
+
+def ErrorExit(msg, exit=True):
+  """Print an error message to stderr and optionally exit."""
   print >>sys.stderr, msg
   sys.exit(1)
 
@@ -182,10 +193,15 @@ class ChangeInfo:
     self.issue = issue
     self.description = description
     self.files = files
+    self.patch = None
 
   def FileList(self):
     """Returns a list of files."""
     return [file[1] for file in self.files]
+
+  def _NonDeletedFileList(self):
+    """Returns a list of files in this change, not including deleted files."""
+    return [file[1] for file in self.files if file[0] != "D"]
 
   def Save(self):
     """Writes the changelist information to disk."""
@@ -210,7 +226,82 @@ class ChangeInfo:
     ctype, body = upload.EncodeMultipartFormData(data, [])
     SendToRietveld("/" + self.issue + "/description", body, ctype)
 
-  
+  def MissingTests(self):
+    """Returns True if the change looks like it needs unit tests but has none.
+
+    A change needs unit tests if it contains any new source files or methods.
+    """
+    SOURCE_SUFFIXES = [".cc", ".cpp", ".c", ".m", ".mm"]
+    # Ignore third_party entirely.
+    files = [file for file in self._NonDeletedFileList()
+             if file.find("third_party") == -1]
+
+    # Any new or modified test files?
+    # A test file's name ends with "test.*" or "tests.*".
+    test_files = [test for test in files
+                  if os.path.splitext(test)[0].rstrip("s").endswith("test")]
+    if len(test_files) > 0:
+      return False
+
+    # Any new source files?
+    source_files = [file for file in files
+                    if os.path.splitext(file)[1] in SOURCE_SUFFIXES]
+    if len(source_files) > 0:
+      return True
+
+    # Do the long test, checking the files for new methods.
+    return self._HasNewMethod()
+
+  def _HasNewMethod(self):
+    """Returns True if the changeset contains any new functions, or if a
+    function signature has been changed.
+
+    A function is identified by starting flush left, containing a "(" before
+    the next flush-left line, and either ending with "{" before the next
+    flush-left line or being followed by an unindented "{".
+
+    Currently this returns True for new methods, new static functions, and
+    methods or functions whose signatures have been changed.
+
+    Inline methods added to header files won't be detected by this. That's
+    acceptable for purposes of determining if a unit test is needed, since
+    inline methods should be trivial.
+    """
+    # To check for methods added to source or header files, we need the diffs.
+    # We'll generate them all, since there aren't likely to be many files
+    # apart from source and headers; besides, we'll want them all if we're
+    # uploading anyway.
+    if self.patch is None:
+      self.patch = GenerateDiff(self.FileList())
+
+    definition = ""
+    for line in self.patch.splitlines():
+      if not line.startswith("+"):
+        continue
+      line = line.strip("+").rstrip(" \t")
+      # Skip empty lines, comments, and preprocessor directives.
+      # TODO(pamg): Handle multiline comments if it turns out to be a problem.
+      if line == "" or line.startswith("/") or line.startswith("#"):
+        continue
+
+      # A possible definition ending with "{" is complete, so check it.
+      if definition.endswith("{"):
+        if definition.find("(") != -1:
+          return True
+        definition = ""
+
+      # A { or an indented line, when we're in a definition, continues it.
+      if (definition != "" and
+          (line == "{" or line.startswith(" ") or line.startswith("\t"))):
+        definition += line
+
+      # A flush-left line starts a new possible function definition.
+      elif not line.startswith(" ") and not line.startswith("\t"):
+        definition = line
+
+    return False
+
+
 SEPARATOR = "\n-----\n"
 # The info files have the following format:
 # issue_id\n
@@ -317,12 +408,12 @@ def GetModifiedFiles():
   """Returns a set that maps from changelist name to (status,filename) tuples.
 
   Files not in a changelist have an empty changelist name.  Filenames are in
-  relation to the top level directory of the current repositary.  Note that
+  relation to the top level directory of the current repository.  Note that
   only the current directory and subdirectories are scanned, in order to
   improve performance while still being flexible.
   """
   files = {}
-  
+
   # Since the files are normalized to the root folder of the repositary, figure
   # out what we need to add to the paths.
   dir_prefix = os.getcwd()[len(GetRepositoryRoot()):].strip(os.sep)
@@ -500,7 +591,14 @@ def GetEditor():
 
 
 def GenerateDiff(files):
-  """Returns a string containing the diff for the given file list."""
+  """Returns a string containing the diff for the given file list.
+
+  The files in the list should either be absolute paths or relative to the
+  repository root.
+  """
+  previous_cwd = os.getcwd()
+  os.chdir(GetRepositoryRoot())
+
   diff = []
   for file in files:
     # Use svn info output instead of os.path.isdir because the latter fails
@@ -521,6 +619,7 @@ def GenerateDiff(files):
     if not os.path.exists(bogus_dir):
       os.mkdir(bogus_dir)
     diff.append(RunShell(["svn", "diff", "--config-dir", bogus_dir, file]))
+  os.chdir(previous_cwd)
   return "".join(diff)
 
 
@@ -532,6 +631,9 @@ def UploadCL(change_info, args):
   no_try = "--no_try" in args
   if no_try:
     args.remove("--no_try")
+
+  # TODO(pamg): Do something when tests are missing. The plan is to upload a
+  # message to Rietveld and have it shown in the UI attached to this patch.
 
   upload_arg = ["upload.py", "-y"]
   upload_arg.append("--server=" + GetCodeReviewSetting("CODE_REVIEW_SERVER"))
@@ -565,16 +667,18 @@ def UploadCL(change_info, args):
       if len(change_info.description) > 77:
         subject = subject + "..."
       upload_arg.append("--message=" + subject)
-  
+
   # Change the current working directory before calling upload.py so that it
   # shows the correct base.
+  previous_cwd = os.getcwd()
   os.chdir(GetRepositoryRoot())
 
   # If we have a lot of files with long paths, then we won't be able to fit
   # the command to "svn diff".  Instead, we generate the diff manually for
   # each file and concatenate them before passing it to upload.py.
-  issue, patchset = upload.RealMain(upload_arg,
-                                    GenerateDiff(change_info.FileList()))
+  if change_info.patch is None:
+    change_info.patch = GenerateDiff(change_info.FileList())
+  issue, patchset = upload.RealMain(upload_arg, change_info.patch)
   if issue and issue != change_info.issue:
     change_info.issue = issue
     change_info.Save()
@@ -590,6 +694,8 @@ def UploadCL(change_info, args):
   if not no_try and GetCodeReviewSetting('TRY_ON_UPLOAD').lower() == 'true':
     # Use the local diff.
     TryChange(change_info, [], True)
+
+  os.chdir(previous_cwd)
 
 
 def TryChange(change_info, args, swallow_exception=False, patchset=None):
@@ -642,6 +748,7 @@ def Commit(change_info, args):
   commit_cmd += ['--file=' + commit_filename]
   commit_cmd += ['--targets=' + targets_filename]
   # Change the current working directory before calling commit.
+  previous_cwd = os.getcwd()
   os.chdir(GetRepositoryRoot())
   output = RunShell(commit_cmd, True)
   os.remove(commit_filename)
@@ -656,6 +763,7 @@ def Commit(change_info, args):
       change_info.description = (change_info.description +
                                  "\n\nCommitted: " + viewvc_url + revision)
       change_info.CloseIssue()
+  os.chdir(previous_cwd)
 
 
 def Change(change_info):
@@ -721,6 +829,8 @@ def Change(change_info):
 
   change_info.Save()
   print change_info.name + " changelist saved."
+  if change_info.MissingTests():
+    Warn("WARNING: " + MISSING_TEST_MSG)
 
 # We don't lint files in these path prefixes.
 IGNORE_PATHS = ("webkit",)
@@ -737,6 +847,7 @@ def Lint(change_info, args):
 
   # Change the current working directory before calling lint so that it
   # shows the correct base.
+  previous_cwd = os.getcwd()
   os.chdir(GetRepositoryRoot())
 
   # Process cpplints arguments if any.
@@ -750,10 +861,11 @@ def Lint(change_info, args):
         cpplint.ProcessFile(file, cpplint._cpplint_state.verbose_level)
 
   print "Total errors found: %d\n" % cpplint._cpplint_state.error_count
+  os.chdir(previous_cwd)
 
 
 def Changes():
-  """Print all the changlists and their files."""
+  """Print all the changelists and their files."""
   for cl in GetCLs():
     change_info = LoadChangelistInfo(cl, True, True)
     print "\n--- Changelist " + change_info.name + ":"
@@ -790,7 +902,7 @@ def main(argv=None):
     return 0
   if command == "diff" and len(argv) == 2:
     files = GetFilesNotInCL()
-    print GenerateDiff([os.path.join(GetRepositoryRoot(), x[1]) for x in files])
+    print GenerateDiff([x[1] for x in files])
     return 0
   if command == "settings":
     ignore = GetCodeReviewSetting("UNKNOWN");
