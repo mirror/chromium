@@ -9,6 +9,7 @@
 #include "base/string_util.h"
 #include "base/thread.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/extensions/user_script_master.h"
 #include "chrome/common/json_value_serializer.h"
 #include "chrome/common/notification_service.h"
 
@@ -17,10 +18,12 @@
 const FilePath::CharType* ExtensionsService::kInstallDirectoryName =
     FILE_PATH_LITERAL("Extensions");
 
-ExtensionsService::ExtensionsService(const FilePath& profile_directory)
+ExtensionsService::ExtensionsService(const FilePath& profile_directory,
+                                     UserScriptMaster* user_script_master)
     : message_loop_(MessageLoop::current()),
       backend_(new ExtensionsServiceBackend),
-      install_directory_(profile_directory.Append(kInstallDirectoryName)) {
+      install_directory_(profile_directory.Append(kInstallDirectoryName)),
+      user_script_master_(user_script_master) {
 }
 
 ExtensionsService::~ExtensionsService() {
@@ -53,6 +56,24 @@ void ExtensionsService::OnExtensionsLoadedFromDirectory(
   extensions_.insert(extensions_.end(), new_extensions->begin(),
                      new_extensions->end());
 
+  // Tell UserScriptMaster about any scripts in the loaded extensions.
+  for (ExtensionList::iterator extension = extensions_.begin();
+       extension != extensions_.end(); ++extension) {
+    const UserScriptList& scripts = (*extension)->user_scripts();
+    for (UserScriptList::const_iterator script = scripts.begin();
+         script != scripts.end(); ++script) {
+      user_script_master_->AddLoneScript(*script);
+    }
+  }
+
+  // Tell UserScriptMaster to also watch the extensions directory for changes
+  // and then kick off the first scan.
+  // TODO(aa): This should go away when we implement the --extension flag, since
+  // developing scripts in the Extensions directory will no longer be a common
+  // use-case.
+  user_script_master_->AddWatchedPath(install_directory_);
+  user_script_master_->StartScan();
+
   NotificationService::current()->Notify(NOTIFY_EXTENSIONS_LOADED,
       NotificationService::AllSources(),
       Details<ExtensionList>(new_extensions));
@@ -70,8 +91,12 @@ void ExtensionsService::OnExtensionLoadError(const std::string& error) {
 // ExtensionsServicesBackend
 
 bool ExtensionsServiceBackend::LoadExtensionsFromDirectory(
-    const FilePath& path,
+    const FilePath& path_in,
     scoped_refptr<ExtensionsServiceFrontendInterface> frontend) {
+  FilePath path = path_in;
+  if (!file_util::AbsolutePath(&path))
+    NOTREACHED();
+
   // Find all child directories in the install directory and load their
   // manifests. Post errors and results to the frontend.
   scoped_ptr<ExtensionList> extensions(new ExtensionList);
@@ -80,7 +105,8 @@ bool ExtensionsServiceBackend::LoadExtensionsFromDirectory(
                                        file_util::FileEnumerator::DIRECTORIES);
   for (FilePath child_path = enumerator.Next(); !child_path.value().empty();
        child_path = enumerator.Next()) {
-    FilePath manifest_path = child_path.Append(Extension::kManifestFilename);
+    FilePath manifest_path =
+        child_path.AppendASCII(Extension::kManifestFilename);
     if (!file_util::PathExists(manifest_path)) {
       ReportExtensionLoadError(frontend.get(), child_path.ToWStringHack(),
                                Extension::kInvalidManifestError);

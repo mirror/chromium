@@ -23,6 +23,9 @@ class PrefService;
 
 namespace l10n_util {
 
+const wchar_t kRightToLeftMark[] = L"\x200f";
+const wchar_t kLeftToRightMark[] = L"\x200e";
+
 // This method is responsible for determining the locale as defined below. In
 // nearly all cases you shouldn't call this, rather use GetApplicationLocale
 // defined on browser_process.
@@ -147,6 +150,9 @@ void WrapStringWithRTLFormatting(std::wstring* text);
 // Callers should OR this value into their extended style value when creating
 // a window.
 int GetExtendedStyles();
+
+// TODO(xji):
+// This is a temporary name, it will eventually replace GetExtendedStyles
 int GetExtendedTooltipStyles();
 
 // Returns the default text alignment to be used when drawing text on a

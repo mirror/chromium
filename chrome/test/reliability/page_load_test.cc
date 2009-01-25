@@ -40,7 +40,7 @@
 #include "base/file_util.h"
 #include "base/path_service.h"
 #include "base/string_util.h"
-#include "chrome/browser/url_fixer_upper.h"
+#include "chrome/browser/net/url_fixer_upper.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
@@ -101,6 +101,7 @@ uint32 timeout_ms = INFINITE;
 bool save_debug_log = false;
 std::wstring chrome_log_path;
 std::wstring v8_log_path;
+bool stand_alone = false;
 
 class PageLoadTest : public UITest {
  public:
@@ -154,8 +155,7 @@ class PageLoadTest : public UITest {
           // Page down twice.
           scoped_ptr<BrowserProxy> browser(automation()->GetBrowserWindow(0));
           if (browser.get()) {
-            scoped_ptr<WindowProxy> window(
-                automation()->GetWindowForBrowser(browser.get()));
+            scoped_ptr<WindowProxy> window(browser->GetWindow());
             if (window.get()) {
               bool activation_timeout;
               browser->BringToFrontWithTimeout(action_max_timeout_ms(),
@@ -267,7 +267,10 @@ class PageLoadTest : public UITest {
       }
     } else {
       // Don't run if single process mode.
-      if (in_process_renderer())
+      // Also don't run if running as a standalone program which is for
+      // distributed testing, to avoid mistakenly hitting web sites with many
+      // instances.
+      if (in_process_renderer() || stand_alone)
         return;
       // For usage 1
       NavigationMetrics metrics;
@@ -555,6 +558,8 @@ TEST_F(PageLoadTest, Reliability) {
 }
 
 void SetPageRange(const CommandLine& parsed_command_line) {
+  // If calling into this function, we are running as a standalone program.
+  stand_alone = true;
   if (parsed_command_line.HasSwitch(kStartPageSwitch)) {
     ASSERT_TRUE(parsed_command_line.HasSwitch(kEndPageSwitch));
     start_page =

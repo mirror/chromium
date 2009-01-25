@@ -620,6 +620,7 @@ all : \
     HTMLEntityNames.c \
     V8Attr.h \
     V8BarInfo.h \
+    V8CanvasPixelArray.h \
     V8CDATASection.h \
     V8CSSCharsetRule.h \
     V8CSSFontFaceRule.h \
@@ -894,9 +895,12 @@ all : \
     V8WebKitAnimationEvent.h \
     V8WebKitCSSKeyframeRule.h \
     V8WebKitCSSKeyframesRule.h \
+    V8WebKitCSSMatrix.h \
     V8WebKitCSSTransformValue.h \
     V8WebKitTransitionEvent.h \
     V8WheelEvent.h \
+    V8Worker.h \
+    V8WorkerLocation.h \
     V8XMLHttpRequest.h \
     V8XMLHttpRequestException.h \
     V8XMLHttpRequestProgressEvent.h \

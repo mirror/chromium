@@ -32,8 +32,7 @@ class BrowserTest : public UITest {
  protected:
    HWND GetMainWindow() {
      scoped_ptr<BrowserProxy> browser(automation()->GetBrowserWindow(0));
-     scoped_ptr<WindowProxy> window(
-        automation()->GetWindowForBrowser(browser.get()));
+     scoped_ptr<WindowProxy> window(browser->GetWindow());
 
      HWND window_handle;
      EXPECT_TRUE(window->GetHWND(&window_handle));
@@ -123,7 +122,8 @@ TEST_F(BrowserTest, WindowsSessionEnd) {
   ASSERT_TRUE(exited_cleanly);
 }
 
-TEST_F(BrowserTest, JavascriptAlertActivatesTab) {
+// This test is flakey, see bug 5668 for details.
+TEST_F(BrowserTest, DISABLED_JavascriptAlertActivatesTab) {
   scoped_ptr<BrowserProxy> window(automation()->GetBrowserWindow(0));
   int start_index;
   ASSERT_TRUE(window->GetActiveTabIndex(&start_index));

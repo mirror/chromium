@@ -7,6 +7,18 @@
 	objects = {
 
 /* Begin PBXAggregateTarget section */
+		4D1F55010F2905C60040C1E3 /* package_test_shell */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 4D1F55170F2906220040C1E3 /* Build configuration list for PBXAggregateTarget "package_test_shell" */;
+			buildPhases = (
+				4D1F55000F2905C60040C1E3 /* ShellScript */,
+			);
+			dependencies = (
+				4D1F55050F2905DC0040C1E3 /* PBXTargetDependency */,
+			);
+			name = package_test_shell;
+			productName = "Package TestShell";
+		};
 		4DCE98940EF0600700682526 /* All */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 4DCE98AF0EF0602400682526 /* Build configuration list for PBXAggregateTarget "All" */;
@@ -35,6 +47,7 @@
 
 /* Begin PBXBuildFile section */
 		4D1638790EBFA714008F024E /* libsqlite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D1638760EBFA6F7008F024E /* libsqlite.a */; };
+		4D4164FC0F212E6500F2F4A0 /* KeystoneGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D4164FB0F212E6500F2F4A0 /* KeystoneGlue.m */; };
 		4D4C57FC0EF1A314002CA805 /* multipart_response_delegate_unittest.cc in Sources */ = {isa = PBXBuildFile; fileRef = E4506B9E0EF02C7E003BE099 /* multipart_response_delegate_unittest.cc */; };
 		4D4C58D90EF1A6D0002CA805 /* password_autocomplete_listener_unittest.cc in Sources */ = {isa = PBXBuildFile; fileRef = E4506BA00EF02C85003BE099 /* password_autocomplete_listener_unittest.cc */; };
 		4DB687D70EAFE7C800AB2128 /* libxslt.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DB687D40EAFE79200AB2128 /* libxslt.a */; };
@@ -212,6 +225,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 4D7B007E0E9D5538009A6919;
 			remoteInfo = sqlite;
+		};
+		4D1F55040F2905DC0040C1E3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E45628C30E26B4FE005E4685;
+			remoteInfo = TestShell;
 		};
 		4DB687D30EAFE79200AB2128 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -707,6 +727,8 @@
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* TestShell_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestShell_Prefix.pch; sourceTree = "<group>"; };
 		4D16386E0EBFA6F7008F024E /* sqlite.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = sqlite.xcodeproj; path = third_party/sqlite/sqlite.xcodeproj; sourceTree = "<group>"; };
+		4D4164FA0F212E6500F2F4A0 /* KeystoneGlue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeystoneGlue.h; sourceTree = "<group>"; };
+		4D4164FB0F212E6500F2F4A0 /* KeystoneGlue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeystoneGlue.m; sourceTree = "<group>"; };
 		4DB687CA0EAFE79200AB2128 /* libxslt.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = libxslt.xcodeproj; path = third_party/libxslt/libxslt.xcodeproj; sourceTree = "<group>"; };
 		4DB7FA6E0E9BF33B00C66CE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<group>"; };
 		4DB7FEA70E9BF98C00C66CE0 /* libWebKitSystemInterfaceLeopard.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libWebKitSystemInterfaceLeopard.a; path = ../../../../third_party/WebKit/WebKitLibraries/libWebKitSystemInterfaceLeopard.a; sourceTree = SOURCE_ROOT; };
@@ -1162,6 +1184,8 @@
 			children = (
 				F431EA480F1D141300E8D37F /* DumpRenderTreePasteboard.m */,
 				F431EA490F1D141300E8D37F /* DumpRenderTreePasteboard.h */,
+				4D4164FA0F212E6500F2F4A0 /* KeystoneGlue.h */,
+				4D4164FB0F212E6500F2F4A0 /* KeystoneGlue.m */,
 				29B97316FDCFA39411CA2CEA /* main.mm */,
 				ABA65EFD0DD50BFF003A4FC8 /* test_shell_webview.h */,
 				ABA65EFE0DD50BFF003A4FC8 /* test_shell_webview.mm */,
@@ -1467,6 +1491,7 @@
 				E45628C30E26B4FE005E4685 /* TestShell */,
 				E45067A70EEF2776003BE099 /* test_shell_tests */,
 				E4506A340EF020E4003BE099 /* run_test_shell_tests */,
+				4D1F55010F2905C60040C1E3 /* package_test_shell */,
 			);
 		};
 /* End PBXProject section */
@@ -1799,6 +1824,20 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		4D1F55000F2905C60040C1E3 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "set -ex\nexec \"${PROJECT_FILE_PATH}/${PRODUCT_NAME}.sh\" \"${@}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4D3D52680EC3838E00650CA0 /* Strip If Needed */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -1900,6 +1939,7 @@
 			files = (
 				F431EA4A0F1D141300E8D37F /* DumpRenderTreePasteboard.m in Sources */,
 				E45629160E26B4FE005E4685 /* event_sending_controller.cc in Sources */,
+				4D4164FC0F212E6500F2F4A0 /* KeystoneGlue.m in Sources */,
 				E45629170E26B4FE005E4685 /* layout_test_controller.cc in Sources */,
 				E45629150E26B4FE005E4685 /* main.mm in Sources */,
 				53E50D280ECA1B21001784B4 /* simple_clipboard_impl.cc in Sources */,
@@ -1925,6 +1965,11 @@
 			isa = PBXTargetDependency;
 			name = sqlite;
 			targetProxy = 4D1638770EBFA706008F024E /* PBXContainerItemProxy */;
+		};
+		4D1F55050F2905DC0040C1E3 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = E45628C30E26B4FE005E4685 /* TestShell */;
+			targetProxy = 4D1F55040F2905DC0040C1E3 /* PBXContainerItemProxy */;
 		};
 		4DB687D60EAFE7B100AB2128 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2098,6 +2143,20 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4D1F55020F2905C70040C1E3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = package_test_shell;
+			};
+			name = Debug;
+		};
+		4D1F55030F2905C70040C1E3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = package_test_shell;
+			};
+			name = Release;
+		};
 		4DCE98950EF0600700682526 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2171,13 +2230,16 @@
 					../../../../third_party/WebKit/WebCore/html,
 					../../../../third_party/WebKit/WebCore/loader,
 					../../../../third_party/WebKit/WebCore/page,
+					../../../../third_party/WebKit/WebCore/page/animation,
 					../../../../third_party/WebKit/WebCore/platform,
 					../../../../third_party/WebKit/WebCore/platform/animation,
 					../../../../third_party/WebKit/WebCore/platform/chromium,
 					../../../../third_party/WebKit/WebCore/platform/graphics,
+					../../../../third_party/WebKit/WebCore/platform/graphics/mac,
 					../../../../third_party/WebKit/WebCore/platform/graphics/chromium,
 					../../../../third_party/WebKit/WebCore/platform/graphics/transforms,
 					../../../../third_party/WebKit/WebCore/platform/graphics/skia,
+					"../../../../third_party/WebKit/WebCore/platform/image-decoders/skia",
 					../../../../third_party/WebKit/WebCore/platform/network,
 					../../../../third_party/WebKit/WebCore/platform/network/chromium,
 					../../../../third_party/WebKit/WebCore/platform/text,
@@ -2185,12 +2247,8 @@
 					../../../../third_party/WebKit/WebCore/rendering/style,
 					../../../../third_party/WebKit/WebCore/svg,
 					../../../../third_party/WebKit/WebKit/mac/WebCoreSupport,
+					../../../../v8/include,
 					../../../../webkit/port/platform,
-					"../../../../webkit/port/platform/image-decoders",
-					"../../../../webkit/port/platform/image-decoders/bmp",
-					"../../../../webkit/port/platform/image-decoders/ico",
-					"../../../../webkit/port/platform/image-decoders/png",
-					"../../../../webkit/port/platform/image-decoders/xbm",
 					../../../../webkit/port/platform/graphics,
 					../../../../webkit/port/bindings/v8,
 					"$(SYMROOT)/webkit.build/$(CONFIGURATION)/generated/DerivedSources/v8/bindings",
@@ -2238,13 +2296,16 @@
 					../../../../third_party/WebKit/WebCore/html,
 					../../../../third_party/WebKit/WebCore/loader,
 					../../../../third_party/WebKit/WebCore/page,
+					../../../../third_party/WebKit/WebCore/page/animation,
 					../../../../third_party/WebKit/WebCore/platform,
 					../../../../third_party/WebKit/WebCore/platform/animation,
 					../../../../third_party/WebKit/WebCore/platform/chromium,
 					../../../../third_party/WebKit/WebCore/platform/graphics,
+					../../../../third_party/WebKit/WebCore/platform/graphics/mac,
 					../../../../third_party/WebKit/WebCore/platform/graphics/chromium,
 					../../../../third_party/WebKit/WebCore/platform/graphics/transforms,
 					../../../../third_party/WebKit/WebCore/platform/graphics/skia,
+					"../../../../third_party/WebKit/WebCore/platform/image-decoders/skia",
 					../../../../third_party/WebKit/WebCore/platform/network,
 					../../../../third_party/WebKit/WebCore/platform/network/chromium,
 					../../../../third_party/WebKit/WebCore/platform/text,
@@ -2252,12 +2313,8 @@
 					../../../../third_party/WebKit/WebCore/rendering/style,
 					../../../../third_party/WebKit/WebCore/svg,
 					../../../../third_party/WebKit/WebKit/mac/WebCoreSupport,
+					../../../../v8/include,
 					../../../../webkit/port/platform,
-					"../../../../webkit/port/platform/image-decoders",
-					"../../../../webkit/port/platform/image-decoders/bmp",
-					"../../../../webkit/port/platform/image-decoders/ico",
-					"../../../../webkit/port/platform/image-decoders/png",
-					"../../../../webkit/port/platform/image-decoders/xbm",
 					../../../../webkit/port/platform/graphics,
 					../../../../webkit/port/bindings/v8,
 					"$(SYMROOT)/webkit.build/$(CONFIGURATION)/generated/DerivedSources/v8/bindings",
@@ -2307,7 +2364,14 @@
 					../../../../third_party/icu38/public/i18n,
 					../../../../third_party/npapi,
 					../../../pending,
+					../../../port/bindings/v8,
+					../../../../v8/include,
 					../../../../third_party/WebKit/WebCore/platform/chromium,
+					../../../../third_party/WebKit/WebCore/platform/text,
+					../../../../third_party/WebKit/WebCore/platform,
+					../../../../third_party/WebKit/JavaScriptCore/wtf,
+					../../../../third_party/WebKit/WebCore/dom,
+					../../../../third_party/WebKit/WebCore/page,
 					../../../../third_party/WebKit/WebCore,
 					../../../../third_party/WebKit/WebKit/mac/WebCoreSupport,
 					"$(SYMROOT)/webkit.build/$(CONFIGURATION)/generated/WebCore/v8",
@@ -2343,7 +2407,14 @@
 					../../../../third_party/icu38/public/i18n,
 					../../../../third_party/npapi,
 					../../../pending,
+					../../../port/bindings/v8,
+					../../../../v8/include,
 					../../../../third_party/WebKit/WebCore/platform/chromium,
+					../../../../third_party/WebKit/WebCore/platform/text,
+					../../../../third_party/WebKit/WebCore/platform,
+					../../../../third_party/WebKit/JavaScriptCore/wtf,
+					../../../../third_party/WebKit/WebCore/dom,
+					../../../../third_party/WebKit/WebCore/page,
 					../../../../third_party/WebKit/WebCore,
 					../../../../third_party/WebKit/WebKit/mac/WebCoreSupport,
 					"$(SYMROOT)/webkit.build/$(CONFIGURATION)/generated/WebCore/v8",
@@ -2363,6 +2434,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4D1F55170F2906220040C1E3 /* Build configuration list for PBXAggregateTarget "package_test_shell" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4D1F55020F2905C70040C1E3 /* Debug */,
+				4D1F55030F2905C70040C1E3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		4DCE98AF0EF0602400682526 /* Build configuration list for PBXAggregateTarget "All" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -482,46 +482,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\render_view_host.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\render_view_host.h"
-				>
-			</File>
-			<File
-				RelativePath=".\render_view_host_delegate.h"
-				>
-			</File>
-			<File
-				RelativePath=".\render_widget_helper.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\render_widget_helper.h"
-				>
-			</File>
-			<File
-				RelativePath=".\render_widget_host.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\render_widget_host.h"
-				>
-			</File>
-			<File
-				RelativePath=".\render_widget_host_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\render_widget_host_view_win.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\render_widget_host_view_win.h"
-				>
-			</File>
-			<File
 				RelativePath=".\resource_message_filter.cc"
 				>
 			</File>
@@ -567,30 +527,6 @@
 			</File>
 			<File
 				RelativePath=".\spellchecker.h"
-				>
-			</File>
-			<File
-				RelativePath=".\url_fetcher.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\url_fetcher.h"
-				>
-			</File>
-			<File
-				RelativePath=".\url_fetcher_protect.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\url_fetcher_protect.h"
-				>
-			</File>
-			<File
-				RelativePath=".\url_fixer_upper.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\url_fixer_upper.h"
 				>
 			</File>
 			<File
@@ -715,38 +651,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Tab Contents (Old)"
-			>
-			<File
-				RelativePath=".\render_view_context_menu.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\render_view_context_menu.h"
-				>
-			</File>
-			<File
-				RelativePath=".\render_view_context_menu_controller.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\render_view_context_menu_controller.h"
-				>
-			</File>
-			<File
-				RelativePath=".\render_view_host_manager.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\render_view_host_manager.h"
-				>
-			</File>
-			<File
-				RelativePath=".\security_style.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="Browser Window"
 			>
 			<File
@@ -786,11 +690,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\controller.cc"
+				RelativePath=".\command_updater.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\controller.h"
+				RelativePath=".\command_updater.h"
 				>
 			</File>
 			<File
@@ -850,6 +754,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\status_bubble.h"
+				>
+			</File>
+			<File
 				RelativePath=".\task_manager.cc"
 				>
 			</File>
@@ -879,18 +787,6 @@
 			</File>
 			<File
 				RelativePath=".\window_sizer.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Policy"
-			>
-			<File
-				RelativePath=".\renderer_security_policy.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\renderer_security_policy.h"
 				>
 			</File>
 		</Filter>
@@ -1310,6 +1206,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\webdata\web_data_service_win.cc"
+				>
+			</File>
+			<File
 				RelativePath=".\webdata\web_database.cc"
 				>
 			</File>
@@ -1383,14 +1283,6 @@
 			</File>
 			<File
 				RelativePath=".\importer\mork_reader.h"
-				>
-			</File>
-			<File
-				RelativePath=".\importer\toolbar_importer.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\importer\toolbar_importer.h"
 				>
 			</File>
 		</Filter>
@@ -1568,24 +1460,6 @@
 			<File
 				RelativePath=".\password_manager\encryptor.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\password_manager\encryptor.h"
@@ -1605,6 +1479,10 @@
 			</File>
 			<File
 				RelativePath=".\password_manager\password_form_manager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\password_manager\password_form_manager_win.cc"
 				>
 			</File>
 			<File
@@ -1757,6 +1635,30 @@
 			</File>
 			<File
 				RelativePath=".\net\sdch_dictionary_fetcher.h"
+				>
+			</File>
+			<File
+				RelativePath=".\net\url_fetcher.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\net\url_fetcher.h"
+				>
+			</File>
+			<File
+				RelativePath=".\net\url_fetcher_protect.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\net\url_fetcher_protect.h"
+				>
+			</File>
+			<File
+				RelativePath=".\net\url_fixer_upper.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\net\url_fixer_upper.h"
 				>
 			</File>
 		</Filter>
@@ -2036,6 +1938,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\renderer_host\backing_store.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\backing_store.h"
+				>
+			</File>
+			<File
 				RelativePath=".\renderer_host\browser_render_process_host.cc"
 				>
 			</File>
@@ -2084,6 +1994,54 @@
 				>
 			</File>
 			<File
+				RelativePath=".\renderer_host\render_view_host.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\render_view_host.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\render_view_host_delegate.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\render_widget_helper.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\render_widget_helper.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\render_widget_host.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\render_widget_host.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\render_widget_host_view.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\render_widget_host_view_win.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\render_widget_host_view_win.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\renderer_security_policy.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\renderer_security_policy.h"
+				>
+			</File>
+			<File
 				RelativePath=".\renderer_host\resource_dispatcher_host.cc"
 				>
 			</File>
@@ -2124,14 +2082,6 @@
 			Name="Tab Contents"
 			>
 			<File
-				RelativePath=".\tab_contents\about_internets_status_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_contents\about_internets_status_view.h"
-				>
-			</File>
-			<File
 				RelativePath=".\tab_contents\constrained_window.h"
 				>
 			</File>
@@ -2146,24 +2096,6 @@
 			<File
 				RelativePath=".\tab_contents\interstitial_page.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\tab_contents\interstitial_page.h"
@@ -2180,24 +2112,6 @@
 			<File
 				RelativePath=".\tab_contents\native_ui_contents.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\tab_contents\native_ui_contents.h"
@@ -2206,24 +2120,6 @@
 			<File
 				RelativePath=".\tab_contents\navigation_controller.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\tab_contents\navigation_controller.h"
@@ -2232,35 +2128,9 @@
 			<File
 				RelativePath=".\tab_contents\navigation_entry.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\tab_contents\navigation_entry.h"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_contents\network_status_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_contents\network_status_view.h"
 				>
 			</File>
 			<File
@@ -2270,50 +2140,42 @@
 			<File
 				RelativePath=".\tab_contents\provisional_load_details.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\tab_contents\provisional_load_details.h"
 				>
 			</File>
 			<File
+				RelativePath=".\tab_contents\render_view_context_menu.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\render_view_context_menu.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\render_view_context_menu_controller.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\render_view_context_menu_controller.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\render_view_host_manager.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\render_view_host_manager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\security_style.h"
+				>
+			</File>
+			<File
 				RelativePath=".\tab_contents\site_instance.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\tab_contents\site_instance.h"
@@ -2394,24 +2256,6 @@
 			<File
 				RelativePath=".\tab_contents\web_drag_source.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\tab_contents\web_drag_source.h"
@@ -2420,24 +2264,6 @@
 			<File
 				RelativePath=".\tab_contents\web_drop_target.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\tab_contents\web_drop_target.h"
@@ -2450,24 +2276,6 @@
 			<File
 				RelativePath=".\search_engines\template_url.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\search_engines\template_url.h"
@@ -2476,24 +2284,6 @@
 			<File
 				RelativePath=".\search_engines\template_url_fetcher.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\search_engines\template_url_fetcher.h"
@@ -2502,24 +2292,6 @@
 			<File
 				RelativePath=".\search_engines\template_url_model.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\search_engines\template_url_model.h"
@@ -2528,24 +2300,6 @@
 			<File
 				RelativePath=".\search_engines\template_url_parser.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\search_engines\template_url_parser.h"
@@ -2554,24 +2308,6 @@
 			<File
 				RelativePath=".\search_engines\template_url_prepopulate_data.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\search_engines\template_url_prepopulate_data.h"
@@ -2620,24 +2356,6 @@
 			<File
 				RelativePath=".\ssl\ssl_blocking_page.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\ssl\ssl_blocking_page.h"
@@ -2646,24 +2364,6 @@
 			<File
 				RelativePath=".\ssl\ssl_error_info.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\ssl\ssl_error_info.h"
@@ -2672,24 +2372,6 @@
 			<File
 				RelativePath=".\ssl\ssl_manager.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\ssl\ssl_manager.h"
@@ -2698,24 +2380,6 @@
 			<File
 				RelativePath=".\ssl\ssl_policy.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\ssl\ssl_policy.h"

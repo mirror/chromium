@@ -15,6 +15,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
 #include "net/http/http_cache.h"
+#include "net/http/http_util.h"
 #include "net/proxy/proxy_service.h"
 #include "webkit/glue/webkit_glue.h"
 
@@ -23,7 +24,7 @@
 static net::ProxyInfo* CreateProxyInfo() {
   net::ProxyInfo* proxy_info = NULL;
 
-  CommandLine command_line;
+  const CommandLine& command_line = *CommandLine::ForCurrentProcess();
   if (command_line.HasSwitch(switches::kProxyServer)) {
     proxy_info = new net::ProxyInfo();
     const std::wstring& proxy_server =
@@ -47,7 +48,7 @@ ChromeURLRequestContext* ChromeURLRequestContext::CreateOriginal(
   net::HttpCache* cache =
       new net::HttpCache(context->proxy_service_, disk_cache_path, 0);
 
-  CommandLine command_line;
+  const CommandLine& command_line = *CommandLine::ForCurrentProcess();
   bool record_mode = chrome::kRecordModeEnabled &&
                      command_line.HasSwitch(switches::kRecordMode);
   bool playback_mode = command_line.HasSwitch(switches::kPlaybackMode);
@@ -95,24 +96,26 @@ ChromeURLRequestContext::ChromeURLRequestContext(Profile* profile)
       is_off_the_record_(profile->IsOffTheRecord()) {
   user_agent_ = webkit_glue::GetUserAgent();
 
-  // set up Accept-Language and Accept-Charset header values
-  // TODO(jungshik) : This may slow down http requests. Perhaps,
-  // we have to come up with a better way to set up these values.
-  accept_language_ = WideToASCII(prefs_->GetString(prefs::kAcceptLanguages));
-  accept_charset_ = WideToASCII(prefs_->GetString(prefs::kDefaultCharset));
-  accept_charset_ += ",*,utf-8";
+  // Set up Accept-Language and Accept-Charset header values
+  accept_language_ = net::HttpUtil::GenerateAcceptLanguageHeader(
+      WideToASCII(prefs_->GetString(prefs::kAcceptLanguages)));
+  accept_charset_ = net::HttpUtil::GenerateAcceptCharsetHeader(
+      WideToASCII(prefs_->GetString(prefs::kDefaultCharset)));
 
   cookie_policy_.SetType(net::CookiePolicy::FromInt(
       prefs_->GetInteger(prefs::kCookieBehavior)));
 
-  const ExtensionList* extensions =
-      profile->GetExtensionsService()->extensions();
-  for (ExtensionList::const_iterator iter = extensions->begin();
-      iter != extensions->end(); ++iter) {
-    extension_paths_[(*iter)->id()] = (*iter)->path();
+  if (profile->GetExtensionsService()) {
+    const ExtensionList* extensions =
+        profile->GetExtensionsService()->extensions();
+    for (ExtensionList::const_iterator iter = extensions->begin();
+        iter != extensions->end(); ++iter) {
+      extension_paths_[(*iter)->id()] = (*iter)->path();
+    }
   }
 
-  user_script_dir_path_ = profile->GetUserScriptMaster()->user_script_dir();
+  if (profile->GetUserScriptMaster())
+    user_script_dir_path_ = profile->GetUserScriptMaster()->user_script_dir();
 
   prefs_->AddPrefObserver(prefs::kAcceptLanguages, this);
   prefs_->AddPrefObserver(prefs::kCookieBehavior, this);  
@@ -183,7 +186,8 @@ FilePath ChromeURLRequestContext::GetPathForExtension(const std::string& id) {
 void ChromeURLRequestContext::OnAcceptLanguageChange(std::string accept_language) {
   DCHECK(MessageLoop::current() ==
          ChromeThread::GetMessageLoop(ChromeThread::IO));
-  accept_language_ = accept_language;
+  accept_language_ =
+      net::HttpUtil::GenerateAcceptLanguageHeader(accept_language);
 }
 
 void ChromeURLRequestContext::OnCookiePolicyChange(net::CookiePolicy::Type type) {

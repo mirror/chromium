@@ -26,21 +26,20 @@ namespace NPAPI
 class PluginInstance;
 
 // This struct fully describes a plugin. For external plugins, it's read in from
-// the version info of the dll; For internal plugins, it's predefined.
+// the version info of the dll; For internal plugins, it's predefined and
+// includes addresses of entry functions. (Yes, it's Win32 NPAPI-centric, but
+// it'll do for holding descriptions of internal plugins cross-platform.)
 struct PluginVersionInfo {
-  FilePath path;
-  std::wstring product_name;
-  std::wstring file_description;
-  std::wstring file_version;
-  std::wstring mime_types;
-  std::wstring file_extents;
-  std::wstring file_open_names;
-};
-
-// This struct contains information of an internal plugin and addresses of
-// entry functions.
-struct InternalPluginInfo {
-  PluginVersionInfo version_info;
+  const FilePath::CharType* path;
+  // Info about the plugin itself.
+  const wchar_t* product_name;
+  const wchar_t* file_description;
+  const wchar_t* file_version;
+  // Info about the data types that the plugin supports.
+  const wchar_t* mime_types;
+  const wchar_t* file_extensions;
+  const wchar_t* type_descriptions;
+  // Entry points for internal plugins, NULL for external ones.
   NP_GetEntryPointsFunc np_getentrypoints;
   NP_InitializeFunc np_initialize;
   NP_ShutdownFunc np_shutdown;
@@ -54,9 +53,14 @@ class PluginLib : public base::RefCounted<PluginLib> {
   virtual ~PluginLib();
 
   // Creates a WebPluginInfo structure given a plugin's path.  On success
-  // returns true, with the information being put into "info".  Returns false if
-  // the library couldn't be found, or if it's not a plugin.
-  static bool ReadWebPluginInfo(const FilePath &filename, WebPluginInfo* info);
+  // returns true, with the information being put into "info".  If it's an
+  // internal plugin, the function pointers are returned as well.
+  // Returns false if the library couldn't be found, or if it's not a plugin.
+  static bool ReadWebPluginInfo(const FilePath& filename,
+                                WebPluginInfo* info,
+                                NP_GetEntryPointsFunc* np_getentrypoints,
+                                NP_InitializeFunc* np_initialize,
+                                NP_ShutdownFunc* np_shutdown);
 
   // Unloads all the loaded plugin libraries and cleans up the plugin map.
   static void UnloadAllPlugins();
@@ -65,10 +69,10 @@ class PluginLib : public base::RefCounted<PluginLib> {
   static void ShutdownAllPlugins();
 
   // Get the Plugin's function pointer table.
-  NPPluginFuncs *functions();
+  NPPluginFuncs* functions();
 
   // Creates a new instance of this plugin.
-  PluginInstance *CreateInstance(const std::string &mime_type);
+  PluginInstance* CreateInstance(const std::string& mime_type);
 
   // Called by the instance when the instance is tearing down.
   void CloseInstance();
@@ -92,7 +96,10 @@ class PluginLib : public base::RefCounted<PluginLib> {
 
  private:
   // Creates a new PluginLib.
-  PluginLib(const WebPluginInfo& info);
+  PluginLib(const WebPluginInfo& info,
+            NP_GetEntryPointsFunc np_getentrypoints,
+            NP_InitializeFunc np_initialize,
+            NP_ShutdownFunc np_shutdown);
 
   // Attempts to load the plugin from the library.
   // Returns true if it is a legitimate plugin, false otherwise
@@ -104,13 +111,12 @@ class PluginLib : public base::RefCounted<PluginLib> {
   // Shutdown the plugin library.
   void Shutdown();
 
-  //
-  // Platform functions
-  //
-
-  // Gets the list of internal plugins.
-  static void GetInternalPlugins(const InternalPluginInfo** plugins,
-                                 size_t* count);
+  // Populate a WebPluginInfo from a PluginVersionInfo.
+  static bool CreateWebPluginInfo(const PluginVersionInfo& pvi,
+                                  WebPluginInfo* info,
+                                  NP_GetEntryPointsFunc* np_getentrypoints,
+                                  NP_InitializeFunc* np_initialize,
+                                  NP_ShutdownFunc* np_shutdown);
 
  public:
 #if defined(OS_WIN)
@@ -121,6 +127,10 @@ class PluginLib : public base::RefCounted<PluginLib> {
   typedef CFBundleRef NativeLibrary;
   typedef CFStringRef NativeLibraryFunctionNameType;
 #define FUNCTION_NAME(x) CFSTR(x)
+#elif defined(OS_LINUX)
+  typedef void* NativeLibrary;
+  typedef const char* NativeLibraryFunctionNameType;
+#define FUNCTION_NAME(x) x
 #endif  // OS_*
 
   // Loads a native library from disk. NOTE: You must release it with

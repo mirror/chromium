@@ -106,6 +106,7 @@
 #include "Settings.h"
 #include "StyleSheetList.h"
 #include "TreeWalker.h"
+#include "WebKitCSSMatrix.h"
 #include "WindowFeatures.h"
 #include "XMLSerializer.h"
 #include "XPathEvaluator.h"
@@ -139,18 +140,6 @@ v8::Handle<v8::Value> V8Custom::v8##NAME##NamedPropertySetter(\
 #define NAMED_PROPERTY_DELETER(NAME) \
 v8::Handle<v8::Boolean> V8Custom::v8##NAME##NamedPropertyDeleter(\
     v8::Local<v8::String> name, const v8::AccessorInfo& info)
-
-#define INDEXED_PROPERTY_GETTER(NAME)  \
-v8::Handle<v8::Value> V8Custom::v8##NAME##IndexedPropertyGetter(\
-    uint32_t index, const v8::AccessorInfo& info)
-
-#define INDEXED_PROPERTY_SETTER(NAME)  \
-v8::Handle<v8::Value> V8Custom::v8##NAME##IndexedPropertySetter(\
-    uint32_t index, v8::Local<v8::Value> value, const v8::AccessorInfo& info)
-
-#define INDEXED_PROPERTY_DELETER(NAME) \
-v8::Handle<v8::Boolean> V8Custom::v8##NAME##IndexedPropertyDeleter(\
-    uint32_t index, const v8::AccessorInfo& info)
 
 #define NAMED_ACCESS_CHECK(NAME) \
 bool V8Custom::v8##NAME##NamedSecurityCheck(v8::Local<v8::Object> host, \
@@ -304,6 +293,33 @@ CALLBACK_FUNC_DECL(MessageChannelConstructor) {
   // Return the wrapper object which will be the result of the call to
   // new.
   return wrapper_object;
+}
+
+
+CALLBACK_FUNC_DECL(WebKitCSSMatrixConstructor) {
+  INC_STATS("DOM.WebKitCSSMatrix.Constructor");
+  String s;
+  if (args.Length() >= 1)
+    s = ToWebCoreString(args[0]);
+  
+  // Create the matrix.
+  ExceptionCode ec = 0;
+  RefPtr<WebKitCSSMatrix> matrix = WebKitCSSMatrix::create(s, ec);
+  if (ec != 0) {
+    V8Proxy::SetDOMException(ec);
+    return v8::Undefined();
+  }
+
+  // Transform the holder into a wrapper object for the matrix.
+  V8Proxy::SetDOMWrapper(args.Holder(),
+                         V8ClassIndex::ToInt(V8ClassIndex::WEBKITCSSMATRIX),
+                         matrix.get());
+  // Add the wrapper to the DOM object map.
+  matrix->ref();
+  V8Proxy::SetJSWrapperForDOMObject(
+      matrix.get(),
+      v8::Persistent<v8::Object>::New(args.Holder()));
+  return args.Holder();
 }
 
 
@@ -685,6 +701,7 @@ NAMED_PROPERTY_GETTER(HTMLCollection) {
   String key = ToWebCoreString(name);
   return HTMLCollectionGetNamedItems(imp, key);
 }
+
 
 CALLBACK_FUNC_DECL(HTMLCollectionItem) {
   INC_STATS("DOM.HTMLCollection.item()");
@@ -3465,8 +3482,6 @@ NAMED_ACCESS_CHECK(Location) {
 #undef NAMED_ACCESS_CHECK
 #undef NAMED_PROPERTY_GETTER
 #undef NAMED_PROPERTY_SETTER
-#undef INDEXED_PROPERTY_GETTER
-#undef INDEXED_PROPERTY_SETTER
 
 
 // static

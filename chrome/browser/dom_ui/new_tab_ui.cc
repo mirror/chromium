@@ -16,7 +16,7 @@
 #include "chrome/browser/history/page_usage_data.h"
 #include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/profile.h"
-#include "chrome/browser/render_view_host.h"
+#include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/sessions/session_types.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/search_engines/template_url.h"
@@ -787,7 +787,7 @@ NewTabUIContents::NewTabUIContents(Profile* profile,
     NewTabHTMLSource::set_first_view(false);
   }
 
-  render_view_host()->SetPaintObserver(new PaintTimer);
+  render_view_host()->set_paint_observer(new PaintTimer);
 }
 
 void NewTabUIContents::AttachMessageHandlers() {

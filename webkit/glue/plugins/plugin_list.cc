@@ -6,6 +6,7 @@
 
 #include "webkit/glue/plugins/plugin_list.h"
 
+#include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/string_util.h"
 #include "base/time.h"
@@ -19,33 +20,30 @@
 #include "webkit/glue/plugins/plugin_constants_win.h"
 #endif
 
-namespace NPAPI
-{
+namespace NPAPI {
 
-scoped_refptr<PluginList> PluginList::singleton_;
+base::LazyInstance<PluginList> g_singleton(base::LINKER_INITIALIZED);
 
-// Extra paths to search.
-static std::vector<FilePath>* extra_plugin_paths_ = NULL;
-
+// static
 PluginList* PluginList::Singleton() {
-  if (singleton_.get() == NULL) {
-    singleton_ = new PluginList();
-    singleton_->LoadPlugins(false);
+  PluginList* singleton = g_singleton.Pointer();
+  if (!singleton->plugins_loaded_) {
+    singleton->LoadPlugins(false);
+    DCHECK(singleton->plugins_loaded_);
   }
-
-  return singleton_;
+  return singleton;
 }
 
+// static
 void PluginList::AddExtraPluginPath(const FilePath& plugin_path) {
-  DCHECK(!singleton_.get() || !singleton_->plugins_loaded_);
+  // We access the singleton directly, and not through Singleton(), since
+  // we don't want LoadPlugins() to be called.
+  DCHECK(!g_singleton.Pointer()->plugins_loaded_);
 
-  if (!extra_plugin_paths_)
-    extra_plugin_paths_ = new std::vector<FilePath>;
-  extra_plugin_paths_->push_back(plugin_path);
+  g_singleton.Pointer()->extra_plugin_paths_.push_back(plugin_path);
 }
 
-PluginList::PluginList() :
-    plugins_loaded_(false) {
+PluginList::PluginList() : plugins_loaded_(false) {
   PlatformInit();
 }
 
@@ -67,18 +65,12 @@ void PluginList::LoadPlugins(bool refresh) {
     LoadPluginsFromDir(directories_to_scan[i]);
   }
 
-  if (extra_plugin_paths_) {
-    for (size_t i = 0; i < extra_plugin_paths_->size(); ++i)
-      LoadPlugin((*extra_plugin_paths_)[i]);
-  }
+  for (size_t i = 0; i < extra_plugin_paths_.size(); ++i)
+    LoadPlugin(extra_plugin_paths_[i]);
+  extra_plugin_paths_.clear();
 
-  if (webkit_glue::IsDefaultPluginEnabled()) {
-    WebPluginInfo info;
-    if (PluginLib::ReadWebPluginInfo(FilePath(kDefaultPluginLibraryName),
-                                     &info)) {
-      plugins_.push_back(info);
-    }
-  }
+  if (webkit_glue::IsDefaultPluginEnabled())
+    LoadPlugin(FilePath(kDefaultPluginLibraryName));
 
   base::TimeTicks end_time = base::TimeTicks::Now();
   base::TimeDelta elapsed = end_time - start_time;
@@ -87,24 +79,29 @@ void PluginList::LoadPlugins(bool refresh) {
 
 void PluginList::LoadPlugin(const FilePath &path) {
   WebPluginInfo plugin_info;
-  if (!PluginLib::ReadWebPluginInfo(path, &plugin_info))
+  NP_GetEntryPointsFunc np_getentrypoints;
+  NP_InitializeFunc np_initialize;
+  NP_ShutdownFunc np_shutdown;
+  if (!PluginLib::ReadWebPluginInfo(path, &plugin_info, &np_getentrypoints,
+                                    &np_initialize, &np_shutdown)) {
     return;
+  }
 
   if (!ShouldLoadPlugin(plugin_info))
     return;
 
-  for (size_t i = 0; i < plugin_info.mime_types.size(); ++i) {
-    // TODO: don't load global handlers for now.
-    // WebKit hands to the Plugin before it tries
-    // to handle mimeTypes on its own.
-    const std::string &mime_type = plugin_info.mime_types[i].mime_type;
-    if (mime_type == "*" ) {
+  if (path.value() != kDefaultPluginLibraryName
 #if defined(OS_WIN) && !defined(NDEBUG)
-      // Make an exception for NPSPY.
-      if (path.BaseName().value() == L"npspy.dll")
-        break;
+      && path.BaseName().value() != L"npspy.dll"  // Make an exception for NPSPY
 #endif
-      return;
+      ) {
+    for (size_t i = 0; i < plugin_info.mime_types.size(); ++i) {
+      // TODO: don't load global handlers for now.
+      // WebKit hands to the Plugin before it tries
+      // to handle mimeTypes on its own.
+      const std::string &mime_type = plugin_info.mime_types[i].mime_type;
+      if (mime_type == "*" )
+        return;
     }
   }
 

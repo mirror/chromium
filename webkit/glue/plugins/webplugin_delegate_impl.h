@@ -10,7 +10,6 @@
 
 #include "base/file_path.h"
 #include "base/gfx/native_widget_types.h"
-#include "base/iat_patch.h"
 #include "base/ref_counted.h"
 #include "base/task.h"
 #include "third_party/npapi/bindings/npapi.h"
@@ -44,9 +43,7 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
                           WebPlugin* plugin,
                           bool load_manually);
   virtual void UpdateGeometry(const gfx::Rect& window_rect,
-                              const gfx::Rect& clip_rect,
-                              const std::vector<gfx::Rect>& cutout_rects,
-                              bool visible);
+                              const gfx::Rect& clip_rect);
   virtual void Paint(HDC hdc, const gfx::Rect& rect);
   virtual void Print(HDC hdc);
   virtual void SetFocus();  // only called when windowless
@@ -99,12 +96,6 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
 
   int quirks() { return quirks_; }
 
-  static void MoveWindow(HWND window,
-                         const gfx::Rect& window_rect,
-                         const gfx::Rect& clip_rect,
-                         const std::vector<gfx::Rect>& cutout_rects,
-                         bool visible);
-
  private:
   WebPluginDelegateImpl(gfx::NativeView containing_view,
                         NPAPI::PluginInstance *instance);
@@ -113,9 +104,7 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
   //--------------------------
   // used for windowed plugins
   void WindowedUpdateGeometry(const gfx::Rect& window_rect,
-                              const gfx::Rect& clip_rect,
-                              const std::vector<gfx::Rect>& cutout_rects,
-                              bool visible);
+                              const gfx::Rect& clip_rect);
   // Create the native window.
   // Returns true if the window is created (or already exists).
   // Returns false if unable to create the window.
@@ -127,9 +116,7 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
   // Reposition the native window to be in sync with the given geometry.
   // Returns true if the native window has moved or been clipped differently.
   bool WindowedReposition(const gfx::Rect& window_rect,
-                          const gfx::Rect& clip_rect,
-                          const std::vector<gfx::Rect>& cutout_rects,
-                          bool visible);
+                          const gfx::Rect& clip_rect);
 
   // Tells the plugin about the current state of the window.
   // See NPAPI NPP_SetWindow for more information.
@@ -202,11 +189,6 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
   std::vector<gfx::Rect> cutout_rects_;
   int quirks_;
 
-  // We only move/size the plugin window once after its creation. The
-  // rest of the moves are controlled by the browser. This flag controls
-  // this behaviour.
-  bool initial_plugin_resize_done_;
-
   // Windowless plugins don't have keyboard focus causing issues with the
   // plugin not receiving keyboard events if the plugin enters a modal
   // loop like TrackPopupMenuEx or MessageBox, etc.
@@ -219,8 +201,6 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
   // receives a WM_LBUTTONDOWN/WM_RBUTTONDOWN message via NPP_HandleEvent.
   HWND dummy_window_for_activation_;
   bool CreateDummyWindowForActivation();
-
-  static std::list<MSG> throttle_queue_;
 
   // Returns true if the event passed in needs to be tracked for a potential
   // modal loop.
@@ -243,9 +223,6 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
   // Handle to the message filter hook
   HHOOK handle_event_message_filter_hook_;
 
-  // The current instance of the plugin which entered the modal loop.
-  static WebPluginDelegateImpl* current_plugin_instance_;
-
   // Event which is set when the plugin enters a modal loop in the course
   // of a NPP_HandleEvent call.
   HANDLE handle_event_pump_messages_event_;
@@ -266,9 +243,6 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
   // The plugin module handle.
   HMODULE plugin_module_handle_;
 
-  // Helper object for patching the TrackPopupMenu API
-  static iat_patch::IATPatchFunction iat_patch_track_popup_menu_;
-
   // TrackPopupMenu interceptor. Parameters are the same as the Win32 function
   // TrackPopupMenu.
   static BOOL WINAPI TrackPopupMenuPatch(HMENU menu, unsigned int flags, int x,
@@ -277,9 +251,6 @@ class WebPluginDelegateImpl : public WebPluginDelegate {
 
   // SetCursor interceptor for windowless plugins.
   static HCURSOR WINAPI SetCursorPatch(HCURSOR cursor);
-
-  // Helper object for patching the SetCursor API
-  static iat_patch::IATPatchFunction iat_patch_set_cursor_;
 
   // Holds the current cursor set by the windowless plugin.
   WebCursor current_windowless_cursor_;

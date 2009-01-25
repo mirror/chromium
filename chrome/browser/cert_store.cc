@@ -7,7 +7,8 @@
 #include <algorithm>
 #include <functional>
 
-#include "chrome/browser/render_view_host.h"
+#include "chrome/browser/renderer_host/render_process_host.h"
+#include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/common/stl_util-inl.h"
 
@@ -22,19 +23,9 @@ struct MatchSecond {
   T value;
 };
 
-// static
-CertStore* CertStore::instance_ = NULL;
-
-// static
-void CertStore::Initialize() {
-  DCHECK(!instance_);
-  instance_ = new CertStore();
-}
-
 //  static
 CertStore* CertStore::GetSharedInstance() {
-  DCHECK(instance_);
-  return instance_;
+  return Singleton<CertStore>::get();
 }
 
 CertStore::CertStore() : next_cert_id_(1) {
@@ -51,8 +42,6 @@ CertStore::CertStore() : next_cert_id_(1) {
 }
 
 CertStore::~CertStore() {
-  NotificationService::current()->RemoveObserver(this,
-      NOTIFY_RENDERER_PROCESS_TERMINATED, NotificationService::AllSources());
 }
 
 int CertStore::StoreCert(net::X509Certificate* cert, int process_id) {

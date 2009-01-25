@@ -22,6 +22,18 @@ void V8Custom::v8##NAME##AccessorSetter(v8::Local<v8::String> name, \
                                         v8::Local<v8::Value> value, \
                                         const v8::AccessorInfo& info)
 
+#define INDEXED_PROPERTY_GETTER(NAME)  \
+v8::Handle<v8::Value> V8Custom::v8##NAME##IndexedPropertyGetter(\
+    uint32_t index, const v8::AccessorInfo& info)
+
+#define INDEXED_PROPERTY_SETTER(NAME)  \
+v8::Handle<v8::Value> V8Custom::v8##NAME##IndexedPropertySetter(\
+    uint32_t index, v8::Local<v8::Value> value, const v8::AccessorInfo& info)
+
+#define INDEXED_PROPERTY_DELETER(NAME) \
+v8::Handle<v8::Boolean> V8Custom::v8##NAME##IndexedPropertyDeleter(\
+    uint32_t index, const v8::AccessorInfo& info)
+
 namespace WebCore {
 
 class Frame;
@@ -70,6 +82,13 @@ class V8Custom {
                       kDefaultWrapperInternalFieldCount + 1;
   static const int kMessagePortInternalFieldCount =
                       kDefaultWrapperInternalFieldCount + 2;
+
+#if ENABLE(WORKERS)
+  static const int kWorkerRequestCacheIndex =
+                      kDefaultWrapperInternalFieldCount + 0;
+  static const int kWorkerInternalFieldCount =
+                      kDefaultWrapperInternalFieldCount + 1;
+#endif
 
   static const int kDOMWindowLocationIndex =
                       kDefaultWrapperInternalFieldCount + 0;
@@ -239,6 +258,7 @@ DECLARE_CALLBACK(DOMWindowOpen)
 
 DECLARE_CALLBACK(DOMParserConstructor)
 DECLARE_CALLBACK(MessageChannelConstructor)
+DECLARE_CALLBACK(WebKitCSSMatrixConstructor)
 DECLARE_CALLBACK(XMLHttpRequestConstructor)
 DECLARE_CALLBACK(XMLSerializerConstructor)
 DECLARE_CALLBACK(XPathEvaluatorConstructor)
@@ -372,6 +392,10 @@ DECLARE_INDEXED_PROPERTY_SETTER(HTMLOptionsCollection)
 DECLARE_INDEXED_PROPERTY_SETTER(HTMLSelectElementCollection)
 DECLARE_NAMED_PROPERTY_GETTER(HTMLCollection)
 
+// Canvas and supporting classes
+DECLARE_INDEXED_PROPERTY_GETTER(CanvasPixelArray)
+DECLARE_INDEXED_PROPERTY_SETTER(CanvasPixelArray)
+
 // MessagePort
 DECLARE_PROPERTY_ACCESSOR(MessagePortOnmessage)
 DECLARE_PROPERTY_ACCESSOR(MessagePortOnclose)
@@ -387,6 +411,15 @@ DECLARE_CALLBACK(SVGMatrixInverse)
 DECLARE_CALLBACK(SVGMatrixRotateFromVector)
 DECLARE_CALLBACK(SVGElementInstanceAddEventListener)
 DECLARE_CALLBACK(SVGElementInstanceRemoveEventListener)
+#endif
+
+// Worker
+#if ENABLE(WORKERS)
+DECLARE_PROPERTY_ACCESSOR(WorkerOnmessage)
+DECLARE_PROPERTY_ACCESSOR(WorkerOnerror)
+DECLARE_CALLBACK(WorkerConstructor)
+DECLARE_CALLBACK(WorkerAddEventListener)
+DECLARE_CALLBACK(WorkerRemoveEventListener)
 #endif
 
 #undef DECLARE_INDEXED_ACCESS_CHECK

@@ -25,7 +25,7 @@ class UserScriptMasterTest : public testing::Test,
     // Name a subdirectory of the temp directory.
     FilePath tmp_dir;
     ASSERT_TRUE(PathService::Get(base::DIR_TEMP, &tmp_dir));
-    script_dir_ = tmp_dir.Append(FILE_PATH_LITERAL("UserScriptTest"));
+    script_dir_ = tmp_dir.AppendASCII("UserScriptTest");
 
     // Create a fresh, empty copy of this directory.
     file_util::Delete(script_dir_, true);
@@ -74,6 +74,7 @@ TEST_F(UserScriptMasterTest, NoScripts) {
 
   scoped_refptr<UserScriptMaster> master(
       new UserScriptMaster(MessageLoop::current(), script_dir_));
+  master->StartScan();
   message_loop_.PostTask(FROM_HERE, new MessageLoop::QuitTask);
   message_loop_.Run();
 
@@ -87,7 +88,7 @@ TEST_F(UserScriptMasterTest, NewScripts) {
   scoped_refptr<UserScriptMaster> master(
       new UserScriptMaster(MessageLoop::current(), script_dir_));
 
-  FilePath path = script_dir_.Append(FILE_PATH_LITERAL("script.user.js"));
+  FilePath path = script_dir_.AppendASCII("script.user.js");
 
   FILE* file = file_util::OpenFile(path, "w");
   const char content[] = "some content";
@@ -101,7 +102,7 @@ TEST_F(UserScriptMasterTest, NewScripts) {
 
 // Test that we get notified about scripts if they're already in the test dir.
 TEST_F(UserScriptMasterTest, ExistingScripts) {
-  FilePath path = script_dir_.Append(FILE_PATH_LITERAL("script.user.js"));
+  FilePath path = script_dir_.AppendASCII("script.user.js");
 
   FILE* file = file_util::OpenFile(path, "w");
   const char content[] = "some content";
@@ -110,9 +111,57 @@ TEST_F(UserScriptMasterTest, ExistingScripts) {
 
   scoped_refptr<UserScriptMaster> master(
       new UserScriptMaster(MessageLoop::current(), script_dir_));
+  master->StartScan();
 
   message_loop_.PostTask(FROM_HERE, new MessageLoop::QuitTask);
   message_loop_.Run();
 
   ASSERT_TRUE(shared_memory_ != NULL);
+}
+
+TEST_F(UserScriptMasterTest, Parse1) {
+  const std::string text(
+    "// This is my awesome script\n"
+    "// It does stuff.\n"
+    "// ==UserScript==   trailing garbage\n"
+    "// @name foobar script\n"
+    "// @namespace http://www.google.com/\n"
+    "// @include *mail.google.com*\n"
+    "// \n"
+    "// @othergarbage\n"
+    "// @include *mail.yahoo.com*\r\n"
+    "// @include  \t *mail.msn.com*\n" // extra spaces after "@include" OK
+    "//@include not-recognized\n" // must have one space after "//"
+    "// ==/UserScript==  trailing garbage\n"
+    "\n"
+    "\n"
+    "alert('hoo!');\n");
+
+  std::vector<std::string> includes;
+  UserScriptMaster::ScriptReloader::ParseMetadataHeader(text, &includes);
+  EXPECT_EQ(3U, includes.size());
+  EXPECT_EQ("*mail.google.com*", includes[0]);
+  EXPECT_EQ("*mail.yahoo.com*", includes[1]);
+  EXPECT_EQ("*mail.msn.com*", includes[2]);
+}
+
+TEST_F(UserScriptMasterTest, Parse2) {
+  const std::string text("default to @include *");
+
+  std::vector<std::string> includes;
+  UserScriptMaster::ScriptReloader::ParseMetadataHeader(text, &includes);
+  EXPECT_EQ(1U, includes.size());
+  EXPECT_EQ("*", includes[0]);
+}
+
+TEST_F(UserScriptMasterTest, Parse3) {
+  const std::string text(
+    "// ==UserScript==\n"
+    "// @include *foo*\n"
+    "// ==/UserScript=="); // no trailing newline
+
+  std::vector<std::string> includes;
+  UserScriptMaster::ScriptReloader::ParseMetadataHeader(text, &includes);
+  EXPECT_EQ(1U, includes.size());
+  EXPECT_EQ("*foo*", includes[0]);
 }

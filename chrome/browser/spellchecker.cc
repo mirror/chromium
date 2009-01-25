@@ -13,8 +13,8 @@
 #include "base/thread.h"
 #include "chrome/app/locales/locale_settings.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/net/url_fetcher.h"
 #include "chrome/browser/profile.h"
-#include "chrome/browser/url_fetcher.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_counters.h"
 #include "chrome/common/chrome_paths.h"
@@ -211,7 +211,7 @@ class SpellChecker::DictionaryDownloadController
       : spellchecker_flag_set_task_(spellchecker_flag_set_task),
         url_request_context_(url_request_context),
         download_server_url_(
-            L"http://cache.pack.google.com/chrome/dict/"),
+            L"http://cache.pack.google.com/edgedl/chrome/dict/"),
         ui_loop_(ui_loop) {
     // Determine dictionary file path and name.
     fetcher_.reset(NULL);

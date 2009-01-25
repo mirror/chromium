@@ -62,11 +62,6 @@ IPC_BEGIN_MESSAGES(PluginProcessHost, 4)
                               std::vector<uint8> /* opaque data */,
                               std::vector<uint8> /* opaque data response */)
 
-  // Retrieve the given type of info that is associated with the given
-  // CPBrowsingContext.  Returns the result in a string.
-  IPC_SYNC_MESSAGE_CONTROL0_1(PluginProcessHostMsg_GetPluginDataDir,
-                              std::wstring /* data_dir_retval */)
-
   // Used to get cookies for the given URL.  The request_context is a
   // CPBrowsingContext, but is passed as int32 to avoid compilation errors.
   IPC_SYNC_MESSAGE_CONTROL2_1(PluginProcessHostMsg_GetCookies,
@@ -80,6 +75,15 @@ IPC_BEGIN_MESSAGES(PluginProcessHost, 4)
                               GURL /* url */,
                               int /* network error */,
                               std::string /* proxy list */)
+
+  // Creates a child window of the given parent window on the UI thread.
+  IPC_SYNC_MESSAGE_CONTROL1_1(PluginProcessHostMsg_CreateWindow,
+                              HWND /* parent */,
+                              HWND /* child */)
+
+  // Destroys the given window on the UI thread.
+  IPC_MESSAGE_CONTROL1(PluginProcessHostMsg_DestroyWindow,
+                       HWND /* window */)
 
 IPC_END_MESSAGES(PluginProcessHost)
 
@@ -131,11 +135,9 @@ IPC_BEGIN_MESSAGES(Plugin, 5)
   // contains a buffer that the plugin draws into.  background_buffer is used
   // for transparent windowless plugins, and holds the background of the plugin
   // rectangle.
-  IPC_MESSAGE_ROUTED6(PluginMsg_UpdateGeometry,
+  IPC_MESSAGE_ROUTED4(PluginMsg_UpdateGeometry,
                       gfx::Rect /* window_rect */,
                       gfx::Rect /* clip_rect */,
-                      std::vector<gfx::Rect> /* cutout_rects */,
-                      bool /* visible */,
                       base::SharedMemoryHandle /* windowless_buffer */,
                       base::SharedMemoryHandle /* background_buffer */)
 

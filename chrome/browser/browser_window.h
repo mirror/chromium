@@ -9,14 +9,13 @@ class BookmarkBarView;
 class Browser;
 class BrowserList;
 class BrowserView;
-class GoButton;
+class BrowserWindowTesting;
+class GURL;
 class LocationBarView;
 class HtmlDialogContentsDelegate;
 class Profile;
 class StatusBubble;
 class TabContents;
-class TabStrip;
-class ToolbarStarToggle;
 
 namespace gfx {
 class Rect;
@@ -54,9 +53,9 @@ class BrowserWindow {
   // returns an HWND. DO NOT USE IN CROSS PLATFORM CODE.
   virtual void* GetNativeHandle() = 0;
 
-  // TODO(beng): REMOVE (obtain via BrowserFrame).
-  // Return the TabStrip associated with the frame.
-  virtual TabStrip* GetTabStrip() const = 0;
+  // Returns a pointer to the testing interface to the Browser window, or NULL
+  // if there is none.
+  virtual BrowserWindowTesting* GetBrowserWindowTesting() = 0;
 
   // Return the status bubble associated with the frame
   virtual StatusBubble* GetStatusBubble() = 0;
@@ -77,6 +76,9 @@ class BrowserWindow {
   // if there are no active loads and the animations should end.
   virtual void UpdateLoadingAnimations(bool should_animate) = 0;
 
+  // Sets the starred state for the current tab.
+  virtual void SetStarredState(bool is_starred) = 0;
+
   // TODO(beng): RENAME (GetRestoredBounds)
   // Returns the nonmaximized bounds of the frame (even if the frame is
   // currently maximized or minimized) in terms of the screen coordinates.
@@ -86,17 +88,12 @@ class BrowserWindow {
   // Returns true if the frame is maximized (aka zoomed).
   virtual bool IsMaximized() = 0;
 
-  // Returns the star button.
-  virtual ToolbarStarToggle* GetStarButton() const = 0;
-
   // Returns the location bar.
   virtual LocationBarView* GetLocationBarView() const = 0;
 
-  // Returns the go button.
-  virtual GoButton* GetGoButton() const = 0;
-
-  // Returns the Bookmark Bar view.
-  virtual BookmarkBarView* GetBookmarkBarView() = 0;
+  // Informs the view whether or not a load is in progress for the current tab.
+  // The view can use this notification to update the go/stop button.
+  virtual void UpdateStopGoState(bool is_loading) = 0;
 
   // Updates the toolbar with the state for the specified |contents|.
   virtual void UpdateToolbar(TabContents* contents,
@@ -117,6 +114,13 @@ class BrowserWindow {
   // Shows the Bookmark Manager window.
   virtual void ShowBookmarkManager() = 0;
 
+  // Returns true if the Bookmark bubble is visible.
+  virtual bool IsBookmarkBubbleVisible() const = 0;
+
+  // Shows the Bookmark bubble. |url| is the URL being bookmarked,
+  // |already_bookmarked| is true if the url is already bookmarked.
+  virtual void ShowBookmarkBubble(const GURL& url, bool already_bookmarked) = 0;
+
   // Shows the Report a Bug dialog box.
   virtual void ShowReportBugDialog() = 0;
 
@@ -132,6 +136,12 @@ class BrowserWindow {
   // Shows the Password Manager dialog box.
   virtual void ShowPasswordManager() = 0;
 
+  // Shows the Select Profile dialog box.
+  virtual void ShowSelectProfileDialog() = 0;
+
+  // Shows the New Profile dialog box.
+  virtual void ShowNewProfileDialog() = 0;
+
   // Shows a dialog box with HTML content, e.g. for Gears. |parent_window| is
   // the window the dialog should be opened modal to and is a native window
   // handle.
@@ -145,6 +155,16 @@ class BrowserWindow {
   friend class BrowserList;
   friend class BrowserView;
   virtual void DestroyBrowser() = 0;
+};
+
+// A BrowserWindow utility interface used for accessing elements of the browser
+// UI used only by UI test automation.
+class BrowserWindowTesting {
+public:
+#if defined(OS_WIN)
+  // Returns the Bookmark Bar view.
+  virtual BookmarkBarView* GetBookmarkBarView() = 0;
+#endif
 };
 
 #endif  // CHROME_BROWSER_BROWSER_WINDOW_H__

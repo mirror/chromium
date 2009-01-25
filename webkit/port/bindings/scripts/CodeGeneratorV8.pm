@@ -262,6 +262,8 @@ sub GenerateHeader
         push(@headerContent, "\n#if ENABLE(SVG)\n");
     } elsif (IsVideoClassName($className)) {
         push(@headerContent, "\n#if ENABLE(VIDEO)\n");
+    } elsif (IsWorkerClassName($className)) {
+        push(@headerContent, "\n#if ENABLE(WORKERS)\n");
     }
     
     push(@headerContent, "\n#ifndef $className" . "_H");
@@ -310,6 +312,8 @@ END
         push(@headerContent, "\n#endif // ENABLE(SVG)\n");
     } elsif (IsVideoClassName($className)) {
         push(@headerContent, "\n#endif // ENABLE(VIDEO)\n");
+    } elsif (IsWorkerClassName($className)) {
+        push(@headerContent, "\n#endif // ENABLE(WORKERS)\n");
     }
 }
 
@@ -1000,6 +1004,8 @@ sub GenerateImplementation
         push(@implFixedHeader, "#if ENABLE(SVG)\n\n");
     } elsif (IsVideoClassName($className)) {
         push(@implFixedHeader, "#if ENABLE(VIDEO)\n\n");
+    } elsif (IsWorkerClassName($className)) {
+        push(@implFixedHeader, "#if ENABLE(WORKERS)\n\n");
     }
     
     if ($className =~ /^V8SVGAnimated/) {
@@ -1323,6 +1329,8 @@ END
         push(@implContent, "\n#endif // ENABLE(SVG)\n");
     } elsif (IsVideoClassName($className)) {
         push(@implContent, "\n#endif // ENABLE(VIDEO)\n");
+    } elsif (IsWorkerClassName($className)) {
+        push(@implContent, "\n#endif // ENABLE(WORKERS)\n");
     }
 }
 
@@ -1567,6 +1575,7 @@ sub IsRefPtrType
     return 1 if $type eq "TextMetrics";
     return 1 if $type eq "TimeRanges";
     return 1 if $type eq "TreeWalker";
+    return 1 if $type eq "WebKitCSSMatrix";
     return 1 if $type eq "XPathExpression";
     return 1 if $type eq "XPathNSResolver";
     return 1 if $type eq "XPathResult";
@@ -1590,6 +1599,15 @@ sub IsVideoClassName
     return 1 if $class eq "V8HTMLVideoElement";
     return 1 if $class eq "V8MediaError";
     return 1 if $class eq "V8TimeRanges";
+
+    return 0;
+}
+
+sub IsWorkerClassName
+{
+    my $class = shift;
+    return 1 if $class eq "V8Worker";
+    return 1 if $class eq "V8WorkerLocation";
 
     return 0;
 }
@@ -1662,6 +1680,7 @@ my %typeCanFailConversion = (
     "SVGRect" => 0,
     "SVGTransform" => 0,
     "VoidCallback" => 1,
+    "WebKitCSSMatrix" => 0,
     "XPathEvaluator" => 0,
     "XPathNSResolver" => 0,
     "XPathResult" => 0,

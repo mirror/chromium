@@ -14,12 +14,12 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/dom_ui/new_tab_ui.h"
 #include "chrome/browser/history/history.h"
+#include "chrome/browser/net/url_fixer_upper.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/session_startup_pref.h"
 #include "chrome/browser/search_engines/template_url.h"
 #include "chrome/browser/search_engines/template_url_model.h"
 #include "chrome/browser/shell_integration.h"
-#include "chrome/browser/url_fixer_upper.h"
 #include "chrome/browser/views/keyword_editor_view.h"
 #include "chrome/browser/views/options/options_group_view.h"
 #include "chrome/browser/views/standard_layout.h"
@@ -300,6 +300,8 @@ int CustomHomePagesTableModel::RowCount() {
 std::wstring CustomHomePagesTableModel::GetText(int row, int column_id) {
   DCHECK(column_id == 0);
   DCHECK(row >= 0 && row < RowCount());
+  // No need to force URL to have LTR directionality because the custom home
+  // pages control is created using LTR directionality.
   return UTF8ToWide(entries_[row].url.spec());
 }
 

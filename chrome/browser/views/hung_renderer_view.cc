@@ -7,7 +7,8 @@
 #include "chrome/app/result_codes.h"
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/browser_list.h"
-#include "chrome/browser/render_view_host.h"
+#include "chrome/browser/renderer_host/render_process_host.h"
+#include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/views/standard_layout.h"
 #include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/common/chrome_constants.h"
@@ -85,6 +86,10 @@ std::wstring HungPagesTableModel::GetText(int row, int column_id) {
   std::wstring title = webcontentses_.at(row)->GetTitle();
   if (title.empty())
     title = l10n_util::GetString(IDS_TAB_UNTITLED_TITLE);
+  // TODO(xji): Consider adding a special case if the title text is a URL,
+  // since those should always have LTR directionality. Please refer to
+  // http://crbug.com/6726 for more information.
+  l10n_util::AdjustStringForLocaleDirection(title, &title);
   return title;
 }
 

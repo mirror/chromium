@@ -8,9 +8,9 @@
 #include "base/string_util.h"
 #include "chrome/app/locales/locale_settings.h"
 #include "chrome/app/theme/theme_resources.h"
+#include "chrome/browser/net/url_fixer_upper.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
-#include "chrome/browser/url_fixer_upper.h"
 #include "chrome/browser/views/standard_layout.h"
 #include "chrome/common/gfx/text_elider.h"
 #include "chrome/common/l10n_util.h"
@@ -131,12 +131,26 @@ class PossibleURLModel : public views::TableModel {
       return std::wstring();
     }
 
-    if (col_id == IDS_ASI_PAGE_COLUMN)
-      return GetTitle(row);
+    if (col_id == IDS_ASI_PAGE_COLUMN) {
+      const std::wstring& title = GetTitle(row);
+      // TODO(xji): Consider adding a special case if the title text is a URL,
+      // since those should always have LTR directionality. Please refer to
+      // http://crbug.com/6726 for more information.
+      std::wstring localized_title;
+      if (l10n_util::AdjustStringForLocaleDirection(title, &localized_title))
+        return localized_title;
+      return title;
+    }
 
     // TODO(brettw): this should probably pass the GURL up so the URL elider
     // can be used at a higher level when we know the width.
-    return results_[row].display_url.display_url();
+    const std::wstring& url = results_[row].display_url.display_url();
+    if (l10n_util::GetTextDirection() == l10n_util::LEFT_TO_RIGHT)
+      return url;
+    // Force URL to be LTR.
+    std::wstring localized_url = url;
+    l10n_util::WrapStringWithLTRFormatting(&localized_url);
+    return localized_url;
   }
 
   virtual SkBitmap GetIcon(int row) {

@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "build/build_config.h"
+
 #include "chrome/browser/browser_list.h"
 
 #include "base/logging.h"
@@ -10,15 +12,17 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/browser_window.h"
+#if defined(OS_WIN)
+// TODO(port): these can probably all go away, even on win
 #include "chrome/browser/profile.h"
 #include "chrome/browser/profile_manager.h"
 #include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/common/notification_service.h"
-#include "chrome/views/window.h"
+#endif
+
 
 BrowserList::list_type BrowserList::browsers_;
 std::vector<BrowserList::Observer*> BrowserList::observers_;
-BrowserList::DependentWindowList BrowserList::dependent_windows_;
 
 // static
 void BrowserList::AddBrowser(Browser* browser) {
@@ -60,27 +64,12 @@ void BrowserList::RemoveBrowser(Browser* browser) {
 
   // If the last Browser object was destroyed, make sure we try to close any
   // remaining dependent windows too.
-  if (browsers_.empty())
-    CloseAllDependentWindows();
+  if (browsers_.empty()) {
+    NotificationService::current()->Notify(NOTIFY_ALL_APPWINDOWS_CLOSED,
+                                           NotificationService::AllSources(),
+                                           NotificationService::NoDetails());
+  }
 
-  g_browser_process->ReleaseModule();
-}
-
-// static
-void BrowserList::AddDependentWindow(views::Window* window) {
-  DependentWindowList::const_iterator existing =
-      find(dependent_windows_.begin(), dependent_windows_.end(), window);
-  DCHECK(existing == dependent_windows_.end());
-  dependent_windows_.push_back(window);
-  g_browser_process->AddRefModule();
-}
-
-// static
-void BrowserList::RemoveDependentWindow(views::Window* window) {
-  DependentWindowList::iterator existing =
-      find(dependent_windows_.begin(), dependent_windows_.end(), window);
-  DCHECK(existing != dependent_windows_.end());
-  dependent_windows_.erase(existing);
   g_browser_process->ReleaseModule();
 }
 
@@ -160,9 +149,13 @@ void BrowserList::WindowsSessionEnding() {
   // And shutdown.
   browser_shutdown::Shutdown();
 
+#if defined(OS_WIN)
   // At this point the message loop is still running yet we've shut everything
   // down. If any messages are processed we'll likely crash. Exit now.
   ExitProcess(ResultCodes::NORMAL_EXIT);
+#else
+  NOTIMPLEMENTED();
+#endif
 }
 
 // static
@@ -173,26 +166,6 @@ bool BrowserList::HasBrowserWithProfile(Profile* profile) {
       return true;
   }
   return false;
-}
-
-// static
-views::AppModalDialogDelegate* BrowserList::app_modal_dialog_ = NULL;
-
-// static
-void BrowserList::SetShowingAppModalDialog(
-    views::AppModalDialogDelegate* dialog) {
-  DCHECK(!(app_modal_dialog_ && dialog));
-  app_modal_dialog_ = dialog;
-}
-
-// static
-views::AppModalDialogDelegate* BrowserList::GetShowingAppModalDialog() {
-  return app_modal_dialog_;
-}
-
-// static
-bool BrowserList::IsShowingAppModalDialog() {
-  return app_modal_dialog_ != NULL;
 }
 
 // static
@@ -259,18 +232,6 @@ bool BrowserList::IsOffTheRecordSessionActive() {
       return true;
   }
   return false;
-}
-
-// static
-void BrowserList::CloseAllDependentWindows() {
-  // Note that |dependent_windows_| is guaranteed to be consistent for the
-  // duration of this operation because windows are not actually closed
-  // (destroyed, then deleted, and thus removed from this list) until we return
-  // to the message loop. So this basically just schedules a bunch of close
-  // operations to be performed asynchronously.
-  DependentWindowList::iterator window = dependent_windows_.begin();
-  for (; window != dependent_windows_.end(); ++window)
-    (*window)->Close();
 }
 
 // static

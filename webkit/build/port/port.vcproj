@@ -20,11 +20,14 @@
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
-			ConfigurationType="4"
+			ConfigurationType="10"
 			InheritedPropertySheets="$(SolutionDir)..\build\debug.vsprops;..\..\..\third_party\zlib\using_zlib.vsprops;.\port.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="Inspector image file copy"
 			/>
 			<Tool
 				Name="Inspector file copy"
@@ -33,43 +36,7 @@
 				Name="VCCustomBuildTool"
 			/>
 			<Tool
-				Name="Inspector image file copy"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
 				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -77,11 +44,14 @@
 		</Configuration>
 		<Configuration
 			Name="Release|Win32"
-			ConfigurationType="4"
+			ConfigurationType="10"
 			InheritedPropertySheets="$(SolutionDir)..\build\release.vsprops;.\port.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="Inspector image file copy"
 			/>
 			<Tool
 				Name="Inspector file copy"
@@ -90,43 +60,7 @@
 				Name="VCCustomBuildTool"
 			/>
 			<Tool
-				Name="Inspector image file copy"
-			/>
-			<Tool
-				Name="VCXMLDataGeneratorTool"
-			/>
-			<Tool
-				Name="VCWebServiceProxyGeneratorTool"
-			/>
-			<Tool
 				Name="VCMIDLTool"
-			/>
-			<Tool
-				Name="VCCLCompilerTool"
-			/>
-			<Tool
-				Name="VCManagedResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCResourceCompilerTool"
-			/>
-			<Tool
-				Name="VCPreLinkEventTool"
-			/>
-			<Tool
-				Name="VCLibrarianTool"
-			/>
-			<Tool
-				Name="VCALinkTool"
-			/>
-			<Tool
-				Name="VCXDCMakeTool"
-			/>
-			<Tool
-				Name="VCBscMakeTool"
-			/>
-			<Tool
-				Name="VCFxCopTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -783,106 +717,6 @@
 					RelativePath="..\..\..\third_party\WebKit\WebCore\inspector\front-end\Images\warningsErrors.png"
 					>
 				</File>
-			</Filter>
-		</Filter>
-		<Filter
-			Name="platform"
-			>
-			<Filter
-				Name="image-decoders"
-				>
-				<File
-					RelativePath="..\..\port\platform\image-decoders\ImageDecoder.h"
-					>
-				</File>
-				<Filter
-					Name="bmp"
-					>
-					<File
-						RelativePath="..\..\port\platform\image-decoders\bmp\BMPImageDecoder.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\port\platform\image-decoders\bmp\BMPImageDecoder.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\port\platform\image-decoders\bmp\BMPImageReader.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\port\platform\image-decoders\bmp\BMPImageReader.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="ico"
-					>
-					<File
-						RelativePath="..\..\port\platform\image-decoders\ico\ICOImageDecoder.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\port\platform\image-decoders\ico\ICOImageDecoder.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="xbm"
-					>
-					<File
-						RelativePath="..\..\port\platform\image-decoders\xbm\XBMImageDecoder.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\port\platform\image-decoders\xbm\XBMImageDecoder.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="jpeg"
-					>
-					<File
-						RelativePath="..\..\port\platform\image-decoders\jpeg\JPEGImageDecoder.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\port\platform\image-decoders\jpeg\JPEGImageDecoder.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="gif"
-					>
-					<File
-						RelativePath="..\..\port\platform\image-decoders\gif\GIFImageDecoder.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\port\platform\image-decoders\gif\GIFImageDecoder.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\port\platform\image-decoders\gif\GIFImageReader.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\port\platform\image-decoders\gif\GIFImageReader.h"
-						>
-					</File>
-				</Filter>
-				<Filter
-					Name="png"
-					>
-					<File
-						RelativePath="..\..\port\platform\image-decoders\png\PNGImageDecoder.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\port\platform\image-decoders\png\PNGImageDecoder.h"
-						>
-					</File>
-				</Filter>
 			</Filter>
 		</Filter>
 	</Files>

@@ -26,6 +26,14 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
 #define VIDEO_NONNODE_TYPES(V)
 #endif
 
+#if ENABLE(WORKERS)
+#define WORKER_NONNODE_WRAPPER_TYPES(V)                                 \
+  V(WORKER, Worker)                                                     \
+  V(WORKERLOCATION, WorkerLocation)
+#else
+#define WORKER_NONNODE_WRAPPER_TYPES(V)
+#endif
+
 #define DOM_NODE_TYPES(V)                                               \
   V(ATTR, Attr)                                                         \
   V(CHARACTERDATA, CharacterData)                                       \
@@ -268,6 +276,7 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(HTMLCOLLECTION, HTMLCollection)                                     \
   V(HTMLOPTIONSCOLLECTION, HTMLOptionsCollection)                       \
   V(IMAGEDATA, ImageData)                                               \
+  V(CANVASPIXELARRAY, CanvasPixelArray)                                 \
   V(INSPECTORCONTROLLER, InspectorController)                           \
   V(KEYBOARDEVENT, KeyboardEvent)                                       \
   V(LOCATION, Location)                                                 \
@@ -303,6 +312,7 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(WEBKITANIMATIONEVENT, WebKitAnimationEvent)                         \
   V(WEBKITCSSKEYFRAMERULE, WebKitCSSKeyframeRule)                       \
   V(WEBKITCSSKEYFRAMESRULE, WebKitCSSKeyframesRule)                     \
+  V(WEBKITCSSMATRIX, WebKitCSSMatrix)                                   \
   V(WEBKITCSSTRANSFORMVALUE, WebKitCSSTransformValue)                   \
   V(WEBKITTRANSITIONEVENT, WebKitTransitionEvent)                       \
   V(WHEELEVENT, WheelEvent)                                             \
@@ -317,8 +327,8 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(XPATHRESULT, XPathResult)                                           \
   V(XSLTPROCESSOR, XSLTProcessor)                                       \
   ACTIVE_DOM_OBJECT_TYPES(V)                                            \
-  VIDEO_NONNODE_TYPES(V)
-
+  VIDEO_NONNODE_TYPES(V)                                                \
+  WORKER_NONNODE_WRAPPER_TYPES(V)
 
 #define DOM_OBJECT_TYPES(V)                                             \
   DOM_OBJECT_TYPES_1(V)                                                 \

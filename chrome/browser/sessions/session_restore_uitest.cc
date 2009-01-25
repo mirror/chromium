@@ -22,15 +22,15 @@ class SessionRestoreUITest : public UITest {
  protected:
   SessionRestoreUITest() : UITest() {
     FilePath path_prefix = FilePath::FromWStringHack(test_data_directory_);
-    path_prefix = path_prefix.Append(FILE_PATH_LITERAL("session_history"))
+    path_prefix = path_prefix.AppendASCII("session_history")
         .Append(FilePath::StringType(&FilePath::kSeparators[0], 1));
 
     url1 = net::FilePathToFileURL(
-        path_prefix.Append(FILE_PATH_LITERAL("bot1.html")));
+        path_prefix.AppendASCII("bot1.html"));
     url2 = net::FilePathToFileURL(
-        path_prefix.Append(FILE_PATH_LITERAL("bot2.html")));
+        path_prefix.AppendASCII("bot2.html"));
     url3 = net::FilePathToFileURL(
-        path_prefix.Append(FILE_PATH_LITERAL("bot3.html")));
+        path_prefix.AppendASCII("bot3.html"));
   }
 
   virtual void QuitBrowserAndRestore() {
@@ -38,8 +38,7 @@ class SessionRestoreUITest : public UITest {
 
     clear_profile_ = false;
 
-    CommandLine::AppendSwitch(&launch_arguments_,
-                              switches::kRestoreLastSession);
+    launch_arguments_.AppendSwitch(switches::kRestoreLastSession);
     UITest::SetUp();
   }
 
@@ -283,7 +282,7 @@ TEST_F(SessionRestoreUITest, DISABLED_DontRestoreWhileIncognito) {
   include_testing_id_ = false;
   use_existing_browser_ = true;
   clear_profile_ = false;
-  CommandLine::AppendSwitch(&launch_arguments_, switches::kRestoreLastSession);
+  launch_arguments_.AppendSwitch(switches::kRestoreLastSession);
   LaunchBrowser(launch_arguments_, false);
 
   // A new window should appear;
@@ -345,9 +344,9 @@ TEST_F(SessionRestoreUITest,
   include_testing_id_ = false;
   use_existing_browser_ = true;
   clear_profile_ = false;
-  std::wstring app_launch_arguments = launch_arguments_;
-  CommandLine::AppendSwitchWithValue(
-      &app_launch_arguments, switches::kApp, UTF8ToWide(url2.spec()));
+  CommandLine app_launch_arguments = launch_arguments_;
+  app_launch_arguments.AppendSwitchWithValue(switches::kApp,
+                                             UTF8ToWide(url2.spec()));
   LaunchBrowser(app_launch_arguments, false);
   int window_count;
   ASSERT_TRUE(automation()->WaitForWindowCountToChange(1, &window_count,
@@ -358,9 +357,8 @@ TEST_F(SessionRestoreUITest,
   CloseWindow(0, 2);
 
   // Restore it, which should bring back the first window with url1.
-  std::wstring restore_launch_arguments = launch_arguments_;
-  CommandLine::AppendSwitch(&restore_launch_arguments,
-                            switches::kRestoreLastSession);
+  CommandLine restore_launch_arguments = launch_arguments_;
+  restore_launch_arguments.AppendSwitch(switches::kRestoreLastSession);
   LaunchBrowser(restore_launch_arguments, false);
   ASSERT_TRUE(automation()->WaitForWindowCountToChange(1, &window_count,
                                                        action_timeout_ms()));

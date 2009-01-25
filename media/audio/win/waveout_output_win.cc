@@ -79,7 +79,6 @@ bool PCMWaveOutAudioOutputStream::Open(size_t buffer_size) {
                                   CALLBACK_FUNCTION);
   if (result != MMSYSERR_NOERROR)
     return false;
-
   // If we don't have a packet size we use 100ms.
   if (!buffer_size)
     buffer_size = format_.nAvgBytesPerSec / 10;

@@ -6,6 +6,7 @@
 
 #include "base/basictypes.h"
 #include "base/debug_util.h"
+#include "logging.h"
 
 namespace {
 
@@ -101,3 +102,10 @@ void DebugUtil::BreakDebugger() {
   __debugbreak();
 }
 
+// TODO(port): not implemented on Windows
+StackTrace::StackTrace() {
+}
+
+void PrintBacktrace() {
+  NOTIMPLEMENTED();
+}
