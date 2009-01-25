@@ -15,6 +15,8 @@
 #include "base/scoped_handle.h"
 #include "chrome/common/gfx/chrome_font.h"
 
+class FilePath;
+
 namespace win_util {
 
 // Import ScopedHandle and friends into this namespace for backwards
@@ -55,17 +57,26 @@ class CoMemReleaser {
   DISALLOW_COPY_AND_ASSIGN(CoMemReleaser);
 };
 
-// Initializes COM in the constructor, and uninitializes COM in the
+// Initializes COM in the constructor (STA), and uninitializes COM in the
 // destructor.
 class ScopedCOMInitializer {
  public:
-  ScopedCOMInitializer() {
-    CoInitialize(NULL);
+  ScopedCOMInitializer() : hr_(CoInitialize(NULL)) {
   }
 
-  ~ScopedCOMInitializer() {
-    CoUninitialize();
+  ScopedCOMInitializer::~ScopedCOMInitializer() {
+    if (SUCCEEDED(hr_))
+      CoUninitialize();
   }
+
+  // Returns the error code from CoInitialize(NULL)
+  // (called in constructor)
+  inline HRESULT error_code() const {
+    return hr_;
+  }
+
+ protected:
+  HRESULT hr_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ScopedCOMInitializer);
@@ -112,12 +123,12 @@ void ShowItemInFolder(const std::wstring& full_path);
 // ask the user, via the Windows "Open With" dialog, for an application to use
 // if 'ask_for_app' is true.
 // Returns 'true' on successful open, 'false' otherwise.
-bool OpenItemViaShell(const std::wstring& full_path, bool ask_for_app);
+bool OpenItemViaShell(const FilePath& full_path, bool ask_for_app);
 
 // The download manager now writes the alternate data stream with the
 // zone on all downloads. This function is equivalent to OpenItemViaShell
 // without showing the zone warning dialog.
-bool OpenItemViaShellNoZoneCheck(const std::wstring& full_path,
+bool OpenItemViaShellNoZoneCheck(const FilePath& full_path,
                                  bool ask_for_app);
 
 // Ask the user, via the Windows "Open With" dialog, for an application to use

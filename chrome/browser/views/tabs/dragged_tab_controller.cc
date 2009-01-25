@@ -8,14 +8,14 @@
 #include "chrome/browser/views/tabs/dragged_tab_controller.h"
 
 #include "chrome/browser/browser_window.h"
-#include "chrome/browser/tab_contents.h"
-#include "chrome/browser/user_metrics.h"
+#include "chrome/browser/tab_contents/tab_contents.h"
+#include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/views/frame/browser_view.h"
 #include "chrome/browser/views/tabs/dragged_tab_view.h"
 #include "chrome/browser/views/tabs/hwnd_photobooth.h"
 #include "chrome/browser/views/tabs/tab.h"
 #include "chrome/browser/views/tabs/tab_strip.h"
-#include "chrome/browser/web_contents.h"
+#include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/common/animation.h"
 #include "chrome/views/event.h"
 #include "chrome/views/root_view.h"
@@ -355,8 +355,8 @@ void DraggedTabController::Drag() {
   }
 }
 
-void DraggedTabController::EndDrag(bool canceled) {
-  EndDragImpl(canceled ? CANCELED : NORMAL);
+bool DraggedTabController::EndDrag(bool canceled) {
+  return EndDragImpl(canceled ? CANCELED : NORMAL);
 }
 
 Tab* DraggedTabController::GetDragSourceTabForContents(
@@ -921,7 +921,7 @@ Tab* DraggedTabController::GetTabMatchingDraggedContents(
   return index == TabStripModel::kNoTab ? NULL : tabstrip->GetTabAt(index);
 }
 
-void DraggedTabController::EndDragImpl(EndDragType type) {
+bool DraggedTabController::EndDragImpl(EndDragType type) {
   bring_to_front_timer_.Stop();
 
   // Hide the current dock controllers.
@@ -959,6 +959,8 @@ void DraggedTabController::EndDragImpl(EndDragType type) {
   // If we're not destroyed now, we'll be destroyed asynchronously later.
   if (destroy_now)
     source_tabstrip_->DestroyDragController();
+
+  return destroy_now;
 }
 
 void DraggedTabController::RevertDrag() {

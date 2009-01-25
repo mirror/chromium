@@ -303,7 +303,7 @@ input_files = ChromeFileList([
     'sgl/SkTSearch.cpp',
     'sgl/SkTSort.h',
     'sgl/SkTypeface_fake.cpp',
-    'sgl/SkUnPreMultiply.cpp',
+    #'sgl/SkUnPreMultiply.cpp',
     'sgl/SkUtils.cpp',
     'sgl/SkWriter32.cpp',
     'sgl/SkXfermode.cpp',
@@ -375,6 +375,7 @@ input_files = ChromeFileList([
     'ext/bitmap_platform_device.h',
     'ext/bitmap_platform_device_win.cc',
     'ext/bitmap_platform_device_win.h',
+    'ext/google_logging.cc',
     'ext/image_operations.cc',
     'ext/image_operations.h',
     'ext/platform_canvas.h',
@@ -391,7 +392,6 @@ input_files = ChromeFileList([
     'ext/vector_canvas.h',
     'ext/vector_device.cc',
     'ext/vector_device.h',
-
   ]),
 
     'precompiled.cc',
@@ -401,6 +401,7 @@ if env.Bit('linux'):
   input_files.append('ext/bitmap_platform_device_linux.cc')
   input_files.append('ext/platform_canvas_linux.cc')
   input_files.append('ext/platform_device_linux.cc')
+  input_files.append('ext/GdkSkia.cc')
 
   # On Linux we use Skia to render fonts with FreeType and fontconfig
   input_files.Remove('sgl/SkTypeface_fake.cpp')
@@ -460,6 +461,7 @@ if env.Bit('windows'):
 env.ChromeLibrary('skia', input_files)
 
 p = env.ChromeMSVSProject('skia.vcproj',
+                          dest='$CHROME_SRC_DIR/skia/skia.vcproj',
                           guid='{CD9CA56E-4E94-444C-87D4-58CA1E6F300D}',
                           files=input_files,
                           relative_path_prefix=r'./',
@@ -510,9 +512,3 @@ p.AddFileConfig(
     tools=[
         MSVSTool('VCCLCompilerTool'),
     ])
-
-env.AlwaysBuild(p)
-
-i = env.Command('$CHROME_SRC_DIR/skia/skia.vcproj', p,
-                Copy('$TARGET', '$SOURCE'))
-Alias('msvs', i)

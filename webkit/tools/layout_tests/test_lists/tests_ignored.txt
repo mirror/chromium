@@ -83,7 +83,7 @@ SKIP : LayoutTests/http/tests/webarchive = FAIL PASS
 LayoutTests/webarchive/loading/test-loading-archive.html = TIMEOUT
 
 // Mac-specific stuff
-// Don't run the platform/mac* tests
+// Run the platform/mac* tests, but only to check for crashes.
 LayoutTests/platform = FAIL PASS
 
 // Ignored because we do not have OBJC bindings
@@ -160,6 +160,18 @@ LINUX WIN : LayoutTests/fast/images/object-image.html = FAIL
 // follow the rest of the browsers on this one.
 LayoutTests/fast/js/removing-Cf-characters.html = FAIL
 
+// These tests fail in all but the PST/PDT time zone.
+// Another reason for failure is that, for compatability, we don't obey
+// the ECMA standard on DST exactly.  We use the OS's facilities to
+// convert to local time for dates within the UNIX 32-bit epoch,
+// and follow the ECMA rules for dates outside that range.
+// The ECMA rules say to use current DST rules for all dates,
+// and that all dates that are separated by an exact multiple of
+// 28 years must behave exactly the same.
+// OS local time services are more accurate than this ECMA rule,
+// which is a discrepancy.
+SKIP : LayoutTests/fast/js/date-DST-time-cusps.html = PASS FAIL
+SKIP : LayoutTests/fast/js/date-big-setdate.html = PASS FAIL
 
 // -----------------------------------------------------------------
 // CHROME REWRITTEN TESTS
@@ -209,3 +221,8 @@ SKIP : LayoutTests/fast/encoding/char-decoding-mac.html = FAIL
 
 // WebKit QT Build-specific tests
 SKIP : LayoutTests/platform/qt/view/fixed-layout-size.html = FAIL
+
+// These don't have pixel results and rely on ObjC bindings. Don't run until they have pixel results.
+SKIP : LayoutTests/platform/mac/editing/pasteboard/dataTransfer-set-data-file-url.html = FAIL
+SKIP : LayoutTests/http/tests/security/dataTransfer-set-data-file-url.html = FAIL
+

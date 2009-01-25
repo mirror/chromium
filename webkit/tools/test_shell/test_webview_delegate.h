@@ -22,6 +22,7 @@
 
 #include "base/basictypes.h"
 #include "base/ref_counted.h"
+#include "webkit/glue/webcursor.h"
 #include "webkit/glue/webview_delegate.h"
 #include "webkit/glue/webwidget_delegate.h"
 #if defined(OS_WIN)
@@ -66,9 +67,7 @@ class TestWebViewDelegate : public base::RefCounted<TestWebViewDelegate>,
 #else
       , select_trailing_whitespace_enabled_(false)
 #endif
-#if defined(OS_WIN)
-      , custom_cursor_(NULL)
-#elif defined(OS_LINUX)
+#if defined(OS_LINUX)
       , cursor_type_(GDK_X_CURSOR)
 #endif
       { 
@@ -77,7 +76,7 @@ class TestWebViewDelegate : public base::RefCounted<TestWebViewDelegate>,
 
   // WebViewDelegate
   virtual WebView* CreateWebView(WebView* webview, bool user_gesture);
-  virtual WebWidget* CreatePopupWidget(WebView* webview, bool focus_on_show);
+  virtual WebWidget* CreatePopupWidget(WebView* webview, bool activatable);
   virtual WebPluginDelegate* CreatePluginDelegate(
     WebView* webview,
     const GURL& url,
@@ -310,9 +309,8 @@ class TestWebViewDelegate : public base::RefCounted<TestWebViewDelegate>,
   // true if we want to enable selection of trailing whitespaces
   bool select_trailing_whitespace_enabled_;
 
+  WebCursor current_cursor_;
 #if defined(OS_WIN)
-  HCURSOR custom_cursor_;
-
   // Classes needed by drag and drop.
   scoped_refptr<TestDragDelegate> drag_delegate_;
   scoped_refptr<TestDropDelegate> drop_delegate_;

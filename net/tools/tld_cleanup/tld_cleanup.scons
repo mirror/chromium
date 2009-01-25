@@ -14,7 +14,6 @@ env.ApplySConscript([
     '$BASE_DIR/using_base.scons',
     '$CHROME_SRC_DIR/build/using_googleurl.scons',
     '$ICU38_DIR/using_icu38.scons',
-    '$NET_DIR/using_net.scons',
 ])
 
 if env.Bit('windows'):
@@ -24,19 +23,56 @@ if env.Bit('windows'):
       ],
   )
 
-input_files = [
+input_files = ChromeFileList([
     'tld_cleanup.cc',
-]
+])
 
-if env.Bit('windows'):
-  # TODO(port): We need to port tld_cleanup before this will work on other
-  # platforms.
-  env.ChromeProgram('tld_cleanup', input_files)
+env.ChromeProgram('tld_cleanup', input_files)
 
-env.ChromeMSVSProject('$NET_DIR/build/tld_cleanup.vcproj',
-                dependencies = [
-                    '$BASE_DIR/build/base.vcproj',
-                    '$ICU38_DIR/build/icu.vcproj',
-                    '$GOOGLEURL_DIR/build/googleurl.vcproj',
-                ],
-                guid='{E13045CD-7E1F-4A41-9B18-8D288B2E7B41}')
+p = env.ChromeMSVSProject('$NET_DIR/build/tld_cleanup.vcproj',
+                          dest='$CHROME_SRC_DIR/net/build/tld_cleanup.vcproj',
+                          guid='{E13045CD-7E1F-4A41-9B18-8D288B2E7B41}',
+                          dependencies = [
+                              '$BASE_DIR/build/base.vcproj',
+                              '$ICU38_DIR/build/icu.vcproj',
+                              '$GOOGLEURL_DIR/build/googleurl.vcproj',
+                          ],
+                          # TODO: restore when we can derive all info,
+                          # on all platforms, from the windows build targets.
+                          #buildtargets=TODO,
+                          files=input_files,
+                          tools=[
+                              'VCPreBuildEventTool',
+                              'VCCustomBuildTool',
+                              'VCXMLDataGeneratorTool',
+                              'VCWebServiceProxyGeneratorTool',
+                              'VCMIDLTool',
+                              'VCCLCompilerTool',
+                              'VCManagedResourceCompilerTool',
+                              'VCResourceCompilerTool',
+                              'VCPreLinkEventTool',
+                              MSVSTool('VCLinkerTool',
+                                       SubSystem='1'),
+                              'VCALinkTool',
+                              'VCManifestTool',
+                              'VCXDCMakeTool',
+                              'VCBscMakeTool',
+                              'VCFxCopTool',
+                              'VCAppVerifierTool',
+                              'VCWebDeploymentTool',
+                              'VCPostBuildEventTool',
+                          ],
+                          ConfigurationType='1')
+
+
+p.AddConfig('Debug|Win32',
+            InheritedPropertySheets=[
+                '$(SolutionDir)../build/common.vsprops',
+                '$(SolutionDir)../build/debug.vsprops',
+            ])
+
+p.AddConfig('Release|Win32',
+            InheritedPropertySheets=[
+                '$(SolutionDir)../build/common.vsprops',
+                '$(SolutionDir)../build/release.vsprops',
+            ])

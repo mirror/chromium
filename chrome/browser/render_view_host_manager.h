@@ -69,7 +69,7 @@ class RenderViewHostManager {
   void Init(Profile* profile,
             SiteInstance* site_instance,
             int routing_id,
-            HANDLE modal_dialog_event);
+            base::WaitableEvent* modal_dialog_event);
 
   // Schedules all RenderViewHosts for destruction.
   void Shutdown();
@@ -119,6 +119,10 @@ class RenderViewHostManager {
   // handler of the old RenderViewHost before we can allow it to proceed.
   void OnCrossSiteResponse(int new_render_process_host_id,
                            int new_request_id);
+
+  // Notifies that the navigation that initiated a cross-site transition has
+  // been canceled.
+  void CrossSiteNavigationCanceled();
 
   // Called when a provisional load on the given renderer is aborted.
   void RendererAbortedProvisionalLoad(RenderViewHost* render_view_host);
@@ -175,7 +179,7 @@ class RenderViewHostManager {
   // factory is NULL).
   RenderViewHost* CreateRenderViewHost(SiteInstance* instance,
                                        int routing_id,
-                                       HANDLE modal_dialog_event);
+                                       base::WaitableEvent* modal_dialog_event);
 
   // Replaces the currently shown render_view_host_ with the RenderViewHost in
   // the field pointed to by |new_render_view_host|, and then NULLs the field.

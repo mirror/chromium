@@ -4,6 +4,16 @@
 # and http://code.google.com/p/chromium/wiki/LinuxBuild64Bit
 set -ex
 
+# Root can't access files on all filesystems, but /tmp should always be ok
+# (unless it's full).  
+DIR=`mktemp -d`
+cd $DIR
+touch .created
+
+cleanup() {
+  test -f $DIR/.created && rm -rf $DIR
+}
+
 # TODO(dkegel): add sha1sum verification
 download() {
   dir=$1
@@ -59,7 +69,7 @@ install_hardy_64() {
   # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=492453 
   # http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=497087
   cd /usr/lib32
-  for lib in gdk-x11-2.0 atk-1.0 gdk_pixbuf-2.0 \
+  for lib in gio-2.0 gdk-x11-2.0 atk-1.0 gdk_pixbuf-2.0 \
            pangocairo-1.0 pango-1.0 pangoft2-1.0 \
            gobject-2.0 gmodule-2.0 glib-2.0 gtk-x11-2.0; do
     sudo ln -s -f lib$lib.so.0 lib$lib.so
@@ -95,6 +105,8 @@ then
   install_hardy_64
 else
   echo "Unsupported system"
+  cleanup
   exit 1
 fi
+cleanup
 

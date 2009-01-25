@@ -20,7 +20,7 @@ TEST_F(ErrorPageTest, DNSError) {
   int i;
   std::wstring title;
   for (i = 0; i < 10; ++i) {
-    Sleep(kWaitForActionMaxMsec / 10);
+    Sleep(sleep_timeout_ms());
     title = GetActiveTabTitle();
     if (title.find(test_host) != std::wstring::npos) {
       // Success, bail out.
@@ -38,8 +38,10 @@ TEST_F(ErrorPageTest, IFrame404) {
   // In this test, the iframe sets the title of the parent page to "SUCCESS"
   // when the iframe loads.  If the iframe fails to load (because an alternate
   // error page loads instead), then the title will remain as "FAIL".
-  TestServer server(L"chrome/test/data");
-  GURL test_url = server.TestServerPage("files/iframe404.html");
+  scoped_refptr<HTTPTestServer> server =
+      HTTPTestServer::CreateServer(L"chrome/test/data");
+  ASSERT_TRUE(NULL != server.get());
+  GURL test_url = server->TestServerPage("files/iframe404.html");
   NavigateToURL(test_url);
 
   // Verify that the url is in the title.  Since it's set via Javascript, we
@@ -47,7 +49,7 @@ TEST_F(ErrorPageTest, IFrame404) {
   int i;
   std::wstring title;
   for (i = 0; i < 10; ++i) {
-    Sleep(kWaitForActionMaxMsec / 10);
+    Sleep(sleep_timeout_ms());
     title = GetActiveTabTitle();
     if (title == L"SUCCESS") {
       // Success, bail out.

@@ -86,6 +86,18 @@
 #define SK_SCALAR_IS_FLOAT
 #undef SK_SCALAR_IS_FIXED
 
+// Log the file and line number for assertions.
+#define SkDebugf(...) SkDebugf_FileLine(__FILE__, __LINE__, false, __VA_ARGS__)
+void SkDebugf_FileLine(const char* file, int line, bool fatal,
+                       const char* format, ...);
+
+// Marking the debug print as "fatal" will cause a debug break, so we don't need
+// a separate crash call here.
+#define SK_DEBUGBREAK(cond) do { if (!(cond)) { \
+    SkDebugf_FileLine(__FILE__, __LINE__, true, \
+    "%s:%d: failed assertion \"%s\"\n", \
+    __FILE__, __LINE__, #cond); } } while (false)
+
 #if defined(SK_BUILD_FOR_WIN32)
 
 #define SK_BUILD_FOR_WIN
@@ -102,6 +114,10 @@ typedef unsigned uint32_t;
 #define SK_R32_SHIFT    16
 #define SK_G32_SHIFT    8
 #define SK_B32_SHIFT    0
+
+// VC doesn't support __restrict__, so make it a NOP.
+#undef SK_RESTRICT
+#define SK_RESTRICT
 
 // Skia uses this deprecated bzero function to fill zeros into a string.
 #define bzero(str, len) memset(str, 0, len)
@@ -138,16 +154,25 @@ typedef unsigned uint32_t;
 
 #endif
 
-// Don't use skia debug mode even when compiled as debug, because we don't
-// care about debugging this library, only our app.
-#undef SK_DEBUG
-#undef SK_SUPPORT_UNITTEST
-#define SK_RELEASE
-#undef SK_RESTRICT
-#define SK_RESTRICT
-#define SkDebugf(...)  ((void)0)
+// The default crash macro writes to badbeef which can cause some strange
+// problems. Instead, pipe this through to the logging function as a fatal
+// assertion.
+#define SK_CRASH() SkDebugf_FileLine(__FILE__, __LINE__, true, "SK_CRASH")
+
+// TODO(brettw) bug 6373: Re-enable Skia assertions. This is blocked on fixing
+// some of our transparency handling which generates purposely-invalid colors,
+// in turn causing assertions.
+//#ifndef NDEBUG
+//  #define SK_DEBUG
+//  #undef SK_RELEASE
+  #undef SK_SUPPORT_UNITTEST  // This is only necessary in debug mode since
+                              // we've disabled assertions. When we re-enable
+                              // them, this line can be removed.
+//#else
+  #define SK_RELEASE
+  #undef SK_DEBUG
+//#endif
 
 // ===== End Chrome-specific definitions =====
 
 #endif
-

@@ -50,6 +50,7 @@ input_files = ChromeFileList([
   MSVSFilter('support', [
     'multiprocess_test.h',
     'no_windows2000_unittest.h',
+    'perf_test_suite.h',
     'run_all_unittests.cc',
     'test_suite.h',
   ]),
@@ -84,6 +85,8 @@ input_files = ChromeFileList([
     'rand_util_unittest.cc',
     'gfx/rect_unittest.cc',
     'ref_counted_unittest.cc',
+    'scoped_bstr_win_unittest.cc',
+    'scoped_comptr_win_unittest.cc',
     'scoped_ptr_unittest.cc',
     'sha2_unittest.cc',
     'shared_memory_unittest.cc',
@@ -103,12 +106,13 @@ input_files = ChromeFileList([
     'thread_local_unittest.cc',
     'thread_unittest.cc',
     'time_unittest.cc',
-    'time_unittest_win.cc',
+    'time_win_unittest.cc',
     'timer_unittest.cc',
     'tracked_objects_unittest.cc',
     'tuple_unittest.cc',
     'values_unittest.cc',
     'waitable_event_unittest.cc',
+    'waitable_event_watcher_unittest.cc',
     'watchdog_unittest.cc',
     'win_util_unittest.cc',
     'wmi_util_unittest.cc',
@@ -131,6 +135,11 @@ if env.Bit('posix'):
       'gfx/native_theme_unittest.cc',
   )
 
+if env.Bit('linux'):
+  input_files.Append(
+      'data_pack_unittest.cc',
+  )
+
 if env.Bit('mac'):
   # Remove files that still need to be ported from the input_files list.
   # TODO(port): delete files from this list as they get ported.
@@ -147,9 +156,11 @@ if not env.Bit('windows'):
       'file_version_info_unittest.cc',
       'object_watcher_unittest.cc',
       'pe_image_unittest.cc',
+      'scoped_bstr_win_unittest.cc',
+      'scoped_comptr_win_unittest.cc',
       'system_monitor_unittest.cc',
       'sys_string_conversions_unittest.cc',
-      'time_unittest_win.cc',
+      'time_win_unittest.cc',
       'win_util_unittest.cc',
       'wmi_util_unittest.cc',
   )
@@ -163,6 +174,7 @@ if env.Bit('mac'):
 env.ChromeTestProgram('base_unittests', input_files)
 
 p = env.ChromeMSVSProject('build/base_unittests.vcproj',
+                          dest='$CHROME_SRC_DIR/base/build/base_unittests.vcproj',
                           guid='{27A30967-4BBA-48D1-8522-CDE95F7B1CEC}',
                           dependencies=[
                               '$BASE_DIR/build/base.vcproj',
@@ -211,12 +223,6 @@ p.AddConfig('Release|Win32',
                 './base_unittests.vsprops',
                 '$(SolutionDir)../testing/using_gtest.vsprops',
             ])
-
-env.AlwaysBuild(p)
-
-i = env.Command('$CHROME_SRC_DIR/base/build/base_unittests.vcproj', p,
-                Copy('$TARGET', '$SOURCE'))
-Alias('msvs', i)
 
 # TODO(sgk) should this be moved into base.lib like everything else?  This will
 # require updating a bunch of other SConscripts which link directly against

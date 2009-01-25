@@ -49,13 +49,13 @@
 #include "Base64.h"
 #include "CanvasGradient.h"
 #include "CanvasPattern.h"
-#include "CanvasPixelArray.h"
 #include "CanvasRenderingContext2D.h"
 #include "CanvasStyle.h"
 #include "Clipboard.h"
 #include "ClipboardEvent.h"
 #include "Console.h"
 #include "DOMParser.h"
+#include "DOMStringList.h"
 #include "DOMWindow.h"
 #include "Document.h"
 #include "DocumentFragment.h"
@@ -686,34 +686,6 @@ NAMED_PROPERTY_GETTER(HTMLCollection) {
   return HTMLCollectionGetNamedItems(imp, key);
 }
 
-INDEXED_PROPERTY_GETTER(CanvasPixelArray) {
-  INC_STATS("DOM.CanvasPixelArray.IndexedPropertyGetter");
-  CanvasPixelArray* pixelArray =
-      V8Proxy::ToNativeObject<CanvasPixelArray>(V8ClassIndex::CANVASPIXELARRAY,
-          info.Holder());
-
-  // TODO(eroman): This performance will not be good when looping through
-  // many pixels. See: http://code.google.com/p/chromium/issues/detail?id=3473
-  
-  unsigned char result;
-  if (!pixelArray->get(index, result))
-      return v8::Undefined();
-  return v8::Number::New(result);
-}
-
-INDEXED_PROPERTY_SETTER(CanvasPixelArray) {
-  INC_STATS("DOM.CanvasPixelArray.IndexedPropertySetter");
-  CanvasPixelArray* pixelArray =
-      V8Proxy::ToNativeObject<CanvasPixelArray>(V8ClassIndex::CANVASPIXELARRAY,
-          info.Holder());
-
-  double pixelValue = value->NumberValue();
-  pixelArray->set(index, pixelValue);
-
-  // TODO(eroman): what to return?
-  return v8::Undefined();
-}
-
 CALLBACK_FUNC_DECL(HTMLCollectionItem) {
   INC_STATS("DOM.HTMLCollection.item()");
   HTMLCollection* imp = V8Proxy::ToNativeObject<HTMLCollection>(
@@ -826,6 +798,29 @@ CALLBACK_FUNC_DECL(HTMLOptionsCollectionAdd) {
     V8Proxy::SetDOMException(ec);
   }
   return v8::Undefined();
+}
+
+
+INDEXED_PROPERTY_GETTER(DOMStringList) {
+  INC_STATS("DOM.DOMStringList.IndexedPropertyGetter");
+  DOMStringList* imp =
+    V8Proxy::DOMWrapperToNative<DOMStringList>(info.Holder());
+  return v8String(imp->item(index));
+}
+
+
+CALLBACK_FUNC_DECL(DOMStringListItem) {
+  INC_STATS("DOM.DOMStringListItem()");
+  if (args.Length() == 0)
+    return v8::Null();
+  uint32_t index = args[0]->Uint32Value();
+
+  DOMStringList* imp =
+    V8Proxy::DOMWrapperToNative<DOMStringList>(args.Holder());
+  if (index >= imp->length())
+    return v8::Null();
+
+  return v8String(imp->item(index));
 }
 
 
@@ -3290,11 +3285,11 @@ CALLBACK_FUNC_DECL(SVGLengthConvertToSpecifiedUnits) {
 
 CALLBACK_FUNC_DECL(SVGMatrixInverse) {
   INC_STATS("DOM.SVGMatrix.inverse()");
-  AffineTransform imp =
-      *V8Proxy::ToNativeObject<V8SVGPODTypeWrapper<AffineTransform> >(
+  TransformationMatrix imp =
+      *V8Proxy::ToNativeObject<V8SVGPODTypeWrapper<TransformationMatrix> >(
           V8ClassIndex::SVGMATRIX, args.Holder());
   ExceptionCode ec = 0;
-  AffineTransform result = imp.inverse();
+  TransformationMatrix result = imp.inverse();
   if (!imp.isInvertible()) {
     ec = SVGException::SVG_MATRIX_NOT_INVERTABLE;
   }
@@ -3304,18 +3299,18 @@ CALLBACK_FUNC_DECL(SVGMatrixInverse) {
   }
 
   return V8Proxy::ToV8Object(V8ClassIndex::SVGMATRIX,
-      new V8SVGStaticPODTypeWrapper<AffineTransform>(result));
+      new V8SVGStaticPODTypeWrapper<TransformationMatrix>(result));
 }
 
 CALLBACK_FUNC_DECL(SVGMatrixRotateFromVector) {
   INC_STATS("DOM.SVGMatrix.rotateFromVector()");
-  AffineTransform imp =
-      *V8Proxy::ToNativeObject<V8SVGPODTypeWrapper<AffineTransform> >(
+  TransformationMatrix imp =
+      *V8Proxy::ToNativeObject<V8SVGPODTypeWrapper<TransformationMatrix> >(
           V8ClassIndex::SVGMATRIX, args.Holder());
   ExceptionCode ec = 0;
   float x = TO_FLOAT(args[0]);
   float y = TO_FLOAT(args[1]);
-  AffineTransform result = imp;
+  TransformationMatrix result = imp;
   result.rotateFromVector(x, y);
   if (x == 0.0 || y == 0.0) {
     ec = SVGException::SVG_INVALID_VALUE_ERR;
@@ -3326,7 +3321,7 @@ CALLBACK_FUNC_DECL(SVGMatrixRotateFromVector) {
   }
 
   return V8Proxy::ToV8Object(V8ClassIndex::SVGMATRIX,
-      new V8SVGStaticPODTypeWrapper<AffineTransform>(result));
+      new V8SVGStaticPODTypeWrapper<TransformationMatrix>(result));
 }
 
 CALLBACK_FUNC_DECL(SVGElementInstanceAddEventListener) {

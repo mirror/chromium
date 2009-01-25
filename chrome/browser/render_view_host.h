@@ -8,7 +8,7 @@
 #include <string>
 #include <vector>
 
-#include "base/scoped_handle.h"
+#include "base/scoped_ptr.h"
 #include "chrome/browser/render_view_host_delegate.h"
 #include "chrome/browser/render_widget_host.h"
 #include "chrome/common/page_zoom.h"
@@ -32,6 +32,10 @@ struct ViewMsg_PrintPages_Params;
 struct WebDropData;
 struct WebPreferences;
 enum WindowOpenDisposition;
+
+namespace base {
+class WaitableEvent;
+}
 
 namespace gfx {
 class Point;
@@ -86,7 +90,7 @@ class RenderViewHost : public RenderWidgetHost {
   explicit RenderViewHost(SiteInstance* instance,
                           RenderViewHostDelegate* delegate,
                           int routing_id,
-                          HANDLE modal_dialog_event);
+                          base::WaitableEvent* modal_dialog_event);
   virtual ~RenderViewHost();
 
   SiteInstance* site_instance() const { return instance_; }
@@ -365,11 +369,18 @@ class RenderViewHost : public RenderWidgetHost {
   // an Open File dialog for the form.
   void FileSelected(const std::wstring& path);
 
+  // Notifies the Listener that many files have been chosen by the user from
+  // an Open File dialog for the form.
+  void MultiFilesSelected(const std::vector<std::wstring>& files);
+
   // Notifies the RenderViewHost that its load state changed.
   void LoadStateChanged(const GURL& url, net::LoadState load_state);
 
   // Does the associated view have an onunload or onbeforeunload handler?
   bool HasUnloadListener() { return has_unload_listener_; }
+
+  // If the associated view can be terminated without any side effects
+  bool CanTerminate() const;
 
   // Clears the has_unload_listener_ bit since the unload handler has fired
   // and we're necessarily leaving the page.
@@ -410,7 +421,7 @@ class RenderViewHost : public RenderWidgetHost {
 
   // IPC message handlers:
   void OnMsgCreateWindow(int route_id, HANDLE modal_dialog_event);
-  void OnMsgCreateWidget(int route_id, bool focus_on_show);
+  void OnMsgCreateWidget(int route_id, bool activatable);
   void OnMsgShowView(int route_id,
                      WindowOpenDisposition disposition,
                      const gfx::Rect& initial_pos,
@@ -466,7 +477,10 @@ class RenderViewHost : public RenderWidgetHost {
 #endif
   void OnMsgGoToEntryAtOffset(int offset);
   void OnMsgSetTooltipText(const std::wstring& tooltip_text);
-  void OnMsgRunFileChooser(const std::wstring& default_file);
+  void OnMsgRunFileChooser(bool multiple_files,
+                           const std::wstring& title,
+                           const std::wstring& default_file,
+                           const std::wstring& filter);
   void OnMsgRunJavaScriptMessage(const std::wstring& message,
                                  const std::wstring& default_prompt,
                                  const int flags,
@@ -568,7 +582,7 @@ class RenderViewHost : public RenderWidgetHost {
   // Handle to an event that's set when the page is showing a modal dialog box
   // (or equivalent constrained window).  The renderer and plugin processes
   // check this to know if they should pump messages/tasks then.
-  ScopedHandle modal_dialog_event_;
+  scoped_ptr<base::WaitableEvent> modal_dialog_event_;
 
   // Multiple dialog boxes can be shown before the first one is finished,
   // so we keep a counter to know when we can reset the modal dialog event.
@@ -608,7 +622,7 @@ class RenderViewHostFactory {
       SiteInstance* instance,
       RenderViewHostDelegate* delegate,
       int routing_id,
-      HANDLE modal_dialog_event) = 0;
+      base::WaitableEvent* modal_dialog_event) = 0;
 };
 
 #endif  // CHROME_BROWSER_RENDER_VIEW_HOST_H__

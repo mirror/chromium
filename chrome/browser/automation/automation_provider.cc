@@ -19,13 +19,13 @@
 #include "chrome/browser/external_tab_container.h"
 #include "chrome/browser/find_notification_details.h"
 #include "chrome/browser/login_prompt.h"
-#include "chrome/browser/navigation_entry.h"
 #include "chrome/browser/printing/print_job.h"
 #include "chrome/browser/render_view_host.h"
-#include "chrome/browser/ssl_manager.h"
-#include "chrome/browser/ssl_blocking_page.h"
-#include "chrome/browser/web_contents.h"
-#include "chrome/browser/web_contents_view.h"
+#include "chrome/browser/ssl/ssl_manager.h"
+#include "chrome/browser/ssl/ssl_blocking_page.h"
+#include "chrome/browser/tab_contents/navigation_entry.h"
+#include "chrome/browser/tab_contents/web_contents.h"
+#include "chrome/browser/tab_contents/web_contents_view.h"
 #include "chrome/browser/views/bookmark_bar_view.h"
 #include "chrome/browser/views/location_bar_view.h"
 #include "chrome/common/chrome_paths.h"
@@ -820,6 +820,8 @@ void AutomationProvider::OnMessageReceived(const IPC::Message& message) {
                         GetPageCurrentEncoding)
     IPC_MESSAGE_HANDLER(AutomationMsg_OverrideEncodingRequest,
                         OverrideEncoding)
+    IPC_MESSAGE_HANDLER(AutomationMsg_SavePackageShouldPromptUser,
+                        SavePackageShouldPromptUser)
   IPC_END_MESSAGE_MAP()
 }
 
@@ -1903,7 +1905,7 @@ void AutomationProvider::GetDownloadDirectory(const IPC::Message& message,
     NavigationController* tab = tab_tracker_->GetResource(handle);
     DownloadManager* dlm = tab->profile()->GetDownloadManager();
     DCHECK(dlm);
-    download_directory = dlm->download_path();
+    download_directory = dlm->download_path().ToWStringHack();
   }
 
   Send(new AutomationMsg_DownloadDirectoryResponse(message.routing_id(),
@@ -2577,4 +2579,9 @@ void AutomationProvider::OverrideEncoding(const IPC::Message& message,
   }
   Send(new AutomationMsg_OverrideEncodingResponse(message.routing_id(),
                                                   succeed));
+}
+
+void AutomationProvider::SavePackageShouldPromptUser(
+    const IPC::Message& message, bool should_prompt) {
+  SavePackage::SetShouldPromptUser(should_prompt);
 }

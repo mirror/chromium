@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_TEST_TESTING_PROFILE_H__
-#define CHROME_TEST_TESTING_PROFILE_H__
+#ifndef CHROME_TEST_TESTING_PROFILE_H_
+#define CHROME_TEST_TESTING_PROFILE_H_
 
 #include "base/base_paths.h"
 #include "base/path_service.h"
@@ -12,8 +12,8 @@
 #include "chrome/browser/browser_prefs.h"
 #include "chrome/browser/history/history.h"
 #include "chrome/browser/profile.h"
+#include "chrome/browser/search_engines/template_url_model.h"
 #include "chrome/browser/sessions/session_service.h"
-#include "chrome/browser/template_url_model.h"
 #include "chrome/common/pref_service.h"
 
 class TestingProfile : public Profile {
@@ -70,7 +70,7 @@ class TestingProfile : public Profile {
   virtual ExtensionsService* GetExtensionsService() {
     return NULL;
   }
-  virtual GreasemonkeyMaster* GetGreasemonkeyMaster() {
+  virtual UserScriptMaster* GetUserScriptMaster() {
     return NULL;
   }
   virtual HistoryService* GetHistoryService(ServiceAccessType access) {
@@ -207,4 +207,4 @@ class TestingProfile : public Profile {
   bool last_session_exited_cleanly_;
 };
 
-#endif  // CHROME_TEST_TESTING_PROFILE_H__
+#endif  // CHROME_TEST_TESTING_PROFILE_H_

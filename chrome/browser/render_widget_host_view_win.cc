@@ -12,7 +12,7 @@
 #include "chrome/browser/browser_accessibility.h"
 #include "chrome/browser/browser_accessibility_manager.h"
 #include "chrome/browser/browser_trial.h"
-#include "chrome/browser/render_process_host.h"
+#include "chrome/browser/renderer_host/render_process_host.h"
 // TODO(beng): (Cleanup) we should not need to include this file... see comment
 //             in |DidBecomeSelected|.
 #include "chrome/browser/render_view_host.h"
@@ -67,8 +67,6 @@ RenderWidgetHostView* RenderWidgetHostView::CreateViewForWidget(
 
 RenderWidgetHostViewWin::RenderWidgetHostViewWin(RenderWidgetHost* widget)
     : render_widget_host_(widget),
-      cursor_(LoadCursor(NULL, IDC_ARROW)),
-      cursor_is_custom_(false),
       track_mouse_leave_(false),
       ime_notification_(false),
       is_hidden_(false),
@@ -78,15 +76,13 @@ RenderWidgetHostViewWin::RenderWidgetHostViewWin(RenderWidgetHost* widget)
       shutdown_factory_(this),
       parent_hwnd_(NULL),
       is_loading_(false),
-      focus_on_show_(true) {
+      activatable_(true) {
   render_widget_host_->set_view(this);
   renderer_accessible_ =
       CommandLine().HasSwitch(switches::kEnableRendererAccessibility);
 }
 
 RenderWidgetHostViewWin::~RenderWidgetHostViewWin() {
-  if (cursor_is_custom_)
-    DestroyIcon(cursor_);
   ResetTooltip();
 }
 
@@ -166,7 +162,7 @@ void RenderWidgetHostViewWin::ForwardMouseEventToRenderer(UINT message,
 
   render_widget_host_->ForwardMouseEvent(event);
 
-  if (event.type == WebInputEvent::MOUSE_DOWN) {
+  if (activatable_ && event.type == WebInputEvent::MOUSE_DOWN) {
     // This is a temporary workaround for bug 765011 to get focus when the
     // mouse is clicked. This happens after the mouse down event is sent to
     // the renderer because normally Windows does a WM_SETFOCUS after
@@ -218,33 +214,22 @@ gfx::Rect RenderWidgetHostViewWin::GetViewBounds() const {
 }
 
 void RenderWidgetHostViewWin::UpdateCursor(const WebCursor& cursor) {
-  static HINSTANCE module_handle =
-      GetModuleHandle(chrome::kBrowserResourcesDll);
-
-  // If the last active cursor was a custom cursor, we need to destroy
-  // it before setting the new one.
-  if (cursor_is_custom_)
-    DestroyIcon(cursor_);
-
-  cursor_is_custom_ = cursor.IsCustom();
-  if (cursor_is_custom_) {
-    cursor_ = cursor.GetCustomCursor();
-  } else {
-    // We cannot pass in NULL as the module handle as this would only
-    // work for standard win32 cursors. We can also receive cursor
-    // types which are defined as webkit resources. We need to specify
-    // the module handle of chrome.dll while loading these cursors.
-    cursor_ = cursor.GetCursor(module_handle);
-  }
-
+  current_cursor_ = cursor;
   UpdateCursorIfOverSelf();
 }
 
 void RenderWidgetHostViewWin::UpdateCursorIfOverSelf() {
   static HCURSOR kCursorArrow = LoadCursor(NULL, IDC_ARROW);
   static HCURSOR kCursorAppStarting = LoadCursor(NULL, IDC_APPSTARTING);
+  static HINSTANCE module_handle =
+      GetModuleHandle(chrome::kBrowserResourcesDll);
 
-  HCURSOR display_cursor = cursor_;
+  // We cannot pass in NULL as the module handle as this would only work for
+  // standard win32 cursors. We can also receive cursor types which are defined
+  // as webkit resources. We need to specify the module handle of chrome.dll
+  // while loading these cursors.
+  HCURSOR display_cursor = current_cursor_.GetCursor(module_handle);
+
   // If a page is in the loading state, we want to show the Arrow+Hourglass
   // cursor only when the current cursor is the ARROW cursor. In all other
   // cases we should continue to display the current cursor.
@@ -780,6 +765,9 @@ LRESULT RenderWidgetHostViewWin::OnWheelEvent(UINT message, WPARAM wparam,
 
 LRESULT RenderWidgetHostViewWin::OnMouseActivate(UINT, WPARAM, LPARAM,
                                                  BOOL& handled) {
+  if (!activatable_)
+    return MA_NOACTIVATE;
+
   HWND focus_window = GetFocus();
   if (!::IsWindow(focus_window) || !IsChild(focus_window)) {
     // We handle WM_MOUSEACTIVATE to set focus to the underlying plugin
@@ -916,4 +904,3 @@ void RenderWidgetHostViewWin::ShutdownHost() {
   render_widget_host_->Shutdown();
   // Do not touch any members at this point, |this| has been deleted.
 }
-

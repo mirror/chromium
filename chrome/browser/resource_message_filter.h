@@ -78,7 +78,7 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
  private:
   void OnMsgCreateWindow(int opener_id, bool user_gesture, int* route_id,
                          HANDLE* modal_dialog_event);
-  void OnMsgCreateWidget(int opener_id, bool focus_on_show, int* route_id);
+  void OnMsgCreateWidget(int opener_id, bool activatable, int* route_id);
   void OnRequestResource(const IPC::Message& msg, int request_id,
                          const ViewHostMsg_Resource_Request& request);
   void OnCancelRequest(int request_id);
@@ -98,6 +98,11 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   void OnPluginSyncMessage(const FilePath& plugin_path,
                            const std::vector<uint8>& message,
                            std::vector<uint8> *retval);
+  void OnPluginFileDialog(const IPC::Message& msg,
+                          bool multiple_files,
+                          const std::wstring& title,
+                          const std::wstring& filter,
+                          uint32 user_data);
 
   // Cache fonts for the renderer. See ResourceMessageFilter::OnLoadFont
   // implementation for more details

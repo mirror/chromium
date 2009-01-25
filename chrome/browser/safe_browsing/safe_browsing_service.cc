@@ -17,7 +17,7 @@
 #include "chrome/browser/safe_browsing/protocol_manager.h"
 #include "chrome/browser/safe_browsing/safe_browsing_blocking_page.h"
 #include "chrome/browser/safe_browsing/safe_browsing_database.h"
-#include "chrome/browser/tab_util.h"
+#include "chrome/browser/tab_contents/tab_util.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
@@ -577,7 +577,7 @@ void SafeBrowsingService::DatabaseLoadComplete(bool database_error) {
 }
 
 // static
-void SafeBrowsingService::RegisterUserPrefs(PrefService* prefs) {
+void SafeBrowsingService::RegisterPrefs(PrefService* prefs) {
   prefs->RegisterStringPref(prefs::kSafeBrowsingClientKey, L"");
   prefs->RegisterStringPref(prefs::kSafeBrowsingWrappedKey, L"");
 }

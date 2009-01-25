@@ -6,7 +6,7 @@
 
 #include "base/thread.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/render_process_host.h"
+#include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 
 using base::TimeDelta;
@@ -219,10 +219,10 @@ void RenderWidgetHelper::CreateNewWindow(int opener_id,
 }
 
 void RenderWidgetHelper::CreateNewWidget(int opener_id,
-                                         bool focus_on_show,
+                                         bool activatable,
                                          int* route_id) {
   *route_id = GetNextRoutingID();
-  ViewHostMsg_CreateWidgetWithRoute msg(opener_id, *route_id, focus_on_show);
+  ViewHostMsg_CreateWidgetWithRoute msg(opener_id, *route_id, activatable);
   ui_loop_->PostTask(FROM_HERE, NewRunnableMethod(
       this, &RenderWidgetHelper::OnSimulateReceivedMessage, msg));
 }

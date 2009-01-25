@@ -34,7 +34,7 @@ const char kH264AnnexB[]                    = "video/x-h264-annex-b";
 //   kChannels        Integer         Number of audio channels
 //   kSampleRate      Integer         Audio sample rate (i.e., 44100)
 //   kSampleBits      Integer         Audio bits-per-sample (i.e., 16)
-const char kRawAudio[]                      = "audio/x-uncompressed";
+const char kUncompressedAudio[]             = "audio/x-uncompressed";
 
 // Represents decoded video data, typically from a VideoDecoderInterface.
 // Other information, such as surface format (i.e., YV12), stride and planes are
@@ -42,13 +42,7 @@ const char kRawAudio[]                      = "audio/x-uncompressed";
 // Expected keys:
 //   kWidth           Integer         Display width of the surface
 //   kHeight          Integer         Display height of the surface
-const char kRawVideo[]                      = "video/x-uncompressed";
-
-// Represents FFmpeg encoded packets, typically from an DemuxerStreamInterface.
-// Expected keys:
-//   kFfmpegCodecId   Integer         The FFmpeg CodecID identifying the decoder
-const char kFFmpegAudio[]                   = "audio/x-ffmpeg";
-const char kFFmpegVideo[]                   = "video/x-ffmpeg";
+const char kUncompressedVideo[]             = "video/x-uncompressed";
 
 }  // namespace mime_type
 
@@ -61,7 +55,6 @@ const char MediaFormat::kSampleBits[]       = "SampleBits";
 const char MediaFormat::kChannels[]         = "Channels";
 const char MediaFormat::kWidth[]            = "Width";
 const char MediaFormat::kHeight[]           = "Height";
-const char MediaFormat::kFfmpegCodecId[]    = "FfmpegCodecId";
 
 MediaFormat::MediaFormat() {
 }

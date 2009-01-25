@@ -11,7 +11,7 @@
 #include <atlmisc.h>
 
 #include "base/basictypes.h"
-#include "chrome/browser/tab_contents_delegate.h"
+#include "chrome/browser/tab_contents/tab_contents_delegate.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/notification_registrar.h"
 #include "chrome/common/notification_service.h"
@@ -77,7 +77,7 @@ class ExternalTabContainer : public TabContentsDelegate,
   virtual void ToolbarSizeChanged(TabContents* source, bool is_animating);
   virtual void ForwardMessageToExternalHost(const std::string& receiver,
                                             const std::string& message);
-
+  virtual bool IsExternalTabContainer() const { return true; };
 
   // Notification service callback.
   virtual void Observe(NotificationType type,

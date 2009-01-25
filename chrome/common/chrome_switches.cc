@@ -315,9 +315,6 @@ const wchar_t kGearsPluginPathOverride[]       = L"gears-plugin-path";
 // Switch to load Gears in the renderer process.
 const wchar_t kGearsInRenderer[]               = L"gears-in-renderer";
 
-// Enable winhttp HTTP stack.
-const wchar_t kUseWinHttp[]                    = L"winhttp";
-
 // Enable the fastback page cache.
 const wchar_t kEnableFastback[]                = L"enable-fastback";
 
@@ -333,8 +330,8 @@ const wchar_t kEnableP13n[]                    = L"enable-p13n";
 // SDCH is currently only supported server-side for searches on google.com.
 const wchar_t kSdchFilter[]                    = L"enable-sdch";
 
-// Enable Greasemonkey script support.
-const wchar_t kEnableGreasemonkey[] = L"enable-user-scripts";
+// Enable user script support.
+const wchar_t kEnableUserScripts[]             = L"enable-user-scripts";
 
 // Enable extensions.
 const wchar_t kEnableExtensions[]              = L"enable-extensions";
@@ -346,11 +343,14 @@ const wchar_t kIncognito[]                     = L"incognito";
 // problems on some computers during updates.
 const wchar_t kUseOldSafeBrowsing[]            = L"old-safe-browsing";
 
-// Turns on the accessibility in the renderer.  Off by default until 
+// Turns on the accessibility in the renderer.  Off by default until
 // http://b/issue?id=1432077 is fixed.
 const wchar_t kEnableRendererAccessibility[] = L"enable-renderer-accessibility";
 
 // Enable HTML5 Video/Audio tag support
 const wchar_t kEnableVideo[]                   = L"enable-video";
+
+// Pass the name of the current running automated test to Chrome.
+const wchar_t kTestName[]                      = L"test-name";
 
 }  // namespace switches

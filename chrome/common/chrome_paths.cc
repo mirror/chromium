@@ -35,8 +35,12 @@ bool GetDefaultUserDataDirectory(std::wstring* result) {
   file_util::AppendToPath(result, chrome::kBrowserAppName);
   file_util::AppendToPath(result, chrome::kUserDataDirname);
   return true;
-#else  // defined(OS_WIN)
-  // TODO(port): Decide what to do on other platforms.
+#elif defined(OS_MACOSX)
+  if (!PathService::Get(base::DIR_LOCAL_APP_DATA, result))
+    return false;
+  return true;
+#elif defined(OS_LINUX)
+  // TODO(port): Decide what to do on linux.
   NOTIMPLEMENTED();
   return false;
 #endif  // defined(OS_WIN)
@@ -171,15 +175,6 @@ bool PathProvider(int key, FilePath* result) {
         return false;
       file_util::AppendToPath(&cur, L"Dictionaries");
       create_dir = true;
-      break;
-    case chrome::DIR_USER_SCRIPTS:
-      // TODO(aa): Figure out where the script directory should live.
-#if defined(OS_WIN)
-      cur = L"C:\\SCRIPTS\\";
-#else
-      NOTIMPLEMENTED();
-      return false;
-#endif
       break;
     case chrome::FILE_LOCAL_STATE:
       if (!PathService::Get(chrome::DIR_USER_DATA, &cur))

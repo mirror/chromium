@@ -19,7 +19,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/profile_manager.h"
-#include "chrome/browser/template_url_model.h"
+#include "chrome/browser/search_engines/template_url_model.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/env_vars.h"
 #include "chrome/common/notification_service.h"
@@ -183,8 +183,10 @@ class DailyPingTask : public Task {
     std::wstring referral;
     GoogleUpdateSettings::GetReferral(&referral);
     if (SendFinancialPing(brand.c_str(), lang.c_str(), referral.c_str(),
-                          is_organic(brand)))
+                          is_organic(brand))) {
       access_values_state = ACCESS_VALUES_STALE;
+      GoogleUpdateSettings::ClearReferral();
+    }
   }
 
   // Organic brands all start with GG, such as GGCM.

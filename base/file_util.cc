@@ -79,12 +79,13 @@ void TrimTrailingSeparator(std::wstring* dir) {
     dir->resize(dir->length() - 1);
 }
 
-std::wstring GetFileExtensionFromPath(const std::wstring& path) {
-  std::wstring file_name = GetFilenameFromPath(path);
-  std::wstring::size_type last_dot = file_name.rfind(L'.');
-  return std::wstring(last_dot == std::wstring::npos ? 
-      L"" : 
-      file_name, last_dot+1);
+FilePath::StringType GetFileExtensionFromPath(const FilePath& path) {
+  FilePath::StringType file_name = path.BaseName().value();
+  const FilePath::StringType::size_type last_dot =
+      file_name.rfind(kExtensionSeparator);
+  return FilePath::StringType(last_dot == FilePath::StringType::npos ?
+                              FILE_PATH_LITERAL("") :
+                              file_name, last_dot+1);
 }
 
 std::wstring GetFilenameWithoutExtensionFromPath(const std::wstring& path) {
@@ -275,6 +276,33 @@ bool CloseFile(FILE* file) {
   return fclose(file) == 0;
 }
 
+bool ContainsPath(const FilePath &parent, const FilePath& child) {
+  FilePath abs_parent = FilePath(parent);
+  FilePath abs_child = FilePath(child);
+
+  if (!file_util::AbsolutePath(&abs_parent) ||
+      !file_util::AbsolutePath(&abs_child))
+    return false;
+
+#if defined(OS_WIN)
+  // file_util::AbsolutePath() does not flatten case on Windows, so we must do
+  // a case-insensitive compare.
+  if (!StartsWith(abs_child.value(), abs_parent.value(), false))
+#else
+  if (!StartsWithASCII(abs_child.value(), abs_parent.value(), true))
+#endif
+    return false;
+
+  // file_util::AbsolutePath() normalizes '/' to '\' on Windows, so we only need
+  // to check kSeparators[0].
+  if (abs_child.value().length() <= abs_parent.value().length() ||
+      abs_child.value()[abs_parent.value().length()] !=
+          FilePath::kSeparators[0])
+    return false;
+
+  return true;
+}
+
 ///////////////////////////////////////////////
 // MemoryMappedFile
 
@@ -373,6 +401,15 @@ bool GetCurrentDirectory(std::wstring* path_str) {
     return false;
   *path_str = path.ToWStringHack();
   return true;
+}
+std::wstring GetFileExtensionFromPath(const std::wstring& path) {
+  FilePath::StringType extension =
+      GetFileExtensionFromPath(FilePath::FromWStringHack(path));
+#if defined(OS_WIN)
+  return extension;
+#elif defined(OS_POSIX)
+  return UTF8ToWide(extension);
+#endif
 }
 bool GetFileInfo(const std::wstring& file_path, FileInfo* results) {
   return GetFileInfo(FilePath::FromWStringHack(file_path), results);

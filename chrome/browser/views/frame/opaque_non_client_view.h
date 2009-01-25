@@ -31,8 +31,8 @@ class OpaqueNonClientView : public views::NonClientView,
   // Retrieve the bounds of the window for the specified contents bounds.
   gfx::Rect GetWindowBoundsForClientBounds(const gfx::Rect& client_bounds);
 
-  // Retrieve the bounds (in ClientView coordinates) that the specified
-  // |tabstrip| will be laid out within.
+  // Retrieve the bounds for the specified |tabstrip|, in the coordinate system
+  // of the non-client view (which whould be window coordinates).
   gfx::Rect GetBoundsForTabStrip(TabStrip* tabstrip);
 
   // Updates the window icon/throbber.
@@ -70,27 +70,33 @@ class OpaqueNonClientView : public views::NonClientView,
   virtual void SetAccessibleName(const std::wstring& name);
 
  private:
-  // Updates the system menu icon button.
-  void SetWindowIcon(SkBitmap window_icon);
-
   // Returns the height of the non-client area at the top of the window (the
   // title bar, etc).
   int CalculateNonClientTopHeight() const;
 
+  // Returns the current thickness of the border that makes up the window left
+  // and right edges.
+  int HorizontalBorderSize() const;
+
+  // Returns the current thickness of the border that makes up the window bottom
+  // edge.
+  int VerticalBorderBottomSize() const;
+
   // Paint various sub-components of this view.
   void PaintFrameBorder(ChromeCanvas* canvas);
   void PaintMaximizedFrameBorder(ChromeCanvas* canvas);
-  void PaintOTRAvatar(ChromeCanvas* canvas);
   void PaintDistributorLogo(ChromeCanvas* canvas);
   void PaintTitleBar(ChromeCanvas* canvas);
   void PaintToolbarBackground(ChromeCanvas* canvas);
+  void PaintOTRAvatar(ChromeCanvas* canvas);
   void PaintClientEdge(ChromeCanvas* canvas);
+  void PaintMaximizedClientEdge(ChromeCanvas* canvas);
 
   // Layout various sub-components of this view.
   void LayoutWindowControls();
-  void LayoutOTRAvatar();
   void LayoutDistributorLogo();
   void LayoutTitleBar();
+  void LayoutOTRAvatar();
   void LayoutClientView();
 
   // Returns the set of resources to use to paint this view.

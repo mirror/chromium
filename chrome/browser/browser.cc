@@ -26,20 +26,21 @@
 #include "chrome/browser/dom_ui/new_tab_ui.h"
 #include "chrome/browser/download/save_package.h"
 #include "chrome/browser/history_tab_ui.h"
-#include "chrome/browser/interstitial_page.h"
-#include "chrome/browser/navigation_controller.h"
-#include "chrome/browser/navigation_entry.h"
+#include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/options_window.h"
 #include "chrome/browser/plugin_process_host.h"
 #include "chrome/browser/plugin_service.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/sessions/session_service.h"
-#include "chrome/browser/ssl_error_info.h"
-#include "chrome/browser/site_instance.h"
+#include "chrome/browser/ssl/ssl_error_info.h"
+#include "chrome/browser/tab_contents/interstitial_page.h"
+#include "chrome/browser/tab_contents/navigation_controller.h"
+#include "chrome/browser/tab_contents/navigation_entry.h"
+#include "chrome/browser/tab_contents/site_instance.h"
+#include "chrome/browser/tab_contents/web_contents_view.h"
 #include "chrome/browser/task_manager.h"
 #include "chrome/browser/url_fixer_upper.h"
 #include "chrome/browser/user_data_manager.h"
-#include "chrome/browser/user_metrics.h"
 #include "chrome/browser/view_ids.h"
 #include "chrome/browser/views/download_tab_view.h"
 #include "chrome/browser/views/go_button.h"
@@ -48,7 +49,6 @@
 #include "chrome/browser/views/select_profile_dialog.h"
 #include "chrome/browser/views/status_bubble.h"
 #include "chrome/browser/views/toolbar_star_toggle.h"
-#include "chrome/browser/web_contents_view.h"
 #include "chrome/browser/window_sizer.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
@@ -246,6 +246,8 @@ void Browser::CreateBrowserWindow() {
 
   // Show the First Run information bubble if we've been told to.
   PrefService* local_state = g_browser_process->local_state();
+  if (!local_state)
+    return;
   if (local_state->IsPrefRegistered(prefs::kShouldShowFirstRunBubble) &&
       local_state->GetBoolean(prefs::kShouldShowFirstRunBubble)) {
     // Reset the preference so we don't show the bubble for subsequent windows.
@@ -657,6 +659,11 @@ void Browser::NewTab() {
     Browser* b = GetOrCreateTabbedBrowser();
     b->AddBlankTab(true);
     b->window()->Show();
+    // The call to AddBlankTab above did not set the focus to the tab as its
+    // window was not active, so we have to do it explicitly.
+    // See http://crbug.com/6380.
+    TabContents* tab = b->GetSelectedTabContents();
+    tab->RestoreFocus();
   }
 }
 
@@ -1430,10 +1437,13 @@ void Browser::TabSelectedAt(TabContents* old_contents,
   UpdateCommandsForTabState();
 
   // Reset the status bubble.
-  GetStatusBubble()->Hide();
+  StatusBubble* status_bubble = GetStatusBubble();
+  if (status_bubble) {
+    status_bubble->Hide();
 
-  // Show the loading state (if any).
-  GetStatusBubble()->SetStatus(GetSelectedTabContents()->GetStatusText());
+    // Show the loading state (if any).
+    status_bubble->SetStatus(GetSelectedTabContents()->GetStatusText());
+  }
 
   // Update sessions. Don't force creation of sessions. If sessions doesn't
   // exist, the change will be picked up by sessions when created.
@@ -1567,7 +1577,8 @@ void Browser::OpenURLFromTab(TabContents* source,
     // The TabContents might have changed as part of the navigation (ex: new
     // tab page can become WebContents).
     new_contents = current_tab->controller()->active_contents();
-    GetStatusBubble()->Hide();
+    if (GetStatusBubble())
+      GetStatusBubble()->Hide();
 
     // Synchronously update the location bar. This allows us to immediately
     // have the URL bar update when the user types something, rather than
@@ -1681,7 +1692,8 @@ void Browser::LoadingStateChanged(TabContents* source) {
 
   if (source == GetSelectedTabContents()) {
     UpdateStopGoState(source->is_loading());
-    GetStatusBubble()->SetStatus(GetSelectedTabContents()->GetStatusText());
+    if (GetStatusBubble())
+      GetStatusBubble()->SetStatus(GetSelectedTabContents()->GetStatusText());
   }
 }
 
@@ -1729,6 +1741,9 @@ void Browser::URLStarredChanged(TabContents* source, bool starred) {
 }
 
 void Browser::ContentsMouseEvent(TabContents* source, UINT message) {
+  if (!GetStatusBubble())
+    return;
+
   if (source == GetSelectedTabContents()) {
     if (message == WM_MOUSEMOVE) {
       GetStatusBubble()->MouseMoved();
@@ -1739,6 +1754,9 @@ void Browser::ContentsMouseEvent(TabContents* source, UINT message) {
 }
 
 void Browser::UpdateTargetURL(TabContents* source, const GURL& url) {
+  if (!GetStatusBubble())
+    return;
+
   if (source == GetSelectedTabContents()) {
     PrefService* prefs = profile_->GetPrefs();
     GetStatusBubble()->SetURL(url, prefs->GetString(prefs::kAcceptLanguages));
@@ -2052,14 +2070,22 @@ void Browser::UpdateCommandsForTabState() {
 }
 
 void Browser::UpdateStopGoState(bool is_loading) {
-  GetGoButton()->ChangeMode(is_loading ?
+  GoButton* go_button = GetGoButton();
+  if (!go_button)
+    return;
+
+  go_button->ChangeMode(is_loading ?
       GoButton::MODE_STOP : GoButton::MODE_GO);
   controller_.UpdateCommandEnabled(IDC_GO, !is_loading);
   controller_.UpdateCommandEnabled(IDC_STOP, is_loading);
 }
 
 void Browser::SetStarredButtonToggled(bool starred) {
-  window_->GetStarButton()->SetToggled(starred);
+  ToolbarStarToggle* star_button = window_->GetStarButton();
+  if (!star_button)
+    return;
+
+  star_button->SetToggled(starred);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -2153,7 +2179,7 @@ void Browser::ProcessPendingUIUpdates() {
 
     // Updating the URL happens synchronously in ScheduleUIUpdate.
 
-    if (flags & TabContents::INVALIDATE_LOAD)
+    if (flags & TabContents::INVALIDATE_LOAD && GetStatusBubble())
       GetStatusBubble()->SetStatus(GetSelectedTabContents()->GetStatusText());
 
     if (invalidate_tab) {  // INVALIDATE_TITLE or INVALIDATE_FAVICON.

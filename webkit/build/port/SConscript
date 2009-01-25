@@ -188,6 +188,7 @@ idl_files = [
     'dom/DocumentType.idl',
     'dom/DOMCoreException.idl',
     'dom/DOMImplementation.idl',
+    'dom/DOMStringList.idl',
     'dom/Element.idl',
     'dom/Entity.idl',
     'dom/EntityReference.idl',
@@ -222,7 +223,6 @@ idl_files = [
     'dom/WheelEvent.idl',
 
     'html/CanvasGradient.idl',
-    'html/CanvasPixelArray.idl',
     'html/CanvasPattern.idl',
     'html/CanvasRenderingContext2D.idl',
     'html/File.idl',

@@ -18,17 +18,17 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/extensions/extensions_service.h"
-#include "chrome/browser/greasemonkey_master.h"
+#include "chrome/browser/extensions/user_script_master.h"
 #include "chrome/browser/history/history.h"
-#include "chrome/browser/navigation_controller.h"
 #include "chrome/browser/net/chrome_url_request_context.h"
 #include "chrome/browser/profile_manager.h"
-#include "chrome/browser/render_process_host.h"
+#include "chrome/browser/renderer_host/render_process_host.h"
+#include "chrome/browser/search_engines/template_url_fetcher.h"
+#include "chrome/browser/search_engines/template_url_model.h"
 #include "chrome/browser/sessions/session_service.h"
 #include "chrome/browser/sessions/tab_restore_service.h"
 #include "chrome/browser/spellchecker.h"
-#include "chrome/browser/template_url_fetcher.h"
-#include "chrome/browser/template_url_model.h"
+#include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/visitedlink_master.h"
 #include "chrome/browser/webdata/web_data_service.h"
 #include "chrome/common/chrome_constants.h"
@@ -134,8 +134,8 @@ class OffTheRecordProfileImpl : public Profile,
     return profile_->GetExtensionsService();
   }
 
-  virtual GreasemonkeyMaster* GetGreasemonkeyMaster() {
-    return profile_->GetGreasemonkeyMaster();
+  virtual UserScriptMaster* GetUserScriptMaster() {
+    return profile_->GetUserScriptMaster();
   }
 
   virtual HistoryService* GetHistoryService(ServiceAccessType sat) {
@@ -448,17 +448,16 @@ ExtensionsService* ProfileImpl::GetExtensionsService() {
   return extensions_service_.get();
 }
 
-GreasemonkeyMaster* ProfileImpl::GetGreasemonkeyMaster() {
-  if (!greasemonkey_master_.get()) {
-    std::wstring script_dir_str;
-    PathService::Get(chrome::DIR_USER_SCRIPTS, &script_dir_str);
-    FilePath script_dir(script_dir_str);
-    greasemonkey_master_ =
-        new GreasemonkeyMaster(g_browser_process->file_thread()->message_loop(),
-                               script_dir);
+UserScriptMaster* ProfileImpl::GetUserScriptMaster() {
+  if (!user_script_master_.get()) {
+    std::wstring script_dir = GetPath();
+    file_util::AppendToPath(&script_dir, chrome::kUserScriptsDirname);
+    user_script_master_ =
+        new UserScriptMaster(g_browser_process->file_thread()->message_loop(),
+                             FilePath(script_dir));
   }
 
-  return greasemonkey_master_.get();
+  return user_script_master_.get();
 }
 
 PrefService* ProfileImpl::GetPrefs() {

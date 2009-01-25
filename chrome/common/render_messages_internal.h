@@ -165,10 +165,10 @@ IPC_BEGIN_MESSAGES(View, 1)
   // handle. This handle is valid in the context of the renderer
   IPC_MESSAGE_CONTROL1(ViewMsg_VisitedLink_NewTable, base::SharedMemoryHandle)
 
-  // Notification that the Greasemonkey scripts have been updated. It has one
+  // Notification that the user scripts have been updated. It has one
   // SharedMemoryHandle argument consisting of the pickled script data. This
   // handle is valid in the context of the renderer.
-  IPC_MESSAGE_CONTROL1(ViewMsg_Greasemonkey_NewScripts, base::SharedMemoryHandle)
+  IPC_MESSAGE_CONTROL1(ViewMsg_UserScripts_NewScripts, base::SharedMemoryHandle)
 
   // Sent when the user wants to search for a word on the page (find in page).
   // Request parameters are passed in as a FindInPageMsg_Request struct.
@@ -378,7 +378,7 @@ IPC_BEGIN_MESSAGES(View, 1)
   IPC_MESSAGE_ROUTED0(ViewMsg_InstallMissingPlugin)
 
   IPC_MESSAGE_ROUTED1(ViewMsg_RunFileChooserResponse,
-                      std::wstring /* file_name */)
+                      std::vector<std::wstring> /* selected files */)
 
   // Used to instruct the RenderView to go into "view source" mode.
   IPC_MESSAGE_ROUTED0(ViewMsg_EnableViewSourceMode)
@@ -522,7 +522,7 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
 
   IPC_MESSAGE_ROUTED2(ViewHostMsg_CreateWidgetWithRoute,
                       int /* route_id */,
-                      bool /* focus on show */)
+                      bool /* activatable */)
 
   // These two messages are sent to the parent RenderViewHost to display the
   // page/widget that was created by CreateView/CreateWidget.  routing_id
@@ -697,7 +697,7 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
                               bool /* refresh*/,
                               std::vector<WebPluginInfo> /* plugins */)
 
-  // Returns a path to a plugin dll for the given url and mime type.  If there's
+  // Returns a path to a plugin for the given url and mime type.  If there's
   // no plugin, an empty string is returned.
   IPC_SYNC_MESSAGE_CONTROL3_2(ViewHostMsg_GetPluginPath,
                               GURL /* url */,
@@ -852,8 +852,11 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
 
   // Asks the browser to display the file chooser.  The result is returned in a
   // ViewHost_RunFileChooserResponse message.
-  IPC_MESSAGE_ROUTED1(ViewHostMsg_RunFileChooser,
-                      std::wstring /* Default file name */)
+  IPC_MESSAGE_ROUTED4(ViewHostMsg_RunFileChooser,
+                      bool /* multiple_files */,
+                      std::wstring /* title */,
+                      std::wstring /* Default file name */,
+                      std::wstring /* filter */)
 
   // Notification that password forms have been seen that are candidates for
   // filling/submitting by the password manager

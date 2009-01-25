@@ -8,6 +8,7 @@
 #include "base/scoped_handle.h"
 #include "base/shared_memory.h"
 #include "base/singleton.h"
+#include "base/waitable_event.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/plugin_messages.h"
 #include "chrome/common/win_util.h"
@@ -47,7 +48,7 @@ WebPluginProxy::WebPluginProxy(
       FALSE,
       0);
   DCHECK(result) << "Couldn't duplicate the modal dialog handle for the plugin.";
-  modal_dialog_event_.Set(event);
+  modal_dialog_event_.reset(new base::WaitableEvent(event));
 }
 
 WebPluginProxy::~WebPluginProxy() {
@@ -121,7 +122,7 @@ NPObject* WebPluginProxy::GetWindowScriptNPObject() {
   window_npobject_ = NPObjectProxy::Create(channel_,
                                            npobject_route_id,
                                            npobject_ptr,
-                                           modal_dialog_event_.Get());
+                                           modal_dialog_event_.get());
 
   return window_npobject_;
 }
@@ -141,7 +142,7 @@ NPObject* WebPluginProxy::GetPluginElement() {
   plugin_element_ = NPObjectProxy::Create(channel_,
                                           npobject_route_id,
                                           npobject_ptr,
-                                          modal_dialog_event_.Get());
+                                          modal_dialog_event_.get());
 
   return plugin_element_;
 }
@@ -170,8 +171,9 @@ void WebPluginProxy::ShowModalHTMLDialog(const GURL& url, int width, int height,
   // Create a new event and set it.  This forces us to pump messages while
   // waiting for a response (which won't come until the dialog is closed).  This
   // avoids a deadlock.
-  ScopedHandle event(CreateEvent(NULL, FALSE, TRUE, NULL));
-  msg->set_pump_messages_event(event);
+  scoped_ptr<base::WaitableEvent> event(
+      new base::WaitableEvent(false, true));
+  msg->set_pump_messages_event(event.get());
 
   Send(msg);
 }
@@ -233,6 +235,19 @@ void WebPluginProxy::HandleURLRequest(const char *method,
   if (!url) {
     NOTREACHED();
     return;
+  }
+
+  if (!target && (0 == _strcmpi(method, "GET"))) {
+    // Please refer to https://bugzilla.mozilla.org/show_bug.cgi?id=366082
+    // for more details on this.
+    if (delegate_->quirks() &
+        WebPluginDelegateImpl::PLUGIN_QUIRK_BLOCK_NONSTANDARD_GETURL_REQUESTS) {
+      GURL request_url(url);
+      if (!request_url.SchemeIs("http") && !request_url.SchemeIs("https") &&
+          !request_url.SchemeIs("ftp")) {
+        return;
+      }
+    }
   }
 
   PluginHostMsg_URLRequest_Params params;

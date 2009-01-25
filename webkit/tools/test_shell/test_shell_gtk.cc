@@ -98,10 +98,8 @@ void TestShell::InitializeTestShell(bool layout_test_mode) {
     "/usr/share/fonts/truetype/msttcorefonts/Verdana_Bold.ttf",
     "/usr/share/fonts/truetype/msttcorefonts/Verdana_Bold_Italic.ttf",
     "/usr/share/fonts/truetype/msttcorefonts/Verdana_Italic.ttf",
-    "/usr/share/fonts/truetype/ttf-lucida/LucidaSansRegular.ttf",
-    NULL
   };
-  for (size_t i = 0; fonts[i]; ++i) {
+  for (size_t i = 0; i < arraysize(fonts); ++i) {
     if (access(fonts[i], R_OK)) {
       LOG(FATAL) << "You are missing " << fonts[i] << ". "
                  << "Try installing msttcorefonts. Also see "
@@ -110,6 +108,25 @@ void TestShell::InitializeTestShell(bool layout_test_mode) {
     }
     if (!FcConfigAppFontAddFile(fontcfg, (FcChar8 *) fonts[i]))
       LOG(FATAL) << "Failed to load font " << fonts[i];
+  }
+
+  // We special case these fonts because they're only needed in a few layout tests.
+  static const char* const optional_fonts[] = {
+    "/usr/share/fonts/truetype/ttf-lucida/LucidaSansRegular.ttf",
+    "/usr/share/fonts/truetype/kochi/kochi-gothic.ttf",
+    "/usr/share/fonts/truetype/kochi/kochi-mincho.ttf",
+  };
+  for (size_t i = 0; i < arraysize(optional_fonts); ++i) {
+    const char* font = optional_fonts[i];
+    if (access(font, R_OK) < 0) {
+      LOG(WARNING) << "You are missing " << font << ". "
+                   << "Without this, some layout tests will fail."
+                   << "It's not a major problem.  See the build instructions "
+                   << "for more information on where to get all the data.";
+    } else {
+      if (!FcConfigAppFontAddFile(fontcfg, (FcChar8 *) font))
+        LOG(FATAL) << "Failed to load font " << font;
+    }
   }
 
   // Also load the layout-test-specific "Ahem" font.
@@ -140,8 +157,9 @@ void TestShell::PlatformCleanUp() {
   m_webViewHost.release();
 }
 
-// GTK callbacks ------------------------------------------------------
 namespace {
+
+// GTK callbacks ------------------------------------------------------
 
 // Callback for when the main window is destroyed.
 gboolean MainWindowDestroyed(GtkWindow* window, TestShell* shell) {
@@ -190,6 +208,54 @@ void URLEntryActivate(GtkEntry* entry, TestShell* shell) {
   shell->LoadURL(UTF8ToWide(url).c_str());
 }
 
+// Callback for Debug > Dump body text... menu item.
+gboolean DumpBodyTextActivated(GtkWidget* widget, TestShell* shell) {
+  shell->DumpDocumentText();
+  return FALSE;  // Don't stop this message.
+}
+
+// Callback for Debug > Dump render tree... menu item.
+gboolean DumpRenderTreeActivated(GtkWidget* widget, TestShell* shell) {
+  shell->DumpRenderTree();
+  return FALSE;  // Don't stop this message.
+}
+
+// Callback for Debug > Show web inspector... menu item.
+gboolean ShowWebInspectorActivated(GtkWidget* widget, TestShell* shell) {
+  shell->webView()->InspectElement(0, 0);
+  return FALSE;  // Don't stop this message.
+}
+
+// GTK utility functions ----------------------------------------------
+
+GtkWidget* AddMenuEntry(GtkWidget* menu_widget, const char* text,
+                        GCallback callback, TestShell* shell) {
+  GtkWidget* entry = gtk_menu_item_new_with_label(text);
+  g_signal_connect(G_OBJECT(entry), "activate", callback, shell);
+  gtk_menu_shell_append(GTK_MENU_SHELL(menu_widget), entry);
+  return entry;
+}
+
+GtkWidget* CreateMenu(GtkWidget* menu_bar, const char* text) {
+  GtkWidget* menu_widget = gtk_menu_new();
+  GtkWidget* menu_header = gtk_menu_item_new_with_label(text);
+  gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu_header), menu_widget);
+  gtk_menu_shell_append(GTK_MENU_SHELL(menu_bar), menu_header);
+  return menu_widget;
+}
+
+GtkWidget* CreateMenuBar(TestShell* shell) {
+  GtkWidget* menu_bar = gtk_menu_bar_new();
+  GtkWidget* debug_menu = CreateMenu(menu_bar, "Debug");
+  AddMenuEntry(debug_menu, "Dump body text...",
+               G_CALLBACK(DumpBodyTextActivated), shell);
+  AddMenuEntry(debug_menu, "Dump render tree...",
+               G_CALLBACK(DumpRenderTreeActivated), shell);
+  AddMenuEntry(debug_menu, "Show web inspector...",
+               G_CALLBACK(ShowWebInspectorActivated), shell);
+  return menu_bar;
+}
+
 }
 
 bool TestShell::Initialize(const std::wstring& startingURL) {
@@ -203,6 +269,10 @@ bool TestShell::Initialize(const std::wstring& startingURL) {
   g_object_set_data(G_OBJECT(m_mainWnd), "test-shell", this);
 
   GtkWidget* vbox = gtk_vbox_new(FALSE, 0);
+
+  GtkWidget* menu_bar = CreateMenuBar(this);
+
+  gtk_box_pack_start(GTK_BOX(vbox), menu_bar, FALSE, FALSE, 0);
 
   GtkWidget* toolbar = gtk_toolbar_new();
   // Turn off the labels on the toolbar buttons.
@@ -247,11 +317,11 @@ bool TestShell::Initialize(const std::wstring& startingURL) {
 
   gtk_container_add(GTK_CONTAINER(m_mainWnd), vbox);
   gtk_widget_show_all(m_mainWnd);
-  toolbar_height_ = toolbar->allocation.height +
-      gtk_box_get_spacing(GTK_BOX(vbox));
+  top_chrome_height_ = toolbar->allocation.height +
+      menu_bar->allocation.height + 2 * gtk_box_get_spacing(GTK_BOX(vbox));
 
-  // LoadURL will do a resize (which uses toolbar_height_), so make sure we
-  // don't call LoadURL until we've completed all of our GTK setup.
+  // LoadURL will do a resize (which uses top_chrome_height_), so make
+  // sure we don't call LoadURL until we've completed all of our GTK setup.
   if (!startingURL.empty())
     LoadURL(startingURL.c_str());
 
@@ -273,7 +343,8 @@ void TestShell::TestFinished() {
 }
 
 void TestShell::SizeTo(int width, int height) {
-  gtk_window_resize(GTK_WINDOW(m_mainWnd), width, height + toolbar_height_);
+  gtk_window_resize(GTK_WINDOW(m_mainWnd), width,
+                    height + top_chrome_height_);
 }
 
 static void AlarmHandler(int signatl) {
@@ -505,59 +576,28 @@ void TestShell::LoadURLForFrame(const wchar_t* url,
     -1, gurl, std::wstring(), frame_string));
 }
 
-static void WriteTextToFile(const std::wstring& data,
-                            const FilePath& filepath)
-{
-  // This function does the same thing as the Windows version except that it
-  // takes a FilePath. We should be using WriteFile in base/file_util.h, but
-  // the patch to add the FilePath version of that file hasn't landed yet, so
-  // this is another TODO(agl) for the merging.
-  const int fd = open(filepath.value().c_str(), O_TRUNC | O_WRONLY | O_CREAT, 0600);
-  if (fd < 0)
-    return;
-  const std::string data_utf8 = WideToUTF8(data);
-  ssize_t n;
-  do {
-    n = write(fd, data_utf8.data(), data.size());
-  } while (n == -1 && errno == EINTR);
-  close(fd);
-}
-
-
-// TODO(agl):
-// This version of PromptForSaveFile uses FilePath, which is what the real
-// version should be using. However, I don't want to step on tony's toes (as he
-// is also editing this file), so this is a hack until we merge the files again.
-// (There is also a PromptForSaveFile member in TestShell which returns a wstring)
-static bool PromptForSaveFile(const char* prompt_title,
-                              FilePath* result)
-{
-  char filenamebuffer[512];
-  printf("Enter filename for \"%s\"\n", prompt_title);
-  if (!fgets(filenamebuffer, sizeof(filenamebuffer), stdin))
-    return false;  // EOF on stdin
-  *result = FilePath(filenamebuffer);
+// TODO(agl): PromptForSaveFile should use FilePath
+bool TestShell::PromptForSaveFile(const wchar_t* prompt_title,
+                                  std::wstring* result) {
+  GtkWidget* dialog;
+  dialog = gtk_file_chooser_dialog_new(WideToUTF8(prompt_title).c_str(),
+                                       GTK_WINDOW(m_mainWnd),
+                                       GTK_FILE_CHOOSER_ACTION_SAVE,
+                                       GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                       GTK_STOCK_SAVE, GTK_RESPONSE_ACCEPT,
+                                       NULL);  // Terminate (button, id) pairs.
+  gtk_file_chooser_set_do_overwrite_confirmation(GTK_FILE_CHOOSER(dialog),
+                                                 TRUE);
+  int dialog_result = gtk_dialog_run(GTK_DIALOG(dialog));
+  if (dialog_result != GTK_RESPONSE_ACCEPT) {
+    gtk_widget_destroy(dialog);
+    return false;
+  }
+  char* path = gtk_file_chooser_get_filename(GTK_FILE_CHOOSER(dialog));
+  gtk_widget_destroy(dialog);
+  *result = UTF8ToWide(path);
+  g_free(path);
   return true;
-}
-
-void TestShell::DumpDocumentText()
-{
-  FilePath file_path;
-  if (!::PromptForSaveFile("Dump document text", &file_path))
-      return;
-
-  WriteTextToFile(webkit_glue::DumpDocumentText(webView()->GetMainFrame()),
-                  file_path);
-}
-
-void TestShell::DumpRenderTree()
-{
-  FilePath file_path;
-  if (!::PromptForSaveFile("Dump render tree", &file_path))
-      return;
-
-  WriteTextToFile(webkit_glue::DumpRenderer(webView()->GetMainFrame()),
-                  file_path);
 }
 
 // static

@@ -28,9 +28,9 @@
 #include "chrome/renderer/about_handler.h"
 #include "chrome/renderer/chrome_plugin_host.h"
 #include "chrome/renderer/debug_message_handler.h"
-#include "chrome/renderer/greasemonkey_slave.h"
 #include "chrome/renderer/localized_error.h"
 #include "chrome/renderer/renderer_resources.h"
+#include "chrome/renderer/user_script_slave.h"
 #include "chrome/renderer/visitedlink_slave.h"
 #include "chrome/renderer/webmediaplayer_delegate_impl.h"
 #include "chrome/renderer/webplugin_delegate_proxy.h"
@@ -162,7 +162,7 @@ RenderView::RenderView(RenderThreadBase* render_thread)
       disable_popup_blocking_(false),
       has_unload_listener_(false),
       decrement_shared_popup_at_destruction_(false),
-      greasemonkey_enabled_(false),
+      user_scripts_enabled_(false),
       waiting_for_create_window_ack_(false),
       form_field_autofill_request_id_(0),
       popup_notification_visible_(false),
@@ -197,7 +197,7 @@ RenderView::~RenderView() {
 RenderView* RenderView::Create(
     RenderThreadBase* render_thread,
     HWND parent_hwnd,
-    HANDLE modal_dialog_event,
+    base::WaitableEvent* modal_dialog_event,
     int32 opener_id,
     const WebPreferences& webkit_prefs,
     SharedRenderViewCounter* counter,
@@ -245,7 +245,7 @@ void RenderView::JSOutOfMemory() {
 }
 
 void RenderView::Init(HWND parent_hwnd,
-                      HANDLE modal_dialog_event,
+                      base::WaitableEvent* modal_dialog_event,
                       int32 opener_id,
                       const WebPreferences& webkit_prefs,
                       SharedRenderViewCounter* counter,
@@ -287,15 +287,15 @@ void RenderView::Init(HWND parent_hwnd,
   }
 
   host_window_ = parent_hwnd;
-  modal_dialog_event_.Set(modal_dialog_event);
+  modal_dialog_event_.reset(modal_dialog_event);
 
   CommandLine command_line;
   enable_dom_automation_ =
       command_line.HasSwitch(switches::kDomAutomationController);
   disable_popup_blocking_ =
       command_line.HasSwitch(switches::kDisablePopupBlocking);
-  greasemonkey_enabled_ =
-      command_line.HasSwitch(switches::kEnableGreasemonkey);
+  user_scripts_enabled_ =
+      command_line.HasSwitch(switches::kEnableUserScripts);
 
   debug_message_handler_ = new DebugMessageHandler(this);
   render_thread_->AddFilter(debug_message_handler_);
@@ -1457,15 +1457,15 @@ void RenderView::DidFinishDocumentLoadForFrame(WebView* webview,
   // Check whether we have new encoding name.
   UpdateEncoding(frame, webview->GetMainFrameEncodingName());
 
-  // Inject any Greasemonkey scripts. Do not inject into chrome UI pages, but
-  // do inject into any other document.
-  if (greasemonkey_enabled_) {
+  // Inject any user scripts. Do not inject into chrome UI pages, but do inject
+  // into any other document.
+  if (user_scripts_enabled_) {
     const GURL &gurl = frame->GetURL();
     if (g_render_thread &&  // Will be NULL when testing.
         (gurl.SchemeIs("file") ||
          gurl.SchemeIs("http") ||
          gurl.SchemeIs("https"))) {
-      g_render_thread->greasemonkey_slave()->InjectScripts(frame);
+      g_render_thread->user_script_slave()->InjectScripts(frame);
     }
   }
 }
@@ -1648,7 +1648,7 @@ bool RenderView::RunJavaScriptMessage(int type,
   IPC::SyncMessage* msg = new ViewHostMsg_RunJavaScriptMessage(
       routing_id_, message, default_value, type, &success, result);
 
-  msg->set_pump_messages_event(modal_dialog_event_);
+  msg->set_pump_messages_event(modal_dialog_event_.get());
   Send(msg);
 
   return success;
@@ -1669,7 +1669,7 @@ bool RenderView::RunBeforeUnloadConfirm(WebView* webview,
   IPC::SyncMessage* msg = new ViewHostMsg_RunBeforeUnloadConfirm(
       routing_id_, message, &success,  &ignored_result);
 
-  msg->set_pump_messages_event(modal_dialog_event_);
+  msg->set_pump_messages_event(modal_dialog_event_.get());
   Send(msg);
 
   return success;
@@ -1716,7 +1716,7 @@ void RenderView::ShowModalHTMLDialog(const GURL& url, int width, int height,
   IPC::SyncMessage* msg = new ViewHostMsg_ShowModalHTMLDialog(
       routing_id_, url, width, height, json_arguments, json_retval);
 
-  msg->set_pump_messages_event(modal_dialog_event_);
+  msg->set_pump_messages_event(modal_dialog_event_.get());
   Send(msg);
 }
 
@@ -1744,7 +1744,10 @@ void RenderView::UpdateTargetURL(WebView* webview, const GURL& url) {
   }
 }
 
-void RenderView::RunFileChooser(const std::wstring& default_filename,
+void RenderView::RunFileChooser(bool multi_select,
+                                const std::wstring& title,
+                                const std::wstring& default_filename,
+                                const std::wstring& filter,
                                 WebFileChooserCallback* file_chooser) {
   if (file_chooser_.get()) {
     // TODO(brettw): bug 1235154: This should be a synchronous message to deal
@@ -1757,7 +1760,8 @@ void RenderView::RunFileChooser(const std::wstring& default_filename,
     return;
   }
   file_chooser_.reset(file_chooser);
-  Send(new ViewHostMsg_RunFileChooser(routing_id_, default_filename));
+  Send(new ViewHostMsg_RunFileChooser(routing_id_, multi_select, title,
+                                      default_filename, filter));
 }
 
 void RenderView::AddMessageToConsole(WebView* webview,
@@ -1799,8 +1803,10 @@ WebView* RenderView::CreateWebView(WebView* webview, bool user_gesture) {
 
   // The WebView holds a reference to this new RenderView
   const WebPreferences& prefs = webview->GetPreferences();
+  base::WaitableEvent* waitable_event =
+      new base::WaitableEvent(modal_dialog_event);
   RenderView* view = RenderView::Create(render_thread_,
-                                        NULL, modal_dialog_event, routing_id_,
+                                        NULL, waitable_event, routing_id_,
                                         prefs, shared_popup_counter_,
                                         routing_id);
   view->set_opened_by_user_gesture(user_gesture);
@@ -1814,10 +1820,10 @@ WebView* RenderView::CreateWebView(WebView* webview, bool user_gesture) {
 }
 
 WebWidget* RenderView::CreatePopupWidget(WebView* webview,
-                                         bool focus_on_show) {
+                                         bool activatable) {
   RenderWidget* widget = RenderWidget::Create(routing_id_,
                                               render_thread_,
-                                              focus_on_show);
+                                              activatable);
   return widget->webwidget();
 }
 
@@ -1934,7 +1940,7 @@ void RenderView::RunModal(WebWidget* webwidget) {
 
   IPC::SyncMessage* msg = new ViewHostMsg_RunModal(routing_id_);
 
-  msg->set_pump_messages_event(modal_dialog_event_);
+  msg->set_pump_messages_event(modal_dialog_event_.get());
   Send(msg);
 }
 
@@ -2569,8 +2575,9 @@ void RenderView::OnInstallMissingPlugin() {
   first_default_plugin_->InstallMissingPlugin();
 }
 
-void RenderView::OnFileChooserResponse(const std::wstring& file_name) {
-  file_chooser_->OnFileChoose(file_name);
+void RenderView::OnFileChooserResponse(
+         const std::vector<std::wstring>& file_names) {
+  file_chooser_->OnFileChoose(file_names);
   file_chooser_.reset();
 }
 

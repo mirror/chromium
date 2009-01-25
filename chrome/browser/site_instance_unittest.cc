@@ -2,9 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "chrome/browser/navigation_entry.h"
 #include "chrome/browser/render_view_host.h"
-#include "chrome/browser/web_contents.h"
+#include "chrome/browser/renderer_host/browser_render_process_host.h"
+#include "chrome/browser/tab_contents/navigation_entry.h"
+#include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/test/testing_profile.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -175,8 +176,10 @@ TEST_F(SiteInstanceTest, UpdateMaxPageID) {
 TEST_F(SiteInstanceTest, GetProcess) {
   // Ensure that GetProcess returns the process based on its host id.
   scoped_ptr<TestingProfile> profile(new TestingProfile());
-  scoped_ptr<RenderProcessHost> host1(new RenderProcessHost(profile.get()));
-  scoped_refptr<SiteInstance> instance(SiteInstance::CreateSiteInstance(profile.get()));
+  scoped_ptr<BrowserRenderProcessHost> host1(
+      new BrowserRenderProcessHost(profile.get()));
+  scoped_refptr<SiteInstance> instance(
+      SiteInstance::CreateSiteInstance(profile.get()));
   instance.get()->set_process_host_id(host1.get()->host_id());
   EXPECT_EQ(host1.get(), instance.get()->GetProcess());
 

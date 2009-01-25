@@ -9,7 +9,7 @@
 #include "base/sys_info.h"
 #include "base/time.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/render_process_host.h"
+#include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
@@ -22,10 +22,6 @@ static const unsigned int kReviseAllocationDelayMS = 200 /* milliseconds */;
 
 // The default size limit of the in-memory cache is 8 MB
 static const int kDefaultMemoryCacheSize = 8 * 1024 * 1024;
-
-// The amount of idle time before we consider a tab to be "inactive"
-const TimeDelta CacheManagerHost::kRendererInactiveThreshold =
-    TimeDelta::FromMinutes(5);
 
 namespace {
 
@@ -137,8 +133,7 @@ void CacheManagerHost::ObserveStats(int renderer_id,
   // See notification_types.h.
   NotificationService::current()->
       Notify(NOTIFY_WEB_CACHE_STATS_OBSERVED,
-             Source<RenderProcessHost>(
-                RenderProcessHost::FromID(renderer_id)),
+             Source<RenderProcessHost>(RenderProcessHost::FromID(renderer_id)),
              Details<CacheManager::UsageStats>(&stats_details));
 }
 
@@ -367,7 +362,7 @@ void CacheManagerHost::FindInactiveRenderers() {
     StatsMap::iterator elmt = stats_.find(*iter);
     DCHECK(elmt != stats_.end());
     TimeDelta idle = Time::Now() - elmt->second.access;
-    if (idle >= kRendererInactiveThreshold) {
+    if (idle >= TimeDelta::FromMinutes(kRendererInactiveThresholdMinutes)) {
       // Moved to inactive status.  This invalidates our iterator.
       inactive_renderers_.insert(*iter);
       active_renderers_.erase(*iter);

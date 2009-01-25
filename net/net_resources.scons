@@ -6,33 +6,59 @@ __doc__ = """
 Configuration for building the net_resources.rc resources.
 """
 
+import os
+import sys
+
 Import('env')
 
 env = env.Clone()
 
-env.Prepend(
-    RCFLAGS = [
-        ['/l', '0x409'],
-    ],
-)
-
 input_files = [
     'base/effective_tld_names.dat',
-    'tools/tld_cleanup/tld_cleanup.exe'
+    'tools/tld_cleanup/tld_cleanup$PROGSUFFIX',
 ]
 
+sys.path.append(env.Dir('$CHROME_SRC_DIR/tools/grit').abspath)
+env.Tool('scons', toolpath=[env.Dir('$CHROME_SRC_DIR/tools/grit/grit')])
+# This dummy target is used to tell the emitter where to put the target files.
+generated = env.GRIT('$TARGET_ROOT/grit_derived_sources/dummy_net_res',
+                     'base/net_resources.grd')
+
+# This dat file needed by net_resources is generated.
+tld_names_clean = env.Command(
+    '$TARGET_ROOT/grit_derived_sources/effective_tld_names_clean.dat',
+    input_files,
+    '${SOURCES[1]} ${SOURCES[0]} $TARGET')
+
 if env.Bit('windows'):
-  # TODO(port): Need to figure out what to do with external resources
-  # on linux (and mac?).
-  # This dat file needed by net_resources is generated.
-  tld_names_clean = env.Command('net/effective_tld_names_clean.dat',
-                              input_files,
-                              '${SOURCES[1]} ${SOURCES[0]} $TARGET')
+  env.Prepend(
+      RCFLAGS = [
+          '/l 0x409',
+      ],
+  )
 
-  rc = env.Command('net_resources.rc',
-                   'base/net_resources.rc',
-                    Copy('$TARGET', '$SOURCE'))
+  net_resources = []
+  for g in [g for g in generated if str(g).endswith('.rc')]:
+    net_res = env.RES(g)
+    net_resources.extend(net_res)
+    env.Depends(net_res, tld_names_clean)
 
-  env.Depends(rc, tld_names_clean)
+  p = env.ChromeMSVSProject('build/net_resources.vcproj',
+                            dest='$CHROME_SRC_DIR/net/build/net_resources.vcproj',
+                            guid='{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}',
+                            buildtargets=net_resources,
+                            ConfigurationType='10')
 
-  env.RES(rc)
+  p.AddToolFile('../tools/grit/build/grit_resources.rules')
+
+  p.AddConfig('Debug|Win32',
+              InheritedPropertySheets=[
+                  '$(SolutionDir)../build/common.vsprops',
+                  '$(SolutionDir)../build/debug.vsprops',
+              ])
+
+  p.AddConfig('Release|Win32',
+              InheritedPropertySheets=[
+                  '$(SolutionDir)../build/common.vsprops',
+                  '$(SolutionDir)../build/release.vsprops',
+              ])

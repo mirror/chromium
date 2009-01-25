@@ -77,8 +77,9 @@ class TestRunner:
     # a list of TestType objects
     self._test_types = []
 
-    # a set of test files
+    # a set of test files, and the same tests as a list
     self._test_files = set()
+    self._test_files_list = None
     self._file_dir = os.path.join(os.path.dirname(sys.argv[0]), TEST_FILE_DIR)
     self._file_dir = path_utils.GetAbsolutePath(self._file_dir)
 
@@ -96,7 +97,7 @@ class TestRunner:
       self._expectations = self._ParseExpectations(
           platform_utils.GetTestListPlatformName().lower(),
           options.target == 'Debug')
-      self._GenerateExpecationsAndPrintOutput()
+      self._PrepareListsAndPrintOutput()
 
   def __del__(self):
     sys.stdout.flush()
@@ -162,9 +163,13 @@ class TestRunner:
       else:
         raise err
 
-  def _GenerateExpecationsAndPrintOutput(self):
-    """Create appropriate subsets of self._tests_files in 
+  def _PrepareListsAndPrintOutput(self):
+    """Create appropriate subsets of test lists and print test counts.
+
+    Create appropriate subsets of self._tests_files in
     self._ignored_failures, self._fixable_failures, and self._fixable_crashes.
+    Also remove skipped files from self._test_files, extract a subset of tests
+    if desired, and create the sorted self._test_files_list.
     """
     # Filter and sort out files from the skipped, ignored, and fixable file
     # lists.
@@ -188,10 +193,18 @@ class TestRunner:
     logging.info('Skipped: %d tests' % len(skipped))
     logging.info('Skipped tests do not appear in any of the below numbers\n')
 
+    # Create a sorted list of test files so the subset chunk, if used, contains
+    # alphabetically consecutive tests.
+    self._test_files_list = list(self._test_files)
+    if self._options.randomize_order:
+      random.shuffle(self._test_files_list)
+    else:
+      self._test_files_list.sort(self.TestFilesSort)
+
     # If the user specifies they just want to run a subset chunk of the tests,
     # just grab a subset of the non-skipped tests.
     if self._options.run_chunk:
-      test_files = list(self._test_files)
+      test_files = self._test_files_list
       try:
         (chunk_num, chunk_len) = self._options.run_chunk.split(":")
         chunk_num = int(chunk_num)
@@ -211,6 +224,7 @@ class TestRunner:
         extra = 1 + chunk_len - (slice_end - slice_start)
         logging.info('   last chunk is partial, appending [0:%d]' % extra)
         files.extend(test_files[0:extra])
+      self._test_files_list = files
       self._test_files = set(files)
       # update expectations so that the stats are calculated correctly
       self._expectations = self._ParseExpectations(
@@ -219,16 +233,22 @@ class TestRunner:
     else:
       logging.info('Run: %d tests' % len(self._test_files))
 
+    logging.info('Deferred: %d tests' % 
+                 len(self._expectations.GetFixableDeferred()))
     logging.info('Expected passes: %d tests' %
                  len(self._test_files -
                      self._expectations.GetFixable() -
                      self._expectations.GetIgnored()))
-    logging.info(('Expected failures: %d fixable, %d ignored') %
+    logging.info(('Expected failures: %d fixable, %d ignored '
+                  'and %d deferred tests') %
                  (len(self._expectations.GetFixableFailures()),
-                  len(self._expectations.GetIgnoredFailures())))
-    logging.info(('Expected timeouts: %d fixable, %d ignored') %
+                  len(self._expectations.GetIgnoredFailures()),
+                  len(self._expectations.GetFixableDeferredFailures())))
+    logging.info(('Expected timeouts: %d fixable, %d ignored '
+                  'and %d deferred tests') %
                  (len(self._expectations.GetFixableTimeouts()),
-                  len(self._expectations.GetIgnoredTimeouts())))
+                  len(self._expectations.GetIgnoredTimeouts()),
+                  len(self._expectations.GetFixableDeferredTimeouts())))
     logging.info('Expected crashes: %d fixable tests' %
                  len(self._expectations.GetFixableCrashes()))
 
@@ -289,11 +309,7 @@ class TestRunner:
     # Create the output directory if it doesn't already exist.
     google.path_utils.MaybeMakeDirectory(self._options.results_directory)
 
-    test_files = list(self._test_files)
-    if self._options.randomize_order:
-      random.shuffle(test_files)
-    else:
-      test_files.sort(self.TestFilesSort)
+    test_files = self._test_files_list
 
     # Create the thread safe queue of (test filenames, test URIs) tuples. Each
     # TestShellThread pulls values from this queue.
@@ -330,9 +346,6 @@ class TestRunner:
 
       if self._options.gp_fault_error_box:
         shell_args.append('--gp-fault-error-box')
-
-      if self._options.winhttp:
-        shell_args.append('--winhttp')
 
       # larger timeout if page heap is enabled.
       if self._options.time_out_ms:
@@ -395,9 +408,11 @@ class TestRunner:
     """
 
     failure_counts = {}
+    deferred_counts = {}
     fixable_counts = {}
     non_ignored_counts = {}
     fixable_failures = set()
+    deferred_failures = set()
     non_ignored_failures = set()
 
     # Aggregate failures in a dictionary (TestFailure -> frequency),
@@ -411,29 +426,44 @@ class TestRunner:
     for test, failures in test_failures.iteritems():
       for failure in failures:
         AddFailure(failure_counts, failure.__class__)
-        if self._expectations.IsFixable(test):
-          AddFailure(fixable_counts, failure.__class__)
-          fixable_failures.add(test)
-        if not self._expectations.IsIgnored(test):
-          AddFailure(non_ignored_counts, failure.__class__)
-          non_ignored_failures.add(test)
+        if self._expectations.IsDeferred(test):
+          AddFailure(deferred_counts, failure.__class__)
+          deferred_failures.add(test)
+        else:
+          if self._expectations.IsFixable(test):
+            AddFailure(fixable_counts, failure.__class__)
+            fixable_failures.add(test)
+          if not self._expectations.IsIgnored(test):
+            AddFailure(non_ignored_counts, failure.__class__)
+            non_ignored_failures.add(test)
 
     # Print breakdown of tests we need to fix and want to pass.
     # Include skipped fixable tests in the statistics.
-    skipped = self._expectations.GetFixableSkipped().copy()
+    skipped = (self._expectations.GetFixableSkipped() -
+        self._expectations.GetFixableSkippedDeferred())
 
-    self._PrintResultSummary("=> Tests to be fixed",
+    self._PrintResultSummary("=> Tests to be fixed for the current release",
                              self._expectations.GetFixable(),
                              fixable_failures,
                              fixable_counts,
-                             skipped, output)
+                             skipped,
+                             output)
 
-    self._PrintResultSummary("=> Tests we want to pass",
+    self._PrintResultSummary("=> Tests we want to pass for the current release",
                              (self._test_files -
-                              self._expectations.GetIgnored()),
+                              self._expectations.GetIgnored() -
+                              self._expectations.GetFixableDeferred()),
                              non_ignored_failures,
                              non_ignored_counts,
-                             skipped, output)
+                             skipped,
+                             output)
+
+    self._PrintResultSummary("=> Tests to be fixed for a future release",	 
+                             self._expectations.GetFixableDeferred(),	 
+                             deferred_failures,	 
+                             deferred_counts,	 
+                             self._expectations.GetFixableSkippedDeferred(),
+                             output)
 
     # Print breakdown of all tests including all skipped tests.
     skipped |= self._expectations.GetIgnoredSkipped()
@@ -441,7 +471,8 @@ class TestRunner:
                              self._test_files,
                              test_failures,
                              failure_counts,
-                             skipped, output)
+                             skipped,
+                             output)
     print
 
   def _PrintResultSummary(self, heading, all, failed, failure_counts, skipped,
@@ -737,9 +768,6 @@ if '__main__' == __name__:
                                 "of test_shell; option is split on whitespace "
                                 "before running.  (example: "
                                 "--wrapper='valgrind --smc-check=all')")
-  option_parser.add_option("", "--winhttp", action="store_true",
-                           default=False,
-                           help="Use WinHTTP stack")
   option_parser.add_option("", "--test-list", action="append",
                            help="read list of tests to run from file",
                            metavar="FILE")

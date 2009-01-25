@@ -22,6 +22,10 @@ class WebContents;
 struct WebDropData;
 enum WindowOpenDisposition;
 
+namespace base {
+class WaitableEvent;
+}
+
 namespace IPC {
 class Message;
 }
@@ -56,15 +60,16 @@ class RenderViewHostDelegate {
     //
     // Note: this is not called "CreateWindow" because that will clash with
     // the Windows function which is actually a #define.
-    virtual void CreateNewWindow(int route_id, HANDLE modal_dialog_event) = 0;
+    //
+    // NOTE: this takes ownership of @modal_dialog_event
+    virtual void CreateNewWindow(int route_id,
+                                 base::WaitableEvent* modal_dialog_event) = 0;
 
     // The page is trying to open a new widget (e.g. a select popup). The
     // widget should be created associated with the given route, but it should
     // not be shown yet. That should happen in response to ShowCreatedWidget.
-    // If |focus_on_show| is true, the focus is given to the widget when shown,
-    // otherwise the focus is not changed.
-    virtual void CreateNewWidget(int route_id,
-                                 bool focus_on_show) = 0;
+    // If |activatable| is false, the widget cannot be activated or get focus.
+    virtual void CreateNewWidget(int route_id, bool activatable) = 0;
 
     // Show a previously created page with the specified disposition and bounds.
     // The window is identified by the route_id passed to CreateNewWindow.
@@ -261,7 +266,10 @@ class RenderViewHostDelegate {
                                    int* forward_list_count) { }
 
   // A file chooser should be shown.
-  virtual void RunFileChooser(const std::wstring& default_file) { }
+  virtual void RunFileChooser(bool multiple_files,
+                              const std::wstring& title,
+                              const std::wstring& default_file,
+                              const std::wstring& filter) { }
 
   // A javascript message, confirmation or prompt should be shown.
   virtual void RunJavaScriptMessage(const std::wstring& message,
@@ -379,6 +387,9 @@ class RenderViewHostDelegate {
   // page. This is used to avoid uninitiated user downloads (aka carpet
   // bombing), see DownloadRequestManager for details.
   virtual void OnEnterOrSpace() { }
+
+  // If this view can be terminated without any side effects
+  virtual bool CanTerminate() const { return true; }
 };
 
 #endif  // CHROME_BROWSER_RENDER_VIEW_HOST_DELEGATE_H__

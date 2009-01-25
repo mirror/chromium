@@ -1472,14 +1472,6 @@
 					Name="transforms"
 					>
 					<File
-						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\transforms\AffineTransform.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\transforms\AffineTransform.h"
-						>
-					</File>
-					<File
 						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\transforms\IdentityTransformOperation.h"
 						>
 					</File>
@@ -1516,6 +1508,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\transforms\TransformationMatrix.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\transforms\TransformationMatrix.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\transforms\TransformOperation.h"
 						>
 					</File>
@@ -1539,6 +1539,10 @@
 				<Filter
 					Name="chromium"
 					>
+					<File
+						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\chromium\ColorChromium.cpp"
+						>
+					</File>
 					<File
 						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\chromium\FontCacheChromiumWin.cpp"
 						>
@@ -1592,6 +1596,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\opentype\OpenTypeUtilities.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\opentype\OpenTypeUtilities.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\chromium\PlatformIcon.h"
 						>
 					</File>
@@ -1623,28 +1635,12 @@
 						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\chromium\UniscribeHelperTextRun.h"
 						>
 					</File>
-					<File
-						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\opentype\OpenTypeUtilities.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\opentype\OpenTypeUtilities.h"
-						>
-					</File>
 				</Filter>
 				<Filter
 					Name="skia"
 					>
 					<File
-						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\skia\AffineTransformSkia.cpp"
-						>
-					</File>
-					<File
 						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\skia\BitmapImageSingleFrameSkia.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\skia\ColorSkia.cpp"
 						>
 					</File>
 					<File
@@ -1733,6 +1729,10 @@
 					</File>
 					<File
 						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\skia\SkiaUtils.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\skia\TransformationMatrixSkia.cpp"
 						>
 					</File>
 				</Filter>
@@ -2104,6 +2104,14 @@
 					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\WidthIterator.h"
 					>
 				</File>
+				<Filter
+					Name="chromium"
+					>
+					<File
+						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\text\chromium\TextBreakIteratorInternalICUChromium.cpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="sql"
@@ -2185,14 +2193,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\ChromiumUtilsWin.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\ChromiumUtilsWin.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\ClipboardChromium.cpp"
 					>
 				</File>
@@ -2234,10 +2234,6 @@
 				</File>
 				<File
 					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\DragImageRef.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\EditorChromium.cpp"
 					>
 				</File>
 				<File
@@ -2361,11 +2357,15 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\TextBreakIteratorInternalICUChromium.cpp"
+					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\WidgetChromium.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\WidgetChromium.cpp"
+					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\WindowsVersion.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\third_party\WebKit\WebCore\platform\chromium\WindowsVersion.h"
 					>
 				</File>
 			</Filter>
@@ -2895,6 +2895,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\css\WebKitCSSKeyframesRule.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\css\WebKitCSSMatrix.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\css\WebKitCSSMatrix.h"
 				>
 			</File>
 			<File
@@ -4814,6 +4822,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\editing\chromium\EditorChromium.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\editing\EditorCommand.cpp"
 				>
 			</File>
@@ -5123,14 +5135,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\html\CanvasPattern.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\html\CanvasPixelArray.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\html\CanvasPixelArray.h"
 				>
 			</File>
 			<File
@@ -7055,14 +7059,6 @@
 				<Filter
 					Name="skia"
 					>
-					<File
-						RelativePath="..\..\..\third_party\WebKit\WebCore\svg\graphics\skia\RenderPathSkia.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\..\third_party\WebKit\WebCore\svg\graphics\skia\SVGPaintServerGradientSkia.cpp"
-						>
-					</File>
 					<File
 						RelativePath="..\..\..\third_party\WebKit\WebCore\svg\graphics\skia\SVGPaintServerPatternSkia.cpp"
 						>

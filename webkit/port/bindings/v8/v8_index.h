@@ -234,7 +234,6 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(BARINFO, BarInfo)                                                   \
   V(CANVASGRADIENT, CanvasGradient)                                     \
   V(CANVASPATTERN, CanvasPattern)                                       \
-  V(CANVASPIXELARRAY, CanvasPixelArray)                                 \
   V(CANVASRENDERINGCONTEXT2D, CanvasRenderingContext2D)                 \
   V(CLIPBOARD, Clipboard)                                               \
   V(CONSOLE, Console)                                                   \
@@ -258,6 +257,7 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(DOMIMPLEMENTATION, DOMImplementation)                               \
   V(DOMPARSER, DOMParser)                                               \
   V(DOMSELECTION, DOMSelection)                                         \
+  V(DOMSTRINGLIST, DOMStringList)                                       \
   V(DOMWINDOW, DOMWindow)                                               \
   V(EVENT, Event)                                                       \
   V(EVENTEXCEPTION, EventException)                                     \
@@ -390,7 +390,7 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
 #define SVG_POD_NATIVE_TYPES(V)                                         \
   V(SVGLENGTH, SVGLength)                                               \
   V(SVGTRANSFORM, SVGTransform)                                         \
-  V(SVGMATRIX, AffineTransform)                                         \
+  V(SVGMATRIX, TransformationMatrix)                                    \
   V(SVGNUMBER, float)                                                   \
   V(SVGPOINT, FloatPoint)                                               \
   V(SVGRECT, FloatRect)

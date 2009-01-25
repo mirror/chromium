@@ -9,13 +9,14 @@
 #include "base/path_service.h"
 #include "base/string_util.h"
 #include "base/time.h"
+#include "base/waitable_event.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/first_run.h"
 #include "chrome/browser/jankometer.h"
-#include "chrome/browser/metrics_service.h"
+#include "chrome/browser/metrics/metrics_service.h"
 #include "chrome/browser/plugin_process_host.h"
 #include "chrome/browser/plugin_service.h"
-#include "chrome/browser/render_process_host.h"
+#include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/render_view_host.h"
 #include "chrome/browser/render_widget_host.h"
 #include "chrome/common/chrome_paths.h"
@@ -86,7 +87,7 @@ void Shutdown() {
   DCHECK(g_browser_process);
 
   // Notifies we are going away.
-  ::SetEvent(g_browser_process->shutdown_event());
+  g_browser_process->shutdown_event()->Signal();
 
   PluginService* plugin_service = PluginService::GetInstance();
   if (plugin_service) {

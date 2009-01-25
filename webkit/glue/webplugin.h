@@ -40,7 +40,7 @@ struct WebPluginInfo {
   std::wstring name;
 
   // The path to the plugin file (DLL/bundle/library).
-  FilePath file;
+  FilePath path;
 
   // The version number of the plugin file (may be OS-specific)
   std::wstring version;

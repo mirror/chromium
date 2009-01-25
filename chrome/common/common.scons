@@ -55,6 +55,7 @@ input_files.extend([
   'ipc_channel_proxy.cc',
   'ipc_message.cc',
   'ipc_message_utils.cc',
+  'ipc_sync_channel.cc',
   'ipc_sync_message.cc',
   'jpeg_codec.cc',
   'json_value_serializer.cc',
@@ -63,29 +64,28 @@ input_files.extend([
   'logging_chrome.cc',
   'message_router.cc',
   'net/cookie_monster_sqlite.cc',
+  'net/url_request_intercept_job.cc',
   'notification_registrar.cc',
   'notification_service.cc',
   'pref_member.cc',
   'pref_names.cc',
+  'pref_service.cc',
   'property_bag.cc',
   'render_messages.cc',
+  'resource_bundle.cc',
+  'resource_dispatcher.cc',
+  'sandbox_init_wrapper.cc',
   'slide_animation.cc',
   'sqlite_compiled_statement.cc',
   'sqlite_utils.cc',
   'task_queue.cc',
   'throb_animation.cc',
+  'time_format.cc',
   'thumbnail_score.cc',
   'unzip.cc',
   'visitedlink_common.cc',
+  'worker_thread_ticker.cc',
 ])
-
-if not env.Bit('mac'):
-  # TODO(port): Port to Mac.
-  input_files.extend([
-      'pref_service.cc',
-      'resource_dispatcher.cc',
-      'time_format.cc',
-  ])
 
 if env.Bit('windows'):
   # TODO(port): Port these.
@@ -94,36 +94,34 @@ if env.Bit('windows'):
       'chrome_plugin_lib.cc',
       'chrome_plugin_util.cc',
       'chrome_process_filter.cc',
-      'classfactory.cc',
       'drag_drop_types.cc',
-      'gfx/chrome_canvas_win.cc',
       'gfx/emf.cc',
       'gfx/icon_util.cc',
       'gfx/path.cc',
       'gfx/text_elider.cc',
       'ipc_logging.cc',
-      'ipc_sync_channel.cc',
       'jstemplate_builder.cc',
-      'net/url_request_intercept_job.cc',
       'os_exchange_data.cc',
       'plugin_messages.cc',
       'process_watcher.cc',
-      'resource_bundle.cc',
       'security_filter_peer.cc',
       'win_safe_util.cc',
       'win_util.cc',
-      'worker_thread_ticker.cc',
   ])
 
 if env.Bit('windows'):
   # Windows specific files
   input_files.extend([
+      'classfactory.cc',
+      'gfx/chrome_canvas_win.cc',
       'gfx/chrome_font_win.cc',
       'ipc_channel_win.cc',
+      'resource_bundle_win.cc',
   ])
 elif env.Bit('linux'):
   input_files.extend([
       'gfx/chrome_canvas_skia.cc',
+      'gfx/chrome_font_gtk.cc',
       'gfx/chrome_font_skia.cc',
   ])
 

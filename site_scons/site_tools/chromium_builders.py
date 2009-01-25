@@ -8,6 +8,8 @@ wrappers around Hammer builders.  This gives us a central place for any
 customization we need to make to the different things we build.
 """
 
+from SCons.Script import *
+
 import SCons.Node
 import _Node_MSVS as MSVS
 
@@ -53,10 +55,12 @@ __builtin__.ChromeFileList = ChromeFileList
 
 def compilable_files(sources):
   if not hasattr(sources, 'entries'):
-    return [x for x in sources if not str(x).endswith('.h')]
+    return [x for x in sources if not str(x).endswith('.h')
+                               and not str(x).endswith('.dat')]
   result = []
   for top, folders, nonfolders in MSVS.FileListWalk(sources):
-    result.extend([x for x in nonfolders if not str(x).endswith('.h')])
+    result.extend([x for x in nonfolders if not str(x).endswith('.h')
+                                         and not str(x).endswith('.dat')])
   return result
 
 def ChromeProgram(env, target, source, *args, **kw):
@@ -101,12 +105,34 @@ def ChromeMSVSFolder(env, *args, **kw):
 def ChromeMSVSProject(env, *args, **kw):
   if not env.Bit('msvs'):
     return Null()
-  return env.MSVSProject(*args, **kw)
+  try:
+    dest = kw['dest']
+  except KeyError:
+    dest = None
+  else:
+    del kw['dest']
+  result = env.MSVSProject(*args, **kw)
+  env.AlwaysBuild(result)
+  if dest:
+    i = env.Command(dest, result, Copy('$TARGET', '$SOURCE'))
+    Alias('msvs', i)
+  return result
 
 def ChromeMSVSSolution(env, *args, **kw):
   if not env.Bit('msvs'):
     return Null()
-  return env.MSVSSolution(*args, **kw)
+  try:
+    dest = kw['dest']
+  except KeyError:
+    dest = None
+  else:
+    del kw['dest']
+  result = env.MSVSSolution(*args, **kw)
+  env.AlwaysBuild(result)
+  if dest:
+    i = env.Command(dest, result, Copy('$TARGET', '$SOURCE'))
+    Alias('msvs', i)
+  return result
 
 def generate(env):
   env.AddMethod(ChromeProgram)

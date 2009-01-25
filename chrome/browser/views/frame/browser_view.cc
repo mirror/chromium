@@ -14,7 +14,6 @@
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/encoding_menu_controller_delegate.h"
-#include "chrome/browser/navigation_entry.h"
 #include "chrome/browser/view_ids.h"
 #include "chrome/browser/views/about_chrome_view.h"
 #include "chrome/browser/views/bookmark_bar_view.h"
@@ -32,8 +31,9 @@
 #include "chrome/browser/views/tab_contents_container_view.h"
 #include "chrome/browser/views/tabs/tab_strip.h"
 #include "chrome/browser/views/toolbar_view.h"
-#include "chrome/browser/web_contents.h"
-#include "chrome/browser/web_contents_view.h"
+#include "chrome/browser/tab_contents/navigation_entry.h"
+#include "chrome/browser/tab_contents/web_contents.h"
+#include "chrome/browser/tab_contents/web_contents_view.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/drag_drop_types.h"
 #include "chrome/common/l10n_util.h"
@@ -61,10 +61,10 @@ static const int kToolbarTabStripVerticalOverlap = 3;
 static const int kTabShadowSize = 2;
 // The height of the status bubble.
 static const int kStatusBubbleHeight = 20;
-// The distance of the status bubble from the left edge of the window.
-static const int kStatusBubbleHorizontalOffset = 3;
-// The distance of the status bubble from the bottom edge of the window.
-static const int kStatusBubbleVerticalOffset = 2;
+// The overlap of the status bubble with the left edge of the window.
+static const int kStatusBubbleHorizontalOverlap = 2;
+// The overlap of the status bubble with the bottom edge of the window.
+static const int kStatusBubbleVerticalOverlap = 2;
 // An offset distance between certain toolbars and the toolbar that preceded
 // them in layout.
 static const int kSeparationLineHeight = 1;
@@ -178,7 +178,9 @@ gfx::Rect BrowserView::GetToolbarBounds() const {
 
 gfx::Rect BrowserView::GetClientAreaBounds() const {
   gfx::Rect container_bounds = contents_container_->bounds();
-  container_bounds.Offset(x(), y());
+  gfx::Point container_origin = container_bounds.origin();
+  ConvertPointToView(this, GetParent(), &container_origin);
+  container_bounds.set_origin(container_origin);
   return container_bounds;
 }
 
@@ -501,6 +503,9 @@ void BrowserView::UpdateToolbar(TabContents* contents,
 }
 
 void BrowserView::FocusToolbar() {
+  // Do not restore the button that previously had accessibility focus, if
+  // focus is set by using the toolbar focus keyboard shortcut.
+  toolbar_->set_acc_focused_view(NULL);
   toolbar_->RequestFocus();
 }
 
@@ -766,15 +771,13 @@ bool BrowserView::GetSavedWindowBounds(gfx::Rect* bounds) const {
     }
 
     gfx::Rect window_rect = frame_->GetWindowBoundsForClientBounds(*bounds);
-    window_rect.set_origin(gfx::Point(bounds->x(), bounds->y()));
+    window_rect.set_origin(bounds->origin());
 
     // When we are given x/y coordinates of 0 on a created popup window,
     // assume none were given by the window.open() command.
     if (window_rect.x() == 0 && window_rect.y() == 0) {
-      gfx::Point origin = GetNormalBounds().origin();
-      origin.set_x(origin.x() + kWindowTilePixels);
-      origin.set_y(origin.y() + kWindowTilePixels);
-      window_rect.set_origin(origin);
+      window_rect.set_origin(GetNormalBounds().origin());
+      window_rect.Offset(kWindowTilePixels, kWindowTilePixels);
     }
 
     *bounds = window_rect;
@@ -1033,6 +1036,9 @@ views::DropTargetEvent* BrowserView::MapEventToTabStrip(
 int BrowserView::LayoutTabStrip() {
   if (IsTabStripVisible()) {
     gfx::Rect tabstrip_bounds = frame_->GetBoundsForTabStrip(tabstrip_);
+    gfx::Point tabstrip_origin = tabstrip_bounds.origin();
+    ConvertPointToView(GetParent(), this, &tabstrip_origin);
+    tabstrip_bounds.set_origin(tabstrip_origin);
     tabstrip_->SetBounds(tabstrip_bounds.x(), tabstrip_bounds.y(),
                          tabstrip_bounds.width(), tabstrip_bounds.height());
     return tabstrip_bounds.bottom();
@@ -1123,10 +1129,11 @@ int BrowserView::LayoutDownloadShelf() {
 }
 
 void BrowserView::LayoutStatusBubble(int top) {
-  int status_bubble_y =
-      top - kStatusBubbleHeight + kStatusBubbleVerticalOffset + y();
-  status_bubble_->SetBounds(kStatusBubbleHorizontalOffset, status_bubble_y,
-                            width() / 3, kStatusBubbleHeight);
+  gfx::Point origin(-kStatusBubbleHorizontalOverlap,
+                    top - kStatusBubbleHeight + kStatusBubbleVerticalOverlap);
+  ConvertPointToView(this, GetParent(), &origin);
+  status_bubble_->SetBounds(origin.x(), origin.y(), width() / 3,
+                            kStatusBubbleHeight);
 }
 
 bool BrowserView::MaybeShowBookmarkBar(TabContents* contents) {
@@ -1329,6 +1336,9 @@ void BrowserView::LoadingAnimationCallback() {
 
 void BrowserView::InitHangMonitor() {
   PrefService* pref_service = g_browser_process->local_state();
+  if (!pref_service)
+    return;
+
   int plugin_message_response_timeout =
       pref_service->GetInteger(prefs::kPluginMessageResponseTimeout);
   int hung_plugin_detect_freq =

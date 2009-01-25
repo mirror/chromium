@@ -7,6 +7,7 @@
 #include "base/command_line.h"
 #include "base/path_service.h"
 #include "base/thread.h"
+#include "base/waitable_event.h"
 #include "chrome/browser/automation/automation_provider_list.h"
 #include "chrome/browser/browser_trial.h"
 #include "chrome/browser/chrome_thread.h"
@@ -14,11 +15,11 @@
 #include "chrome/browser/download/save_file_manager.h"
 #include "chrome/browser/google_url_tracker.h"
 #include "chrome/browser/icon_manager.h"
-#include "chrome/browser/metrics_service.h"
+#include "chrome/browser/metrics/metrics_service.h"
 #include "chrome/browser/plugin_service.h"
 #include "chrome/browser/printing/print_job_manager.h"
 #include "chrome/browser/profile_manager.h"
-#include "chrome/browser/render_process_host.h"
+#include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/debugger/debugger_wrapper.h"
@@ -127,7 +128,7 @@ BrowserProcessImpl::BrowserProcessImpl(CommandLine& command_line)
       memory_model_ = MEDIUM_MEMORY_MODEL;
   }
 
-  shutdown_event_ = ::CreateEvent(NULL, TRUE, FALSE, NULL);
+  shutdown_event_ = new base::WaitableEvent(true, false);
 }
 
 BrowserProcessImpl::~BrowserProcessImpl() {

@@ -40,16 +40,15 @@ class TabRestoreUITest : public UITest {
 
     // Get a handle to the restored tab.
     int restored_tab_count;
-    ASSERT_TRUE(browser_proxy->WaitForTabCountToChange(tab_count,
-                                                       &restored_tab_count,
-                                                       5000));
+    ASSERT_TRUE(browser_proxy->WaitForTabCountToChange(
+        tab_count, &restored_tab_count, action_max_timeout_ms()));
     ASSERT_EQ(tab_count + 1, restored_tab_count);
 
     // Wait for the restored tab to finish loading.
     scoped_ptr<TabProxy> restored_tab_proxy(
         browser_proxy->GetTab(restored_tab_count - 1));
     ASSERT_TRUE(restored_tab_proxy->WaitForTabToBeRestored(
-        action_timeout_ms()));
+        action_max_timeout_ms()));
   }
 
   GURL url1_;
@@ -70,7 +69,7 @@ TEST_F(TabRestoreUITest, Basic) {
   int new_tab_count;
   ASSERT_TRUE(browser_proxy->WaitForTabCountToChange(initial_tab_count,
                                                      &new_tab_count,
-                                                     5000));
+                                                     action_max_timeout_ms()));
   scoped_ptr<TabProxy> new_tab(browser_proxy->GetTab(new_tab_count - 1));
   // Make sure we're at url.
   new_tab->NavigateToURL(url1_);
@@ -107,13 +106,13 @@ TEST_F(TabRestoreUITest, RestoreToDifferentWindow) {
 
   // Create a new browser.
   ASSERT_TRUE(automation()->OpenNewBrowserWindow(SW_HIDE));
-  ASSERT_TRUE(automation()->WaitForWindowCountToBecome(2,
-                                                       kWaitForActionMaxMsec));
+  ASSERT_TRUE(automation()->WaitForWindowCountToBecome(
+      2, action_max_timeout_ms()));
 
   // Close the first browser.
   EXPECT_TRUE(tab_proxy->Close(true));
-  ASSERT_TRUE(automation()->WaitForWindowCountToBecome(1,
-                                                       kWaitForActionMaxMsec));
+  ASSERT_TRUE(automation()->WaitForWindowCountToBecome(
+      1, action_max_timeout_ms()));
 
   // Tab and browser are no longer valid.
   tab_proxy.reset();
@@ -133,9 +132,11 @@ TEST_F(TabRestoreUITest, RestoreToDifferentWindow) {
 // to an existing SiteInstance.  (Bug 1230446)
 TEST_F(TabRestoreUITest, RestoreWithExistingSiteInstance) {
   const wchar_t kDocRoot[] = L"chrome/test/data";
-  TestServer server(kDocRoot);
-  GURL http_url1(server.TestServerPageW(L"files/title1.html"));
-  GURL http_url2(server.TestServerPageW(L"files/title2.html"));
+  scoped_refptr<HTTPTestServer> server =
+      HTTPTestServer::CreateServer(kDocRoot);
+  ASSERT_TRUE(NULL != server.get());
+  GURL http_url1(server->TestServerPageW(L"files/title1.html"));
+  GURL http_url2(server->TestServerPageW(L"files/title2.html"));
 
   scoped_ptr<BrowserProxy> browser_proxy(automation()->GetBrowserWindow(0));
   int initial_tab_count;
@@ -146,7 +147,7 @@ TEST_F(TabRestoreUITest, RestoreWithExistingSiteInstance) {
   int new_tab_count;
   ASSERT_TRUE(browser_proxy->WaitForTabCountToChange(initial_tab_count,
                                                      &new_tab_count,
-                                                     5000));
+                                                     action_max_timeout_ms()));
   scoped_ptr<TabProxy> tab(browser_proxy->GetTab(new_tab_count - 1));
 
   // Navigate to another same-site URL.
@@ -176,9 +177,11 @@ TEST_F(TabRestoreUITest, RestoreWithExistingSiteInstance) {
 // already exists.  (Bug 1204135)
 TEST_F(TabRestoreUITest, RestoreCrossSiteWithExistingSiteInstance) {
   const wchar_t kDocRoot[] = L"chrome/test/data";
-  TestServer server(kDocRoot);
-  GURL http_url1(server.TestServerPageW(L"files/title1.html"));
-  GURL http_url2(server.TestServerPageW(L"files/title2.html"));
+  scoped_refptr<HTTPTestServer> server =
+      HTTPTestServer::CreateServer(kDocRoot);
+  ASSERT_TRUE(NULL != server.get());
+  GURL http_url1(server->TestServerPageW(L"files/title1.html"));
+  GURL http_url2(server->TestServerPageW(L"files/title2.html"));
 
   scoped_ptr<BrowserProxy> browser_proxy(automation()->GetBrowserWindow(0));
   int initial_tab_count;
@@ -189,7 +192,7 @@ TEST_F(TabRestoreUITest, RestoreCrossSiteWithExistingSiteInstance) {
   int new_tab_count;
   ASSERT_TRUE(browser_proxy->WaitForTabCountToChange(initial_tab_count,
                                                      &new_tab_count,
-                                                     5000));
+                                                     action_max_timeout_ms()));
   scoped_ptr<TabProxy> tab(browser_proxy->GetTab(new_tab_count - 1));
 
   // Navigate to more URLs, then a cross-site URL.
@@ -227,8 +230,8 @@ TEST_F(TabRestoreUITest, RestoreWindow) {
   int window_count;
   ASSERT_TRUE(automation()->GetBrowserWindowCount(&window_count));
   ASSERT_TRUE(automation()->OpenNewBrowserWindow(SW_HIDE));
-  ASSERT_TRUE(automation()->WaitForWindowCountToBecome(++window_count,
-                                                       kWaitForActionMaxMsec));
+  ASSERT_TRUE(automation()->WaitForWindowCountToBecome(
+      ++window_count, action_max_timeout_ms()));
 
   // Create two more tabs, one with url1, the other url2.
   scoped_ptr<BrowserProxy> browser_proxy(automation()->GetBrowserWindow(0));
@@ -236,12 +239,12 @@ TEST_F(TabRestoreUITest, RestoreWindow) {
   ASSERT_TRUE(browser_proxy->GetTabCount(&initial_tab_count));
   browser_proxy->AppendTab(url1_);
   ASSERT_TRUE(browser_proxy->WaitForTabCountToBecome(initial_tab_count + 1,
-                                                     kWaitForActionMaxMsec));
+                                                     action_max_timeout_ms()));
   scoped_ptr<TabProxy> new_tab(browser_proxy->GetTab(initial_tab_count));
   new_tab->NavigateToURL(url1_);
   browser_proxy->AppendTab(url2_);
   ASSERT_TRUE(browser_proxy->WaitForTabCountToBecome(initial_tab_count + 2,
-                                                     kWaitForActionMaxMsec));
+                                                     action_max_timeout_ms()));
   new_tab.reset(browser_proxy->GetTab(initial_tab_count + 1));
   new_tab->NavigateToURL(url2_);
 
@@ -249,29 +252,29 @@ TEST_F(TabRestoreUITest, RestoreWindow) {
   ASSERT_TRUE(browser_proxy->ApplyAccelerator(IDC_CLOSE_WINDOW));
   browser_proxy.reset();
   new_tab.reset();
-  ASSERT_TRUE(automation()->WaitForWindowCountToBecome(window_count - 1,
-                                                       kWaitForActionMaxMsec));
+  ASSERT_TRUE(automation()->WaitForWindowCountToBecome(
+      window_count - 1, action_max_timeout_ms()));
 
   // Restore the window.
   browser_proxy.reset(automation()->GetBrowserWindow(0));
   ASSERT_TRUE(browser_proxy->ApplyAccelerator(IDC_RESTORE_TAB));
-  ASSERT_TRUE(automation()->WaitForWindowCountToBecome(window_count,
-                                                       kWaitForActionMaxMsec));
+  ASSERT_TRUE(automation()->WaitForWindowCountToBecome(
+      window_count, action_max_timeout_ms()));
 
   browser_proxy.reset(automation()->GetBrowserWindow(1));
   ASSERT_TRUE(browser_proxy->WaitForTabCountToBecome(initial_tab_count + 2,
-                                                     kWaitForActionMaxMsec));
+                                                     action_max_timeout_ms()));
 
   scoped_ptr<TabProxy> restored_tab_proxy(
         browser_proxy->GetTab(initial_tab_count));
-  ASSERT_TRUE(restored_tab_proxy->WaitForTabToBeRestored(kWaitForActionMsec));
+  ASSERT_TRUE(restored_tab_proxy->WaitForTabToBeRestored(action_timeout_ms()));
   GURL url;
   ASSERT_TRUE(restored_tab_proxy->GetCurrentURL(&url));
   ASSERT_TRUE(url == url1_);
 
   restored_tab_proxy.reset(
         browser_proxy->GetTab(initial_tab_count + 1));
-  ASSERT_TRUE(restored_tab_proxy->WaitForTabToBeRestored(kWaitForActionMsec));
+  ASSERT_TRUE(restored_tab_proxy->WaitForTabToBeRestored(action_timeout_ms()));
   ASSERT_TRUE(restored_tab_proxy->GetCurrentURL(&url));
   ASSERT_TRUE(url == url2_);
 }

@@ -12,8 +12,8 @@
 #include "chrome/browser/shell_dialogs.h"
 #include "chrome/browser/browser_window.h"
 #include "chrome/browser/sessions/session_id.h"
-#include "chrome/browser/tab_contents.h"
-#include "chrome/browser/tab_contents_delegate.h"
+#include "chrome/browser/tab_contents/tab_contents.h"
+#include "chrome/browser/tab_contents/tab_contents_delegate.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
 #include "chrome/browser/toolbar_model.h"
 #include "chrome/common/notification_service.h"
@@ -81,6 +81,13 @@ class Browser : public TabStripModelDelegate,
   Profile* profile() const { return profile_; }
   const std::vector<std::wstring>& user_data_dir_profiles() const {
     return g_browser_process->user_data_dir_profiles();
+  }
+  // Sets the BrowserWindow. This is intended for testing and generally not
+  // useful outside of testing. Use CreateBrowserWindow outside of testing, or
+  // the static convenience methods that create a BrowserWindow for you.
+  void set_window(BrowserWindow* window) {
+    DCHECK(!window_);
+    window_ = window;
   }
   BrowserWindow* window() const { return window_; }
   ToolbarModel* toolbar_model() { return &toolbar_model_; }

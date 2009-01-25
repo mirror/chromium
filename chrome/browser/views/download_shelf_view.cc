@@ -10,8 +10,8 @@
 #include "chrome/browser/browser.h"
 #include "chrome/browser/download/download_item_model.h"
 #include "chrome/browser/download/download_manager.h"
-#include "chrome/browser/navigation_entry.h"
-#include "chrome/browser/tab_contents.h"
+#include "chrome/browser/tab_contents/navigation_entry.h"
+#include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/browser/views/download_item_view.h"
 #include "chrome/browser/views/download_tab_view.h"
 #include "chrome/common/gfx/chrome_canvas.h"
@@ -111,6 +111,8 @@ void DownloadShelfView::Init() {
 }
 
 void DownloadShelfView::AddDownloadView(View* view) {
+  shelf_animation_->Show();
+
   DCHECK(view);
   download_views_.push_back(view);
   AddChildView(view);
@@ -128,8 +130,6 @@ void DownloadShelfView::ChangeTabContents(TabContents* old_contents,
 }
 
 void DownloadShelfView::AddDownload(DownloadItem* download) {
-  shelf_animation_->Show();
-
   DownloadItemView* view = new DownloadItemView(
       download, this, new DownloadItemModel(download));
   AddDownloadView(view);
@@ -269,3 +269,4 @@ void DownloadShelfView::LinkActivated(views::Link* source, int event_flags) {
 void DownloadShelfView::ButtonPressed(views::BaseButton* button) {
   shelf_animation_->Hide();
 }
+

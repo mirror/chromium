@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "config.h"
+
 #include "webkit/glue/plugins/plugin_host.h"
 
 #include "base/file_util.h"
@@ -759,10 +761,11 @@ NPError NPN_GetValue(NPP id, NPNVariable variable, void *value) {
     // to worry about future standard change that may conflict with the
     // variable definition.
     scoped_refptr<NPAPI::PluginInstance> plugin = FindInstance(id);
-    if (plugin->plugin_lib()->plugin_info().file.value() ==
-          kDefaultPluginDllName)
+    if (plugin->plugin_lib()->plugin_info().path.value() ==
+          kDefaultPluginLibraryName) {
       plugin->webplugin()->OnMissingPluginStatus(
           variable - default_plugin::kMissingPluginStatusStart);
+    }
     break;
   }
   default:
@@ -811,7 +814,7 @@ NPError  NPN_SetValue(NPP id, NPPVariable variable, void *value) {
     DLOG(INFO) << "NPN_SetValue(NPPVJavascriptPushCallerBool) is not implemented.";
     return NPERR_GENERIC_ERROR;
   case NPPVpluginKeepLibraryInMemory:
-    // Tells browser that plugin dll should live longer than usual.
+    // Tells browser that plugin library should live longer than usual.
     // TODO: implement me
     DLOG(INFO) << "NPN_SetValue(NPPVpluginKeepLibraryInMemory) is not implemented.";
     return NPERR_GENERIC_ERROR;
@@ -858,15 +861,6 @@ void NPN_PluginThreadAsyncCall(NPP id,
   if (plugin) {
     plugin->PluginThreadAsyncCall(func, userData);
   }
-}
-
-bool NPN_Construct(NPP npp,
-                   NPObject* obj,
-                   const NPVariant *args,
-                   uint32_t argCount,
-                   NPVariant *result) {
-  NOTREACHED();
-  return false;
 }
 
 } // extern "C"

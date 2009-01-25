@@ -48,6 +48,10 @@ class WebPluginDelegate;
 class WebPluginDelegateProxy;
 enum WebRequestCachePolicy;
 
+namespace base {
+class WaitableEvent;
+}
+
 namespace webkit_glue {
 struct FileUploadData;
 }
@@ -85,7 +89,7 @@ class RenderView : public RenderWidget,
   static RenderView* Create(
       RenderThreadBase* render_thread,
       HWND parent_hwnd,
-      HANDLE modal_dialog_event,
+      base::WaitableEvent* modal_dialog_event,  // takes ownership
       int32 opener_id,
       const WebPreferences& webkit_prefs,
       SharedRenderViewCounter* counter,
@@ -108,8 +112,8 @@ class RenderView : public RenderWidget,
     return host_window_;
   }
 
-  HANDLE modal_dialog_event() {
-    return modal_dialog_event_.Get();
+  base::WaitableEvent* modal_dialog_event() {
+    return modal_dialog_event_.get();
   }
 
   // IPC::Channel::Listener
@@ -136,7 +140,10 @@ class RenderView : public RenderWidget,
                                       int64 node_id);
   virtual void UpdateTargetURL(WebView* webview,
                                const GURL& url);
-  virtual void RunFileChooser(const std::wstring& default_filename,
+  virtual void RunFileChooser(bool multi_select,
+                              const std::wstring& title,
+                              const std::wstring& initial_filename,
+                              const std::wstring& filter,
                               WebFileChooserCallback* file_chooser);
   virtual void AddMessageToConsole(WebView* webview,
                                    const std::wstring& message,
@@ -204,8 +211,7 @@ class RenderView : public RenderWidget,
       bool is_redirect);
 
   virtual WebView* CreateWebView(WebView* webview, bool user_gesture);
-  virtual WebWidget* CreatePopupWidget(WebView* webview,
-                                       bool focus_on_show);
+  virtual WebWidget* CreatePopupWidget(WebView* webview, bool activatable);
   virtual WebPluginDelegate* CreatePluginDelegate(
       WebView* webview,
       const GURL& url,
@@ -326,7 +332,7 @@ class RenderView : public RenderWidget,
   // set to 'MSG_ROUTING_NONE' if the true ID is not yet known. In this case,
   // CompleteInit must be called later with the true ID.
   void Init(HWND parent,
-            HANDLE modal_dialog_event,
+            base::WaitableEvent* modal_dialog_event,  // takes ownership
             int32 opener_id,
             const WebPreferences& webkit_prefs,
             SharedRenderViewCounter* counter,
@@ -458,7 +464,7 @@ class RenderView : public RenderWidget,
       int client_x, int client_y, int screen_x, int screen_y, bool ended);
   void OnDragSourceSystemDragEnded();
   void OnInstallMissingPlugin();
-  void OnFileChooserResponse(const std::wstring& file_name);
+  void OnFileChooserResponse(const std::vector<std::wstring>& file_names);
   void OnEnableViewSourceMode();
   void OnUpdateBackForwardListCount(int back_list_count,
                                     int forward_list_count);
@@ -657,7 +663,7 @@ class RenderView : public RenderWidget,
   // Handle to an event that's set when the page is showing a modal dialog (or
   // equivalent constrained window).  The renderer and any plugin processes
   // check this to know if they should pump messages/tasks then.
-  ScopedHandle modal_dialog_event_;
+  scoped_ptr<base::WaitableEvent> modal_dialog_event_;
 
   // Document width when in print CSS media type. 0 otherwise.
   int printed_document_width_;
@@ -693,8 +699,8 @@ class RenderView : public RenderWidget,
   // maintains the cache and other features of the accessibility tree.
   scoped_ptr<GlueAccessibility> glue_accessibility_;
 
-  // True if Greasemonkey is enabled in this process.
-  bool greasemonkey_enabled_;
+  // True if user scripts are enabled in this process.
+  bool user_scripts_enabled_;
 
   // Resource message queue. Used to queue up resource IPCs if we need
   // to wait for an ACK from the browser before proceeding.

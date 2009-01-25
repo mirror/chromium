@@ -405,7 +405,7 @@ class RcInclude(interface.ItemFormatter):
   def Format(self, item, lang='en', begin_item=True, output_dir='.'):
     if not begin_item:
       return ''
-    
+
     assert isinstance(lang, types.StringTypes)
     from grit.node import structure
     from grit.node import include

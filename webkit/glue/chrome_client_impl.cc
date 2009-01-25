@@ -42,8 +42,20 @@ class WebFileChooserCallbackImpl : public WebFileChooserCallback {
       : file_chooser_(file_chooser) {
   }
 
-  void OnFileChoose(const std::wstring& file_name) {
-    file_chooser_->chooseFile(webkit_glue::StdWStringToString(file_name));
+  void OnFileChoose(const std::vector<std::wstring>& file_names) {
+    if (file_names.empty()) {
+      file_chooser_->chooseFile(WebCore::String(""));
+    } else if (file_names.size() == 1) {
+      file_chooser_->chooseFile(
+        webkit_glue::StdWStringToString(file_names.front()));
+    } else {
+      Vector<WebCore::String> paths;
+      for (std::vector<std::wstring>::const_iterator filename =
+             file_names.begin(); filename != file_names.end(); ++filename) {
+        paths.append(webkit_glue::StdWStringToString(*filename));
+      }
+      file_chooser_->chooseFiles(paths);
+    }
   }
 
  private:
@@ -57,7 +69,8 @@ ChromeClientImpl::ChromeClientImpl(WebViewImpl* webview)
       statusbar_visible_(true),
       scrollbars_visible_(true),
       menubar_visible_(true),
-      resizable_(true) {
+      resizable_(true),
+      ignore_next_set_cursor_(false) {
 }
 
 ChromeClientImpl::~ChromeClientImpl() {
@@ -451,30 +464,46 @@ void ChromeClientImpl::runOpenPanel(WebCore::Frame* frame,
   if (!delegate)
     return;
 
+  bool multiple_files = fileChooser->allowsMultipleFiles();
+
   std::wstring suggestion;
   if (fileChooser->filenames().size() > 0)
     suggestion = webkit_glue::StringToStdWString(fileChooser->filenames()[0]);
 
   WebFileChooserCallbackImpl* chooser = new WebFileChooserCallbackImpl(fileChooser);
-  delegate->RunFileChooser(suggestion, chooser);
+  delegate->RunFileChooser(multiple_files, std::wstring(), suggestion,
+                           std::wstring(), chooser);
 }
 
 void ChromeClientImpl::popupOpened(WebCore::FramelessScrollView* popup_view,
                                    const WebCore::IntRect& bounds,
-                                   bool focus_on_show) {
+                                   bool activatable) {
   WebViewDelegate* d = webview_->delegate();
   if (d) {
     WebWidgetImpl* webwidget =
         static_cast<WebWidgetImpl*>(d->CreatePopupWidget(webview_,
-                                                         focus_on_show));
+                                                         activatable));
     webwidget->Init(popup_view, webkit_glue::FromIntRect(bounds));
   }
 }
 
 void ChromeClientImpl::SetCursor(const WebCursor& cursor) {
+  if (ignore_next_set_cursor_) {
+    ignore_next_set_cursor_ = false;
+    return;
+  }
+
   WebViewDelegate* d = webview_->delegate();
   if (d)
     d->SetCursor(webview_, cursor);
+}
+
+void ChromeClientImpl::SetCursorForPlugin(const WebCursor& cursor) {
+  SetCursor(cursor);
+  // Currently, Widget::setCursor is always called after this function in
+  // EventHandler.cpp and since we don't want that we set a flag indicating
+  // that the next SetCursor call is to be ignored.
+  ignore_next_set_cursor_ = true;
 }
 
 void ChromeClientImpl::enableSuddenTermination() {

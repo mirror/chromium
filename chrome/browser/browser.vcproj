@@ -422,30 +422,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\metrics_log.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\metrics_log.h"
-				>
-			</File>
-			<File
-				RelativePath=".\metrics_response.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\metrics_response.h"
-				>
-			</File>
-			<File
-				RelativePath=".\metrics_service.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\metrics_service.h"
-				>
-			</File>
-			<File
 				RelativePath=".\plugin_process_host.cc"
 				>
 			</File>
@@ -503,14 +479,6 @@
 			</File>
 			<File
 				RelativePath=".\profile_manager.h"
-				>
-			</File>
-			<File
-				RelativePath=".\render_process_host.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\render_process_host.h"
 				>
 			</File>
 			<File
@@ -586,14 +554,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\site_instance.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\site_instance.h"
-				>
-			</File>
-			<File
 				RelativePath=".\spellcheck_worditerator.cc"
 				>
 			</File>
@@ -607,46 +567,6 @@
 			</File>
 			<File
 				RelativePath=".\spellchecker.h"
-				>
-			</File>
-			<File
-				RelativePath=".\template_url.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\template_url.h"
-				>
-			</File>
-			<File
-				RelativePath=".\template_url_fetcher.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\template_url_fetcher.h"
-				>
-			</File>
-			<File
-				RelativePath=".\template_url_model.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\template_url_model.h"
-				>
-			</File>
-			<File
-				RelativePath=".\template_url_parser.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\template_url_parser.h"
-				>
-			</File>
-			<File
-				RelativePath=".\template_url_prepopulate_data.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\template_url_prepopulate_data.h"
 				>
 			</File>
 			<File
@@ -679,14 +599,6 @@
 			</File>
 			<File
 				RelativePath=".\user_data_manager.h"
-				>
-			</File>
-			<File
-				RelativePath=".\user_metrics.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\user_metrics.h"
 				>
 			</File>
 			<File
@@ -803,48 +715,8 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="Tab Contents"
+			Name="Tab Contents (Old)"
 			>
-			<File
-				RelativePath=".\about_internets_status_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\about_internets_status_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\constrained_window.h"
-				>
-			</File>
-			<File
-				RelativePath=".\infobar_delegate.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\infobar_delegate.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ipc_status_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\ipc_status_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\network_status_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\network_status_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\page_navigator.h"
-				>
-			</File>
 			<File
 				RelativePath=".\render_view_context_menu.cc"
 				>
@@ -871,86 +743,6 @@
 			</File>
 			<File
 				RelativePath=".\security_style.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ssl_error_info.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\ssl_error_info.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ssl_manager.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\ssl_manager.h"
-				>
-			</File>
-			<File
-				RelativePath=".\status_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\status_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_contents.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_contents.h"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_contents_delegate.h"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_contents_factory.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_util.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_util.h"
-				>
-			</File>
-			<File
-				RelativePath=".\view_source_contents.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\view_source_contents.h"
-				>
-			</File>
-			<File
-				RelativePath=".\web_contents.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\web_contents.h"
-				>
-			</File>
-			<File
-				RelativePath=".\web_contents_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\web_contents_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\web_contents_view_win.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\web_contents_view_win.h"
 				>
 			</File>
 		</Filter>
@@ -1046,31 +838,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\navigation_controller.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\navigation_controller.h"
-				>
-			</File>
-			<File
-				RelativePath=".\navigation_entry.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\navigation_entry.h"
-				>
-			</File>
-			<File
 				RelativePath=".\options_window.h"
-				>
-			</File>
-			<File
-				RelativePath=".\provisional_load_details.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\provisional_load_details.h"
 				>
 			</File>
 			<File
@@ -1123,14 +891,6 @@
 			</File>
 			<File
 				RelativePath=".\renderer_security_policy.h"
-				>
-			</File>
-			<File
-				RelativePath=".\ssl_policy.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\ssl_policy.h"
 				>
 			</File>
 		</Filter>
@@ -1542,14 +1302,6 @@
 			Name="WebData"
 			>
 			<File
-				RelativePath=".\encryptor.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\encryptor.h"
-				>
-			</File>
-			<File
 				RelativePath=".\webdata\web_data_service.cc"
 				>
 			</File>
@@ -1651,22 +1403,6 @@
 			</File>
 			<File
 				RelativePath=".\drag_utils.h"
-				>
-			</File>
-			<File
-				RelativePath=".\web_drag_source.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\web_drag_source.h"
-				>
-			</File>
-			<File
-				RelativePath=".\web_drop_target.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\web_drop_target.h"
 				>
 			</File>
 		</Filter>
@@ -1830,27 +1566,53 @@
 			Name="Password Manager"
 			>
 			<File
-				RelativePath=".\ie7_password.cc"
+				RelativePath=".\password_manager\encryptor.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\password_manager\encryptor.h"
 				>
 			</File>
 			<File
-				RelativePath=".\ie7_password.h"
+				RelativePath=".\password_manager\ie7_password.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\password_form_manager.cc"
+				RelativePath=".\password_manager\ie7_password.h"
 				>
 			</File>
 			<File
-				RelativePath=".\password_form_manager.h"
+				RelativePath=".\password_manager\password_form_manager.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\password_manager.cc"
+				RelativePath=".\password_manager\password_form_manager.h"
 				>
 			</File>
 			<File
-				RelativePath=".\password_manager.h"
+				RelativePath=".\password_manager\password_manager.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\password_manager\password_manager.h"
 				>
 			</File>
 		</Filter>
@@ -1935,14 +1697,6 @@
 			</File>
 			<File
 				RelativePath=".\history_tab_ui.h"
-				>
-			</File>
-			<File
-				RelativePath=".\native_ui_contents.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\native_ui_contents.h"
 				>
 			</File>
 		</Filter>
@@ -2246,11 +2000,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\extensions\extension_protocol.cc"
+				RelativePath=".\extensions\extension_protocols.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\extensions\extension_protocol.h"
+				RelativePath=".\extensions\extension_protocols.h"
 				>
 			</File>
 			<File
@@ -2259,6 +2013,14 @@
 			</File>
 			<File
 				RelativePath=".\extensions\extensions_service.h"
+				>
+			</File>
+			<File
+				RelativePath=".\extensions\user_script_master.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\extensions\user_script_master.h"
 				>
 			</File>
 		</Filter>
@@ -2271,6 +2033,14 @@
 			</File>
 			<File
 				RelativePath=".\renderer_host\async_resource_handler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\browser_render_process_host.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\browser_render_process_host.h"
 				>
 			</File>
 			<File
@@ -2306,26 +2076,16 @@
 				>
 			</File>
 			<File
+				RelativePath=".\renderer_host\render_process_host.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\render_process_host.h"
+				>
+			</File>
+			<File
 				RelativePath=".\renderer_host\resource_dispatcher_host.cc"
 				>
-				<FileConfiguration
-					Name="Debug|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
-				<FileConfiguration
-					Name="Release|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						ObjectFile="$(IntDir)\$(InputName)1.obj"
-						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
-					/>
-				</FileConfiguration>
 			</File>
 			<File
 				RelativePath=".\renderer_host\resource_dispatcher_host.h"
@@ -2357,6 +2117,608 @@
 			</File>
 			<File
 				RelativePath=".\renderer_host\sync_resource_handler.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Tab Contents"
+			>
+			<File
+				RelativePath=".\tab_contents\about_internets_status_view.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\about_internets_status_view.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\constrained_window.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\infobar_delegate.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\infobar_delegate.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\interstitial_page.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\tab_contents\interstitial_page.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\ipc_status_view.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\ipc_status_view.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\native_ui_contents.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\tab_contents\native_ui_contents.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\navigation_controller.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\tab_contents\navigation_controller.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\navigation_entry.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\tab_contents\navigation_entry.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\network_status_view.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\network_status_view.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\page_navigator.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\provisional_load_details.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\tab_contents\provisional_load_details.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\site_instance.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\tab_contents\site_instance.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\status_view.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\status_view.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\tab_contents.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\tab_contents.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\tab_contents_delegate.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\tab_contents_factory.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\tab_contents_factory.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\tab_contents_type.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\tab_util.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\tab_util.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\view_source_contents.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\view_source_contents.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\web_contents.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\web_contents.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\web_contents_view.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\web_contents_view.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\web_contents_view_win.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\web_contents_view_win.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\web_drag_source.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\tab_contents\web_drag_source.h"
+				>
+			</File>
+			<File
+				RelativePath=".\tab_contents\web_drop_target.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\tab_contents\web_drop_target.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Search Engines"
+			>
+			<File
+				RelativePath=".\search_engines\template_url.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\search_engines\template_url.h"
+				>
+			</File>
+			<File
+				RelativePath=".\search_engines\template_url_fetcher.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\search_engines\template_url_fetcher.h"
+				>
+			</File>
+			<File
+				RelativePath=".\search_engines\template_url_model.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\search_engines\template_url_model.h"
+				>
+			</File>
+			<File
+				RelativePath=".\search_engines\template_url_parser.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\search_engines\template_url_parser.h"
+				>
+			</File>
+			<File
+				RelativePath=".\search_engines\template_url_prepopulate_data.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\search_engines\template_url_prepopulate_data.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Metrics"
+			>
+			<File
+				RelativePath=".\metrics\metrics_log.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\metrics\metrics_log.h"
+				>
+			</File>
+			<File
+				RelativePath=".\metrics\metrics_response.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\metrics\metrics_response.h"
+				>
+			</File>
+			<File
+				RelativePath=".\metrics\metrics_service.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\metrics\metrics_service.h"
+				>
+			</File>
+			<File
+				RelativePath=".\metrics\user_metrics.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\metrics\user_metrics.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="SSL"
+			>
+			<File
+				RelativePath=".\ssl\ssl_blocking_page.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\ssl\ssl_blocking_page.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ssl\ssl_error_info.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\ssl\ssl_error_info.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ssl\ssl_manager.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\ssl\ssl_manager.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ssl\ssl_policy.cc"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						ObjectFile="$(IntDir)\$(InputName)1.obj"
+						XMLDocumentationFileName="$(IntDir)\$(InputName)1.xdc"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath=".\ssl\ssl_policy.h"
 				>
 			</File>
 		</Filter>
@@ -2421,22 +2783,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\greasemonkey_master.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\greasemonkey_master.h"
-			>
-		</File>
-		<File
-			RelativePath=".\interstitial_page.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\interstitial_page.h"
-			>
-		</File>
-		<File
 			RelativePath=".\modal_html_dialog_delegate.cc"
 			>
 		</File>
@@ -2458,14 +2804,6 @@
 		</File>
 		<File
 			RelativePath=".\plugin_installer.h"
-			>
-		</File>
-		<File
-			RelativePath=".\ssl_blocking_page.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\ssl_blocking_page.h"
 			>
 		</File>
 		<File

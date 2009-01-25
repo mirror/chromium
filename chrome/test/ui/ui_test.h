@@ -17,35 +17,37 @@
 // Tests which need to launch the browser with a particular set of command-line
 // arguments should set the value of launch_arguments_ in their constructors.
 
+#include "build/build_config.h"
+
+#if defined(OS_WIN)
 #include <windows.h>
+#endif
 #include <string>
 
+#include "base/message_loop.h"
 #include "base/path_service.h"
+#include "base/process.h"
 #include "base/scoped_ptr.h"
 #include "base/time.h"
+#if defined(OS_WIN)
+// TODO(evanm): we should be able to just forward-declare
+// AutomationProxy here, but many files that #include this one don't
+// themselves #include automation_proxy.h.
 #include "chrome/test/automation/automation_proxy.h"
+#endif
 #include "testing/gtest/include/gtest/gtest.h"
 
+class AutomationProxy;
+class BrowserProxy;
 class DictionaryValue;
 class GURL;
 class TabProxy;
 
 class UITest : public testing::Test {
  protected:
-  // Delay to let browser complete a requested action.
-  static const int kWaitForActionMsec = 2000;
-  static const int kWaitForActionMaxMsec = 10000;
-  // Delay to let the browser complete the test.
-  static const int kMaxTestExecutionTime = 30000;
-
   // String to display when a test fails because the crash service isn't
   // running.
   static const wchar_t kFailedNoCrashService[];
-
-  // Tries to delete the specified file/directory returning true on success.
-  // This differs from file_util::Delete in that it repeatedly invokes Delete
-  // until successful, or a timeout is reached. Returns true on success.
-  static bool DieFileDie(const std::wstring& file, bool recurse);
 
   // Constructor
   UITest();
@@ -61,6 +63,11 @@ class UITest : public testing::Test {
   virtual void InitializeTimeouts();
 
   // ********* Utility functions *********
+
+  // Tries to delete the specified file/directory returning true on success.
+  // This differs from file_util::Delete in that it repeatedly invokes Delete
+  // until successful, or a timeout is reached. Returns true on success.
+  bool DieFileDie(const std::wstring& file, bool recurse);
 
   // Launches the browser and IPC testing server.
   void LaunchBrowserAndServer();
@@ -205,7 +212,7 @@ class UITest : public testing::Test {
   // Get the handle of browser process connected to the automation. This
   // function only retruns a reference to the handle so the caller does not
   // own the handle returned.
-  HANDLE process() { return process_; }
+  base::ProcessHandle process() { return process_; }
 
  public:
   // Get/Set a flag to run the renderer in process when running the
@@ -307,6 +314,10 @@ class UITest : public testing::Test {
 
   int action_max_timeout_ms() const { return action_max_timeout_ms_; }
 
+  int sleep_timeout_ms() const { return sleep_timeout_ms_; }
+
+  std::wstring ui_test_name() const { return ui_test_name_; }
+
   // Count the number of active browser processes.  This function only counts
   // browser processes that share the same profile directory as the current
   // process.  The count includes browser sub-processes.
@@ -351,8 +362,14 @@ class UITest : public testing::Test {
 
  protected:
   AutomationProxy* automation() {
+#if defined(OS_WIN)
     EXPECT_TRUE(server_.get());
     return server_.get();
+#else
+    // TODO(port): restore when AutomationProxy bits work.
+    NOTIMPLEMENTED();
+    return NULL;
+#endif
   }
 
   // Wait a certain amount of time for all the app processes to exit,
@@ -373,7 +390,7 @@ class UITest : public testing::Test {
   std::wstring test_data_directory_;    // Path to the unit test data,
                                         // with no trailing slash
   std::wstring launch_arguments_;       // Arguments to the browser on launch.
-  int expected_errors_;                 // The number of errors expected during
+  size_t expected_errors_;              // The number of errors expected during
                                         // the run (generally 0).
   int expected_crashes_;                // The number of crashes expected during
                                         // the run (generally 0).
@@ -384,7 +401,7 @@ class UITest : public testing::Test {
   bool dom_automation_enabled_;         // This can be set to true to have the
                                         // test run the dom automation case.
   std::wstring template_user_data_;     // See set_template_user_data().
-  HANDLE process_;                      // Handle the the first Chrome process.
+  base::ProcessHandle process_;         // Handle to the first Chrome process.
   std::wstring user_data_dir_;          // User data directory used for the test
   static bool in_process_renderer_;     // true if we're in single process mode
   bool show_window_;                    // Determines if the window is shown or
@@ -398,8 +415,13 @@ class UITest : public testing::Test {
                                         // Default value comes from static.
 
  private:
+#if defined(OS_WIN)
+  // TODO(port): make this use base::Time instead.  It would seem easy, but
+  // the code also depends on file_util::CountFilesCreatedAfter which hasn't
+  // yet been made portable.
   FILETIME test_start_time_;            // Time the test was started
                                         // (so we can check for new crash dumps)
+#endif
   static bool in_process_plugins_;
   static bool no_sandbox_;
   static bool safe_plugins_;
@@ -417,13 +439,19 @@ class UITest : public testing::Test {
   static int timeout_ms_;               // Timeout in milliseconds to wait
                                         // for an test to finish.
   static std::wstring js_flags_;        // Flags passed to the JS engine.
-  ::scoped_ptr<AutomationProxy> server_;
+#if defined(OS_WIN)
+  // TODO(port): restore me after AutomationProxy works.
+  scoped_ptr<AutomationProxy> server_;
+#endif
 
   MessageLoop message_loop_;            // Enables PostTask to main thread.
 
   int command_execution_timeout_ms_;
   int action_timeout_ms_;
   int action_max_timeout_ms_;
+  int sleep_timeout_ms_;
+
+  std::wstring ui_test_name_;
 };
 
 // These exist only to support the gTest assertion macros, and

@@ -21,6 +21,7 @@ class MessageLoop;
 // issues a NOTIFY_CHROME_PLUGIN_UNLOADED notification.
 class ChromePluginLib : public base::RefCounted<ChromePluginLib>  {
  public:
+  static bool IsInitialized();
   static ChromePluginLib* Create(const FilePath& filename,
                                  const CPBrowserFuncs* bfuncs);
   static ChromePluginLib* Find(const FilePath& filename);
@@ -35,11 +36,11 @@ class ChromePluginLib : public base::RefCounted<ChromePluginLib>  {
   // Adds Chrome plugins to the NPAPI plugin list.
   static void RegisterPluginsWithNPAPI();
 
-  // Loads all the plugin dlls that are marked as "LoadOnStartup" in the
+  // Loads all the plugins that are marked as "LoadOnStartup" in the
   // registry. This should only be called in the browser process.
   static void LoadChromePlugins(const CPBrowserFuncs* bfuncs);
 
-  // Unloads all the loaded plugin dlls and cleans up the plugin map.
+  // Unloads all the loaded plugins and cleans up the plugin map.
   static void UnloadAllPlugins();
 
   // Returns true if the plugin is currently loaded.
@@ -57,8 +58,10 @@ class ChromePluginLib : public base::RefCounted<ChromePluginLib>  {
   // Method to call a test function in the plugin, used for unit tests.
   int CP_Test(void* param);
 
-  // The registroy path to search for Chrome Plugins/
+#if defined(OS_WIN)
+  // The registry path to search for Chrome Plugins/
   static const TCHAR kRegistryChromePlugins[];
+#endif  // defined(OS_WIN)
 
  private:
   friend class base::RefCounted<ChromePluginLib>;
@@ -73,18 +76,21 @@ class ChromePluginLib : public base::RefCounted<ChromePluginLib>  {
   // Method to shutdown a Plugin.
   void CP_Shutdown();
 
-  // Attempts to load the plugin from the DLL.
+  // Attempts to load the plugin.
   // Returns true if it is a legitimate plugin, false otherwise
   bool Load();
 
-  // Unloading the plugin DLL.
+  // Unloads the plugin.
   void Unload();
 
-  FilePath filename_;  // the path to the DLL
-  HMODULE module_;  // the opened DLL handle
+  FilePath filename_;  // the path to the plugin
+#if defined(OS_WIN)
+  // TODO(port): Remove ifdefs when we have portable replacement for HMODULE.
+  HMODULE module_;  // the opened plugin handle
+#endif  // defined(OS_WIN)
   bool initialized_;  // is the plugin initialized
 
-  // DLL exports, looked up by name.
+  // Exported symbols from the plugin, looked up by name.
   CP_VersionNegotiateFunc CP_VersionNegotiate_;
   CP_InitializeFunc CP_Initialize_;
 
