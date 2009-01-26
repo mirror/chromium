@@ -20,7 +20,11 @@ import gcl
 
 # Constants
 HELP_STRING = "Sorry, Tryserver is not available."
-SCRIPT_PATH = os.path.join('tools', 'tryserver', 'tryserver.py')
+SCRIPT_PATH = os.path.join('src', 'tools', 'tryserver', 'tryserver.py')
+
+
+# Globals
+checkout_root = ''
 
 
 class InvalidScript(Exception): 
@@ -33,6 +37,20 @@ class NoTryServerAccess(Exception):
     return self.args[0] + '\n' + HELP_STRING
 
 
+def GetCheckoutRoot():
+  """Retrieves the checkout root by finding the try script."""
+  # Cache this value accross calls.
+  global checkout_root
+  if not checkout_root:
+    # TODO(maruel):  Completely hacked into the current gclient setup. Needs to
+    # be fixed.
+    checkout_root = os.path.dirname(gcl.GetRepositoryRoot())
+    if not os.path.exists(os.path.join(checkout_root, SCRIPT_PATH)):
+      # Too bad, the script doesn't exist.
+      pass
+  return checkout_root
+
+
 def PathDifference(root, subpath):
   """Returns the difference subpath minus root."""
   if subpath.find(root) != 0:
@@ -43,7 +61,7 @@ def PathDifference(root, subpath):
 
 def ExecuteTryServerScript():
   """Execute the try server script and returns its dictionary."""
-  script_path = os.path.join(gcl.GetRepositoryRoot(), SCRIPT_PATH)
+  script_path = os.path.join(GetCheckoutRoot(), SCRIPT_PATH)
   script_locals = {}
   if os.path.exists(script_path):
     try:
@@ -214,7 +232,7 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
   group.add_option("-f", "--file", default=file_list, dest="files",
                    metavar="FILE", action="append",
                    help="Use many time to list the files to include in the "
-                        "try, relative to the repository root.")
+                        "try.")
   group.add_option("-i", "--issue", default=issue,
                    help="Rietveld's issue id to use instead of a local"
                         " diff.")
@@ -275,8 +293,15 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
     else:
       if not options.files:
         parser.error('Please specify some files!')
-      # Generate the diff with svn and write it to the submit queue path.
-      options.diff = gcl.GenerateDiff(options.files)
+      # Generate the diff with svn. Change the current working directory before
+      # generating the diff so that it shows the correct base.
+      os.chdir(gcl.GetRepositoryRoot())
+      # Generate the diff and write it to the submit queue path. Fix the file list
+      # according to the new path.
+      subpath = PathDifference(GetCheckoutRoot(), os.getcwd())
+      os.chdir(GetCheckoutRoot())
+      options.diff = gcl.GenerateDiff([os.path.join(subpath, x)
+                                      for x in options.files])
 
     # Send the patch. Defaults to HTTP.
     if not options.use_svn or options.use_http:
