@@ -104,6 +104,8 @@ def main(options, args):
 
   if options.no_pixel_tests:
     command.append('--no-pixel-tests')
+  if options.batch_size:
+    command.extend(['--batch-size', options.batch_size])
 
   if options.enable_pageheap:
     # If we're actually requesting pageheap checking, complain if we don't have
@@ -142,6 +144,10 @@ if '__main__' == __name__:
                            help='disable pixel-to-pixel PNG comparisons')
   option_parser.add_option('', '--enable-pageheap', action='store_true',
                            default=False, help='Enable page heap checking')
+  option_parser.add_option("", "--batch-size",
+                           default=None,
+                           help=("Run a the tests in batches (n), after every "
+                                 "n tests, the test shell is relaunched."))
   options, args = option_parser.parse_args()
 
   # Disable pageheap checking except on Windows.
