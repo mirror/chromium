@@ -120,7 +120,6 @@ class GateKeeper(MailNotifier):
     if self.isInterestingBuilder(builder, name):
       return self
 
-  # def buildFinished(self, name, build, results):
   def stepFinished(self, build, step, results):
     """A build step has just finished."""
     # If we have not failed, we have nothing to do.
