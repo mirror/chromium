@@ -22,6 +22,7 @@ from buildbot import util
 from buildbot.status.builder import FAILURE
 from buildbot.status.mail import MailNotifier
 from buildbot.status.web.base import IBox
+from build_sheriffs import BuildSheriffs
 from email.MIMEMultipart import MIMEMultipart
 from email.MIMEText import MIMEText
 from email.Utils import formatdate
@@ -113,23 +114,21 @@ class GateKeeper(MailNotifier):
       self.watched.append(builder)
       return self  # subscribe to this builder
 
+  def buildStarted(self, name, build):
+    """A build has started allowing us to register for stepFinished."""
+    builder = build.getBuilder()
+    if self.isInterestingBuilder(builder, name):
+      return self
+
+  # def buildFinished(self, name, build, results):
   def stepFinished(self, build, step, results):
-    """A step has just finished.
-
-    'results' is the result tuple described in IBuildStepStatus.getResults().
-    """
-    pass
-
-  def buildFinished(self, name, build, results):
-    """A build has just finished."""
+    """A build step has just finished."""
     # If we have not failed, we have nothing to do.
-    if results != FAILURE:
+    if results[0] != FAILURE:
       return
 
     builder = build.getBuilder()
-    if not self.isInterestingBuilder(builder, name):
-      return  # nothing to do
-
+    name  = builder.getName()
     if not self.categories_steps:
       return self.closeTree(name, build, results)
 
@@ -150,12 +149,9 @@ class GateKeeper(MailNotifier):
     if '' in self.categories_steps:
       steps_to_check += self.categories_steps['']
 
-    for build_step in build.getSteps():
-      for step_text in build_step.getText():
-        if step_text in steps_to_check:
-          (step_result, result_strings) = build_step.getResults()
-          if step_result == FAILURE:
-            return self.closeTree(name, build, step_text)
+    for step_text in step.getText():
+      if step_text in steps_to_check:
+        return self.closeTree(name, build, step_text)
 
   def closeTree(self, name, build, step_text):
     # Check if the tree is already closed or not.
@@ -291,6 +287,7 @@ Buildbot waterfall: http://build.chromium.org/
     # now, who is this message going to?
     dl = []
     recipients = self.extraRecipients[:]
+    recipients.append(BuildSheriffs.GetSheriffs())
     if self.sendToInterestedUsers and self.lookup:
       for u in build.getInterestedUsers():
         d = defer.maybeDeferred(self.lookup.getAddress, u)
