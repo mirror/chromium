@@ -6,7 +6,7 @@
 
 #include "base/gfx/png_decoder.h"
 #include "base/gfx/png_encoder.h"
-#include "chrome/browser/render_view_host.h"
+#include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/tab_contents_delegate.h"
@@ -84,12 +84,7 @@ void FavIconHelper::SetFavIcon(
 
   if (GetHistoryService() && !profile()->IsOffTheRecord()) {
     std::vector<unsigned char> image_data;
-    SkAutoLockPixels icon_lock(sized_image);
-    PNGEncoder::Encode(
-        reinterpret_cast<unsigned char*>(sized_image.getPixels()),
-        PNGEncoder::FORMAT_BGRA, sized_image.width(),
-        sized_image.height(), sized_image.width()* 4, false,
-        &image_data);
+    PNGEncoder::EncodeBGRASkBitmap(sized_image, false, &image_data);
     GetHistoryService()->SetFavIcon(i->second.url, i->second.fav_icon_url,
                                     image_data);
   }

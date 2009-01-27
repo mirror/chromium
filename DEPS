@@ -12,22 +12,22 @@ deps = {
     "http://googletest.googlecode.com/svn/trunk@167",
 
   "src/third_party/WebKit":
-    "/trunk/deps/third_party/WebKit@8168",
+    "/trunk/deps/third_party/WebKit@8597",
 
   "src/third_party/icu38":
     "/trunk/deps/third_party/icu38@7525",
 
   "src/v8":
-    "http://v8.googlecode.com/svn/trunk@1095",
+    "http://v8.googlecode.com/svn/trunk@1103",
 
   "src/webkit/data/layout_tests/LayoutTests":
-    "http://svn.webkit.org/repository/webkit/trunk/LayoutTests@39953",
+    "http://svn.webkit.org/repository/webkit/trunk/LayoutTests@40164",
 
   "src/third_party/WebKit/WebKit":
-    "http://svn.webkit.org/repository/webkit/trunk/WebKit@39953",
+    "http://svn.webkit.org/repository/webkit/trunk/WebKit@40164",
 
   "src/third_party/WebKit/WebKitLibraries":
-    "http://svn.webkit.org/repository/webkit/trunk/WebKitLibraries@39953",
+    "http://svn.webkit.org/repository/webkit/trunk/WebKitLibraries@40164",
 }
 
 

@@ -5,19 +5,31 @@
 #ifndef CHROME_BROWSER_BROWSER_H_
 #define CHROME_BROWSER_BROWSER_H_
 
+#include "base/basictypes.h"
+
 #include <vector>
 
+#if defined(OS_MACOSX) || defined(OS_LINUX)
+// Remove when we've finished porting the supporting classes.
+#include "chrome/common/temp_scaffolding_stubs.h"
+#endif
+
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/controller.h"
-#include "chrome/browser/shell_dialogs.h"
 #include "chrome/browser/browser_window.h"
+#include "chrome/browser/command_updater.h"
 #include "chrome/browser/sessions/session_id.h"
+#include "chrome/common/notification_service.h"
+#include "chrome/common/pref_member.h"
+#include "base/gfx/rect.h"
+#include "skia/include/SkBitmap.h"
+
+#if defined(OS_WIN)
+#include "chrome/browser/shell_dialogs.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/browser/tab_contents/tab_contents_delegate.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
 #include "chrome/browser/toolbar_model.h"
-#include "chrome/common/notification_service.h"
-#include "chrome/common/pref_member.h"
+#endif
 
 class BrowserIdleTimer;
 class BrowserWindow;
@@ -33,7 +45,7 @@ class WebApp;
 class Browser : public TabStripModelDelegate,
                 public TabStripModelObserver,
                 public TabContentsDelegate,
-                public CommandHandler,
+                public CommandUpdater::CommandUpdaterDelegate,
                 public NotificationObserver,
                 public SelectFileDialog::Listener {
  public:
@@ -92,7 +104,7 @@ class Browser : public TabStripModelDelegate,
   BrowserWindow* window() const { return window_; }
   ToolbarModel* toolbar_model() { return &toolbar_model_; }
   const SessionID& session_id() const { return session_id_; }
-  CommandController* controller() { return &controller_; }
+  CommandUpdater* command_updater() { return &command_updater_; }
 
   // Setters /////////////////////////////////////////////////////////////////
 
@@ -110,15 +122,10 @@ class Browser : public TabStripModelDelegate,
   // |profile|, that session is re-used.
   static void OpenURLOffTheRecord(Profile* profile, const GURL& url);
 
+#if defined(OS_WIN)
   // Opens the a new application window for the specified WebApp.
   static void OpenWebApplication(Profile* profile, WebApp* app);
-
-  // Command API //////////////////////////////////////////////////////////////
-
-  // Please fix the incestuous nest that is */controller.h and eliminate the
-  // need for this retarded hack.
-  bool SupportsCommand(int id) const;
-  bool IsCommandEnabled(int id) const;
+#endif
 
   // State Storage and Retrieval for UI ///////////////////////////////////////
 
@@ -132,6 +139,7 @@ class Browser : public TabStripModelDelegate,
   // Gets the FavIcon of the page in the selected tab.
   SkBitmap GetCurrentPageIcon() const;
 
+#if defined(OS_WIN)
   // Gets the title of the page in the selected tab.
   std::wstring GetCurrentPageTitle() const;
 
@@ -146,6 +154,7 @@ class Browser : public TabStripModelDelegate,
   // Invoked when the window containing us is closing. Performs the necessary
   // cleanup.
   void OnWindowClosing();
+#endif  // OS_WIN
 
   // TabStripModel pass-thrus /////////////////////////////////////////////////
 
@@ -183,6 +192,7 @@ class Browser : public TabStripModelDelegate,
       PageTransition::Type transition, bool foreground,
       SiteInstance* instance);
 
+#if defined(OS_WIN)
   // Add a new application tab for the specified URL. If lazy is true, the tab
   // won't be selected. Further, the initial web page load will only take place
   // when the tab is first selected.
@@ -222,20 +232,23 @@ class Browser : public TabStripModelDelegate,
   // NOTE: Within each of the following sections, the IDs are ordered roughly by
   // how they appear in the GUI/menus (left to right, top to bottom, etc.).
 
+#endif
   // Navigation commands
   void GoBack();
   void GoForward();
   void Reload();
   void Home();
+#if defined(OS_WIN)
   void OpenCurrentURL();
+#endif
   void Go();
   void Stop();
-
   // Window management commands
   void NewWindow();
   void NewIncognitoWindow();
   void NewProfileWindowByIndex(int index);
   void CloseWindow();
+#if defined(OS_WIN)
   void NewTab();
   void CloseTab();
   void SelectNextTab();
@@ -312,13 +325,12 @@ class Browser : public TabStripModelDelegate,
       const NavigationController* controller, int* index);
 
   // Interface implementations ////////////////////////////////////////////////
+#endif
 
-  // Overridden from CommandHandler:
-  virtual bool GetContextualLabel(int id, std::wstring* out) const {
-    return false;
-  }
+  // Overridden from CommandUpdater::CommandUpdaterDelegate:
   virtual void ExecuteCommand(int id);
 
+#if defined(OS_WIN)
   // Overridden from TabStripModelDelegate:
   virtual GURL GetBlankTabURL() const;
   virtual void CreateNewStripWithContents(TabContents* detached_contents,
@@ -334,9 +346,13 @@ class Browser : public TabStripModelDelegate,
       PageTransition::Type transition,
       bool defer_load,
       SiteInstance* instance) const;
+#endif
   virtual bool CanDuplicateContentsAt(int index);
+#if defined(OS_WIN)
   virtual void DuplicateContentsAt(int index);
   virtual void CloseFrameAfterDragSession();
+  virtual void CreateHistoricalTab(TabContents* contents);
+  virtual bool RunUnloadListenerBeforeClosing(TabContents* contents);
 
   // Overridden from TabStripModelObserver:
   virtual void TabInsertedAt(TabContents* contents,
@@ -374,7 +390,7 @@ class Browser : public TabStripModelDelegate,
   virtual void ToolbarSizeChanged(TabContents* source, bool is_animating);
   virtual void URLStarredChanged(TabContents* source, bool starred);
 
-  virtual void ContentsMouseEvent(TabContents* source, UINT message);
+  virtual void ContentsMouseEvent(TabContents* source, uint32 message);
   virtual void UpdateTargetURL(TabContents* source, const GURL& url);
 
   virtual void ContentsZoomChange(bool zoom_in);
@@ -390,6 +406,8 @@ class Browser : public TabStripModelDelegate,
 
   // Overridden from SelectFileDialog::Listener:
   virtual void FileSelected(const std::wstring& path, void* params);
+
+#endif  // OS_WIN
 
   // Overridden from NotificationObserver:
   virtual void Observe(NotificationType type,
@@ -410,10 +428,7 @@ class Browser : public TabStripModelDelegate,
   // |is_loading| is true if the current TabContents is loading.
   void UpdateStopGoState(bool is_loading);
 
-  // Change the "starred" button display to starred/unstarred.
-  // TODO(evanm): migrate this to the commands framework.
-  void SetStarredButtonToggled(bool starred);
-
+#if defined(OS_WIN)
   // UI update coalescing and handling ////////////////////////////////////////
 
   // Asks the toolbar (and as such the location bar) to update its state to
@@ -442,6 +457,7 @@ class Browser : public TabStripModelDelegate,
   friend class AutomationProvider;
 
   // Getters for the location bar and go button.
+#endif  // OS_WIN
   LocationBarView* GetLocationBarView() const;
   GoButton* GetGoButton();
 
@@ -450,6 +466,7 @@ class Browser : public TabStripModelDelegate,
   // TODO(beng): remove this.
   StatusBubble* GetStatusBubble();
 
+#if defined(OS_WIN)
   // Session restore functions ////////////////////////////////////////////////
 
   // Notifies the history database of the index for all tabs whose index is
@@ -464,9 +481,11 @@ class Browser : public TabStripModelDelegate,
       int selected_navigation);
 
   // OnBeforeUnload handling //////////////////////////////////////////////////
+#endif
 
   typedef std::set<TabContents*> UnloadListenerSet;
 
+#if defined(OS_WIN)
   // Processes the next tab that needs it's beforeunload/unload event fired.
   void ProcessPendingTabs();
 
@@ -500,11 +519,13 @@ class Browser : public TabStripModelDelegate,
   void BuildPopupWindow(TabContents* source,
                         TabContents* new_contents,
                         const gfx::Rect& initial_pos);
+#endif
 
   // Returns what the user's home page is, or the new tab page if the home page
   // has not been set.
   GURL GetHomePage();
 
+#if defined(OS_WIN)
   // Advance the find selection by one. Direction is either forward or
   // backwards depending on parameter passed in.
   void AdvanceFindSelection(bool forward_direction);
@@ -522,6 +543,8 @@ class Browser : public TabStripModelDelegate,
   // done only once per application name / per session.
   static void RegisterAppPrefs(const std::wstring& app_name);
 
+#endif  // OS_WIN
+
   // Data members /////////////////////////////////////////////////////////////
 
   // This Browser's type.
@@ -536,8 +559,8 @@ class Browser : public TabStripModelDelegate,
   // This Browser's TabStripModel.
   TabStripModel tabstrip_model_;
 
-  // The Controller that updates all browser commands.
-  CommandController controller_;
+  // The CommandUpdater that manages the browser window commands.
+  CommandUpdater command_updater_;
 
   // An optional application name which is used to retrieve and save window
   // positions.

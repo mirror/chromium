@@ -32,7 +32,6 @@
 #include "base/process_util.h"
 #include "base/rand_util.h"
 #include "base/stats_table.h"
-#include "base/string_piece.h"
 #include "base/string_util.h"
 #include "base/sys_info.h"
 #include "base/trace_event.h"
@@ -60,19 +59,6 @@ static int kStatsFileThreads = 20;
 static int kStatsFileCounters = 200;
 
 #if defined(OS_WIN)
-StringPiece GetRawDataResource(HMODULE module, int resource_id) {
-  void* data_ptr;
-  size_t data_size;
-  return base::GetDataResourceFromModule(module, resource_id, &data_ptr,
-                                         &data_size) ?
-      StringPiece(static_cast<char*>(data_ptr), data_size) : StringPiece();
-}
-
-// This is called indirectly by the network layer to access resources.
-StringPiece NetResourceProvider(int key) {
-  return GetRawDataResource(::GetModuleHandle(NULL), key);
-}
-
 // This test approximates whether you have the Windows XP theme selected by
 // inspecting a couple of metrics. It does not catch all cases, but it does
 // pick up on classic vs xp, and normal vs large fonts. Something it misses
@@ -148,11 +134,12 @@ int main(int argc, char* argv[]) {
 
 #if defined(OS_LINUX)
   gtk_init(&argc, &argv);
-  // Only parse the command line after GTK's had a crack at it.
-  CommandLine::SetArgcArgv(argc, argv);
 #endif
 
-  CommandLine parsed_command_line;
+  // Only parse the command line after GTK's had a crack at it.
+  CommandLine::Init(argc, argv);
+
+  const CommandLine& parsed_command_line = *CommandLine::ForCurrentProcess();
   if (parsed_command_line.HasSwitch(test_shell::kStartupDialog))
     TestShell::ShowStartupDebuggingDialog();
 
@@ -224,10 +211,10 @@ int main(int argc, char* argv[]) {
   // Load ICU data tables
   icu_util::Initialize();
 
-#if defined(OS_WIN)
   // Config the network module so it has access to a limited set of resources.
-  net::NetModule::SetResourceProvider(NetResourceProvider);
+  net::NetModule::SetResourceProvider(TestShell::NetResourceProvider);
 
+#if defined(OS_WIN)
   INITCOMMONCONTROLSEX InitCtrlEx;
 
   InitCtrlEx.dwSize = sizeof(INITCOMMONCONTROLSEX);
@@ -279,16 +266,14 @@ int main(int argc, char* argv[]) {
     file_util::AppendToPath(&uri, L"index.html");
   }
 
-  if (parsed_command_line.GetLooseValueCount() > 0) {
-    CommandLine::LooseValueIterator iter(
-        parsed_command_line.GetLooseValuesBegin());
-    uri = *iter;
-  }
+  std::vector<std::wstring> loose_values = parsed_command_line.GetLooseValues();
+  if (loose_values.size() > 0)
+    uri = loose_values[0];
 
-  std::wstring js_flags = 
+  std::wstring js_flags =
     parsed_command_line.GetSwitchValue(test_shell::kJavaScriptFlags);
   // Test shell always exposes the GC.
-  CommandLine::AppendSwitch(&js_flags, L"expose-gc");
+  js_flags += L" --expose-gc";
   webkit_glue::SetJavaScriptFlags(js_flags);
   // Also expose GCController to JavaScript.
   webkit_glue::SetShouldExposeGCController(true);
@@ -370,17 +355,24 @@ int main(int argc, char* argv[]) {
           if (!*filenameBuffer)
             continue;
 
-
-          if (!TestShell::RunFileTest(filenameBuffer, params))
+          params.test_url = filenameBuffer;
+          if (!TestShell::RunFileTest(params))
             break;
         }
       } else {
-        TestShell::RunFileTest(WideToUTF8(uri).c_str(), params);
+        params.test_url = WideToUTF8(uri).c_str();
+        TestShell::RunFileTest(params);
       }
 
       shell->CallJSGC();
       shell->CallJSGC();
-      if (shell) delete shell;
+      if (shell) {
+        // When we finish the last test, cleanup the LayoutTestController.
+        // It may have references to not-yet-cleaned up windows.  By
+        // cleaning up here we help purify reports.
+        shell->ResetTestController();
+        delete shell;
+      }
     } else {
       MessageLoop::current()->Run();
     }

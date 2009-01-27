@@ -5,6 +5,7 @@
 #ifndef CHROME_VIEWS_WINDOW_H__
 #define CHROME_VIEWS_WINDOW_H__
 
+#include "chrome/common/notification_registrar.h"
 #include "chrome/views/widget_win.h"
 
 namespace gfx {
@@ -30,7 +31,8 @@ class WindowDelegate;
 //  rendered by the operating system.
 //
 ///////////////////////////////////////////////////////////////////////////////
-class Window : public WidgetWin {
+class Window : public WidgetWin,
+               public NotificationObserver {
  public:
   virtual ~Window();
 
@@ -121,6 +123,11 @@ class Window : public WidgetWin {
   static gfx::Size GetLocalizedContentsSize(int col_resource_id,
                                             int row_resource_id);
 
+  // NotificationObserver overrides:
+  virtual void Observe(NotificationType type,
+                       const NotificationSource& source,
+                       const NotificationDetails& details);
+
  protected:
   // Constructs the Window. |window_delegate| cannot be NULL.
   explicit Window(WindowDelegate* window_delegate);
@@ -142,6 +149,11 @@ class Window : public WidgetWin {
 
   // Sizes the window to the default size specified by its ClientView.
   virtual void SizeWindowToDefault();
+
+  // Returns true if the Window is considered to be an "app window" - i.e. any
+  // window which when it is the last of its type closed causes the application
+  // to exit.
+  virtual bool IsAppWindow() const { return false; }
 
   void set_client_view(ClientView* client_view) { client_view_ = client_view; }
 
@@ -254,6 +266,9 @@ class Window : public WidgetWin {
   // The saved maximized state for this window. See note in SetInitialBounds
   // that explains why we save this.
   bool saved_maximized_state_;
+
+  // Hold onto notifications.
+  NotificationRegistrar notification_registrar_;
 
   DISALLOW_EVIL_CONSTRUCTORS(Window);
 };

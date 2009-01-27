@@ -38,6 +38,7 @@
 #include "V8CanvasRenderingContext2D.h"
 #include "V8CanvasGradient.h"
 #include "V8CanvasPattern.h"
+#include "V8CanvasPixelArray.h"
 #include "V8CDATASection.h"
 #include "V8CharacterData.h"
 #include "V8Clipboard.h"
@@ -158,6 +159,7 @@
 #include "V8WebKitAnimationEvent.h"
 #include "V8WebKitCSSKeyframeRule.h"
 #include "V8WebKitCSSKeyframesRule.h"
+#include "V8WebKitCSSMatrix.h"
 #include "V8WebKitCSSTransformValue.h"
 #include "V8WebKitTransitionEvent.h"
 #include "V8WheelEvent.h"
@@ -350,6 +352,11 @@
 #include "V8HTMLVideoElement.h"
 #include "V8MediaError.h"
 #include "V8TimeRanges.h"
+#endif
+
+#if ENABLE(WORKERS)
+#include "V8Worker.h"
+#include "V8WorkerLocation.h"
 #endif
 
 namespace WebCore {

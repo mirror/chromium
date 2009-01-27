@@ -41,6 +41,7 @@ namespace WebCore {
   class ResourceHandle;
   class ResourceError;
   class ResourceResponse;
+  class ScrollView;
   class String;
   class Widget;
 }
@@ -55,7 +56,7 @@ class WebPluginContainer : public WebCore::Widget {
   WebPluginContainer(WebPluginImpl* impl);
   virtual ~WebPluginContainer();
   NPObject* GetPluginScriptableObject();
-  
+
   // Widget methods:
   virtual void setFrameRect(const WebCore::IntRect& rect);
   virtual void paint(WebCore::GraphicsContext*, const WebCore::IntRect& rect);
@@ -65,7 +66,7 @@ class WebPluginContainer : public WebCore::Widget {
   virtual void hide();
   virtual void handleEvent(WebCore::Event* event);
   virtual void frameRectsChanged();
-  virtual void setParentVisible(bool visible);
+  virtual void setParent(WebCore::ScrollView* view);
 
 #if USE(JSC)
   virtual bool isPluginView() const;
@@ -97,6 +98,7 @@ class WebPluginContainer : public WebCore::Widget {
     uint32 last_modified;
     uint32 expected_length;
   };
+
   // Helper function to read fields in a HTTP response structure.
   // These fields are written to the HttpResponseInfo structure passed in.
   static void ReadHttpResponseInfo(const WebCore::ResourceResponse& response,
@@ -271,7 +273,8 @@ class WebPluginImpl : public WebPlugin,
 
   WebCore::Frame* frame() { return webframe_ ? webframe_->frame() : NULL; }
 
-  // Calculates the bounds of the plugin widget based on the frame rect passed in.
+  // Calculates the bounds of the plugin widget based on the frame
+  // rect passed in.
   void CalculateBounds(const WebCore::IntRect& frame_rect,
                        WebCore::IntRect* window_rect,
                        WebCore::IntRect* clip_rect,
@@ -307,7 +310,7 @@ class WebPluginImpl : public WebPlugin,
   bool ReinitializePluginForResponse(WebCore::ResourceHandle* response_handle);
 
   // Helper functions to convert an array of names/values to a vector.
-  static void ArrayToVector(int total_values, char** values, 
+  static void ArrayToVector(int total_values, char** values,
                             std::vector<std::string>* value_vector);
 
   struct ClientInfo {
@@ -325,11 +328,7 @@ class WebPluginImpl : public WebPlugin,
   WebFrameImpl* webframe_;
 
   WebPluginDelegate* delegate_;
-  bool force_geometry_update_;
   bool visible_;
-  // Set when we receive the first paint notification for a windowed
-  // plugin widget.
-  bool received_first_paint_notification_;
 
   WebPluginContainer* widget_;
 

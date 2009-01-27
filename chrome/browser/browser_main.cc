@@ -61,7 +61,6 @@
 #include "chrome/browser/browser_process_impl.h"
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/browser_trial.h"
-#include "chrome/browser/cert_store.h"
 #include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/browser/extensions/extension_protocols.h"
 #include "chrome/browser/first_run.h"
@@ -70,9 +69,9 @@
 #include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/net/dns_global.h"
 #include "chrome/browser/net/sdch_dictionary_fetcher.h"
+#include "chrome/browser/net/url_fixer_upper.h"
 #include "chrome/browser/printing/print_job_manager.h"
 #include "chrome/browser/rlz/rlz.h"
-#include "chrome/browser/url_fixer_upper.h"
 #include "chrome/browser/user_data_manager.h"
 #include "chrome/browser/views/user_data_dir_dialog.h"
 #include "chrome/common/env_vars.h"
@@ -176,7 +175,7 @@ StringPiece NetResourceProvider(int key) {
 
 // Main routine for running as the Browser process.
 int BrowserMain(const MainFunctionParams& parameters) {
-  CommandLine& parsed_command_line = parameters.command_line_;
+  const CommandLine& parsed_command_line = parameters.command_line_;
 
   // WARNING: If we get a WM_ENDSESSION objects created on the stack here
   // are NOT deleted. If you need something to run during WM_ENDSESSION add it
@@ -309,7 +308,7 @@ int BrowserMain(const MainFunctionParams& parameters) {
   StatisticsRecorder statistics;
 
   // Initialize the shared instance of user data manager.
-  UserDataManager::Create();
+  scoped_ptr<UserDataManager> user_data_manager(UserDataManager::Create());
 
   // Try to create/load the profile.
   ProfileManager* profile_manager = browser_process->profile_manager();
@@ -327,10 +326,9 @@ int BrowserMain(const MainFunctionParams& parameters) {
       // --user-data-dir switch.  The last flag of the same name wins.
       // TODO(tc): It would be nice to remove the flag we don't want, but that
       // sounds risky if we parse differently than CommandLineToArgvW.
-      std::wstring new_command_line =
-          parsed_command_line.command_line_string();
-      CommandLine::AppendSwitchWithValue(&new_command_line,
-          switches::kUserDataDir, user_data_dir);
+      CommandLine new_command_line = parsed_command_line;
+      new_command_line.AppendSwitchWithValue(switches::kUserDataDir,
+                                             user_data_dir);
       base::LaunchApp(new_command_line, false, false, NULL);
     }
 
@@ -474,9 +472,6 @@ int BrowserMain(const MainFunctionParams& parameters) {
   PluginService::GetInstance()->SetChromePluginDataDir(profile->GetPath());
 
 #if defined(OS_WIN)
-  // Initialize the CertStore.
-  CertStore::Initialize();
-
   // Prepare for memory caching of SDCH dictionaries.
   SdchManager sdch_manager;  // Construct singleton database.
   sdch_manager.set_sdch_fetcher(new SdchDictionaryFetcher);
@@ -547,4 +542,3 @@ int BrowserMain(const MainFunctionParams& parameters) {
 
   return result_code;
 }
-

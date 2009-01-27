@@ -2,9 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "build/build_config.h"
 #include "base/debug_util.h"
 
+#include <execinfo.h>
 #include <fcntl.h>
+#include <stdio.h>
 #include <sys/stat.h>
 #include <sys/sysctl.h>
 #include <sys/types.h>
@@ -89,4 +92,18 @@ bool DebugUtil::BeingDebugged() {
 // static
 void DebugUtil::BreakDebugger() {
   asm ("int3");
+}
+
+StackTrace::StackTrace() {
+  static const int kMaxCallers = 256;
+
+  void* callers[kMaxCallers];
+  int count = backtrace(callers, kMaxCallers);
+  trace_.resize(count);
+  memcpy(&trace_[0], callers, sizeof(void*) * count);
+}
+
+void StackTrace::PrintBacktrace() {
+  fflush(stderr);
+  backtrace_symbols_fd(&trace_[0], trace_.size(), STDERR_FILENO);
 }

@@ -17,11 +17,12 @@
 #include "chrome/browser/plugin_process_host.h"
 #include "chrome/browser/plugin_service.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
-#include "chrome/browser/render_view_host.h"
-#include "chrome/browser/render_widget_host.h"
+#include "chrome/browser/renderer_host/render_view_host.h"
+#include "chrome/browser/renderer_host/render_widget_host.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
+#include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/browser/plugin_service.h"
 #include "net/dns_global.h"
@@ -81,6 +82,12 @@ std::wstring GetShutdownMsPath() {
 }
 
 void Shutdown() {
+  // Unload plugins. This needs to happen on the IO thread.
+  if (g_browser_process->io_thread()) {
+    g_browser_process->io_thread()->message_loop()->PostTask(FROM_HERE,
+        NewRunnableFunction(&ChromePluginLib::UnloadAllPlugins));
+  }
+
   // WARNING: During logoff/shutdown (WM_ENDSESSION) we may not have enough
   // time to get here. If you have something that *must* happen on end session,
   // consider putting it in BrowserProcessImpl::EndSession.
@@ -189,4 +196,3 @@ void ReadLastShutdownInfo() {
 }
 
 }  // namespace browser_shutdown
-

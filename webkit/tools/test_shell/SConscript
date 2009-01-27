@@ -115,7 +115,7 @@ input_files = [
     'text_input_controller.cc',
 ]
 if env.Bit('windows'):
-  # TODO(port): Consider porting drag_delegate.cc and drop_delecate.cc.
+  # TODO(port): Consider porting drag_delegate.cc and drop_delegate.cc.
   input_files.extend([
       'drag_delegate.cc',
       'drop_delegate.cc',
@@ -175,7 +175,6 @@ exe_input_files = [
 ]
 
 if env.Bit('windows'):
-  # TODO(port): figure out what to do with resources.
   resources = [
       env_res.RES('resources/test_shell.rc'),
       '$TARGET_ROOT/grit_derived_sources/net_resources.res',
@@ -194,6 +193,42 @@ env.Alias('webkit', i)
 if env.Bit('windows'):
   env.Depends(test_shell, '$V8_DIR/vc80.pdb')
 
+if env.Bit('linux'):
+  # Build the linux resource files.
+  import sys
+  sys.path.append(env.Dir('$CHROME_SRC_DIR/tools/grit').abspath)
+  env_grd = env.Clone()
+  env_grd.Tool('scons', toolpath=[env_grd.Dir('$CHROME_SRC_DIR/tools/grit/grit')])
+  # This dummy target is used to tell the emitter where to put the target
+  # files.
+  generated = env_grd.GRIT(
+      '$TARGET_ROOT/grit_derived_sources/fake_test_shell_resources',
+      '$CHROME_SRC_DIR/webkit/tools/test_shell/test_shell_resources.grd')
+
+  env.Append(BUILDERS = { 'Repack' : Builder(
+      action = 'python $CHROME_SRC_DIR/tools/data_pack/repack.py $TARGET $SOURCES',
+  )})
+  test_shell_data = env.Repack(
+      '$TARGET_ROOT/test_shell.pak',
+      ['$TARGET_ROOT/grit_derived_sources/net_resources.pak',
+       '$TARGET_ROOT/grit_derived_sources/test_shell_resources.pak',
+       '$TARGET_ROOT/grit_derived_sources/webkit_resources.pak',
+       '$TARGET_ROOT/grit_derived_sources/webkit_strings_en-US.pak',
+       ]
+  )
+  env.Depends(test_shell, test_shell_data)
+
+  i = env.Install('$DESTINATION_ROOT', test_shell_data)
+  env.Requires(test_shell, i)
+  env.Alias('webkit', i)
+
+  # We need the npapi plugin stuffed into the right place.
+  # TODO(evanm): find a cleaner way of requiring this.
+  env.Requires(test_shell,
+               '$DESTINATION_ROOT/plugins/libnpapi_test_plugin.so')
+  env.Requires(test_shell,
+               '$DESTINATION_ROOT/plugins/libnpapi_layout_test_plugin.so')
+
 test_files = [
     'image_decoder_unittest.cc',
     'keyboard_unittest.cc',
@@ -202,6 +237,7 @@ test_files = [
     'run_all_tests.cc',
     'test_shell_test.cc',
     'text_input_controller_unittest.cc',
+    '$SKIA_DIR/ext/convolver_unittest.cc',
     '$WEBKIT_DIR/glue/bookmarklet_unittest.cc',
     '$WEBKIT_DIR/glue/context_menu_unittest.cc',
     '$WEBKIT_DIR/glue/cpp_bound_class_unittest.cc',
@@ -226,15 +262,24 @@ test_files = [
 if env.Bit('windows'):
   # TODO(port): put portable files in above test_files declaration.
   test_files.extend([
+      '$SKIA_DIR/ext/platform_canvas_unittest.cc',
       'plugin_tests.cc',
       # Commented out until a regression is fixed and this file is restored.
       #'$WEBKIT_DIR/glue/stringimpl_unittest.cc',
+      '$SKIA_DIR/ext/vector_canvas_unittest.cc',
       '$WEBKIT_DIR/glue/webplugin_impl_unittest.cc',
       '$WEBKIT_DIR/tools/webcore_unit_tests/UniscribeHelper_unittest.cpp',
   ])
 
 test_shell_tests = env.ChromeTestProgram('test_shell_tests',
                                          resources + test_files)
+# We need the npapi plugin stuffed into the right place.
+# TODO(evanm): find a cleaner way of requiring this.
+env.Requires(test_shell,
+             '$DESTINATION_ROOT/plugins/libnpapi_test_plugin.so')
+env.Requires(test_shell_tests,
+             '$DESTINATION_ROOT/plugins/libnpapi_layout_test_plugin.so')
+
 i = env.Install('$TARGET_ROOT', test_shell_tests)
 env.Alias('webkit', i)
 

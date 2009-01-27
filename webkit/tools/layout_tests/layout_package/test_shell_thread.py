@@ -105,7 +105,7 @@ def StartTestShell(command, args):
 class SingleTestThread(threading.Thread):
   """Thread wrapper for running a single test file."""
   def __init__(self, test_shell_command, shell_args, test_uri, filename,
-               test_types, test_args):
+               test_types, test_args, target):
     """
     Args:
       test_uri: full file:// or http:// URI of the test file to be run
@@ -120,6 +120,7 @@ class SingleTestThread(threading.Thread):
     self._filename = filename
     self._test_types = test_types
     self._test_args = test_args
+    self._target = target
     self._single_test_failures = []
 
   def run(self):
@@ -128,7 +129,8 @@ class SingleTestThread(threading.Thread):
                                                self._filename,
                                                self._test_uri,
                                                self._test_types,
-                                               self._test_args)
+                                               self._test_args,
+                                               self._target)
 
   def GetFailures(self):
     return self._single_test_failures
@@ -181,6 +183,14 @@ class TestShellThread(threading.Thread):
   def run(self):
     """Main work entry point of the thread.  Basically we pull urls from the
     filename queue and run the tests until we run out of urls."""
+    batch_size = 0
+    batch_count = 0
+    if self._options.batch_size:
+      try:
+        batch_size = int(self._options.batch_size)
+      except:
+        logging.info("Ignoring invalid batch size '%s'" %
+                     self._options.batch_size)
     while True:
       try:
         filename, test_uri = self._filename_queue.get_nowait()
@@ -189,23 +199,30 @@ class TestShellThread(threading.Thread):
         logging.debug("queue empty, quitting test shell thread")
         return
 
-      # we have a url, run tests
+      # We have a url, run tests.
+      batch_count += 1
       if self._options.run_singly:
         failures = self._RunTestSingly(filename, test_uri)
       else:
         failures = self._RunTest(filename, test_uri)
       if failures:
-        # Check and kill test shell if we need to
+        # Check and kill test shell if we need too.
         if len([1 for f in failures if f.ShouldKillTestShell()]):
           self._KillTestShell()
-        # print the error message(s)
+          # Reset the batch count since the shell just bounced.
+          batch_count = 0
+        # Print the error message(s).
         error_str = '\n'.join(['  ' + f.Message() for f in failures])
         logging.error("%s failed:\n%s" %
                       (path_utils.RelativeTestFilename(filename), error_str))
-        # Group the errors for reporting
+        # Group the errors for reporting.
         self._failures[filename] = failures
       else:
         logging.debug(path_utils.RelativeTestFilename(filename) + " passed")
+      if batch_size > 0 and batch_count > batch_size:
+        # Bounce the shell and reset count.
+        self._KillTestShell()
+        batch_count = 0
 
 
   def _RunTestSingly(self, filename, test_uri):
@@ -220,7 +237,8 @@ class TestShellThread(threading.Thread):
                               test_uri,
                               filename,
                               self._test_types,
-                              self._test_args)
+                              self._test_args,
+                              self._options.target)
     worker.start()
     worker.join(self._time_out_sec)
     if worker.isAlive():

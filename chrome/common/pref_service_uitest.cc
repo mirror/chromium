@@ -43,9 +43,8 @@ public:
     ASSERT_TRUE(::SetFileAttributesW(tmp_pref_file_.c_str(),
         FILE_ATTRIBUTE_NORMAL));
 
-    CommandLine::AppendSwitchWithValue(&launch_arguments_,
-                                       switches::kUserDataDir,
-                                       tmp_profile_);
+    launch_arguments_.AppendSwitchWithValue(switches::kUserDataDir,
+                                            tmp_profile_);
   }
 
   bool LaunchAppWithProfile() {
@@ -92,8 +91,7 @@ TEST_F(PreferenceServiceTest, PreservedWindowPlacementIsLoaded) {
   // Retrieve the screen rect for the launched window
   scoped_ptr<BrowserProxy> browser(automation()->GetBrowserWindow(0));
   ASSERT_TRUE(browser.get());
-  scoped_ptr<WindowProxy> window(
-      automation()->GetWindowForBrowser(browser.get()));
+  scoped_ptr<WindowProxy> window(browser->GetWindow());
   HWND hWnd;
   ASSERT_TRUE(window->GetHWND(&hWnd));
 

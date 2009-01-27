@@ -24,7 +24,7 @@ class BrowserToolbarView;
 class EncodingMenuControllerDelegate;
 class InfoBarContainer;
 class Menu;
-class StatusBubble;
+class StatusBubbleViews;
 class TabContentsContainerView;
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -34,6 +34,7 @@ class TabContentsContainerView;
 //  including the TabStrip, toolbars, download shelves, the content area etc.
 //
 class BrowserView : public BrowserWindow,
+                    public BrowserWindowTesting,
                     public NotificationObserver,
                     public TabStripModelObserver,
                     public views::WindowDelegate,
@@ -44,10 +45,10 @@ class BrowserView : public BrowserWindow,
 
   void set_frame(BrowserFrame* frame) { frame_ = frame; }
 
-  // Returns a pointer to the BrowserWindow* interface implementation (an
+  // Returns a pointer to the BrowserView* interface implementation (an
   // instance of this object, typically) for a given HWND, or NULL if there is
   // no such association.
-  static BrowserWindow* GetBrowserWindowForHWND(HWND window);
+  static BrowserView* GetBrowserViewForHWND(HWND window);
 
   // Returns the show flag that should be used to show the frame containing
   // this view.
@@ -153,18 +154,17 @@ class BrowserView : public BrowserWindow,
   virtual void Activate();
   virtual void FlashFrame();
   virtual void* GetNativeHandle();
-  virtual TabStrip* GetTabStrip() const;
+  virtual BrowserWindowTesting* GetBrowserWindowTesting();
   virtual StatusBubble* GetStatusBubble();
   virtual void SelectedTabToolbarSizeChanged(bool is_animating);
   virtual void UpdateTitleBar();
   virtual void UpdateLoadingAnimations(bool should_animate);
+  virtual void SetStarredState(bool is_starred);
   virtual gfx::Rect GetNormalBounds() const;
   virtual bool IsMaximized();
-  virtual ToolbarStarToggle* GetStarButton() const;
   virtual LocationBarView* GetLocationBarView() const;
-  virtual GoButton* GetGoButton() const;
-  virtual BookmarkBarView* GetBookmarkBarView();
   virtual BrowserView* GetBrowserView() const;
+  virtual void UpdateStopGoState(bool is_loading);
   virtual void UpdateToolbar(TabContents* contents, bool should_restore_state);
   virtual void FocusToolbar();
   virtual void DestroyBrowser();
@@ -172,13 +172,20 @@ class BrowserView : public BrowserWindow,
   virtual void ToggleBookmarkBar();
   virtual void ShowAboutChromeDialog();
   virtual void ShowBookmarkManager();
+  virtual bool IsBookmarkBubbleVisible() const;
+  virtual void ShowBookmarkBubble(const GURL& url, bool already_bookmarked);
   virtual void ShowReportBugDialog();
   virtual void ShowClearBrowsingDataDialog();
   virtual void ShowImportDialog();
   virtual void ShowSearchEnginesDialog();
   virtual void ShowPasswordManager();
+  virtual void ShowSelectProfileDialog();
+  virtual void ShowNewProfileDialog();
   virtual void ShowHTMLDialog(HtmlDialogContentsDelegate* delegate,
                               void* parent_window);
+
+  // Overridden from BrowserWindowTesting:
+  virtual BookmarkBarView* GetBookmarkBarView();
 
   // Overridden from NotificationObserver:
   virtual void Observe(NotificationType type,
@@ -351,7 +358,7 @@ class BrowserView : public BrowserWindow,
   TabContentsContainerView* contents_container_;
 
   // The Status information bubble that appears at the bottom of the window.
-  scoped_ptr<StatusBubble> status_bubble_;
+  scoped_ptr<StatusBubbleViews> status_bubble_;
 
   // A mapping between accelerators and commands.
   scoped_ptr<std::map<views::Accelerator, int>> accelerator_table_;

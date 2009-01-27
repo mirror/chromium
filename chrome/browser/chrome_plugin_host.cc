@@ -23,6 +23,7 @@
 #include "chrome/browser/plugin_process_host.h"
 #include "chrome/browser/plugin_service.h"
 #include "chrome/browser/profile.h"
+#include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_counters.h"
 #include "chrome/common/chrome_paths.h"
@@ -640,8 +641,8 @@ CPProcessType STDCALL CPB_GetProcessType(CPID id) {
 }
 
 CPError STDCALL CPB_SendMessage(CPID id, const void *data, uint32 data_len) {
-  CommandLine cmd;
-  if (cmd.HasSwitch(switches::kGearsInRenderer)) {
+  if (CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kGearsInRenderer)) {
     ChromePluginLib* plugin = ChromePluginLib::FromCPID(id);
     CHECK(plugin);
 

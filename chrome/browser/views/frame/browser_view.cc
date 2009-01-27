@@ -26,10 +26,13 @@
 #include "chrome/browser/views/importer_view.h"
 #include "chrome/browser/views/infobars/infobar_container.h"
 #include "chrome/browser/views/keyword_editor_view.h"
+#include "chrome/browser/views/new_profile_dialog.h"
 #include "chrome/browser/views/password_manager_view.h"
-#include "chrome/browser/views/status_bubble.h"
+#include "chrome/browser/views/select_profile_dialog.h"
+#include "chrome/browser/views/status_bubble_views.h"
 #include "chrome/browser/views/tab_contents_container_view.h"
 #include "chrome/browser/views/tabs/tab_strip.h"
+#include "chrome/browser/views/toolbar_star_toggle.h"
 #include "chrome/browser/views/toolbar_view.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/web_contents.h"
@@ -70,7 +73,7 @@ static const int kStatusBubbleVerticalOverlap = 2;
 static const int kSeparationLineHeight = 1;
 // The name of a key to store on the window handle so that other code can
 // locate this object using just the handle.
-static const wchar_t* kBrowserWindowKey = L"__BROWSER_WINDOW__";
+static const wchar_t* kBrowserViewKey = L"__BROWSER_VIEW__";
 // The distance between tiled windows.
 static const int kWindowTilePixels = 10;
 // How frequently we check for hung plugin windows.
@@ -140,11 +143,11 @@ BrowserView::~BrowserView() {
 }
 
 // static
-BrowserWindow* BrowserView::GetBrowserWindowForHWND(HWND window) {
+BrowserView* BrowserView::GetBrowserViewForHWND(HWND window) {
   if (IsWindow(window)) {
-    HANDLE data = GetProp(window, kBrowserWindowKey);
+    HANDLE data = GetProp(window, kBrowserViewKey);
     if (data)
-      return reinterpret_cast<BrowserWindow*>(data);
+      return reinterpret_cast<BrowserView*>(data);
   }
   return NULL;
 }
@@ -212,8 +215,8 @@ bool BrowserView::AcceleratorPressed(const views::Accelerator& accelerator) {
   DCHECK(iter != accelerator_table_->end());
 
   int command_id = iter->second;
-  if (browser_->SupportsCommand(command_id) &&
-      browser_->IsCommandEnabled(command_id)) {
+  if (browser_->command_updater()->SupportsCommand(command_id) &&
+      browser_->command_updater()->IsCommandEnabled(command_id)) {
     browser_->ExecuteCommand(command_id);
     return true;
   }
@@ -236,7 +239,8 @@ bool BrowserView::SystemCommandReceived(UINT notification_code,
                                         const gfx::Point& point) {
   bool handled = false;
 
-  if (browser_->SupportsCommand(notification_code)) {
+  if (browser_->command_updater()->SupportsCommand(notification_code) &&
+      browser_->command_updater()->IsCommandEnabled(notification_code)) {
     browser_->ExecuteCommand(notification_code);
     handled = true;
   }
@@ -250,7 +254,7 @@ void BrowserView::AddViewToDropList(views::View* view) {
 
 bool BrowserView::ActivateAppModalDialog() const {
   // If another browser is app modal, flash and activate the modal browser.
-  if (BrowserList::IsShowingAppModalDialog()) {
+  if (AppModalDialogQueue::HasActiveDialog()) {
     Browser* active_browser = BrowserList::GetLastActive();
     if (active_browser && (browser_ != active_browser)) {
       active_browser->window()->FlashFrame();
@@ -285,8 +289,9 @@ void BrowserView::PrepareToRunSystemMenu(HMENU menu) {
     // |command| can be zero on submenu items (IDS_ENCODING,
     // IDS_ZOOM) and on separators.
     if (command != 0) {
-      system_menu_->EnableMenuItemByID(command,
-                                       browser_->IsCommandEnabled(command));
+      system_menu_->EnableMenuItemByID(
+          command,
+          browser_->command_updater()->IsCommandEnabled(command));
     }
   }
 }
@@ -321,12 +326,14 @@ void BrowserView::RegisterBrowserViewPrefs(PrefService* prefs) {
 void BrowserView::Init() {
   // Stow a pointer to this object onto the window handle so that we can get
   // at it later when all we have is a HWND.
-  SetProp(GetWidget()->GetHWND(), kBrowserWindowKey, this);
+  SetProp(GetWidget()->GetHWND(), kBrowserViewKey, this);
 
   // Start a hung plugin window detector for this browser object (as long as
   // hang detection is not disabled).
-  if (!CommandLine().HasSwitch(switches::kDisableHangMonitor))
+  if (!CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kDisableHangMonitor)) {
     InitHangMonitor();
+  }
 
   LoadAccelerators();
   SetAccessibleName(l10n_util::GetString(IDS_PRODUCT_NAME));
@@ -335,7 +342,7 @@ void BrowserView::Init() {
   tabstrip_->SetAccessibleName(l10n_util::GetString(IDS_ACCNAME_TABSTRIP));
   AddChildView(tabstrip_);
 
-  toolbar_ = new BrowserToolbarView(browser_->controller(), browser_.get());
+  toolbar_ = new BrowserToolbarView(browser_.get());
   AddChildView(toolbar_);
   toolbar_->SetID(VIEW_ID_TOOLBAR);
   toolbar_->Init(browser_->profile());
@@ -348,10 +355,11 @@ void BrowserView::Init() {
   set_contents_view(contents_container_);
   AddChildView(contents_container_);
 
-  status_bubble_.reset(new StatusBubble(GetWidget()));
+  status_bubble_.reset(new StatusBubbleViews(GetWidget()));
 
 #ifdef CHROME_PERSONALIZATION
-  EnablePersonalization(CommandLine().HasSwitch(switches::kEnableP13n));
+  const CommandLine& command_line = *CommandLine::ForCurrentProcess();
+  EnablePersonalization(command_line.HasSwitch(switches::kEnableP13n));
   if (IsPersonalizationEnabled()) {
     personalization_ = Personalization::CreateFramePersonalization(
         browser_->profile(), this);
@@ -414,8 +422,8 @@ void* BrowserView::GetNativeHandle() {
   return GetWidget()->GetHWND();
 }
 
-TabStrip* BrowserView::GetTabStrip() const {
-  return tabstrip_;
+BrowserWindowTesting* BrowserView::GetBrowserWindowTesting() {
+  return this;
 }
 
 StatusBubble* BrowserView::GetStatusBubble() {
@@ -456,6 +464,10 @@ void BrowserView::UpdateLoadingAnimations(bool should_animate) {
   }
 }
 
+void BrowserView::SetStarredState(bool is_starred) {
+  toolbar_->star_button()->SetToggled(is_starred);
+}
+
 gfx::Rect BrowserView::GetNormalBounds() const {
   WINDOWPLACEMENT wp;
   wp.length = sizeof(wp);
@@ -468,33 +480,17 @@ bool BrowserView::IsMaximized() {
   return frame_->GetWindow()->IsMaximized();
 }
 
-ToolbarStarToggle* BrowserView::GetStarButton() const {
-  return toolbar_->star_button();
-}
-
 LocationBarView* BrowserView::GetLocationBarView() const {
   return toolbar_->GetLocationBarView();
 }
 
-GoButton* BrowserView::GetGoButton() const {
-  return toolbar_->GetGoButton();
-}
-
-BookmarkBarView* BrowserView::GetBookmarkBarView() {
-  TabContents* current_tab = browser_->GetSelectedTabContents();
-  if (!bookmark_bar_view_.get()) {
-    bookmark_bar_view_.reset(new BookmarkBarView(current_tab->profile(),
-                                                 browser_.get()));
-    bookmark_bar_view_->SetParentOwned(false);
-  } else {
-    bookmark_bar_view_->SetProfile(current_tab->profile());
-  }
-  bookmark_bar_view_->SetPageNavigator(current_tab);
-  return bookmark_bar_view_.get();
-}
-
 BrowserView* BrowserView::GetBrowserView() const {
   return NULL;
+}
+
+void BrowserView::UpdateStopGoState(bool is_loading) {
+  toolbar_->GetGoButton()->ChangeMode(
+      is_loading ? GoButton::MODE_STOP : GoButton::MODE_GO);
 }
 
 void BrowserView::UpdateToolbar(TabContents* contents,
@@ -540,6 +536,14 @@ void BrowserView::ShowAboutChromeDialog() {
 
 void BrowserView::ShowBookmarkManager() {
   BookmarkManagerView::Show(browser_->profile());
+}
+
+bool BrowserView::IsBookmarkBubbleVisible() const {
+  return toolbar_->star_button()->is_bubble_showing();
+}
+
+void BrowserView::ShowBookmarkBubble(const GURL& url, bool already_bookmarked) {
+  toolbar_->star_button()->ShowStarBubble(url, !already_bookmarked);
 }
 
 void BrowserView::ShowReportBugDialog() {
@@ -603,6 +607,14 @@ void BrowserView::ShowPasswordManager() {
   PasswordManagerView::Show(browser_->profile());
 }
 
+void BrowserView::ShowSelectProfileDialog() {
+  SelectProfileDialog::RunDialog();
+}
+
+void BrowserView::ShowNewProfileDialog() {
+  NewProfileDialog::RunDialog();
+}
+
 void BrowserView::ShowHTMLDialog(HtmlDialogContentsDelegate* delegate,
                                  void* parent_window) {
   HWND parent_hwnd = reinterpret_cast<HWND>(parent_window);
@@ -613,6 +625,22 @@ void BrowserView::ShowHTMLDialog(HtmlDialogContentsDelegate* delegate,
   views::Window::CreateChromeWindow(parent_hwnd, gfx::Rect(), html_view);
   html_view->InitDialog();
   html_view->window()->Show();
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// BrowserView, BrowserWindowTesting implementation:
+
+BookmarkBarView* BrowserView::GetBookmarkBarView() {
+  TabContents* current_tab = browser_->GetSelectedTabContents();
+  if (!bookmark_bar_view_.get()) {
+    bookmark_bar_view_.reset(new BookmarkBarView(current_tab->profile(),
+                                                 browser_.get()));
+    bookmark_bar_view_->SetParentOwned(false);
+  } else {
+    bookmark_bar_view_->SetProfile(current_tab->profile());
+  }
+  bookmark_bar_view_->SetPageNavigator(current_tab);
+  return bookmark_bar_view_.get();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -730,8 +758,8 @@ bool BrowserView::ExecuteWindowsCommand(int command_id) {
   if (command_id_from_app_command != -1)
     command_id = command_id_from_app_command;
 
-  if (browser_->SupportsCommand(command_id)) {
-    if (browser_->IsCommandEnabled(command_id))
+  if (browser_->command_updater()->SupportsCommand(command_id)) {
+    if (browser_->command_updater()->IsCommandEnabled(command_id))
       browser_->ExecuteCommand(command_id);
     return true;
   }
@@ -1256,8 +1284,7 @@ void BrowserView::LoadAccelerators() {
 void BrowserView::BuildMenuForTabStriplessWindow(Menu* menu,
                                                  int insertion_index) {
   encoding_menu_delegate_.reset(new EncodingMenuControllerDelegate(
-      browser_.get(),
-      browser_->controller()));
+      browser_.get()));
 
   for (int i = 0; i < arraysize(kMenuLayout); ++i) {
     if (kMenuLayout[i].separator) {

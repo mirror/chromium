@@ -8,14 +8,18 @@
 #include "base/thread.h"
 #include "base/path_service.h"
 #include "base/singleton.h"
+#include "chrome/browser/browser.h"
+#include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/plugin_service.h"
 #include "chrome/browser/shell_integration.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/pref_service.h"
 
-BrowserProcessImpl::BrowserProcessImpl(CommandLine& command_line)
-    : created_local_state_(), created_metrics_service_(),
+BrowserProcessImpl::BrowserProcessImpl(const CommandLine& command_line)
+    : main_notification_service_(new NotificationService),
+      memory_model_(HIGH_MEMORY_MODEL),
+      created_local_state_(), created_metrics_service_(),
       created_profile_manager_() {
   g_browser_process = this;
 }
@@ -94,7 +98,9 @@ bool BrowserInit::LaunchBrowserImpl(const CommandLine& parsed_command_line,
                                     int* return_code) {
   DCHECK(profile);
 
-  // LAUNCH BROWSER WITH PROFILE HERE!
+  // this code is a simplification of BrowserInit::LaunchWithProfile::Launch()
+  Browser* browser = Browser::Create(profile);
+  browser->window()->Show();
 
   return true;
 }
@@ -103,11 +109,12 @@ bool BrowserInit::LaunchBrowserImpl(const CommandLine& parsed_command_line,
 
 UserDataManager* UserDataManager::instance_ = NULL;
 
-void UserDataManager::Create() {
+UserDataManager* UserDataManager::Create() {
   DCHECK(!instance_);
   std::wstring user_data;
   PathService::Get(chrome::DIR_USER_DATA, &user_data);
   instance_ = new UserDataManager(user_data);
+  return instance_;
 }
 
 UserDataManager* UserDataManager::Get() {
@@ -134,6 +141,10 @@ std::wstring ProfileManager::GetDefaultProfilePath(
 Profile* ProfileManager::GetDefaultProfile(const std::wstring& user_data_dir) {
   std::wstring default_profile_dir = GetDefaultProfileDir(user_data_dir);
   return new Profile(default_profile_dir);
+}
+
+Profile* ProfileManager::FakeProfile() {
+  return new Profile(L"");
 }
 
 //--------------------------------------------------------------------------
@@ -173,6 +184,7 @@ void RegisterAllPrefs(PrefService*, PrefService*) { }
 namespace browser_shutdown {
 void ReadLastShutdownInfo()  { }
 void Shutdown() { }
+void OnShutdownStarting(ShutdownType type) { }
 }
 
 void OpenFirstRunDialog(Profile* profile) { }
@@ -201,4 +213,21 @@ void PluginService::SetChromePluginDataDir(const std::wstring& data_dir) {
 //--------------------------------------------------------------------------
 
 void InstallJankometer(const CommandLine&) {
+}
+
+//--------------------------------------------------------------------------
+
+void Browser::Observe(NotificationType type,
+                      const NotificationSource& source,
+                      const NotificationDetails& details) {
+}
+
+GURL Browser::GetHomePage() {
+  return GURL("http://dev.chromium.org");
+}
+
+TabContents* Browser::AddTabWithURL(
+    const GURL& url, const GURL& referrer, PageTransition::Type transition,
+    bool foreground, SiteInstance* instance) {
+  return NULL;
 }

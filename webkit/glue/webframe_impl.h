@@ -96,7 +96,8 @@ class WebFrameImpl : public WebFrame {
                                           bool replace,
                                           const GURL& fake_url);
   virtual void ExecuteJavaScript(const std::string& js_code,
-                                 const GURL& script_url);
+                                 const GURL& script_url,
+                                 int start_line);
   virtual bool GetPreviousHistoryState(std::string* history_state) const;
   virtual bool GetCurrentHistoryState(std::string* history_state) const;
   virtual bool HasCurrentHistoryState() const;
@@ -256,8 +257,6 @@ class WebFrameImpl : public WebFrame {
 
   // Returns true if the frame CSS is in "printing" mode.
   bool printing() const { return printing_; }
-
-  virtual bool IsReloadAllowingStaleData() const;
 
   // Registers a listener for the specified user name input element.  The
   // listener will receive notifications for blur and when autocomplete should

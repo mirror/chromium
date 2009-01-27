@@ -101,6 +101,9 @@ class Thread : PlatformThread::Delegate {
   // The native thread handle.
   PlatformThreadHandle thread_handle() { return thread_; }
 
+  // The thread ID.
+  PlatformThreadId thread_id() const { return thread_id_; }
+
  protected:
   // Called just prior to starting the message loop
   virtual void Init() {}
@@ -130,8 +133,8 @@ class Thread : PlatformThread::Delegate {
   // by the created thread.
   MessageLoop* message_loop_;
 
-  // Our thread's ID.  Used for debugging purposes.
-  int thread_id_;
+  // Our thread's ID.
+  PlatformThreadId thread_id_;
 
   // The name of the thread.  Used for debugging purposes.
   std::string name_;

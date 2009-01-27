@@ -195,7 +195,7 @@ namespace NPAPI
 {
 
 void PluginList::PlatformInit() {
-  CommandLine command_line;
+  const CommandLine& command_line = *CommandLine::ForCurrentProcess();
   dont_load_new_wmp_ = command_line.HasSwitch(kUseOldWMPPluginSwitch);
   use_internal_activex_shim_ =
       !command_line.HasSwitch(kNoNativeActiveXShimSwitch);
@@ -324,19 +324,17 @@ bool PluginList::ShouldLoadPlugin(const WebPluginInfo& info) {
 }
 
 void PluginList::LoadInternalPlugins() {
+  WebPluginInfo info;
+
+#ifdef GEARS_STATIC_LIB
+  LoadPlugin(FilePath(kGearsPluginLibraryName));
+#endif
+
   if (!use_internal_activex_shim_)
     return;
 
-  WebPluginInfo info;
-  if (PluginLib::ReadWebPluginInfo(FilePath(kActiveXShimFileName),
-                                   &info)) {
-    plugins_.push_back(info);
-  }
-
-  if (PluginLib::ReadWebPluginInfo(FilePath(kActiveXShimFileNameForMediaPlayer),
-                                   &info)) {
-    plugins_.push_back(info);
-  }
+  LoadPlugin(FilePath(kActiveXShimFileName));
+  LoadPlugin(FilePath(kActiveXShimFileNameForMediaPlayer));
 }
 
 } // namespace NPAPI

@@ -25,6 +25,7 @@
 #include "webkit/tools/test_shell/test_shell.h"
 #include "webkit/tools/test_shell/test_shell_request_context.h"
 #include "webkit/tools/test_shell/test_shell_switches.h"
+#import "webkit/tools/test_shell/mac/KeystoneGlue.h"
 
 #include "WebSystemInterface.h"
 
@@ -114,8 +115,8 @@ int main(const int argc, const char *argv[]) {
   // the windows version, so that we can run the same test scripts. stop
   // if we hit something that's not a switch (like, oh, a URL).
 
-  CommandLine::SetArgcArgv(argc, argv);
-  CommandLine parsed_command_line(argc, argv);
+  CommandLine::Init(argc, argv);
+  const CommandLine& parsed_command_line = *CommandLine::ForCurrentProcess();
 
   if (parsed_command_line.HasSwitch(test_shell::kCheckLayoutTestSystemDeps)) {
     // Always succeed the deps check, currently just used by windows port.
@@ -166,7 +167,7 @@ int main(const int argc, const char *argv[]) {
   std::wstring javascript_flags =
       parsed_command_line.GetSwitchValue(test_shell::kJavaScriptFlags);
   // Test shell always exposes the GC.
-  CommandLine::AppendSwitch(&javascript_flags, L"expose-gc");
+  javascript_flags += L" --expose-gc";
   webkit_glue::SetJavaScriptFlags(javascript_flags);
 
   // Load and initialize the stats table (one per process, so that multiple
@@ -221,6 +222,9 @@ int main(const int argc, const char *argv[]) {
 
   // Default to a homepage if we're interactive
   if (!layout_test_mode) {
+    // If Keystone is available, set it up if needed and register with it.
+    [KeystoneGlue registerWithKeystone];
+
     NSString *resourcePath = [[NSBundle mainBundle] resourcePath];
     NSString *testShellPath =
         [resourcePath stringByAppendingPathComponent:@"test_shell/index.html"];
@@ -231,12 +235,10 @@ int main(const int argc, const char *argv[]) {
     uri = UTF8ToWide([testShellURL UTF8String]);
   }
 
-  if (parsed_command_line.GetLooseValueCount() > 0) {
-    CommandLine::LooseValueIterator iter =
-        parsed_command_line.GetLooseValuesBegin();
-    uri = *iter;
-  }
-  
+  std::vector<std::wstring> values = parsed_command_line.GetLooseValues();
+  if (values.size() > 0)
+    uri = values[0];
+
   TestShell* shell;
   if (TestShell::CreateNewWindow(uri, &shell)) {
 #ifdef NOTYET
@@ -321,11 +323,13 @@ int main(const int argc, const char *argv[]) {
             continue;
           
           SetCurrentTestName(filenameBuffer);
-          if (!TestShell::RunFileTest(filenameBuffer, params))
+          params.test_url = filenameBuffer;
+          if (!TestShell::RunFileTest(params))
             break;
         }
       } else {
-        TestShell::RunFileTest(WideToUTF8(uri).c_str(), params);
+        params.test_url = WideToUTF8(uri).c_str();
+        TestShell::RunFileTest(params);
       }
     } else {
       main_message_loop.Run();

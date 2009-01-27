@@ -8,7 +8,7 @@
 #include "base/path_service.h"
 #include "base/process_util.h"
 #include "base/string_util.h"
-#include "chrome/browser/url_fixer_upper.h"
+#include "chrome/browser/net/url_fixer_upper.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_process_filter.h"
@@ -38,9 +38,8 @@ class PageCyclerTest : public UITest {
     show_window_ = true;
 
     // Expose garbage collection for the page cycler tests.
-    CommandLine::AppendSwitchWithValue(&launch_arguments_,
-                                       switches::kJavaScriptFlags,
-                                       L"--expose_gc");
+    launch_arguments_.AppendSwitchWithValue(switches::kJavaScriptFlags,
+                                            L"--expose_gc");
   }
 
   // For HTTP tests, the name must be safe for use in a URL without escaping.

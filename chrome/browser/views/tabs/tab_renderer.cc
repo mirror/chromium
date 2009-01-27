@@ -8,6 +8,7 @@
 
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/browser.h"
+#include "chrome/browser/profile.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
 #include "chrome/common/gfx/chrome_canvas.h"
@@ -401,6 +402,8 @@ void TabRenderer::Paint(ChromeCanvas* canvas) {
                               true);
       } else {
         if (!data_.favicon.isNull()) {
+          // TODO(pkasting): Use code in tab_icon_view.cc:PaintIcon() (or switch
+          // to using that class to render the favicon).
           canvas->DrawBitmapInt(data_.favicon, 0, 0,
                                 data_.favicon.width(),
                                 data_.favicon.height(),

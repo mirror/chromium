@@ -2,19 +2,35 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <windows.h>
-#include <shellapi.h>
-
-#include "chrome/browser/browser.h"
-
 #include "base/command_line.h"
 #include "base/idle_timer.h"
 #include "base/logging.h"
 #include "base/string_util.h"
 #include "chrome/app/chrome_dll_resource.h"
+#include "chrome/browser/browser_list.h"
+#include "chrome/browser/metrics/user_metrics.h"
+#include "chrome/browser/tab_contents/tab_contents_type.h"
+#include "chrome/common/chrome_constants.h"
+#include "chrome/common/chrome_switches.h"
+#include "chrome/common/page_transition_types.h"
+#include "chrome/common/pref_names.h"
+#include "chrome/common/pref_service.h"
+#include "net/base/cookie_monster.h"
+#include "net/base/cookie_policy.h"
+#include "net/base/net_util.h"
+#include "net/base/registry_controlled_domain.h"
+#include "net/url_request/url_request_context.h"
+#include "webkit/glue/window_open_disposition.h"
+
+#if defined(OS_WIN)
+
+#include <windows.h>
+#include <shellapi.h>
+
+#include "chrome/browser/browser.h"
+
 #include "chrome/app/locales/locale_settings.h"
 #include "chrome/browser/automation/ui_controls.h"
-#include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/browser_url_handler.h"
@@ -26,47 +42,34 @@
 #include "chrome/browser/dom_ui/new_tab_ui.h"
 #include "chrome/browser/download/save_package.h"
 #include "chrome/browser/history_tab_ui.h"
-#include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/options_window.h"
+#include "chrome/browser/net/url_fixer_upper.h"
 #include "chrome/browser/plugin_process_host.h"
 #include "chrome/browser/plugin_service.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/sessions/session_service.h"
 #include "chrome/browser/ssl/ssl_error_info.h"
+#include "chrome/browser/status_bubble.h"
 #include "chrome/browser/tab_contents/interstitial_page.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/site_instance.h"
 #include "chrome/browser/tab_contents/web_contents_view.h"
 #include "chrome/browser/task_manager.h"
-#include "chrome/browser/url_fixer_upper.h"
 #include "chrome/browser/user_data_manager.h"
 #include "chrome/browser/view_ids.h"
 #include "chrome/browser/views/download_tab_view.h"
-#include "chrome/browser/views/go_button.h"
 #include "chrome/browser/views/location_bar_view.h"
-#include "chrome/browser/views/new_profile_dialog.h"
-#include "chrome/browser/views/select_profile_dialog.h"
-#include "chrome/browser/views/status_bubble.h"
-#include "chrome/browser/views/toolbar_star_toggle.h"
 #include "chrome/browser/window_sizer.h"
-#include "chrome/common/chrome_constants.h"
-#include "chrome/common/chrome_switches.h"
 #include "chrome/common/l10n_util.h"
-#include "chrome/common/pref_names.h"
-#include "chrome/common/pref_service.h"
 #include "chrome/common/win_util.h"
-#include "net/base/cookie_monster.h"
-#include "net/base/cookie_policy.h"
-#include "net/base/net_util.h"
-#include "net/base/registry_controlled_domain.h"
 
 #include "chromium_strings.h"
 #include "generated_resources.h"
 
-using base::TimeDelta;
+#endif  // OS_WIN
 
-static BrowserList g_browserlist;
+using base::TimeDelta;
 
 // How long we wait before updating the browser chrome while loading a page.
 static const int kUIUpdateCoalescingTimeMS = 200;
@@ -84,12 +87,14 @@ static const int kWindowTilePixels = 20;
 class ReducePluginsWorkingSetTask : public Task {
  public:
   virtual void Run() {
+#if defined(OS_WIN)
     for (PluginProcessHostIterator iter; !iter.Done(); ++iter) {
       PluginProcessHost* plugin = const_cast<PluginProcessHost*>(*iter);
       DCHECK(plugin->process());
       base::Process process(plugin->process());
       process.ReduceWorkingSet();
     }
+#endif
   }
 };
 
@@ -104,6 +109,7 @@ class BrowserIdleTimer : public base::IdleTimer {
   }
 
   virtual void OnIdle() {
+#if defined(OS_WIN)
     // We're idle.  Release browser and renderer unused pages.
 
     // Handle the Browser.
@@ -123,6 +129,7 @@ class BrowserIdleTimer : public base::IdleTimer {
     // collection.
     g_browser_process->io_thread()->message_loop()->PostTask(FROM_HERE,
         new ReducePluginsWorkingSetTask());
+#endif
   }
 };
 
@@ -141,6 +148,18 @@ struct Browser::UIUpdate {
   unsigned changed_flags;
 };
 
+namespace {
+
+// Returns true if the specified TabContents has unload listeners registered.
+bool TabHasUnloadListener(TabContents* contents) {
+  WebContents* web_contents = contents->AsWebContents();
+  return web_contents && web_contents->notify_disconnection() &&
+      !web_contents->showing_interstitial_page() &&
+      web_contents->render_view_host()->HasUnloadListener();
+}
+
+}  // namespace
+
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, Constructors, Creation, Showing:
 
@@ -149,7 +168,7 @@ Browser::Browser(Type type, Profile* profile)
       profile_(profile),
       window_(NULL),
       tabstrip_model_(this, profile),
-      controller_(this),
+      command_updater_(this),
       toolbar_model_(this),
       chrome_updater_factory_(this),
       is_attempting_to_close_browser_(false),
@@ -164,8 +183,12 @@ Browser::Browser(Type type, Profile* profile)
   InitCommandState();
   BrowserList::AddBrowser(this);
 
+#if defined(OS_WIN)
+  // TODO(port): turn this back on when prefs are fleshed out. This asserts
+  // because the pref hasn't yet been registered.
   encoding_auto_detect_.Init(prefs::kWebKitUsesUniversalDetector,
                              profile_->GetPrefs(), NULL);
+#endif
 
   // Trim browser memory on idle for low & medium memory models.
   if (g_browser_process->memory_model() < BrowserProcess::HIGH_MEMORY_MODEL)
@@ -279,6 +302,7 @@ void Browser::OpenURLOffTheRecord(Profile* profile, const GURL& url) {
   browser->window()->Show();
 }
 
+#if defined(OS_WIN)
 // static
 void Browser::OpenWebApplication(Profile* profile, WebApp* app) {
   const std::wstring& app_name =
@@ -290,27 +314,7 @@ void Browser::OpenWebApplication(Profile* profile, WebApp* app) {
   browser->AddWebApplicationTab(profile, app, false);
   browser->window()->Show();
 }
-
-///////////////////////////////////////////////////////////////////////////////
-// Browser, Command API:
-
-bool Browser::SupportsCommand(int id) const {
-  return controller_.SupportsCommand(id);
-}
-
-bool Browser::IsCommandEnabled(int id) const {
-  // No commands are enabled if there is not yet any selected tab.
-  // TODO(pkasting): It seems like we should not need this, because either
-  // most/all commands should not have been enabled yet anyway or the ones that
-  // are enabled should be global, or safe themselves against having no selected
-  // tab.  However, Ben says he tried removing this before and got lots of
-  // crashes, e.g. from Windows sending WM_COMMANDs at random times during
-  // window construction.  This probably could use closer examination someday.
-  if (!GetSelectedTabContents())
-    return false;
-
-  return controller_.IsCommandEnabled(id);
-}
+#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, State Storage and Retrieval for UI:
@@ -342,7 +346,7 @@ void Browser::SaveWindowPlacement(const gfx::Rect& bounds, bool maximized) {
 }
 
 gfx::Rect Browser::GetSavedWindowBounds() const {
-  CommandLine parsed_command_line;
+  const CommandLine& parsed_command_line = *CommandLine::ForCurrentProcess();
   bool record_mode = parsed_command_line.HasSwitch(switches::kRecordMode);
   bool playback_mode = parsed_command_line.HasSwitch(switches::kPlaybackMode);
   if (record_mode || playback_mode) {
@@ -364,7 +368,7 @@ gfx::Rect Browser::GetSavedWindowBounds() const {
 // TODO(beng): obtain maximized state some other way so we don't need to go
 //             through all this hassle.
 bool Browser::GetSavedMaximizedState() const {
-  if (CommandLine().HasSwitch(switches::kStartMaximized))
+  if (CommandLine::ForCurrentProcess()->HasSwitch(switches::kStartMaximized))
     return true;
 
   gfx::Rect restored_bounds;
@@ -380,6 +384,8 @@ SkBitmap Browser::GetCurrentPageIcon() const {
   // during the window's creation (before tabs have been added).
   return contents ? contents->GetFavIcon() : SkBitmap();
 }
+
+#if defined(OS_WIN)
 
 std::wstring Browser::GetCurrentPageTitle() const {
   TabContents* contents = tabstrip_model_.GetSelectedTabContents();
@@ -418,10 +424,9 @@ bool Browser::ShouldCloseWindow() {
   is_attempting_to_close_browser_ = true;
 
   for (int i = 0; i < tab_count(); ++i) {
-    if (tabstrip_model_.TabHasUnloadListener(i)) {
-      TabContents* tab = GetTabContentsAt(i);
-      tabs_needing_before_unload_fired_.insert(tab);
-    }
+    TabContents* contents = GetTabContentsAt(i);
+    if (TabHasUnloadListener(contents))
+      tabs_needing_before_unload_fired_.insert(contents);
   }
 
   if (tabs_needing_before_unload_fired_.empty())
@@ -554,6 +559,8 @@ void Browser::ShowNativeUITab(const GURL& url) {
   AddNewContents(NULL, contents, NEW_FOREGROUND_TAB, gfx::Rect(), true);
 }
 
+#endif  // OS_WIN
+
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, Assorted browser commands:
 
@@ -580,6 +587,7 @@ void Browser::GoForward() {
   if (GetSelectedTabContents()->controller()->CanGoForward())
     GetSelectedTabContents()->controller()->GoForward();
 }
+
 
 void Browser::Reload() {
   UserMetrics::RecordAction(L"Reload", profile_);
@@ -610,6 +618,7 @@ void Browser::Home() {
       homepage_url, GURL(), PageTransition::AUTO_BOOKMARK);
 }
 
+#if defined(OS_WIN)
 void Browser::OpenCurrentURL() {
   UserMetrics::RecordAction(L"LoadURL", profile_);
   LocationBarView* lbv = GetLocationBarView();
@@ -625,6 +634,7 @@ void Browser::Go() {
   if (lbv)
     lbv->location_entry()->model()->AcceptInput(CURRENT_TAB, false);
 }
+#endif
 
 void Browser::Stop() {
   UserMetrics::RecordAction(L"Stop", profile_);
@@ -642,14 +652,18 @@ void Browser::NewIncognitoWindow() {
 }
 
 void Browser::NewProfileWindowByIndex(int index) {
+#if defined(OS_WIN)
   UserMetrics::RecordAction(L"NewProfileWindowByIndex", profile_);
   UserDataManager::Get()->LaunchChromeForProfile(index);
+#endif
 }
 
 void Browser::CloseWindow() {
   UserMetrics::RecordAction(L"CloseWindow", profile_);
   window_->Close();
 }
+
+#if defined(OS_WIN)
 
 void Browser::NewTab() {
   UserMetrics::RecordAction(L"NewTab", profile_);
@@ -725,40 +739,21 @@ void Browser::Exit() {
 void Browser::BookmarkCurrentPage() {
   UserMetrics::RecordAction(L"Star", profile_);
 
-  TabContents* tab = GetSelectedTabContents();
-  if (!tab->AsWebContents())
-    return;
-
-  WebContents* rvh = tab->AsWebContents();
-  BookmarkModel* model = tab->profile()->GetBookmarkModel();
+  TabContents* contents = GetSelectedTabContents();
+  BookmarkModel* model = contents->profile()->GetBookmarkModel();
   if (!model || !model->IsLoaded())
     return;  // Ignore requests until bookmarks are loaded.
 
-  NavigationEntry* entry = rvh->controller()->GetActiveEntry();
+  NavigationEntry* entry = contents->controller()->GetActiveEntry();
   if (!entry)
     return;  // Can't star if there is no URL.
   const GURL& url = entry->display_url();
   if (url.is_empty() || !url.is_valid())
     return;
 
-  if (window_->GetStarButton()) {
-    if (!window_->GetStarButton()->is_bubble_showing()) {
-      const bool newly_bookmarked = !model->IsBookmarked(url);
-      if (newly_bookmarked) {
-        model->SetURLStarred(url, entry->title(), true);
-        if (!model->IsBookmarked(url)) {
-          // Starring failed. This shouldn't happen.
-          NOTREACHED();
-          return;
-        }
-      }
-      window_->GetStarButton()->ShowStarBubble(url, newly_bookmarked);
-    }
-  } else if (model->IsBookmarked(url)) {
-    // If we can't find the star button and the user wanted to unstar it,
-    // go ahead and unstar it without showing the bubble.
-    model->SetURLStarred(url, std::wstring(), false);
-  }
+  model->SetURLStarred(url, entry->title(), true);
+  if (!window_->IsBookmarkBubbleVisible())
+    window_->ShowBookmarkBubble(url, model->IsBookmarked(url));
 }
 
 void Browser::ViewSource() {
@@ -965,12 +960,12 @@ void Browser::OpenTaskManager() {
 
 void Browser::OpenSelectProfileDialog() {
   UserMetrics::RecordAction(L"SelectProfile", profile_);
-  SelectProfileDialog::RunDialog();
+  window_->ShowSelectProfileDialog();
 }
 
 void Browser::OpenNewProfileDialog() {
   UserMetrics::RecordAction(L"CreateProfile", profile_);
-  NewProfileDialog::RunDialog();
+  window_->ShowNewProfileDialog();
 }
 
 void Browser::OpenBugReportDialog() {
@@ -1077,11 +1072,23 @@ Browser* Browser::GetBrowserForController(
   return NULL;
 }
 
+#endif  // OS_WIN
+
 ///////////////////////////////////////////////////////////////////////////////
-// Browser, CommandHandler implementation:
+// Browser, CommandUpdater::CommandUpdaterDelegate implementation:
 
 void Browser::ExecuteCommand(int id) {
-  DCHECK(IsCommandEnabled(id)) << "Invalid or disabled command";
+  // No commands are enabled if there is not yet any selected tab.
+  // TODO(pkasting): It seems like we should not need this, because either
+  // most/all commands should not have been enabled yet anyway or the ones that
+  // are enabled should be global, or safe themselves against having no selected
+  // tab.  However, Ben says he tried removing this before and got lots of
+  // crashes, e.g. from Windows sending WM_COMMANDs at random times during
+  // window construction.  This probably could use closer examination someday.
+  if (!GetSelectedTabContents())
+    return;
+
+  DCHECK(command_updater_.IsCommandEnabled(id)) << "Invalid/disabled command";
 
   // The order of commands in this switch statement must match the function
   // declaration order in browser.h!
@@ -1091,8 +1098,10 @@ void Browser::ExecuteCommand(int id) {
     case IDC_FORWARD:               GoForward();                   break;
     case IDC_RELOAD:                Reload();                      break;
     case IDC_HOME:                  Home();                        break;
+#if defined(OS_WIN)
     case IDC_OPEN_CURRENT_URL:      OpenCurrentURL();              break;
     case IDC_GO:                    Go();                          break;
+#endif
     case IDC_STOP:                  Stop();                        break;
 
      // Window management commands
@@ -1108,6 +1117,7 @@ void Browser::ExecuteCommand(int id) {
     case IDC_NEW_WINDOW_PROFILE_7:
     case IDC_NEW_WINDOW_PROFILE_8: 
         NewProfileWindowByIndex(id - IDC_NEW_WINDOW_PROFILE_0);    break;
+#if defined(OS_WIN)
     case IDC_CLOSE_WINDOW:          CloseWindow();                 break;
     case IDC_NEW_TAB:               NewTab();                      break;
     case IDC_CLOSE_TAB:             CloseTab();                    break;
@@ -1213,12 +1223,15 @@ void Browser::ExecuteCommand(int id) {
     case IDC_VIEW_PASSWORDS:        OpenPasswordManager();         break;
     case IDC_ABOUT:                 OpenAboutChromeDialog();       break;
     case IDC_HELP_PAGE:             OpenHelpTab();                 break;
+#endif
 
     default:
       LOG(WARNING) << "Received Unimplemented Command: " << id;
       break;
   }
 }
+
+#if defined(OS_WIN)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, TabStripModelDelegate implementation:
@@ -1289,6 +1302,8 @@ TabContents* Browser::CreateTabContentsForURL(
   return contents;
 }
 
+#endif  // OS_WIN
+
 bool Browser::CanDuplicateContentsAt(int index) {
   TabContents* contents = GetTabContentsAt(index);
   DCHECK(contents);
@@ -1296,6 +1311,8 @@ bool Browser::CanDuplicateContentsAt(int index) {
   NavigationController* nc = contents->controller();
   return nc ? (nc->active_contents() && nc->GetLastCommittedEntry()) : false;
 }
+
+#if defined(OS_WIN)
 
 void Browser::DuplicateContentsAt(int index) {
   TabContents* contents = GetTabContentsAt(index);
@@ -1351,6 +1368,40 @@ void Browser::CloseFrameAfterDragSession() {
   // the request.
   MessageLoop::current()->PostTask(FROM_HERE,
       method_factory_.NewRunnableMethod(&Browser::CloseFrame));
+}
+
+void Browser::CreateHistoricalTab(TabContents* contents) {
+  // We don't create historical tabs for incognito windows or windows without
+  // profiles.
+  if (!profile() || profile()->IsOffTheRecord() ||
+      !profile()->GetTabRestoreService()) {
+    return;
+  }
+
+  // We only create historical tab entries for normal tabbed browser windows.
+  if (type() == TYPE_NORMAL) {
+    profile()->GetTabRestoreService()->CreateHistoricalTab(
+        contents->controller());
+  }
+}
+
+bool Browser::RunUnloadListenerBeforeClosing(TabContents* contents) {
+  WebContents* web_contents = contents->AsWebContents();
+  if (web_contents) {
+    // If the WebContents is not connected yet, then there's no unload
+    // handler we can fire even if the WebContents has an unload listener.
+    // One case where we hit this is in a tab that has an infinite loop 
+    // before load.
+    if (TabHasUnloadListener(contents)) {
+      // If the page has unload listeners, then we tell the renderer to fire
+      // them. Once they have fired, we'll get a message back saying whether
+      // to proceed closing the page or not, which sends us back to this method
+      // with the HasUnloadListener bit cleared.
+      web_contents->render_view_host()->FirePageBeforeUnload();
+      return true;
+    }
+  }
+  return false;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1500,7 +1551,7 @@ void Browser::OpenURLFromTab(TabContents* source,
   // TODO(creis): should this apply to applications?
   SiteInstance* instance = NULL;
   // Don't use this logic when "--process-per-tab" is specified.
-  if (!CommandLine().HasSwitch(switches::kProcessPerTab)) {
+  if (!CommandLine::ForCurrentProcess()->HasSwitch(switches::kProcessPerTab)) {
     if (current_tab) {
       const WebContents* const web_contents = current_tab->AsWebContents();
       if (web_contents) {
@@ -1737,7 +1788,7 @@ void Browser::ToolbarSizeChanged(TabContents* source, bool is_animating) {
 
 void Browser::URLStarredChanged(TabContents* source, bool starred) {
   if (source == GetSelectedTabContents())
-    SetStarredButtonToggled(starred);
+    window_->SetStarredState(starred);
 }
 
 void Browser::ContentsMouseEvent(TabContents* source, UINT message) {
@@ -1764,7 +1815,7 @@ void Browser::UpdateTargetURL(TabContents* source, const GURL& url) {
 }
 
 void Browser::ContentsZoomChange(bool zoom_in) {
-  controller_.ExecuteCommand(zoom_in ? IDC_ZOOM_PLUS : IDC_ZOOM_MINUS);
+  ExecuteCommand(zoom_in ? IDC_ZOOM_PLUS : IDC_ZOOM_MINUS);
 }
 
 bool Browser::IsApplication() const {
@@ -1881,6 +1932,8 @@ void Browser::Observe(NotificationType type,
   }
 }
 
+#endif  // OS_WIN
+
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, Command and state updating (private):
 
@@ -1890,128 +1943,134 @@ void Browser::InitCommandState() {
   // initialized here, otherwise they will be forever disabled.
 
   // Navigation commands
-  controller_.UpdateCommandEnabled(IDC_RELOAD, true);
+  command_updater_.UpdateCommandEnabled(IDC_RELOAD, true);
 
   // Window management commands
-  controller_.UpdateCommandEnabled(IDC_NEW_WINDOW, true);
-  controller_.UpdateCommandEnabled(IDC_NEW_INCOGNITO_WINDOW, true);
+  command_updater_.UpdateCommandEnabled(IDC_NEW_WINDOW, true);
+  command_updater_.UpdateCommandEnabled(IDC_NEW_INCOGNITO_WINDOW, true);
   // TODO(pkasting): Perhaps the code that populates this submenu should do
   // this?
-  controller_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_0, true);
-  controller_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_1, true);
-  controller_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_2, true);
-  controller_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_3, true);
-  controller_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_4, true);
-  controller_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_5, true);
-  controller_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_6, true);
-  controller_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_7, true);
-  controller_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_8, true);
-  controller_.UpdateCommandEnabled(IDC_CLOSE_WINDOW, true);
-  controller_.UpdateCommandEnabled(IDC_NEW_TAB, true);
-  controller_.UpdateCommandEnabled(IDC_CLOSE_TAB, true);
-  controller_.UpdateCommandEnabled(IDC_DUPLICATE_TAB, true);
-  controller_.UpdateCommandEnabled(IDC_EXIT, true);
+  command_updater_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_0, true);
+  command_updater_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_1, true);
+  command_updater_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_2, true);
+  command_updater_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_3, true);
+  command_updater_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_4, true);
+  command_updater_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_5, true);
+  command_updater_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_6, true);
+  command_updater_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_7, true);
+  command_updater_.UpdateCommandEnabled(IDC_NEW_WINDOW_PROFILE_8, true);
+  command_updater_.UpdateCommandEnabled(IDC_CLOSE_WINDOW, true);
+  command_updater_.UpdateCommandEnabled(IDC_NEW_TAB, true);
+  command_updater_.UpdateCommandEnabled(IDC_CLOSE_TAB, true);
+  command_updater_.UpdateCommandEnabled(IDC_DUPLICATE_TAB, true);
+  command_updater_.UpdateCommandEnabled(IDC_EXIT, true);
 
   // Page-related commands
-  controller_.UpdateCommandEnabled(IDC_CLOSE_POPUPS, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_AUTO_DETECT, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_UTF8, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_UTF16LE, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_ISO88591, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1252, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_GBK, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_GB18030, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_BIG5HKSCS, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_BIG5, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_THAI, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_KOREAN, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_SHIFTJIS, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_ISO2022JP, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_EUCJP, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_ISO885915, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_MACINTOSH, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_ISO88592, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1250, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_ISO88595, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1251, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_KOI8R, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_KOI8U, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_ISO88597, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1253, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_ISO88594, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_ISO885913, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1257, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_ISO88593, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_ISO885910, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_ISO885914, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_ISO885916, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1254, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_ISO88596, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1256, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_ISO88598, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1255, true);
-  controller_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1258, true);
+  command_updater_.UpdateCommandEnabled(IDC_CLOSE_POPUPS, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_AUTO_DETECT, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_UTF8, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_UTF16LE, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_ISO88591, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1252, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_GBK, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_GB18030, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_BIG5HKSCS, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_BIG5, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_THAI, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_KOREAN, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_SHIFTJIS, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_ISO2022JP, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_EUCJP, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_ISO885915, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_MACINTOSH, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_ISO88592, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1250, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_ISO88595, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1251, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_KOI8R, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_KOI8U, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_ISO88597, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1253, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_ISO88594, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_ISO885913, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1257, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_ISO88593, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_ISO885910, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_ISO885914, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_ISO885916, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1254, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_ISO88596, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1256, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_ISO88598, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1255, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1258, true);
 
   // Clipboard commands
-  controller_.UpdateCommandEnabled(IDC_CUT, true);
-  controller_.UpdateCommandEnabled(IDC_COPY, true);
-  controller_.UpdateCommandEnabled(IDC_COPY_URL, true);
-  controller_.UpdateCommandEnabled(IDC_PASTE, true);
+  command_updater_.UpdateCommandEnabled(IDC_CUT, true);
+  command_updater_.UpdateCommandEnabled(IDC_COPY, true);
+  command_updater_.UpdateCommandEnabled(IDC_COPY_URL, true);
+  command_updater_.UpdateCommandEnabled(IDC_PASTE, true);
 
   // Show various bits of UI
-  controller_.UpdateCommandEnabled(IDC_OPEN_FILE, true);
-  controller_.UpdateCommandEnabled(IDC_CREATE_SHORTCUTS, false);
-  controller_.UpdateCommandEnabled(IDC_TASK_MANAGER, true);
-  controller_.UpdateCommandEnabled(IDC_SELECT_PROFILE, true);
-  controller_.UpdateCommandEnabled(IDC_SHOW_HISTORY, true);
-  controller_.UpdateCommandEnabled(IDC_SHOW_BOOKMARK_MANAGER, true);
-  controller_.UpdateCommandEnabled(IDC_SHOW_DOWNLOADS, true);
-  controller_.UpdateCommandEnabled(IDC_HELP_PAGE, true);
+  command_updater_.UpdateCommandEnabled(IDC_OPEN_FILE, true);
+  command_updater_.UpdateCommandEnabled(IDC_CREATE_SHORTCUTS, false);
+  command_updater_.UpdateCommandEnabled(IDC_TASK_MANAGER, true);
+  command_updater_.UpdateCommandEnabled(IDC_SELECT_PROFILE, true);
+  command_updater_.UpdateCommandEnabled(IDC_SHOW_HISTORY, true);
+  command_updater_.UpdateCommandEnabled(IDC_SHOW_BOOKMARK_MANAGER, true);
+  command_updater_.UpdateCommandEnabled(IDC_SHOW_DOWNLOADS, true);
+  command_updater_.UpdateCommandEnabled(IDC_HELP_PAGE, true);
 
   // Initialize other commands based on the window type.
   {
     bool normal_window = type() == TYPE_NORMAL;
 
     // Navigation commands
-    controller_.UpdateCommandEnabled(IDC_HOME, normal_window);
-    controller_.UpdateCommandEnabled(IDC_OPEN_CURRENT_URL, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_HOME, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_OPEN_CURRENT_URL, normal_window);
 
     // Window management commands
-    controller_.UpdateCommandEnabled(IDC_PROFILE_MENU, normal_window);
-    controller_.UpdateCommandEnabled(IDC_SELECT_NEXT_TAB, normal_window);
-    controller_.UpdateCommandEnabled(IDC_SELECT_PREVIOUS_TAB, normal_window);
-    controller_.UpdateCommandEnabled(IDC_SELECT_TAB_0, normal_window);
-    controller_.UpdateCommandEnabled(IDC_SELECT_TAB_1, normal_window);
-    controller_.UpdateCommandEnabled(IDC_SELECT_TAB_2, normal_window);
-    controller_.UpdateCommandEnabled(IDC_SELECT_TAB_3, normal_window);
-    controller_.UpdateCommandEnabled(IDC_SELECT_TAB_4, normal_window);
-    controller_.UpdateCommandEnabled(IDC_SELECT_TAB_5, normal_window);
-    controller_.UpdateCommandEnabled(IDC_SELECT_TAB_6, normal_window);
-    controller_.UpdateCommandEnabled(IDC_SELECT_TAB_7, normal_window);
-    controller_.UpdateCommandEnabled(IDC_SELECT_LAST_TAB, normal_window);
-    controller_.UpdateCommandEnabled(IDC_RESTORE_TAB,
+    command_updater_.UpdateCommandEnabled(IDC_PROFILE_MENU, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_SELECT_NEXT_TAB, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_SELECT_PREVIOUS_TAB,
+                                          normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_SELECT_TAB_0, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_SELECT_TAB_1, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_SELECT_TAB_2, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_SELECT_TAB_3, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_SELECT_TAB_4, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_SELECT_TAB_5, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_SELECT_TAB_6, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_SELECT_TAB_7, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_SELECT_LAST_TAB, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_RESTORE_TAB,
         normal_window && !profile_->IsOffTheRecord());
-    controller_.UpdateCommandEnabled(IDC_SHOW_AS_TAB, (type() == TYPE_POPUP));
+    command_updater_.UpdateCommandEnabled(IDC_SHOW_AS_TAB,
+                                          (type() == TYPE_POPUP));
 
     // Focus various bits of UI
-    controller_.UpdateCommandEnabled(IDC_FOCUS_TOOLBAR, normal_window);
-    controller_.UpdateCommandEnabled(IDC_FOCUS_LOCATION, normal_window);
-    controller_.UpdateCommandEnabled(IDC_FOCUS_SEARCH, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_FOCUS_TOOLBAR, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_FOCUS_LOCATION, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_FOCUS_SEARCH, normal_window);
 
     // Show various bits of UI
-    controller_.UpdateCommandEnabled(IDC_DEVELOPER_MENU, normal_window);
-    controller_.UpdateCommandEnabled(IDC_DEBUGGER,
+    command_updater_.UpdateCommandEnabled(IDC_DEVELOPER_MENU, normal_window);
+#if defined(OS_WIN)
+    command_updater_.UpdateCommandEnabled(IDC_DEBUGGER,
         // The debugger doesn't work in single process mode.
         normal_window && !RenderProcessHost::run_renderer_in_process());
-    controller_.UpdateCommandEnabled(IDC_NEW_PROFILE, normal_window);
-    controller_.UpdateCommandEnabled(IDC_REPORT_BUG, normal_window);
-    controller_.UpdateCommandEnabled(IDC_SHOW_BOOKMARK_BAR, normal_window);
-    controller_.UpdateCommandEnabled(IDC_CLEAR_BROWSING_DATA, normal_window);
-    controller_.UpdateCommandEnabled(IDC_IMPORT_SETTINGS, normal_window);
-    controller_.UpdateCommandEnabled(IDC_OPTIONS, normal_window);
-    controller_.UpdateCommandEnabled(IDC_EDIT_SEARCH_ENGINES, normal_window);
-    controller_.UpdateCommandEnabled(IDC_VIEW_PASSWORDS, normal_window);
-    controller_.UpdateCommandEnabled(IDC_ABOUT, normal_window);
+#endif
+    command_updater_.UpdateCommandEnabled(IDC_NEW_PROFILE, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_REPORT_BUG, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_SHOW_BOOKMARK_BAR, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_CLEAR_BROWSING_DATA,
+                                          normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_IMPORT_SETTINGS, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_OPTIONS, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_EDIT_SEARCH_ENGINES,
+                                          normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_VIEW_PASSWORDS, normal_window);
+    command_updater_.UpdateCommandEnabled(IDC_ABOUT, normal_window);
   }
 }
 
@@ -2022,12 +2081,12 @@ void Browser::UpdateCommandsForTabState() {
 
   // Navigation commands
   NavigationController* nc = current_tab->controller();
-  controller_.UpdateCommandEnabled(IDC_BACK, nc->CanGoBack());
-  controller_.UpdateCommandEnabled(IDC_FORWARD, nc->CanGoForward());
+  command_updater_.UpdateCommandEnabled(IDC_BACK, nc->CanGoBack());
+  command_updater_.UpdateCommandEnabled(IDC_FORWARD, nc->CanGoForward());
 
   // Window management commands
-  controller_.UpdateCommandEnabled(IDC_DUPLICATE_TAB,
-                                   CanDuplicateContentsAt(selected_index()));
+  command_updater_.UpdateCommandEnabled(IDC_DUPLICATE_TAB,
+      CanDuplicateContentsAt(selected_index()));
 
   // Initialize commands available only for web content.
   {
@@ -2036,57 +2095,46 @@ void Browser::UpdateCommandsForTabState() {
 
     // Page-related commands
     // Only allow bookmarking for tabbed browsers.
-    controller_.UpdateCommandEnabled(IDC_STAR,
+    command_updater_.UpdateCommandEnabled(IDC_STAR,
         is_web_contents && (type() == TYPE_NORMAL));
-    SetStarredButtonToggled(is_web_contents && web_contents->is_starred());
+    window_->SetStarredState(is_web_contents && web_contents->is_starred());
     // View-source should not be enabled if already in view-source mode.
-    controller_.UpdateCommandEnabled(IDC_VIEW_SOURCE,
+    command_updater_.UpdateCommandEnabled(IDC_VIEW_SOURCE,
         is_web_contents && (current_tab->type() != TAB_CONTENTS_VIEW_SOURCE) &&
         current_tab->controller()->GetActiveEntry());
-    controller_.UpdateCommandEnabled(IDC_PRINT, is_web_contents);
-    controller_.UpdateCommandEnabled(IDC_SAVE_PAGE,
+    command_updater_.UpdateCommandEnabled(IDC_PRINT, is_web_contents);
+    command_updater_.UpdateCommandEnabled(IDC_SAVE_PAGE,
         is_web_contents && SavePackage::IsSavableURL(current_tab->GetURL()));
-    controller_.UpdateCommandEnabled(IDC_ENCODING_MENU,
+    command_updater_.UpdateCommandEnabled(IDC_ENCODING_MENU,
         is_web_contents &&
         SavePackage::IsSavableContents(web_contents->contents_mime_type()) &&
         SavePackage::IsSavableURL(current_tab->GetURL()));
 
     // Find-in-page
-    controller_.UpdateCommandEnabled(IDC_FIND, is_web_contents);
-    controller_.UpdateCommandEnabled(IDC_FIND_NEXT, is_web_contents);
-    controller_.UpdateCommandEnabled(IDC_FIND_PREVIOUS, is_web_contents);
+    command_updater_.UpdateCommandEnabled(IDC_FIND, is_web_contents);
+    command_updater_.UpdateCommandEnabled(IDC_FIND_NEXT, is_web_contents);
+    command_updater_.UpdateCommandEnabled(IDC_FIND_PREVIOUS, is_web_contents);
 
     // Zoom
-    controller_.UpdateCommandEnabled(IDC_ZOOM_MENU, is_web_contents);
-    controller_.UpdateCommandEnabled(IDC_ZOOM_PLUS, is_web_contents);
-    controller_.UpdateCommandEnabled(IDC_ZOOM_NORMAL, is_web_contents);
-    controller_.UpdateCommandEnabled(IDC_ZOOM_MINUS, is_web_contents);
+    command_updater_.UpdateCommandEnabled(IDC_ZOOM_MENU, is_web_contents);
+    command_updater_.UpdateCommandEnabled(IDC_ZOOM_PLUS, is_web_contents);
+    command_updater_.UpdateCommandEnabled(IDC_ZOOM_NORMAL, is_web_contents);
+    command_updater_.UpdateCommandEnabled(IDC_ZOOM_MINUS, is_web_contents);
 
     // Show various bits of UI
-    controller_.UpdateCommandEnabled(IDC_JS_CONSOLE, is_web_contents);
-    controller_.UpdateCommandEnabled(IDC_CREATE_SHORTCUTS,
+    command_updater_.UpdateCommandEnabled(IDC_JS_CONSOLE, is_web_contents);
+    command_updater_.UpdateCommandEnabled(IDC_CREATE_SHORTCUTS,
         is_web_contents && !current_tab->GetFavIcon().isNull());
   }
 }
 
 void Browser::UpdateStopGoState(bool is_loading) {
-  GoButton* go_button = GetGoButton();
-  if (!go_button)
-    return;
-
-  go_button->ChangeMode(is_loading ?
-      GoButton::MODE_STOP : GoButton::MODE_GO);
-  controller_.UpdateCommandEnabled(IDC_GO, !is_loading);
-  controller_.UpdateCommandEnabled(IDC_STOP, is_loading);
+  window_->UpdateStopGoState(is_loading);
+  command_updater_.UpdateCommandEnabled(IDC_GO, !is_loading);
+  command_updater_.UpdateCommandEnabled(IDC_STOP, is_loading);
 }
 
-void Browser::SetStarredButtonToggled(bool starred) {
-  ToolbarStarToggle* star_button = window_->GetStarButton();
-  if (!star_button)
-    return;
-
-  star_button->SetToggled(starred);
-}
+#if defined(OS_WIN)
 
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, UI update coalescing and handling (private):
@@ -2189,7 +2237,7 @@ void Browser::ProcessPendingUIUpdates() {
 
       if (contents == GetSelectedTabContents()) {
         TabContents* current_tab = GetSelectedTabContents();
-        controller_.UpdateCommandEnabled(IDC_CREATE_SHORTCUTS,
+        command_updater_.UpdateCommandEnabled(IDC_CREATE_SHORTCUTS,
             current_tab->type() == TAB_CONTENTS_WEB &&
             !current_tab->GetFavIcon().isNull());
       }
@@ -2216,6 +2264,8 @@ void Browser::RemoveScheduledUpdatesFor(TabContents* contents) {
   }
 }
 
+#endif  // OS_WIN
+
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, Getters for UI (private):
 
@@ -2223,14 +2273,11 @@ LocationBarView* Browser::GetLocationBarView() const {
   return window_->GetLocationBarView();
 }
 
-GoButton* Browser::GetGoButton() {
-  return window_->GetGoButton();
-}
-
 StatusBubble* Browser::GetStatusBubble() {
   return window_->GetStatusBubble();
 }
 
+#if defined(OS_WIN)
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, Session restore functions (private):
 
@@ -2416,3 +2463,5 @@ void Browser::RegisterAppPrefs(const std::wstring& app_name) {
 
   prefs->RegisterDictionaryPref(window_pref.c_str());
 }
+
+#endif  // OS_WIN

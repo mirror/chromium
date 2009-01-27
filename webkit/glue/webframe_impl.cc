@@ -805,7 +805,7 @@ bool WebFrameImpl::Find(const FindInPageRequest& request,
                                    start_in_selection);
   if (found) {
 #if defined(OS_WIN)
-    WebCore::RenderThemeWin::setFindInPageMode(true);
+    WebCore::RenderThemeChromiumWin::setFindInPageMode(true);
 #endif
     // Store which frame was active. This will come in handy later when we
     // change the active match ordinal below.
@@ -1213,7 +1213,7 @@ void WebFrameImpl::StopFinding(bool clear_selection) {
   CancelPendingScopingEffort();
 
 #if defined(OS_WIN)
-  WebCore::RenderThemeWin::setFindInPageMode(false);
+  WebCore::RenderThemeChromiumWin::setFindInPageMode(false);
 #endif
 
   // Remove all markers for matches found and turn off the highlighting.
@@ -1552,11 +1552,12 @@ void WebFrameImpl::LoadAlternateHTMLErrorPage(const WebRequest* request,
 }
 
 void WebFrameImpl::ExecuteJavaScript(const std::string& js_code,
-                                     const GURL& script_url) {
+                                     const GURL& script_url,
+                                     int start_line) {
   WebCore::ScriptSourceCode source_code(
       webkit_glue::StdStringToString(js_code),
       webkit_glue::GURLToKURL(script_url),
-      1);  // base line number (for errors)
+      start_line);
   frame_->loader()->executeScript(source_code);
 }
 
@@ -1754,8 +1755,10 @@ bool WebFrameImpl::SetPrintingMode(bool printing,
     pages_.clear();
 
   // The document width is well hidden.
-  if (width)
-    *width = frame()->document()->renderer()->width();
+  if (width) {
+    WebCore::RenderObject* obj = frame()->document()->renderer();
+    *width = WebCore::RenderBox::toRenderBox(obj)->width();
+  }
   return true;
 }
 
@@ -1815,15 +1818,6 @@ bool WebFrameImpl::SpoolPage(int page, skia::PlatformCanvas* canvas) {
   // Make sure we're not printing the ScrollView (with scrollbars!)
   frame()->view()->paintContents(&spool, pages_[page]);
   return true;
-}
-
-bool WebFrameImpl::IsReloadAllowingStaleData() const {
-  FrameLoader* loader = frame() ? frame()->loader() : NULL;
-  if (loader) {
-    return WebCore::FrameLoadTypeReloadAllowingStaleData ==
-           loader->policyLoadType();
-  }
-  return false;
 }
 
 int WebFrameImpl::PendingFrameUnloadEventCount() const {

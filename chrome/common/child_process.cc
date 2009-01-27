@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <windows.h>
-
 #include "chrome/common/child_process.h"
 
 #include "base/atomic_ref_count.h"
@@ -79,10 +77,14 @@ bool ChildProcess::GlobalInit(const std::wstring &channel_name,
 
   child_process_ = factory->Create(channel_name);
 
-  CommandLine command_line;
+  const CommandLine& command_line = *CommandLine::ForCurrentProcess();
   if (command_line.HasSwitch(switches::kUserAgent)) {
+#if defined(OS_WIN)
+    // TODO(port): calling this connects an, otherwise disconnected, subgraph
+    // of symbols, causing huge numbers of linker errors.
     webkit_glue::SetUserAgent(WideToUTF8(
         command_line.GetSwitchValue(switches::kUserAgent)));
+#endif
   }
 
   return true;

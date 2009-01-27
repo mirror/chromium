@@ -50,6 +50,7 @@
 #include "BarInfo.h"
 #include "CanvasGradient.h"
 #include "CanvasPattern.h"
+#include "CanvasPixelArray.h"
 #include "CanvasRenderingContext2D.h"
 #include "CanvasStyle.h"
 #include "CharacterData.h"
@@ -134,7 +135,6 @@
 #include "TextMetrics.h"
 #include "TimeRanges.h"
 #include "TreeWalker.h"
-#include "WebKitCSSTransformValue.h"
 #include "XMLHttpRequest.h"
 #include "XMLHttpRequestUpload.h"
 #include "XMLHttpRequestException.h"
@@ -147,6 +147,8 @@
 #include "WebKitAnimationEvent.h"
 #include "WebKitCSSKeyframeRule.h"
 #include "WebKitCSSKeyframesRule.h"
+#include "WebKitCSSMatrix.h"
+#include "WebKitCSSTransformValue.h"
 #include "WebKitTransitionEvent.h"
 #include "WheelEvent.h"
 #include "XMLHttpRequestProgressEvent.h"
@@ -189,6 +191,11 @@
 #include "SVGZoomEvent.h"
 #include "V8SVGPODTypeWrapper.h"
 #endif  // SVG
+
+#if ENABLE(WORKERS)
+#include "Worker.h"
+#include "WorkerLocation.h"
+#endif  // WORKERS
 
 #if ENABLE(XPATH)
 #include "XPathEvaluator.h"
@@ -1658,6 +1665,11 @@ v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
           NodeCollectionIndexedPropertyEnumerator<HTMLFormElement>,
           v8::Integer::New(V8ClassIndex::NODE));
       break;
+    case V8ClassIndex::CANVASPIXELARRAY:
+      desc->InstanceTemplate()->SetIndexedPropertyHandler(
+          USE_INDEXED_PROPERTY_GETTER(CanvasPixelArray),
+          USE_INDEXED_PROPERTY_SETTER(CanvasPixelArray));
+      break;
     case V8ClassIndex::STYLESHEET:  // fall through
     case V8ClassIndex::CSSSTYLESHEET: {
       // We add an extra internal field to hold a reference to
@@ -1765,11 +1777,24 @@ v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
         break;
     }
 
-    // DOMParser, XMLSerializer, and XMLHttpRequest objects are created from
-    // JS world, but we setup the constructor function lazily in
-    // WindowNamedPropertyHandler::get.
+#if ENABLE(WORKERS)
+    case V8ClassIndex::WORKER: {
+        // Reserve one more internal field for keeping event listeners.
+        v8::Local<v8::ObjectTemplate> instance_template =
+            desc->InstanceTemplate();
+        instance_template->SetInternalFieldCount(
+            V8Custom::kWorkerInternalFieldCount);
+        desc->SetCallHandler(USE_CALLBACK(WorkerConstructor));
+        break;
+    }
+#endif  // WORKERS
+
+    // The following objects are created from JavaScript.
     case V8ClassIndex::DOMPARSER:
       desc->SetCallHandler(USE_CALLBACK(DOMParserConstructor));
+      break;
+    case V8ClassIndex::WEBKITCSSMATRIX:
+      desc->SetCallHandler(USE_CALLBACK(WebKitCSSMatrixConstructor));
       break;
     case V8ClassIndex::XMLSERIALIZER:
       desc->SetCallHandler(USE_CALLBACK(XMLSerializerConstructor));

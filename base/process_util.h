@@ -91,8 +91,6 @@ bool LaunchApp(const std::wstring& cmdline,
                bool wait, bool start_hidden, ProcessHandle* process_handle);
 #elif defined(OS_POSIX)
 // Runs the application specified in argv[0] with the command line argv.
-// Both the elements of argv and argv itself must be terminated with a null
-// byte.
 // Before launching all FDs open in the parent process will be marked as
 // close-on-exec.  |fds_to_remap| defines a mapping of src fd->dest fd to
 // propagate FDs into the child process.
@@ -141,6 +139,9 @@ bool KillProcesses(const std::wstring& executable_name, int exit_code,
 // for the process to be actually terminated before returning.
 // Returns true if this is successful, false otherwise.
 bool KillProcess(int process_id, int exit_code, bool wait);
+#if defined(OS_WIN)
+bool KillProcess(HANDLE process, int exit_code, bool wait);
+#endif
 
 // Get the termination status (exit code) of the process and return true if the
 // status indicates the process crashed.  It is an error to call this if the

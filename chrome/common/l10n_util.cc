@@ -261,7 +261,7 @@ std::wstring GetApplicationLocale(const std::wstring& pref_locale) {
   std::wstring resolved_locale;
 
   // First, check to see if there's a --lang flag.
-  CommandLine parsed_command_line;
+  const CommandLine& parsed_command_line = *CommandLine::ForCurrentProcess();
   const std::wstring& lang_arg =
       parsed_command_line.GetSwitchValue(switches::kLang);
   if (!lang_arg.empty()) {
@@ -313,7 +313,7 @@ std::wstring GetLocalName(const std::wstring& locale_code_wstr,
   name_local.resize(actual_size);
   // Add an RTL mark so parentheses are properly placed.
   if (is_for_ui && GetTextDirection() == RIGHT_TO_LEFT)
-    return name_local + L"\x200f";
+    return name_local + kRightToLeftMark;
   else
     return name_local;
 }
