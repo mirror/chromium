@@ -33,16 +33,6 @@ public:
     virtual bool isTextArea() const { return true; }
 
     virtual void subtreeHasChanged();
-    virtual void autoscroll();
-    virtual int scrollWidth() const;
-    virtual int scrollHeight() const;
-    virtual int scrollLeft() const;
-    virtual int scrollTop() const;
-    virtual void setScrollLeft(int newLeft);
-    virtual void setScrollTop(int newTop);
-    virtual bool scroll(ScrollDirection direction, ScrollGranularity granularity, float multiplier);
-    virtual bool isScrollable() const;
-
     virtual void layout();
 
     virtual bool nodeAtPoint(const HitTestRequest&, HitTestResult&, int x, int y, int tx, int ty, HitTestAction);

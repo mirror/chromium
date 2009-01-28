@@ -506,7 +506,8 @@ void PopupContainer::setAcceptOnAbandon(bool value)
     listBox()->setAcceptOnAbandon(value);
 }
 
-void PopupContainer::setLoopSelectionNavigation(bool value) {
+void PopupContainer::setLoopSelectionNavigation(bool value)
+{
     listBox()->setLoopSelectionNavigation(value);
 }
 
@@ -963,14 +964,16 @@ bool PopupListBox::isSelectableItem(int index) {
     return m_items[index]->type == TypeOption && m_popupClient->itemIsEnabled(index);
 }
 
-void PopupListBox::clearSelection() {
+void PopupListBox::clearSelection()
+{
     if (m_selectedIndex != -1) {
         invalidateRow(m_selectedIndex);
         m_selectedIndex = -1;
     }
 }
 
-void PopupListBox::selectNextRow() {
+void PopupListBox::selectNextRow()
+{
     if (!m_loopSelectionNavigation || m_selectedIndex != numItems() - 1) {
         adjustSelectedIndex(1);
         return;
@@ -980,7 +983,8 @@ void PopupListBox::selectNextRow() {
     clearSelection();
 }
 
-void PopupListBox::selectPreviousRow() {
+void PopupListBox::selectPreviousRow()
+{
     if (!m_loopSelectionNavigation || m_selectedIndex > 0) {
         adjustSelectedIndex(-1);
         return;

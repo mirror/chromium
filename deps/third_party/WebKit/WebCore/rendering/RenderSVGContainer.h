@@ -69,14 +69,14 @@ public:
     virtual bool isSVGContainer() const { return true; }
     virtual const char* renderName() const { return "RenderSVGContainer"; }
 
-    virtual bool requiresLayer();
+    virtual bool requiresLayer() const { return false; }
     virtual int lineHeight(bool b, bool isRootLineBox = false) const;
     virtual int baselinePosition(bool b, bool isRootLineBox = false) const;
 
     virtual void layout();
     virtual void paint(PaintInfo&, int parentX, int parentY);
 
-    virtual IntRect absoluteClippedOverflowRect();
+    virtual IntRect clippedOverflowRectForRepaint(RenderBox* repaintContainer);
     virtual void absoluteRects(Vector<IntRect>& rects, int tx, int ty, bool topLevel = true);
     virtual void absoluteQuads(Vector<FloatQuad>&, bool topLevel = true);
     virtual void addFocusRingRects(GraphicsContext*, int tx, int ty);
@@ -89,13 +89,13 @@ public:
 
     virtual bool nodeAtPoint(const HitTestRequest&, HitTestResult&, int x, int y, int tx, int ty, HitTestAction);
 
-    virtual IntRect absoluteOutlineBounds() const;
-
 protected:
     virtual void applyContentTransforms(PaintInfo&);
     virtual void applyAdditionalTransforms(PaintInfo&);
 
     void calcBounds();
+
+    virtual IntRect outlineBoundsForRepaint(RenderBox* /*repaintContainer*/) const;
 
 private:
     int calcReplacedWidth() const;

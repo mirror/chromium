@@ -2136,6 +2136,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\page\DOMTimer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\page\DOMTimer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\page\DOMWindow.cpp"
 				>
 				<FileConfiguration
@@ -11386,6 +11394,22 @@
 				>
 			</File>
 			<File
+				RelativePath="..\dom\FormControlElementWithState.cpp"
+				>
+				<FileConfiguration
+					Name="Release_PGO|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						WholeProgramOptimization="true"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\dom\FormControlElementWithState.h"
+				>
+			</File>
+			<File
 				RelativePath="..\dom\FormControlElement.cpp"
 				>
 				<FileConfiguration
@@ -12435,14 +12459,6 @@
 			</File>
 			<File
 				RelativePath="..\editing\RemoveFormatCommand.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\editing\RemoveNodeAttributeCommand.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\editing\RemoveNodeAttributeCommand.h"
 				>
 			</File>
 			<File
@@ -14057,14 +14073,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\bindings\js\DOMTimer.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\bindings\js\DOMTimer.h"
-					>
-				</File>
-				<File
 					RelativePath="..\bindings\js\GCController.cpp"
 					>
 				</File>
@@ -14086,6 +14094,10 @@
 				</File>
 				<File
 					RelativePath="..\bindings\js\JSCanvasRenderingContext2DCustom.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\bindings\js\JSCDATASectionCustom.cpp"
 					>
 				</File>
 				<File
@@ -14601,11 +14613,11 @@
 					>
 				</File>
 				<File
-					RelativePath="..\bindings\js\ScriptCachedPageData.cpp"
+					RelativePath="..\bindings\js\ScriptCachedFrameData.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\bindings\js\ScriptCachedPageData.h"
+					RelativePath="..\bindings\js\ScriptCachedFrameData.h"
 					>
 				</File>
 				<File
@@ -16054,6 +16066,18 @@
 				>
 			</File>
 			<File
+				RelativePath="..\history\CachedFrame.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\history\CachedFrame.h"
+				>
+			</File>
+			<File
+				RelativePath="..\history\CachedFramePlatformData.h"
+				>
+			</File>
+			<File
 				RelativePath="..\history\CachedPage.cpp"
 				>
 			</File>
@@ -16711,6 +16735,14 @@
 			</File>
 			<File
 				RelativePath="..\wml\WMLEventHandlingElement.h"
+				>
+			</File>
+			<File
+				RelativePath="..\wml\WMLFormControlElement.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\wml\WMLFormControlElement.h"
 				>
 			</File>
 			<File

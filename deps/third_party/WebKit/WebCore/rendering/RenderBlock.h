@@ -56,7 +56,6 @@ public:
 
     virtual bool isRenderBlock() const { return true; }
     virtual bool isBlockFlow() const { return (!isInline() || isReplaced()) && !isTable(); }
-    virtual bool isInlineFlow() const { return isInline() && !isReplaced(); }
     virtual bool isInlineBlockOrInlineTable() const { return isInline() && isReplaced(); }
 
     virtual bool childrenInline() const { return m_childrenInline; }
@@ -114,7 +113,7 @@ public:
     void layoutPositionedObjects(bool relayoutChildren);
     void insertPositionedObject(RenderBox*);
     void removePositionedObject(RenderBox*);
-    virtual void removePositionedObjects(RenderBlock*);
+    void removePositionedObjects(RenderBlock*);
 
     void addPercentHeightDescendant(RenderBox*);
     static void removePercentHeightDescendant(RenderBox*);
@@ -177,7 +176,7 @@ public:
     bool positionNewFloats();
     void clearFloats();
     int getClearDelta(RenderBox* child);
-    virtual void markAllDescendantsWithFloatsForLayout(RenderBox* floatToRemove = 0);
+    void markAllDescendantsWithFloatsForLayout(RenderBox* floatToRemove = 0, bool inLayout = true);
     void markPositionedObjectsForLayout();
 
     virtual bool containsFloats() { return m_floatingObjects && !m_floatingObjects->isEmpty(); }
@@ -364,25 +363,6 @@ protected:
         bool m_isDescendant : 1;
     };
 
-    // The following helper functions and structs are used by layoutBlockChildren.
-    class CompactInfo {
-        // A compact child that needs to be collapsed into the margin of the following block.
-        RenderBox* m_compact;
-
-        // The block with the open margin that the compact child is going to place itself within.
-        RenderObject* m_block;
-
-    public:
-        RenderBox* compact() const { return m_compact; }
-        RenderObject* block() const { return m_block; }
-        bool matches(RenderObject* child) const { return m_compact && m_block == child; }
-
-        void clear() { set(0, 0); }
-        void set(RenderBox* c, RenderObject* b) { m_compact = c; m_block = b; }
-
-        CompactInfo() { clear(); }
-    };
-
     class MarginInfo {
         // Collapsing flags for whether we can collapse our margins with our children's margins.
         bool m_canCollapseWithChildren : 1;
@@ -451,14 +431,12 @@ protected:
 
     void adjustPositionedBlock(RenderBox* child, const MarginInfo&);
     void adjustFloatingBlock(const MarginInfo&);
-    RenderBox* handleSpecialChild(RenderBox* child, const MarginInfo&, CompactInfo&, bool& handled);
+    RenderBox* handleSpecialChild(RenderBox* child, const MarginInfo&, bool& handled);
     RenderBox* handleFloatingChild(RenderBox* child, const MarginInfo&, bool& handled);
     RenderBox* handlePositionedChild(RenderBox* child, const MarginInfo&, bool& handled);
-    RenderBox* handleCompactChild(RenderBox* child, CompactInfo&, bool& handled);
     RenderBox* handleRunInChild(RenderBox* child, bool& handled);
     void collapseMargins(RenderBox* child, MarginInfo&, int yPosEstimate);
     void clearFloatsIfNeeded(RenderBox* child, MarginInfo&, int oldTopPosMargin, int oldTopNegMargin);
-    void insertCompactIfNeeded(RenderBox* child, CompactInfo&);
     int estimateVerticalPosition(RenderBox* child, const MarginInfo&);
     void determineHorizontalPosition(RenderBox* child);
     void handleBottomOfBlock(int top, int bottom, MarginInfo&);

@@ -95,6 +95,7 @@ sources['dom'] = [
     'dom/EventTargetNode.cpp',
     'dom/ExceptionBase.cpp',
     'dom/ExceptionCode.cpp',
+    'dom/FormControlElementWithState.cpp',
     'dom/FormControlElement.cpp',
     'dom/InputElement.cpp',
     'dom/KeyboardEvent.cpp',
@@ -176,7 +177,6 @@ sources['editing'] = [
     'editing/MoveSelectionCommand.cpp',
     'editing/RemoveCSSPropertyCommand.cpp',
     'editing/RemoveFormatCommand.cpp',
-    'editing/RemoveNodeAttributeCommand.cpp',
     'editing/RemoveNodeCommand.cpp',
     'editing/RemoveNodePreservingChildrenCommand.cpp',
     'editing/ReplaceSelectionCommand.cpp',
@@ -198,6 +198,7 @@ sources['editing'] = [
 ]
 sources['history'] = [
     'history/BackForwardList.cpp',
+    'history/CachedFrame.cpp',
     'history/CachedPage.cpp',
     'history/HistoryItem.cpp',
     'history/PageCache.cpp'
@@ -375,6 +376,7 @@ sources['page'] = [
     'page/Console.cpp',
     'page/ContextMenuController.cpp',
     'page/DOMSelection.cpp',
+    'page/DOMTimer.cpp',
     'page/DOMWindow.cpp',
     'page/DragController.cpp',
     'page/EventHandler.cpp',
@@ -601,10 +603,10 @@ sources['xml'] = [
 
 # Using JavaScriptCore for now, eventually this needs to be configurable (and in separate file)
 sources['bindings/js'] = [
-    "bindings/js/DOMTimer.cpp",
     "bindings/js/GCController.cpp",
     "bindings/js/JSAttrCustom.cpp",
     "bindings/js/JSAudioConstructor.cpp",
+    "bindings/js/JSCDATASectionCustom.cpp",
     "bindings/js/JSCSSRuleCustom.cpp",
     "bindings/js/JSCSSStyleDeclarationCustom.cpp",
     "bindings/js/JSCSSValueCustom.cpp",

@@ -161,13 +161,14 @@ void RenderTableRow::layout()
     setNeedsLayout(false);
 }
 
-IntRect RenderTableRow::absoluteClippedOverflowRect()
+IntRect RenderTableRow::clippedOverflowRectForRepaint(RenderBox* repaintContainer)
 {
     // For now, just repaint the whole table.
     // FIXME: Find a better way to do this, e.g., need to repaint all the cells that we
     // might have propagated a background color into.
+    // FIXME: do repaintContainer checks here
     if (RenderTable* parentTable = table())
-        return parentTable->absoluteClippedOverflowRect();
+        return parentTable->clippedOverflowRectForRepaint(repaintContainer);
 
     return IntRect();
 }
@@ -182,7 +183,7 @@ bool RenderTableRow::nodeAtPoint(const HitTestRequest& request, HitTestResult& r
         // at the moment (a demoted inline <form> for example). If we ever implement a
         // table-specific hit-test method (which we should do for performance reasons anyway),
         // then we can remove this check.
-        if (!child->hasLayer() && !child->isInlineFlow() && child->nodeAtPoint(request, result, x, y, tx, ty, action)) {
+        if (!child->hasLayer() && !child->isRenderInline() && child->nodeAtPoint(request, result, x, y, tx, ty, action)) {
             updateHitTestResult(result, IntPoint(x - tx, y - ty));
             return true;
         }

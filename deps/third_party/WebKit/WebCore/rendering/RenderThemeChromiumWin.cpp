@@ -401,7 +401,7 @@ void RenderThemeChromiumWin::adjustMenuListStyle(CSSStyleSelector* selector, Ren
 // Used to paint unstyled menulists (i.e. with the default border)
 bool RenderThemeChromiumWin::paintMenuList(RenderObject* o, const RenderObject::PaintInfo& i, const IntRect& r)
 {
-    const RenderBox* box = RenderBox::toConstRenderBox(o);
+    const RenderBox* box = toRenderBox(o);
     int borderRight = box->borderRight();
     int borderLeft = box->borderLeft();
     int borderTop = box->borderTop();

@@ -33,6 +33,7 @@
 #include "HTMLElement.h"
 #include "HTMLNames.h"
 #include "ImageBuffer.h"
+#include "FloatQuad.h"
 #include "Frame.h"
 #include "Page.h"
 #include "RenderArena.h"
@@ -104,13 +105,72 @@ void RenderBox::styleWillChange(RenderStyle::Diff diff, const RenderStyle* newSt
     s_wasFloating = isFloating();
     s_hadOverflowClip = hasOverflowClip();
 
+    if (style()) {
+        // If our z-index changes value or our visibility changes,
+        // we need to dirty our stacking context's z-order list.
+        if (newStyle) {
+            if (hasLayer() && (style()->hasAutoZIndex() != newStyle->hasAutoZIndex() ||
+                               style()->zIndex() != newStyle->zIndex() ||
+                               style()->visibility() != newStyle->visibility())) {
+                layer()->dirtyStackingContextZOrderLists();
+                if (style()->hasAutoZIndex() != newStyle->hasAutoZIndex() || style()->visibility() != newStyle->visibility())
+                    layer()->dirtyZOrderLists();
+            }
+        }
+        
+        // The background of the root element or the body element could propagate up to
+        // the canvas.  Just dirty the entire canvas when our style changes substantially.
+        if (diff >= RenderStyle::Repaint && element() &&
+                (element()->hasTagName(htmlTag) || element()->hasTagName(bodyTag)))
+            view()->repaint();
+        else if (parent() && !isText()) {
+            // Do a repaint with the old style first, e.g., for example if we go from
+            // having an outline to not having an outline.
+            if (diff == RenderStyle::RepaintLayer) {
+                layer()->repaintIncludingDescendants();
+                if (!(style()->clip() == newStyle->clip()))
+                    layer()->clearClipRectsIncludingDescendants();
+            } else if (diff == RenderStyle::Repaint || newStyle->outlineSize() < style()->outlineSize())
+                repaint();
+        }
+
+        if (diff == RenderStyle::Layout) {
+            // When a layout hint happens, we go ahead and do a repaint of the layer, since the layer could
+            // end up being destroyed.
+            if (hasLayer()) {
+                if (style()->position() != newStyle->position() ||
+                    style()->zIndex() != newStyle->zIndex() ||
+                    style()->hasAutoZIndex() != newStyle->hasAutoZIndex() ||
+                    !(style()->clip() == newStyle->clip()) ||
+                    style()->hasClip() != newStyle->hasClip() ||
+                    style()->opacity() != newStyle->opacity() ||
+                    style()->transform() != newStyle->transform())
+                layer()->repaintIncludingDescendants();
+            } else if (newStyle->hasTransform() || newStyle->opacity() < 1) {
+                // If we don't have a layer yet, but we are going to get one because of transform or opacity,
+                //  then we need to repaint the old position of the object.
+                repaint();
+            }
+        
+            // When a layout hint happens and an object's position style changes, we have to do a layout
+            // to dirty the render tree using the old position value now.
+            if (parent() && style()->position() != newStyle->position()) {
+                markContainingBlocksForLayout();
+                if (style()->position() == StaticPosition)
+                    repaint();
+                if (isFloating() && !isPositioned() && (newStyle->position() == AbsolutePosition || newStyle->position() == FixedPosition))
+                    removeFromObjectLists();
+            }
+        }
+    }
+
     RenderObject::styleWillChange(diff, newStyle);
 }
 
 void RenderBox::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
 {
     // We need to ensure that view->maximalOutlineSize() is valid for any repaints that happen
-    // during the style change (it's used by absoluteClippedOverflowRect()).
+    // during the style change (it's used by clippedOverflowRectForRepaint()).
     if (style()->outlineWidth() > 0 && style()->outlineSize() > maximalOutlineSize(PaintPhaseOutline))
         static_cast<RenderView*>(document()->renderer())->setMaximalOutlineSize(style()->outlineSize());
 
@@ -301,11 +361,15 @@ RenderBox* RenderBox::offsetParent() const
 // excluding border and scrollbar.
 int RenderBox::clientWidth() const
 {
+    if (isRenderInline())
+        return 0;
     return width() - borderLeft() - borderRight() - verticalScrollbarWidth();
 }
 
 int RenderBox::clientHeight() const
 {
+    if (isRenderInline())
+        return 0;
     return height() - borderTop() - borderBottom() - horizontalScrollbarHeight();
 }
 
@@ -313,12 +377,12 @@ int RenderBox::clientHeight() const
 // object has overflow:hidden/scroll/auto specified and also has overflow.
 int RenderBox::scrollWidth() const
 {
-    return hasOverflowClip() ? m_layer->scrollWidth() : overflowWidth();
+    return hasOverflowClip() ? m_layer->scrollWidth() : clientWidth();
 }
 
 int RenderBox::scrollHeight() const
 {
-    return hasOverflowClip() ? m_layer->scrollHeight() : overflowHeight();
+    return hasOverflowClip() ? m_layer->scrollHeight() : clientHeight();
 }
 
 int RenderBox::scrollLeft() const
@@ -425,13 +489,16 @@ FloatQuad RenderBox::absoluteContentQuad() const
 }
 
 
-IntRect RenderBox::absoluteOutlineBounds() const
+IntRect RenderBox::outlineBoundsForRepaint(RenderBox* /*repaintContainer*/) const
 {
-    IntRect box = borderBoxRect();
+    IntRect box = borderBoundingBox();
     adjustRectForOutlineAndShadow(box);
 
     FloatQuad absOutlineQuad = localToAbsoluteQuad(FloatRect(box));
     box = absOutlineQuad.enclosingBoundingBox();
+
+    // FIXME: layoutDelta needs to be applied in parts before/after transforms and
+    // repaint containers. https://bugs.webkit.org/show_bug.cgi?id=23308
     box.move(view()->layoutDelta());
 
     return box;
@@ -508,6 +575,44 @@ IntRect RenderBox::reflectedRect(const IntRect& r) const
             break;
     }
     return result;
+}
+
+int RenderBox::verticalScrollbarWidth() const
+{
+    return includeVerticalScrollbarSize() ? layer()->verticalScrollbarWidth() : 0;
+}
+
+int RenderBox::horizontalScrollbarHeight() const
+{
+    return includeHorizontalScrollbarSize() ? layer()->horizontalScrollbarHeight() : 0;
+}
+
+bool RenderBox::scroll(ScrollDirection direction, ScrollGranularity granularity, float multiplier)
+{
+    RenderLayer* l = layer();
+    if (l && l->scroll(direction, granularity, multiplier))
+        return true;
+    RenderBlock* b = containingBlock();
+    if (b && !b->isRenderView())
+        return b->scroll(direction, granularity, multiplier);
+    return false;
+}
+    
+bool RenderBox::canBeProgramaticallyScrolled(bool) const
+{
+    return (hasOverflowClip() && (scrollsOverflow() || (node() && node()->isContentEditable()))) || (node() && node()->isDocumentNode());
+}
+
+void RenderBox::autoscroll()
+{
+    if (layer())
+        layer()->autoscroll();
+}
+
+void RenderBox::panScroll(const IntPoint& source)
+{
+    if (layer())
+        layer()->panScrollFromPoint(source);
 }
 
 int RenderBox::minPrefWidth() const
@@ -600,7 +705,7 @@ bool RenderBox::nodeAtPoint(const HitTestRequest& request, HitTestResult& result
         // at the moment (a demoted inline <form> for example). If we ever implement a
         // table-specific hit-test method (which we should do for performance reasons anyway),
         // then we can remove this check.
-        if (!child->hasLayer() && !child->isInlineFlow() && child->nodeAtPoint(request, result, xPos, yPos, tx, ty, action)) {
+        if (!child->hasLayer() && !child->isRenderInline() && child->nodeAtPoint(request, result, xPos, yPos, tx, ty, action)) {
             updateHitTestResult(result, IntPoint(xPos - tx, yPos - ty));
             return true;
         }
@@ -847,8 +952,10 @@ IntSize RenderBox::calculateBackgroundSize(const FillLayer* bgLayer, int scaledW
 
 void RenderBox::imageChanged(WrappedImagePtr image, const IntRect*)
 {
-    if (isInlineFlow() ||
-        style()->borderImage().image() && style()->borderImage().image()->data() == image ||
+    if (!parent())
+        return;
+
+    if (isRenderInline() || style()->borderImage().image() && style()->borderImage().image()->data() == image ||
         style()->maskBoxImage().image() && style()->maskBoxImage().image()->data() == image) {
         repaint();
         return;
@@ -1243,7 +1350,7 @@ int RenderBox::containingBlockWidth() const
 
 IntSize RenderBox::offsetForPositionedInContainer(RenderObject* container) const
 {
-    if (!container->isRelPositioned() || !container->isInlineFlow())
+    if (!container->isRelPositioned() || !container->isRenderInline())
         return IntSize();
 
     // When we have an enclosing relpositioned inline, we need to add in the offset of the first line
@@ -1333,8 +1440,11 @@ FloatPoint RenderBox::absoluteToLocal(FloatPoint containerPoint, bool fixed, boo
     return FloatPoint();
 }
 
-FloatQuad RenderBox::localToAbsoluteQuad(const FloatQuad& localQuad, bool fixed) const
+FloatQuad RenderBox::localToContainerQuad(const FloatQuad& localQuad, RenderBox* repaintContainer, bool fixed) const
 {
+    if (repaintContainer == this)
+        return localQuad;
+
     if (style()->position() == FixedPosition)
         fixed = true;
 
@@ -1346,7 +1456,7 @@ FloatQuad RenderBox::localToAbsoluteQuad(const FloatQuad& localQuad, bool fixed)
             quad = m_layer->transform()->mapQuad(quad);
         }
         quad += offsetFromContainer(o);
-        return o->localToAbsoluteQuad(quad, fixed);
+        return o->localToContainerQuad(quad, repaintContainer, fixed);
     }
     
     return FloatQuad();
@@ -1372,7 +1482,7 @@ IntSize RenderBox::offsetFromContainer(RenderObject* o) const
     }
 
     if (o->hasOverflowClip())
-        offset -= o->layer()->scrolledContentOffset();
+        offset -= toRenderBox(o)->layer()->scrolledContentOffset();
 
     if (style()->position() == AbsolutePosition)
         offset += offsetForPositionedInContainer(o);
@@ -1430,7 +1540,7 @@ void RenderBox::deleteLineBoxWrapper()
     }
 }
 
-IntRect RenderBox::absoluteClippedOverflowRect()
+IntRect RenderBox::clippedOverflowRectForRepaint(RenderBox* repaintContainer)
 {
     if (style()->visibility() != VISIBLE && !enclosingLayer()->hasVisibleContent())
         return IntRect();
@@ -1438,9 +1548,12 @@ IntRect RenderBox::absoluteClippedOverflowRect()
     IntRect r = overflowRect(false);
 
     RenderView* v = view();
-    if (v)
+    if (v) {
+        // FIXME: layoutDelta needs to be applied in parts before/after transforms and
+        // repaint containers. https://bugs.webkit.org/show_bug.cgi?id=23308
         r.move(v->layoutDelta());
-
+    }
+    
     if (style()) {
         if (style()->hasAppearance())
             // The theme may wish to inflate the rect used when repainting.
@@ -1453,14 +1566,15 @@ IntRect RenderBox::absoluteClippedOverflowRect()
             r.inflate(v->maximalOutlineSize());
         }
     }
-    computeAbsoluteRepaintRect(r);
+    computeRectForRepaint(r, repaintContainer);
     return r;
 }
 
-void RenderBox::computeAbsoluteRepaintRect(IntRect& rect, bool fixed)
+void RenderBox::computeRectForRepaint(IntRect& rect, RenderBox* repaintContainer, bool fixed)
 {
     if (RenderView* v = view()) {
-        if (v->layoutStateEnabled()) {
+        // LayoutState is only valid for root-relative repainting
+        if (v->layoutStateEnabled() && !repaintContainer) {
             LayoutState* layoutState = v->layoutState();
             if (style()->position() == RelativePosition && m_layer)
                 rect.move(m_layer->relativePositionOffset());
@@ -1475,6 +1589,9 @@ void RenderBox::computeAbsoluteRepaintRect(IntRect& rect, bool fixed)
 
     if (hasReflection())
         rect.unite(reflectedRect(rect));
+
+    if (repaintContainer == this)
+        return;
 
     RenderObject* o = container();
     if (!o)
@@ -1519,20 +1636,22 @@ void RenderBox::computeAbsoluteRepaintRect(IntRect& rect, bool fixed)
     // FIXME: We ignore the lightweight clipping rect that controls use, since if |o| is in mid-layout,
     // its controlClipRect will be wrong. For overflow clip we use the values cached by the layer.
     if (o->hasOverflowClip()) {
+        RenderBox* containerBox = toRenderBox(o);
+
         // o->height() is inaccurate if we're in the middle of a layout of |o|, so use the
         // layer's size instead.  Even if the layer's size is wrong, the layer itself will repaint
         // anyway if its size does change.
-        topLeft -= o->layer()->scrolledContentOffset(); // For overflow:auto/scroll/hidden.
+        topLeft -= containerBox->layer()->scrolledContentOffset(); // For overflow:auto/scroll/hidden.
 
         IntRect repaintRect(topLeft, rect.size());
-        IntRect boxRect(0, 0, o->layer()->width(), o->layer()->height());
+        IntRect boxRect(0, 0, containerBox->layer()->width(), containerBox->layer()->height());
         rect = intersection(repaintRect, boxRect);
         if (rect.isEmpty())
             return;
     } else
         rect.setLocation(topLeft);
     
-    o->computeAbsoluteRepaintRect(rect, fixed);
+    o->computeRectForRepaint(rect, repaintContainer, fixed);
 }
 
 void RenderBox::repaintDuringLayoutIfMoved(const IntRect& rect)
@@ -1697,8 +1816,7 @@ bool RenderBox::sizesToIntrinsicWidth(WidthType widthType) const
 {
     // Marquees in WinIE are like a mixture of blocks and inline-blocks.  They size as though they're blocks,
     // but they allow text to sit on the same line as the marquee.
-    if (isFloating() || (isCompact() && isInline())
-            || (isInlineBlockOrInlineTable() && !isHTMLMarquee()))
+    if (isFloating() || (isInlineBlockOrInlineTable() && !isHTMLMarquee()))
         return true;
 
     // This code may look a bit strange.  Basically width:intrinsic should clamp the size when testing both
@@ -2076,7 +2194,7 @@ void RenderBox::setStaticY(int staticY)
 
 int RenderBox::containingBlockWidthForPositioned(const RenderObject* containingBlock) const
 {
-    if (containingBlock->isInlineFlow()) {
+    if (containingBlock->isRenderInline()) {
         ASSERT(containingBlock->isRelPositioned());
 
         const RenderFlow* flow = static_cast<const RenderFlow*>(containingBlock);
@@ -2100,18 +2218,18 @@ int RenderBox::containingBlockWidthForPositioned(const RenderObject* containingB
         return max(0, (fromRight - fromLeft));
     }
 
-    const RenderBox* containingBlockBox = RenderBox::toConstRenderBox(containingBlock);
+    const RenderBox* containingBlockBox = toRenderBox(containingBlock);
     return containingBlockBox->width() - containingBlockBox->borderLeft() - containingBlockBox->borderRight() - containingBlockBox->verticalScrollbarWidth();
 }
 
 int RenderBox::containingBlockHeightForPositioned(const RenderObject* containingBlock) const
 {
-    const RenderBox* containingBlockBox = RenderBox::toConstRenderBox(containingBlock);
+    const RenderBox* containingBlockBox = toRenderBox(containingBlock);
     
     int heightResult;
     if (containingBlock->isRenderInline()) {
         ASSERT(containingBlock->isRelPositioned());
-        heightResult = static_cast<const RenderInline*>(containingBlock)->boundingBoxHeight();
+        heightResult = static_cast<const RenderInline*>(containingBlock)->linesBoundingBox().height();
     } else
         heightResult = containingBlockBox->height();
     
@@ -2152,7 +2270,7 @@ void RenderBox::calcAbsoluteHorizontal()
 
     // We don't use containingBlock(), since we may be positioned by an enclosing
     // relative positioned inline.
-    const RenderBox* containerBlock = RenderBox::toRenderBox(container());
+    const RenderBox* containerBlock = toRenderBox(container());
     
     const int containerWidth = containingBlockWidthForPositioned(containerBlock);
 
@@ -2459,7 +2577,7 @@ void RenderBox::calcAbsoluteVertical()
 
 
     // We don't use containingBlock(), since we may be positioned by an enclosing relpositioned inline.
-    const RenderBox* containerBlock = RenderBox::toConstRenderBox(container());
+    const RenderBox* containerBlock = toRenderBox(container());
 
     const int containerHeight = containingBlockHeightForPositioned(containerBlock);
 
@@ -2682,7 +2800,7 @@ void RenderBox::calcAbsoluteHorizontalReplaced()
 
     // We don't use containingBlock(), since we may be positioned by an enclosing
     // relative positioned inline.
-    const RenderBox* containerBlock = RenderBox::toConstRenderBox(container());
+    const RenderBox* containerBlock = toRenderBox(container());
 
     const int containerWidth = containingBlockWidthForPositioned(containerBlock);
 
@@ -2855,7 +2973,7 @@ void RenderBox::calcAbsoluteVerticalReplaced()
     // the numbers correspond to numbers in spec)
 
     // We don't use containingBlock(), since we may be positioned by an enclosing relpositioned inline.
-    const RenderBox* containerBlock = RenderBox::toConstRenderBox(container());
+    const RenderBox* containerBlock = toRenderBox(container());
 
     const int containerHeight = containingBlockHeightForPositioned(containerBlock);
 

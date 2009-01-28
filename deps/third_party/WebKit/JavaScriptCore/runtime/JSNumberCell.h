@@ -35,6 +35,8 @@ namespace JSC {
     extern const double NaN;
     extern const double Inf;
 
+    JSValuePtr jsNumberCell(ExecState*, double);
+
 #if !USE(ALTERNATE_JSIMMEDIATE)
 
     class Identifier;
@@ -105,7 +107,6 @@ namespace JSC {
     };
 
     JSValuePtr jsNumberCell(JSGlobalData*, double);
-    JSValuePtr jsNumberCell(ExecState*, double);
 
     inline bool isNumberCell(JSValuePtr v)
     {

@@ -402,8 +402,8 @@ void RenderLayer::updateLayerPosition()
 
     m_relX = m_relY = 0;
     if (renderer()->isRelPositioned()) {
-        m_relX = RenderBox::toRenderBox(renderer())->relativePositionOffsetX();
-        m_relY = RenderBox::toRenderBox(renderer())->relativePositionOffsetY();
+        m_relX = toRenderBox(renderer())->relativePositionOffsetX();
+        m_relY = toRenderBox(renderer())->relativePositionOffsetY();
         x += m_relX; y += m_relY;
     }
     
@@ -415,7 +415,7 @@ void RenderLayer::updateLayerPosition()
         positionedParent->subtractScrolledContentOffset(x, y);
         
         if (renderer()->isPositioned()) {
-            IntSize offset = RenderBox::toRenderBox(renderer())->offsetForPositionedInContainer(positionedParent->renderer());
+            IntSize offset = toRenderBox(renderer())->offsetForPositionedInContainer(positionedParent->renderer());
             x += offset.width();
             y += offset.height();
         }
@@ -428,18 +428,19 @@ void RenderLayer::updateLayerPosition()
 
     if (renderer()->isRenderInline()) {
         RenderInline* inlineFlow = static_cast<RenderInline*>(renderer());
-        setWidth(inlineFlow->boundingBoxWidth());
-        setHeight(inlineFlow->boundingBoxHeight());
+        IntRect lineBox = inlineFlow->linesBoundingBox();
+        setWidth(lineBox.width());
+        setHeight(lineBox.height());
     } else {
         setWidth(renderer()->width());
         setHeight(renderer()->height());
-    }
 
-    if (!renderer()->hasOverflowClip()) {
-        if (renderer()->overflowWidth() > renderer()->width())
-            setWidth(renderer()->overflowWidth());
-        if (renderer()->overflowHeight() > renderer()->height())
-            setHeight(renderer()->overflowHeight());
+        if (!renderer()->hasOverflowClip()) {
+            if (renderer()->overflowWidth() > renderer()->width())
+                setWidth(renderer()->overflowWidth());
+            if (renderer()->overflowHeight() > renderer()->height())
+                setHeight(renderer()->overflowHeight());
+        }
     }
 }
 
@@ -1042,7 +1043,7 @@ void RenderLayer::resize(const PlatformMouseEvent& evt, const IntSize& oldOffset
     // Set the width and height of the shadow ancestor node if there is one.
     // This is necessary for textarea elements since the resizable layer is in the shadow content.
     Element* element = static_cast<Element*>(renderer()->node()->shadowAncestorNode());
-    RenderBox* renderer = RenderBox::toRenderBox(element->renderer());
+    RenderBox* renderer = toRenderBox(element->renderer());
 
     EResize resize = renderer->style()->resize();
     if (resize == RESIZE_NONE)
@@ -2163,7 +2164,7 @@ void RenderLayer::calculateRects(const RenderLayer* rootLayer, const IntRect& pa
 
 IntRect RenderLayer::childrenClipRect() const
 {
-    RenderLayer* rootLayer = renderer()->document()->renderer()->layer();
+    RenderLayer* rootLayer = renderer()->view()->layer();
     IntRect layerBounds, backgroundRect, foregroundRect, outlineRect;
     calculateRects(rootLayer, rootLayer->boundingBox(rootLayer), layerBounds, backgroundRect, foregroundRect, outlineRect);
     return foregroundRect;
@@ -2171,7 +2172,7 @@ IntRect RenderLayer::childrenClipRect() const
 
 IntRect RenderLayer::selfClipRect() const
 {
-    RenderLayer* rootLayer = renderer()->document()->renderer()->layer();
+    RenderLayer* rootLayer = renderer()->view()->layer();
     IntRect layerBounds, backgroundRect, foregroundRect, outlineRect;
     calculateRects(rootLayer, rootLayer->boundingBox(rootLayer), layerBounds, backgroundRect, foregroundRect, outlineRect);
     return backgroundRect;
@@ -2189,7 +2190,7 @@ bool RenderLayer::intersectsDamageRect(const IntRect& layerBounds, const IntRect
     // can go ahead and return true.
     RenderView* view = renderer()->view();
     ASSERT(view);
-    if (view && !renderer()->isInlineFlow()) {
+    if (view && !renderer()->isRenderInline()) {
         IntRect b = layerBounds;
         b.inflate(view->maximalOutlineSize());
         if (b.intersects(damageRect))
@@ -2213,7 +2214,7 @@ IntRect RenderLayer::boundingBox(const RenderLayer* rootLayer) const
     // as part of our bounding box.  We do this because we are the responsible layer for both hit testing and painting those
     // floats.
     IntRect result;
-    if (renderer()->isInlineFlow()) {
+    if (renderer()->isRenderInline()) {
         // Go from our first line box to our last line box.
         RenderInline* inlineFlow = static_cast<RenderInline*>(renderer());
         InlineFlowBox* firstBox = inlineFlow->firstLineBox();
@@ -2229,7 +2230,7 @@ IntRect RenderLayer::boundingBox(const RenderLayer* rootLayer) const
         // Our bounding box is just the union of all of our cells' border/overflow rects.
         for (RenderObject* child = renderer()->firstChild(); child; child = child->nextSibling()) {
             if (child->isTableCell()) {
-                IntRect bbox = RenderBox::toRenderBox(child)->borderBoxRect();
+                IntRect bbox = toRenderBox(child)->borderBoxRect();
                 result.unite(bbox);
                 IntRect overflowRect = renderer()->overflowRect(false);
                 if (bbox != overflowRect)

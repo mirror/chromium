@@ -30,16 +30,17 @@
 #include "RenderSVGText.h"
 
 #include "FloatConversion.h"
+#include "FloatQuad.h"
 #include "GraphicsContext.h"
 #include "PointerEventsHitRules.h"
 #include "RenderSVGRoot.h"
-#include "SimpleFontData.h"
 #include "SVGLengthList.h"
 #include "SVGResourceFilter.h"
 #include "SVGRootInlineBox.h"
 #include "SVGTextElement.h"
 #include "SVGTransformList.h"
 #include "SVGURIReference.h"
+#include "SimpleFontData.h"
 
 namespace WebCore {
 
@@ -48,8 +49,9 @@ RenderSVGText::RenderSVGText(SVGTextElement* node)
 {
 }
 
-IntRect RenderSVGText::absoluteClippedOverflowRect()
+IntRect RenderSVGText::clippedOverflowRectForRepaint(RenderBox* /*repaintContainer*/)
 {
+    // FIXME: handle non-root repaintContainer
     FloatRect repaintRect = absoluteTransform().mapRect(relativeBBox(true));
 
 #if ENABLE(SVG_FILTERS)
@@ -63,11 +65,6 @@ IntRect RenderSVGText::absoluteClippedOverflowRect()
         repaintRect.inflate(1); // inflate 1 pixel for antialiasing
 
     return enclosingIntRect(repaintRect);
-}
-
-bool RenderSVGText::requiresLayer()
-{
-    return false;
 }
 
 bool RenderSVGText::calculateLocalTransform()
@@ -113,7 +110,7 @@ void RenderSVGText::layout()
 
 InlineBox* RenderSVGText::createInlineBox(bool, bool, bool)
 {
-    ASSERT(!isInlineFlow());
+    ASSERT(!isRenderInline());
     InlineFlowBox* flowBox = new (renderArena()) SVGRootInlineBox(this);
     
     if (!m_firstLineBox)

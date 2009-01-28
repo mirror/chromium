@@ -25,8 +25,8 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-#ifndef CachedPagePlatformData_h
-#define CachedPagePlatformData_h
+#ifndef CachedFramePlatformData_h
+#define CachedFramePlatformData_h
 
 namespace WebCore {
 
@@ -34,12 +34,12 @@ namespace WebCore {
 // goes into the Back/Forward page cache, and perform some action with that data when the page comes out.  
 // Each platform should subclass this class as neccessary
 
-class CachedPagePlatformData {
+class CachedFramePlatformData {
 public:
-    virtual ~CachedPagePlatformData() { }
+    virtual ~CachedFramePlatformData() { }
     virtual void clear() { }
 };
 
 } // namespace WebCore
 
-#endif // CachedPagePlatformData_h
+#endif // CachedFramePlatformData_h

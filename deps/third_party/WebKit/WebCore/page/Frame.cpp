@@ -42,6 +42,7 @@
 #include "EditorClient.h"
 #include "EventNames.h"
 #include "FocusController.h"
+#include "FloatQuad.h"
 #include "FrameLoader.h"
 #include "FrameView.h"
 #include "GraphicsContext.h"
@@ -441,8 +442,7 @@ String Frame::searchForLabelsBeforeElement(const Vector<String>& labels, Element
          n = n->traversePreviousNode())
     {
         if (n->hasTagName(formTag)
-            || (n->isHTMLElement()
-                && static_cast<HTMLElement*>(n)->isGenericFormElement()))
+            || (n->isHTMLElement() && static_cast<Element*>(n)->isFormControlElement()))
         {
             // We hit another form element or the start of the form - bail out
             break;
@@ -1238,7 +1238,7 @@ static HTMLFormElement *scanForForm(Node *start)
     for (n = start; n; n = n->traverseNextNode()) {
         if (n->hasTagName(formTag))
             return static_cast<HTMLFormElement*>(n);
-        else if (n->isHTMLElement() && static_cast<HTMLElement*>(n)->isGenericFormElement())
+        else if (n->isHTMLElement() && static_cast<Element*>(n)->isFormControlElement())
             return static_cast<HTMLFormControlElement*>(n)->form();
         else if (n->hasTagName(frameTag) || n->hasTagName(iframeTag)) {
             Node *childDoc = static_cast<HTMLFrameElementBase*>(n)->contentDocument();
@@ -1262,8 +1262,7 @@ HTMLFormElement *Frame::currentForm() const
     for (n = start; n; n = n->parentNode()) {
         if (n->hasTagName(formTag))
             return static_cast<HTMLFormElement*>(n);
-        else if (n->isHTMLElement()
-                   && static_cast<HTMLElement*>(n)->isGenericFormElement())
+        else if (n->isHTMLElement() && static_cast<Element*>(n)->isFormControlElement())
             return static_cast<HTMLFormControlElement*>(n)->form();
     }
     
@@ -1412,7 +1411,7 @@ void Frame::clearTimers(FrameView *view, Document *document)
         view->unscheduleRelayout();
         if (view->frame()) {
             if (document && document->renderer() && document->renderer()->hasLayer())
-                document->renderer()->layer()->suspendMarquees();
+                document->renderView()->layer()->suspendMarquees();
             view->frame()->animation()->suspendAnimations(document);
             view->frame()->eventHandler()->stopAutoscrollTimer();
         }

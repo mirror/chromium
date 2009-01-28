@@ -463,7 +463,7 @@ namespace WebCore {
         bool canCachePageContainingThisFrame();
 #ifndef NDEBUG
         void logCanCachePageDecision();
-        bool logCanCacheFrameDecision();
+        bool logCanCacheFrameDecision(int indentLevel);
 #endif
 
         void addBackForwardItemClippedAtTarget(bool doClip);

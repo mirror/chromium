@@ -498,7 +498,7 @@ int RenderTableSection::layoutRows(int toAdd)
                 (!table()->style()->height().isAuto() && rHeight != cell->height());
 
             for (RenderObject* o = cell->firstChild(); o; o = o->nextSibling()) {
-                if (!o->isText() && o->style()->height().isPercent() && (o->isReplaced() || o->scrollsOverflow() || flexAllChildren)) {
+                if (!o->isText() && o->style()->height().isPercent() && (o->isReplaced() || (o->isBox() && toRenderBox(o)->scrollsOverflow()) || flexAllChildren)) {
                     // Tables with no sections do not flex.
                     if (!o->isTable() || static_cast<RenderTable*>(o)->hasSections()) {
                         o->setNeedsLayout(true, false);
@@ -586,6 +586,8 @@ int RenderTableSection::layoutRows(int toAdd)
                 cell->repaintDuringLayoutIfMoved(oldCellRect);
         }
     }
+
+    ASSERT(!needsLayout());
 
     statePusher.pop();
 
@@ -1084,7 +1086,7 @@ bool RenderTableSection::nodeAtPoint(const HitTestRequest& request, HitTestResul
         // at the moment (a demoted inline <form> for example). If we ever implement a
         // table-specific hit-test method (which we should do for performance reasons anyway),
         // then we can remove this check.
-        if (!child->hasLayer() && !child->isInlineFlow() && child->nodeAtPoint(request, result, xPos, yPos, tx, ty, action)) {
+        if (!child->hasLayer() && !child->isRenderInline() && child->nodeAtPoint(request, result, xPos, yPos, tx, ty, action)) {
             updateHitTestResult(result, IntPoint(xPos - tx, yPos - ty));
             return true;
         }

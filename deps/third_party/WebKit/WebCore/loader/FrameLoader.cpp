@@ -284,7 +284,7 @@ void FrameLoader::init()
     // this somewhat odd set of steps is needed to give the frame an initial empty document
     m_isDisplayingInitialEmptyDocument = false;
     m_creatingInitialEmptyDocument = true;
-    setPolicyDocumentLoader(m_client->createDocumentLoader(ResourceRequest(String("")), SubstituteData()).get());
+    setPolicyDocumentLoader(m_client->createDocumentLoader(ResourceRequest(KURL("")), SubstituteData()).get());
     setProvisionalDocumentLoader(m_policyDocumentLoader.get());
     setState(FrameStateProvisional);
     m_provisionalDocumentLoader->setResponse(ResourceResponse(KURL(), "text/html", 0, String(), String()));
@@ -436,7 +436,7 @@ bool FrameLoader::requestFrame(HTMLFrameOwnerElement* ownerElement, const String
     KURL scriptURL;
     KURL url;
     if (protocolIs(urlString, "javascript")) {
-        scriptURL = KURL(urlString);
+        scriptURL = completeURL(urlString); // completeURL() encodes the URL.
         url = blankURL();
     } else
         url = completeURL(urlString);
@@ -1238,7 +1238,8 @@ void FrameLoader::restoreDocumentState()
     
     if (!itemToRestore)
         return;
-        
+
+    LOG(Loading, "WebCoreLoading %s: restoring form state from %p", m_frame->tree()->name().string().utf8().data(), itemToRestore);
     doc->setStateForNewFormElements(itemToRestore->documentState());
 }
 
@@ -1971,6 +1972,28 @@ bool FrameLoader::canCachePage()
 }
 
 #ifndef NDEBUG
+static String& pageCacheLogPrefix(int indentLevel)
+{
+    static int previousIndent = -1;
+    DEFINE_STATIC_LOCAL(String, prefix, ());
+    
+    if (indentLevel != previousIndent) {    
+        previousIndent = indentLevel;
+        prefix.truncate(0);
+        for (int i = 0; i < previousIndent; ++i)
+            prefix += "    ";
+    }
+    
+    return prefix;
+}
+
+static void pageCacheLog(const String& prefix, const String& message)
+{
+    LOG(PageCache, "%s%s", prefix.utf8().data(), message.utf8().data());
+}
+
+#define PCLOG(...) pageCacheLog(pageCacheLogPrefix(indentLevel), String::format(__VA_ARGS__))
+
 void FrameLoader::logCanCachePageDecision()
 {
     // Only bother logging for main frames that have actually loaded and have content.
@@ -1980,42 +2003,40 @@ void FrameLoader::logCanCachePageDecision()
     if (currentURL.isEmpty())
         return;
 
-    LOG(PageCache, "--------\nDetermining if page can be cached:");
-    
-    bool cannotCache = !logCanCacheFrameDecision();
-    
-    for (Frame* child = m_frame->tree()->firstChild(); child; child = child->tree()->nextSibling())
-        cannotCache = !child->loader()->logCanCacheFrameDecision();
+    int indentLevel = 0;
+    PCLOG("--------\n Determining if page can be cached:");
+
+    bool cannotCache = !logCanCacheFrameDecision(1);
         
     FrameLoadType loadType = this->loadType();
     do {
         if (m_frame->tree()->parent())
-            { LOG(PageCache, " -Frame has a parent frame"); cannotCache = true; }
+            { PCLOG("   -Frame has a parent frame"); cannotCache = true; }
         if (!m_frame->page()) {
-            LOG(PageCache, " -There is no Page object");
+            PCLOG("   -There is no Page object");
             cannotCache = true;
             break;
         }
         if (!m_frame->page()->backForwardList()->enabled())
-            { LOG(PageCache, " -The back/forward list is disabled"); cannotCache = true; }
+            { PCLOG("   -The back/forward list is disabled"); cannotCache = true; }
         if (!(m_frame->page()->backForwardList()->capacity() > 0))
-            { LOG(PageCache, " -The back/forward list has a 0 capacity"); cannotCache = true; }
+            { PCLOG("   -The back/forward list has a 0 capacity"); cannotCache = true; }
         if (!m_frame->page()->settings()->usesPageCache())
-            { LOG(PageCache, " -Page settings says b/f cache disabled"); cannotCache = true; }
+            { PCLOG("   -Page settings says b/f cache disabled"); cannotCache = true; }
         if (loadType == FrameLoadTypeReload)
-            { LOG(PageCache, " -Load type is: Reload"); cannotCache = true; }
+            { PCLOG("   -Load type is: Reload"); cannotCache = true; }
         if (loadType == FrameLoadTypeReloadAllowingStaleData)
-            { LOG(PageCache, " -Load type is: Reload allowing stale data"); cannotCache = true; }
+            { PCLOG("   -Load type is: Reload allowing stale data"); cannotCache = true; }
         if (loadType == FrameLoadTypeReloadFromOrigin)
-            { LOG(PageCache, " -Load type is: Reload from origin"); cannotCache = true; }
+            { PCLOG("   -Load type is: Reload from origin"); cannotCache = true; }
         if (loadType == FrameLoadTypeSame)
-            { LOG(PageCache, " -Load type is: Same"); cannotCache = true; }
+            { PCLOG("   -Load type is: Same"); cannotCache = true; }
     } while (false);
     
-    LOG(PageCache, cannotCache ? "Page CANNOT be cached\n--------" : "Page CAN be cached\n--------");
+    PCLOG(cannotCache ? " Page CANNOT be cached\n--------" : " Page CAN be cached\n--------");
 }
 
-bool FrameLoader::logCanCacheFrameDecision()
+bool FrameLoader::logCanCacheFrameDecision(int indentLevel)
 {
     // Only bother logging for frames that have actually loaded and have content.
     if (m_creatingInitialEmptyDocument)
@@ -2024,63 +2045,69 @@ bool FrameLoader::logCanCacheFrameDecision()
     if (currentURL.isEmpty())
         return false;
 
+    PCLOG("+---");
     KURL newURL = m_provisionalDocumentLoader ? m_provisionalDocumentLoader->url() : KURL();
     if (!newURL.isEmpty())
-        LOG(PageCache, "----\nDetermining if frame can be cached navigating from (%s) to (%s):", currentURL.string().utf8().data(), newURL.string().utf8().data());
+        PCLOG(" Determining if frame can be cached navigating from (%s) to (%s):", currentURL.string().utf8().data(), newURL.string().utf8().data());
     else
-        LOG(PageCache, "----\nDetermining if subframe with URL (%s) can be cached:", currentURL.string().utf8().data());
+        PCLOG(" Determining if subframe with URL (%s) can be cached:", currentURL.string().utf8().data());
         
     bool cannotCache = false;
 
     do {
         if (!m_documentLoader) {
-            LOG(PageCache, " -There is no DocumentLoader object");
+            PCLOG("   -There is no DocumentLoader object");
             cannotCache = true;
             break;
         }
         if (!m_documentLoader->mainDocumentError().isNull())
-            { LOG(PageCache, " -Main document has an error"); cannotCache = true; }
+            { PCLOG("   -Main document has an error"); cannotCache = true; }
         if (m_frame->tree()->childCount())
-            { LOG(PageCache, " -Frame has child frames"); cannotCache = true; }
+            { PCLOG("   -Frame has child frames"); cannotCache = true; }
         if (m_containsPlugIns)
-            { LOG(PageCache, " -Frame contains plugins"); cannotCache = true; }
+            { PCLOG("   -Frame contains plugins"); cannotCache = true; }
         if (m_URL.protocolIs("https"))
-            { LOG(PageCache, " -Frame is HTTPS"); cannotCache = true; }
+            { PCLOG("   -Frame is HTTPS"); cannotCache = true; }
         if (!m_frame->document()) {
-            LOG(PageCache, " -There is no Document object");
+            PCLOG("   -There is no Document object");
             cannotCache = true;
             break;
         }
         if (m_frame->document()->hasWindowEventListener(eventNames().unloadEvent))
-            { LOG(PageCache, " -Frame has an unload event listener"); cannotCache = true; }
+            { PCLOG("   -Frame has an unload event listener"); cannotCache = true; }
 #if ENABLE(DATABASE)
         if (m_frame->document()->hasOpenDatabases())
-            { LOG(PageCache, " -Frame has open database handles"); cannotCache = true; }
+            { PCLOG("   -Frame has open database handles"); cannotCache = true; }
 #endif
         if (m_frame->document()->usingGeolocation())
-            { LOG(PageCache, " -Frame uses Geolocation"); cannotCache = true; }
+            { PCLOG("   -Frame uses Geolocation"); cannotCache = true; }
         if (!m_currentHistoryItem)
-            { LOG(PageCache, " -No current history item"); cannotCache = true; }
+            { PCLOG("   -No current history item"); cannotCache = true; }
         if (isQuickRedirectComing())
-            { LOG(PageCache, " -Quick redirect is coming"); cannotCache = true; }
+            { PCLOG("   -Quick redirect is coming"); cannotCache = true; }
         if (m_documentLoader->isLoadingInAPISense())
-            { LOG(PageCache, " -DocumentLoader is still loading in API sense"); cannotCache = true; }
+            { PCLOG("   -DocumentLoader is still loading in API sense"); cannotCache = true; }
         if (m_documentLoader->isStopping())
-            { LOG(PageCache, " -DocumentLoader is in the middle of stopping"); cannotCache = true; }
+            { PCLOG("   -DocumentLoader is in the middle of stopping"); cannotCache = true; }
         if (!m_frame->document()->canSuspendActiveDOMObjects())
-            { LOG(PageCache, " -The document cannot suspect its active DOM Objects"); cannotCache = true; }
+            { PCLOG("   -The document cannot suspect its active DOM Objects"); cannotCache = true; }
 #if ENABLE(OFFLINE_WEB_APPLICATIONS)
         if (m_documentLoader->applicationCache())
-            { LOG(PageCache, " -The DocumentLoader has an active application cache"); cannotCache = true; }
+            { PCLOG("   -The DocumentLoader has an active application cache"); cannotCache = true; }
         if (m_documentLoader->candidateApplicationCacheGroup())
-            { LOG(PageCache, " -The DocumentLoader has a candidateApplicationCacheGroup"); cannotCache = true; }
+            { PCLOG("   -The DocumentLoader has a candidateApplicationCacheGroup"); cannotCache = true; }
 #endif
         if (!m_client->canCachePage())
-            { LOG(PageCache, " -The client says this frame cannot be cached"); cannotCache = true; }
+            { PCLOG("   -The client says this frame cannot be cached"); cannotCache = true; }
     } while (false);
+
+    for (Frame* child = m_frame->tree()->firstChild(); child; child = child->tree()->nextSibling())
+        if (!child->loader()->logCanCacheFrameDecision(indentLevel + 1))
+            cannotCache = true;
     
-    LOG(PageCache, cannotCache ? "Frame CANNOT be cached\n----" : "Frame CAN be cached\n----");
-    
+    PCLOG(cannotCache ? " Frame CANNOT be cached" : " Frame CAN be cached");
+    PCLOG("+---");
+
     return !cannotCache;
 }
 #endif
@@ -2856,7 +2883,9 @@ void FrameLoader::commitProvisionalLoad(PassRefPtr<CachedPage> prpCachedPage)
 {
     RefPtr<CachedPage> cachedPage = prpCachedPage;
     RefPtr<DocumentLoader> pdl = m_provisionalDocumentLoader;
-    
+
+    LOG(Loading, "WebCoreLoading %s: About to commit provisional load from previous URL %s", m_frame->tree()->name().string().utf8().data(), m_URL.string().utf8().data());
+
     // Check to see if we need to cache the page we are navigating away from into the back/forward cache.
     // We are doing this here because we know for sure that a new page is about to be loaded.
     if (canCachePage() && !m_currentHistoryItem->isInPageCache()) {
@@ -2914,6 +2943,9 @@ void FrameLoader::commitProvisionalLoad(PassRefPtr<CachedPage> prpCachedPage)
 
         didOpenURL(url);
     }
+
+    LOG(Loading, "WebCoreLoading %s: Finished committing provisional load to URL %s", m_frame->tree()->name().string().utf8().data(), m_URL.string().utf8().data());
+
     opened();
 }
 
@@ -2964,7 +2996,7 @@ void FrameLoader::transitionToCommitted(PassRefPtr<CachedPage> cachedPage)
                         DocumentLoader* cachedDocumentLoader = cachedPage->documentLoader();
                         ASSERT(cachedDocumentLoader);
                         cachedDocumentLoader->setFrame(m_frame);
-                        m_client->transitionToCommittedFromCachedPage(cachedPage.get());
+                        m_client->transitionToCommittedFromCachedFrame(cachedPage->cachedMainFrame());
                         
                     } else
                         m_client->transitionToCommittedForNewPage();
@@ -4300,9 +4332,7 @@ void FrameLoader::cachePageForHistoryItem(HistoryItem* item)
 {
     if (Page* page = m_frame->page()) {
         RefPtr<CachedPage> cachedPage = CachedPage::create(page);
-        cachedPage->setTimeStampToNow();
-        cachedPage->setDocumentLoader(documentLoader());
-        m_client->savePlatformDataToCachedPage(cachedPage.get());
+        m_client->savePlatformDataToCachedFrame(cachedPage->cachedMainFrame());
 
         pageCache()->add(item, cachedPage.release());
     }
@@ -5319,7 +5349,7 @@ void FrameLoader::dispatchWillSendRequest(DocumentLoader* loader, unsigned long 
     m_client->dispatchWillSendRequest(loader, identifier, request, redirectResponse);
 
     // If the URL changed, then we want to put that new URL in the "did tell client" set too.
-    if (oldRequestURL != request.url().string().impl())
+    if (!request.isNull() && oldRequestURL != request.url().string().impl())
         m_documentLoader->didTellClientAboutLoad(request.url());
 
     if (Page* page = m_frame->page())

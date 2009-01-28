@@ -1,7 +1,7 @@
 /*
  * (C) 1999 Lars Knoll (knoll@kde.org)
  * (C) 2000 Dirk Mueller (mueller@kde.org)
- * Copyright (C) 2004, 2005, 2006, 2007 Apple Inc. All rights reserved.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -83,13 +83,7 @@ public:
                            int& beginMaxW, int& endMaxW,
                            int& minW, int& maxW, bool& stripFrontSpaces);
 
-    // Returns the leftmost (and topmost) position of the bounding box that encloses all text runs
-    int boundingBoxX() const;
-    int boundingBoxY() const;
-
-    // Returns the width and height of the bounding box that encloses all text runs.
-    int boundingBoxWidth() const;
-    int boundingBoxHeight() const;
+    IntRect linesBoundingBox() const;
 
     int firstRunX() const;
     int firstRunY() const;
@@ -108,7 +102,7 @@ public:
     virtual int marginLeft() const { return style()->marginLeft().calcMinValue(0); }
     virtual int marginRight() const { return style()->marginRight().calcMinValue(0); }
 
-    virtual IntRect absoluteClippedOverflowRect();
+    virtual IntRect clippedOverflowRectForRepaint(RenderBox* repaintContainer);
 
     InlineTextBox* firstTextBox() const { return m_firstTextBox; }
     InlineTextBox* lastTextBox() const { return m_lastTextBox; }
@@ -129,6 +123,7 @@ public:
     void checkConsistency() const;
 
 protected:
+    virtual void styleWillChange(RenderStyle::Diff, const RenderStyle*) { }
     virtual void styleDidChange(RenderStyle::Diff, const RenderStyle* oldStyle);
 
     virtual void setTextInternal(PassRefPtr<StringImpl>);
@@ -173,6 +168,18 @@ private:
     bool m_containsReversedText : 1;
     bool m_isAllASCII : 1;
 };
+
+inline RenderText* toRenderText(RenderObject* o)
+{ 
+    ASSERT(!o || o->isText());
+    return static_cast<RenderText*>(o);
+}
+
+inline const RenderText* toRenderText(const RenderObject* o)
+{ 
+    ASSERT(!o || o->isText());
+    return static_cast<const RenderText*>(o);
+}
 
 #ifdef NDEBUG
 inline void RenderText::checkConsistency() const

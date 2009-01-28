@@ -61,6 +61,7 @@
 #include "RenderListBox.h"
 #include "RenderListMarker.h"
 #include "RenderMenuList.h"
+#include "RenderText.h"
 #include "RenderTextControl.h"
 #include "RenderTheme.h"
 #include "RenderView.h"
@@ -1142,7 +1143,7 @@ bool AccessibilityRenderObject::accessibilityIsIgnored() const
         if (parentObjectUnignored()->ariaRoleAttribute() == MenuItemRole ||
             parentObjectUnignored()->ariaRoleAttribute() == MenuButtonRole)
             return true;
-         return m_renderer->isBR() || !static_cast<RenderText*>(m_renderer)->firstTextBox();
+         return m_renderer->isBR() || !toRenderText(m_renderer)->firstTextBox();
     }
     
     if (isHeading())
@@ -1438,9 +1439,9 @@ bool AccessibilityRenderObject::isEnabled() const
     return m_renderer->element() ? m_renderer->element()->isEnabled() : true;
 }
 
-RenderObject* AccessibilityRenderObject::topRenderer() const
+RenderView* AccessibilityRenderObject::topRenderer() const
 {
-    return m_renderer->document()->topDocument()->renderer();
+    return m_renderer->document()->topDocument()->renderView();
 }
 
 Document* AccessibilityRenderObject::document() const
@@ -1702,7 +1703,7 @@ VisiblePosition AccessibilityRenderObject::visiblePositionForPoint(const IntPoin
 {
     // convert absolute point to view coordinates
     FrameView* frameView = m_renderer->document()->topDocument()->renderer()->view()->frameView();
-    RenderObject* renderer = topRenderer();
+    RenderView* renderView = topRenderer();
     Node* innerNode = 0;
     
     // locate the node containing the point
@@ -1716,7 +1717,7 @@ VisiblePosition AccessibilityRenderObject::visiblePositionForPoint(const IntPoin
 #endif
         HitTestRequest request(true, true);
         HitTestResult result(ourpoint);
-        renderer->layer()->hitTest(request, result);
+        renderView->layer()->hitTest(request, result);
         innerNode = result.innerNode();
         if (!innerNode || !innerNode->renderer())
             return VisiblePosition();
@@ -1724,7 +1725,7 @@ VisiblePosition AccessibilityRenderObject::visiblePositionForPoint(const IntPoin
         pointResult = result.localPoint();
         
         // done if hit something other than a widget
-        renderer = innerNode->renderer();
+        RenderObject* renderer = innerNode->renderer();
         if (!renderer->isWidget())
             break;
         
@@ -1738,7 +1739,7 @@ VisiblePosition AccessibilityRenderObject::visiblePositionForPoint(const IntPoin
         Document* document = frame->document();
         if (!document)
             break;
-        renderer = document->renderer();
+        renderView = document->renderView();
         frameView = static_cast<FrameView*>(widget);
     }
     
@@ -1869,13 +1870,11 @@ IntRect AccessibilityRenderObject::doAXBoundsForRange(const PlainTextRange& rang
 
 AccessibilityObject* AccessibilityRenderObject::doAccessibilityHitTest(const IntPoint& point) const
 {
-    if (!m_renderer)
+    if (!m_renderer || !m_renderer->hasLayer())
         return 0;
     
-    RenderLayer* layer = m_renderer->layer();
-    if (!layer)
-        return 0;
-    
+    RenderLayer* layer = toRenderBox(m_renderer)->layer();
+     
     HitTestRequest request(true, true);
     HitTestResult hitTestResult = HitTestResult(point);
     layer->hitTest(request, hitTestResult);

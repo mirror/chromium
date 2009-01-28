@@ -702,13 +702,14 @@ void CSSStyleSelector::matchRulesForList(CSSRuleDataList* rules, int& firstRuleI
     }
 }
 
-bool operator >(CSSRuleData& r1, CSSRuleData& r2)
+static bool operator >(CSSRuleData& r1, CSSRuleData& r2)
 {
     int spec1 = r1.selector()->specificity();
     int spec2 = r2.selector()->specificity();
     return (spec1 == spec2) ? r1.position() > r2.position() : spec1 > spec2; 
 }
-bool operator <=(CSSRuleData& r1, CSSRuleData& r2)
+    
+static bool operator <=(CSSRuleData& r1, CSSRuleData& r2)
 {
     return !(r1 > r2);
 }
@@ -5832,7 +5833,7 @@ void CSSStyleSelector::SelectorChecker::visitedStateChanged(LinkHash visitedHash
     }
 }
 
-TransformOperation::OperationType getTransformOperationType(WebKitCSSTransformValue::TransformOperationType type)
+static TransformOperation::OperationType getTransformOperationType(WebKitCSSTransformValue::TransformOperationType type)
 {
     switch (type) {
         case WebKitCSSTransformValue::ScaleTransformOperation:          return TransformOperation::SCALE;

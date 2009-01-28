@@ -650,10 +650,11 @@ sub GenerateHeader
         } else {
             push(@headerContent, "$implClassName* to${interfaceName}(JSC::JSValuePtr);\n");
         }
-        if ($interfaceName eq "Node" or $interfaceName eq "Element" or $interfaceName eq "Text") {
-            push(@headerContent, "JSC::JSValuePtr toJSNewlyCreated(JSC::ExecState*, $interfaceName*);\n");
-        }
     }
+    if ($interfaceName eq "Node" or $interfaceName eq "Element" or $interfaceName eq "Text" or $interfaceName eq "CDATASection") {
+        push(@headerContent, "JSC::JSValuePtr toJSNewlyCreated(JSC::ExecState*, $interfaceName*);\n");
+    }
+    
     push(@headerContent, "\n");
 
     # Add prototype declaration.
@@ -1530,7 +1531,9 @@ sub GenerateImplementationFunctionCall()
         push(@implContent, "\n" . $indent . "JSC::JSValuePtr result = " . NativeToJSValue($function->signature, 1, $implClassName, "", $functionString, "castedThisObj") . ";\n");
         push(@implContent, $indent . "setDOMException(exec, ec);\n") if @{$function->raisesExceptions};
 
-        if ($podType) {
+        if ($podType and not $function->signature->extendedAttributes->{"Immutable"}) {
+            # Immutable methods do not commit changes back to the instance, thus producing
+            # a new instance rather than mutating existing one.
             push(@implContent, $indent . "wrapper->commitChange(imp, castedThisObj->context());\n");
         }
 

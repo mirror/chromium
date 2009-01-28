@@ -3,7 +3,7 @@
  *           (C) 2000 Antti Koivisto (koivisto@kde.org)
  *           (C) 2000 Dirk Mueller (mueller@kde.org)
  *           (C) 2004 Allan Sandfeld Jensen (kde@carewolf.com)
- * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2003, 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -26,40 +26,20 @@
 #define RenderObject_h
 
 #include "CachedResourceClient.h"
-#include "Document.h"
 #include "FloatQuad.h"
+#include "Document.h"
 #include "RenderStyle.h"
-#include "ScrollTypes.h"
-#include "VisiblePosition.h"
-#include <wtf/HashMap.h>
 
 namespace WebCore {
 
-class TransformationMatrix;
 class AnimationController;
-class Color;
-class Document;
-class Element;
-class Event;
-class FloatRect;
-class FrameView;
-class HTMLAreaElement;
 class HitTestResult;
 class InlineBox;
 class InlineFlowBox;
-class Position;
-class RenderArena;
 class RenderBlock;
-class RenderBox;
 class RenderFlow;
-class RenderFrameSet;
 class RenderLayer;
-class RenderTable;
-class RenderText;
-class RenderView;
-class String;
-
-struct HitTestRequest;
+class VisiblePosition;
 
 /*
  *  The painting of a layer occurs in three distinct phases.  Each phase involves
@@ -105,11 +85,10 @@ enum HitTestAction {
     HitTestForeground
 };
 
-enum VerticalPositionHint {
-    PositionTop = -0x7fffffff,
-    PositionBottom = 0x7fffffff,
-    PositionUndefined = static_cast<int>(0x80000000)
-};
+// Values for verticalPosition.
+const int PositionTop = -0x7fffffff;
+const int PositionBottom = 0x7fffffff;
+const int PositionUndefined = 0x80000000;
 
 #if ENABLE(DASHBOARD_SUPPORT)
 struct DashboardRegionValue {
@@ -129,15 +108,11 @@ struct DashboardRegionValue {
 };
 #endif
 
-// FIXME: This should be a HashSequencedSet, but we don't have that data structure yet.
-// This means the paint order of outlines will be wrong, although this is a minor issue.
-typedef HashSet<RenderFlow*> RenderFlowSequencedSet;
-
 // Base class for all rendering tree objects.
 class RenderObject : public CachedResourceClient {
     friend class RenderContainer;
-    friend class RenderSVGContainer;
     friend class RenderLayer;
+    friend class RenderSVGContainer;
 public:
     // Anonymous objects should pass the document as their node, and they will then automatically be
     // marked as anonymous in the constructor.
@@ -165,15 +140,18 @@ public:
     RenderObject* firstLeafChild() const;
     RenderObject* lastLeafChild() const;
 
-    virtual RenderLayer* layer() const { return 0; }
+    // The following five functions are used when the render tree hierarchy changes to make sure layers get
+    // properly added and removed.  Since containership can be implemented by any subclass, and since a hierarchy
+    // can contain a mixture of boxes and other object types, these functions need to be in the base class.
     RenderLayer* enclosingLayer() const;
     void addLayers(RenderLayer* parentLayer, RenderObject* newObject);
     void removeLayers(RenderLayer* parentLayer);
     void moveLayers(RenderLayer* oldParent, RenderLayer* newParent);
     RenderLayer* findNextLayer(RenderLayer* parentLayer, RenderObject* startPoint, bool checkParent = true);
-    virtual void positionChildLayers() { }
-    virtual bool requiresLayer();
 
+    // Convenience function for getting to the nearest enclosing box of a RenderObject.
+    RenderBox* enclosingBox() const;
+    
     virtual IntRect getOverflowClipRect(int /*tx*/, int /*ty*/) { return IntRect(0, 0, 0, 0); }
     virtual IntRect getClipRect(int /*tx*/, int /*ty*/) { return IntRect(0, 0, 0, 0); }
     bool hasClip() { return isPositioned() && style()->hasClip(); }
@@ -271,7 +249,6 @@ public:
     virtual bool isImage() const { return false; }
     virtual bool isInlineBlockOrInlineTable() const { return false; }
     virtual bool isInlineContinuation() const;
-    virtual bool isInlineFlow() const { return false; }
     virtual bool isListBox() const { return false; }
     virtual bool isListItem() const { return false; }
     virtual bool isListMarker() const { return false; }
@@ -291,7 +268,6 @@ public:
     virtual bool isTextArea() const { return false; }
     virtual bool isTextField() const { return false; }
     virtual bool isWidget() const { return false; }
-
 
     bool isRoot() const { return document()->documentElement() == node(); }
     bool isBody() const;
@@ -332,7 +308,6 @@ public:
     bool isText() const  { return m_isText; }
     bool isBox() const { return m_isBox; }
     bool isInline() const { return m_inline; }  // inline object
-    bool isCompact() const { return style()->display() == COMPACT; } // compact object
     bool isRunIn() const { return style()->display() == RUN_IN; } // run-in object
     bool isDragging() const { return m_isDragging; }
     bool isReplaced() const { return m_replaced; } // a "replaced" element (see CSS)
@@ -357,22 +332,8 @@ public:
     virtual bool hasControlClip() const { return false; }
     virtual IntRect controlClipRect(int /*tx*/, int /*ty*/) const { return IntRect(); }
 
-    bool hasAutoVerticalScrollbar() const { return hasOverflowClip() && (style()->overflowY() == OAUTO || style()->overflowY() == OOVERLAY); }
-    bool hasAutoHorizontalScrollbar() const { return hasOverflowClip() && (style()->overflowX() == OAUTO || style()->overflowX() == OOVERLAY); }
-
-    bool scrollsOverflow() const { return scrollsOverflowX() || scrollsOverflowY(); }
-    bool scrollsOverflowX() const { return hasOverflowClip() && (style()->overflowX() == OSCROLL || hasAutoHorizontalScrollbar()); }
-    bool scrollsOverflowY() const { return hasOverflowClip() && (style()->overflowY() == OSCROLL || hasAutoVerticalScrollbar()); }
-
-    virtual int verticalScrollbarWidth() const;
-    virtual int horizontalScrollbarHeight() const;
-    
     bool hasTransform() const { return m_hasTransform; }
     bool hasMask() const { return style() && style()->hasMask(); }
-
-private:
-    bool includeVerticalScrollbarSize() const { return hasOverflowClip() && (style()->overflowY() == OSCROLL || style()->overflowY() == OAUTO); }
-    bool includeHorizontalScrollbarSize() const { return hasOverflowClip() && (style()->overflowX() == OSCROLL || style()->overflowX() == OAUTO); }
 
 public:
     // The pseudo element style can be cached or uncached.  Use the cached method if the pseudo element doesn't respect
@@ -400,7 +361,6 @@ public:
     RenderObject* container() const;
     RenderObject* hoverAncestor() const;
 
-    virtual void markAllDescendantsWithFloatsForLayout(RenderBox* floatToRemove = 0);
     void markContainingBlocksForLayout(bool scheduleRelayout = true, RenderObject* newRoot = 0);
     void setNeedsLayout(bool b, bool markParents = true);
     void setChildNeedsLayout(bool b, bool markParents = true);
@@ -457,7 +417,7 @@ public:
      */
     struct PaintInfo {
         PaintInfo(GraphicsContext* newContext, const IntRect& newRect, PaintPhase newPhase, bool newForceBlackText,
-                  RenderObject* newPaintingRoot, RenderFlowSequencedSet* newOutlineObjects)
+                  RenderObject* newPaintingRoot, ListHashSet<RenderFlow*>* newOutlineObjects)
             : context(newContext)
             , rect(newRect)
             , phase(newPhase)
@@ -472,7 +432,7 @@ public:
         PaintPhase phase;
         bool forceBlackText;
         RenderObject* paintingRoot; // used to draw just one element and its visual kids
-        RenderFlowSequencedSet* outlineObjects; // used to list outlines that should be painted by a block with inline children
+        ListHashSet<RenderFlow*>* outlineObjects; // used to list outlines that should be painted by a block with inline children
     };
 
     virtual void paint(PaintInfo&, int tx, int ty);
@@ -487,7 +447,6 @@ public:
                                         int /*clipY*/, int /*clipH*/, int /*tx*/, int /*ty*/, int /*width*/, int /*height*/,
                                         InlineFlowBox* = 0, CompositeOperator = CompositeSourceOver) { }
 
-    
     /*
      * Calculates the actual width of the object (only for non inline
      * objects)
@@ -529,7 +488,7 @@ public:
     void updateHitTestResult(HitTestResult&, const IntPoint&);
 
     virtual VisiblePosition positionForCoordinates(int x, int y);
-    VisiblePosition positionForPoint(const IntPoint& point) { return positionForCoordinates(point.x(), point.y()); }
+    VisiblePosition positionForPoint(const IntPoint&);
 
     virtual void dirtyLinesFromChangedChild(RenderObject*);
 
@@ -564,20 +523,16 @@ public:
     virtual FloatPoint localToAbsolute(FloatPoint localPoint = FloatPoint(), bool fixed = false, bool useTransforms = false) const;
     virtual FloatPoint absoluteToLocal(FloatPoint, bool fixed = false, bool useTransforms = false) const;
 
-    // Convert a local quad to an absolute quad, taking transforms into account.
-    virtual FloatQuad localToAbsoluteQuad(const FloatQuad&, bool fixed = false) const;
+    // Convert a local quad to absolute coordinates, taking transforms into account.
+    FloatQuad localToAbsoluteQuad(const FloatQuad& quad, bool fixed = false) const
+    {
+        return localToContainerQuad(quad, 0, fixed);
+    }
+    // Convert a local quad into the coordinate system of container, taking transforms into account.
+    virtual FloatQuad localToContainerQuad(const FloatQuad&, RenderBox* repaintContainer, bool fixed = false) const;
 
     // Return the offset from the container() renderer (excluding transforms)
     virtual IntSize offsetFromContainer(RenderObject*) const;
-
-    virtual bool scroll(ScrollDirection, ScrollGranularity, float multiplier = 1.0f);
-    virtual bool canBeProgramaticallyScrolled(bool) const;
-    virtual void autoscroll();
-    virtual void stopAutoscroll() { }
-
-    virtual void panScroll(const IntPoint&);
-
-    virtual bool isScrollable() const;
 
     virtual void addLineBoxRects(Vector<IntRect>&, unsigned startOffset = 0, unsigned endOffset = UINT_MAX, bool useSelectionHeight = false);
     
@@ -586,8 +541,8 @@ public:
     IntRect absoluteBoundingBoxRect(bool useTransforms = false);
 
     // Build an array of quads in absolute coords for line boxes
-    virtual void collectAbsoluteLineBoxQuads(Vector<FloatQuad>&, unsigned /*startOffset*/ = 0, unsigned /*endOffset*/ = UINT_MAX, bool /*useSelectionHeight*/ = false) { };
-    virtual void absoluteQuads(Vector<FloatQuad>&, bool /*topLevel*/ = true) { };
+    virtual void collectAbsoluteLineBoxQuads(Vector<FloatQuad>&, unsigned /*startOffset*/ = 0, unsigned /*endOffset*/ = UINT_MAX, bool /*useSelectionHeight*/ = false) { }
+    virtual void absoluteQuads(Vector<FloatQuad>&, bool /*topLevel*/ = true) { }
 
     // the rect that will be painted if this object is passed as the paintingRoot
     IntRect paintingRootRect(IntRect& topLevelRect);
@@ -614,6 +569,11 @@ public:
     void drawBorder(GraphicsContext*, int x1, int y1, int x2, int y2, BorderSide,
                     Color, const Color& textcolor, EBorderStyle, int adjbw1, int adjbw2);
 
+    // Return the RenderBox in the container chain which is responsible for painting this object, or 0
+    // if painting is root-relative. This is the container that should be passed to the 'forRepaint'
+    // methods.
+    RenderBox* containerForRepaint() const;
+    
     // Repaint the entire object.  Called when, e.g., the color of a border changes, or when a border
     // style changes.
     void repaint(bool immediate = false);
@@ -634,13 +594,23 @@ public:
 
     // Returns the rect that should be repainted whenever this object changes.  The rect is in the view's
     // coordinate space.  This method deals with outlines and overflow.
-    virtual IntRect absoluteClippedOverflowRect();
+    IntRect absoluteClippedOverflowRect()
+    {
+        return clippedOverflowRectForRepaint(0);
+    }
+    virtual IntRect clippedOverflowRectForRepaint(RenderBox* repaintContainer);
     
-    IntRect getAbsoluteRepaintRectWithOutline(int ow);
+    IntRect rectWithOutlineForRepaint(RenderBox* repaintContainer, int outlineWidth);
 
-    // Given a rect in the object's coordinate space, this method converts the rectangle to the view's
-    // coordinate space.
-    virtual void computeAbsoluteRepaintRect(IntRect&, bool fixed = false);
+    // Given a rect in the object's coordinate space, compute a rect suitable for repainting
+    // that rect in view coordinates.
+    void computeAbsoluteRepaintRect(IntRect& r, bool fixed = false)
+    {
+        return computeRectForRepaint(r, 0, fixed);
+    }
+    // Given a rect in the object's coordinate space, compute a rect suitable for repainting
+    // that rect in the coordinate space of repaintContainer.
+    virtual void computeRectForRepaint(IntRect&, RenderBox* repaintContainer, bool fixed = false);
 
     virtual unsigned int length() const { return 1; }
 
@@ -648,8 +618,6 @@ public:
     virtual bool containsFloats() { return false; }
     virtual bool containsFloat(RenderObject*) { return false; }
     virtual bool hasOverhangingFloats() { return false; }
-
-    virtual void removePositionedObjects(RenderBlock*) { }
 
     virtual bool avoidsFloats() const;
     bool shrinkToAvoidFloats() const;
@@ -789,7 +757,11 @@ public:
     bool visibleToHitTesting() const { return style()->visibility() == VISIBLE && style()->pointerEvents() != PE_NONE; }
     
     virtual void addFocusRingRects(GraphicsContext*, int /*tx*/, int /*ty*/) { };
-    virtual IntRect absoluteOutlineBounds() const { return IntRect(); }
+
+    IntRect absoluteOutlineBounds() const
+    {
+        return outlineBoundsForRepaint(0);
+    }
 
 protected:
     // Overrides should call the superclass at the end
@@ -809,6 +781,8 @@ protected:
     void adjustRectForOutlineAndShadow(IntRect&) const;
 
     void arenaDelete(RenderArena*, void* objectBase);
+
+    virtual IntRect outlineBoundsForRepaint(RenderBox* /*repaintContainer*/) const { return IntRect(); }
 
 private:
     RefPtr<RenderStyle> m_style;

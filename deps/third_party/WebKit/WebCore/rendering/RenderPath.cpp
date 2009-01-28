@@ -26,9 +26,8 @@
 #if ENABLE(SVG)
 #include "RenderPath.h"
 
-#include <math.h>
-
 #include "FloatPoint.h"
+#include "FloatQuad.h"
 #include "GraphicsContext.h"
 #include "PointerEventsHitRules.h"
 #include "RenderSVGContainer.h"
@@ -41,7 +40,6 @@
 #include "SVGStyledTransformableElement.h"
 #include "SVGTransformList.h"
 #include "SVGURIReference.h"
-
 #include <wtf/MathExtras.h>
 
 namespace WebCore {
@@ -178,8 +176,9 @@ void RenderPath::layout()
     setNeedsLayout(false);
 }
 
-IntRect RenderPath::absoluteClippedOverflowRect()
+IntRect RenderPath::clippedOverflowRectForRepaint(RenderBox* /*repaintContainer*/)
 {
+    // FIXME: handle non-root repaintContainer
     FloatRect repaintRect = absoluteTransform().mapRect(relativeBBox(true));
 
     // Markers can expand the bounding box
@@ -196,11 +195,6 @@ IntRect RenderPath::absoluteClippedOverflowRect()
         repaintRect.inflate(1); // inflate 1 pixel for antialiasing
 
     return enclosingIntRect(repaintRect);
-}
-
-bool RenderPath::requiresLayer()
-{
-    return false;
 }
 
 int RenderPath::lineHeight(bool, bool) const
@@ -482,8 +476,9 @@ FloatRect RenderPath::drawMarkersIfNeeded(GraphicsContext* context, const FloatR
     return bounds;
 }
 
-IntRect RenderPath::absoluteOutlineBounds() const
+IntRect RenderPath::outlineBoundsForRepaint(RenderBox* /*repaintContainer*/) const
 {
+    // FIXME: handle non-root repaintContainer
     IntRect result = m_absoluteBounds;
     adjustRectForOutlineAndShadow(result);
     return result;

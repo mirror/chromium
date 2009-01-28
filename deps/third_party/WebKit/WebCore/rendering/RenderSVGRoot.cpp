@@ -107,7 +107,7 @@ void RenderSVGRoot::layout()
     
     for (RenderObject* child = firstChild(); child; child = child->nextSibling()) {
         if (selfNeedsLayout()) // either bounds or transform changed, force kids to relayout
-            child->setNeedsLayout(true);
+            child->setNeedsLayout(true, false);
         
         child->layoutIfNeeded();
         ASSERT(!child->needsLayout());
@@ -231,12 +231,12 @@ void RenderSVGRoot::calcViewport()
     }
 }
 
-IntRect RenderSVGRoot::absoluteClippedOverflowRect()
+IntRect RenderSVGRoot::clippedOverflowRectForRepaint(RenderBox* repaintContainer)
 {
     IntRect repaintRect;
 
     for (RenderObject* current = firstChild(); current != 0; current = current->nextSibling())
-        repaintRect.unite(current->absoluteClippedOverflowRect());
+        repaintRect.unite(current->clippedOverflowRectForRepaint(repaintContainer));
 
 #if ENABLE(SVG_FILTERS)
     // Filters can expand the bounding box

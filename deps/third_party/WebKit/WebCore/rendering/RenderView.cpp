@@ -1,8 +1,6 @@
-/**
- * This file is part of the HTML widget for KDE.
- *
+/*
  * Copyright (C) 1999 Lars Knoll (knoll@kde.org)
- * Copyright (C) 2004, 2005, 2006 Apple Computer, Inc.
+ * Copyright (C) 2004, 2005, 2006, 2007, 2008, 2009 Apple Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Library General Public
@@ -25,6 +23,7 @@
 
 #include "Document.h"
 #include "Element.h"
+#include "FloatQuad.h"
 #include "Frame.h"
 #include "FrameView.h"
 #include "GraphicsContext.h"
@@ -144,8 +143,12 @@ FloatPoint RenderView::absoluteToLocal(FloatPoint containerPoint, bool fixed, bo
     return containerPoint;
 }
 
-FloatQuad RenderView::localToAbsoluteQuad(const FloatQuad& localQuad, bool fixed) const
+FloatQuad RenderView::localToContainerQuad(const FloatQuad& localQuad, RenderBox* repaintContainer, bool fixed) const
 {
+    // If a container was specified, and was not 0 or the RenderView,
+    // then we should have found it by now.
+    ASSERT_UNUSED(repaintContainer, !repaintContainer || repaintContainer == this);
+
     FloatQuad quad = localQuad;
     if (fixed && m_frameView)
         quad += m_frameView->scrollOffset();
@@ -237,8 +240,12 @@ void RenderView::repaintViewRectangle(const IntRect& ur, bool immediate)
     }
 }
 
-void RenderView::computeAbsoluteRepaintRect(IntRect& rect, bool fixed)
+void RenderView::computeRectForRepaint(IntRect& rect, RenderBox* repaintContainer, bool fixed)
 {
+    // If a container was specified, and was not 0 or the RenderView,
+    // then we should have found it by now.
+    ASSERT_UNUSED(repaintContainer, !repaintContainer || repaintContainer == this);
+
     if (printing())
         return;
 
@@ -260,7 +267,7 @@ void RenderView::absoluteQuads(Vector<FloatQuad>& quads, bool)
     quads.append(FloatRect(0, 0, m_layer->width(), m_layer->height()));
 }
 
-RenderObject* rendererAfterPosition(RenderObject* object, unsigned offset)
+static RenderObject* rendererAfterPosition(RenderObject* object, unsigned offset)
 {
     if (!object)
         return 0;

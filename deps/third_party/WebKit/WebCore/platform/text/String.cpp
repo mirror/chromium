@@ -847,7 +847,9 @@ PassRefPtr<SharedBuffer> utf8Buffer(const String& string)
 } // namespace WebCore
 
 #ifndef NDEBUG
-// For debugging only -- leaks memory
+// For use in the debugger - leaks memory
+WebCore::String* string(const char*);
+
 WebCore::String* string(const char* s)
 {
     return new WebCore::String(s);

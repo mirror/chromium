@@ -246,7 +246,7 @@ void RenderFlow::destroy()
 
 void RenderFlow::dirtyLinesFromChangedChild(RenderObject* child)
 {
-    if (!parent() || (selfNeedsLayout() && !isInlineFlow()) || isTable())
+    if (!parent() || (selfNeedsLayout() && !isRenderInline()) || isTable())
         return;
 
     // If we have no first line box, then just bail early.
@@ -272,10 +272,10 @@ void RenderFlow::dirtyLinesFromChangedChild(RenderObject* child)
             if (wrapper)
                 box = wrapper->root();
         } else if (curr->isText()) {
-            InlineTextBox* textBox = static_cast<RenderText*>(curr)->lastTextBox();
+            InlineTextBox* textBox = toRenderText(curr)->lastTextBox();
             if (textBox)
                 box = textBox->root();
-        } else if (curr->isInlineFlow()) {
+        } else if (curr->isRenderInline()) {
             InlineRunBox* runBox = static_cast<RenderFlow*>(curr)->lastLineBox();
             if (runBox)
                 box = runBox->root();
@@ -355,7 +355,7 @@ InlineBox* RenderFlow::createInlineBox(bool makePlaceHolderBox, bool isRootLineB
         return RenderContainer::createInlineBox(false, isRootLineBox);  // (or positioned element placeholders).
 
     InlineFlowBox* flowBox = 0;
-    if (isInlineFlow())
+    if (isRenderInline())
         flowBox = new (renderArena()) InlineFlowBox(this);
     else
         flowBox = new (renderArena()) RootInlineBox(this);
@@ -381,9 +381,9 @@ void RenderFlow::paintLines(PaintInfo& paintInfo, int tx, int ty)
         && paintInfo.phase != PaintPhaseMask)
         return;
 
-    bool inlineFlow = isInlineFlow();
+    bool inlineFlow = isRenderInline();
     if (inlineFlow)
-        ASSERT(m_layer); // The only way a compact/run-in/inline could paint like this is if it has a layer.
+        ASSERT(m_layer); // The only way an inline could paint like this is if it has a layer.
 
     // If we have no lines then we have no work to do.
     if (!firstLineBox())
@@ -400,7 +400,7 @@ void RenderFlow::paintLines(PaintInfo& paintInfo, int tx, int ty)
         return;
 
     PaintInfo info(paintInfo);
-    RenderFlowSequencedSet outlineObjects;
+    ListHashSet<RenderFlow*> outlineObjects;
     info.outlineObjects = &outlineObjects;
 
     // See if our root lines intersect with the dirty rect.  If so, then we paint
@@ -435,8 +435,8 @@ void RenderFlow::paintLines(PaintInfo& paintInfo, int tx, int ty)
     }
 
     if (info.phase == PaintPhaseOutline || info.phase == PaintPhaseSelfOutline || info.phase == PaintPhaseChildOutlines) {
-        RenderFlowSequencedSet::iterator end = info.outlineObjects->end();
-        for (RenderFlowSequencedSet::iterator it = info.outlineObjects->begin(); it != end; ++it) {
+        ListHashSet<RenderFlow*>::iterator end = info.outlineObjects->end();
+        for (ListHashSet<RenderFlow*>::iterator it = info.outlineObjects->begin(); it != end; ++it) {
             RenderFlow* flow = *it;
             flow->paintOutline(info.context, tx, ty);
         }
@@ -449,9 +449,9 @@ bool RenderFlow::hitTestLines(const HitTestRequest& request, HitTestResult& resu
     if (hitTestAction != HitTestForeground)
         return false;
 
-    bool inlineFlow = isInlineFlow();
+    bool inlineFlow = isRenderInline();
     if (inlineFlow)
-        ASSERT(m_layer); // The only way a compact/run-in/inline could paint like this is if it has a layer.
+        ASSERT(m_layer); // The only way an inline can hit test like this is if it has a layer.
 
     // If we have no lines then we have no work to do.
     if (!firstLineBox())
@@ -478,147 +478,6 @@ bool RenderFlow::hitTestLines(const HitTestRequest& request, HitTestResult& resu
     }
     
     return false;
-}
-
-IntRect RenderFlow::absoluteClippedOverflowRect()
-{
-    if (isInlineFlow()) {
-        // Only compacts and run-ins are allowed in here during layout.
-        ASSERT(!view() || !view()->layoutStateEnabled() || isCompact() || isRunIn());
-
-        if (!firstLineBox() && !continuation())
-            return IntRect();
-
-        // Find our leftmost position.
-        int left = 0;
-        int top = firstLineBox() ? firstLineBox()->yPos() : 0;
-        for (InlineRunBox* curr = firstLineBox(); curr; curr = curr->nextLineBox()) {
-            if (curr == firstLineBox() || curr->xPos() < left)
-                left = curr->xPos();
-        }
-
-        // Now invalidate a rectangle.
-        int ow = style() ? style()->outlineSize() : 0;
-        if (isCompact())
-            left -= x();
-        
-        // We need to add in the relative position offsets of any inlines (including us) up to our
-        // containing block.
-        RenderBlock* cb = containingBlock();
-        for (RenderObject* inlineFlow = this; inlineFlow && inlineFlow->isInlineFlow() && inlineFlow != cb; 
-             inlineFlow = inlineFlow->parent()) {
-             if (inlineFlow->style()->position() == RelativePosition && inlineFlow->hasLayer())
-                inlineFlow->layer()->relativePositionOffset(left, top);
-        }
-
-        IntRect r(-ow + left, -ow + top, width() + ow * 2, height() + ow * 2);
-        if (cb->hasColumns())
-            cb->adjustRectForColumns(r);
-
-        if (cb->hasOverflowClip()) {
-            // cb->height() is inaccurate if we're in the middle of a layout of |cb|, so use the
-            // layer's size instead.  Even if the layer's size is wrong, the layer itself will repaint
-            // anyway if its size does change.
-            int x = r.x();
-            int y = r.y();
-            IntRect boxRect(0, 0, cb->layer()->width(), cb->layer()->height());
-            cb->layer()->subtractScrolledContentOffset(x, y); // For overflow:auto/scroll/hidden.
-            IntRect repaintRect(x, y, r.width(), r.height());
-            r = intersection(repaintRect, boxRect);
-        }
-        cb->computeAbsoluteRepaintRect(r);
-
-        if (ow) {
-            for (RenderObject* curr = firstChild(); curr; curr = curr->nextSibling()) {
-                if (!curr->isText()) {
-                    IntRect childRect = curr->getAbsoluteRepaintRectWithOutline(ow);
-                    r.unite(childRect);
-                }
-            }
-
-            if (continuation() && !continuation()->isInline()) {
-                IntRect contRect = continuation()->getAbsoluteRepaintRectWithOutline(ow);
-                r.unite(contRect);
-            }
-        }
-
-        return r;
-    }
-
-    return RenderContainer::absoluteClippedOverflowRect();
-}
-
-int RenderFlow::lowestPosition(bool includeOverflowInterior, bool includeSelf) const
-{
-    ASSERT(!isInlineFlow());
-    if (!includeOverflowInterior && (hasOverflowClip() || hasControlClip()))
-        return includeSelf && width() > 0 ? overflowHeight(false) : 0;
-
-    int bottom = includeSelf && width() > 0 ? height() : 0;
-    if (!hasColumns()) {
-        // FIXME: Come up with a way to use the layer tree to avoid visiting all the kids.
-        // For now, we have to descend into all the children, since we may have a huge abs div inside
-        // a tiny rel div buried somewhere deep in our child tree.  In this case we have to get to
-        // the abs div.
-        for (RenderObject* c = firstChild(); c; c = c->nextSibling()) {
-            if (!c->isFloatingOrPositioned() && !c->isText() && !c->isInlineFlow())
-                bottom = max(bottom, toRenderBox(c)->y() + c->lowestPosition(false));
-        }
-    }
-
-    if (includeSelf && isRelPositioned())
-        bottom += relativePositionOffsetY();         
-
-    return bottom;
-}
-
-int RenderFlow::rightmostPosition(bool includeOverflowInterior, bool includeSelf) const
-{
-    ASSERT(!isInlineFlow());
-    if (!includeOverflowInterior && (hasOverflowClip() || hasControlClip()))
-        return includeSelf && height() > 0 ? overflowWidth(false) : 0;
-
-    int right = includeSelf && height() > 0 ? width() : 0;
-
-    if (!hasColumns()) {
-        // FIXME: Come up with a way to use the layer tree to avoid visiting all the kids.
-        // For now, we have to descend into all the children, since we may have a huge abs div inside
-        // a tiny rel div buried somewhere deep in our child tree.  In this case we have to get to
-        // the abs div.
-        for (RenderObject* c = firstChild(); c; c = c->nextSibling()) {
-            if (!c->isFloatingOrPositioned() && c->isBox() && !c->isInlineFlow())
-                right = max(right, toRenderBox(c)->x() + c->rightmostPosition(false));
-        }
-    }
-
-    if (includeSelf && isRelPositioned())
-        right += relativePositionOffsetX();
-
-    return right;
-}
-
-int RenderFlow::leftmostPosition(bool includeOverflowInterior, bool includeSelf) const
-{
-    ASSERT(!isInlineFlow());
-    if (!includeOverflowInterior && (hasOverflowClip() || hasControlClip()))
-        return includeSelf && height() > 0 ? overflowLeft(false) : width();
-
-    int left = includeSelf && height() > 0 ? 0 : width();
-    if (!hasColumns()) {
-        // FIXME: Come up with a way to use the layer tree to avoid visiting all the kids.
-        // For now, we have to descend into all the children, since we may have a huge abs div inside
-        // a tiny rel div buried somewhere deep in our child tree.  In this case we have to get to
-        // the abs div.
-        for (RenderObject* c = firstChild(); c; c = c->nextSibling()) {
-            if (!c->isFloatingOrPositioned() && c->isBox() && !c->isInlineFlow())
-                left = min(left, toRenderBox(c)->x() + c->leftmostPosition(false));
-        }
-    }
-
-    if (includeSelf && isRelPositioned())
-        left += relativePositionOffsetX(); 
-
-    return left;
 }
 
 IntRect RenderFlow::localCaretRect(InlineBox* inlineBox, int caretOffset, int* extraWidthToEndOfLine)
@@ -724,7 +583,7 @@ void RenderFlow::addFocusRingRects(GraphicsContext* graphicsContext, int tx, int
                 RenderBox* box = toRenderBox(curr);
                 FloatPoint pos;
                 // FIXME: This doesn't work correctly with transforms.
-                if (curr->layer()) 
+                if (box->layer()) 
                     pos = curr->localToAbsolute();
                 else
                     pos = FloatPoint(tx + box->x(), ty + box->y());

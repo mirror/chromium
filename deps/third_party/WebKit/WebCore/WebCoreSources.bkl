@@ -33,10 +33,10 @@ This file contains the list of files needed to build WebCore.
 
 <makefile>
     <set append="1" var="WEBCORE_SOURCES_JS">
-        bindings/js/DOMTimer.cpp
         bindings/js/GCController.cpp
         bindings/js/JSAttrCustom.cpp
         bindings/js/JSAudioConstructor.cpp
+        bindings/js/JSCDATASectionCustom.cpp
         bindings/js/JSCanvasRenderingContext2DCustom.cpp
         bindings/js/JSClipboardCustom.cpp
         bindings/js/JSConsoleCustom.cpp
@@ -108,6 +108,7 @@ This file contains the list of files needed to build WebCore.
         bindings/js/JSStorageCustom.cpp
         bindings/js/JSStyleSheetCustom.cpp
         bindings/js/JSStyleSheetListCustom.cpp
+        bindings/js/JSTextCustom.cpp
         bindings/js/JSTreeWalkerCustom.cpp
         bindings/js/JSXMLHttpRequestConstructor.cpp
         bindings/js/JSXMLHttpRequestCustom.cpp
@@ -117,7 +118,7 @@ This file contains the list of files needed to build WebCore.
         bindings/js/JSDOMBinding.cpp
         bindings/js/JSEventListener.cpp
         bindings/js/JSPluginElementFunctions.cpp
-        bindings/js/ScriptCachedPageData.cpp
+        bindings/js/ScriptCachedFrameData.cpp
         bindings/js/ScriptCallFrame.cpp
         bindings/js/ScriptCallStack.cpp
         bindings/js/ScriptController.cpp
@@ -412,6 +413,7 @@ This file contains the list of files needed to build WebCore.
         dom/EventTargetNode.cpp
         dom/ExceptionBase.cpp
         dom/ExceptionCode.cpp
+        dom/FormControlElementWithState.cpp
         dom/FormControlElement.cpp
         dom/InputElement.cpp
         dom/KeyboardEvent.cpp
@@ -489,7 +491,6 @@ This file contains the list of files needed to build WebCore.
         editing/MoveSelectionCommand.cpp
         editing/RemoveCSSPropertyCommand.cpp
         editing/RemoveFormatCommand.cpp
-        editing/RemoveNodeAttributeCommand.cpp
         editing/RemoveNodeCommand.cpp
         editing/RemoveNodePreservingChildrenCommand.cpp
         editing/ReplaceSelectionCommand.cpp
@@ -513,6 +514,7 @@ This file contains the list of files needed to build WebCore.
     
     <set append="1" var="WEBCORE_SOURCES_HISTORY">
         history/BackForwardList.cpp
+        history/CachedFrame.cpp
         history/CachedPage.cpp
         history/PageCache.cpp
         history/HistoryItem.cpp
@@ -688,6 +690,7 @@ This file contains the list of files needed to build WebCore.
         page/Console.cpp
         page/ContextMenuController.cpp
         page/DOMSelection.cpp
+        page/DOMTimer.cpp
         page/DOMWindow.cpp
         page/DragController.cpp
         page/EventHandler.cpp

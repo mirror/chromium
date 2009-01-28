@@ -25,9 +25,10 @@
 #include "config.h"
 #include "RenderInline.h"
 
-#include "Document.h"
+#include "FloatQuad.h"
 #include "RenderArena.h"
 #include "RenderBlock.h"
+#include "RenderView.h"
 #include "VisiblePosition.h"
 
 namespace WebCore {
@@ -321,37 +322,6 @@ void RenderInline::absoluteQuads(Vector<FloatQuad>& quads, bool topLevel)
         continuation()->absoluteQuads(quads, topLevel);
 }
 
-bool RenderInline::requiresLayer()
-{
-    return isRelPositioned() || isTransparent() || hasMask();
-}
-
-int RenderInline::boundingBoxWidth() const
-{
-    // Return the width of the minimal left side and the maximal right side.
-    int leftSide = 0;
-    int rightSide = 0;
-    for (InlineRunBox* curr = firstLineBox(); curr; curr = curr->nextLineBox()) {
-        if (curr == firstLineBox() || curr->xPos() < leftSide)
-            leftSide = curr->xPos();
-        if (curr == firstLineBox() || curr->xPos() + curr->width() > rightSide)
-            rightSide = curr->xPos() + curr->width();
-    }
-
-    return rightSide - leftSide;
-}
-
-int RenderInline::boundingBoxHeight() const
-{
-    // See <rdar://problem/5289721>, for an unknown reason the linked list here is sometimes inconsistent, first is non-zero and last is zero.  We have been
-    // unable to reproduce this at all (and consequently unable to figure ot why this is happening).  The assert will hopefully catch the problem in debug
-    // builds and help us someday figure out why.  We also put in a redundant check of lastLineBox() to avoid the crash for now.
-    ASSERT(!firstLineBox() == !lastLineBox());  // Either both are null or both exist.
-    if (firstLineBox() && lastLineBox())
-        return lastLineBox()->yPos() + lastLineBox()->height() - firstLineBox()->yPos();
-    return 0;
-}
-
 int RenderInline::offsetLeft() const
 {
     int x = RenderFlow::offsetLeft();
@@ -374,6 +344,8 @@ const char* RenderInline::renderName() const
         return "RenderInline (relative positioned)";
     if (isAnonymous())
         return "RenderInline (generated)";
+    if (isRunIn())
+        return "RenderInline (run-in)";
     return "RenderInline";
 }
 
@@ -398,6 +370,93 @@ VisiblePosition RenderInline::positionForCoordinates(int x, int y)
     }
 
     return RenderFlow::positionForCoordinates(x, y);
+}
+
+IntRect RenderInline::linesBoundingBox() const
+{
+    IntRect result;
+    
+    // See <rdar://problem/5289721>, for an unknown reason the linked list here is sometimes inconsistent, first is non-zero and last is zero.  We have been
+    // unable to reproduce this at all (and consequently unable to figure ot why this is happening).  The assert will hopefully catch the problem in debug
+    // builds and help us someday figure out why.  We also put in a redundant check of lastLineBox() to avoid the crash for now.
+    ASSERT(!firstLineBox() == !lastLineBox());  // Either both are null or both exist.
+    if (firstLineBox() && lastLineBox()) {
+        // Return the width of the minimal left side and the maximal right side.
+        int leftSide = 0;
+        int rightSide = 0;
+        for (InlineRunBox* curr = firstLineBox(); curr; curr = curr->nextLineBox()) {
+            if (curr == firstLineBox() || curr->xPos() < leftSide)
+                leftSide = curr->xPos();
+            if (curr == firstLineBox() || curr->xPos() + curr->width() > rightSide)
+                rightSide = curr->xPos() + curr->width();
+        }
+        result.setWidth(rightSide - leftSide);
+        result.setX(leftSide);
+        result.setHeight(lastLineBox()->yPos() + lastLineBox()->height() - firstLineBox()->yPos());
+        result.setY(firstLineBox()->yPos());
+    }
+
+    return result;
+}
+
+IntRect RenderInline::clippedOverflowRectForRepaint(RenderBox* repaintContainer)
+{
+    // Only run-ins are allowed in here during layout.
+    ASSERT(!view() || !view()->layoutStateEnabled() || isRunIn());
+
+    if (!firstLineBox() && !continuation())
+        return IntRect();
+
+    // Find our leftmost position.
+    IntRect boundingBox(linesBoundingBox());
+    int left = boundingBox.x();
+    int top = boundingBox.y();
+
+    // Now invalidate a rectangle.
+    int ow = style() ? style()->outlineSize() : 0;
+    
+    // We need to add in the relative position offsets of any inlines (including us) up to our
+    // containing block.
+    RenderBlock* cb = containingBlock();
+    for (RenderObject* inlineFlow = this; inlineFlow && inlineFlow->isRenderInline() && inlineFlow != cb; 
+         inlineFlow = inlineFlow->parent()) {
+         if (inlineFlow->style()->position() == RelativePosition && inlineFlow->hasLayer())
+            toRenderBox(inlineFlow)->layer()->relativePositionOffset(left, top);
+    }
+
+    IntRect r(-ow + left, -ow + top, boundingBox.width() + ow * 2, boundingBox.height() + ow * 2);
+    if (cb->hasColumns())
+        cb->adjustRectForColumns(r);
+
+    if (cb->hasOverflowClip()) {
+        // cb->height() is inaccurate if we're in the middle of a layout of |cb|, so use the
+        // layer's size instead.  Even if the layer's size is wrong, the layer itself will repaint
+        // anyway if its size does change.
+        int x = r.x();
+        int y = r.y();
+        IntRect boxRect(0, 0, cb->layer()->width(), cb->layer()->height());
+        cb->layer()->subtractScrolledContentOffset(x, y); // For overflow:auto/scroll/hidden.
+        IntRect repaintRect(x, y, r.width(), r.height());
+        r = intersection(repaintRect, boxRect);
+    }
+    ASSERT(repaintContainer != this);
+    cb->computeRectForRepaint(r, repaintContainer);
+
+    if (ow) {
+        for (RenderObject* curr = firstChild(); curr; curr = curr->nextSibling()) {
+            if (!curr->isText()) {
+                IntRect childRect = curr->rectWithOutlineForRepaint(repaintContainer, ow);
+                r.unite(childRect);
+            }
+        }
+
+        if (continuation() && !continuation()->isInline()) {
+            IntRect contRect = continuation()->rectWithOutlineForRepaint(repaintContainer, ow);
+            r.unite(contRect);
+        }
+    }
+
+    return r;
 }
 
 } // namespace WebCore

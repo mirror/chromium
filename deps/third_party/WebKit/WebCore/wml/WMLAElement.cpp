@@ -104,11 +104,11 @@ bool WMLAElement::isKeyboardFocusable(KeyboardEvent* event) const
     // Before calling absoluteRects, check for the common case where the renderer
     // or one of the continuations is non-empty, since this is a faster check and
     // almost always returns true.
-    RenderBox* box = RenderBox::toRenderBox(renderer());
-    if (box->width() > 0 && box->height() > 0)
+    RenderBox* box = toRenderBox(renderer());
+    if (!box->borderBoundingBox().isEmpty())
         return true;
     for (RenderFlow* r = box->virtualContinuation(); r; r = r->continuation())
-        if (r->width() > 0 && r->height() > 0)
+        if (!r->borderBoundingBox().isEmpty())
             return true;
 
     Vector<IntRect> rects;

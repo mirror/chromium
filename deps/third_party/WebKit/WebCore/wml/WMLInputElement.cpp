@@ -35,10 +35,9 @@
 namespace WebCore {
 
 WMLInputElement::WMLInputElement(const QualifiedName& tagName, Document* doc)
-    : WMLElement(tagName, doc)
+    : WMLFormControlElementWithState(tagName, doc)
     , m_data(this, this)
     , m_isPasswordField(false)
-    , m_valueMatchesRenderer(false)
 {
 }
 
@@ -53,7 +52,7 @@ static inline bool isInputFocusable(RenderObject* renderer)
     if (!renderer || !renderer->isBox())
         return false;
 
-    if (RenderBox::toRenderBox(renderer)->size().isEmpty())
+    if (toRenderBox(renderer)->size().isEmpty())
         return false;
 
     if (RenderStyle* style = renderer->style()) {
@@ -99,6 +98,18 @@ void WMLInputElement::aboutToUnload()
 int WMLInputElement::size() const
 {
     return m_data.size();
+}
+
+const AtomicString& WMLInputElement::type() const
+{
+    // needs to be lowercase according to DOM spec
+    if (m_isPasswordField) {
+        DEFINE_STATIC_LOCAL(const AtomicString, password, ("password"));
+        return password;
+    }
+
+    DEFINE_STATIC_LOCAL(const AtomicString, text, ("text"));
+    return text;
 }
 
 const AtomicString& WMLInputElement::name() const

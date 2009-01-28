@@ -39,11 +39,6 @@ RenderSVGHiddenContainer::~RenderSVGHiddenContainer()
 {
 }
 
-bool RenderSVGHiddenContainer::requiresLayer()
-{
-    return false;
-}
-
 int RenderSVGHiddenContainer::lineHeight(bool, bool) const
 {
     return 0;
@@ -76,7 +71,7 @@ void RenderSVGHiddenContainer::paint(PaintInfo&, int, int)
     // This subtree does not paint.
 }
 
-IntRect RenderSVGHiddenContainer::absoluteClippedOverflowRect()
+IntRect RenderSVGHiddenContainer::clippedOverflowRectForRepaint(RenderBox* /*repaintContainer*/)
 {
     return IntRect();
 }

@@ -52,57 +52,6 @@ void RenderTextControlMultiLine::subtreeHasChanged()
         frame->textDidChangeInTextArea(static_cast<Element*>(node()));
 }
 
-void RenderTextControlMultiLine::autoscroll()
-{
-    layer()->autoscroll();
-}
-
-int RenderTextControlMultiLine::scrollWidth() const
-{
-    return RenderBlock::scrollWidth();
-}
-
-int RenderTextControlMultiLine::scrollHeight() const
-{
-  int result = RenderTextControl::scrollHeight();
-  if (m_innerText) {
-        // This matches IEs behavior of giving the height of the innerText block
-        // as the scrollHeight.
-        result += paddingTop() + paddingBottom();
-    }
-    return result;
-}
-
-int RenderTextControlMultiLine::scrollLeft() const
-{
-    return RenderBlock::scrollLeft();
-}
-
-int RenderTextControlMultiLine::scrollTop() const
-{
-    return RenderBlock::scrollTop();
-}
-
-void RenderTextControlMultiLine::setScrollLeft(int newLeft)
-{
-  RenderBlock::setScrollLeft(newLeft);
-}
-
-void RenderTextControlMultiLine::setScrollTop(int newTop)
-{
-  RenderBlock::setScrollTop(newTop);
-}
-
-bool RenderTextControlMultiLine::scroll(ScrollDirection direction, ScrollGranularity granularity, float multiplier)
-{
-    return RenderObject::scroll(direction, granularity, multiplier);
-}
-
-bool RenderTextControlMultiLine::isScrollable() const
-{
-    return RenderObject::isScrollable();
-}
-
 void RenderTextControlMultiLine::layout()
 {
     int oldHeight = height();

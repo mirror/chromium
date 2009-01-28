@@ -428,7 +428,7 @@ void DOMWindow::postMessage(const String& message, MessagePort* messagePort, con
     // to generate the SYNTAX_ERR exception correctly.
     RefPtr<SecurityOrigin> target;
     if (targetOrigin != "*") {
-        target = SecurityOrigin::create(KURL(targetOrigin));
+        target = SecurityOrigin::createFromString(targetOrigin);
         if (target->isEmpty()) {
             ec = SYNTAX_ERR;
             return;

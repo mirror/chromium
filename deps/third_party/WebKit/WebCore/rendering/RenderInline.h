@@ -39,7 +39,6 @@ public:
     virtual const char* renderName() const;
 
     virtual bool isRenderInline() const { return true; }
-    virtual bool isInlineFlow() const { return true; }
     virtual bool childrenInline() const { return true; }
 
     virtual bool isInlineContinuation() const;
@@ -56,21 +55,27 @@ public:
 
     virtual bool nodeAtPoint(const HitTestRequest&, HitTestResult&, int x, int y, int tx, int ty, HitTestAction);
 
-    // overrides RenderObject
-    virtual bool requiresLayer();
-
-    int boundingBoxWidth() const;
-    int boundingBoxHeight() const;
+    virtual bool requiresLayer() const { return isRelPositioned() || isTransparent() || hasMask(); }
 
     virtual int offsetLeft() const;
     virtual int offsetTop() const;
-    virtual int offsetWidth() const { return boundingBoxWidth(); }
-    virtual int offsetHeight() const { return boundingBoxHeight(); }
+    virtual int offsetWidth() const { return linesBoundingBox().width(); }
+    virtual int offsetHeight() const { return linesBoundingBox().height(); }
 
     void absoluteRects(Vector<IntRect>&, int tx, int ty, bool topLevel = true);
     virtual void absoluteQuads(Vector<FloatQuad>&, bool topLevel = true);
 
+    virtual IntRect clippedOverflowRectForRepaint(RenderBox* repaintContainer);
+
     virtual VisiblePosition positionForCoordinates(int x, int y);
+
+    IntRect linesBoundingBox() const;
+    
+    virtual IntRect borderBoundingBox() const
+    {
+        IntRect boundingBox = linesBoundingBox();
+        return IntRect(0, 0, boundingBox.width(), boundingBox.height());
+    }
 
 protected:
     virtual void styleDidChange(RenderStyle::Diff, const RenderStyle* oldStyle);

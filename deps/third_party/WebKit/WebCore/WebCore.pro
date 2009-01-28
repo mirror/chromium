@@ -401,9 +401,9 @@ IDL_BINDINGS += \
 
 
 SOURCES += \
-    bindings/js/DOMTimer.cpp \
     bindings/js/GCController.cpp \
     bindings/js/JSAttrCustom.cpp \
+    bindings/js/JSCDATASectionCustom.cpp \
     bindings/js/JSCanvasRenderingContext2DCustom.cpp \
     bindings/js/JSClipboardCustom.cpp \
     bindings/js/JSConsoleCustom.cpp \
@@ -460,6 +460,7 @@ SOURCES += \
     bindings/js/JSRGBColor.cpp \
     bindings/js/JSStyleSheetCustom.cpp \
     bindings/js/JSStyleSheetListCustom.cpp \
+    bindings/js/JSTextCustom.cpp \
     bindings/js/JSTreeWalkerCustom.cpp \
     bindings/js/JSWebKitCSSMatrixConstructor.cpp \
     bindings/js/JSXMLHttpRequestConstructor.cpp \
@@ -476,7 +477,7 @@ SOURCES += \
     bindings/js/JSDOMBinding.cpp \
     bindings/js/JSEventListener.cpp \
     bindings/js/JSPluginElementFunctions.cpp \
-    bindings/js/ScriptCachedPageData.cpp \
+    bindings/js/ScriptCachedFrameData.cpp \
     bindings/js/ScriptCallFrame.cpp \
     bindings/js/ScriptCallStack.cpp \
     bindings/js/ScriptController.cpp \
@@ -582,6 +583,7 @@ SOURCES += \
     dom/EventTargetNode.cpp \
     dom/ExceptionBase.cpp \
     dom/ExceptionCode.cpp \
+    dom/FormControlElementWithState.cpp \
     dom/FormControlElement.cpp \
     dom/InputElement.cpp \
     dom/KeyboardEvent.cpp \
@@ -658,7 +660,6 @@ SOURCES += \
     editing/MoveSelectionCommand.cpp \
     editing/RemoveCSSPropertyCommand.cpp \
     editing/RemoveFormatCommand.cpp \
-    editing/RemoveNodeAttributeCommand.cpp \
     editing/RemoveNodeCommand.cpp \
     editing/RemoveNodePreservingChildrenCommand.cpp \
     editing/ReplaceSelectionCommand.cpp \
@@ -677,6 +678,7 @@ SOURCES += \
     editing/visible_units.cpp \
     editing/WrapContentsInDummySpanCommand.cpp \
     history/BackForwardList.cpp \
+    history/CachedFrame.cpp \
     history/CachedPage.cpp \
     history/HistoryItem.cpp \
     history/PageCache.cpp \
@@ -830,6 +832,7 @@ SOURCES += \
     page/Console.cpp \
     page/ContextMenuController.cpp \
     page/DOMSelection.cpp \
+    page/DOMTimer.cpp \
     page/DOMWindow.cpp \
     page/Navigator.cpp \
     page/NavigatorBase.cpp \
@@ -1418,6 +1421,7 @@ contains(DEFINES, ENABLE_WML=1) {
         wml/WMLElement.cpp \
         wml/WMLErrorHandling.cpp \
         wml/WMLEventHandlingElement.cpp \
+        wml/WMLFormControlElement.cpp \
         wml/WMLFieldSetElement.cpp \
         wml/WMLGoElement.cpp \
         wml/WMLImageElement.cpp \

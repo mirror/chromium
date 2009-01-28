@@ -232,7 +232,7 @@ static int verticalScrollDistance(Frame* frame)
         return 0;
     if (!(style->overflowY() == OSCROLL || style->overflowY() == OAUTO || renderer->isTextArea()))
         return 0;
-    int height = RenderBox::toRenderBox(renderer)->clientHeight();
+    int height = toRenderBox(renderer)->clientHeight();
     return max((height + 1) / 2, height - cAmountToKeepWhenPaging);
 }
 
@@ -1180,27 +1180,27 @@ static String valueNull(Frame*, Event*)
     return String();
 }
 
-String valueBackColor(Frame* frame, Event*)
+static String valueBackColor(Frame* frame, Event*)
 {
     return valueStyle(frame, CSSPropertyBackgroundColor);
 }
 
-String valueFontName(Frame* frame, Event*)
+static String valueFontName(Frame* frame, Event*)
 {
     return valueStyle(frame, CSSPropertyFontFamily);
 }
 
-String valueFontSize(Frame* frame, Event*)
+static String valueFontSize(Frame* frame, Event*)
 {
     return valueStyle(frame, CSSPropertyFontSize);
 }
 
-String valueFontSizeDelta(Frame* frame, Event*)
+static String valueFontSizeDelta(Frame* frame, Event*)
 {
     return valueStyle(frame, CSSPropertyWebkitFontSizeDelta);
 }
 
-String valueForeColor(Frame* frame, Event*)
+static String valueForeColor(Frame* frame, Event*)
 {
     return valueStyle(frame, CSSPropertyColor);
 }

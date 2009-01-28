@@ -29,6 +29,7 @@
 
 #include "Attr.h"
 #include "FloatConversion.h"
+#include "FloatQuad.h"
 #include "GraphicsContext.h"
 #include "PointerEventsHitRules.h"
 #include "SVGImageElement.h"
@@ -217,11 +218,6 @@ bool RenderSVGImage::nodeAtPoint(const HitTestRequest&, HitTestResult& result, i
     return false;
 }
 
-bool RenderSVGImage::requiresLayer()
-{
-    return false;
-}
-
 FloatRect RenderSVGImage::relativeBBox(bool) const
 {
     return m_localBounds;
@@ -253,8 +249,9 @@ void RenderSVGImage::calculateAbsoluteBounds()
     m_absoluteBounds = enclosingIntRect(absoluteRect);
 }
 
-IntRect RenderSVGImage::absoluteClippedOverflowRect()
+IntRect RenderSVGImage::clippedOverflowRectForRepaint(RenderBox* /*repaintContainer*/)
 {
+    // FIXME: handle non-root repaintContainer
     return m_absoluteBounds;
 }
 

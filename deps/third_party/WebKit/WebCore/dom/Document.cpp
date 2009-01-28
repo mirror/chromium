@@ -983,7 +983,7 @@ Element* Document::elementFromPoint(int x, int y) const
 
     HitTestRequest request(true, true);
     HitTestResult result(IntPoint(x, y));
-    renderer()->layer()->hitTest(request, result); 
+    renderView()->layer()->hitTest(request, result); 
 
     Node* n = result.innerNode();
     while (n && !n->isElementNode())
@@ -1189,9 +1189,6 @@ void Document::recalcStyle(StyleChange change)
     if (m_inStyleRecalc)
         return; // Guard against re-entrancy. -dwh
 
-    if (m_frame)
-        m_frame->animation()->beginAnimationUpdate();
-
     m_inStyleRecalc = true;
     suspendPostAttachCallbacks();
     
@@ -1287,19 +1284,21 @@ bail_out:
         m_closeAfterStyleRecalc = false;
         implicitClose();
     }
-
-    if (m_frame)
-        m_frame->animation()->endAnimationUpdate();
 }
 
 void Document::updateRendering()
 {
-    if (hasChangedChild() && !inPageCache())
-        recalcStyle(NoChange);
-    
-    // Tell the animation controller that the style is available and it can start animations
+    if (!hasChangedChild() || inPageCache())
+        return;
+        
     if (m_frame)
-        m_frame->animation()->styleAvailable();
+        m_frame->animation()->beginAnimationUpdate();
+        
+    recalcStyle(NoChange);
+    
+    // Tell the animation controller that updateRendering is finished and it can do any post-processing
+    if (m_frame)
+        m_frame->animation()->endAnimationUpdate();
 }
 
 void Document::updateDocumentsRendering()
@@ -1468,6 +1467,11 @@ void Document::removeAllDisconnectedNodeEventListeners()
     for (HashSet<Node*>::iterator i = m_disconnectedNodesWithEventListeners.begin(); i != end; ++i)
         EventTargetNodeCast(*i)->removeAllEventListeners();
     m_disconnectedNodesWithEventListeners.clear();
+}
+
+RenderView* Document::renderView() const
+{
+    return static_cast<RenderView*>(renderer());
 }
 
 void Document::clearAXObjectCache()
@@ -1879,7 +1883,15 @@ void Document::setBaseElementURL(const KURL& baseElementURL)
 
 void Document::updateBaseURL()
 {
-    m_baseURL = m_baseElementURL.isEmpty() ? KURL(documentURI()) : m_baseElementURL;
+    // DOM 3 Core: When the Document supports the feature "HTML" [DOM Level 2 HTML], the base URI is computed using
+    // first the value of the href attribute of the HTML BASE element if any, and the value of the documentURI attribute
+    // from the Document interface otherwise.
+    if (m_baseElementURL.isEmpty()) {
+        // The documentURI attribute is an arbitrary string. DOM 3 Core does not specify how it should be resolved,
+        // so we use a null base URL.
+        m_baseURL = KURL(KURL(), documentURI());
+    } else
+        m_baseURL = m_baseElementURL;
     if (!m_baseURL.isValid())
         m_baseURL = KURL();
 
@@ -2109,7 +2121,7 @@ MouseEventWithHitTestResults Document::prepareMouseEvent(const HitTestRequest& r
         return MouseEventWithHitTestResults(event, HitTestResult(IntPoint()));
 
     HitTestResult result(documentPoint);
-    renderer()->layer()->hitTest(request, result);
+    renderView()->layer()->hitTest(request, result);
 
     if (!request.readonly)
         updateRendering();
@@ -4006,14 +4018,17 @@ Vector<String> Document::formElementsState() const
 {
     Vector<String> stateVector;
     stateVector.reserveCapacity(m_formElementsWithState.size() * 3);
-    typedef ListHashSet<HTMLFormControlElementWithState*>::const_iterator Iterator;
+    typedef ListHashSet<FormControlElementWithState*>::const_iterator Iterator;
     Iterator end = m_formElementsWithState.end();
     for (Iterator it = m_formElementsWithState.begin(); it != end; ++it) {
-        HTMLFormControlElementWithState* e = *it;
+        FormControlElementWithState* e = *it;
         String value;
         if (e->saveState(value)) {
-            stateVector.append(e->name().string());
-            stateVector.append(e->type().string());
+            FormControlElement* formControlElement = e->toFormControlElement();
+            ASSERT(formControlElement);
+
+            stateVector.append(formControlElement->name().string());
+            stateVector.append(formControlElement->type().string());
             stateVector.append(value);
         }
     }

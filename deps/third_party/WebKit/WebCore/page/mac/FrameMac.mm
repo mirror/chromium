@@ -78,7 +78,7 @@ using namespace HTMLNames;
 
 // Either get cached regexp or build one that matches any of the labels.
 // The regexp we build is of the form:  (STR1|STR2|STRN)
-RegularExpression* regExpForLabels(NSArray* labels)
+static RegularExpression* regExpForLabels(NSArray* labels)
 {
     // All the ObjC calls in this method are simple array and string
     // calls which we can assume do not raise exceptions
@@ -196,8 +196,7 @@ NSString* Frame::searchForLabelsBeforeElement(NSArray* labels, Element* element)
          n = n->traversePreviousNode())
     {
         if (n->hasTagName(formTag)
-            || (n->isHTMLElement()
-                && static_cast<HTMLElement*>(n)->isGenericFormElement()))
+            || (n->isHTMLElement() && static_cast<Element*>(n)->isFormControlElement()))
         {
             // We hit another form element or the start of the form - bail out
             break;

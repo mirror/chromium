@@ -739,7 +739,8 @@ VisiblePosition AccessibilityObject::nextSentenceEndPosition(const VisiblePositi
     // an empty line is considered a sentence. If it's skipped, then the sentence parser will not
     // see this empty line.  Instead, return the end position of the empty line.
     VisiblePosition endPosition;
-    String lineString = plainText(makeRange(startOfLine(visiblePos), endOfLine(visiblePos)).get());
+    
+    String lineString = plainText(makeRange(startOfLine(nextVisiblePos), endOfLine(nextVisiblePos)).get());
     if (lineString.isEmpty())
         endPosition = nextVisiblePos;
     else
@@ -762,6 +763,7 @@ VisiblePosition AccessibilityObject::previousSentenceStartPosition(const Visible
 
     // treat empty line as a separate sentence.
     VisiblePosition startPosition;
+    
     String lineString = plainText(makeRange(startOfLine(previousVisiblePos), endOfLine(previousVisiblePos)).get());
     if (lineString.isEmpty())
         startPosition = previousVisiblePos;

@@ -289,7 +289,7 @@ int InlineFlowBox::placeBoxesHorizontally(int x, int& leftPosition, int& rightPo
     for (InlineBox* curr = firstChild(); curr; curr = curr->nextOnLine()) {
         if (curr->object()->isText()) {
             InlineTextBox* text = static_cast<InlineTextBox*>(curr);
-            RenderText* rt = static_cast<RenderText*>(text->object());
+            RenderText* rt = toRenderText(text->object());
             if (rt->textLength()) {
                 if (needsWordSpacing && isSpaceOrNewline(rt->characters()[text->start()]))
                     x += rt->style(m_firstLine)->font().wordSpacing();
@@ -328,17 +328,12 @@ int InlineFlowBox::placeBoxesHorizontally(int x, int& leftPosition, int& rightPo
                     curr->setXPos(root()->block()->width()-x);
                 continue; // The positioned object has no effect on the width.
             }
-            if (curr->object()->isInlineFlow()) {
+            if (curr->object()->isRenderInline()) {
                 InlineFlowBox* flow = static_cast<InlineFlowBox*>(curr);
-                if (curr->object()->isCompact()) {
-                    int ignoredX = x;
-                    flow->placeBoxesHorizontally(ignoredX, leftPosition, rightPosition, needsWordSpacing);
-                } else {
-                    x += flow->marginLeft();
-                    x = flow->placeBoxesHorizontally(x, leftPosition, rightPosition, needsWordSpacing);
-                    x += flow->marginRight();
-                }
-            } else if (!curr->object()->isCompact() && (!curr->object()->isListMarker() || static_cast<RenderListMarker*>(curr->object())->isInside())) {
+                x += flow->marginLeft();
+                x = flow->placeBoxesHorizontally(x, leftPosition, rightPosition, needsWordSpacing);
+                x += flow->marginRight();
+            } else if (!curr->object()->isListMarker() || static_cast<RenderListMarker*>(curr->object())->isInside()) {
                 x += curr->renderBox()->marginLeft();
                 curr->setXPos(x);
                 leftPosition = min(x + curr->renderBox()->overflowLeft(false), leftPosition);
@@ -857,7 +852,7 @@ void InlineFlowBox::paintMask(RenderObject::PaintInfo& paintInfo, int tx, int ty
 static bool shouldDrawTextDecoration(RenderObject* obj)
 {
     for (RenderObject* curr = obj->firstChild(); curr; curr = curr->nextSibling()) {
-        if (curr->isInlineFlow())
+        if (curr->isRenderInline())
             return true;
         if (curr->isText() && !curr->isBR()) {
             if (!curr->style()->collapseWhiteSpace())

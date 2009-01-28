@@ -238,11 +238,10 @@ IDL_BINDINGS += \
 webcore_sources += \
 	WebCore/WebCorePrefix.h \
 	WebCore/bindings/js/CachedScriptSourceProvider.h \
-	WebCore/bindings/js/DOMTimer.cpp \
-	WebCore/bindings/js/DOMTimer.h \
 	WebCore/bindings/js/GCController.cpp \
 	WebCore/bindings/js/GCController.h \
 	WebCore/bindings/js/JSAttrCustom.cpp \
+	WebCore/bindings/js/JSCDATASectionCustom.cpp \
 	WebCore/bindings/js/JSCSSRuleCustom.cpp \
 	WebCore/bindings/js/JSCSSStyleDeclarationCustom.cpp \
 	WebCore/bindings/js/JSCSSStyleDeclarationCustom.h \
@@ -353,8 +352,8 @@ webcore_sources += \
 	WebCore/bindings/js/JSXSLTProcessorCustom.cpp \
 	WebCore/bindings/js/ScheduledAction.cpp \
 	WebCore/bindings/js/ScheduledAction.h \
-	WebCore/bindings/js/ScriptCachedPageData.cpp \
-	WebCore/bindings/js/ScriptCachedPageData.h \
+	WebCore/bindings/js/ScriptCachedFrameData.cpp \
+	WebCore/bindings/js/ScriptCachedFrameData.h \
 	WebCore/bindings/js/ScriptCallFrame.cpp \
 	WebCore/bindings/js/ScriptCallFrame.h \
 	WebCore/bindings/js/ScriptCallStack.cpp \
@@ -596,6 +595,8 @@ webcore_sources += \
 	WebCore/dom/ExceptionBase.h \
 	WebCore/dom/ExceptionCode.cpp \
 	WebCore/dom/ExceptionCode.h \
+	WebCore/dom/FormControlElementWithState.cpp \
+	WebCore/dom/FormControlElementWithState.h \
 	WebCore/dom/FormControlElement.cpp \
 	WebCore/dom/FormControlElement.h \
 	WebCore/dom/InputElement.cpp \
@@ -754,8 +755,6 @@ webcore_sources += \
 	WebCore/editing/RemoveCSSPropertyCommand.h \
 	WebCore/editing/RemoveFormatCommand.cpp \
 	WebCore/editing/RemoveFormatCommand.h \
-	WebCore/editing/RemoveNodeAttributeCommand.cpp \
-	WebCore/editing/RemoveNodeAttributeCommand.h \
 	WebCore/editing/RemoveNodeCommand.cpp \
 	WebCore/editing/RemoveNodeCommand.h \
 	WebCore/editing/RemoveNodePreservingChildrenCommand.cpp \
@@ -797,9 +796,11 @@ webcore_sources += \
 	WebCore/editing/visible_units.h \
 	WebCore/history/BackForwardList.cpp \
 	WebCore/history/BackForwardList.h \
+	WebCore/history/CachedFrame.cpp \
+	WebCore/history/CachedFrame.h \
+	WebCore/history/CachedFramePlatformData.h \
 	WebCore/history/CachedPage.cpp \
 	WebCore/history/CachedPage.h \
-	WebCore/history/CachedPagePlatformData.h \
 	WebCore/history/HistoryItem.cpp \
 	WebCore/history/HistoryItem.h \
 	WebCore/history/PageCache.cpp \
@@ -1137,6 +1138,8 @@ webcore_sources += \
 	WebCore/page/ContextMenuController.h \
 	WebCore/page/DOMSelection.cpp \
 	WebCore/page/DOMSelection.h \
+	WebCore/page/DOMTimer.cpp \
+	WebCore/page/DOMTimer.h \
 	WebCore/page/DOMWindow.cpp \
 	WebCore/page/DOMWindow.h \
 	WebCore/page/DragActions.h \
@@ -2224,6 +2227,7 @@ webcore_sources += \
 	WebCore/wml/WMLErrorHandling.cpp \
 	WebCore/wml/WMLEventHandlingElement.cpp \
 	WebCore/wml/WMLFieldSetElement.cpp \
+	WebCore/wml/WMLFormControlElement.cpp \
 	WebCore/wml/WMLGoElement.cpp \
 	WebCore/wml/WMLImageElement.cpp \
 	WebCore/wml/WMLImageLoader.cpp \

@@ -32,6 +32,7 @@
 #include "HitTestResult.h"
 #include "InlineTextBox.h"
 #include "RenderImage.h"
+#include "RenderInline.h"
 #include "RenderMarquee.h"
 #include "RenderReplica.h"
 #include "RenderTableCell.h"
@@ -72,7 +73,7 @@ static PercentHeightDescendantsMap* gPercentHeightDescendantsMap = 0;
 typedef WTF::HashMap<const RenderBox*, HashSet<RenderBlock*>*> PercentHeightContainerMap;
 static PercentHeightContainerMap* gPercentHeightContainerMap = 0;
     
-typedef WTF::HashMap<RenderBlock*, RenderFlowSequencedSet*> ContinuationOutlineTableMap;
+typedef WTF::HashMap<RenderBlock*, ListHashSet<RenderFlow*>*> ContinuationOutlineTableMap;
 
 // Our MarginInfo state used when laying out block children.
 RenderBlock::MarginInfo::MarginInfo(RenderBlock* block, int top, int bottom)
@@ -152,6 +153,29 @@ RenderBlock::~RenderBlock()
 void RenderBlock::styleWillChange(RenderStyle::Diff diff, const RenderStyle* newStyle)
 {
     setReplaced(newStyle->isDisplayReplacedType());
+    
+    if (style() && parent() && diff == RenderStyle::Layout && style()->position() != newStyle->position()) {
+        if (newStyle->position() == StaticPosition)
+            // Clear our positioned objects list. Our absolutely positioned descendants will be
+            // inserted into our containing block's positioned objects list during layout.
+            removePositionedObjects(0);
+        else if (style()->position() == StaticPosition) {
+            // Remove our absolutely positioned descendants from their current containing block.
+            // They will be inserted into our positioned objects list during layout.
+            RenderObject* cb = parent();
+            while (cb && (cb->style()->position() == StaticPosition || (cb->isInline() && !cb->isReplaced())) && !cb->isRenderView()) {
+                if (cb->style()->position() == RelativePosition && cb->isInline() && !cb->isReplaced()) {
+                    cb = cb->containingBlock();
+                    break;
+                }
+                cb = cb->parent();
+            }
+            
+            if (cb->isRenderBlock())
+                static_cast<RenderBlock*>(cb)->removePositionedObjects(this);
+        }
+    }
+
     RenderFlow::styleWillChange(diff, newStyle);
 }
 
@@ -813,7 +837,7 @@ void RenderBlock::adjustFloatingBlock(const MarginInfo& marginInfo)
     setHeight(height() - marginOffset);
 }
 
-RenderBox* RenderBlock::handleSpecialChild(RenderBox* child, const MarginInfo& marginInfo, CompactInfo& compactInfo, bool& handled)
+RenderBox* RenderBlock::handleSpecialChild(RenderBox* child, const MarginInfo& marginInfo, bool& handled)
 {
     // Handle positioned children first.
     RenderBox* next = handlePositionedChild(child, marginInfo, handled);
@@ -821,10 +845,6 @@ RenderBox* RenderBlock::handleSpecialChild(RenderBox* child, const MarginInfo& m
     
     // Handle floating children next.
     next = handleFloatingChild(child, marginInfo, handled);
-    if (handled) return next;
-
-    // See if we have a compact element.  If we do, then try to tuck the compact element into the margin space of the next block.
-    next = handleCompactChild(child, compactInfo, handled);
     if (handled) return next;
 
     // Finally, see if we have a run-in element.
@@ -856,87 +876,43 @@ RenderBox* RenderBlock::handleFloatingChild(RenderBox* child, const MarginInfo& 
     return 0;
 }
 
-RenderBox* RenderBlock::handleCompactChild(RenderBox* child, CompactInfo& compactInfo, bool& handled)
-{
-    // FIXME: We only deal with one compact at a time.  It is unclear what should be
-    // done if multiple contiguous compacts are encountered.  For now we assume that
-    // compact A followed by another compact B should simply be treated as block A.
-    if (child->isCompact() && !compactInfo.compact() && (child->childrenInline() || child->isReplaced())) {
-        // Get the next non-positioned/non-floating RenderBlock.
-        RenderBox* next = child->nextSiblingBox();
-        RenderBox* curr = next;
-        while (curr && curr->isFloatingOrPositioned())
-            curr = curr->nextSiblingBox();
-        if (curr && curr->isRenderBlock() && !curr->isCompact() && !curr->isRunIn()) {
-            curr->calcWidth(); // So that horizontal margins are correct.
-            child->setInline(true); // Need to compute the margins/width for the child as though it is an inline, so that it won't try to puff up the margins to
-                                    // fill the containing block width.
-            child->calcWidth();
-            int childMargins = child->marginLeft() + child->marginRight();
-            int margin = style()->direction() == LTR ? curr->marginLeft() : curr->marginRight();
-            if (margin >= (childMargins + child->maxPrefWidth())) {
-                // The compact will fit in the margin.
-                handled = true;
-                compactInfo.set(child, curr);
-                toRenderBox(child)->setLocation(IntPoint()); // This position will be updated to reflect the compact's
-                                    // desired position and the line box for the compact will
-                                    // pick that position up.
-                
-                // Remove the child.
-                RenderBox* next = child->nextSiblingBox();
-                removeChildNode(child);
-                
-                // Now insert the child under |curr|.
-                curr->insertChildNode(child, curr->firstChild());
-                return next;
-            }
-            else
-                child->setInline(false); // We didn't fit, so we remain a block-level element.
-        }
-    }
-    return 0;
-}
-
-void RenderBlock::insertCompactIfNeeded(RenderBox* child, CompactInfo& compactInfo)
-{
-    if (compactInfo.matches(child)) {
-        // We have a compact child to squeeze in.
-        RenderBox* compactChild = compactInfo.compact();
-        int compactXPos = borderLeft() + paddingLeft() + compactChild->marginLeft();
-        if (style()->direction() == RTL) {
-            compactChild->calcWidth(); // have to do this because of the capped maxwidth
-            compactXPos = width() - borderRight() - paddingRight() - marginRight() -
-                compactChild->width() - compactChild->marginRight();
-        }
-        compactXPos -= child->x(); // Put compactXPos into the child's coordinate space.
-        compactChild->setLocation(compactXPos, compactChild->y()); // Set the x position.
-        compactInfo.clear();
-    }
-}
-
-RenderBox* RenderBlock::handleRunInChild(RenderBox* child, bool& handled)
+RenderBox* RenderBlock::handleRunInChild(RenderBox* blockRunIn, bool& handled)
 {
     // See if we have a run-in element with inline children.  If the
     // children aren't inline, then just treat the run-in as a normal
     // block.
-    if (child->isRunIn() && (child->childrenInline() || child->isReplaced())) {
+    if (blockRunIn->isRunIn() && (blockRunIn->childrenInline() || blockRunIn->isReplaced())) {
         // Get the next non-positioned/non-floating RenderBlock.
-        RenderObject* curr = child->nextSibling();
+        RenderObject* curr = blockRunIn->nextSibling();
         while (curr && curr->isFloatingOrPositioned())
             curr = curr->nextSibling();
-        if (curr && (curr->isRenderBlock() && curr->childrenInline() && !curr->isCompact() && !curr->isRunIn())) {
+        if (curr && (curr->isRenderBlock() && curr->childrenInline() && !curr->isRunIn())) {
             // The block acts like an inline, so just null out its
             // position.
             handled = true;
-            child->setInline(true);
-            child->setLocation(0,0);
             
-            // Remove the child.
-            RenderBox* next = child->nextSiblingBox();
-            removeChildNode(child);
+            // Remove the old child.
+            RenderBox* next = blockRunIn->nextSiblingBox();
+            removeChildNode(blockRunIn);
+
+            // Create an inline.
+            RenderInline* inlineRunIn = new (renderArena()) RenderInline(blockRunIn->node());
+            inlineRunIn->setStyle(blockRunIn->style());
+
+            // Move the nodes from the old child to the new child.
+            for (RenderObject* runInChild = blockRunIn->firstChild(); runInChild; runInChild = runInChild->nextSibling())
+                inlineRunIn->moveChildNode(runInChild);
+
+            // Now insert the new child under |curr|.
+            curr->insertChildNode(inlineRunIn, curr->firstChild());
             
-            // Now insert the child under |curr|.
-            curr->insertChildNode(child, curr->firstChild());
+            // If the run-in had an element, we need to set the new renderer.
+            if (blockRunIn->element())
+                blockRunIn->element()->setRenderer(inlineRunIn);
+            
+            // Destroy the block run-in.
+            blockRunIn->destroy();
+
             return next;
         }
     }
@@ -1043,7 +1019,7 @@ void RenderBlock::collapseMargins(RenderBox* child, MarginInfo& marginInfo, int 
             child->setChildNeedsLayout(true, false);
 
         if (!child->avoidsFloats() && child->containsFloats())
-            child->markAllDescendantsWithFloatsForLayout();
+            static_cast<RenderBlock*>(child)->markAllDescendantsWithFloatsForLayout();
 
         // Our guess was wrong. Make the child lay itself out again.
         child->layoutIfNeeded();
@@ -1098,7 +1074,7 @@ void RenderBlock::clearFloatsIfNeeded(RenderBox* child, MarginInfo& marginInfo, 
         // So go ahead and mark the item as dirty.
         child->setChildNeedsLayout(true, false);
     if (!child->avoidsFloats() && child->containsFloats())
-        child->markAllDescendantsWithFloatsForLayout();
+        static_cast<RenderBlock*>(child)->markAllDescendantsWithFloatsForLayout();
     child->layoutIfNeeded();
 }
 
@@ -1246,7 +1222,6 @@ void RenderBlock::layoutBlockChildren(bool relayoutChildren, int& maxFloatBottom
 
     // The margin struct caches all our current margin collapsing state.  The compact struct caches state when we encounter compacts,
     MarginInfo marginInfo(this, top, bottom);
-    CompactInfo compactInfo;
 
     // Fieldsets need to find their legend and position it inside the border of the object.
     // The legend then gets skipped during normal layout.
@@ -1278,7 +1253,7 @@ void RenderBlock::layoutBlockChildren(bool relayoutChildren, int& maxFloatBottom
         // Handle the four types of special elements first.  These include positioned content, floating content, compacts and
         // run-ins.  When we encounter these four types of objects, we don't actually lay them out as normal flow blocks.
         bool handled = false;
-        RenderBox* next = handleSpecialChild(child, marginInfo, compactInfo, handled);
+        RenderBox* next = handleSpecialChild(child, marginInfo, handled);
         if (handled) {
             child = next;
             continue;
@@ -1319,7 +1294,7 @@ void RenderBlock::layoutBlockChildren(bool relayoutChildren, int& maxFloatBottom
         }
 
         if (markDescendantsWithFloats)
-            child->markAllDescendantsWithFloatsForLayout();
+            static_cast<RenderBlock*>(child)->markAllDescendantsWithFloatsForLayout();
 
         if (child->isRenderBlock())
             previousFloatBottom = max(previousFloatBottom, oldRect.y() + static_cast<RenderBlock*>(child)->floatBottom());
@@ -1359,9 +1334,6 @@ void RenderBlock::layoutBlockChildren(bool relayoutChildren, int& maxFloatBottom
         m_overflowHeight = max(m_overflowHeight, height() + child->overflowHeight(false) - child->height());
         m_overflowWidth = max(child->x() + child->overflowWidth(false), m_overflowWidth);
         m_overflowLeft = min(child->x() + child->overflowLeft(false), m_overflowLeft);
-        
-        // Insert our compact into the block margin if we have one.
-        insertCompactIfNeeded(child, compactInfo);
 
         IntSize childOffset(child->x() - oldRect.x(), child->y() - oldRect.y());
         if (childOffset.width() || childOffset.height()) {
@@ -1489,7 +1461,7 @@ void RenderBlock::paint(PaintInfo& paintInfo, int tx, int ty)
     // Check if we need to do anything at all.
     // FIXME: Could eliminate the isRoot() check if we fix background painting so that the RenderView
     // paints the root's background.
-    if (!isInlineFlow() && !isRoot()) {
+    if (!isRoot()) {
         IntRect overflowBox = overflowRect(false);
         overflowBox.inflate(maximalOutlineSize(paintInfo.phase));
         overflowBox.move(tx, ty);
@@ -1661,12 +1633,8 @@ void RenderBlock::paintObject(PaintInfo& paintInfo, int tx, int ty)
 {
     PaintPhase paintPhase = paintInfo.phase;
 
-    // If we're a repositioned run-in or a compact, don't paint background/borders.
-    bool inlineFlow = isInlineFlow();
-
     // 1. paint background, borders etc
-    if (!inlineFlow &&
-        (paintPhase == PaintPhaseBlockBackground || paintPhase == PaintPhaseChildBlockBackground) &&
+    if ((paintPhase == PaintPhaseBlockBackground || paintPhase == PaintPhaseChildBlockBackground) &&
         hasBoxDecorations() && style()->visibility() == VISIBLE) {
         paintBoxDecorations(paintInfo, tx, ty);
     }
@@ -1697,11 +1665,11 @@ void RenderBlock::paintObject(PaintInfo& paintInfo, int tx, int ty)
     // 3. paint selection
     // FIXME: Make this work with multi column layouts.  For now don't fill gaps.
     bool isPrinting = document()->printing();
-    if (!inlineFlow && !isPrinting && !m_hasColumns)
+    if (!isPrinting && !m_hasColumns)
         paintSelection(paintInfo, scrolledX, scrolledY); // Fill in gaps in selection on lines and between blocks.
 
     // 4. paint floats.
-    if (!inlineFlow && (paintPhase == PaintPhaseFloat || paintPhase == PaintPhaseSelection || paintPhase == PaintPhaseTextClip)) {
+    if (paintPhase == PaintPhaseFloat || paintPhase == PaintPhaseSelection || paintPhase == PaintPhaseTextClip) {
         if (m_hasColumns)
             paintColumns(paintInfo, scrolledX, scrolledY, true);
         else
@@ -1709,11 +1677,11 @@ void RenderBlock::paintObject(PaintInfo& paintInfo, int tx, int ty)
     }
 
     // 5. paint outline.
-    if (!inlineFlow && (paintPhase == PaintPhaseOutline || paintPhase == PaintPhaseSelfOutline) && hasOutline() && style()->visibility() == VISIBLE)
+    if ((paintPhase == PaintPhaseOutline || paintPhase == PaintPhaseSelfOutline) && hasOutline() && style()->visibility() == VISIBLE)
         RenderBox::paintOutline(paintInfo.context, tx, ty, width(), height(), style());
 
     // 6. paint continuation outlines.
-    if (!inlineFlow && (paintPhase == PaintPhaseOutline || paintPhase == PaintPhaseChildOutlines)) {
+    if ((paintPhase == PaintPhaseOutline || paintPhase == PaintPhaseChildOutlines)) {
         if (continuation() && continuation()->hasOutline() && continuation()->style()->visibility() == VISIBLE) {
             RenderFlow* inlineFlow = static_cast<RenderFlow*>(continuation()->element()->renderer());
             if (!inlineFlow->hasLayer())
@@ -1728,7 +1696,7 @@ void RenderBlock::paintObject(PaintInfo& paintInfo, int tx, int ty)
     // 7. paint caret.
     // If the caret's node's render object's containing block is this block, and the paint action is PaintPhaseForeground,
     // then paint the caret.
-    if (!inlineFlow && paintPhase == PaintPhaseForeground) {        
+    if (paintPhase == PaintPhaseForeground) {        
         paintCaret(paintInfo, scrolledX, scrolledY, CursorCaret);
         paintCaret(paintInfo, scrolledX, scrolledY, DragCaret);
     }
@@ -1788,7 +1756,7 @@ void RenderBlock::paintEllipsisBoxes(PaintInfo& paintInfo, int tx, int ty)
     }
 }
 
-ContinuationOutlineTableMap* continuationOutlineTable()
+static ContinuationOutlineTableMap* continuationOutlineTable()
 {
     DEFINE_STATIC_LOCAL(ContinuationOutlineTableMap, table, ());
     return &table;
@@ -1801,9 +1769,9 @@ void RenderBlock::addContinuationWithOutline(RenderFlow* flow)
     ASSERT(!flow->layer());
     
     ContinuationOutlineTableMap* table = continuationOutlineTable();
-    RenderFlowSequencedSet* continuations = table->get(this);
+    ListHashSet<RenderFlow*>* continuations = table->get(this);
     if (!continuations) {
-        continuations = new RenderFlowSequencedSet;
+        continuations = new ListHashSet<RenderFlow*>;
         table->set(this, continuations);
     }
     
@@ -1816,13 +1784,13 @@ void RenderBlock::paintContinuationOutlines(PaintInfo& info, int tx, int ty)
     if (table->isEmpty())
         return;
         
-    RenderFlowSequencedSet* continuations = table->get(this);
+    ListHashSet<RenderFlow*>* continuations = table->get(this);
     if (!continuations)
         return;
         
     // Paint each continuation outline.
-    RenderFlowSequencedSet::iterator end = continuations->end();
-    for (RenderFlowSequencedSet::iterator it = continuations->begin(); it != end; ++it) {
+    ListHashSet<RenderFlow*>::iterator end = continuations->end();
+    for (ListHashSet<RenderFlow*>::iterator it = continuations->begin(); it != end; ++it) {
         // Need to add in the coordinates of the intervening blocks.
         RenderFlow* flow = *it;
         RenderBlock* block = flow->containingBlock();
@@ -2591,7 +2559,23 @@ IntRect RenderBlock::floatRect() const
 
 int RenderBlock::lowestPosition(bool includeOverflowInterior, bool includeSelf) const
 {
-    int bottom = RenderFlow::lowestPosition(includeOverflowInterior, includeSelf);
+    if (!includeOverflowInterior && (hasOverflowClip() || hasControlClip()))
+        return includeSelf && width() > 0 ? overflowHeight(false) : 0;
+    
+    int bottom = includeSelf && width() > 0 ? height() : 0;
+    if (!hasColumns()) {
+        // FIXME: Come up with a way to use the layer tree to avoid visiting all the kids.
+        // For now, we have to descend into all the children, since we may have a huge abs div inside
+        // a tiny rel div buried somewhere deep in our child tree.  In this case we have to get to
+        // the abs div.
+        for (RenderObject* c = firstChild(); c; c = c->nextSibling()) {
+            if (!c->isFloatingOrPositioned() && !c->isText() && !c->isRenderInline())
+                bottom = max(bottom, toRenderBox(c)->y() + c->lowestPosition(false));
+        }
+    }
+
+    if (includeSelf && isRelPositioned())
+        bottom += relativePositionOffsetY();     
     if (!includeOverflowInterior && hasOverflowClip())
         return bottom;
 
@@ -2637,7 +2621,6 @@ int RenderBlock::lowestPosition(bool includeOverflowInterior, bool includeSelf) 
         }
     }
 
-
     if (!includeSelf && lastLineBox()) {
         int lp = lastLineBox()->yPos() + lastLineBox()->height();
         bottom = max(bottom, lp);
@@ -2648,7 +2631,25 @@ int RenderBlock::lowestPosition(bool includeOverflowInterior, bool includeSelf) 
 
 int RenderBlock::rightmostPosition(bool includeOverflowInterior, bool includeSelf) const
 {
-    int right = RenderFlow::rightmostPosition(includeOverflowInterior, includeSelf);
+    if (!includeOverflowInterior && (hasOverflowClip() || hasControlClip()))
+        return includeSelf && height() > 0 ? overflowWidth(false) : 0;
+
+    int right = includeSelf && height() > 0 ? width() : 0;
+
+    if (!hasColumns()) {
+        // FIXME: Come up with a way to use the layer tree to avoid visiting all the kids.
+        // For now, we have to descend into all the children, since we may have a huge abs div inside
+        // a tiny rel div buried somewhere deep in our child tree.  In this case we have to get to
+        // the abs div.
+        for (RenderObject* c = firstChild(); c; c = c->nextSibling()) {
+            if (!c->isFloatingOrPositioned() && c->isBox() && !c->isRenderInline())
+                right = max(right, toRenderBox(c)->x() + c->rightmostPosition(false));
+        }
+    }
+
+    if (includeSelf && isRelPositioned())
+        right += relativePositionOffsetX();
+
     if (!includeOverflowInterior && hasOverflowClip())
         return right;
 
@@ -2710,7 +2711,24 @@ int RenderBlock::rightmostPosition(bool includeOverflowInterior, bool includeSel
 
 int RenderBlock::leftmostPosition(bool includeOverflowInterior, bool includeSelf) const
 {
-    int left = RenderFlow::leftmostPosition(includeOverflowInterior, includeSelf);
+    if (!includeOverflowInterior && (hasOverflowClip() || hasControlClip()))
+        return includeSelf && height() > 0 ? overflowLeft(false) : width();
+
+    int left = includeSelf && height() > 0 ? 0 : width();
+    if (!hasColumns()) {
+        // FIXME: Come up with a way to use the layer tree to avoid visiting all the kids.
+        // For now, we have to descend into all the children, since we may have a huge abs div inside
+        // a tiny rel div buried somewhere deep in our child tree.  In this case we have to get to
+        // the abs div.
+        for (RenderObject* c = firstChild(); c; c = c->nextSibling()) {
+            if (!c->isFloatingOrPositioned() && c->isBox() && !c->isRenderInline())
+                left = min(left, toRenderBox(c)->x() + c->leftmostPosition(false));
+        }
+    }
+
+    if (includeSelf && isRelPositioned())
+        left += relativePositionOffsetX(); 
+
     if (!includeOverflowInterior && hasOverflowClip())
         return left;
     
@@ -2854,7 +2872,7 @@ void RenderBlock::clearFloats()
         offset -= toRenderBox(prev)->y();
     else if (parent()->isBox()) {
         prev = parent();
-        xoffset += RenderBox::toRenderBox(prev)->borderLeft() + RenderBox::toRenderBox(prev)->paddingLeft();
+        xoffset += toRenderBox(prev)->borderLeft() + toRenderBox(prev)->paddingLeft();
     }
 
     // Add overhanging floats from the previous RenderBlock, but only if it has a float that intrudes into our space.
@@ -3029,9 +3047,9 @@ bool RenderBlock::containsFloat(RenderObject* o)
     return false;
 }
 
-void RenderBlock::markAllDescendantsWithFloatsForLayout(RenderBox* floatToRemove)
+void RenderBlock::markAllDescendantsWithFloatsForLayout(RenderBox* floatToRemove, bool inLayout)
 {
-    setChildNeedsLayout(true);
+    setChildNeedsLayout(true, !inLayout);
 
     if (floatToRemove)
         removeFloatingObject(floatToRemove);
@@ -3041,7 +3059,7 @@ void RenderBlock::markAllDescendantsWithFloatsForLayout(RenderBox* floatToRemove
         for (RenderObject* child = firstChild(); child; child = child->nextSibling()) {
             if (isBlockFlow() && !child->isFloatingOrPositioned() &&
                 ((floatToRemove ? child->containsFloat(floatToRemove) : child->containsFloats()) || child->shrinkToAvoidFloats()))
-                child->markAllDescendantsWithFloatsForLayout(floatToRemove);
+                static_cast<RenderBlock*>(child)->markAllDescendantsWithFloatsForLayout(floatToRemove, inLayout);
         }
     }
 }
@@ -3102,12 +3120,10 @@ bool RenderBlock::isPointInOverflowControl(HitTestResult& result, int, int, int,
 
 bool RenderBlock::nodeAtPoint(const HitTestRequest& request, HitTestResult& result, int _x, int _y, int _tx, int _ty, HitTestAction hitTestAction)
 {
-    bool inlineFlow = isInlineFlow();
-
     int tx = _tx + x();
     int ty = _ty + y();
 
-    if (!inlineFlow && !isRenderView()) {
+    if (!isRenderView()) {
         // Check if we need to do anything at all.
         IntRect overflowBox = overflowRect(false);
         overflowBox.move(tx, ty);
@@ -3162,7 +3178,7 @@ bool RenderBlock::nodeAtPoint(const HitTestRequest& request, HitTestResult& resu
     }
 
     // Now hit test our background
-    if (!inlineFlow && (hitTestAction == HitTestBlockBackground || hitTestAction == HitTestChildBlockBackground)) {
+    if (hitTestAction == HitTestBlockBackground || hitTestAction == HitTestChildBlockBackground) {
         IntRect boundsRect(tx, ty, width(), height());
         if (visibleToHitTesting() && boundsRect.contains(_x, _y)) {
             updateHitTestResult(result, IntPoint(_x - tx, _y - ty));
@@ -3223,7 +3239,7 @@ bool RenderBlock::hitTestContents(const HitTestRequest& request, HitTestResult& 
         for (RenderObject* child = lastChild(); child; child = child->previousSibling()) {
             // FIXME: We have to skip over inline flows, since they can show up inside RenderTables at the moment (a demoted inline <form> for example).  If we ever implement a
             // table-specific hit-test method (which we should do for performance reasons anyway), then we can remove this check.
-            if (!child->hasLayer() && !child->isFloating() && !child->isInlineFlow() && child->nodeAtPoint(request, result, x, y, tx, ty, childHitTest)) {
+            if (!child->hasLayer() && !child->isFloating() && !child->isRenderInline() && child->nodeAtPoint(request, result, x, y, tx, ty, childHitTest)) {
                 updateHitTestResult(result, IntPoint(x - tx, y - ty));
                 return true;
             }
@@ -3299,7 +3315,7 @@ VisiblePosition RenderBlock::positionForCoordinates(int x, int y)
 
         if (y < top || (isEditableRoot && (y < bottom && x < left))) {
             if (!isEditableRoot)
-                if (RenderBox* c = firstChildBox()) { // FIXME: This code doesn't make any sense.  This child could be an inline or a positioned element or a float or a compact, etc.
+                if (RenderBox* c = firstChildBox()) { // FIXME: This code doesn't make any sense.  This child could be an inline or a positioned element or a float, etc.
                     VisiblePosition p = c->positionForCoordinates(contentsX - c->x(), contentsY - c->y());
                     if (p.isNotNull())
                         return p;
@@ -3315,7 +3331,7 @@ VisiblePosition RenderBlock::positionForCoordinates(int x, int y)
 
         if (y >= bottom || (isEditableRoot && (y >= top && x >= right))) {
             if (!isEditableRoot)
-                if (RenderBox* c = lastChildBox()) { // FIXME: This code doesn't make any sense.  This child could be an inline or a positioned element or a float or a compact, ect.
+                if (RenderBox* c = lastChildBox()) { // FIXME: This code doesn't make any sense.  This child could be an inline or a positioned element or a float, etc.
                     VisiblePosition p = c->positionForCoordinates(contentsX - c->x(), contentsY - c->y());
                     if (p.isNotNull())
                         return p;
@@ -3760,7 +3776,7 @@ RenderObject* InlineMinMaxIterator::next()
             result = current->firstChild();
         if (!result) {
             // We hit the end of our inline. (It was empty, e.g., <span></span>.)
-            if (!oldEndOfInline && current->isInlineFlow()) {
+            if (!oldEndOfInline && current->isRenderInline()) {
                 result = current;
                 endOfInline = true;
                 break;
@@ -3770,7 +3786,7 @@ RenderObject* InlineMinMaxIterator::next()
                 result = current->nextSibling();
                 if (result) break;
                 current = current->parent();
-                if (current && current != parent && current->isInlineFlow()) {
+                if (current && current != parent && current->isRenderInline()) {
                     result = current;
                     endOfInline = true;
                     break;
@@ -3781,7 +3797,7 @@ RenderObject* InlineMinMaxIterator::next()
         if (!result)
             break;
 
-        if (!result->isPositioned() && (result->isText() || result->isFloating() || result->isReplaced() || result->isInlineFlow()))
+        if (!result->isPositioned() && (result->isText() || result->isFloating() || result->isReplaced() || result->isRenderInline()))
              break;
         
         current = result;
@@ -3820,7 +3836,7 @@ static inline void stripTrailingSpace(int& inlineMax, int& inlineMin,
 {
     if (trailingSpaceChild && trailingSpaceChild->isText()) {
         // Collapse away the trailing space at the end of a block.
-        RenderText* t = static_cast<RenderText*>(trailingSpaceChild);
+        RenderText* t = toRenderText(trailingSpaceChild);
         const UChar space = ' ';
         const Font& font = t->style()->font(); // FIXME: This ignores first-line.
         int spaceWidth = font.width(TextRun(&space, 1));
@@ -3900,7 +3916,7 @@ void RenderBlock::calcInlinePrefWidths()
 
             if (!child->isText()) {
                 // Case (1) and (2).  Inline replaced and inline flow elements.
-                if (child->isInlineFlow()) {
+                if (child->isRenderInline()) {
                     // Add in padding/border/margin from the appropriate side of
                     // the element.
                     int bpm = getBorderPaddingMargin(static_cast<RenderFlow*>(child), childIterator.endOfInline);
@@ -3986,7 +4002,7 @@ void RenderBlock::calcInlinePrefWidths()
                 }
             } else if (child->isText()) {
                 // Case (3). Text.
-                RenderText* t = static_cast<RenderText *>(child);
+                RenderText* t = toRenderText(child);
 
                 if (t->isWordBreak()) {
                     m_minPrefWidth = max(inlineMin, m_minPrefWidth);
@@ -4077,7 +4093,7 @@ void RenderBlock::calcInlinePrefWidths()
         }
 
         oldAutoWrap = autoWrap;
-        if (!child->isInlineFlow())
+        if (!child->isRenderInline())
             previousLeaf = child;
     }
 
@@ -4314,7 +4330,7 @@ bool RenderBlock::containsNonZeroBidiLevel() const
 
 RenderBlock* RenderBlock::firstLineBlock() const
 {
-    const RenderObject* firstLineBlock = this;
+    RenderBlock* firstLineBlock = const_cast<RenderBlock*>(this);
     bool hasPseudo = false;
     while (true) {
         hasPseudo = firstLineBlock->style()->hasPseudoStyle(RenderStyle::FIRST_LINE);
@@ -4324,13 +4340,14 @@ RenderBlock* RenderBlock::firstLineBlock() const
         if (firstLineBlock->isReplaced() || firstLineBlock->isFloating() || 
             !parentBlock || parentBlock->firstChild() != firstLineBlock || !parentBlock->isBlockFlow())
             break;
-        firstLineBlock = parentBlock;
+        ASSERT(parentBlock->isRenderBlock());
+        firstLineBlock = static_cast<RenderBlock*>(parentBlock);
     } 
     
     if (!hasPseudo)
         return 0;
     
-    return (RenderBlock*)(firstLineBlock);
+    return firstLineBlock;
 }
 
 void RenderBlock::updateFirstLetter()
@@ -4401,7 +4418,7 @@ void RenderBlock::updateFirstLetter()
         // adding and removing children of firstLetterContainer.
         view()->disableLayoutState();
 
-        RenderText* textObj = static_cast<RenderText*>(currChild);
+        RenderText* textObj = toRenderText(currChild);
         
         // Create our pseudo style now that we have our firstLetterContainer determined.
         RenderStyle* pseudoStyle = firstLetterBlock->getCachedPseudoStyle(RenderStyle::FIRST_LETTER,
@@ -4472,7 +4489,7 @@ bool RenderBlock::inRootBlockContext() const
 // (crawling into blocks).
 static bool shouldCheckLines(RenderObject* obj)
 {
-    return !obj->isFloatingOrPositioned() && !obj->isCompact() && !obj->isRunIn() &&
+    return !obj->isFloatingOrPositioned() && !obj->isRunIn() &&
             obj->isBlockFlow() && obj->style()->height().isAuto() &&
             (!obj->isFlexibleBox() || obj->style()->boxOrient() == VERTICAL);
 }
@@ -4499,7 +4516,7 @@ static RootInlineBox* getLineAtIndex(RenderBlock* block, int i, int& count)
     return 0;
 }
 
-int getHeightForLineCount(RenderBlock* block, int l, bool includeBottom, int& count)
+static int getHeightForLineCount(RenderBlock* block, int l, bool includeBottom, int& count)
 {
     if (block->style()->visibility() == VISIBLE) {
         if (block->childrenInline()) {
@@ -4516,7 +4533,7 @@ int getHeightForLineCount(RenderBlock* block, int l, bool includeBottom, int& co
                     if (result != -1)
                         return result + obj->y() + (includeBottom ? (block->borderBottom() + block->paddingBottom()) : 0);
                 }
-                else if (!obj->isFloatingOrPositioned() && !obj->isCompact() && !obj->isRunIn())
+                else if (!obj->isFloatingOrPositioned() && !obj->isRunIn())
                     normalFlowChildWithoutLines = obj;
             }
             if (normalFlowChildWithoutLines && l == 0)
@@ -4673,8 +4690,6 @@ const char* RenderBlock::renderName() const
         return "RenderBlock (generated)";
     if (isRelPositioned())
         return "RenderBlock (relative positioned)";
-    if (isCompact())
-        return "RenderBlock (compact)";
     if (isRunIn())
         return "RenderBlock (run-in)";
     return "RenderBlock";

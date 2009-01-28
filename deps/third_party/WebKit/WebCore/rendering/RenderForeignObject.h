@@ -42,8 +42,8 @@ public:
     virtual TransformationMatrix localTransform() const { return m_localTransform; }
     virtual bool calculateLocalTransform();
 
-    virtual void computeAbsoluteRepaintRect(IntRect&, bool fixed);
-    virtual bool requiresLayer();
+    virtual void computeRectForRepaint(IntRect&, RenderBox* repaintContainer, bool fixed = false);
+    virtual bool requiresLayer() const { return false; }
     virtual void layout();
 
     virtual bool nodeAtPoint(const HitTestRequest&, HitTestResult&, int x, int y, int tx, int ty, HitTestAction);

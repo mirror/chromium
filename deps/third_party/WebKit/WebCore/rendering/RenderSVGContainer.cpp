@@ -27,6 +27,7 @@
 #include "RenderSVGContainer.h"
 
 #include "AXObjectCache.h"
+#include "FloatQuad.h"
 #include "GraphicsContext.h"
 #include "RenderView.h"
 #include "SVGRenderSupport.h"
@@ -202,12 +203,6 @@ TransformationMatrix RenderSVGContainer::localTransform() const
     return m_localTransform;
 }
 
-bool RenderSVGContainer::requiresLayer()
-{
-    // Only allow an <svg> element to generate a layer when it's positioned in a non-SVG context
-    return false;
-}
-
 int RenderSVGContainer::lineHeight(bool, bool) const
 {
     return height();
@@ -362,12 +357,12 @@ TransformationMatrix RenderSVGContainer::viewportTransform() const
      return TransformationMatrix();
 }
 
-IntRect RenderSVGContainer::absoluteClippedOverflowRect()
+IntRect RenderSVGContainer::clippedOverflowRectForRepaint(RenderBox* repaintContainer)
 {
     FloatRect repaintRect;
 
     for (RenderObject* current = firstChild(); current != 0; current = current->nextSibling())
-        repaintRect.unite(current->absoluteClippedOverflowRect());
+        repaintRect.unite(current->clippedOverflowRectForRepaint(repaintContainer));
 
 #if ENABLE(SVG_FILTERS)
     // Filters can expand the bounding box
@@ -430,8 +425,9 @@ bool RenderSVGContainer::nodeAtPoint(const HitTestRequest& request, HitTestResul
     return false;
 }
 
-IntRect RenderSVGContainer::absoluteOutlineBounds() const
+IntRect RenderSVGContainer::outlineBoundsForRepaint(RenderBox* /*repaintContainer*/) const
 {
+    // FIXME: handle non-root repaintContainer
     IntRect result = m_absoluteBounds;
     adjustRectForOutlineAndShadow(result);
     return result;

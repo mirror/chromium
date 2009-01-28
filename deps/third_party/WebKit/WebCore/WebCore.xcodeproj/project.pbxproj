@@ -65,6 +65,8 @@
 		084DBAA20ED39D360038C226 /* WMLVariables.h in Headers */ = {isa = PBXBuildFile; fileRef = 084DBA9E0ED39D360038C226 /* WMLVariables.h */; };
 		085773350F0846010080583E /* FormControlElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 085773340F0846010080583E /* FormControlElement.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		08591AA50F085C4E009BACB1 /* InputElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 08591AA40F085C4E009BACB1 /* InputElement.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		085AFDC80F2977350061F2B3 /* WMLFormControlElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 085AFDC60F2977350061F2B3 /* WMLFormControlElement.cpp */; };
+		085AFDC90F2977350061F2B3 /* WMLFormControlElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 085AFDC70F2977350061F2B3 /* WMLFormControlElement.h */; settings = {ATTRIBUTES = (); }; };
 		085B92BA0EFDE73D00E6123C /* FormDataBuilder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 085B92B80EFDE73D00E6123C /* FormDataBuilder.cpp */; };
 		085B92BB0EFDE73D00E6123C /* FormDataBuilder.h in Headers */ = {isa = PBXBuildFile; fileRef = 085B92B90EFDE73D00E6123C /* FormDataBuilder.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		0865CCE60EDDF51B00DF9EC3 /* WMLNoopElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0865CCE40EDDF51B00DF9EC3 /* WMLNoopElement.cpp */; };
@@ -113,6 +115,8 @@
 		08A484770E5272C500C3FE76 /* ScriptElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08A484750E5272C500C3FE76 /* ScriptElement.cpp */; };
 		08A484780E5272C500C3FE76 /* ScriptElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 08A484760E5272C500C3FE76 /* ScriptElement.h */; };
 		08A48A6E0E86CF6D00E225DD /* JSSVGElementInstanceCustom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08A48A6D0E86CF6D00E225DD /* JSSVGElementInstanceCustom.cpp */; };
+		08B93F750F293481000720C2 /* FormControlElementWithState.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08B93F730F293481000720C2 /* FormControlElementWithState.cpp */; };
+		08B93F760F293481000720C2 /* FormControlElementWithState.h in Headers */ = {isa = PBXBuildFile; fileRef = 08B93F740F293481000720C2 /* FormControlElementWithState.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		08BFDFC40F099E70007DC2BF /* FormControlElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08BFDFC30F099E70007DC2BF /* FormControlElement.cpp */; };
 		08C4C5180EF19A4000E4840F /* WMLImageElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 08C4C5140EF19A4000E4840F /* WMLImageElement.cpp */; };
 		08C4C5190EF19A4000E4840F /* WMLImageElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 08C4C5150EF19A4000E4840F /* WMLImageElement.h */; };
@@ -177,10 +181,10 @@
 		14EC268009CA07E000E1EEEC /* EventTargetNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14EC267E09CA07E000E1EEEC /* EventTargetNode.cpp */; };
 		14FFE31D0AE1963300136BF5 /* HTMLFrameElementBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 14FFE31B0AE1963300136BF5 /* HTMLFrameElementBase.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		14FFE31E0AE1963300136BF5 /* HTMLFrameElementBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14FFE31C0AE1963300136BF5 /* HTMLFrameElementBase.cpp */; };
+		188604B30F2E654A000B6443 /* DOMTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 188604B10F2E654A000B6443 /* DOMTimer.cpp */; };
+		188604B40F2E654A000B6443 /* DOMTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 188604B20F2E654A000B6443 /* DOMTimer.h */; };
 		18A0537C0F26859C00A51705 /* WorkerRunLoop.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18A0537A0F26859C00A51705 /* WorkerRunLoop.cpp */; };
 		18A0537D0F26859C00A51705 /* WorkerRunLoop.h in Headers */ = {isa = PBXBuildFile; fileRef = 18A0537B0F26859C00A51705 /* WorkerRunLoop.h */; };
-		18E687870EDB793500A8E8B7 /* DOMTimer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 18E687850EDB793400A8E8B7 /* DOMTimer.cpp */; };
-		18E687880EDB793500A8E8B7 /* DOMTimer.h in Headers */ = {isa = PBXBuildFile; fileRef = 18E687860EDB793500A8E8B7 /* DOMTimer.h */; };
 		1A0D57360A5C77FE007EDD4C /* OverflowEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A0D57340A5C77FE007EDD4C /* OverflowEvent.cpp */; };
 		1A0D57370A5C77FE007EDD4C /* OverflowEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 1A0D57350A5C77FE007EDD4C /* OverflowEvent.h */; };
 		1A0D57400A5C7867007EDD4C /* JSOverflowEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1A0D573E0A5C7867007EDD4C /* JSOverflowEvent.cpp */; };
@@ -593,8 +597,8 @@
 		416E75CC0EDF90C700360E1D /* ScriptCallFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 416E75CA0EDF90C700360E1D /* ScriptCallFrame.cpp */; };
 		416F45F00ED7B311008215B6 /* ScriptString.h in Headers */ = {isa = PBXBuildFile; fileRef = 416F45EF0ED7B311008215B6 /* ScriptString.h */; };
 		41C760B10EDE03D300C1655F /* ScriptState.h in Headers */ = {isa = PBXBuildFile; fileRef = 41C760B00EDE03D300C1655F /* ScriptState.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		41F1D21F0EF35C2A00DA8753 /* ScriptCachedPageData.h in Headers */ = {isa = PBXBuildFile; fileRef = 41F1D21D0EF35C2A00DA8753 /* ScriptCachedPageData.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		41F1D2200EF35C2A00DA8753 /* ScriptCachedPageData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41F1D21E0EF35C2A00DA8753 /* ScriptCachedPageData.cpp */; };
+		41F1D21F0EF35C2A00DA8753 /* ScriptCachedFrameData.h in Headers */ = {isa = PBXBuildFile; fileRef = 41F1D21D0EF35C2A00DA8753 /* ScriptCachedFrameData.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		41F1D2200EF35C2A00DA8753 /* ScriptCachedFrameData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 41F1D21E0EF35C2A00DA8753 /* ScriptCachedFrameData.cpp */; };
 		4415292E0E1AE8A000C4A2D0 /* HTMLPlugInImageElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 4415292C0E1AE8A000C4A2D0 /* HTMLPlugInImageElement.h */; };
 		4415292F0E1AE8A000C4A2D0 /* HTMLPlugInImageElement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4415292D0E1AE8A000C4A2D0 /* HTMLPlugInImageElement.cpp */; };
 		441B05560CD779B6007C1F18 /* DOMCSSStyleSheetPrivate.h in Copy Generated Headers */ = {isa = PBXBuildFile; fileRef = 4429AAEA0CB84DC7007647C5 /* DOMCSSStyleSheetPrivate.h */; };
@@ -768,9 +772,11 @@
 		51BE37E00DAEE00E001085FC /* StorageArea.h in Headers */ = {isa = PBXBuildFile; fileRef = 51BE37DE0DAEE00E001085FC /* StorageArea.h */; };
 		51BE38280DAEF7DA001085FC /* LocalStorage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51BE38260DAEF7DA001085FC /* LocalStorage.cpp */; };
 		51BE38290DAEF7DA001085FC /* LocalStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = 51BE38270DAEF7DA001085FC /* LocalStorage.h */; };
+		51C0AA390F2AA10A001648C2 /* CachedFrame.h in Headers */ = {isa = PBXBuildFile; fileRef = 51C0AA380F2AA10A001648C2 /* CachedFrame.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51C0AA410F2AA15E001648C2 /* CachedFrame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51C0AA400F2AA15E001648C2 /* CachedFrame.cpp */; };
 		51C81B890C4422F70019ECE3 /* FTPDirectoryParser.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51C81B870C4422F70019ECE3 /* FTPDirectoryParser.cpp */; };
 		51C81B8A0C4422F70019ECE3 /* FTPDirectoryParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 51C81B880C4422F70019ECE3 /* FTPDirectoryParser.h */; };
-		51CBFC990D10E483002DBF51 /* CachedPagePlatformData.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CBFC980D10E483002DBF51 /* CachedPagePlatformData.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		51CBFC990D10E483002DBF51 /* CachedFramePlatformData.h in Headers */ = {isa = PBXBuildFile; fileRef = 51CBFC980D10E483002DBF51 /* CachedFramePlatformData.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		51D0C5160DAA90B7003B3831 /* JSStorageCustom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51D0C5150DAA90B7003B3831 /* JSStorageCustom.cpp */; };
 		51DCE8020CAC9F1C00488358 /* JSSQLResultSetRowListCustom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 51DCE8010CAC9F1C00488358 /* JSSQLResultSetRowListCustom.cpp */; };
 		51DF6D7E0B92A16D00C2DC85 /* ThreadCheck.h in Headers */ = {isa = PBXBuildFile; fileRef = 51DF6D7D0B92A16D00C2DC85 /* ThreadCheck.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -1855,8 +1861,6 @@
 		93309DFC099E64920056E581 /* MoveSelectionCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 93309DAD099E64910056E581 /* MoveSelectionCommand.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		93309E00099E64920056E581 /* RemoveCSSPropertyCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93309DB1099E64910056E581 /* RemoveCSSPropertyCommand.cpp */; };
 		93309E01099E64920056E581 /* RemoveCSSPropertyCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 93309DB2099E64910056E581 /* RemoveCSSPropertyCommand.h */; };
-		93309E02099E64920056E581 /* RemoveNodeAttributeCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93309DB3099E64910056E581 /* RemoveNodeAttributeCommand.cpp */; };
-		93309E03099E64920056E581 /* RemoveNodeAttributeCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 93309DB4099E64910056E581 /* RemoveNodeAttributeCommand.h */; };
 		93309E04099E64920056E581 /* RemoveNodeCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93309DB5099E64910056E581 /* RemoveNodeCommand.cpp */; };
 		93309E05099E64920056E581 /* RemoveNodeCommand.h in Headers */ = {isa = PBXBuildFile; fileRef = 93309DB6099E64910056E581 /* RemoveNodeCommand.h */; };
 		93309E06099E64920056E581 /* RemoveNodePreservingChildrenCommand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93309DB7099E64910056E581 /* RemoveNodePreservingChildrenCommand.cpp */; };
@@ -1965,6 +1969,7 @@
 		93B70D6F09EB0C7C009D8468 /* ScriptController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93B70D5309EB0C7C009D8468 /* ScriptController.cpp */; };
 		93B70D7009EB0C7C009D8468 /* ScriptController.h in Headers */ = {isa = PBXBuildFile; fileRef = 93B70D5409EB0C7C009D8468 /* ScriptController.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		93B77A380ADD792500EA4B81 /* FrameLoaderTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = 93B77A370ADD792500EA4B81 /* FrameLoaderTypes.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		93BA59B20F2AA5FE008E8E99 /* JSCDATASectionCustom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93BA59B10F2AA5FE008E8E99 /* JSCDATASectionCustom.cpp */; };
 		93C09A530B064DB3005ABD4D /* EventHandler.h in Headers */ = {isa = PBXBuildFile; fileRef = 93C09A520B064DB3005ABD4D /* EventHandler.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		93C09A7F0B064EEF005ABD4D /* EventHandlerMac.mm in Sources */ = {isa = PBXBuildFile; fileRef = 93C09A7E0B064EEF005ABD4D /* EventHandlerMac.mm */; };
 		93C09A810B064F00005ABD4D /* EventHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 93C09A800B064F00005ABD4D /* EventHandler.cpp */; };
@@ -2040,7 +2045,7 @@
 		93F19B0308245E59001E9ABC /* XSLStyleSheet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC06F24906D18A7E004A6FA3 /* XSLStyleSheet.cpp */; };
 		93F19B0408245E59001E9ABC /* XSLTProcessor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BC06F24B06D18A7E004A6FA3 /* XSLTProcessor.cpp */; };
 		93F19B0708245E59001E9ABC /* WebCoreView.m in Sources */ = {isa = PBXBuildFile; fileRef = BE8560510701F91100239769 /* WebCoreView.m */; };
-		93F19B0808245E59001E9ABC /* WebDashboardRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 5150C2A50702629800AF642C /* WebDashboardRegion.m */; };
+		93F19B0808245E59001E9ABC /* WebDashboardRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = 5150C2A50702629800AF642C /* WebDashboardRegion.m */; settings = {COMPILER_FLAGS = "-Wno-cast-qual"; }; };
 		93F19B1308245E59001E9ABC /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5C2869302846DCD018635CA /* ApplicationServices.framework */; };
 		93F19B1408245E59001E9ABC /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5C2869402846DCD018635CA /* Carbon.framework */; };
 		93F19B1508245E59001E9ABC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5C2869502846DCD018635CA /* Cocoa.framework */; };
@@ -4913,6 +4918,8 @@
 		084DBA9E0ED39D360038C226 /* WMLVariables.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMLVariables.h; sourceTree = "<group>"; };
 		085773340F0846010080583E /* FormControlElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormControlElement.h; sourceTree = "<group>"; };
 		08591AA40F085C4E009BACB1 /* InputElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputElement.h; sourceTree = "<group>"; };
+		085AFDC60F2977350061F2B3 /* WMLFormControlElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WMLFormControlElement.cpp; sourceTree = "<group>"; };
+		085AFDC70F2977350061F2B3 /* WMLFormControlElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMLFormControlElement.h; sourceTree = "<group>"; };
 		085B92B80EFDE73D00E6123C /* FormDataBuilder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FormDataBuilder.cpp; sourceTree = "<group>"; };
 		085B92B90EFDE73D00E6123C /* FormDataBuilder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormDataBuilder.h; sourceTree = "<group>"; };
 		0865CCE40EDDF51B00DF9EC3 /* WMLNoopElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WMLNoopElement.cpp; sourceTree = "<group>"; };
@@ -4949,6 +4956,8 @@
 		08A484750E5272C500C3FE76 /* ScriptElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptElement.cpp; sourceTree = "<group>"; };
 		08A484760E5272C500C3FE76 /* ScriptElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptElement.h; sourceTree = "<group>"; };
 		08A48A6D0E86CF6D00E225DD /* JSSVGElementInstanceCustom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSSVGElementInstanceCustom.cpp; sourceTree = "<group>"; };
+		08B93F730F293481000720C2 /* FormControlElementWithState.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FormControlElementWithState.cpp; sourceTree = "<group>"; };
+		08B93F740F293481000720C2 /* FormControlElementWithState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FormControlElementWithState.h; sourceTree = "<group>"; };
 		08BFDFC30F099E70007DC2BF /* FormControlElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FormControlElement.cpp; sourceTree = "<group>"; };
 		08C4C5140EF19A4000E4840F /* WMLImageElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WMLImageElement.cpp; sourceTree = "<group>"; };
 		08C4C5150EF19A4000E4840F /* WMLImageElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WMLImageElement.h; sourceTree = "<group>"; };
@@ -5026,10 +5035,10 @@
 		14EC267E09CA07E000E1EEEC /* EventTargetNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventTargetNode.cpp; sourceTree = "<group>"; };
 		14FFE31B0AE1963300136BF5 /* HTMLFrameElementBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLFrameElementBase.h; sourceTree = "<group>"; };
 		14FFE31C0AE1963300136BF5 /* HTMLFrameElementBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HTMLFrameElementBase.cpp; sourceTree = "<group>"; };
+		188604B10F2E654A000B6443 /* DOMTimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DOMTimer.cpp; sourceTree = "<group>"; };
+		188604B20F2E654A000B6443 /* DOMTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DOMTimer.h; sourceTree = "<group>"; };
 		18A0537A0F26859C00A51705 /* WorkerRunLoop.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WorkerRunLoop.cpp; sourceTree = "<group>"; };
 		18A0537B0F26859C00A51705 /* WorkerRunLoop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WorkerRunLoop.h; sourceTree = "<group>"; };
-		18E687850EDB793400A8E8B7 /* DOMTimer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DOMTimer.cpp; sourceTree = "<group>"; };
-		18E687860EDB793500A8E8B7 /* DOMTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DOMTimer.h; sourceTree = "<group>"; };
 		1A0D57340A5C77FE007EDD4C /* OverflowEvent.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = OverflowEvent.cpp; sourceTree = "<group>"; };
 		1A0D57350A5C77FE007EDD4C /* OverflowEvent.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = OverflowEvent.h; sourceTree = "<group>"; };
 		1A0D57380A5C7812007EDD4C /* OverflowEvent.idl */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = text; path = OverflowEvent.idl; sourceTree = "<group>"; };
@@ -5480,8 +5489,8 @@
 		416E75CA0EDF90C700360E1D /* ScriptCallFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptCallFrame.cpp; sourceTree = "<group>"; };
 		416F45EF0ED7B311008215B6 /* ScriptString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptString.h; sourceTree = "<group>"; };
 		41C760B00EDE03D300C1655F /* ScriptState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptState.h; sourceTree = "<group>"; };
-		41F1D21D0EF35C2A00DA8753 /* ScriptCachedPageData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptCachedPageData.h; sourceTree = "<group>"; };
-		41F1D21E0EF35C2A00DA8753 /* ScriptCachedPageData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptCachedPageData.cpp; sourceTree = "<group>"; };
+		41F1D21D0EF35C2A00DA8753 /* ScriptCachedFrameData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScriptCachedFrameData.h; sourceTree = "<group>"; };
+		41F1D21E0EF35C2A00DA8753 /* ScriptCachedFrameData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptCachedFrameData.cpp; sourceTree = "<group>"; };
 		4415292C0E1AE8A000C4A2D0 /* HTMLPlugInImageElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLPlugInImageElement.h; sourceTree = "<group>"; };
 		4415292D0E1AE8A000C4A2D0 /* HTMLPlugInImageElement.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HTMLPlugInImageElement.cpp; sourceTree = "<group>"; };
 		4429AAEA0CB84DC7007647C5 /* DOMCSSStyleSheetPrivate.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DOMCSSStyleSheetPrivate.h; sourceTree = "<group>"; };
@@ -5678,9 +5687,11 @@
 		51BE37DE0DAEE00E001085FC /* StorageArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StorageArea.h; sourceTree = "<group>"; };
 		51BE38260DAEF7DA001085FC /* LocalStorage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LocalStorage.cpp; sourceTree = "<group>"; };
 		51BE38270DAEF7DA001085FC /* LocalStorage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalStorage.h; sourceTree = "<group>"; };
+		51C0AA380F2AA10A001648C2 /* CachedFrame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedFrame.h; sourceTree = "<group>"; };
+		51C0AA400F2AA15E001648C2 /* CachedFrame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CachedFrame.cpp; sourceTree = "<group>"; };
 		51C81B870C4422F70019ECE3 /* FTPDirectoryParser.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = FTPDirectoryParser.cpp; sourceTree = "<group>"; };
 		51C81B880C4422F70019ECE3 /* FTPDirectoryParser.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = FTPDirectoryParser.h; sourceTree = "<group>"; };
-		51CBFC980D10E483002DBF51 /* CachedPagePlatformData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedPagePlatformData.h; sourceTree = "<group>"; };
+		51CBFC980D10E483002DBF51 /* CachedFramePlatformData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedFramePlatformData.h; sourceTree = "<group>"; };
 		51D0C5150DAA90B7003B3831 /* JSStorageCustom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSStorageCustom.cpp; sourceTree = "<group>"; };
 		51DCE8010CAC9F1C00488358 /* JSSQLResultSetRowListCustom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSSQLResultSetRowListCustom.cpp; sourceTree = "<group>"; };
 		51DF6D7D0B92A16D00C2DC85 /* ThreadCheck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThreadCheck.h; sourceTree = "<group>"; };
@@ -6727,8 +6738,6 @@
 		93309DAD099E64910056E581 /* MoveSelectionCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MoveSelectionCommand.h; sourceTree = "<group>"; };
 		93309DB1099E64910056E581 /* RemoveCSSPropertyCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RemoveCSSPropertyCommand.cpp; sourceTree = "<group>"; };
 		93309DB2099E64910056E581 /* RemoveCSSPropertyCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveCSSPropertyCommand.h; sourceTree = "<group>"; };
-		93309DB3099E64910056E581 /* RemoveNodeAttributeCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RemoveNodeAttributeCommand.cpp; sourceTree = "<group>"; };
-		93309DB4099E64910056E581 /* RemoveNodeAttributeCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveNodeAttributeCommand.h; sourceTree = "<group>"; };
 		93309DB5099E64910056E581 /* RemoveNodeCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RemoveNodeCommand.cpp; sourceTree = "<group>"; };
 		93309DB6099E64910056E581 /* RemoveNodeCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RemoveNodeCommand.h; sourceTree = "<group>"; };
 		93309DB7099E64910056E581 /* RemoveNodePreservingChildrenCommand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RemoveNodePreservingChildrenCommand.cpp; sourceTree = "<group>"; };
@@ -6842,6 +6851,7 @@
 		93B70D5309EB0C7C009D8468 /* ScriptController.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = ScriptController.cpp; sourceTree = "<group>"; };
 		93B70D5409EB0C7C009D8468 /* ScriptController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ScriptController.h; sourceTree = "<group>"; };
 		93B77A370ADD792500EA4B81 /* FrameLoaderTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FrameLoaderTypes.h; sourceTree = "<group>"; };
+		93BA59B10F2AA5FE008E8E99 /* JSCDATASectionCustom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = JSCDATASectionCustom.cpp; sourceTree = "<group>"; };
 		93C09A520B064DB3005ABD4D /* EventHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventHandler.h; sourceTree = "<group>"; };
 		93C09A7E0B064EEF005ABD4D /* EventHandlerMac.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = EventHandlerMac.mm; sourceTree = "<group>"; };
 		93C09A800B064F00005ABD4D /* EventHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EventHandler.cpp; sourceTree = "<group>"; };
@@ -9719,6 +9729,8 @@
 				0818AEE10EDB86BC00647B66 /* WMLEventHandlingElement.h */,
 				08E6E0EF0EFF42BA00029FBF /* WMLFieldSetElement.cpp */,
 				08E6E0F00EFF42BA00029FBF /* WMLFieldSetElement.h */,
+				085AFDC60F2977350061F2B3 /* WMLFormControlElement.cpp */,
+				085AFDC70F2977350061F2B3 /* WMLFormControlElement.h */,
 				08807B6A0ED709AB003F6975 /* WMLGoElement.cpp */,
 				08807B6B0ED709AB003F6975 /* WMLGoElement.h */,
 				08C4C5140EF19A4000E4840F /* WMLImageElement.cpp */,
@@ -9835,9 +9847,11 @@
 				5160F4920B0AA71500C1D2AF /* mac */,
 				51741D0C0B07259A00ED442C /* BackForwardList.cpp */,
 				51741D0B0B07259A00ED442C /* BackForwardList.h */,
+				51C0AA400F2AA15E001648C2 /* CachedFrame.cpp */,
+				51C0AA380F2AA10A001648C2 /* CachedFrame.h */,
+				51CBFC980D10E483002DBF51 /* CachedFramePlatformData.h */,
 				510184680B08602A004A825F /* CachedPage.cpp */,
 				510184670B08602A004A825F /* CachedPage.h */,
-				51CBFC980D10E483002DBF51 /* CachedPagePlatformData.h */,
 				51741D0E0B07259A00ED442C /* HistoryItem.cpp */,
 				51741D0D0B07259A00ED442C /* HistoryItem.h */,
 				1477E7740BF4134A00152872 /* PageCache.cpp */,
@@ -10089,6 +10103,8 @@
 				BC5A86810C33676000EEA649 /* DOMSelection.cpp */,
 				BC5A86820C33676000EEA649 /* DOMSelection.h */,
 				BC5A86830C33676000EEA649 /* DOMSelection.idl */,
+				188604B10F2E654A000B6443 /* DOMTimer.cpp */,
+				188604B20F2E654A000B6443 /* DOMTimer.h */,
 				1403B99609EB13AF00797C7F /* DOMWindow.cpp */,
 				1403B99509EB13AF00797C7F /* DOMWindow.h */,
 				1403B90C09EB124500797C7F /* DOMWindow.idl */,
@@ -11317,8 +11333,6 @@
 				93309DB2099E64910056E581 /* RemoveCSSPropertyCommand.h */,
 				D06C0D8E0CFD11460065F43F /* RemoveFormatCommand.cpp */,
 				D06C0D8D0CFD11460065F43F /* RemoveFormatCommand.h */,
-				93309DB3099E64910056E581 /* RemoveNodeAttributeCommand.cpp */,
-				93309DB4099E64910056E581 /* RemoveNodeAttributeCommand.h */,
 				93309DB5099E64910056E581 /* RemoveNodeCommand.cpp */,
 				93309DB6099E64910056E581 /* RemoveNodeCommand.h */,
 				93309DB7099E64910056E581 /* RemoveNodePreservingChildrenCommand.cpp */,
@@ -13175,8 +13189,6 @@
 				14DFB33F0A7DF7630018F769 /* Derived Sources */,
 				BCD533630ED6848900887468 /* CachedScriptSourceProvider.h */,
 				93F8B3060A300FEA00F61AB8 /* CodeGeneratorJS.pm */,
-				18E687850EDB793400A8E8B7 /* DOMTimer.cpp */,
-				18E687860EDB793500A8E8B7 /* DOMTimer.h */,
 				1432E8480C51493F00B1500F /* GCController.cpp */,
 				1432E8460C51493800B1500F /* GCController.h */,
 				E4EEFFC60D34550C00469A58 /* JSAudioConstructor.cpp */,
@@ -13231,8 +13243,8 @@
 				BCE99EC20DCA624100182683 /* JSXSLTProcessorConstructor.h */,
 				BCA378BA0D15F64200B793D6 /* ScheduledAction.cpp */,
 				BCA378BB0D15F64200B793D6 /* ScheduledAction.h */,
-				41F1D21E0EF35C2A00DA8753 /* ScriptCachedPageData.cpp */,
-				41F1D21D0EF35C2A00DA8753 /* ScriptCachedPageData.h */,
+				41F1D21E0EF35C2A00DA8753 /* ScriptCachedFrameData.cpp */,
+				41F1D21D0EF35C2A00DA8753 /* ScriptCachedFrameData.h */,
 				416E75CA0EDF90C700360E1D /* ScriptCallFrame.cpp */,
 				416E75C90EDF90C700360E1D /* ScriptCallFrame.h */,
 				416E75BD0EDF8FD700360E1D /* ScriptCallStack.cpp */,
@@ -13304,6 +13316,7 @@
 			isa = PBXGroup;
 			children = (
 				BC2ED6BB0C6BD2F000920BFF /* JSAttrCustom.cpp */,
+				93BA59B10F2AA5FE008E8E99 /* JSCDATASectionCustom.cpp */,
 				BC46C1ED0C0DDBDF0020CFC3 /* JSCSSRuleCustom.cpp */,
 				BC5825F20C0B89380053F1B5 /* JSCSSStyleDeclarationCustom.cpp */,
 				BC20FB7E0C0E8E6C00D1447F /* JSCSSValueCustom.cpp */,
@@ -14271,6 +14284,8 @@
 				935FBCF109BA143B00E230B1 /* ExceptionCode.h */,
 				08BFDFC30F099E70007DC2BF /* FormControlElement.cpp */,
 				085773340F0846010080583E /* FormControlElement.h */,
+				08B93F730F293481000720C2 /* FormControlElementWithState.cpp */,
+				08B93F740F293481000720C2 /* FormControlElementWithState.h */,
 				0BA5D3850F240FB4009B870B /* GenericWorkerTask.h */,
 				08700BE60F086C5300919419 /* InputElement.cpp */,
 				08591AA40F085C4E009BACB1 /* InputElement.h */,
@@ -14538,7 +14553,7 @@
 				BC64B4CC0CB4295D005F2B62 /* CachedFont.h in Headers */,
 				BCB16C1C0979C3BD00467741 /* CachedImage.h in Headers */,
 				510184690B08602A004A825F /* CachedPage.h in Headers */,
-				51CBFC990D10E483002DBF51 /* CachedPagePlatformData.h in Headers */,
+				51CBFC990D10E483002DBF51 /* CachedFramePlatformData.h in Headers */,
 				BCB16C200979C3BD00467741 /* CachedResource.h in Headers */,
 				BCFB2E5E0979E46400BA703D /* CachedResourceClient.h in Headers */,
 				BCB16C220979C3BD00467741 /* CachedResourceClientWalker.h in Headers */,
@@ -15295,7 +15310,6 @@
 				DDE63ED50B7D45A800226998 /* DOMTextEvent.h in Headers */,
 				85E711D90AC5D5350053270F /* DOMTextInternal.h in Headers */,
 				BCC5733A0D695BF1006EF517 /* DOMTextPrivate.h in Headers */,
-				18E687880EDB793500A8E8B7 /* DOMTimer.h in Headers */,
 				BC1A37BE097C715F0019F3D8 /* DOMTraversal.h in Headers */,
 				85526CD20AB0B7D9000302EA /* DOMTreeWalker.h in Headers */,
 				850B41C30AD9E7E700A6ED4F /* DOMTreeWalkerInternal.h in Headers */,
@@ -15420,6 +15434,7 @@
 				3784C34B0E11AA34007D8D48 /* FontTraitsMask.h in Headers */,
 				A80E6CED0A1989CA007FB8C5 /* FontValue.h in Headers */,
 				085773350F0846010080583E /* FormControlElement.h in Headers */,
+				08B93F760F293481000720C2 /* FormControlElementWithState.h in Headers */,
 				514C76700CE923A1007EF3CD /* FormData.h in Headers */,
 				085B92BB0EFDE73D00E6123C /* FormDataBuilder.h in Headers */,
 				A8136D380973A8E700D74463 /* FormDataList.h in Headers */,
@@ -16062,7 +16077,6 @@
 				B2C3DA2D0D006C1D00EF6F26 /* RegularExpression.h in Headers */,
 				93309E01099E64920056E581 /* RemoveCSSPropertyCommand.h in Headers */,
 				D06C0D8F0CFD11460065F43F /* RemoveFormatCommand.h in Headers */,
-				93309E03099E64920056E581 /* RemoveNodeAttributeCommand.h in Headers */,
 				93309E05099E64920056E581 /* RemoveNodeCommand.h in Headers */,
 				93309E07099E64920056E581 /* RemoveNodePreservingChildrenCommand.h in Headers */,
 				BCEA485C097D93020094C9E4 /* RenderApplet.h in Headers */,
@@ -16348,7 +16362,7 @@
 				1CEFC9B90D78DC8C007D2579 /* SchedulePair.h in Headers */,
 				5DFE8F570D16477C0076E937 /* ScheduledAction.h in Headers */,
 				BCEC01BE0C274DAC009F4EC9 /* Screen.h in Headers */,
-				41F1D21F0EF35C2A00DA8753 /* ScriptCachedPageData.h in Headers */,
+				41F1D21F0EF35C2A00DA8753 /* ScriptCachedFrameData.h in Headers */,
 				416E75CB0EDF90C700360E1D /* ScriptCallFrame.h in Headers */,
 				416E75BE0EDF8FD700360E1D /* ScriptCallStack.h in Headers */,
 				93B70D7009EB0C7C009D8468 /* ScriptController.h in Headers */,
@@ -16512,6 +16526,7 @@
 				08E192540EDE0C3A0087B780 /* WMLErrorHandling.h in Headers */,
 				0818AEE30EDB86BC00647B66 /* WMLEventHandlingElement.h in Headers */,
 				08E6E0F20EFF42BA00029FBF /* WMLFieldSetElement.h in Headers */,
+				085AFDC90F2977350061F2B3 /* WMLFormControlElement.h in Headers */,
 				08807B770ED709AB003F6975 /* WMLGoElement.h in Headers */,
 				08C4C5190EF19A4000E4840F /* WMLImageElement.h in Headers */,
 				08C4C51B0EF19A4000E4840F /* WMLImageLoader.h in Headers */,
@@ -16635,6 +16650,8 @@
 				1A569D250D7E2B82007C3983 /* runtime_root.h in Headers */,
 				93309E1E099E64920056E581 /* visible_units.h in Headers */,
 				18A0537D0F26859C00A51705 /* WorkerRunLoop.h in Headers */,
+				51C0AA390F2AA10A001648C2 /* CachedFrame.h in Headers */,
+				188604B40F2E654A000B6443 /* DOMTimer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -17298,7 +17315,6 @@
 				850657030AAB4763002D15C0 /* DOMStyleSheetList.mm in Sources */,
 				85ACA99D0A9B575900671E90 /* DOMText.mm in Sources */,
 				933A14AA0B7D1D0900A53FFD /* DOMTextEvent.mm in Sources */,
-				18E687870EDB793500A8E8B7 /* DOMTimer.cpp in Sources */,
 				85526CD30AB0B7DA000302EA /* DOMTreeWalker.mm in Sources */,
 				85C7F4920AAF79DC004014DD /* DOMUIEvent.mm in Sources */,
 				BC1A37BF097C715F0019F3D8 /* DOMUtility.mm in Sources */,
@@ -17401,6 +17417,7 @@
 				B2AFFC820D00A5C10030074D /* FontPlatformDataMac.mm in Sources */,
 				A80E6CF10A1989CA007FB8C5 /* FontValue.cpp in Sources */,
 				08BFDFC40F099E70007DC2BF /* FormControlElement.cpp in Sources */,
+				08B93F750F293481000720C2 /* FormControlElementWithState.cpp in Sources */,
 				514C766F0CE923A1007EF3CD /* FormData.cpp in Sources */,
 				085B92BA0EFDE73D00E6123C /* FormDataBuilder.cpp in Sources */,
 				A8136D390973A8E700D74463 /* FormDataList.cpp in Sources */,
@@ -18074,7 +18091,6 @@
 				B2C3DA2C0D006C1D00EF6F26 /* RegularExpression.cpp in Sources */,
 				93309E00099E64920056E581 /* RemoveCSSPropertyCommand.cpp in Sources */,
 				D06C0D900CFD11460065F43F /* RemoveFormatCommand.cpp in Sources */,
-				93309E02099E64920056E581 /* RemoveNodeAttributeCommand.cpp in Sources */,
 				93309E04099E64920056E581 /* RemoveNodeCommand.cpp in Sources */,
 				93309E06099E64920056E581 /* RemoveNodePreservingChildrenCommand.cpp in Sources */,
 				BCEA485B097D93020094C9E4 /* RenderApplet.cpp in Sources */,
@@ -18351,7 +18367,7 @@
 				1CE24F970D7CAF0E007E04C2 /* SchedulePairMac.mm in Sources */,
 				5DFE8F560D16477B0076E937 /* ScheduledAction.cpp in Sources */,
 				BCEC01BD0C274DAC009F4EC9 /* Screen.cpp in Sources */,
-				41F1D2200EF35C2A00DA8753 /* ScriptCachedPageData.cpp in Sources */,
+				41F1D2200EF35C2A00DA8753 /* ScriptCachedFrameData.cpp in Sources */,
 				416E75CC0EDF90C700360E1D /* ScriptCallFrame.cpp in Sources */,
 				416E75BF0EDF8FD700360E1D /* ScriptCallStack.cpp in Sources */,
 				93B70D6F09EB0C7C009D8468 /* ScriptController.cpp in Sources */,
@@ -18494,6 +18510,7 @@
 				08E192530EDE0C3A0087B780 /* WMLErrorHandling.cpp in Sources */,
 				0818AEE20EDB86BC00647B66 /* WMLEventHandlingElement.cpp in Sources */,
 				08E6E0F10EFF42BA00029FBF /* WMLFieldSetElement.cpp in Sources */,
+				085AFDC80F2977350061F2B3 /* WMLFormControlElement.cpp in Sources */,
 				08807B760ED709AB003F6975 /* WMLGoElement.cpp in Sources */,
 				08C4C5180EF19A4000E4840F /* WMLImageElement.cpp in Sources */,
 				08C4C51A0EF19A4000E4840F /* WMLImageLoader.cpp in Sources */,
@@ -18605,6 +18622,9 @@
 				1A569D220D7E2B82007C3983 /* runtime_object.cpp in Sources */,
 				1A569D240D7E2B82007C3983 /* runtime_root.cpp in Sources */,
 				93309E1D099E64920056E581 /* visible_units.cpp in Sources */,
+				51C0AA410F2AA15E001648C2 /* CachedFrame.cpp in Sources */,
+				93BA59B20F2AA5FE008E8E99 /* JSCDATASectionCustom.cpp in Sources */,
+				188604B30F2E654A000B6443 /* DOMTimer.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

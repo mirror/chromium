@@ -133,7 +133,7 @@ void JIT::compileOpCall(OpcodeID opcodeID, Instruction* instruction, unsigned)
         compileOpCallEvalSetupArgs(instruction);
 
         emitCTICall(Interpreter::cti_op_call_eval);
-        wasEval = jnePtr(X86::eax, ImmPtr(jsImpossibleValue()));
+        wasEval = jnePtr(X86::eax, ImmPtr(JSValuePtr::encode(jsImpossibleValue())));
     }
 
     emitGetVirtualRegister(callee, X86::ecx);
@@ -187,7 +187,7 @@ void JIT::compileOpCallSlowCase(Instruction* instruction, Vector<SlowCaseEntry>:
 
 #else
 
-static void unreachable()
+static NO_RETURN void unreachable()
 {
     ASSERT_NOT_REACHED();
     exit(1);
