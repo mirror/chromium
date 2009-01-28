@@ -443,35 +443,14 @@ int RenderBox::paddingRight(bool) const
     return padding.calcMinValue(w);
 }
 
-void RenderBox::absoluteRects(Vector<IntRect>& rects, int tx, int ty, bool topLevel)
+void RenderBox::absoluteRects(Vector<IntRect>& rects, int tx, int ty, bool)
 {
-    // For blocks inside inlines, we go ahead and include margins so that we run right up to the
-    // inline boxes above and below us (thus getting merged with them to form a single irregular
-    // shape).
-    RenderFlow* continuation = virtualContinuation();
-    if (topLevel && continuation) {
-        rects.append(IntRect(tx, ty - collapsedMarginTop(),
-                             width(), height() + collapsedMarginTop() + collapsedMarginBottom()));
-        continuation->absoluteRects(rects,
-                                    tx - x() + continuation->containingBlock()->x(),
-                                    ty - y() + continuation->containingBlock()->y(), topLevel);
-    } else
-        rects.append(IntRect(tx, ty, width(), height()));
+    rects.append(IntRect(tx, ty, width(), height()));
 }
 
-void RenderBox::absoluteQuads(Vector<FloatQuad>& quads, bool topLevel)
+void RenderBox::absoluteQuads(Vector<FloatQuad>& quads, bool)
 {
-    // For blocks inside inlines, we go ahead and include margins so that we run right up to the
-    // inline boxes above and below us (thus getting merged with them to form a single irregular
-    // shape).
-    RenderFlow* continuation = virtualContinuation();
-    if (topLevel && continuation) {
-        FloatRect localRect(0, -collapsedMarginTop(),
-                            width(), height() + collapsedMarginTop() + collapsedMarginBottom());
-        quads.append(localToAbsoluteQuad(localRect));
-        continuation->absoluteQuads(quads, topLevel);
-    } else
-        quads.append(localToAbsoluteQuad(FloatRect(0, 0, width(), height())));
+    quads.append(localToAbsoluteQuad(FloatRect(0, 0, width(), height())));
 }
 
 IntRect RenderBox::absoluteContentBox() const
@@ -506,17 +485,7 @@ IntRect RenderBox::outlineBoundsForRepaint(RenderBox* /*repaintContainer*/) cons
 
 void RenderBox::addFocusRingRects(GraphicsContext* graphicsContext, int tx, int ty)
 {
-    // For blocks inside inlines, we go ahead and include margins so that we run right up to the
-    // inline boxes above and below us (thus getting merged with them to form a single irregular
-    // shape).
-    RenderFlow* continuation = virtualContinuation();
-    if (continuation) {
-        graphicsContext->addFocusRingRect(IntRect(tx, ty - collapsedMarginTop(), width(), height() + collapsedMarginTop() + collapsedMarginBottom()));
-        continuation->addFocusRingRects(graphicsContext,
-                                        tx - x() + continuation->containingBlock()->x(),
-                                        ty - y() + continuation->containingBlock()->y());
-    } else
-        graphicsContext->addFocusRingRect(IntRect(tx, ty, width(), height()));
+    graphicsContext->addFocusRingRect(IntRect(tx, ty, width(), height()));
 }
 
 
@@ -1344,7 +1313,7 @@ int RenderBox::containingBlockWidth() const
     if (!cb)
         return 0;
     if (shrinkToAvoidFloats())
-        return cb->lineWidth(y());
+        return cb->lineWidth(y(), false);
     return cb->availableWidth();
 }
 
@@ -1566,11 +1535,11 @@ IntRect RenderBox::clippedOverflowRectForRepaint(RenderBox* repaintContainer)
             r.inflate(v->maximalOutlineSize());
         }
     }
-    computeRectForRepaint(r, repaintContainer);
+    computeRectForRepaint(repaintContainer, r);
     return r;
 }
 
-void RenderBox::computeRectForRepaint(IntRect& rect, RenderBox* repaintContainer, bool fixed)
+void RenderBox::computeRectForRepaint(RenderBox* repaintContainer, IntRect& rect, bool fixed)
 {
     if (RenderView* v = view()) {
         // LayoutState is only valid for root-relative repainting
@@ -1651,7 +1620,7 @@ void RenderBox::computeRectForRepaint(IntRect& rect, RenderBox* repaintContainer
     } else
         rect.setLocation(topLeft);
     
-    o->computeRectForRepaint(rect, repaintContainer, fixed);
+    o->computeRectForRepaint(repaintContainer, rect, fixed);
 }
 
 void RenderBox::repaintDuringLayoutIfMoved(const IntRect& rect)

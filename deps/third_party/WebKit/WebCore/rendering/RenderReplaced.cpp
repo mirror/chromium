@@ -42,7 +42,6 @@ const int cDefaultHeight = 150;
 RenderReplaced::RenderReplaced(Node* node)
     : RenderBox(node)
     , m_intrinsicSize(cDefaultWidth, cDefaultHeight)
-    , m_selectionState(SelectionNone)
     , m_hasOverflow(false)
 {
     setReplaced(true);
@@ -51,7 +50,6 @@ RenderReplaced::RenderReplaced(Node* node)
 RenderReplaced::RenderReplaced(Node* node, const IntSize& intrinsicSize)
     : RenderBox(node)
     , m_intrinsicSize(intrinsicSize)
-    , m_selectionState(SelectionNone)
     , m_hasOverflow(false)
 {
     setReplaced(true);
@@ -77,13 +75,7 @@ void RenderReplaced::layout()
 {
     ASSERT(needsLayout());
     
-    IntRect oldBounds;
-    IntRect oldOutlineBox;
-    bool checkForRepaint = checkForRepaintDuringLayout();
-    if (checkForRepaint) {
-        oldBounds = absoluteClippedOverflowRect();
-        oldOutlineBox = absoluteOutlineBounds();
-    }
+    LayoutRepainter repainter(*this, checkForRepaintDuringLayout());
     
     setHeight(minimumReplacedHeight());
     
@@ -91,9 +83,8 @@ void RenderReplaced::layout()
     calcHeight();
     adjustOverflowForBoxShadow();
     
-    if (checkForRepaint)
-        repaintAfterLayoutIfNeeded(oldBounds, oldOutlineBox);
-    
+    repainter.repaintAfterLayout();    
+
     setNeedsLayout(false);
 }
  
@@ -280,7 +271,7 @@ IntRect RenderReplaced::localSelectionRect(bool checkWhetherSelected) const
 
 void RenderReplaced::setSelectionState(SelectionState s)
 {
-    m_selectionState = s;
+    RenderBox::setSelectionState(s);
     if (m_inlineBoxWrapper) {
         RootInlineBox* line = m_inlineBoxWrapper->root();
         if (line)
@@ -412,7 +403,7 @@ IntRect RenderReplaced::clippedOverflowRectForRepaint(RenderBox* repaintContaine
         if (v)
             r.inflate(style()->outlineSize());
     }
-    computeRectForRepaint(r, repaintContainer);
+    computeRectForRepaint(repaintContainer, r);
     return r;
 }
 

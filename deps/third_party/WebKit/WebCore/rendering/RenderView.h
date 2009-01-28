@@ -60,7 +60,7 @@ public:
 
     virtual bool hasOverhangingFloats() { return false; }
 
-    virtual void computeRectForRepaint(IntRect&, RenderBox* repaintContainer, bool fixed = false);
+    virtual void computeRectForRepaint(RenderBox* repaintContainer, IntRect&, bool fixed = false);
     virtual void repaintViewRectangle(const IntRect&, bool immediate = false);
 
     virtual void paint(PaintInfo&, int tx, int ty);
@@ -143,6 +143,8 @@ public:
     // Note that even when disabled, LayoutState is still used to store layoutDelta.
     void disableLayoutState() { m_layoutStateDisableCount++; }
     void enableLayoutState() { ASSERT(m_layoutStateDisableCount > 0); m_layoutStateDisableCount--; }
+
+    virtual void updateHitTestResult(HitTestResult&, const IntPoint&);
 
 protected:
     virtual FloatQuad localToContainerQuad(const FloatQuad&, RenderBox* repaintContainer, bool fixed = false) const;

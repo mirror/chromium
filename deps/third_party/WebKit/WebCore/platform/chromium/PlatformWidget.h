@@ -31,7 +31,7 @@
 #ifndef PlatformWidget_h
 #define PlatformWidget_h
 
-#include <wtf/Assertions.h>  // for intptr_t
+#include <wtf/StdLibExtras.h>  // for intptr_t
 
 // PlatformWidget is an opaque identifier corresponding to whatever native
 // view type the embedder may use.  PlatformWidget CANNOT be assumed to be

@@ -200,14 +200,7 @@ void RenderFlexibleBox::layoutBlock(bool relayoutChildren)
     if (!relayoutChildren && layoutOnlyPositionedObjects())
         return;
 
-    IntRect oldBounds;
-    IntRect oldOutlineBox;
-    bool checkForRepaint = checkForRepaintDuringLayout();
-    if (checkForRepaint) {
-        oldBounds = absoluteClippedOverflowRect();
-        oldOutlineBox = absoluteOutlineBounds();
-    }
-
+    LayoutRepainter repainter(*this, checkForRepaintDuringLayout());
     LayoutStateMaintainer statePusher(view(), this, IntSize(x(), y()), hasTransform() || hasReflection());
 
     int previousWidth = width();
@@ -302,8 +295,7 @@ void RenderFlexibleBox::layoutBlock(bool relayoutChildren)
         m_layer->updateScrollInfoAfterLayout();
 
     // Repaint with our new bounds if they are different from our old bounds.
-    if (checkForRepaint)
-        repaintAfterLayoutIfNeeded(oldBounds, oldOutlineBox);
+    repainter.repaintAfterLayout();
     
     setNeedsLayout(false);
 }
@@ -778,7 +770,7 @@ void RenderFlexibleBox::layoutVerticalBox(bool relayoutChildren)
                 if (destBlock->style()->direction() != LTR)
                     continue;
 
-                int blockEdge = destBlock->rightOffset(lastVisibleLine->yPos());
+                int blockEdge = destBlock->rightOffset(lastVisibleLine->yPos(), false);
                 if (!lastVisibleLine->canAccommodateEllipsis(true, blockEdge, 
                                                              lastVisibleLine->xPos() + lastVisibleLine->width(),
                                                              totalWidth))

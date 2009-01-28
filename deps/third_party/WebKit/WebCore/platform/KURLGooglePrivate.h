@@ -28,8 +28,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef GoogleURLPrivate_h
-#define GoogleURLPrivate_h
+#ifndef KURLGooglePrivate_h
+#define KURLGooglePrivate_h
 
 #include "CString.h"
 
@@ -44,10 +44,10 @@ namespace WebCore {
     // Wraps the internals related to using Google-URL as the bnackend for KURL.
     // This maintains the state and has auxiliary functions so that we don't need
     // to uglify KURL.h while allowing Google-URL to be evaluated.
-    class GoogleURLPrivate {
+    class KURLGooglePrivate {
     public:
-        GoogleURLPrivate();
-        GoogleURLPrivate(const url_parse::Parsed&, bool isValid);
+        KURLGooglePrivate();
+        KURLGooglePrivate(const url_parse::Parsed&, bool isValid);
 
         // Initializes the object. This will call through to one of the backend
         // initializers below depending on whether the string's internal
@@ -65,7 +65,7 @@ namespace WebCore {
                   const TextEncoding* queryEncoding);
 
         // Does a deep copy to the given output object.
-        void copyTo(GoogleURLPrivate* dest) const;
+        void copyTo(KURLGooglePrivate* dest) const;
 
         // Returns the substring of the input identified by the given component.
         String componentString(const url_parse::Component&) const;

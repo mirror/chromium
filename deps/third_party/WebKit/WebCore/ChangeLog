@@ -1,3 +1,444 @@
+2009-01-28  Adam Langley  <agl@google.com>
+
+        Reviewed by Sam Weinig.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23573
+        Make PlatformWidget on chromium an intptr_t to match changes made in Chromium
+
+        * platform/chromium/PlatformWidget.h:
+
+2009-01-28  David Hyatt  <hyatt@apple.com>
+
+        Fix for 
+
+        <rdar://problem/6531287> REGRESSION: CrashTracer: [USER] 12 crashes in Safari at com.apple.WebCore • WebCore::RenderBlock::removeFloatingObject + 59
+
+        My tightening up of markAllDescendantsWithFloatsForLayout exposed a buggy check in that code that could
+        lead to a bad cast.
+
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::markAllDescendantsWithFloatsForLayout):
+
+2009-01-27  David Hyatt  <hyatt@apple.com>
+
+        https://bugs.webkit.org/show_bug.cgi?id=23576
+
+        Work towards eliminating RenderFlow from the tree.
+        
+        Move the m_continuation variable down from RenderFlow into RenderInline and RenderBlock.  Since a block can only have an inline continuation following it, the type
+        of the member and methods reflect this (inlineContinuation() and m_inlineContinuation).  Since an inline can have either a block or an inline continuation following it,
+        a base class of RenderBox* is used for the type of object returned (in anticipation of the removal of RenderFlow).
+        
+        Since moving the continuation variable down into the subclasses increased the size of RenderInline and RenderBlock by 4 bytes, this patch also moves all of the bitfield
+        members of RenderFlow up to RenderObject.  Since they fit within the available bits on RenderObject, this patch actually results in a net savings of 4 bytes on RenderInlines
+        and RenderBlocks!
+        
+        One bitfield member was eliminated rather than moved: m_firstLine.  This was really more of a state variable used during line layout only, so I removed it as a member
+        and just passed firstLine down to various methods as needed.  Doing so uncovered some potential bugs where the first line state was not being respected when querying for
+        line offsets.
+
+        Continuations have been completely hidden from all files except for RenderFlow, RenderBlock and RenderInline.  All of the code that referenced continuations directly
+        from base classes has been refactored to use virtual methods on RenderBlock and RenderInline instead.
+        
+        RenderFlow still has a common addChildWithContinuation method that is used by both blocks and inlines.  Since refactoring that method will be pretty tricky, I've held
+        off on that for a later patch.
+
+        Reviewed by Oliver Hunt
+
+        * html/HTMLAnchorElement.cpp:
+        (WebCore::HTMLAnchorElement::isKeyboardFocusable):
+        * page/AccessibilityRenderObject.cpp:
+        (WebCore::AccessibilityRenderObject::anchorElement):
+        (WebCore::AccessibilityRenderObject::boundingBoxRect):
+        * rendering/InlineFlowBox.cpp:
+        (WebCore::InlineFlowBox::determineSpacingForFlowBoxes):
+        (WebCore::InlineFlowBox::paint):
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::RenderBlock):
+        (WebCore::RenderBlock::~RenderBlock):
+        (WebCore::RenderBlock::destroy):
+        (WebCore::RenderBlock::addChildToFlow):
+        (WebCore::RenderBlock::makeChildrenNonInline):
+        (WebCore::RenderBlock::removeChild):
+        (WebCore::RenderBlock::layoutBlock):
+        (WebCore::RenderBlock::expandsToEncloseOverhangingFloats):
+        (WebCore::RenderBlock::collapseMargins):
+        (WebCore::RenderBlock::determineHorizontalPosition):
+        (WebCore::RenderBlock::setCollapsedBottomMargin):
+        (WebCore::RenderBlock::layoutOnlyPositionedObjects):
+        (WebCore::RenderBlock::paintObject):
+        (WebCore::RenderBlock::addContinuationWithOutline):
+        (WebCore::RenderBlock::setSelectionState):
+        (WebCore::RenderBlock::shouldPaintSelectionGaps):
+        (WebCore::RenderBlock::fillSelectionGaps):
+        (WebCore::RenderBlock::leftSelectionOffset):
+        (WebCore::RenderBlock::rightSelectionOffset):
+        (WebCore::RenderBlock::leftOffset):
+        (WebCore::RenderBlock::leftRelOffset):
+        (WebCore::RenderBlock::rightOffset):
+        (WebCore::RenderBlock::rightRelOffset):
+        (WebCore::RenderBlock::lineWidth):
+        (WebCore::RenderBlock::lowestPosition):
+        (WebCore::RenderBlock::rightmostPosition):
+        (WebCore::RenderBlock::leftmostPosition):
+        (WebCore::RenderBlock::getClearDelta):
+        (WebCore::RenderBlock::nodeAtPoint):
+        (WebCore::RenderBlock::offsetForContents):
+        (WebCore::RenderBlock::availableWidth):
+        (WebCore::RenderBlock::setDesiredColumnCountAndWidth):
+        (WebCore::RenderBlock::desiredColumnWidth):
+        (WebCore::RenderBlock::desiredColumnCount):
+        (WebCore::RenderBlock::columnRects):
+        (WebCore::RenderBlock::layoutColumns):
+        (WebCore::RenderBlock::adjustPointToColumnContents):
+        (WebCore::RenderBlock::adjustRectForColumns):
+        (WebCore::RenderBlock::absoluteRects):
+        (WebCore::RenderBlock::absoluteQuads):
+        (WebCore::RenderBlock::rectWithOutlineForRepaint):
+        (WebCore::RenderBlock::hoverAncestor):
+        (WebCore::RenderBlock::updateDragState):
+        (WebCore::RenderBlock::outlineStyleForRepaint):
+        (WebCore::RenderBlock::childBecameNonInline):
+        (WebCore::RenderBlock::updateHitTestResult):
+        * rendering/RenderBlock.h:
+        (WebCore::RenderBlock::rightOffset):
+        (WebCore::RenderBlock::leftOffset):
+        (WebCore::RenderBlock::inlineContinuation):
+        (WebCore::RenderBlock::setInlineContinuation):
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::absoluteRects):
+        (WebCore::RenderBox::absoluteQuads):
+        (WebCore::RenderBox::addFocusRingRects):
+        (WebCore::RenderBox::containingBlockWidth):
+        * rendering/RenderBox.h:
+        (WebCore::RenderBox::collapsedMarginBottom):
+        (WebCore::RenderBox::childBecameNonInline):
+        * rendering/RenderContainer.cpp:
+        (WebCore::RenderContainer::updateBeforeAfterContentForContainer):
+        (WebCore::RenderContainer::removeLeftoverAnonymousBlock):
+        * rendering/RenderFlexibleBox.cpp:
+        (WebCore::RenderFlexibleBox::layoutVerticalBox):
+        * rendering/RenderFlow.cpp:
+        (WebCore::nextContinuation):
+        (WebCore::RenderFlow::continuationBefore):
+        (WebCore::RenderFlow::addChildWithContinuation):
+        (WebCore::RenderFlow::addChild):
+        (WebCore::RenderFlow::destroy):
+        (WebCore::RenderFlow::addFocusRingRects):
+        * rendering/RenderFlow.h:
+        (WebCore::RenderFlow::RenderFlow):
+        * rendering/RenderInline.cpp:
+        (WebCore::RenderInline::RenderInline):
+        (WebCore::RenderInline::destroy):
+        (WebCore::RenderInline::inlineContinuation):
+        (WebCore::RenderInline::styleDidChange):
+        (WebCore::RenderInline::addChildToFlow):
+        (WebCore::RenderInline::cloneInline):
+        (WebCore::RenderInline::splitInlines):
+        (WebCore::RenderInline::splitFlow):
+        (WebCore::RenderInline::positionForCoordinates):
+        (WebCore::RenderInline::rectWithOutlineForRepaint):
+        (WebCore::RenderInline::updateDragState):
+        (WebCore::RenderInline::childBecameNonInline):
+        (WebCore::RenderInline::updateHitTestResult):
+        * rendering/RenderInline.h:
+        (WebCore::RenderInline::isRenderInline):
+        (WebCore::RenderInline::continuation):
+        (WebCore::RenderInline::setContinuation):
+        * rendering/RenderListItem.cpp:
+        (WebCore::RenderListItem::positionListMarker):
+        * rendering/RenderListMarker.cpp:
+        (WebCore::RenderListMarker::RenderListMarker):
+        (WebCore::RenderListMarker::setSelectionState):
+        * rendering/RenderListMarker.h:
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::RenderObject):
+        (WebCore::RenderObject::repaintAfterLayoutIfNeeded):
+        (WebCore::RenderObject::rectWithOutlineForRepaint):
+        (WebCore::RenderObject::handleDynamicFloatPositionChange):
+        (WebCore::RenderObject::updateDragState):
+        (WebCore::RenderObject::updateHitTestResult):
+        (WebCore::RenderObject::getTextDecorationColors):
+        (WebCore::RenderObject::adjustRectForOutlineAndShadow):
+        * rendering/RenderObject.h:
+        (WebCore::RenderObject::isInlineBlockOrInlineTable):
+        (WebCore::RenderObject::childrenInline):
+        (WebCore::RenderObject::setChildrenInline):
+        (WebCore::RenderObject::hasColumns):
+        (WebCore::RenderObject::setHasColumns):
+        (WebCore::RenderObject::cellWidthChanged):
+        (WebCore::RenderObject::setCellWidthChanged):
+        (WebCore::RenderObject::isInlineContinuation):
+        (WebCore::RenderObject::hoverAncestor):
+        (WebCore::RenderObject::outlineStyleForRepaint):
+        (WebCore::RenderObject::setHasMarkupTruncation):
+        (WebCore::RenderObject::hasMarkupTruncation):
+        (WebCore::RenderObject::selectionState):
+        (WebCore::RenderObject::setSelectionState):
+        (WebCore::RenderObject::hasSelectedChildren):
+        (WebCore::RenderObject::isTopMarginQuirk):
+        (WebCore::RenderObject::isBottomMarginQuirk):
+        (WebCore::RenderObject::setTopMarginQuirk):
+        (WebCore::RenderObject::setBottomMarginQuirk):
+        * rendering/RenderReplaced.cpp:
+        (WebCore::RenderReplaced::RenderReplaced):
+        (WebCore::RenderReplaced::setSelectionState):
+        * rendering/RenderReplaced.h:
+        (WebCore::RenderReplaced::canBeSelectionLeaf):
+        * rendering/RenderTable.cpp:
+        (WebCore::RenderTable::calcWidth):
+        * rendering/RenderTableCell.cpp:
+        (WebCore::RenderTableCell::updateWidth):
+        (WebCore::RenderTableCell::layout):
+        * rendering/RenderText.cpp:
+        (WebCore::RenderText::RenderText):
+        (WebCore::RenderText::localCaretRect):
+        (WebCore::RenderText::setSelectionState):
+        * rendering/RenderText.h:
+        (WebCore::RenderText::canBeSelectionLeaf):
+        * rendering/RenderView.cpp:
+        (WebCore::RenderView::updateHitTestResult):
+        * rendering/RenderView.h:
+        * rendering/RootInlineBox.cpp:
+        (WebCore::RootInlineBox::selectionTop):
+        * rendering/bidi.cpp:
+        (WebCore::RenderBlock::createLineBoxes):
+        (WebCore::RenderBlock::constructLine):
+        (WebCore::RenderBlock::computeHorizontalPositionsForLine):
+        (WebCore::RenderBlock::layoutInlineChildren):
+        (WebCore::RenderBlock::determineStartPosition):
+        (WebCore::RenderBlock::skipTrailingWhitespace):
+        (WebCore::RenderBlock::skipLeadingWhitespace):
+        (WebCore::RenderBlock::fitBelowFloats):
+        (WebCore::RenderBlock::findNextLineBreak):
+        (WebCore::RenderBlock::checkLinesForTextOverflow):
+
+2009-01-28  Adam Treat  <adam.treat@torchmobile.com>
+
+        Reviewed by Nikolas Zimmermann and George Staikos.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23557
+        Allow option of hit testing frame content without clipping to the visible
+        viewport.
+
+        * WebCore.base.exp:
+        * page/EventHandler.cpp:
+        (WebCore::EventHandler::hitTestResultAtPoint):
+        * page/EventHandler.h:
+        * rendering/HitTestRequest.h:
+        (WebCore::HitTestRequest::HitTestRequest):
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::hitTest):
+
+2009-01-28  Simon Hausmann  <simon.hausmann@nokia.com>
+
+        Reviewed by Holger Freyther.
+
+        Fix the build with Qt on Windows.
+
+        Make sure that the QTWEBKIT_EXPORT macro becomes the Q_DECL_EXPORT macro
+        instead of the import macro when building the dll, by defining
+        QT_MAKEDLL.
+
+        SystemTimeWin.cpp is needed on Windows for userIdleTime(), which for the
+        other Qt platforms comes from TemporaryLinkStubs.cpp.
+
+        * WebCore.pro:
+
+2009-01-28  Ariya Hidayat  <ariya.hidayat@trolltech.com>
+
+        Reviewed by Simon Hausmann.
+
+        [Qt] Speed-up clipping: avoid calling expensive QPainter::clipRegion().
+        Beside, the check is not necessary since QPainter::setClipRect() will
+        work just fine if there is no clip region yet.
+
+        * platform/graphics/qt/GraphicsContextQt.cpp:
+        (WebCore::GraphicsContext::clip):
+
+2009-01-28  Darin Fisher  <darin@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23546
+        Upstream GoogleURL implementation of KURL
+
+        * platform/KURL.h:
+        * platform/KURLGoogle.cpp: Added.
+        * platform/KURLGooglePrivate.h: Added.
+
+2009-01-27  Darin Adler  <darin@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        REGRESSION (r40234): Launching iTunes from a link displays a
+        "Safari can't find the Internet plug-in" sheet in Safari
+        rdar://problem/6533678
+
+        * rendering/RenderPartObject.cpp:
+        (WebCore::havePlugin): Put the check for empty string in here.
+        (WebCore::serviceTypeForClassId): Only return activeXType() if
+        we have a plug-in that can handle that type. While it might be logical
+        to return an Active X type for any <object> with a classId in it,
+        even if we don't have a plug-in that implements Active X, existing
+        clients, such as Safari, don't expect that.
+
+2009-01-27  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Steve Falkenburg.
+
+        - fix <rdar://problem/6524351> Text looks bad when font smoothing is
+          forced off
+
+        * platform/graphics/win/FontCGWin.cpp:
+        (WebCore::Font::drawGlyphs): Changed to use GDI rather than Core
+        Graphics if the client has turned font smoothing off.
+
+2009-01-27  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+
+        https://bugs.webkit.org/show_bug.cgi?id=23360
+        
+        Use the new container-relative repaint methods to compute
+        post-layout repaints, and repaints using RenderLayer's
+        cached repaintRect() relative to that container, rather than
+        using absolute coords.
+
+        Replaced lots of boilerplate old/new rect code in various
+        layout methods with a stack-based LayoutRepainter class, and
+        fixed a bug in RenderTable which set didFullRepaint to
+        'true' every time.
+
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::layoutBlock):
+        * rendering/RenderFlexibleBox.cpp:
+        (WebCore::RenderFlexibleBox::layoutBlock):
+        * rendering/RenderForeignObject.cpp:
+        (WebCore::RenderForeignObject::layout):
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::updateLayerPositions):
+        (WebCore::RenderLayer::setHasVisibleContent):
+        * rendering/RenderLayer.h:
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::repaintUsingContainer):
+        (WebCore::RenderObject::repaint):
+        (WebCore::RenderObject::repaintRectangle):
+        (WebCore::RenderObject::repaintAfterLayoutIfNeeded):
+        * rendering/RenderObject.h:
+        (WebCore::RenderObject::LayoutRepainter::LayoutRepainter):
+        (WebCore::RenderObject::LayoutRepainter::repaintAfterLayout):
+        (WebCore::RenderObject::LayoutRepainter::checkForRepaint):
+        * rendering/RenderPath.cpp:
+        (WebCore::RenderPath::layout):
+        * rendering/RenderReplaced.cpp:
+        (WebCore::RenderReplaced::layout):
+        * rendering/RenderSVGContainer.cpp:
+        (WebCore::RenderSVGContainer::layout):
+        * rendering/RenderSVGImage.cpp:
+        (WebCore::RenderSVGImage::layout):
+        * rendering/RenderSVGRoot.cpp:
+        (WebCore::RenderSVGRoot::layout):
+        * rendering/RenderSVGText.cpp:
+        (WebCore::RenderSVGText::layout):
+        * rendering/RenderSVGViewportContainer.cpp:
+        (WebCore::RenderSVGViewportContainer::layout):
+        * rendering/RenderTable.cpp:
+        (WebCore::RenderTable::layout):
+        * rendering/bidi.cpp:
+        (WebCore::RenderBlock::layoutInlineChildren):
+
+2009-01-27  Brady Eidson  <beidson@apple.com>
+
+        Reviewed by Darin Adler
+
+        <rdar://problem/3541409> - More groundwork and cleanup for CachedFrames
+
+        * history/CachedFrame.cpp:
+        (WebCore::CachedFrame::CachedFrame): Make the savePlatformDataToCachedFrame() client call here,
+          and add the code for caching subframes.
+        (WebCore::CachedFrame::clear):
+        * history/CachedFrame.h: Change to be RefCounted
+        (WebCore::CachedFrame::create):
+        (WebCore::CachedFrame::url):
+
+        * history/CachedPage.cpp:
+        (WebCore::CachedPage::CachedPage):
+        (WebCore::CachedPage::restore):
+        * history/CachedPage.h:
+        (WebCore::CachedPage::document):
+        (WebCore::CachedPage::documentLoader):
+        (WebCore::CachedPage::view):
+        (WebCore::CachedPage::url):
+        (WebCore::CachedPage::domWindow):
+        (WebCore::CachedPage::cachedMainFrame):
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::cachePageForHistoryItem): Move the platform data saving into the
+          CachedFrame itself.
+
+2009-01-27  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+
+        Flip the arguments of computeRectForRepaint() from
+            computeRectForRepaint(IntRect&, RenderBox* repaintContainer, bool)
+        to 
+            computeRectForRepaint(RenderBox* repaintContainer, IntRect&, bool)
+
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::clippedOverflowRectForRepaint):
+        (WebCore::RenderBox::computeRectForRepaint):
+        * rendering/RenderBox.h:
+        * rendering/RenderForeignObject.cpp:
+        (WebCore::RenderForeignObject::computeRectForRepaint):
+        * rendering/RenderForeignObject.h:
+        * rendering/RenderInline.cpp:
+        (WebCore::RenderInline::clippedOverflowRectForRepaint):
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::computeRectForRepaint):
+        * rendering/RenderObject.h:
+        (WebCore::RenderObject::computeAbsoluteRepaintRect):
+        * rendering/RenderReplaced.cpp:
+        (WebCore::RenderReplaced::clippedOverflowRectForRepaint):
+        * rendering/RenderTableCell.cpp:
+        (WebCore::RenderTableCell::clippedOverflowRectForRepaint):
+        (WebCore::RenderTableCell::computeRectForRepaint):
+        * rendering/RenderTableCell.h:
+        * rendering/RenderView.cpp:
+        (WebCore::RenderView::computeRectForRepaint):
+        * rendering/RenderView.h:
+
+2009-01-27  David Kilzer  <ddkilzer@apple.com>
+
+        Add missing header guards to AccessibilityObjectWrapper.h
+
+        Reviewed by Anders Carlsson.
+
+        * page/mac/AccessibilityObjectWrapper.h: Added missing header guards.
+
+2009-01-27  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+
+        https://bugs.webkit.org/show_bug.cgi?id=23567
+        
+        Fix crash of svg/custom/stop-crash.svg testcase because of
+        infinite recursion, as I missed replacing absoluteClippedOverflowRect()
+        with clippedOverflowRectForRepaint() in RenderSVGGradientStop.
+        
+        Also fix a missed conversion in RenderTableCol, and add a couple
+        of comments.
+
+        * rendering/RenderSVGGradientStop.h:
+        (WebCore::RenderSVGGradientStop::clippedOverflowRectForRepaint):
+        * rendering/RenderSVGImage.cpp:
+        (WebCore::RenderSVGImage::imageChanged):
+        * rendering/RenderTableCol.cpp:
+        (WebCore::RenderTableCol::clippedOverflowRectForRepaint):
+        * rendering/RenderTableRow.cpp:
+        (WebCore::RenderTableRow::layout):
+
 2009-01-27  Adele Peterson  <adele@apple.com>
 
         RS by Dave Hyatt  

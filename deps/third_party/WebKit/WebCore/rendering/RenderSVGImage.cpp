@@ -137,13 +137,7 @@ void RenderSVGImage::layout()
 {
     ASSERT(needsLayout());
     
-    IntRect oldBounds;
-    IntRect oldOutlineBox;
-    bool checkForRepaint = checkForRepaintDuringLayout();
-    if (checkForRepaint) {
-        oldBounds = absoluteClippedOverflowRect();
-        oldOutlineBox = absoluteOutlineBounds();
-    }
+    LayoutRepainter repainter(*this, checkForRepaintDuringLayout());
     
     calculateLocalTransform();
     
@@ -158,9 +152,8 @@ void RenderSVGImage::layout()
 
     calculateAbsoluteBounds();
 
-    if (checkForRepaint)
-        repaintAfterLayoutIfNeeded(oldBounds, oldOutlineBox);
-
+    repainter.repaintAfterLayout();
+    
     setNeedsLayout(false);
 }
 
@@ -228,7 +221,7 @@ void RenderSVGImage::imageChanged(WrappedImagePtr image, const IntRect* rect)
     RenderImage::imageChanged(image, rect);
 
     // We override to invalidate a larger rect, since SVG images can draw outside their "bounds"
-    repaintRectangle(absoluteClippedOverflowRect());
+    repaintRectangle(absoluteClippedOverflowRect());    // FIXME: Isn't this just repaint()?
 }
 
 void RenderSVGImage::calculateAbsoluteBounds()

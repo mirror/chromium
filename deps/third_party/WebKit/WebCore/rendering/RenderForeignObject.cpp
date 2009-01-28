@@ -70,12 +70,12 @@ void RenderForeignObject::paint(PaintInfo& paintInfo, int parentX, int parentY)
     paintInfo.context->restore();
 }
 
-void RenderForeignObject::computeRectForRepaint(IntRect& rect, RenderBox* repaintContainer, bool fixed)
+void RenderForeignObject::computeRectForRepaint(RenderBox* repaintContainer, IntRect& rect, bool fixed)
 {
     TransformationMatrix transform = translationForAttributes() * localTransform();
     rect = transform.mapRect(rect);
 
-    RenderBlock::computeRectForRepaint(rect, repaintContainer, fixed);
+    RenderBlock::computeRectForRepaint(repaintContainer, rect, fixed);
 }
 
 bool RenderForeignObject::calculateLocalTransform()
@@ -92,13 +92,8 @@ void RenderForeignObject::layout()
     // Arbitrary affine transforms are incompatible with LayoutState.
     view()->disableLayoutState();
 
-    IntRect oldBounds;
-    IntRect oldOutlineBox;
-    bool checkForRepaint = checkForRepaintDuringLayout();
-    if (checkForRepaint) {
-        oldBounds = m_absoluteBounds;
-        oldOutlineBox = absoluteOutlineBounds();
-    }
+    // FIXME: using m_absoluteBounds breaks if containerForRepaint() is not the root
+    LayoutRepainter repainter(*this, checkForRepaintDuringLayout(), &m_absoluteBounds);
     
     calculateLocalTransform();
     
@@ -106,8 +101,7 @@ void RenderForeignObject::layout()
 
     m_absoluteBounds = absoluteClippedOverflowRect();
 
-    if (checkForRepaint)
-        repaintAfterLayoutIfNeeded(oldBounds, oldOutlineBox);
+    repainter.repaintAfterLayout();
 
     view()->enableLayoutState();
     setNeedsLayout(false);

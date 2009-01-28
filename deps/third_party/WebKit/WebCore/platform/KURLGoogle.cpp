@@ -29,6 +29,8 @@
  */
 
 #include "config.h"
+
+#if USE(GOOGLEURL)
 #include "KURL.h"
 
 #include "CString.h"
@@ -36,24 +38,21 @@
 #include "TextEncoding.h"
 #include <wtf/Vector.h>
 
-#if USE(GOOGLEURL)
-
 #include <googleurl/src/url_canon_internal.h>
 #include <googleurl/src/url_util.h>
 
+using WTF::isASCIILower;
 using WTF::toASCIILower;
 
 namespace WebCore {
 
-namespace {
-
-// Wraps WebKit's text encoding in a character set converter for the
+// Wraps WebCore's text encoding in a character set converter for the
 // canonicalizer.
-class WebCoreCharsetConverter : public url_canon::CharsetConverter {
+class KURLCharsetConverter : public url_canon::CharsetConverter {
 public:
     // The encoding parameter may be NULL, but in this case the object must not
     // be called.
-    WebCoreCharsetConverter(const TextEncoding* encoding)
+    KURLCharsetConverter(const TextEncoding* encoding)
         : m_encoding(encoding)
     {
     }
@@ -72,7 +71,7 @@ private:
 // Note that this function must be named differently than the one in KURL.cpp
 // since our unit tests evilly include both files, and their local definition
 // will be ambiguous.
-inline void assertProtocolIsGood(const char* protocol)
+static inline void assertProtocolIsGood(const char* protocol)
 {
 #ifndef NDEBUG
     const char* p = protocol;
@@ -86,7 +85,7 @@ inline void assertProtocolIsGood(const char* protocol)
 // Returns the characters for the given string, or a pointer to a static empty
 // string if the input string is NULL. This will always ensure we have a non-
 // NULL character pointer since ReplaceComponents has special meaning for NULL.
-inline const url_parse::UTF16Char* CharactersOrEmpty(const String& str)
+static inline const url_parse::UTF16Char* CharactersOrEmpty(const String& str)
 {
     static const url_parse::UTF16Char zero = 0;
     return str.characters() ?
@@ -94,32 +93,31 @@ inline const url_parse::UTF16Char* CharactersOrEmpty(const String& str)
            &zero;
 }
 
-inline bool isUnicodeEncoding(const TextEncoding* encoding)
+static inline bool isUnicodeEncoding(const TextEncoding* encoding)
 {
     return encoding->encodingForFormSubmission() == UTF8Encoding();
 }
 
-bool lowerCaseEqualsASCII(const char* begin, const char* end, const char* str)
+static bool lowerCaseEqualsASCII(const char* begin, const char* end, const char* str)
 {
     while (begin != end && *str) {
+        ASSERT(isASCIILower(*str));
         if (toASCIILower(*begin++) != *str++)
             return false;
     }
     return true;
 }
 
-}  // namespace
+// KURLGooglePrivate -----------------------------------------------------------
 
-// GoogleURLPrivate ------------------------------------------------------------
-
-GoogleURLPrivate::GoogleURLPrivate()
+KURLGooglePrivate::KURLGooglePrivate()
     : m_isValid(false)
     , m_utf8IsASCII(true)
     , m_stringIsValid(false)
 {
 }
 
-GoogleURLPrivate::GoogleURLPrivate(const url_parse::Parsed& parsed, bool isValid)
+KURLGooglePrivate::KURLGooglePrivate(const url_parse::Parsed& parsed, bool isValid)
     : m_isValid(isValid)
     , m_parsed(parsed)
     , m_utf8IsASCII(true)
@@ -130,7 +128,7 @@ GoogleURLPrivate::GoogleURLPrivate(const url_parse::Parsed& parsed, bool isValid
 // Setters for the data. Using the ASCII version when you know the
 // data is ASCII will be slightly more efficient. The UTF-8 version
 // will always be correct if the caller is unsure.
-void GoogleURLPrivate::setUtf8(const char* data, int data_len)
+void KURLGooglePrivate::setUtf8(const char* data, int data_len)
 {
     // The m_utf8IsASCII must always be correct since the DeprecatedString
     // getter must create it with the proper constructor. This test can be
@@ -148,14 +146,14 @@ void GoogleURLPrivate::setUtf8(const char* data, int data_len)
     m_stringIsValid = false;
 }
 
-void GoogleURLPrivate::setAscii(const char* data, int data_len)
+void KURLGooglePrivate::setAscii(const char* data, int data_len)
 {
     m_utf8 = CString(data, data_len);
     m_utf8IsASCII = true;
     m_stringIsValid = false;
 }
 
-void GoogleURLPrivate::init(const KURL& base,
+void KURLGooglePrivate::init(const KURL& base,
                             const String& relative,
                             const TextEncoding* queryEncoding)
 {
@@ -163,7 +161,7 @@ void GoogleURLPrivate::init(const KURL& base,
 }
 
 // Note: code mostly duplicated below.
-void GoogleURLPrivate::init(const KURL& base, const char* rel, int rel_len,
+void KURLGooglePrivate::init(const KURL& base, const char* rel, int rel_len,
                             const TextEncoding* query_encoding)
 {
     // As a performance optimization, we do not use the charset converter if
@@ -174,8 +172,8 @@ void GoogleURLPrivate::init(const KURL& base, const char* rel, int rel_len,
 
     // We feel free to make the charset converter object every time since it's
     // just a wrapper around a reference.
-    WebCoreCharsetConverter charset_converter_object(query_encoding);
-    WebCoreCharsetConverter* charset_converter =
+    KURLCharsetConverter charset_converter_object(query_encoding);
+    KURLCharsetConverter* charset_converter =
         (!query_encoding || isUnicodeEncoding(query_encoding)) ? 0 :
         &charset_converter_object;
 
@@ -186,7 +184,7 @@ void GoogleURLPrivate::init(const KURL& base, const char* rel, int rel_len,
                                           charset_converter,
                                           &output, &m_parsed);
 
-    // See FIXME in GoogleURLPrivate in the header. If canonicalization has not
+    // See FIXME in KURLGooglePrivate in the header. If canonicalization has not
     // changed the string, we can avoid an extra allocation by using assignment.
     //
     // When KURL encounters an error such that the URL is invalid and empty
@@ -201,17 +199,17 @@ void GoogleURLPrivate::init(const KURL& base, const char* rel, int rel_len,
         else
             setAscii(output.data(), output.length());
     } else {
-        // WebKit expects resolved URLs to be empty rather than NULL.
+        // WebCore expects resolved URLs to be empty rather than NULL.
         setUtf8("", 0);
     }
 }
 
 // Note: code mostly duplicated above. See FIXMEs and comments there.
-void GoogleURLPrivate::init(const KURL& base, const UChar* rel, int rel_len,
+void KURLGooglePrivate::init(const KURL& base, const UChar* rel, int rel_len,
                             const TextEncoding* query_encoding)
 {
-    WebCoreCharsetConverter charset_converter_object(query_encoding);
-    WebCoreCharsetConverter* charset_converter =
+    KURLCharsetConverter charset_converter_object(query_encoding);
+    KURLCharsetConverter* charset_converter =
         (!query_encoding || isUnicodeEncoding(query_encoding)) ? 0 :
         &charset_converter_object;
 
@@ -231,7 +229,7 @@ void GoogleURLPrivate::init(const KURL& base, const UChar* rel, int rel_len,
         setUtf8("", 0);
 }
 
-void GoogleURLPrivate::copyTo(GoogleURLPrivate* dest) const
+void KURLGooglePrivate::copyTo(KURLGooglePrivate* dest) const
 {
     dest->m_isValid = m_isValid;
     dest->m_parsed = m_parsed;
@@ -242,7 +240,7 @@ void GoogleURLPrivate::copyTo(GoogleURLPrivate* dest) const
     dest->m_stringIsValid = false;
 }
 
-String GoogleURLPrivate::componentString(const url_parse::Component& comp) const
+String KURLGooglePrivate::componentString(const url_parse::Component& comp) const
 {
     if (!m_isValid || comp.len <= 0) {
         // KURL returns a NULL string if the URL is itself a NULL string, and an
@@ -262,7 +260,7 @@ String GoogleURLPrivate::componentString(const url_parse::Component& comp) const
     return string().substring(comp.begin, comp.len);
 }
 
-void GoogleURLPrivate::replaceComponents(const Replacements& replacements)
+void KURLGooglePrivate::replaceComponents(const Replacements& replacements)
 {
     url_canon::RawCanonOutputT<char> output;
     url_parse::Parsed new_parsed;
@@ -277,7 +275,7 @@ void GoogleURLPrivate::replaceComponents(const Replacements& replacements)
         setAscii(output.data(), output.length());
 }
 
-const String& GoogleURLPrivate::string() const
+const String& KURLGooglePrivate::string() const
 {
     if (!m_stringIsValid) {
         // Must special case the NULL case, since constructing the
@@ -301,13 +299,13 @@ const String& GoogleURLPrivate::string() const
 // ASCII. We treat is as UTF-8 just in case.
 KURL::KURL(const char *url)
 {
-    // FIXME(brettw) the Mac code checks for beginning with a slash and
-    // converting to a file: URL. We will want to add this as well once we can
-    // compile on a system like that.
+    // FIXME The Mac code checks for beginning with a slash and converting to a
+    // file: URL. We will want to add this as well once we can compile on a
+    // system like that.
     m_url.init(KURL(), url, strlen(url), NULL);
 
     // The one-argument constructors should never generate a NULL string.
-    // This is a funny quirk of KURL (probably a bug) which we preserve.
+    // This is a funny quirk of KURL.cpp (probably a bug) which we preserve.
     if (m_url.utf8String().isNull())
         m_url.setAscii("", 0);
 }
@@ -322,7 +320,7 @@ KURL::KURL(const String& url)
     if (!url.isNull())
         m_url.init(KURL(), url, NULL);
     else {
-        // WebKit expects us to preserve the nullness of strings when this
+        // WebCore expects us to preserve the nullness of strings when this
         // constructor is used. In all other cases, it expects a non-null
         // empty string, which is what init() will create.
         m_url.m_isValid = false;
@@ -364,7 +362,8 @@ KURL::KURL(CFURLRef)
     invalidate();
 }
 
-CFURLRef KURL::createCFURL() const {
+CFURLRef KURL::createCFURL() const
+{
     notImplemented();
     return NULL;
 }
@@ -399,13 +398,13 @@ bool KURL::hasPath() const
     return m_url.m_parsed.path.len >= 0;
 }
 
-// We handle "parameters" separated be a semicolon, while the old KURL does
-// not, which can lead to different results in some cases.
+// We handle "parameters" separated by a semicolon, while KURL.cpp does not,
+// which can lead to different results in some cases.
 String KURL::lastPathComponent() const
 {
-    // When the output ends in a slash, WebKit has different expectations than
-    // our library. For "/foo/bar/" the library will return the empty string,
-    // but WebKit wants "bar".
+    // When the output ends in a slash, WebCore has different expectations than
+    // the GoogleURL library. For "/foo/bar/" the library will return the empty
+    // string, but WebCore wants "bar".
     url_parse::Component path = m_url.m_parsed.path;
     if (path.len > 0 && m_url.utf8String().data()[path.end() - 1] == '/')
         path.len--;
@@ -427,16 +426,16 @@ String KURL::protocol() const
 
 String KURL::host() const
 {
-    // Note: WebKit decode_string()s here.
+    // Note: KURL.cpp unescapes here.
     return m_url.componentString(m_url.m_parsed.host);
 }
 
 // Returns 0 when there is no port or it is invalid.
 //
-// We define invalid port numbers to be invalid URLs, and they will be
-// rejected by the canonicalizer. WebKit's old one will allow them in
-// parsing, and return 0 from this port() function.
-unsigned short int KURL::port() const
+// We treat URL's with out-of-range port numbers as invalid URLs, and they will
+// be rejected by the canonicalizer. KURL.cpp will allow them in parsing, but
+// return 0 from this port() function, so we mirror that behavior here.
+unsigned short KURL::port() const
 {
     if (!m_url.m_isValid || m_url.m_parsed.port.len <= 0)
         return 0;
@@ -454,14 +453,14 @@ String KURL::pass() const
     if (!m_url.m_parsed.password.is_nonempty())
         return String();
 
-    // Note: WebKit decode_string()s here.
+    // Note: KURL.cpp unescapes here.
     return m_url.componentString(m_url.m_parsed.password);
 }
 
 // Returns the empty string if there is no username.
 String KURL::user() const
 {
-    // Note: WebKit decode_string()s here.
+    // Note: KURL.cpp unescapes here.
     return m_url.componentString(m_url.m_parsed.username);
 }
 
@@ -473,14 +472,14 @@ String KURL::ref() const
     if (!m_url.m_parsed.ref.is_valid())
         return String();
 
-    // Note: WebKit decode_string()s here.
+    // Note: KURL.cpp unescapes here.
     return m_url.componentString(m_url.m_parsed.ref);
 }
 
 bool KURL::hasRef() const
 {
-    // Note: WebKit decode_string()s here.
-    // FIXME(brettw) determine if they agree about an empty ref
+    // Note: KURL.cpp unescapes here.
+    // FIXME determine if KURL.cpp agrees about an empty ref
     return m_url.m_parsed.ref.len >= 0;
 }
 
@@ -504,13 +503,13 @@ String KURL::query() const
 
 String KURL::path() const
 {
-    // Note: WebKit decode_string()s here.
+    // Note: KURL.cpp unescapes here.
     return m_url.componentString(m_url.m_parsed.path);
 }
 
 void KURL::setProtocol(const String& protocol)
 {
-    GoogleURLPrivate::Replacements replacements;
+    KURLGooglePrivate::Replacements replacements;
     replacements.SetScheme(CharactersOrEmpty(protocol),
                            url_parse::Component(0, protocol.length()));
     m_url.replaceComponents(replacements);
@@ -518,18 +517,19 @@ void KURL::setProtocol(const String& protocol)
 
 void KURL::setHost(const String& host)
 {
-    GoogleURLPrivate::Replacements replacements;
+    KURLGooglePrivate::Replacements replacements;
     replacements.SetHost(CharactersOrEmpty(host),
                          url_parse::Component(0, host.length()));
     m_url.replaceComponents(replacements);
 }
 
 // This function is used only in the JSC build.
-void KURL::setHostAndPort(const String& s) {
+void KURL::setHostAndPort(const String& s)
+{
     String newhost = s.left(s.find(":"));
     String newport = s.substring(s.find(":") + 1);
 
-    GoogleURLPrivate::Replacements replacements;
+    KURLGooglePrivate::Replacements replacements;
     // Host can't be removed, so we always set.
     replacements.SetHost(CharactersOrEmpty(newhost),
                          url_parse::Component(0, newhost.length()));
@@ -543,7 +543,7 @@ void KURL::setHostAndPort(const String& s) {
 
 void KURL::setPort(unsigned short i)
 {
-    GoogleURLPrivate::Replacements replacements;
+    KURLGooglePrivate::Replacements replacements;
     String portStr;
     if (i) {
         portStr = String::number(static_cast<int>(i));
@@ -567,7 +567,7 @@ void KURL::setUser(const String& user)
 
     // The canonicalizer will clear any usernames that are empty, so we
     // don't have to explicitly call ClearUsername() here.
-    GoogleURLPrivate::Replacements replacements;
+    KURLGooglePrivate::Replacements replacements;
     replacements.SetUsername(CharactersOrEmpty(user),
                              url_parse::Component(0, user.length()));
     m_url.replaceComponents(replacements);
@@ -582,7 +582,7 @@ void KURL::setPass(const String& pass)
 
     // The canonicalizer will clear any passwords that are empty, so we
     // don't have to explicitly call ClearUsername() here.
-    GoogleURLPrivate::Replacements replacements;
+    KURLGooglePrivate::Replacements replacements;
     replacements.SetPassword(CharactersOrEmpty(pass),
                              url_parse::Component(0, pass.length()));
     m_url.replaceComponents(replacements);
@@ -595,7 +595,7 @@ void KURL::setRef(const String& ref)
     if (ref.isNull() && !m_url.m_parsed.ref.is_valid())
         return;
 
-    GoogleURLPrivate::Replacements replacements;
+    KURLGooglePrivate::Replacements replacements;
     if (ref.isNull())
         replacements.ClearRef();
     else
@@ -605,28 +605,29 @@ void KURL::setRef(const String& ref)
 
 void KURL::removeRef()
 {
-    GoogleURLPrivate::Replacements replacements;
+    KURLGooglePrivate::Replacements replacements;
     replacements.ClearRef();
     m_url.replaceComponents(replacements);
 }
 
 void KURL::setQuery(const String& query)
 {
-    GoogleURLPrivate::Replacements replacements;
+    KURLGooglePrivate::Replacements replacements;
     if (query.isNull()) {
-        // WebKit sets to NULL to clear any query.
+        // KURL.cpp sets to NULL to clear any query.
         replacements.ClearQuery();
     } else if (query.length() > 0 && query[0] == '?') {
-        // WebKit expects the query string to begin with a question mark, but
-        // our library doesn't. So we trim off the question mark when setting.
+        // WebCore expects the query string to begin with a question mark, but
+        // GoogleURL doesn't. So we trim off the question mark when setting.
         replacements.SetQuery(CharactersOrEmpty(query),
                               url_parse::Component(1, query.length() - 1));
     } else {
         // When set with the empty string or something that doesn't begin with
-        // a question mark, WebKit will add a question mark for you. The only
+        // a question mark, KURL.cpp will add a question mark for you. The only
         // way this isn't compatible is if you call this function with an empty
-        // string. Old KURL will leave a '?' with nothing following it in the
+        // string. KURL.cpp will leave a '?' with nothing following it in the
         // URL, whereas we'll clear it.
+        // FIXME We should eliminate this difference.
         replacements.SetQuery(CharactersOrEmpty(query),
                               url_parse::Component(0, query.length()));
     }
@@ -637,7 +638,7 @@ void KURL::setPath(const String& path)
 {
     // Empty paths will be canonicalized to "/", so we don't have to worry
     // about calling ClearPath().
-    GoogleURLPrivate::Replacements replacements;
+    KURLGooglePrivate::Replacements replacements;
     replacements.SetPath(CharactersOrEmpty(path),
                          url_parse::Component(0, path.length()));
     m_url.replaceComponents(replacements);
@@ -653,15 +654,12 @@ String KURL::prettyURL() const
     return m_url.string();
 }
 
-// Copy the KURL version here on Sept 12, 2008 while doing the webkit merge.
+// We copied the KURL version here on Sept 12, 2008 while doing a WebKit
+// merge.
 // 
-// FIXME(erg) Somehow share this with KURL? Like we'd theoretically merge with
+// FIXME Somehow share this with KURL? Like we'd theoretically merge with
 // decodeURLEscapeSequences below?
-#ifdef KURL_DECORATE_GLOBALS
-String KURL::mimeTypeFromDataURL(const String& url)
-#else
 String mimeTypeFromDataURL(const String& url)
-#endif
 {
     ASSERT(protocolIs(url, "data"));
     int index = url.find(';');
@@ -676,16 +674,12 @@ String mimeTypeFromDataURL(const String& url)
     return "";
 }
 
-#ifdef KURL_DECORATE_GLOBALS
-String KURL::decodeURLEscapeSequences(const String& str)
-#else
 String decodeURLEscapeSequences(const String& str)
-#endif
 {
     return decodeURLEscapeSequences(str, UTF8Encoding());
 }
 
-// In WebKit's implementation, this is called by every component getter.
+// In KURL.cpp's implementation, this is called by every component getter.
 // It will unescape every character, including NULL. This is scary, and may
 // cause security holes. We never call this function for components, and
 // just return the ASCII versions instead.
@@ -698,23 +692,19 @@ String decodeURLEscapeSequences(const String& str)
 // the same. This also eliminates NULL-related problems should a consumer
 // incorrectly call this function for non-JavaScript.
 //
-// FIXME(brettw) these should be merged to the regular KURL implementation.
-#ifdef KURL_DECORATE_GLOBALS
-String KURL::decodeURLEscapeSequences(const String& str, const TextEncoding& encoding)
-#else
+// FIXME These should be merged to the KURL.cpp implementation.
 String decodeURLEscapeSequences(const String& str, const TextEncoding& encoding)
-#endif
 {
-    // FIXME(brettw) We can probably use KURL's version of this function
+    // FIXME We can probably use KURL.cpp's version of this function
     // without modification. However, I'm concerned about
     // https://bugs.webkit.org/show_bug.cgi?id=20559 so am keeping this old
     // custom code for now. Using their version will also fix the bug that
     // we ignore the encoding.
     //
-    // FIXME(brettw) bug 1350291: This does not get called very often. We just
-    // convert first to 8-bit UTF-8, then unescape, then back to 16-bit. This
-    // kind of sucks, and we don't use the encoding properly, which will make
-    // some obscure anchor navigations fail.
+    // FIXME b/1350291: This does not get called very often. We just convert
+    // first to 8-bit UTF-8, then unescape, then back to 16-bit. This kind of
+    // sucks, and we don't use the encoding properly, which will make some
+    // obscure anchor navigations fail.
     CString cstr = str.utf8();
 
     const char* input = cstr.data();
@@ -760,7 +750,7 @@ String decodeURLEscapeSequences(const String& str, const TextEncoding& encoding)
                 url_canon::AppendUTF16Value(code_point, &utf16);
                 i = next_ch;
             } else {
-                // WebKit strips any sequences that are not valid UTF-8. This
+                // KURL.cpp strips any sequences that are not valid UTF-8. This
                 // sounds scary. Instead, we just keep those invalid code
                 // points and promote to UTF-16. We copy all characters from
                 // the current position to the end of the identified sqeuqnce.
@@ -801,11 +791,7 @@ bool KURL::isLocalFile() const
 // ways, and may expect to get a valid URL string. The dangerous thing we want
 // to protect against here is accidentally getting NULLs in a string that is
 // not supposed to have NULLs. Therefore, we escape NULLs here to prevent this.
-#ifdef KURL_DECORATE_GLOBALS
-String KURL::encodeWithURLEscapeSequences(const String& notEncodedString)
-#else
 String encodeWithURLEscapeSequences(const String& notEncodedString)
-#endif
 {
     CString utf8 = UTF8Encoding().encode(
         reinterpret_cast<const UChar*>(notEncodedString.characters()),
@@ -898,21 +884,13 @@ unsigned KURL::pathAfterLastSlash() const
     return filename.begin;
 }
 
-#ifdef KURL_DECORATE_GLOBALS
-const KURL& KURL::blankURL()
-#else
 const KURL& blankURL()
-#endif
 {
     static KURL staticBlankURL("about:blank");
     return staticBlankURL;
 }
 
-#ifdef KURL_DECORATE_GLOBALS
-bool KURL::protocolIs(const String& url, const char* protocol)
-#else
 bool protocolIs(const String& url, const char* protocol)
-#endif
 {
     // Do the comparison without making a new string object.
     assertProtocolIsGood(protocol);
@@ -924,12 +902,10 @@ bool protocolIs(const String& url, const char* protocol)
     }
 }
 
-#ifndef KURL_DECORATE_GLOBALS
 inline bool KURL::protocolIs(const String& string, const char* protocol)
 {
     return WebCore::protocolIs(string, protocol);
 }
-#endif
 
 } // namespace WebCore
 
