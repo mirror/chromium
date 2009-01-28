@@ -574,7 +574,7 @@ void RenderThemeChromiumMac::updatePressedState(NSCell* cell, const RenderObject
 int RenderThemeChromiumMac::baselinePosition(const RenderObject* o) const
 {
     if (o->style()->appearance() == CheckboxPart || o->style()->appearance() == RadioPart) {
-        const RenderBox* box = RenderBox::toConstRenderBox(o);
+        const RenderBox* box = toRenderBox(o);
         return box->marginTop() + box->height() - 2 * o->style()->effectiveZoom(); // The baseline is 2px up from the bottom of the checkbox/radio in AppKit.
     }
     return RenderTheme::baselinePosition(o);
