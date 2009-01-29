@@ -105,8 +105,6 @@ class ProfileImpl::RequestContext : public URLRequestContext,
       : prefs_(prefs) {
     cookie_store_ = NULL;
 
-    // setup user agent
-    user_agent_ = webkit_glue::GetUserAgent();
     // set up Accept-Language and Accept-Charset header values
     // TODO(jungshik) : This may slow down http requests. Perhaps,
     // we have to come up with a better way to set up these values.
@@ -154,6 +152,11 @@ class ProfileImpl::RequestContext : public URLRequestContext,
     // Register for notifications about prefs.
     prefs_->AddPrefObserver(prefs::kAcceptLanguages, this);
     prefs_->AddPrefObserver(prefs::kCookieBehavior, this);
+  }
+
+  const std::string& GetUserAgent(
+        const GURL& url) const {
+    return webkit_glue::GetUserAgent(url);
   }
 
   // NotificationObserver implementation.
@@ -251,7 +254,6 @@ class OffTheRecordRequestContext : public URLRequestContext,
     cookie_store_ = new net::CookieMonster;
     cookie_policy_.SetType(net::CookiePolicy::FromInt(
         prefs_->GetInteger(prefs::kCookieBehavior)));
-    user_agent_ = original_context_->user_agent();
     accept_language_ = original_context_->accept_language();
     accept_charset_ = original_context_->accept_charset();
     is_off_the_record_ = true;

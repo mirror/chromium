@@ -1245,6 +1245,7 @@ int HttpTransactionWinHttp::SendRequest() {
   }
 
   response_.request_time = Time::Now();
+  response_.was_cached = false;
 
   DWORD total_size = 0;
   if (request_->upload_data) {
