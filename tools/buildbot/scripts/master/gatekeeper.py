@@ -111,7 +111,6 @@ class GateKeeper(MailNotifier):
   def builderAdded(self, name, builder):
     # Only subscribe to builders we are interested in.
     if self.isInterestingBuilder(builder, name):
-      self.watched.append(builder)
       return self  # subscribe to this builder
 
   def buildStarted(self, name, build):
@@ -164,16 +163,22 @@ class GateKeeper(MailNotifier):
           return
         else:
           self._last_closure_revision = latest_revision
-      elif not build.getResponsibleUsers():
-        # If we don't have a version stamp nor a blame list, then this is most
-        # likely a build started manually, and we don't want to close the tree.
-        return
+      else:
+        if not build.getResponsibleUsers():
+          # If we don't have a version stamp nor a blame list, then this is most
+          # likely a build started manually, and we don't want to close the
+          # tree.
+          return
+        else:
+          latest_revision = 0
 
       # Send the notification email.
       defered_object = self.buildMessage(name, build, step_text)
 
       # Post a request to close the tree.
-      message = 'Tree is closed (Automatic: "%s" on "%s")' % (step_text, name)
+      message = ('Tree is closed (Automatic: "%s" on "%s" from %d: %s)' %
+                 (step_text, name, latest_revision,
+                  ", ".join(build.getResponsibleUsers())))
       password_file = file(".status_password")
       params = urllib.urlencode({'message': message,
                                  'username': 'buildbot@chromium.org',
@@ -285,8 +290,8 @@ Buildbot waterfall: http://build.chromium.org/
       m['Reply-To'] = self.reply_to
     # now, who is this message going to?
     dl = []
-    recipients = self.extraRecipients[:]
-    recipients.append(BuildSheriffs.GetSheriffs())
+    recipients = list(self.extraRecipients[:])
+    recipients.extend(BuildSheriffs.GetSheriffs())
     if self.sendToInterestedUsers and self.lookup:
       for u in build.getInterestedUsers():
         d = defer.maybeDeferred(self.lookup.getAddress, u)
