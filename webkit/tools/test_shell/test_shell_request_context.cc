@@ -22,8 +22,6 @@ void TestShellRequestContext::Init(
     net::HttpCache::Mode cache_mode) {
   cookie_store_ = new net::CookieMonster();
 
-  user_agent_ = webkit_glue::GetUserAgent();
-
   // hard-code A-L and A-C for test shells
   accept_language_ = "en-us,en";
   accept_charset_ = "iso-8859-1,*,utf-8";
@@ -43,3 +41,7 @@ TestShellRequestContext::~TestShellRequestContext() {
   delete http_transaction_factory_;
 }
 
+const std::string& TestShellRequestContext::GetUserAgent(
+    const GURL& url) const {
+  return webkit_glue::GetUserAgent(url);
+}

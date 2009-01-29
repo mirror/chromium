@@ -1023,6 +1023,7 @@ bool HttpCache::ReadResponseInfo(disk_cache::Entry* disk_entry,
   if (!pickle.ReadInt64(&iter, &time_val))
     return false;
   response_info->request_time = Time::FromInternalValue(time_val);
+  response_info->was_cached = true;  // Set status to show cache resurrection.
 
   // read response-time
   if (!pickle.ReadInt64(&iter, &time_val))
@@ -1079,7 +1080,18 @@ bool HttpCache::WriteResponseInfo(disk_cache::Entry* disk_entry,
   pickle.WriteInt64(response_info->request_time.ToInternalValue());
   pickle.WriteInt64(response_info->response_time.ToInternalValue());
 
-  response_info->headers->Persist(&pickle, skip_transient_headers);
+  net::HttpResponseHeaders::PersistOptions persist_options =
+      net::HttpResponseHeaders::PERSIST_RAW;
+
+  if (skip_transient_headers) {
+    persist_options =
+        net::HttpResponseHeaders::PERSIST_SANS_COOKIES |
+        net::HttpResponseHeaders::PERSIST_SANS_CHALLENGES |
+        net::HttpResponseHeaders::PERSIST_SANS_HOP_BY_HOP |
+        net::HttpResponseHeaders::PERSIST_SANS_NON_CACHEABLE;
+  }
+
+  response_info->headers->Persist(&pickle, persist_options);
 
   if (response_info->ssl_info.cert) {
     response_info->ssl_info.cert->Persist(&pickle);
@@ -1245,9 +1257,9 @@ int HttpCache::AddTransactionToEntry(ActiveEntry* entry, Transaction* trans) {
 }
 
 void HttpCache::DoneWithEntry(ActiveEntry* entry, Transaction* trans) {
-  // If we already posted a task to move on to the next transaction, there is
-  // nothing to cancel.
-  if (entry->will_process_pending_queue)
+  // If we already posted a task to move on to the next transaction and this was
+  // the writer, there is nothing to cancel.
+  if (entry->will_process_pending_queue && entry->readers.empty())
     return;
 
   if (entry->writer) {

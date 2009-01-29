@@ -7,6 +7,7 @@
 
 #include "net/http/http_transaction.h"
 
+#include <algorithm>
 #include <string>
 
 #include "base/compiler_specific.h"
@@ -217,6 +218,7 @@ class MockNetworkTransaction : public net::HttpTransaction {
     std::replace(header_data.begin(), header_data.end(), '\n', '\0');
 
     response_.request_time = Time::Now();
+    response_.was_cached = false;
     response_.response_time = Time::Now();
     response_.headers = new net::HttpResponseHeaders(header_data);
     response_.ssl_info.cert_status = t->cert_status;

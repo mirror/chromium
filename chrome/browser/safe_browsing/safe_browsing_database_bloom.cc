@@ -359,7 +359,7 @@ void SafeBrowsingDatabaseBloom::InsertChunks(const std::string& list_name,
 
   Time insert_start = Time::Now();
 
-  int list_id = GetListId(list_name);
+  int list_id = safe_browsing_util::GetListId(list_name);
   ChunkType chunk_type = chunks->front().is_add ? ADD_CHUNK : SUB_CHUNK;
 
   while (!chunks->empty()) {
@@ -635,7 +635,7 @@ void SafeBrowsingDatabaseBloom::DeleteChunks(
   if (chunk_deletes->empty())
     return;
 
-  int list_id = GetListId(chunk_deletes->front().list_name);
+  int list_id = safe_browsing_util::GetListId(chunk_deletes->front().list_name);
 
   for (size_t i = 0; i < chunk_deletes->size(); ++i) {
     const SBChunkDelete& chunk = (*chunk_deletes)[i];
@@ -701,38 +701,14 @@ void SafeBrowsingDatabaseBloom::GetListsInfo(
   ReadChunkNumbers();
 
   lists->push_back(SBListChunkRanges(safe_browsing_util::kMalwareList));
-  GetChunkIds(MALWARE, ADD_CHUNK, &lists->back().adds);
-  GetChunkIds(MALWARE, SUB_CHUNK, &lists->back().subs);
+  GetChunkIds(safe_browsing_util::MALWARE, ADD_CHUNK, &lists->back().adds);
+  GetChunkIds(safe_browsing_util::MALWARE, SUB_CHUNK, &lists->back().subs);
 
   lists->push_back(SBListChunkRanges(safe_browsing_util::kPhishingList));
-  GetChunkIds(PHISH, ADD_CHUNK, &lists->back().adds);
-  GetChunkIds(PHISH, SUB_CHUNK, &lists->back().subs);
+  GetChunkIds(safe_browsing_util::PHISH, ADD_CHUNK, &lists->back().adds);
+  GetChunkIds(safe_browsing_util::PHISH, SUB_CHUNK, &lists->back().subs);
 
   return;
-}
-
-/* static */
-int SafeBrowsingDatabaseBloom::GetListId(const std::string& name) {
-  if (name == safe_browsing_util::kMalwareList)
-    return MALWARE;
-  else if (name == safe_browsing_util::kPhishingList)
-    return PHISH;
-
-  NOTREACHED();
-  return -1;
-}
-
-/* static */
-std::string SafeBrowsingDatabaseBloom::GetListName(int list_id) {
-  switch (list_id) {
-    case MALWARE:
-      return safe_browsing_util::kMalwareList;
-    case PHISH:
-      return safe_browsing_util::kPhishingList;
-    default:
-      NOTREACHED();
-      return "";
-  }
 }
 
 void SafeBrowsingDatabaseBloom::ReadChunkNumbers() {
@@ -1411,7 +1387,7 @@ void SafeBrowsingDatabaseBloom::GetCachedFullHashes(
           memcpy(&full_hash.hash.full_hash,
                  &eit->full_hash.full_hash,
                  sizeof(SBFullHash));
-          full_hash.list_name = GetListName(eit->list_id);
+          full_hash.list_name = safe_browsing_util::GetListName(eit->list_id);
           full_hash.add_chunk_id = eit->add_chunk_id;
           full_hits->push_back(full_hash);
         }
@@ -1447,7 +1423,7 @@ void SafeBrowsingDatabaseBloom::CacheHashResults(
     HashList& entries = (*hash_cache_)[prefix];
     HashCacheEntry entry;
     entry.received = now;
-    entry.list_id = GetListId(it->list_name);
+    entry.list_id = safe_browsing_util::GetListId(it->list_name);
     entry.add_chunk_id = EncodeChunkId(it->add_chunk_id, entry.list_id);
     memcpy(&entry.full_hash, &it->hash.full_hash, sizeof(SBFullHash));
     entries.push_back(entry);

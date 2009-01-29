@@ -10,11 +10,9 @@
 #ifndef NET_URL_REQUEST_URL_REQUEST_CONTEXT_H_
 #define NET_URL_REQUEST_URL_REQUEST_CONTEXT_H_
 
-#include <string>
-
-#include "base/basictypes.h"
 #include "base/ref_counted.h"
 #include "base/scoped_ptr.h"
+#include "base/string_util.h"
 #include "net/base/auth_cache.h"
 #include "net/base/cookie_policy.h"
 #include "net/http/http_transaction_factory.h"
@@ -47,37 +45,40 @@ class URLRequestContext :
   // Gets the FTP realm authentication cache for this context.
   net::AuthCache* ftp_auth_cache() { return &ftp_auth_cache_; }
 
-  // Gets the UA string to use for this context.
-  const std::string& user_agent() const { return user_agent_; }
-
   // Gets the value of 'Accept-Charset' header field.
   const std::string& accept_charset() const { return accept_charset_; }
 
   // Gets the value of 'Accept-Language' header field.
   const std::string& accept_language() const { return accept_language_; }
 
+  // Gets the UA string to use for the given URL.  Pass an invalid URL (such as
+  // GURL()) to get the default UA string.  Subclasses should override this
+  // method to provide a UA string.
+  virtual const std::string& GetUserAgent(const GURL& url) const {
+    return EmptyString();
+  }
+  
   // Returns true if this context is off the record.
   bool is_off_the_record() { return is_off_the_record_; }
 
-  // Do not call this directly.  TODO(darin): extending from RefCounted* should
-  // not require a public destructor!
-  virtual ~URLRequestContext() {}
 
  protected:
+  friend class base::RefCountedThreadSafe<URLRequestContext>;
+
+  virtual ~URLRequestContext() {}
+
   // The following members are expected to be initialized and owned by
   // subclasses.
   net::HttpTransactionFactory* http_transaction_factory_;
   net::CookieMonster* cookie_store_;
   net::CookiePolicy cookie_policy_;
   net::AuthCache ftp_auth_cache_;
-  std::string user_agent_;
   bool is_off_the_record_;
   std::string accept_language_;
   std::string accept_charset_;
 
  private:
-  DISALLOW_EVIL_CONSTRUCTORS(URLRequestContext);
+  DISALLOW_COPY_AND_ASSIGN(URLRequestContext);
 };
 
 #endif  // NET_URL_REQUEST_URL_REQUEST_CONTEXT_H_
-

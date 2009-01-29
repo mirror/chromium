@@ -21,6 +21,8 @@ class TestShellRequestContext : public URLRequestContext {
 
   ~TestShellRequestContext();
 
+  virtual const std::string& GetUserAgent(const GURL& url) const;
+
  private:
   void Init(const std::wstring& cache_path, net::HttpCache::Mode cache_mode);
 };

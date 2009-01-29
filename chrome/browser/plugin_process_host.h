@@ -111,7 +111,6 @@ class PluginProcessHost : public IPC::Channel::Listener,
 
   void OnPluginShutdownRequest();
   void OnPluginMessage(const std::vector<uint8>& data);
-  void OnGetPluginDataDir(std::wstring* retval);
 
   struct ChannelRequest {
     ChannelRequest(ResourceMessageFilter* renderer_message_filter,
