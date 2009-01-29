@@ -24,9 +24,10 @@
  */
 
 #include "config.h"
-#include "KURL.h"
 
-#ifndef USE_GOOGLE_URL_LIBRARY
+#if !USE(GOOGLEURL)
+
+#include "KURL.h"
 
 #include "CString.h"
 #include "PlatformString.h"
@@ -280,12 +281,10 @@ static inline void checkEncodedString(const String&)
 }
 #endif
 
-#ifndef KURL_DECORATE_GLOBALS
 inline bool KURL::protocolIs(const String& string, const char* protocol)
 {
     return WebCore::protocolIs(string, protocol);
 }
-#endif
 
 void KURL::invalidate()
 {
@@ -833,20 +832,12 @@ String KURL::prettyURL() const
     return String::adopt(result);
 }
 
-#ifdef KURL_DECORATE_GLOBALS
-String KURL::decodeURLEscapeSequences(const String& str)
-#else
 String decodeURLEscapeSequences(const String& str)
-#endif
 {
     return decodeURLEscapeSequences(str, UTF8Encoding());
 }
 
-#ifdef KURL_DECORATE_GLOBALS
-String KURL::decodeURLEscapeSequences(const String& str, const TextEncoding& encoding)
-#else
 String decodeURLEscapeSequences(const String& str, const TextEncoding& encoding)
-#endif
 {
     Vector<UChar> result;
 
@@ -1344,11 +1335,8 @@ bool protocolHostAndPortAreEqual(const KURL& a, const KURL& b)
     return true;
 }
     
-#ifdef KURL_DECORATE_GLOBALS
-String KURL::encodeWithURLEscapeSequences(const String& notEncodedString)
-#else
+
 String encodeWithURLEscapeSequences(const String& notEncodedString)
-#endif
 {
     CString asUTF8 = notEncodedString.utf8();
 
@@ -1513,7 +1501,7 @@ static void encodeHostnames(const String& str, UCharBuffer& output)
 {
     output.clear();
 
-    if (KURL::protocolIs(str, "mailto")) {
+    if (protocolIs(str, "mailto")) {
         Vector<pair<int, int> > hostnameRanges;
         findHostnamesInMailToURL(str.characters(), str.length(), hostnameRanges);
         int n = hostnameRanges.size();
@@ -1548,7 +1536,7 @@ static void encodeRelativeString(const String& rel, const TextEncoding& encoding
     TextEncoding pathEncoding(UTF8Encoding()); // Path is always encoded as UTF-8; other parts may depend on the scheme.
 
     int pathEnd = -1;
-    if (encoding != pathEncoding && encoding.isValid() && !KURL::protocolIs(rel, "mailto") && !KURL::protocolIs(rel, "data") && !KURL::protocolIs(rel, "javascript")) {
+    if (encoding != pathEncoding && encoding.isValid() && !protocolIs(rel, "mailto") && !protocolIs(rel, "data") && !protocolIs(rel, "javascript")) {
         // Find the first instance of either # or ?, keep pathEnd at -1 otherwise.
         pathEnd = findFirstOf(s.data(), s.size(), 0, "#?");
     }
@@ -1602,11 +1590,7 @@ void KURL::copyToBuffer(CharBuffer& buffer) const
     copyASCII(m_string.characters(), m_string.length(), buffer.data());
 }
 
-#ifdef KURL_DECORATE_GLOBALS
-bool KURL::protocolIs(const String& url, const char* protocol)
-#else
 bool protocolIs(const String& url, const char* protocol)
-#endif
 {
     // Do the comparison without making a new string object.
     assertProtocolIsGood(protocol);
@@ -1618,11 +1602,7 @@ bool protocolIs(const String& url, const char* protocol)
     }
 }
 
-#ifdef KURL_DECORATE_GLOBALS
-String KURL::mimeTypeFromDataURL(const String& url)
-#else
 String mimeTypeFromDataURL(const String& url)
-#endif
 {
     ASSERT(protocolIs(url, "data"));
     int index = url.find(';');
@@ -1637,11 +1617,7 @@ String mimeTypeFromDataURL(const String& url)
     return "";
 }
 
-#ifdef KURL_DECORATE_GLOBALS
-const KURL& KURL::blankURL()
-#else
 const KURL& blankURL()
-#endif
 {
     DEFINE_STATIC_LOCAL(KURL, staticBlankURL, ("about:blank"));
     return staticBlankURL;
@@ -1656,6 +1632,4 @@ void KURL::print() const
 
 }
 
-#endif // #ifndef USE_GOOGLE_URL_LIBRARY
-
-
+#endif  // !USE(GOOGLEURL)
