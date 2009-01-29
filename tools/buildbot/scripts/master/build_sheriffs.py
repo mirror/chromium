@@ -33,6 +33,7 @@ class BuildSheriffs(object):
 
       try:
         lines = urllib.urlopen(BuildSheriffs.build_sheriff_url_).readlines()[1:]
+        week = datetime.timedelta(7)
         for line in lines:
           items = line.split(',')
           # Stop as soon as a line has less than 3 elements. The rest is assumed
@@ -41,7 +42,7 @@ class BuildSheriffs(object):
             break
           (month, day, year) = items[0].split('/')
           starting_date = datetime.date(int(year), int(month), int(day))
-          if today > starting_date:
+          if today >= starting_date and today < starting_date + week:
             BuildSheriffs.sheriffs_ = [item.strip() for item in items[1:]]
             break
       except ValueError:
