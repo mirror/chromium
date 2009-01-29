@@ -27,9 +27,9 @@ def FixupPath(path):
 def GetRevision():
   """Returns the revision number of the last build that was archived, or
   None on failure."""
-  HOST = "chrome-dev.mtv.corp.google.com:8010"
-  PATH = "/waterfall"
-  EXPR = r"http://www.corp.google.com/eng-users/chrome-eng/snapshots/[^/]*/(\d+)"
+  HOST = "build.chromium.org"
+  PATH = "/buildbot/continuous/LATEST/REVISION"
+  EXPR = r"(\d+)"
 
   connection = httplib.HTTPConnection(HOST)
   connection.request("GET", PATH)
@@ -125,8 +125,14 @@ def Main():
   parser.add_option("", "--release", action="store_true", default=False,
 		    help="build the release configuration in addition of the debug configuration.")
   parser.add_option("", "--nosync", action="store_true", default=False,
-		    help="doesn't sync before building.")
+		    help="doesn't sync before building")
+  parser.add_option("", "--print-latest", action="store_true", default=False,
+		    help="print the latest buildable revision and exit")
   options, args = parser.parse_args()
+
+  if options.print_latest:
+    print GetRevision() or "HEAD"
+    sys.exit(0)
 
   if not args:
     Message("Usage: %s <path\\to\\chrome\\root> [options]" % sys.argv[0])
@@ -134,7 +140,7 @@ def Main():
 
   chrome_root = args[0]
 
-  if options.nosync!=True:
+  if not options.nosync:
     rv = DoUpdate(chrome_root)
     if rv != 0:
       Message("Update Failed.  Bailing.")
