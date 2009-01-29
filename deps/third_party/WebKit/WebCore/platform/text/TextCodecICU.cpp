@@ -36,7 +36,7 @@
 #include <wtf/Assertions.h>
 #include <wtf/StringExtras.h>
 #include <wtf/Threading.h>
-// TODO(ojan): This #if needs to be upstreamed.
+
 using std::auto_ptr;
 using std::min;
 

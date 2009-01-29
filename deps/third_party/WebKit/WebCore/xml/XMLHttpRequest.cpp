@@ -1417,4 +1417,3 @@ ScriptExecutionContext* XMLHttpRequest::scriptExecutionContext() const
 }
 
 } // namespace WebCore 
-
