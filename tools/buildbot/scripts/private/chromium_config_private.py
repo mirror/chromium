@@ -22,10 +22,12 @@ class Master(object):
 
   class Chromium(object):
     # Actual server name.
+    is_production_host = False
     master_host = 'localhost'
     tree_closing_notification_recipients = []
 
   class TryServer(object):
+    is_production_host = False
     master_host = 'localhost'
     svn_url = ''
 
