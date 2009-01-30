@@ -38,11 +38,13 @@ Files
 __author__ = "darinf@gmail.com (Darin Fisher)"
 __version__ = "0.1"
 
+import errno
 import optparse
 import os
 import stat
 import subprocess
 import sys
+import time
 import urlparse
 import xml.dom.minidom
 
@@ -257,44 +259,69 @@ def RemoveDirectory(*path):
   indexing).  The best suggestion any of the user forums had was to wait a
   bit and try again, so we do that too.  It's hand-waving, but sometimes it
   works. :/
+
+  On POSIX systems, things are a little bit simpler.  The modes of the files
+  to be deleted doesn't matter, only the modes of the directories containing
+  them are significant.  As the directory tree is traversed, each directory
+  has its mode set appropriately before descending into it.  This should
+  result in the entire tree being removed, with the possible exception of
+  *path itself, because nothing attempts to change the mode of its parent.
+  Doing so would be hazardous, as it's not a directory slated for removal.
+  In the ordinary case, this is not a problem: for our purposes, the user
+  will never lack write permission on *path's parent.
   """
   file_path = os.path.join(*path)
   if not os.path.exists(file_path):
     return
 
-  win32 = False
+  if os.path.islink(file_path) or not os.path.isdir(file_path):
+    raise Error("RemoveDirectory asked to remove non-directory %s" % file_path)
+
+  has_win32api = False
   if sys.platform == 'win32':
-    win32 = True
+    has_win32api = True
     # Some people don't have the APIs installed. In that case we'll do without.
     try:
       win32api = __import__('win32api')
       win32con = __import__('win32con')
     except ImportError:
-      win32 = False
+      has_win32api = False
+  else:
+    # On POSIX systems, we need the x-bit set on the directory to access it,
+    # the r-bit to see its contents, and the w-bit to remove files from it.
+    # The actual modes of the files within the directory is irrelevant.
+    os.chmod(file_path, stat.S_IRUSR | stat.S_IWUSR | stat.S_IXUSR)
   for fn in os.listdir(file_path):
     fullpath = os.path.join(file_path, fn)
-    if os.path.isfile(fullpath):
-      os.chmod(fullpath, stat.S_IWRITE)
-      if win32:
-        win32api.SetFileAttributes(fullpath, win32con.FILE_ATTRIBUTE_NORMAL)
+
+    # If fullpath is a symbolic link that points to a directory, isdir will
+    # be True, but we don't want to descend into that as a directory, we just
+    # want to remove the link.  Check islink and treat links as ordinary files
+    # would be treated regardless of what they reference.
+    if os.path.islink(fullpath) or not os.path.isdir(fullpath):
+      if sys.platform == 'win32':
+        os.chmod(fullpath, stat.S_IWRITE)
+        if has_win32api:
+          win32api.SetFileAttributes(fullpath, win32con.FILE_ATTRIBUTE_NORMAL)
       try:
         os.remove(fullpath)
       except OSError, e:
-        if e.errno != errno.EACCES:
+        if e.errno != errno.EACCES or sys.platform != 'win32':
           raise
         print 'Failed to delete %s: trying again' % fullpath
         time.sleep(0.1)
         os.remove(fullpath)
-    elif os.path.isdir(fullpath):
+    else:
       RemoveDirectory(fullpath)
 
-  os.chmod(file_path, stat.S_IWRITE)
-  if win32:
-    win32api.SetFileAttributes(file_path, win32con.FILE_ATTRIBUTE_NORMAL)
+  if sys.platform == 'win32':
+    os.chmod(file_path, stat.S_IWRITE)
+    if has_win32api:
+      win32api.SetFileAttributes(file_path, win32con.FILE_ATTRIBUTE_NORMAL)
   try:
     os.rmdir(file_path)
   except OSError, e:
-    if e.errno != errno.EACCES:
+    if e.errno != errno.EACCES or sys.platform != 'win32':
       raise
     print 'Failed to remove %s: trying again' % file_path
     time.sleep(0.1)
@@ -508,8 +535,6 @@ class SCMWrapper(object):
         rev_str = ' at %d' % revision
 
     if from_info.url != components[0]:
-      raise Error("The current %s checkout is from %s but %s was expected" % (
-                      self.relpath, from_info.url, url))
       to_info = CaptureSVNInfo(options, url, '.')
       if from_info.root != to_info.root:
         # We have different roots, so check if we can switch --relocate.
@@ -697,11 +722,25 @@ class GClient(object):
     def __str__(self):
       return 'From("%s")' % self.module_name
 
-  def _GetDefaultSolutionDeps(self, solution_name):
+  class _VarImpl:
+    def __init__(self, custom_vars, local_scope):
+      self._custom_vars = custom_vars
+      self._local_scope = local_scope
+
+    def Lookup(self, var_name):
+      """Implements the Var syntax."""
+      if var_name in self._custom_vars:
+        return self._custom_vars[var_name]
+      elif var_name in self._local_scope.get("vars", {}):
+        return self._local_scope["vars"][var_name]
+      raise Error("Var is not defined: %s" % var_name)
+
+  def _GetDefaultSolutionDeps(self, solution_name, custom_vars):
     """Fetches the DEPS file for the specified solution.
 
     Args:
       solution_name: The name of the solution to query.
+      vars: A dict of vars to override any vars defined in the DEPS file.
 
     Returns:
       A dict mapping module names (as relative paths) to URLs or an empty
@@ -709,25 +748,31 @@ class GClient(object):
     """
     deps_file = os.path.join(self._root_dir, solution_name,
                              self._options.deps_file)
-    scope = {"From": self.FromImpl, "deps_os": {}}
+
+    local_scope = {}
+    var = self._VarImpl(custom_vars, local_scope)
+    global_scope = {"From": self.FromImpl, "Var": var.Lookup, "deps_os": {}}
     try:
-      exec(FileRead(deps_file), scope)
+      exec(FileRead(deps_file), global_scope, local_scope)
     except EnvironmentError:
       print >> self._options.stdout, (
           "\nWARNING: DEPS file not found for solution: %s\n" % solution_name)
       return {}
-    deps = scope.get("deps", {})
+    deps = local_scope.get("deps", {})
+
     # load os specific dependencies if defined.  these dependencies may override
     # or extend the values defined by the 'deps' member.
-    deps_os_key = {
-        "win32": "win",
-        "win": "win",
-        "cygwin": "win",
-        "darwin": "mac",
-        "mac": "mac",
-        "unix": "unix",
-    }.get(self._options.platform, "unix")
-    deps.update(scope["deps_os"].get(deps_os_key, {}))
+    if "deps_os" in local_scope:
+      deps_os_key = {
+          "win32": "win",
+          "win": "win",
+          "cygwin": "win",
+          "darwin": "mac",
+          "mac": "mac",
+          "unix": "unix",
+      }.get(self._options.platform, "unix")
+      deps.update(local_scope["deps_os"].get(deps_os_key, {}))
+
     return deps
 
   def _GetAllDeps(self, solution_urls):
@@ -747,7 +792,10 @@ class GClient(object):
     """
     deps = {}
     for solution in self.GetVar("solutions"):
-      solution_deps = self._GetDefaultSolutionDeps(solution["name"])
+      custom_vars = solution.get("custom_vars", {})
+      solution_deps = self._GetDefaultSolutionDeps(solution["name"],
+                                                   custom_vars)
+
       for d in solution_deps:
         if "custom_deps" in solution and d in solution["custom_deps"]:
           # Dependency is overriden.
