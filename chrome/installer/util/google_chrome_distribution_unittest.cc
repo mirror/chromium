@@ -9,6 +9,7 @@
 #include "base/registry.h"
 #include "base/scoped_ptr.h"
 #include "base/file_util.h"
+#include "base/file_path.h"
 #include "chrome/installer/util/browser_distribution.h"
 #include "chrome/installer/util/google_update_constants.h"
 #include "chrome/installer/util/google_chrome_distribution.h"
