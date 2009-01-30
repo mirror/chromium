@@ -138,8 +138,6 @@ Database::Database(Document* document, const String& name, const String& expecte
     JSC::initializeThreading();
     // Database code violates the normal JSCore contract by calling jsUnprotect from a secondary thread, and thus needs additional locking.
     JSDOMWindow::commonJSGlobalData()->heap.setGCProtectNeedsLocking();
-#elif USE(V8)
-    // TODO(aa): Need to abstract these glue dependencies out.
 #endif
 
     m_guid = guidForOriginAndName(m_securityOrigin->toString(), name);
@@ -602,4 +600,3 @@ String Database::stringIdentifier() const
 }
 
 }
-
