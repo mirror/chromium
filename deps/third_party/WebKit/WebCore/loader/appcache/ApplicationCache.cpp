@@ -51,8 +51,13 @@ ApplicationCache::~ApplicationCache()
     
 void ApplicationCache::setGroup(ApplicationCacheGroup* group)
 {
-    ASSERT(!m_group);
+    ASSERT(!m_group || group == m_group);
     m_group = group;
+}
+
+bool ApplicationCache::isComplete() const
+{
+    return !m_group->cacheIsBeingUpdated(this);
 }
 
 void ApplicationCache::setManifestResource(PassRefPtr<ApplicationCacheResource> manifest)
@@ -76,7 +81,7 @@ void ApplicationCache::addResource(PassRefPtr<ApplicationCacheResource> resource
     
     if (m_storageID) {
         ASSERT(!resource->storageID());
-        ASSERT(resource->type() & (ApplicationCacheResource::Dynamic | ApplicationCacheResource::Implicit));
+        ASSERT(resource->type() & (ApplicationCacheResource::Dynamic | ApplicationCacheResource::Master));
         
         // Add the resource to the storage.
         cacheStorage().store(resource.get(), this);

@@ -62,7 +62,9 @@ public:
     virtual bool isInlineBlockOrInlineTable() const { return isInline() && isReplaced(); }
 
     void makeChildrenNonInline(RenderObject* insertionPoint = 0);
+    
     void deleteLineBoxTree();
+    virtual void dirtyLineBoxes(bool fullLayout, bool isRootLineBox = false);
 
     // The height (and width) of a block when you include overflow spillage out of the bottom
     // of the block (e.g., a <div style="height:25px"> that has a 100px tall image inside
@@ -120,6 +122,8 @@ public:
     virtual void positionListMarker() { }
 
     virtual void borderFitAdjust(int& x, int& w) const; // Shrink the box in which the border paints if border-fit is set.
+
+    virtual InlineBox* createInlineBox(bool makePlaceHolderBox, bool isRootLineBox, bool isOnlyRun=false);
 
     // Called to lay out the legend for a fieldset.
     virtual RenderObject* layoutLegend(bool /*relayoutChildren*/) { return 0; }
@@ -314,6 +318,10 @@ public:
     RenderInline* inlineContinuation() const { return m_inlineContinuation; }
     void setInlineContinuation(RenderInline* c) { m_inlineContinuation = c; }
 
+    virtual IntRect localCaretRect(InlineBox*, int caretOffset, int* extraWidthToEndOfLine = 0);
+
+    virtual void addFocusRingRects(GraphicsContext*, int tx, int ty);
+
 private:
     void adjustPointToColumnContents(IntPoint&) const;
     void adjustForBorderFit(int x, int& left, int& right) const; // Helper function for borderFitAdjust
@@ -492,6 +500,8 @@ protected:
     int m_overflowWidth;
     int m_overflowLeft;
     int m_overflowTop;
+    
+    mutable int m_lineHeight;
 };
 
 } // namespace WebCore

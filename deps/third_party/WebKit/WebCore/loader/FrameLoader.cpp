@@ -196,7 +196,6 @@ bool isBackForwardLoadType(FrameLoadType type)
     switch (type) {
         case FrameLoadTypeStandard:
         case FrameLoadTypeReload:
-        case FrameLoadTypeReloadAllowingStaleData:
         case FrameLoadTypeReloadFromOrigin:
         case FrameLoadTypeSame:
         case FrameLoadTypeRedirectWithLockedHistory:
@@ -1223,7 +1222,6 @@ void FrameLoader::restoreDocumentState()
     
     switch (loadType()) {
         case FrameLoadTypeReload:
-        case FrameLoadTypeReloadAllowingStaleData:
         case FrameLoadTypeReloadFromOrigin:
         case FrameLoadTypeSame:
         case FrameLoadTypeReplace:
@@ -1569,26 +1567,15 @@ void FrameLoader::loadURLIntoChildFrame(const KURL& url, const String& referer, 
     
     // If we're moving in the backforward list, we might want to replace the content
     // of this child frame with whatever was there at that point.
-    // Reload will maintain the frame contents, LoadSame will not.
-    if (parentItem && parentItem->children().size() &&
-        (isBackForwardLoadType(loadType) || loadType == FrameLoadTypeReloadAllowingStaleData))
-    {
+    if (parentItem && parentItem->children().size() && isBackForwardLoadType(loadType)) {
         HistoryItem* childItem = parentItem->childItemWithName(childFrame->tree()->name());
         if (childItem) {
             // Use the original URL to ensure we get all the side-effects, such as
             // onLoad handlers, of any redirects that happened. An example of where
             // this is needed is Radar 3213556.
             workingURL = KURL(childItem->originalURLString());
-            // These behaviors implied by these loadTypes should apply to the child frames
             childLoadType = loadType;
-
-            if (isBackForwardLoadType(loadType)) {
-                // For back/forward, remember this item so we can traverse any child items as child frames load
-                childFrame->loader()->setProvisionalHistoryItem(childItem);
-            } else {
-                // For reload, just reinstall the current item, since a new child frame was created but we won't be creating a new BF item
-                childFrame->loader()->setCurrentHistoryItem(childItem);
-            }
+            childFrame->loader()->setProvisionalHistoryItem(childItem);
         }
     }
 
@@ -1965,7 +1952,6 @@ bool FrameLoader::canCachePage()
         && m_frame->page()->backForwardList()->capacity() > 0
         && m_frame->page()->settings()->usesPageCache()
         && loadType != FrameLoadTypeReload 
-        && loadType != FrameLoadTypeReloadAllowingStaleData
         && loadType != FrameLoadTypeReloadFromOrigin
         && loadType != FrameLoadTypeSame
         ;
@@ -2025,8 +2011,6 @@ void FrameLoader::logCanCachePageDecision()
             { PCLOG("   -Page settings says b/f cache disabled"); cannotCache = true; }
         if (loadType == FrameLoadTypeReload)
             { PCLOG("   -Load type is: Reload"); cannotCache = true; }
-        if (loadType == FrameLoadTypeReloadAllowingStaleData)
-            { PCLOG("   -Load type is: Reload allowing stale data"); cannotCache = true; }
         if (loadType == FrameLoadTypeReloadFromOrigin)
             { PCLOG("   -Load type is: Reload from origin"); cannotCache = true; }
         if (loadType == FrameLoadTypeSame)
@@ -2351,10 +2335,9 @@ void FrameLoader::loadURL(const KURL& newURL, const String& referrer, const Stri
             // Example of this case are sites that reload the same URL with a different cookie
             // driving the generated content, or a master frame with links that drive a target
             // frame, where the user has clicked on the same link repeatedly.
-            // But if the load type is FrameLoadTypeReloadAllowingStaleData, which means the frame
-            // is reloaded only because user select one encoding from encoding menu, so we do not
-            // change the load type.
-            if (m_loadType != FrameLoadTypeReloadAllowingStaleData)
+            // But if the load type is FrameLoadTypeReload, which means the frame
+            // is reloaded so we do not change the load type.
+            if (m_loadType != FrameLoadTypeReload)
                 m_loadType = FrameLoadTypeSame;
     }
 }
@@ -2396,10 +2379,9 @@ void FrameLoader::loadWithNavigationAction(const ResourceRequest& request, const
 
     loader->setTriggeringAction(action);
     if (m_documentLoader) {
-        // if the load type is not FrameLoadTypeReloadAllowingStaleData,
-        // which means we will load page by user action, so we need not
-        // use original encoding override.
-        if (type == FrameLoadTypeReloadAllowingStaleData)
+        // if the load type is not FrameLoadTypeReload,
+        // we need not use original encoding override.
+        if (type == FrameLoadTypeReload)
             loader->setOverrideEncoding(m_documentLoader->overrideEncoding());
         else
             loader->setOverrideEncoding(String());
@@ -2465,7 +2447,7 @@ void FrameLoader::loadWithDocumentLoader(DocumentLoader* loader, FrameLoadType t
             callContinueFragmentScrollAfterNavigationPolicy, this);
     } else {
     	if (Frame* parent = m_frame->tree()->parent()) {
-       		if (type == FrameLoadTypeReloadAllowingStaleData)
+       		if (type == FrameLoadTypeReload)
             	loader->setOverrideEncoding(parent->loader()->documentLoader()->overrideEncoding());
         	else
             	loader->setOverrideEncoding(String());
@@ -2600,7 +2582,7 @@ bool FrameLoader::shouldReloadToHandleUnreachableURL(DocumentLoader* docLoader)
     return compareDocumentLoader && unreachableURL == compareDocumentLoader->request().url();
 }
 
-void FrameLoader::reloadAllowingStaleData(const String& encoding)
+void FrameLoader::reloadWithOverrideEncoding(const String& encoding)
 {
     if (!m_documentLoader)
         return;
@@ -2617,7 +2599,7 @@ void FrameLoader::reloadAllowingStaleData(const String& encoding)
 
     loader->setOverrideEncoding(encoding);
 
-    loadWithDocumentLoader(loader.get(), FrameLoadTypeReloadAllowingStaleData, 0);
+    loadWithDocumentLoader(loader.get(), FrameLoadTypeReload, 0);
 }
 
 void FrameLoader::reload(bool endToEndReload)
@@ -3008,11 +2990,6 @@ void FrameLoader::transitionToCommitted(PassRefPtr<CachedPage> cachedPage)
         case FrameLoadTypeSame:
         case FrameLoadTypeReplace:
             updateHistoryForReload();
-            m_client->transitionToCommittedForNewPage();
-            break;
-
-        // FIXME - just get rid of this case, and merge FrameLoadTypeReloadAllowingStaleData with the above case
-        case FrameLoadTypeReloadAllowingStaleData:
             m_client->transitionToCommittedForNewPage();
             break;
 
@@ -4678,7 +4655,6 @@ void FrameLoader::loadItem(HistoryItem* item, FrameLoadType loadType)
                         // FIXME:  I wonder if we ever hit this case
                         break;
                     case FrameLoadTypeSame:
-                    case FrameLoadTypeReloadAllowingStaleData:
                     default:
                         ASSERT_NOT_REACHED();
                 }

@@ -24,6 +24,7 @@
 #define RenderFlow_h
 
 #include "RenderContainer.h"
+#include "RenderLineBoxList.h"
 
 namespace WebCore {
 
@@ -40,14 +41,8 @@ class RenderFlow : public RenderContainer {
 public:
     RenderFlow(Node* node)
         : RenderContainer(node)
-        , m_firstLineBox(0)
-        , m_lastLineBox(0)
-        , m_lineHeight(-1)
     {
     }
-#ifndef NDEBUG
-    virtual ~RenderFlow();
-#endif
 
     RenderFlow* continuationBefore(RenderObject* beforeChild);
 
@@ -55,52 +50,17 @@ public:
     virtual void addChildToFlow(RenderObject* newChild, RenderObject* beforeChild) = 0;
     virtual void addChild(RenderObject* newChild, RenderObject* beforeChild = 0);
 
-    static RenderFlow* createAnonymousFlow(Document*, PassRefPtr<RenderStyle>);
-
-    void extractLineBox(InlineFlowBox*);
-    void attachLineBox(InlineFlowBox*);
-    void removeLineBox(InlineFlowBox*);
-    void deleteLineBoxes();
-    virtual void destroy();
+    RenderLineBoxList* lineBoxes() { return &m_lineBoxes; }
+    const RenderLineBoxList* lineBoxes() const { return &m_lineBoxes; }
 
     virtual void dirtyLinesFromChangedChild(RenderObject* child);
 
-    virtual int lineHeight(bool firstLine, bool isRootLineBox = false) const;
-
-    InlineFlowBox* firstLineBox() const { return m_firstLineBox; }
-    InlineFlowBox* lastLineBox() const { return m_lastLineBox; }
-
-    virtual InlineBox* createInlineBox(bool makePlaceHolderBox, bool isRootLineBox, bool isOnlyRun=false);
-    virtual void dirtyLineBoxes(bool fullLayout, bool isRootLineBox = false);
-
-    void paintLines(PaintInfo&, int tx, int ty);
-    bool hitTestLines(const HitTestRequest&, HitTestResult&, int x, int y, int tx, int ty, HitTestAction);
-
-    virtual IntRect localCaretRect(InlineBox*, int caretOffset, int* extraWidthToEndOfLine = 0);
-
-    virtual void addFocusRingRects(GraphicsContext*, int tx, int ty);
-    void paintOutlineForLine(GraphicsContext*, int tx, int ty, const IntRect& prevLine, const IntRect& thisLine, const IntRect& nextLine);
-    void paintOutline(GraphicsContext*, int tx, int ty);
-
-    void calcMargins(int containerWidth);
-
-    void checkConsistency() const;
+    InlineFlowBox* firstLineBox() const { return m_lineBoxes.firstLineBox(); }
+    InlineFlowBox* lastLineBox() const { return m_lineBoxes.lastLineBox(); }
 
 protected:
-    // For block flows, each box represents the root inline box for a line in the
-    // paragraph.
-    // For inline flows, each box represents a portion of that inline.
-    InlineFlowBox* m_firstLineBox;
-    InlineFlowBox* m_lastLineBox;
-
-    mutable int m_lineHeight;
+    RenderLineBoxList m_lineBoxes;
 };
-
-#ifdef NDEBUG
-inline void RenderFlow::checkConsistency() const
-{
-}
-#endif
 
 } // namespace WebCore
 

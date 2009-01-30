@@ -169,24 +169,42 @@ void InlineFlowBox::deleteLine(RenderArena* arena)
     m_lastChild = 0;
 #endif
 
-    static_cast<RenderFlow*>(m_object)->removeLineBox(this);
+    removeLineBoxFromRenderObject();
     destroy(arena);
+}
+
+void InlineFlowBox::removeLineBoxFromRenderObject()
+{
+    ASSERT(m_object->isRenderInline());
+    static_cast<RenderInline*>(m_object)->lineBoxes()->removeLineBox(this);
 }
 
 void InlineFlowBox::extractLine()
 {
     if (!m_extracted)
-        static_cast<RenderFlow*>(m_object)->extractLineBox(this);
+        extractLineBoxFromRenderObject();
     for (InlineBox* child = firstChild(); child; child = child->nextOnLine())
         child->extractLine();
+}
+
+void InlineFlowBox::extractLineBoxFromRenderObject()
+{
+    ASSERT(m_object->isRenderInline());
+    static_cast<RenderInline*>(m_object)->lineBoxes()->extractLineBox(this);
 }
 
 void InlineFlowBox::attachLine()
 {
     if (m_extracted)
-        static_cast<RenderFlow*>(m_object)->attachLineBox(this);
+        attachLineBoxToRenderObject();
     for (InlineBox* child = firstChild(); child; child = child->nextOnLine())
         child->attachLine();
+}
+
+void InlineFlowBox::attachLineBoxToRenderObject()
+{
+    ASSERT(m_object->isRenderInline());
+    static_cast<RenderInline*>(m_object)->lineBoxes()->attachLineBox(this);
 }
 
 void InlineFlowBox::adjustPosition(int dx, int dy)
@@ -634,7 +652,7 @@ void InlineFlowBox::paint(RenderObject::PaintInfo& paintInfo, int tx, int ty)
                     RenderBlock* block = object()->containingBlock()->containingBlock();
                     block->addContinuationWithOutline(static_cast<RenderInline*>(object()->element()->renderer()));
                 } else if (!inlineFlow->isInlineContinuation())
-                    paintInfo.outlineObjects->add(flowObject());
+                    paintInfo.outlineObjects->add(inlineFlow);
             }
         } else if (paintInfo.phase == PaintPhaseMask) {
             paintMask(paintInfo, tx, ty);

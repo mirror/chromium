@@ -203,7 +203,7 @@ namespace WebCore {
 #endif
 
         void setAllowScriptsToCloseWindows(bool);
-        bool allowScriptsToCloseWindows() const { return m_allow_scripts_to_close_windows; }
+        bool allowScriptsToCloseWindows() const { return m_allowScriptsToCloseWindows; }
 
     private:
         Page* m_page;
@@ -257,7 +257,7 @@ namespace WebCore {
         bool m_enforceCSSMIMETypeInStrictMode : 1;
         size_t m_maximumDecodedImageSize;
         bool m_usesEncodingDetector : 1;
-        bool m_allow_scripts_to_close_windows : 1;
+        bool m_allowScriptsToCloseWindows : 1;
 
 #if USE(SAFARI_THEME)
         static bool gShouldPaintNativeControls;

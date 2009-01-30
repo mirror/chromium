@@ -515,12 +515,12 @@ void DOMWindow::close()
         return;
 
     Settings* settings = m_frame->settings();
-    bool allow_scripts_to_close_windows =
-        (settings && settings->allowScriptsToCloseWindows());
+    bool allowScriptsToCloseWindows =
+        settings && settings->allowScriptsToCloseWindows();
 
     if (m_frame->loader()->openedByDOM()
         || m_frame->loader()->getHistoryLength() <= 1
-        || allow_scripts_to_close_windows)
+        || allowScriptsToCloseWindows)
         m_frame->scheduleClose();
 }
 

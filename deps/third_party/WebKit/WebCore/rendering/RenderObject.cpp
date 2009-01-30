@@ -1558,11 +1558,11 @@ void RenderObject::paintOutline(GraphicsContext* graphicsContext, int tx, int ty
         if (!theme()->supportsFocusRing(style)) {
             // Only paint the focus ring by hand if the theme isn't able to draw the focus ring.
             graphicsContext->initFocusRing(ow, offset);
+            addFocusRingRects(graphicsContext, tx, ty);
             if (style->outlineStyleIsAuto())
-                addFocusRingRects(graphicsContext, tx, ty);
+                graphicsContext->drawFocusRing(oc);
             else
                 addPDFURLRect(graphicsContext, graphicsContext->focusRingBoundingRect());
-            graphicsContext->drawFocusRing(oc);
             graphicsContext->clearFocusRing();
         }
     }
@@ -2470,19 +2470,7 @@ int RenderObject::getVerticalPosition(bool firstLine) const
 
 int RenderObject::lineHeight(bool firstLine, bool /*isRootLineBox*/) const
 {
-    RenderStyle* s = style(firstLine);
-
-    Length lh = s->lineHeight();
-
-    // its "unset", choose nice default
-    if (lh.isNegative())
-        return s->font().lineSpacing();
-
-    if (lh.isPercent())
-        return lh.calcMinValue(s->fontSize());
-
-    // its fixed
-    return lh.value();
+    return style(firstLine)->computedLineHeight();
 }
 
 int RenderObject::baselinePosition(bool firstLine, bool isRootLineBox) const

@@ -39,7 +39,13 @@ namespace WebCore {
 
     protected:
         AccessibilityObjectWrapper(AccessibilityObject* obj)
-            : RefCounted<AccessibilityObjectWrapper>(0), m_object(obj) { }
+            : RefCounted<AccessibilityObjectWrapper>(), m_object(obj) { 
+          // Default refCount is 1, but the webkit-win version of this is not
+          // RefCounted, so this is not properly created using ::Create.
+          // TODO: Once AccessibleBase no longer implements COM interfaces,
+          // look into making it not RefCounted.
+          m_refCount = 0;
+        }
         AccessibilityObjectWrapper() : m_object(0) { }
 
         AccessibilityObject* m_object;

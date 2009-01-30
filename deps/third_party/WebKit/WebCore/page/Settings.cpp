@@ -85,8 +85,8 @@ Settings::Settings(Page* page)
     , m_zoomsTextOnly(false)
     , m_enforceCSSMIMETypeInStrictMode(true)
     , m_maximumDecodedImageSize(std::numeric_limits<size_t>::max())
-	, m_usesEncodingDetector(false)
-    , m_allow_scripts_to_close_windows(false)
+    , m_usesEncodingDetector(false)
+    , m_allowScriptsToCloseWindows(false)
 {
     // A Frame may not have been created yet, so we initialize the AtomicString 
     // hash before trying to use it.
@@ -412,9 +412,9 @@ void Settings::setUsesUniversalDetector(bool usesEncodingDetector)
     m_usesEncodingDetector = usesEncodingDetector;
 }
 
-void Settings::setAllowScriptsToCloseWindows(bool allow_scripts_to_close_windows)
+void Settings::setAllowScriptsToCloseWindows(bool allowScriptsToCloseWindows)
 {
-    m_allow_scripts_to_close_windows = allow_scripts_to_close_windows;
+    m_allowScriptsToCloseWindows = allowScriptsToCloseWindows;
 }
 
 } // namespace WebCore

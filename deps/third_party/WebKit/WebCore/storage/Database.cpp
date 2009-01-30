@@ -40,11 +40,6 @@
 #include "FileSystem.h"
 #include "Frame.h"
 #include "InspectorController.h"
-#if USE(JSC)
-#include "JSDOMWindow.h"
-#elif USE(V8)
-// TODO(aa): Need to abstract these glue dependencies out.
-#endif
 #include "Logging.h"
 #include "NotImplemented.h"
 #include "Page.h"
@@ -52,9 +47,13 @@
 #include "SQLiteDatabase.h"
 #include "SQLiteStatement.h"
 #include "SQLResultSet.h"
-#include <runtime/InitializeThreading.h>
 #include <wtf/MainThread.h>
 #include <wtf/StdLibExtras.h>
+
+#if USE(JSC)
+#include "JSDOMWindow.h"
+#include <runtime/InitializeThreading.h>
+#endif
 
 namespace WebCore {
 

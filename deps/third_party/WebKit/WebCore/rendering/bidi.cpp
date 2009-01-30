@@ -29,6 +29,7 @@
 #include "InlineTextBox.h"
 #include "Logging.h"
 #include "RenderArena.h"
+#include "RenderInline.h"
 #include "RenderLayer.h"
 #include "RenderListMarker.h"
 #include "RenderView.h"
@@ -778,7 +779,7 @@ void RenderBlock::layoutInlineChildren(bool relayoutChildren, int& repaintTop, i
     // FIXME: Do something better when floats are present.
     bool fullLayout = !firstLineBox() || !firstChild() || selfNeedsLayout() || relayoutChildren;
     if (fullLayout)
-        deleteLineBoxes();
+        lineBoxes()->deleteLineBoxes(renderArena());
 
     // Text truncation only kicks in if your overflow isn't visible and your text-overflow-mode isn't
     // clip.
@@ -825,7 +826,7 @@ void RenderBlock::layoutInlineChildren(bool relayoutChildren, int& repaintTop, i
                 
                 // Calculate margins of inline flows so that they can be used later by line layout.
                 if (o->isRenderInline())
-                    static_cast<RenderFlow*>(o)->calcMargins(containerWidth);
+                    static_cast<RenderInline*>(o)->calcMargins(containerWidth);
                 o->setNeedsLayout(false);
             }
             o = bidiNext(this, o, 0, false, &endOfInline);

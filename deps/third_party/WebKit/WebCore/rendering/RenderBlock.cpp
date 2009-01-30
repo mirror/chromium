@@ -74,7 +74,7 @@ static PercentHeightDescendantsMap* gPercentHeightDescendantsMap = 0;
 typedef WTF::HashMap<const RenderBox*, HashSet<RenderBlock*>*> PercentHeightContainerMap;
 static PercentHeightContainerMap* gPercentHeightContainerMap = 0;
     
-typedef WTF::HashMap<RenderBlock*, ListHashSet<RenderFlow*>*> ContinuationOutlineTableMap;
+typedef WTF::HashMap<RenderBlock*, ListHashSet<RenderInline*>*> ContinuationOutlineTableMap;
 
 // Our MarginInfo state used when laying out block children.
 RenderBlock::MarginInfo::MarginInfo(RenderBlock* block, int top, int bottom)
@@ -120,6 +120,7 @@ RenderBlock::RenderBlock(Node* node)
       , m_overflowWidth(0)
       , m_overflowLeft(0)
       , m_overflowTop(0)
+      , m_lineHeight(-1)
 {
     setChildrenInline(true);
 }
@@ -160,6 +161,34 @@ void RenderBlock::destroy()
         m_inlineContinuation->destroy();
     m_inlineContinuation = 0;
     
+    // Make sure to destroy anonymous children first while they are still connected to the rest of the tree, so that they will
+    // properly dirty line boxes that they are removed from.  Effects that do :before/:after only on hover could crash otherwise.
+    RenderContainer::destroyLeftoverChildren();
+
+    if (!documentBeingDestroyed()) {
+        if (firstLineBox()) {
+            // We can't wait for RenderContainer::destroy to clear the selection,
+            // because by then we will have nuked the line boxes.
+            // FIXME: The SelectionController should be responsible for this when it
+            // is notified of DOM mutations.
+            if (isSelectionBorder())
+                view()->clearSelection();
+
+            // If we are an anonymous block, then our line boxes might have children
+            // that will outlast this block. In the non-anonymous block case those
+            // children will be destroyed by the time we return from this function.
+            if (isAnonymousBlock()) {
+                for (InlineFlowBox* box = firstLineBox(); box; box = box->nextFlowBox()) {
+                    while (InlineBox* childBox = box->firstChild())
+                        childBox->remove();
+                }
+            }
+        } else if (isInline() && parent())
+            parent()->dirtyLinesFromChangedChild(this);
+    }
+
+    m_lineBoxes.deleteLineBoxes(renderArena());
+
     RenderFlow::destroy();
 }
 
@@ -342,14 +371,27 @@ static void getInlineRun(RenderObject* start, RenderObject* boundary,
 
 void RenderBlock::deleteLineBoxTree()
 {
-    InlineFlowBox* line = m_firstLineBox;
-    InlineFlowBox* nextLine;
-    while (line) {
-        nextLine = line->nextFlowBox();
-        line->deleteLine(renderArena());
-        line = nextLine;
-    }
-    m_firstLineBox = m_lastLineBox = 0;
+    m_lineBoxes.deleteLineBoxTree(renderArena());
+}
+
+void RenderBlock::dirtyLineBoxes(bool fullLayout, bool isRootLineBox)
+{
+    if (!isRootLineBox && isReplaced())
+        return RenderFlow::dirtyLineBoxes(fullLayout, isRootLineBox);
+
+    if (fullLayout)
+        m_lineBoxes.deleteLineBoxes(renderArena());
+    else
+        m_lineBoxes.dirtyLineBoxes();
+}
+
+InlineBox* RenderBlock::createInlineBox(bool makePlaceHolderBox, bool isRootLineBox, bool /*isOnlyRun*/)
+{
+    if (!isRootLineBox && (isReplaced() || makePlaceHolderBox))                     // Inline tables and inline blocks
+        return RenderContainer::createInlineBox(false, isRootLineBox);              // (or positioned element placeholders).
+    InlineFlowBox* flowBox = new (renderArena()) RootInlineBox(this);
+    m_lineBoxes.appendLineBox(flowBox);
+    return flowBox;
 }
 
 void RenderBlock::makeChildrenNonInline(RenderObject *insertionPoint)
@@ -1577,7 +1619,7 @@ void RenderBlock::paintContents(PaintInfo& paintInfo, int tx, int ty)
         return;
 
     if (childrenInline())
-        paintLines(paintInfo, tx, ty);
+        m_lineBoxes.paint(this, paintInfo, tx, ty);
     else
         paintChildren(paintInfo, tx, ty);
 }
@@ -1682,7 +1724,7 @@ void RenderBlock::paintObject(PaintInfo& paintInfo, int tx, int ty)
 
     // 5. paint outline.
     if ((paintPhase == PaintPhaseOutline || paintPhase == PaintPhaseSelfOutline) && hasOutline() && style()->visibility() == VISIBLE)
-        RenderBox::paintOutline(paintInfo.context, tx, ty, width(), height(), style());
+        paintOutline(paintInfo.context, tx, ty, width(), height(), style());
 
     // 6. paint continuation outlines.
     if ((paintPhase == PaintPhaseOutline || paintPhase == PaintPhaseChildOutlines)) {
@@ -1773,9 +1815,9 @@ void RenderBlock::addContinuationWithOutline(RenderInline* flow)
     ASSERT(!flow->layer() && !flow->isInlineContinuation());
     
     ContinuationOutlineTableMap* table = continuationOutlineTable();
-    ListHashSet<RenderFlow*>* continuations = table->get(this);
+    ListHashSet<RenderInline*>* continuations = table->get(this);
     if (!continuations) {
-        continuations = new ListHashSet<RenderFlow*>;
+        continuations = new ListHashSet<RenderInline*>;
         table->set(this, continuations);
     }
     
@@ -1788,15 +1830,15 @@ void RenderBlock::paintContinuationOutlines(PaintInfo& info, int tx, int ty)
     if (table->isEmpty())
         return;
         
-    ListHashSet<RenderFlow*>* continuations = table->get(this);
+    ListHashSet<RenderInline*>* continuations = table->get(this);
     if (!continuations)
         return;
         
     // Paint each continuation outline.
-    ListHashSet<RenderFlow*>::iterator end = continuations->end();
-    for (ListHashSet<RenderFlow*>::iterator it = continuations->begin(); it != end; ++it) {
+    ListHashSet<RenderInline*>::iterator end = continuations->end();
+    for (ListHashSet<RenderInline*>::iterator it = continuations->begin(); it != end; ++it) {
         // Need to add in the coordinates of the intervening blocks.
-        RenderFlow* flow = *it;
+        RenderInline* flow = *it;
         RenderBlock* block = flow->containingBlock();
         for ( ; block && block != this; block = block->containingBlock()) {
             tx += block->x();
@@ -3225,7 +3267,7 @@ bool RenderBlock::hitTestContents(const HitTestRequest& request, HitTestResult& 
 {
     if (childrenInline() && !isTable()) {
         // We have to hit-test our line boxes.
-        if (hitTestLines(request, result, x, y, tx, ty, hitTestAction)) {
+        if (m_lineBoxes.hitTest(this, request, result, x, y, tx, ty, hitTestAction)) {
             updateHitTestResult(result, IntPoint(x - tx, y - ty));
             return true;
         }
@@ -4224,7 +4266,7 @@ bool RenderBlock::hasLineIfEmpty() const
     return false;
 }
 
-int RenderBlock::lineHeight(bool b, bool isRootLineBox) const
+int RenderBlock::lineHeight(bool firstLine, bool isRootLineBox) const
 {
     // Inline blocks are replaced elements. Otherwise, just pass off to
     // the base class.  If we're being queried as though we're the root line
@@ -4232,7 +4274,17 @@ int RenderBlock::lineHeight(bool b, bool isRootLineBox) const
     // just like a block.
     if (isReplaced() && !isRootLineBox)
         return height() + marginTop() + marginBottom();
-    return RenderFlow::lineHeight(b, isRootLineBox);
+    
+    if (firstLine && document()->usesFirstLineRules()) {
+        RenderStyle* s = style(firstLine);
+        if (s != style())
+            return s->computedLineHeight();
+    }
+    
+    if (m_lineHeight == -1)
+        m_lineHeight = style()->computedLineHeight();
+
+    return m_lineHeight;
 }
 
 int RenderBlock::baselinePosition(bool b, bool isRootLineBox) const
@@ -4423,10 +4475,15 @@ void RenderBlock::updateFirstLetter()
                                                                           firstLetterContainer->firstLineStyle());
         
         // Force inline display (except for floating first-letters)
-        pseudoStyle->setDisplay( pseudoStyle->isFloating() ? BLOCK : INLINE);
-        pseudoStyle->setPosition( StaticPosition ); // CSS2 says first-letter can't be positioned.
+        pseudoStyle->setDisplay(pseudoStyle->isFloating() ? BLOCK : INLINE);
+        pseudoStyle->setPosition(StaticPosition); // CSS2 says first-letter can't be positioned.
         
-        RenderObject* firstLetter = RenderFlow::createAnonymousFlow(document(), pseudoStyle); // anonymous box
+        RenderObject* firstLetter = 0;
+        if (pseudoStyle->display() == INLINE)
+            firstLetter = new (renderArena()) RenderInline(document());
+        else
+            firstLetter = new (renderArena()) RenderBlock(document());
+        firstLetter->setStyle(pseudoStyle);
         firstLetterContainer->addChild(firstLetter, currChild);
         
         // The original string is going to be either a generated content string or a DOM node's
@@ -4753,6 +4810,126 @@ void RenderBlock::updateHitTestResult(HitTestResult& result, const IntPoint& poi
             result.setInnerNonSharedNode(node);
         result.setLocalPoint(point);
     }
+}
+
+IntRect RenderBlock::localCaretRect(InlineBox* inlineBox, int caretOffset, int* extraWidthToEndOfLine)
+{
+    // Do the normal calculation in most cases.
+    if (firstChild())
+        return RenderContainer::localCaretRect(inlineBox, caretOffset, extraWidthToEndOfLine);
+
+    // This is a special case:
+    // The element is not an inline element, and it's empty. So we have to
+    // calculate a fake position to indicate where objects are to be inserted.
+    
+    // FIXME: This does not take into account either :first-line or :first-letter
+    // However, as soon as some content is entered, the line boxes will be
+    // constructed and this kludge is not called any more. So only the caret size
+    // of an empty :first-line'd block is wrong. I think we can live with that.
+    RenderStyle* currentStyle = firstLineStyle();
+    int height = lineHeight(true);
+    const int caretWidth = 1;
+
+    enum CaretAlignment { alignLeft, alignRight, alignCenter };
+
+    CaretAlignment alignment = alignLeft;
+
+    switch (currentStyle->textAlign()) {
+        case TAAUTO:
+        case JUSTIFY:
+            if (currentStyle->direction() == RTL)
+                alignment = alignRight;
+            break;
+        case LEFT:
+        case WEBKIT_LEFT:
+            break;
+        case CENTER:
+        case WEBKIT_CENTER:
+            alignment = alignCenter;
+            break;
+        case RIGHT:
+        case WEBKIT_RIGHT:
+            alignment = alignRight;
+            break;
+    }
+
+    int x = borderLeft() + paddingLeft();
+    int w = width();
+
+    switch (alignment) {
+        case alignLeft:
+            break;
+        case alignCenter:
+            x = (x + w - (borderRight() + paddingRight())) / 2;
+            break;
+        case alignRight:
+            x = w - (borderRight() + paddingRight());
+            break;
+    }
+
+    if (extraWidthToEndOfLine) {
+        if (isRenderBlock()) {
+            *extraWidthToEndOfLine = w - (x + caretWidth);
+        } else {
+            // FIXME: This code looks wrong.
+            // myRight and containerRight are set up, but then clobbered.
+            // So *extraWidthToEndOfLine will always be 0 here.
+
+            int myRight = x + caretWidth;
+            // FIXME: why call localToAbsoluteForContent() twice here, too?
+            FloatPoint absRightPoint = localToAbsolute(FloatPoint(myRight, 0));
+
+            int containerRight = containingBlock()->x() + containingBlockWidth();
+            FloatPoint absContainerPoint = localToAbsolute(FloatPoint(containerRight, 0));
+
+            *extraWidthToEndOfLine = absContainerPoint.x() - absRightPoint.x();
+        }
+    }
+
+    int y = paddingTop() + borderTop();
+
+    return IntRect(x, y, caretWidth, height);
+}
+
+void RenderBlock::addFocusRingRects(GraphicsContext* graphicsContext, int tx, int ty)
+{
+    // For blocks inside inlines, we go ahead and include margins so that we run right up to the
+    // inline boxes above and below us (thus getting merged with them to form a single irregular
+    // shape).
+    if (inlineContinuation()) {
+        // FIXME: This check really isn't accurate. 
+        bool nextInlineHasLineBox = inlineContinuation()->firstLineBox();
+        // FIXME: This is wrong. The principal renderer may not be the continuation preceding this block.
+        bool prevInlineHasLineBox = static_cast<RenderInline*>(inlineContinuation()->element()->renderer())->firstLineBox(); 
+        int topMargin = prevInlineHasLineBox ? collapsedMarginTop() : 0;
+        int bottomMargin = nextInlineHasLineBox ? collapsedMarginBottom() : 0;
+        graphicsContext->addFocusRingRect(IntRect(tx, ty - topMargin, 
+                                                  width(), height() + topMargin + bottomMargin));
+    } else
+        graphicsContext->addFocusRingRect(IntRect(tx, ty, width(), height()));
+
+    if (!hasOverflowClip() && !hasControlClip()) {
+        for (InlineRunBox* curr = firstLineBox(); curr; curr = curr->nextLineBox())
+            graphicsContext->addFocusRingRect(IntRect(tx + curr->xPos(), ty + curr->yPos(), curr->width(), curr->height()));
+
+        for (RenderObject* curr = firstChild(); curr; curr = curr->nextSibling()) {
+            if (!curr->isText() && !curr->isListMarker() && curr->isBox()) {
+                RenderBox* box = toRenderBox(curr);
+                FloatPoint pos;
+                // FIXME: This doesn't work correctly with transforms.
+                if (box->layer()) 
+                    pos = curr->localToAbsolute();
+                else
+                    pos = FloatPoint(tx + box->x(), ty + box->y());
+                box->addFocusRingRects(graphicsContext, pos.x(), pos.y());
+            }
+        }
+    }
+
+    if (inlineContinuation())
+        inlineContinuation()->addFocusRingRects(graphicsContext, 
+                                                tx - x() + inlineContinuation()->containingBlock()->x(),
+                                                ty - y() + inlineContinuation()->containingBlock()->y());
 }
 
 const char* RenderBlock::renderName() const

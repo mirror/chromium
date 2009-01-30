@@ -595,11 +595,7 @@ String InspectorController::platform() const {
 
 InspectorController::InspectorController(Page* page, InspectorClient* client)
     :
-      // The V8 version of InspectorController is RefCounted while the JSC
-      // version uses an OwnPtr (http://b/904340).  However, since we're not
-      // using a create method to initialize the InspectorController, we need
-      // to start the RefCount at 0.
-      RefCounted<InspectorController>(0)
+      RefCounted<InspectorController>()
     , m_trackResources(false)
     , m_inspectedPage(page)
     , m_client(client)
@@ -620,6 +616,11 @@ InspectorController::InspectorController(Page* page, InspectorClient* client)
 {
     ASSERT_ARG(page, page);
     ASSERT_ARG(client, client);
+    // The V8 version of InspectorController is RefCounted while the JSC
+    // version uses an OwnPtr (http://b/904340).  However, since we're not
+    // using a create method to initialize the InspectorController, we need
+    // to start the RefCount at 0.
+    m_refCount = 0;
 }
 
 InspectorController::~InspectorController()

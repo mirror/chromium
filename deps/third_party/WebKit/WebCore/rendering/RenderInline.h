@@ -77,6 +77,11 @@ public:
         return IntRect(0, 0, boundingBox.width(), boundingBox.height());
     }
 
+    virtual InlineBox* createInlineBox(bool makePlaceHolderBox, bool isRootLineBox, bool isOnlyRun=false);    
+    virtual void dirtyLineBoxes(bool fullLayout, bool isRootLineBox = false);
+
+    virtual int lineHeight(bool firstLine, bool isRootLineBox = false) const;
+
     RenderBox* continuation() const { return m_continuation; }
     RenderInline* inlineContinuation() const;
     void setContinuation(RenderBox* c) { m_continuation = c; }
@@ -87,14 +92,27 @@ public:
 
     virtual void updateHitTestResult(HitTestResult&, const IntPoint&);
 
+    virtual void addFocusRingRects(GraphicsContext*, int tx, int ty);
+    void paintOutline(GraphicsContext*, int tx, int ty);
+
+    void calcMargins(int containerWidth)
+    {
+        m_marginLeft = style()->marginLeft().calcMinValue(containerWidth);
+        m_marginRight = style()->marginRight().calcMinValue(containerWidth);
+    }
+    
 protected:
     virtual void styleDidChange(RenderStyle::Diff, const RenderStyle* oldStyle);
 
     static RenderInline* cloneInline(RenderFlow* src);
 
 private:
+    void paintOutlineForLine(GraphicsContext*, int tx, int ty, const IntRect& prevLine, const IntRect& thisLine, const IntRect& nextLine);
+
+private:
     RenderBox* m_continuation; // Can be either a block or an inline. <b><i><p>Hello</p></i></b>. In this example the <i> will have a block as its continuation but the
                                // <b> will just have an inline as its continuation.
+    mutable int m_lineHeight;
 };
 
 } // namespace WebCore

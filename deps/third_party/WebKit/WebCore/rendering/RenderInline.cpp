@@ -26,17 +26,21 @@
 #include "RenderInline.h"
 
 #include "FloatQuad.h"
+#include "GraphicsContext.h"
 #include "HitTestResult.h"
 #include "RenderArena.h"
 #include "RenderBlock.h"
 #include "RenderView.h"
 #include "VisiblePosition.h"
 
+using namespace std;
+
 namespace WebCore {
 
 RenderInline::RenderInline(Node* node)
     : RenderFlow(node)
     , m_continuation(0)
+    , m_lineHeight(-1)
 {
     setChildrenInline(true);
 }
@@ -52,6 +56,34 @@ void RenderInline::destroy()
         m_continuation->destroy();
     m_continuation = 0;
     
+    // Make sure to destroy anonymous children first while they are still connected to the rest of the tree, so that they will
+    // properly dirty line boxes that they are removed from.  Effects that do :before/:after only on hover could crash otherwise.
+    RenderContainer::destroyLeftoverChildren();
+
+    if (!documentBeingDestroyed()) {
+        if (firstLineBox()) {
+            // We can't wait for RenderContainer::destroy to clear the selection,
+            // because by then we will have nuked the line boxes.
+            // FIXME: The SelectionController should be responsible for this when it
+            // is notified of DOM mutations.
+            if (isSelectionBorder())
+                view()->clearSelection();
+
+            // If line boxes are contained inside a root, that means we're an inline.
+            // In that case, we need to remove all the line boxes so that the parent
+            // lines aren't pointing to deleted children. If the first line box does
+            // not have a parent that means they are either already disconnected or
+            // root lines that can just be destroyed without disconnecting.
+            if (firstLineBox()->parent()) {
+                for (InlineRunBox* box = firstLineBox(); box; box = box->nextLineBox())
+                    box->remove();
+            }
+        } else if (isInline() && parent())
+            parent()->dirtyLinesFromChangedChild(this);
+    }
+
+    m_lineBoxes.deleteLineBoxes(renderArena());
+
     RenderFlow::destroy();
 }
 
@@ -295,7 +327,7 @@ void RenderInline::splitFlow(RenderObject* beforeChild, RenderBlock* newBlockBox
 
 void RenderInline::paint(PaintInfo& paintInfo, int tx, int ty)
 {
-    paintLines(paintInfo, tx, ty);
+    m_lineBoxes.paint(this, paintInfo, tx, ty);
 }
 
 void RenderInline::absoluteRects(Vector<IntRect>& rects, int tx, int ty, bool topLevel)
@@ -363,7 +395,7 @@ const char* RenderInline::renderName() const
 bool RenderInline::nodeAtPoint(const HitTestRequest& request, HitTestResult& result,
                                 int x, int y, int tx, int ty, HitTestAction hitTestAction)
 {
-    return hitTestLines(request, result, x, y, tx, ty, hitTestAction);
+    return m_lineBoxes.hitTest(this, request, result, x, y, tx, ty, hitTestAction);
 }
 
 VisiblePosition RenderInline::positionForCoordinates(int x, int y)
@@ -524,6 +556,174 @@ void RenderInline::updateHitTestResult(HitTestResult& result, const IntPoint& po
             result.setInnerNonSharedNode(node);
         result.setLocalPoint(localPoint);
     }
+}
+
+void RenderInline::dirtyLineBoxes(bool fullLayout, bool)
+{
+    if (fullLayout)
+        m_lineBoxes.deleteLineBoxes(renderArena());
+    else
+        m_lineBoxes.dirtyLineBoxes();
+}
+
+InlineBox* RenderInline::createInlineBox(bool, bool, bool)
+{
+    InlineFlowBox* flowBox = new (renderArena()) InlineFlowBox(this);
+    m_lineBoxes.appendLineBox(flowBox);
+    return flowBox;
+}
+
+int RenderInline::lineHeight(bool firstLine, bool /*isRootLineBox*/) const
+{
+    if (firstLine && document()->usesFirstLineRules()) {
+        RenderStyle* s = style(firstLine);
+        if (s != style())
+            return s->computedLineHeight();
+    }
+    
+    if (m_lineHeight == -1)
+        m_lineHeight = style()->computedLineHeight();
+    
+    return m_lineHeight;
+}
+
+void RenderInline::addFocusRingRects(GraphicsContext* graphicsContext, int tx, int ty)
+{
+    for (InlineRunBox* curr = firstLineBox(); curr; curr = curr->nextLineBox())
+        graphicsContext->addFocusRingRect(IntRect(tx + curr->xPos(), ty + curr->yPos(), curr->width(), curr->height()));
+
+    for (RenderObject* curr = firstChild(); curr; curr = curr->nextSibling()) {
+        if (!curr->isText() && !curr->isListMarker() && curr->isBox()) {
+            RenderBox* box = toRenderBox(curr);
+            FloatPoint pos;
+            // FIXME: This doesn't work correctly with transforms.
+            if (box->layer()) 
+                pos = curr->localToAbsolute();
+            else
+                pos = FloatPoint(tx + box->x(), ty + box->y());
+            box->addFocusRingRects(graphicsContext, pos.x(), pos.y());
+        }
+    }
+
+    if (continuation())
+        continuation()->addFocusRingRects(graphicsContext, 
+                                          tx - containingBlock()->x() + continuation()->x(),
+                                          ty - containingBlock()->y() + continuation()->y());
+}
+
+void RenderInline::paintOutline(GraphicsContext* graphicsContext, int tx, int ty)
+{
+    if (!hasOutline())
+        return;
+    
+    if (style()->outlineStyleIsAuto() || hasOutlineAnnotation()) {
+        int ow = style()->outlineWidth();
+        Color oc = style()->outlineColor();
+        if (!oc.isValid())
+            oc = style()->color();
+
+        graphicsContext->initFocusRing(ow, style()->outlineOffset());
+        addFocusRingRects(graphicsContext, tx, ty);
+        if (style()->outlineStyleIsAuto())
+            graphicsContext->drawFocusRing(oc);
+        else
+            addPDFURLRect(graphicsContext, graphicsContext->focusRingBoundingRect());
+        graphicsContext->clearFocusRing();
+    }
+
+    if (style()->outlineStyleIsAuto() || style()->outlineStyle() == BNONE)
+        return;
+
+    Vector<IntRect> rects;
+
+    rects.append(IntRect());
+    for (InlineRunBox* curr = firstLineBox(); curr; curr = curr->nextLineBox())
+        rects.append(IntRect(curr->xPos(), curr->yPos(), curr->width(), curr->height()));
+
+    rects.append(IntRect());
+
+    for (unsigned i = 1; i < rects.size() - 1; i++)
+        paintOutlineForLine(graphicsContext, tx, ty, rects.at(i - 1), rects.at(i), rects.at(i + 1));
+}
+
+void RenderInline::paintOutlineForLine(GraphicsContext* graphicsContext, int tx, int ty,
+                                       const IntRect& lastline, const IntRect& thisline, const IntRect& nextline)
+{
+    int ow = style()->outlineWidth();
+    EBorderStyle os = style()->outlineStyle();
+    Color oc = style()->outlineColor();
+    if (!oc.isValid())
+        oc = style()->color();
+
+    int offset = style()->outlineOffset();
+
+    int t = ty + thisline.y() - offset;
+    int l = tx + thisline.x() - offset;
+    int b = ty + thisline.bottom() + offset;
+    int r = tx + thisline.right() + offset;
+    
+    // left edge
+    drawBorder(graphicsContext,
+               l - ow,
+               t - (lastline.isEmpty() || thisline.x() < lastline.x() || (lastline.right() - 1) <= thisline.x() ? ow : 0),
+               l,
+               b + (nextline.isEmpty() || thisline.x() <= nextline.x() || (nextline.right() - 1) <= thisline.x() ? ow : 0),
+               BSLeft,
+               oc, style()->color(), os,
+               (lastline.isEmpty() || thisline.x() < lastline.x() || (lastline.right() - 1) <= thisline.x() ? ow : -ow),
+               (nextline.isEmpty() || thisline.x() <= nextline.x() || (nextline.right() - 1) <= thisline.x() ? ow : -ow));
+    
+    // right edge
+    drawBorder(graphicsContext,
+               r,
+               t - (lastline.isEmpty() || lastline.right() < thisline.right() || (thisline.right() - 1) <= lastline.x() ? ow : 0),
+               r + ow,
+               b + (nextline.isEmpty() || nextline.right() <= thisline.right() || (thisline.right() - 1) <= nextline.x() ? ow : 0),
+               BSRight,
+               oc, style()->color(), os,
+               (lastline.isEmpty() || lastline.right() < thisline.right() || (thisline.right() - 1) <= lastline.x() ? ow : -ow),
+               (nextline.isEmpty() || nextline.right() <= thisline.right() || (thisline.right() - 1) <= nextline.x() ? ow : -ow));
+    // upper edge
+    if (thisline.x() < lastline.x())
+        drawBorder(graphicsContext,
+                   l - ow,
+                   t - ow,
+                   min(r+ow, (lastline.isEmpty() ? 1000000 : tx + lastline.x())),
+                   t ,
+                   BSTop, oc, style()->color(), os,
+                   ow,
+                   (!lastline.isEmpty() && tx + lastline.x() + 1 < r + ow) ? -ow : ow);
+    
+    if (lastline.right() < thisline.right())
+        drawBorder(graphicsContext,
+                   max(lastline.isEmpty() ? -1000000 : tx + lastline.right(), l - ow),
+                   t - ow,
+                   r + ow,
+                   t ,
+                   BSTop, oc, style()->color(), os,
+                   (!lastline.isEmpty() && l - ow < tx + lastline.right()) ? -ow : ow,
+                   ow);
+    
+    // lower edge
+    if (thisline.x() < nextline.x())
+        drawBorder(graphicsContext,
+                   l - ow,
+                   b,
+                   min(r + ow, !nextline.isEmpty() ? tx + nextline.x() + 1 : 1000000),
+                   b + ow,
+                   BSBottom, oc, style()->color(), os,
+                   ow,
+                   (!nextline.isEmpty() && tx + nextline.x() + 1 < r + ow) ? -ow : ow);
+    
+    if (nextline.right() < thisline.right())
+        drawBorder(graphicsContext,
+                   max(!nextline.isEmpty() ? tx + nextline.right() : -1000000, l - ow),
+                   b,
+                   r + ow,
+                   b + ow,
+                   BSBottom, oc, style()->color(), os,
+                   (!nextline.isEmpty() && l - ow < tx + nextline.right()) ? -ow : ow,
+                   ow);
 }
 
 } // namespace WebCore
