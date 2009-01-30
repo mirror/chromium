@@ -509,6 +509,48 @@ class MasterFactory(object):
 
     return factory
 
+  def NewGearsFactory(self, identifier, target='Release'):
+    custom_deps = []
+    custom_deps_internal = []
+    self._FixDeps(custom_deps, custom_deps_internal, [])
+
+    # Create the special spec for the gears solution.
+    spec = 'solutions = ['
+    spec += self._BuildGClientSolution(self._svn_url, custom_deps)
+    spec += ','
+    spec += self._BuildGClientSolution(self._svn_url_internal,
+                                       custom_deps_internal)
+    spec += ','
+    spec += ('{ "name": "src/gears", '
+               '"url": "%s", '
+             '}' % config.Master.gears_url)
+    spec += ','
+    spec += self._BuildGClientSolution(config.Master.gears_url_internal, [])
+    spec += ']'
+
+    factory = self.NewGClientFactory(spec)
+    factory_cmd_obj = factory_commands.FactoryCommands(factory, identifier,
+                                                       target, 'src/chrome',
+                                                       self._target_platform)
+
+    # Add the chrome compile step.
+    factory_cmd_obj.AddCompileStep(self._solution)
+
+    # Add the gears compile step.
+    mode = None
+    if target == 'Release':
+      mode = 'opt'
+
+    factory_cmd_obj = factory_commands.FactoryCommands(factory, identifier,
+                                                       'Hammer', 'src/gears',
+                                                       self._target_platform)
+
+    factory_cmd_obj.AddCompileStep(self._solution, mode=mode,
+                                   options=['--build-tool=scons',
+                                            '--build-args=Hammer BROWSER=CHROME'])
+
+    return factory
+
   def NewReliabilityTestsFactory(self, identifier):
     factory = chromium_factory.BuildFactory()
     factory_cmd_obj = factory_commands.FactoryCommands(factory, identifier,
