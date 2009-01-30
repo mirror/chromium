@@ -24,7 +24,9 @@ class Master(chromium_config_private.Master):
 
   trunk_url = (chromium_config_private.Master.server_url +
                chromium_config_private.Master.repo_root + '/trunk')
-  trunk_url_src = trunk_url + '/src'
+
+  trunk_url_src = trunk_url + '/src' 
+  gears_url = trunk_url_src + '/gears'
   branch_url = (chromium_config_private.Master.server_url +
                 chromium_config_private.Master.repo_root + '/branches')
   merge_branch_url = branch_url + '/chrome_webkit_merge_branch'
