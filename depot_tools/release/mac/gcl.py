@@ -532,6 +532,16 @@ def UploadCL(change_info, args):
   no_try = "--no_try" in args
   if no_try:
     args.remove("--no_try")
+  else:
+    # Support --no-try as --no_try
+    no_try = "--no-try" in args
+    if no_try:
+      args.remove("--no-try")
+  
+  # Map --send-mail to --send_mail
+  if "--send-mail" in args:
+    args.remove("--send-mail")
+    args.append("--send_mail")
 
   upload_arg = ["upload.py", "-y"]
   upload_arg.append("--server=" + GetCodeReviewSetting("CODE_REVIEW_SERVER"))
@@ -821,7 +831,7 @@ def main(argv=None):
     Lint(change_info, argv[3:])
   elif command == "upload":
     UploadCL(change_info, argv[3:])
-  elif command == "commit":
+  elif command in ("commit", "submit"):
     Commit(change_info, argv[3:])
   elif command == "delete":
     change_info.Delete()
