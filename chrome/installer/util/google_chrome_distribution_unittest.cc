@@ -9,7 +9,6 @@
 #include "base/registry.h"
 #include "base/scoped_ptr.h"
 #include "base/file_util.h"
-#include "base/file_path.h"
 #include "chrome/installer/util/browser_distribution.h"
 #include "chrome/installer/util/google_update_constants.h"
 #include "chrome/installer/util/google_chrome_distribution.h"
@@ -186,7 +185,7 @@ TEST_F(GoogleChromeDistributionTest, UpdateDiffInstallStatusTest) {
 #endif
 
 TEST(MasterPreferences, ParseDistroParams) {
-  FilePath prefs;
+  std::wstring prefs;
   ASSERT_TRUE(file_util::CreateTemporaryFileName(&prefs));
   const char text[] =
     "{ \n"
@@ -207,8 +206,8 @@ TEST(MasterPreferences, ParseDistroParams) {
     "  }\n"
     "} \n";
 
-  EXPECT_TRUE(file_util::WriteFile(prefs.value(), text, sizeof(text)));
-  int result = installer_util::ParseDistributionPreferences(prefs.value());
+  EXPECT_TRUE(file_util::WriteFile(prefs, text, sizeof(text)));
+  int result = installer_util::ParseDistributionPreferences(prefs);
   EXPECT_FALSE(result & installer_util::MASTER_PROFILE_NOT_FOUND);
   EXPECT_FALSE(result & installer_util::MASTER_PROFILE_ERROR);
   EXPECT_TRUE(result & installer_util::MASTER_PROFILE_NO_FIRST_RUN_UI);
