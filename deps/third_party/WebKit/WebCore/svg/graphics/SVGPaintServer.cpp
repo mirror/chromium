@@ -41,6 +41,7 @@
 // FIXME: See the FIXME below about moving the teardown code into the graphics context.
 #include "PlatformContextSkia.h"
 #endif
+
 namespace WebCore {
 
 SVGPaintServer::SVGPaintServer()
@@ -183,9 +184,9 @@ void SVGPaintServer::renderPath(GraphicsContext*& context, const RenderObject* p
         context->strokePath();
 }
 
+#if PLATFORM(SKIA)
 void SVGPaintServer::teardown(GraphicsContext*& context, const RenderObject*, SVGPaintTargetType, bool) const
 {
-#if PLATFORM(SKIA)
     // FIXME: Move this into the GraphicsContext
     // WebKit implicitly expects us to reset the path.
     // For example in fillAndStrokePath() of RenderPath.cpp the path is 
@@ -194,8 +195,12 @@ void SVGPaintServer::teardown(GraphicsContext*& context, const RenderObject*, SV
     context->beginPath();
     context->platformContext()->setGradient(0);
     context->platformContext()->setPattern(0);
-#endif
 }
+#else
+void SVGPaintServer::teardown(GraphicsContext*&, const RenderObject*, SVGPaintTargetType, bool) const
+{
+}
+#endif
 
 DashArray dashArrayFromRenderingStyle(const RenderStyle* style)
 {

@@ -27,7 +27,8 @@
 
 #include "DeprecatedPtrList.h"
 #include "GapRects.h"
-#include "RenderFlow.h"
+#include "RenderContainer.h"
+#include "RenderLineBoxList.h"
 #include "RootInlineBox.h"
 #include <wtf/ListHashSet.h>
 
@@ -44,7 +45,7 @@ typedef BidiResolver<InlineIterator, BidiRun> InlineBidiResolver;
 
 enum CaretType { CursorCaret, DragCaret };
 
-class RenderBlock : public RenderFlow {
+class RenderBlock : public RenderContainer {
 public:
     RenderBlock(Node*);
     virtual ~RenderBlock();
@@ -62,9 +63,16 @@ public:
     virtual bool isInlineBlockOrInlineTable() const { return isInline() && isReplaced(); }
 
     void makeChildrenNonInline(RenderObject* insertionPoint = 0);
-    
+
+    RenderLineBoxList* lineBoxes() { return &m_lineBoxes; }
+    const RenderLineBoxList* lineBoxes() const { return &m_lineBoxes; }
+
+    InlineFlowBox* firstLineBox() const { return m_lineBoxes.firstLineBox(); }
+    InlineFlowBox* lastLineBox() const { return m_lineBoxes.lastLineBox(); }
+
     void deleteLineBoxTree();
     virtual void dirtyLineBoxes(bool fullLayout, bool isRootLineBox = false);
+    virtual void dirtyLinesFromChangedChild(RenderObject* child) { m_lineBoxes.dirtyLinesFromChangedChild(this, child); }
 
     // The height (and width) of a block when you include overflow spillage out of the bottom
     // of the block (e.g., a <div style="height:25px"> that has a 100px tall image inside
@@ -101,7 +109,7 @@ public:
         }
     }
 
-    virtual void addChildToFlow(RenderObject* newChild, RenderObject* beforeChild);
+    virtual void addChild(RenderObject* newChild, RenderObject* beforeChild = 0);
     virtual void removeChild(RenderObject*);
 
     virtual void repaintOverhangingFloats(bool paintAllDescendants);
@@ -495,6 +503,8 @@ private:
     MaxMargin* m_maxMargin;
 
 protected:
+    RenderLineBoxList m_lineBoxes;   // All of the root line boxes created for this block flow.  For example, <div>Hello<br>world.</div> will have two total lines for the <div>.
+
     // How much content overflows out of our block vertically or horizontally.
     int m_overflowHeight;
     int m_overflowWidth;
@@ -503,6 +513,21 @@ protected:
     
     mutable int m_lineHeight;
 };
+
+inline RenderBlock* toRenderBlock(RenderObject* o)
+{ 
+    ASSERT(!o || o->isRenderBlock());
+    return static_cast<RenderBlock*>(o);
+}
+
+inline const RenderBlock* toRenderBlock(const RenderObject* o)
+{ 
+    ASSERT(!o || o->isRenderBlock());
+    return static_cast<const RenderBlock*>(o);
+}
+
+// This will catch anyone doing an unnecessary cast.
+void toRenderBlock(const RenderBlock* o);
 
 } // namespace WebCore
 

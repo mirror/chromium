@@ -25,13 +25,14 @@
 #ifndef RenderInline_h
 #define RenderInline_h
 
-#include "RenderFlow.h"
+#include "RenderContainer.h"
+#include "RenderLineBoxList.h"
 
 namespace WebCore {
 
 class Position;
 
-class RenderInline : public RenderFlow {
+class RenderInline : public RenderContainer {
 public:
     RenderInline(Node*);
     virtual ~RenderInline();
@@ -42,11 +43,14 @@ public:
 
     virtual bool isRenderInline() const { return true; }
 
-    virtual void addChildToFlow(RenderObject* newChild, RenderObject* beforeChild);
+    virtual void addChild(RenderObject* newChild, RenderObject* beforeChild = 0);
+    void addChildToContinuation(RenderObject* newChild, RenderObject* beforeChild);
+    virtual void addChildIgnoringContinuation(RenderObject* newChild, RenderObject* beforeChild = 0);
+
     void splitInlines(RenderBlock* fromBlock, RenderBlock* toBlock, RenderBlock* middleBlock,
-                      RenderObject* beforeChild, RenderBox* oldCont);
+                      RenderObject* beforeChild, RenderContainer* oldCont);
     void splitFlow(RenderObject* beforeChild, RenderBlock* newBlockBox,
-                   RenderObject* newChild, RenderBox* oldCont);
+                   RenderObject* newChild, RenderContainer* oldCont);
 
     virtual void layout() { } // Do nothing for layout()
 
@@ -79,18 +83,27 @@ public:
 
     virtual InlineBox* createInlineBox(bool makePlaceHolderBox, bool isRootLineBox, bool isOnlyRun=false);    
     virtual void dirtyLineBoxes(bool fullLayout, bool isRootLineBox = false);
+    virtual void dirtyLinesFromChangedChild(RenderObject* child) { m_lineBoxes.dirtyLinesFromChangedChild(this, child); }
+
+    RenderLineBoxList* lineBoxes() { return &m_lineBoxes; }
+    const RenderLineBoxList* lineBoxes() const { return &m_lineBoxes; }
+
+    InlineFlowBox* firstLineBox() const { return m_lineBoxes.firstLineBox(); }
+    InlineFlowBox* lastLineBox() const { return m_lineBoxes.lastLineBox(); }
 
     virtual int lineHeight(bool firstLine, bool isRootLineBox = false) const;
 
-    RenderBox* continuation() const { return m_continuation; }
+    RenderContainer* continuation() const { return m_continuation; }
     RenderInline* inlineContinuation() const;
-    void setContinuation(RenderBox* c) { m_continuation = c; }
+    void setContinuation(RenderContainer* c) { m_continuation = c; }
     
     virtual void updateDragState(bool dragOn);
     
     virtual void childBecameNonInline(RenderObject* child);
 
     virtual void updateHitTestResult(HitTestResult&, const IntPoint&);
+
+    IntSize relativePositionedInlineOffset(const RenderObject* child) const;
 
     virtual void addFocusRingRects(GraphicsContext*, int tx, int ty);
     void paintOutline(GraphicsContext*, int tx, int ty);
@@ -104,14 +117,18 @@ public:
 protected:
     virtual void styleDidChange(RenderStyle::Diff, const RenderStyle* oldStyle);
 
-    static RenderInline* cloneInline(RenderFlow* src);
+    static RenderInline* cloneInline(RenderInline* src);
 
 private:
     void paintOutlineForLine(GraphicsContext*, int tx, int ty, const IntRect& prevLine, const IntRect& thisLine, const IntRect& nextLine);
+    RenderContainer* continuationBefore(RenderObject* beforeChild);
+
+protected:
+    RenderLineBoxList m_lineBoxes;   // All of the line boxes created for this inline flow.  For example, <i>Hello<br>world.</i> will have two <i> line boxes.
 
 private:
-    RenderBox* m_continuation; // Can be either a block or an inline. <b><i><p>Hello</p></i></b>. In this example the <i> will have a block as its continuation but the
-                               // <b> will just have an inline as its continuation.
+    RenderContainer* m_continuation; // Can be either a block or an inline. <b><i><p>Hello</p></i></b>. In this example the <i> will have a block as its continuation but the
+                                     // <b> will just have an inline as its continuation.
     mutable int m_lineHeight;
 };
 

@@ -416,8 +416,8 @@ void RenderLayer::updateLayerPosition()
         // For positioned layers, we subtract out the enclosing positioned layer's scroll offset.
         positionedParent->subtractScrolledContentOffset(x, y);
         
-        if (renderer()->isPositioned()) {
-            IntSize offset = toRenderBox(renderer())->offsetForPositionedInContainer(positionedParent->renderer());
+        if (renderer()->isPositioned() && positionedParent->renderer()->isRelPositioned() && positionedParent->renderer()->isRenderInline()) {
+            IntSize offset = static_cast<RenderInline*>(positionedParent->renderer())->relativePositionedInlineOffset(renderer());
             x += offset.width();
             y += offset.height();
         }
@@ -1075,7 +1075,7 @@ void RenderLayer::resize(const PlatformMouseEvent& evt, const IntSize& oldOffset
     ExceptionCode ec;
 
     if (difference.width()) {
-        if (element && element->isControl()) {
+        if (element && element->isFormControlElement()) {
             // Make implicit margins from the theme explicit (see <http://bugs.webkit.org/show_bug.cgi?id=9547>).
             style->setProperty(CSSPropertyMarginLeft, String::number(renderer->marginLeft() / zoomFactor) + "px", false, ec);
             style->setProperty(CSSPropertyMarginRight, String::number(renderer->marginRight() / zoomFactor) + "px", false, ec);
@@ -1087,7 +1087,7 @@ void RenderLayer::resize(const PlatformMouseEvent& evt, const IntSize& oldOffset
     }
 
     if (difference.height()) {
-        if (element && element->isControl()) {
+        if (element && element->isFormControlElement()) {
             // Make implicit margins from the theme explicit (see <http://bugs.webkit.org/show_bug.cgi?id=9547>).
             style->setProperty(CSSPropertyMarginTop, String::number(renderer->marginTop() / zoomFactor) + "px", false, ec);
             style->setProperty(CSSPropertyMarginBottom, String::number(renderer->marginBottom() / zoomFactor) + "px", false, ec);
@@ -1441,7 +1441,7 @@ RenderLayer::updateScrollInfoAfterLayout()
                 m_inOverflowRelayout = true;
                 renderer()->setNeedsLayout(true);
                 if (renderer()->isRenderBlock())
-                    static_cast<RenderBlock*>(renderer())->layoutBlock(true);
+                    toRenderBlock(renderer())->layoutBlock(true);
                 else
                     renderer()->layout();
                 m_inOverflowRelayout = false;

@@ -79,7 +79,7 @@ public:
     // If this is true the contents have not been marked up with the magic
     // color and all text drawing needs to go to a layer so that the alpha is
     // correctly updated.
-    void setDrawingToImageBuffer(bool value);
+    void setDrawingToImageBuffer(bool);
     bool isDrawingToImageBuffer() const;
 #endif
 
@@ -91,8 +91,8 @@ public:
     // invoked.
     // NOTE: |imageBuffer| may be deleted before the |restore| is invoked.
 #if defined(__linux__) || PLATFORM(WIN_OS)
-    void beginLayerClippedToImage(const WebCore::FloatRect& rect,
-                                  const WebCore::ImageBuffer* imageBuffer);
+    void beginLayerClippedToImage(const WebCore::FloatRect&,
+                                  const WebCore::ImageBuffer*);
 #endif
 
     // Sets up the common flags on a paint for antialiasing, effects, etc.
@@ -171,7 +171,7 @@ private:
 #if defined(__linux__) || PLATFORM(WIN_OS)
     // Used when restoring and the state has an image clip. Only shows the pixels in
     // m_canvas that are also in imageBuffer.
-    void applyClipFromImage(const WebCore::FloatRect& rect, const SkBitmap& imageBuffer);
+    void applyClipFromImage(const WebCore::FloatRect&, const SkBitmap&);
 #endif
 
     // Defines drawing style.

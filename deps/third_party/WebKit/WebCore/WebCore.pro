@@ -2995,6 +2995,7 @@ SOURCES += \
     platform/text/TextEncodingRegistry.cpp \
     platform/text/TextStream.cpp \
     platform/ThreadGlobalData.cpp \
+    platform/ThreadTimers.cpp \
     platform/Timer.cpp \
     platform/text/UnicodeRange.cpp \
     platform/Widget.cpp \
@@ -3026,7 +3027,6 @@ SOURCES += \
     rendering/RenderFieldset.cpp \
     rendering/RenderFileUploadControl.cpp \
     rendering/RenderFlexibleBox.cpp \
-    rendering/RenderFlow.cpp \
     rendering/RenderFrame.cpp \
     rendering/RenderFrameSet.cpp \
     rendering/RenderHTMLCanvas.cpp \

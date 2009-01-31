@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Apple Inc. All Rights Reserved.
+ * Copyright (C) 2009 Apple Inc.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -21,58 +21,36 @@
  * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
- *
  */
 
-#ifndef ThreadGlobalData_h
-#define ThreadGlobalData_h
-
-#include "StringHash.h"
-#include <wtf/HashSet.h>
-#include <wtf/Noncopyable.h>
+#ifndef RenderObjectChildList_h
+#define RenderObjectChildList_h
 
 namespace WebCore {
 
-    class EventNames;
-    struct ICUConverterWrapper;
-    struct TECConverterWrapper;
-    class ThreadTimers;
+class RenderObject;
 
-    class ThreadGlobalData : Noncopyable {
-    public:
-        ThreadGlobalData();
-        ~ThreadGlobalData();
+class RenderObjectChildList {
+public:
+    RenderObjectChildList()
+        : m_firstChild(0)
+        , m_lastChild(0)
+    {
+    }
 
-        EventNames& eventNames() { return *m_eventNames; }
-        StringImpl* emptyString() { return m_emptyString; }
-        HashSet<StringImpl*>& atomicStringTable() { return *m_atomicStringTable; }
-        ThreadTimers& threadTimers() { return *m_threadTimers; }
-
-#if USE(ICU_UNICODE)
-        ICUConverterWrapper& cachedConverterICU() { return *m_cachedConverterICU; }
-#endif
-
-#if PLATFORM(MAC)
-        TECConverterWrapper& cachedConverterTEC() { return *m_cachedConverterTEC; }
-#endif
-
-    private:
-        StringImpl* m_emptyString;
-        HashSet<StringImpl*>* m_atomicStringTable;
-        EventNames* m_eventNames;
-        ThreadTimers* m_threadTimers;
-
-#if USE(ICU_UNICODE)
-        ICUConverterWrapper* m_cachedConverterICU;
-#endif
-
-#if PLATFORM(MAC)
-        TECConverterWrapper* m_cachedConverterTEC;
-#endif
-    };
-
-    ThreadGlobalData& threadGlobalData();
+    RenderObject* firstChild() const { return m_firstChild; }
+    RenderObject* lastChild() const { return m_lastChild; }
+    
+    // FIXME: Temporary while RenderContainer still exists. Eventually this will just happen during insert/append/remove methods on the child list, and nobody
+    // will need to manipulate firstChild or lastChild directly.
+    void setFirstChild(RenderObject* child) { m_firstChild = child; }
+    void setLastChild(RenderObject* child) { m_lastChild = child; }
+    
+private:
+    RenderObject* m_firstChild;
+    RenderObject* m_lastChild;
+};
 
 } // namespace WebCore
 
-#endif // ThreadGlobalData_h
+#endif // RenderObjectChildList_h

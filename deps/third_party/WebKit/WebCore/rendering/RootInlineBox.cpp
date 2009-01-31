@@ -74,6 +74,11 @@ void RootInlineBox::detachEllipsisBox(RenderArena* arena)
     }
 }
 
+RenderLineBoxList* RootInlineBox::rendererLineBoxes() const
+{
+    return block()->lineBoxes();
+}
+
 void RootInlineBox::clearTruncation()
 {
     if (m_hasEllipsisBox) {
@@ -339,7 +344,7 @@ int RootInlineBox::selectionTop()
 
 RenderBlock* RootInlineBox::block() const
 {
-    return static_cast<RenderBlock*>(m_object);
+    return toRenderBlock(m_object);
 }
 
 static bool isEditableLeaf(InlineBox* leaf)

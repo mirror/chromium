@@ -28,6 +28,7 @@
 
 #include "IntPoint.h"
 #include "PlatformString.h"
+#include <wtf/OwnPtr.h>
 
 #if PLATFORM(MAC)
 #import <wtf/RetainPtr.h>
@@ -138,7 +139,11 @@ public:
     // in GlobalHistory. The WebKit api for this is to use -[WebHistory setLastVisitedTimeInterval:forItem:] instead.
     void setLastVisitedTime(double);
     void visited(const String& title, double time);
-    
+
+    void addRedirectURL(const String&);
+    Vector<String>* redirectURLs() const;
+    void setRedirectURLs(std::auto_ptr<Vector<String> >);
+
     bool isCurrentDocument(Document*) const;
     
 #if PLATFORM(MAC)
@@ -189,7 +194,9 @@ private:
     bool m_isInPageCache;
     bool m_isTargetItem;
     int m_visitCount;
-    
+
+    OwnPtr<Vector<String> > m_redirectURLs;
+
     // info used to repost form data
     RefPtr<FormData> m_formData;
     String m_formContentType;

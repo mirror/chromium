@@ -86,7 +86,7 @@ void RenderTextControl::styleDidChange(RenderStyle::Diff diff, const RenderStyle
     RenderBlock::styleDidChange(diff, oldStyle);
 
     if (m_innerText) {
-        RenderBlock* textBlockRenderer = static_cast<RenderBlock*>(m_innerText->renderer());
+        RenderBlock* textBlockRenderer = toRenderBlock(m_innerText->renderer());
         RefPtr<RenderStyle> textBlockStyle = createInnerTextStyle(style());
         // We may have set the width and the height in the old style in layout().
         // Reset them now to avoid getting a spurious layout hint.
@@ -102,14 +102,31 @@ void RenderTextControl::styleDidChange(RenderStyle::Diff diff, const RenderStyle
     setReplaced(isInline());
 }
 
+static inline bool updateUserModifyProperty(Node* node, RenderStyle* style)
+{
+    bool isEnabled = true;
+    bool isReadOnlyControl = false;
+
+    if (node->isElementNode()) {
+        FormControlElement* formControlElement = toFormControlElement(static_cast<Element*>(node));
+        ASSERT(formControlElement);
+
+        isEnabled = formControlElement->isEnabled();
+        isReadOnlyControl = formControlElement->isReadOnlyControl();
+    }
+
+    style->setUserModify((isReadOnlyControl || !isEnabled) ? READ_ONLY : READ_WRITE_PLAINTEXT_ONLY);
+    return !isEnabled;
+}
+
 void RenderTextControl::adjustInnerTextStyle(const RenderStyle* startStyle, RenderStyle* textBlockStyle) const
 {
     // The inner block, if present, always has its direction set to LTR,
     // so we need to inherit the direction from the element.
     textBlockStyle->setDirection(style()->direction());
-    textBlockStyle->setUserModify((node()->isReadOnlyControl() || !node()->isEnabled()) ? READ_ONLY : READ_WRITE_PLAINTEXT_ONLY);
 
-    if (!node()->isEnabled())
+    bool disabled = updateUserModifyProperty(node(), textBlockStyle);
+    if (disabled)
         textBlockStyle->setColor(disabledTextColor(textBlockStyle->color(), startStyle->backgroundColor()));
 }
 
@@ -138,7 +155,7 @@ int RenderTextControl::textBlockWidth() const
 
 void RenderTextControl::updateFromElement()
 {
-    m_innerText->renderer()->style()->setUserModify((node()->isReadOnlyControl() || !node()->isEnabled()) ? READ_ONLY : READ_WRITE_PLAINTEXT_ONLY); 
+    updateUserModifyProperty(node(), m_innerText->renderer()->style());
 }
 
 void RenderTextControl::setInnerTextValue(const String& innerTextValue)

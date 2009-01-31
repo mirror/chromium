@@ -152,27 +152,25 @@ struct ScheduledRedirection {
     bool wasUserGesture;
     bool wasRefresh;
 
-    ScheduledRedirection(double redirectDelay, const String& redirectURL, bool redirectLockHistory, bool userGesture, bool refresh)
+    ScheduledRedirection(double delay, const String& url, bool lockHistory, bool wasUserGesture, bool refresh)
         : type(redirection)
-        , delay(redirectDelay)
-        , url(redirectURL)
+        , delay(delay)
+        , url(url)
         , historySteps(0)
-        , lockHistory(redirectLockHistory)
-        , wasUserGesture(userGesture)
+        , lockHistory(lockHistory)
+        , wasUserGesture(wasUserGesture)
         , wasRefresh(refresh)
     {
     }
 
-    ScheduledRedirection(Type locationChangeType,
-            const String& locationChangeURL, const String& locationChangeReferrer,
-            bool locationChangeLockHistory, bool locationChangeWasUserGesture, bool refresh)
+    ScheduledRedirection(Type locationChangeType, const String& url, const String& referrer, bool lockHistory, bool wasUserGesture, bool refresh)
         : type(locationChangeType)
         , delay(0)
-        , url(locationChangeURL)
-        , referrer(locationChangeReferrer)
+        , url(url)
+        , referrer(referrer)
         , historySteps(0)
-        , lockHistory(locationChangeLockHistory)
-        , wasUserGesture(locationChangeWasUserGesture)
+        , lockHistory(lockHistory)
+        , wasUserGesture(wasUserGesture)
         , wasRefresh(refresh)
     {
     }
@@ -2870,9 +2868,7 @@ void FrameLoader::commitProvisionalLoad(PassRefPtr<CachedPage> prpCachedPage)
 
     // Check to see if we need to cache the page we are navigating away from into the back/forward cache.
     // We are doing this here because we know for sure that a new page is about to be loaded.
-    if (canCachePage() && !m_currentHistoryItem->isInPageCache()) {
-        if (Document* document = m_frame->document())
-            document->suspendActiveDOMObjects();
+    if (canCachePage() && !m_currentHistoryItem->isInPageCache())
         cachePageForHistoryItem(m_currentHistoryItem.get());
 #if USE(JSC)
         ScriptController* proxy = m_frame->script();
@@ -2894,7 +2890,6 @@ void FrameLoader::commitProvisionalLoad(PassRefPtr<CachedPage> prpCachedPage)
 #elif USE(V8)
         // FIXME: Need to do something here.
 #endif
-    }
     
     if (m_loadType != FrameLoadTypeReplace)
         closeOldDataSources();
@@ -3156,7 +3151,6 @@ void FrameLoader::open(CachedPage& cachedPage)
     updatePolicyBaseURL();
 
     cachedPage.restore(m_frame->page());
-    document->resumeActiveDOMObjects();
 
     // It is necessary to update any platform script objects after restoring the
     // cached page.
@@ -3417,9 +3411,7 @@ void FrameLoader::checkLoadCompleteForThisFrame()
         }
         
         case FrameStateComplete:
-            // Even if already complete, we might have set a previous item on a frame that
-            // didn't do any data loading on the past transaction. Make sure to clear these out.
-            m_client->frameLoadCompleted();
+            frameLoadCompleted();
             return;
     }
 
@@ -3480,7 +3472,13 @@ void FrameLoader::didFirstVisuallyNonEmptyLayout()
 
 void FrameLoader::frameLoadCompleted()
 {
+    // Note: Can be called multiple times.
+
     m_client->frameLoadCompleted();
+
+    // Even if already complete, we might have set a previous item on a frame that
+    // didn't do any data loading on the past transaction. Make sure to clear these out.
+    setPreviousHistoryItem(0);
 
     // After a canceled provisional load, firstLayoutDone is false.
     // Reset it to true if we're displaying a page.

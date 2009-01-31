@@ -1,3 +1,707 @@
+2009-01-30  David Hyatt  <hyatt@apple.com>
+
+        Add toRenderBlock methods for casting RenderObjects to RenderBlocks.  The methods will assert if the object
+        is not a RenderBlock.  Also add a toRenderBlock method that takes a RenderBlock but returns void and that
+        is unimplemented.  This method will catch anyone trying to do a cast when the object is already a RenderBlock.
+
+        Making this change caught a bad cast in RenderBlock::layoutBlockChildren, so that is also fixed by this
+        patch with a containsFloats() check.
+
+        Reviewed by Darin Adler
+
+        * dom/PositionIterator.cpp:
+        (WebCore::PositionIterator::isCandidate):
+        * editing/CompositeEditCommand.cpp:
+        (WebCore::CompositeEditCommand::addBlockPlaceholderIfNeeded):
+        * editing/Editor.cpp:
+        (WebCore::Editor::hasBidiSelection):
+        * page/AccessibilityRenderObject.cpp:
+        (WebCore::AccessibilityRenderObject::anchorElement):
+        (WebCore::AccessibilityRenderObject::accessibilityIsIgnored):
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::styleWillChange):
+        (WebCore::RenderBlock::removeChild):
+        (WebCore::RenderBlock::layoutBlock):
+        (WebCore::RenderBlock::collapseMargins):
+        (WebCore::RenderBlock::clearFloatsIfNeeded):
+        (WebCore::RenderBlock::layoutBlockChildren):
+        (WebCore::RenderBlock::fillBlockSelectionGaps):
+        (WebCore::RenderBlock::markAllDescendantsWithFloatsForLayout):
+        (WebCore::RenderBlock::firstLineBlock):
+        (WebCore::getLineAtIndex):
+        (WebCore::getHeightForLineCount):
+        (WebCore::RenderBlock::lineCount):
+        (WebCore::RenderBlock::adjustForBorderFit):
+        (WebCore::RenderBlock::clearTruncation):
+        * rendering/RenderBlock.h:
+        (WebCore::toRenderBlock):
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::offsetFromContainer):
+        (WebCore::RenderBox::computeRectForRepaint):
+        (WebCore::RenderBox::calcReplacedHeightUsing):
+        * rendering/RenderFlexibleBox.cpp:
+        (WebCore::RenderFlexibleBox::layoutHorizontalBox):
+        (WebCore::RenderFlexibleBox::layoutVerticalBox):
+        * rendering/RenderInline.cpp:
+        (WebCore::RenderInline::inlineContinuation):
+        (WebCore::nextContinuation):
+        (WebCore::RenderInline::positionForCoordinates):
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::updateScrollInfoAfterLayout):
+        * rendering/RenderListItem.cpp:
+        (WebCore::getParentOfFirstLineBox):
+        (WebCore::RenderListItem::positionListMarker):
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::containingBlock):
+        (WebCore::RenderObject::computeRectForRepaint):
+        (WebCore::RenderObject::removeFromObjectLists):
+        (WebCore::RenderObject::getTextDecorationColors):
+        * rendering/RenderTable.cpp:
+        (WebCore::RenderTable::addChild):
+        (WebCore::RenderTable::recalcSections):
+        * rendering/RenderTextControl.cpp:
+        (WebCore::RenderTextControl::styleDidChange):
+        * rendering/RenderTextControlSingleLine.cpp:
+        (WebCore::RenderTextControlSingleLine::adjustControlHeightBasedOnLineHeight):
+        * rendering/RootInlineBox.cpp:
+        (WebCore::RootInlineBox::block):
+        * rendering/bidi.cpp:
+        (WebCore::RenderBlock::createLineBoxes):
+
+2009-01-30  Brady Eidson  <beidson@apple.com>
+
+        Reviewed by Sam Weinig
+
+        - Let CachedFrame handle the suspending/resuming of active DOM objects itself instead of
+          relying on some outside force.
+        - Clear the previous history item inside FrameLoader instead of relying on multiple
+          FrameLoaderClients to do it.
+
+        * history/CachedFrame.cpp:
+        (WebCore::CachedFrame::CachedFrame): Suspend active DOM objects here.
+        (WebCore::CachedFrame::restore): Resume those DOM objects here.
+        * history/CachedFrame.h:
+        (WebCore::CachedFrame::domWindow):
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::commitProvisionalLoad): Let CachedFrame  creation handle the 
+          suspending of active DOM objects.
+        (WebCore::FrameLoader::open): Let CachedFrame::restore() handle resuming those DOM objects.
+        (WebCore::FrameLoader::checkLoadCompleteForThisFrame): Call frameLoadCompleted() instead
+          of performing a client call by itself.
+        (WebCore::FrameLoader::frameLoadCompleted):
+
+2009-01-30  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        <rdar://problem/6448823> Application Cache is kept after a private browsing session
+
+        * loader/appcache/ApplicationCacheGroup.cpp:
+        (WebCore::ApplicationCacheGroup::selectCache):
+        (WebCore::ApplicationCacheGroup::update):
+        Cache update will not be started if private browsing is enabled. Existing cache version
+        from disk database will be used.
+
+        * loader/appcache/ApplicationCacheGroup.h: Made postListenerTask() static, in order to call
+        it when refusing to update from selectCache().
+
+        * loader/appcache/ApplicationCache.cpp:
+        (WebCore::ApplicationCache::addDynamicEntry):
+        (WebCore::ApplicationCache::removeDynamicEntry):
+        Added reminders about private browsing to unimplemented methods.
+
+2009-01-30  Laszlo Gombos  <laszlo.1.gombos@nokia.com>
+
+        Reviewed by Simon Hausmann.
+
+        Bug 23580: GNU mode RVCT compilation support
+        <https://bugs.webkit.org/show_bug.cgi?id=23580>
+
+        * html/PreloadScanner.cpp: Use COMPILER(GCC) instead of __GNUC__.
+
+2009-01-30  David Levin  <levin@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Bug 23616: Various "template helpers" should be consolidated from isolated files in JavaScriptCore.
+        <https://bugs.webkit.org/show_bug.cgi?id=23616>
+
+        Added forwarding header.
+
+        * ForwardingHeaders/wtf/TypeTraits.h: Added.
+
+2009-01-30  David Levin  <levin@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Bug 23599: ResourceError needs to be copyable for use in another thread.
+        <https://bugs.webkit.org/show_bug.cgi?id=23599>
+
+        Add ResourceErrorBase::copy method.  (Not yet used.)
+
+        * platform/network/ResourceErrorBase.cpp:
+        (WebCore::ResourceErrorBase::copy):
+        * platform/network/ResourceErrorBase.h:
+
+2009-01-29  Stephanie Lewis <slewis@apple.com>
+
+        RS by Oliver Hunt.
+
+        Update the order files.
+
+        * WebCore.order:
+
+2009-01-29  Dmitry Titov  <dimich@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23488
+
+        Make TimerBase thread-aware (for Workers).
+        Added new class ThreadTimers - it keeps a heap of all timers for a thread (previously kept in a static global).
+        Pointer to instance of ThreadTimers is stored in GlobalThreadData.
+        Most static methods of TimerBase went to ThreadTimers.
+
+        The TimerBase functionality did not change (it maintains the timer heap which computes the nearest firing).
+
+        Added new abstract class SharedTimer, so worker threads can provide their own implementation (will be implemented on WorkerRunLoop).
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.scons:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+        Added new ThreadTimers.cpp to build files.
+
+        * platform/SharedTimer.h:
+        (WebCore::SharedTimer::~SharedTimer):
+        (WebCore::MainThreadSharedTimer::setFiredFunction):
+        (WebCore::MainThreadSharedTimer::setFireTime):
+        (WebCore::MainThreadSharedTimer::stop):
+        Added abstract SharedTimer and MainThreadSharedTimer which redirects to the existing port-supplied functions.
+
+        * platform/ThreadGlobalData.cpp:
+        (WebCore::ThreadGlobalData::ThreadGlobalData):
+        (WebCore::ThreadGlobalData::~ThreadGlobalData):
+        * platform/ThreadGlobalData.h:
+        (WebCore::ThreadGlobalData::threadTimers):
+        Added ThreadTimers to ThreadGlobalData.
+
+        * platform/ThreadTimers.cpp: Added.
+        (WebCore::mainThreadSharedTimer):
+        Static getter for a MainThreadSharedTimer singleton.
+
+        (WebCore::ThreadTimers::ThreadTimers):
+        (WebCore::ThreadTimers::setSharedTimer):
+        (WebCore::ThreadTimers::updateSharedTimer):
+        (WebCore::ThreadTimers::collectFiringTimers):
+        (WebCore::ThreadTimers::fireTimers):
+        (WebCore::ThreadTimers::sharedTimerFired):
+        (WebCore::ThreadTimers::sharedTimerFiredInternal):
+        (WebCore::ThreadTimers::fireTimersInNestedEventLoop):
+        ThreadTimers implementation. Most of the code is moved from previous static functions on TimerBase.
+        Need a new class so each thread may get ts own copy of the timer heap.
+
+        * platform/ThreadTimers.h: Added.
+        (WebCore::ThreadTimers::timerHeap):
+        (WebCore::ThreadTimers::timersReadyToFire):
+
+        * platform/Timer.cpp:
+        (WebCore::timerHeap):
+        (WebCore::timersReadyToFire):
+        (WebCore::TimerHeapElement::TimerHeapElement):
+        (WebCore::TimerHeapElement::checkConsistency):
+        (WebCore::TimerHeapElement::operator=):
+        (WebCore::TimerHeapIterator::checkConsistency):
+        (WebCore::TimerBase::TimerBase):
+        (WebCore::TimerBase::~TimerBase):
+        (WebCore::TimerBase::isActive):
+        (WebCore::TimerBase::checkHeapIndex):
+        (WebCore::TimerBase::heapDelete):
+        (WebCore::TimerBase::heapDeleteMin):
+        (WebCore::TimerBase::heapInsert):
+        (WebCore::TimerBase::heapPopMin):
+        (WebCore::TimerBase::setNextFireTime):
+        (WebCore::TimerBase::fireTimersInNestedEventLoop):
+        Now instead of static timer heap these use accessor functions that pull thread-specific heap instance.
+
+        * platform/Timer.h:
+        static methods moved to ThreadTimers.
+
+2009-01-29  David Hyatt  <hyatt@apple.com>
+
+        Beginning of work to eliminate RenderContainer and make containership "pluggable" into any spot in the render tree.  The first step is to create
+        the new object that will handle children: RenderObjectChildList and move RenderContainer's member variables into it.  Subsequent patches will begin
+        moving RenderContainer's functionality into RenderObjectChildList.
+
+        Reviewed by Eric Seidel
+
+        * WebCore.xcodeproj/project.pbxproj:
+        * rendering/RenderContainer.cpp:
+        (WebCore::RenderContainer::RenderContainer):
+        (WebCore::RenderContainer::destroyLeftoverChildren):
+        (WebCore::RenderContainer::addChild):
+        (WebCore::RenderContainer::removeChildNode):
+        (WebCore::RenderContainer::updateBeforeAfterContentForContainer):
+        (WebCore::RenderContainer::appendChildNode):
+        (WebCore::RenderContainer::insertChildNode):
+        (WebCore::RenderContainer::layout):
+        (WebCore::RenderContainer::removeLeftoverAnonymousBlock):
+        (WebCore::RenderContainer::positionForCoordinates):
+        (WebCore::RenderContainer::addLineBoxRects):
+        (WebCore::RenderContainer::collectAbsoluteLineBoxQuads):
+        * rendering/RenderContainer.h:
+        (WebCore::RenderContainer::firstChild):
+        (WebCore::RenderContainer::lastChild):
+        (WebCore::RenderContainer::firstChildBox):
+        (WebCore::RenderContainer::lastChildBox):
+        * rendering/RenderObjectChildList.h: Added.
+        (WebCore::RenderObjectChildList::RenderObjectChildList):
+        (WebCore::RenderObjectChildList::firstChild):
+        (WebCore::RenderObjectChildList::lastChild):
+        (WebCore::RenderObjectChildList::setFirstChild):
+        (WebCore::RenderObjectChildList::setLastChild):
+
+2009-01-29  Jungshik Shin  <jshin@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        http://bugs.webkit.org/show_bug.cgi?id=23598
+        Replace smart-quotes in UTF-8 with ASCII double-quotes to avoid
+        the compilation error on CJK Windows
+
+        * wml/WMLTableElement.cpp:
+        (WebCore::WMLTableElement::parseMappedAttribute):
+
+2009-01-29  Darin Fisher  <darin@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23627
+        Fix the PLATFORM(SKIA) build.
+
+        * svg/graphics/SVGPaintServer.cpp:
+        (WebCore::SVGPaintServer::teardown):
+
+2009-01-29  Scott Violet  <sky@google.com>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23625
+        Skia platform doesn't render text to a canvas or support clipping to an image buffer
+
+        Fixes two bugs in Skia rendering to a canvas:
+        . Text was not rendered at all. This is because we never properly
+          fixed up the alpha values. The fix is to create a layer when
+          rendering text to a layer.
+        . We were not honoring clipping to an image buffer.
+
+        * platform/graphics/chromium/FontChromiumWin.cpp:
+        (WebCore::Font::drawGlyphs):
+        * platform/graphics/skia/GraphicsContextSkia.cpp:
+        (WebCore::GraphicsContext::clipToImageBuffer):
+        * platform/graphics/skia/ImageBufferSkia.cpp:
+        (WebCore::ImageBuffer::ImageBuffer):
+        * platform/graphics/skia/PlatformContextSkia.cpp:
+        (PlatformContextSkia::PlatformContextSkia):
+        (PlatformContextSkia::setDrawingToImageBuffer):
+        (PlatformContextSkia::isDrawingToImageBuffer):
+        (PlatformContextSkia::beginLayerClippedToImage):
+        (PlatformContextSkia::restore):
+        (PlatformContextSkia::applyClipFromImage):
+        * platform/graphics/skia/PlatformContextSkia.h:
+
+2009-01-29  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Mark Rowe.
+
+        First step in tracking the urls a HistoryItem was redirected through.
+
+        * WebCore.base.exp:
+        * history/HistoryItem.cpp:
+        (WebCore::HistoryItem::HistoryItem):
+        (WebCore::HistoryItem::addRedirectURL):
+        (WebCore::HistoryItem::redirectURLs):
+        (WebCore::HistoryItem::setRedirectURLs):
+        * history/HistoryItem.h:
+
+2009-01-29  Dirk Schulze  <krit@webkit.org>
+
+        Reviewed by Nikolas Zimmermann, Eric Seidel.
+
+        Just transform the pattern directly instead of transforming the context fixes this 
+        problem. Texts or strokes are no longer affected by transformations.
+
+        SVG pattern transformation/BoundingBox can cause ugly stroke thickness or text positions
+        https://bugs.webkit.org/show_bug.cgi?id=23472
+
+        Test: svg/custom/pattern-with-transformation.svg
+
+        * platform/graphics/Pattern.h:
+        (WebCore::Pattern::setPatternSpaceTransform):
+        * platform/graphics/cairo/PatternCairo.cpp:
+        (WebCore::Pattern::createPlatformPattern):
+        * platform/graphics/cg/PatternCG.cpp:
+        (WebCore::Pattern::createPlatformPattern):
+        * platform/graphics/qt/PatternQt.cpp:
+        (WebCore::Pattern::createPlatformPattern):
+        * svg/graphics/SVGPaintServerPattern.cpp:
+        (WebCore::SVGPaintServerPattern::setup):
+
+2009-01-29  David Hyatt  <hyatt@apple.com>
+
+        Move the line box list member out of RenderFlow and down into RenderBlock and RenderInline.  Eliminate RenderFlow from the tree.
+
+        Reviewed by Sam Weinig
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+        * html/HTMLAnchorElement.cpp:
+        * rendering/InlineFlowBox.cpp:
+        (WebCore::InlineFlowBox::rendererLineBoxes):
+        (WebCore::InlineFlowBox::determineSpacingForFlowBoxes):
+        * rendering/InlineFlowBox.h:
+        * rendering/LayoutState.cpp:
+        (WebCore::LayoutState::LayoutState):
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::RenderBlock):
+        (WebCore::RenderBlock::destroy):
+        (WebCore::RenderBlock::styleWillChange):
+        (WebCore::RenderBlock::styleDidChange):
+        (WebCore::RenderBlock::dirtyLineBoxes):
+        (WebCore::RenderBlock::removeChild):
+        (WebCore::RenderBlock::setSelectionState):
+        (WebCore::RenderBlock::avoidsFloats):
+        (WebCore::RenderBlock::positionForCoordinates):
+        (WebCore::RenderBlock::calcInlinePrefWidths):
+        (WebCore::RenderBlock::baselinePosition):
+        (WebCore::RenderBlock::getBaselineOfFirstLineBox):
+        (WebCore::RenderBlock::getBaselineOfLastLineBox):
+        (WebCore::RenderBlock::rectWithOutlineForRepaint):
+        (WebCore::RenderBlock::hoverAncestor):
+        (WebCore::RenderBlock::updateDragState):
+        * rendering/RenderBlock.h:
+        (WebCore::RenderBlock::lineBoxes):
+        (WebCore::RenderBlock::firstLineBox):
+        (WebCore::RenderBlock::lastLineBox):
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::offsetFromContainer):
+        (WebCore::RenderBox::computeRectForRepaint):
+        (WebCore::RenderBox::containingBlockWidthForPositioned):
+        (WebCore::RenderBox::calcAbsoluteHorizontalValues):
+        (WebCore::RenderBox::calcAbsoluteHorizontalReplaced):
+        * rendering/RenderBox.h:
+        * rendering/RenderFlow.cpp: Removed.
+        * rendering/RenderFlow.h: Removed.
+        * rendering/RenderInline.cpp:
+        (WebCore::RenderInline::RenderInline):
+        (WebCore::RenderInline::destroy):
+        (WebCore::RenderInline::styleDidChange):
+        (WebCore::RenderInline::addChildIgnoringContinuation):
+        (WebCore::RenderInline::cloneInline):
+        (WebCore::RenderInline::splitInlines):
+        (WebCore::RenderInline::offsetLeft):
+        (WebCore::RenderInline::offsetTop):
+        (WebCore::RenderInline::positionForCoordinates):
+        (WebCore::RenderInline::rectWithOutlineForRepaint):
+        (WebCore::RenderInline::updateDragState):
+        (WebCore::RenderInline::relativePositionedInlineOffset):
+        * rendering/RenderInline.h:
+        (WebCore::RenderInline::lineBoxes):
+        (WebCore::RenderInline::firstLineBox):
+        (WebCore::RenderInline::lastLineBox):
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::updateLayerPosition):
+        * rendering/RenderLineBoxList.cpp:
+        (WebCore::RenderLineBoxList::dirtyLinesFromChangedChild):
+        * rendering/RootInlineBox.cpp:
+        (WebCore::RootInlineBox::rendererLineBoxes):
+        * rendering/RootInlineBox.h:
+        * rendering/bidi.cpp:
+        (WebCore::RenderBlock::createLineBoxes):
+        * wml/WMLAElement.cpp:
+
+2009-01-29  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Cleaned up some naming in ScheduledRedirection.
+
+        * loader/FrameLoader.cpp:
+        (WebCore::ScheduledRedirection::ScheduledRedirection):
+
+2009-01-29  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Update to use new API.
+
+        * platform/graphics/mac/FontCustomPlatformData.cpp:
+        (WebCore::FontCustomPlatformData::~FontCustomPlatformData):
+        (WebCore::createFontCustomPlatformData):
+
+2009-01-29  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Nikolas Zimmermann.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23619
+        ASSERT(!error.isNull()) in DocumentLoader::mainReceivedError() when an SVG image load
+        is cancelled
+
+        Covered by existing tests (as a random crash).
+
+        * loader/EmptyClients.h:
+        (WebCore::EmptyFrameLoaderClient::cancelledError):
+        (WebCore::EmptyFrameLoaderClient::blockedError):
+        (WebCore::EmptyFrameLoaderClient::cannotShowURLError):
+        (WebCore::EmptyFrameLoaderClient::interruptForPolicyChangeError):
+        (WebCore::EmptyFrameLoaderClient::cannotShowMIMETypeError):
+        (WebCore::EmptyFrameLoaderClient::fileDoesNotExistError):
+        (WebCore::EmptyFrameLoaderClient::pluginWillHandleLoadError):
+        Create non-null errors.
+
+2009-01-29  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Removed an unused case of "lockHistory" to help make the other cases
+        clearer.
+
+        * page/FrameLoadRequest.h:
+        (WebCore::FrameLoadRequest::FrameLoadRequest):
+
+2009-01-29  David Hyatt  <hyatt@apple.com>
+
+        Move all of the contination insertion code from RenderFlow to RenderInline.  addChildToFlow is renamed to addChildIgnoringContinuation, and it has been moved to
+        RenderContainer so that it can still be called on either blocks or inlines.  The base class implementation in RenderContainer is what RenderBlock uses.  RenderInline
+        subclasses it to do all the work it used to do in addChildToFlow.
+        
+        RenderBlock's old addChildToFlow can just become addChild.  This simplification is possible because addChild was actually never being called on anonymous
+        block continuations.
+        
+        The code dealing with anonymous table parts in the old addChildWithContinuation method can now be removed as a result with no harmful side effects.  Falling through to the
+        base class and ignoring a block continuation makes the right thing happen.
+        
+        addChildWithContinuation moved to RenderInline and has been renamed to addChildToContinuation.
+        
+        Reviewed by Eric Seidel
+
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::addChild):
+        * rendering/RenderBlock.h:
+        * rendering/RenderContainer.h:
+        (WebCore::RenderContainer::addChildIgnoringContinuation):
+        * rendering/RenderFlow.cpp:
+        * rendering/RenderFlow.h:
+        * rendering/RenderInline.cpp:
+        (WebCore::RenderInline::styleDidChange):
+        (WebCore::RenderInline::addChild):
+        (WebCore::nextContinuation):
+        (WebCore::RenderInline::continuationBefore):
+        (WebCore::RenderInline::addChildIgnoringContinuation):
+        (WebCore::RenderInline::splitInlines):
+        (WebCore::RenderInline::splitFlow):
+        (WebCore::RenderInline::addChildToContinuation):
+        (WebCore::RenderInline::childBecameNonInline):
+        * rendering/RenderInline.h:
+        (WebCore::RenderInline::continuation):
+        (WebCore::RenderInline::setContinuation):
+
+2009-01-29  Brady Eidson  <beidson@apple.com>
+
+        Reviewed by Oliver Hunt
+
+        <rdar://problem/6337157> hyundaiusa.com closes window or tab during load
+
+        Test: fast/loader/subframe-self-close.html
+
+        * page/DOMWindow.cpp:
+        (WebCore::DOMWindow::close): Only allow mainframes to close the window.
+
+2009-01-29  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Reviewed by David Hyatt.
+
+        Fixes: https://bugs.webkit.org/show_bug.cgi?id=23539
+
+        Remove several virtual functions from Node & Element related to form control / input elements,
+        that shouldn't reside there, but move to approriate locations, in the new form control /
+        input element abstract base classes.
+
+        Remove the isControl() method from Node, as it's redundant - isFormControlElement() provides the same information.
+        Move isEnabled( / isReadOnlyControl() / isTextControl() from Node to FormControlElement.
+        Move isAutofilled() / isChecked() / isIndeterminate() from Node to InputElement.
+        Move isInputTypeHidden() / isPasswordField() from Element to InputElement.
+
+        Querying these methods requires using the toInputElement/toFormControlElement casting helper functions
+        to cast Element pointers to InputElement/FormControlElement pointers.
+
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::canShareStyleWithElement):
+        (WebCore::CSSStyleSelector::adjustRenderStyle):
+        (WebCore::CSSStyleSelector::SelectorChecker::checkOneSelector):
+        * dom/Element.h:
+        (WebCore::Element::isFormControlElementWithState):
+        * dom/FormControlElement.h:
+        * dom/InputElement.h:
+        * dom/Node.h:
+        * editing/TextIterator.cpp:
+        (WebCore::TextIterator::advance):
+        * html/HTMLFormControlElement.cpp:
+        (WebCore::HTMLFormControlElement::attach):
+        * html/HTMLFormControlElement.h:
+        (WebCore::HTMLFormControlElement::isTextControl):
+        * html/HTMLFormElement.cpp:
+        (WebCore::HTMLFormElement::CheckedRadioButtons::removeButton):
+        * html/HTMLInputElement.h:
+        (WebCore::HTMLInputElement::isAutofilled):
+        * page/AccessibilityRenderObject.cpp:
+        (WebCore::AccessibilityRenderObject::isPasswordField):
+        (WebCore::AccessibilityRenderObject::isIndeterminate):
+        (WebCore::AccessibilityRenderObject::isChecked):
+        (WebCore::AccessibilityRenderObject::isControl):
+        (WebCore::AccessibilityRenderObject::isEnabled):
+        (WebCore::AccessibilityRenderObject::canSetFocusAttribute):
+        * page/mac/AccessibilityObjectWrapper.mm:
+        (textMarkerForVisiblePosition):
+        * platform/ContextMenu.cpp:
+        (WebCore::ContextMenu::populate):
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::resize):
+        * rendering/RenderMenuList.cpp:
+        (WebCore::RenderMenuList::itemIsEnabled):
+        * rendering/RenderTextControl.cpp:
+        (WebCore::updateUserModifyProperty):
+        (WebCore::RenderTextControl::adjustInnerTextStyle):
+        (WebCore::RenderTextControl::updateFromElement):
+        * rendering/RenderTheme.cpp:
+        (WebCore::RenderTheme::isChecked):
+        (WebCore::RenderTheme::isIndeterminate):
+        (WebCore::RenderTheme::isEnabled):
+        (WebCore::RenderTheme::isReadOnlyControl):
+        * rendering/RenderThemeMac.mm:
+        (WebCore::RenderThemeMac::adjustMenuListStyle):
+        * wml/WMLFormControlElement.cpp:
+        (WebCore::WMLFormControlElement::isFocusable):
+        * wml/WMLFormControlElement.h:
+        (WebCore::WMLFormControlElement::isEnabled):
+        (WebCore::WMLFormControlElement::isReadOnlyControl):
+        (WebCore::WMLFormControlElement::isTextControl):
+        * wml/WMLInputElement.cpp:
+        (WebCore::WMLInputElement::isKeyboardFocusable):
+        (WebCore::WMLInputElement::isMouseFocusable):
+        * wml/WMLInputElement.h:
+        (WebCore::WMLInputElement::isAutofilled):
+
+2009-01-29  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Not reviewed. Fix WML build - apply same fix as HTMLAnchorElement received.
+
+        * wml/WMLAElement.cpp:
+        (WebCore::WMLAElement::isKeyboardFocusable):
+
+2009-01-29  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Anders Carlsson.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23620
+        Crash in appcache/resource-redirect.html on Tiger
+
+        There was a bug in the test case - it didn't send a Location header, and on Tiger, this
+        resulted in a failure callback being sent. It turned out that proper redirects weren't
+        caught at all.
+
+        Tests: http/tests/appcache/manifest-redirect-2.html
+               http/tests/appcache/resource-redirect-2.html
+
+        * loader/appcache/ApplicationCacheGroup.cpp:
+        (WebCore::ApplicationCacheGroup::didFail): Fixed this function to not crash if
+        didReceiveResponse() wasn't called for this request.
+        (WebCore::ApplicationCacheGroup::didReceiveResponse): Fixed to check for redirects correctly.
+        (WebCore::ApplicationCacheGroup::didReceiveManifestResponse): Ditto.
+
+2009-01-29  David Hyatt  <hyatt@apple.com>
+
+        Move dirtyLinesFromChangedChild into RenderLineBoxList so that it can be shared by RenderBlock and RenderInline.
+    
+        Reviewed by Sam Weinig
+
+        * rendering/RenderBlock.h:
+        (WebCore::RenderBlock::dirtyLinesFromChangedChild):
+        * rendering/RenderFlow.cpp:
+        * rendering/RenderFlow.h:
+        * rendering/RenderInline.h:
+        (WebCore::RenderInline::dirtyLinesFromChangedChild):
+        * rendering/RenderLineBoxList.cpp:
+        (WebCore::RenderLineBoxList::dirtyLinesFromChangedChild):
+        * rendering/RenderLineBoxList.h:
+
+2009-01-29  Adam Roben  <aroben@apple.com>
+
+        Fix Bug 23623: Windowed Flash instances aren't captured when a WebView
+        receives a WM_PRINTCLIENT message
+
+        <https://bugs.webkit.org/show_bug.cgi?id=23623>
+        <rdar://problem/6513921>
+        <rdar://problem/6536874>
+
+        Flash doesn't seem to respond to WM_PRINTCLIENT, so we change
+        WM_PRINTCLIENT messages into WM_PAINT messages and hook into the
+        BeginPaint/EndPaint APIs to return the HDC we received from
+        WM_PRINTCLIENT. This causes the plugin to paint into the
+        WM_PRINTCLIENT HDC via its normal WM_PAINT handler. This technique
+        came from <http://www.fengyuan.com/article/wmprint.html>.
+
+        No test possible.
+
+        Reviewed by Darin Adler.
+
+        * platform/graphics/GraphicsContext.h: Added
+        [set]ShouldIncludeChildWindows on Windows.
+
+        * platform/graphics/cg/GraphicsContextPlatformPrivateCG.h: Added
+        m_shouldIncludeChildWindows.
+        (WebCore::GraphicsContextPlatformPrivate::GraphicsContextPlatformPrivate):
+        Initialize the new member.
+
+        * platform/graphics/win/GraphicsContextCGWin.cpp:
+        (WebCore::GraphicsContext::setShouldIncludeChildWindows):
+        (WebCore::GraphicsContext::shouldIncludeChildWindows):
+        Added simple setter and getter.
+
+        * plugins/PluginView.cpp:
+        (WebCore::PluginView::PluginView): Initialize the new member.
+
+        * plugins/PluginView.h: Added m_wmPrintHDC and various functions
+        required for making WM_PRINTCLIENT work.
+
+        * plugins/win/PluginViewWin.cpp:
+        (WebCore::PluginView::hookedBeginPaint):
+        (WebCore::PluginView::hookedEndPaint):
+        (WebCore::hook):
+        (WebCore::setUpOffscreenPaintingHooks):
+        Added. Code was modified from code available on fengyuan.com.
+
+        (WebCore::PluginView::wndProc): Turn WM_PRINTCLIENT messages into
+        WM_PAINT messages and save off the HDC that we're supposed to paint
+        into.
+
+        (WebCore::PluginView::paintWindowedPluginIntoContext): Added. Gets an
+        HDC from the GraphicsContext, translates it into client coordinates,
+        gets the plugin to draw into the HDC by sending a WM_PRINTCLIENT
+        message, and returns the HDC to the GraphicsContext.
+
+        (WebCore::PluginView::paint): If we're trying to paint a windowed
+        plugin into the GraphicsContext, call paintWindowedPluginIntoContext.
+
+        (WebCore::PluginView::init): Call setUpOffscreenPaintingHooks to make
+        our WM_PRINTCLIENT trick work.
+
 2009-01-29  David Hyatt  <hyatt@apple.com>
 
         Move RenderFlow::destroy down into RenderBlock and RenderInline.
@@ -3454,6 +4158,18 @@
         Modify the render tree dumping code to continue to produce the same results as before.  This is really a hack, since we're now capable of indicating the correct
         position for the descendants of cells with intrinsic padding (and also indicating what the correct cell box is).  A future patch can remove these hacks so that the
         layout test results can all be regenerated.
+
+2009-01-22  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Remove <strong>/<em> tags when toggling bold/italic since IE inserts them instead of <b>/<i>
+        https://bugs.webkit.org/show_bug.cgi?id=23486
+
+        Test: editing/execCommand/toggle-styles.html
+
+        * editing/ApplyStyleCommand.cpp:
+        (WebCore::ApplyStyleCommand::isHTMLStyleNode):
 
 2009-01-22  Eric Seidel  <eric@webkit.org>
 

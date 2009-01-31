@@ -3376,6 +3376,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\platform\ThreadTimers.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\platform\ThreadTimers.h"
+				>
+			</File>
+			<File
 				RelativePath="..\platform\Timer.cpp"
 				>
 			</File>
@@ -9075,22 +9083,6 @@
 			</File>
 			<File
 				RelativePath="..\rendering\RenderFlexibleBox.h"
-				>
-			</File>
-			<File
-				RelativePath="..\rendering\RenderFlow.cpp"
-				>
-				<FileConfiguration
-					Name="Release_PGO|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						WholeProgramOptimization="true"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\rendering\RenderFlow.h"
 				>
 			</File>
 			<File
