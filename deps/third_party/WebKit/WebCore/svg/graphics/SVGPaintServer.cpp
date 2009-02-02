@@ -38,7 +38,6 @@
 #include "SVGURIReference.h"
 
 #if PLATFORM(SKIA)
-// FIXME: See the FIXME below about moving the teardown code into the graphics context.
 #include "PlatformContextSkia.h"
 #endif
 
