@@ -1,4 +1,8 @@
 #!/usr/bin/python
+# Copyright (c) 2006-2009 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+#
 # Wrapper script around Rietveld's upload.py that groups files into
 # changelists.
 
@@ -45,6 +49,26 @@ def GetSVNFileInfo(file, field):
     if line.startswith(search):
       return line[len(search):]
   return ""
+
+
+def GetSVNFileProperty(file, property_name):
+  """Returns the value of an SVN property for the given file.
+  
+  Args:
+    file: The file to check
+    property_name: The name of the SVN property, e.g. "svn:mime-type"
+  
+  Returns:
+    The value of the property, which will be the empty string if the property
+    is not set on the file.  If the file is not under version control, the
+    empty string is also returned.
+  """
+  output = RunShell(["svn", "propget", property_name, file])
+  if (output.startswith("svn: ") and
+      output.endswith("is not under version control")):
+    return ""
+  else:
+    return output
 
 
 def GetRepositoryRoot():
@@ -445,7 +469,7 @@ Basic commands:
       subdirectories.
 
    gcl upload change_name [-r reviewer1@gmail.com,reviewer2@gmail.com,...]
-                          [--send_mail] [--no_try]
+                          [--send_mail] [--no_try] [--no_presubmit]
       Uploads the changelist to the server for review.
 
    gcl commit change_name [--force]
@@ -528,6 +552,12 @@ def UploadCL(change_info, args):
   if not change_info.FileList():
     print "Nothing to upload, changelist is empty."
     return
+
+  if not "--no_presubmit" in args:
+    if not DoPresubmitChecks(change_info, committing=False):
+      return
+  else:
+    args.remove("--no_presubmit")
 
   no_try = "--no_try" in args
   if no_try:
@@ -622,6 +652,12 @@ def Commit(change_info, args):
   if not change_info.FileList():
     print "Nothing to commit, changelist is empty."
     return
+  
+  if not "--no_presubmit" in args:
+    if not DoPresubmitChecks(change_info, committing=True):
+      return
+  else:
+    args.remove("--no_presubmit")
 
   no_tree_status_check = ("--force" in args or "-f" in args)
   if not no_tree_status_check and not IsTreeOpen():
@@ -760,6 +796,17 @@ def Lint(change_info, args):
         cpplint.ProcessFile(file, cpplint._cpplint_state.verbose_level)
 
   print "Total errors found: %d\n" % cpplint._cpplint_state.error_count
+
+
+def DoPresubmitChecks(change_info, committing):
+  """Imports presubmit, then calls presubmit.DoPresubmitChecks."""
+  # Need to import here to avoid circular dependency.
+  import presubmit
+  result = presubmit.DoPresubmitChecks(change_info, committing,
+                                       sys.stdout, sys.stdin)
+  if not result:
+    print "\nPresubmit errors, can't continue (use --no_presubmit to bypass)"
+  return result
 
 
 def Changes():

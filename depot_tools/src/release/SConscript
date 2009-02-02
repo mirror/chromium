@@ -6,9 +6,11 @@ Import('env')
 
 source_files = [
     'README',
-    'gcl.py',
     'cpplint.py',
+    'gcl.py',
     'gclient.py',
+    'presubmit.py',
+    'presubmit_canned_checks.py',
     'revert.py',
     'trychange.py',
     'upload.py',
