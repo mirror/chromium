@@ -273,9 +273,9 @@ bool RLZTracker::InitRlz(int directory_key) {
 bool RLZTracker::InitRlzDelayed(int directory_key, bool first_run) {
   new OmniBoxUsageObserver();
   // Schedule the delayed init items.
-  const int kTwentySeconds = 20 * 1000;
+  const int kNinetySeconds = 90 * 1000;
   MessageLoop::current()->PostDelayedTask(FROM_HERE,
-      new DelayedInitTask(directory_key, first_run), kTwentySeconds);
+      new DelayedInitTask(directory_key, first_run), kNinetySeconds);
   return true;
 }
 
