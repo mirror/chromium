@@ -138,14 +138,14 @@ namespace WebCore {
         void loadWithNavigationAction(const ResourceRequest&, const NavigationAction&,              // Calls loadWithDocumentLoader()
             FrameLoadType, PassRefPtr<FormState>);
 
-        void loadPostRequest(const ResourceRequest& inRequest, const String& referrer,              // Called by loadFrameRequestWithFormAndValues(), calls loadWithNavigationAction
-            const String& frameName, Event* event, PassRefPtr<FormState> prpFormState);
+        void loadPostRequest(const ResourceRequest&, const String& referrer,                        // Called by loadFrameRequestWithFormAndValues(), calls loadWithNavigationAction
+            const String& frameName, FrameLoadType, Event*, PassRefPtr<FormState>);
 
         void loadURL(const KURL& newURL, const String& referrer, const String& frameName,           // Called by loadFrameRequestWithFormAndValues(), calls loadWithNavigationAction or else dispatches to navigation policy delegate    
-            FrameLoadType, Event* event, PassRefPtr<FormState> prpFormState);                                                         
+            FrameLoadType, Event*, PassRefPtr<FormState>);                                                         
         void loadURLIntoChildFrame(const KURL&, const String& referer, Frame*);
 
-        void loadFrameRequestWithFormAndValues(const FrameLoadRequest&, bool lockHistory,           // Called by submitForm, calls loadPostRequest()
+        void loadFrameRequestWithFormAndValues(const FrameLoadRequest&, bool lockHistory, bool lockBackForwardList,           // Called by submitForm, calls loadPostRequest()
             Event*, HTMLFormElement*, const HashMap<String, String>& formValues);
 
         void load(const ResourceRequest&);                                                          // Called by WebFrame, calls (ResourceRequest, SubstituteData)
@@ -253,7 +253,7 @@ namespace WebCore {
         void didFirstVisuallyNonEmptyLayout();
 
         void clientRedirectCancelledOrFinished(bool cancelWithLoadInProgress);
-        void clientRedirected(const KURL&, double delay, double fireDate, bool lockHistory, bool isJavaScriptFormAction);
+        void clientRedirected(const KURL&, double delay, double fireDate, bool lockHistory, bool lockBackForwardList, bool isJavaScriptFormAction);
         bool shouldReload(const KURL& currentURL, const KURL& destinationURL);
 #if ENABLE(WML)
         void setForceReloadWmlDeck(bool);
@@ -280,17 +280,17 @@ namespace WebCore {
 
         void setDefersLoading(bool);
 
-        void changeLocation(const String& url, const String& referrer, bool lockHistory = true, bool userGesture = false, bool refresh = false);
-        void changeLocation(const KURL&, const String& referrer, bool lockHistory = true, bool userGesture = false, bool refresh = false);
-        void urlSelected(const ResourceRequest&, const String& target, Event*, bool lockHistory, bool userGesture);
-        void urlSelected(const FrameLoadRequest&, Event*, bool lockHistory);
+        void changeLocation(const String& url, const String& referrer, bool lockHistory = true, bool lockBackForwardList = true, bool userGesture = false, bool refresh = false);
+        void changeLocation(const KURL&, const String& referrer, bool lockHistory = true, bool lockBackForwardList = true, bool userGesture = false, bool refresh = false);
+        void urlSelected(const ResourceRequest&, const String& target, Event*, bool lockHistory, bool lockBackForwardList, bool userGesture);
+        void urlSelected(const FrameLoadRequest&, Event*, bool lockHistory, bool lockBackForwardList);
       
         bool requestFrame(HTMLFrameOwnerElement*, const String& url, const AtomicString& frameName);
         Frame* loadSubframe(HTMLFrameOwnerElement*, const KURL&, const String& name, const String& referrer);
 
-        void submitForm(const char* action, const String& url, PassRefPtr<FormData>, const String& target, const String& contentType, const String& boundary, Event*);
+        void submitForm(const char* action, const String& url, PassRefPtr<FormData>, const String& target, const String& contentType, const String& boundary, Event*, bool lockHistory, bool lockBackForwardList);
         void submitFormAgain();
-        void submitForm(const FrameLoadRequest&, Event*);
+        void submitForm(const FrameLoadRequest&, Event*, bool lockHistory, bool lockBackForwardList);
 
         void stop();
         void stopLoading(bool sendUnload);
@@ -307,7 +307,7 @@ namespace WebCore {
 
         bool isScheduledLocationChangePending() const { return m_scheduledRedirection && isLocationChange(*m_scheduledRedirection); }
         void scheduleHTTPRedirection(double delay, const String& url);
-        void scheduleLocationChange(const String& url, const String& referrer, bool lockHistory = true, bool userGesture = false);
+        void scheduleLocationChange(const String& url, const String& referrer, bool lockHistory = true, bool lockBackForwardList = true, bool userGesture = false);
         void scheduleRefresh(bool userGesture = false);
         void scheduleHistoryNavigation(int steps);
 

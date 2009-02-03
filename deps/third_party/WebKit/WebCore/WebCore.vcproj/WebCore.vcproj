@@ -1951,6 +1951,14 @@
 				RelativePath="..\page\AccessibilityRenderObject.h"
 				>
 			</File>
+                        <File
+				RelativePath="..\page\AccessibilityRenderObjectChildList.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\page\AccessibilityRenderObjectChildList.h"
+				>
+			</File>
 			<File
 				RelativePath="..\page\AccessibilityTable.cpp"
 				>
@@ -2777,10 +2785,6 @@
 			</File>
 			<File
 				RelativePath="..\loader\FrameLoader.h"
-				>
-			</File>
-			<File
-				RelativePath="..\loader\FrameLoaderClient.cpp"
 				>
 			</File>
 			<File
@@ -16371,6 +16375,14 @@
 			</File>
 			<File
 				RelativePath="..\bridge\npruntime.h"
+				>
+			</File>
+			<File
+				RelativePath="..\bridge\IdentifierRep.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\bridge\IdentifierRep.h"
 				>
 			</File>
 			<File

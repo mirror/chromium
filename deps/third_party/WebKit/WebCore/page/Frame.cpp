@@ -1144,7 +1144,7 @@ RenderView* Frame::contentRenderer() const
     if (!object)
         return 0;
     ASSERT(object->isRenderView());
-    return static_cast<RenderView*>(object);
+    return toRenderView(object);
 }
 
 HTMLFrameOwnerElement* Frame::ownerElement() const
@@ -1221,15 +1221,6 @@ void Frame::selectionTextRects(Vector<FloatRect>& rects, bool clipToVisibleConte
             rects.append(intRects[i]);
 }
 
-
-bool Frame::isFrameSet() const
-{
-    Document* document = m_doc.get();
-    if (!document || !document->isHTMLDocument())
-        return false;
-    Node *body = static_cast<HTMLDocument*>(document)->body();
-    return body && body->renderer() && body->hasTagName(framesetTag);
-}
 
 // Scans logically forward from "start", including any child frames
 static HTMLFormElement *scanForForm(Node *start)
@@ -1362,7 +1353,7 @@ void Frame::forceLayoutWithPageWidthRange(float minPageWidth, float maxPageWidth
 {
     // Dumping externalRepresentation(m_frame->renderer()).ascii() is a good trick to see
     // the state of things before and after the layout
-    RenderView *root = static_cast<RenderView*>(document()->renderer());
+    RenderView *root = toRenderView(document()->renderer());
     if (root) {
         // This magic is basically copied from khtmlview::print
         int pageW = (int)ceilf(minPageWidth);
@@ -1385,24 +1376,6 @@ void Frame::forceLayoutWithPageWidthRange(float minPageWidth, float maxPageWidth
 
     if (adjustViewSize && view())
         view()->adjustViewSize();
-}
-
-void Frame::sendResizeEvent()
-{
-    if (Document* doc = document())
-        doc->dispatchWindowEvent(eventNames().resizeEvent, false, false);
-}
-
-void Frame::sendScrollEvent()
-{
-    FrameView* v = m_view.get();
-    if (!v)
-        return;
-    v->setWasScrolledByUser(true);
-    Document* doc = document();
-    if (!doc)
-        return;
-    doc->dispatchEventForType(eventNames().scrollEvent, true, false);
 }
 
 void Frame::clearTimers(FrameView *view, Document *document)
@@ -1873,6 +1846,49 @@ Document* Frame::documentAtPoint(const IntPoint& point)
     if (contentRenderer())
         result = eventHandler()->hitTestResultAtPoint(pt, false);
     return result.innerNode() ? result.innerNode()->document() : 0;
+}
+
+void Frame::createView(const IntSize& viewportSize,
+                       const Color& backgroundColor, bool transparent,
+                       const IntSize& fixedLayoutSize, bool useFixedLayout,
+                       ScrollbarMode horizontalScrollbarMode, ScrollbarMode verticalScrollbarMode)
+{
+    ASSERT(this);
+    ASSERT(m_page);
+
+    bool isMainFrame = this == m_page->mainFrame();
+
+    if (isMainFrame && view())
+        view()->setParentVisible(false);
+
+    setView(0);
+
+    FrameView* frameView;
+    if (isMainFrame) {
+        frameView = new FrameView(this, viewportSize);
+        frameView->setFixedLayoutSize(fixedLayoutSize);
+        frameView->setUseFixedLayout(useFixedLayout);
+    } else
+        frameView = new FrameView(this);
+
+    frameView->setScrollbarModes(horizontalScrollbarMode, verticalScrollbarMode);
+    frameView->updateDefaultScrollbarState();
+
+    setView(frameView);
+    // FrameViews are created with a ref count of 1. Release this ref since we've assigned it to frame.
+    frameView->deref();
+
+    if (backgroundColor.isValid())
+        frameView->updateBackgroundRecursively(backgroundColor, transparent);
+
+    if (isMainFrame)
+        frameView->setParentVisible(true);
+
+    if (ownerRenderer())
+        ownerRenderer()->setWidget(frameView);
+
+    if (HTMLFrameOwnerElement* owner = ownerElement())
+        view()->setCanHaveScrollbars(owner->scrollingMode() != ScrollbarAlwaysOff);
 }
 
 } // namespace WebCore

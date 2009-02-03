@@ -46,6 +46,8 @@ public:
     void setFirstChild(RenderObject* child) { m_firstChild = child; }
     void setLastChild(RenderObject* child) { m_lastChild = child; }
     
+    void destroyLeftoverChildren();
+
 private:
     RenderObject* m_firstChild;
     RenderObject* m_lastChild;

@@ -163,7 +163,7 @@ void RenderBlock::destroy()
     
     // Make sure to destroy anonymous children first while they are still connected to the rest of the tree, so that they will
     // properly dirty line boxes that they are removed from.  Effects that do :before/:after only on hover could crash otherwise.
-    RenderContainer::destroyLeftoverChildren();
+    children()->destroyLeftoverChildren();
 
     if (!documentBeingDestroyed()) {
         if (firstLineBox()) {
@@ -322,10 +322,9 @@ void RenderBlock::addChild(RenderObject* newChild, RenderObject* beforeChild)
     }
 
     RenderContainer::addChild(newChild, beforeChild);
-    // ### care about aligned stuff
 
-    if (madeBoxesNonInline && parent() && isAnonymousBlock())
-        parent()->removeLeftoverAnonymousBlock(this);
+    if (madeBoxesNonInline && parent() && isAnonymousBlock() && parent()->isRenderBlock())
+        toRenderBlock(parent())->removeLeftoverAnonymousBlock(this);
     // this object may be dead here
 }
 
@@ -441,6 +440,48 @@ void RenderBlock::makeChildrenNonInline(RenderObject *insertionPoint)
 #endif
 
     repaint();
+}
+
+void RenderBlock::removeLeftoverAnonymousBlock(RenderBlock* child)
+{
+    ASSERT(child->isAnonymousBlock());
+    ASSERT(!child->childrenInline());
+    
+    if (child->inlineContinuation()) 
+        return;
+    
+    RenderObject* firstAnChild = child->m_children.firstChild();
+    RenderObject* lastAnChild = child->m_children.lastChild();
+    if (firstAnChild) {
+        RenderObject* o = firstAnChild;
+        while (o) {
+            o->setParent(this);
+            o = o->nextSibling();
+        }
+        firstAnChild->setPreviousSibling(child->previousSibling());
+        lastAnChild->setNextSibling(child->nextSibling());
+        if (child->previousSibling())
+            child->previousSibling()->setNextSibling(firstAnChild);
+        if (child->nextSibling())
+            child->nextSibling()->setPreviousSibling(lastAnChild);
+    } else {
+        if (child->previousSibling())
+            child->previousSibling()->setNextSibling(child->nextSibling());
+        if (child->nextSibling())
+            child->nextSibling()->setPreviousSibling(child->previousSibling());
+    }
+    if (child == m_children.firstChild())
+        m_children.setFirstChild(firstAnChild);
+    if (child == m_children.lastChild())
+        m_children.setLastChild(lastAnChild);
+    child->setParent(0);
+    child->setPreviousSibling(0);
+    child->setNextSibling(0);
+    
+    child->children()->setFirstChild(0);
+    child->m_next = 0;
+
+    child->destroy();
 }
 
 void RenderBlock::removeChild(RenderObject* oldChild)
@@ -1180,7 +1221,7 @@ void RenderBlock::determineHorizontalPosition(RenderBox* child)
                 // width computation will take into account the delta between |rightOff| and |xPos|
                 // so that we can just pass the content width in directly to the |calcHorizontalMargins|
                 // function.
-                toRenderBox(child)->calcHorizontalMargins(child->style()->marginLeft(), child->style()->marginRight(), lineWidth(child->y(), false));
+                child->calcHorizontalMargins(child->style()->marginLeft(), child->style()->marginRight(), lineWidth(child->y(), false));
                 chPos = rightOff - child->marginRight() - child->width();
             }
         }
@@ -1339,11 +1380,12 @@ void RenderBlock::layoutBlockChildren(bool relayoutChildren, int& maxFloatBottom
                 markDescendantsWithFloats = true;
         }
 
-        if (markDescendantsWithFloats)
-            toRenderBlock(child)->markAllDescendantsWithFloatsForLayout();
+        if (child->isRenderBlock()) {
+            if (markDescendantsWithFloats)
+                toRenderBlock(child)->markAllDescendantsWithFloatsForLayout();
 
-        if (child->isRenderBlock())
             previousFloatBottom = max(previousFloatBottom, oldRect.y() + toRenderBlock(child)->floatBottom());
+        }
 
         bool childHadLayout = child->m_everHadLayout;
         bool childNeededLayout = child->needsLayout();
@@ -1445,7 +1487,7 @@ void RenderBlock::layoutPositionedObjects(bool relayoutChildren)
                 r->setChildNeedsLayout(true, false);
                 
             // If relayoutChildren is set and we have percentage padding, we also need to invalidate the child's pref widths.
-            if (relayoutChildren && (r->style()->paddingLeft().isPercent() || r->style()->paddingRight().isPercent()))
+            //if (relayoutChildren && (r->style()->paddingLeft().isPercent() || r->style()->paddingRight().isPercent()))
                 r->setPrefWidthsDirty(true, false);
             
             // We don't have to do a full layout.  We just have to update our position. Try that first. If we have shrink-to-fit width
@@ -1730,7 +1772,7 @@ void RenderBlock::paintObject(PaintInfo& paintInfo, int tx, int ty)
     // 6. paint continuation outlines.
     if ((paintPhase == PaintPhaseOutline || paintPhase == PaintPhaseChildOutlines)) {
         if (inlineContinuation() && inlineContinuation()->hasOutline() && inlineContinuation()->style()->visibility() == VISIBLE) {
-            RenderInline* inlineRenderer = static_cast<RenderInline*>(inlineContinuation()->element()->renderer());
+            RenderInline* inlineRenderer = toRenderInline(inlineContinuation()->element()->renderer());
             if (!inlineRenderer->hasLayer())
                 containingBlock()->addContinuationWithOutline(inlineRenderer);
             else if (!inlineRenderer->firstLineBox())
@@ -3199,8 +3241,8 @@ bool RenderBlock::nodeAtPoint(const HitTestRequest& request, HitTestResult& resu
         // Hit test floats.
         if (hitTestAction == HitTestFloat && m_floatingObjects) {
             if (isRenderView()) {
-                scrolledX += static_cast<RenderView*>(this)->frameView()->scrollX();
-                scrolledY += static_cast<RenderView*>(this)->frameView()->scrollY();
+                scrolledX += toRenderView(this)->frameView()->scrollX();
+                scrolledY += toRenderView(this)->frameView()->scrollY();
             }
             
             FloatingObject* o;
@@ -4788,8 +4830,8 @@ RenderStyle* RenderBlock::outlineStyleForRepaint() const
 void RenderBlock::childBecameNonInline(RenderObject*)
 {
     makeChildrenNonInline();
-    if (isAnonymousBlock() && parent())
-        parent()->removeLeftoverAnonymousBlock(this);
+    if (isAnonymousBlock() && parent() && parent()->isRenderBlock())
+        toRenderBlock(parent())->removeLeftoverAnonymousBlock(this);
     // |this| may be dead here
 }
 
@@ -4901,7 +4943,7 @@ void RenderBlock::addFocusRingRects(GraphicsContext* graphicsContext, int tx, in
         // FIXME: This check really isn't accurate. 
         bool nextInlineHasLineBox = inlineContinuation()->firstLineBox();
         // FIXME: This is wrong. The principal renderer may not be the continuation preceding this block.
-        bool prevInlineHasLineBox = static_cast<RenderInline*>(inlineContinuation()->element()->renderer())->firstLineBox(); 
+        bool prevInlineHasLineBox = toRenderInline(inlineContinuation()->element()->renderer())->firstLineBox(); 
         int topMargin = prevInlineHasLineBox ? collapsedMarginTop() : 0;
         int bottomMargin = nextInlineHasLineBox ? collapsedMarginBottom() : 0;
         graphicsContext->addFocusRingRect(IntRect(tx, ty - topMargin, 

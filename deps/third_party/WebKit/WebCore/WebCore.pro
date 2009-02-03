@@ -2539,6 +2539,7 @@ SOURCES += \
     bindings/js/ScriptController.cpp \
     bindings/js/ScriptValue.cpp \
     bindings/js/ScheduledAction.cpp \
+    bridge/IdentifierRep.cpp \
     bridge/NP_jsobject.cpp \
     bridge/npruntime.cpp \
     bridge/runtime_array.cpp \
@@ -2847,7 +2848,6 @@ SOURCES += \
     loader/DocumentThreadableLoader.cpp \
     loader/FormState.cpp \
     loader/FrameLoader.cpp \
-    loader/FrameLoaderClient.cpp \
     loader/FTPDirectoryDocument.cpp \
     loader/FTPDirectoryParser.cpp \
     loader/icon/IconLoader.cpp \
@@ -3041,6 +3041,7 @@ SOURCES += \
     rendering/RenderMarquee.cpp \
     rendering/RenderMenuList.cpp \
     rendering/RenderObject.cpp \
+    rendering/RenderObjectChildList.cpp \
     rendering/RenderPart.cpp \
     rendering/RenderPartObject.cpp \
     rendering/RenderReplaced.cpp \

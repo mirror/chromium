@@ -171,7 +171,7 @@ void RenderBox::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldSty
     // We need to ensure that view->maximalOutlineSize() is valid for any repaints that happen
     // during the style change (it's used by clippedOverflowRectForRepaint()).
     if (style()->outlineWidth() > 0 && style()->outlineSize() > maximalOutlineSize(PaintPhaseOutline))
-        static_cast<RenderView*>(document()->renderer())->setMaximalOutlineSize(style()->outlineSize());
+        toRenderView(document()->renderer())->setMaximalOutlineSize(style()->outlineSize());
 
     RenderObject::styleDidChange(diff, oldStyle);
 
@@ -277,6 +277,25 @@ void RenderBox::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldSty
         document()->setTextColor(style()->color());
 }
 
+void RenderBox::layout()
+{
+    ASSERT(needsLayout());
+
+    RenderObject* child = firstChild();
+    if (!child) {
+        setNeedsLayout(false);
+        return;
+    }
+
+    LayoutStateMaintainer statePusher(view(), this, IntSize(x(), y()));
+    while (child) {
+        child->layoutIfNeeded();
+        ASSERT(!child->needsLayout());
+        child = child->nextSibling();
+    }
+    statePusher.pop();
+    setNeedsLayout(false);
+}
 
 int RenderBox::offsetLeft() const
 {
@@ -954,7 +973,7 @@ bool RenderBox::repaintLayerRectsForImage(WrappedImagePtr image, const FillLayer
                     int rw;
                     int rh;
 
-                    if (FrameView* frameView = static_cast<RenderView*>(layerRenderer)->frameView()) {
+                    if (FrameView* frameView = toRenderView(layerRenderer)->frameView()) {
                         rw = frameView->contentsWidth();
                         rh = frameView->contentsHeight();
                     } else {
@@ -1418,7 +1437,7 @@ IntSize RenderBox::offsetFromContainer(RenderObject* o) const
         offset -= toRenderBox(o)->layer()->scrolledContentOffset();
 
     if (style()->position() == AbsolutePosition && o->isRelPositioned() && o->isRenderInline())
-        offset += static_cast<RenderInline*>(o)->relativePositionedInlineOffset(this);
+        offset += toRenderInline(o)->relativePositionedInlineOffset(this);
 
     return offset;
 }
@@ -1557,7 +1576,7 @@ void RenderBox::computeRectForRepaint(RenderBox* repaintContainer, IntRect& rect
     }
 
     if (style()->position() == AbsolutePosition && o->isRelPositioned() && o->isRenderInline())
-        topLeft += static_cast<RenderInline*>(o)->relativePositionedInlineOffset(this);
+        topLeft += toRenderInline(o)->relativePositionedInlineOffset(this);
     else if (style()->position() == RelativePosition && m_layer) {
         // Apply the relative position offset when invalidating a rectangle.  The layer
         // is translated, but the render box isn't, so we need to do this to get the
@@ -2059,7 +2078,7 @@ int RenderBox::availableHeightUsing(const Length& h) const
         return calcContentBoxHeight(h.value());
 
     if (isRenderView())
-        return static_cast<const RenderView*>(this)->frameView()->visibleHeight();
+        return toRenderView(this)->frameView()->visibleHeight();
 
     // We need to stop here, since we don't want to increase the height of the table
     // artificially.  We're going to rely on this cell getting expanded to some new
@@ -2130,7 +2149,7 @@ int RenderBox::containingBlockWidthForPositioned(const RenderObject* containingB
     if (containingBlock->isRenderInline()) {
         ASSERT(containingBlock->isRelPositioned());
 
-        const RenderInline* flow = static_cast<const RenderInline*>(containingBlock);
+        const RenderInline* flow = toRenderInline(containingBlock);
         InlineFlowBox* first = flow->firstLineBox();
         InlineFlowBox* last = flow->lastLineBox();
 
@@ -2162,7 +2181,7 @@ int RenderBox::containingBlockHeightForPositioned(const RenderObject* containing
     int heightResult;
     if (containingBlock->isRenderInline()) {
         ASSERT(containingBlock->isRelPositioned());
-        heightResult = static_cast<const RenderInline*>(containingBlock)->linesBoundingBox().height();
+        heightResult = toRenderInline(containingBlock)->linesBoundingBox().height();
     } else
         heightResult = containingBlockBox->height();
     
@@ -2483,7 +2502,7 @@ void RenderBox::calcAbsoluteHorizontalValues(Length width, const RenderBox* cont
     // of the first line box when really it should use the last line box.  When
     // this is fixed elsewhere, this block should be removed.
     if (containerBlock->isInline() && containerBlock->style()->direction() == RTL) {
-        const RenderInline* flow = static_cast<const RenderInline*>(containerBlock);
+        const RenderInline* flow = toRenderInline(containerBlock);
         InlineFlowBox* firstLine = flow->firstLineBox();
         InlineFlowBox* lastLine = flow->lastLineBox();
         if (firstLine && lastLine && firstLine != lastLine) {
@@ -2885,7 +2904,7 @@ void RenderBox::calcAbsoluteHorizontalReplaced()
     // of the first line box when really it should use the last line box.  When
     // this is fixed elsewhere, this block should be removed.
     if (containerBlock->isInline() && containerBlock->style()->direction() == RTL) {
-        const RenderInline* flow = static_cast<const RenderInline*>(containerBlock);
+        const RenderInline* flow = toRenderInline(containerBlock);
         InlineFlowBox* firstLine = flow->firstLineBox();
         InlineFlowBox* lastLine = flow->lastLineBox();
         if (firstLine && lastLine && firstLine != lastLine) {

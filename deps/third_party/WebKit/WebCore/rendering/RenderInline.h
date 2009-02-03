@@ -52,7 +52,7 @@ public:
     void splitFlow(RenderObject* beforeChild, RenderBlock* newBlockBox,
                    RenderObject* newChild, RenderContainer* oldCont);
 
-    virtual void layout() { } // Do nothing for layout()
+    virtual void layout() { ASSERT_NOT_REACHED(); } // Do nothing for layout()
 
     virtual void paint(PaintInfo&, int tx, int ty);
 
@@ -131,6 +131,21 @@ private:
                                      // <b> will just have an inline as its continuation.
     mutable int m_lineHeight;
 };
+
+inline RenderInline* toRenderInline(RenderObject* o)
+{ 
+    ASSERT(!o || o->isRenderInline());
+    return static_cast<RenderInline*>(o);
+}
+
+inline const RenderInline* toRenderInline(const RenderObject* o)
+{ 
+    ASSERT(!o || o->isRenderInline());
+    return static_cast<const RenderInline*>(o);
+}
+
+// This will catch anyone doing an unnecessary cast.
+void toRenderInline(const RenderInline*);
 
 } // namespace WebCore
 

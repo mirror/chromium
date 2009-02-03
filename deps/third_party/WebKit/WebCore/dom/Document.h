@@ -316,6 +316,7 @@ public:
 #if ENABLE(WML)
     virtual bool isWMLDocument() const { return false; }
 #endif
+    bool isFrameSet() const;
     
     CSSStyleSelector* styleSelector() const { return m_styleSelector; }
 
@@ -686,7 +687,7 @@ public:
     void removeImageMap(HTMLMapElement*);
     HTMLMapElement* getImageMap(const String& url) const;
 
-    HTMLElement* body();
+    HTMLElement* body() const;
     void setBody(PassRefPtr<HTMLElement>, ExceptionCode&);
 
     HTMLHeadElement* head();

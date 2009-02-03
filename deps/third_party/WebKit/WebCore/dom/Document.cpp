@@ -1118,6 +1118,14 @@ Node::NodeType Document::nodeType() const
     return DOCUMENT_NODE;
 }
 
+bool Document::isFrameSet() const
+{
+    if (!isHTMLDocument())
+        return false;
+    HTMLElement *bodyElement = body();
+    return bodyElement && bodyElement->renderer() && bodyElement->hasTagName(framesetTag);
+}
+
 FrameView* Document::view() const
 {
     return m_frame ? m_frame->view() : 0;
@@ -1471,7 +1479,7 @@ void Document::removeAllDisconnectedNodeEventListeners()
 
 RenderView* Document::renderView() const
 {
-    return static_cast<RenderView*>(renderer());
+    return toRenderView(renderer());
 }
 
 void Document::clearAXObjectCache()
@@ -1583,7 +1591,7 @@ void Document::implicitOpen()
     setParsing(true);
 }
 
-HTMLElement* Document::body()
+HTMLElement* Document::body() const
 {
     Node* de = documentElement();
     if (!de)
@@ -4235,6 +4243,13 @@ void Document::initSecurityContext()
         DocumentLoader* documentLoader = m_frame->loader()->documentLoader();
         if (documentLoader && documentLoader->substituteData().isValid())
             securityOrigin()->grantLoadLocalResources();
+    }
+
+    if (settings() && !settings()->isWebSecurityEnabled()) {
+        // Web security is turned off.  We should let this document access every
+        // other document.  This is used primary by testing harnesses for web
+        // sites.
+        securityOrigin()->grantUniversalAccess();
     }
 
     if (!securityOrigin()->isEmpty())

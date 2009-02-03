@@ -367,6 +367,8 @@ webcore_sources += \
 	WebCore/bindings/js/ScriptValue.cpp \
 	WebCore/bindings/js/ScriptValue.h \
 	WebCore/bindings/js/StringSourceProvider.h \
+	WebCore/bridge/IdentifierRep.cpp \
+	WebCore/bridge/IdentifierRep.h \
 	WebCore/bridge/NP_jsobject.cpp \
 	WebCore/bridge/NP_jsobject.h \
 	WebCore/bridge/c/c_class.cpp \
@@ -1055,7 +1057,6 @@ webcore_sources += \
 	WebCore/loader/FormState.h \
 	WebCore/loader/FrameLoader.cpp \
 	WebCore/loader/FrameLoader.h \
-	WebCore/loader/FrameLoaderClient.cpp \
 	WebCore/loader/FrameLoaderClient.h \
 	WebCore/loader/FrameLoaderTypes.h \
 	WebCore/loader/ImageDocument.cpp \
@@ -1560,6 +1561,8 @@ webcore_sources += \
 	WebCore/rendering/RenderMenuList.h \
 	WebCore/rendering/RenderObject.cpp \
 	WebCore/rendering/RenderObject.h \
+	WebCore/rendering/RenderObjectChildList.cpp \
+	WebCore/rendering/RenderObjectChildList.h \
 	WebCore/rendering/RenderPart.cpp \
 	WebCore/rendering/RenderPart.h \
 	WebCore/rendering/RenderPartObject.cpp \

@@ -640,7 +640,6 @@ This file contains the list of files needed to build WebCore.
         loader/DocumentThreadableLoader.cpp
         loader/FormState.cpp
         loader/FrameLoader.cpp
-        loader/FrameLoaderClient.cpp
         loader/FTPDirectoryDocument.cpp
         loader/FTPDirectoryParser.cpp
         loader/ImageDocument.cpp
@@ -903,6 +902,7 @@ This file contains the list of files needed to build WebCore.
         rendering/RenderMarquee.cpp
         rendering/RenderMenuList.cpp
         rendering/RenderObject.cpp
+        rendering/RenderObjectChildList.cpp
         rendering/RenderPart.cpp
         rendering/RenderPartObject.cpp
         rendering/RenderReplaced.cpp
