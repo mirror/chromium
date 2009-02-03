@@ -146,7 +146,7 @@ class InputApi(object):
     """Builds an InputApi object.
     
     Args:
-      change: A presubmit.GclientChange object.
+      change: A presubmit.GclChange object.
       presubmit_path: The path to the presubmit script being processed.
     """
     self.change = change
@@ -239,36 +239,37 @@ class InputApi(object):
           output_files.append(af)
     return output_files
   
-  def AffectedFiles(self):
+  def AffectedFiles(self, include_dirs=False):
     """Same as input_api.change.AffectedFiles() except only lists files
-    in the same directory as the current presubmit script, or subdirectories
-    thereof.
+    (and optionally directories) in the same directory as the current presubmit
+    script, or subdirectories thereof.
     """
     output_files = []
     dir_with_slash = os.path.normpath(
         "%s/" % os.path.dirname(self.current_presubmit_path))
     if len(dir_with_slash) == 1:
       dir_with_slash = ''
-    for af in self.change.AffectedFiles():
+    for af in self.change.AffectedFiles(include_dirs):
       af_path = os.path.normpath(af.LocalPath())
       if af_path.startswith(dir_with_slash):
         output_files.append(af)
     return output_files
   
-  def LocalPaths(self):
+  def LocalPaths(self, include_dirs=False):
     """Returns local paths of input_api.AffectedFiles()."""
-    return [af.LocalPath() for af in self.AffectedFiles()]
+    return [af.LocalPath() for af in self.AffectedFiles(include_dirs)]
 
-  def ServerPaths(self):
+  def ServerPaths(self, include_dirs=False):
     """Returns server paths of input_api.AffectedFiles()."""
-    return [af.ServerPath() for af in self.AffectedFiles()]
+    return [af.ServerPath() for af in self.AffectedFiles(include_dirs)]
 
   def AffectedTextFiles(self, include_deletes=True):
     """Same as input_api.change.AffectedTextFiles() except only lists files
     in the same directory as the current presubmit script, or subdirectories
     thereof.
     """
-    return InputApi.FilterTextFiles(self.AffectedFiles(), include_deletes)
+    return InputApi.FilterTextFiles(self.AffectedFiles(include_dirs=False),
+                                    include_deletes)
 
   def RightHandSideLines(self):
     """An iterator over all text lines in "new" version of changed files.
@@ -290,9 +291,9 @@ class InputApi(object):
   
   @staticmethod
   def _RightHandSideLinesImpl(affected_files):
-    """Implements RightHandSideLines for InputApi and GclientChange."""
+    """Implements RightHandSideLines for InputApi and GclChange."""
     for af in affected_files:
-      lines = _ReadFile(af.LocalPath()).split('\n')
+      lines = af.NewContents()
       line_number = 0
       for line in lines:
         line_number += 1
@@ -316,6 +317,10 @@ class AffectedFile(object):
   def LocalPath(self):
     """Returns the path on local disk where this file resides."""
     return os.path.normpath(self.path)
+  
+  def IsDirectory(self):
+    """Returns true if this object is a directory."""
+    return _GetSVNFileInfo(self.path, 'Node Kind') == 'directory'
 
   def Action(self):
     """Returns the action on this opened file, e.g. A, M, D, etc."""
@@ -326,8 +331,16 @@ class AffectedFile(object):
 
     The new version is the file in the user's workspace, i.e. the "right hand
     side".
+    
+    Contents will be empty if the file is a directory or does not exist.
     """
-    return _ReadFile(self.path).split('\n')
+    if self.IsDirectory():
+      return []
+    else:
+      contents = _ReadFile(self.LocalPath())
+      contents = contents.replace('\r\n', '\n')
+      contents = contents.replace('\r', '\n')
+      return contents.split('\n')
 
   def OldContents(self):
     """Returns an iterator over the lines in the old version of file.
@@ -346,17 +359,18 @@ class AffectedFile(object):
     raise NotImplementedError()  # Implement if/when needed.
 
 
-class GclientChange(object):
+class GclChange(object):
   """A gclient change."""
 
   def __init__(self, change_info):
-    self.change_info = change_info
+    self.name = change_info.name
+    self.full_description = change_info.description
     
     # From the description text, build up a dictionary of key/value pairs
     # plus the description minus all key/value or "tag" lines.
     self.description_without_tags = []
     self.tags = {}
-    for line in self.change_info.description.split('\n'):
+    for line in change_info.description.split('\n'):
       m = _tag_line_re.match(line)
       if m:
         self.tags[m.group('key')] = m.group('value')
@@ -366,10 +380,13 @@ class GclientChange(object):
     # Change back to text and remove whitespace at end.
     self.description_without_tags = '\n'.join(self.description_without_tags)
     self.description_without_tags = self.description_without_tags.rstrip()
+    
+    self.affected_files = [AffectedFile(info[1], info[0]) for info in
+                           change_info.files]
 
   def Change(self):
     """Returns the change name."""
-    return self.change_info.name
+    return self.name
 
   def Changelist(self):
     """Synonym for Change()."""
@@ -386,7 +403,7 @@ class GclientChange(object):
 
   def FullDescriptionText(self):
     """Returns the complete changelist description including tags."""
-    return self.change_info.description
+    return self.full_description
 
   def __getattr__(self, attr):
     """Return keys directly as attributes on the object.
@@ -401,9 +418,19 @@ class GclientChange(object):
     if attr in self.tags:
       return self.tags[attr]
 
-  def AffectedFiles(self):
-    """Returns a list of AffectedFile instances for all files in the change."""
-    return [AffectedFile(info[1], info[0]) for info in self.change_info.files]
+  def AffectedFiles(self, include_dirs=False):
+    """Returns a list of AffectedFile instances for all files in the change.
+    
+    Args:
+      include_dirs: True to include directories in the list
+    
+    Returns:
+      [AffectedFile(path, action), AffectedFile(path, action)]
+    """
+    if include_dirs:
+      return self.affected_files
+    else:
+      return filter(lambda x: not x.IsDirectory(), self.affected_files)
   
   def AffectedTextFiles(self, include_deletes=True):
     """Return a list of the text files in a change.
@@ -414,15 +441,16 @@ class GclientChange(object):
       include_deletes: Controls whether to return files with "delete" actions,
       which commonly aren't relevant to presubmit scripts.
     """
-    return InputApi.FilterTextFiles(self.AffectedFiles(), include_deletes)
+    return InputApi.FilterTextFiles(self.AffectedFiles(include_dirs=False),
+                                    include_deletes)
 
-  def LocalPaths(self):
+  def LocalPaths(self, include_dirs=False):
     """Convenience function."""
-    return [af.LocalPath() for af in self.AffectedFiles()]
+    return [af.LocalPath() for af in self.AffectedFiles(include_dirs)]
 
-  def ServerPaths(self):
+  def ServerPaths(self, include_dirs=False):
     """Convenience function."""
-    return [af.ServerPath() for af in self.AffectedFiles()]
+    return [af.ServerPath() for af in self.AffectedFiles(include_dirs)]
   
   def RightHandSideLines(self):
     """An iterator over all text lines in "new" version of changed files.
@@ -479,7 +507,7 @@ class PresubmitExecuter(object):
       change_info: The ChangeInfo object for the change.
       committing: True if 'gcl commit' is running, False if 'gcl upload' is.
     """
-    self.change = GclientChange(change_info)
+    self.change = GclChange(change_info)
     self.committing = committing
 
   def ExecPresubmitScript(self, script_text, presubmit_path):

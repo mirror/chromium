@@ -28,10 +28,15 @@ class PresubmitUnittest(unittest.TestCase):
     def MockGetSVNFileInfo(path, key):
       if path.count('notfound'):
         return ''
-      if key == 'Path':
+      elif key == 'Path':
         return path[len('svn:/foo/'):]
       elif key == 'URL':
         return 'svn:/foo/%s' % path.replace('\\', '/')
+      elif key == 'Node Kind':
+        if path.endswith('isdir'):
+          return 'directory'
+        else:
+          return 'file'
     presubmit._GetSVNFileInfo = MockGetSVNFileInfo
     
     self.original_GetSVNFileProperty = presubmit._GetSVNFileProperty
@@ -49,12 +54,14 @@ class PresubmitUnittest(unittest.TestCase):
     def MockReadFile(path):
       if path.count('nosuchfile'):
         return None
+      elif path.endswith('isdir'):
+        self.fail('Should not attempt to read file that is directory.')
       elif path.endswith('PRESUBMIT.py'):
         # used in testDoPresubmitChecks
         return ('def CheckChangeOnUpload(input_api, output_api):\n'
-                '  if not input_api.change.NOSUCHKEY:\n'
-                '    return [output_api.PresubmitError("!!")]\n'
-                '  elif not input_api.change.REALLYNOSUCHKEY:\n'
+                '  if not input_api.change.NOSUCHKEY:\r\n'
+                '    return [output_api.PresubmitError("!!")]\r'
+                '  elif not input_api.change.REALLYNOSUCHKEY:\r\n'
                 '    return [output_api.PresubmitPromptWarning("??")]\n'
                 '  elif not input_api.change.REALLYABSOLUTELYNOSUCHKEY:\n'
                 '    return [output_api.PresubmitPromptWarning("??"),\n'
@@ -62,7 +69,7 @@ class PresubmitUnittest(unittest.TestCase):
                 '  else:\n'
                 '    return ()')
       else:
-        return 'one:%s\ntwo:%s' % (path, path)
+        return 'one:%s\r\ntwo:%s' % (path, path)
     presubmit._ReadFile = MockReadFile
   
   def tearDown(self):
@@ -171,7 +178,7 @@ class PresubmitUnittest(unittest.TestCase):
     self.failUnless(len(output) == 1)
     self.failUnless(list[0] in output)
   
-  def testGclientChange(self):
+  def testGclChange(self):
     description_lines = ('Hello there',
                          'this is a change',
                          'BUG=123',
@@ -179,15 +186,16 @@ class PresubmitUnittest(unittest.TestCase):
                          'and some more regular text  \t')
     files = [
       ['A', 'foo/blat.cc'],
-      ['M', 'binary.dll'],
-      ['M', 'flop/notfound.txt'],
+      ['M', 'binary.dll'],  # a binary file
+      ['A', 'isdir'],  # a directory
+      ['M', 'flop/notfound.txt'],  # not found in SVN, still exists locally
       ['D', 'boo/flap.h'],
     ]
     
     ci = gcl.ChangeInfo(name='mychange',
                         description='\n'.join(description_lines),
                         files=files)
-    change = presubmit.GclientChange(ci)
+    change = presubmit.GclChange(ci)
     
     self.failUnless(change.Change() == 'mychange')
     self.failUnless(change.Changelist() == 'mychange')
@@ -202,6 +210,7 @@ class PresubmitUnittest(unittest.TestCase):
     
     affected_files = change.AffectedFiles()
     self.failUnless(len(affected_files) == 4)
+    self.failUnless(len(change.AffectedFiles(include_dirs=True)) == 5)
     
     affected_text_files = change.AffectedTextFiles(include_deletes=True)
     self.failUnless(len(affected_text_files) == 3)
@@ -233,20 +242,21 @@ class PresubmitUnittest(unittest.TestCase):
     self.failUnless(rhs_lines[1][1] == 2)
     self.failUnless(rhs_lines[1][2] == 'two:%s' % files[0][1])
 
-    self.failUnless(rhs_lines[2][0].LocalPath() == files[2][1])
+    self.failUnless(rhs_lines[2][0].LocalPath() == files[3][1])
     self.failUnless(rhs_lines[2][1] == 1)
-    self.failUnless(rhs_lines[2][2] == 'one:%s' % files[2][1])
+    self.failUnless(rhs_lines[2][2] == 'one:%s' % files[3][1])
 
-    self.failUnless(rhs_lines[3][0].LocalPath() == files[2][1])
+    self.failUnless(rhs_lines[3][0].LocalPath() == files[3][1])
     self.failUnless(rhs_lines[3][1] == 2)
-    self.failUnless(rhs_lines[3][2] == 'two:%s' % files[2][1])
+    self.failUnless(rhs_lines[3][2] == 'two:%s' % files[3][1])
   
   def testAffectedFile(self):
     af = presubmit.AffectedFile('foo/blat.cc', 'M')
     self.failUnless(af.ServerPath() == 'svn:/foo/foo/blat.cc')
     self.failUnless(af.LocalPath() == os.path.normpath('foo/blat.cc'))
     self.failUnless(af.Action() == 'M')
-    self.failUnless(af.NewContents() == ['one:foo/blat.cc', 'two:foo/blat.cc'])
+    self.failUnless(af.NewContents() == ['one:%s' % af.LocalPath(),
+                                         'two:%s' % af.LocalPath()])
     
     af = presubmit.AffectedFile('notfound.cc', 'A')
     self.failUnless(af.ServerPath() == '')
@@ -268,7 +278,7 @@ class PresubmitUnittest(unittest.TestCase):
     ci = gcl.ChangeInfo(name='mychange',
                         description='\n'.join(description_lines),
                         files=files)
-    change = presubmit.GclientChange(ci)
+    change = presubmit.GclChange(ci)
 
     api = presubmit.InputApi(change, 'foo/PRESUBMIT.py')
     
@@ -412,12 +422,29 @@ class PresubmitUnittest(unittest.TestCase):
     self.failUnless(output.getvalue().count('XX!!XX'))
     self.failIf(output.getvalue().count('(y/N)'))
   
+  def testDirectoryHandling(self):
+    files = [
+      ['A', 'isdir'],
+      ['A', 'isdir\\blat.cc'],
+    ]
+    ci = gcl.ChangeInfo(name='mychange',
+                        description='foo',
+                        files=files)
+    change = presubmit.GclChange(ci)
+    
+    affected_files = change.AffectedFiles(include_dirs=False)
+    self.failUnless(len(affected_files) == 1)
+    self.failUnless(affected_files[0].LocalPath().endswith('blat.cc'))
+    
+    affected_files_and_dirs = change.AffectedFiles(include_dirs=True)
+    self.failUnless(len(affected_files_and_dirs) == 2)
+  
   @staticmethod
   def MakeBasicChange(name, description):
     ci = gcl.ChangeInfo(name=name,
                         description=description,
                         files=[])
-    change = presubmit.GclientChange(ci)
+    change = presubmit.GclChange(ci)
     return change
   
   def testCannedCheckChangeHasTestedField(self):
