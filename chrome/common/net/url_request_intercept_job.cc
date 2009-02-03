@@ -11,6 +11,7 @@
 #include "base/message_loop.h"
 #include "base/string_util.h"
 #include "chrome/common/chrome_plugin_lib.h"
+#include "chrome/common/notification_service.h"
 #include "net/base/net_errors.h"
 
 using base::Time;
@@ -31,7 +32,7 @@ URLRequestInterceptJob::URLRequestInterceptJob(URLRequest* request,
   cprequest_->data = this;  // see FromCPRequest().
 
   NotificationService::current()->AddObserver(
-      this, NOTIFY_CHROME_PLUGIN_UNLOADED,
+      this, NotificationType::CHROME_PLUGIN_UNLOADED,
       Source<ChromePluginLib>(plugin_));
 }
 
@@ -45,7 +46,7 @@ URLRequestInterceptJob::~URLRequestInterceptJob() {
 
 void URLRequestInterceptJob::DetachPlugin() {
   NotificationService::current()->RemoveObserver(
-      this, NOTIFY_CHROME_PLUGIN_UNLOADED,
+      this, NotificationType::CHROME_PLUGIN_UNLOADED,
       Source<ChromePluginLib>(plugin_));
   plugin_ = NULL;
 }
@@ -66,7 +67,7 @@ void URLRequestInterceptJob::Kill() {
   URLRequestJob::Kill();
 }
 
-bool URLRequestInterceptJob::ReadRawData(char* dest, int dest_size,
+bool URLRequestInterceptJob::ReadRawData(net::IOBuffer* dest, int dest_size,
                                          int* bytes_read) {
   DCHECK_NE(dest_size, 0);
   DCHECK(bytes_read);
@@ -75,7 +76,7 @@ bool URLRequestInterceptJob::ReadRawData(char* dest, int dest_size,
     return false;
 
   int rv = plugin_->functions().request_funcs->read(cprequest_.get(),
-                                                         dest, dest_size);
+                                                    dest->data(), dest_size);
   if (rv >= 0) {
     *bytes_read = rv;
     return true;
@@ -205,7 +206,7 @@ void URLRequestInterceptJob::OnReadCompleted(int bytes_read) {
 void URLRequestInterceptJob::Observe(NotificationType type,
                                      const NotificationSource& source,
                                      const NotificationDetails& details) {
-  DCHECK(type == NOTIFY_CHROME_PLUGIN_UNLOADED);
+  DCHECK(type == NotificationType::CHROME_PLUGIN_UNLOADED);
   DCHECK(plugin_ == Source<ChromePluginLib>(source).ptr());
 
   DetachPlugin();

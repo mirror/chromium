@@ -10,6 +10,7 @@
 
 #include "base/command_line.h"
 #include "base/gfx/png_encoder.h"
+#include "base/gfx/native_widget_types.h"
 #include "base/string_piece.h"
 #include "base/string_util.h"
 #include "build/build_config.h"
@@ -110,7 +111,7 @@ static int32 next_page_id_ = 1;
 static const int kMaximumNumberOfUnacknowledgedPopups = 25;
 
 static const char* const kUnreachableWebDataURL =
-    "chrome://chromewebdata/";
+    "chrome-ui://chromewebdata/";
 
 static const char* const kBackForwardNavigationScheme = "history";
 
@@ -171,7 +172,6 @@ RenderView::RenderView(RenderThreadBase* render_thread)
       disable_popup_blocking_(false),
       has_unload_listener_(false),
       decrement_shared_popup_at_destruction_(false),
-      user_scripts_enabled_(false),
       waiting_for_create_window_ack_(false),
       form_field_autofill_request_id_(0),
       popup_notification_visible_(false),
@@ -210,7 +210,7 @@ RenderView::~RenderView() {
 /*static*/
 RenderView* RenderView::Create(
     RenderThreadBase* render_thread,
-    HWND parent_hwnd,
+    gfx::NativeViewId parent_hwnd,
     base::WaitableEvent* modal_dialog_event,
     int32 opener_id,
     const WebPreferences& webkit_prefs,
@@ -266,7 +266,7 @@ void RenderView::JSOutOfMemory() {
   Send(new ViewHostMsg_JSOutOfMemory(routing_id_));
 }
 
-void RenderView::Init(HWND parent_hwnd,
+void RenderView::Init(gfx::NativeViewId parent_hwnd,
                       base::WaitableEvent* modal_dialog_event,
                       int32 opener_id,
                       const WebPreferences& webkit_prefs,
@@ -316,8 +316,6 @@ void RenderView::Init(HWND parent_hwnd,
       command_line.HasSwitch(switches::kDomAutomationController);
   disable_popup_blocking_ =
       command_line.HasSwitch(switches::kDisablePopupBlocking);
-  user_scripts_enabled_ =
-      command_line.HasSwitch(switches::kEnableUserScripts);
 
   debug_message_handler_ = new DebugMessageHandler(this);
   render_thread_->AddFilter(debug_message_handler_);
@@ -343,7 +341,6 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
   IPC_BEGIN_MESSAGE_MAP(RenderView, message)
     IPC_MESSAGE_HANDLER(ViewMsg_CreatingNew_ACK, OnCreatingNewAck)
     IPC_MESSAGE_HANDLER(ViewMsg_CaptureThumbnail, SendThumbnail)
-    IPC_MESSAGE_HANDLER(ViewMsg_GetPrintedPagesCount, OnGetPrintedPagesCount)
     IPC_MESSAGE_HANDLER(ViewMsg_PrintPages, OnPrintPages)
     IPC_MESSAGE_HANDLER(ViewMsg_Navigate, OnNavigate)
     IPC_MESSAGE_HANDLER(ViewMsg_Stop, OnStop)
@@ -425,14 +422,8 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
 
 // Got a response from the browser after the renderer decided to create a new
 // view.
-void RenderView::OnCreatingNewAck
-#if defined(OS_WIN)
-    (HWND parent) {
+void RenderView::OnCreatingNewAck(gfx::NativeViewId parent) {
   CompleteInit(parent);
-#else
-    () {
-#endif
-
   waiting_for_create_window_ack_ = false;
 
   while (!queued_resource_messages_.empty()) {
@@ -521,12 +512,6 @@ void RenderView::SwitchFrameToDisplayMediaType(WebFrame* frame) {
     printing_view_size_.SetSize(0, 0);
   }
   printed_document_width_ = 0;
-}
-
-void RenderView::OnPrintPage(const ViewMsg_PrintPage_Params& params) {
-  DCHECK(webview());
-  if (webview())
-    PrintPage(params, webview()->GetMainFrame());
 }
 
 void RenderView::PrintPage(const ViewMsg_PrintPage_Params& params,
@@ -654,26 +639,12 @@ void RenderView::PrintPage(const ViewMsg_PrintPage_Params& params,
 #endif
 }
 
-void RenderView::OnGetPrintedPagesCount(const ViewMsg_Print_Params& params) {
+void RenderView::OnPrintPages() {
   DCHECK(webview());
-  if (!webview()) {
-    Send(new ViewHostMsg_DidGetPrintedPagesCount(routing_id_,
-                                                 params.document_cookie,
-                                                 0));
-    return;
+  if (webview()) {
+    // The renderer own the control flow as if it was a window.print() call.
+    ScriptedPrint(webview()->GetMainFrame());
   }
-  WebFrame* frame = webview()->GetMainFrame();
-  int expected_pages = SwitchFrameToPrintMediaType(params, frame);
-  Send(new ViewHostMsg_DidGetPrintedPagesCount(routing_id_,
-                                               params.document_cookie,
-                                               expected_pages));
-  SwitchFrameToDisplayMediaType(frame);
-}
-
-void RenderView::OnPrintPages(const ViewMsg_PrintPages_Params& params) {
-  DCHECK(webview());
-  if (webview())
-    PrintPages(params, webview()->GetMainFrame());
 }
 
 void RenderView::PrintPages(const ViewMsg_PrintPages_Params& params,
@@ -1496,14 +1467,12 @@ void RenderView::DidFinishDocumentLoadForFrame(WebView* webview,
 
   // Inject any user scripts. Do not inject into chrome UI pages, but do inject
   // into any other document.
-  if (user_scripts_enabled_) {
-    const GURL &gurl = frame->GetURL();
-    if (g_render_thread &&  // Will be NULL when testing.
-        (gurl.SchemeIs("file") ||
-         gurl.SchemeIs("http") ||
-         gurl.SchemeIs("https"))) {
-      g_render_thread->user_script_slave()->InjectScripts(frame);
-    }
+  const GURL &gurl = frame->GetURL();
+  if (g_render_thread &&  // Will be NULL when testing.
+      (gurl.SchemeIs("file") ||
+       gurl.SchemeIs("http") ||
+       gurl.SchemeIs("https"))) {
+    g_render_thread->user_script_slave()->InjectScripts(frame);
   }
 }
 
@@ -1854,29 +1823,19 @@ WebView* RenderView::CreateWebView(WebView* webview, bool user_gesture) {
 
   int32 routing_id = MSG_ROUTING_NONE;
 
-#if defined(OS_WIN)
-  HANDLE modal_dialog_event = NULL;
+  ModalDialogEvent modal_dialog_event;
   render_thread_->Send(
       new ViewHostMsg_CreateWindow(routing_id_, user_gesture, &routing_id,
                                    &modal_dialog_event));
   if (routing_id == MSG_ROUTING_NONE) {
-    DCHECK(modal_dialog_event == NULL);
     return NULL;
   }
-#else  // defined(OS_WIN)
-  // On POSIX we don't have a HANDLE parameter as we don't have cross process
-  // events. All platforms should be ported across to this at some point.
-  render_thread_->Send(
-      new ViewHostMsg_CreateWindow(routing_id_, user_gesture, &routing_id));
-  if (routing_id == MSG_ROUTING_NONE)
-    return NULL;
-#endif
 
   // The WebView holds a reference to this new RenderView
   const WebPreferences& prefs = webview->GetPreferences();
   base::WaitableEvent* waitable_event = new base::WaitableEvent
 #if defined(OS_WIN)
-      (modal_dialog_event);
+      (modal_dialog_event.event);
 #else
       (true, false);
 #endif
@@ -1946,7 +1905,8 @@ WebPluginDelegate* RenderView::CreatePluginDelegate(
     if (is_gears)
       ChromePluginLib::Create(path, GetCPBrowserFuncsForRenderer());
     return WebPluginDelegateImpl::Create(path,
-                                         mime_type_to_use, host_window_);
+                                         mime_type_to_use,
+                                         gfx::NativeViewFromId(host_window_));
   }
 
   WebPluginDelegateProxy* proxy =
@@ -2046,7 +2006,7 @@ void RenderView::SyncNavigationState() {
 }
 
 void RenderView::ShowContextMenu(WebView* webview,
-                                 ContextNode::Type type,
+                                 ContextNode node,
                                  int x,
                                  int y,
                                  const GURL& link_url,
@@ -2058,7 +2018,7 @@ void RenderView::ShowContextMenu(WebView* webview,
                                  int edit_flags,
                                  const std::string& security_info) {
   ViewHostMsg_ContextMenu_Params params;
-  params.type = type;
+  params.node = node;
   params.x = x;
   params.y = y;
   params.image_url = image_url;
@@ -2157,7 +2117,7 @@ GURL RenderView::GetAlternateErrorPageURL(const GURL& failedURL,
       break;
 
     case CONNECTION_ERROR:
-      params.append("connectionerror");
+      params.append("connectionfailure");
       break;
 
     default:

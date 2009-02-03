@@ -4,7 +4,7 @@
 
 #include "base/file_path.h"
 #include "chrome/common/net/cookie_monster_sqlite.h"
-#include "chrome/common/notification_service.h"
+#include "chrome/common/notification_observer.h"
 #include "chrome/common/pref_service.h"
 #include "net/url_request/url_request_context.h"
 
@@ -25,8 +25,8 @@ class ChromeURLRequestContext : public URLRequestContext,
   // Create an instance for use with an 'original' (non-OTR) profile. This is
   // expected to get called on the UI thread.
   static ChromeURLRequestContext* CreateOriginal(
-      Profile* profile, const std::wstring& cookie_store_path,
-      const std::wstring& disk_cache_path);
+      Profile* profile, const FilePath& cookie_store_path,
+      const FilePath& disk_cache_path);
 
   // Create an instance for use with an OTR profile. This is expected to get
   // called on the UI thread.
@@ -43,6 +43,8 @@ class ChromeURLRequestContext : public URLRequestContext,
   FilePath user_script_dir_path() const {
     return user_script_dir_path_;
   }
+
+  virtual const std::string& GetUserAgent(const GURL& url) const;
 
  private:
   // Private constructor, use the static factory methods instead. This is

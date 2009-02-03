@@ -5,13 +5,9 @@
 #ifndef CHROME_BROWSER_RENDERER_HOST_RENDER_WIDGET_HOST_VIEW_H_
 #define CHROME_BROWSER_RENDERER_HOST_RENDER_WIDGET_HOST_VIEW_H_
 
+#include "base/gfx/native_widget_types.h"
 #include "base/shared_memory.h"
-#include "build/build_config.h"
 #include "chrome/common/render_messages.h"
-
-#if defined(OS_WIN)
-#include <windows.h>
-#endif
 
 namespace gfx {
 class Rect;
@@ -25,23 +21,22 @@ class RenderProcessHost;
 class RenderWidgetHost;
 class WebCursor;
 
-///////////////////////////////////////////////////////////////////////////////
-//
-// RenderWidgetHostView
-//
-//  RenderWidgetHostView is an interface implemented by an object that acts as
-//  the "View" portion of a RenderWidgetHost. The RenderWidgetHost and its
-//  associated RenderProcessHost own the "Model" in this case which is the
-//  child renderer process. The View is responsible for receiving events from
-//  the surrounding environment and passing them to the RenderWidgetHost, and
-//  for actually displaying the content of the RenderWidgetHost when it
-//  changes.
-//
-///////////////////////////////////////////////////////////////////////////////
+// RenderWidgetHostView is an interface implemented by an object that acts as
+// the "View" portion of a RenderWidgetHost. The RenderWidgetHost and its
+// associated RenderProcessHost own the "Model" in this case which is the
+// child renderer process. The View is responsible for receiving events from
+// the surrounding environment and passing them to the RenderWidgetHost, and
+// for actually displaying the content of the RenderWidgetHost when it
+// changes.
 class RenderWidgetHostView {
  public:
   // Platform-specific creator. Use this to construct new RenderWidgetHostViews
   // rather than using RenderWidgetHostViewWin & friends.
+  //
+  // This function must NOT size it, because the RenderView in the renderer
+  // wounldn't have been created yet. The widget would set its "waiting for
+  // resize ack" flag, and the ack would never come becasue no RenderView
+  // received it.
   //
   // The RenderWidgetHost must already be created (because we can't know if it's
   // going to be a regular RenderWidgetHost or a RenderViewHost (a subclass).
@@ -59,10 +54,8 @@ class RenderWidgetHostView {
   // Tells the View to size itself to the specified size.
   virtual void SetSize(const gfx::Size& size) = 0;
 
-#if defined(OS_WIN)
-  // Retrieves the HWND used to contain plugin HWNDs.
-  virtual HWND GetPluginHWND() = 0;
-#endif
+  // Retrieves the native view used to contain plugins.
+  virtual gfx::NativeView GetPluginNativeView() = 0;
 
   // Moves all plugin windows as described in the given list.
   virtual void MovePluginWindows(

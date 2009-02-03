@@ -4,6 +4,9 @@
 
 #include "base/file_util.h"
 
+#if defined(OS_WIN)
+#include <io.h>
+#endif
 #include <stdio.h>
 
 #include <fstream>
@@ -246,7 +249,7 @@ bool ContentsEqual(const FilePath& filename1, const FilePath& filename2) {
   return true;
 }
 
-bool ReadFileToString(const std::wstring& path, std::string* contents) {
+bool ReadFileToString(const FilePath& path, std::string* contents) {
   FILE* file = OpenFile(path, "rb");
   if (!file) {
     return false;
@@ -274,6 +277,24 @@ bool CloseFile(FILE* file) {
   if (file == NULL)
     return true;
   return fclose(file) == 0;
+}
+
+bool TruncateFile(FILE* file) {
+  if (file == NULL)
+    return false;
+  long current_offset = ftell(file);
+  if (current_offset == -1)
+    return false;
+#if defined(OS_WIN)
+  int fd = _fileno(file);
+  if (_chsize(fd, current_offset) != 0)
+    return false;
+#else
+  int fd = fileno(file);
+  if (ftruncate(fd, current_offset) != 0)
+    return false;
+#endif
+  return true;
 }
 
 bool ContainsPath(const FilePath &parent, const FilePath& child) {
@@ -327,6 +348,10 @@ bool MemoryMappedFile::IsValid() {
 }
 
 // Deprecated functions ----------------------------------------------------
+
+bool ReadFileToString(const std::wstring& path, std::string* contents) {
+  return ReadFileToString(FilePath::FromWStringHack(path), contents);
+}
 
 bool AbsolutePath(std::wstring* path_str) {
   FilePath path(FilePath::FromWStringHack(*path_str));
@@ -443,6 +468,9 @@ bool PathExists(const std::wstring& path) {
 bool PathIsWritable(const std::wstring& path) {
   return PathIsWritable(FilePath::FromWStringHack(path));
 }
+int ReadFile(const std::wstring& filename, char* data, int size) {
+  return ReadFile(FilePath::FromWStringHack(filename), data, size);
+}
 bool SetCurrentDirectory(const std::wstring& directory) {
   return SetCurrentDirectory(FilePath::FromWStringHack(directory));
 }
@@ -470,6 +498,9 @@ void UpOneDirectoryOrEmpty(std::wstring* dir) {
     dir->clear();
   else
     *dir = directory.ToWStringHack();
+}
+int WriteFile(const std::wstring& filename, const char* data, int size) {
+  return WriteFile(FilePath::FromWStringHack(filename), data, size);
 }
 }  // namespace
 

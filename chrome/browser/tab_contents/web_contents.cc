@@ -8,20 +8,36 @@
 #include "base/compiler_specific.h"
 #include "base/file_version_info.h"
 #include "base/process_util.h"
+#include "base/string_util.h"
 #include "chrome/app/locales/locale_settings.h"
-#include "chrome/browser/autofill_manager.h"
-#include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser.h"
-#include "chrome/browser/cache_manager_host.h"
-#include "chrome/browser/character_encoding.h"
 #include "chrome/browser/dom_operation_notification_details.h"
-#include "chrome/browser/download/download_manager.h"
-#include "chrome/browser/download/download_request_manager.h"
-#include "chrome/browser/find_notification_details.h"
 #include "chrome/browser/google_util.h"
 #include "chrome/browser/js_before_unload_handler.h"
 #include "chrome/browser/jsmessage_box_handler.h"
 #include "chrome/browser/load_from_memory_cache_details.h"
+#include "chrome/browser/profile.h"
+#include "chrome/browser/renderer_host/render_process_host.h"
+#include "chrome/browser/tab_contents/provisional_load_details.h"
+#include "chrome/common/chrome_switches.h"
+#include "chrome/common/l10n_util.h"
+#include "chrome/common/notification_service.h"
+#include "chrome/common/pref_names.h"
+#include "chrome/common/pref_service.h"
+#include "net/base/mime_util.h"
+#include "net/base/net_errors.h"
+#include "net/base/registry_controlled_domain.h"
+#include "webkit/glue/webkit_glue.h"
+
+#if defined(OS_WIN)
+// TODO(port): fill these in as we flesh out the implementation of this class
+#include "chrome/browser/autofill_manager.h"
+#include "chrome/browser/bookmarks/bookmark_model.h"
+#include "chrome/browser/cache_manager_host.h"
+#include "chrome/browser/character_encoding.h"
+#include "chrome/browser/download/download_manager.h"
+#include "chrome/browser/download/download_request_manager.h"
+#include "chrome/browser/gears_integration.h"
 #include "chrome/browser/load_notification_details.h"
 #include "chrome/browser/modal_html_dialog_delegate.h"
 #include "chrome/browser/password_manager/password_manager.h"
@@ -29,21 +45,14 @@
 #include "chrome/browser/plugin_service.h"
 #include "chrome/browser/printing/print_job.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
-#include "chrome/browser/renderer_host/render_widget_host_view_win.h"  // TODO(brettw) delete me.
+#include "chrome/browser/renderer_host/render_widget_host_view.h"
 #include "chrome/browser/search_engines/template_url_fetcher.h"
 #include "chrome/browser/search_engines/template_url_model.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/web_contents_view.h"
-#include "chrome/browser/tab_contents/web_contents_view_win.h"
 #include "chrome/browser/views/hung_renderer_view.h"  // TODO(brettw) delete me.
-#include "chrome/common/chrome_switches.h"
-#include "chrome/common/l10n_util.h"
-#include "chrome/common/pref_names.h"
-#include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
-#include "net/base/mime_util.h"
-#include "net/base/registry_controlled_domain.h"
-#include "webkit/glue/webkit_glue.h"
+#endif
 
 #include "generated_resources.h"
 
@@ -107,8 +116,8 @@ const int kJavascriptMessageExpectedDelay = 1000;
 // shown for us to hide it when navigating away from the current page.
 const int kDownloadShelfHideDelay = 5000;
 
-const wchar_t kLinkDoctorBaseURL[] =
-    L"http://linkhelp.clients.google.com/tbproxy/lh/fixurl";
+const char kLinkDoctorBaseURL[] =
+    "http://linkhelp.clients.google.com/tbproxy/lh/fixurl";
 
 // The printer icon in shell32.dll. That's a standard icon user will quickly
 // recognize.
@@ -139,14 +148,6 @@ const int kPrefsToObserveLength = arraysize(kPrefsToObserve);
 // Limit on the number of suggestions to appear in the pop-up menu under an
 // text input element in a form.
 const int kMaxAutofillMenuItems = 6;
-
-void InitWebContentsClass() {
-  static bool web_contents_class_initialized = false;
-  if (!web_contents_class_initialized) {
-    ResourceBundle& rb = ResourceBundle::GetSharedInstance();
-    web_contents_class_initialized = true;
-  }
-}
 
 // Returns true if the entry's transition type is FORM_SUBMIT.
 bool IsFormSubmit(const NavigationEntry* entry) {
@@ -180,19 +181,20 @@ WebContents::WebContents(Profile* profile,
                          int routing_id,
                          base::WaitableEvent* modal_dialog_event)
     : TabContents(TAB_CONTENTS_WEB),
-      view_(new WebContentsViewWin(this)),
+      view_(WebContentsView::Create(this)),
       ALLOW_THIS_IN_INITIALIZER_LIST(
           render_manager_(render_view_factory, this, this)),
       render_view_factory_(render_view_factory),
-      received_page_title_(false),
-      is_starred_(false),
       printing_(*this),
       notify_disconnection_(false),
+      received_page_title_(false),
+      is_starred_(false),
+#if defined(OS_WIN)
       message_box_active_(CreateEvent(NULL, TRUE, FALSE, NULL)),
+#endif
       ALLOW_THIS_IN_INITIALIZER_LIST(fav_icon_helper_(this)),
       suppress_javascript_messages_(false),
       load_state_(net::LOAD_STATE_IDLE) {
-  InitWebContentsClass();
 
   pending_install_.page_id = 0;
   pending_install_.callback_functor = NULL;
@@ -207,24 +209,22 @@ WebContents::WebContents(Profile* profile,
   }
 
   // Register for notifications about URL starredness changing on any profile.
-  NotificationService::current()->
-      AddObserver(this, NOTIFY_URLS_STARRED, NotificationService::AllSources());
-  NotificationService::current()->
-      AddObserver(this, NOTIFY_BOOKMARK_MODEL_LOADED,
-                  NotificationService::AllSources());
-  NotificationService::current()->
-      AddObserver(this, NOTIFY_RENDER_WIDGET_HOST_DESTROYED,
-                  NotificationService::AllSources());
+  NotificationService::current()->AddObserver(
+      this, NotificationType::URLS_STARRED, NotificationService::AllSources());
+  NotificationService::current()->AddObserver(
+      this, NotificationType::BOOKMARK_MODEL_LOADED,
+      NotificationService::AllSources());
+  NotificationService::current()->AddObserver(
+      this, NotificationType::RENDER_WIDGET_HOST_DESTROYED,
+      NotificationService::AllSources());
 }
 
 WebContents::~WebContents() {
-  if (web_app_.get())
-    web_app_->RemoveObserver(this);
   if (pending_install_.callback_functor)
     pending_install_.callback_functor->Cancel();
-  NotificationService::current()->
-      RemoveObserver(this, NOTIFY_RENDER_WIDGET_HOST_DESTROYED,
-                     NotificationService::AllSources());
+  NotificationService::current()->RemoveObserver(
+      this, NotificationType::RENDER_WIDGET_HOST_DESTROYED,
+      NotificationService::AllSources());
 }
 
 // static
@@ -301,12 +301,11 @@ PluginInstaller* WebContents::GetPluginInstaller() {
 
 void WebContents::Destroy() {
   // Tell the notification service we no longer want notifications.
-  NotificationService::current()->
-      RemoveObserver(this, NOTIFY_URLS_STARRED,
-                     NotificationService::AllSources());
-  NotificationService::current()->
-      RemoveObserver(this, NOTIFY_BOOKMARK_MODEL_LOADED,
-                     NotificationService::AllSources());
+  NotificationService::current()->RemoveObserver(
+      this, NotificationType::URLS_STARRED, NotificationService::AllSources());
+  NotificationService::current()->RemoveObserver(
+      this, NotificationType::BOOKMARK_MODEL_LOADED,
+      NotificationService::AllSources());
 
   // Destroy the print manager right now since a Print command may be pending.
   printing_.Destroy();
@@ -333,15 +332,6 @@ SiteInstance* WebContents::GetSiteInstance() const {
   return render_manager_.current_host()->site_instance();
 }
 
-SkBitmap WebContents::GetFavIcon() {
-  if (web_app_.get() && IsWebApplicationActive()) {
-    SkBitmap app_icon = web_app_->GetFavIcon();
-    if (!app_icon.isNull())
-      return app_icon;
-  }
-  return TabContents::GetFavIcon();
-}
-
 std::wstring WebContents::GetStatusText() const {
   if (!is_loading() || load_state_ == net::LOAD_STATE_IDLE)
     return std::wstring();
@@ -358,9 +348,15 @@ std::wstring WebContents::GetStatusText() const {
     case net::LOAD_STATE_SENDING_REQUEST:
       return l10n_util::GetString(IDS_LOAD_STATE_SENDING_REQUEST);
     case net::LOAD_STATE_WAITING_FOR_RESPONSE:
+#if defined(OS_WIN)
+      // TODO(port): GetStringF() is currently disabled for non-win platforms.
       return l10n_util::GetStringF(IDS_LOAD_STATE_WAITING_FOR_RESPONSE,
                                    load_state_host_);
+#endif
     // Ignore net::LOAD_STATE_READING_RESPONSE and net::LOAD_STATE_IDLE
+    case net::LOAD_STATE_IDLE:
+    case net::LOAD_STATE_READING_RESPONSE:
+      break;
   }
 
   return std::wstring();
@@ -489,36 +485,21 @@ void WebContents::PopupNotificationVisibilityChanged(bool visible) {
   render_view_host()->PopupNotificationVisibilityChanged(visible);
 }
 
+#if defined(OS_WIN)
 // Stupid view pass-throughs
 void WebContents::CreateView() {
   view_->CreateView();
 }
 HWND WebContents::GetContainerHWND() const {
-  return view_->GetContainerHWND();
+  return view_->GetNativeView();
 }
 HWND WebContents::GetContentHWND() {
-  return view_->GetContentHWND();
+  return view_->GetContentNativeView();
 }
 void WebContents::GetContainerBounds(gfx::Rect *out) const {
   view_->GetContainerBounds(out);
 }
-
-void WebContents::SetWebApp(WebApp* web_app) {
-  if (web_app_.get()) {
-    web_app_->RemoveObserver(this);
-    web_app_->SetWebContents(NULL);
-  }
-
-  web_app_ = web_app;
-  if (web_app) {
-    web_app->AddObserver(this);
-    web_app_->SetWebContents(this);
-  }
-}
-
-bool WebContents::IsWebApplication() const {
-  return (web_app_.get() != NULL);
-}
+#endif
 
 void WebContents::CreateShortcut() {
   NavigationEntry* entry = controller()->GetLastCommittedEntry();
@@ -573,8 +554,8 @@ void WebContents::OnSavePage() {
 
   // TODO(rocking): Use new asynchronous dialog boxes to prevent the SaveAs
   // dialog blocking the UI thread. See bug: http://b/issue?id=1129694.
-  if (SavePackage::GetSaveInfo(suggest_name, GetContainerHWND(), &param,
-                               profile()->GetDownloadManager()))
+  if (SavePackage::GetSaveInfo(suggest_name, view_->GetNativeView(),
+                               &param, profile()->GetDownloadManager()))
     SavePage(param.saved_main_file_path, param.dir, param.save_type);
 }
 
@@ -589,15 +570,8 @@ void WebContents::SavePage(const std::wstring& main_file,
 }
 
 void WebContents::PrintPreview() {
-  // We can't print interstitial page for now.
-  if (showing_interstitial_page())
-    return;
-
-  // If we have a find bar it needs to hide as well.
-  view_->HideFindBar(false);
-
-  // We don't show the print preview for the beta, only the print dialog.
-  printing_.ShowPrintDialog();
+  // We don't show the print preview yet, only the print dialog.
+  PrintNow();
 }
 
 bool WebContents::PrintNow() {
@@ -608,7 +582,7 @@ bool WebContents::PrintNow() {
   // If we have a find bar it needs to hide as well.
   view_->HideFindBar(false);
 
-  return printing_.PrintNow();
+  return render_view_host()->PrintPages();
 }
 
 bool WebContents::IsActiveEntry(int32 page_id) {
@@ -764,7 +738,6 @@ void WebContents::UpdateTitle(RenderViewHost* rvh,
     NotifyNavigationStateChanged(INVALIDATE_TITLE);
 }
 
-
 void WebContents::UpdateEncoding(RenderViewHost* render_view_host,
                                  const std::wstring& encoding) {
   set_encoding(encoding);
@@ -837,10 +810,10 @@ void WebContents::DidStartProvisionalLoadForFrame(
   ProvisionalLoadDetails details(is_main_frame,
                                  controller()->IsURLInPageNavigation(url),
                                  url, std::string(), false);
-  NotificationService::current()->
-      Notify(NOTIFY_FRAME_PROVISIONAL_LOAD_START,
-             Source<NavigationController>(controller()),
-             Details<ProvisionalLoadDetails>(&details));
+  NotificationService::current()->Notify(
+      NotificationType::FRAME_PROVISIONAL_LOAD_START,
+      Source<NavigationController>(controller()),
+      Details<ProvisionalLoadDetails>(&details));
 }
 
 void WebContents::DidRedirectProvisionalLoad(int32 page_id,
@@ -865,16 +838,16 @@ void WebContents::DidLoadResourceFromMemoryCache(
     return;
 
   // Send out a notification that we loaded a resource from our memory cache.
-  int cert_id, cert_status, security_bits;
+  int cert_id = 0, cert_status = 0, security_bits = 0;
   SSLManager::DeserializeSecurityInfo(security_info,
                                       &cert_id, &cert_status,
                                       &security_bits);
   LoadFromMemoryCacheDetails details(url, cert_id, cert_status);
 
-  NotificationService::current()->
-      Notify(NOTIFY_LOAD_FROM_MEMORY_CACHE,
-             Source<NavigationController>(controller()),
-             Details<LoadFromMemoryCacheDetails>(&details));
+  NotificationService::current()->Notify(
+      NotificationType::LOAD_FROM_MEMORY_CACHE,
+      Source<NavigationController>(controller()),
+      Details<LoadFromMemoryCacheDetails>(&details));
 }
 
 void WebContents::DidFailProvisionalLoadWithError(
@@ -926,10 +899,10 @@ void WebContents::DidFailProvisionalLoadWithError(
                                  url, std::string(), false);
   details.set_error_code(error_code);
 
-  NotificationService::current()->
-      Notify(NOTIFY_FAIL_PROVISIONAL_LOAD_WITH_ERROR,
-             Source<NavigationController>(controller()),
-             Details<ProvisionalLoadDetails>(&details));
+  NotificationService::current()->Notify(
+      NotificationType::FAIL_PROVISIONAL_LOAD_WITH_ERROR,
+      Source<NavigationController>(controller()),
+      Details<ProvisionalLoadDetails>(&details));
 }
 
 void WebContents::UpdateFavIconURL(RenderViewHost* render_view_host,
@@ -952,8 +925,6 @@ void WebContents::DidDownloadImage(
     fav_icon_helper_.FavIconDownloadFailed(id);
   else
     fav_icon_helper_.SetFavIcon(id, image_url, image);
-  if (web_app_.get() && !errored)
-    web_app_->SetImage(image_url, image);
 }
 
 void WebContents::RequestOpenURL(const GURL& url, const GURL& referrer,
@@ -965,7 +936,7 @@ void WebContents::DomOperationResponse(const std::string& json_string,
                                        int automation_id) {
   DomOperationNotificationDetails details(json_string, automation_id);
   NotificationService::current()->Notify(
-      NOTIFY_DOM_OPERATION_RESPONSE, Source<WebContents>(this),
+      NotificationType::DOM_OPERATION_RESPONSE, Source<WebContents>(this),
       Details<DomOperationNotificationDetails>(&details));
 }
 
@@ -997,14 +968,14 @@ void WebContents::RunFileChooser(bool multiple_files,
                                  const std::wstring& title,
                                  const std::wstring& default_file,
                                  const std::wstring& filter) {
-  HWND toplevel_hwnd = GetAncestor(GetContainerHWND(), GA_ROOT);
   if (!select_file_dialog_.get())
     select_file_dialog_ = SelectFileDialog::Create(this);
   SelectFileDialog::Type dialog_type =
     multiple_files ? SelectFileDialog::SELECT_OPEN_MULTI_FILE :
                      SelectFileDialog::SELECT_OPEN_FILE;
   select_file_dialog_->SelectFile(dialog_type, title, default_file, filter,
-                                  std::wstring(), toplevel_hwnd, NULL);
+                                  std::wstring(),
+                                  view_->GetTopLevelNativeView(), NULL);
 }
 
 void WebContents::RunJavaScriptMessage(
@@ -1033,12 +1004,8 @@ void WebContents::RunJavaScriptMessage(
         TimeDelta::FromMilliseconds(kJavascriptMessageExpectedDelay))
       show_suppress_checkbox = true;
 
-    JavascriptMessageBoxHandler::RunJavascriptMessageBox(this,
-                                                         flags,
-                                                         message,
-                                                         default_prompt,
-                                                         show_suppress_checkbox,
-                                                         reply_msg);
+    RunJavascriptMessageBox(this, flags, message, default_prompt,
+                            show_suppress_checkbox, reply_msg);
   } else {
     // If we are suppressing messages, just reply as is if the user immediately
     // pressed "Cancel".
@@ -1047,9 +1014,8 @@ void WebContents::RunJavaScriptMessage(
 }
 
 void WebContents::RunBeforeUnloadConfirm(const std::wstring& message,
-                                            IPC::Message* reply_msg) {
-  JavascriptBeforeUnloadHandler::RunBeforeUnloadDialog(this, message,
-                                                       reply_msg);
+                                         IPC::Message* reply_msg) {
+  RunBeforeUnloadDialog(this, message, reply_msg);
 }
 
 void WebContents::ShowModalHTMLDialog(const GURL& url, int width, int height,
@@ -1140,20 +1106,25 @@ void WebContents::PageHasOSDD(RenderViewHost* render_view_host,
 
   // Download the OpenSearch description document. If this is successful a
   // new keyword will be created when done.
+#if defined(OS_WIN)
+  gfx::NativeView ancestor = GetAncestor(view_->GetNativeView(), GA_ROOT);
+#else
+  gfx::NativeView ancestor = NULL;
+#endif
   profile()->GetTemplateURLFetcher()->ScheduleDownload(
       keyword,
       url,
       base_entry->favicon().url(),
-      GetAncestor(view_->GetContainerHWND(), GA_ROOT),
+      ancestor,
       autodetected);
 }
 
 void WebContents::InspectElementReply(int num_resources) {
   // We have received reply from inspect element request. Notify the
   // automation provider in case we need to notify automation client.
-  NotificationService::current()->
-      Notify(NOTIFY_DOM_INSPECT_ELEMENT_RESPONSE, Source<WebContents>(this),
-             Details<int>(&num_resources));
+  NotificationService::current()->Notify(
+      NotificationType::DOM_INSPECT_ELEMENT_RESPONSE, Source<WebContents>(this),
+      Details<int>(&num_resources));
 }
 
 void WebContents::DidGetPrintedPagesCount(int cookie, int number_pages) {
@@ -1260,10 +1231,15 @@ WebPreferences WebContents::GetWebkitPrefs() {
 }
 
 void WebContents::OnMissingPluginStatus(int status) {
+#if defined(OS_WIN)
+// TODO(PORT): pull in when plug-ins work
   GetPluginInstaller()->OnMissingPluginStatus(status);
+#endif
 }
 
 void WebContents::OnCrashedPlugin(const FilePath& plugin_path) {
+#if defined(OS_WIN)
+// TODO(PORT): pull in when plug-ins work
   DCHECK(!plugin_path.value().empty());
 
   std::wstring plugin_name = plugin_path.ToWStringHack();
@@ -1277,6 +1253,7 @@ void WebContents::OnCrashedPlugin(const FilePath& plugin_path) {
   AddInfoBar(new SimpleAlertInfoBarDelegate(
       this, l10n_util::GetStringF(IDS_PLUGIN_CRASHED_PROMPT, plugin_name),
       NULL));
+#endif
 }
 
 void WebContents::OnJSOutOfMemory() {
@@ -1331,19 +1308,25 @@ void WebContents::OnDidGetApplicationInfo(
   if (pending_install_.page_id != page_id)
     return;  // The user clicked create on a separate page. Ignore this.
 
+#if defined(OS_WIN)
+  // TODO(port): include when gears integration is ported
   pending_install_.callback_functor =
       new GearsCreateShortcutCallbackFunctor(this);
   GearsCreateShortcut(
       info, pending_install_.title, pending_install_.url, pending_install_.icon,
       NewCallback(pending_install_.callback_functor,
                   &GearsCreateShortcutCallbackFunctor::Run));
+#endif
 }
 
 void WebContents::OnEnterOrSpace() {
   // See comment in RenderViewHostDelegate::OnEnterOrSpace as to why we do this.
+#if defined(OS_WIN)
+  // TODO(port): this is stubbed in BrowserProcess
   DownloadRequestManager* drm = g_browser_process->download_request_manager();
   if (drm)
     drm->OnUserGesture(this);
+#endif
 }
 
 bool WebContents::CanTerminate() const {
@@ -1361,7 +1344,6 @@ void WebContents::MultiFilesSelected(const std::vector<std::wstring>& files,
                                      void* params) {
   render_view_host()->MultiFilesSelected(files);
 }
-
 
 void WebContents::FileSelectionCanceled(void* params) {
   // If the user cancels choosing a file to upload we pass back an
@@ -1383,28 +1365,26 @@ void WebContents::UpdateRenderViewSizeForRenderManager() {
 
 bool WebContents::CreateRenderViewForRenderManager(
     RenderViewHost* render_view_host) {
-  RenderWidgetHostView* rvh_view = view_->CreateViewForWidget(render_view_host);
+  RenderWidgetHostView* rwh_view = view_->CreateViewForWidget(render_view_host);
+  if (!render_view_host->CreateRenderView())
+    return false;
 
-  bool ok = render_view_host->CreateRenderView();
-  if (ok) {
-    // TODO(brettw) hack alert. Do this in some cross platform way, or move
-    // to the view?
-    RenderWidgetHostViewWin* rvh_view_win =
-        static_cast<RenderWidgetHostViewWin*>(rvh_view);
-    rvh_view->SetSize(view_->GetContainerSize());
-    UpdateMaxPageIDIfNecessary(render_view_host->site_instance(),
-                               render_view_host);
-  }
-  return ok;
+  // Now that the RenderView has been created, we need to tell it its size.
+  rwh_view->SetSize(view_->GetContainerSize());
+
+  UpdateMaxPageIDIfNecessary(render_view_host->site_instance(),
+                             render_view_host);
+  return true;
 }
 
 void WebContents::Observe(NotificationType type,
                           const NotificationSource& source,
                           const NotificationDetails& details) {
-  switch (type) {
-    case NOTIFY_BOOKMARK_MODEL_LOADED:  // BookmarkModel finished loading, fall
-                                        // through to update starred state.
-    case NOTIFY_URLS_STARRED: {  // Somewhere, a URL has been starred.
+  switch (type.value) {
+    case NotificationType::BOOKMARK_MODEL_LOADED:
+      // BookmarkModel finished loading, fall through to update starred state.
+    case NotificationType::URLS_STARRED: {
+      // Somewhere, a URL has been starred.
       // Ignore notifications for profiles other than our current one.
       Profile* source_profile = Source<Profile>(source).ptr();
       if (!source_profile->IsSameProfile(profile()))
@@ -1413,7 +1393,7 @@ void WebContents::Observe(NotificationType type,
       UpdateStarredStateForCurrentURL();
       break;
     }
-    case NOTIFY_PREF_CHANGED: {
+    case NotificationType::PREF_CHANGED: {
       std::wstring* pref_name_in = Details<std::wstring>(details).ptr();
       DCHECK(Source<PrefService>(source).ptr() == profile()->GetPrefs());
       if (*pref_name_in == prefs::kAlternateErrorPagesEnabled) {
@@ -1427,7 +1407,7 @@ void WebContents::Observe(NotificationType type,
       }
       break;
     }
-    case NOTIFY_RENDER_WIDGET_HOST_DESTROYED:
+    case NotificationType::RENDER_WIDGET_HOST_DESTROYED:
       view_->RenderWidgetHostDestroyed(Source<RenderWidgetHost>(source).ptr());
       break;
     default: {
@@ -1562,25 +1542,6 @@ void WebContents::UpdateWebPreferences() {
   render_view_host()->UpdateWebPreferences(GetWebkitPrefs());
 }
 
-bool WebContents::IsWebApplicationActive() const {
-  if (!web_app_.get())
-    return false;
-
-  // If we are inside an application, the application is always active. For
-  // example, this allows us to display the GMail icon even when we are bounced
-  // the login page.
-  if (delegate() && delegate()->IsApplication())
-    return true;
-
-  return (GetURL() == web_app_->url());
-}
-
-void WebContents::WebAppImagesChanged(WebApp* web_app) {
-  DCHECK(web_app == web_app_.get());
-  if (delegate() && IsWebApplicationActive())
-    delegate()->NavigationStateChanged(this, TabContents::INVALIDATE_FAVICON);
-}
-
 void WebContents::OnGearsCreateShortcutDone(
     const GearsShortcutData& shortcut_data, bool success) {
   NavigationEntry* current_entry = controller()->GetLastCommittedEntry();
@@ -1590,7 +1551,6 @@ void WebContents::OnGearsCreateShortcutDone(
   if (success && same_page) {
     // Only switch to app mode if the user chose to create a shortcut and
     // we're still on the same page that it corresponded to.
-    SetWebApp(new WebApp(profile(), shortcut_data));
     if (delegate())
       delegate()->ConvertContentsToApplication(this);
   }
@@ -1695,18 +1655,18 @@ void WebContents::NotifySwapped() {
   // notification so that clients that pick up a pointer to |this| can NULL the
   // pointer.  See Bug 1230284.
   notify_disconnection_ = true;
-  NotificationService::current()->
-      Notify(NOTIFY_WEB_CONTENTS_SWAPPED,
-             Source<WebContents>(this),
-             NotificationService::NoDetails());
+  NotificationService::current()->Notify(
+      NotificationType::WEB_CONTENTS_SWAPPED,
+      Source<WebContents>(this),
+      NotificationService::NoDetails());
 }
 
 void WebContents::NotifyConnected() {
   notify_disconnection_ = true;
-  NotificationService::current()->
-      Notify(NOTIFY_WEB_CONTENTS_CONNECTED,
-             Source<WebContents>(this),
-             NotificationService::NoDetails());
+  NotificationService::current()->Notify(
+      NotificationType::WEB_CONTENTS_CONNECTED,
+      Source<WebContents>(this),
+      NotificationService::NoDetails());
 }
 
 void WebContents::NotifyDisconnected() {
@@ -1714,10 +1674,10 @@ void WebContents::NotifyDisconnected() {
     return;
 
   notify_disconnection_ = false;
-  NotificationService::current()->
-      Notify(NOTIFY_WEB_CONTENTS_DISCONNECTED,
-             Source<WebContents>(this),
-             NotificationService::NoDetails());
+  NotificationService::current()->Notify(
+      NotificationType::WEB_CONTENTS_DISCONNECTED,
+      Source<WebContents>(this),
+      NotificationService::NoDetails());
 }
 
 void WebContents::GenerateKeywordIfNecessary(

@@ -8,6 +8,8 @@
 #include "chrome/tools/profiles/thumbnail-inl.h"
 
 #include "base/at_exit.h"
+#include "base/file_path.h"
+#include "base/gfx/jpeg_codec.h"
 #include "base/icu_util.h"
 #include "base/message_loop.h"
 #include "base/path_service.h"
@@ -15,7 +17,6 @@
 #include "base/string_util.h"
 #include "base/time.h"
 #include "chrome/browser/history/history.h"
-#include "chrome/common/jpeg_codec.h"
 #include "chrome/common/thumbnail_score.h"
 #include "SkBitmap.h"
 
@@ -93,7 +94,7 @@ std::wstring ConstructRandomPage() {
 void InsertURLBatch(const std::wstring& profile_dir, int page_id,
                     int batch_size, bool history_only) {
   scoped_refptr<HistoryService> history_service(new HistoryService);
-  if (!history_service->Init(profile_dir, NULL)) {
+  if (!history_service->Init(FilePath::FromWStringHack(profile_dir), NULL)) {
     printf("Could not init the history service\n");
     exit(1);
   }

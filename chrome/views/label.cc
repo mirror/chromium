@@ -188,7 +188,7 @@ const GURL Label::GetURL() const {
   if (url_set_)
     return url_;
   else
-    return GURL(text_);
+    return GURL(WideToUTF8(text_));
 }
 
 gfx::Size Label::GetTextSize() {
@@ -346,6 +346,10 @@ gfx::Rect Label::GetTextBounds() {
     case ALIGN_RIGHT:
       text_x = width() - insets.right() - text_size.width();
       break;
+    default:
+      NOTREACHED();
+      text_x = 0;
+      break;
   }
   return gfx::Rect(text_x, text_y, text_size.width(), text_size.height());
 }
@@ -372,6 +376,7 @@ void Label::SizeToFit(int max_width) {
   SizeToPreferredSize();
 }
 
+#if defined(OS_WIN)
 bool Label::GetAccessibleRole(VARIANT* role) {
   DCHECK(role);
 
@@ -391,5 +396,6 @@ bool Label::GetAccessibleState(VARIANT* state) {
   state->lVal |= STATE_SYSTEM_READONLY;
   return true;
 }
+#endif  // defined(OS_WIN)
 
 }  // namespace views

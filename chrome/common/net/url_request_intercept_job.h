@@ -11,7 +11,7 @@
 #include "chrome/browser/chrome_plugin_host.h"
 #include "chrome/common/chrome_plugin_api.h"
 #include "chrome/common/chrome_plugin_util.h"
-#include "chrome/common/notification_service.h"
+#include "chrome/common/notification_observer.h"
 
 class ChromePluginLib;
 
@@ -34,7 +34,7 @@ class URLRequestInterceptJob
   // URLRequestJob
   virtual void Start();
   virtual void Kill();
-  virtual bool ReadRawData(char* buf, int buf_size, int* bytes_read);
+  virtual bool ReadRawData(net::IOBuffer* buf, int buf_size, int* bytes_read);
   virtual bool GetMimeType(std::string* mime_type);
   virtual bool GetCharset(std::string* charset);
   virtual void GetResponseInfo(net::HttpResponseInfo* info);
@@ -53,7 +53,7 @@ class URLRequestInterceptJob
   scoped_ptr<ScopableCPRequest> cprequest_;
   ChromePluginLib* plugin_;
   bool got_headers_;
-  char* read_buffer_;
+  net::IOBuffer* read_buffer_;
   int read_buffer_size_;
 
   DISALLOW_EVIL_CONSTRUCTORS(URLRequestInterceptJob);

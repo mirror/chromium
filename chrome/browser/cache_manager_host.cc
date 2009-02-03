@@ -14,6 +14,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/notification_service.h"
+#include "chrome/common/render_messages.h"
 
 using base::Time;
 using base::TimeDelta;
@@ -131,10 +132,10 @@ void CacheManagerHost::ObserveStats(int renderer_id,
   CacheManager::UsageStats stats_details(stats);
   // &stats_details is only valid during the notification.
   // See notification_types.h.
-  NotificationService::current()->
-      Notify(NOTIFY_WEB_CACHE_STATS_OBSERVED,
-             Source<RenderProcessHost>(RenderProcessHost::FromID(renderer_id)),
-             Details<CacheManager::UsageStats>(&stats_details));
+  NotificationService::current()->Notify(
+      NotificationType::WEB_CACHE_STATS_OBSERVED,
+      Source<RenderProcessHost>(RenderProcessHost::FromID(renderer_id)),
+      Details<CacheManager::UsageStats>(&stats_details));
 }
 
 void CacheManagerHost::SetGlobalSizeLimit(size_t bytes) {

@@ -39,6 +39,7 @@
 #include "chrome/views/button_dropdown.h"
 #include "chrome/views/hwnd_view.h"
 #include "chrome/views/label.h"
+#include "chrome/views/non_client_view.h"
 #include "chrome/views/tooltip_manager.h"
 #include "chrome/views/widget.h"
 #include "net/base/net_util.h"
@@ -48,9 +49,6 @@
 
 static const int kControlHorizOffset = 4;
 static const int kControlVertOffset = 6;
-static const int kControlVertOffsetLocationOnly = 4;
-// The left and right margin of the toolbar in location-bar only mode.
-static const int kToolbarHorizontalMargin = 1;
 static const int kControlIndent = 3;
 static const int kStatusBubbleWidth = 480;
 
@@ -319,11 +317,8 @@ void BrowserToolbarView::Layout() {
 
     left_side_width = star_->x() + star_->width();
   } else {
-    gfx::Size temp = location_bar_->GetPreferredSize();
-    location_bar_height = temp.height();
-    left_side_width = kToolbarHorizontalMargin;
-    right_side_width = kToolbarHorizontalMargin;
-    location_bar_y = kControlVertOffsetLocationOnly;
+    location_bar_height = location_bar_->GetPreferredSize().height();
+    location_bar_y = 0;
   }
 
   location_bar_->SetBounds(left_side_width, location_bar_y,
@@ -484,8 +479,17 @@ gfx::Size BrowserToolbarView::GetPreferredSize() {
     return gfx::Size(0, normal_background.height());
   }
 
-  int locbar_height = location_bar_->GetPreferredSize().height();
-  return gfx::Size(0, locbar_height + 2 * kControlVertOffsetLocationOnly);
+  // Note: We make sure to return the same value in the "no browser window" case
+  // as the "not maximized" case, so that when a popup is opened at a particular
+  // requested size, we'll report the same preferred size during the initial
+  // window size calculation (when there isn't yet a browser window) as when
+  // we're actually laying things out after setting up the browser window.  This
+  // prevents the content area from being off by |kClientEdgeThickness| px.
+  int client_edge_height =
+      (browser_->window() && browser_->window()->IsMaximized()) ?
+      0 : views::NonClientView::kClientEdgeThickness;
+  return gfx::Size(0,
+      location_bar_->GetPreferredSize().height() + client_edge_height);
 }
 
 void BrowserToolbarView::RunPageMenu(const CPoint& pt, HWND hwnd) {
@@ -783,7 +787,7 @@ void BrowserToolbarView::ButtonPressed(views::BaseButton* sender) {
 void BrowserToolbarView::Observe(NotificationType type,
                                  const NotificationSource& source,
                                  const NotificationDetails& details) {
-  if (type == NOTIFY_PREF_CHANGED) {
+  if (type == NotificationType::PREF_CHANGED) {
     std::wstring* pref_name = Details<std::wstring>(details).ptr();
     if (*pref_name == prefs::kShowHomeButton) {
       Layout();

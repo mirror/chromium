@@ -13,12 +13,9 @@
 #include "base/string_util.h"
 #include "base/thread.h"
 #include "base/time.h"
+#include "base/waitable_event.h"
 #include "googleurl/src/gurl.h"
 #include "net/base/completion_callback.h"
-
-#if defined(OS_WIN)
-typedef LPVOID HINTERNET;  // From winhttp.h
-#endif
 
 class GURL;
 
@@ -93,9 +90,9 @@ class ProxyService {
   // Used internally to handle PAC queries.
   class PacRequest;
 
-  // Returns OK if proxy information could be provided synchronously.  Else,
-  // ERR_IO_PENDING is returned to indicate that the result will be available
-  // when the callback is run.  The callback is run on the thread that calls
+  // Returns ERR_IO_PENDING if the proxy information could not be provided
+  // synchronously, to indicate that the result will be available when the
+  // callback is run.  The callback is run on the thread that calls
   // ResolveProxy.
   //
   // The caller is responsible for ensuring that |results| and |callback|
@@ -245,11 +242,6 @@ class ProxyInfo {
   // This may optionally be a semi-colon delimited list of proxy servers.
   void UseNamedProxy(const std::string& proxy_server);
 
-#if defined(OS_WIN)
-  // Apply this proxy information to the given WinHTTP request handle.
-  void Apply(HINTERNET request_handle);
-#endif
-
   // Returns true if this proxy info specifies a direct connection.
   bool is_direct() const { return proxy_list_.Get().empty(); }
 
@@ -310,6 +302,31 @@ class ProxyResolver {
   virtual int GetProxyForURL(const GURL& query_url,
                              const GURL& pac_url,
                              ProxyInfo* results) = 0;
+};
+
+// Wrapper for invoking methods on a ProxyService synchronously.
+class SyncProxyServiceHelper
+    : public base::RefCountedThreadSafe<SyncProxyServiceHelper> {
+ public:
+  SyncProxyServiceHelper(MessageLoop* io_message_loop,
+                         ProxyService* proxy_service);
+
+  int ResolveProxy(const GURL& url, ProxyInfo* proxy_info);
+  int ReconsiderProxyAfterError(const GURL& url, ProxyInfo* proxy_info);
+
+ private:
+  void StartAsyncResolve(const GURL& url);
+  void StartAsyncReconsider(const GURL& url);
+
+  void OnCompletion(int result);
+
+  MessageLoop* io_message_loop_;
+  ProxyService* proxy_service_;
+
+  base::WaitableEvent event_;
+  CompletionCallbackImpl<SyncProxyServiceHelper> callback_;
+  ProxyInfo proxy_info_;
+  int result_;
 };
 
 }  // namespace net

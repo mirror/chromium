@@ -37,22 +37,42 @@ class SleepSome : public Task {
   int msec_;
 };
 
+class SleepInsideInitThread : public Thread {
+ public:
+  SleepInsideInitThread() : Thread("none") { init_called_ = false; }
+  virtual ~SleepInsideInitThread() { }
+
+  virtual void Init() {
+    PlatformThread::Sleep(500);
+    init_called_ = true;
+  }
+  bool InitCalled() { return init_called_; }
+ private:
+  bool init_called_;
+};
+
 }  // namespace
 
 TEST_F(ThreadTest, Restart) {
   Thread a("Restart");
   a.Stop();
   EXPECT_FALSE(a.message_loop());
+  EXPECT_FALSE(a.IsRunning());
   EXPECT_TRUE(a.Start());
   EXPECT_TRUE(a.message_loop());
+  EXPECT_TRUE(a.IsRunning());
   a.Stop();
   EXPECT_FALSE(a.message_loop());
+  EXPECT_FALSE(a.IsRunning());
   EXPECT_TRUE(a.Start());
   EXPECT_TRUE(a.message_loop());
+  EXPECT_TRUE(a.IsRunning());
   a.Stop();
   EXPECT_FALSE(a.message_loop());
+  EXPECT_FALSE(a.IsRunning());
   a.Stop();
   EXPECT_FALSE(a.message_loop());
+  EXPECT_FALSE(a.IsRunning());
 }
 
 TEST_F(ThreadTest, StartWithOptions_StackSize) {
@@ -63,6 +83,7 @@ TEST_F(ThreadTest, StartWithOptions_StackSize) {
   options.stack_size = 12*1024;
   EXPECT_TRUE(a.StartWithOptions(options));
   EXPECT_TRUE(a.message_loop());
+  EXPECT_TRUE(a.IsRunning());
 
   bool was_invoked = false;
   a.message_loop()->PostTask(FROM_HERE, new ToggleValue(&was_invoked));
@@ -96,10 +117,12 @@ TEST_F(ThreadTest, StopSoon) {
   Thread a("StopSoon");
   EXPECT_TRUE(a.Start());
   EXPECT_TRUE(a.message_loop());
+  EXPECT_TRUE(a.IsRunning());
   a.StopSoon();
   a.StopSoon();
   a.Stop();
   EXPECT_FALSE(a.message_loop());
+  EXPECT_FALSE(a.IsRunning());
 }
 
 TEST_F(ThreadTest, ThreadName) {
@@ -107,3 +130,12 @@ TEST_F(ThreadTest, ThreadName) {
   EXPECT_TRUE(a.Start());
   EXPECT_EQ("ThreadName", a.thread_name());
 }
+
+// Make sure we can't use a thread between Start() and Init().
+TEST_F(ThreadTest, SleepInsideInit) {
+  SleepInsideInitThread t;
+  EXPECT_FALSE(t.InitCalled());
+  t.Start();
+  EXPECT_TRUE(t.InitCalled());
+}
+

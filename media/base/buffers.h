@@ -27,23 +27,25 @@
 #ifndef MEDIA_BASE_BUFFERS_H_
 #define MEDIA_BASE_BUFFERS_H_
 
+#include "base/basictypes.h"
 #include "base/ref_counted.h"
+#include "base/time.h"
 
 namespace media {
 
 class StreamSample : public base::RefCountedThreadSafe<StreamSample> {
  public:
   // Returns the timestamp of this buffer in microseconds.
-  virtual int64 GetTimestamp() const = 0;
+  virtual base::TimeDelta GetTimestamp() const = 0;
 
   // Returns the duration of this buffer in microseconds.
-  virtual int64 GetDuration() const = 0;
+  virtual base::TimeDelta GetDuration() const = 0;
 
   // Sets the timestamp of this buffer in microseconds.
-  virtual void SetTimestamp(int64 timestamp) = 0;
+  virtual void SetTimestamp(const base::TimeDelta& timestamp) = 0;
 
   // Sets the duration of this buffer in microseconds.
-  virtual void SetDuration(int64 duration) = 0;
+  virtual void SetDuration(const base::TimeDelta& duration) = 0;
 
  protected:
   friend class base::RefCountedThreadSafe<StreamSample>;
@@ -124,31 +126,45 @@ class VideoFrame : public StreamSample {
 };
 
 
+// An interface for receiving the results of an asynchronous read.  Downstream
+// filters typically implement this interface or use AssignableBuffer and
+// provide it to upstream filters as a read request.  When the upstream filter
+// has completed the read, they call SetBuffer/OnAssignment to notify the
+// downstream filter.
+//
+// TODO(scherkus): rethink the Assignable interface -- it's a bit kludgy.
 template <class BufferType>
-class Assignable {
+class Assignable :
+    public base::RefCountedThreadSafe< Assignable<BufferType> > {
  public:
   // Assigns a buffer to the owner.
   virtual void SetBuffer(BufferType* buffer) = 0;
 
   // Notifies the owner that an assignment has been completed.
   virtual void OnAssignment() = 0;
+
+  // TODO(scherkus): figure out a solution to friending a template.
+  // See http://www.comeaucomputing.com/techtalk/templates/#friendclassT for
+  // an explanation.
+  //protected:
+  // friend class base::RefCountedThreadSafe< Assignable<class T> >;
+  virtual ~Assignable() {}
 };
 
 
 // Template for easily creating Assignable buffers.  Pass in the pointer of the
 // object to receive the OnAssignment callback.
-template <class TOwner, class TBuffer>
-class AssignableBuffer : public Assignable<TBuffer>,
-    public base::RefCountedThreadSafe< AssignableBuffer<TOwner, TBuffer> > {
+template <class OwnerType, class BufferType>
+class AssignableBuffer : public Assignable<BufferType> {
  public:
-  explicit AssignableBuffer(TOwner* owner)
+  explicit AssignableBuffer(OwnerType* owner)
       : owner_(owner),
         buffer_(NULL) {
     DCHECK(owner_);
   }
 
-  // AssignableBuffer<TBuffer> implementation.
-  virtual void SetBuffer(TBuffer* buffer) {
+  // AssignableBuffer<BufferType> implementation.
+  virtual void SetBuffer(BufferType* buffer) {
     buffer_ = buffer;
   }
 
@@ -157,12 +173,12 @@ class AssignableBuffer : public Assignable<TBuffer>,
   }
 
  private:
-  TOwner* owner_;
-  scoped_refptr<TBuffer> buffer_;
+  OwnerType* owner_;
+  scoped_refptr<BufferType> buffer_;
 
   DISALLOW_COPY_AND_ASSIGN(AssignableBuffer);
 };
 
-} // namespace media
+}  // namespace media
 
-#endif // MEDIA_BASE_BUFFERS_H_
+#endif  // MEDIA_BASE_BUFFERS_H_

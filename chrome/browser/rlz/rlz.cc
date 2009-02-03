@@ -124,9 +124,11 @@ class OmniBoxUsageObserver : public NotificationObserver {
  public:
   OmniBoxUsageObserver() {
     NotificationService::current()->AddObserver(this,
-        NOTIFY_OMNIBOX_OPENED_URL,
+        NotificationType::OMNIBOX_OPENED_URL,
         NotificationService::AllSources());
     omnibox_used_ = false;
+    DCHECK(!instance_);
+    instance_ = this;
   }
 
   virtual void Observe(NotificationType type,
@@ -145,18 +147,31 @@ class OmniBoxUsageObserver : public NotificationObserver {
     return omnibox_used_;
   }
 
+  // Deletes the single instance of OmniBoxUsageObserver.
+  static void DeleteInstance() {
+    delete instance_;
+  }
+
  private:
   // Dtor is private so the object cannot be created on the stack.
   ~OmniBoxUsageObserver() {
     NotificationService::current()->RemoveObserver(this,
-        NOTIFY_OMNIBOX_OPENED_URL, 
+        NotificationType::OMNIBOX_OPENED_URL, 
         NotificationService::AllSources());
+    instance_ = NULL;
   }
 
   static bool omnibox_used_;
+
+  // There should only be one instance created at a time, and instance_ points
+  // to that instance.
+  // NOTE: this is only non-null for the amount of time it is needed. Once the
+  // instance_ is no longer needed (or Chrome is exitting), this is null.
+  static OmniBoxUsageObserver* instance_;
 };
 
 bool OmniBoxUsageObserver::omnibox_used_ = false;
+OmniBoxUsageObserver* OmniBoxUsageObserver::instance_ = NULL;
 
 // This task is run in the file thread, so to not block it for a long time
 // we use a throwaway thread to do the blocking url request.
@@ -251,7 +266,8 @@ class DelayedInitTask : public Task {
     if (!PathService::Get(chrome::DIR_USER_DATA, &user_data_dir))
       return false;
     ProfileManager* profile_manager = g_browser_process->profile_manager();
-    Profile* profile = profile_manager->GetDefaultProfile(user_data_dir);
+    Profile* profile = profile_manager->
+        GetDefaultProfile(FilePath::FromWStringHack(user_data_dir));
     if (!profile)
       return false;
     const TemplateURL* url_template =
@@ -273,11 +289,12 @@ bool RLZTracker::InitRlz(int directory_key) {
 }
 
 bool RLZTracker::InitRlzDelayed(int directory_key, bool first_run) {
-  new OmniBoxUsageObserver();
+  if (!OmniBoxUsageObserver::used())
+    new OmniBoxUsageObserver();
   // Schedule the delayed init items.
-  const int kTwentySeconds = 20 * 1000;
+  const int kNinetySeconds = 90 * 1000;
   MessageLoop::current()->PostDelayedTask(FROM_HERE,
-      new DelayedInitTask(directory_key, first_run), kTwentySeconds);
+      new DelayedInitTask(directory_key, first_run), kNinetySeconds);
   return true;
 }
 
@@ -314,3 +331,7 @@ bool RLZTracker::GetAccessPointRlz(AccessPoint point, std::wstring* rlz) {
   return true;
 }
 
+// static
+void RLZTracker::CleanupRlz() {
+  OmniBoxUsageObserver::DeleteInstance();
+}

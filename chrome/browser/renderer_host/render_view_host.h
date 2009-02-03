@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_RENDER_VIEW_HOST_H__
-#define CHROME_BROWSER_RENDER_VIEW_HOST_H__
+#ifndef CHROME_BROWSER_RENDERER_HOST_RENDER_VIEW_HOST_H__
+#define CHROME_BROWSER_RENDERER_HOST_RENDER_VIEW_HOST_H__
 
 #include <string>
 #include <vector>
@@ -11,6 +11,7 @@
 #include "base/scoped_ptr.h"
 #include "chrome/browser/renderer_host/render_view_host_delegate.h"
 #include "chrome/browser/renderer_host/render_widget_host.h"
+#include "chrome/common/modal_dialog_event.h"
 #include "chrome/common/page_zoom.h"
 #ifdef CHROME_PERSONALIZATION
 #include "chrome/personalization/personalization.h"
@@ -119,13 +120,20 @@ class RenderViewHost : public RenderWidgetHost {
                                        const GURL& display_url,
                                        const std::string& security_info);
 
+  // Returns whether navigation messages are currently suspended for this
+  // RenderViewHost.  Only true during a cross-site navigation, while waiting
+  // for the onbeforeunload handler.
+  bool are_navigations_suspended() { return navigations_suspended_; }
+
   // Suspends (or unsuspends) any navigation messages from being sent from this
   // RenderViewHost.  This is called when a pending RenderViewHost is created
   // for a cross-site navigation, because we must suspend any navigations until
   // we hear back from the old renderer's onbeforeunload handler.  Note that it
   // is important that only one navigation event happen after calling this
   // method with |suspend| equal to true.  If |suspend| is false and there is
-  // a suspended_nav_message_, this will send the message.
+  // a suspended_nav_message_, this will send the message.  This function
+  // should only be called to toggle the state; callers should check
+  // are_navigations_suspended() first.
   void SetNavigationsSuspended(bool suspend);
 
   // Causes the renderer to invoke the onbeforeunload event handler.  The
@@ -172,13 +180,9 @@ class RenderViewHost : public RenderWidgetHost {
   void Stop();
 
 
-  // Retrieves the number of printed pages that would result for the current web
-  // page and the specified settings. The response is a
-  // ViewHostMsg_DidGetPrintedPagesCount.
-  bool GetPrintedPagesCount(const ViewMsg_Print_Params& params);
-
-  // Asks the renderer to "render" printed pages.
-  bool PrintPages(const ViewMsg_PrintPages_Params& params);
+  // Asks the renderer to "render" printed pages and initiate printing on our
+  // behalf.
+  bool PrintPages();
 
   // Start looking for a string within the content of the page, with the
   // specified options.
@@ -416,7 +420,7 @@ class RenderViewHost : public RenderWidgetHost {
   virtual void NotifyRendererResponsive();
 
   // IPC message handlers.
-  void OnMsgCreateWindow(int route_id, HANDLE modal_dialog_event);
+  void OnMsgCreateWindow(int route_id, ModalDialogEvent modal_dialog_event);
   void OnMsgCreateWidget(int route_id, bool activatable);
   void OnMsgShowView(int route_id,
                      WindowOpenDisposition disposition,
@@ -619,4 +623,4 @@ class RenderViewHostFactory {
       base::WaitableEvent* modal_dialog_event) = 0;
 };
 
-#endif  // CHROME_BROWSER_RENDER_VIEW_HOST_H__
+#endif  // CHROME_BROWSER_RENDERER_HOST_RENDER_VIEW_HOST_H__

@@ -33,7 +33,10 @@ enum InstallStatus {
   UNINSTALL_CANCELLED,   // User cancelled Chrome uninstallation
   UNKNOWN_STATUS,        // Unknown status (this should never happen)
   RENAME_SUCCESSFUL,     // Rename of new_chrome.exe to chrome.exe worked
-  RENAME_FAILED          // Rename of new_chrome.exe failed
+  RENAME_FAILED,         // Rename of new_chrome.exe failed
+  EULA_REJECTED,         // EULA dialog was not accepted by user.
+  EULA_ACCEPTED,         // EULA dialog was accepted by user.
+  EULA_ACCEPTED_OPT_IN   // EULA accepted wtih the crash optin selected.
 };
 
 // These are distibution related install options specified through command
@@ -55,6 +58,8 @@ enum InstallOption {
   SYSTEM_LEVEL            = 0x1 << 5,
   // Run installer in verbose mode.
   VERBOSE_LOGGING         = 0x1 << 6,
+  // Show the EULA dialog.
+  SHOW_EULA_DIALOG        = 0x1 << 7
 };
 
 namespace switches {
@@ -74,6 +79,7 @@ extern const wchar_t kRunAsAdmin[];
 extern const wchar_t kSystemLevel[];
 extern const wchar_t kUninstall[];
 extern const wchar_t kVerboseLogging[];
+extern const wchar_t kShowEula[];
 }  // namespace switches
 
 extern const wchar_t kInstallBinaryDir[];
@@ -82,6 +88,11 @@ extern const wchar_t kChromeOldExe[];
 extern const wchar_t kChromeNewExe[];
 extern const wchar_t kChromeDll[];
 extern const wchar_t kSetupExe[];
+extern const wchar_t kInstallerDir[];
+
+extern const wchar_t kAppPathsRegistryKey[];
+extern const wchar_t kAppPathsRegistryDefaultName[];
+extern const wchar_t kAppPathsRegistryPathName[];
 
 extern const wchar_t kUninstallStringField[];
 extern const wchar_t kUninstallDisplayNameField[];

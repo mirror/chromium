@@ -75,7 +75,7 @@ bool PlatformCanvasWin::initialize(int width,
     return false;
 
   setDevice(device);
-  device->unref(); // was created with refcount 1, and setDevice also refs
+  device->unref();  // was created with refcount 1, and setDevice also refs
   return true;
 }
 
@@ -116,6 +116,11 @@ SkDevice* PlatformCanvasWin::createPlatformDevice(int width,
 SkDevice* PlatformCanvasWin::setBitmapDevice(const SkBitmap&) {
   SkASSERT(false);  // Should not be called.
   return NULL;
+}
+
+// static
+size_t PlatformCanvasWin::StrideForWidth(unsigned width) {
+  return 4 * width;
 }
 
 }  // namespace skia

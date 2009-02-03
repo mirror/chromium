@@ -23,7 +23,8 @@ class PlatformCanvasMac : public SkCanvas {
   // If you use the version with no arguments, you MUST call initialize()
   PlatformCanvasMac();
   PlatformCanvasMac(int width, int height, bool is_opaque);
-  PlatformCanvasMac(int width, int height, bool is_opaque, CGContextRef context);
+  PlatformCanvasMac(int width, int height, bool is_opaque,
+                    CGContextRef context);
   virtual ~PlatformCanvasMac();
 
   // For two-part init, call if you use the no-argument constructor above
@@ -56,6 +57,11 @@ class PlatformCanvasMac : public SkCanvas {
   // override of a virtual one.
   using SkCanvas::clipRect;
 
+  // Return the stride (length of a line in bytes) for the given width. Because
+  // we use 32-bits per pixel, this will be roughly 4*width. However, for
+  // alignment reasons we may wish to increase that.
+  static size_t StrideForWidth(unsigned width);
+
  protected:
   // Creates a device store for use by the canvas. We override this so that
   // the device is always our own so we know that we can use GDI operations
@@ -85,4 +91,3 @@ class PlatformCanvasMac : public SkCanvas {
 }  // namespace skia
 
 #endif  // SKIA_EXT_PLATFORM_CANVAS_MAC_H_
-

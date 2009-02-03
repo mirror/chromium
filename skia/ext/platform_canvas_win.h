@@ -57,6 +57,8 @@ class PlatformCanvasWin : public SkCanvas {
   // by the next call to save() or restore().
   PlatformDeviceWin& getTopPlatformDevice() const;
 
+  static size_t StrideForWidth(unsigned width);
+
  protected:
   // Creates a device store for use by the canvas. We override this so that
   // the device is always our own so we know that we can use GDI operations
@@ -99,7 +101,8 @@ class PlatformCanvasWin : public SkCanvas {
 template <class T>
 class CanvasPaintT : public T {
  public:
-  CanvasPaintT(HWND hwnd) : hwnd_(hwnd), paint_dc_(NULL), for_paint_(true) {
+  explicit CanvasPaintT(HWND hwnd) : hwnd_(hwnd), paint_dc_(NULL),
+    for_paint_(true) {
     memset(&ps_, 0, sizeof(ps_));
     initPaint(true);
   }
@@ -198,4 +201,3 @@ typedef CanvasPaintT<PlatformCanvasWin> PlatformCanvasWinPaint;
 }  // namespace skia
 
 #endif  // SKIA_EXT_PLATFORM_CANVAS_WIN_H_
-

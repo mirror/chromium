@@ -13,8 +13,8 @@
 #include "base/basictypes.h"
 #include "chrome/browser/tab_contents/tab_contents_delegate.h"
 #include "chrome/common/chrome_constants.h"
+#include "chrome/common/notification_observer.h"
 #include "chrome/common/notification_registrar.h"
-#include "chrome/common/notification_service.h"
 #include "chrome/views/focus_manager.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/widget.h"
@@ -51,7 +51,9 @@ class ExternalTabContainer : public TabContentsDelegate,
     return tab_contents_;
   }
 
-  bool Init(Profile* profile);
+  bool Init(Profile* profile, HWND parent, const gfx::Rect& dimensions,
+            unsigned int style);
+
   // Overridden from TabContentsDelegate:
   virtual void OpenURLFromTab(TabContents* source,
                               const GURL& url,

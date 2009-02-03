@@ -24,19 +24,10 @@ env.SConscript([
     '$MODP_B64_DIR/using_modp_b64.scons',
     '$NET_DIR/using_net.scons',
     '$NPAPI_DIR/using_npapi.scons',
+    '$SDCH_DIR/using_sdch.scons',
     '$SKIA_DIR/using_skia.scons',
     '$ZLIB_DIR/using_zlib.scons',
 ], {'env':env})
-
-if env.Bit('windows'):
-  env.SConscript([
-      '$SDCH_DIR/using_sdch.scons',
-  ], {'env':env})
-
-if env.Bit('posix'):
-  env.SConscript([
-      '$LIBEVENT_DIR/using_libevent.scons',
-  ], {'env':env})
 
 env.Prepend(
     CPPPATH = [
@@ -48,7 +39,6 @@ env.Prepend(
         'common',
         'plugin',
         'renderer',
-        'sdch',
         'sqlite',
         'util',
         'v8_snapshot',
@@ -81,7 +71,6 @@ if env.Bit('windows'):
           'jscre',
           'test_chrome_plugin',
           'views',
-          'WebCore',
 
           # Windows-specific libraries.
           'activex_shim',
@@ -187,6 +176,7 @@ input_files = ChromeFileList([
     '$CHROME_DIR/browser/history/thumbnail_database_unittest.cc',
     '$CHROME_DIR/browser/printing/units_unittest.cc',
     '$CHROME_DIR/browser/history/url_database_unittest.cc',
+    '$CHROME_DIR/browser/net/resolve_proxy_msg_helper_unittest.cc',
     '$CHROME_DIR/browser/net/url_fetcher_unittest.cc',
     '$CHROME_DIR/browser/net/url_fixer_upper_unittest.cc',
     '$CHROME_DIR/browser/extensions/user_script_master_unittest.cc',
@@ -197,6 +187,7 @@ input_files = ChromeFileList([
     '$CHROME_DIR/browser/webdata/web_database_unittest.cc',
     '$CHROME_DIR/browser/printing/win_printing_context_unittest.cc',
     '$CHROME_DIR/browser/window_sizer_unittest.cc',
+    '$CHROME_DIR/browser/renderer_host/render_widget_host_unittests.cc',
 
     # test_infrastructure
     '$CHROME_DIR/test/browser_with_test_window_test.cc',
@@ -211,6 +202,7 @@ input_files = ChromeFileList([
     '$CHROME_DIR/common/animation_unittest.cc',
     '$CHROME_DIR/common/bzip2_unittest.cc',
     '$CHROME_DIR/common/chrome_plugin_unittest.cc',
+    '$CHROME_DIR/common/extensions/url_pattern_unittest.cc',
     '$CHROME_DIR/common/gfx/emf_unittest.cc',
     '$CHROME_DIR/common/gfx/icon_util_unittest.cc',
     '$CHROME_DIR/common/ipc_message_unittest.cc',
@@ -218,7 +210,6 @@ input_files = ChromeFileList([
     '$CHROME_DIR/common/ipc_sync_channel_unittest.h',
     '$CHROME_DIR/common/ipc_sync_message_unittest.cc',
     '$CHROME_DIR/common/ipc_sync_message_unittest.h',
-    '$CHROME_DIR/common/jpeg_codec_unittest.cc',
     '$CHROME_DIR/common/json_value_serializer_unittest.cc',
     '$CHROME_DIR/common/l10n_util_unittest.cc',
     '$CHROME_DIR/common/mru_cache_unittest.cc',
@@ -260,6 +251,8 @@ input_files = ChromeFileList([
     '$CHROME_DIR/renderer/render_view_unittest.cc',
     '$CHROME_DIR/renderer/render_widget_unittest.cc',
     '$CHROME_DIR/renderer/user_script_slave_unittest.cc',
+    '$CHROME_DIR/renderer/render_process_unittest.cc',
+    '$CHROME_DIR/renderer/render_thread_unittest.cc',
 
     # test_infrastructure
     '$CHROME_DIR/renderer/mock_render_process.h',
@@ -391,26 +384,23 @@ if not env.Bit('windows'):
       '$CHROME_DIR/browser/download/download_manager_unittest.cc',
       '$CHROME_DIR/browser/download/download_request_manager_unittest.cc',
       '$CHROME_DIR/browser/download/save_package_unittest.cc',
-      '$CHROME_DIR/browser/extensions/extension_protocols_unittest.cc',
       '$CHROME_DIR/browser/extensions/user_script_master_unittest.cc',
       '$CHROME_DIR/browser/google_url_tracker_unittest.cc',
       '$CHROME_DIR/browser/history/expire_history_backend_unittest.cc',
       '$CHROME_DIR/browser/history/history_backend_unittest.cc',
       '$CHROME_DIR/browser/history/history_querying_unittest.cc',
       '$CHROME_DIR/browser/history/history_unittest.cc',
-      '$CHROME_DIR/browser/history/query_parser_unittest.cc',
       '$CHROME_DIR/browser/history/starred_url_database_unittest.cc',
-      '$CHROME_DIR/browser/history/text_database_manager_unittest.cc',
-      '$CHROME_DIR/browser/history/thumbnail_database_unittest.cc',
-      '$CHROME_DIR/browser/history/url_database_unittest.cc',
       '$CHROME_DIR/browser/importer/firefox_importer_unittest.cc',
       '$CHROME_DIR/browser/importer/importer_unittest.cc',
       '$CHROME_DIR/browser/login_prompt_unittest.cc',
       '$CHROME_DIR/browser/metrics/metrics_log_unittest.cc',
       '$CHROME_DIR/browser/renderer_host/mock_render_process_host.cc',
       '$CHROME_DIR/browser/renderer_host/mock_render_process_host.h',
+      '$CHROME_DIR/browser/renderer_host/render_widget_host_unittests.cc',
       '$CHROME_DIR/browser/navigation_controller_unittest.cc',
       '$CHROME_DIR/browser/net/dns_master_unittest.cc',
+      '$CHROME_DIR/browser/net/resolve_proxy_msg_helper_unittest.cc',
       '$CHROME_DIR/browser/password_manager/encryptor_unittest.cc',
       '$CHROME_DIR/browser/password_manager/password_form_manager_unittest.cc',
       '$CHROME_DIR/browser/printing/page_number_unittest.cc',
@@ -504,6 +494,7 @@ p = env.ChromeMSVSProject('unittests.vcproj',
                     '$SQLITE_DIR/sqlite.vcproj',
                     '$CHROME_DIR/views/views.vcproj',
                     '$MODP_B64_DIR/modp_b64.vcproj',
+                    '$CHROME_DIR/app/chrome_exe.vcproj',
                     '$CHROME_DIR/test/chrome_plugin/test_chrome_plugin.vcproj',
                     '$ZLIB_DIR/zlib.vcproj',
                     '$CHROME_DIR/common/common.vcproj',

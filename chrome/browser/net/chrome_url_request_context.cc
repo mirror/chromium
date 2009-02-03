@@ -13,6 +13,7 @@
 #include "chrome/browser/profile.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
 #include "net/http/http_cache.h"
 #include "net/http/http_util.h"
@@ -37,8 +38,8 @@ static net::ProxyInfo* CreateProxyInfo() {
 
 // static
 ChromeURLRequestContext* ChromeURLRequestContext::CreateOriginal(
-    Profile* profile, const std::wstring& cookie_store_path,
-    const std::wstring& disk_cache_path) {
+    Profile* profile, const FilePath& cookie_store_path,
+    const FilePath& disk_cache_path) {
   DCHECK(!profile->IsOffTheRecord());
   ChromeURLRequestContext* context = new ChromeURLRequestContext(profile);
 
@@ -46,7 +47,8 @@ ChromeURLRequestContext* ChromeURLRequestContext::CreateOriginal(
   context->proxy_service_ = net::ProxyService::Create(proxy_info.get());
 
   net::HttpCache* cache =
-      new net::HttpCache(context->proxy_service_, disk_cache_path, 0);
+      new net::HttpCache(context->proxy_service_,
+                         disk_cache_path.ToWStringHack(), 0);
 
   const CommandLine& command_line = *CommandLine::ForCurrentProcess();
   bool record_mode = chrome::kRecordModeEnabled &&
@@ -65,7 +67,8 @@ ChromeURLRequestContext* ChromeURLRequestContext::CreateOriginal(
   if (!context->cookie_store_) {
     DCHECK(!cookie_store_path.empty());
     context->cookie_db_.reset(new SQLitePersistentCookieStore(
-        cookie_store_path, g_browser_process->db_thread()->message_loop()));
+        cookie_store_path.ToWStringHack(),
+        g_browser_process->db_thread()->message_loop()));
     context->cookie_store_ = new net::CookieMonster(context->cookie_db_.get());
   }
 
@@ -94,8 +97,6 @@ ChromeURLRequestContext* ChromeURLRequestContext::CreateOffTheRecord(
 ChromeURLRequestContext::ChromeURLRequestContext(Profile* profile)
     : prefs_(profile->GetPrefs()),
       is_off_the_record_(profile->IsOffTheRecord()) {
-  user_agent_ = webkit_glue::GetUserAgent();
-
   // Set up Accept-Language and Accept-Charset header values
   accept_language_ = net::HttpUtil::GenerateAcceptLanguageHeader(
       WideToASCII(prefs_->GetString(prefs::kAcceptLanguages)));
@@ -121,14 +122,15 @@ ChromeURLRequestContext::ChromeURLRequestContext(Profile* profile)
   prefs_->AddPrefObserver(prefs::kCookieBehavior, this);  
 
   NotificationService::current()->AddObserver(
-      this, NOTIFY_EXTENSIONS_LOADED, NotificationService::AllSources());
+      this, NotificationType::EXTENSIONS_LOADED,
+      NotificationService::AllSources());
 }
 
 // NotificationObserver implementation.
 void ChromeURLRequestContext::Observe(NotificationType type,
                                       const NotificationSource& source,
                                       const NotificationDetails& details) {
-  if (NOTIFY_PREF_CHANGED == type) {
+  if (NotificationType::PREF_CHANGED == type) {
     std::wstring* pref_name_in = Details<std::wstring>(details).ptr();
     PrefService* prefs = Source<PrefService>(source).ptr();
     DCHECK(pref_name_in && prefs);
@@ -147,7 +149,7 @@ void ChromeURLRequestContext::Observe(NotificationType type,
                             &ChromeURLRequestContext::OnCookiePolicyChange,
                             type));
     }
-  } else if (NOTIFY_EXTENSIONS_LOADED == type) {
+  } else if (NotificationType::EXTENSIONS_LOADED == type) {
     ExtensionPaths* new_paths = new ExtensionPaths;
     ExtensionList* extensions = Details<ExtensionList>(details).ptr();
     DCHECK(extensions);
@@ -171,7 +173,8 @@ void ChromeURLRequestContext::CleanupOnUIThread() {
   prefs_ = NULL;
 
   NotificationService::current()->RemoveObserver(
-      this, NOTIFY_EXTENSIONS_LOADED, NotificationService::AllSources());
+      this, NotificationType::EXTENSIONS_LOADED,
+      NotificationService::AllSources());
 }
 
 FilePath ChromeURLRequestContext::GetPathForExtension(const std::string& id) {
@@ -183,14 +186,21 @@ FilePath ChromeURLRequestContext::GetPathForExtension(const std::string& id) {
   }
 }
 
-void ChromeURLRequestContext::OnAcceptLanguageChange(std::string accept_language) {
+const std::string& ChromeURLRequestContext::GetUserAgent(
+    const GURL& url) const {
+  return webkit_glue::GetUserAgent(url);
+}
+
+void ChromeURLRequestContext::OnAcceptLanguageChange(
+    std::string accept_language) {
   DCHECK(MessageLoop::current() ==
          ChromeThread::GetMessageLoop(ChromeThread::IO));
   accept_language_ =
       net::HttpUtil::GenerateAcceptLanguageHeader(accept_language);
 }
 
-void ChromeURLRequestContext::OnCookiePolicyChange(net::CookiePolicy::Type type) {
+void ChromeURLRequestContext::OnCookiePolicyChange(
+    net::CookiePolicy::Type type) {
   DCHECK(MessageLoop::current() ==
          ChromeThread::GetMessageLoop(ChromeThread::IO));
   cookie_policy_.SetType(type);
@@ -204,9 +214,10 @@ void ChromeURLRequestContext::OnNewExtensions(ExtensionPaths* new_paths) {
 ChromeURLRequestContext::~ChromeURLRequestContext() {
   DCHECK(NULL == prefs_);
 
-  NotificationService::current()->Notify(NOTIFY_URL_REQUEST_CONTEXT_RELEASED,
-                                         Source<URLRequestContext>(this),
-                                         NotificationService::NoDetails());
+  NotificationService::current()->Notify(
+      NotificationType::URL_REQUEST_CONTEXT_RELEASED,
+      Source<URLRequestContext>(this),
+      NotificationService::NoDetails());
 
   delete cookie_store_;
   delete http_transaction_factory_;

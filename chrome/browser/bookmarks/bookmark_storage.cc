@@ -8,8 +8,10 @@
 #include "base/file_util.h"
 #include "base/json_writer.h"
 #include "base/message_loop.h"
+#include "base/thread.h"
 #include "chrome/browser/bookmarks/bookmark_codec.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
+#include "chrome/browser/browser_process.h"
 #include "chrome/browser/profile.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/json_value_serializer.h"
@@ -34,9 +36,9 @@ BookmarkStorage::BookmarkStorage(Profile* profile, BookmarkModel* model)
     : model_(model),
       ALLOW_THIS_IN_INITIALIZER_LIST(save_factory_(this)),
       backend_thread_(g_browser_process->file_thread()) {
-  std::wstring path = profile->GetPath();
+  std::wstring path = profile->GetPath().ToWStringHack();
   file_util::AppendToPath(&path, chrome::kBookmarksFileName);
-  std::wstring tmp_history_path = profile->GetPath();
+  std::wstring tmp_history_path = profile->GetPath().ToWStringHack();
   file_util::AppendToPath(&tmp_history_path, chrome::kHistoryBookmarksFileName);
   backend_ = new BookmarkStorageBackend(path, tmp_history_path);
 }

@@ -7,6 +7,7 @@
 
 #include "base/basictypes.h"
 
+#include <set>
 #include <vector>
 
 #if defined(OS_MACOSX) || defined(OS_LINUX)
@@ -18,16 +19,17 @@
 #include "chrome/browser/browser_window.h"
 #include "chrome/browser/command_updater.h"
 #include "chrome/browser/sessions/session_id.h"
-#include "chrome/common/notification_service.h"
+#include "chrome/browser/tabs/tab_strip_model.h"
+#include "chrome/common/notification_observer.h"
 #include "chrome/common/pref_member.h"
 #include "base/gfx/rect.h"
+#include "base/task.h"
 #include "skia/include/SkBitmap.h"
 
 #if defined(OS_WIN)
 #include "chrome/browser/shell_dialogs.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/browser/tab_contents/tab_contents_delegate.h"
-#include "chrome/browser/tabs/tab_strip_model.h"
 #include "chrome/browser/toolbar_model.h"
 #endif
 
@@ -35,12 +37,11 @@ class BrowserIdleTimer;
 class BrowserWindow;
 class DebuggerWindow;
 class GoButton;
-class LocationBarView;
+class LocationBar;
 class PrefService;
 class Profile;
 class StatusBubble;
 class TabNavigation;
-class WebApp;
 
 class Browser : public TabStripModelDelegate,
                 public TabStripModelObserver,
@@ -122,10 +123,8 @@ class Browser : public TabStripModelDelegate,
   // |profile|, that session is re-used.
   static void OpenURLOffTheRecord(Profile* profile, const GURL& url);
 
-#if defined(OS_WIN)
-  // Opens the a new application window for the specified WebApp.
-  static void OpenWebApplication(Profile* profile, WebApp* app);
-#endif
+  // Opens the a new application ("thin frame") window for the specified url.
+  static void OpenApplicationWindow(Profile* profile, const GURL& url);
 
   // State Storage and Retrieval for UI ///////////////////////////////////////
 
@@ -192,19 +191,12 @@ class Browser : public TabStripModelDelegate,
       PageTransition::Type transition, bool foreground,
       SiteInstance* instance);
 
-#if defined(OS_WIN)
-  // Add a new application tab for the specified URL. If lazy is true, the tab
-  // won't be selected. Further, the initial web page load will only take place
-  // when the tab is first selected.
-  TabContents* AddWebApplicationTab(Profile* profile,
-                                    WebApp* web_app,
-                                    bool lazy);
-
   // Add a new tab, given a NavigationController. A TabContents appropriate to
   // display the last committed entry is created and returned.
   TabContents* AddTabWithNavigationController(NavigationController* ctrl,
                                               PageTransition::Type type);
 
+#if defined(OS_WIN)
   // Add a tab with its session history restored from the SessionRestore
   // system. If select is true, the tab is selected. Returns the created
   // NavigationController. |tab_index| gives the index to insert the tab at.
@@ -248,13 +240,13 @@ class Browser : public TabStripModelDelegate,
   void NewIncognitoWindow();
   void NewProfileWindowByIndex(int index);
   void CloseWindow();
-#if defined(OS_WIN)
   void NewTab();
   void CloseTab();
   void SelectNextTab();
   void SelectPreviousTab();
   void SelectNumberedTab(int index);
   void SelectLastTab();
+#if defined(OS_WIN)
   void DuplicateTab();
   void RestoreTab();
   void ConvertPopupToTabbedBrowser();
@@ -310,6 +302,7 @@ class Browser : public TabStripModelDelegate,
   void OpenPasswordManager();
   void OpenAboutChromeDialog();
   void OpenHelpTab();
+#endif
 
   /////////////////////////////////////////////////////////////////////////////
 
@@ -325,12 +318,10 @@ class Browser : public TabStripModelDelegate,
       const NavigationController* controller, int* index);
 
   // Interface implementations ////////////////////////////////////////////////
-#endif
 
   // Overridden from CommandUpdater::CommandUpdaterDelegate:
   virtual void ExecuteCommand(int id);
 
-#if defined(OS_WIN)
   // Overridden from TabStripModelDelegate:
   virtual GURL GetBlankTabURL() const;
   virtual void CreateNewStripWithContents(TabContents* detached_contents,
@@ -346,14 +337,13 @@ class Browser : public TabStripModelDelegate,
       PageTransition::Type transition,
       bool defer_load,
       SiteInstance* instance) const;
-#endif
   virtual bool CanDuplicateContentsAt(int index);
-#if defined(OS_WIN)
   virtual void DuplicateContentsAt(int index);
   virtual void CloseFrameAfterDragSession();
   virtual void CreateHistoricalTab(TabContents* contents);
   virtual bool RunUnloadListenerBeforeClosing(TabContents* contents);
 
+#if defined(OS_WIN)
   // Overridden from TabStripModelObserver:
   virtual void TabInsertedAt(TabContents* contents,
                              int index,
@@ -383,7 +373,9 @@ class Browser : public TabStripModelDelegate,
                               const gfx::Rect& initial_pos,
                               bool user_gesture);
   virtual void ActivateContents(TabContents* contents);
+#endif
   virtual void LoadingStateChanged(TabContents* source);
+#if defined(OS_WIN)
   virtual void CloseContents(TabContents* source);
   virtual void MoveContents(TabContents* source, const gfx::Rect& pos);
   virtual bool IsPopup(TabContents* source);
@@ -403,6 +395,7 @@ class Browser : public TabStripModelDelegate,
                                  bool* proceed_to_fire_unload);
   virtual void ShowHtmlDialog(HtmlDialogContentsDelegate* delegate,
                               void* parent_window);
+  virtual void SetFocusToLocationBar();
 
   // Overridden from SelectFileDialog::Listener:
   virtual void FileSelected(const std::wstring& path, void* params);
@@ -455,10 +448,9 @@ class Browser : public TabStripModelDelegate,
   // TODO(beng): remove, and provide AutomationProvider a better way to access
   //             the LocationBarView's edit.
   friend class AutomationProvider;
+#endif  // OS_WIN
 
   // Getters for the location bar and go button.
-#endif  // OS_WIN
-  LocationBarView* GetLocationBarView() const;
   GoButton* GetGoButton();
 
   // Returns the StatusBubble from the current toolbar. It is possible for
@@ -506,6 +498,7 @@ class Browser : public TabStripModelDelegate,
   // cases where a tab crashes or hangs even if the beforeunload/unload haven't
   // successfully fired.
   void ClearUnloadState(TabContents* tab);
+#endif
 
   // Assorted utility functions ///////////////////////////////////////////////
 
@@ -513,6 +506,7 @@ class Browser : public TabStripModelDelegate,
   // receiving Browser. Creates a new Browser if none are available.
   Browser* GetOrCreateTabbedBrowser();
 
+#if defined(OS_WIN)
   // Creates a new popup window with its own Browser object with the
   // incoming sizing information. |initial_pos|'s origin() is the
   // window origin, and its size() is the size of the content area.
@@ -535,6 +529,8 @@ class Browser : public TabStripModelDelegate,
   //             after a return to the message loop.
   void CloseFrame();
 
+#endif  // OS_WIN
+
   // Compute a deterministic name based on the URL. We use this pseudo name
   // as a key to store window location per application URLs.
   static std::wstring ComputeApplicationNameFromURL(const GURL& url);
@@ -542,8 +538,6 @@ class Browser : public TabStripModelDelegate,
   // Create a preference dictionary for the provided application name. This is
   // done only once per application name / per session.
   static void RegisterAppPrefs(const std::wstring& app_name);
-
-#endif  // OS_WIN
 
   // Data members /////////////////////////////////////////////////////////////
 

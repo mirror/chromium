@@ -7,17 +7,13 @@
 // will return NULL if the service is not available, so callers must check for
 // this condition.
 
-#ifndef CHROME_BROWSER_BROWSER_PROCESS_H__
-#define CHROME_BROWSER_BROWSER_PROCESS_H__
+#ifndef CHROME_BROWSER_BROWSER_PROCESS_H_
+#define CHROME_BROWSER_BROWSER_PROCESS_H_
 
 #include <string>
 #include <vector>
 
 #include "base/basictypes.h"
-#include "base/message_loop.h"
-#if defined(OS_WIN)
-#include "chrome/browser/renderer_host/resource_dispatcher_host.h"
-#endif  // defined(OS_WIN)
 
 class AutomationProviderList;
 class ClipboardService;
@@ -25,7 +21,6 @@ class DownloadRequestManager;
 class GoogleURLTracker;
 class IconManager;
 class MetricsService;
-class NotificationService;
 class PrefService;
 class ProfileManager;
 class DebuggerWrapper;
@@ -124,10 +119,7 @@ class BrowserProcess {
   virtual MemoryModel memory_model() = 0;
 
 #if defined(OS_WIN)
-  DownloadRequestManager* download_request_manager() {
-    ResourceDispatcherHost* rdh = resource_dispatcher_host();
-    return rdh ? rdh->download_request_manager() : NULL;
-  }
+  DownloadRequestManager* download_request_manager();
 #endif
 
   // Returns an event that is signaled when the browser shutdown.
@@ -142,10 +134,9 @@ class BrowserProcess {
   // User-data-dir based profiles.
   std::vector<std::wstring> user_data_dir_profiles_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(BrowserProcess);
+  DISALLOW_COPY_AND_ASSIGN(BrowserProcess);
 };
 
 extern BrowserProcess* g_browser_process;
 
-#endif  // CHROME_BROWSER_BROWSER_PROCESS_H__
-
+#endif  // CHROME_BROWSER_BROWSER_PROCESS_H_

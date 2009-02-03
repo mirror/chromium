@@ -43,6 +43,10 @@ input_files = ChromeFileList([
   # TODO(sgk):  violate standard indentation so we don't have to
   # reindent too much when we remove the explicit MSVSFilter() calls
   # in favor of generating the hierarchy to reflect the file system.
+  MSVSFilter('extensions', [
+    'extensions/url_pattern.cc',
+    'extensions/url_pattern.h',
+  ]),
   MSVSFilter('net', [
     'net/cookie_monster_sqlite.cc',
     'net/cookie_monster_sqlite.h',
@@ -129,8 +133,6 @@ input_files = ChromeFileList([
     'env_vars.h',
     'filter_policy.h',
     'gears_api.h',
-    'jpeg_codec.cc',
-    'jpeg_codec.h',
     'json_value_serializer.cc',
     'json_value_serializer.h',
     'jstemplate_builder.cc',
@@ -208,9 +210,13 @@ input_files = ChromeFileList([
 ])
 
 if not env.Bit('windows'):
+  # TODO(port): This is temporary so we can link.
+  input_files.Append(
+      'temp_scaffolding_stubs.cc'
+  )
+
   # TODO(port): Port these.
   input_files.Remove(
-      'chrome_plugin_lib.cc',
       'chrome_plugin_util.cc',
       'chrome_process_filter.cc',
       'drag_drop_types.cc',
@@ -218,13 +224,9 @@ if not env.Bit('windows'):
       'gfx/icon_util.cc',
       'gfx/path.cc',
       'ipc_logging.cc',
-      'jstemplate_builder.cc',
       'os_exchange_data.cc',
       'plugin_messages.cc',
       'process_watcher.cc',
-      'security_filter_peer.cc',
-      'win_safe_util.cc',
-      'win_util.cc',
   )
 
 if not env.Bit('windows'):
@@ -235,6 +237,8 @@ if not env.Bit('windows'):
       'gfx/chrome_font_win.cc',
       'ipc_channel_win.cc',
       'resource_bundle_win.cc',
+      'win_safe_util.cc',
+      'win_util.cc',
       '$CHROME_DIR/tools/build/win/precompiled$OBJSUFFIX',
   )
 

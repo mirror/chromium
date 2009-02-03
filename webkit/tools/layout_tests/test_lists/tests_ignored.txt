@@ -211,6 +211,18 @@ LINUX : chrome/fonts/impact.html = FAIL
 // to verify is that we don't crash on this page.
 LayoutTests/fast/js/regexp-charclass-crash.html = PASS TIMEOUT
 
+// This tests for an arbitrary limit set in JSCRE to terminate regular
+// expressions with an exponential matching behavior.  Since the V8 
+// regular expression engine can be preempted from the outside, we do not
+// need to limit the execution this way.  Firefox also keeps running
+// on this one. 
+LayoutTests/fast/regex/slow.html = TIMEOUT
+
+// This test contains expressions with exponential matching 
+// behavior on which JSCRE terminate the matching before it is done.  We
+// do not and the test therefore takes a long time to run.
+LayoutTests/fast/regex/test1.html = TIMEOUT
+
 // Test to verify legacy MAC encodings. We don't want to support them and
 // have to skip this test.
 SKIP : LayoutTests/fast/encoding/char-decoding-mac.html = FAIL
@@ -222,3 +234,12 @@ SKIP : LayoutTests/platform/qt/view/fixed-layout-size.html = FAIL
 SKIP : LayoutTests/platform/mac/editing/pasteboard/dataTransfer-set-data-file-url.html = FAIL
 SKIP : LayoutTests/http/tests/security/dataTransfer-set-data-file-url.html = FAIL
 
+// Bug 5053: The issue is which global object to use as the implicit
+// receiver for cross-frame calls.  Currently, IE, Firefox and Chrome
+// agree and only Safari is doing it this way.
+LayoutTests/fast/frames/cross-site-this.html = FAIL
+
+// This tests a Safari incompatibility.  This test should fail since
+// it contains syntax errors that JSC for some reason choose not to
+// throw.  V8 follows the spec.
+LayoutTests/fast/js/reparsing-semicolon-insertion.html = FAIL

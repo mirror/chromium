@@ -24,7 +24,7 @@
 #include "chrome/browser/history/history.h"
 #include "chrome/common/ipc_channel_proxy.h"
 #include "chrome/common/ipc_message.h"
-#include "chrome/common/notification_service.h"
+#include "chrome/common/notification_observer.h"
 #include "chrome/views/event.h"
 
 class LoginHandler;
@@ -237,7 +237,8 @@ class AutomationProvider : public base::RefCounted<AutomationProvider>,
                             const std::string& html_text);
   void HideInterstitialPage(const IPC::Message& message, int tab_handle);
 
-  void CreateExternalTab(const IPC::Message& message);
+  void CreateExternalTab(const IPC::Message& message, HWND parent,
+                         const gfx::Rect& dimensions, unsigned int style);
   void NavigateInExternalTab(const IPC::Message& message, int handle,
                              const GURL& url);
   // The container of an externally hosted tab calls this to reflect any
@@ -442,4 +443,5 @@ class TestingAutomationProvider : public AutomationProvider,
 
   void OnRemoveProvider();  // Called via PostTask
 };
+
 #endif  // CHROME_BROWSER_AUTOMATION_AUTOMATION_PROVIDER_H_

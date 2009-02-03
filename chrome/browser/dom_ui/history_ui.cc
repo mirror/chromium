@@ -16,6 +16,7 @@
 #include "chrome/browser/profile.h"
 #include "chrome/common/jstemplate_builder.h"
 #include "chrome/common/l10n_util.h"
+#include "chrome/common/notification_service.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/time_format.h"
 
@@ -24,8 +25,7 @@
 
 using base::Time;
 
-// HistoryUI is accessible from chrome://history, and the raw HTML is
-// accessed from chrome://history.
+// HistoryUI is accessible from chrome-ui://history.
 static const char kHistoryHost[] = "history";
 
 // Maximum number of search results to return in a given search. We should 
@@ -102,13 +102,13 @@ BrowsingHistoryHandler::BrowsingHistoryHandler(DOMUI* dom_ui)
 
   // Get notifications when history is cleared.
   NotificationService* service = NotificationService::current();
-  service->AddObserver(this, NOTIFY_HISTORY_URLS_DELETED,
+  service->AddObserver(this, NotificationType::HISTORY_URLS_DELETED,
                        Source<Profile>(dom_ui_->get_profile()));
 }
 
 BrowsingHistoryHandler::~BrowsingHistoryHandler() {
   NotificationService* service = NotificationService::current();
-  service->RemoveObserver(this, NOTIFY_HISTORY_URLS_DELETED,
+  service->RemoveObserver(this, NotificationType::HISTORY_URLS_DELETED,
                           Source<Profile>(dom_ui_->get_profile()));
 }
 
@@ -264,7 +264,7 @@ history::QueryOptions BrowsingHistoryHandler::CreateQueryOptions(int month,
 void BrowsingHistoryHandler::Observe(NotificationType type,
                                      const NotificationSource& source,
                                      const NotificationDetails& details) {
-  if (type != NOTIFY_HISTORY_URLS_DELETED) {
+  if (type != NotificationType::HISTORY_URLS_DELETED) {
     NOTREACHED();
     return;
   }
@@ -287,7 +287,7 @@ void HistoryUI::Init() {
 
   HistoryUIHTMLSource* html_source = new HistoryUIHTMLSource();
 
-  // Set up the chrome://history/ source.
+  // Set up the chrome-ui://history/ source.
   g_browser_process->io_thread()->message_loop()->PostTask(FROM_HERE,
       NewRunnableMethod(&chrome_url_data_manager,
           &ChromeURLDataManager::AddDataSource,

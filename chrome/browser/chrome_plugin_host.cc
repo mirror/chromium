@@ -18,7 +18,9 @@
 #include "net/url_request/url_request_error_job.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/chrome_plugin_browsing_context.h"
+#include "chrome/browser/chrome_thread.h"
 #include "chrome/browser/dom_ui/html_dialog_contents.h"
+#include "chrome/browser/gears_integration.h"
 #include "chrome/browser/net/dns_master.h"
 #include "chrome/browser/plugin_process_host.h"
 #include "chrome/browser/plugin_service.h"
@@ -30,6 +32,7 @@
 #include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/common/chrome_plugin_util.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/gears_api.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/net/url_request_intercept_job.h"
 #include "chrome/common/plugin_messages.h"
@@ -146,7 +149,7 @@ class PluginRequestHandler : public PluginHelper, public URLRequest::Delegate {
   }
 
   PluginRequestHandler(ChromePluginLib* plugin, ScopableCPRequest* cprequest)
-      : PluginHelper(plugin), cprequest_(cprequest) {
+      : PluginHelper(plugin), cprequest_(cprequest), user_buffer_(NULL) {
     cprequest_->data = this;  // see FromCPRequest().
 
     URLRequestContext* context = CPBrowsingContextManager::Instance()->
@@ -164,6 +167,25 @@ class PluginRequestHandler : public PluginHelper, public URLRequest::Delegate {
 
   URLRequest* request() { return request_.get(); }
 
+  // Wraper of URLRequest::Read()
+  bool Read(char* dest, int dest_size, int *bytes_read) {
+    CHECK(!my_buffer_.get());
+    // We'll use our own buffer until the read actually completes.
+    user_buffer_ = dest;
+    my_buffer_ = new net::IOBuffer(dest_size);
+
+    if (request_->Read(my_buffer_, dest_size, bytes_read)) {
+      memcpy(dest, my_buffer_->data(), *bytes_read);
+      my_buffer_ = NULL;
+      return true;
+    }
+
+    if (!request_->status().is_io_pending())
+      my_buffer_ = NULL;
+
+    return false;
+  }
+
   // URLRequest::Delegate
   virtual void OnReceivedRedirect(URLRequest* request, const GURL& new_url) {
     plugin_->functions().response_funcs->received_redirect(
@@ -179,16 +201,24 @@ class PluginRequestHandler : public PluginHelper, public URLRequest::Delegate {
   }
 
   virtual void OnReadCompleted(URLRequest* request, int bytes_read) {
-    // TODO(mpcomplete): better error codes
-    if (bytes_read < 0)
+    CHECK(my_buffer_.get());
+    CHECK(user_buffer_);
+    if (bytes_read > 0) {
+      memcpy(user_buffer_, my_buffer_->data(), bytes_read);
+    } else if (bytes_read < 0) {
+      // TODO(mpcomplete): better error codes
       bytes_read = CPERR_FAILURE;
+    }
+    my_buffer_ = NULL;
     plugin_->functions().response_funcs->read_completed(
-      cprequest_.get(), bytes_read);
+        cprequest_.get(), bytes_read);
   }
 
  private:
   scoped_ptr<ScopableCPRequest> cprequest_;
   scoped_ptr<URLRequest> request_;
+  scoped_refptr<net::IOBuffer> my_buffer_;
+  char* user_buffer_;
 };
 
 // This class manages plugins that want to handle UI commands.  Right now, we
@@ -423,7 +453,7 @@ int STDCALL CPB_GetBrowsingContextInfo(
     PluginService* service = PluginService::GetInstance();
     if (!service)
       return CPERR_FAILURE;
-    std::wstring wretval = service->GetChromePluginDataDir();
+    std::wstring wretval = service->GetChromePluginDataDir().ToWStringHack();
     file_util::AppendToPath(&wretval, chrome::kChromePluginDataDirname);
     *static_cast<char**>(buf) = CPB_StringDup(CPB_Alloc, WideToUTF8(wretval));
     return CPERR_SUCCESS;
@@ -461,7 +491,7 @@ static void NotifyGearsShortcutsChanged() {
   // when gears provides the correct browser context, and when we
   // can relate that to an actual profile.
   NotificationService::current()->Notify(
-      NOTIFY_WEB_APP_INSTALL_CHANGED,
+      NotificationType::WEB_APP_INSTALL_CHANGED,
       Source<Profile>(NULL),
       NotificationService::NoDetails());
 }
@@ -615,7 +645,7 @@ int STDCALL CPR_Read(CPRequest* request, void* buf, uint32 buf_size) {
   CHECK(handler);
 
   int bytes_read;
-  if (handler->request()->Read(static_cast<char*>(buf), buf_size, &bytes_read))
+  if (handler->Read(static_cast<char*>(buf), buf_size, &bytes_read))
     return bytes_read;  // 0 == CPERR_SUCESS
 
   if (handler->request()->status().is_io_pending())

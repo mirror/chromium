@@ -199,7 +199,7 @@ bool BrowserAboutHandler::MaybeHandle(GURL* url,
     return false;
 
   *result_type = TAB_CONTENTS_ABOUT_UI;
-  std::string about_url = "chrome://about/";
+  std::string about_url = "chrome-ui://about/";
   about_url.append(url->path());
   *url = GURL(about_url);
   return true;
@@ -274,7 +274,7 @@ std::string BrowserAboutHandler::AboutVersion() {
       l10n_util::GetString(IDS_ABOUT_VERSION_UNOFFICIAL));
   }
   localized_strings.SetString(L"useragent",
-      UTF8ToWide(webkit_glue::GetUserAgent()));
+      UTF8ToWide(webkit_glue::GetUserAgent(GURL())));
 
   static const StringPiece version_html(
       ResourceBundle::GetSharedInstance().GetRawDataResource(

@@ -8,10 +8,14 @@
 #include "base/string_util.h"
 #include "chrome/app/chrome_dll_resource.h"
 #include "chrome/browser/browser_list.h"
+#include "chrome/browser/location_bar.h"
 #include "chrome/browser/metrics/user_metrics.h"
+#include "chrome/browser/profile.h"
 #include "chrome/browser/tab_contents/tab_contents_type.h"
+#include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/notification_service.h"
 #include "chrome/common/page_transition_types.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
@@ -46,7 +50,6 @@
 #include "chrome/browser/net/url_fixer_upper.h"
 #include "chrome/browser/plugin_process_host.h"
 #include "chrome/browser/plugin_service.h"
-#include "chrome/browser/profile.h"
 #include "chrome/browser/sessions/session_service.h"
 #include "chrome/browser/ssl/ssl_error_info.h"
 #include "chrome/browser/status_bubble.h"
@@ -178,17 +181,15 @@ Browser::Browser(Type type, Profile* profile)
   tabstrip_model_.AddObserver(this);
 
   NotificationService::current()->AddObserver(
-      this, NOTIFY_SSL_STATE_CHANGED, NotificationService::AllSources());
+      this,
+      NotificationType::SSL_STATE_CHANGED,
+      NotificationService::AllSources());
 
   InitCommandState();
   BrowserList::AddBrowser(this);
 
-#if defined(OS_WIN)
-  // TODO(port): turn this back on when prefs are fleshed out. This asserts
-  // because the pref hasn't yet been registered.
   encoding_auto_detect_.Init(prefs::kWebKitUsesUniversalDetector,
                              profile_->GetPrefs(), NULL);
-#endif
 
   // Trim browser memory on idle for low & medium memory models.
   if (g_browser_process->memory_model() < BrowserProcess::HIGH_MEMORY_MODEL)
@@ -221,7 +222,9 @@ Browser::~Browser() {
     tab_restore_service->BrowserClosed(this);
 
   NotificationService::current()->RemoveObserver(
-      this, NOTIFY_SSL_STATE_CHANGED, NotificationService::AllSources());
+      this,
+      NotificationType::SSL_STATE_CHANGED,
+      NotificationService::AllSources());
 
   if (profile_->IsOffTheRecord() &&
       !BrowserList::IsOffTheRecordSessionActive()) {
@@ -275,7 +278,7 @@ void Browser::CreateBrowserWindow() {
       local_state->GetBoolean(prefs::kShouldShowFirstRunBubble)) {
     // Reset the preference so we don't show the bubble for subsequent windows.
     local_state->ClearPref(prefs::kShouldShowFirstRunBubble);
-    GetLocationBarView()->ShowFirstRunBubble();
+    window_->GetLocationBar()->ShowFirstRunBubble();
   }
 }
 
@@ -302,19 +305,15 @@ void Browser::OpenURLOffTheRecord(Profile* profile, const GURL& url) {
   browser->window()->Show();
 }
 
-#if defined(OS_WIN)
 // static
-void Browser::OpenWebApplication(Profile* profile, WebApp* app) {
-  const std::wstring& app_name =
-      app->name().empty() ? ComputeApplicationNameFromURL(app->url()) :
-                            app->name();
+void Browser::OpenApplicationWindow(Profile* profile, const GURL& url) {
+  std::wstring app_name = ComputeApplicationNameFromURL(url);
   RegisterAppPrefs(app_name);
 
   Browser* browser = Browser::CreateForApp(app_name, profile);
-  browser->AddWebApplicationTab(profile, app, false);
+  browser->AddTabWithURL(url, GURL(), PageTransition::START_PAGE, true, NULL);
   browser->window()->Show();
 }
-#endif
 
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, State Storage and Retrieval for UI:
@@ -456,6 +455,8 @@ void Browser::OnWindowClosing() {
   CloseAllTabs();
 }
 
+#endif  // OS_WIN
+
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, Tab adding/showing functions:
 
@@ -481,34 +482,14 @@ TabContents* Browser::AddTabWithURL(
   return contents;
 }
 
-TabContents* Browser::AddWebApplicationTab(Profile* profile,
-                                           WebApp* web_app,
-                                           bool lazy) {
-  DCHECK(web_app);
-
-  // TODO(acw): Do we need an "application launched" transition type?
-  // TODO(creis): Should we reuse the current instance (ie. process) here?
-  TabContents* contents =
-      CreateTabContentsForURL(web_app->url(), GURL(), profile,
-                              PageTransition::LINK, lazy, NULL);
-  WebContents* web_contents = contents->AsWebContents();
-  if (web_contents)
-    web_contents->SetWebApp(web_app);
-
-  if (lazy) {
-    contents->controller()->LoadURLLazily(
-        web_app->url(), GURL(), PageTransition::LINK, web_app->name(), NULL);
-  }
-  tabstrip_model_.AddTabContents(contents, -1, PageTransition::LINK, !lazy);
-  return contents;
-}
-
 TabContents* Browser::AddTabWithNavigationController(
     NavigationController* ctrl, PageTransition::Type type) {
   TabContents* tc = ctrl->active_contents();
   tabstrip_model_.AddTabContents(tc, -1, type, true);
   return tc;
 }
+
+#if defined(OS_WIN)
 
 NavigationController* Browser::AddRestoredTab(
     const std::vector<TabNavigation>& navigations,
@@ -621,18 +602,15 @@ void Browser::Home() {
 #if defined(OS_WIN)
 void Browser::OpenCurrentURL() {
   UserMetrics::RecordAction(L"LoadURL", profile_);
-  LocationBarView* lbv = GetLocationBarView();
-  if (lbv) {
-    OpenURL(GURL(lbv->location_input()), GURL(), lbv->disposition(),
-            lbv->transition());
-  }
+  LocationBar* location_bar = window_->GetLocationBar();
+  OpenURL(GURL(location_bar->GetInputString()), GURL(),
+               location_bar->GetWindowOpenDisposition(),
+               location_bar->GetPageTransition());
 }
 
 void Browser::Go() {
   UserMetrics::RecordAction(L"Go", profile_);
-  LocationBarView* lbv = GetLocationBarView();
-  if (lbv)
-    lbv->location_entry()->model()->AcceptInput(CURRENT_TAB, false);
+  window_->GetLocationBar()->AcceptInput();
 }
 #endif
 
@@ -662,8 +640,6 @@ void Browser::CloseWindow() {
   UserMetrics::RecordAction(L"CloseWindow", profile_);
   window_->Close();
 }
-
-#if defined(OS_WIN)
 
 void Browser::NewTab() {
   UserMetrics::RecordAction(L"NewTab", profile_);
@@ -707,6 +683,8 @@ void Browser::SelectLastTab() {
   UserMetrics::RecordAction(L"SelectLastTab", profile_);
   tabstrip_model_.SelectLastTab();
 }
+
+#if defined(OS_WIN)
 
 void Browser::DuplicateTab() {
   UserMetrics::RecordAction(L"Duplicate", profile_);
@@ -895,23 +873,13 @@ void Browser::FocusToolbar() {
 
 void Browser::FocusLocationBar() {
   UserMetrics::RecordAction(L"FocusLocation", profile_);
-  LocationBarView* lbv = GetLocationBarView();
-  if (lbv) {
-    AutocompleteEditView* aev = lbv->location_entry();
-    aev->SetFocus();
-    aev->SelectAll(true);
-  }
+  window_->GetLocationBar()->FocusLocation();
 }
 
 void Browser::FocusSearch() {
   // TODO(beng): replace this with FocusLocationBar
   UserMetrics::RecordAction(L"FocusSearch", profile_);
-  LocationBarView* lbv = GetLocationBarView();
-  if (lbv) {
-    AutocompleteEditView* aev = lbv->location_entry();
-    aev->SetUserText(L"?");
-    aev->SetFocus();
-  }
+  window_->GetLocationBar()->FocusSearch();
 }
 
 void Browser::OpenFile() {
@@ -1028,6 +996,7 @@ void Browser::OpenHelpTab() {
                 NULL);
 }
 
+#endif
 ///////////////////////////////////////////////////////////////////////////////
 
 // static
@@ -1071,8 +1040,6 @@ Browser* Browser::GetBrowserForController(
 
   return NULL;
 }
-
-#endif  // OS_WIN
 
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, CommandUpdater::CommandUpdaterDelegate implementation:
@@ -1119,6 +1086,7 @@ void Browser::ExecuteCommand(int id) {
         NewProfileWindowByIndex(id - IDC_NEW_WINDOW_PROFILE_0);    break;
 #if defined(OS_WIN)
     case IDC_CLOSE_WINDOW:          CloseWindow();                 break;
+#endif
     case IDC_NEW_TAB:               NewTab();                      break;
     case IDC_CLOSE_TAB:             CloseTab();                    break;
     case IDC_SELECT_NEXT_TAB:       SelectNextTab();               break;
@@ -1133,6 +1101,7 @@ void Browser::ExecuteCommand(int id) {
     case IDC_SELECT_TAB_7:          SelectNumberedTab(id - IDC_SELECT_TAB_0);
                                                                    break;
     case IDC_SELECT_LAST_TAB:       SelectLastTab();               break;
+#if defined(OS_WIN)
     case IDC_DUPLICATE_TAB:         DuplicateTab();                break;
     case IDC_RESTORE_TAB:           RestoreTab();                  break;
     case IDC_SHOW_AS_TAB:           ConvertPopupToTabbedBrowser(); break;
@@ -1231,8 +1200,6 @@ void Browser::ExecuteCommand(int id) {
   }
 }
 
-#if defined(OS_WIN)
-
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, TabStripModelDelegate implementation:
 
@@ -1261,6 +1228,7 @@ void Browser::CreateNewStripWithContents(TabContents* detached_contents,
   browser->LoadingStateChanged(detached_contents);
   browser->window()->Show();
 
+#if defined(OS_WIN)
   // When we detach a tab we need to make sure any associated Find window moves
   // along with it to its new home (basically we just make new_window the
   // parent of the Find window).
@@ -1269,6 +1237,10 @@ void Browser::CreateNewStripWithContents(TabContents* detached_contents,
   WebContents* web_contents = detached_contents->AsWebContents();
   if (web_contents)
     web_contents->view()->ReparentFindWindow(browser);
+#else
+  // TODO(port): remove the view dependency from this.
+  NOTIMPLEMENTED() << "need to reparent find window";
+#endif
 }
 
 int Browser::GetDragActions() const {
@@ -1302,8 +1274,6 @@ TabContents* Browser::CreateTabContentsForURL(
   return contents;
 }
 
-#endif  // OS_WIN
-
 bool Browser::CanDuplicateContentsAt(int index) {
   TabContents* contents = GetTabContentsAt(index);
   DCHECK(contents);
@@ -1311,8 +1281,6 @@ bool Browser::CanDuplicateContentsAt(int index) {
   NavigationController* nc = contents->controller();
   return nc ? (nc->active_contents() && nc->GetLastCommittedEntry()) : false;
 }
-
-#if defined(OS_WIN)
 
 void Browser::DuplicateContentsAt(int index) {
   TabContents* contents = GetTabContentsAt(index);
@@ -1363,11 +1331,14 @@ void Browser::DuplicateContentsAt(int index) {
 }
 
 void Browser::CloseFrameAfterDragSession() {
+#if defined(OS_WIN)
   // This is scheduled to run after we return to the message loop because
   // otherwise the frame will think the drag session is still active and ignore
   // the request.
+  // TODO(port): figure out what is required here in a cross-platform world
   MessageLoop::current()->PostTask(FROM_HERE,
       method_factory_.NewRunnableMethod(&Browser::CloseFrame));
+#endif
 }
 
 void Browser::CreateHistoricalTab(TabContents* contents) {
@@ -1404,6 +1375,8 @@ bool Browser::RunUnloadListenerBeforeClosing(TabContents* contents) {
   return false;
 }
 
+#if defined(OS_WIN)
+
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, TabStripModelObserver implementation:
 
@@ -1431,18 +1404,19 @@ void Browser::TabInsertedAt(TabContents* contents,
 
   // If the tab crashes in the beforeunload or unload handler, it won't be
   // able to ack. But we know we can close it.
-  NotificationService::current()->
-      AddObserver(this, NOTIFY_WEB_CONTENTS_DISCONNECTED,
-                  Source<TabContents>(contents));
+  NotificationService::current()->AddObserver(
+      this,
+      NotificationType::WEB_CONTENTS_DISCONNECTED,
+      Source<TabContents>(contents));
 }
 
 void Browser::TabClosingAt(TabContents* contents, int index) {
   NavigationController* controller = contents->controller();
   DCHECK(controller);
-  NotificationService::current()->
-      Notify(NOTIFY_TAB_CLOSING,
-              Source<NavigationController>(controller),
-              NotificationService::NoDetails());
+  NotificationService::current()->Notify(
+      NotificationType::TAB_CLOSING,
+      Source<NavigationController>(controller),
+      NotificationService::NoDetails());
 
   // Sever the TabContents' connection back to us.
   contents->set_delegate(NULL);
@@ -1455,9 +1429,10 @@ void Browser::TabDetachedAt(TabContents* contents, int index) {
 
   RemoveScheduledUpdatesFor(contents);
 
-  NotificationService::current()->
-      RemoveObserver(this, NOTIFY_WEB_CONTENTS_DISCONNECTED,
-                     Source<TabContents>(contents));
+  NotificationService::current()->RemoveObserver(
+      this,
+      NotificationType::WEB_CONTENTS_DISCONNECTED,
+      Source<TabContents>(contents));
 }
 
 void Browser::TabSelectedAt(TabContents* old_contents,
@@ -1470,12 +1445,10 @@ void Browser::TabSelectedAt(TabContents* old_contents,
   if (!chrome_updater_factory_.empty() && old_contents)
     ProcessPendingUIUpdates();
 
-  LocationBarView* location_bar = GetLocationBarView();
   if (old_contents) {
     // Save what the user's currently typing, so it can be restored when we
     // switch back to this tab.
-    if (location_bar)
-      location_bar->location_entry()->SaveStateToTab(old_contents);
+    window_->GetLocationBar()->SaveStateToContents(old_contents);
   }
 
   // Propagate the profile to the location bar.
@@ -1681,12 +1654,14 @@ void Browser::ReplaceContents(TabContents* source, TabContents* new_contents) {
   // Need to remove ourselves as an observer for disconnection on the replaced
   // TabContents, since we only care to fire onbeforeunload handlers on active
   // Tabs. Make sure an observer is added for the replacement TabContents.
-  NotificationService::current()->
-      RemoveObserver(this, NOTIFY_WEB_CONTENTS_DISCONNECTED,
-                     Source<TabContents>(source));
-  NotificationService::current()->
-      AddObserver(this, NOTIFY_WEB_CONTENTS_DISCONNECTED,
-                  Source<TabContents>(new_contents));
+  NotificationService::current()->RemoveObserver(
+      this,
+      NotificationType::WEB_CONTENTS_DISCONNECTED,
+      Source<TabContents>(source));
+  NotificationService::current()->AddObserver(
+      this,
+      NotificationType::WEB_CONTENTS_DISCONNECTED,
+      Source<TabContents>(new_contents));
 }
 
 void Browser::AddNewContents(TabContents* source,
@@ -1823,19 +1798,12 @@ bool Browser::IsApplication() const {
 }
 
 void Browser::ConvertContentsToApplication(TabContents* contents) {
-  WebContents* web_contents = contents->AsWebContents();
-  if (!web_contents || !web_contents->web_app()) {
-    NOTREACHED();
-    return;
-  }
-
   int index = tabstrip_model_.GetIndexOfTabContents(contents);
   if (index < 0)
     return;
 
-  WebApp* app = web_contents->web_app();
-  const std::wstring& app_name = app->name().empty() ?
-      ComputeApplicationNameFromURL(app->url()) : app->name();
+  const GURL& url = contents->controller()->GetActiveEntry()->url();
+  std::wstring app_name = ComputeApplicationNameFromURL(url);
   RegisterAppPrefs(app_name);
 
   tabstrip_model_.DetachTabContentsAt(index);
@@ -1888,6 +1856,13 @@ void Browser::ShowHtmlDialog(HtmlDialogContentsDelegate* delegate,
   window_->ShowHTMLDialog(delegate, parent_window);
 }
 
+void Browser::SetFocusToLocationBar() {
+  // This is the same as FocusLocationBar above but doesn't record the user
+  // metrics. This TabContentsDelegate version is called internally, so
+  // shouldn't get recorded in user commands.
+  window_->GetLocationBar()->FocusLocation();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, SelectFileDialog::Listener implementation:
 
@@ -1903,8 +1878,8 @@ void Browser::FileSelected(const std::wstring& path, void* params) {
 void Browser::Observe(NotificationType type,
                       const NotificationSource& source,
                       const NotificationDetails& details) {
-  switch (type) {
-    case NOTIFY_WEB_CONTENTS_DISCONNECTED:
+  switch (type.value) {
+    case NotificationType::WEB_CONTENTS_DISCONNECTED:
       if (is_attempting_to_close_browser_) {
         // Need to do this asynchronously as it will close the tab, which is
         // currently on the call stack above us.
@@ -1914,7 +1889,7 @@ void Browser::Observe(NotificationType type,
       }
       break;
 
-    case NOTIFY_SSL_STATE_CHANGED:
+    case NotificationType::SSL_STATE_CHANGED:
       // When the current tab's SSL state changes, we need to update the URL
       // bar to reflect the new state. Note that it's possible for the selected
       // tab contents to be NULL. This is because we listen for all sources
@@ -2269,10 +2244,6 @@ void Browser::RemoveScheduledUpdatesFor(TabContents* contents) {
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, Getters for UI (private):
 
-LocationBarView* Browser::GetLocationBarView() const {
-  return window_->GetLocationBarView();
-}
-
 StatusBubble* Browser::GetStatusBubble() {
   return window_->GetStatusBubble();
 }
@@ -2384,6 +2355,8 @@ void Browser::ClearUnloadState(TabContents* tab) {
   ProcessPendingTabs();
 }
 
+#endif  // OS_WIN
+
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, Assorted utility functions (private):
 
@@ -2394,6 +2367,8 @@ Browser* Browser::GetOrCreateTabbedBrowser() {
     browser = Browser::Create(profile_);
   return browser;
 }
+
+#if defined(OS_WIN)
 
 void Browser::BuildPopupWindow(TabContents* source,
                                TabContents* new_contents,
@@ -2432,6 +2407,8 @@ void Browser::CloseFrame() {
   window_->Close();
 }
 
+#endif  // OS_WIN
+
 // static
 std::wstring Browser::ComputeApplicationNameFromURL(const GURL& url) {
   std::string t;
@@ -2463,5 +2440,3 @@ void Browser::RegisterAppPrefs(const std::wstring& app_name) {
 
   prefs->RegisterDictionaryPref(window_pref.c_str());
 }
-
-#endif  // OS_WIN

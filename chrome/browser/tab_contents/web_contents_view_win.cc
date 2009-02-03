@@ -24,6 +24,7 @@
 #include "chrome/browser/views/sad_tab_view.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/os_exchange_data.h"
+#include "net/base/net_util.h"
 #include "webkit/glue/plugins/webplugin_delegate_impl.h"
 
 namespace {
@@ -38,6 +39,11 @@ BOOL CALLBACK DetachPluginWindowsCallback(HWND window, LPARAM param) {
 }
 
 }  // namespace
+
+// static
+WebContentsView* WebContentsView::Create(WebContents* web_contents) {
+  return new WebContentsViewWin(web_contents);
+}
 
 WebContentsViewWin::WebContentsViewWin(WebContents* web_contents)
     : web_contents_(web_contents),
@@ -63,7 +69,7 @@ void WebContentsViewWin::CreateView() {
   drop_target_ = new WebDropTarget(GetHWND(), web_contents_);
 }
 
-RenderWidgetHostViewWin* WebContentsViewWin::CreateViewForWidget(
+RenderWidgetHostView* WebContentsViewWin::CreateViewForWidget(
     RenderWidgetHost* render_widget_host) {
   DCHECK(!render_widget_host->view());
   RenderWidgetHostViewWin* view =
@@ -73,14 +79,18 @@ RenderWidgetHostViewWin* WebContentsViewWin::CreateViewForWidget(
   return view;
 }
 
-HWND WebContentsViewWin::GetContainerHWND() const {
+gfx::NativeView WebContentsViewWin::GetNativeView() const {
   return GetHWND();
 }
 
-HWND WebContentsViewWin::GetContentHWND() const {
+gfx::NativeView WebContentsViewWin::GetContentNativeView() const {
   if (!web_contents_->render_widget_host_view())
     return NULL;
-  return web_contents_->render_widget_host_view()->GetPluginHWND();
+  return web_contents_->render_widget_host_view()->GetPluginNativeView();
+}
+
+gfx::NativeView WebContentsViewWin::GetTopLevelNativeView() const {
+  return ::GetAncestor(GetNativeView(), GA_ROOT);
 }
 
 void WebContentsViewWin::GetContainerBounds(gfx::Rect* out) const {
@@ -96,8 +106,17 @@ void WebContentsViewWin::StartDragging(const WebDropData& drop_data) {
   // contents (to a .URL shortcut).  We want to prefer file content data over a
   // shortcut so we add it first.
   if (!drop_data.file_contents.empty()) {
-    data->SetFileContents(drop_data.file_description_filename,
-                          drop_data.file_contents);
+    // Images without ALT text will only have a file extension so we need to
+    // synthesize one from the provided extension and URL.
+    FilePath file_name(drop_data.file_description_filename);
+    file_name = file_name.BaseName().RemoveExtension();
+    if (file_name.value().empty()) {
+      // Retrieve the name from the URL.
+      file_name = FilePath::FromWStringHack(
+          net::GetSuggestedFilename(drop_data.url, L"", L""));
+    }
+    file_name = file_name.ReplaceExtension(drop_data.file_extension);
+    data->SetFileContents(file_name.value(), drop_data.file_contents);
   }
   if (!drop_data.text_html.empty())
     data->SetHtml(drop_data.text_html, drop_data.html_base_url);
@@ -172,20 +191,21 @@ void WebContentsViewWin::OnDestroy() {
 }
 
 void WebContentsViewWin::SetPageTitle(const std::wstring& title) {
-  if (GetContainerHWND()) {
+  if (GetNativeView()) {
     // It's possible to get this after the hwnd has been destroyed.
-    ::SetWindowText(GetContainerHWND(), title.c_str());
+    ::SetWindowText(GetNativeView(), title.c_str());
     // TODO(brettw) this call seems messy the way it reaches into the widget
     // view, and I'm not sure it's necessary. Maybe we should just remove it.
-    ::SetWindowText(web_contents_->render_widget_host_view()->GetPluginHWND(),
-                    title.c_str());
+    ::SetWindowText(
+        web_contents_->render_widget_host_view()->GetPluginNativeView(),
+        title.c_str());
   }
 }
 
 void WebContentsViewWin::Invalidate() {
   // Note that it's possible to get this message after the window was destroyed.
-  if (::IsWindow(GetContainerHWND()))
-    InvalidateRect(GetContainerHWND(), NULL, FALSE);
+  if (::IsWindow(GetNativeView()))
+    InvalidateRect(GetNativeView(), NULL, FALSE);
 }
 
 void WebContentsViewWin::SizeContents(const gfx::Size& size) {
@@ -245,7 +265,7 @@ void WebContentsViewWin::UpdateDragCursor(bool is_drop_target) {
 
 void WebContentsViewWin::TakeFocus(bool reverse) {
   views::FocusManager* focus_manager =
-      views::FocusManager::GetFocusManager(GetContainerHWND());
+      views::FocusManager::GetFocusManager(GetNativeView());
 
   // We may not have a focus manager if the tab has been switched before this
   // message arrived.
@@ -319,7 +339,7 @@ void WebContentsViewWin::ShowContextMenu(
   RenderViewContextMenuController menu_controller(web_contents_, params);
   RenderViewContextMenu menu(&menu_controller,
                              GetHWND(),
-                             params.type,
+                             params.node,
                              params.misspelled_word,
                              params.dictionary_suggestions,
                              web_contents_->profile());
@@ -373,7 +393,7 @@ RenderWidgetHostView* WebContentsViewWin::CreateNewWidgetInternal(
   // TODO(brettw) this should not need to get the current RVHView from the
   // WebContents. We should have it somewhere ourselves.
   widget_view->set_parent_hwnd(
-      web_contents_->render_widget_host_view()->GetPluginHWND());
+      web_contents_->render_widget_host_view()->GetPluginNativeView());
   widget_view->set_close_on_deactivate(true);
   widget_view->set_activatable(activatable);
 
@@ -415,7 +435,7 @@ void WebContentsViewWin::ShowCreatedWidgetInternal(
   // This logic should be implemented by RenderWidgetHostHWND (as mentioned
   // above) in the ::Init function, which should take a parent and some initial
   // bounds.
-  widget_host_view_win->Create(GetContainerHWND(), NULL, NULL,
+  widget_host_view_win->Create(GetNativeView(), NULL, NULL,
                                WS_POPUP, WS_EX_TOOLWINDOW);
   widget_host_view_win->MoveWindow(initial_pos.x(), initial_pos.y(),
                                    initial_pos.width(), initial_pos.height(),
@@ -519,7 +539,8 @@ void WebContentsViewWin::OnSetFocus(HWND window) {
   // We NULL-check the render_view_host_ here because Windows can send us
   // messages during the destruction process after it has been destroyed.
   if (web_contents_->render_widget_host_view()) {
-    HWND inner_hwnd = web_contents_->render_widget_host_view()->GetPluginHWND();
+    HWND inner_hwnd =
+        web_contents_->render_widget_host_view()->GetPluginNativeView();
     if (::IsWindow(inner_hwnd))
       ::SetFocus(inner_hwnd);
   }
@@ -589,8 +610,9 @@ void WebContentsViewWin::ScrollCommon(UINT message, int scroll_type,
   if (!ScrollZoom(scroll_type)) {
     // Reflect scroll message to the view() to give it a chance
     // to process scrolling.
-    SendMessage(GetContentHWND(), message, MAKELONG(scroll_type, position),
-                (LPARAM) scrollbar);
+    SendMessage(GetContentNativeView(), message,
+                MAKELONG(scroll_type, position),
+                reinterpret_cast<LPARAM>(scrollbar));
   }
 }
 

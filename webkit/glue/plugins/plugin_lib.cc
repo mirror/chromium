@@ -13,6 +13,7 @@
 #include "webkit/glue/webkit_glue.h"
 #include "webkit/glue/plugins/plugin_instance.h"
 #include "webkit/glue/plugins/plugin_host.h"
+#include "webkit/glue/plugins/plugin_list.h"
 
 namespace NPAPI
 {
@@ -36,15 +37,11 @@ PluginLib* PluginLib::CreatePluginLib(const FilePath& filename) {
   }
 
   WebPluginInfo info;
-  NP_GetEntryPointsFunc np_getentrypoints;
-  NP_InitializeFunc np_initialize;
-  NP_ShutdownFunc np_shutdown;
-  if (!ReadWebPluginInfo(filename, &info, &np_getentrypoints, &np_initialize,
-                         &np_shutdown)) {
+  const PluginEntryPoints* entry_points = NULL;
+  if (!PluginList::ReadPluginInfo(filename, &info, &entry_points))
     return NULL;
-  }
 
-  return new PluginLib(info, np_getentrypoints, np_initialize, np_shutdown);
+  return new PluginLib(info, entry_points);
 }
 
 void PluginLib::UnloadAllPlugins() {
@@ -65,9 +62,7 @@ void PluginLib::ShutdownAllPlugins() {
 }
 
 PluginLib::PluginLib(const WebPluginInfo& info,
-                     NP_GetEntryPointsFunc np_getentrypoints,
-                     NP_InitializeFunc np_initialize,
-                     NP_ShutdownFunc np_shutdown)
+                     const PluginEntryPoints* entry_points)
     : web_plugin_info_(info),
       library_(0),
       initialized_(false),
@@ -77,13 +72,13 @@ PluginLib::PluginLib(const WebPluginInfo& info,
   memset((void*)&plugin_funcs_, 0, sizeof(plugin_funcs_));
   g_loaded_libs->push_back(this);
 
-  if (np_getentrypoints && np_initialize && np_shutdown) {
+  if (entry_points) {
     internal_ = true;
-    NP_GetEntryPoints_ = np_getentrypoints;
-    NP_Initialize_ = np_initialize;
-    NP_Shutdown_ = np_shutdown;
+    entry_points_ = *entry_points;
   } else {
     internal_ = false;
+    // We will read the entry points from the plugin directly.
+    memset(&entry_points_, 0, sizeof(entry_points_));
   }
 }
 
@@ -109,14 +104,19 @@ NPError PluginLib::NP_Initialize() {
   if (host == 0)
     return NPERR_GENERIC_ERROR;
 
-  NPError rv = NP_Initialize_(host->host_functions());
+#if defined(OS_LINUX)
+  NPError rv = entry_points_.np_initialize(host->host_functions(),
+                                           &plugin_funcs_);
+#else
+  NPError rv = entry_points_.np_initialize(host->host_functions());
+#endif
   initialized_ = (rv == NPERR_NO_ERROR);
   return rv;
 }
 
 void PluginLib::NP_Shutdown(void) {
   DCHECK(initialized_);
-  NP_Shutdown_();
+  entry_points_.np_shutdown();
 }
 
 PluginInstance* PluginLib::CreateInstance(const std::string& mime_type) {
@@ -162,20 +162,24 @@ bool PluginLib::Load() {
 
     rv = true;  // assume success now
 
-    NP_Initialize_ = (NP_InitializeFunc)GetFunctionPointerFromNativeLibrary(
-        library, FUNCTION_NAME("NP_Initialize"));
-    if (NP_Initialize_ == 0)
+    entry_points_.np_initialize =
+        (NP_InitializeFunc)GetFunctionPointerFromNativeLibrary(library,
+            FUNCTION_NAME("NP_Initialize"));
+    if (entry_points_.np_initialize == 0)
       rv = false;
 
-    NP_GetEntryPoints_ =
-        (NP_GetEntryPointsFunc)GetFunctionPointerFromNativeLibrary(
-        library, FUNCTION_NAME("NP_GetEntryPoints"));
-    if (NP_GetEntryPoints_ == 0)
+#if !defined(OS_LINUX)
+    entry_points_.np_getentrypoints =
+        (NP_GetEntryPointsFunc)GetFunctionPointerFromNativeLibrary(library,
+            FUNCTION_NAME("NP_GetEntryPoints"));
+    if (entry_points_.np_getentrypoints == 0)
       rv = false;
+#endif
 
-    NP_Shutdown_ = (NP_ShutdownFunc)GetFunctionPointerFromNativeLibrary(
-        library, FUNCTION_NAME("NP_Shutdown"));
-    if (NP_Shutdown_ == 0)
+    entry_points_.np_shutdown =
+        (NP_ShutdownFunc)GetFunctionPointerFromNativeLibrary(library,
+            FUNCTION_NAME("NP_Shutdown"));
+    if (entry_points_.np_shutdown == 0)
       rv = false;
   } else {
     rv = true;
@@ -184,8 +188,12 @@ bool PluginLib::Load() {
   if (rv) {
     plugin_funcs_.size = sizeof(plugin_funcs_);
     plugin_funcs_.version = (NP_VERSION_MAJOR << 8) | NP_VERSION_MINOR;
-    if (NP_GetEntryPoints_(&plugin_funcs_) != NPERR_NO_ERROR)
+#if !defined(OS_LINUX)
+    if (entry_points_.np_getentrypoints(&plugin_funcs_) != NPERR_NO_ERROR)
       rv = false;
+#else
+    // On Linux, we get the plugin entry points during NP_Initialize.
+#endif
   }
 
   if (!internal_) {
@@ -241,7 +249,7 @@ void PluginLib::Unload() {
 
     if (defer_unload) {
       FreePluginLibraryTask* free_library_task =
-          new FreePluginLibraryTask(library_, NP_Shutdown_);
+          new FreePluginLibraryTask(library_, entry_points_.np_shutdown);
       MessageLoop::current()->PostTask(FROM_HERE, free_library_task);
     } else {
       Shutdown();
@@ -257,61 +265,6 @@ void PluginLib::Shutdown() {
     NP_Shutdown();
     initialized_ = false;
   }
-}
-
-// Creates WebPluginInfo structure based on read in or built in
-// PluginVersionInfo.
-/* static */
-bool PluginLib::CreateWebPluginInfo(const PluginVersionInfo& pvi,
-                                    WebPluginInfo* info,
-                                    NP_GetEntryPointsFunc* np_getentrypoints,
-                                    NP_InitializeFunc* np_initialize,
-                                    NP_ShutdownFunc* np_shutdown) {
-  std::vector<std::string> mime_types, file_extensions;
-  std::vector<std::wstring> descriptions;
-  SplitString(WideToUTF8(pvi.mime_types), '|', &mime_types);
-  SplitString(WideToUTF8(pvi.file_extensions), '|', &file_extensions);
-  SplitString(pvi.type_descriptions, '|', &descriptions);
-
-  info->mime_types.clear();
-
-  if (mime_types.empty())
-    return false;
-
-  info->name = pvi.product_name;
-  info->desc = pvi.file_description;
-  info->version = pvi.file_version;
-  info->path = FilePath(pvi.path);
-
-  for (size_t i = 0; i < mime_types.size(); ++i) {
-    WebPluginMimeType mime_type;
-    mime_type.mime_type = StringToLowerASCII(mime_types[i]);
-    if (file_extensions.size() > i)
-      SplitString(file_extensions[i], ',', &mime_type.file_extensions);
-
-    if (descriptions.size() > i) {
-      mime_type.description = descriptions[i];
-
-      // On Windows, the description likely has a list of file extensions
-      // embedded in it (e.g. "SurfWriter file (*.swr)"). Remove an extension
-      // list from the description if it is present.
-      size_t ext = mime_type.description.find(L"(*");
-      if (ext != std::wstring::npos) {
-        if (ext > 1 && mime_type.description[ext -1] == ' ')
-          ext--;
-
-        mime_type.description.erase(ext);
-      }
-    }
-
-    info->mime_types.push_back(mime_type);
-  }
-
-  *np_getentrypoints = pvi.np_getentrypoints;
-  *np_initialize = pvi.np_initialize;
-  *np_shutdown = pvi.np_shutdown;
-
-  return true;
 }
 
 }  // namespace NPAPI

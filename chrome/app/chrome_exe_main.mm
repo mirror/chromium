@@ -9,7 +9,7 @@
 
 // The entry point for all invocations of Chromium, browser and renderer. On
 // windows, this does nothing but load chrome.dll and invoke its entry point
-// in order to make it easy to update the app from Omaha. We don't need
+// in order to make it easy to update the app from GoogleUpdate. We don't need
 // that extra layer with Keystone on the Mac, though we may run into issues
 // with Keychain prompts unless we sign the application. That shouldn't be
 // too hard, we just need infrastructure support to do it.

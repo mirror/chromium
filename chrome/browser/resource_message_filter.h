@@ -11,13 +11,17 @@
 #include "base/gfx/native_widget_types.h"
 #include "base/ref_counted.h"
 #include "build/build_config.h"
-#include "chrome/browser/renderer_host/resource_dispatcher_host.h"
+#include "chrome/browser/net/resolve_proxy_msg_helper.h"
 #include "chrome/common/ipc_channel_proxy.h"
-#include "chrome/common/notification_service.h"
+#include "chrome/common/notification_observer.h"
 #include "webkit/glue/cache_manager.h"
 
 #if defined(OS_WIN)
 #include <windows.h>
+#include "chrome/browser/renderer_host/resource_dispatcher_host.h"
+#else
+// TODO(port): port ResourceDispatcherHost.
+#include "chrome/common/temp_scaffolding_stubs.h"
 #endif
 
 class ClipboardService;
@@ -43,7 +47,8 @@ struct ScreenInfo;
 
 class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
                               public ResourceDispatcherHost::Receiver,
-                              public NotificationObserver {
+                              public NotificationObserver,
+                              public ResolveProxyMsgHelper::Delegate {
  public:
   // Create the filter.
   // Note:  because the lifecycle of the ResourceMessageFilter is not
@@ -82,7 +87,7 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
 
  private:
   void OnMsgCreateWindow(int opener_id, bool user_gesture, int* route_id,
-                         HANDLE* modal_dialog_event);
+                         ModalDialogEvent* modal_dialog_event);
   void OnMsgCreateWidget(int opener_id, bool activatable, int* route_id);
   void OnRequestResource(const IPC::Message& msg, int request_id,
                          const ViewHostMsg_Resource_Request& request);
@@ -115,7 +120,7 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   void OnLoadFont(LOGFONT font);
 #endif
 
-  void OnGetScreenInfo(gfx::NativeView window,
+  void OnGetScreenInfo(gfx::NativeViewId window,
                        webkit_glue::ScreenInfo* results);
   void OnGetPlugins(bool refresh, std::vector<WebPluginInfo>* plugins);
   void OnGetPluginPath(const GURL& url,
@@ -142,9 +147,9 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   void OnClipboardReadAsciiText(std::string* result);
   void OnClipboardReadHTML(std::wstring* markup, GURL* src_url);
 #if defined(OS_WIN)
-  void OnGetWindowRect(HWND window, gfx::Rect *rect);
-  void OnGetRootWindowRect(HWND window, gfx::Rect *rect);
-  void OnGetRootWindowResizerRect(HWND window, gfx::Rect *rect);
+  void OnGetWindowRect(gfx::NativeViewId window, gfx::Rect *rect);
+  void OnGetRootWindowRect(gfx::NativeViewId window, gfx::Rect *rect);
+  void OnGetRootWindowResizerRect(gfx::NativeViewId window, gfx::Rect *rect);
 #endif
   void OnGetMimeTypeFromExtension(const std::wstring& ext,
                                   std::string* mime_type);
@@ -157,6 +162,13 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
                           base::SharedMemoryHandle* browser_handle);
   void OnResourceTypeStats(const CacheManager::ResourceTypeStats& stats);
 
+  void OnResolveProxy(const GURL& url, IPC::Message* reply_msg);
+  
+  // ResolveProxyMsgHelper::Delegate implementation:
+  virtual void OnResolveProxyCompleted(IPC::Message* reply_msg,
+                                       int result,
+                                       const std::string& proxy_list);
+
   // A javascript code requested to print the current page. This is done in two
   // steps and this is the first step. Get the print setting right here
   // synchronously. It will hang the I/O completely.
@@ -168,7 +180,7 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   // A javascript code requested to print the current page. The renderer host
   // have to show to the user the print dialog and returns the selected print
   // settings.
-  void OnScriptedPrint(HWND host_window,
+  void OnScriptedPrint(gfx::NativeViewId host_window,
                        int cookie,
                        int expected_pages_count,
                        IPC::Message* reply_msg);
@@ -203,6 +215,10 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
 
   // Our spellchecker object.
   scoped_refptr<SpellChecker> spellchecker_;
+
+  // Helper class for handling PluginProcessHost_ResolveProxy messages (manages
+  // the requests to the proxy service).
+  ResolveProxyMsgHelper resolve_proxy_msg_helper_;
 
   // Process handle of the renderer process.
   base::ProcessHandle render_handle_;

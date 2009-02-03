@@ -225,12 +225,19 @@ sconscripts = root_env.ChromiumLoadComponentSConscripts(
 # Add the final list into the root environment to be build in BuildComponents.
 root_env.Append(BUILD_SCONSCRIPTS = sconscripts)
 
+if not root_env.WantSystemLib('sqlite'):
+  root_env.Append(BUILD_SCONSCRIPTS = ['$SQLITE_DIR/SConscript'])
 
 
 # --------------------------------------------------------------------------
 # Windows specific
 
 windows_env = root_env.Clone()
+
+# TODO(siggi) Remove this code once SCons plays well when the 
+# Platform SDK 6.1 is installed with VS2005 but not VS2008.
+if root_env['PLATFORM'] in ['win32', 'cygwin']:
+  windows_env['MSVS_VERSION'] = '8.0'
 
 windows_env.Tool('target_platform_windows')
 windows_env.Tool('component_targets_msvs')  # Per target project support.
@@ -452,6 +459,9 @@ linux_env.Append(
         '$LIBEVENT_DIR/libevent.scons',
     ],
     CCFLAGS = ['-m32', '-pthread', '-march=i686', '-fno-exceptions'],
+    # GCC will generate ident directives with the GCC version. Accumulate
+    # these all up and you end up with ~80K repeated in a .comment section.
+    CCFLAGS_OPTIMIZED = ['-fno-ident'],
     CXXFLAGS = ['-Wall', '-Werror', '-march=i686'] + excluded_warnings,
     LINKFLAGS = ['-m32', '-pthread'],
 )
@@ -504,6 +514,16 @@ linux_env.Append(
 
     ICU_LIBS = ['icu'],
 )
+
+# Build an "official" build (DCHECKs completely compiled out, etc).
+if ARGUMENTS.get('OFFICIAL') == '1':
+  linux_env.Append(CPPDEFINES=['OFFICIAL_BUILD'])
+  # Make sure units of code and data go in their own section, and then GC them
+  # in the linker to remove unreferenced data and code.  Currently gold doesn't
+  # support --gc-sections, so you'll have to build with the original GNU ld.
+  linux_env.Append(CCFLAGS_OPTIMIZED=['-ffunction-sections', '-fdata-sections'])
+  linux_env.Append(LINKFLAGS_OPTIMIZED=['-Wl,--gc-sections'])
+
 # Build with support for gcov when COVERAGE=1.
 if ARGUMENTS.get('COVERAGE') == '1':
   linux_env.Append(CCFLAGS=['-fprofile-arcs', '-ftest-coverage'])
@@ -522,6 +542,15 @@ if ARGUMENTS.get('SYMBOLS') == '1':
 if ARGUMENTS.get('SHARED') == '1':
   linux_env.Replace(COMPONENT_STATIC=False)
 
+  # The shared library build only works for test_shell and test_shell_tests,
+  # so filter out Chrome.
+  print "Filtering out chrome and media build targets in shared object build."
+  linux_env.FilterOut(
+      BUILD_SCONSCRIPTS = [
+          '$CHROME_DIR/chrome.scons',
+      ]
+  )
+
 # Build with system-provided NSS and GTK.
 if root_env['PLATFORM'] in ['linux', 'linux2', 'posix']:
   try:
@@ -536,6 +565,8 @@ if root_env['PLATFORM'] in ['linux', 'linux2', 'posix']:
         '#Software_Requirements')
 
     sys.exit(1)
+
+  # TODO: Factor the code here into aits own function.
   if root_env.WantSystemLib('libxml'):
     try:
       linux_env.ParseConfig('pkg-config --cflags --libs libxml-2.0')
@@ -549,6 +580,13 @@ if root_env['PLATFORM'] in ['linux', 'linux2', 'posix']:
     except OSError, e:
       print ('\n'
           'libxslt requested in SYSTEM_LIBS but not found\n')
+      sys.exit(1)
+  if root_env.WantSystemLib('sqlite'):
+    try:
+      linux_env.ParseConfig('pkg-config --cflags --libs sqlite')
+    except OSError, e:
+      print ('\n'
+          'sqlite requested in SYSTEM_LIBS but not found\n')
       sys.exit(1)
 
 linux_dbg = linux_env.Clone()

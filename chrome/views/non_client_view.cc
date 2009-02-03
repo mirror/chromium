@@ -6,43 +6,45 @@
 
 namespace views {
 
+const int NonClientView::kClientEdgeThickness = 1;
+
 int NonClientView::GetHTComponentForFrame(const gfx::Point& point,
-                                          int resize_area_size,
-                                          int resize_area_corner_size,
-                                          int top_resize_area_size,
+                                          int top_resize_border_height,
+                                          int resize_border_thickness,
+                                          int resize_corner_size,
                                           bool can_resize) {
   int component = HTNOWHERE;
-  if (point.x() < resize_area_size) {
-    if (point.y() < resize_area_corner_size) {
+  if (point.x() < resize_border_thickness) {
+    if (point.y() < resize_corner_size) {
       component = HTTOPLEFT;
-    } else if (point.y() >= (height() - resize_area_corner_size)) {
+    } else if (point.y() >= (height() - resize_corner_size)) {
       component = HTBOTTOMLEFT;
     } else {
       component = HTLEFT;
     }
-  } else if (point.x() < resize_area_corner_size) {
-    if (point.y() < top_resize_area_size) {
+  } else if (point.x() < resize_corner_size) {
+    if (point.y() < top_resize_border_height) {
       component = HTTOPLEFT;
-    } else if (point.y() >= (height() - resize_area_size)) {
+    } else if (point.y() >= (height() - resize_border_thickness)) {
       component = HTBOTTOMLEFT;
     }
-  } else if (point.x() >= (width() - resize_area_size)) {
-    if (point.y() < resize_area_corner_size) {
+  } else if (point.x() >= (width() - resize_border_thickness)) {
+    if (point.y() < resize_corner_size) {
       component = HTTOPRIGHT;
-    } else if (point.y() >= (height() - resize_area_corner_size)) {
+    } else if (point.y() >= (height() - resize_corner_size)) {
       component = HTBOTTOMRIGHT;
-    } else if (point.x() >= (width() - resize_area_size)) {
+    } else {
       component = HTRIGHT;
     }
-  } else if (point.x() >= (width() - resize_area_corner_size)) {
-    if (point.y() < top_resize_area_size) {
+  } else if (point.x() >= (width() - resize_corner_size)) {
+    if (point.y() < top_resize_border_height) {
       component = HTTOPRIGHT;
-    } else if (point.y() >= (height() - resize_area_size)) {
+    } else if (point.y() >= (height() - resize_border_thickness)) {
       component = HTBOTTOMRIGHT;
     }
-  } else if (point.y() < top_resize_area_size) {
+  } else if (point.y() < top_resize_border_height) {
     component = HTTOP;
-  } else if (point.y() >= (height() - resize_area_size)) {
+  } else if (point.y() >= (height() - resize_border_thickness)) {
     component = HTBOTTOM;
   }
 

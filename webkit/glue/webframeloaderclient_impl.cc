@@ -914,7 +914,9 @@ void WebFrameLoaderClient::dispatchDecidePolicyForNavigationAction(
   WebViewDelegate* d = wv->delegate();
   // It is valid for this function to be invoked in code paths where the
   // the webview is closed.
-  if (d) {
+  // The NULL check here is to fix a crash that seems strange
+  // (see - https://bugs.webkit.org/show_bug.cgi?id=23554).
+  if (d && !request.url().isNull()) {
     WindowOpenDisposition disposition = CURRENT_TAB;
     ActionSpecifiesDisposition(action, &disposition);
 
@@ -1262,14 +1264,15 @@ void WebFrameLoaderClient::setTitle(const String& title, const KURL& url) {
 }
 
 String WebFrameLoaderClient::userAgent(const KURL& url) {
-  return webkit_glue::StdStringToString(webkit_glue::GetUserAgent());
+  return webkit_glue::StdStringToString(
+      webkit_glue::GetUserAgent(webkit_glue::KURLToGURL(url)));
 }
 
-void WebFrameLoaderClient::savePlatformDataToCachedPage(WebCore::CachedPage*) {
+void WebFrameLoaderClient::savePlatformDataToCachedFrame(WebCore::CachedFrame*) {
   NOTREACHED() << "Page cache should be disabled";
 }
 
-void WebFrameLoaderClient::transitionToCommittedFromCachedPage(WebCore::CachedPage*) {
+void WebFrameLoaderClient::transitionToCommittedFromCachedFrame(WebCore::CachedFrame*) {
   ASSERT_NOT_REACHED();
 }
 
@@ -1429,7 +1432,7 @@ Widget* WebFrameLoaderClient::createPlugin(const IntSize& size, // TODO(erikkay)
 
   Widget* result = WebPluginImpl::Create(gurl, argn, argv, argc, element,
                                          webframe_, plugin_delegate,
-                                         load_manually, actual_mime_type);
+                                         load_manually, my_mime_type);
 
   DeleteToArray(argn);
   DeleteToArray(argv);

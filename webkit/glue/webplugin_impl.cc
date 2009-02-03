@@ -328,7 +328,8 @@ WebPluginImpl::WebPluginImpl(WebCore::Element* element,
 WebPluginImpl::~WebPluginImpl() {
 }
 
-void WebPluginImpl::SetWindow(HWND window, HANDLE pump_messages_event) {
+void WebPluginImpl::SetWindow(gfx::NativeView window,
+                              HANDLE pump_messages_event) {
   if (window) {
     DCHECK(!windowless_);  // Make sure not called twice.
     window_ = window;
@@ -622,7 +623,7 @@ void WebPluginImpl::windowCutoutRects(
       if (n && n->hasTagName(WebCore::HTMLNames::iframeTag)) {
         if (!ro->style() || ro->style()->visibility() == WebCore::VISIBLE) {
           WebCore::IntPoint point = roundedIntPoint(ro->localToAbsolute());
-          WebCore::RenderBox* rbox = WebCore::RenderBox::toRenderBox(ro);
+          WebCore::RenderBox* rbox = WebCore::toRenderBox(ro);
           WebCore::IntSize size(rbox->width(), rbox->height());
           cutouts->append(WebCore::IntRect(point, size));
         }
@@ -1318,9 +1319,6 @@ bool WebPluginImpl::ReinitializePluginForResponse(
 
   widget_ = container_widget;
   webframe_ = web_frame;
-  // Turn off the load_manually flag as we are going to hand data off to the
-  // plugin.
-  load_manually_ = false;
 
   WebViewDelegate* webview_delegate = web_view->GetDelegate();
   std::string actual_mime_type;
@@ -1344,7 +1342,7 @@ bool WebPluginImpl::ReinitializePluginForResponse(
   delete[] arg_values;
 
   if (!init_ok) {
-    SetContainer(NULL);
+    widget_ = NULL;
     // TODO(iyengar) Should we delete the current plugin instance here?
     return false;
   }
@@ -1355,6 +1353,10 @@ bool WebPluginImpl::ReinitializePluginForResponse(
   // visible.
   widget_->frameRectsChanged();
   delegate_->FlushGeometryUpdates();
+  // The plugin move sequences accumulated via DidMove are sent to the browser
+  // whenever the renderer paints. Force a paint here to ensure that changes
+  // to the plugin window are propagated to the browser.
+  widget_->invalidateRect(widget_->frameRect());
   return true;
 }
 

@@ -43,9 +43,11 @@
 #include "chrome/common/notification_service.h"
 #include "chrome/common/os_exchange_data.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
 #include "chrome/views/hwnd_notification_source.h"
+#include "chrome/views/non_client_view.h"
 #include "chrome/views/view.h"
 #include "chrome/views/window.h"
 
@@ -64,10 +66,8 @@ static const int kToolbarTabStripVerticalOverlap = 3;
 static const int kTabShadowSize = 2;
 // The height of the status bubble.
 static const int kStatusBubbleHeight = 20;
-// The overlap of the status bubble with the left edge of the window.
-static const int kStatusBubbleHorizontalOverlap = 2;
-// The overlap of the status bubble with the bottom edge of the window.
-static const int kStatusBubbleVerticalOverlap = 2;
+// The overlap of the status bubble with the window frame.
+static const int kStatusBubbleOverlap = 1;
 // An offset distance between certain toolbars and the toolbar that preceded
 // them in layout.
 static const int kSeparationLineHeight = 1;
@@ -82,6 +82,9 @@ static const int kDefaultHungPluginDetectFrequency = 2000;
 static const int kDefaultPluginMessageResponseTimeout = 30000;
 // The number of milliseconds between loading animation frames.
 static const int kLoadingAnimationFrameTimeMs = 30;
+
+// If not -1, windows are shown with this state.
+static int explicit_show_state = -1;
 
 static const struct { bool separator; int command; int label; } kMenuLayout[] = {
   { true, 0, 0 },
@@ -109,6 +112,11 @@ static const struct { bool separator; int command; int label; } kMenuLayout[] = 
 
 ///////////////////////////////////////////////////////////////////////////////
 // BrowserView, public:
+
+// static
+void BrowserView::SetShowState(int state) {
+  explicit_show_state = state;
+}
 
 BrowserView::BrowserView(Browser* browser)
     : ClientView(NULL, NULL),
@@ -153,6 +161,9 @@ BrowserView* BrowserView::GetBrowserViewForHWND(HWND window) {
 }
 
 int BrowserView::GetShowState() const {
+  if (explicit_show_state != -1)
+    return explicit_show_state;
+
   STARTUPINFO si = {0};
   si.cb = sizeof(si);
   si.dwFlags = STARTF_USESHOWWINDOW;
@@ -171,8 +182,8 @@ void BrowserView::WindowMoved() {
   status_bubble_->Reposition();
 
   // Close the omnibox popup, if any.
-  if (GetLocationBarView())
-    GetLocationBarView()->location_entry()->ClosePopup();
+  if (toolbar_->GetLocationBarView())
+    toolbar_->GetLocationBarView()->location_entry()->ClosePopup();
 }
 
 gfx::Rect BrowserView::GetToolbarBounds() const {
@@ -198,6 +209,10 @@ bool BrowserView::IsToolbarVisible() const {
 
 bool BrowserView::IsTabStripVisible() const {
   return SupportsWindowFeature(FEATURE_TABSTRIP);
+}
+
+bool BrowserView::IsToolbarDisplayModeNormal() const {
+  return toolbar_->IsDisplayModeNormal();
 }
 
 bool BrowserView::IsOffTheRecord() const {
@@ -480,12 +495,8 @@ bool BrowserView::IsMaximized() {
   return frame_->GetWindow()->IsMaximized();
 }
 
-LocationBarView* BrowserView::GetLocationBarView() const {
+LocationBar* BrowserView::GetLocationBar() const {
   return toolbar_->GetLocationBarView();
-}
-
-BrowserView* BrowserView::GetBrowserView() const {
-  return NULL;
 }
 
 void BrowserView::UpdateStopGoState(bool is_loading) {
@@ -643,13 +654,17 @@ BookmarkBarView* BrowserView::GetBookmarkBarView() {
   return bookmark_bar_view_.get();
 }
 
+LocationBarView* BrowserView::GetLocationBarView() const {
+  return toolbar_->GetLocationBarView();
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // BrowserView, NotificationObserver implementation:
 
 void BrowserView::Observe(NotificationType type,
                           const NotificationSource& source,
                           const NotificationDetails& details) {
-  if (type == NOTIFY_PREF_CHANGED &&
+  if (type == NotificationType::PREF_CHANGED &&
       *Details<std::wstring>(details).ptr() == prefs::kShowBookmarkBar) {
     if (MaybeShowBookmarkBar(browser_->GetSelectedTabContents()))
       Layout();
@@ -734,7 +749,7 @@ std::wstring BrowserView::GetWindowTitle() const {
 }
 
 views::View* BrowserView::GetInitiallyFocusedView() const {
-  return GetLocationBarView();
+  return toolbar_->GetLocationBarView();
 }
 
 bool BrowserView::ShouldShowWindowTitle() const {
@@ -860,7 +875,8 @@ bool BrowserView::CanClose() const {
 
   // Empty TabStripModel, it's now safe to allow the Window to be closed.
   NotificationService::current()->Notify(
-      NOTIFY_WINDOW_CLOSED, Source<HWND>(frame_->GetWindow()->GetHWND()),
+      NotificationType::WINDOW_CLOSED,
+      Source<HWND>(frame_->GetWindow()->GetHWND()),
       NotificationService::NoDetails());
   return true;
 }
@@ -875,7 +891,6 @@ int BrowserView::NonClientHitTest(const gfx::Point& point) {
   // might be a popup window without a TabStrip, or the TabStrip could be
   // animating.
   if (IsTabStripVisible() && tabstrip_->CanProcessInputEvents()) {
-    views::Window* window = frame_->GetWindow();
     gfx::Point point_in_view_coords(point);
     View::ConvertPointToView(GetParent(), this, &point_in_view_coords);
 
@@ -891,7 +906,7 @@ int BrowserView::NonClientHitTest(const gfx::Point& point) {
     // The top few pixels of the TabStrip are a drop-shadow - as we're pretty
     // starved of dragable area, let's give it to window dragging (this also
     // makes sense visually).
-    if (!window->IsMaximized() &&
+    if (!IsMaximized() &&
         (point_in_view_coords.y() < tabstrip_->y() + kTabShadowSize)) {
       // We return HTNOWHERE as this is a signal to our containing
       // NonClientView that it should figure out what the correct hit-test
@@ -1157,8 +1172,11 @@ int BrowserView::LayoutDownloadShelf() {
 }
 
 void BrowserView::LayoutStatusBubble(int top) {
-  gfx::Point origin(-kStatusBubbleHorizontalOverlap,
-                    top - kStatusBubbleHeight + kStatusBubbleVerticalOverlap);
+  // In restored mode, the client area has a client edge between it and the
+  // frame.
+  int overlap = kStatusBubbleOverlap +
+      (IsMaximized() ? 0 : views::NonClientView::kClientEdgeThickness);
+  gfx::Point origin(-overlap, top - kStatusBubbleHeight + overlap);
   ConvertPointToView(this, GetParent(), &origin);
   status_bubble_->SetBounds(origin.x(), origin.y(), width() / 3,
                             kStatusBubbleHeight);

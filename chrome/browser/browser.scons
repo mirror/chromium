@@ -37,6 +37,7 @@ if env.Bit('windows'):
       ],
   )
 
+# input_files initialized to common files + Windows specific ones.
 input_files = ChromeFileList([
   # TODO(sgk):  violate standard indentation so we don't have to
   # reindent too much when we remove the explicit MSVSFilter() calls
@@ -142,10 +143,6 @@ input_files = ChromeFileList([
     'user_data_manager.h',
     'visitedlink_master.cc',
     'visitedlink_master.h',
-    'web_app.cc',
-    'web_app.h',
-    'web_app_launcher.cc',
-    'web_app_launcher.h',
   ]),
   MSVSFilter('Bookmarks', [
     'bookmarks/bookmark_codec.cc',
@@ -185,10 +182,12 @@ input_files = ChromeFileList([
     'dock_info.cc',
     'dock_info.h',
     'find_notification_details.h',
-    'js_before_unload_handler.cc',
     'js_before_unload_handler.h',
-    'jsmessage_box_handler.cc',
+    'js_before_unload_handler_win.cc',
+    'js_before_unload_handler_win.h',
     'jsmessage_box_handler.h',
+    'jsmessage_box_handler_win.cc',
+    'jsmessage_box_handler_win.h',
     'load_from_memory_cache_details.h',
     'load_notification_details.h',
     'login_prompt.cc',
@@ -200,8 +199,6 @@ input_files = ChromeFileList([
     'task_manager.h',
     'task_manager_resource_providers.cc',
     'task_manager_resource_providers.h',
-    'web_app_icon_manager.cc',
-    'web_app_icon_manager.h',
     'window_sizer.cc',
     'window_sizer.h',
   ]),
@@ -257,6 +254,8 @@ input_files = ChromeFileList([
     'history/history_marshaling.h',
     'history/history_notifications.h',
     'history/history_publisher.cc',
+    'history/history_publisher_none.cc',
+    'history/history_publisher_win.cc',
     'history/history_publisher.h',
     'history/history_types.cc',
     'history/history_types.h',
@@ -430,6 +429,8 @@ input_files = ChromeFileList([
     'net/dns_slave.h',
     'net/referrer.cc',
     'net/referrer.h',
+    'net/resolve_proxy_msg_helper.cc',
+    'net/resolve_proxy_msg_helper.h',
     'net/sdch_dictionary_fetcher.cc',
     'net/sdch_dictionary_fetcher.h',
     'net/url_fetcher.cc',
@@ -514,6 +515,9 @@ input_files = ChromeFileList([
   MSVSFilter('Renderer Host', [
     'renderer_host/async_resource_handler.cc',
     'renderer_host/async_resource_handler.h',
+    'renderer_host/backing_store.h',
+    'renderer_host/backing_store.cc',
+    'renderer_host/backing_store_win.cc',
     'renderer_host/browser_render_process_host.cc',
     'renderer_host/browser_render_process_host.h',
     'renderer_host/buffered_resource_handler.cc',
@@ -524,8 +528,8 @@ input_files = ChromeFileList([
     'renderer_host/download_resource_handler.h',
     'renderer_host/download_throttling_resource_handler.cc',
     'renderer_host/download_throttling_resource_handler.h',
-    'renderer_host/browser_render_process_host.cc',
-    'renderer_host/browser_render_process_host.h',
+    'renderer_host/render_process_host.cc',
+    'renderer_host/render_process_host.h',
     'renderer_host/render_view_host.cc',
     'renderer_host/render_view_host.h',
     'renderer_host/render_view_host_delegate.h',
@@ -656,11 +660,6 @@ input_files = ChromeFileList([
     'toolbar_model.h',
 ])
 
-if env.Bit('mac'):
-  input_files.Remove(
-      'spellchecker.cc',
-  )
-
 if not env.Bit('windows'):
   # TODO: Port these.
   input_files.Remove(
@@ -672,31 +671,21 @@ if not env.Bit('windows'):
       'autocomplete/autocomplete_edit.cc',
       'autocomplete/autocomplete_popup.cc',
       'autocomplete/edit_drop_target.cc',
-      'autocomplete/history_contents_provider.cc',
       'autocomplete/history_url_provider.cc',
       'autocomplete/search_provider.cc',
       'automation/automation_provider.cc',
       'automation/automation_provider_list.cc',
       'automation/ui_controls.cc',
       'back_forward_menu_model.cc',
-      'base_history_model.cc',
       'bookmarks/bookmark_context_menu.cc',
       'bookmarks/bookmark_drag_data.cc',
       'bookmarks/bookmark_drop_info.cc',
-      'bookmarks/bookmark_folder_tree_model.cc',
       'bookmarks/bookmark_model.cc',
       'bookmarks/bookmark_storage.cc',
-      'bookmarks/bookmark_table_model.cc',
       'bookmarks/bookmark_utils.cc',
-      'browser.cc',
       'browser_about_handler.cc',
       'browser_accessibility.cc',
       'browser_accessibility_manager.cc',
-      'browser_init.cc',
-      'browser_list.cc',
-      'browser_main.cc',
-      'browser_prefs.cc',
-      'browser_process_impl.cc',
       'browser_shutdown.cc',
       'browser_url_handler.cc',
       'browsing_data_remover.cc',
@@ -705,7 +694,6 @@ if not env.Bit('windows'):
       'cert_store.cc',
       'character_encoding.cc',
       'chrome_plugin_host.cc',
-      'command_updater.cc',
       'dock_info.cc',
       'dom_ui/dom_ui_contents.cc',
       'dom_ui/dom_ui_host.cc',
@@ -734,7 +722,6 @@ if not env.Bit('windows'):
       'hang_monitor/hung_plugin_action.cc',
       'hang_monitor/hung_window_detector.cc',
       'history/history.cc',
-      'history/history_publisher.cc',
       'history_tab_ui.cc',
       'history_view.cc',
       'icon_loader.cc',
@@ -745,8 +732,6 @@ if not env.Bit('windows'):
       'importer/importer.cc',
       'importer/toolbar_importer.cc',
       'jankometer.cc',
-      'js_before_unload_handler.cc',
-      'jsmessage_box_handler.cc',
       'login_prompt.cc',
       'memory_details.cc',
       'metrics/metrics_service.cc',
@@ -754,6 +739,7 @@ if not env.Bit('windows'):
       'net/dns_global.cc',
       'net/dns_master.cc',
       'net/dns_slave.cc',
+      'net/resolve_proxy_msg_helper.cc',
       'google_update.cc',
       'password_manager/encryptor.cc',
       'password_manager/ie7_password.cc',
@@ -771,11 +757,8 @@ if not env.Bit('windows'):
       'printing/printed_page.cc',
       'printing/printer_query.cc',
       'printing/win_printing_context.cc',
-      'profile.cc',
-      'profile_manager.cc',
       'renderer_host/render_view_host.cc',
       'renderer_host/render_widget_helper.cc',
-      'renderer_host/render_widget_host.cc',
       'renderer_host/cross_site_resource_handler.cc',
       'renderer_host/resource_dispatcher_host.cc',
       'repost_form_warning_dialog.cc',
@@ -812,28 +795,26 @@ if not env.Bit('windows'):
       'tab_contents/tab_contents_factory.cc',
       'tab_contents/tab_util.cc',
       'tab_contents/view_source_contents.cc',
-      'tab_contents/web_contents.cc',
       'tab_contents/web_contents_view.cc',
       'tab_contents/web_drag_source.cc',
       'tab_contents/web_drop_target.cc',
-      'tabs/tab_strip_model.cc',
-      'tabs/tab_strip_model_order_controller.cc',
       'task_manager.cc',
       'task_manager_resource_providers.cc',
       'toolbar_model.cc',
       'user_data_manager.cc',
       'views/download_tab_view.cc',
-      'visitedlink_master.cc',
-      'web_app.cc',
-      'web_app_icon_manager.cc',
-      'web_app_launcher.cc',
       'window_sizer.cc',
   )
 
+  # Remove Windows-specific files on other platforms.
   input_files.Remove(
       'browser_main_win.cc',
+      'history/history_publisher_win.cc',
       'importer/firefox_profile_lock_win.cc',
+      'js_before_unload_handler_win.cc',
+      'jsmessage_box_handler_win.cc',
       'password_manager/password_form_manager_win.cc',
+      'renderer_host/backing_store_win.cc',
       'renderer_host/render_widget_host_view_win.cc',
       'tab_contents/web_contents_view_win.cc',
       'webdata/web_data_service_win.cc',
@@ -842,11 +823,27 @@ if not env.Bit('windows'):
       '../tools/build/win/precompiled_wtl.h',
   )
 
+  # Add files shared across non-Windows platforms.
+  input_files.Append(
+      'renderer_host/backing_store_posix.cc',
+  )
+
+
+if env.Bit('linux'):
+  input_files.Extend([
+      'browser_main_gtk.cc',
+  ])
+
+if env.Bit('mac'):
+  input_files.Remove(
+      'spellchecker.cc',
+  )
+
 if env.Bit('windows'):
   env.TypeLibrary('history/history_indexer.idl')
 
-if not env.Bit('posix'):
   input_files.Remove(
+      'history/history_publisher_none.cc',
       'importer/firefox_profile_lock_posix.cc',
   )
 

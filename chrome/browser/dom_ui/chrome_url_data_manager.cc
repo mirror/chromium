@@ -25,7 +25,7 @@
 
 // The URL scheme used for internal chrome resources.
 // TODO(glen): Choose a better location for this.
-static const char kChromeURLScheme[] = "chrome";
+static const char kChromeURLScheme[] = "chrome-ui";
 
 // The single global instance of ChromeURLDataManager.
 ChromeURLDataManager chrome_url_data_manager;
@@ -42,7 +42,7 @@ class URLRequestChromeJob : public URLRequestJob {
   // URLRequestJob implementation.
   virtual void Start();
   virtual void Kill();
-  virtual bool ReadRawData(char* buf, int buf_size, int *bytes_read);
+  virtual bool ReadRawData(net::IOBuffer* buf, int buf_size, int *bytes_read);
   virtual bool GetMimeType(std::string* mime_type);
 
   // Called by ChromeURLDataManager to notify us that the data blob is ready
@@ -60,7 +60,7 @@ class URLRequestChromeJob : public URLRequestJob {
 
   // Do the actual copy from data_ (the data we're serving) into |buf|.
   // Separate from ReadRawData so we can handle async I/O.
-  void CompleteRead(char* buf, int buf_size, int* bytes_read);
+  void CompleteRead(net::IOBuffer* buf, int buf_size, int* bytes_read);
 
   // The actual data we're serving.  NULL until it's been fetched.
   scoped_refptr<RefCountedBytes> data_;
@@ -70,7 +70,7 @@ class URLRequestChromeJob : public URLRequestJob {
 
   // For async reads, we keep around a pointer to the buffer that
   // we're reading into.
-  char* pending_buf_;
+  scoped_refptr<net::IOBuffer> pending_buf_;
   int pending_buf_size_;
   std::string mime_type_;
 
@@ -88,8 +88,13 @@ class URLRequestChromeFileJob : public URLRequestFileJob {
 };
 
 void RegisterURLRequestChromeJob() {
-  // Being a standard scheme allows us to resolve relative paths
-  url_util::AddStandardScheme(kChromeURLScheme);
+  // Being a standard scheme allows us to resolve relative paths. This method
+  // is invoked multiple times during testing, so only add the scheme once.
+  url_parse::Component url_scheme_component(0, arraysize(kChromeURLScheme) - 1);
+  if (!url_util::IsStandard(kChromeURLScheme, arraysize(kChromeURLScheme) - 1,
+                            url_scheme_component)) {
+    url_util::AddStandardScheme(kChromeURLScheme);
+  }
 
   std::wstring inspector_dir;
   if (PathService::Get(chrome::DIR_INSPECTOR, &inspector_dir))
@@ -102,6 +107,12 @@ void RegisterURLRequestChromeJob() {
   URLRequest::RegisterProtocolFactory(kPersonalizationScheme,
                                       &ChromeURLDataManager::Factory); 
 #endif
+}
+
+void UnregisterURLRequestChromeJob() {
+  std::wstring inspector_dir;
+  if (PathService::Get(chrome::DIR_INSPECTOR, &inspector_dir))
+    chrome_url_data_manager.RemoveFileSource("inspector");
 }
 
 // static
@@ -120,7 +131,7 @@ void ChromeURLDataManager::URLToRequest(const GURL& url,
     return;
   }
 
-  // Our input looks like: chrome://source_name/extra_bits?foo .
+  // Our input looks like: chrome-ui://source_name/extra_bits?foo .
   // So the url's "host" is our source, and everything after the host is
   // the path.
   source_name->assign(url.host());
@@ -249,7 +260,7 @@ URLRequestJob* ChromeURLDataManager::Factory(URLRequest* request,
 }
 
 URLRequestChromeJob::URLRequestChromeJob(URLRequest* request)
-    : URLRequestJob(request), data_offset_(0), pending_buf_(NULL) {}
+    : URLRequestJob(request), data_offset_(0) {}
 
 URLRequestChromeJob::~URLRequestChromeJob() {
 }
@@ -278,9 +289,10 @@ void URLRequestChromeJob::DataAvailable(RefCountedBytes* bytes) {
 
     data_ = bytes;
     int bytes_read;
-    if (pending_buf_) {
+    if (pending_buf_.get()) {
       CompleteRead(pending_buf_, pending_buf_size_, &bytes_read);
       NotifyReadComplete(bytes_read);
+      pending_buf_ = NULL;
     }
   } else {
     // The request failed.
@@ -288,10 +300,11 @@ void URLRequestChromeJob::DataAvailable(RefCountedBytes* bytes) {
   }
 }
 
-bool URLRequestChromeJob::ReadRawData(char* buf, int buf_size,
+bool URLRequestChromeJob::ReadRawData(net::IOBuffer* buf, int buf_size,
                                       int* bytes_read) {
   if (!data_.get()) {
     SetStatus(URLRequestStatus(URLRequestStatus::IO_PENDING, 0));
+    DCHECK(!pending_buf_.get());
     pending_buf_ = buf;
     pending_buf_size_ = buf_size;
     return false;  // Tell the caller we're still waiting for data.
@@ -302,13 +315,13 @@ bool URLRequestChromeJob::ReadRawData(char* buf, int buf_size,
   return true;
 }
 
-void URLRequestChromeJob::CompleteRead(char* buf, int buf_size,
+void URLRequestChromeJob::CompleteRead(net::IOBuffer* buf, int buf_size,
                                        int* bytes_read) {
   int remaining = static_cast<int>(data_->data.size()) - data_offset_;
   if (buf_size > remaining)
     buf_size = remaining;
   if (buf_size > 0) {
-    memcpy(buf, &data_->data[0] + data_offset_, buf_size);
+    memcpy(buf->data(), &data_->data[0] + data_offset_, buf_size);
     data_offset_ += buf_size;
   }
   *bytes_read = buf_size;

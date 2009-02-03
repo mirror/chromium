@@ -5,7 +5,11 @@
 #ifndef CHROME_VIEWS_TABLE_VIEW_H_
 #define CHROME_VIEWS_TABLE_VIEW_H_
 
+#include "build/build_config.h"
+
+#if defined(OS_WIN)
 #include <windows.h>
+#endif  // defined(OS_WIN)
 
 #include <map>
 #include <unicode/coll.h>
@@ -14,7 +18,10 @@
 
 #include "base/logging.h"
 #include "chrome/common/l10n_util.h"
+#if defined(OS_WIN)
+// TODO(port): remove the ifdef when native_control.h is ported.
 #include "chrome/views/native_control.h"
+#endif  // defined(OS_WIN)
 #include "SkColor.h"
 
 class SkBitmap;
@@ -53,7 +60,7 @@ struct TableColumn;
 // - only text
 // - a small icon (16x16) and some text
 // - a check box and some text
-typedef enum TableTypes {
+enum TableTypes {
   TEXT_ONLY = 0,
   ICON_AND_TEXT,
   CHECK_BOX_AND_TEXT
@@ -157,7 +164,7 @@ class TableModel {
 
 // TableColumn specifies the title, alignment and size of a particular column.
 struct TableColumn {
-  typedef enum Alignment {
+  enum Alignment {
     LEFT, RIGHT, CENTER
   };
 
@@ -284,6 +291,8 @@ class TableViewObserver {
   virtual void OnTableViewDelete(TableView* table_view) {}
 };
 
+#if defined(OS_WIN)
+// TODO(port): Port TableView.
 class TableView : public NativeControl,
                   public TableModelObserver {
  public:
@@ -661,6 +670,7 @@ class TableView : public NativeControl,
 
   DISALLOW_COPY_AND_ASSIGN(TableView);
 };
+#endif  // defined(OS_WIN)
 
 }  // namespace views
 

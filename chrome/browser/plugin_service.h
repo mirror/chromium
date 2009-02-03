@@ -5,14 +5,15 @@
 // This class responds to requests from renderers for the list of plugins, and
 // also a proxy object for plugin instances.
 
-#ifndef CHROME_BROWSER_PLUGIN_SERVICE_H__
-#define CHROME_BROWSER_PLUGIN_SERVICE_H__
+#ifndef CHROME_BROWSER_PLUGIN_SERVICE_H_
+#define CHROME_BROWSER_PLUGIN_SERVICE_H_
 
 #include <vector>
 
 #include "base/basictypes.h"
 #include "base/hash_tables.h"
 #include "base/lock.h"
+#include "base/ref_counted.h"
 #include "chrome/browser/browser_process.h"
 #include "webkit/glue/webplugin.h"
 
@@ -20,6 +21,7 @@ namespace IPC {
 class Message;
 }
 
+class MessageLoop;
 class PluginProcessHost;
 class URLRequestContext;
 class ResourceDispatcherHost;
@@ -48,8 +50,8 @@ class PluginService {
 
   // Sets/gets the data directory that Chrome plugins should use to store
   // persistent data.
-  void SetChromePluginDataDir(const std::wstring& data_dir);
-  const std::wstring& GetChromePluginDataDir();
+  void SetChromePluginDataDir(const FilePath& data_dir);
+  const FilePath& GetChromePluginDataDir();
 
   // Gets the browser's UI locale.
   const std::wstring& GetUILocale();
@@ -131,7 +133,7 @@ class PluginService {
   ResourceDispatcherHost* resource_dispatcher_host_;
 
   // The data directory that Chrome plugins should use to store persistent data.
-  std::wstring chrome_plugin_data_dir_;
+  FilePath chrome_plugin_data_dir_;
 
   // The browser's UI locale.
   const std::wstring ui_locale_;
@@ -141,8 +143,7 @@ class PluginService {
   Lock lock_;
 
   // Handles plugin process shutdown.
-  class ShutdownHandler :
-      public base::RefCountedThreadSafe<ShutdownHandler> {
+  class ShutdownHandler : public base::RefCountedThreadSafe<ShutdownHandler> {
    public:
      ShutdownHandler() {}
      ~ShutdownHandler() {}
@@ -152,16 +153,16 @@ class PluginService {
      void InitiateShutdown();
 
    private:
-     // Shutdown handler which runs on the io thread.
-     void OnShutdown();
+    // Shutdown handler which runs on the io thread.
+    void OnShutdown();
 
-     DISALLOW_EVIL_CONSTRUCTORS(ShutdownHandler);
+    DISALLOW_COPY_AND_ASSIGN(ShutdownHandler);
   };
 
   friend class ShutdownHandler;
   scoped_refptr<ShutdownHandler> plugin_shutdown_handler_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(PluginService);
+  DISALLOW_COPY_AND_ASSIGN(PluginService);
 };
 
 // The PluginProcessHostIterator allows to iterate through all the
@@ -214,4 +215,4 @@ class PluginProcessHostIterator {
   PluginService::PluginMap::const_iterator end_;
 };
 
-#endif  // CHROME_BROWSER_PLUGIN_SERVICE_H__
+#endif  // CHROME_BROWSER_PLUGIN_SERVICE_H_

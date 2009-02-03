@@ -66,6 +66,9 @@ const wchar_t kUninstall[] = L"uninstall";
 // Enable verbose logging (info level).
 const wchar_t kVerboseLogging[] = L"verbose-logging";
 
+// Show the embedded EULA dialog.
+const wchar_t kShowEula[] = L"show-eula";
+
 }  // namespace switches
 
 const wchar_t kInstallBinaryDir[] = L"Application";
@@ -74,6 +77,14 @@ const wchar_t kChromeOldExe[] = L"old_chrome.exe";
 const wchar_t kChromeNewExe[] = L"new_chrome.exe";
 const wchar_t kChromeDll[] = L"chrome.dll";
 const wchar_t kSetupExe[] = L"setup.exe";
+const wchar_t kInstallerDir[] = L"Installer";
+
+// Note that the following value must be kept in sync with kChromeExe
+const wchar_t kAppPathsRegistryKey[] =
+    L"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\chrome.exe";
+// Use the empty string to set the key default value.
+const wchar_t kAppPathsRegistryDefaultName[] = L"";
+const wchar_t kAppPathsRegistryPathName[] = L"Path";
 
 const wchar_t kUninstallStringField[] = L"UninstallString";
 const wchar_t kUninstallDisplayNameField[] = L"DisplayName";

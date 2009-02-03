@@ -83,8 +83,8 @@ URLRequestInetJob::URLRequestInetJob(URLRequest* request)
   // TODO(darin): we should re-create the internet if the UA string changes,
   // but we have to be careful about existing users of this internet.
   if (!the_internet_) {
-    InitializeTheInternet(
-        request->context() ? request->context()->user_agent() : std::string());
+    InitializeTheInternet(request->context() ?
+        request->context()->GetUserAgent(GURL()) : std::string());
   }
 #ifndef NDEBUG
   DCHECK(MessageLoop::current() == my_message_loop_) <<
@@ -185,7 +185,7 @@ void URLRequestInetJob::OnIOComplete(const AsyncResult& result) {
   }
 }
 
-bool URLRequestInetJob::ReadRawData(char* dest, int dest_size,
+bool URLRequestInetJob::ReadRawData(net::IOBuffer* dest, int dest_size,
                                     int *bytes_read) {
   if (is_done())
     return 0;
@@ -196,7 +196,7 @@ bool URLRequestInetJob::ReadRawData(char* dest, int dest_size,
 
   *bytes_read = 0;
 
-  int result = CallInternetRead(dest, dest_size, bytes_read);
+  int result = CallInternetRead(dest->data(), dest_size, bytes_read);
   if (result == ERROR_SUCCESS) {
     DLOG(INFO) << "read " << *bytes_read << " bytes";
     if (*bytes_read == 0)

@@ -27,21 +27,22 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/cache_manager_host.h"
 #include "chrome/browser/extensions/user_script_master.h"
-#include "chrome/browser/history/history.h"
 #include "chrome/browser/plugin_service.h"
+#include "chrome/browser/profile.h"
 #include "chrome/browser/renderer_host/render_widget_helper.h"
 #include "chrome/browser/renderer_host/renderer_security_policy.h"
 #include "chrome/browser/resource_message_filter.h"
-#include "chrome/browser/spellchecker.h"
 #include "chrome/browser/visitedlink_master.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/debug_flags.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/logging_chrome.h"
+#include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/process_watcher.h"
+#include "chrome/common/render_messages.h"
 #include "chrome/renderer/render_process.h"
 #include "net/base/cookie_monster.h"
 #include "net/base/net_util.h"
@@ -49,6 +50,9 @@
 #if defined(OS_WIN)
 // TODO(port): see comment by the only usage of RenderViewHost in this file.
 #include "chrome/browser/renderer_host/render_view_host.h"
+
+#include "chrome/browser/history/history.h"
+#include "chrome/browser/spellchecker.h"
 
 // Once the above TODO is finished, then this block is all Windows-specific
 // files.
@@ -138,7 +142,8 @@ BrowserRenderProcessHost::BrowserRenderProcessHost(Profile* profile)
       profile->GetPrefs()->GetBoolean(prefs::kBlockPopups));
 
   NotificationService::current()->AddObserver(this,
-      NOTIFY_USER_SCRIPTS_LOADED, NotificationService::AllSources());
+      NotificationType::USER_SCRIPTS_LOADED,
+      NotificationService::AllSources());
 
   // Note: When we create the BrowserRenderProcessHost, it's technically backgrounded,
   //       because it has no visible listeners.  But the process doesn't
@@ -160,7 +165,7 @@ BrowserRenderProcessHost::~BrowserRenderProcessHost() {
   profile()->GetPrefs()->RemovePrefObserver(prefs::kBlockPopups, this);
 
   NotificationService::current()->RemoveObserver(this,
-      NOTIFY_USER_SCRIPTS_LOADED, NotificationService::AllSources());
+      NotificationType::USER_SCRIPTS_LOADED, NotificationService::AllSources());
 }
 
 // When we're started with the --start-renderers-manually flag, we pop up a
@@ -257,7 +262,6 @@ bool BrowserRenderProcessHost::Init() {
     switches::kDisablePopupBlocking,
     switches::kUseLowFragHeapCrt,
     switches::kGearsInRenderer,
-    switches::kEnableUserScripts,
     switches::kEnableVideo,
   };
 
@@ -381,7 +385,8 @@ bool BrowserRenderProcessHost::Init() {
 
         bool on_sandbox_desktop = (desktop != NULL);
         NotificationService::current()->Notify(
-            NOTIFY_RENDERER_PROCESS_IN_SBOX, Source<BrowserRenderProcessHost>(this),
+            NotificationType::RENDERER_PROCESS_IN_SBOX,
+            Source<BrowserRenderProcessHost>(this),
             Details<bool>(&on_sandbox_desktop));
 
         ResumeThread(target.hThread);
@@ -391,7 +396,7 @@ bool BrowserRenderProcessHost::Init() {
         // Help the process a little. It can't start the debugger by itself if
         // the process is in a sandbox.
         if (child_needs_help)
-            DebugUtil::SpawnDebuggerOnProcess(target.dwProcessId);
+          DebugUtil::SpawnDebuggerOnProcess(target.dwProcessId);
       } else
 #endif  // OS_WIN and sandbox
       {
@@ -470,11 +475,17 @@ void BrowserRenderProcessHost::WidgetHidden() {
 }
 
 void BrowserRenderProcessHost::AddWord(const std::wstring& word) {
+#if !defined(OS_WIN)
+  // TODO(port): reimplement when we get the spell checker up and running on
+  // other platforms.
+  NOTIMPLEMENTED();
+#else
   base::Thread* io_thread = g_browser_process->io_thread();
   if (profile()->GetSpellChecker()) {
     io_thread->message_loop()->PostTask(FROM_HERE, NewRunnableMethod(
         profile()->GetSpellChecker(), &SpellChecker::AddWord, word));
   }
+#endif // !defined(OS_WIN)
 }
 
 base::ProcessHandle BrowserRenderProcessHost::GetRendererProcessHandle() {
@@ -499,21 +510,8 @@ void BrowserRenderProcessHost::InitVisitedLinks() {
 }
 
 void BrowserRenderProcessHost::InitUserScripts() {
-  if (!CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kEnableUserScripts)) {
-    return;
-  }
-
-  // TODO(aa): Figure out lifetime and ownership of this object
-  // - VisitedLinkMaster is owned by Profile, but there has been talk of
-  //   having scripts live elsewhere besides the profile.
-  // - File IO should be asynchronous (see VisitedLinkMaster), but how do we
-  //   get scripts to the first renderer without blocking startup? Should we
-  //   cache some information across restarts?
   UserScriptMaster* user_script_master = profile()->GetUserScriptMaster();
-  if (!user_script_master) {
-    return;
-  }
+  DCHECK(user_script_master);
 
   if (!user_script_master->ScriptsReady()) {
     // No scripts ready.  :(
@@ -571,6 +569,7 @@ bool BrowserRenderProcessHost::FastShutdownIfPossible() {
   // Otherwise, we're allowed to just terminate the process. Using exit code 0
   // means that UMA won't treat this as a renderer crash.
   process_.Terminate(ResultCodes::NORMAL_EXIT);
+  process_.Close();
   return true;
 }
 
@@ -670,9 +669,10 @@ void BrowserRenderProcessHost::OnChannelError() {
   if (!notified_termination_) {
     // If |close_expected| is false, it means the renderer process went away
     // before the web views expected it; count it as a crash.
-    NotificationService::current()->Notify(NOTIFY_RENDERER_PROCESS_TERMINATED,
-                                           Source<RenderProcessHost>(this),
-                                           Details<bool>(&clean_shutdown));
+    NotificationService::current()->Notify(
+        NotificationType::RENDERER_PROCESS_TERMINATED,
+        Source<RenderProcessHost>(this),
+        Details<bool>(&clean_shutdown));
     notified_termination_ = true;
   }
 
@@ -749,8 +749,8 @@ void BrowserRenderProcessHost::SetBackgrounded(bool backgrounded) {
 void BrowserRenderProcessHost::Observe(NotificationType type,
                                        const NotificationSource& source,
                                        const NotificationDetails& details) {
-  switch (type) {
-    case NOTIFY_PREF_CHANGED: {
+  switch (type.value) {
+    case NotificationType::PREF_CHANGED: {
       std::wstring* pref_name_in = Details<std::wstring>(details).ptr();
       DCHECK(Source<PrefService>(source).ptr() == profile()->GetPrefs());
       if (*pref_name_in == prefs::kBlockPopups) {
@@ -761,10 +761,9 @@ void BrowserRenderProcessHost::Observe(NotificationType type,
       }
       break;
     }
-    case NOTIFY_USER_SCRIPTS_LOADED: {
+    case NotificationType::USER_SCRIPTS_LOADED: {
       base::SharedMemory* shared_memory =
           Details<base::SharedMemory>(details).ptr();
-      DCHECK(shared_memory);
       if (shared_memory) {
         SendUserScriptsUpdate(shared_memory);
       }

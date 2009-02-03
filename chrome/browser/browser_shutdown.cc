@@ -11,6 +11,7 @@
 #include "base/time.h"
 #include "base/waitable_event.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/browser/first_run.h"
 #include "chrome/browser/jankometer.h"
 #include "chrome/browser/metrics/metrics_service.h"
@@ -19,6 +20,7 @@
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/renderer_host/render_widget_host.h"
+#include "chrome/browser/rlz/rlz.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
@@ -36,6 +38,8 @@ Time shutdown_started_;
 ShutdownType shutdown_type_ = NOT_VALID;
 int shutdown_num_processes_;
 int shutdown_num_processes_slow_;
+
+bool delete_resources_on_shutdown = true;
 
 const wchar_t* const kShutdownMsFile = L"chrome_shutdown_ms.txt";
 
@@ -122,6 +126,10 @@ void Shutdown() {
 
   prefs->SavePersistentPrefs(g_browser_process->file_thread());
 
+  // Cleanup any statics created by RLZ. Must be done before NotificationService
+  // is destroyed.
+  RLZTracker::CleanupRlz();
+
   // The jank'o'meter requires that the browser process has been destroyed
   // before calling UninstallJankometer().
   delete g_browser_process;
@@ -130,7 +138,8 @@ void Shutdown() {
   // Uninstall Jank-O-Meter here after the IO thread is no longer running.
   UninstallJankometer();
 
-  ResourceBundle::CleanupSharedInstance();
+  if (delete_resources_on_shutdown)
+    ResourceBundle::CleanupSharedInstance();
 
   if (!Upgrade::IsBrowserAlreadyRunning()) {
     Upgrade::SwapNewChromeExeIfPresent();
@@ -146,6 +155,8 @@ void Shutdown() {
     std::wstring shutdown_ms_file = GetShutdownMsPath();
     file_util::WriteFile(shutdown_ms_file, shutdown_ms.c_str(), len);
   }
+
+  UnregisterURLRequestChromeJob();
 }
 
 void ReadLastShutdownInfo() {

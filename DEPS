@@ -3,7 +3,7 @@ deps = {
     "http://google-breakpad.googlecode.com/svn/trunk/src@285",
 
   "src/googleurl":
-    "http://google-url.googlecode.com/svn/trunk@94",
+    "http://google-url.googlecode.com/svn/trunk@95",
 
   "src/sdch/open-vcdiff":
     "http://open-vcdiff.googlecode.com/svn/trunk@22",
@@ -12,22 +12,22 @@ deps = {
     "http://googletest.googlecode.com/svn/trunk@167",
 
   "src/third_party/WebKit":
-    "/trunk/deps/third_party/WebKit@8597",
+    "/trunk/deps/third_party/WebKit@9010",
 
   "src/third_party/icu38":
     "/trunk/deps/third_party/icu38@7525",
 
   "src/v8":
-    "http://v8.googlecode.com/svn/trunk@1103",
+    "http://v8.googlecode.com/svn/trunk@1201",
 
   "src/webkit/data/layout_tests/LayoutTests":
-    "http://svn.webkit.org/repository/webkit/trunk/LayoutTests@40164",
+    "http://svn.webkit.org/repository/webkit/trunk/LayoutTests@40409",
 
   "src/third_party/WebKit/WebKit":
-    "http://svn.webkit.org/repository/webkit/trunk/WebKit@40164",
+    "http://svn.webkit.org/repository/webkit/trunk/WebKit@40409",
 
   "src/third_party/WebKit/WebKitLibraries":
-    "http://svn.webkit.org/repository/webkit/trunk/WebKitLibraries@40164",
+    "http://svn.webkit.org/repository/webkit/trunk/WebKitLibraries@40409",
 }
 
 
