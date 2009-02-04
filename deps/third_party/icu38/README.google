@@ -11,15 +11,21 @@ A. This directory contains the source code of ICU 3.8 for C/C++ with CJK
         
        * segmentation.patch.txt  (CJ segmentation patch : code change + data)
        * data.patch.txt (ICU data customization patch)
-       * data.patch2.txt, data.patch3.txt 
-         (ICU data customization patch sets 2 and 3 : to be applied on top of
+       * data.patch2.txt, data.patch3.txt
+         (Additional ICU data customization patches: to be applied on top of
           data.patch.txt)
        * eucjp.patch.txt (to be applied on top of 3 data patches above).
+       * indian8_locales.txt (to be applied on top of above data paches) :
+         Add locale data for 8 Indian languages
+       * gbk.patch.txt (to be applied after the above patches) : Make
+         GBK converter in ICU used outside Webkit behave identically
+	 to GBK converter used in Webkit (see
+	 WebCore/platform/text/TextCodecICU.cpp : getGbkEscapes())
        * windows.patch (Windows-specific patch)
        * uconv.patch (thread-safety patch for uconv. Ported from the ICU trunk)
        * wpo.patch (see section E).
        * plural.patch (for plural formatting. Ported back from ICU 4.0. See
-         section G for details).  
+         section G for details).
        * uconv.security.patch (patches for ICU bug 5691/Chrome bug 2074.
          The patch for HZ encoding is not included because we don't
          support HZ).

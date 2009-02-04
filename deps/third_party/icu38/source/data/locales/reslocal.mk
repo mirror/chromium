@@ -39,6 +39,7 @@ GENRB_ALIAS_SOURCE = $(GENRB_SYNTHETIC_ALIAS)\
 GENRB_SOURCE =\
  ar.txt\
  bg.txt\
+ bn.txt\
  ca.txt\
  cs.txt\
  da.txt\
@@ -55,6 +56,7 @@ GENRB_SOURCE =\
  fi.txt\
  fil.txt\
  fr.txt\
+ gu.txt\
  he.txt\
  hi.txt\
  hr.txt\
@@ -62,11 +64,15 @@ GENRB_SOURCE =\
  id.txt\
  it.txt\
  ja.txt\
+ kn.txt\
  ko.txt\
  lt.txt\
  lv.txt\
+ ml.txt\
+ mr.txt\
  nb.txt\
  nl.txt\
+ or.txt\
  pl.txt\
  pt.txt pt_BR.txt\
  pt_PT.txt\
@@ -76,6 +82,8 @@ GENRB_SOURCE =\
  sl.txt\
  sr.txt\
  sv.txt\
+ ta.txt\
+ te.txt\
  th.txt\
  tr.txt\
  uk.txt\
