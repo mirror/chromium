@@ -13,6 +13,10 @@ import sys
 
 import chromium_utils
 
+# Exit code to use for warnings, to distinguish script issues from reliability
+# crashes.
+WARNING_EXIT_CODE = -88
+
 def main(options, args):
   """ extract build\full-build-win32.zip to build\BuildDir\full-build-win32
       and rename it to build\BuildDir\Target
@@ -21,9 +25,13 @@ def main(options, args):
   build_dir = os.path.join(project_dir, options.target)
   output_dir = os.path.join(project_dir, 'full-build-win32')
 
-  chromium_utils.ExtractZip('full-build-win32.zip', project_dir)
-  chromium_utils.RemoveDirectory(build_dir)
-  shutil.move(output_dir, build_dir)
+  try:
+    chromium_utils.ExtractZip('full-build-win32.zip', project_dir)
+    chromium_utils.RemoveDirectory(build_dir)
+    shutil.move(output_dir, build_dir)
+  except:
+    return WARNING_EXIT_CODE
+
   return 0
 
 if '__main__' == __name__:
