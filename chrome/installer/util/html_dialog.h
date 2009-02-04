@@ -7,6 +7,8 @@
 
 #include <string>
 
+#include "base/basictypes.h"
+
 // This is the interface for creating HTML-based Dialogs *before* Chrome has
 // been installed or when there is a suspicion chrome is not working. In
 // other words, the dialogs use another native html rendering engine. In the
@@ -56,6 +58,36 @@ class HTMLDialog {
 // different underlying implementation according to the url protocol.
 HTMLDialog* CreateNativeHTMLDialog(const std::wstring& url);
 
+// This class leverages HTMLDialog to create a dialog that is suitable
+// for a end-user-agreement modal dialog. The html shows a fairly standard
+// EULA form with the accept and cancel buttons and an optional check box
+// to opt-in for sending usage stats and crash reports.
+class EulaHTMLDialog {
+ public:
+  // |file| points to an html file on disk or to a resource via res:// spec.
+  explicit EulaHTMLDialog(const std::wstring& file);
+  ~EulaHTMLDialog();
+
+  enum Outcome {
+    REJECTED,           // Declined EULA, mapped from HTML_DLG_ACCEPT (1).
+    ACCEPTED,           // Accepted EULA no opt-in, from HTML_DLG_DECLINE (2).
+    ACCEPTED_OPT_IN,    // Accepted EULA and opt-in, from HTML_DLG_EXTRA (6).
+  };
+
+  // Shows the dialog and blocks for user input. The return value is one of
+  // the |Outcome| values and any form of failure maps to REJECTED.
+  Outcome ShowModal();
+
+ private:
+  class Customizer : public HTMLDialog::CustomizationCallback {
+   public:
+    virtual void OnBeforeCreation(void** extra);
+    virtual void OnBeforeDisplay(void* window);
+  };
+
+  HTMLDialog* dialog_;
+  DISALLOW_COPY_AND_ASSIGN(EulaHTMLDialog);
+};
 
 }  // namespace installer
 

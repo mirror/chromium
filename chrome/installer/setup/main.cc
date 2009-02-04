@@ -21,7 +21,9 @@
 #include "chrome/installer/util/browser_distribution.h"
 #include "chrome/installer/util/delete_tree_work_item.h"
 #include "chrome/installer/util/helper.h"
+#include "chrome/installer/util/html_dialog.h"
 #include "chrome/installer/util/install_util.h"
+#include "chrome/installer/util/l10n_string_util.h"
 #include "chrome/installer/util/logging_installer.h"
 #include "chrome/installer/util/lzma_util.h"
 #include "chrome/installer/util/google_update_constants.h"
@@ -44,7 +46,7 @@ int PatchArchiveFile(bool system_install, const std::wstring& archive_path,
       installer::GetChromeInstallPath(system_install);
   file_util::AppendToPath(&existing_archive,
                           installed_version->GetString());
-  file_util::AppendToPath(&existing_archive, installer::kInstallerDir);
+  file_util::AppendToPath(&existing_archive, installer_util::kInstallerDir);
   file_util::AppendToPath(&existing_archive, installer::kChromeArchive);
 
   std::wstring patch_archive(archive_path);
@@ -225,6 +227,10 @@ int GetInstallOptions(const CommandLine& cmd_line) {
       if ((preferences & installer_util::MASTER_PROFILE_ERROR) == 0)
         options |= installer_util::MASTER_PROFILE_VALID;
     }
+    // While there is a --show-eula command line flag, we don't process
+    // it in this function because it requires special handling.
+    if (preferences & installer_util::MASTER_PROFILE_REQUIRE_EULA)
+      options |= installer_util::SHOW_EULA_DIALOG;
   }
 
   if (preferences & installer_util::MASTER_PROFILE_CREATE_ALL_SHORTCUTS ||
@@ -246,7 +252,7 @@ int GetInstallOptions(const CommandLine& cmd_line) {
   if (preferences & installer_util::MASTER_PROFILE_VERBOSE_LOGGING ||
       cmd_line.HasSwitch(installer_util::switches::kVerboseLogging))
     options |= installer_util::VERBOSE_LOGGING;
-
+  
   return options;
 }
 
@@ -430,8 +436,28 @@ installer_util::InstallStatus UninstallChrome(const CommandLine& cmd_line,
                                           *version, remove_all, force);
 }
 
-}  // namespace
+installer_util::InstallStatus ShowEULADialog() {
+  LOG(INFO) << "About to show EULA";
+  std::wstring eula_path = installer_util::GetLocalizedEulaResource();
+  if (eula_path.empty()) {
+    LOG(ERROR) << "No EULA path available";
+    return installer_util::EULA_REJECTED;
+  }
+  installer::EulaHTMLDialog dlg(eula_path);
+  installer::EulaHTMLDialog::Outcome outcome = dlg.ShowModal();
+  if (installer::EulaHTMLDialog::REJECTED == outcome) {
+    LOG(ERROR) << "EULA rejected or EULA failure";
+    return installer_util::EULA_REJECTED;
+  }
+  if (installer::EulaHTMLDialog::ACCEPTED_OPT_IN == outcome) {
+    LOG(INFO) << "EULA accepted (opt-in)";
+    return installer_util::EULA_ACCEPTED_OPT_IN;
+  }
+  LOG(INFO) << "EULA accepted (no opt-in)";
+  return installer_util::EULA_ACCEPTED;
+}
 
+}  // namespace
 
 int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
                     wchar_t* command_line, int show_command) {
@@ -463,6 +489,12 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
                                       installer_util::OS_ERROR,
                                       IDS_INSTALL_OS_ERROR_BASE, NULL);
     return installer_util::OS_ERROR;
+  }
+
+  // Check if we need to show the EULA. If it is passed as a command line
+  // then the dialog is shown and regardless of the outcome setup exits here.
+  if (parsed_command_line.HasSwitch(installer_util::switches::kShowEula)) {
+    return ShowEULADialog();
   }
 
   // If --register-chrome-browser option is specified, register all

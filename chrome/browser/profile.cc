@@ -154,8 +154,7 @@ class ProfileImpl::RequestContext : public URLRequestContext,
     prefs_->AddPrefObserver(prefs::kCookieBehavior, this);
   }
 
-  const std::string& GetUserAgent(
-        const GURL& url) const {
+  const std::string& GetUserAgent(const GURL& url) const {
     return webkit_glue::GetUserAgent(url);
   }
 
@@ -261,6 +260,10 @@ class OffTheRecordRequestContext : public URLRequestContext,
     // Register for notifications about prefs.
     prefs_->AddPrefObserver(prefs::kAcceptLanguages, this);
     prefs_->AddPrefObserver(prefs::kCookieBehavior, this);
+  }
+
+  const std::string& GetUserAgent(const GURL& url) const {
+    return original_context_->GetUserAgent(url);
   }
 
   // Since OffTheRecordProfileImpl maybe be destroyed after destroying
