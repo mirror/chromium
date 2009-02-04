@@ -39,13 +39,6 @@ class OpaqueNonClientView : public views::NonClientView,
   void UpdateWindowIcon();
 
  protected:
-  // Overridden from TabIconView::TabIconViewModel:
-  virtual bool ShouldTabIconViewAnimate() const;
-  virtual SkBitmap GetFavIconForTabIconView();
-
-  // Overridden from views::BaseButton::ButtonListener:
-  virtual void ButtonPressed(views::BaseButton* sender);
-
   // Overridden from views::NonClientView:
   virtual gfx::Rect CalculateClientAreaBounds(int width, int height) const;
   virtual gfx::Size CalculateWindowSizeForClientSize(int width,
@@ -69,28 +62,51 @@ class OpaqueNonClientView : public views::NonClientView,
   virtual bool GetAccessibleName(std::wstring* name);
   virtual void SetAccessibleName(const std::wstring& name);
 
+  // Overridden from views::BaseButton::ButtonListener:
+  virtual void ButtonPressed(views::BaseButton* sender);
+
+  // Overridden from TabIconView::TabIconViewModel:
+  virtual bool ShouldTabIconViewAnimate() const;
+  virtual SkBitmap GetFavIconForTabIconView();
+
  private:
-  // Returns the height of the non-client area at the top of the window (the
-  // title bar, etc).
-  int CalculateNonClientTopHeight() const;
+  // Returns the thickness of the border that makes up the window frame edges.
+  // This does not include any client edge.
+  int FrameBorderThickness() const;
 
-  // Returns the current thickness of the border that makes up the window left
-  // and right edges.
-  int HorizontalBorderSize() const;
+  // Returns the height of the top resize area.  This is smaller than the frame
+  // border height in order to increase the window draggable area.
+  int TopResizeHeight() const;
 
-  // Returns the current thickness of the border that makes up the window bottom
-  // edge.
-  int VerticalBorderBottomSize() const;
+  // Returns the thickness of the entire nonclient left, right, and bottom
+  // borders, including both the window frame and any client edge.
+  int NonClientBorderThickness() const;
 
-  // Paint various sub-components of this view.
-  void PaintFrameBorder(ChromeCanvas* canvas);
+  // Returns the height of the entire nonclient top border, including the window
+  // frame, any title area, and any connected client edge.
+  int NonClientTopBorderHeight() const;
+
+  // For windows without a toolbar, a bottom border, and, in restored mode, a
+  // client edge are drawn at the bottom of the titlebar.  When a toolbar is
+  // present, neither of these are drawn, as the toolbar itself will edge the
+  // titlebar area.  This returns the height of any such edge.
+  int BottomEdgeThicknessWithinNonClientHeight() const;
+
+  // Calculates multiple values related to title layout.  Returns the height of
+  // the entire titlebar including any connected client edge.
+  int TitleCoordinates(int* title_top_spacing,
+                       int* title_thickness) const;
+
+  // Paint various sub-components of this view.  The *FrameBorder() functions
+  // also paint the background of the titlebar area, since the top frame border
+  // and titlebar background are a contiguous component.
+  void PaintRestoredFrameBorder(ChromeCanvas* canvas);
   void PaintMaximizedFrameBorder(ChromeCanvas* canvas);
   void PaintDistributorLogo(ChromeCanvas* canvas);
   void PaintTitleBar(ChromeCanvas* canvas);
   void PaintToolbarBackground(ChromeCanvas* canvas);
   void PaintOTRAvatar(ChromeCanvas* canvas);
-  void PaintClientEdge(ChromeCanvas* canvas);
-  void PaintMaximizedClientEdge(ChromeCanvas* canvas);
+  void PaintRestoredClientEdge(ChromeCanvas* canvas);
 
   // Layout various sub-components of this view.
   void LayoutWindowControls();

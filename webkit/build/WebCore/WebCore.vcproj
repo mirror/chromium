@@ -287,6 +287,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\page\DOMTimer.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\page\DOMWindow.cpp"
 				>
 			</File>
@@ -1047,10 +1051,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\GKURL.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\GlyphBuffer.h"
 				>
 			</File>
@@ -1063,15 +1063,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\GoogleURLPrivate.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\HostWindow.h"
 				>
 			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\KURL.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\KURLGoogle.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\KURLGooglePrivate.h"
 				>
 			</File>
 			<File
@@ -1252,6 +1256,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\Threading.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\ThreadTimers.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\platform\ThreadTimers.h"
 				>
 			</File>
 			<File
@@ -3235,14 +3247,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderFlow.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderFlow.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderForeignObject.cpp"
 				>
 			</File>
@@ -3314,6 +3318,14 @@
 				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderLegend.h"
 				>
 			</File>
+      <File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderLineBoxList.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderLineBoxList.h"
+				>
+			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderListBox.cpp"
 				>
@@ -3368,6 +3380,10 @@
 			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderObject.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderObjectChildList.h"
 				>
 			</File>
 			<File
@@ -4467,6 +4483,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\FormControlElementWithState.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\FormControlElementWithState.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\FormControlElement.cpp"
 				>
 			</File>
@@ -5156,14 +5180,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\editing\RemoveFormatCommand.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\editing\RemoveNodeAttributeCommand.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\editing\RemoveNodeAttributeCommand.h"
 				>
 			</File>
 			<File
@@ -6044,6 +6060,18 @@
 			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\history\BackForwardListChromium.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\history\CachedFrame.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\history\CachedFrame.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\history\CachedFramePlatformData.h"
 				>
 			</File>
 			<File

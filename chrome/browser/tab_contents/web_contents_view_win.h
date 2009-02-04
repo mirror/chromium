@@ -30,10 +30,11 @@ class WebContentsViewWin : public WebContentsView,
 
   virtual WebContents* GetWebContents();
   virtual void CreateView();
-  virtual RenderWidgetHostViewWin* CreateViewForWidget(
+  virtual RenderWidgetHostView* CreateViewForWidget(
       RenderWidgetHost* render_widget_host);
-  virtual HWND GetContainerHWND() const;
-  virtual HWND GetContentHWND() const;
+  virtual gfx::NativeView GetNativeView() const;
+  virtual gfx::NativeView GetContentNativeView() const;
+  virtual gfx::NativeView GetTopLevelNativeView() const;
   virtual void GetContainerBounds(gfx::Rect* out) const;
   virtual void OnContentsDestroy();
   virtual void SetPageTitle(const std::wstring& title);

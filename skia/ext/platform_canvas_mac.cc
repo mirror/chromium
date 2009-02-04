@@ -36,7 +36,7 @@ bool PlatformCanvasMac::initialize(int width,
     return false;
 
   setDevice(device);
-  device->unref(); // was created with refcount 1, and setDevice also refs
+  device->unref();  // was created with refcount 1, and setDevice also refs
   return true;
 }
 
@@ -76,5 +76,9 @@ SkDevice* PlatformCanvasMac::setBitmapDevice(const SkBitmap&) {
   return NULL;
 }
 
-}  // namespace skia
+// static
+size_t PlatformCanvasMac::StrideForWidth(unsigned width) {
+  return 4 * width;
+}
 
+}  // namespace skia

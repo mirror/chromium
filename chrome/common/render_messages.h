@@ -10,11 +10,14 @@
 #include <map>
 
 #include "base/basictypes.h"
+#include "base/gfx/native_widget_types.h"
 #include "base/ref_counted.h"
 #include "base/shared_memory.h"
+#include "chrome/common/bitmap_wire_data.h"
 #include "chrome/common/filter_policy.h"
 #include "chrome/common/ipc_message.h"
 #include "chrome/common/ipc_message_utils.h"
+#include "chrome/common/modal_dialog_event.h"
 #include "chrome/common/page_transition_types.h"
 #include "googleurl/src/gurl.h"
 #include "net/base/upload_data.h"
@@ -31,6 +34,10 @@
 #include "webkit/glue/webplugin.h"
 #include "webkit/glue/webpreferences.h"
 #include "webkit/glue/webview_delegate.h"
+
+#if defined(OS_POSIX)
+#include "skia/include/SkBitmap.h"
+#endif
 
 // Parameters structure for ViewMsg_Navigate, which has too many data
 // parameters to be reasonably put in a predefined IPC message.
@@ -123,7 +130,7 @@ struct ViewHostMsg_FrameNavigate_Params {
 //              could be used for more contextual actions.
 struct ViewHostMsg_ContextMenu_Params {
   // This is the type of Context Node that the context menu was invoked on.
-  ContextNode::Type type;
+  ContextNode node;
 
   // These values represent the coordinates of the mouse when the context menu
   // was invoked.  Coords are relative to the associated RenderView's origin.
@@ -189,13 +196,9 @@ struct ViewHostMsg_PaintRect_Flags {
   }
 };
 
-#if defined(OS_WIN)
-// TODO(port): Make these structs portable.
-
 struct ViewHostMsg_PaintRect_Params {
-  // The bitmap to be painted into the rect given by bitmap_rect.  Valid only
-  // in the context of the renderer process.
-  base::SharedMemoryHandle bitmap;
+  // The bitmap to be painted into the rect given by bitmap_rect.
+  BitmapWireData bitmap;
 
   // The position and size of the bitmap.
   gfx::Rect bitmap_rect;
@@ -227,9 +230,8 @@ struct ViewHostMsg_PaintRect_Params {
 // Parameters structure for ViewHostMsg_ScrollRect, which has too many data
 // parameters to be reasonably put in a predefined IPC message.
 struct ViewHostMsg_ScrollRect_Params {
-  // The bitmap to be painted into the rect exposed by scrolling.  This handle
-  // is valid only in the context of the renderer process.
-  base::SharedMemoryHandle bitmap;
+  // The bitmap to be painted into the rect exposed by scrolling.
+  BitmapWireData bitmap;
 
   // The position and size of the bitmap.
   gfx::Rect bitmap_rect;
@@ -247,7 +249,6 @@ struct ViewHostMsg_ScrollRect_Params {
   // New window locations for plugin child windows.
   std::vector<WebPluginGeometry> plugin_window_moves;
 };
-#endif  // defined(OS_WIN)
 
 // Parameters structure for ViewMsg_UploadFile.
 struct ViewMsg_UploadFile_Params {
@@ -542,8 +543,49 @@ struct ParamTraits<FilterPolicy::Type> {
 };
 
 template <>
-struct ParamTraits<ContextNode::Type> {
-  typedef ContextNode::Type param_type;
+struct ParamTraits<ContextNode> {
+  typedef ContextNode param_type;
+  static void Write(Message* m, const param_type& p) {
+    m->WriteInt(p.type);
+  }
+  static bool Read(const Message* m, void** iter, param_type* p) {
+    int type;
+    if (!m->ReadInt(iter, &type))
+      return false;
+    *p = ContextNode(type);
+    return true;
+  }
+  static void Log(const param_type& p, std::wstring* l) {
+    std::wstring event = L"";
+
+    if (!p.type) {
+      event.append(L"NONE");
+    } else {
+      event.append(L"(");
+      if (p.type & ContextNode::PAGE)
+        event.append(L"PAGE|");
+      if (p.type & ContextNode::FRAME)
+        event.append(L"FRAME|");
+      if (p.type & ContextNode::LINK)
+        event.append(L"LINK|");
+      if (p.type & ContextNode::IMAGE)
+        event.append(L"IMAGE|");
+      if (p.type & ContextNode::SELECTION)
+        event.append(L"SELECTION|");
+      if (p.type & ContextNode::EDITABLE)
+        event.append(L"EDITABLE|");
+      if (p.type & ContextNode::MISSPELLED_WORD)
+        event.append(L"MISSPELLED_WORD|");
+      event.append(L")");
+    }
+
+    LogParam(event, l);
+  }
+};
+
+template <>
+struct ParamTraits<WebInputEvent::Type> {
+  typedef WebInputEvent::Type param_type;
   static void Write(Message* m, const param_type& p) {
     m->WriteInt(p);
   }
@@ -551,7 +593,7 @@ struct ParamTraits<ContextNode::Type> {
     int type;
     if (!m->ReadInt(iter, &type))
       return false;
-    *p = ContextNode::FromInt(type);
+    *p = static_cast<WebInputEvent::Type>(type);
     return true;
   }
   static void Log(const param_type& p, std::wstring* l) {
@@ -587,58 +629,6 @@ struct ParamTraits<ContextNode::Type> {
     }
 
     LogParam(type, l);
-  }
-};
-
-template <>
-struct ParamTraits<WebInputEvent::Type> {
-  typedef WebInputEvent::Type param_type;
-  static void Write(Message* m, const param_type& p) {
-    m->WriteInt(p);
-  }
-  static bool Read(const Message* m, void** iter, param_type* p) {
-    int type;
-    if (!m->ReadInt(iter, &type))
-      return false;
-    *p = static_cast<WebInputEvent::Type>(type);
-    return true;
-  }
-  static void Log(const param_type& p, std::wstring* l) {
-    std::wstring event;
-    switch (p) {
-     case ContextNode::NONE:
-      event = L"NONE";
-      break;
-     case ContextNode::PAGE:
-      event = L"PAGE";
-      break;
-     case ContextNode::FRAME:
-      event = L"FRAME";
-      break;
-     case ContextNode::LINK:
-      event = L"LINK";
-      break;
-     case ContextNode::IMAGE:
-      event = L"IMAGE";
-      break;
-     case ContextNode::IMAGE_LINK:
-      event = L"IMAGE_LINK";
-      break;
-     case ContextNode::SELECTION:
-      event = L"SELECTION";
-      break;
-     case ContextNode::EDITABLE:
-      event = L"EDITABLE";
-      break;
-     case ContextNode::MISPELLED_WORD:
-      event = L"MISPELLED_WORD";
-      break;
-     default:
-      event = L"UNKNOWN";
-      break;
-    }
-
-    LogParam(event, l);
   }
 };
 
@@ -942,7 +932,7 @@ template <>
 struct ParamTraits<ViewHostMsg_ContextMenu_Params> {
   typedef ViewHostMsg_ContextMenu_Params param_type;
   static void Write(Message* m, const param_type& p) {
-    WriteParam(m, p.type);
+    WriteParam(m, p.node);
     WriteParam(m, p.x);
     WriteParam(m, p.y);
     WriteParam(m, p.link_url);
@@ -958,7 +948,7 @@ struct ParamTraits<ViewHostMsg_ContextMenu_Params> {
   }
   static bool Read(const Message* m, void** iter, param_type* p) {
     return
-      ReadParam(m, iter, &p->type) &&
+      ReadParam(m, iter, &p->node) &&
       ReadParam(m, iter, &p->x) &&
       ReadParam(m, iter, &p->y) &&
       ReadParam(m, iter, &p->link_url) &&
@@ -976,9 +966,6 @@ struct ParamTraits<ViewHostMsg_ContextMenu_Params> {
     l->append(L"<ViewHostMsg_ContextMenu_Params>");
   }
 };
-
-#if defined(OS_WIN)
-// TODO(port): Make these messages portable.
 
 // Traits for ViewHostMsg_PaintRect_Params structure to pack/unpack.
 template <>
@@ -1088,7 +1075,6 @@ struct ParamTraits<WebPluginGeometry> {
     l->append(L")");
   }
 };
-#endif  // defined(OS_WIN)
 
 // Traits for ViewMsg_GetPlugins_Reply structure to pack/unpack.
 template <>
@@ -1676,6 +1662,7 @@ struct ParamTraits<WebDropData> {
   static void Write(Message* m, const param_type& p) {
     WriteParam(m, p.url);
     WriteParam(m, p.url_title);
+    WriteParam(m, p.file_extension);
     WriteParam(m, p.filenames);
     WriteParam(m, p.plain_text);
     WriteParam(m, p.text_html);
@@ -1687,6 +1674,7 @@ struct ParamTraits<WebDropData> {
     return
       ReadParam(m, iter, &p->url) &&
       ReadParam(m, iter, &p->url_title) &&
+      ReadParam(m, iter, &p->file_extension) &&
       ReadParam(m, iter, &p->filenames) &&
       ReadParam(m, iter, &p->plain_text) &&
       ReadParam(m, iter, &p->text_html) &&
@@ -1722,6 +1710,54 @@ struct ParamTraits<webkit_glue::ScreenInfo> {
     l->append(L"<webkit_glue::ScreenInfo>");
   }
 };
+
+template<>
+struct ParamTraits<ModalDialogEvent> {
+  typedef ModalDialogEvent param_type;
+#if defined(OS_WIN)
+  static void Write(Message* m, const param_type& p) {
+    WriteParam(m, p.event);
+  }
+  static bool Read(const Message* m, void** iter, param_type* p) {
+    return ReadParam(m, iter, &p->event);
+  }
+#else
+  static void Write(Message* m, const param_type& p) {
+  }
+  static bool Read(const Message* m, void** iter, param_type* p) {
+    return true;
+  }
+#endif
+
+  static void Log(const param_type& p, std::wstring* l) {
+    l->append(L"<ModalDialogEvent>");
+  }
+};
+
+#if defined(OS_POSIX)
+
+// TODO(port): this shouldn't exist. However, the plugin stuff is really using
+// HWNDS (NativeView), and making Windows calls based on them. I've not figured
+// out the deal with plugins yet.
+template <>
+struct ParamTraits<gfx::NativeView> {
+  typedef gfx::NativeView param_type;
+  static void Write(Message* m, const param_type& p) {
+    NOTIMPLEMENTED();
+  }
+
+  static bool Read(const Message* m, void** iter, param_type* p) {
+    NOTIMPLEMENTED();
+    *p = NULL;
+    return true;
+  }
+
+  static void Log(const param_type& p, std::wstring* l) {
+    l->append(StringPrintf(L"<gfx::NativeView>"));
+  }
+};
+
+#endif  // defined(OS_POSIX)
 
 }  // namespace IPC
 

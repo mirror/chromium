@@ -15,6 +15,7 @@ env.ApplySConscript([
     '$BASE_DIR/gfx/using_base_gfx.scons',
     '$GTEST_DIR/../using_gtest.scons',
     '$ICU38_DIR/using_icu38.scons',
+    '$LIBJPEG_DIR/using_libjpeg.scons',
     '$LIBPNG_DIR/using_libpng.scons',
     '$SKIA_DIR/using_skia.scons',
     '$ZLIB_DIR/using_zlib.scons',
@@ -111,6 +112,7 @@ input_files = ChromeFileList([
     'tracked_objects_unittest.cc',
     'tuple_unittest.cc',
     'values_unittest.cc',
+    'version_unittest.cc',
     'waitable_event_unittest.cc',
     'waitable_event_watcher_unittest.cc',
     'watchdog_unittest.cc',
@@ -120,6 +122,7 @@ input_files = ChromeFileList([
   ]),
 
   MSVSFilter('gfx_tests', [
+    'gfx/jpeg_codec_unittest.cc',
     'gfx/png_codec_unittest.cc',
   ]),
 ])

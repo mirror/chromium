@@ -450,6 +450,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\keyboard_codes.h"
+			>
+		</File>
+		<File
+			RelativePath="..\keyboard_codes_win.h"
+			>
+		</File>
+		<File
 			RelativePath="..\lazy_instance.cc"
 			>
 		</File>
@@ -718,6 +726,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\scoped_temp_dir.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\scoped_temp_dir.h"
+			>
+		</File>
+		<File
 			RelativePath="..\sha2.cc"
 			>
 		</File>
@@ -947,6 +963,14 @@
 		</File>
 		<File
 			RelativePath="..\values.h"
+			>
+		</File>
+		<File
+			RelativePath="..\version.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\version.h"
 			>
 		</File>
 		<File

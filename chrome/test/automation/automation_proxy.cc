@@ -145,12 +145,22 @@ AutomationProxy::AutomationProxy(int command_execution_timeout_ms)
       command_execution_timeout_ms_(command_execution_timeout_ms) {
   InitializeEvents();
   InitializeChannelID();
+  InitializeHandleTracker();
   InitializeThread();
   InitializeChannel();
-  InitializeHandleTracker();
 }
 
 AutomationProxy::~AutomationProxy() {
+  // Destruction order is important. Thread has to outlive the channel and
+  // tracker has to outlive the thread since we access the tracker inside
+  // AutomationMessageFilter::OnMessageReceived.
+  channel_.reset();
+  thread_.reset();
+  DCHECK(NULL == current_request_);
+  tracker_.reset();
+  ::CloseHandle(app_launched_);
+  ::CloseHandle(initial_loads_complete_);
+  ::CloseHandle(new_tab_ui_load_complete_);
 }
 
 void AutomationProxy::InitializeEvents() {
@@ -345,8 +355,7 @@ bool AutomationProxy::ClickAppModalDialogButton(
   bool is_timeout = true;
   if (!SendAndWaitForResponseWithTimeout(
           new AutomationMsg_ClickAppModalDialogButtonRequest(0, button),
-          &response,
-          AutomationMsg_ClickAppModalDialogButtonResponse::ID,
+          &response, AutomationMsg_ClickAppModalDialogButtonResponse::ID,
           command_execution_timeout_ms_, &is_timeout)) {
     return false;
   }
@@ -531,11 +540,14 @@ bool AutomationProxy::OpenNewBrowserWindow(int show_command) {
   return Send(new AutomationMsg_OpenNewBrowserWindow(0, show_command));
 }
 
-TabProxy* AutomationProxy::CreateExternalTab(HWND* external_tab_container) {
+TabProxy* AutomationProxy::CreateExternalTab(HWND parent,
+                                             const gfx::Rect& dimensions,
+                                             unsigned int style,
+                                             HWND* external_tab_container) {
   IPC::Message* response = NULL;
   bool succeeded = SendAndWaitForResponse(
-    new AutomationMsg_CreateExternalTab(0), &response,
-    AutomationMsg_CreateExternalTabResponse::ID);
+    new AutomationMsg_CreateExternalTab(0, parent, dimensions, style),
+    &response, AutomationMsg_CreateExternalTabResponse::ID);
   if (!succeeded) {
     return NULL;
   }

@@ -120,6 +120,9 @@ input_files = ChromeFileList([
     'json_reader.h',
     'json_writer.cc',
     'json_writer.h',
+    'keyboard_codes.h',
+    'keyboard_codes_posix.h',
+    'keyboard_codes_win.h',
     'lazy_instance.cc',
     'lazy_instance.h',
     'linked_ptr.h',
@@ -187,6 +190,8 @@ input_files = ChromeFileList([
     'scoped_handle.h',
     'scoped_nsautorelease_pool.h',
     'scoped_ptr.h',
+    'scoped_temp_dir.cc',
+    'scoped_temp_dir.h',
     'sha2.cc',
     'sha2.h',
     'third_party/nss/sha256.h',
@@ -245,6 +250,8 @@ input_files = ChromeFileList([
     'tuple.h',
     'values.cc',
     'values.h',
+    'version.cc',
+    'version.h',
     'waitable_event.h',
     'waitable_event_watcher.h',
     'waitable_event_watcher_win.cc',
@@ -270,13 +277,19 @@ if env.Bit('posix'):
     'event_recorder.cc',
     'file_version_info.cc',
 
-    # We have an implementation of idle_timer, but it's unclear if we want it
-    # yet, so it's commented out for now.  Leave this 'unported'.
+    # We have an implementation of idle_timer that depends on XScreenSaver,
+    # but it's unclear if we want it yet, so it's commented out for now.
+    # Leave this 'unported'.
     'idle_timer.cc',
 
     'object_watcher.cc',
 
     'resource_util.cc',  # Uses HMODULE, but may be abstractable.
+  )
+
+  input_files.Append(
+    # See above note about idle_timer.cc.
+    'idle_timer_none.cc',
   )
 
 if not env.Bit('windows'):
@@ -353,6 +366,7 @@ if env.Bit('posix'):
 if env.Bit('mac'):
   input_files.Extend([
       'base_paths_mac.mm',
+      'event_recorder_stubs.cc',
       'clipboard_mac.mm',
       'file_util_mac.mm',
       'file_version_info_mac.mm',
@@ -372,6 +386,7 @@ if env.Bit('linux'):
       'base_paths_linux.cc',
       'clipboard_linux.cc',
       'data_pack.cc',
+      'event_recorder_stubs.cc',
       'file_util_linux.cc',
       'file_version_info_linux.cc',
       'hmac_nss.cc',

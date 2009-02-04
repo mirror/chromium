@@ -8,6 +8,7 @@
 #include "base/logging.h"
 #include "base/json_writer.h"
 #include "base/string_util.h"
+#include "base/values.h"
 #include "chrome/browser/bookmarks/bookmark_codec.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/history/history.h"
@@ -58,7 +59,7 @@ void FillInStarredEntry(SQLStatement* s, StarredEntry* entry) {
   switch (s->column_int(1)) {
     case 0:
       entry->type = history::StarredEntry::URL;
-      entry->url = GURL(WideToUTF8(s->column_string16(6)));
+      entry->url = GURL(WideToUTF8(s->column_wstring(6)));
       break;
     case 1:
       entry->type = history::StarredEntry::BOOKMARK_BAR;
@@ -73,7 +74,7 @@ void FillInStarredEntry(SQLStatement* s, StarredEntry* entry) {
       NOTREACHED();
       break;
   }
-  entry->title = s->column_string16(2);
+  entry->title = s->column_wstring(2);
   entry->date_added = Time::FromInternalValue(s->column_int64(3));
   entry->visual_order = s->column_int(4);
   entry->parent_group_id = s->column_int64(5);

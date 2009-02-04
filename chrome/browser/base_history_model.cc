@@ -4,10 +4,10 @@
 
 #include "chrome/browser/base_history_model.h"
 
+#include "base/gfx/jpeg_codec.h"
 #include "base/gfx/png_decoder.h"
 #include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/profile.h"
-#include "chrome/common/jpeg_codec.h"
 #include "chrome/common/resource_bundle.h"
 #include "SkBitmap.h"
 
@@ -23,9 +23,9 @@ const int BaseHistoryModel::kHistoryScopeMonths = 18;
 BaseHistoryModel::BaseHistoryModel(Profile* profile)
     : profile_(profile),
       observer_(NULL),
+      is_search_results_(false),
       thumbnails_(kThumbnailCacheSize),
-      favicons_(kThumbnailCacheSize),
-      is_search_results_(false) {
+      favicons_(kThumbnailCacheSize) {
   if (!kDefaultFavicon) {
     kDefaultFavicon = ResourceBundle::GetSharedInstance().
         GetBitmapNamed(IDR_DEFAULT_FAVICON);

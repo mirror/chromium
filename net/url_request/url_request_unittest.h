@@ -21,6 +21,7 @@
 #include "base/thread.h"
 #include "base/time.h"
 #include "base/waitable_event.h"
+#include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "net/http/http_network_layer.h"
 #include "net/url_request/url_request.h"
@@ -62,7 +63,8 @@ class TestDelegate : public URLRequest::Delegate {
         received_bytes_count_(0),
         received_redirect_count_(0),
         received_data_before_response_(false),
-        request_failed_(false) {
+        request_failed_(false),
+        buf_(new net::IOBuffer(kBufferSize)) {
   }
 
   virtual void OnReceivedRedirect(URLRequest* request, const GURL& new_url) {
@@ -87,7 +89,7 @@ class TestDelegate : public URLRequest::Delegate {
     } else {
       // Initiate the first read.
       int bytes_read = 0;
-      if (request->Read(buf_, sizeof(buf_), &bytes_read))
+      if (request->Read(buf_, kBufferSize, &bytes_read))
         OnReadCompleted(request, bytes_read);
       else if (!request->status().is_io_pending())
         OnResponseCompleted(request);
@@ -109,15 +111,15 @@ class TestDelegate : public URLRequest::Delegate {
       received_bytes_count_ += bytes_read;
 
       // consume the data
-      data_received_.append(buf_, bytes_read);
+      data_received_.append(buf_->data(), bytes_read);
     }
 
     // If it was not end of stream, request to read more.
     if (request->status().is_success() && bytes_read > 0) {
       bytes_read = 0;
-      while (request->Read(buf_, sizeof(buf_), &bytes_read)) {
+      while (request->Read(buf_, kBufferSize, &bytes_read)) {
         if (bytes_read > 0) {
-          data_received_.append(buf_, bytes_read);
+          data_received_.append(buf_->data(), bytes_read);
           received_bytes_count_ += bytes_read;
         } else {
           break;
@@ -173,6 +175,7 @@ class TestDelegate : public URLRequest::Delegate {
   bool request_failed() const { return request_failed_; }
 
  private:
+  static const int kBufferSize = 4096;
   // options for controlling behavior
   bool cancel_in_rr_;
   bool cancel_in_rs_;
@@ -192,7 +195,7 @@ class TestDelegate : public URLRequest::Delegate {
   std::string data_received_;
 
   // our read buffer
-  char buf_[4096];
+  scoped_refptr<net::IOBuffer> buf_;
 };
 
 // This object bounds the lifetime of an external python-based HTTP/FTP server
@@ -209,6 +212,11 @@ class BaseTestServer : public base::ProcessFilter,
     if (process_handle_) {
 #if defined(OS_WIN)
       CloseHandle(process_handle_);
+#elif defined(OS_POSIX)
+      // Make sure the process has exited and clean up the process to avoid
+      // a zombie.
+      kill(process_handle_, SIGINT);
+      waitpid(process_handle_, 0, 0);
 #endif
       process_handle_ = NULL;
     }
@@ -407,12 +415,16 @@ class BaseTestServer : public base::ProcessFilter,
 
 class HTTPTestServer : public BaseTestServer {
  protected:
-  HTTPTestServer() {
+  explicit HTTPTestServer() : loop_(NULL) {
   }
 
  public:
-  static HTTPTestServer* CreateServer(const std::wstring& document_root) {
+  // Creates and returns a new HTTPTestServer. If |loop| is non-null, requests
+  // are serviced on it, otherwise a new thread and message loop are created.
+  static HTTPTestServer* CreateServer(const std::wstring& document_root,
+                                      MessageLoop* loop) {
     HTTPTestServer* test_server = new HTTPTestServer();
+    test_server->loop_ = loop;
     if (!test_server->Init(kDefaultHostName, kHTTPDefaultPort, document_root)) {
       delete test_server;
       return NULL;
@@ -453,12 +465,18 @@ class HTTPTestServer : public BaseTestServer {
     // message loop, we also want to avoid spinning a nested message loop.
     SyncTestDelegate d;
     {
-      base::Thread io_thread("MakeGETRequest");
-      base::Thread::Options options;
-      options.message_loop_type = MessageLoop::TYPE_IO;
-      io_thread.StartWithOptions(options);
-      io_thread.message_loop()->PostTask(FROM_HERE, NewRunnableFunction(
-          &HTTPTestServer::StartGETRequest, url, &d));
+      MessageLoop* loop = loop_;
+      scoped_ptr<base::Thread> io_thread;
+      
+      if (!loop) {
+        io_thread.reset(new base::Thread("MakeGETRequest"));
+        base::Thread::Options options;
+        options.message_loop_type = MessageLoop::TYPE_IO;
+        io_thread->StartWithOptions(options);
+        loop = io_thread->message_loop();
+      }
+      loop->PostTask(FROM_HERE, NewRunnableFunction(
+            &HTTPTestServer::StartGETRequest, url, &d));
 
       // Build bot wait for only 300 seconds we should ensure wait do not take
       // more than 300 seconds
@@ -516,6 +534,11 @@ class HTTPTestServer : public BaseTestServer {
     command_line->push_back("--data-dir=" + WideToUTF8(test_data_directory));
   }
 #endif
+
+ private:
+  // If non-null a background thread isn't created and instead this message loop
+  // is used.
+  MessageLoop* loop_;
 };
 
 class HTTPSTestServer : public HTTPTestServer {

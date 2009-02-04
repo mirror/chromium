@@ -40,15 +40,15 @@ class TestWebViewDelegate : public base::RefCounted<TestWebViewDelegate>,
                             public WebViewDelegate {
  public:
   struct CapturedContextMenuEvent {
-    CapturedContextMenuEvent(ContextNode::Type in_type,
+    CapturedContextMenuEvent(ContextNode in_node,
                              int in_x,
                              int in_y)
-      : type(in_type),
+      : node(in_node),
         x(in_x),
         y(in_y) {
     }
 
-    ContextNode::Type type;
+    ContextNode node;
     int x;
     int y;
   };
@@ -102,7 +102,7 @@ class TestWebViewDelegate : public base::RefCounted<TestWebViewDelegate>,
   virtual void StartDragging(WebView* webview,
                              const WebDropData& drop_data);
   virtual void ShowContextMenu(WebView* webview,
-                               ContextNode::Type type,
+                               ContextNode node,
                                int x,
                                int y,
                                const GURL& link_url,
@@ -205,7 +205,7 @@ class TestWebViewDelegate : public base::RefCounted<TestWebViewDelegate>,
   virtual int GetHistoryForwardListCount();
 
   // WebWidgetDelegate
-  virtual gfx::NativeView GetContainingView(WebWidget* webwidget);
+  virtual gfx::NativeViewId GetContainingView(WebWidget* webwidget);
   virtual void DidInvalidateRect(WebWidget* webwidget, const gfx::Rect& rect);
   virtual void DidScrollRect(WebWidget* webwidget, int dx, int dy,
                              const gfx::Rect& clip_rect);

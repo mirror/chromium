@@ -23,63 +23,11 @@ const std::wstring kUserSelectPage = L"files/find_in_page/user-select.html";
 const std::wstring kCrashPage = L"files/find_in_page/crash_1341577.html";
 const std::wstring kTooFewMatchesPage = L"files/find_in_page/bug_1155639.html";
 
-// This test loads a page with frames and starts FindInPage requests
-TEST_F(FindInPageControllerTest, FindInPageFrames) {
-  scoped_refptr<HTTPTestServer> server =
-      HTTPTestServer::CreateServer(L"chrome/test/data");
-  ASSERT_TRUE(NULL != server.get());
-
-  // First we navigate to our frames page.
-  GURL url = server->TestServerPageW(kFramePage);
-  scoped_ptr<TabProxy> tab(GetActiveTab());
-  ASSERT_TRUE(tab->NavigateToURL(url));
-  WaitUntilTabCount(1);
-
-  // Try incremental search (mimicking user typing in).
-  EXPECT_EQ(18, tab->FindInPage(L"g",       FWD, IGNORE_CASE, false, NULL));
-  EXPECT_EQ(11, tab->FindInPage(L"go",      FWD, IGNORE_CASE, false, NULL));
-  EXPECT_EQ(04, tab->FindInPage(L"goo",     FWD, IGNORE_CASE, false, NULL));
-  EXPECT_EQ(03, tab->FindInPage(L"goog",    FWD, IGNORE_CASE, false, NULL));
-  EXPECT_EQ(02, tab->FindInPage(L"googl",   FWD, IGNORE_CASE, false, NULL));
-  EXPECT_EQ(01, tab->FindInPage(L"google",  FWD, IGNORE_CASE, false, NULL));
-  EXPECT_EQ(00, tab->FindInPage(L"google!", FWD, IGNORE_CASE, false, NULL));
-
-  // Negative test (no matches should be found).
-  EXPECT_EQ(0, tab->FindInPage(L"Non-existing string", FWD, IGNORE_CASE,
-                               false, NULL));
-
-  // 'horse' only exists in the three right frames.
-  EXPECT_EQ(3, tab->FindInPage(L"horse", FWD, IGNORE_CASE, false, NULL));
-
-  // 'cat' only exists in the first frame.
-  EXPECT_EQ(1, tab->FindInPage(L"cat", FWD, IGNORE_CASE, false, NULL));
-
-  // Try searching again, should still come up with 1 match.
-  EXPECT_EQ(1, tab->FindInPage(L"cat", FWD, IGNORE_CASE, false, NULL));
-
-  // Try searching backwards, ignoring case, should still come up with 1 match.
-  EXPECT_EQ(1, tab->FindInPage(L"CAT", BACK, IGNORE_CASE, false, NULL));
-
-  // Try case sensitive, should NOT find it.
-  EXPECT_EQ(0, tab->FindInPage(L"CAT", FWD, CASE_SENSITIVE, false, NULL));
-
-  // Try again case sensitive, but this time with right case.
-  EXPECT_EQ(1, tab->FindInPage(L"dog", FWD, CASE_SENSITIVE, false, NULL));
-
-  // Try non-Latin characters ('Hreggvidur' with 'eth' for 'd' in left frame).
-  EXPECT_EQ(1, tab->FindInPage(L"Hreggvi\u00F0ur", FWD, IGNORE_CASE,
-                               false, NULL));
-  EXPECT_EQ(1, tab->FindInPage(L"Hreggvi\u00F0ur", FWD, CASE_SENSITIVE,
-                               false, NULL));
-  EXPECT_EQ(0, tab->FindInPage(L"hreggvi\u00F0ur", FWD, CASE_SENSITIVE,
-                               false, NULL));
-}
-
 // This test loads a single-frame page and makes sure the ordinal returned makes
 // sense as we FindNext over all the items.
 TEST_F(FindInPageControllerTest, FindInPageOrdinal) {
   scoped_refptr<HTTPTestServer> server =
-      HTTPTestServer::CreateServer(L"chrome/test/data");
+      HTTPTestServer::CreateServer(L"chrome/test/data", NULL);
   ASSERT_TRUE(NULL != server.get());
 
   // First we navigate to our frames page.
@@ -117,7 +65,7 @@ TEST_F(FindInPageControllerTest, FindInPageOrdinal) {
 // sense.
 TEST_F(FindInPageControllerTest, FindInPageMultiFramesOrdinal) {
   scoped_refptr<HTTPTestServer> server =
-      HTTPTestServer::CreateServer(L"chrome/test/data");
+      HTTPTestServer::CreateServer(L"chrome/test/data", NULL);
   ASSERT_TRUE(NULL != server.get());
 
   // First we navigate to our frames page.
@@ -163,7 +111,7 @@ TEST_F(FindInPageControllerTest, FindInPageMultiFramesOrdinal) {
 // See http://crbug.com/5132
 TEST_F(FindInPageControllerTest, FindInPage_Issue5132) {
   scoped_refptr<HTTPTestServer> server =
-      HTTPTestServer::CreateServer(L"chrome/test/data");
+      HTTPTestServer::CreateServer(L"chrome/test/data", NULL);
   ASSERT_TRUE(NULL != server.get());
 
   // First we navigate to our frames page.
@@ -194,7 +142,7 @@ TEST_F(FindInPageControllerTest, FindInPage_Issue5132) {
 // Load a page with no selectable text and make sure we don't crash.
 TEST_F(FindInPageControllerTest, FindUnSelectableText) {
   scoped_refptr<HTTPTestServer> server =
-      HTTPTestServer::CreateServer(L"chrome/test/data");
+      HTTPTestServer::CreateServer(L"chrome/test/data", NULL);
   ASSERT_TRUE(NULL != server.get());
 
   GURL url = server->TestServerPageW(kUserSelectPage);
@@ -210,7 +158,7 @@ TEST_F(FindInPageControllerTest, FindUnSelectableText) {
 // Try to reproduce the crash seen in issue 1341577.
 TEST_F(FindInPageControllerTest, FindCrash_Issue1341577) {
   scoped_refptr<HTTPTestServer> server =
-      HTTPTestServer::CreateServer(L"chrome/test/data");
+      HTTPTestServer::CreateServer(L"chrome/test/data", NULL);
   ASSERT_TRUE(NULL != server.get());
 
   GURL url = server->TestServerPageW(kCrashPage);
@@ -242,7 +190,7 @@ TEST_F(FindInPageControllerTest, FindCrash_Issue1341577) {
 //    again from where it left off).
 TEST_F(FindInPageControllerTest, FindEnoughMatches_Issue1155639) {
   scoped_refptr<HTTPTestServer> server =
-      HTTPTestServer::CreateServer(L"chrome/test/data");
+      HTTPTestServer::CreateServer(L"chrome/test/data", NULL);
   ASSERT_TRUE(NULL != server.get());
 
   GURL url = server->TestServerPageW(kTooFewMatchesPage);
@@ -259,7 +207,7 @@ TEST_F(FindInPageControllerTest, FindEnoughMatches_Issue1155639) {
 // a new tab.
 TEST_F(FindInPageControllerTest, FindMovesOnTabClose_Issue1343052) {
   scoped_refptr<HTTPTestServer> server =
-      HTTPTestServer::CreateServer(L"chrome/test/data");
+      HTTPTestServer::CreateServer(L"chrome/test/data", NULL);
   ASSERT_TRUE(NULL != server.get());
 
   GURL url = server->TestServerPageW(kFramePage);
@@ -320,7 +268,7 @@ TEST_F(FindInPageControllerTest, FindMovesOnTabClose_Issue1343052) {
 // Make sure Find box disappears on Navigate but not on Refresh.
 TEST_F(FindInPageControllerTest, FindDisappearOnNavigate) {
   scoped_refptr<HTTPTestServer> server =
-      HTTPTestServer::CreateServer(L"chrome/test/data");
+      HTTPTestServer::CreateServer(L"chrome/test/data", NULL);
   ASSERT_TRUE(NULL != server.get());
 
   GURL url = server->TestServerPageW(kUserSelectPage);

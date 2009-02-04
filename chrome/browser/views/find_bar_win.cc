@@ -13,6 +13,7 @@
 #include "chrome/browser/views/find_bar_view.h"
 #include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/browser/tab_contents/web_contents_view.h"
+#include "chrome/common/notification_service.h"
 #include "chrome/views/external_focus_tracker.h"
 #include "chrome/views/native_scroll_bar.h"
 #include "chrome/views/root_view.h"
@@ -439,7 +440,7 @@ void FindBarWin::OnFindReply(int request_id,
                                  active_match_ordinal,
                                  final_update);
   NotificationService::current()->Notify(
-      NOTIFY_FIND_RESULT_AVAILABLE,
+      NotificationType::FIND_RESULT_AVAILABLE,
       Source<TabContents>(parent_tab_->GetWebContents()),
       Details<FindNotificationDetails>(&detail));
 }
@@ -468,7 +469,8 @@ void FindBarWin::GetDialogBounds(gfx::Rect* bounds) {
   // fails, we return an empty rect.
   CRect browser_client_rect, browser_window_rect, content_window_rect;
   if (!::IsWindow(parent_hwnd_) ||
-      !::GetWindowRect(parent_tab_->GetContentHWND(), &content_window_rect) ||
+      !::GetWindowRect(parent_tab_->GetContentNativeView(),
+                       &content_window_rect) ||
       !::GetWindowRect(parent_hwnd_, &browser_window_rect) ||
       !::GetClientRect(parent_hwnd_, &browser_client_rect) ||
       !toolbar) {
@@ -589,7 +591,7 @@ gfx::Rect FindBarWin::GetDialogPosition(gfx::Rect avoid_overlapping_rect) {
     // whereas the selection rect is relative to the page.
     RECT frame_rect = {0}, webcontents_rect = {0};
     ::GetWindowRect(parent_hwnd_, &frame_rect);
-    ::GetWindowRect(parent_tab_->GetContainerHWND(), &webcontents_rect);
+    ::GetWindowRect(parent_tab_->GetNativeView(), &webcontents_rect);
     avoid_overlapping_rect.Offset(0, webcontents_rect.top - frame_rect.top);
   }
 

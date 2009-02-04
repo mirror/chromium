@@ -37,8 +37,10 @@
 #include "base/thread.h"
 #include "base/waitable_event.h"
 #include "net/base/cookie_monster.h"
+#include "net/base/io_buffer.h"
 #include "net/base/net_util.h"
 #include "net/base/upload_data.h"
+#include "net/proxy/proxy_service.h"
 #include "net/url_request/url_request.h"
 #include "webkit/glue/resource_loader_bridge.h"
 #include "webkit/tools/test_shell/test_shell_request_context.h"
@@ -104,7 +106,7 @@ class RequestProxy : public URLRequest::Delegate,
                      public base::RefCountedThreadSafe<RequestProxy> {
  public:
   // Takes ownership of the params.
-  RequestProxy() {
+  RequestProxy() : buf_(new net::IOBuffer(kDataSize)) {
   }
 
   virtual ~RequestProxy() {
@@ -155,7 +157,7 @@ class RequestProxy : public URLRequest::Delegate,
 
     // Make a local copy of buf_, since AsyncReadData reuses it.
     scoped_array<char> buf_copy(new char[bytes_read]);
-    memcpy(buf_copy.get(), buf_, bytes_read);
+    memcpy(buf_copy.get(), buf_->data(), bytes_read);
 
     // Continue reading more data into buf_
     // Note: Doing this before notifying our peer ensures our load events get
@@ -211,7 +213,7 @@ class RequestProxy : public URLRequest::Delegate,
 
     if (request_->status().is_success()) {
       int bytes_read;
-      if (request_->Read(buf_, sizeof(buf_), &bytes_read) && bytes_read) {
+      if (request_->Read(buf_, kDataSize, &bytes_read) && bytes_read) {
         OnReceivedData(bytes_read);
       } else if (!request_->status().is_io_pending()) {
         Done();
@@ -296,7 +298,7 @@ class RequestProxy : public URLRequest::Delegate,
   static const int kDataSize = 16*1024;
 
   // read buffer for async IO
-  char buf_[kDataSize];
+  scoped_refptr<net::IOBuffer> buf_;
 
   MessageLoop* owner_loop_;
 
@@ -333,7 +335,7 @@ class SyncRequestProxy : public RequestProxy {
   }
 
   virtual void OnReceivedData(int bytes_read) {
-    result_->data.append(buf_, bytes_read);
+    result_->data.append(buf_->data(), bytes_read);
     AsyncReadData();  // read more (may recurse)
   }
 
@@ -523,6 +525,24 @@ std::string GetCookies(const GURL& url, const GURL& policy_url) {
       getter.get(), &CookieGetter::Get, url));
 
   return getter->GetResult();
+}
+
+// Issue the proxy resolve request on the io thread, and wait 
+// for the result.
+bool FindProxyForUrl(const GURL& url, std::string* proxy_list) {
+  DCHECK(request_context);
+
+  scoped_refptr<net::SyncProxyServiceHelper> sync_proxy_service(
+      new net::SyncProxyServiceHelper(io_thread->message_loop(),
+      request_context->proxy_service()));
+
+  net::ProxyInfo proxy_info;
+  int rv = sync_proxy_service->ResolveProxy(url, &proxy_info);
+  if (rv == net::OK) {
+    *proxy_list = proxy_info.GetAnnotatedProxyList();
+  }
+
+  return rv == net::OK;
 }
 
 }  // namespace webkit_glue

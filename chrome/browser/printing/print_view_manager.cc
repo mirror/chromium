@@ -14,6 +14,7 @@
 #include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/common/gfx/emf.h"
 #include "chrome/common/l10n_util.h"
+#include "chrome/common/notification_service.h"
 
 #include "generated_resources.h"
 
@@ -183,8 +184,8 @@ GURL PrintViewManager::RenderSourceUrl() {
 void PrintViewManager::Observe(NotificationType type,
                                const NotificationSource& source,
                                const NotificationDetails& details) {
-  switch (type) {
-    case NOTIFY_PRINT_JOB_EVENT: {
+  switch (type.value) {
+    case NotificationType::PRINT_JOB_EVENT: {
       OnNotifyPrintJobEvent(*Details<JobEventDetails>(details).ptr());
       break;
     }
@@ -254,14 +255,8 @@ void PrintViewManager::OnNotifyPrintJobInitEvent(
       owner_.render_view_host()->IsRenderViewLive() &&
       (!old_print_params.Equals(print_params_) ||
        !event_details.document()->page_count())) {
-    // This will generate a DidGetPrintedPagesCount() callback.
-    if (!owner_.render_view_host()->GetPrintedPagesCount(print_params_)) {
-      NOTREACHED();
-      if (inside_inner_message_loop_) {
-        MessageLoop::current()->Quit();
-        return;
-      }
-    }
+    // TODO(maruel): Will never happen, this code is about to be deleted.
+    NOTREACHED();
   }
 
   // Continue even if owner_.render_view_host() is dead because we may already
@@ -404,10 +399,10 @@ bool PrintViewManager::CreateNewPrintJob(PrintJobWorkerOwner* job) {
   } else {
     print_job_ = new PrintJob(this);
   }
-  NotificationService::current()->
-      AddObserver(this,
-                  NOTIFY_PRINT_JOB_EVENT,
-                  Source<PrintJob>(print_job_.get()));
+  NotificationService::current()->AddObserver(
+      this,
+      NotificationType::PRINT_JOB_EVENT,
+      Source<PrintJob>(print_job_.get()));
   return true;
 }
 
@@ -459,7 +454,7 @@ void PrintViewManager::ReleasePrintJob() {
     return;
   NotificationService::current()->RemoveObserver(
       this,
-      NOTIFY_PRINT_JOB_EVENT,
+      NotificationType::PRINT_JOB_EVENT,
       Source<PrintJob>(print_job_.get()));
 
   print_job_->DisconnectSource();
@@ -477,10 +472,8 @@ void PrintViewManager::PrintNowInternal() {
 
   if (!print_job_->document() ||
       !print_job_->document()->IsComplete()) {
-    ViewMsg_PrintPages_Params params;
-    params.params = print_params_;
-    params.pages = PageRange::GetPages(print_job_->settings().ranges);
-    owner_.render_view_host()->PrintPages(params);
+    // TODO(maruel): Will never happen. This code is about to be deleted.
+    NOTREACHED();
   }
 }
 

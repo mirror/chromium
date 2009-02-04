@@ -4,7 +4,17 @@
 
 #include "chrome/common/sqlite_utils.h"
 
+#include "base/file_path.h"
 #include "base/logging.h"
+#include "base/string16.h"
+
+int OpenSqliteDb(const FilePath& filepath, sqlite3** database) {
+#if defined(OS_WIN)
+  return sqlite3_open16(filepath.value().c_str(), database);
+#elif defined(OS_POSIX)
+  return sqlite3_open(filepath.value().c_str(), database);
+#endif
+}
 
 bool DoesSqliteTableExist(sqlite3* db,
                           const char* db_name,
@@ -70,7 +80,6 @@ bool DoesSqliteTableHaveRow(sqlite3* db, const char* table_name) {
 
   return s.step() == SQLITE_ROW;
 }
-
 
 SQLTransaction::SQLTransaction(sqlite3* db) : db_(db), began_(false) {
 }
@@ -195,16 +204,6 @@ int SQLStatement::prepare(sqlite3* db, const char* sql, int sql_len) {
   return rv;
 }
 
-int SQLStatement::prepare16(sqlite3* db, const wchar_t* sql, int sql_len) {
-  DCHECK(!stmt_);
-  sql_len *= sizeof(wchar_t);
-  int rv = sqlite3_prepare16_v2(db, sql, sql_len, &stmt_, NULL);
-  if (rv != SQLITE_OK) {
-    DLOG(ERROR) << "SQLStatement.prepare16_v2 failed: " << sqlite3_errmsg(db);
-  }
-  return rv;
-}
-
 int SQLStatement::step() {
   DCHECK(stmt_);
   return sqlite3_step(stmt_);
@@ -281,10 +280,10 @@ int SQLStatement::bind_text(int index, const char* value, int value_len,
   return sqlite3_bind_text(stmt_, index + 1, value, value_len, dtor);
 }
 
-int SQLStatement::bind_text16(int index, const wchar_t* value, int value_len,
+int SQLStatement::bind_text16(int index, const char16* value, int value_len,
                 Function dtor) {
   DCHECK(stmt_);
-  value_len *= sizeof(wchar_t);
+  value_len *= sizeof(char16);
   return sqlite3_bind_text16(stmt_, index + 1, value, value_len, dtor);
 }
 
@@ -301,11 +300,6 @@ int SQLStatement::column_count() {
 int SQLStatement::column_type(int index) {
   DCHECK(stmt_);
   return sqlite3_column_type(stmt_, index);
-}
-
-const wchar_t* SQLStatement::column_name16(int index) {
-  DCHECK(stmt_);
-  return static_cast<const wchar_t*>( sqlite3_column_name16(stmt_, index) );
 }
 
 const void* SQLStatement::column_blob(int index) {
@@ -378,7 +372,7 @@ bool SQLStatement::column_string(int index, std::string* str) {
   DCHECK(stmt_);
   DCHECK(str);
   const char* s = column_text(index);
-str->assign(s ? s : std::string(""));
+  str->assign(s ? s : std::string());
   return s != NULL;
 }
 
@@ -388,22 +382,22 @@ std::string SQLStatement::column_string(int index) {
   return str;
 }
 
-const wchar_t* SQLStatement::column_text16(int index) {
+const char16* SQLStatement::column_text16(int index) {
   DCHECK(stmt_);
-  return static_cast<const wchar_t*>( sqlite3_column_text16(stmt_, index) );
+  return static_cast<const char16*>(sqlite3_column_text16(stmt_, index));
 }
 
-bool SQLStatement::column_string16(int index, std::wstring* str) {
+bool SQLStatement::column_wstring(int index, std::wstring* str) {
   DCHECK(stmt_);
   DCHECK(str);
-  const wchar_t* s = column_text16(index);
-  str->assign(s ? s : std::wstring(L""));
+  const char* s = column_text(index);
+  str->assign(s ? UTF8ToWide(s) : std::wstring());
   return (s != NULL);
 }
 
-std::wstring SQLStatement::column_string16(int index) {
+std::wstring SQLStatement::column_wstring(int index) {
   std::wstring wstr;
-  column_string16(index, &wstr);
+  column_wstring(index, &wstr);
   return wstr;
 }
 

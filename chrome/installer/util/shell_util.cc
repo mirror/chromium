@@ -13,6 +13,7 @@
 
 #include "chrome/installer/util/shell_util.h"
 
+#include "base/file_path.h"
 #include "base/file_util.h"
 #include "base/logging.h"
 #include "base/path_service.h"
@@ -69,6 +70,27 @@ class RegistryEntry {
       open_with_key.append(L"\\OpenWithList\\" + exe_name);
       entries.push_front(new RegistryEntry(open_with_key, std::wstring()));
     }
+
+    // Chrome extension installer
+    std::wstring install_cmd =
+        ShellUtil::GetChromeInstallExtensionCmd(chrome_exe);
+    std::wstring prog_id = std::wstring(L"Software\\Classes\\") +
+        ShellUtil::kChromeExtProgId;
+
+    // Extension file handler
+    entries.push_front(new RegistryEntry(prog_id,
+                                         ShellUtil::kChromeExtProgIdDesc));
+    entries.push_front(new RegistryEntry(
+        prog_id + L"\\DefaultIcon", icon_path));
+    entries.push_front(new RegistryEntry(
+        prog_id + L"\\shell\\open\\command", install_cmd));
+
+    // .crx file type extension
+    std::wstring file_extension_key(L"Software\\Classes\\");
+    file_extension_key.append(L".");
+    file_extension_key.append(chrome::kExtensionFileExtension);
+    entries.push_front(new RegistryEntry(file_extension_key,
+                                         ShellUtil::kChromeExtProgId));
 
     BrowserDistribution* dist = BrowserDistribution::GetDistribution();
     entries.push_front(new RegistryEntry(
@@ -291,6 +313,11 @@ bool SetAccessDefaultRegEntries(HKEY root_key,
     delete (*itr);
   }
 
+  // Append the App Paths registry entries. Do this only if we are an admin,
+  // since they are always written to HKLM.
+  if (IsUserAnAdmin())
+    ShellUtil::AddChromeAppPathWorkItems(chrome_exe, items.get());
+
   // Apply all the registry changes and if there is a problem, rollback.
   if (!items->Do()) {
     LOG(ERROR) << "Failed to add Chrome to Set Program Access and Defaults";
@@ -358,6 +385,9 @@ const wchar_t* ShellUtil::kProtocolAssociations[] = {L"ftp", L"http", L"https",
     NULL};
 const wchar_t* ShellUtil::kRegUrlProtocol = L"URL Protocol";
 
+const wchar_t* ShellUtil::kChromeExtProgId = L"ChromeExt";
+const wchar_t* ShellUtil::kChromeExtProgIdDesc = L"Chrome Extension Installer";
+
 ShellUtil::RegisterStatus ShellUtil::AddChromeToSetAccessDefaults(
     const std::wstring& chrome_exe, bool skip_if_not_admin) {
   if (IsChromeRegistered(chrome_exe))
@@ -388,6 +418,11 @@ bool ShellUtil::GetChromeIcon(std::wstring& chrome_icon) {
 
 std::wstring ShellUtil::GetChromeShellOpenCmd(const std::wstring& chrome_exe) {
   return L"\"" + chrome_exe + L"\" -- \"%1\"";
+}
+
+std::wstring ShellUtil::GetChromeInstallExtensionCmd(
+    const std::wstring& chrome_exe) {
+  return L"\"" + chrome_exe + L"\" --install-extension=\"%1\"";
 }
 
 bool ShellUtil::GetChromeShortcutName(std::wstring* shortcut) {
@@ -434,6 +469,29 @@ bool ShellUtil::GetQuickLaunchPath(bool system_level, std::wstring* path) {
   }
   file_util::AppendToPath(path, kQuickLaunchPath);
   return true;
+}
+
+void ShellUtil::AddChromeAppPathWorkItems(
+    const std::wstring& chrome_exe, WorkItemList* item_list) {
+  WorkItem* create_work_item = WorkItem::CreateCreateRegKeyWorkItem(
+      HKEY_LOCAL_MACHINE, installer_util::kAppPathsRegistryKey);
+
+  item_list->AddWorkItem(create_work_item);
+
+  WorkItem* set_default_value_work_item =
+      WorkItem::CreateSetRegValueWorkItem(HKEY_LOCAL_MACHINE,
+          installer_util::kAppPathsRegistryKey,
+          installer_util::kAppPathsRegistryDefaultName,
+          chrome_exe, true);
+  item_list->AddWorkItem(set_default_value_work_item);
+
+  FilePath chrome_path(chrome_exe);
+  WorkItem* set_path_value_work_item =
+      WorkItem::CreateSetRegValueWorkItem(HKEY_LOCAL_MACHINE,
+          installer_util::kAppPathsRegistryKey,
+          installer_util::kAppPathsRegistryPathName,
+          chrome_path.DirName().value(), true);
+  item_list->AddWorkItem(set_path_value_work_item);
 }
 
 bool ShellUtil::CreateChromeDesktopShortcut(const std::wstring& chrome_exe,

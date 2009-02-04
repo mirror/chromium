@@ -9,6 +9,7 @@
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/notification_registrar.h"
+#include "chrome/common/notification_service.h"
 #include "chrome/test/testing_profile.h"
 #include "chrome/views/tree_node_model.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -413,13 +414,13 @@ namespace {
 class StarredListener : public NotificationObserver {
  public:
   StarredListener() : notification_count_(0), details_(false) {
-    registrar_.Add(this, NOTIFY_URLS_STARRED, Source<Profile>(NULL));
+    registrar_.Add(this, NotificationType::URLS_STARRED, Source<Profile>(NULL));
   }
 
   virtual void Observe(NotificationType type,
                        const NotificationSource& source,
                        const NotificationDetails& details) {
-    if (type == NOTIFY_URLS_STARRED) {
+    if (type == NotificationType::URLS_STARRED) {
       notification_count_++;
       details_ = *(Details<history::URLsStarredDetails>(details).ptr());
     }
@@ -773,7 +774,7 @@ TEST_F(BookmarkModelTestWithProfile2, MigrateFromDBToFileTest) {
   PathService::Get(chrome::DIR_TEST_DATA, &old_history_path);
   file_util::AppendToPath(&old_history_path, L"bookmarks");
   file_util::AppendToPath(&old_history_path, L"History_with_starred");
-  std::wstring new_history_path = profile_->GetPath();
+  std::wstring new_history_path = profile_->GetPath().ToWStringHack();
   file_util::Delete(new_history_path, true);
   file_util::CreateDirectory(new_history_path);
   file_util::AppendToPath(&new_history_path, chrome::kHistoryFilename);

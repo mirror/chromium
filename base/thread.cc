@@ -1,4 +1,4 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Copyright (c) 2006-2009 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -29,7 +29,9 @@ struct Thread::StartupData {
   // Used to synchronize thread startup.
   WaitableEvent event;
 
-  StartupData(const Options& opt) : options(opt), event(false, false) {}
+  explicit StartupData(const Options& opt)
+      : options(opt),
+        event(false, false) {}
 };
 
 Thread::Thread(const char *name)
@@ -143,12 +145,13 @@ void Thread::ThreadMain() {
   message_loop.set_thread_name(name_);
   message_loop_ = &message_loop;
 
+  // Let the thread do extra initialization.
+  // Let's do this before signaling we are started.
+  Init();
+
   startup_data_->event.Signal();
   // startup_data_ can't be touched anymore since the starting thread is now
   // unlocked.
-
-  // Let the thread do extra initialization.
-  Init();
 
   message_loop.Run();
 
@@ -160,6 +163,7 @@ void Thread::ThreadMain() {
 
   // We can't receive messages anymore.
   message_loop_ = NULL;
+  thread_id_ = 0;
 }
 
 }  // namespace base

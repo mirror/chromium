@@ -11,6 +11,7 @@
 
 #include "chrome/browser/first_run.h"
 
+#include "base/command_line.h"
 #include "base/file_util.h"
 #include "base/logging.h"
 #include "base/object_watcher.h"
@@ -22,6 +23,7 @@
 #include "chrome/app/result_codes.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/pref_names.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/hang_monitor/hung_window_detector.h"
 #include "chrome/browser/importer/importer.h"
@@ -33,6 +35,7 @@
 #include "chrome/common/pref_service.h"
 #include "chrome/installer/util/browser_distribution.h"
 #include "chrome/installer/util/google_update_constants.h"
+#include "chrome/installer/util/google_update_settings.h"
 #include "chrome/installer/util/install_util.h"
 #include "chrome/installer/util/master_preferences.h"
 #include "chrome/installer/util/shell_util.h"
@@ -82,15 +85,16 @@ bool GetBackupChromeFile(std::wstring* path) {
 
 std::wstring GetDefaultPrefFilePath(bool create_profile_dir, 
                                     const std::wstring& user_data_dir) {
-  std::wstring default_pref_dir =
-      ProfileManager::GetDefaultProfileDir(user_data_dir);
+  FilePath default_pref_dir = ProfileManager::GetDefaultProfileDir(
+      FilePath::FromWStringHack(user_data_dir));
   if (create_profile_dir) {
     if (!file_util::PathExists(default_pref_dir)) {
       if (!file_util::CreateDirectory(default_pref_dir))
         return std::wstring();
     }
   }
-  return ProfileManager::GetDefaultProfilePath(default_pref_dir);
+  return ProfileManager::GetDefaultProfilePath(default_pref_dir)
+      .ToWStringHack();
 }
 
 bool InvokeGoogleUpdateForRename() {
@@ -110,6 +114,23 @@ bool InvokeGoogleUpdateForRename() {
     }
   }
   return false;
+}
+
+bool LaunchSetupWithParam(const std::wstring& param, int* ret_code) {
+  FilePath exe_path;
+  if (!PathService::Get(base::DIR_MODULE, &exe_path))
+    return false;
+  exe_path = exe_path.Append(installer_util::kInstallerDir);
+  exe_path = exe_path.Append(installer_util::kSetupExe);
+  base::ProcessHandle ph;
+  CommandLine cl(exe_path.ToWStringHack());
+  cl.AppendSwitch(param);
+  if (!base::LaunchApp(cl, false, false, &ph))
+    return false;
+  DWORD wr = ::WaitForSingleObject(ph, INFINITE);
+  if (wr != WAIT_OBJECT_0)
+    return false;
+  return (TRUE == ::GetExitCodeProcess(ph, reinterpret_cast<DWORD*>(ret_code)));
 }
 
 }  // namespace
@@ -163,8 +184,8 @@ bool FirstRun::CreateSentinel() {
 }
 
 bool FirstRun::ProcessMasterPreferences(
-    const std::wstring& user_data_dir,
-    const std::wstring& master_prefs_path,
+    const FilePath& user_data_dir,
+    const FilePath& master_prefs_path,
     int* preference_details) {
   DCHECK(!user_data_dir.empty());
   if (preference_details)
@@ -179,7 +200,7 @@ bool FirstRun::ProcessMasterPreferences(
     file_util::AppendToPath(&master_path, installer_util::kDefaultMasterPrefs);
     master_prefs = master_path;
   } else {
-    master_prefs = master_prefs_path;
+    master_prefs = master_prefs_path.ToWStringHack();
   }
 
   int parse_result = installer_util::ParseDistributionPreferences(master_prefs);
@@ -189,13 +210,30 @@ bool FirstRun::ProcessMasterPreferences(
   if (parse_result & installer_util::MASTER_PROFILE_ERROR)
     return true;
 
-  std::wstring user_prefs = GetDefaultPrefFilePath(true, user_data_dir);
+  if (parse_result & installer_util::MASTER_PROFILE_REQUIRE_EULA) {
+    // Show the post-installation EULA. This is done by setup.exe and the
+    // result determines if we continue or not. We wait here until the user
+    // dismisses the dialog.
+    int retcode = 0;
+    if (!LaunchSetupWithParam(installer_util::switches::kShowEula, &retcode) || 
+        (retcode == installer_util::EULA_REJECTED)) {
+      LOG(WARNING) << "EULA rejected. Fast exit.";
+      ::ExitProcess(1);
+    }
+    if (retcode == installer_util::EULA_ACCEPTED_OPT_IN) {
+      LOG(INFO) << "EULA : collection consent";
+      GoogleUpdateSettings::SetCollectStatsConsent(true);
+    }
+  }
+
+  FilePath user_prefs = FilePath::FromWStringHack(
+      GetDefaultPrefFilePath(true, user_data_dir.ToWStringHack()));
   if (user_prefs.empty())
     return true;
 
   // The master prefs are regular prefs so we can just copy the file
   // to the default place and they just work.
-  if (!file_util::CopyFile(master_prefs, user_prefs))
+  if (!file_util::CopyFile(master_prefs, user_prefs.ToWStringHack()))
     return true;
 
   if (!(parse_result & installer_util::MASTER_PROFILE_NO_FIRST_RUN_UI))

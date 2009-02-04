@@ -96,8 +96,10 @@ void URLRequestHttpJob::Start() {
   request_info_.method = request_->method();
   request_info_.load_flags = request_->load_flags();
 
-  if (request_->context())
-    request_info_.user_agent = request_->context()->user_agent();
+  if (request_->context()) {
+    request_info_.user_agent =
+        request_->context()->GetUserAgent(request_->url());
+  }
 
   AddExtraHeaders();
 
@@ -348,7 +350,8 @@ bool URLRequestHttpJob::GetMoreData() {
   return transaction_.get() && !read_in_progress_;
 }
 
-bool URLRequestHttpJob::ReadRawData(char* buf, int buf_size, int *bytes_read) {
+bool URLRequestHttpJob::ReadRawData(net::IOBuffer* buf, int buf_size,
+                                    int *bytes_read) {
   DCHECK_NE(buf_size, 0);
   DCHECK(bytes_read);
   DCHECK(!read_in_progress_);

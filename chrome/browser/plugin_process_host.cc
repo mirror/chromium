@@ -36,7 +36,7 @@
 #include "chrome/common/render_messages.h"
 #include "chrome/common/win_util.h"
 #include "net/base/cookie_monster.h"
-#include "net/proxy/proxy_service.h"
+#include "net/base/io_buffer.h"
 #include "net/url_request/url_request.h"
 #include "sandbox/src/sandbox.h"
 #include "webkit/glue/plugins/plugin_constants_win.h"
@@ -72,11 +72,11 @@ PluginNotificationTask::PluginNotificationTask(
 
 void PluginNotificationTask::Run() {
   // Verify that the notification type is one that makes sense.
-  switch (notification_type_) {
-    case NOTIFY_PLUGIN_PROCESS_HOST_CONNECTED:
-    case NOTIFY_PLUGIN_PROCESS_HOST_DISCONNECTED:
-    case NOTIFY_PLUGIN_PROCESS_CRASHED:
-    case NOTIFY_PLUGIN_INSTANCE_CREATED:
+  switch (notification_type_.value) {
+    case NotificationType::PLUGIN_PROCESS_HOST_CONNECTED:
+    case NotificationType::PLUGIN_PROCESS_HOST_DISCONNECTED:
+    case NotificationType::PLUGIN_PROCESS_CRASHED:
+    case NotificationType::PLUGIN_INSTANCE_CREATED:
       break;
 
     default:
@@ -127,7 +127,7 @@ class PluginDownloadUrlHelper : public URLRequest::Delegate {
   // The full path of the downloaded file.
   std::wstring download_file_path_;
   // The buffer passed off to URLRequest::Read.
-  char download_file_buffer_[kDownloadFileBufferSize];
+  scoped_refptr<net::IOBuffer> download_file_buffer_;
   // The window handle for sending the WM_COPYDATA notification,
   // indicating that the download completed.
   HWND download_file_caller_window_;
@@ -142,12 +142,13 @@ PluginDownloadUrlHelper::PluginDownloadUrlHelper(
     const std::string& download_url,
     int source_pid, HWND caller_window)
     : download_url_(download_url),
-      download_file_caller_window_(caller_window),
-      download_source_pid_(source_pid),
       download_file_request_(NULL),
-      download_file_(INVALID_HANDLE_VALUE) {
+      download_file_(INVALID_HANDLE_VALUE),
+      download_file_buffer_(new net::IOBuffer(kDownloadFileBufferSize)),
+      download_file_caller_window_(caller_window),
+      download_source_pid_(source_pid) {
   DCHECK(::IsWindow(caller_window));
-  memset(download_file_buffer_, 0, arraysize(download_file_buffer_));
+  memset(download_file_buffer_->data(), 0, kDownloadFileBufferSize);
 }
 
 PluginDownloadUrlHelper::~PluginDownloadUrlHelper() {
@@ -210,7 +211,7 @@ void PluginDownloadUrlHelper::OnResponseStarted(URLRequest* request) {
   } else {
     // Initiate a read.
     int bytes_read = 0;
-    if (!request->Read(download_file_buffer_, arraysize(download_file_buffer_),
+    if (!request->Read(download_file_buffer_, kDownloadFileBufferSize,
                        &bytes_read)) {
       // If the error is not an IO pending, then we're done
       // reading.
@@ -238,7 +239,8 @@ void PluginDownloadUrlHelper::OnReadCompleted(URLRequest* request,
 
   while (request->status().is_success()) {
     unsigned long bytes_written = 0;
-    BOOL write_result = WriteFile(download_file_, download_file_buffer_,
+    BOOL write_result = WriteFile(download_file_,
+                                  download_file_buffer_->data(),
                                   request_bytes_read, &bytes_written, NULL);
     DCHECK(!write_result || (bytes_written == request_bytes_read));
 
@@ -249,7 +251,7 @@ void PluginDownloadUrlHelper::OnReadCompleted(URLRequest* request,
 
     // Start reading
     request_bytes_read = 0;
-    if (!request->Read(download_file_buffer_, arraysize(download_file_buffer_),
+    if (!request->Read(download_file_buffer_, kDownloadFileBufferSize,
                        &request_bytes_read)) {
       if (!request->status().is_io_pending()) {
         // If the error is not an IO pending, then we're done
@@ -296,57 +298,6 @@ void PluginDownloadUrlHelper::DownloadCompletedHelper(bool success) {
   // Don't access any members after this.
   delete this;
 }
-
-// The following class is a helper to handle ProxyResolve IPC requests.
-// It is responsible for initiating an asynchronous proxy resolve request,
-// and will send out the IPC response on completion then delete itself.
-// Should the PluginProcessHost be destroyed while a proxy resolve request
-// is in progress, the request will not be canceled. However once it completes
-// it will see that it has been revoked and delete itself.
-// TODO(eroman): This could leak if ProxyService is deleted while request is
-// outstanding.
-class PluginResolveProxyHelper : RevocableStore::Revocable {
- public:
-  // Create a helper that writes its response through |plugin_host|.
-  PluginResolveProxyHelper(PluginProcessHost* plugin_host)
-      : RevocableStore::Revocable(&plugin_host->revocable_store_),
-        plugin_host_(plugin_host),
-        reply_msg_(NULL),
-        ALLOW_THIS_IN_INITIALIZER_LIST(callback_(
-            this, &PluginResolveProxyHelper::OnProxyResolveCompleted)) {
-  }
-  
-  // Completion callback for ProxyService.
-  void OnProxyResolveCompleted(int result) {
-    if (!revoked()) {
-      PluginProcessHostMsg_ResolveProxy::WriteReplyParams(
-          reply_msg_, result, proxy_info_.GetAnnotatedProxyList());
-      plugin_host_->Send(reply_msg_);
-    }
-
-    delete this;
-  };
-
-  // Resolve the proxy for |url| using |proxy_service|. Write the response
-  // to |reply_msg|.
-  void Start(net::ProxyService* proxy_service,
-             const GURL& url,
-             IPC::Message* reply_msg) {
-    reply_msg_ = reply_msg;
-    int rv = proxy_service->ResolveProxy(
-        url, &proxy_info_, &callback_, NULL);
-    if (rv != net::ERR_IO_PENDING)
-      OnProxyResolveCompleted(rv);
-  }
-
- private:
-  // |plugin_host_| is only valid if !this->revoked().
-  PluginProcessHost* plugin_host_;
-  IPC::Message* reply_msg_;
-  net::CompletionCallbackImpl<PluginResolveProxyHelper> callback_;
-  net::ProxyInfo proxy_info_;
-};
-
 
 // Sends the reply to the create window message on the IO thread.
 class SendReplyTask : public Task {
@@ -432,6 +383,7 @@ PluginProcessHost::PluginProcessHost(PluginService* plugin_service)
     : process_(NULL),
       opening_channel_(false),
       resource_dispatcher_host_(plugin_service->resource_dispatcher_host()),
+      ALLOW_THIS_IN_INITIALIZER_LIST(resolve_proxy_msg_helper_(this, NULL)),
       plugin_service_(plugin_service) {
   DCHECK(resource_dispatcher_host_);
 }
@@ -513,7 +465,8 @@ bool PluginProcessHost::Init(const FilePath& plugin_path,
   }
 
   // Gears requires the data dir to be available on startup.
-  std::wstring data_dir = plugin_service_->GetChromePluginDataDir();;
+  std::wstring data_dir =
+      plugin_service_->GetChromePluginDataDir().ToWStringHack();
   DCHECK(!data_dir.empty());
   cmd_line.AppendSwitchWithValue(switches::kPluginDataDir, data_dir);
 
@@ -615,13 +568,14 @@ void PluginProcessHost::OnObjectSignaled(HANDLE object) {
   if (did_crash) {
     // Report that this plugin crashed.
     plugin_service_->main_message_loop()->PostTask(FROM_HERE,
-        new PluginNotificationTask(NOTIFY_PLUGIN_PROCESS_CRASHED,
+        new PluginNotificationTask(NotificationType::PLUGIN_PROCESS_CRASHED,
                                    plugin_path(), object));
   }
   // Notify in the main loop of the disconnection.
   plugin_service_->main_message_loop()->PostTask(FROM_HERE,
-      new PluginNotificationTask(NOTIFY_PLUGIN_PROCESS_HOST_DISCONNECTED,
-                                 plugin_path(), object));
+      new PluginNotificationTask(
+          NotificationType::PLUGIN_PROCESS_HOST_DISCONNECTED,
+          plugin_path(), object));
 
   // Cancel all requests for plugin processes.
   // TODO(mpcomplete): use a real process ID when http://b/issue?id=1210062 is
@@ -689,8 +643,9 @@ void PluginProcessHost::OnChannelConnected(int32 peer_pid) {
 
   // Notify in the main loop of the connection.
   plugin_service_->main_message_loop()->PostTask(FROM_HERE,
-      new PluginNotificationTask(NOTIFY_PLUGIN_PROCESS_HOST_CONNECTED,
-                                 plugin_path(), process()));
+      new PluginNotificationTask(
+          NotificationType::PLUGIN_PROCESS_HOST_CONNECTED,
+          plugin_path(), process()));
 }
 
 void PluginProcessHost::OnChannelError() {
@@ -711,7 +666,7 @@ void PluginProcessHost::OpenChannelToPlugin(
     IPC::Message* reply_msg) {
   // Notify in the main loop of the instantiation.
   plugin_service_->main_message_loop()->PostTask(FROM_HERE,
-      new PluginNotificationTask(NOTIFY_PLUGIN_INSTANCE_CREATED,
+      new PluginNotificationTask(NotificationType::PLUGIN_INSTANCE_CREATED,
                                  plugin_path(), process()));
 
   if (opening_channel_) {
@@ -810,13 +765,15 @@ void PluginProcessHost::OnGetCookies(uint32 request_context,
 
 void PluginProcessHost::OnResolveProxy(const GURL& url,
                                        IPC::Message* reply_msg) {
-  // Use the default profile's proxy service.
-  net::ProxyService* proxy_service =
-      Profile::GetDefaultRequestContext()->proxy_service();
+  resolve_proxy_msg_helper_.Start(url, reply_msg);
+}
 
-  // Kick off a proxy resolve request; writes the response to |reply_msg|
-  // on completion. The helper's storage will be deleted on completion.
-  (new PluginResolveProxyHelper(this))->Start(proxy_service, url, reply_msg);
+void PluginProcessHost::OnResolveProxyCompleted(IPC::Message* reply_msg,
+                                                int result,
+                                                const std::string& proxy_list) {
+  PluginProcessHostMsg_ResolveProxy::WriteReplyParams(
+      reply_msg, result, proxy_list);
+  Send(reply_msg);
 }
 
 void PluginProcessHost::ReplyToRenderer(

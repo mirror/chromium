@@ -49,10 +49,6 @@ enum {
   FRAME_TOP_LEFT_CORNER,
   FRAME_TOP_RIGHT_CORNER,
 
-  // Window Maximized Border.
-  FRAME_MAXIMIZED_TOP_EDGE,
-  FRAME_MAXIMIZED_BOTTOM_EDGE,
-
   // Client Edge Border.
   FRAME_CLIENT_EDGE_TOP_LEFT,
   FRAME_CLIENT_EDGE_TOP,
@@ -62,6 +58,10 @@ enum {
   FRAME_CLIENT_EDGE_BOTTOM,
   FRAME_CLIENT_EDGE_BOTTOM_LEFT,
   FRAME_CLIENT_EDGE_LEFT,
+
+  // Popup-mode toolbar edges.
+  FRAME_TOOLBAR_POPUP_EDGE_LEFT,
+  FRAME_TOOLBAR_POPUP_EDGE_RIGHT,
 
   FRAME_PART_BITMAP_COUNT  // Must be last.
 };
@@ -93,11 +93,11 @@ class ActiveWindowResources : public views::WindowResources {
             IDR_WINDOW_BOTTOM_RIGHT_CORNER, IDR_WINDOW_LEFT_SIDE,
             IDR_WINDOW_RIGHT_SIDE, IDR_WINDOW_TOP_CENTER,
             IDR_WINDOW_TOP_LEFT_CORNER, IDR_WINDOW_TOP_RIGHT_CORNER,
-        IDR_WINDOW_TOP_CENTER, IDR_WINDOW_BOTTOM_CENTER,
         IDR_CONTENT_TOP_LEFT_CORNER, IDR_CONTENT_TOP_CENTER,
             IDR_CONTENT_TOP_RIGHT_CORNER, IDR_CONTENT_RIGHT_SIDE,
             IDR_CONTENT_BOTTOM_RIGHT_CORNER, IDR_CONTENT_BOTTOM_CENTER,
             IDR_CONTENT_BOTTOM_LEFT_CORNER, IDR_CONTENT_LEFT_SIDE,
+        IDR_LOCATIONBG_POPUPMODE_LEFT, IDR_LOCATIONBG_POPUPMODE_RIGHT,
         0
       };
 
@@ -144,11 +144,11 @@ class InactiveWindowResources : public views::WindowResources {
             IDR_DEWINDOW_BOTTOM_RIGHT_CORNER, IDR_DEWINDOW_LEFT_SIDE,
             IDR_DEWINDOW_RIGHT_SIDE, IDR_DEWINDOW_TOP_CENTER,
             IDR_DEWINDOW_TOP_LEFT_CORNER, IDR_DEWINDOW_TOP_RIGHT_CORNER,
-        IDR_DEWINDOW_TOP_CENTER, IDR_DEWINDOW_BOTTOM_CENTER,
         IDR_CONTENT_TOP_LEFT_CORNER, IDR_CONTENT_TOP_CENTER,
             IDR_CONTENT_TOP_RIGHT_CORNER, IDR_CONTENT_RIGHT_SIDE,
             IDR_CONTENT_BOTTOM_RIGHT_CORNER, IDR_CONTENT_BOTTOM_CENTER,
             IDR_CONTENT_BOTTOM_LEFT_CORNER, IDR_CONTENT_LEFT_SIDE,
+        IDR_LOCATIONBG_POPUPMODE_LEFT, IDR_LOCATIONBG_POPUPMODE_RIGHT,
         0
       };
 
@@ -195,11 +195,11 @@ class OTRActiveWindowResources : public views::WindowResources {
             IDR_WINDOW_BOTTOM_RIGHT_CORNER_OTR, IDR_WINDOW_LEFT_SIDE_OTR,
             IDR_WINDOW_RIGHT_SIDE_OTR, IDR_WINDOW_TOP_CENTER_OTR,
             IDR_WINDOW_TOP_LEFT_CORNER_OTR, IDR_WINDOW_TOP_RIGHT_CORNER_OTR,
-        IDR_WINDOW_TOP_CENTER_OTR, IDR_WINDOW_BOTTOM_CENTER_OTR,
         IDR_CONTENT_TOP_LEFT_CORNER, IDR_CONTENT_TOP_CENTER,
             IDR_CONTENT_TOP_RIGHT_CORNER, IDR_CONTENT_RIGHT_SIDE,
             IDR_CONTENT_BOTTOM_RIGHT_CORNER, IDR_CONTENT_BOTTOM_CENTER,
             IDR_CONTENT_BOTTOM_LEFT_CORNER, IDR_CONTENT_LEFT_SIDE,
+        IDR_LOCATIONBG_POPUPMODE_LEFT, IDR_LOCATIONBG_POPUPMODE_RIGHT,
         0
       };
 
@@ -246,11 +246,11 @@ class OTRInactiveWindowResources : public views::WindowResources {
             IDR_DEWINDOW_RIGHT_SIDE_OTR, IDR_DEWINDOW_TOP_CENTER_OTR,
             IDR_DEWINDOW_TOP_LEFT_CORNER_OTR,
             IDR_DEWINDOW_TOP_RIGHT_CORNER_OTR,
-        IDR_DEWINDOW_TOP_CENTER_OTR, IDR_DEWINDOW_BOTTOM_CENTER_OTR,
         IDR_CONTENT_TOP_LEFT_CORNER, IDR_CONTENT_TOP_CENTER,
             IDR_CONTENT_TOP_RIGHT_CORNER, IDR_CONTENT_RIGHT_SIDE,
             IDR_CONTENT_BOTTOM_RIGHT_CORNER, IDR_CONTENT_BOTTOM_CENTER,
             IDR_CONTENT_BOTTOM_LEFT_CORNER, IDR_CONTENT_LEFT_SIDE,
+        IDR_LOCATIONBG_POPUPMODE_LEFT, IDR_LOCATIONBG_POPUPMODE_RIGHT,
         0
       };
 
@@ -269,6 +269,7 @@ class OTRInactiveWindowResources : public views::WindowResources {
 
   DISALLOW_EVIL_CONSTRUCTORS(OTRInactiveWindowResources);
 };
+
 // static
 SkBitmap* ActiveWindowResources::standard_frame_bitmaps_[];
 SkBitmap* InactiveWindowResources::standard_frame_bitmaps_[];
@@ -285,106 +286,74 @@ SkBitmap OpaqueNonClientView::app_top_center_;
 SkBitmap OpaqueNonClientView::app_top_right_;
 ChromeFont OpaqueNonClientView::title_font_;
 
-// The distance between the top of the window and the top of the window
-// controls when the window is restored.
-static const int kWindowControlsTopOffset = 1;
-// The distance between the right edge of the window and the right edge of the
-// right-most window control when the window is restored.
-static const int kWindowControlsRightOffset = 4;
-// The distance between the bottom of the window's top border and the top of the
-// window controls' images when the window is maximized.  We extend the
-// clickable area all the way to the top of the window to obey Fitts' Law.
-static const int kWindowControlsZoomedTopExtraHeight = 1;
-// The distance between right edge of the right-most window control and the left
-// edge of the window's right border when the window is maximized.
-static const int kWindowControlsZoomedRightOffset = 3;
-// The distance between the left edge of the window and the left edge of the
-// window icon when a title-bar is showing and the window is restored.
-static const int kWindowIconLeftOffset = 6;
-// The distance between the right edge of the window's left border and the left
-// edge of the window icon when a title-bar is showing and the window is
-// maximized.
-static const int kWindowIconZoomedLeftOffset = 2;
-// The proportion of vertical space the icon takes up after subtracting the top
-// and bottom borders of the titlebar (expressed as two values to avoid
-// floating point representation errors that goof up the calculation).
-static const int kWindowIconFractionNumerator = 16;
-static const int kWindowIconFractionDenominator = 25;
-// The distance between the top edge of the window and the top edge of the
-// window title when a title-bar is showing and the window is restored.
-static const int kWindowTitleTopOffset = 6;
-// The distance between the bottom edge of the window's top border and the top
-// edge of the window title when a title-bar is showing and the window is
-// maximized.
-static const int kWindowTitleZoomedTopOffset = 4;
-// The distance between the window icon and the window title when a title-bar
-// is showing.
-static const int kWindowIconTitleSpacing = 4;
-// The distance between the right edge of the title text bounding box and the
-// left edge of the distributor logo.
-static const int kTitleLogoSpacing = 5;
-// The distance between the bottom of the title text and the TabStrip when a
-// title-bar is showing and the window is restored.
-static const int kTitleBottomSpacing = 7;
-// The distance between the bottom of the title text and the TabStrip when a
-// title-bar is showing and the window is maximized.
-static const int kTitleZoomedBottomSpacing = 5;
-// The distance between the top edge of the window and the TabStrip when there
-// is no title-bar showing, and the window is restored.
-static const int kNoTitleTopSpacing = 15;
-// The number of pixels to crop off the bottom of the images making up the top
-// client edge when the window is maximized, so we only draw a shadowed titlebar
-// and not a grey client area border below it.
-static const int kClientEdgeZoomedBottomCrop = 1;
-// The amount of horizontal and vertical distance from a corner of the window
-// within which a mouse-drive resize operation will resize the window in two
-// dimensions.
-static const int kResizeAreaCornerSize = 16;
-// The width of the sizing border on the left and right edge of the window.
-static const int kWindowHorizontalBorderSize = 5;
-// The height of the sizing border at the top edge of the window
-static const int kWindowVerticalBorderTopSize = 3;
-// The height of the sizing border on the bottom edge of the window when the
-// window is restored.
-static const int kWindowVerticalBorderBottomSize = 5;
-// The additional height beyond the system-provided thickness of the border on
-// the bottom edge of the window when the window is maximized.
-static const int kWindowVerticalBorderZoomedBottomSize = 1;
-// The minimum width and height of the window icon that appears at the top left
-// of pop-up and app windows.
-static const int kWindowIconMinimumSize = 16;
-// The minimum height reserved for the window title font.
-static const int kWindowTitleMinimumHeight = 11;
-// The horizontal distance of the right edge of the distributor logo from the
-// left edge of the left-most window control.
-static const int kDistributorLogoHorizontalOffset = 7;
-// The vertical distance of the top of the distributor logo from the top edge
-// of the window.
-static const int kDistributorLogoVerticalOffset = 3;
-// The distance between the left edge of the window and the OTR avatar icon when
-// the window is restored.
-static const int kOTRLeftOffset = 7;
-// The distance between the right edge of the window's left border and the OTR
-// avatar icon when the window is maximized.
-static const int kOTRZoomedLeftOffset = 2;
-// The distance between the top edge of the client area and the OTR avatar icon
-// when the window is maximized.
-static const int kOTRZoomedTopSpacing = 2;
-// The distance between the bottom of the OTR avatar icon and the bottom of the
-// tabstrip.
-static const int kOTRBottomSpacing = 2;
-// The number of pixels to crop off the top of the OTR image when the window is
-// maximized.
-static const int kOTRZoomedTopCrop = 4;
-// Horizontal distance between the right edge of the OTR avatar icon and the
-// left edge of the tabstrip.
-static const int kOTRTabStripSpacing = 2;
-// Horizontal distance between the right edge of the new tab icon and the left
-// edge of the window minimize icon when the window is restored.
-static const int kNewTabIconMinimizeSpacing = 5;
-// Horizontal distance between the right edge of the new tab icon and the left
-// edge of the window minimize icon when the window is maximized.
-static const int kNewTabIconMinimizeZoomedSpacing = 16;
+namespace {
+// The frame border is only visible in restored mode and is hardcoded to 4 px on
+// each side regardless of the system window border size.
+const int kFrameBorderThickness = 4;
+// Various edges of the frame border have a 1 px shadow along their edges; in a
+// few cases we shift elements based on this amount for visual appeal.
+const int kFrameShadowThickness = 1;
+// Besides the frame border, there's another 11 px of empty space atop the
+// window in restored mode, to use to drag the window around.
+const int kNonClientRestoredExtraThickness = 11;
+// While resize areas on Windows are normally the same size as the window
+// borders, our top area is shrunk by 1 px to make it easier to move the window
+// around with our thinner top grabbable strip.  (Incidentally, our side and
+// bottom resize areas don't match the frame border thickness either -- they
+// span the whole nonclient area, so there's no "dead zone" for the mouse.)
+const int kTopResizeAdjust = 1;
+// In the window corners, the resize areas don't actually expand bigger, but the
+// 16 px at the end of each edge triggers diagonal resizing.
+const int kResizeAreaCornerSize = 16;
+// The titlebar never shrinks to less than 18 px tall, plus the height of the
+// frame border and any bottom edge.
+const int kTitlebarMinimumHeight = 18;
+// The icon is inset 2 px from the left frame border.
+const int kIconLeftSpacing = 2;
+// The icon takes up 16/25th of the available titlebar height.  (This is
+// expressed as two ints to avoid precision losses leading to off-by-one pixel
+// errors.)
+const int kIconHeightFractionNumerator = 16;
+const int kIconHeightFractionDenominator = 25;
+// The icon never shrinks below 16 px on a side.
+const int kIconMinimumSize = 16;
+// Because our frame border has a different "3D look" than Windows', with a less
+// cluttered top edge, we need to shift the icon up by 1 px in restored mode so
+// it looks more centered.
+const int kIconRestoredAdjust = 1;
+// There is a 4 px gap between the icon and the title text.
+const int kIconTitleSpacing = 4;
+// The title text starts 2 px below the bottom of the top frame border.
+const int kTitleTopSpacing = 2;
+// There is a 5 px gap between the title text and the distributor logo (if
+// present) or caption buttons.
+const int kTitleLogoSpacing = 5;
+// In maximized mode, the OTR avatar starts 2 px below the top of the screen, so
+// that it doesn't extend into the "3D edge" portion of the titlebar.
+const int kOTRMaximizedTopSpacing = 2;
+// The OTR avatar ends 2 px above the bottom of the tabstrip (which, given the
+// way the tabstrip draws its bottom edge, will appear like a 1 px gap to the
+// user).
+const int kOTRBottomSpacing = 2;
+// There are 2 px on each side of the OTR avatar (between the frame border and
+// it on the left, and between it and the tabstrip on the right).
+const int kOTRSideSpacing = 2;
+// In restored mode, the New Tab button isn't at the same height as the caption
+// buttons, but the space will look cluttered if it actually slides under them,
+// so we stop it when the gap between the two is down to 5 px.
+const int kNewTabCaptionRestoredSpacing = 5;
+// In maximized mode, where the New Tab button and the caption buttons are at
+// similar vertical coordinates, we need to reserve a larger, 16 px gap to avoid
+// looking too cluttered.
+const int kNewTabCaptionMaximizedSpacing = 16;
+// When there's a distributor logo, we leave a 7 px gap between it and the
+// caption buttons.
+const int kLogoCaptionSpacing = 7;
+// The caption buttons are always drawn 1 px down from the visible top of the
+// window (the true top in restored mode, or the top of the screen in maximized
+// mode).
+const int kCaptionTopSpacing = 1;
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // OpaqueNonClientView, public:
@@ -487,24 +456,22 @@ OpaqueNonClientView::~OpaqueNonClientView() {
 
 gfx::Rect OpaqueNonClientView::GetWindowBoundsForClientBounds(
     const gfx::Rect& client_bounds) {
-  int top_height = CalculateNonClientTopHeight();
-  int horizontal_border = HorizontalBorderSize();
-  int window_x = std::max(0, client_bounds.x() - horizontal_border);
-  int window_y = std::max(0, client_bounds.y() - top_height);
-  int window_w = client_bounds.width() + (2 * horizontal_border);
-  int window_h =
-      client_bounds.height() + top_height + VerticalBorderBottomSize();
-  return gfx::Rect(window_x, window_y, window_w, window_h);
+  int top_height = NonClientTopBorderHeight();
+  int border_thickness = NonClientBorderThickness();
+  return gfx::Rect(std::max(0, client_bounds.x() - border_thickness),
+                   std::max(0, client_bounds.y() - top_height),
+                   client_bounds.width() + (2 * border_thickness),
+                   client_bounds.height() + top_height + border_thickness);
 }
 
 gfx::Rect OpaqueNonClientView::GetBoundsForTabStrip(TabStrip* tabstrip) {
   int tabstrip_x = browser_view_->ShouldShowOffTheRecordAvatar() ?
-      (otr_avatar_bounds_.right() + kOTRTabStripSpacing) :
-      HorizontalBorderSize();
+      (otr_avatar_bounds_.right() + kOTRSideSpacing) :
+      NonClientBorderThickness();
   int tabstrip_width = minimize_button_->x() - tabstrip_x -
       (frame_->IsMaximized() ?
-      kNewTabIconMinimizeZoomedSpacing : kNewTabIconMinimizeSpacing);
-  return gfx::Rect(tabstrip_x, CalculateNonClientTopHeight(),
+      kNewTabCaptionMaximizedSpacing : kNewTabCaptionRestoredSpacing);
+  return gfx::Rect(tabstrip_x, NonClientTopBorderHeight(),
                    std::max(0, tabstrip_width), tabstrip->GetPreferredHeight());
 }
 
@@ -514,55 +481,28 @@ void OpaqueNonClientView::UpdateWindowIcon() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// OpaqueNonClientView, TabIconView::TabContentsProvider implementation:
-
-bool OpaqueNonClientView::ShouldTabIconViewAnimate() const {
-  // This function is queried during the creation of the window as the
-  // TabIconView we host is initialized, so we need to NULL check the selected
-  // TabContents because in this condition there is not yet a selected tab.
-  TabContents* current_tab = browser_view_->GetSelectedTabContents();
-  return current_tab ? current_tab->is_loading() : false;
-}
-
-SkBitmap OpaqueNonClientView::GetFavIconForTabIconView() {
-  return frame_->window_delegate()->GetWindowIcon();
-}
-
-///////////////////////////////////////////////////////////////////////////////
-// OpaqueNonClientView, views::BaseButton::ButtonListener implementation:
-
-void OpaqueNonClientView::ButtonPressed(views::BaseButton* sender) {
-  if (sender == minimize_button_) {
-    frame_->ExecuteSystemMenuCommand(SC_MINIMIZE);
-  } else if (sender == maximize_button_) {
-    frame_->ExecuteSystemMenuCommand(SC_MAXIMIZE);
-  } else if (sender == restore_button_) {
-    frame_->ExecuteSystemMenuCommand(SC_RESTORE);
-  } else if (sender == close_button_) {
-    frame_->ExecuteSystemMenuCommand(SC_CLOSE);
-  }
-}
-
-///////////////////////////////////////////////////////////////////////////////
 // OpaqueNonClientView, views::NonClientView implementation:
 
 gfx::Rect OpaqueNonClientView::CalculateClientAreaBounds(int width,
                                                          int height) const {
-  int top_margin = CalculateNonClientTopHeight();
-  int horizontal_border = HorizontalBorderSize();
-  return gfx::Rect(horizontal_border, top_margin,
-      std::max(0, width - (2 * horizontal_border)),
-      std::max(0, height - top_margin - VerticalBorderBottomSize()));
+  int top_height = NonClientTopBorderHeight();
+  int border_thickness = NonClientBorderThickness();
+  return gfx::Rect(border_thickness, top_height,
+                   std::max(0, width - (2 * border_thickness)),
+                   std::max(0, height - top_height - border_thickness));
 }
 
 gfx::Size OpaqueNonClientView::CalculateWindowSizeForClientSize(
     int width,
     int height) const {
-  return gfx::Size(width + (2 * HorizontalBorderSize()),
-      height + CalculateNonClientTopHeight() + VerticalBorderBottomSize());
+  int border_thickness = NonClientBorderThickness();
+  return gfx::Size(width + (2 * border_thickness),
+                   height + NonClientTopBorderHeight() + border_thickness);
 }
 
 CPoint OpaqueNonClientView::GetSystemMenuPoint() const {
+  // TODO(pkasting): This is wrong; Windows native runs the menu at the bottom
+  // of the titlebar, not the bottom of the window icon.
   CPoint system_menu_point(icon_bounds_.x(), icon_bounds_.bottom());
   MapWindowPoints(frame_->GetHWND(), HWND_DESKTOP, &system_menu_point, 1);
   return system_menu_point;
@@ -591,13 +531,12 @@ int OpaqueNonClientView::NonClientHitTest(const gfx::Point& point) {
       window_icon_->GetBounds(APPLY_MIRRORING_TRANSFORMATION).Contains(point))
     return HTSYSMENU;
 
-  int window_component = GetHTComponentForFrame(point, HorizontalBorderSize(),
-      kResizeAreaCornerSize, kWindowVerticalBorderTopSize,
+  int window_component = GetHTComponentForFrame(point, TopResizeHeight(),
+      NonClientBorderThickness(), kResizeAreaCornerSize,
       frame_->window_delegate()->CanResize());
   // Fall back to the caption if no other component matches.
-  if ((window_component == HTNOWHERE) && bounds().Contains(point))
-    window_component = HTCAPTION;
-  return window_component;
+  return ((window_component == HTNOWHERE) && bounds().Contains(point)) ?
+      HTCAPTION : window_component;
 }
 
 void OpaqueNonClientView::GetWindowMask(const gfx::Size& size,
@@ -606,13 +545,16 @@ void OpaqueNonClientView::GetWindowMask(const gfx::Size& size,
 
   // Redefine the window visible region for the new size.
   window_mask->moveTo(0, 3);
+  window_mask->lineTo(1, 2);
   window_mask->lineTo(1, 1);
+  window_mask->lineTo(2, 1);
   window_mask->lineTo(3, 0);
 
   window_mask->lineTo(SkIntToScalar(size.width() - 3), 0);
+  window_mask->lineTo(SkIntToScalar(size.width() - 2), 1);
   window_mask->lineTo(SkIntToScalar(size.width() - 1), 1);
-  window_mask->lineTo(SkIntToScalar(size.width() - 1), 3);
-  window_mask->lineTo(SkIntToScalar(size.width() - 0), 3);
+  window_mask->lineTo(SkIntToScalar(size.width() - 1), 2);
+  window_mask->lineTo(SkIntToScalar(size.width()), 3);
 
   window_mask->lineTo(SkIntToScalar(size.width()),
                       SkIntToScalar(size.height()));
@@ -638,15 +580,13 @@ void OpaqueNonClientView::Paint(ChromeCanvas* canvas) {
   if (frame_->IsMaximized())
     PaintMaximizedFrameBorder(canvas);
   else
-    PaintFrameBorder(canvas);
+    PaintRestoredFrameBorder(canvas);
   PaintDistributorLogo(canvas);
   PaintTitleBar(canvas);
   PaintToolbarBackground(canvas);
   PaintOTRAvatar(canvas);
-  if (frame_->IsMaximized())
-    PaintMaximizedClientEdge(canvas);
-  else
-    PaintClientEdge(canvas);
+  if (!frame_->IsMaximized())
+    PaintRestoredClientEdge(canvas);
 }
 
 void OpaqueNonClientView::Layout() {
@@ -659,8 +599,9 @@ void OpaqueNonClientView::Layout() {
 
 gfx::Size OpaqueNonClientView::GetPreferredSize() {
   gfx::Size prefsize(frame_->client_view()->GetPreferredSize());
-  prefsize.Enlarge(2 * HorizontalBorderSize(),
-      CalculateNonClientTopHeight() + VerticalBorderBottomSize());
+  int border_thickness = NonClientBorderThickness();
+  prefsize.Enlarge(2 * border_thickness,
+                   NonClientTopBorderHeight() + border_thickness);
   return prefsize;
 }
 
@@ -669,8 +610,8 @@ views::View* OpaqueNonClientView::GetViewForPoint(const gfx::Point& point,
   // We override this function because the ClientView can overlap the non -
   // client view, making it impossible to click on the window controls. We need
   // to ensure the window controls are checked _first_.
-  views::View* views[] = { close_button_, restore_button_, maximize_button_,
-                           minimize_button_ };
+  views::View* views[] =
+      { close_button_, restore_button_, maximize_button_, minimize_button_ };
   for (int i = 0; i < arraysize(views); ++i) {
     if (!views[i]->IsVisible())
       continue;
@@ -718,39 +659,98 @@ void OpaqueNonClientView::SetAccessibleName(const std::wstring& name) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
+// OpaqueNonClientView, views::BaseButton::ButtonListener implementation:
+
+void OpaqueNonClientView::ButtonPressed(views::BaseButton* sender) {
+  if (sender == minimize_button_)
+    frame_->ExecuteSystemMenuCommand(SC_MINIMIZE);
+  else if (sender == maximize_button_)
+    frame_->ExecuteSystemMenuCommand(SC_MAXIMIZE);
+  else if (sender == restore_button_)
+    frame_->ExecuteSystemMenuCommand(SC_RESTORE);
+  else if (sender == close_button_)
+    frame_->ExecuteSystemMenuCommand(SC_CLOSE);
+}
+
+///////////////////////////////////////////////////////////////////////////////
+// OpaqueNonClientView, TabIconView::TabContentsProvider implementation:
+
+bool OpaqueNonClientView::ShouldTabIconViewAnimate() const {
+  // This function is queried during the creation of the window as the
+  // TabIconView we host is initialized, so we need to NULL check the selected
+  // TabContents because in this condition there is not yet a selected tab.
+  TabContents* current_tab = browser_view_->GetSelectedTabContents();
+  return current_tab ? current_tab->is_loading() : false;
+}
+
+SkBitmap OpaqueNonClientView::GetFavIconForTabIconView() {
+  return frame_->window_delegate()->GetWindowIcon();
+}
+
+///////////////////////////////////////////////////////////////////////////////
 // OpaqueNonClientView, private:
 
-int OpaqueNonClientView::CalculateNonClientTopHeight() const {
-  bool show_title = frame_->window_delegate()->ShouldShowWindowTitle();
-  int title_height = std::max(title_font_.height(), kWindowTitleMinimumHeight);
-  if (frame_->IsMaximized()) {
-    int top_height = GetSystemMetrics(SM_CYSIZEFRAME);
-    if (show_title) {
-      top_height += kWindowTitleZoomedTopOffset + title_height +
-          kTitleZoomedBottomSpacing;
-    }
-    if (!browser_view_->IsToolbarVisible())
-      top_height -= kClientEdgeZoomedBottomCrop;
-    return top_height;
-  }
-  return show_title ?
-      (kWindowTitleTopOffset + title_height + kTitleBottomSpacing) :
-      kNoTitleTopSpacing;
-}
-
-int OpaqueNonClientView::HorizontalBorderSize() const {
+int OpaqueNonClientView::FrameBorderThickness() const {
   return frame_->IsMaximized() ?
-      GetSystemMetrics(SM_CXSIZEFRAME) : kWindowHorizontalBorderSize;
+      GetSystemMetrics(SM_CXSIZEFRAME) : kFrameBorderThickness;
 }
 
-int OpaqueNonClientView::VerticalBorderBottomSize() const {
-  return frame_->IsMaximized() ? (GetSystemMetrics(SM_CYSIZEFRAME) +
-      kWindowVerticalBorderZoomedBottomSize) : kWindowVerticalBorderBottomSize;
+int OpaqueNonClientView::TopResizeHeight() const {
+  return FrameBorderThickness() - kTopResizeAdjust;
 }
 
-void OpaqueNonClientView::PaintFrameBorder(ChromeCanvas* canvas) {
-  SkBitmap* top_left_corner =
-      resources()->GetPartBitmap(FRAME_TOP_LEFT_CORNER);
+int OpaqueNonClientView::NonClientBorderThickness() const {
+  // In maximized mode, we don't show a client edge.
+  return FrameBorderThickness() +
+      (frame_->IsMaximized() ? 0 : kClientEdgeThickness);
+}
+
+int OpaqueNonClientView::NonClientTopBorderHeight() const {
+  if (frame_->window_delegate()->ShouldShowWindowTitle()) {
+    int title_top_spacing, title_thickness;
+    return TitleCoordinates(&title_top_spacing, &title_thickness);
+  }
+
+  return FrameBorderThickness() +
+      (frame_->IsMaximized() ? 0 : kNonClientRestoredExtraThickness);
+}
+
+int OpaqueNonClientView::BottomEdgeThicknessWithinNonClientHeight() const {
+  if (browser_view_->IsToolbarVisible())
+    return 0;
+  return kFrameShadowThickness +
+      (frame_->IsMaximized() ? 0 : kClientEdgeThickness);
+}
+
+int OpaqueNonClientView::TitleCoordinates(int* title_top_spacing,
+                                          int* title_thickness) const {
+  int frame_thickness = FrameBorderThickness();
+  int min_titlebar_height = kTitlebarMinimumHeight + frame_thickness;
+  *title_top_spacing = frame_thickness + kTitleTopSpacing;
+  // The bottom spacing should be the same apparent height as the top spacing.
+  // Because the actual top spacing height varies based on the system border
+  // thickness, we calculate this based on the restored top spacing and then
+  // adjust for maximized mode.  We also don't include the frame shadow here,
+  // since while it's part of the bottom spacing it will be added in at the end
+  // as necessary (when a toolbar is present, the "shadow" is actually drawn by
+  // the toolbar).
+  int title_bottom_spacing =
+      kFrameBorderThickness + kTitleTopSpacing - kFrameShadowThickness;
+  if (frame_->IsMaximized()) {
+    // When we maximize, the top border appears to be chopped off; shift the
+    // title down to stay centered within the remaining space.
+    int title_adjust = (kFrameBorderThickness / 2);
+    *title_top_spacing += title_adjust;
+    title_bottom_spacing -= title_adjust;
+  }
+  *title_thickness = std::max(title_font_.height(),
+      min_titlebar_height - *title_top_spacing - title_bottom_spacing);
+  return *title_top_spacing + *title_thickness + title_bottom_spacing +
+      BottomEdgeThicknessWithinNonClientHeight();
+}
+
+void OpaqueNonClientView::PaintRestoredFrameBorder(ChromeCanvas* canvas) {
+  SkBitmap* top_left_corner = resources()->GetPartBitmap(FRAME_TOP_LEFT_CORNER);
   SkBitmap* top_right_corner =
       resources()->GetPartBitmap(FRAME_TOP_RIGHT_CORNER);
   SkBitmap* top_edge = resources()->GetPartBitmap(FRAME_TOP_EDGE);
@@ -768,6 +768,10 @@ void OpaqueNonClientView::PaintFrameBorder(ChromeCanvas* canvas) {
                        width() - top_right_corner->width(), top_edge->height());
   canvas->DrawBitmapInt(*top_right_corner,
                         width() - top_right_corner->width(), 0);
+  // Note: When we don't have a toolbar, we need to draw some kind of bottom
+  // edge here.  Because the App Window graphics we use for this have an
+  // attached client edge and their sizing algorithm is a little involved, we do
+  // all this in PaintRestoredClientEdge().
 
   // Right.
   canvas->TileImageInt(*right_edge, width() - right_edge->width(),
@@ -794,24 +798,26 @@ void OpaqueNonClientView::PaintFrameBorder(ChromeCanvas* canvas) {
 }
 
 void OpaqueNonClientView::PaintMaximizedFrameBorder(ChromeCanvas* canvas) {
-  SkBitmap* top_edge = resources()->GetPartBitmap(FRAME_MAXIMIZED_TOP_EDGE);
-  int frame_thickness = GetSystemMetrics(SM_CYSIZEFRAME);
-  canvas->TileImageInt(*top_edge, 0, frame_thickness, width(),
+  SkBitmap* top_edge = resources()->GetPartBitmap(FRAME_TOP_EDGE);
+  canvas->TileImageInt(*top_edge, 0, FrameBorderThickness(), width(),
                        top_edge->height());
 
-  SkBitmap* bottom_edge =
-      resources()->GetPartBitmap(FRAME_MAXIMIZED_BOTTOM_EDGE);
-  canvas->TileImageInt(*bottom_edge, 0,
-      height() - bottom_edge->height() - frame_thickness, width(),
-      bottom_edge->height());
+  if (!browser_view_->IsToolbarVisible()) {
+    // There's no toolbar to edge the frame border, so we need to draw a bottom
+    // edge.  The App Window graphic we use for this has a built in client edge,
+    // so we clip it off the bottom.
+    int edge_height = app_top_center_.height() - kClientEdgeThickness;
+    canvas->TileImageInt(app_top_center_, 0,
+        frame_->client_view()->y() - edge_height, width(), edge_height);
+  }
 }
 
 void OpaqueNonClientView::PaintDistributorLogo(ChromeCanvas* canvas) {
   // The distributor logo is only painted when the frame is not maximized and
   // when we actually have a logo.
   if (!frame_->IsMaximized() && !distributor_logo_.empty()) {
-    int logo_x = MirroredLeftPointForRect(logo_bounds_);
-    canvas->DrawBitmapInt(distributor_logo_, logo_x, logo_bounds_.y());
+    canvas->DrawBitmapInt(distributor_logo_,
+        MirroredLeftPointForRect(logo_bounds_), logo_bounds_.y());
   }
 }
 
@@ -822,75 +828,80 @@ void OpaqueNonClientView::PaintTitleBar(ChromeCanvas* canvas) {
     canvas->DrawStringInt(d->GetWindowTitle(), title_font_, SK_ColorWHITE,
         MirroredLeftPointForRect(title_bounds_), title_bounds_.y(),
         title_bounds_.width(), title_bounds_.height());
-    /* TODO(pkasting):
-    if (app window && active)
-      Draw Drop Shadow;
-    */
+    /* TODO(pkasting):  If this window is active, we should also draw a drop
+     * shadow on the title.  This is tricky, because we don't want to hardcode a
+     * shadow color (since we want to work with various themes), but we can't
+     * alpha-blend either (since the Windows text APIs don't really do this).
+     * So we'd need to sample the background color at the right location and
+     * synthesize a good shadow color. */
   }
 }
 
 void OpaqueNonClientView::PaintToolbarBackground(ChromeCanvas* canvas) {
-  if (!browser_view_->IsToolbarVisible() && !browser_view_->IsTabStripVisible())
+  if (!browser_view_->IsToolbarVisible())
     return;
-
+  
   gfx::Rect toolbar_bounds(browser_view_->GetToolbarBounds());
   gfx::Point toolbar_origin(toolbar_bounds.origin());
   View::ConvertPointToView(frame_->client_view(), this, &toolbar_origin);
   toolbar_bounds.set_origin(toolbar_origin);
 
-  SkBitmap* toolbar_left =
-      resources()->GetPartBitmap(FRAME_CLIENT_EDGE_TOP_LEFT);
+  bool normal_mode = browser_view_->IsToolbarDisplayModeNormal();
+  SkBitmap* toolbar_left = resources()->GetPartBitmap(normal_mode ?
+      FRAME_CLIENT_EDGE_TOP_LEFT : FRAME_TOOLBAR_POPUP_EDGE_LEFT);
   canvas->DrawBitmapInt(*toolbar_left,
                         toolbar_bounds.x() - toolbar_left->width(),
                         toolbar_bounds.y());
 
-  SkBitmap* toolbar_center =
-      resources()->GetPartBitmap(FRAME_CLIENT_EDGE_TOP);
-  canvas->TileImageInt(*toolbar_center, toolbar_bounds.x(), toolbar_bounds.y(),
-                       toolbar_bounds.width(), toolbar_center->height());
+  if (normal_mode) {
+    SkBitmap* toolbar_center =
+        resources()->GetPartBitmap(FRAME_CLIENT_EDGE_TOP);
+    canvas->TileImageInt(*toolbar_center, toolbar_bounds.x(),
+        toolbar_bounds.y(), toolbar_bounds.width(), toolbar_center->height());
+  }
 
-  canvas->DrawBitmapInt(
-      *resources()->GetPartBitmap(FRAME_CLIENT_EDGE_TOP_RIGHT),
+  canvas->DrawBitmapInt(*resources()->GetPartBitmap(normal_mode ?
+      FRAME_CLIENT_EDGE_TOP_RIGHT : FRAME_TOOLBAR_POPUP_EDGE_RIGHT),
       toolbar_bounds.right(), toolbar_bounds.y());
 }
 
 void OpaqueNonClientView::PaintOTRAvatar(ChromeCanvas* canvas) {
-  if (browser_view_->ShouldShowOffTheRecordAvatar()) {
-    int src_y = frame_->IsMaximized() ? kOTRZoomedTopCrop : 0;
-    canvas->DrawBitmapInt(browser_view_->GetOTRAvatarIcon(), 0, src_y,
-        otr_avatar_bounds_.width(), otr_avatar_bounds_.height(), 
-        MirroredLeftPointForRect(otr_avatar_bounds_), otr_avatar_bounds_.y(),
-        otr_avatar_bounds_.width(), otr_avatar_bounds_.height(), false);
-  }
+  if (!browser_view_->ShouldShowOffTheRecordAvatar())
+    return;
+
+  SkBitmap otr_avatar_icon = browser_view_->GetOTRAvatarIcon();
+  canvas->DrawBitmapInt(otr_avatar_icon, 0,
+      (otr_avatar_icon.height() - otr_avatar_bounds_.height()) / 2,
+      otr_avatar_bounds_.width(), otr_avatar_bounds_.height(), 
+      MirroredLeftPointForRect(otr_avatar_bounds_), otr_avatar_bounds_.y(),
+      otr_avatar_bounds_.width(), otr_avatar_bounds_.height(), false);
 }
 
-void OpaqueNonClientView::PaintClientEdge(ChromeCanvas* canvas) {
-  // The toolbar draws a client edge along its own bottom edge when it's
-  // visible.  However, it only draws this for the width of the actual client
-  // area, leaving a gap at the left and right edges:
-  //
-  // |             Toolbar             | <-- part of toolbar
-  //  ----- (toolbar client edge) -----  <-- gap
-  // |           Client area           | <-- right client edge
-  //
-  // To address this, we extend the left and right client edges up one pixel to
-  // fill the gap, by pretending the toolbar is one pixel shorter than it really
-  // is.
-  //
-  // Note: We can get away with this hackery because we only draw a top edge
-  // when there is no toolbar.  If we tried to draw a top edge over the
-  // toolbar's top edge, we'd need a different solution.
-  gfx::Rect toolbar_bounds = browser_view_->GetToolbarBounds();
-  if (browser_view_->IsToolbarVisible())
-    toolbar_bounds.set_height(std::max(0, toolbar_bounds.height() - 1));
-  int client_area_top = frame_->client_view()->y() + toolbar_bounds.bottom();
+void OpaqueNonClientView::PaintRestoredClientEdge(ChromeCanvas* canvas) {
+  int client_area_top =
+      frame_->client_view()->y() + browser_view_->GetToolbarBounds().bottom();
 
-  // When we don't have a toolbar to draw a top edge for us, draw a top edge.
   gfx::Rect client_area_bounds = CalculateClientAreaBounds(width(), height());
-  if (!browser_view_->IsToolbarVisible()) {
-    // This is necessary because the top center bitmap is shorter than the top
-    // left and right bitmaps.  We need their top edges to line up, and we
-    // need the left and right edges to start below the corners' bottoms.
+  if (browser_view_->IsToolbarVisible() &&
+      browser_view_->IsToolbarDisplayModeNormal()) {
+    // The toolbar draws a client edge along its own bottom edge when it's
+    // visible and in normal mode.  However, it only draws this for the width of
+    // the actual client area, leaving a gap at the left and right edges:
+    //
+    // |             Toolbar             | <-- part of toolbar
+    //  ----- (toolbar client edge) -----  <-- gap
+    // |           Client area           | <-- right client edge
+    //
+    // To address this, we extend the left and right client edges up to fill the
+    // gap, by pretending the toolbar is shorter than it really is.
+    client_area_top -= kClientEdgeThickness;
+  } else {
+    // The toolbar isn't going to draw a client edge for us, so draw one
+    // ourselves.
+    // This next calculation is necessary because the top center bitmap is
+    // shorter than the top left and right bitmaps.  We need their top edges to
+    // line up, and we need the left and right edges to start below the corners'
+    // bottoms.
     int top_edge_y = client_area_top - app_top_center_.height();
     client_area_top = top_edge_y + app_top_left_.height();
     canvas->DrawBitmapInt(app_top_left_,
@@ -903,7 +914,7 @@ void OpaqueNonClientView::PaintClientEdge(ChromeCanvas* canvas) {
   }
 
   int client_area_bottom =
-      std::max(client_area_top, height() - VerticalBorderBottomSize());
+      std::max(client_area_top, height() - NonClientBorderThickness());
   int client_area_height = client_area_bottom - client_area_top;
   SkBitmap* right = resources()->GetPartBitmap(FRAME_CLIENT_EDGE_RIGHT);
   canvas->TileImageInt(*right, client_area_bounds.right(), client_area_top,
@@ -928,40 +939,27 @@ void OpaqueNonClientView::PaintClientEdge(ChromeCanvas* canvas) {
       client_area_top, left->width(), client_area_height);
 }
 
-void OpaqueNonClientView::PaintMaximizedClientEdge(ChromeCanvas* canvas) {
-  if (browser_view_->IsToolbarVisible())
-    return;  // The toolbar draws its own client edge, which is sufficient.
-
-  int edge_height = app_top_center_.height() - kClientEdgeZoomedBottomCrop;
-  canvas->TileImageInt(app_top_center_, 0,
-      frame_->client_view()->y() - edge_height, width(), edge_height);
-}
-
 void OpaqueNonClientView::LayoutWindowControls() {
-  // TODO(pkasting): This function is almost identical to
-  // DefaultNonClientView::LayoutWindowControls(), they should be combined.
   close_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
                                    views::Button::ALIGN_BOTTOM);
   // Maximized buttons start at window top so that even if their images aren't
   // drawn flush with the screen edge, they still obey Fitts' Law.
   bool is_maximized = frame_->IsMaximized();
-  int top_offset = is_maximized ? 0 : kWindowControlsTopOffset;
-  int top_extra_height = is_maximized ?
-      (GetSystemMetrics(SM_CYSIZEFRAME) + kWindowControlsZoomedTopExtraHeight) :
-      0;
-  int right_offset = is_maximized ?
-      (GetSystemMetrics(SM_CXSIZEFRAME) + kWindowControlsZoomedRightOffset) :
-      kWindowControlsRightOffset;
+  int frame_thickness = FrameBorderThickness();
+  int caption_y = is_maximized ? frame_thickness : kCaptionTopSpacing;
+  int top_extra_height = is_maximized ? kCaptionTopSpacing : 0;
+  // There should always be the same number of non-shadow pixels visible to the
+  // side of the caption buttons.  In maximized mode we extend the rightmost
+  // button to the screen corner to obey Fitts' Law.
+  int right_extra_width = is_maximized ?
+      (kFrameBorderThickness - kFrameShadowThickness) : 0;
+  int right_spacing = is_maximized ?
+      (GetSystemMetrics(SM_CXSIZEFRAME) + right_extra_width) : frame_thickness;
   gfx::Size close_button_size = close_button_->GetPreferredSize();
-  close_button_->SetBounds(
-      (width() - close_button_size.width() - right_offset),
-      top_offset,
-      (is_maximized ?
-          // We extend the maximized close button to the screen corner to obey
-          // Fitts' Law.
-          (close_button_size.width() + kWindowControlsZoomedRightOffset) :
-          close_button_size.width()),
-      (close_button_size.height() + top_extra_height));
+  close_button_->SetBounds(width() - close_button_size.width() - right_spacing,
+                           caption_y,
+                           close_button_size.width() + right_extra_width,
+                           close_button_size.height() + top_extra_height);
 
   // When the window is restored, we show a maximized button; otherwise, we show
   // a restore button.
@@ -977,8 +975,7 @@ void OpaqueNonClientView::LayoutWindowControls() {
                                     views::Button::ALIGN_BOTTOM);
   gfx::Size visible_button_size = visible_button->GetPreferredSize();
   visible_button->SetBounds(close_button_->x() - visible_button_size.width(),
-                            top_offset,
-                            visible_button_size.width(),
+                            caption_y, visible_button_size.width(),
                             visible_button_size.height() + top_extra_height);
 
   minimize_button_->SetVisible(true);
@@ -986,93 +983,78 @@ void OpaqueNonClientView::LayoutWindowControls() {
                                       views::Button::ALIGN_BOTTOM);
   gfx::Size minimize_button_size = minimize_button_->GetPreferredSize();
   minimize_button_->SetBounds(
-      visible_button->x() - minimize_button_size.width(),
-      top_offset,
+      visible_button->x() - minimize_button_size.width(), caption_y,
       minimize_button_size.width(),
       minimize_button_size.height() + top_extra_height);
 }
 
 void OpaqueNonClientView::LayoutDistributorLogo() {
-  logo_bounds_.SetRect(minimize_button_->x() - distributor_logo_.width() -
-      kDistributorLogoHorizontalOffset, kDistributorLogoVerticalOffset,
-      distributor_logo_.width(), distributor_logo_.height());
+  // Always lay out the logo, even when it's not present, so we can lay out the
+  // window title based on its position.
+  int logo_x = minimize_button_->x() - (distributor_logo_.empty() ?
+      0 : (distributor_logo_.width() + kLogoCaptionSpacing));
+  logo_bounds_.SetRect(logo_x, TopResizeHeight(), distributor_logo_.width(),
+                       distributor_logo_.height());
 }
 
 void OpaqueNonClientView::LayoutTitleBar() {
-  // Size the window icon, even if it is hidden so we can size the title based
-  // on its position.
-  int left_offset = frame_->IsMaximized() ?
-      (GetSystemMetrics(SM_CXSIZEFRAME) + kWindowIconZoomedLeftOffset) :
-      kWindowIconLeftOffset;
+  // Always lay out the icon, even when it's not present, so we can lay out the
+  // window title based on its position.
+  int frame_thickness = FrameBorderThickness();
+  int icon_x = frame_thickness + kIconLeftSpacing;
 
   // The usable height of the titlebar area is the total height minus the top
-  // resize border, the one shadow pixel at the bottom, and any client edge area
-  // we draw below that shadow pixel (only in restored mode).
-  // TODO(pkasting): Clean up this "4" hack.
-  int top_border_height =
-      frame_->IsMaximized() ? GetSystemMetrics(SM_CYSIZEFRAME) : 4;
-  int available_height = CalculateNonClientTopHeight() - top_border_height - 1;
-  if (!frame_->IsMaximized())
-    available_height -= kClientEdgeZoomedBottomCrop;
+  // resize border and any edge area we draw at its bottom.
+  int title_top_spacing, title_thickness;
+  int top_height = TitleCoordinates(&title_top_spacing, &title_thickness);
+  int available_height = top_height - frame_thickness -
+      BottomEdgeThicknessWithinNonClientHeight();
 
   // The icon takes up a constant fraction of the available height, down to a
   // minimum size, and is always an even number of pixels on a side (presumably
   // to make scaled icons look better).  It's centered within the usable height.
-  int icon_size = std::max((available_height * kWindowIconFractionNumerator /
-      kWindowIconFractionDenominator) / 2 * 2, kWindowIconMinimumSize);
-  int icon_top_offset =
-      ((available_height - icon_size) / 2) + top_border_height;
+  int icon_size = std::max((available_height * kIconHeightFractionNumerator /
+      kIconHeightFractionDenominator) / 2 * 2, kIconMinimumSize);
+  int icon_y = ((available_height - icon_size) / 2) + frame_thickness;
 
   // Hack: Our frame border has a different "3D look" than Windows'.  Theirs has
   // a more complex gradient on the top that they push their icon/title below;
   // then the maximized window cuts this off and the icon/title are centered in
   // the remaining space.  Because the apparent shape of our border is simpler,
   // using the same positioning makes things look slightly uncentered with
-  // restored windows, so we come up one pixel to compensate.
+  // restored windows, so we come up to compensate.
   if (!frame_->IsMaximized())
-    --icon_top_offset;
+    icon_y -= kIconRestoredAdjust;
 
   views::WindowDelegate* d = frame_->window_delegate();
   if (!d->ShouldShowWindowIcon())
     icon_size = 0;
-  icon_bounds_.SetRect(left_offset, icon_top_offset, icon_size, icon_size);
+  icon_bounds_.SetRect(icon_x, icon_y, icon_size, icon_size);
   if (window_icon_)
     window_icon_->SetBounds(icon_bounds_);
 
   // Size the title, if visible.
   if (d->ShouldShowWindowTitle()) {
-    int title_right = logo_bounds_.x() - kTitleLogoSpacing;
     int icon_right = icon_bounds_.right();
-    int title_left =
-        icon_right + (d->ShouldShowWindowIcon() ? kWindowIconTitleSpacing : 0);
-    int title_top_offset = frame_->IsMaximized() ?
-        (GetSystemMetrics(SM_CYSIZEFRAME) + kWindowTitleZoomedTopOffset) :
-        kWindowTitleTopOffset;
-    if (title_font_.height() < kWindowTitleMinimumHeight) {
-      title_top_offset +=
-          (kWindowTitleMinimumHeight - title_font_.height()) / 2;
-    }
-    title_bounds_.SetRect(title_left, title_top_offset,
-        std::max(0, title_right - icon_right), title_font_.height());
+    int title_x =
+        icon_right + (d->ShouldShowWindowIcon() ? kIconTitleSpacing : 0);
+    title_bounds_.SetRect(title_x,
+        title_top_spacing + ((title_thickness - title_font_.height()) / 2),
+        std::max(0, logo_bounds_.x() - kTitleLogoSpacing - title_x),
+        title_font_.height());
   }
 }
 
 void OpaqueNonClientView::LayoutOTRAvatar() {
   SkBitmap otr_avatar_icon = browser_view_->GetOTRAvatarIcon();
-  int non_client_height = CalculateNonClientTopHeight();
-  int otr_bottom = non_client_height + browser_view_->GetTabStripHeight() -
-      kOTRBottomSpacing;
-  int otr_x, otr_y, otr_height;
-  if (frame_->IsMaximized()) {
-    otr_x = GetSystemMetrics(SM_CXSIZEFRAME) + kOTRZoomedLeftOffset;
-    otr_y = non_client_height + kOTRZoomedTopSpacing;
-    otr_height = otr_bottom - otr_y;
-  } else {
-    otr_x = kOTRLeftOffset; 
-    otr_height = otr_avatar_icon.height();
-    otr_y = otr_bottom - otr_height;
-  }
-  otr_avatar_bounds_.SetRect(otr_x, otr_y, otr_avatar_icon.width(), otr_height);
+  int top_height = NonClientTopBorderHeight();
+  int tabstrip_height = browser_view_->GetTabStripHeight() - kOTRBottomSpacing;
+  int otr_height = frame_->IsMaximized() ?
+      (tabstrip_height - kOTRMaximizedTopSpacing) :
+      otr_avatar_icon.height();
+  otr_avatar_bounds_.SetRect(NonClientBorderThickness() + kOTRSideSpacing,
+                             top_height + tabstrip_height - otr_height,
+                             otr_avatar_icon.width(), otr_height);
 }
 
 void OpaqueNonClientView::LayoutClientView() {

@@ -35,13 +35,15 @@ ExternalTabContainer::ExternalTabContainer(
 ExternalTabContainer::~ExternalTabContainer() {
 }
 
-bool ExternalTabContainer::Init(Profile* profile) {
+bool ExternalTabContainer::Init(Profile* profile, HWND parent,
+                                const gfx::Rect& dimensions,
+                                unsigned int style) {
   if (IsWindow()) {
     NOTREACHED();
     return false;
   }
   // First create the container window
-  if (!Create(NULL)) {
+  if (!Create(NULL, dimensions.ToRECT())) {
     NOTREACHED();
     return false;
   }
@@ -81,12 +83,18 @@ bool ExternalTabContainer::Init(Profile* profile) {
 
   NavigationController* controller = tab_contents_->controller();
   DCHECK(controller);
-  registrar_.Add(this, NOTIFY_NAV_ENTRY_COMMITTED,
+  registrar_.Add(this, NotificationType::NAV_ENTRY_COMMITTED,
                  Source<NavigationController>(controller));
-  NotificationService::current()->
-      Notify(NOTIFY_EXTERNAL_TAB_CREATED,
-              Source<NavigationController>(controller),
-              NotificationService::NoDetails());
+  NotificationService::current()->Notify(
+      NotificationType::EXTERNAL_TAB_CREATED,
+      Source<NavigationController>(controller),
+      NotificationService::NoDetails());
+
+  // Now apply the parenting and style
+  if (parent)
+    SetParent(parent);
+  ModifyStyle(0, style, 0);
+
   ::ShowWindow(tab_contents_->GetContainerHWND(), SW_SHOW);
   return true;
 }
@@ -102,10 +110,10 @@ void ExternalTabContainer::OnDestroy() {
     NavigationController* controller = tab_contents_->controller();
     DCHECK(controller);
 
-    NotificationService::current()->
-        Notify(NOTIFY_EXTERNAL_TAB_CLOSED,
-                Source<NavigationController>(controller),
-                Details<ExternalTabContainer>(this));
+    NotificationService::current()->Notify(
+        NotificationType::EXTERNAL_TAB_CLOSED,
+        Source<NavigationController>(controller),
+        Details<ExternalTabContainer>(this));
     tab_contents_->set_delegate(NULL);
     tab_contents_->CloseContents();
     // WARNING: tab_contents_ has likely been deleted.
@@ -215,8 +223,8 @@ void ExternalTabContainer::ForwardMessageToExternalHost(
 void ExternalTabContainer::Observe(NotificationType type,
                                    const NotificationSource& source,
                                    const NotificationDetails& details) {
-  switch (type) {
-    case NOTIFY_NAV_ENTRY_COMMITTED:
+  switch (type.value) {
+    case NotificationType::NAV_ENTRY_COMMITTED:
       if (automation_) {
         const NavigationController::LoadCommittedDetails* commit =
             Details<NavigationController::LoadCommittedDetails>(details).ptr();
@@ -280,6 +288,7 @@ bool ExternalTabContainer::ProcessKeyDown(HWND window, UINT message,
   }
   int flags = HIWORD(lparam);
   if ((flags & KF_EXTENDED) || (flags & KF_ALTDOWN) ||
+      (wparam >= VK_F1 && wparam <= VK_F24) ||
       win_util::IsShiftPressed() || win_util::IsCtrlPressed()) {
     // If this is an extended key or if one or more of Alt, Shift and Control
     // are pressed, this might be an accelerator that the external host wants

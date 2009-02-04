@@ -4,6 +4,8 @@
 
 // This file provides the embedder's side of random webkit glue functions.
 
+#include "build/build_config.h"
+
 #if defined(OS_WIN)
 #include <windows.h>
 #include <wininet.h>
@@ -13,7 +15,6 @@
 #include "base/command_line.h"
 #include "base/scoped_clipboard_writer.h"
 #include "base/string_util.h"
-#include "build/build_config.h"
 #include "chrome/renderer/net/render_dns_master.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/resource_bundle.h"
@@ -22,6 +23,7 @@
 #include "chrome/renderer/visitedlink_slave.h"
 #include "googleurl/src/url_util.h"
 #include "net/base/mime_util.h"
+#include "net/base/net_errors.h"
 #include "webkit/glue/scoped_clipboard_writer_glue.h"
 #include "webkit/glue/webframe.h"
 #include "webkit/glue/webkit_glue.h"
@@ -162,7 +164,7 @@ void AppendToLog(const char* file, int line, const char* msg) {
 }
 
 bool GetMimeTypeFromExtension(const std::wstring &ext,
-                                           std::string *mime_type) {
+                              std::string *mime_type) {
   if (IsPluginProcess())
     return net::GetMimeTypeFromExtension(ext, mime_type);
 
@@ -175,7 +177,7 @@ bool GetMimeTypeFromExtension(const std::wstring &ext,
 }
 
 bool GetMimeTypeFromFile(const std::wstring &file_path,
-                                      std::string *mime_type) {
+                         std::string *mime_type) {
   if (IsPluginProcess())
     return net::GetMimeTypeFromFile(file_path, mime_type);
 
@@ -188,7 +190,7 @@ bool GetMimeTypeFromFile(const std::wstring &file_path,
 }
 
 bool GetPreferredExtensionForMimeType(const std::string& mime_type,
-                                                   std::wstring* ext) {
+                                      std::wstring* ext) {
   if (IsPluginProcess())
     return net::GetPreferredExtensionForMimeType(mime_type, ext);
 
@@ -200,15 +202,21 @@ bool GetPreferredExtensionForMimeType(const std::string& mime_type,
   return !ext->empty();
 }
 
+// TODO(port): Need to finish port ResourceBundle.
 std::string GetDataResource(int resource_id) {
+#if defined(OS_WIN)
   return ResourceBundle::GetSharedInstance().GetDataResource(resource_id);
+#else
+  NOTIMPLEMENTED();
+  return std::string();
+#endif
 }
 
+#if defined(OS_WIN)
 SkBitmap* GetBitmapResource(int resource_id) {
   return ResourceBundle::GetSharedInstance().GetBitmapNamed(resource_id);
 }
 
-#if defined(OS_WIN)
 HCURSOR LoadCursor(int cursor_id) {
   return ResourceBundle::GetSharedInstance().LoadCursor(cursor_id);
 }
@@ -219,6 +227,16 @@ HCURSOR LoadCursor(int cursor_id) {
 Clipboard* ClipboardGetClipboard(){
   return NULL;
 }
+
+#if defined(OS_LINUX)
+// TODO(port): This should replace the method below (the unsigned int is a
+// windows type).  We may need to convert the type of format so it can be sent
+// over IPC.
+bool ClipboardIsFormatAvailable(Clipboard::FormatType format) {
+  NOTIMPLEMENTED();
+  return false;
+}
+#endif
 
 bool ClipboardIsFormatAvailable(unsigned int format) {
   bool result;
@@ -240,7 +258,7 @@ void ClipboardReadHTML(std::wstring* markup, GURL* url) {
 }
 
 GURL GetInspectorURL() {
-  return GURL("chrome://inspector/inspector.html");
+  return GURL("chrome-ui://inspector/inspector.html");
 }
 
 std::string GetUIResourceProtocol() {
@@ -261,15 +279,10 @@ bool EnsureFontLoaded(HFONT font) {
 }
 #endif
 
-webkit_glue::ScreenInfo GetScreenInfo(gfx::NativeView window) {
+webkit_glue::ScreenInfo GetScreenInfo(gfx::NativeViewId window) {
   webkit_glue::ScreenInfo results;
-#if defined(OS_WIN)
   g_render_thread->Send(
       new ViewHostMsg_GetScreenInfo(window, &results));
-#else
-  // TODO(agl): this will start working on GetScreenInfo is fixed
-  NOTIMPLEMENTED();
-#endif
   return results;
 }
 
@@ -280,6 +293,15 @@ uint64 VisitedLinkHash(const char* canonical_url, size_t length) {
 
 bool IsLinkVisited(uint64 link_hash) {
   return g_render_thread->visited_link_slave()->IsVisited(link_hash);
+}
+
+int ResolveProxyFromRenderThread(const GURL& url, std::string* proxy_result) {
+  // Send a synchronous IPC from renderer process to the browser process to
+  // resolve the proxy. (includes --single-process case).
+  int net_error;
+  bool ipc_ok = g_render_thread->Send(
+      new ViewHostMsg_ResolveProxy(url, &net_error, proxy_result));
+  return ipc_ok ? net_error : net::ERR_UNEXPECTED;
 }
 
 #ifndef USING_SIMPLE_RESOURCE_LOADER_BRIDGE

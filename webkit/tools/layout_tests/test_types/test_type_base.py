@@ -19,6 +19,11 @@ import google.path_utils
 from layout_package import path_utils
 from layout_package import platform_utils
 
+def isRenderTreeDump(data):
+  """Returns true if data appears to be a render tree dump as opposed to a
+  plain text dump."""
+  return data.find("RenderView at (0,0)") != -1
+
 class TestArguments(object):
   """Struct-like wrapper for additional arguments needed by specific tests."""
   # Whether to save new baseline results.
@@ -42,11 +47,11 @@ _wdiff_available = True
 
 class TestTypeBase(object):
   # Filename pieces when writing failures to the test results directory.
-  FILENAME_SUFFIX_ACTUAL = "-actual-win"
+  FILENAME_SUFFIX_ACTUAL = "-actual"
   FILENAME_SUFFIX_EXPECTED = "-expected"
-  FILENAME_SUFFIX_DIFF = "-diff-win"
-  FILENAME_SUFFIX_WDIFF = "-wdiff-win.html"
-  FILENAME_SUFFIX_COMPARE = "-diff-win.png"
+  FILENAME_SUFFIX_DIFF = "-diff"
+  FILENAME_SUFFIX_WDIFF = "-wdiff.html"
+  FILENAME_SUFFIX_COMPARE = "-diff.png"
 
   def __init__(self, platform, root_output_dir):
     """Initialize a TestTypeBase object.
@@ -76,15 +81,27 @@ class TestTypeBase(object):
       data: result to be saved as the new baseline
       modifier: type of the result file, e.g. ".txt" or ".png"
     """
-    relative_dir = os.path.dirname(path_utils.RelativeTestFilename(filename))
-    output_dir = os.path.join(path_utils.PlatformResultsDir(self._platform),
-                              self._platform,
-                              relative_dir)
     output_file = os.path.basename(os.path.splitext(filename)[0] +
                                    self.FILENAME_SUFFIX_EXPECTED + modifier)
+    if isRenderTreeDump(data):
+      relative_dir = os.path.dirname(path_utils.RelativeTestFilename(filename))
+      output_dir = os.path.join(path_utils.PlatformResultsDir(self._platform),
+                                self._platform,
+                                relative_dir)
 
-    google.path_utils.MaybeMakeDirectory(output_dir)
-    open(os.path.join(output_dir, output_file), "wb").write(data)
+      google.path_utils.MaybeMakeDirectory(output_dir)
+      open(os.path.join(output_dir, output_file), "wb").write(data)
+    else:
+      # If it's not a render tree, then the results can be shared between all
+      # platforms.  Copy the file into the chromium-win and chromium-mac dirs.
+      relative_dir = os.path.dirname(path_utils.RelativeTestFilename(filename))
+      for platform in ('chromium-win', 'chromium-mac'):
+        output_dir = os.path.join(path_utils.PlatformResultsDir(self._platform),
+                                  platform,
+                                  relative_dir)
+
+        google.path_utils.MaybeMakeDirectory(output_dir)
+        open(os.path.join(output_dir, output_file), "wb").write(data)
 
   def OutputFilename(self, filename, modifier):
     """Returns a filename inside the output dir that contains modifier.
@@ -143,9 +160,9 @@ class TestTypeBase(object):
     between the two to files in the results directory.
 
     The full output filename of the actual, for example, will be
-      <filename><test_type>-actual-win<file_type>
+      <filename><test_type>-actual<file_type>
     For instance,
-      my_test-simp-actual-win.txt
+      my_test-simp-actual.txt
 
     Args:
       filename: The test filename
@@ -160,15 +177,15 @@ class TestTypeBase(object):
     self._MakeOutputDirectory(filename)
     actual_filename = self.OutputFilename(filename,
                       test_type + self.FILENAME_SUFFIX_ACTUAL + file_type)
-    expected_win_filename = self.OutputFilename(filename,
+    expected_filename = self.OutputFilename(filename,
                       test_type + self.FILENAME_SUFFIX_EXPECTED + file_type)
     open(actual_filename, "wb").write(output)
-    open(expected_win_filename, "wb").write(expected)
+    open(expected_filename, "wb").write(expected)
 
     if diff:
       diff = difflib.unified_diff(expected.splitlines(True),
                                   output.splitlines(True),
-                                  expected_win_filename,
+                                  expected_filename,
                                   actual_filename)
 
       diff_filename = self.OutputFilename(filename,
@@ -182,7 +199,7 @@ class TestTypeBase(object):
       cmd = [executable,
              '--start-delete=##WDIFF_DEL##', '--end-delete=##WDIFF_END##',
              '--start-insert=##WDIFF_ADD##', '--end-insert=##WDIFF_END##',
-             actual_filename, expected_win_filename]
+             actual_filename, expected_filename]
       filename = self.OutputFilename(filename,
                       test_type + self.FILENAME_SUFFIX_WDIFF)
 

@@ -12,6 +12,7 @@
 #include "base/ref_counted.h"
 #include "base/string_util.h"
 #include "base/gfx/size.h"
+#include "base/gfx/native_widget_types.h"
 
 #include "chrome/app/chrome_dll_resource.h"
 #include "chrome/common/gfx/chrome_canvas.h"
@@ -231,7 +232,7 @@ bool WebPluginDelegateProxy::Initialize(const GURL& url, char** argn,
 
   // Now tell the PluginInstance in the plugin process to initialize.
   PluginMsg_Init_Params params;
-  params.containing_window = render_view_->host_window();
+  params.containing_window = gfx::NativeViewFromId(render_view_->host_window());
   params.url = url;
   for (int i = 0; i < argc; ++i) {
     params.arg_names.push_back(argn[i]);
@@ -580,7 +581,13 @@ void WebPluginDelegateProxy::OnSetWindow(
     plugin_->SetWindow(window, modal_loop_pump_messages_event);
 
   DCHECK(modal_loop_pump_messages_event_ == NULL);
-  modal_loop_pump_messages_event_.reset();
+
+  if (modal_loop_pump_messages_event) {
+    modal_loop_pump_messages_event_.reset(
+        new base::WaitableEvent(modal_loop_pump_messages_event));
+  } else {
+    modal_loop_pump_messages_event_.reset();
+  }
 }
 
 void WebPluginDelegateProxy::OnCancelResource(int id) {

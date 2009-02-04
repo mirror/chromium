@@ -5,27 +5,52 @@
 #ifndef CHROME_BROWSER_TAB_CONTENTS_WEB_CONTENTS_H_
 #define CHROME_BROWSER_TAB_CONTENTS_WEB_CONTENTS_H_
 
+#include "base/basictypes.h"
 #include "base/hash_tables.h"
+#include "chrome/browser/cancelable_request.h"
+#include "net/base/load_states.h"
+#include "webkit/glue/password_form.h"
+#include "webkit/glue/webpreferences.h"
+
+#if defined(OS_MACOSX) || defined(OS_LINUX)
+// Remove when we've finished porting the supporting classes.
+#include "chrome/common/temp_scaffolding_stubs.h"
+#elif defined(OS_WIN)
 #include "chrome/browser/download/save_package.h"
 #include "chrome/browser/fav_icon_helper.h"
 #include "chrome/browser/printing/print_view_manager.h"
 #include "chrome/browser/renderer_host/render_view_host_delegate.h"
-#include "chrome/browser/tab_contents/render_view_host_manager.h"
 #include "chrome/browser/shell_dialogs.h"
+#include "chrome/browser/tab_contents/render_view_host_manager.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
-#include "chrome/browser/web_app.h"
+#include "chrome/common/gears_api.h"
+#endif
 
+class AutofillForm;
 class AutofillManager;
 class InterstitialPageDelegate;
+class LoadNotificationDetails;
 class PasswordManager;
 class PluginInstaller;
+class RenderProcessHost;
 class RenderViewHost;
 class RenderViewHostFactory;
 class RenderWidgetHost;
+struct ThumbnailScore;
+struct ViewHostMsg_FrameNavigate_Params;
+struct ViewHostMsg_DidPrintPage_Params;
 class WebContentsView;
 
 namespace base {
 class WaitableEvent;
+}
+
+namespace webkit_glue {
+struct WebApplicationInfo;
+}
+
+namespace IPC {
+class Message;
 }
 
 // WebContents represents the contents of a tab that shows web pages. It embeds
@@ -33,8 +58,7 @@ class WaitableEvent;
 class WebContents : public TabContents,
                     public RenderViewHostDelegate,
                     public RenderViewHostManager::Delegate,
-                    public SelectFileDialog::Listener,
-                    public WebApp::Observer {
+                    public SelectFileDialog::Listener {
  public:
   // If instance is NULL, then creates a new process for this view.  Otherwise
   // initialize with a process already created for a different WebContents.
@@ -89,7 +113,6 @@ class WebContents : public TabContents,
   virtual void Destroy();
   virtual WebContents* AsWebContents() { return this; }
   virtual SiteInstance* GetSiteInstance() const;
-  virtual SkBitmap GetFavIcon();
   virtual std::wstring GetStatusText() const;
   virtual bool NavigateToPendingEntry(bool reload);
   virtual void Stop();
@@ -104,6 +127,7 @@ class WebContents : public TabContents,
   virtual void SetDownloadShelfVisible(bool visible);
   virtual void PopupNotificationVisibilityChanged(bool visible);
 
+#if defined(OS_WIN)
   // Retarded pass-throughs to the view.
   // TODO(brettw) fix this, tab contents shouldn't have these methods, probably
   // it should be killed altogether.
@@ -111,15 +135,9 @@ class WebContents : public TabContents,
   virtual HWND GetContainerHWND() const;
   virtual HWND GetContentHWND();
   virtual void GetContainerBounds(gfx::Rect *out) const;
+#endif
 
   // Web apps ------------------------------------------------------------------
-
-  // Sets the WebApp for this WebContents.
-  void SetWebApp(WebApp* web_app);
-  WebApp* web_app() { return web_app_.get(); }
-
-  // Return whether this tab contents was created to contain an application.
-  bool IsWebApplication() const;
 
   // Tell Gears to create a shortcut for the current page.
   void CreateShortcut();
@@ -432,17 +450,6 @@ class WebContents : public TabContents,
   // Send webkit specific settings to the renderer.
   void UpdateWebPreferences();
 
-  // Return whether the optional web application is active for the current URL.
-  // Call this method to check if web app properties are in effect.
-  //
-  // Note: This method should be used for presentation but not security. The app
-  // is always active if the containing window is a web application.
-  bool IsWebApplicationActive() const;
-
-  // WebApp::Observer method. Invoked when the set of images contained in the
-  // web app changes. Notifies the delegate our favicon has changed.
-  virtual void WebAppImagesChanged(WebApp* web_app);
-
   // Called when the user dismisses the shortcut creation dialog.  'success' is
   // true if the shortcut was created.
   void OnGearsCreateShortcutDone(const GearsShortcutData& shortcut_data,
@@ -524,10 +531,12 @@ class WebContents : public TabContents,
   // Whether the current URL is starred
   bool is_starred_;
 
+#if defined(OS_WIN)
   // Handle to an event that's set when the page is showing a message box (or
   // equivalent constrained window).  Plugin processes check this to know if
   // they should pump messages then.
   ScopedHandle message_box_active_;
+#endif
 
   // AutofillManager, lazily created.
   scoped_ptr<AutofillManager> autofill_manager_;
@@ -566,9 +575,6 @@ class WebContents : public TabContents,
   // The current load state and the URL associated with it.
   net::LoadState load_state_;
   std::wstring load_state_host_;
-
-  // Non-null if we're displaying content for a web app.
-  scoped_refptr<WebApp> web_app_;
 
   DISALLOW_COPY_AND_ASSIGN(WebContents);
 };

@@ -20,8 +20,14 @@
 #include "base/values.h"
 #include "chrome/app/result_codes.h"
 #include "chrome/browser/browser_main_win.h"
+#include "chrome/browser/browser_init.h"
+#include "chrome/browser/browser_list.h"
+#include "chrome/browser/browser_prefs.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/browser_process_impl.h"
+#include "chrome/browser/first_run.h"
 #include "chrome/browser/plugin_service.h"
+#include "chrome/browser/profile_manager.h"
 #include "chrome/browser/shell_integration.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
@@ -55,22 +61,20 @@
 #include "base/win_util.h"
 #include "chrome/browser/automation/automation_provider.h"
 #include "chrome/browser/browser.h"
-#include "chrome/browser/browser_init.h"
-#include "chrome/browser/browser_list.h"
-#include "chrome/browser/browser_prefs.h"
-#include "chrome/browser/browser_process_impl.h"
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/browser_trial.h"
 #include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/browser/extensions/extension_protocols.h"
-#include "chrome/browser/first_run.h"
 #include "chrome/browser/jankometer.h"
+#include "chrome/browser/message_window.h"
 #include "chrome/browser/metrics/metrics_service.h"
 #include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/net/dns_global.h"
 #include "chrome/browser/net/sdch_dictionary_fetcher.h"
 #include "chrome/browser/net/url_fixer_upper.h"
 #include "chrome/browser/printing/print_job_manager.h"
+#include "chrome/browser/profile.h"
+#include "chrome/browser/profile_manager.h"
 #include "chrome/browser/rlz/rlz.h"
 #include "chrome/browser/user_data_manager.h"
 #include "chrome/browser/views/user_data_dir_dialog.h"
@@ -171,6 +175,14 @@ StringPiece NetResourceProvider(int key) {
 }
 #endif
 
+void RunUIMessageLoop(BrowserProcess* browser_process) {
+#if defined(OS_WIN)
+  MessageLoopForUI::current()->Run(browser_process->accelerator_handler());
+#elif defined(OS_POSIX)
+  MessageLoopForUI::current()->Run();
+#endif
+}
+
 }  // namespace
 
 // Main routine for running as the Browser process.
@@ -191,7 +203,7 @@ int BrowserMain(const MainFunctionParams& parameters) {
   tracked_objects::AutoTracking tracking_objects;
 #endif
 
-  // Do platform-specific things (such as finishing initiailizing Cocoa)
+  // Do platform-specific things (such as finishing initializing Cocoa)
   // prior to instantiating the message loop. This could be turned into a
   // broadcast notification.
   Platform::WillInitializeMainMessageLoop(parsed_command_line);
@@ -212,9 +224,13 @@ int BrowserMain(const MainFunctionParams& parameters) {
   main_message_loop.set_thread_name(thread_name);
   bool already_running = Upgrade::IsBrowserAlreadyRunning();
 
-  std::wstring user_data_dir;
+  FilePath user_data_dir;
   PathService::Get(chrome::DIR_USER_DATA, &user_data_dir);
-  BrowserInit::MessageWindow message_window(user_data_dir);
+  MessageWindow message_window(user_data_dir);
+
+  bool is_first_run = FirstRun::IsChromeFirstRun() ||
+      parsed_command_line.HasSwitch(switches::kFirstRun);
+  bool first_run_ui_bypass = false;
 
   scoped_ptr<BrowserProcess> browser_process;
   if (parsed_command_line.HasSwitch(switches::kImport)) {
@@ -222,6 +238,7 @@ int BrowserMain(const MainFunctionParams& parameters) {
     // instantiated (as it makes a URLRequest and we don't have an IO thread,
     // see bug #1292702).
     browser_process.reset(new FirstRunBrowserProcess(parsed_command_line));
+    is_first_run = false;
   } else {
     browser_process.reset(new BrowserProcessImpl(parsed_command_line));
   }
@@ -237,10 +254,6 @@ int BrowserMain(const MainFunctionParams& parameters) {
   // locale dll to load.
   PrefService* local_state = browser_process->local_state();
   DCHECK(local_state);
-
-  bool is_first_run = FirstRun::IsChromeFirstRun() ||
-      parsed_command_line.HasSwitch(switches::kFirstRun);
-  bool first_run_ui_bypass = false;
 
   // Initialize ResourceBundle which handles files loaded from external
   // sources. This has to be done before uninstall code path and before prefs
@@ -260,8 +273,7 @@ int BrowserMain(const MainFunctionParams& parameters) {
     // On first run, we  need to process the master preferences before the
     // browser's profile_manager object is created.
     first_run_ui_bypass =
-        !FirstRun::ProcessMasterPreferences(user_data_dir,
-                                            std::wstring(), NULL);
+        !FirstRun::ProcessMasterPreferences(user_data_dir, FilePath(), NULL);
 
     // If we are running in App mode, we do not want to show the importer
     // (first run) UI.
@@ -291,10 +303,14 @@ int BrowserMain(const MainFunctionParams& parameters) {
   }
 
 #if defined(OS_WIN)
-  ResourceBundle::InitSharedInstance(
-      local_state->GetString(prefs::kApplicationLocale));
-  // We only load the theme dll in the browser process.
-  ResourceBundle::GetSharedInstance().LoadThemeResources();
+  // If we're running tests (ui_task is non-null), then the ResourceBundle
+  // has already been initialized.
+  if (!parameters.ui_task) {
+    ResourceBundle::InitSharedInstance(
+        local_state->GetString(prefs::kApplicationLocale));
+    // We only load the theme dll in the browser process.
+    ResourceBundle::GetSharedInstance().LoadThemeResources();
+  }
 #endif
 
   if (!parsed_command_line.HasSwitch(switches::kNoErrorDialogs)) {
@@ -315,11 +331,17 @@ int BrowserMain(const MainFunctionParams& parameters) {
   Profile* profile = profile_manager->GetDefaultProfile(user_data_dir);
   if (!profile) {
 #if defined(OS_WIN)
-    user_data_dir = UserDataDirDialog::RunUserDataDirDialog(user_data_dir);
+    user_data_dir = FilePath::FromWStringHack(
+        UserDataDirDialog::RunUserDataDirDialog(user_data_dir.ToWStringHack()));
     // Flush the message loop which lets the UserDataDirDialog close.
     MessageLoop::current()->Run();
 
-    ResourceBundle::CleanupSharedInstance();
+    if (!parameters.ui_task && browser_shutdown::delete_resources_on_shutdown) {
+      // Only delete the resources if we're not running tests. If we're running
+      // tests the resources need to be reused as many places in the UI cache
+      // SkBitmaps from the ResourceBundle.
+      ResourceBundle::CleanupSharedInstance();
+    }
 
     if (!user_data_dir.empty()) {
       // Because of the way CommandLine parses, it's sufficient to append a new
@@ -328,7 +350,7 @@ int BrowserMain(const MainFunctionParams& parameters) {
       // sounds risky if we parse differently than CommandLineToArgvW.
       CommandLine new_command_line = parsed_command_line;
       new_command_line.AppendSwitchWithValue(switches::kUserDataDir,
-                                             user_data_dir);
+                                             user_data_dir.ToWStringHack());
       base::LaunchApp(new_command_line, false, false, NULL);
     }
 
@@ -443,14 +465,15 @@ int BrowserMain(const MainFunctionParams& parameters) {
   // Config the network module so it has access to resources.
   net::NetModule::SetResourceProvider(NetResourceProvider);
 
-  // Register our global network handler for chrome:// and chrome-extension://
-  // URLs.
+  // Register our global network handler for chrome-ui:// and
+  // chrome-extension:// URLs.
   RegisterURLRequestChromeJob();
   RegisterExtensionProtocols();
 
   sandbox::BrokerServices* broker_services =
       parameters.sandbox_info_.BrokerServices();
-  browser_process->InitBrokerServices(broker_services);
+  if (broker_services)
+    browser_process->InitBrokerServices(broker_services);
 #endif
 
   // In unittest mode, this will do nothing.  In normal mode, this will create
@@ -521,13 +544,13 @@ int BrowserMain(const MainFunctionParams& parameters) {
   RecordBreakpadStatusUMA(metrics);
 
   int result_code = ResultCodes::NORMAL_EXIT;
-  if (BrowserInit::ProcessCommandLine(parsed_command_line, L"", local_state,
-                                      true, profile, &result_code)) {
-#if defined(OS_WIN)
-    MessageLoopForUI::current()->Run(browser_process->accelerator_handler());
-#elif defined(OS_POSIX)
-    MessageLoopForUI::current()->Run();
-#endif
+  if (parameters.ui_task) {
+    MessageLoopForUI::current()->PostTask(FROM_HERE, parameters.ui_task);
+    RunUIMessageLoop(browser_process.get());
+  } else if (BrowserInit::ProcessCommandLine(parsed_command_line,
+                                             std::wstring(), local_state, true,
+                                             profile, &result_code)) {
+    RunUIMessageLoop(browser_process.get());
   }
 
   Platform::WillTerminate();

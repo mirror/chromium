@@ -13,6 +13,7 @@
 
 #include "base/clipboard.h"
 #include "base/gfx/rect.h"
+#include "base/gfx/native_widget_types.h"
 #include "base/shared_memory.h"
 #include "chrome/common/ipc_message_macros.h"
 #include "skia/include/SkBitmap.h"
@@ -39,12 +40,14 @@ IPC_BEGIN_MESSAGES(View, 1)
   IPC_MESSAGE_CONTROL1(ViewMsg_SetNextPageID,
                        int32 /* next_page_id */)
 
-#if defined(OS_WIN)
   // Tells the renderer to create a new view.
   // This message is slightly different, the view it takes is the view to
   // create, the message itself is sent as a non-view control message.
-  IPC_MESSAGE_CONTROL4(ViewMsg_New, HWND, HANDLE, WebPreferences, int32)
-#endif  // defined(OS_WIN)
+  IPC_MESSAGE_CONTROL4(ViewMsg_New,
+                       gfx::NativeViewId, /* parent window */
+                       ModalDialogEvent, /* model dialog box event */
+                       WebPreferences,
+                       int32 /* view id */)
 
   // Tells the renderer to set its maximum cache size to the supplied value
   IPC_MESSAGE_CONTROL3(ViewMsg_SetCacheCapacities,
@@ -61,13 +64,8 @@ IPC_BEGIN_MESSAGES(View, 1)
   // Reply in response to ViewHostMsg_ShowView or ViewHostMsg_ShowWidget.
   // similar to the new command, but used when the renderer created a view
   // first, and we need to update it
-#if defined(OS_WIN)
   IPC_MESSAGE_ROUTED1(ViewMsg_CreatingNew_ACK,
-                      HWND /* parent_hwnd */)
-#else  // defined(OS_WIN)
-  // On POSIX, we don't pass "window handles" between processes.
-  IPC_MESSAGE_ROUTED0(ViewMsg_CreatingNew_ACK)
-#endif
+                      gfx::NativeViewId /* parent_hwnd */)
 
   // Tells the render view to close.
   IPC_MESSAGE_ROUTED0(ViewMsg_Close)
@@ -99,15 +97,9 @@ IPC_BEGIN_MESSAGES(View, 1)
   // This signals the render view that it can send another PaintRect message.
   IPC_MESSAGE_ROUTED0(ViewMsg_PaintRect_ACK)
 
-  // Asks the renderer to calculate the number of printed pages according to the
-  // supplied settings. The renderer will reply with
-  // ViewHostMsg_DidGetPrintedPagesCount.
-  IPC_MESSAGE_ROUTED1(ViewMsg_GetPrintedPagesCount,
-                      ViewMsg_Print_Params)
-
   // Tells the render view to switch the CSS to print media type, renders every
   // requested pages and switch back the CSS to display media type.
-  IPC_MESSAGE_ROUTED1(ViewMsg_PrintPages, ViewMsg_PrintPages_Params)
+  IPC_MESSAGE_ROUTED0(ViewMsg_PrintPages)
 
   // Tells the render view that a ViewHostMsg_ScrollRect message was processed.
   // This signals the render view that it can send another ScrollRect message.
@@ -397,7 +389,7 @@ IPC_BEGIN_MESSAGES(View, 1)
                              ViewHostMsg_Accessibility_Out_Params
                              /* output parameters */)
 
-  // Requests the renderer to clear cashed accessibility information. Takes an 
+  // Requests the renderer to clear cashed accessibility information. Takes an
   // id to clear a specific hashmap entry, and a bool; true clears all, false
   // does not.
   IPC_MESSAGE_ROUTED2(ViewMsg_ClearAccessibilityInfo,
@@ -412,7 +404,7 @@ IPC_BEGIN_MESSAGES(View, 1)
   // Get html data by serializing all frames of current page with lists
   // which contain all resource links that have local copy.
   IPC_MESSAGE_ROUTED3(ViewMsg_GetSerializedHtmlDataForCurrentPageWithLocalLinks,
-                      std::vector<std::wstring> /* urls which have local copy */,
+                      std::vector<std::wstring> /* urls that have local copy */,
                       std::vector<std::wstring> /* paths of local copy */,
                       std::wstring /* local directory path */)
 
@@ -458,9 +450,9 @@ IPC_BEGIN_MESSAGES(View, 1)
                       gfx::Size /* The view size to be repainted */)
 
 #ifdef CHROME_PERSONALIZATION
-  IPC_MESSAGE_ROUTED2(ViewMsg_PersonalizationEvent, 
+  IPC_MESSAGE_ROUTED2(ViewMsg_PersonalizationEvent,
                       std::string /* event name */,
-                      std::string /* event arguments */)                      
+                      std::string /* event arguments */)
 #endif
   // Posts a message to the renderer.
   IPC_MESSAGE_ROUTED2(ViewMsg_HandleMessageFromExternalHost,
@@ -495,7 +487,6 @@ IPC_END_MESSAGES(View)
 // These are messages sent from the renderer to the browser process.
 
 IPC_BEGIN_MESSAGES(ViewHost, 2)
-#if defined(OS_WIN)
   // Sent by the renderer when it is creating a new window.  The browser creates
   // a tab for it and responds with a ViewMsg_CreatingNew_ACK.  If route_id is
   // MSG_ROUTING_NONE, the view couldn't be created.  modal_dialog_event is set
@@ -504,16 +495,7 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
                               int /* opener_id */,
                               bool /* user_gesture */,
                               int /* route_id */,
-                              HANDLE /* modal_dialog_event */)
-#else  // defined(OS_WIN)
-  // On POSIX, we don't use the cross process events for modal dialogs. At some
-  // point, we won't use them on any platform, but for now we just define a
-  // message without the last parameter.
-  IPC_SYNC_MESSAGE_CONTROL2_1(ViewHostMsg_CreateWindow,
-                              int /* opener_id */,
-                              bool /* user_gesture */,
-                              int /* route_id */)
-#endif
+                              ModalDialogEvent /* modal_dialog_event */)
 
   // Similar to ViewHostMsg_CreateView, except used for sub-widgets, like
   // <select> dropdowns.  This message is sent to the WebContents that
@@ -523,13 +505,11 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
                               bool /* focus on show */,
                               int /* route_id */)
 
-#if defined(OS_WIN)
   // These two messages are sent as a result of the above two, in the browser
   // process, from RenderWidgetHelper to RenderViewHost.
   IPC_MESSAGE_ROUTED2(ViewHostMsg_CreateWindowWithRoute,
                       int /* route_id */,
-                      HANDLE /* modal_dialog_event */)
-#endif  // defined(OS_WIN)
+                      ModalDialogEvent /* modal_dialog_event */)
 
   IPC_MESSAGE_ROUTED2(ViewHostMsg_CreateWidgetWithRoute,
                       int /* route_id */,
@@ -596,8 +576,8 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
   // TODO(darin): use a UTF-8 string to reduce data size
   IPC_MESSAGE_ROUTED2(ViewHostMsg_UpdateTitle, int32, std::wstring)
 
-  // Change the encoding name of the page in UI when the page has detected proper
-  // encoding name.
+  // Change the encoding name of the page in UI when the page has detected
+  // proper encoding name.
   IPC_MESSAGE_ROUTED1(ViewHostMsg_UpdateEncoding,
                       std::wstring /* new encoding name */)
 
@@ -633,7 +613,6 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
                               navigating to a POST again and we're going to
                               show the POST interstitial */ )
 
-#if defined(OS_WIN)
   // Sent to paint part of the view.  In response to this message, the host
   // generates a ViewMsg_PaintRect_ACK message.
   IPC_MESSAGE_ROUTED1(ViewHostMsg_PaintRect,
@@ -643,7 +622,6 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
   // generates a ViewMsg_ScrollRect_ACK message.
   IPC_MESSAGE_ROUTED1(ViewHostMsg_ScrollRect,
                       ViewHostMsg_ScrollRect_Params)
-#endif  // defined(OS_WIN)
 
   // Acknowledges receipt of a ViewMsg_HandleInputEvent message.
   // Payload is a WebInputEvent::Type which is the type of the event, followed
@@ -654,12 +632,10 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
   IPC_MESSAGE_ROUTED0(ViewHostMsg_Focus)
   IPC_MESSAGE_ROUTED0(ViewHostMsg_Blur)
 
-#if defined(OS_WIN)
   // Returns the window location of the given window.
   IPC_SYNC_MESSAGE_ROUTED1_1(ViewHostMsg_GetWindowRect,
-                             HWND /* window */,
+                             gfx::NativeViewId /* window */,
                              gfx::Rect /* Out: Window location */)
-#endif  // defined(OS_WIN)
 
   IPC_MESSAGE_ROUTED1(ViewHostMsg_SetCursor, WebCursor)
   // Result of string search in the page.
@@ -850,12 +826,12 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
   // Please see ResourceMessageFilter::OnLoadFont for details.
   IPC_SYNC_MESSAGE_CONTROL1_0(ViewHostMsg_LoadFont,
                               LOGFONT /* font data */)
+#endif  // defined(OS_WIN)
 
   // Returns ScreenInfo corresponding to the given window.
   IPC_SYNC_MESSAGE_CONTROL1_1(ViewHostMsg_GetScreenInfo,
-                              gfx::NativeView /* window */,
+                              gfx::NativeViewId /* window */,
                               webkit_glue::ScreenInfo /* results */)
-#endif  // defined(OS_WIN)
 
   // Send the tooltip text for the current mouse position to the browser.
   IPC_MESSAGE_ROUTED1(ViewHostMsg_SetTooltipText,
@@ -967,7 +943,7 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
   // final print settings. The output parameter is the same as
   // ViewMsg_PrintPages which is executed implicitly.
   IPC_SYNC_MESSAGE_ROUTED3_1(ViewHostMsg_ScriptedPrint,
-                             HWND /* host_window */,
+                             gfx::NativeViewId /* host_window */,
                              int /* cookie */,
                              int /* expected_pages_count */,
                              ViewMsg_PrintPages_Params /* settings choosen by
@@ -1106,18 +1082,16 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
   IPC_MESSAGE_ROUTED1(ViewHostMsg_UnloadListenerChanged,
                       bool /* has_listener */)
 
-#if defined(OS_WIN)
   // Returns the window location of the window this widget is embeded.
   IPC_SYNC_MESSAGE_ROUTED1_1(ViewHostMsg_GetRootWindowRect,
-                             HWND /* window */,
+                             gfx::NativeViewId /* window */,
                              gfx::Rect /* Out: Window location */)
 
   // Returns the resizer box location in the window this widget is embeded.
   // Important for Mac OS X, but not Win or Linux.
   IPC_SYNC_MESSAGE_ROUTED1_1(ViewHostMsg_GetRootWindowResizerRect,
-                             HWND /* window */,
+                             gfx::NativeViewId /* window */,
                              gfx::Rect /* Out: Window location */)
-#endif  // defined(OS_WIN)
 
   // Queries the browser for suggestion for autofill in a form input field.
   IPC_MESSAGE_ROUTED4(ViewHostMsg_QueryFormFieldAutofill,
@@ -1125,5 +1099,13 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
                       std::wstring /* user entered text */,
                       int64 /* id of the text input field */,
                       int /* id of this message */)
+
+  // Get the list of proxies to use for |url|, as a semicolon delimited list
+  // of "<TYPE> <HOST>:<PORT>" | "DIRECT". See also
+  // PluginProcessHostMsg_ResolveProxy which does the same thing.
+  IPC_SYNC_MESSAGE_CONTROL1_2(ViewHostMsg_ResolveProxy,
+                              GURL /* url */,
+                              int /* network error */,
+                              std::string /* proxy list */)
 
 IPC_END_MESSAGES(ViewHost)

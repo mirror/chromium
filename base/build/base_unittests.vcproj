@@ -296,6 +296,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\scoped_temp_dir_unittest.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\sha2_unittest.cc"
 				>
 			</File>
@@ -388,6 +392,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\version_unittest.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\waitable_event_unittest.cc"
 				>
 			</File>
@@ -411,6 +419,10 @@
 		<Filter
 			Name="gfx_tests"
 			>
+			<File
+				RelativePath="..\gfx\jpeg_codec_unittest.cc"
+				>
+			</File>
 			<File
 				RelativePath="..\gfx\png_codec_unittest.cc"
 				>

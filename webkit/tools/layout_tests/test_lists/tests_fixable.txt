@@ -103,11 +103,6 @@ DEFER RELEASE : LayoutTests/fast/events/standalone-image-drag-to-editable.html =
 // and it should replace the first "?" substring. This makes absolutely no sense.
 DEFER : LayoutTests/fast/events/stopPropagation-submit.html = FAIL
 
-// Expected results has a terminal "?", since "set query" on about:blank is allowed.
-// This is strange since query should have no meaning in non-standard urls
-DEFER LINUX WIN : LayoutTests/http/tests/navigation/onload-navigation-iframe-timeout.html = FAIL
-DEFER LINUX WIN : LayoutTests/http/tests/navigation/onload-navigation-iframe.html = FAIL
-
 // -----------------------------------------------------------------
 // PENDING TESTS (forked to pending/, need to be sent upstream)
 // -----------------------------------------------------------------
@@ -326,64 +321,43 @@ DEFER : LayoutTests/http/tests/security/local-user-CSS-from-remote.html = FAIL
 // the checked in results do not include the PASS text.
 DEFER : LayoutTests/http/tests/navigation/changing-frame-hierarchy-in-onload.html = FAIL
 
+// This test has hover effects that change the font size. This test also
+// moves the mouse around, resulting in a layout that dances around.
+// Depending upon when the snapshot is taken we get different results.
+DEFER WIN LINUX : LayoutTests/fast/inline/dirtyLinesForInline.html = PASS FAIL
 // -----------------------------------------------------------------
 // SVG TESTS
 // -----------------------------------------------------------------
 
 // These were recently rebaselined on Windows and probably just need a
 // rebaseline on other platforms as well.
-LINUX : LayoutTests/fast/backgrounds/svg-as-background-1.html = FAIL
-LINUX : LayoutTests/fast/backgrounds/svg-as-background-2.html = FAIL
-LINUX : LayoutTests/fast/backgrounds/svg-as-background-4.html = FAIL
-LINUX : LayoutTests/fast/backgrounds/svg-as-background-5.html = FAIL CRASH
+// Compact support was removed from WebKit by Hyatt and layout tests rebaselined in r40259.
+LINUX : LayoutTests/fast/compact/001.html = FAIL
+LINUX : LayoutTests/fast/compact/002.html = FAIL
 DEFER LINUX : LayoutTests/fast/dom/clientWidthAfterDocumentIsRemoved.html = FAIL
-LINUX MAC : LayoutTests/fast/dynamic/insert-before-table-part-in-continuation.html = FAIL
 MAC : LayoutTests/fast/parser/open-comment-in-textarea.html = FAIL
-LINUX : LayoutTests/fast/text/international/001.html = FAIL
-LINUX : LayoutTests/fast/text/international/002.html = FAIL
-LINUX : LayoutTests/fast/text/international/003.html = FAIL
-LINUX : LayoutTests/fast/text/international/wrap-CJK-001.html = FAIL
+LINUX : LayoutTests/fast/table/form-with-table-style.html = FAIL
 // Font differences, requiring overriden metrics, not a real bug, not fixing for Beta
 DEFER LINUX : LayoutTests/fast/text/international/bidi-AN-after-L.html = FAIL
 DEFER MAC : LayoutTests/fast/text/international/bidi-menulist.html = FAIL
 DEFER LINUX : LayoutTests/fast/text/international/bidi-neutral-run.html = FAIL
 DEFER LINUX : LayoutTests/fast/text/international/thai-line-breaks.html = FAIL
-DEFER MAC LINUX : LayoutTests/svg/batik/text/textFeatures.svg = FAIL PASS
-LINUX : LayoutTests/svg/batik/text/textPosition2.svg = FAIL
-LINUX : LayoutTests/svg/carto.net/colourpicker.svg = FAIL
-LINUX : LayoutTests/svg/custom/circular-marker-reference-2.svg = FAIL
-DEFER LINUX : LayoutTests/svg/custom/use-css-events.svg = FAIL   // 5 numbers differ, by an absolute total of 27.16
+LINUX : LayoutTests/fast/transforms/transform-on-inline.html = FAIL
+LINUX : LayoutTests/fast/transforms/transform-table-row.html = FAIL
+DEFER MAC : LayoutTests/svg/batik/text/textFeatures.svg = FAIL PASS
 LINUX : LayoutTests/svg/custom/foreign-object-skew.svg = FAIL
 MAC : LayoutTests/svg/custom/inline-svg-in-xhtml.xml = FAIL
 DEFER MAC LINUX : LayoutTests/svg/batik/text/textDecoration2.svg = FAIL PASS
-LINUX : LayoutTests/svg/text/text-align-05-b.svg = FAIL
-LINUX : LayoutTests/svg/text/text-altglyph-01-b.svg = FAIL
-DEFER LINUX : LayoutTests/svg/text/text-fonts-01-t.svg = FAIL
 DEFER LINUX : LayoutTests/svg/text/text-intro-05-t.svg = FAIL
-LINUX : LayoutTests/svg/text/text-fonts-02-t.svg = FAIL
-DEFER MAC LINUX : LayoutTests/svg/text/text-text-03-b.svg = FAIL PASS
-LINUX : LayoutTests/svg/text/text-text-05-t.svg = FAIL
-LINUX : LayoutTests/svg/text/text-text-06-t.svg = FAIL
-DEFER LINUX : LayoutTests/svg/text/text-path-01-b.svg = FAIL
-LINUX : LayoutTests/svg/W3C-SVG-1.1/animate-elem-03-t.svg = FAIL
-LINUX : LayoutTests/svg/W3C-SVG-1.1/animate-elem-24-t.svg = FAIL
+LINUX : LayoutTests/svg/W3C-SVG-1.1/text-intro-05-t.svg = FAIL
 DEFER LINUX : LayoutTests/svg/W3C-SVG-1.1/animate-elem-36-t.svg = FAIL
-LINUX : LayoutTests/svg/W3C-SVG-1.1/animate-elem-46-t.svg = FAIL
 LINUX : LayoutTests/svg/W3C-SVG-1.1/animate-elem-81-t.svg = FAIL PASS
-LINUX MAC : LayoutTests/svg/W3C-SVG-1.1/coords-viewattr-01-b.svg = FAIL
+MAC : LayoutTests/svg/W3C-SVG-1.1/coords-viewattr-01-b.svg = FAIL
 MAC : LayoutTests/svg/W3C-SVG-1.1/coords-viewattr-02-b.svg = FAIL
-DEFER LINUX : LayoutTests/svg/W3C-SVG-1.1/metadata-example-01-b.svg = FAIL
 WIN : LayoutTests/svg/W3C-SVG-1.1/pservers-grad-16-b.svg = FAIL
-LINUX : LayoutTests/svg/W3C-SVG-1.1/pservers-grad-18-b.svg = FAIL
-LINUX : LayoutTests/svg/W3C-SVG-1.1/pservers-grad-19-b.svg = FAIL
 MAC : LayoutTests/svg/W3C-SVG-1.1/render-elems-03-t.svg = FAIL
-LINUX : LayoutTests/svg/W3C-SVG-1.1/styling-inherit-01-b.svg = FAIL
-DEFER LINUX : LayoutTests/svg/W3C-SVG-1.1/text-deco-01-b.svg = FAIL
-DEFER LINUX : LayoutTests/svg/W3C-SVG-1.1/text-fonts-01-t.svg = FAIL
-LINUX : LayoutTests/svg/W3C-SVG-1.1/text-fonts-02-t.svg = FAIL
-DEFER LINUX : LayoutTests/svg/W3C-SVG-1.1/text-intro-05-t.svg = FAIL
-DEFER LINUX : LayoutTests/svg/W3C-SVG-1.1/text-path-01-b.svg = FAIL
 DEFER LINUX MAC : LayoutTests/svg/W3C-SVG-1.1/text-text-03-b.svg = FAIL PASS
+LINUX : LayoutTests/svg/carto.net/colourpicker.svg = FAIL
 
 // Pixel test passes. Texts differ by 1 on SVGRenderText bounding box.
 LINUX : LayoutTests/svg/custom/scrolling-embedded-svg-file-image-repaint-problem.html = FAIL
@@ -521,8 +495,8 @@ LINUX WIN : LayoutTests/svg/batik/paints/patternRegions.svg = FAIL CRASH
 LINUX WIN : LayoutTests/svg/batik/text/textEffect.svg = FAIL
 LINUX WIN : LayoutTests/svg/batik/text/textEffect3.svg = FAIL
 
-// 2008/12/13 - This was FAIL but is now CRASH on WIN
-LayoutTests/svg/carto.net/selectionlist.svg = FAIL CRASH
+// 2008/12/13 - This was FAIL but is now CRASH on WIN. See issue 6869.
+LINUX WIN : LayoutTests/svg/carto.net/selectionlist.svg = FAIL CRASH
 LayoutTests/svg/css/getComputedStyle-basic.xhtml = FAIL
 // Flaky on both release and debug.
 LINUX WIN : LayoutTests/svg/custom/deep-dynamic-updates.svg = FAIL CRASH
@@ -531,7 +505,6 @@ LayoutTests/svg/custom/embedded-svg-disallowed-in-dashboard.xml = FAIL
 LINUX WIN : LayoutTests/svg/custom/focus-ring.svg = FAIL
 // Difference between numeric precision in output.
 LINUX WIN : LayoutTests/svg/custom/gradient-stop-corner-cases.svg = FAIL
-LINUX : LayoutTests/svg/custom/group-opacity.svg = FAIL
 LINUX WIN : LayoutTests/svg/custom/image-small-width-height.svg = FAIL
 // Our green is darker and we seem to be a pixel taller.
 WIN : LayoutTests/svg/custom/js-update-image.svg = FAIL
@@ -662,11 +635,6 @@ LINUX WIN : LayoutTests/fast/backgrounds/svg-as-background-3.html = FAIL
 // TODO(port): mac is passing these, does that mean something is wrong?
 DEFER LINUX WIN : LayoutTests/editing/selection/4960137.html = FAIL
 
-// Bug: 1045048
-// We haven't implemented GCController in test shell
-// Not critical for Beta.  We have window.gc() for other tests.
-DEFER : LayoutTests/fast/js/garbage-collect-after-string-appends.html = FAIL
-
 // Bug: 1115062
 // These fail the pixel tests in debug mode because they have
 // unpainted space (filled red in Debug but not in Release).
@@ -751,10 +719,6 @@ LINUX WIN : LayoutTests/fast/repaint/shadow-multiple-strict-horizontal.html = FA
 LINUX WIN : LayoutTests/fast/repaint/shadow-multiple-strict-vertical.html = FAIL
 LINUX WIN : LayoutTests/fast/repaint/shadow-multiple-vertical.html = FAIL
 
-// Many of the failures here are because V8 stringifies objects differently than
-// JSC. However, the missing position and totalSize properties seems genuine.
-SKIP : LayoutTests/fast/dom/xmlhttprequest-get.xhtml = PASS
-
 // We don't render reflection masks properly.
 // http://code.google.com/p/chromium/issues/detail?id=3229
 LINUX WIN : LayoutTests/fast/reflections/reflection-masks.html = FAIL
@@ -786,8 +750,6 @@ LayoutTests/accessibility = FAIL
 LINUX : LayoutTests/fast/borders/border-image-omit-right-slice.html = FAIL
 // Border radius not anti-aliased.
 WIN : LayoutTests/fast/borders/fieldsetBorderRadius.html = FAIL
-// This test should just need to be rebaselined on Linux.
-LINUX : LayoutTests/fast/canvas/canvas-text-alignment.html = FAIL
 // Linux pixeltest failure: radial gradients don't have offset focal point
 LINUX WIN : LayoutTests/fast/gradients/generated-gradients.html = FAIL
 // Linux pixeltest failure: radial gradients don't have offset focal point
@@ -848,10 +810,6 @@ WIN : LayoutTests/http/tests/plugins/geturlnotify-from-npp-destroystream.html = 
 // way.  Maybe this is just flaky because it's animating faster?
 LayoutTests/animations/big-rotation.html = FAIL PASS
 
-// Missing a Georgian font for Linux
-LINUX : LayoutTests/css2.1/t1202-counter-09-b.html = FAIL
-LINUX : LayoutTests/css2.1/t1202-counters-09-b.html = FAIL
-
 // It's not clear that the test isn't wrong here. It believes that middle
 // aligning 15px Ahem should end up in a certain spot. But we have the
 // x-height correct and we're still one px off.
@@ -861,16 +819,10 @@ LINUX : LayoutTests/css2.1/t100801-c544-valgn-01-d-ag.html = FAIL
 // We should be able to pass this -- not sure what's wrong.
 LINUX : LayoutTests/css2.1/t1008-c44-ln-box-02-d-ag.html = FAIL
 
-// Many off-by-one-pixel bits.  Font metrics?
-LINUX : LayoutTests/css2.1/t100801-c544-valgn-03-d-agi.html = FAIL
-
 // Red pixels -- probably font metrics?  Ugh.
 LINUX : LayoutTests/css2.1/t100801-c548-ln-ht-04-d-ag.html = FAIL
 // Red pixels, even upstream!  Linux is like upstream but everyone fails.
 LINUX WIN : LayoutTests/css2.1/t1605-c545-txttrans-00-b-ag.html = FAIL
-
-// Not implemented in clipboard code.
-LINUX : LayoutTests/editing/pasteboard/copy-standalone-image.html = FAIL
 
 // Some tests that we had baselined improperly on Windows.
 WIN : LayoutTests/css2.1/t1507-c526-font-sz-02-b-a.html = FAIL
@@ -880,9 +832,6 @@ LINUX : LayoutTests/editing/deleting/deletionUI-single-instance.html = FAIL
 
 // Linux: off-by-ones imply font metrics.
 LINUX MAC : LayoutTests/editing/selection/select-from-textfield-outwards.html = FAIL
-
-// Linux: off-by-ones imply font metrics.
-LINUX : LayoutTests/fast/block/basic/011.html = FAIL
 
 // Linux: fonts significantly different.
 LINUX MAC : LayoutTests/fast/block/margin-collapse/103.html = FAIL
@@ -897,12 +846,6 @@ LINUX : LayoutTests/fast/css/font-face-descriptor-multiple-values.html = FAIL
 // need to check in a wrong-looking baseline.  Windows looks wrong too.
 LINUX : LayoutTests/fast/css/font-face-locally-installed.html = FAIL
 
-// Our metrics for Georgia are off by one pixel.
-LINUX : LayoutTests/fast/css/line-height-font-order.html = FAIL
-
-// Need a Japanese font.
-LINUX : LayoutTests/fast/encoding/denormalised-voiced-japanese-chars.html = FAIL
-
 // Font metrics wrong, despite using Lucida Grande?
 LINUX MAC : LayoutTests/fast/events/updateLayoutForHitTest.html = FAIL
 
@@ -912,22 +855,17 @@ LINUX MAC : LayoutTests/fast/forms/searchfield-heights.html = FAIL
 MAC : LayoutTests/fast/forms/textfield-outline.html = FAIL
 
 // Hebrew font metrics.
-LINUX : LayoutTests/fast/forms/select-visual-hebrew.html = FAIL
-LINUX MAC : LayoutTests/fast/forms/visual-hebrew-text-field.html = FAIL
+MAC : LayoutTests/fast/forms/visual-hebrew-text-field.html = FAIL
 
 // Layout totally different -- wrong font selected?
 LINUX : LayoutTests/fast/frames/viewsource-attribute.html = FAIL
 
 // Linux flaky: sometimes I get scrollbars and sometimes not.
 LINUX : LayoutTests/fast/lists/001.html = FAIL PASS
-MAC : LayoutTests/fast/lists/001.html = FAIL
 
 // We fail to load a file URL with a port number -- how does this work on
 // Windows?
 LINUX MAC : LayoutTests/fast/loader/file-URL-with-port-number.html = FAIL
-
-// URL canonicalization is different -- how does this work on Windows?
-LINUX MAC : LayoutTests/fast/loader/url-parse-1.html = FAIL
 
 // Text doesn't display at all -- maybe we don't have the slow font
 // code enabled?
@@ -951,16 +889,10 @@ LINUX : LayoutTests/fast/text/international/bidi-CS-after-AN.html = FAIL
 // Missing Hindi font.
 LINUX : LayoutTests/fast/text/international/hindi-spacing.html = FAIL
 
-// Missing composed "m'" glyph.
-LINUX : LayoutTests/fast/text/line-breaks.html = FAIL
-
 // We print to stderr when a failure happens while importing XSL;
 // should disable this in libxml.
 LINUX MAC : LayoutTests/fast/xsl/transform-xhr-doc.xhtml = FAIL
 
-
-// Mysterious off-by-one on the y axis -- font metrics?
-LINUX : LayoutTests/css1/box_properties/acid_test.html = FAIL
 
 MAC : LayoutTests/fast/forms/input-appearance-height.html = FAIL
 MAC : LayoutTests/fast/forms/input-text-scroll-left-on-blur.html = FAIL
@@ -980,7 +912,6 @@ LINUX : chrome/fast/forms/basic-selects.html = FAIL
 
 // Depends on plugin support.
 LINUX MAC : LayoutTests/fast/dom/object-embed-plugin-scripting.html = FAIL
-MAC : LayoutTests/fast/dom/Window/Plug-ins.html = FAIL
 LINUX MAC : LayoutTests/fast/dynamic/flash-replacement-test.html = FAIL
 LINUX MAC : LayoutTests/fast/events/tabindex-focus-blur-all.html = FAIL
 LINUX MAC : LayoutTests/fast/loader/loadInProgress.html = FAIL
@@ -998,7 +929,7 @@ LINUX MAC : LayoutTests/dom/html/level2/html/HTMLAppletElement07.html = FAIL
 LINUX MAC : LayoutTests/dom/html/level2/html/HTMLAppletElement08.html = FAIL
 LINUX MAC : LayoutTests/dom/html/level2/html/HTMLAppletElement09.html = FAIL
 LINUX MAC : LayoutTests/dom/html/level2/html/HTMLAppletElement10.html = FAIL
-LINUX MAC : LayoutTests/fast/js/navigator-mimeTypes-length.html = FAIL
+LINUX : LayoutTests/fast/js/navigator-mimeTypes-length.html = FAIL
 LINUX MAC : LayoutTests/http/tests/plugins/cross-frame-object-access.html = FAIL
 LINUX MAC : LayoutTests/http/tests/plugins/get-url.html = TIMEOUT
 // Skip because we throw an exception before we get to dumpAsText.
@@ -1046,36 +977,27 @@ MAC : LayoutTests/fast/forms/search-event-delay.html = FAIL TIMEOUT
 // We don't draw the spelling markers at all in test shell, and it's a low
 // priority, so I'm DEFERing.
 DEFER LINUX WIN : LayoutTests/editing/spelling/inline_spelling_markers.html = FAIL
-LayoutTests/fast/dom/StyleSheet/ownerNode-lifetime-2.html = FAIL
-LayoutTests/fast/dom/constructors-cached-navigate.html = FAIL
-LayoutTests/fast/dom/constructors-cached.html = FAIL
 LayoutTests/fast/js/arguments.html = FAIL
-LayoutTests/fast/js/construct-global-object.html = FAIL
 LayoutTests/fast/js/function-dot-arguments.html = FAIL
 LayoutTests/fast/js/primitive-method-this.html = FAIL
 LayoutTests/http/tests/plugins/local-geturl-from-remote.html = CRASH FAIL
-LINUX : LayoutTests/scrollbars/listbox-scrollbar-combinations.html = FAIL
-LINUX : LayoutTests/scrollbars/overflow-scrollbar-combinations.html = FAIL
+// These two depend on which webkit features are enabled.  For instance, it checks
+// if the Audio constructor is available which is only the case if AUDIO is enabled.
+LayoutTests/fast/dom/constructors-cached-navigate.html = FAIL
+LayoutTests/fast/dom/constructors-cached.html = FAIL
 
-// The handling of the selection functions on HTMLInputElements differ
-// from the Firefox behavior.  We should follow Firefox and I believe
-// that WebKit should as well.  I have submitted a patch to fix this
-// upstream after which it will be easy to fix in the v8 bindings as
-// well.
-//
-// https://bugs.webkit.org/show_bug.cgi?id=23300
-LayoutTests/fast/forms/selection-functions.html = FAIL
+// This test was update in webkit revision 40293.  This new test
+// passes, but the old test seems to still be used on the buildbot.
+// Mac seems to be passing this
+WIN : LayoutTests/fast/forms/selection-functions.html = FAIL
 
 // MERGE REGRESSIONS 36102:37604
 
 LINUX : LayoutTests/fast/events/mouse-click-events.html = FAIL
-// The thumb in the scrollbar looks wrong.  It looks too narrow.
 LayoutTests/fast/forms/form-element-geometry.html = FAIL
 // The list box selection is wrong, the focus ring is wrong, and the thumb in
 // the scrollbar looks too narrow.
 LINUX WIN : LayoutTests/fast/forms/listbox-deselect-scroll.html = FAIL
-// The thumb in the scrollbar looks too narrow.
-LINUX : LayoutTests/fast/forms/listbox-scrollbar-incremental-load.html = FAIL
 LINUX WIN : LayoutTests/fast/forms/listbox-selection-2.html = FAIL
 // Thumb is the wrong size and this test doesn't work on Windows due to font
 // sizes.
@@ -1105,6 +1027,9 @@ chrome/fast/forms/basic-textareas.html = FAIL
 LayoutTests/http/tests/misc/dns-prefetch-control.html = FAIL TIMEOUT PASS
 // NEW FOR MERGE 37604:38097
 LayoutTests/fast/events/destroyed-atomic-string.html = FAIL
+// This is a Safari specific test used to document the set of global
+// constructors they expose and the exact way they are printed.  Not
+// important - we might even want to ignore it.
 LayoutTests/fast/js/global-constructors.html = FAIL
 LINUX WIN : LayoutTests/fast/layers/opacity-transforms.html = FAIL
 LayoutTests/fast/profiler = FAIL TIMEOUT
@@ -1116,10 +1041,6 @@ LayoutTests/http/tests/security/originHeader/origin-header-for-empty.html = FAIL
 
 MAC : LayoutTests/http/tests/security/originHeader/origin-header-for-https.html = FAIL TIMEOUT
 
-// MERGE 38097:38305 REGRESSIONS
-// Bug 5053: fails (maybe V8?)
-LayoutTests/fast/frames/cross-site-this.html = FAIL
-
 // MERGE 38389:38450
 LayoutTests/fast/dom/cssTarget-crash.html = TIMEOUT
 
@@ -1129,7 +1050,7 @@ LayoutTests/security/block-test.html = FAIL
 
 // MERGE 38500:39550: New tests
 // Missing expected results
-SKIP : LayoutTests/animations/animation-drt-api.html = PASS
+SKIP LINUX MAC : LayoutTests/animations/animation-drt-api.html = PASS
 
 // MERGE 38600:38625: New tests
 // Big 4999: we need to fix this same bug in our plugin handling Apple did in
@@ -1437,18 +1358,18 @@ MAC : LayoutTests/http/tests/multipart/invalid-image-data.html = FAIL
 
 // window.open crashes (some of these are flaky, in that they don't always
 // crash, and are noted as such)
-MAC : LayoutTests/http/tests/navigation/target-frame-from-window.html = CRASH TIMEOUT PASS
-MAC : LayoutTests/http/tests/security/frameNavigation/not-opener.html = CRASH PASS TIMEOUT
-MAC : LayoutTests/http/tests/security/frameNavigation/opener.html = CRASH PASS TIMEOUT
-MAC : LayoutTests/http/tests/security/javascriptURL/xss-ALLOWED-to-javascript-url-window-open.html = PASS CRASH TIMEOUT
+MAC : LayoutTests/http/tests/navigation/target-frame-from-window.html = TIMEOUT PASS
+MAC : LayoutTests/http/tests/security/frameNavigation/not-opener.html = PASS TIMEOUT CRASH
+MAC : LayoutTests/http/tests/security/frameNavigation/opener.html = PASS TIMEOUT
+MAC : LayoutTests/http/tests/security/javascriptURL/xss-ALLOWED-to-javascript-url-window-open.html = PASS TIMEOUT
 MAC : LayoutTests/http/tests/xmlhttprequest/close-window.html = CRASH TIMEOUT
-MAC : LayoutTests/plugins/open-and-close-window-with-plugin.html = CRASH FAIL
-MAC : LayoutTests/fast/dom/Window/setting-properties-on-closed-window.html = CRASH PASS TIMEOUT
-MAC : LayoutTests/fast/events/open-window-from-another-frame.html = CRASH PASS TIMEOUT
-MAC : LayoutTests/fast/history/history_reload.html = CRASH PASS TIMEOUT
-MAC : LayoutTests/http/tests/security/dataURL/xss-DENIED-to-data-url-in-foreign-domain-window-open.html = CRASH TIMEOUT FAIL
-MAC : LayoutTests/http/tests/security/javascriptURL/xss-DENIED-from-javascript-url-in-foreign-domain-window-open.html = CRASH PASS TIMEOUT
-MAC : LayoutTests/http/tests/security/javascriptURL/xss-DENIED-to-javascript-url-in-foreign-domain-window-open.html = PASS CRASH TIMEOUT
+MAC : LayoutTests/plugins/open-and-close-window-with-plugin.html = FAIL TIMEOUT
+MAC : LayoutTests/fast/dom/Window/setting-properties-on-closed-window.html = PASS TIMEOUT
+MAC : LayoutTests/fast/events/open-window-from-another-frame.html = PASS TIMEOUT
+MAC : LayoutTests/fast/history/history_reload.html = PASS TIMEOUT
+MAC : LayoutTests/http/tests/security/dataURL/xss-DENIED-to-data-url-in-foreign-domain-window-open.html = TIMEOUT FAIL CRASH
+MAC : LayoutTests/http/tests/security/javascriptURL/xss-DENIED-from-javascript-url-in-foreign-domain-window-open.html = PASS TIMEOUT
+MAC : LayoutTests/http/tests/security/javascriptURL/xss-DENIED-to-javascript-url-in-foreign-domain-window-open.html = PASS TIMEOUT
 MAC : LayoutTests/svg/carto.net/scrollbar.svg = CRASH PASS
 
 //  no html tags, bad html (unmatched tags)
@@ -1478,9 +1399,6 @@ MAC : LayoutTests/fast/images/object-image.html = FAIL
 // has regressed.
 MAC DEBUG : LayoutTests/fast/js/large-expressions.html = FAIL
 
-// Parsing issue?
-MAC :  LayoutTests/fast/js/reparsing-semicolon-insertion.html = FAIL
-
 // Rebase for our network stack?
 MAC : LayoutTests/http/tests/misc/window-dot-stop.html = FAIL
 MAC : LayoutTests/http/tests/xmlhttprequest/abort-should-cancel-load.html = FAIL
@@ -1496,6 +1414,10 @@ MAC : LayoutTests/svg/hixie/perf/007.xml = FAIL PASS
 MAC : LayoutTests/animations/combo-transform-translate+scale.html = PASS FAIL
 MAC : LayoutTests/animations/change-one-anim.html = FAIL PASS
 
+// Fails due to a log message now that some, but not all plugin code is hooked
+// up (w/o the code, the log wasn't generated, and this passed).
+MAC : LayoutTests/fast/dom/object-plugin-hides-properties.html = FAIL
+
 // All of these svg tests seem to be hit or miss on the mac.  the issue is they
 // seem not always take the dom snapshot at a consistent state, so some times
 // animations have started and sometimes they haven't.  It looks like win and
@@ -1504,7 +1426,7 @@ MAC : LayoutTests/animations/change-one-anim.html = FAIL PASS
 // pass & fail, but we really need to fix these tests upstream to have
 // a consistent behavior (and probably update win/linux expected values).
 MAC : LayoutTests/svg/W3C-SVG-1.1/animate-elem-02-t.svg = FAIL PASS
-MAC : LayoutTests/svg/W3C-SVG-1.1/animate-elem-03-t.svg = FAIL PASS
+MAC LINUX : LayoutTests/svg/W3C-SVG-1.1/animate-elem-03-t.svg = FAIL PASS
 MAC : LayoutTests/svg/W3C-SVG-1.1/animate-elem-04-t.svg = FAIL PASS
 MAC : LayoutTests/svg/W3C-SVG-1.1/animate-elem-05-t.svg = FAIL PASS
 MAC : LayoutTests/svg/W3C-SVG-1.1/animate-elem-06-t.svg = FAIL PASS
@@ -1534,6 +1456,7 @@ MAC : LayoutTests/svg/W3C-SVG-1.1/animate-elem-85-t.svg = FAIL PASS
 MAC : LayoutTests/transitions/change-values-during-transition.html = FAIL PASS
 MAC : LayoutTests/transitions/shorthand-border-transitions.html = FAIL PASS
 MAC : LayoutTests/transitions/shorthand-transitions.html = FAIL PASS
+MAC : LayoutTests/animations/change-keyframes-name.html = FAIL PASS
 
 // The following are flaky in that some times the timeout or crash, but we think
 // it is because of bugs in other parts of the code and not specific to what
@@ -1547,7 +1470,7 @@ MAC : LayoutTests/http/tests/security/javascriptURL/xss-ALLOWED-from-javascript-
 MAC : LayoutTests/fast/css/background-shorthand-invalid-url.html = CRASH PASS
 MAC : LayoutTests/fast/dom/Window/window-early-properties.html = CRASH PASS TIMEOUT
 MAC : chrome/http/tests/misc/set-window-opener-to-null.html = CRASH PASS TIMEOUT
-MAC : LayoutTests/fast/dom/Window/new-window-opener.html = CRASH TIMEOUT
+MAC : LayoutTests/fast/dom/Window/new-window-opener.html = CRASH TIMEOUT FAIL
 MAC : LayoutTests/http/tests/security/aboutBlank/xss-DENIED-navigate-opener-document-write.html = PASS CRASH TIMEOUT
 MAC : LayoutTests/http/tests/security/aboutBlank/xss-DENIED-navigate-opener-javascript-url.html = PASS CRASH TIMEOUT
 MAC : LayoutTests/http/tests/security/aboutBlank/xss-DENIED-set-opener.html = PASS CRASH TIMEOUT
@@ -1573,7 +1496,7 @@ MAC : LayoutTests/fast/borders/border-image-01.html = CRASH PASS
 MAC : LayoutTests/fast/canvas/linearGradient-infinite-values.html = CRASH PASS
 MAC : LayoutTests/fast/css/acid2-pixel.html = CRASH PASS
 MAC : LayoutTests/fast/canvas/gradient-with-clip.html = CRASH PASS
-MAC : LayoutTests/fast/css/acid2.html = CRASH PASS
+MAC LINUX : LayoutTests/fast/css/acid2.html = CRASH PASS
 // These next few passes like 1 in 20 times, but it could be from corruption
 // from previous tests that is causing the problems.
 MAC : LayoutTests/http/tests/misc/xhtml.php = CRASH FAIL PASS
@@ -1597,7 +1520,6 @@ LayoutTests/fast/dom/dom-constructors.html = FAIL
 // WebKit Merge 39050:39100 failures:
 LayoutTests/fast/dom/java-applet-calls.html = FAIL
 LINUX WIN : LayoutTests/fast/repaint/transform-repaint-descendants.html = FAIL
-LINUX WIN : LayoutTests/http/tests/loading/simple-subframe.html = FAIL
 
 // WebKit Merge 39100:39141 new tests:
 MAC : LayoutTests/fast/events/special-key-events-in-input-text.html = FAIL
@@ -1654,10 +1576,9 @@ LINUX : LayoutTests/fast/css/beforeSelectorOnCodeElement.html = CRASH PASS
 // This test needs to be rebaselined on Mac.
 MAC : LayoutTests/animations/keyframes-rule.html = FAIL
 
-// These two appear to be failing because of changes to PCRE that have
-// not made it to JSCRE (regex engine used by V8). See V8 bug 182.
+// The V8 regular expression engine does not match JSCRE on this one.
+// See V8 bug 182.
 LayoutTests/fast/js/regexp-no-extensions.html = FAIL
-LayoutTests/fast/regex/quantified-assertions.html = FAIL
 
 // This test appears to pass on Linux, despite it referencing feed:// URLs which
 // we don't support.  Needs more investigation.
@@ -1713,15 +1634,9 @@ WIN DEBUG : LayoutTests/editing/execCommand/paste-2.html = PASS FAIL
 SKIP : LayoutTests/fast/events/pointer-events-2.html = FAIL
 SKIP : LayoutTests/fast/events/pointer-events.html = FAIL
 
-// Merge 39660:39711 - need to implement layoutTestController.numberOfActiveAnimations()
-SKIP : LayoutTests/animations/animation-controller-drt-api.html = TIMEOUT
-SKIP : LayoutTests/transitions/zero-duration-with-non-zero-delay-end.html = TIMEOUT
-
-
 // Merge 39744:39829 - new tests
 WIN LINUX : LayoutTests/fast/canvas/canvas-incremental-repaint-2.html = FAIL
 LayoutTests/fast/encoding/char-encoding-mac.html = FAIL
-WIN LINUX : LayoutTests/fast/forms/focus2.html = FAIL
 WIN LINUX : LayoutTests/fast/repaint/transform-disable-layoutstate.html = FAIL
 
 // Merge 39744:39829 - regression likely due to bad implementation of RenderPath::strokeContains in PathSkia.cpp
@@ -1734,18 +1649,13 @@ LINUX : LayoutTests/tables/mozilla_expected_failures/marvin/table_overflow_dirty
 WIN : LayoutTests/tables/mozilla_expected_failures/marvin/table_overflow_dirty_reflow_tbody.html = FAIL PASS
 MAC : LayoutTests/tables/mozilla_expected_failures/marvin/table_overflow_dirty_reflow_tbody.html = FAIL PASS
 
-// 12-Jan-2009 Regressions:
-// I'm turning these off to green the build until I can look at them tomorrow. For the
-// most part they probably just need to be rebaselined due to recent Skia SVG changes.
-LINUX : LayoutTests/fast/images/animated-svg-as-image.html = FAIL
-
 // Looks like this just needs a rebaseline.
 LINUX : LayoutTests/svg/custom/stroke-fallback.svg = FAIL
 
 // Merge 39830:39880 - new tests
 LayoutTests/plugins/npruntime.html = FAIL TIMEOUT
 
-// Merge 39830:39880 - regressions 
+// Merge 39830:39880 - regressions
 WIN : LayoutTests/editing/selection/5057506.html = FAIL
 LINUX WIN : LayoutTests/fast/events/init-events.html = FAIL
 
@@ -1753,19 +1663,18 @@ LINUX WIN : LayoutTests/fast/events/init-events.html = FAIL
 // Note: this failed before the merge on Windows, just not crashed (brettw saw
 // this on his machine once so is marking it as so).
 WIN : LayoutTests/fast/borders/border-image-omit-right-slice.html = FAIL CRASH
-// Bug 6733: Need to parse Inifinity as 0.
+// Bug 6733: This test is wrong: it is testing a Safari regression.
 LayoutTests/fast/js/numeric-conversion.html = FAIL
 
 // Bug 6735: Merge 39894:39913 - new test.
 LayoutTests/plugins/netscape-throw-exception.html = FAIL
 
 // Merge 39744:39913? - regressions
-WIN : LayoutTests/fast/dom/Window/setting-properties-on-closed-window.html = PASS TIMEOUT
 WIN : LayoutTests/fast/dom/Window/timeout-callback-scope.html = PASS TIMEOUT
-WIN LINUX : LayoutTests/fast/inline/dirtyLinesForInline.html = PASS FAIL
-WIN : LayoutTests/fast/layers/layer-visibility-sublayer.html = PASS FAIL
 WIN : LayoutTests/http/tests/security/dataURL/xss-DENIED-from-data-url-in-foreign-domain-subframe.html = PASS TIMEOUT
 WIN : LayoutTests/svg/W3C-SVG-1.1/animate-elem-02-t.svg = PASS FAIL
+// I believe this is a bug in the test. I have upstreamed a fix
+// (https://bugs.webkit.org/show_bug.cgi?id=23633).
 WIN : LayoutTests/transitions/transition-end-event-nested.html = PASS FAIL
 LayoutTests/http/tests/misc/uncacheable-script-repeated.html = PASS TIMEOUT
 LINUX : LayoutTests/http/tests/local/stylesheet-and-script-load-order-http.html = PASS TIMEOUT
@@ -1773,20 +1682,18 @@ LINUX : LayoutTests/svg/custom/animate-path-morphing.svg = PASS FAIL
 LINUX : LayoutTests/svg/custom/circular-marker-reference-1.svg = PASS FAIL
 LINUX : LayoutTests/transitions/change-values-during-transition.html = PASS FAIL
 
-// These 3 never worked on Linux, but were in the past incorrectly rebaselined.
-// Text gradient fills/strokes not working.
-LINUX : LayoutTests/svg/W3C-SVG-1.1/pservers-grad-11-b.svg = FAIL
+// Radial gradient on text not rendered.
+LINUX WIN : LayoutTests/svg/W3C-SVG-1.1/pservers-grad-11-b.svg = FAIL
+
+// This never worked on Linux, but were in the past incorrectly rebaselined.
 // Text pattern fills/strokes not working.
 LINUX : LayoutTests/svg/custom/js-late-pattern-and-object-creation.svg = FAIL
-// Text stroke partially missing.
-LINUX : LayoutTests/svg/custom/struct-use-09-b.svg = FAIL
+
+// might need to be rebaselined in win, 'DRAFT' rendering incorrect before
+WIN : LayoutTests/svg/custom/struct-use-09-b.svg = FAIL
 
 // Merge 39913:39933 - regressions
 // See http://crbug.com/6482
-WIN : LayoutTests/fast/forms/searchfield-heights.html = FAIL
-LINUX WIN : LayoutTests/fast/forms/input-appearance-height.html = FAIL
-LINUX WIN : LayoutTests/fast/forms/placeholder-pseudo-style.html = FAIL
-LINUX WIN : LayoutTests/fast/forms/search-placeholder-value-changed.html = FAIL
 LINUX WIN : LayoutTests/fast/replaced/width100percent-searchfield.html = FAIL
 
 // Passes locally but Text diff fails on the buildbots
@@ -1796,16 +1703,10 @@ LINUX : LayoutTests/svg/custom/path-getTotalLength.svg = FAIL PASS
 LayoutTests/fast/regex/malformed-escapes.html = FAIL
 
 // Merge 39972:40057 -- regressions
-LINUX : LayoutTests/fast/canvas/pointInPath.html = CRASH
-// After a rebaseline, this fails image diff on the buildbot but passes locally.
-// TODO(estade): investigate.
-LINUX : LayoutTests/editing/selection/extend-selection-bidi.html = FAIL PASS
+LINUX : LayoutTests/fast/canvas/pointInPath.html = FAIL
 
 // Merge 40059:40086 -- regressions
 LayoutTests/transitions/hang-with-bad-transition-list.html = PASS FAIL TIMEOUT
-// These two appear to have been failing before the merge.
-LINUX : LayoutTests/svg/custom/circular-marker-reference-3.svg = FAIL
-LINUX : LayoutTests/svg/custom/circular-marker-reference-4.svg = FAIL
 
 // TestShell change to dump() on notifyDone http://codereview.chromium.org/18440
 WIN : LayoutTests/fast/dom/Window/window-property-shadowing.html = TIMEOUT
@@ -1820,26 +1721,80 @@ MAC : LayoutTests/fast/js/switch-behaviour.html = FAIL
 WIN LINUX : LayoutTests/editing/selection/move-by-line-001.html = PASS FAIL
 MAC : LayoutTests/fast/forms/002.html = FAIL
 
-// Merge 40086:40124 -- new test
-// This needs layoutTestController.numberOfActiveAnimations implemented.
-LayoutTests/transitions/repeated-firing-background-color.html = FAIL TIMEOUT
-
 // Merge 40124:40164 -- regressions
-LayoutTests/css1/box_properties/float.html = FAIL
-WIN LINUX : LayoutTests/fast/css/acid2-pixel.html = FAIL
-WIN : LayoutTests/fast/css/acid2.html = FAIL
-WIN MAC : LayoutTests/fast/dom/clientWidthAfterDocumentIsRemoved.html = FAIL
-WIN : LayoutTests/fast/dynamic/insert-before-table-part-in-continuation.html = FAIL
-LayoutTests/fast/forms/HTMLOptionElement_label06.html = FAIL
-LayoutTests/fast/forms/HTMLOptionElement_label07.html = FAIL
-LayoutTests/fast/forms/menulist-separator-painting.html = FAIL
-LayoutTests/fast/forms/select-baseline.html = FAIL
-LayoutTests/fast/forms/select-empty-option-height.html = FAIL
-LayoutTests/fast/replaced/three-selects-break.html = FAIL
-LayoutTests/fast/table/border-collapsing/003.html = FAIL
-LayoutTests/fast/table/vertical-align-baseline.html = FAIL
-LayoutTests/http/tests/misc/acid2-pixel.html = FAIL
-LayoutTests/http/tests/misc/acid2.html = FAIL
-LayoutTests/tables/mozilla/bugs/bug149275-2.html = FAIL
-LayoutTests/tables/mozilla/bugs/bug3037-1.html = FAIL
-LayoutTests/tables/mozilla/bugs/bug57828-2.html = FAIL
+// This test tries to remove an iframe on the page then generate the pixel
+// output.  For some reason, we're taking the snapshot before the iframe is
+// removed (maybe getting the clientWidth isn't causing a re-layout?)
+WIN : LayoutTests/fast/dom/clientWidthAfterDocumentIsRemoved.html = FAIL
+
+// Flakey tests
+LINUX : LayoutTests/transitions/shorthand-transitions.html = FAIL PASS
+
+// intermittent failures on the buildbot
+LINUX : LayoutTests/svg/custom/gradient-stop-style-change.svg = FAIL PASS
+
+// The 7th column should not be top aligned.
+WIN LINUX : LayoutTests/fast/table/vertical-align-baseline.html = FAIL
+
+// Merge 40165:40297 -- regressions
+LINUX WIN : LayoutTests/editing/style/smoosh-styles-003.html = FAIL
+LayoutTests/fast/forms/textarea-no-scroll-on-blur.html = FAIL
+LINUX WIN : LayoutTests/fast/loader/null-request-after-willSendRequest.html = FAIL TIMEOUT
+MAC : LayoutTests/fast/loader/null-request-after-willSendRequest.html = FAIL TIMEOUT
+LINUX WIN : LayoutTests/fast/repaint/dynamic-table-vertical-alignment-change.html = FAIL
+LINUX WIN : LayoutTests/fast/repaint/inline-color-change.html = FAIL
+LayoutTests/http/tests/misc/SVGFont-delayed-load.html = FAIL
+LayoutTests/http/tests/uri/resolve-encoding-relative.html = FAIL
+WIN : LayoutTests/http/tests/security/originHeader/origin-header-for-post.html = TIMEOUT
+WIN : LayoutTests/svg/custom/stop-crash.svg = CRASH
+WIN : LayoutTests/svg/batik/text/verticalText.svg = FAIL
+LINUX WIN : LayoutTests/fast/forms/textarea-scroll-height.html = FAIL
+WIN : LayoutTests/http/tests/security/cross-frame-access-protocol-explicit-domain.html = FAIL
+WIN : LayoutTests/http/tests/security/cross-frame-access-protocol.html = FAIL
+WIN : LayoutTests/http/tests/security/originHeader/origin-header-for-https.html = FAIL
+LINUX WIN : chrome/fast/forms/textarea-metrics.html = FAIL
+WIN : LayoutTests/plugins/embed-attributes-setting.html = FAIL
+
+// Merge 40314:40364 -- new tests that need 
+// layoutTestController.keepWebHistory() implemented.
+LayoutTests/http/tests/history/redirect-meta-refresh-2-seconds.html = FAIL
+LayoutTests/http/tests/history/redirect-307.pl = FAIL
+LayoutTests/http/tests/history/redirect-js-location-assign-before-load.html = FAIL
+LayoutTests/http/tests/history/redirect-js-location-href-0-seconds.html = FAIL
+LayoutTests/http/tests/history/redirect-200-refresh-0-seconds.pl = FAIL
+LayoutTests/http/tests/history/redirect-200-refresh-2-seconds.pl = FAIL
+LayoutTests/http/tests/history/redirect-js-location-href-2-seconds.html = FAIL
+LayoutTests/http/tests/history/redirect-302.pl = FAIL
+LayoutTests/http/tests/history/redirect-js-location-0-seconds.html = FAIL
+LayoutTests/http/tests/history/redirect-js-location-2-seconds.html = FAIL
+LayoutTests/http/tests/history/redirect-js-location-href-before-load.html = FAIL
+LayoutTests/http/tests/history/redirect-js-location-replace-0-seconds.html = FAIL
+LayoutTests/http/tests/history/redirect-js-location-replace-2-seconds.html = FAIL
+LayoutTests/http/tests/history/redirect-js-document-location-0-seconds.html = FAIL
+LayoutTests/http/tests/history/redirect-js-document-location-2-seconds.html = FAIL
+LayoutTests/http/tests/history/redirect-js-location-assign-0-seconds.html = FAIL
+LayoutTests/http/tests/history/redirect-js-location-before-load.html = FAIL
+LayoutTests/http/tests/history/redirect-js-location-assign-2-seconds.html = FAIL
+LayoutTests/http/tests/history/redirect-js-location-replace-before-load.html = FAIL
+LayoutTests/http/tests/history/redirect-301.pl = FAIL
+LayoutTests/http/tests/history/redirect-js-document-location-before-load.html = FAIL
+LayoutTests/http/tests/history/redirect-meta-refresh-0-seconds.html = FAIL
+LayoutTests/http/tests/history/redirect-303.pl = FAIL
+
+// Merge 40314:40364 -- new tests
+LINUX WIN : LayoutTests/editing/spelling/spelling-linebreak.html = FAIL
+
+// Started failng at build 1379 (r8741).  passes locally
+LINUX : LayoutTests/fast/text/cg-fallback-bolding.html = FAIL PASS
+
+// Merge 40364:40409 -- new test
+LINUX WIN : LayoutTests/svg/custom/pattern-with-transformation.svg = FAIL
+
+// Merge 40364:40409 -- fails after http://trac.webkit.org/changeset/40379
+// Perhaps needs some change on Skia side.
+LINUX WIN : LayoutTests/svg/W3C-SVG-1.1/pservers-grad-06-b.svg = FAIL
+
+// Merge 40364:40409 -- fails after http://trac.webkit.org/changeset/40379
+// ASSERTs in Debug after this change: http://trac.webkit.org/changeset/40372
+// Likely will be fixed with subsequent merge. 
+SKIP : LayoutTests/fast/dynamic/insert-before-table-part-in-continuation.html = CRASH

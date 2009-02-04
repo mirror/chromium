@@ -6,6 +6,7 @@
 
 #include "base/json_reader.h"
 #include "base/string_util.h"
+#include "base/values.h"
 #include "chrome/browser/debugger/debugger_io.h"
 #include "chrome/browser/debugger/debugger_wrapper.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
@@ -19,7 +20,8 @@ class TabContentsReference : public NotificationObserver {
 
     NotificationService* service = NotificationService::current();
     DCHECK(service);
-    service->AddObserver(this, NOTIFY_TAB_CLOSING,
+    service->AddObserver(this,
+                         NotificationType::TAB_CLOSING,
                          Source<NavigationController>(navigation_controller_));
     observing_ = true;
   }
@@ -50,7 +52,7 @@ class TabContentsReference : public NotificationObserver {
       DCHECK(service);
       service->RemoveObserver(
           this,
-          NOTIFY_TAB_CLOSING,
+          NotificationType::TAB_CLOSING,
           Source<NavigationController>(navigation_controller_));
       observing_ = false;
     }

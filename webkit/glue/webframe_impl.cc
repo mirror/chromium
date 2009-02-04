@@ -1629,36 +1629,23 @@ PassRefPtr<Frame> WebFrameImpl::CreateChildFrame(
 
   // If we're moving in the backforward list, we might want to replace the
   // content of this child frame with whatever was there at that point.
-  // Reload will maintain the frame contents, LoadSame will not.
   if (parent_item && parent_item->children().size() != 0 &&
-      (isBackForwardLoadType(load_type) ||
-       load_type == WebCore::FrameLoadTypeReloadAllowingStaleData)) {
+      isBackForwardLoadType(load_type)) {
     HistoryItem* child_item = parent_item->childItemWithName(request.frameName());
     if (child_item) {
       // Use the original URL to ensure we get all the side-effects, such as
       // onLoad handlers, of any redirects that happened. An example of where
       // this is needed is Radar 3213556.
       new_url = child_item->originalURL();
-
-      // These behaviors implied by these loadTypes should apply to the child
-      // frames
       child_load_type = load_type;
-
-      if (isBackForwardLoadType(load_type)) {
-        // For back/forward, remember this item so we can traverse any child
-        // items as child frames load.
-        child_frame->loader()->setProvisionalHistoryItem(child_item);
-      } else {
-        // For reload, just reinstall the current item, since a new child frame
-        // was created but we won't be creating a new BF item
-        child_frame->loader()->setCurrentHistoryItem(child_item);
-      }
+      child_frame->loader()->setProvisionalHistoryItem(child_item);
     }
   }
 
-  child_frame->loader()->loadURL(
-      new_url, request.resourceRequest().httpReferrer(), request.frameName(),
-      child_load_type, 0, 0);
+  child_frame->loader()->loadURL(new_url,
+                                 request.resourceRequest().httpReferrer(),
+                                 child_frame->tree()->name(),
+                                 child_load_type, 0, 0);
 
   // A synchronous navigation (about:blank) would have already processed
   // onload, so it is possible for the frame to have already been destroyed by
@@ -1757,7 +1744,7 @@ bool WebFrameImpl::SetPrintingMode(bool printing,
   // The document width is well hidden.
   if (width) {
     WebCore::RenderObject* obj = frame()->document()->renderer();
-    *width = WebCore::RenderBox::toRenderBox(obj)->width();
+    *width = WebCore::toRenderBox(obj)->width();
   }
   return true;
 }

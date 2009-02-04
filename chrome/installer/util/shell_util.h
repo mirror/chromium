@@ -72,6 +72,21 @@ class ShellUtil {
   // Registry value name that is needed for ChromeHTML ProgId
   static const wchar_t* kRegUrlProtocol;
 
+  // Name that we give to Chrome extension file association handler ProgId.
+  static const wchar_t* kChromeExtProgId;
+
+  // Description of Chrome file/URL association handler ProgId.
+  static const wchar_t* kChromeExtProgIdDesc;
+
+  // Populate work_item_list with WorkItem entries that will add chrome.exe to
+  // the set of App Paths registry keys so that ShellExecute can find it. Note
+  // that this is done in HKLM, regardless of whether this is a single-user
+  // install or not. For non-admin users, this will fail.
+  // chrome_exe: full path to chrome.exe
+  // work_item_list: pointer to the WorkItemList that will be populated
+  static void AddChromeAppPathWorkItems(const std::wstring& chrome_exe,
+                                        WorkItemList* work_item_list);
+
   // This method adds Chrome to the list that shows up in Add/Remove Programs->
   // Set Program Access and Defaults and also creates Chrome ProgIds under
   // Software\Classes. This method requires write access to HKLM so is just
@@ -128,6 +143,11 @@ class ShellUtil {
   // chrome_exe: the full path to chrome.exe
   static std::wstring GetChromeShellOpenCmd(const std::wstring& chrome_exe);
 
+  // This method returns the command to open .crx files using chrome in order
+  // to install them as extensions. Similar to above method.
+  static std::wstring GetChromeInstallExtensionCmd(
+      const std::wstring& chrome_exe);
+
   // Returns the localized name of Chrome shortcut.
   static bool GetChromeShortcutName(std::wstring* shortcut);
 
@@ -177,6 +197,7 @@ class ShellUtil {
   static bool UpdateChromeShortcut(const std::wstring& chrome_exe,
                                    const std::wstring& shortcut,
                                    bool create_new);
+
  private:
   DISALLOW_EVIL_CONSTRUCTORS(ShellUtil);
 };

@@ -12,6 +12,24 @@
 // '' : local class member function does not have a body
 MSVC_PUSH_DISABLE_WARNING(4822)
 
+
+#if defined(NDEBUG)
+
+// Would cause a memory leak otherwise.
+#undef DFAKE_MUTEX
+#define DFAKE_MUTEX(obj) scoped_ptr<base::AsserterBase> obj
+
+// In Release, we expect the AsserterBase::warn() to not happen.
+#define EXPECT_NDEBUG_FALSE_DEBUG_TRUE EXPECT_FALSE
+
+#else
+
+// In Debug, we expect the AsserterBase::warn() to happen.
+#define EXPECT_NDEBUG_FALSE_DEBUG_TRUE EXPECT_TRUE
+
+#endif
+
+
 namespace {
 
 // This is the asserter used with ThreadCollisionWarner instead of the default
@@ -89,15 +107,17 @@ TEST(ThreadCollisionTest, ScopedBookCriticalSection) {
   {  // Pin section.
     DFAKE_SCOPED_LOCK(warner);
     EXPECT_FALSE(local_reporter->fail_state());
-    {  // Pin section again (not allowed by DFAKE_SCOPED_LOCK)
+    {
+      // Pin section again (not allowed by DFAKE_SCOPED_LOCK)
       DFAKE_SCOPED_LOCK(warner);
-      EXPECT_TRUE(local_reporter->fail_state());
+      EXPECT_NDEBUG_FALSE_DEBUG_TRUE(local_reporter->fail_state());
       // Reset the status of warner for further tests.
       local_reporter->reset();
     }  // Unpin section.
   }  // Unpin section.
 
-  {  // Pin section.
+  {
+    // Pin section.
     DFAKE_SCOPED_LOCK(warner);
     EXPECT_FALSE(local_reporter->fail_state());
   }  // Unpin section.
@@ -107,7 +127,8 @@ TEST(ThreadCollisionTest, MTBookCriticalSectionTest) {
   class NonThreadSafeQueue {
    public:
     explicit NonThreadSafeQueue(base::AsserterBase* asserter)
-        : push_pop_(asserter) { }
+        : push_pop_(asserter) {
+    }
 
     void push(int value) {
       DFAKE_SCOPED_LOCK_THREAD_LOCKED(push_pop_);
@@ -154,7 +175,7 @@ TEST(ThreadCollisionTest, MTBookCriticalSectionTest) {
   thread_a.Join();
   thread_b.Join();
 
-  EXPECT_TRUE(local_reporter->fail_state());
+  EXPECT_NDEBUG_FALSE_DEBUG_TRUE(local_reporter->fail_state());
 }
 
 TEST(ThreadCollisionTest, MTScopedBookCriticalSectionTest) {
@@ -163,7 +184,8 @@ TEST(ThreadCollisionTest, MTScopedBookCriticalSectionTest) {
   class NonThreadSafeQueue {
    public:
     explicit NonThreadSafeQueue(base::AsserterBase* asserter)
-        : push_pop_(asserter) { }
+        : push_pop_(asserter) {
+    }
 
     void push(int value) {
       DFAKE_SCOPED_LOCK(push_pop_);
@@ -211,7 +233,7 @@ TEST(ThreadCollisionTest, MTScopedBookCriticalSectionTest) {
   thread_a.Join();
   thread_b.Join();
 
-  EXPECT_TRUE(local_reporter->fail_state());
+  EXPECT_NDEBUG_FALSE_DEBUG_TRUE(local_reporter->fail_state());
 }
 
 TEST(ThreadCollisionTest, MTSynchedScopedBookCriticalSectionTest) {
@@ -220,7 +242,8 @@ TEST(ThreadCollisionTest, MTSynchedScopedBookCriticalSectionTest) {
   class NonThreadSafeQueue {
    public:
     explicit NonThreadSafeQueue(base::AsserterBase* asserter)
-        : push_pop_(asserter) { }
+        : push_pop_(asserter) {
+    }
 
     void push(int value) {
       DFAKE_SCOPED_LOCK(push_pop_);
@@ -288,7 +311,8 @@ TEST(ThreadCollisionTest, MTSynchedScopedRecursiveBookCriticalSectionTest) {
   class NonThreadSafeQueue {
    public:
     explicit NonThreadSafeQueue(base::AsserterBase* asserter)
-        : push_pop_(asserter) { }
+        : push_pop_(asserter) {
+    }
 
     void push(int) {
       DFAKE_SCOPED_RECURSIVE_LOCK(push_pop_);

@@ -414,6 +414,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\message_window.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\message_window.h"
+				>
+			</File>
+			<File
 				RelativePath=".\meta_table_helper.cc"
 				>
 			</File>
@@ -543,22 +551,6 @@
 			</File>
 			<File
 				RelativePath=".\visitedlink_master.h"
-				>
-			</File>
-			<File
-				RelativePath=".\web_app.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\web_app.h"
-				>
-			</File>
-			<File
-				RelativePath=".\web_app_launcher.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\web_app_launcher.h"
 				>
 			</File>
 		</Filter>
@@ -710,19 +702,27 @@
 				>
 			</File>
 			<File
-				RelativePath=".\js_before_unload_handler.cc"
-				>
-			</File>
-			<File
 				RelativePath=".\js_before_unload_handler.h"
 				>
 			</File>
 			<File
-				RelativePath=".\jsmessage_box_handler.cc"
+				RelativePath=".\js_before_unload_handler_win.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\js_before_unload_handler_win.h"
 				>
 			</File>
 			<File
 				RelativePath=".\jsmessage_box_handler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\jsmessage_box_handler_win.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\jsmessage_box_handler_win.h"
 				>
 			</File>
 			<File
@@ -731,6 +731,10 @@
 			</File>
 			<File
 				RelativePath=".\load_notification_details.h"
+				>
+			</File>
+			<File
+				RelativePath=".\location_bar.h"
 				>
 			</File>
 			<File
@@ -771,14 +775,6 @@
 			</File>
 			<File
 				RelativePath=".\task_manager_resource_providers.h"
-				>
-			</File>
-			<File
-				RelativePath=".\web_app_icon_manager.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\web_app_icon_manager.h"
 				>
 			</File>
 			<File
@@ -987,6 +983,10 @@
 			</File>
 			<File
 				RelativePath=".\history\history_publisher.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\history\history_publisher_win.cc"
 				>
 			</File>
 			<File
@@ -1630,6 +1630,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\net\resolve_proxy_msg_helper.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\net\resolve_proxy_msg_helper.h"
+				>
+			</File>
+			<File
 				RelativePath=".\net\sdch_dictionary_fetcher.cc"
 				>
 			</File>
@@ -1943,6 +1951,10 @@
 			</File>
 			<File
 				RelativePath=".\renderer_host\backing_store.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\backing_store_win.cc"
 				>
 			</File>
 			<File

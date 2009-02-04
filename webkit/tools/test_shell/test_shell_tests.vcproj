@@ -194,6 +194,10 @@
 				RelativePath=".\run_all_tests.cc"
 				>
 			</File>
+		<File
+			RelativePath="..\..\glue\simple_clipboard_impl.cc"
+			>
+		</File>
 			<File
 				RelativePath=".\simple_resource_loader_bridge.cc"
 				>
@@ -226,6 +230,14 @@
 				RelativePath=".\resources\test_shell.rc"
 				>
 			</File>
+      <File
+        RelativePath=".\test_shell_platform_delegate.h"
+        >
+      </File>
+      <File
+        RelativePath=".\test_shell_platform_delegate_win.cc"
+        >
+      </File>
 			<File
 				RelativePath=".\test_shell_request_context.cc"
 				>

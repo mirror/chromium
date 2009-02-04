@@ -24,6 +24,7 @@
 #include <vector>
 
 #include "base/basictypes.h"
+#include "base/scoped_ptr.h"
 #include "base/file_path.h"
 
 namespace file_util {
@@ -214,6 +215,8 @@ bool ContentsEqual(const std::wstring& filename1,
 
 // Read the file at |path| into |contents|, returning true on success.
 // Useful for unit tests.
+bool ReadFileToString(const FilePath& path, std::string* contents);
+// Deprecated version.
 bool ReadFileToString(const std::wstring& path, std::string* contents);
 
 #if defined(OS_WIN)
@@ -318,12 +321,20 @@ FILE* OpenFile(const std::wstring& filename, const char* mode);
 // Closes file opened by OpenFile. Returns true on success.
 bool CloseFile(FILE* file);
 
+// Truncates an open file to end at the location of the current file pointer.
+// This is a cross-platform analog to Windows' SetEndOfFile() function.
+bool TruncateFile(FILE* file);
+
 // Reads the given number of bytes from the file into the buffer.  Returns
 // the number of read bytes, or -1 on error.
+int ReadFile(const FilePath& filename, char* data, int size);
+// Deprecated temporary compatibility function.
 int ReadFile(const std::wstring& filename, char* data, int size);
 
 // Writes the given buffer into the file, overwriting any data that was
 // previously there.  Returns the number of bytes written, or -1 on error.
+int WriteFile(const FilePath& filename, const char* data, int size);
+// Deprecated temporary compatibility function.
 int WriteFile(const std::wstring& filename, const char* data, int size);
 
 // Gets the current working directory for the process.
@@ -335,6 +346,18 @@ bool GetCurrentDirectory(std::wstring* path);
 bool SetCurrentDirectory(const FilePath& path);
 // Deprecated temporary compatibility function.
 bool SetCurrentDirectory(const std::wstring& current_directory);
+
+// A class to handle auto-closing of FILE*'s.
+class ScopedFILEClose {
+ public:
+  inline void operator()(FILE* x) const {
+    if (x) {
+      fclose(x);
+    }
+  }
+};
+
+typedef scoped_ptr_malloc<FILE, ScopedFILEClose> ScopedFILE;
 
 // A class for enumerating the files in a provided path. The order of the
 // results is not guaranteed.

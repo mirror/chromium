@@ -242,6 +242,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\glue\simple_clipboard_impl.cc"
+			>
+		</File>
+		<File
 			RelativePath=".\simple_resource_loader_bridge.cc"
 			>
 		</File>
@@ -263,6 +267,14 @@
 		</File>
 		<File
 			RelativePath=".\test_shell_main.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\test_shell_platform_delegate.h"
+			>
+		</File>
+		<File
+			RelativePath=".\test_shell_platform_delegate_win.cc"
 			>
 		</File>
 		<File

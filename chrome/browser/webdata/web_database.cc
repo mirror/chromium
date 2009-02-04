@@ -13,12 +13,25 @@
 #include "base/string_util.h"
 #include "base/time.h"
 #include "base/values.h"
-#include "chrome/browser/history/history_database.h"
-#include "chrome/browser/password_manager/encryptor.h"
 #include "chrome/browser/search_engines/template_url.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/scoped_vector.h"
 #include "webkit/glue/password_form.h"
+
+#if defined(OS_POSIX)
+// TODO(port): get rid of this include. It's used just to provide declarations
+// and stub definitions for classes we encouter during the porting effort.
+#include "chrome/common/temp_scaffolding_stubs.h"
+#endif
+
+// TODO(port): Get rid of this section and finish porting.
+#if defined(OS_WIN)
+// Encryptor is the *wrong* way of doing things; we need to turn it into a
+// bottleneck to use the platform methods (e.g. Keychain on the Mac). That's
+// going to take a massive change in its API...
+#include "chrome/browser/history/history_database.h"
+#include "chrome/browser/password_manager/encryptor.h"
+#endif
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -528,23 +541,23 @@ bool WebDatabase::GetKeywords(std::vector<TemplateURL*>* urls) {
     std::wstring tmp;
     template_url->set_id(s.column_int64(0));
 
-    s.column_string16(1, &tmp);
+    s.column_wstring(1, &tmp);
     DCHECK(!tmp.empty());
     template_url->set_short_name(tmp);
 
-    s.column_string16(2, &tmp);
+    s.column_wstring(2, &tmp);
     template_url->set_keyword(tmp);
 
-    s.column_string16(3, &tmp);
+    s.column_wstring(3, &tmp);
     if (!tmp.empty())
       template_url->SetFavIconURL(GURL(WideToUTF8(tmp)));
 
-    s.column_string16(4, &tmp);
+    s.column_wstring(4, &tmp);
     template_url->SetURL(tmp, 0, 0);
 
     template_url->set_safe_for_autoreplace(s.column_int(5) == 1);
 
-    s.column_string16(6, &tmp);
+    s.column_wstring(6, &tmp);
     if (!tmp.empty())
       template_url->set_originating_url(GURL(WideToUTF8(tmp)));
 
@@ -558,7 +571,7 @@ bool WebDatabase::GetKeywords(std::vector<TemplateURL*>* urls) {
 
     template_url->set_show_in_default_list(s.column_int(10) == 1);
 
-    s.column_string16(11, &tmp);
+    s.column_wstring(11, &tmp);
     template_url->SetSuggestionsURL(tmp, 0, 0);
 
     template_url->set_prepopulate_id(s.column_int(12));
@@ -748,12 +761,12 @@ static void InitPasswordFormFromStatement(PasswordForm* form,
   form->origin = GURL(tmp);
   s->column_string(1, &tmp);
   form->action = GURL(tmp);
-  s->column_string16(2, &form->username_element);
-  s->column_string16(3, &form->username_value);
-  s->column_string16(4, &form->password_element);
+  s->column_wstring(2, &form->username_element);
+  s->column_wstring(3, &form->username_value);
+  s->column_wstring(4, &form->password_element);
   s->column_blob_as_string(5, &encrypted_password);
   Encryptor::DecryptWideString(encrypted_password, &form->password_value);
-  s->column_string16(6, &form->submit_element);
+  s->column_wstring(6, &form->submit_element);
   s->column_string(7, &tmp);
   form->signon_realm = tmp;
   form->ssl_valid = (s->column_int(8) > 0);
@@ -1007,7 +1020,7 @@ bool WebDatabase::GetFormValuesForElementName(const std::wstring& name,
   values->clear();
   int result;
   while ((result = s.step()) == SQLITE_ROW)
-    values->push_back(s.column_string16(0));
+    values->push_back(s.column_wstring(0));
 
   return result == SQLITE_DONE;
 }

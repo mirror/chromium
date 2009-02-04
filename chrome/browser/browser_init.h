@@ -2,21 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_BROWSER_INIT_H__
-#define CHROME_BROWSER_BROWSER_INIT_H__
+#ifndef CHROME_BROWSER_BROWSER_INIT_H_
+#define CHROME_BROWSER_BROWSER_INIT_H_
 
-#include <atlbase.h>
-#include <atlwin.h>
-#include <windows.h>
 #include <string>
 #include <vector>
 
-#include "base/gfx/rect.h"
-#include "chrome/browser/profile_manager.h"
+#include "base/basictypes.h"
 
 class Browser;
 class CommandLine;
 class GURL;
+class PrefService;
 class Profile;
 class TabContents;
 
@@ -27,68 +24,6 @@ class BrowserInit {
   // Returns true if the browser is coming up.
   static bool InProcessStartup();
 
-  // MessageWindow -------------------------------------------------------------
-  //
-  // Class for dealing with the invisible global message window for IPC. This
-  // window allows different browser processes to communicate with each other.
-  // It is named according to the user data directory, so we can be sure that
-  // no more than one copy of the application can be running at once with a
-  // given data directory.
-
-  class MessageWindow {
-   public:
-    explicit MessageWindow(const std::wstring& user_data_dir);
-    ~MessageWindow();
-
-    // Returns true if another process was found and notified, false if we
-    // should continue with this process. Roughly based on Mozilla
-    //
-    // TODO(brettw): this will not handle all cases. If two process start up too
-    // close to each other, the window might not have been created yet for the
-    // first one, so this function won't find it.
-    bool NotifyOtherProcess();
-
-    // Create the toplevel message window for IPC.
-    void Create();
-
-    // Blocks the dispatch of CopyData messages.
-    void Lock() {
-      locked_ = true;
-    }
-
-    // Allows the dispatch of CopyData messages.
-    void Unlock() {
-      locked_ = false;
-    }
-
-    // This ugly behemoth handles startup commands sent from another process.
-    LRESULT OnCopyData(HWND hwnd, const COPYDATASTRUCT* cds);
-
-    // Looks for zombie renderer and plugin processes that could have survived.
-    void HuntForZombieChromeProcesses();
-
-   private:
-    LRESULT CALLBACK WndProc(HWND hwnd,
-                             UINT message,
-                             WPARAM wparam,
-                             LPARAM lparam);
-
-    static LRESULT CALLBACK WndProcStatic(HWND hwnd,
-                                          UINT message,
-                                          WPARAM wparam,
-                                          LPARAM lparam) {
-      MessageWindow* msg_wnd = reinterpret_cast<MessageWindow*>(
-          GetWindowLongPtr(hwnd, GWLP_USERDATA));
-      return msg_wnd->WndProc(hwnd, message, wparam, lparam);
-    }
-
-    HWND remote_window_;  // The HWND_MESSAGE of another browser.
-    HWND window_;  // The HWND_MESSAGE window.
-    bool locked_;
-
-    DISALLOW_EVIL_CONSTRUCTORS(MessageWindow);
-  };
-
   // LaunchWithProfile ---------------------------------------------------------
   //
   // Assists launching the application and appending the initial tabs for a
@@ -97,7 +32,7 @@ class BrowserInit {
   class LaunchWithProfile {
    public:
     LaunchWithProfile(const std::wstring& cur_dir,
-                      const std::wstring& cmd_line);
+                      const CommandLine& command_line);
     ~LaunchWithProfile() { }
 
     // Creates the necessary windows for startup. Returns true on success,
@@ -107,6 +42,12 @@ class BrowserInit {
     bool Launch(Profile* profile, bool process_startup);
 
    private:
+    // If the process was launched with the web application command line flag,
+    // e.g. --app=http://www.google.com/, opens a web application browser and
+    // returns true. If there is no web application command line flag speciifed,
+    // returns false to specify default processing.
+    bool OpenApplicationURL(Profile* profile);
+
     // Does the following:
     // . If the user's startup pref is to restore the last session (or the
     //   command line flag is present to force using last session), it is
@@ -116,7 +57,6 @@ class BrowserInit {
     //
     // Otherwise false is returned.
     bool OpenStartupURLs(bool is_process_startup,
-                         const CommandLine& command_line,
                          const std::vector<GURL>& urls_to_open);
 
     // Opens the list of urls. If browser is non-null and a tabbed browser, the
@@ -133,50 +73,52 @@ class BrowserInit {
 
     // Returns the list of URLs to open from the command line. The returned
     // vector is empty if the user didn't specify any URLs on the command line.
-    std::vector<GURL> GetURLsFromCommandLine(const CommandLine& command_line,
-                                             Profile* profile);
+    std::vector<GURL> GetURLsFromCommandLine(Profile* profile);
+
+    // Adds additional startup URLs to the specified vector.
+    void AddStartupURLs(std::vector<GURL>* startup_urls) const;
 
     std::wstring cur_dir_;
-    std::wstring command_line_;
+    const CommandLine& command_line_;
     Profile* profile_;
 
-    // Bounds for the browser.
-    gfx::Rect start_position_;
-
-    DISALLOW_EVIL_CONSTRUCTORS(LaunchWithProfile);
+    DISALLOW_COPY_AND_ASSIGN(LaunchWithProfile);
   };
 
   // This function performs command-line handling and is invoked when
   // process starts as well as when we get a start request from another
-  // process (via the WM_COPYDATA message). The process_startup flag
-  // indicates if this is being called from the process startup code or
-  // the WM_COPYDATA handler.
-  static bool ProcessCommandLine(const CommandLine& parsed_command_line,
+  // process (via the WM_COPYDATA message). |command_line| holds the command
+  // line we need to process - either from this process or from some other one
+  // (if |process_startup| is true and we are being called from
+  //  MessageWindow::OnCopyData).
+  static bool ProcessCommandLine(const CommandLine& command_line,
                                  const std::wstring& cur_dir,
                                  PrefService* prefs, bool process_startup,
                                  Profile* profile, int* return_code);
 
   // Helper function to launch a new browser based on command-line arguments
   // This function takes in a specific profile to use.
-  static bool LaunchBrowser(const CommandLine& parsed_command_line,
+  static bool LaunchBrowser(const CommandLine& command_line,
                             Profile* profile, const std::wstring& cur_dir,
                             bool process_startup, int* return_code);
 
+#if defined(OS_WIN)
   template <class AutomationProviderClass>
   static void CreateAutomationProvider(const std::wstring& channel_id,
                                        Profile* profile,
                                        size_t expected_tabs);
+#endif
 
  private:
   // Does the work of LaunchBrowser returning the result.
-  static bool LaunchBrowserImpl(const CommandLine& parsed_command_line,
+  static bool LaunchBrowserImpl(const CommandLine& command_line,
                                 Profile* profile, const std::wstring& cur_dir,
                                 bool process_startup, int* return_code);
 
   // This class is for scoping purposes.
   BrowserInit();
-  DISALLOW_EVIL_CONSTRUCTORS(BrowserInit);
+  DISALLOW_COPY_AND_ASSIGN(BrowserInit);
 };
 
-#endif  // CHROME_BROWSER_BROWSER_INIT_H__
+#endif  // CHROME_BROWSER_BROWSER_INIT_H_
 

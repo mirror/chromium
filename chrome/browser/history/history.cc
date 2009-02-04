@@ -32,17 +32,17 @@
 #include "chrome/browser/autocomplete/history_url_provider.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/chrome_thread.h"
 #include "chrome/browser/history/download_types.h"
 #include "chrome/browser/history/history_backend.h"
 #include "chrome/browser/history/history_types.h"
 #include "chrome/browser/history/in_memory_database.h"
 #include "chrome/browser/history/in_memory_history_backend.h"
+#include "chrome/browser/profile.h"
 #include "chrome/browser/visitedlink_master.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
-#include "chrome/common/sqlite_utils.h"
-#include "chrome/common/thumbnail_score.h"
 
 #include "chromium_strings.h"
 #include "generated_resources.h"
@@ -100,7 +100,8 @@ HistoryService::HistoryService()
       backend_loaded_(false) {
   if (NotificationService::current()) {  // Is NULL when running generate_profile.
     NotificationService::current()->AddObserver(
-        this, NOTIFY_HISTORY_URLS_DELETED, Source<Profile>(profile_));
+        this, NotificationType::HISTORY_URLS_DELETED,
+        Source<Profile>(profile_));
   }
 }
 
@@ -109,7 +110,7 @@ HistoryService::HistoryService(Profile* profile)
       profile_(profile),
       backend_loaded_(false) {
   NotificationService::current()->AddObserver(
-      this, NOTIFY_HISTORY_URLS_DELETED, Source<Profile>(profile_));
+      this, NotificationType::HISTORY_URLS_DELETED, Source<Profile>(profile_));
 }
 
 HistoryService::~HistoryService() {
@@ -119,18 +120,20 @@ HistoryService::~HistoryService() {
   // Unregister for notifications.
   if (NotificationService::current()) {  // Is NULL when running generate_profile.
     NotificationService::current()->RemoveObserver(
-        this, NOTIFY_HISTORY_URLS_DELETED, Source<Profile>(profile_));
+        this, NotificationType::HISTORY_URLS_DELETED,
+        Source<Profile>(profile_));
   }
 }
 
-bool HistoryService::Init(const std::wstring& history_dir,
+bool HistoryService::Init(const FilePath& history_dir,
                           BookmarkService* bookmark_service) {
   if (!thread_->Start())
     return false;
 
   // Create the history backend.
   scoped_refptr<HistoryBackend> backend(
-      new HistoryBackend(history_dir, new BackendDelegate(this),
+      new HistoryBackend(history_dir.ToWStringHack(),
+                         new BackendDelegate(this),
                          bookmark_service));
   history_backend_.swap(backend);
 
@@ -526,7 +529,7 @@ HistoryService::Handle HistoryService::GetVisitCountToHost(
 void HistoryService::Observe(NotificationType type,
                              const NotificationSource& source,
                              const NotificationDetails& details) {
-  if (type != NOTIFY_HISTORY_URLS_DELETED) {
+  if (type != NotificationType::HISTORY_URLS_DELETED) {
     NOTREACHED();
     return;
   }
@@ -652,7 +655,7 @@ void HistoryService::BroadcastNotifications(
 void HistoryService::OnDBLoaded() {
   LOG(INFO) << "History backend finished loading";
   backend_loaded_ = true;
-  NotificationService::current()->Notify(NOTIFY_HISTORY_LOADED,
+  NotificationService::current()->Notify(NotificationType::HISTORY_LOADED,
                                          Source<Profile>(profile_),
                                          Details<HistoryService>(this));
 }

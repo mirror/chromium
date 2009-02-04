@@ -105,9 +105,10 @@ std::string GetWebKitVersion();
 // inconsistent behavior.
 void SetUserAgent(const std::string& new_user_agent);
 
-// Returns the user agent, which is usually the default user agent but may be
-// overriden by a call to SetUserAgent() (which should be done at startup).
-const std::string& GetUserAgent();
+// Returns the user agent to use for the given URL, which is usually the
+// default user agent but may be overriden by a call to SetUserAgent() (which
+// should be done at startup).
+const std::string& GetUserAgent(const GURL& url);
 
 // Creates serialized state for the specified URL. This is a variant of
 // HistoryItemToString (in glue_serialize) that is used during session restore
@@ -241,7 +242,7 @@ bool EnsureFontLoaded(HFONT font);
 #endif
 
 // Returns screen information corresponding to the given window.
-ScreenInfo GetScreenInfo(gfx::NativeView window);
+ScreenInfo GetScreenInfo(gfx::NativeViewId window);
 
 // Functions implemented by webkit_glue for WebKit ----------------------------
 
@@ -256,6 +257,9 @@ bool DownloadUrl(const std::string& url, HWND caller_window);
 
 // Returns the plugin finder URL.
 bool GetPluginFinderURL(std::string* plugin_finder_url);
+
+// Resolves the proxies for the url, returns true on success.
+bool FindProxyForUrl(const GURL& url, std::string* proxy_list);
 
 // Returns the locale that this instance of webkit is running as.  This is of
 // the form language-country (e.g., en-US or pt-BR).

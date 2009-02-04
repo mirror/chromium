@@ -17,22 +17,22 @@
 #include "base/task.h"
 #include "base/time.h"
 #include "chrome/browser/cancelable_request.h"
-#include "chrome/browser/chrome_thread.h"
 #include "chrome/browser/history/history_notifications.h"
 #include "chrome/browser/history/history_types.h"
 #include "chrome/browser/search_engines/template_url.h"
-#include "chrome/common/notification_service.h"
+#include "chrome/common/notification_observer.h"
 #include "chrome/common/page_transition_types.h"
 #include "chrome/common/ref_counted_util.h"
 
 class BookmarkService;
+class ChromeThread;
 struct DownloadCreateInfo;
+class FilePath;
 class GURL;
 class HistoryURLProvider;
 struct HistoryURLProviderParams;
 class InMemoryURLDatabase;
 class MainPagesRequest;
-enum NotificationType;
 class PageUsageData;
 class PageUsageRequest;
 class Profile;
@@ -100,7 +100,7 @@ class HistoryService : public CancelableRequestProvider,
   // not call any other functions. The given directory will be used for storing
   // the history files. The BookmarkService is used when deleting URLs to
   // test if a URL is bookmarked; it may be NULL during testing.
-  bool Init(const std::wstring& history_dir, BookmarkService* bookmark_service);
+  bool Init(const FilePath& history_dir, BookmarkService* bookmark_service);
 
   // Did the backend finish loading the databases?
   bool backend_loaded() const { return backend_loaded_; }

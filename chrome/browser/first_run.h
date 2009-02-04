@@ -7,8 +7,10 @@
 
 #include "base/basictypes.h"
 #include "base/command_line.h"
+#include "base/gfx/native_widget_types.h"
 #include "chrome/browser/browser_process_impl.h"
 
+class FilePath;
 class Profile;
 
 // This class contains the chrome first-run installation actions needed to
@@ -38,7 +40,8 @@ class FirstRun {
   // Imports settings in a separate process. It spawns a second dedicated
   // browser process that just does the import with the import progress UI.
   static bool ImportSettings(Profile* profile, int browser,
-                             int items_to_import, HWND parent_window);
+                             int items_to_import,
+                             gfx::NativeView parent_window);
   // Import browser items in this process. The browser and the items to
   // import are encoded int the command line. This function is paired with
   // FirstRun::ImportSettings(). This function might or might not show
@@ -60,8 +63,8 @@ class FirstRun {
   //
   // See chrome/installer/util/master_preferences.h for a description of
   // 'master_preferences' file.
-  static bool ProcessMasterPreferences(const std::wstring& user_data_dir,
-                                       const std::wstring& master_prefs_path,
+  static bool ProcessMasterPreferences(const FilePath& user_data_dir,
+                                       const FilePath& master_prefs_path,
                                        int* preference_details);
 
   // Sets the kShouldShowFirstRunBubble local state pref so that the browser

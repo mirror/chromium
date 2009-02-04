@@ -4,6 +4,7 @@
 
 #include "base/command_line.h"
 #include "base/path_service.h"
+#include "build/build_config.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/l10n_util.h"

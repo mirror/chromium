@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 
+#include "base/gfx/native_widget_types.h"
 #include "base/string_util.h"
 #include "base/waitable_event.h"
 #include "chrome/app/result_codes.h"
@@ -129,7 +130,8 @@ bool RenderViewHost::CreateRenderView() {
 
   renderer_initialized_ = true;
 
-  HANDLE modal_dialog_event;
+#if defined(OS_WIN)
+  HANDLE modal_dialog_event_handle;
   HANDLE renderer_process_handle = process()->process().handle();
   if (renderer_process_handle == NULL)
     renderer_process_handle = GetCurrentProcess();
@@ -137,14 +139,21 @@ bool RenderViewHost::CreateRenderView() {
   BOOL result = DuplicateHandle(GetCurrentProcess(),
       modal_dialog_event_->handle(),
       renderer_process_handle,
-      &modal_dialog_event,
+      &modal_dialog_event_handle,
       SYNCHRONIZE,
       FALSE,
       0);
   DCHECK(result) << "Couldn't duplicate the modal dialog handle for the renderer.";
+#endif
 
   DCHECK(view());
-  Send(new ViewMsg_New(view()->GetPluginHWND(),
+
+  ModalDialogEvent modal_dialog_event;
+#if defined(OS_WIN)
+  modal_dialog_event.event = modal_dialog_event_handle;
+#endif
+
+  Send(new ViewMsg_New(gfx::IdFromNativeView(view()->GetPluginNativeView()),
                        modal_dialog_event,
                        delegate_->GetWebkitPrefs(),
                        routing_id()));
@@ -222,10 +231,13 @@ void RenderViewHost::LoadAlternateHTMLString(const std::string& html_text,
 }
 
 void RenderViewHost::SetNavigationsSuspended(bool suspend) {
+  // This should only be called to toggle the state.
   DCHECK(navigations_suspended_ != suspend);
+
   navigations_suspended_ = suspend;
   if (!suspend && suspended_nav_message_.get()) {
-    // Resume navigation
+    // There's a navigation message waiting to be sent.  Now that we're not
+    // suspended anymore, resume navigation by sending it.
     Send(suspended_nav_message_.release());
   }
 }
@@ -239,7 +251,7 @@ void RenderViewHost::FirePageBeforeUnload() {
   }
 
   // This may be called more than once (if the user clicks the tab close button
-  // several times, or if she clicks the tab close button than the browser close
+  // several times, or if she clicks the tab close button then the browser close
   // button), so this test makes sure we only send the message once.
   if (!is_waiting_for_unload_ack_) {
     // Start the hang monitor in case the renderer hangs in the beforeunload
@@ -309,12 +321,8 @@ void RenderViewHost::Stop() {
   Send(new ViewMsg_Stop(routing_id()));
 }
 
-bool RenderViewHost::GetPrintedPagesCount(const ViewMsg_Print_Params& params) {
-  return Send(new ViewMsg_GetPrintedPagesCount(routing_id(), params));
-}
-
-bool RenderViewHost::PrintPages(const ViewMsg_PrintPages_Params& params) {
-  return Send(new ViewMsg_PrintPages(routing_id(), params));
+bool RenderViewHost::PrintPages() {
+  return Send(new ViewMsg_PrintPages(routing_id()));
 }
 
 void RenderViewHost::StartFinding(int request_id,
@@ -751,11 +759,17 @@ void RenderViewHost::Shutdown() {
 }
 
 void RenderViewHost::OnMsgCreateWindow(int route_id,
-                                       HANDLE modal_dialog_event) {
+                                       ModalDialogEvent modal_dialog_event) {
   RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
+  base::WaitableEvent* waitable_event = new base::WaitableEvent(
+#if defined(OS_WIN)
+      modal_dialog_event.event);
+#else
+      true, false);
+#endif
+
   if (view)
-    view->CreateNewWindow(route_id,
-                          new base::WaitableEvent(modal_dialog_event));
+    view->CreateNewWindow(route_id, waitable_event);
 }
 
 void RenderViewHost::OnMsgCreateWidget(int route_id, bool activatable) {

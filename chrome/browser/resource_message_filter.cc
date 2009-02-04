@@ -5,6 +5,7 @@
 #include "chrome/browser/resource_message_filter.h"
 
 #include "base/clipboard.h"
+#include "base/gfx/native_widget_types.h"
 #include "base/histogram.h"
 #include "base/thread.h"
 #include "chrome/browser/chrome_plugin_browsing_context.h"
@@ -20,6 +21,7 @@
 #include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/common/chrome_plugin_util.h"
 #include "chrome/common/clipboard_service.h"
+#include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/ipc_message_macros.h"
@@ -61,6 +63,25 @@ class ContextMenuMessageDispatcher : public Task {
   DISALLOW_COPY_AND_ASSIGN(ContextMenuMessageDispatcher);
 };
 
+// Completes a clipboard write initiated by the renderer. The write must be
+// performed on the UI thread because the clipboard service from the IO thread
+// cannot create windows so it cannot be the "owner" of the clipboard's
+// contents.
+class WriteClipboardTask : public Task {
+ public:
+  explicit WriteClipboardTask(Clipboard::ObjectMap* objects)
+      : objects_(objects) {}
+  ~WriteClipboardTask() {}
+
+  void Run() {
+    g_browser_process->clipboard_service()->WriteObjects(*objects_.get());
+  }
+
+ private:
+  scoped_ptr<Clipboard::ObjectMap> objects_;
+};
+
+
 }  // namespace
 
 ResourceMessageFilter::ResourceMessageFilter(
@@ -80,7 +101,8 @@ ResourceMessageFilter::ResourceMessageFilter(
       request_context_(profile->GetRequestContext()),
       profile_(profile),
       render_widget_helper_(render_widget_helper),
-      spellchecker_(spellchecker) {
+      spellchecker_(spellchecker),
+      ALLOW_THIS_IN_INITIALIZER_LIST(resolve_proxy_msg_helper_(this, NULL)) {
 
   DCHECK(request_context_.get());
   DCHECK(request_context_->cookie_store());
@@ -94,7 +116,8 @@ ResourceMessageFilter::~ResourceMessageFilter() {
   DCHECK(MessageLoop::current() ==
          ChromeThread::GetMessageLoop(ChromeThread::IO));
   NotificationService::current()->RemoveObserver(
-      this, NOTIFY_SPELLCHECKER_REINITIALIZED,
+      this,
+      NotificationType::SPELLCHECKER_REINITIALIZED,
       Source<Profile>(static_cast<Profile*>(profile_)));
 }
 
@@ -104,14 +127,15 @@ void ResourceMessageFilter::OnFilterAdded(IPC::Channel* channel) {
 
   // Add the observers to intercept 
   NotificationService::current()->AddObserver(
-      this, NOTIFY_SPELLCHECKER_REINITIALIZED,
+      this,
+      NotificationType::SPELLCHECKER_REINITIALIZED,
       Source<Profile>(static_cast<Profile*>(profile_)));
 }
 
 // Called on the IPC thread:
 void ResourceMessageFilter::OnChannelConnected(int32 peer_pid) {
   DCHECK(!render_handle_);
-  render_handle_ = OpenProcess(PROCESS_DUP_HANDLE|PROCESS_TERMINATE,
+  render_handle_ = OpenProcess(PROCESS_DUP_HANDLE | PROCESS_TERMINATE,
                                FALSE, peer_pid);
   DCHECK(render_handle_);
 }
@@ -187,6 +211,7 @@ bool ResourceMessageFilter::OnMessageReceived(const IPC::Message& message) {
                         OnGetCPBrowsingContext)
     IPC_MESSAGE_HANDLER(ViewHostMsg_DuplicateSection, OnDuplicateSection)
     IPC_MESSAGE_HANDLER(ViewHostMsg_ResourceTypeStats, OnResourceTypeStats)
+    IPC_MESSAGE_HANDLER_DELAY_REPLY(ViewHostMsg_ResolveProxy, OnResolveProxy)
     IPC_MESSAGE_HANDLER_DELAY_REPLY(ViewHostMsg_GetDefaultPrintSettings,
                                     OnGetDefaultPrintSettings)
 #if defined(OS_WIN)
@@ -244,12 +269,14 @@ bool ResourceMessageFilter::Send(IPC::Message* message) {
   return channel_->Send(message);
 }
 
-void ResourceMessageFilter::OnMsgCreateWindow(int opener_id,
-                                              bool user_gesture,
-                                              int* route_id,
-                                              HANDLE* modal_dialog_event) {
-  render_widget_helper_->CreateNewWindow(opener_id, user_gesture, route_id,
-                                         modal_dialog_event, render_handle_);
+void ResourceMessageFilter::OnMsgCreateWindow(
+    int opener_id, bool user_gesture, int* route_id,
+    ModalDialogEvent* modal_dialog_event) {
+  render_widget_helper_->CreateNewWindow(opener_id,
+                                         user_gesture,
+                                         render_handle_,
+                                         route_id,
+                                         modal_dialog_event);
 }
 
 void ResourceMessageFilter::OnMsgCreateWidget(int opener_id,
@@ -322,7 +349,7 @@ void ResourceMessageFilter::OnGetCookies(const GURL& url,
 }
 
 void ResourceMessageFilter::OnGetDataDir(std::wstring* data_dir) {
-  *data_dir = plugin_service_->GetChromePluginDataDir();
+  *data_dir = plugin_service_->GetChromePluginDataDir().ToWStringHack();
 }
 
 void ResourceMessageFilter::OnPluginMessage(const FilePath& plugin_path,
@@ -403,8 +430,8 @@ void ResourceMessageFilter::OnLoadFont(LOGFONT font) {
 }
 
 void ResourceMessageFilter::OnGetScreenInfo(
-	gfx::NativeView window, webkit_glue::ScreenInfo* results) {
-  *results = webkit_glue::GetScreenInfoHelper(window);
+    gfx::NativeViewId window, webkit_glue::ScreenInfo* results) {
+  *results = webkit_glue::GetScreenInfoHelper(gfx::NativeViewFromId(window));
 }
 
 void ResourceMessageFilter::OnGetPlugins(bool refresh,
@@ -442,10 +469,19 @@ void ResourceMessageFilter::OnDownloadUrl(const IPC::Message& message,
 
 void ResourceMessageFilter::OnClipboardWriteObjects(
     const Clipboard::ObjectMap& objects) {
+  // We cannot write directly from the IO thread, and cannot service the IPC
+  // on the UI thread. We'll copy the relevant data and get a handle to any
+  // shared memory so it doesn't go away when we resume the renderer, and post
+  // a task to perform the write on the UI thread.
+  Clipboard::ObjectMap* long_living_objects = new Clipboard::ObjectMap(objects); 
+
   // We pass the render_handle_ to assist the clipboard with using shared
   // memory objects. render_handle_ is a handle to the process that would
   // own any shared memory that might be in the object list.
-  GetClipboardService()->WriteObjects(objects, render_handle_);
+  Clipboard::DuplicateRemoteHandles(render_handle_, long_living_objects);
+
+  render_widget_helper_->ui_loop()->PostTask(FROM_HERE,
+      new WriteClipboardTask(long_living_objects));
 }
 
 void ResourceMessageFilter::OnClipboardIsFormatAvailable(unsigned int format,
@@ -471,20 +507,25 @@ void ResourceMessageFilter::OnClipboardReadHTML(std::wstring* markup,
 
 #if defined(OS_WIN)
 
-void ResourceMessageFilter::OnGetWindowRect(HWND window, gfx::Rect *rect) {
+void ResourceMessageFilter::OnGetWindowRect(gfx::NativeViewId window_id,
+                                            gfx::Rect* rect) {
+  HWND window = gfx::NativeViewFromId(window_id);
   RECT window_rect = {0};
   GetWindowRect(window, &window_rect);
   *rect = window_rect;
 }
 
-void ResourceMessageFilter::OnGetRootWindowRect(HWND window, gfx::Rect *rect) {
+void ResourceMessageFilter::OnGetRootWindowRect(gfx::NativeViewId window_id,
+                                                gfx::Rect* rect) {
+  HWND window = gfx::NativeViewFromId(window_id);
   RECT window_rect = {0};
   HWND root_window = ::GetAncestor(window, GA_ROOT);
   GetWindowRect(root_window, &window_rect);
   *rect = window_rect;
 }
 
-void ResourceMessageFilter::OnGetRootWindowResizerRect(HWND window, gfx::Rect *rect) {
+void ResourceMessageFilter::OnGetRootWindowResizerRect(gfx::NativeViewId window,
+                                                       gfx::Rect* rect) {
   RECT window_rect = {0};
   *rect = window_rect;
 }
@@ -536,6 +577,19 @@ void ResourceMessageFilter::OnResourceTypeStats(
                    static_cast<int>(stats.fonts.size / 1024));
 }
 
+void ResourceMessageFilter::OnResolveProxy(const GURL& url,
+                                    IPC::Message* reply_msg) { 
+  resolve_proxy_msg_helper_.Start(url, reply_msg);
+}
+
+void ResourceMessageFilter::OnResolveProxyCompleted(
+    IPC::Message* reply_msg,
+    int result,
+    const std::string& proxy_list) {
+  ViewHostMsg_ResolveProxy::WriteReplyParams(reply_msg, result, proxy_list);
+  Send(reply_msg);
+}
+
 void ResourceMessageFilter::OnGetDefaultPrintSettings(IPC::Message* reply_msg) {
   scoped_refptr<printing::PrinterQuery> printer_query;
   print_job_manager_->PopPrinterQuery(0, &printer_query);
@@ -578,10 +632,12 @@ void ResourceMessageFilter::OnGetDefaultPrintSettingsReply(
 
 #if defined(OS_WIN)
 
-void ResourceMessageFilter::OnScriptedPrint(HWND host_window,
+void ResourceMessageFilter::OnScriptedPrint(gfx::NativeViewId host_window_id,
                                             int cookie,
                                             int expected_pages_count,
                                             IPC::Message* reply_msg) {
+  HWND host_window = gfx::NativeViewFromId(host_window_id);
+
   scoped_refptr<printing::PrinterQuery> printer_query;
   print_job_manager_->PopPrinterQuery(cookie, &printer_query);
   if (!printer_query.get()) {
@@ -673,7 +729,7 @@ void ResourceMessageFilter::OnSpellCheck(const std::wstring& word,
 void ResourceMessageFilter::Observe(NotificationType type, 
                                     const NotificationSource &source,
                                     const NotificationDetails &details) {
-  if (type == NOTIFY_SPELLCHECKER_REINITIALIZED) {
+  if (type == NotificationType::SPELLCHECKER_REINITIALIZED) {
     spellchecker_ = Details<SpellcheckerReinitializedDetails>
         (details).ptr()->spellchecker;
   }

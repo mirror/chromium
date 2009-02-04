@@ -38,13 +38,14 @@
 // appropriate DownloadManager. In progress downloads are cancelled for a
 // DownloadManager that exits (such as when closing a profile).
 
-#ifndef CHROME_BROWSER_DOWNLOAD_DOWNLOAD_FILE_H__
-#define CHROME_BROWSER_DOWNLOAD_DOWNLOAD_FILE_H__
+#ifndef CHROME_BROWSER_DOWNLOAD_DOWNLOAD_FILE_H_
+#define CHROME_BROWSER_DOWNLOAD_DOWNLOAD_FILE_H_
 
 #include <string>
 #include <vector>
 
 #include "base/basictypes.h"
+#include "base/gfx/native_widget_types.h"
 #include "base/hash_tables.h"
 #include "base/lock.h"
 #include "base/ref_counted.h"
@@ -52,6 +53,9 @@
 #include "base/timer.h"
 #include "chrome/browser/history/download_types.h"
 
+namespace net {
+class IOBuffer;
+}
 class DownloadManager;
 class FilePath;
 class GURL;
@@ -70,7 +74,7 @@ class URLRequestContext;
 
 struct DownloadBuffer {
   Lock lock;
-  typedef std::pair<char *, int> Contents;
+  typedef std::pair<net::IOBuffer*, int> Contents;
   std::vector<Contents> contents;
 };
 
@@ -141,7 +145,7 @@ class DownloadFile {
   // Whether the download is still receiving data.
   bool in_progress_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(DownloadFile);
+  DISALLOW_COPY_AND_ASSIGN(DownloadFile);
 };
 
 
@@ -196,7 +200,8 @@ class DownloadFileManager
   void OnShowDownloadInShell(const FilePath& full_path);
   // Handler to open or execute a downloaded file.
   void OnOpenDownloadInShell(const FilePath& full_path,
-                             const std::wstring& url, HWND parent_window);
+                             const std::wstring& url,
+                             gfx::NativeView parent_window);
 
   // The download manager has provided a final name for a download. Sent from
   // the UI thread and run on the download thread.
@@ -267,7 +272,7 @@ class DownloadFileManager
   ProgressMap ui_progress_;
   Lock progress_lock_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(DownloadFileManager);
+  DISALLOW_COPY_AND_ASSIGN(DownloadFileManager);
 };
 
-#endif  // CHROME_BROWSER_DOWNLOAD_DOWNLOAD_FILE_H__
+#endif  // CHROME_BROWSER_DOWNLOAD_DOWNLOAD_FILE_H_

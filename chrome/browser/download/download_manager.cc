@@ -2,8 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <time.h>
-
 #include "chrome/browser/download/download_manager.h"
 
 #include "base/file_util.h"
@@ -21,12 +19,14 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_file.h"
 #include "chrome/browser/download/download_util.h"
+#include "chrome/browser/extensions/extension.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #include "chrome/browser/tab_contents/tab_util.h"
 #include "chrome/browser/tab_contents/web_contents.h"
+#include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
@@ -40,9 +40,6 @@
 #include "net/url_request/url_request_context.h"
 
 #include "generated_resources.h"
-
-using base::Time;
-using base::TimeDelta;
 
 // Periodically update our observers.
 class DownloadItemUpdateTask : public Task {
@@ -131,7 +128,7 @@ DownloadItem::DownloadItem(int32 download_id,
                            int path_uniquifier,
                            const std::wstring& url,
                            const FilePath& original_name,
-                           const Time start_time,
+                           const base::Time start_time,
                            int64 download_size,
                            int render_process_id,
                            int request_id,
@@ -229,7 +226,7 @@ void DownloadItem::Remove(bool delete_on_disk) {
 }
 
 void DownloadItem::StartProgressTimer() {
-  update_timer_.Start(TimeDelta::FromMilliseconds(kUpdateTimeMs), this,
+  update_timer_.Start(base::TimeDelta::FromMilliseconds(kUpdateTimeMs), this,
                       &DownloadItem::UpdateObservers);
 }
 
@@ -237,7 +234,7 @@ void DownloadItem::StopProgressTimer() {
   update_timer_.Stop();
 }
 
-bool DownloadItem::TimeRemaining(TimeDelta* remaining) const {
+bool DownloadItem::TimeRemaining(base::TimeDelta* remaining) const {
   if (total_bytes_ <= 0)
     return false;  // We never received the content_length for this download.
 
@@ -246,7 +243,7 @@ bool DownloadItem::TimeRemaining(TimeDelta* remaining) const {
     return false;
 
   *remaining =
-      TimeDelta::FromSeconds((total_bytes_ - received_bytes_) / speed);
+      base::TimeDelta::FromSeconds((total_bytes_ - received_bytes_) / speed);
   return true;
 }
 
@@ -723,8 +720,9 @@ void DownloadManager::RemoveDownloadFromHistory(DownloadItem* download) {
     hs->RemoveDownload(download->db_handle());
 }
 
-void DownloadManager::RemoveDownloadsFromHistoryBetween(const Time remove_begin,
-                                                        const Time remove_end) {
+void DownloadManager::RemoveDownloadsFromHistoryBetween(
+    const base::Time remove_begin,
+    const base::Time remove_end) {
   // FIXME(paulg) see bug 958058. EXPLICIT_ACCESS below is wrong.
   HistoryService* hs = profile_->GetHistoryService(Profile::EXPLICIT_ACCESS);
   if (hs)
@@ -982,8 +980,8 @@ void DownloadManager::RemoveDownload(int64 download_handle) {
   delete download;
 }
 
-int DownloadManager::RemoveDownloadsBetween(const Time remove_begin,
-                                            const Time remove_end) {
+int DownloadManager::RemoveDownloadsBetween(const base::Time remove_begin,
+                                            const base::Time remove_end) {
   RemoveDownloadsFromHistoryBetween(remove_begin, remove_end);
 
   int num_deleted = 0;
@@ -1019,8 +1017,8 @@ int DownloadManager::RemoveDownloadsBetween(const Time remove_begin,
   return num_deleted;
 }
 
-int DownloadManager::RemoveDownloads(const Time remove_begin) {
-  return RemoveDownloadsBetween(remove_begin, Time());
+int DownloadManager::RemoveDownloads(const base::Time remove_begin) {
+  return RemoveDownloadsBetween(remove_begin, base::Time());
 }
 
 // Initiate a download of a specific URL. We send the request to the
@@ -1038,15 +1036,17 @@ void DownloadManager::DownloadUrl(const GURL& url,
 }
 
 void DownloadManager::NotifyAboutDownloadStart() {
-  NotificationService::current()->
-      Notify(NOTIFY_DOWNLOAD_START, NotificationService::AllSources(),
-             NotificationService::NoDetails());
+  NotificationService::current()->Notify(
+      NotificationType::DOWNLOAD_START,
+      NotificationService::AllSources(),
+      NotificationService::NoDetails());
 }
 
 void DownloadManager::NotifyAboutDownloadStop() {
-  NotificationService::current()->
-      Notify(NOTIFY_DOWNLOAD_STOP, NotificationService::AllSources(),
-             NotificationService::NoDetails());
+  NotificationService::current()->Notify(
+      NotificationType::DOWNLOAD_STOP,
+      NotificationService::AllSources(),
+      NotificationService::NoDetails());
 }
 
 void DownloadManager::GenerateExtension(
@@ -1152,7 +1152,7 @@ void DownloadManager::ShowDownloadInShell(const DownloadItem* download) {
 }
 
 void DownloadManager::OpenDownloadInShell(const DownloadItem* download,
-                                          HWND parent_window) {
+                                          gfx::NativeView parent_window) {
   DCHECK(file_manager_);
   file_loop_->PostTask(FROM_HERE,
       NewRunnableMethod(file_manager_,
@@ -1171,9 +1171,11 @@ void DownloadManager::OpenFilesOfExtension(
 
 bool DownloadManager::ShouldOpenFileExtension(
     const FilePath::StringType& extension) {
+  // Special-case Chrome extensions as always-open.
   if (!IsExecutable(extension) &&
-      auto_open_.find(extension) != auto_open_.end())
-      return true;
+      (auto_open_.find(extension) != auto_open_.end() ||
+       extension == chrome::kExtensionFileExtension))
+    return true;
   return false;
 }
 

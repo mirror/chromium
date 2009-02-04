@@ -12,18 +12,20 @@
 
 class Browser;
 class BrowserWindow;
-@class TabBarView;
+@class TabStripView;
 @class TabContentsController;
+@class TabStripController;
 
 @interface BrowserWindowController :
     NSWindowController<NSUserInterfaceValidations> {
  @private
   Browser* browser_;
   BrowserWindow* windowShim_;
+  TabStripController* tabStripController_;
   TabContentsController* contentsController_;
 
   IBOutlet NSBox* contentBox_;
-  IBOutlet TabBarView* tabBarView_;
+  IBOutlet TabStripView* tabStripView_;
 
   // Views for the toolbar
   IBOutlet NSView* toolbarView_;

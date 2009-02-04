@@ -14,6 +14,9 @@
 #include "chrome/common/pref_member.h"
 #include "chrome/views/client_view.h"
 #include "chrome/views/window_delegate.h"
+#ifdef CHROME_PERSONALIZATION
+#include "chrome/personalization/personalization.h"
+#endif
 
 // NOTE: For more information about the objects and files in this directory,
 //       view: https://sites.google.com/a/google.com/the-chrome-project/developers/design-documents/browser-window
@@ -40,6 +43,11 @@ class BrowserView : public BrowserWindow,
                     public views::WindowDelegate,
                     public views::ClientView {
  public:
+  // Explicitly sets how windows are shown. Use a value of -1 to give the
+  // default behavior. This is used during testing and not generally useful
+  // otherwise.
+  static void SetShowState(int state);
+
   explicit BrowserView(Browser* browser);
   virtual ~BrowserView();
 
@@ -75,6 +83,9 @@ class BrowserView : public BrowserWindow,
   // Returns true if various window components are visible.
   bool IsToolbarVisible() const;
   bool IsTabStripVisible() const;
+
+  // Returns true if the toolbar is displaying its normal set of controls.
+  bool IsToolbarDisplayModeNormal() const;
 
   // Returns true if the profile associated with this Browser window is
   // off the record.
@@ -162,8 +173,7 @@ class BrowserView : public BrowserWindow,
   virtual void SetStarredState(bool is_starred);
   virtual gfx::Rect GetNormalBounds() const;
   virtual bool IsMaximized();
-  virtual LocationBarView* GetLocationBarView() const;
-  virtual BrowserView* GetBrowserView() const;
+  virtual LocationBar* GetLocationBar() const;
   virtual void UpdateStopGoState(bool is_loading);
   virtual void UpdateToolbar(TabContents* contents, bool should_restore_state);
   virtual void FocusToolbar();
@@ -186,6 +196,7 @@ class BrowserView : public BrowserWindow,
 
   // Overridden from BrowserWindowTesting:
   virtual BookmarkBarView* GetBookmarkBarView();
+  virtual LocationBarView* GetLocationBarView() const;
 
   // Overridden from NotificationObserver:
   virtual void Observe(NotificationType type,

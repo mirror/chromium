@@ -27,6 +27,10 @@ class ClientView;
 //
 class NonClientView : public View {
  public:
+  // In restored mode, we draw a 1 px edge around the content area inside the
+  // frame border.
+  static const int kClientEdgeThickness;
+
   // Calculates the bounds of the client area of the window assuming the
   // window is sized to |width| and |height|.
   virtual gfx::Rect CalculateClientAreaBounds(int width,
@@ -75,9 +79,9 @@ class NonClientView : public View {
   // the size of the sizing edges, and whether or not the window can be
   // resized.
   int GetHTComponentForFrame(const gfx::Point& point,
-                             int resize_area_size,
-                             int resize_area_corner_size,
-                             int top_resize_area_size,
+                             int top_resize_border_height,
+                             int resize_border_thickness,
+                             int resize_corner_size,
                              bool can_resize);
 
   // Accessor for paint_as_active_.

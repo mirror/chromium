@@ -9,6 +9,7 @@
 #import "chrome/browser/browser.h"
 #import "chrome/browser/browser_list.h"
 #import "chrome/browser/command_updater.h"
+#import "chrome/browser/profile_manager.h"
 #import "chrome/common/temp_scaffolding_stubs.h"
 
 @interface AppController(PRIVATE)
@@ -27,7 +28,7 @@
   [super dealloc];
 }
 
-// We can't use the standard terminate: method because it will abrubptly exit
+// We can't use the standard terminate: method because it will abruptly exit
 // the app and leave things on the stack in an unfinalized state. We need to
 // post a quit message to our run loop so the stack can gracefully unwind.
 - (IBAction)quit:(id)sender {  
@@ -74,10 +75,16 @@
 // command is supported and doesn't check, otherwise it would have been disabled
 // in the UI in validateUserInterfaceItem:.
 - (void)commandDispatch:(id)sender {
+  // How to get the profile created on line 314 of browser_main? Ugh. TODO:FIXME
+  Profile* default_profile = *g_browser_process->profile_manager()->begin();
+  
   NSInteger tag = [sender tag];
   switch (tag) {
     case IDC_NEW_WINDOW:
-      Browser::OpenEmptyWindow(ProfileManager::FakeProfile());
+      Browser::OpenEmptyWindow(default_profile);
+      break;
+    case IDC_NEW_INCOGNITO_WINDOW:
+      Browser::OpenURLOffTheRecord(default_profile, GURL());
       break;
   };
 }
@@ -85,6 +92,7 @@
 - (void)initMenuState {
   menuState_ = new CommandUpdater(NULL);
   menuState_->UpdateCommandEnabled(IDC_NEW_WINDOW, true);
+  menuState_->UpdateCommandEnabled(IDC_NEW_INCOGNITO_WINDOW, true);
   // TODO(pinkerton): ...more to come...
 }
 
