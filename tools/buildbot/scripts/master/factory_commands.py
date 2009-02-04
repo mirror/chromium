@@ -376,7 +376,7 @@ class FactoryCommands(object):
 
   def AddExtractBuild(self, timeout=240):
     """Adds a step to the factory to extract a build."""
-    self.AddTestStep(shell.ShellCommand,
+    self.AddTestStep(retcode_command.ReturnCodeCommand,
                      timeout=timeout,
                      test_name='extract build',
                      test_command=self.GetExtractCommand())
