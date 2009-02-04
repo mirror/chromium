@@ -51,7 +51,7 @@ env.Prepend(
     ],
 )
 
-if env['PLATFORM'] == 'darwin':
+if env.Bit('mac'):
   CombinedLib = False
   GenerateDataLib = True
 
@@ -61,17 +61,17 @@ if env['PLATFORM'] == 'darwin':
   env['GENCCODE_FLAGS'] = '-a gcc-darwin -n $GENCCODE_NAME -e icudt38'
   env['GENCCODE_SUFFIX'] = '.s'
 
-if env['PLATFORM'] =='posix':
+if env.Bit('linux'):
   env['GENCCODE_NAME'] = 'icudt38l'
   env['GENCCODE_FLAGS'] = '-a gcc -n $GENCCODE_NAME -e icudt38'
   env['GENCCODE_SUFFIX'] = '.s'
 
-if env['PLATFORM'] == 'win32':
+if env.Bit('windows'):
   env['GENCCODE_NAME'] = 'icudt38'
   env['GENCCODE_FLAGS'] = '-e icudt38'
   env['GENCCODE_SUFFIX'] = '.c'
 
-if env['PLATFORM'] == 'win32':
+if env.Bit('windows'):
   # /Wd4996 to silence warning about strncpy
   env.Append(CCFLAGS = ['/WX', '/wd4996'])
 else:
@@ -454,7 +454,7 @@ else:
   icu_data = None
 
   # The ICU library isn't useful without the data properly installed.
-  if env['PLATFORM'] == 'win32':
+  if env.Bit('windows'):
     icu_data = env.Install('$DESTINATION_ROOT', 'icudt38.dll')
   else:
     icu_data = env.Install('$DESTINATION_ROOT', 'source/data/in/icudt38l.dat')
