@@ -54,6 +54,7 @@ class Event;
 class FloatPoint;
 class FloatRect;
 class Frame;
+class HitTestRequest;
 class HitTestResult;
 class HTMLFrameSetElement;
 class KeyboardEvent;
@@ -71,8 +72,6 @@ class TextEvent;
 class VisiblePosition;
 class Widget;
     
-struct HitTestRequest;
-
 extern const int LinkDragHysteresis;
 extern const int ImageDragHysteresis;
 extern const int TextDragHysteresis;
@@ -97,7 +96,7 @@ public:
     RenderObject* autoscrollRenderer() const;
     void updateAutoscrollRenderer();
 
-    HitTestResult hitTestResultAtPoint(const IntPoint&, bool allowShadowContent, bool clipToVisible = true);
+    HitTestResult hitTestResultAtPoint(const IntPoint&, bool allowShadowContent, bool ignoreClipping = false);
 
     bool mousePressed() const { return m_mousePressed; }
     void setMousePressed(bool pressed) { m_mousePressed = pressed; }

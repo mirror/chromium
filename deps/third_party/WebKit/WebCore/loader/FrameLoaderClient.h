@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006, 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2006, 2007, 2008, 2009 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -53,34 +53,37 @@ namespace WebCore {
     class Frame;
     class FrameLoader;
     class HistoryItem;
+    class HTMLAppletElement;
     class HTMLFrameOwnerElement;
+    class HTMLPlugInElement;
     class IntSize;
     class KURL;
     class NavigationAction;
     class ResourceError;
     class ResourceHandle;
     class ResourceLoader;
+    class ResourceRequest;
     class ResourceResponse;
     class SharedBuffer;
     class SubstituteData;
     class String;
     class Widget;
 
-    class ResourceRequest;
-
     typedef void (FrameLoader::*FramePolicyFunction)(PolicyAction);
 
     class FrameLoaderClient {
     public:
+        // An inline function cannot be the first non-abstract virtual function declared
+        // in the class as it results in the vtable being generated as a weak symbol.
+        // This hurts performance (in Mac OS X at least, when loadig frameworks), so we
+        // don't want to do it in WebKit.
+        virtual bool hasHTMLView() const;
+
+        virtual ~FrameLoaderClient() { }
+
         virtual void frameLoaderDestroyed() = 0;
 
-        // The inline virtual destructor cannot be the first virtual function declared
-        // in the class as it results in the vtable being generated as a weak symbol
-        virtual ~FrameLoaderClient() {}
-
         virtual bool hasWebView() const = 0; // mainly for assertions
-
-        virtual bool hasHTMLView() const { return true; }
 
         virtual void makeRepresentation(DocumentLoader*) = 0;
         virtual void forceLayout() = 0;
@@ -193,10 +196,10 @@ namespace WebCore {
 
         virtual PassRefPtr<Frame> createFrame(const KURL& url, const String& name, HTMLFrameOwnerElement* ownerElement,
                                    const String& referrer, bool allowsScrolling, int marginWidth, int marginHeight) = 0;
-        virtual Widget* createPlugin(const IntSize&, Element*, const KURL&, const Vector<String>&, const Vector<String>&, const String&, bool loadManually) = 0;
+        virtual Widget* createPlugin(const IntSize&, HTMLPlugInElement*, const KURL&, const Vector<String>&, const Vector<String>&, const String&, bool loadManually) = 0;
         virtual void redirectDataToPlugin(Widget* pluginWidget) = 0;
         
-        virtual Widget* createJavaAppletWidget(const IntSize&, Element*, const KURL& baseURL, const Vector<String>& paramNames, const Vector<String>& paramValues) = 0;
+        virtual Widget* createJavaAppletWidget(const IntSize&, HTMLAppletElement*, const KURL& baseURL, const Vector<String>& paramNames, const Vector<String>& paramValues) = 0;
 
         virtual ObjectContentType objectContentType(const KURL& url, const String& mimeType) = 0;
         virtual String overrideMediaType() const = 0;

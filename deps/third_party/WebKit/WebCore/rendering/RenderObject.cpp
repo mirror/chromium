@@ -528,100 +528,9 @@ void RenderObject::invalidateContainerPrefWidths()
     }
 }
 
-void RenderObject::setNeedsLayout(bool b, bool markParents)
+void RenderObject::setLayerNeedsFullRepaint()
 {
-    bool alreadyNeededLayout = m_needsLayout;
-    m_needsLayout = b;
-    if (b) {
-        if (!alreadyNeededLayout) {
-            if (markParents)
-                markContainingBlocksForLayout();
-            if (hasLayer())
-                toRenderBox(this)->layer()->setNeedsFullRepaint();
-        }
-    } else {
-        m_everHadLayout = true;
-        m_posChildNeedsLayout = false;
-        m_normalChildNeedsLayout = false;
-        m_needsPositionedMovementLayout = false;
-    }
-}
-
-void RenderObject::setChildNeedsLayout(bool b, bool markParents)
-{
-    bool alreadyNeededLayout = m_normalChildNeedsLayout;
-    m_normalChildNeedsLayout = b;
-    if (b) {
-        if (!alreadyNeededLayout && markParents)
-            markContainingBlocksForLayout();
-    } else {
-        m_posChildNeedsLayout = false;
-        m_normalChildNeedsLayout = false;
-        m_needsPositionedMovementLayout = false;
-    }
-}
-
-void RenderObject::setNeedsPositionedMovementLayout()
-{
-    bool alreadyNeededLayout = needsLayout();
-    m_needsPositionedMovementLayout = true;
-    if (!alreadyNeededLayout) {
-        markContainingBlocksForLayout();
-        if (hasLayer())
-            toRenderBox(this)->layer()->setNeedsFullRepaint();
-    }
-}
-
-static inline bool objectIsRelayoutBoundary(const RenderObject *obj) 
-{
-    // FIXME: In future it may be possible to broaden this condition in order to improve performance.
-    // Table cells are excluded because even when their CSS height is fixed, their height()
-    // may depend on their contents.
-    return obj->isTextField() || obj->isTextArea()
-        || obj->hasOverflowClip() && !obj->style()->width().isIntrinsicOrAuto() && !obj->style()->height().isIntrinsicOrAuto() && !obj->style()->height().isPercent() && !obj->isTableCell()
-#if ENABLE(SVG)
-           || obj->isSVGRoot()
-#endif
-           ;
-}
-    
-void RenderObject::markContainingBlocksForLayout(bool scheduleRelayout, RenderObject* newRoot)
-{
-    ASSERT(!scheduleRelayout || !newRoot);
-
-    RenderObject* o = container();
-    RenderObject* last = this;
-
-    while (o) {
-        if (!last->isText() && (last->style()->position() == FixedPosition || last->style()->position() == AbsolutePosition)) {
-            if (last->hasStaticY()) {
-                RenderObject* parent = last->parent();
-                if (!parent->normalChildNeedsLayout()) {
-                    parent->setChildNeedsLayout(true, false);
-                    if (parent != newRoot)
-                        parent->markContainingBlocksForLayout(scheduleRelayout, newRoot);
-                }
-            }
-            if (o->m_posChildNeedsLayout)
-                return;
-            o->m_posChildNeedsLayout = true;
-        } else {
-            if (o->m_normalChildNeedsLayout)
-                return;
-            o->m_normalChildNeedsLayout = true;
-        }
-
-        if (o == newRoot)
-            return;
-
-        last = o;
-        if (scheduleRelayout && objectIsRelayoutBoundary(last))
-            break;
-        o = o->container();
-    }
-
-    if (scheduleRelayout)
-        last->scheduleRelayout();
+    toRenderBox(this)->layer()->setNeedsFullRepaint(true);
 }
 
 RenderBlock* RenderObject::containingBlock() const
@@ -2277,11 +2186,6 @@ void RenderObject::removeFromObjectLists()
     }
 }
 
-bool RenderObject::documentBeingDestroyed() const
-{
-    return !document()->renderer();
-}
-
 void RenderObject::destroy()
 {
     // Destroy any leftover anonymous children.
@@ -2527,27 +2431,25 @@ void RenderObject::deleteLineBoxWrapper()
 {
 }
 
-RenderStyle* RenderObject::firstLineStyle() const
+RenderStyle* RenderObject::firstLineStyleSlowCase() const
 {
-    if (!document()->usesFirstLineRules())
-        return m_style.get();
+    ASSERT(document()->usesFirstLineRules());
 
-    RenderStyle* s = m_style.get();
-    const RenderObject* obj = isText() ? parent() : this;
-    if (obj->isBlockFlow()) {
-        RenderBlock* firstLineBlock = obj->firstLineBlock();
-        if (firstLineBlock)
-            s = firstLineBlock->getCachedPseudoStyle(RenderStyle::FIRST_LINE, style());
-    } else if (!obj->isAnonymous() && obj->isRenderInline()) {
-        RenderStyle* parentStyle = obj->parent()->firstLineStyle();
-        if (parentStyle != obj->parent()->style()) {
-            // A first-line style is in effect. We need to cache a first-line style
-            // for ourselves.
-            style()->setHasPseudoStyle(RenderStyle::FIRST_LINE_INHERITED);
-            s = obj->getCachedPseudoStyle(RenderStyle::FIRST_LINE_INHERITED, parentStyle);
+    RenderStyle* style = m_style.get();
+    const RenderObject* renderer = isText() ? parent() : this;
+    if (renderer->isBlockFlow()) {
+        if (RenderBlock* firstLineBlock = renderer->firstLineBlock())
+            style = firstLineBlock->getCachedPseudoStyle(RenderStyle::FIRST_LINE, style);
+    } else if (!renderer->isAnonymous() && renderer->isRenderInline()) {
+        RenderStyle* parentStyle = renderer->parent()->firstLineStyle();
+        if (parentStyle != renderer->parent()->style()) {
+            // A first-line style is in effect. Cache a first-line style for ourselves.
+            style->setHasPseudoStyle(RenderStyle::FIRST_LINE_INHERITED);
+            style = renderer->getCachedPseudoStyle(RenderStyle::FIRST_LINE_INHERITED, parentStyle);
         }
     }
-    return s;
+
+    return style;
 }
 
 RenderStyle* RenderObject::getCachedPseudoStyle(RenderStyle::PseudoId pseudo, RenderStyle* parentStyle) const

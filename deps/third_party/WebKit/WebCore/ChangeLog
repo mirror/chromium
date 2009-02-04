@@ -1,3 +1,511 @@
+2009-02-26  Jon Honeycutt  <jhoneycutt@apple.com>
+
+        Build fix after r40486.
+
+        Rubber-stamped by Ada Chan.
+
+        * dom/Document.h:
+        * page/EventHandler.h:
+        * rendering/EllipsisBox.h:
+        * rendering/InlineBox.h:
+        * rendering/InlineFlowBox.h:
+        * rendering/RenderLayer.h:
+
+2009-02-02  Darin Adler  <darin@apple.com>
+
+        Reviewed by Anders Carlsson.
+
+        Bug 23694: REGRESSION: Running svg/custom tests crashes, randomly, depending on the order of tests
+        https://bugs.webkit.org/show_bug.cgi?id=23694
+
+        * dom/ContainerNode.cpp:
+        (WebCore::ContainerNode::insertedIntoDocument): Added back the call through to EventTargetNode.
+        (WebCore::ContainerNode::removedFromDocument): Ditto.
+        * dom/EventTargetNode.cpp:
+        (WebCore::EventTargetNode::insertedIntoDocument): Changed this to not call through to Node.
+        (WebCore::EventTargetNode::removedFromDocument): Ditto.
+        * dom/Node.cpp:
+        (WebCore::Node::insertedIntoDocument): Updated comment.
+        (WebCore::Node::removedFromDocument): Ditto.
+
+2009-02-02  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        More plug-in cleanup.
+        
+        * WebCore.NPAPI.exp:
+        Add new symbols.
+        
+        * bindings/objc/DOM.mm:
+        * bindings/objc/DOMPrivate.h:
+        Remove methods that WebKit doesn't use anymore.
+
+2009-02-02  Jay Campan  <jcampan@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Clean up PopupMenuChromium a little.
+        https://bugs.webkit.org/show_bug.cgi?id=23653
+
+        No functional changes, only code cleanup, thus no tests.
+
+        * platform/chromium/PopupMenuChromium.cpp:
+        (WebCore::):
+        (WebCore::PopupListBox::PopupListBox):
+        (WebCore::PopupContainer::create):
+        (WebCore::PopupContainer::PopupContainer):
+        (WebCore::PopupContainer::showPopup):
+        (WebCore::PopupListBox::handleKeyEvent):
+        (WebCore::PopupListBox::isSelectableItem):
+        (WebCore::PopupListBox::selectNextRow):
+        (WebCore::PopupListBox::selectPreviousRow):
+        (WebCore::PopupMenu::show):
+        * platform/chromium/PopupMenuChromium.h:
+
+2009-02-02  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Change createPlugin to take a HTMLPlugInElement, and createJavaAppletWidget to take a HTMLAppletElement.
+        
+        * WebCore.xcodeproj/project.pbxproj:
+        * loader/EmptyClients.h:
+        (WebCore::EmptyFrameLoaderClient::createPlugin):
+        (WebCore::EmptyFrameLoaderClient::createJavaAppletWidget):
+        * loader/FrameLoader.cpp:
+        (WebCore::toPlugInElement):
+        (WebCore::FrameLoader::loadPlugin):
+        (WebCore::FrameLoader::loadItem):
+        * loader/FrameLoader.h:
+        * loader/FrameLoaderClient.h:
+
+2009-02-02  Genevieve Mak  <gen@staikos.net>
+
+        Reviewed by George Staikos.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23508
+        Returns Blank Page for all "about" protocols
+
+        * loader/MainResourceLoader.cpp:
+        Fix shouldLoadAsEmptyDocument() to return a blank page for an empty
+        url or about:blank only (for now, exclusively for Torch Mobile platform).
+
+2009-02-02  Brent Fulgham  <bfulgham@webkit.org>
+
+        Reviewed by George Staikos.
+
+        Fixes https://bugs.webkit.org/show_bug.cgi?id=23691.
+        Correct build break caused by @r40366 by moving the
+        common code implmentations from GraphicsContextCGWin.cpp
+        into the base Windows class (GraphicsContextWin.cpp).  Also
+        move inTransparencyLayer since it is identical in both
+        children.
+
+        * platform/graphics/cairo/GraphicsContextPlatformPrivateCairo.h:
+          Added member m_shouldIncludeChildWindows to Windows version,
+          similar to GraphicsContextPlatformPrivateCG.h.
+        * platform/graphics/win/GraphicsContextCGWin.cpp: Remove the
+          implementations of shouldIncludeChildWindows,
+          setShouldIncludeChildWindows, and inTransparencyLayer.
+        * platform/graphics/win/GraphicsContextCairoWin.cpp: Remove
+          the implementation of inTransparencyLayer.
+        * platform/graphics/win/GraphicsContextWin.cpp: Move common code
+          from GraphicsContextCGWin.cpp and GraphicsContextCairoWin.cpp. 
+        (WebCore::GraphicsContext::inTransparencyLayer):
+        (WebCore::GraphicsContext::setShouldIncludeChildWindows):
+        (WebCore::GraphicsContext::shouldIncludeChildWindows):
+
+2009-02-02  Darin Adler  <darin@apple.com>
+
+        Try to fix Wx build, and maybe Chromium build too.
+
+        * WebCore.scons: Added IdentifierRep.cpp.
+        * WebCoreSources.bkl: Ditto.
+
+2009-02-02  Darin Adler  <darin@apple.com>
+
+        Try to fix Wx build.
+
+        * html/HTMLAreaElement.cpp: Added missing include of "Path.h".
+
+2009-02-02  Adam Treat  <adam.treat@torchmobile.com>
+
+        Reviewed by Nikolas Zimmermann.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23587
+        Refactor HitTestRequest to eliminate all the ugly boolean arguments and
+        use an enum bitflag instead.  Cleanup all the code that constructs the
+        various HitTestRequests to make the code more readable.
+
+        * dom/Document.cpp:
+        (WebCore::Document::elementFromPoint):
+        (WebCore::Document::prepareMouseEvent):
+        * editing/SelectionController.cpp:
+        (WebCore::SelectionController::contains):
+        * page/AccessibilityRenderObject.cpp:
+        (WebCore::AccessibilityRenderObject::visiblePositionForPoint):
+        (WebCore::AccessibilityRenderObject::doAccessibilityHitTest):
+        * page/EventHandler.cpp:
+        (WebCore::EventHandler::eventMayStartDrag):
+        (WebCore::EventHandler::updateSelectionForMouseDrag):
+        (WebCore::EventHandler::hitTestResultAtPoint):
+        (WebCore::EventHandler::handleMousePressEvent):
+        (WebCore::EventHandler::handleMouseDoubleClickEvent):
+        (WebCore::EventHandler::handleMouseMoveEvent):
+        (WebCore::EventHandler::handleMouseReleaseEvent):
+        (WebCore::EventHandler::updateDragAndDrop):
+        (WebCore::EventHandler::handleWheelEvent):
+        (WebCore::EventHandler::sendContextMenuEvent):
+        (WebCore::EventHandler::hoverTimerFired):
+        (WebCore::EventHandler::handleDrag):
+        * page/EventHandler.h:
+        * rendering/HitTestRequest.h:
+        (WebCore::HitTestRequest::):
+        (WebCore::HitTestRequest::HitTestRequest):
+        (WebCore::HitTestRequest::readOnly):
+        (WebCore::HitTestRequest::active):
+        (WebCore::HitTestRequest::mouseMove):
+        (WebCore::HitTestRequest::mouseUp):
+        (WebCore::HitTestRequest::ignoreClipping):
+        * rendering/RenderFrameSet.cpp:
+        (WebCore::RenderFrameSet::nodeAtPoint):
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::hitTest):
+        (WebCore::RenderLayer::hitTestLayer):
+        (WebCore::RenderLayer::updateHoverActiveState):
+
+2009-02-02  George Staikos  <george.staikos@torchmobile.com>
+
+        Reviewed by Niko Zimmermann.
+
+        Fix WML build by including the inlined renderStyle().
+
+        * wml/WMLOptGroupElement.cpp:
+        * wml/WMLOptionElement.cpp:
+
+2009-02-02  Darin Adler  <darin@apple.com>
+
+        Reviewed by Niko Zimmermann.
+
+        Bug 23686: REGRESSION (r40475): Failure in fast/xpath/4XPath/Core/test_core_functions.html
+        https://bugs.webkit.org/show_bug.cgi?id=23686
+        rdar://problem/6547971
+
+        Also fix other XPath tests that are crashing.
+
+        * xml/XPathFunctions.cpp:
+        (WebCore::XPath::FunLang::evaluate): Fix order of arguments when creating QualifiedName.
+        * xml/XPathStep.cpp:
+        (WebCore::XPath::Step::nodesInAxis): Use createAttrIfNeeded() rather than attr() since we
+        need to make Attr nodes here. Yuck!
+
+2009-02-02  Yichao Yin  <yichao.yin@torchmobile.com.cn>
+
+        Reviewed by Niko Zimmermann.
+
+        Test: wml/input-format.html
+
+        * wml/WMLInputElement.cpp:
+        (WebCore::WMLInputElement::WMLInputElement):
+        (WebCore::formatCodes):
+        (WebCore::WMLInputElement::dispatchBlurEvent):
+        (WebCore::WMLInputElement::parseMappedAttribute):
+        (WebCore::WMLInputElement::attach):
+        (WebCore::WMLInputElement::defaultEventHandler):
+        (WebCore::WMLInputElement::init):
+        (WebCore::WMLInputElement::validateInputMask):
+        (WebCore::WMLInputElement::isConformedToInputMask):
+        (WebCore::WMLInputElement::cursorPositionToMaskIndex):
+        * wml/WMLInputElement.h:
+
+2009-02-02  Brent Fulgham  <bfulgham@webkit.org>
+
+        Build fix only, no review.
+
+        Fixes https://bugs.webkit.org/show_bug.cgi?id=23685.
+        Correct build break caused by @r40473.
+
+        * page/win/FrameWin.cpp: Correct access for adjustPageHeight.
+        (WebCore::computePageRectsForFrame):
+
+2009-02-02  Nikolas Zimmermann  <nikolas.zimmermann@torchmobile.com>
+
+        Not reviewed. Fix WML enabled builds.
+        FrameLoader::urlSelected() got a new parameter: lockBackForwardList. Pass 'false', as HTMLAnchorElement does.
+
+        * wml/WMLAElement.cpp:
+        (WebCore::WMLAElement::defaultEventHandler):
+
+2009-02-02  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        <rdar://problem/6451610> Reloading a AppCache page doesn't ever hit the server
+
+        Not easily testable.
+
+        * loader/appcache/ApplicationCacheGroup.cpp:
+        (WebCore::ApplicationCacheGroup::createResourceHandle): A new method that creates a resource
+        handle in a manner that is closer to what CachedResource does. We now make conditional
+        requests for better performance, and set max-age to ensure that stale responses are not used.
+        (WebCore::ApplicationCacheGroup::update): Use the new createResourceHandle() method.
+        (WebCore::ApplicationCacheGroup::didReceiveResponse): If the response code for the resource
+        is 304, take it from the newest cache.
+        (WebCore::ApplicationCacheGroup::didFail): Pre-compute request URL.
+        (WebCore::ApplicationCacheGroup::didReceiveManifestResponse): Don't create a resource for
+        the manifest if the response code was 304 - it won't be needed.
+        (WebCore::ApplicationCacheGroup::didReceiveManifestData): Replaced an assertion that
+        m_manifestResource is not null with a check.
+        (WebCore::ApplicationCacheGroup::didFinishLoadingManifest): Treat null m_manifestResource as
+        an indication that the response was 304.
+        (WebCore::ApplicationCacheGroup::startLoadingEntry): Use createResourceHandle().
+
+        * loader/appcache/ApplicationCacheGroup.h: Added createResourceHandle().
+
+2009-02-01  Darin Adler  <darin@apple.com>
+
+        Reviewed by Dave Hyatt.
+
+        Bug 23674: Speed up some things based on profiling the page load test
+        https://bugs.webkit.org/show_bug.cgi?id=23674
+
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::canShareStyleWithElement): Use the newly named cssTarget instead
+        of the old name, getCSSTarget.
+        (WebCore::CSSStyleSelector::SelectorChecker::checkOneSelector): Ditto.
+
+        * dom/ContainerNode.cpp:
+        (WebCore::ContainerNode::insertedIntoDocument): Moved code from Node in here rather than
+        calling through to EventTargetNode::insertedIntoDocument.
+        (WebCore::ContainerNode::removedFromDocument): Ditto.
+        (WebCore::ContainerNode::insertedIntoTree): Tweaked a bit.
+        (WebCore::ContainerNode::removedFromTree): Ditto.
+
+        * dom/ContainerNode.h: Moved the constructor definition here and made it inline.
+
+        * dom/Document.cpp:
+        (WebCore::Document::removeAllEventListenersFromAllNodes): Iterate the document element and
+        its contents only to avoid the document type node. This allows us to remove the virtual
+        function call to isEventTargetNode from the loop.
+        (WebCore::Document::setCSSTarget): Changed argument to be an Element rather than Node.
+
+        * dom/Document.h: Changed CSS target to be an Element rather than a Node. Renamed
+        getCSSTarget to cssTarget.
+
+        * dom/EventTargetNode.cpp:
+        (WebCore::EventTargetNode::removeAllEventListenersSlowCase): Renamed and turned the
+        rare data check into an assertion.
+
+        * dom/EventTargetNode.h: Made the fast case of removeAllEventListeners be inline.
+        Also moved the constructor definition here and made it inline. And added toEventTargetNode,
+        matching the design of the render tree checked casts. Later we can migrate all callers
+        from EventTargetNodeCast to toEventTargetNode.
+
+        * dom/NamedAttrMap.cpp:
+        (WebCore::NamedAttrMap::detachAttributesFromElement): Added. Factored out from
+        clearAttributes, so we could use this loop in cases where we're not clearing the attributes.
+        (WebCore::NamedAttrMap::~NamedAttrMap): Call detachAttributesFromElement instead of
+        clearAttributes here.
+        (WebCore::NamedAttrMap::clearAttributes): Call detachAttributesFromElement here.
+        (WebCore::NamedAttrMap::detachFromElement): Call detachAttributesFromElement instead of
+        clearAttributes. We don't need to clear the attributes array just because the element is
+        going away, so don't.
+        (WebCore::NamedAttrMap::virtualLength): Added.
+
+        * dom/NamedAttrMap.h: Made all the virtual functions inherited from NamedNodeMap be private.
+        These are all unnecessarily inefficient for use outside the DOM. Changed length to be a
+        non-virtual function. This was a fairly hot function.
+
+        * dom/NamedMappedAttrMap.cpp:
+        (WebCore::NamedMappedAttrMap::setClass): Changed to use element() function now that the
+        m_element data member is private.
+
+        * dom/NamedMappedAttrMap.h: Made a few functions private. Made the
+        hasMappedAttributes function non-virtual.
+
+        * dom/NamedNodeMap.h: Made length a non-virtual inline function that calls a virtual
+        function, name virtualLength. This lets NamedAttrMap::length be a non-virtual function.
+
+        * dom/Node.cpp:
+        (WebCore::Node::insertedIntoDocument): Removed call to insertedIntoTree, since it's
+        only non-empty in subclasses of ContainerNode.
+        (WebCore::Node::removedFromDocument): Ditto. Also removed setCSSTarget. Since a CSS
+        target has to be an Element, this can be moved down to ContainerNode (or it could be
+        moved down to Element for that matter).
+
+        * dom/QualifiedName.cpp:
+        (WebCore::QualifiedName::QualifiedName): Removed double initialization of m_impl.
+
+        * dom/QualifiedName.h: Moved the destructor, copy constructor, assignment operator, and
+        setPrefix function definitions into the header and made them inline.
+
+        * html/HTMLAreaElement.cpp:
+        (WebCore::HTMLAreaElement::mapMouseEvent): Updated since the stored region is now
+        an OwnPtr.
+        (WebCore::HTMLAreaElement::accessKey): Use AtomicString.
+        (WebCore::HTMLAreaElement::setAccessKey): Ditto.
+        (WebCore::HTMLAreaElement::alt): Ditto.
+        (WebCore::HTMLAreaElement::setAlt): Ditto.
+        (WebCore::HTMLAreaElement::coords): Ditto.
+        (WebCore::HTMLAreaElement::setCoords): Ditto.
+        (WebCore::HTMLAreaElement::setHref): Ditto.
+        (WebCore::HTMLAreaElement::shape): Ditto.
+        (WebCore::HTMLAreaElement::setShape): Ditto.
+        (WebCore::HTMLAreaElement::setTarget): Ditto.
+
+        * html/HTMLAreaElement.h: Use AtomicString in the getter and setter DOM operations.
+        Change the region data member to be an OwnPtr<Path> instead of a Path to optimize
+        the common case where an area element is parsed but never hit-tested. This could
+        also have been done by changing the Path class's null case to be more efficient,
+        but this seems fine.
+
+        * html/HTMLViewSourceDocument.cpp:
+        (WebCore::HTMLViewSourceDocument::createContainingTable): Use addAttribute instead
+        of insertAttribute.
+        (WebCore::HTMLViewSourceDocument::addSpanWithClassName): Ditto.
+        (WebCore::HTMLViewSourceDocument::addLine): Ditto.
+        (WebCore::HTMLViewSourceDocument::addLink): Ditto.
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::gotoAnchor): Use cssTarget under its new name instead
+        of its old name getCSSTarget.
+
+        * platform/graphics/GlyphWidthMap.cpp:
+        (WebCore::GlyphWidthMap::locatePageSlowCase): Refactored from locatePage.
+
+        * platform/graphics/GlyphWidthMap.h: Made most of this class inline.
+        Changed m_pages to use OwnPtr.
+
+        * platform/text/PlatformString.h: Remove include no longer needed since
+        StringImpl.h includes it.
+
+        * platform/text/StringImpl.cpp:
+        (WebCore::StringImpl::createStrippingNullCharactersSlowCase): Refactored
+        from createStrippingNullCharacters.
+        * platform/text/StringImpl.h: Moved the definition of
+        createStrippingNullCharacters here and made it inline.
+
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::firstLineStyleSlowCase): Refactored from
+        firstLineStyle.
+
+        * rendering/RenderObject.h: Moved the definition of the firstLineStyle
+        function here and made it inline. Moved the definition of the
+        documentBeingDestroyed function here and made it inline.
+
+        * svg/SVGSVGElement.cpp:
+        (WebCore::SVGSVGElement::getCTM): Use getAttributeItem instead of
+        getNamedItem here since it accomplishes the same thing but is more efficient.
+        (WebCore::SVGSVGElement::getScreenCTM): Ditto.
+        * svg/SVGStyledElement.cpp:
+        (WebCore::SVGStyledElement::getPresentationAttribute): Ditto.
+
+        * xml/XPathFunctions.cpp:
+        (WebCore::XPath::FunLang::evaluate): Use getAttributeItem instead of
+        getNamedItemNS.
+
+        * xml/XPathStep.cpp:
+        (WebCore::XPath::Step::nodesInAxis): Use attributeItem instead of item here.
+
+2009-02-02  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by Darin Adler.
+
+        Move Frame::forceLayout, Frame::adjustPageHeight and Frame::forceLayoutWithPageWidthRange to FrameView
+
+        https://bugs.webkit.org/show_bug.cgi?id=23428
+
+        FrameView::forceLayout could be killed but the comment might
+        contain a value over the the plain FrameView::layout...
+
+        Adjust the WebCore/WebKit consumers of these methods.
+
+        * WebCore.base.exp:
+        * page/Frame.cpp:
+        (WebCore::Frame::setPrinting):
+        * page/Frame.h:
+        * page/FrameView.cpp:
+        (WebCore::FrameView::forceLayout):
+        (WebCore::FrameView::forceLayoutWithPageWidthRange):
+        (WebCore::FrameView::adjustPageHeight):
+        * page/FrameView.h:
+        * page/PrintContext.cpp:
+        (WebCore::PrintContext::computePageRects):
+
+2009-02-01  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by John Sullivan.
+
+        - fix <rdar://problem/6546625> REGRESSION (r40432): iframes added to global history at haaretz.co.il
+
+        Fixes http/tests/navigation/multiple-back-forward-entries.html
+
+        r40432 added a parameter to FrameLoader::scheduleLocationChange() and
+        failed to update all call sites.
+
+        * bindings/js/JSDOMWindowBase.cpp:
+        (WebCore::createWindow): Pass the lockBackForwardHistory parameter,
+        giving it the same value as the lockHistory parameter.
+        (windowProtoFuncOpen): Ditto.
+        * bindings/js/JSDOMWindowCustom.cpp:
+        (WebCore::JSDOMWindow::setLocation): Ditto.
+        * bindings/js/JSDocumentCustom.cpp:
+        (WebCore::JSDocument::setLocation): Ditto.
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::requestFrame): Ditto.
+
+2009-01-31  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        - fix <rdar://problem/6546549> Eliminate some RenderText::width() overhead from findNextLineBreak()
+
+        On the PLT, this results in 0.36x the number of virtual function calls
+        to RenderText::width() and 0.69x the number of calls to
+        Font::isFixedPitch(), but makes 1.0004x the number of calls to
+        Font::width().
+
+        * rendering/RenderText.cpp:
+        (WebCore::RenderText::width): Replaced bounds checks on 'from' and 'len'
+        with an assertion.
+        * rendering/bidi.cpp:
+        (WebCore::textWidth): Added this inlined helper function which calls
+        Font::width() directly in the non-fixed-pitch, non-full-range case, and
+        otherwise calls RenderText::width().
+        (WebCore::RenderBlock::findNextLineBreak): Cache whether the font has
+        fixed pitch (in which case RenderText::width() will be called in order
+        to take advantage of the widthFromCache() optimization for fixed-pitch
+        fonts). Replaced all calls to RenderText::width() with calls to the
+        textWidth() helper function.
+
+2009-01-31  David Hyatt  <hyatt@apple.com>
+
+        Inline all of the setNeedsLayout method and its associated functions.  Also inline setChildNeedsLayout
+        and setNeedsPositionedMovementLayout.
+
+        Reviewed by Dan Bernstein
+
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::setLayerNeedsFullRepaint):
+        * rendering/RenderObject.h:
+        (WebCore::RenderObject::setNeedsLayout):
+        (WebCore::RenderObject::setChildNeedsLayout):
+        (WebCore::RenderObject::setNeedsPositionedMovementLayout):
+        (WebCore::objectIsRelayoutBoundary):
+        (WebCore::RenderObject::markContainingBlocksForLayout):
+
+2009-01-31  Darin Adler  <darin@apple.com>
+
+        Fix Mac build.
+
+        * loader/FrameLoader.cpp: Moved FrameLoaderClient::hasHTMLView in here.
+        We need it to not be an inline. Sadly, FrameLoaderClient.cpp was prematurely
+        deleted and I don't want to bring it back just to fix the build.
+
+        * loader/FrameLoaderClient.h: Rearrange virtual functions and corrected
+        a possibly-confusing comment.
+
 2009-01-31  Adam Treat  <adam.treat@torchmobile.com>
 
         Reviewed by David Hyatt.
