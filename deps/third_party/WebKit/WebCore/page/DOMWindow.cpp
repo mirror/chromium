@@ -971,8 +971,11 @@ void DOMWindow::setLocation(const String& v) {
     ScriptController::isSafeScript(m_frame)) {
     String completed_url = active_frame->loader()->completeURL(v).string();
 
+    // FIXME: The JSC bindings pass !anyPageIsProcessingUserGesture() for
+    // the lockHistory parameter.  We should probably do something similar.
+
     m_frame->loader()->scheduleLocationChange(completed_url,
-        active_frame->loader()->outgoingReferrer(), false,
+        active_frame->loader()->outgoingReferrer(), false, false,
         active_frame->script()->processingUserGesture());
   }
 }
