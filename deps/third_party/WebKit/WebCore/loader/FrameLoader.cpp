@@ -379,9 +379,8 @@ bool FrameLoader::canHandleRequest(const ResourceRequest& request)
 
 void FrameLoader::changeLocation(const String& url, const String& referrer, bool lockHistory, bool lockBackForwardList, bool userGesture, bool refresh)
 {
-    changeLocation(completeURL(url), referrer, lockHistory, userGesture, refresh);
+    changeLocation(completeURL(url), referrer, lockHistory, lockBackForwardList, userGesture, refresh);
 }
-
 
 void FrameLoader::changeLocation(const KURL& url, const String& referrer, bool lockHistory, bool lockBackForwardList, bool userGesture, bool refresh)
 {
