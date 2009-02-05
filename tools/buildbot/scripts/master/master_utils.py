@@ -376,8 +376,7 @@ class MasterFactory(object):
 
     # Archive the generated build.
     if archive_build:
-      show_url = (slave_type != 'Builder')
-      factory_cmd_obj.AddArchiveBuild(show_url=show_url)
+      factory_cmd_obj.AddArchiveBuild()
 
     if 'reliability' in tests:
       factory.addStep(trigger.Trigger(schedulerNames=['reliability'],
@@ -385,7 +384,7 @@ class MasterFactory(object):
 
     # Archive the full output directory if the machine is a builder.
     if slave_type == 'Builder':
-      factory_cmd_obj.AddArchiveBuild('full')
+      factory_cmd_obj.AddArchiveBuild('full', show_url=False)
       factory_cmd_obj.AddUploadBuild()
 
     # Download the full output directory if the machine is a tester.
