@@ -32,5 +32,6 @@ class ArchiveCommand(shell.ShellCommand):
     self.addLogObserver('stdio', self.script_observer)
 
   def createSummary(self, log):
-    url = ('%s/%s' % (self.base_url, self.script_observer.last_change))
-    self.addURL(self.link_text, url)
+    if (self.base_url and self.link_text):
+      url = ('%s/%s' % (self.base_url, self.script_observer.last_change))
+      self.addURL(self.link_text, url)
