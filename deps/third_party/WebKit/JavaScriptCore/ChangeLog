@@ -1,3 +1,55 @@
+2009-02-03  Simon Hausmann  <simon.hausmann@nokia.com>
+
+        Reviewed by Tor Arne Vestbø.
+
+        Added accessor for JSByteArray storage.
+
+        * runtime/JSByteArray.h:
+        (JSC::JSByteArray::storage):
+
+2009-02-03  Dmitry Titov  <dimich@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23560
+        Implement SharedTimer on WorkerRunLoop
+
+        * JavaScriptCore.exp:
+        Forgot to expose ThreadCondition::timedWait() in one of previous patches.
+
+2009-02-02  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by Gavin Barraclough.
+
+        <https://bugs.webkit.org/show_bug.cgi?id=21414> REGRESSION: Regular Expressions and character classes, shorthands and ranges
+        <rdar://problem/6543487>
+
+        In certain circumstances when WREC::Generator::generateCharacterClassInvertedRange invokes
+        itself recursively, it will incorrectly emit (and thus consume) the next single character
+        match in the current character class.  As WREC uses a binary search this out of sequence
+        codegen could result in a character match being missed and so cause the regex to produce
+        incorrect results.
+
+        * wrec/WRECGenerator.cpp:
+        (JSC::WREC::Generator::generateCharacterClassInvertedRange):
+
+2009-02-02  Darin Adler  <darin@apple.com>
+
+        Reviewed by Dave Hyatt.
+
+        Bug 23676: Speed up uses of reserveCapacity on new vectors by adding a new reserveInitialCapacity
+        https://bugs.webkit.org/show_bug.cgi?id=23676
+
+        * API/JSObjectRef.cpp:
+        (JSObjectCopyPropertyNames): Use reserveInitialCapacity.
+        * parser/Lexer.cpp:
+        (JSC::Lexer::Lexer): Ditto.
+        (JSC::Lexer::clear): Ditto.
+
+        * wtf/Vector.h: Added reserveInitialCapacity, a more efficient version of
+        reserveCapacity for use when the vector is brand new (still size 0 with no
+        capacity other than the inline capacity).
+
 2009-01-30  Mark Rowe  <mrowe@apple.com>
 
         Rubber-stamped by Oliver Hunt.

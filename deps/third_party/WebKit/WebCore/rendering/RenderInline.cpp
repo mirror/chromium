@@ -118,8 +118,8 @@ void RenderInline::styleDidChange(RenderStyle::Diff diff, const RenderStyle* old
 
     // Update pseudos for :before and :after now.
     if (!isAnonymous() && document()->usesBeforeAfterRules()) {
-        updateBeforeAfterContent(RenderStyle::BEFORE);
-        updateBeforeAfterContent(RenderStyle::AFTER);
+        children()->updateBeforeAfterContent(this, RenderStyle::BEFORE);
+        children()->updateBeforeAfterContent(this, RenderStyle::AFTER);
     }
 }
 
@@ -199,7 +199,7 @@ void RenderInline::addChildIgnoringContinuation(RenderObject* newChild, RenderOb
         // content gets properly destroyed.
         bool isLastChild = (beforeChild == lastChild());
         if (document()->usesBeforeAfterRules())
-            updateBeforeAfterContent(RenderStyle::AFTER);
+            children()->updateBeforeAfterContent(this, RenderStyle::AFTER);
         if (isLastChild && beforeChild != lastChild())
             beforeChild = 0; // We destroyed the last child, so now we need to update our insertion
                              // point to be 0.  It's just a straight append now.
@@ -234,7 +234,7 @@ void RenderInline::splitInlines(RenderBlock* fromBlock, RenderBlock* toBlock,
     while (o) {
         RenderObject* tmp = o;
         o = tmp->nextSibling();
-        clone->addChildIgnoringContinuation(removeChildNode(tmp), 0);
+        clone->addChildIgnoringContinuation(children()->removeChildNode(this, tmp), 0);
         tmp->setNeedsLayoutAndPrefWidthsRecalc();
     }
 
@@ -273,7 +273,7 @@ void RenderInline::splitInlines(RenderBlock* fromBlock, RenderBlock* toBlock,
             // has to move into the inline continuation.  Call updateBeforeAfterContent to ensure that the inline's :after
             // content gets properly destroyed.
             if (document()->usesBeforeAfterRules())
-                curr->updateBeforeAfterContent(RenderStyle::AFTER);
+                inlineCurr->children()->updateBeforeAfterContent(this, RenderStyle::AFTER);
 
             // Now we need to take all of the children starting from the first child
             // *after* currChild and append them all to the clone.
@@ -281,7 +281,7 @@ void RenderInline::splitInlines(RenderBlock* fromBlock, RenderBlock* toBlock,
             while (o) {
                 RenderObject* tmp = o;
                 o = tmp->nextSibling();
-                clone->addChildIgnoringContinuation(curr->removeChildNode(tmp), 0);
+                clone->addChildIgnoringContinuation(curr->children()->removeChildNode(curr, tmp), 0);
                 tmp->setNeedsLayoutAndPrefWidthsRecalc();
             }
         }
@@ -293,7 +293,7 @@ void RenderInline::splitInlines(RenderBlock* fromBlock, RenderBlock* toBlock,
     }
 
     // Now we are at the block level. We need to put the clone into the toBlock.
-    toBlock->appendChildNode(clone);
+    toBlock->children()->appendChildNode(toBlock, clone);
 
     // Now take all the children after currChild and remove them from the fromBlock
     // and put them in the toBlock.
@@ -301,7 +301,7 @@ void RenderInline::splitInlines(RenderBlock* fromBlock, RenderBlock* toBlock,
     while (o) {
         RenderObject* tmp = o;
         o = tmp->nextSibling();
-        toBlock->appendChildNode(fromBlock->removeChildNode(tmp));
+        toBlock->children()->appendChildNode(toBlock, fromBlock->children()->removeChildNode(fromBlock, tmp));
     }
 }
 
@@ -329,9 +329,9 @@ void RenderInline::splitFlow(RenderObject* beforeChild, RenderBlock* newBlockBox
 
     RenderObject* boxFirst = madeNewBeforeBlock ? block->firstChild() : pre->nextSibling();
     if (madeNewBeforeBlock)
-        block->insertChildNode(pre, boxFirst);
-    block->insertChildNode(newBlockBox, boxFirst);
-    block->insertChildNode(post, boxFirst);
+        block->children()->insertChildNode(block, pre, boxFirst);
+    block->children()->insertChildNode(block, newBlockBox, boxFirst);
+    block->children()->insertChildNode(block, post, boxFirst);
     block->setChildrenInline(false);
     
     if (madeNewBeforeBlock) {
@@ -339,7 +339,7 @@ void RenderInline::splitFlow(RenderObject* beforeChild, RenderBlock* newBlockBox
         while (o) {
             RenderObject* no = o;
             o = no->nextSibling();
-            pre->appendChildNode(block->removeChildNode(no));
+            pre->children()->appendChildNode(pre, block->children()->removeChildNode(block, no));
             no->setNeedsLayoutAndPrefWidthsRecalc();
         }
     }
@@ -602,7 +602,7 @@ void RenderInline::childBecameNonInline(RenderObject* child)
     RenderContainer* oldContinuation = continuation();
     setContinuation(newBox);
     RenderObject* beforeChild = child->nextSibling();
-    removeChildNode(child);
+    children()->removeChildNode(this, child);
     splitFlow(beforeChild, newBox, child, oldContinuation);
 }
 

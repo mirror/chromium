@@ -29,41 +29,38 @@
  */
 
 #include "config.h"
-#include "ThreadableLoader.h"
 
-#include "DocumentThreadableLoader.h"
-#include "Document.h"
-#include "Frame.h"
-#include "FrameLoader.h"
-#include "ScriptExecutionContext.h"
-#include "WorkerContext.h"
-#include "WorkerThreadableLoader.h"
+#if ENABLE(WORKERS)
+
+#include "CrossThreadCopier.h"
+
+#include "PlatformString.h"
+#include "ResourceError.h"
+#include "ResourceRequest.h"
+#include "ResourceResponse.h"
 
 namespace WebCore {
 
-PassRefPtr<ThreadableLoader> ThreadableLoader::create(ScriptExecutionContext* context, ThreadableLoaderClient* client, const ResourceRequest& request, LoadCallbacks callbacksSetting, ContentSniff contentSniff) 
+CrossThreadCopierBase<false, String>::Type CrossThreadCopierBase<false, String>::copy(const String& str)
 {
-    ASSERT(client);
-    ASSERT(context);
-
-#if ENABLE(WORKERS)
-    if (context->isWorkerContext())
-        return WorkerThreadableLoader::create(static_cast<WorkerContext*>(context), client, request, callbacksSetting, contentSniff);
-#endif // ENABLE(WORKERS)
-
-    ASSERT(context->isDocument());
-    return DocumentThreadableLoader::create(static_cast<Document*>(context), client, request, callbacksSetting, contentSniff);
+    return str.copy();
 }
 
-unsigned long ThreadableLoader::loadResourceSynchronously(ScriptExecutionContext* context, const ResourceRequest& request, ResourceError& error, ResourceResponse& response, Vector<char>& data)
+CrossThreadCopierBase<false, ResourceError>::Type CrossThreadCopierBase<false, ResourceError>::copy(const ResourceError& error)
 {
-    ASSERT(context);
-    ASSERT(context->isDocument());
+    return error.copy();
+}
 
-    Document* document = static_cast<Document*>(context);
-    if (!document->frame())
-        return std::numeric_limits<unsigned long>::max();
-    return document->frame()->loader()->loadResourceSynchronously(request, error, response, data);
+CrossThreadCopierBase<false, ResourceRequest>::Type CrossThreadCopierBase<false, ResourceRequest>::copy(const ResourceRequest& request)
+{
+    return request.copyData();
+}
+
+CrossThreadCopierBase<false, ResourceResponse>::Type CrossThreadCopierBase<false, ResourceResponse>::copy(const ResourceResponse& response)
+{
+    return response.copyData();
 }
 
 } // namespace WebCore
+
+#endif // ENABLE(WORKERS)

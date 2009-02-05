@@ -26,6 +26,8 @@
 #ifndef RenderObjectChildList_h
 #define RenderObjectChildList_h
 
+#include "RenderStyle.h"
+
 namespace WebCore {
 
 class RenderObject;
@@ -47,6 +49,13 @@ public:
     void setLastChild(RenderObject* child) { m_lastChild = child; }
     
     void destroyLeftoverChildren();
+
+    RenderObject* removeChildNode(RenderObject* owner, RenderObject*, bool fullRemove = true);
+    void appendChildNode(RenderObject* owner, RenderObject*, bool fullAppend = true);
+    void insertChildNode(RenderObject* owner, RenderObject* child, RenderObject* before, bool fullInsert = true);
+
+    void updateBeforeAfterContent(RenderObject* owner, RenderStyle::PseudoId type, RenderObject* styledObject = 0);
+    void invalidateCounters(RenderObject* owner);
 
 private:
     RenderObject* m_firstChild;

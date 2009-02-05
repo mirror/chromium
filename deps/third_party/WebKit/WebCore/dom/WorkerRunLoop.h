@@ -33,17 +33,21 @@
 
 #if ENABLE(WORKERS)
 
-#include "WorkerTask.h"
+#include "ScriptExecutionContext.h"
+#include "SharedTimer.h"
 #include <wtf/MessageQueue.h>
+#include <wtf/OwnPtr.h>
 #include <wtf/PassRefPtr.h>
 
 namespace WebCore {
 
     class WorkerContext;
+    class WorkerSharedTimer;
 
     class WorkerRunLoop {
     public:
-        WorkerRunLoop() {}
+        WorkerRunLoop();
+        ~WorkerRunLoop();
         
         // Blocking call. Waits for tasks and timers, invokes the callbacks.
         void run(WorkerContext*);
@@ -51,10 +55,11 @@ namespace WebCore {
         void terminate();
         bool terminated() { return m_messageQueue.killed(); }
 
-        void postTask(PassRefPtr<WorkerTask>);
-        
+        void postTask(PassRefPtr<ScriptExecutionContext::Task>);
+
     private:
-        MessageQueue<RefPtr<WorkerTask> > m_messageQueue;
+        MessageQueue<RefPtr<ScriptExecutionContext::Task> > m_messageQueue;
+        OwnPtr<WorkerSharedTimer> m_sharedTimer;
     };
 
 } // namespace WebCore

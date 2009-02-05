@@ -31,6 +31,7 @@
 #include "WorkerContext.h"
 
 #include "ActiveDOMObject.h"
+#include "DOMTimer.h"
 #include "DOMWindow.h"
 #include "Event.h"
 #include "EventException.h"
@@ -40,7 +41,6 @@
 #include "WorkerLocation.h"
 #include "WorkerMessagingProxy.h"
 #include "WorkerNavigator.h"
-#include "WorkerTask.h"
 #include "WorkerThread.h"
 #include <wtf/RefPtr.h>
 
@@ -111,18 +111,16 @@ void WorkerContext::reportException(const String& errorMessage, int lineNumber, 
     m_thread->messagingProxy()->postWorkerException(errorMessage, lineNumber, sourceURL);
 }
 
-static void addMessageTask(ScriptExecutionContext* context, MessageDestination destination, MessageSource source, MessageLevel level, const String& message, unsigned lineNumber, const String& sourceURL)
+static void addMessageTask(ScriptExecutionContext* context, WorkerMessagingProxy* messagingProxy, MessageDestination destination, MessageSource source, MessageLevel level, const String& message, unsigned lineNumber, const String& sourceURL)
 {
+    if (messagingProxy->askedToTerminate())
+        return;
     context->addMessage(destination, source, level, message, lineNumber, sourceURL);
 }
 
 void WorkerContext::addMessage(MessageDestination destination, MessageSource source, MessageLevel level, const String& message, unsigned lineNumber, const String& sourceURL)
 {
-    // createCallbackTask has to be a separate statement from postTaskToParentContext to make the destructor
-    // for message.copy() get called before postTaskToParentContext.  (If they are one statement, the destructor
-    // gets called after postTaskToParentContext which causes a race condition.) 
-    RefPtr<Task> task = createCallbackTask(m_thread->messagingProxy(), &addMessageTask, destination, source, level, message.copy(), lineNumber, sourceURL.copy());
-    postTaskToParentContext(task.release());
+    postTaskToWorkerObject(createCallbackTask(&addMessageTask, m_thread->messagingProxy(), destination, source, level, message, lineNumber, sourceURL));
 }
 
 void WorkerContext::resourceRetrievedByXMLHttpRequest(unsigned long, const ScriptString&)
@@ -187,35 +185,24 @@ bool WorkerContext::dispatchEvent(PassRefPtr<Event> event, ExceptionCode& ec)
     return !event->defaultPrevented();
 }
 
-class ScriptExecutionContextTaskWorkerTask : public WorkerTask {
-public:
-    static PassRefPtr<ScriptExecutionContextTaskWorkerTask> create(PassRefPtr<ScriptExecutionContext::Task> task)
-    {
-        return adoptRef(new ScriptExecutionContextTaskWorkerTask(task));
-    }
-
-private:
-    ScriptExecutionContextTaskWorkerTask(PassRefPtr<ScriptExecutionContext::Task> task)
-        : m_task(task)
-    {
-    }
-
-    virtual void performTask(WorkerContext* context)
-    {
-        m_task->performTask(context);
-    }
-
-    RefPtr<ScriptExecutionContext::Task> m_task;
-};
-
 void WorkerContext::postTask(PassRefPtr<Task> task)
 {
-    thread()->runLoop().postTask(ScriptExecutionContextTaskWorkerTask::create(task));
+    thread()->runLoop().postTask(task);
 }
 
-void WorkerContext::postTaskToParentContext(PassRefPtr<Task> task)
+void WorkerContext::postTaskToWorkerObject(PassRefPtr<Task> task)
 {
-    thread()->messagingProxy()->postTaskToParentContext(task);
+    thread()->messagingProxy()->postTaskToWorkerObject(task);
+}
+
+int WorkerContext::installTimeout(ScheduledAction* action, int timeout, bool singleShot)
+{
+    return DOMTimer::install(scriptExecutionContext(), action, timeout, singleShot);
+}
+
+void WorkerContext::removeTimeout(int timeoutId)
+{
+    DOMTimer::removeById(scriptExecutionContext(), timeoutId);
 }
 
 } // namespace WebCore

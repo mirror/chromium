@@ -1091,6 +1091,8 @@ webcore_sources += \
 	WebCore/loader/ThreadableLoader.cpp \
 	WebCore/loader/ThreadableLoader.h \
 	WebCore/loader/ThreadableLoaderClient.h \
+	WebCore/loader/WorkerThreadableLoader.cpp \
+	WebCore/loader/WorkerThreadableLoader.h \
 	WebCore/loader/archive/Archive.h \
 	WebCore/loader/archive/ArchiveFactory.cpp \
 	WebCore/loader/archive/ArchiveFactory.h \
@@ -2186,6 +2188,8 @@ webcore_sources += \
 	WebCore/bindings/js/JSWorkerCustom.cpp \
 	WebCore/bindings/js/WorkerScriptController.cpp \
 	WebCore/bindings/js/WorkerScriptController.h \
+	WebCore/dom/CrossThreadCopier.cpp \
+	WebCore/dom/CrossThreadCopier.h \
 	WebCore/dom/GenericWorkerTask.h \
 	WebCore/dom/Worker.cpp \
 	WebCore/dom/Worker.h \
@@ -2197,8 +2201,6 @@ webcore_sources += \
 	WebCore/dom/WorkerMessagingProxy.h \
 	WebCore/dom/WorkerRunLoop.cpp \
 	WebCore/dom/WorkerRunLoop.h \
-	WebCore/dom/WorkerTask.cpp \
-	WebCore/dom/WorkerTask.h \
 	WebCore/dom/WorkerThread.cpp \
 	WebCore/dom/WorkerThread.h \
 	WebCore/page/WorkerNavigator.cpp \

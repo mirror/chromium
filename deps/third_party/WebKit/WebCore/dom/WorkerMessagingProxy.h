@@ -40,7 +40,6 @@ namespace WebCore {
     class ScriptExecutionContext;
     class String;
     class Worker;
-    class WorkerTask;
     class WorkerThread;
 
     class WorkerMessagingProxy : Noncopyable {
@@ -49,7 +48,9 @@ namespace WebCore {
 
         void postMessageToWorkerObject(const String& message);
         void postMessageToWorkerContext(const String& message);
-        void postTaskToParentContext(PassRefPtr<ScriptExecutionContext::Task>);
+
+        void postTaskToWorkerObject(PassRefPtr<ScriptExecutionContext::Task>);
+        void postTaskToWorkerContext(PassRefPtr<ScriptExecutionContext::Task>);
 
         void postWorkerException(const String& errorMessage, int lineNumber, const String& sourceURL);
 
@@ -57,17 +58,17 @@ namespace WebCore {
         void workerObjectDestroyed();
         void workerContextDestroyed();
 
-        void terminate();
-
         void confirmWorkerThreadMessage(bool hasPendingActivity);
         void reportWorkerThreadActivity(bool hasPendingActivity);
         bool workerThreadHasPendingActivity() const;
 
+        // Only use these methods on the worker object thread.
+        void terminate();
+        bool askedToTerminate() const { return m_askedToTerminate; }
+
     private:
-        friend class GenericWorkerTaskBase;
         friend class MessageWorkerTask;
         friend class WorkerContextDestroyedTask;
-        friend class WorkerExceptionTask;
         friend class WorkerThreadActivityReportTask;
 
         ~WorkerMessagingProxy();
@@ -75,7 +76,6 @@ namespace WebCore {
         void workerContextDestroyedInternal();
         void reportWorkerThreadActivityInternal(bool confirmingMessage, bool hasPendingActivity);
         Worker* workerObject() const { return m_workerObject; }
-        bool askedToTerminate() { return m_askedToTerminate; }
 
         RefPtr<ScriptExecutionContext> m_scriptExecutionContext;
         Worker* m_workerObject;
@@ -86,7 +86,7 @@ namespace WebCore {
 
         bool m_askedToTerminate;
 
-        Vector<RefPtr<WorkerTask> > m_queuedEarlyTasks; // Tasks are queued here until there's a thread object created.
+        Vector<RefPtr<ScriptExecutionContext::Task> > m_queuedEarlyTasks; // Tasks are queued here until there's a thread object created.
     };
 
 } // namespace WebCore

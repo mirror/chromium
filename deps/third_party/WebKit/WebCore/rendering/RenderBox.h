@@ -304,6 +304,8 @@ public:
 
     virtual void childBecameNonInline(RenderObject* /*child*/) { }
 
+    virtual VisiblePosition positionForCoordinates(int x, int y);
+
 #if ENABLE(SVG)
     virtual TransformationMatrix localTransform() const;
 #endif
@@ -354,7 +356,10 @@ private:
     // This function calculates the minimum and maximum preferred widths for an object.
     // These values are used in shrink-to-fit layout systems.
     // These include tables, positioned objects, floats and flexible boxes.
-    virtual void calcPrefWidths() = 0;
+    virtual void calcPrefWidths() { setPrefWidthsDirty(false); }
+
+protected:
+    bool isAfterContent(RenderObject* child) const;
 
 private:
     // The width/height of the contents + borders + padding.  The x/y location is relative to our container (which is not always our parent).

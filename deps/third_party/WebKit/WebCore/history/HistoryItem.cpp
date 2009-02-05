@@ -125,7 +125,7 @@ inline HistoryItem::HistoryItem(const HistoryItem& item)
         m_formData = item.m_formData->copy();
         
     unsigned size = item.m_subItems.size();
-    m_subItems.reserveCapacity(size);
+    m_subItems.reserveInitialCapacity(size);
     for (unsigned i = 0; i < size; ++i)
         m_subItems.append(item.m_subItems[i]->copy());
 
@@ -408,7 +408,10 @@ void HistoryItem::addRedirectURL(const String& url)
     if (!m_redirectURLs)
         m_redirectURLs.set(new Vector<String>);
 
-    m_redirectURLs->append(url);
+    // Our API allows us to store all the URLs in the redirect chain, but for
+    // now we only have a use for the final URL.
+    (*m_redirectURLs).resize(1);
+    (*m_redirectURLs)[0] = url;
 }
 
 Vector<String>* HistoryItem::redirectURLs() const

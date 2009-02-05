@@ -34,10 +34,8 @@
 #include "PlatformString.h"
 #include "ScriptSourceCode.h"
 #include "ScriptValue.h"
-#include "Worker.h"
 #include "WorkerContext.h"
 #include "WorkerMessagingProxy.h"
-#include "WorkerTask.h"
 
 #include <utility>
 #include <wtf/Noncopyable.h>

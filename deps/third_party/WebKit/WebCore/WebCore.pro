@@ -2623,6 +2623,7 @@ SOURCES += \
     dom/ClipboardEvent.cpp \
     dom/Comment.cpp \
     dom/ContainerNode.cpp \
+    dom/CrossThreadCopier.cpp \
     dom/CSSMappedAttributeDeclaration.cpp \
     dom/Document.cpp \
     dom/DocumentFragment.cpp \
@@ -2866,6 +2867,7 @@ SOURCES += \
     loader/TextDocument.cpp \
     loader/TextResourceDecoder.cpp \
     loader/ThreadableLoader.cpp \
+    loader/WorkerThreadableLoader.cpp \
     page/AccessibilityImageMapLink.cpp \
     page/AccessibilityObject.cpp \    
     page/AccessibilityList.cpp \    

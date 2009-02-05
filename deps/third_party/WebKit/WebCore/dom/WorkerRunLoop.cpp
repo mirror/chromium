@@ -32,26 +32,75 @@
 
 #if ENABLE(WORKERS)
 
+#include "ScriptExecutionContext.h"
+#include "ThreadGlobalData.h"
+#include "ThreadTimers.h"
 #include "WorkerRunLoop.h"
 #include "WorkerContext.h"
-#include "WorkerTask.h"
 #include "WorkerThread.h"
 
 namespace WebCore {
+
+class WorkerSharedTimer : public SharedTimer {
+public:
+    WorkerSharedTimer()
+        : m_sharedTimerFunction(0)
+        , m_nextFireTime(0)
+    {
+    }
+
+    // SharedTimer interface.
+    virtual void setFiredFunction(void (*function)()) { m_sharedTimerFunction = function; }
+    virtual void setFireTime(double fireTime) { m_nextFireTime = fireTime; }
+    virtual void stop() { m_nextFireTime = 0; }
+
+    bool isActive() { return m_sharedTimerFunction && m_nextFireTime; }
+    double fireTime() { return m_nextFireTime; }
+    void fire() { m_sharedTimerFunction(); }
+
+private:
+    void (*m_sharedTimerFunction)();
+    double m_nextFireTime;
+};
+
+WorkerRunLoop::WorkerRunLoop()
+    : m_sharedTimer(new WorkerSharedTimer)
+{
+}
+
+WorkerRunLoop::~WorkerRunLoop()
+{
+}
 
 void WorkerRunLoop::run(WorkerContext* context)
 {
     ASSERT(context);
     ASSERT(context->thread());
     ASSERT(context->thread()->threadID() == currentThread());
-    
-    while (true) {
-        RefPtr<WorkerTask> task;
-        if (!m_messageQueue.waitForMessage(task))
-            break;
 
-        task->performTask(context);
+    threadGlobalData().threadTimers().setSharedTimer(m_sharedTimer.get());
+
+    while (true) {
+        RefPtr<ScriptExecutionContext::Task> task;
+        MessageQueueWaitResult result;
+
+        if (m_sharedTimer->isActive())
+            result = m_messageQueue.waitForMessageTimed(task, m_sharedTimer->fireTime());
+        else
+            result = (m_messageQueue.waitForMessage(task) ? MessageQueueMessageReceived : MessageQueueTerminated);
+
+        if (result == MessageQueueTerminated)
+            break;
+        
+        if (result == MessageQueueMessageReceived)
+            task->performTask(context);
+        else {
+            ASSERT(result == MessageQueueTimeout);
+            m_sharedTimer->fire();
+        }
     }
+
+    threadGlobalData().threadTimers().setSharedTimer(0);
 }
 
 void WorkerRunLoop::terminate()
@@ -59,7 +108,7 @@ void WorkerRunLoop::terminate()
     m_messageQueue.kill();
 }
 
-void WorkerRunLoop::postTask(PassRefPtr<WorkerTask> task)
+void WorkerRunLoop::postTask(PassRefPtr<ScriptExecutionContext::Task> task)
 {
     m_messageQueue.append(task);
 }

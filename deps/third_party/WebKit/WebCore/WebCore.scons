@@ -78,6 +78,7 @@ sources['dom'] = [
     'dom/ClipboardEvent.cpp',
     'dom/Comment.cpp',
     'dom/ContainerNode.cpp',
+    'dom/CrossThreadCopier.cpp',
     'dom/CSSMappedAttributeDeclaration.cpp',
     'dom/Document.cpp',
     'dom/DocumentFragment.cpp',
@@ -357,6 +358,7 @@ sources['loader'] = [
     'loader/TextResourceDecoder.cpp',
     'loader/ThreadableLoader.cpp',
     'loader/UserStyleSheetLoader.cpp',
+    'loader/WorkerThreadableLoader.cpp',
 ]
 sources['page'] = [
     'page/AccessibilityImageMapLink.cpp',

@@ -4019,7 +4019,7 @@ void Document::finishedParsing()
 Vector<String> Document::formElementsState() const
 {
     Vector<String> stateVector;
-    stateVector.reserveCapacity(m_formElementsWithState.size() * 3);
+    stateVector.reserveInitialCapacity(m_formElementsWithState.size() * 3);
     typedef ListHashSet<FormControlElementWithState*>::const_iterator Iterator;
     Iterator end = m_formElementsWithState.end();
     for (Iterator it = m_formElementsWithState.begin(); it != end; ++it) {
@@ -4416,22 +4416,6 @@ void Document::parseDNSPrefetchControlHeader(const String& dnsPrefetchControl)
 
     m_isDNSPrefetchEnabled = false;
     m_haveExplicitlyDisabledDNSPrefetch = true;
-}
-
-void Document::addTimeout(int timeoutId, DOMTimer* timer)
-{
-    ASSERT(!m_timeouts.contains(timeoutId));
-    m_timeouts.set(timeoutId, timer);
-}
-
-void Document::removeTimeout(int timeoutId)
-{
-    m_timeouts.remove(timeoutId);
-}
-
-DOMTimer* Document::findTimeout(int timeoutId)
-{
-    return m_timeouts.get(timeoutId);
 }
 
 void Document::reportException(const String& errorMessage, int lineNumber, const String& sourceURL)
