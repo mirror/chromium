@@ -6,4 +6,7 @@ Local modifications:
 
 slave/bot.py:
   Edited to import google_commands.  Original version saved as bot_orig.py.
-
+  
+status/web/build.py
+  Make the time it took to run the step appears in the build status page
+  Original version saved as build_orig.py
