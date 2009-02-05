@@ -73,6 +73,7 @@ class MailNotifier(mail.MailNotifier):
       'projectName': projectName,
       'builder': name,
       'reason': build.getReason(),
+      'revision': job_stamp.revision,
     }
 
     class DummyObject(object):
