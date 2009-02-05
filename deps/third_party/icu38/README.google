@@ -48,7 +48,8 @@ B. We build ICU 3.8 with VC++ 8 statically linked to VC8 runtime library
 C. The data tables DLL (icudt38.dll) is converted from the archive file 
   (trunk/third_party/icu38/source/data/in/icudt38l.dat) built on Linux.
   Consumers normally just copy the converted file (icudt38.dll) by including
-  the build/icudt.vcproj file.
+  the build/icudt.vcproj file.  Additionally, icudt38l_dat.s is included as
+  prebuilt ICU data for the Mac build.
 
 D. The following procedure was taken to build a customized icudt38l.dat on Linux. 
 
