@@ -141,7 +141,7 @@ String Location::toString() const {
 }
 
 #if USE(V8)
-static void navigateIfAllowed(Frame* frame, const KURL& url, bool lock_history)
+static void navigateIfAllowed(Frame* frame, const KURL& url, bool lock_history, bool lockBackForwardList)
 {
   if (url.isEmpty())
     return;
@@ -153,7 +153,7 @@ static void navigateIfAllowed(Frame* frame, const KURL& url, bool lock_history)
   if (!url.protocolIs("javascript") || ScriptController::isSafeScript(frame)) {
     bool user_gesture = activeFrame->script()->processingUserGesture();
     frame->loader()->scheduleLocationChange(url.string(), 
-      activeFrame->loader()->outgoingReferrer(), lock_history, user_gesture);
+      activeFrame->loader()->outgoingReferrer(), lock_history, lockBackForwardList, user_gesture);
   }
 }
 
@@ -171,7 +171,7 @@ void Location::setHash(const String& hash) {
     return;
   url.setRef(str);
 
-  navigateIfAllowed(m_frame, url, false);
+  navigateIfAllowed(m_frame, url, false, false);
 }
 
 void Location::setHost(const String& host) {
@@ -185,7 +185,7 @@ void Location::setHost(const String& host) {
   url.setHost(newhost);
   url.setPort(newport.toUInt());
 
-  navigateIfAllowed(m_frame, url, false);
+  navigateIfAllowed(m_frame, url, false, false);
 }
 
 void Location::setHostname(const String& hostname) {
@@ -195,7 +195,7 @@ void Location::setHostname(const String& hostname) {
   KURL url = m_frame->loader()->url();
   url.setHost(hostname);
 
-  navigateIfAllowed(m_frame, url, false);  
+  navigateIfAllowed(m_frame, url, false, false);
 }
 
 void Location::setHref(const String& value) {
@@ -209,7 +209,7 @@ void Location::setHref(const String& value) {
   if (!active_frame->loader()->shouldAllowNavigation(m_frame))
     return;
 
-  navigateIfAllowed(m_frame, active_frame->loader()->completeURL(value), false);
+  navigateIfAllowed(m_frame, active_frame->loader()->completeURL(value), false, false);
 }
 
 void Location::setPathname(const String& pathname) {
@@ -219,7 +219,7 @@ void Location::setPathname(const String& pathname) {
   KURL url = m_frame->loader()->url();  
   url.setPath(pathname);
 
-  navigateIfAllowed(m_frame, url, false);    
+  navigateIfAllowed(m_frame, url, false, false);
 }
 
 void Location::setPort(const String& port) {
@@ -229,7 +229,7 @@ void Location::setPort(const String& port) {
   KURL url = m_frame->loader()->url();  
   url.setPort(port.toUInt());
 
-  navigateIfAllowed(m_frame, url, false);  
+  navigateIfAllowed(m_frame, url, false, false);
 }
 
 void Location::setProtocol(const String& protocol) {
@@ -239,7 +239,7 @@ void Location::setProtocol(const String& protocol) {
   KURL url = m_frame->loader()->url();
   url.setProtocol(protocol);
   
-  navigateIfAllowed(m_frame, url, false); 
+  navigateIfAllowed(m_frame, url, false, false);
 }
 
 void Location::setSearch(const String& query) {
@@ -249,7 +249,7 @@ void Location::setSearch(const String& query) {
   KURL url = m_frame->loader()->url();
   url.setQuery(query);
   
-  navigateIfAllowed(m_frame, url, false); 
+  navigateIfAllowed(m_frame, url, false, false);
 }
 
 void Location::reload(bool forceget)
@@ -279,7 +279,7 @@ void Location::replace(const String& url) {
   if (!active_frame->loader()->shouldAllowNavigation(m_frame))
     return;
 
-  navigateIfAllowed(m_frame, active_frame->loader()->completeURL(url), true);
+  navigateIfAllowed(m_frame, active_frame->loader()->completeURL(url), true, true);
 }
 
 void Location::assign(const String& url) {
@@ -293,7 +293,7 @@ void Location::assign(const String& url) {
   if (!active_frame->loader()->shouldAllowNavigation(m_frame))
     return;
 
-  navigateIfAllowed(m_frame, active_frame->loader()->completeURL(url), false);
+  navigateIfAllowed(m_frame, active_frame->loader()->completeURL(url), false, false);
 }
 
 #endif  // USE(V8)
