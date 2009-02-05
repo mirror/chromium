@@ -47,6 +47,7 @@ if '__main__' == __name__:
         'CHROME_HEADLESS',
         'CHROMIUM_BUILD',
         'COMSPEC',
+        'NUMBER_OF_PROCESSORS',
         'OS',
         'PATH',
         'PATHEXT',
