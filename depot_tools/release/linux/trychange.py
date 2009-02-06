@@ -219,13 +219,12 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
 
   group = optparse.OptionGroup(parser, "Try run options")
   group.add_option("-b", "--bot", action="append",
-                    help="Force the use specifics build slaves, use multiple "
-                         "times to list many bots (or comma separated)")
+                    help="Force the use specifics build slave")
   group.add_option("-r", "--revision", default=None, type='int',
                     help="Revision to use for testing.")
-  group.add_option("-t", "--tests", action="append",
-                    help="Override the list of tests to run, use multiple times"
-                         "to list many tests (or comma separated)")
+  # group.add_option("-t", "--tests", action="append",
+  #                   help="Override the list of tests to run, use multiple"
+  #                        "times to list many tests (or comma separated)")
   parser.add_option_group(group)
 
   group = optparse.OptionGroup(parser, "Which patch to run")
@@ -233,12 +232,12 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
                    metavar="FILE", action="append",
                    help="Use many time to list the files to include in the "
                         "try.")
-  group.add_option("-i", "--issue", default=issue,
-                   help="Rietveld's issue id to use instead of a local"
-                        " diff.")
-  group.add_option("-p", "--patchset", default=patchset,
-                   help="Rietveld's patchset id to use instead of a local"
-                        " diff.")
+  # group.add_option("-i", "--issue", default=issue,
+  #                  help="Rietveld's issue id to use instead of a local"
+  #                       " diff.")
+  # group.add_option("-p", "--patchset", default=patchset,
+  #                  help="Rietveld's patchset id to use instead of a local"
+  #                       " diff.")
   group.add_option("--diff", default=None,
                    help="File containing the diff to try.")
   group.add_option("--url", default=None,
@@ -263,6 +262,11 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
   parser.add_option_group(group)
 
   options, args = parser.parse_args(argv)
+  # TODO(maruel): Enable these flags:
+  options.tests = None
+  options.issue = None
+  options.patchset = None
+
   if len(args) == 1 and args[0] == 'help':
     parser.print_help()
   if (not options.files and (not options.issue and options.patchset) and
