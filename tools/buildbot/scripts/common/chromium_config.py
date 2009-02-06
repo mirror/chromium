@@ -188,6 +188,10 @@ class Archive(chromium_config_private.Archive):
   layout_test_result_archive = (
       chromium_config_private.Archive.www_dir_base + 'layout_test_results')
 
+  # Where to save the purity test results.
+  purify_test_result_archive = (
+      chromium_config_private.Archive.www_dir_base + 'purify')
+
 
 class IRC(chromium_config_private.IRC):
   """Options for the IRC bot."""
