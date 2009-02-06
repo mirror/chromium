@@ -92,9 +92,12 @@ namespace WebCore {
         const String& string() const;
 
         bool m_isValid;
+        bool m_protocolInHTTPFamily;
         url_parse::Parsed m_parsed; // Indexes into the UTF-8 version of the string.
 
     private:
+        void initProtocolInHTTPFamily();
+
         CString m_utf8;
 
         // Set to true when the caller set us using the ASCII setter. We can

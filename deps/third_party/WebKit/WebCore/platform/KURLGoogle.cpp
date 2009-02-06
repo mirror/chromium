@@ -100,18 +100,22 @@ static inline bool isUnicodeEncoding(const TextEncoding* encoding)
 
 static bool lowerCaseEqualsASCII(const char* begin, const char* end, const char* str)
 {
-    while (begin != end && *str) {
+    while (begin != end) {
+        if (!*str)
+            return false;
         ASSERT(isASCIILower(*str));
         if (toASCIILower(*begin++) != *str++)
             return false;
     }
-    return true;
+    return !*str;
 }
+
 
 // KURLGooglePrivate -----------------------------------------------------------
 
 KURLGooglePrivate::KURLGooglePrivate()
     : m_isValid(false)
+    , m_protocolInHTTPFamily(false)
     , m_utf8IsASCII(true)
     , m_stringIsValid(false)
 {
@@ -119,6 +123,7 @@ KURLGooglePrivate::KURLGooglePrivate()
 
 KURLGooglePrivate::KURLGooglePrivate(const url_parse::Parsed& parsed, bool isValid)
     : m_isValid(isValid)
+    , m_protocolInHTTPFamily(false)
     , m_parsed(parsed)
     , m_utf8IsASCII(true)
     , m_stringIsValid(false)
@@ -144,6 +149,7 @@ void KURLGooglePrivate::setUtf8(const char* data, int data_len)
 
     m_utf8 = CString(data, data_len);
     m_stringIsValid = false;
+    initProtocolInHTTPFamily();
 }
 
 void KURLGooglePrivate::setAscii(const char* data, int data_len)
@@ -151,6 +157,7 @@ void KURLGooglePrivate::setAscii(const char* data, int data_len)
     m_utf8 = CString(data, data_len);
     m_utf8IsASCII = true;
     m_stringIsValid = false;
+    initProtocolInHTTPFamily();
 }
 
 void KURLGooglePrivate::init(const KURL& base,
@@ -162,7 +169,7 @@ void KURLGooglePrivate::init(const KURL& base,
 
 // Note: code mostly duplicated below.
 void KURLGooglePrivate::init(const KURL& base, const char* rel, int rel_len,
-                            const TextEncoding* query_encoding)
+                             const TextEncoding* query_encoding)
 {
     // As a performance optimization, we do not use the charset converter if
     // encoding is UTF-8 or other Unicode encodings. Note that this is
@@ -206,7 +213,7 @@ void KURLGooglePrivate::init(const KURL& base, const char* rel, int rel_len,
 
 // Note: code mostly duplicated above. See FIXMEs and comments there.
 void KURLGooglePrivate::init(const KURL& base, const UChar* rel, int rel_len,
-                            const TextEncoding* query_encoding)
+                             const TextEncoding* query_encoding)
 {
     KURLCharsetConverter charset_converter_object(query_encoding);
     KURLCharsetConverter* charset_converter =
@@ -220,6 +227,7 @@ void KURLGooglePrivate::init(const KURL& base, const UChar* rel, int rel_len,
                                           charset_converter,
                                           &output, &m_parsed);
 
+
     if (m_isValid || output.length()) {
         if (m_parsed.ref.is_nonempty())
             setUtf8(output.data(), output.length());
@@ -229,9 +237,22 @@ void KURLGooglePrivate::init(const KURL& base, const UChar* rel, int rel_len,
         setUtf8("", 0);
 }
 
+void KURLGooglePrivate::initProtocolInHTTPFamily()
+{
+    m_protocolInHTTPFamily = m_isValid
+        && m_parsed.scheme.len >= 4
+        && toASCIILower(m_utf8.data()[0]) == 'h'
+        && toASCIILower(m_utf8.data()[1]) == 't'
+        && toASCIILower(m_utf8.data()[2]) == 't'
+        && toASCIILower(m_utf8.data()[3]) == 'p'
+        && (m_parsed.scheme.len == 4
+            || (m_parsed.scheme.len == 5 && toASCIILower(m_utf8.data()[4]) == 's'));
+}
+
 void KURLGooglePrivate::copyTo(KURLGooglePrivate* dest) const
 {
     dest->m_isValid = m_isValid;
+    dest->m_protocolInHTTPFamily = m_protocolInHTTPFamily;
     dest->m_parsed = m_parsed;
 
     // Don't copy the 16-bit string since that will be regenerated as needed.
@@ -324,6 +345,7 @@ KURL::KURL(const String& url)
         // constructor is used. In all other cases, it expects a non-null
         // empty string, which is what init() will create.
         m_url.m_isValid = false;
+        m_url.m_protocolInHTTPFamily = false;
     }
 }
 
@@ -389,6 +411,11 @@ bool KURL::isEmpty() const
 bool KURL::isValid() const
 {
     return m_url.m_isValid;
+}
+
+bool KURL::protocolInHTTPFamily() const
+{
+    return m_url.m_protocolInHTTPFamily;
 }
 
 bool KURL::hasPath() const
@@ -776,7 +803,7 @@ bool KURL::protocolIs(const char* protocol) const
         m_url.utf8String().data() + m_url.m_parsed.scheme.end(),
         protocol);
 }
- 
+
 bool KURL::isLocalFile() const
 {
     return protocolIs("file");
@@ -832,6 +859,7 @@ void KURL::invalidate()
     // This is only called from the constructor so resetting the (automatically
     // initialized) string and parsed structure would be a waste of time.
     m_url.m_isValid = false;
+    m_url.m_protocolInHTTPFamily = false;
 }
 
 // Equal up to reference fragments, if any.
