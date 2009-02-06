@@ -65,7 +65,7 @@ bool RenderBox::s_wasFloating = false;
 bool RenderBox::s_hadOverflowClip = false;
 
 RenderBox::RenderBox(Node* node)
-    : RenderObject(node)
+    : RenderBoxModelObject(node)
     , m_marginLeft(0)
     , m_marginRight(0)
     , m_marginTop(0)
@@ -97,10 +97,37 @@ void RenderBox::destroy()
     if (style() && (style()->height().isPercent() || style()->minHeight().isPercent() || style()->maxHeight().isPercent()))
         RenderBlock::removePercentHeightDescendant(this);
 
-    RenderObject::destroy();
+    RenderBoxModelObject::destroy();
 }
 
-void RenderBox::styleWillChange(RenderStyle::Diff diff, const RenderStyle* newStyle)
+void RenderBox::removeFloatingOrPositionedChildFromBlockLists()
+{
+    ASSERT(isFloatingOrPositioned());
+
+    if (documentBeingDestroyed())
+        return;
+
+    if (isFloating()) {
+        RenderBlock* outermostBlock = containingBlock();
+        for (RenderBlock* p = outermostBlock; p && !p->isRenderView(); p = p->containingBlock()) {
+            if (p->containsFloat(this))
+                outermostBlock = p;
+        }
+
+        if (outermostBlock)
+            outermostBlock->markAllDescendantsWithFloatsForLayout(this, false);
+    }
+
+    if (isPositioned()) {
+        RenderObject* p;
+        for (p = parent(); p; p = p->parent()) {
+            if (p->isRenderBlock())
+                toRenderBlock(p)->removePositionedObject(this);
+        }
+    }
+}
+
+void RenderBox::styleWillChange(StyleDifference diff, const RenderStyle* newStyle)
 {
     s_wasFloating = isFloating();
     s_hadOverflowClip = hasOverflowClip();
@@ -120,21 +147,21 @@ void RenderBox::styleWillChange(RenderStyle::Diff diff, const RenderStyle* newSt
         
         // The background of the root element or the body element could propagate up to
         // the canvas.  Just dirty the entire canvas when our style changes substantially.
-        if (diff >= RenderStyle::Repaint && element() &&
+        if (diff >= StyleDifferenceRepaint && element() &&
                 (element()->hasTagName(htmlTag) || element()->hasTagName(bodyTag)))
             view()->repaint();
         else if (parent() && !isText()) {
             // Do a repaint with the old style first, e.g., for example if we go from
             // having an outline to not having an outline.
-            if (diff == RenderStyle::RepaintLayer) {
+            if (diff == StyleDifferenceRepaintLayer) {
                 layer()->repaintIncludingDescendants();
                 if (!(style()->clip() == newStyle->clip()))
                     layer()->clearClipRectsIncludingDescendants();
-            } else if (diff == RenderStyle::Repaint || newStyle->outlineSize() < style()->outlineSize())
+            } else if (diff == StyleDifferenceRepaint || newStyle->outlineSize() < style()->outlineSize())
                 repaint();
         }
 
-        if (diff == RenderStyle::Layout) {
+        if (diff == StyleDifferenceLayout) {
             // When a layout hint happens, we go ahead and do a repaint of the layer, since the layer could
             // end up being destroyed.
             if (hasLayer()) {
@@ -159,22 +186,22 @@ void RenderBox::styleWillChange(RenderStyle::Diff diff, const RenderStyle* newSt
                 if (style()->position() == StaticPosition)
                     repaint();
                 if (isFloating() && !isPositioned() && (newStyle->position() == AbsolutePosition || newStyle->position() == FixedPosition))
-                    removeFromObjectLists();
+                    removeFloatingOrPositionedChildFromBlockLists();
             }
         }
     }
 
-    RenderObject::styleWillChange(diff, newStyle);
+    RenderBoxModelObject::styleWillChange(diff, newStyle);
 }
 
-void RenderBox::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
+void RenderBox::styleDidChange(StyleDifference diff, const RenderStyle* oldStyle)
 {
     // We need to ensure that view->maximalOutlineSize() is valid for any repaints that happen
     // during the style change (it's used by clippedOverflowRectForRepaint()).
     if (style()->outlineWidth() > 0 && style()->outlineSize() > maximalOutlineSize(PaintPhaseOutline))
         toRenderView(document()->renderer())->setMaximalOutlineSize(style()->outlineSize());
 
-    RenderObject::styleDidChange(diff, oldStyle);
+    RenderBoxModelObject::styleDidChange(diff, oldStyle);
 
     if (needsLayout() && oldStyle && (oldStyle->height().isPercent() || oldStyle->minHeight().isPercent() || oldStyle->maxHeight().isPercent()))
         RenderBlock::removePercentHeightDescendant(this);
@@ -382,15 +409,11 @@ RenderBox* RenderBox::offsetParent() const
 // excluding border and scrollbar.
 int RenderBox::clientWidth() const
 {
-    if (isRenderInline())
-        return 0;
     return width() - borderLeft() - borderRight() - verticalScrollbarWidth();
 }
 
 int RenderBox::clientHeight() const
 {
-    if (isRenderInline())
-        return 0;
     return height() - borderTop() - borderBottom() - horizontalScrollbarHeight();
 }
 
@@ -402,8 +425,6 @@ int RenderBox::scrollWidth() const
 {
     if (hasOverflowClip())
         return m_layer->scrollWidth();
-    if (isRenderInline())
-        return 0;
     return overflowWidth();
 }
 
@@ -411,8 +432,6 @@ int RenderBox::scrollHeight() const
 {
     if (hasOverflowClip())
         return m_layer->scrollHeight();
-    if (isRenderInline())
-        return 0;
     return overflowHeight();
 }
 
@@ -3133,7 +3152,7 @@ int RenderBox::leftmostPosition(bool /*includeOverflowInterior*/, bool includeSe
 
 bool RenderBox::isAfterContent(RenderObject* child) const
 {
-    return (child && child->style()->styleType() == RenderStyle::AFTER && (!child->isText() || child->isBR()));
+    return (child && child->style()->styleType() == AFTER && (!child->isText() || child->isBR()));
 }
 
 VisiblePosition RenderBox::positionForCoordinates(int xPos, int yPos)

@@ -69,7 +69,7 @@ void RenderButton::removeChild(RenderObject* oldChild)
         m_inner->removeChild(oldChild);
 }
 
-void RenderButton::styleWillChange(RenderStyle::Diff diff, const RenderStyle* newStyle)
+void RenderButton::styleWillChange(StyleDifference diff, const RenderStyle* newStyle)
 {
     if (m_inner) {
         // RenderBlock::setStyle is going to apply a new style to the inner block, which
@@ -81,7 +81,7 @@ void RenderButton::styleWillChange(RenderStyle::Diff diff, const RenderStyle* ne
     RenderBlock::styleWillChange(diff, newStyle);
 }
 
-void RenderButton::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
+void RenderButton::styleDidChange(StyleDifference diff, const RenderStyle* oldStyle)
 {
     RenderBlock::styleDidChange(diff, oldStyle);
 
@@ -161,7 +161,7 @@ void RenderButton::setText(const String& str)
     }
 }
 
-void RenderButton::updateBeforeAfterContent(RenderStyle::PseudoId type)
+void RenderButton::updateBeforeAfterContent(PseudoId type)
 {
     if (m_inner)
         m_inner->children()->updateBeforeAfterContent(m_inner, type, this);

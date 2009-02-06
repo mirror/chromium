@@ -48,7 +48,7 @@ public:
     void setupInnerStyle(RenderStyle*);
     virtual void updateFromElement();
 
-    virtual void updateBeforeAfterContent(RenderStyle::PseudoId);
+    virtual void updateBeforeAfterContent(PseudoId);
 
     virtual bool hasControlClip() const { return true; }
     virtual IntRect controlClipRect(int /*tx*/, int /*ty*/) const;
@@ -58,8 +58,8 @@ public:
     virtual bool canHaveChildren() const;
 
 protected:
-    virtual void styleWillChange(RenderStyle::Diff, const RenderStyle* newStyle);
-    virtual void styleDidChange(RenderStyle::Diff, const RenderStyle* oldStyle);
+    virtual void styleWillChange(StyleDifference, const RenderStyle* newStyle);
+    virtual void styleDidChange(StyleDifference, const RenderStyle* oldStyle);
 
     virtual bool hasLineIfEmpty() const { return true; }
 

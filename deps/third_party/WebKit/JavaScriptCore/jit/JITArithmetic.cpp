@@ -61,7 +61,7 @@ void JIT::compileFastArith_op_lshift(unsigned result, unsigned op1, unsigned op2
 #endif
     lshift32(X86::ecx, X86::eax);
 #if !USE(ALTERNATE_JSIMMEDIATE)
-    addSlowCase(joAdd32(X86::eax, X86::eax));
+    addSlowCase(branchAdd32(Overflow, X86::eax, X86::eax));
     signExtend32ToPtr(X86::eax, X86::eax);
 #endif
     emitFastArithReTagImmediate(X86::eax, X86::eax);
@@ -192,7 +192,7 @@ void JIT::compileFastArith_op_mod(unsigned result, unsigned op1, unsigned op2)
     emitJumpSlowCaseIfNotImmediateInteger(X86::eax);
     emitJumpSlowCaseIfNotImmediateInteger(X86::ecx);
 #if USE(ALTERNATE_JSIMMEDIATE)
-    addSlowCase(jePtr(X86::ecx, ImmPtr(JSValuePtr::encode(js0()))));
+    addSlowCase(branchPtr(Equal, X86::ecx, ImmPtr(JSValuePtr::encode(js0()))));
     mod32(X86::ecx, X86::eax, X86::edx);
 #else
     emitFastArithDeTagImmediate(X86::eax);
@@ -230,10 +230,10 @@ void JIT::compileFastArith_op_post_inc(unsigned result, unsigned srcDst)
     move(X86::eax, X86::edx);
     emitJumpSlowCaseIfNotImmediateInteger(X86::eax);
 #if USE(ALTERNATE_JSIMMEDIATE)
-    addSlowCase(joAdd32(Imm32(1), X86::edx));
+    addSlowCase(branchAdd32(Overflow, Imm32(1), X86::edx));
     emitFastArithIntToImmNoCheck(X86::edx, X86::edx);
 #else
-    addSlowCase(joAdd32(Imm32(1 << JSImmediate::IntegerPayloadShift), X86::edx));
+    addSlowCase(branchAdd32(Overflow, Imm32(1 << JSImmediate::IntegerPayloadShift), X86::edx));
     signExtend32ToPtr(X86::edx, X86::edx);
 #endif
     emitPutVirtualRegister(srcDst, X86::edx);
@@ -255,10 +255,10 @@ void JIT::compileFastArith_op_post_dec(unsigned result, unsigned srcDst)
     move(X86::eax, X86::edx);
     emitJumpSlowCaseIfNotImmediateInteger(X86::eax);
 #if USE(ALTERNATE_JSIMMEDIATE)
-    addSlowCase(joSub32(Imm32(1), X86::edx));
+    addSlowCase(branchSub32(Zero, Imm32(1), X86::edx));
     emitFastArithIntToImmNoCheck(X86::edx, X86::edx);
 #else
-    addSlowCase(joSub32(Imm32(1 << JSImmediate::IntegerPayloadShift), X86::edx));
+    addSlowCase(branchSub32(Zero, Imm32(1 << JSImmediate::IntegerPayloadShift), X86::edx));
     signExtend32ToPtr(X86::edx, X86::edx);
 #endif
     emitPutVirtualRegister(srcDst, X86::edx);
@@ -279,10 +279,10 @@ void JIT::compileFastArith_op_pre_inc(unsigned srcDst)
     emitGetVirtualRegister(srcDst, X86::eax);
     emitJumpSlowCaseIfNotImmediateInteger(X86::eax);
 #if USE(ALTERNATE_JSIMMEDIATE)
-    addSlowCase(joAdd32(Imm32(1), X86::eax));
+    addSlowCase(branchAdd32(Overflow, Imm32(1), X86::eax));
     emitFastArithIntToImmNoCheck(X86::eax, X86::eax);
 #else
-    addSlowCase(joAdd32(Imm32(1 << JSImmediate::IntegerPayloadShift), X86::eax));
+    addSlowCase(branchAdd32(Overflow, Imm32(1 << JSImmediate::IntegerPayloadShift), X86::eax));
     signExtend32ToPtr(X86::eax, X86::eax);
 #endif
     emitPutVirtualRegister(srcDst);
@@ -303,10 +303,10 @@ void JIT::compileFastArith_op_pre_dec(unsigned srcDst)
     emitGetVirtualRegister(srcDst, X86::eax);
     emitJumpSlowCaseIfNotImmediateInteger(X86::eax);
 #if USE(ALTERNATE_JSIMMEDIATE)
-    addSlowCase(joSub32(Imm32(1), X86::eax));
+    addSlowCase(branchSub32(Zero, Imm32(1), X86::eax));
     emitFastArithIntToImmNoCheck(X86::eax, X86::eax);
 #else
-    addSlowCase(joSub32(Imm32(1 << JSImmediate::IntegerPayloadShift), X86::eax));
+    addSlowCase(branchSub32(Zero, Imm32(1 << JSImmediate::IntegerPayloadShift), X86::eax));
     signExtend32ToPtr(X86::eax, X86::eax);
 #endif
     emitPutVirtualRegister(srcDst);
@@ -381,13 +381,13 @@ void JIT::compileBinaryArithOp(OpcodeID opcodeID, unsigned, unsigned op1, unsign
     emitJumpSlowCaseIfNotImmediateInteger(X86::eax);
     emitJumpSlowCaseIfNotImmediateInteger(X86::edx);
     if (opcodeID == op_add)
-        addSlowCase(joAdd32(X86::edx, X86::eax));
+        addSlowCase(branchAdd32(Overflow, X86::edx, X86::eax));
     else if (opcodeID == op_sub)
-        addSlowCase(joSub32(X86::edx, X86::eax));
+        addSlowCase(branchSub32(Zero, X86::edx, X86::eax));
     else {
         ASSERT(opcodeID == op_mul);
-        addSlowCase(joMul32(X86::edx, X86::eax));
-        addSlowCase(jz32(X86::eax));
+        addSlowCase(branchMul32(Overflow, X86::edx, X86::eax));
+        addSlowCase(branchTest32(Zero, X86::eax));
     }
     emitFastArithIntToImmNoCheck(X86::eax, X86::eax);
 }
@@ -472,12 +472,12 @@ void JIT::compileFastArith_op_add(Instruction* currentInstruction)
     if (isOperandConstantImmediateInt(op1)) {
         emitGetVirtualRegister(op2, X86::eax);
         emitJumpSlowCaseIfNotImmediateInteger(X86::eax);
-        addSlowCase(joAdd32(Imm32(getConstantOperandImmediateInt(op1)), X86::eax));
+        addSlowCase(branchAdd32(Overflow, Imm32(getConstantOperandImmediateInt(op1)), X86::eax));
         emitFastArithIntToImmNoCheck(X86::eax, X86::eax);
     } else if (isOperandConstantImmediateInt(op2)) {
         emitGetVirtualRegister(op1, X86::eax);
         emitJumpSlowCaseIfNotImmediateInteger(X86::eax);
-        addSlowCase(joAdd32(Imm32(getConstantOperandImmediateInt(op2)), X86::eax));
+        addSlowCase(branchAdd32(Overflow, Imm32(getConstantOperandImmediateInt(op2)), X86::eax));
         emitFastArithIntToImmNoCheck(X86::eax, X86::eax);
     } else
         compileBinaryArithOp(op_add, result, op1, op2, types);
@@ -521,12 +521,12 @@ void JIT::compileFastArith_op_mul(Instruction* currentInstruction)
     if (isOperandConstantImmediateInt(op1) && ((value = getConstantOperandImmediateInt(op1)) > 0)) {
         emitGetVirtualRegister(op2, X86::eax);
         emitJumpSlowCaseIfNotImmediateInteger(X86::eax);
-        addSlowCase(joMul32(Imm32(value), X86::eax, X86::eax));
+        addSlowCase(branchMul32(Overflow, Imm32(value), X86::eax, X86::eax));
         emitFastArithReTagImmediate(X86::eax, X86::eax);
     } else if (isOperandConstantImmediateInt(op2) && ((value = getConstantOperandImmediateInt(op2)) > 0)) {
         emitGetVirtualRegister(op1, X86::eax);
         emitJumpSlowCaseIfNotImmediateInteger(X86::eax);
-        addSlowCase(joMul32(Imm32(value), X86::eax, X86::eax));
+        addSlowCase(branchMul32(Overflow, Imm32(value), X86::eax, X86::eax));
         emitFastArithReTagImmediate(X86::eax, X86::eax);
     } else
         compileBinaryArithOp(op_mul, result, op1, op2, types);
@@ -782,10 +782,10 @@ void JIT::compileBinaryArithOp(OpcodeID opcodeID, unsigned dst, unsigned src1, u
         ASSERT(opcodeID == op_mul);
         // convert eax & edx from JSImmediates to ints, and check if either are zero
         emitFastArithImmToInt(X86::edx);
-        JmpSrc op1Zero = emitFastArithDeTagImmediateJumpIfZero(X86::eax);
+        Jump op1Zero = emitFastArithDeTagImmediateJumpIfZero(X86::eax);
         __ testl_rr(X86::edx, X86::edx);
         JmpSrc op2NonZero = __ jne();
-        __ link(op1Zero, __ label());
+        op1Zero.link(this);
         // if either input is zero, add the two together, and check if the result is < 0.
         // If it is, we have a problem (N < 0), (N * 0) == -0, not representatble as a JSImmediate. 
         __ movl_rr(X86::eax, X86::ecx);
@@ -860,13 +860,13 @@ void JIT::compileFastArith_op_add(Instruction* currentInstruction)
     if (isOperandConstantImmediateInt(op1)) {
         emitGetVirtualRegister(op2, X86::eax);
         emitJumpSlowCaseIfNotImmediateInteger(X86::eax);
-        addSlowCase(joAdd32(Imm32(getConstantOperandImmediateInt(op1) << JSImmediate::IntegerPayloadShift), X86::eax));
+        addSlowCase(branchAdd32(Overflow, Imm32(getConstantOperandImmediateInt(op1) << JSImmediate::IntegerPayloadShift), X86::eax));
         signExtend32ToPtr(X86::eax, X86::eax);
         emitPutVirtualRegister(result);
     } else if (isOperandConstantImmediateInt(op2)) {
         emitGetVirtualRegister(op1, X86::eax);
         emitJumpSlowCaseIfNotImmediateInteger(X86::eax);
-        addSlowCase(joAdd32(Imm32(getConstantOperandImmediateInt(op2) << JSImmediate::IntegerPayloadShift), X86::eax));
+        addSlowCase(branchAdd32(Overflow, Imm32(getConstantOperandImmediateInt(op2) << JSImmediate::IntegerPayloadShift), X86::eax));
         signExtend32ToPtr(X86::eax, X86::eax);
         emitPutVirtualRegister(result);
     } else {
@@ -924,7 +924,7 @@ void JIT::compileFastArith_op_mul(Instruction* currentInstruction)
         emitGetVirtualRegister(op2, X86::eax);
         emitJumpSlowCaseIfNotImmediateInteger(X86::eax);
         emitFastArithDeTagImmediate(X86::eax);
-        addSlowCase(joMul32(Imm32(value), X86::eax, X86::eax));
+        addSlowCase(branchMul32(Overflow, Imm32(value), X86::eax, X86::eax));
         signExtend32ToPtr(X86::eax, X86::eax);
         emitFastArithReTagImmediate(X86::eax, X86::eax);
         emitPutVirtualRegister(result);
@@ -932,7 +932,7 @@ void JIT::compileFastArith_op_mul(Instruction* currentInstruction)
         emitGetVirtualRegister(op1, X86::eax);
         emitJumpSlowCaseIfNotImmediateInteger(X86::eax);
         emitFastArithDeTagImmediate(X86::eax);
-        addSlowCase(joMul32(Imm32(value), X86::eax, X86::eax));
+        addSlowCase(branchMul32(Overflow, Imm32(value), X86::eax, X86::eax));
         signExtend32ToPtr(X86::eax, X86::eax);
         emitFastArithReTagImmediate(X86::eax, X86::eax);
         emitPutVirtualRegister(result);

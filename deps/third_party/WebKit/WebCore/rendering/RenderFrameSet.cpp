@@ -42,7 +42,7 @@
 namespace WebCore {
 
 RenderFrameSet::RenderFrameSet(HTMLFrameSetElement* frameSet)
-    : RenderContainer(frameSet)
+    : RenderBox(frameSet)
     , m_isResizing(false)
     , m_isChildResizing(false)
 {
@@ -161,8 +161,8 @@ bool RenderFrameSet::nodeAtPoint(const HitTestRequest& request, HitTestResult& r
     if (action != HitTestForeground)
         return false;
 
-    bool inside = RenderContainer::nodeAtPoint(request, result, x, y, tx, ty, action)
-        || m_isResizing || canResize(IntPoint(x, y));
+    bool inside = RenderBox::nodeAtPoint(request, result, x, y, tx, ty, action)
+        || m_isResizing;
 
     if (inside && frameSet()->noResize()
             && !request.readOnly() && !result.innerNode()) {
@@ -475,7 +475,7 @@ void RenderFrameSet::layout()
 
     positionFrames();
 
-    RenderContainer::layout();
+    RenderBox::layout();
 
     computeEdgeInfo();
 
@@ -605,11 +605,6 @@ bool RenderFrameSet::isResizingRow() const
 bool RenderFrameSet::isResizingColumn() const
 {
     return m_isResizing && m_cols.m_splitBeingResized != noSplit;
-}
-
-bool RenderFrameSet::canResize(const IntPoint& p) const
-{
-    return hitTestSplit(m_cols, p.x()) != noSplit || hitTestSplit(m_rows, p.y()) != noSplit;
 }
 
 bool RenderFrameSet::canResizeRow(const IntPoint& p) const

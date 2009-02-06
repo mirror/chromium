@@ -32,11 +32,7 @@ module core {
 
         // DOM Level 1 Core
         readonly attribute DocumentType doctype;
-#if defined(V8_BINDING)
-        readonly attribute [Custom] DOMImplementation implementation;
-#else
-        readonly attribute DOMImplementation implementation;
-#endif
+        readonly attribute [V8Custom] DOMImplementation implementation;
         readonly attribute Element documentElement;
 
         [ReturnsNew] Element createElement(in [ConvertNullToNullString] DOMString tagName)
@@ -126,24 +122,12 @@ module core {
                                                         in XPathNSResolver resolver)
             raises(DOMException);
         XPathNSResolver    createNSResolver(in Node nodeResolver);
-
-#if defined(V8_BINDING)
-        // NOTE: Parameter resolver can also be a JS function or JS object with
-        // the function lookupNamespaceURI.
-        [OldStyleObjC, Custom] XPathResult evaluate(in DOMString expression,
-                                                    in Node contextNode,
-                                                    in XPathNSResolver resolver,
-                                                    in unsigned short type,
-                                                    in XPathResult inResult)
+        [OldStyleObjC, V8Custom] XPathResult evaluate(in DOMString expression,
+                                                      in Node contextNode,
+                                                      in XPathNSResolver resolver,
+                                                      in unsigned short type,
+                                                      in XPathResult inResult)
             raises(DOMException);
-#else
-        [OldStyleObjC] XPathResult evaluate(in DOMString expression,
-                                            in Node contextNode,
-                                            in XPathNSResolver resolver,
-                                            in unsigned short type,
-                                            in XPathResult inResult)
-            raises(DOMException);
-#endif // V8_BINDING
 #endif // ENABLE_XPATH
 #endif // !defined(LANGUAGE_COM)
 

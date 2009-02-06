@@ -30,9 +30,9 @@ module core {
         InterfaceUUID=84BA0D7A-7E3E-4a7b-B6FB-7653E8FB54ED,
         ImplementationUUID=81B47FDB-94B0-40fd-8E0C-FB2A6E53CC04
     ] Node
-#if defined(LANGUAGE_OBJECTIVE_C)	
-        : Object, EventTarget	
-#endif /* defined(LANGUAGE_OBJECTIVE_C) */	
+#if defined(LANGUAGE_OBJECTIVE_C)
+        : Object, EventTarget
+#endif /* defined(LANGUAGE_OBJECTIVE_C) */
      {
         // NodeType
         const unsigned short      ELEMENT_NODE                   = 1;
@@ -64,29 +64,17 @@ module core {
         readonly attribute NamedNodeMap     attributes;
         readonly attribute Document         ownerDocument;
 
-#if defined(V8_BINDING)
-        [OldStyleObjC] Node insertBefore(in [Return] Node newChild, 
+        [OldStyleObjC, JSCCustom] Node insertBefore(in [Return] Node newChild, 
                                                  in Node refChild)
             raises(DOMException);
-        [OldStyleObjC] Node replaceChild(in Node newChild, 
+        [OldStyleObjC, JSCCustom] Node replaceChild(in Node newChild, 
                                                  in [Return] Node oldChild)
+            raises(DOMExceptionJSC);
+        [JSCCustom] Node               removeChild(in [Return] Node oldChild)
             raises(DOMException);
-        Node               removeChild(in [Return] Node oldChild)
+        [JSCCustom] Node               appendChild(in [Return] Node newChild)
             raises(DOMException);
-        Node               appendChild(in [Return] Node newChild)
-            raises(DOMException);
-#else
-        [OldStyleObjC, Custom] Node insertBefore(in [Return] Node newChild, 
-                                                 in Node refChild)
-            raises(DOMException);
-        [OldStyleObjC, Custom] Node replaceChild(in Node newChild, 
-                                                 in [Return] Node oldChild)
-            raises(DOMException);
-        [Custom] Node               removeChild(in [Return] Node oldChild)
-            raises(DOMException);
-        [Custom] Node               appendChild(in [Return] Node newChild)
-            raises(DOMException);
-#endif // V8_BINDING
+
         boolean            hasChildNodes();
         Node               cloneNode(in boolean deep);
         void               normalize();

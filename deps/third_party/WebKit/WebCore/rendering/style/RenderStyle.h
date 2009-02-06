@@ -106,17 +106,6 @@ class StyleImage;
 
 class RenderStyle: public RefCounted<RenderStyle> {
     friend class CSSStyleSelector;
-
-public:
-    // static pseudo styles. Dynamic ones are produced on the fly.
-    enum PseudoId { NOPSEUDO, FIRST_LINE, FIRST_LETTER, BEFORE, AFTER, SELECTION, FIRST_LINE_INHERITED, SCROLLBAR, FILE_UPLOAD_BUTTON, INPUT_PLACEHOLDER,
-                    SLIDER_THUMB, SEARCH_CANCEL_BUTTON, SEARCH_DECORATION, SEARCH_RESULTS_DECORATION, SEARCH_RESULTS_BUTTON, MEDIA_CONTROLS_PANEL,
-                    MEDIA_CONTROLS_PLAY_BUTTON, MEDIA_CONTROLS_MUTE_BUTTON, MEDIA_CONTROLS_TIMELINE, MEDIA_CONTROLS_TIMELINE_CONTAINER,
-                    MEDIA_CONTROLS_CURRENT_TIME_DISPLAY, MEDIA_CONTROLS_TIME_REMAINING_DISPLAY, MEDIA_CONTROLS_SEEK_BACK_BUTTON, 
-                    MEDIA_CONTROLS_SEEK_FORWARD_BUTTON, MEDIA_CONTROLS_FULLSCREEN_BUTTON, 
-                    SCROLLBAR_THUMB, SCROLLBAR_BUTTON, SCROLLBAR_TRACK, SCROLLBAR_TRACK_PIECE, SCROLLBAR_CORNER, RESIZER };
-    static const int FIRST_INTERNAL_PSEUDOID = FILE_UPLOAD_BUTTON;
-
 protected:
 
 // !START SYNC!: Keep this in sync with the copy constructor in RenderStyle.cpp
@@ -985,13 +974,7 @@ public:
 
     bool inheritedNotEqual(RenderStyle*) const;
 
-    // The difference between two styles.  The following values are used:
-    // (1) Equal - The two styles are identical
-    // (2) Repaint - The object just needs to be repainted.
-    // (3) RepaintLayer - The layer and its descendant layers needs to be repainted.
-    // (4) Layout - A layout is required.
-    enum Diff { Equal, Repaint, RepaintLayer, LayoutPositionedMovementOnly, Layout };
-    Diff diff(const RenderStyle*) const;
+    StyleDifference diff(const RenderStyle*) const;
 
     bool isDisplayReplacedType() const
     {

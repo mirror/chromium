@@ -157,7 +157,7 @@ void RenderWidget::layout()
     setNeedsLayout(false);
 }
 
-void RenderWidget::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
+void RenderWidget::styleDidChange(StyleDifference diff, const RenderStyle* oldStyle)
 {
     RenderReplaced::styleDidChange(diff, oldStyle);
     if (m_widget) {
@@ -204,8 +204,10 @@ void RenderWidget::paint(PaintInfo& paintInfo, int tx, int ty)
     }
 
     // Paint a partially transparent wash over selected widgets.
-    if (isSelected() && !document()->printing())
+    if (isSelected() && !document()->printing()) {
+        // FIXME: selectionRect() is in absolute, not painting coordinates.
         paintInfo.context->fillRect(selectionRect(), selectionBackgroundColor());
+    }
 }
 
 void RenderWidget::deref(RenderArena *arena)
@@ -233,8 +235,9 @@ void RenderWidget::updateWidgetPosition()
         if (checkForRepaintDuringLayout()) {
             RenderView* v = view();
             if (!v->printing()) {
-                v->repaintViewRectangle(oldBounds);
-                v->repaintViewRectangle(newBounds);
+                // FIXME: do container-relative repaint
+                v->repaintRectangleInViewAndCompositedLayers(oldBounds);
+                v->repaintRectangleInViewAndCompositedLayers(newBounds);
             }
         }
 

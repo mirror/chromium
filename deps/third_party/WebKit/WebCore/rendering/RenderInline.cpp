@@ -28,6 +28,7 @@
 #include "FloatQuad.h"
 #include "GraphicsContext.h"
 #include "HitTestResult.h"
+#include "Page.h"
 #include "RenderArena.h"
 #include "RenderBlock.h"
 #include "RenderView.h"
@@ -38,7 +39,7 @@ using namespace std;
 namespace WebCore {
 
 RenderInline::RenderInline(Node* node)
-    : RenderContainer(node)
+    : RenderBox(node)
     , m_continuation(0)
     , m_lineHeight(-1)
 {
@@ -62,7 +63,7 @@ void RenderInline::destroy()
 
     if (!documentBeingDestroyed()) {
         if (firstLineBox()) {
-            // We can't wait for RenderContainer::destroy to clear the selection,
+            // We can't wait for RenderBox::destroy to clear the selection,
             // because by then we will have nuked the line boxes.
             // FIXME: The SelectionController should be responsible for this when it
             // is notified of DOM mutations.
@@ -84,7 +85,7 @@ void RenderInline::destroy()
 
     m_lineBoxes.deleteLineBoxes(renderArena());
 
-    RenderContainer::destroy();
+    RenderBox::destroy();
 }
 
 RenderInline* RenderInline::inlineContinuation() const
@@ -94,9 +95,9 @@ RenderInline* RenderInline::inlineContinuation() const
     return toRenderBlock(m_continuation)->inlineContinuation();
 }
 
-void RenderInline::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
+void RenderInline::styleDidChange(StyleDifference diff, const RenderStyle* oldStyle)
 {
-    RenderContainer::styleDidChange(diff, oldStyle);
+    RenderBox::styleDidChange(diff, oldStyle);
 
     setInline(true);
     setHasReflection(false);
@@ -108,7 +109,7 @@ void RenderInline::styleDidChange(RenderStyle::Diff diff, const RenderStyle* old
     // and after the block share the same style, but the block doesn't
     // need to pass its style on to anyone else.
     for (RenderInline* currCont = inlineContinuation(); currCont; currCont = currCont->inlineContinuation()) {
-        RenderContainer* nextCont = currCont->continuation();
+        RenderBox* nextCont = currCont->continuation();
         currCont->setContinuation(0);
         currCont->setStyle(style());
         currCont->setContinuation(nextCont);
@@ -118,8 +119,8 @@ void RenderInline::styleDidChange(RenderStyle::Diff diff, const RenderStyle* old
 
     // Update pseudos for :before and :after now.
     if (!isAnonymous() && document()->usesBeforeAfterRules()) {
-        children()->updateBeforeAfterContent(this, RenderStyle::BEFORE);
-        children()->updateBeforeAfterContent(this, RenderStyle::AFTER);
+        children()->updateBeforeAfterContent(this, BEFORE);
+        children()->updateBeforeAfterContent(this, AFTER);
     }
 }
 
@@ -127,7 +128,7 @@ static inline bool isAfterContent(RenderObject* child)
 {
     if (!child)
         return false;
-    if (child->style()->styleType() != RenderStyle::AFTER)
+    if (child->style()->styleType() != AFTER)
         return false;
     // Text nodes don't have their own styles, so ignore the style on a text node.
     if (child->isText() && !child->isBR())
@@ -142,21 +143,21 @@ void RenderInline::addChild(RenderObject* newChild, RenderObject* beforeChild)
     return addChildIgnoringContinuation(newChild, beforeChild);
 }
 
-static RenderContainer* nextContinuation(RenderObject* renderer)
+static RenderBox* nextContinuation(RenderObject* renderer)
 {
     if (renderer->isInline() && !renderer->isReplaced())
         return toRenderInline(renderer)->continuation();
     return toRenderBlock(renderer)->inlineContinuation();
 }
 
-RenderContainer* RenderInline::continuationBefore(RenderObject* beforeChild)
+RenderBox* RenderInline::continuationBefore(RenderObject* beforeChild)
 {
     if (beforeChild && beforeChild->parent() == this)
         return this;
 
-    RenderContainer* curr = nextContinuation(this);
-    RenderContainer* nextToLast = this;
-    RenderContainer* last = this;
+    RenderBox* curr = nextContinuation(this);
+    RenderBox* nextToLast = this;
+    RenderBox* last = this;
     while (curr) {
         if (beforeChild && beforeChild->parent() == curr) {
             if (curr->firstChild() == beforeChild)
@@ -191,7 +192,7 @@ void RenderInline::addChildIgnoringContinuation(RenderObject* newChild, RenderOb
 
         RenderBlock* newBox = new (renderArena()) RenderBlock(document() /* anonymous box */);
         newBox->setStyle(newStyle.release());
-        RenderContainer* oldContinuation = continuation();
+        RenderBox* oldContinuation = continuation();
         setContinuation(newBox);
 
         // Someone may have put a <p> inside a <q>, causing a split.  When this happens, the :after content
@@ -199,7 +200,7 @@ void RenderInline::addChildIgnoringContinuation(RenderObject* newChild, RenderOb
         // content gets properly destroyed.
         bool isLastChild = (beforeChild == lastChild());
         if (document()->usesBeforeAfterRules())
-            children()->updateBeforeAfterContent(this, RenderStyle::AFTER);
+            children()->updateBeforeAfterContent(this, AFTER);
         if (isLastChild && beforeChild != lastChild())
             beforeChild = 0; // We destroyed the last child, so now we need to update our insertion
                              // point to be 0.  It's just a straight append now.
@@ -208,7 +209,7 @@ void RenderInline::addChildIgnoringContinuation(RenderObject* newChild, RenderOb
         return;
     }
 
-    RenderContainer::addChild(newChild, beforeChild);
+    RenderBox::addChild(newChild, beforeChild);
 
     newChild->setNeedsLayoutAndPrefWidthsRecalc();
 }
@@ -222,7 +223,7 @@ RenderInline* RenderInline::cloneInline(RenderInline* src)
 
 void RenderInline::splitInlines(RenderBlock* fromBlock, RenderBlock* toBlock,
                                 RenderBlock* middleBlock,
-                                RenderObject* beforeChild, RenderContainer* oldCont)
+                                RenderObject* beforeChild, RenderBox* oldCont)
 {
     // Create a clone of this inline.
     RenderInline* clone = cloneInline(this);
@@ -244,8 +245,8 @@ void RenderInline::splitInlines(RenderBlock* fromBlock, RenderBlock* toBlock,
     // We have been reparented and are now under the fromBlock.  We need
     // to walk up our inline parent chain until we hit the containing block.
     // Once we hit the containing block we're done.
-    RenderContainer* curr = static_cast<RenderContainer*>(parent());
-    RenderContainer* currChild = this;
+    RenderBox* curr = static_cast<RenderBox*>(parent());
+    RenderBox* currChild = this;
     
     // FIXME: Because splitting is O(n^2) as tags nest pathologically, we cap the depth at which we're willing to clone.
     // There will eventually be a better approach to this problem that will let us nest to a much
@@ -273,7 +274,7 @@ void RenderInline::splitInlines(RenderBlock* fromBlock, RenderBlock* toBlock,
             // has to move into the inline continuation.  Call updateBeforeAfterContent to ensure that the inline's :after
             // content gets properly destroyed.
             if (document()->usesBeforeAfterRules())
-                inlineCurr->children()->updateBeforeAfterContent(this, RenderStyle::AFTER);
+                inlineCurr->children()->updateBeforeAfterContent(this, AFTER);
 
             // Now we need to take all of the children starting from the first child
             // *after* currChild and append them all to the clone.
@@ -281,14 +282,14 @@ void RenderInline::splitInlines(RenderBlock* fromBlock, RenderBlock* toBlock,
             while (o) {
                 RenderObject* tmp = o;
                 o = tmp->nextSibling();
-                clone->addChildIgnoringContinuation(curr->children()->removeChildNode(curr, tmp), 0);
+                clone->addChildIgnoringContinuation(inlineCurr->children()->removeChildNode(curr, tmp), 0);
                 tmp->setNeedsLayoutAndPrefWidthsRecalc();
             }
         }
         
         // Keep walking up the chain.
         currChild = curr;
-        curr = static_cast<RenderContainer*>(curr->parent());
+        curr = static_cast<RenderBox*>(curr->parent());
         splitDepth++;
     }
 
@@ -306,7 +307,7 @@ void RenderInline::splitInlines(RenderBlock* fromBlock, RenderBlock* toBlock,
 }
 
 void RenderInline::splitFlow(RenderObject* beforeChild, RenderBlock* newBlockBox,
-                             RenderObject* newChild, RenderContainer* oldCont)
+                             RenderObject* newChild, RenderBox* oldCont)
 {
     RenderBlock* pre = 0;
     RenderBlock* block = containingBlock();
@@ -365,13 +366,13 @@ void RenderInline::splitFlow(RenderObject* beforeChild, RenderBlock* newBlockBox
 
 void RenderInline::addChildToContinuation(RenderObject* newChild, RenderObject* beforeChild)
 {
-    RenderContainer* flow = continuationBefore(beforeChild);
+    RenderBox* flow = continuationBefore(beforeChild);
     ASSERT(!beforeChild || beforeChild->parent()->isRenderBlock() || beforeChild->parent()->isRenderInline());
-    RenderContainer* beforeChildParent = 0;
+    RenderBox* beforeChildParent = 0;
     if (beforeChild)
-        beforeChildParent = static_cast<RenderContainer*>(beforeChild->parent());
+        beforeChildParent = static_cast<RenderBox*>(beforeChild->parent());
     else {
-        RenderContainer* cont = nextContinuation(flow);
+        RenderBox* cont = nextContinuation(flow);
         if (cont)
             beforeChildParent = cont;
         else
@@ -443,7 +444,7 @@ void RenderInline::absoluteQuads(Vector<FloatQuad>& quads, bool topLevel)
 
 int RenderInline::offsetLeft() const
 {
-    int x = RenderContainer::offsetLeft();
+    int x = RenderBox::offsetLeft();
     if (firstLineBox())
         x += firstLineBox()->xPos();
     return x;
@@ -451,7 +452,7 @@ int RenderInline::offsetLeft() const
 
 int RenderInline::offsetTop() const
 {
-    int y = RenderContainer::offsetTop();
+    int y = RenderBox::offsetTop();
     if (firstLineBox())
         y += firstLineBox()->yPos();
     return y;
@@ -488,7 +489,7 @@ VisiblePosition RenderInline::positionForCoordinates(int x, int y)
         c = toRenderBlock(c)->inlineContinuation();
     }
     
-    return RenderContainer::positionForCoordinates(x, y);
+    return RenderBox::positionForCoordinates(x, y);
 }
 
 IntRect RenderInline::linesBoundingBox() const
@@ -558,8 +559,11 @@ IntRect RenderInline::clippedOverflowRectForRepaint(RenderBox* repaintContainer)
         IntRect repaintRect(x, y, r.width(), r.height());
         r = intersection(repaintRect, boxRect);
     }
-    ASSERT(repaintContainer != this);
-    cb->computeRectForRepaint(repaintContainer, r);
+    
+    // FIXME: need to ensure that we compute the correct repaint rect when the repaint container
+    // is an inline.
+    if (repaintContainer != this)
+        cb->computeRectForRepaint(repaintContainer, r);
 
     if (ow) {
         for (RenderObject* curr = firstChild(); curr; curr = curr->nextSibling()) {
@@ -580,7 +584,7 @@ IntRect RenderInline::clippedOverflowRectForRepaint(RenderBox* repaintContainer)
 
 IntRect RenderInline::rectWithOutlineForRepaint(RenderBox* repaintContainer, int outlineWidth)
 {
-    IntRect r(RenderContainer::rectWithOutlineForRepaint(repaintContainer, outlineWidth));
+    IntRect r(RenderBox::rectWithOutlineForRepaint(repaintContainer, outlineWidth));
     for (RenderObject* curr = firstChild(); curr; curr = curr->nextSibling()) {
         if (!curr->isText())
             r.unite(curr->rectWithOutlineForRepaint(repaintContainer, outlineWidth));
@@ -590,7 +594,7 @@ IntRect RenderInline::rectWithOutlineForRepaint(RenderBox* repaintContainer, int
 
 void RenderInline::updateDragState(bool dragOn)
 {
-    RenderContainer::updateDragState(dragOn);
+    RenderBox::updateDragState(dragOn);
     if (continuation())
         continuation()->updateDragState(dragOn);
 }
@@ -599,7 +603,7 @@ void RenderInline::childBecameNonInline(RenderObject* child)
 {
     // We have to split the parent flow.
     RenderBlock* newBox = createAnonymousBlock();
-    RenderContainer* oldContinuation = continuation();
+    RenderBox* oldContinuation = continuation();
     setContinuation(newBox);
     RenderObject* beforeChild = child->nextSibling();
     children()->removeChildNode(this, child);
@@ -838,5 +842,57 @@ void RenderInline::paintOutlineForLine(GraphicsContext* graphicsContext, int tx,
                    (!nextline.isEmpty() && l - ow < tx + nextline.right()) ? -ow : ow,
                    ow);
 }
+
+#if ENABLE(DASHBOARD_SUPPORT)
+void RenderInline::addDashboardRegions(Vector<DashboardRegionValue>& regions)
+{
+    // Convert the style regions to absolute coordinates.
+    if (style()->visibility() != VISIBLE)
+        return;
+
+    const Vector<StyleDashboardRegion>& styleRegions = style()->dashboardRegions();
+    unsigned i, count = styleRegions.size();
+    for (i = 0; i < count; i++) {
+        StyleDashboardRegion styleRegion = styleRegions[i];
+
+        IntRect linesBoundingBox = this->linesBoundingBox();
+        int w = linesBoundingBox.width();
+        int h = linesBoundingBox.height();
+
+        DashboardRegionValue region;
+        region.label = styleRegion.label;
+        region.bounds = IntRect(linesBoundingBox.x() + styleRegion.offset.left().value(),
+                                linesBoundingBox.y() + styleRegion.offset.top().value(),
+                                w - styleRegion.offset.left().value() - styleRegion.offset.right().value(),
+                                h - styleRegion.offset.top().value() - styleRegion.offset.bottom().value());
+        region.type = styleRegion.type;
+
+        RenderObject* container = containingBlock();
+        if (!container)
+            container = this;
+
+        region.clip = region.bounds;
+        container->computeAbsoluteRepaintRect(region.clip);
+        if (region.clip.height() < 0) {
+            region.clip.setHeight(0);
+            region.clip.setWidth(0);
+        }
+
+        FloatPoint absPos = container->localToAbsolute();
+        region.bounds.setX(absPos.x() + region.bounds.x());
+        region.bounds.setY(absPos.y() + region.bounds.y());
+
+        if (document()->frame()) {
+            float pageScaleFactor = document()->frame()->page()->chrome()->scaleFactor();
+            if (pageScaleFactor != 1.0f) {
+                region.bounds.scale(pageScaleFactor);
+                region.clip.scale(pageScaleFactor);
+            }
+        }
+
+        regions.append(region);
+    }
+}
+#endif
 
 } // namespace WebCore

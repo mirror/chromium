@@ -31,9 +31,14 @@
 
 namespace WebCore {
 
-class RenderTableRow : public RenderContainer {
+class RenderTableRow : public RenderBox {
 public:
     RenderTableRow(Node*);
+
+    virtual RenderObjectChildList* virtualChildren() { return children(); }
+    virtual const RenderObjectChildList* virtualChildren() const { return children(); }
+    const RenderObjectChildList* children() const { return &m_children; }
+    RenderObjectChildList* children() { return &m_children; }
 
     RenderTableSection* section() const { return static_cast<RenderTableSection*>(parent()); }
     RenderTable* table() const { return static_cast<RenderTable*>(parent()->parent()); }
@@ -58,8 +63,10 @@ private:
     virtual void paint(PaintInfo&, int tx, int ty);
     virtual void imageChanged(WrappedImagePtr, const IntRect* = 0);
 
-    virtual void styleWillChange(RenderStyle::Diff, const RenderStyle* newStyle);
+    virtual void styleWillChange(StyleDifference, const RenderStyle* newStyle);
 
+private:
+    RenderObjectChildList m_children;
 };
 
 } // namespace WebCore

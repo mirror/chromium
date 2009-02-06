@@ -68,7 +68,7 @@ RenderTable::~RenderTable()
     delete m_tableLayout;
 }
 
-void RenderTable::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
+void RenderTable::styleDidChange(StyleDifference diff, const RenderStyle* oldStyle)
 {
     RenderBlock::styleDidChange(diff, oldStyle);
 
@@ -173,7 +173,7 @@ void RenderTable::addChild(RenderObject* child, RenderObject* beforeChild)
         while (beforeChild && !beforeChild->isTableSection() && !beforeChild->isTableCol() && beforeChild->style()->display() != TABLE_CAPTION)
             beforeChild = beforeChild->parent();
 
-        RenderContainer::addChild(child, beforeChild);
+        RenderBox::addChild(child, beforeChild);
         return;
     }
 
@@ -203,7 +203,7 @@ void RenderTable::addChild(RenderObject* child, RenderObject* beforeChild)
 
 void RenderTable::removeChild(RenderObject* oldChild)
 {
-    RenderContainer::removeChild(oldChild);
+    RenderBox::removeChild(oldChild);
     setNeedsSectionRecalc();
 }
 
@@ -292,6 +292,7 @@ void RenderTable::layout()
             calculatedHeight += section->calcRowHeight();
             if (collapsing)
                 section->recalcOuterBorder();
+            ASSERT(!section->needsLayout());
         }
     }
 
@@ -346,10 +347,9 @@ void RenderTable::layout()
     th = max(0, th);
 
     for (RenderObject* child = firstChild(); child; child = child->nextSibling()) {
-        if (!child->isTableSection())
-            continue;
-        // FIXME: Distribute extra height between all table body sections instead of giving it all to the first one.
-        static_cast<RenderTableSection*>(child)->layoutRows(child == m_firstBody ? max(0, th - calculatedHeight) : 0);
+        if (child->isTableSection())
+            // FIXME: Distribute extra height between all table body sections instead of giving it all to the first one.
+            static_cast<RenderTableSection*>(child)->layoutRows(child == m_firstBody ? max(0, th - calculatedHeight) : 0);
     }
 
     if (!m_firstBody && th > calculatedHeight && !style()->htmlHacks()) {

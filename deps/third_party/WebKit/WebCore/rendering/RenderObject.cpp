@@ -159,6 +159,7 @@ RenderObject::RenderObject(Node* node)
     , m_next(0)
 #ifndef NDEBUG
     , m_hasAXObject(false)
+    , m_setNeedsLayoutForbidden(false)
 #endif
     , m_verticalPosition(PositionUndefined)
     , m_needsLayout(false)
@@ -229,14 +230,83 @@ bool RenderObject::isHTMLMarquee() const
     return element() && element()->renderer() == this && element()->hasTagName(marqueeTag);
 }
 
-void RenderObject::addChild(RenderObject*, RenderObject*)
+
+static void updateListMarkerNumbers(RenderObject* child)
 {
-    ASSERT_NOT_REACHED();
+    for (RenderObject* r = child; r; r = r->nextSibling())
+        if (r->isListItem())
+            static_cast<RenderListItem*>(r)->updateValue();
 }
 
-void RenderObject::removeChild(RenderObject*)
+void RenderObject::addChild(RenderObject* newChild, RenderObject* beforeChild)
 {
-    ASSERT_NOT_REACHED();
+    RenderObjectChildList* children = virtualChildren();
+    ASSERT(children);
+    if (!children)
+        return;
+
+    bool needsTable = false;
+
+    if (newChild->isListItem())
+        updateListMarkerNumbers(beforeChild ? beforeChild : children->lastChild());
+    else if (newChild->isTableCol() && newChild->style()->display() == TABLE_COLUMN_GROUP)
+        needsTable = !isTable();
+    else if (newChild->isRenderBlock() && newChild->style()->display() == TABLE_CAPTION)
+        needsTable = !isTable();
+    else if (newChild->isTableSection())
+        needsTable = !isTable();
+    else if (newChild->isTableRow())
+        needsTable = !isTableSection();
+    else if (newChild->isTableCell()) {
+        needsTable = !isTableRow();
+        // I'm not 100% sure this is the best way to fix this, but without this
+        // change we recurse infinitely when trying to render the CSS2 test page:
+        // http://www.bath.ac.uk/%7Epy8ieh/internet/eviltests/htmlbodyheadrendering2.html.
+        // See Radar 2925291.
+        if (needsTable && isTableCell() && !children->firstChild() && !newChild->isTableCell())
+            needsTable = false;
+    }
+
+    if (needsTable) {
+        RenderTable* table;
+        RenderObject* afterChild = beforeChild ? beforeChild->previousSibling() : children->lastChild();
+        if (afterChild && afterChild->isAnonymous() && afterChild->isTable())
+            table = static_cast<RenderTable*>(afterChild);
+        else {
+            table = new (renderArena()) RenderTable(document() /* is anonymous */);
+            RefPtr<RenderStyle> newStyle = RenderStyle::create();
+            newStyle->inheritFrom(style());
+            newStyle->setDisplay(TABLE);
+            table->setStyle(newStyle.release());
+            addChild(table, beforeChild);
+        }
+        table->addChild(newChild);
+    } else {
+        // Just add it...
+        children->insertChildNode(this, newChild, beforeChild);
+    }
+    
+    if (newChild->isText() && newChild->style()->textTransform() == CAPITALIZE) {
+        RefPtr<StringImpl> textToTransform = toRenderText(newChild)->originalText();
+        if (textToTransform)
+            toRenderText(newChild)->setText(textToTransform.release(), true);
+    }
+}
+
+void RenderObject::removeChild(RenderObject* oldChild)
+{
+    RenderObjectChildList* children = virtualChildren();
+    ASSERT(children);
+    if (!children)
+        return;
+
+    // We do this here instead of in removeChildNode, since the only extremely low-level uses of remove/appendChildNode
+    // cannot affect the positioned object list, and the floating object list is irrelevant (since the list gets cleared on
+    // layout anyway).
+    if (oldChild->isFloatingOrPositioned())
+        toRenderBox(oldChild)->removeFloatingOrPositionedChildFromBlockLists();
+        
+    children->removeChildNode(this, oldChild);
 }
 
 RenderObject* RenderObject::nextInPreOrder() const
@@ -456,6 +526,20 @@ RenderLayer* RenderObject::enclosingLayer() const
     return 0;
 }
 
+#if USE(ACCELERATED_COMPOSITING)
+RenderLayer* RenderObject::enclosingCompositingLayer() const
+{
+    const RenderObject* curr = this;
+    while (curr) {
+        RenderLayer* layer = curr->hasLayer() ? toRenderBox(curr)->layer() : 0;
+        if (layer && layer->isComposited())
+            return layer;
+        curr = curr->parent();
+    }
+    return 0;
+}
+#endif
+
 RenderBox* RenderObject::enclosingBox() const
 {
     RenderObject* curr = const_cast<RenderObject*>(this);
@@ -557,13 +641,11 @@ RenderBlock* RenderObject::containingBlock() const
 
 int RenderObject::containingBlockWidth() const
 {
-    // FIXME ?
     return containingBlock()->availableWidth();
 }
 
 int RenderObject::containingBlockHeight() const
 {
-    // FIXME ?
     return containingBlock()->contentHeight();
 }
 
@@ -1474,8 +1556,39 @@ void RenderObject::paintOutline(GraphicsContext* graphicsContext, int tx, int ty
                BSBottom, Color(oc), style->color(), os, ow, ow);
 }
 
-void RenderObject::addLineBoxRects(Vector<IntRect>&, unsigned, unsigned, bool)
+
+void RenderObject::absoluteRectsForRange(Vector<IntRect>& rects, unsigned start, unsigned end, bool)
 {
+    if (!virtualChildren()->firstChild()) {
+        if ((isInline() || isAnonymousBlock())) {
+            FloatPoint absPos = localToAbsolute(FloatPoint());
+            absoluteRects(rects, absPos.x(), absPos.y());
+        }
+        return;
+    }
+
+    unsigned offset = start;
+    for (RenderObject* child = childAt(start); child && offset < end; child = child->nextSibling(), ++offset) {
+        if (child->isText() || child->isInline() || child->isAnonymousBlock()) {
+            FloatPoint absPos = child->localToAbsolute(FloatPoint());
+            child->absoluteRects(rects, absPos.x(), absPos.y());
+        }
+    }
+}
+
+void RenderObject::absoluteQuadsForRange(Vector<FloatQuad>& quads, unsigned start, unsigned end, bool)
+{
+    if (!virtualChildren()->firstChild()) {
+        if (isInline() || isAnonymousBlock())
+            absoluteQuads(quads);
+        return;
+    }
+
+    unsigned offset = start;
+    for (RenderObject* child = childAt(start); child && offset < end; child = child->nextSibling(), ++offset) {
+        if (child->isText() || child->isInline() || child->isAnonymousBlock())
+            child->absoluteQuads(quads);
+    }
 }
 
 IntRect RenderObject::absoluteBoundingBoxRect(bool useTransforms)
@@ -1531,7 +1644,15 @@ void RenderObject::paint(PaintInfo& /*paintInfo*/, int /*tx*/, int /*ty*/)
 
 RenderBox* RenderObject::containerForRepaint() const
 {
-    // For now, all repaints are root-relative.
+#if USE(ACCELERATED_COMPOSITING)
+    if (RenderView* v = view()) {
+        if (v->usesCompositing()) {
+            RenderLayer* compLayer = enclosingCompositingLayer();
+            return compLayer ? compLayer->renderer() : 0;
+        }
+    }
+#endif
+    // Do root-relative repaint.
     return 0;
 }
 
@@ -1541,8 +1662,15 @@ void RenderObject::repaintUsingContainer(RenderBox* repaintContainer, const IntR
         RenderView* v = repaintContainer ? toRenderView(repaintContainer) : view();
         v->repaintViewRectangle(r, immediate);
     } else {
-        // Handle container-relative repaints eventually.
+#if USE(ACCELERATED_COMPOSITING)
+        RenderView* v = view();
+        if (v->usesCompositing()) {
+            ASSERT(repaintContainer->hasLayer() && repaintContainer->layer()->isComposited());
+            repaintContainer->layer()->setBackingNeedsRepaintInRect(r);
+        }
+#else
         ASSERT_NOT_REACHED();
+#endif
     }
 }
 
@@ -1770,7 +1898,7 @@ Color RenderObject::selectionBackgroundColor() const
 {
     Color color;
     if (style()->userSelect() != SELECT_NONE) {
-        RenderStyle* pseudoStyle = getCachedPseudoStyle(RenderStyle::SELECTION);
+        RenderStyle* pseudoStyle = getCachedPseudoStyle(SELECTION);
         if (pseudoStyle && pseudoStyle->backgroundColor().isValid())
             color = pseudoStyle->backgroundColor().blendWithWhite();
         else
@@ -1788,7 +1916,7 @@ Color RenderObject::selectionForegroundColor() const
     if (style()->userSelect() == SELECT_NONE)
         return color;
 
-    if (RenderStyle* pseudoStyle = getCachedPseudoStyle(RenderStyle::SELECTION)) {
+    if (RenderStyle* pseudoStyle = getCachedPseudoStyle(SELECTION)) {
         color = pseudoStyle->textFillColor();
         if (!color.isValid())
             color = pseudoStyle->color();
@@ -1883,13 +2011,13 @@ void RenderObject::setStyle(PassRefPtr<RenderStyle> style)
     if (m_style == style)
         return;
 
-    RenderStyle::Diff diff = RenderStyle::Equal;
+    StyleDifference diff = StyleDifferenceEqual;
     if (m_style)
         diff = m_style->diff(style.get());
 
     // If we have no layer(), just treat a RepaintLayer hint as a normal Repaint.
-    if (diff == RenderStyle::RepaintLayer && !hasLayer())
-        diff = RenderStyle::Repaint;
+    if (diff == StyleDifferenceRepaintLayer && !hasLayer())
+        diff = StyleDifferenceRepaint;
 
     styleWillChange(diff, style.get());
     
@@ -1910,7 +2038,7 @@ void RenderObject::setStyleInternal(PassRefPtr<RenderStyle> style)
     m_style = style;
 }
 
-void RenderObject::styleWillChange(RenderStyle::Diff diff, const RenderStyle* newStyle)
+void RenderObject::styleWillChange(StyleDifference diff, const RenderStyle* newStyle)
 {
     if (m_style) {
         // If our z-index changes value or our visibility changes,
@@ -1930,30 +2058,30 @@ void RenderObject::styleWillChange(RenderStyle::Diff diff, const RenderStyle* ne
                         l->setHasVisibleContent(true);
                     else if (l->hasVisibleContent() && (this == l->renderer() || l->renderer()->style()->visibility() != VISIBLE)) {
                         l->dirtyVisibleContentStatus();
-                        if (diff > RenderStyle::RepaintLayer)
+                        if (diff > StyleDifferenceRepaintLayer)
                             repaint();
                     }
                 }
             }
         }
 
-        if (m_parent && (diff == RenderStyle::Repaint || newStyle->outlineSize() < m_style->outlineSize()))
+        if (m_parent && (diff == StyleDifferenceRepaint || newStyle->outlineSize() < m_style->outlineSize()))
             repaint();
         if (isFloating() && (m_style->floating() != newStyle->floating()))
             // For changes in float styles, we need to conceivably remove ourselves
             // from the floating objects list.
-            removeFromObjectLists();
+            toRenderBox(this)->removeFloatingOrPositionedChildFromBlockLists();
         else if (isPositioned() && (newStyle->position() != AbsolutePosition && newStyle->position() != FixedPosition))
             // For changes in positioning styles, we need to conceivably remove ourselves
             // from the positioned objects list.
-            removeFromObjectLists();
+            toRenderBox(this)->removeFloatingOrPositionedChildFromBlockLists();
 
         s_affectsParentBlock = isFloatingOrPositioned() &&
             (!newStyle->isFloating() && newStyle->position() != AbsolutePosition && newStyle->position() != FixedPosition)
             && parent() && (parent()->isBlockFlow() || parent()->isRenderInline());
 
         // reset style flags
-        if (diff == RenderStyle::Layout || diff == RenderStyle::LayoutPositionedMovementOnly) {
+        if (diff == StyleDifferenceLayout || diff == StyleDifferenceLayoutPositionedMovementOnly) {
             m_floating = false;
             m_positioned = false;
             m_relPositioned = false;
@@ -1979,7 +2107,7 @@ void RenderObject::styleWillChange(RenderStyle::Diff diff, const RenderStyle* ne
     }
 }
 
-void RenderObject::styleDidChange(RenderStyle::Diff diff, const RenderStyle*)
+void RenderObject::styleDidChange(StyleDifference diff, const RenderStyle*)
 {
     setHasBoxDecorations(m_style->hasBorder() || m_style->hasBackground() || m_style->hasAppearance() || m_style->boxShadow());
 
@@ -1989,11 +2117,11 @@ void RenderObject::styleDidChange(RenderStyle::Diff diff, const RenderStyle*)
     if (!m_parent)
         return;
     
-    if (diff == RenderStyle::Layout)
+    if (diff == StyleDifferenceLayout)
         setNeedsLayoutAndPrefWidthsRecalc();
-    else if (diff == RenderStyle::LayoutPositionedMovementOnly)
+    else if (diff == StyleDifferenceLayoutPositionedMovementOnly)
         setNeedsPositionedMovementLayout();
-    else if (diff == RenderStyle::RepaintLayer || diff == RenderStyle::Repaint)
+    else if (diff == StyleDifferenceRepaintLayer || diff == StyleDifferenceRepaint)
         // Do a repaint with the new style now, e.g., for example if we go from
         // not having an outline to having an outline.
         repaint();
@@ -2139,31 +2267,6 @@ bool RenderObject::isSelectionBorder() const
 {
     SelectionState st = selectionState();
     return st == SelectionStart || st == SelectionEnd || st == SelectionBoth;
-}
-
-void RenderObject::removeFromObjectLists()
-{
-    if (documentBeingDestroyed())
-        return;
-
-    if (isFloating()) {
-        RenderBlock* outermostBlock = containingBlock();
-        for (RenderBlock* p = outermostBlock; p && !p->isRenderView(); p = p->containingBlock()) {
-            if (p->containsFloat(this))
-                outermostBlock = p;
-        }
-
-        if (outermostBlock)
-            outermostBlock->markAllDescendantsWithFloatsForLayout(toRenderBox(this), false);
-    }
-
-    if (isPositioned()) {
-        RenderObject* p;
-        for (p = parent(); p; p = p->parent()) {
-            if (p->isRenderBlock())
-                toRenderBlock(p)->removePositionedObject(toRenderBox(this));
-        }
-    }
 }
 
 void RenderObject::destroy()
@@ -2419,22 +2522,22 @@ RenderStyle* RenderObject::firstLineStyleSlowCase() const
     const RenderObject* renderer = isText() ? parent() : this;
     if (renderer->isBlockFlow()) {
         if (RenderBlock* firstLineBlock = renderer->firstLineBlock())
-            style = firstLineBlock->getCachedPseudoStyle(RenderStyle::FIRST_LINE, style);
+            style = firstLineBlock->getCachedPseudoStyle(FIRST_LINE, style);
     } else if (!renderer->isAnonymous() && renderer->isRenderInline()) {
         RenderStyle* parentStyle = renderer->parent()->firstLineStyle();
         if (parentStyle != renderer->parent()->style()) {
             // A first-line style is in effect. Cache a first-line style for ourselves.
-            style->setHasPseudoStyle(RenderStyle::FIRST_LINE_INHERITED);
-            style = renderer->getCachedPseudoStyle(RenderStyle::FIRST_LINE_INHERITED, parentStyle);
+            style->setHasPseudoStyle(FIRST_LINE_INHERITED);
+            style = renderer->getCachedPseudoStyle(FIRST_LINE_INHERITED, parentStyle);
         }
     }
 
     return style;
 }
 
-RenderStyle* RenderObject::getCachedPseudoStyle(RenderStyle::PseudoId pseudo, RenderStyle* parentStyle) const
+RenderStyle* RenderObject::getCachedPseudoStyle(PseudoId pseudo, RenderStyle* parentStyle) const
 {
-    if (pseudo < RenderStyle::FIRST_INTERNAL_PSEUDOID && !style()->hasPseudoStyle(pseudo))
+    if (pseudo < FIRST_INTERNAL_PSEUDOID && !style()->hasPseudoStyle(pseudo))
         return 0;
 
     RenderStyle* cachedStyle = style()->getCachedPseudoStyle(pseudo);
@@ -2447,9 +2550,9 @@ RenderStyle* RenderObject::getCachedPseudoStyle(RenderStyle::PseudoId pseudo, Re
     return 0;
 }
 
-PassRefPtr<RenderStyle> RenderObject::getUncachedPseudoStyle(RenderStyle::PseudoId pseudo, RenderStyle* parentStyle) const
+PassRefPtr<RenderStyle> RenderObject::getUncachedPseudoStyle(PseudoId pseudo, RenderStyle* parentStyle) const
 {
-    if (pseudo < RenderStyle::FIRST_INTERNAL_PSEUDOID && !style()->hasPseudoStyle(pseudo))
+    if (pseudo < FIRST_INTERNAL_PSEUDOID && !style()->hasPseudoStyle(pseudo))
         return 0;
     
     if (!parentStyle)
@@ -2462,9 +2565,9 @@ PassRefPtr<RenderStyle> RenderObject::getUncachedPseudoStyle(RenderStyle::Pseudo
         return 0;
 
     RefPtr<RenderStyle> result;
-    if (pseudo == RenderStyle::FIRST_LINE_INHERITED) {
+    if (pseudo == FIRST_LINE_INHERITED) {
         result = document()->styleSelector()->styleForElement(static_cast<Element*>(node), parentStyle, false);
-        result->setStyleType(RenderStyle::FIRST_LINE_INHERITED);
+        result->setStyleType(FIRST_LINE_INHERITED);
     } else
         result = document()->styleSelector()->pseudoStyleForElement(pseudo, static_cast<Element*>(node), parentStyle);
     return result.release();

@@ -30,6 +30,7 @@
 
 #include "AnimationController.h"
 #include "ChromeClient.h"
+#include "CSSPropertyNames.h"
 #include "FrameView.h"
 #include "GraphicsLayer.h"
 #include "HitTestRequest.h"
@@ -115,12 +116,13 @@ void RenderLayerCompositor::updateCompositingLayers(RenderLayer* updateRoot)
     if (!m_compositingLayersNeedUpdate)
         return;
 
-    m_compositingLayersNeedUpdate = false;
-
     ASSERT(inCompositingMode());
 
-    if (!updateRoot)
+    if (!updateRoot) {
+        // Only clear the flag if we're updating the entire hierarchy
+        m_compositingLayersNeedUpdate = false;
         updateRoot = rootRenderLayer();
+    }
 
 #if PROFILE_LAYER_REBUILD
     ++m_rootLayerUpdateCount;
@@ -149,10 +151,10 @@ void RenderLayerCompositor::updateCompositingLayers(RenderLayer* updateRoot)
         fprintf(stderr, "Update %d: computeCompositingRequirements for the world took %fms\n"
                     m_rootLayerUpdateCount, 1000.0 * (endTime - startTime));
 #endif
-    ASSERT(!m_compositingLayersNeedUpdate);
+    ASSERT(updateRoot || !m_compositingLayersNeedUpdate);
 }
 
-bool RenderLayerCompositor::updateLayerCompositingState(RenderLayer* layer, RenderStyle::Diff diff)
+bool RenderLayerCompositor::updateLayerCompositingState(RenderLayer* layer, StyleDifference diff)
 {
     bool needsLayer = needsToBeComposited(layer);
     bool layerChanged = false;
@@ -170,8 +172,8 @@ bool RenderLayerCompositor::updateLayerCompositingState(RenderLayer* layer, Rend
     }
     
     if (layerChanged) {
-        // invalidate the parent in this region
-        RenderLayer* compLayer = enclosingCompositingLayer(layer, false);
+        // Invalidate the parent in this region.
+        RenderLayer* compLayer = ancestorCompositingLayer(layer);
         if (compLayer) {
             // We can't reliably compute a dirty rect, because style may have changed already, 
             // so just dirty the whole parent layer
@@ -179,7 +181,7 @@ bool RenderLayerCompositor::updateLayerCompositingState(RenderLayer* layer, Rend
             // The contents of this layer may be moving between the window
             // and a GraphicsLayer, so we need to make sure the window system
             // synchronizes those changes on the screen.
-            m_renderView->frameView()->setNeedsSynchronizedGraphicsFlush();
+            m_renderView->frameView()->setNeedsOneShotDrawingSynchronization();
         }
 
         layer->renderer()->compositingStateChanged();
@@ -191,7 +193,7 @@ bool RenderLayerCompositor::updateLayerCompositingState(RenderLayer* layer, Rend
     if (layer->backing()->updateGraphicsLayers(needsContentsCompositingLayer(layer),
                                                clippedByAncestor(layer),
                                                clipsCompositingDescendants(layer),
-                                               diff >= RenderStyle::Repaint))
+                                               diff >= StyleDifferenceRepaint))
         layerChanged = true;
 
     return layerChanged;
@@ -267,35 +269,21 @@ void RenderLayerCompositor::layerWillBeRemoved(RenderLayer* parent, RenderLayer*
     if (child->isComposited())
         setCompositingParent(child, 0);
     
-    RenderLayer* compLayer = enclosingCompositingLayer(parent, false);
+    // If the document is being torn down (document's renderer() is null), then there's
+    // no need to do any layer updating.
+    if (parent->renderer()->documentBeingDestroyed())
+        return;
+
+    RenderLayer* compLayer = parent->renderer()->enclosingCompositingLayer();
     if (compLayer) {
         IntRect ancestorRect = calculateCompositedBounds(child, compLayer);
         compLayer->setBackingNeedsRepaintInRect(ancestorRect);
         // The contents of this layer may be moving from a GraphicsLayer to the window,
         // so we need to make sure the window system synchronizes those changes on the screen.
-        m_renderView->frameView()->setNeedsSynchronizedGraphicsFlush();
+        m_renderView->frameView()->setNeedsOneShotDrawingSynchronization();
     }
 
     setCompositingLayersNeedUpdate();
-}
-
-RenderLayer* RenderLayerCompositor::enclosingCompositingLayer(RenderLayer* layer, bool includeSelf) const
-{
-    if (includeSelf && layer->isComposited())
-        return layer;
-
-    bool childOverflowOnly = layer->isOverflowOnly();
-    for (RenderLayer* curr = layer->parent(); curr; curr = curr->parent()) {
-        // Compositing layers are parented according to stacking order and overflow list,
-        // so we have to check whether the parent is a stacking context, or whether 
-        // the child is overflow-only.
-        if (curr->isComposited() && (childOverflowOnly || curr->isStackingContext()))
-            return curr;
-        
-        childOverflowOnly = curr->isOverflowOnly();
-    }
-         
-    return 0;
 }
 
 RenderLayer* RenderLayerCompositor::enclosingNonStackingClippingLayer(const RenderLayer* layer) const
@@ -411,6 +399,14 @@ void RenderLayerCompositor::setForcedCompositingLayer(RenderLayer* layer, bool f
     }
 }
 
+RenderLayer* RenderLayerCompositor::ancestorCompositingLayer(const RenderLayer* layer) const
+{
+    if (!layer->parent())
+        return 0;
+
+    return layer->parent()->renderer()->enclosingCompositingLayer();
+}
+
 void RenderLayerCompositor::setCompositingParent(RenderLayer* childLayer, RenderLayer* parentLayer)
 {
     ASSERT(childLayer->isComposited());
@@ -454,7 +450,7 @@ void RenderLayerCompositor::parentInRootLayer(RenderLayer* layer)
 
 void RenderLayerCompositor::rebuildCompositingLayerTree(RenderLayer* layer, struct CompositingState& ioCompState)
 {
-    updateLayerCompositingState(layer, RenderStyle::Equal);
+    updateLayerCompositingState(layer, StyleDifferenceEqual);
 
     // host the document layer in the RenderView's root layer
     if (layer->isDocumentLayer())
@@ -585,21 +581,7 @@ GraphicsLayer* RenderLayerCompositor::rootPlatformLayer() const
     return m_rootPlatformLayer;
 }
 
-void RenderLayerCompositor::willBeDetached()
-{
-    if (!m_rootPlatformLayer ||! m_rootLayerAttached)
-        return;
-
-    Frame* frame = m_renderView->frameView()->frame();
-    Page* page = frame ? frame->page() : 0;
-    if (!page)
-        return;
-
-    page->chrome()->client()->attachRootGraphicsLayer(frame, 0);
-    m_rootLayerAttached = false;
-}
-
-void RenderLayerCompositor::wasAttached()
+void RenderLayerCompositor::didMoveOnscreen()
 {
     if (!m_rootPlatformLayer)
         return;
@@ -611,6 +593,20 @@ void RenderLayerCompositor::wasAttached()
 
     page->chrome()->client()->attachRootGraphicsLayer(frame, m_rootPlatformLayer);
     m_rootLayerAttached = true;
+}
+
+void RenderLayerCompositor::willMoveOffscreen()
+{
+    if (!m_rootPlatformLayer || !m_rootLayerAttached)
+        return;
+
+    Frame* frame = m_renderView->frameView()->frame();
+    Page* page = frame ? frame->page() : 0;
+    if (!page)
+        return;
+
+    page->chrome()->client()->attachRootGraphicsLayer(frame, 0);
+    m_rootLayerAttached = false;
 }
 
 void RenderLayerCompositor::updateRootLayerPosition()
@@ -682,7 +678,7 @@ bool RenderLayerCompositor::clippedByAncestor(RenderLayer* layer) const
     if (!layer->isComposited() || !layer->parent())
         return false;
 
-    RenderLayer* compositingAncestor = enclosingCompositingLayer(layer, false);
+    RenderLayer* compositingAncestor = ancestorCompositingLayer(layer);
 
     // We need ancestor clipping if something clips between this layer and its compositing, stacking context ancestor
     for (RenderLayer* curLayer = layer->parent(); curLayer && curLayer != compositingAncestor; curLayer = curLayer->parent()) {
@@ -742,7 +738,7 @@ void RenderLayerCompositor::ensureRootPlatformLayer()
     // Need to clip to prevent transformed content showing outside this frame
     m_rootPlatformLayer->setMasksToBounds(true);
     
-    wasAttached();
+    didMoveOnscreen();
 }
 
 } // namespace WebCore

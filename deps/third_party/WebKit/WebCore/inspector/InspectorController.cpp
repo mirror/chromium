@@ -1736,7 +1736,7 @@ void InspectorController::drawNodeHighlight(GraphicsContext& context) const
     Vector<IntRect> lineBoxRects;
     if (renderer->isInline() || (renderer->isText() && !m_highlightedNode->isSVGElement())) {
         // FIXME: We should show margins/padding/border for inlines.
-        renderer->addLineBoxRects(lineBoxRects);
+        renderer->absoluteRectsForRange(lineBoxRects);
     }
 
     for (unsigned i = 0; i < lineBoxRects.size(); ++i) 

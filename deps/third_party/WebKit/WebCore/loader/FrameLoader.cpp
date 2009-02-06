@@ -3139,7 +3139,7 @@ void FrameLoader::open(CachedPage& cachedPage)
     m_didCallImplicitClose = false;
     m_outgoingReferrer = url.string();
 
-    FrameView* view = cachedPage.view();
+    FrameView* view = cachedPage.mainFrameView();
     if (view)
         view->setWasScrolledByUser(false);
     m_frame->setView(view);
@@ -3631,6 +3631,10 @@ void FrameLoader::addExtraFieldsToMainResourceRequest(ResourceRequest& request)
 
 void FrameLoader::addExtraFieldsToRequest(ResourceRequest& request, FrameLoadType loadType, bool mainResource, bool cookiePolicyURLFromRequest)
 {
+    // These modifications are only necessary for HTTP and HTTPS.
+    if (!request.url().protocolInHTTPFamily())
+        return;
+
     applyUserAgent(request);
     
     if (loadType == FrameLoadTypeReload) {

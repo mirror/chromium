@@ -61,7 +61,7 @@ RenderReplaced::~RenderReplaced()
         gOverflowRectMap->remove(this);
 }
 
-void RenderReplaced::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
+void RenderReplaced::styleDidChange(StyleDifference diff, const RenderStyle* oldStyle)
 {
     RenderBox::styleDidChange(diff, oldStyle);
 
@@ -234,7 +234,7 @@ VisiblePosition RenderReplaced::positionForCoordinates(int xPos, int yPos)
     return RenderBox::positionForCoordinates(xPos, yPos);
 }
 
-IntRect RenderReplaced::selectionRect(bool clipToVisibleContent)
+IntRect RenderReplaced::selectionRectForRepaint(RenderBox* repaintContainer, bool clipToVisibleContent)
 {
     ASSERT(!needsLayout());
 
@@ -243,11 +243,9 @@ IntRect RenderReplaced::selectionRect(bool clipToVisibleContent)
     
     IntRect rect = localSelectionRect();
     if (clipToVisibleContent)
-        computeAbsoluteRepaintRect(rect);
-    else {
-        FloatPoint absPos = localToAbsolute(FloatPoint());
-        rect.move(absPos.x(), absPos.y());
-    }
+        computeRectForRepaint(repaintContainer, rect);
+    else
+        rect = localToContainerQuad(FloatRect(rect), repaintContainer).enclosingBoundingBox();
     
     return rect;
 }

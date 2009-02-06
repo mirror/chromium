@@ -113,7 +113,7 @@ struct DashboardRegionValue {
 // Base class for all rendering tree objects.
 class RenderObject : public CachedResourceClient {
     friend class RenderBlock;
-    friend class RenderContainer;
+    friend class RenderBox;
     friend class RenderLayer;
     friend class RenderObjectChildList;
     friend class RenderSVGContainer;
@@ -123,7 +123,7 @@ public:
     RenderObject(Node*);
     virtual ~RenderObject();
 
-    virtual const char* renderName() const { return "RenderObject"; }
+    virtual const char* renderName() const = 0;
 
     RenderObject* parent() const { return m_parent; }
     bool isDescendantOf(const RenderObject*) const;
@@ -156,14 +156,19 @@ public:
     RenderObject* firstLeafChild() const;
     RenderObject* lastLeafChild() const;
 
-    // The following five functions are used when the render tree hierarchy changes to make sure layers get
+    // The following six functions are used when the render tree hierarchy changes to make sure layers get
     // properly added and removed.  Since containership can be implemented by any subclass, and since a hierarchy
     // can contain a mixture of boxes and other object types, these functions need to be in the base class.
     RenderLayer* enclosingLayer() const;
+    
     void addLayers(RenderLayer* parentLayer, RenderObject* newObject);
     void removeLayers(RenderLayer* parentLayer);
     void moveLayers(RenderLayer* oldParent, RenderLayer* newParent);
     RenderLayer* findNextLayer(RenderLayer* parentLayer, RenderObject* startPoint, bool checkParent = true);
+
+#if USE(ACCELERATED_COMPOSITING)
+    RenderLayer* enclosingCompositingLayer() const;
+#endif
 
     // Convenience function for getting to the nearest enclosing box of a RenderObject.
     RenderBox* enclosingBox() const;
@@ -183,6 +188,8 @@ public:
 #ifndef NDEBUG
     void setHasAXObject(bool flag) { m_hasAXObject = flag; }
     bool hasAXObject() const { return m_hasAXObject; }
+    bool isSetNeedsLayoutForbidden() const { return m_setNeedsLayoutForbidden; }
+    void setNeedsLayoutIsForbidden(bool flag) { m_setNeedsLayoutForbidden = flag; }
 #endif
 
     // Obtains the nearest enclosing block (including this block) that contributes a first-line style to our inline
@@ -212,6 +219,7 @@ public:
     virtual bool canHaveChildren() const { return virtualChildren(); }
     virtual bool isChildAllowed(RenderObject*, RenderStyle*) const { return true; }
     virtual void addChild(RenderObject* newChild, RenderObject* beforeChild = 0);
+    virtual void addChildIgnoringContinuation(RenderObject* newChild, RenderObject* beforeChild = 0) { return addChild(newChild, beforeChild); }
     virtual void removeChild(RenderObject*);
     virtual bool createsAnonymousWrapper() const { return false; }
     //////////////////////////////////////////
@@ -309,7 +317,7 @@ public:
     void setIsAnonymous(bool b) { m_isAnonymous = b; }
     bool isAnonymousBlock() const
     {
-        return m_isAnonymous && style()->display() == BLOCK && style()->styleType() == RenderStyle::NOPSEUDO && !isListMarker();
+        return m_isAnonymous && style()->display() == BLOCK && style()->styleType() == NOPSEUDO && !isListMarker();
     }
     bool isInlineContinuation() const { return isInline() && isBox() && (element() ? element()->renderer() != this : false); }
     bool isFloating() const { return m_floating; }
@@ -348,8 +356,8 @@ public:
 public:
     // The pseudo element style can be cached or uncached.  Use the cached method if the pseudo element doesn't respect
     // any pseudo classes (and therefore has no concept of changing state).
-    RenderStyle* getCachedPseudoStyle(RenderStyle::PseudoId, RenderStyle* parentStyle = 0) const;
-    PassRefPtr<RenderStyle> getUncachedPseudoStyle(RenderStyle::PseudoId, RenderStyle* parentStyle = 0) const;
+    RenderStyle* getCachedPseudoStyle(PseudoId, RenderStyle* parentStyle = 0) const;
+    PassRefPtr<RenderStyle> getUncachedPseudoStyle(PseudoId, RenderStyle* parentStyle = 0) const;
     
     virtual void updateDragState(bool dragOn);
 
@@ -479,7 +487,7 @@ public:
     virtual void updateWidgetPosition();
 
 #if ENABLE(DASHBOARD_SUPPORT)
-    void addDashboardRegions(Vector<DashboardRegionValue>&);
+    virtual void addDashboardRegions(Vector<DashboardRegionValue>&);
     void collectDashboardRegions(Vector<DashboardRegionValue>&);
 #endif
 
@@ -534,14 +542,14 @@ public:
     // Return the offset from the container() renderer (excluding transforms)
     virtual IntSize offsetFromContainer(RenderObject*) const;
 
-    virtual void addLineBoxRects(Vector<IntRect>&, unsigned startOffset = 0, unsigned endOffset = UINT_MAX, bool useSelectionHeight = false);
+    virtual void absoluteRectsForRange(Vector<IntRect>&, unsigned startOffset = 0, unsigned endOffset = UINT_MAX, bool useSelectionHeight = false);
     
     virtual void absoluteRects(Vector<IntRect>&, int, int, bool = true) { }
     // FIXME: useTransforms should go away eventually
     IntRect absoluteBoundingBoxRect(bool useTransforms = false);
 
     // Build an array of quads in absolute coords for line boxes
-    virtual void collectAbsoluteLineBoxQuads(Vector<FloatQuad>&, unsigned /*startOffset*/ = 0, unsigned /*endOffset*/ = UINT_MAX, bool /*useSelectionHeight*/ = false) { }
+    virtual void absoluteQuadsForRange(Vector<FloatQuad>&, unsigned startOffset = 0, unsigned endOffset = UINT_MAX, bool useSelectionHeight = false);
     virtual void absoluteQuads(Vector<FloatQuad>&, bool /*topLevel*/ = true) { }
 
     // the rect that will be painted if this object is passed as the paintingRoot
@@ -659,7 +667,8 @@ public:
 
     // A single rectangle that encompasses all of the selected objects within this object.  Used to determine the tightest
     // possible bounding box for the selection.
-    virtual IntRect selectionRect(bool) { return IntRect(); }
+    IntRect selectionRect(bool clipToVisibleContent = true) { return selectionRectForRepaint(0, clipToVisibleContent); }
+    virtual IntRect selectionRectForRepaint(RenderBox* /*repaintContainer*/, bool /*clipToVisibleContent*/ = true) { return IntRect(); }
 
     // Whether or not an object can be part of the leaf elements of the selection.
     virtual bool canBeSelectionLeaf() const { return false; }
@@ -673,30 +682,6 @@ public:
 
     // Whether or not a given block needs to paint selection gaps.
     virtual bool shouldPaintSelectionGaps() const { return false; }
-
-    // This struct is used when the selection changes to cache the old and new state of the selection for each RenderObject.
-    struct SelectionInfo {
-        SelectionInfo()
-            : m_object(0)
-            , m_state(SelectionNone)
-        {
-        }
-
-        SelectionInfo(RenderObject* o, bool clipToVisibleContent)
-            : m_object(o)
-            , m_rect(o->needsLayout() ? IntRect() : o->selectionRect(clipToVisibleContent))
-            , m_state(o->selectionState())
-        {
-        }
-
-        RenderObject* object() const { return m_object; }
-        IntRect rect() const { return m_rect; }
-        SelectionState state() const { return m_state; }
-
-        RenderObject* m_object;
-        IntRect m_rect;
-        SelectionState m_state;
-    };
 
     Node* draggableNode(bool dhtmlOK, bool uaOK, int x, int y, bool& dhtmlWillDrag) const;
 
@@ -717,8 +702,6 @@ public:
     bool isBottomMarginQuirk() const { return m_bottomMarginQuirk; }
     void setTopMarginQuirk(bool b = true) { m_topMarginQuirk = b; }
     void setBottomMarginQuirk(bool b = true) { m_bottomMarginQuirk = b; }
-
-    void removeFromObjectLists();
 
     // When performing a global document tear-down, the renderer of the document is cleared.  We use this
     // as a hook to detect the case of document destruction and don't waste time doing unnecessary work.
@@ -777,9 +760,9 @@ public:
 
 protected:
     // Overrides should call the superclass at the end
-    virtual void styleWillChange(RenderStyle::Diff, const RenderStyle* newStyle);
+    virtual void styleWillChange(StyleDifference, const RenderStyle* newStyle);
     // Overrides should call the superclass at the start
-    virtual void styleDidChange(RenderStyle::Diff, const RenderStyle* oldStyle);
+    virtual void styleDidChange(StyleDifference, const RenderStyle* oldStyle);
     
     virtual void printBoxDecorations(GraphicsContext*, int /*x*/, int /*y*/, int /*w*/, int /*h*/, int /*tx*/, int /*ty*/) { }
 
@@ -839,6 +822,7 @@ private:
 
 #ifndef NDEBUG
     bool m_hasAXObject;
+    bool m_setNeedsLayoutForbidden : 1;
 #endif
     mutable int m_verticalPosition;
 
@@ -902,6 +886,7 @@ inline void RenderObject::setNeedsLayout(bool b, bool markParents)
     bool alreadyNeededLayout = m_needsLayout;
     m_needsLayout = b;
     if (b) {
+        ASSERT(!isSetNeedsLayoutForbidden());
         if (!alreadyNeededLayout) {
             if (markParents)
                 markContainingBlocksForLayout();
@@ -921,6 +906,7 @@ inline void RenderObject::setChildNeedsLayout(bool b, bool markParents)
     bool alreadyNeededLayout = m_normalChildNeedsLayout;
     m_normalChildNeedsLayout = b;
     if (b) {
+        ASSERT(!isSetNeedsLayoutForbidden());
         if (!alreadyNeededLayout && markParents)
             markContainingBlocksForLayout();
     } else {
@@ -974,10 +960,12 @@ inline void RenderObject::markContainingBlocksForLayout(bool scheduleRelayout, R
             if (o->m_posChildNeedsLayout)
                 return;
             o->m_posChildNeedsLayout = true;
+            ASSERT(!o->isSetNeedsLayoutForbidden());
         } else {
             if (o->m_normalChildNeedsLayout)
                 return;
             o->m_normalChildNeedsLayout = true;
+            ASSERT(!o->isSetNeedsLayoutForbidden());
         }
 
         if (o == newRoot)

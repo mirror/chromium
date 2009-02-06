@@ -117,7 +117,7 @@ RenderBlock::MarginInfo::MarginInfo(RenderBlock* block, int top, int bottom)
 // -------------------------------------------------------------------------------------------------------
 
 RenderBlock::RenderBlock(Node* node)
-      : RenderContainer(node)
+      : RenderBox(node)
       , m_floatingObjects(0)
       , m_positionedObjects(0)
       , m_inlineContinuation(0)
@@ -173,7 +173,7 @@ void RenderBlock::destroy()
 
     if (!documentBeingDestroyed()) {
         if (firstLineBox()) {
-            // We can't wait for RenderContainer::destroy to clear the selection,
+            // We can't wait for RenderBox::destroy to clear the selection,
             // because by then we will have nuked the line boxes.
             // FIXME: The SelectionController should be responsible for this when it
             // is notified of DOM mutations.
@@ -195,14 +195,14 @@ void RenderBlock::destroy()
 
     m_lineBoxes.deleteLineBoxes(renderArena());
 
-    RenderContainer::destroy();
+    RenderBox::destroy();
 }
 
-void RenderBlock::styleWillChange(RenderStyle::Diff diff, const RenderStyle* newStyle)
+void RenderBlock::styleWillChange(StyleDifference diff, const RenderStyle* newStyle)
 {
     setReplaced(newStyle->isDisplayReplacedType());
     
-    if (style() && parent() && diff == RenderStyle::Layout && style()->position() != newStyle->position()) {
+    if (style() && parent() && diff == StyleDifferenceLayout && style()->position() != newStyle->position()) {
         if (newStyle->position() == StaticPosition)
             // Clear our positioned objects list. Our absolutely positioned descendants will be
             // inserted into our containing block's positioned objects list during layout.
@@ -224,12 +224,12 @@ void RenderBlock::styleWillChange(RenderStyle::Diff diff, const RenderStyle* new
         }
     }
 
-    RenderContainer::styleWillChange(diff, newStyle);
+    RenderBox::styleWillChange(diff, newStyle);
 }
 
-void RenderBlock::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
+void RenderBlock::styleDidChange(StyleDifference diff, const RenderStyle* oldStyle)
 {
-    RenderContainer::styleDidChange(diff, oldStyle);
+    RenderBox::styleDidChange(diff, oldStyle);
 
     // FIXME: We could save this call when the change only affected non-inherited properties
     for (RenderObject* child = firstChild(); child; child = child->nextSibling()) {
@@ -245,13 +245,13 @@ void RenderBlock::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldS
 
     // Update pseudos for :before and :after now.
     if (!isAnonymous() && document()->usesBeforeAfterRules() && canHaveChildren()) {
-        updateBeforeAfterContent(RenderStyle::BEFORE);
-        updateBeforeAfterContent(RenderStyle::AFTER);
+        updateBeforeAfterContent(BEFORE);
+        updateBeforeAfterContent(AFTER);
     }
     updateFirstLetter();
 }
 
-void RenderBlock::updateBeforeAfterContent(RenderStyle::PseudoId pseudoId)
+void RenderBlock::updateBeforeAfterContent(PseudoId pseudoId)
 {
     // If this is an anonymous wrapper, then the parent applies its own pseudo-element style to it.
     if (parent() && parent()->createsAnonymousWrapper())
@@ -329,13 +329,13 @@ void RenderBlock::addChild(RenderObject* newChild, RenderObject* beforeChild)
         if (newChild->isInline()) {
             // No suitable existing anonymous box - create a new one.
             RenderBlock* newBox = createAnonymousBlock();
-            RenderContainer::addChild(newBox, beforeChild);
+            RenderBox::addChild(newBox, beforeChild);
             newBox->addChild(newChild);
             return;
         }
     }
 
-    RenderContainer::addChild(newChild, beforeChild);
+    RenderBox::addChild(newChild, beforeChild);
 
     if (madeBoxesNonInline && parent() && isAnonymousBlock() && parent()->isRenderBlock())
         toRenderBlock(parent())->removeLeftoverAnonymousBlock(this);
@@ -390,7 +390,7 @@ void RenderBlock::deleteLineBoxTree()
 void RenderBlock::dirtyLineBoxes(bool fullLayout, bool isRootLineBox)
 {
     if (!isRootLineBox && isReplaced())
-        return RenderContainer::dirtyLineBoxes(fullLayout, isRootLineBox);
+        return RenderBox::dirtyLineBoxes(fullLayout, isRootLineBox);
 
     if (fullLayout)
         m_lineBoxes.deleteLineBoxes(renderArena());
@@ -401,7 +401,7 @@ void RenderBlock::dirtyLineBoxes(bool fullLayout, bool isRootLineBox)
 InlineBox* RenderBlock::createInlineBox(bool makePlaceHolderBox, bool isRootLineBox, bool /*isOnlyRun*/)
 {
     if (!isRootLineBox && (isReplaced() || makePlaceHolderBox))                     // Inline tables and inline blocks
-        return RenderContainer::createInlineBox(false, isRootLineBox);              // (or positioned element placeholders).
+        return RenderBox::createInlineBox(false, isRootLineBox);              // (or positioned element placeholders).
     InlineFlowBox* flowBox = new (renderArena()) RootInlineBox(this);
     m_lineBoxes.appendLineBox(flowBox);
     return flowBox;
@@ -529,7 +529,7 @@ void RenderBlock::removeChild(RenderObject* oldChild)
         next->destroy();
     }
 
-    RenderContainer::removeChild(oldChild);
+    RenderBox::removeChild(oldChild);
 
     RenderObject* child = prev ? prev : next;
     if (canDeleteAnonymousBlocks && child && !child->previousSibling() && !child->nextSibling() && !isFlexibleBox()) {
@@ -1925,9 +1925,9 @@ void RenderBlock::setSelectionState(SelectionState s)
 
     if ((s == SelectionStart && selectionState() == SelectionEnd) ||
         (s == SelectionEnd && selectionState() == SelectionStart))
-        RenderContainer::setSelectionState(SelectionBoth);
+        RenderBox::setSelectionState(SelectionBoth);
     else
-        RenderContainer::setSelectionState(s);
+        RenderBox::setSelectionState(s);
     
     RenderBlock* cb = containingBlock();
     if (cb && !cb->isRenderView())
@@ -1962,14 +1962,14 @@ bool RenderBlock::isSelectionRoot() const
     return false;
 }
 
-GapRects RenderBlock::selectionGapRects()
+GapRects RenderBlock::selectionGapRectsForRepaint(RenderBox* /*repaintContainer*/)
 {
     ASSERT(!needsLayout());
 
     if (!shouldPaintSelectionGaps())
         return GapRects();
 
-    // FIXME: this is broken with transforms
+    // FIXME: this is broken with transforms and a non-null repaintContainer
     FloatPoint absContentPoint = localToAbsolute(FloatPoint());
     if (hasOverflowClip())
         absContentPoint -= layer()->scrolledContentOffset();
@@ -3133,7 +3133,7 @@ void RenderBlock::addIntrudingFloats(RenderBlock* prev, int xoff, int yoff)
 bool RenderBlock::avoidsFloats() const
 {
     // Floats can't intrude into our box if we have a non-auto column count or width.
-    return RenderContainer::avoidsFloats() || !style()->hasAutoColumnCount() || !style()->hasAutoColumnWidth();
+    return RenderBox::avoidsFloats() || !style()->hasAutoColumnCount() || !style()->hasAutoColumnWidth();
 }
 
 bool RenderBlock::containsFloat(RenderObject* o)
@@ -3388,7 +3388,7 @@ Position RenderBlock::positionForRenderer(RenderObject* renderer, bool start) co
 VisiblePosition RenderBlock::positionForCoordinates(int x, int y)
 {
     if (isTable())
-        return RenderContainer::positionForCoordinates(x, y); 
+        return RenderBox::positionForCoordinates(x, y); 
 
     int top = borderTop();
     int bottom = top + paddingTop() + contentHeight() + paddingBottom();
@@ -3497,7 +3497,7 @@ VisiblePosition RenderBlock::positionForCoordinates(int x, int y)
             return renderer->positionForCoordinates(contentsX - renderer->x(), contentsY - renderer->y());
     }
     
-    return RenderContainer::positionForCoordinates(x, y);
+    return RenderBox::positionForCoordinates(x, y);
 }
 
 void RenderBlock::offsetForContents(int& tx, int& ty) const
@@ -4021,7 +4021,7 @@ void RenderBlock::calcInlinePrefWidths()
                 if (child->isRenderInline()) {
                     // Add in padding/border/margin from the appropriate side of
                     // the element.
-                    int bpm = getBorderPaddingMargin(static_cast<RenderContainer*>(child), childIterator.endOfInline);
+                    int bpm = getBorderPaddingMargin(static_cast<RenderBox*>(child), childIterator.endOfInline);
                     childMin += bpm;
                     childMax += bpm;
 
@@ -4373,13 +4373,13 @@ int RenderBlock::baselinePosition(bool b, bool isRootLineBox) const
             return marginTop() + baselinePos;
         return height() + marginTop() + marginBottom();
     }
-    return RenderContainer::baselinePosition(b, isRootLineBox);
+    return RenderBox::baselinePosition(b, isRootLineBox);
 }
 
 int RenderBlock::getBaselineOfFirstLineBox() const
 {
     if (!isBlockFlow())
-        return RenderContainer::getBaselineOfFirstLineBox();
+        return RenderBox::getBaselineOfFirstLineBox();
 
     if (childrenInline()) {
         if (firstLineBox())
@@ -4403,11 +4403,11 @@ int RenderBlock::getBaselineOfFirstLineBox() const
 int RenderBlock::getBaselineOfLastLineBox() const
 {
     if (!isBlockFlow())
-        return RenderContainer::getBaselineOfLastLineBox();
+        return RenderBox::getBaselineOfLastLineBox();
 
     if (childrenInline()) {
         if (!firstLineBox() && hasLineIfEmpty())
-            return RenderContainer::baselinePosition(true, true) + borderTop() + paddingTop();
+            return RenderBox::baselinePosition(true, true) + borderTop() + paddingTop();
         if (lastLineBox())
             return lastLineBox()->yPos() + lastLineBox()->baseline();
         return -1;
@@ -4423,7 +4423,7 @@ int RenderBlock::getBaselineOfLastLineBox() const
             }
         }
         if (!haveNormalFlowChild && hasLineIfEmpty())
-            return RenderContainer::baselinePosition(true, true) + borderTop() + paddingTop();
+            return RenderBox::baselinePosition(true, true) + borderTop() + paddingTop();
     }
 
     return -1;
@@ -4445,7 +4445,7 @@ RenderBlock* RenderBlock::firstLineBlock() const
     RenderBlock* firstLineBlock = const_cast<RenderBlock*>(this);
     bool hasPseudo = false;
     while (true) {
-        hasPseudo = firstLineBlock->style()->hasPseudoStyle(RenderStyle::FIRST_LINE);
+        hasPseudo = firstLineBlock->style()->hasPseudoStyle(FIRST_LINE);
         if (hasPseudo)
             break;
         RenderObject* parentBlock = firstLineBlock->parent();
@@ -4467,7 +4467,7 @@ void RenderBlock::updateFirstLetter()
     if (!document()->usesFirstLetterRules())
         return;
     // Don't recurse
-    if (style()->styleType() == RenderStyle::FIRST_LETTER)
+    if (style()->styleType() == FIRST_LETTER)
         return;
 
     // FIXME: We need to destroy the first-letter object if it is no longer the first child.  Need to find
@@ -4477,7 +4477,7 @@ void RenderBlock::updateFirstLetter()
     while (true) {
         // We only honor first-letter if the firstLetterBlock can have children in the DOM. This correctly 
         // prevents form controls from honoring first-letter.
-        hasPseudoStyle = firstLetterBlock->style()->hasPseudoStyle(RenderStyle::FIRST_LETTER) 
+        hasPseudoStyle = firstLetterBlock->style()->hasPseudoStyle(FIRST_LETTER) 
             && firstLetterBlock->canHaveChildren();
         if (hasPseudoStyle)
             break;
@@ -4495,7 +4495,7 @@ void RenderBlock::updateFirstLetter()
     RenderObject* currChild = firstLetterBlock->firstChild();
     while (currChild && currChild->needsLayout() && (!currChild->isReplaced() || currChild->isFloatingOrPositioned()) && !currChild->isText()) {
         if (currChild->isFloatingOrPositioned()) {
-            if (currChild->style()->styleType() == RenderStyle::FIRST_LETTER)
+            if (currChild->style()->styleType() == FIRST_LETTER)
                 break;
             currChild = currChild->nextSibling();
         } else
@@ -4513,8 +4513,8 @@ void RenderBlock::updateFirstLetter()
 
     // If the child already has style, then it has already been created, so we just want
     // to update it.
-    if (currChild->style()->styleType() == RenderStyle::FIRST_LETTER) {
-        RenderStyle* pseudo = firstLetterBlock->getCachedPseudoStyle(RenderStyle::FIRST_LETTER,
+    if (currChild->style()->styleType() == FIRST_LETTER) {
+        RenderStyle* pseudo = firstLetterBlock->getCachedPseudoStyle(FIRST_LETTER,
                                                                      firstLetterContainer->firstLineStyle());
         currChild->setStyle(pseudo);
         for (RenderObject* genChild = currChild->firstChild(); genChild; genChild = genChild->nextSibling()) {
@@ -4525,7 +4525,7 @@ void RenderBlock::updateFirstLetter()
     }
 
     // If the child does not already have style, we create it here.
-    if (currChild->isText() && !currChild->isBR() && currChild->parent()->style()->styleType() != RenderStyle::FIRST_LETTER) {
+    if (currChild->isText() && !currChild->isBR() && currChild->parent()->style()->styleType() != FIRST_LETTER) {
         // Our layout state is not valid for the repaints we are going to trigger by
         // adding and removing children of firstLetterContainer.
         view()->disableLayoutState();
@@ -4533,7 +4533,7 @@ void RenderBlock::updateFirstLetter()
         RenderText* textObj = toRenderText(currChild);
         
         // Create our pseudo style now that we have our firstLetterContainer determined.
-        RenderStyle* pseudoStyle = firstLetterBlock->getCachedPseudoStyle(RenderStyle::FIRST_LETTER,
+        RenderStyle* pseudoStyle = firstLetterBlock->getCachedPseudoStyle(FIRST_LETTER,
                                                                           firstLetterContainer->firstLineStyle());
         
         // Force inline display (except for floating first-letters)
@@ -4823,7 +4823,7 @@ void RenderBlock::absoluteQuads(Vector<FloatQuad>& quads, bool topLevel)
 
 IntRect RenderBlock::rectWithOutlineForRepaint(RenderBox* repaintContainer, int outlineWidth)
 {
-    IntRect r(RenderContainer::rectWithOutlineForRepaint(repaintContainer, outlineWidth));
+    IntRect r(RenderBox::rectWithOutlineForRepaint(repaintContainer, outlineWidth));
     if (inlineContinuation())
         r.inflateY(collapsedMarginTop());
     return r;
@@ -4831,12 +4831,12 @@ IntRect RenderBlock::rectWithOutlineForRepaint(RenderBox* repaintContainer, int 
 
 RenderObject* RenderBlock::hoverAncestor() const
 {
-    return inlineContinuation() ? inlineContinuation() : RenderContainer::hoverAncestor();
+    return inlineContinuation() ? inlineContinuation() : RenderBox::hoverAncestor();
 }
 
 void RenderBlock::updateDragState(bool dragOn)
 {
-    RenderContainer::updateDragState(dragOn);
+    RenderBox::updateDragState(dragOn);
     if (inlineContinuation())
         inlineContinuation()->updateDragState(dragOn);
 }
@@ -4878,7 +4878,7 @@ IntRect RenderBlock::localCaretRect(InlineBox* inlineBox, int caretOffset, int* 
 {
     // Do the normal calculation in most cases.
     if (firstChild())
-        return RenderContainer::localCaretRect(inlineBox, caretOffset, extraWidthToEndOfLine);
+        return RenderBox::localCaretRect(inlineBox, caretOffset, extraWidthToEndOfLine);
 
     // This is a special case:
     // The element is not an inline element, and it's empty. So we have to

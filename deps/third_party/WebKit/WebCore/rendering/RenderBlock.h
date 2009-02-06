@@ -27,7 +27,7 @@
 
 #include "DeprecatedPtrList.h"
 #include "GapRects.h"
-#include "RenderContainer.h"
+#include "RenderBox.h"
 #include "RenderLineBoxList.h"
 #include "RootInlineBox.h"
 #include <wtf/ListHashSet.h>
@@ -45,10 +45,15 @@ typedef BidiResolver<InlineIterator, BidiRun> InlineBidiResolver;
 
 enum CaretType { CursorCaret, DragCaret };
 
-class RenderBlock : public RenderContainer {
+class RenderBlock : public RenderBox {
 public:
     RenderBlock(Node*);
     virtual ~RenderBlock();
+
+    virtual RenderObjectChildList* virtualChildren() { return children(); }
+    virtual const RenderObjectChildList* virtualChildren() const { return children(); }
+    const RenderObjectChildList* children() const { return &m_children; }
+    RenderObjectChildList* children() { return &m_children; }
 
     virtual void destroy();
 
@@ -132,7 +137,7 @@ public:
 
     virtual void borderFitAdjust(int& x, int& w) const; // Shrink the box in which the border paints if border-fit is set.
 
-    virtual void updateBeforeAfterContent(RenderStyle::PseudoId pseudoId);
+    virtual void updateBeforeAfterContent(PseudoId);
 
     virtual InlineBox* createInlineBox(bool makePlaceHolderBox, bool isRootLineBox, bool isOnlyRun=false);
 
@@ -262,31 +267,11 @@ public:
 
     virtual void setSelectionState(SelectionState s);
 
-    struct BlockSelectionInfo {
-        RenderBlock* m_block;
-        GapRects m_rects;
-        SelectionState m_state;
-
-        BlockSelectionInfo()
-            : m_block(0)
-            , m_state(SelectionNone)
-        {
-        }
-
-        BlockSelectionInfo(RenderBlock* b)
-            : m_block(b)
-            , m_rects(b->needsLayout() ? GapRects() : b->selectionGapRects())
-            , m_state(b->selectionState())
-        { 
-        }
-
-        RenderBlock* block() const { return m_block; }
-        GapRects rects() const { return m_rects; }
-        SelectionState state() const { return m_state; }
-    };
-
-    virtual IntRect selectionRect(bool) { return selectionGapRects(); }
-    GapRects selectionGapRects();
+    virtual IntRect selectionRectForRepaint(RenderBox* repaintContainer, bool /*clipToVisibleContent*/)
+    {
+        return selectionGapRectsForRepaint(repaintContainer);
+    }
+    GapRects selectionGapRectsForRepaint(RenderBox* repaintContainer);
     virtual bool shouldPaintSelectionGaps() const;
     bool isSelectionRoot() const;
     GapRects fillSelectionGaps(RenderBlock* rootBlock, int blockX, int blockY, int tx, int ty,
@@ -320,6 +305,7 @@ public:
     unsigned desiredColumnCount() const;
     Vector<IntRect>* columnRects() const;
     void setDesiredColumnCountAndWidth(int count, int width);
+    int columnGap() const;
     
     void adjustRectForColumns(IntRect&) const;
 
@@ -340,8 +326,8 @@ private:
     void markLinesDirtyInVerticalRange(int top, int bottom);
 
 protected:
-    virtual void styleWillChange(RenderStyle::Diff, const RenderStyle* newStyle);
-    virtual void styleDidChange(RenderStyle::Diff, const RenderStyle* oldStyle);
+    virtual void styleWillChange(StyleDifference, const RenderStyle* newStyle);
+    virtual void styleDidChange(StyleDifference, const RenderStyle* oldStyle);
 
     void newLine(EClear);
     virtual bool hasLineIfEmpty() const;
@@ -354,7 +340,6 @@ private:
     // Adjust tx and ty from painting offsets to the local coords of this renderer
     void offsetForContents(int& tx, int& ty) const;
 
-    int columnGap() const;
     void calcColumnWidth();
     int layoutColumns(int endOfContent = -1);
 
@@ -506,6 +491,7 @@ private:
     MaxMargin* m_maxMargin;
 
 protected:
+    RenderObjectChildList m_children;
     RenderLineBoxList m_lineBoxes;   // All of the root line boxes created for this block flow.  For example, <div>Hello<br>world.</div> will have two total lines for the <div>.
 
     // How much content overflows out of our block vertically or horizontally.

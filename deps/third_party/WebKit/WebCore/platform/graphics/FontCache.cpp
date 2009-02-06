@@ -132,6 +132,55 @@ typedef HashMap<FontPlatformDataCacheKey, FontPlatformData*, FontPlatformDataCac
 
 static FontPlatformDataCache* gFontPlatformDataCache = 0;
 
+static const AtomicString& alternateFamilyName(const AtomicString& familyName)
+{
+    // Alias Courier <-> Courier New
+    DEFINE_STATIC_LOCAL(AtomicString, courier, ("Courier"));
+    DEFINE_STATIC_LOCAL(AtomicString, courierNew, ("Courier New"));
+    if (equalIgnoringCase(familyName, courier))
+        return courierNew;
+#if !PLATFORM(WIN_OS)
+    // On Windows, Courier New (truetype font) is always present and
+    // Courier is a bitmap font. So, we don't want to map Courier New to
+    // Courier.
+    if (equalIgnoringCase(familyName, courierNew))
+        return courier;
+#endif
+
+    // Alias Times and Times New Roman.
+    DEFINE_STATIC_LOCAL(AtomicString, times, ("Times"));
+    DEFINE_STATIC_LOCAL(AtomicString, timesNewRoman, ("Times New Roman"));
+    if (equalIgnoringCase(familyName, times))
+        return timesNewRoman;
+    if (equalIgnoringCase(familyName, timesNewRoman))
+        return times;
+    
+    // Alias Arial and Helvetica
+    DEFINE_STATIC_LOCAL(AtomicString, arial, ("Arial"));
+    DEFINE_STATIC_LOCAL(AtomicString, helvetica, ("Helvetica"));
+    if (equalIgnoringCase(familyName, arial))
+        return helvetica;
+    if (equalIgnoringCase(familyName, helvetica))
+        return arial;
+
+#if PLATFORM(WIN_OS)
+    // On Windows, bitmap fonts are blocked altogether so that we have to 
+    // alias MS Sans Serif (bitmap font) -> Microsoft Sans Serif (truetype font)
+    DEFINE_STATIC_LOCAL(AtomicString, msSans, ("MS Sans Serif"));
+    DEFINE_STATIC_LOCAL(AtomicString, microsoftSans, ("Microsoft Sans Serif"));
+    if (equalIgnoringCase(familyName, msSans))
+        return microsoftSans;
+
+    // Alias MS Serif (bitmap) -> Times New Roman (truetype font). There's no 
+    // 'Microsoft Sans Serif-equivalent' for Serif. 
+    static AtomicString msSerif("MS Serif");
+    if (equalIgnoringCase(familyName, msSerif))
+        return timesNewRoman;
+#endif
+
+    return emptyAtom;
+}
+
 FontPlatformData* FontCache::getCachedFontPlatformData(const FontDescription& fontDescription, 
                                                        const AtomicString& familyName,
                                                        bool checkingAlternateName)
@@ -409,5 +458,3 @@ void FontCache::invalidate()
 }
 
 } // namespace WebCore
-
-

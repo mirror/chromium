@@ -62,12 +62,12 @@ public:
     
     virtual bool canBeSelectionLeaf() const { return true; }
     virtual void setSelectionState(SelectionState);
-    virtual IntRect selectionRect(bool clipToVisibleContent = true);
+    virtual IntRect selectionRectForRepaint(RenderBox* repaintContainer, bool clipToVisibleContent = true);
 
     bool isSelected() const;
 
 protected:
-    virtual void styleDidChange(RenderStyle::Diff, const RenderStyle* oldStyle);
+    virtual void styleDidChange(StyleDifference, const RenderStyle* oldStyle);
 
     void setIntrinsicSize(const IntSize&);
     virtual void intrinsicSizeChanged();

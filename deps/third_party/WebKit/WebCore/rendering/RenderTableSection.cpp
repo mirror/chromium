@@ -43,7 +43,7 @@ namespace WebCore {
 using namespace HTMLNames;
 
 RenderTableSection::RenderTableSection(Node* node)
-    : RenderContainer(node)
+    : RenderBox(node)
     , m_gridRows(0)
     , m_cCol(0)
     , m_cRow(-1)
@@ -71,7 +71,7 @@ void RenderTableSection::destroy()
 {
     RenderTable* recalcTable = table();
     
-    RenderContainer::destroy();
+    RenderBox::destroy();
     
     // recalc cell info because RenderTable has unguarded pointers
     // stored that point to this RenderTableSection.
@@ -89,7 +89,7 @@ void RenderTableSection::addChild(RenderObject* child, RenderObject* beforeChild
 
     if (!child->isTableRow()) {
         if (isTableSection && child->element() && child->element()->hasTagName(formTag) && document()->isHTMLDocument()) {
-            RenderContainer::addChild(child, beforeChild);
+            RenderBox::addChild(child, beforeChild);
             return;
         }
 
@@ -144,13 +144,13 @@ void RenderTableSection::addChild(RenderObject* child, RenderObject* beforeChild
         beforeChild = beforeChild->parent();
 
     ASSERT(!beforeChild || beforeChild->isTableRow() || isTableSection && beforeChild->element() && beforeChild->element()->hasTagName(formTag) && document()->isHTMLDocument());
-    RenderContainer::addChild(child, beforeChild);
+    RenderBox::addChild(child, beforeChild);
 }
 
 void RenderTableSection::removeChild(RenderObject* oldChild)
 {
     setNeedsCellRecalc();
-    RenderContainer::removeChild(oldChild);
+    RenderBox::removeChild(oldChild);
 }
 
 bool RenderTableSection::ensureRows(int numRows)
@@ -303,6 +303,12 @@ void RenderTableSection::setCellWidths()
 
 int RenderTableSection::calcRowHeight()
 {
+#ifndef NDEBUG
+    setNeedsLayoutIsForbidden(true);
+#endif
+
+    ASSERT(!needsLayout());
+
     RenderTableCell* cell;
 
     int spacing = table()->vBorderSpacing();
@@ -382,6 +388,12 @@ int RenderTableSection::calcRowHeight()
         m_rowPos[r + 1] = max(m_rowPos[r + 1], m_rowPos[r]);
     }
 
+#ifndef NDEBUG
+    setNeedsLayoutIsForbidden(false);
+#endif
+
+    ASSERT(!needsLayout());
+
     statePusher.pop();
 
     return m_rowPos[m_gridRows];
@@ -404,6 +416,12 @@ void RenderTableSection::layout()
 
 int RenderTableSection::layoutRows(int toAdd)
 {
+#ifndef NDEBUG
+    setNeedsLayoutIsForbidden(true);
+#endif
+
+    ASSERT(!needsLayout());
+
     int rHeight;
     int rindx;
     int totalRows = m_gridRows;
@@ -608,6 +626,10 @@ int RenderTableSection::layoutRows(int toAdd)
         }
     }
 
+#ifndef NDEBUG
+    setNeedsLayoutIsForbidden(false);
+#endif
+
     ASSERT(!needsLayout());
 
     statePusher.pop();
@@ -619,7 +641,7 @@ int RenderTableSection::layoutRows(int toAdd)
 
 int RenderTableSection::lowestPosition(bool includeOverflowInterior, bool includeSelf) const
 {
-    int bottom = RenderContainer::lowestPosition(includeOverflowInterior, includeSelf);
+    int bottom = RenderBox::lowestPosition(includeOverflowInterior, includeSelf);
     if (!includeOverflowInterior && hasOverflowClip())
         return bottom;
 
@@ -635,7 +657,7 @@ int RenderTableSection::lowestPosition(bool includeOverflowInterior, bool includ
 
 int RenderTableSection::rightmostPosition(bool includeOverflowInterior, bool includeSelf) const
 {
-    int right = RenderContainer::rightmostPosition(includeOverflowInterior, includeSelf);
+    int right = RenderBox::rightmostPosition(includeOverflowInterior, includeSelf);
     if (!includeOverflowInterior && hasOverflowClip())
         return right;
 
@@ -651,7 +673,7 @@ int RenderTableSection::rightmostPosition(bool includeOverflowInterior, bool inc
 
 int RenderTableSection::leftmostPosition(bool includeOverflowInterior, bool includeSelf) const
 {
-    int left = RenderContainer::leftmostPosition(includeOverflowInterior, includeSelf);
+    int left = RenderBox::leftmostPosition(includeOverflowInterior, includeSelf);
     if (!includeOverflowInterior && hasOverflowClip())
         return left;
     

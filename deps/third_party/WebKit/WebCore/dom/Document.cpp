@@ -1119,14 +1119,6 @@ Node::NodeType Document::nodeType() const
     return DOCUMENT_NODE;
 }
 
-bool Document::isFrameSet() const
-{
-    if (!isHTMLDocument())
-        return false;
-    HTMLElement *bodyElement = body();
-    return bodyElement && bodyElement->renderer() && bodyElement->hasTagName(framesetTag);
-}
-
 FrameView* Document::view() const
 {
     return m_frame ? m_frame->view() : 0;
@@ -1453,6 +1445,7 @@ void Document::removeAllEventListenersFromAllNodes()
         m_windowEventListeners[i]->setRemoved(true);
     m_windowEventListeners.clear();
     removeAllDisconnectedNodeEventListeners();
+    removeAllEventListeners();
     Element* documentElement = this->documentElement();
     for (Node* node = documentElement; node; node = node->traverseNextNode(documentElement))
         toEventTargetNode(node)->removeAllEventListeners();

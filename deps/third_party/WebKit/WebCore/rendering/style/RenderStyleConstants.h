@@ -36,6 +36,30 @@ namespace WebCore {
  * and produce invalid results.
  */
 
+// The difference between two styles.  The following values are used:
+// (1) StyleDifferenceEqual - The two styles are identical
+// (2) StyleDifferenceRepaint - The object just needs to be repainted.
+// (3) StyleDifferenceRepaintLayer - The layer and its descendant layers needs to be repainted.
+// (4) StyleDifferenceLayout - A layout is required.
+enum StyleDifference {
+    StyleDifferenceEqual,
+    StyleDifferenceRepaint,
+    StyleDifferenceRepaintLayer,
+    StyleDifferenceLayoutPositionedMovementOnly,
+    StyleDifferenceLayout
+};
+
+// Static pseudo styles. Dynamic ones are produced on the fly.
+enum PseudoId {
+    NOPSEUDO, FIRST_LINE, FIRST_LETTER, BEFORE, AFTER, SELECTION, FIRST_LINE_INHERITED, SCROLLBAR, FILE_UPLOAD_BUTTON, INPUT_PLACEHOLDER,
+    SLIDER_THUMB, SEARCH_CANCEL_BUTTON, SEARCH_DECORATION, SEARCH_RESULTS_DECORATION, SEARCH_RESULTS_BUTTON, MEDIA_CONTROLS_PANEL,
+    MEDIA_CONTROLS_PLAY_BUTTON, MEDIA_CONTROLS_MUTE_BUTTON, MEDIA_CONTROLS_TIMELINE, MEDIA_CONTROLS_TIMELINE_CONTAINER,
+    MEDIA_CONTROLS_CURRENT_TIME_DISPLAY, MEDIA_CONTROLS_TIME_REMAINING_DISPLAY, MEDIA_CONTROLS_SEEK_BACK_BUTTON, 
+    MEDIA_CONTROLS_SEEK_FORWARD_BUTTON, MEDIA_CONTROLS_FULLSCREEN_BUTTON, 
+    SCROLLBAR_THUMB, SCROLLBAR_BUTTON, SCROLLBAR_TRACK, SCROLLBAR_TRACK_PIECE, SCROLLBAR_CORNER, RESIZER,
+
+    FIRST_INTERNAL_PSEUDOID = FILE_UPLOAD_BUTTON
+};
 
 // These have been defined in the order of their precedence for border-collapsing. Do
 // not change this order!
@@ -170,11 +194,6 @@ enum ContentType {
 enum EBorderFit { BorderFitBorder, BorderFitLines };
 
 enum ETimingFunctionType { LinearTimingFunction, CubicBezierTimingFunction };
-
-enum EAnimPlayState {
-    AnimPlayStatePlaying = 0x0,
-    AnimPlayStatePaused = 0x1
-};
 
 enum EWhiteSpace {
     NORMAL, PRE, PRE_WRAP, PRE_LINE, NOWRAP, KHTML_NOWRAP

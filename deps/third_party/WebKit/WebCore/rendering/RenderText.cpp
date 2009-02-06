@@ -97,13 +97,13 @@ bool RenderText::isWordBreak() const
     return false;
 }
 
-void RenderText::styleDidChange(RenderStyle::Diff diff, const RenderStyle* oldStyle)
+void RenderText::styleDidChange(StyleDifference diff, const RenderStyle* oldStyle)
 {
     // There is no need to ever schedule repaints from a style change of a text run, since
     // we already did this for the parent of the text run.
     // We do have to schedule layouts, though, since a style change can force us to
     // need to relayout.
-    if (diff == RenderStyle::Layout)
+    if (diff == StyleDifferenceLayout)
         setNeedsLayoutAndPrefWidthsRecalc();
 
     ETextTransform oldTransform = oldStyle ? oldStyle->textTransform() : TTNONE;
@@ -209,7 +209,7 @@ void RenderText::absoluteRects(Vector<IntRect>& rects, int tx, int ty, bool)
         rects.append(IntRect(tx + box->xPos(), ty + box->yPos(), box->width(), box->height()));
 }
 
-void RenderText::addLineBoxRects(Vector<IntRect>& rects, unsigned start, unsigned end, bool useSelectionHeight)
+void RenderText::absoluteRectsForRange(Vector<IntRect>& rects, unsigned start, unsigned end, bool useSelectionHeight)
 {
     // Work around signed/unsigned issues. This function takes unsigneds, and is often passed UINT_MAX
     // to mean "all the way to the end". InlineTextBox coordinates are unsigneds, so changing this 
@@ -254,7 +254,7 @@ void RenderText::absoluteQuads(Vector<FloatQuad>& quads, bool)
         quads.append(localToAbsoluteQuad(FloatRect(box->xPos(), box->yPos(), box->width(), box->height())));
 }
 
-void RenderText::collectAbsoluteLineBoxQuads(Vector<FloatQuad>& quads, unsigned start, unsigned end, bool useSelectionHeight)
+void RenderText::absoluteQuadsForRange(Vector<FloatQuad>& quads, unsigned start, unsigned end, bool useSelectionHeight)
 {
     // Work around signed/unsigned issues. This function takes unsigneds, and is often passed UINT_MAX
     // to mean "all the way to the end". InlineTextBox coordinates are unsigneds, so changing this 
@@ -1073,16 +1073,15 @@ IntRect RenderText::clippedOverflowRectForRepaint(RenderBox* repaintContainer)
     return cb->clippedOverflowRectForRepaint(repaintContainer);
 }
 
-IntRect RenderText::selectionRect(bool clipToVisibleContent)
+IntRect RenderText::selectionRectForRepaint(RenderBox* repaintContainer, bool clipToVisibleContent)
 {
     ASSERT(!needsLayout());
 
-    IntRect rect;
     if (selectionState() == SelectionNone)
-        return rect;
+        return IntRect();
     RenderBlock* cb =  containingBlock();
     if (!cb)
-        return rect;
+        return IntRect();
 
     // Now calculate startPos and endPos for painting selection.
     // We include a selection while endPos > 0
@@ -1100,19 +1099,19 @@ IntRect RenderText::selectionRect(bool clipToVisibleContent)
     }
 
     if (startPos == endPos)
-        return rect;
+        return IntRect();
 
+    IntRect rect;
     for (InlineTextBox* box = firstTextBox(); box; box = box->nextTextBox())
         rect.unite(box->selectionRect(0, 0, startPos, endPos));
 
     if (clipToVisibleContent)
-        computeAbsoluteRepaintRect(rect);
+        computeRectForRepaint(repaintContainer, rect);
     else {
         if (cb->hasColumns())
             cb->adjustRectForColumns(rect);
-        // FIXME: This doesn't work correctly with transforms.
-        FloatPoint absPos = localToAbsolute();
-        rect.move(absPos.x(), absPos.y());
+
+        rect = localToContainerQuad(FloatRect(rect), repaintContainer).enclosingBoundingBox();
     }
 
     return rect;

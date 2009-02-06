@@ -61,7 +61,7 @@ public:
     void updateCompositingLayers(RenderLayer* updateRoot = 0);
 
     // Update the compositing state of the given layer. Returns true if that state changed
-    bool updateLayerCompositingState(RenderLayer*, RenderStyle::Diff);
+    bool updateLayerCompositingState(RenderLayer*, StyleDifference);
 
     // Return the bounding box required for compositing layer and its childern, relative to ancestorLayer.
     // If layerBoundingBox is not 0, on return it contains the bounding box of this layer only.
@@ -71,8 +71,8 @@ public:
     void layerWasAdded(RenderLayer* parent, RenderLayer* child);
     void layerWillBeRemoved(RenderLayer* parent, RenderLayer* child);
 
-    // Gets the nearest enclosing render layer that is composited (optionally including self)
-    RenderLayer* enclosingCompositingLayer(RenderLayer* layer, bool includeSelf = true) const;
+    // Ancestor layer of the given layer that is composited, excluding the layer itself.
+    RenderLayer* ancestorCompositingLayer(const RenderLayer*) const;
 
     // Get the nearest ancestor layer that has overflow or clip, but is not a stacking context
     RenderLayer* enclosingNonStackingClippingLayer(const RenderLayer* layer) const;
@@ -83,8 +83,9 @@ public:
     RenderLayer* rootRenderLayer() const;
     GraphicsLayer* rootPlatformLayer() const;
 
-    void willBeDetached();
-    void wasAttached();
+    void didMoveOnscreen();
+    void willMoveOffscreen();
+
     void updateRootLayerPosition();
 
 private:

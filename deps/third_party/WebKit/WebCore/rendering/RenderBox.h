@@ -23,19 +23,17 @@
 #ifndef RenderBox_h
 #define RenderBox_h
 
-#include "RenderObject.h"
+#include "RenderBoxModelObject.h"
 #include "ScrollTypes.h"
 
 namespace WebCore {
 
 enum WidthType { Width, MinWidth, MaxWidth };
 
-class RenderBox : public RenderObject {
+class RenderBox : public RenderBoxModelObject {
 public:
     RenderBox(Node*);
     virtual ~RenderBox();
-
-    virtual const char* renderName() const { return "RenderBox"; }
 
     // Use this with caution! No type checking is done!
     RenderBox* firstChildBox() const;
@@ -306,13 +304,15 @@ public:
 
     virtual VisiblePosition positionForCoordinates(int x, int y);
 
+    void removeFloatingOrPositionedChildFromBlockLists();
+
 #if ENABLE(SVG)
     virtual TransformationMatrix localTransform() const;
 #endif
 
 protected:
-    virtual void styleWillChange(RenderStyle::Diff, const RenderStyle* newStyle);
-    virtual void styleDidChange(RenderStyle::Diff, const RenderStyle* oldStyle);
+    virtual void styleWillChange(StyleDifference, const RenderStyle* newStyle);
+    virtual void styleDidChange(StyleDifference, const RenderStyle* oldStyle);
 
     void paintFillLayer(const PaintInfo&, const Color&, const FillLayer*, int clipY, int clipHeight, int tx, int ty, int width, int height, CompositeOperator = CompositeSourceOver);
     void paintFillLayers(const PaintInfo&, const Color&, const FillLayer*, int clipY, int clipHeight, int tx, int ty, int width, int height, CompositeOperator = CompositeSourceOver);
