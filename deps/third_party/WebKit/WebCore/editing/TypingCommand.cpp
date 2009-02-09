@@ -373,12 +373,12 @@ void TypingCommand::deleteKeyPressed(TextGranularity granularity, bool killRing)
     Selection selectionToDelete;
     Selection selectionAfterUndo;
     
-    switch (endingSelection().state()) {
-        case Selection::RANGE:
+    switch (endingSelection().selectionType()) {
+        case Selection::RangeSelection:
             selectionToDelete = endingSelection();
             selectionAfterUndo = selectionToDelete;
             break;
-        case Selection::CARET: {
+        case Selection::CaretSelection: {
             if (breakOutOfEmptyMailBlockquotedParagraph()) {
                 typingAddedToOpenCommand();
                 return;
@@ -431,14 +431,14 @@ void TypingCommand::deleteKeyPressed(TextGranularity granularity, bool killRing)
                 selectionAfterUndo.setWithoutValidation(startingSelection().end(), selectionToDelete.extent());
             break;
         }
-        case Selection::NONE:
+        case Selection::NoSelection:
             ASSERT_NOT_REACHED();
             break;
     }
     
     if (selectionToDelete.isCaretOrRange() && document()->frame()->shouldDeleteSelection(selectionToDelete)) {
         if (killRing)
-            document()->frame()->editor()->addToKillRing(selectionToDelete.toRange().get(), false);
+            document()->frame()->editor()->addToKillRing(selectionToDelete.toNormalizedRange().get(), false);
         // Make undo select everything that has been deleted, unless an undo will undo more than just this deletion.
         // FIXME: This behaves like TextEdit except for the case where you open with text insertion and then delete
         // more text than you insert.  In that case all of the text that was around originally should be selected.
@@ -455,12 +455,12 @@ void TypingCommand::forwardDeleteKeyPressed(TextGranularity granularity, bool ki
     Selection selectionToDelete;
     Selection selectionAfterUndo;
 
-    switch (endingSelection().state()) {
-        case Selection::RANGE:
+    switch (endingSelection().selectionType()) {
+        case Selection::RangeSelection:
             selectionToDelete = endingSelection();
             selectionAfterUndo = selectionToDelete;
             break;
-        case Selection::CARET: {
+        case Selection::CaretSelection: {
             m_smartDelete = false;
 
             // Handle delete at beginning-of-block case.
@@ -509,14 +509,14 @@ void TypingCommand::forwardDeleteKeyPressed(TextGranularity granularity, bool ki
             }
             break;
         }
-        case Selection::NONE:
+        case Selection::NoSelection:
             ASSERT_NOT_REACHED();
             break;
     }
     
     if (selectionToDelete.isCaretOrRange() && document()->frame()->shouldDeleteSelection(selectionToDelete)) {
         if (killRing)
-            document()->frame()->editor()->addToKillRing(selectionToDelete.toRange().get(), false);
+            document()->frame()->editor()->addToKillRing(selectionToDelete.toNormalizedRange().get(), false);
         // make undo select what was deleted
         setStartingSelection(selectionAfterUndo);
         CompositeEditCommand::deleteSelection(selectionToDelete, m_smartDelete);

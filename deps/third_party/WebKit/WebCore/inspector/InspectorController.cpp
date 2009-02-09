@@ -66,6 +66,7 @@
 #include "ResourceResponse.h"
 #include "ScriptCallStack.h"
 #include "ScriptController.h"
+#include "SecurityOrigin.h"
 #include "Settings.h"
 #include "SharedBuffer.h"
 #include "TextEncoding.h"
@@ -77,6 +78,14 @@
 #include "Database.h"
 #if USE(JSC)
 #include "JSDatabase.h"
+#endif
+
+#if ENABLE(DOM_STORAGE)
+#include "Storage.h"
+#include "StorageArea.h"
+#if USE(JSC)
+#include "JSStorage.h"
+#endif
 #endif
 #endif
 
@@ -386,6 +395,44 @@ private:
         , domain(domain)
         , name(name)
         , version(version)
+    {
+    }
+};
+#endif
+
+#if ENABLE(DOM_STORAGE)
+struct InspectorDOMStorageResource : public RefCounted<InspectorDOMStorageResource> {
+    static PassRefPtr<InspectorDOMStorageResource> create(Storage* domStorage, bool isLocalStorage, Frame* frame)
+    {
+        return adoptRef(new InspectorDOMStorageResource(domStorage, isLocalStorage, frame));
+    }
+
+    void setScriptObject(JSContextRef context, JSObjectRef newScriptObject)
+    {
+        if (scriptContext && scriptObject)
+            JSValueUnprotect(scriptContext, scriptObject);
+
+        scriptObject = newScriptObject;
+        scriptContext = context;
+
+        ASSERT((context && newScriptObject) || (!context && !newScriptObject));
+        if (context && newScriptObject)
+            JSValueProtect(context, newScriptObject);
+    }
+
+    RefPtr<Storage> domStorage;
+    bool isLocalStorage;
+    RefPtr<Frame> frame;
+    JSContextRef scriptContext;
+    JSObjectRef scriptObject;
+    
+private:
+    InspectorDOMStorageResource(Storage* domStorage, bool isLocalStorage, Frame* frame)
+        : domStorage(domStorage)
+        , isLocalStorage(isLocalStorage)
+        , frame(frame)
+        , scriptContext(0)
+        , scriptObject(0)
     {
     }
 };
@@ -1406,6 +1453,9 @@ void InspectorController::didCommitLoad(DocumentLoader* loader)
 #if ENABLE(DATABASE)
         m_databaseResources.clear();
 #endif
+#if ENABLE(DOM_STORAGE)
+        m_domStorageResources.clear();
+#endif
 
         if (windowVisible()) {
             resetScriptObjects();
@@ -1651,6 +1701,27 @@ void InspectorController::didOpenDatabase(Database* database, const String& doma
 
     if (windowVisible())
         addDatabaseScriptResource(resource.get());
+}
+#endif
+
+#if ENABLE(DOM_STORAGE)
+void InspectorController::didUseDOMStorage(StorageArea* storageArea, bool isLocalStorage, Frame* frame)
+{
+    if (!enabled())
+        return;
+
+    DOMStorageResourcesSet::iterator domStorageEnd = m_domStorageResources.end();
+    for (DOMStorageResourcesSet::iterator it = m_domStorageResources.begin(); it != domStorageEnd; ++it) {
+        InspectorDOMStorageResource* resource = it->get();
+        if (equalIgnoringCase(resource->frame->document()->securityOrigin()->domain(), frame->document()->securityOrigin()->domain()) && resource->isLocalStorage == isLocalStorage)
+            return;
+    }
+    RefPtr<Storage> domStorage = Storage::create(frame, storageArea);
+    RefPtr<InspectorDOMStorageResource> resource = InspectorDOMStorageResource::create(domStorage.get(), isLocalStorage, frame);
+
+    m_domStorageResources.add(resource);
+    if (windowVisible())
+        addDOMStorageScriptResource(resource.get());
 }
 #endif
 

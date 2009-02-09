@@ -43,7 +43,7 @@ namespace WebCore {
 Selection::Selection()
     : m_affinity(DOWNSTREAM)
     , m_granularity(CharacterGranularity)
-    , m_state(NONE)
+    , m_selectionType(NoSelection)
     , m_baseIsFirst(true)
 {
 }
@@ -122,7 +122,16 @@ void Selection::setExtent(const VisiblePosition& visiblePosition)
     validate();
 }
 
-PassRefPtr<Range> Selection::toRange() const
+PassRefPtr<Range> Selection::firstRange() const
+{
+    if (isNone())
+        return 0;
+    Position start = rangeCompliantEquivalent(m_start);
+    Position end = rangeCompliantEquivalent(m_end);
+    return Range::create(start.node()->document(), start, end);
+}
+
+PassRefPtr<Range> Selection::toNormalizedRange() const
 {
     if (isNone())
         return 0;
@@ -170,19 +179,9 @@ PassRefPtr<Range> Selection::toRange() const
         e = rangeCompliantEquivalent(e);
     }
 
-    ExceptionCode ec = 0;
-    RefPtr<Range> result(Range::create(s.node()->document()));
-    result->setStart(s.node(), s.offset(), ec);
-    if (ec) {
-        LOG_ERROR("Exception setting Range start from Selection: %d", ec);
-        return 0;
-    }
-    result->setEnd(e.node(), e.offset(), ec);
-    if (ec) {
-        LOG_ERROR("Exception setting Range end from Selection: %d", ec);
-        return 0;
-    }
-    return result.release();
+    // Selections are supposed to always be valid.  This constructor will ASSERT
+    // if a valid range could not be created, which is fine for this callsite.
+    return Range::create(s.node()->document(), s, e);
 }
 
 bool Selection::expandUsingGranularity(TextGranularity granularity)
@@ -238,7 +237,7 @@ void Selection::appendTrailingWhitespace()
     }
 }
 
-void Selection::validate()
+void Selection::setBaseAndExtentToDeepEquivalents()
 {
     // Move the selection to rendered positions, if possible.
     bool baseAndExtentEqual = m_base == m_extent;
@@ -259,10 +258,12 @@ void Selection::validate()
     } else if (m_extent.isNull()) {
         m_extent = m_base;
         m_baseIsFirst = true;
-    } else {
+    } else
         m_baseIsFirst = comparePositions(m_base, m_extent) <= 0;
-    }
+}
 
+void Selection::setStartAndEndFromBaseAndExtentRespectingGranularity()
+{
     if (m_baseIsFirst) {
         m_start = m_base;
         m_end = m_extent;
@@ -271,7 +272,6 @@ void Selection::validate()
         m_end = m_base;
     }
 
-    // Expand the selection if requested.
     switch (m_granularity) {
         case CharacterGranularity:
             // Don't do any expansion.
@@ -385,26 +385,31 @@ void Selection::validate()
         m_start = m_end;
     if (m_end.isNull())
         m_end = m_start;
-    
-    adjustForEditableContent();
+}
 
-    // adjust the state
+void Selection::updateSelectionType()
+{
     if (m_start.isNull()) {
         ASSERT(m_end.isNull());
-        m_state = NONE;
-
-        // enforce downstream affinity if not caret, as affinity only
-        // makes sense for caret
-        m_affinity = DOWNSTREAM;
+        m_selectionType = NoSelection;
     } else if (m_start == m_end || m_start.upstream() == m_end.upstream()) {
-        m_state = CARET;
-    } else {
-        m_state = RANGE;
+        m_selectionType = CaretSelection;
+    } else
+        m_selectionType = RangeSelection;
 
-        // enforce downstream affinity if not caret, as affinity only
-        // makes sense for caret
+    // Affinity only makes sense for a caret
+    if (m_selectionType != CaretSelection)
         m_affinity = DOWNSTREAM;
+}
 
+void Selection::validate()
+{
+    setBaseAndExtentToDeepEquivalents();
+    setStartAndEndFromBaseAndExtentRespectingGranularity();
+    adjustSelectionToAvoidCrossingEditingBoundaries();
+    updateSelectionType();
+
+    if (selectionType() == RangeSelection) {
         // "Constrain" the selection to be the smallest equivalent range of nodes.
         // This is a somewhat arbitrary choice, but experience shows that it is
         // useful to make to make the selection "canonical" (if only for
@@ -441,10 +446,10 @@ void Selection::setWithoutValidation(const Position& base, const Position& exten
         m_start = extent;
         m_end = base;
     }
-    m_state = RANGE;
+    m_selectionType = RangeSelection;
 }
 
-void Selection::adjustForEditableContent()
+void Selection::adjustSelectionToAvoidCrossingEditingBoundaries()
 {
     if (m_base.isNull() || m_start.isNull() || m_end.isNull())
         return;
@@ -505,8 +510,10 @@ void Selection::adjustForEditableContent()
                     p = Position(shadowAncestor, maxDeepOffset(shadowAncestor));
             }
             VisiblePosition previous(p);
-            
+
             if (previous.isNull()) {
+                // The selection crosses an Editing boundary.  This is a
+                // programmer error in the editing code.  Happy debugging!
                 ASSERT_NOT_REACHED();
                 m_base = Position();
                 m_extent = Position();
@@ -534,6 +541,8 @@ void Selection::adjustForEditableContent()
             VisiblePosition next(p);
             
             if (next.isNull()) {
+                // The selection crosses an Editing boundary.  This is a
+                // programmer error in the editing code.  Happy debugging!
                 ASSERT_NOT_REACHED();
                 m_base = Position();
                 m_extent = Position();

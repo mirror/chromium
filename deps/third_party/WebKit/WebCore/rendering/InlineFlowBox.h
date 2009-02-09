@@ -36,6 +36,9 @@ public:
         , m_firstChild(0)
         , m_lastChild(0)
         , m_maxHorizontalVisualOverflow(0)
+        , m_includeLeftEdge(false)
+        , m_includeRightEdge(false)
+        , m_hasTextChildren(true)
 #ifndef NDEBUG
         , m_hasBadChildList(false)
 #endif
@@ -101,10 +104,10 @@ public:
     int marginBorderPaddingRight();
     int marginLeft();
     int marginRight();
-    int borderLeft() { if (includeLeftEdge()) return renderBox()->borderLeft(); return 0; }
-    int borderRight() { if (includeRightEdge()) return renderBox()->borderRight(); return 0; }
-    int paddingLeft() { if (includeLeftEdge()) return renderBox()->paddingLeft(); return 0; }
-    int paddingRight() { if (includeRightEdge()) return renderBox()->paddingRight(); return 0; }
+    int borderLeft() { if (includeLeftEdge()) return object()->style()->borderLeftWidth(); return 0; }
+    int borderRight() { if (includeRightEdge()) return object()->style()->borderRightWidth(); return 0; }
+    int paddingLeft() { if (includeLeftEdge()) return boxModelObject()->paddingLeft(); return 0; }
+    int paddingRight() { if (includeRightEdge()) return boxModelObject()->paddingRight(); return 0; }
 
     bool includeLeftEdge() { return m_includeLeftEdge; }
     bool includeRightEdge() { return m_includeRightEdge; }
@@ -130,7 +133,7 @@ public:
     
     virtual void setVerticalOverflowPositions(int /*top*/, int /*bottom*/) { }
     virtual void setVerticalSelectionPositions(int /*top*/, int /*bottom*/) { }
-    int maxHorizontalVisualOverflow() const { return m_maxHorizontalVisualOverflow; }
+    short maxHorizontalVisualOverflow() const { return m_maxHorizontalVisualOverflow; }
 
     void removeChild(InlineBox* child);
 
@@ -139,13 +142,19 @@ public:
     virtual bool canAccommodateEllipsis(bool ltr, int blockEdge, int ellipsisWidth);
     virtual int placeEllipsisBox(bool ltr, int blockEdge, int ellipsisWidth, bool&);
 
+    bool hasTextChildren() const { return m_hasTextChildren; }
+
     void checkConsistency() const;
     void setHasBadChildList();
 
 private:
     InlineBox* m_firstChild;
     InlineBox* m_lastChild;
-    int m_maxHorizontalVisualOverflow;
+    short m_maxHorizontalVisualOverflow;
+    
+    bool m_includeLeftEdge : 1;
+    bool m_includeRightEdge : 1;
+    bool m_hasTextChildren : 1;
 
 #ifndef NDEBUG
     bool m_hasBadChildList;

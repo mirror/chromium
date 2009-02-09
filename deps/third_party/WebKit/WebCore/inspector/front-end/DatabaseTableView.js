@@ -30,7 +30,7 @@ WebInspector.DatabaseTableView = function(database, tableName)
     this.database = database;
     this.tableName = tableName;
 
-    this.element.addStyleClass("database-view");
+    this.element.addStyleClass("storage-view");
     this.element.addStyleClass("table");
 }
 
@@ -58,7 +58,7 @@ WebInspector.DatabaseTableView.prototype = {
         var dataGrid = WebInspector.panels.databases.dataGridForResult(result);
         if (!dataGrid) {
             var emptyMsgElement = document.createElement("div");
-            emptyMsgElement.className = "database-table-empty";
+            emptyMsgElement.className = "storage-table-empty";
             emptyMsgElement.textContent = WebInspector.UIString("The “%s”\ntable is empty.", this.tableName);
             this.element.appendChild(emptyMsgElement);
             return;
@@ -72,7 +72,7 @@ WebInspector.DatabaseTableView.prototype = {
         this.element.removeChildren();
 
         var errorMsgElement = document.createElement("div");
-        errorMsgElement.className = "database-table-error";
+        errorMsgElement.className = "storage-table-error";
         errorMsgElement.textContent = WebInspector.UIString("An error occurred trying to\nread the “%s” table.", this.tableName);
         this.element.appendChild(errorMsgElement);
     },

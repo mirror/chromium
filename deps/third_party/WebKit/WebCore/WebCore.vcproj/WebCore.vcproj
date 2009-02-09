@@ -12186,6 +12186,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\dom\WorkerContextProxy.h"
+				>
+			</File>
+			<File
 				RelativePath="..\dom\WorkerLocation.cpp"
 				>
 			</File>
@@ -12199,6 +12203,10 @@
 			</File>
 			<File
 				RelativePath="..\dom\WorkerMessagingProxy.h"
+				>
+			</File>
+			<File
+				RelativePath="..\dom\WorkerObjectProxy.h"
 				>
 			</File>
 			<File
@@ -16560,7 +16568,15 @@
 					RelativePath="..\inspector\front-end\DataGrid.js"
 					>
 				</File>
-				<File
+                <File
+                    RelativePath="..\inspector\front-end\DOMStorage.js"
+                    >
+                </File>
+                <File
+                    RelativePath="..\inspector\front-end\DOMStorageItemsView.js"
+                    >
+                </File>
+                <File
 					RelativePath="..\inspector\front-end\ElementsPanel.js"
 					>
 				</File>

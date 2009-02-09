@@ -37,8 +37,7 @@ const EAffinity SEL_DEFAULT_AFFINITY = DOWNSTREAM;
 
 class Selection {
 public:
-    enum EState { NONE, CARET, RANGE };
-    enum EDirection { FORWARD, BACKWARD, RIGHT, LEFT };
+    enum SelectionType { NoSelection, CaretSelection, RangeSelection };
 
     Selection();
 
@@ -52,7 +51,7 @@ public:
 
     static Selection selectionFromContentsOfNode(Node*);
 
-    EState state() const { return m_state; }
+    SelectionType selectionType() const { return m_selectionType; }
 
     void setAffinity(EAffinity affinity) { m_affinity = affinity; }
     EAffinity affinity() const { return m_affinity; }
@@ -63,17 +62,17 @@ public:
     void setExtent(const VisiblePosition&);
     
     Position base() const { return m_base; }
-    Position extent() const { return m_extent; }    
+    Position extent() const { return m_extent; }
     Position start() const { return m_start; }
     Position end() const { return m_end; }
     
     VisiblePosition visibleStart() const { return VisiblePosition(m_start, isRange() ? DOWNSTREAM : affinity()); }
     VisiblePosition visibleEnd() const { return VisiblePosition(m_end, isRange() ? UPSTREAM : affinity()); }
 
-    bool isNone() const { return state() == NONE; }
-    bool isCaret() const { return state() == CARET; }
-    bool isRange() const { return state() == RANGE; }
-    bool isCaretOrRange() const { return state() != NONE; }
+    bool isNone() const { return selectionType() == NoSelection; }
+    bool isCaret() const { return selectionType() == CaretSelection; }
+    bool isRange() const { return selectionType() == RangeSelection; }
+    bool isCaretOrRange() const { return selectionType() != NoSelection; }
 
     bool isBaseFirst() const { return m_baseIsFirst; }
 
@@ -82,7 +81,13 @@ public:
     bool expandUsingGranularity(TextGranularity granularity);
     TextGranularity granularity() const { return m_granularity; }
 
-    PassRefPtr<Range> toRange() const;
+    // We don't yet support multi-range selections, so we only ever have one range to return.
+    PassRefPtr<Range> firstRange() const;
+
+    // FIXME: Most callers probably don't want this function, but are using it
+    // for historical reasons.  toNormalizedRange contracts the range around
+    // text, and moves the caret upstream before returning the range.
+    PassRefPtr<Range> toNormalizedRange() const;
     
     Element* rootEditableElement() const;
     bool isContentEditable() const;
@@ -100,18 +105,23 @@ public:
 
 private:
     void validate();
-    void adjustForEditableContent();
 
-    Position m_base;                  // base position for the selection
-    Position m_extent;                // extent position for the selection
-    Position m_start;                 // start position for the selection
-    Position m_end;                   // end position for the selection
+    // Support methods for validate()
+    void setBaseAndExtentToDeepEquivalents();
+    void setStartAndEndFromBaseAndExtentRespectingGranularity();
+    void adjustSelectionToAvoidCrossingEditingBoundaries();
+    void updateSelectionType();
 
-    EAffinity m_affinity;             // the upstream/downstream affinity of the caret
-    TextGranularity m_granularity;   // granularity of start/end selection
+    Position m_base;   // Where the first click happened
+    Position m_extent; // Where the end click happened
+    Position m_start;  // Leftmost position when expanded to respect granularity
+    Position m_end;    // Rightmost position when expanded to respect granularity
+
+    EAffinity m_affinity;           // the upstream/downstream affinity of the caret
+    TextGranularity m_granularity;  // granularity of start/end selection
 
     // these are cached, can be recalculated by validate()
-    EState m_state;                   // the state of the selection
+    SelectionType m_selectionType;    // None, Caret, Range
     bool m_baseIsFirst;               // true if base is before the extent
 };
 

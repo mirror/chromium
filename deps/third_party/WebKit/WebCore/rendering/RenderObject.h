@@ -313,7 +313,7 @@ public:
     {
         return m_isAnonymous && style()->display() == BLOCK && style()->styleType() == NOPSEUDO && !isListMarker();
     }
-    bool isInlineContinuation() const { return isInline() && isBox() && (element() ? element()->renderer() != this : false); }
+    bool isInlineContinuation() const { return (element() ? element()->renderer() != this : false) && isRenderInline(); }
     bool isFloating() const { return m_floating; }
     bool isPositioned() const { return m_positioned; } // absolute or fixed positioning
     bool isRelPositioned() const { return m_relPositioned; } // relative positioning
@@ -357,6 +357,9 @@ public:
 
     RenderView* view() const;
 
+    // Returns true if this renderer is rooted, and optionally returns the hosting view (the root of the hierarchy).
+    bool isRooted(RenderView** = 0);
+
     // don't even think about making this method virtual!
     Node* element() const { return m_isAnonymous ? 0 : m_node; }
     Document* document() const { return m_node->document(); }
@@ -372,6 +375,9 @@ public:
      */
     RenderObject* container() const;
     virtual RenderObject* hoverAncestor() const { return parent(); }
+
+    // IE Extension that can be called on any RenderObject.  See the implementation for the details.
+    RenderBoxModelObject* offsetParent() const;
 
     void markContainingBlocksForLayout(bool scheduleRelayout = true, RenderObject* newRoot = 0);
     void setNeedsLayout(bool b, bool markParents = true);

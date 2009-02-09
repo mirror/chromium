@@ -283,7 +283,7 @@ Settings* Frame::settings() const
 
 String Frame::selectedText() const
 {
-    return plainText(selection()->toRange().get());
+    return plainText(selection()->toNormalizedRange().get());
 }
 
 IntRect Frame::firstRectForRange(Range* range) const
@@ -842,13 +842,13 @@ bool Frame::shouldChangeSelection(const Selection& newSelection) const
 
 bool Frame::shouldChangeSelection(const Selection& oldSelection, const Selection& newSelection, EAffinity affinity, bool stillSelecting) const
 {
-    return editor()->client()->shouldChangeSelectedRange(oldSelection.toRange().get(), newSelection.toRange().get(),
+    return editor()->client()->shouldChangeSelectedRange(oldSelection.toNormalizedRange().get(), newSelection.toNormalizedRange().get(),
                                                          affinity, stillSelecting);
 }
 
 bool Frame::shouldDeleteSelection(const Selection& selection) const
 {
-    return editor()->client()->shouldDeleteRange(selection.toRange().get());
+    return editor()->client()->shouldDeleteRange(selection.toNormalizedRange().get());
 }
 
 bool Frame::isContentEditable() const 
@@ -960,7 +960,7 @@ PassRefPtr<CSSComputedStyleDeclaration> Frame::selectionComputedStyle(Node*& nod
     if (selection()->isNone())
         return 0;
 
-    RefPtr<Range> range(selection()->toRange());
+    RefPtr<Range> range(selection()->toNormalizedRange());
     Position pos = range->editingStartPosition();
 
     Element *elem = pos.element();
@@ -1207,7 +1207,7 @@ void Frame::selectionTextRects(Vector<FloatRect>& rects, bool clipToVisibleConte
     if (!root)
         return;
 
-    RefPtr<Range> selectedRange = selection()->toRange();
+    RefPtr<Range> selectedRange = selection()->toNormalizedRange();
 
     Vector<IntRect> intRects;
     selectedRange->addLineBoxRects(intRects, true);
@@ -1261,32 +1261,28 @@ HTMLFormElement *Frame::currentForm() const
     return start ? scanForForm(start) : 0;
 }
 
-// FIXME: should this go in SelectionController?
 void Frame::revealSelection(const RenderLayer::ScrollAlignment& alignment) const
 {
     IntRect rect;
-    
-    switch (selection()->state()) {
-        case Selection::NONE:
+
+    switch (selection()->selectionType()) {
+        case Selection::NoSelection:
             return;
-            
-        case Selection::CARET:
+        case Selection::CaretSelection:
             rect = selection()->absoluteCaretBounds();
             break;
-            
-        case Selection::RANGE:
+        case Selection::RangeSelection:
             rect = enclosingIntRect(selectionBounds(false));
             break;
     }
 
     Position start = selection()->start();
-
     ASSERT(start.node());
     if (start.node() && start.node()->renderer()) {
         // FIXME: This code only handles scrolling the startContainer's layer, but
         // the selection rect could intersect more than just that. 
         // See <rdar://problem/4799899>.
-        if (RenderLayer *layer = start.node()->renderer()->enclosingLayer())
+        if (RenderLayer* layer = start.node()->renderer()->enclosingLayer())
             layer->scrollRectToVisible(rect, false, alignment, alignment);
     }
 }
@@ -1431,7 +1427,7 @@ bool Frame::findString(const String& target, bool forward, bool caseFlag, bool w
     // If we started in the selection and the found range exactly matches the existing selection, find again.
     // Build a selection with the found range to remove collapsed whitespace.
     // Compare ranges instead of selection objects to ignore the way that the current selection was made.
-    if (startInSelection && *Selection(resultRange.get()).toRange() == *selection.toRange()) {
+    if (startInSelection && *Selection(resultRange.get()).toNormalizedRange() == *selection.toNormalizedRange()) {
         searchRange = rangeOfContents(document());
         if (forward)
             setStart(searchRange.get(), selection.visibleEnd());
@@ -1745,9 +1741,9 @@ void Frame::respondToChangedSelection(const Selection& oldSelection, bool closeT
 
             // This only erases markers that are in the first unit (word or sentence) of the selection.
             // Perhaps peculiar, but it matches AppKit.
-            if (RefPtr<Range> wordRange = newAdjacentWords.toRange())
+            if (RefPtr<Range> wordRange = newAdjacentWords.toNormalizedRange())
                 document()->removeMarkers(wordRange.get(), DocumentMarker::Spelling);
-            if (RefPtr<Range> sentenceRange = newSelectedSentence.toRange())
+            if (RefPtr<Range> sentenceRange = newSelectedSentence.toNormalizedRange())
                 document()->removeMarkers(sentenceRange.get(), DocumentMarker::Grammar);
         }
 

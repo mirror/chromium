@@ -625,6 +625,7 @@ void EventHandler::autoscrollTimerFired(Timer<EventHandler>*)
     }
 }
 
+#if ENABLE(PAN_SCROLLING)
 void EventHandler::setPanScrollCursor()
 {
     // At the original click location we draw a 4 arrowed icon. Over this icon there won't be any scroll
@@ -656,6 +657,7 @@ void EventHandler::setPanScrollCursor()
     else
         m_frame->view()->setCursor(middlePanningCursor());
 }
+#endif  // ENABLE(PAN_SCROLLING)
 
 RenderObject* EventHandler::autoscrollRenderer() const
 {
@@ -1572,7 +1574,7 @@ bool EventHandler::dispatchMouseEvent(const AtomicString& eventType, Node* targe
                 ExceptionCode ec = 0;
                 Node* n = node->isShadowNode() ? node->shadowParentNode() : node;
                 if (m_frame->selection()->isRange() && 
-                    m_frame->selection()->toRange()->compareNode(n, ec) == Range::NODE_INSIDE &&
+                    m_frame->selection()->toNormalizedRange()->compareNode(n, ec) == Range::NODE_INSIDE &&
                     n->isDescendantOf(m_frame->document()->focusedNode()))
                     return false;
                     

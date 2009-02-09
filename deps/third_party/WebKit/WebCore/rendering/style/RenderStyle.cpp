@@ -503,39 +503,6 @@ void RenderStyle::clearCursorList()
         inherited.access()->cursorData = 0;
 }
 
-bool RenderStyle::contentDataEquivalent(const RenderStyle* otherStyle) const
-{
-    ContentData* c1 = rareNonInheritedData->m_content.get();
-    ContentData* c2 = otherStyle->rareNonInheritedData->m_content.get();
-
-    while (c1 && c2) {
-        if (c1->m_type != c2->m_type)
-            return false;
-
-        switch (c1->m_type) {
-            case CONTENT_NONE:
-                break;
-            case CONTENT_TEXT:
-                if (!equal(c1->m_content.m_text, c2->m_content.m_text))
-                    return false;
-                break;
-            case CONTENT_OBJECT:
-                if (!StyleImage::imagesEquivalent(c1->m_content.m_image, c2->m_content.m_image))
-                    return false;
-                break;
-            case CONTENT_COUNTER:
-                if (*c1->m_content.m_counter != *c2->m_content.m_counter)
-                    return false;
-                break;
-        }
-
-        c1 = c1->m_next;
-        c2 = c2->m_next;
-    }
-
-    return !c1 && !c2;
-}
-
 void RenderStyle::clearContent()
 {
     if (rareNonInheritedData->m_content)
@@ -818,7 +785,7 @@ AnimationList* RenderStyle::accessTransitions()
     return rareNonInheritedData->m_transitions.get();
 }
 
-const Animation* RenderStyle::transitionForProperty(int property)
+const Animation* RenderStyle::transitionForProperty(int property) const
 {
     if (transitions()) {
         for (size_t i = 0; i < transitions()->size(); ++i) {

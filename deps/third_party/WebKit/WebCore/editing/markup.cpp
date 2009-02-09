@@ -701,6 +701,24 @@ static String joinMarkups(const Vector<String>& preMarkups, const Vector<String>
     return String::adopt(result);
 }
 
+bool isSpecialAncestorBlock(Node* node)
+{
+    if (!node || !isBlock(node))
+        return false;
+        
+    return node->hasTagName(listingTag) ||
+           node->hasTagName(olTag) ||
+           node->hasTagName(preTag) ||
+           node->hasTagName(tableTag) ||
+           node->hasTagName(ulTag) ||
+           node->hasTagName(xmpTag) ||
+           node->hasTagName(h1Tag) ||
+           node->hasTagName(h2Tag) ||
+           node->hasTagName(h3Tag) ||
+           node->hasTagName(h4Tag) ||
+           node->hasTagName(h5Tag);
+}
+
 // FIXME: Shouldn't we omit style info when annotate == DoNotAnnotateForInterchange? 
 // FIXME: At least, annotation and style info should probably not be included in range.markupString()
 String createMarkup(const Range* range, Vector<Node*>* nodes, EAnnotateForInterchange annotate, bool convertBlocksToInlines)
@@ -849,12 +867,7 @@ String createMarkup(const Range* range, Vector<Node*>* nodes, EAnnotateForInterc
                 table = table->parentNode();
             if (table)
                 specialCommonAncestor = table;
-        } else if (commonAncestorBlock->hasTagName(listingTag)
-                    || commonAncestorBlock->hasTagName(olTag)
-                    || commonAncestorBlock->hasTagName(preTag)
-                    || commonAncestorBlock->hasTagName(tableTag)
-                    || commonAncestorBlock->hasTagName(ulTag)
-                    || commonAncestorBlock->hasTagName(xmpTag))
+        } else if (isSpecialAncestorBlock(commonAncestorBlock))
             specialCommonAncestor = commonAncestorBlock;
     }
                                       
@@ -888,7 +901,7 @@ String createMarkup(const Range* range, Vector<Node*>* nodes, EAnnotateForInterc
     // FIXME: Only include markup for a fully selected root (and ancestors of lastClosed up to that root) if
     // there are styles/attributes on those nodes that need to be included to preserve the appearance of the copied markup.
     // FIXME: Do this for all fully selected blocks, not just the body.
-    Node* fullySelectedRoot = body && *Selection::selectionFromContentsOfNode(body).toRange() == *updatedRange ? body : 0;
+    Node* fullySelectedRoot = body && *Selection::selectionFromContentsOfNode(body).toNormalizedRange() == *updatedRange ? body : 0;
     if (annotate && fullySelectedRoot)
         specialCommonAncestor = fullySelectedRoot;
         

@@ -78,6 +78,7 @@
 #include "TransformationMatrix.h"
 #include "TranslateTransformOperation.h"
 #include <wtf/StdLibExtras.h>
+#include <wtf/UnusedParam.h>
 
 #if USE(ACCELERATED_COMPOSITING)
 #include "RenderLayerBacking.h"
@@ -326,7 +327,7 @@ void RenderLayer::updateTransform()
     if (hasTransform) {
         RenderBox* box = renderBox();
         ASSERT(box);
-        m_transform->reset();
+        m_transform->makeIdentity();
         box->style()->applyTransform(*m_transform, box->borderBoxRect().size());
     }
 }
