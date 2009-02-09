@@ -281,6 +281,7 @@ IDL_BINDINGS += \
     dom/EventException.idl \
 #    dom/EventListener.idl \
 #    dom/EventTarget.idl \
+    dom/EventTargetNode.idl \
     dom/KeyboardEvent.idl \
     dom/MouseEvent.idl \
     dom/MessageChannel.idl \
@@ -425,6 +426,7 @@ SOURCES += \
     bindings/js/JSElementCustom.cpp \
     bindings/js/JSEventCustom.cpp \
     bindings/js/JSEventTarget.cpp \
+    bindings/js/JSEventTargetNodeCustom.cpp \
     bindings/js/JSGeolocationCustom.cpp \
     bindings/js/JSHTMLAllCollection.cpp \
     bindings/js/JSHistoryCustom.cpp \
@@ -582,6 +584,7 @@ SOURCES += \
     dom/Event.cpp \
     dom/EventNames.cpp \
     dom/EventTarget.cpp \
+    dom/EventTargetNode.cpp \
     dom/ExceptionBase.cpp \
     dom/ExceptionCode.cpp \
     dom/FormControlElementWithState.cpp \

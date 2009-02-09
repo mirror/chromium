@@ -35,7 +35,6 @@
 #include "EventNames.h"
 #include "Frame.h"
 #include <wtf/CurrentTime.h>
-#include <wtf/UnusedParam.h>
 
 namespace WebCore {
 
@@ -191,7 +190,7 @@ void AnimationControllerPrivate::animationTimerFired(Timer<AnimationControllerPr
     updateAnimationTimer(true);
 }
 
-bool AnimationControllerPrivate::isAnimatingPropertyOnRenderer(RenderObject* renderer, CSSPropertyID property, bool isRunningNow) const
+bool AnimationControllerPrivate::isAnimatingPropertyOnRenderer(RenderObject* renderer, int property, bool isRunningNow) const
 {
     RefPtr<CompositeAnimation> animation = m_compositeAnimations.get(renderer);
     if (!animation)
@@ -271,16 +270,11 @@ double AnimationControllerPrivate::beginAnimationUpdateTime()
 
 PassRefPtr<RenderStyle> AnimationControllerPrivate::getAnimatedStyleForRenderer(RenderObject* renderer)
 {
-    if (!renderer)
-        return 0;
-
-    RefPtr<CompositeAnimation> rendererAnimations = m_compositeAnimations.get(renderer);
-    if (!rendererAnimations)
-        return renderer->style();
-    
     // Make sure animationUpdateTime is updated, so that it is current even if no
-    // styleChange has happened (e.g. accelerated animations).
+    // styleChange has happened (e.g. accelerated animations)
     setBeginAnimationUpdateTime(cBeginAnimationUpdateTimeNotSet);
+
+    RefPtr<CompositeAnimation> rendererAnimations = accessCompositeAnimation(renderer);
     return rendererAnimations->getAnimatedStyle();
 }
 
@@ -486,7 +480,7 @@ bool AnimationController::pauseTransitionAtTime(RenderObject* renderer, const St
     return m_data->pauseTransitionAtTime(renderer, property, t);
 }
 
-bool AnimationController::isAnimatingPropertyOnRenderer(RenderObject* renderer, CSSPropertyID property, bool isRunningNow) const
+bool AnimationController::isAnimatingPropertyOnRenderer(RenderObject* renderer, int property, bool isRunningNow) const
 {
     return m_data->isAnimatingPropertyOnRenderer(renderer, property, isRunningNow);
 }
@@ -509,16 +503,6 @@ void AnimationController::beginAnimationUpdate()
 void AnimationController::endAnimationUpdate()
 {
     m_data->endAnimationUpdate();
-}
-
-bool AnimationController::supportsAcceleratedAnimationOfProperty(CSSPropertyID property)
-{
-#if USE(ACCELERATED_COMPOSITING)
-    return AnimationBase::animationOfPropertyIsAccelerated(property);
-#else
-    UNUSED_PARAM(property);
-    return false;
-#endif
 }
 
 } // namespace WebCore

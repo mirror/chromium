@@ -234,7 +234,7 @@ VisiblePosition RenderReplaced::positionForCoordinates(int xPos, int yPos)
     return RenderBox::positionForCoordinates(xPos, yPos);
 }
 
-IntRect RenderReplaced::selectionRectForRepaint(RenderBoxModelObject* repaintContainer, bool clipToVisibleContent)
+IntRect RenderReplaced::selectionRectForRepaint(RenderBox* repaintContainer, bool clipToVisibleContent)
 {
     ASSERT(!needsLayout());
 
@@ -378,7 +378,7 @@ IntRect RenderReplaced::overflowRect(bool) const
     return borderBoxRect();
 }
 
-IntRect RenderReplaced::clippedOverflowRectForRepaint(RenderBoxModelObject* repaintContainer)
+IntRect RenderReplaced::clippedOverflowRectForRepaint(RenderBox* repaintContainer)
 {
     if (style()->visibility() != VISIBLE && !enclosingLayer()->hasVisibleContent())
         return IntRect();

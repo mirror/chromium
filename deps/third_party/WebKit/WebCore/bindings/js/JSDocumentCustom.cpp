@@ -44,7 +44,7 @@ namespace WebCore {
 
 void JSDocument::mark()
 {
-    JSNode::mark();
+    JSEventTargetNode::mark();
     markDOMNodesForDocument(impl());
     markActiveObjectsForContext(*Heap::heap(this)->globalData(), impl());
 }

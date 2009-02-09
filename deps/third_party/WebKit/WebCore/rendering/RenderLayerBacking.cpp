@@ -116,7 +116,7 @@ void RenderLayerBacking::updateLayerTransform()
     // baked into it, and we don't want that.
     TransformationMatrix t;
     if (m_owningLayer->hasTransform())
-        style->applyTransform(t, toRenderBox(renderer())->borderBoxRect().size(), RenderStyle::ExcludeTransformOrigin);
+        style->applyTransform(t, renderer()->borderBoxRect().size(), false);
     
     m_graphicsLayer->setTransform(t);
 }
@@ -238,7 +238,7 @@ void RenderLayerBacking::updateGraphicsLayerGeometry()
     }
     
     if (m_owningLayer->hasTransform()) {
-        const IntRect borderBox = toRenderBox(renderer())->borderBoxRect();
+        const IntRect borderBox = renderer()->borderBoxRect();
 
         IntRect layerBounds = IntRect(m_owningLayer->xPos(), m_owningLayer->yPos(), borderBox.width(), borderBox.height());
         // Convert to absolute coords to match bbox.
@@ -594,10 +594,7 @@ IntSize RenderLayerBacking::contentOffsetInCompostingLayer()
 
 IntRect RenderLayerBacking::contentsBox(const GraphicsLayer*)
 {
-    if (!renderer()->isBox())
-        return IntRect();
-
-    IntRect contentsRect = toRenderBox(renderer())->contentBoxRect();
+    IntRect contentsRect = renderer()->contentBoxRect();
     IntSize contentOffset = contentOffsetInCompostingLayer();
     contentsRect.move(contentOffset);
     return contentsRect;
@@ -679,8 +676,8 @@ void RenderLayerBacking::paintIntoLayer(RenderLayer* rootLayer, GraphicsContext*
     
     int x = layerBounds.x();        // layerBounds is computed relative to rootLayer
     int y = layerBounds.y();
-    int tx = x - toRenderBox(renderer())->x();
-    int ty = y - toRenderBox(renderer())->y();
+    int tx = x - renderer()->x();
+    int ty = y - renderer()->y();
 
     // If this layer's renderer is a child of the paintingRoot, we render unconditionally, which
     // is done by passing a nil paintingRoot down to our renderer (as if no paintingRoot was ever set).
@@ -695,26 +692,24 @@ void RenderLayerBacking::paintIntoLayer(RenderLayer* rootLayer, GraphicsContext*
         // because we'll be painting the background as well (see RenderBox::paintRootBoxDecorations()).
         IntRect paintBox = clipRectToApply;
         
-        // FIXME: do we need this code?
         if (renderer()->node()->isDocumentNode() && renderer()->document()->isHTMLDocument()) {
-            RenderBox* box = toRenderBox(renderer());
-            int w = box->width();
-            int h = box->height();
+            int w = renderer()->width();
+            int h = renderer()->height();
             
             int rw;
             int rh;
-            if (box->view()->frameView()) {
-                rw = box->view()->frameView()->contentsWidth();
-                rh = box->view()->frameView()->contentsHeight();
+            if (renderer()->view()->frameView()) {
+                rw = renderer()->view()->frameView()->contentsWidth();
+                rh = renderer()->view()->frameView()->contentsHeight();
             } else {
-                rw = box->view()->width();
-                rh = box->view()->height();
+                rw = renderer()->view()->width();
+                rh = renderer()->view()->height();
             }
             
-            int bx = tx - box->marginLeft();
-            int by = ty - box->marginTop();
-            int bw = max(w + box->marginLeft() + box->marginRight() + box->borderLeft() + box->borderRight(), rw);
-            int bh = max(h + box->marginTop() + box->marginBottom() + box->borderTop() + box->borderBottom(), rh);
+            int bx = tx - renderer()->marginLeft();
+            int by = ty - renderer()->marginTop();
+            int bw = max(w + renderer()->marginLeft() + renderer()->marginRight() + renderer()->borderLeft() + renderer()->borderRight(), rw);
+            int bh = max(h + renderer()->marginTop() + renderer()->marginBottom() + renderer()->borderTop() + renderer()->borderBottom(), rh);
             paintBox = IntRect(bx, by, bw, bh);
         }
 
@@ -857,7 +852,7 @@ bool RenderLayerBacking::startAnimation(double beginTime, const Animation* anim,
     bool didAnimateTransform = !hasTransform;
     bool didAnimateOpacity = !hasOpacity;
     
-    if (hasTransform && m_graphicsLayer->animateTransform(transformVector, toRenderBox(renderer())->borderBoxRect().size(), anim, beginTime, false))
+    if (hasTransform && m_graphicsLayer->animateTransform(transformVector, renderer()->borderBoxRect().size(), anim, beginTime, false))
         didAnimateTransform = true;
 
     if (hasOpacity && m_graphicsLayer->animateFloat(AnimatedPropertyOpacity, opacityVector, anim, beginTime))
@@ -893,12 +888,17 @@ bool RenderLayerBacking::startTransition(double beginTime, int property, const R
             GraphicsLayer::TransformValueList transformVector;
             transformVector.insert(0, &fromStyle->transform(), 0);        
             transformVector.insert(1, &toStyle->transform(), 0);        
-            if (m_graphicsLayer->animateTransform(transformVector, toRenderBox(renderer())->borderBoxRect().size(), transformAnim, beginTime, true))
+            if (m_graphicsLayer->animateTransform(transformVector, renderer()->borderBoxRect().size(), transformAnim, beginTime, true))
                 didAnimate = true;
         }
     }
     
     return didAnimate;
+}
+
+void RenderLayerBacking::notifyTransitionStarted(const GraphicsLayer*, AnimatedPropertyID property, double time)
+{
+    renderer()->animation()->notifyTransitionStarted(renderer(), graphicsLayerToCSSProperty(property), time);
 }
 
 void RenderLayerBacking::notifyAnimationStarted(const GraphicsLayer*, double time)

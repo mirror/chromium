@@ -90,6 +90,7 @@ DOM_CLASSES = \
     EventException \
     EventListener \
     EventTarget \
+    EventTargetNode \
     File \
     FileList \
     Geolocation \
@@ -378,7 +379,7 @@ DOM_CLASSES = \
 .PHONY : all
 
 all : \
-    $(filter-out JSEventListener.h JSEventTarget.h JSRGBColor.h,$(DOM_CLASSES:%=JS%.h)) \
+    $(filter-out JSEventListener.h JSRGBColor.h,$(DOM_CLASSES:%=JS%.h)) \
     \
     JSDOMWindowBase.lut.h \
     JSRGBColor.lut.h \

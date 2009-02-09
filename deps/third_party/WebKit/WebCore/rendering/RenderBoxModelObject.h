@@ -25,52 +25,11 @@
 
 namespace WebCore {
 
-// This class is the base for all objects that adhere to the CSS box model as described
-// at http://www.w3.org/TR/CSS21/box.html
-
 class RenderBoxModelObject : public RenderObject {
 public:
     RenderBoxModelObject(Node*);
     virtual ~RenderBoxModelObject();
-    
-    virtual void destroy();
-
-    int relativePositionOffsetX() const;
-    int relativePositionOffsetY() const;
-    IntSize relativePositionOffset() const { return IntSize(relativePositionOffsetX(), relativePositionOffsetY()); }
-
-    virtual void styleWillChange(StyleDifference, const RenderStyle* newStyle);
-    virtual void styleDidChange(StyleDifference, const RenderStyle* oldStyle);
-    virtual void updateBoxModelInfoFromStyle();
-
-    RenderLayer* layer() const { return m_layer; }
-    virtual bool requiresLayer() const { return isRoot() || isPositioned() || isRelPositioned() || isTransparent() || hasOverflowClip() || hasTransform() || hasMask() || hasReflection(); }
-
-private:
-    virtual bool isBoxModelObject() const { return true; }
-
-    friend class RenderView;
-
-    RenderLayer* m_layer;
-    
-    // Used to store state between styleWillChange and styleDidChange
-    static bool s_wasFloating;
 };
-
-inline RenderBoxModelObject* toRenderBoxModelObject(RenderObject* o)
-{ 
-    ASSERT(!o || o->isBoxModelObject());
-    return static_cast<RenderBoxModelObject*>(o);
-}
-
-inline const RenderBoxModelObject* toRenderBoxModelObject(const RenderObject* o)
-{ 
-    ASSERT(!o || o->isBoxModelObject());
-    return static_cast<const RenderBoxModelObject*>(o);
-}
-
-// This will catch anyone doing an unnecessary cast.
-void toRenderBoxModelObject(const RenderBox*);
 
 } // namespace WebCore
 

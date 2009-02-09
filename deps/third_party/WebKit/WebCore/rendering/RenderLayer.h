@@ -186,11 +186,10 @@ public:
     static ScrollBehavior getPartialBehavior(const ScrollAlignment& s) { return s.m_rectPartial; }
     static ScrollBehavior getHiddenBehavior(const ScrollAlignment& s) { return s.m_rectHidden; }
 
-    RenderLayer(RenderBoxModelObject*);
+    RenderLayer(RenderBox*);
     ~RenderLayer();
 
-    RenderBoxModelObject* renderer() const { return m_renderer; }
-    RenderBox* renderBox() const { return m_renderer && m_renderer->isBox() ? toRenderBox(m_renderer) : 0; }
+    RenderBox* renderer() const { return m_renderer; }
     RenderLayer* parent() const { return m_parent; }
     RenderLayer* previousSibling() const { return m_previous; }
     RenderLayer* nextSibling() const { return m_next; }
@@ -385,7 +384,7 @@ public:
     int staticX() const { return m_staticX; }
     int staticY() const { return m_staticY; }
     void setStaticX(int staticX) { m_staticX = staticX; }
-    void setStaticY(int staticY);
+    void setStaticY(int staticY) { m_staticY = staticY; }
 
     bool hasTransform() const { return renderer()->hasTransform(); }
     // Note that this transform has the transform-origin baked in.
@@ -429,9 +428,6 @@ private:
     void setParent(RenderLayer* parent);
     void setFirstChild(RenderLayer* first) { m_first = first; }
     void setLastChild(RenderLayer* last) { m_last = last; }
-
-    int renderBoxX() const { return renderer()->isBox() ? toRenderBox(renderer())->x() : 0; }
-    int renderBoxY() const { return renderer()->isBox() ? toRenderBox(renderer())->y() : 0; }
 
     void collectLayers(Vector<RenderLayer*>*&, Vector<RenderLayer*>*&);
 
@@ -481,7 +477,7 @@ private:
     friend class RenderLayerCompositor;
 
 protected:
-    RenderBoxModelObject* m_renderer;
+    RenderBox* m_renderer;
 
     RenderLayer* m_parent;
     RenderLayer* m_previous;

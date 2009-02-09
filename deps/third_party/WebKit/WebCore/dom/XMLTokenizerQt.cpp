@@ -507,8 +507,6 @@ void XMLTokenizer::parseStartElement()
         m_sawFirstElement = true;
         return;
     }
-
-    bool isFirstElement = !m_sawFirstElement;
     m_sawFirstElement = true;
 
     exitText();
@@ -554,9 +552,6 @@ void XMLTokenizer::parseStartElement()
     setCurrentNode(newElement.get());
     if (m_view && !newElement->attached())
         newElement->attach();
-
-    if (isFirstElement && m_doc->frame())
-        m_doc->frame()->loader()->dispatchDocumentElementAvailable();
 }
 
 void XMLTokenizer::parseEndElement()

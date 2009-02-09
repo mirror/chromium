@@ -346,7 +346,6 @@ namespace WebCore {
         Widget* createJavaAppletWidget(const IntSize&, HTMLAppletElement*, const HashMap<String, String>& args);
 
         void dispatchWindowObjectAvailable();
-        void dispatchDocumentElementAvailable();
         void restoreDocumentState();
 
         Frame* opener();

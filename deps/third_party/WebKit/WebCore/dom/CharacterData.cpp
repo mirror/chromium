@@ -31,13 +31,13 @@
 namespace WebCore {
 
 CharacterData::CharacterData(Document *doc, bool isText)
-    : Node(doc, false, false, isText)
+    : EventTargetNode(doc, false, false, isText)
     , m_data(StringImpl::empty())
 {
 }
 
 CharacterData::CharacterData(Document* document, const String& text, bool isText)
-    : Node(document, false, false, isText)
+    : EventTargetNode(document, false, false, isText)
 {
     m_data = text.impl() ? text.impl() : StringImpl::empty();
 }
@@ -224,7 +224,7 @@ bool CharacterData::rendererIsNeeded(RenderStyle *style)
 {
     if (!m_data || !length())
         return false;
-    return Node::rendererIsNeeded(style);
+    return EventTargetNode::rendererIsNeeded(style);
 }
 
 bool CharacterData::offsetInCharacters() const

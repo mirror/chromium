@@ -49,6 +49,7 @@ namespace WebCore {
 class AtomicString;
 class Clipboard;
 class Cursor;
+class EventTargetNode;
 class Event;
 class FloatPoint;
 class FloatRect;

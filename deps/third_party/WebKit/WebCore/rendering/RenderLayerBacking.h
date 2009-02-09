@@ -37,7 +37,6 @@
 
 namespace WebCore {
 
-class KeyframeList;
 class RenderLayerCompositor;
 
 // RenderLayerBacking controls the compositing behavior for a single RenderLayer.
@@ -117,7 +116,7 @@ private:
     void createGraphicsLayer();
     void destroyGraphicsLayer();
 
-    RenderBoxModelObject* renderer() const { return m_owningLayer->renderer(); }
+    RenderBox* renderer() const { return m_owningLayer->renderer(); }
     RenderLayerCompositor* compositor() const { return m_owningLayer->compositor(); }
 
     bool updateClippingLayers(bool needsAncestorClip, bool needsDescendantClip);

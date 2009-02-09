@@ -31,14 +31,12 @@
 #include "config.h"
 #include "ImageBuffer.h"
 
-#include "Base64.h"
 #include "BitmapImage.h"
 #include "BitmapImageSingleFrameSkia.h"
 #include "GraphicsContext.h"
 #include "ImageData.h"
 #include "NotImplemented.h"
 #include "PlatformContextSkia.h"
-#include "PNGImageEncoder.h"
 #include "SkiaUtils.h"
 
 using namespace std;
@@ -208,18 +206,8 @@ void ImageBuffer::putImageData(ImageData* source, const IntRect& sourceRect,
 
 String ImageBuffer::toDataURL(const String&) const
 {
-    // Encode the image into a vector.
-    Vector<unsigned char> pngEncodedData;
-    PNGImageEncoder::encode(*context()->platformContext()->bitmap(), &pngEncodedData);
-
-    // Convert it into base64.
-    Vector<char> base64EncodedData;
-    base64Encode(*reinterpret_cast<Vector<char>*>(&pngEncodedData), base64EncodedData);
-    // Append with a \0 so that it's a valid string.
-    base64EncodedData.append('\0');
-
-    // And the resulting string.
-    return String::format("data:image/png;base64,%s", base64EncodedData.data());
+    notImplemented();
+    return String();
 }
 
 } // namespace WebCore

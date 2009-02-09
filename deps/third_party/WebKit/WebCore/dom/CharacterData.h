@@ -23,11 +23,11 @@
 #ifndef CharacterData_h
 #define CharacterData_h
 
-#include "Node.h"
+#include "EventTargetNode.h"
 
 namespace WebCore {
 
-class CharacterData : public Node {
+class CharacterData : public EventTargetNode {
 public:
     CharacterData(Document*, const String& text, bool isText = false);
     CharacterData(Document*, bool isText = false);

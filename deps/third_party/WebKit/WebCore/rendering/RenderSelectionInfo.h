@@ -47,12 +47,12 @@ public:
     }
     
     RenderObject* object() const { return m_object; }
-    RenderBoxModelObject* repaintContainer() const { return m_repaintContainer; }
+    RenderBox* repaintContainer() const { return m_repaintContainer; }
     RenderObject::SelectionState state() const { return m_state; }
 
 protected:
     RenderObject* m_object;
-    RenderBoxModelObject* m_repaintContainer;
+    RenderBox* m_repaintContainer;
     RenderObject::SelectionState m_state;
 };
 

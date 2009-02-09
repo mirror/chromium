@@ -97,7 +97,7 @@ static void networkStateChanged()
             continue;
 
         // If the document does not have a body the event should be dispatched to the document
-        Node* eventTarget = document->body();
+        EventTargetNode* eventTarget = document->body();
         if (!eventTarget)
             eventTarget = document;
         

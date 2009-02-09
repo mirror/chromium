@@ -131,7 +131,7 @@ void WMLGoElement::executeTask(Event* event)
             request.setCachePolicy(ReloadIgnoringCacheData);
     }
 
-    loader->load(request, false);
+    loader->load(request);
 }
 
 void WMLGoElement::preparePOSTRequest(ResourceRequest& request, bool inSameDeck, const String& cacheControl)

@@ -227,7 +227,7 @@ void RenderSVGRoot::calcViewport()
     }
 }
 
-IntRect RenderSVGRoot::clippedOverflowRectForRepaint(RenderBoxModelObject* repaintContainer)
+IntRect RenderSVGRoot::clippedOverflowRectForRepaint(RenderBox* repaintContainer)
 {
     IntRect repaintRect;
 

@@ -5179,11 +5179,6 @@ String FrameLoader::referrer() const
     return documentLoader()->request().httpReferrer();
 }
 
-void FrameLoader::dispatchDocumentElementAvailable()
-{
-    m_client->documentElementAvailable();
-}
-
 void FrameLoader::dispatchWindowObjectAvailable()
 {
 #if USE(JSC)

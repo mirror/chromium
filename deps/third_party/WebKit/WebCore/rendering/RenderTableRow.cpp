@@ -161,7 +161,7 @@ void RenderTableRow::layout()
     setNeedsLayout(false);
 }
 
-IntRect RenderTableRow::clippedOverflowRectForRepaint(RenderBoxModelObject* repaintContainer)
+IntRect RenderTableRow::clippedOverflowRectForRepaint(RenderBox* repaintContainer)
 {
     // For now, just repaint the whole table.
     // FIXME: Find a better way to do this, e.g., need to repaint all the cells that we
@@ -194,8 +194,8 @@ bool RenderTableRow::nodeAtPoint(const HitTestRequest& request, HitTestResult& r
 
 void RenderTableRow::paint(PaintInfo& paintInfo, int tx, int ty)
 {
-    ASSERT(hasLayer());
-    if (!layer())
+    ASSERT(m_layer);
+    if (!m_layer)
         return;
 
     for (RenderObject* child = firstChild(); child; child = child->nextSibling()) {

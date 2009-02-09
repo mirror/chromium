@@ -386,6 +386,9 @@ sub GenerateHeader
         push(@headerContentHeader, "#include <runtime/JSGlobalObject.h>\n");
         push(@headerContentHeader, "#include <runtime/ObjectPrototype.h>\n");
     }
+    if ($interfaceName eq "Node") {
+        push(@headerContentHeader, "#include \"EventTargetNode.h\"\n");
+    }
 
     if ($dataNode->extendedAttributes->{"CustomCall"}) {
         push(@headerContentHeader, "#include <runtime/CallData.h>\n");
@@ -632,6 +635,11 @@ sub GenerateHeader
             push(@headerContent, "JSC::JSValuePtr toJS(JSC::ExecState*, $implType*, SVGElement* context);\n");
         } else {
             push(@headerContent, "JSC::JSValuePtr toJS(JSC::ExecState*, $implType*);\n");
+        }
+
+        # Resolve ambiguity with EventTarget that otherwise exists.
+        if ($interfaceName eq "Node") {
+            push(@headerContent, "inline JSC::JSValuePtr toJS(JSC::ExecState* exec, EventTargetNode* node) { return toJS(exec, static_cast<Node*>(node)); }\n");
         }
     }
     if (!$hasParent || $dataNode->extendedAttributes->{"GenerateNativeConverter"}) {
@@ -1549,6 +1557,7 @@ sub GetNativeTypeFromSignature
 my %nativeType = (
     "CompareHow" => "Range::CompareHow",
     "DOMString" => "const UString&",
+    "EventTarget" => "EventTargetNode*",
     "NodeFilter" => "RefPtr<NodeFilter>",
     "SVGLength" => "SVGLength",
     "SVGMatrix" => "TransformationMatrix",
@@ -1594,6 +1603,11 @@ sub JSValueToNative
         return "valueToStringWithNullCheck(exec, $value)" if $signature->extendedAttributes->{"ConvertNullToNullString"};
         return "valueToStringWithUndefinedOrNullCheck(exec, $value)" if $signature->extendedAttributes->{"ConvertUndefinedOrNullToNullString"};
         return "$value.toString(exec)";
+    }
+
+    if ($type eq "EventTarget") {
+        $implIncludes{"JSEventTargetNode.h"} = 1;
+        return "toEventTargetNode($value)";
     }
 
     $implIncludes{"FloatPoint.h"} = 1 if $type eq "SVGPoint";

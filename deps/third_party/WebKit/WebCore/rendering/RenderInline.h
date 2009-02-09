@@ -73,8 +73,8 @@ public:
     virtual void absoluteRects(Vector<IntRect>&, int tx, int ty, bool topLevel = true);
     virtual void absoluteQuads(Vector<FloatQuad>&, bool topLevel = true);
 
-    virtual IntRect clippedOverflowRectForRepaint(RenderBoxModelObject* repaintContainer);
-    virtual IntRect rectWithOutlineForRepaint(RenderBoxModelObject* repaintContainer, int outlineWidth);
+    virtual IntRect clippedOverflowRectForRepaint(RenderBox* repaintContainer);
+    virtual IntRect rectWithOutlineForRepaint(RenderBox* repaintContainer, int outlineWidth);
 
     virtual VisiblePosition positionForCoordinates(int x, int y);
 
@@ -108,7 +108,7 @@ public:
 
     virtual void updateHitTestResult(HitTestResult&, const IntPoint&);
 
-    IntSize relativePositionedInlineOffset(const RenderBox* child) const;
+    IntSize relativePositionedInlineOffset(const RenderObject* child) const;
 
     virtual void addFocusRingRects(GraphicsContext*, int tx, int ty);
     void paintOutline(GraphicsContext*, int tx, int ty);
@@ -125,7 +125,6 @@ public:
     
 protected:
     virtual void styleDidChange(StyleDifference, const RenderStyle* oldStyle);
-    virtual void updateBoxModelInfoFromStyle();
 
     static RenderInline* cloneInline(RenderInline* src);
 

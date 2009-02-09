@@ -91,20 +91,20 @@ void RenderWidget::destroy()
     if (hasOverrideSize())
         setOverrideSize(-1);
 
+    RenderLayer* layer = m_layer;
     RenderArena* arena = renderArena();
 
-    if (hasLayer())
-        layer()->clearClipRects();
+    if (layer)
+        layer->clearClipRects();
 
     if (style() && (style()->height().isPercent() || style()->minHeight().isPercent() || style()->maxHeight().isPercent()))
         RenderBlock::removePercentHeightDescendant(this);
 
     setNode(0);
-
-    if (hasLayer())
-        layer()->destroy(arena);
-
     deref(arena);
+
+    if (layer)
+        layer->destroy(arena);
 }
 
 RenderWidget::~RenderWidget()

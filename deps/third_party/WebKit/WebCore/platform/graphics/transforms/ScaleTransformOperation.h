@@ -36,9 +36,6 @@ public:
         return adoptRef(new ScaleTransformOperation(sx, sy, type));
     }
 
-    double x() const { return m_x; }
-    double y() const { return m_y; }
-
 private:
     virtual bool isIdentity() const { return m_x == 1 &&  m_y == 1; }
     virtual OperationType getOperationType() const { return m_type; }

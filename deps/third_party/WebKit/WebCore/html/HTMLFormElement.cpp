@@ -116,7 +116,7 @@ void HTMLFormElement::removedFromDocument()
 
 void HTMLFormElement::handleLocalEvents(Event* event, bool useCapture)
 {
-    Node* targetNode = event->target()->toNode();
+    EventTargetNode* targetNode = event->target()->toNode();
     if (!useCapture && targetNode && targetNode != this && (event->type() == eventNames().submitEvent || event->type() == eventNames().resetEvent)) {
         event->stopPropagation();
         return;

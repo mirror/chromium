@@ -36,6 +36,7 @@
 #include "KeyframeAnimation.h"
 #include "RenderLayer.h"
 #include "RenderLayerBacking.h"
+
 #include <wtf/UnusedParam.h>
 
 namespace WebCore {
@@ -96,14 +97,14 @@ void ImplicitAnimation::getAnimatedStyle(RefPtr<RenderStyle>& animatedStyle)
 
 bool ImplicitAnimation::startAnimation(double beginTime)
 {
+    UNUSED_PARAM(beginTime);
+    
 #if USE(ACCELERATED_COMPOSITING)
     if (m_object && m_object->hasLayer()) {
-        RenderLayer* layer = toRenderBoxModelObject(m_object)->layer();
+        RenderLayer* layer = toRenderBox(m_object)->layer();
         if (layer->isComposited())
             return layer->backing()->startTransition(beginTime, m_animatingProperty, m_fromStyle.get(), m_toStyle.get());
     }
-#else
-    UNUSED_PARAM(beginTime);
 #endif
     return false;
 }
@@ -112,7 +113,7 @@ void ImplicitAnimation::endAnimation(bool /*reset*/)
 {
 #if USE(ACCELERATED_COMPOSITING)
     if (m_object && m_object->hasLayer()) {
-        RenderLayer* layer = toRenderBoxModelObject(m_object)->layer();
+        RenderLayer* layer = toRenderBox(m_object)->layer();
         if (layer->isComposited())
             layer->backing()->transitionFinished(m_animatingProperty);
     }

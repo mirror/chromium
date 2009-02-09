@@ -27,7 +27,6 @@
 #include "JSStyleSheet.h"
 
 #include "CSSStyleSheet.h"
-#include "Node.h"
 #include "JSCSSStyleSheet.h"
 #include "JSNode.h"
 

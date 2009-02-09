@@ -64,7 +64,7 @@ static FunctionQueue& functionQueue()
     return staticFunctionQueue;
 }
 
-#if !PLATFORM(WIN) && !PLATFORM(CHROMIUM)
+#if !PLATFORM(WIN)
 void initializeMainThread()
 {
     mainThreadFunctionQueueMutex();

@@ -44,7 +44,7 @@ EventTarget::~EventTarget()
 {
 }
 
-Node* EventTarget::toNode()
+EventTargetNode* EventTarget::toNode()
 {
     return 0;
 }

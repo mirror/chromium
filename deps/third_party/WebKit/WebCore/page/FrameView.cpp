@@ -63,7 +63,7 @@ double FrameView::sCurrentPaintTimeStamp = 0.0;
 
 struct ScheduledEvent {
     RefPtr<Event> m_event;
-    RefPtr<Node> m_eventTarget;
+    RefPtr<EventTargetNode> m_eventTarget;
 };
 
 FrameView::FrameView(Frame* frame)
@@ -374,7 +374,7 @@ void FrameView::updateCompositingLayers(CompositingUpdate updateType)
     if (!view || !view->usesCompositing())
         return;
 
-    if (updateType == ForcedCompositingUpdate)
+    if (updateType == ForcedUpdate)
         view->compositor()->setCompositingLayersNeedUpdate();
     
     view->compositor()->updateCompositingLayers();
@@ -934,7 +934,7 @@ void FrameView::setShouldUpdateWhileOffscreen(bool shouldUpdateWhileOffscreen)
     m_shouldUpdateWhileOffscreen = shouldUpdateWhileOffscreen;
 }
 
-void FrameView::scheduleEvent(PassRefPtr<Event> event, PassRefPtr<Node> eventTarget)
+void FrameView::scheduleEvent(PassRefPtr<Event> event, PassRefPtr<EventTargetNode> eventTarget)
 {
     if (!m_enqueueEvents) {
         ExceptionCode ec = 0;
@@ -1032,7 +1032,7 @@ void FrameView::updateOverflowStatus(bool horizontalOverflow, bool verticalOverf
         
         scheduleEvent(OverflowEvent::create(horizontalOverflowChanged, horizontalOverflow,
             verticalOverflowChanged, verticalOverflow),
-            m_viewportRenderer->element());
+            EventTargetNodeCast(m_viewportRenderer->element()));
     }
     
 }

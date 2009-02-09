@@ -224,9 +224,9 @@ void RenderFlexibleBox::layoutBlock(bool relayoutChildren)
     // For overflow:scroll blocks, ensure we have both scrollbars in place always.
     if (scrollsOverflow()) {
         if (style()->overflowX() == OSCROLL)
-            layer()->setHasHorizontalScrollbar(true);
+            m_layer->setHasHorizontalScrollbar(true);
         if (style()->overflowY() == OSCROLL)
-            layer()->setHasVerticalScrollbar(true);
+            m_layer->setHasVerticalScrollbar(true);
     }
 
     if (isHorizontal())
@@ -292,7 +292,7 @@ void RenderFlexibleBox::layoutBlock(bool relayoutChildren)
     // Update our scrollbars if we're overflow:auto/scroll/hidden now that we know if
     // we overflow or not.
     if (hasOverflowClip())
-        layer()->updateScrollInfoAfterLayout();
+        m_layer->updateScrollInfoAfterLayout();
 
     // Repaint with our new bounds if they are different from our old bounds.
     repainter.repaintAfterLayout();
@@ -410,13 +410,13 @@ void RenderFlexibleBox::layoutHorizontalBox(bool relayoutChildren)
         while (child) {
             if (child->isPositioned()) {
                 child->containingBlock()->insertPositionedObject(child);
-                if (child->style()->hasStaticX()) {
+                if (child->hasStaticX()) {
                     if (style()->direction() == LTR)
-                        child->layer()->setStaticX(xPos);
-                    else child->layer()->setStaticX(width() - xPos);
+                        child->setStaticX(xPos);
+                    else child->setStaticX(width() - xPos);
                 }
-                if (child->style()->hasStaticY())
-                    child->layer()->setStaticY(yPos);
+                if (child->hasStaticY())
+                    child->setStaticY(yPos);
                 child = iterator.next();
                 continue;
             }
@@ -801,14 +801,14 @@ void RenderFlexibleBox::layoutVerticalBox(bool relayoutChildren)
             if (child->isPositioned())
             {
                 child->containingBlock()->insertPositionedObject(child);
-                if (child->style()->hasStaticX()) {
+                if (child->hasStaticX()) {
                     if (style()->direction() == LTR)
-                        child->layer()->setStaticX(borderLeft()+paddingLeft());
+                        child->setStaticX(borderLeft()+paddingLeft());
                     else
-                        child->layer()->setStaticX(borderRight()+paddingRight());
+                        child->setStaticX(borderRight()+paddingRight());
                 }
-                if (child->style()->hasStaticY())
-                    child->layer()->setStaticY(height());
+                if (child->hasStaticY())
+                    child->setStaticY(height());
                 child = iterator.next();
                 continue;
             } 
