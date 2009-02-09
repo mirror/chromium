@@ -35,7 +35,6 @@ namespace WebCore {
 
 class Color;
 class Event;
-class EventTargetNode;
 class Frame;
 class FrameViewPrivate;
 class IntRect;
@@ -158,7 +157,7 @@ public:
 
     void restoreScrollbar();
 
-    void scheduleEvent(PassRefPtr<Event>, PassRefPtr<EventTargetNode>);
+    void scheduleEvent(PassRefPtr<Event>, PassRefPtr<Node>);
     void pauseScheduledEvents();
     void resumeScheduledEvents();
     void postLayoutTimerFired(Timer<FrameView>*);

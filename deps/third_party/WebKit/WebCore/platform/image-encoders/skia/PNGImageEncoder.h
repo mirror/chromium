@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, Google Inc. All rights reserved.
+ * Copyright (c) 2006-2009, Google Inc. All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -28,19 +28,28 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "config.h"
+#ifndef PNGImageEncoder_h
+#define PNGImageEncoder_h
 
-#include "KURL.h"
-#include "NotImplemented.h"
-#include "SharedBuffer.h"
+#include "Vector.h"
+
+class IntSize;
+class SkBitmap;
 
 namespace WebCore {
 
-String signedPublicKeyAndChallengeString(unsigned, const String&, const KURL&) { notImplemented(); return String(); }
-void getSupportedKeySizes(Vector<String>&) { notImplemented(); }
+    // Interface for encoding PNG data. This is a wrapper around libpng.
+    class PNGImageEncoder {
+    public:
+        // Encodes the specific SkBitmap into the supplied vector.
+        static bool encode(const SkBitmap&, WTF::Vector<unsigned char>* output);
 
-String KURL::fileSystemPath() const { notImplemented(); return String(); }
+        // Encodes the specified image data into the supplied vector.
+        // w, h give the size of the image and bytes_per_row gives the bytes
+        // per row.
+        static bool encode(const unsigned char* input, const IntSize& size, int bytesPerRow, WTF::Vector<unsigned char>* output);
+    };
 
-PassRefPtr<SharedBuffer> SharedBuffer::createWithContentsOfFile(const String&) { notImplemented(); return 0; }
+}  // namespace WebCore
 
-} // namespace WebCore
+#endif

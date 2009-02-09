@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008, 2009, Google Inc. All rights reserved.
+ * Copyright (C) 2009 Google Inc. All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -28,19 +28,35 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "config.h"
+#ifndef V8CustomSQLStatementCallback_h
+#define V8CustomSQLStatementCallback_h
 
-#include "KURL.h"
-#include "NotImplemented.h"
-#include "SharedBuffer.h"
+#include "SQLStatementCallback.h"
+#include <v8.h>
+#include <wtf/PassRefPtr.h>
+#include <wtf/RefPtr.h>
 
 namespace WebCore {
 
-String signedPublicKeyAndChallengeString(unsigned, const String&, const KURL&) { notImplemented(); return String(); }
-void getSupportedKeySizes(Vector<String>&) { notImplemented(); }
+class Frame;
 
-String KURL::fileSystemPath() const { notImplemented(); return String(); }
+class V8CustomSQLStatementCallback : public SQLStatementCallback {
+public:
+    static PassRefPtr<V8CustomSQLStatementCallback> create(v8::Local<v8::Value> value, Frame* frame)
+    {
+        ASSERT(value->IsObject());
+        return adoptRef(new V8CustomSQLStatementCallback(value->ToObject(), frame));
+    }
+    virtual ~V8CustomSQLStatementCallback();
 
-PassRefPtr<SharedBuffer> SharedBuffer::createWithContentsOfFile(const String&) { notImplemented(); return 0; }
+    virtual void handleEvent(SQLTransaction*, SQLResultSet*, bool& raisedException);
+private:
+    V8CustomSQLStatementCallback(v8::Local<v8::Object>, Frame*);
+
+    v8::Persistent<v8::Object> m_callback;
+    RefPtr<Frame> m_frame;
+};
 
 } // namespace WebCore
+
+#endif // V8CustomSQLStatementCallback_h
