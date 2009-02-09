@@ -558,16 +558,6 @@ RenderBlock* RenderObject::firstLineBlock() const
     return 0;
 }
 
-bool RenderObject::hasStaticX() const
-{
-    return (style()->left().isAuto() && style()->right().isAuto()) || style()->left().isStatic() || style()->right().isStatic();
-}
-
-bool RenderObject::hasStaticY() const
-{
-    return (style()->top().isAuto() && style()->bottom().isAuto()) || style()->top().isStatic();
-}
-
 void RenderObject::setPrefWidthsDirty(bool b, bool markParents)
 {
     bool alreadyDirty = m_prefWidthsDirty;
@@ -606,7 +596,7 @@ RenderBlock* RenderObject::containingBlock() const
     }
 
     if (isRenderView())
-        return const_cast<RenderBlock*>(static_cast<const RenderBlock*>(this));
+        return const_cast<RenderView*>(toRenderView(this));
 
     RenderObject* o = parent();
     if (!isText() && m_style->position() == FixedPosition) {
@@ -1642,7 +1632,7 @@ void RenderObject::paint(PaintInfo& /*paintInfo*/, int /*tx*/, int /*ty*/)
 {
 }
 
-RenderBox* RenderObject::containerForRepaint() const
+RenderBoxModelObject* RenderObject::containerForRepaint() const
 {
 #if USE(ACCELERATED_COMPOSITING)
     if (RenderView* v = view()) {
@@ -1656,7 +1646,7 @@ RenderBox* RenderObject::containerForRepaint() const
     return 0;
 }
 
-void RenderObject::repaintUsingContainer(RenderBox* repaintContainer, const IntRect& r, bool immediate)
+void RenderObject::repaintUsingContainer(RenderBoxModelObject* repaintContainer, const IntRect& r, bool immediate)
 {
     if (!repaintContainer || repaintContainer->isRenderView()) {
         RenderView* v = repaintContainer ? toRenderView(repaintContainer) : view();
@@ -1687,7 +1677,7 @@ void RenderObject::repaint(bool immediate)
     if (view->printing())
         return; // Don't repaint if we're printing.
 
-    RenderBox* repaintContainer = containerForRepaint();
+    RenderBoxModelObject* repaintContainer = containerForRepaint();
     repaintUsingContainer(repaintContainer ? repaintContainer : view, clippedOverflowRectForRepaint(repaintContainer), immediate);
 }
 
@@ -1710,12 +1700,12 @@ void RenderObject::repaintRectangle(const IntRect& r, bool immediate)
     // repaint containers. https://bugs.webkit.org/show_bug.cgi?id=23308
     dirtyRect.move(view->layoutDelta());
 
-    RenderBox* repaintContainer = containerForRepaint();
+    RenderBoxModelObject* repaintContainer = containerForRepaint();
     computeRectForRepaint(repaintContainer, dirtyRect);
     repaintUsingContainer(repaintContainer ? repaintContainer : view, dirtyRect, immediate);
 }
 
-bool RenderObject::repaintAfterLayoutIfNeeded(RenderBox* repaintContainer, const IntRect& oldBounds, const IntRect& oldOutlineBox)
+bool RenderObject::repaintAfterLayoutIfNeeded(RenderBoxModelObject* repaintContainer, const IntRect& oldBounds, const IntRect& oldOutlineBox)
 {
     RenderView* v = view();
     if (v->printing())
@@ -1834,21 +1824,20 @@ bool RenderObject::checkForRepaintDuringLayout() const
     return !document()->view()->needsFullRepaint() && !hasLayer();
 }
 
-IntRect RenderObject::rectWithOutlineForRepaint(RenderBox* repaintContainer, int outlineWidth)
+IntRect RenderObject::rectWithOutlineForRepaint(RenderBoxModelObject* repaintContainer, int outlineWidth)
 {
     IntRect r(clippedOverflowRectForRepaint(repaintContainer));
     r.inflate(outlineWidth);
     return r;
 }
 
-IntRect RenderObject::clippedOverflowRectForRepaint(RenderBox* repaintContainer)
+IntRect RenderObject::clippedOverflowRectForRepaint(RenderBoxModelObject*)
 {
-    if (parent())
-        return parent()->clippedOverflowRectForRepaint(repaintContainer);
+    ASSERT_NOT_REACHED();
     return IntRect();
 }
 
-void RenderObject::computeRectForRepaint(RenderBox* repaintContainer, IntRect& rect, bool fixed)
+void RenderObject::computeRectForRepaint(RenderBoxModelObject* repaintContainer, IntRect& rect, bool fixed)
 {
     if (repaintContainer == this)
         return;
@@ -2030,6 +2019,11 @@ void RenderObject::setStyle(PassRefPtr<RenderStyle> style)
     updateImage(oldStyle ? oldStyle->borderImage().image() : 0, m_style ? m_style->borderImage().image() : 0);
     updateImage(oldStyle ? oldStyle->maskBoxImage().image() : 0, m_style ? m_style->maskBoxImage().image() : 0);
 
+    // We need to ensure that view->maximalOutlineSize() is valid for any repaints that happen
+    // during styleDidChange (it's used by clippedOverflowRectForRepaint()).
+    if (m_style->outlineWidth() > 0 && m_style->outlineSize() > maximalOutlineSize(PaintPhaseOutline))
+        toRenderView(document()->renderer())->setMaximalOutlineSize(m_style->outlineSize());
+
     styleDidChange(diff, oldStyle.get());
 }
 
@@ -2109,8 +2103,6 @@ void RenderObject::styleWillChange(StyleDifference diff, const RenderStyle* newS
 
 void RenderObject::styleDidChange(StyleDifference diff, const RenderStyle*)
 {
-    setHasBoxDecorations(m_style->hasBorder() || m_style->hasBackground() || m_style->hasAppearance() || m_style->boxShadow());
-
     if (s_affectsParentBlock)
         handleDynamicFloatPositionChange();
 
@@ -2179,7 +2171,7 @@ FloatPoint RenderObject::absoluteToLocal(FloatPoint containerPoint, bool fixed, 
     return FloatPoint();
 }
 
-FloatQuad RenderObject::localToContainerQuad(const FloatQuad& localQuad, RenderBox* repaintContainer, bool fixed) const
+FloatQuad RenderObject::localToContainerQuad(const FloatQuad& localQuad, RenderBoxModelObject* repaintContainer, bool fixed) const
 {
     if (repaintContainer == this)
         return localQuad;
@@ -2748,6 +2740,11 @@ unsigned RenderObject::caretMaxRenderedOffset() const
 }
 
 int RenderObject::previousOffset(int current) const
+{
+    return current - 1;
+}
+
+int RenderObject::previousOffsetForBackwardDeletion(int current) const
 {
     return current - 1;
 }

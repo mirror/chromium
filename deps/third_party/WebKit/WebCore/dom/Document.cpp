@@ -1269,8 +1269,16 @@ void Document::recalcStyle(StyleChange change)
         if (change >= Inherit || n->hasChangedChild() || n->changed())
             n->recalcStyle(change);
 
-    if (changed() && view())
-        view()->layout();
+    if (view()) {
+        if (changed())
+            view()->layout();
+#if USE(ACCELERATED_COMPOSITING)
+        else {
+            // If we didn't update compositing layers because of layout(), we need to do so here.
+            view()->updateCompositingLayers();
+        }
+#endif
+    }
 
 bail_out:
     setChanged(NoStyleChange);
@@ -1322,7 +1330,6 @@ void Document::updateLayout()
     if (Element* oe = ownerElement())
         oe->document()->updateLayout();
 
-    // FIXME: Dave Hyatt's pretty sure we can remove this because layout calls recalcStyle as needed.
     updateRendering();
 
     // Only do a layout if changes have occurred that make it necessary.      
@@ -1375,6 +1382,9 @@ void Document::attach()
     
     // Create the rendering tree
     setRenderer(new (m_renderArena) RenderView(this, view()));
+#if USE(ACCELERATED_COMPOSITING)
+    renderView()->didMoveOnscreen();
+#endif
 
     if (!m_styleSelector) {
         bool matchAuthorAndUserStyles = true;
@@ -1402,6 +1412,11 @@ void Document::detach()
     stopActiveDOMObjects();
     
     RenderObject* render = renderer();
+
+#if USE(ACCELERATED_COMPOSITING)
+    if (render)
+        renderView()->willMoveOffscreen();
+#endif
 
     // indicate destruction mode,  i.e. attached() but renderer == 0
     setRenderer(0);
@@ -1445,10 +1460,8 @@ void Document::removeAllEventListenersFromAllNodes()
         m_windowEventListeners[i]->setRemoved(true);
     m_windowEventListeners.clear();
     removeAllDisconnectedNodeEventListeners();
-    removeAllEventListeners();
-    Element* documentElement = this->documentElement();
-    for (Node* node = documentElement; node; node = node->traverseNextNode(documentElement))
-        toEventTargetNode(node)->removeAllEventListeners();
+    for (Node* node = this; node; node = node->traverseNextNode())
+        node->removeAllEventListeners();
 }
 
 void Document::registerDisconnectedNodeWithEventListeners(Node* node)
@@ -1465,7 +1478,7 @@ void Document::removeAllDisconnectedNodeEventListeners()
 {
     HashSet<Node*>::iterator end = m_disconnectedNodesWithEventListeners.end();
     for (HashSet<Node*>::iterator i = m_disconnectedNodesWithEventListeners.begin(); i != end; ++i)
-        EventTargetNodeCast(*i)->removeAllEventListeners();
+        (*i)->removeAllEventListeners();
     m_disconnectedNodesWithEventListeners.clear();
 }
 
@@ -2580,20 +2593,20 @@ bool Document::setFocusedNode(PassRefPtr<Node> newFocusedNode)
         // Dispatch a change event for text fields or textareas that have been edited
         RenderObject* r = static_cast<RenderObject*>(oldFocusedNode.get()->renderer());
         if (r && (r->isTextArea() || r->isTextField()) && r->isEdited()) {
-            EventTargetNodeCast(oldFocusedNode.get())->dispatchEventForType(eventNames().changeEvent, true, false);
+            oldFocusedNode->dispatchEventForType(eventNames().changeEvent, true, false);
             if ((r = static_cast<RenderObject*>(oldFocusedNode.get()->renderer())))
                 r->setEdited(false);
         }
 
         // Dispatch the blur event and let the node do any other blur related activities (important for text fields)
-        EventTargetNodeCast(oldFocusedNode.get())->dispatchBlurEvent();
+        oldFocusedNode->dispatchBlurEvent();
 
         if (m_focusedNode) {
             // handler shifted focus
             focusChangeBlocked = true;
             newFocusedNode = 0;
         }
-        EventTargetNodeCast(oldFocusedNode.get())->dispatchUIEvent(eventNames().DOMFocusOutEvent);
+        oldFocusedNode->dispatchUIEvent(eventNames().DOMFocusOutEvent);
         if (m_focusedNode) {
             // handler shifted focus
             focusChangeBlocked = true;
@@ -2616,14 +2629,14 @@ bool Document::setFocusedNode(PassRefPtr<Node> newFocusedNode)
         m_focusedNode = newFocusedNode.get();
 
         // Dispatch the focus event and let the node do any other focus related activities (important for text fields)
-        EventTargetNodeCast(m_focusedNode.get())->dispatchFocusEvent();
+        m_focusedNode->dispatchFocusEvent();
 
         if (m_focusedNode != newFocusedNode) {
             // handler shifted focus
             focusChangeBlocked = true;
             goto SetFocusedNodeDone;
         }
-        EventTargetNodeCast(m_focusedNode.get())->dispatchUIEvent(eventNames().DOMFocusInEvent);
+        m_focusedNode->dispatchUIEvent(eventNames().DOMFocusInEvent);
         if (m_focusedNode != newFocusedNode) { 
             // handler shifted focus
             focusChangeBlocked = true;
@@ -3295,6 +3308,11 @@ void Document::setInPageCache(bool flag)
 
 void Document::documentWillBecomeInactive() 
 {
+#if USE(ACCELERATED_COMPOSITING)
+    if (renderer())
+        renderView()->willMoveOffscreen();
+#endif
+
     HashSet<Element*>::iterator end = m_documentActivationCallbackElements.end();
     for (HashSet<Element*>::iterator i = m_documentActivationCallbackElements.begin(); i != end; ++i)
         (*i)->documentWillBecomeInactive();
@@ -3305,6 +3323,11 @@ void Document::documentDidBecomeActive()
     HashSet<Element*>::iterator end = m_documentActivationCallbackElements.end();
     for (HashSet<Element*>::iterator i = m_documentActivationCallbackElements.begin(); i != end; ++i)
         (*i)->documentDidBecomeActive();
+
+#if USE(ACCELERATED_COMPOSITING)
+    if (renderer())
+        renderView()->didMoveOnscreen();
+#endif
 }
 
 void Document::registerForDocumentActivationCallbacks(Element* e)

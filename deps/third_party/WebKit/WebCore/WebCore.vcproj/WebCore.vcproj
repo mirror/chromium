@@ -688,10 +688,6 @@
 				>
 			</File>
 			<File
-				RelativePath="$(WebKitOutputDir)\obj\$(ProjectName)\DerivedSources\JSEventTargetNode.h"
-				>
-			</File>
-			<File
 				RelativePath="$(WebKitOutputDir)\obj\$(ProjectName)\DerivedSources\JSFile.h"
 				>
 			</File>
@@ -11398,22 +11394,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\dom\EventTargetNode.cpp"
-				>
-				<FileConfiguration
-					Name="Release_PGO|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						WholeProgramOptimization="true"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\dom\EventTargetNode.h"
-				>
-			</File>
-			<File
 				RelativePath="..\dom\ExceptionBase.cpp"
 				>
 				<FileConfiguration
@@ -14306,10 +14286,6 @@
 				</File>
 				<File
 					RelativePath="..\bindings\js\JSEventTargetBase.h"
-					>
-				</File>
-				<File
-					RelativePath="..\bindings\js\JSEventTargetNodeCustom.cpp"
 					>
 				</File>
 				<File
