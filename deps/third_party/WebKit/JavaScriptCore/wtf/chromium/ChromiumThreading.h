@@ -36,9 +36,8 @@ namespace WTF {
     // An interface to the embedding layer, which provides threading support.
     class ChromiumThreading {
     public:
-      // TODO(ojan): These probably need implementations.
-      static void initializeMainThread() {};
-      static void scheduleDispatchFunctionsOnMainThread() {};
+        static void initializeMainThread();
+        static void scheduleDispatchFunctionsOnMainThread();
     };
 
 } // namespace WTF
