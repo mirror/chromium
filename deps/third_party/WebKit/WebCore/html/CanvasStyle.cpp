@@ -147,7 +147,7 @@ void CanvasStyle::applyStrokeColor(GraphicsContext* context)
             currentPen.setColor(clr);
             context->platformContext()->setPen(currentPen);
 #else
-            context->setStrokeColor(cmykToRGB());
+            context->setStrokeColor(Color(m_cyan, m_magenta, m_yellow, m_black, m_alpha));
 #endif
             break;
         }
@@ -208,7 +208,7 @@ void CanvasStyle::applyFillColor(GraphicsContext* context)
             currentBrush.setColor(clr);
             context->platformContext()->setBrush(currentBrush);
 #else
-            context->setFillColor(cmykToRGB());
+            context->setFillColor(Color(m_cyan, m_magenta, m_yellow, m_black, m_alpha));
 #endif
             break;
         }
