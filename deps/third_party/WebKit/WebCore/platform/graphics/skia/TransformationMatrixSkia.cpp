@@ -48,6 +48,7 @@ TransformationMatrix::operator SkMatrix() const
 
     result.setPerspX(0);
     result.setPerspY(0);
+    result.set(SkMatrix::kMPersp2, SK_Scalar1);
 
     return result;
 }
