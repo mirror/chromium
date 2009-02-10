@@ -42,7 +42,9 @@ gfx::Rect GetInitialWindowBounds(GtkWindow* window) {
 
 }  // namespace
 
-BrowserWindowGtk::BrowserWindowGtk(Browser* browser) : browser_(browser) {
+BrowserWindowGtk::BrowserWindowGtk(Browser* browser)
+    :  content_area_(NULL),
+       browser_(browser) {
   Init();
 }
 
@@ -62,13 +64,13 @@ void BrowserWindowGtk::Init() {
                    G_CALLBACK(MainWindowStateChanged), this);
   bounds_ = GetInitialWindowBounds(window_);
 
-  GtkWidget* vbox = gtk_vbox_new(FALSE, 0);
+  vbox_ = gtk_vbox_new(FALSE, 0);
 
   toolbar_.reset(new BrowserToolbarGtk(browser_.get()));
   toolbar_->Init(browser_->profile());
-  toolbar_->AddToolbarToBox(vbox);
+  toolbar_->AddToolbarToBox(vbox_);
 
-  gtk_container_add(GTK_CONTAINER(window_), vbox);
+  gtk_container_add(GTK_CONTAINER(window_), vbox_);
 }
 
 void BrowserWindowGtk::Show() {
@@ -78,8 +80,7 @@ void BrowserWindowGtk::Show() {
     WebContents* contents = (WebContents*)(browser_->GetTabContentsAt(0));
     content_area_ = ((RenderWidgetHostViewGtk*)contents->
         render_view_host()->view())->native_view();
-    gtk_container_add(GTK_CONTAINER(window_), content_area_);
-    contents->NavigateToPendingEntry(false);
+    gtk_box_pack_start(GTK_BOX(vbox_), content_area_, TRUE, TRUE, 0);
   }
 
   gtk_widget_show_all(GTK_WIDGET(window_));

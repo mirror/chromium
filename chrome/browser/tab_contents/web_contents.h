@@ -8,7 +8,6 @@
 #include "base/basictypes.h"
 #include "base/hash_tables.h"
 #include "chrome/browser/cancelable_request.h"
-#include "chrome/browser/history/history.h"
 #include "chrome/browser/renderer_host/render_view_host_delegate.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/render_view_host_manager.h"
@@ -133,9 +132,11 @@ class WebContents : public TabContents,
   // TODO(brettw) fix this, tab contents shouldn't have these methods, probably
   // it should be killed altogether.
   virtual void CreateView();
-  virtual gfx::NativeView GetNativeView() const;
-  virtual gfx::NativeView GetContentNativeView();
+#if defined(OS_WIN)
+  virtual HWND GetContainerHWND() const;
+  virtual HWND GetContentHWND();
   virtual void GetContainerBounds(gfx::Rect *out) const;
+#endif
 
   // Web apps ------------------------------------------------------------------
 

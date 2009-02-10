@@ -58,7 +58,6 @@ gboolean ButtonPressReleaseEvent(GtkWidget* widget, GdkEventButton* event,
 
 gboolean MouseMoveEvent(GtkWidget* widget, GdkEventMotion* event,
                         RenderWidgetHostViewGtk* host) {
-  NOTIMPLEMENTED();
   return FALSE;
 }
 
@@ -125,7 +124,10 @@ void RenderWidgetHostViewGtk::SetSize(const gfx::Size& size) {
 
 gfx::NativeView RenderWidgetHostViewGtk::GetPluginNativeView() {
   NOTIMPLEMENTED();
-  return NULL;
+  // TODO(port): We need to pass some widget pointer out here because the
+  // renderer echos it back to us when it asks for GetScreenInfo. However, we
+  // should probably be passing the top-level window or some such instead.
+  return view_;
 }
 
 void RenderWidgetHostViewGtk::MovePluginWindows(
