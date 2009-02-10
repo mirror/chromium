@@ -22,7 +22,9 @@
 #include "webkit/glue/weburlrequest.h"
 #include "webkit/glue/webkit_glue.h"
 #include "webkit/glue/webview.h"
+#include "webkit/glue/plugins/plugin_list.h"
 #include "webkit/glue/window_open_disposition.h"
+#include "webkit/glue/plugins/webplugin_delegate_impl.h"
 #include "webkit/tools/test_shell/test_navigation_controller.h"
 #include "webkit/tools/test_shell/test_shell.h"
 
@@ -77,14 +79,24 @@ WebPluginDelegate* TestWebViewDelegate::CreatePluginDelegate(
     const std::string& mime_type,
     const std::string& clsid,
     std::string* actual_mime_type) {
-  NOTIMPLEMENTED();
-  return NULL;
+  bool allow_wildcard = true;
+  WebPluginInfo info;
+  if (!NPAPI::PluginList::Singleton()->GetPluginInfo(url, mime_type, clsid,
+                                                     allow_wildcard, &info,
+                                                     actual_mime_type))
+    return NULL;
+
+  if (actual_mime_type && !actual_mime_type->empty())
+    return WebPluginDelegateImpl::Create(info.path, *actual_mime_type,
+                                         shell_->webViewHost()->view_handle());
+  else
+    return WebPluginDelegateImpl::Create(info.path, mime_type,
+                                         shell_->webViewHost()->view_handle());
 }
 
 void TestWebViewDelegate::ShowJavaScriptAlert(const std::wstring& message) {
-  // TODO(port): remove GTK_WINDOW bit after gfx::NativeWindow is fixed.
   GtkWidget* dialog = gtk_message_dialog_new(
-      GTK_WINDOW(shell_->mainWnd()), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO,
+      shell_->mainWnd(), GTK_DIALOG_MODAL, GTK_MESSAGE_INFO,
       GTK_BUTTONS_OK, "%s", WideToUTF8(message).c_str());
   gtk_window_set_title(GTK_WINDOW(dialog), "JavaScript Alert");
   gtk_dialog_run(GTK_DIALOG(dialog));  // Runs a nested message loop.

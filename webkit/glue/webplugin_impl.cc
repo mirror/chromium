@@ -11,7 +11,6 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "Cursor.h"
 #include "Document.h"
 #include "DocumentLoader.h"
-#include "Element.h"
 #include "Event.h"
 #include "EventNames.h"
 #include "FloatPoint.h"
@@ -279,8 +278,8 @@ WebCore::Widget* WebPluginImpl::Create(const GURL& url,
                                        char** argn,
                                        char** argv,
                                        int argc,
-                                       WebCore::Element *element,
-                                       WebFrameImpl *frame,
+                                       WebCore::HTMLPlugInElement* element,
+                                       WebFrameImpl* frame,
                                        WebPluginDelegate* delegate,
                                        bool load_manually,
                                        const std::string& mime_type) {
@@ -300,7 +299,7 @@ WebCore::Widget* WebPluginImpl::Create(const GURL& url,
   return container;
 }
 
-WebPluginImpl::WebPluginImpl(WebCore::Element* element,
+WebPluginImpl::WebPluginImpl(WebCore::HTMLPlugInElement* element,
                              WebFrameImpl* webframe,
                              WebPluginDelegate* delegate,
                              const GURL& plugin_url,
@@ -508,6 +507,7 @@ RoutingStatus WebPluginImpl::RouteToFrame(const char *method,
   loader->loadFrameRequestWithFormAndValues(
       load_request,
       false,  // lock history
+      false,  // lock back forward list
       0,      // event
       0,      // form element
       HashMap<WebCore::String, WebCore::String>());
@@ -537,11 +537,7 @@ NPObject* WebPluginImpl::GetWindowScriptNPObject() {
 }
 
 NPObject* WebPluginImpl::GetPluginElement() {
-  // We don't really know that this is a
-  // HTMLPluginElement.  Cast to it and hope?
-  WebCore::HTMLPlugInElement *plugin_element =
-      static_cast<WebCore::HTMLPlugInElement*>(element_);
-  return plugin_element->getNPObject();
+  return element_->getNPObject();
 }
 
 void WebPluginImpl::SetCookie(const GURL& url,
@@ -706,19 +702,20 @@ void WebPluginImpl::paint(WebCore::GraphicsContext* gc,
                 static_cast<float>(origin.y()));
 
 #if defined(OS_WIN)
-  // HDC is only used when in windowless mode.
-  HDC hdc = gc->platformContext()->canvas()->beginPlatformPaint();
+  // Note that HDC is only used when in windowless mode.
+  HDC dc = gc->platformContext()->canvas()->beginPlatformPaint();
 #else
-  NOTIMPLEMENTED();
+  // TODO(port): the equivalent of the above.
+  void* dc = NULL;  // Temporary, to reduce ifdefs.
 #endif
 
   WebCore::IntRect window_rect =
       WebCore::IntRect(view->contentsToWindow(damage_rect.location()),
                        damage_rect.size());
 
-#if defined(OS_WIN)
-  delegate_->Paint(hdc, webkit_glue::FromIntRect(window_rect));
+  delegate_->Paint(dc, webkit_glue::FromIntRect(window_rect));
 
+#if defined(OS_WIN)
   gc->platformContext()->canvas()->endPlatformPaint();
 #endif
   gc->restore();
@@ -1378,10 +1375,12 @@ void WebPluginImpl::TearDownPluginInstance(
     frame()->script()->cleanupScriptObjectsForPlugin(widget_);
   }
 
-  // Call PluginDestroyed() first to prevent the plugin from calling us back
-  // in the middle of tearing down the render tree.
-  delegate_->PluginDestroyed();
-  delegate_ = NULL;
+  if (delegate_) {
+    // Call PluginDestroyed() first to prevent the plugin from calling us back
+    // in the middle of tearing down the render tree.
+    delegate_->PluginDestroyed();
+    delegate_ = NULL;
+  }
 
   // Cancel any pending requests because otherwise this deleted object will
   // be called by the ResourceDispatcher.

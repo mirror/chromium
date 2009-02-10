@@ -6,6 +6,7 @@
 #include "base/message_loop.h"
 #include "base/path_service.h"
 #include "base/platform_thread.h"
+#include "base/scoped_nsautorelease_pool.h"
 #include "base/string_util.h"
 #include "base/system_monitor.h"
 #include "chrome/common/chrome_constants.h"
@@ -15,10 +16,12 @@
 #include "chrome/common/logging_chrome.h"
 #include "chrome/common/main_function_params.h"
 #include "chrome/common/resource_bundle.h"
-#include "chrome/common/win_util.h"
+#include "chrome/renderer/renderer_main_platform_delegate.h"
 #include "chrome/renderer/render_process.h"
-#include "chrome/test/injection_test_dll.h"
-#include "sandbox/src/sandbox.h"
+
+#if defined(OS_LINUX)
+#include <gtk/gtk.h>
+#endif
 
 #include "chromium_strings.h"
 #include "generated_resources.h"
@@ -38,18 +41,36 @@ static void HandleRendererErrorTestParameters(const CommandLine& command_line) {
   }
 
   if (command_line.HasSwitch(switches::kRendererStartupDialog)) {
+#if defined(OS_WIN)
     std::wstring title = l10n_util::GetString(IDS_PRODUCT_NAME);
     title += L" renderer";  // makes attaching to process easier
-    MessageBox(NULL, L"renderer starting...", title.c_str(),
-               MB_OK | MB_SETFOREGROUND);
+    ::MessageBox(NULL, L"renderer starting...", title.c_str(),
+                 MB_OK | MB_SETFOREGROUND);
+#elif defined(OS_LINUX)
+    // TODO(port): create an abstraction layer for dialog boxes and use it here.
+    std::string text = StringPrintf("attach to me at pid %d", getpid());
+    GtkWidget* dialog = gtk_message_dialog_new(
+        NULL, GTK_DIALOG_MODAL, GTK_MESSAGE_INFO, GTK_BUTTONS_OK, text.c_str());
+    gtk_window_set_title(GTK_WINDOW(dialog), "renderer starting...");
+    gtk_dialog_run(GTK_DIALOG(dialog));  // Runs a nested message loop.
+    gtk_widget_destroy(dialog);
+#elif defined(OS_MACOSX)
+    // TODO(playmobil): In the long term, overriding this flag doesn't seem
+    // right, either use our own flag or open a dialog we can use.
+    // This is just to ease debugging in the interim.
+    LOG(WARNING) << "Renderer ("
+                 << getpid()
+                 << ") paused waiting for debugger to attach @ pid";
+    pause();
+#endif  // defined(OS_MACOSX)
   }
 }
 
 // mainline routine for running as the Rendererer process
 int RendererMain(const MainFunctionParams& parameters) {
   const CommandLine& parsed_command_line = parameters.command_line_;
-  sandbox::TargetServices* target_services = 
-      parameters.sandbox_info_.TargetServices();
+  base::ScopedNSAutoreleasePool* pool = parameters.autorelease_pool_;
+  RendererMainPlatformDelegate platform(parameters);
 
   StatsScope<StatsCounterTimer>
       startup_timer(chrome::Counters::renderer_main());
@@ -62,22 +83,10 @@ int RendererMain(const MainFunctionParams& parameters) {
   // Initialize the SystemMonitor
   base::SystemMonitor::Start();
 
-  CoInitialize(NULL);
+  platform.PlatformInitialize();
 
-  DLOG(INFO) << "Started renderer with " <<
-    parsed_command_line.command_line_string();
-
-  HMODULE sandbox_test_module = NULL;
   bool no_sandbox = parsed_command_line.HasSwitch(switches::kNoSandbox);
-  if (target_services && !no_sandbox) {
-    // The command line might specify a test dll to load.
-    if (parsed_command_line.HasSwitch(switches::kTestSandbox)) {
-      std::wstring test_dll_name =
-        parsed_command_line.GetSwitchValue(switches::kTestSandbox);
-      sandbox_test_module = LoadLibrary(test_dll_name.c_str());
-      DCHECK(sandbox_test_module);
-    }
-  }
+  platform.InitSandboxTests(no_sandbox);
 
   HandleRendererErrorTestParameters(parsed_command_line);
 
@@ -86,41 +95,23 @@ int RendererMain(const MainFunctionParams& parameters) {
   if (RenderProcess::GlobalInit(channel_name)) {
     bool run_loop = true;
     if (!no_sandbox) {
-      if (target_services) {
-        target_services->LowerToken();
-      } else {
-        run_loop = false;
-      }
+      run_loop = platform.EnableSandbox();
     }
 
-    if (sandbox_test_module) {
-      RunRendererTests run_security_tests =
-          reinterpret_cast<RunRendererTests>(GetProcAddress(sandbox_test_module,
-                                                            kRenderTestCall));
-      DCHECK(run_security_tests);
-      if (run_security_tests) {
-        int test_count = 0;
-        DLOG(INFO) << "Running renderer security tests";
-        BOOL result = run_security_tests(&test_count);
-        DCHECK(result) << "Test number " << test_count << " has failed.";
-        // If we are in release mode, debug or crash the process.
-        if (!result)
-          __debugbreak();
-      }
-    }
+    platform.RunSandboxTests();
 
     startup_timer.Stop();  // End of Startup Time Measurement.
 
     if (run_loop) {
       // Load the accelerator table from the browser executable and tell the
       // message loop to use it when translating messages.
+      if (pool) pool->Recycle();
       MessageLoop::current()->Run();
     }
 
     RenderProcess::GlobalCleanup();
   }
-
-  CoUninitialize();
+  platform.PlatformUninitialize();
   return 0;
 }
 

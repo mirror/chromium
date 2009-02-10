@@ -33,6 +33,14 @@ ProcessHandle GetCurrentProcessHandle() {
   return ::GetCurrentProcess();
 }
 
+ProcessHandle OpenProcessHandle(int pid) {
+  return OpenProcess(PROCESS_DUP_HANDLE | PROCESS_TERMINATE, FALSE, pid);
+}
+
+void CloseProcessHandle(ProcessHandle process) {
+  CloseHandle(process);
+}
+
 // Helper for GetProcId()
 bool GetProcIdViaGetProcessId(ProcessHandle process, DWORD* id) {
   // Dynamically get a pointer to GetProcessId().
@@ -152,17 +160,20 @@ bool LaunchApp(const CommandLine& cl,
 // Attempts to kill the process identified by the given process
 // entry structure, giving it the specified exit code.
 // Returns true if this is successful, false otherwise.
-bool KillProcess(int process_id, int exit_code, bool wait) {
+bool KillProcessById(DWORD process_id, int exit_code, bool wait) {
   HANDLE process = OpenProcess(PROCESS_TERMINATE | SYNCHRONIZE,
                                FALSE,  // Don't inherit handle
                                process_id);
-  if (process)
-    return KillProcess(process, exit_code, wait);
-  return false;
+  if (!process)
+    return false;
+
+  bool ret = KillProcess(process, exit_code, wait);
+  CloseHandle(process);
+  return ret;
 }
 
-bool KillProcess(HANDLE process, int exit_code, bool wait) {
-  bool result = !!TerminateProcess(process, exit_code);
+bool KillProcess(ProcessHandle process, int exit_code, bool wait) {
+  bool result = (TerminateProcess(process, exit_code) != FALSE);
   if (result && wait) {
     // The process may not end immediately due to pending I/O
     if (WAIT_OBJECT_0 != WaitForSingleObject(process, 60 * 1000))
@@ -170,7 +181,6 @@ bool KillProcess(HANDLE process, int exit_code, bool wait) {
   } else {
     DLOG(ERROR) << "Unable to terminate process: " << GetLastError();
   }
-  CloseHandle(process);
   return result;
 }
 
@@ -244,12 +254,12 @@ bool WaitForExitCode(ProcessHandle handle, int* exit_code) {
 }
 
 NamedProcessIterator::NamedProcessIterator(const std::wstring& executable_name,
-                                           const ProcessFilter* filter) :
-  started_iteration_(false),
-  executable_name_(executable_name),
-  filter_(filter) {
-    snapshot_ = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
-  }
+                                           const ProcessFilter* filter)
+    : started_iteration_(false),
+      executable_name_(executable_name),
+      filter_(filter) {
+  snapshot_ = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+}
 
 NamedProcessIterator::~NamedProcessIterator() {
   CloseHandle(snapshot_);
@@ -307,8 +317,10 @@ bool KillProcesses(const std::wstring& executable_name, int exit_code,
   const ProcessEntry* entry;
 
   NamedProcessIterator iter(executable_name, filter);
-  while (entry = iter.NextProcessEntry())
-    result = KillProcess((*entry).th32ProcessID, exit_code, true) && result;
+  while (entry = iter.NextProcessEntry()) {
+    if (!KillProcessById((*entry).th32ProcessID, exit_code, true))
+      result = false;
+  }
 
   return result;
 }
@@ -338,7 +350,6 @@ bool WaitForProcessesToExit(const std::wstring& executable_name,
 
 bool WaitForSingleProcess(ProcessHandle handle, int wait_milliseconds) {
   bool retval = WaitForSingleObject(handle, wait_milliseconds) == WAIT_OBJECT_0;
-  CloseHandle(handle);
   return retval;
 }
 

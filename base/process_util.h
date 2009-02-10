@@ -20,6 +20,7 @@
 #endif
 
 #include <string>
+#include <vector>
 
 #include "base/command_line.h"
 #include "base/process.h"
@@ -28,10 +29,11 @@
 typedef PROCESSENTRY32 ProcessEntry;
 typedef IO_COUNTERS IoCounters;
 #elif defined(OS_POSIX)
+// TODO(port): we should not rely on a Win32 structure.
 struct ProcessEntry {
   int pid;
   int ppid;
-  char szExeFile[NAME_MAX+1];
+  char szExeFile[NAME_MAX + 1];
 };
 
 struct IoCounters {
@@ -42,6 +44,10 @@ struct IoCounters {
   unsigned long long WriteTransferCount;
   unsigned long long OtherTransferCount;
 };
+#endif
+
+#if defined(OS_MACOSX)
+struct kinfo_proc;
 #endif
 
 namespace base {
@@ -60,6 +66,13 @@ int GetCurrentProcId();
 
 // Returns the ProcessHandle of the current process.
 ProcessHandle GetCurrentProcessHandle();
+  
+// Converts a PID to a process handle. This handle must be closed by
+// CloseProcessHandle when you are done with it.
+ProcessHandle OpenProcessHandle(int pid);
+  
+// Closes the process handle opened by OpenProcessHandle.
+void CloseProcessHandle(ProcessHandle process);
 
 // Returns the unique ID for the specified process. This is functionally the
 // same as Windows' GetProcessId(), but works on versions of Windows before
@@ -138,9 +151,9 @@ bool KillProcesses(const std::wstring& executable_name, int exit_code,
 // entry structure, giving it the specified exit code. If |wait| is true, wait
 // for the process to be actually terminated before returning.
 // Returns true if this is successful, false otherwise.
-bool KillProcess(int process_id, int exit_code, bool wait);
+bool KillProcess(ProcessHandle process, int exit_code, bool wait);
 #if defined(OS_WIN)
-bool KillProcess(HANDLE process, int exit_code, bool wait);
+bool KillProcessById(DWORD process_id, int exit_code, bool wait);
 #endif
 
 // Get the termination status (exit code) of the process and return true if the
@@ -215,9 +228,9 @@ class NamedProcessIterator {
 #elif defined(OS_LINUX)
   DIR *procfs_dir_;
 #elif defined(OS_MACOSX)
-  // probably kvm_t *kvmd_;
+  std::vector<kinfo_proc> kinfo_procs_;
+  size_t index_of_kinfo_proc_;
 #endif
-
   ProcessEntry entry_;
   const ProcessFilter* filter_;
 

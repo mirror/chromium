@@ -125,6 +125,30 @@
 	</References>
 	<Files>
 		<Filter
+			Name="custom"
+			>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8CustomBinding.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8CustomEventListener.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8SVGElementInstanceCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8SVGLengthCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8SVGMatrixCustom.cpp"
+			>
+		</File>
+		</Filter>
+		<Filter
 			Name="DerivedSources"
 			>
 			<File
@@ -493,14 +517,6 @@
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\V8EventException.h"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8EventTargetNode.cpp"
-				>
-			</File>
-			<File
-				RelativePath="$(IntDir)\DerivedSources\V8EventTargetNode.h"
 				>
 			</File>
 			<File
@@ -2288,11 +2304,27 @@
 				>
 			</File>
 			<File
+				RelativePath="$(IntDir)\DerivedSources\V8WorkerContext.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\V8WorkerContext.h"
+				>
+			</File>
+			<File
 				RelativePath="$(IntDir)\DerivedSources\V8WorkerLocation.cpp"
 				>
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\V8WorkerLocation.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\V8WorkerNavigator.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\V8WorkerNavigator.h"
 				>
 			</File>
 			<File
@@ -2597,10 +2629,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\Threading.cpp"
-			>
-		</File>
-		<File
 			RelativePath="..\..\port\bindings\v8\v8_binding.h"
 			>
 		</File>
@@ -2657,6 +2685,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\V8Binding.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\port\bindings\v8\V8CanvasPixelArrayCustom.cpp"
 			>
 		</File>
@@ -2665,11 +2697,27 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\V8Proxy.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\port\bindings\v8\V8WorkerCustom.cpp"
 			>
 		</File>
 		<File
+			RelativePath="..\..\port\bindings\v8\V8WorkerContextCustom.cpp"
+			>
+		</File>
+		<File
 			RelativePath="..\..\port\bindings\v8\V8XMLHttpRequestCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\port\bindings\v8\WorkerContextExecutionProxy.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\port\bindings\v8\WorkerContextExecutionProxy.h"
 			>
 		</File>
 		<File

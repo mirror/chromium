@@ -8,6 +8,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/resource_dispatcher_host.h"
+#include "chrome/common/render_messages.h"
 
 // A Task used with InvokeLater that we hold a pointer to in pending_paints_.
 // Instances are deleted by MessageLoop after it calls their Run method.
@@ -43,7 +44,11 @@ class RenderWidgetHelper::PaintMsgProxy : public Task {
 RenderWidgetHelper::RenderWidgetHelper(int render_process_id)
     : render_process_id_(render_process_id),
       ui_loop_(MessageLoop::current()),
+#if defined(OS_WIN)
       event_(CreateEvent(NULL, FALSE /* auto-reset */, FALSE, NULL)),
+#elif defined(OS_POSIX)
+      event_(false /* auto-reset */, false),
+#endif
       block_popups_(false) {
 }
 

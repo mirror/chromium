@@ -4,8 +4,8 @@
 
 // TODO(port): the ifdefs in here are a first step towards trying to determine
 // the correct abstraction for all the OS functionality required at this
-// stage of process initialization. It should not be taken as a final 
-// abstraction. 
+// stage of process initialization. It should not be taken as a final
+// abstraction.
 
 #include "build/build_config.h"
 
@@ -14,6 +14,10 @@
 #include <atlapp.h>
 #include <malloc.h>
 #include <new.h>
+#endif
+
+#if defined(OS_LINUX)
+#include <gtk/gtk.h>
 #endif
 
 #include "base/at_exit.h"
@@ -36,9 +40,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/logging_chrome.h"
 #include "chrome/common/main_function_params.h"
-#if defined(OS_WIN)
 #include "chrome/common/resource_bundle.h"
-#endif
 #include "chrome/common/sandbox_init_wrapper.h"
 #if defined(OS_WIN)
 #include "sandbox/src/sandbox.h"
@@ -166,13 +168,15 @@ void EnableHeapProfiler(const CommandLine& parsed_command_line) {
 }
 
 void CommonSubprocessInit() {
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_LINUX)
   // Initialize ResourceBundle which handles files loaded from external
   // sources.  The language should have been passed in to us from the
   // browser process as a command line flag.
-  // TODO(port): enable when we figure out resource bundle issues
+  // TODO(port-mac): enable when we figure out resource bundle issues
   ResourceBundle::InitSharedInstance(std::wstring());
+#endif
 
+#if defined(OS_WIN)
   // HACK: Let Windows know that we have started.  This is needed to suppress
   // the IDC_APPSTARTING cursor from being displayed for a prolonged period
   // while a subprocess is starting.
@@ -196,12 +200,19 @@ int ChromeMain(int argc, const char** argv) {
   // The exit manager is in charge of calling the dtors of singleton objects.
   base::AtExitManager exit_manager;
 
-  // TODO(pinkerton): We need this pool here for all the objects created 
-  // before we get to the UI event loop, but we don't want to leave them
-  // hanging around until the app quits. We should add a "flush" to the class
-  // which just cycles the pool under the covers and then call that just
-  // before we invoke the main UI loop near the bottom of this function.
+  // We need this pool for all the objects created before we get to the 
+  // event loop, but we don't want to leave them hanging around until the
+  // app quits. Each "main" needs to flush this pool right before it goes into
+  // its main event loop to get rid of the cruft.
   base::ScopedNSAutoreleasePool autorelease_pool;
+
+#if defined(OS_LINUX)
+  // gtk_init() can change |argc| and |argv| and thus must be called before
+  // CommandLine::Init().
+  // TODO(estade): we should make a copy of |argv| instead of const_casting
+  // it.
+  gtk_init(&argc, const_cast<char***>(&argv));
+#endif
 
   // Initialize the command line.
 #if defined(OS_WIN)
@@ -212,7 +223,7 @@ int ChromeMain(int argc, const char** argv) {
   const CommandLine& parsed_command_line = *CommandLine::ForCurrentProcess();
 
   SetupCRT(parsed_command_line);
-  
+
   // Initialize the Chrome path provider.
   chrome::RegisterPathProvider();
 
@@ -242,7 +253,7 @@ int ChromeMain(int argc, const char** argv) {
 
   std::wstring process_type =
     parsed_command_line.GetSwitchValue(switches::kProcessType);
-  
+
   // Checks if the sandbox is enabled in this process and initializes it if this
   // is the case. The crash handler depends on this so it has to be done before
   // its initialization.
@@ -251,7 +262,7 @@ int ChromeMain(int argc, const char** argv) {
   sandbox_wrapper.SetServices(sandbox_info);
 #endif
   sandbox_wrapper.InitializeSandbox(parsed_command_line, process_type);
-  
+
 #if defined(OS_WIN)
   _Module.Init(NULL, instance);
 #endif
@@ -295,14 +306,13 @@ int ChromeMain(int argc, const char** argv) {
 
   startup_timer.Stop();  // End of Startup Time Measurement.
 
-  MainFunctionParams main_params(parsed_command_line, sandbox_wrapper);
-  
+  MainFunctionParams main_params(parsed_command_line, sandbox_wrapper,
+                                 &autorelease_pool);
+
   // TODO(port): turn on these main() functions as they've been de-winified.
   int rv = -1;
   if (process_type == switches::kRendererProcess) {
-#if defined(OS_WIN)
     rv = RendererMain(main_params);
-#endif
   } else if (process_type == switches::kPluginProcess) {
 #if defined(OS_WIN)
     rv = PluginMain(main_params);
@@ -315,8 +325,8 @@ int ChromeMain(int argc, const char** argv) {
   }
 
   if (!process_type.empty()) {
-#if defined(OS_WIN)
-    // TODO(port): enable when we figure out resource bundle issues
+#if defined(OS_WIN) || defined(OS_LINUX)
+    // TODO(port-mac): enable when we figure out resource bundle issues
     ResourceBundle::CleanupSharedInstance();
 #endif
   }

@@ -40,6 +40,7 @@ extern const wchar_t kTrustedPlugins[];
 extern const wchar_t kTestSandbox[];
 extern const wchar_t kUserDataDir[];
 extern const wchar_t kPluginDataDir[];
+extern const wchar_t kDiskCacheDir[];
 extern const wchar_t kParentProfile[];
 extern const wchar_t kApp[];
 extern const wchar_t kAppUploadFile[];
@@ -47,7 +48,7 @@ extern const wchar_t kDomAutomationController[];
 extern const wchar_t kPluginPath[];
 extern const wchar_t kUserAgent[];
 extern const wchar_t kJavaScriptFlags[];
-extern const wchar_t kGeoID[];
+extern const wchar_t kCountry[];
 extern const wchar_t kLang[];
 extern const wchar_t kDebugChildren[];
 extern const wchar_t kWaitForDebuggerChildren[];
@@ -111,6 +112,7 @@ extern const wchar_t kDisableJavaScript[];
 extern const wchar_t kDisableJava[];
 extern const wchar_t kDisablePlugins[];
 extern const wchar_t kDisableImages[];
+extern const wchar_t kDisableWebSecurity[];
 
 extern const wchar_t kUseLowFragHeapCrt[];
 
@@ -131,6 +133,7 @@ extern const wchar_t kSdchFilter[];
 extern const wchar_t kEnableUserScripts[];
 extern const wchar_t kEnableExtensions[];
 extern const wchar_t kInstallExtension[];
+extern const wchar_t kLoadExtension[];
 
 extern const wchar_t kIncognito[];
 extern const wchar_t kUseOldSafeBrowsing[];
@@ -140,6 +143,8 @@ extern const wchar_t kEnableRendererAccessibility[];
 extern const wchar_t kEnableVideo[];
 
 extern const wchar_t kTestName[];
+
+extern const wchar_t kRendererCmdPrefix[];
 
 }  // namespace switches
 

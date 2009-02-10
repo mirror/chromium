@@ -93,9 +93,13 @@ bool ExternalTabContainer::Init(Profile* profile, HWND parent,
   // Now apply the parenting and style
   if (parent)
     SetParent(parent);
-  ModifyStyle(0, style, 0);
 
-  ::ShowWindow(tab_contents_->GetContainerHWND(), SW_SHOW);
+  // We need WS_POPUP to be on the window during initialization, but
+  // once initialized and parent-ed, we apply the requested style which
+  // may or may not include the popup bit.
+  ModifyStyle(WS_POPUP, style, 0);
+
+  ::ShowWindow(tab_contents_->GetNativeView(), SW_SHOW);
   return true;
 }
 
@@ -129,7 +133,7 @@ LRESULT ExternalTabContainer::OnSize(UINT, WPARAM, LPARAM, BOOL& handled) {
   if (tab_contents_) {
     RECT client_rect = {0};
     GetClientRect(&client_rect);
-    ::SetWindowPos(tab_contents_->GetContainerHWND(), NULL, client_rect.left,
+    ::SetWindowPos(tab_contents_->GetNativeView(), NULL, client_rect.left,
                    client_rect.top, client_rect.right - client_rect.left,
                    client_rect.bottom - client_rect.top, SWP_NOZORDER);
   }

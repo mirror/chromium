@@ -10,7 +10,10 @@
 #import "chrome/browser/cocoa/tab_contents_controller.h"
 #import "chrome/browser/tabs/tab_strip_model.h"
 
-// the private methods the brige object needs from the controller
+// The amount of overlap tabs have in their button frames.
+const short kTabOverlap = 16;
+
+// The private methods the brige object needs from the controller.
 @interface TabStripController(BridgeMethods)
 - (void)insertTabWithContents:(TabContents*)contents
                       atIndex:(NSInteger)index
@@ -19,6 +22,8 @@
              previousContents:(TabContents*)oldContents
                       atIndex:(NSInteger)index
                   userGesture:(bool)wasUserGesture;
+- (void)tabDetachedWithContents:(TabContents*)contents
+                        atIndex:(NSInteger)index;
 @end
 
 // A C++ bridge class to handle receiving notifications from the C++ tab
@@ -33,7 +38,6 @@ class TabStripBridge : public TabStripModelObserver {
   virtual void TabInsertedAt(TabContents* contents,
                              int index,
                              bool foreground);
-  virtual void TabClosingAt(TabContents* contents, int index);
   virtual void TabDetachedAt(TabContents* contents, int index);
   virtual void TabSelectedAt(TabContents* old_contents,
                              TabContents* new_contents,
@@ -52,11 +56,14 @@ class TabStripBridge : public TabStripModelObserver {
 
 @implementation TabStripController
 
-- (id)initWithView:(TabStripView*)view model:(TabStripModel*)model {
+- (id)initWithView:(TabStripView*)view 
+             model:(TabStripModel*)model
+          commands:(CommandUpdater*)commands {
   DCHECK(view && model);
   if ((self = [super init])) {
     tabView_ = view;
     model_ = model;
+    commands_ = commands;
     bridge_ = new TabStripBridge(model, self);
     tabContentsToController_ = [[NSMutableDictionary alloc] init];
     
@@ -105,9 +112,16 @@ class TabStripBridge : public TabStripModelObserver {
   [newView setFrame:frame];
 
   // Remove the old view from the view hierarchy. We know there's only one
-  // child of the contentView because we're the one who put it there.
-  NSView* oldView = [[contentView subviews] objectAtIndex:0];
-  [contentView replaceSubview:oldView with:newView];
+  // child of the contentView because we're the one who put it there. There
+  // may not be any children in the case of a tab that's been closed, in
+  // which case there's no swapping going on.
+  NSArray* subviews = [contentView subviews];
+  if ([subviews count]) {
+    NSView* oldView = [subviews objectAtIndex:0];
+    [contentView replaceSubview:oldView with:newView];
+  } else {
+    [contentView addSubview:newView];
+  }
 }
 
 // Create a new tab view and set its cell correctly so it draws the way we
@@ -157,7 +171,6 @@ class TabStripBridge : public TabStripModelObserver {
 - (NSRect)frameForNewTabAtIndex:(NSInteger)index {
   const short kIndentLeavingSpaceForControls = 66;
   const short kNewTabWidth = 160;
-  const short kTabOverlap = 16;
   
   short xOffset = kIndentLeavingSpaceForControls;
   if (index > 0) {
@@ -183,8 +196,10 @@ class TabStripBridge : public TabStripModelObserver {
   // TODO(pinkerton): will eventually need to pass |contents| to the 
   // controller to complete hooking things up.
   TabContentsController* contentsController =
-      [[[TabContentsController alloc] initWithNibName:@"TabContents" bundle:nil]
-          autorelease];
+      [[[TabContentsController alloc] initWithNibName:@"TabContents" 
+                                               bundle:nil
+                                             contents:contents
+                                             commands:commands_] autorelease];
   NSValue* key = [NSValue valueWithPointer:contents];
   [tabContentsToController_ setObject:contentsController forKey:key];
   
@@ -227,8 +242,49 @@ class TabStripBridge : public TabStripModelObserver {
     [current setState:(i == index) ? NSOnState : NSOffState];
   }
   
+  // Tell the new tab contents it is about to become the selected tab. Here it
+  // can do things like make sure the toolbar is up to date.
+  TabContentsController* newController =
+      [self controllerWithContents:newContents];
+  [newController willBecomeSelectedTab];
+
   // Swap in the contents for the new tab
   [self swapInTabContents:newContents];
+}
+
+// Called when a notification is received from the model that the given tab
+// has gone away. Remove all knowledge about this tab and it's associated 
+// controller and remove the view from the strip.
+- (void)tabDetachedWithContents:(TabContents*)contents
+                        atIndex:(NSInteger)index {
+  // Release the tab contents controller so those views get destroyed. This
+  // will remove all the tab content Cocoa views from the hierarchy. A
+  // subsequent "select tab" notification will follow from the model. To
+  // tell us what to swap in in its absence.
+  NSValue* key = [NSValue valueWithPointer:contents];
+  [tabContentsToController_ removeObjectForKey:key];
+
+  // Remove the |index|th view from the tab strip
+  NSView* tab = [[tabView_ subviews] objectAtIndex:index];
+  NSInteger tabWidth = [tab frame].size.width;
+  [tab removeFromSuperview];
+  
+  // Move all the views to the right the width of the tab that was closed.
+  // TODO(pinkerton): Animate!
+  const int numSubviews = [[tabView_ subviews] count];
+  for (int i = index; i < numSubviews; i++) {
+    NSView* curr = [[tabView_ subviews] objectAtIndex:i];
+    NSRect newFrame = [curr frame];
+    newFrame.origin.x -= tabWidth - kTabOverlap;
+    [curr setFrame:newFrame];
+  }
+}
+
+- (LocationBar*)locationBar {
+  TabContents* selectedContents = model_->GetSelectedTabContents();
+  TabContentsController* selectedController =
+      [self controllerWithContents:selectedContents];
+  return [selectedController locationBar];
 }
 
 @end
@@ -256,10 +312,8 @@ void TabStripBridge::TabInsertedAt(TabContents* contents,
                         inForeground:foreground];
 }
 
-void TabStripBridge::TabClosingAt(TabContents* contents, int index) {
-}
-
 void TabStripBridge::TabDetachedAt(TabContents* contents, int index) {
+  [controller_ tabDetachedWithContents:contents atIndex:index];
 }
 
 void TabStripBridge::TabSelectedAt(TabContents* old_contents,
@@ -275,10 +329,13 @@ void TabStripBridge::TabSelectedAt(TabContents* old_contents,
 void TabStripBridge::TabMoved(TabContents* contents,
                               int from_index,
                               int to_index) {
+  NOTIMPLEMENTED();
 }
 
 void TabStripBridge::TabChangedAt(TabContents* contents, int index) {
+  NOTIMPLEMENTED();
 }
 
 void TabStripBridge::TabStripEmpty() {
+  NOTIMPLEMENTED();
 }

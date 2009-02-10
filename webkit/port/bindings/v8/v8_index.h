@@ -29,7 +29,9 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
 #if ENABLE(WORKERS)
 #define WORKER_NONNODE_WRAPPER_TYPES(V)                                 \
   V(WORKER, Worker)                                                     \
-  V(WORKERLOCATION, WorkerLocation)
+  V(WORKERCONTEXT, WorkerContext)                                       \
+  V(WORKERLOCATION, WorkerLocation)                                     \
+  V(WORKERNAVIGATOR, WorkerNavigator)
 #else
 #define WORKER_NONNODE_WRAPPER_TYPES(V)
 #endif
@@ -45,7 +47,6 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(ELEMENT, Element)                                                   \
   V(ENTITY, Entity)                                                     \
   V(ENTITYREFERENCE, EntityReference)                                   \
-  V(EVENTTARGETNODE, EventTargetNode)                                   \
   V(HTMLDOCUMENT, HTMLDocument)                                         \
   V(NODE, Node)                                                         \
   V(NOTATION, Notation)                                                 \

@@ -18,6 +18,7 @@
 #include "webkit/glue/webframe.h"
 #include "webkit/glue/webpreferences.h"
 #include "webkit/glue/webview.h"
+#include "webkit/tools/test_shell/test_navigation_controller.h"
 #include "webkit/tools/test_shell/test_shell.h"
 
 using std::string;
@@ -29,15 +30,17 @@ namespace {
 // Stops the test from running and prints a brief warning to stdout.  Called
 // when the timer for loading a layout test expires.
 VOID CALLBACK TestTimeout(HWND hwnd, UINT msg, UINT_PTR timer_id, DWORD ms) {
+  puts("#TEST_TIMED_OUT\n");
   reinterpret_cast<TestShell*>(timer_id)->TestFinished();
   // Print a warning to be caught by the layout-test script.
-  puts("#TEST_TIMED_OUT\n");
 }
 
 }
 #endif
 
 TestShell* LayoutTestController::shell_ = NULL;
+// Most of these flags need to be cleared in Reset() so that they get turned
+// off between each test run.
 bool LayoutTestController::dump_as_text_ = false;
 bool LayoutTestController::dump_editing_callbacks_ = false;
 bool LayoutTestController::dump_frame_load_callbacks_ = false;
@@ -45,6 +48,7 @@ bool LayoutTestController::dump_resource_load_callbacks_ = false;
 bool LayoutTestController::dump_back_forward_list_ = false;
 bool LayoutTestController::dump_child_frame_scroll_positions_ = false;
 bool LayoutTestController::dump_child_frames_as_text_ = false;
+bool LayoutTestController::dump_window_status_changes_ = false;
 bool LayoutTestController::dump_title_changes_ = false;
 bool LayoutTestController::accepts_editing_ = true;
 bool LayoutTestController::wait_until_done_ = false;
@@ -54,9 +58,10 @@ bool LayoutTestController::should_add_file_to_pasteboard_ = false;
 bool LayoutTestController::stop_provisional_frame_loads_ = false;
 LayoutTestController::WorkQueue LayoutTestController::work_queue_;
 CppVariant LayoutTestController::globalFlag_;
+CppVariant LayoutTestController::webHistoryItemCount_;
 
 LayoutTestController::LayoutTestController(TestShell* shell) {
-  // Set static shell_ variable since we can't do it in an initializer list. 
+  // Set static shell_ variable since we can't do it in an initializer list.
   // We also need to be careful not to assign shell_ to new windows which are
   // temporary.
   if (NULL == shell_)
@@ -73,6 +78,7 @@ LayoutTestController::LayoutTestController(TestShell* shell) {
   BindMethod("dumpBackForwardList", &LayoutTestController::dumpBackForwardList);
   BindMethod("dumpFrameLoadCallbacks", &LayoutTestController::dumpFrameLoadCallbacks);
   BindMethod("dumpResourceLoadCallbacks", &LayoutTestController::dumpResourceLoadCallbacks);
+  BindMethod("dumpStatusCallbacks", &LayoutTestController::dumpWindowStatusChanges);
   BindMethod("dumpTitleChanges", &LayoutTestController::dumpTitleChanges);
   BindMethod("setAcceptsEditing", &LayoutTestController::setAcceptsEditing);
   BindMethod("waitUntilDone", &LayoutTestController::waitUntilDone);
@@ -129,9 +135,12 @@ LayoutTestController::LayoutTestController(TestShell* shell) {
   // The fallback method is called when an unknown method is invoked.
   BindFallbackMethod(&LayoutTestController::fallbackMethod);
 
-  // Shared property used by a number of layout tests in
+  // Shared properties.
+  // globalFlag is used by a number of layout tests in
   // LayoutTests\http\tests\security\dataURL.
   BindProperty("globalFlag", &globalFlag_);
+  // webHistoryItemCount is used by tests in LayoutTests\http\tests\history
+  BindProperty("webHistoryItemCount", &webHistoryItemCount_);
 }
 
 LayoutTestController::WorkQueue::~WorkQueue() {
@@ -179,7 +188,7 @@ void LayoutTestController::WorkQueue::AddWork(WorkItem* work) {
   queue_.push(work);
 }
 
-void LayoutTestController::dumpAsText(const CppArgumentList& args, 
+void LayoutTestController::dumpAsText(const CppArgumentList& args,
                                                    CppVariant* result) {
   dump_as_text_ = true;
   result->SetNull();
@@ -218,6 +227,12 @@ void LayoutTestController::dumpChildFrameScrollPositions(
 void LayoutTestController::dumpChildFramesAsText(
     const CppArgumentList& args, CppVariant* result) {
   dump_child_frames_as_text_ = true;
+  result->SetNull();
+}
+
+void LayoutTestController::dumpWindowStatusChanges(
+    const CppArgumentList& args, CppVariant* result) {
+  dump_window_status_changes_ = true;
   result->SetNull();
 }
 
@@ -367,6 +382,7 @@ void LayoutTestController::Reset() {
   dump_back_forward_list_ = false;
   dump_child_frame_scroll_positions_ = false;
   dump_child_frames_as_text_ = false;
+  dump_window_status_changes_ = false;
   dump_title_changes_ = false;
   accepts_editing_ = true;
   wait_until_done_ = false;
@@ -374,6 +390,7 @@ void LayoutTestController::Reset() {
   should_add_file_to_pasteboard_ = false;
   stop_provisional_frame_loads_ = false;
   globalFlag_.Set(false);
+  webHistoryItemCount_.Set(0);
 
   if (close_remaining_windows_) {
     // Iterate through the window list and close everything except the original
@@ -398,6 +415,8 @@ void LayoutTestController::Reset() {
 }
 
 void LayoutTestController::LocationChangeDone() {
+  webHistoryItemCount_.Set(shell_->navigation_controller()->GetEntryCount());
+
   // no more new work after the first complete load.
   work_queue_.set_frozen(true);
 

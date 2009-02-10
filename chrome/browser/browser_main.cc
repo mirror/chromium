@@ -11,6 +11,7 @@
 #include "base/file_util.h"
 #include "base/histogram.h"
 #include "base/lazy_instance.h"
+#include "base/scoped_nsautorelease_pool.h"
 #include "base/path_service.h"
 #include "base/process_util.h"
 #include "base/string_piece.h"
@@ -25,8 +26,8 @@
 #include "chrome/browser/browser_prefs.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_process_impl.h"
+#include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/first_run.h"
-#include "chrome/browser/plugin_service.h"
 #include "chrome/browser/profile_manager.h"
 #include "chrome/browser/shell_integration.h"
 #include "chrome/common/chrome_constants.h"
@@ -37,6 +38,7 @@
 #include "chrome/common/main_function_params.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
+#include "chrome/common/resource_bundle.h"
 
 #include "chromium_strings.h"
 #include "generated_resources.h"
@@ -61,7 +63,6 @@
 #include "base/win_util.h"
 #include "chrome/browser/automation/automation_provider.h"
 #include "chrome/browser/browser.h"
-#include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/browser_trial.h"
 #include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/browser/extensions/extension_protocols.h"
@@ -72,6 +73,7 @@
 #include "chrome/browser/net/dns_global.h"
 #include "chrome/browser/net/sdch_dictionary_fetcher.h"
 #include "chrome/browser/net/url_fixer_upper.h"
+#include "chrome/browser/plugin_service.h"
 #include "chrome/browser/printing/print_job_manager.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/profile_manager.h"
@@ -79,7 +81,6 @@
 #include "chrome/browser/user_data_manager.h"
 #include "chrome/browser/views/user_data_dir_dialog.h"
 #include "chrome/common/env_vars.h"
-#include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
 #include "chrome/installer/util/google_update_settings.h"
 #include "chrome/installer/util/helper.h"
@@ -94,8 +95,10 @@
 #include "net/http/http_network_layer.h"
 #include "sandbox/src/sandbox.h"
 
-#include "net_resources.h"
+#endif  // defined(OS_WIN)
 
+#if !defined(OS_MACOSX)
+#include "net_resources.h"
 #endif
 
 namespace Platform {
@@ -134,7 +137,7 @@ void HandleErrorTestParameters(const CommandLine& command_line) {
   }
 }
 
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_LINUX)
 // The net module doesn't have access to this HTML or the strings that need to
 // be localized.  The Chrome locale will never change while we're running, so
 // it's safe to have a static string that we always return a pointer into.
@@ -173,7 +176,7 @@ StringPiece NetResourceProvider(int key) {
 
   return ResourceBundle::GetSharedInstance().GetRawDataResource(key);
 }
-#endif
+#endif  // defined(OS_WIN) || defined(OS_LINUX)
 
 void RunUIMessageLoop(BrowserProcess* browser_process) {
 #if defined(OS_WIN)
@@ -188,6 +191,7 @@ void RunUIMessageLoop(BrowserProcess* browser_process) {
 // Main routine for running as the Browser process.
 int BrowserMain(const MainFunctionParams& parameters) {
   const CommandLine& parsed_command_line = parameters.command_line_;
+  base::ScopedNSAutoreleasePool* pool = parameters.autorelease_pool_;
 
   // WARNING: If we get a WM_ENDSESSION objects created on the stack here
   // are NOT deleted. If you need something to run during WM_ENDSESSION add it
@@ -302,7 +306,7 @@ int BrowserMain(const MainFunctionParams& parameters) {
         parent_local_state.GetString(prefs::kApplicationLocale));
   }
 
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_LINUX)
   // If we're running tests (ui_task is non-null), then the ResourceBundle
   // has already been initialized.
   if (!parameters.ui_task) {
@@ -311,7 +315,7 @@ int BrowserMain(const MainFunctionParams& parameters) {
     // We only load the theme dll in the browser process.
     ResourceBundle::GetSharedInstance().LoadThemeResources();
   }
-#endif
+#endif  // defined(OS_WIN) || defined(OS_LINUX)
 
   if (!parsed_command_line.HasSwitch(switches::kNoErrorDialogs)) {
     // Display a warning if the user is running windows 2000.
@@ -333,6 +337,11 @@ int BrowserMain(const MainFunctionParams& parameters) {
 #if defined(OS_WIN)
     user_data_dir = FilePath::FromWStringHack(
         UserDataDirDialog::RunUserDataDirDialog(user_data_dir.ToWStringHack()));
+#elif defined(OS_LINUX)
+    // TODO(port): fix this.
+    user_data_dir = FilePath("/tmp");
+#endif
+#if defined(OS_WIN) || defined(OS_LINUX)
     // Flush the message loop which lets the UserDataDirDialog close.
     MessageLoop::current()->Run();
 
@@ -355,7 +364,7 @@ int BrowserMain(const MainFunctionParams& parameters) {
     }
 
     return ResultCodes::NORMAL_EXIT;
-#endif
+#endif  // defined(OS_WIN) || defined(OS_LINUX)
   }
 
   PrefService* user_prefs = profile->GetPrefs();
@@ -543,13 +552,22 @@ int BrowserMain(const MainFunctionParams& parameters) {
 
   RecordBreakpadStatusUMA(metrics);
 
+  // Start up the extensions service.
+  // This should happen before ProcessCommandLine.
+  profile->InitExtensions();
+
+  // Call Recycle() here as late as possible, just before going into the main
+  // loop. We can't do it any earlier, as ProcessCommandLine() will add things
+  // to it in the act of creating the initial browser window.
   int result_code = ResultCodes::NORMAL_EXIT;
   if (parameters.ui_task) {
+    if (pool) pool->Recycle();
     MessageLoopForUI::current()->PostTask(FROM_HERE, parameters.ui_task);
     RunUIMessageLoop(browser_process.get());
   } else if (BrowserInit::ProcessCommandLine(parsed_command_line,
                                              std::wstring(), local_state, true,
                                              profile, &result_code)) {
+    if (pool) pool->Recycle();
     RunUIMessageLoop(browser_process.get());
   }
 

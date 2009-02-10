@@ -24,12 +24,11 @@ class WebWidgetHost {
   // The new instance is deleted once the associated NativeView is destroyed.
   // The newly created window should be resized after it is created, using the
   // MoveWindow (or equivalent) function.
-  static WebWidgetHost* Create(gfx::NativeWindow parent_window,
+  static WebWidgetHost* Create(gfx::NativeView parent_view,
                                WebWidgetDelegate* delegate);
 
-  static WebWidgetHost* FromWindow(gfx::NativeWindow view);
 #if defined(OS_MACOSX)
-  static void HandleEvent(gfx::NativeWindow window, NSEvent *event);
+  static void HandleEvent(gfx::NativeView view, NSEvent* event);
 #endif
 
   gfx::NativeView view_handle() const { return view_; }
@@ -83,7 +82,8 @@ class WebWidgetHost {
   //   parent: a GtkBox to pack the new widget at the end of
   //   host: a pointer to a WebWidgetHost (or subclass thereof)
   // ---------------------------------------------------------------------------
-  static gfx::NativeWindow CreateWindow(gfx::NativeWindow parent, void* host);
+  static gfx::NativeView CreateWidget(gfx::NativeView parent_view,
+                                      WebWidgetHost* host);
   void WindowDestroyed();
   void Resize(const gfx::Size& size);
 #endif

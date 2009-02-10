@@ -659,7 +659,6 @@ all : \
     V8EntityReference.h \
     V8Event.h \
     V8EventException.h \
-    V8EventTargetNode.h \
     V8File.h \
     V8FileList.h \
     V8HTMLAnchorElement.h \
@@ -900,7 +899,9 @@ all : \
     V8WebKitTransitionEvent.h \
     V8WheelEvent.h \
     V8Worker.h \
+    V8WorkerContext.h \
     V8WorkerLocation.h \
+    V8WorkerNavigator.h \
     V8XMLHttpRequest.h \
     V8XMLHttpRequestException.h \
     V8XMLHttpRequestProgressEvent.h \

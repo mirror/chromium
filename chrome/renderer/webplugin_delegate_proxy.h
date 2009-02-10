@@ -12,18 +12,18 @@
 #include "base/ref_counted.h"
 #include "base/scoped_handle.h"
 #include "chrome/common/ipc_message.h"
-#include "chrome/common/plugin_messages.h"
 #include "chrome/plugin/npobject_stub.h"
 #include "chrome/renderer/plugin_channel_host.h"
 #include "webkit/glue/webplugin.h"
 #include "webkit/glue/webplugin_delegate.h"
 
 class GURL;
-struct PluginHostMsg_RouteToFrame_Params;
+struct PluginHostMsg_URLRequest_Params;
 class RenderView;
 class SkBitmap;
 
 namespace base {
+class SharedMemory;
 class WaitableEvent;
 }
 
@@ -114,7 +114,8 @@ class WebPluginDelegateProxy : public WebPluginDelegate,
   void OnHandleURLRequest(const PluginHostMsg_URLRequest_Params& params);
   void OnCancelResource(int id);
   void OnInvalidateRect(const gfx::Rect& rect);
-  void OnGetWindowScriptNPObject(int route_id, bool* success, void** npobject_ptr);
+  void OnGetWindowScriptNPObject(int route_id, bool* success,
+                                 void** npobject_ptr);
   void OnGetPluginElement(int route_id, bool* success, void** npobject_ptr);
   void OnSetCookie(const GURL& url,
                    const GURL& policy_url,
@@ -193,5 +194,4 @@ class WebPluginDelegateProxy : public WebPluginDelegate,
   DISALLOW_EVIL_CONSTRUCTORS(WebPluginDelegateProxy);
 };
 
-#endif  // #ifndef CHROME_RENDERER_WEBPLUGIN_DELEGATE_PROXY_H__
-
+#endif  // CHROME_RENDERER_WEBPLUGIN_DELEGATE_PROXY_H_

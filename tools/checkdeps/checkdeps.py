@@ -56,6 +56,7 @@ import os
 import optparse
 import re
 import sys
+import copy
 
 # Variable name used in the DEPS file to specify module-level deps.
 DEPS_VAR_NAME = "deps"
@@ -180,7 +181,7 @@ def ApplyRules(existing_rules, deps, includes, cur_dir):
   Returns: A new set of rules combining the existing_rules with the other
            arguments.
   """
-  rules = existing_rules
+  rules = copy.copy(existing_rules)
 
   # First apply the implicit "allow" rule for the current directory.
   if cur_dir.lower().startswith(BASE_DIRECTORY):
@@ -241,18 +242,31 @@ def ApplyDirectoryRules(existing_rules, dir_name):
     print "Applying rules from", dir_name
   def FromImpl(unused):
     pass  # NOP function so "From" doesn't fail.
-  scope = {"From": FromImpl}
+
+  class _VarImpl:
+    def __init__(self, local_scope):
+      self._local_scope = local_scope
+
+    def Lookup(self, var_name):
+      """Implements the Var syntax."""
+      if var_name in self._local_scope.get("vars", {}):
+        return self._local_scope["vars"][var_name]
+      raise Error("Var is not defined: %s" % var_name)
+
+  local_scope = {}
+  global_scope = {"From": FromImpl, "Var": _VarImpl(local_scope).Lookup}
   deps_file = os.path.join(dir_name, "DEPS")
-  if not os.path.exists(deps_file):
-    if VERBOSE:
-      print "  No deps file found in", dir_name
-    return (existing_rules, [])  # Nothing to change from the input rules.
 
-  execfile(deps_file, scope)
+  if os.path.exists(deps_file):
+    execfile(deps_file, global_scope, local_scope)
+  elif VERBOSE:
+    print "  No deps file found in", dir_name
 
-  deps = scope.get(DEPS_VAR_NAME, {})
-  include_rules = scope.get(INCLUDE_RULES_VAR_NAME, [])
-  skip_subdirs = scope.get(SKIP_SUBDIRS_VAR_NAME, [])
+  # Even if a DEPS file does not exist we still invoke ApplyRules
+  # to apply the implicit "allow" rule for the current directory
+  deps = local_scope.get(DEPS_VAR_NAME, {})
+  include_rules = local_scope.get(INCLUDE_RULES_VAR_NAME, [])
+  skip_subdirs = local_scope.get(SKIP_SUBDIRS_VAR_NAME, [])
 
   return (ApplyRules(existing_rules, deps, include_rules, dir_name),
           skip_subdirs)
@@ -336,8 +350,8 @@ def CheckFile(rules, file_name):
   return ret_val
 
 
-def CheckDirectory(rules, dir_name):
-  (rules, skip_subdirs) = ApplyDirectoryRules(rules, dir_name)
+def CheckDirectory(parent_rules, dir_name):
+  (rules, skip_subdirs) = ApplyDirectoryRules(parent_rules, dir_name)
   if rules == None:
     return True
 

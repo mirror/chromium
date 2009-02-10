@@ -43,6 +43,7 @@ class WebFrameLoaderClient : public WebCore::FrameLoaderClient {
   // giving it a chance to bind native objects to the window before script
   // parsing begins.
   virtual void windowObjectCleared();
+  virtual void documentElementAvailable();
 
   virtual bool hasWebView() const; // mainly for assertions
   virtual bool hasFrameView() const; // ditto
@@ -119,6 +120,7 @@ class WebFrameLoaderClient : public WebCore::FrameLoaderClient {
   virtual void finishedLoading(WebCore::DocumentLoader*);
 
   virtual void updateGlobalHistory();
+  virtual void updateGlobalHistoryForRedirectWithoutHistoryItem();
   virtual bool shouldGoToHistoryItem(WebCore::HistoryItem*) const;
 
   virtual WebCore::ResourceError blockedError(const WebCore::ResourceRequest&);
@@ -168,7 +170,7 @@ class WebFrameLoaderClient : public WebCore::FrameLoaderClient {
                                       bool allowsScrolling, int marginWidth,
                                       int marginHeight);
   virtual WebCore::Widget* createPlugin(const WebCore::IntSize&,
-                                        WebCore::Element*, 
+                                        WebCore::HTMLPlugInElement*, 
                                         const WebCore::KURL&, 
                                         const WTF::Vector<WebCore::String>&, 
                                         const WTF::Vector<WebCore::String>&, 
@@ -176,10 +178,12 @@ class WebFrameLoaderClient : public WebCore::FrameLoaderClient {
                                         bool loadManually);
   virtual void redirectDataToPlugin(WebCore::Widget* pluginWidget);
 
-  virtual WebCore::Widget* createJavaAppletWidget(const WebCore::IntSize&, 
-                                      WebCore::Element*, const WebCore::KURL& baseURL, 
-                                      const WTF::Vector<WebCore::String>& paramNames, 
-                                      const WTF::Vector<WebCore::String>& paramValues);
+  virtual WebCore::Widget* createJavaAppletWidget(
+      const WebCore::IntSize&, 
+      WebCore::HTMLAppletElement*,
+      const WebCore::KURL& baseURL, 
+      const WTF::Vector<WebCore::String>& paramNames, 
+      const WTF::Vector<WebCore::String>& paramValues);
 
   virtual WebCore::ObjectContentType objectContentType(const WebCore::KURL& url, 
                                               const WebCore::String& mimeType);

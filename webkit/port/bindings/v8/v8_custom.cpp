@@ -62,7 +62,6 @@
 #include "Event.h"
 #include "EventListener.h"
 #include "EventTarget.h"
-#include "EventTargetNode.h"
 #include "ExceptionCode.h"
 #include "FloatRect.h"
 #include "Frame.h"
@@ -2888,12 +2887,11 @@ CALLBACK_FUNC_DECL(DOMWindowNOP)
 }
 
 
-// EventTargetNode -------------------------------------------------------------
+// Node -------------------------------------------------------------
 
-CALLBACK_FUNC_DECL(EventTargetNodeAddEventListener) {
-  INC_STATS("DOM.EventTargetNode.addEventListener()");
-  EventTargetNode* node =
-      V8Proxy::DOMWrapperToNode<EventTargetNode>(args.Holder());
+CALLBACK_FUNC_DECL(NodeAddEventListener) {
+  INC_STATS("DOM.Node.addEventListener()");
+  Node* node = V8Proxy::DOMWrapperToNode<Node>(args.Holder());
 
   V8Proxy* proxy = V8Proxy::retrieve(node->document()->frame());
   if (!proxy)
@@ -2909,10 +2907,9 @@ CALLBACK_FUNC_DECL(EventTargetNodeAddEventListener) {
   return v8::Undefined();
 }
 
-CALLBACK_FUNC_DECL(EventTargetNodeRemoveEventListener) {
-  INC_STATS("DOM.EventTargetNode.removeEventListener()");
-  EventTargetNode* node =
-      V8Proxy::DOMWrapperToNode<EventTargetNode>(args.Holder());
+CALLBACK_FUNC_DECL(NodeRemoveEventListener) {
+  INC_STATS("DOM.Node.removeEventListener()");
+  Node* node = V8Proxy::DOMWrapperToNode<Node>(args.Holder());
 
   V8Proxy* proxy = V8Proxy::retrieve(node->document()->frame());
   // It is possbile that the owner document of the node is detached
@@ -3097,6 +3094,16 @@ CALLBACK_FUNC_DECL(NodeFilterAcceptNode) {
   return v8::Undefined();
 }
 
+CALLBACK_FUNC_DECL(HTMLFormElementSubmit) {
+  INC_STATS("DOM.HTMLFormElement.submit()");
+  
+  HTMLFormElement* form =
+    V8Proxy::DOMWrapperToNative<HTMLFormElement>(args.Holder());
+
+  form->submit(0, false, false);
+  return v8::Undefined();
+}
+
 static String EventNameFromAttributeName(const String& name) {
   ASSERT(name.startsWith("on"));
   String event_type = name.substring(2);
@@ -3182,8 +3189,7 @@ ACCESSOR_GETTER(DOMWindowEventHandler) {
 
 
 ACCESSOR_SETTER(ElementEventHandler) {
-  EventTargetNode* node =
-      V8Proxy::DOMWrapperToNode<EventTargetNode>(info.Holder());
+  Node* node = V8Proxy::DOMWrapperToNode<Node>(info.Holder());
 
   // Name starts with 'on', remove them.
   String key = ToWebCoreString(name);
@@ -3213,8 +3219,7 @@ ACCESSOR_SETTER(ElementEventHandler) {
 
 
 ACCESSOR_GETTER(ElementEventHandler) {
-  EventTargetNode* node =
-      V8Proxy::DOMWrapperToNode<EventTargetNode>(info.Holder());
+  Node* node = V8Proxy::DOMWrapperToNode<Node>(info.Holder());
 
   // Name starts with 'on', remove them.
   String key = ToWebCoreString(name);
@@ -3334,110 +3339,6 @@ CALLBACK_FUNC_DECL(HTMLInputElementSetSelectionRange) {
   imp->setSelectionRange(start, end);
   return v8::Undefined();
 }
-
-#if ENABLE(SVG)
-
-ACCESSOR_GETTER(SVGLengthValue) {
-  INC_STATS("DOM.SVGLength.value");
-  V8SVGPODTypeWrapper<SVGLength>* wrapper = V8Proxy::ToNativeObject<V8SVGPODTypeWrapper<SVGLength> >(V8ClassIndex::SVGLENGTH, info.Holder());
-  SVGLength imp = *wrapper;
-  return v8::Number::New(imp.value(V8Proxy::GetSVGContext(wrapper)));
-}
-
-CALLBACK_FUNC_DECL(SVGLengthConvertToSpecifiedUnits) {
-  INC_STATS("DOM.SVGLength.convertToSpecifiedUnits");
-  V8SVGPODTypeWrapper<SVGLength>* wrapper = V8Proxy::ToNativeObject<V8SVGPODTypeWrapper<SVGLength> >(V8ClassIndex::SVGLENGTH, args.Holder());
-  SVGLength imp = *wrapper;
-  SVGElement* context = V8Proxy::GetSVGContext(wrapper);
-  imp.convertToSpecifiedUnits(ToInt32(args[0]), context);
-  wrapper->commitChange(imp, context);
-  return v8::Undefined();
-}
-
-CALLBACK_FUNC_DECL(SVGMatrixInverse) {
-  INC_STATS("DOM.SVGMatrix.inverse()");
-  TransformationMatrix imp =
-      *V8Proxy::ToNativeObject<V8SVGPODTypeWrapper<TransformationMatrix> >(
-          V8ClassIndex::SVGMATRIX, args.Holder());
-  ExceptionCode ec = 0;
-  TransformationMatrix result = imp.inverse();
-  if (!imp.isInvertible()) {
-    ec = SVGException::SVG_MATRIX_NOT_INVERTABLE;
-  }
-  if (ec != 0) {
-    V8Proxy::SetDOMException(ec);
-    return v8::Handle<v8::Value>();
-  }
-
-  return V8Proxy::ToV8Object(V8ClassIndex::SVGMATRIX,
-      new V8SVGStaticPODTypeWrapper<TransformationMatrix>(result));
-}
-
-CALLBACK_FUNC_DECL(SVGMatrixRotateFromVector) {
-  INC_STATS("DOM.SVGMatrix.rotateFromVector()");
-  TransformationMatrix imp =
-      *V8Proxy::ToNativeObject<V8SVGPODTypeWrapper<TransformationMatrix> >(
-          V8ClassIndex::SVGMATRIX, args.Holder());
-  ExceptionCode ec = 0;
-  float x = TO_FLOAT(args[0]);
-  float y = TO_FLOAT(args[1]);
-  TransformationMatrix result = imp;
-  result.rotateFromVector(x, y);
-  if (x == 0.0 || y == 0.0) {
-    ec = SVGException::SVG_INVALID_VALUE_ERR;
-  }
-  if (ec != 0) {
-    V8Proxy::SetDOMException(ec);
-    return v8::Handle<v8::Value>();
-  }
-
-  return V8Proxy::ToV8Object(V8ClassIndex::SVGMATRIX,
-      new V8SVGStaticPODTypeWrapper<TransformationMatrix>(result));
-}
-
-CALLBACK_FUNC_DECL(SVGElementInstanceAddEventListener) {
-  INC_STATS("DOM.SVGElementInstance.AddEventListener()");
-  SVGElementInstance* instance =
-      V8Proxy::DOMWrapperToNative<SVGElementInstance>(args.Holder());
-
-  V8Proxy* proxy = V8Proxy::retrieve(instance->scriptExecutionContext());
-  if (!proxy)
-    return v8::Undefined();
-
-  RefPtr<EventListener> listener =
-    proxy->FindOrCreateV8EventListener(args[1], false);
-  if (listener) {
-    String type = ToWebCoreString(args[0]);
-    bool useCapture = args[2]->BooleanValue();
-    instance->addEventListener(type, listener, useCapture);
-  }
-  return v8::Undefined();
-}
-
-CALLBACK_FUNC_DECL(SVGElementInstanceRemoveEventListener) {
-  INC_STATS("DOM.SVGElementInstance.RemoveEventListener()");
-  SVGElementInstance* instance =
-      V8Proxy::DOMWrapperToNative<SVGElementInstance>(args.Holder());
-
-  V8Proxy* proxy = V8Proxy::retrieve(instance->scriptExecutionContext());
-  // It is possbile that the owner document of the node is detached
-  // from the frame, return immediately in this case.
-  // See issue 878909
-  if (!proxy)
-    return v8::Undefined();
-
-  RefPtr<EventListener> listener =
-    proxy->FindV8EventListener(args[1], false);
-  if (listener) {
-    String type = ToWebCoreString(args[0]);
-    bool useCapture = args[2]->BooleanValue();
-    instance->removeEventListener(type, listener.get(), useCapture);
-  }
-
-  return v8::Undefined();
-}
-
-#endif  // ENABLE(SVG)
 
 // --------------- Security Checks -------------------------
 NAMED_ACCESS_CHECK(DOMWindow) {

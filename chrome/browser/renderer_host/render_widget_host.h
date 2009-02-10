@@ -11,7 +11,6 @@
 #include "base/timer.h"
 #include "chrome/common/bitmap_wire_data.h"
 #include "chrome/common/ipc_channel.h"
-#include "chrome/common/render_messages.h"
 #include "testing/gtest/include/gtest/gtest_prod.h"
 
 namespace gfx {
@@ -29,7 +28,6 @@ class WebMouseWheelEvent;
 class WebCursor;
 struct ViewHostMsg_PaintRect_Params;
 struct ViewHostMsg_ScrollRect_Params;
-struct WebPluginGeometry;
 
 // This class manages the browser side of a browser<->renderer HWND connection.
 // The HWND lives in the browser process, and windows events are sent over
@@ -255,8 +253,9 @@ class RenderWidgetHost : public IPC::Channel::Listener {
   void OnMsgFocus();
   void OnMsgBlur();
   void OnMsgSetCursor(const WebCursor& cursor);
-  void OnMsgImeUpdateStatus(ViewHostMsg_ImeControl control,
-                            const gfx::Rect& caret_rect);
+  // Using int instead of ViewHostMsg_ImeControl for control's type to avoid
+  // having to bring in render_messages.h in a header file.
+  void OnMsgImeUpdateStatus(int control, const gfx::Rect& caret_rect);
 
   // Paints the given bitmap to the current backing store at the given location.
   void PaintBackingStoreRect(BitmapWireData bitmap,

@@ -21,6 +21,7 @@
 #include "base/message_loop.h"
 #include "base/path_service.h"
 #include "base/stats_table.h"
+#include "base/string16.h"
 #include "base/string_piece.h"
 #include "base/string_util.h"
 #include "net/base/mime_util.h"
@@ -265,7 +266,7 @@ bool TestShell::Initialize(const std::wstring& startingURL) {
   // Create a webview. Note that |web_view| takes ownership of this shell so we
   // will get cleaned up when it gets destroyed.
   m_webViewHost.reset(
-      WebViewHost::Create(m_mainWnd, delegate_.get(), *TestShell::web_prefs_));
+      WebViewHost::Create([m_mainWnd contentView], delegate_.get(), *TestShell::web_prefs_));
   webView()->SetUseEditorDelegate(true);
   delegate_->RegisterDragDrop();
   TestShellWebView* web_view = 
@@ -634,11 +635,11 @@ StringPiece TestShell::NetResourceProvider(int key) {
 
 namespace webkit_glue {
 
-std::wstring GetLocalizedString(int message_id) {
+string16 GetLocalizedString(int message_id) {
   NSString* idString = [NSString stringWithFormat:@"%d", message_id];
   NSString* localString = NSLocalizedString(idString, @"");
 
-  return UTF8ToWide([localString UTF8String]);
+  return UTF8ToUTF16([localString UTF8String]);
 }
 
 std::string GetDataResource(int resource_id) {

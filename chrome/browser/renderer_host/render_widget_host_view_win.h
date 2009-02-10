@@ -17,8 +17,7 @@
 #include "base/task.h"
 #include "chrome/browser/ime_input.h"
 #include "chrome/browser/renderer_host/render_widget_host_view.h"
-#include "chrome/common/render_messages.h"
-#include "chrome/views/focus_manager.h"
+#include "webkit/glue/webcursor.h"
 
 namespace gfx {
 class Rect;
@@ -136,8 +135,7 @@ class RenderWidgetHostViewWin :
   virtual void UpdateCursor(const WebCursor& cursor);
   virtual void UpdateCursorIfOverSelf();
   virtual void SetIsLoading(bool is_loading);
-  virtual void IMEUpdateStatus(ViewHostMsg_ImeControl control,
-                               const gfx::Rect& caret_rect);
+  virtual void IMEUpdateStatus(int control, const gfx::Rect& caret_rect);
   virtual void DidPaintRect(const gfx::Rect& rect);
   virtual void DidScrollRect(const gfx::Rect& rect, int dx, int dy);
   virtual void RendererGone();

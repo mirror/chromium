@@ -5,6 +5,8 @@
 #include "chrome/browser/renderer_host/async_resource_handler.h"
 
 #include "base/process.h"
+#include "base/shared_memory.h"
+#include "chrome/common/render_messages.h"
 #include "net/base/io_buffer.h"
 
 SharedIOBuffer* AsyncResourceHandler::spare_read_buffer_;
@@ -12,7 +14,7 @@ SharedIOBuffer* AsyncResourceHandler::spare_read_buffer_;
 // Our version of IOBuffer that uses shared memory.
 class SharedIOBuffer : public net::IOBuffer {
  public:
-  SharedIOBuffer(int buffer_size) : net::IOBuffer(NULL), ok_(false) {
+  SharedIOBuffer(int buffer_size) : net::IOBuffer(), ok_(false) {
     if (shared_memory_.Create(std::wstring(), false, false, buffer_size) &&
         shared_memory_.Map(buffer_size)) {
       ok_ = true;

@@ -12,6 +12,7 @@
 #include "base/shared_memory.h"
 #include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/common/ipc_logging.h"
+#include "chrome/common/render_messages.h"
 #include "chrome/common/notification_service.h"
 // TODO(port)
 #if defined(OS_WIN)
@@ -184,9 +185,7 @@ void RenderThread::OnMessageReceived(const IPC::Message& msg) {
       IPC_MESSAGE_HANDLER(ViewMsg_SetNextPageID, OnSetNextPageID)
       // TODO(port): removed from render_messages_internal.h;
       // is there a new non-windows message I should add here?
-#if defined(OS_WIN)
       IPC_MESSAGE_HANDLER(ViewMsg_New, OnCreateNewView)
-#endif
       IPC_MESSAGE_HANDLER(ViewMsg_SetCacheCapacities, OnSetCacheCapacities)
       IPC_MESSAGE_HANDLER(ViewMsg_GetCacheResourceStats,
                           OnGetCacheResourceStats)
@@ -219,17 +218,16 @@ void RenderThread::OnSetNextPageID(int32 next_page_id) {
   // This should only be called at process initialization time, so we shouldn't
   // have to worry about thread-safety.
   // TODO(port)
-#if defined(OS_WIN)
+#if !defined(OS_LINUX)
   RenderView::SetNextPageID(next_page_id);
 #endif
 }
-
-#if defined(OS_WIN)
 
 void RenderThread::OnCreateNewView(gfx::NativeViewId parent_hwnd,
                                    ModalDialogEvent modal_dialog_event,
                                    const WebPreferences& webkit_prefs,
                                    int32 view_id) {
+  // When bringing in render_view, also bring in webkit's glue and jsbindings.
   base::WaitableEvent* waitable_event = new base::WaitableEvent(
 #if defined(OS_WIN)
       modal_dialog_event.event);
@@ -237,14 +235,16 @@ void RenderThread::OnCreateNewView(gfx::NativeViewId parent_hwnd,
       true, false);
 #endif
 
+#if defined(OS_MACOSX)
+  // TODO(jrg): causes a crash.
+  if (0)
+#endif
   // TODO(darin): once we have a RenderThread per RenderView, this will need to
   // change to assert that we are not creating more than one view.
   RenderView::Create(
       this, parent_hwnd, waitable_event, MSG_ROUTING_NONE, webkit_prefs,
       new SharedRenderViewCounter(0), view_id);
 }
-
-#endif
 
 void RenderThread::OnSetCacheCapacities(size_t min_dead_capacity,
                                         size_t max_dead_capacity,

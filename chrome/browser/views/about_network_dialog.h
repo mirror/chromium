@@ -43,7 +43,6 @@ class AboutNetworkDialog : public views::DialogDelegate,
   virtual views::View* GetContentsView();
   virtual int GetDialogButtons() const;
   virtual std::wstring GetWindowTitle() const;
-  virtual void Layout();
 
   // views::WindowDelegate (via view::DialogDelegate).
   virtual bool CanResize() const;

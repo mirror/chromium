@@ -35,6 +35,10 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
+#include "chrome/common/win_util.h"
+#ifdef CHROME_PERSONALIZATION
+#include "chrome/personalization/personalization.h"
+#endif
 #include "chrome/views/background.h"
 #include "chrome/views/button_dropdown.h"
 #include "chrome/views/hwnd_view.h"
@@ -479,13 +483,15 @@ gfx::Size BrowserToolbarView::GetPreferredSize() {
     return gfx::Size(0, normal_background.height());
   }
 
+  // With the non-Vista frame, we'll draw a client edge below the toolbar for
+  // non-maximized popups.
   // Note: We make sure to return the same value in the "no browser window" case
   // as the "not maximized" case, so that when a popup is opened at a particular
   // requested size, we'll report the same preferred size during the initial
   // window size calculation (when there isn't yet a browser window) as when
   // we're actually laying things out after setting up the browser window.  This
   // prevents the content area from being off by |kClientEdgeThickness| px.
-  int client_edge_height =
+  int client_edge_height = win_util::ShouldUseVistaFrame() ||
       (browser_->window() && browser_->window()->IsMaximized()) ?
       0 : views::NonClientView::kClientEdgeThickness;
   return gfx::Size(0,
@@ -589,6 +595,10 @@ void BrowserToolbarView::RunAppMenu(const CPoint& pt, HWND hwnd) {
   menu.AppendMenuItemWithLabel(IDC_SHOW_DOWNLOADS,
                                l10n_util::GetString(IDS_SHOW_DOWNLOADS));
   menu.AppendSeparator();
+#ifdef CHROME_PERSONALIZATION
+  menu.AppendMenuItemWithLabel(IDC_P13N_INFO,
+                               Personalization::GetMenuItemInfoText(browser()));
+#endif
   menu.AppendMenuItemWithLabel(IDC_CLEAR_BROWSING_DATA,
                                l10n_util::GetString(IDS_CLEAR_BROWSING_DATA));
   menu.AppendMenuItemWithLabel(IDC_IMPORT_SETTINGS,

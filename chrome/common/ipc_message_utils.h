@@ -12,6 +12,9 @@
 #include "base/file_path.h"
 #include "base/string_util.h"
 #include "base/tuple.h"
+#if defined(OS_POSIX)
+#include "chrome/common/file_descriptor_posix.h"
+#endif
 #include "chrome/common/ipc_sync_message.h"
 #include "chrome/common/thumbnail_score.h"
 #include "webkit/glue/cache_manager.h"
@@ -34,16 +37,32 @@ namespace webkit_glue {
 struct WebApplicationInfo;
 }  // namespace webkit_glue
 
+// Used by IPC_BEGIN_MESSAGES so that each message class starts from a unique
+// base.  Messages have unique IDs across channels in order for the IPC logging
+// code to figure out the message class from its ID.
+enum IPCMessageStart {
+  // By using a start value of 0 for automation messages, we keep backward
+  // compatibility with old builds.
+  AutomationMsgStart = 0,
+  ViewMsgStart,
+  ViewHostMsgStart,
+  PluginProcessMsgStart,
+  PluginProcessHostMsgStart,
+  PluginMsgStart,
+  PluginHostMsgStart,
+  NPObjectMsgStart,
+  TestMsgStart,
+  // NOTE: When you add a new message class, also update
+  // IPCStatusView::IPCStatusView to ensure logging works.
+  // NOTE: this enum is used by IPC_MESSAGE_MACRO to generate a unique message
+  // id.  Only 4 bits are used for the message type, so if this enum needs more
+  // than 16 entries, that code needs to be updated.
+  LastMsgIndex
+};
+
+COMPILE_ASSERT(LastMsgIndex <= 16, need_to_update_IPC_MESSAGE_MACRO);
+
 namespace IPC {
-
-// Used by the message macros to register a logging function based on the
-// message class.
-typedef void (LogFunction)(uint16 type,
-                           std::wstring* name,
-                           const IPC::Message* msg,
-                           std::wstring* params);
-void RegisterMessageLogger(int msg_start, LogFunction* func);
-
 
 //-----------------------------------------------------------------------------
 // An iterator class for reading the fields contained within a Message.
@@ -646,6 +665,35 @@ struct ParamTraits<gfx::Size> {
   static void Log(const param_type& p, std::wstring* l);
 };
 
+#if defined(OS_POSIX)
+
+template<>
+struct ParamTraits<FileDescriptor> {
+  typedef FileDescriptor param_type;
+  static void Write(Message* m, const param_type& p) {
+    if (p.auto_close) {
+      m->descriptor_set()->AddAndAutoClose(p.fd);
+    } else {
+      m->descriptor_set()->Add(p.fd);
+    }
+  }
+  static bool Read(const Message* m, void** iter, param_type* r) {
+    r->auto_close = false;
+    r->fd = m->descriptor_set()->NextDescriptor();
+
+    return r->fd >= 0;
+  }
+  static void Log(const param_type& p, std::wstring* l) {
+    if (p.auto_close) {
+      l->append(StringPrintf(L"FD(%d auto-close)", p.fd));
+    } else {
+      l->append(StringPrintf(L"FD(%d)", p.fd));
+    }
+  }
+};
+
+#endif // defined(OS_POSIX)
+
 template<>
 struct ParamTraits<ThumbnailScore> {
   typedef ThumbnailScore param_type;
@@ -1106,6 +1154,54 @@ class MessageWithTuple : public Message {
     Param p;
     if (Read(msg, &p))
       LogParam(p, l);
+  }
+
+  // Functions used to do manual unpacking.  Only used by the automation code,
+  // these should go away once that code uses SyncChannel.
+  template<typename TA, typename TB>
+  static bool Read(const IPC::Message* msg, TA* a, TB* b) {
+    ParamType params;
+    if (!Read(msg, &params))
+      return false;
+    *a = params.a;
+    *b = params.b;
+    return true;
+  }
+
+  template<typename TA, typename TB, typename TC>
+  static bool Read(const IPC::Message* msg, TA* a, TB* b, TC* c) {
+    ParamType params;
+    if (!Read(msg, &params))
+      return false;
+    *a = params.a;
+    *b = params.b;
+    *c = params.c;
+    return true;
+  }
+
+  template<typename TA, typename TB, typename TC, typename TD>
+  static bool Read(const IPC::Message* msg, TA* a, TB* b, TC* c, TD* d) {
+    ParamType params;
+    if (!Read(msg, &params))
+      return false;
+    *a = params.a;
+    *b = params.b;
+    *c = params.c;
+    *d = params.d;
+    return true;
+  }
+
+  template<typename TA, typename TB, typename TC, typename TD, typename TE>
+  static bool Read(const IPC::Message* msg, TA* a, TB* b, TC* c, TD* d, TE* e) {
+    ParamType params;
+    if (!Read(msg, &params))
+      return false;
+    *a = params.a;
+    *b = params.b;
+    *c = params.c;
+    *d = params.d;
+    *e = params.e;
+    return true;
   }
 };
 

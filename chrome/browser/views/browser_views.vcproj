@@ -370,6 +370,14 @@
 			>
 		</File>
 		<File
+			RelativePath=".\about_ipc_dialog.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\about_ipc_dialog.h"
+			>
+		</File>
+		<File
 			RelativePath=".\about_network_dialog.cc"
 			>
 		</File>
@@ -695,6 +703,14 @@
 		</File>
 		<File
 			RelativePath="..\..\tools\build\win\precompiled_wtl.h"
+			>
+		</File>
+		<File
+			RelativePath=".\repost_form_warning_view.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\repost_form_warning_view.h"
 			>
 		</File>
 		<File

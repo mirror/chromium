@@ -36,6 +36,7 @@
 #include "base/compiler_specific.h"
 MSVC_PUSH_WARNING_LEVEL(0);
 #include "CSSStyleSelector.h"
+#include "CSSValueKeywords.h"
 #include "Cursor.h"
 #include "Document.h"
 #include "DocumentLoader.h"
@@ -78,6 +79,7 @@ MSVC_POP_WARNING();
 #undef LOG
 
 #include "base/gfx/rect.h"
+#include "base/keyboard_codes.h"
 #include "base/logging.h"
 #include "base/message_loop.h"
 #include "base/string_util.h"
@@ -121,22 +123,42 @@ static const WebCore::DragOperation kDropTargetOperation =
     static_cast<WebCore::DragOperation>(DragOperationCopy | DragOperationLink);
 
 // AutocompletePopupMenuClient
-class AutocompletePopupMenuClient
-    : public RefCounted<AutocompletePopupMenuClient>,
-      public WebCore::PopupMenuClient {
+class AutocompletePopupMenuClient : public WebCore::PopupMenuClient {
  public:
-  AutocompletePopupMenuClient(WebViewImpl* webview,
-                              WebCore::HTMLInputElement* text_field,
-                              const std::vector<std::wstring>& suggestions,
-                              int default_suggestion_index)
-      : text_field_(text_field),
-        selected_index_(default_suggestion_index),
-        webview_(webview) {
-    SetSuggestions(suggestions);
+  AutocompletePopupMenuClient(WebViewImpl* webview) : text_field_(NULL),
+                                                      selected_index_(0),
+                                                      webview_(webview) {
   }
+
+  void Init(WebCore::HTMLInputElement* text_field,
+            const std::vector<std::wstring>& suggestions,
+            int default_suggestion_index) {
+    DCHECK(default_suggestion_index < static_cast<int>(suggestions.size()));
+    text_field_ = text_field;
+    selected_index_ = default_suggestion_index;
+    SetSuggestions(suggestions);
+
+    FontDescription font_description;
+#if defined(OS_WIN)
+    theme()->systemFont(CSSValueWebkitControl, text_field->document(),
+                        font_description);
+#else
+    NOTIMPLEMENTED();
+#endif
+    // Use a smaller font size to match IE/Firefox.
+    // TODO(jcampan): http://crbug.com/7376 use the system size instead of a
+    //                fixed font size value.
+    font_description.setComputedSize(12.0);
+    Font font(font_description, 0, 0);
+    font.update(text_field->document()->styleSelector()->fontSelector());
+    style_.reset(new PopupMenuStyle(Color::black, Color::white, font, true));
+
+  }
+
   virtual ~AutocompletePopupMenuClient() {
   }
 
+  // WebCore::PopupMenuClient implementation.
   virtual void valueChanged(unsigned listIndex, bool fireEvents = true) {
     text_field_->setValue(suggestions_[listIndex]);
   }  
@@ -150,15 +172,11 @@ class AutocompletePopupMenuClient
   }
 
   virtual PopupMenuStyle itemStyle(unsigned listIndex) const {
-    return menuStyle();
+    return *style_;
   }
 
   virtual PopupMenuStyle menuStyle() const {
-    RenderStyle* style = text_field_->renderStyle() ?
-                            text_field_->renderStyle() :
-                            text_field_->computedStyle();
-    return PopupMenuStyle(style->color(), Color::white, style->font(),
-                          style->visibility() == VISIBLE);
+    return *style_;
   }
 
   virtual int clientInsetLeft() const {
@@ -230,6 +248,7 @@ class AutocompletePopupMenuClient
     return widget.release();
   }
 
+  // AutocompletePopupMenuClient specific methods:
   void SetSuggestions(const std::vector<std::wstring>& suggestions) {
     suggestions_.clear();
     for (std::vector<std::wstring>::const_iterator iter = suggestions.begin();
@@ -250,6 +269,17 @@ class AutocompletePopupMenuClient
   std::vector<WebCore::String> suggestions_;
   int selected_index_;
   WebViewImpl* webview_;
+  scoped_ptr<PopupMenuStyle> style_;
+};
+
+// Note that focusOnShow is false so that the autocomplete popup is shown not
+// activated.  We need the page to still have focus so the user can keep typing
+// while the popup is showing.
+static const WebCore::PopupContainerSettings kAutocompletePopupSettings = {
+  false,  // focusOnShow
+  false,  // setTextOnIndexChange
+  false,  // acceptOnAbandon
+  true,   // loopSelectionNavigation
 };
 
 // WebView ----------------------------------------------------------------
@@ -288,7 +318,8 @@ WebViewImpl::WebViewImpl()
       doing_drag_and_drop_(false),
       suppress_next_keypress_event_(false),
       window_open_disposition_(IGNORE_ACTION),
-      ime_accept_events_(true) {
+      ime_accept_events_(true),
+      autocomplete_popup_showing_(false) {
   // WebKit/win/WebView.cpp does the same thing, except they call the
   // KJS specific wrapper around this method. We need to have threading
   // initialized because CollatorICU requires it.
@@ -444,18 +475,8 @@ bool WebViewImpl::KeyEvent(const WebKeyboardEvent& event) {
   suppress_next_keypress_event_ = false;
 
   // Give autocomplete a chance to consume the key events it is interested in.
-  if (autocomplete_popup_ &&
-      autocomplete_popup_->isInterestedInEventForKey(event.key_code)) {
-    if (autocomplete_popup_->handleKeyEvent(MakePlatformKeyboardEvent(event))) {
-#if defined(OS_WIN)
-      // We need to ignore the next CHAR event after this otherwise pressing
-      // enter when selecting an item in the menu will go to the page.
-      if (WebInputEvent::KEY_DOWN == event.type)
-        suppress_next_keypress_event_ = true;
-#endif
-      return true;
-    }
-  }
+  if (AutocompleteHandleKeyEvent(event))
+    return true;
 
   Frame* frame = GetFocusedWebCoreFrame();
   if (!frame)
@@ -507,6 +528,29 @@ bool WebViewImpl::KeyEvent(const WebKeyboardEvent& event) {
   return KeyEventDefault(event);
 }
 
+bool WebViewImpl::AutocompleteHandleKeyEvent(const WebKeyboardEvent& event) {
+  if (!autocomplete_popup_showing_ ||
+      // Home and End should be left to the text field to process.
+      event.key_code == base::VKEY_HOME || event.key_code == base::VKEY_END) {
+    return false;
+  }
+
+  if (!autocomplete_popup_->isInterestedInEventForKey(event.key_code))
+    return false;
+
+  if (autocomplete_popup_->handleKeyEvent(MakePlatformKeyboardEvent(event))) {
+#if defined(OS_WIN)
+      // We need to ignore the next CHAR event after this otherwise pressing
+      // enter when selecting an item in the menu will go to the page.
+      if (WebInputEvent::KEY_DOWN == event.type)
+        suppress_next_keypress_event_ = true;
+#endif
+      return true;
+    }
+
+  return false;
+}
+  
 bool WebViewImpl::CharEvent(const WebKeyboardEvent& event) {
   DCHECK(event.type == WebInputEvent::CHAR);
 
@@ -831,7 +875,7 @@ void WebViewImpl::Resize(const gfx::Size& new_size) {
 
   if (main_frame()->frameview()) {
     main_frame()->frameview()->resize(size_.width(), size_.height());
-    main_frame()->frame()->sendResizeEvent();
+    main_frame()->frame()->eventHandler()->sendResizeEvent();
   }
 
   if (delegate_) {
@@ -1051,56 +1095,57 @@ bool WebViewImpl::ImeSetComposition(int string_type,
       return false;
   }
 
+  // We should verify the parent node of this IME composition node are
+  // editable because JavaScript may delete a parent node of the composition
+  // node. In this case, WebKit crashes while deleting texts from the parent
+  // node, which doesn't exist any longer.
+  PassRefPtr<Range> range = editor->compositionRange();
+  if (range) {
+    const Node* node = range->startPosition().node();
+    if (!node || !node->isContentEditable())
+      return false;
+  }
+
   if (string_type == 0) {
     // A browser process sent an IPC message which does not contain a valid
     // string, which means an ongoing composition has been canceled.
     // If the ongoing composition has been canceled, replace the ongoing
     // composition string with an empty string and complete it.
-    // TODO(hbono): Need to add a new function to cancel the ongoing
-    // composition to WebCore::Editor?
     WebCore::String empty_string;
-    editor->confirmComposition(empty_string);
+    WTF::Vector<WebCore::CompositionUnderline> empty_underlines;
+    editor->setComposition(empty_string, empty_underlines, 0, 0);
   } else {
     // A browser process sent an IPC message which contains a string to be
     // displayed in this Editor object.
     // To display the given string, set the given string to the
     // m_compositionNode member of this Editor object and display it.
-    // NOTE: An empty string (often sent by Chinese IMEs and Korean IMEs)
-    // causes a panic in Editor::setComposition(), which deactivates the
-    // m_frame.m_sel member of this Editor object, i.e. we can never display
-    // composition strings in the m_compositionNode member.
-    // (I have not been able to find good methods for re-activating it.)
-    // Therefore, I have to prevent from calling Editor::setComposition()
-    // with its first argument an empty string.
-    if (ime_string.length() > 0) {
-      if (target_start < 0) target_start = 0;
-      if (target_end < 0) target_end = static_cast<int>(ime_string.length());
-      WebCore::String composition_string(
-          webkit_glue::StdWStringToString(ime_string));
-      // Create custom underlines.
-      // To emphasize the selection, the selected region uses a solid black
-      // for its underline while other regions uses a pale gray for theirs.
-      WTF::Vector<WebCore::CompositionUnderline> underlines(3);
-      underlines[0].startOffset = 0;
-      underlines[0].endOffset = target_start;
-      underlines[0].thick = true;
-      underlines[0].color.setRGB(0xd3, 0xd3, 0xd3);
-      underlines[1].startOffset = target_start;
-      underlines[1].endOffset = target_end;
-      underlines[1].thick = true;
-      underlines[1].color.setRGB(0x00, 0x00, 0x00);
-      underlines[2].startOffset = target_end;
-      underlines[2].endOffset = static_cast<int>(ime_string.length());
-      underlines[2].thick = true;
-      underlines[2].color.setRGB(0xd3, 0xd3, 0xd3);
-      // When we use custom underlines, WebKit ("InlineTextBox.cpp" Line 282)
-      // prevents from writing a text in between 'selectionStart' and
-      // 'selectionEnd' somehow.
-      // Therefore, we use the 'cursor_position' for these arguments so that
-      // there are not any characters in the above region.
-      editor->setComposition(composition_string, underlines,
-                             cursor_position, cursor_position);
-    }
+    if (target_start < 0) target_start = 0;
+    if (target_end < 0) target_end = static_cast<int>(ime_string.length());
+    WebCore::String composition_string(
+        webkit_glue::StdWStringToString(ime_string));
+    // Create custom underlines.
+    // To emphasize the selection, the selected region uses a solid black
+    // for its underline while other regions uses a pale gray for theirs.
+    WTF::Vector<WebCore::CompositionUnderline> underlines(3);
+    underlines[0].startOffset = 0;
+    underlines[0].endOffset = target_start;
+    underlines[0].thick = true;
+    underlines[0].color.setRGB(0xd3, 0xd3, 0xd3);
+    underlines[1].startOffset = target_start;
+    underlines[1].endOffset = target_end;
+    underlines[1].thick = true;
+    underlines[1].color.setRGB(0x00, 0x00, 0x00);
+    underlines[2].startOffset = target_end;
+    underlines[2].endOffset = static_cast<int>(ime_string.length());
+    underlines[2].thick = true;
+    underlines[2].color.setRGB(0xd3, 0xd3, 0xd3);
+    // When we use custom underlines, WebKit ("InlineTextBox.cpp" Line 282)
+    // prevents from writing a text in between 'selectionStart' and
+    // 'selectionEnd' somehow.
+    // Therefore, we use the 'cursor_position' for these arguments so that
+    // there are not any characters in the above region.
+    editor->setComposition(composition_string, underlines,
+                           cursor_position, cursor_position);
 #if defined(OS_WIN)
     // The given string is a result string, which means the ongoing
     // composition has been completed. I have to call the
@@ -1230,6 +1275,7 @@ void WebViewImpl::SetPreferences(const WebPreferences& preferences) {
   settings->setDefaultTextEncodingName(webkit_glue::StdWStringToString(
     preferences.default_encoding));
   settings->setJavaScriptEnabled(preferences.javascript_enabled);
+  settings->setWebSecurityEnabled(preferences.web_security_enabled);
   settings->setJavaScriptCanOpenWindowsAutomatically(
     preferences.javascript_can_open_windows_automatically);
   settings->setLoadsImagesAutomatically(
@@ -1494,24 +1540,21 @@ void WebViewImpl::AutofillSuggestionsForNode(
 
     WebCore::HTMLInputElement* input_elem =
         static_cast<WebCore::HTMLInputElement*>(focused_node.get());
-    if (!autocomplete_popup_client_.get() ||
-        autocomplete_popup_client_->text_field() != input_elem) {
-      autocomplete_popup_client_ =
-          adoptRef(new AutocompletePopupMenuClient(this, input_elem,
-                                                   suggestions,
-                                                   default_suggestion_index));
-      // The autocomplete popup is not activated.  We need the page to still
-      // have focus so the user can keep typing when the popup is showing.
+
+    // The first time the autocomplete is shown we'll create the client and the
+    // popup.
+    if (!autocomplete_popup_client_.get())
+      autocomplete_popup_client_.reset(new AutocompletePopupMenuClient(this));
+    autocomplete_popup_client_->Init(input_elem,
+                                     suggestions,
+                                     default_suggestion_index);
+    if (!autocomplete_popup_.get()) {
       autocomplete_popup_ =
           WebCore::PopupContainer::create(autocomplete_popup_client_.get(),
-                                          false);
-      autocomplete_popup_->setTextOnIndexChange(false);
-      autocomplete_popup_->setAcceptOnAbandon(false);
-      autocomplete_popup_->setLoopSelectionNavigation(true);
-      autocomplete_popup_->show(focused_node->getRect(), 
-                                page_->mainFrame()->view(), 0);
-    } else {
-      // There is already a popup, reuse it.
+                                          kAutocompletePopupSettings);
+    }
+
+    if (autocomplete_popup_showing_) {
       autocomplete_popup_client_->SetSuggestions(suggestions);
       IntRect old_bounds = autocomplete_popup_->boundsRect();
       autocomplete_popup_->refresh();
@@ -1523,6 +1566,10 @@ void WebViewImpl::AutofillSuggestionsForNode(
         web_widget->delegate()->SetWindowRect(
             web_widget, webkit_glue::FromIntRect(new_bounds));
       }
+    } else {
+      autocomplete_popup_->show(focused_node->getRect(), 
+                                page_->mainFrame()->view(), 0);
+      autocomplete_popup_showing_ = true;
     }
   }
 }
@@ -1619,8 +1666,7 @@ void WebViewImpl::DeleteImageResourceFetcher(ImageResourceFetcher* fetcher) {
 void WebViewImpl::HideAutoCompletePopup() {
   if (autocomplete_popup_) {
     autocomplete_popup_->hidePopup();
-    autocomplete_popup_.clear();
-    autocomplete_popup_client_.clear();
+    autocomplete_popup_showing_ = false;
   }
 }
 

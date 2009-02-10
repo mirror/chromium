@@ -622,7 +622,7 @@ void DownloadManager::OnPathExistenceAvailable(DownloadCreateInfo* info) {
     std::wstring filter =
         win_util::GetFileFilterFromPath(info->suggested_path.value());
     HWND owning_hwnd =
-        contents ? GetAncestor(contents->GetContainerHWND(), GA_ROOT) : NULL;
+        contents ? GetAncestor(contents->GetNativeView(), GA_ROOT) : NULL;
     select_file_dialog_->SelectFile(SelectFileDialog::SELECT_SAVEAS_FILE,
                                     std::wstring(),
                                     info->suggested_path.ToWStringHack(),
@@ -1111,10 +1111,12 @@ void DownloadManager::GenerateExtension(
     //         application/x-javascript.
     FilePath::StringType append_extension;
     if (net::GetPreferredExtensionForMimeType(mime_type, &append_extension)) {
-      if (append_extension != FILE_PATH_LITERAL(".txt") &&
+      if (append_extension != FILE_PATH_LITERAL("txt") &&
           append_extension != extension &&
-          !IsExecutable(append_extension))
+          !IsExecutable(append_extension)) {
+        extension += FILE_PATH_LITERAL(".");
         extension += append_extension;
+      }
     }
   }
 

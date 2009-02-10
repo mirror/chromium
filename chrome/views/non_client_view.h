@@ -81,7 +81,8 @@ class NonClientView : public View {
   int GetHTComponentForFrame(const gfx::Point& point,
                              int top_resize_border_height,
                              int resize_border_thickness,
-                             int resize_corner_size,
+                             int top_resize_corner_height,
+                             int resize_corner_width,
                              bool can_resize);
 
   // Accessor for paint_as_active_.

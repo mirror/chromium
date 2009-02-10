@@ -10,33 +10,28 @@
 #include "build/build_config.h"
 
 #include <algorithm>
-#include <sstream>
-#include <vector>
 
 #include "base/command_line.h"
 #include "base/debug_util.h"
-#include "base/file_util.h"
 #include "base/logging.h"
 #include "base/path_service.h"
 #include "base/process_util.h"
+#include "base/rand_util.h"
 #include "base/shared_memory.h"
-#include "base/singleton.h"
 #include "base/string_util.h"
 #include "base/thread.h"
 #include "chrome/app/result_codes.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/cache_manager_host.h"
 #include "chrome/browser/extensions/user_script_master.h"
-#include "chrome/browser/plugin_service.h"
+#include "chrome/browser/history/history.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/renderer_host/render_widget_helper.h"
 #include "chrome/browser/renderer_host/renderer_security_policy.h"
-#include "chrome/browser/resource_message_filter.h"
+#include "chrome/browser/renderer_host/resource_message_filter.h"
 #include "chrome/browser/visitedlink_master.h"
-#include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/debug_flags.h"
-#include "chrome/common/l10n_util.h"
 #include "chrome/common/logging_chrome.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
@@ -44,14 +39,13 @@
 #include "chrome/common/process_watcher.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/renderer/render_process.h"
-#include "net/base/cookie_monster.h"
-#include "net/base/net_util.h"
 
 #if defined(OS_WIN)
+#include "chrome/browser/plugin_service.h"
+
 // TODO(port): see comment by the only usage of RenderViewHost in this file.
 #include "chrome/browser/renderer_host/render_view_host.h"
 
-#include "chrome/browser/history/history.h"
 #include "chrome/browser/spellchecker.h"
 
 // Once the above TODO is finished, then this block is all Windows-specific
@@ -59,11 +53,13 @@
 #include "base/win_util.h"
 #include "chrome/common/win_util.h"
 #include "chrome/browser/sandbox_policy.h"
-#include "chrome/common/win_util.h"
 #include "sandbox/src/sandbox.h"
+#elif defined(OS_POSIX)
+// TODO(port): Remove temporary scaffolding after porting the above headers.
+#include "chrome/common/temp_scaffolding_stubs.h"
 #endif
 
-#include "SkBitmap.h"
+#include "skia/include/SkBitmap.h"
 
 #include "generated_resources.h"
 
@@ -145,9 +141,10 @@ BrowserRenderProcessHost::BrowserRenderProcessHost(Profile* profile)
       NotificationType::USER_SCRIPTS_LOADED,
       NotificationService::AllSources());
 
-  // Note: When we create the BrowserRenderProcessHost, it's technically backgrounded,
-  //       because it has no visible listeners.  But the process doesn't
-  //       actually exist yet, so we'll Background it later, after creation.
+  // Note: When we create the BrowserRenderProcessHost, it's technically
+  //       backgrounded, because it has no visible listeners.  But the process
+  //       doesn't actually exist yet, so we'll Background it later, after
+  //       creation.
 }
 
 BrowserRenderProcessHost::~BrowserRenderProcessHost() {
@@ -287,6 +284,13 @@ bool BrowserRenderProcessHost::Init() {
       DebugFlags::ProcessDebugFlags(&cmd_line,
                                     DebugFlags::RENDERER,
                                     in_sandbox);
+#elif defined(OS_POSIX)
+  if (browser_command_line.HasSwitch(switches::kRendererCmdPrefix)) {
+    // launch the renderer child with some prefix (usually "gdb --args")
+    const std::wstring prefix =
+        browser_command_line.GetSwitchValue(switches::kRendererCmdPrefix);
+    cmd_line.PrependWrapper(prefix);
+  }
 #endif
 
   cmd_line.AppendSwitchWithValue(switches::kProcessType,
@@ -400,18 +404,11 @@ bool BrowserRenderProcessHost::Init() {
       } else
 #endif  // OS_WIN and sandbox
       {
-#if defined(OS_WIN)
         // spawn child process
         base::ProcessHandle process = 0;
-        // TODO(port): LaunchApp is actually no good on POSIX when
-        // we've constructed the command line as we have here, as the above
-        // calls all append to a single string while LaunchApp reaches in to
-        // the argv array.  CommandLine should be fixed, but once it is, this
-        // code will be correct.
-        if (!base::LaunchApp(cmd_line, false, false, &process))
+        if (!SpawnChild(cmd_line, channel_.get(), &process))
           return false;
         process_.set_handle(process);
-#endif
       }
     }
   }
@@ -427,6 +424,24 @@ bool BrowserRenderProcessHost::Init() {
 
   return true;
 }
+
+#if defined(OS_WIN)
+bool BrowserRenderProcessHost::SpawnChild(const CommandLine& command_line,
+    IPC::SyncChannel* channel, base::ProcessHandle* process_handle) {
+  return base::LaunchApp(command_line, false, false, process_handle);
+}
+#elif defined(OS_POSIX)
+bool BrowserRenderProcessHost::SpawnChild(const CommandLine& command_line,
+    IPC::SyncChannel* channel, base::ProcessHandle* process_handle) {
+  base::file_handle_mapping_vector fds_to_map;
+  int src_fd = -1, dest_fd = -1;
+  channel->GetClientFileDescriptorMapping(&src_fd, &dest_fd);
+  if (src_fd > -1)
+    fds_to_map.push_back(std::pair<int, int>(src_fd, dest_fd));
+  return base::LaunchApp(command_line.argv(), fds_to_map, false,
+                         process_handle);
+}
+#endif
 
 int BrowserRenderProcessHost::GetNextRoutingID() {
   return widget_helper_->GetNextRoutingID();
@@ -500,6 +515,7 @@ void BrowserRenderProcessHost::InitVisitedLinks() {
     return;
   }
 
+#if defined(OS_WIN)
   base::SharedMemoryHandle handle_for_process = NULL;
   visitedlink_master->ShareToProcess(GetRendererProcessHandle(),
                                      &handle_for_process);
@@ -507,6 +523,9 @@ void BrowserRenderProcessHost::InitVisitedLinks() {
   if (handle_for_process) {
     channel_->Send(new ViewMsg_VisitedLink_NewTable(handle_for_process));
   }
+#else
+  NOTIMPLEMENTED();
+#endif
 }
 
 void BrowserRenderProcessHost::InitUserScripts() {
@@ -636,7 +655,15 @@ void BrowserRenderProcessHost::OnChannelConnected(int32 peer_pid) {
   } else {
     // Need to verify that the peer_pid is actually the process we know, if
     // it is not, we need to panic now. See bug 1002150.
-    CHECK(peer_pid == process_.pid());
+    if (peer_pid != process_.pid()) {
+      // In the case that we are running the renderer in a wrapper, this check
+      // is invalid as it's the wrapper PID that we'll have, not the actual
+      // renderer
+      const CommandLine& cmd_line = *CommandLine::ForCurrentProcess();
+      if (cmd_line.HasSwitch(switches::kRendererCmdPrefix))
+        return;
+      CHECK(peer_pid == process_.pid());
+    }
   }
 }
 

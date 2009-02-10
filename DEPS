@@ -1,3 +1,10 @@
+vars = {
+  "webkit_trunk":
+    "http://svn.webkit.org/repository/webkit/trunk",
+  "webkit_revision": "40722",
+}
+
+
 deps = {
   "src/breakpad/src":
     "http://google-breakpad.googlecode.com/svn/trunk/src@285",
@@ -12,22 +19,22 @@ deps = {
     "http://googletest.googlecode.com/svn/trunk@167",
 
   "src/third_party/WebKit":
-    "/trunk/deps/third_party/WebKit@9010",
+    "/trunk/deps/third_party/WebKit@9423",
 
   "src/third_party/icu38":
-    "/trunk/deps/third_party/icu38@7525",
+    "/trunk/deps/third_party/icu38@9252",
 
   "src/v8":
     "http://v8.googlecode.com/svn/trunk@1201",
 
   "src/webkit/data/layout_tests/LayoutTests":
-    "http://svn.webkit.org/repository/webkit/trunk/LayoutTests@40409",
+    Var("webkit_trunk") + "/LayoutTests@" + Var("webkit_revision"),
 
   "src/third_party/WebKit/WebKit":
-    "http://svn.webkit.org/repository/webkit/trunk/WebKit@40409",
+    Var("webkit_trunk") + "/WebKit@" + Var("webkit_revision"),
 
   "src/third_party/WebKit/WebKitLibraries":
-    "http://svn.webkit.org/repository/webkit/trunk/WebKitLibraries@40409",
+    Var("webkit_trunk") + "/WebKitLibraries@" + Var("webkit_revision"),
 }
 
 
@@ -41,6 +48,10 @@ deps_os = {
 
     "src/third_party/svn":
       "/trunk/deps/third_party/svn@3230",
+  },
+  "mac": {
+    "src/third_party/GTM":
+      "http://google-toolbox-for-mac.googlecode.com/svn/trunk/@77",
   },
 }
 

@@ -17,6 +17,7 @@
 
 #include "base/basictypes.h"
 #include "base/logging.h"
+#include "base/platform_thread.h"
 #include "base/process_util.h"
 #include "base/sys_info.h"
 #include "base/time.h"
@@ -33,6 +34,17 @@ ProcessHandle GetCurrentProcessHandle() {
   return GetCurrentProcId();
 }
 
+ProcessHandle OpenProcessHandle(int pid) {
+  // On Posix platforms, process handles are the same as PIDs, so we
+  // don't need to do anything.
+  return pid;
+}
+
+void CloseProcessHandle(ProcessHandle process) {
+  // See OpenProcessHandle, nothing to do.
+  return;
+}
+
 int GetProcId(ProcessHandle process) {
   return process;
 }
@@ -40,7 +52,7 @@ int GetProcId(ProcessHandle process) {
 // Attempts to kill the process identified by the given process
 // entry structure.  Ignores specified exit_code; posix can't force that.
 // Returns true if this is successful, false otherwise.
-bool KillProcess(int process_id, int exit_code, bool wait) {
+bool KillProcess(ProcessHandle process_id, int exit_code, bool wait) {
   bool result = false;
 
   int status = kill(process_id, SIGTERM);
@@ -268,6 +280,62 @@ int ProcessMetrics::GetCPUUsage() {
   last_time_ = time;
 
   return cpu;
+}
+
+int GetProcessCount(const std::wstring& executable_name,
+                    const ProcessFilter* filter) {
+  int count = 0;
+
+  NamedProcessIterator iter(executable_name, filter);
+  while (iter.NextProcessEntry())
+    ++count;
+  return count;
+}
+
+bool KillProcesses(const std::wstring& executable_name, int exit_code,
+                   const ProcessFilter* filter) {
+  bool result = true;
+  const ProcessEntry* entry;
+
+  NamedProcessIterator iter(executable_name, filter);
+  while ((entry = iter.NextProcessEntry()) != NULL)
+    result = KillProcess((*entry).pid, exit_code, true) && result;
+
+  return result;
+}
+
+bool WaitForProcessesToExit(const std::wstring& executable_name,
+                            int wait_milliseconds,
+                            const ProcessFilter* filter) {
+  bool result = false;
+
+  // TODO(port): This is inefficient, but works if there are multiple procs.
+  // TODO(port): use waitpid to avoid leaving zombies around
+
+  base::Time end_time = base::Time::Now() +
+      base::TimeDelta::FromMilliseconds(wait_milliseconds);
+  do {
+    NamedProcessIterator iter(executable_name, filter);
+    if (!iter.NextProcessEntry()) {
+      result = true;
+      break;
+    }
+    PlatformThread::Sleep(100);
+  } while ((base::Time::Now() - end_time) > base::TimeDelta());
+
+  return result;
+}
+
+bool CleanupProcesses(const std::wstring& executable_name,
+                      int wait_milliseconds,
+                      int exit_code,
+                      const ProcessFilter* filter) {
+  bool exited_cleanly =
+      WaitForProcessesToExit(executable_name, wait_milliseconds,
+                           filter);
+  if (!exited_cleanly)
+    KillProcesses(executable_name, exit_code, filter);
+  return exited_cleanly;
 }
 
 }  // namespace base

@@ -19,6 +19,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/plugin_messages.h"
+#include "chrome/common/render_messages.h"
 #include "chrome/common/win_util.h"
 // Included for views::kReflectedMessage - TODO(beng): move this to win_util.h!
 #include "chrome/views/widget_win.h"
@@ -271,7 +272,7 @@ void RenderWidgetHostViewWin::SetIsLoading(bool is_loading) {
   UpdateCursorIfOverSelf();
 }
 
-void RenderWidgetHostViewWin::IMEUpdateStatus(ViewHostMsg_ImeControl control,
+void RenderWidgetHostViewWin::IMEUpdateStatus(int control,
                                               const gfx::Rect& caret_rect) {
   if (control == IME_DISABLE) {
     ime_input_.DisableIME(m_hWnd);
@@ -396,6 +397,7 @@ LRESULT RenderWidgetHostViewWin::OnCreate(CREATESTRUCT* create_struct) {
   // Call the WM_INPUTLANGCHANGE message handler to initialize the input locale
   // of a browser process.
   OnInputLangChange(0, 0);
+  TRACK_HWND_CREATION(m_hWnd);
   return 0;
 }
 
@@ -413,6 +415,7 @@ void RenderWidgetHostViewWin::OnActivate(UINT action, BOOL minimized,
 void RenderWidgetHostViewWin::OnDestroy() {
   ResetTooltip();
   TrackMouseLeave(false);
+  TRACK_HWND_DESTRUCTION(m_hWnd);
 }
 
 void RenderWidgetHostViewWin::OnPaint(HDC dc) {

@@ -96,14 +96,16 @@ if not env.Bit('windows'):
       '$CHROME_DIR/tools/build/win/precompiled_wtl.h',
   )
 
-# TODO(port): Port these to Linux
 if env.Bit('linux'):
+  # Linux-specific.
+  input_files.Append(
+      'renderer_main_platform_delegate_linux.cc',
+  )
+
+  # TODO(port): Port these to Linux
   input_files.Remove(
       'chrome_plugin_host.cc',
-      'debug_message_handler.cc',
-      'external_js_object.cc',
       'plugin_channel_host.cc',
-      'renderer_main.cc',
       'webplugin_delegate_proxy.cc',
   )
 
@@ -118,7 +120,6 @@ if env.Bit('mac'):
       'render_view.cc',
       'render_widget.cc',
       'renderer_glue.cc',
-      'renderer_main.cc',
       'webplugin_delegate_proxy.cc',
   )
 

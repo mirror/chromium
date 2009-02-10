@@ -43,6 +43,7 @@
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
+#include "chrome/common/thumbnail_score.h"
 
 #include "chromium_strings.h"
 #include "generated_resources.h"
@@ -598,6 +599,7 @@ void HistoryService::SetInMemoryBackend(
 }
 
 void HistoryService::NotifyTooNew() {
+#if defined(OS_WIN)
   // Find the last browser window to display our message box from.
   Browser* cur_browser = BrowserList::GetLastActive();
   // TODO(brettw): Do this some other way or beng will kick you. e.g. move to
@@ -610,6 +612,10 @@ void HistoryService::NotifyTooNew() {
   std::wstring message = l10n_util::GetString(IDS_PROFILE_TOO_NEW_ERROR);
   MessageBox(cur_hwnd, message.c_str(), title.c_str(),
              MB_OK | MB_ICONWARNING | MB_TOPMOST);
+#else
+  // TODO(port): factor this out into platform-specific code.
+  NOTIMPLEMENTED();
+#endif
 }
 
 void HistoryService::DeleteURL(const GURL& url) {

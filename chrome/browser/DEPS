@@ -1,8 +1,15 @@
 include_rules = [
+  "+chrome/app",
+  "+chrome/app/theme",  # For resource identifiers
+  "+chrome/app/locales",
   "+chrome/installer",
+  "+chrome/personalization",
   "+chrome/tools",
   "+chrome/tools/profiles",  # For history unit tests.
   "+chrome/views",
+  "+sandbox/src",
+  "+skia/include",
+  "+skia/ext",
   "+webkit/activex_shim",
   "+webkit/default_plugin",
   "+webkit/glue",  # Defines some types that are marshalled over IPC.
@@ -10,6 +17,7 @@ include_rules = [
   # Other libraries.
   "+chrome/third_party/hunspell",
   "+libxml", # For search engine definition parsing.
+  "+media/audio", # Chrome's lightweight audio library.
   "+third_party/sqlite",
   "+v8/include", # Browser uses V8 to get the version and run the debugger.
 

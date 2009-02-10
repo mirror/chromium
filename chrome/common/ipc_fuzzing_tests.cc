@@ -96,10 +96,9 @@ TEST(IPCMessageIntegrity, ReadVectorTooLarge2) {
   EXPECT_FALSE(ReadParam(&m, &iter, &vec));
 }
 
-// Typically the ipc_message_macros files is included twice but here we only
-// include it once in 'enum mode' because we want more control of the class
-// definitions.
-#define IPC_MESSAGE_MACROS_ENUMS
+// We don't actually use the messages defined in this file, but we do this
+// to get to the IPC macros.
+#define MESSAGES_INTERNAL_FILE "chrome/common/ipc_sync_message_unittest.h"
 #include "chrome/common/ipc_message_macros.h"
 
 enum IPCMessageIds {
@@ -303,6 +302,7 @@ TEST_F(IPCFuzzingTest, SanityTest) {
   EXPECT_TRUE(listener.ExpectMessage(value, MsgClassSI::ID));
 
   EXPECT_TRUE(base::WaitForSingleProcess(server_process, 5000));
+  base::CloseProcessHandle(server_process);
 }
 
 // This test uses a payload that is smaller than expected.
@@ -332,6 +332,7 @@ TEST_F(IPCFuzzingTest, MsgBadPayloadShort) {
   EXPECT_TRUE(listener.ExpectMessage(1, MsgClassSI::ID));
 
   EXPECT_TRUE(base::WaitForSingleProcess(server_process, 5000));
+  base::CloseProcessHandle(server_process);
 }
 #endif  // NDEBUG
 
@@ -366,6 +367,7 @@ TEST_F(IPCFuzzingTest, MsgBadPayloadArgs) {
   EXPECT_TRUE(listener.ExpectMessage(3, MsgClassIS::ID));
 
   EXPECT_TRUE(base::WaitForSingleProcess(server_process, 5000));
+  base::CloseProcessHandle(server_process);
 }
 
 // This class is for testing the IPC_BEGIN_MESSAGE_MAP_EX macros.

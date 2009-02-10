@@ -13,21 +13,27 @@
 #include "chrome/app/result_codes.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/cross_site_request_manager.h"
-#include "chrome/browser/debugger/debugger_wrapper.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/metrics/user_metrics.h"
+#include "chrome/browser/renderer_host/renderer_security_policy.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/render_view_host_delegate.h"
 #include "chrome/browser/renderer_host/render_widget_host.h"
 #include "chrome/browser/renderer_host/render_widget_host_view.h"
-#include "chrome/browser/renderer_host/renderer_security_policy.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/site_instance.h"
 #include "chrome/browser/tab_contents/web_contents.h"
+#include "chrome/common/render_messages.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/thumbnail_score.h"
 #include "net/base/net_util.h"
 #include "skia/include/SkBitmap.h"
+#include "webkit/glue/autofill_form.h"
+
+#if defined(OS_WIN)
+// TODO(port): remove these when stubs are filled in
+#include "chrome/browser/debugger/debugger_wrapper.h"
+#endif
 
 using base::TimeDelta;
 
@@ -79,12 +85,13 @@ RenderViewHost::RenderViewHost(SiteInstance* instance,
                                base::WaitableEvent* modal_dialog_event)
     : RenderWidgetHost(instance->GetProcess(), routing_id),
       instance_(instance),
-      enable_dom_ui_bindings_(false),
-      enable_external_host_bindings_(false),
       delegate_(delegate),
       renderer_initialized_(false),
       waiting_for_drag_context_response_(false),
       debugger_attached_(false),
+      enable_dom_ui_bindings_(false),
+      pending_request_id_(0),
+      enable_external_host_bindings_(false),
       modal_dialog_count_(0),
       navigations_suspended_(false),
       suspended_nav_message_(NULL),
@@ -641,9 +648,9 @@ bool RenderViewHost::CanTerminate() const {
 
 void RenderViewHost::OnMessageReceived(const IPC::Message& msg) {
   if (msg.is_sync() && !msg.is_caller_pumping_messages()) {
-    NOTREACHED() << "Can't send sync messages to UI thread without pumping " \
-        "messages in the renderer or else deadlocks can occur if the page" \
-        "has windowed plugins!";
+    NOTREACHED() << "Can't send sync messages to UI thread without pumping "
+        "messages in the renderer or else deadlocks can occur if the page"
+        "has windowed plugins! (message type " << msg.type() << ")";
     IPC::Message* reply = IPC::SyncMessage::GenerateReply(&msg);
     reply->set_reply_error();
     Send(reply);
@@ -664,7 +671,7 @@ void RenderViewHost::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(ViewHostMsg_UpdateTitle, OnMsgUpdateTitle)
     IPC_MESSAGE_HANDLER(ViewHostMsg_UpdateEncoding, OnMsgUpdateEncoding)
     IPC_MESSAGE_HANDLER(ViewHostMsg_UpdateTargetURL, OnMsgUpdateTargetURL)
-    IPC_MESSAGE_HANDLER_GENERIC(ViewHostMsg_Thumbnail, OnMsgThumbnail(msg))
+    IPC_MESSAGE_HANDLER(ViewHostMsg_Thumbnail, OnMsgThumbnail)
     IPC_MESSAGE_HANDLER(ViewHostMsg_Close, OnMsgClose)
     IPC_MESSAGE_HANDLER(ViewHostMsg_RequestMove, OnMsgRequestMove)
     IPC_MESSAGE_HANDLER(ViewHostMsg_DidStartLoading, OnMsgDidStartLoading)
@@ -885,22 +892,9 @@ void RenderViewHost::OnMsgUpdateTargetURL(int32 page_id,
   Send(new ViewMsg_UpdateTargetURL_ACK(routing_id()));
 }
 
-void RenderViewHost::OnMsgThumbnail(const IPC::Message& msg) {
-  // crack the message
-  void* iter = NULL;
-  GURL url;
-  if (!IPC::ParamTraits<GURL>::Read(&msg, &iter, &url))
-    return;
-
-  ThumbnailScore score;
-  if (!IPC::ParamTraits<ThumbnailScore>::Read(&msg, &iter, &score))
-    return;
-
-  // thumbnail data
-  SkBitmap bitmap;
-  if (!IPC::ParamTraits<SkBitmap>::Read(&msg, &iter, &bitmap))
-    return;
-
+void RenderViewHost::OnMsgThumbnail(const GURL& url,
+                                    const ThumbnailScore& score,
+                                    const SkBitmap& bitmap) {
   delegate_->UpdateThumbnail(url, bitmap, score);
 }
 
@@ -992,15 +986,14 @@ void RenderViewHost::OnMsgDidDownloadImage(
   delegate_->DidDownloadImage(this, id, image_url, errored, image);
 }
 
-void RenderViewHost::OnMsgContextMenu(
-    const ViewHostMsg_ContextMenu_Params& params) {
+void RenderViewHost::OnMsgContextMenu(const ContextMenuParams& params) {
   RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
   if (!view)
     return;
 
   // Validate the URLs in |params|.  If the renderer can't request the URLs
   // directly, don't show them in the context menu.
-  ViewHostMsg_ContextMenu_Params validated_params(params);
+  ContextMenuParams validated_params(params);
   const int renderer_id = process()->host_id();
   RendererSecurityPolicy* policy = RendererSecurityPolicy::GetInstance();
 
@@ -1084,7 +1077,6 @@ void RenderViewHost::OnMsgRunJavaScriptMessage(
   StopHangMonitorTimeout();
   if (modal_dialog_count_++ == 0)
     modal_dialog_event_->Signal();
-  bool did_suppress_message = false;
   delegate_->RunJavaScriptMessage(message, default_prompt, flags, reply_msg,
                                   &are_javascript_messages_suppressed_);
 }
