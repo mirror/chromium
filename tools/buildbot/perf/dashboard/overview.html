@@ -8,9 +8,9 @@
         document.write(name);
         document.write('/report.html?history=50')
         var params = ParseParams();
-        if ('trace' in params) {
-          document.write('&trace=');
-          document.write(params.trace);
+        if ('graph' in params) {
+          document.write('&graph=');
+          document.write(params.graph);
         }
         document.write('&lookout"></iframe></td>');
       }
@@ -22,8 +22,8 @@
         Currently showing
         <script language=javascript>
           var params = ParseParams();
-          if ('trace' in params) {
-            document.write(params.trace)
+          if ('graph' in params) {
+            document.write(params.graph)
           } else {
             document.write('page-load-time')
           }
@@ -31,12 +31,12 @@
       </h1>
       <br>
       [ <a href="overview.html">page-load-time</a> |
-        <a href="overview.html?trace=vm-peak-browser">vm-peak-browser</a> |
-        <a href="overview.html?trace=vm-peak-renderer">vm-peak-renderer</a> |
-        <a href="overview.html?trace=ws-peak-browser">ws-peak-browser</a> |
-        <a href="overview.html?trace=ws-peak-renderer">ws-peak-renderer</a> |
-        <a href="overview.html?trace=io-op-browser">io-op-browser</a> |
-        <a href="overview.html?trace=io-byte-browser">io-byte-browser</a> ]
+        <a href="overview.html?graph=vm_peak_b">vm-peak-browser</a> |
+        <a href="overview.html?graph=vm_peak_r">vm-peak-renderer</a> |
+        <a href="overview.html?graph=ws_peak_b">ws-peak-browser</a> |
+        <a href="overview.html?graph=ws_peak_r">ws-peak-renderer</a> |
+        <a href="overview.html?graph=total_op_b">io-op-browser</a> |
+        <a href="overview.html?graph=total_byte_b">io-byte-browser</a> ]
       <h1>Chromium XP Dual Core</h1>
       <table>
         <tr>
