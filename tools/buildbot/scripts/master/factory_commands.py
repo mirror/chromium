@@ -47,6 +47,7 @@ class FactoryCommands(object):
       'chromium-rel-xp-single': 'xp-release-single-core',
       'chromium-rel-vista-dual': 'vista-release-dual-core',
       'chromium-rel-vista-single': 'vista-release-single-core',
+      'chromium-rel-xp-dual-v8': 'xp-release-v8-latest',
     }
   }
 
@@ -59,6 +60,7 @@ class FactoryCommands(object):
       'chromium-rel-xp-single': 'xp-release-single-core/startup',
       'chromium-rel-vista-dual': 'vista-release-dual-core/startup',
       'chromium-rel-vista-single': 'vista-release-single-core/startup',
+      'chromium-rel-xp-dual-v8': 'xp-release-v8-latest/startup',
     }
   }
 
@@ -71,6 +73,7 @@ class FactoryCommands(object):
       'chromium-rel-xp-single': 'xp-release-single-core/new-tab-ui-cold',
       'chromium-rel-vista-dual': 'vista-release-dual-core/new-tab-ui-cold',
       'chromium-rel-vista-single': 'vista-release-single-core/new-tab-ui-cold',
+      'chromium-rel-xp-dual-v8': 'xp-release-v8-latest/new-tab-ui-cold',
     }
   }
   NEW_TAB_UI_WARM_TEST_MAPPINGS = {
@@ -81,6 +84,7 @@ class FactoryCommands(object):
       'chromium-rel-xp-single': 'xp-release-single-core/new-tab-ui-warm',
       'chromium-rel-vista-dual': 'vista-release-dual-core/new-tab-ui-warm',
       'chromium-rel-vista-single': 'vista-release-single-core/new-tab-ui-warm',
+      'chromium-rel-xp-dual-v8': 'xp-release-v8-latest/new-tab-ui-warm',
     }
   }
 
@@ -93,6 +97,7 @@ class FactoryCommands(object):
       'chromium-rel-xp-single': 'xp-release-single-core/tab-switching',
       'chromium-rel-vista-dual': 'vista-release-dual-core/tab-switching',
       'chromium-rel-vista-single': 'vista-release-single-core/tab-switching',
+      'chromium-rel-xp-dual-v8': 'xp-release-v8-latest/tab-switching',
     }
   }
 
@@ -105,6 +110,7 @@ class FactoryCommands(object):
       'chromium-rel-xp-single': 'xp-release-single-core/memory',
       'chromium-rel-vista-dual': 'vista-release-dual-core/memory',
       'chromium-rel-vista-single': 'vista-release-single-core/memory',
+      'chromium-rel-xp-dual-v8': 'xp-release-v8-latest/memory',
     }
   }
 
@@ -845,7 +851,7 @@ class FactoryCommands(object):
     """
     cmd = [self._python, self._purify_tool,
            '--build_dir', self.PathJoin(self._build_dir, self._target),
-           '--test', test_name]
+           '--test', test_name, '--buildbot']
     return cmd
 
   def AddPurifyTest(self, test_name, timeout=1200):
