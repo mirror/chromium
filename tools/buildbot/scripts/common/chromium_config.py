@@ -34,7 +34,7 @@ class Master(chromium_config_private.Master):
                 chromium_config_private.Master.repo_root + '/branches')
   merge_branch_url = branch_url + '/chrome_webkit_merge_branch'
   merge_branch_url_src = merge_branch_url + '/src'
-  v8_url = 'http://v8.googlecode.com/svn/branches/bleeding_edge'
+  v8_url = 'http://v8.googlecode.com/svn'
 
   # Used for the Chromium server.
   class Chromium(chromium_config_private.Master.Chromium):
