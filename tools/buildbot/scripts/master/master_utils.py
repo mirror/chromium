@@ -25,12 +25,18 @@ class MasterFactory(object):
   CUSTOM_DEPS_DISABLE_V8 = ('src/v8', None)
   CUSTOM_DEPS_V8_LATEST = ('src/v8',
     'http://v8.googlecode.com/svn/branches/bleeding_edge')
+  CUSTOM_DEPS_WEBKIT_ORG = [
+    ('src/third_party/WebKit', config.Master.webkit_mirror_url),
+    ('src/third_party/WebKit/WebKit', None),
+    ('src/third_party/WebKit/WebKitLibraries', None),
+    ('src/webkit/data/layout_tests/LayoutTests', None)]
 
   # A map used to skip dependencies when a test is not run.
   # The map key is the test name. The map value is an array containing the
   # dependencies that are not needed when this test is not run.
   NEEDED_COMPONENTS = {
-    '^(webkit|purify_layout)$': [('src/webkit/data/layout_tests/LayoutTests', None)]}
+    '^(webkit|purify_layout)$': [('src/webkit/data/layout_tests/LayoutTests',
+                                  None)]}
 
   NEEDED_COMPONENTS_INTERNAL = {
     'memory':
