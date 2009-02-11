@@ -28,21 +28,36 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef V8Proxy_h
-#define V8Proxy_h
+#include "config.h"
+#include "V8HTMLSelectElementCustom.h"
 
-// FIXME: This is a temporary forwarding header until all bindings have migrated
-// over and v8_proxy actually becomes V8Proxy.
-#include "v8_proxy.h"
+#include "HTMLSelectElement.h"
+#include "HTMLOptionElement.h"
+
+#include "V8Binding.h"
+#include "V8CustomBinding.h"
+#include "V8HTMLOptionElement.h"
+#include "V8Proxy.h"
 
 namespace WebCore {
 
-    inline v8::Handle<v8::Primitive> throwError(const char* message, V8Proxy::ErrorType type = V8Proxy::TYPE_ERROR)
-    {
-        V8Proxy::ThrowError(type, message);
+CALLBACK_FUNC_DECL(HTMLSelectElementRemove)
+{
+    INC_STATS("DOM.HTMLSelectElement.remove");
+    HTMLSelectElement* imp = V8Proxy::DOMWrapperToNode<HTMLSelectElement>(args.Holder());
+    return removeElement(imp, args);
+}
+
+v8::Handle<v8::Value> removeElement(HTMLSelectElement* imp, const v8::Arguments& args) 
+{
+    if (V8HTMLOptionElement::HasInstance(args[0])) {
+        HTMLOptionElement* element = V8Proxy::DOMWrapperToNode<HTMLOptionElement>(args[0]);
+        imp->remove(element->index());
         return v8::Undefined();
     }
 
+    imp->remove(ToInt32(args[0]));
+    return v8::Undefined();
 }
 
-#endif // V8Proxy_h
+} // namespace WebCore

@@ -28,24 +28,66 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <config.h>
-
+#include "config.h"
 #include "HTMLOptionsCollection.h"
 
+#include "HTMLOptionElement.h"
+#include "HTMLSelectElement.h"
 #include "ExceptionCode.h"
 
 #include "V8Binding.h"
 #include "V8CustomBinding.h"
+#include "V8HTMLOptionElement.h"
+#include "V8HTMLSelectElementCustom.h"
 #include "V8Proxy.h"
 
 namespace WebCore {
 
+CALLBACK_FUNC_DECL(HTMLOptionsCollectionRemove)
+{
+    INC_STATS("DOM.HTMLOptionsCollection.remove()");
+    HTMLOptionsCollection* imp = V8Proxy::ToNativeObject<HTMLOptionsCollection>(V8ClassIndex::HTMLOPTIONSCOLLECTION, args.Holder());
+    HTMLSelectElement* base = static_cast<HTMLSelectElement*>(imp->base());
+    return removeElement(base, args);
+}
+
+CALLBACK_FUNC_DECL(HTMLOptionsCollectionAdd)
+{
+    INC_STATS("DOM.HTMLOptionsCollection.add()");
+    if (!V8HTMLOptionElement::HasInstance(args[0])) {
+        V8Proxy::SetDOMException(TYPE_MISMATCH_ERR);
+        return v8::Undefined();
+    }
+    HTMLOptionsCollection* imp = V8Proxy::ToNativeObject<HTMLOptionsCollection>(V8ClassIndex::HTMLOPTIONSCOLLECTION, args.Holder());
+    HTMLOptionElement* option = V8Proxy::DOMWrapperToNode<HTMLOptionElement>(args[0]);
+
+    ExceptionCode ec = 0;
+    if (args.Length() < 2)
+        imp->add(option, ec);
+    else {
+        bool ok;
+        v8::TryCatch try_catch;
+        int index = ToInt32(args[1], ok);
+
+        if (try_catch.HasCaught())
+            return v8::Undefined();
+
+        if (!ok)
+            ec = TYPE_MISMATCH_ERR;
+        else
+            imp->add(option, index, ec);
+    }
+
+    if (ec != 0)
+        V8Proxy::SetDOMException(ec);
+
+    return v8::Undefined();
+}
+
 ACCESSOR_GETTER(HTMLOptionsCollectionLength)
 {
     INC_STATS("DOM.HTMLOptionsCollection.length._get");
-    HTMLOptionsCollection* imp =
-        V8Proxy::ToNativeObject<HTMLOptionsCollection>(
-        V8ClassIndex::HTMLOPTIONSCOLLECTION, info.Holder());
+    HTMLOptionsCollection* imp = V8Proxy::ToNativeObject<HTMLOptionsCollection>(V8ClassIndex::HTMLOPTIONSCOLLECTION, info.Holder());
     int v = imp->length();
     return v8::Integer::New(v);
 }
@@ -53,22 +95,21 @@ ACCESSOR_GETTER(HTMLOptionsCollectionLength)
 ACCESSOR_SETTER(HTMLOptionsCollectionLength)
 {
     INC_STATS("DOM.HTMLOptionsCollection.length._set");
-    HTMLOptionsCollection* imp =
-        V8Proxy::ToNativeObject<HTMLOptionsCollection>(
-        V8ClassIndex::HTMLOPTIONSCOLLECTION, info.Holder());
+    HTMLOptionsCollection* imp = V8Proxy::ToNativeObject<HTMLOptionsCollection>(V8ClassIndex::HTMLOPTIONSCOLLECTION, info.Holder());
     double v = value->NumberValue();
     unsigned newLength = 0;
     ExceptionCode ec = 0;
     if (!isnan(v) && !isinf(v)) {
-        if (v < 0.0) {
+        if (v < 0.0)
             ec = INDEX_SIZE_ERR;
-        } else if (v > static_cast<double>(UINT_MAX)) {
+        else if (v > static_cast<double>(UINT_MAX))
             newLength = UINT_MAX;
-        } else {
+        else
             newLength = static_cast<unsigned>(v);
-        }
     }
-    if (!ec) imp->setLength(value->Uint32Value(), ec);
+    if (!ec)
+        imp->setLength(value->Uint32Value(), ec);
+
     V8Proxy::SetDOMException(ec);
 }
 

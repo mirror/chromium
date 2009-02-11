@@ -28,8 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <config.h>
-
+#include "config.h"
 #include "HTMLInputElement.h"
 
 #include "V8Binding.h"
@@ -44,12 +43,8 @@ ACCESSOR_GETTER(HTMLInputElementSelectionStart)
     v8::Handle<v8::Object> holder = info.Holder();
     HTMLInputElement* imp = V8Proxy::DOMWrapperToNode<HTMLInputElement>(holder);
 
-    if (!imp->canHaveSelection()) {
-        V8Proxy::ThrowError(V8Proxy::TYPE_ERROR,
-            "Accessing selectionStart on an input element that "
-            "cannot have a selection.");
-        return v8::Undefined();
-    }
+    if (!imp->canHaveSelection())
+        return throwError("Accessing selectionStart on an input element that cannot have a selection.");
 
     int v = imp->selectionStart();
     return v8::Integer::New(v);
@@ -62,9 +57,7 @@ ACCESSOR_SETTER(HTMLInputElementSelectionStart)
     HTMLInputElement* imp = V8Proxy::DOMWrapperToNode<HTMLInputElement>(holder);
 
     if (!imp->canHaveSelection()) {
-        V8Proxy::ThrowError(V8Proxy::TYPE_ERROR, 
-            "Accessing selectionStart on an input element that "
-            "cannot have a selection.");
+        throwError("Accessing selectionStart on an input element that cannot have a selection.");
         return;
     }
     imp->setSelectionStart(value->Int32Value());
@@ -76,12 +69,8 @@ ACCESSOR_GETTER(HTMLInputElementSelectionEnd)
     v8::Handle<v8::Object> holder = info.Holder();
     HTMLInputElement* imp = V8Proxy::DOMWrapperToNode<HTMLInputElement>(holder);
 
-    if (!imp->canHaveSelection()) {
-        V8Proxy::ThrowError(V8Proxy::TYPE_ERROR,
-            "Accessing selectionEnd on an input element that "
-            "cannot have a selection.");
-        return v8::Undefined();
-    }
+    if (!imp->canHaveSelection())
+        return throwError("Accessing selectionEnd on an input element that cannot have a selection.");
 
     int v = imp->selectionEnd();
     return v8::Integer::New(v);
@@ -94,11 +83,10 @@ ACCESSOR_SETTER(HTMLInputElementSelectionEnd)
     HTMLInputElement* imp = V8Proxy::DOMWrapperToNode<HTMLInputElement>(holder);
 
     if (!imp->canHaveSelection()) {
-        V8Proxy::ThrowError(V8Proxy::TYPE_ERROR,
-            "Accessing selectionEnd on an input element that "
-            "cannot have a selection.");
+        throwError("Accessing selectionEnd on an input element that cannot have a selection.");
         return;
     }
+
     imp->setSelectionEnd(value->Int32Value());
 }
 
@@ -108,12 +96,9 @@ CALLBACK_FUNC_DECL(HTMLInputElementSetSelectionRange)
     v8::Handle<v8::Object> holder = args.Holder();
     HTMLInputElement* imp = V8Proxy::DOMWrapperToNode<HTMLInputElement>(holder);
 
-    if (!imp->canHaveSelection()) {
-        V8Proxy::ThrowError(V8Proxy::TYPE_ERROR,
-            "Calling setSelectionRange on an input element that "
-            "cannot have a selection.");
-        return v8::Undefined();
-    }
+    if (!imp->canHaveSelection())
+        return throwError("Calling setSelectionRange on an input element that cannot have a selection.");
+
     int start = args[0]->Int32Value();
     int end = args[1]->Int32Value();
 

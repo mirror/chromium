@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2009 Google Inc. All rights reserved.
+ * Copyright (c) 2008, 2009 Google Inc.
+ * All rights reserved.
  * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -28,21 +29,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef V8Proxy_h
-#define V8Proxy_h
+#ifndef V8HTMLSelectElementCustom_h
+#define V8HTMLSelectElementCustom_h
 
-// FIXME: This is a temporary forwarding header until all bindings have migrated
-// over and v8_proxy actually becomes V8Proxy.
-#include "v8_proxy.h"
+#include <v8.h>
 
 namespace WebCore {
 
-    inline v8::Handle<v8::Primitive> throwError(const char* message, V8Proxy::ErrorType type = V8Proxy::TYPE_ERROR)
-    {
-        V8Proxy::ThrowError(type, message);
-        return v8::Undefined();
-    }
+    class HTMLSelectElement;
 
-}
+    v8::Handle<v8::Value> removeElement(HTMLSelectElement*, const v8::Arguments&);
 
-#endif // V8Proxy_h
+} // namespace WebCore
+
+#endif // V8HTMLSelectElementCustom_h

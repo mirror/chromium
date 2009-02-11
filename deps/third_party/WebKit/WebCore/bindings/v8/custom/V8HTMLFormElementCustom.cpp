@@ -28,21 +28,43 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef V8Proxy_h
-#define V8Proxy_h
+#include "config.h"
+#include "HTMLFormElement.h"
 
-// FIXME: This is a temporary forwarding header until all bindings have migrated
-// over and v8_proxy actually becomes V8Proxy.
-#include "v8_proxy.h"
+#include "V8Binding.h"
+#include "V8CustomBinding.h"
+#include "V8NamedNodesCollection.h"
+#include "V8Proxy.h"
 
 namespace WebCore {
 
-    inline v8::Handle<v8::Primitive> throwError(const char* message, V8Proxy::ErrorType type = V8Proxy::TYPE_ERROR)
+NAMED_PROPERTY_GETTER(HTMLFormElement)
+{
+    INC_STATS("DOM.HTMLFormElement.NamedPropertyGetter");
+    HTMLFormElement* imp = V8Proxy::DOMWrapperToNode<HTMLFormElement>(info.Holder());
+    String v = toWebCoreString(name);
+
+    // Call getNamedElements twice, first time check if it has a value
+    // and let HTMLFormElement update its cache.
+    // See issue: 867404
     {
-        V8Proxy::ThrowError(type, message);
-        return v8::Undefined();
+        Vector<RefPtr<Node> > elements;
+        imp->getNamedElements(v, elements);
+        if (elements.isEmpty())
+            return v8::Handle<v8::Value>();
     }
 
+    // Second call may return different results from the first call,
+    // but if the first the size cannot be zero.
+    Vector<RefPtr<Node> > elements;
+    imp->getNamedElements(v, elements);
+    ASSERT(!elements.isEmpty());
+
+    if (elements.size() == 1)
+        return V8Proxy::NodeToV8Object(elements.at(0).get());
+
+    NodeList* collection = new V8NamedNodesCollection(elements);
+    return V8Proxy::ToV8Object(V8ClassIndex::NODELIST, collection);
 }
 
-#endif // V8Proxy_h
+} // namespace WebCore
