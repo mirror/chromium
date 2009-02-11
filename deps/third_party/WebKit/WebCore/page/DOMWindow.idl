@@ -27,9 +27,7 @@ module window {
     interface [
         // DOMWindow object has CheckDomainSecurity on the front
         // object in the V8 bindings.
-#if !defined(V8_BINDING)
         CheckDomainSecurity,
-#endif
         CustomDefineGetter,
         CustomDefineSetter,
         CustomDeleteProperty,
@@ -123,11 +121,7 @@ module window {
         readonly attribute [DoNotCheckDomainSecurity, DontDelete, v8DisallowShadowing] DOMWindow window;
         attribute [Replaceable, DoNotCheckDomainSecurityOnGet] DOMWindow frames;
 
-#if defined(V8_BINDING)
-        attribute [CustomSetter, DoNotCheckDomainSecurity] DOMWindow opener;
-#else
-        attribute [Replaceable, DoNotCheckDomainSecurityOnGet] DOMWindow opener;
-#endif
+        attribute [Replaceable, V8CustomSetter, DoNotCheckDomainSecurity] DOMWindow opener;
         attribute [Replaceable, DoNotCheckDomainSecurity] DOMWindow parent;
         readonly attribute [DoNotCheckDomainSecurity, DontDelete, v8DisallowShadowing] DOMWindow top;
 
@@ -163,16 +157,14 @@ module window {
         [DoNotCheckDomainSecurity, Custom] void postMessage(in DOMString message, in DOMString targetOrigin)
             raises(DOMException);
 
-#if !defined(V8_BINDING)
         // Timers
         [Custom] long setTimeout(in TimeoutHandler handler, in long timeout);
-        // [Custom] long setTimeout(in DOMString code, in long timeout);
+        // [JSCCustom] long setTimeout(in DOMString code, in long timeout);
         [Custom] void clearTimeout(in long handle);
 
         [Custom] long setInterval(in TimeoutHandler handler, in long timeout);
-        // [Custom] long setInterval(in DOMString code, in long timeout);
+        // [JSCCustom] long setInterval(in DOMString code, in long timeout);
         [Custom] void clearInterval(in long handle);
-#endif
 
         // Base64
         [Custom] DOMString atob(in DOMString string)
@@ -464,15 +456,6 @@ module window {
     [Custom] DOMObject showModalDialog(in DOMString url, 
                                        in [Optional] DOMObject dialogArgs,
                                        in [Optional] DOMString featureArgs);
-
-    void  back();
-    void  forward();
-
-    void clearTimeout(in long timerID);
-    void clearInterval(in long timerID);
-
-    [Custom] long setTimeout(in DOMString function, in unsigned long timeout);
-    [Custom] long setInterval(in DOMString function, in unsigned long timeout);
 
     // These are defined on the window object in WebKit/KJS, but they
     // are not implemented.

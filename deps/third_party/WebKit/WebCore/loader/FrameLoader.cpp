@@ -621,7 +621,6 @@ void FrameLoader::stopLoading(bool sendUnload)
         if (DocLoader* docLoader = doc->docLoader())
             cache()->loader()->cancelRequests(docLoader);
 
-        doc->stopActiveDOMObjects();
 #if ENABLE(DATABASE)
         doc->stopDatabases();
 #endif
@@ -2855,26 +2854,6 @@ void FrameLoader::commitProvisionalLoad(PassRefPtr<CachedPage> prpCachedPage)
     // We are doing this here because we know for sure that a new page is about to be loaded.
     if (canCachePage() && !m_currentHistoryItem->isInPageCache())
         cachePageForHistoryItem(m_currentHistoryItem.get());
-#if USE(JSC)
-        ScriptController* proxy = m_frame->script();
-        if (proxy->haveWindowShell())
-            proxy->windowShell()->window()->clearAllTimeouts();
-    } else {
-        if (m_frame->page() && m_frame == m_frame->page()->mainFrame()) {
-            // If the main frame installs a timeout late enough (for example in its onunload handler)
-            // it could sometimes fire when transitioning to a non-HTML document representation (such as the Mac bookmarks view).
-            // To avoid this, we clear all timeouts if the page is not to be cached in the back forward list.
-            // Cached pages have their timers paused so they are fine.
-            ScriptController* proxy = m_frame->script();
-            if (proxy->haveWindowShell())
-                proxy->windowShell()->window()->clearAllTimeouts();
-        }
-        // FIXME: Integrate clearing timeouts into stopActiveDOMObjects().
-        if (Document* document = m_frame->document())
-            document->stopActiveDOMObjects();
-#elif USE(V8)
-        // FIXME: Need to do something here.
-#endif
     
     if (m_loadType != FrameLoadTypeReplace)
         closeOldDataSources();
