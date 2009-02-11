@@ -81,7 +81,7 @@ class PurifyCommand(retcode_command.ReturnCodeCommand):
     self.addLogObserver('stdio', self.test_observer)
 
   def createSummary(self, log):
-    if (self.base_url and self.test_observer.last_change and
+    if (self.test_observer.last_change and
         self.test_observer.test_name):
       url = ('%s/purify/%s/%s' % (config.Master.archive_url,
                                   self.test_observer.test_name,
