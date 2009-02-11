@@ -523,15 +523,17 @@ class MasterFactory(object):
     # Create the special spec for the gears solution.
     spec = 'solutions = ['
     spec += self._BuildGClientSolution(self._svn_url, custom_deps)
-    spec += ','
-    spec += self._BuildGClientSolution(self._svn_url_internal,
-                                       custom_deps_internal)
+    if self._svn_url_internal:
+      spec += ','
+      spec += self._BuildGClientSolution(self._svn_url_internal,
+                                         custom_deps_internal)
     spec += ','
     spec += ('{ "name": "src/gears", '
                '"url": "%s", '
              '}' % config.Master.gears_url)
-    spec += ','
-    spec += self._BuildGClientSolution(config.Master.gears_url_internal, [])
+    if config.Master.gears_url_internal:
+      spec += ','
+      spec += self._BuildGClientSolution(config.Master.gears_url_internal, [])
     spec += ']'
 
     factory = self.NewGClientFactory(spec)

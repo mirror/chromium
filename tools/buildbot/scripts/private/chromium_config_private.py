@@ -13,9 +13,11 @@ class Master(object):
   # Repository URLs used by the SVNPoller and 'gclient config'.
   server_url = 'http://src.chromium.org'
   repo_root = '/svn'
+  webkit_root = '/webkit-mirror'
   repo_root_internal = None
   trunk_internal_url = None
   trunk_internal_url_src = None
+  gears_url_internal = None
   # Please change this accordingly.
   master_domain = 'example.com'
   smtp = 'smtp'
