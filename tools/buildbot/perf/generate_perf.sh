@@ -71,6 +71,9 @@ function InitTester()
 
 # Add any new perf testers here.
 InitTester xp-release-dual-core
+InitTester xp-release-single-core
 InitTester xp-release-jsc
 InitTester vista-release-dual-core
+InitTester vista-release-single-core
+InitTester xp-release-v8-latest
 
