@@ -1246,6 +1246,12 @@ public:
         reinterpret_cast<int*>(reinterpret_cast<ptrdiff_t>(code) + from.m_offset)[-1] = reinterpret_cast<ptrdiff_t>(to) - (reinterpret_cast<ptrdiff_t>(code) + from.m_offset);
     }
     
+    static unsigned getCallReturnOffset(JmpSrc call)
+    {
+        ASSERT(call.m_offset >= 0);
+        return call.m_offset;
+    }
+
     static void* getRelocatedAddress(void* code, JmpSrc jump)
     {
         return reinterpret_cast<void*>(reinterpret_cast<ptrdiff_t>(code) + jump.m_offset);

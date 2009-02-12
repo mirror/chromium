@@ -1328,7 +1328,7 @@ const AtomicString& AccessibilityRenderObject::accessKey() const
     return static_cast<Element*>(node)->getAttribute(accesskeyAttr);
 }
 
-Selection AccessibilityRenderObject::selection() const
+VisibleSelection AccessibilityRenderObject::selection() const
 {
     return m_renderer->document()->frame()->selection()->selection();
 }
@@ -1370,7 +1370,7 @@ void AccessibilityRenderObject::setSelectedTextRange(const PlainTextRange& range
     if (!frame)
         return;
     Node* node = m_renderer->element();
-    frame->selection()->setSelection(Selection(Position(node, range.start),
+    frame->selection()->setSelection(VisibleSelection(Position(node, range.start),
         Position(node, range.start + range.length), DOWNSTREAM));
 }
 
@@ -1620,7 +1620,7 @@ VisiblePositionRange AccessibilityRenderObject::visiblePositionRangeForLine(unsi
     // starting at an empty line.  The resulting selection in that case
     // will be a caret at visiblePos.
     SelectionController selection;
-    selection.setSelection(Selection(visiblePos));
+    selection.setSelection(VisibleSelection(visiblePos));
     selection.modify(SelectionController::EXTEND, SelectionController::RIGHT, LineBoundary);
     
     return VisiblePositionRange(selection.selection().visibleStart(), selection.selection().visibleEnd());
@@ -1727,7 +1727,7 @@ void AccessibilityRenderObject::setSelectedVisiblePositionRange(const VisiblePos
         m_renderer->document()->frame()->selection()->moveTo(range.start, true);
     }
     else {
-        Selection newSelection = Selection(range.start, range.end);
+        VisibleSelection newSelection = VisibleSelection(range.start, range.end);
         m_renderer->document()->frame()->selection()->setSelection(newSelection);
     }    
 }
@@ -1770,10 +1770,7 @@ VisiblePosition AccessibilityRenderObject::visiblePositionForPoint(const IntPoin
         Frame* frame = static_cast<FrameView*>(widget)->frame();
         if (!frame)
             break;
-        Document* document = frame->document();
-        if (!document)
-            break;
-        renderView = document->renderView();
+        renderView = frame->document()->renderView();
         frameView = static_cast<FrameView*>(widget);
     }
     
@@ -1836,7 +1833,7 @@ PlainTextRange AccessibilityRenderObject::doAXRangeForLine(unsigned lineNumber) 
     // starting at an empty line.  The resulting selection in that case
     // will be a caret at visiblePos.
     SelectionController selection;
-    selection.setSelection(Selection(visiblePos));
+    selection.setSelection(VisibleSelection(visiblePos));
     selection.modify(SelectionController::EXTEND, SelectionController::LEFT, LineBoundary);
     selection.modify(SelectionController::EXTEND, SelectionController::RIGHT, LineBoundary);
     

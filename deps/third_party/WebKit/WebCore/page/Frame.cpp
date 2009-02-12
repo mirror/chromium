@@ -508,12 +508,12 @@ String Frame::matchLabelsAgainstElement(const Vector<String>& labels, Element* e
     return String();
 }
 
-const Selection& Frame::mark() const
+const VisibleSelection& Frame::mark() const
 {
     return m_mark;
 }
 
-void Frame::setMark(const Selection& s)
+void Frame::setMark(const VisibleSelection& s)
 {
     ASSERT(!s.base().node() || s.base().node()->document() == document());
     ASSERT(!s.extent().node() || s.extent().node()->document() == document());
@@ -574,7 +574,7 @@ static bool isFrameElement(const Node *n)
 
 void Frame::setFocusedNodeIfNeeded()
 {
-    if (!document() || selection()->isNone() || !selection()->isFocusedAndActive())
+    if (selection()->isNone() || !selection()->isFocusedAndActive())
         return;
 
     Node* target = selection()->rootEditableElement();
@@ -632,7 +632,7 @@ void Frame::selectionLayoutChanged()
     if (!view)
         return;
 
-    Selection selection = this->selection()->selection();
+    VisibleSelection selection = this->selection()->selection();
         
     if (!selection.isRange())
         view->clearSelection();
@@ -704,7 +704,7 @@ bool Frame::shouldApplyTextZoom() const
     if (m_zoomFactor == 1.0f || !isZoomFactorTextOnly())
         return false;
 #if ENABLE(SVG)
-    if (m_doc && m_doc->isSVGDocument())
+    if (m_doc->isSVGDocument())
         return false;
 #endif
     return true;
@@ -715,7 +715,7 @@ bool Frame::shouldApplyPageZoom() const
     if (m_zoomFactor == 1.0f || isZoomFactorTextOnly())
         return false;
 #if ENABLE(SVG)
-    if (m_doc && m_doc->isSVGDocument())
+    if (m_doc->isSVGDocument())
         return false;
 #endif
     return true;
@@ -729,7 +729,7 @@ void Frame::setZoomFactor(float percent, bool isTextOnly)
 #if ENABLE(SVG)
     // SVG doesn't care if the zoom factor is text only.  It will always apply a 
     // zoom to the whole SVG.
-    if (m_doc && m_doc->isSVGDocument()) {
+    if (m_doc->isSVGDocument()) {
         if (!static_cast<SVGDocument*>(m_doc.get())->zoomAndPanEnabled())
             return;
         m_zoomFactor = percent;
@@ -743,21 +743,17 @@ void Frame::setZoomFactor(float percent, bool isTextOnly)
     m_zoomFactor = percent;
     m_page->settings()->setZoomsTextOnly(isTextOnly);
 
-    if (m_doc)
-        m_doc->recalcStyle(Node::Force);
+    m_doc->recalcStyle(Node::Force);
 
     for (Frame* child = tree()->firstChild(); child; child = child->tree()->nextSibling())
         child->setZoomFactor(m_zoomFactor, isTextOnly);
 
-    if (m_doc && m_doc->renderer() && m_doc->renderer()->needsLayout() && view()->didFirstLayout())
+    if (m_doc->renderer() && m_doc->renderer()->needsLayout() && view()->didFirstLayout())
         view()->layout();
 }
 
 void Frame::setPrinting(bool printing, float minPageWidth, float maxPageWidth, bool adjustViewSize)
 {
-    if (!m_doc)
-        return;
-
     m_doc->setPrinting(printing);
     view()->setMediaType(printing ? "print" : "screen");
     m_doc->updateStyleSelector();
@@ -816,8 +812,7 @@ void Frame::reapplyStyles()
     // FIXME: This call doesn't really make sense in a method called
     // "reapplyStyles". We should probably eventually move it into its own
     // method.
-    if (m_doc)
-        m_doc->docLoader()->setAutoLoadImages(m_page && m_page->settings()->loadsImagesAutomatically());
+    m_doc->docLoader()->setAutoLoadImages(m_page && m_page->settings()->loadsImagesAutomatically());
         
 #if FRAME_LOADS_USER_STYLESHEET
     const KURL userStyleSheetLocation = m_page ? m_page->settings()->userStyleSheetLocation() : KURL();
@@ -831,22 +826,21 @@ void Frame::reapplyStyles()
     // The document automatically does this as required when you set the style sheet.
     // But we had problems when this code was removed. Details are in
     // <http://bugs.webkit.org/show_bug.cgi?id=8079>.
-    if (m_doc)
-        m_doc->updateStyleSelector();
+    m_doc->updateStyleSelector();
 }
 
-bool Frame::shouldChangeSelection(const Selection& newSelection) const
+bool Frame::shouldChangeSelection(const VisibleSelection& newSelection) const
 {
     return shouldChangeSelection(selection()->selection(), newSelection, newSelection.affinity(), false);
 }
 
-bool Frame::shouldChangeSelection(const Selection& oldSelection, const Selection& newSelection, EAffinity affinity, bool stillSelecting) const
+bool Frame::shouldChangeSelection(const VisibleSelection& oldSelection, const VisibleSelection& newSelection, EAffinity affinity, bool stillSelecting) const
 {
     return editor()->client()->shouldChangeSelectedRange(oldSelection.toNormalizedRange().get(), newSelection.toNormalizedRange().get(),
                                                          affinity, stillSelecting);
 }
 
-bool Frame::shouldDeleteSelection(const Selection& selection) const
+bool Frame::shouldDeleteSelection(const VisibleSelection& selection) const
 {
     return editor()->client()->shouldDeleteRange(selection.toNormalizedRange().get());
 }
@@ -855,8 +849,6 @@ bool Frame::isContentEditable() const
 {
     if (m_editor.clientIsEditable())
         return true;
-    if (!m_doc)
-        return false;
     return m_doc->inDesignMode();
 }
 
@@ -925,7 +917,7 @@ void Frame::computeAndSetTypingStyle(CSSStyleDeclaration *style, EditAction edit
     // Handle block styles, substracting these from the typing style.
     RefPtr<CSSMutableStyleDeclaration> blockStyle = mutableStyle->copyBlockProperties();
     blockStyle->diff(mutableStyle.get());
-    if (document() && blockStyle->length() > 0)
+    if (blockStyle->length() > 0)
         applyCommand(ApplyStyleCommand::create(document(), blockStyle.get(), editingAction));
     
     // Set the remaining style as the typing style.
@@ -953,9 +945,6 @@ String Frame::selectionStartStylePropertyValue(int stylePropertyID) const
 PassRefPtr<CSSComputedStyleDeclaration> Frame::selectionComputedStyle(Node*& nodeToRemove) const
 {
     nodeToRemove = 0;
-
-    if (!document())
-        return 0;
 
     if (selection()->isNone())
         return 0;
@@ -1040,9 +1029,6 @@ void Frame::textDidChangeInTextArea(Element* e)
 
 void Frame::applyEditingStyleToBodyElement() const
 {
-    if (!m_doc)
-        return;
-        
     RefPtr<NodeList> list = m_doc->getElementsByTagName("body");
     unsigned len = list->length();
     for (unsigned i = 0; i < len; i++) {
@@ -1052,9 +1038,6 @@ void Frame::applyEditingStyleToBodyElement() const
 
 void Frame::removeEditingStyleFromBodyElement() const
 {
-    if (!m_doc)
-        return;
-        
     RefPtr<NodeList> list = m_doc->getElementsByTagName("body");
     unsigned len = list->length();
     for (unsigned i = 0; i < len; i++) {
@@ -1138,8 +1121,6 @@ void Frame::clearDOMWindow()
 RenderView* Frame::contentRenderer() const
 {
     Document* doc = document();
-    if (!doc)
-        return 0;
     RenderObject* object = doc->renderer();
     if (!object)
         return 0;
@@ -1266,12 +1247,12 @@ void Frame::revealSelection(const RenderLayer::ScrollAlignment& alignment) const
     IntRect rect;
 
     switch (selection()->selectionType()) {
-        case Selection::NoSelection:
+        case VisibleSelection::NoSelection:
             return;
-        case Selection::CaretSelection:
+        case VisibleSelection::CaretSelection:
             rect = selection()->absoluteCaretBounds();
             break;
-        case Selection::RangeSelection:
+        case VisibleSelection::RangeSelection:
             rect = enclosingIntRect(selectionBounds(false));
             break;
     }
@@ -1337,8 +1318,6 @@ RenderStyle *Frame::styleForSelectionStart(Node *&nodeToRemove) const
 {
     nodeToRemove = 0;
     
-    if (!document())
-        return 0;
     if (selection()->isNone())
         return 0;
     
@@ -1375,14 +1354,14 @@ void Frame::setSelectionFromNone()
     // Put a caret inside the body if the entire frame is editable (either the 
     // entire WebView is editable or designMode is on for this document).
     Document *doc = document();
-    if (!doc || !selection()->isNone() || !isContentEditable())
+    if (!selection()->isNone() || !isContentEditable())
         return;
         
     Node* node = doc->documentElement();
     while (node && !node->hasTagName(bodyTag))
         node = node->traverseNextNode();
     if (node)
-        selection()->setSelection(Selection(Position(node, 0), DOWNSTREAM));
+        selection()->setSelection(VisibleSelection(Position(node, 0), DOWNSTREAM));
 }
 
 bool Frame::inViewSourceMode() const
@@ -1398,7 +1377,7 @@ void Frame::setInViewSourceMode(bool mode)
 // Searches from the beginning of the document if nothing is selected.
 bool Frame::findString(const String& target, bool forward, bool caseFlag, bool wrapFlag, bool startInSelection)
 {
-    if (target.isEmpty() || !document())
+    if (target.isEmpty())
         return false;
     
     if (excludeFromTextSearch())
@@ -1407,7 +1386,7 @@ bool Frame::findString(const String& target, bool forward, bool caseFlag, bool w
     // Start from an edge of the selection, if there's a selection that's not in shadow content. Which edge
     // is used depends on whether we're searching forward or backward, and whether startInSelection is set.
     RefPtr<Range> searchRange(rangeOfContents(document()));
-    Selection selection = this->selection()->selection();
+    VisibleSelection selection = this->selection()->selection();
 
     if (forward)
         setStart(searchRange.get(), startInSelection ? selection.visibleStart() : selection.visibleEnd());
@@ -1427,7 +1406,7 @@ bool Frame::findString(const String& target, bool forward, bool caseFlag, bool w
     // If we started in the selection and the found range exactly matches the existing selection, find again.
     // Build a selection with the found range to remove collapsed whitespace.
     // Compare ranges instead of selection objects to ignore the way that the current selection was made.
-    if (startInSelection && *Selection(resultRange.get()).toNormalizedRange() == *selection.toNormalizedRange()) {
+    if (startInSelection && *VisibleSelection(resultRange.get()).toNormalizedRange() == *selection.toNormalizedRange()) {
         searchRange = rangeOfContents(document());
         if (forward)
             setStart(searchRange.get(), selection.visibleEnd());
@@ -1477,14 +1456,14 @@ bool Frame::findString(const String& target, bool forward, bool caseFlag, bool w
     if (resultRange->collapsed(exception))
         return false;
 
-    this->selection()->setSelection(Selection(resultRange.get(), DOWNSTREAM));
+    this->selection()->setSelection(VisibleSelection(resultRange.get(), DOWNSTREAM));
     revealSelection();
     return true;
 }
 
 unsigned Frame::markAllMatchesForText(const String& target, bool caseFlag, unsigned limit)
 {
-    if (target.isEmpty() || !document())
+    if (target.isEmpty())
         return 0;
     
     RefPtr<Range> searchRange(rangeOfContents(document()));
@@ -1527,7 +1506,7 @@ unsigned Frame::markAllMatchesForText(const String& target, bool caseFlag, unsig
     // Do a "fake" paint in order to execute the code that computes the rendered rect for 
     // each text match.
     Document* doc = document();
-    if (doc && m_view && contentRenderer()) {
+    if (m_view && contentRenderer()) {
         doc->updateLayout(); // Ensure layout is up to date.
         IntRect visibleRect = m_view->visibleContentRect();
         if (!visibleRect.isEmpty()) {
@@ -1547,7 +1526,7 @@ bool Frame::markedTextMatchesAreHighlighted() const
 
 void Frame::setMarkedTextMatchesAreHighlighted(bool flag)
 {
-    if (flag == m_highlightTextMatches || !document())
+    if (flag == m_highlightTextMatches)
         return;
     
     m_highlightTextMatches = flag;
@@ -1637,10 +1616,8 @@ void Frame::disconnectOwnerElement()
 
 String Frame::documentTypeString() const
 {
-    if (Document* doc = document()) {
-        if (DocumentType* doctype = doc->doctype())
-            return createMarkup(doctype);
-    }
+    if (DocumentType* doctype = document()->doctype())
+        return createMarkup(doctype);
 
     return String();
 }
@@ -1674,8 +1651,6 @@ bool Frame::shouldClose()
         return true;
 
     RefPtr<Document> doc = document();
-    if (!doc)
-        return true;
     HTMLElement* body = doc->body();
     if (!body)
         return true;
@@ -1686,7 +1661,7 @@ bool Frame::shouldClose()
     beforeUnloadEvent->setTarget(doc);
     doc->handleWindowEvent(beforeUnloadEvent.get(), false);
 
-    if (!beforeUnloadEvent->defaultPrevented() && doc)
+    if (!beforeUnloadEvent->defaultPrevented())
         doc->defaultEventHandler(beforeUnloadEvent.get());
 
     loader()->setFiringUnloadEvents(false);
@@ -1708,51 +1683,49 @@ void Frame::scheduleClose()
         chrome->closeWindowSoon();
 }
 
-void Frame::respondToChangedSelection(const Selection& oldSelection, bool closeTyping)
+void Frame::respondToChangedSelection(const VisibleSelection& oldSelection, bool closeTyping)
 {
-    if (document()) {
-        bool isContinuousSpellCheckingEnabled = editor()->isContinuousSpellCheckingEnabled();
-        bool isContinuousGrammarCheckingEnabled = isContinuousSpellCheckingEnabled && editor()->isGrammarCheckingEnabled();
-        if (isContinuousSpellCheckingEnabled) {
-            Selection newAdjacentWords;
-            Selection newSelectedSentence;
-            if (selection()->selection().isContentEditable()) {
-                VisiblePosition newStart(selection()->selection().visibleStart());
-                newAdjacentWords = Selection(startOfWord(newStart, LeftWordIfOnBoundary), endOfWord(newStart, RightWordIfOnBoundary));
-                if (isContinuousGrammarCheckingEnabled)
-                    newSelectedSentence = Selection(startOfSentence(newStart), endOfSentence(newStart));
-            }
-
-            // When typing we check spelling elsewhere, so don't redo it here.
-            // If this is a change in selection resulting from a delete operation,
-            // oldSelection may no longer be in the document.
-            if (closeTyping && oldSelection.isContentEditable() && oldSelection.start().node() && oldSelection.start().node()->inDocument()) {
-                VisiblePosition oldStart(oldSelection.visibleStart());
-                Selection oldAdjacentWords = Selection(startOfWord(oldStart, LeftWordIfOnBoundary), endOfWord(oldStart, RightWordIfOnBoundary));   
-                if (oldAdjacentWords != newAdjacentWords) {
-                    editor()->markMisspellings(oldAdjacentWords);
-                    if (isContinuousGrammarCheckingEnabled) {
-                        Selection oldSelectedSentence = Selection(startOfSentence(oldStart), endOfSentence(oldStart));   
-                        if (oldSelectedSentence != newSelectedSentence)
-                            editor()->markBadGrammar(oldSelectedSentence);
-                    }
-                }
-            }
-
-            // This only erases markers that are in the first unit (word or sentence) of the selection.
-            // Perhaps peculiar, but it matches AppKit.
-            if (RefPtr<Range> wordRange = newAdjacentWords.toNormalizedRange())
-                document()->removeMarkers(wordRange.get(), DocumentMarker::Spelling);
-            if (RefPtr<Range> sentenceRange = newSelectedSentence.toNormalizedRange())
-                document()->removeMarkers(sentenceRange.get(), DocumentMarker::Grammar);
+    bool isContinuousSpellCheckingEnabled = editor()->isContinuousSpellCheckingEnabled();
+    bool isContinuousGrammarCheckingEnabled = isContinuousSpellCheckingEnabled && editor()->isGrammarCheckingEnabled();
+    if (isContinuousSpellCheckingEnabled) {
+        VisibleSelection newAdjacentWords;
+        VisibleSelection newSelectedSentence;
+        if (selection()->selection().isContentEditable()) {
+            VisiblePosition newStart(selection()->selection().visibleStart());
+            newAdjacentWords = VisibleSelection(startOfWord(newStart, LeftWordIfOnBoundary), endOfWord(newStart, RightWordIfOnBoundary));
+            if (isContinuousGrammarCheckingEnabled)
+                newSelectedSentence = VisibleSelection(startOfSentence(newStart), endOfSentence(newStart));
         }
 
-        // When continuous spell checking is off, existing markers disappear after the selection changes.
-        if (!isContinuousSpellCheckingEnabled)
-            document()->removeMarkers(DocumentMarker::Spelling);
-        if (!isContinuousGrammarCheckingEnabled)
-            document()->removeMarkers(DocumentMarker::Grammar);
+        // When typing we check spelling elsewhere, so don't redo it here.
+        // If this is a change in selection resulting from a delete operation,
+        // oldSelection may no longer be in the document.
+        if (closeTyping && oldSelection.isContentEditable() && oldSelection.start().node() && oldSelection.start().node()->inDocument()) {
+            VisiblePosition oldStart(oldSelection.visibleStart());
+            VisibleSelection oldAdjacentWords = VisibleSelection(startOfWord(oldStart, LeftWordIfOnBoundary), endOfWord(oldStart, RightWordIfOnBoundary));   
+            if (oldAdjacentWords != newAdjacentWords) {
+                editor()->markMisspellings(oldAdjacentWords);
+                if (isContinuousGrammarCheckingEnabled) {
+                    VisibleSelection oldSelectedSentence = VisibleSelection(startOfSentence(oldStart), endOfSentence(oldStart));   
+                    if (oldSelectedSentence != newSelectedSentence)
+                        editor()->markBadGrammar(oldSelectedSentence);
+                }
+            }
+        }
+
+        // This only erases markers that are in the first unit (word or sentence) of the selection.
+        // Perhaps peculiar, but it matches AppKit.
+        if (RefPtr<Range> wordRange = newAdjacentWords.toNormalizedRange())
+            document()->removeMarkers(wordRange.get(), DocumentMarker::Spelling);
+        if (RefPtr<Range> sentenceRange = newSelectedSentence.toNormalizedRange())
+            document()->removeMarkers(sentenceRange.get(), DocumentMarker::Grammar);
     }
+
+    // When continuous spell checking is off, existing markers disappear after the selection changes.
+    if (!isContinuousSpellCheckingEnabled)
+        document()->removeMarkers(DocumentMarker::Spelling);
+    if (!isContinuousGrammarCheckingEnabled)
+        document()->removeMarkers(DocumentMarker::Grammar);
 
     editor()->respondToChangedSelection(oldSelection);
 }

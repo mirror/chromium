@@ -265,6 +265,8 @@ IDL_BINDINGS += \
     css/WebKitCSSTransformValue.idl \
     dom/Attr.idl \
     dom/CharacterData.idl \
+    dom/ClientRect.idl \
+    dom/ClientRectList.idl \
     dom/Clipboard.idl \
     dom/CDATASection.idl \
     dom/Comment.idl \
@@ -563,6 +565,8 @@ SOURCES += \
     dom/ChildNodeList.cpp \
     dom/ClassNames.cpp \
     dom/ClassNodeList.cpp \
+    dom/ClientRect.cpp \
+    dom/ClientRectList.cpp \
     dom/Clipboard.cpp \
     dom/ClipboardEvent.cpp \
     dom/Comment.cpp \
@@ -665,7 +669,6 @@ SOURCES += \
     editing/RemoveNodePreservingChildrenCommand.cpp \
     editing/ReplaceSelectionCommand.cpp \
     editing/SelectionController.cpp \
-    editing/Selection.cpp \
     editing/SetNodeAttributeCommand.cpp \
     editing/SmartReplace.cpp \
     editing/SmartReplaceICU.cpp \
@@ -676,6 +679,7 @@ SOURCES += \
     editing/TypingCommand.cpp \
     editing/UnlinkCommand.cpp \
     editing/VisiblePosition.cpp \
+    editing/VisibleSelection.cpp \
     editing/visible_units.cpp \
     editing/WrapContentsInDummySpanCommand.cpp \
     history/BackForwardList.cpp \
@@ -2053,4 +2057,3 @@ CONFIG(QTDIR_build):isEqual(QT_MAJOR_VERSION, 4):greaterThan(QT_MINOR_VERSION, 4
     CONFIG += no_debug_info
 }
 
->>>>>>> .merge-right.r40314

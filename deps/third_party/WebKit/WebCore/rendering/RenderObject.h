@@ -88,11 +88,6 @@ enum HitTestAction {
     HitTestForeground
 };
 
-// Values for verticalPosition.
-const int PositionTop = -0x7fffffff;
-const int PositionBottom = 0x7fffffff;
-const int PositionUndefined = 0x80000000;
-
 #if ENABLE(DASHBOARD_SUPPORT)
 struct DashboardRegionValue {
     bool operator==(const DashboardRegionValue& o) const
@@ -157,7 +152,7 @@ public:
     RenderObject* firstLeafChild() const;
     RenderObject* lastLeafChild() const;
 
-    // The following six functions are used when the render tree hierarchy changes to make sure layers get
+    // The following five functions are used when the render tree hierarchy changes to make sure layers get
     // properly added and removed.  Since containership can be implemented by any subclass, and since a hierarchy
     // can contain a mixture of boxes and other object types, these functions need to be in the base class.
     RenderLayer* enclosingLayer() const;
@@ -166,10 +161,6 @@ public:
     void removeLayers(RenderLayer* parentLayer);
     void moveLayers(RenderLayer* oldParent, RenderLayer* newParent);
     RenderLayer* findNextLayer(RenderLayer* parentLayer, RenderObject* startPoint, bool checkParent = true);
-
-#if USE(ACCELERATED_COMPOSITING)
-    RenderLayer* enclosingCompositingLayer() const;
-#endif
 
     // Convenience function for getting to the nearest enclosing box of a RenderObject.
     RenderBox* enclosingBox() const;
@@ -423,8 +414,6 @@ public:
     // for discussion of lineHeight see CSS2 spec
     virtual int lineHeight(bool firstLine, bool isRootLineBox = false) const;
     // for the vertical-align property of inline elements
-    // the difference between this objects baseline position and the lines baseline position.
-    virtual int verticalPositionHint(bool firstLine) const;
     // the offset of baseline from the top of the object.
     virtual int baselinePosition(bool firstLine, bool isRootLineBox = false) const;
 
@@ -744,10 +733,6 @@ public:
     
     void remove() { if (parent()) parent()->removeChild(this); }
 
-    void invalidateVerticalPosition() { m_verticalPosition = PositionUndefined; }
-
-    virtual void capsLockStateMayHaveChanged() { }
-
     AnimationController* animation() const;
 
     bool visibleToHitTesting() const { return style()->visibility() == VISIBLE && style()->pointerEvents() != PE_NONE; }
@@ -759,6 +744,9 @@ public:
         return outlineBoundsForRepaint(0);
     }
 
+    bool replacedHasOverflow() const { return m_replacedHasOverflow; }
+    void setReplacedHasOverflow(bool b = true) { m_replacedHasOverflow = b; }
+    
 protected:
     // Overrides should call the superclass at the end
     virtual void styleWillChange(StyleDifference, const RenderStyle* newStyle);
@@ -771,8 +759,6 @@ protected:
     void addPDFURLRect(GraphicsContext*, const IntRect&);
 
     virtual IntRect viewRect() const;
-
-    int getVerticalPosition(bool firstLine) const;
 
     void adjustRectForOutlineAndShadow(IntRect&) const;
 
@@ -825,10 +811,8 @@ private:
     bool m_hasAXObject;
     bool m_setNeedsLayoutForbidden : 1;
 #endif
-    mutable int m_verticalPosition;
 
-    // 31 bits have been used here.  Count the bits before you add any and update the comment
-    // with the new total.
+    // 32 bits have been used here. THERE ARE NO FREE BITS AVAILABLE.
     bool m_needsLayout               : 1;
     bool m_needsPositionedMovementLayout :1;
     bool m_normalChildNeedsLayout    : 1;
@@ -871,6 +855,9 @@ private:
     
     // from RenderTableCell
     bool m_cellWidthChanged : 1;
+
+    // from RenderReplaced
+    bool m_replacedHasOverflow : 1;
 
 private:
     // Store state between styleWillChange and styleDidChange

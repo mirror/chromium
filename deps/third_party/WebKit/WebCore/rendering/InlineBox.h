@@ -36,12 +36,10 @@ class RootInlineBox;
 class InlineBox {
 public:
     InlineBox(RenderObject* obj)
-        : m_object(obj)
+        : m_renderer(obj)
         , m_x(0)
         , m_y(0)
         , m_width(0)
-        , m_height(0)
-        , m_baseline(0)
         , m_next(0)
         , m_prev(0)
         , m_parent(0)
@@ -66,14 +64,12 @@ public:
     {
     }
 
-    InlineBox(RenderObject* obj, int x, int y, int width, int height, int baseline, bool firstLine, bool constructed,
+    InlineBox(RenderObject* obj, int x, int y, int width, bool firstLine, bool constructed,
               bool dirty, bool extracted, InlineBox* next, InlineBox* prev, InlineFlowBox* parent)
-        : m_object(obj)
+        : m_renderer(obj)
         , m_x(x)
         , m_y(y)
         , m_width(width)
-        , m_height(height)
-        , m_baseline(baseline)
         , m_next(next)
         , m_prev(prev)
         , m_parent(parent)
@@ -128,10 +124,9 @@ public:
     void showTreeForThis() const;
 #endif
     virtual bool isInlineBox() { return false; }
-    virtual bool isInlineFlowBox() { return false; }
-    virtual bool isContainer() { return false; }
+    virtual bool isInlineFlowBox() const { return false; }
     virtual bool isInlineTextBox() { return false; }
-    virtual bool isRootInlineBox() { return false; }
+    virtual bool isRootInlineBox() const { return false; }
 #if ENABLE(SVG) 
     virtual bool isSVGRootInlineBox() { return false; }
 #endif
@@ -172,7 +167,7 @@ public:
     InlineBox* nextLeafChild();
     InlineBox* prevLeafChild();
         
-    RenderObject* object() const { return m_object; }
+    RenderObject* renderer() const { return m_renderer; }
 
     InlineFlowBox* parent() const
     {
@@ -181,27 +176,24 @@ public:
     }
     void setParent(InlineFlowBox* par) { m_parent = par; }
 
+    const RootInlineBox* root() const;
     RootInlineBox* root();
-    
+
     void setWidth(int w) { m_width = w; }
     int width() const { return m_width; }
 
-    void setXPos(int x) { m_x = x; }
-    int xPos() const { return m_x; }
+    void setX(int x) { m_x = x; }
+    int x() const { return m_x; }
 
-    void setYPos(int y) { m_y = y; }
-    int yPos() const { return m_y; }
+    void setY(int y) { m_y = y; }
+    int y() const { return m_y; }
 
-    void setHeight(int h) { m_height = h; }
-    int height() const { return m_height; }
-    
-    void setBaseline(int b) { m_baseline = b; }
-    int baseline() const { return m_baseline; }
+    virtual int height() const;
 
-    virtual int topOverflow() { return yPos(); }
-    virtual int bottomOverflow() { return yPos() + height(); }
-    virtual int leftOverflow() { return xPos(); }
-    virtual int rightOverflow() { return xPos() + width(); }
+    virtual int topOverflow() const { return y(); }
+    virtual int bottomOverflow() const { return y() + height(); }
+    virtual int leftOverflow() const { return x(); }
+    virtual int rightOverflow() const { return x() + width(); }
 
     virtual int caretMinOffset() const;
     virtual int caretMaxOffset() const;
@@ -229,24 +221,22 @@ public:
 
     int toAdd() const { return m_toAdd; }
     
-    bool visibleToHitTesting() const { return object()->style()->visibility() == VISIBLE && object()->style()->pointerEvents() != PE_NONE; }
+    bool visibleToHitTesting() const { return renderer()->style()->visibility() == VISIBLE && renderer()->style()->pointerEvents() != PE_NONE; }
     
     // Use with caution! The type is not checked!
     RenderBoxModelObject* boxModelObject() const
     { 
-        if (!m_object->isText())
-            return static_cast<RenderBoxModelObject*>(m_object);
+        if (!m_renderer->isText())
+            return static_cast<RenderBoxModelObject*>(m_renderer);
         return 0;
     }
 
 public:
-    RenderObject* m_object;
+    RenderObject* m_renderer;
 
     int m_x;
     int m_y;
     int m_width;
-    int m_height;
-    int m_baseline;
 
 private:
     InlineBox* m_next; // The next element on the same line as us.

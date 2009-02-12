@@ -865,7 +865,7 @@ JSValuePtr Interpreter::execute(ProgramNode* programNode, CallFrame* callFrame, 
 #if ENABLE(JIT)
         if (!codeBlock->jitCode())
             JIT::compile(scopeChain->globalData, codeBlock);
-        result = JIT::execute(codeBlock->jitCode(), &m_registerFile, newCallFrame, scopeChain->globalData, exception);
+        result = codeBlock->jitCode().execute(&m_registerFile, newCallFrame, scopeChain->globalData, exception);
 #else
         result = privateExecute(Normal, &m_registerFile, newCallFrame, exception);
 #endif
@@ -931,7 +931,7 @@ JSValuePtr Interpreter::execute(FunctionBodyNode* functionBodyNode, CallFrame* c
 #if ENABLE(JIT)
         if (!codeBlock->jitCode())
             JIT::compile(scopeChain->globalData, codeBlock);
-        result = JIT::execute(codeBlock->jitCode(), &m_registerFile, newCallFrame, scopeChain->globalData, exception);
+        result = codeBlock->jitCode().execute(&m_registerFile, newCallFrame, scopeChain->globalData, exception);
 #else
         result = privateExecute(Normal, &m_registerFile, newCallFrame, exception);
 #endif
@@ -1023,7 +1023,7 @@ JSValuePtr Interpreter::execute(EvalNode* evalNode, CallFrame* callFrame, JSObje
 #if ENABLE(JIT)
         if (!codeBlock->jitCode())
             JIT::compile(scopeChain->globalData, codeBlock);
-        result = JIT::execute(codeBlock->jitCode(), &m_registerFile, newCallFrame, scopeChain->globalData, exception);
+        result = codeBlock->jitCode().execute(&m_registerFile, newCallFrame, scopeChain->globalData, exception);
 #else
         result = privateExecute(Normal, &m_registerFile, newCallFrame, exception);
 #endif
@@ -4520,7 +4520,7 @@ JSValueEncodedAsPointer* Interpreter::cti_op_get_by_id_self_fail(STUB_ARGS)
 
         if (stubInfo->opcodeID == op_get_by_id_self) {
             ASSERT(!stubInfo->stubRoutine);
-            polymorphicStructureList = new PolymorphicAccessStructureList(0, stubInfo->u.getByIdSelf.baseObjectStructure);
+            polymorphicStructureList = new PolymorphicAccessStructureList(MacroAssembler::CodeLocationLabel(), stubInfo->u.getByIdSelf.baseObjectStructure);
             stubInfo->initGetByIdSelfList(polymorphicStructureList, 2);
         } else {
             polymorphicStructureList = stubInfo->u.getByIdSelfList.structureList;
@@ -4546,12 +4546,12 @@ static PolymorphicAccessStructureList* getPolymorphicAccessStructureListSlot(Str
     switch (stubInfo->opcodeID) {
     case op_get_by_id_proto:
         prototypeStructureList = new PolymorphicAccessStructureList(stubInfo->stubRoutine, stubInfo->u.getByIdProto.baseObjectStructure, stubInfo->u.getByIdProto.prototypeStructure);
-        stubInfo->stubRoutine = 0;
+        stubInfo->stubRoutine.reset();
         stubInfo->initGetByIdProtoList(prototypeStructureList, 2);
         break;
     case op_get_by_id_chain:
         prototypeStructureList = new PolymorphicAccessStructureList(stubInfo->stubRoutine, stubInfo->u.getByIdChain.baseObjectStructure, stubInfo->u.getByIdChain.chain);
-        stubInfo->stubRoutine = 0;
+        stubInfo->stubRoutine.reset();
         stubInfo->initGetByIdProtoList(prototypeStructureList, 2);
         break;
     case op_get_by_id_proto_list:
@@ -4829,7 +4829,7 @@ void* Interpreter::cti_vm_dontLazyLinkCall(STUB_ARGS)
 
     ctiPatchCallByReturnAddress(ARG_returnAddress2, ARG_globalData->interpreter->m_ctiVirtualCallLink);
 
-    return codeBlock->jitCode();
+    return codeBlock->jitCode().addressForCall();
 }
 
 void* Interpreter::cti_vm_lazyLinkCall(STUB_ARGS)
@@ -4844,7 +4844,7 @@ void* Interpreter::cti_vm_lazyLinkCall(STUB_ARGS)
     CallLinkInfo* callLinkInfo = &ARG_callFrame->callerFrame()->codeBlock()->getCallLinkInfo(ARG_returnAddress2);
     JIT::linkCall(callee, codeBlock, codeBlock->jitCode(), callLinkInfo, ARG_int3);
 
-    return codeBlock->jitCode();
+    return codeBlock->jitCode().addressForCall();
 }
 
 JSObject* Interpreter::cti_op_push_activation(STUB_ARGS)
@@ -5778,7 +5778,7 @@ JSValueEncodedAsPointer* Interpreter::cti_op_throw(STUB_ARGS)
     }
 
     ARG_setCallFrame(callFrame);
-    void* catchRoutine = handler->nativeCode;
+    void* catchRoutine = handler->nativeCode.addressForExceptionHandler();
     ASSERT(catchRoutine);
     STUB_SET_RETURN_ADDRESS(catchRoutine);
     return JSValuePtr::encode(exceptionValue);
@@ -5972,13 +5972,13 @@ void* Interpreter::cti_op_switch_imm(STUB_ARGS)
     CodeBlock* codeBlock = callFrame->codeBlock();
 
     if (scrutinee.isInt32Fast())
-        return codeBlock->immediateSwitchJumpTable(tableIndex).ctiForValue(scrutinee.getInt32Fast());
+        return codeBlock->immediateSwitchJumpTable(tableIndex).ctiForValue(scrutinee.getInt32Fast()).addressForSwitch();
     else {
         int32_t value;
         if (scrutinee.numberToInt32(value))
-            return codeBlock->immediateSwitchJumpTable(tableIndex).ctiForValue(value);
+            return codeBlock->immediateSwitchJumpTable(tableIndex).ctiForValue(value).addressForSwitch();
         else
-            return codeBlock->immediateSwitchJumpTable(tableIndex).ctiDefault;
+            return codeBlock->immediateSwitchJumpTable(tableIndex).ctiDefault.addressForSwitch();
     }
 }
 
@@ -5991,12 +5991,12 @@ void* Interpreter::cti_op_switch_char(STUB_ARGS)
     CallFrame* callFrame = ARG_callFrame;
     CodeBlock* codeBlock = callFrame->codeBlock();
 
-    void* result = codeBlock->characterSwitchJumpTable(tableIndex).ctiDefault;
+    void* result = codeBlock->characterSwitchJumpTable(tableIndex).ctiDefault.addressForSwitch();
 
     if (scrutinee.isString()) {
         UString::Rep* value = asString(scrutinee)->value().rep();
         if (value->size() == 1)
-            result = codeBlock->characterSwitchJumpTable(tableIndex).ctiForValue(value->data()[0]);
+            result = codeBlock->characterSwitchJumpTable(tableIndex).ctiForValue(value->data()[0]).addressForSwitch();
     }
 
     return result;
@@ -6011,11 +6011,11 @@ void* Interpreter::cti_op_switch_string(STUB_ARGS)
     CallFrame* callFrame = ARG_callFrame;
     CodeBlock* codeBlock = callFrame->codeBlock();
 
-    void* result = codeBlock->stringSwitchJumpTable(tableIndex).ctiDefault;
+    void* result = codeBlock->stringSwitchJumpTable(tableIndex).ctiDefault.addressForSwitch();
 
     if (scrutinee.isString()) {
         UString::Rep* value = asString(scrutinee)->value().rep();
-        result = codeBlock->stringSwitchJumpTable(tableIndex).ctiForValue(value);
+        result = codeBlock->stringSwitchJumpTable(tableIndex).ctiForValue(value).addressForSwitch();
     }
 
     return result;
@@ -6119,7 +6119,7 @@ JSValueEncodedAsPointer* Interpreter::cti_vm_throw(STUB_ARGS)
     }
 
     ARG_setCallFrame(callFrame);
-    void* catchRoutine = handler->nativeCode;
+    void* catchRoutine = handler->nativeCode.addressForExceptionHandler();
     ASSERT(catchRoutine);
     STUB_SET_RETURN_ADDRESS(catchRoutine);
     return JSValuePtr::encode(exceptionValue);

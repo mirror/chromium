@@ -161,7 +161,6 @@ RenderObject::RenderObject(Node* node)
     , m_hasAXObject(false)
     , m_setNeedsLayoutForbidden(false)
 #endif
-    , m_verticalPosition(PositionUndefined)
     , m_needsLayout(false)
     , m_needsPositionedMovementLayout(false)
     , m_normalChildNeedsLayout(false)
@@ -191,6 +190,7 @@ RenderObject::RenderObject(Node* node)
     , m_selectionState(SelectionNone)
     , m_hasColumns(false)
     , m_cellWidthChanged(false)
+    , m_replacedHasOverflow(false)
 {
 #ifndef NDEBUG
     renderObjectCounter.increment();
@@ -525,20 +525,6 @@ RenderLayer* RenderObject::enclosingLayer() const
     }
     return 0;
 }
-
-#if USE(ACCELERATED_COMPOSITING)
-RenderLayer* RenderObject::enclosingCompositingLayer() const
-{
-    const RenderObject* curr = this;
-    while (curr) {
-        RenderLayer* layer = curr->hasLayer() ? toRenderBoxModelObject(curr)->layer() : 0;
-        if (layer && layer->isComposited())
-            return layer;
-        curr = curr->parent();
-    }
-    return 0;
-}
-#endif
 
 RenderBox* RenderObject::enclosingBox() const
 {
@@ -1638,7 +1624,7 @@ RenderBoxModelObject* RenderObject::containerForRepaint() const
 #if USE(ACCELERATED_COMPOSITING)
     if (RenderView* v = view()) {
         if (v->usesCompositing()) {
-            RenderLayer* compLayer = enclosingCompositingLayer();
+            RenderLayer* compLayer = enclosingLayer()->enclosingCompositingLayer();
             return compLayer ? compLayer->renderer() : 0;
         }
     }
@@ -2398,63 +2384,6 @@ void RenderObject::updateHitTestResult(HitTestResult& result, const IntPoint& po
 bool RenderObject::nodeAtPoint(const HitTestRequest&, HitTestResult&, int /*x*/, int /*y*/, int /*tx*/, int /*ty*/, HitTestAction)
 {
     return false;
-}
-
-int RenderObject::verticalPositionHint(bool firstLine) const
-{
-    if (firstLine) // We're only really a first-line style if the document actually uses first-line rules.
-        firstLine = document()->usesFirstLineRules();
-    int vpos = m_verticalPosition;
-    if (m_verticalPosition == PositionUndefined || firstLine) {
-        vpos = getVerticalPosition(firstLine);
-        if (!firstLine)
-            m_verticalPosition = vpos;
-    }
-
-    return vpos;
-}
-
-int RenderObject::getVerticalPosition(bool firstLine) const
-{
-    if (!isInline())
-        return 0;
-
-    // This method determines the vertical position for inline elements.
-    int vpos = 0;
-    EVerticalAlign va = style()->verticalAlign();
-    if (va == TOP)
-        vpos = PositionTop;
-    else if (va == BOTTOM)
-        vpos = PositionBottom;
-    else {
-        bool checkParent = parent()->isInline() && !parent()->isInlineBlockOrInlineTable() && parent()->style()->verticalAlign() != TOP && parent()->style()->verticalAlign() != BOTTOM;
-        vpos = checkParent ? parent()->verticalPositionHint(firstLine) : 0;
-        // don't allow elements nested inside text-top to have a different valignment.
-        if (va == BASELINE)
-            return vpos;
-
-        const Font& f = parent()->style(firstLine)->font();
-        int fontsize = f.pixelSize();
-
-        if (va == SUB)
-            vpos += fontsize / 5 + 1;
-        else if (va == SUPER)
-            vpos -= fontsize / 3 + 1;
-        else if (va == TEXT_TOP)
-            vpos += baselinePosition(firstLine) - f.ascent();
-        else if (va == MIDDLE)
-            vpos += -static_cast<int>(f.xHeight() / 2) - lineHeight(firstLine) / 2 + baselinePosition(firstLine);
-        else if (va == TEXT_BOTTOM) {
-            vpos += f.descent();
-            if (!isReplaced())
-                vpos -= style(firstLine)->font().descent();
-        } else if (va == BASELINE_MIDDLE)
-            vpos += -lineHeight(firstLine) / 2 + baselinePosition(firstLine);
-        else if (va == LENGTH)
-            vpos -= style()->verticalAlignLength().calcValue(lineHeight(firstLine));
-    }
-
-    return vpos;
 }
 
 int RenderObject::lineHeight(bool firstLine, bool /*isRootLineBox*/) const

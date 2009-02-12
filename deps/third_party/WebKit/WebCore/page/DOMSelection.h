@@ -88,8 +88,6 @@ namespace WebCore {
 
         // Microsoft Selection Object API
         void empty();
-        //void clear();
-        //TextRange *createRange();
 
     private:
         DOMSelection(Frame*);

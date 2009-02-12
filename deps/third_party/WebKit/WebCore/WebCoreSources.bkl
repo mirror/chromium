@@ -229,6 +229,8 @@ This file contains the list of files needed to build WebCore.
         DerivedSources/WebCore/JSCanvasPattern.cpp
         DerivedSources/WebCore/JSCanvasRenderingContext2D.cpp
         DerivedSources/WebCore/JSCharacterData.cpp
+        DerivedSources/WebCore/JSClientRect.cpp
+        DerivedSources/WebCore/JSClientRectList.cpp
         DerivedSources/WebCore/JSClipboard.cpp
         DerivedSources/WebCore/JSComment.cpp
         DerivedSources/WebCore/JSConsole.cpp
@@ -392,6 +394,8 @@ This file contains the list of files needed to build WebCore.
         dom/ChildNodeList.cpp
         dom/ClassNames.cpp
         dom/ClassNodeList.cpp
+        dom/ClientRect.cpp
+        dom/ClientRectList.cpp
         dom/Clipboard.cpp
         dom/ClipboardEvent.cpp
         dom/Comment.cpp
@@ -493,7 +497,6 @@ This file contains the list of files needed to build WebCore.
         editing/RemoveNodeCommand.cpp
         editing/RemoveNodePreservingChildrenCommand.cpp
         editing/ReplaceSelectionCommand.cpp
-        editing/Selection.cpp
         editing/SelectionController.cpp
         editing/SmartReplace.cpp
         editing/SmartReplaceICU.cpp
@@ -505,6 +508,7 @@ This file contains the list of files needed to build WebCore.
         editing/TypingCommand.cpp
         editing/UnlinkCommand.cpp
         editing/VisiblePosition.cpp
+        editing/VisibleSelection.cpp
         editing/WrapContentsInDummySpanCommand.cpp
         editing/htmlediting.cpp
         editing/markup.cpp
@@ -725,6 +729,7 @@ This file contains the list of files needed to build WebCore.
         platform/DragImage.cpp
         platform/FileChooser.cpp
         platform/GeolocationService.cpp
+        platform/graphics/FloatPoint3D.cpp
         platform/graphics/Font.cpp
         platform/graphics/FontCache.cpp
         platform/graphics/FontData.cpp

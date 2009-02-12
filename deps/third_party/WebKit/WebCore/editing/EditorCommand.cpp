@@ -184,7 +184,7 @@ static bool executeInsertNode(Frame* frame, PassRefPtr<Node> content)
 
 static bool expandSelectionToGranularity(Frame* frame, TextGranularity granularity)
 {
-    Selection selection = frame->selection()->selection();
+    VisibleSelection selection = frame->selection()->selection();
     selection.expandUsingGranularity(granularity);
     RefPtr<Range> newRange = selection.toNormalizedRange();
     if (!newRange)
@@ -935,8 +935,8 @@ static bool executeSuperscript(Frame* frame, Event*, EditorCommandSource source,
 
 static bool executeSwapWithMark(Frame* frame, Event*, EditorCommandSource, const String&)
 {
-    const Selection& mark = frame->mark();
-    const Selection& selection = frame->selection()->selection();
+    const VisibleSelection& mark = frame->mark();
+    const VisibleSelection& selection = frame->selection()->selection();
     if (mark.isNone() || selection.isNone()) {
         systemBeep();
         return false;
@@ -1042,20 +1042,20 @@ static bool enabled(Frame*, Event*, EditorCommandSource)
 static bool enabledVisibleSelection(Frame* frame, Event* event, EditorCommandSource)
 {
     // The term "visible" here includes a caret in editable text or a range in any text.
-    const Selection& selection = frame->editor()->selectionForCommand(event);
+    const VisibleSelection& selection = frame->editor()->selectionForCommand(event);
     return (selection.isCaret() && selection.isContentEditable()) || selection.isRange();
 }
 
 static bool enabledVisibleSelectionAndMark(Frame* frame, Event* event, EditorCommandSource)
 {
-    const Selection& selection = frame->editor()->selectionForCommand(event);
+    const VisibleSelection& selection = frame->editor()->selectionForCommand(event);
     return ((selection.isCaret() && selection.isContentEditable()) || selection.isRange())
         && frame->mark().isCaretOrRange();
 }
 
 static bool enableCaretInEditableText(Frame* frame, Event* event, EditorCommandSource)
 {
-    const Selection& selection = frame->editor()->selectionForCommand(event);
+    const VisibleSelection& selection = frame->editor()->selectionForCommand(event);
     return selection.isCaret() && selection.isContentEditable();
 }
 
@@ -1443,7 +1443,7 @@ bool Editor::Command::execute(const String& parameter, Event* triggeringEvent) c
 {
     if (!isEnabled(triggeringEvent)) {
         // Let certain commands be executed when performed explicitly even if they are disabled.
-        if (!isSupported() || !m_frame || !m_frame->document() || !m_command->allowExecutionWhenDisabled)
+        if (!isSupported() || !m_frame || !m_command->allowExecutionWhenDisabled)
             return false;
     }
     m_frame->document()->updateLayoutIgnorePendingStylesheets();
@@ -1462,21 +1462,21 @@ bool Editor::Command::isSupported() const
 
 bool Editor::Command::isEnabled(Event* triggeringEvent) const
 {
-    if (!isSupported() || !m_frame || !m_frame->document())
+    if (!isSupported() || !m_frame)
         return false;
     return m_command->isEnabled(m_frame.get(), triggeringEvent, m_source);
 }
 
 TriState Editor::Command::state(Event* triggeringEvent) const
 {
-    if (!isSupported() || !m_frame || !m_frame->document())
+    if (!isSupported() || !m_frame)
         return FalseTriState;
     return m_command->state(m_frame.get(), triggeringEvent);
 }
 
 String Editor::Command::value(Event* triggeringEvent) const
 {
-    if (!isSupported() || !m_frame || !m_frame->document())
+    if (!isSupported() || !m_frame)
         return String();
     return m_command->value(m_frame.get(), triggeringEvent);
 }

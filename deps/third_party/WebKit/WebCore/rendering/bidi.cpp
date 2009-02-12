@@ -527,7 +527,7 @@ RootInlineBox* RenderBlock::constructLine(unsigned runCount, BidiRun* firstRun, 
             // If we have no parent box yet, or if the run is not simply a sibling,
             // then we need to construct inline boxes as necessary to properly enclose the
             // run's inline box.
-            if (!parentBox || parentBox->object() != r->m_object->parent())
+            if (!parentBox || parentBox->renderer() != r->m_object->parent())
                 // Create new inline boxes all the way back to the appropriate insertion point.
                 parentBox = createLineBoxes(r->m_object->parent(), firstLine);
 
@@ -734,7 +734,7 @@ void RenderBlock::computeVerticalPositionsForLine(RootInlineBox* lineBox, BidiRu
         // Align positioned boxes with the top of the line box.  This is
         // a reasonable approximation of an appropriate y position.
         if (r->m_object->isPositioned())
-            r->m_box->setYPos(height());
+            r->m_box->setY(height());
 
         // Position is used to properly position both replaced elements and
         // to update the static normal flow x/y of positioned elements.
@@ -765,8 +765,6 @@ static inline bool isCollapsibleSpace(UChar character, RenderText* renderer)
 void RenderBlock::layoutInlineChildren(bool relayoutChildren, int& repaintTop, int& repaintBottom)
 {
     bool useRepaintBounds = false;
-
-    invalidateVerticalPosition();
     
     m_overflowHeight = 0;
         
@@ -797,7 +795,6 @@ void RenderBlock::layoutInlineChildren(bool relayoutChildren, int& repaintTop, i
         RenderObject* o = bidiFirst(this, 0, false);
         Vector<FloatWithRect> floats;
         while (o) {
-            o->invalidateVerticalPosition();
             if (o->isReplaced() || o->isFloating() || o->isPositioned()) {
                 RenderBox* box = toRenderBox(o);
                 
@@ -822,6 +819,8 @@ void RenderBlock::layoutInlineChildren(bool relayoutChildren, int& repaintTop, i
                 if (fullLayout || o->selfNeedsLayout())
                     o->dirtyLineBoxes(fullLayout);
                 o->setNeedsLayout(false);
+                if (!o->isText())
+                    toRenderInline(o)->invalidateVerticalPosition(); // FIXME: Should do better here and not always invalidate everything.
             }
             o = bidiNext(this, o, 0, false, &endOfInline);
         }
@@ -883,9 +882,9 @@ void RenderBlock::layoutInlineChildren(bool relayoutChildren, int& repaintTop, i
             // adjust the height accordingly.
             // A line break can be either the first or the last object on a line, depending on its direction.
             if (InlineBox* lastLeafChild = lastRootBox()->lastLeafChild()) {
-                RenderObject* lastObject = lastLeafChild->object();
+                RenderObject* lastObject = lastLeafChild->renderer();
                 if (!lastObject->isBR())
-                    lastObject = lastRootBox()->firstLeafChild()->object();
+                    lastObject = lastRootBox()->firstLeafChild()->renderer();
                 if (lastObject->isBR()) {
                     EClear clear = lastObject->style()->clear();
                     if (clear != CNONE)
@@ -2185,8 +2184,8 @@ void RenderBlock::checkLinesForTextOverflow()
     // Include the scrollbar for overflow blocks, which means we want to use "contentWidth()"
     bool ltr = style()->direction() == LTR;
     for (RootInlineBox* curr = firstRootBox(); curr; curr = curr->nextRootBox()) {
-        int blockEdge = ltr ? rightOffset(curr->yPos(), curr == firstRootBox()) : leftOffset(curr->yPos(), curr == firstRootBox());
-        int lineBoxEdge = ltr ? curr->xPos() + curr->width() : curr->xPos();
+        int blockEdge = ltr ? rightOffset(curr->y(), curr == firstRootBox()) : leftOffset(curr->y(), curr == firstRootBox());
+        int lineBoxEdge = ltr ? curr->x() + curr->width() : curr->x();
         if ((ltr && lineBoxEdge > blockEdge) || (!ltr && lineBoxEdge < blockEdge)) {
             // This line spills out of our box in the appropriate direction.  Now we need to see if the line
             // can be truncated.  In order for truncation to be possible, the line must have sufficient space to

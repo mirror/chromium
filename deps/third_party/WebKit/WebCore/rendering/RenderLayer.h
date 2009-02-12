@@ -237,12 +237,12 @@ public:
         return curr;
     }
     
-    int xPos() const { return m_x; }
-    int yPos() const { return m_y; }
-    void setPos(int xPos, int yPos)
+    int x() const { return m_x; }
+    int y() const { return m_y; }
+    void setLocation(int x, int y)
     {
-        m_x = xPos;
-        m_y = yPos;
+        m_x = x;
+        m_y = y;
     }
 
     int width() const { return m_width; }
@@ -341,6 +341,13 @@ public:
     // Gets the nearest enclosing positioned ancestor layer (also includes
     // the <html> layer and the root layer).
     RenderLayer* enclosingPositionedAncestor() const;
+
+#if USE(ACCELERATED_COMPOSITING)
+    // Enclosing compositing layer; if includeSelf is true, may return this.
+    RenderLayer* enclosingCompositingLayer(bool includeSelf = true) const;
+    // Ancestor compositing layer, excluding this.
+    RenderLayer* ancestorCompositingLayer() const { return enclosingCompositingLayer(false); }
+#endif
 
     void convertToLayerCoords(const RenderLayer* ancestorLayer, int& x, int& y) const;
 

@@ -29,6 +29,8 @@
 #include "AXObjectCache.h"
 #include "CSSStyleSelector.h"
 #include "CString.h"
+#include "ClientRect.h"
+#include "ClientRectList.h"
 #include "Document.h"
 #include "Editor.h"
 #include "ElementRareData.h"
@@ -44,6 +46,9 @@
 #include "Page.h"
 #include "PlatformString.h"
 #include "RenderBlock.h"
+#if ENABLE(SVG)
+#include "SVGNames.h"
+#endif
 #include "SelectionController.h"
 #include "TextIterator.h"
 #include "XMLNames.h"
@@ -411,6 +416,42 @@ int Element::scrollHeight()
     if (RenderBox* rend = renderBox())
         return adjustForAbsoluteZoom(rend->scrollHeight(), rend);
     return 0;
+}
+
+PassRefPtr<ClientRectList> Element::getClientRects() const
+{
+    document()->updateLayoutIgnorePendingStylesheets();
+
+    RenderBoxModelObject* renderBoxModelObject = this->renderBoxModelObject();
+    if (!renderBoxModelObject)
+        return ClientRectList::create();
+
+    // FIXME: Handle SVG elements.
+    // FIXME: Handle table/inline-table with a caption.
+
+    Vector<FloatQuad> quads;
+    renderBoxModelObject->absoluteQuads(quads);
+    return ClientRectList::create(quads);
+}
+
+PassRefPtr<ClientRect> Element::getBoundingClientRect() const
+{
+    document()->updateLayoutIgnorePendingStylesheets();
+    RenderBoxModelObject* renderBoxModelObject = this->renderBoxModelObject();
+    if (!renderBoxModelObject)
+        return ClientRect::create();
+
+    Vector<FloatQuad> quads;
+    renderBoxModelObject->absoluteQuads(quads);
+
+    if (quads.isEmpty())
+        return ClientRect::create();
+
+    IntRect result = quads[0].enclosingBoundingBox();
+    for (size_t i = 1; i < quads.size(); ++i)
+        result.unite(quads[i].enclosingBoundingBox());
+
+    return ClientRect::create(result);
 }
 
 static inline bool shouldIgnoreAttributeCase(const Element* e)
@@ -1096,7 +1137,7 @@ void Element::updateFocusAppearance(bool /*restorePreviousSelection*/)
             return;
 
         // FIXME: We should restore the previous selection if there is one.
-        Selection newSelection = hasTagName(htmlTag) || hasTagName(bodyTag) ? Selection(Position(this, 0), DOWNSTREAM) : Selection::selectionFromContentsOfNode(this);
+        VisibleSelection newSelection = hasTagName(htmlTag) || hasTagName(bodyTag) ? VisibleSelection(Position(this, 0), DOWNSTREAM) : VisibleSelection::selectionFromContentsOfNode(this);
         
         if (frame->shouldChangeSelection(newSelection)) {
             frame->selection()->setSelection(newSelection);

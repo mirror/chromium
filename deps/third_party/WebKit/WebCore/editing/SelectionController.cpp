@@ -76,30 +76,30 @@ SelectionController::SelectionController(Frame* frame, bool isDragCaretControlle
 
 void SelectionController::moveTo(const VisiblePosition &pos, bool userTriggered)
 {
-    setSelection(Selection(pos.deepEquivalent(), pos.deepEquivalent(), pos.affinity()), true, true, userTriggered);
+    setSelection(VisibleSelection(pos.deepEquivalent(), pos.deepEquivalent(), pos.affinity()), true, true, userTriggered);
 }
 
 void SelectionController::moveTo(const VisiblePosition &base, const VisiblePosition &extent, bool userTriggered)
 {
-    setSelection(Selection(base.deepEquivalent(), extent.deepEquivalent(), base.affinity()), true, true, userTriggered);
+    setSelection(VisibleSelection(base.deepEquivalent(), extent.deepEquivalent(), base.affinity()), true, true, userTriggered);
 }
 
 void SelectionController::moveTo(const Position &pos, EAffinity affinity, bool userTriggered)
 {
-    setSelection(Selection(pos, affinity), true, true, userTriggered);
+    setSelection(VisibleSelection(pos, affinity), true, true, userTriggered);
 }
 
 void SelectionController::moveTo(const Range *r, EAffinity affinity, bool userTriggered)
 {
-    setSelection(Selection(startPosition(r), endPosition(r), affinity), true, true, userTriggered);
+    setSelection(VisibleSelection(startPosition(r), endPosition(r), affinity), true, true, userTriggered);
 }
 
 void SelectionController::moveTo(const Position &base, const Position &extent, EAffinity affinity, bool userTriggered)
 {
-    setSelection(Selection(base, extent, affinity), true, true, userTriggered);
+    setSelection(VisibleSelection(base, extent, affinity), true, true, userTriggered);
 }
 
-void SelectionController::setSelection(const Selection& s, bool closeTyping, bool clearTypingStyle, bool userTriggered)
+void SelectionController::setSelection(const VisibleSelection& s, bool closeTyping, bool clearTypingStyle, bool userTriggered)
 {
     if (m_isDragCaretController) {
         invalidateCaretRect();
@@ -134,7 +134,7 @@ void SelectionController::setSelection(const Selection& s, bool closeTyping, boo
     if (m_sel == s)
         return;
     
-    Selection oldSelection = m_sel;
+    VisibleSelection oldSelection = m_sel;
 
     m_sel = s;
     
@@ -220,7 +220,7 @@ void SelectionController::nodeWillBeRemoved(Node *node)
     }
 
     if (clearDOMTreeSelection)
-        setSelection(Selection(), false, false);
+        setSelection(VisibleSelection(), false, false);
 }
 
 void SelectionController::willBeModified(EAlteration alter, EDirection direction)
@@ -700,27 +700,27 @@ int SelectionController::xPosForVerticalArrowNavigation(EPositionType type)
 
 void SelectionController::clear()
 {
-    setSelection(Selection());
+    setSelection(VisibleSelection());
 }
 
 void SelectionController::setBase(const VisiblePosition &pos, bool userTriggered)
 {
-    setSelection(Selection(pos.deepEquivalent(), m_sel.extent(), pos.affinity()), true, true, userTriggered);
+    setSelection(VisibleSelection(pos.deepEquivalent(), m_sel.extent(), pos.affinity()), true, true, userTriggered);
 }
 
 void SelectionController::setExtent(const VisiblePosition &pos, bool userTriggered)
 {
-    setSelection(Selection(m_sel.base(), pos.deepEquivalent(), pos.affinity()), true, true, userTriggered);
+    setSelection(VisibleSelection(m_sel.base(), pos.deepEquivalent(), pos.affinity()), true, true, userTriggered);
 }
 
 void SelectionController::setBase(const Position &pos, EAffinity affinity, bool userTriggered)
 {
-    setSelection(Selection(pos, m_sel.extent(), affinity), true, true, userTriggered);
+    setSelection(VisibleSelection(pos, m_sel.extent(), affinity), true, true, userTriggered);
 }
 
 void SelectionController::setExtent(const Position &pos, EAffinity affinity, bool userTriggered)
 {
-    setSelection(Selection(m_sel.base(), pos, affinity), true, true, userTriggered);
+    setSelection(VisibleSelection(m_sel.base(), pos, affinity), true, true, userTriggered);
 }
 
 void SelectionController::setNeedsLayout(bool flag)
@@ -830,7 +830,7 @@ IntRect SelectionController::caretRepaintRect() const
 
 bool SelectionController::recomputeCaretRect()
 {
-    if (!m_frame || !m_frame->document())
+    if (!m_frame)
         return false;
         
     FrameView* v = m_frame->document()->view();
@@ -1043,8 +1043,6 @@ void SelectionController::selectFrameElementInParentIfFullySelected()
 
     // Get to the <iframe> or <frame> (or even <object>) element in the parent frame.
     Document* doc = m_frame->document();
-    if (!doc)
-        return;
     Element* ownerElement = doc->ownerElement();
     if (!ownerElement)
         return;
@@ -1062,7 +1060,7 @@ void SelectionController::selectFrameElementInParentIfFullySelected()
     VisiblePosition afterOwnerElement(VisiblePosition(ownerElementParent, ownerElementNodeIndex + 1, VP_UPSTREAM_IF_POSSIBLE));
 
     // Focus on the parent frame, and then select from before this element to after.
-    Selection newSelection(beforeOwnerElement, afterOwnerElement);
+    VisibleSelection newSelection(beforeOwnerElement, afterOwnerElement);
     if (parent->shouldChangeSelection(newSelection)) {
         page->focusController()->setFocusedFrame(parent);
         parent->selection()->setSelection(newSelection);
@@ -1072,8 +1070,6 @@ void SelectionController::selectFrameElementInParentIfFullySelected()
 void SelectionController::selectAll()
 {
     Document* document = m_frame->document();
-    if (!document)
-        return;
     
     if (document->focusedNode() && document->focusedNode()->canSelectAll()) {
         document->focusedNode()->selectAll();
@@ -1090,7 +1086,7 @@ void SelectionController::selectAll()
     }
     if (!root)
         return;
-    Selection newSelection(Selection::selectionFromContentsOfNode(root));
+    VisibleSelection newSelection(VisibleSelection::selectionFromContentsOfNode(root));
     if (m_frame->shouldChangeSelection(newSelection))
         setSelection(newSelection);
     selectFrameElementInParentIfFullySelected();
@@ -1134,7 +1130,7 @@ bool SelectionController::setSelectedRange(Range* range, EAffinity affinity, boo
     // FIXME: Can we provide extentAffinity?
     VisiblePosition visibleStart(startContainer, startOffset, collapsed ? affinity : DOWNSTREAM);
     VisiblePosition visibleEnd(endContainer, endOffset, SEL_DEFAULT_AFFINITY);
-    setSelection(Selection(visibleStart, visibleEnd), closeTyping);
+    setSelection(VisibleSelection(visibleStart, visibleEnd), closeTyping);
     return true;
 }
 
@@ -1207,8 +1203,7 @@ void SelectionController::setFocused(bool flag)
 
     focusedOrActiveStateChanged();
 
-    if (Document* doc = m_frame->document())
-        doc->dispatchWindowEvent(flag ? eventNames().focusEvent : eventNames().blurEvent, false, false);
+    m_frame->document()->dispatchWindowEvent(flag ? eventNames().focusEvent : eventNames().blurEvent, false, false);
 }
 
 bool SelectionController::isFocusedAndActive() const

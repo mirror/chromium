@@ -480,7 +480,7 @@ void RenderLayer::updateLayerPosition()
     
     // FIXME: We'd really like to just get rid of the concept of a layer rectangle and rely on the renderers.
 
-    setPos(x, y);
+    setLocation(x, y);
 
     if (renderer()->isRenderInline()) {
         RenderInline* inlineFlow = toRenderInline(renderer());
@@ -524,6 +524,27 @@ RenderLayer* RenderLayer::enclosingTransformedAncestor() const
         { }
     return curr;
 }
+
+#if USE(ACCELERATED_COMPOSITING)
+RenderLayer* RenderLayer::enclosingCompositingLayer(bool includeSelf) const
+{
+    if (includeSelf && isComposited())
+        return const_cast<RenderLayer*>(this);
+
+    // Compositing layers are parented according to stacking order and overflow list,
+    // so we have to check whether the parent is a stacking context, or whether 
+    // the child is overflow-only.
+    bool inOverflowList = isOverflowOnly();
+    for (RenderLayer* curr = parent(); curr; curr = curr->parent()) {
+        if (curr->isComposited() && (inOverflowList || curr->isStackingContext()))
+            return curr;
+        
+        inOverflowList = curr->isOverflowOnly();
+    }
+         
+    return 0;
+}
+#endif
 
 IntPoint RenderLayer::absoluteToContents(const IntPoint& absolutePoint) const
 {
@@ -773,7 +794,7 @@ void RenderLayer::insertOnlyThisLayer()
 }
 
 void 
-RenderLayer::convertToLayerCoords(const RenderLayer* ancestorLayer, int& x, int& y) const
+RenderLayer::convertToLayerCoords(const RenderLayer* ancestorLayer, int& xPos, int& yPos) const
 {
     if (ancestorLayer == this)
         return;
@@ -782,8 +803,8 @@ RenderLayer::convertToLayerCoords(const RenderLayer* ancestorLayer, int& x, int&
         // Add in the offset of the view.  We can obtain this by calling
         // localToAbsolute() on the RenderView.
         FloatPoint absPos = renderer()->localToAbsolute(FloatPoint(), true);
-        x += absPos.x();
-        y += absPos.y();
+        xPos += absPos.x();
+        yPos += absPos.y();
         return;
     }
  
@@ -795,10 +816,10 @@ RenderLayer::convertToLayerCoords(const RenderLayer* ancestorLayer, int& x, int&
     
     if (!parentLayer) return;
     
-    parentLayer->convertToLayerCoords(ancestorLayer, x, y);
+    parentLayer->convertToLayerCoords(ancestorLayer, xPos, yPos);
 
-    x += xPos();
-    y += yPos();
+    xPos += x();
+    yPos += y();
 }
 
 void RenderLayer::panScrollFromPoint(const IntPoint& sourcePoint) 
@@ -2346,9 +2367,9 @@ IntRect RenderLayer::localBoundingBox() const
             return result;
         int top = firstBox->root()->topOverflow();
         int bottom = inlineFlow->lastLineBox()->root()->bottomOverflow();
-        int left = firstBox->xPos();
+        int left = firstBox->x();
         for (InlineRunBox* curr = firstBox->nextLineBox(); curr; curr = curr->nextLineBox())
-            left = min(left, curr->xPos());
+            left = min(left, curr->x());
         result = IntRect(left, top, width(), bottom - top);
     } else if (renderer()->isTableRow()) {
         // Our bounding box is just the union of all of our cells' border/overflow rects.
@@ -2440,14 +2461,14 @@ void RenderLayer::setParent(RenderLayer* parent)
         return;
 
 #if USE(ACCELERATED_COMPOSITING)
-    if (m_parent && compositor())
+    if (m_parent && !renderer()->documentBeingDestroyed())
         compositor()->layerWillBeRemoved(m_parent, this);
 #endif
     
     m_parent = parent;
     
 #if USE(ACCELERATED_COMPOSITING)
-    if (m_parent)
+    if (m_parent && !renderer()->documentBeingDestroyed())
         compositor()->layerWasAdded(m_parent, this);
 #endif
 }
@@ -2549,7 +2570,7 @@ void RenderLayer::dirtyZOrderLists()
     m_zOrderListsDirty = true;
 
 #if USE(ACCELERATED_COMPOSITING)
-    if (compositor())
+    if (!renderer()->documentBeingDestroyed())
         compositor()->setCompositingLayersNeedUpdate();
 #endif
 }
@@ -2568,7 +2589,7 @@ void RenderLayer::dirtyOverflowList()
     m_overflowListDirty = true;
 
 #if USE(ACCELERATED_COMPOSITING)
-    if (compositor())
+    if (!renderer()->documentBeingDestroyed())
         compositor()->setCompositingLayersNeedUpdate();
 #endif
 }
