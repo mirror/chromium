@@ -57,7 +57,6 @@
 #include "Screen.h"
 #include "SecurityOrigin.h"
 #include "Settings.h"
-#include "ScriptController.h"
 #include <algorithm>
 #include <wtf/MathExtras.h>
 
@@ -78,27 +77,6 @@
 
 using std::min;
 using std::max;
-
-#if USE(V8)
-#include "Location.h"
-#include "Navigator.h"
-#include "CString.h"
-#include "FloatRect.h"
-#include "FrameTree.h"
-#include "FrameView.h"
-#include "Page.h"
-#include "Chrome.h"
-#include "WindowFeatures.h"
-#include "FrameLoadRequest.h"
-#include "ScheduledAction.h"
-#include "v8_proxy.h"
-
-#if PLATFORM(WIN)
-#include <windows.h>
-#endif // WIN
-
-#include "CSSHelper.h"  // parseURL
-#endif // V8
 
 
 namespace WebCore {
@@ -514,9 +492,8 @@ void DOMWindow::stop()
     if (m_frame->loader()->firingUnloadEvents())
         return;
 
-    // We must check whether the load is complete asynchronously,
-    // because we might still be parsing the document until the
-    // callstack unwinds.
+    // We must check whether the load is complete asynchronously, because we might still be parsing
+    // the document until the callstack unwinds.
     m_frame->loader()->stopForUserCancel(true);
 }
 
