@@ -15,6 +15,7 @@ Since the behavior is very similar to the MainNotifier, we simply inherit from
 it and also reuse some of its methods to send emails.
 """
 
+import time
 import urllib
 
 from buildbot import interfaces
@@ -60,8 +61,10 @@ class GateKeeper(MailNotifier):
 
   _CATEGORY_SPLITTER = '|'
   _TREE_STATUS_URL = 'http://chromium-status.appspot.com/status'
+  _MINIMUM_DELAY_BETWEEN_CLOSE = 600  # 10 minutes in seconds
 
   _last_closure_revision = 0
+  _last_time_mail_sent = None
   
   # Attributes we want to set from provided arguments, or set to None
   params = ['reply_to', 'lookup', 'categories_steps', 'exclusions']
@@ -119,6 +122,10 @@ class GateKeeper(MailNotifier):
     if self.isInterestingBuilder(builder, name):
       return self
 
+  def buildFinished(self, name, build, results):
+    """Must be overloaded to avoid the base class sending email."""
+    pass
+
   def stepFinished(self, build, step, results):
     """A build step has just finished."""
     # If we have not failed, we have nothing to do.
@@ -128,9 +135,9 @@ class GateKeeper(MailNotifier):
     builder = build.getBuilder()
     name  = builder.getName()
     if not self.categories_steps:
-      return self.closeTree(name, build, results)
+      return self.closeTree(name, build, step.getText())
 
-    # Check is the slave is still alive.
+    # Check if the slave is still alive.
     # We should not close the tree for inactive slaves.
     slave_name = build.getSlavename()
     if slave_name in self.status.getSlaveNames():
@@ -152,40 +159,48 @@ class GateKeeper(MailNotifier):
         return self.closeTree(name, build, step_text)
 
   def closeTree(self, name, build, step_text):
+    # We don't want to do this too often
+    if (self._last_time_mail_sent and self._last_time_mail_sent >
+        time.time() - self._MINIMUM_DELAY_BETWEEN_CLOSE):
+      return
+    self._last_time_mail_sent = time.time()
+
     # Check if the tree is already closed or not.
-    if urllib.urlopen(self._TREE_STATUS_URL).read().find('0') == -1:
-      # If the tree is opened, we don't want to close it again for the same
-      # revision, or an earlier one in case the build that just finished is a
-      # slow one and we already fixed the problem and manually opened the tree.
-      latest_revision = getLatestRevision(build)
-      if latest_revision:
-        if latest_revision <= self._last_closure_revision:
-          return
-        else:
-          self._last_closure_revision = latest_revision
+    if urllib.urlopen(self._TREE_STATUS_URL).read().find('0') != -1:
+      return
+
+    # If the tree is opened, we don't want to close it again for the same
+    # revision, or an earlier one in case the build that just finished is a
+    # slow one and we already fixed the problem and manually opened the tree.
+    latest_revision = getLatestRevision(build)
+    if latest_revision:
+      if latest_revision <= self._last_closure_revision:
+        return
       else:
-        if not build.getResponsibleUsers():
-          # If we don't have a version stamp nor a blame list, then this is most
-          # likely a build started manually, and we don't want to close the
-          # tree.
-          return
-        else:
-          latest_revision = 0
+        self._last_closure_revision = latest_revision
+    else:
+      if not build.getResponsibleUsers():
+        # If we don't have a version stamp nor a blame list, then this is most
+        # likely a build started manually, and we don't want to close the
+        # tree.
+        return
+      else:
+        latest_revision = 0
 
-      # Send the notification email.
-      defered_object = self.buildMessage(name, build, step_text)
+    # Send the notification email.
+    defered_object = self.buildMessage(name, build, step_text)
 
-      # Post a request to close the tree.
-      message = ('Tree is closed (Automatic: "%s" on "%s" from %d: %s)' %
-                 (step_text, name, latest_revision,
-                  ", ".join(build.getResponsibleUsers())))
-      password_file = file(".status_password")
-      params = urllib.urlencode({'message': message,
-                                 'username': 'buildbot@chromium.org',
-                                 'password': password_file.read().strip()})
-      urllib.urlopen(self._TREE_STATUS_URL, params)
+    # Post a request to close the tree.
+    message = ('Tree is closed (Automatic: "%s" on "%s" from %d: %s)' %
+               (step_text, name, latest_revision,
+                ", ".join(build.getResponsibleUsers())))
+    password_file = file(".status_password")
+    params = urllib.urlencode({'message': message,
+                               'username': 'buildbot@chromium.org',
+                               'password': password_file.read().strip()})
+    urllib.urlopen(self._TREE_STATUS_URL, params)
 
-      return defered_object
+    return defered_object
 
   def buildMessage(self, name, build, step_text):
     """Send an email about the tree closing.
