@@ -457,6 +457,7 @@ namespace WebCore {
 
         void applyUserAgent(ResourceRequest& request);
 
+        // See bug 802075
         bool firingUnloadEvents() { return m_firingUnloadEvents; }
         void setFiringUnloadEvents(bool value) { m_firingUnloadEvents = value; }
 

@@ -65,7 +65,6 @@
 #include "RenderTextControl.h"
 #include "RenderTheme.h"
 #include "RenderView.h"
-#include "ScriptController.h"
 #include "Settings.h"
 #include "TextIterator.h"
 #include "TextResourceDecoder.h"
@@ -1113,9 +1112,6 @@ void Frame::clearDOMWindow()
         m_domWindow->clear();
     }
     m_domWindow = 0;
-#if USE(V8)
-    m_script.clearPluginObjects();
-#endif
 }
 
 RenderView* Frame::contentRenderer() const
@@ -1580,21 +1576,9 @@ void Frame::pageDestroyed()
     if (page() && page()->focusController()->focusedFrame() == this)
         page()->focusController()->setFocusedFrame(0);
 
-#if USE(JSC)
-    // TODO(fqian): Unfork this change. It is a temporary workaround
-    // for this merge to pass layout tests. Once the merge is landed
-    // in the trunk, I am going to unfork this change and fix the issue
-    // in the binding code.
-    script()->clearWindowShell();
-#endif
-
     // This will stop any JS timers
-#if USE(JSC)
     if (script()->haveWindowShell())
         script()->windowShell()->disconnectFrame();
-#elif USE(V8)
-    script()->disconnectFrame();
-#endif
 
     script()->clearScriptObjects();
     script()->updatePlatformScriptObjects();
@@ -1655,7 +1639,7 @@ bool Frame::shouldClose()
     if (!body)
         return true;
 
-    loader()->setFiringUnloadEvents(true);
+    loader()->setFiringUnloadEvents(true); // Bug 802075.
 
     RefPtr<BeforeUnloadEvent> beforeUnloadEvent = BeforeUnloadEvent::create();
     beforeUnloadEvent->setTarget(doc);
