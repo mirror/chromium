@@ -28,8 +28,8 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "config.h"
-
 #include "V8NamedNodesCollection.h"
+
 #include "Element.h"
 #include "NamedAttrMap.h"
 

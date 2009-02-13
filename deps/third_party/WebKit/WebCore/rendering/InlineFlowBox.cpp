@@ -354,7 +354,7 @@ int InlineFlowBox::verticallyAlignBoxes(int heightOfBlock)
     // Figure out if we're in strict mode.  Note that we can't simply use !style()->htmlHacks(),
     // because that would match almost strict mode as well.
     RenderObject* curr = renderer();
-    while (curr && !curr->element())
+    while (curr && !curr->node())
         curr = curr->container();
     bool strictMode = (curr && curr->document()->inStrictMode());
     
@@ -597,7 +597,7 @@ void InlineFlowBox::paint(RenderObject::PaintInfo& paintInfo, int tx, int ty)
                     // Add ourselves to the containing block of the entire continuation so that it can
                     // paint us atomically.
                     RenderBlock* block = renderer()->containingBlock()->containingBlock();
-                    block->addContinuationWithOutline(toRenderInline(renderer()->element()->renderer()));
+                    block->addContinuationWithOutline(toRenderInline(renderer()->node()->renderer()));
                 } else if (!inlineFlow->isInlineContinuation())
                     paintInfo.outlineObjects->add(inlineFlow);
             }
@@ -825,7 +825,7 @@ static bool shouldDrawTextDecoration(RenderObject* obj)
         if (curr->isText() && !curr->isBR()) {
             if (!curr->style()->collapseWhiteSpace())
                 return true;
-            Node* currElement = curr->element();
+            Node* currElement = curr->node();
             if (!currElement)
                 return true;
             if (!currElement->isTextNode())
@@ -893,8 +893,10 @@ void InlineFlowBox::paintTextDecorations(RenderObject::PaintInfo& paintInfo, int
 
         bool linesAreOpaque = !isPrinting && (!paintUnderline || underline.alpha() == 255) && (!paintOverline || overline.alpha() == 255) && (!paintLineThrough || linethrough.alpha() == 255);
 
-        int baselinePos = baseline();
-        
+        int baselinePos = renderer()->style(m_firstLine)->font().ascent();
+        if (!isRootInlineBox())
+            baselinePos += borderTop() + paddingTop();
+
         bool setClip = false;
         int extraOffset = 0;
         ShadowData* shadow = styleToUse->textShadow();

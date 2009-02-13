@@ -368,9 +368,10 @@ void RenderFlexibleBox::layoutHorizontalBox(bool relayoutChildren)
     
             // Update our height and overflow height.
             if (style()->boxAlign() == BBASELINE) {
-                int ascent = child->marginTop() + child->getBaselineOfFirstLineBox();
+                int ascent = child->firstLineBoxBaseline();
                 if (ascent == -1)
-                    ascent = child->marginTop() + child->height() + child->marginBottom();
+                    ascent = child->height() + child->marginBottom();
+                ascent += child->marginTop();
                 int descent = (child->marginTop() + child->height() + child->marginBottom()) - ascent;
                 
                 // Update our maximum ascent.
@@ -438,9 +439,10 @@ void RenderFlexibleBox::layoutHorizontalBox(bool relayoutChildren)
                     childY += child->marginTop() + max(0, (contentHeight() - (child->height() + child->marginTop() + child->marginBottom()))/2);
                     break;
                 case BBASELINE: {
-                    int ascent = child->marginTop() + child->getBaselineOfFirstLineBox();
+                    int ascent = child->firstLineBoxBaseline();
                     if (ascent == -1)
-                        ascent = child->marginTop() + child->height() + child->marginBottom();
+                        ascent = child->height() + child->marginBottom();
+                    ascent += child->marginTop();
                     childY += child->marginTop() + (maxAscent - ascent);
                     break;
                 }
@@ -742,9 +744,9 @@ void RenderFlexibleBox::layoutVerticalBox(bool relayoutChildren)
                 InlineBox* anchorBox = lastLine->lastChild();
                 if (!anchorBox)
                     continue;
-                if (!anchorBox->renderer()->element())
+                if (!anchorBox->renderer()->node())
                     continue;
-                if (!anchorBox->renderer()->element()->isLink())
+                if (!anchorBox->renderer()->node()->isLink())
                     continue;
                 
                 RootInlineBox* lastVisibleLine = blockChild->lineAtIndex(numVisibleLines-1);

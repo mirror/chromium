@@ -29,7 +29,6 @@
  */
 
 #include "config.h"
-
 #include "HTMLCollection.h"
 
 #include "V8Binding.h"

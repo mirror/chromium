@@ -38,7 +38,7 @@ namespace WebCore {
 
 static const int maxTimerNestingLevel = 5;
 static const double oneMillisecond = 0.001;
-#ifdef USE(V8)
+#if USE(V8)
 static const double minTimerInterval = 0.004; // 4 milliseconds
 #else
 static const double minTimerInterval = 0.010; // 10 milliseconds

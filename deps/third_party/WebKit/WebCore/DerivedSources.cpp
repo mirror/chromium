@@ -32,6 +32,8 @@
 #include "JSCanvasRenderingContext2D.cpp"
 #include "JSCDATASection.cpp"
 #include "JSCharacterData.cpp"
+#include "JSClientRect.cpp"
+#include "JSClientRectList.cpp"
 #include "JSClipboard.cpp"
 #include "JSComment.cpp"
 #include "JSConsole.cpp"
@@ -333,7 +335,6 @@
 #include "JSXPathNSResolver.cpp"
 #include "JSXPathResult.cpp"
 #include "JSXSLTProcessor.cpp"
-#include "SVGElementFactory.cpp"
 #include "UserAgentStyleSheetsData.cpp"
 
 // On MSVC, including StaticConstructors.h causes all global objects not to be

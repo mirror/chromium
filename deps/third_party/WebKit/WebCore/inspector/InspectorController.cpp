@@ -567,8 +567,8 @@ void InspectorController::search(Node* node, const String& target) {
     // TODO(jackson): Figure out how to return array
 }
 
-#if ENABLE(DATABASE)
 #if USE(JSC)
+#if ENABLE(DATABASE)
 static JSValueRef databaseTableNames(JSContextRef ctx, JSObjectRef /*function*/, JSObjectRef thisObject, size_t argumentCount, const JSValueRef arguments[], JSValueRef* exception)
 {
     InspectorController* controller = reinterpret_cast<InspectorController*>(JSObjectGetPrivate(thisObject));
@@ -625,7 +625,169 @@ static JSValueRef databaseTableNames(JSContextRef ctx, JSObjectRef /*function*/,
 #elif USE(V8)
 // TODO(aa): Implement inspector database support
 #endif
+
+static JSValueRef inspectedWindow(JSContextRef ctx, JSObjectRef /*function*/, JSObjectRef thisObject, size_t /*argumentCount*/, const JSValueRef[] /*arguments[]*/, JSValueRef* /*exception*/)
+{
+    InspectorController* controller = reinterpret_cast<InspectorController*>(JSObjectGetPrivate(thisObject));
+    if (!controller)
+        return JSValueMakeUndefined(ctx);
+
+    JSDOMWindow* inspectedWindow = toJSDOMWindow(controller->inspectedPage()->mainFrame());
+    JSLock lock(false);
+    return toRef(JSInspectedObjectWrapper::wrap(inspectedWindow->globalExec(), inspectedWindow));
+}
+
+static JSValueRef setting(JSContextRef ctx, JSObjectRef /*function*/, JSObjectRef thisObject, size_t /*argumentCount*/, const JSValueRef arguments[], JSValueRef* exception)
+{
+    InspectorController* controller = reinterpret_cast<InspectorController*>(JSObjectGetPrivate(thisObject));
+    if (!controller)
+        return JSValueMakeUndefined(ctx);
+
+    JSValueRef keyValue = arguments[0];
+    if (!JSValueIsString(ctx, keyValue))
+        return JSValueMakeUndefined(ctx);
+
+    const InspectorController::Setting& setting = controller->setting(toString(ctx, keyValue, exception));
+
+    switch (setting.type()) {
+        default:
+        case InspectorController::Setting::NoType:
+            return JSValueMakeUndefined(ctx);
+        case InspectorController::Setting::StringType:
+            return JSValueMakeString(ctx, jsStringRef(setting.string()).get());
+        case InspectorController::Setting::DoubleType:
+            return JSValueMakeNumber(ctx, setting.doubleValue());
+        case InspectorController::Setting::IntegerType:
+            return JSValueMakeNumber(ctx, setting.integerValue());
+        case InspectorController::Setting::BooleanType:
+            return JSValueMakeBoolean(ctx, setting.booleanValue());
+        case InspectorController::Setting::StringVectorType: {
+            Vector<JSValueRef> stringValues;
+            const Vector<String>& strings = setting.stringVector();
+            const unsigned length = strings.size();
+            for (unsigned i = 0; i < length; ++i)
+                stringValues.append(JSValueMakeString(ctx, jsStringRef(strings[i]).get()));
+
+            JSObjectRef stringsArray = JSObjectMakeArray(ctx, stringValues.size(), stringValues.data(), exception);
+            if (exception && *exception)
+                return JSValueMakeUndefined(ctx);
+            return stringsArray;
+        }
+    }
+}
+
+static JSValueRef setSetting(JSContextRef ctx, JSObjectRef /*function*/, JSObjectRef thisObject, size_t /*argumentCount*/, const JSValueRef arguments[], JSValueRef* exception)
+{
+    InspectorController* controller = reinterpret_cast<InspectorController*>(JSObjectGetPrivate(thisObject));
+    if (!controller)
+        return JSValueMakeUndefined(ctx);
+
+    JSValueRef keyValue = arguments[0];
+    if (!JSValueIsString(ctx, keyValue))
+        return JSValueMakeUndefined(ctx);
+
+    InspectorController::Setting setting;
+
+    JSValueRef value = arguments[1];
+    switch (JSValueGetType(ctx, value)) {
+        default:
+        case kJSTypeUndefined:
+        case kJSTypeNull:
+            // Do nothing. The setting is already NoType.
+            ASSERT(setting.type() == InspectorController::Setting::NoType);
+            break;
+        case kJSTypeString:
+            setting.set(toString(ctx, value, exception));
+            break;
+        case kJSTypeNumber:
+            setting.set(JSValueToNumber(ctx, value, exception));
+            break;
+        case kJSTypeBoolean:
+            setting.set(JSValueToBoolean(ctx, value));
+            break;
+        case kJSTypeObject: {
+            JSObjectRef object = JSValueToObject(ctx, value, 0);
+            JSValueRef lengthValue = JSObjectGetProperty(ctx, object, jsStringRef("length").get(), exception);
+            if (exception && *exception)
+                return JSValueMakeUndefined(ctx);
+
+            Vector<String> strings;
+            const unsigned length = static_cast<unsigned>(JSValueToNumber(ctx, lengthValue, 0));
+            for (unsigned i = 0; i < length; ++i) {
+                JSValueRef itemValue = JSObjectGetPropertyAtIndex(ctx, object, i, exception);
+                if (exception && *exception)
+                    return JSValueMakeUndefined(ctx);
+                strings.append(toString(ctx, itemValue, exception));
+                if (exception && *exception)
+                    return JSValueMakeUndefined(ctx);
+            }
+
+            setting.set(strings);
+            break;
+        }
+    }
+
+    if (exception && *exception)
+        return JSValueMakeUndefined(ctx);
+
+    controller->setSetting(toString(ctx, keyValue, exception), setting);
+
+    return JSValueMakeUndefined(ctx);
+}
+
+static JSValueRef localizedStrings(JSContextRef ctx, JSObjectRef /*function*/, JSObjectRef thisObject, size_t /*argumentCount*/, const JSValueRef[] /*arguments[]*/, JSValueRef* /*exception*/)
+{
+    InspectorController* controller = reinterpret_cast<InspectorController*>(JSObjectGetPrivate(thisObject));
+    if (!controller)
+        return JSValueMakeUndefined(ctx);
+
+    String url = controller->localizedStringsURL();
+    if (url.isNull())
+        return JSValueMakeNull(ctx);
+
+    return JSValueMakeString(ctx, jsStringRef(url).get());
+}
+
+
+static JSValueRef hiddenPanels(JSContextRef ctx, JSObjectRef /*function*/, JSObjectRef thisObject, size_t /*argumentCount*/, const JSValueRef[] /*arguments[]*/, JSValueRef* /*exception*/)
+{
+    InspectorController* controller = reinterpret_cast<InspectorController*>(JSObjectGetPrivate(thisObject));
+    if (!controller)
+        return JSValueMakeUndefined(ctx);
+
+    String hiddenPanels = controller->hiddenPanels();
+    if (hiddenPanels.isNull())
+        return JSValueMakeNull(ctx);
+
+    return JSValueMakeString(ctx, jsStringRef(hiddenPanels).get());
+}
+
+static JSValueRef platform(JSContextRef ctx, JSObjectRef /*function*/, JSObjectRef /*thisObject*/, size_t /*argumentCount*/, const JSValueRef[] /*arguments[]*/, JSValueRef* /*exception*/)
+{
+#if PLATFORM(MAC)
+#ifdef BUILDING_ON_TIGER
+    DEFINE_STATIC_LOCAL(const String, platform, ("mac-tiger"));
+#else
+    DEFINE_STATIC_LOCAL(const String, platform, ("mac-leopard"));
 #endif
+#elif PLATFORM(WIN_OS)
+    DEFINE_STATIC_LOCAL(const String, platform, ("windows"));
+#elif PLATFORM(QT)
+    DEFINE_STATIC_LOCAL(const String, platform, ("qt"));
+#elif PLATFORM(GTK)
+    DEFINE_STATIC_LOCAL(const String, platform, ("gtk"));
+#elif PLATFORM(WX)
+    DEFINE_STATIC_LOCAL(const String, platform, ("wx"));
+#else
+    DEFINE_STATIC_LOCAL(const String, platform, ("unknown"));
+#endif
+
+    JSValueRef platformValue = JSValueMakeString(ctx, jsStringRef(platform).get());
+
+    return platformValue;
+}
+
+#endif  // USE(JSC)
 
 DOMWindow* InspectorController::inspectedWindow() {
     // Can be null if page was already destroyed.
@@ -707,6 +869,24 @@ String InspectorController::localizedStringsURL()
     if (!enabled())
         return String();
     return m_client->localizedStringsURL();
+}
+
+String InspectorController::hiddenPanels()
+{
+    if (!enabled())
+        return String();
+    return m_client->hiddenPanels();
+}
+
+// Trying to inspect something in a frame with JavaScript disabled would later lead to
+// crashes trying to create JavaScript wrappers. Some day we could fix this issue, but
+// for now prevent crashes here by never targeting a node in such a frame.
+static bool canPassNodeToJavaScript(Node* node)
+{
+    if (!node)
+        return false;
+    Frame* frame = node->document()->frame();
+    return frame && frame->script()->isEnabled();
 }
 
 void InspectorController::inspect(Node* node)

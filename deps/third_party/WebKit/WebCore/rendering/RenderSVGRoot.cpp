@@ -97,7 +97,7 @@ void RenderSVGRoot::layout()
     calcHeight();
 
     m_absoluteBounds = absoluteClippedOverflowRect();
-    SVGSVGElement* svg = static_cast<SVGSVGElement*>(element());
+    SVGSVGElement* svg = static_cast<SVGSVGElement*>(node());
     setWidth(static_cast<int>(width() * svg->currentScale()));
     setHeight(static_cast<int>(height() * svg->currentScale()));
     
@@ -133,7 +133,7 @@ void RenderSVGRoot::applyContentTransforms(PaintInfo& paintInfo, int parentX, in
     TransformationMatrix ctm = RenderBox::absoluteTransform();
     paintInfo.rect.move(static_cast<int>(ctm.e()), static_cast<int>(ctm.f()));
 
-    SVGSVGElement* svg = static_cast<SVGSVGElement*>(element());
+    SVGSVGElement* svg = static_cast<SVGSVGElement*>(node());
     paintInfo.context->concatCTM(TransformationMatrix().scale(svg->currentScale()));
 
     if (!viewport().isEmpty()) {
@@ -182,7 +182,7 @@ void RenderSVGRoot::paint(PaintInfo& paintInfo, int parentX, int parentY)
     if (childPaintInfo.phase == PaintPhaseForeground)
         prepareToRenderSVGContent(this, childPaintInfo, boundingBox, filter);
 
-    SVGSVGElement* svg = static_cast<SVGSVGElement*>(element());
+    SVGSVGElement* svg = static_cast<SVGSVGElement*>(node());
     childPaintInfo.context->concatCTM(svg->viewBoxToViewTransform(width(), height()));
     RenderBox::paint(childPaintInfo, 0, 0);
 
@@ -202,7 +202,7 @@ FloatRect RenderSVGRoot::viewport() const
 
 void RenderSVGRoot::calcViewport()
 {
-    SVGSVGElement* svg = static_cast<SVGSVGElement*>(element());
+    SVGSVGElement* svg = static_cast<SVGSVGElement*>(node());
 
     if (!selfNeedsLayout() && !svg->hasRelativeValues())
         return;
@@ -257,7 +257,7 @@ TransformationMatrix RenderSVGRoot::absoluteTransform() const
 {
     TransformationMatrix ctm = RenderBox::absoluteTransform();
     ctm.translate(x(), y());
-    SVGSVGElement* svg = static_cast<SVGSVGElement*>(element());
+    SVGSVGElement* svg = static_cast<SVGSVGElement*>(node());
     ctm.scale(svg->currentScale());
     ctm.translate(svg->currentTranslate().x(), svg->currentTranslate().y());
     ctm.translate(viewport().x(), viewport().y());
@@ -319,13 +319,6 @@ bool RenderSVGRoot::nodeAtPoint(const HitTestRequest& request, HitTestResult& re
     // Spec: Only graphical elements can be targeted by the mouse, period.
     // 16.4: "If there are no graphics elements whose relevant graphics content is under the pointer (i.e., there is no target element), the event is not dispatched."
     return false;
-}
-
-void RenderSVGRoot::position(InlineBox* box)
-{
-    RenderBox::position(box);
-    if (m_absoluteBounds.isEmpty())
-        setNeedsLayout(true, false);
 }
 
 }

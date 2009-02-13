@@ -47,6 +47,11 @@
 #include <algorithm>
 #include <stdio.h>
 #include <wtf/RefCountedLeakCounter.h>
+#include <wtf/UnusedParam.h>
+
+#if USE(ACCELERATED_COMPOSITING)
+#include "RenderLayerCompositor.h"
+#endif
 
 #if ENABLE(WML)
 #include "WMLNames.h"
@@ -195,6 +200,7 @@ RenderObject::RenderObject(Node* node)
 #ifndef NDEBUG
     renderObjectCounter.increment();
 #endif
+    ASSERT(node);
 }
 
 RenderObject::~RenderObject()
@@ -217,19 +223,18 @@ bool RenderObject::isDescendantOf(const RenderObject* obj) const
 
 bool RenderObject::isBody() const
 {
-    return node()->hasTagName(bodyTag);
+    return node() && node()->hasTagName(bodyTag);
 }
 
 bool RenderObject::isHR() const
 {
-    return element() && element()->hasTagName(hrTag);
+    return node() && node()->hasTagName(hrTag);
 }
 
 bool RenderObject::isHTMLMarquee() const
 {
-    return element() && element()->renderer() == this && element()->hasTagName(marqueeTag);
+    return node() && node()->renderer() == this && node()->hasTagName(marqueeTag);
 }
-
 
 static void updateListMarkerNumbers(RenderObject* child)
 {
@@ -385,7 +390,7 @@ bool RenderObject::isEditable() const
         textRenderer = toRenderText(const_cast<RenderObject*>(this));
 
     return style()->visibility() == VISIBLE &&
-        element() && element()->isContentEditable() &&
+        node() && node()->isContentEditable() &&
         ((isBlockFlow() && !firstChild()) ||
         isReplaced() ||
         isBR() ||
@@ -1473,13 +1478,13 @@ void RenderObject::addPDFURLRect(GraphicsContext* context, const IntRect& rect)
 {
     if (rect.isEmpty())
         return;
-    Node* node = element();
-    if (!node || !node->isLink() || !node->isElementNode())
+    Node* n = node();
+    if (!n || !n->isLink() || !n->isElementNode())
         return;
-    const AtomicString& href = static_cast<Element*>(node)->getAttribute(hrefAttr);
+    const AtomicString& href = static_cast<Element*>(n)->getAttribute(hrefAttr);
     if (href.isNull())
         return;
-    context->setURLForRect(node->document()->completeURL(href), rect);
+    context->setURLForRect(n->document()->completeURL(href), rect);
 }
 
 void RenderObject::paintOutline(GraphicsContext* graphicsContext, int tx, int ty, int w, int h, const RenderStyle* style)
@@ -1858,8 +1863,8 @@ void RenderObject::dirtyLinesFromChangedChild(RenderObject*)
 
 void RenderObject::showTreeForThis() const
 {
-    if (element())
-        element()->showTreeForThis();
+    if (node())
+        node()->showTreeForThis();
 }
 
 #endif // NDEBUG
@@ -1904,7 +1909,7 @@ Node* RenderObject::draggableNode(bool dhtmlOK, bool uaOK, int x, int y, bool& d
         return 0;
 
     for (const RenderObject* curr = this; curr; curr = curr->parent()) {
-        Node* elt = curr->element();
+        Node* elt = curr->node();
         if (elt && elt->nodeType() == Node::TEXT_NODE) {
             // Since there's no way for the author to address the -webkit-user-drag style for a text node,
             // we use our own judgement.
@@ -1938,17 +1943,6 @@ void RenderObject::selectionStartEnd(int& spos, int& epos) const
     view()->selectionStartEnd(spos, epos);
 }
 
-RenderBlock* RenderObject::createAnonymousBlock()
-{
-    RefPtr<RenderStyle> newStyle = RenderStyle::create();
-    newStyle->inheritFrom(m_style.get());
-    newStyle->setDisplay(BLOCK);
-
-    RenderBlock* newBox = new (renderArena()) RenderBlock(document() /* anonymous box */);
-    newBox->setStyle(newStyle.release());
-    return newBox;
-}
-
 void RenderObject::handleDynamicFloatPositionChange()
 {
     // We have gone from not affecting the inline status of the parent flow to suddenly
@@ -1960,7 +1954,7 @@ void RenderObject::handleDynamicFloatPositionChange()
             toRenderBoxModelObject(parent())->childBecameNonInline(this);
         else {
             // An anonymous block must be made to wrap this inline.
-            RenderBlock* block = createAnonymousBlock();
+            RenderBlock* block = toRenderBlock(parent())->createAnonymousBlock();
             RenderObjectChildList* childlist = parent()->virtualChildren();
             childlist->insertChildNode(parent(), block, this);
             block->children()->appendChildNode(block, childlist->removeChildNode(parent(), this));
@@ -1976,18 +1970,48 @@ void RenderObject::setAnimatableStyle(PassRefPtr<RenderStyle> style)
         setStyle(style);
 }
 
+StyleDifference RenderObject::adjustStyleDifference(StyleDifference diff, unsigned contextSensitiveProperties) const
+{
+#if USE(ACCELERATED_COMPOSITING)
+    // If transform changed, and we are not composited, need to do a layout.
+    if (contextSensitiveProperties & ContextSensitivePropertyTransform)
+        // Text nodes share style with their parents but transforms don't apply to them,
+        // hence the !isText() check.
+        // FIXME: when transforms are taken into account for overflow, we will need to do a layout.
+        if (!isText() && (!hasLayer() || !toRenderBoxModelObject(this)->layer()->isComposited()))
+            diff = StyleDifferenceLayout;
+        else if (diff < StyleDifferenceRecompositeLayer)
+            diff = StyleDifferenceRecompositeLayer;
+
+    // If opacity changed, and we are not composited, need to repaint (also
+    // ignoring text nodes)
+    if (contextSensitiveProperties & ContextSensitivePropertyOpacity)
+        if (!isText() && (!hasLayer() || !toRenderBoxModelObject(this)->layer()->isComposited()))
+            diff = StyleDifferenceRepaintLayer;
+        else if (diff < StyleDifferenceRecompositeLayer)
+            diff = StyleDifferenceRecompositeLayer;
+#else
+    UNUSED_PARAM(contextSensitiveProperties);
+#endif
+
+    // If we have no layer(), just treat a RepaintLayer hint as a normal Repaint.
+    if (diff == StyleDifferenceRepaintLayer && !hasLayer())
+        diff = StyleDifferenceRepaint;
+
+    return diff;
+}
+
 void RenderObject::setStyle(PassRefPtr<RenderStyle> style)
 {
     if (m_style == style)
         return;
 
     StyleDifference diff = StyleDifferenceEqual;
+    unsigned contextSensitiveProperties = ContextSensitivePropertyNone;
     if (m_style)
-        diff = m_style->diff(style.get());
+        diff = m_style->diff(style.get(), contextSensitiveProperties);
 
-    // If we have no layer(), just treat a RepaintLayer hint as a normal Repaint.
-    if (diff == StyleDifferenceRepaintLayer && !hasLayer())
-        diff = StyleDifferenceRepaint;
+    diff = adjustStyleDifference(diff, contextSensitiveProperties);
 
     styleWillChange(diff, style.get());
     
@@ -2006,6 +2030,26 @@ void RenderObject::setStyle(PassRefPtr<RenderStyle> style)
         toRenderView(document()->renderer())->setMaximalOutlineSize(m_style->outlineSize());
 
     styleDidChange(diff, oldStyle.get());
+
+    if (!m_parent || isText())
+        return;
+
+    // Now that the layer (if any) has been updated, we need to adjust the diff again,
+    // check whether we should layout now, and decide if we need to repaint.
+    StyleDifference updatedDiff = adjustStyleDifference(diff, contextSensitiveProperties);
+    
+    if (diff <= StyleDifferenceLayoutPositionedMovementOnly) {
+        if (updatedDiff == StyleDifferenceLayout)
+            setNeedsLayoutAndPrefWidthsRecalc();
+        else if (updatedDiff == StyleDifferenceLayoutPositionedMovementOnly)
+            setNeedsPositionedMovementLayout();
+    }
+    
+    if (updatedDiff == StyleDifferenceRepaintLayer || updatedDiff == StyleDifferenceRepaint) {
+        // Do a repaint with the new style now, e.g., for example if we go from
+        // not having an outline to having an outline.
+        repaint();
+    }
 }
 
 void RenderObject::setStyleInternal(PassRefPtr<RenderStyle> style)
@@ -2094,10 +2138,9 @@ void RenderObject::styleDidChange(StyleDifference diff, const RenderStyle*)
         setNeedsLayoutAndPrefWidthsRecalc();
     else if (diff == StyleDifferenceLayoutPositionedMovementOnly)
         setNeedsPositionedMovementLayout();
-    else if (diff == StyleDifferenceRepaintLayer || diff == StyleDifferenceRepaint)
-        // Do a repaint with the new style now, e.g., for example if we go from
-        // not having an outline to having an outline.
-        repaint();
+
+    // Don't check for repaint here; we need to wait until the layer has been
+    // updated by subclasses before we know if we have to repaint (in setStyle()).
 }
 
 void RenderObject::updateFillImages(const FillLayer* oldLayers, const FillLayer* newLayers)
@@ -2209,7 +2252,7 @@ bool RenderObject::isRooted(RenderView** view)
 
 bool RenderObject::hasOutlineAnnotation() const
 {
-    return element() && element()->isLink() && document()->printing();
+    return node() && node()->isLink() && document()->printing();
 }
 
 RenderObject* RenderObject::container() const
@@ -2326,7 +2369,7 @@ void RenderObject::arenaDelete(RenderArena* arena, void* base)
 
 VisiblePosition RenderObject::positionForCoordinates(int, int)
 {
-    return VisiblePosition(element(), caretMinOffset(), DOWNSTREAM);
+    return VisiblePosition(node(), caretMinOffset(), DOWNSTREAM);
 }
 
 VisiblePosition RenderObject::positionForPoint(const IntPoint& point)
@@ -2339,7 +2382,7 @@ void RenderObject::updateDragState(bool dragOn)
     bool valueChanged = (dragOn != m_isDragging);
     m_isDragging = dragOn;
     if (valueChanged && style()->affectedByDragRules())
-        element()->setChanged();
+        node()->setChanged();
     for (RenderObject* curr = firstChild(); curr; curr = curr->nextSibling())
         curr->updateDragState(dragOn);
 }
@@ -2372,11 +2415,11 @@ void RenderObject::updateHitTestResult(HitTestResult& result, const IntPoint& po
     if (result.innerNode())
         return;
 
-    Node* node = element();
-    if (node) {
-        result.setInnerNode(node);
+    Node* n = node();
+    if (n) {
+        result.setInnerNode(n);
         if (!result.innerNonSharedNode())
-            result.setInnerNonSharedNode(node);
+            result.setInnerNonSharedNode(n);
         result.setLocalPoint(point);
     }
 }
@@ -2489,18 +2532,18 @@ PassRefPtr<RenderStyle> RenderObject::getUncachedPseudoStyle(PseudoId pseudo, Re
     if (!parentStyle)
         parentStyle = style();
 
-    Node* node = element();
-    while (node && !node->isElementNode())
-        node = node->parentNode();
-    if (!node)
+    Node* n = node();
+    while (n && !n->isElementNode())
+        n = n->parentNode();
+    if (!n)
         return 0;
 
     RefPtr<RenderStyle> result;
     if (pseudo == FIRST_LINE_INHERITED) {
-        result = document()->styleSelector()->styleForElement(static_cast<Element*>(node), parentStyle, false);
+        result = document()->styleSelector()->styleForElement(static_cast<Element*>(n), parentStyle, false);
         result->setStyleType(FIRST_LINE_INHERITED);
     } else
-        result = document()->styleSelector()->pseudoStyleForElement(pseudo, static_cast<Element*>(node), parentStyle);
+        result = document()->styleSelector()->pseudoStyleForElement(pseudo, static_cast<Element*>(n), parentStyle);
     return result.release();
 }
 
@@ -2545,8 +2588,8 @@ void RenderObject::getTextDecorationColors(int decorations, Color& underline, Co
         curr = curr->parent();
         if (curr && curr->isRenderBlock() && toRenderBlock(curr)->inlineContinuation())
             curr = toRenderBlock(curr)->inlineContinuation();
-    } while (curr && decorations && (!quirksMode || !curr->element() ||
-                                     (!curr->element()->hasTagName(aTag) && !curr->element()->hasTagName(fontTag))));
+    } while (curr && decorations && (!quirksMode || !curr->node() ||
+                                     (!curr->node()->hasTagName(aTag) && !curr->node()->hasTagName(fontTag))));
 
     // If we bailed out, use the element we bailed out at (typically a <font> or <a> element).
     if (decorations && curr) {
@@ -2667,7 +2710,7 @@ int RenderObject::caretMinOffset() const
 int RenderObject::caretMaxOffset() const
 {
     if (isReplaced())
-        return element() ? max(1U, element()->childNodeCount()) : 1;
+        return node() ? max(1U, node()->childNodeCount()) : 1;
     if (isHR())
         return 1;
     return 0;
@@ -2751,9 +2794,9 @@ RenderBoxModelObject* RenderObject::offsetParent() const
     bool skipTables = isPositioned() || isRelPositioned();
     float currZoom = style()->effectiveZoom();
     RenderObject* curr = parent();
-    while (curr && (!curr->element() ||
+    while (curr && (!curr->node() ||
                     (!curr->isPositioned() && !curr->isRelPositioned() && !curr->isBody()))) {
-        Node* element = curr->element();
+        Node* element = curr->node();
         if (!skipTables && element) {
             bool isTableElement = element->hasTagName(tableTag) ||
                                   element->hasTagName(tdTag) ||

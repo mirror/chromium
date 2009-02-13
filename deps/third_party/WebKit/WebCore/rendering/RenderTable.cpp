@@ -109,7 +109,7 @@ void RenderTable::addChild(RenderObject* child, RenderObject* beforeChild)
         beforeChild = lastChild();
 
     bool wrapInAnonymousSection = !child->isPositioned();
-    bool isTableElement = element() && element()->hasTagName(tableTag);
+    bool isTableElement = node() && node()->hasTagName(tableTag);
 
     if (child->isRenderBlock() && child->style()->display() == TABLE_CAPTION) {
         // First caption wins.
@@ -166,7 +166,7 @@ void RenderTable::addChild(RenderObject* child, RenderObject* beforeChild)
         wrapInAnonymousSection = true;
     } else
         // Allow a form to just sit at the top level.
-        wrapInAnonymousSection = !isTableElement || !child->element() || !(child->element()->hasTagName(formTag) && document()->isHTMLDocument());
+        wrapInAnonymousSection = !isTableElement || !child->node() || !(child->node()->hasTagName(formTag) && document()->isHTMLDocument());
 
     if (!wrapInAnonymousSection) {
         // If the next renderer is actually wrapped in an anonymous table section, we need to go up and find that.
@@ -1105,7 +1105,7 @@ void RenderTable::updateFirstLetter()
 {
 }
 
-int RenderTable::getBaselineOfFirstLineBox() const
+int RenderTable::firstLineBoxBaseline() const
 {
     RenderTableSection* firstNonEmptySection = m_head ? m_head : (m_firstBody ? m_firstBody : m_foot);
     if (firstNonEmptySection && !firstNonEmptySection->numRows())
@@ -1114,7 +1114,7 @@ int RenderTable::getBaselineOfFirstLineBox() const
     if (!firstNonEmptySection)
         return -1;
 
-    return firstNonEmptySection->y() + firstNonEmptySection->getBaselineOfFirstLineBox();
+    return firstNonEmptySection->y() + firstNonEmptySection->firstLineBoxBaseline();
 }
 
 IntRect RenderTable::getOverflowClipRect(int tx, int ty)

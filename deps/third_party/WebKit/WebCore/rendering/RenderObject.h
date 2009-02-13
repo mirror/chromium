@@ -169,9 +169,6 @@ public:
     virtual IntRect getClipRect(int /*tx*/, int /*ty*/) { return IntRect(0, 0, 0, 0); }
     bool hasClip() { return isPositioned() && style()->hasClip(); }
 
-    virtual int getBaselineOfFirstLineBox() const { return -1; }
-    virtual int getBaselineOfLastLineBox() const { return -1; }
-
     virtual bool isEmpty() const { return firstChild() == 0; }
 
     virtual bool isEdited() const { return false; }
@@ -192,10 +189,6 @@ public:
     // again.  We have to make sure the render tree updates as needed to accommodate the new
     // normal flow object.
     void handleDynamicFloatPositionChange();
-
-    // This function is a convenience helper for creating an anonymous block that inherits its
-    // style from this RenderObject.
-    RenderBlock* createAnonymousBlock();
     
     // RenderObject tree manipulation
     //////////////////////////////////////////
@@ -270,7 +263,7 @@ public:
     virtual bool isTextField() const { return false; }
     virtual bool isWidget() const { return false; }
 
-    bool isRoot() const { return document()->documentElement() == node(); }
+    bool isRoot() const { return document()->documentElement() == m_node; }
     bool isBody() const;
     bool isHR() const;
 
@@ -304,7 +297,7 @@ public:
     {
         return m_isAnonymous && style()->display() == BLOCK && style()->styleType() == NOPSEUDO && !isListMarker();
     }
-    bool isInlineContinuation() const { return (element() ? element()->renderer() != this : false) && isRenderInline(); }
+    bool isInlineContinuation() const { return (node() ? node()->renderer() != this : false) && isRenderInline(); }
     bool isFloating() const { return m_floating; }
     bool isPositioned() const { return m_positioned; } // absolute or fixed positioning
     bool isRelPositioned() const { return m_relPositioned; } // relative positioning
@@ -351,11 +344,9 @@ public:
     // Returns true if this renderer is rooted, and optionally returns the hosting view (the root of the hierarchy).
     bool isRooted(RenderView** = 0);
 
-    // don't even think about making this method virtual!
-    Node* element() const { return m_isAnonymous ? 0 : m_node; }
+    Node* node() const { return m_isAnonymous ? 0 : m_node; }
     Document* document() const { return m_node->document(); }
     void setNode(Node* node) { m_node = node; }
-    Node* node() const { return m_node; }
 
     bool hasOutlineAnnotation() const;
     bool hasOutline() const { return style()->hasOutline() || hasOutlineAnnotation(); }
@@ -625,9 +616,6 @@ public:
     virtual bool avoidsFloats() const;
     bool shrinkToAvoidFloats() const;
 
-    // positioning of inline children (bidi)
-    virtual void position(InlineBox*) { }
-
     bool isTransparent() const { return style()->opacity() < 1.0f; }
     float opacity() const { return style()->opacity(); }
 
@@ -798,7 +786,8 @@ protected:
     
 private:
     RenderStyle* firstLineStyleSlowCase() const;
-
+    StyleDifference adjustStyleDifference(StyleDifference, unsigned contextSensitiveProperties) const;
+    
     RefPtr<RenderStyle> m_style;
 
     Node* m_node;

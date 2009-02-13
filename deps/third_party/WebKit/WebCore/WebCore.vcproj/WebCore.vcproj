@@ -508,6 +508,22 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath="$(WebKitOutputDir)\obj\$(ProjectName)\DerivedSources\HTMLElementFactory.cpp"
+				>
+				<FileConfiguration
+					Name="Release_PGO|Win32"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+						WholeProgramOptimization="true"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="$(WebKitOutputDir)\obj\$(ProjectName)\DerivedSources\HTMLElementFactory.h"
+				>
+			</File>
+			<File
 				RelativePath="$(WebKitOutputDir)\obj\$(ProjectName)\DerivedSources\HTMLNames.cpp"
 				>
 			</File>
@@ -541,6 +557,14 @@
 			</File>
 			<File
 				RelativePath="$(WebKitOutputDir)\obj\$(ProjectName)\DerivedSources\JSCharacterData.h"
+				>
+			</File>
+			<File
+				RelativePath="$(WebKitOutputDir)\obj\$(ProjectName)\DerivedSources\JSClientRect.h"
+				>
+			</File>
+			<File
+				RelativePath="$(WebKitOutputDir)\obj\$(ProjectName)\DerivedSources\JSClientRectList.h"
 				>
 			</File>
 			<File
@@ -613,14 +637,6 @@
 			</File>
 			<File
 				RelativePath="$(WebKitOutputDir)\obj\$(ProjectName)\DerivedSources\JSCSSVariablesDeclaration.h"
-				>
-			</File>
-			<File
-				RelativePath="$(WebKitOutputDir)\obj\$(ProjectName)\DerivedSources\JSClientRect.h"
-				>
-			</File>
-			<File
-				RelativePath="$(WebKitOutputDir)\obj\$(ProjectName)\DerivedSources\JSClientRectList.h"
 				>
 			</File>
 			<File
@@ -1789,6 +1805,10 @@
 			</File>
 			<File
 				RelativePath="$(WebKitOutputDir)\obj\$(ProjectName)\DerivedSources\kjs_navigator.lut.h"
+				>
+			</File>
+			<File
+				RelativePath="$(WebKitOutputDir)\obj\$(ProjectName)\DerivedSources\SVGElementFactory.cpp"
 				>
 			</File>
 			<File
@@ -8985,7 +9005,7 @@
 				RelativePath="..\rendering\RenderBox.h"
 				>
 			</File>
-                        <File
+			<File
 				RelativePath="..\rendering\RenderBoxModelObject.cpp"
 				>
 				<FileConfiguration
@@ -13078,22 +13098,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\html\HTMLElementFactory.cpp"
-				>
-				<FileConfiguration
-					Name="Release_PGO|Win32"
-					>
-					<Tool
-						Name="VCCLCompilerTool"
-						WholeProgramOptimization="true"
-					/>
-				</FileConfiguration>
-			</File>
-			<File
-				RelativePath="..\html\HTMLElementFactory.h"
-				>
-			</File>
-			<File
 				RelativePath="..\html\HTMLEmbedElement.cpp"
 				>
 				<FileConfiguration
@@ -16608,15 +16612,15 @@
 					RelativePath="..\inspector\front-end\DataGrid.js"
 					>
 				</File>
-                <File
-                    RelativePath="..\inspector\front-end\DOMStorage.js"
-                    >
-                </File>
-                <File
-                    RelativePath="..\inspector\front-end\DOMStorageItemsView.js"
-                    >
-                </File>
-                <File
+				<File
+					RelativePath="..\inspector\front-end\DOMStorage.js"
+					>
+				</File>
+				<File
+					RelativePath="..\inspector\front-end\DOMStorageItemsView.js"
+					>
+				</File>
+				<File
 					RelativePath="..\inspector\front-end\ElementsPanel.js"
 					>
 				</File>

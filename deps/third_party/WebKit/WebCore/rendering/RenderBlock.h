@@ -241,8 +241,8 @@ public:
     void calcInlinePrefWidths();
     void calcBlockPrefWidths();
 
-    virtual int getBaselineOfFirstLineBox() const;
-    virtual int getBaselineOfLastLineBox() const;
+    virtual int firstLineBoxBaseline() const;
+    virtual int lastLineBoxBaseline() const;
 
     RootInlineBox* firstRootBox() const { return static_cast<RootInlineBox*>(firstLineBox()); }
     RootInlineBox* lastRootBox() const { return static_cast<RootInlineBox*>(lastLineBox()); }
@@ -318,6 +318,10 @@ public:
     virtual IntRect localCaretRect(InlineBox*, int caretOffset, int* extraWidthToEndOfLine = 0);
 
     virtual void addFocusRingRects(GraphicsContext*, int tx, int ty);
+
+    // This function is a convenience helper for creating an anonymous block that inherits its
+    // style from this RenderBlock.
+    RenderBlock* createAnonymousBlock() const;
 
 private:
     void adjustPointToColumnContents(IntPoint&) const;

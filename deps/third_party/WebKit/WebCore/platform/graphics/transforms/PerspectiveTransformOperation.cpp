@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 Apple Inc.  All rights reserved.
+ * Copyright (C) 2009 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -10,7 +10,7 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE COMPUTER, INC. ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY APPLE INC. ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
  * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL APPLE COMPUTER, INC. OR
@@ -23,47 +23,43 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-#ifndef InspectorClient_h
-#define InspectorClient_h
+#include "config.h"
+#include "PerspectiveTransformOperation.h"
 
-#include "InspectorController.h"
+#if ENABLE(3D_TRANSFORMS)
+
+#include <algorithm>
+
+using namespace std;
 
 namespace WebCore {
 
-class Node;
-class Page;
-class String;
-
-class InspectorClient {
-public:
-    virtual ~InspectorClient() {  }
-
-    virtual void inspectorDestroyed() = 0;
-
-    virtual Page* createPage() = 0;
-
-    virtual String localizedStringsURL() = 0;
-
-    virtual String hiddenPanels() = 0;
-
-    virtual void showWindow() = 0;
-    virtual void closeWindow() = 0;
-
-    virtual void attachWindow() = 0;
-    virtual void detachWindow() = 0;
-
-    virtual void setAttachedWindowHeight(unsigned height) = 0;
-
-    virtual void highlight(Node*) = 0;
-    virtual void hideHighlight() = 0;
-
-    virtual void inspectedURLChanged(const String& newURL) = 0;
-
-    virtual void populateSetting(const String& key, InspectorController::Setting&) = 0;
-    virtual void storeSetting(const String& key, const InspectorController::Setting&) = 0;
-    virtual void removeSetting(const String& key) = 0;
-};
+PassRefPtr<TransformOperation> PerspectiveTransformOperation::blend(const TransformOperation* from, double progress, bool blendToIdentity)
+{
+    if (from && !from->isSameType(*this))
+        return this;
+    
+    if (blendToIdentity)
+        return PerspectiveTransformOperation::create(m_p + (1. - m_p) * progress);
+    
+    const PerspectiveTransformOperation* fromOp = static_cast<const PerspectiveTransformOperation*>(from);
+    double fromP = fromOp ? fromOp->m_p : 0;
+    double toP = m_p;
+    
+    if (blendToIdentity)
+        swap(fromP, toP);
+    
+    TransformationMatrix fromT;
+    TransformationMatrix toT;
+    fromT.applyPerspective(fromP);
+    toT.applyPerspective(toP);
+    toT.blend(fromT, progress);
+    TransformationMatrix::DecomposedType decomp;
+    toT.decompose(decomp);
+    
+    return PerspectiveTransformOperation::create(decomp.perspectiveZ ? -1.0 / decomp.perspectiveZ : 0.0);
+}
 
 } // namespace WebCore
 
-#endif // !defined(InspectorClient_h)
+#endif // ENABLE(3D_TRANSFORMS)

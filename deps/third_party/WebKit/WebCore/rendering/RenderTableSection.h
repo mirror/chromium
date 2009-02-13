@@ -56,7 +56,7 @@ public:
     virtual void addChild(RenderObject* child, RenderObject* beforeChild = 0);
     virtual void removeChild(RenderObject* oldChild);
 
-    virtual int getBaselineOfFirstLineBox() const;
+    virtual int firstLineBoxBaseline() const;
 
     void addCell(RenderTableCell*, RenderTableRow* row);
 
@@ -131,7 +131,6 @@ public:
 
 private:
     virtual int lineHeight(bool, bool) const { return 0; }
-    virtual void position(InlineBox*) { }
 
     bool ensureRows(int);
     void clearGrid();
