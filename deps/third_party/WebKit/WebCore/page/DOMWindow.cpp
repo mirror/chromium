@@ -486,7 +486,7 @@ void DOMWindow::stop()
     if (!m_frame)
         return;
 
-    // Ignores stop() in unload event handlers
+    // Ignores stop() in unload event handlers.  See bug 802075.
     if (m_frame->loader()->firingUnloadEvents())
         return;
 
@@ -497,13 +497,6 @@ void DOMWindow::stop()
 
 void DOMWindow::alert(const String& message)
 {
-#if USE(V8)
-    // Before showing the JavaScript dialog, we give
-    // the proxy implementation a chance to process any
-    // pending console messages.
-    V8Proxy::ProcessConsoleMessages();
-#endif
-
     if (!m_frame)
         return;
 
@@ -518,13 +511,6 @@ void DOMWindow::alert(const String& message)
 
 bool DOMWindow::confirm(const String& message)
 {
-#if USE(V8)
-    // Before showing the JavaScript dialog, we give
-    // the proxy implementation a chance to process any
-    // pending console messages.
-    V8Proxy::ProcessConsoleMessages();
-#endif
-
     if (!m_frame)
         return false;
 
@@ -539,13 +525,6 @@ bool DOMWindow::confirm(const String& message)
 
 String DOMWindow::prompt(const String& message, const String& defaultValue)
 {
-#if USE(V8)
-    // Before showing the JavaScript dialog, we give
-    // the proxy implementation a chance to process any
-    // pending console messages.
-    V8Proxy::ProcessConsoleMessages();
-#endif
-
     if (!m_frame)
         return String();
 
