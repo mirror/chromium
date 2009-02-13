@@ -556,7 +556,8 @@ class MasterFactory(object):
     factory_cmd_obj.AddCompileStep(self._solution, mode=mode,
                                    options=['--build-tool=scons',
                                             '--build-args=Hammer BROWSER=CHROME'])
-
+    # Add test step.
+    factory_cmd_obj.AddGearsTests(mode)
     return factory
 
   def NewReliabilityTestsFactory(self, identifier):

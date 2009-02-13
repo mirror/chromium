@@ -172,6 +172,10 @@ class FactoryCommands(object):
     # Valgrind isn't in the script_dir, it's out on its own.
     self._valgrind_tool = self.PathJoin('src', 'tools', 'valgrind',
                                         'chrome_tests.sh')
+    
+    # Gears test runner lives in the gears src tree.
+    self._gears_test_runner = self.PathJoin('src', 'gears', 'gears',
+                                            'test', 'runner', 'bootstrap.py')
 
     # These tools aren't in the script_dir either.
     # TODO(pamg): For consistency, move them into the script_dir if possible.
@@ -1015,6 +1019,14 @@ class FactoryCommands(object):
   def AddTestShellTests(self):
     """Adds a step to the factory to run the test_shell_tests."""
     self.AddBasicGTestTestStep('test_shell_tests')
+  
+  def AddGearsTests(self, mode):
+    """Adds a step to the factory to run the gears browser tests."""
+    command_list = [self._python, self._gears_test_runner,
+                    'chromium', mode or 'Debug']
+    browser_test_timeout = 120
+    self.AddTestStep(shell.ShellCommand, 'Gears browser tests',
+                                browser_test_timeout, command_list)
 
   #######
   # Crash handler command
