@@ -105,6 +105,7 @@ Valid options:
   --force             : force update even for unchanged modules
   --revision REV      : update/checkout all solutions with specified revision
   --revision SOLUTION@REV : update given solution to specified revision
+  --deps PLATFORM(S)  : sync deps for the given platform(s), or 'all'
   --verbose           : output additional diagnostics
 
 Examples:
@@ -760,18 +761,38 @@ class GClient(object):
       return {}
     deps = local_scope.get("deps", {})
 
-    # load os specific dependencies if defined.  these dependencies may override
-    # or extend the values defined by the 'deps' member.
+    # load os specific dependencies if defined.  these dependencies may
+    # override or extend the values defined by the 'deps' member.
     if "deps_os" in local_scope:
-      deps_os_key = {
+      deps_os_choices = {
           "win32": "win",
           "win": "win",
           "cygwin": "win",
           "darwin": "mac",
           "mac": "mac",
           "unix": "unix",
-      }.get(self._options.platform, "unix")
-      deps.update(local_scope["deps_os"].get(deps_os_key, {}))
+          "linux": "unix",
+          "linux2": "unix",
+         }
+
+      if self._options.deps_os is not None:
+        deps_to_include = self._options.deps_os.split(",")
+        if "all" in deps_to_include:
+          deps_to_include = deps_os_choices.values()
+      else:
+        deps_to_include = [deps_os_choices.get(self._options.platform, "unix")]
+
+      deps_to_include = set(deps_to_include)
+      for deps_os_key in deps_to_include:
+        os_deps = local_scope["deps_os"].get(deps_os_key, {})
+        if len(deps_to_include) > 1:
+          # Ignore any overrides when including deps for more than one
+          # platform, so we collect the broadest set of dependencies available.
+          # We may end up with the wrong revision of something for our
+          # platform, but this is the best we can do.
+          deps.update([x for x in os_deps.items() if not x[0] in deps])
+        else:
+          deps.update(os_deps)
 
     return deps
 
@@ -1064,6 +1085,11 @@ def Main(argv):
                                  "revision, can be used multiple times for "
                                  "each solution, e.g. --revision=src@123, "
                                  "--revision=internal@32"))
+  option_parser.add_option("", "--deps", default=None, dest="deps_os",
+                           metavar="OS_LIST",
+                           help=("(update/sync only) sync deps for the "
+                                 "specified (comma-separated) platform(s); "
+                                 "'all' will sync all platforms"))
   option_parser.add_option("", "--spec", default=None,
                            help=("(config only) create a gclient file "
                                  "containing the provided string"))
