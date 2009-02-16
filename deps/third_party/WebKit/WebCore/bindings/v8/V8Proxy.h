@@ -37,6 +37,13 @@
 
 namespace WebCore {
 
+    // Used by a bindings function to inform its interceptor that it's up to the
+    // interceptor to provide the result of this call.
+    inline static v8::Local<v8::Object> deferToInterceptor()
+    {
+        return v8::Local<v8::Object>();
+    }
+
     inline v8::Handle<v8::Primitive> throwError(const char* message, V8Proxy::ErrorType type = V8Proxy::TYPE_ERROR)
     {
         V8Proxy::ThrowError(type, message);

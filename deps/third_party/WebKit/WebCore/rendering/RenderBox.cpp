@@ -252,7 +252,7 @@ void RenderBox::updateBoxModelInfoFromStyle()
         }
     }
 
-    setHasTransform(style()->hasTransform());
+    setHasTransform(style()->hasTransformRelatedProperty());
     setHasReflection(style()->boxReflect());
 }
 
@@ -852,7 +852,7 @@ void RenderBox::paintCustomHighlight(int tx, int ty, const AtomicString& type, b
 
 #endif
 
-IntRect RenderBox::getOverflowClipRect(int tx, int ty)
+IntRect RenderBox::overflowClipRect(int tx, int ty)
 {
     // FIXME: When overflow-clip (CSS3) is implemented, we'll obtain the property
     // here.
@@ -874,7 +874,7 @@ IntRect RenderBox::getOverflowClipRect(int tx, int ty)
     return IntRect(clipX, clipY, clipWidth, clipHeight);
 }
 
-IntRect RenderBox::getClipRect(int tx, int ty)
+IntRect RenderBox::clipRect(int tx, int ty)
 {
     int clipX = tx;
     int clipY = ty;
@@ -902,11 +902,9 @@ IntRect RenderBox::getClipRect(int tx, int ty)
     return IntRect(clipX, clipY, clipWidth, clipHeight);
 }
 
-int RenderBox::containingBlockWidth() const
+int RenderBox::containingBlockWidthForContent() const
 {
     RenderBlock* cb = containingBlock();
-    if (!cb)
-        return 0;
     if (shrinkToAvoidFloats())
         return cb->lineWidth(y(), false);
     return cb->availableWidth();
@@ -1017,7 +1015,12 @@ IntSize RenderBox::offsetFromContainer(RenderObject* o) const
     return offset;
 }
 
-void RenderBox::dirtyLineBoxes(bool fullLayout, bool /*isRootLineBox*/)
+InlineBox* RenderBox::createInlineBox()
+{
+    return new (renderArena()) InlineBox(this);
+}
+
+void RenderBox::dirtyLineBoxes(bool fullLayout)
 {
     if (m_inlineBoxWrapper) {
         if (fullLayout) {
@@ -1225,7 +1228,7 @@ void RenderBox::calcWidth()
     Length w = (treatAsReplaced) ? Length(calcReplacedWidth(), Fixed) : style()->width();
 
     RenderBlock* cb = containingBlock();
-    int containerWidth = max(0, containingBlockWidth());
+    int containerWidth = max(0, containingBlockWidthForContent());
 
     Length marginLeft = style()->marginLeft();
     Length marginRight = style()->marginRight();
@@ -1556,7 +1559,7 @@ int RenderBox::calcReplacedWidthUsing(Length width) const
         case Fixed:
             return calcContentBoxWidth(width.value());
         case Percent: {
-            const int cw = isPositioned() ? containingBlockWidthForPositioned(toRenderBoxModelObject(container())) : containingBlockWidth();
+            const int cw = isPositioned() ? containingBlockWidthForPositioned(toRenderBoxModelObject(container())) : containingBlockWidthForContent();
             if (cw > 0)
                 return calcContentBoxWidth(width.calcMinValue(cw));
         }
@@ -2743,6 +2746,23 @@ VisiblePosition RenderBox::positionForCoordinates(int xPos, int yPos)
         return closestRenderer->positionForCoordinates(newX - closestRenderer->x(), newY - closestRenderer->y());
     
     return VisiblePosition(node(), 0, DOWNSTREAM);
+}
+
+bool RenderBox::shrinkToAvoidFloats() const
+{
+    // FIXME: Technically we should be able to shrink replaced elements on a line, but this is difficult to accomplish, since this
+    // involves doing a relayout during findNextLineBreak and somehow overriding the containingBlockWidth method to return the
+    // current remaining width on a line.
+    if (isInline() && !isHTMLMarquee() || !avoidsFloats())
+        return false;
+
+    // All auto-width objects that avoid floats should always use lineWidth.
+    return style()->width().isAuto();
+}
+
+bool RenderBox::avoidsFloats() const
+{
+    return isReplaced() || hasOverflowClip() || isHR();
 }
 
 #if ENABLE(SVG)

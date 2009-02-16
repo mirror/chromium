@@ -36,6 +36,7 @@ public:
     virtual ~RenderTextControl();
 
     virtual const char* renderName() const { return "RenderTextControl"; }
+    virtual bool isTextControl() const { return true; }
     virtual bool hasControlClip() const { return false; }
     virtual IntRect controlClipRect(int tx, int ty) const;
     virtual void calcHeight();
@@ -45,8 +46,8 @@ public:
     virtual bool canHaveChildren() const { return false; }
     virtual bool avoidsFloats() const { return true; }
     
-    virtual bool isEdited() const { return m_edited; }
-    virtual void setEdited(bool isEdited) { m_edited = isEdited; }
+    bool isEdited() const { return m_edited; }
+    void setEdited(bool isEdited) { m_edited = isEdited; }
 
     bool isUserEdited() const { return m_userEdited; }
     void setUserEdited(bool isUserEdited);
@@ -115,6 +116,21 @@ private:
     bool m_edited;
     bool m_userEdited;
 };
+
+inline RenderTextControl* toRenderTextControl(RenderObject* o)
+{ 
+    ASSERT(!o || o->isTextControl());
+    return static_cast<RenderTextControl*>(o);
+}
+
+inline const RenderTextControl* toRenderTextControl(const RenderObject* o)
+{ 
+    ASSERT(!o || o->isTextControl());
+    return static_cast<const RenderTextControl*>(o);
+}
+
+// This will catch anyone doing an unnecessary cast.
+void toRenderTextControl(const RenderTextControl*);
 
 } // namespace WebCore
 

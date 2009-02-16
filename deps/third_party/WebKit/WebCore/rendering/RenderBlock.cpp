@@ -387,24 +387,16 @@ void RenderBlock::deleteLineBoxTree()
     m_lineBoxes.deleteLineBoxTree(renderArena());
 }
 
-void RenderBlock::dirtyLineBoxes(bool fullLayout, bool isRootLineBox)
+RootInlineBox* RenderBlock::createRootBox()
 {
-    if (!isRootLineBox && isReplaced())
-        return RenderBox::dirtyLineBoxes(fullLayout, isRootLineBox);
-
-    if (fullLayout)
-        m_lineBoxes.deleteLineBoxes(renderArena());
-    else
-        m_lineBoxes.dirtyLineBoxes();
+    return new (renderArena()) RootInlineBox(this);
 }
 
-InlineBox* RenderBlock::createInlineBox(bool makePlaceHolderBox, bool isRootLineBox, bool /*isOnlyRun*/)
+RootInlineBox* RenderBlock::createRootInlineBox()
 {
-    if (!isRootLineBox && (isReplaced() || makePlaceHolderBox))                     // Inline tables and inline blocks
-        return RenderBox::createInlineBox(false, isRootLineBox);              // (or positioned element placeholders).
-    InlineFlowBox* flowBox = new (renderArena()) RootInlineBox(this);
-    m_lineBoxes.appendLineBox(flowBox);
-    return flowBox;
+    RootInlineBox* rootBox = createRootBox();
+    m_lineBoxes.appendLineBox(rootBox);
+    return rootBox;
 }
 
 void RenderBlock::makeChildrenNonInline(RenderObject *insertionPoint)
@@ -1129,7 +1121,7 @@ void RenderBlock::collapseMargins(RenderBox* child, MarginInfo& marginInfo, int 
             // So go ahead and mark the item as dirty.
             child->setChildNeedsLayout(true, false);
 
-        if (!child->avoidsFloats() && child->containsFloats())
+        if (!child->avoidsFloats() && child->isBlockFlow() && toRenderBlock(child)->containsFloats())
             toRenderBlock(child)->markAllDescendantsWithFloatsForLayout();
 
         // Our guess was wrong. Make the child lay itself out again.
@@ -1184,7 +1176,7 @@ void RenderBlock::clearFloatsIfNeeded(RenderBox* child, MarginInfo& marginInfo, 
         // change (because it has more available line width).
         // So go ahead and mark the item as dirty.
         child->setChildNeedsLayout(true, false);
-    if (!child->avoidsFloats() && child->containsFloats())
+    if (!child->avoidsFloats() && child->isBlockFlow() && toRenderBlock(child)->containsFloats())
         toRenderBlock(child)->markAllDescendantsWithFloatsForLayout();
     child->layoutIfNeeded();
 }
@@ -1394,7 +1386,7 @@ void RenderBlock::layoutBlockChildren(bool relayoutChildren, int& maxFloatBottom
         child->setLocation(child->x(), yPosEstimate);
 
         bool markDescendantsWithFloats = false;
-        if (yPosEstimate != oldRect.y() && !child->avoidsFloats() && child->containsFloats())
+        if (yPosEstimate != oldRect.y() && !child->avoidsFloats() && child->isBlockFlow() && toRenderBlock(child)->containsFloats())
             markDescendantsWithFloats = true;
         else if (!child->avoidsFloats() || child->shrinkToAvoidFloats()) {
             // If an element might be affected by the presence of floats, then always mark it for
@@ -1439,7 +1431,7 @@ void RenderBlock::layoutBlockChildren(bool relayoutChildren, int& maxFloatBottom
         }
         // If the child has overhanging floats that intrude into following siblings (or possibly out
         // of this block), then the parent gets notified of the floats now.
-        if (child->containsFloats())
+        if (child->isBlockFlow() && toRenderBlock(child)->containsFloats())
             maxFloatBottom = max(maxFloatBottom, addOverhangingFloats(toRenderBlock(child), -child->x(), -child->y(), !childNeededLayout));
 
         // Update our overflow in case the child spills out the block.
@@ -1669,8 +1661,8 @@ void RenderBlock::paintColumns(PaintInfo& paintInfo, int tx, int ty, bool painti
         if (renderRule && paintInfo.phase == PaintPhaseForeground && i < colCount - 1) {
             int ruleStart = ruleX - ruleWidth / 2 + ruleAdd;
             int ruleEnd = ruleStart + ruleWidth;
-            drawBorder(paintInfo.context, tx + ruleStart, ty + borderTop() + paddingTop(), tx + ruleEnd, ty + borderTop() + paddingTop() + contentHeight(),
-                       style()->direction() == LTR ? BSLeft : BSRight, ruleColor, style()->color(), ruleStyle, 0, 0);
+            drawLineForBoxSide(paintInfo.context, tx + ruleStart, ty + borderTop() + paddingTop(), tx + ruleEnd, ty + borderTop() + paddingTop() + contentHeight(),
+                               style()->direction() == LTR ? BSLeft : BSRight, ruleColor, style()->color(), ruleStyle, 0, 0);
         }
         
         ruleX = currXOffset;
@@ -2676,8 +2668,10 @@ int RenderBlock::lowestPosition(bool includeOverflowInterior, bool includeSelf) 
         // a tiny rel div buried somewhere deep in our child tree.  In this case we have to get to
         // the abs div.
         for (RenderObject* c = firstChild(); c; c = c->nextSibling()) {
-            if (!c->isFloatingOrPositioned() && !c->isText() && !c->isRenderInline())
-                bottom = max(bottom, toRenderBox(c)->y() + c->lowestPosition(false));
+            if (!c->isFloatingOrPositioned() && c->isBox()) {
+                RenderBox* childBox = toRenderBox(c);
+                bottom = max(bottom, childBox->y() + childBox->lowestPosition(false));
+            }
         }
     }
 
@@ -2749,8 +2743,10 @@ int RenderBlock::rightmostPosition(bool includeOverflowInterior, bool includeSel
         // a tiny rel div buried somewhere deep in our child tree.  In this case we have to get to
         // the abs div.
         for (RenderObject* c = firstChild(); c; c = c->nextSibling()) {
-            if (!c->isFloatingOrPositioned() && c->isBox() && !c->isRenderInline())
-                right = max(right, toRenderBox(c)->x() + c->rightmostPosition(false));
+            if (!c->isFloatingOrPositioned() && c->isBox()) {
+                RenderBox* childBox = toRenderBox(c);
+                right = max(right, childBox->x() + childBox->rightmostPosition(false));
+            }
         }
     }
 
@@ -2828,8 +2824,10 @@ int RenderBlock::leftmostPosition(bool includeOverflowInterior, bool includeSelf
         // a tiny rel div buried somewhere deep in our child tree.  In this case we have to get to
         // the abs div.
         for (RenderObject* c = firstChild(); c; c = c->nextSibling()) {
-            if (!c->isFloatingOrPositioned() && c->isBox() && !c->isRenderInline())
-                left = min(left, toRenderBox(c)->x() + c->leftmostPosition(false));
+            if (!c->isFloatingOrPositioned() && c->isBox()) {
+                RenderBox* childBox = toRenderBox(c);
+                left = min(left, childBox->x() + childBox->leftmostPosition(false));
+            }
         }
     }
 
@@ -2961,7 +2959,7 @@ void RenderBlock::clearFloats()
     // to avoid floats.
     bool parentHasFloats = false;
     RenderObject* prev = previousSibling();
-    while (prev && (!prev->isBox() || !prev->isRenderBlock() || prev->avoidsFloats() || prev->isFloatingOrPositioned())) {
+    while (prev && (prev->isFloatingOrPositioned() || !prev->isBox() || !prev->isRenderBlock() || toRenderBlock(prev)->avoidsFloats())) {
         if (prev->isFloating())
             parentHasFloats = true;
          prev = prev->previousSibling();
@@ -3164,9 +3162,11 @@ void RenderBlock::markAllDescendantsWithFloatsForLayout(RenderBox* floatToRemove
     // Iterate over our children and mark them as needed.
     if (!childrenInline()) {
         for (RenderObject* child = firstChild(); child; child = child->nextSibling()) {
-            if (child->isRenderBlock() && !child->isFloatingOrPositioned() &&
-                ((floatToRemove ? child->containsFloat(floatToRemove) : child->containsFloats()) || child->shrinkToAvoidFloats()))
-                toRenderBlock(child)->markAllDescendantsWithFloatsForLayout(floatToRemove, inLayout);
+            if (child->isFloatingOrPositioned() || !child->isRenderBlock())
+                continue;
+            RenderBlock* childBlock = toRenderBlock(child);
+            if ((floatToRemove ? childBlock->containsFloat(floatToRemove) : childBlock->containsFloats()) || childBlock->shrinkToAvoidFloats())
+                childBlock->markAllDescendantsWithFloatsForLayout(floatToRemove, inLayout);
         }
     }
 }
@@ -4227,7 +4227,7 @@ void RenderBlock::calcBlockPrefWidths()
             continue;
         }
 
-        if (child->isFloating() || child->avoidsFloats()) {
+        if (child->isFloating() || (child->isBox() && toRenderBox(child)->avoidsFloats())) {
             int floatTotalWidth = floatLeftWidth + floatRightWidth;
             if (child->style()->clear() & CLEFT) {
                 m_maxPrefWidth = max(floatTotalWidth, m_maxPrefWidth);
@@ -4261,7 +4261,7 @@ void RenderBlock::calcBlockPrefWidths()
         w = child->maxPrefWidth() + margin;
 
         if (!child->isFloating()) {
-            if (child->avoidsFloats()) {
+            if (child->isBox() && toRenderBox(child)->avoidsFloats()) {
                 // Determine a left and right max value based off whether or not the floats can fit in the
                 // margins of the object.  For negative margins, we will attempt to overlap the float if the negative margin
                 // is smaller than the float width.
@@ -4934,7 +4934,7 @@ IntRect RenderBlock::localCaretRect(InlineBox* inlineBox, int caretOffset, int* 
             // FIXME: why call localToAbsoluteForContent() twice here, too?
             FloatPoint absRightPoint = localToAbsolute(FloatPoint(myRight, 0));
 
-            int containerRight = containingBlock()->x() + containingBlockWidth();
+            int containerRight = containingBlock()->x() + containingBlockWidthForContent();
             FloatPoint absContainerPoint = localToAbsolute(FloatPoint(containerRight, 0));
 
             *extraWidthToEndOfLine = absContainerPoint.x() - absRightPoint.x();

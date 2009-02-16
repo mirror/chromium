@@ -468,7 +468,7 @@ int RenderInline::marginLeft() const
     if (margin.isFixed())
         return margin.value();
     if (margin.isPercent())
-        return margin.calcMinValue(max(0, containingBlockWidth()));
+        return margin.calcMinValue(max(0, containingBlock()->availableWidth()));
     return 0;
 }
 
@@ -480,7 +480,7 @@ int RenderInline::marginRight() const
     if (margin.isFixed())
         return margin.value();
     if (margin.isPercent())
-        return margin.calcMinValue(max(0, containingBlockWidth()));
+        return margin.calcMinValue(max(0, containingBlock()->availableWidth()));
     return 0;
 }
 
@@ -731,7 +731,7 @@ void RenderInline::updateHitTestResult(HitTestResult& result, const IntPoint& po
     }
 }
 
-void RenderInline::dirtyLineBoxes(bool fullLayout, bool)
+void RenderInline::dirtyLineBoxes(bool fullLayout)
 {
     if (fullLayout)
         m_lineBoxes.deleteLineBoxes(renderArena());
@@ -739,9 +739,14 @@ void RenderInline::dirtyLineBoxes(bool fullLayout, bool)
         m_lineBoxes.dirtyLineBoxes();
 }
 
-InlineBox* RenderInline::createInlineBox(bool, bool, bool)
+InlineFlowBox* RenderInline::createFlowBox()
 {
-    InlineFlowBox* flowBox = new (renderArena()) InlineFlowBox(this);
+    return new (renderArena()) InlineFlowBox(this);
+}
+
+InlineFlowBox* RenderInline::createInlineFlowBox()
+{
+    InlineFlowBox* flowBox = createFlowBox();
     m_lineBoxes.appendLineBox(flowBox);
     return flowBox;
 }
@@ -900,7 +905,7 @@ void RenderInline::paintOutlineForLine(GraphicsContext* graphicsContext, int tx,
     int r = tx + thisline.right() + offset;
     
     // left edge
-    drawBorder(graphicsContext,
+    drawLineForBoxSide(graphicsContext,
                l - ow,
                t - (lastline.isEmpty() || thisline.x() < lastline.x() || (lastline.right() - 1) <= thisline.x() ? ow : 0),
                l,
@@ -911,7 +916,7 @@ void RenderInline::paintOutlineForLine(GraphicsContext* graphicsContext, int tx,
                (nextline.isEmpty() || thisline.x() <= nextline.x() || (nextline.right() - 1) <= thisline.x() ? ow : -ow));
     
     // right edge
-    drawBorder(graphicsContext,
+    drawLineForBoxSide(graphicsContext,
                r,
                t - (lastline.isEmpty() || lastline.right() < thisline.right() || (thisline.right() - 1) <= lastline.x() ? ow : 0),
                r + ow,
@@ -922,7 +927,7 @@ void RenderInline::paintOutlineForLine(GraphicsContext* graphicsContext, int tx,
                (nextline.isEmpty() || nextline.right() <= thisline.right() || (thisline.right() - 1) <= nextline.x() ? ow : -ow));
     // upper edge
     if (thisline.x() < lastline.x())
-        drawBorder(graphicsContext,
+        drawLineForBoxSide(graphicsContext,
                    l - ow,
                    t - ow,
                    min(r+ow, (lastline.isEmpty() ? 1000000 : tx + lastline.x())),
@@ -932,7 +937,7 @@ void RenderInline::paintOutlineForLine(GraphicsContext* graphicsContext, int tx,
                    (!lastline.isEmpty() && tx + lastline.x() + 1 < r + ow) ? -ow : ow);
     
     if (lastline.right() < thisline.right())
-        drawBorder(graphicsContext,
+        drawLineForBoxSide(graphicsContext,
                    max(lastline.isEmpty() ? -1000000 : tx + lastline.right(), l - ow),
                    t - ow,
                    r + ow,
@@ -943,7 +948,7 @@ void RenderInline::paintOutlineForLine(GraphicsContext* graphicsContext, int tx,
     
     // lower edge
     if (thisline.x() < nextline.x())
-        drawBorder(graphicsContext,
+        drawLineForBoxSide(graphicsContext,
                    l - ow,
                    b,
                    min(r + ow, !nextline.isEmpty() ? tx + nextline.x() + 1 : 1000000),
@@ -953,7 +958,7 @@ void RenderInline::paintOutlineForLine(GraphicsContext* graphicsContext, int tx,
                    (!nextline.isEmpty() && tx + nextline.x() + 1 < r + ow) ? -ow : ow);
     
     if (nextline.right() < thisline.right())
-        drawBorder(graphicsContext,
+        drawLineForBoxSide(graphicsContext,
                    max(!nextline.isEmpty() ? tx + nextline.right() : -1000000, l - ow),
                    b,
                    r + ow,

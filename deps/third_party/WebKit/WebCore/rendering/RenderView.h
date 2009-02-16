@@ -63,8 +63,6 @@ public:
 
     FrameView* frameView() const { return m_frameView; }
 
-    virtual bool hasOverhangingFloats() { return false; }
-
     virtual void computeRectForRepaint(RenderBoxModelObject* repaintContainer, IntRect&, bool fixed = false);
     virtual void repaintViewRectangle(const IntRect&, bool immediate = false);
     // Repaint the view, and all composited layers that intersect the given absolute rectangle.
@@ -108,8 +106,8 @@ public:
     void setPrintRect(const IntRect& r) { m_printRect = r; }
 
     void updateWidgetPositions();
-    void addWidget(RenderObject*);
-    void removeWidget(RenderObject*);
+    void addWidget(RenderWidget*);
+    void removeWidget(RenderWidget*);
 
     // layoutDelta is used transiently during layout to store how far an object has moved from its
     // last layout location, in order to repaint correctly.
@@ -189,9 +187,9 @@ protected:
     int m_maximalOutlineSize; // Used to apply a fudge factor to dirty-rect checks on blocks/tables.
     IntRect m_printRect; // Used when printing.
 
-    typedef HashSet<RenderObject*> RenderObjectSet;
+    typedef HashSet<RenderWidget*> RenderWidgetSet;
 
-    RenderObjectSet m_widgets;
+    RenderWidgetSet m_widgets;
 
 private:
     int m_bestTruncatedAt;

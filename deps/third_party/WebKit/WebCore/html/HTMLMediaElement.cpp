@@ -85,6 +85,7 @@ HTMLMediaElement::HTMLMediaElement(const QualifiedName& tagName, Document* doc)
     , m_inActiveDocument(true)
     , m_player(0)
     , m_loadRestrictions(NoLoadRestriction)
+    , m_processingMediaPlayerCallback(0)
     , m_sendProgressEvents(true)
 {
     document()->registerForDocumentActivationCallbacks(this);
@@ -283,6 +284,7 @@ void HTMLMediaElement::load(ExceptionCode& ec)
     }
 
     String mediaSrc;
+    String mediaMIMEType;
 
     // 3.14.9.4. Loading the media resource
     // 1
@@ -331,7 +333,7 @@ void HTMLMediaElement::load(ExceptionCode& ec)
     }
     
     // 6
-    mediaSrc = pickMedia();
+    mediaSrc = selectMediaURL(mediaMIMEType);
     if (mediaSrc.isEmpty()) {
         ec = INVALID_STATE_ERR;
         goto end;
@@ -354,7 +356,7 @@ void HTMLMediaElement::load(ExceptionCode& ec)
     m_player.clear();
     m_player.set(new MediaPlayer(this));
     updateVolume();
-    m_player->load(m_currentSrc);
+    m_player->load(m_currentSrc, mediaMIMEType);
     if (m_loadNestingLevel < m_terminateLoadBelowNestingLevel)
         goto end;
     
@@ -375,14 +377,23 @@ end:
     m_loadNestingLevel--;
 }
 
+
 void HTMLMediaElement::mediaPlayerNetworkStateChanged(MediaPlayer*)
 {
-    if (!m_begun || m_networkState == EMPTY)
+    if (!m_begun)
+        return;
+    
+    beginProcessingMediaPlayerCallback();
+    setNetworkState(m_player->networkState());
+    endProcessingMediaPlayerCallback();
+}
+
+void HTMLMediaElement::setNetworkState(MediaPlayer::NetworkState state)
+{
+    if (m_networkState == EMPTY)
         return;
     
     m_terminateLoadBelowNestingLevel = m_loadNestingLevel;
-
-    MediaPlayer::NetworkState state = m_player->networkState();
     
     // 3.14.9.4. Loading the media resource
     // 14
@@ -462,8 +473,12 @@ void HTMLMediaElement::mediaPlayerNetworkStateChanged(MediaPlayer*)
 
 void HTMLMediaElement::mediaPlayerReadyStateChanged(MediaPlayer*)
 {
+    beginProcessingMediaPlayerCallback();
+
     MediaPlayer::ReadyState state = m_player->readyState();
     setReadyState((ReadyState)state);
+
+    endProcessingMediaPlayerCallback();
 }
 
 void HTMLMediaElement::setReadyState(ReadyState state)
@@ -783,6 +798,12 @@ void HTMLMediaElement::setCurrentLoop(unsigned currentLoop)
 
 bool HTMLMediaElement::controls() const
 {
+    Frame* frame = document()->frame();
+
+    // always show controls when scripting is disabled
+    if (frame && !frame->script()->isEnabled())
+        return true;
+
     return hasAttribute(controlsAttr);
 }
 
@@ -861,7 +882,7 @@ bool HTMLMediaElement::canPlay() const
     return paused() || ended() || networkState() < LOADED_METADATA;
 }
 
-String HTMLMediaElement::pickMedia()
+String HTMLMediaElement::selectMediaURL(String& mediaMIMEType)
 {
     // 3.14.9.2. Location of the media resource
     String mediaSrc = getAttribute(srcAttr);
@@ -879,14 +900,14 @@ String HTMLMediaElement::pickMedia()
                 }
                 if (source->hasAttribute(typeAttr)) {
                     String type = source->type().stripWhiteSpace();
+                    String codecs = MIMETypeRegistry::getParameterFromMIMEType(type, "codecs");
+                    String simpleType = MIMETypeRegistry::stripParametersFromMIMEType(type);
 
-                    // "type" can have parameters after a semi-colon, strip them before checking with the type registry
-                    int semi = type.find(';');
-                    if (semi != -1)
-                        type = type.left(semi).stripWhiteSpace();
-
-                    if (!MIMETypeRegistry::isSupportedMediaMIMEType(type))
+                    if (!MediaPlayer::supportsType(simpleType, codecs))
                         continue;
+
+                    // return type with all parameters in place so the media engine can use them
+                    mediaMIMEType = type;
                 }
                 mediaSrc = source->src().string();
                 break;
@@ -934,6 +955,8 @@ void HTMLMediaElement::checkIfSeekNeeded()
 
 void HTMLMediaElement::mediaPlayerTimeChanged(MediaPlayer*)
 {
+    beginProcessingMediaPlayerCallback();
+
     if (readyState() >= CAN_PLAY)
         m_seeking = false;
     
@@ -951,12 +974,23 @@ void HTMLMediaElement::mediaPlayerTimeChanged(MediaPlayer*)
     }
 
     updatePlayState();
+
+    endProcessingMediaPlayerCallback();
 }
 
 void HTMLMediaElement::mediaPlayerRepaint(MediaPlayer*)
 {
+    beginProcessingMediaPlayerCallback();
     if (renderer())
         renderer()->repaint();
+    endProcessingMediaPlayerCallback();
+}
+
+void HTMLMediaElement::mediaPlayerVolumeChanged(MediaPlayer*)
+{
+    beginProcessingMediaPlayerCallback();
+    updateVolume();
+    endProcessingMediaPlayerCallback();
 }
 
 PassRefPtr<TimeRanges> HTMLMediaElement::buffered() const
@@ -1024,10 +1058,13 @@ void HTMLMediaElement::updateVolume()
     if (!m_player)
         return;
 
-    Page* page = document()->page();
-    float volumeMultiplier = page ? page->mediaVolume() : 1;
-
-    m_player->setVolume(m_muted ? 0 : m_volume * volumeMultiplier);
+    // Avoid recursion when the player reports volume changes.
+    if (!processingMediaPlayerCallback()) {
+        Page* page = document()->page();
+        float volumeMultiplier = page ? page->mediaVolume() : 1;
+    
+        m_player->setVolume(m_muted ? 0 : m_volume * volumeMultiplier);
+    }
     
     if (renderer())
         renderer()->updateFromElement();

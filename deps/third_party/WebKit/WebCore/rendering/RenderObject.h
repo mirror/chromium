@@ -88,6 +88,15 @@ enum HitTestAction {
     HitTestForeground
 };
 
+// Sides used when drawing borders and outlines.  This is in RenderObject rather than RenderBoxModelObject since outlines can
+// be drawn by SVG around bounding boxes.
+enum BoxSide {
+    BSTop,
+    BSBottom,
+    BSLeft,
+    BSRight
+};
+
 #if ENABLE(DASHBOARD_SUPPORT)
 struct DashboardRegionValue {
     bool operator==(const DashboardRegionValue& o) const
@@ -165,14 +174,7 @@ public:
     // Convenience function for getting to the nearest enclosing box of a RenderObject.
     RenderBox* enclosingBox() const;
     
-    virtual IntRect getOverflowClipRect(int /*tx*/, int /*ty*/) { return IntRect(0, 0, 0, 0); }
-    virtual IntRect getClipRect(int /*tx*/, int /*ty*/) { return IntRect(0, 0, 0, 0); }
-    bool hasClip() { return isPositioned() && style()->hasClip(); }
-
     virtual bool isEmpty() const { return firstChild() == 0; }
-
-    virtual bool isEdited() const { return false; }
-    virtual void setEdited(bool) { }
 
 #ifndef NDEBUG
     void setHasAXObject(bool flag) { m_hasAXObject = flag; }
@@ -259,6 +261,7 @@ public:
     virtual bool isTableCol() const { return false; }
     virtual bool isTableRow() const { return false; }
     virtual bool isTableSection() const { return false; }
+    virtual bool isTextControl() const { return false; }
     virtual bool isTextArea() const { return false; }
     virtual bool isTextField() const { return false; }
     virtual bool isWidget() const { return false; }
@@ -289,8 +292,6 @@ public:
     virtual TransformationMatrix absoluteTransform() const;
 #endif
 
-    virtual bool isEditable() const;
-
     bool isAnonymous() const { return m_isAnonymous; }
     void setIsAnonymous(bool b) { m_isAnonymous = b; }
     bool isAnonymousBlock() const
@@ -312,7 +313,7 @@ public:
     
     bool hasBoxDecorations() const { return m_paintBackground; }
     bool mustRepaintBackgroundOrBorder() const;
-                                                              
+
     bool needsLayout() const { return m_needsLayout || m_normalChildNeedsLayout || m_posChildNeedsLayout || m_needsPositionedMovementLayout; }
     bool selfNeedsLayout() const { return m_needsLayout; }
     bool needsPositionedMovementLayout() const { return m_needsPositionedMovementLayout; }
@@ -324,12 +325,16 @@ public:
 
     bool isSelectionBorder() const;
 
+    bool hasClip() const { return isPositioned() && style()->hasClip(); }
     bool hasOverflowClip() const { return m_hasOverflowClip; }
-    virtual bool hasControlClip() const { return false; }
-    virtual IntRect controlClipRect(int /*tx*/, int /*ty*/) const { return IntRect(); }
 
     bool hasTransform() const { return m_hasTransform; }
     bool hasMask() const { return style() && style()->hasMask(); }
+
+    void drawLineForBoxSide(GraphicsContext*, int x1, int y1, int x2, int y2, BoxSide,
+                            Color, const Color& textcolor, EBorderStyle, int adjbw1, int adjbw2);
+    void drawArcForBoxSide(GraphicsContext*, int x, int y, float thickness, IntSize radius, int angleStart,
+                           int angleSpan, BoxSide, Color, const Color& textcolor, EBorderStyle, bool firstCorner);
 
 public:
     // The pseudo element style can be cached or uncached.  Use the cached method if the pseudo element doesn't respect
@@ -392,16 +397,6 @@ public:
     void updateFillImages(const FillLayer*, const FillLayer*);
     void updateImage(StyleImage*, StyleImage*);
 
-    virtual InlineBox* createInlineBox(bool makePlaceHolderBox, bool isRootLineBox, bool isOnlyRun = false);
-    virtual void dirtyLineBoxes(bool fullLayout, bool isRootLineBox = false);
-
-    // For inline replaced elements, this function returns the inline box that owns us.  Enables
-    // the replaced RenderObject to quickly determine what line it is contained on and to easily
-    // iterate over structures on the line.
-    virtual InlineBox* inlineBoxWrapper() const;
-    virtual void setInlineBoxWrapper(InlineBox*);
-    virtual void deleteLineBoxWrapper();
-
     // for discussion of lineHeight see CSS2 spec
     virtual int lineHeight(bool firstLine, bool isRootLineBox = false) const;
     // for the vertical-align property of inline elements
@@ -433,22 +428,6 @@ public:
     };
 
     virtual void paint(PaintInfo&, int tx, int ty);
-    void paintBorder(GraphicsContext*, int tx, int ty, int w, int h, const RenderStyle*, bool begin = true, bool end = true);
-    bool paintNinePieceImage(GraphicsContext*, int tx, int ty, int w, int h, const RenderStyle*, const NinePieceImage&, CompositeOperator = CompositeSourceOver);
-    void paintBoxShadow(GraphicsContext*, int tx, int ty, int w, int h, const RenderStyle*, bool begin = true, bool end = true);
-
-    // RenderBox implements this.
-    virtual void paintBoxDecorations(PaintInfo&, int /*tx*/, int /*ty*/) { }
-    virtual void paintMask(PaintInfo&, int /*tx*/, int /*ty*/) { }
-    virtual void paintFillLayerExtended(const PaintInfo&, const Color&, const FillLayer*,
-                                        int /*clipY*/, int /*clipH*/, int /*tx*/, int /*ty*/, int /*width*/, int /*height*/,
-                                        InlineFlowBox* = 0, CompositeOperator = CompositeSourceOver) { }
-
-    /*
-     * Calculates the actual width of the object (only for non inline
-     * objects)
-     */
-    virtual void calcWidth() { }
 
     // Recursive function that computes the size and position of this object and all its descendants.
     virtual void layout();
@@ -463,8 +442,6 @@ public:
     // used for element state updates that cannot be fixed with a
     // repaint and do not need a relayout
     virtual void updateFromElement() { }
-
-    virtual void updateWidgetPosition();
 
 #if ENABLE(DASHBOARD_SUPPORT)
     virtual void addDashboardRegions(Vector<DashboardRegionValue>&);
@@ -494,17 +471,6 @@ public:
 
     // returns the containing block level element for this element.
     RenderBlock* containingBlock() const;
-
-    // return just the width of the containing block
-    virtual int containingBlockWidth() const;
-    // return just the height of the containing block
-    virtual int containingBlockHeight() const;
-
-    // used by flexible boxes to impose a flexed width/height override
-    virtual int overrideSize() const { return 0; }
-    virtual int overrideWidth() const { return 0; }
-    virtual int overrideHeight() const { return 0; }
-    virtual void setOverrideSize(int /*overrideSize*/) { }
 
     // Convert the given local point to absolute coordinates
     // FIXME: Temporary. If useTransforms is true, take transforms into account. Eventually localToAbsolute() will always be transform-aware.
@@ -548,18 +514,6 @@ public:
     
     void getTextDecorationColors(int decorations, Color& underline, Color& overline,
                                  Color& linethrough, bool quirksMode = false);
-
-    enum BorderSide {
-        BSTop,
-        BSBottom,
-        BSLeft,
-        BSRight
-    };
-
-    void drawBorderArc(GraphicsContext*, int x, int y, float thickness, IntSize radius, int angleStart,
-                       int angleSpan, BorderSide, Color, const Color& textcolor, EBorderStyle, bool firstCorner);
-    void drawBorder(GraphicsContext*, int x1, int y1, int x2, int y2, BorderSide,
-                    Color, const Color& textcolor, EBorderStyle, int adjbw1, int adjbw2);
 
     // Return the RenderBox in the container chain which is responsible for painting this object, or 0
     // if painting is root-relative. This is the container that should be passed to the 'forRepaint'
@@ -609,12 +563,6 @@ public:
     virtual unsigned int length() const { return 1; }
 
     bool isFloatingOrPositioned() const { return (isFloating() || isPositioned()); }
-    virtual bool containsFloats() { return false; }
-    virtual bool containsFloat(RenderObject*) { return false; }
-    virtual bool hasOverhangingFloats() { return false; }
-
-    virtual bool avoidsFloats() const;
-    bool shrinkToAvoidFloats() const;
 
     bool isTransparent() const { return style()->opacity() < 1.0f; }
     float opacity() const { return style()->opacity(); }
@@ -669,10 +617,6 @@ public:
      * useful for character range rect computations
      */
     virtual IntRect localCaretRect(InlineBox*, int caretOffset, int* extraWidthToEndOfLine = 0);
-
-    virtual int lowestPosition(bool /*includeOverflowInterior*/ = true, bool /*includeSelf*/ = true) const { return 0; }
-    virtual int rightmostPosition(bool /*includeOverflowInterior*/ = true, bool /*includeSelf*/ = true) const { return 0; }
-    virtual int leftmostPosition(bool /*includeOverflowInterior*/ = true, bool /*includeSelf*/ = true) const { return 0; }
 
     virtual void calcVerticalMargins() { }
     bool isTopMarginQuirk() const { return m_topMarginQuirk; }
@@ -740,8 +684,6 @@ protected:
     virtual void styleWillChange(StyleDifference, const RenderStyle* newStyle);
     // Overrides should call the superclass at the start
     virtual void styleDidChange(StyleDifference, const RenderStyle* oldStyle);
-    
-    virtual void printBoxDecorations(GraphicsContext*, int /*x*/, int /*y*/, int /*w*/, int /*h*/, int /*tx*/, int /*ty*/) { }
 
     void paintOutline(GraphicsContext*, int tx, int ty, int w, int h, const RenderStyle*);
     void addPDFURLRect(GraphicsContext*, const IntRect&);
@@ -909,7 +851,7 @@ inline bool objectIsRelayoutBoundary(const RenderObject *obj)
     // FIXME: In future it may be possible to broaden this condition in order to improve performance.
     // Table cells are excluded because even when their CSS height is fixed, their height()
     // may depend on their contents.
-    return obj->isTextField() || obj->isTextArea()
+    return obj->isTextControl()
         || obj->hasOverflowClip() && !obj->style()->width().isIntrinsicOrAuto() && !obj->style()->height().isIntrinsicOrAuto() && !obj->style()->height().isPercent() && !obj->isTableCell()
 #if ENABLE(SVG)
            || obj->isSVGRoot()

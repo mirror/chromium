@@ -646,6 +646,9 @@ void GraphicsContext::drawLineForText(const IntPoint& pt,
     if (paintingDisabled())
         return;
 
+    if (width <= 0)
+        return;
+
     int thickness = SkMax32(static_cast<int>(strokeThickness()), 1);
     SkRect r;
     r.fLeft = SkIntToScalar(pt.x());
@@ -654,7 +657,9 @@ void GraphicsContext::drawLineForText(const IntPoint& pt,
     r.fBottom = r.fTop + SkIntToScalar(thickness);
 
     SkPaint paint;
-    paint.setColor(strokeColor().rgb());
+    platformContext()->setupPaintForFilling(&paint);
+    // Text lines are drawn using the stroke color.
+    paint.setColor(platformContext()->effectiveStrokeColor());
     platformContext()->canvas()->drawRect(r, paint);
 }
 

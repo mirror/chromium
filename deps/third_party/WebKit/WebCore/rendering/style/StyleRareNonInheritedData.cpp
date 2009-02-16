@@ -42,10 +42,18 @@ StyleRareNonInheritedData::StyleRareNonInheritedData()
     , matchNearestMailBlockquoteColor(RenderStyle::initialMatchNearestMailBlockquoteColor())
     , m_appearance(RenderStyle::initialAppearance())
     , m_borderFit(RenderStyle::initialBorderFit())
+#if USE(ACCELERATED_COMPOSITING)
+    , m_runningAcceleratedAnimation(false)
+#endif
     , m_boxShadow(0)
     , m_animations(0)
     , m_transitions(0)
     , m_mask(FillLayer(MaskFillLayer))
+    , m_transformStyle3D(RenderStyle::initialTransformStyle3D())
+    , m_backfaceVisibility(RenderStyle::initialBackfaceVisibility())
+    , m_perspective(RenderStyle::initialPerspective())
+    , m_perspectiveOriginX(RenderStyle::initialPerspectiveOriginX())
+    , m_perspectiveOriginY(RenderStyle::initialPerspectiveOriginY())
 #if ENABLE(XBL)
     , bindingURI(0)
 #endif
@@ -69,12 +77,20 @@ StyleRareNonInheritedData::StyleRareNonInheritedData(const StyleRareNonInherited
     , matchNearestMailBlockquoteColor(o.matchNearestMailBlockquoteColor)
     , m_appearance(o.m_appearance)
     , m_borderFit(o.m_borderFit)
+#if USE(ACCELERATED_COMPOSITING)
+    , m_runningAcceleratedAnimation(o.m_runningAcceleratedAnimation)
+#endif
     , m_boxShadow(o.m_boxShadow ? new ShadowData(*o.m_boxShadow) : 0)
     , m_boxReflect(o.m_boxReflect)
     , m_animations(o.m_animations ? new AnimationList(*o.m_animations) : 0)
     , m_transitions(o.m_transitions ? new AnimationList(*o.m_transitions) : 0)
     , m_mask(o.m_mask)
     , m_maskBoxImage(o.m_maskBoxImage)
+    , m_transformStyle3D(o.m_transformStyle3D)
+    , m_backfaceVisibility(o.m_backfaceVisibility)
+    , m_perspective(o.m_perspective)
+    , m_perspectiveOriginX(o.m_perspectiveOriginX)
+    , m_perspectiveOriginY(o.m_perspectiveOriginY)
 #if ENABLE(XBL)
     , bindingURI(o.bindingURI ? o.bindingURI->copy() : 0)
 #endif
@@ -117,6 +133,9 @@ bool StyleRareNonInheritedData::operator==(const StyleRareNonInheritedData& o) c
         && matchNearestMailBlockquoteColor == o.matchNearestMailBlockquoteColor
         && m_appearance == o.m_appearance
         && m_borderFit == o.m_borderFit
+#if USE(ACCELERATED_COMPOSITING)
+        && !m_runningAcceleratedAnimation && !o.m_runningAcceleratedAnimation
+#endif
         && shadowDataEquivalent(o)
         && reflectionDataEquivalent(o)
         && animationDataEquivalent(o)
@@ -126,6 +145,11 @@ bool StyleRareNonInheritedData::operator==(const StyleRareNonInheritedData& o) c
 #if ENABLE(XBL)
         && bindingsEquivalent(o)
 #endif
+        && (m_transformStyle3D == o.m_transformStyle3D)
+        && (m_backfaceVisibility == o.m_backfaceVisibility)
+        && (m_perspective == o.m_perspective)
+        && (m_perspectiveOriginX == o.m_perspectiveOriginX)
+        && (m_perspectiveOriginY == o.m_perspectiveOriginY)
         ;
 }
 

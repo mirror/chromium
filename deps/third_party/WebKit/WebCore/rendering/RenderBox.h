@@ -156,9 +156,9 @@ public:
     virtual int minPrefWidth() const;
     virtual int maxPrefWidth() const;
 
-    virtual int overrideSize() const;
-    virtual int overrideWidth() const;
-    virtual int overrideHeight() const;
+    int overrideSize() const;
+    int overrideWidth() const;
+    int overrideHeight() const;
     virtual void setOverrideSize(int);
 
     virtual IntSize offsetFromContainer(RenderObject*) const;
@@ -178,14 +178,15 @@ public:
 
     void positionLineBox(InlineBox*);
 
-    virtual void dirtyLineBoxes(bool fullLayout, bool isRootLineBox = false);
+    InlineBox* createInlineBox();
+    void dirtyLineBoxes(bool fullLayout);
 
     // For inline replaced elements, this function returns the inline box that owns us.  Enables
     // the replaced RenderObject to quickly determine what line it is contained on and to easily
     // iterate over structures on the line.
-    virtual InlineBox* inlineBoxWrapper() const { return m_inlineBoxWrapper; }
-    virtual void setInlineBoxWrapper(InlineBox* boxWrapper) { m_inlineBoxWrapper = boxWrapper; }
-    virtual void deleteLineBoxWrapper();
+    InlineBox* inlineBoxWrapper() const { return m_inlineBoxWrapper; }
+    void setInlineBoxWrapper(InlineBox* boxWrapper) { m_inlineBoxWrapper = boxWrapper; }
+    void deleteLineBoxWrapper();
 
     virtual int lowestPosition(bool includeOverflowInterior = true, bool includeSelf = true) const;
     virtual int rightmostPosition(bool includeOverflowInterior = true, bool includeSelf = true) const;
@@ -196,7 +197,7 @@ public:
 
     virtual void repaintDuringLayoutIfMoved(const IntRect&);
 
-    virtual int containingBlockWidth() const;
+    virtual int containingBlockWidthForContent() const;
 
     virtual void calcWidth();
     virtual void calcHeight();
@@ -245,8 +246,10 @@ public:
     
     virtual IntRect localCaretRect(InlineBox*, int caretOffset, int* extraWidthToEndOfLine = 0);
 
-    virtual IntRect getOverflowClipRect(int tx, int ty);
-    virtual IntRect getClipRect(int tx, int ty);
+    virtual IntRect overflowClipRect(int tx, int ty);
+    IntRect clipRect(int tx, int ty);
+    virtual bool hasControlClip() const { return false; }
+    virtual IntRect controlClipRect(int /*tx*/, int /*ty*/) const { return IntRect(); }
 
     virtual void paintBoxDecorations(PaintInfo&, int tx, int ty);
     virtual void paintMask(PaintInfo& paintInfo, int tx, int ty);
@@ -273,6 +276,9 @@ public:
     
     virtual int firstLineBoxBaseline() const { return -1; }
     virtual int lastLineBoxBaseline() const { return -1; }
+
+    bool shrinkToAvoidFloats() const;
+    virtual bool avoidsFloats() const;
 
 #if ENABLE(SVG)
     virtual TransformationMatrix localTransform() const;

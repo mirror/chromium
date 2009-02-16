@@ -43,13 +43,11 @@ public:
         ROTATE_Z = ROTATE,
         SKEW_X, SKEW_Y, SKEW, 
         MATRIX,
-#if ENABLE(3D_TRANSFORMS)
         SCALE_Z, SCALE_3D,
         TRANSLATE_Z, TRANSLATE_3D,
         ROTATE_X, ROTATE_Y, ROTATE_3D,
         MATRIX_3D,
         PERSPECTIVE,
-#endif
         IDENTITY, NONE
     };
 
@@ -68,7 +66,6 @@ public:
     virtual OperationType getOperationType() const = 0;
     virtual bool isSameType(const TransformOperation&) const { return false; }
     
-#if ENABLE(3D_TRANSFORMS)
     bool is3DOperation() const
     {
         OperationType opType = getOperationType();
@@ -82,7 +79,6 @@ public:
                opType == MATRIX_3D ||
                opType == PERSPECTIVE;
     }
-#endif
 };
 
 } // namespace WebCore

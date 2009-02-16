@@ -39,7 +39,6 @@
 #include "MediaControlElements.h"
 #include "MouseEvent.h"
 #include "MediaPlayer.h"
-#include "RenderSlider.h"
 #include <wtf/CurrentTime.h>
 #include <wtf/MathExtras.h>
 
@@ -428,8 +427,10 @@ void RenderMedia::forwardEvent(Event* event)
             updateControlVisibility();
         }
         if (event->type() == eventNames().mouseoutEvent) {
-            // FIXME: moving over scrollbar thumb generates mouseout for the ancestor media element for some reason
-            m_mouseOver = absoluteBoundingBoxRect().contains(point);
+            // When the scrollbar thumb captures mouse events, we should treat the mouse as still being over our renderer if the new target is a descendant
+            Node* mouseOverNode = mouseEvent->relatedTarget() ? mouseEvent->relatedTarget()->toNode() : 0;
+            RenderObject* mouseOverRenderer = mouseOverNode ? mouseOverNode->renderer() : 0;
+            m_mouseOver = mouseOverRenderer && mouseOverRenderer->isDescendantOf(this);
             updateControlVisibility();
         }
     }
@@ -441,7 +442,7 @@ int RenderMedia::lowestPosition(bool includeOverflowInterior, bool includeSelf) 
     if (!m_controlsShadowRoot || !m_controlsShadowRoot->renderer())
         return bottom;
     
-    return max(bottom,  m_controlsShadowRoot->renderBox()->y() + m_controlsShadowRoot->renderer()->lowestPosition(includeOverflowInterior, includeSelf));
+    return max(bottom,  m_controlsShadowRoot->renderBox()->y() + m_controlsShadowRoot->renderBox()->lowestPosition(includeOverflowInterior, includeSelf));
 }
 
 int RenderMedia::rightmostPosition(bool includeOverflowInterior, bool includeSelf) const
@@ -450,7 +451,7 @@ int RenderMedia::rightmostPosition(bool includeOverflowInterior, bool includeSel
     if (!m_controlsShadowRoot || !m_controlsShadowRoot->renderer())
         return right;
     
-    return max(right, m_controlsShadowRoot->renderBox()->x() + m_controlsShadowRoot->renderer()->rightmostPosition(includeOverflowInterior, includeSelf));
+    return max(right, m_controlsShadowRoot->renderBox()->x() + m_controlsShadowRoot->renderBox()->rightmostPosition(includeOverflowInterior, includeSelf));
 }
 
 int RenderMedia::leftmostPosition(bool includeOverflowInterior, bool includeSelf) const
@@ -459,7 +460,7 @@ int RenderMedia::leftmostPosition(bool includeOverflowInterior, bool includeSelf
     if (!m_controlsShadowRoot || !m_controlsShadowRoot->renderer())
         return left;
     
-    return min(left, m_controlsShadowRoot->renderBox()->x() +  m_controlsShadowRoot->renderer()->leftmostPosition(includeOverflowInterior, includeSelf));
+    return min(left, m_controlsShadowRoot->renderBox()->x() +  m_controlsShadowRoot->renderBox()->leftmostPosition(includeOverflowInterior, includeSelf));
 }
 
 } // namespace WebCore

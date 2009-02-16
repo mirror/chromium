@@ -1,3 +1,387 @@
+2009-02-13  Adam Treat  <adam.treat@torchmobile.com>
+
+        Reviewed by George Staikos.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23960
+        Crash Fix.
+
+        Don't depend on 'initializeThreading()' to come before a call to 'isMainThread()'
+        as QtWebKit only calls 'initializeThreading()' during QWebPage construction.
+
+        A client app may well make a call to QWebSettings::iconForUrl() for instance
+        before creating a QWebPage and that call to QWebSettings triggers an
+        ASSERT(isMainThread()) deep within WebCore.
+
+        * wtf/ThreadingQt.cpp:
+        (WTF::isMainThread):
+
+2009-02-13  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Darin Adler.
+
+        Some data in the instruction stream is potentially uninitialized - fix this.
+
+        Change the OperandTypes constructor so that uninitialized memory in the int
+        is zeroed, and modify the Instruction constructor taking an Opcode so that
+        if !HAVE(COMPUTED_GOTO) (i.e. when Opcode is an enum, and is potentially only
+        a byte) it zeros the Instruction first before writing the opcode.
+
+        * bytecode/Instruction.h:
+        (JSC::Instruction::Instruction):
+        * parser/ResultType.h:
+        (JSC::OperandTypes::OperandTypes):
+
+2009-02-13  Geoffrey Garen  <ggaren@apple.com>
+
+        Build fix for non_JIT platforms.
+
+        * bytecode/CodeBlock.h:
+        (JSC::CodeBlock::setIsNumericCompareFunction):
+        (JSC::CodeBlock::isNumericCompareFunction):
+
+2009-02-13  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Darin Adler.
+        
+        Fixed <rdar://problem/6584057> Optimize sort by JS numeric comparison
+        function not to run the comparison function
+        
+        * bytecode/CodeBlock.cpp:
+        (JSC::CodeBlock::CodeBlock):
+        * bytecode/CodeBlock.h:
+        (JSC::CodeBlock::setIsNumericCompareFunction):
+        (JSC::CodeBlock::isNumericCompareFunction): Added the ability to track
+        whether a CodeBlock performs a sort-like numeric comparison.
+
+        * bytecompiler/BytecodeGenerator.cpp:
+        (JSC::BytecodeGenerator::generate): Set the isNumericCompareFunction bit
+        after compiling.
+
+        * parser/Nodes.cpp:
+        (JSC::FunctionBodyNode::emitBytecode): Fixed a bug that caused us to
+        codegen an extra return at the end of all functions (eek!), since this
+        made it harder / weirder to detect the numeric comparison pattern in
+        bytecode.
+
+        * runtime/ArrayPrototype.cpp:
+        (JSC::arrayProtoFuncSort): Use the isNumericCompareFunction bit to do
+        a faster sort if we can.
+
+        * runtime/FunctionConstructor.cpp:
+        (JSC::extractFunctionBody):
+        (JSC::constructFunction):
+        * runtime/FunctionConstructor.h: Renamed and exported extractFunctionBody for
+        use in initializing lazyNumericCompareFunction.
+
+        * runtime/JSArray.cpp:
+        (JSC::compareNumbersForQSort):
+        (JSC::compareByStringPairForQSort):
+        (JSC::JSArray::sortNumeric):
+        (JSC::JSArray::sort):
+        * runtime/JSArray.h: Added a fast numeric sort. Renamed ArrayQSortPair
+        to be more specific since we do different kinds of qsort now.
+
+        * runtime/JSGlobalData.cpp:
+        (JSC::JSGlobalData::JSGlobalData):
+        (JSC::JSGlobalData::numericCompareFunction):
+        (JSC::JSGlobalData::ClientData::~ClientData):
+        * runtime/JSGlobalData.h: Added helper data for computing the
+        isNumericCompareFunction bit.
+
+2009-02-13  Darin Adler  <darin@apple.com>
+
+        * Configurations/JavaScriptCore.xcconfig: Undo accidental commit of this file.
+
+2009-02-12  Darin Adler  <darin@apple.com>
+
+        Reviewed by Oliver Hunt and Alexey Proskuryakov.
+
+        Speed up a couple string functions.
+
+        * runtime/StringPrototype.cpp:
+        (JSC::stringProtoFuncIndexOf): Added a fast path for cases where the second
+        argument is either missing or an integer.
+        (JSC::stringProtoFuncBig): Use jsNontrivialString since the string is guaranteed
+        to be 2 or more characters long.
+        (JSC::stringProtoFuncSmall): Ditto.
+        (JSC::stringProtoFuncBlink): Ditto.
+        (JSC::stringProtoFuncBold): Ditto.
+        (JSC::stringProtoFuncItalics): Ditto.
+        (JSC::stringProtoFuncStrike): Ditto.
+        (JSC::stringProtoFuncSub): Ditto.
+        (JSC::stringProtoFuncSup): Ditto.
+        (JSC::stringProtoFuncFontcolor): Ditto.
+        (JSC::stringProtoFuncFontsize): Make the fast path Sam recently added even faster
+        by avoiding all but the minimum memory allocation.
+        (JSC::stringProtoFuncAnchor): Use jsNontrivialString.
+        (JSC::stringProtoFuncLink): Added a fast path.
+
+        * runtime/UString.cpp:
+        (JSC::UString::find): Added a fast path for single-character search strings.
+
+2009-02-13  David Levin  <levin@chromium.org>
+
+        Reviewed by Darin Adler.
+
+        Bug 23926: Race condition in callOnMainThreadAndWait
+        <https://bugs.webkit.org/show_bug.cgi?id=23926>
+
+        * wtf/MainThread.cpp:
+        Removed callOnMainThreadAndWait since it isn't used.
+
+2009-02-13  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by Jon Honeycutt.
+
+        Math.random is really slow on windows.
+
+        Math.random calls WTF::randomNumber which is implemented as
+        the secure rand_s on windows.  Unfortunately rand_s is an order
+        of magnitude slower than arc4random.  For this reason I've
+        added "weakRandomNumber" for use by JavaScript's Math Object.
+        In the long term we should look at using our own secure PRNG
+        in place of the system, but this will do for now.
+
+        30% win on SunSpider on Windows, resolving most of the remaining
+        disparity vs. Mac.
+
+        * runtime/MathObject.cpp:
+        (JSC::MathObject::MathObject):
+        (JSC::mathProtoFuncRandom):
+        * wtf/RandomNumber.cpp:
+        (WTF::weakRandomNumber):
+        (WTF::randomNumber):
+        * wtf/RandomNumber.h:
+        * wtf/RandomNumberSeed.h:
+        (WTF::initializeWeakRandomNumberGenerator):
+
+2009-02-12  Mark Rowe  <mrowe@apple.com>
+
+        Fix the build for other platforms.
+
+        * wtf/RandomNumber.cpp:
+        (WTF::randomNumber):
+
+2009-02-12  Gavin Barraclough  <barraclough@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Remove (/reduce) use of hard-wired register names from the JIT.
+        Currently there is no abstraction of registers used in the JIT,
+        which has a number of negative consequences.  Hard-wiring x86
+        register names makes the JIT less portable to other platforms,
+        and prevents us from performing dynamic register allocation to
+        attempt to maintain more temporary values in machine registers.
+        (The latter will be more important on x86-64, where we have more
+        registers to make use of).
+
+        Also, remove MacroAssembler::mod32.  This was not providing a
+        useful abstraction, and was not in keeping with the rest of the
+        MacroAssembler interface, in having specific register requirements.
+
+        * assembler/MacroAssemblerX86Common.h:
+        * jit/JIT.cpp:
+        (JSC::JIT::compileOpStrictEq):
+        (JSC::JIT::emitSlowScriptCheck):
+        (JSC::JIT::privateCompileMainPass):
+        (JSC::JIT::privateCompileSlowCases):
+        (JSC::JIT::privateCompile):
+        (JSC::JIT::privateCompileCTIMachineTrampolines):
+        * jit/JIT.h:
+        * jit/JITArithmetic.cpp:
+        (JSC::JIT::compileFastArith_op_lshift):
+        (JSC::JIT::compileFastArithSlow_op_lshift):
+        (JSC::JIT::compileFastArith_op_rshift):
+        (JSC::JIT::compileFastArithSlow_op_rshift):
+        (JSC::JIT::compileFastArith_op_bitand):
+        (JSC::JIT::compileFastArithSlow_op_bitand):
+        (JSC::JIT::compileFastArith_op_mod):
+        (JSC::JIT::compileFastArithSlow_op_mod):
+        (JSC::JIT::compileFastArith_op_post_inc):
+        (JSC::JIT::compileFastArithSlow_op_post_inc):
+        (JSC::JIT::compileFastArith_op_post_dec):
+        (JSC::JIT::compileFastArithSlow_op_post_dec):
+        (JSC::JIT::compileFastArith_op_pre_inc):
+        (JSC::JIT::compileFastArithSlow_op_pre_inc):
+        (JSC::JIT::compileFastArith_op_pre_dec):
+        (JSC::JIT::compileFastArithSlow_op_pre_dec):
+        (JSC::JIT::compileFastArith_op_add):
+        (JSC::JIT::compileFastArith_op_mul):
+        (JSC::JIT::compileFastArith_op_sub):
+        (JSC::JIT::compileBinaryArithOp):
+        * jit/JITCall.cpp:
+        (JSC::JIT::compileOpCallInitializeCallFrame):
+        (JSC::JIT::compileOpCallSetupArgs):
+        (JSC::JIT::compileOpCallEvalSetupArgs):
+        (JSC::JIT::compileOpConstructSetupArgs):
+        (JSC::JIT::compileOpCall):
+        (JSC::JIT::compileOpCallSlowCase):
+        * jit/JITInlineMethods.h:
+        (JSC::JIT::emitGetVirtualRegister):
+        (JSC::JIT::emitPutVirtualRegister):
+        (JSC::JIT::emitNakedCall):
+        (JSC::JIT::restoreArgumentReference):
+        (JSC::JIT::restoreArgumentReferenceForTrampoline):
+        * jit/JITPropertyAccess.cpp:
+        (JSC::JIT::compileGetByIdHotPath):
+        (JSC::JIT::compilePutByIdHotPath):
+        (JSC::JIT::compileGetByIdSlowCase):
+        (JSC::JIT::compilePutByIdSlowCase):
+        (JSC::JIT::privateCompilePutByIdTransition):
+        (JSC::JIT::privateCompilePatchGetArrayLength):
+        (JSC::JIT::privateCompileGetByIdSelf):
+        (JSC::JIT::privateCompileGetByIdProto):
+        (JSC::JIT::privateCompileGetByIdSelfList):
+        (JSC::JIT::privateCompileGetByIdProtoList):
+        (JSC::JIT::privateCompileGetByIdChainList):
+        (JSC::JIT::privateCompileGetByIdChain):
+        (JSC::JIT::privateCompilePutByIdReplace):
+
+2009-02-12  Horia Olaru  <olaru@adobe.com>
+
+        Reviewed by Oliver Hunt.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23400
+
+        When throwing an exception within an eval argument string, the dst parameter was
+        modified in the functions below and the return value for eval was altered. Changed
+        the emitNode call in JSC::ThrowNode::emitBytecode to use a temporary register
+        to store its results instead of dst. The JSC::FunctionCallResolveNode::emitBytecode
+        would load the function within the dst registry, also altering the result returned
+        by eval. Replaced it with another temporary.
+
+        * parser/Nodes.cpp:
+        (JSC::FunctionCallResolveNode::emitBytecode):
+        (JSC::ThrowNode::emitBytecode):
+
+2009-02-12  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey Garen.
+
+        Speed up String.prototype.fontsize.
+
+        * runtime/StringPrototype.cpp:
+        (JSC::stringProtoFuncFontsize): Specialize for defined/commonly used values.
+
+2009-02-12  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Correctness fix.
+
+        * wtf/RandomNumber.cpp:
+        (WTF::randomNumber): Divide by the maximum representable value, which
+        is different on each platform now, to get values between 0 and 1.
+
+2009-02-12  Geoffrey Garen  <ggaren@apple.com>
+
+        Build fix.
+
+        * wtf/RandomNumber.cpp:
+        (WTF::randomNumber):
+
+2009-02-12  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Fixed <rdar://problem/6582048>.
+
+        * wtf/RandomNumber.cpp:
+        (WTF::randomNumber): Make only one call to the random number generator
+        on platforms where the generator is cryptographically secure. The value
+        of randomness over and above cryptographically secure randomness is not
+        clear, and it caused some performance problems.
+
+2009-02-12  Adam Roben  <aroben@apple.com>
+
+        Fix lots of Perl warnings when building JavaScriptCoreGenerated on
+        Windows
+
+        Reviewed by John Sullivan.
+
+        * JavaScriptCore.vcproj/JavaScriptCore/build-generated-files.sh:
+        Create the docs/ directory so that we can write bytecode.html into it.
+        This matches what JavaScriptCore.xcodeproj does.
+
+2009-02-12  Simon Hausmann  <simon.hausmann@nokia.com>
+
+        Rubber-stamped by Lars.
+
+        Re-enable the JIT in the Qt build with -fno-stack-protector on Linux.
+
+        * JavaScriptCore.pri:
+
+2009-02-11  Dmitry Titov  <dimich@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23705
+        Fix the UI freeze caused by Worker generating a flood of messages.
+        Measure time we spend in executing posted work items. If too much time is spent
+        without returning to the run loop, exit and reschedule.
+
+        * wtf/MainThread.h:
+        Added initializeMainThreadPlatform() to initialize low-level mechanism for posting
+        work items from thread to thread. This removes #ifdefs for WIN and CHROMIUM from platform-independent code.
+
+        * wtf/MainThread.cpp:
+        (WTF::initializeMainThread):
+        (WTF::dispatchFunctionsFromMainThread):
+        Instead of dispatching all work items in the queue, dispatch them one by one
+        and measure elapsed time. After a threshold, reschedule and quit.
+
+        (WTF::callOnMainThread):
+        (WTF::callOnMainThreadAndWait):
+        Only schedule dispatch if the queue was empty - to avoid many posted messages in the run loop queue.
+
+        * wtf/mac/MainThreadMac.mm:
+        (WTF::scheduleDispatchFunctionsOnMainThread):
+        Use static instance of the mainThreadCaller instead of allocating and releasing it each time.
+        (WTF::initializeMainThreadPlatform):
+        * wtf/gtk/MainThreadChromium.cpp:
+        (WTF::initializeMainThreadPlatform):
+        * wtf/gtk/MainThreadGtk.cpp:
+        (WTF::initializeMainThreadPlatform):
+        * wtf/qt/MainThreadQt.cpp:
+        (WTF::initializeMainThreadPlatform):
+        * wtf/win/MainThreadWin.cpp:
+        (WTF::initializeMainThreadPlatform):
+        * wtf/wx/MainThreadWx.cpp:
+        (WTF::initializeMainThreadPlatform):
+
+2009-02-11  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Gavin Barraclough.
+
+        Style cleanup.
+
+        * assembler/AbstractMacroAssembler.h:
+        (JSC::AbstractMacroAssembler::CodeLocationCommon::CodeLocationCommon):
+        (JSC::AbstractMacroAssembler::CodeLocationCommon::operator bool):
+        (JSC::AbstractMacroAssembler::CodeLocationCommon::reset):
+        (JSC::AbstractMacroAssembler::CodeLocationLabel::addressForSwitch):
+        (JSC::AbstractMacroAssembler::CodeLocationLabel::addressForExceptionHandler):
+        (JSC::AbstractMacroAssembler::CodeLocationLabel::addressForJSR):
+        (JSC::AbstractMacroAssembler::CodeLocationLabel::getJumpDestination):
+        (JSC::AbstractMacroAssembler::CodeLocationJump::relink):
+        (JSC::AbstractMacroAssembler::CodeLocationJump::CodeLocationJump):
+        (JSC::AbstractMacroAssembler::CodeLocationCall::relink):
+        (JSC::AbstractMacroAssembler::CodeLocationCall::calleeReturnAddressValue):
+        (JSC::AbstractMacroAssembler::CodeLocationCall::CodeLocationCall):
+        (JSC::AbstractMacroAssembler::CodeLocationDataLabel32::repatch):
+        (JSC::AbstractMacroAssembler::CodeLocationDataLabel32::CodeLocationDataLabel32):
+        (JSC::AbstractMacroAssembler::CodeLocationDataLabelPtr::repatch):
+        (JSC::AbstractMacroAssembler::CodeLocationDataLabelPtr::CodeLocationDataLabelPtr):
+        (JSC::AbstractMacroAssembler::ProcessorReturnAddress::ProcessorReturnAddress):
+        (JSC::AbstractMacroAssembler::ProcessorReturnAddress::relinkCallerToFunction):
+        (JSC::AbstractMacroAssembler::ProcessorReturnAddress::operator void*):
+        (JSC::AbstractMacroAssembler::PatchBuffer::link):
+        (JSC::::CodeLocationCommon::labelAtOffset):
+        (JSC::::CodeLocationCommon::jumpAtOffset):
+        (JSC::::CodeLocationCommon::callAtOffset):
+        (JSC::::CodeLocationCommon::dataLabelPtrAtOffset):
+        (JSC::::CodeLocationCommon::dataLabel32AtOffset):
+
 2009-02-04  Gavin Barraclough  <barraclough@apple.com>
 
         Reviewed by Oliver 'the nun' Hunt.

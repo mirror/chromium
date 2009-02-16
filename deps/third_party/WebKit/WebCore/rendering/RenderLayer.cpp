@@ -328,7 +328,7 @@ void RenderLayer::updateTransform()
         RenderBox* box = renderBox();
         ASSERT(box);
         m_transform->makeIdentity();
-        box->style()->applyTransform(*m_transform, box->borderBoxRect().size());
+        box->style()->applyTransform(*m_transform, box->borderBoxRect().size(), RenderStyle::IncludeTransformOrigin);
     }
 }
 
@@ -498,6 +498,34 @@ void RenderLayer::updateLayerPosition()
                 setHeight(box->overflowHeight());
         }
     }
+}
+
+TransformationMatrix RenderLayer::perspectiveTransform() const
+{
+    if (!renderer()->hasTransform())
+        return TransformationMatrix();
+
+    RenderStyle* style = renderer()->style();
+    if (!style->perspective())
+        return TransformationMatrix();
+
+    // Maybe fetch the perspective from the backing?
+    const IntRect borderBox = toRenderBox(renderer())->borderBoxRect();
+    const float boxWidth = borderBox.width();
+    const float boxHeight = borderBox.height();
+
+    float perspectiveOriginX = style->perspectiveOriginX().calcFloatValue(boxWidth);
+    float perspectiveOriginY = style->perspectiveOriginY().calcFloatValue(boxHeight);
+
+    perspectiveOriginX -= boxWidth / 2.0f;
+    perspectiveOriginY -= boxHeight / 2.0f;
+    
+    TransformationMatrix t;
+    t.translate(perspectiveOriginX, perspectiveOriginY);
+    t.applyPerspective(style->perspective());
+    t.translate(-perspectiveOriginX, -perspectiveOriginY);
+    
+    return t;
 }
 
 RenderLayer *RenderLayer::stackingContext() const
@@ -1456,7 +1484,7 @@ void RenderLayer::computeScrollDimensions(bool* needHBar, bool* needVBar)
     int rightPos = ltr ?
                     box->rightmostPosition(true, false) - box->borderLeft() :
                     clientWidth - m_scrollLeftOverflow;
-    int bottomPos = renderer()->lowestPosition(true, false) - box->borderTop();
+    int bottomPos = box->lowestPosition(true, false) - box->borderTop();
 
     m_scrollWidth = max(rightPos, clientWidth);
     m_scrollHeight = max(bottomPos, clientHeight);
@@ -2233,13 +2261,13 @@ void RenderLayer::calculateClipRects(const RenderLayer* rootLayer, ClipRects& cl
         }
         
         if (renderer()->hasOverflowClip()) {
-            IntRect newOverflowClip = renderer()->getOverflowClipRect(x,y);
+            IntRect newOverflowClip = toRenderBox(renderer())->overflowClipRect(x,y);
             clipRects.setOverflowClipRect(intersection(newOverflowClip, clipRects.overflowClipRect()));
             if (renderer()->isPositioned() || renderer()->isRelPositioned())
                 clipRects.setPosClipRect(intersection(newOverflowClip, clipRects.posClipRect()));
         }
         if (renderer()->hasClip()) {
-            IntRect newPosClip = renderer()->getClipRect(x,y);
+            IntRect newPosClip = toRenderBox(renderer())->clipRect(x,y);
             clipRects.setPosClipRect(intersection(newPosClip, clipRects.posClipRect()));
             clipRects.setOverflowClipRect(intersection(newPosClip, clipRects.overflowClipRect()));
             clipRects.setFixedClipRect(intersection(newPosClip, clipRects.fixedClipRect()));
@@ -2283,10 +2311,10 @@ void RenderLayer::calculateRects(const RenderLayer* rootLayer, const IntRect& pa
     if (renderer()->hasOverflowClip() || renderer()->hasClip()) {
         // This layer establishes a clip of some kind.
         if (renderer()->hasOverflowClip())
-            foregroundRect.intersect(renderer()->getOverflowClipRect(x,y));
+            foregroundRect.intersect(toRenderBox(renderer())->overflowClipRect(x,y));
         if (renderer()->hasClip()) {
             // Clip applies to *us* as well, so go ahead and update the damageRect.
-            IntRect newPosClip = renderer()->getClipRect(x,y);
+            IntRect newPosClip = toRenderBox(renderer())->clipRect(x,y);
             backgroundRect.intersect(newPosClip);
             foregroundRect.intersect(newPosClip);
             outlineRect.intersect(newPosClip);

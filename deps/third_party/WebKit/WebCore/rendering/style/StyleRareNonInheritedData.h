@@ -30,6 +30,7 @@
 #include "DataRef.h"
 #include "FillLayer.h"
 #include "NinePieceImage.h"
+#include "StyleTransformData.h"
 #include <wtf/OwnPtr.h>
 #include <wtf/PassRefPtr.h>
 #include <wtf/Vector.h>
@@ -97,6 +98,9 @@ public:
     unsigned matchNearestMailBlockquoteColor : 1; // EMatchNearestMailBlockquoteColor, FIXME: This property needs to be eliminated. It should never have been added.
     unsigned m_appearance : 6; // EAppearance
     unsigned m_borderFit : 1; // EBorderFit
+#if USE(ACCELERATED_COMPOSITING)
+    bool m_runningAcceleratedAnimation : 1;
+#endif    
     OwnPtr<ShadowData> m_boxShadow;  // For box-shadow decorations.
     
     RefPtr<StyleReflection> m_boxReflect;
@@ -106,6 +110,12 @@ public:
 
     FillLayer m_mask;
     NinePieceImage m_maskBoxImage;
+
+    ETransformStyle3D m_transformStyle3D;
+    EBackfaceVisibility m_backfaceVisibility;
+    float m_perspective;
+    Length m_perspectiveOriginX;
+    Length m_perspectiveOriginY;
 
 #if ENABLE(XBL)
     OwnPtr<BindingURI> bindingURI; // The XBL binding URI list.

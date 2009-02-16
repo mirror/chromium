@@ -640,7 +640,7 @@ RegisterID* FunctionCallResolveNode::emitBytecode(BytecodeGenerator& generator, 
         return generator.emitCall(generator.finalDestination(dst, func.get()), func.get(), thisRegister.get(), m_args.get(), divot(), startOffset(), endOffset());
     }
 
-    RefPtr<RegisterID> func = generator.tempDestination(dst);
+    RefPtr<RegisterID> func = generator.newTemporary();
     RefPtr<RegisterID> thisRegister = generator.newTemporary();
     int identifierStart = divot() - startOffset();
     generator.emitExpressionInfo(identifierStart + m_ident.size(), m_ident.size(), 0);
@@ -2293,10 +2293,10 @@ RegisterID* ThrowNode::emitBytecode(BytecodeGenerator& generator, RegisterID* ds
 {
     if (dst == generator.ignoredResult())
         dst = 0;
-    RefPtr<RegisterID> expr = generator.emitNode(dst, m_expr.get());
+    RefPtr<RegisterID> expr = generator.emitNode(m_expr.get());
     generator.emitExpressionInfo(divot(), startOffset(), endOffset());
     generator.emitThrow(expr.get());
-    return dst;
+    return 0;
 }
 
 // ------------------------------ TryNode --------------------------------------
@@ -2648,11 +2648,15 @@ RegisterID* FunctionBodyNode::emitBytecode(BytecodeGenerator& generator, Registe
 {
     generator.emitDebugHook(DidEnterCallFrame, firstLine(), lastLine());
     statementListEmitCode(children(), generator, generator.ignoredResult());
-    if (!children().size() || !children().last()->isReturnNode()) {
-        RegisterID* r0 = generator.emitLoad(0, jsUndefined());
-        generator.emitDebugHook(WillLeaveCallFrame, firstLine(), lastLine());
-        generator.emitReturn(r0);
+    if (children().size() && children().last()->isBlock()) {
+        BlockNode* blockNode = static_cast<BlockNode*>(children().last().get());
+        if (blockNode->children().size() && blockNode->children().last()->isReturnNode())
+            return 0;
     }
+
+    RegisterID* r0 = generator.emitLoad(0, jsUndefined());
+    generator.emitDebugHook(WillLeaveCallFrame, firstLine(), lastLine());
+    generator.emitReturn(r0);
     return 0;
 }
 

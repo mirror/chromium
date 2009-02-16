@@ -138,7 +138,13 @@ public:
     // Returns the current path in local coordinates.
     SkPath currentPath() const;
 
-    SkColor fillColor() const;
+    // Returns the fill color. The returned color has it's alpha adjusted
+    // by the current alpha.
+    SkColor effectiveFillColor() const;
+
+    // Returns the stroke color. The returned color has it's alpha adjusted
+    // by the current alpha.
+    SkColor effectiveStrokeColor() const;
 
     skia::PlatformCanvas* canvas() { return m_canvas; }
 

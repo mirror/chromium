@@ -78,7 +78,7 @@ void RenderLayerBacking::createGraphicsLayer()
         m_graphicsLayer->setName("Document Node");
     else {
         if (renderer()->node()->isHTMLElement() && renderer()->node()->hasID())
-            m_graphicsLayer->setName(renderer()->renderName() + String(" ") + static_cast<HTMLElement*>(renderer()->element())->id());
+            m_graphicsLayer->setName(renderer()->renderName() + String(" ") + static_cast<HTMLElement*>(renderer()->node())->id());
         else
             m_graphicsLayer->setName(renderer()->renderName());
     }
@@ -149,6 +149,10 @@ bool RenderLayerBacking::updateGraphicsLayers(bool needsContentsLayer, bool need
     if (!renderer()->animation()->isAnimatingPropertyOnRenderer(renderer(), CSSPropertyOpacity))
         updateLayerOpacity();
     
+    RenderStyle* style = renderer()->style();
+    m_graphicsLayer->setPreserves3D(style->transformStyle3D() == TransformStyle3DPreserve3D);
+    m_graphicsLayer->setBackfaceVisibility(style->backfaceVisibility() == BackfaceVisibilityVisible);
+
     updateGraphicsLayerGeometry();
     
     m_graphicsLayer->updateContentsRect();
@@ -193,7 +197,7 @@ void RenderLayerBacking::updateGraphicsLayerGeometry()
     if (compAncestor && compAncestor->backing()->hasClippingLayer()) {
         // If the compositing ancestor has a layer to clip children, we parent in that, and therefore
         // position relative to it.
-        graphicsLayerParentLocation = compAncestor->renderer()->getOverflowClipRect(0, 0).location();
+        graphicsLayerParentLocation = toRenderBox(compAncestor->renderer())->overflowClipRect(0, 0).location();
     } else
         graphicsLayerParentLocation = ancestorCompositingBounds.location();
     
@@ -231,7 +235,7 @@ void RenderLayerBacking::updateGraphicsLayerGeometry()
 
     // If we have a layer that clips children, position it.
     if (m_clippingLayer) {
-        IntRect clippingBox = renderer()->getOverflowClipRect(0, 0);
+        IntRect clippingBox = toRenderBox(renderer())->overflowClipRect(0, 0);
         m_clippingLayer->setPosition(FloatPoint() + (clippingBox.location() - localCompositingBounds.location()));
         m_clippingLayer->setSize(clippingBox.size());
         m_clippingLayer->setOffsetFromRenderer(clippingBox.location() - IntPoint());
@@ -240,11 +244,11 @@ void RenderLayerBacking::updateGraphicsLayerGeometry()
     if (m_owningLayer->hasTransform()) {
         const IntRect borderBox = toRenderBox(renderer())->borderBoxRect();
 
-        IntRect layerBounds = IntRect(m_owningLayer->xPos(), m_owningLayer->yPos(), borderBox.width(), borderBox.height());
+        IntRect layerBounds = IntRect(m_owningLayer->x(), m_owningLayer->y(), borderBox.width(), borderBox.height());
         // Convert to absolute coords to match bbox.
         int x = 0, y = 0;
         m_owningLayer->convertToLayerCoords(compAncestor, x, y);
-        layerBounds.move(x - m_owningLayer->xPos(), y - m_owningLayer->yPos());
+        layerBounds.move(x - m_owningLayer->x(), y - m_owningLayer->y());
 
         // Update properties that depend on layer dimensions
         FloatPoint3D transformOrigin = computeTransformOrigin(borderBox);
@@ -253,6 +257,31 @@ void RenderLayerBacking::updateGraphicsLayerGeometry()
                             relativeCompositingBounds.height() != 0.0f ? ((layerBounds.y() - relativeCompositingBounds.y()) + transformOrigin.y()) / relativeCompositingBounds.height() : 0.5f,
                             transformOrigin.z());
         m_graphicsLayer->setAnchorPoint(anchor);
+
+        RenderStyle* style = renderer()->style();
+        if (style->perspective() > 0) {
+            FloatPoint perspectiveOrigin = computePerspectiveOrigin(borderBox);
+            
+            float xOffset = perspectiveOrigin.x() - (float)borderBox.width() / 2.0f;
+            float yOffset = perspectiveOrigin.y() - (float)borderBox.height() / 2.0f;
+
+            TransformationMatrix t;
+            t.translate(xOffset, yOffset);
+            t.applyPerspective(style->perspective());
+            t.translate(-xOffset, -yOffset);
+            
+            if (m_clippingLayer) {
+                m_clippingLayer->setChildrenTransform(t);
+                m_graphicsLayer->setChildrenTransform(TransformationMatrix());
+            }
+            else
+                m_graphicsLayer->setChildrenTransform(t);
+        } else {
+            if (m_clippingLayer)
+                m_clippingLayer->setChildrenTransform(TransformationMatrix());
+            else
+                m_graphicsLayer->setChildrenTransform(TransformationMatrix());
+        }
     } else {
         m_graphicsLayer->setAnchorPoint(FloatPoint3D(0.5f, 0.5f, 0));
     }
@@ -568,13 +597,28 @@ void RenderLayerBacking::forceCompositingLayer(bool force)
     m_forceCompositingLayer = force;
 }
 
-FloatPoint RenderLayerBacking::computeTransformOrigin(const IntRect& borderBox) const
+FloatPoint3D RenderLayerBacking::computeTransformOrigin(const IntRect& borderBox) const
 {
     RenderStyle* style = renderer()->style();
 
-    FloatPoint origin;
+    FloatPoint3D origin;
     origin.setX(style->transformOriginX().calcFloatValue(borderBox.width()));
     origin.setY(style->transformOriginY().calcFloatValue(borderBox.height()));
+    origin.setZ(style->transformOriginZ());
+
+    return origin;
+}
+
+FloatPoint RenderLayerBacking::computePerspectiveOrigin(const IntRect& borderBox) const
+{
+    RenderStyle* style = renderer()->style();
+
+    float boxWidth = borderBox.width();
+    float boxHeight = borderBox.height();
+
+    FloatPoint origin;
+    origin.setX(style->perspectiveOriginX().calcFloatValue(boxWidth));
+    origin.setY(style->perspectiveOriginY().calcFloatValue(boxHeight));
 
     return origin;
 }
@@ -679,8 +723,8 @@ void RenderLayerBacking::paintIntoLayer(RenderLayer* rootLayer, GraphicsContext*
     
     int x = layerBounds.x();        // layerBounds is computed relative to rootLayer
     int y = layerBounds.y();
-    int tx = x - toRenderBox(renderer())->x();
-    int ty = y - toRenderBox(renderer())->y();
+    int tx = x - m_owningLayer->renderBoxX();
+    int ty = y - m_owningLayer->renderBoxY();
 
     // If this layer's renderer is a child of the paintingRoot, we render unconditionally, which
     // is done by passing a nil paintingRoot down to our renderer (as if no paintingRoot was ever set).

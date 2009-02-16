@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007, 2008 Apple Inc. All rights reserved.
+ * Copyright (C) 2007, 2008, 2009 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -65,6 +65,7 @@ SOFT_LINK_CLASS(QTKit, QTMovieView)
 
 SOFT_LINK_POINTER(QTKit, QTMediaTypeAttribute, NSString *)
 SOFT_LINK_POINTER(QTKit, QTMediaTypeBase, NSString *)
+SOFT_LINK_POINTER(QTKit, QTMediaTypeMPEG, NSString *)
 SOFT_LINK_POINTER(QTKit, QTMediaTypeSound, NSString *)
 SOFT_LINK_POINTER(QTKit, QTMediaTypeText, NSString *)
 SOFT_LINK_POINTER(QTKit, QTMediaTypeVideo, NSString *)
@@ -91,6 +92,7 @@ SOFT_LINK_POINTER(QTKit, QTVideoRendererWebKitOnlyNewImageAvailableNotification,
 
 #define QTMediaTypeAttribute getQTMediaTypeAttribute()
 #define QTMediaTypeBase getQTMediaTypeBase()
+#define QTMediaTypeMPEG getQTMediaTypeMPEG()
 #define QTMediaTypeSound getQTMediaTypeSound()
 #define QTMediaTypeText getQTMediaTypeText()
 #define QTMediaTypeVideo getQTMediaTypeVideo()
@@ -156,6 +158,18 @@ static const float endPointTimerInterval = 0.020f;
 #ifdef BUILDING_ON_TIGER
 static const long minimumQuickTimeVersion = 0x07300000; // 7.3
 #endif
+
+
+MediaPlayerPrivateInterface* MediaPlayerPrivate::create(MediaPlayer* player) 
+{ 
+    return new MediaPlayerPrivate(player);
+}
+
+void MediaPlayerPrivate::registerMediaEngine(MediaEngineRegistrar registrar)
+{
+    if (isAvailable())
+        registrar(create, getSupportedTypes, supportsType);
+}
 
 MediaPlayerPrivate::MediaPlayerPrivate(MediaPlayer* player)
     : m_player(player)
@@ -279,7 +293,7 @@ void MediaPlayerPrivate::createQTMovieView()
 
     m_qtMovieView.adoptNS([[QTMovieView alloc] init]);
     setRect(m_player->rect());
-    NSView* parentView = m_player->m_frameView->documentView();
+    NSView* parentView = m_player->frameView()->documentView();
     [parentView addSubview:m_qtMovieView.get()];
 #ifdef BUILDING_ON_TIGER
     // setDelegate: isn't a public call in Tiger, so use performSelector to keep the compiler happy
@@ -352,7 +366,7 @@ void MediaPlayerPrivate::destroyQTVideoRenderer()
 
 void MediaPlayerPrivate::setUpVideoRendering()
 {
-    if (!m_player->m_frameView || !m_qtMovie)
+    if (!m_player->frameView() || !m_qtMovie)
         return;
 
     if (m_player->inMediaDocument() || !QTVideoRendererClass() )
@@ -787,7 +801,7 @@ void MediaPlayerPrivate::paint(GraphicsContext* context, const IntRect& r)
 #if DRAW_FRAME_RATE
     // Draw the frame rate only after having played more than 10 frames.
     if (m_frameCountWhilePlaying > 10) {
-        Frame* frame = m_player->m_frameView ? m_player->m_frameView->frame() : NULL;
+        Frame* frame = m_player->frameView() ? m_player->frameView()->frame() : NULL;
         Document* document = frame ? frame->document() : NULL;
         RenderObject* renderer = document ? document->renderer() : NULL;
         RenderStyle* styleToUse = renderer ? renderer->style() : NULL;
@@ -813,22 +827,42 @@ void MediaPlayerPrivate::paint(GraphicsContext* context, const IntRect& r)
     [m_objcObserver.get() setDelayCallbacks:NO];
 }
 
+static HashSet<String> mimeTypeCache()
+{
+    DEFINE_STATIC_LOCAL(HashSet<String>, cache, ());
+    static bool typeListInitialized = false;
+
+    if (!typeListInitialized) {
+        NSArray* fileTypes = [QTMovie movieFileTypes:QTIncludeCommonTypes];
+        int count = [fileTypes count];
+        for (int n = 0; n < count; n++) {
+            CFStringRef ext = reinterpret_cast<CFStringRef>([fileTypes objectAtIndex:n]);
+            RetainPtr<CFStringRef> uti(AdoptCF, UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, ext, NULL));
+            if (!uti)
+                continue;
+            RetainPtr<CFStringRef> mime(AdoptCF, UTTypeCopyPreferredTagWithClass(uti.get(), kUTTagClassMIMEType));
+            if (!mime)
+                continue;
+            cache.add(mime.get());
+        }
+        typeListInitialized = true;
+    }
+    
+    return cache;
+} 
+
 void MediaPlayerPrivate::getSupportedTypes(HashSet<String>& types)
 {
-    NSArray* fileTypes = [QTMovie movieFileTypes:QTIncludeCommonTypes];
-    int count = [fileTypes count];
-    for (int n = 0; n < count; n++) {
-        CFStringRef ext = reinterpret_cast<CFStringRef>([fileTypes objectAtIndex:n]);
-        RetainPtr<CFStringRef> uti(AdoptCF, UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension, ext, NULL));
-        if (!uti)
-            continue;
-        RetainPtr<CFStringRef> mime(AdoptCF, UTTypeCopyPreferredTagWithClass(uti.get(), kUTTagClassMIMEType));
-        if (!mime)
-            continue;
-        types.add(mime.get());
-    }
+    types = mimeTypeCache();
 } 
-    
+
+MediaPlayer::SupportsType MediaPlayerPrivate::supportsType(const String& type, const String& codecs)
+{
+    // only return "IsSupported" if there is no codecs parameter for now as there is no way to ask QT if it supports an
+    //  extended MIME type yet
+    return mimeTypeCache().contains(type) ? (codecs && !codecs.isEmpty() ? MediaPlayer::MayBeSupported : MediaPlayer::IsSupported) : MediaPlayer::IsNotSupported;
+}
+
 bool MediaPlayerPrivate::isAvailable()
 {
 #ifdef BUILDING_ON_TIGER
@@ -864,6 +898,7 @@ void MediaPlayerPrivate::disableUnsupportedTracks(unsigned& enabledTrackCount)
         allowedTrackTypes->add(QTMediaTypeSound);
         allowedTrackTypes->add(QTMediaTypeText);
         allowedTrackTypes->add(QTMediaTypeBase);
+        allowedTrackTypes->add(QTMediaTypeMPEG);
         allowedTrackTypes->add("clcp");
         allowedTrackTypes->add("sbtl");
     }
@@ -939,7 +974,7 @@ void MediaPlayerPrivate::disableUnsupportedTracks(unsigned& enabledTrackCount)
 
 @implementation WebCoreMovieObserver
 
-- (id)initWithCallback:(MediaPlayerPrivate *)callback
+- (id)initWithCallback:(MediaPlayerPrivate*)callback
 {
     m_callback = callback;
     return [super init];
