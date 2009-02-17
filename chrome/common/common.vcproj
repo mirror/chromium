@@ -342,6 +342,14 @@
 			>
 		</File>
 		<File
+			RelativePath=".\child_process_info.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\child_process_info.h"
+			>
+		</File>
+		<File
 			RelativePath=".\chrome_constants.cc"
 			>
 		</File>
@@ -423,10 +431,6 @@
 		</File>
 		<File
 			RelativePath=".\common_glue.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\common_resources.h"
 			>
 		</File>
 		<File
@@ -525,6 +529,10 @@
 			RelativePath=".\notification_details.h"
 			>
 		</File>
+                <File
+			RelativePath=".\notification_observer.h"
+			>
+		</File>
 		<File
 			RelativePath=".\notification_registrar.cc"
 			>
@@ -546,7 +554,7 @@
 			>
 		</File>
 		<File
-			RelativePath=".\notification_types.h"
+			RelativePath=".\notification_type.h"
 			>
 		</File>
 		<File

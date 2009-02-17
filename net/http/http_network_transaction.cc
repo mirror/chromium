@@ -13,6 +13,7 @@
 #include "net/base/connection_type_histograms.h"
 #include "net/base/dns_resolution_observer.h"
 #include "net/base/host_resolver.h"
+#include "net/base/io_buffer.h"
 #include "net/base/load_flags.h"
 #include "net/base/net_util.h"
 #include "net/base/ssl_client_socket.h"
@@ -827,6 +828,27 @@ int HttpNetworkTransaction::DidReadResponseHeaders() {
       return ERR_METHOD_NOT_SUPPORTED;
   }
 
+  if (establishing_tunnel_) {
+    if (headers->response_code() == 200) {
+      if (header_buf_body_offset_ != header_buf_len_) {
+        // The proxy sent extraneous data after the headers.
+        return ERR_TUNNEL_CONNECTION_FAILED;
+      }
+      next_state_ = STATE_SSL_CONNECT_OVER_TUNNEL;
+      // Reset for the real request and response headers.
+      request_headers_.clear();
+      request_headers_bytes_sent_ = 0;
+      header_buf_len_ = 0;
+      header_buf_body_offset_ = 0;
+      establishing_tunnel_ = false;
+      return OK;
+    }
+    // Sanitize any illegal response code for CONNECT to prevent us from
+    // handling it by mistake.  See http://crbug.com/7338.
+    if (headers->response_code() < 400 || headers->response_code() > 599)
+      headers->set_response_code(500);  // Masquerade as a 500.
+  }
+
   // Check for an intermediate 100 Continue response.  An origin server is
   // allowed to send this response even if we didn't ask for it, so we just
   // need to skip over it.
@@ -840,21 +862,6 @@ int HttpNetworkTransaction::DidReadResponseHeaders() {
     }
     header_buf_body_offset_ = -1;
     next_state_ = STATE_READ_HEADERS;
-    return OK;
-  }
-
-  if (establishing_tunnel_ && headers->response_code() == 200) {
-    if (header_buf_body_offset_ != header_buf_len_) {
-      // The proxy sent extraneous data after the headers.
-      return ERR_TUNNEL_CONNECTION_FAILED;
-    }
-    next_state_ = STATE_SSL_CONNECT_OVER_TUNNEL;
-    // Reset for the real request and response headers.
-    request_headers_.clear();
-    request_headers_bytes_sent_ = 0;
-    header_buf_len_ = 0;
-    header_buf_body_offset_ = 0;
-    establishing_tunnel_ = false;
     return OK;
   }
 
@@ -1215,6 +1222,9 @@ int HttpNetworkTransaction::HandleAuthChallenge() {
 
   if (target == HttpAuth::AUTH_PROXY && proxy_info_.is_direct())
     return ERR_UNEXPECTED_PROXY_AUTH;
+
+  if (target == HttpAuth::AUTH_SERVER && establishing_tunnel_)
+    return ERR_UNEXPECTED_SERVER_AUTH;
 
   // The auth we tried just failed, hence it can't be valid. Remove it from
   // the cache so it won't be used again.

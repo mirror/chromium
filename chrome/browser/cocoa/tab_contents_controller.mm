@@ -4,12 +4,21 @@
 
 #include "chrome/browser/cocoa/tab_contents_controller.h"
 
+#import "base/sys_string_conversions.h"
 #import "chrome/app/chrome_dll_resource.h"
 #import "chrome/browser/command_updater.h"
 #import "chrome/browser/location_bar.h"
 
+// For now, tab_contents lives here. TODO(port):fix
+#include "chrome/common/temp_scaffolding_stubs.h"
+
 @interface TabContentsController(CommandUpdates)
 - (void)enabledStateChangedForCommand:(NSInteger)command enabled:(BOOL)enabled;
+@end
+
+@interface TabContentsController(LocationBar)
+- (NSString*)locationBarString;
+- (void)focusLocationBar;
 @end
 
 @interface TabContentsController(Private)
@@ -32,20 +41,22 @@ class TabContentsCommandObserver : public CommandUpdater::CommandObserver {
   CommandUpdater* commands_;  // weak
 };
 
-// TODO(pinkerton): implement these
+// A C++ bridge class that handles responding to requests from the
+// cross-platform code for information about the location bar. Just passes
+// everything back to the controller.
 class LocationBarBridge : public LocationBar {
  public:
   LocationBarBridge(TabContentsController* controller);
 
   // Overridden from LocationBar
   virtual void ShowFirstRunBubble() { NOTIMPLEMENTED(); }
-  virtual std::wstring GetInputString() const { NOTIMPLEMENTED(); return L""; }
+  virtual std::wstring GetInputString() const;
   virtual WindowOpenDisposition GetWindowOpenDisposition() const
       { NOTIMPLEMENTED(); return NEW_FOREGROUND_TAB; }
   virtual PageTransition::Type GetPageTransition() const 
       { NOTIMPLEMENTED(); return 0; }
   virtual void AcceptInput() { NOTIMPLEMENTED(); }
-  virtual void FocusLocation() { NOTIMPLEMENTED(); }
+  virtual void FocusLocation();
   virtual void FocusSearch() { NOTIMPLEMENTED(); }
   virtual void SaveStateToContents(TabContents* contents) { NOTIMPLEMENTED(); }
 
@@ -64,6 +75,7 @@ class LocationBarBridge : public LocationBar {
     if (commands_)
       observer_ = new TabContentsCommandObserver(self, commands);
     locationBarBridge_ = new LocationBarBridge(self);
+    contents_ = contents;
   }
   return self;
 }
@@ -77,6 +89,8 @@ class LocationBarBridge : public LocationBar {
 }
 
 - (void)awakeFromNib {
+  [contentsBox_ setContentView:contents_->GetNativeView()];
+  
   // Provide a starting point since we won't get notifications if the state
   // doesn't change between tabs.
   [self updateToolbarCommandStatus];
@@ -148,6 +162,30 @@ class LocationBarBridge : public LocationBar {
   [self updateToolbarCommandStatus];
 }
 
+- (NSString*)locationBarString {
+  return [locationBar_ stringValue];
+}
+
+- (void)focusLocationBar {
+  [[locationBar_ window] makeFirstResponder:locationBar_];
+}
+
+- (void)updateToolbarWithContents:(TabContents*)tab {
+  // TODO(pinkerton): there's a lot of ui code in autocomplete_edit.cc
+  // that we'll want to duplicate. For now, just handle setting the text.
+  
+  // TODO(pinkerton): update the security lock icon and background color
+  
+  if (tab) {
+    NSString* urlString =
+        [NSString stringWithUTF8String:tab->GetURL().spec().c_str()];
+    [locationBar_ setStringValue:urlString];
+  } else {
+    // TODO(pinkerton): just reset the state of the url bar. We're currently
+    // not saving any state as that drags in too much Omnibar code.
+  }
+}
+
 @end
 
 //--------------------------------------------------------------------------
@@ -180,3 +218,13 @@ void TabContentsCommandObserver::EnabledStateChangedForCommand(int command,
 LocationBarBridge::LocationBarBridge(TabContentsController* controller)
     : controller_(controller) {
 }
+
+std::wstring LocationBarBridge::GetInputString() const {
+  return base::SysNSStringToWide([controller_ locationBarString]);
+}
+
+void LocationBarBridge::FocusLocation() {
+  [controller_ focusLocationBar];
+}
+
+

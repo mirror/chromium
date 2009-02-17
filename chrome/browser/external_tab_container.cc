@@ -109,7 +109,7 @@ bool ExternalTabContainer::Init(Profile* profile, HWND parent,
   // may or may not include the popup bit.
   ModifyStyle(WS_POPUP, style, 0);
 
-  ::ShowWindow(tab_contents_->GetContainerHWND(), SW_SHOW);
+  ::ShowWindow(tab_contents_->GetNativeView(), SW_SHOW);
   return true;
 }
 
@@ -143,7 +143,7 @@ LRESULT ExternalTabContainer::OnSize(UINT, WPARAM, LPARAM, BOOL& handled) {
   if (tab_contents_) {
     RECT client_rect = {0};
     GetClientRect(&client_rect);
-    ::SetWindowPos(tab_contents_->GetContainerHWND(), NULL, client_rect.left,
+    ::SetWindowPos(tab_contents_->GetNativeView(), NULL, client_rect.left,
                    client_rect.top, client_rect.right - client_rect.left,
                    client_rect.bottom - client_rect.top, SWP_NOZORDER);
   }
@@ -158,8 +158,8 @@ LRESULT ExternalTabContainer::OnSetFocus(UINT msg, WPARAM wp, LPARAM lp,
     DCHECK(focus_manager);
     if (focus_manager) {
       focus_manager->ClearFocus();
-      automation_->Send(new AutomationMsg_TabbedOut(win_util::IsShiftPressed(),
-                                                    false));
+      automation_->Send(new AutomationMsg_TabbedOut(0,
+          win_util::IsShiftPressed()));
     }
   }
 

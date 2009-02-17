@@ -9,13 +9,11 @@
 #include <vector>
 
 #include "base/basictypes.h"
-#include "base/scoped_handle.h"
 #include "base/gfx/point.h"
 #include "base/gfx/rect.h"
 #include "base/timer.h"
 #include "base/values.h"
 #include "build/build_config.h"
-#include "chrome/common/page_zoom.h"
 #include "chrome/common/resource_dispatcher.h"
 #ifdef CHROME_PERSONALIZATION
 #include "chrome/personalization/personalization.h"
@@ -24,17 +22,13 @@
 #include "chrome/renderer/dom_ui_bindings.h"
 #include "chrome/renderer/external_host_bindings.h"
 #include "chrome/renderer/external_js_object.h"
-#include "chrome/renderer/render_process.h"
 #include "chrome/renderer/render_widget.h"
 #include "testing/gtest/include/gtest/gtest_prod.h"
 #include "webkit/glue/console_message_level.h"
 #include "webkit/glue/dom_serializer_delegate.h"
-#include "webkit/glue/find_in_page_request.h"
 #include "webkit/glue/form_data.h"
-#include "webkit/glue/glue_accessibility.h"
 #include "webkit/glue/password_form_dom_manager.h"
 #include "webkit/glue/webview_delegate.h"
-#include "webkit/glue/weburlrequest.h"
 #include "webkit/glue/webview.h"
 
 #if defined(OS_WIN)
@@ -44,9 +38,13 @@
 #pragma warning(disable: 4250)
 #endif
 
+class DictionaryValue;
 class DebugMessageHandler;
+class FilePath;
+class GlueAccessibility;
 class GURL;
 class RenderThread;
+class ResourceDispatcher;
 class SkBitmap;
 class WebError;
 class WebFrame;
@@ -54,6 +52,7 @@ class WebPluginDelegate;
 class WebPluginDelegateProxy;
 struct AccessibilityInParams;
 struct AccessibilityOutParams;
+struct FindInPageRequest;
 struct ThumbnailScore;
 struct ViewMsg_Navigate_Params;
 struct ViewMsg_PrintPage_Params;
@@ -215,6 +214,8 @@ class RenderView : public RenderWidget,
                                          const GURL& source);
 
   virtual void WindowObjectCleared(WebFrame* webframe);
+  virtual void DocumentElementAvailable(WebFrame* webframe);
+
   virtual WindowOpenDisposition DispositionForNavigationAction(
       WebView* webview,
       WebFrame* frame,
@@ -335,9 +336,16 @@ class RenderView : public RenderWidget,
     delay_seconds_for_form_state_sync_ = delay_in_seconds;
   }
 
+  // Returns a message loop of type IO that can be used to run I/O jobs. The
+  // renderer thread is of type TYPE_DEFAULT, so doesn't support everything
+  // needed by some consumers. The returned thread will be the main thread of
+  // the renderer, which processes all IPC, to any I/O should be non-blocking.
+  MessageLoop* GetMessageLoopForIO();
+
  private:
   FRIEND_TEST(RenderViewTest, OnLoadAlternateHTMLText);
   FRIEND_TEST(RenderViewTest, OnNavStateChanged);
+  FRIEND_TEST(RenderViewTest, OnImeStateChanged);
 
   explicit RenderView(RenderThreadBase* render_thread);
 
@@ -436,7 +444,7 @@ class RenderView : public RenderWidget,
   void OnSetPageEncoding(const std::wstring& encoding_name);
   void OnGetAllSavableResourceLinksForCurrentPage(const GURL& page_url);
   void OnGetSerializedHtmlDataForCurrentPageWithLocalLinks(
-      const std::vector<std::wstring>& links,
+      const std::vector<GURL>& links,
       const std::vector<std::wstring>& local_paths,
       const std::wstring& local_directory_name);
   void OnUploadFileRequest(const ViewMsg_UploadFile_Params& p);

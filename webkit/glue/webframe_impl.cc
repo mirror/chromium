@@ -97,7 +97,6 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "markup.h"
 #include "Page.h"
 #include "PlatformContextSkia.h"
-#include "PrintContext.h"
 #include "RenderFrame.h"
 #if defined(OS_WIN)
 #include "RenderThemeChromiumWin.h"
@@ -177,7 +176,7 @@ using WebCore::RenderObject;
 using WebCore::ResourceError;
 using WebCore::ResourceHandle;
 using WebCore::ResourceRequest;
-using WebCore::Selection;
+using WebCore::VisibleSelection;
 using WebCore::SharedBuffer;
 using WebCore::String;
 using WebCore::SubstituteData;
@@ -815,7 +814,7 @@ bool WebFrameImpl::Find(const FindInPageRequest& request,
     main_frame_impl->active_match_frame_ = this;
 
     // We found something, so we can now query the selection for its position.
-    Selection new_selection(frame()->selection()->selection());
+    VisibleSelection new_selection(frame()->selection()->selection());
     IntRect curr_selection_rect;
 
     // If we thought we found something, but it couldn't be selected (perhaps
@@ -1177,7 +1176,7 @@ void WebFrameImpl::SetFindEndstateFocusAndSelection() {
       active_match_.get()) {
     // If the user has changed the selection since the match was found, we
     // don't focus anything.
-    Selection selection(frame()->selection()->selection());
+    VisibleSelection selection(frame()->selection()->selection());
     if (selection.isNone() || (selection.start() == selection.end()) ||
         active_match_->boundingBox() !=
             selection.toNormalizedRange()->boundingBox())
@@ -1769,13 +1768,10 @@ int WebFrameImpl::ComputePageRects(const gfx::Size& page_size_px) {
   // TODO(maruel): Weird. We don't do that.
   // Everything is in pixels :(
   // pages_ and page_height are actually output parameters.
-  WebCore::FloatRect rect(0, 0,
-						  static_cast<float>(page_size_px.width()),
-						  static_cast<float>(page_size_px.height()));
-  WebCore::PrintContext print_context(frame());
-  float page_height;
-  print_context.computePageRects(rect, 0, 0, 1.0, page_height);
-  return print_context.pageCount();
+  int page_height;
+  WebCore::IntRect rect(0, 0, page_size_px.width(), page_size_px.height());
+  computePageRectsForFrame(frame(), rect, 0, 0, 1.0, pages_, page_height);
+  return pages_.size();
 }
 
 void WebFrameImpl::GetPageRect(int page, gfx::Rect* page_size) const {

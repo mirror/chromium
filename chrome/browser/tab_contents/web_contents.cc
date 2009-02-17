@@ -11,12 +11,15 @@
 #include "base/string_util.h"
 #include "chrome/app/locales/locale_settings.h"
 #include "chrome/browser/autofill_manager.h"
+#include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/dom_operation_notification_details.h"
 #include "chrome/browser/google_util.h"
 #include "chrome/browser/js_before_unload_handler.h"
 #include "chrome/browser/jsmessage_box_handler.h"
 #include "chrome/browser/load_from_memory_cache_details.h"
+#include "chrome/browser/load_notification_details.h"
+#include "chrome/browser/password_manager/password_manager.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
@@ -37,15 +40,12 @@
 
 #if defined(OS_WIN)
 // TODO(port): fill these in as we flesh out the implementation of this class
-#include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/cache_manager_host.h"
 #include "chrome/browser/character_encoding.h"
 #include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/download/download_request_manager.h"
 #include "chrome/browser/gears_integration.h"
-#include "chrome/browser/load_notification_details.h"
 #include "chrome/browser/modal_html_dialog_delegate.h"
-#include "chrome/browser/password_manager/password_manager.h"
 #include "chrome/browser/plugin_installer.h"
 #include "chrome/browser/plugin_service.h"
 #include "chrome/browser/printing/print_job.h"
@@ -394,7 +394,7 @@ bool WebContents::NavigateToPendingEntry(bool reload) {
   }
 
   // Clear any provisional password saves - this stops password infobars
-  // showing up on pages the user navigates to while the right page is 
+  // showing up on pages the user navigates to while the right page is
   // loading.
   GetPasswordManager()->ClearProvisionalSave();
 
@@ -422,7 +422,7 @@ void WebContents::Copy() {
 }
 
 void WebContents::Paste() {
-   render_view_host()->Paste();
+  render_view_host()->Paste();
 }
 
 void WebContents::DisassociateFromPopupCount() {
@@ -499,17 +499,17 @@ void WebContents::CreateView() {
   view_->CreateView();
 }
 
-#if defined(OS_WIN)
-HWND WebContents::GetContainerHWND() const {
+gfx::NativeView WebContents::GetNativeView() const {
   return view_->GetNativeView();
 }
-HWND WebContents::GetContentHWND() {
+
+gfx::NativeView WebContents::GetContentNativeView() {
   return view_->GetContentNativeView();
 }
+
 void WebContents::GetContainerBounds(gfx::Rect *out) const {
   view_->GetContainerBounds(out);
 }
-#endif
 
 void WebContents::CreateShortcut() {
   NavigationEntry* entry = controller()->GetLastCommittedEntry();
@@ -556,8 +556,8 @@ void WebContents::OnSavePage() {
   PrefService* prefs = profile()->GetPrefs();
   DCHECK(prefs);
 
-  std::wstring suggest_name =
-      SavePackage::GetSuggestNameForSaveAs(prefs, GetTitle());
+  FilePath suggest_name = SavePackage::GetSuggestNameForSaveAs(prefs,
+      FilePath::FromWStringHack(GetTitle()));
 
   SavePackage::SavePackageParam param(contents_mime_type());
   param.prefs = prefs;
@@ -565,8 +565,11 @@ void WebContents::OnSavePage() {
   // TODO(rocking): Use new asynchronous dialog boxes to prevent the SaveAs
   // dialog blocking the UI thread. See bug: http://b/issue?id=1129694.
   if (SavePackage::GetSaveInfo(suggest_name, view_->GetNativeView(),
-                               &param, profile()->GetDownloadManager()))
-    SavePage(param.saved_main_file_path, param.dir, param.save_type);
+                               &param, profile()->GetDownloadManager())) {
+    SavePage(param.saved_main_file_path.ToWStringHack(),
+             param.dir.ToWStringHack(),
+             param.save_type);
+  }
 }
 
 void WebContents::SavePage(const std::wstring& main_file,
@@ -575,7 +578,9 @@ void WebContents::SavePage(const std::wstring& main_file,
   // Stop the page from navigating.
   Stop();
 
-  save_package_ = new SavePackage(this, save_type, main_file, dir_path);
+  save_package_ = new SavePackage(this, save_type,
+                                  FilePath::FromWStringHack(main_file),
+                                  FilePath::FromWStringHack(dir_path));
   save_package_->Init();
 }
 
@@ -603,7 +608,7 @@ bool WebContents::IsActiveEntry(int32 page_id) {
 }
 
 void WebContents::SetInitialFocus(bool reverse) {
-   render_view_host()->SetInitialFocus(reverse);
+  render_view_host()->SetInitialFocus(reverse);
 }
 
 // Notifies the RenderWidgetHost instance about the fact that the page is
@@ -670,20 +675,20 @@ void WebContents::DidNavigate(RenderViewHost* rvh,
 
   // We can't do anything about navigations when we're inactive.
   if (!controller() || !is_active())
-    return;  
+    return;
 
   // Update the site of the SiteInstance if it doesn't have one yet.
   if (!GetSiteInstance()->has_site())
     GetSiteInstance()->SetSite(params.url);
 
-  // Need to update MIME type here because it's referred to in 
+  // Need to update MIME type here because it's referred to in
   // UpdateNavigationCommands() called by RendererDidNavigate() to
-  // determine whether or not to enable the encoding menu. 
-  // It's updated only for the main frame. For a subframe, 
+  // determine whether or not to enable the encoding menu.
+  // It's updated only for the main frame. For a subframe,
   // RenderView::UpdateURL does not set params.contents_mime_type.
   // (see http://code.google.com/p/chromium/issues/detail?id=2929 )
-  // TODO(jungshik): Add a test for the encoding menu to avoid 
-  // regressing it again. 
+  // TODO(jungshik): Add a test for the encoding menu to avoid
+  // regressing it again.
   if (PageTransition::IsMainFrame(params.transition))
     contents_mime_type_ = params.contents_mime_type;
 
@@ -1049,7 +1054,7 @@ void WebContents::AutofillFormSubmitted(
   GetAutofillManager()->AutofillFormSubmitted(form);
 }
 
-void WebContents::GetAutofillSuggestions(const std::wstring& field_name, 
+void WebContents::GetAutofillSuggestions(const std::wstring& field_name,
     const std::wstring& user_text, int64 node_id, int request_id) {
   GetAutofillManager()->FetchValuesForName(field_name, user_text,
       kMaxAutofillMenuItems, node_id, request_id);
@@ -1163,6 +1168,7 @@ GURL WebContents::GetAlternateErrorPageURL() const {
 WebPreferences WebContents::GetWebkitPrefs() {
   // Initialize web_preferences_ to chrome defaults.
   WebPreferences web_prefs;
+#if defined(OS_WIN)
   PrefService* prefs = profile()->GetPrefs();
 
   web_prefs.fixed_font_family =
@@ -1239,6 +1245,14 @@ WebPreferences WebContents::GetWebkitPrefs() {
     web_prefs.default_encoding = prefs->GetString(
         prefs::kDefaultCharset);
   }
+#else
+  // TODO(port): we skip doing the above settings because the default values
+  // for these prefs->GetFoo() calls aren't filled in yet.  By leaving the
+  // the WebPreferences alone, we get the moderately-sane default values out
+  // of WebKit.  Remove this ifdef block once we properly load font sizes, etc.
+  NOTIMPLEMENTED();
+#endif
+
   DCHECK(!web_prefs.default_encoding.empty());
   return web_prefs;
 }
@@ -1278,16 +1292,21 @@ bool WebContents::CanBlur() const {
   return delegate() ? delegate()->CanBlur() : true;
 }
 
-void WebContents::RendererUnresponsive(RenderViewHost* rvh, 
+gfx::Rect WebContents::GetRootWindowResizerRect() const {
+  if (delegate())
+    return delegate()->GetRootWindowResizerRect();
+  return gfx::Rect();
+}
+
+void WebContents::RendererUnresponsive(RenderViewHost* rvh,
                                        bool is_during_unload) {
   if (is_during_unload) {
     // Hang occurred while firing the beforeunload/unload handler.
     // Pretend the handler fired so tab closing continues as if it had.
     rvh->UnloadListenerHasFired();
 
-    if (!render_manager_.ShouldCloseTabOnUnresponsiveRenderer()) {
+    if (!render_manager_.ShouldCloseTabOnUnresponsiveRenderer())
       return;
-    }
 
     // If the tab hangs in the beforeunload/unload handler there's really
     // nothing we can do to recover. Pretend the unload listeners have
@@ -1652,7 +1671,7 @@ bool WebContents::UpdateTitleForEntry(NavigationEntry* entry,
         profile()->GetHistoryService(Profile::IMPLICIT_ACCESS);
     if (hs)
       hs->SetPageTitle(entry->display_url(), final_title);
-    
+
     // Don't allow the title to be saved again for explicitly set ones.
     received_page_title_ = explicit_set;
   }

@@ -30,7 +30,6 @@
 #include "v8_events.h"
 #include "v8_binding.h"
 #include "v8_npobject.h"
-#include "v8_vectornodelist.h"
 #include "v8_custom.h"
 
 #include "V8Attr.h"
@@ -56,6 +55,7 @@
 #include "Console.h"
 #include "DOMParser.h"
 #include "DOMStringList.h"
+#include "DOMTimer.h"
 #include "DOMWindow.h"
 #include "Document.h"
 #include "DocumentFragment.h"
@@ -66,9 +66,7 @@
 #include "FloatRect.h"
 #include "Frame.h"
 #include "FrameLoader.h"
-#include "FrameLoadRequest.h"
 #include "FrameTree.h"
-#include "FrameView.h"
 #include "HTMLBodyElement.h"
 #include "HTMLCanvasElement.h"
 #include "HTMLDocument.h"
@@ -93,20 +91,18 @@
 #include "MessagePort.h"
 #include "MouseEvent.h"
 #include "NodeIterator.h"
-#include "Page.h"
-#include "PlatformScreen.h"
+#include "NodeList.h"
 #include "RGBColor.h"
 #include "RenderPartObject.h"
 #include "RenderWidget.h"
 #include "ScheduledAction.h"
 #include "ScriptState.h"
 #include "ScriptController.h"
+#include "ScriptSourceCode.h"
 #include "SecurityOrigin.h"
-#include "Settings.h"
 #include "StyleSheetList.h"
 #include "TreeWalker.h"
 #include "WebKitCSSMatrix.h"
-#include "WindowFeatures.h"
 #include "XMLSerializer.h"
 #include "XPathEvaluator.h"
 #include "XPathResult.h"
@@ -121,36 +117,7 @@
 
 #include "Navigator.h"
 
-// Horizontal and vertical offset, from the parent content area, around newly
-// opened popups that don't specify a location.
-static const int kPopupTilePixels = 10;
-
 namespace WebCore {
-
-#define NAMED_PROPERTY_GETTER(NAME)  \
-v8::Handle<v8::Value> V8Custom::v8##NAME##NamedPropertyGetter(\
-    v8::Local<v8::String> name, const v8::AccessorInfo& info)
-
-#define NAMED_PROPERTY_SETTER(NAME)  \
-v8::Handle<v8::Value> V8Custom::v8##NAME##NamedPropertySetter(\
-    v8::Local<v8::String> name, v8::Local<v8::Value> value, \
-    const v8::AccessorInfo& info)
-
-#define NAMED_PROPERTY_DELETER(NAME) \
-v8::Handle<v8::Boolean> V8Custom::v8##NAME##NamedPropertyDeleter(\
-    v8::Local<v8::String> name, const v8::AccessorInfo& info)
-
-#define NAMED_ACCESS_CHECK(NAME) \
-bool V8Custom::v8##NAME##NamedSecurityCheck(v8::Local<v8::Object> host, \
-                                            v8::Local<v8::Value> key, \
-                                            v8::AccessType type, \
-                                            v8::Local<v8::Value> data)
-
-#define INDEXED_ACCESS_CHECK(NAME) \
-bool V8Custom::v8##NAME##IndexedSecurityCheck(v8::Local<v8::Object> host, \
-                                              uint32_t index, \
-                                              v8::AccessType type, \
-                                              v8::Local<v8::Value> data)
 
 class V8ScheduledAction : public ScheduledAction {
  public:
@@ -159,18 +126,19 @@ class V8ScheduledAction : public ScheduledAction {
   explicit V8ScheduledAction(const WebCore::String& code) : m_argc(0),
       m_argv(0), m_code(code) { }
   virtual ~V8ScheduledAction();
-  virtual void execute(DOMWindow* window);
+  virtual void execute(ScriptExecutionContext* window);
 
  private:
   v8::Persistent<v8::Function> m_func;
   int m_argc;
   v8::Persistent<v8::Value>* m_argv;
 
-  String m_code;
+  ScriptSourceCode m_code;
 };
 
 V8ScheduledAction::V8ScheduledAction(v8::Handle<v8::Function> func, int argc,
-                                     v8::Handle<v8::Value> argv[]) {
+                                     v8::Handle<v8::Value> argv[])
+    : m_code(String(), KURL(), 0) {
   m_func = v8::Persistent<v8::Function>::New(func);
 
 #ifndef NDEBUG
@@ -213,31 +181,30 @@ V8ScheduledAction::~V8ScheduledAction() {
 }
 
 
-void V8ScheduledAction::execute(DOMWindow* window) {
+void V8ScheduledAction::execute(ScriptExecutionContext* script_context) {
   // TODO(ager): Timeouts for running the javascript code are not set.
-  Frame* frame = window->frame();
-  if (!frame) return;
+  V8Proxy* proxy = V8Proxy::retrieve(script_context);
+  if (!proxy) return;
 
   v8::HandleScope handle_scope;
-  v8::Local<v8::Context> context = V8Proxy::GetContext(frame);
+  v8::Local<v8::Context> context = proxy->GetContext();
   if (context.IsEmpty()) return;  // JS may not be enabled.
 
   v8::Context::Scope scope(context);
 
-  V8Proxy* proxy = V8Proxy::retrieve(frame);
   proxy->setTimerCallback(true);
 
   if (!m_func.IsEmpty() && m_func->IsFunction()) {
     proxy->CallFunction(v8::Persistent<v8::Function>::Cast(m_func),
                         context->Global(), m_argc, m_argv);
   } else {
-    // TODO: why cannot just compile and run m_code?
-    // check what's in V8Proxy::Evaluate
-    frame->loader()->executeScript(m_code);
+    proxy->Evaluate(m_code.url(), m_code.startLine() - 1, m_code.source(), 0);
   }
 
-  if (Document* doc = frame->document())
+  if (script_context->isDocument()) {
+    Document* doc = static_cast<Document*>(script_context);
     doc->updateRendering();
+  }
 
   proxy->setTimerCallback(false);
 }
@@ -556,45 +523,8 @@ ACCESSOR_SETTER(DocumentLocation) {
     return;
 
   DOMWindow* window = imp->frame()->domWindow();
-  // DOMWindow::setLocation does security checks.
-  window->setLocation(ToWebCoreString(value));
-}
-
-
-ACCESSOR_SETTER(DOMWindowLocation) {
-  v8::Handle<v8::Object> holder = V8Proxy::LookupDOMWrapper(
-      V8ClassIndex::DOMWINDOW, info.This());
-  if (holder.IsEmpty())
-    return;
-
-  DOMWindow* imp = V8Proxy::ToNativeObject<DOMWindow>(
-      V8ClassIndex::DOMWINDOW, holder);
-  imp->setLocation(ToWebCoreString(value));
-}
-
-
-ACCESSOR_SETTER(DOMWindowOpener) {
-  DOMWindow* imp = V8Proxy::ToNativeObject<DOMWindow>(
-      V8ClassIndex::DOMWINDOW, info.Holder());
-
-  if (!V8Proxy::CanAccessFrame(imp->frame(), true))
-    return;
-  
-  // Opener can be shadowed if it is in the same domain.
-  // Have a special handling of null value to behave
-  // like Firefox. See bug 1224887 & 791706.
-  if (value->IsNull()) {
-    // imp->frame() cannot be null,
-    // otherwise, SameOrigin check would have failed.
-    ASSERT(imp->frame());
-    imp->frame()->loader()->setOpener(0);
-  }
-
-  // Delete the accessor from this object.
-  info.Holder()->Delete(name);
-
-  // Put property on the front (this) object.
-  info.This()->Set(name, value);
+  // WindowSetLocation does security checks.  // XXXMB- verify!
+  WindowSetLocation(window, ToWebCoreString(value));
 }
 
 
@@ -644,179 +574,6 @@ ACCESSOR_GETTER(EventClipboardData) {
 }
 
 
-static v8::Handle<v8::Value> HTMLCollectionGetNamedItems(
-    HTMLCollection* collection, String name) {
-  Vector<RefPtr<Node> > namedItems;
-  collection->namedItems(name, namedItems);
-  switch (namedItems.size()) {
-    case 0:
-      return v8::Handle<v8::Value>();
-    case 1:
-      return V8Proxy::NodeToV8Object(namedItems.at(0).get());
-    default:
-      NodeList* list = new V8VectorNodeList(namedItems);
-      return V8Proxy::ToV8Object(V8ClassIndex::NODELIST, list);
-  }
-}
-
-
-static v8::Handle<v8::Value> HTMLCollectionGetItem(
-    HTMLCollection* collection, v8::Handle<v8::Value> argument) {
-  v8::Local<v8::Uint32> index = argument->ToArrayIndex();
-  if (index.IsEmpty()) {
-    v8::Handle<v8::String> str = argument->ToString();
-    v8::Handle<v8::Value> result =
-      HTMLCollectionGetNamedItems(collection, ToWebCoreString(str));
-    if (result.IsEmpty())
-      return v8::Undefined();
-    else
-      return result;
-  }
-  unsigned i = index->Uint32Value();
-  RefPtr<Node> result = collection->item(i);
-  return V8Proxy::NodeToV8Object(result.get());
-}
-
-
-NAMED_PROPERTY_GETTER(HTMLCollection) {
-  INC_STATS("DOM.HTMLCollection.NamedPropertyGetter");
-  // Search the prototype chain first.
-  v8::Handle<v8::Value> value =
-      info.Holder()->GetRealNamedPropertyInPrototypeChain(name);
-
-  if (!value.IsEmpty()) {
-    return value;
-  }
-
-  // Search local callback properties next to find IDL defined
-  // properties.
-  if (info.Holder()->HasRealNamedCallbackProperty(name)) {
-    return v8::Handle<v8::Value>();
-  }
-
-  // Finally, search the DOM structure.
-  HTMLCollection* imp = V8Proxy::ToNativeObject<HTMLCollection>(
-      V8ClassIndex::HTMLCOLLECTION, info.Holder());
-  String key = ToWebCoreString(name);
-  return HTMLCollectionGetNamedItems(imp, key);
-}
-
-
-CALLBACK_FUNC_DECL(HTMLCollectionItem) {
-  INC_STATS("DOM.HTMLCollection.item()");
-  HTMLCollection* imp = V8Proxy::ToNativeObject<HTMLCollection>(
-      V8ClassIndex::HTMLCOLLECTION, args.Holder());
-  return HTMLCollectionGetItem(imp, args[0]);
-}
-
-
-CALLBACK_FUNC_DECL(HTMLCollectionNamedItem) {
-  INC_STATS("DOM.HTMLCollection.namedItem()");
-  HTMLCollection* imp = V8Proxy::ToNativeObject<HTMLCollection>(
-      V8ClassIndex::HTMLCOLLECTION, args.Holder());
-  String name = ToWebCoreString(args[0]);
-  v8::Handle<v8::Value> result =
-    HTMLCollectionGetNamedItems(imp, name);
-  if (result.IsEmpty())
-    return v8::Undefined();
-  else
-    return result;
-}
-
-
-CALLBACK_FUNC_DECL(HTMLCollectionCallAsFunction) {
-  INC_STATS("DOM.HTMLCollection.callAsFunction()");
-  if (args.Length() < 1) return v8::Undefined();
-
-  HTMLCollection* imp = V8Proxy::ToNativeObject<HTMLCollection>(
-      V8ClassIndex::HTMLCOLLECTION, args.Holder());
-
-  if (args.Length() == 1) {
-    return HTMLCollectionGetItem(imp, args[0]);
-  }
-
-  // If there is a second argument it is the index of the item we
-  // want.
-  String name = ToWebCoreString(args[0]);
-  v8::Local<v8::Uint32> index = args[1]->ToArrayIndex();
-  if (index.IsEmpty()) return v8::Undefined();
-  unsigned i = index->Uint32Value();
-  Node* node = imp->namedItem(name);
-  while (node) {
-    if (i == 0) return V8Proxy::NodeToV8Object(node);
-    node = imp->nextNamedItem(name);
-    i--;
-  }
-
-  return v8::Undefined();
-}
-
-
-static v8::Handle<v8::Value> V8HTMLSelectElementRemoveHelper(
-    HTMLSelectElement* imp, const v8::Arguments& args) {
-  if (V8HTMLOptionElement::HasInstance(args[0])) {
-    HTMLOptionElement* element =
-        V8Proxy::DOMWrapperToNode<HTMLOptionElement>(args[0]);
-    imp->remove(element->index());
-    return v8::Undefined();
-  }
-
-  imp->remove(ToInt32(args[0]));
-  return v8::Undefined();
-}
-
-CALLBACK_FUNC_DECL(HTMLSelectElementRemove) {
-  INC_STATS("DOM.HTMLSelectElement.remove");
-  HTMLSelectElement* imp =
-      V8Proxy::DOMWrapperToNode<HTMLSelectElement>(args.Holder());
-  return V8HTMLSelectElementRemoveHelper(imp, args);
-}
-
-CALLBACK_FUNC_DECL(HTMLOptionsCollectionRemove) {
-  INC_STATS("DOM.HTMLOptionsCollection.remove()");
-  HTMLOptionsCollection* imp =
-      V8Proxy::ToNativeObject<HTMLOptionsCollection>(
-          V8ClassIndex::HTMLOPTIONSCOLLECTION, args.Holder());
-  HTMLSelectElement* base = static_cast<HTMLSelectElement*>(imp->base());
-  return V8HTMLSelectElementRemoveHelper(base, args);
-}
-
-
-CALLBACK_FUNC_DECL(HTMLOptionsCollectionAdd) {
-  INC_STATS("DOM.HTMLOptionsCollection.add()");
-  if (!V8HTMLOptionElement::HasInstance(args[0])) {
-    V8Proxy::SetDOMException(TYPE_MISMATCH_ERR);
-    return v8::Undefined();
-  }
-  HTMLOptionsCollection* imp =
-      V8Proxy::ToNativeObject<HTMLOptionsCollection>(
-          V8ClassIndex::HTMLOPTIONSCOLLECTION, args.Holder());
-  HTMLOptionElement* option =
-      V8Proxy::DOMWrapperToNode<HTMLOptionElement>(args[0]);
-
-  ExceptionCode ec = 0;
-  if (args.Length() < 2) {
-    imp->add(option, ec);
-  } else {
-    bool ok;
-    v8::TryCatch try_catch;
-    int index = ToInt32(args[1], ok);
-    if (try_catch.HasCaught()) {
-      return v8::Undefined();
-    }
-    if (!ok) {
-      ec = TYPE_MISMATCH_ERR;
-    } else {
-      imp->add(option, index, ec);
-    }
-  }
-  if (ec != 0) {
-    V8Proxy::SetDOMException(ec);
-  }
-  return v8::Undefined();
-}
-
-
 INDEXED_PROPERTY_GETTER(DOMStringList) {
   INC_STATS("DOM.DOMStringList.IndexedPropertyGetter");
   DOMStringList* imp =
@@ -837,580 +594,6 @@ CALLBACK_FUNC_DECL(DOMStringListItem) {
     return v8::Null();
 
   return v8String(imp->item(index));
-}
-
-
-CALLBACK_FUNC_DECL(DOMWindowAddEventListener) {
-  INC_STATS("DOM.DOMWindow.addEventListener()");
-  DOMWindow* imp = V8Proxy::ToNativeObject<DOMWindow>(
-      V8ClassIndex::DOMWINDOW, args.Holder());
-
-  if (!V8Proxy::CanAccessFrame(imp->frame(), true))
-    return v8::Undefined();
-
-  if (!imp->frame())
-    return v8::Undefined();  // DOMWindow could be disconnected from the frame
-
-  Document* doc = imp->frame()->document();
-  if (!doc)
-    return v8::Undefined();
-
-  // TODO: Check if there is not enough arguments
-  V8Proxy* proxy = V8Proxy::retrieve(imp->frame());
-  if (!proxy)
-    return v8::Undefined();
-
-  RefPtr<EventListener> listener =
-    proxy->FindOrCreateV8EventListener(args[1], false);
-
-  if (listener) {
-    String event_type = ToWebCoreString(args[0]);
-    bool useCapture = args[2]->BooleanValue();
-    doc->addWindowEventListener(event_type, listener, useCapture);
-  }
-
-  return v8::Undefined();
-}
-
-
-CALLBACK_FUNC_DECL(DOMWindowRemoveEventListener) {
-  INC_STATS("DOM.DOMWindow.removeEventListener()");
-  DOMWindow* imp = V8Proxy::ToNativeObject<DOMWindow>(
-      V8ClassIndex::DOMWINDOW, args.Holder());
-
-  if (!V8Proxy::CanAccessFrame(imp->frame(), true))
-    return v8::Undefined();
-
-  if (!imp->frame())
-    return v8::Undefined();
-
-  Document* doc = imp->frame()->document();
-  if (!doc)
-    return v8::Undefined();
-
-  V8Proxy* proxy = V8Proxy::retrieve(imp->frame());
-  if (!proxy)
-    return v8::Undefined();
-
-  RefPtr<EventListener> listener =
-    proxy->FindV8EventListener(args[1], false);
-
-  if (listener) {
-    String event_type = ToWebCoreString(args[0]);
-    bool useCapture = args[2]->BooleanValue();
-    doc->removeWindowEventListener(event_type, listener.get(), useCapture);
-  }
-
-  return v8::Undefined();
-}
-
-CALLBACK_FUNC_DECL(DOMWindowPostMessage) {
-  INC_STATS("DOM.DOMWindow.postMessage()");
-  DOMWindow* window = V8Proxy::ToNativeObject<DOMWindow>(
-      V8ClassIndex::DOMWINDOW, args.Holder());
-
-  DOMWindow* source = V8Proxy::retrieveActiveFrame()->domWindow();
-  ASSERT(source->frame());
-
-  String uri = source->frame()->loader()->url().string();
-
-  v8::TryCatch try_catch;
-
-  String message = ToWebCoreString(args[0]);
-  MessagePort* port = NULL;
-  String domain;
-
-  // This function has variable arguments and can either be:
-  //   postMessage(message, port, domain);
-  // or
-  //   postMessage(message, domain);
-  if (args.Length() > 2) {
-    if (V8Proxy::IsWrapperOfType(args[1], V8ClassIndex::MESSAGEPORT)) {
-      port = V8Proxy::ToNativeObject<MessagePort>(
-          V8ClassIndex::MESSAGEPORT, args[1]);
-    }
-    domain = valueToStringWithNullOrUndefinedCheck(args[2]);
-  } else {
-    domain = valueToStringWithNullOrUndefinedCheck(args[1]);
-  }
-
-  if (try_catch.HasCaught()) return v8::Undefined();
-
-  ExceptionCode ec = 0;
-  window->postMessage(message, port, domain, source, ec);
-  if (ec)
-    V8Proxy::SetDOMException(ec);
-
-  return v8::Undefined();
-}
-
-static bool canShowModalDialogNow(const Frame* frame) {
-  // A frame can out live its page. See bug 1219613.
-  if (!frame || !frame->page())
-    return false;
-  return frame->page()->chrome()->canRunModalNow();
-}
-
-static bool allowPopUp() {
-  Frame* frame = V8Proxy::retrieveActiveFrame();
-
-  ASSERT(frame);
-  if (frame->script()->processingUserGesture()) return true;
-  Settings* settings = frame->settings();
-  return settings && settings->JavaScriptCanOpenWindowsAutomatically();
-}
-
-static HashMap<String, String> parseModalDialogFeatures(
-    const String& features_arg) {
-  HashMap<String, String> map;
-
-  Vector<String> features;
-  features_arg.split(';', features);
-  Vector<String>::const_iterator end = features.end();
-  for (Vector<String>::const_iterator it = features.begin(); it != end; ++it) {
-    String s = *it;
-    int pos = s.find('=');
-    int colonPos = s.find(':');
-    if (pos >= 0 && colonPos >= 0)
-      continue;  // ignore any strings that have both = and :
-    if (pos < 0)
-      pos = colonPos;
-    if (pos < 0) {
-      // null string for value means key without value
-      map.set(s.stripWhiteSpace().lower(), String());
-    } else {
-      String key = s.left(pos).stripWhiteSpace().lower();
-      String val = s.substring(pos + 1).stripWhiteSpace().lower();
-      int spacePos = val.find(' ');
-      if (spacePos != -1)
-        val = val.left(spacePos);
-      map.set(key, val);
-    }
-  }
-
-  return map;
-}
-
-
-static Frame* createWindow(Frame* opener_frame,
-                           const String& url,
-                           const String& frame_name,
-                           const WindowFeatures& window_features,
-                           v8::Local<v8::Value> dialog_args) {
-  Frame* active_frame = V8Proxy::retrieveActiveFrame();
-
-  ResourceRequest request;
-  if (active_frame)
-    request.setHTTPReferrer(active_frame->loader()->outgoingReferrer());
-  FrameLoadRequest frame_request(request, frame_name);
-
-  // FIXME: It's much better for client API if a new window starts with a URL,
-  // here where we know what URL we are going to open. Unfortunately, this code
-  // passes the empty string for the URL, but there's a reason for that.
-  // Before loading we have to set up the opener, openedByDOM,
-  // and dialogArguments values. Also, to decide whether to use the URL
-  // we currently do an allowsAccessFrom call using the window we create,
-  // which can't be done before creating it. We'd have to resolve all those
-  // issues to pass the URL instead of "".
-
-  bool created;
-  // We pass in the opener frame here so it can be used for looking up the frame
-  // name, in case the active frame is different from the opener frame, and
-  // the name references a frame relative to the opener frame, for example
-  // "_self" or "_parent".
-  Frame* new_frame = active_frame->loader()->createWindow(
-      opener_frame->loader(), frame_request, window_features, created);
-  if (!new_frame)
-    return 0;
-
-  new_frame->loader()->setOpener(opener_frame);
-  new_frame->loader()->setOpenedByDOM();
-
-  // Set dialog arguments on the global object of the new frame.
-  if (!dialog_args.IsEmpty()) {
-    v8::Local<v8::Context> context = V8Proxy::GetContext(new_frame);
-    if (!context.IsEmpty()) {
-      v8::Context::Scope scope(context);
-      context->Global()->Set(v8::String::New("dialogArguments"), dialog_args);
-    }
-  }
-
-  if (!parseURL(url).startsWith("javascript:", false) ||
-      ScriptController::isSafeScript(new_frame)) {
-    KURL completed_url =
-        url.isEmpty() ? KURL("") : active_frame->document()->completeURL(url);
-    bool user_gesture = active_frame->script()->processingUserGesture();
-
-    if (created) {
-      new_frame->loader()->changeLocation(
-          completed_url,
-          active_frame->loader()->outgoingReferrer(),
-          false,
-          user_gesture);
-    } else if (!url.isEmpty()) {
-      new_frame->loader()->scheduleLocationChange(
-          completed_url.string(),
-          active_frame->loader()->outgoingReferrer(),
-          false,
-          user_gesture);
-    }
-  }
-
-  return new_frame;
-}
-
-
-CALLBACK_FUNC_DECL(DOMWindowShowModalDialog) {
-  INC_STATS("DOM.DOMWindow.showModalDialog()");
-  DOMWindow* window = V8Proxy::ToNativeObject<DOMWindow>(
-      V8ClassIndex::DOMWINDOW, args.Holder());
-  Frame* frame = window->frame();
-
-  if (!frame || !V8Proxy::CanAccessFrame(frame, true)) 
-    return v8::Undefined();
-
-  if (!canShowModalDialogNow(frame) || !allowPopUp())
-    return v8::Undefined();
-
-  String url = valueToStringWithNullOrUndefinedCheck(args[0]);
-  v8::Local<v8::Value> dialog_args = args[1];
-  String feature_args = valueToStringWithNullOrUndefinedCheck(args[2]);
-
-  const HashMap<String, String> features =
-      parseModalDialogFeatures(feature_args);
-
-  const bool trusted = false;
-
-  FloatRect screenRect = screenAvailableRect(frame->view());
-
-  WindowFeatures wargs;
-  // default here came from frame size of dialog in MacIE.
-  wargs.width = WindowFeatures::floatFeature(features, "dialogwidth", 100,
-                                             screenRect.width(), 620);
-  wargs.widthSet = true;
-  // default here came from frame size of dialog in MacIE.
-  wargs.height = WindowFeatures::floatFeature(features, "dialogheight", 100,
-                                              screenRect.height(), 450);
-  wargs.heightSet = true;
-
-  wargs.x = WindowFeatures::floatFeature(features, "dialogleft", screenRect.x(),
-                                         screenRect.right() - wargs.width,
-                                         -1);
-  wargs.xSet = wargs.x > 0;
-  wargs.y = WindowFeatures::floatFeature(features, "dialogtop", screenRect.y(),
-                                         screenRect.bottom() - wargs.height,
-                                         -1);
-  wargs.ySet = wargs.y > 0;
-
-  if (WindowFeatures::boolFeature(features, "center", true)) {
-    if (!wargs.xSet) {
-      wargs.x = screenRect.x() + (screenRect.width() - wargs.width) / 2;
-      wargs.xSet = true;
-    }
-    if (!wargs.ySet) {
-      wargs.y = screenRect.y() + (screenRect.height() - wargs.height) / 2;
-      wargs.ySet = true;
-    }
-  }
-
-  wargs.dialog = true;
-  wargs.resizable = WindowFeatures::boolFeature(features, "resizable");
-  wargs.scrollbarsVisible =
-      WindowFeatures::boolFeature(features, "scroll", true);
-  wargs.statusBarVisible =
-      WindowFeatures::boolFeature(features, "status", !trusted);
-  wargs.menuBarVisible = false;
-  wargs.toolBarVisible = false;
-  wargs.locationBarVisible = false;
-  wargs.fullscreen = false;
-
-  Frame* dialog_frame = createWindow(frame, url, "", wargs, dialog_args);
-  if (!dialog_frame)
-    return v8::Undefined();
-
-  // Hold on to the context of the dialog window long enough to retrieve the
-  // value of the return value property.
-  v8::Local<v8::Context> context = V8Proxy::GetContext(dialog_frame);
-
-  // Run the dialog.
-  dialog_frame->page()->chrome()->runModal();
-
-  // Extract the return value property from the dialog window.
-  v8::Local<v8::Value> return_value;
-  if (!context.IsEmpty()) {
-    v8::Context::Scope scope(context);
-    return_value = context->Global()->Get(v8::String::New("returnValue"));
-  }
-
-  if (!return_value.IsEmpty()) {
-    return return_value;
-  }
-
-  return v8::Undefined();
-}
-
-
-CALLBACK_FUNC_DECL(DOMWindowOpen) {
-  INC_STATS("DOM.DOMWindow.open()");
-  DOMWindow* parent = V8Proxy::ToNativeObject<DOMWindow>(
-      V8ClassIndex::DOMWINDOW, args.Holder());
-  Frame* frame = parent->frame();
-
-  if (!V8Proxy::CanAccessFrame(frame, true))
-    return v8::Undefined();
-
-  Frame* active_frame = V8Proxy::retrieveActiveFrame();
-  if (!active_frame)
-    return v8::Undefined();
-
-  Page* page = frame->page();
-  if (!page)
-    return v8::Undefined();
-
-  String url_string = valueToStringWithNullOrUndefinedCheck(args[0]);
-  AtomicString frame_name = (args[1]->IsUndefined() || args[1]->IsNull()) ?
-      "_blank" : AtomicString(ToWebCoreString(args[1]));
-
-  // Because FrameTree::find() returns true for empty strings, we must check
-  // for empty framenames. Otherwise, illegitimate window.open() calls with
-  // no name will pass right through the popup blocker.
-  if (!allowPopUp() &&
-      (frame_name.isEmpty() ||
-       !frame->tree()->find(frame_name))) {
-    return v8::Undefined();
-  }
-
-  // Get the target frame for the special cases of _top and _parent.  In those
-  // cases, we can schedule a location change right now and return early.
-  bool top_or_parent = false;
-  if (frame_name == "_top") {
-    frame = frame->tree()->top();
-    top_or_parent = true;
-  } else if (frame_name == "_parent") {
-    if (Frame* parent = frame->tree()->parent()) {
-      frame = parent;
-    }
-    top_or_parent = true;
-  }
-  if (top_or_parent) {
-    if (!active_frame->loader()->shouldAllowNavigation(frame)) {
-      return v8::Undefined();
-    }
-
-    String completed_url;
-    if (!url_string.isEmpty()) {
-      completed_url = active_frame->document()->completeURL(url_string);
-    }
-
-    if (!completed_url.isEmpty() &&
-        (!parseURL(url_string).startsWith("javascript:", false) ||
-         ScriptController::isSafeScript(frame))) {
-      bool user_gesture = active_frame->script()->processingUserGesture();
-      frame->loader()->scheduleLocationChange(
-          completed_url,
-          active_frame->loader()->outgoingReferrer(),
-          false,
-          user_gesture);
-    }
-    return V8Proxy::ToV8Object(V8ClassIndex::DOMWINDOW, frame->domWindow());
-  }
-
-  // In the case of a named frame or a new window, we'll use the createWindow()
-  // helper.
-
-  // Parse the values, and then work with a copy of the parsed values
-  // so we can restore the values we may not want to overwrite after
-  // we do the multiple monitor fixes.
-  WindowFeatures raw_features(
-      valueToStringWithNullOrUndefinedCheck(args[2]));
-  WindowFeatures window_features(raw_features);
-  FloatRect screen_rect = screenAvailableRect(page->mainFrame()->view());
-
-  // Set default size and location near parent window if none were specified.
-  // These may be further modified by adjustWindowRect, below.
-  if (!window_features.xSet) {
-    window_features.x = parent->screenX() - screen_rect.x() + kPopupTilePixels;
-    window_features.xSet = true;
-  }
-  if (!window_features.ySet) {
-    window_features.y = parent->screenY() - screen_rect.y() + kPopupTilePixels;
-    window_features.ySet = true;
-  }
-  if (!window_features.widthSet) {
-    window_features.width = parent->innerWidth();
-    window_features.widthSet = true;
-  }
-  if (!window_features.heightSet) {
-    window_features.height = parent->innerHeight();
-    window_features.heightSet = true;
-  }
-
-  FloatRect window_rect(window_features.x, window_features.y,
-                        window_features.width, window_features.height);
-
-  // The new window's location is relative to its current screen, so shift
-  // it in case it's on a secondary monitor. See http://b/viewIssue?id=967905.
-  window_rect.move(screen_rect.x(), screen_rect.y());
-  WebCore::DOMWindow::adjustWindowRect(screen_rect, window_rect, window_rect);
-
-  window_features.x = window_rect.x();
-  window_features.y = window_rect.y();
-  window_features.height = window_rect.height();
-  window_features.width = window_rect.width();
-
-  // If either of the origin coordinates weren't set in the original
-  // string, make sure they aren't set now.
-  if (!raw_features.xSet) {
-    window_features.x = 0;
-    window_features.xSet = false;
-  }
-  if (!raw_features.ySet) {
-    window_features.y = 0;
-    window_features.ySet = false;
-  }
-
-  frame = createWindow(frame, url_string, frame_name,
-                       window_features, v8::Local<v8::Value>());
-
-  if (!frame) return v8::Undefined();
-
-  return V8Proxy::ToV8Object(V8ClassIndex::DOMWINDOW, frame->domWindow());
-}
-
-
-INDEXED_PROPERTY_GETTER(DOMWindow) {
-  INC_STATS("DOM.DOMWindow.IndexedPropertyGetter");
-  v8::Handle<v8::Object> holder = V8Proxy::LookupDOMWrapper(
-      V8ClassIndex::DOMWINDOW, info.This());
-  if (holder.IsEmpty())
-    return v8::Handle<v8::Value>();
-
-  DOMWindow* window = V8Proxy::ToNativeObject<DOMWindow>(
-      V8ClassIndex::DOMWINDOW, holder);
-  if (!window)
-    return v8::Handle<v8::Value>();
-
-  Frame* frame = window->frame();
-  if (!frame)
-    return v8::Handle<v8::Value>();
-
-  Frame* child = frame->tree()->child(index);
-  if (child) {
-    return V8Proxy::ToV8Object(V8ClassIndex::DOMWINDOW, child->domWindow());
-  }
-
-  return v8::Handle<v8::Value>();
-}
-
-
-NAMED_PROPERTY_GETTER(DOMWindow) {
-  INC_STATS("DOM.DOMWindow.NamedPropertyGetter");
-  // The key must be a string.
-  if (!name->IsString())
-    return v8::Handle<v8::Value>();
-
-  v8::Handle<v8::Object> holder = V8Proxy::LookupDOMWrapper(
-      V8ClassIndex::DOMWINDOW, info.This());
-  if (holder.IsEmpty())
-    return v8::Handle<v8::Value>();
-
-  DOMWindow* window = V8Proxy::ToNativeObject<DOMWindow>(
-      V8ClassIndex::DOMWINDOW, holder);
-  if (!window)
-    return v8::Handle<v8::Value>();
-
-  String prop_name = ToWebCoreString(name);
-
-  Frame* frame = window->frame();
-  // window is detached from a frame.
-  if (!frame)
-    return v8::Handle<v8::Value>();
-
-  // Search sub-frames.
-  Frame* child = frame->tree()->child(prop_name);
-  if (child)
-    return V8Proxy::ToV8Object(V8ClassIndex::DOMWINDOW, child->domWindow());
-
-  // Search IDL functions defined in the prototype
-  v8::Handle<v8::Value> result =
-      holder->GetRealNamedPropertyInPrototypeChain(name);
-  if (!result.IsEmpty())
-    return result;
-
-  // Lazy initialization map keeps global properties that can be lazily
-  // initialized. The value is the code to instantiate the property.
-  // It must return the value of property after initialization.
-  static HashMap<String, String> kLazyInitMap;
-  if (kLazyInitMap.isEmpty()) {
-    // "new Image()" does not appear to be well-defined in a spec, but Safari,
-    // Opera, and Firefox all consider it to always create an HTML image
-    // element, regardless of the current doctype.
-    kLazyInitMap.set("Image",
-                     "function Image() { \
-                        return document.createElementNS( \
-                          'http://www.w3.org/1999/xhtml', 'img'); \
-                      }; \
-                      Image");
-    kLazyInitMap.set("Option",
-      "function Option(text, value, defaultSelected, selected) { \
-         var option = document.createElement('option'); \
-         if (text == null) return option; \
-         option.text = text; \
-         if (value == null) return option; \
-         option.value = value; \
-         if (defaultSelected == null) return option; \
-         option.defaultSelected = defaultSelected; \
-         if (selected == null) return option; \
-         option.selected = selected; \
-         return option; \
-       }; \
-       Option");
-  }
-
-  String code = kLazyInitMap.get(prop_name);
-  if (!code.isEmpty()) {
-    v8::Local<v8::Context> context = V8Proxy::GetContext(window->frame());
-    // Bail out if we cannot get the context for the frame.
-    if (context.IsEmpty()) return v8::Handle<v8::Value>();
-
-    // switch to the target object's environment.
-    v8::Context::Scope scope(context);
-
-    // Set the property name to undefined to make sure that the
-    // property exists.  This is necessary because this getter
-    // might be called when evaluating 'var RangeException = value'
-    // to figure out if we have a property named 'RangeException' before
-    // we set RangeException to the new value.  In that case, we will
-    // evaluate 'var RangeException = {}' and enter an infinite loop.
-    // Setting the property name to undefined on the global object
-    // ensures that we do not have to ask this getter to figure out
-    // that we have the property.
-    //
-    // TODO(ager): We probably should implement the Has method
-    // for the interceptor instead of using the default Has method
-    // that calls Get.
-    context->Global()->Set(v8String(prop_name), v8::Undefined());
-    V8Proxy* proxy = V8Proxy::retrieve(window->frame());
-    ASSERT(proxy);
-
-    v8::Local<v8::Value> result = proxy->Evaluate(prop_name, 0, code, 0);
-    return result;
-  }
-
-  // Search named items in the document.
-  Document* doc = frame->document();
-  if (doc) {
-    RefPtr<HTMLCollection> items = doc->windowNamedItems(prop_name);
-    if (items->length() >= 1) {
-      if (items->length() == 1) {
-        return V8Proxy::NodeToV8Object(items->firstItem());
-      } else {
-        return V8Proxy::ToV8Object(V8ClassIndex::HTMLCOLLECTION, items.get());
-      }
-    }
-  }
-
-  return v8::Handle<v8::Value>();
 }
 
 
@@ -1500,35 +683,6 @@ NAMED_PROPERTY_GETTER(HTMLFrameSetElement)
     return v8::Undefined();
   }
   return v8::Handle<v8::Value>();
-}
-
-
-NAMED_PROPERTY_GETTER(HTMLFormElement) {
-  INC_STATS("DOM.HTMLFormElement.NamedPropertyGetter");
-  HTMLFormElement* imp =
-      V8Proxy::DOMWrapperToNode<HTMLFormElement>(info.Holder());
-  String v = ToWebCoreString(name);
-
-  // Call getNamedElements twice, first time check if it has a value
-  // and let HTMLFormElement update its cache.
-  // See issue: 867404
-  {
-    Vector<RefPtr<Node> > elements;
-    imp->getNamedElements(v, elements);
-    if (elements.size() == 0)
-      return v8::Handle<v8::Value>();
-  }
-  // Second call may return different results from the first call,
-  // but if the first the size cannot be zero.
-  Vector<RefPtr<Node> > elements;
-  imp->getNamedElements(v, elements);
-  ASSERT(elements.size() != 0);
-  if (elements.size() == 1) {
-    return V8Proxy::NodeToV8Object(elements.at(0).get());
-  } else {
-    NodeList* collection = new V8VectorNodeList(elements);
-    return V8Proxy::ToV8Object(V8ClassIndex::NODELIST, collection);
-  }
 }
 
 
@@ -1800,75 +954,6 @@ NAMED_PROPERTY_SETTER(CSSStyleDeclaration) {
   return value;
 }
 
-
-NAMED_PROPERTY_GETTER(HTMLPlugInElement) {
-  INC_STATS("DOM.HTMLPlugInElement.NamedPropertyGetter");
-  HTMLPlugInElement* imp =
-      V8Proxy::DOMWrapperToNode<HTMLPlugInElement>(info.Holder());
-  ScriptInstance script_instance = imp->getInstance();
-  if (script_instance) {
-    v8::Local<v8::Object> instance =
-        v8::Local<v8::Object>::New(script_instance->instance());
-    if (!instance.IsEmpty()) {
-      return NPObjectGetNamedProperty(instance, name);
-    }
-  }
-  return v8::Handle<v8::Object>();
-}
-
-
-NAMED_PROPERTY_SETTER(HTMLPlugInElement) {
-  INC_STATS("DOM.HTMLPlugInElement.NamedPropertySetter");
-  HTMLPlugInElement* imp =
-      V8Proxy::DOMWrapperToNode<HTMLPlugInElement>(info.Holder());
-  ScriptInstance script_instance = imp->getInstance();
-  if (script_instance) {
-    v8::Local<v8::Object> instance =
-        v8::Local<v8::Object>::New(script_instance->instance());
-    if (!instance.IsEmpty()) {
-      return NPObjectSetNamedProperty(instance, name, value);
-    }
-  }
-  return v8::Handle<v8::Value>();  // do not block the call
-}
-
-
-CALLBACK_FUNC_DECL(HTMLPlugInElement) {
-  INC_STATS("DOM.HTMLPluginElement()");
-  return NPObjectInvokeDefaultHandler(args);
-}
-
-
-INDEXED_PROPERTY_GETTER(HTMLPlugInElement) {
-  INC_STATS("DOM.HTMLPlugInElement.IndexedPropertyGetter");
-  HTMLPlugInElement* imp =
-      V8Proxy::DOMWrapperToNode<HTMLPlugInElement>(info.Holder());
-  ScriptInstance script_instance = imp->getInstance();
-  if (script_instance) {
-    v8::Local<v8::Object> instance =
-        v8::Local<v8::Object>::New(script_instance->instance());
-    if (!instance.IsEmpty()) {
-      return NPObjectGetIndexedProperty(instance, index);
-    }
-  }
-  return v8::Handle<v8::Object>();
-}
-
-
-INDEXED_PROPERTY_SETTER(HTMLPlugInElement) {
-  INC_STATS("DOM.HTMLPlugInElement.IndexedPropertySetter");
-  HTMLPlugInElement* imp =
-      V8Proxy::DOMWrapperToNode<HTMLPlugInElement>(info.Holder());
-  ScriptInstance script_instance = imp->getInstance();
-  if (script_instance) {
-    v8::Local<v8::Object> instance =
-        v8::Local<v8::Object>::New(script_instance->instance());
-    if (!instance.IsEmpty()) {
-      return NPObjectSetIndexedProperty(instance, index, value);
-    }
-  }
-  return v8::Handle<v8::Value>();  // do not block the call
-}
 
 NAMED_PROPERTY_GETTER(StyleSheetList) {
   INC_STATS("DOM.StyleSheetList.NamedPropertyGetter");
@@ -2619,6 +1704,9 @@ ACCESSOR_SETTER(HTMLIFrameElementSrc) {
 }
 
 
+// TODO(mbelshe): This should move into V8DOMWindowCustom.cpp
+// Can't move it right now because it depends on V8ScheduledAction,
+// which is private to this file (v8_custom.cpp).
 v8::Handle<v8::Value> V8Custom::WindowSetTimeoutImpl(const v8::Arguments& args,
                                                      bool single_shot) {
   int num_arguments = args.Length();
@@ -2628,8 +1716,14 @@ v8::Handle<v8::Value> V8Custom::WindowSetTimeoutImpl(const v8::Arguments& args,
   DOMWindow* imp = V8Proxy::ToNativeObject<DOMWindow>(
       V8ClassIndex::DOMWINDOW, args.Holder());
 
+  if (!imp->frame())
+    return v8::Undefined();
+
   if (!V8Proxy::CanAccessFrame(imp->frame(), true))
     return v8::Undefined();
+
+  ScriptExecutionContext* script_context = 
+    static_cast<ScriptExecutionContext*>(imp->frame()->document());
 
   v8::Handle<v8::Value> function = args[0];
 
@@ -2644,8 +1738,9 @@ v8::Handle<v8::Value> V8Custom::WindowSetTimeoutImpl(const v8::Arguments& args,
     if (string_function.length() == 0)
       return v8::Undefined();
 
-    id = imp->installTimeout(new V8ScheduledAction(string_function),
-                             timeout, single_shot);
+    id = DOMTimer::install(script_context,
+                           new V8ScheduledAction(string_function), timeout,
+                           single_shot);
   } else if (function->IsFunction()) {
     int param_count = num_arguments >= 2 ? num_arguments - 2 : 0;
     v8::Local<v8::Value>* params = 0;
@@ -2662,24 +1757,12 @@ v8::Handle<v8::Value> V8Custom::WindowSetTimeoutImpl(const v8::Arguments& args,
 
     delete[] params;
 
-    id = imp->installTimeout(action, timeout, single_shot);
+    id = DOMTimer::install(script_context, action, timeout, single_shot);
   } else {
     // TODO(fqian): what's the right return value if failed.
     return v8::Undefined();
   }
   return v8::Integer::New(id);
-}
-
-
-CALLBACK_FUNC_DECL(DOMWindowSetTimeout) {
-  INC_STATS("DOM.DOMWindow.setTimeout()");
-  return WindowSetTimeoutImpl(args, true);
-}
-
-
-CALLBACK_FUNC_DECL(DOMWindowSetInterval) {
-  INC_STATS("DOM.DOMWindow.setInterval()");
-  return WindowSetTimeoutImpl(args, false);
 }
 
 
@@ -3228,116 +2311,6 @@ ACCESSOR_GETTER(ElementEventHandler) {
 
   EventListener* listener = node->inlineEventListenerForType(event_type);
   return V8Proxy::EventListenerToV8Object(listener);
-}
-
-
-ACCESSOR_GETTER(HTMLOptionsCollectionLength) {
-  INC_STATS("DOM.HTMLOptionsCollection.length._get");
-  HTMLOptionsCollection* imp =
-    V8Proxy::ToNativeObject<HTMLOptionsCollection>(
-        V8ClassIndex::HTMLOPTIONSCOLLECTION, info.Holder());
-  int v = imp->length();
-  return v8::Integer::New(v);
-}
-
-
-ACCESSOR_SETTER(HTMLOptionsCollectionLength) {
-  INC_STATS("DOM.HTMLOptionsCollection.length._set");
-  HTMLOptionsCollection* imp =
-    V8Proxy::ToNativeObject<HTMLOptionsCollection>(
-        V8ClassIndex::HTMLOPTIONSCOLLECTION, info.Holder());
-  double v = value->NumberValue();
-  unsigned newLength = 0;
-  ExceptionCode ec = 0;
-  if (!isnan(v) && !isinf(v)) {
-    if (v < 0.0) {
-      ec = INDEX_SIZE_ERR;
-    } else if (v > static_cast<double>(UINT_MAX)) {
-      newLength = UINT_MAX;
-    } else {
-      newLength = static_cast<unsigned>(v);
-    }
-  }
-  if (!ec) imp->setLength(value->Uint32Value(), ec);
-  V8Proxy::SetDOMException(ec);
-}
-
-ACCESSOR_GETTER(HTMLInputElementSelectionStart) {
-  INC_STATS("DOM.HTMLInputElement.selectionStart._get");
-  v8::Handle<v8::Object> holder = info.Holder();
-  HTMLInputElement* imp = V8Proxy::DOMWrapperToNode<HTMLInputElement>(holder);
-
-  if (!imp->canHaveSelection()) {
-    V8Proxy::ThrowError(V8Proxy::TYPE_ERROR,
-                        "Accessing selectionStart on an input element that "
-                        "cannot have a selection.");
-    return v8::Undefined();
-  }
-
-  int v = imp->selectionStart();
-  return v8::Integer::New(v);
-}
-
-ACCESSOR_SETTER(HTMLInputElementSelectionStart) {
-  INC_STATS("DOM.HTMLInputElement.selectionStart._set");
-  v8::Handle<v8::Object> holder = info.Holder();
-  HTMLInputElement* imp = V8Proxy::DOMWrapperToNode<HTMLInputElement>(holder);
-
-  if (!imp->canHaveSelection()) {
-    V8Proxy::ThrowError(V8Proxy::TYPE_ERROR, 
-                        "Accessing selectionStart on an input element that "
-                        "cannot have a selection.");
-    return;
-  }
-  imp->setSelectionStart(value->Int32Value());
-}
-
-ACCESSOR_GETTER(HTMLInputElementSelectionEnd) {
-  INC_STATS("DOM.HTMLInputElement.selectionEnd._get");
-  v8::Handle<v8::Object> holder = info.Holder();
-  HTMLInputElement* imp = V8Proxy::DOMWrapperToNode<HTMLInputElement>(holder);
-
-  if (!imp->canHaveSelection()) {
-    V8Proxy::ThrowError(V8Proxy::TYPE_ERROR,
-                        "Accessing selectionEnd on an input element that "
-                        "cannot have a selection.");
-    return v8::Undefined();
-  }
-
-  int v = imp->selectionEnd();
-  return v8::Integer::New(v);
-}
-
-ACCESSOR_SETTER(HTMLInputElementSelectionEnd) {
-  INC_STATS("DOM.HTMLInputElement.selectionEnd._set");
-  v8::Handle<v8::Object> holder = info.Holder();
-  HTMLInputElement* imp = V8Proxy::DOMWrapperToNode<HTMLInputElement>(holder);
-
-  if (!imp->canHaveSelection()) {
-    V8Proxy::ThrowError(V8Proxy::TYPE_ERROR,
-                        "Accessing selectionEnd on an input element that "
-                        "cannot have a selection.");
-    return;
-  }
-  imp->setSelectionEnd(value->Int32Value());
-}
-
-CALLBACK_FUNC_DECL(HTMLInputElementSetSelectionRange) {
-  INC_STATS("DOM.HTMLInputElement.setSelectionRange");
-  v8::Handle<v8::Object> holder = args.Holder();
-  HTMLInputElement* imp = V8Proxy::DOMWrapperToNode<HTMLInputElement>(holder);
-
-  if (!imp->canHaveSelection()) {
-    V8Proxy::ThrowError(V8Proxy::TYPE_ERROR,
-                        "Calling setSelectionRange on an input element that "
-                        "cannot have a selection.");
-    return v8::Undefined();
-  }
-  int start = args[0]->Int32Value();
-  int end = args[1]->Int32Value();
-
-  imp->setSelectionRange(start, end);
-  return v8::Undefined();
 }
 
 // --------------- Security Checks -------------------------

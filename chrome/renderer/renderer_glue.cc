@@ -12,14 +12,15 @@
 #endif
 
 #include "base/clipboard.h"
-#include "base/command_line.h"
 #include "base/scoped_clipboard_writer.h"
 #include "base/string_util.h"
-#include "chrome/renderer/net/render_dns_master.h"
 #include "chrome/common/chrome_switches.h"
-#include "chrome/common/resource_bundle.h"
 #include "chrome/common/render_messages.h"
+#include "chrome/common/resource_bundle.h"
 #include "chrome/plugin/npobject_util.h"
+#include "chrome/renderer/net/render_dns_master.h"
+#include "chrome/renderer/render_process.h"
+#include "chrome/renderer/render_thread.h"
 #include "chrome/renderer/render_view.h"
 #include "chrome/renderer/visitedlink_slave.h"
 #include "googleurl/src/url_util.h"
@@ -144,8 +145,16 @@ ScopedClipboardWriterGlue::~ScopedClipboardWriterGlue() {
 
 namespace webkit_glue {
 
+// Global variable set during RenderProcess::GlobalInit if video was enabled
+// and our media libraries were successfully loaded.
+static bool g_media_player_available = false;
+
+void SetMediaPlayerAvailable(bool value) {
+  g_media_player_available = value;
+}
+
 bool IsMediaPlayerAvailable() {
-  return CommandLine::ForCurrentProcess()->HasSwitch(switches::kEnableVideo);
+  return g_media_player_available;
 }
 
 void PrefetchDns(const std::string& hostname) {
@@ -164,7 +173,7 @@ void AppendToLog(const char* file, int line, const char* msg) {
   logging::LogMessage(file, line).stream() << msg;
 }
 
-bool GetMimeTypeFromExtension(const std::wstring &ext,
+bool GetMimeTypeFromExtension(const FilePath::StringType &ext,
                               std::string *mime_type) {
   if (IsPluginProcess())
     return net::GetMimeTypeFromExtension(ext, mime_type);
@@ -177,7 +186,7 @@ bool GetMimeTypeFromExtension(const std::wstring &ext,
   return !mime_type->empty();
 }
 
-bool GetMimeTypeFromFile(const std::wstring &file_path,
+bool GetMimeTypeFromFile(const FilePath &file_path,
                          std::string *mime_type) {
   if (IsPluginProcess())
     return net::GetMimeTypeFromFile(file_path, mime_type);
@@ -191,7 +200,7 @@ bool GetMimeTypeFromFile(const std::wstring &file_path,
 }
 
 bool GetPreferredExtensionForMimeType(const std::string& mime_type,
-                                      std::wstring* ext) {
+                                      FilePath::StringType* ext) {
   if (IsPluginProcess())
     return net::GetPreferredExtensionForMimeType(mime_type, ext);
 
@@ -287,16 +296,7 @@ uint64 VisitedLinkHash(const char* canonical_url, size_t length) {
 }
 
 bool IsLinkVisited(uint64 link_hash) {
-#if defined(OS_WIN)
   return g_render_thread->visited_link_slave()->IsVisited(link_hash);
-#elif defined(OS_POSIX)
-  // TODO(port): Currently we don't have a HistoryService. This stops the
-  // VisitiedLinkMaster from sucessfully calling Init(). In that case, no
-  // message is ever sent to the renderer with the VisitiedLink shared memory
-  // region and we end up crashing with SIGFPE as we try to hash by taking a
-  // fingerprint mod 0.
-  return false;
-#endif
 }
 
 int ResolveProxyFromRenderThread(const GURL& url, std::string* proxy_result) {
@@ -372,4 +372,3 @@ void NotifyCacheStats() {
 #endif  // !USING_SIMPLE_RESOURCE_LOADER_BRIDGE
 
 }  // namespace webkit_glue
-

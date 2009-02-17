@@ -12,6 +12,7 @@
 #include "base/string_util.h"
 #include "base/sys_info.h"
 #include "chrome/app/result_codes.h"
+#include "chrome/browser/autocomplete/autocomplete.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/extensions/extensions_service.h"
@@ -20,7 +21,10 @@
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/search_engines/template_url_model.h"
 #include "chrome/browser/session_startup_pref.h"
+#include "chrome/browser/sessions/session_restore.h"
+#include "chrome/browser/tab_contents/infobar_delegate.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
+#include "chrome/browser/net/url_fixer_upper.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
@@ -34,12 +38,9 @@
 
 #include "base/win_util.h"
 #include "chrome/app/locales/locale_settings.h"
-#include "chrome/app/theme/theme_resources.h"
+#include "grit/theme_resources.h"
 #include "chrome/browser/automation/automation_provider.h"
 #include "chrome/browser/automation/automation_provider_list.h"
-#include "chrome/browser/net/url_fixer_upper.h"
-#include "chrome/browser/sessions/session_restore.h"
-#include "chrome/browser/tab_contents/infobar_delegate.h"
 #include "chrome/common/resource_bundle.h"
 
 #include "chromium_strings.h"
@@ -424,7 +425,7 @@ bool BrowserInit::ProcessCommandLine(
       if (StringToInt(popup_count_string, &count)) {
         const int popup_count = std::max(0, count);
         AutocompleteResult::set_max_matches(popup_count);
-        AutocompleteProvider::set_max_matches(popup_count / 2);       
+        AutocompleteProvider::set_max_matches(popup_count / 2);
       }
     }
 
@@ -440,7 +441,7 @@ bool BrowserInit::ProcessCommandLine(
         SessionRestore::num_tabs_to_load_ = static_cast<size_t>(tab_count);
       }
     }
-    
+
 #if defined(OS_WIN)
     // Look for the testing channel ID ONLY during process startup
     if (command_line.HasSwitch(switches::kTestingChannelID)) {
@@ -505,7 +506,7 @@ bool BrowserInit::ProcessCommandLine(
   }
   return true;
 }
-  
+
 bool BrowserInit::LaunchBrowser(const CommandLine& command_line,
                                 Profile* profile, const std::wstring& cur_dir,
                                 bool process_startup, int* return_code) {
@@ -538,7 +539,7 @@ bool BrowserInit::LaunchBrowserImpl(const CommandLine& command_line,
                                     bool process_startup,
                                     int* return_code) {
   DCHECK(profile);
-  
+
   // Continue with the off-the-record profile from here on if --incognito
   if (command_line.HasSwitch(switches::kIncognito))
     profile = profile->GetOffTheRecordProfile();

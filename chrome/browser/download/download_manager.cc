@@ -126,7 +126,7 @@ DownloadItem::DownloadItem(const DownloadCreateInfo& info)
 DownloadItem::DownloadItem(int32 download_id,
                            const FilePath& path,
                            int path_uniquifier,
-                           const std::wstring& url,
+                           const GURL& url,
                            const FilePath& original_name,
                            const base::Time start_time,
                            int64 download_size,
@@ -622,7 +622,7 @@ void DownloadManager::OnPathExistenceAvailable(DownloadCreateInfo* info) {
     std::wstring filter =
         win_util::GetFileFilterFromPath(info->suggested_path.value());
     HWND owning_hwnd =
-        contents ? GetAncestor(contents->GetContainerHWND(), GA_ROOT) : NULL;
+        contents ? GetAncestor(contents->GetNativeView(), GA_ROOT) : NULL;
     select_file_dialog_->SelectFile(SelectFileDialog::SELECT_SAVEAS_FILE,
                                     std::wstring(),
                                     info->suggested_path.ToWStringHack(),
@@ -1080,7 +1080,7 @@ void DownloadManager::GenerateExtension(
     extension.assign(default_extension);
 
   std::string mime_type_from_extension;
-  net::GetMimeTypeFromFile(file_name.ToWStringHack(),
+  net::GetMimeTypeFromFile(file_name,
                            &mime_type_from_extension);
   if (mime_type == mime_type_from_extension) {
     // The hinted extension matches the mime type.  It looks like a winner.
@@ -1198,11 +1198,11 @@ static const char* kExecutableBlackList[] = {
 
 // static
 bool DownloadManager::IsExecutableMimeType(const std::string& mime_type) {
-  for (int i=0; i < arraysize(kExecutableWhiteList); ++i) {
+  for (size_t i = 0; i < arraysize(kExecutableWhiteList); ++i) {
     if (net::MatchesMimeType(kExecutableWhiteList[i], mime_type))
       return true;
   }
-  for (int i=0; i < arraysize(kExecutableBlackList); ++i) {
+  for (size_t i = 0; i < arraysize(kExecutableBlackList); ++i) {
     if (net::MatchesMimeType(kExecutableBlackList[i], mime_type))
       return false;
   }

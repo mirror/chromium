@@ -18,9 +18,9 @@
 
 #include "webkit/glue/webwidget_delegate.h"
 #include "webkit/glue/webcursor.h"
-#include "webkit/glue/webplugin.h"
 
 class RenderThreadBase;
+struct WebPluginGeometry;
 
 // RenderWidget provides a communication bridge between a WebWidget and
 // a RenderWidgetHost, the latter of which lives in a different process.
@@ -120,7 +120,7 @@ class RenderWidget : public IPC::Channel::Listener,
   // RenderWidget IPC message handlers
   void OnClose();
   void OnCreatingNewAck(gfx::NativeViewId parent);
-  void OnResize(const gfx::Size& new_size);
+  void OnResize(const gfx::Size& new_size, const gfx::Rect& resizer_rect);
   void OnWasHidden();
   void OnWasRestored(bool needs_repainting);
   void OnPaintRectAck();
@@ -165,7 +165,8 @@ class RenderWidget : public IPC::Channel::Listener,
   // RenderWidgetHost. When MSG_ROUTING_NONE, no messages may be sent.
   int32 routing_id_;
 
-  scoped_refptr<WebWidget> webwidget_;
+  // We are responsible for destroying this object via its Close method.
+  WebWidget* webwidget_;
 
   // Set to the ID of the view that initiated creating this view, if any. When
   // the view was initiated by the browser (the common case), this will be
@@ -203,6 +204,9 @@ class RenderWidget : public IPC::Channel::Listener,
   // The clip rect for the pending scroll event.  This is non-empty if a
   // scroll event is pending.
   gfx::Rect scroll_rect_;
+
+  // The area that must be reserved for drawing the resize corner.
+  gfx::Rect resizer_rect_;
 
   // The scroll delta for a pending scroll event.
   gfx::Point scroll_delta_;
@@ -262,4 +266,4 @@ class RenderWidget : public IPC::Channel::Listener,
   DISALLOW_EVIL_CONSTRUCTORS(RenderWidget);
 };
 
-#endif // CHROME_RENDERER_RENDER_WIDGET_H__
+#endif  // CHROME_RENDERER_RENDER_WIDGET_H__

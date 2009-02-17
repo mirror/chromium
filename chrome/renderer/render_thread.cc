@@ -2,8 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "build/build_config.h"
+
 #if defined(OS_WIN)
 #include <windows.h>
+#include <objbase.h>
 #endif
 #include <algorithm>
 
@@ -164,13 +167,13 @@ void RenderThread::CleanUp() {
 }
 
 void RenderThread::OnUpdateVisitedLinks(base::SharedMemoryHandle table) {
-  DCHECK(table) << "Bad table handle";
+  DCHECK(base::SharedMemory::IsHandleValid(table)) << "Bad table handle";
   visited_link_slave_->Init(table);
 }
 
 void RenderThread::OnUpdateUserScripts(
     base::SharedMemoryHandle scripts) {
-  DCHECK(scripts) << "Bad scripts handle";
+  DCHECK(base::SharedMemory::IsHandleValid(scripts)) << "Bad scripts handle";
   user_script_slave_->UpdateScripts(scripts);
 }
 
@@ -235,10 +238,6 @@ void RenderThread::OnCreateNewView(gfx::NativeViewId parent_hwnd,
       true, false);
 #endif
 
-#if defined(OS_MACOSX)
-  // TODO(jrg): causes a crash.
-  if (0)
-#endif
   // TODO(darin): once we have a RenderThread per RenderView, this will need to
   // change to assert that we are not creating more than one view.
   RenderView::Create(

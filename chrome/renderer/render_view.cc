@@ -26,17 +26,21 @@
 #include "chrome/renderer/about_handler.h"
 #include "chrome/renderer/debug_message_handler.h"
 #include "chrome/renderer/localized_error.h"
-#include "chrome/renderer/renderer_resources.h"
+#include "chrome/renderer/render_process.h"
 #include "chrome/renderer/user_script_slave.h"
 #include "chrome/renderer/visitedlink_slave.h"
 #include "chrome/renderer/webmediaplayer_delegate_impl.h"
+#include "chrome/renderer/webplugin_delegate_proxy.h"
 #include "net/base/escape.h"
 #include "net/base/net_errors.h"
 #include "skia/ext/bitmap_platform_device.h"
 #include "skia/ext/image_operations.h"
+#include "webkit/default_plugin/default_plugin_shared.h"
 #include "webkit/glue/dom_operations.h"
 #include "webkit/glue/dom_serializer.h"
+#include "webkit/glue/glue_accessibility.h"
 #include "webkit/glue/password_form.h"
+#include "webkit/glue/plugins/plugin_list.h"
 #include "webkit/glue/searchable_form_data.h"
 #include "webkit/glue/webdatasource.h"
 #include "webkit/glue/webdropdata.h"
@@ -46,11 +50,13 @@
 #include "webkit/glue/webinputevent.h"
 #include "webkit/glue/webkit_glue.h"
 #include "webkit/glue/webpreferences.h"
+#include "webkit/glue/webplugin_delegate.h"
 #include "webkit/glue/webresponse.h"
 #include "webkit/glue/weburlrequest.h"
 #include "webkit/glue/webview.h"
 
 #include "generated_resources.h"
+#include "grit/renderer_resources.h"
 
 #if defined(OS_WIN)
 // TODO(port): these files are currently Windows only because they concern:
@@ -64,11 +70,7 @@
 #include "chrome/views/message_box_view.h"
 #include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/renderer/chrome_plugin_host.h"
-#include "chrome/renderer/webplugin_delegate_proxy.h"
 #include "skia/ext/vector_canvas.h"
-#include "webkit/default_plugin/default_plugin_shared.h"
-#include "webkit/glue/plugins/plugin_list.h"
-#include "webkit/glue/plugins/webplugin_delegate_impl.h"
 #endif
 
 using base::TimeDelta;
@@ -186,17 +188,12 @@ RenderView::~RenderView() {
     shared_popup_counter_->data--;
 
   resource_dispatcher_->ClearMessageSender();
-#if defined(OS_WIN)
   // Clear any back-pointers that might still be held by plugins.
   PluginDelegateList::iterator it = plugin_delegates_.begin();
   while (it != plugin_delegates_.end()) {
     (*it)->DropRenderView();
     it = plugin_delegates_.erase(it);
   }
-#else
-  // TODO(port): plugins not implemented yet
-  NOTIMPLEMENTED();
-#endif
 
   render_thread_->RemoveFilter(debug_message_handler_);
 
@@ -285,9 +282,7 @@ void RenderView::Init(gfx::NativeViewId parent_hwnd,
     decrement_shared_popup_at_destruction_ = false;
   }
 
-  // Avoid a leak here by not assigning, since WebView::Create addrefs for us.
-  WebWidget* view = WebView::Create(this, webkit_prefs);
-  webwidget_.swap(&view);
+  webwidget_ = WebView::Create(this, webkit_prefs);
 
   // Don't let WebCore keep a B/F list - we have our own.
   // We let it keep 1 entry because FrameLoader::goToItem expects an item in the
@@ -1459,15 +1454,9 @@ void RenderView::DidFinishDocumentLoadForFrame(WebView* webview,
   // Check whether we have new encoding name.
   UpdateEncoding(frame, webview->GetMainFrameEncodingName());
 
-  // Inject any user scripts. Do not inject into chrome UI pages, but do inject
-  // into any other document.
-  const GURL &gurl = frame->GetURL();
-  if (g_render_thread &&  // Will be NULL when testing.
-      (gurl.SchemeIs("file") ||
-       gurl.SchemeIs("http") ||
-       gurl.SchemeIs("https"))) {
-    g_render_thread->user_script_slave()->InjectScripts(frame);
-  }
+  if (g_render_thread)  // Will be NULL during unit tests.
+    g_render_thread->user_script_slave()->InjectScripts(
+        frame, UserScript::DOCUMENT_END);
 }
 
 void RenderView::DidHandleOnloadEventsForFrame(WebView* webview,
@@ -1533,6 +1522,12 @@ void RenderView::WindowObjectCleared(WebFrame* webframe) {
   Personalization::ConfigureRendererPersonalization(personalization_, this,
                                                     routing_id_, webframe);
 #endif
+}
+
+void RenderView::DocumentElementAvailable(WebFrame* frame) {
+  if (g_render_thread)  // Will be NULL during unit tests.
+    g_render_thread->user_script_slave()->InjectScripts(
+        frame, UserScript::DOCUMENT_START);
 }
 
 WindowOpenDisposition RenderView::DispositionForNavigationAction(
@@ -1898,9 +1893,9 @@ WebPluginDelegate* RenderView::CreatePluginDelegate(
 
     if (is_gears)
       ChromePluginLib::Create(path, GetCPBrowserFuncsForRenderer());
-    return WebPluginDelegateImpl::Create(path,
-                                         mime_type_to_use,
-                                         gfx::NativeViewFromId(host_window_));
+    return WebPluginDelegate::Create(path,
+                                     mime_type_to_use,
+                                     gfx::NativeViewFromId(host_window_));
   }
 
   WebPluginDelegateProxy* proxy =
@@ -2625,28 +2620,18 @@ void RenderView::OnSetAltErrorPageURL(const GURL& url) {
 }
 
 void RenderView::DidPaint() {
-#if defined(OS_WIN)
   PluginDelegateList::iterator it = plugin_delegates_.begin();
   while (it != plugin_delegates_.end()) {
     (*it)->FlushGeometryUpdates();
     ++it;
   }
-#else  // defined(OS_WIN)
-  // TODO(port): plugins not yet implemented
-  NOTIMPLEMENTED();
-#endif
 }
 
 void RenderView::OnInstallMissingPlugin() {
-#if defined(OS_WIN)
   // This could happen when the first default plugin is deleted.
   if (first_default_plugin_ == NULL)
     return;
   first_default_plugin_->InstallMissingPlugin();
-#else  // defined(OS_WIN)
-  // TODO(port): plugins not yet implemented
-  NOTIMPLEMENTED();
-#endif
 }
 
 void RenderView::OnFileChooserResponse(
@@ -2731,7 +2716,7 @@ void RenderView::OnGetAllSavableResourceLinksForCurrentPage(
 }
 
 void RenderView::OnGetSerializedHtmlDataForCurrentPageWithLocalLinks(
-    const std::vector<std::wstring>& links,
+    const std::vector<GURL>& links,
     const std::vector<std::wstring>& local_paths,
     const std::wstring& local_directory_name) {
   webkit_glue::DomSerializer dom_serializer(webview()->GetMainFrame(),
@@ -2869,4 +2854,12 @@ std::string RenderView::GetAltHTMLForTemplate(
   NOTIMPLEMENTED();
   return std::string();
 #endif  // OS_WIN
+}
+
+MessageLoop* RenderView::GetMessageLoopForIO() {
+  // Assume that we have only one RenderThread in the process and the owner loop
+  // of RenderThread is an IO message loop.
+  if (g_render_thread)
+    return g_render_thread->owner_loop();
+  return NULL;
 }

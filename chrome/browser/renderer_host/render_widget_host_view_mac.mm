@@ -11,6 +11,7 @@
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/render_widget_host.h"
 #include "skia/ext/platform_canvas.h"
+#include "webkit/glue/webinputevent.h"
 
 @interface RenderWidgetHostViewCocoa (Private)
 - (id)initWithRenderWidgetHostViewMac:(RenderWidgetHostViewMac*)r;
@@ -44,10 +45,6 @@ RenderWidgetHostViewMac::RenderWidgetHostViewMac(RenderWidgetHost* widget)
 }
 
 RenderWidgetHostViewMac::~RenderWidgetHostViewMac() {
-}
-
-gfx::NativeView RenderWidgetHostViewMac::GetNativeView() const {
-  return cocoa_view_;
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -128,17 +125,27 @@ gfx::Rect RenderWidgetHostViewMac::GetViewBounds() const {
 }
 
 void RenderWidgetHostViewMac::UpdateCursor(const WebCursor& cursor) {
-//  current_cursor_ = cursor;  // temporarily commented for link issues
+  current_cursor_ = cursor;
   UpdateCursorIfOverSelf();
 }
 
 void RenderWidgetHostViewMac::UpdateCursorIfOverSelf() {
-  // Do something special (as Windows does) for arrow cursor while loading a
-  // page? TODO(avi): decide
-  // TODO(avi): check to see if mouse pointer is within our bounds
-  // Disabled so we don't have to link in glue... yet
-//  NSCursor* ns_cursor = current_cursor_.GetCursor();
-//  [ns_cursor set];
+  // Do something special (as Win Chromium does) for arrow cursor while loading
+  // a page? TODO(avi): decide
+  // Can we synchronize to the event stream? Switch to -[NSWindow
+  // mouseLocationOutsideOfEventStream] if we cannot. TODO(avi): test and see
+  NSEvent* event = [[cocoa_view_ window] currentEvent];
+  if ([event window] != [cocoa_view_ window])
+    return;
+  
+  NSPoint event_location = [event locationInWindow];
+  NSPoint local_point = [cocoa_view_ convertPoint:event_location fromView:nil];
+  
+  if (!NSPointInRect(local_point, [cocoa_view_ bounds]))
+    return;
+  
+  NSCursor* ns_cursor = current_cursor_.GetCursor();
+  [ns_cursor set];
 }
 
 void RenderWidgetHostViewMac::SetIsLoading(bool is_loading) {
@@ -209,7 +216,7 @@ void RenderWidgetHostViewMac::ShutdownHost() {
 // them into the C++ system. TODO(avi): all that jazz
 
 - (id)initWithRenderWidgetHostViewMac:(RenderWidgetHostViewMac*)r {
-  self = [super init];
+  self = [super initWithFrame:NSZeroRect];
   if (self != nil) {
     renderWidgetHostView_ = r;
   }
@@ -220,6 +227,21 @@ void RenderWidgetHostViewMac::ShutdownHost() {
   delete renderWidgetHostView_;
   
   [super dealloc];
+}
+
+- (void)mouseEvent:(NSEvent *)theEvent {
+  WebMouseEvent event(theEvent, self);
+  renderWidgetHostView_->render_widget_host()->ForwardMouseEvent(event);
+}
+
+- (void)keyEvent:(NSEvent *)theEvent {
+  WebKeyboardEvent event(theEvent);
+  renderWidgetHostView_->render_widget_host()->ForwardKeyboardEvent(event);
+}
+
+- (void)scrollWheel:(NSEvent *)theEvent {
+  WebMouseWheelEvent event(theEvent, self);
+  renderWidgetHostView_->render_widget_host()->ForwardWheelEvent(event);
 }
 
 - (void)drawRect:(NSRect)dirtyRect {

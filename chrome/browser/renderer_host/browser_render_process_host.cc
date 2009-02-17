@@ -24,6 +24,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/cache_manager_host.h"
 #include "chrome/browser/extensions/user_script_master.h"
+#include "chrome/browser/history/history.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/renderer_host/render_widget_helper.h"
 #include "chrome/browser/renderer_host/renderer_security_policy.h"
@@ -45,7 +46,6 @@
 // TODO(port): see comment by the only usage of RenderViewHost in this file.
 #include "chrome/browser/renderer_host/render_view_host.h"
 
-#include "chrome/browser/history/history.h"
 #include "chrome/browser/spellchecker.h"
 
 // Once the above TODO is finished, then this block is all Windows-specific
@@ -155,6 +155,10 @@ BrowserRenderProcessHost::~BrowserRenderProcessHost() {
   // We may have some unsent messages at this point, but that's OK.
   channel_.reset();
 
+  // Destroy the AudioRendererHost properly.
+  if (audio_renderer_host_.get())
+    audio_renderer_host_->Destroy();
+
   if (process_.handle() && !run_renderer_in_process()) {
     ProcessWatcher::EnsureProcessTerminated(process_.handle());
   }
@@ -195,8 +199,13 @@ bool BrowserRenderProcessHost::Init() {
   // run the IPC channel on the shared IO thread.
   base::Thread* io_thread = g_browser_process->io_thread();
 
+  // Construct the AudioRendererHost with the IO thread.
+  audio_renderer_host_ =
+      new AudioRendererHost(io_thread->message_loop());
+
   scoped_refptr<ResourceMessageFilter> resource_message_filter =
       new ResourceMessageFilter(g_browser_process->resource_dispatcher_host(),
+                                audio_renderer_host_.get(),
                                 PluginService::GetInstance(),
                                 g_browser_process->print_job_manager(),
                                 host_id(),
@@ -282,7 +291,7 @@ bool BrowserRenderProcessHost::Init() {
 #if defined(OS_WIN)
   bool child_needs_help =
       DebugFlags::ProcessDebugFlags(&cmd_line,
-                                    DebugFlags::RENDERER,
+                                    ChildProcessInfo::RENDER_PROCESS,
                                     in_sandbox);
 #elif defined(OS_POSIX)
   if (browser_command_line.HasSwitch(switches::kRendererCmdPrefix)) {
@@ -515,18 +524,14 @@ void BrowserRenderProcessHost::InitVisitedLinks() {
     return;
   }
 
-#if defined(OS_WIN)
-  base::SharedMemoryHandle handle_for_process = NULL;
-  visitedlink_master->ShareToProcess(GetRendererProcessHandle(),
-                                     &handle_for_process);
-  DCHECK(handle_for_process);
-  if (handle_for_process) {
+  base::SharedMemoryHandle handle_for_process;
+  bool r = visitedlink_master->ShareToProcess(GetRendererProcessHandle(),
+                                              &handle_for_process);
+  DCHECK(r);
+
+  if (base::SharedMemory::IsHandleValid(handle_for_process)) {
     channel_->Send(new ViewMsg_VisitedLink_NewTable(handle_for_process));
   }
-#else
-  // TODO(port): ShareToProcess is Windows-specific.
-  NOTIMPLEMENTED();
-#endif
 }
 
 void BrowserRenderProcessHost::InitUserScripts() {
@@ -544,11 +549,11 @@ void BrowserRenderProcessHost::InitUserScripts() {
 
 void BrowserRenderProcessHost::SendUserScriptsUpdate(
     base::SharedMemory *shared_memory) {
-  base::SharedMemoryHandle handle_for_process = NULL;
-  shared_memory->ShareToProcess(GetRendererProcessHandle(),
-                                &handle_for_process);
-  DCHECK(handle_for_process);
-  if (handle_for_process) {
+  base::SharedMemoryHandle handle_for_process;
+  bool r = shared_memory->ShareToProcess(GetRendererProcessHandle(),
+                                         &handle_for_process);
+  DCHECK(r);
+  if (base::SharedMemory::IsHandleValid(handle_for_process)) {
     channel_->Send(new ViewMsg_UserScripts_NewScripts(handle_for_process));
   }
 }

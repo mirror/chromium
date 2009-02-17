@@ -13,6 +13,7 @@
 #include "chrome/browser/chrome_thread.h"
 #include "chrome/browser/net/dns_global.h"
 #include "chrome/browser/profile.h"
+#include "chrome/browser/renderer_host/audio_renderer_host.h"
 #include "chrome/browser/renderer_host/browser_render_process_host.h"
 #include "chrome/browser/renderer_host/render_widget_helper.h"
 #include "chrome/common/chrome_plugin_lib.h"
@@ -92,6 +93,7 @@ class WriteClipboardTask : public Task {
 
 ResourceMessageFilter::ResourceMessageFilter(
     ResourceDispatcherHost* resource_dispatcher_host,
+    AudioRendererHost* audio_renderer_host,
     PluginService* plugin_service,
     printing::PrintJobManager* print_job_manager,
     int render_process_host_id,
@@ -108,7 +110,8 @@ ResourceMessageFilter::ResourceMessageFilter(
       render_handle_(NULL),
       request_context_(profile->GetRequestContext()),
       profile_(profile),
-      render_widget_helper_(render_widget_helper) {
+      render_widget_helper_(render_widget_helper),
+      audio_renderer_host_(audio_renderer_host) {
 
   DCHECK(request_context_.get());
   DCHECK(request_context_->cookie_store());
@@ -205,8 +208,6 @@ bool ResourceMessageFilter::OnMessageReceived(const IPC::Message& message) {
 #if defined(OS_WIN)
     IPC_MESSAGE_HANDLER(ViewHostMsg_GetWindowRect, OnGetWindowRect)
     IPC_MESSAGE_HANDLER(ViewHostMsg_GetRootWindowRect, OnGetRootWindowRect)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_GetRootWindowResizerRect,
-                        OnGetRootWindowResizerRect)
 #endif
     IPC_MESSAGE_HANDLER(ViewHostMsg_GetMimeTypeFromExtension,
                         OnGetMimeTypeFromExtension)
@@ -225,6 +226,13 @@ bool ResourceMessageFilter::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER_DELAY_REPLY(ViewHostMsg_ScriptedPrint,
                                     OnScriptedPrint)
 #endif
+    IPC_MESSAGE_HANDLER(ViewHostMsg_CreateAudioStream, OnCreateAudioStream)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_StartAudioStream, OnStartAudioStream)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_CloseAudioStream, OnCloseAudioStream)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_NotifyAudioPacketReady,
+                        OnNotifyAudioPacketReady)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_GetAudioVolume, OnGetAudioVolume)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_SetAudioVolume, OnSetAudioVolume)
     IPC_MESSAGE_UNHANDLED(
         handled = false)
   IPC_END_MESSAGE_MAP_EX()
@@ -541,26 +549,20 @@ void ResourceMessageFilter::OnGetRootWindowRect(gfx::NativeViewId window_id,
   *rect = window_rect;
 }
 
-void ResourceMessageFilter::OnGetRootWindowResizerRect(gfx::NativeViewId window,
-                                                       gfx::Rect* rect) {
-  RECT window_rect = {0};
-  *rect = window_rect;
-}
-
 #endif  // OS_WIN
 
 void ResourceMessageFilter::OnGetMimeTypeFromExtension(
-    const std::wstring& ext, std::string* mime_type) {
+    const FilePath::StringType& ext, std::string* mime_type) {
   net::GetMimeTypeFromExtension(ext, mime_type);
 }
 
 void ResourceMessageFilter::OnGetMimeTypeFromFile(
-    const std::wstring& file_path, std::string* mime_type) {
+    const FilePath& file_path, std::string* mime_type) {
   net::GetMimeTypeFromFile(file_path, mime_type);
 }
 
 void ResourceMessageFilter::OnGetPreferredExtensionForMimeType(
-    const std::string& mime_type, std::wstring* ext) {
+    const std::string& mime_type, FilePath::StringType* ext) {
   net::GetPreferredExtensionForMimeType(mime_type, ext);
 }
 
@@ -755,4 +757,39 @@ void ResourceMessageFilter::Observe(NotificationType type,
 void ResourceMessageFilter::OnDnsPrefetch(
     const std::vector<std::string>& hostnames) {
   chrome_browser_net::DnsPrefetchList(hostnames);
+}
+
+void ResourceMessageFilter::OnCreateAudioStream(
+   const IPC::Message& msg, int stream_id,
+   const ViewHostMsg_Audio_CreateStream& params) {
+  // TODO(hclam): call to AudioRendererHost::CreateStream and send a message to
+  // renderer to notify the result.
+}
+
+void ResourceMessageFilter::OnNotifyAudioPacketReady(
+    const IPC::Message& msg, int stream_id) {
+  // TODO(hclam): delegate to AudioRendererHost and handle this message.
+}
+
+void ResourceMessageFilter::OnStartAudioStream(
+    const IPC::Message& msg, int stream_id) {
+  // TODO(hclam): delegate to AudioRendererHost and handle this message.
+}
+
+
+void ResourceMessageFilter::OnCloseAudioStream(
+    const IPC::Message& msg, int stream_id) {
+  // TODO(hclam): delegate to AudioRendererHost and handle this message.
+}
+
+void ResourceMessageFilter::OnGetAudioVolume(
+    const IPC::Message& msg, int stream_id) {
+  // TODO(hclam): delegate to AudioRendererHost and handle this message. Send
+  // a message about the volume.
+}
+
+void ResourceMessageFilter::OnSetAudioVolume(
+    const IPC::Message& msg, int stream_id,
+    double left_channel, double right_channel) {
+  // TODO(hclam): delegate to AudioRendererHost and handle this message.
 }

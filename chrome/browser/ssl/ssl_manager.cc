@@ -6,44 +6,52 @@
 
 #include "base/message_loop.h"
 #include "base/string_util.h"
-#include "chrome/app/theme/theme_resources.h"
+#include "grit/theme_resources.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/load_notification_details.h"
 #include "chrome/browser/load_from_memory_cache_details.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/renderer_host/resource_request_details.h"
 #include "chrome/browser/ssl/ssl_error_info.h"
-#include "chrome/browser/ssl/ssl_policy.h"
-#include "chrome/browser/tab_contents/infobar_delegate.h"
+#include "chrome/browser/ssl/ssl_host_state.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/provisional_load_details.h"
-#include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/browser/tab_contents/tab_util.h"
 #include "chrome/browser/tab_contents/web_contents.h"
+#include "chrome/browser/ssl/ssl_policy.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
-#include "chrome/views/decision.h"
-#include "chrome/views/link.h"
 #include "net/base/cert_status_flags.h"
 #include "net/base/net_errors.h"
 #include "net/url_request/url_request.h"
 #include "webkit/glue/resource_type.h"
 #include "generated_resources.h"
 
+#if defined(OS_WIN)
+// TODO(port): Port these files.
+#include "chrome/browser/load_notification_details.h"
+#include "chrome/browser/tab_contents/infobar_delegate.h"
+#include "chrome/browser/tab_contents/tab_contents.h"
+#include "chrome/views/decision.h"
+#include "chrome/views/link.h"
+#else
+#include "chrome/common/temp_scaffolding_stubs.h"
+#endif
+
+
 class SSLInfoBarDelegate : public ConfirmInfoBarDelegate {
  public:
-   SSLInfoBarDelegate(TabContents* contents,
-                      const std::wstring message,
-                      const std::wstring& button_label,
-                      Task* task)
-      : ConfirmInfoBarDelegate(contents),
-        message_(message),
-        button_label_(button_label),
-        task_(task) {
+  SSLInfoBarDelegate(TabContents* contents,
+                     const std::wstring message,
+                     const std::wstring& button_label,
+                     Task* task)
+    : ConfirmInfoBarDelegate(contents),
+      message_(message),
+      button_label_(button_label),
+      task_(task) {
   }
   virtual ~SSLInfoBarDelegate() {}
 
@@ -93,8 +101,9 @@ void SSLManager::RegisterUserPrefs(PrefService* prefs) {
 }
 
 SSLManager::SSLManager(NavigationController* controller, Delegate* delegate)
-    : controller_(controller),
-      delegate_(delegate) {
+    : delegate_(delegate),
+      controller_(controller),
+      ssl_host_state_(controller->profile()->GetSSLHostState()) {
   DCHECK(controller_);
 
   // If do delegate is supplied, use the default policy.
@@ -184,33 +193,27 @@ void SSLManager::AddMessageToConsole(const std::wstring& msg,
 void SSLManager::DenyCertForHost(net::X509Certificate* cert,
                                  const std::string& host) {
   // Remember that we don't like this cert for this host.
-  // TODO(abarth): Do we want to persist this information in the user's profile?
-  cert_policy_for_host_[host].Deny(cert);
+  ssl_host_state_->DenyCertForHost(cert, host);
 }
 
 // Delegate API method.
 void SSLManager::AllowCertForHost(net::X509Certificate* cert,
                                   const std::string& host) {
-  // Remember that we do like this cert for this host.
-  // TODO(abarth): Do we want to persist this information in the user's profile?
-  cert_policy_for_host_[host].Allow(cert);
+  ssl_host_state_->AllowCertForHost(cert, host);
 }
 
 // Delegate API method.
 net::X509Certificate::Policy::Judgment SSLManager::QueryPolicy(
     net::X509Certificate* cert, const std::string& host) {
-  // TODO(abarth): Do we want to read this information from the user's profile?
-  return cert_policy_for_host_[host].Check(cert);
+  return ssl_host_state_->QueryPolicy(cert, host);
 }
 
 bool SSLManager::CanShowInsecureContent(const GURL& url) {
-  // TODO(jcampan): Do we want to read this information from the user's profile?
-  return (can_show_insecure_content_for_host_.find(url.host()) !=
-      can_show_insecure_content_for_host_.end());
+  return ssl_host_state_->CanShowInsecureContent(url);
 }
 
 void SSLManager::AllowShowInsecureContentForURL(const GURL& url) {
-  can_show_insecure_content_for_host_.insert(url.host());
+  ssl_host_state_->AllowShowInsecureContentForURL(url);
 }
 
 bool SSLManager::ProcessedSSLErrorFromRequest() const {
@@ -232,10 +235,10 @@ SSLManager::ErrorHandler::ErrorHandler(ResourceDispatcherHost* rdh,
     : ui_loop_(ui_loop),
       io_loop_(MessageLoop::current()),
       manager_(NULL),
-      resource_dispatcher_host_(rdh),
-      request_has_been_notified_(false),
       request_id_(0, 0),
-      request_url_(request->url()) {
+      resource_dispatcher_host_(rdh),
+      request_url_(request->url()),
+      request_has_been_notified_(false) {
   DCHECK(MessageLoop::current() != ui_loop);
 
   ResourceDispatcherHost::ExtraRequestInfo* info =
@@ -602,7 +605,7 @@ void SSLManager::DidCommitProvisionalLoad(
       // If the frame has been blocked we keep our security style as
       // authenticated in that case as nothing insecure is actually showing or
       // loaded.
-      if (!details->is_content_filtered && 
+      if (!details->is_content_filtered &&
           !details->entry->ssl().has_mixed_content()) {
         details->entry->ssl().set_has_mixed_content();
         changed = true;

@@ -10,8 +10,8 @@
 
 #include "chrome/browser/webdata/web_data_service.h"
 #include "chrome/common/pref_member.h"
-#include "webkit/glue/autofill_form.h"
 
+class AutofillForm;
 class Profile;
 class WebContents;
 
@@ -41,6 +41,8 @@ class AutofillManager : public WebDataServiceConsumer {
   // WebDataServiceConsumer implementation.
   virtual void OnWebDataServiceRequestDone(WebDataService::Handle h,
                                            const WDTypedResult* result);
+
+  static void RegisterUserPrefs(PrefService* prefs);
 
  private:
   void StoreFormEntriesInWebDatabase(const AutofillForm& form);

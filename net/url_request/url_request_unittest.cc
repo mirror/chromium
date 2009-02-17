@@ -55,10 +55,10 @@ class URLRequestHttpCacheContext : public URLRequestContext {
 
 class TestURLRequest : public URLRequest {
  public:
-   TestURLRequest(const GURL& url, Delegate* delegate)
-       : URLRequest(url, delegate) {
-     set_context(new URLRequestHttpCacheContext());
-   }
+  TestURLRequest(const GURL& url, Delegate* delegate)
+      : URLRequest(url, delegate) {
+    set_context(new URLRequestHttpCacheContext());
+  }
 };
 
 StringPiece TestNetResourceProvider(int key) {
@@ -82,6 +82,59 @@ bool ContainsString(const std::string& haystack, const char* needle) {
 class URLRequestTest : public PlatformTest {
 };
 
+TEST_F(URLRequestTest, ProxyTunnelRedirectTest) {
+  // In this unit test, we're using the HTTPTestServer as a proxy server and
+  // issuing a CONNECT request with the magic host name "www.redirect.com".
+  // The HTTPTestServer will return a 302 response, which we should not
+  // follow.
+  scoped_refptr<HTTPTestServer> server =
+      HTTPTestServer::CreateServer(L"", NULL);
+  ASSERT_TRUE(NULL != server.get());
+  TestDelegate d;
+  {
+    URLRequest r(GURL("https://www.redirect.com/"), &d);
+    std::string proxy("localhost:");
+    proxy.append(IntToString(kHTTPDefaultPort));
+    r.set_context(new TestURLRequestContext(proxy));
+
+    r.Start();
+    EXPECT_TRUE(r.is_pending());
+
+    MessageLoop::current()->Run();
+
+    EXPECT_EQ(URLRequestStatus::SUCCESS, r.status().status());
+    // We should have rewritten the 302 response code as 500.
+    EXPECT_EQ(500, r.GetResponseCode());
+    EXPECT_EQ(1, d.response_started_count());
+    // We should not have followed the redirect.
+    EXPECT_EQ(0, d.received_redirect_count());
+  }
+}
+
+TEST_F(URLRequestTest, UnexpectedServerAuthTest) {
+  // In this unit test, we're using the HTTPTestServer as a proxy server and
+  // issuing a CONNECT request with the magic host name "www.server-auth.com".
+  // The HTTPTestServer will return a 401 response, which we should balk at.
+  scoped_refptr<HTTPTestServer> server =
+      HTTPTestServer::CreateServer(L"", NULL);
+  ASSERT_TRUE(NULL != server.get());
+  TestDelegate d;
+  {
+    URLRequest r(GURL("https://www.server-auth.com/"), &d);
+    std::string proxy("localhost:");
+    proxy.append(IntToString(kHTTPDefaultPort));
+    r.set_context(new TestURLRequestContext(proxy));
+
+    r.Start();
+    EXPECT_TRUE(r.is_pending());
+
+    MessageLoop::current()->Run();
+
+    EXPECT_EQ(URLRequestStatus::FAILED, r.status().status());
+    EXPECT_EQ(net::ERR_UNEXPECTED_SERVER_AUTH, r.status().os_error());
+  }
+}
+
 TEST_F(URLRequestTest, GetTest_NoCache) {
   scoped_refptr<HTTPTestServer> server =
       HTTPTestServer::CreateServer(L"", NULL);
@@ -100,7 +153,7 @@ TEST_F(URLRequestTest, GetTest_NoCache) {
     EXPECT_NE(0, d.bytes_received());
   }
 #ifndef NDEBUG
-  DCHECK_EQ(url_request_metrics.object_count,0);
+  DCHECK_EQ(url_request_metrics.object_count, 0);
 #endif
 }
 
@@ -122,15 +175,15 @@ TEST_F(URLRequestTest, GetTest) {
     EXPECT_NE(0, d.bytes_received());
   }
 #ifndef NDEBUG
-  DCHECK_EQ(url_request_metrics.object_count,0);
+  DCHECK_EQ(url_request_metrics.object_count, 0);
 #endif
 }
 
 class HTTPSRequestTest : public testing::Test {
  protected:
-   HTTPSRequestTest() : util_() {};
+  HTTPSRequestTest() : util_() {}
 
-   SSLTestUtil util_;
+  SSLTestUtil util_;
 };
 
 #if defined(OS_MACOSX)
@@ -165,7 +218,7 @@ TEST_F(HTTPSRequestTest, MAYBE_HTTPSGetTest) {
     EXPECT_NE(0, d.bytes_received());
   }
 #ifndef NDEBUG
-  DCHECK_EQ(url_request_metrics.object_count,0);
+  DCHECK_EQ(url_request_metrics.object_count, 0);
 #endif
 }
 
@@ -188,7 +241,7 @@ TEST_F(URLRequestTest, CancelTest) {
     EXPECT_FALSE(d.received_data_before_response());
   }
 #ifndef NDEBUG
-  DCHECK_EQ(url_request_metrics.object_count,0);
+  DCHECK_EQ(url_request_metrics.object_count, 0);
 #endif
 }
 
@@ -217,7 +270,7 @@ TEST_F(URLRequestTest, CancelTest2) {
     EXPECT_EQ(URLRequestStatus::CANCELED, r.status().status());
   }
 #ifndef NDEBUG
-  DCHECK_EQ(url_request_metrics.object_count,0);
+  DCHECK_EQ(url_request_metrics.object_count, 0);
 #endif
 }
 
@@ -245,7 +298,7 @@ TEST_F(URLRequestTest, CancelTest3) {
     EXPECT_EQ(URLRequestStatus::CANCELED, r.status().status());
   }
 #ifndef NDEBUG
-  DCHECK_EQ(url_request_metrics.object_count,0);
+  DCHECK_EQ(url_request_metrics.object_count, 0);
 #endif
 }
 
@@ -320,7 +373,7 @@ TEST_F(URLRequestTest, PostTest) {
   char *uploadBytes = new char[kMsgSize+1];
   char *ptr = uploadBytes;
   char marker = 'a';
-  for(int idx=0; idx<kMsgSize/10; idx++) {
+  for (int idx = 0; idx < kMsgSize/10; idx++) {
     memcpy(ptr, "----------", 10);
     ptr += 10;
     if (idx % 100 == 0) {
@@ -329,7 +382,6 @@ TEST_F(URLRequestTest, PostTest) {
       if (++marker > 'z')
         marker = 'a';
     }
-
   }
   uploadBytes[kMsgSize] = '\0';
 
@@ -354,12 +406,12 @@ TEST_F(URLRequestTest, PostTest) {
 
     EXPECT_FALSE(d.received_data_before_response());
     EXPECT_EQ(uploadBytes, d.data_received());
-    EXPECT_EQ(memcmp(uploadBytes, d.data_received().c_str(), kMsgSize),0);
+    EXPECT_EQ(memcmp(uploadBytes, d.data_received().c_str(), kMsgSize), 0);
     EXPECT_EQ(d.data_received().compare(uploadBytes), 0);
   }
   delete[] uploadBytes;
 #ifndef NDEBUG
-  DCHECK_EQ(url_request_metrics.object_count,0);
+  DCHECK_EQ(url_request_metrics.object_count, 0);
 #endif
 }
 
@@ -384,7 +436,7 @@ TEST_F(URLRequestTest, PostEmptyTest) {
     EXPECT_TRUE(d.data_received().empty());
   }
 #ifndef NDEBUG
-  DCHECK_EQ(url_request_metrics.object_count,0);
+  DCHECK_EQ(url_request_metrics.object_count, 0);
 #endif
 }
 
@@ -435,7 +487,7 @@ TEST_F(URLRequestTest, PostFileTest) {
     EXPECT_EQ(0, memcmp(d.data_received().c_str(), buf.get(), size));
   }
 #ifndef NDEBUG
-  DCHECK_EQ(url_request_metrics.object_count,0);
+  DCHECK_EQ(url_request_metrics.object_count, 0);
 #endif
 }
 
@@ -454,7 +506,7 @@ TEST_F(URLRequestTest, AboutBlankTest) {
     EXPECT_EQ(d.bytes_received(), 0);
   }
 #ifndef NDEBUG
-  DCHECK_EQ(url_request_metrics.object_count,0);
+  DCHECK_EQ(url_request_metrics.object_count, 0);
 #endif
 }
 
@@ -481,7 +533,7 @@ TEST_F(URLRequestTest, FileTest) {
     EXPECT_EQ(d.bytes_received(), static_cast<int>(file_size));
   }
 #ifndef NDEBUG
-  DCHECK_EQ(url_request_metrics.object_count,0);
+  DCHECK_EQ(url_request_metrics.object_count, 0);
 #endif
 }
 
@@ -497,7 +549,7 @@ TEST_F(URLRequestTest, InvalidUrlTest) {
     EXPECT_TRUE(d.request_failed());
   }
 #ifndef NDEBUG
-  DCHECK_EQ(url_request_metrics.object_count,0);
+  DCHECK_EQ(url_request_metrics.object_count, 0);
 #endif
 }
 
@@ -515,7 +567,7 @@ TEST_F(URLRequestTest, DISABLED_DnsFailureTest) {
     EXPECT_TRUE(d.request_failed());
   }
 #ifndef NDEBUG
-  DCHECK_EQ(url_request_metrics.object_count,0);
+  DCHECK_EQ(url_request_metrics.object_count, 0);
 #endif
 }
 
@@ -666,7 +718,7 @@ TEST_F(URLRequestTest, ResolveShortcutTest) {
   CoUninitialize();
 
 #ifndef NDEBUG
-  DCHECK_EQ(url_request_metrics.object_count,0);
+  DCHECK_EQ(url_request_metrics.object_count, 0);
 #endif
 }
 #endif  // defined(OS_WIN)
@@ -713,7 +765,7 @@ TEST_F(URLRequestTest, FileDirCancelTest) {
     MessageLoop::current()->Run();
   }
 #ifndef NDEBUG
-  DCHECK_EQ(url_request_metrics.object_count,0);
+  DCHECK_EQ(url_request_metrics.object_count, 0);
 #endif
 
   // Take out mock resource provider.

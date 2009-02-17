@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef WEBKIT_GLUE_WEBPLUGIN_DELEGATE_H__
-#define WEBKIT_GLUE_WEBPLUGIN_DELEGATE_H__
+#ifndef WEBKIT_GLUE_WEBPLUGIN_DELEGATE_H_
+#define WEBKIT_GLUE_WEBPLUGIN_DELEGATE_H_
 
 #include <string>
 #include <vector>
@@ -27,8 +27,25 @@ class WebPluginResourceClient;
 // This is the interface that a plugin implementation needs to provide.
 class WebPluginDelegate {
  public:
+#if defined(OS_WIN)
+  enum PluginQuirks {
+    PLUGIN_QUIRK_SETWINDOW_TWICE = 1 << 0,
+    PLUGIN_QUIRK_THROTTLE_WM_USER_PLUS_ONE = 1 << 1,
+    PLUGIN_QUIRK_DONT_CALL_WND_PROC_RECURSIVELY = 1 << 2,
+    PLUGIN_QUIRK_DONT_ALLOW_MULTIPLE_INSTANCES = 1 << 3,
+    PLUGIN_QUIRK_DIE_AFTER_UNLOAD = 1 << 4,
+    PLUGIN_QUIRK_PATCH_TRACKPOPUP_MENU = 1 << 5,
+    PLUGIN_QUIRK_PATCH_SETCURSOR = 1 << 6,
+    PLUGIN_QUIRK_BLOCK_NONSTANDARD_GETURL_REQUESTS = 1 << 7,
+  };
+#endif
+
   WebPluginDelegate() {}
   virtual ~WebPluginDelegate() {}
+
+  static WebPluginDelegate* Create(const FilePath& filename,
+                                   const std::string& mime_type,
+                                   gfx::NativeView containing_view);
 
   // Initializes the plugin implementation with the given (UTF8) arguments.
   // Note that the lifetime of WebPlugin must be longer than this delegate.
@@ -55,24 +72,13 @@ class WebPluginDelegate {
   virtual void UpdateGeometry(const gfx::Rect& window_rect,
                               const gfx::Rect& clip_rect) = 0;
 
-#if defined(OS_WIN)
-  // Tells the plugin to paint the damaged rect.  The HDC is only used for
+  // Tells the plugin to paint the damaged rect.  |context| is only used for
   // windowless plugins.
-  virtual void Paint(HDC hdc, const gfx::Rect& rect) = 0;
+  virtual void Paint(gfx::NativeDrawingContext context,
+                     const gfx::Rect& rect) = 0;
 
   // Tells the plugin to print itself.
-  virtual void Print(HDC hdc) = 0;
-#else
-  // TODO(port): these are not intended to be implementable for now,
-  // and will have the prototypes fixed once they are implemented.
-
-  // Tells the plugin to paint the damaged rect.  The HDC is only used for
-  // windowless plugins.
-  virtual void Paint(void* dc, const gfx::Rect& rect) = 0;
-
-  // Tells the plugin to print itself.
-  virtual void Print(void* dc) = 0;
-#endif
+  virtual void Print(gfx::NativeDrawingContext hdc) = 0;
 
   // Informs the plugin that it now has focus.
   virtual void SetFocus() = 0;
@@ -131,9 +137,33 @@ class WebPluginDelegate {
   // Notifies the delegate about a Get/Post URL request getting routed.
   virtual void URLRequestRouted(const std::string&url, bool notify_needed,
                                 void* notify_data) = 0;
+
+  virtual bool IsWindowless() const {
+    NOTREACHED();
+    return false;
+  }
+
+  virtual const gfx::Rect& GetRect() const {
+    NOTREACHED();
+    static gfx::Rect dummy;
+    return dummy;
+  }
+
+  virtual const gfx::Rect& GetClipRect() const {
+    NOTREACHED();
+    return GetRect();
+  }
+
+#if defined(OS_WIN)
+  // Returns a combinaison of PluginQuirks.
+  virtual int GetQuirks() const {
+    NOTREACHED();
+    return 0;
+  }
+#endif
+
  private:
   DISALLOW_EVIL_CONSTRUCTORS(WebPluginDelegate);
 };
 
-#endif  // #ifndef WEBKIT_GLUE_WEBPLUGIN_DELEGATE_H__
-
+#endif  // #ifndef WEBKIT_GLUE_WEBPLUGIN_DELEGATE_H_

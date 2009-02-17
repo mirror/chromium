@@ -58,7 +58,7 @@ base::LazyInstance<iat_patch::IATPatchFunction> g_iat_patch_set_cursor(
 
 }  // namespace
 
-WebPluginDelegateImpl* WebPluginDelegateImpl::Create(
+WebPluginDelegate* WebPluginDelegate::Create(
     const FilePath& filename,
     const std::string& mime_type,
     gfx::NativeView containing_view) {
@@ -184,9 +184,6 @@ WebPluginDelegateImpl::WebPluginDelegateImpl(
     quirks_ |= PLUGIN_QUIRK_DONT_CALL_WND_PROC_RECURSIVELY;
   } else if (plugin_info.name.find(L"VLC Multimedia Plugin") !=
              std::wstring::npos) {
-    // VLC hangs on NPP_Destroy if we call NPP_SetWindow with a null window
-    // handle
-    quirks_ |= PLUGIN_QUIRK_DONT_SET_NULL_WINDOW_HANDLE_ON_DESTROY;
     // VLC 0.8.6d and 0.8.6e crash if multiple instances are created.
     quirks_ |= PLUGIN_QUIRK_DONT_ALLOW_MULTIPLE_INSTANCES;
   } else if (filename == "npctrl.dll") {
@@ -304,10 +301,11 @@ void WebPluginDelegateImpl::DestroyInstance() {
     // instance uses the helper to do the download.
     instance_->CloseStreams();
 
-    window_.window = NULL;
-    if (!(quirks_ & PLUGIN_QUIRK_DONT_SET_NULL_WINDOW_HANDLE_ON_DESTROY)) {
-      instance_->NPP_SetWindow(&window_);
-    }
+    // The MDC documentation suggests that you should call SetWindow(NULL) or
+    // SetWindow(window->window = NULL) when you destroy an instance.  However,
+    // Firefox does not do this, and hence many plugins don't expect it.  This
+    // leads to NULL pointer deference crashes, etc.  We will have to follow
+    // Firefox here and not call SetWindow during destruction.
 
     instance_->NPP_Destroy();
 
@@ -692,7 +690,15 @@ bool WebPluginDelegateImpl::WindowedReposition(
   if (window_rect_ == window_rect && clip_rect_ == clip_rect)
     return false;
 
-  // Clipping is handled by WebPlugin.
+  // There are a few parts to managing the plugin windows:
+  //   - Initial geometry, show / resize / position the window.
+  //   - Geometry updates, resize the window.
+  //   - Geometry updates, move the window or update the clipping region.
+  // This code should handle the first two, positioning and sizing the window
+  // initially, and resizing it when the size changes.  Clipping and moving are
+  // handled separately by WebPlugin, after it has called this code.  This
+  // allows window moves, like scrolling, to be synchronized with painting.
+  // See WebPluginImpl::setFrameRect().
   if (window_rect.size() != window_rect_.size()) {
     ::SetWindowPos(windowed_handle_,
                    NULL,
@@ -802,7 +808,7 @@ LRESULT CALLBACK WebPluginDelegateImpl::NativeWndProc(
   }
 
   if (message == delegate->last_message_ &&
-      delegate->quirks() & PLUGIN_QUIRK_DONT_CALL_WND_PROC_RECURSIVELY &&
+      delegate->GetQuirks() & PLUGIN_QUIRK_DONT_CALL_WND_PROC_RECURSIVELY &&
       delegate->is_calling_wndproc) {
     // Real may go into a state where it recursively dispatches the same event
     // when subclassed.  See https://bugzilla.mozilla.org/show_bug.cgi?id=192914
@@ -854,7 +860,7 @@ LRESULT CALLBACK WebPluginDelegateImpl::NativeWndProc(
     // usage.  See https://bugzilla.mozilla.org/show_bug.cgi?id=132759.  We
     // prevent this by throttling the messages.
     case WM_USER + 1: {
-      if (delegate->quirks() & PLUGIN_QUIRK_THROTTLE_WM_USER_PLUS_ONE) {
+      if (delegate->GetQuirks() & PLUGIN_QUIRK_THROTTLE_WM_USER_PLUS_ONE) {
         WebPluginDelegateImpl::ThrottleMessage(delegate->plugin_wnd_proc_, hwnd,
                                                message, wparam, lparam);
         g_current_plugin_instance = last_plugin_instance;
@@ -1174,7 +1180,7 @@ HCURSOR WINAPI WebPluginDelegateImpl::SetCursorPatch(HCURSOR cursor) {
   if (!g_current_plugin_instance)
     return GetCursor();
 
-  if (!g_current_plugin_instance->windowless()) {
+  if (!g_current_plugin_instance->IsWindowless()) {
     return SetCursor(cursor);
   }
 

@@ -14,7 +14,6 @@
 #include "chrome/browser/sessions/session_service.h"
 #include "chrome/browser/sessions/session_types.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
-#include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/common/notification_registrar.h"
 #include "chrome/common/notification_service.h"
 
@@ -196,7 +195,7 @@ class SessionRestoreImpl : public NotificationObserver {
         urls_to_open_(urls_to_open) {
   }
 
-  void SessionRestoreImpl::Restore() {
+  void Restore() {
     SessionService* session_service = profile_->GetSessionService();
     DCHECK(session_service);
     SessionService::LastSessionCallback* callback =

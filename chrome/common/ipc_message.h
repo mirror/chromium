@@ -11,14 +11,19 @@
 #include "base/pickle.h"
 #include "testing/gtest/include/gtest/gtest_prod.h"
 
-#if defined(OS_WIN)
-// TODO(port): IPC message logging hasn't been ported to other platforms yet.
 #ifndef NDEBUG
 #define IPC_MESSAGE_LOG_ENABLED
 #endif
-#elif defined(OS_POSIX)
-#include "chrome/common/file_descriptor_posix.h"
+
+#if defined(OS_POSIX)
+#include "base/ref_counted.h"
 #endif
+
+namespace base {
+class FileDescriptor;
+}
+
+class FileDescriptorSet;
 
 namespace IPC {
 
@@ -162,7 +167,14 @@ class Message : public Pickle {
   }
 
 #if defined(OS_POSIX)
-  DescriptorSet* descriptor_set() const { return &descriptor_set_; }
+  // On POSIX, a message supports reading / writing FileDescriptor objects.
+  // This is used to pass a file descriptor to the peer of an IPC channel.
+
+  // Add a descriptor to the end of the set. Returns false iff the set is full.
+  bool WriteFileDescriptor(const base::FileDescriptor& descriptor);
+  // Get a file descriptor from the message. Returns false on error.
+  //   iter: a Pickle iterator to the current location in the message.
+  bool ReadFileDescriptor(void** iter, base::FileDescriptor* descriptor) const;
 #endif
 
 #ifdef IPC_MESSAGE_LOG_ENABLED
@@ -227,7 +239,18 @@ class Message : public Pickle {
 
 #if defined(OS_POSIX)
   // The set of file descriptors associated with this message.
-  mutable DescriptorSet descriptor_set_;
+  scoped_refptr<FileDescriptorSet> file_descriptor_set_;
+
+  // Ensure that a FileDescriptorSet is allocated
+  void EnsureFileDescriptorSet();
+
+  FileDescriptorSet* file_descriptor_set() {
+    EnsureFileDescriptorSet();
+    return file_descriptor_set_.get();
+  }
+  const FileDescriptorSet* file_descriptor_set() const {
+    return file_descriptor_set_.get();
+  }
 #endif
 
 #ifdef IPC_MESSAGE_LOG_ENABLED

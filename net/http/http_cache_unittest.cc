@@ -65,7 +65,7 @@ class MockDiskEntry : public disk_cache::Entry,
     return static_cast<int32>(data_[index].size());
   }
 
-  virtual int ReadData(int index, int offset, char* buf, int buf_len,
+  virtual int ReadData(int index, int offset, net::IOBuffer* buf, int buf_len,
                        net::CompletionCallback* callback) {
     DCHECK(index >= 0 && index < 2);
 
@@ -75,7 +75,7 @@ class MockDiskEntry : public disk_cache::Entry,
       return 0;
 
     int num = std::min(buf_len, static_cast<int>(data_[index].size()) - offset);
-    memcpy(buf, &data_[index][offset], num);
+    memcpy(buf->data(), &data_[index][offset], num);
 
     if (!callback || (test_mode_ & TEST_MODE_SYNC_CACHE_READ))
       return num;
@@ -84,7 +84,7 @@ class MockDiskEntry : public disk_cache::Entry,
     return net::ERR_IO_PENDING;
   }
 
-  virtual int WriteData(int index, int offset, const char* buf, int buf_len,
+  virtual int WriteData(int index, int offset, net::IOBuffer* buf, int buf_len,
                         net::CompletionCallback* callback, bool truncate) {
     DCHECK(index >= 0 && index < 2);
     DCHECK(truncate);
@@ -94,7 +94,7 @@ class MockDiskEntry : public disk_cache::Entry,
 
     data_[index].resize(offset + buf_len);
     if (buf_len)
-      memcpy(&data_[index][offset], buf, buf_len);
+      memcpy(&data_[index][offset], buf->data(), buf_len);
     return buf_len;
   }
 
@@ -1087,4 +1087,13 @@ TEST(HttpCache, SimpleGET_SSLError) {
   if (rv == net::ERR_IO_PENDING)
     rv = callback.WaitForResult();
   ASSERT_EQ(net::ERR_CACHE_MISS, rv);
+}
+
+// Ensure that we don't crash by if left-behind transactions.
+TEST(HttpCache, OutlivedTransactions) {
+  MockHttpCache* cache = new MockHttpCache;
+
+  net::HttpTransaction* trans = cache->http_cache()->CreateTransaction();
+  delete cache; 
+  delete trans;
 }

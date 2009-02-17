@@ -434,10 +434,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\plugin_process_info.h"
-				>
-			</File>
-			<File
 				RelativePath=".\plugin_service.cc"
 				>
 			</File>
@@ -2359,6 +2355,14 @@
 			</File>
 			<File
 				RelativePath=".\ssl\ssl_error_info.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ssl\ssl_host_state.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\ssl\ssl_host_state.h"
 				>
 			</File>
 			<File

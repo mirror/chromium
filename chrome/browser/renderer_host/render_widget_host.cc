@@ -164,7 +164,8 @@ void RenderWidgetHost::WasResized() {
   if (!new_size.IsEmpty())
     resize_ack_pending_ = true;
 
-  if (!Send(new ViewMsg_Resize(routing_id_, new_size)))
+  if (!Send(new ViewMsg_Resize(routing_id_, new_size,
+                               GetRootWindowResizerRect())))
     resize_ack_pending_ = false;
 }
 
@@ -330,6 +331,10 @@ void RenderWidgetHost::RendererExited() {
   BackingStoreManager::RemoveBackingStore(this);
 }
 
+gfx::Rect RenderWidgetHost::GetRootWindowResizerRect() const {
+  return gfx::Rect();
+}
+
 void RenderWidgetHost::Destroy() {
   NotificationService::current()->Notify(
       NotificationType::RENDER_WIDGET_HOST_DESTROYED,
@@ -440,11 +445,13 @@ void RenderWidgetHost::OnMsgPaintRect(
     return;
 
   // Now paint the view. Watch out: it might be destroyed already.
-  if (view_ && !suppress_view_updating_) {
-    view_being_painted_ = true;
+  if (view_) {
     view_->MovePluginWindows(params.plugin_window_moves);
-    view_->DidPaintRect(params.bitmap_rect);
-    view_being_painted_ = false;
+    if (!suppress_view_updating_) {
+      view_being_painted_ = true;
+      view_->DidPaintRect(params.bitmap_rect);
+      view_being_painted_ = false;
+    }
   }
 
   if (paint_observer_.get())

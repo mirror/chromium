@@ -6,6 +6,7 @@
 
 #include "chrome/browser/app_modal_dialog_queue.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/profile.h"
 #include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/common/gfx/text_elider.h"
 #include "chrome/common/l10n_util.h"
@@ -153,7 +154,7 @@ void JavascriptMessageBoxHandler::ShowModalDialog() {
   }
 
   web_contents_->Activate();
-  HWND root_hwnd = GetAncestor(web_contents_->GetContainerHWND(), GA_ROOT);
+  HWND root_hwnd = GetAncestor(web_contents_->GetNativeView(), GA_ROOT);
   dialog_ = views::Window::CreateChromeWindow(root_hwnd, gfx::Rect(), this);
   dialog_->Show();
 }
@@ -206,4 +207,3 @@ void JavascriptMessageBoxHandler::Observe(NotificationType type,
       dialog_->Close();
   }
 }
-

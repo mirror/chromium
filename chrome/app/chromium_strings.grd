@@ -249,6 +249,9 @@ be available for now. -->
       <message name="IDS_INSTALL_INSUFFICIENT_RIGHTS" desc="Error displayed when a non admin user tries to attempt system level install/uninstall.">
         You do not have appropriate rights for system-level install. Try running the installer again as Administrator.
       </message>
+      <message name="IDS_INSTALL_APP_CONFLICT" desc="Error displayed if installation fails due to another existing application.">
+        A conflict with another installed application has been detected.
+      </message>
       <message name="IDS_UNINSTALL_FAILED" desc="Error during uninstall if we can not find the installation directory from registry.">
         Chromium is not installed or it failed to find installation directory. Please download Chromium again.
       </message>
@@ -261,6 +264,12 @@ be available for now. -->
       </message>
       <message name="IDS_START_IN_PROFILE_SHORTCUT_NAME" desc="Name of the desktop shortcut to start the application in a specific profile.">
         Chromium for <ph name="profile_name">$1</ph>
+      </message>
+      <message name="IDS_OEM_MAIN_SHORTCUT_NAME" desc="Name of the desktop shortcut to start the application for OEM pre-installations.">
+        Internet Browser
+      </message>
+      <message name="IDS_SHORTCUT_TOOLTIP" desc="Text for the hover-on tooltip for the Chromium shortcuts.">
+        Access the Internet
       </message>
     </messages>
   </release>

@@ -8,7 +8,7 @@
 #include "base/stats_table.h"
 #include "base/string_util.h"
 #include "base/thread.h"
-#include "chrome/app/theme/theme_resources.h"
+#include "grit/theme_resources.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
@@ -74,10 +74,10 @@ TaskManagerTableModel::TaskManagerTableModel(TaskManager* task_manager)
       new TaskManagerWebContentsResourceProvider(task_manager);
   wc_provider->AddRef();
   providers_.push_back(wc_provider);
-  TaskManagerPluginProcessResourceProvider* plugin_provider =
-      new TaskManagerPluginProcessResourceProvider(task_manager);
-  plugin_provider->AddRef();
-  providers_.push_back(plugin_provider);
+  TaskManagerChildProcessResourceProvider* child_process_provider =
+      new TaskManagerChildProcessResourceProvider(task_manager);
+  child_process_provider->AddRef();
+  providers_.push_back(child_process_provider);
 }
 
 TaskManagerTableModel::~TaskManagerTableModel() {

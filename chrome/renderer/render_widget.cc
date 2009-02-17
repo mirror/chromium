@@ -76,6 +76,7 @@ DeferredCloses* DeferredCloses::current_ = NULL;
 
 RenderWidget::RenderWidget(RenderThreadBase* render_thread, bool activatable)
     : routing_id_(MSG_ROUTING_NONE),
+      webwidget_(NULL),
       opener_id_(MSG_ROUTING_NONE),
       render_thread_(render_thread),
       host_window_(NULL),
@@ -101,6 +102,7 @@ RenderWidget::RenderWidget(RenderThreadBase* render_thread, bool activatable)
 }
 
 RenderWidget::~RenderWidget() {
+  DCHECK(!webwidget_) << "Leaking our WebWidget!";
   if (current_paint_buf_) {
     RenderProcess::FreeSharedMemory(current_paint_buf_);
     current_paint_buf_ = NULL;
@@ -129,9 +131,7 @@ void RenderWidget::Init(int32 opener_id) {
   if (opener_id != MSG_ROUTING_NONE)
     opener_id_ = opener_id;
 
-  // Avoid a leak here by not assigning, since WebWidget::Create addrefs for us.
-  WebWidget* webwidget = WebWidget::Create(this);
-  webwidget_.swap(&webwidget);
+  webwidget_ = WebWidget::Create(this);
 
   bool result = render_thread_->Send(
       new ViewHostMsg_CreateWidget(opener_id, activatable_, &routing_id_));
@@ -229,10 +229,14 @@ void RenderWidget::OnClose() {
   }
 }
 
-void RenderWidget::OnResize(const gfx::Size& new_size) {
+void RenderWidget::OnResize(const gfx::Size& new_size,
+                            const gfx::Rect& resizer_rect) {
   // During shutdown we can just ignore this message.
   if (!webwidget_)
     return;
+
+  // Remember the rect where the resize corner will be drawn.
+  resizer_rect_ = resizer_rect;
 
   // TODO(darin): We should not need to reset this here.
   is_hidden_ = false;
@@ -301,10 +305,12 @@ void RenderWidget::OnPaintRectAck() {
 }
 
 void RenderWidget::OnScrollRectAck() {
+#if defined(OS_WIN)
   DCHECK(scroll_reply_pending());
 
   RenderProcess::FreeSharedMemory(current_scroll_buf_);
   current_scroll_buf_ = NULL;
+#endif
 
   // Continue scrolling if necessary...
   DoDeferredScroll();
@@ -694,14 +700,10 @@ void RenderWidget::GetRootWindowRect(WebWidget* webwidget, gfx::Rect* rect) {
 
 void RenderWidget::GetRootWindowResizerRect(WebWidget* webwidget,
                                             gfx::Rect* rect) {
-#if defined(OS_WIN)
-  Send(new ViewHostMsg_GetRootWindowResizerRect(routing_id_, host_window_,
-                                                rect));
-#else
-  // TODO(port): mac/linux currently choke on this message.
-  // See browser/renderer_host/render_message_host.cc.
-  NOTIMPLEMENTED();
-#endif
+  // This is disabled to verify if WebKit is responsible for the slow down
+  // that was witnessed in the page cycler tests when the resize corner 
+  // code was commited...
+  *rect = gfx::Rect();  // resizer_rect_;
 }
 
 void RenderWidget::OnImeSetInputMode(bool is_active) {

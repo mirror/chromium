@@ -106,6 +106,8 @@ input_files = ChromeFileList([
     'animation.h',
     'child_process.cc',
     'child_process.h',
+    'child_process_info.cc',
+    'child_process_info.h',
     'chrome_constants.cc',
     'chrome_constants.h',
     'chrome_counters.cc',
@@ -219,7 +221,7 @@ if not env.Bit('windows'):
   # TODO(port): This is temporary so we can link.
   input_files.Append(
       'temp_scaffolding_stubs.cc',
-      'file_descriptor_posix.cc',
+      'file_descriptor_set_posix.cc',
   )
 
   # TODO(port): Port these.
@@ -230,7 +232,6 @@ if not env.Bit('windows'):
       'gfx/emf.cc',
       'gfx/icon_util.cc',
       'gfx/path.cc',
-      'ipc_logging.cc',
       'os_exchange_data.cc',
       'process_watcher.cc',
   )

@@ -9,8 +9,9 @@
 #include "base/string_util.h"
 #include "base/time.h"
 #include "base/time_format.h"
-#include "chrome/app/theme/theme_resources.h"
+#include "grit/theme_resources.h"
 #include "chrome/browser/bookmarks/bookmark_utils.h"
+#include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "googleurl/src/gurl.h"
 

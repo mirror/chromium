@@ -288,8 +288,9 @@ const wchar_t kMessageLoopHistogrammer[]       = L"message-loop-histogrammer";
 // setting encodes the target browser and what items to import.
 const wchar_t kImport[]                        = L"import";
 
-// Change the DCHECKS to dump memory and continue instead of crashing.
-// This is valid only in Release mode when --enable-dcheck is specified.
+// Change the DCHECKS to dump memory and continue instead of displaying error
+// dialog. This is valid only in Release mode when --enable-dcheck is
+// specified.
 const wchar_t kSilentDumpOnDCHECK[]            = L"silent-dump-on-dcheck";
 
 // Normally when the user attempts to navigate to a page that was the result of
@@ -353,6 +354,9 @@ const wchar_t kInstallExtension[]              = L"install-extension";
 
 // Load an extension from the specified directory.
 const wchar_t kLoadExtension[]                 = L"load-extension";
+
+// Load an NPAPI plugin from the specified path.
+const wchar_t kLoadPlugin[]                    = L"load-plugin";
 
 // Causes the browser to launch directly in incognito mode.
 const wchar_t kIncognito[]                     = L"incognito";

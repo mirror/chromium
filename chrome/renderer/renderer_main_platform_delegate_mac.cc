@@ -6,9 +6,13 @@
 
 #include "base/debug_util.h"
 
+#include <ApplicationServices/ApplicationServices.h>
 extern "C" {
 #include <sandbox.h>
 }
+
+#include "base/sys_info.h"
+#include "third_party/WebKit/WebKit/mac/WebCoreSupport/WebSystemInterface.h"
 
 RendererMainPlatformDelegate::RendererMainPlatformDelegate(
     const MainFunctionParams& parameters)
@@ -19,6 +23,22 @@ RendererMainPlatformDelegate::~RendererMainPlatformDelegate() {
 }
 
 void RendererMainPlatformDelegate::PlatformInitialize() {
+  // Load WebKit system interfaces.
+  InitWebCoreSystemInterface();
+
+  // Warmup CG - without these calls these two functions won't work in the
+  // sandbox.
+  CGColorSpaceRef rgb_colorspace =
+      CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
+
+  // Allocate a 1 byte image.
+  char data[8];
+  CGContextRef tmp = CGBitmapContextCreate(data, 1, 1, 8, 1*8,
+                                           rgb_colorspace,
+                                           kCGImageAlphaPremultipliedFirst |
+                                           kCGBitmapByteOrder32Host);
+  CGColorSpaceRelease(rgb_colorspace);
+  CGContextRelease(tmp);
 }
 
 void RendererMainPlatformDelegate::PlatformUninitialize() {
@@ -29,10 +49,19 @@ bool RendererMainPlatformDelegate::InitSandboxTests(bool no_sandbox) {
 }
 
 bool RendererMainPlatformDelegate::EnableSandbox() {
+
+  // TODO(port): hack
+  // With the sandbox on we don't have fonts in WebKit!
+  return true;
+
   // This call doesn't work when the sandbox is enabled, the implementation
   // caches it's return value so we call it here and then future calls will
   // succeed.
   DebugUtil::BeingDebugged();
+
+  // Cache the System info information, since we can't query certain attributes
+  // with the Sandbox enabled.
+  base::SysInfo::CacheSysInfo();
 
   char* error_buff = NULL;
   int error = sandbox_init(kSBXProfilePureComputation, SANDBOX_NAMED,

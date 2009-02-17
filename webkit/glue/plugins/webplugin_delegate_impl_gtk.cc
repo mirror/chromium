@@ -37,7 +37,7 @@
 #include "webkit/glue/plugins/plugin_stream_url.h"
 #include "webkit/glue/webkit_glue.h"
 
-WebPluginDelegateImpl* WebPluginDelegateImpl::Create(
+WebPluginDelegate* WebPluginDelegate::Create(
     const FilePath& filename,
     const std::string& mime_type,
     gfx::NativeView containing_view) {
@@ -131,15 +131,6 @@ void WebPluginDelegateImpl::DestroyInstance() {
     // this before calling set_web_plugin(NULL) because the
     // instance uses the helper to do the download.
     instance_->CloseStreams();
-
-    // TODO(evanm): I played with this for quite a while but couldn't
-    // figure out a way to make Flash not crash unless I didn't call
-    // NPP_SetWindow.  Perhaps it just should be marked with the quirk
-    // that wraps the NPP_SetWindow call.
-    // window_.window = NULL;
-    // if (!(quirks_ & PLUGIN_QUIRK_DONT_SET_NULL_WINDOW_HANDLE_ON_DESTROY)) {
-    //   instance_->NPP_SetWindow(&window_);
-    // }
 
     instance_->NPP_Destroy();
 
@@ -350,17 +341,23 @@ bool WebPluginDelegateImpl::WindowedReposition(
   if (window_rect_ == window_rect && clip_rect_ == clip_rect)
     return false;
 
-  // Clipping is handled by WebPlugin.
-  GtkAllocation allocation = { window_rect.x(), window_rect.y(),
-                               window_rect.width(), window_rect.height() };
-  // Tell our parent GtkFixed container where to place the widget.
-  gtk_fixed_move(
-      GTK_FIXED(parent_), windowed_handle_, window_rect.x(), window_rect.y());
-  gtk_widget_size_allocate(windowed_handle_, &allocation);
+
+  if (window_rect.size() != window_rect_.size()) {
+    // Clipping is handled by WebPlugin.
+    GtkAllocation allocation = { window_rect.x(), window_rect.y(),
+                                 window_rect.width(), window_rect.height() };
+    // TODO(deanm): we probably want to match Windows here, where x and y is
+    // fixed at 0, and we're just sizing the window.
+    // Tell our parent GtkFixed container where to place the widget.
+    gtk_fixed_move(
+        GTK_FIXED(parent_), windowed_handle_, window_rect.x(), window_rect.y());
+    gtk_widget_size_allocate(windowed_handle_, &allocation);
+  }
 
   window_rect_ = window_rect;
   clip_rect_ = clip_rect;
 
+  // TODO(deanm): Is this really needed?
   // Ensure that the entire window gets repainted.
   gtk_widget_queue_draw(windowed_handle_);
 

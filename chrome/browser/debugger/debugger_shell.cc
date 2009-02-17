@@ -4,6 +4,8 @@
 
 #include "chrome/browser/debugger/debugger_shell.h"
 
+#include "build/build_config.h"
+
 #include "base/file_util.h"
 #include "base/path_service.h"
 #include "base/string_util.h"
@@ -13,11 +15,17 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/debugger/debugger_io.h"
 #include "chrome/browser/debugger/debugger_node.h"
-#include "chrome/browser/debugger/resources/debugger_resources.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
-#include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/resource_bundle.h"
+
+#include "grit/debugger_resources.h"
+
+#if defined(OS_WIN)
+#include "chrome/browser/tab_contents/tab_contents.h"
+#elif defined(OS_POSIX)
+#include "chrome/common/temp_scaffolding_stubs.h"
+#endif
 
 DebuggerShell::DebuggerShell(DebuggerInputOutput* io) : io_(io),
                                                         debugger_ready_(true) {
@@ -409,6 +417,3 @@ v8::Handle<v8::Value> DebuggerShell::CompileAndRun(
   }
   return v8::Undefined();
 }
-
-
-

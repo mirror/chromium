@@ -5,19 +5,19 @@
 #ifndef CHROME_RENDERER_WEBPLUGIN_DELEGATE_PROXY_H__
 #define CHROME_RENDERER_WEBPLUGIN_DELEGATE_PROXY_H__
 
-#include <set>
 #include <string>
 
 #include "base/gfx/rect.h"
+#include "base/gfx/native_widget_types.h"
 #include "base/ref_counted.h"
-#include "base/scoped_handle.h"
 #include "chrome/common/ipc_message.h"
-#include "chrome/plugin/npobject_stub.h"
 #include "chrome/renderer/plugin_channel_host.h"
 #include "webkit/glue/webplugin.h"
 #include "webkit/glue/webplugin_delegate.h"
 
 class GURL;
+struct NPObject;
+class NPObjectStub;
 struct PluginHostMsg_URLRequest_Params;
 class RenderView;
 class SkBitmap;
@@ -108,7 +108,8 @@ class WebPluginDelegateProxy : public WebPluginDelegate,
 
   // Message handlers for messages that proxy WebPlugin methods, which
   // we translate into calls to the real WebPlugin.
-  void OnSetWindow(HWND window, HANDLE modal_loop_pump_messages_event);
+  void OnSetWindow(gfx::NativeView window,
+                   HANDLE modal_loop_pump_messages_event);
   void OnCompleteURL(const std::string& url_in, std::string* url_out,
                      bool* result);
   void OnHandleURLRequest(const PluginHostMsg_URLRequest_Params& params);

@@ -12,11 +12,15 @@
 #include "base/singleton.h"
 #include "base/task.h"
 #include "build/build_config.h"
+#include "chrome/browser/autocomplete/autocomplete.h"
+#include "chrome/browser/autocomplete/history_url_provider.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/cache_manager_host.h"
+#include "chrome/browser/debugger/debugger_shell.h"
 #include "chrome/browser/first_run.h"
 #include "chrome/browser/history/in_memory_history_backend.h"
+#include "chrome/browser/memory_details.h"
 #include "chrome/browser/profile_manager.h"
 #include "chrome/browser/renderer_host/render_widget_helper.h"
 #include "chrome/browser/renderer_host/resource_message_filter.h"
@@ -26,7 +30,9 @@
 #include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
+#include "chrome/common/chrome_plugin_util.h"
 #include "chrome/common/gfx/chrome_font.h"
+#include "chrome/common/gfx/text_elider.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/process_watcher.h"
@@ -35,8 +41,31 @@
 #include "webkit/glue/webcursor.h"
 #include "webkit/glue/webkit_glue.h"
 
+//--------------------------------------------------------------------------
+
 // static
-size_t SessionRestore::num_tabs_to_load_ = 0;
+size_t AutocompleteProvider::max_matches_;
+
+AutocompleteProvider::~AutocompleteProvider() {
+  // Though nothing needs this function yet, we want to get the C++ metadata
+  // for this class grounded in this file.
+  NOTIMPLEMENTED();
+}
+
+// static
+size_t AutocompleteResult::max_matches_;
+
+//static
+std::string AutocompleteInput::TypeToString(AutocompleteInput::Type type) {
+  NOTIMPLEMENTED();
+  return "";
+}
+
+//static
+std::string AutocompleteMatch::TypeToString(AutocompleteMatch::Type type) {
+  NOTIMPLEMENTED();
+  return "";
+}
 
 //--------------------------------------------------------------------------
 
@@ -66,13 +95,6 @@ bool ShellIntegration::IsDefaultBrowser() {
 }
 
 //--------------------------------------------------------------------------
-
-namespace browser_shutdown {
-bool delete_resources_on_shutdown = true;
-void ReadLastShutdownInfo()  { NOTIMPLEMENTED(); }
-void Shutdown() { NOTIMPLEMENTED(); }
-void OnShutdownStarting(ShutdownType type) { NOTIMPLEMENTED(); }
-}
 
 // static
 bool FirstRun::IsChromeFirstRun() {
@@ -146,6 +168,10 @@ void InstallJankometer(const CommandLine&) {
   NOTIMPLEMENTED();
 }
 
+void UninstallJankometer() {
+  NOTIMPLEMENTED();
+}
+
 //--------------------------------------------------------------------------
 
 void Browser::Observe(NotificationType type,
@@ -169,7 +195,7 @@ TabContents* TabContents::CreateWithType(TabContentsType type,
                                          Profile* profile,
                                          SiteInstance* instance) {
   TabContents* contents;
-  
+
   switch (type) {
     case TAB_CONTENTS_WEB:
       contents = new WebContents(profile, instance, NULL, MSG_ROUTING_NONE,
@@ -179,10 +205,10 @@ TabContents* TabContents::CreateWithType(TabContentsType type,
       NOTREACHED() << "Don't know how to create tab contents of type " << type;
       contents = NULL;
   }
-  
+
   if (contents)
     contents->CreateView();
-  
+
   return contents;
 }
 
@@ -222,7 +248,83 @@ void TabContents::Destroy() {
   controller->TabContentsWasDestroyed(type);
 }
 
+const GURL& TabContents::GetURL() const {
+  // We may not have a navigation entry yet
+  NavigationEntry* entry = controller_->GetActiveEntry();
+  return entry ? entry->display_url() : GURL::EmptyGURL();
+}
+
+const std::wstring& TabContents::GetTitle() const {
+  // We use the title for the last committed entry rather than a pending
+  // navigation entry. For example, when the user types in a URL, we want to
+  // keep the old page's title until the new load has committed and we get a new
+  // title.
+  // The exception is with transient pages, for which we really want to use
+  // their title, as they are not committed.
+  NavigationEntry* entry = controller_->GetTransientEntry();
+  if (entry)
+    return entry->GetTitleForDisplay();
+  
+  entry = controller_->GetLastCommittedEntry();
+  if (entry)
+    return entry->GetTitleForDisplay();
+  else if (controller_->LoadingURLLazily())
+    return controller_->GetLazyTitle();
+  return EmptyWString();
+}
+
+void TabContents::NotifyNavigationStateChanged(unsigned changed_flags) {
+  if (delegate_)
+    delegate_->NavigationStateChanged(this, changed_flags);
+}
+
+void TabContents::OpenURL(const GURL& url, const GURL& referrer,
+                          WindowOpenDisposition disposition,
+                          PageTransition::Type transition) {
+  if (delegate_)
+    delegate_->OpenURLFromTab(this, url, referrer, disposition, transition);
+}
+
+void TabContents::SetIsLoading(bool is_loading,
+                               LoadNotificationDetails* details) {
+  // TODO(port): this is a subset of SetIsLoading() as a stub
+  is_loading_ = is_loading;
+}
+
+bool TabContents::SupportsURL(GURL* url) {
+  GURL u(*url);
+  if (TabContents::TypeForURL(&u) == type()) {
+    *url = u;
+    return true;
+  }
+  return false;
+}
+
+int32 TabContents::GetMaxPageID() {
+  if (GetSiteInstance())
+    return GetSiteInstance()->max_page_id();
+  else
+    return max_page_id_;
+}
+
+void TabContents::UpdateMaxPageID(int32 page_id) {
+  // Ensure both the SiteInstance and RenderProcessHost update their max page
+  // IDs in sync. Only WebContents will also have site instances, except during
+  // testing.
+  if (GetSiteInstance())
+    GetSiteInstance()->UpdateMaxPageID(page_id);
+  
+  if (AsWebContents())
+    AsWebContents()->process()->UpdateMaxPageID(page_id);
+  else
+    max_page_id_ = std::max(max_page_id_, page_id);
+}
+
 //--------------------------------------------------------------------------
+
+void RLZTracker::CleanupRlz() {
+  NOTIMPLEMENTED();
+}
 
 bool RLZTracker::GetAccessPointRlz(AccessPoint point, std::wstring* rlz) {
   NOTIMPLEMENTED();
@@ -247,7 +349,11 @@ namespace chrome_browser_net {
 
 void EnableDnsPrefetch(bool) { NOTIMPLEMENTED(); }
 
-void DnsPrefetchList(const std::vector<std::string>& hostnames) { NOTIMPLEMENTED(); }
+void DnsPrefetchList(const std::vector<std::string>& hostnames) {
+  NOTIMPLEMENTED();
+}
+
+void SaveHostNamesForNextStartup(PrefService* local_state) { NOTIMPLEMENTED(); }
 
 }  // namespace chrome_browser_net
 
@@ -270,20 +376,6 @@ void RunJavascriptMessageBox(WebContents* web_contents,
 void RunBeforeUnloadDialog(WebContents* web_contents,
                            const std::wstring& message_text,
                            IPC::Message* reply_msg) {
-  NOTIMPLEMENTED();
-}
-
-bool SSLManager::DeserializeSecurityInfo(const std::string&, int*, int*, int*) {
-  NOTIMPLEMENTED();
-  return false;
-}
-
-void SSLManager::OnSSLCertificateError(
-    ResourceDispatcherHost* resource_dispatcher,
-    URLRequest* request,
-    int cert_error,
-    net::X509Certificate* cert,
-    MessageLoop* ui_loop) {
   NOTIMPLEMENTED();
 }
 
@@ -318,6 +410,10 @@ std::string ResourceBundle::GetDataResource(int resource_id) {
   return "";
 }
 
+void ResourceBundle::CleanupSharedInstance() {
+  NOTIMPLEMENTED();
+}
+
 #endif
 
 LoginHandler* CreateLoginPrompt(net::AuthChallengeInfo* auth_info,
@@ -326,23 +422,6 @@ LoginHandler* CreateLoginPrompt(net::AuthChallengeInfo* auth_info,
   NOTIMPLEMENTED();
   return NULL;
 }
-
-namespace tab_util {
-
-bool GetTabContentsID(URLRequest* request,
-                      int* render_process_host_id,
-                      int* routing_id) {
-  NOTIMPLEMENTED();
-  return true;
-}
-
-WebContents* GetWebContentsByID(int render_process_host_id,
-                                int render_view_id) {
-  NOTIMPLEMENTED();
-  return NULL;
-}
-
-}  // namespace
 
 void ProcessWatcher::EnsureProcessTerminated(int) {
   NOTIMPLEMENTED();
@@ -366,3 +445,77 @@ bool ClipboardIsFormatAvailable(Clipboard::FormatType format) {
 
 }  // webkit_glue
 
+#ifndef CHROME_DEBUGGER_DISABLED
+DebuggerShell::DebuggerShell(DebuggerInputOutput *io) { }
+DebuggerShell::~DebuggerShell() { }
+void DebuggerShell::Start() { NOTIMPLEMENTED(); }
+void DebuggerShell::Debug(TabContents* tab) { NOTIMPLEMENTED(); }
+void DebuggerShell::DebugMessage(const std::wstring& msg) { NOTIMPLEMENTED(); }
+void DebuggerShell::OnDebugAttach() { NOTIMPLEMENTED(); }
+void DebuggerShell::OnDebugDisconnect() { NOTIMPLEMENTED(); }
+void DebuggerShell::DidConnect() { NOTIMPLEMENTED(); }
+void DebuggerShell::DidDisconnect() { NOTIMPLEMENTED(); }
+void DebuggerShell::ProcessCommand(const std::wstring& data) {
+  NOTIMPLEMENTED();
+}
+#endif  // !CHROME_DEBUGGER_DISABLED
+
+void HistoryURLProvider::ExecuteWithDB(history::HistoryBackend*,
+                                       history::URLDatabase*,
+                                       HistoryURLProviderParams*) {
+  NOTIMPLEMENTED();
+}
+
+namespace bookmark_utils {
+
+bool MoreRecentlyAdded(BookmarkNode* n1, BookmarkNode* n2) {
+  NOTIMPLEMENTED();
+  return false;
+}
+
+std::vector<BookmarkNode*> GetMostRecentlyModifiedGroups(BookmarkModel* model,
+                                                         size_t max_count) {
+  NOTIMPLEMENTED();
+  return std::vector<BookmarkNode*>();
+}
+
+}
+
+ScopableCPRequest::~ScopableCPRequest() {
+  NOTIMPLEMENTED();
+}
+
+#if defined(OS_MACOSX)
+namespace gfx {
+std::wstring GetCleanStringFromUrl(const GURL& url,
+                                   const std::wstring& languages,
+                                   url_parse::Parsed* new_parsed,
+                                   size_t* prefix_end) {
+  NOTIMPLEMENTED();
+  return L"";
+}
+}
+#endif
+
+MemoryDetails::MemoryDetails() {
+  NOTIMPLEMENTED();
+}
+
+void MemoryDetails::StartFetch() {
+  NOTIMPLEMENTED();
+}
+
+InfoBar* ConfirmInfoBarDelegate::CreateInfoBar() {
+  NOTIMPLEMENTED();
+  return NULL;
+}
+
+InfoBar* AlertInfoBarDelegate::CreateInfoBar() {
+  NOTIMPLEMENTED();
+  return NULL;
+}
+
+InfoBar* LinkInfoBarDelegate::CreateInfoBar() {
+  NOTIMPLEMENTED();
+  return NULL;
+}

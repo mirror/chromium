@@ -6,7 +6,7 @@
 
 #include "base/gfx/rect.h"
 #include "chrome/app/chrome_dll_resource.h"
-#include "chrome/app/theme/theme_resources.h"
+#include "grit/theme_resources.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
@@ -201,7 +201,7 @@ class ConstrainedWindowNonClientView
   virtual gfx::Rect CalculateClientAreaBounds(int width, int height) const;
   virtual gfx::Size CalculateWindowSizeForClientSize(int width,
                                                      int height) const;
-  virtual CPoint GetSystemMenuPoint() const;
+  virtual gfx::Point GetSystemMenuPoint() const;
   virtual int NonClientHitTest(const gfx::Point& point);
   virtual void GetWindowMask(const gfx::Size& size, gfx::Path* window_mask);
   virtual void EnableClose(bool enable);
@@ -353,10 +353,13 @@ gfx::Size ConstrainedWindowNonClientView::CalculateWindowSizeForClientSize(
                    height + NonClientTopBorderHeight() + border_thickness);
 }
 
-CPoint ConstrainedWindowNonClientView::GetSystemMenuPoint() const {
-  // Doesn't matter what we return, since this is only used when the user clicks
-  // a window icon, and we never have an icon.
-  return CPoint();
+gfx::Point ConstrainedWindowNonClientView::GetSystemMenuPoint() const {
+  // Doesn't really matter, since we never show system menus on constrained
+  // windows...
+  gfx::Point system_menu_point(FrameBorderThickness(),
+                               NonClientTopBorderHeight());
+  ConvertPointToScreen(this, &system_menu_point);
+  return system_menu_point;
 }
 
 int ConstrainedWindowNonClientView::NonClientHitTest(const gfx::Point& point) {
@@ -664,7 +667,7 @@ void ConstrainedWindowImpl::Init(TabContents* owner) {
 }
 
 void ConstrainedWindowImpl::InitAsDialog(const gfx::Rect& initial_bounds) {
-  CustomFrameWindow::Init(owner_->GetContainerHWND(), initial_bounds);
+  CustomFrameWindow::Init(owner_->GetNativeView(), initial_bounds);
   ActivateConstrainedWindow();
 }
 

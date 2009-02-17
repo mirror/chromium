@@ -9,65 +9,118 @@
 #include <cairo/cairo.h>
 
 #include "base/logging.h"
+#include "base/string_util.h"
 #include "chrome/browser/renderer_host/backing_store.h"
 #include "chrome/browser/renderer_host/render_widget_host.h"
 #include "skia/ext/bitmap_platform_device_linux.h"
 #include "skia/ext/platform_device_linux.h"
+#include "webkit/glue/webinputevent.h"
 
 namespace {
 
-// -----------------------------------------------------------------------------
-// Callback functions to proxy to RenderWidgetHostViewGtk...
+// This class is a simple convenience wrapper for Gtk functions. It has only
+// static methods.
+class RenderWidgetHostViewGtkWidget {
+ public:
+  static GtkWidget* CreateNewWidget(RenderWidgetHostViewGtk* host_view) {
+    GtkWidget* widget = gtk_drawing_area_new();
 
-gboolean ConfigureEvent(GtkWidget* widget, GdkEventConfigure* config,
-                        RenderWidgetHostViewGtk* host) {
-  NOTIMPLEMENTED();
-  return FALSE;
-}
+    gtk_widget_add_events(widget, GDK_EXPOSURE_MASK |
+                                  GDK_POINTER_MOTION_MASK |
+                                  GDK_BUTTON_PRESS_MASK |
+                                  GDK_BUTTON_RELEASE_MASK |
+                                  GDK_KEY_PRESS_MASK |
+                                  GDK_KEY_RELEASE_MASK);
+    GTK_WIDGET_SET_FLAGS(widget, GTK_CAN_FOCUS);
 
-gboolean ExposeEvent(GtkWidget* widget, GdkEventExpose* expose,
-                     RenderWidgetHostViewGtk* host) {
-  const gfx::Rect damage_rect(expose->area);
-  host->Paint(damage_rect);
-  return FALSE;
-}
+    g_signal_connect(widget, "configure-event",
+                     G_CALLBACK(ConfigureEvent), host_view);
+    g_signal_connect(widget, "expose-event",
+                     G_CALLBACK(ExposeEvent), host_view);
+    g_signal_connect(widget, "key-press-event",
+                     G_CALLBACK(KeyPressReleaseEvent), host_view);
+    g_signal_connect(widget, "key-release-event",
+                     G_CALLBACK(KeyPressReleaseEvent), host_view);
+    g_signal_connect(widget, "focus-in-event",
+                     G_CALLBACK(FocusIn), host_view);
+    g_signal_connect(widget, "focus-out-event",
+                     G_CALLBACK(FocusOut), host_view);
+    g_signal_connect(widget, "button-press-event",
+                     G_CALLBACK(ButtonPressReleaseEvent), host_view);
+    g_signal_connect(widget, "button-release-event",
+                     G_CALLBACK(ButtonPressReleaseEvent), host_view);
+    g_signal_connect(widget, "motion-notify-event",
+                     G_CALLBACK(MouseMoveEvent), host_view);
+    g_signal_connect(widget, "scroll-event",
+                     G_CALLBACK(MouseScrollEvent), host_view);
 
-gboolean KeyPressReleaseEvent(GtkWidget* widget, GdkEventKey* event,
-                              RenderWidgetHostViewGtk* host) {
-  NOTIMPLEMENTED();
-  return FALSE;
-}
+    return widget;
+  }
 
-gboolean FocusIn(GtkWidget* widget, GdkEventFocus* focus,
-                 RenderWidgetHostViewGtk* host) {
-  NOTIMPLEMENTED();
-  return FALSE;
-}
+ private:
+  static gboolean ConfigureEvent(GtkWidget* widget, GdkEventConfigure* config,
+                                 RenderWidgetHostViewGtk* host_view) {
+    host_view->GetRenderWidgetHost()->WasResized();
+    return FALSE;
+  }
 
-gboolean FocusOut(GtkWidget* widget, GdkEventFocus* focus,
-                  RenderWidgetHostViewGtk* host) {
-  NOTIMPLEMENTED();
-  return FALSE;
-}
+  static gboolean ExposeEvent(GtkWidget* widget, GdkEventExpose* expose,
+                              RenderWidgetHostViewGtk* host_view) {
+    const gfx::Rect damage_rect(expose->area);
+    host_view->Paint(damage_rect);
+    return FALSE;
+  }
 
-gboolean ButtonPressReleaseEvent(GtkWidget* widget, GdkEventButton* event,
-                                 RenderWidgetHostViewGtk* host) {
-  NOTIMPLEMENTED();
-  return FALSE;
-}
+  static gboolean KeyPressReleaseEvent(GtkWidget* widget, GdkEventKey* event,
+                                       RenderWidgetHostViewGtk* host_view) {
+    WebKeyboardEvent wke(event);
+    host_view->GetRenderWidgetHost()->ForwardKeyboardEvent(wke);
 
-gboolean MouseMoveEvent(GtkWidget* widget, GdkEventMotion* event,
-                        RenderWidgetHostViewGtk* host) {
-  return FALSE;
-}
+    // See note in webwidget_host_gtk.cc::HandleKeyPress().
+    if (event->type == GDK_KEY_PRESS) {
+      wke.type = WebKeyboardEvent::CHAR;
+      host_view->GetRenderWidgetHost()->ForwardKeyboardEvent(wke);
+    }
 
-gboolean MouseScrollEvent(GtkWidget* widget, GdkEventScroll* event,
-                          RenderWidgetHostViewGtk* host) {
-  NOTIMPLEMENTED();
-  return FALSE;
-}
+    return FALSE;
+  }
 
-}  // anonymous namespace
+  static gboolean FocusIn(GtkWidget* widget, GdkEventFocus* focus,
+                          RenderWidgetHostViewGtk* host_view) {
+    host_view->GetRenderWidgetHost()->Focus();
+    return FALSE;
+  }
+
+  static gboolean FocusOut(GtkWidget* widget, GdkEventFocus* focus,
+                           RenderWidgetHostViewGtk* host_view) {
+    host_view->GetRenderWidgetHost()->Blur();
+    return FALSE;
+  }
+
+  static gboolean ButtonPressReleaseEvent(
+      GtkWidget* widget, GdkEventButton* event,
+      RenderWidgetHostViewGtk* host_view) {
+    WebMouseEvent wme(event);
+    host_view->GetRenderWidgetHost()->ForwardMouseEvent(wme);
+    return FALSE;
+  }
+
+  static gboolean MouseMoveEvent(GtkWidget* widget, GdkEventMotion* event,
+                                 RenderWidgetHostViewGtk* host_view) {
+    WebMouseEvent wme(event);
+    host_view->GetRenderWidgetHost()->ForwardMouseEvent(wme);
+    return FALSE;
+  }
+
+  static gboolean MouseScrollEvent(GtkWidget* widget, GdkEventScroll* event,
+                                   RenderWidgetHostViewGtk* host_view) {
+    WebMouseWheelEvent wmwe(event);
+    host_view->GetRenderWidgetHost()->ForwardWheelEvent(wmwe);
+    return FALSE;
+  }
+};
+
+}  // namespace
 
 // static
 RenderWidgetHostView* RenderWidgetHostView::CreateViewForWidget(
@@ -75,35 +128,10 @@ RenderWidgetHostView* RenderWidgetHostView::CreateViewForWidget(
   return new RenderWidgetHostViewGtk(widget);
 }
 
-RenderWidgetHostViewGtk::RenderWidgetHostViewGtk(RenderWidgetHost* widget)
-    : widget_(widget) {
-  widget_->set_view(this);
-
-  view_ = gtk_drawing_area_new();
-
-  gtk_widget_add_events(view_, GDK_EXPOSURE_MASK |
-                               GDK_POINTER_MOTION_MASK |
-                               GDK_BUTTON_PRESS_MASK |
-                               GDK_BUTTON_RELEASE_MASK |
-                               GDK_KEY_PRESS_MASK |
-                               GDK_KEY_RELEASE_MASK);
-  GTK_WIDGET_SET_FLAGS(view_, GTK_CAN_FOCUS);
-  g_signal_connect(view_, "configure-event", G_CALLBACK(ConfigureEvent), this);
-  g_signal_connect(view_, "expose-event", G_CALLBACK(ExposeEvent), this);
-  g_signal_connect(view_, "key-press-event", G_CALLBACK(KeyPressReleaseEvent),
-                   this);
-  g_signal_connect(view_, "key-release-event",
-                   G_CALLBACK(KeyPressReleaseEvent), this);
-  g_signal_connect(view_, "focus-in-event", G_CALLBACK(FocusIn), this);
-  g_signal_connect(view_, "focus-out-event", G_CALLBACK(FocusOut), this);
-  g_signal_connect(view_, "button-press-event",
-                   G_CALLBACK(ButtonPressReleaseEvent), this);
-  g_signal_connect(view_, "button-release-event",
-                   G_CALLBACK(ButtonPressReleaseEvent), this);
-  g_signal_connect(view_, "motion-notify-event", G_CALLBACK(MouseMoveEvent),
-                   this);
-  g_signal_connect(view_, "scroll-event", G_CALLBACK(MouseScrollEvent),
-                   this);
+RenderWidgetHostViewGtk::RenderWidgetHostViewGtk(RenderWidgetHost* widget_host)
+    : host_(widget_host) {
+  host_->set_view(this);
+  view_ = RenderWidgetHostViewGtkWidget::CreateNewWidget(this);
 }
 
 RenderWidgetHostViewGtk::~RenderWidgetHostViewGtk() {
@@ -123,7 +151,6 @@ void RenderWidgetHostViewGtk::SetSize(const gfx::Size& size) {
 }
 
 gfx::NativeView RenderWidgetHostViewGtk::GetPluginNativeView() {
-  NOTIMPLEMENTED();
   // TODO(port): We need to pass some widget pointer out here because the
   // renderer echos it back to us when it asks for GetScreenInfo. However, we
   // should probably be passing the top-level window or some such instead.
@@ -132,6 +159,9 @@ gfx::NativeView RenderWidgetHostViewGtk::GetPluginNativeView() {
 
 void RenderWidgetHostViewGtk::MovePluginWindows(
     const std::vector<WebPluginGeometry>& plugin_window_moves) {
+  if (plugin_window_moves.empty())
+    return;
+
   NOTIMPLEMENTED();
 }
 
@@ -162,15 +192,40 @@ gfx::Rect RenderWidgetHostViewGtk::GetViewBounds() const {
 }
 
 void RenderWidgetHostViewGtk::UpdateCursor(const WebCursor& cursor) {
-  NOTIMPLEMENTED();
+  // TODO(port): some of this logic may need moving to UpdateCursorIfOverSelf at
+  // some point.
+  GdkCursorType current_cursor_type = current_cursor_.GetCursorType();
+  GdkCursorType new_cursor_type = cursor.GetCursorType();
+  current_cursor_ = cursor;
+  GdkCursor* gdk_cursor;
+  if (new_cursor_type == GDK_CURSOR_IS_PIXMAP) {
+    // TODO(port): WebKit bug https://bugs.webkit.org/show_bug.cgi?id=16388 is
+    // that calling gdk_window_set_cursor repeatedly is expensive.  We should
+    // avoid it here where possible.
+    gdk_cursor = current_cursor_.GetCustomCursor();
+  } else {
+    // Optimize the common case, where the cursor hasn't changed.
+    // However, we can switch between different pixmaps, so only on the
+    // non-pixmap branch.
+    if (new_cursor_type == current_cursor_type)
+      return;
+    gdk_cursor = gdk_cursor_new(new_cursor_type);
+  }
+  gdk_window_set_cursor(view_->window, gdk_cursor);
+  // The window now owns the cursor.
+  gdk_cursor_unref(gdk_cursor);
 }
 
 void RenderWidgetHostViewGtk::UpdateCursorIfOverSelf() {
+  // Windows uses this to show the resizer arrow if the mouse is over the
+  // bottom-right corner.
   NOTIMPLEMENTED();
 }
 
 void RenderWidgetHostViewGtk::SetIsLoading(bool is_loading) {
-  NOTIMPLEMENTED();
+  // Windows tracks loading whether it's loading to switch the cursor
+  // out for the arrow+hourglass one.  We don't have such a cursor, so we just
+  // ignore this.
 }
 
 void RenderWidgetHostViewGtk::IMEUpdateStatus(int control,
@@ -179,12 +234,12 @@ void RenderWidgetHostViewGtk::IMEUpdateStatus(int control,
 }
 
 void RenderWidgetHostViewGtk::DidPaintRect(const gfx::Rect& rect) {
-  NOTIMPLEMENTED();
+  Paint(rect);
 }
 
 void RenderWidgetHostViewGtk::DidScrollRect(const gfx::Rect& rect, int dx,
                                             int dy) {
-  NOTIMPLEMENTED();
+  Paint(rect);
 }
 
 void RenderWidgetHostViewGtk::RendererGone() {
@@ -196,11 +251,15 @@ void RenderWidgetHostViewGtk::Destroy() {
 }
 
 void RenderWidgetHostViewGtk::SetTooltipText(const std::wstring& tooltip_text) {
-  NOTIMPLEMENTED();
+  if (tooltip_text.empty()) {
+    gtk_widget_set_has_tooltip(view_, FALSE);
+  } else {
+    gtk_widget_set_tooltip_text(view_, WideToUTF8(tooltip_text).c_str());
+  }
 }
 
 void RenderWidgetHostViewGtk::Paint(const gfx::Rect& damage_rect) {
-  BackingStore* backing_store = widget_->GetBackingStore();
+  BackingStore* backing_store = host_->GetBackingStore();
 
   if (backing_store) {
     GdkRectangle grect = {

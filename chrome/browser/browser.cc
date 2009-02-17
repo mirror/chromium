@@ -9,17 +9,21 @@
 #include "base/logging.h"
 #include "base/string_util.h"
 #include "chrome/app/chrome_dll_resource.h"
+#include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/location_bar.h"
 #include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/profile.h"
+#include "chrome/browser/sessions/session_service.h"
 #include "chrome/browser/sessions/session_types.h"
+#include "chrome/browser/sessions/tab_restore_service.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/site_instance.h"
 #include "chrome/browser/tab_contents/tab_contents_type.h"
 #include "chrome/browser/tab_contents/web_contents.h"
+#include "chrome/common/child_process_info.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/l10n_util.h"
@@ -56,9 +60,6 @@
 #include "chrome/browser/history_tab_ui.h"
 #include "chrome/browser/options_window.h"
 #include "chrome/browser/net/url_fixer_upper.h"
-#include "chrome/browser/plugin_process_host.h"
-#include "chrome/browser/plugin_service.h"
-#include "chrome/browser/sessions/session_service.h"
 #include "chrome/browser/ssl/ssl_error_info.h"
 #include "chrome/browser/status_bubble.h"
 #include "chrome/browser/tab_contents/interstitial_page.h"
@@ -90,16 +91,15 @@ static const int kWindowTilePixels = 20;
 
 ///////////////////////////////////////////////////////////////////////////////
 
-// A task to reduce the working set of the plugins.
-class ReducePluginsWorkingSetTask : public Task {
+// A task to reduce the working set of the child processes that live on the IO
+// thread (i.e. plugins, workers).
+class ReduceChildProcessesWorkingSetTask : public Task {
  public:
   virtual void Run() {
 #if defined(OS_WIN)
-    for (PluginProcessHostIterator iter; !iter.Done(); ++iter) {
-      PluginProcessHost* plugin = const_cast<PluginProcessHost*>(*iter);
-      DCHECK(plugin->process());
-      base::Process process(plugin->process());
-      process.ReduceWorkingSet();
+    for (ChildProcessInfo::Iterator iter; !iter.Done(); ++iter) {
+      DCHECK(iter->process().handle());
+      iter->process().ReduceWorkingSet();
     }
 #endif
   }
@@ -131,11 +131,10 @@ class BrowserIdleTimer : public base::IdleTimer {
        process.ReduceWorkingSet();
     }
 
-    // Handle the Plugin(s).  We need to iterate through the plugin processes
-    // on the IO thread because that thread manages the plugin process
-    // collection.
+    // Handle the child processe.  We need to iterate through them on the IO
+    // thread because that thread manages the child process collection.
     g_browser_process->io_thread()->message_loop()->PostTask(FROM_HERE,
-        new ReducePluginsWorkingSetTask());
+        new ReduceChildProcessesWorkingSetTask());
 #endif
   }
 };
@@ -1018,9 +1017,6 @@ void Browser::RegisterUserPrefs(PrefService* prefs) {
                              net::CookiePolicy::ALLOW_ALL_COOKIES);
   prefs->RegisterBooleanPref(prefs::kShowHomeButton, false);
   prefs->RegisterStringPref(prefs::kRecentlySelectedEncoding, L"");
-  // TODO(peterson): bug #3870 move this to the AutofillManager once it is
-  //                 checked-in.
-  prefs->RegisterBooleanPref(prefs::kFormAutofillEnabled, true);
   prefs->RegisterBooleanPref(prefs::kDeleteBrowsingHistory, true);
   prefs->RegisterBooleanPref(prefs::kDeleteDownloadHistory, true);
   prefs->RegisterBooleanPref(prefs::kDeleteCache, true);
@@ -1085,7 +1081,7 @@ void Browser::ExecuteCommand(int id) {
     case IDC_NEW_WINDOW_PROFILE_5:
     case IDC_NEW_WINDOW_PROFILE_6:
     case IDC_NEW_WINDOW_PROFILE_7:
-    case IDC_NEW_WINDOW_PROFILE_8: 
+    case IDC_NEW_WINDOW_PROFILE_8:
         NewProfileWindowByIndex(id - IDC_NEW_WINDOW_PROFILE_0);    break;
 #if defined(OS_WIN)
     case IDC_CLOSE_WINDOW:          CloseWindow();                 break;
@@ -1368,7 +1364,7 @@ bool Browser::RunUnloadListenerBeforeClosing(TabContents* contents) {
   if (web_contents) {
     // If the WebContents is not connected yet, then there's no unload
     // handler we can fire even if the WebContents has an unload listener.
-    // One case where we hit this is in a tab that has an infinite loop 
+    // One case where we hit this is in a tab that has an infinite loop
     // before load.
     if (TabHasUnloadListener(contents)) {
       // If the page has unload listeners, then we tell the renderer to fire
@@ -1510,8 +1506,6 @@ void Browser::TabStripEmpty() {
       method_factory_.NewRunnableMethod(&Browser::CloseFrame));
 }
 
-#if defined(OS_WIN)
-
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, TabContentsDelegate implementation:
 
@@ -1581,36 +1575,8 @@ void Browser::OpenURLFromTab(TabContents* source,
                                           instance);
     browser->window()->Show();
   } else if ((disposition == CURRENT_TAB) && current_tab) {
-    // TODO(beng): move this block into the TabStripModelOrderController.
-    if (transition == PageTransition::TYPED ||
-        transition == PageTransition::AUTO_BOOKMARK ||
-        transition == PageTransition::GENERATED ||
-        transition == PageTransition::START_PAGE) {
-      // Don't forget the openers if this tab is a New Tab page opened at the
-      // end of the TabStrip (e.g. by pressing Ctrl+T). Give the user one
-      // navigation of one of these transition types before resetting the
-      // opener relationships (this allows for the use case of opening a new
-      // tab to do a quick look-up of something while viewing a tab earlier in
-      // the strip). We can make this heuristic more permissive if need be.
-      // TODO(beng): (http://b/1306495) write unit tests for this once this
-      //             object is unit-testable.
-      int current_tab_index =
-          tabstrip_model_.GetIndexOfTabContents(current_tab);
-      bool forget_openers =
-          !(current_tab->type() == TAB_CONTENTS_NEW_TAB_UI &&
-          current_tab_index == (tab_count() - 1) &&
-          current_tab->controller()->GetEntryCount() == 1);
-      if (forget_openers) {
-        // If the user navigates the current tab to another page in any way
-        // other than by clicking a link, we want to pro-actively forget all
-        // TabStrip opener relationships since we assume they're beginning a
-        // different task by reusing the current tab.
-        tabstrip_model_.ForgetAllOpeners();
-        // In this specific case we also want to reset the group relationship,
-        // since it is now technically invalid.
-        tabstrip_model_.ForgetGroup(current_tab);
-      }
-    }
+    tabstrip_model_.TabNavigating(current_tab, transition);
+
     // TODO(beng): remove all this once there are no TabContents types.
     // It seems like under some circumstances current_tab can be dust after the
     // call to LoadURL (perhaps related to TabContents type switching), so we
@@ -1682,6 +1648,8 @@ void Browser::ReplaceContents(TabContents* source, TabContents* new_contents) {
       NotificationType::WEB_CONTENTS_DISCONNECTED,
       Source<TabContents>(new_contents));
 }
+
+#if defined(OS_WIN)
 
 void Browser::AddNewContents(TabContents* source,
                              TabContents* new_contents,
@@ -1868,6 +1836,10 @@ void Browser::BeforeUnloadFired(TabContents* tab,
   }
 
   *proceed_to_fire_unload = true;
+}
+
+gfx::Rect Browser::GetRootWindowResizerRect() const {
+  return window_->GetRootWindowResizerRect();
 }
 
 void Browser::ShowHtmlDialog(HtmlDialogContentsDelegate* delegate,
@@ -2341,7 +2313,6 @@ bool Browser::HasCompletedUnloadProcessing() {
       tabs_needing_unload_fired_.empty();
 }
 
-#if defined(OS_WIN)
 void Browser::CancelWindowClose() {
   DCHECK(is_attempting_to_close_browser_);
   // Only cancelling beforeunload should be able to cancel the window's close.
@@ -2372,7 +2343,6 @@ void Browser::ClearUnloadState(TabContents* tab) {
   ProcessPendingTabs();
 }
 
-#endif  // OS_WIN
 
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, Assorted utility functions (private):

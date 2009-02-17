@@ -136,6 +136,46 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8DOMWindowCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8HTMLCollectionCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8HTMLFormElementCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8HTMLInputElementCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8HTMLOptionsCollectionCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8HTMLPlugInElementCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8HTMLSelectElementCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8HTMLSelectElementCustom.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8NamedNodesCollection.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8NamedNodesCollection.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8SVGElementInstanceCustom.cpp"
 			>
 		</File>
@@ -157,6 +197,14 @@
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\CSSGrammar.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\HTMLElementFactory.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\HTMLElementFactory.h"
 				>
 			</File>
 			<File
@@ -253,6 +301,22 @@
 			</File>
 			<File
 				RelativePath="$(IntDir)\DerivedSources\V8CharacterData.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\V8ClientRect.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\V8ClientRect.h"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\V8ClientRectList.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\V8ClientRectList.h"
 				>
 			</File>
 			<File
@@ -2677,14 +2741,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\v8_vectornodelist.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\port\bindings\v8\v8_vectornodelist.h"
-			>
-		</File>
-		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\V8Binding.h"
 			>
 		</File>
@@ -2701,11 +2757,11 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\V8WorkerCustom.cpp"
+			RelativePath="..\..\port\bindings\v8\V8WorkerContextCustom.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\V8WorkerContextCustom.cpp"
+			RelativePath="..\..\port\bindings\v8\V8WorkerCustom.cpp"
 			>
 		</File>
 		<File

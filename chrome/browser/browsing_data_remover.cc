@@ -6,7 +6,7 @@
 
 #include "chrome/browser/chrome_thread.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/download/download_manager.h"
+#include "chrome/browser/history/history.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/search_engines/template_url_model.h"
@@ -20,13 +20,26 @@
 #include "net/url_request/url_request_context.h"
 #include "webkit/glue/password_form.h"
 
+#if defined(OS_POSIX)
+// TODO(port): get rid of this include. It's used just to provide declarations
+// and stub definitions for classes we encouter during the porting effort.
+#include "chrome/common/temp_scaffolding_stubs.h"
+#endif
+
+// TODO(port): Get rid of this section and finish porting.
+#if defined(OS_WIN)
+#include "chrome/browser/download/download_manager.h"
+#endif
+
 using base::Time;
 
 // Done so that we can use invokeLater on BrowsingDataRemovers and not have
 // BrowsingDataRemover implement RefCounted.
+template<>
 void RunnableMethodTraits<BrowsingDataRemover>::RetainCallee(
     BrowsingDataRemover* remover) {
 }
+template<>
 void RunnableMethodTraits<BrowsingDataRemover>::ReleaseCallee(
     BrowsingDataRemover* remover) {
 }

@@ -7,7 +7,7 @@
 
 #include "chrome/views/menu_button.h"
 
-#include "chrome/app/theme/theme_resources.h"
+#include "grit/theme_resources.h"
 #include "chrome/common/drag_drop_types.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/l10n_util.h"
@@ -180,8 +180,7 @@ bool MenuButton::Activate() {
 }
 
 bool MenuButton::OnMousePressed(const MouseEvent& e) {
-  if (IsFocusable())
-    RequestFocus();
+  RequestFocus();
   if (GetState() != BS_DISABLED) {
     // If we're draggable (GetDragOperations returns a non-zero value), then
     // don't pop on press, instead wait for release.

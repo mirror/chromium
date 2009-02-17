@@ -27,7 +27,9 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_process_impl.h"
 #include "chrome/browser/browser_shutdown.h"
+#include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/browser/first_run.h"
+#include "chrome/browser/metrics/metrics_service.h"
 #include "chrome/browser/profile_manager.h"
 #include "chrome/browser/shell_integration.h"
 #include "chrome/common/chrome_constants.h"
@@ -64,11 +66,9 @@
 #include "chrome/browser/automation/automation_provider.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_trial.h"
-#include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/browser/extensions/extension_protocols.h"
 #include "chrome/browser/jankometer.h"
 #include "chrome/browser/message_window.h"
-#include "chrome/browser/metrics/metrics_service.h"
 #include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/net/dns_global.h"
 #include "chrome/browser/net/sdch_dictionary_fetcher.h"
@@ -379,19 +379,8 @@ int BrowserMain(const MainFunctionParams& parameters) {
 
   // If the command line specifies 'uninstall' then we need to work here
   // unless we detect another chrome browser running.
-  if (parsed_command_line.HasSwitch(switches::kUninstall)) {
-    if (already_running) {
-#if defined(OS_WIN)
-      const std::wstring text = l10n_util::GetString(IDS_UNINSTALL_CLOSE_APP);
-      const std::wstring caption = l10n_util::GetString(IDS_PRODUCT_NAME);
-      win_util::MessageBox(NULL, text, caption,
-                           MB_OK | MB_ICONWARNING | MB_TOPMOST);
-#endif
-      return ResultCodes::UNINSTALL_CHROME_ALIVE;
-    } else {
-      return DoUninstallTasks();
-    }
-  }
+  if (parsed_command_line.HasSwitch(switches::kUninstall))
+    return DoUninstallTasks(already_running);
 
   if (parsed_command_line.HasSwitch(switches::kHideIcons) ||
       parsed_command_line.HasSwitch(switches::kShowIcons)) {
@@ -473,10 +462,13 @@ int BrowserMain(const MainFunctionParams& parameters) {
 
   // Config the network module so it has access to resources.
   net::NetModule::SetResourceProvider(NetResourceProvider);
+#endif
 
   // Register our global network handler for chrome-ui:// and
   // chrome-extension:// URLs.
   RegisterURLRequestChromeJob();
+
+#if defined(OS_WIN)
   RegisterExtensionProtocols();
 
   sandbox::BrokerServices* broker_services =

@@ -15,6 +15,7 @@
 #include "chrome/browser/cross_site_request_manager.h"
 #include "chrome/browser/renderer_host/async_resource_handler.h"
 #include "chrome/browser/renderer_host/buffered_resource_handler.h"
+#include "chrome/browser/renderer_host/cross_site_resource_handler.h"
 #include "chrome/browser/renderer_host/download_resource_handler.h"
 #include "chrome/browser/renderer_host/renderer_security_policy.h"
 #include "chrome/browser/renderer_host/resource_request_details.h"
@@ -44,7 +45,6 @@
 #include "chrome/browser/external_protocol_handler.h"
 #include "chrome/browser/login_prompt.h"
 #include "chrome/browser/plugin_service.h"
-#include "chrome/browser/renderer_host/cross_site_resource_handler.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/renderer_host/render_view_host_delegate.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
@@ -349,7 +349,7 @@ void ResourceDispatcherHost::BeginDownload(const GURL& url,
                                   render_process_host_id,
                                   render_view_id,
                                   request_id_,
-                                  url.spec(),
+                                  url,
                                   download_file_manager_.get(),
                                   request,
                                   true);
@@ -405,7 +405,7 @@ void ResourceDispatcherHost::BeginSaveFile(const GURL& url,
   scoped_refptr<ResourceHandler> handler =
       new SaveFileResourceHandler(render_process_host_id,
                                   render_view_id,
-                                  url.spec(),
+                                  url,
                                   save_file_manager_.get());
   request_id_--;
 

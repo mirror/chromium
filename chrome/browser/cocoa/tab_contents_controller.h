@@ -29,11 +29,13 @@ class TabStripModel;
   CommandUpdater* commands_;  // weak, may be nil
   TabContentsCommandObserver* observer_;  // nil if |commands_| is nil
   LocationBar* locationBarBridge_;
+  TabContents* contents_;  // weak
   IBOutlet NSButton* backButton_;
   IBOutlet NSButton* forwardButton_;
   IBOutlet NSButton* reloadStopButton_;
   IBOutlet NSButton* starButton_;
   IBOutlet NSTextField* locationBar_;
+  IBOutlet NSBox* contentsBox_;
 }
 
 // Create the contents of a tab represented by |contents| and loaded from the
@@ -54,6 +56,10 @@ class TabStripModel;
 // the selected tab. Handles things such as ensuring the toolbar is correctly
 // enabled.
 - (void)willBecomeSelectedTab;
+
+// Called when any url bar state changes. If |tabForRestoring| is non-NULL,
+// it points to a TabContents whose state we should restore.
+- (void)updateToolbarWithContents:(TabContents*)tabForRestoring;
 
 @end
 
