@@ -16,6 +16,7 @@
 #include "base/file_util.h"
 #include "base/message_loop.h"
 #include "base/path_service.h"
+#include "base/string16.h"
 #include "base/string_piece.h"
 #include "base/string_util.h"
 #include "net/base/mime_util.h"
@@ -117,7 +118,15 @@ void TestShell::InitializeTestShell(bool layout_test_mode) {
     "/usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold.ttf",
     "/usr/share/fonts/truetype/msttcorefonts/Courier_New_Bold_Italic.ttf",
     "/usr/share/fonts/truetype/msttcorefonts/Courier_New_Italic.ttf",
+    "/usr/share/fonts/truetype/msttcorefonts/Georgia.ttf",
+    "/usr/share/fonts/truetype/msttcorefonts/Georgia_Bold.ttf",
+    "/usr/share/fonts/truetype/msttcorefonts/Georgia_Bold_Italic.ttf",
+    "/usr/share/fonts/truetype/msttcorefonts/Georgia_Italic.ttf",
     "/usr/share/fonts/truetype/msttcorefonts/Impact.ttf",
+    "/usr/share/fonts/truetype/msttcorefonts/Trebuchet_MS.ttf",
+    "/usr/share/fonts/truetype/msttcorefonts/Trebuchet_MS_Bold.ttf",
+    "/usr/share/fonts/truetype/msttcorefonts/Trebuchet_MS_Bold_Italic.ttf",
+    "/usr/share/fonts/truetype/msttcorefonts/Trebuchet_MS_Italic.ttf",
     "/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman.ttf",
     "/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman_Bold.ttf",
     "/usr/share/fonts/truetype/msttcorefonts/Times_New_Roman_Bold_Italic.ttf",
@@ -201,7 +210,7 @@ namespace {
 // Callback for when the main window is destroyed.
 gboolean MainWindowDestroyed(GtkWindow* window, TestShell* shell) {
 
-  TestShell::RemoveWindowFromList(GTK_WIDGET(window));
+  TestShell::RemoveWindowFromList(window);
 
   if (TestShell::windowList()->empty() || shell->is_modal()) {
     MessageLoop::current()->PostTask(FROM_HERE,
@@ -296,9 +305,9 @@ GtkWidget* CreateMenuBar(TestShell* shell) {
 }
 
 bool TestShell::Initialize(const std::wstring& startingURL) {
-  m_mainWnd = gtk_window_new(GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_title(GTK_WINDOW(m_mainWnd), "Test Shell");
-  gtk_window_set_default_size(GTK_WINDOW(m_mainWnd), 640, 480);
+  m_mainWnd = GTK_WINDOW(gtk_window_new(GTK_WINDOW_TOPLEVEL));
+  gtk_window_set_title(m_mainWnd, "Test Shell");
+  gtk_window_set_default_size(m_mainWnd, 640, 480);
   g_signal_connect(G_OBJECT(m_mainWnd), "destroy",
                    G_CALLBACK(MainWindowDestroyed), this);
   g_signal_connect(G_OBJECT(m_mainWnd), "focus-out-event",
@@ -353,7 +362,7 @@ bool TestShell::Initialize(const std::wstring& startingURL) {
   webView()->SetUseEditorDelegate(true);
 
   gtk_container_add(GTK_CONTAINER(m_mainWnd), vbox);
-  gtk_widget_show_all(m_mainWnd);
+  gtk_widget_show_all(GTK_WIDGET(m_mainWnd));
   top_chrome_height_ = toolbar->allocation.height +
       menu_bar->allocation.height + 2 * gtk_box_get_spacing(GTK_BOX(vbox));
 
@@ -376,7 +385,7 @@ void TestShell::TestFinished() {
     return;
 
   test_is_pending_ = false;
-  GtkWidget* window = *(TestShell::windowList()->begin());
+  GtkWindow* window = *(TestShell::windowList()->begin());
   TestShell* shell = static_cast<TestShell*>(g_object_get_data(G_OBJECT(window),
                                              "test-shell"));
   TestShell::Dump(shell);
@@ -429,7 +438,7 @@ void TestShell::InteractiveSetFocus(WebWidgetHost* host, bool enable) {
 
 void TestShell::DestroyWindow(gfx::NativeWindow windowHandle) {
   RemoveWindowFromList(windowHandle);
-  gtk_widget_destroy(windowHandle);
+  gtk_widget_destroy(GTK_WIDGET(windowHandle));
 }
 
 WebWidget* TestShell::CreatePopupWidget(WebView* webview) {
@@ -469,7 +478,7 @@ void TestShell::ResizeSubViews() {
   result->clear();
   for (WindowList::iterator iter = TestShell::windowList()->begin();
        iter != TestShell::windowList()->end(); iter++) {
-      GtkWidget* window = *iter;
+      GtkWindow* window = *iter;
       TestShell* shell =
           static_cast<TestShell*>(g_object_get_data(G_OBJECT(window), "test-shell"));
       webkit_glue::DumpBackForwardList(shell->webView(), NULL, result);
@@ -483,7 +492,7 @@ void TestShell::ResizeSubViews() {
     return false;
   }
 
-  GtkWidget* window = *(TestShell::windowList()->begin());
+  GtkWindow* window = *(TestShell::windowList()->begin());
   TestShell* shell =
       static_cast<TestShell*>(g_object_get_data(G_OBJECT(window), "test-shell"));
   shell->ResetTestController();
@@ -624,13 +633,14 @@ StringPiece TestShell::NetResourceProvider(int key) {
 
 namespace webkit_glue {
 
-std::wstring GetLocalizedString(int message_id) {
+string16 GetLocalizedString(int message_id) {
   StringPiece res;
   if (!g_resource_data_pack->Get(message_id, &res)) {
     LOG(FATAL) << "failed to load webkit string with id " << message_id;
   }
 
-  return UTF8ToWide(res.as_string());
+  return string16(reinterpret_cast<const char16*>(res.data()),
+                  res.length() / 2);
 }
 
 std::string GetDataResource(int resource_id) {

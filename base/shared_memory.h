@@ -24,7 +24,9 @@ typedef HANDLE SharedMemoryHandle;
 typedef HANDLE SharedMemoryLock;
 #elif defined(OS_POSIX)
 typedef int SharedMemoryHandle;
-typedef sem_t* SharedMemoryLock;
+// On POSIX, the lock is implemented as a lockf() on the mapped file,
+// so no additional member (or definition of SharedMemoryLock) is
+// needed.
 #endif
 
 // Platform abstraction for shared memory.  Provides a C++ wrapper
@@ -51,12 +53,18 @@ class SharedMemory {
   // If read_only is true, opens the memory as read-only.
   // If open_existing is true, and the shared memory already exists,
   // opens the existing shared memory and ignores the size parameter.
+  // If name is the empty string, use a unique name.
   // Returns true on success, false on failure.
   bool Create(const std::wstring& name, bool read_only, bool open_existing,
               size_t size);
 
+  // Deletes resources associated with a shared memory segment based on name.
+  // Not all platforms require this call.
+  bool Delete(const std::wstring& name);
+
   // Opens a shared memory segment based on a name.
   // If read_only is true, opens for read-only access.
+  // If name is the empty string, use a unique name.
   // Returns true on success, false on failure.
   bool Open(const std::wstring& name, bool read_only);
 
@@ -113,6 +121,12 @@ class SharedMemory {
   // Lock the shared memory.
   // This is a cross-process lock which may be recursively
   // locked by the same thread.
+  // TODO(port):
+  // WARNING: on POSIX the lock only works across processes, not
+  // across threads.  2 threads in the same process can both grab the
+  // lock at the same time.  There are several solutions for this
+  // (futex, lockf+anon_semaphore) but none are both clean and common
+  // across Mac and Linux.
   void Lock();
 
   // Release the shared memory lock.
@@ -120,7 +134,11 @@ class SharedMemory {
 
  private:
 #if defined(OS_POSIX)
-  bool CreateOrOpen(const std::wstring &name, int posix_flags);
+  bool CreateOrOpen(const std::wstring &name, int posix_flags, size_t size);
+  bool FilenameForMemoryName(const std::wstring &memname,
+                             std::wstring *filename);
+  void LockOrUnlockCommon(int function);
+
 #endif
   bool ShareToProcessCommon(ProcessHandle process,
                             SharedMemoryHandle* new_handle,
@@ -131,7 +149,9 @@ class SharedMemory {
   void*              memory_;
   bool               read_only_;
   size_t             max_size_;
+#if !defined(OS_POSIX)
   SharedMemoryLock   lock_;
+#endif
 
   DISALLOW_EVIL_CONSTRUCTORS(SharedMemory);
 };

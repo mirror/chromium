@@ -121,6 +121,18 @@
 	<References>
 	</References>
 	<Files>
+		<Filter
+			Name="chromium"
+			>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\chromium\ChromiumThreading.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\chromium\MainThreadChromium.cpp"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\AlwaysInline.h"
 			>
@@ -334,6 +346,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\Threading.cpp"
+			>
+		</File>
+		<File
 			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\Threading.h"
 			>
 		</File>
@@ -343,6 +359,10 @@
 		</File>
 		<File
 			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\ThreadSpecific.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\TypeTraits.cpp"
 			>
 		</File>
 		<File
@@ -379,6 +399,14 @@
 		</File>
 		<File
 			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\VectorTraits.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\chromium\ChromiumThreading.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\JavaScriptCore\wtf\chromium\MainThreadChromium.cpp"
 			>
 		</File>
 	</Files>

@@ -34,6 +34,7 @@ TEST_F(ProcessUtilTest, SpawnChild) {
 
   ASSERT_NE(static_cast<ProcessHandle>(NULL), handle);
   EXPECT_TRUE(WaitForSingleProcess(handle, 5000));
+  base::CloseProcessHandle(handle);
 }
 
 MULTIPROCESS_TEST_MAIN(SlowChildProcess) {
@@ -55,22 +56,18 @@ MULTIPROCESS_TEST_MAIN(SlowChildProcess) {
 #define EXE_SUFFIX L""
 #endif
 
-// TODO(port): finish port on Mac
-#if !defined(OS_MACOSX)
 TEST_F(ProcessUtilTest, KillSlowChild) {
   remove("SlowChildProcess.die");
   int oldcount = GetProcessCount(L"base_unittests" EXE_SUFFIX, 0);
-
   ProcessHandle handle = this->SpawnChild(L"SlowChildProcess");
-
   ASSERT_NE(static_cast<ProcessHandle>(NULL), handle);
   EXPECT_EQ(oldcount+1, GetProcessCount(L"base_unittests" EXE_SUFFIX, 0));
   FILE *fp = fopen("SlowChildProcess.die", "w");
   fclose(fp);
   EXPECT_TRUE(base::WaitForSingleProcess(handle, 5000));
   EXPECT_EQ(oldcount, GetProcessCount(L"base_unittests" EXE_SUFFIX, 0));
+  base::CloseProcessHandle(handle);
 }
-#endif
 
 // TODO(estade): if possible, port these 2 tests.
 #if defined(OS_WIN)
@@ -221,6 +218,7 @@ TEST_F(ProcessUtilTest, FDRemapping) {
   ASSERT_EQ(0, num_open_files);
 
   EXPECT_TRUE(WaitForSingleProcess(handle, 1000));
+  base::CloseProcessHandle(handle);
   close(fds[0]);
   close(sockets[0]);
   close(sockets[1]);

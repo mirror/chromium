@@ -413,6 +413,7 @@ END
 sub GenerateConstructorGetter
 {
   my $implClassName = shift;
+  my $classIndex = shift;
       
   push(@implContentDecls, <<END);
   static v8::Handle<v8::Value> ${implClassName}ConstructorGetter(v8::Local<v8::String> name, const v8::AccessorInfo& info) {
@@ -420,6 +421,10 @@ sub GenerateConstructorGetter
     v8::Handle<v8::Value> data = info.Data();
     ASSERT(data->IsNumber());
     V8ClassIndex::V8WrapperType type = V8ClassIndex::FromInt(data->Int32Value());
+END
+
+  if ($classIndex eq "DOMWINDOW") {
+    push(@implContentDecls, <<END);
     DOMWindow* window = V8Proxy::ToNativeObject<DOMWindow>(V8ClassIndex::DOMWINDOW, info.Holder());
     Frame* frame = window->frame();
     if (frame) {
@@ -428,7 +433,19 @@ sub GenerateConstructorGetter
       // context of the DOMWindow and not in the context of the caller.
       return V8Proxy::retrieve(frame)->GetConstructor(type);
     }
-    return V8Proxy::retrieve()->GetConstructor(type);
+END
+  }
+  
+  if ($classIndex eq "WORKERCONTEXT") {
+    $implIncludes{"WorkerContextExecutionProxy.h"} = 1;
+    push(@implContentDecls, <<END);
+    return WorkerContextExecutionProxy::retrieve()->GetConstructor(type);
+END
+  } else {
+    push(@implContentDecls, "    return V8Proxy::retrieve()->GetConstructor(type);");
+  }
+
+  push(@implContentDecls, <<END);
   }
 
 END
@@ -741,8 +758,14 @@ sub GenerateNewFunctionTemplate
   my $interfaceName = $dataNode->name;
   my $name = $function->signature->name;
 
-  if ($function->signature->extendedAttributes->{"Custom"}) {
-    my $customFunc = $function->signature->extendedAttributes->{"Custom"};
+  if ($function->signature->extendedAttributes->{"Custom"} ||
+      $function->signature->extendedAttributes->{"V8Custom"}) {
+    if ($function->signature->extendedAttributes->{"Custom"} &&
+        $function->signature->extendedAttributes->{"V8Custom"}) {
+      die "Custom and V8Custom should be mutually exclusive!"
+    }
+    my $customFunc = $function->signature->extendedAttributes->{"Custom"} ||
+                     $function->signature->extendedAttributes->{"V8Custom"};
     if ($customFunc eq 1) {
       $customFunc = $interfaceName . WK_ucfirst($name);
     }
@@ -882,7 +905,7 @@ sub GenerateBatchedAttributeData
     $accessControl = "static_cast<v8::AccessControl>(" . $accessControl . ")";
 
 
-    my $customAccessor = $attrExt->{"Custom"} || $attrExt->{"CustomSetter"} || $attrExt->{"CustomGetter"} || "";
+    my $customAccessor = $attrExt->{"Custom"} || $attrExt->{"V8Custom"} || $attrExt->{"CustomSetter"} || $attrExt->{"CustomGetter"} || "";
     if ($customAccessor eq 1) {
       # use the naming convension, interface + (capitalize) attr name
       $customAccessor = $interfaceName . WK_ucfirst($attrName);
@@ -924,9 +947,14 @@ sub GenerateBatchedAttributeData
       }
 
     # Custom Getter and Setter
-    } elsif ($attrExt->{"Custom"}) {
+    } elsif ($attrExt->{"Custom"} || $attrExt->{"V8Custom"}) {
       $getter = "V8Custom::v8${customAccessor}AccessorGetter";
-      $setter = "V8Custom::v8${customAccessor}AccessorSetter";
+      if ($interfaceName eq "WorkerContext" and $attrName eq "self") {
+        $setter = "0";
+        $propAttr = "v8::ReadOnly";
+      } else {
+        $setter = "V8Custom::v8${customAccessor}AccessorSetter";
+      }
       
     # Custom Setter
     } elsif ($attrExt->{"CustomSetter"}) {
@@ -1050,7 +1078,8 @@ sub GenerateImplementation
       # Do not generate accessor if this is a custom attribute.  The
       # call will be forwarded to a hand-written accessor
       # implementation.
-      if ($attribute->signature->extendedAttributes->{"Custom"}) {
+      if ($attribute->signature->extendedAttributes->{"Custom"} ||
+          $attribute->signature->extendedAttributes->{"V8Custom"}) {
         $implIncludes{"v8_custom.h"} = 1;
         next;
       }
@@ -1064,7 +1093,7 @@ sub GenerateImplementation
       if ($attribute->signature->extendedAttributes->{"CustomSetter"}) {
         $implIncludes{"v8_custom.h"} = 1;
       } elsif ($attribute->signature->extendedAttributes->{"Replaceable"}) {
-        $interfaceName eq "DOMWindow" || die "Replaceable attribute can only be used in DOMWindow interface!";
+        $dataNode->extendedAttributes->{"ExtendsDOMGlobalObject"} || die "Replaceable attribute can only be used in interface that defines ExtendsDOMGlobalObject attribute!";
 #        GenerateReplaceableAttrSetter($implClassName);
       } elsif ($attribute->type !~ /^readonly/) {
         GenerateNormalAttrSetter($attribute, $dataNode, $classIndex, $implClassName);
@@ -1072,14 +1101,15 @@ sub GenerateImplementation
     }
 
     if ($hasConstructors) {
-      GenerateConstructorGetter($implClassName);
+      GenerateConstructorGetter($implClassName, $classIndex);
     }
 
     # Generate methods for functions.
     foreach my $function (@{$dataNode->functions}) {
       # hack for addEventListener/RemoveEventListener
       # TODO(fqian): avoid naming conflict
-      if ($function->signature->extendedAttributes->{"Custom"}) {
+      if ($function->signature->extendedAttributes->{"Custom"} ||
+          $function->signature->extendedAttributes->{"V8Custom"}) {
         $implIncludes{"v8_custom.h"} = 1;
 
       } else {
@@ -1607,7 +1637,9 @@ sub IsWorkerClassName
 {
     my $class = shift;
     return 1 if $class eq "V8Worker";
+    return 1 if $class eq "V8WorkerContext";
     return 1 if $class eq "V8WorkerLocation";
+    return 1 if $class eq "V8WorkerNavigator";
 
     return 0;
 }
@@ -1636,7 +1668,7 @@ sub GetNativeType
     return "SVGPaint::SVGPaintType" if $type eq "SVGPaintType";
     return "DOMTimeStamp" if $type eq "DOMTimeStamp";
     return "unsigned" if $type eq "RGBColor";
-    return "EventTargetNode*" if $type eq "EventTarget" and $isParameter;
+    return "Node*" if $type eq "EventTarget" and $isParameter;
 
     return "String" if $type eq "DOMUserData";  # temporary hack, TODO
 
@@ -1755,7 +1787,7 @@ sub JSValueToNative
       $implIncludes{"V8Node.h"} = 1;
 
       # EventTarget is not in DOM hierarchy, but all Nodes are EventTarget.
-      return "V8Node::HasInstance($value) ? V8Proxy::DOMWrapperToNode<EventTargetNode>($value) : 0";
+      return "V8Node::HasInstance($value) ? V8Proxy::DOMWrapperToNode<Node>($value) : 0";
     }
 
     AddIncludesForType($type);
@@ -1829,7 +1861,8 @@ sub RequiresCustomSignature
 {
     my $function = shift;
     # No signature needed for Custom function
-    if ($function->signature->extendedAttributes->{"Custom"}) {
+    if ($function->signature->extendedAttributes->{"Custom"} ||
+        $function->signature->extendedAttributes->{"V8Custom"}) {
       return 0;
     }
 
@@ -1957,6 +1990,13 @@ sub NativeToJSValue
 
     if ($type eq "RGBColor") {
       return "V8Proxy::ToV8Object(V8ClassIndex::RGBCOLOR, new RGBColor($value))";
+    }
+    
+    if ($type eq "WorkerLocation" or $type eq "WorkerNavigator") {
+      $implIncludes{"WorkerContextExecutionProxy.h"} = 1;
+      my $classIndex = uc($type);
+
+      return "WorkerContextExecutionProxy::ToV8Object(V8ClassIndex::$classIndex, $value)";
     }
 
     else {

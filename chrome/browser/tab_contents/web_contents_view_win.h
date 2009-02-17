@@ -34,7 +34,7 @@ class WebContentsViewWin : public WebContentsView,
       RenderWidgetHost* render_widget_host);
   virtual gfx::NativeView GetNativeView() const;
   virtual gfx::NativeView GetContentNativeView() const;
-  virtual gfx::NativeView GetTopLevelNativeView() const;
+  virtual gfx::NativeWindow GetTopLevelNativeView() const;
   virtual void GetContainerBounds(gfx::Rect* out) const;
   virtual void OnContentsDestroy();
   virtual void SetPageTitle(const std::wstring& title);
@@ -58,8 +58,7 @@ class WebContentsViewWin : public WebContentsView,
                                          bool user_gesture);
   virtual void ShowCreatedWidgetInternal(RenderWidgetHostView* widget_host_view,
                                          const gfx::Rect& initial_pos);
-  virtual void ShowContextMenu(
-      const ViewHostMsg_ContextMenu_Params& params);
+  virtual void ShowContextMenu(const ContextMenuParams& params);
   virtual void StartDragging(const WebDropData& drop_data);
   virtual void UpdateDragCursor(bool is_drop_target);
   virtual void TakeFocus(bool reverse);

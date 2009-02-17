@@ -10,6 +10,7 @@
 #include "base/process_util.h"
 #include "base/string_util.h"
 #include "chrome/app/locales/locale_settings.h"
+#include "chrome/browser/autofill_manager.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/dom_operation_notification_details.h"
 #include "chrome/browser/google_util.h"
@@ -18,12 +19,17 @@
 #include "chrome/browser/load_from_memory_cache_details.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
+#include "chrome/browser/renderer_host/render_view_host.h"
+#include "chrome/browser/renderer_host/render_widget_host_view.h"
+#include "chrome/browser/search_engines/template_url_model.h"
 #include "chrome/browser/tab_contents/provisional_load_details.h"
+#include "chrome/browser/tab_contents/web_contents_view.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
+#include "chrome/common/render_messages.h"
 #include "net/base/mime_util.h"
 #include "net/base/net_errors.h"
 #include "net/base/registry_controlled_domain.h"
@@ -31,7 +37,6 @@
 
 #if defined(OS_WIN)
 // TODO(port): fill these in as we flesh out the implementation of this class
-#include "chrome/browser/autofill_manager.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/cache_manager_host.h"
 #include "chrome/browser/character_encoding.h"
@@ -44,17 +49,19 @@
 #include "chrome/browser/plugin_installer.h"
 #include "chrome/browser/plugin_service.h"
 #include "chrome/browser/printing/print_job.h"
-#include "chrome/browser/renderer_host/render_view_host.h"
-#include "chrome/browser/renderer_host/render_widget_host_view.h"
 #include "chrome/browser/search_engines/template_url_fetcher.h"
-#include "chrome/browser/search_engines/template_url_model.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
-#include "chrome/browser/tab_contents/web_contents_view.h"
 #include "chrome/browser/views/hung_renderer_view.h"  // TODO(brettw) delete me.
 #include "chrome/common/resource_bundle.h"
 #endif
 
 #include "generated_resources.h"
+
+#if !defined(OS_MACOSX)
+// TODO(port): port this to mac.
+#include "chrome/browser/renderer_host/render_widget_host_view.h"
+#include "chrome/browser/tab_contents/web_contents_view.h"
+#endif
 
 // Cross-Site Navigations
 //
@@ -234,6 +241,8 @@ void WebContents::RegisterUserPrefs(PrefService* prefs) {
   WebPreferences pref_defaults;
   prefs->RegisterBooleanPref(prefs::kWebKitJavascriptEnabled,
                              pref_defaults.javascript_enabled);
+  prefs->RegisterBooleanPref(prefs::kWebKitWebSecurityEnabled,
+                             pref_defaults.web_security_enabled);
   prefs->RegisterBooleanPref(
       prefs::kWebKitJavascriptCanOpenWindowsAutomatically, true);
   prefs->RegisterBooleanPref(prefs::kWebKitLoadsImagesAutomatically,
@@ -485,11 +494,12 @@ void WebContents::PopupNotificationVisibilityChanged(bool visible) {
   render_view_host()->PopupNotificationVisibilityChanged(visible);
 }
 
-#if defined(OS_WIN)
 // Stupid view pass-throughs
 void WebContents::CreateView() {
   view_->CreateView();
 }
+
+#if defined(OS_WIN)
 HWND WebContents::GetContainerHWND() const {
   return view_->GetNativeView();
 }
@@ -1196,6 +1206,9 @@ WebPreferences WebContents::GetWebkitPrefs() {
     web_prefs.javascript_enabled =
         !command_line.HasSwitch(switches::kDisableJavaScript) &&
         prefs->GetBoolean(prefs::kWebKitJavascriptEnabled);
+    web_prefs.web_security_enabled =
+        !command_line.HasSwitch(switches::kDisableWebSecurity) &&
+        prefs->GetBoolean(prefs::kWebKitWebSecurityEnabled);
     web_prefs.plugins_enabled =
         !command_line.HasSwitch(switches::kDisablePlugins) &&
         prefs->GetBoolean(prefs::kWebKitPluginsEnabled);

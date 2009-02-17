@@ -6,14 +6,15 @@
 
 #include "base/command_line.h"
 #include "base/logging.h"
-#include "chrome/browser/renderer_host/render_widget_host_view.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/renderer_host/render_view_host_delegate.h"
+#include "chrome/browser/renderer_host/render_widget_host_view.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/site_instance.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/notification_service.h"
+#include "chrome/common/notification_type.h"
 
 namespace base {
 class WaitableEvent;
@@ -30,6 +31,8 @@ RenderViewHostManager::RenderViewHostManager(
       render_view_host_(NULL),
       pending_render_view_host_(NULL),
       interstitial_page_(NULL) {
+  registrar_.Add(this, NotificationType::RENDER_VIEW_HOST_DELETED,
+                 NotificationService::AllSources());
 }
 
 RenderViewHostManager::~RenderViewHostManager() {
@@ -56,8 +59,9 @@ void RenderViewHostManager::Shutdown() {
     CancelPendingRenderView();
 
   // We should always have a main RenderViewHost.
-  render_view_host_->Shutdown();
+  RenderViewHost* render_view_host = render_view_host_;
   render_view_host_ = NULL;
+  render_view_host->Shutdown();
 }
 
 RenderViewHost* RenderViewHostManager::Navigate(const NavigationEntry& entry) {
@@ -245,6 +249,17 @@ void RenderViewHostManager::OnJavaScriptMessageBoxClosed(
   render_view_host_->JavaScriptMessageBoxClosed(reply_msg, success, prompt);
 }
 
+void RenderViewHostManager::Observe(NotificationType type,
+                                    const NotificationSource& source,
+                                    const NotificationDetails& details) {
+  // Debugging code to help isolate
+  // http://code.google.com/p/chromium/issues/detail?id=6316 . We should never
+  // reference a RVH that is about to be deleted.
+  RenderViewHost* deleted_rvh = Source<RenderViewHost>(source).ptr();
+  CHECK(deleted_rvh);
+  CHECK(render_view_host_ != deleted_rvh);
+  CHECK(pending_render_view_host_ != deleted_rvh);
+}
 
 bool RenderViewHostManager::ShouldTransitionCrossSite() {
   // True if we are using process-per-site-instance (default) or
@@ -508,8 +523,9 @@ RenderViewHost* RenderViewHostManager::UpdateRendererStateNavigate(
 }
 
 void RenderViewHostManager::CancelPendingRenderView() {
-  pending_render_view_host_->Shutdown();
+  RenderViewHost* pending_render_view_host = pending_render_view_host_;
   pending_render_view_host_ = NULL;
+  pending_render_view_host->Shutdown();
 }
 
 void RenderViewHostManager::CrossSiteNavigationCanceled() {

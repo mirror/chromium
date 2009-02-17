@@ -141,7 +141,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\context_node_types.h"
+				RelativePath=".\context_menu.h"
 				>
 			</File>
 			<File
@@ -302,6 +302,10 @@
 			</File>
 			<File
 				RelativePath=".\chromium_bridge_impl.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\chromium_threading.cc"
 				>
 			</File>
 			<File

@@ -266,10 +266,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\browser_resources.h"
-				>
-			</File>
-			<File
 				RelativePath=".\browser_shutdown.cc"
 				>
 			</File>
@@ -487,18 +483,6 @@
 			</File>
 			<File
 				RelativePath=".\profile_manager.h"
-				>
-			</File>
-			<File
-				RelativePath=".\resource_message_filter.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\resource_message_filter.h"
-				>
-			</File>
-			<File
-				RelativePath=".\resource_request_details.h"
 				>
 			</File>
 			<File
@@ -750,14 +734,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\repost_form_warning_dialog.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\repost_form_warning_dialog.h"
-				>
-			</File>
-			<File
 				RelativePath=".\status_bubble.h"
 				>
 			</File>
@@ -986,11 +962,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\history\history_publisher_win.cc"
+				RelativePath=".\history\history_publisher.h"
 				>
 			</File>
 			<File
-				RelativePath=".\history\history_publisher.h"
+				RelativePath=".\history\history_publisher_win.cc"
 				>
 			</File>
 			<File
@@ -1785,10 +1761,6 @@
 				RelativePath=".\browser_accessibility_manager.h"
 				>
 			</File>
-			<File
-				RelativePath=".\iaccessible_function_ids.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Download"
@@ -1946,6 +1918,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\renderer_host\audio_renderer_host.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\audio_renderer_host.h"
+				>
+			</File>
+			<File
 				RelativePath=".\renderer_host\backing_store.cc"
 				>
 			</File>
@@ -2066,6 +2046,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\renderer_host\resource_message_filter.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\resource_message_filter.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\resource_request_details.h"
+				>
+			</File>
+			<File
 				RelativePath=".\renderer_host\safe_browsing_resource_handler.cc"
 				>
 			</File>
@@ -2111,14 +2103,6 @@
 			</File>
 			<File
 				RelativePath=".\tab_contents\interstitial_page.h"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_contents\ipc_status_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_contents\ipc_status_view.h"
 				>
 			</File>
 			<File
@@ -2182,6 +2166,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\tab_contents\repost_form_warning.h"
+				>
+			</File>
+			<File
 				RelativePath=".\tab_contents\security_style.h"
 				>
 			</File>
@@ -2191,14 +2179,6 @@
 			</File>
 			<File
 				RelativePath=".\tab_contents\site_instance.h"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_contents\status_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_contents\status_view.h"
 				>
 			</File>
 			<File

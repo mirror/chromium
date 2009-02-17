@@ -14,13 +14,13 @@
 #include "base/string_piece.h"
 #include "base/string_util.h"
 #include "build/build_config.h"
-#include "chrome/app/theme/theme_resources.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/gfx/favicon_size.h"
 #include "chrome/common/gfx/color_utils.h"
 #include "chrome/common/jstemplate_builder.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/page_zoom.h"
+#include "chrome/common/render_messages.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/thumbnail_score.h"
 #include "chrome/renderer/about_handler.h"
@@ -49,7 +49,6 @@
 #include "webkit/glue/webresponse.h"
 #include "webkit/glue/weburlrequest.h"
 #include "webkit/glue/webview.h"
-//#include "webkit/port/platform/graphics/PlatformContextSkia.h"
 
 #include "generated_resources.h"
 
@@ -328,7 +327,7 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
   // parents any plugins instantiated in this RenderView instance.
   // Plugins can be instantiated only when we receive the parent window
   // handle as they are child windows.
-  if (waiting_for_create_window_ack_ && 
+  if (waiting_for_create_window_ack_ &&
       resource_dispatcher_->IsResourceMessage(message)) {
     queued_resource_messages_.push(new IPC::Message(message));
     return;
@@ -454,12 +453,7 @@ void RenderView::SendThumbnail() {
     return;
 
   // send the thumbnail message to the browser process
-  IPC::Message* thumbnail_msg = new IPC::Message(routing_id_,
-      ViewHostMsg_Thumbnail::ID, IPC::Message::PRIORITY_NORMAL);
-  IPC::ParamTraits<GURL>::Write(thumbnail_msg, url);
-  IPC::ParamTraits<ThumbnailScore>::Write(thumbnail_msg, score);
-  IPC::ParamTraits<SkBitmap>::Write(thumbnail_msg, thumbnail);
-  Send(thumbnail_msg);
+  Send(new ViewHostMsg_Thumbnail(routing_id_, url, score, thumbnail));
 }
 
 int RenderView::SwitchFrameToPrintMediaType(const ViewMsg_Print_Params& params,
@@ -1144,7 +1138,7 @@ void RenderView::UpdateURL(WebFrame* frame) {
 
 #if defined(OS_WIN)
   if (glue_accessibility_.get()) {
-    // Clear accessibility info cache. 
+    // Clear accessibility info cache.
     glue_accessibility_->ClearIAccessibleMap(-1, true);
   }
 #else
@@ -1344,7 +1338,7 @@ void RenderView::DidFailProvisionalLoadWithError(WebView* webview,
     }
   }
 
-  // Fallback to a local error page.  
+  // Fallback to a local error page.
   LoadNavigationErrorPage(frame, &failed_request, error, std::string(),
                           replace);
 }
@@ -1927,7 +1921,13 @@ WebPluginDelegate* RenderView::CreatePluginDelegate(
 }
 
 webkit_glue::WebMediaPlayerDelegate* RenderView::CreateMediaPlayerDelegate() {
-  return new WebMediaPlayerDelegateImpl();
+#if defined(OS_WIN)
+  return new WebMediaPlayerDelegateImpl(this);
+#else
+  // TODO(port)
+  NOTIMPLEMENTED();
+  return NULL;
+#endif
 }
 
 void RenderView::OnMissingPluginStatus(WebPluginDelegate* delegate,
@@ -2017,7 +2017,7 @@ void RenderView::ShowContextMenu(WebView* webview,
                                  const std::wstring& misspelled_word,
                                  int edit_flags,
                                  const std::string& security_info) {
-  ViewHostMsg_ContextMenu_Params params;
+  ContextMenuParams params;
   params.node = node;
   params.x = x;
   params.y = y;
@@ -2027,7 +2027,7 @@ void RenderView::ShowContextMenu(WebView* webview,
   params.frame_url = frame_url;
   params.selection_text = selection_text;
   params.misspelled_word = misspelled_word;
-  params.spellcheck_enabled = 
+  params.spellcheck_enabled =
       webview->GetFocusedFrame()->SpellCheckEnabled();
   params.edit_flags = edit_flags;
   params.security_info = security_info;
@@ -2672,8 +2672,8 @@ void RenderView::OnUpdateBackForwardListCount(int back_list_count,
 }
 
 void RenderView::OnGetAccessibilityInfo(
-    const ViewMsg_Accessibility_In_Params& in_params,
-    ViewHostMsg_Accessibility_Out_Params* out_params) {
+    const AccessibilityInParams& in_params,
+    AccessibilityOutParams* out_params) {
 #if defined(OS_WIN)
   if (!glue_accessibility_.get())
     glue_accessibility_.reset(new GlueAccessibility());
@@ -2860,7 +2860,13 @@ std::string RenderView::GetAltHTMLForTemplate(
     NOTREACHED() << "unable to load template. ID: " << template_resource_id;
     return "";
   }
+#if defined(OS_WIN)
   // "t" is the id of the templates root node.
   return jstemplate_builder::GetTemplateHtml(
       template_html, &error_strings, "t");
+#else
+  // TODO(port)
+  NOTIMPLEMENTED();
+  return std::string();
+#endif  // OS_WIN
 }

@@ -27,7 +27,6 @@
   delete browser_;
   delete windowShim_;
   [tabStripController_ release];
-  [contentsController_ release];
   [super dealloc];
 }
 
@@ -43,7 +42,9 @@
   // managing the creation of new tabs.
   tabStripController_ = 
       [[TabStripController alloc]
-          initWithView:tabStripView_ model:browser_->tabstrip_model()];
+          initWithView:tabStripView_ 
+                 model:browser_->tabstrip_model()
+              commands:browser_->command_updater()];
 
   // Place the tab bar above the content box and add it to the view hierarchy
   // as a sibling of the content view so it can overlap with the window frame.
@@ -104,6 +105,10 @@
 - (void)commandDispatch:(id)sender {
   NSInteger tag = [sender tag];
   browser_->ExecuteCommand(tag);
+}
+
+- (LocationBar*)locationBar {
+  return [tabStripController_ locationBar];
 }
 
 @end

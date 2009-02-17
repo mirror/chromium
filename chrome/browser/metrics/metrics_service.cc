@@ -181,6 +181,7 @@
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
+#include "chrome/common/render_messages.h"
 #include "chrome/installer/util/google_update_settings.h"
 #include "googleurl/src/gurl.h"
 #include "net/base/load_flags.h"
@@ -694,7 +695,9 @@ void MetricsService::StopRecording(MetricsLog** log) {
   // end of all log transmissions (initial log handles this separately).
   // Don't bother if we're going to discard current_log_.
   if (log) {
-    current_log_->RecordIncrementalStabilityElements();
+    // TODO(jar): when initial logs and ongoing logs have equal survivability,
+    // uncomment the following line to expedite stability data uploads.
+    // current_log_->RecordIncrementalStabilityElements();
     RecordCurrentHistograms();
   }
 

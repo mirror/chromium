@@ -7,17 +7,9 @@
 
 #include "build/build_config.h"
 
-#if defined(OS_WIN)
-#include <windows.h>
-#endif
+#include <string>
 
-#include <limits>
-#include <set>
-#include <vector>
-
-#include "base/id_map.h"
 #include "base/process.h"
-#include "base/rand_util.h"
 #include "base/ref_counted.h"
 #include "base/scoped_ptr.h"
 #include "base/shared_memory.h"
@@ -25,14 +17,11 @@
 #include "chrome/common/notification_observer.h"
 #include "webkit/glue/cache_manager.h"
 
+class CommandLine;
 class GURL;
 class PrefService;
 class RenderWidgetHelper;
 class WebContents;
-
-namespace base {
-class Thread;
-}
 
 namespace gfx {
 class Size;
@@ -119,6 +108,11 @@ class BrowserRenderProcessHost : public RenderProcessHost,
   // set of scripts and listen for updates to scripts.
   void InitUserScripts();
 
+  // Handles actually spawning the renderer process with the appropriate options
+  // for each platform.
+  bool SpawnChild(const CommandLine& command_line,
+      IPC::SyncChannel* channel, base::ProcessHandle* process_handle);
+
   // Sends the renderer process a new set of user scripts.
   void SendUserScriptsUpdate(base::SharedMemory* shared_memory);
 
@@ -150,4 +144,3 @@ class BrowserRenderProcessHost : public RenderProcessHost,
 std::wstring GenerateRandomChannelID(void* instance);
 
 #endif  // CHROME_BROWSER_RENDERER_HOST_BROWSER_RENDER_PROCESS_HOST_H_
-

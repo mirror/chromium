@@ -9,19 +9,26 @@
 #include <vector>
 
 #include "base/basictypes.h"
-#include "chrome/browser/autofill_manager.h"
-#include "chrome/common/render_messages.h"
+#include "base/file_path.h"
+#include "base/logging.h"
 #include "net/base/load_states.h"
+#include "webkit/glue/password_form.h"
 #include "webkit/glue/webpreferences.h"
+#include "webkit/glue/window_open_disposition.h"
 
+class AutofillForm;
 class NavigationEntry;
 class Profile;
 class RenderProcessHost;
 class RenderViewHost;
 class SkBitmap;
 class WebContents;
+class WebKeyboardEvent;
+struct ThumbnailScore;
+struct ContextMenuParams;
+struct ViewHostMsg_DidPrintPage_Params;
+struct ViewHostMsg_FrameNavigate_Params;
 struct WebDropData;
-enum WindowOpenDisposition;
 
 namespace base {
 class WaitableEvent;
@@ -33,6 +40,10 @@ class Message;
 
 namespace gfx {
 class Rect;
+}
+
+namespace webkit_glue {
+struct WebApplicationInfo;
 }
 
 //
@@ -85,8 +96,7 @@ class RenderViewHostDelegate {
 
     // A context menu should be shown, to be built using the context information
     // provided in the supplied params.
-    virtual void ShowContextMenu(
-        const ViewHostMsg_ContextMenu_Params& params) = 0;
+    virtual void ShowContextMenu(const ContextMenuParams& params) = 0;
 
     // The user started dragging content of the specified type within the
     // RenderView. Contextual information about the dragged content is supplied

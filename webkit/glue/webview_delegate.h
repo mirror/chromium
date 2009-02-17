@@ -23,8 +23,8 @@
 // of ChromeClient and FrameLoaderClient not delegated in the WebKit
 // implementation; and some WebView additions.
 
-#ifndef WEBKIT_GLUE_WEBVIEW_DELEGATE_H__
-#define WEBKIT_GLUE_WEBVIEW_DELEGATE_H__
+#ifndef WEBKIT_GLUE_WEBVIEW_DELEGATE_H_
+#define WEBKIT_GLUE_WEBVIEW_DELEGATE_H_
 
 #include <string>
 #include <vector>
@@ -32,7 +32,7 @@
 #include "base/basictypes.h"
 #include "base/logging.h"
 #include "googleurl/src/gurl.h"
-#include "webkit/glue/context_node_types.h"
+#include "webkit/glue/context_menu.h"
 #include "webkit/glue/webwidget_delegate.h"
 #include "webkit/glue/window_open_disposition.h"
 
@@ -93,7 +93,7 @@ class WebFileChooserCallback {
   virtual void OnFileChoose(const std::vector<std::wstring>& file_names) { }
 
  private:
-  DISALLOW_EVIL_CONSTRUCTORS(WebFileChooserCallback);
+  DISALLOW_COPY_AND_ASSIGN(WebFileChooserCallback);
 };
 
 
@@ -518,6 +518,10 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
     return false;
   }
 
+  // Sets the status bar text.
+  virtual void SetStatusbarText(WebView* webview,
+                                const std::wstring& message) { }
+
   // Displays a "before unload" confirm panel associated with the given view.
   // The panel should have two buttons, e.g. "OK" and "Cancel", where OK means
   // that the navigation should continue, and Cancel means that the navigation
@@ -772,8 +776,7 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
   virtual ~WebViewDelegate() { }
 
  private:
-  DISALLOW_EVIL_CONSTRUCTORS(WebViewDelegate);
+  DISALLOW_COPY_AND_ASSIGN(WebViewDelegate);
 };
 
-#endif  // WEBKIT_GLUE_WEBVIEW_DELEGATE_H__
-
+#endif  // WEBKIT_GLUE_WEBVIEW_DELEGATE_H_

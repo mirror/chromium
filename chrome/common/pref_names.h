@@ -36,6 +36,7 @@ extern const wchar_t kWebKitDefaultFixedFontSize[];
 extern const wchar_t kWebKitMinimumFontSize[];
 extern const wchar_t kWebKitMinimumLogicalFontSize[];
 extern const wchar_t kWebKitJavascriptEnabled[];
+extern const wchar_t kWebKitWebSecurityEnabled[];
 extern const wchar_t kWebKitJavascriptCanOpenWindowsAutomatically[];
 extern const wchar_t kWebKitLoadsImagesAutomatically[];
 extern const wchar_t kWebKitPluginsEnabled[];
@@ -148,7 +149,8 @@ extern const wchar_t kShouldShowWelcomePage[];
 
 extern const wchar_t kLastKnownGoogleURL[];
 
-extern const wchar_t kGeoIDAtInstall[];
+extern const wchar_t kCountryIDAtInstall[];
+extern const wchar_t kGeoIDAtInstall[];  // OBSOLETE
 
 extern const wchar_t kShutdownType[];
 extern const wchar_t kShutdownNumProcesses[];

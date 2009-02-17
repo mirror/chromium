@@ -7,8 +7,10 @@
 #include "base/basictypes.h"
 #include "base/command_line.h"
 #include "base/event_recorder.h"
+#include "base/histogram.h"
 #include "base/path_service.h"
 #include "base/string_util.h"
+#include "base/sys_info.h"
 #include "chrome/app/result_codes.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
@@ -16,7 +18,9 @@
 #include "chrome/browser/net/dns_global.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
+#include "chrome/browser/search_engines/template_url_model.h"
 #include "chrome/browser/session_startup_pref.h"
+#include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
@@ -34,10 +38,8 @@
 #include "chrome/browser/automation/automation_provider.h"
 #include "chrome/browser/automation/automation_provider_list.h"
 #include "chrome/browser/net/url_fixer_upper.h"
-#include "chrome/browser/search_engines/template_url_model.h"
 #include "chrome/browser/sessions/session_restore.h"
 #include "chrome/browser/tab_contents/infobar_delegate.h"
-#include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/common/resource_bundle.h"
 
 #include "chromium_strings.h"
@@ -131,6 +133,55 @@ SessionStartupPref GetSessionStartupPref(const CommandLine& command_line,
   return pref;
 }
 
+enum LaunchMode {
+  LM_TO_BE_DECIDED = 0,       // Possibly direct launch or via a shortcut.
+  LM_AS_WEBAPP,               // Launched as a installed web application.
+  LM_WITH_URLS,               // Launched with urls in the cmd line.
+  LM_SHORTCUT_NONE,           // Not launched from a shortcut.
+  LM_SHORTCUT_NONAME,         // Launched from shortcut but no name available.
+  LM_SHORTCUT_UNKNOWN,        // Launched from user-defined shortcut.
+  LM_SHORTCUT_QUICKLAUNCH,    // Launched from the quick launch bar.
+  LM_SHORTCUT_DESKTOP,        // Launched from a desktop shortcut.
+  LM_SHORTCUT_STARTMENU,      // Launched from start menu.
+  LM_LINUX_MAC_BEOS           // Other OS buckets start here. 
+};
+
+#if defined(OS_WIN)
+// Undocumented flag in the startup info structure tells us what shortcut was
+// used to launch the browser. See http://www.catch22.net/tuts/undoc01 for
+// more information. Confirmed to work on XP, Vista and Win7.
+LaunchMode GetLaunchSortcutKind() {
+  STARTUPINFOW si = { sizeof(si) };
+  GetStartupInfoW(&si);
+  if (si.dwFlags & 0x800) {
+    if (!si.lpTitle)
+      return LM_SHORTCUT_NONAME;
+    std::wstring shortcut(si.lpTitle);
+    // The windows quick launch path is not localized.
+    if (shortcut.find(L"\\Quick Launch\\") != std::wstring::npos)
+      return LM_SHORTCUT_QUICKLAUNCH;
+    std::wstring appdata_path = base::SysInfo::GetEnvVar(L"USERPROFILE");
+    if (!appdata_path.empty() &&
+        shortcut.find(appdata_path) != std::wstring::npos)
+      return LM_SHORTCUT_DESKTOP;
+    return LM_SHORTCUT_UNKNOWN;
+  }
+  return LM_SHORTCUT_NONE;
+}
+#else
+// TODO(cpu): Port to other platforms.
+LaunchMode GetLaunchSortcutKind() {
+  return LM_LINUX_MAC_BEOS;
+}
+#endif
+
+// Log in a histogram the frequency of launching by the different methods. See
+// LaunchMode enum for the actual values of the buckets.
+void RecordLaunchModeHistogram(LaunchMode mode) {
+  int bucket = (mode == LM_TO_BE_DECIDED) ? GetLaunchSortcutKind() : mode;
+  UMA_HISTOGRAM_COUNTS_100(L"Launch.Modes", bucket);
+}
+
 }  // namespace
 
 static bool in_startup = false;
@@ -190,14 +241,21 @@ bool BrowserInit::LaunchWithProfile::Launch(Profile* profile,
   // First, see if we're being run as a web application (thin frame window).
   if (!OpenApplicationURL(profile)) {
     std::vector<GURL> urls_to_open = GetURLsFromCommandLine(profile_);
+    RecordLaunchModeHistogram(urls_to_open.empty()?
+                              LM_TO_BE_DECIDED : LM_WITH_URLS);
     // Always attempt to restore the last session. OpenStartupURLs only opens
     // the home pages if no additional URLs were passed on the command line.
     if (!OpenStartupURLs(process_startup, urls_to_open)) {
       // Add the home page and any special first run URLs.
-      AddStartupURLs(&urls_to_open);
-      OpenURLsInBrowser(BrowserList::GetLastActive(), process_startup,
-                        urls_to_open);
+      Browser* browser = NULL;
+      if (urls_to_open.empty())
+        AddStartupURLs(&urls_to_open);
+      else
+        browser = BrowserList::GetLastActive();
+      OpenURLsInBrowser(browser, process_startup, urls_to_open);
     }
+  } else {
+    RecordLaunchModeHistogram(LM_AS_WEBAPP);
   }
 
   // If we're recording or playing back, startup the EventRecorder now
@@ -422,11 +480,14 @@ bool BrowserInit::ProcessCommandLine(
     CreateAutomationProvider<AutomationProvider>(automation_channel_id,
                                                  profile, expected_tabs);
   }
-
-  // Start up the extensions service http://crbug.com/7265
-  profile->InitExtensions();
-  // TODO(port): figure out why this call crashes.
 #endif
+
+  if (command_line.HasSwitch(switches::kLoadExtension)) {
+    std::wstring path_string =
+        command_line.GetSwitchValue(switches::kLoadExtension);
+    FilePath path = FilePath::FromWStringHack(path_string);
+    profile->GetExtensionsService()->LoadExtension(path);
+  }
 
   if (command_line.HasSwitch(switches::kInstallExtension)) {
     std::wstring path_string =

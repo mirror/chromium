@@ -13,13 +13,13 @@
 #include "webkit/glue/webinputevent.h"
 #include "webkit/glue/webview.h"
 
-/*static*/
-WebViewHost* WebViewHost::Create(GtkWidget* box,
+// static
+WebViewHost* WebViewHost::Create(GtkWidget* parent_view,
                                  WebViewDelegate* delegate,
                                  const WebPreferences& prefs) {
   WebViewHost* host = new WebViewHost();
 
-  host->view_ = WebWidgetHost::CreateWindow(box, host);
+  host->view_ = WebWidgetHost::CreateWidget(parent_view, host);
   g_object_set_data(G_OBJECT(host->view_), "webwidgethost", host);
 
   host->webwidget_ = WebView::Create(delegate, prefs);

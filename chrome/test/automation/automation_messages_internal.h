@@ -31,9 +31,7 @@
 //       since the PageCyclerReferenceTest depends on the correctness of the
 //       message IDs across the builds.
 
-// By using a start value of 0 for automation messages, we keep backward
-// compatability with old builds.
-IPC_BEGIN_MESSAGES(Automation, 0)
+IPC_BEGIN_MESSAGES(Automation)
 
   // This message is fired when the AutomationProvider is up and running
   // in the app (the app is not fully up at this point).
@@ -82,7 +80,7 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   // status code which is nonnegative on success.
   IPC_MESSAGE_ROUTED2(AutomationMsg_NavigateToURLRequest, int, GURL)
   IPC_MESSAGE_ROUTED1(AutomationMsg_NavigateToURLResponse,
-                      int)  // see AutomationMsg_NavigationResponseValues
+                      AutomationMsg_NavigationResponseValues)
 
   // This message is used to implement the asynchronous version of
   // NavigateToURL.
@@ -98,7 +96,7 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   // nonnegative on success.
   IPC_MESSAGE_ROUTED1(AutomationMsg_GoBackRequest, int)
   IPC_MESSAGE_ROUTED1(AutomationMsg_GoBackResponse,
-                      int)  // see AutomationMsg_NavigationResponseValues
+                      AutomationMsg_NavigationResponseValues)
 
   // This message notifies the AutomationProvider to navigate forward in session
   // history in the tab with given handle. The first parameter is the handle
@@ -106,7 +104,7 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   // nonnegative on success.
   IPC_MESSAGE_ROUTED1(AutomationMsg_GoForwardRequest, int)
   IPC_MESSAGE_ROUTED1(AutomationMsg_GoForwardResponse,
-                      int)  // see AutomationMsg_NavigationResponseValues
+                      AutomationMsg_NavigationResponseValues)
 
   // This message requests the number of browser windows that the app currently
   // has open.  The parameter in the response is the number of windows.
@@ -206,7 +204,9 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   IPC_MESSAGE_ROUTED2(AutomationMsg_RedirectsFromRequest,
                       int,   // tab handle
                       GURL)  // source URL
-  IPC_MESSAGE_EMPTY(AutomationMsg_RedirectsFromResponse)
+  IPC_MESSAGE_ROUTED2(AutomationMsg_RedirectsFromResponse,
+                      bool /* succeeded */,
+                      std::vector<GURL> /* redirects */)
 
   // This message asks the AutomationProvider whether a tab is waiting for
   // login info.
@@ -462,7 +462,7 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   // The response contains a status code which is nonnegative on success.
   IPC_MESSAGE_ROUTED2(AutomationMsg_NavigateInExternalTabRequest, int, GURL)
   IPC_MESSAGE_ROUTED1(AutomationMsg_NavigateInExternalTabResponse,
-                      int)  // see AutomationMsg_NavigationResponseValues
+                      AutomationMsg_NavigationResponseValues)
 
   // This message is an outgoing message from Chrome to an external host.
   // It is a notification that the NavigationState was changed
@@ -553,6 +553,26 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   IPC_MESSAGE_ROUTED2(AutomationMsg_ProcessUnhandledAccelerator, int, MSG)
 #endif  // defined(OS_WIN)
 
+  // Sent by the external tab to the host to notify that the user has tabbed
+  // out of the tab.
+  // Request:
+  //   - bool: |reverse| set to true when shift-tabbing out of the tab, false
+  //    otherwise.
+  // Response:
+  //   None expected
+  IPC_MESSAGE_ROUTED1(AutomationMsg_TabbedOut, bool)
+
+  // Sent by the external tab host to ask focus to be set to either the first
+  // or last element on the page.
+  // Request:
+  //   - int: handle of the tab
+  //   - bool: |reverse|
+  //      true: Focus will be set to the last focusable element
+  //      false: Focus will be set to the first focusable element
+  // Response:
+  //   None expected
+  IPC_MESSAGE_ROUTED2(AutomationMsg_SetInitialFocus, int, bool)
+
   // This message is an outgoing message from Chrome to an external host.
   // It is a request to open a url
   // Request:
@@ -593,15 +613,14 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   //   - int: handle of the tab
   // Response:
   //  - bool: whether the operation was successful.
-  //  - int: the security style of the tab (enum SecurityStyle see
-  //         security_style.h)).
+  //  - SecurityStyle: the security style of the tab.
   //  - int: the status of the server's ssl cert (0 means no errors or no ssl
   //         was used).
   //  - int: the mixed content state, 0 means no mixed/unsafe contents.
   IPC_MESSAGE_ROUTED1(AutomationMsg_GetSecurityState, int)
   IPC_MESSAGE_ROUTED4(AutomationMsg_GetSecurityStateResponse,
                       bool,
-                      int,
+                      SecurityStyle,
                       int,
                       int)
 
@@ -611,10 +630,11 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   //   - int: handle of the tab
   // Response:
   //  - bool: whether the operation was successful.
-  //  - int: the type of the page currently displayed (enum PageType see
-  //         entry_navigation.h).
+  //  - NavigationEntry::PageType: the type of the page currently displayed.
   IPC_MESSAGE_ROUTED1(AutomationMsg_GetPageType, int)
-  IPC_MESSAGE_ROUTED2(AutomationMsg_GetPageTypeResponse, bool, int)
+  IPC_MESSAGE_ROUTED2(AutomationMsg_GetPageTypeResponse,
+                      bool,
+                      NavigationEntry::PageType)
 
   // This message simulates the user action on the SSL blocking page showing in
   // the specified tab.  This message is only effective if an interstitial page
@@ -659,7 +679,7 @@ IPC_BEGIN_MESSAGES(Automation, 0)
   // success.
   IPC_MESSAGE_ROUTED1(AutomationMsg_ReloadRequest, int)
   IPC_MESSAGE_ROUTED1(AutomationMsg_ReloadResponse,
-                      int)  // see AutomationMsg_NavigationResponseValues
+                      AutomationMsg_NavigationResponseValues)
 
   // This message requests the handle (int64 app-unique identifier) of the
   // last active browser window, or the browser at index 0 if there is no last

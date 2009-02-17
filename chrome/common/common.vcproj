@@ -285,19 +285,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\plugin_messages.cc"
-				>
-			</File>
-			<File
 				RelativePath=".\plugin_messages.h"
 				>
 			</File>
 			<File
 				RelativePath=".\plugin_messages_internal.h"
-				>
-			</File>
-			<File
-				RelativePath=".\render_messages.cc"
 				>
 			</File>
 			<File
@@ -320,7 +312,19 @@
 				RelativePath=".\extensions\url_pattern.h"
 				>
 			</File>
+			<File
+				RelativePath=".\extensions\user_script.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\extensions\user_script.h"
+				>
+			</File>
 		</Filter>
+		<File
+			RelativePath=".\accessibility.h"
+			>
+		</File>
 		<File
 			RelativePath=".\animation.cc"
 			>
@@ -359,6 +363,14 @@
 		</File>
 		<File
 			RelativePath=".\chrome_paths.h"
+			>
+		</File>
+		<File
+			RelativePath=".\chrome_paths_internal.h"
+			>
+		</File>
+		<File
+			RelativePath=".\chrome_paths_win.cc"
 			>
 		</File>
 		<File

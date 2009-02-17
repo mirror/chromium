@@ -4,7 +4,9 @@
 
 #include "chrome/browser/automation/automation_provider.h"
 
+#include "base/message_loop.h"
 #include "base/path_service.h"
+#include "base/thread.h"
 #include "chrome/app/chrome_dll_resource.h" 
 #include "chrome/browser/app_modal_dialog_queue.h"
 #include "chrome/browser/automation/automation_provider_list.h"
@@ -768,6 +770,8 @@ void AutomationProvider::OnMessageReceived(const IPC::Message& message) {
                         SetAcceleratorsForTab)
     IPC_MESSAGE_HANDLER(AutomationMsg_ProcessUnhandledAccelerator,
                         ProcessUnhandledAccelerator)
+    IPC_MESSAGE_HANDLER(AutomationMsg_SetInitialFocus,
+                        SetInitialFocus)
     IPC_MESSAGE_HANDLER(AutomationMsg_WaitForTabToBeRestored,
                         WaitForTabToBeRestored)
     IPC_MESSAGE_HANDLER(AutomationMsg_GetSecurityState,
@@ -1071,7 +1075,9 @@ void AutomationProvider::GetRedirectsFrom(const IPC::Message& message,
   IPC::Message* msg = new IPC::Message(
     message.routing_id(), AutomationMsg_RedirectsFromResponse::ID,
     IPC::Message::PRIORITY_NORMAL);
-  msg->WriteInt(-1);   // Negative string count indicates an error.
+  msg->WriteBool(false);
+  std::vector<GURL> empty;
+  IPC::ParamTraits<std::vector<GURL>>::Write(msg, empty);
   Send(msg);
 }
 
@@ -1554,13 +1560,16 @@ void AutomationProvider::OnRedirectQueryComplete(
   IPC::Message* msg = new IPC::Message(redirect_query_routing_id_,
                                        AutomationMsg_RedirectsFromResponse::ID,
                                        IPC::Message::PRIORITY_NORMAL);
+  std::vector<GURL> redirects_gurl;
   if (success) {
-    msg->WriteInt(static_cast<int>(redirects->size()));
+    msg->WriteBool(true);
     for (size_t i = 0; i < redirects->size(); i++)
-      IPC::ParamTraits<GURL>::Write(msg, redirects->at(i));
+      redirects_gurl.push_back(redirects->at(i));
   } else {
     msg->WriteInt(-1);  // Negative count indicates failure.
   }
+
+  IPC::ParamTraits<std::vector<GURL>>::Write(msg, redirects_gurl);
 
   Send(msg);
   redirect_query_ = NULL;
@@ -2081,16 +2090,16 @@ void AutomationProvider::CreateExternalTab(const IPC::Message& message,
 
 void AutomationProvider::NavigateInExternalTab(const IPC::Message& message,
                                                int handle, const GURL& url) {
-  bool status = false;
+  AutomationMsg_NavigationResponseValues rv = AUTOMATION_MSG_NAVIGATION_ERROR;
 
   if (tab_tracker_->ContainsHandle(handle)) {
     NavigationController* tab = tab_tracker_->GetResource(handle);
     tab->LoadURL(url, GURL(), PageTransition::TYPED);
-    status = true;
+    rv = AUTOMATION_MSG_NAVIGATION_SUCCESS;
   }
 
   Send(new AutomationMsg_NavigateInExternalTabResponse(message.routing_id(),
-                                                       status));
+                                                       rv));
 }
 
 void AutomationProvider::SetAcceleratorsForTab(const IPC::Message& message,
@@ -2098,18 +2107,10 @@ void AutomationProvider::SetAcceleratorsForTab(const IPC::Message& message,
                                                HACCEL accel_table,
                                                int accel_entry_count) {
   bool status = false;
-  if (tab_tracker_->ContainsHandle(handle)) {
-    NavigationController* tab = tab_tracker_->GetResource(handle);
-    TabContents* tab_contents = tab->GetTabContents(TAB_CONTENTS_WEB);
-    ExternalTabContainer* external_tab_container =
-        ExternalTabContainer::GetContainerForTab(
-            tab_contents->GetContainerHWND());
-    // This call is only valid on an externally hosted tab
-    if (external_tab_container) {
-      external_tab_container->SetAccelerators(accel_table,
-                                              accel_entry_count);
-      status = true;
-    }
+  ExternalTabContainer* external_tab = GetExternalTabForHandle(handle);
+  if (external_tab) {
+    external_tab->SetAccelerators(accel_table, accel_entry_count);
+    status = true;
   }
   Send(new AutomationMsg_SetAcceleratorsForTabResponse(message.routing_id(),
                                                        status));
@@ -2117,16 +2118,18 @@ void AutomationProvider::SetAcceleratorsForTab(const IPC::Message& message,
 
 void AutomationProvider::ProcessUnhandledAccelerator(
     const IPC::Message& message, int handle, const MSG& msg) {
-  if (tab_tracker_->ContainsHandle(handle)) {
-    NavigationController* tab = tab_tracker_->GetResource(handle);
-    TabContents* tab_contents = tab->GetTabContents(TAB_CONTENTS_WEB);
-    ExternalTabContainer* external_tab_container =
-        ExternalTabContainer::GetContainerForTab(
-            tab_contents->GetContainerHWND());
-    // This call is only valid on an externally hosted tab
-    if (external_tab_container) {
-      external_tab_container->ProcessUnhandledAccelerator(msg);
-    }
+  ExternalTabContainer* external_tab = GetExternalTabForHandle(handle);
+  if (external_tab) {
+    external_tab->ProcessUnhandledAccelerator(msg);
+  }
+  // This message expects no response.
+}
+
+void AutomationProvider::SetInitialFocus(const IPC::Message& message,
+                                         int handle, bool reverse) {
+  ExternalTabContainer* external_tab = GetExternalTabForHandle(handle);
+  if (external_tab) {
+    external_tab->SetInitialFocus(reverse);
   }
   // This message expects no response.
 }
@@ -2382,6 +2385,20 @@ WebContents* AutomationProvider::GetWebContentsForHandle(
     }
   }
   return web_contents;
+}
+
+ExternalTabContainer* AutomationProvider::GetExternalTabForHandle(int handle) {
+  if (tab_tracker_->ContainsHandle(handle)) {
+    NavigationController* tab = tab_tracker_->GetResource(handle);
+    TabContents* tab_contents = tab->GetTabContents(TAB_CONTENTS_WEB);
+    DCHECK(tab_contents);
+    if (tab_contents) {
+      return ExternalTabContainer::GetContainerForTab(
+          tab_contents->GetContainerHWND());
+    }
+  }
+
+  return NULL;
 }
 
 TestingAutomationProvider::TestingAutomationProvider(Profile* profile)

@@ -2,9 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "build/build_config.h"
+
 #if defined(OS_WIN)
 #include <windows.h>
+#elif defined(OS_POSIX)
+#include <sys/types.h>
+#include <unistd.h>
 #endif
+
 #include <stdio.h>
 #include <iostream>
 #include <string>
@@ -20,6 +26,9 @@
 #include "base/test_suite.h"
 #include "base/thread.h"
 #include "chrome/common/chrome_switches.h"
+#if defined(OS_POSIX)
+#include "chrome/common/file_descriptor_posix.h"
+#endif
 #include "chrome/common/ipc_channel.h"
 #include "chrome/common/ipc_channel_proxy.h"
 #include "chrome/common/ipc_message_utils.h"
@@ -31,6 +40,8 @@
 const wchar_t kTestClientChannel[] = L"T1";
 const wchar_t kReflectorChannel[] = L"T2";
 const wchar_t kFuzzerChannel[] = L"F3";
+
+const size_t kLongMessageStringNumBytes = 50000;
 
 #ifndef PERFORMANCE_TEST
 
@@ -89,6 +100,12 @@ base::ProcessHandle IPCChannelTest::SpawnChild(ChildType child_type,
   switch (child_type) {
   case TEST_CLIENT:
     ret = MultiProcessTest::SpawnChild(L"RunTestClient",
+                                       fds_to_map,
+                                       debug_on_start);
+    channel->OnClientConnected();
+    break;
+  case TEST_DESCRIPTOR_CLIENT:
+    ret = MultiProcessTest::SpawnChild(L"RunTestDescriptorClient",
                                        fds_to_map,
                                        debug_on_start);
     channel->OnClientConnected();
@@ -154,7 +171,7 @@ static void Send(IPC::Message::Sender* sender, const char* text) {
   message->WriteString(std::string(text));
 
   // Make sure we can handle large messages.
-  char junk[50000];
+  char junk[kLongMessageStringNumBytes];
   memset(junk, 'a', sizeof(junk)-1);
   junk[sizeof(junk)-1] = 0;
   message->WriteString(std::string(junk));
@@ -170,6 +187,10 @@ class MyChannelListener : public IPC::Channel::Listener {
 
     iter.NextInt();
     const std::string data = iter.NextString();
+    const std::string big_string = iter.NextString();
+    EXPECT_EQ(kLongMessageStringNumBytes - 1, big_string.length());
+
+
     if (--messages_left_ == 0) {
       MessageLoop::current()->Quit();
     } else {
@@ -192,9 +213,9 @@ class MyChannelListener : public IPC::Channel::Listener {
   IPC::Message::Sender* sender_;
   int messages_left_;
 };
-static MyChannelListener channel_listener;
 
 TEST_F(IPCChannelTest, ChannelTest) {
+  MyChannelListener channel_listener;
   // Setup IPC channel.
   IPC::Channel chan(kTestClientChannel, IPC::Channel::MODE_SERVER,
                     &channel_listener);
@@ -215,9 +236,12 @@ TEST_F(IPCChannelTest, ChannelTest) {
 
   // Cleanup child process.
   EXPECT_TRUE(base::WaitForSingleProcess(process_handle, 5000));
+  base::CloseProcessHandle(process_handle);
 }
 
 TEST_F(IPCChannelTest, ChannelProxyTest) {
+  MyChannelListener channel_listener;
+
   // The thread needs to out-live the ChannelProxy.
   base::Thread thread("ChannelProxyTestServer");
   base::Thread::Options options;
@@ -259,12 +283,14 @@ TEST_F(IPCChannelTest, ChannelProxyTest) {
 
     // cleanup child process
     EXPECT_TRUE(base::WaitForSingleProcess(process_handle, 5000));
+    base::CloseProcessHandle(process_handle);
   }
   thread.Stop();
 }
 
 MULTIPROCESS_TEST_MAIN(RunTestClient) {
   MessageLoopForIO main_message_loop;
+  MyChannelListener channel_listener;
 
   // setup IPC channel
   IPC::Channel chan(kTestClientChannel, IPC::Channel::MODE_CLIENT,
@@ -277,6 +303,7 @@ MULTIPROCESS_TEST_MAIN(RunTestClient) {
   // return true;
   return NULL;
 }
+
 #endif  // !PERFORMANCE_TEST
 
 #ifdef PERFORMANCE_TEST

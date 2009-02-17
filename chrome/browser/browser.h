@@ -138,7 +138,6 @@ class Browser : public TabStripModelDelegate,
   // Gets the FavIcon of the page in the selected tab.
   SkBitmap GetCurrentPageIcon() const;
 
-#if defined(OS_WIN)
   // Gets the title of the page in the selected tab.
   std::wstring GetCurrentPageTitle() const;
 
@@ -153,7 +152,6 @@ class Browser : public TabStripModelDelegate,
   // Invoked when the window containing us is closing. Performs the necessary
   // cleanup.
   void OnWindowClosing();
-#endif  // OS_WIN
 
   // TabStripModel pass-thrus /////////////////////////////////////////////////
 
@@ -196,7 +194,6 @@ class Browser : public TabStripModelDelegate,
   TabContents* AddTabWithNavigationController(NavigationController* ctrl,
                                               PageTransition::Type type);
 
-#if defined(OS_WIN)
   // Add a tab with its session history restored from the SessionRestore
   // system. If select is true, the tab is selected. Returns the created
   // NavigationController. |tab_index| gives the index to insert the tab at.
@@ -217,22 +214,21 @@ class Browser : public TabStripModelDelegate,
   // Show a native UI tab given a URL. If a tab with the same URL is already
   // visible in this browser, it becomes selected. Otherwise a new tab is
   // created.
+#if defined(OS_WIN)
   void ShowNativeUITab(const GURL& url);
+#endif
 
   // Assorted browser commands ////////////////////////////////////////////////
 
   // NOTE: Within each of the following sections, the IDs are ordered roughly by
   // how they appear in the GUI/menus (left to right, top to bottom, etc.).
 
-#endif
   // Navigation commands
   void GoBack();
   void GoForward();
   void Reload();
   void Home();
-#if defined(OS_WIN)
   void OpenCurrentURL();
-#endif
   void Go();
   void Stop();
   // Window management commands
@@ -246,7 +242,6 @@ class Browser : public TabStripModelDelegate,
   void SelectPreviousTab();
   void SelectNumberedTab(int index);
   void SelectLastTab();
-#if defined(OS_WIN)
   void DuplicateTab();
   void RestoreTab();
   void ConvertPopupToTabbedBrowser();
@@ -255,6 +250,7 @@ class Browser : public TabStripModelDelegate,
   // Page-related commands
   void BookmarkCurrentPage();
   void ViewSource();
+#if defined(OS_WIN)
   void ClosePopups();
   void Print();
   void SavePage();
@@ -350,6 +346,7 @@ class Browser : public TabStripModelDelegate,
                              bool foreground);
   virtual void TabClosingAt(TabContents* contents, int index);
   virtual void TabDetachedAt(TabContents* contents, int index);
+#endif
   virtual void TabSelectedAt(TabContents* old_contents,
                              TabContents* new_contents,
                              int index,
@@ -359,6 +356,7 @@ class Browser : public TabStripModelDelegate,
                         int to_index);
   virtual void TabStripEmpty();
 
+#if defined(OS_WIN)
   // Overridden from TabContentsDelegate:
   virtual void OpenURLFromTab(TabContents* source,
                              const GURL& url, const GURL& referrer,
@@ -391,7 +389,7 @@ class Browser : public TabStripModelDelegate,
   virtual void ContentsStateChanged(TabContents* source);
   virtual bool ShouldDisplayURLField();
   virtual void BeforeUnloadFired(TabContents* source,
-                                 bool proceed, 
+                                 bool proceed,
                                  bool* proceed_to_fire_unload);
   virtual void ShowHtmlDialog(HtmlDialogContentsDelegate* delegate,
                               void* parent_window);
@@ -421,7 +419,6 @@ class Browser : public TabStripModelDelegate,
   // |is_loading| is true if the current TabContents is loading.
   void UpdateStopGoState(bool is_loading);
 
-#if defined(OS_WIN)
   // UI update coalescing and handling ////////////////////////////////////////
 
   // Asks the toolbar (and as such the location bar) to update its state to
@@ -448,7 +445,6 @@ class Browser : public TabStripModelDelegate,
   // TODO(beng): remove, and provide AutomationProvider a better way to access
   //             the LocationBarView's edit.
   friend class AutomationProvider;
-#endif  // OS_WIN
 
   // Getters for the location bar and go button.
   GoButton* GetGoButton();
@@ -458,7 +454,6 @@ class Browser : public TabStripModelDelegate,
   // TODO(beng): remove this.
   StatusBubble* GetStatusBubble();
 
-#if defined(OS_WIN)
   // Session restore functions ////////////////////////////////////////////////
 
   // Notifies the history database of the index for all tabs whose index is
@@ -473,17 +468,16 @@ class Browser : public TabStripModelDelegate,
       int selected_navigation);
 
   // OnBeforeUnload handling //////////////////////////////////////////////////
-#endif
 
   typedef std::set<TabContents*> UnloadListenerSet;
 
-#if defined(OS_WIN)
   // Processes the next tab that needs it's beforeunload/unload event fired.
   void ProcessPendingTabs();
 
   // Whether we've completed firing all the tabs' beforeunload/unload events.
   bool HasCompletedUnloadProcessing();
 
+#if defined(OS_WIN)
   // Clears all the state associated with processing tabs' beforeunload/unload
   // events since the user cancelled closing the window.
   void CancelWindowClose();
@@ -494,7 +488,7 @@ class Browser : public TabStripModelDelegate,
   bool RemoveFromSet(UnloadListenerSet* set, TabContents* tab);
 
   // Cleans up state appropriately when we are trying to close the browser and
-  // the tab has finished firing it's unload handler. We also use this in the 
+  // the tab has finished firing its unload handler. We also use this in the
   // cases where a tab crashes or hangs even if the beforeunload/unload haven't
   // successfully fired.
   void ClearUnloadState(TabContents* tab);
@@ -523,13 +517,13 @@ class Browser : public TabStripModelDelegate,
   // Advance the find selection by one. Direction is either forward or
   // backwards depending on parameter passed in.
   void AdvanceFindSelection(bool forward_direction);
+#endif
 
   // Closes the frame.
   // TODO(beng): figure out if we need this now that the frame itself closes
   //             after a return to the message loop.
   void CloseFrame();
 
-#endif  // OS_WIN
 
   // Compute a deterministic name based on the URL. We use this pseudo name
   // as a key to store window location per application URLs.

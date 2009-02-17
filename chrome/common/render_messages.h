@@ -13,9 +13,10 @@
 #include "base/gfx/native_widget_types.h"
 #include "base/ref_counted.h"
 #include "base/shared_memory.h"
+#include "chrome/browser/renderer_host/resource_handler.h"
+#include "chrome/common/accessibility.h"
 #include "chrome/common/bitmap_wire_data.h"
 #include "chrome/common/filter_policy.h"
-#include "chrome/common/ipc_message.h"
 #include "chrome/common/ipc_message_utils.h"
 #include "chrome/common/modal_dialog_event.h"
 #include "chrome/common/page_transition_types.h"
@@ -24,13 +25,14 @@
 #include "net/url_request/url_request_status.h"
 #include "webkit/glue/autofill_form.h"
 #include "webkit/glue/cache_manager.h"
-#include "webkit/glue/context_node_types.h"
+#include "webkit/glue/context_menu.h"
 #include "webkit/glue/form_data.h"
 #include "webkit/glue/password_form.h"
 #include "webkit/glue/password_form_dom_manager.h"
 #include "webkit/glue/resource_loader_bridge.h"
 #include "webkit/glue/screen_info.h"
 #include "webkit/glue/webdropdata.h"
+#include "webkit/glue/webinputevent.h"
 #include "webkit/glue/webplugin.h"
 #include "webkit/glue/webpreferences.h"
 #include "webkit/glue/webview_delegate.h"
@@ -119,61 +121,6 @@ struct ViewHostMsg_FrameNavigate_Params {
   // Whether the content of the frame was replaced with some alternate content
   // (this can happen if the resource was insecure).
   bool is_content_filtered;
-};
-
-// Parameters structure for ViewHostMsg_ContextMenu, which has too many data
-// parameters to be reasonably put in a predefined IPC message.
-// FIXME(beng): This would be more useful in the future and more efficient
-//              if the parameters here weren't so literally mapped to what
-//              they contain for the ContextMenu task. It might be better
-//              to make the string fields more generic so that this object
-//              could be used for more contextual actions.
-struct ViewHostMsg_ContextMenu_Params {
-  // This is the type of Context Node that the context menu was invoked on.
-  ContextNode node;
-
-  // These values represent the coordinates of the mouse when the context menu
-  // was invoked.  Coords are relative to the associated RenderView's origin.
-  int x;
-  int y;
-
-  // This is the URL of the link that encloses the node the context menu was
-  // invoked on.
-  GURL link_url;
-
-  // This is the URL of the image the context menu was invoked on.
-  GURL image_url;
-
-  // This is the URL of the top level page that the context menu was invoked
-  // on.
-  GURL page_url;
-
-  // This is the URL of the subframe that the context menu was invoked on.
-  GURL frame_url;
-
-  // This is the text of the selection that the context menu was invoked on.
-  std::wstring selection_text;
-
-  // The misspelled word under the cursor, if any. Used to generate the
-  // |dictionary_suggestions| list.
-  std::wstring misspelled_word;
-
-  // Suggested replacements for a misspelled word under the cursor.
-  // This vector gets populated in the render process host
-  // by intercepting ViewHostMsg_ContextMenu in ResourceMessageFilter
-  // and populating dictionary_suggestions if the type is EDITABLE
-  // and the misspelled_word is not empty.
-  std::vector<std::wstring> dictionary_suggestions;
-
-  // If editable, flag for whether spell check is enabled or not.
-  bool spellcheck_enabled;
-
-  // These flags indicate to the browser whether the renderer believes it is
-  // able to perform the corresponding action.
-  int edit_flags;
-
-  // The security info for the resource we are showing the menu on.
-  std::string security_info;
 };
 
 // Values that may be OR'd together to form the 'flags' parameter of a
@@ -302,26 +249,6 @@ struct ViewHostMsg_Resource_Request {
   std::vector<net::UploadData::Element> upload_content;
 };
 
-// Parameters for a resource response header.
-struct ViewMsg_Resource_ResponseHead
-    : webkit_glue::ResourceLoaderBridge::ResponseInfo {
-  // The response status.
-  URLRequestStatus status;
-
-  // Specifies if the resource should be filtered before being displayed
-  // (insecure resources can be filtered to keep the page secure).
-  FilterPolicy::Type filter_policy;
-};
-
-// Parameters for a synchronous resource response.
-struct ViewHostMsg_SyncLoad_Result : ViewMsg_Resource_ResponseHead {
-  // The final URL after any redirects.
-  GURL final_url;
-
-  // The response data.
-  std::string data;
-};
-
 // Parameters for a render request.
 struct ViewMsg_Print_Params {
   // In pixels according to dpi_x and dpi_y.
@@ -390,83 +317,12 @@ struct ViewHostMsg_DidPrintPage_Params {
   double actual_shrink;
 };
 
-// Parameters structure to hold a union of the possible IAccessible function
-// INPUT variables, with the unused fields always set to default value. Used in
-// ViewMsg_GetAccessibilityInfo, as only parameter.
-struct ViewMsg_Accessibility_In_Params {
-  // Identifier to uniquely distinguish which instance of IAccessible is being
-  // called upon on the renderer side.
-  int iaccessible_id;
-
-  // Identifier to resolve which IAccessible interface function is being called.
-  int iaccessible_function_id;
-
-  // Function input parameters.
-  // Input VARIANT structure's LONG field to specify requested object.
-  long input_variant_lval;
-
-  // LONG input parameters, used differently depending on the function called.
-  long input_long1;
-  long input_long2;
-};
-
-// Parameters structure to hold a union of the possible IAccessible function
-// OUTPUT variables, with the unused fields always set to default value. Used in
-// ViewHostMsg_GetAccessibilityInfoResponse, as only parameter.
-struct ViewHostMsg_Accessibility_Out_Params {
-  // Identifier to uniquely distinguish which instance of IAccessible is being
-  // called upon on the renderer side.
-  int iaccessible_id;
-
-  // Function output parameters.
-  // Output VARIANT structure's LONG field to specify requested object.
-  long output_variant_lval;
-
-  // LONG output parameters, used differently depending on the function called.
-  // output_long1 can in some cases be set to -1 to indicate that the child
-  // object found by the called IAccessible function is not a simple object.
-  long output_long1;
-  long output_long2;
-  long output_long3;
-  long output_long4;
-
-  // String output parameter.
-  std::wstring output_string;
-
-  // Return code, either S_OK (true) or S_FALSE (false). WebKit MSAA error
-  // return codes (E_POINTER, E_INVALIDARG, E_FAIL, E_NOTIMPL) must be handled
-  // on the browser side by input validation.
-  bool return_code;
-};
-
 // The first parameter for the ViewHostMsg_ImeUpdateStatus message.
 enum ViewHostMsg_ImeControl {
   IME_DISABLE = 0,
   IME_MOVE_WINDOWS,
   IME_COMPLETE_COMPOSITION,
 };
-
-// Multi-pass include of render_messages_internal.  Preprocessor magic allows
-// us to use 1 header to define the enums and classes for our render messages.
-#define IPC_MESSAGE_MACROS_ENUMS
-#include "chrome/common/render_messages_internal.h"
-
-#ifdef IPC_MESSAGE_MACROS_LOG_ENABLED
-// When we are supposed to create debug strings, we run it through twice, once
-// with debug strings on, and once with only CLASSES on to generate both types
-// of messages.
-#  undef IPC_MESSAGE_MACROS_LOG
-#  define IPC_MESSAGE_MACROS_CLASSES
-#  include "chrome/common/render_messages_internal.h"
-
-#  undef IPC_MESSAGE_MACROS_CLASSES
-#  define IPC_MESSAGE_MACROS_LOG
-#  include "chrome/common/render_messages_internal.h"
-#else
-// No debug strings requested, just define the classes
-#  define IPC_MESSAGE_MACROS_CLASSES
-#  include "chrome/common/render_messages_internal.h"
-#endif
 
 
 namespace IPC {
@@ -632,10 +488,9 @@ struct ParamTraits<WebInputEvent::Type> {
   }
 };
 
-// Traits for ViewMsg_Accessibility_In_Params structure to pack/unpack.
 template <>
-struct ParamTraits<ViewMsg_Accessibility_In_Params> {
-  typedef ViewMsg_Accessibility_In_Params param_type;
+struct ParamTraits<AccessibilityInParams> {
+  typedef AccessibilityInParams param_type;
   static void Write(Message* m, const param_type& p) {
     WriteParam(m, p.iaccessible_id);
     WriteParam(m, p.iaccessible_function_id);
@@ -666,10 +521,9 @@ struct ParamTraits<ViewMsg_Accessibility_In_Params> {
   }
 };
 
-// Traits for ViewHostMsg_Accessibility_Out_Params structure to pack/unpack.
 template <>
-struct ParamTraits<ViewHostMsg_Accessibility_Out_Params> {
-  typedef ViewHostMsg_Accessibility_Out_Params param_type;
+struct ParamTraits<AccessibilityOutParams> {
+  typedef AccessibilityOutParams param_type;
   static void Write(Message* m, const param_type& p) {
     WriteParam(m, p.iaccessible_id);
     WriteParam(m, p.output_variant_lval);
@@ -927,10 +781,9 @@ struct ParamTraits<ViewHostMsg_FrameNavigate_Params> {
   }
 };
 
-// Traits for ViewHostMsg_ContextMenu_Params structure to pack/unpack.
 template <>
-struct ParamTraits<ViewHostMsg_ContextMenu_Params> {
-  typedef ViewHostMsg_ContextMenu_Params param_type;
+struct ParamTraits<ContextMenuParams> {
+  typedef ContextMenuParams param_type;
   static void Write(Message* m, const param_type& p) {
     WriteParam(m, p.node);
     WriteParam(m, p.x);
@@ -963,7 +816,7 @@ struct ParamTraits<ViewHostMsg_ContextMenu_Params> {
       ReadParam(m, iter, &p->security_info);
   }
   static void Log(const param_type& p, std::wstring* l) {
-    l->append(L"<ViewHostMsg_ContextMenu_Params>");
+    l->append(L"<ContextMenuParams>");
   }
 };
 
@@ -1445,10 +1298,9 @@ struct ParamTraits<webkit_glue::ResourceLoaderBridge::ResponseInfo> {
   }
 };
 
-// Traits for ViewMsg_Resource_ResponseHead
 template <>
-struct ParamTraits<ViewMsg_Resource_ResponseHead> {
-  typedef ViewMsg_Resource_ResponseHead param_type;
+struct ParamTraits<ResourceResponseHead> {
+  typedef ResourceResponseHead param_type;
   static void Write(Message* m, const param_type& p) {
     ParamTraits<webkit_glue::ResourceLoaderBridge::ResponseInfo>::Write(m, p);
     WriteParam(m, p.status);
@@ -1466,18 +1318,17 @@ struct ParamTraits<ViewMsg_Resource_ResponseHead> {
   }
 };
 
-// Traits for ViewHostMsg_Resource_SyncLoad_Response
 template <>
-struct ParamTraits<ViewHostMsg_SyncLoad_Result> {
-  typedef ViewHostMsg_SyncLoad_Result param_type;
+struct ParamTraits<SyncLoadResult> {
+  typedef SyncLoadResult param_type;
   static void Write(Message* m, const param_type& p) {
-    ParamTraits<ViewMsg_Resource_ResponseHead>::Write(m, p);
+    ParamTraits<ResourceResponseHead>::Write(m, p);
     WriteParam(m, p.final_url);
     WriteParam(m, p.data);
   }
   static bool Read(const Message* m, void** iter, param_type* r) {
     return
-      ParamTraits<ViewMsg_Resource_ResponseHead>::Read(m, iter, r) &&
+      ParamTraits<ResourceResponseHead>::Read(m, iter, r) &&
       ReadParam(m, iter, &r->final_url) &&
       ReadParam(m, iter, &r->data);
   }
@@ -1610,6 +1461,7 @@ struct ParamTraits<WebPreferences> {
     WriteParam(m, p.minimum_logical_font_size);
     WriteParam(m, p.default_encoding);
     WriteParam(m, p.javascript_enabled);
+    WriteParam(m, p.web_security_enabled);
     WriteParam(m, p.javascript_can_open_windows_automatically);
     WriteParam(m, p.loads_images_automatically);
     WriteParam(m, p.plugins_enabled);
@@ -1637,6 +1489,7 @@ struct ParamTraits<WebPreferences> {
         ReadParam(m, iter, &p->minimum_logical_font_size) &&
         ReadParam(m, iter, &p->default_encoding) &&
         ReadParam(m, iter, &p->javascript_enabled) &&
+        ReadParam(m, iter, &p->web_security_enabled) &&
         ReadParam(m, iter, &p->javascript_can_open_windows_automatically) &&
         ReadParam(m, iter, &p->loads_images_automatically) &&
         ReadParam(m, iter, &p->plugins_enabled) &&
@@ -1760,5 +1613,9 @@ struct ParamTraits<gfx::NativeView> {
 #endif  // defined(OS_POSIX)
 
 }  // namespace IPC
+
+
+#define MESSAGES_INTERNAL_FILE "chrome/common/render_messages_internal.h"
+#include "chrome/common/ipc_message_macros.h"
 
 #endif  // CHROME_COMMON_RENDER_MESSAGES_H_

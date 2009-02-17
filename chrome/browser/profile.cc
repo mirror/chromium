@@ -18,6 +18,7 @@
 #include "chrome/browser/net/chrome_url_request_context.h"
 #include "chrome/browser/profile_manager.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
+#include "chrome/browser/search_engines/template_url_model.h"
 #include "chrome/browser/visitedlink_master.h"
 #include "chrome/browser/webdata/web_data_service.h"
 #include "chrome/common/chrome_constants.h"
@@ -42,7 +43,6 @@
 #include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/history/history.h"
 #include "chrome/browser/search_engines/template_url_fetcher.h"
-#include "chrome/browser/search_engines/template_url_model.h"
 #include "chrome/browser/sessions/session_service.h"
 #include "chrome/browser/sessions/tab_restore_service.h"
 #include "chrome/browser/spellchecker.h"
@@ -532,6 +532,15 @@ URLRequestContext* ProfileImpl::GetRequestContext() {
     FilePath cookie_path = GetPath();
     cookie_path = cookie_path.Append(chrome::kCookieFilename);
     FilePath cache_path = GetPath();
+
+    // Override the cache location if specified by the user.
+    const std::wstring user_cache_dir(
+        CommandLine::ForCurrentProcess()->GetSwitchValue(
+            switches::kDiskCacheDir));
+    if (!user_cache_dir.empty()) {
+      cache_path = FilePath::FromWStringHack(user_cache_dir);
+    }
+
     cache_path = cache_path.Append(chrome::kCacheDirname);
     request_context_ = ChromeURLRequestContext::CreateOriginal(
         this, cookie_path, cache_path);

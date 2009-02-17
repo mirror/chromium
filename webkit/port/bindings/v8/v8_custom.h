@@ -88,6 +88,11 @@ class V8Custom {
                       kDefaultWrapperInternalFieldCount + 0;
   static const int kWorkerInternalFieldCount =
                       kDefaultWrapperInternalFieldCount + 1;
+
+  static const int kWorkerContextRequestCacheIndex =
+                      kDefaultWrapperInternalFieldCount + 0;
+  static const int kWorkerContextInternalFieldCount =
+                      kDefaultWrapperInternalFieldCount + 1;
 #endif
 
   static const int kDOMWindowLocationIndex =
@@ -309,8 +314,8 @@ DECLARE_CALLBACK(LocationValueOf)
 
 // Implementation of EventTarget::addEventListener
 // and EventTarget::removeEventListener
-DECLARE_CALLBACK(EventTargetNodeAddEventListener)
-DECLARE_CALLBACK(EventTargetNodeRemoveEventListener)
+DECLARE_CALLBACK(NodeAddEventListener)
+DECLARE_CALLBACK(NodeRemoveEventListener)
 
 // Custom implementation is Navigator properties.
 // We actually only need this because WebKit has
@@ -360,6 +365,9 @@ DECLARE_CALLBACK(NodeIteratorPreviousNode)
 
 // Custom implementation of NodeFilter function
 DECLARE_CALLBACK(NodeFilterAcceptNode)
+
+// Custom implementation of HTMLFormElement
+DECLARE_CALLBACK(HTMLFormElementSubmit)
 
 DECLARE_INDEXED_PROPERTY_GETTER(DOMStringList)
 DECLARE_CALLBACK(DOMStringListItem)
@@ -422,6 +430,15 @@ DECLARE_PROPERTY_ACCESSOR(WorkerOnerror)
 DECLARE_CALLBACK(WorkerConstructor)
 DECLARE_CALLBACK(WorkerAddEventListener)
 DECLARE_CALLBACK(WorkerRemoveEventListener)
+
+DECLARE_PROPERTY_ACCESSOR_GETTER(WorkerContextSelf)
+DECLARE_PROPERTY_ACCESSOR(WorkerContextOnmessage)
+DECLARE_CALLBACK(WorkerContextSetTimeout)
+DECLARE_CALLBACK(WorkerContextClearTimeout)
+DECLARE_CALLBACK(WorkerContextSetInterval)
+DECLARE_CALLBACK(WorkerContextClearInterval)
+DECLARE_CALLBACK(WorkerContextAddEventListener)
+DECLARE_CALLBACK(WorkerContextRemoveEventListener)
 #endif
 
 #undef DECLARE_INDEXED_ACCESS_CHECK

@@ -116,6 +116,10 @@ const wchar_t kUserDataDir[]                   = L"user-data-dir";
 // specifically) will store its state.
 const wchar_t kPluginDataDir[]                 = L"plugin-data-dir";
 
+// Use a specific disk cache location, rather than one derived from the
+// UserDatadir.
+const wchar_t kDiskCacheDir[]                  = L"disk-cache-dir";
+
 // Specifies the path to the user data folder for the parent profile.
 const wchar_t kParentProfile[]                 = L"parent-profile";
 
@@ -141,10 +145,10 @@ const wchar_t kUserAgent[]                     = L"user-agent";
 // Specifies the flags passed to JS engine
 const wchar_t kJavaScriptFlags[]               = L"js-flags";
 
-// The GeoID we should use.  This is normally obtained from the operating system
-// during first run and cached in the preferences afterwards.  This is a numeric
-// value; see http://msdn.microsoft.com/en-us/library/ms776390.aspx .
-const wchar_t kGeoID[]                         = L"geoid";
+// The Country we should use.  This is normally obtained from the operating
+// system during first run and cached in the preferences afterwards.  This is a
+// string value, the 2 letter code from ISO 3166-1.
+const wchar_t kCountry[]                       = L"country";
 
 // The language file that we want to try to open.  Of the form
 // language[-country] where language is the 2 letter code from ISO-639.
@@ -299,6 +303,9 @@ const wchar_t kDisablePopupBlocking[]          = L"disable-popup-blocking";
 // Don't execute JavaScript (browser JS like the new tab page still runs).
 const wchar_t kDisableJavaScript[]             = L"disable-javascript";
 
+// Don't enforce the same-origin policy.  (Used by people testing their sites.)
+const wchar_t kDisableWebSecurity[]            = L"disable-web-security";
+
 // Prevent Java from running.
 const wchar_t kDisableJava[]                   = L"disable-java";
 
@@ -344,6 +351,9 @@ const wchar_t kEnableExtensions[]              = L"enable-extensions";
 // handling so that users can double-click on an extension.
 const wchar_t kInstallExtension[]              = L"install-extension";
 
+// Load an extension from the specified directory.
+const wchar_t kLoadExtension[]                 = L"load-extension";
+
 // Causes the browser to launch directly in incognito mode.
 const wchar_t kIncognito[]                     = L"incognito";
 
@@ -360,5 +370,9 @@ const wchar_t kEnableVideo[]                   = L"enable-video";
 
 // Pass the name of the current running automated test to Chrome.
 const wchar_t kTestName[]                      = L"test-name";
+
+// On POSIX only: the contents of this flag are prepended to the renderer
+// command line. (Useful values might be "valgrind" or "gdb --args")
+const wchar_t kRendererCmdPrefix[]             = L"renderer-cmd-prefix";
 
 }  // namespace switches

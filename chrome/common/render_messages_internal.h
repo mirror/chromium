@@ -18,14 +18,11 @@
 #include "chrome/common/ipc_message_macros.h"
 #include "skia/include/SkBitmap.h"
 #include "webkit/glue/console_message_level.h"
-#include "webkit/glue/context_node_types.h"
 #include "webkit/glue/dom_operations.h"
 #include "webkit/glue/screen_info.h"
 #include "webkit/glue/webcursor.h"
 #include "webkit/glue/webinputevent.h"
 #include "webkit/glue/webplugin.h"
-
-void RenderMessagesInit();
 
 // TODO(mpcomplete): rename ViewMsg and ViewHostMsg to something that makes
 // more sense with our current design.
@@ -34,7 +31,7 @@ void RenderMessagesInit();
 // RenderView messages
 // These are messages sent from the browser to the renderer process.
 
-IPC_BEGIN_MESSAGES(View, 1)
+IPC_BEGIN_MESSAGES(View)
   // Used typically when recovering from a crash.  The new rendering process
   // sets its global "next page id" counter to the given value.
   IPC_MESSAGE_CONTROL1(ViewMsg_SetNextPageID,
@@ -172,7 +169,7 @@ IPC_BEGIN_MESSAGES(View, 1)
   // Sent when the headers are available for a resource request.
   IPC_MESSAGE_ROUTED2(ViewMsg_Resource_ReceivedResponse,
                       int /* request_id */,
-                      ViewMsg_Resource_ResponseHead)
+                      ResourceResponseHead)
 
   // Sent as upload progress is being made
   IPC_MESSAGE_ROUTED3(ViewMsg_Resource_UploadProgress,
@@ -384,9 +381,9 @@ IPC_BEGIN_MESSAGES(View, 1)
 
   // Retreive information from the MSAA DOM subtree, for accessibility purposes.
   IPC_SYNC_MESSAGE_ROUTED1_1(ViewMsg_GetAccessibilityInfo,
-                             ViewMsg_Accessibility_In_Params
+                             AccessibilityInParams
                              /* input parameters */,
-                             ViewHostMsg_Accessibility_Out_Params
+                             AccessibilityOutParams
                              /* output parameters */)
 
   // Requests the renderer to clear cashed accessibility information. Takes an
@@ -486,7 +483,7 @@ IPC_END_MESSAGES(View)
 // WebContents messages
 // These are messages sent from the renderer to the browser process.
 
-IPC_BEGIN_MESSAGES(ViewHost, 2)
+IPC_BEGIN_MESSAGES(ViewHost)
   // Sent by the renderer when it is creating a new window.  The browser creates
   // a tab for it and responds with a ViewMsg_CreatingNew_ACK.  If route_id is
   // MSG_ROUTING_NONE, the view couldn't be created.  modal_dialog_event is set
@@ -664,7 +661,7 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
   IPC_SYNC_MESSAGE_ROUTED2_1(ViewHostMsg_SyncLoad,
                              int /* request_id */,
                              ViewHostMsg_Resource_Request,
-                             ViewHostMsg_SyncLoad_Result)
+                             SyncLoadResult)
 
   // Used to set a cookie.  The cookie is set asynchronously, but will be
   // available to a subsequent ViewHostMsg_GetCookies request.
@@ -738,9 +735,11 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
   IPC_MESSAGE_CONTROL3(ViewHostMsg_PageContents, GURL, int32, std::wstring)
 
   // Specifies the URL as the first parameter (a wstring) and thumbnail as
-  // binary data as the second parameter. Our macros don't handle binary data,
-  // so this is declared "empty," to be encoded by the caller/receiver.
-  IPC_MESSAGE_EMPTY(ViewHostMsg_Thumbnail)
+  // binary data as the second parameter.
+  IPC_MESSAGE_ROUTED3(ViewHostMsg_Thumbnail,
+                      GURL /* url */,
+                      ThumbnailScore /* score */,
+                      SkBitmap /* bitmap */)
 
   // Notification that the url for the favicon of a site has been determined.
   IPC_MESSAGE_ROUTED2(ViewHostMsg_UpdateFavIconURL,
@@ -751,7 +750,7 @@ IPC_BEGIN_MESSAGES(ViewHost, 2)
   // content area, and a context menu should be shown for it. The params
   // object contains information about the node(s) that were selected when the
   // user right clicked.
-  IPC_MESSAGE_ROUTED1(ViewHostMsg_ContextMenu, ViewHostMsg_ContextMenu_Params)
+  IPC_MESSAGE_ROUTED1(ViewHostMsg_ContextMenu, ContextMenuParams)
 
   // Request that the given URL be opened in the specified manner.
   IPC_MESSAGE_ROUTED3(ViewHostMsg_OpenURL,

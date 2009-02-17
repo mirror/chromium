@@ -97,6 +97,7 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "markup.h"
 #include "Page.h"
 #include "PlatformContextSkia.h"
+#include "PrintContext.h"
 #include "RenderFrame.h"
 #if defined(OS_WIN)
 #include "RenderThemeChromiumWin.h"
@@ -378,7 +379,7 @@ void WebFrameImpl::InternalLoadRequest(const WebRequest* request,
     CacheCurrentRequestInfo(datasource);
 
   if (data.isValid()) {
-    frame_->loader()->load(resource_request, data);
+    frame_->loader()->load(resource_request, data, false);
     if (replace) {
       // Do this to force WebKit to treat the load as replacing the currently
       // loaded page.
@@ -405,7 +406,7 @@ void WebFrameImpl::InternalLoadRequest(const WebRequest* request,
   } else if (resource_request.cachePolicy() == ReloadIgnoringCacheData) {
     frame_->loader()->reload();
   } else {
-    frame_->loader()->load(resource_request);
+    frame_->loader()->load(resource_request, false);
   }
 
   currently_loading_request_ = NULL;
@@ -826,7 +827,7 @@ bool WebFrameImpl::Find(const FindInPageRequest& request,
         (new_selection.start() == new_selection.end())) {
       active_match_ = NULL;
     } else {
-      active_match_ = new_selection.toRange();
+      active_match_ = new_selection.toNormalizedRange();
       curr_selection_rect = active_match_->boundingBox();
     }
 
@@ -957,20 +958,22 @@ void WebFrameImpl::AddMarker(WebCore::Range* range) {
         textPiece->endOffset(exception),
         "" };
 
-    // Find the node to add a marker to and add it.
-    Node* node = textPiece->startContainer(exception);
-    frame()->document()->addMarker(node, marker);
+    if (marker.endOffset > marker.startOffset) {
+      // Find the node to add a marker to and add it.
+      Node* node = textPiece->startContainer(exception);
+      frame()->document()->addMarker(node, marker);
 
-    // Rendered rects for markers in WebKit are not populated until each time
-    // the markers are painted. However, we need it to happen sooner, because
-    // the whole purpose of tickmarks on the scrollbar is to show where matches
-    // off-screen are (that haven't been painted yet).
-    Vector<WebCore::DocumentMarker> markers =
-        frame()->document()->markersForNode(node);
-    frame()->document()->setRenderedRectForMarker(
-        textPiece->startContainer(exception),
-        markers[markers.size() - 1],
-        range->boundingBox());
+      // Rendered rects for markers in WebKit are not populated until each time
+      // the markers are painted. However, we need it to happen sooner, because
+      // the whole purpose of tickmarks on the scrollbar is to show where
+      // matches off-screen are (that haven't been painted yet).
+      Vector<WebCore::DocumentMarker> markers =
+          frame()->document()->markersForNode(node);
+      frame()->document()->setRenderedRectForMarker(
+          textPiece->startContainer(exception),
+          markers[markers.size() - 1],
+          range->boundingBox());
+    }
   }
 }
 
@@ -1019,7 +1022,8 @@ void WebFrameImpl::ScopeStringMatches(FindInPageRequest request,
                            resume_scoping_from_range_->startOffset(ec2) + 1,
                            ec);
     if (ec != 0 || ec2 != 0) {
-      NOTREACHED();
+      if (ec2 != 0)  // A non-zero |ec| happens when navigating during search.
+        NOTREACHED();
       return;
     }
   }
@@ -1175,7 +1179,8 @@ void WebFrameImpl::SetFindEndstateFocusAndSelection() {
     // don't focus anything.
     Selection selection(frame()->selection()->selection());
     if (selection.isNone() || (selection.start() == selection.end()) ||
-        active_match_->boundingBox() != selection.toRange()->boundingBox())
+        active_match_->boundingBox() !=
+            selection.toNormalizedRange()->boundingBox())
       return;
 
     // We will be setting focus ourselves, so we want the view to forget its
@@ -1303,8 +1308,8 @@ void WebFrameImpl::Paste() {
 
 void WebFrameImpl::Replace(const std::wstring& wtext) {
   String text = webkit_glue::StdWStringToString(wtext);
-  RefPtr<DocumentFragment> fragment =
-      createFragmentFromText(frame()->selection()->toRange().get(), text);
+  RefPtr<DocumentFragment> fragment = createFragmentFromText(
+      frame()->selection()->toNormalizedRange().get(), text);
   WebCore::applyCommand(WebCore::ReplaceSelectionCommand::create(
       frame()->document(), fragment.get(), false, true, true));
 }
@@ -1346,7 +1351,7 @@ void WebFrameImpl::ClearSelection() {
 }
 
 std::string WebFrameImpl::GetSelection(bool as_html) {
-  RefPtr<Range> range = frame()->selection()->toRange();
+  RefPtr<Range> range = frame()->selection()->toNormalizedRange();
   if (!range.get())
     return std::string();
 
@@ -1624,7 +1629,7 @@ PassRefPtr<Frame> WebFrameImpl::CreateChildFrame(
   // this child frame.
   HistoryItem* parent_item = frame_->loader()->currentHistoryItem();
   FrameLoadType load_type = frame_->loader()->loadType();
-  FrameLoadType child_load_type = WebCore::FrameLoadTypeRedirectWithLockedHistory;
+  FrameLoadType child_load_type = WebCore::FrameLoadTypeRedirectWithLockedBackForwardList;
   KURL new_url = request.resourceRequest().url();
 
   // If we're moving in the backforward list, we might want to replace the
@@ -1645,6 +1650,7 @@ PassRefPtr<Frame> WebFrameImpl::CreateChildFrame(
   child_frame->loader()->loadURL(new_url,
                                  request.resourceRequest().httpReferrer(),
                                  child_frame->tree()->name(),
+                                 false,
                                  child_load_type, 0, 0);
 
   // A synchronous navigation (about:blank) would have already processed
@@ -1735,7 +1741,7 @@ bool WebFrameImpl::SetPrintingMode(bool printing,
     view->setScrollbarModes(WebCore::ScrollbarAuto,
                             WebCore::ScrollbarAuto);
   }
-  DCHECK_EQ(frame()->isFrameSet(), false);
+  DCHECK_EQ(frame()->document()->isFrameSet(), false);
 
   SetPrinting(printing, page_width_min, page_width_max);
   if (!printing)
@@ -1763,10 +1769,13 @@ int WebFrameImpl::ComputePageRects(const gfx::Size& page_size_px) {
   // TODO(maruel): Weird. We don't do that.
   // Everything is in pixels :(
   // pages_ and page_height are actually output parameters.
-  int page_height;
-  WebCore::IntRect rect(0, 0, page_size_px.width(), page_size_px.height());
-  computePageRectsForFrame(frame(), rect, 0, 0, 1.0, pages_, page_height);
-  return pages_.size();
+  WebCore::FloatRect rect(0, 0,
+						  static_cast<float>(page_size_px.width()),
+						  static_cast<float>(page_size_px.height()));
+  WebCore::PrintContext print_context(frame());
+  float page_height;
+  print_context.computePageRects(rect, 0, 0, 1.0, page_height);
+  return print_context.pageCount();
 }
 
 void WebFrameImpl::GetPageRect(int page, gfx::Rect* page_size) const {

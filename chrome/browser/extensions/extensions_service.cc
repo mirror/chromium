@@ -70,6 +70,29 @@ MessageLoop* ExtensionsService::GetMessageLoop() {
   return message_loop_;
 }
 
+void ExtensionsService::InstallExtension(const FilePath& extension_path) {
+  // TODO(aa): This message loop should probably come from a backend
+  // interface, similar to how the message loop for the frontend comes
+  // from the frontend interface.
+  g_browser_process->file_thread()->message_loop()->PostTask(FROM_HERE,
+      NewRunnableMethod(backend_.get(),
+          &ExtensionsServiceBackend::InstallExtension,
+          extension_path,
+          install_directory_,
+          scoped_refptr<ExtensionsServiceFrontendInterface>(this)));
+}
+
+void ExtensionsService::LoadExtension(const FilePath& extension_path) {
+  // TODO(aa): This message loop should probably come from a backend
+  // interface, similar to how the message loop for the frontend comes
+  // from the frontend interface.
+  g_browser_process->file_thread()->message_loop()->PostTask(FROM_HERE,
+      NewRunnableMethod(backend_.get(),
+          &ExtensionsServiceBackend::LoadSingleExtension,
+          extension_path,
+          scoped_refptr<ExtensionsServiceFrontendInterface>(this)));
+}
+
 void ExtensionsService::OnExtensionsLoadedFromDirectory(
     ExtensionList* new_extensions) {
   extensions_.insert(extensions_.end(), new_extensions->begin(),
@@ -107,18 +130,6 @@ void ExtensionsService::OnExtensionLoadError(const std::string& error) {
   LOG(WARNING) << error;
 }
 
-void ExtensionsService::InstallExtension(const FilePath& extension_path) {
-  // TODO(aa): This message loop should probably come from a backend
-  // interface, similar to how the message loop for the frontend comes
-  // from the frontend interface.
-  g_browser_process->file_thread()->message_loop()->PostTask(FROM_HERE,
-      NewRunnableMethod(backend_.get(),
-          &ExtensionsServiceBackend::InstallExtension,
-          extension_path,
-          install_directory_,
-          scoped_refptr<ExtensionsServiceFrontendInterface>(this)));
-}
-
 void ExtensionsService::OnExtensionInstallError(const std::string& error) {
   // TODO(erikkay): Print the error message out somewhere better.
   LOG(WARNING) << error;
@@ -130,7 +141,12 @@ void ExtensionsService::OnExtensionInstalled(FilePath path) {
       NotificationService::AllSources(),
       Details<FilePath>(&path));
 
-  // TODO(erikkay): now what?
+  // Immediately try to load the extension.
+  g_browser_process->file_thread()->message_loop()->PostTask(FROM_HERE,
+      NewRunnableMethod(backend_.get(),
+          &ExtensionsServiceBackend::LoadSingleExtension,
+          path,
+          scoped_refptr<ExtensionsServiceFrontendInterface>(this)));
 }
 
 
@@ -160,41 +176,65 @@ bool ExtensionsServiceBackend::LoadExtensionsFromDirectory(
       // from local directories that developers are just hacking in place.
       // TODO(erikkay): perhaps we should use a different code path for this.
     }
-    FilePath manifest_path =
-        child_path.AppendASCII(Extension::kManifestFilename);
-    if (!file_util::PathExists(manifest_path)) {
-      ReportExtensionLoadError(frontend.get(), child_path,
-                               Extension::kInvalidManifestError);
-      continue;
-    }
 
-    JSONFileValueSerializer serializer(manifest_path.ToWStringHack());
-    std::string error;
-    scoped_ptr<Value> root(serializer.Deserialize(&error));
-    if (!root.get()) {
-      ReportExtensionLoadError(frontend.get(), child_path,
-                               error);
-      continue;
-    }
-
-    if (!root->IsType(Value::TYPE_DICTIONARY)) {
-      ReportExtensionLoadError(frontend.get(), child_path,
-                               Extension::kInvalidManifestError);
-      continue;
-    }
-
-    scoped_ptr<Extension> extension(new Extension(child_path));
-    if (!extension->InitFromValue(*static_cast<DictionaryValue*>(root.get()),
-                                  &error)) {
-      ReportExtensionLoadError(frontend.get(), child_path, error);
-      continue;
-    }
-
-    extensions->push_back(extension.release());
+    Extension* extension = LoadExtension(child_path, frontend);
+    if (extension)
+      extensions->push_back(extension);
   }
 
   ReportExtensionsLoaded(frontend.get(), extensions.release());
   return true;
+}
+
+bool ExtensionsServiceBackend::LoadSingleExtension(
+    const FilePath& path_in,
+    scoped_refptr<ExtensionsServiceFrontendInterface> frontend) {
+  FilePath path = path_in;
+  if (!file_util::AbsolutePath(&path))
+    NOTREACHED();
+  Extension* extension = LoadExtension(path, frontend);
+  if (extension) {
+    ExtensionList* extensions = new ExtensionList;
+    extensions->push_back(extension);
+    ReportExtensionsLoaded(frontend.get(), extensions);
+    return true;
+  }
+  return false;
+}
+
+Extension* ExtensionsServiceBackend::LoadExtension(
+    const FilePath& path,
+    scoped_refptr<ExtensionsServiceFrontendInterface> frontend) {
+  FilePath manifest_path =
+      path.AppendASCII(Extension::kManifestFilename);
+  if (!file_util::PathExists(manifest_path)) {
+    ReportExtensionLoadError(frontend.get(), path,
+                             Extension::kInvalidManifestError);
+    return NULL;
+  }
+
+  JSONFileValueSerializer serializer(manifest_path.ToWStringHack());
+  std::string error;
+  scoped_ptr<Value> root(serializer.Deserialize(&error));
+  if (!root.get()) {
+    ReportExtensionLoadError(frontend.get(), path,
+                             error);
+    return NULL;
+  }
+
+  if (!root->IsType(Value::TYPE_DICTIONARY)) {
+    ReportExtensionLoadError(frontend.get(), path,
+                             Extension::kInvalidManifestError);
+    return NULL;
+  }
+
+  scoped_ptr<Extension> extension(new Extension(path));
+  if (!extension->InitFromValue(*static_cast<DictionaryValue*>(root.get()),
+                                &error)) {
+    ReportExtensionLoadError(frontend.get(), path, error);
+    return NULL;
+  }
+  return extension.release();
 }
 
 void ExtensionsServiceBackend::ReportExtensionLoadError(
@@ -271,8 +311,8 @@ DictionaryValue* ExtensionsServiceBackend::ReadManifest(
   // Verify the JSON
   JSONStringValueSerializer json(manifest_str);
   std::string error;
-  Value* val = json.Deserialize(&error);
-  if (!val) {
+  scoped_ptr<Value> val(json.Deserialize(&error));
+  if (!val.get()) {
     ReportExtensionInstallError(frontend, extension_path, error);
     return NULL;
   }
@@ -281,7 +321,7 @@ DictionaryValue* ExtensionsServiceBackend::ReadManifest(
                                 "manifest isn't a JSON dictionary");
     return NULL;
   }
-  DictionaryValue* manifest = static_cast<DictionaryValue*>(val);
+  DictionaryValue* manifest = static_cast<DictionaryValue*>(val.get());
   std::string zip_hash;
   if (!manifest->GetString(Extension::kZipHashKey, &zip_hash)) {
     ReportExtensionInstallError(frontend, extension_path,
@@ -327,6 +367,8 @@ DictionaryValue* ExtensionsServiceBackend::ReadManifest(
   // TODO(erikkay): The manifest will also contain a signature of the hash
   // (or perhaps the whole manifest) for authentication purposes.
 
+  // The caller owns val (now cast to manifest).
+  val.release();
   return manifest;
 }
 

@@ -200,8 +200,7 @@ class TestDelegate : public URLRequest::Delegate {
 
 // This object bounds the lifetime of an external python-based HTTP/FTP server
 // that can provide various responses useful for testing.
-class BaseTestServer : public base::ProcessFilter,
-                       public base::RefCounted<BaseTestServer> {
+class BaseTestServer : public base::RefCounted<BaseTestServer> {
  protected:
   BaseTestServer()
       : process_handle_(NULL) {
@@ -209,31 +208,40 @@ class BaseTestServer : public base::ProcessFilter,
 
  public:
   virtual ~BaseTestServer() {
+    if (!IsFinished())
+      if (!WaitToFinish(1000))
+        Kill();
+  }
+
+  bool IsFinished() {
+    return WaitToFinish(0);
+  }
+
+  void Kill() {
     if (process_handle_) {
 #if defined(OS_WIN)
-      CloseHandle(process_handle_);
+      base::KillProcess(process_handle_, 0, true);
 #elif defined(OS_POSIX)
       // Make sure the process has exited and clean up the process to avoid
       // a zombie.
       kill(process_handle_, SIGINT);
       waitpid(process_handle_, 0, 0);
 #endif
+      base::CloseProcessHandle(process_handle_);
       process_handle_ = NULL;
     }
-    // Make sure we don't leave any stray testserver processes laying around.
-    std::wstring testserver_name =
-    file_util::GetFilenameFromPath(python_runtime_);
-    base::CleanupProcesses(testserver_name, 10000, 1, this);
-    EXPECT_EQ(0, base::GetProcessCount(testserver_name, this));
   }
 
-  // Implementation of ProcessFilter
-  virtual bool Includes(uint32 pid, uint32 parent_pid) const {
-    // Since no process handle is set, it can't be included in the filter.
-    if (!process_handle_)
-      return false;
-    // TODO(port): rationalize return value of GetProcId
-    return pid == static_cast<uint32>(base::GetProcId(process_handle_));
+  bool WaitToFinish(int milliseconds) {
+    if (process_handle_ == 0)
+      return true;
+    bool ret = base::WaitForSingleProcess(process_handle_, milliseconds);
+    if (ret) {
+      base::CloseProcessHandle(process_handle_);
+      process_handle_ = NULL;
+    }
+
+    return ret;
   }
 
   GURL TestServerPage(const std::string& base_address,
@@ -348,6 +356,7 @@ class BaseTestServer : public base::ProcessFilter,
     if (!normalized_document_root.empty())
       file_util::AppendToPath(test_data_directory, normalized_document_root);
 
+    data_directory_ = *test_data_directory;
   }
 
 #if defined(OS_WIN)
@@ -380,6 +389,10 @@ class BaseTestServer : public base::ProcessFilter,
     return true;
   }
 
+  std::wstring GetDataDirectory() {
+    return data_directory_;
+  }
+
  protected:
   // Used by MakeGETRequest to implement sync load behavior.
   class SyncTestDelegate : public TestDelegate {
@@ -409,8 +422,10 @@ class BaseTestServer : public base::ProcessFilter,
   std::string url_user_;
   std::string url_password_;
   std::wstring python_runtime_;
+  std::wstring data_directory_;
   base::ProcessHandle process_handle_;
   std::string port_str_;
+  
 };
 
 class HTTPTestServer : public BaseTestServer {
@@ -495,6 +510,13 @@ class HTTPTestServer : public BaseTestServer {
   }
 
   virtual ~HTTPTestServer() {
+    Stop();
+  }
+
+  void Stop() {
+    if (IsFinished())
+      return;
+
     // here we append the time to avoid problems where the kill page
     // is being cached rather than being executed on the server
     std::string page_name = StringPrintf("kill?%u",
@@ -653,6 +675,13 @@ class FTPTestServer : public BaseTestServer {
   }
 
   virtual ~FTPTestServer() {
+    Stop();
+  }
+
+  void Stop() {
+    if (IsFinished())
+      return;
+
     const std::string base_address = scheme() + "://" + host_name_ + ":" +
         port_str_ + "/";
     const GURL& url = TestServerPage(base_address, "kill");

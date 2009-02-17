@@ -16,23 +16,22 @@
 #ifdef CHROME_PERSONALIZATION
 #include "chrome/personalization/personalization.h"
 #endif
-#include "webkit/glue/password_form_dom_manager.h"
 #include "webkit/glue/autofill_form.h"
+#include "webkit/glue/console_message_level.h"
+#include "webkit/glue/password_form_dom_manager.h"
+#include "webkit/glue/window_open_disposition.h"
 
-enum ConsoleMessageLevel;
+class AutofillForm;
 class NavigationEntry;
 class RenderViewHostDelegate;
 class SiteInstance;
 class SkBitmap;
-struct ViewHostMsg_ContextMenu_Params;
-struct ViewHostMsg_DidPrintPage_Params;
 class ViewMsg_Navigate;
+struct ContextMenuParams;
+struct ViewHostMsg_DidPrintPage_Params;
 struct ViewMsg_Navigate_Params;
-struct ViewMsg_Print_Params;
-struct ViewMsg_PrintPages_Params;
 struct WebDropData;
 struct WebPreferences;
-enum WindowOpenDisposition;
 
 namespace base {
 class WaitableEvent;
@@ -378,7 +377,7 @@ class RenderViewHost : public RenderWidgetHost {
   void UnloadListenerHasFired() { has_unload_listener_ = false; }
 
 #ifdef CHROME_PERSONALIZATION
-  // Tells the RenderView to raise an personalization event with the given name 
+  // Tells the RenderView to raise an personalization event with the given name
   // and argument.
   void RaisePersonalizationEvent(std::string event_name, std::string event_arg);
 
@@ -436,7 +435,9 @@ class RenderViewHost : public RenderWidgetHost {
   void OnMsgUpdateTitle(int32 page_id, const std::wstring& title);
   void OnMsgUpdateEncoding(const std::wstring& encoding);
   void OnMsgUpdateTargetURL(int32 page_id, const GURL& url);
-  void OnMsgThumbnail(const IPC::Message& msg);
+  void OnMsgThumbnail(const GURL& url,
+                      const ThumbnailScore& score,
+                      const SkBitmap& bitmap);
   void OnMsgClose();
   void OnMsgRequestMove(const gfx::Rect& pos);
   void OnMsgDidRedirectProvisionalLoad(int32 page_id,
@@ -462,7 +463,7 @@ class RenderViewHost : public RenderWidgetHost {
                              const GURL& image_url,
                              bool errored,
                              const SkBitmap& image_data);
-  void OnMsgContextMenu(const ViewHostMsg_ContextMenu_Params& params);
+  void OnMsgContextMenu(const ContextMenuParams& params);
   void OnMsgOpenURL(const GURL& url, const GURL& referrer,
                     WindowOpenDisposition disposition);
   void OnMsgDomOperationResponse(const std::string& json_string,

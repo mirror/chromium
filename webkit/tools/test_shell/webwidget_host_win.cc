@@ -15,7 +15,7 @@
 static const wchar_t kWindowClassName[] = L"WebWidgetHost";
 
 /*static*/
-WebWidgetHost* WebWidgetHost::Create(gfx::NativeWindow parent_window,
+WebWidgetHost* WebWidgetHost::Create(HWND parent_view,
                                      WebWidgetDelegate* delegate) {
   WebWidgetHost* host = new WebWidgetHost();
 
@@ -35,8 +35,8 @@ WebWidgetHost* WebWidgetHost::Create(gfx::NativeWindow parent_window,
   host->view_ = CreateWindowEx(WS_EX_TOOLWINDOW,
                                kWindowClassName, kWindowClassName, WS_POPUP,
                                0, 0, 0, 0,
-                               parent_window, NULL, GetModuleHandle(NULL), NULL);
-
+                               parent_view, NULL, GetModuleHandle(NULL), NULL);
+  TRACK_HWND_CREATION(host->view_);
   win_util::SetWindowUserData(host->view_, host);
 
   host->webwidget_ = WebWidget::Create(delegate);
@@ -44,9 +44,8 @@ WebWidgetHost* WebWidgetHost::Create(gfx::NativeWindow parent_window,
   return host;
 }
 
-/*static*/
-WebWidgetHost* WebWidgetHost::FromWindow(gfx::NativeWindow hwnd) {
-  return reinterpret_cast<WebWidgetHost*>(win_util::GetWindowUserData(hwnd));
+static WebWidgetHost* FromWindow(HWND view) {
+  return reinterpret_cast<WebWidgetHost*>(win_util::GetWindowUserData(view));
 }
 
 /*static*/
@@ -57,6 +56,9 @@ LRESULT CALLBACK WebWidgetHost::WndProc(HWND hwnd, UINT message, WPARAM wparam,
     switch (message) {
       case WM_DESTROY:
         delete host;
+        break;
+      case WM_NCDESTROY:
+        TRACK_HWND_DESTRUCTION(hwnd);
         break;
 
       case WM_PAINT: {

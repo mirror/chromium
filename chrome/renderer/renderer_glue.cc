@@ -18,6 +18,7 @@
 #include "chrome/renderer/net/render_dns_master.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/resource_bundle.h"
+#include "chrome/common/render_messages.h"
 #include "chrome/plugin/npobject_util.h"
 #include "chrome/renderer/render_view.h"
 #include "chrome/renderer/visitedlink_slave.h"
@@ -202,21 +203,15 @@ bool GetPreferredExtensionForMimeType(const std::string& mime_type,
   return !ext->empty();
 }
 
-// TODO(port): Need to finish port ResourceBundle.
 std::string GetDataResource(int resource_id) {
-#if defined(OS_WIN)
   return ResourceBundle::GetSharedInstance().GetDataResource(resource_id);
-#else
-  NOTIMPLEMENTED();
-  return std::string();
-#endif
 }
 
-#if defined(OS_WIN)
 SkBitmap* GetBitmapResource(int resource_id) {
   return ResourceBundle::GetSharedInstance().GetBitmapNamed(resource_id);
 }
 
+#if defined(OS_WIN)
 HCURSOR LoadCursor(int cursor_id) {
   return ResourceBundle::GetSharedInstance().LoadCursor(cursor_id);
 }
@@ -292,7 +287,16 @@ uint64 VisitedLinkHash(const char* canonical_url, size_t length) {
 }
 
 bool IsLinkVisited(uint64 link_hash) {
+#if defined(OS_WIN)
   return g_render_thread->visited_link_slave()->IsVisited(link_hash);
+#elif defined(OS_POSIX)
+  // TODO(port): Currently we don't have a HistoryService. This stops the
+  // VisitiedLinkMaster from sucessfully calling Init(). In that case, no
+  // message is ever sent to the renderer with the VisitiedLink shared memory
+  // region and we end up crashing with SIGFPE as we try to hash by taking a
+  // fingerprint mod 0.
+  return false;
+#endif
 }
 
 int ResolveProxyFromRenderThread(const GURL& url, std::string* proxy_result) {

@@ -7,13 +7,18 @@
 #ifndef CHROME_COMMON_RESOURCE_DISPATCHER_H__
 #define CHROME_COMMON_RESOURCE_DISPATCHER_H__
 
+#include <deque>
 #include <queue>
+#include <string>
 
 #include "base/hash_tables.h"
+#include "base/shared_memory.h"
 #include "base/task.h"
+#include "chrome/common/filter_policy.h"
 #include "chrome/common/ipc_channel.h"
-#include "chrome/common/render_messages.h"
 #include "webkit/glue/resource_loader_bridge.h"
+
+struct ResourceResponseHead;
 
 // Uncomment this to disable loading resources via the parent process.  This
 // may be useful for debugging purposes.
@@ -25,7 +30,7 @@
 // processes.
 class ResourceDispatcher : public base::RefCounted<ResourceDispatcher> {
  public:
-  ResourceDispatcher(IPC::Message::Sender* sender);
+  explicit ResourceDispatcher(IPC::Message::Sender* sender);
   ~ResourceDispatcher();
 
   // Called to possibly handle the incoming IPC message.  Returns true if
@@ -95,11 +100,11 @@ class ResourceDispatcher : public base::RefCounted<ResourceDispatcher> {
     bool mixed_content;
     bool is_deferred;
   };
-  typedef base::hash_map<int,PendingRequestInfo> PendingRequestList;
+  typedef base::hash_map<int, PendingRequestInfo> PendingRequestList;
 
   // Message response handlers, called by the message handler for this process.
   void OnUploadProgress(int request_id, int64 position, int64 size);
-  void OnReceivedResponse(int request_id, const ViewMsg_Resource_ResponseHead&);
+  void OnReceivedResponse(int request_id, const ResourceResponseHead&);
   void OnReceivedRedirect(int request_id, const GURL& new_url);
   void OnReceivedData(int request_id, base::SharedMemoryHandle data,
                       int data_len);
