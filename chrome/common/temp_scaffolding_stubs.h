@@ -19,8 +19,6 @@
 #include "base/ref_counted.h"
 #include "base/gfx/native_widget_types.h"
 #include "base/gfx/rect.h"
-#include "chrome/browser/bookmarks/bookmark_model.h"
-#include "chrome/browser/bookmarks/bookmark_service.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/cache_manager_host.h"
 #include "chrome/browser/cancelable_request.h"
@@ -53,9 +51,9 @@
 #include "webkit/glue/window_open_disposition.h"
 
 class Browser;
-class BookmarkService;
 class CommandLine;
 class ConstrainedWindow;
+class CPCommandInterface;
 class DOMUIHost;
 class DownloadManager;
 class HistoryService;
@@ -78,6 +76,7 @@ class SessionID;
 class SiteInstance;
 class SpellChecker;
 class TabContents;
+class TabContentsDelegate;
 class TabNavigation;
 struct ThumbnailScore;
 class Task;
@@ -110,13 +109,14 @@ class X509Certificate;
 //---------------------------------------------------------------------------
 // These stubs are for Browser_main()
 
-// TODO(port): MessageWindow is very windows-specific, but provides the concept
-//             of singleton browser process per user-data-dir. Investigate how
-//             to achieve this on other platforms and see if this API works.
-class MessageWindow {
+// TODO(port): the current ProcessSingleton implementation is very
+// windows-specific, but provides the concept of a singleton browser
+// process per user-data-dir. Investigate how achieve this on other
+// platforms and see if this API works.
+class ProcessSingleton {
  public:
-  explicit MessageWindow(const FilePath& user_data_dir) { }
-  ~MessageWindow() { }
+  explicit ProcessSingleton(const FilePath& user_data_dir) { }
+  ~ProcessSingleton() { }
   bool NotifyOtherProcess() {
     NOTIMPLEMENTED();
     return false;
@@ -405,6 +405,7 @@ class StatusBubble {
  public:
   void SetStatus(const std::wstring&) { NOTIMPLEMENTED(); }
   void Hide() { NOTIMPLEMENTED(); }
+  void SetURL(const GURL&, const std::wstring&) { NOTIMPLEMENTED(); }
 };
 
 class SavePackage : public base::RefCountedThreadSafe<SavePackage>,
@@ -464,62 +465,6 @@ class FaviconStatus {
   const GURL& url() const { return url_; }
  private:
   GURL url_;
-};
-
-class TabContentsDelegate {
- public:
-  virtual void OpenURLFromTab(TabContents* source,
-                              const GURL& url, const GURL& referrer,
-                              WindowOpenDisposition disposition,
-                              PageTransition::Type transition) {
-    NOTIMPLEMENTED();
-  }
-  virtual void OpenURL(const GURL& url, const GURL& referrer,
-                       WindowOpenDisposition disposition,
-                       PageTransition::Type transition) {
-    OpenURLFromTab(NULL, url, referrer, disposition, transition);
-  }
-  virtual void UpdateTargetURL(TabContents*, const GURL&) { NOTIMPLEMENTED(); }
-  virtual void CloseContents(TabContents*) { NOTIMPLEMENTED(); }
-  virtual void MoveContents(TabContents*, const gfx::Rect&) {
-    NOTIMPLEMENTED();
-  }
-  virtual bool IsPopup(TabContents*) {
-    NOTIMPLEMENTED();
-    return false;
-  }
-  virtual void ForwardMessageToExternalHost(const std::string&,
-                                            const std::string&) {
-    NOTIMPLEMENTED();
-  }
-  virtual TabContents* GetConstrainingContents(TabContents*) {
-    NOTIMPLEMENTED();
-    return NULL;
-  }
-  virtual void ShowHtmlDialog(ModalHtmlDialogDelegate*, void*) {
-    NOTIMPLEMENTED();
-  }
-  virtual bool CanBlur() {
-    NOTIMPLEMENTED();
-    return true;
-  }
-  virtual gfx::Rect GetRootWindowResizerRect() const {
-    return gfx::Rect();
-  }
-
-  virtual bool IsExternalTabContainer() {
-    NOTIMPLEMENTED();
-    return false;
-  }
-  virtual void BeforeUnloadFired(WebContents*, bool, bool*) {
-    NOTIMPLEMENTED();
-  }
-  virtual void URLStarredChanged(WebContents*, bool) { NOTIMPLEMENTED(); }
-  virtual void ConvertContentsToApplication(WebContents*) { NOTIMPLEMENTED(); }
-  virtual void ReplaceContents(TabContents*, TabContents*) { NOTIMPLEMENTED(); }
-  virtual void NavigationStateChanged(const TabContents*, unsigned int) {
-    NOTIMPLEMENTED();
-  }
 };
 
 class InterstitialPage {
@@ -774,10 +719,6 @@ class WebApp : public base::RefCountedThreadSafe<WebApp> {
   }
 };
 
-class GearsShortcutData {
- public:
-};
-
 namespace printing {
 class PrintViewManager {
  public:
@@ -786,7 +727,7 @@ class PrintViewManager {
   void Destroy() { NOTIMPLEMENTED(); }
   bool OnRendererGone(RenderViewHost*) {
     NOTIMPLEMENTED();
-    return false;
+    return true;  // Assume for now that all renderer crashes are important.
   }
   void DidGetPrintedPagesCount(int, int) { NOTIMPLEMENTED(); }
   void DidPrintPage(const ViewHostMsg_DidPrintPage_Params&) {
@@ -856,7 +797,11 @@ class ConstrainedWindow {
   void CloseConstrainedWindow() { NOTIMPLEMENTED(); }
 };
 
-class ModalHtmlDialogDelegate {
+class HtmlDialogContentsDelegate {
+ public:
+};
+
+class ModalHtmlDialogDelegate : public HtmlDialogContentsDelegate {
  public:
   ModalHtmlDialogDelegate(const GURL&, int, int, const std::string&,
                           IPC::Message*, WebContents*) { }

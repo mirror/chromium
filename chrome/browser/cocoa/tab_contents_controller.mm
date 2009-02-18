@@ -12,6 +12,10 @@
 // For now, tab_contents lives here. TODO(port):fix
 #include "chrome/common/temp_scaffolding_stubs.h"
 
+// Names of images in the bundle for the star icon (normal and 'starred').
+static NSString* const kStarImageName = @"star";
+static NSString* const kStarredImageName = @"starred";
+
 @interface TabContentsController(CommandUpdates)
 - (void)enabledStateChangedForCommand:(NSInteger)command enabled:(BOOL)enabled;
 @end
@@ -52,7 +56,7 @@ class LocationBarBridge : public LocationBar {
   virtual void ShowFirstRunBubble() { NOTIMPLEMENTED(); }
   virtual std::wstring GetInputString() const;
   virtual WindowOpenDisposition GetWindowOpenDisposition() const
-      { NOTIMPLEMENTED(); return NEW_FOREGROUND_TAB; }
+      { NOTIMPLEMENTED(); return CURRENT_TAB; }
   virtual PageTransition::Type GetPageTransition() const 
       { NOTIMPLEMENTED(); return 0; }
   virtual void AcceptInput() { NOTIMPLEMENTED(); }
@@ -162,6 +166,11 @@ class LocationBarBridge : public LocationBar {
   [self updateToolbarCommandStatus];
 }
 
+- (void)tabDidChange {
+  // TODO(pinkerton): what specificaly do we need to update here?
+  NOTIMPLEMENTED();
+}
+
 - (NSString*)locationBarString {
   return [locationBar_ stringValue];
 }
@@ -184,6 +193,13 @@ class LocationBarBridge : public LocationBar {
     // TODO(pinkerton): just reset the state of the url bar. We're currently
     // not saving any state as that drags in too much Omnibar code.
   }
+}
+
+- (void)setStarredState:(BOOL)isStarred {
+  NSString* starImageName = kStarImageName;
+  if (isStarred)
+    starImageName = kStarredImageName;
+  [starButton_ setImage:[NSImage imageNamed:starImageName]];
 }
 
 @end

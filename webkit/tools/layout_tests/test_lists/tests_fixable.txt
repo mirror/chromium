@@ -327,6 +327,8 @@ DEFER WIN LINUX : LayoutTests/fast/inline/dirtyLinesForInline.html = PASS FAIL
 LINUX : chrome/fast/forms/basic-textareas.html = FAIL
 LINUX : chrome/fast/forms/basic-textareas-quirks.html = FAIL
 LINUX MAC : LayoutTests/editing/selection/5354455-1.html = FAIL
+LINUX : LayoutTests/svg/custom/deep-dynamic-updates.svg = FAIL CRASH
+LINUX : LayoutTests/svg/W3C-SVG-1.1/animate-elem-33-t.svg = FAIL
 // For these two fast/frames tests it looks like the win baseline had some weird
 // artifacts on the scrollbars on one of the frames, which has now been removed.
 // This artifact does not exist on the mac baseline.
@@ -352,6 +354,7 @@ LINUX : LayoutTests/fast/transforms/transform-on-inline.html = FAIL
 LINUX : LayoutTests/fast/transforms/transform-table-row.html = FAIL
 LINUX : LayoutTests/svg/batik/paints/patternPreserveAspectRatioA.svg = FAIL CRASH
 DEFER MAC : LayoutTests/svg/batik/text/textFeatures.svg = FAIL PASS
+// Needs to be rebaselined.
 LINUX : LayoutTests/svg/custom/foreign-object-skew.svg = FAIL
 MAC : LayoutTests/svg/custom/inline-svg-in-xhtml.xml = FAIL
 DEFER MAC LINUX : LayoutTests/svg/batik/text/textDecoration2.svg = FAIL PASS
@@ -497,7 +500,6 @@ LINUX WIN : LayoutTests/svg/batik/text/textEffect3.svg = FAIL
 LINUX WIN : LayoutTests/svg/carto.net/selectionlist.svg = FAIL CRASH
 LayoutTests/svg/css/getComputedStyle-basic.xhtml = FAIL
 // Flaky on both release and debug.
-LINUX WIN : LayoutTests/svg/custom/deep-dynamic-updates.svg = FAIL CRASH
 LINUX WIN : LayoutTests/svg/custom/dominant-baseline-hanging.svg = FAIL
 LINUX WIN : LayoutTests/svg/custom/focus-ring.svg = FAIL
 LINUX WIN : LayoutTests/svg/custom/image-small-width-height.svg = FAIL
@@ -541,7 +543,6 @@ LINUX : LayoutTests/svg/hixie/perf/006.xml = FAIL
 LINUX : LayoutTests/svg/hixie/text/003b.xml = FAIL
 LINUX : LayoutTests/svg/text/text-spacing-01-b.svg = FAIL
 LINUX : LayoutTests/svg/text/text-text-01-b.svg = FAIL
-LINUX WIN : LayoutTests/svg/W3C-SVG-1.1/animate-elem-33-t.svg = FAIL
 LINUX : LayoutTests/svg/W3C-SVG-1.1/fonts-elem-01-t.svg = FAIL
 LINUX : LayoutTests/svg/W3C-SVG-1.1/fonts-elem-02-t.svg = FAIL
 LINUX : LayoutTests/svg/W3C-SVG-1.1/fonts-elem-03-b.svg = FAIL
@@ -679,10 +680,9 @@ MAC DEBUG : LayoutTests/fast/js/global-recursion-on-full-stack.html = FAIL
 // http://b/issue?id=1344252
 DEFER : LayoutTests/fast/js/pic/cached-prototype-setter.html = FAIL
 
-// Shadows don't render correctly for these tests.
-// The first likely just needs a rebaseline on Linux.
+// These need to be rebaselined.
 LINUX : LayoutTests/fast/canvas/shadow-offset-7.html = FAIL
-LINUX WIN : LayoutTests/fast/css/shadow-multiple.html = FAIL
+LINUX : LayoutTests/fast/css/shadow-multiple.html = FAIL
 
 // Problems with getImageData and toDataURL: http://crbug.com/2972
 LINUX WIN : LayoutTests/fast/canvas/canvas-getImageData.html = FAIL
@@ -690,13 +690,11 @@ LINUX WIN : LayoutTests/fast/canvas/canvas-getImageData.html = FAIL
 // and gif, which is a low priority.
 DEFER LINUX WIN : LayoutTests/fast/canvas/toDataURL-supportedTypes.html = FAIL
 
-// Our shadows looks wrong. The text not having shadows is to be expected, but
-// it looks like we're missing a red shadow that Safari has.
-// http://code.google.com/p/chromium/issues/detail?id=2982
-LINUX WIN : LayoutTests/fast/repaint/shadow-multiple-horizontal.html = FAIL
-LINUX WIN : LayoutTests/fast/repaint/shadow-multiple-strict-horizontal.html = FAIL
-LINUX WIN : LayoutTests/fast/repaint/shadow-multiple-strict-vertical.html = FAIL
-LINUX WIN : LayoutTests/fast/repaint/shadow-multiple-vertical.html = FAIL
+// These need to be rebaselined on Linux.
+LINUX : LayoutTests/fast/repaint/shadow-multiple-horizontal.html = FAIL
+LINUX : LayoutTests/fast/repaint/shadow-multiple-strict-horizontal.html = FAIL
+LINUX : LayoutTests/fast/repaint/shadow-multiple-strict-vertical.html = FAIL
+LINUX : LayoutTests/fast/repaint/shadow-multiple-vertical.html = FAIL
 
 // We don't render reflection masks properly.
 // http://code.google.com/p/chromium/issues/detail?id=3229
@@ -1655,10 +1653,6 @@ LINUX WIN : LayoutTests/svg/W3C-SVG-1.1/pservers-grad-06-b.svg = FAIL
 SKIP : LayoutTests/fast/dynamic/insert-before-table-part-in-continuation.html = CRASH
 
 // New tests added in http://trac.webkit.org/changeset/40424
-// The expected results indicate the test is failing upstream (see
-// https://bugs.webkit.org/show_bug.cgi?id=23772).
-LayoutTests/http/tests/history/redirect-js-form-submit-before-load.html = FAIL
-
 // Renders the width of "600" off by 3.  Looks OK but could still be a bug
 // that we shouldn't rebaseline.
 LINUX : LayoutTests/svg/W3C-SVG-1.1/text-fonts-02-t.svg = FAIL
@@ -1724,7 +1718,6 @@ WIN LINUX : LayoutTests/fast/text/line-breaks.html = FAIL PASS
 // Now the left one is slightly different.
 WIN LINUX : LayoutTests/svg/W3C-SVG-1.1/pservers-grad-17-b.svg = FAIL
 WIN : LayoutTests/svg/carto.net/colourpicker.svg = FAIL
-WIN : LayoutTests/svg/custom/foreign-object-skew.svg = FAIL
 // Upstream dumprendertree changes caused the expected to change.
 // Now our baseline is out of date, and we differ from Mac expected on the
 // caret position in the last line of the text output.

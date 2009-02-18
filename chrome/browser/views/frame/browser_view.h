@@ -170,6 +170,7 @@ class BrowserView : public BrowserWindow,
   virtual gfx::Rect GetNormalBounds() const;
   virtual bool IsMaximized() const;
   virtual LocationBar* GetLocationBar() const;
+  virtual void SetFocusToLocationBar();
   virtual void UpdateStopGoState(bool is_loading);
   virtual void UpdateToolbar(TabContents* contents, bool should_restore_state);
   virtual void FocusToolbar();
@@ -213,7 +214,7 @@ class BrowserView : public BrowserWindow,
   virtual bool CanMaximize() const;
   virtual bool IsModal() const;
   virtual std::wstring GetWindowTitle() const;
-  virtual views::View* GetInitiallyFocusedView() const;
+  virtual views::View* GetInitiallyFocusedView();
   virtual bool ShouldShowWindowTitle() const;
   virtual SkBitmap GetWindowIcon();
   virtual bool ShouldShowWindowIcon() const;

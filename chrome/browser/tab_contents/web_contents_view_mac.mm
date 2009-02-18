@@ -5,6 +5,7 @@
 #include "chrome/browser/tab_contents/web_contents_view_mac.h"
 
 #include "chrome/browser/browser.h" // TODO(beng): this dependency is awful.
+#include "chrome/browser/cocoa/sad_tab_view.h"
 #include "chrome/browser/renderer_host/render_widget_host.h"
 #include "chrome/browser/renderer_host/render_widget_host_view_mac.h"
 #include "chrome/browser/tab_contents/web_contents.h"
@@ -18,6 +19,10 @@ WebContentsView* WebContentsView::Create(WebContents* web_contents) {
 
 WebContentsViewMac::WebContentsViewMac(WebContents* web_contents)
     : web_contents_(web_contents) {
+  registrar_.Add(this, NotificationType::WEB_CONTENTS_CONNECTED,
+                 Source<WebContents>(web_contents));
+  registrar_.Add(this, NotificationType::WEB_CONTENTS_DISCONNECTED,
+                 Source<WebContents>(web_contents));
 }
 
 WebContentsViewMac::~WebContentsViewMac() {
@@ -68,7 +73,7 @@ gfx::NativeWindow WebContentsViewMac::GetTopLevelNativeView() const {
 }
 
 void WebContentsViewMac::GetContainerBounds(gfx::Rect* out) const {
-  *out = gfx::Rect(NSRectToCGRect([cocoa_view_.get() frame]));
+  *out = [cocoa_view_.get() NSRectToRect:[cocoa_view_.get() bounds]];
 }
 
 void WebContentsViewMac::StartDragging(const WebDropData& drop_data) {
@@ -91,9 +96,7 @@ void WebContentsViewMac::Invalidate() {
 
 void WebContentsViewMac::SizeContents(const gfx::Size& size) {
   // TODO(brettw) this is a hack and should be removed. See web_contents_view.h.
-  NSRect rect = [cocoa_view_.get() frame];
-  rect.size = NSSizeFromCGSize(size.ToCGSize());
-  [cocoa_view_.get() setBounds:rect];
+  NOTIMPLEMENTED();  // Leaving the hack unimplemented.
 }
 
 void WebContentsViewMac::FindInPage(const Browser& browser,
@@ -230,6 +233,34 @@ void WebContentsViewMac::ShowCreatedWidgetInternal(
   // Reparenting magic goes here. TODO(avi): fix
 
   widget_host->Init();
+}
+
+void WebContentsViewMac::Observe(NotificationType type,
+                                 const NotificationSource& source,
+                                 const NotificationDetails& details) {
+  switch (type.value) {
+    case NotificationType::WEB_CONTENTS_CONNECTED: {
+      if (sad_tab_.get()) {
+        [sad_tab_.get() removeFromSuperview];
+        sad_tab_.reset();
+      }
+      break;
+    }
+    case NotificationType::WEB_CONTENTS_DISCONNECTED: {
+      SadTabView* view = [[SadTabView alloc] initWithFrame:NSZeroRect];
+      CFRetain(view);
+      [view release];
+      sad_tab_.reset(view);
+      
+      // Set as the dominant child.
+      [cocoa_view_.get() addSubview:view];
+      [view setFrame:[cocoa_view_.get() bounds]];
+      [view setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+      break;
+    }
+    default:
+      NOTREACHED() << "Got a notification we didn't register for.";
+  }
 }
 
 @implementation WebContentsViewCocoa

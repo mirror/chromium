@@ -70,7 +70,7 @@ void BrowserWindowCocoa::UpdateLoadingAnimations(bool should_animate) {
 }
 
 void BrowserWindowCocoa::SetStarredState(bool is_starred) {
-  NOTIMPLEMENTED();
+  [controller_ setStarredState:is_starred ? YES : NO];
 }
 
 gfx::Rect BrowserWindowCocoa::GetNormalBounds() const {
@@ -93,6 +93,10 @@ gfx::Rect BrowserWindowCocoa::GetRootWindowResizerRect() const {
 
 LocationBar* BrowserWindowCocoa::GetLocationBar() const {
   return [controller_ locationBar];
+}
+
+void BrowserWindowCocoa::SetFocusToLocationBar() {
+  NOTIMPLEMENTED();
 }
 
 void BrowserWindowCocoa::UpdateStopGoState(bool is_loading) {

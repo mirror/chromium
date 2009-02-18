@@ -57,9 +57,16 @@ class TabStripModel;
 // enabled.
 - (void)willBecomeSelectedTab;
 
+// Called when the tab contents is updated in some non-descript way (the
+// notification from the model isn't specific).
+- (void)tabDidChange;
+
 // Called when any url bar state changes. If |tabForRestoring| is non-NULL,
 // it points to a TabContents whose state we should restore.
 - (void)updateToolbarWithContents:(TabContents*)tabForRestoring;
+
+// Sets whether or not the current page in the frontmost tab is bookmarked.
+- (void)setStarredState:(BOOL)isStarred;
 
 @end
 

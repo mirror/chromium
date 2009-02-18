@@ -4,6 +4,10 @@
 
 #include "temp_scaffolding_stubs.h"
 
+#include "build/build_config.h"
+
+#include <vector>
+
 #include "base/file_util.h"
 #include "base/logging.h"
 #include "base/thread.h"
@@ -11,9 +15,9 @@
 #include "base/string_piece.h"
 #include "base/singleton.h"
 #include "base/task.h"
-#include "build/build_config.h"
 #include "chrome/browser/autocomplete/autocomplete.h"
 #include "chrome/browser/autocomplete/history_url_provider.h"
+#include "chrome/browser/bookmarks/bookmark_utils.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/cache_manager_host.h"
@@ -52,8 +56,21 @@ AutocompleteProvider::~AutocompleteProvider() {
   NOTIMPLEMENTED();
 }
 
+std::wstring AutocompleteProvider::StringForURLDisplay(const GURL& url,
+                                                       bool check_accept_lang) {
+  NOTIMPLEMENTED();
+  return L"";
+}
+
 // static
 size_t AutocompleteResult::max_matches_;
+
+AutocompleteMatch::AutocompleteMatch(AutocompleteProvider* provider,
+                                     int relevance,
+                                     bool deletable,
+                                     Type type) {
+  NOTIMPLEMENTED();
+}
 
 //static
 std::string AutocompleteInput::TypeToString(AutocompleteInput::Type type) {
@@ -65,6 +82,15 @@ std::string AutocompleteInput::TypeToString(AutocompleteInput::Type type) {
 std::string AutocompleteMatch::TypeToString(AutocompleteMatch::Type type) {
   NOTIMPLEMENTED();
   return "";
+}
+
+void AutocompleteMatch::ClassifyLocationInString(
+    size_t match_location,
+    size_t match_length,
+    size_t overall_length,
+    int style,
+    ACMatchClassifications* classification) {
+  NOTIMPLEMENTED();
 }
 
 //--------------------------------------------------------------------------
@@ -138,7 +164,9 @@ void OpenFirstRunDialog(Profile* profile) { NOTIMPLEMENTED(); }
 
 GURL NewTabUIURL() {
   NOTIMPLEMENTED();
-  return GURL();
+  // TODO(port): returning a blank URL here confuses the page IDs so make sure 
+  // we load something
+  return GURL("http://dev.chromium.org");
 }
 
 //--------------------------------------------------------------------------
@@ -169,23 +197,6 @@ void InstallJankometer(const CommandLine&) {
 }
 
 void UninstallJankometer() {
-  NOTIMPLEMENTED();
-}
-
-//--------------------------------------------------------------------------
-
-void Browser::Observe(NotificationType type,
-                      const NotificationSource& source,
-                      const NotificationDetails& details) {
-  NOTIMPLEMENTED();
-}
-
-GURL Browser::GetHomePage() {
-  NOTIMPLEMENTED();
-  return GURL("http://dev.chromium.org");
-}
-
-void Browser::LoadingStateChanged(TabContents* source) {
   NOTIMPLEMENTED();
 }
 
@@ -349,11 +360,17 @@ namespace chrome_browser_net {
 
 void EnableDnsPrefetch(bool) { NOTIMPLEMENTED(); }
 
+void DnsPrefetchGetHtmlInfo(std::string* output) { NOTIMPLEMENTED(); }
+
 void DnsPrefetchList(const std::vector<std::string>& hostnames) {
   NOTIMPLEMENTED();
 }
 
 void SaveHostNamesForNextStartup(PrefService* local_state) { NOTIMPLEMENTED(); }
+
+void TrimSubresourceReferrers()  { NOTIMPLEMENTED(); }
+
+void SaveSubresourceReferrers(PrefService* local_state) { NOTIMPLEMENTED(); }
 
 }  // namespace chrome_browser_net
 
@@ -468,15 +485,40 @@ void HistoryURLProvider::ExecuteWithDB(history::HistoryBackend*,
 
 namespace bookmark_utils {
 
-bool MoreRecentlyAdded(BookmarkNode* n1, BookmarkNode* n2) {
+bool DoesBookmarkContainText(BookmarkNode* node, const std::wstring& text) {
   NOTIMPLEMENTED();
   return false;
+}
+
+void GetMostRecentlyAddedEntries(BookmarkModel* model,
+                                 size_t count,
+                                 std::vector<BookmarkNode*>* nodes) {
+  NOTIMPLEMENTED();
 }
 
 std::vector<BookmarkNode*> GetMostRecentlyModifiedGroups(BookmarkModel* model,
                                                          size_t max_count) {
   NOTIMPLEMENTED();
   return std::vector<BookmarkNode*>();
+}
+
+void GetBookmarksContainingText(BookmarkModel* model,
+                                const std::wstring& text,
+                                size_t max_count,
+                                std::vector<BookmarkNode*>* nodes) {
+  NOTIMPLEMENTED();
+}
+
+void GetBookmarksMatchingText(BookmarkModel* model,
+                              const std::wstring& text,
+                              size_t max_count,
+                              std::vector<TitleMatch>* matches) {
+  NOTIMPLEMENTED();
+}
+
+bool MoreRecentlyAdded(BookmarkNode* n1, BookmarkNode* n2) {
+  NOTIMPLEMENTED();
+  return false;
 }
 
 }
@@ -518,4 +560,26 @@ InfoBar* AlertInfoBarDelegate::CreateInfoBar() {
 InfoBar* LinkInfoBarDelegate::CreateInfoBar() {
   NOTIMPLEMENTED();
   return NULL;
+}
+
+void CPHandleCommand(int command, CPCommandInterface* data,
+                     CPBrowsingContext context) {
+  NOTIMPLEMENTED();
+}
+
+bool CanImportURL(const GURL& url) {
+  NOTIMPLEMENTED();
+  return false;
+}
+
+bool DOMUIContentsCanHandleURL(GURL* url,
+                               TabContentsType* result_type) {
+  NOTIMPLEMENTED();
+  return false;
+}
+
+bool NewTabUIHandleURL(GURL* url,
+                       TabContentsType* result_type) {
+  NOTIMPLEMENTED();
+  return false;
 }

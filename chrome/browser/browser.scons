@@ -699,7 +699,6 @@ if not env.Bit('windows'):
       'external_protocol_handler.cc',
       'external_tab_container.cc',
       'first_run.cc',
-      'gears_integration.cc',
       'hang_monitor/hung_plugin_action.cc',
       'hang_monitor/hung_window_detector.cc',
       'history_tab_ui.cc',
@@ -779,16 +778,20 @@ if not env.Bit('windows'):
 
   # Add files shared across non-Windows platforms.
   input_files.Append(
+      'importer/firefox_profile_lock_posix.cc',
       'renderer_host/backing_store_posix.cc',
   )
 
 
 if env.Bit('linux'):
   input_files.Extend([
-      'gtk/browser_main_gtk.cc',
+      'browser_main_gtk.cc',
       'gtk/browser_toolbar_view_gtk.cc',
       'gtk/browser_window_factory_gtk.cc',
       'gtk/browser_window_gtk.cc',
+      'gtk/menu_gtk.cc',
+      'gtk/nine_box.cc',
+      'gtk/standard_menus.cc',
       'renderer_host/render_widget_host_view_gtk.cc',
       'tab_contents/web_contents_view_gtk.cc',
   ])
