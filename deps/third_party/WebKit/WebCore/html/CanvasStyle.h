@@ -32,7 +32,6 @@ namespace WebCore {
 
     class CanvasGradient;
     class CanvasPattern;
-    class Color;
     class GraphicsContext;
 
     class CanvasStyle : public RefCounted<CanvasStyle> {
@@ -62,8 +61,6 @@ namespace WebCore {
         CanvasStyle(float c, float m, float y, float k, float a);
         CanvasStyle(PassRefPtr<CanvasGradient>);
         CanvasStyle(PassRefPtr<CanvasPattern>);
-
-        Color cmykToRGB() const;
 
         enum Type { ColorString, ColorStringWithAlpha, GrayLevel, RGBA, CMYKA, Gradient, ImagePattern };
 

@@ -221,13 +221,4 @@ void CanvasStyle::applyFillColor(GraphicsContext* context)
     }
 }
 
-Color CanvasStyle::cmykToRGB() const
-{
-    float colors = 1 - m_black;
-    int r = static_cast<int>(255 * (colors * (1 - m_cyan)));
-    int g = static_cast<int>(255 * (colors * (1 - m_magenta)));
-    int b = static_cast<int>(255 * (colors * (1 - m_yellow)));
-    return Color(r, g, b, static_cast<int>(m_alpha * 255));
-}
-
 }
