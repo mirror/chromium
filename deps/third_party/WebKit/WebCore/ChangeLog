@@ -1,3 +1,330 @@
+2009-02-18  Holger Hans Peter Freyther  <zecke@selfish.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Implement ResourceHandle::loadResourceSynchronously in ResourceHandleSoup.cpp
+
+        The implementation is needed to have synchronous loading, e.g. for
+        JavaScript interaction. This is fixing various regressions that
+        came from the curl->soup switch.
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::WebCoreSynchronousLoader::WebCoreSynchronousLoader):
+        (WebCore::WebCoreSynchronousLoader::~WebCoreSynchronousLoader):
+        (WebCore::WebCoreSynchronousLoader::didReceiveResponse):
+        (WebCore::WebCoreSynchronousLoader::didReceiveData):
+        (WebCore::WebCoreSynchronousLoader::didFinishLoading):
+        (WebCore::WebCoreSynchronousLoader::didFail):
+        (WebCore::WebCoreSynchronousLoader::run):
+        (WebCore::ResourceHandle::loadResourceSynchronously):
+
+2009-02-18  Xan Lopez  <xan@gnome.org>
+
+        Reviewed by Mark Rowe.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23989
+
+        Based on a patch by Bo Yang  <techrazy.yang@gmail.com>
+
+        Make the cursor cache global, that's all we really need and
+        otherwise we can miss cursor transitions in some situations (see
+        the bug for one testcase). Also remove some now useless code.
+
+        * platform/Widget.h:
+        * platform/gtk/WidgetGtk.cpp:
+        (WebCore::Widget::Widget):
+        (WebCore::Widget::~Widget):
+        (WebCore::Widget::setCursor):
+
+2009-02-17  Adam Roben  <aroben@apple.com>
+
+        Windows build fix
+
+        * loader/FrameLoader.cpp:
+        (WebCore::toPlugInElement): Don't rely on #if being processed before
+        ASSERT.
+
+2009-02-17  David Levin  <levin@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Bug 23977: Unnecessary timer related headers in files.
+        <https://bugs.webkit.org/show_bug.cgi?id=23977>
+
+        No observable change in behavior, so no test.
+
+        * dom/Document.cpp:
+        * dom/WorkerRunLoop.cpp:
+        * dom/WorkerRunLoop.h:
+
+2009-02-17  Peter Abrahamsen  <rainhead@gmail.com>
+
+        Reviewed by Sam Weinig.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23958
+        <rdar://problem/6587815>
+
+        Updated XMLHttpRequest with new header names from the latest Access
+        Control draft: http://www.w3.org/TR/access-control/
+        - Access-Control-Origin becomes Access-Control-Allow-Origin
+        - Access-Control-Credentials becomes Access-Control-Allow-Credentials
+
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::XMLHttpRequest::accessControlCheck):
+
+2009-02-17  Kevin Ollivier  <kevino@theolliviers.com>
+
+        wx build fix. Add missing constructor used for empty values.
+
+        * platform/graphics/wx/FontPlatformData.h:
+        (WebCore::FontPlatformData::FontPlatformData):
+
+2009-02-17  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Dave Kilzer.
+
+        <rdar://problem/6592446> dynamically updating page doesn't seem to draw when updated
+        
+        Need update after callback.
+
+        * bindings/js/JSCustomPositionCallback.cpp:
+        (WebCore::JSCustomPositionCallback::handleEvent):
+        * bindings/js/JSCustomPositionErrorCallback.cpp:
+        (WebCore::JSCustomPositionErrorCallback::handleEvent):
+
+2009-02-17  Eric Carlson  <eric.carlson@apple.com>
+
+        Reviewed by Antti Koivisto.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23917
+        Allow a WebKit plug-in to act as a proxy for the <audio> and <video>
+        element.
+
+        * DerivedSources.make: add media element proxy exports to .exp file when feature is defined.
+
+        * WebCore.VideoProxy.exp: New, define the informal protocol exported by a media element proxy.
+
+        * WebCore.xcodeproj/project.pbxproj: Add MediaPlayerProxy.h.
+
+        * html/HTMLMediaElement.cpp:
+        (WebCore::HTMLMediaElement::HTMLMediaElement): Initialize m_needWidgetUpdate.
+        (WebCore::HTMLMediaElement::attributeChanged): Don't detach+attach when PLUGIN_PROXY_FOR_VIDEO, the
+        proxy plug-in handles the poster frame.
+        (WebCore::HTMLMediaElement::rendererIsNeeded): New logic for PLUGIN_PROXY_FOR_VIDEO.
+        (WebCore::HTMLMediaElement::createRenderer): Create RenderPartObject when PLUGIN_PROXY_FOR_VIDEO.
+        (WebCore::HTMLMediaElement::attach): Set m_needWidgetUpdate when PLUGIN_PROXY_FOR_VIDEO
+        (WebCore::HTMLMediaElement::load): Don't reallocate MediaPlayer when PLUGIN_PROXY_FOR_VIDEO, we keep the
+        same plug-in for the life of the element.
+        (WebCore::HTMLMediaElement::mediaPlayerNetworkStateChanged): update m_networkState when media player
+        network state changes to EMPTY, otherwise we can get out of sync with engine.
+        (WebCore::HTMLMediaElement::defaultEventHandler): pass event to widget when PLUGIN_PROXY_FOR_VIDEO
+        (WebCore::HTMLMediaElement::deliverNotification): New, deliver notification from proxy plug-in to
+        media player.
+        (WebCore::HTMLMediaElement::setMediaPlayerProxy): New, pass proxy object to media player.
+        (WebCore::HTMLMediaElement::initialURL): New, return the url from the "src" attr or the appropriate
+        <source> element to be used as the initial url for the proxy.
+        (WebCore::HTMLMediaElement::finishParsingChildren): New, allocate MediaPlayer and update widget.
+        * html/HTMLMediaElement.h: Declare new methods for proxy, add m_needWidgetUpdate.
+        (WebCore::HTMLMediaElement::setNeedWidgetUpdate): 
+
+        * html/HTMLVideoElement.cpp:
+        (WebCore::HTMLVideoElement::attach): Poster image is handled by proxy when PLUGIN_PROXY_FOR_VIDEO.
+        (WebCore::HTMLVideoElement::parseMappedAttribute): Ditto.
+        * html/HTMLVideoElement.h:
+
+        * loader/FrameLoader.cpp:
+        (WebCore::toPlugInElement): Allow cast if element is <video> or <audio>
+
+        * platform/graphics/MediaPlayer.cpp:
+        (WebCore::MediaPlayer::MediaPlayer): Remove white space.
+        (WebCore::MediaPlayer::setPoster): New, forward call to private player.
+        (WebCore::MediaPlayer::deliverNotification): Ditto.
+        (WebCore::MediaPlayer::setMediaPlayerProxy): Ditto.
+        * platform/graphics/MediaPlayer.h:
+        (WebCore::MediaPlayer::mediaPlayerClient):
+
+        * platform/graphics/mac/MediaPlayerProxy.h: New, defines media player proxy interface.
+
+        * rendering/RenderPart.cpp:
+        (WebCore::RenderPart::RenderPart): Change constructor to take Element* instead of Node* as a
+        non-element node doesn't need a renderer
+        * rendering/RenderPart.h: Ditto.
+
+        * rendering/RenderPartObject.cpp:
+        (WebCore::RenderPartObject::RenderPartObject): Ditto.
+        (WebCore::RenderPartObject::updateWidget): Package params for proxy plug-in when element is 
+        <video> or <audio>.
+        * rendering/RenderPartObject.h:
+
+2009-02-17  David Hyatt  <hyatt@apple.com>
+
+        Reviewed by Eric Seidel
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=23985
+
+        Don't allow legends to be anything but display:block.
+
+        Added fast/forms/inline-ignored-on-legend.html
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+        * css/html4.css:
+        * html/HTMLLegendElement.cpp:
+        * html/HTMLLegendElement.h:
+        * rendering/RenderLegend.cpp: Removed.
+        * rendering/RenderLegend.h: Removed.
+        * wml/WMLInsertedLegendElement.cpp:
+        * wml/WMLInsertedLegendElement.h:
+
+2009-02-13  Brett Wilson  <brettw@dhcp-172-22-71-167.mtv.corp.google.com>
+
+        Reviewed by Simon Fraser.
+
+        https://bugs.webkit.org/attachment.cgi?id=27666 
+        Fix Chromium build build: forgotten include in RenderObject, sync
+        RenderTheme to the recent changes in RenderObject.
+
+        * rendering/RenderObject.cpp:
+        * rendering/RenderThemeChromiumMac.mm:
+        (WebCore::RenderThemeChromiumMac::updatePressedState):
+
+2009-02-17  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22966
+        crash when destroying a webview that opened a page containing <script>
+        tags
+
+        Fix m_group being set to 0 instead of to m_singlePageGroup when
+        GroupName is set to empty
+
+        * page/Page.cpp:
+        (WebCore::Page::setGroupName):
+
+2009-02-16  Beth Dakin  <bdakin@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Fix for <rdar://problem/6386623>
+
+        I made m_numParsedProperties and m_maxParsedProperties unsigned 
+        instead of int, and then added an early return from addPropery() if 
+        m_maxParsedProperties exceeds the max value.
+
+        * css/CSSParser.cpp:
+        (WebCore::CSSParser::addProperty):
+        (WebCore::CSSParser::rollbackLastProperties):
+        (WebCore::CSSParser::clearProperties):
+        (WebCore::CSSParser::createFontFaceRule):
+        (WebCore::CSSParser::deleteFontFaceOnlyValues):
+        * css/CSSParser.h:
+
+2009-02-16  Justin Garcia  <justin.garcia@apple.com>
+
+        Reviewed by Mark Rowe.
+
+        https://bugs.webkit.org/show_bug.cgi?id=16309
+        HTML5: The third execCommand argument for insert{un}orderedlist should be ignored
+        
+        When we originally implemented this command, MSDN documentation said that IE set the
+        id attribute of inserted lists to the third argument to execCommand, but IE doesn't
+        do this nor do any other browsers.
+
+        * editing/EditorCommand.cpp:
+        (WebCore::executeInsertOrderedList):
+        (WebCore::executeInsertUnorderedList):
+        * editing/IndentOutdentCommand.cpp:
+        (WebCore::IndentOutdentCommand::outdentParagraph):
+        * editing/InsertListCommand.cpp:
+        (WebCore::InsertListCommand::insertList):
+        (WebCore::InsertListCommand::InsertListCommand):
+        (WebCore::InsertListCommand::doApply):
+        * editing/InsertListCommand.h:
+        (WebCore::InsertListCommand::create):
+
+2009-02-16  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Geoffrey Garen.
+
+        - fix <rdar://problem/6561077> REGRESSION (r39634): Unable to select an item in stocks widget with the mouse
+
+        Test: platform/mac/fast/events/pointer-events-dashboard.html
+
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::applyProperty): Do not apply the
+        pointer-events property in Dashboard backwards compatibility mode,
+        in order to work around misuse of that property by the Stocks widget.
+
+2009-02-16  Justin Garcia  <justin.garcia@apple.com>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=15381
+        execCommand justify modifies the contentEditable node
+
+        * editing/CompositeEditCommand.cpp:
+        (WebCore::CompositeEditCommand::moveParagraphContentsToNewBlockIfNecessary): Avoid modifying not just
+        the body element, but any root editable element.
+        
+2009-02-16  Chris Fleizach  <cfleizach@apple.com>
+
+        Reviewed by Adele Peterson.
+ 
+        Bug 23979: AX: alt tag not returned for <input type="image">
+        https://bugs.webkit.org/show_bug.cgi?id=23979
+
+        Test: accessibility/input-image-alt.html
+
+        * page/AccessibilityRenderObject.cpp:
+        (WebCore::AccessibilityRenderObject::accessibilityDescription):
+
+2009-02-16  Kevin Watters  <kevinwatters@gmail.com>
+
+        Reviewed by Kevin Ollivier.
+
+        The ref data is not properly set unless we use the CreateMatrix function.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=23978
+
+        * platform/graphics/wx/TransformationMatrixWx.cpp:
+        (WebCore::TransformationMatrix::operator wxGraphicsMatrix):
+
+2009-02-16  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by John Sullivan.
+
+        - fix <rdar://problem/6516829> FontPlatformData constructor passes NULL to CTFontCopyGraphicsFont and CTFontGetPlatformFont
+
+        * platform/graphics/FontCache.cpp:
+        (WebCore::FontDataCacheKeyTraits::emptyValue): Changed to use the
+        FontPlatformData(float, bool, bool) constructor.
+        * platform/graphics/mac/FontCacheMac.mm:
+        (WebCore::FontCache::createFontPlatformData): Changed to pass a valid
+        NSFont to the FontPlatformData constructor, instead of implicitly
+        passing 0 and then calling setFont().
+        * platform/graphics/mac/FontPlatformData.h: Made the NSFont parameter
+        of the constructor mandatory.
+
+2009-02-15  David Kilzer  <ddkilzer@apple.com>
+
+        Move duplicate caretWidth constants to RenderObject.h
+
+        Reviewed by Dan Bernstein.
+
+        No test since no change in behavior.
+
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::localCaretRect): Removed caretWidth.
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::localCaretRect): Ditto.
+        * rendering/RenderObject.h: Added caretWidth definition.
+        * rendering/RenderText.cpp:
+        (WebCore::RenderText::localCaretRect): Removed caretWidth.
+
 2009-02-13  Dimitri Glazkov  <dglazkov@chromium.org>
 
         Reviewed by Eric Seidel.

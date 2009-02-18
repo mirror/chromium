@@ -1,3 +1,99 @@
+2009-02-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Fixed failure in js1_5/Regress/regress-168347.js, as seen on the Oliver
+        bot.
+        
+        Technically, both behaviors are OK, but we might as well keep this test
+        passing.
+
+        * runtime/FunctionPrototype.cpp:
+        (JSC::insertSemicolonIfNeeded): No need to add a trailing semicolon
+        after a trailing '}', since '}' ends a block, indicating the end of a
+        statement.
+
+2009-02-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Build fix.
+
+        * runtime/FunctionPrototype.cpp:
+
+2009-02-17  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        Add assertion to guard against oversized pc relative calls.
+
+        * assembler/X86Assembler.h:
+        (JSC::X86Assembler::link):
+
+2009-02-17  Geoffrey Garen  <ggaren@apple.com>
+
+        Reviewed by Sam Weinig.
+        
+        Fixed <rdar://problem/6595040> REGRESSION: http://www.amnestyusa.org/
+        fails to load.
+        
+        amnestyusa.org uses the Optimist JavaScript library, which adds event
+        listeners by concatenating string-ified functions. This is only sure to
+        be syntactically valid if the string-ified functions end in semicolons.
+
+        * parser/Lexer.cpp:
+        (JSC::Lexer::isWhiteSpace):
+        * parser/Lexer.h:
+        (JSC::Lexer::isWhiteSpace):
+        (JSC::Lexer::isLineTerminator): Added some helper functions for examining
+        whitespace.
+
+        * runtime/FunctionPrototype.cpp:
+        (JSC::appendSemicolonIfNeeded):
+        (JSC::functionProtoFuncToString): When string-ifying a function, insert
+        a semicolon in the last non-whitespace position, if one doesn't already exist.
+
+2009-02-16  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by NOBODY (Build fix).
+
+        Roll out r41022 as it breaks qt and gtk builds
+
+        * jit/JITArithmetic.cpp:
+        (JSC::isSSE2Present):
+
+2009-02-16  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey Garen.
+
+        Fix for <rdar://problem/6468156>
+        REGRESSION (r36779): Adding link, images, flash in TinyMCE blocks entire page (21382)
+
+        No performance regression.
+
+        * runtime/Arguments.cpp:
+        (JSC::Arguments::fillArgList): Add codepath for when the "length" property has been
+        overridden.
+
+2009-02-16  Mark Rowe  <mrowe@apple.com>
+
+        Build fix.
+
+        * wtf/FastMalloc.cpp:
+        (WTF::TCMallocStats::):
+        (WTF::TCMallocStats::FastMallocZone::FastMallocZone):
+
+2009-02-16  Csaba Osztrogonac  <oszi@inf.u-szeged.hu>
+
+        Reviewed by Oliver Hunt.
+
+        Bug 23787: Allow JIT to generate SSE2 code if using GCC
+        <https://bugs.webkit.org/show_bug.cgi?id=23787>
+
+        GCC version of the cpuid check.
+
+        * jit/JITArithmetic.cpp:
+        (JSC::isSSE2Present): GCC assembly code added.
+        6.6% progression on x86 Linux with JIT and WREC on SunSpider if using SSE2 capable machine.
+
 2009-02-13  Adam Treat  <adam.treat@torchmobile.com>
 
         Reviewed by George Staikos.
