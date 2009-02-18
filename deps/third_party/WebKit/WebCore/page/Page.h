@@ -208,15 +208,15 @@ namespace WebCore {
         OwnPtr<DragController> m_dragController;
         OwnPtr<FocusController> m_focusController;
         OwnPtr<ContextMenuController> m_contextMenuController;
-        OwnPtr<Settings> m_settings;
-        OwnPtr<ProgressTracker> m_progress;
-        
 #if USE(V8)
         // To fix crash in inspector window (Bug 904340)
         RefPtr<InspectorController> m_inspectorController;
 #else
         OwnPtr<InspectorController> m_inspectorController;
 #endif
+        OwnPtr<Settings> m_settings;
+        OwnPtr<ProgressTracker> m_progress;
+        
         RefPtr<BackForwardList> m_backForwardList;
         RefPtr<Frame> m_mainFrame;
 
