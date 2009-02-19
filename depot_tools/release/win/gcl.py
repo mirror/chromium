@@ -225,7 +225,11 @@ class ChangeInfo:
 
   def _NonDeletedFileList(self):
     """Returns a list of files in this change, not including deleted files."""
-    return [file[1] for file in self.files if file[0] != "D"]
+    return [file[1] for file in self.files if not file[0].startswith("D")]
+
+  def _AddedFileList(self):
+    """Returns a list of files added in this change."""
+    return [file[1] for file in self.files if file[0].startswith("A")]
 
   def Save(self):
     """Writes the changelist information to disk."""
@@ -259,6 +263,12 @@ class ChangeInfo:
     # Ignore third_party entirely.
     files = [file for file in self._NonDeletedFileList()
              if file.find("third_party") == -1]
+    added_files = [file for file in self._AddedFileList()
+                   if file.find("third_party") == -1]
+
+    # If the change is entirely in third_party, we're done.
+    if len(files) == 0:
+      return False
 
     # Any new or modified test files?
     # A test file's name ends with "test.*" or "tests.*".
@@ -268,7 +278,7 @@ class ChangeInfo:
       return False
 
     # Any new source files?
-    source_files = [file for file in files
+    source_files = [file for file in added_files
                     if os.path.splitext(file)[1] in SOURCE_SUFFIXES]
     if len(source_files) > 0:
       return True
