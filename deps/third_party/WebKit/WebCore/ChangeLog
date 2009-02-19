@@ -1,3 +1,156 @@
+2009-02-19  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Ignore ports on local URLs. This fixes a regression in
+        fast/loader/file-URL-with-port-number.html
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::ResourceHandle::startGio):
+
+2009-02-19  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Make setPort remove port if 0 is given to it, as promised by the
+        comment in KURL's header.
+
+        * platform/KURL.cpp:
+        (WebCore::KURL::setPort):
+
+2009-02-18  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Brady Eidson.
+
+        - WebCore part of fixing <rdar://problem/6507512> Crash in iChat at CSSStyleSelector::adjustRenderStyle
+
+        The crash results from re-entry into
+        CSSMutableStyleDeclaration::setCssText, which in turn is caused by
+        the first style change causing a cached image to load from the memory
+        cache, causing load delegate dispatch, and iChat's delegate method
+        calling back into WebKit.
+
+        The workaround is to use defer delegate callbacks for memory cache. In
+        this case, deferring callbacks during image load event dispatch was
+        found to be sufficient.
+
+        The crash is a regression. See also the discussion in
+        <https://bugs.webkit.org/show_bug.cgi?id=22521>.
+
+        * WebCore.base.exp: Added
+        Settings::setNeedsIChatMemoryCacheCallsQuirk().
+        * dom/Document.cpp:
+        (WebCore::Document::dispatchImageLoadEventsNow): If the quirk is
+        enabled, defer memory cache callbacks during image load event dispatch.
+        * page/Settings.cpp:
+        (WebCore::Settings::Settings): Initialize
+        m_needsIChatMemoryCacheCallsQuirk.
+        (WebCore::Settings::setNeedsIChatMemoryCacheCallsQuirk): Added this
+        setter.
+        * page/Settings.h:
+        (WebCore::Settings::needsIChatMemoryCacheCallsQuirk): Added this getter.
+
+2009-02-18  Adam Roben  <aroben@apple.com>
+
+        Export WebCore::handCursor and Cursor.h
+
+        Reviewed by John Sullivan.
+
+        * WebCore.base.exp: Added WebCore::handCursor.
+        * WebCore.xcodeproj/project.pbxproj: Made Cursor.h private.
+
+2009-02-18  Ojan Vafai  <ojan@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23992
+        REGRESSION: crash on windows loading http://www.stickam.com/liveStreams.do
+
+        Unable to reduce to a layout test.
+
+        * page/Frame.cpp:
+        (WebCore::Frame::contentRenderer):
+
+2009-02-18  Evan Stade  <estade@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23861
+        Stroke font outlines on chromium linux
+
+        TEST=LayoutTests/svg/custom/pointer-events-text.svg
+
+        * platform/graphics/chromium/FontLinux.cpp:
+        (WebCore::Font::drawGlyphs):
+
+2009-02-18  Evan Stade  <estade@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23860
+        Resync some graphics/skia files with their chromium counterparts
+
+        This comes from chromium patches <http://codereview.chromium.org/17633>
+        and <http://codereview.chromium.org/17454>
+
+        * platform/graphics/skia/GraphicsContextSkia.cpp:
+        (WebCore::GraphicsContext::clipPath):
+        (WebCore::GraphicsContext::fillPath):
+        * platform/graphics/skia/PlatformContextSkia.cpp:
+        (PlatformContextSkia::addPath):
+        (PlatformContextSkia::currentPath):
+        * platform/graphics/skia/PlatformContextSkia.h:
+
+2009-02-18  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Unreviewed.
+
+        Build fix after r41060.
+
+        * GNUmakefile.am:
+
+2009-02-18  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24005
+        Add an include to fix Chromium build.
+
+        * page/animation/AnimationController.cpp: Add UnusedParam.h include.
+
+2009-02-18  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Reviewed by Holger Freyther.
+
+        Fix symbols.filter location, and add other missing files to the
+        autotools build, so that make dist works.
+
+        * GNUmakefile.am:
+
+2009-02-18  Zan Dobersek  <zandobersek@gmail.com>
+
+        Rubber-stamped by Holger Hans Peter Freyther.
+
+        Allow POST method for local requests.
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::ResourceHandle::startGio):
+
+2009-02-18  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Reviewed by Holger Hans Peter Freyther.
+
+        Use KURL in startGio instead of passing a string with the URL, so
+        that we can handle removing refs and queries more elegantly. This
+        is fixing more regressions that came from the curl->soup switch.
+
+        Original work by Zan Dobersek.
+
+        * platform/network/ResourceHandle.h:
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::ResourceHandle::start):
+        (WebCore::ResourceHandle::startGio):
+
 2009-02-18  Holger Hans Peter Freyther  <zecke@selfish.org>
 
         Reviewed by Alexey Proskuryakov.

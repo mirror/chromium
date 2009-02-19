@@ -135,8 +135,7 @@ public:
 
     void beginPath();
     void addPath(const SkPath&);
-    // Returns the current path in local coordinates.
-    SkPath currentPath() const;
+    SkPath currentPathInLocalCoordinates() const;
 
     // Returns the fill color. The returned color has it's alpha adjusted
     // by the current alpha.

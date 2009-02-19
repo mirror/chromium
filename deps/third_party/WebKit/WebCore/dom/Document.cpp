@@ -3018,7 +3018,13 @@ void Document::dispatchImageLoadEventsNow()
     // will set a timer and eventually be processed.
     if (!m_imageLoadEventDispatchingList.isEmpty())
         return;
-
+#ifdef BUILDING_ON_LEOPARD
+    bool shouldReenableMemoryCacheClientCalls = false;
+    if (settings() && settings()->needsIChatMemoryCacheCallsQuirk() && page()->areMemoryCacheClientCallsEnabled()) {
+        shouldReenableMemoryCacheClientCalls = true;
+        page()->setMemoryCacheClientCallsEnabled(false);
+    }
+#endif
     m_imageLoadEventTimer.stop();
 
     m_imageLoadEventDispatchingList = m_imageLoadEventDispatchSoonList;
@@ -3029,6 +3035,10 @@ void Document::dispatchImageLoadEventsNow()
             image->dispatchLoadEvent();
     }
     m_imageLoadEventDispatchingList.clear();
+#ifdef BUILDING_ON_LEOPARD
+    if (shouldReenableMemoryCacheClientCalls && page())
+        page()->setMemoryCacheClientCallsEnabled(true);
+#endif
 }
 
 void Document::imageLoadEventTimerFired(Timer<Document>*)
