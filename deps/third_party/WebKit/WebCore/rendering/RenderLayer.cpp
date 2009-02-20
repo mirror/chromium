@@ -89,8 +89,6 @@
 #include "SVGNames.h"
 #endif
 
-#include <wtf/UnusedParam.h>
-
 #define MIN_INTERSECT_FOR_REVEAL 32
 
 using namespace std;
