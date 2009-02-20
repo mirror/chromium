@@ -421,7 +421,7 @@ class WaterfallStatusResource(waterfall.WaterfallStatusResource):
     """Calls default body method and prepends Tree Status HTML based on
     IRC topic."""
 
-    # Limit access to the two last days. Buildbot doesn't scale well.
+    # Limit access to the X last days. Buildbot doesn't scale well.
     seven_days_in_seconds = 60 * 60 * 24 * 7
     two_days_ago = util.now() - seven_days_in_seconds
     last_time = request.args.get('last_time')
