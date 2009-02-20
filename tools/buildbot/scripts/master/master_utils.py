@@ -553,9 +553,12 @@ class MasterFactory(object):
                                                        'Hammer', 'src/gears',
                                                        self._target_platform)
 
-    factory_cmd_obj.AddCompileStep(self._solution, mode=mode,
+    factory_cmd_obj.AddCompileStep(self._solution,
                                    options=['--build-tool=scons',
-                                            '--build-args=Hammer BROWSER=CHROME'])
+                                            '--build-args=gears '
+                                            'BROWSER=CHROME MODE=%s' % 
+                                            (mode or 'dbg')])
+
     # Add test step.
     factory_cmd_obj.AddGearsTests(mode)
     return factory
