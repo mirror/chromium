@@ -18,6 +18,7 @@ module core {
         DOMWindow inspectedWindow();
         DOMString platform();
         DOMString localizedStringsURL();
+        DOMString hiddenPanels();
         [v8implname=clearConsoleMessages] void clearMessages();
 
         /* TODO(ojan): add these. These are in trunk webkit.
