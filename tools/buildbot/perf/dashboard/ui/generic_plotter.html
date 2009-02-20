@@ -190,11 +190,58 @@ function received_summary(data) {
       allTraces[traceName] = 1;
   }
 
+  // Sort trace names, putting traces with corresponding _ref lines first
+  // under the assumption that those are the most interesting ones.
+  // Returns 1 if name1 is larger, -1 if it's smaller, and 0 if they're equal.
+  // Use a closure so we have access to allTraces.
+  function trace_compare(name1, name2) {
+    function compare(x, y) {
+      return ((x < y) ? -1 : (x > y) ? 1 : 0);
+    }
+
+    // The main trace name associated with this _ref name, and whether this is
+    // in fact a _ref trace.
+    main1 = name1.substring(0, name1.length - 4);
+    main2 = name2.substring(0, name2.length - 4);
+    is_ref1 = name1.substr(-4) == "_ref" && main1 in allTraces;
+    is_ref2 = name2.substr(-4) == "_ref" && main2 in allTraces;
+
+    // Whether this trace has a corresponding _ref. If so, it's its own main
+    // trace.
+    is_main1 = name1 + "_ref" in allTraces;
+    is_main2 = name2 + "_ref" in allTraces;
+    if (is_main1)
+      main1 = name1;
+    if (is_main2)
+      main2 = name2;
+
+    // A main trace is smaller than its own _ref, compared alphabetically by
+    // main name to any other main or _ref traces, and smaller than anything
+    // else.
+    if (is_main1) {
+      if (is_ref2 && main1 == main2)
+        return -1;
+      if (is_main2 || is_ref2)
+        return compare(main1, main2);
+      return -1;
+    }
+    if (is_ref1) {
+      if (is_main2 && main1 == main2)
+        return 1;
+      if (is_main2 || is_ref2)
+        return compare(main1, main2);
+      return -1;
+    }
+    if (is_main2 || is_ref2)
+      return 1;
+    return compare(name1, name2);
+  }
+
   // Build and sort a list of all the trace names we've seen.
   var traceNames = [];
   for (var traceName in allTraces)
     traceNames.push(traceName);
-  traceNames.sort();
+  traceNames.sort(trace_compare);
 
   // Build and sort a list of revision numbers.
   var revisionNumbers = [];
