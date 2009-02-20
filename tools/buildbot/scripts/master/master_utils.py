@@ -201,6 +201,8 @@ class MasterFactory(object):
       factory_cmd_obj.AddGoogleURLTests()
     if self._ShouldRunTest(tests, 'media'):
       factory_cmd_obj.AddMediaTests()
+    if self._ShouldRunTest(tests, 'printing'):
+      factory_cmd_obj.AddPrintingTests()
     # When adding a test that uses a new executable, update kill_processes.py.
 
   def _BuildGClientSolution(self, svnurl, custom_deps_list):
@@ -321,7 +323,7 @@ class MasterFactory(object):
                 'purify_layout', 'purify_ui', 'playback', 'node_leak',
                 'tab_switching', 'omnibox', 'memory, 'interactive_ui', 'base',
                 'net', 'reliability', 'media', 'valgrind_net', 'valgrind_ipc',
-                'valgrind_unit', 'valgrind_base').
+                'valgrind_unit', 'valgrind_base', 'printing').
          The 'unit' suite includes the IPC tests.
       arhive_webkit_results: whether to archive the webkit test output
       show_perf_results: whether to add links to the test perf result graphs

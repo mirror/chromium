@@ -61,6 +61,7 @@ processes=[
     'page_cycler_tests.exe',
     'perf_tests.exe',
     'plugin_tests.exe',
+    'printing_unittests.exe',
     'reliability_tests.exe',
     'selenium_tests.exe',
     'startup_tests.exe',

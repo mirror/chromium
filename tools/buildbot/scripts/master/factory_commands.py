@@ -838,6 +838,10 @@ class FactoryCommands(object):
     """Adds a step to the factory to run the googleurl tests."""
     self.AddBasicGTestTestStep('googleurl_unittests')
 
+  def AddPrintingTests(self):
+    """Adds a step to the factory to run the printing tests."""
+    self.AddBasicGTestTestStep('printing_unittests')
+
   def AddSeleniumTests(self, timeout=300):
     """Adds a step to the factory to run the Selenium tests."""
     self.AddTestStep(
