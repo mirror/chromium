@@ -10,6 +10,7 @@ import os
 import re
 import urllib
 
+from buildbot import util
 import buildbot.status.web.base as base
 import buildbot.status.web.baseweb as baseweb
 import buildbot.status.web.waterfall as waterfall
@@ -408,6 +409,9 @@ class WaterfallStatusResource(waterfall.WaterfallStatusResource):
   def head(self, request):
     """ Adds META to refresh page by specified value in the request,
     sets to one minute by default. """
+    # Don't auto-refresh when last_time is set.
+    if request.args.get('last_time'):
+      return ""
     reload_time = self.get_reload_time(request)
     if reload_time is None:
       reload_time = WaterfallStatusResource.DEFAULT_REFRESH_TIME
@@ -417,9 +421,17 @@ class WaterfallStatusResource(waterfall.WaterfallStatusResource):
     """Calls default body method and prepends Tree Status HTML based on
     IRC topic."""
 
-    data = waterfall.WaterfallStatusResource.body(self, request)
-
-    return "%s %s" % (self.__TreeStatus(), data)
+    # Limit access to the two last days. Buildbot doesn't scale well.
+    seven_days_in_seconds = 60 * 60 * 24 * 7
+    two_days_ago = util.now() - seven_days_in_seconds
+    last_time = request.args.get('last_time')
+    if (last_time and
+        last_time < two_days_ago and
+        not request.args.get('force')):
+      return 'Stop hammering our server!'
+    else:
+      data = waterfall.WaterfallStatusResource.body(self, request)
+      return "%s %s" % (self.__TreeStatus(), data)
 
   def __TreeStatus(self):
     """Creates DIV that provides visuals on tree status.
