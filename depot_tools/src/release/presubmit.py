@@ -34,6 +34,7 @@ import presubmit_canned_checks
 _IsFile = os.path.isfile
 _GetSVNFileInfo = gcl.GetSVNFileInfo
 _GetSVNFileProperty = gcl.GetSVNFileProperty
+_GetRepositoryRoot = gcl.GetRepositoryRoot
 _ReadFile = gcl.ReadFile
 
 
@@ -64,14 +65,25 @@ class NotImplementedException(Exception):
   pass
 
 
+def normpath(path):
+  '''Version of os.path.normpath that also changes backward slashes to
+  forward slashes when not running on Windows.
+  '''
+  # This is safe to always do because the Windows version of os.path.normpath
+  # will replace forward slashes with backward slashes.
+  path = path.replace('\\', '/')
+  return os.path.normpath(path)
+
+
+
 class OutputApi(object):
   """This class (more like a module) gets passed to presubmit scripts so that
   they can specify various types of results.
   """
-  
+
   class PresubmitResult(object):
     """Base class for result objects."""
-    
+
     def __init__(self, message, items=[], long_text=''):
       """
       message: A short one-line message to indicate errors.
@@ -81,13 +93,13 @@ class OutputApi(object):
       self._message = message
       self._items = items
       self._long_text = long_text.rstrip()
-    
+
     def _Handle(self, output_stream, input_stream, may_prompt=True):
       """Writes this result to the output stream.
-      
+
       Args:
         output_stream: Where to write
-      
+
       Returns:
         True if execution may continue, False otherwise.
       """
@@ -98,13 +110,13 @@ class OutputApi(object):
       if self._long_text:
         output_stream.write('\n***************\n%s\n***************\n\n' %
                             self._long_text)
-      
+
       if self.ShouldPrompt() and may_prompt:
         output_stream.write('Are you sure you want to continue? (y/N): ')
         response = input_stream.readline()
         if response.strip().lower() != 'y':
           return False
-      
+
       return not self.IsFatal()
 
     def IsFatal(self):
@@ -130,7 +142,7 @@ class OutputApi(object):
   class PresubmitNotifyResult(PresubmitResult):
     """Just print something to the screen -- but it's not even a warning."""
     pass
-  
+
   class MailTextResult(PresubmitResult):
     """A warning that should be included in the review request email."""
     def __init__(self, *args, **kwargs):
@@ -141,16 +153,16 @@ class InputApi(object):
   """An instance of this object is passed to presubmit scripts so they can
   know stuff about the change they're looking at.
   """
-  
+
   def __init__(self, change, presubmit_path):
     """Builds an InputApi object.
-    
+
     Args:
       change: A presubmit.GclChange object.
       presubmit_path: The path to the presubmit script being processed.
     """
     self.change = change
-    
+
     # We expose various modules and functions as attributes of the input_api
     # so that presubmit scripts don't have to import them.
     self.basename = os.path.basename
@@ -163,29 +175,29 @@ class InputApi(object):
     self.sets = sets
     self.subprocess = subprocess
     self.tempfile = tempfile
-    
+
     # InputApi.platform is the platform you're currently running on.
     self.platform = sys.platform
-    
+
     # The local path of the currently-being-processed presubmit script.
     self.current_presubmit_path = presubmit_path
-    
+
     # We carry the canned checks so presubmit scripts can easily use them.
     self.canned_checks = presubmit_canned_checks
-  
+
   def PresubmitLocalPath(self):
     """Returns the local path of the presubmit script currently being run.
-    
+
     This is useful if you don't want to hard-code absolute paths in the
     presubmit script.  For example, It can be used to find another file
     relative to the PRESUBMIT.py script, so the whole tree can be branched and
     the presubmit script still works, without editing its content.
     """
     return self.current_presubmit_path
-  
+
   @staticmethod
   def DepotToLocalPath(depot_path):
-    """Translate a depot path to a local path.
+    """Translate a depot path to a local path (relative to client root).
 
     Args:
       Depot path as a string.
@@ -193,7 +205,7 @@ class InputApi(object):
     Returns:
       The local path of the depot path under the user's current client, or None
       if the file is not mapped.
-      
+
       Remember to check for the None case and show an appropriate error!
     """
     local_path = _GetSVNFileInfo(depot_path, 'Path')
@@ -201,14 +213,14 @@ class InputApi(object):
       return None
     else:
       return local_path
-  
+
   @staticmethod
   def LocalToDepotPath(local_path):
     """Translate a local path to a depot path.
-    
+
     Args:
-      Local path (relative to client root) as a string.
-      
+      Local path (relative to current directory, or absolute) as a string.
+
     Returns:
       The depot path (SVN URL) of the file if mapped, otherwise None.
     """
@@ -217,47 +229,51 @@ class InputApi(object):
       return None
     else:
       return depot_path
-  
+
   @staticmethod
   def FilterTextFiles(affected_files, include_deletes=True):
     """Filters out all except text files and optionally also filters out
     deleted files.
-    
+
     Args:
       affected_files: List of AffectedFiles objects.
       include_deletes: If false, deleted files will be filtered out.
-    
+
     Returns:
       Filtered list of AffectedFiles objects.
     """
     output_files = []
     for af in affected_files:
       if include_deletes or af.Action() != 'D':
-        path = af.LocalPath()
+        path = af.AbsoluteLocalPath()
         mime_type = _GetSVNFileProperty(path, 'svn:mime-type')
         if not mime_type or mime_type.startswith('text/'):
           output_files.append(af)
     return output_files
-  
+
   def AffectedFiles(self, include_dirs=False):
     """Same as input_api.change.AffectedFiles() except only lists files
     (and optionally directories) in the same directory as the current presubmit
     script, or subdirectories thereof.
     """
     output_files = []
-    dir_with_slash = os.path.normpath(
+    dir_with_slash = normpath(
         "%s/" % os.path.dirname(self.current_presubmit_path))
     if len(dir_with_slash) == 1:
       dir_with_slash = ''
     for af in self.change.AffectedFiles(include_dirs):
-      af_path = os.path.normpath(af.LocalPath())
+      af_path = normpath(af.LocalPath())
       if af_path.startswith(dir_with_slash):
         output_files.append(af)
     return output_files
-  
+
   def LocalPaths(self, include_dirs=False):
     """Returns local paths of input_api.AffectedFiles()."""
     return [af.LocalPath() for af in self.AffectedFiles(include_dirs)]
+
+  def AbsoluteLocalPaths(self, include_dirs=False):
+    """Returns absolute local paths of input_api.AffectedFiles()."""
+    return [af.AbsoluteLocalPath() for af in self.AffectedFiles(include_dirs)]
 
   def ServerPaths(self, include_dirs=False):
     """Returns server paths of input_api.AffectedFiles()."""
@@ -273,7 +289,7 @@ class InputApi(object):
 
   def RightHandSideLines(self):
     """An iterator over all text lines in "new" version of changed files.
-    
+
     Only lists lines from new or modified text files in the change that are
     contained by the directory of the currently executing presubmit script.
 
@@ -288,7 +304,7 @@ class InputApi(object):
     """
     return InputApi._RightHandSideLinesImpl(
         self.AffectedTextFiles(include_deletes=False))
-  
+
   @staticmethod
   def _RightHandSideLinesImpl(affected_files):
     """Implements RightHandSideLines for InputApi and GclChange."""
@@ -302,25 +318,38 @@ class InputApi(object):
 
 class AffectedFile(object):
   """Representation of a file in a change."""
-  
-  def __init__(self, path, action):
+
+  def __init__(self, path, action, repository_root=''):
     self.path = path
     self.action = action.strip()
-  
+    self.repository_root = repository_root
+
   def ServerPath(self):
     """Returns a path string that identifies the file in the SCM system.
-    
+
     Returns the empty string if the file does not exist in SCM.
     """
-    return _GetSVNFileInfo(self.path, 'URL')
+    return _GetSVNFileInfo(self.AbsoluteLocalPath(), 'URL')
 
   def LocalPath(self):
-    """Returns the path on local disk where this file resides."""
-    return os.path.normpath(self.path)
-  
+    """Returns the path of this file on the local disk relative to client root.
+    """
+    return normpath(self.path)
+
+  def AbsoluteLocalPath(self):
+    """Returns the absolute path of this file on the local disk.
+    """
+    return normpath(os.path.join(self.repository_root, self.LocalPath()))
+
   def IsDirectory(self):
     """Returns true if this object is a directory."""
     return _GetSVNFileInfo(self.path, 'Node Kind') == 'directory'
+
+  def SvnProperty(self, property_name):
+    """Returns the specified SVN property of this file, or the empty string
+    if no such property.
+    """
+    return _GetSVNFileProperty(self.AbsoluteLocalPath(), property_name)
 
   def Action(self):
     """Returns the action on this opened file, e.g. A, M, D, etc."""
@@ -331,13 +360,13 @@ class AffectedFile(object):
 
     The new version is the file in the user's workspace, i.e. the "right hand
     side".
-    
+
     Contents will be empty if the file is a directory or does not exist.
     """
     if self.IsDirectory():
       return []
     else:
-      contents = _ReadFile(self.LocalPath())
+      contents = _ReadFile(self.AbsoluteLocalPath())
       contents = contents.replace('\r\n', '\n')
       contents = contents.replace('\r', '\n')
       return contents.split('\n')
@@ -362,10 +391,11 @@ class AffectedFile(object):
 class GclChange(object):
   """A gclient change."""
 
-  def __init__(self, change_info):
+  def __init__(self, change_info, repository_root=''):
     self.name = change_info.name
     self.full_description = change_info.description
-    
+    self.repository_root = repository_root
+
     # From the description text, build up a dictionary of key/value pairs
     # plus the description minus all key/value or "tag" lines.
     self.description_without_tags = []
@@ -376,13 +406,13 @@ class GclChange(object):
         self.tags[m.group('key')] = m.group('value')
       else:
         self.description_without_tags.append(line)
-    
+
     # Change back to text and remove whitespace at end.
     self.description_without_tags = '\n'.join(self.description_without_tags)
     self.description_without_tags = self.description_without_tags.rstrip()
-    
-    self.affected_files = [AffectedFile(info[1], info[0]) for info in
-                           change_info.files]
+
+    self.affected_files = [AffectedFile(info[1], info[0], repository_root) for
+                           info in change_info.files]
 
   def Change(self):
     """Returns the change name."""
@@ -394,7 +424,7 @@ class GclChange(object):
 
   def DescriptionText(self):
     """Returns the user-entered changelist description, minus tags.
-    
+
     Any line in the user-provided description starting with e.g. "FOO="
     (whitespace permitted before and around) is considered a tag line.  Such
     lines are stripped out of the description this function returns.
@@ -405,9 +435,13 @@ class GclChange(object):
     """Returns the complete changelist description including tags."""
     return self.full_description
 
+  def RepositoryRoot(self):
+    """Returns the repository root for this change, as an absolute path."""
+    return self.repository_root
+
   def __getattr__(self, attr):
     """Return keys directly as attributes on the object.
-    
+
     You may use a friendly name (from SPECIAL_KEYS) or the actual name of
     the key.
     """
@@ -420,10 +454,10 @@ class GclChange(object):
 
   def AffectedFiles(self, include_dirs=False):
     """Returns a list of AffectedFile instances for all files in the change.
-    
+
     Args:
       include_dirs: True to include directories in the list
-    
+
     Returns:
       [AffectedFile(path, action), AffectedFile(path, action)]
     """
@@ -431,7 +465,7 @@ class GclChange(object):
       return self.affected_files
     else:
       return filter(lambda x: not x.IsDirectory(), self.affected_files)
-  
+
   def AffectedTextFiles(self, include_deletes=True):
     """Return a list of the text files in a change.
 
@@ -448,13 +482,17 @@ class GclChange(object):
     """Convenience function."""
     return [af.LocalPath() for af in self.AffectedFiles(include_dirs)]
 
+  def AbsoluteLocalPaths(self, include_dirs=False):
+    """Convenience function."""
+    return [af.AbsoluteLocalPath() for af in self.AffectedFiles(include_dirs)]
+
   def ServerPaths(self, include_dirs=False):
     """Convenience function."""
     return [af.ServerPath() for af in self.AffectedFiles(include_dirs)]
-  
+
   def RightHandSideLines(self):
     """An iterator over all text lines in "new" version of changed files.
-    
+
     Lists lines from new or modified text files in the change.
 
     This is useful for doing line-by-line regex checks, like checking for
@@ -472,10 +510,10 @@ class GclChange(object):
 
 def ListRelevantPresubmitFiles(files):
   """Finds all presubmit files that apply to a given set of source files.
-  
+
   Args:
     files: An iterable container containing file paths.
-  
+
   Return:
     ['foo/blat/PRESUBMIT.py', 'mat/gat/PRESUBMIT.py']
   """
@@ -486,11 +524,11 @@ def ListRelevantPresubmitFiles(files):
     while (True):
       if dir in checked_dirs:
         break  # We've already walked up from this directory.
-      
+
       test_path = os.path.join(dir, 'PRESUBMIT.py')
       if _IsFile(test_path):
-        presubmit_files.append(os.path.normpath(test_path))
-      
+        presubmit_files.append(normpath(test_path))
+
       checked_dirs[dir] = ''
       if dir in ['', '.']:
         break
@@ -500,31 +538,31 @@ def ListRelevantPresubmitFiles(files):
 
 
 class PresubmitExecuter(object):
-  
+
   def __init__(self, change_info, committing):
     """
     Args:
       change_info: The ChangeInfo object for the change.
       committing: True if 'gcl commit' is running, False if 'gcl upload' is.
     """
-    self.change = GclChange(change_info)
+    self.change = GclChange(change_info, _GetRepositoryRoot())
     self.committing = committing
 
   def ExecPresubmitScript(self, script_text, presubmit_path):
     """Executes a single presubmit script.
-    
+
     Args:
       script_text: The text of the presubmit script.
       presubmit_path: The path to the presubmit file (this will be reported via
         input_api.PresubmitLocalPath()).
-    
+
     Return:
       A list of result objects, empty if no problems.
     """
     input_api = InputApi(self.change, presubmit_path)
     context = {}
     exec script_text in context
-    
+
     # These function names must change if we make substantial changes to
     # the presubmit API that are not backwards compatible.
     if self.committing:
@@ -545,26 +583,26 @@ class PresubmitExecuter(object):
             'output_api.PresubmitResult')
     else:
       result = ()  # no error since the script doesn't care about current event.
-    
+
     return result
 
 
 def DoPresubmitChecks(change_info, committing, output_stream, input_stream):
   """Runs all presubmit checks that apply to the files in the change.
-  
+
   This finds all PRESUBMIT.py files in directories enclosing the files in the
   change (up to the repository root) and calls the relevant entrypoint function
   depending on whether the change is being committed or uploaded.
-  
+
   Prints errors, warnings and notifications.  Prompts the user for warnings
   when needed.
-  
+
   Args:
     change_info: The ChangeInfo object for the change.
     committing: True if 'gcl commit' is running, False if 'gcl upload' is.
     output_stream: A stream to write output from presubmit tests to.
     input_stream: A stream to read input from the user.
-  
+
   Return:
     True if execution can continue, False if not.
   """
@@ -576,7 +614,7 @@ def DoPresubmitChecks(change_info, committing, output_stream, input_stream):
     presubmit_script = presubmit_script.replace('\r\n', '\n')
     presubmit_script = presubmit_script.replace('\r', '\n')
     results += executer.ExecPresubmitScript(presubmit_script, filename)
-  
+
   errors = []
   notifications = []
   warnings = []
@@ -587,7 +625,7 @@ def DoPresubmitChecks(change_info, committing, output_stream, input_stream):
       warnings.append(result)
     else:
       errors.append(result)
-  
+
   error_count = 0
   for name, items in (('Messages', notifications),
                       ('Warnings', warnings),

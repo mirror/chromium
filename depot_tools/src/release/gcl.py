@@ -56,11 +56,11 @@ def GetSVNFileInfo(file, field):
 
 def GetSVNFileProperty(file, property_name):
   """Returns the value of an SVN property for the given file.
-  
+
   Args:
     file: The file to check
     property_name: The name of the SVN property, e.g. "svn:mime-type"
-  
+
   Returns:
     The value of the property, which will be the empty string if the property
     is not set on the file.  If the file is not under version control, the
@@ -206,7 +206,7 @@ def WriteFile(filename, contents):
 
 class ChangeInfo:
   """Holds information about a changelist.
-  
+
     issue: the Rietveld issue number, of "" if it hasn't been uploaded yet.
     description: the description.
     files: a list of 2 tuple containing (status, filename) of changed files,
@@ -374,13 +374,13 @@ def LoadChangelistInfoForMultiple(changenames, fail_on_not_found=True,
 def LoadChangelistInfo(changename, fail_on_not_found=True,
                        update_status=False):
   """Gets information about a changelist.
-  
+
   Args:
     fail_on_not_found: if True, this function will quit the program if the
       changelist doesn't exist.
     update_status: if True, the svn status will be updated for all the files
       and unchanged files will be removed.
-  
+
   Returns: a ChangeInfo object.
   """
   info_file = GetChangelistInfoFile(changename)
@@ -399,7 +399,7 @@ def LoadChangelistInfo(changename, fail_on_not_found=True,
     status = line[:7]
     file = line[7:]
     files.append((status, file))
-  description = split_data[2]  
+  description = split_data[2]
   save = False
   if update_status:
     for file in files:
@@ -478,7 +478,7 @@ def GetModifiedFiles():
 
 def GetFilesNotInCL():
   """Returns a list of tuples (status,filename) that aren't in any changelists.
-  
+
   See docstring of GetModifiedFiles for information about path of files and
   which directories are scanned.
   """
@@ -587,6 +587,9 @@ Advanced commands:
    gcl diff change_name
       Diffs all files in the changelist.
 
+   gcl presubmit change_name
+      Runs presubmit checks without uploading the changelist.
+
    gcl diff
       Diffs all files in the current directory and subdirectories that aren't in
       a changelist.
@@ -680,7 +683,7 @@ def UploadCL(change_info, args):
     no_try = "--no-try" in args
     if no_try:
       args.remove("--no-try")
-  
+
   # Map --send-mail to --send_mail
   if "--send-mail" in args:
     args.remove("--send-mail")
@@ -752,6 +755,19 @@ def UploadCL(change_info, args):
   os.chdir(previous_cwd)
 
 
+def PresubmitCL(change_info):
+  """Reports what presubmit checks on the change would report."""
+  if not change_info.FileList():
+    print "Nothing to presubmit check, changelist is empty."
+    return
+
+  print "*** Presubmit checks for UPLOAD would report: ***"
+  DoPresubmitChecks(change_info, committing=False)
+
+  print "\n\n*** Presubmit checks for COMMIT would report: ***"
+  DoPresubmitChecks(change_info, committing=True)
+
+
 def TryChange(change_info, args, swallow_exception=False, patchset=None):
   """Create a diff file of change_info and send it to the try server."""
   try:
@@ -772,7 +788,7 @@ def Commit(change_info, args):
   if not change_info.FileList():
     print "Nothing to commit, changelist is empty."
     return
-  
+
   if not "--no_presubmit" in args:
     if not DoPresubmitChecks(change_info, committing=True):
       return
@@ -1004,6 +1020,8 @@ def main(argv=None):
     Lint(change_info, argv[3:])
   elif command == "upload":
     UploadCL(change_info, argv[3:])
+  elif command == "presubmit":
+    PresubmitCL(change_info)
   elif command in ("commit", "submit"):
     Commit(change_info, argv[3:])
   elif command == "delete":
