@@ -243,11 +243,12 @@ function received_summary(data) {
     traceNames.push(traceName);
   traceNames.sort(trace_compare);
 
-  // Build and sort a list of revision numbers.
+  // Build and numerically sort a list of revision numbers.
   var revisionNumbers = [];
   for (var rev in graphData)
     revisionNumbers.push(rev);
-  revisionNumbers.sort();
+  revisionNumbers.sort(
+      function(a, b) { return parseInt(a, 10) - parseInt(b, 10) });
 
   // Build separate ordered lists of trace data.
   var traceData = {};
