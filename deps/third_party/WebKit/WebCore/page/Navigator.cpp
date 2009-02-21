@@ -113,9 +113,6 @@ String Navigator::userAgent() const
 
 PluginArray* Navigator::plugins() const
 {
-    // TODO(fqian): Upstream null-check added at r2849 in old repo.
-    if (!m_frame)
-        return NULL;
     if (!m_plugins)
         m_plugins = PluginArray::create(m_frame);
     return m_plugins.get();
@@ -123,9 +120,6 @@ PluginArray* Navigator::plugins() const
 
 MimeTypeArray* Navigator::mimeTypes() const
 {
-    // TODO(fqian): Upstream null-check added at r2849 in old repo.
-    if (!m_frame)
-        return NULL;
     if (!m_mimeTypes)
         m_mimeTypes = MimeTypeArray::create(m_frame);
     return m_mimeTypes.get();
