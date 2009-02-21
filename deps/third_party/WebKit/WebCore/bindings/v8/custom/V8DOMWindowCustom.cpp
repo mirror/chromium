@@ -296,6 +296,7 @@ static Frame* createWindow(Frame* openerFrame,
                 completedUrl,
                 activeFrame->loader()->outgoingReferrer(),
                 false,
+                false,
                 userGesture);
         } else if (!url.isEmpty()) {
             newFrame->loader()->scheduleLocationChange(
