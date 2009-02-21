@@ -151,6 +151,8 @@ def main_win(options, args):
     os.environ['CHROME_BUILD_TYPE'] = '_official'
   elif options.mode == 'purify':
     os.environ['CHROME_BUILD_TYPE'] = '_purify'
+  if options.fastbuild:
+    os.environ['FAST_BUILD_TYPE'] = 'fastbuild'
 
   # jsc builds need another environment variable.
   # TODO(nsylvain): We should have --js-engine option instead.
@@ -200,6 +202,8 @@ if '__main__' == __name__:
                            help='specify build tool (ib, vs, scons, xcode)')
   option_parser.add_option('', '--build-args', action='append', default=[],
                            help='arguments to pass to the build tool')
+  option_parser.add_option('', '--fastbuild', action="store_true",
+                           help='faster build (with debug info striped)')
 
   options, args = option_parser.parse_args()
 
