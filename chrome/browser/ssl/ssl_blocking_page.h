@@ -7,9 +7,8 @@
 
 #include <string>
 
-#include "chrome/browser/tab_contents/interstitial_page.h"
 #include "chrome/browser/ssl/ssl_manager.h"
-#include "chrome/views/decision.h"
+#include "chrome/browser/tab_contents/interstitial_page.h"
 
 class DictionaryValue;
 

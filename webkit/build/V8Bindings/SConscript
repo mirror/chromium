@@ -34,6 +34,7 @@ else:
 
 inputs = [
     '$DERIVED_DIR/CSSGrammar.cpp',
+    '$DERIVED_DIR/HTMLElementFactory.cpp',
     '$DERIVED_DIR/HTMLNames.cpp',
     '$DERIVED_DIR/SVGElementFactory.cpp',
     '$DERIVED_DIR/SVGNames.cpp',
@@ -54,6 +55,8 @@ inputs = [
     '$DERIVED_DIR/V8CDATASection.cpp',
     '$DERIVED_DIR/V8CharacterData.cpp',
     '$DERIVED_DIR/V8Clipboard.cpp',
+    '$DERIVED_DIR/V8ClientRect.cpp',
+    '$DERIVED_DIR/V8ClientRectList.cpp',
     '$DERIVED_DIR/V8Comment.cpp',
     '$DERIVED_DIR/V8Console.cpp',
     '$DERIVED_DIR/V8Counter.cpp',
@@ -338,7 +341,6 @@ inputs = [
     '$PORT_DIR/bindings/v8/v8_np_utils.cpp',
     '$PORT_DIR/bindings/v8/v8_npobject.cpp',
     '$PORT_DIR/bindings/v8/v8_proxy.cpp',
-    '$PORT_DIR/bindings/v8/v8_vectornodelist.cpp',
     '$PORT_DIR/bindings/v8/V8CanvasPixelArrayCustom.cpp',
     '$PORT_DIR/bindings/v8/V8MessagePortCustom.cpp',
     '$PORT_DIR/bindings/v8/V8WorkerContextCustom.cpp',
@@ -349,7 +351,17 @@ inputs = [
     '$PORT_DIR/bindings/v8/extensions/GCController.cpp',
     '$PORT_DIR/bindings/v8/extensions/Interval.cpp',
     '$PORT_DIR/bindings/v8/extensions/Playback.cpp',
-    
+
+    '$WEBCORE_DIR/bindings/v8/custom/V8DOMWindowCustom.cpp',
+    '$WEBCORE_DIR/bindings/v8/custom/V8HTMLCollectionCustom.cpp',
+    '$WEBCORE_DIR/bindings/v8/custom/V8HTMLFormElementCustom.cpp',
+    '$WEBCORE_DIR/bindings/v8/custom/V8HTMLInputElementCustom.cpp',
+    '$WEBCORE_DIR/bindings/v8/custom/V8HTMLOptionsCollectionCustom.cpp',
+    '$WEBCORE_DIR/bindings/v8/custom/V8HTMLPlugInElementCustom.cpp',
+    '$WEBCORE_DIR/bindings/v8/custom/V8HTMLSelectElementCustom.cpp',
+    '$WEBCORE_DIR/bindings/v8/custom/V8HTMLSelectElementCustom.h',
+    '$WEBCORE_DIR/bindings/v8/custom/V8NamedNodesCollection.cpp',
+    '$WEBCORE_DIR/bindings/v8/custom/V8NamedNodesCollection.h',
     '$WEBCORE_DIR/bindings/v8/custom/V8SVGElementInstanceCustom.cpp',
     '$WEBCORE_DIR/bindings/v8/custom/V8SVGLengthCustom.cpp',
     '$WEBCORE_DIR/bindings/v8/custom/V8SVGMatrixCustom.cpp',

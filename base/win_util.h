@@ -23,6 +23,8 @@ enum WinVersion {
   WINVERSION_XP = 2,
   WINVERSION_SERVER_2003 = 3,
   WINVERSION_VISTA = 4,
+  WINVERSION_2008 = 5,
+  WINVERSION_WIN7 = 6,
 };
 
 void GetNonClientMetrics(NONCLIENTMETRICS* metrics);
@@ -111,14 +113,9 @@ void NotifyHWNDCreation(const tracked_objects::Location& from_here, HWND hwnd);
 void NotifyHWNDDestruction(const tracked_objects::Location& from_here,
                            HWND hwnd);
 
-#ifdef NDEBUG
-#define TRACK_HWND_CREATION(hwnd)
-#define TRACK_HWND_DESTRUCTION(hwnd)
-#else
 #define TRACK_HWND_CREATION(hwnd) win_util::NotifyHWNDCreation(FROM_HERE, hwnd)
 #define TRACK_HWND_DESTRUCTION(hwnd) \
     win_util::NotifyHWNDDestruction(FROM_HERE, hwnd)
-#endif
 
 }  // namespace win_util
 

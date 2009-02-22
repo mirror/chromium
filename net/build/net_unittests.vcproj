@@ -367,6 +367,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\base\tcp_pinger_unittest.cc"
+					>
+				</File>
+				<File
 					RelativePath="..\base\tcp_client_socket_unittest.cc"
 					>
 				</File>
@@ -412,6 +416,10 @@
 				>
 				<File
 					RelativePath="..\proxy\proxy_script_fetcher_unittest.cc"
+					>
+				</File>
+				<File
+					RelativePath="..\proxy\proxy_server_unittest.cc"
 					>
 				</File>
 				<File

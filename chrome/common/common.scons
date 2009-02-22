@@ -106,6 +106,12 @@ input_files = ChromeFileList([
     'animation.h',
     'child_process.cc',
     'child_process.h',
+    'child_process_host.cc',
+    'child_process_host.h',
+    'child_process_info.cc',
+    'child_process_info.h',
+    'child_thread.cc',
+    'child_thread.h',
     'chrome_constants.cc',
     'chrome_constants.h',
     'chrome_counters.cc',
@@ -219,7 +225,7 @@ if not env.Bit('windows'):
   # TODO(port): This is temporary so we can link.
   input_files.Append(
       'temp_scaffolding_stubs.cc',
-      'file_descriptor_posix.cc',
+      'file_descriptor_set_posix.cc',
   )
 
   # TODO(port): Port these.
@@ -230,9 +236,10 @@ if not env.Bit('windows'):
       'gfx/emf.cc',
       'gfx/icon_util.cc',
       'gfx/path.cc',
-      'ipc_logging.cc',
       'os_exchange_data.cc',
       'process_watcher.cc',
+      'child_process_host.cc',
+      'child_process_host.h',
   )
 
 if not env.Bit('windows'):
@@ -268,6 +275,21 @@ if not env.Bit('mac'):
 if not env.Bit('posix'):
   input_files.Remove(
       'ipc_channel_posix.cc',
+  )
+
+if env.Bit('windows'):
+  input_files.Append(
+      'transport_dib_win.cc'
+  )
+
+if env.Bit('linux'):
+  input_files.Append(
+      'transport_dib_linux.cc'
+  )
+
+if env.Bit('mac'):
+  input_files.Append(
+      'transport_dib_mac.cc'
   )
 
 if not env.Bit('mac'):

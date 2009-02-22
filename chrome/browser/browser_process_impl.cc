@@ -10,28 +10,29 @@
 #include "base/waitable_event.h"
 #include "chrome/browser/browser_trial.h"
 #include "chrome/browser/chrome_thread.h"
+#include "chrome/browser/debugger/debugger_wrapper.h"
+#include "chrome/browser/download/download_file.h"
+#include "chrome/browser/download/save_file_manager.h"
 #include "chrome/browser/google_url_tracker.h"
+#include "chrome/browser/metrics/metrics_service.h"
+#include "chrome/browser/net/dns_global.h"
+#include "chrome/browser/plugin_service.h"
 #include "chrome/browser/profile_manager.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 
 #if defined(OS_WIN)
 #include "chrome/browser/automation/automation_provider_list.h"
-#include "chrome/browser/download/download_file.h"
-#include "chrome/browser/download/save_file_manager.h"
 #include "chrome/browser/icon_manager.h"
-#include "chrome/browser/metrics/metrics_service.h"
-#include "chrome/browser/plugin_service.h"
 #include "chrome/browser/printing/print_job_manager.h"
-#include "chrome/browser/debugger/debugger_wrapper.h"
 #include "chrome/common/clipboard_service.h"
-#include "chrome/common/l10n_util.h"
 #include "chrome/views/accelerator_handler.h"
 #include "chrome/views/view_storage.h"
 #elif defined(OS_POSIX)
@@ -174,6 +175,11 @@ BrowserProcessImpl::~BrowserProcessImpl() {
     resource_dispatcher_host()->Shutdown();
   }
 
+  // Shutdown DNS prefetching now to ensure that network stack objects
+  // living on the IO thread get destroyed before the IO thread goes away.
+  io_thread_->message_loop()->PostTask(FROM_HERE,
+      NewRunnableFunction(chrome_browser_net::ShutdownDnsPrefetch));
+
   // Need to stop io_thread_ before resource_dispatcher_host_, since
   // io_thread_ may still deref ResourceDispatcherHost and handle resource
   // request before going away.
@@ -260,15 +266,10 @@ printing::PrintJobManager* BrowserProcessImpl::print_job_manager() {
 
 const std::wstring& BrowserProcessImpl::GetApplicationLocale() {
   DCHECK(CalledOnValidThread());
-#if defined(OS_WIN)
   if (locale_.empty()) {
     locale_ = l10n_util::GetApplicationLocale(local_state()->GetString(
         prefs::kApplicationLocale));
   }
-#else
-  NOTIMPLEMENTED();
-  // TODO(port): port l10n_util
-#endif
   return locale_;
 }
 

@@ -37,7 +37,11 @@ class BrowserWindow {
 
   // Closes the frame as soon as possible.  If the frame is not in a drag
   // session, it will close immediately; otherwise, it will move offscreen (so
-  // events are still fired) until the drag ends, then close.
+  // events are still fired) until the drag ends, then close. This assumes
+  // that the Browser is not immediately destroyed, but will be eventually
+  // destroyed by other means (eg, the tab strip going to zero elements).
+  // Bad things happen if the Browser dtor is called directly as a result of
+  // invoking this method.
   virtual void Close() = 0;
 
   // Activates (brings to front) the window. Restores the window from minimized
@@ -83,10 +87,18 @@ class BrowserWindow {
 
   // TODO(beng): REMOVE?
   // Returns true if the frame is maximized (aka zoomed).
-  virtual bool IsMaximized() = 0;
+  virtual bool IsMaximized() const = 0;
+
+  // Accessors for fullscreen mode state.
+  virtual void SetFullscreen(bool fullscreen) = 0;
+  virtual bool IsFullscreen() const = 0;
 
   // Returns the location bar.
   virtual LocationBar* GetLocationBar() const = 0;
+
+  // Tries to focus the location bar.  Clears the window focus (to avoid
+  // inconsistent state) if this fails.
+  virtual void SetFocusToLocationBar() = 0;
 
   // Informs the view whether or not a load is in progress for the current tab.
   // The view can use this notification to update the go/stop button.
@@ -102,6 +114,12 @@ class BrowserWindow {
   // Returns whether the bookmark bar is visible or not.
   virtual bool IsBookmarkBarVisible() const = 0;
 
+  // Returns the rect where the resize corner should be drawn by the render
+  // widget host view (on top of what the renderer returns). We return an empty
+  // rect to identify that there shouldn't be a resize corner (in the cases
+  // where we take care of it ourselves at the browser level).
+  virtual gfx::Rect GetRootWindowResizerRect() const = 0;
+
   // Shows or hides the bookmark bar depending on its current visibility.
   virtual void ToggleBookmarkBar() = 0;
 
@@ -110,9 +128,6 @@ class BrowserWindow {
 
   // Shows the Bookmark Manager window.
   virtual void ShowBookmarkManager() = 0;
-
-  // Returns true if the Bookmark bubble is visible.
-  virtual bool IsBookmarkBubbleVisible() const = 0;
 
   // Shows the Bookmark bubble. |url| is the URL being bookmarked,
   // |already_bookmarked| is true if the url is already bookmarked.
@@ -126,7 +141,7 @@ class BrowserWindow {
 
   // Shows the Import Bookmarks & Settings dialog box.
   virtual void ShowImportDialog() = 0;
-  
+
   // Shows the Search Engines dialog box.
   virtual void ShowSearchEnginesDialog() = 0;
 
@@ -163,7 +178,7 @@ class BrowserWindowTesting {
  public:
 #if defined(OS_WIN)
   // Returns the BookmarkBarView.
-  virtual BookmarkBarView* GetBookmarkBarView() = 0;
+  virtual BookmarkBarView* GetBookmarkBarView() const = 0;
 
   // Returns the LocationBarView.
   virtual LocationBarView* GetLocationBarView() const = 0;

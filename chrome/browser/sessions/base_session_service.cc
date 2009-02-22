@@ -11,7 +11,6 @@
 #include "chrome/browser/sessions/session_backend.h"
 #include "chrome/browser/sessions/session_types.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
-#include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/common/stl_util-inl.h"
 
 // InternalGetCommandsRequest -------------------------------------------------
@@ -61,12 +60,11 @@ const int BaseSessionService::max_persist_navigation_count = 6;
 
 BaseSessionService::BaseSessionService(SessionType type,
                                        Profile* profile,
-                                       const std::wstring& path)
+                                       const FilePath& path)
     : profile_(profile),
       path_(path),
       backend_thread_(NULL),
-#pragma warning(suppress: 4355)  // Okay to pass "this" here.
-      save_factory_(this),
+      ALLOW_THIS_IN_INITIALIZER_LIST(save_factory_(this)),
       pending_reset_(false),
       commands_since_reset_(0) {
   if (profile) {
@@ -74,7 +72,7 @@ BaseSessionService::BaseSessionService(SessionType type,
     DCHECK(!profile->IsOffTheRecord());
   }
   backend_ = new SessionBackend(type,
-      profile_ ? profile_->GetPath().ToWStringHack() : path_);
+      profile_ ? profile_->GetPath() : path_);
   DCHECK(backend_.get());
   backend_thread_ = g_browser_process->file_thread();
   if (!backend_thread_)

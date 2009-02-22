@@ -80,9 +80,6 @@ class UserDataManager {
   std::wstring GetUserDataFolderForProfile(
       const std::wstring& profile_name) const;
 
-  // Returns the command to start the app in the given profile.
-  std::wstring GetCommandForProfile(const std::wstring& profile_name) const;
-
   // Shared instance.
   static UserDataManager* instance_;
 

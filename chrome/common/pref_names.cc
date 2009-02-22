@@ -188,6 +188,12 @@ const wchar_t kDnsPrefetchingEnabled[] = L"dns_prefetching.enabled";
 // next startup, based on what was actually needed during this startup.
 const wchar_t kDnsStartupPrefetchList[] = L"StartupDNSPrefetchList";
 
+// A list of host names used to fetch web pages, and their commonly used
+// sub-resource hostnames (and expected latency benefits from pre-resolving such
+// sub-resource hostnames).
+// This list is adaptively grown and pruned.
+extern const wchar_t kDnsHostReferralList[] = L"HostReferralList";
+
 // The disabled messages in IPC logging.
 const wchar_t kIpcDisabledMessages[] = L"ipc_log_disabled_messages";
 
@@ -328,7 +334,7 @@ const wchar_t kStabilityUptimeSec[] =
 
 // This is the location of a list of dictionaries of plugin stability stats.
 const wchar_t kStabilityPluginStats[] =
-    L"user_experience_metrics.stability.plugin_stats";
+    L"user_experience_metrics.stability.plugin_stats2";
 
 // Number of times the renderer has become non-responsive since the last
 // report.
@@ -353,7 +359,7 @@ const wchar_t kStabilityDebuggerNotPresent[] =
 
 // The keys below are used for the dictionaries in the
 // kStabilityPluginStats list.
-const wchar_t kStabilityPluginPath[] = L"path";
+const wchar_t kStabilityPluginName[] = L"name";
 const wchar_t kStabilityPluginLaunches[] = L"launches";
 const wchar_t kStabilityPluginInstances[] = L"instances";
 const wchar_t kStabilityPluginCrashes[] = L"crashes";
@@ -457,5 +463,9 @@ const wchar_t kNumFoldersInOtherBookmarkFolder[] =
 
 // Number of keywords.
 const wchar_t kNumKeywords[] = L"user_experience_metrics.num_keywords";
+
+// Whether Extensions or User Scripts are enabled.
+const wchar_t kEnableExtensions[] = L"extensions.enabled";
+const wchar_t kEnableUserScripts[] = L"extensions.user_scripts_enabled";
 
 }  // namespace prefs

@@ -20,6 +20,7 @@
 #include "chrome/browser/command_updater.h"
 #include "chrome/browser/sessions/session_id.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
+#include "chrome/browser/tab_contents/tab_contents_delegate.h"
 #include "chrome/common/notification_observer.h"
 #include "chrome/common/pref_member.h"
 #include "base/gfx/rect.h"
@@ -29,7 +30,6 @@
 #if defined(OS_WIN)
 #include "chrome/browser/shell_dialogs.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
-#include "chrome/browser/tab_contents/tab_contents_delegate.h"
 #include "chrome/browser/toolbar_model.h"
 #endif
 
@@ -214,9 +214,7 @@ class Browser : public TabStripModelDelegate,
   // Show a native UI tab given a URL. If a tab with the same URL is already
   // visible in this browser, it becomes selected. Otherwise a new tab is
   // created.
-#if defined(OS_WIN)
   void ShowNativeUITab(const GURL& url);
-#endif
 
   // Assorted browser commands ////////////////////////////////////////////////
 
@@ -245,6 +243,7 @@ class Browser : public TabStripModelDelegate,
   void DuplicateTab();
   void RestoreTab();
   void ConvertPopupToTabbedBrowser();
+  void ToggleFullscreenMode();
   void Exit();
 
   // Page-related commands
@@ -339,14 +338,12 @@ class Browser : public TabStripModelDelegate,
   virtual void CreateHistoricalTab(TabContents* contents);
   virtual bool RunUnloadListenerBeforeClosing(TabContents* contents);
 
-#if defined(OS_WIN)
   // Overridden from TabStripModelObserver:
   virtual void TabInsertedAt(TabContents* contents,
                              int index,
                              bool foreground);
   virtual void TabClosingAt(TabContents* contents, int index);
   virtual void TabDetachedAt(TabContents* contents, int index);
-#endif
   virtual void TabSelectedAt(TabContents* old_contents,
                              TabContents* new_contents,
                              int index,
@@ -356,7 +353,6 @@ class Browser : public TabStripModelDelegate,
                         int to_index);
   virtual void TabStripEmpty();
 
-#if defined(OS_WIN)
   // Overridden from TabContentsDelegate:
   virtual void OpenURLFromTab(TabContents* source,
                              const GURL& url, const GURL& referrer,
@@ -371,16 +367,16 @@ class Browser : public TabStripModelDelegate,
                               const gfx::Rect& initial_pos,
                               bool user_gesture);
   virtual void ActivateContents(TabContents* contents);
-#endif
   virtual void LoadingStateChanged(TabContents* source);
-#if defined(OS_WIN)
   virtual void CloseContents(TabContents* source);
   virtual void MoveContents(TabContents* source, const gfx::Rect& pos);
   virtual bool IsPopup(TabContents* source);
   virtual void ToolbarSizeChanged(TabContents* source, bool is_animating);
   virtual void URLStarredChanged(TabContents* source, bool starred);
 
+#if defined(OS_WIN)
   virtual void ContentsMouseEvent(TabContents* source, uint32 message);
+#endif
   virtual void UpdateTargetURL(TabContents* source, const GURL& url);
 
   virtual void ContentsZoomChange(bool zoom_in);
@@ -391,14 +387,13 @@ class Browser : public TabStripModelDelegate,
   virtual void BeforeUnloadFired(TabContents* source,
                                  bool proceed,
                                  bool* proceed_to_fire_unload);
+  virtual gfx::Rect GetRootWindowResizerRect() const;
   virtual void ShowHtmlDialog(HtmlDialogContentsDelegate* delegate,
                               void* parent_window);
   virtual void SetFocusToLocationBar();
 
   // Overridden from SelectFileDialog::Listener:
   virtual void FileSelected(const std::wstring& path, void* params);
-
-#endif  // OS_WIN
 
   // Overridden from NotificationObserver:
   virtual void Observe(NotificationType type,
@@ -411,9 +406,12 @@ class Browser : public TabStripModelDelegate,
   // Initialize state for all browser commands.
   void InitCommandState();
 
-  // Update commands which may be enabled or disabled depending on the tab's
-  // state.
+  // Update commands whose state depends on the tab's state.
   void UpdateCommandsForTabState();
+
+  // Update commands whose state depends on whether the window is in fullscreen
+  // mode.
+  void UpdateCommandsForFullscreenMode(bool is_fullscreen);
 
   // Set the correct stop/go icon and update the Go and Stop command states.
   // |is_loading| is true if the current TabContents is loading.
@@ -477,7 +475,6 @@ class Browser : public TabStripModelDelegate,
   // Whether we've completed firing all the tabs' beforeunload/unload events.
   bool HasCompletedUnloadProcessing();
 
-#if defined(OS_WIN)
   // Clears all the state associated with processing tabs' beforeunload/unload
   // events since the user cancelled closing the window.
   void CancelWindowClose();
@@ -492,7 +489,6 @@ class Browser : public TabStripModelDelegate,
   // cases where a tab crashes or hangs even if the beforeunload/unload haven't
   // successfully fired.
   void ClearUnloadState(TabContents* tab);
-#endif
 
   // Assorted utility functions ///////////////////////////////////////////////
 
@@ -500,14 +496,12 @@ class Browser : public TabStripModelDelegate,
   // receiving Browser. Creates a new Browser if none are available.
   Browser* GetOrCreateTabbedBrowser();
 
-#if defined(OS_WIN)
   // Creates a new popup window with its own Browser object with the
   // incoming sizing information. |initial_pos|'s origin() is the
   // window origin, and its size() is the size of the content area.
   void BuildPopupWindow(TabContents* source,
                         TabContents* new_contents,
                         const gfx::Rect& initial_pos);
-#endif
 
   // Returns what the user's home page is, or the new tab page if the home page
   // has not been set.
@@ -523,7 +517,6 @@ class Browser : public TabStripModelDelegate,
   // TODO(beng): figure out if we need this now that the frame itself closes
   //             after a return to the message loop.
   void CloseFrame();
-
 
   // Compute a deterministic name based on the URL. We use this pseudo name
   // as a key to store window location per application URLs.

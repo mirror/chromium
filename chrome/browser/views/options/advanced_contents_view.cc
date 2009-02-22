@@ -15,7 +15,6 @@
 #include "base/file_util.h"
 #include "base/path_service.h"
 #include "base/gfx/native_theme.h"
-#include "chrome/app/locales/locale_settings.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
@@ -39,10 +38,11 @@
 #include "chrome/views/combo_box.h"
 #include "chrome/views/grid_layout.h"
 #include "chrome/views/scroll_view.h"
+#include "grit/chromium_strings.h"
+#include "grit/generated_resources.h"
+#include "grit/locale_settings.h"
 #include "net/base/ssl_config_service.h"
-
-#include "chromium_strings.h"
-#include "generated_resources.h"
+#include "net/base/cookie_policy.h"
 
 using views::GridLayout;
 using views::ColumnSet;
@@ -691,8 +691,11 @@ void WebContentSection::InitControlLayout() {
   } else {
     // Add an RTL mark so that
     // ":" in "Google Gears:" in Hebrew Chrome is displayed left-most.
-    gears_label_ = new views::Label(l10n_util::GetString(
-        IDS_OPTIONS_GEARSSETTINGS_GROUP_NAME) + l10n_util::kRightToLeftMark);
+    std::wstring gearssetting_group_name =
+        l10n_util::GetString(IDS_OPTIONS_GEARSSETTINGS_GROUP_NAME);
+    gearssetting_group_name.push_back(
+        static_cast<wchar_t>(l10n_util::kRightToLeftMark));
+    gears_label_ = new views::Label(gearssetting_group_name);
   }
   gears_settings_button_ = new views::NativeButton(
       l10n_util::GetString(IDS_OPTIONS_GEARSSETTINGS_CONFIGUREGEARS_BUTTON));

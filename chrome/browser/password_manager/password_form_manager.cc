@@ -6,14 +6,8 @@
 
 #include <algorithm>
 
-#if defined(OS_POSIX)
-// TODO(port): remove these when supporting classes are ported
-#include "chrome/common/temp_scaffolding_stubs.h"
-#elif defined(OS_WIN)
-#include "chrome/browser/password_manager/password_manager.h"
-#endif
-
 #include "base/string_util.h"
+#include "chrome/browser/password_manager/password_manager.h"
 #include "chrome/browser/profile.h"
 #include "webkit/glue/password_form_dom_manager.h"
 
@@ -246,8 +240,10 @@ void PasswordFormManager::OnRequestDone(WebDataService::Handle h,
   state_ = POST_MATCHING_PHASE;
 
   if (best_score <= 0) {
+#if defined(OS_WIN)
     state_ = PRE_MATCHING_PHASE;
     FetchMatchingIE7LoginFromWebDatabase();
+#endif
     return;
   }
 
@@ -291,10 +287,12 @@ void PasswordFormManager::OnWebDataServiceRequestDone(WebDataService::Handle h,
       OnRequestDone(h, result);
       break;
     }
+#if defined(OS_WIN)
     case PASSWORD_IE7_RESULT: {
       OnIE7RequestDone(h, result);
       break;
     }
+#endif
     default:
       NOTREACHED();
   }

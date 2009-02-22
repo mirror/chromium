@@ -5,14 +5,9 @@
 
 #define IDR_MAINFRAME                   101
 
-// Values around 200 are used by browser/browser_resources.h
-// Values around 300 are used by common/common_resources.h
-// Values around 500 are used by renderer/renderer_resources.h
-
 #define IDR_SAD_PLUGIN                  1000
 
 // Values around 1600 are used by installer/setup/build/
-// Values around 2000 are used by webkit/glue/webkit_resources.h
 
 #define IDD_IPC_SETTINGS                3000
 
@@ -80,7 +75,8 @@
 #define IDC_DUPLICATE_TAB               34027
 #define IDC_RESTORE_TAB                 34028
 #define IDC_SHOW_AS_TAB                 34029
-#define IDC_EXIT                        34030
+#define IDC_FULLSCREEN                  34030
+#define IDC_EXIT                        34031
 
 // Page-related commands
 #define IDC_STAR                        35000

@@ -12,8 +12,6 @@
 #include "base/file_util.h"
 #include "base/scoped_clipboard_writer.h"
 #include "base/string_util.h"
-#include "chrome/app/locales/locale_settings.h"
-#include "chrome/app/theme/theme_resources.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_manager.h"
 #include "chrome/common/clipboard_service.h"
@@ -23,7 +21,9 @@
 #include "chrome/common/os_exchange_data.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/view.h"
-#include "generated_resources.h"
+#include "grit/generated_resources.h"
+#include "grit/locale_settings.h"
+#include "grit/theme_resources.h"
 #include "skia/ext/image_operations.h"
 #include "SkPath.h"
 #include "SkShader.h"
@@ -112,7 +112,7 @@ void BaseContextMenu::ExecuteCommand(int id) {
       download_->manager()->ShowDownloadInShell(download_);
       break;
     case COPY_LINK:
-      scw.WriteText(download_->url());
+      scw.WriteText(UTF8ToWide(download_->url().spec()));
       break;
     case COPY_PATH:
       scw.WriteText(download_->full_path().ToWStringHack());

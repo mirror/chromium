@@ -8,13 +8,15 @@
 
 AudioRendererHost::IPCAudioSource::IPCAudioSource(
     AudioRendererHost* host,
-    int32 id,
+    int32 render_view_id,
+    int32 stream_id,
     AudioOutputStream* stream,
     IPC::Message::Sender* sender,
     base::ProcessHandle process,
     size_t packet_size)
     : host_(host),
-      id_(id),
+      render_view_id_(render_view_id),
+      stream_id_(stream_id),
       stream_(stream),
       sender_(sender) {
   // Make sure we can create and map the shared memory.
@@ -48,7 +50,7 @@ void AudioRendererHost::IPCAudioSource::OnClose(AudioOutputStream* stream) {
   // Stuff to do here:
   // 1. Send an IPC to renderer about close complete.
   // 2. Remove this object from host.
-  host_->DestroySource(id_);
+  host_->DestroySource(render_view_id_, stream_id_);
 }
 
 void AudioRendererHost::IPCAudioSource::OnError(AudioOutputStream* stream,
@@ -67,41 +69,45 @@ void AudioRendererHost::IPCAudioSource::NotifyPacketReady() {
 }
 
 AudioRendererHost::AudioRendererHost(MessageLoop* message_loop)
-    : next_id_(INVALID_ID+1),
-      message_loop_(message_loop) {
+    : io_loop_(message_loop) {
+  // Make sure we perform actual initialization operations in the thread where
+  // this object should live.
+  io_loop_->PostTask(FROM_HERE,
+      NewRunnableMethod(this, &AudioRendererHost::OnInitialized));
 }
 
 AudioRendererHost::~AudioRendererHost() {
-  DestroyAllStreams();
 }
 
-int AudioRendererHost::CreateStream(
+bool AudioRendererHost::CreateStream(
     IPC::Message::Sender* sender, base::ProcessHandle handle,
-    AudioManager::Format format, int channels, int sample_rate,
-    int bits_per_sample, size_t packet_size) {
-  DCHECK(MessageLoop::current() == message_loop_);
+    int32 render_view_id, int32 stream_id, AudioManager::Format format,
+    int channels, int sample_rate, int bits_per_sample, size_t packet_size) {
+  DCHECK(MessageLoop::current() == io_loop_);
+  DCHECK(Lookup(render_view_id, stream_id) == NULL);
 
   // Create the stream in the first place.
   AudioOutputStream* stream = AudioManager::GetAudioManager()->MakeAudioStream(
       format, channels, sample_rate, bits_per_sample);
   if (!stream)
-    return INVALID_ID;
+    return false;
 
   // Try to open the stream if we can create it.
   if (stream->Open(packet_size)) {
     // Create the containing IPCAudioSource and save it to the map.
     IPCAudioSource* source =
-        new IPCAudioSource(this, next_id_++, stream, sender, handle,
-                           packet_size);
-    sources_.AddWithID(source, source->id());
-    return source->id();
+        new IPCAudioSource(this, render_view_id, stream_id, stream, sender,
+                           handle, packet_size);
+    sources_.insert(make_pair(
+        SourceID(source->render_view_id(), source->stream_id()), source));
+    return true;
   }
-  return INVALID_ID;
+  return false;
 }
 
-bool AudioRendererHost::Start(int stream_id) {
-  DCHECK(MessageLoop::current() == message_loop_);
-  IPCAudioSource* source = sources_.Lookup(stream_id);
+bool AudioRendererHost::Start(int32 render_view_id, int32 stream_id) {
+  DCHECK(MessageLoop::current() == io_loop_);
+  IPCAudioSource* source = Lookup(render_view_id, stream_id);
   if (source) {
     source->stream()->Start(source);
     return true;
@@ -109,9 +115,9 @@ bool AudioRendererHost::Start(int stream_id) {
   return false;
 }
 
-bool AudioRendererHost::Stop(int stream_id) {
-  DCHECK(MessageLoop::current() == message_loop_);
-  IPCAudioSource* source = sources_.Lookup(stream_id);
+bool AudioRendererHost::Stop(int32 render_view_id, int32 stream_id) {
+  DCHECK(MessageLoop::current() == io_loop_);
+  IPCAudioSource* source = Lookup(render_view_id, stream_id);
   if (source) {
     source->stream()->Stop();
     return true;
@@ -119,9 +125,9 @@ bool AudioRendererHost::Stop(int stream_id) {
   return false;
 }
 
-bool AudioRendererHost::Close(int stream_id) {
-  DCHECK(MessageLoop::current() == message_loop_);
-  IPCAudioSource* source = sources_.Lookup(stream_id);
+bool AudioRendererHost::Close(int32 render_view_id, int32 stream_id) {
+  DCHECK(MessageLoop::current() == io_loop_);
+  IPCAudioSource* source = Lookup(render_view_id, stream_id);
   if (source) {
     source->stream()->Close();
     return true;
@@ -129,20 +135,20 @@ bool AudioRendererHost::Close(int stream_id) {
   return false;
 }
 
-bool AudioRendererHost::SetVolume(
-    int stream_id, double left_channel, double right_channel) {
-  DCHECK(MessageLoop::current() == message_loop_);
-  IPCAudioSource* source = sources_.Lookup(stream_id);
+bool AudioRendererHost::SetVolume(int32 render_view_id, int32 stream_id,
+    double left_channel, double right_channel) {
+  DCHECK(MessageLoop::current() == io_loop_);
+  IPCAudioSource* source = Lookup(render_view_id, stream_id);
   if (source) {
     source->stream()->SetVolume(left_channel, right_channel);
   }
   return false;
 }
 
-bool AudioRendererHost::GetVolume(
-    int stream_id, double* left_channel, double* right_channel) {
-  DCHECK(MessageLoop::current() == message_loop_);
-  IPCAudioSource* source = sources_.Lookup(stream_id);
+bool AudioRendererHost::GetVolume(int32 render_view_id, int32 stream_id,
+    double* left_channel, double* right_channel) {
+  DCHECK(MessageLoop::current() == io_loop_);
+  IPCAudioSource* source = Lookup(render_view_id, stream_id);
   if (source) {
     source->stream()->GetVolume(left_channel, right_channel);
     return true;
@@ -150,25 +156,68 @@ bool AudioRendererHost::GetVolume(
   return false;
 }
 
-void AudioRendererHost::NotifyPacketReady(int stream_id) {
-  DCHECK(MessageLoop::current() == message_loop_);
-  IPCAudioSource* source = sources_.Lookup(stream_id);
+void AudioRendererHost::NotifyPacketReady(int32 render_view_id,
+                                          int32 stream_id) {
+  DCHECK(MessageLoop::current() == io_loop_);
+  IPCAudioSource* source = Lookup(render_view_id, stream_id);
   if (source) {
     source->NotifyPacketReady();
   }
 }
 
 void AudioRendererHost::DestroyAllStreams() {
-  DCHECK(MessageLoop::current() == message_loop_);
+  DCHECK(MessageLoop::current() == io_loop_);
   // TODO(hclam): iterate on the map, close and delete every stream, and clear
   // the map.
 }
 
-void AudioRendererHost::DestroySource(int stream_id) {
-  DCHECK(MessageLoop::current() == message_loop_);
-  IPCAudioSource* source = sources_.Lookup(stream_id);
-  if (source) {
-    sources_.Remove(stream_id);
-    delete source;
+void AudioRendererHost::DestroySource(int32 render_view_id, int32 stream_id) {
+  DCHECK(MessageLoop::current() == io_loop_);
+  SourceMap::iterator i = sources_.find(SourceID(render_view_id, stream_id));
+  if (i != sources_.end()) {
+    // Remove the entry from the map.
+    sources_.erase(i);
+    // Also delete the IPCAudioSource object.
+    delete i->second;
   }
+}
+
+void AudioRendererHost::Destroy() {
+  // Post a message to the thread where this object should live and do the
+  // actual operations there.
+  io_loop_->PostTask(
+      FROM_HERE, NewRunnableMethod(this, &AudioRendererHost::OnDestroyed));
+}
+
+void AudioRendererHost::OnInitialized() {
+  DCHECK(MessageLoop::current() == io_loop_);
+
+  // Increase the ref count of this object so it is active until we do
+  // Release().
+  AddRef();
+
+  // Also create the AudioManager singleton in this thread.
+  // TODO(hclam): figure out a better location to initialize the AudioManager
+  // singleton. The following method call seems to create a memory leak.
+  // AudioManager::GetAudioManager();
+}
+
+void AudioRendererHost::OnDestroyed() {
+  DCHECK(MessageLoop::current() == io_loop_);
+
+  // Destroy audio streams only in the thread it should happen.
+  // TODO(hclam): make sure we don't call IPC::Message::Sender inside
+  // IPCAudioSource because it is most likely be destroyed.
+  DestroyAllStreams();
+
+  // Decrease the reference to this object, which may lead to self-destruction.
+  Release();
+}
+
+AudioRendererHost::IPCAudioSource* AudioRendererHost::Lookup(int render_view_id,
+                                                             int stream_id) {
+  SourceMap::iterator i = sources_.find(SourceID(render_view_id, stream_id));
+  if (i != sources_.end())
+    return i->second;
+  return NULL;
 }

@@ -31,6 +31,9 @@ void BrowserWindowCocoa::SetBounds(const gfx::Rect& bounds) {
       [screen frame].size.height - bounds.height() - bounds.y();
 }
 
+// Callers assume that this doesn't immediately delete the Browser object.
+// The controller implementing the window delegate methods called from
+// |-performClose:| must take precautiions to ensure that.
 void BrowserWindowCocoa::Close() {
   [window_ orderOut:controller_];
   [window_ performClose:controller_];
@@ -70,7 +73,7 @@ void BrowserWindowCocoa::UpdateLoadingAnimations(bool should_animate) {
 }
 
 void BrowserWindowCocoa::SetStarredState(bool is_starred) {
-  NOTIMPLEMENTED();
+  [controller_ setStarredState:is_starred ? YES : NO];
 }
 
 gfx::Rect BrowserWindowCocoa::GetNormalBounds() const {
@@ -83,12 +86,30 @@ gfx::Rect BrowserWindowCocoa::GetNormalBounds() const {
   return bounds;
 }
 
-bool BrowserWindowCocoa::IsMaximized() {
+bool BrowserWindowCocoa::IsMaximized() const {
   return [window_ isZoomed];
+}
+
+void BrowserWindowCocoa::SetFullscreen(bool fullscreen) {
+  NOTIMPLEMENTED();
+}
+
+bool BrowserWindowCocoa::IsFullscreen() const {
+  NOTIMPLEMENTED();
+  return false;
+}
+
+gfx::Rect BrowserWindowCocoa::GetRootWindowResizerRect() const {
+  NSRect tabRect = [controller_ selectedTabGrowBoxRect];
+  return gfx::Rect(NSRectToCGRect(tabRect));
 }
 
 LocationBar* BrowserWindowCocoa::GetLocationBar() const {
   return [controller_ locationBar];
+}
+
+void BrowserWindowCocoa::SetFocusToLocationBar() {
+  NOTIMPLEMENTED();
 }
 
 void BrowserWindowCocoa::UpdateStopGoState(bool is_loading) {
@@ -97,7 +118,8 @@ void BrowserWindowCocoa::UpdateStopGoState(bool is_loading) {
 
 void BrowserWindowCocoa::UpdateToolbar(TabContents* contents,
                                        bool should_restore_state) {
-  NOTIMPLEMENTED();
+  [controller_ updateToolbarWithContents:contents 
+                      shouldRestoreState:should_restore_state ? YES : NO];
 }
 
 void BrowserWindowCocoa::FocusToolbar() {
@@ -119,11 +141,6 @@ void BrowserWindowCocoa::ShowAboutChromeDialog() {
 
 void BrowserWindowCocoa::ShowBookmarkManager() {
   NOTIMPLEMENTED();
-}
-
-bool BrowserWindowCocoa::IsBookmarkBubbleVisible() const {
-  NOTIMPLEMENTED();
-  return false;
 }
 
 void BrowserWindowCocoa::ShowBookmarkBubble(const GURL& url,

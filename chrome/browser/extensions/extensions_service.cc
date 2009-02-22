@@ -15,9 +15,13 @@
 #include "net/base/file_stream.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/extensions/user_script_master.h"
+#include "chrome/browser/plugin_service.h"
 #include "chrome/common/json_value_serializer.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/unzip.h"
+#if defined(OS_WIN)
+#include "chrome/common/win_util.h"
+#endif
 
 // ExtensionsService
 
@@ -98,22 +102,29 @@ void ExtensionsService::OnExtensionsLoadedFromDirectory(
   extensions_.insert(extensions_.end(), new_extensions->begin(),
                      new_extensions->end());
 
-  // Tell UserScriptMaster about any scripts in the loaded extensions.
+  // TODO: Fix race here.  A page could need a user script on startup, before
+  // the user script is loaded.  We need to freeze the renderer in that case.
+  // TODO(mpcomplete): We also need to force a renderer to refresh its cache of
+  // the plugin list when we inject user scripts, since it could have a stale
+  // version by the time extensions are loaded.
+
   for (ExtensionList::iterator extension = extensions_.begin();
        extension != extensions_.end(); ++extension) {
-    const UserScriptList& scripts = (*extension)->user_scripts();
+    // Tell NPAPI about any plugins in the loaded extensions.
+    if (!(*extension)->plugins_dir().empty()) {
+      PluginService::GetInstance()->AddExtraPluginDir(
+          (*extension)->plugins_dir());
+    }
+
+    // Tell UserScriptMaster about any scripts in the loaded extensions.
+    const UserScriptList& scripts = (*extension)->content_scripts();
     for (UserScriptList::const_iterator script = scripts.begin();
          script != scripts.end(); ++script) {
       user_script_master_->AddLoneScript(*script);
     }
   }
 
-  // Tell UserScriptMaster to also watch the extensions directory for changes
-  // and then kick off the first scan.
-  // TODO(aa): This should go away when we implement the --extension flag, since
-  // developing scripts in the Extensions directory will no longer be a common
-  // use-case.
-  user_script_master_->AddWatchedPath(install_directory_);
+  // Tell UserScriptMaster to kick off the first scan.
   user_script_master_->StartScan();
 
   NotificationService::current()->Notify(
@@ -128,11 +139,19 @@ void ExtensionsService::OnExtensionLoadError(const std::string& error) {
   // TODO(aa): Print the error message out somewhere better. I think we are
   // going to need some sort of 'extension inspector'.
   LOG(WARNING) << error;
+#if defined(OS_WIN)
+  win_util::MessageBox(NULL, UTF8ToWide(error),
+      L"Extension load error", MB_OK | MB_SETFOREGROUND);
+#endif
 }
 
 void ExtensionsService::OnExtensionInstallError(const std::string& error) {
   // TODO(erikkay): Print the error message out somewhere better.
   LOG(WARNING) << error;
+#if defined(OS_WIN)
+  win_util::MessageBox(NULL, UTF8ToWide(error),
+      L"Extension load error", MB_OK | MB_SETFOREGROUND);
+#endif
 }
 
 void ExtensionsService::OnExtensionInstalled(FilePath path) {
@@ -156,6 +175,11 @@ bool ExtensionsServiceBackend::LoadExtensionsFromDirectory(
     const FilePath& path_in,
     scoped_refptr<ExtensionsServiceFrontendInterface> frontend) {
   FilePath path = path_in;
+
+  // Create the <Profile>/Extensions directory if it doesn't exist.
+  if (!file_util::DirectoryExists(path))
+    file_util::CreateDirectory(path);
+
   if (!file_util::AbsolutePath(&path))
     NOTREACHED();
 
@@ -168,15 +192,14 @@ bool ExtensionsServiceBackend::LoadExtensionsFromDirectory(
   for (FilePath child_path = enumerator.Next(); !child_path.value().empty();
        child_path = enumerator.Next()) {
     std::string version_str;
-    if (ReadCurrentVersion(child_path, &version_str)) {
-      child_path = child_path.AppendASCII(version_str);
-    } else {
-      // For now, continue to allow fallback to a non-versioned directory
-      // structure.  This is so that we can use this same method to load
-      // from local directories that developers are just hacking in place.
-      // TODO(erikkay): perhaps we should use a different code path for this.
+    if (!ReadCurrentVersion(child_path, &version_str)) {
+      ReportExtensionLoadError(frontend.get(), child_path, StringPrintf(
+          "Could not read '%s' file.", 
+          ExtensionsService::kCurrentVersionFileName));
+      continue;
     }
 
+    child_path = child_path.AppendASCII(version_str);
     Extension* extension = LoadExtension(child_path, frontend);
     if (extension)
       extensions->push_back(extension);
@@ -234,6 +257,19 @@ Extension* ExtensionsServiceBackend::LoadExtension(
     ReportExtensionLoadError(frontend.get(), path, error);
     return NULL;
   }
+
+  // Validate that claimed resources actually exist.
+  for (UserScriptList::const_iterator iter =
+       extension->content_scripts().begin();
+       iter != extension->content_scripts().end(); ++iter) {
+    if (!file_util::PathExists(iter->path())) {
+      ReportExtensionLoadError(frontend.get(), path, StringPrintf(
+          "Could not load content script '%s'.",
+          WideToUTF8(iter->path().ToWStringHack()).c_str()));
+      return NULL;
+    }
+  }
+
   return extension.release();
 }
 

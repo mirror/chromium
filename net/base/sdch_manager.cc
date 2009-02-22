@@ -172,11 +172,10 @@ bool SdchManager::CanFetchDictionary(const GURL& referring_url,
   return true;
 }
 
-void SdchManager::FetchDictionary(const GURL& referring_url,
+void SdchManager::FetchDictionary(const GURL& request_url,
                                   const GURL& dictionary_url) {
-  if (!CanFetchDictionary(referring_url, dictionary_url))
-    return;
-  if (fetcher_.get())
+  if (SdchManager::Global()->CanFetchDictionary(request_url, dictionary_url) &&
+      fetcher_.get())
     fetcher_->Schedule(dictionary_url);
 }
 
@@ -379,6 +378,11 @@ bool SdchManager::Dictionary::CanSet(const std::string& domain,
     5. If the dictionary has a Port attribute and the referer URL's port was not
       in the list.
   */
+
+  // TODO(jar): Redirects in dictionary fetches might plausibly be problematic,
+  // and hence the conservative approach is to not allow any redirects (if there
+  // were any... then don't allow the dictionary to be set).
+
   if (domain.empty()) {
     SdchErrorRecovery(DICTIONARY_MISSING_DOMAIN_SPECIFIER);
     return false;  // Domain is required.

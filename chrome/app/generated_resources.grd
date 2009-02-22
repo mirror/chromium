@@ -61,6 +61,8 @@ each locale. -->
     <output filename="generated_resources_vi.rc" type="rc_all" lang="vi" />
     <output filename="generated_resources_zh-CN.rc" type="rc_all" lang="zh-CN" />
     <output filename="generated_resources_zh-TW.rc" type="rc_all" lang="zh-TW" />
+
+    <output filename="generated_resources_en-US.pak" type="data_package" lang="en" />
   </outputs>
   <translations>
     <file path="resources/generated_resources_ar.xtb" lang="ar" />
@@ -1228,6 +1230,12 @@ each locale. -->
       <message name="IDS_DOWNLOAD_SEARCH_BUTTON" desc="Title of the button in the download page that triggers a search">
         Search downloads
       </message>
+      <message name="IDS_DOWNLOAD_NO_RESULTS" desc="Descriptive text when no results are found.">
+        No results
+      </message>
+      <message name="IDS_DOWNLOAD_SEARCHRESULTSFOR" desc="Format string for search results">
+        Search results for '<ph name="SEARCH_STRING">%s</ph>'
+      </message>
       <message name="IDS_DOWNLOAD_LINK_RESUME"
                desc="In the download view, 'Resume' link text">
         Resume
@@ -1525,6 +1533,9 @@ each locale. -->
       </message>
       <message name="IDS_TASK_MANAGER_UNKNOWN_PLUGIN_NAME" desc="The prefix for a Task Manager plugin row">
         Unknown plug-in
+      </message>
+      <message name="IDS_TASK_MANAGER_WORKER_PREFIX" desc="The prefix for a Task Manager HTML5 Web Worker process row">
+        Web Worker: <ph name="WORKER_NAME">$1<ex>http://www.domain.com</ex></ph>
       </message>
 
       <!-- Session Crashed Info Bar-->
@@ -3400,6 +3411,10 @@ each locale. -->
       </message>
       <message name="IDS_BOOKMARK_MANAGER_SEARCH_TITLE" desc="Text shown before the search text field.">
         Search:
+      </message>
+
+      <message name="IDS_DEFAULT_FILENAME" desc="Default name for saved files when we have no idea what they could be.">
+        unknown
       </message>
 
     </messages>

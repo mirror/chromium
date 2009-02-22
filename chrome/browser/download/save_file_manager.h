@@ -61,6 +61,7 @@
 #include <utility>
 
 #include "base/basictypes.h"
+#include "base/file_path.h"
 #include "base/hash_tables.h"
 #include "base/ref_counted.h"
 #include "base/thread.h"
@@ -93,19 +94,19 @@ class SaveFileManager
 
   // Save the specified URL. Called on the UI thread and forwarded to the
   // ResourceDispatcherHost on the IO thread.
-  void SaveURL(const std::wstring& url,
-               const std::wstring& referrer,
+  void SaveURL(const GURL& url,
+               const GURL& referrer,
                int render_process_host_id,
                int render_view_id,
                SaveFileCreateInfo::SaveFileSource save_source,
-               const std::wstring& file_full_path,
+               const FilePath& file_full_path,
                URLRequestContext* request_context,
                SavePackage* save_package);
 
   // Notifications sent from the IO thread and run on the file thread:
   void StartSave(SaveFileCreateInfo* info);
   void UpdateSaveProgress(int save_id, net::IOBuffer* data, int size);
-  void SaveFinished(int save_id, std::wstring save_url,
+  void SaveFinished(int save_id, GURL save_url,
                     int render_process_id, bool is_success);
 
   // Notifications sent from the UI thread and run on the file thread.
@@ -114,21 +115,21 @@ class SaveFileManager
 
   // Called on the UI thread to remove a save package from SaveFileManager's
   // tracking map.
-  void RemoveSaveFile(int save_id, const std::wstring& save_url,
+  void RemoveSaveFile(int save_id, const GURL& save_url,
                       SavePackage* package);
 
   // Handler for shell operations sent from the UI to the file thread.
-  void OnShowSavedFileInShell(const std::wstring full_path);
+  void OnShowSavedFileInShell(const FilePath full_path);
 
   // Helper function for deleting specified file.
-  void DeleteDirectoryOrFile(const std::wstring& full_path, bool is_dir);
+  void DeleteDirectoryOrFile(const FilePath& full_path, bool is_dir);
 
   // For posting notifications from the UI and IO threads.
   MessageLoop* GetSaveLoop() const { return file_loop_; }
 
   // Runs on file thread to save a file by copying from file system when
   // original url is using file scheme.
-  void SaveLocalFile(const std::wstring& original_file_url,
+  void SaveLocalFile(const GURL& original_file_url,
                      int save_id,
                      int render_process_id);
 
@@ -137,7 +138,7 @@ class SaveFileManager
   // final names of successfully saved files.
   void RenameAllFiles(
       const FinalNameList& final_names,
-      const std::wstring& resource_dir,
+      const FilePath& resource_dir,
       int render_process_id,
       int render_view_id);
 
@@ -161,11 +162,11 @@ class SaveFileManager
 
   // Register a starting request. Associate the save URL with a
   // SavePackage for further matching.
-  void RegisterStartingRequest(const std::wstring& save_url,
+  void RegisterStartingRequest(const GURL& save_url,
                                SavePackage* save_package);
   // Unregister a start request according save URL, disassociate
   // the save URL and SavePackage.
-  SavePackage* UnregisterStartingRequest(const std::wstring& save_url,
+  SavePackage* UnregisterStartingRequest(const GURL& save_url,
                                          int tab_id);
 
   // Look up the SavePackage according to save id.
@@ -193,7 +194,7 @@ class SaveFileManager
   void OnSaveFinished(int save_id, int64 bytes_so_far, bool is_success);
   // For those requests that do not have valid save id, use
   // map:(url, SavePackage) to find the request and remove it.
-  void OnErrorFinished(std::wstring save_url, int tab_id);
+  void OnErrorFinished(GURL save_url, int tab_id);
   // Handler for a notification sent to the UI thread.
   // The user has requested a cancel in the UI thread, so send a cancel request
   // to stop the network requests in net IO thread.
@@ -204,7 +205,7 @@ class SaveFileManager
   // Notifications sent from the UI thread and run on the file thread.
 
   // Deletes a specified file on the file thread.
-  void OnDeleteDirectoryOrFile(const std::wstring& full_path, bool is_dir);
+  void OnDeleteDirectoryOrFile(const FilePath& full_path, bool is_dir);
 
   // Notifications sent from the UI thread and run on the IO thread
 
@@ -255,7 +256,7 @@ class SaveFileManager
   // use a hashmap to map the tab id (we actually use render_process_id) to the
   // hashmap since it is possible to save same URL in different tab at
   // same time.
-  typedef base::hash_map<std::wstring, SavePackage*> StartingRequestsMap;
+  typedef base::hash_map<std::string, SavePackage*> StartingRequestsMap;
   typedef base::hash_map<int, StartingRequestsMap> TabToStartingRequestsMap;
   TabToStartingRequestsMap tab_starting_requests_;
 

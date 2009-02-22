@@ -60,6 +60,10 @@ class SdchManager {
     ADDED_CONTENT_ENCODING = 1,
     FIXED_CONTENT_ENCODING = 2,
     FIXED_CONTENT_ENCODINGS = 3,
+    // Content encoding correction when we're not even tagged as HTML!?!
+    BINARY_ADDED_CONTENT_ENCODING = 4,
+    BINARY_FIXED_CONTENT_ENCODING = 5,
+    BINARY_FIXED_CONTENT_ENCODINGS = 6,
 
     // Content decoding errors.
     DECODE_HEADER_ERROR = 4,
@@ -243,13 +247,13 @@ class SdchManager {
   // by 1 the number of times it will be reported as blacklisted.
   const bool IsInSupportedDomain(const GURL& url);
 
-  // Schedule the URL fetching to load a dictionary. This will generally return
-  // long before the dictionary is actually loaded and added.
+  // Schedule the URL fetching to load a dictionary. This will always return
+  // before the dictionary is actually loaded and added.
   // After the implied task does completes, the dictionary will have been
   // cached in memory.
-  void FetchDictionary(const GURL& referring_url, const GURL& dictionary_url);
+  void FetchDictionary(const GURL& request_url, const GURL& dictionary_url);
 
-  // Security test function used before initiating a fetch.
+  // Security test function used before initiating a FetchDictionary.
   // Return true if fetch is legal.
   bool CanFetchDictionary(const GURL& referring_url,
                           const GURL& dictionary_url) const;

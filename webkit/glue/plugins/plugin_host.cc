@@ -580,6 +580,7 @@ NPError NPN_DestroyStream(NPP id, NPStream* stream, NPReason reason) {
 }
 
 const char* NPN_UserAgent(NPP id) {
+#if defined(OS_WIN)
   // Flash passes in a null id during the NP_initialize call.  We need to
   // default to the Mozilla user agent if we don't have an NPP instance or
   // else Flash won't request windowless mode.
@@ -589,8 +590,12 @@ const char* NPN_UserAgent(NPP id) {
       return webkit_glue::GetUserAgent(GURL()).c_str();
   }
 
-  static const char *UA = "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9a1) Gecko/20061103 Firefox/2.0a1";
-  return UA;
+  return "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9a1) Gecko/20061103 Firefox/2.0a1";
+#else
+  // TODO(port): For now we always use our real useragent on Mac and Linux.
+  // We might eventually need to spoof for some plugins.
+  return webkit_glue::GetUserAgent(GURL()).c_str();
+#endif
 }
 
 void NPN_Status(NPP id, const char* message) {
@@ -601,7 +606,6 @@ void NPN_Status(NPP id, const char* message) {
 }
 
 void NPN_InvalidateRect(NPP id, NPRect *invalidRect) {
-#if defined(OS_WIN)
   // Invalidates specified drawing area prior to repainting or refreshing a
   // windowless plugin
 
@@ -619,12 +623,18 @@ void NPN_InvalidateRect(NPP id, NPRect *invalidRect) {
   if (plugin.get() && plugin->webplugin()) {
     if (invalidRect) {
       if (!plugin->windowless()) {
+#if defined(OS_WIN)
         RECT rect = {0};
         rect.left = invalidRect->left;
         rect.right = invalidRect->right;
         rect.top = invalidRect->top;
         rect.bottom = invalidRect->bottom;
         ::InvalidateRect(plugin->window_handle(), &rect, FALSE);
+#elif defined(OS_MACOSX)
+        NOTIMPLEMENTED();
+#else
+        NOTIMPLEMENTED();
+#endif
         return;
       }
 
@@ -637,9 +647,6 @@ void NPN_InvalidateRect(NPP id, NPRect *invalidRect) {
       plugin->webplugin()->Invalidate();
     }
   }
-#else
-  NOTIMPLEMENTED();
-#endif
 }
 
 void NPN_InvalidateRegion(NPP id, NPRegion invalidRegion) {
@@ -770,7 +777,14 @@ NPError NPN_GetValue(NPP id, NPNVariable variable, void *value) {
   case NPNVSupportsWindowless:
   {
     NPBool* supports_windowless = reinterpret_cast<NPBool*>(value);
+#if defined(OS_LINUX)
+    // TODO(deanm): Remove me once windowless plugins work on Linux.  Right now
+    // it's better to tell the plugin we don't support windowless, then have it
+    // try and fail.
+    *supports_windowless = FALSE;
+#else
     *supports_windowless = TRUE;
+#endif
     rv = NPERR_NO_ERROR;
     break;
   }
@@ -792,6 +806,24 @@ NPError NPN_GetValue(NPP id, NPNVariable variable, void *value) {
     }
     break;
   }
+#if defined(OS_MACOSX)
+  case NPNVsupportsQuickDrawBool:
+  {
+    // we do not support the QuickDraw drawing model
+    NPBool* supports_qd = reinterpret_cast<NPBool*>(value);
+    *supports_qd = FALSE;
+    rv = NPERR_NO_ERROR;
+    break;
+  }
+  case NPNVsupportsCoreGraphicsBool:
+  {
+    // we do support (and in fact require) the CoreGraphics drawing model
+    NPBool* supports_cg = reinterpret_cast<NPBool*>(value);
+    *supports_cg = TRUE;
+    rv = NPERR_NO_ERROR;
+    break;
+  }
+#endif
   default:
   {
     // TODO: implement me
@@ -814,8 +846,7 @@ NPError  NPN_SetValue(NPP id, NPPVariable variable, void *value) {
     // Note: the documentation at http://developer.mozilla.org/en/docs/NPN_SetValue
     // is wrong.  When value is NULL, the mode is set to true.  This is the same
     // way Mozilla works.
-    bool mode = (value == 0);
-    plugin->set_windowless(mode);
+    plugin->set_windowless(value == 0);
     return NPERR_NO_ERROR;
   }
   case NPPVpluginTransparentBool:
@@ -842,6 +873,13 @@ NPError  NPN_SetValue(NPP id, NPPVariable variable, void *value) {
     // TODO: implement me
     DLOG(INFO) << "NPN_SetValue(NPPVpluginKeepLibraryInMemory) is not implemented.";
     return NPERR_GENERIC_ERROR;
+#if defined(OS_MACOSX)
+  case NPNVpluginDrawingModel:
+    // we only support the CoreGraphics drawing model
+    if (reinterpret_cast<int>(value) == NPDrawingModelCoreGraphics)
+      return NPERR_NO_ERROR;
+    return NPERR_GENERIC_ERROR;    
+#endif
   default:
     // TODO: implement me
     DLOG(INFO) << "NPN_SetValue(" << variable << ") is not implemented.";

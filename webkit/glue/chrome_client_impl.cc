@@ -17,6 +17,9 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "Page.h"
 #include "ScriptController.h"
 #include "WindowFeatures.h"
+#if USE(V8)
+#include "v8_proxy.h"
+#endif
 MSVC_POP_WARNING();
 #undef LOG
 
@@ -28,6 +31,7 @@ MSVC_POP_WARNING();
 #include "webkit/glue/webframe_impl.h"
 #include "webkit/glue/webinputevent.h"
 #include "webkit/glue/webkit_glue.h"
+#include "webkit/glue/weburlrequest_impl.h"
 #include "webkit/glue/webview_delegate.h"
 #include "webkit/glue/webview_impl.h"
 #include "webkit/glue/webwidget_impl.h"
@@ -311,6 +315,12 @@ void ChromeClientImpl::runJavaScriptAlert(WebCore::Frame* frame,
   // Pass the request on to the WebView delegate, for more control.
   WebViewDelegate* d = webview_->delegate();
   if (d) {
+#if USE(V8)
+    // Before showing the JavaScript dialog, we give the proxy implementation
+    // a chance to process any pending console messages.
+    WebCore::V8Proxy::ProcessConsoleMessages();
+#endif
+
     std::wstring wstr = webkit_glue::StringToStdWString(message);
     d->RunJavaScriptAlert(webview_, wstr);
   }

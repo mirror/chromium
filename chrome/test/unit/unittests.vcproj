@@ -230,6 +230,14 @@
 				RelativePath="..\..\..\net\url_request\url_request_test_job.h"
 				>
 			</File>
+			<File
+				RelativePath="..\v8_unit_test.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\v8_unit_test.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="hunspell"
@@ -291,10 +299,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\browser\browser_resources.h"
-				>
-			</File>
-			<File
 				RelativePath="$(OutDir)\grit_derived_sources\browser_resources.rc"
 				>
 			</File>
@@ -319,11 +323,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\common\common_resources.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\common\common_resources.rc"
+				RelativePath="$(OutDir)\grit_derived_sources\common_resources.rc"
 				>
 			</File>
 			<File
@@ -331,11 +331,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\browser\debugger\resources\debugger_resources.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\browser\debugger\resources\debugger_resources.rc"
+				RelativePath="$(OutDir)\grit_derived_sources\debugger_resources.rc"
 				>
 			</File>
 			<File
@@ -343,11 +339,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\renderer\renderer_resources.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\renderer\renderer_resources.rc"
+				RelativePath="$(OutDir)\grit_derived_sources\renderer_resources.rc"
 				>
 			</File>
 			<File
@@ -703,10 +695,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\browser\printing\units_unittest.cc"
-				>
-			</File>
-			<File
 				RelativePath="..\..\browser\history\url_database_unittest.cc"
 				>
 			</File>
@@ -810,6 +798,10 @@
 		<Filter
 			Name="renderer"
 			>
+			<File
+				RelativePath="..\..\renderer\extensions\greasemonkey_api_unittest.cc"
+				>
+			</File>
 			<File
 				RelativePath="..\..\renderer\net\render_dns_master_unittest.cc"
 				>

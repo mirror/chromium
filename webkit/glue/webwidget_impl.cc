@@ -100,6 +100,8 @@ void WebWidgetImpl::Close() {
     widget_->hide();
 
   delegate_ = NULL;
+
+  Release();  // Balances AddRef from WebWidget::Create
 }
 
 void WebWidgetImpl::Resize(const gfx::Size& new_size) {
@@ -195,7 +197,6 @@ bool WebWidgetImpl::ImeSetComposition(int string_type,
 }
 
 bool WebWidgetImpl::ImeUpdateStatus(bool* enable_ime,
-                                    const void** node,
                                     gfx::Rect* caret_rect) {
   return false;
 }

@@ -4,8 +4,8 @@
 
 // Contains code for managing local HTML UI at chrome-ui:// URLs.
 
-#ifndef CHROME_BROWSER_DOM_UI_CONTENTS_H__
-#define CHROME_BROWSER_DOM_UI_CONTENTS_H__
+#ifndef CHROME_BROWSER_DOM_UI_CONTENTS_H_
+#define CHROME_BROWSER_DOM_UI_CONTENTS_H_
 
 #include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/browser/tab_contents/web_contents.h"
@@ -25,8 +25,9 @@ class FavIconSource : public ChromeURLDataManager::DataSource {
   virtual void StartDataRequest(const std::string& path, int request_id);
 
   virtual std::string GetMimeType(const std::string&) const {
-    // Rely on image decoder inferring the correct type.
-    return std::string();
+    // We need to explicitly return a mime type, otherwise if the user tries to
+    // drag the image they get no extension.
+    return "image/png";
   }
 
   // Called when favicon data is available from the history backend.
@@ -59,8 +60,9 @@ class ThumbnailSource : public ChromeURLDataManager::DataSource {
   virtual void StartDataRequest(const std::string& path, int request_id);
 
   virtual std::string GetMimeType(const std::string&) const {
-    // Rely on image decoder inferring the correct type.
-    return std::string();
+    // We need to explicitly return a mime type, otherwise if the user tries to
+    // drag the image they get no extension.
+    return "image/png";
   }
 
   // Called when thumbnail data is available from the history backend.
@@ -120,4 +122,4 @@ class DOMUIContents : public WebContents {
   DISALLOW_COPY_AND_ASSIGN(DOMUIContents);
 };
 
-#endif  // CHROME_BROWSER_DOM_UI_CONTENTS_H__
+#endif  // CHROME_BROWSER_DOM_UI_CONTENTS_H_

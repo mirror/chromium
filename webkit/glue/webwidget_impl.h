@@ -30,7 +30,8 @@ class WebMouseWheelEvent;
 class WebWidgetDelegate;
 
 class WebWidgetImpl : public WebWidget,
-                      public WebCore::FramelessScrollViewClient {
+                      public WebCore::FramelessScrollViewClient,
+                      public base::RefCounted<WebWidgetImpl> {
  public:
   // WebWidget
   virtual void Close();
@@ -47,7 +48,6 @@ class WebWidgetImpl : public WebWidget,
                                  int target_end,
                                  const std::wstring& ime_string);
   virtual bool ImeUpdateStatus(bool* enable_ime,
-                               const void** node,
                                gfx::Rect* caret_rect);
 
   // WebWidgetImpl
@@ -69,6 +69,7 @@ class WebWidgetImpl : public WebWidget,
 
  protected:
   friend class WebWidget;  // So WebWidget::Create can call our constructor
+  friend class base::RefCounted<WebWidgetImpl>;
 
   WebWidgetImpl(WebWidgetDelegate* delegate);
   ~WebWidgetImpl();

@@ -1,0 +1,17 @@
+{
+  "format_version": 1,
+  "id": "com.google.myextension1",
+  "version": "1.0.0.0",
+  "name": "My extension 1",
+  "description": "The first extension that I made.",
+  "content_scripts": [
+    {
+      "matches": ["http://*.google.com/*", "https://*.google.com/*"],
+      "js": ["script1.js"]
+    },
+    {
+      "matches": ["http://*.yahoo.com/*"],
+      "js": ["script2.js"]
+    }
+  ]
+}

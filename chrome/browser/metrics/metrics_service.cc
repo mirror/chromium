@@ -155,13 +155,16 @@
 //
 //------------------------------------------------------------------------------
 
+#if defined(OS_WIN)
 #include <windows.h>
+#endif
 
 #include "chrome/browser/metrics/metrics_service.h"
 
 #include "base/file_path.h"
 #include "base/histogram.h"
 #include "base/path_service.h"
+#include "base/platform_thread.h"
 #include "base/string_util.h"
 #include "base/task.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
@@ -170,22 +173,28 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/load_notification_details.h"
 #include "chrome/browser/memory_details.h"
-#include "chrome/browser/plugin_process_info.h"
 #include "chrome/browser/plugin_service.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/search_engines/template_url.h"
 #include "chrome/browser/search_engines/template_url_model.h"
+#include "chrome/common/child_process_info.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/libxml_utils.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/render_messages.h"
-#include "chrome/installer/util/google_update_settings.h"
 #include "googleurl/src/gurl.h"
 #include "net/base/load_flags.h"
 #include "third_party/bzip2/bzlib.h"
+
+#if defined(OS_POSIX)
+// TODO(port): Move these headers above as they are ported.
+#include "chrome/common/temp_scaffolding_stubs.h"
+#else
+#include "chrome/installer/util/google_update_settings.h"
+#endif
 
 using base::Time;
 using base::TimeDelta;
@@ -464,10 +473,10 @@ void MetricsService::Observe(NotificationType type,
       LogRendererInSandbox(*Details<bool>(details).ptr());
       break;
 
-    case NotificationType::PLUGIN_PROCESS_HOST_CONNECTED:
-    case NotificationType::PLUGIN_PROCESS_CRASHED:
-    case NotificationType::PLUGIN_INSTANCE_CREATED:
-      LogPluginChange(type, source, details);
+    case NotificationType::CHILD_PROCESS_HOST_CONNECTED:
+    case NotificationType::CHILD_PROCESS_CRASHED:
+    case NotificationType::CHILD_INSTANCE_CREATED:
+      LogChildProcessChange(type, source, details);
       break;
 
     case NotificationType::TEMPLATE_URL_MODEL_LOADED:
@@ -615,6 +624,7 @@ void MetricsService::OnGetPluginListTaskComplete() {
 }
 
 std::string MetricsService::GenerateClientID() {
+#if defined(OS_WIN)
   const int kGUIDSize = 39;
 
   GUID guid;
@@ -627,6 +637,14 @@ std::string MetricsService::GenerateClientID() {
   DCHECK(result == kGUIDSize);
 
   return WideToUTF8(guid_string.substr(1, guid_string.length() - 2));
+#else
+  // TODO(port): Implement for Mac and linux.
+  // Rather than actually implementing a random source, might this be a good
+  // time to implement http://code.google.com/p/chromium/issues/detail?id=2278
+  // ?  I think so!
+  NOTIMPLEMENTED();
+  return std::string();
+#endif
 }
 
 
@@ -723,11 +741,11 @@ void MetricsService::ListenerRegistration(bool start_listening) {
                       start_listening);
   AddOrRemoveObserver(this, NotificationType::RENDERER_PROCESS_HANG,
                       start_listening);
-  AddOrRemoveObserver(this, NotificationType::PLUGIN_PROCESS_HOST_CONNECTED,
+  AddOrRemoveObserver(this, NotificationType::CHILD_PROCESS_HOST_CONNECTED,
                       start_listening);
-  AddOrRemoveObserver(this, NotificationType::PLUGIN_INSTANCE_CREATED,
+  AddOrRemoveObserver(this, NotificationType::CHILD_INSTANCE_CREATED,
                       start_listening);
-  AddOrRemoveObserver(this, NotificationType::PLUGIN_PROCESS_CRASHED,
+  AddOrRemoveObserver(this, NotificationType::CHILD_PROCESS_CRASHED,
                       start_listening);
   AddOrRemoveObserver(this, NotificationType::TEMPLATE_URL_MODEL_LOADED,
                       start_listening);
@@ -780,7 +798,8 @@ void MetricsService::PushPendingLogTextToUnsentOngoingLogs() {
   if (!server_permits_upload_)
     return;
 
-  if (pending_log_text_.length() > kUploadLogAvoidRetransmitSize) {
+  if (pending_log_text_.length() >
+      static_cast<size_t>(kUploadLogAvoidRetransmitSize)) {
     UMA_HISTOGRAM_COUNTS(L"UMA.Large Accumulated Log Not Persisted",
                          static_cast<int>(pending_log_text_.length()));
     return;
@@ -1169,10 +1188,11 @@ void MetricsService::OnURLFetchComplete(const URLFetcher* source,
       StatusToString(status);
 
   // Provide boolean for error recovery (allow us to ignore response_code).
-  boolean discard_log = false;
+  bool discard_log = false;
 
   if (response_code != 200 &&
-      pending_log_text_.length() > kUploadLogAvoidRetransmitSize) {
+      pending_log_text_.length() >
+      static_cast<size_t>(kUploadLogAvoidRetransmitSize)) {
     UMA_HISTOGRAM_COUNTS(L"UMA.Large Rejected Log was Discarded",
                          static_cast<int>(pending_log_text_.length()));
     discard_log = true;
@@ -1413,8 +1433,6 @@ bool MetricsService::ProbabilityTest(double probability,
   // client_id_ we need in order to make a nice pseudorandomish
   // number in the range [0,denominator).  Too many digits is
   // fine.
-  int relevant_digits =
-      static_cast<int>(log10(static_cast<double>(denominator)) + 1.0);
 
   // n is the length of the client_id_ string
   size_t n = client_id_.size();
@@ -1476,7 +1494,7 @@ void MetricsService::LogWindowChange(NotificationType type,
 
     default:
       NOTREACHED();
-      break;
+      return;
   }
 
   // TODO(brettw) we should have some kind of ID for the parent.
@@ -1533,26 +1551,29 @@ void MetricsService::LogRendererHang() {
   IncrementPrefValue(prefs::kStabilityRendererHangCount);
 }
 
-void MetricsService::LogPluginChange(NotificationType type,
-                                     const NotificationSource& source,
-                                     const NotificationDetails& details) {
-  FilePath plugin = Details<PluginProcessInfo>(details)->plugin_path();
+void MetricsService::LogChildProcessChange(
+    NotificationType type,
+    const NotificationSource& source,
+    const NotificationDetails& details) {
+  const std::wstring& child_name =
+      Details<ChildProcessInfo>(details)->name();
 
-  if (plugin_stats_buffer_.find(plugin) == plugin_stats_buffer_.end()) {
-    plugin_stats_buffer_[plugin] = PluginStats();
+  if (child_process_stats_buffer_.find(child_name) ==
+      child_process_stats_buffer_.end()) {
+    child_process_stats_buffer_[child_name] = ChildProcessStats();
   }
 
-  PluginStats& stats = plugin_stats_buffer_[plugin];
+  ChildProcessStats& stats = child_process_stats_buffer_[child_name];
   switch (type.value) {
-    case NotificationType::PLUGIN_PROCESS_HOST_CONNECTED:
+    case NotificationType::CHILD_PROCESS_HOST_CONNECTED:
       stats.process_launches++;
       break;
 
-    case NotificationType::PLUGIN_INSTANCE_CREATED:
+    case NotificationType::CHILD_INSTANCE_CREATED:
       stats.instances++;
       break;
 
-    case NotificationType::PLUGIN_PROCESS_CRASHED:
+    case NotificationType::CHILD_PROCESS_CRASHED:
       stats.process_crashes++;
       break;
 
@@ -1620,18 +1641,18 @@ void MetricsService::RecordPluginChanges(PrefService* pref) {
     }
 
     DictionaryValue* plugin_dict = static_cast<DictionaryValue*>(*value_iter);
-    FilePath::StringType plugin_path_str;
-    plugin_dict->GetString(prefs::kStabilityPluginPath, &plugin_path_str);
-    if (plugin_path_str.empty()) {
+    std::wstring plugin_name;
+    plugin_dict->GetString(prefs::kStabilityPluginName, &plugin_name);
+    if (plugin_name.empty()) {
       NOTREACHED();
       continue;
     }
 
-    FilePath plugin_path(plugin_path_str);
-    if (plugin_stats_buffer_.find(plugin_path) == plugin_stats_buffer_.end())
+    if (child_process_stats_buffer_.find(plugin_name) ==
+        child_process_stats_buffer_.end())
       continue;
 
-    PluginStats stats = plugin_stats_buffer_[plugin_path];
+    ChildProcessStats stats = child_process_stats_buffer_[plugin_name];
     if (stats.process_launches) {
       int launches = 0;
       plugin_dict->GetInteger(prefs::kStabilityPluginLaunches, &launches);
@@ -1651,19 +1672,19 @@ void MetricsService::RecordPluginChanges(PrefService* pref) {
       plugin_dict->SetInteger(prefs::kStabilityPluginInstances, instances);
     }
 
-    plugin_stats_buffer_.erase(plugin_path);
+    child_process_stats_buffer_.erase(plugin_name);
   }
 
   // Now go through and add dictionaries for plugins that didn't already have
   // reports in Local State.
-  for (std::map<FilePath, PluginStats>::iterator cache_iter =
-           plugin_stats_buffer_.begin();
-       cache_iter != plugin_stats_buffer_.end(); ++cache_iter) {
-    FilePath plugin_path = cache_iter->first;
-    PluginStats stats = cache_iter->second;
+  for (std::map<std::wstring, ChildProcessStats>::iterator cache_iter =
+           child_process_stats_buffer_.begin();
+       cache_iter != child_process_stats_buffer_.end(); ++cache_iter) {
+    std::wstring plugin_name = cache_iter->first;
+    ChildProcessStats stats = cache_iter->second;
     DictionaryValue* plugin_dict = new DictionaryValue;
 
-    plugin_dict->SetString(prefs::kStabilityPluginPath, plugin_path.value());
+    plugin_dict->SetString(prefs::kStabilityPluginName, plugin_name);
     plugin_dict->SetInteger(prefs::kStabilityPluginLaunches,
                             stats.process_launches);
     plugin_dict->SetInteger(prefs::kStabilityPluginCrashes,
@@ -1672,7 +1693,7 @@ void MetricsService::RecordPluginChanges(PrefService* pref) {
                             stats.instances);
     plugins->Append(plugin_dict);
   }
-  plugin_stats_buffer_.clear();
+  child_process_stats_buffer_.clear();
 }
 
 bool MetricsService::CanLogNotification(NotificationType type,
@@ -1772,8 +1793,8 @@ void MetricsService::AddProfileMetric(Profile* profile,
 }
 
 static bool IsSingleThreaded() {
-  static int thread_id = 0;
+  static PlatformThreadId thread_id = 0;
   if (!thread_id)
-    thread_id = GetCurrentThreadId();
-  return GetCurrentThreadId() == thread_id;
+    thread_id = PlatformThread::CurrentId();
+  return PlatformThread::CurrentId() == thread_id;
 }

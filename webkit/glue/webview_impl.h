@@ -44,7 +44,7 @@ class WebMouseEvent;
 class WebMouseWheelEvent;
 class WebViewDelegate;
 
-class WebViewImpl : public WebView {
+class WebViewImpl : public WebView, public base::RefCounted<WebViewImpl> {
  public:
   // WebView
   virtual bool ShouldClose();
@@ -72,7 +72,6 @@ class WebViewImpl : public WebView {
                                  int target_end,
                                  const std::wstring& ime_string);
   virtual bool ImeUpdateStatus(bool* enable_ime,
-                               const void** node,
                                gfx::Rect* caret_rect);
   virtual void StopLoading();
   virtual void SetBackForwardListSize(int size);
@@ -194,6 +193,7 @@ class WebViewImpl : public WebView {
 
  protected:
   friend class WebView;  // So WebView::Create can call our constructor
+  friend class base::RefCounted<WebViewImpl>;
 
   WebViewImpl();
   ~WebViewImpl();

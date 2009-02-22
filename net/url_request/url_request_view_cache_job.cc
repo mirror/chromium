@@ -8,7 +8,8 @@
 #include "net/base/escape.h"
 #include "net/disk_cache/disk_cache.h"
 #include "net/http/http_cache.h"
-#include "net/http/http_response_info.h"
+#include "net/http/http_response_headers.h"
+#include "net/url_request/url_request_context.h"
 
 #define VIEW_CACHE_HEAD \
   "<html><body><table>"
@@ -87,9 +88,9 @@ static std::string FormatEntryDetails(disk_cache::Entry* entry) {
 
     int data_size = entry->GetDataSize(i);
 
-    char* data = new char[data_size];
-    if (entry->ReadData(i, 0, data, data_size, NULL) == data_size)
-      HexDump(data, data_size, &result);
+    scoped_refptr<net::IOBuffer> buffer = new net::IOBuffer(data_size);
+    if (entry->ReadData(i, 0, buffer, data_size, NULL) == data_size)
+      HexDump(buffer->data(), data_size, &result);
 
     result.append("</pre>");
   }

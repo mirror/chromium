@@ -5,11 +5,17 @@
 #ifndef CHROME_BROWSER_TAB_CONTENTS_TAB_CONTENTS_H_
 #define CHROME_BROWSER_TAB_CONTENTS_TAB_CONTENTS_H_
 
+#include "build/build_config.h"
+
 #include <string>
 #include <vector>
 
+#include "base/gfx/native_widget_types.h"
 #include "base/gfx/rect.h"
+#if defined(OS_WIN)
+// TODO(evanm): I mean really, c'mon, this can't have broken the build, right?
 #include "chrome/browser/autocomplete/autocomplete_edit.h"
+#endif
 #include "chrome/browser/tab_contents/constrained_window.h"
 #include "chrome/browser/tab_contents/infobar_delegate.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
@@ -343,17 +349,17 @@ class TabContents : public PageNavigator,
   // Views and focus -----------------------------------------------------------
 
   // Returns the actual window that is focused when this TabContents is shown.
-  virtual HWND GetContentHWND() {
-    return GetContainerHWND();
+  virtual gfx::NativeView GetContentNativeView() {
+    return GetNativeView();
   }
 
   // Tell the subclass to set up the view (e.g. create the container HWND if
   // applicable) and any other create-time setup.
   virtual void CreateView() {}
 
-  // Returns the HWND associated with this TabContents. Outside of automation
-  // in the context of the UI, this is required to be implemented.
-  virtual HWND GetContainerHWND() const { return NULL; }
+  // Returns the NativeView associated with this TabContents. Outside of
+  // automation in the context of the UI, this is required to be implemented.
+  virtual gfx::NativeView GetNativeView() const { return NULL; }
 
   // Returns the bounds of this TabContents in the screen coordinate system.
   virtual void GetContainerBounds(gfx::Rect *out) const {
@@ -399,7 +405,7 @@ class TabContents : public PageNavigator,
 
   // Removes the InfoBar for the specified |delegate|.
   void RemoveInfoBar(InfoBarDelegate* delegate);
-  
+
   // Enumeration and access functions.
   int infobar_delegate_count() const { return infobar_delegates_.size(); }
   InfoBarDelegate* GetInfoBarDelegateAt(int index) {
@@ -407,7 +413,7 @@ class TabContents : public PageNavigator,
   }
 
   // Toolbars and such ---------------------------------------------------------
- 
+
   // Returns whether the bookmark bar should be visible.
   virtual bool IsBookmarkBarAlwaysVisible() { return false; }
 

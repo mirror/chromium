@@ -187,7 +187,9 @@ class AutocompletePopupMenuClient : public WebCore::PopupMenuClient {
   }
   virtual int clientPaddingLeft() const {
 #if defined(OS_WIN)
-    return theme()->popupInternalPaddingLeft(text_field_->computedStyle());
+    // Bug http://crbug.com/7708 seems to indicate the style can be NULL.
+    WebCore::RenderStyle* style = GetTextFieldStyle();
+    return style ? theme()->popupInternalPaddingLeft(style) : 0;
 #else
     NOTIMPLEMENTED();
     return 0;
@@ -195,7 +197,9 @@ class AutocompletePopupMenuClient : public WebCore::PopupMenuClient {
   }
   virtual int clientPaddingRight() const {
 #if defined(OS_WIN)
-    return theme()->popupInternalPaddingRight(text_field_->computedStyle());
+    // Bug http://crbug.com/7708 seems to indicate the style can be NULL.
+    WebCore::RenderStyle* style = GetTextFieldStyle();
+    return style ? theme()->popupInternalPaddingRight(style) : 0;
 #else
     NOTIMPLEMENTED();
     return 0;
@@ -262,6 +266,17 @@ class AutocompletePopupMenuClient : public WebCore::PopupMenuClient {
 
   WebCore::HTMLInputElement* text_field() const {
     return text_field_.get();
+  }
+  
+  WebCore::RenderStyle* GetTextFieldStyle() const {
+    WebCore::RenderStyle* style = text_field_->computedStyle();
+    if (!style) {
+      // It seems we can only have an NULL style in a TextField if the node is
+      // dettached, in which case we the popup shoud not be showing.
+      NOTREACHED() << "Please report this in http://crbug.com/7708 and include "
+                      "the page you were visiting.";
+    }
+    return style;
   }
 
  private:
@@ -820,6 +835,8 @@ void WebViewImpl::Close() {
       page_->mainFrame()->loader()->frameDetached();
     page_.reset();
   }
+
+  Release();  // Balances AddRef from WebView::Create
 }
 
 WebViewDelegate* WebViewImpl::GetDelegate() {
@@ -1160,7 +1177,6 @@ bool WebViewImpl::ImeSetComposition(int string_type,
 }
 
 bool WebViewImpl::ImeUpdateStatus(bool* enable_ime,
-                                  const void** new_node,
                                   gfx::Rect* caret_rect) {
   // Store whether the selected node needs IME and the caret rectangle.
   // This process consists of the following four steps:
@@ -1183,7 +1199,10 @@ bool WebViewImpl::ImeUpdateStatus(bool* enable_ime,
     return false;
   *enable_ime = node->shouldUseInputMethod() &&
       !controller->isInPasswordField();
-  const IntRect rect(controller->absoluteCaretBounds());
+  const FrameView* view = node->document()->view();
+  if (!view)
+    return false;
+  const IntRect rect(view->contentsToWindow(controller->absoluteCaretBounds()));
   caret_rect->SetRect(rect.x(), rect.y(), rect.width(), rect.height());
   return true;
 }

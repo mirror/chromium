@@ -14,13 +14,14 @@
 #include "base/ref_counted.h"
 #include "base/shared_memory.h"
 #include "chrome/common/ipc_channel.h"
+#include "chrome/renderer/render_process.h"
 #include "skia/ext/platform_canvas.h"
 
 #include "webkit/glue/webwidget_delegate.h"
 #include "webkit/glue/webcursor.h"
-#include "webkit/glue/webplugin.h"
 
 class RenderThreadBase;
+struct WebPluginGeometry;
 
 // RenderWidget provides a communication bridge between a WebWidget and
 // a RenderWidgetHost, the latter of which lives in a different process.
@@ -31,7 +32,7 @@ class RenderWidget : public IPC::Channel::Listener,
  public:
   // Creates a new RenderWidget.  The opener_id is the routing ID of the
   // RenderView that this widget lives inside. The render_thread is any
-  // RenderThreadBase implementation, mostly commonly g_render_thread.
+  // RenderThreadBase implementation, mostly commonly RenderThread::current().
   static RenderWidget* Create(int32 opener_id,
                               RenderThreadBase* render_thread,
                               bool activatable);
@@ -86,10 +87,6 @@ class RenderWidget : public IPC::Channel::Listener,
   // Close the underlying WebWidget.
   void Close();
 
-  // Get the size of the paint buffer for the given rectangle, rounding up to
-  // the allocation granularity of the system.
-  static size_t GetPaintBufSize(const gfx::Rect& rect);
-
  protected:
   // Friend RefCounted so that the dtor can be non-public. Using this class
   // without ref-counting is an error.
@@ -120,7 +117,7 @@ class RenderWidget : public IPC::Channel::Listener,
   // RenderWidget IPC message handlers
   void OnClose();
   void OnCreatingNewAck(gfx::NativeViewId parent);
-  void OnResize(const gfx::Size& new_size);
+  void OnResize(const gfx::Size& new_size, const gfx::Rect& resizer_rect);
   void OnWasHidden();
   void OnWasRestored(bool needs_repainting);
   void OnPaintRectAck();
@@ -165,7 +162,8 @@ class RenderWidget : public IPC::Channel::Listener,
   // RenderWidgetHost. When MSG_ROUTING_NONE, no messages may be sent.
   int32 routing_id_;
 
-  scoped_refptr<WebWidget> webwidget_;
+  // We are responsible for destroying this object via its Close method.
+  WebWidget* webwidget_;
 
   // Set to the ID of the view that initiated creating this view, if any. When
   // the view was initiated by the browser (the common case), this will be
@@ -191,10 +189,10 @@ class RenderWidget : public IPC::Channel::Listener,
   // The size of the RenderWidget.
   gfx::Size size_;
 
-  // Shared memory handles that are currently in use to transfer an image to
-  // the browser.
-  base::SharedMemory* current_paint_buf_;
-  base::SharedMemory* current_scroll_buf_;
+  // Transport DIBs that are currently in use to transfer an image to the
+  // browser.
+  TransportDIB* current_paint_buf_;
+  TransportDIB* current_scroll_buf_;
 
   // The smallest bounding rectangle that needs to be re-painted.  This is non-
   // empty if a paint event is pending.
@@ -203,6 +201,9 @@ class RenderWidget : public IPC::Channel::Listener,
   // The clip rect for the pending scroll event.  This is non-empty if a
   // scroll event is pending.
   gfx::Rect scroll_rect_;
+
+  // The area that must be reserved for drawing the resize corner.
+  gfx::Rect resizer_rect_;
 
   // The scroll delta for a pending scroll event.
   gfx::Point scroll_delta_;
@@ -262,4 +263,4 @@ class RenderWidget : public IPC::Channel::Listener,
   DISALLOW_EVIL_CONSTRUCTORS(RenderWidget);
 };
 
-#endif // CHROME_RENDERER_RENDER_WIDGET_H__
+#endif  // CHROME_RENDERER_RENDER_WIDGET_H__

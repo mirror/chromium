@@ -3,21 +3,28 @@
 // found in the LICENSE file.
 
 #include "config.h"
-#include <string>
+#include "base/compiler_specific.h"
 
 #include "webkit/glue/glue_util.h"
-#include "base/compiler_specific.h"
-#include "base/gfx/rect.h"
-#include "base/string_util.h"
+
+#include <string>
 
 MSVC_PUSH_WARNING_LEVEL(0);
-#undef LOG
 #include "CString.h"
 #include "IntRect.h"
 #include "PlatformString.h"
+#include "KURL.h"
 MSVC_POP_WARNING();
 
-#include "KURL.h"
+#undef LOG
+
+#include "base/compiler_specific.h"
+#include "base/gfx/rect.h"
+#include "base/string_piece.h"
+#include "base/string_util.h"
+#include "base/sys_string_conversions.h"
+#include "googleurl/src/gurl.h"
+
 
 namespace webkit_glue {
 
@@ -75,6 +82,22 @@ WebCore::String StdStringToString(const std::string& str) {
                                    static_cast<unsigned>(str.length()));
 }
 
+FilePath::StringType StringToFilePathString(const WebCore::String& str) {
+#if defined(OS_WIN)
+  return StringToStdWString(str);
+#elif defined(OS_POSIX)
+  return base::SysWideToNativeMB(StringToStdWString(str));
+#endif
+}
+
+WebCore::String FilePathStringToString(const FilePath::StringType& str) {
+#if defined(OS_WIN)
+  return StdWStringToString(str);
+#elif defined(OS_POSIX)
+  return StdWStringToString(base::SysNativeMBToWide(str));
+#endif
+}
+
 // URL conversions -------------------------------------------------------------
 
 GURL KURLToGURL(const WebCore::KURL& url) {
@@ -92,7 +115,8 @@ WebCore::KURL GURLToKURL(const GURL& url) {
   const std::string& spec = url.possibly_invalid_spec();
 #if USE(GOOGLEURL)
   // Convert using the internal structures to avoid re-parsing.
-  return WebCore::KURL(spec.c_str(), static_cast<int>(spec.length()),
+  return WebCore::KURL(WebCore::CString(spec.c_str(),
+                                        static_cast<unsigned>(spec.length())),
                        url.parsed_for_possibly_invalid_spec(), url.is_valid());
 #else
   return WebCore::KURL(StdWStringToString(UTF8ToWide(spec)));

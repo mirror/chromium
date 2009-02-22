@@ -6,16 +6,18 @@
 
 #include "base/command_line.h"
 #include "base/file_util.h"
+#include "base/string_util.h"
 #include "base/values.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/debugger/debugger_contents.h"
 #include "chrome/browser/debugger/debugger_shell.h"
 #include "chrome/browser/debugger/debugger_wrapper.h"
-#include "chrome/browser/debugger/resources/debugger_resources.h"
 #include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/resource_bundle.h"
 #include "net/base/mime_util.h"
+
+#include "grit/debugger_resources.h"
 
 class DebuggerHTMLSource : public ChromeURLDataManager::DataSource {
  public:
@@ -68,7 +70,12 @@ class DebuggerHTMLSource : public ChromeURLDataManager::DataSource {
     // Currently but three choices {"", "debugger.js", "debugger.css"}.
     // Map the extension to mime-type, defaulting to "text/html".
     std::string mime_type("text/html");
-    net::GetMimeTypeFromFile(ASCIIToWide(path), &mime_type);
+#if defined(OS_WIN)
+    FilePath file_path(ASCIIToWide(path));
+#elif defined(OS_POSIX)
+    FilePath file_path(path);
+#endif
+    net::GetMimeTypeFromFile(file_path, &mime_type);
     return mime_type;
   }
 

@@ -9,6 +9,7 @@
 // during the porting effort. It is not meant to be permanent, and classes will
 // be removed from here as they are fleshed out more completely.
 
+#include <list>
 #include <string>
 
 #include "base/basictypes.h"
@@ -19,20 +20,27 @@
 #include "base/ref_counted.h"
 #include "base/gfx/native_widget_types.h"
 #include "base/gfx/rect.h"
-#include "chrome/browser/bookmarks/bookmark_service.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/cache_manager_host.h"
+#include "chrome/browser/cancelable_request.h"
 #include "chrome/browser/download/save_types.h"
 #include "chrome/browser/history/download_types.h"
+#include "chrome/browser/history/history.h"
 #include "chrome/browser/renderer_host/resource_handler.h"
 #include "chrome/browser/safe_browsing/safe_browsing_util.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/search_engines/template_url.h"
+#include "chrome/browser/sessions/session_id.h"
+#include "chrome/browser/ssl/ssl_error_info.h"
+#include "chrome/browser/ssl/ssl_manager.h"
+#include "chrome/browser/tab_contents/infobar_delegate.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
+#include "chrome/browser/tab_contents/page_navigator.h"
 #include "chrome/browser/tab_contents/tab_contents_type.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/renderer_host/render_widget_host.h"
 #include "chrome/browser/renderer_host/render_view_host_delegate.h"
+#include "chrome/common/child_process_info.h"
 #include "chrome/common/navigation_types.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/page_transition_types.h"
@@ -42,13 +50,15 @@
 #include "net/base/load_states.h"
 #include "skia/include/SkBitmap.h"
 #include "webkit/glue/password_form.h"
+#include "webkit/glue/webplugin.h"
 #include "webkit/glue/window_open_disposition.h"
 
 class Browser;
-class BookmarkService;
 class CommandLine;
 class ConstrainedWindow;
+class CPCommandInterface;
 class DOMUIHost;
+class DownloadItem;
 class DownloadManager;
 class HistoryService;
 class LoginHandler;
@@ -64,10 +74,15 @@ class Profile;
 class RenderProcessHost;
 class RenderWidgetHelper;
 class ResourceMessageFilter;
+class SessionBackend;
+class SessionCommand;
 class SessionID;
 class SiteInstance;
 class SpellChecker;
 class TabContents;
+class TabContentsDelegate;
+class TabContentsFactory;
+class TabNavigation;
 struct ThumbnailScore;
 class Task;
 class TemplateURL;
@@ -78,9 +93,12 @@ class UserScriptMaster;
 class VisitedLinkMaster;
 class WebContents;
 class WebContentsView;
-struct WebPluginInfo;
 struct WebPluginGeometry;
 class WebPreferences;
+
+namespace base {
+class Thread;
+}
 
 namespace IPC {
 class Message;
@@ -95,13 +113,12 @@ class X509Certificate;
 //---------------------------------------------------------------------------
 // These stubs are for Browser_main()
 
-// TODO(port): MessageWindow is very windows-specific, but provides the concept
-//             of singleton browser process per user-data-dir. Investigate how
-//             to achieve this on other platforms and see if this API works.
-class MessageWindow {
+#if defined(OS_MACOSX)
+// TODO(port): needs an implementation of ProcessSingleton.
+class ProcessSingleton {
  public:
-  explicit MessageWindow(const FilePath& user_data_dir) { }
-  ~MessageWindow() { }
+  explicit ProcessSingleton(const FilePath& user_data_dir) { }
+  ~ProcessSingleton() { }
   bool NotifyOtherProcess() {
     NOTIMPLEMENTED();
     return false;
@@ -111,6 +128,7 @@ class MessageWindow {
   void Lock() { NOTIMPLEMENTED(); }
   void Unlock() { NOTIMPLEMENTED(); }
 };
+#endif  // defined(OS_MACOSX)
 
 class GoogleUpdateSettings {
  public:
@@ -154,137 +172,6 @@ class AutomationProviderList {
   }
 };
 
-class UserDataManager {
- public:
-  static UserDataManager* Create();
-  static UserDataManager* Get();
-
-  explicit UserDataManager(const std::wstring& user_data_root) { }
- private:
-  // Shared instance.
-  static UserDataManager* instance_;
-};
-
-class SessionService : public base::RefCountedThreadSafe<SessionService> {
- public:
-  explicit SessionService(Profile* profile) { }
-  void WindowClosed(const SessionID &) { NOTIMPLEMENTED(); }
-  void SetWindowBounds(const SessionID&, const gfx::Rect&, bool)
-      { NOTIMPLEMENTED(); }
-  void ResetFromCurrentBrowsers() { NOTIMPLEMENTED(); }
-  void TabRestored(NavigationController*) { NOTIMPLEMENTED(); }
-  void WindowClosing(const SessionID&) { NOTIMPLEMENTED(); }
-  void SetTabIndexInWindow(const SessionID&, const SessionID&, int)
-      { NOTIMPLEMENTED(); }
-  void SetSelectedTabInWindow(const SessionID&, int) { NOTIMPLEMENTED(); }
-};
-
-class SessionRestore {
- public:
-  static void RestoreSession(Profile* profile,
-                             Browser* browser,
-                             bool clobber_existing_window,
-                             bool always_create_tabbed_browser,
-                             const std::vector<GURL>& urls_to_open) {
-    NOTIMPLEMENTED();
-  }
-  static void RestoreSessionSynchronously(
-      Profile* profile,
-      const std::vector<GURL>& urls_to_open) { NOTIMPLEMENTED(); }
-
-  static size_t num_tabs_to_load_;
-};
-
-class TabRestoreService : public base::RefCountedThreadSafe<TabRestoreService> {
- public:
-  explicit TabRestoreService(Profile* profile) { }
-  void BrowserClosing(Browser*) { NOTIMPLEMENTED(); }
-  void BrowserClosed(Browser*) { NOTIMPLEMENTED(); }
-  void CreateHistoricalTab(NavigationController*) { NOTIMPLEMENTED(); }
-  void RestoreMostRecentEntry(Browser*) { NOTIMPLEMENTED(); }
-};
-
-namespace history {
-
-class ExpireHistoryBackend {
- public:
-  BookmarkService* bookmark_service_;
-};
-
-class HistoryBackend : public base::RefCountedThreadSafe<HistoryBackend> {
- public:
-  BookmarkService* bookmark_service_;
-  ExpireHistoryBackend expirer_;
-};
-
-class HistoryDatabase {
- public:
-  static std::string GURLToDatabaseURL(const GURL& url) {
-    NOTIMPLEMENTED();
-    return "";
-  }
-};
-
-}
-
-class HistoryService {
- public:
-  class URLEnumerator {
-   public:
-    virtual ~URLEnumerator() {}
-    virtual void OnURL(const GURL& url) = 0;
-    virtual void OnComplete(bool success) = 0;
-  };
-  class Handle {
-   public:
-  };
-  HistoryService() {}
-  HistoryService(Profile* profile) {}
-  bool Init(const FilePath& history_dir, BookmarkService* bookmark_service) {
-    NOTIMPLEMENTED();
-    return false;
-  }
-  void SetOnBackendDestroyTask(Task*) { NOTIMPLEMENTED(); }
-  void AddPage(GURL const&, void const*, int, GURL const&,
-               int, std::vector<GURL> const&) { NOTIMPLEMENTED(); }
-  void AddPage(const GURL& url) { NOTIMPLEMENTED(); }
-  void SetPageContents(const GURL& url, const std::wstring& contents) {
-    NOTIMPLEMENTED();
-  }
-  void IterateURLs(URLEnumerator* iterator) { NOTIMPLEMENTED(); }
-  void DeleteAllSearchTermsForKeyword(long long) { NOTIMPLEMENTED(); }
-  void SetKeywordSearchTermsForURL(const GURL& url,
-                                   long long keyword_id,
-                                   const std::wstring& term) {
-    NOTIMPLEMENTED();
-  }
-  void NotifyRenderProcessHostDestruction(int) { NOTIMPLEMENTED(); };
-  void Cleanup() { NOTIMPLEMENTED(); }
-  void AddRef() { NOTIMPLEMENTED(); }
-  void Release() { NOTIMPLEMENTED(); }
-  void SetFavIconOutOfDateForPage(const GURL&) { NOTIMPLEMENTED(); }
-  void SetPageThumbnail(const GURL&, const SkBitmap&, const ThumbnailScore&) {
-    NOTIMPLEMENTED();
-  }
-  void SetPageTitle(const GURL&, const std::wstring&) {
-    NOTIMPLEMENTED();
-  }
-
-  scoped_refptr<history::HistoryBackend> history_backend_;
-};
-
-class MetricsService {
- public:
-  MetricsService() { }
-  ~MetricsService() { }
-  void Start() { NOTIMPLEMENTED(); }
-  void StartRecordingOnly() { NOTIMPLEMENTED(); }
-  void Stop() { NOTIMPLEMENTED(); }
-  void SetUserPermitsUpload(bool enabled) { NOTIMPLEMENTED(); }
-  void RecordCleanShutdown() { NOTIMPLEMENTED(); }
-  void RecordStartOfSessionEnd() { NOTIMPLEMENTED(); }
-};
-
 namespace browser {
 void RegisterAllPrefs(PrefService*, PrefService*);
 }
@@ -306,14 +193,14 @@ class CancelableTask;
 class ViewMsg_Print_Params;
 
 namespace printing {
-  
+
 class PrintingContext {
  public:
   enum Result { OK, CANCEL, FAILED };
 };
-  
+
 class PrintSettings {
- public:    
+ public:
   void RenderParams(ViewMsg_Print_Params* params) const { NOTIMPLEMENTED(); }
   int dpi() const { NOTIMPLEMENTED(); return 92; }
 };
@@ -349,78 +236,6 @@ class PrintJobManager {
 
 }  // namespace printing
 
-
-class SafeBrowsingBlockingPage {
-  public:
-  static void ShowBlockingPage(
-      SafeBrowsingService* service,
-      const SafeBrowsingService::UnsafeResource& resource) {
-    NOTIMPLEMENTED();
-  }
-};
-
-class SafeBrowsingProtocolManager {
- public:
-  SafeBrowsingProtocolManager(SafeBrowsingService* service,
-                              MessageLoop* notify_loop,
-                              const std::string& client_key,
-                              const std::string& wrapped_key) {
-    NOTIMPLEMENTED();
-  }
-
-  ~SafeBrowsingProtocolManager() { NOTIMPLEMENTED(); }
-  void OnChunkInserted() { NOTIMPLEMENTED(); }
-  void OnGetChunksComplete(const std::vector<SBListChunkRanges>& list,
-                           bool database_error) {
-    NOTIMPLEMENTED();
-  }
-  void Initialize() { NOTIMPLEMENTED(); }
-  base::Time last_update() const { return last_update_; }
-  void GetFullHash(SafeBrowsingService::SafeBrowsingCheck* check,
-                   const std::vector<SBPrefix>& prefixes) {
-    NOTIMPLEMENTED();
-  }
- private:
-  base::Time last_update_;
-};
-
-struct DownloadBuffer {
-  Lock lock;
-  typedef std::pair<net::IOBuffer*, int> Contents;
-  std::vector<Contents> contents;
-};
-
-class DownloadItem {
-public:
-  enum DownloadState {
-    IN_PROGRESS,
-    COMPLETE,
-    CANCELLED,
-    REMOVING
-  };
-};
-
-class DownloadFileManager
-    : public base::RefCountedThreadSafe<DownloadFileManager> {
- public:
-  DownloadFileManager(MessageLoop* ui_loop, ResourceDispatcherHost* rdh) {
-    NOTIMPLEMENTED();
-  }
-  void Initialize() { NOTIMPLEMENTED(); }
-  void Shutdown() { NOTIMPLEMENTED(); }
-  MessageLoop* file_loop() const {
-    NOTIMPLEMENTED();
-    return NULL;
-  }
-  int GetNextId() {
-    NOTIMPLEMENTED();
-    return 0;
-  }
-  void StartDownload(DownloadCreateInfo* info) { NOTIMPLEMENTED(); }
-  void UpdateDownload(int id, DownloadBuffer* buffer) { NOTIMPLEMENTED(); }
-  void DownloadFinished(int id, DownloadBuffer* buffer) { NOTIMPLEMENTED(); }
-};
-
 class DownloadRequestManager
     : public base::RefCountedThreadSafe<DownloadRequestManager> {
  public:
@@ -439,32 +254,6 @@ class DownloadRequestManager
   }
 };
 
-class SaveFileManager : public base::RefCountedThreadSafe<SaveFileManager> {
- public:
-  SaveFileManager(MessageLoop* ui_loop,
-                  MessageLoop* io_loop,
-                  ResourceDispatcherHost* rdh) {
-    NOTIMPLEMENTED();
-  }
-  void Shutdown() { NOTIMPLEMENTED(); }
-  void StartSave(SaveFileCreateInfo* info) { NOTIMPLEMENTED(); }
-  void UpdateSaveProgress(int save_id, net::IOBuffer* data, int size) {
-    NOTIMPLEMENTED();
-  }
-  void SaveFinished(int save_id, const std::wstring& save_url,
-                    int render_process_id, int is_success) {
-    NOTIMPLEMENTED();
-  }
-  int GetNextId() {
-    NOTIMPLEMENTED();
-    return 0;
-  }
-  MessageLoop* GetSaveLoop() {
-    NOTIMPLEMENTED();
-    return NULL;
-  }
-};
-
 namespace sandbox {
 
 class BrokerServices {
@@ -479,77 +268,47 @@ class IconManager {
 
 struct ViewHostMsg_DidPrintPage_Params;
 
-class DebuggerWrapper : public base::RefCountedThreadSafe<DebuggerWrapper> {
- public:
-  explicit DebuggerWrapper(int port) {}
-  void DebugMessage(const std::wstring&) {}
-  void OnDebugAttach() {}
-  void OnDebugDisconnect() {}
-};
-
 namespace views {
 
 class AcceleratorHandler {
 };
 
+class TableModelObserver {
+ public:
+  virtual void OnModelChanged() = 0;
+  virtual void OnItemsChanged(int, int) = 0;
+  virtual void OnItemsAdded(int, int) = 0;
+  virtual void OnItemsRemoved(int, int) = 0;
+};
+
+class TableModel {
+ public:
+  int CompareValues(int row1, int row2, int column_id) {
+    NOTIMPLEMENTED();
+    return 0;
+  }
+  virtual int RowCount() = 0;
+};
+
 }  // namespace views
+
+class Menu {
+ public:
+  class Delegate {
+  };
+};
 
 //---------------------------------------------------------------------------
 // These stubs are for Browser
 
+#if defined(OS_MACOSX)
 class StatusBubble {
  public:
   void SetStatus(const std::wstring&) { NOTIMPLEMENTED(); }
   void Hide() { NOTIMPLEMENTED(); }
+  void SetURL(const GURL&, const std::wstring&) { NOTIMPLEMENTED(); }
 };
-
-class SavePackage : public base::RefCountedThreadSafe<SavePackage>,
-                    public RenderViewHostDelegate::Save {
- public:
-  enum SavePackageType {
-    SAVE_AS_ONLY_HTML = 0,
-    SAVE_AS_COMPLETE_HTML = 1
-  };
-  struct SavePackageParam {
-    SavePackageParam(const std::string&) { }
-    const std::string current_tab_mime_type;
-    PrefService* prefs;
-    SavePackageType save_type;
-    std::wstring saved_main_file_path;
-    std::wstring dir;
-  };
-  static bool IsSavableContents(const std::string&) {
-    NOTIMPLEMENTED();
-    return false;
-  }
-  static bool IsSavableURL(const GURL& url) {
-    NOTIMPLEMENTED();
-    return false;
-  }
-  static std::wstring GetSuggestNameForSaveAs(PrefService*,
-                                              const std::wstring&) {
-    NOTIMPLEMENTED();
-    return L"";
-  }
-  static bool GetSaveInfo(const std::wstring&, void*,
-                          SavePackageParam*, DownloadManager*) {
-    NOTIMPLEMENTED();
-    return false;
-  }
-  SavePackage(WebContents*, SavePackageType, const std::wstring&,
-              const std::wstring&) { NOTIMPLEMENTED(); }
-  bool Init() {
-    NOTIMPLEMENTED();
-    return true;
-  }
-  virtual void OnReceivedSavableResourceLinksForCurrentPage(
-      const std::vector<GURL>& resources_list,
-      const std::vector<GURL>& referrers_list,
-      const std::vector<GURL>& frames_list) { NOTIMPLEMENTED(); }
-  virtual void OnReceivedSerializedHtmlData(const GURL& frame_url,
-                                            const std::string& data,
-                                            int32 status) { NOTIMPLEMENTED(); }
-};
+#endif
 
 class DebuggerWindow : public base::RefCountedThreadSafe<DebuggerWindow> {
  public:
@@ -562,72 +321,7 @@ class FaviconStatus {
   GURL url_;
 };
 
-class TabContentsDelegate {
- public:
-  virtual void OpenURL(const GURL&, const GURL&, WindowOpenDisposition,
-                       PageTransition::Type) { NOTIMPLEMENTED(); }
-  virtual void UpdateTargetURL(TabContents*, const GURL&) { NOTIMPLEMENTED(); }
-  virtual void CloseContents(TabContents*) { NOTIMPLEMENTED(); }
-  virtual void MoveContents(TabContents*, const gfx::Rect&) {
-    NOTIMPLEMENTED();
-  }
-  virtual bool IsPopup(TabContents*) {
-    NOTIMPLEMENTED();
-    return false;
-  }
-  virtual void ForwardMessageToExternalHost(const std::string&,
-                                            const std::string&) {
-    NOTIMPLEMENTED();
-  }
-  virtual TabContents* GetConstrainingContents(TabContents*) {
-    NOTIMPLEMENTED();
-    return NULL;
-  }
-  virtual void ShowHtmlDialog(ModalHtmlDialogDelegate*, void*) {
-    NOTIMPLEMENTED();
-  }
-  virtual bool CanBlur() {
-    NOTIMPLEMENTED();
-    return true;
-  }
-  virtual bool IsExternalTabContainer() {
-    NOTIMPLEMENTED();
-    return false;
-  }
-  virtual void BeforeUnloadFired(WebContents*, bool, bool*) {
-    NOTIMPLEMENTED();
-  }
-  virtual void URLStarredChanged(WebContents*, bool) { NOTIMPLEMENTED(); }
-  virtual void ConvertContentsToApplication(WebContents*) { NOTIMPLEMENTED(); }
-  virtual void ReplaceContents(TabContents*, TabContents*) { NOTIMPLEMENTED(); }
-};
-
-class InterstitialPage {
- public:
-  virtual void DontProceed() { NOTIMPLEMENTED(); }
-};
-
-class InfoBarDelegate {
-};
-
-class ConfirmInfoBarDelegate : public InfoBarDelegate {
- public:
-  explicit ConfirmInfoBarDelegate(TabContents* contents) {}
-
-  enum InfoBarButton {
-    BUTTON_NONE = 0,
-    BUTTON_OK,
-    BUTTON_CANCEL
-  };
-};
-
-class LoadNotificationDetails {
- public:
-  LoadNotificationDetails(const GURL&, PageTransition::Type,
-                          base::TimeDelta, NavigationController*, int) { }
-};
-
-class TabContents : public NotificationObserver {
+class TabContents : public PageNavigator, public NotificationObserver {
  public:
   enum InvalidateTypes {
     INVALIDATE_URL = 1,
@@ -636,33 +330,24 @@ class TabContents : public NotificationObserver {
     INVALIDATE_LOAD = 8,
     INVALIDATE_EVERYTHING = 0xFFFFFFFF
   };
-  TabContents(TabContentsType) : controller_() { }
+  TabContents(TabContentsType type) 
+      : type_(type), is_active_(true), is_loading_(false),
+        is_being_destroyed_(false), controller_(),
+        delegate_(), max_page_id_(-1) { }
   virtual ~TabContents() { }
   NavigationController* controller() const { return controller_; }
   void set_controller(NavigationController* c) { controller_ = c; }
-  virtual WebContents* AsWebContents() const { return NULL; }
-  virtual SkBitmap GetFavIcon() const {
-    NOTIMPLEMENTED();
-    return SkBitmap();
+  virtual WebContents* AsWebContents() { return NULL; }
+  WebContents* AsWebContents() const {
+    return const_cast<TabContents*>(this)->AsWebContents();
   }
-  const GURL& GetURL() const {
-    NOTIMPLEMENTED();
-    return url_;
-  }
-  virtual const std::wstring& GetTitle() const {
-    NOTIMPLEMENTED();
-    return title_;
-  }
-  TabContentsType type() const {
-    NOTIMPLEMENTED();
-    return TAB_CONTENTS_WEB;
-  }
+  virtual SkBitmap GetFavIcon() const;
+  const GURL& GetURL() const;
+  virtual const std::wstring& GetTitle() const;
+  TabContentsType type() const { return type_; }
+  void set_type(TabContentsType type) { type_ = type; }
   virtual void Focus() { NOTIMPLEMENTED(); }
   virtual void Stop() { NOTIMPLEMENTED(); }
-  bool is_loading() const {
-    NOTIMPLEMENTED();
-    return false;
-  }
   Profile* profile() const;
   virtual void CloseContents();
   virtual void SetupController(Profile* profile);
@@ -671,10 +356,7 @@ class TabContents : public NotificationObserver {
     return false;
   }
   virtual void RestoreFocus() { NOTIMPLEMENTED(); }
-  static TabContentsType TypeForURL(GURL* url) {
-    NOTIMPLEMENTED();
-    return TAB_CONTENTS_WEB;
-  }
+  static TabContentsType TypeForURL(GURL* url);
   static TabContents* CreateWithType(TabContentsType type,
                                      Profile* profile,
                                      SiteInstance* instance);
@@ -684,38 +366,33 @@ class TabContents : public NotificationObserver {
   virtual void DidBecomeSelected() { NOTIMPLEMENTED(); }
   virtual void SetDownloadShelfVisible(bool) { NOTIMPLEMENTED(); }
   virtual void Destroy();
-  virtual void SetIsLoading(bool, LoadNotificationDetails*) {
-    NOTIMPLEMENTED();
-  }
+  virtual void SetIsLoading(bool, LoadNotificationDetails*);
   virtual void SetIsCrashed(bool) { NOTIMPLEMENTED(); }
   bool capturing_contents() const {
     NOTIMPLEMENTED();
     return false;
   }
   void set_capturing_contents(bool) { NOTIMPLEMENTED(); }
-  bool is_active() {
-    NOTIMPLEMENTED();
-    return true;
-  }
-  void set_is_active(bool) { NOTIMPLEMENTED(); }
+  bool is_active() const { return is_active_; }
+  void set_is_active(bool active) { is_active_ = active; }
+  bool is_loading() const { return is_loading_; }
+  bool is_being_destroyed() const { return is_being_destroyed_; }
   void SetNotWaitingForResponse() { NOTIMPLEMENTED(); }
-  void NotifyNavigationStateChanged(int) { NOTIMPLEMENTED(); }
-  TabContentsDelegate* delegate() const {
-    NOTIMPLEMENTED();
-    return NULL;
-  }
+  void NotifyNavigationStateChanged(unsigned int);
+  TabContentsDelegate* delegate() const { return delegate_; }
+  void set_delegate(TabContentsDelegate* d) { delegate_ = d; }
   void AddInfoBar(InfoBarDelegate*) { NOTIMPLEMENTED(); }
   virtual void OpenURL(const GURL&, const GURL&, WindowOpenDisposition,
-               PageTransition::Type) { NOTIMPLEMENTED(); }
+               PageTransition::Type);
   void AddNewContents(TabContents* new_contents,
                       WindowOpenDisposition disposition,
                       const gfx::Rect& initial_pos,
                       bool user_gesture) { NOTIMPLEMENTED(); }
   virtual void Activate() { NOTIMPLEMENTED(); }
-  virtual bool SupportsURL(GURL*) { NOTIMPLEMENTED(); return false; }
+  virtual bool SupportsURL(GURL*);
   virtual SiteInstance* GetSiteInstance() const { return NULL; }
-  int32 GetMaxPageID() { NOTIMPLEMENTED(); return 0; }
-  void UpdateMaxPageID(int32) { NOTIMPLEMENTED(); }
+  int32 GetMaxPageID();
+  void UpdateMaxPageID(int32);
   virtual bool NavigateToPendingEntry(bool) { NOTIMPLEMENTED(); return true; }
   virtual DOMUIHost* AsDOMUIHost() { NOTIMPLEMENTED(); return NULL; }
   virtual std::wstring GetStatusText() const { return std::wstring(); }
@@ -726,13 +403,23 @@ class TabContents : public NotificationObserver {
     NOTIMPLEMENTED();
   }
   virtual void CreateView() {}
+  virtual gfx::NativeView GetNativeView() const { return NULL; }
+  static TabContentsFactory* RegisterFactory(TabContentsType type,
+                                             TabContentsFactory* factory);
+  void OnStartDownload(DownloadItem* download) { NOTIMPLEMENTED(); }
  protected:
   typedef std::vector<ConstrainedWindow*> ConstrainedWindowList;
   ConstrainedWindowList child_windows_;
  private:
+  TabContentsType type_;
+  bool is_active_;
+  bool is_loading_;
+  bool is_being_destroyed_;
   GURL url_;
   std::wstring title_;
   NavigationController* controller_;
+  TabContentsDelegate* delegate_;
+  int32 max_page_id_;
 };
 
 class SelectFileDialog : public base::RefCountedThreadSafe<SelectFileDialog> {
@@ -780,20 +467,6 @@ class WindowSizer {
 //---------------------------------------------------------------------------
 // These stubs are for Profile
 
-class DownloadManager : public base::RefCountedThreadSafe<DownloadManager> {
- public:
-  bool Init(Profile* profile) {
-    NOTIMPLEMENTED();
-    return true;
-  }
-  void DownloadUrl(const GURL& url, const GURL& referrer,
-                   WebContents* web_contents) { NOTIMPLEMENTED(); }
-  int in_progress_count() {
-    NOTIMPLEMENTED();
-    return 0;
-  }
-};
-
 class TemplateURLFetcher {
  public:
   explicit TemplateURLFetcher(Profile* profile) { }
@@ -824,41 +497,15 @@ class Encryptor {
   }
 };
 
-class BookmarkNode {
-};
-
-class BookmarkModelObserver {
-};
-
-class BookmarkModel : public BookmarkService {
- public:
-  explicit BookmarkModel(Profile* profile) { }
-  virtual ~BookmarkModel() { }
-  void Load() { NOTIMPLEMENTED(); }
-  virtual bool IsBookmarked(const GURL& url) {
-    NOTIMPLEMENTED();
-    return false;
-  }
-  virtual void GetBookmarks(std::vector<GURL>* urls) { NOTIMPLEMENTED(); }
-  virtual bool IsLoaded() {
-    NOTIMPLEMENTED();
-    return false;
-  }
-  virtual void BlockTillLoaded() { NOTIMPLEMENTED(); }
-  void AddObserver(BookmarkModelObserver* observer) { NOTIMPLEMENTED(); }
-  void RemoveObserver(BookmarkModelObserver* observer) { NOTIMPLEMENTED(); }
-  void SetURLStarred(const GURL&, const std::wstring, bool)
-      { NOTIMPLEMENTED(); }
-};
-
 class SpellChecker : public base::RefCountedThreadSafe<SpellChecker> {
  public:
   typedef std::wstring Language;
+  typedef std::vector<Language> Languages;
   SpellChecker(const std::wstring& dict_dir,
                const Language& language,
                URLRequestContext* request_context,
                const std::wstring& custom_dictionary_file_name) {}
-  
+
   bool SpellCheckWord(const wchar_t* in_word,
                      int in_word_len,
                      int* misspelling_start,
@@ -867,31 +514,18 @@ class SpellChecker : public base::RefCountedThreadSafe<SpellChecker> {
     NOTIMPLEMENTED();
     return true;
   }
+  static int GetSpellCheckLanguagesToDisplayInContextMenu(
+      Profile* profile,
+      Languages* display_languages) {
+    NOTIMPLEMENTED();
+    return 0;
+  }
 };
 
 class WebAppLauncher {
  public:
   static void Launch(Profile* profile, const GURL& url) {
     NOTIMPLEMENTED();
-  }
-};
-
-class AutocompleteResult {
- public:
-  static void set_max_matches(int) { NOTIMPLEMENTED(); }
-};
-
-class AutocompleteProvider {
- public:
-  static void set_max_matches(int) { NOTIMPLEMENTED(); }
-};
-
-class URLFixerUpper {
- public:
-  static std::wstring FixupRelativeFile(const std::wstring& base_dir,
-                                        const std::wstring& text) {
-    NOTIMPLEMENTED();
-    return L"about:blank";
   }
 };
 
@@ -912,10 +546,6 @@ class WebApp : public base::RefCountedThreadSafe<WebApp> {
   }
 };
 
-class GearsShortcutData {
- public:
-};
-
 namespace printing {
 class PrintViewManager {
  public:
@@ -924,7 +554,7 @@ class PrintViewManager {
   void Destroy() { NOTIMPLEMENTED(); }
   bool OnRendererGone(RenderViewHost*) {
     NOTIMPLEMENTED();
-    return false;
+    return true;  // Assume for now that all renderer crashes are important.
   }
   void DidGetPrintedPagesCount(int, int) { NOTIMPLEMENTED(); }
   void DidPrintPage(const ViewHostMsg_DidPrintPage_Params&) {
@@ -933,71 +563,61 @@ class PrintViewManager {
 };
 }
 
-class FavIconHelper {
- public:
-  FavIconHelper(WebContents*) { }
-  void SetFavIconURL(const GURL&) { NOTIMPLEMENTED(); }
-  void SetFavIcon(int, const GURL&, const SkBitmap&) { NOTIMPLEMENTED(); }
-  void FavIconDownloadFailed(int) { NOTIMPLEMENTED(); }
-  void FetchFavIcon(const GURL&) { NOTIMPLEMENTED(); }
-};
-
-class PasswordManager {
- public:
-  PasswordManager(WebContents*) { }
-  void ClearProvisionalSave() { NOTIMPLEMENTED(); }
-  void DidStopLoading() { NOTIMPLEMENTED(); }
-  void PasswordFormsSeen(const std::vector<PasswordForm>&) { NOTIMPLEMENTED(); }
-  void DidNavigate() { NOTIMPLEMENTED(); }
-  void ProvisionallySavePassword(PasswordForm form) { NOTIMPLEMENTED(); }
-  void Autofill(const PasswordForm&, const PasswordFormMap&,
-                const PasswordForm* const) const {
-    NOTIMPLEMENTED();
-  }
-};
-
 class PluginInstaller {
  public:
   PluginInstaller(WebContents*) { }
 };
 
-class PluginService {
+class ChildProcessHost : public ChildProcessInfo {
  public:
-  static PluginService* GetInstance();
-  PluginService();
-  ~PluginService();
-  void LoadChromePlugins(ResourceDispatcherHost* rdh) {
-    NOTIMPLEMENTED();
-  }
-  bool HavePluginFor(const std::string& mime_type, bool allow_wildcard) {
-    NOTIMPLEMENTED();
-    return true;
-  }
-  void SetChromePluginDataDir(const FilePath& data_dir);
-  FilePath GetChromePluginDataDir() { return chrome_plugin_data_dir_; }
-  void GetPlugins(bool reload, std::vector<WebPluginInfo>* plugins) {}
-  FilePath GetPluginPath(const GURL& url,
-                         const std::string& mime_type,
-                         const std::string& clsid,
-                         std::string* actual_mime_type) {
-    NOTIMPLEMENTED();
-    return FilePath();
-  }
-  void OpenChannelToPlugin(ResourceMessageFilter* renderer_msg_filter,
-                           const GURL& url,
-                           const std::string& mime_type,
-                           const std::string& clsid,
-                           const std::wstring& locale,
-                           IPC::Message* reply_msg) { NOTIMPLEMENTED(); }
- private:
-  MessageLoop* main_message_loop_;
-  ResourceDispatcherHost* resource_dispatcher_host_;
-  FilePath chrome_plugin_data_dir_;
-  std::wstring ui_locale_;
-  Lock lock_;
-  class ShutdownHandler : public base::RefCountedThreadSafe<ShutdownHandler> {
+  class Iterator {
+   public:
+    explicit Iterator(ProcessType type) { NOTIMPLEMENTED(); }
+    ChildProcessInfo* operator->() { return *iterator_; }
+    ChildProcessInfo* operator*() { return *iterator_; }
+    ChildProcessInfo* operator++() { return NULL; }
+    bool Done() {
+      NOTIMPLEMENTED();
+      return true;
+    }
+   private:
+    std::list<ChildProcessInfo*>::iterator iterator_;
   };
-  scoped_refptr<ShutdownHandler> plugin_shutdown_handler_;
+ protected:
+  ChildProcessHost(ProcessType type, MessageLoop* main_message_loop)
+      : ChildProcessInfo(type) {
+    NOTIMPLEMENTED();
+  }
+};
+
+class PluginProcessHost : public ChildProcessHost {
+ public:
+  explicit PluginProcessHost(MessageLoop* main_message_loop)
+      : ChildProcessHost(PLUGIN_PROCESS, main_message_loop) {
+    NOTIMPLEMENTED();
+  }
+  bool Init(const WebPluginInfo& info,
+            const std::string& activex_clsid,
+            const std::wstring& locale) {
+    NOTIMPLEMENTED();
+    return false;
+  }
+  void OpenChannelToPlugin(ResourceMessageFilter* renderer_message_filter,
+                           const std::string& mime_type,
+                           IPC::Message* reply_msg) {
+    NOTIMPLEMENTED();
+  }
+  static void ReplyToRenderer(ResourceMessageFilter* renderer_message_filter,
+                              const std::wstring& channel,
+                              const FilePath& plugin_path,
+                              IPC::Message* reply_msg) {
+    NOTIMPLEMENTED();
+  }
+  void Shutdown() { NOTIMPLEMENTED(); }
+  const WebPluginInfo& info() const { return info_; }
+ private:
+  WebPluginInfo info_;
+  DISALLOW_EVIL_CONSTRUCTORS(PluginProcessHost);
 };
 
 class HungRendererWarning {
@@ -1016,35 +636,11 @@ class ConstrainedWindow {
   void CloseConstrainedWindow() { NOTIMPLEMENTED(); }
 };
 
-class SSLManager {
+class HtmlDialogContentsDelegate {
  public:
-  class Delegate {
-   public:
-  };
-  SSLManager(NavigationController* controller, Delegate* delegate) {
-    NOTIMPLEMENTED();
-  }
-  ~SSLManager() { }
-  void NavigationStateChanged() { NOTIMPLEMENTED(); }
-  static bool DeserializeSecurityInfo(const std::string&, int*, int*, int*);
-  static void OnSSLCertificateError(ResourceDispatcherHost* rdh,
-                                                  URLRequest* request,
-                                                  int cert_error,
-                                                  net::X509Certificate* cert,
-                                                  MessageLoop* ui_loop);
-  static std::string SerializeSecurityInfo(int cert_id,
-                                           int cert_status,
-                                           int security_bits) {
-    NOTIMPLEMENTED();
-    return std::string();
-  }
-  static void OnMixedContentRequest(ResourceDispatcherHost* rdh,
-                                    URLRequest* request,
-                                    MessageLoop* ui_loop) { NOTIMPLEMENTED(); }
-  void OnMixedContent(MixedContentHandler* mixed_content) { NOTIMPLEMENTED(); }
 };
 
-class ModalHtmlDialogDelegate {
+class ModalHtmlDialogDelegate : public HtmlDialogContentsDelegate {
  public:
   ModalHtmlDialogDelegate(const GURL&, int, int, const std::string&,
                           IPC::Message*, WebContents*) { }
@@ -1057,11 +653,6 @@ class CharacterEncoding {
     NOTIMPLEMENTED();
     return L"";
   }
-};
-
-class SimpleAlertInfoBarDelegate : public InfoBarDelegate {
- public:
-  SimpleAlertInfoBarDelegate(WebContents*, const std::wstring&, void*) {}
 };
 
 #if defined(OS_MACOSX)
@@ -1095,46 +686,6 @@ LoginHandler* CreateLoginPrompt(net::AuthChallengeInfo* auth_info,
                                 URLRequest* request,
                                 MessageLoop* ui_loop);
 
-class CrossSiteResourceHandler : public ResourceHandler {
- public:
-  CrossSiteResourceHandler(ResourceHandler* resource,
-                           int render_process_host_id,
-                           int render_view_id,
-                           ResourceDispatcherHost* rdh) {
-    NOTIMPLEMENTED();
-  }
-
-  void ResumeResponse() { NOTIMPLEMENTED(); }
-  bool OnUploadProgress(int request_id, uint64 position, uint64 size) {
-    NOTIMPLEMENTED();
-    return true;
-  }
-  bool OnRequestRedirected(int request_id, const GURL& url) {
-    NOTIMPLEMENTED();
-    return true;
-  }
-  bool OnResponseStarted(int request_id, ResourceResponse* response) {
-    NOTIMPLEMENTED();
-    return true;
-  }
-  bool OnWillRead(int request_id,
-                  net::IOBuffer** buf,
-                  int* buf_size,
-                  int min_size) {
-    NOTIMPLEMENTED();
-    return true;
-  }
-  bool OnReadCompleted(int request_id, int* bytes_read) {
-    NOTIMPLEMENTED();
-    return true;
-  }
-  bool OnResponseCompleted(int request_id,
-                           const URLRequestStatus& status) {
-    NOTIMPLEMENTED();
-    return true;
-  }
-};
-
 class ExternalProtocolHandler {
  public:
   static void LaunchUrl(const GURL& url, int render_process_host_id,
@@ -1143,18 +694,33 @@ class ExternalProtocolHandler {
   }
 };
 
-namespace tab_util {
-bool GetTabContentsID(URLRequest* request,
-                      int* render_process_host_id,
-                      int* routing_id);
-WebContents* GetWebContentsByID(int render_process_host_id,
-                                int render_view_id);
-}
-
 class RepostFormWarningDialog {
  public:
   static void RunRepostFormWarningDialog(NavigationController*) { }
   virtual ~RepostFormWarningDialog() { }
+};
+
+class PageInfoWindow {
+ public:
+  enum TabID {
+    GENERAL = 0,
+    SECURITY,
+  };
+  static void CreatePageInfo(Profile* profile, NavigationEntry* nav_entry,
+                             gfx::NativeView parent_hwnd, TabID tab) {
+    NOTIMPLEMENTED();
+  }
+  static void CreateFrameInfo(Profile* profile, const GURL& url,
+                              const NavigationEntry::SSLStatus& ssl,
+                              gfx::NativeView parent_hwnd, TabID tab) {
+    NOTIMPLEMENTED();
+  }
+};
+
+class FontsLanguagesWindowView {
+ public:
+  explicit FontsLanguagesWindowView(Profile* profile) { NOTIMPLEMENTED(); }
+  void SelectLanguagesTab() { NOTIMPLEMENTED(); }
 };
 
 #endif  // CHROME_COMMON_TEMP_SCAFFOLDING_STUBS_H_

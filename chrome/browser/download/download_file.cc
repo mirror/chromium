@@ -11,7 +11,6 @@
 #include "base/task.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #include "chrome/browser/tab_contents/tab_util.h"
@@ -90,6 +89,7 @@ void DownloadFile::Cancel() {
 
 // The UI has provided us with our finalized name.
 bool DownloadFile::Rename(const FilePath& new_path) {
+#if defined(OS_WIN)
   Close();
 
   // We cannot rename because rename will keep the same security descriptor
@@ -111,6 +111,11 @@ bool DownloadFile::Rename(const FilePath& new_path) {
   if (!Open("a+b"))
     return false;
   return true;
+#elif defined(OS_POSIX)
+  // TODO(port): Port this function to posix (we need file_util::Rename()).
+  NOTIMPLEMENTED();
+  return false;
+#endif
 }
 
 void DownloadFile::Close() {
@@ -531,12 +536,13 @@ void DownloadFileManager::OnShowDownloadInShell(const FilePath& full_path) {
 // a valid parent window, the 'safer' version will be used which can
 // display a modal dialog asking for user consent on dangerous files.
 void DownloadFileManager::OnOpenDownloadInShell(const FilePath& full_path,
-                                                const std::wstring& url,
+                                                const GURL& url,
                                                 gfx::NativeView parent_window) {
 #if defined(OS_WIN)
   DCHECK(MessageLoop::current() == file_loop_);
   if (NULL != parent_window) {
-    win_util::SaferOpenItemViaShell(parent_window, L"", full_path, url, true);
+    win_util::SaferOpenItemViaShell(parent_window, L"", full_path,
+                                    UTF8ToWide(url.spec()), true);
   } else {
     win_util::OpenItemViaShell(full_path, true);
   }

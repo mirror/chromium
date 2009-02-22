@@ -12,7 +12,8 @@
 
 #include <math.h>
 
-#include "chrome/app/theme/theme_resources.h"
+#include "base/string_util.h"
+#include "grit/theme_resources.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/common/gfx/chrome_canvas.h"
@@ -450,7 +451,7 @@ void BlockedPopupContainer::Init(const gfx::Point& initial_anchor) {
   container_view_->SetVisible(true);
 
   set_window_style(WS_CHILD | WS_CLIPSIBLINGS | WS_CLIPCHILDREN);
-  WidgetWin::Init(owner_->GetContainerHWND(), gfx::Rect(), false);
+  WidgetWin::Init(owner_->GetNativeView(), gfx::Rect(), false);
   SetContentsView(container_view_);
   RepositionConstrainedWindowTo(initial_anchor);
 

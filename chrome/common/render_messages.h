@@ -15,13 +15,15 @@
 #include "base/shared_memory.h"
 #include "chrome/browser/renderer_host/resource_handler.h"
 #include "chrome/common/accessibility.h"
-#include "chrome/common/bitmap_wire_data.h"
 #include "chrome/common/filter_policy.h"
 #include "chrome/common/ipc_message_utils.h"
 #include "chrome/common/modal_dialog_event.h"
 #include "chrome/common/page_transition_types.h"
+#include "chrome/common/transport_dib.h"
 #include "googleurl/src/gurl.h"
+#include "media/audio/audio_output.h"
 #include "net/base/upload_data.h"
+#include "net/http/http_response_headers.h"
 #include "net/url_request/url_request_status.h"
 #include "webkit/glue/autofill_form.h"
 #include "webkit/glue/cache_manager.h"
@@ -121,6 +123,9 @@ struct ViewHostMsg_FrameNavigate_Params {
   // Whether the content of the frame was replaced with some alternate content
   // (this can happen if the resource was insecure).
   bool is_content_filtered;
+
+  // The status code of the HTTP request.
+  int http_status_code;
 };
 
 // Values that may be OR'd together to form the 'flags' parameter of a
@@ -145,7 +150,7 @@ struct ViewHostMsg_PaintRect_Flags {
 
 struct ViewHostMsg_PaintRect_Params {
   // The bitmap to be painted into the rect given by bitmap_rect.
-  BitmapWireData bitmap;
+  TransportDIB::Id bitmap;
 
   // The position and size of the bitmap.
   gfx::Rect bitmap_rect;
@@ -178,7 +183,7 @@ struct ViewHostMsg_PaintRect_Params {
 // parameters to be reasonably put in a predefined IPC message.
 struct ViewHostMsg_ScrollRect_Params {
   // The bitmap to be painted into the rect exposed by scrolling.
-  BitmapWireData bitmap;
+  TransportDIB::Id bitmap;
 
   // The position and size of the bitmap.
   gfx::Rect bitmap_rect;
@@ -324,6 +329,23 @@ enum ViewHostMsg_ImeControl {
   IME_COMPLETE_COMPOSITION,
 };
 
+// Parameters for creating an audio output stream.
+struct ViewHostMsg_Audio_CreateStream {
+  // Format request for the stream.
+  AudioManager::Format format;
+
+  // Number of channels.
+  int channels;
+
+  // Sampling rate (frequency) of the output stream.
+  int sample_rate;
+
+  // Number of bits per sample;
+  int bits_per_sample;
+
+  // Number of bytes per packet.
+  size_t packet_size;
+};
 
 namespace IPC {
 
@@ -727,6 +749,7 @@ struct ParamTraits<ViewHostMsg_FrameNavigate_Params> {
     WriteParam(m, p.contents_mime_type);
     WriteParam(m, p.is_post);
     WriteParam(m, p.is_content_filtered);
+    WriteParam(m, p.http_status_code);
   }
   static bool Read(const Message* m, void** iter, param_type* p) {
     return
@@ -744,7 +767,8 @@ struct ParamTraits<ViewHostMsg_FrameNavigate_Params> {
       ReadParam(m, iter, &p->gesture) &&
       ReadParam(m, iter, &p->contents_mime_type) &&
       ReadParam(m, iter, &p->is_post) &&
-      ReadParam(m, iter, &p->is_content_filtered);
+      ReadParam(m, iter, &p->is_content_filtered) &&
+      ReadParam(m, iter, &p->http_status_code);
   }
   static void Log(const param_type& p, std::wstring* l) {
     l->append(L"(");
@@ -777,6 +801,8 @@ struct ParamTraits<ViewHostMsg_FrameNavigate_Params> {
     LogParam(p.is_post, l);
     l->append(L", ");
     LogParam(p.is_content_filtered, l);
+    l->append(L", ");
+    LogParam(p.http_status_code, l);
     l->append(L")");
   }
 };
@@ -1587,6 +1613,75 @@ struct ParamTraits<ModalDialogEvent> {
   }
 };
 
+// Traits for AudioManager::Format.
+template <>
+struct ParamTraits<AudioManager::Format> {
+  typedef AudioManager::Format param_type;
+  static void Write(Message* m, const param_type& p) {
+    m->WriteInt(p);
+  }
+  static bool Read(const Message* m, void** iter, param_type* p) {
+    int type;
+    if (!m->ReadInt(iter, &type))
+      return false;
+    *p = static_cast<AudioManager::Format>(type);
+    return true;
+  }
+  static void Log(const param_type& p, std::wstring* l) {
+    std::wstring format;
+    switch (p) {
+     case AudioManager::AUDIO_PCM_LINEAR:
+       format = L"AUDIO_PCM_LINEAR";
+       break;
+     case AudioManager::AUDIO_PCM_DELTA:
+       format = L"AUDIO_PCM_DELTA";
+       break;
+     case AudioManager::AUDIO_MOCK:
+       format = L"AUDIO_MOCK";
+       break;
+     default:
+       format = L"AUDIO_LAST_FORMAT";
+       break;
+    }
+    LogParam(format, l);
+  }
+};
+
+// Traits for ViewHostMsg_Audio_CreateStream.
+template <>
+struct ParamTraits<ViewHostMsg_Audio_CreateStream> {
+  typedef ViewHostMsg_Audio_CreateStream param_type;
+  static void Write(Message* m, const param_type& p) {
+    WriteParam(m, p.format);
+    WriteParam(m, p.channels);
+    WriteParam(m, p.sample_rate);
+    WriteParam(m, p.bits_per_sample);
+    WriteParam(m, p.packet_size);
+  }
+  static bool Read(const Message* m, void** iter, param_type* p) {
+    return
+      ReadParam(m, iter, &p->format) &&
+      ReadParam(m, iter, &p->channels) &&
+      ReadParam(m, iter, &p->sample_rate) &&
+      ReadParam(m, iter, &p->bits_per_sample) &&
+      ReadParam(m, iter, &p->packet_size);
+  }
+  static void Log(const param_type& p, std::wstring* l) {
+    l->append(L"<ViewHostMsg_Audio_CreateStream>(");
+    LogParam(p.format, l);
+    l->append(L", ");
+    LogParam(p.channels, l);
+    l->append(L", ");
+    LogParam(p.sample_rate, l);
+    l->append(L", ");
+    LogParam(p.bits_per_sample, l);
+    l->append(L", ");
+    LogParam(p.packet_size, l);
+    l->append(L")");
+  }
+};
+
+
 #if defined(OS_POSIX)
 
 // TODO(port): this shouldn't exist. However, the plugin stuff is really using
@@ -1611,6 +1706,41 @@ struct ParamTraits<gfx::NativeView> {
 };
 
 #endif  // defined(OS_POSIX)
+
+template <>
+struct ParamTraits<AudioOutputStream::State> {
+  typedef AudioOutputStream::State param_type;
+  static void Write(Message* m, const param_type& p) {
+    m->WriteInt(p);
+  }
+  static bool Read(const Message* m, void** iter, param_type* p) {
+    int type;
+    if (!m->ReadInt(iter, &type))
+      return false;
+    *p = static_cast<AudioOutputStream::State>(type);
+    return true;
+  }
+  static void Log(const param_type& p, std::wstring* l) {
+    std::wstring state;
+    switch (p) {
+     case AudioOutputStream::STATE_PAUSED:
+      state = L"AUDIO_STREAM_PAUSED";
+      break;
+     case AudioOutputStream::STATE_STARTED:
+      state = L"AUDIO_STREAM_STARTED";
+      break;
+     case AudioOutputStream::STATE_ERROR:
+      state = L"AUDIO_STREAM_ERROR";
+      break;
+     default:
+      state = L"UNKNOWN";
+      break;
+    }
+
+    LogParam(state, l);
+  }
+};
+
 
 }  // namespace IPC
 

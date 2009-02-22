@@ -342,6 +342,30 @@
 			>
 		</File>
 		<File
+			RelativePath=".\child_process_host.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\child_process_host.h"
+			>
+		</File>
+		<File
+			RelativePath=".\child_process_info.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\child_process_info.h"
+			>
+		</File>
+		<File
+			RelativePath=".\child_thread.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\child_thread.h"
+			>
+		</File>
+		<File
 			RelativePath=".\chrome_constants.cc"
 			>
 		</File>
@@ -423,10 +447,6 @@
 		</File>
 		<File
 			RelativePath=".\common_glue.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\common_resources.h"
 			>
 		</File>
 		<File
@@ -526,6 +546,10 @@
 			>
 		</File>
 		<File
+			RelativePath=".\notification_observer.h"
+			>
+		</File>
+		<File
 			RelativePath=".\notification_registrar.cc"
 			>
 		</File>
@@ -546,7 +570,7 @@
 			>
 		</File>
 		<File
-			RelativePath=".\notification_types.h"
+			RelativePath=".\notification_type.h"
 			>
 		</File>
 		<File
@@ -723,6 +747,14 @@
 		</File>
 		<File
 			RelativePath=".\time_format.h"
+			>
+		</File>
+		<File
+			RelativePath=".\transport_dib.h"
+			>
+		</File>
+		<File
+			RelativePath=".\transport_dib_win.cc"
 			>
 		</File>
 		<File

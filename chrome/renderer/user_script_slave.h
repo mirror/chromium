@@ -11,12 +11,10 @@
 #include "base/scoped_ptr.h"
 #include "base/shared_memory.h"
 #include "base/string_piece.h"
-#include "base/string_util.h"
 #include "chrome/common/extensions/user_script.h"
 #include "chrome/common/stl_util-inl.h"
-#include "testing/gtest/include/gtest/gtest_prod.h"
-#include "webkit/glue/webframe.h"
 
+class WebFrame;
 
 // Manages installed UserScripts for a render process.
 class UserScriptSlave {
@@ -29,7 +27,7 @@ class UserScriptSlave {
   // Inject the appropriate scripts into a frame based on its URL.
   // TODO(aa): Extract a UserScriptFrame interface out of this to improve
   // testability.
-  bool InjectScripts(WebFrame* frame);
+  bool InjectScripts(WebFrame* frame, UserScript::RunLocation location);
 
  private:
   // Shared memory containing raw script data.

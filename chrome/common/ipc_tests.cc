@@ -26,9 +26,6 @@
 #include "base/test_suite.h"
 #include "base/thread.h"
 #include "chrome/common/chrome_switches.h"
-#if defined(OS_POSIX)
-#include "chrome/common/file_descriptor_posix.h"
-#endif
 #include "chrome/common/ipc_channel.h"
 #include "chrome/common/ipc_channel_proxy.h"
 #include "chrome/common/ipc_message_utils.h"
@@ -106,6 +103,12 @@ base::ProcessHandle IPCChannelTest::SpawnChild(ChildType child_type,
     break;
   case TEST_DESCRIPTOR_CLIENT:
     ret = MultiProcessTest::SpawnChild(L"RunTestDescriptorClient",
+                                       fds_to_map,
+                                       debug_on_start);
+    channel->OnClientConnected();
+    break;
+  case TEST_DESCRIPTOR_CLIENT_SANDBOXED:
+    ret = MultiProcessTest::SpawnChild(L"RunTestDescriptorClientSandboxed",
                                        fds_to_map,
                                        debug_on_start);
     channel->OnClientConnected();

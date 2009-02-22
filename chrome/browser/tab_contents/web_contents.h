@@ -5,12 +5,19 @@
 #ifndef CHROME_BROWSER_TAB_CONTENTS_WEB_CONTENTS_H_
 #define CHROME_BROWSER_TAB_CONTENTS_WEB_CONTENTS_H_
 
+#include <map>
+#include <string>
+#include <vector>
+
 #include "base/basictypes.h"
 #include "base/hash_tables.h"
 #include "chrome/browser/cancelable_request.h"
+#include "chrome/browser/download/save_package.h"
+#include "chrome/browser/fav_icon_helper.h"
 #include "chrome/browser/renderer_host/render_view_host_delegate.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/render_view_host_manager.h"
+#include "chrome/common/gears_api.h"
 #include "net/base/load_states.h"
 #include "webkit/glue/password_form.h"
 #include "webkit/glue/webpreferences.h"
@@ -19,12 +26,9 @@
 // Remove when we've finished porting the supporting classes.
 #include "chrome/common/temp_scaffolding_stubs.h"
 #elif defined(OS_WIN)
-#include "chrome/browser/download/save_package.h"
-#include "chrome/browser/fav_icon_helper.h"
 #include "chrome/browser/printing/print_view_manager.h"
 #include "chrome/browser/shell_dialogs.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
-#include "chrome/common/gears_api.h"
 #endif
 
 class AutofillForm;
@@ -132,11 +136,9 @@ class WebContents : public TabContents,
   // TODO(brettw) fix this, tab contents shouldn't have these methods, probably
   // it should be killed altogether.
   virtual void CreateView();
-#if defined(OS_WIN)
-  virtual HWND GetContainerHWND() const;
-  virtual HWND GetContentHWND();
+  virtual gfx::NativeView GetNativeView() const;
+  virtual gfx::NativeView GetContentNativeView();
   virtual void GetContainerBounds(gfx::Rect *out) const;
-#endif
 
   // Web apps ------------------------------------------------------------------
 
@@ -214,7 +216,7 @@ class WebContents : public TabContents,
 
   // Override the encoding and reload the page by sending down
   // ViewMsg_SetPageEncoding to the renderer. |UpdateEncoding| is kinda
-  // the opposite of this, by which 'browser' is notified of 
+  // the opposite of this, by which 'browser' is notified of
   // the encoding of the current tab from 'renderer' (determined by
   // auto-detect, http header, meta, bom detection, etc).
   void override_encoding(const std::wstring& encoding) {
@@ -244,6 +246,7 @@ class WebContents : public TabContents,
   virtual RenderViewHostDelegate::View* GetViewDelegate() const;
   virtual RenderViewHostDelegate::Save* GetSaveDelegate() const;
   virtual Profile* GetProfile() const;
+  virtual WebContents* GetAsWebContents() { return this; }
   virtual void RendererReady(RenderViewHost* render_view_host);
   virtual void RendererGone(RenderViewHost* render_view_host);
   virtual void DidNavigate(RenderViewHost* render_view_host,
@@ -272,10 +275,12 @@ class WebContents : public TabContents,
                                           const GURL& target_url);
   virtual void DidLoadResourceFromMemoryCache(const GURL& url,
                                               const std::string& security_info);
-  virtual void DidFailProvisionalLoadWithError(RenderViewHost* render_view_host,
-                                               bool is_main_frame,
-                                               int error_code,
-                                               const GURL& url);
+  virtual void DidFailProvisionalLoadWithError(
+      RenderViewHost* render_view_host,
+      bool is_main_frame,
+      int error_code,
+      const GURL& url,
+      bool showing_repost_interstitial);
   virtual void UpdateFavIconURL(RenderViewHost* render_view_host,
                                 int32 page_id, const GURL& icon_url);
   virtual void DidDownloadImage(RenderViewHost* render_view_host,
@@ -308,7 +313,7 @@ class WebContents : public TabContents,
                                    IPC::Message* reply_msg);
   virtual void PasswordFormsSeen(const std::vector<PasswordForm>& forms);
   virtual void AutofillFormSubmitted(const AutofillForm& form);
-  virtual void GetAutofillSuggestions(const std::wstring& field_name, 
+  virtual void GetAutofillSuggestions(const std::wstring& field_name,
       const std::wstring& user_text, int64 node_id, int request_id);
   virtual void PageHasOSDD(RenderViewHost* render_view_host,
                            int32 page_id, const GURL& url, bool autodetected);
@@ -332,7 +337,8 @@ class WebContents : public TabContents,
                                         new_request_id);
   }
   virtual bool CanBlur() const;
-  virtual void RendererUnresponsive(RenderViewHost* render_view_host, 
+  virtual gfx::Rect GetRootWindowResizerRect() const;
+  virtual void RendererUnresponsive(RenderViewHost* render_view_host,
                                     bool is_during_unload);
   virtual void RendererResponsive(RenderViewHost* render_view_host);
   virtual void LoadStateChanged(const GURL& url, net::LoadState load_state);
@@ -394,6 +400,8 @@ class WebContents : public TabContents,
   friend class WebContentsViewWin;
 #elif defined(OS_MACOSX)
   friend class WebContentsViewMac;
+#elif defined(OS_LINUX)
+  friend class WebContentsViewGtk;
 #endif
 
   // So InterstitialPage can access SetIsLoading.
@@ -457,7 +465,7 @@ class WebContents : public TabContents,
 
   // Called when the user dismisses the shortcut creation dialog.  'success' is
   // true if the shortcut was created.
-  void OnGearsCreateShortcutDone(const GearsShortcutData& shortcut_data,
+  void OnGearsCreateShortcutDone(const GearsShortcutData2& shortcut_data,
                                  bool success);
 
   // If our controller was restored and the page id is > than the site

@@ -457,7 +457,8 @@ bool View::ProcessMousePressed(const MouseEvent& e, DragInfo* drag_info) {
     drag_operations = GetDragOperations(e.x(), e.y());
   else
     drag_operations = 0;
-  ContextMenuController* context_menu_controller = context_menu_controller_;
+  ContextMenuController* context_menu_controller =
+      e.IsRightMouseButton()? context_menu_controller_ : 0;
 
   const bool result = OnMousePressed(e);
   // WARNING: we may have been deleted, don't use any View variables;
@@ -1268,13 +1269,12 @@ void View::ConvertPointToView(const View* src,
 }
 
 // static
-void View::ConvertPointToWidget(View* src, gfx::Point* p) {
+void View::ConvertPointToWidget(const View* src, gfx::Point* p) {
   DCHECK(src);
   DCHECK(p);
 
-  View *v;
   gfx::Point offset;
-  for (v = src; v; v = v->GetParent()) {
+  for (const View* v = src; v; v = v->GetParent()) {
     offset.set_x(offset.x() + v->GetX(APPLY_MIRRORING_TRANSFORMATION));
     offset.set_y(offset.y() + v->y());
   }
@@ -1282,14 +1282,14 @@ void View::ConvertPointToWidget(View* src, gfx::Point* p) {
 }
 
 // static
-void View::ConvertPointFromWidget(View *source, gfx::Point* p) {
+void View::ConvertPointFromWidget(const View* dest, gfx::Point* p) {
   gfx::Point t;
-  ConvertPointToWidget(source, &t);
+  ConvertPointToWidget(dest, &t);
   p->SetPoint(p->x() - t.x(), p->y() - t.y());
 }
 
 // static
-void View::ConvertPointToScreen(View* src, gfx::Point* p) {
+void View::ConvertPointToScreen(const View* src, gfx::Point* p) {
   DCHECK(src);
   DCHECK(p);
 
@@ -1372,9 +1372,8 @@ bool View::IsVisibleInRootView() const {
 
 void View::RequestFocus() {
   RootView* rv = GetRootView();
-  if (rv) {
+  if (rv && IsFocusable())
     rv->FocusView(this);
-  }
 }
 
 void View::WillGainFocus() {
@@ -1480,6 +1479,8 @@ std::string View::GetClassName() const {
 }
 
 gfx::Rect View::GetVisibleBounds() {
+  if (!IsVisibleInRootView())
+    return gfx::Rect();
   gfx::Rect vis_bounds(0, 0, width(), height());
   gfx::Rect ancestor_bounds;
   View* view = this;

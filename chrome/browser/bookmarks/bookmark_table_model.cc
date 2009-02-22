@@ -9,8 +9,9 @@
 #include "base/string_util.h"
 #include "base/time.h"
 #include "base/time_format.h"
-#include "chrome/app/theme/theme_resources.h"
+#include "grit/theme_resources.h"
 #include "chrome/browser/bookmarks/bookmark_utils.h"
+#include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "googleurl/src/gurl.h"
 
@@ -362,7 +363,7 @@ void BookmarkTableModel::BuildPath(BookmarkNode* node, std::wstring* path) {
   // (in which, "CBA" and "FED" stand for folder names in Hebrew, and "FED" is
   // a subfolder of "CBA") will be displayed as "FED/CBA".
   if (l10n_util::GetTextDirection() == l10n_util::RIGHT_TO_LEFT) {
-    path->append(l10n_util::kLeftToRightMark);
+    path->push_back(static_cast<wchar_t>(l10n_util::kLeftToRightMark));
   }
   path->append(node->GetTitle());
 }

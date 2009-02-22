@@ -10,16 +10,13 @@
 #include <atlcrack.h>
 #include <atlmisc.h>
 
-#include "base/basictypes.h"
-#include "base/gfx/size.h"
-#include "base/scoped_handle.h"
-#include "base/shared_memory.h"
 #include "base/task.h"
 #include "chrome/browser/ime_input.h"
 #include "chrome/browser/renderer_host/render_widget_host_view.h"
 #include "webkit/glue/webcursor.h"
 
 namespace gfx {
+class Size;
 class Rect;
 }
 namespace IPC {
@@ -27,7 +24,6 @@ class Message;
 }
 class RenderWidgetHost;
 class WebMouseEvent;
-class WebCursor;
 
 typedef CWinTraits<WS_CHILD | WS_CLIPCHILDREN | WS_CLIPSIBLINGS, 0>
     RenderWidgetHostHWNDTraits;
@@ -212,6 +208,10 @@ class RenderWidgetHostViewWin :
   // Redraws the window synchronously, and any child windows (i.e. plugins)
   // asynchronously.
   void Redraw(const gfx::Rect& invalid_rect);
+
+  // Draw the resize corner bitmap on top of the given HDC, if it intersects the
+  // given paint rect.
+  void DrawResizeCorner(const gfx::Rect& paint_rect, HDC dc);
 
   // The associated Model.
   RenderWidgetHost* render_widget_host_;

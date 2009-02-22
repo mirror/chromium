@@ -12,6 +12,7 @@
 #include "chrome/browser/browser_prefs.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/search_engines/template_url_model.h"
+#include "chrome/browser/sessions/session_service.h"
 #include "chrome/common/pref_service.h"
 
 #if defined(OS_POSIX)
@@ -24,7 +25,6 @@
 #if defined(OS_WIN)
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/history/history.h"
-#include "chrome/browser/sessions/session_service.h"
 #endif
 
 class TestingProfile : public Profile {
@@ -82,6 +82,9 @@ class TestingProfile : public Profile {
     return NULL;
   }
   virtual UserScriptMaster* GetUserScriptMaster() {
+    return NULL;
+  }
+  virtual SSLHostState* GetSSLHostState() {
     return NULL;
   }
   virtual HistoryService* GetHistoryService(ServiceAccessType access) {

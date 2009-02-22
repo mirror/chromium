@@ -10,12 +10,15 @@
 #include "base/gfx/rect.h"
 #include "base/gfx/native_widget_types.h"
 #include "base/ref_counted.h"
+#include "base/shared_memory.h"
 #include "build/build_config.h"
 #include "chrome/browser/net/resolve_proxy_msg_helper.h"
 #include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #include "chrome/common/ipc_channel_proxy.h"
+#include "chrome/common/ipc_maybe.h"
 #include "chrome/common/modal_dialog_event.h"
 #include "chrome/common/notification_observer.h"
+#include "chrome/common/transport_dib.h"
 #include "webkit/glue/cache_manager.h"
 
 #if defined(OS_WIN)
@@ -25,10 +28,12 @@
 #include "chrome/common/temp_scaffolding_stubs.h"
 #endif
 
+class AudioRendererHost;
 class ClipboardService;
 class Profile;
 class RenderWidgetHelper;
 class SpellChecker;
+struct ViewHostMsg_Audio_CreateStream;
 struct WebPluginInfo;
 
 namespace printing {
@@ -57,6 +62,7 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   //        ResourceMessageFilter is 'given' ownership of the spellchecker
   //        object and must clean it up on exit.
   ResourceMessageFilter(ResourceDispatcherHost* resource_dispatcher_host,
+                        AudioRendererHost* audio_renderer_host,
                         PluginService* plugin_service,
                         printing::PrintJobManager* print_job_manager,
                         int render_process_host_id,
@@ -80,7 +86,7 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   int render_process_host_id() const { return render_process_host_id_;}
 
   base::ProcessHandle renderer_handle() const { return render_handle_;}
-  
+
   // NotificationObserver implementation.
   virtual void Observe(NotificationType type,
                        const NotificationSource& source,
@@ -150,21 +156,20 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
 #if defined(OS_WIN)
   void OnGetWindowRect(gfx::NativeViewId window, gfx::Rect *rect);
   void OnGetRootWindowRect(gfx::NativeViewId window, gfx::Rect *rect);
-  void OnGetRootWindowResizerRect(gfx::NativeViewId window, gfx::Rect *rect);
 #endif
-  void OnGetMimeTypeFromExtension(const std::wstring& ext,
+  void OnGetMimeTypeFromExtension(const FilePath::StringType& ext,
                                   std::string* mime_type);
-  void OnGetMimeTypeFromFile(const std::wstring& file_path,
+  void OnGetMimeTypeFromFile(const FilePath& file_path,
                              std::string* mime_type);
   void OnGetPreferredExtensionForMimeType(const std::string& mime_type,
-                                          std::wstring* ext);
+                                          FilePath::StringType* ext);
   void OnGetCPBrowsingContext(uint32* context);
   void OnDuplicateSection(base::SharedMemoryHandle renderer_handle,
                           base::SharedMemoryHandle* browser_handle);
   void OnResourceTypeStats(const CacheManager::ResourceTypeStats& stats);
 
   void OnResolveProxy(const GURL& url, IPC::Message* reply_msg);
-  
+
   // ResolveProxyMsgHelper::Delegate implementation:
   virtual void OnResolveProxyCompleted(IPC::Message* reply_msg,
                                        int result,
@@ -189,6 +194,21 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
       scoped_refptr<printing::PrinterQuery> printer_query,
       IPC::Message* reply_msg);
 #endif
+
+  // Audio related IPC message handlers.
+  void OnCreateAudioStream(const IPC::Message& msg, int stream_id,
+                           const ViewHostMsg_Audio_CreateStream& params);
+  void OnNotifyAudioPacketReady(const IPC::Message& msg, int stream_id);
+  void OnStartAudioStream(const IPC::Message& msg, int stream_id);
+  void OnCloseAudioStream(const IPC::Message& msg, int stream_id);
+  void OnGetAudioVolume(const IPC::Message& msg, int stream_id);
+  void OnSetAudioVolume(const IPC::Message& msg, int stream_id,
+                        double left_channel, double right_channel);
+
+  // Browser side transport DIB allocation
+  void OnAllocTransportDIB(size_t size,
+                           IPC::Maybe<TransportDIB::Handle>* result);
+  void OnFreeTransportDIB(TransportDIB::Id dib_id);
 
   // We have our own clipboard service because we want to access the clipboard
   // on the IO thread instead of forwarding (possibly synchronous) messages to
@@ -238,6 +258,9 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   void* profile_;
 
   scoped_refptr<RenderWidgetHelper> render_widget_helper_;
+
+  // Object that should take care of audio related resource requests.
+  scoped_refptr<AudioRendererHost> audio_renderer_host_;
 
   DISALLOW_COPY_AND_ASSIGN(ResourceMessageFilter);
 };

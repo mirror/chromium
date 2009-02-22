@@ -9,17 +9,11 @@
 
 #include "build/build_config.h"
 
-#if defined(OS_POSIX)
-// TODO(port): remove when dependent classes are ported
-#include "chrome/common/temp_scaffolding_stubs.h"
-#elif defined(OS_WIN)
-#include "chrome/browser/ssl/ssl_manager.h"
-#endif
-
 #include "base/linked_ptr.h"
 #include "base/ref_counted.h"
 #include "googleurl/src/gurl.h"
 #include "chrome/browser/sessions/session_id.h"
+#include "chrome/browser/ssl/ssl_manager.h"
 #include "chrome/browser/tab_contents/tab_contents_type.h"
 #include "chrome/common/navigation_types.h"
 #include "chrome/common/page_transition_types.h"
@@ -113,6 +107,9 @@ class NavigationController {
     bool is_user_initiated_main_frame_load() const {
       return !is_auto && !is_in_page && is_main_frame;
     }
+
+    // The HTTP status code for this entry..
+    int http_status_code;
   };
 
   // Details sent for NOTIFY_NAV_LIST_PRUNED.

@@ -8,17 +8,13 @@
 #include <vector>
 
 #include "base/basictypes.h"
-#include "base/id_map.h"
-#include "base/object_watcher.h"
-#include "base/process.h"
 #include "base/scoped_ptr.h"
 #include "base/task.h"
 #include "chrome/browser/net/resolve_proxy_msg_helper.h"
 #include "chrome/browser/renderer_host/resource_message_filter.h"
-#include "chrome/common/ipc_channel_proxy.h"
+#include "chrome/common/child_process_host.h"
+#include "webkit/glue/webplugin.h"
 
-class PluginService;
-class PluginProcessHost;
 class ResourceDispatcherHost;
 class URLRequestContext;
 struct ViewHostMsg_Resource_Request;
@@ -32,29 +28,20 @@ class GURL;
 // starting the plugin process when a plugin is created that doesn't already
 // have a process.  After that, most of the communication is directly between
 // the renderer and plugin processes.
-class PluginProcessHost : public IPC::Channel::Listener,
-                          public IPC::Message::Sender,
-                          public base::ObjectWatcher::Delegate,
+class PluginProcessHost : public ChildProcessHost,
                           public ResolveProxyMsgHelper::Delegate {
  public:
-  PluginProcessHost(PluginService* plugin_service);
+  PluginProcessHost(MessageLoop* main_message_loop);
   ~PluginProcessHost();
 
   // Initialize the new plugin process, returning true on success. This must
   // be called before the object can be used. If plugin_path is the
   // ActiveX-shim, then activex_clsid is the class id of ActiveX control,
   // otherwise activex_clsid is ignored.
-  bool Init(const FilePath& plugin_path,
+  bool Init(const WebPluginInfo& info,
             const std::string& activex_clsid,
             const std::wstring& locale);
 
-  // IPC::Message::Sender implementation:
-  virtual bool Send(IPC::Message* msg);
-
-  // ObjectWatcher::Delegate implementation:
-  virtual void OnObjectSignaled(HANDLE object);
-
-  // IPC::Channel::Listener implementation:
   virtual void OnMessageReceived(const IPC::Message& msg);
   virtual void OnChannelConnected(int32 peer_pid);
   virtual void OnChannelError();
@@ -64,17 +51,12 @@ class PluginProcessHost : public IPC::Channel::Listener,
                                        int result,
                                        const std::string& proxy_list);
 
-  // Getter to the process, may return NULL if there is no connection.
-  HANDLE process() { return process_.handle(); }
-
   // Tells the plugin process to create a new channel for communication with a
   // renderer.  When the plugin process responds with the channel name,
   // reply_msg is used to send the name to the renderer.
   void OpenChannelToPlugin(ResourceMessageFilter* renderer_message_filter,
                            const std::string& mime_type,
                            IPC::Message* reply_msg);
-
-  const FilePath& plugin_path() const { return plugin_path_; }
 
   // Sends the reply to an open channel request to the renderer with the given
   // channel name.
@@ -91,6 +73,8 @@ class PluginProcessHost : public IPC::Channel::Listener,
 
   // Shuts down the current plugin process instance.
   void Shutdown();
+
+  const WebPluginInfo& info() const { return info_; }
 
  private:
   friend class PluginResolveProxyHelper;
@@ -140,28 +124,8 @@ class PluginProcessHost : public IPC::Channel::Listener,
   // the plugin process, but haven't heard back about yet.
   std::vector<ChannelRequest> sent_requests_;
 
-  // The handle to our plugin process.
-  base::Process process_;
-
-  // Used to watch the plugin process handle.
-  base::ObjectWatcher watcher_;
-
-  // true while we're waiting the channel to be opened.  In the meantime,
-  // plugin instance requests will be buffered.
-  bool opening_channel_;
-
-  // The IPC::Channel.
-  scoped_ptr<IPC::Channel> channel_;
-
-  // IPC Channel's id.
-  std::wstring channel_id_;
-
-  // Path to the file of that plugin.
-  FilePath plugin_path_;
-
-  PluginService* plugin_service_;
-
-  ResourceDispatcherHost* resource_dispatcher_host_;
+  // Information about the plugin.
+  WebPluginInfo info_;
 
   // Helper class for handling PluginProcessHost_ResolveProxy messages (manages
   // the requests to the proxy service).

@@ -4,8 +4,10 @@
 
 #include "chrome/browser/jsmessage_box_handler_win.h"
 
+#include "base/string_util.h"
 #include "chrome/browser/app_modal_dialog_queue.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/profile.h"
 #include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/common/gfx/text_elider.h"
 #include "chrome/common/l10n_util.h"
@@ -153,7 +155,7 @@ void JavascriptMessageBoxHandler::ShowModalDialog() {
   }
 
   web_contents_->Activate();
-  HWND root_hwnd = GetAncestor(web_contents_->GetContainerHWND(), GA_ROOT);
+  HWND root_hwnd = GetAncestor(web_contents_->GetNativeView(), GA_ROOT);
   dialog_ = views::Window::CreateChromeWindow(root_hwnd, gfx::Rect(), this);
   dialog_->Show();
 }
@@ -173,7 +175,7 @@ views::View* JavascriptMessageBoxHandler::GetContentsView() {
   return message_box_view_;
 }
 
-views::View* JavascriptMessageBoxHandler::GetInitiallyFocusedView() const {
+views::View* JavascriptMessageBoxHandler::GetInitiallyFocusedView() {
   if (message_box_view_->text_box())
     return message_box_view_->text_box();
   return views::AppModalDialogDelegate::GetInitiallyFocusedView();
@@ -206,4 +208,3 @@ void JavascriptMessageBoxHandler::Observe(NotificationType type,
       dialog_->Close();
   }
 }
-

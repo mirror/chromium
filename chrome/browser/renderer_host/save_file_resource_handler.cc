@@ -4,29 +4,25 @@
 
 #include "chrome/browser/renderer_host/save_file_resource_handler.h"
 
-#if defined(OS_POSIX)
-#include "chrome/common/temp_scaffolding_stubs.h"
-#elif defined(OS_WIN)
+#include "base/string_util.h"
 #include "chrome/browser/download/save_file_manager.h"
-#endif
-
 #include "net/base/io_buffer.h"
 
 SaveFileResourceHandler::SaveFileResourceHandler(int render_process_host_id,
                                                  int render_view_id,
-                                                 const std::string& url,
+                                                 const GURL& url,
                                                  SaveFileManager* manager)
     : save_id_(-1),
       render_process_id_(render_process_host_id),
       render_view_id_(render_view_id),
-      url_(UTF8ToWide(url)),
+      url_(url),
       content_length_(0),
       save_manager_(manager) {
 }
 
 bool SaveFileResourceHandler::OnRequestRedirected(int request_id,
                                                   const GURL& url) {
-  final_url_ = UTF8ToWide(url.spec());
+  final_url_ = url;
   return true;
 }
 
@@ -88,4 +84,9 @@ bool SaveFileResourceHandler::OnResponseCompleted(
                         status.is_success() && !status.is_io_pending()));
   read_buffer_ = NULL;
   return true;
+}
+
+void SaveFileResourceHandler::set_content_length(
+    const std::string& content_length) {
+  content_length_ = StringToInt64(content_length);
 }

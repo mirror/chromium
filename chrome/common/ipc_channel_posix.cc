@@ -28,7 +28,7 @@
 #include "base/singleton.h"
 #include "chrome/common/chrome_counters.h"
 #include "chrome/common/chrome_switches.h"
-#include "chrome/common/file_descriptor_posix.h"
+#include "chrome/common/file_descriptor_set_posix.h"
 #include "chrome/common/ipc_message_utils.h"
 
 namespace IPC {
@@ -406,24 +406,40 @@ bool Channel::ChannelImpl::ProcessIncomingMessages() {
 
     // walk the list of control messages and, if we find an array of file
     // descriptors, save a pointer to the array
-    for (struct cmsghdr* cmsg = CMSG_FIRSTHDR(&msg); cmsg;
-         cmsg = CMSG_NXTHDR(&msg, cmsg)) {
-      if (cmsg->cmsg_level == SOL_SOCKET &&
-          cmsg->cmsg_type == SCM_RIGHTS) {
-        const unsigned payload_len = cmsg->cmsg_len - CMSG_LEN(0);
-        DCHECK(payload_len % sizeof(int) == 0);
-        wire_fds = reinterpret_cast<int*>(CMSG_DATA(cmsg));
-        num_wire_fds = payload_len / 4;
 
-        if (msg.msg_flags & MSG_CTRUNC) {
-          LOG(ERROR) << "SCM_RIGHTS message was truncated"
-                     << " cmsg_len:" << cmsg->cmsg_len
-                     << " fd:" << pipe_;
-          for (unsigned i = 0; i < num_wire_fds; ++i)
-            close(wire_fds[i]);
-          return false;
+    // This next if statement is to work around an OSX issue where
+    // CMSG_FIRSTHDR will return non-NULL in the case that controllen == 0.
+    // Here's a test case:
+    //
+    // int main() {
+    // struct msghdr msg;
+    //   msg.msg_control = &msg;
+    //   msg.msg_controllen = 0;
+    //   if (CMSG_FIRSTHDR(&msg))
+    //     printf("Bug found!\n");
+    // }
+    if (msg.msg_controllen > 0) {
+      // On OSX, CMSG_FIRSTHDR doesn't handle the case where controllen is 0
+      // and will return a pointer into nowhere.
+      for (struct cmsghdr* cmsg = CMSG_FIRSTHDR(&msg); cmsg;
+           cmsg = CMSG_NXTHDR(&msg, cmsg)) {
+        if (cmsg->cmsg_level == SOL_SOCKET &&
+            cmsg->cmsg_type == SCM_RIGHTS) {
+          const unsigned payload_len = cmsg->cmsg_len - CMSG_LEN(0);
+          DCHECK(payload_len % sizeof(int) == 0);
+          wire_fds = reinterpret_cast<int*>(CMSG_DATA(cmsg));
+          num_wire_fds = payload_len / 4;
+
+          if (msg.msg_flags & MSG_CTRUNC) {
+            LOG(ERROR) << "SCM_RIGHTS message was truncated"
+                       << " cmsg_len:" << cmsg->cmsg_len
+                       << " fd:" << pipe_;
+            for (unsigned i = 0; i < num_wire_fds; ++i)
+              close(wire_fds[i]);
+            return false;
+          }
+          break;
         }
-        break;
       }
     }
 
@@ -467,13 +483,24 @@ bool Channel::ChannelImpl::ProcessIncomingMessages() {
       const char* message_tail = Message::FindNext(p, end);
       if (message_tail) {
         int len = static_cast<int>(message_tail - p);
-        const Message m(p, len);
+        Message m(p, len);
         if (m.header()->num_fds) {
           // the message has file descriptors
+          const char* error = NULL;
           if (m.header()->num_fds > num_fds - fds_i) {
             // the message has been completely received, but we didn't get
             // enough file descriptors.
-            LOG(WARNING) << "Message needs unreceived descriptors"
+            error = "Message needs unreceived descriptors";
+          }
+
+          if (m.header()->num_fds >
+              FileDescriptorSet::MAX_DESCRIPTORS_PER_MESSAGE) {
+            // There are too many descriptors in this message
+            error = "Message requires an excessive number of descriptors";
+          }
+
+          if (error) {
+            LOG(WARNING) << error
                          << " channel:" << this
                          << " message-type:" << m.type()
                          << " header()->num_fds:" << m.header()->num_fds
@@ -483,10 +510,12 @@ bool Channel::ChannelImpl::ProcessIncomingMessages() {
             for (unsigned i = fds_i; i < num_fds; ++i)
               close(fds[i]);
             input_overflow_fds_.clear();
+            // abort the connection
             return false;
           }
 
-          m.descriptor_set()->SetDescriptors(&fds[fds_i], m.header()->num_fds);
+          m.file_descriptor_set()->SetDescriptors(
+              &fds[fds_i], m.header()->num_fds);
           fds_i += m.header()->num_fds;
         }
 #ifdef IPC_MESSAGE_DEBUG_EXTRA
@@ -508,6 +537,14 @@ bool Channel::ChannelImpl::ProcessIncomingMessages() {
     }
     input_overflow_buf_.assign(p, end - p);
     input_overflow_fds_ = std::vector<int>(&fds[fds_i], &fds[num_fds]);
+
+    // When the input data buffer is empty, the overflow fds should be too. If
+    // this is not the case, we probably have a rogue renderer which is trying
+    // to fill our descriptor table.
+    if (input_overflow_buf_.empty() && !input_overflow_fds_.empty()) {
+      // We close these descriptors in Close()
+      return false;
+    }
 
     bytes_read = 0;  // Get more data.
   }
@@ -542,15 +579,15 @@ bool Channel::ChannelImpl::ProcessOutgoingMessages() {
       msgh.msg_iov = &iov;
       msgh.msg_iovlen = 1;
       char buf[CMSG_SPACE(
-          sizeof(int[DescriptorSet::MAX_DESCRIPTORS_PER_MESSAGE]))];
+          sizeof(int[FileDescriptorSet::MAX_DESCRIPTORS_PER_MESSAGE]))];
 
       if (message_send_bytes_written_ == 0 &&
-          !msg->descriptor_set()->empty()) {
+          !msg->file_descriptor_set()->empty()) {
         // This is the first chunk of a message which has descriptors to send
         struct cmsghdr *cmsg;
-        const unsigned num_fds = msg->descriptor_set()->size();
+        const unsigned num_fds = msg->file_descriptor_set()->size();
 
-        DCHECK_LE(num_fds, DescriptorSet::MAX_DESCRIPTORS_PER_MESSAGE);
+        DCHECK_LE(num_fds, FileDescriptorSet::MAX_DESCRIPTORS_PER_MESSAGE);
 
         msgh.msg_control = buf;
         msgh.msg_controllen = CMSG_SPACE(sizeof(int) * num_fds);
@@ -558,7 +595,7 @@ bool Channel::ChannelImpl::ProcessOutgoingMessages() {
         cmsg->cmsg_level = SOL_SOCKET;
         cmsg->cmsg_type = SCM_RIGHTS;
         cmsg->cmsg_len = CMSG_LEN(sizeof(int) * num_fds);
-        msg->descriptor_set()->GetDescriptors(
+        msg->file_descriptor_set()->GetDescriptors(
             reinterpret_cast<int*>(CMSG_DATA(cmsg)));
         msgh.msg_controllen = cmsg->cmsg_len;
 
@@ -567,7 +604,7 @@ bool Channel::ChannelImpl::ProcessOutgoingMessages() {
 
       bytes_written = sendmsg(pipe_, &msgh, MSG_DONTWAIT);
       if (bytes_written > 0)
-        msg->descriptor_set()->CommitAll();
+        msg->file_descriptor_set()->CommitAll();
     } while (bytes_written == -1 && errno == EINTR);
 
     if (bytes_written < 0 && errno != EAGAIN) {

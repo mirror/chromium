@@ -34,17 +34,20 @@ class BrowserWindowCocoa : public BrowserWindow {
   virtual void UpdateLoadingAnimations(bool should_animate);
   virtual void SetStarredState(bool is_starred);
   virtual gfx::Rect GetNormalBounds() const;
-  virtual bool IsMaximized();
+  virtual bool IsMaximized() const;
+  virtual void SetFullscreen(bool fullscreen);
+  virtual bool IsFullscreen() const;
   virtual LocationBar* GetLocationBar() const;
+  virtual void SetFocusToLocationBar();
   virtual void UpdateStopGoState(bool is_loading);
   virtual void UpdateToolbar(TabContents* contents,
                              bool should_restore_state);
   virtual void FocusToolbar();
   virtual bool IsBookmarkBarVisible() const;
+  virtual gfx::Rect GetRootWindowResizerRect() const;
   virtual void ToggleBookmarkBar();
   virtual void ShowAboutChromeDialog();
   virtual void ShowBookmarkManager();
-  virtual bool IsBookmarkBubbleVisible() const;
   virtual void ShowBookmarkBubble(const GURL& url, bool already_bookmarked);
   virtual void ShowReportBugDialog();
   virtual void ShowClearBrowsingDataDialog();

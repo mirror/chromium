@@ -8,6 +8,7 @@
 
 DOMView::DOMView(const GURL& contents)
     : contents_(contents), initialized_(false), host_(NULL) {
+  SetFocusable(true);
 }
 
 DOMView::~DOMView() {
@@ -32,7 +33,7 @@ bool DOMView::Init(Profile* profile, SiteInstance* instance) {
   host_ = tab_contents->AsDOMUIHost();
   DCHECK(host_);
 
-  views::HWNDView::Attach(host_->GetContainerHWND());
+  views::HWNDView::Attach(host_->GetNativeView());
   host_->SetupController(profile);
   host_->controller()->LoadURL(contents_, GURL(), PageTransition::START_PAGE);
   return true;

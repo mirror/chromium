@@ -209,12 +209,12 @@ bool WebPluginDelegateProxy::Initialize(const GURL& url, char** argn,
                                         bool load_manually) {
   std::wstring channel_name;
   FilePath plugin_path;
-  if (!g_render_thread->Send(new ViewHostMsg_OpenChannelToPlugin(
+  if (!RenderThread::current()->Send(new ViewHostMsg_OpenChannelToPlugin(
           url, mime_type_, clsid_, webkit_glue::GetWebKitLocale(),
           &channel_name, &plugin_path)))
     return false;
 
-  MessageLoop* ipc_message_loop = g_render_thread->owner_loop();
+  MessageLoop* ipc_message_loop = RenderThread::current()->owner_loop();
   scoped_refptr<PluginChannelHost> channel_host =
       PluginChannelHost::GetPluginChannelHost(channel_name, ipc_message_loop);
   if (!channel_host.get())
@@ -545,7 +545,8 @@ NPObject* WebPluginDelegateProxy::GetPluginScriptableObject() {
     return NULL;
 
   npobject_ = NPObjectProxy::Create(
-      channel_host_.get(), route_id, npobject_ptr, NULL);
+      channel_host_.get(), route_id, npobject_ptr,
+      render_view_->modal_dialog_event());
 
   return NPN_RetainObject(npobject_);
 }
@@ -618,8 +619,9 @@ void WebPluginDelegateProxy::OnGetWindowScriptNPObject(
 
   // The stub will delete itself when the proxy tells it that it's released, or
   // otherwise when the channel is closed.
-  NPObjectStub* stub = new NPObjectStub(npobject, channel_host_.get(),
-                                        route_id);
+  NPObjectStub* stub = new NPObjectStub(
+      npobject, channel_host_.get(), route_id,
+      render_view_->modal_dialog_event());
   window_script_object_ = stub;
   window_script_object_->set_proxy(this);
   *success = true;
@@ -637,8 +639,9 @@ void WebPluginDelegateProxy::OnGetPluginElement(
 
   // The stub will delete itself when the proxy tells it that it's released, or
   // otherwise when the channel is closed.
-  NPObjectStub* stub = new NPObjectStub(npobject, channel_host_.get(),
-                                        route_id);
+  NPObjectStub* stub = new NPObjectStub(
+      npobject, channel_host_.get(), route_id,
+      render_view_->modal_dialog_event());
   *success = true;
   *npobject_ptr = npobject;
 }

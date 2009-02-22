@@ -139,11 +139,7 @@ void HWNDView::DidChangeBounds(const gfx::Rect& previous,
 }
 
 void HWNDView::VisibilityChanged(View* starting_from, bool is_visible) {
-  //UpdateHWNDBounds();
-  if (IsVisibleInRootView())
-    ::ShowWindow(hwnd_, SW_SHOW);
-  else
-    ::ShowWindow(hwnd_, SW_HIDE);
+  UpdateHWNDBounds();
 }
 
 gfx::Size HWNDView::GetPreferredSize() {
@@ -173,6 +169,10 @@ void HWNDView::ViewHierarchyChanged(bool is_add, View *parent, View *child) {
 
 void HWNDView::VisibleBoundsInRootChanged() {
   UpdateHWNDBounds();
+}
+
+void HWNDView::Focus() {
+  ::SetFocus(hwnd_);
 }
 
 void HWNDView::Paint(ChromeCanvas* canvas) {

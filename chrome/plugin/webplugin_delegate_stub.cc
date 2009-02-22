@@ -17,8 +17,8 @@
 #include "third_party/npapi/bindings/npapi.h"
 #include "third_party/npapi/bindings/npruntime.h"
 #include "skia/ext/platform_device.h"
-#include "webkit/glue/plugins/webplugin_delegate_impl.h"
 #include "webkit/glue/webcursor.h"
+#include "webkit/glue/webplugin_delegate.h"
 
 class FinishDestructionTask : public Task {
  public:
@@ -126,7 +126,7 @@ void WebPluginDelegateStub::OnInit(const PluginMsg_Init_Params& params,
   const CommandLine& command_line = *CommandLine::ForCurrentProcess();
   FilePath path =
       FilePath(command_line.GetSwitchValue(switches::kPluginPath));
-  delegate_ = WebPluginDelegateImpl::Create(
+  delegate_ = WebPluginDelegate::Create(
       path, mime_type_, params.containing_window);
   if (delegate_) {
     webplugin_ = new WebPluginProxy(
@@ -257,7 +257,8 @@ void WebPluginDelegateStub::OnGetPluginScriptableObject(int* route_id,
   *npobject_ptr = object;
   // The stub will delete itself when the proxy tells it that it's released, or
   // otherwise when the channel is closed.
-  NPObjectStub* stub = new NPObjectStub(object, channel_.get(), *route_id);
+  NPObjectStub* stub = new NPObjectStub(
+      object, channel_.get(), *route_id, webplugin_->modal_dialog_event());
 
   // Release ref added by GetPluginScriptableObject (our stub holds its own).
   NPN_ReleaseObject(object);

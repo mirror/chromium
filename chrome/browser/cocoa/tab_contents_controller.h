@@ -8,6 +8,7 @@
 #include <Cocoa/Cocoa.h>
 
 class CommandUpdater;
+@class GrowBoxView;
 class LocationBar;
 class TabContents;
 class TabContentsCommandObserver;
@@ -29,11 +30,14 @@ class TabStripModel;
   CommandUpdater* commands_;  // weak, may be nil
   TabContentsCommandObserver* observer_;  // nil if |commands_| is nil
   LocationBar* locationBarBridge_;
+  TabContents* contents_;  // weak
   IBOutlet NSButton* backButton_;
   IBOutlet NSButton* forwardButton_;
   IBOutlet NSButton* reloadStopButton_;
   IBOutlet NSButton* starButton_;
   IBOutlet NSTextField* locationBar_;
+  IBOutlet NSBox* contentsBox_;
+  IBOutlet GrowBoxView* growBox_;
 }
 
 // Create the contents of a tab represented by |contents| and loaded from the
@@ -54,6 +58,21 @@ class TabStripModel;
 // the selected tab. Handles things such as ensuring the toolbar is correctly
 // enabled.
 - (void)willBecomeSelectedTab;
+
+// Called when the tab contents is updated in some non-descript way (the
+// notification from the model isn't specific).
+- (void)tabDidChange;
+
+// Called when any url bar state changes. If |tabForRestoring| is non-NULL,
+// it points to a TabContents whose state we should restore.
+- (void)updateToolbarWithContents:(TabContents*)tabForRestoring;
+
+// Sets whether or not the current page in the frontmost tab is bookmarked.
+- (void)setStarredState:(BOOL)isStarred;
+
+// Return the rect, in WebKit coordinates (flipped), of the window's grow box
+// in the coordinate system of the content area of this tab.
+- (NSRect)growBoxRect;
 
 @end
 

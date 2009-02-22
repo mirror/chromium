@@ -11,6 +11,7 @@
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/render_widget_host.h"
 #include "skia/ext/platform_canvas.h"
+#include "webkit/glue/webinputevent.h"
 
 @interface RenderWidgetHostViewCocoa (Private)
 - (id)initWithRenderWidgetHostViewMac:(RenderWidgetHostViewMac*)r;
@@ -46,10 +47,6 @@ RenderWidgetHostViewMac::RenderWidgetHostViewMac(RenderWidgetHost* widget)
 RenderWidgetHostViewMac::~RenderWidgetHostViewMac() {
 }
 
-gfx::NativeView RenderWidgetHostViewMac::GetNativeView() const {
-  return cocoa_view_;
-}
-
 ///////////////////////////////////////////////////////////////////////////////
 // RenderWidgetHostViewMac, RenderWidgetHostView implementation:
 
@@ -83,9 +80,7 @@ void RenderWidgetHostViewMac::SetSize(const gfx::Size& size) {
   if (is_hidden_)
     return;
 
-  NSRect rect = [cocoa_view_ frame];
-  rect.size = NSSizeFromCGSize(size.ToCGSize());
-  [cocoa_view_ setFrame:rect];
+  NOTIMPLEMENTED();  // Who is trying to force a size? We're a Cocoa view.
 }
 
 gfx::NativeView RenderWidgetHostViewMac::GetPluginNativeView() {
@@ -124,21 +119,31 @@ void RenderWidgetHostViewMac::Hide() {
 }
 
 gfx::Rect RenderWidgetHostViewMac::GetViewBounds() const {
-  return gfx::Rect(NSRectToCGRect([cocoa_view_ frame]));
+  return [cocoa_view_ NSRectToRect:[cocoa_view_ bounds]];
 }
 
 void RenderWidgetHostViewMac::UpdateCursor(const WebCursor& cursor) {
-//  current_cursor_ = cursor;  // temporarily commented for link issues
+  current_cursor_ = cursor;
   UpdateCursorIfOverSelf();
 }
 
 void RenderWidgetHostViewMac::UpdateCursorIfOverSelf() {
-  // Do something special (as Windows does) for arrow cursor while loading a
-  // page? TODO(avi): decide
-  // TODO(avi): check to see if mouse pointer is within our bounds
-  // Disabled so we don't have to link in glue... yet
-//  NSCursor* ns_cursor = current_cursor_.GetCursor();
-//  [ns_cursor set];
+  // Do something special (as Win Chromium does) for arrow cursor while loading
+  // a page? TODO(avi): decide
+  // Can we synchronize to the event stream? Switch to -[NSWindow
+  // mouseLocationOutsideOfEventStream] if we cannot. TODO(avi): test and see
+  NSEvent* event = [[cocoa_view_ window] currentEvent];
+  if ([event window] != [cocoa_view_ window])
+    return;
+  
+  NSPoint event_location = [event locationInWindow];
+  NSPoint local_point = [cocoa_view_ convertPoint:event_location fromView:nil];
+  
+  if (!NSPointInRect(local_point, [cocoa_view_ bounds]))
+    return;
+  
+  NSCursor* ns_cursor = current_cursor_.GetCursor();
+  [ns_cursor set];
 }
 
 void RenderWidgetHostViewMac::SetIsLoading(bool is_loading) {
@@ -152,7 +157,7 @@ void RenderWidgetHostViewMac::IMEUpdateStatus(int control,
 }
 
 void RenderWidgetHostViewMac::Redraw(const gfx::Rect& rect) {
-  [cocoa_view_ setNeedsDisplayInRect:NSRectFromCGRect(rect.ToCGRect())];
+  [cocoa_view_ setNeedsDisplayInRect:[cocoa_view_ RectToNSRect:rect]];
 }
 
 void RenderWidgetHostViewMac::DidPaintRect(const gfx::Rect& rect) {
@@ -166,9 +171,14 @@ void RenderWidgetHostViewMac::DidScrollRect(
     const gfx::Rect& rect, int dx, int dy) {
   if (is_hidden_)
     return;
+
+  [cocoa_view_ scrollRect:[cocoa_view_ RectToNSRect:rect]
+                       by:NSMakeSize(dx, -dy)];
   
-  [cocoa_view_ scrollRect:NSRectFromCGRect(rect.ToCGRect())
-                       by:NSMakeSize(dx, dy)];
+  gfx::Rect new_rect = rect;
+  new_rect.Offset(dx, dy);
+  gfx::Rect dirty_rect = rect.Subtract(new_rect);
+  [cocoa_view_ setNeedsDisplayInRect:[cocoa_view_ RectToNSRect:dirty_rect]];
 }
 
 void RenderWidgetHostViewMac::RendererGone() {
@@ -209,7 +219,7 @@ void RenderWidgetHostViewMac::ShutdownHost() {
 // them into the C++ system. TODO(avi): all that jazz
 
 - (id)initWithRenderWidgetHostViewMac:(RenderWidgetHostViewMac*)r {
-  self = [super init];
+  self = [super initWithFrame:NSZeroRect];
   if (self != nil) {
     renderWidgetHostView_ = r;
   }
@@ -222,6 +232,26 @@ void RenderWidgetHostViewMac::ShutdownHost() {
   [super dealloc];
 }
 
+- (void)mouseEvent:(NSEvent *)theEvent {
+  WebMouseEvent event(theEvent, self);
+  renderWidgetHostView_->render_widget_host()->ForwardMouseEvent(event);
+}
+
+- (void)keyEvent:(NSEvent *)theEvent {
+  WebKeyboardEvent event(theEvent);
+  renderWidgetHostView_->render_widget_host()->ForwardKeyboardEvent(event);
+}
+
+- (void)scrollWheel:(NSEvent *)theEvent {
+  WebMouseWheelEvent event(theEvent, self);
+  renderWidgetHostView_->render_widget_host()->ForwardWheelEvent(event);
+}
+
+- (void)setFrame:(NSRect)frameRect {
+  [super setFrame:frameRect];
+  renderWidgetHostView_->render_widget_host()->WasResized();
+}
+
 - (void)drawRect:(NSRect)dirtyRect {
   DCHECK(renderWidgetHostView_->render_widget_host()->process()->channel());
 
@@ -230,20 +260,22 @@ void RenderWidgetHostViewMac::ShutdownHost() {
   skia::PlatformCanvas* canvas = backing_store->canvas();
 
   if (backing_store) {
-    gfx::Rect damaged_rect(NSRectToCGRect(dirtyRect));
+    gfx::Rect damaged_rect([self NSRectToRect:dirtyRect]);
 
-    gfx::Rect bitmap_rect(
-        0, 0, backing_store->size().width(), backing_store->size().height());
+    gfx::Rect bitmap_rect(0, 0,
+                          backing_store->size().width(),
+                          backing_store->size().height());
 
     gfx::Rect paint_rect = bitmap_rect.Intersect(damaged_rect);
     if (!paint_rect.IsEmpty()) {
       if ([self lockFocusIfCanDraw]) {
         CGContextRef context = static_cast<CGContextRef>(
             [[NSGraphicsContext currentContext] graphicsPort]);
-        
+
         CGRect damaged_rect_cg = damaged_rect.ToCGRect();
+        NSRect damaged_rect_ns = [self RectToNSRect:damaged_rect];
         canvas->getTopPlatformDevice().DrawToContext(
-            context, damaged_rect.x(), damaged_rect.y(),
+            context, damaged_rect_ns.origin.x, damaged_rect_ns.origin.y,
             &damaged_rect_cg);
         
         [self unlockFocus];

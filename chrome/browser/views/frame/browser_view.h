@@ -11,7 +11,6 @@
 #include "chrome/browser/hang_monitor/hung_window_detector.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
 #include "chrome/browser/views/frame/browser_frame.h"
-#include "chrome/common/pref_member.h"
 #include "chrome/views/client_view.h"
 #include "chrome/views/window_delegate.h"
 #ifdef CHROME_PERSONALIZATION
@@ -151,9 +150,6 @@ class BrowserView : public BrowserWindow,
   // supports the specified feature.
   bool SupportsWindowFeature(WindowFeature feature) const;
 
-  // Returns the set of WindowFeatures supported by the specified BrowserType.
-  static unsigned int FeaturesForBrowserType(Browser::Type type);
-
   // Register preferences specific to this view.
   static void RegisterBrowserViewPrefs(PrefService* prefs);
 
@@ -172,17 +168,20 @@ class BrowserView : public BrowserWindow,
   virtual void UpdateLoadingAnimations(bool should_animate);
   virtual void SetStarredState(bool is_starred);
   virtual gfx::Rect GetNormalBounds() const;
-  virtual bool IsMaximized();
+  virtual bool IsMaximized() const;
+  virtual void SetFullscreen(bool fullscreen);
+  virtual bool IsFullscreen() const;
   virtual LocationBar* GetLocationBar() const;
+  virtual void SetFocusToLocationBar();
   virtual void UpdateStopGoState(bool is_loading);
   virtual void UpdateToolbar(TabContents* contents, bool should_restore_state);
   virtual void FocusToolbar();
   virtual void DestroyBrowser();
   virtual bool IsBookmarkBarVisible() const;
+  virtual gfx::Rect GetRootWindowResizerRect() const;
   virtual void ToggleBookmarkBar();
   virtual void ShowAboutChromeDialog();
   virtual void ShowBookmarkManager();
-  virtual bool IsBookmarkBubbleVisible() const;
   virtual void ShowBookmarkBubble(const GURL& url, bool already_bookmarked);
   virtual void ShowReportBugDialog();
   virtual void ShowClearBrowsingDataDialog();
@@ -195,7 +194,7 @@ class BrowserView : public BrowserWindow,
                               void* parent_window);
 
   // Overridden from BrowserWindowTesting:
-  virtual BookmarkBarView* GetBookmarkBarView();
+  virtual BookmarkBarView* GetBookmarkBarView() const;
   virtual LocationBarView* GetLocationBarView() const;
 
   // Overridden from NotificationObserver:
@@ -216,7 +215,7 @@ class BrowserView : public BrowserWindow,
   virtual bool CanMaximize() const;
   virtual bool IsModal() const;
   virtual std::wstring GetWindowTitle() const;
-  virtual views::View* GetInitiallyFocusedView() const;
+  virtual views::View* GetInitiallyFocusedView();
   virtual bool ShouldShowWindowTitle() const;
   virtual SkBitmap GetWindowIcon();
   virtual bool ShouldShowWindowIcon() const;
@@ -261,6 +260,14 @@ class BrowserView : public BrowserWindow,
   virtual int OnPerformDrop(const views::DropTargetEvent& event);
 
  private:
+  // Information saved before going into fullscreen mode, used to restore the
+  // window afterwards.
+  struct SavedWindowInfo {
+    LONG style;
+    LONG ex_style;
+    RECT window_rect;
+  };
+
   // Creates the system menu.
   void InitSystemMenu();
 
@@ -350,7 +357,6 @@ class BrowserView : public BrowserWindow,
 
   // Tool/Info bars that we are currently showing. Used for layout.
   views::View* active_bookmark_bar_;
-  views::View* active_info_bar_;
   views::View* active_download_shelf_;
 
   // The TabStrip.
@@ -374,11 +380,14 @@ class BrowserView : public BrowserWindow,
   // A mapping between accelerators and commands.
   scoped_ptr<std::map<views::Accelerator, int>> accelerator_table_;
 
-  // A PrefMember to track the "always show bookmark bar" pref.
-  BooleanPrefMember show_bookmark_bar_pref_;
-
   // True if we have already been initialized.
   bool initialized_;
+
+  // True if we're in fullscreen mode.
+  bool fullscreen_;
+
+  // Saved window information from before entering fullscreen mode.
+  SavedWindowInfo saved_window_info_;
 
   // Lazily created representation of the system menu.
   scoped_ptr<Menu> system_menu_;
@@ -428,4 +437,4 @@ class BrowserView : public BrowserWindow,
   DISALLOW_EVIL_CONSTRUCTORS(BrowserView);
 };
 
-#endif  // #ifndef CHROME_BROWSER_VIEWS_FRAME_BROWSER_VIEW_H_
+#endif  // CHROME_BROWSER_VIEWS_FRAME_BROWSER_VIEW_H_

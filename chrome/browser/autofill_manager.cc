@@ -8,6 +8,13 @@
 #include "chrome/browser/profile.h"
 #include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/common/pref_service.h"
+#include "webkit/glue/autofill_form.h"
+
+// static
+void AutofillManager::RegisterUserPrefs(PrefService* prefs) {
+  prefs->RegisterBooleanPref(prefs::kFormAutofillEnabled, true);
+}
 
 AutofillManager::AutofillManager(WebContents* web_contents) :
     web_contents_(web_contents),

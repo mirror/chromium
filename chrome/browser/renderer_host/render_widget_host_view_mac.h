@@ -8,16 +8,18 @@
 #import <Cocoa/Cocoa.h>
 
 #include "base/time.h"
+#include "chrome/browser/cocoa/base_view.h"
 #include "chrome/browser/renderer_host/render_widget_host_view.h"
+#include "webkit/glue/webcursor.h"
 
 class RenderWidgetHostViewMac;
 
-// This is the NSView that lives in the Cocoa view hierarchy. In Windows-land,
+// This is the view that lives in the Cocoa view hierarchy. In Windows-land,
 // RenderWidgetHostViewWin is both the view and the delegate. We split the roles
 // but that means that the view needs to own the delegate and will dispose of it
 // when it's removed from the view system.
 
-@interface RenderWidgetHostViewCocoa : NSView {
+@interface RenderWidgetHostViewCocoa : BaseView {
  @private
   RenderWidgetHostViewMac* renderWidgetHostView_;
 }
@@ -51,7 +53,7 @@ class RenderWidgetHostViewMac : public RenderWidgetHostView {
   
   base::TimeTicks& whiteout_start_time() { return whiteout_start_time_; }
   
-  gfx::NativeView GetNativeView() const;
+  gfx::NativeView native_view() const { return cocoa_view_; }
 
   // Implementation of RenderWidgetHostView:
   virtual RenderWidgetHost* GetRenderWidgetHost() const;
@@ -92,7 +94,7 @@ class RenderWidgetHostViewMac : public RenderWidgetHostView {
   RenderWidgetHost* render_widget_host_;
 
   // The cursor for the page. This is passed up from the renderer.
-//  WebCursor current_cursor_; // temporarily commented for link issues
+  WebCursor current_cursor_;
 
   // Indicates if the page is loading.
   bool is_loading_;

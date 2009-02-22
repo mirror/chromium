@@ -11,6 +11,7 @@
 #include "base/scoped_ptr.h"
 #include "build/build_config.h"
 #include "chrome/common/render_messages.h"
+#include "chrome/common/transport_dib.h"
 #include "chrome/renderer/render_process.h"
 #include "skia/ext/platform_canvas.h"
 
@@ -76,6 +77,7 @@ DeferredCloses* DeferredCloses::current_ = NULL;
 
 RenderWidget::RenderWidget(RenderThreadBase* render_thread, bool activatable)
     : routing_id_(MSG_ROUTING_NONE),
+      webwidget_(NULL),
       opener_id_(MSG_ROUTING_NONE),
       render_thread_(render_thread),
       host_window_(NULL),
@@ -96,20 +98,21 @@ RenderWidget::RenderWidget(RenderThreadBase* render_thread, bool activatable)
       ime_control_updated_(false),
       ime_control_busy_(false),
       activatable_(activatable) {
-  RenderProcess::AddRefProcess();
+  RenderProcess::current()->AddRefProcess();
   DCHECK(render_thread_);
 }
 
 RenderWidget::~RenderWidget() {
+  DCHECK(!webwidget_) << "Leaking our WebWidget!";
   if (current_paint_buf_) {
-    RenderProcess::FreeSharedMemory(current_paint_buf_);
+    RenderProcess::current()->ReleaseTransportDIB(current_paint_buf_);
     current_paint_buf_ = NULL;
   }
   if (current_scroll_buf_) {
-    RenderProcess::FreeSharedMemory(current_scroll_buf_);
+    RenderProcess::current()->ReleaseTransportDIB(current_scroll_buf_);
     current_scroll_buf_ = NULL;
   }
-  RenderProcess::ReleaseProcess();
+  RenderProcess::current()->ReleaseProcess();
 }
 
 /*static*/
@@ -129,9 +132,7 @@ void RenderWidget::Init(int32 opener_id) {
   if (opener_id != MSG_ROUTING_NONE)
     opener_id_ = opener_id;
 
-  // Avoid a leak here by not assigning, since WebWidget::Create addrefs for us.
-  WebWidget* webwidget = WebWidget::Create(this);
-  webwidget_.swap(&webwidget);
+  webwidget_ = WebWidget::Create(this);
 
   bool result = render_thread_->Send(
       new ViewHostMsg_CreateWidget(opener_id, activatable_, &routing_id_));
@@ -229,10 +230,14 @@ void RenderWidget::OnClose() {
   }
 }
 
-void RenderWidget::OnResize(const gfx::Size& new_size) {
+void RenderWidget::OnResize(const gfx::Size& new_size,
+                            const gfx::Rect& resizer_rect) {
   // During shutdown we can just ignore this message.
   if (!webwidget_)
     return;
+
+  // Remember the rect where the resize corner will be drawn.
+  resizer_rect_ = resizer_rect;
 
   // TODO(darin): We should not need to reset this here.
   is_hidden_ = false;
@@ -293,9 +298,10 @@ void RenderWidget::OnPaintRectAck() {
   // If we sent a PaintRect message with a zero-sized bitmap, then
   // we should have no current paint buf.
   if (current_paint_buf_) {
-    RenderProcess::FreeSharedMemory(current_paint_buf_);
+    RenderProcess::current()->ReleaseTransportDIB(current_paint_buf_);
     current_paint_buf_ = NULL;
   }
+
   // Continue painting if necessary...
   DoDeferredPaint();
 }
@@ -303,8 +309,10 @@ void RenderWidget::OnPaintRectAck() {
 void RenderWidget::OnScrollRectAck() {
   DCHECK(scroll_reply_pending());
 
-  RenderProcess::FreeSharedMemory(current_scroll_buf_);
-  current_scroll_buf_ = NULL;
+  if (current_scroll_buf_) {
+    RenderProcess::current()->ReleaseTransportDIB(current_scroll_buf_);
+    current_scroll_buf_ = NULL;
+  }
 
   // Continue scrolling if necessary...
   DoDeferredScroll();
@@ -373,13 +381,6 @@ void RenderWidget::PaintRect(const gfx::Rect& rect,
   DidPaint();
 }
 
-// static
-size_t RenderWidget::GetPaintBufSize(const gfx::Rect& rect) {
-  // TODO(darin): protect against overflow
-  const size_t stride = skia::PlatformCanvas::StrideForWidth(rect.width());
-  return stride * rect.height();
-}
-
 void RenderWidget::DoDeferredPaint() {
   if (!webwidget_ || paint_reply_pending() || paint_rect_.IsEmpty())
     return;
@@ -401,37 +402,23 @@ void RenderWidget::DoDeferredPaint() {
   paint_rect_ = gfx::Rect();
 
   // Compute a buffer for painting and cache it.
-#if defined(OS_WIN)
-  current_paint_buf_ =
-      RenderProcess::AllocSharedMemory(GetPaintBufSize(damaged_rect));
-  if (!current_paint_buf_) {
+  skia::PlatformCanvas* canvas =
+      RenderProcess::current()->GetDrawingCanvas(&current_paint_buf_, damaged_rect);
+  if (!canvas) {
     NOTREACHED();
     return;
   }
-  skia::PlatformCanvasWin canvas(damaged_rect.width(), damaged_rect.height(),
-                                 true, current_paint_buf_->handle());
-#elif defined(OS_POSIX)
-  // Currently, on POSIX, we are serialising the bitmap data over the IPC
-  // channel.
-  skia::PlatformCanvas canvas(damaged_rect.width(), damaged_rect.height(),
-                              true);
-#endif  // defined(OS_POSIX)
 
-  PaintRect(damaged_rect, &canvas);
+  PaintRect(damaged_rect, canvas);
 
   ViewHostMsg_PaintRect_Params params;
   params.bitmap_rect = damaged_rect;
   params.view_size = size_;
   params.plugin_window_moves = plugin_window_moves_;
   params.flags = next_paint_flags_;
+  params.bitmap = current_paint_buf_->id();
 
-#if defined(OS_WIN)
-  // Windows passes a HANDLE to the shared memory over IPC
-  params.bitmap = current_paint_buf_->handle();
-#elif defined(OS_POSIX)
-  // POSIX currently passes the data itself.
-  params.bitmap = canvas.getDevice()->accessBitmap(false);
-#endif  // defined(OS_WIN)
+  delete canvas;
 
   plugin_window_moves_.clear();
 
@@ -492,21 +479,12 @@ void RenderWidget::DoDeferredScroll() {
   // In case the scroll offset exceeds the width/height of the scroll rect
   damaged_rect = scroll_rect_.Intersect(damaged_rect);
 
-#if defined(OS_WIN)
-  current_scroll_buf_ =
-      RenderProcess::AllocSharedMemory(GetPaintBufSize(damaged_rect));
-  if (!current_scroll_buf_) {
+  skia::PlatformCanvas* canvas =
+      RenderProcess::current()->GetDrawingCanvas(&current_scroll_buf_, damaged_rect);
+  if (!canvas) {
     NOTREACHED();
     return;
   }
-  skia::PlatformCanvasWin canvas(damaged_rect.width(), damaged_rect.height(),
-                                 true, current_scroll_buf_->handle());
-#elif defined(OS_POSIX)
-  // Currently, on POSIX, we are serialising the bitmap data over the IPC
-  // channel.
-  skia::PlatformCanvas canvas(damaged_rect.width(), damaged_rect.height(),
-                              true);
-#endif  // defined(OS_POSIX)
 
   // Set these parameters before calling Paint, since that could result in
   // further invalidates (uncommon).
@@ -517,22 +495,16 @@ void RenderWidget::DoDeferredScroll() {
   params.clip_rect = scroll_rect_;
   params.view_size = size_;
   params.plugin_window_moves = plugin_window_moves_;
-
-#if defined(OS_WIN)
-  // Windows passes a HANDLE to the shared memory over IPC
-  params.bitmap = current_scroll_buf_->handle();
-#elif defined(OS_POSIX)
-  // POSIX currently passes the data itself.
-  params.bitmap = canvas.getDevice()->accessBitmap(false);
-#endif  // defined(OS_WIN)
+  params.bitmap = current_scroll_buf_->id();
 
   plugin_window_moves_.clear();
 
   // Mark the scroll operation as no longer pending.
   scroll_rect_ = gfx::Rect();
 
-  PaintRect(damaged_rect, &canvas);
+  PaintRect(damaged_rect, canvas);
   Send(new ViewHostMsg_ScrollRect(routing_id_, params));
+  delete canvas;
   UpdateIME();
 }
 
@@ -694,13 +666,14 @@ void RenderWidget::GetRootWindowRect(WebWidget* webwidget, gfx::Rect* rect) {
 
 void RenderWidget::GetRootWindowResizerRect(WebWidget* webwidget,
                                             gfx::Rect* rect) {
-#if defined(OS_WIN)
-  Send(new ViewHostMsg_GetRootWindowResizerRect(routing_id_, host_window_,
-                                                rect));
-#else
-  // TODO(port): mac/linux currently choke on this message.
-  // See browser/renderer_host/render_message_host.cc.
-  NOTIMPLEMENTED();
+  // This is disabled to verify if WebKit is responsible for the slow down
+  // that was witnessed in the page cycler tests when the resize corner 
+  // code was commited...
+#if defined(OS_MACOSX)
+  // ...we need it enabled on Mac so scrollbars are usable.
+  *rect = resizer_rect_;
+#elif defined(OS_WIN) || defined(OS_LINUX)
+  *rect = gfx::Rect();  // resizer_rect_;
 #endif
 }
 
@@ -765,10 +738,9 @@ void RenderWidget::UpdateIME() {
   // Retrieve the caret position from the focused widget and verify we should
   // enabled IMEs attached to the browser process.
   bool enable_ime = false;
-  const void* node = NULL;
   gfx::Rect caret_rect;
   if (!webwidget_ ||
-      !webwidget_->ImeUpdateStatus(&enable_ime, &node, &caret_rect)) {
+      !webwidget_->ImeUpdateStatus(&enable_ime, &caret_rect)) {
     // There are not any editable widgets attached to this process.
     // We should disable the IME to prevent it from sending CJK strings to
     // non-editable widgets.

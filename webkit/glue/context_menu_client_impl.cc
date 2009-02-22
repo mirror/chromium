@@ -26,6 +26,8 @@ MSVC_POP_WARNING();
 #include "webkit/glue/context_menu.h"
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/webdocumentloader_impl.h"
+#include "webkit/glue/webresponse.h"
+#include "webkit/glue/weburlrequest_impl.h"
 #include "webkit/glue/webview_impl.h"
 
 #include "base/word_iterator.h"
@@ -76,9 +78,9 @@ std::wstring GetMisspelledWord(const WebCore::ContextMenu* default_menu,
   WebCore::VisiblePosition pos(inner_node->renderer()->positionForPoint(
       hit_test_result.localPoint()));
 
-  WebCore::Selection selection;
+  WebCore::VisibleSelection selection;
   if (pos.isNotNull()) {
-    selection = WebCore::Selection(pos);
+    selection = WebCore::VisibleSelection(pos);
     selection.expandUsingGranularity(WebCore::WordGranularity);
   }
       
@@ -92,7 +94,14 @@ std::wstring GetMisspelledWord(const WebCore::ContextMenu* default_menu,
   misspelled_word_string = CollapseWhitespace(
       webkit_glue::StringToStdWString(selected_frame->selectedText()),                  
                                       false);
-  
+
+  // If misspelled word is empty, then that portion should not be selected.
+  // Set the selection to that position only, and do not expand.
+  if (misspelled_word_string.empty()) {
+    selection = WebCore::VisibleSelection(pos);
+    selected_frame->selection()->setSelection(selection);
+  }
+
   return misspelled_word_string;
 }
 

@@ -22,6 +22,7 @@ env.SConscript([
     '$LIBXML_DIR/using_libxml.scons',
     '$LIBXSLT_DIR/using_libxslt.scons',
     '$MODP_B64_DIR/using_modp_b64.scons',
+    '$MEDIA_DIR/using_media.scons',
     '$NET_DIR/using_net.scons',
     '$NPAPI_DIR/using_npapi.scons',
     '$SDCH_DIR/using_sdch.scons',
@@ -37,6 +38,7 @@ env.Prepend(
     LIBS = [
         'browser',
         'common',
+        'debugger',
         'plugin',
         'renderer',
         'sqlite',
@@ -67,7 +69,6 @@ if env.Bit('windows'):
           # TODO(port):  to be ported to Mac and Linux, or else
           # moved to the Windows-specific list below.
           'browser_views',
-          'debugger',
           'jscre',
           'test_chrome_plugin',
           'views',
@@ -174,7 +175,6 @@ input_files = ChromeFileList([
     '$CHROME_DIR/browser/history/text_database_manager_unittest.cc',
     '$CHROME_DIR/browser/history/text_database_unittest.cc',
     '$CHROME_DIR/browser/history/thumbnail_database_unittest.cc',
-    '$CHROME_DIR/browser/printing/units_unittest.cc',
     '$CHROME_DIR/browser/history/url_database_unittest.cc',
     '$CHROME_DIR/browser/net/resolve_proxy_msg_helper_unittest.cc',
     '$CHROME_DIR/browser/net/url_fetcher_unittest.cc',
@@ -249,17 +249,21 @@ input_files = ChromeFileList([
     '$CHROME_DIR/third_party/hunspell/google/hunspell_tests.cc',
   ]),
   MSVSFilter('renderer', [
+    '$CHROME_DIR/renderer/extensions/greasemonkey_api_unittest.cc',
     '$CHROME_DIR/renderer/net/render_dns_master_unittest.cc',
     '$CHROME_DIR/renderer/net/render_dns_queue_unittest.cc',
     '$CHROME_DIR/renderer/render_view_unittest.cc',
     '$CHROME_DIR/renderer/render_widget_unittest.cc',
     '$CHROME_DIR/renderer/render_process_unittest.cc',
     '$CHROME_DIR/renderer/render_thread_unittest.cc',
+    '$CHROME_DIR/renderer/renderer_main_unittest.cc',
 
     # test_infrastructure
     '$CHROME_DIR/renderer/mock_render_process.h',
     '$CHROME_DIR/renderer/mock_render_thread.cc',
     '$CHROME_DIR/renderer/mock_render_thread.h',
+    '$CHROME_DIR/test/v8_unit_test.h',
+    '$CHROME_DIR/test/v8_unit_test.cc',
   ]),
   MSVSFilter('resources', [
     '$CHROME_DIR/browser/browser_resources.h',
@@ -290,8 +294,8 @@ input_files = ChromeFileList([
     '$CHROME_DIR/test/testing_browser_process.h',
     '$CHROME_DIR/test/testing_profile.cc',
     '$CHROME_DIR/test/testing_profile.h',
-    '$CHROME_DIR/../net/url_request/url_request_test_job$OBJSUFFIX',
-    '$CHROME_DIR/../net/url_request/url_request_test_job.h',
+    '$NET_DIR/url_request/url_request_test_job$OBJSUFFIX',
+    '$NET_DIR/url_request/url_request_test_job.h',
   ]),
   MSVSFilter('views', [
     '$CHROME_DIR/views/focus_manager_unittest.cc',
@@ -317,10 +321,10 @@ if env.Bit('mac'):
       '$CHROME_DIR/browser/history/visit_tracker_unittest.cc',
       '$CHROME_DIR/browser/metrics/metrics_response_unittest.cc',
       '$CHROME_DIR/browser/net/dns_host_info_unittest.cc',
+      '$CHROME_DIR/browser/net/dns_master_unittest.cc',
       '$CHROME_DIR/browser/net/url_fetcher_unittest.cc',
       '$CHROME_DIR/browser/printing/page_range_unittest.cc',
       '$CHROME_DIR/browser/printing/page_setup_unittest.cc',
-      '$CHROME_DIR/browser/printing/units_unittest.cc',
       '$CHROME_DIR/browser/safe_browsing/bloom_filter_unittest.cc',
       '$CHROME_DIR/browser/safe_browsing/chunk_range_unittest.cc',
       '$CHROME_DIR/browser/safe_browsing/protocol_parser_unittest.cc',
@@ -365,6 +369,12 @@ if not env.Bit('windows'):
       '$TARGET_ROOT/grit_derived_sources/webkit_resources.res',
   )
 
+if env.Bit('posix'):
+  # POSIX only unittests
+  input_files.Append(
+      '$CHROME_DIR/common/file_descriptor_set_unittest.cc'
+  )
+
 if not env.Bit('windows'):
   # TODO(port): Port these.
   input_files.Remove(
@@ -372,7 +382,6 @@ if not env.Bit('windows'):
       '$CHROME_DIR/browser/autocomplete/history_contents_provider_unittest.cc',
       '$CHROME_DIR/browser/autocomplete/history_url_provider_unittest.cc',
       '$CHROME_DIR/browser/autocomplete/keyword_provider_unittest.cc',
-      '$CHROME_DIR/browser/back_forward_menu_model_unittest.cc',
       '$CHROME_DIR/browser/bookmarks/bookmark_context_menu_test.cc',
       '$CHROME_DIR/browser/bookmarks/bookmark_drag_data_unittest.cc',
       '$CHROME_DIR/browser/bookmarks/bookmark_folder_tree_model_unittest.cc',
@@ -381,23 +390,14 @@ if not env.Bit('windows'):
       '$CHROME_DIR/browser/bookmarks/bookmark_table_model_unittest.cc',
       '$CHROME_DIR/browser/bookmarks/bookmark_utils_unittest.cc',
       '$CHROME_DIR/browser/browser_commands_unittest.cc',
-      '$CHROME_DIR/browser/command_updater_unittest.cc',
       '$CHROME_DIR/browser/download/download_manager_unittest.cc',
       '$CHROME_DIR/browser/download/download_request_manager_unittest.cc',
-      '$CHROME_DIR/browser/download/save_package_unittest.cc',
       '$CHROME_DIR/browser/extensions/user_script_master_unittest.cc',
-      '$CHROME_DIR/browser/history/expire_history_backend_unittest.cc',
-      '$CHROME_DIR/browser/history/history_backend_unittest.cc',
-      '$CHROME_DIR/browser/history/history_querying_unittest.cc',
-      '$CHROME_DIR/browser/history/history_unittest.cc',
-      '$CHROME_DIR/browser/history/starred_url_database_unittest.cc',
       '$CHROME_DIR/browser/importer/firefox_importer_unittest.cc',
       '$CHROME_DIR/browser/importer/importer_unittest.cc',
       '$CHROME_DIR/browser/login_prompt_unittest.cc',
-      '$CHROME_DIR/browser/metrics/metrics_log_unittest.cc',
       '$CHROME_DIR/browser/renderer_host/render_widget_host_unittests.cc',
       '$CHROME_DIR/browser/navigation_controller_unittest.cc',
-      '$CHROME_DIR/browser/net/dns_master_unittest.cc',
       '$CHROME_DIR/browser/net/resolve_proxy_msg_helper_unittest.cc',
       '$CHROME_DIR/browser/password_manager/encryptor_unittest.cc',
       '$CHROME_DIR/browser/password_manager/password_form_manager_unittest.cc',
@@ -406,12 +406,8 @@ if not env.Bit('windows'):
       '$CHROME_DIR/browser/printing/print_job_unittest.cc',
       '$CHROME_DIR/browser/printing/win_printing_context_unittest.cc',
       '$CHROME_DIR/browser/profile_manager_unittest.cc',
-      '$CHROME_DIR/browser/renderer_host/resource_dispatcher_host_unittest.cc',
       '$CHROME_DIR/browser/rlz/rlz_unittest.cc',
       '$CHROME_DIR/browser/search_engines/template_url_model_unittest.cc',
-      '$CHROME_DIR/browser/search_engines/template_url_parser_unittest.cc',
-      '$CHROME_DIR/browser/search_engines/template_url_prepopulate_data_unittest.cc',
-      '$CHROME_DIR/browser/search_engines/template_url_unittest.cc',
       '$CHROME_DIR/browser/sessions/session_backend_unittest.cc',
       '$CHROME_DIR/browser/sessions/session_service_test_helper.cc',
       '$CHROME_DIR/browser/sessions/session_service_unittest.cc',
@@ -430,20 +426,10 @@ if not env.Bit('windows'):
       '$CHROME_DIR/common/gfx/text_elider_unittest.cc',
       '$CHROME_DIR/common/os_exchange_data_unittest.cc',
       '$CHROME_DIR/common/pref_service_unittest.cc',
-      '$CHROME_DIR/common/resource_dispatcher_unittest.cc',
       '$CHROME_DIR/common/time_format_unittest.cc',
       '$CHROME_DIR/common/win_util_unittest.cc',
-      '$CHROME_DIR/renderer/net/render_dns_master_unittest.cc',
-      '$CHROME_DIR/renderer/render_view_unittest.cc',
-      '$CHROME_DIR/renderer/render_widget_unittest.cc',
       '$CHROME_DIR/test/browser_with_test_window_test.cc',
       '$CHROME_DIR/test/test_tab_contents.cc',
-      '$CHROME_DIR/third_party/hunspell/google/bdict_reader$OBJSUFFIX',
-      '$CHROME_DIR/third_party/hunspell/google/bdict_writer$OBJSUFFIX',
-      '$CHROME_DIR/third_party/hunspell/google/hunspell_tests.cc',
-      '$CHROME_DIR/tools/convert_dict/aff_reader$OBJSUFFIX',
-      '$CHROME_DIR/tools/convert_dict/dic_reader$OBJSUFFIX',
-      '$CHROME_DIR/tools/convert_dict/hunspell_reader$OBJSUFFIX',
       '$CHROME_DIR/views/focus_manager_unittest.cc',
       '$CHROME_DIR/views/grid_layout_unittest.cc',
       '$CHROME_DIR/views/label_unittest.cc',

@@ -16,7 +16,7 @@ class SaveFileResourceHandler : public ResourceHandler {
  public:
   SaveFileResourceHandler(int render_process_host_id,
                           int render_view_id,
-                          const std::string& url,
+                          const GURL& url,
                           SaveFileManager* manager);
 
   // Saves the redirected URL to final_url_, we need to use the original
@@ -39,9 +39,7 @@ class SaveFileResourceHandler : public ResourceHandler {
   // If the content-length header is not present (or contains something other
   // than numbers), StringToInt64 returns 0, which indicates 'unknown size' and
   // is handled correctly by the SaveManager.
-  void set_content_length(const std::string& content_length) {
-    content_length_ = StringToInt64(content_length);
-  }
+  void set_content_length(const std::string& content_length);
 
   void set_content_disposition(const std::string& content_disposition) {
     content_disposition_ = content_disposition;
@@ -53,8 +51,8 @@ class SaveFileResourceHandler : public ResourceHandler {
   int render_view_id_;
   scoped_refptr<net::IOBuffer> read_buffer_;
   std::string content_disposition_;
-  std::wstring url_;
-  std::wstring final_url_;
+  GURL url_;
+  GURL final_url_;
   int64 content_length_;
   SaveFileManager* save_manager_;
 
@@ -62,4 +60,5 @@ class SaveFileResourceHandler : public ResourceHandler {
 
   DISALLOW_COPY_AND_ASSIGN(SaveFileResourceHandler);
 };
+
 #endif  // CHROME_BROWSER_RENDERER_HOST_SAVE_FILE_RESOURCE_HANDLER_H_

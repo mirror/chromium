@@ -8,7 +8,9 @@
 #include "build/build_config.h"
 
 #if defined(OS_POSIX)
+#include <sys/types.h>
 #include <semaphore.h>
+#include "base/file_descriptor_posix.h"
 #endif
 #include <string>
 
@@ -23,7 +25,10 @@ namespace base {
 typedef HANDLE SharedMemoryHandle;
 typedef HANDLE SharedMemoryLock;
 #elif defined(OS_POSIX)
-typedef int SharedMemoryHandle;
+// A SharedMemoryId is sufficient to identify a given shared memory segment on a
+// system, but insufficient to map it.
+typedef FileDescriptor SharedMemoryHandle;
+typedef ino_t SharedMemoryId;
 // On POSIX, the lock is implemented as a lockf() on the mapped file,
 // so no additional member (or definition of SharedMemoryLock) is
 // needed.
@@ -48,6 +53,10 @@ class SharedMemory {
 
   // Destructor.  Will close any open files.
   ~SharedMemory();
+
+  // Return true iff the given handle is valid (i.e. not the distingished
+  // invalid value; NULL for a HANDLE and -1 for a file descriptor)
+  static bool IsHandleValid(const SharedMemoryHandle& handle);
 
   // Creates or opens a shared memory segment based on a name.
   // If read_only is true, opens the memory as read-only.
@@ -92,7 +101,15 @@ class SharedMemory {
   // Get access to the underlying OS handle for this segment.
   // Use of this handle for anything other than an opaque
   // identifier is not portable.
-  SharedMemoryHandle handle() const { return mapped_file_; }
+  SharedMemoryHandle handle() const;
+
+#if defined(OS_POSIX)
+  // Return a unique identifier for this shared memory segment. Inode numbers
+  // are technically only unique to a single filesystem. However, we always
+  // allocate shared memory backing files from the same directory, so will end
+  // up on the same filesystem.
+  SharedMemoryId id() const { return inode_; }
+#endif
 
   // Closes the open shared memory segment.
   // It is safe to call Close repeatedly.
@@ -113,6 +130,8 @@ class SharedMemory {
   //   bool ok = ShareToProcess(process, new_handle);
   //   Close();
   //   return ok;
+  // Note that the memory is unmapped by calling this method, regardless of the
+  // return value.
   bool GiveToProcess(ProcessHandle process,
                      SharedMemoryHandle* new_handle) {
     return ShareToProcessCommon(process, new_handle, true);
@@ -145,7 +164,12 @@ class SharedMemory {
                             bool close_self);
 
   std::wstring       name_;
-  SharedMemoryHandle mapped_file_;
+#if defined(OS_WIN)
+  HANDLE             mapped_file_;
+#elif defined(OS_POSIX)
+  int                mapped_file_;
+  ino_t              inode_;
+#endif
   void*              memory_;
   bool               read_only_;
   size_t             max_size_;

@@ -617,10 +617,13 @@ all : \
     CSSValueKeywords.h \
     ColorData.c \
     DocTypeStrings.cpp \
+    HTMLElementFactory.cpp \
     HTMLEntityNames.c \
     V8Attr.h \
     V8BarInfo.h \
     V8CanvasPixelArray.h \
+    V8ClientRect.h \
+    V8ClientRectList.h \
     V8CDATASection.h \
     V8CSSCharsetRule.h \
     V8CSSFontFaceRule.h \
@@ -1048,13 +1051,13 @@ endif
 
 ifdef HTML_FLAGS
 
-HTMLNames.cpp : dom/make_names.pl html/HTMLTagNames.in html/HTMLAttributeNames.in
-	perl -I $(WebCore)/bindings/scripts $< --tags $(WebCore)/html/HTMLTagNames.in --attrs $(WebCore)/html/HTMLAttributeNames.in --wrapperFactory --extraDefines "$(HTML_FLAGS)"
+HTMLElementFactory.cpp HTMLNames.cpp : dom/make_names.pl html/HTMLTagNames.in html/HTMLAttributeNames.in
+	perl -I $(WebCore)/bindings/scripts $< --tags $(WebCore)/html/HTMLTagNames.in --attrs $(WebCore)/html/HTMLAttributeNames.in --factory --wrapperFactory --extraDefines "$(HTML_FLAGS)"
 
 else
 
-HTMLNames.cpp : dom/make_names.pl html/HTMLTagNames.in html/HTMLAttributeNames.in
-	perl -I $(WebCore)/bindings/scripts $< --tags $(WebCore)/html/HTMLTagNames.in --attrs $(WebCore)/html/HTMLAttributeNames.in --wrapperFactory
+HTMLElementFactory.cpp HTMLNames.cpp : dom/make_names.pl html/HTMLTagNames.in html/HTMLAttributeNames.in
+	perl -I $(WebCore)/bindings/scripts $< --tags $(WebCore)/html/HTMLTagNames.in --attrs $(WebCore)/html/HTMLAttributeNames.in --factory --wrapperFactory
 
 endif
 

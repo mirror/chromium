@@ -8,20 +8,18 @@
 
 #include "base/command_line.h"
 #include "base/file_util.h"
+#include "base/gfx/png_encoder.h"
 #include "base/histogram.h"
 #include "base/message_loop.h"
 #include "base/path_service.h"
 #include "base/perftimer.h"
 #include "base/singleton.h"
 #include "base/string_util.h"
-#include "net/base/cookie_monster.h"
-#include "net/url_request/url_request_error_job.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/chrome_plugin_browsing_context.h"
 #include "chrome/browser/chrome_thread.h"
 #include "chrome/browser/dom_ui/html_dialog_contents.h"
 #include "chrome/browser/gears_integration.h"
-#include "chrome/browser/net/dns_master.h"
 #include "chrome/browser/plugin_process_host.h"
 #include "chrome/browser/plugin_service.h"
 #include "chrome/browser/profile.h"
@@ -37,12 +35,10 @@
 #include "chrome/common/net/url_request_intercept_job.h"
 #include "chrome/common/plugin_messages.h"
 #include "chrome/common/render_messages.h"
-
-#include "base/gfx/png_encoder.h"
-#include "base/logging.h"
-#include "base/string_util.h"
-#include "googleurl/src/gurl.h"
 #include "net/base/base64.h"
+#include "net/base/cookie_monster.h"
+#include "net/url_request/url_request_context.h"
+#include "net/url_request/url_request_error_job.h"
 #include "skia/include/SkBitmap.h"
 
 using base::TimeDelta;
@@ -412,6 +408,7 @@ CPError STDCALL CPB_ShowHtmlDialog(
   ChromePluginLib* plugin = ChromePluginLib::FromCPID(id);
   CHECK(plugin);
 
+#if defined(OS_WIN)
   HWND parent_hwnd = reinterpret_cast<HWND>(static_cast<uintptr_t>(context));
   PluginService* service = PluginService::GetInstance();
   if (!service)
@@ -421,6 +418,11 @@ CPError STDCALL CPB_ShowHtmlDialog(
       new ModelessHtmlDialogDelegate(GURL(url), width, height, json_arguments,
                                      plugin_context, plugin, main_message_loop,
                                      parent_hwnd);
+#else
+  // TODO(port): port ModelessHtmlDialogDelegate
+  NOTIMPLEMENTED();
+#endif
+
   return CPERR_SUCCESS;
 }
 

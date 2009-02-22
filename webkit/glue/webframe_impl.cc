@@ -97,7 +97,6 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "markup.h"
 #include "Page.h"
 #include "PlatformContextSkia.h"
-#include "PrintContext.h"
 #include "RenderFrame.h"
 #if defined(OS_WIN)
 #include "RenderThemeChromiumWin.h"
@@ -135,10 +134,13 @@ MSVC_POP_WARNING();
 #include "webkit/glue/alt_error_page_resource_fetcher.h"
 #include "webkit/glue/dom_operations.h"
 #include "webkit/glue/glue_serialize.h"
+#include "webkit/glue/glue_util.h"
 #include "webkit/glue/webdocumentloader_impl.h"
+#include "webkit/glue/webdatasource_impl.h"
 #include "webkit/glue/weberror_impl.h"
 #include "webkit/glue/webframe_impl.h"
 #include "webkit/glue/webhistoryitem_impl.h"
+#include "webkit/glue/weburlrequest_impl.h"
 #include "webkit/glue/webtextinput_impl.h"
 #include "webkit/glue/webview_impl.h"
 
@@ -177,7 +179,7 @@ using WebCore::RenderObject;
 using WebCore::ResourceError;
 using WebCore::ResourceHandle;
 using WebCore::ResourceRequest;
-using WebCore::Selection;
+using WebCore::VisibleSelection;
 using WebCore::SharedBuffer;
 using WebCore::String;
 using WebCore::SubstituteData;
@@ -205,6 +207,14 @@ static void FrameContentAsPlainText(int max_chars, Frame* frame,
   Document* doc = frame->document();
   if (!doc)
     return;
+
+  if (!frame->view())
+    return;
+
+  // TextIterator iterates over the visual representation of the DOM. As such,
+  // it requires you to do a layout before using it (otherwise it'll crash).
+  if (frame->view()->needsLayout())
+    frame->view()->layout();
 
   // Select the document body.
   RefPtr<Range> range(doc->createRange());
@@ -583,6 +593,11 @@ void WebFrameImpl::CacheCurrentRequestInfo(WebDataSourceImpl* datasource) {
     datasource->SetExtraData(extra);
 }
 
+void WebFrameImpl::set_currently_loading_history_item(
+    WebHistoryItemImpl* item) {
+  currently_loading_history_item_ = item;
+}
+
 void WebFrameImpl::StopLoading() {
   if (!frame_)
     return;
@@ -815,7 +830,7 @@ bool WebFrameImpl::Find(const FindInPageRequest& request,
     main_frame_impl->active_match_frame_ = this;
 
     // We found something, so we can now query the selection for its position.
-    Selection new_selection(frame()->selection()->selection());
+    VisibleSelection new_selection(frame()->selection()->selection());
     IntRect curr_selection_rect;
 
     // If we thought we found something, but it couldn't be selected (perhaps
@@ -1177,7 +1192,7 @@ void WebFrameImpl::SetFindEndstateFocusAndSelection() {
       active_match_.get()) {
     // If the user has changed the selection since the match was found, we
     // don't focus anything.
-    Selection selection(frame()->selection()->selection());
+    VisibleSelection selection(frame()->selection()->selection());
     if (selection.isNone() || (selection.start() == selection.end()) ||
         active_match_->boundingBox() !=
             selection.toNormalizedRange()->boundingBox())
@@ -1769,13 +1784,10 @@ int WebFrameImpl::ComputePageRects(const gfx::Size& page_size_px) {
   // TODO(maruel): Weird. We don't do that.
   // Everything is in pixels :(
   // pages_ and page_height are actually output parameters.
-  WebCore::FloatRect rect(0, 0,
-						  static_cast<float>(page_size_px.width()),
-						  static_cast<float>(page_size_px.height()));
-  WebCore::PrintContext print_context(frame());
-  float page_height;
-  print_context.computePageRects(rect, 0, 0, 1.0, page_height);
-  return print_context.pageCount();
+  int page_height;
+  WebCore::IntRect rect(0, 0, page_size_px.width(), page_size_px.height());
+  computePageRectsForFrame(frame(), rect, 0, 0, 1.0, pages_, page_height);
+  return pages_.size();
 }
 
 void WebFrameImpl::GetPageRect(int page, gfx::Rect* page_size) const {

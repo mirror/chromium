@@ -4,7 +4,7 @@
 
 #include "chrome/browser/views/download_started_animation.h"
 
-#include "chrome/app/theme/theme_resources.h"
+#include "grit/theme_resources.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/resource_bundle.h"
@@ -54,7 +54,7 @@ DownloadStartedAnimation::DownloadStartedAnimation(TabContents* tab_contents)
   popup_->set_window_ex_style(WS_EX_LAYERED | WS_EX_TOOLWINDOW |
                               WS_EX_TRANSPARENT);
   popup_->SetLayeredAlpha(0x00);
-  popup_->Init(tab_contents_->GetContainerHWND(), rc, false);
+  popup_->Init(tab_contents_->GetNativeView(), rc, false);
   popup_->SetContentsView(this);
   Reposition();
   popup_->ShowWindow(SW_SHOWNOACTIVATE);

@@ -2,8 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "build/build_config.h"
+
 #if defined(OS_WIN)
 #include <windows.h>
+#include <objbase.h>
 #endif
 #include <algorithm>
 
@@ -11,9 +14,9 @@
 
 #include "base/shared_memory.h"
 #include "chrome/common/chrome_plugin_lib.h"
-#include "chrome/common/ipc_logging.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/common/notification_service.h"
+#include "chrome/plugin/npobject_util.h"
 // TODO(port)
 #if defined(OS_WIN)
 #include "chrome/plugin/plugin_channel.h"
@@ -31,8 +34,6 @@
 #include "webkit/glue/cache_manager.h"
 
 
-RenderThread* g_render_thread;
-
 static const unsigned int kCacheStatsDelayMS = 2000 /* milliseconds */;
 
 // V8 needs a 1MB stack size.
@@ -41,82 +42,52 @@ static const size_t kStackSize = 1024 * 1024;
 //-----------------------------------------------------------------------------
 // Methods below are only called on the owner's thread:
 
-RenderThread::RenderThread(const std::wstring& channel_name)
-    : Thread("Chrome_RenderThread"),
-      owner_loop_(MessageLoop::current()),
-      channel_name_(channel_name),
+// When we run plugins in process, we actually run them on the render thread,
+// which means that we need to make the render thread pump UI events.
+RenderThread::RenderThread()
+    : ChildThread(
+          base::Thread::Options(RenderProcess::InProcessPlugins() ?
+              MessageLoop::TYPE_UI : MessageLoop::TYPE_DEFAULT, kStackSize)),
       visited_link_slave_(NULL),
       user_script_slave_(NULL),
-      render_dns_master_(NULL),
-      in_send_(0) {
-  DCHECK(owner_loop_);
-  base::Thread::Options options;
-  options.stack_size = kStackSize;
-  // When we run plugins in process, we actually run them on the render thread,
-  // which means that we need to make the render thread pump UI events.
-  if (RenderProcess::ShouldLoadPluginsInProcess())
-    options.message_loop_type = MessageLoop::TYPE_UI;
-  StartWithOptions(options);
+      render_dns_master_(NULL) {
+}
+
+RenderThread::RenderThread(const std::wstring& channel_name)
+    : ChildThread(
+          base::Thread::Options(RenderProcess::InProcessPlugins() ?
+              MessageLoop::TYPE_UI : MessageLoop::TYPE_DEFAULT, kStackSize)),
+      visited_link_slave_(NULL),
+      user_script_slave_(NULL),
+      render_dns_master_(NULL) {
+  SetChannelName(channel_name);
 }
 
 RenderThread::~RenderThread() {
-  Stop();
 }
 
-void RenderThread::OnChannelError() {
-  owner_loop_->PostTask(FROM_HERE, new MessageLoop::QuitTask());
-}
-
-bool RenderThread::Send(IPC::Message* msg) {
-  in_send_++;
-  bool rv = channel_->Send(msg);
-  in_send_--;
-  return rv;
+RenderThread* RenderThread::current() {
+  DCHECK(!IsPluginProcess());
+  return static_cast<RenderThread*>(ChildThread::current());
 }
 
 void RenderThread::AddFilter(IPC::ChannelProxy::MessageFilter* filter) {
-  channel_->AddFilter(filter);
+  channel()->AddFilter(filter);
 }
 
 void RenderThread::RemoveFilter(IPC::ChannelProxy::MessageFilter* filter) {
-  channel_->RemoveFilter(filter);
+  channel()->RemoveFilter(filter);
 }
 
 void RenderThread::Resolve(const char* name, size_t length) {
-// TODO(port)
-#if defined(OS_WIN)
   return render_dns_master_->Resolve(name, length);
-#else
-  NOTIMPLEMENTED();
-#endif
-}
-
-void RenderThread::AddRoute(int32 routing_id,
-                            IPC::Channel::Listener* listener) {
-  DCHECK(MessageLoop::current() == message_loop());
-
-  // This corresponds to the AddRoute call done in CreateView.
-  router_.AddRoute(routing_id, listener);
-}
-
-void RenderThread::RemoveRoute(int32 routing_id) {
-  DCHECK(MessageLoop::current() == message_loop());
-
-  router_.RemoveRoute(routing_id);
 }
 
 void RenderThread::Init() {
-  DCHECK(!g_render_thread);
-  g_render_thread = this;
-
+  ChildThread::Init();
   notification_service_.reset(new NotificationService);
-
   cache_stats_factory_.reset(
       new ScopedRunnableMethodFactory<RenderThread>(this));
-
-  channel_.reset(new IPC::SyncChannel(channel_name_,
-      IPC::Channel::MODE_CLIENT, this, NULL, owner_loop_, true,
-      RenderProcess::GetShutDownEvent()));
 
 #if defined(OS_WIN)
   // The renderer thread should wind-up COM.
@@ -126,28 +97,15 @@ void RenderThread::Init() {
   visited_link_slave_ = new VisitedLinkSlave();
   user_script_slave_ = new UserScriptSlave();
   render_dns_master_.reset(new RenderDnsMaster());
-
-#ifdef IPC_MESSAGE_LOG_ENABLED
-  IPC::Logging::current()->SetIPCSender(this);
-#endif
 }
 
 void RenderThread::CleanUp() {
-  DCHECK(g_render_thread == this);
-  g_render_thread = NULL;
-
-  // Need to destruct the SyncChannel to the browser before we go away because
-  // it caches a pointer to this thread.
-  channel_.reset();
+  ChildThread::CleanUp();
 
 // TODO(port)
 #if defined(OS_WIN)
   // Clean up plugin channels before this thread goes away.
   PluginChannelBase::CleanupChannels();
-#endif
-
-#ifdef IPC_MESSAGE_LOG_ENABLED
-  IPC::Logging::current()->SetIPCSender(NULL);
 #endif
 
   notification_service_.reset();
@@ -164,40 +122,30 @@ void RenderThread::CleanUp() {
 }
 
 void RenderThread::OnUpdateVisitedLinks(base::SharedMemoryHandle table) {
-  DCHECK(table) << "Bad table handle";
+  DCHECK(base::SharedMemory::IsHandleValid(table)) << "Bad table handle";
   visited_link_slave_->Init(table);
 }
 
 void RenderThread::OnUpdateUserScripts(
     base::SharedMemoryHandle scripts) {
-  DCHECK(scripts) << "Bad scripts handle";
+  DCHECK(base::SharedMemory::IsHandleValid(scripts)) << "Bad scripts handle";
   user_script_slave_->UpdateScripts(scripts);
 }
 
-void RenderThread::OnMessageReceived(const IPC::Message& msg) {
-  // NOTE: We could subclass router_ to intercept OnControlMessageReceived, but
-  // it seems simpler to just process any control messages that we care about
-  // up-front and then send the rest of the messages onto router_.
-
-  if (msg.routing_id() == MSG_ROUTING_CONTROL) {
-    IPC_BEGIN_MESSAGE_MAP(RenderThread, msg)
-      IPC_MESSAGE_HANDLER(ViewMsg_VisitedLink_NewTable, OnUpdateVisitedLinks)
-      IPC_MESSAGE_HANDLER(ViewMsg_SetNextPageID, OnSetNextPageID)
-      // TODO(port): removed from render_messages_internal.h;
-      // is there a new non-windows message I should add here?
-      IPC_MESSAGE_HANDLER(ViewMsg_New, OnCreateNewView)
-      IPC_MESSAGE_HANDLER(ViewMsg_SetCacheCapacities, OnSetCacheCapacities)
-      IPC_MESSAGE_HANDLER(ViewMsg_GetCacheResourceStats,
-                          OnGetCacheResourceStats)
-      IPC_MESSAGE_HANDLER(ViewMsg_PluginMessage, OnPluginMessage)
-      IPC_MESSAGE_HANDLER(ViewMsg_UserScripts_NewScripts,
-                          OnUpdateUserScripts)
-      // send the rest to the router
-      IPC_MESSAGE_UNHANDLED(router_.OnMessageReceived(msg))
-    IPC_END_MESSAGE_MAP()
-  } else {
-    router_.OnMessageReceived(msg);
-  }
+void RenderThread::OnControlMessageReceived(const IPC::Message& msg) {
+  IPC_BEGIN_MESSAGE_MAP(RenderThread, msg)
+    IPC_MESSAGE_HANDLER(ViewMsg_VisitedLink_NewTable, OnUpdateVisitedLinks)
+    IPC_MESSAGE_HANDLER(ViewMsg_SetNextPageID, OnSetNextPageID)
+    // TODO(port): removed from render_messages_internal.h;
+    // is there a new non-windows message I should add here?
+    IPC_MESSAGE_HANDLER(ViewMsg_New, OnCreateNewView)
+    IPC_MESSAGE_HANDLER(ViewMsg_SetCacheCapacities, OnSetCacheCapacities)
+    IPC_MESSAGE_HANDLER(ViewMsg_GetCacheResourceStats,
+                        OnGetCacheResourceStats)
+    IPC_MESSAGE_HANDLER(ViewMsg_PluginMessage, OnPluginMessage)
+    IPC_MESSAGE_HANDLER(ViewMsg_UserScripts_NewScripts,
+                        OnUpdateUserScripts)
+  IPC_END_MESSAGE_MAP()
 }
 
 void RenderThread::OnPluginMessage(const FilePath& plugin_path,
@@ -235,10 +183,6 @@ void RenderThread::OnCreateNewView(gfx::NativeViewId parent_hwnd,
       true, false);
 #endif
 
-#if defined(OS_MACOSX)
-  // TODO(jrg): causes a crash.
-  if (0)
-#endif
   // TODO(darin): once we have a RenderThread per RenderView, this will need to
   // change to assert that we are not creating more than one view.
   RenderView::Create(
@@ -249,7 +193,7 @@ void RenderThread::OnCreateNewView(gfx::NativeViewId parent_hwnd,
 void RenderThread::OnSetCacheCapacities(size_t min_dead_capacity,
                                         size_t max_dead_capacity,
                                         size_t capacity) {
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_LINUX)
   CacheManager::SetCapacities(min_dead_capacity, max_dead_capacity, capacity);
 #else
   // TODO(port)
@@ -258,7 +202,7 @@ void RenderThread::OnSetCacheCapacities(size_t min_dead_capacity,
 }
 
 void RenderThread::OnGetCacheResourceStats() {
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_LINUX)
   CacheManager::ResourceTypeStats stats;
   CacheManager::GetResourceTypeStats(&stats);
   Send(new ViewHostMsg_ResourceTypeStats(stats));
@@ -269,7 +213,7 @@ void RenderThread::OnGetCacheResourceStats() {
 }
 
 void RenderThread::InformHostOfCacheStats() {
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_LINUX)
   CacheManager::UsageStats stats;
   CacheManager::GetUsageStats(&stats);
   Send(new ViewHostMsg_UpdatedCacheStats(stats));

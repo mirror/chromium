@@ -41,6 +41,14 @@ input_files = ChromeFileList([
     'base/synchronizer.cc',
     'base/synchronizer.h',
   ]),
+  MSVSFilter('filters', [
+    'filters/audio_renderer_impl.cc',
+    'filters/audio_renderer_impl.h',
+    'filters/file_data_source.cc',
+    'filters/file_data_source.h',
+    'filters/null_audio_renderer.cc',
+    'filters/null_audio_renderer.h',
+  ]),
   MSVSFilter('audio', [
     'audio/win/audio_manager_win.h',
     'audio/audio_output.h',
@@ -51,6 +59,16 @@ input_files = ChromeFileList([
     'audio/win/waveout_output_win.h',
   ]),
 ])
+
+if env.Bit('linux'):
+  input_files.Extend([
+      'audio/linux/audio_manager_linux.cc',
+  ])
+
+if env.Bit('mac'):
+  input_files.Extend([
+      'audio/mac/audio_manager_mac.cc',
+  ])
 
 if not env.Bit('windows'):
   # Windows-specific files.

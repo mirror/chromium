@@ -13,23 +13,29 @@
 
 #include "base/command_line.h"
 #include "base/debug_util.h"
+#include "base/linked_ptr.h"
 #include "base/logging.h"
 #include "base/path_service.h"
 #include "base/process_util.h"
 #include "base/rand_util.h"
+#include "base/scoped_ptr.h"
 #include "base/shared_memory.h"
+#include "base/singleton.h"
 #include "base/string_util.h"
 #include "base/thread.h"
 #include "chrome/app/result_codes.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/cache_manager_host.h"
 #include "chrome/browser/extensions/user_script_master.h"
+#include "chrome/browser/history/history.h"
+#include "chrome/browser/plugin_service.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/renderer_host/render_widget_helper.h"
 #include "chrome/browser/renderer_host/renderer_security_policy.h"
 #include "chrome/browser/renderer_host/resource_message_filter.h"
 #include "chrome/browser/visitedlink_master.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/child_process_info.h"
 #include "chrome/common/debug_flags.h"
 #include "chrome/common/logging_chrome.h"
 #include "chrome/common/notification_service.h"
@@ -40,12 +46,10 @@
 #include "chrome/renderer/render_process.h"
 
 #if defined(OS_WIN)
-#include "chrome/browser/plugin_service.h"
 
 // TODO(port): see comment by the only usage of RenderViewHost in this file.
 #include "chrome/browser/renderer_host/render_view_host.h"
 
-#include "chrome/browser/history/history.h"
 #include "chrome/browser/spellchecker.h"
 
 // Once the above TODO is finished, then this block is all Windows-specific
@@ -80,8 +84,7 @@ class RendererMainThread : public base::Thread {
     CoInitialize(NULL);
 #endif
 
-    bool rv = RenderProcess::GlobalInit(channel_id_);
-    DCHECK(rv);
+    render_process_.reset(new RenderProcess(channel_id_));
     // It's a little lame to manually set this flag.  But the single process
     // RendererThread will receive the WM_QUIT.  We don't need to assert on
     // this thread, so just force the flag manually.
@@ -91,7 +94,7 @@ class RendererMainThread : public base::Thread {
   }
 
   virtual void CleanUp() {
-    RenderProcess::GlobalCleanup();
+    render_process_.reset();
 
 #if defined(OS_WIN)
     CoUninitialize();
@@ -100,6 +103,7 @@ class RendererMainThread : public base::Thread {
 
  private:
   std::wstring channel_id_;
+  scoped_ptr<RenderProcess> render_process_;
 };
 
 // Used for a View_ID where the renderer has not been attached yet
@@ -125,7 +129,10 @@ void BrowserRenderProcessHost::RegisterPrefs(PrefService* prefs) {
 BrowserRenderProcessHost::BrowserRenderProcessHost(Profile* profile)
     : RenderProcessHost(profile),
       visible_widgets_(0),
-      backgrounded_(true) {
+      backgrounded_(true),
+      ALLOW_THIS_IN_INITIALIZER_LIST(cached_dibs_cleaner_(
+            base::TimeDelta::FromSeconds(5),
+            this, &BrowserRenderProcessHost::ClearTransportDIBCache)) {
   DCHECK(host_id() >= 0);  // We use a negative host_id_ in destruction.
   widget_helper_ = new RenderWidgetHelper(host_id());
 
@@ -155,6 +162,10 @@ BrowserRenderProcessHost::~BrowserRenderProcessHost() {
   // We may have some unsent messages at this point, but that's OK.
   channel_.reset();
 
+  // Destroy the AudioRendererHost properly.
+  if (audio_renderer_host_.get())
+    audio_renderer_host_->Destroy();
+
   if (process_.handle() && !run_renderer_in_process()) {
     ProcessWatcher::EnsureProcessTerminated(process_.handle());
   }
@@ -163,6 +174,8 @@ BrowserRenderProcessHost::~BrowserRenderProcessHost() {
 
   NotificationService::current()->RemoveObserver(this,
       NotificationType::USER_SCRIPTS_LOADED, NotificationService::AllSources());
+
+  ClearTransportDIBCache();
 }
 
 // When we're started with the --start-renderers-manually flag, we pop up a
@@ -195,8 +208,13 @@ bool BrowserRenderProcessHost::Init() {
   // run the IPC channel on the shared IO thread.
   base::Thread* io_thread = g_browser_process->io_thread();
 
+  // Construct the AudioRendererHost with the IO thread.
+  audio_renderer_host_ =
+      new AudioRendererHost(io_thread->message_loop());
+
   scoped_refptr<ResourceMessageFilter> resource_message_filter =
       new ResourceMessageFilter(g_browser_process->resource_dispatcher_host(),
+                                audio_renderer_host_.get(),
                                 PluginService::GetInstance(),
                                 g_browser_process->print_job_manager(),
                                 host_id(),
@@ -207,7 +225,8 @@ bool BrowserRenderProcessHost::Init() {
   const CommandLine& browser_command_line = *CommandLine::ForCurrentProcess();
 
   // setup IPC channel
-  const std::wstring channel_id = GenerateRandomChannelID(this);
+  const std::wstring channel_id =
+      ChildProcessInfo::GenerateRandomChannelID(this);
   channel_.reset(
       new IPC::SyncChannel(channel_id, IPC::Channel::MODE_SERVER, this,
                            resource_message_filter,
@@ -282,7 +301,7 @@ bool BrowserRenderProcessHost::Init() {
 #if defined(OS_WIN)
   bool child_needs_help =
       DebugFlags::ProcessDebugFlags(&cmd_line,
-                                    DebugFlags::RENDERER,
+                                    ChildProcessInfo::RENDER_PROCESS,
                                     in_sandbox);
 #elif defined(OS_POSIX)
   if (browser_command_line.HasSwitch(switches::kRendererCmdPrefix)) {
@@ -317,9 +336,12 @@ bool BrowserRenderProcessHost::Init() {
     // communicating IO.  This can lead to deadlocks where the RenderThread is
     // waiting for the IO to complete, while the browsermain is trying to pass
     // an event to the RenderThread.
-    //
-    // TODO: We should consider how to better cleanup threads on exit.
-    base::Thread *render_thread = new RendererMainThread(channel_id);
+    RendererMainThread* render_thread = new RendererMainThread(channel_id);
+
+    // This singleton keeps track of our pointers to avoid a leak.
+    Singleton<std::vector<linked_ptr<RendererMainThread> > >::get()->push_back(
+        linked_ptr<RendererMainThread>(render_thread));
+
     base::Thread::Options options;
     options.message_loop_type = MessageLoop::TYPE_IO;
     render_thread->StartWithOptions(options);
@@ -515,18 +537,14 @@ void BrowserRenderProcessHost::InitVisitedLinks() {
     return;
   }
 
-#if defined(OS_WIN)
-  base::SharedMemoryHandle handle_for_process = NULL;
-  visitedlink_master->ShareToProcess(GetRendererProcessHandle(),
-                                     &handle_for_process);
-  DCHECK(handle_for_process);
-  if (handle_for_process) {
+  base::SharedMemoryHandle handle_for_process;
+  bool r = visitedlink_master->ShareToProcess(GetRendererProcessHandle(),
+                                              &handle_for_process);
+  DCHECK(r);
+
+  if (base::SharedMemory::IsHandleValid(handle_for_process)) {
     channel_->Send(new ViewMsg_VisitedLink_NewTable(handle_for_process));
   }
-#else
-  // TODO(port): ShareToProcess is Windows-specific.
-  NOTIMPLEMENTED();
-#endif
 }
 
 void BrowserRenderProcessHost::InitUserScripts() {
@@ -544,11 +562,11 @@ void BrowserRenderProcessHost::InitUserScripts() {
 
 void BrowserRenderProcessHost::SendUserScriptsUpdate(
     base::SharedMemory *shared_memory) {
-  base::SharedMemoryHandle handle_for_process = NULL;
-  shared_memory->ShareToProcess(GetRendererProcessHandle(),
-                                &handle_for_process);
-  DCHECK(handle_for_process);
-  if (handle_for_process) {
+  base::SharedMemoryHandle handle_for_process;
+  bool r = shared_memory->ShareToProcess(GetRendererProcessHandle(),
+                                         &handle_for_process);
+  DCHECK(r);
+  if (base::SharedMemory::IsHandleValid(handle_for_process)) {
     channel_->Send(new ViewMsg_UserScripts_NewScripts(handle_for_process));
   }
 }
@@ -591,6 +609,67 @@ bool BrowserRenderProcessHost::FastShutdownIfPossible() {
   process_.Terminate(ResultCodes::NORMAL_EXIT);
   process_.Close();
   return true;
+}
+
+// This is a platform specific function for mapping a transport DIB given its id
+TransportDIB* BrowserRenderProcessHost::MapTransportDIB(
+    TransportDIB::Id dib_id) {
+#if defined(OS_WIN)
+  // On Windows we need to duplicate the handle from the remote process
+  HANDLE section = win_util::GetSectionFromProcess(
+      dib_id.handle, GetRendererProcessHandle(), false /* read write */);
+  return TransportDIB::Map(section);
+#elif defined(OS_MACOSX)
+  // On OSX, the browser allocates all DIBs and keeps a file descriptor around
+  // for each.
+  return widget_helper_->MapTransportDIB(dib_id);
+#elif defined(OS_LINUX)
+  return TransportDIB::Map(dib_id);
+#endif  // defined(OS_LINUX)
+}
+
+TransportDIB* BrowserRenderProcessHost::GetTransportDIB(
+    TransportDIB::Id dib_id) {
+  const std::map<TransportDIB::Id, TransportDIB*>::iterator
+      i = cached_dibs_.find(dib_id);
+  if (i != cached_dibs_.end()) {
+    cached_dibs_cleaner_.Reset();
+    return i->second;
+  }
+
+  TransportDIB* dib = MapTransportDIB(dib_id);
+  if (!dib)
+    return NULL;
+
+  if (cached_dibs_.size() >= MAX_MAPPED_TRANSPORT_DIBS) {
+    // Clean a single entry from the cache
+    std::map<TransportDIB::Id, TransportDIB*>::iterator smallest_iterator;
+    size_t smallest_size = std::numeric_limits<size_t>::max();
+
+    for (std::map<TransportDIB::Id, TransportDIB*>::iterator
+         i = cached_dibs_.begin(); i != cached_dibs_.end(); ++i) {
+      if (i->second->size() <= smallest_size) {
+        smallest_iterator = i;
+        smallest_size = i->second->size();
+      }
+    }
+
+    delete smallest_iterator->second;
+    cached_dibs_.erase(smallest_iterator);
+  }
+
+  cached_dibs_[dib_id] = dib;
+  cached_dibs_cleaner_.Reset();
+  return dib;
+}
+
+void BrowserRenderProcessHost::ClearTransportDIBCache() {
+  for (std::map<TransportDIB::Id, TransportDIB*>::iterator
+       i = cached_dibs_.begin(); i != cached_dibs_.end(); ++i) {
+    delete i->second;
+  }
+
+  cached_dibs_.clear();
 }
 
 bool BrowserRenderProcessHost::Send(IPC::Message* msg) {
@@ -802,17 +881,4 @@ void BrowserRenderProcessHost::Observe(NotificationType type,
       break;
     }
   }
-}
-
-std::wstring GenerateRandomChannelID(void* instance) {
-  // Note: the string must start with the current process id, this is how
-  // child processes determine the pid of the parent.
-  // Build the channel ID.  This is composed of a unique identifier for the
-  // parent browser process, an identifier for the renderer/plugin instance,
-  // and a random component. We use a random component so that a hacked child
-  // process can't cause denial of service by causing future named pipe creation
-  // to fail.
-  return StringPrintf(L"%d.%x.%d",
-                      base::GetCurrentProcId(), instance,
-                      base::RandInt(0, std::numeric_limits<int>::max()));
 }

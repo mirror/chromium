@@ -10,15 +10,20 @@
 #include "base/path_service.h"
 #include "base/scoped_ptr.h"
 #include "base/string_util.h"
-#include "chrome/app/locales/locale_settings.h"
+#include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/extensions/extensions_service.h"
 #include "chrome/browser/extensions/user_script_master.h"
+#include "chrome/browser/history/history.h"
 #include "chrome/browser/net/chrome_url_request_context.h"
 #include "chrome/browser/profile_manager.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/search_engines/template_url_model.h"
+#include "chrome/browser/ssl/ssl_host_state.h"
+#include "chrome/browser/sessions/session_service.h"
+#include "chrome/browser/sessions/tab_restore_service.h"
 #include "chrome/browser/visitedlink_master.h"
 #include "chrome/browser/webdata/web_data_service.h"
 #include "chrome/common/chrome_constants.h"
@@ -26,10 +31,8 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
-#include "chrome/common/pref_service.h"
 #include "chrome/common/render_messages.h"
-#include "chrome/common/resource_bundle.h"
-#include "net/url_request/url_request_context.h"
+#include "grit/locale_settings.h"
 
 #if defined(OS_POSIX)
 // TODO(port): get rid of this include. It's used just to provide declarations
@@ -39,14 +42,8 @@
 
 // TODO(port): Get rid of this section and finish porting.
 #if defined(OS_WIN)
-#include "chrome/browser/bookmarks/bookmark_model.h"
-#include "chrome/browser/download/download_manager.h"
-#include "chrome/browser/history/history.h"
 #include "chrome/browser/search_engines/template_url_fetcher.h"
-#include "chrome/browser/sessions/session_service.h"
-#include "chrome/browser/sessions/tab_restore_service.h"
 #include "chrome/browser/spellchecker.h"
-#include "chrome/browser/tab_contents/navigation_controller.h"
 #endif
 
 using base::Time;
@@ -59,7 +56,7 @@ static const int kCreateSessionServiceDelayMS = 500;
 // Profile::GetDefaultRequestContext.
 URLRequestContext* Profile::default_request_context_;
 
-//static
+// static
 void Profile::RegisterUserPrefs(PrefService* prefs) {
   prefs->RegisterBooleanPref(prefs::kSearchSuggestEnabled, true);
   prefs->RegisterBooleanPref(prefs::kSessionExitedCleanly, true);
@@ -74,14 +71,16 @@ void Profile::RegisterUserPrefs(PrefService* prefs) {
       IDS_SPELLCHECK_DICTIONARY);
 #endif
   prefs->RegisterBooleanPref(prefs::kEnableSpellCheck, true);
+  prefs->RegisterBooleanPref(prefs::kEnableUserScripts, false);
+  prefs->RegisterBooleanPref(prefs::kEnableExtensions, false);
 }
 
-//static
+// static
 Profile* Profile::CreateProfile(const FilePath& path) {
   return new ProfileImpl(path);
 }
 
-//static
+// static
 URLRequestContext* Profile::GetDefaultRequestContext() {
   return default_request_context_;
 }
@@ -150,6 +149,14 @@ class OffTheRecordProfileImpl : public Profile,
 
   virtual UserScriptMaster* GetUserScriptMaster() {
     return profile_->GetUserScriptMaster();
+  }
+
+  virtual SSLHostState* GetSSLHostState() {
+    if (!ssl_host_state_.get())
+      ssl_host_state_.reset(new SSLHostState());
+
+    DCHECK(ssl_host_state_->CalledOnValidThread());
+    return ssl_host_state_.get();
   }
 
   virtual HistoryService* GetHistoryService(ServiceAccessType sat) {
@@ -306,6 +313,11 @@ class OffTheRecordProfileImpl : public Profile,
   // The download manager that only stores downloaded items in memory.
   scoped_refptr<DownloadManager> download_manager_;
 
+  // We don't want SSLHostState from the OTR profile to leak back to the main
+  // profile because then the main profile would learn some of the host names
+  // the user visited while OTR.
+  scoped_ptr<SSLHostState> ssl_host_state_;
+
   // Time we were started.
   Time start_time_;
 
@@ -341,10 +353,13 @@ void ProfileImpl::InitExtensions() {
     return;  // Already initialized.
 
   const CommandLine* command_line = CommandLine::ForCurrentProcess();
+  PrefService* prefs = GetPrefs();
   bool user_scripts_enabled =
-      command_line->HasSwitch(switches::kEnableUserScripts);
-  bool extensions_enabled = 
-      command_line->HasSwitch(switches::kEnableExtensions);
+      command_line->HasSwitch(switches::kEnableUserScripts) || 
+      prefs->GetBoolean(prefs::kEnableUserScripts);
+  bool extensions_enabled =
+      command_line->HasSwitch(switches::kEnableExtensions) || 
+      prefs->GetBoolean(prefs::kEnableExtensions);
 
   FilePath script_dir;
   if (user_scripts_enabled) {
@@ -497,6 +512,14 @@ ExtensionsService* ProfileImpl::GetExtensionsService() {
 
 UserScriptMaster* ProfileImpl::GetUserScriptMaster() {
   return user_script_master_.get();
+}
+
+SSLHostState* ProfileImpl::GetSSLHostState() {
+  if (!ssl_host_state_.get())
+    ssl_host_state_.reset(new SSLHostState());
+
+  DCHECK(ssl_host_state_->CalledOnValidThread());
+  return ssl_host_state_.get();
 }
 
 PrefService* ProfileImpl::GetPrefs() {
@@ -693,7 +716,7 @@ void ProfileImpl::ResetTabRestoreService() {
   tab_restore_service_ = NULL;
 }
 
-// To be run in the IO thread to notify all resource message filters that the 
+// To be run in the IO thread to notify all resource message filters that the
 // spellchecker has changed.
 class NotifySpellcheckerChangeTask : public Task {
  public:
@@ -737,7 +760,7 @@ void ProfileImpl::InitializeSpellChecker(bool need_to_broadcast) {
   if (enable_spellcheck) {
     std::wstring dict_dir;
     PathService::Get(chrome::DIR_APP_DICTIONARIES, &dict_dir);
-    // Note that, as the object pointed to by previously by spellchecker_ 
+    // Note that, as the object pointed to by previously by spellchecker_
     // is being deleted in the io thread, the spellchecker_ can be made to point
     // to a new object (RE-initialized) in parallel in this UI thread.
     spellchecker_ = new SpellChecker(dict_dir,
@@ -753,7 +776,7 @@ void ProfileImpl::InitializeSpellChecker(bool need_to_broadcast) {
     scoped_spellchecker.spellchecker = spellchecker_;
     if (io_thread) {
       io_thread->message_loop()->PostTask(
-          FROM_HERE, 
+          FROM_HERE,
           new NotifySpellcheckerChangeTask(this, scoped_spellchecker));
     }
   }
@@ -768,7 +791,7 @@ SpellChecker* ProfileImpl::GetSpellChecker() {
     // This is where spellchecker gets initialized. Note that this is being
     // initialized in the ui_thread. However, this is not a problem as long as
     // it is *used* in the io thread.
-    // TODO (sidchat) One day, change everything so that spellchecker gets
+    // TODO(sidchat): One day, change everything so that spellchecker gets
     // initialized in the IO thread itself.
     InitializeSpellChecker(false);
   }

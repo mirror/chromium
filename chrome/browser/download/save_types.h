@@ -9,8 +9,10 @@
 #include <utility>
 
 #include "base/basictypes.h"
+#include "base/file_path.h"
+#include "googleurl/src/gurl.h"
 
-typedef std::vector<std::pair<int, std::wstring> > FinalNameList;
+typedef std::vector<std::pair<int, FilePath> > FinalNameList;
 typedef std::vector<int> SaveIDList;
 
 // This structure is used to handle and deliver some info
@@ -28,8 +30,8 @@ struct SaveFileCreateInfo {
     SAVE_FILE_FROM_FILE
   };
 
-  SaveFileCreateInfo(const std::wstring& path,
-                     const std::wstring& url,
+  SaveFileCreateInfo(const FilePath& path,
+                     const GURL& url,
                      SaveFileSource save_source,
                      int32 save_id)
       : path(path),
@@ -46,11 +48,11 @@ struct SaveFileCreateInfo {
 
   // SaveItem fields.
   // The local file path of saved file.
-  std::wstring path;
+  FilePath path;
   // Original URL of the saved resource.
-  std::wstring url;
+  GURL url;
   // Final URL of the saved resource since some URL might be redirected.
-  std::wstring final_url;
+  GURL final_url;
   // The unique identifier for saving job, assigned at creation by
   // the SaveFileManager for its internal record keeping.
   int save_id;

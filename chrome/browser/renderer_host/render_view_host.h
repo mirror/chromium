@@ -351,9 +351,9 @@ class RenderViewHost : public RenderWidgetHost {
   // The parameter local_directory_name is relative path of directory which
   // contain all saved auxiliary files included all sub frames and resouces.
   void GetSerializedHtmlDataForCurrentPageWithLocalLinks(
-      const std::vector<std::wstring>& links,
-      const std::vector<std::wstring>& local_paths,
-      const std::wstring& local_directory_name);
+      const std::vector<GURL>& links,
+      const std::vector<FilePath>& local_paths,
+      const FilePath& local_directory_name);
 
   // Notifies the RenderViewHost that a file has been chosen by the user from
   // an Open File dialog for the form.
@@ -410,6 +410,7 @@ class RenderViewHost : public RenderWidgetHost {
   virtual bool IsRenderView() { return true; }
   virtual void OnMessageReceived(const IPC::Message& msg);
   virtual bool CanBlur() const;
+  virtual gfx::Rect GetRootWindowResizerRect() const;
 
  protected:
   // RenderWidgetHost protected overrides.

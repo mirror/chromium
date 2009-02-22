@@ -6,8 +6,9 @@
 
 #include <limits>
 
+#include "base/string_util.h"
 #include "base/base_drag_source.h"
-#include "chrome/app/theme/theme_resources.h"
+#include "grit/theme_resources.h"
 #include "chrome/browser/bookmarks/bookmark_context_menu.h"
 #include "chrome/browser/bookmarks/bookmark_utils.h"
 #include "chrome/browser/browser.h"
@@ -766,9 +767,8 @@ gfx::Size BookmarkBarView::GetPreferredSize() {
                         (kNewtabBarHeight - kBarHeight) *
                         (1 - size_animation_->GetCurrentValue())));
   } else {
-    prefsize.set_height(
-        std::max(static_cast<int>(static_cast<double>(kBarHeight) *
-                 size_animation_->GetCurrentValue()), 1));
+    prefsize.set_height(static_cast<int>(static_cast<double>(kBarHeight) *
+                        size_animation_->GetCurrentValue()));
   }
 
   // Width doesn't matter, we're always given a width based on the browser
@@ -878,7 +878,7 @@ void BookmarkBarView::ViewHierarchyChanged(bool is_add,
 }
 
 void BookmarkBarView::Paint(ChromeCanvas* canvas) {
-  if (OnNewTabPage() && (!IsAlwaysShown() || size_animation_->IsAnimating())) {
+  if (IsDetachedStyle()) {
     // Draw the background to match the new tab page.
     canvas->FillRectInt(kNewtabBackgroundColor, 0, 0, width(), height());
 
@@ -1104,6 +1104,17 @@ int BookmarkBarView::OnPerformDrop(const DropTargetEvent& event) {
     parent_node = root;
   }
   return PerformDropImpl(data, parent_node, index);
+}
+
+void BookmarkBarView::OnFullscreenToggled(bool fullscreen) {
+  if (!fullscreen)
+    size_animation_->Reset(IsAlwaysShown() ? 1 : 0);
+  else if (IsAlwaysShown())
+    size_animation_->Reset(0);
+}
+
+bool BookmarkBarView::IsDetachedStyle() {
+  return OnNewTabPage() && (size_animation_->GetCurrentValue() != 1);
 }
 
 bool BookmarkBarView::IsAlwaysShown() {
@@ -1376,7 +1387,7 @@ void BookmarkBarView::RunMenu(views::View* view,
   int x = view->GetX(APPLY_MIRRORING_TRANSFORMATION);
   int bar_height = height() - kMenuOffset;
 
-  if (OnNewTabPage() && !IsAlwaysShown())
+  if (IsDetachedStyle())
     bar_height -= kNewtabVerticalPadding;
 
   int start_index = 0;

@@ -15,7 +15,7 @@
 #define NET_HTTP_HTTP_CACHE_H_
 
 #include <list>
-#include <string>
+#include <set>
 
 #include "base/basictypes.h"
 #include "base/hash_tables.h"
@@ -163,6 +163,8 @@ class HttpCache : public HttpTransactionFactory {
 
   typedef base::hash_map<std::string, int> PlaybackCacheMap;
   scoped_ptr<PlaybackCacheMap> playback_cache_map_;
+
+  RevocableStore transactions_;
 
   DISALLOW_COPY_AND_ASSIGN(HttpCache);
 };

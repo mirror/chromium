@@ -8,6 +8,7 @@
 #include "base/win_util.h"
 #include "chrome/browser/automation/automation_provider.h"
 #include "chrome/browser/profile.h"
+#include "chrome/browser/tab_contents/provisional_load_details.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/browser/views/tab_contents_container_view.h"
 #include "chrome/browser/tab_contents/web_contents.h"
@@ -29,7 +30,8 @@ ExternalTabContainer::ExternalTabContainer(
       tab_contents_(NULL),
       external_accel_table_(NULL),
       external_accel_entry_count_(0),
-      tab_contents_container_(NULL) {
+      tab_contents_container_(NULL),
+      ignore_next_load_notification_(false) {
 }
 
 ExternalTabContainer::~ExternalTabContainer() {
@@ -95,6 +97,8 @@ bool ExternalTabContainer::Init(Profile* profile, HWND parent,
   DCHECK(controller);
   registrar_.Add(this, NotificationType::NAV_ENTRY_COMMITTED,
                  Source<NavigationController>(controller));
+  registrar_.Add(this, NotificationType::FAIL_PROVISIONAL_LOAD_WITH_ERROR,
+                 Source<NavigationController>(controller));
   NotificationService::current()->Notify(
       NotificationType::EXTERNAL_TAB_CREATED,
       Source<NavigationController>(controller),
@@ -109,7 +113,7 @@ bool ExternalTabContainer::Init(Profile* profile, HWND parent,
   // may or may not include the popup bit.
   ModifyStyle(WS_POPUP, style, 0);
 
-  ::ShowWindow(tab_contents_->GetContainerHWND(), SW_SHOW);
+  ::ShowWindow(tab_contents_->GetNativeView(), SW_SHOW);
   return true;
 }
 
@@ -143,7 +147,7 @@ LRESULT ExternalTabContainer::OnSize(UINT, WPARAM, LPARAM, BOOL& handled) {
   if (tab_contents_) {
     RECT client_rect = {0};
     GetClientRect(&client_rect);
-    ::SetWindowPos(tab_contents_->GetContainerHWND(), NULL, client_rect.left,
+    ::SetWindowPos(tab_contents_->GetNativeView(), NULL, client_rect.left,
                    client_rect.top, client_rect.right - client_rect.left,
                    client_rect.bottom - client_rect.top, SWP_NOZORDER);
   }
@@ -158,8 +162,8 @@ LRESULT ExternalTabContainer::OnSetFocus(UINT msg, WPARAM wp, LPARAM lp,
     DCHECK(focus_manager);
     if (focus_manager) {
       focus_manager->ClearFocus();
-      automation_->Send(new AutomationMsg_TabbedOut(win_util::IsShiftPressed(),
-                                                    false));
+      automation_->Send(new AutomationMsg_TabbedOut(0,
+          win_util::IsShiftPressed()));
     }
   }
 
@@ -251,21 +255,48 @@ void ExternalTabContainer::ForwardMessageToExternalHost(
 void ExternalTabContainer::Observe(NotificationType type,
                                    const NotificationSource& source,
                                    const NotificationDetails& details) {
+  static const int kHttpClientErrorStart = 400;
+  static const int kHttpServerErrorEnd = 510;
+
   switch (type.value) {
     case NotificationType::NAV_ENTRY_COMMITTED:
+      if (ignore_next_load_notification_) {
+        ignore_next_load_notification_ = false;
+        return;
+      }
+
       if (automation_) {
         const NavigationController::LoadCommittedDetails* commit =
             Details<NavigationController::LoadCommittedDetails>(details).ptr();
 
-        // When the previous entry index is invalid, it will be -1, which will
-        // still make the computation come out right (navigating to the 0th
-        // entry will be +1).
-        automation_->Send(new AutomationMsg_DidNavigate(
-            0, commit->type,
-            commit->previous_entry_index -
-                tab_contents_->controller()->GetLastCommittedEntryIndex()));
+        if (commit->http_status_code >= kHttpClientErrorStart && 
+            commit->http_status_code <= kHttpServerErrorEnd) {
+          automation_->Send(new AutomationMsg_NavigationFailed(
+              0, commit->http_status_code, commit->entry->url()));
+
+          ignore_next_load_notification_ = true;
+        } else {
+          // When the previous entry index is invalid, it will be -1, which
+          // will still make the computation come out right (navigating to the
+          // 0th entry will be +1).
+          automation_->Send(new AutomationMsg_DidNavigate(
+              0, commit->type,
+              commit->previous_entry_index -
+                  tab_contents_->controller()->GetLastCommittedEntryIndex()));
+        }
       }
       break;
+    case NotificationType::FAIL_PROVISIONAL_LOAD_WITH_ERROR: {
+      if (automation_) {
+        const ProvisionalLoadDetails* load_details =
+            Details<ProvisionalLoadDetails>(details).ptr();
+        automation_->Send(new AutomationMsg_NavigationFailed(
+            0, load_details->error_code(), load_details->url()));
+
+        ignore_next_load_notification_ = true;
+      }
+      break;
+    }
     default:
       NOTREACHED();
   }

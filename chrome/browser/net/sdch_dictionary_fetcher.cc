@@ -3,7 +3,9 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/net/sdch_dictionary_fetcher.h"
+
 #include "chrome/browser/profile.h"
+#include "net/url_request/url_request_status.h"
 
 void SdchDictionaryFetcher::Schedule(const GURL& dictionary_url) {
   // Avoid pushing duplicate copy onto queue.  We may fetch this url again later
@@ -18,8 +20,6 @@ void SdchDictionaryFetcher::Schedule(const GURL& dictionary_url) {
   ScheduleDelayedRun();
 }
 
-// TODO(jar): If QOS low priority is supported, switch to using that instead of
-// just waiting to do the fetch.
 void SdchDictionaryFetcher::ScheduleDelayedRun() {
   if (fetch_queue_.empty() || current_fetch_.get() || task_is_pending_)
     return;
@@ -33,10 +33,19 @@ void SdchDictionaryFetcher::StartFetching() {
   DCHECK(task_is_pending_);
   task_is_pending_ = false;
 
+  URLRequestContext* context = Profile::GetDefaultRequestContext();
+  if (!context) {
+    // Shutdown in progress.
+    // Simulate handling of all dictionary requests by clearing queue.
+    while (!fetch_queue_.empty())
+      fetch_queue_.pop();
+    return;
+  }
+
   current_fetch_.reset(new URLFetcher(fetch_queue_.front(), URLFetcher::GET,
                                       this));
   fetch_queue_.pop();
-  current_fetch_->set_request_context(Profile::GetDefaultRequestContext());
+  current_fetch_->set_request_context(context);
   current_fetch_->Start();
 }
 

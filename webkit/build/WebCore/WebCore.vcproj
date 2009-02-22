@@ -1495,11 +1495,27 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\transforms\Matrix3DTransformOperation.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\transforms\Matrix3DTransformOperation.h"
+						>
+					</File>
+					<File
 						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\transforms\MatrixTransformOperation.cpp"
 						>
 					</File>
 					<File
 						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\transforms\MatrixTransformOperation.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\transforms\PerspectiveTransformOperation.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\..\third_party\WebKit\WebCore\platform\graphics\transforms\PerspectiveTransformOperation.h"
 						>
 					</File>
 					<File
@@ -3313,14 +3329,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderLegend.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderLegend.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\rendering\RenderLineBoxList.cpp"
 				>
 			</File>
@@ -4297,6 +4305,22 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\ClientRect.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\ClientRect.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\ClientRectList.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\ClientRectList.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\dom\Clipboard.cpp"
 				>
 			</File>
@@ -5189,14 +5213,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\editing\Selection.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\editing\Selection.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\editing\SelectionController.cpp"
 				>
 			</File>
@@ -5290,6 +5306,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\editing\VisiblePosition.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\editing\VisibleSelection.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\third_party\WebKit\WebCore\editing\VisibleSelection.h"
 				>
 			</File>
 			<File
@@ -5502,14 +5526,6 @@
 			</File>
 			<File
 				RelativePath="..\..\..\third_party\WebKit\WebCore\html\HTMLElement.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\html\HTMLElementFactory.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\..\third_party\WebKit\WebCore\html\HTMLElementFactory.h"
 				>
 			</File>
 			<File

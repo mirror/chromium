@@ -5,9 +5,10 @@
 #ifndef NET_URL_REQUEST_URL_REQUEST_HTTP_JOB_H_
 #define NET_URL_REQUEST_URL_REQUEST_HTTP_JOB_H_
 
-#include <string>
 #include <vector>
 
+#include "base/scoped_ptr.h"
+#include "net/base/auth.h"
 #include "net/base/completion_callback.h"
 #include "net/http/http_request_info.h"
 #include "net/url_request/url_request_job.h"
@@ -79,6 +80,9 @@ class URLRequestHttpJob : public URLRequestJob {
   net::CompletionCallbackImpl<URLRequestHttpJob> read_callback_;
 
   bool read_in_progress_;
+
+  // An URL for an SDCH dictionary as suggested in a Get-Dictionary HTTP header.
+  GURL sdch_dictionary_url_;
 
   // Keep a reference to the url request context to be sure it's not deleted
   // before us.

@@ -54,6 +54,8 @@
 #include "CanvasRenderingContext2D.h"
 #include "CanvasStyle.h"
 #include "CharacterData.h"
+#include "ClientRect.h"
+#include "ClientRectList.h"
 #include "Clipboard.h"
 #include "Console.h"
 #include "Counter.h"
@@ -1929,10 +1931,6 @@ void V8Proxy::disconnectFrame()
 {
     // disconnect all event listeners
     DisconnectEventListeners();
-
-    // remove all timeouts
-    if (m_frame->domWindow())
-      m_frame->domWindow()->clearAllTimeouts();
 }
 
 
@@ -2048,11 +2046,6 @@ void V8Proxy::clearForNavigation()
             LookupDOMWrapper(V8ClassIndex::DOMWINDOW, m_global);
         ASSERT(!wrapper.IsEmpty());
         wrapper->TurnOnAccessCheck();
-
-        // Clear all timeouts.
-        DOMWindow* domWindow =
-            ToNativeObject<DOMWindow>(V8ClassIndex::DOMWINDOW, wrapper);
-        domWindow->clearAllTimeouts();
 
         // disconnect all event listeners
         DisconnectEventListeners();

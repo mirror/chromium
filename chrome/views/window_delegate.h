@@ -80,7 +80,7 @@ class WindowDelegate {
 
   // Returns the view that should have the focus when the dialog is opened.  If
   // NULL no view is focused.
-  virtual View* GetInitiallyFocusedView() const { return NULL; }
+  virtual View* GetInitiallyFocusedView() { return NULL; }
 
   // Returns true if the window should show a title in the title bar.
   virtual bool ShouldShowWindowTitle() const {
@@ -143,7 +143,7 @@ class WindowDelegate {
   void ReleaseWindow();
 
  private:
-  friend Window;
+  friend class Window;
   // This is a little unusual. We use a scoped_ptr here because it's
   // initialized to NULL automatically. We do this because we want to allow
   // people using this helper to not have to call a ctor on this object.

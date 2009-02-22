@@ -22,6 +22,7 @@
 
 #include "base/at_exit.h"
 #include "base/command_line.h"
+#include "base/debug_util.h"
 #include "base/icu_util.h"
 #include "base/message_loop.h"
 #include "base/path_service.h"
@@ -195,6 +196,10 @@ DLLEXPORT int __cdecl ChromeMain(HINSTANCE instance,
 #elif defined(OS_POSIX)
 int ChromeMain(int argc, const char** argv) {
 #endif
+
+#if defined(OS_MACOSX)
+  DebugUtil::DisableOSCrashDumps();
+#endif
   RegisterInvalidParamHandler();
 
   // The exit manager is in charge of calling the dtors of singleton objects.
@@ -296,7 +301,7 @@ int ChromeMain(int argc, const char** argv) {
   if (parsed_command_line.HasSwitch(switches::kSilentDumpOnDCHECK) &&
       parsed_command_line.HasSwitch(switches::kEnableDCHECK)) {
 #if defined(OS_WIN)
-    logging::SetLogAssertHandler(ChromeAssert);
+    logging::SetLogReportHandler(ChromeAssert);
 #endif
   }
 #endif  // NDEBUG

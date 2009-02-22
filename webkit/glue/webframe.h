@@ -5,12 +5,8 @@
 #ifndef WEBKIT_GLUE_WEBFRAME_H_
 #define WEBKIT_GLUE_WEBFRAME_H_
 
-#include <string>
-
-#include "base/basictypes.h"
 #include "base/ref_counted.h"
 #include "base/scoped_ptr.h"
-#include "base/gfx/size.h"
 #include "skia/ext/bitmap_platform_device.h"
 #include "skia/ext/platform_canvas.h"
 #include "webkit/glue/console_message_level.h"
@@ -30,14 +26,11 @@ class Rect;
 class Size;
 }
 
-// TODO(darin): use GURL everywhere a URL string appears
-
 // Every frame in a web page is represented by one WebFrame, including the
 // outermost frame.
-class WebFrame : public base::RefCounted<WebFrame> {
+class WebFrame {
  public:
   WebFrame() {}
-  virtual ~WebFrame() {}
 
   // Binds a C++ class to a JavaScript property of the window object.  This
   // should generally be used via CppBoundClass::BindToJavascript() instead of
@@ -370,6 +363,9 @@ class WebFrame : public base::RefCounted<WebFrame> {
 
   // Only for test_shell
   virtual int PendingFrameUnloadEventCount() const = 0;
+
+ protected:
+  virtual ~WebFrame() {}
 
  private:
   DISALLOW_COPY_AND_ASSIGN(WebFrame);

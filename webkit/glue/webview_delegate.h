@@ -26,15 +26,10 @@
 #ifndef WEBKIT_GLUE_WEBVIEW_DELEGATE_H_
 #define WEBKIT_GLUE_WEBVIEW_DELEGATE_H_
 
-#include <string>
 #include <vector>
 
-#include "base/basictypes.h"
-#include "base/logging.h"
-#include "googleurl/src/gurl.h"
 #include "webkit/glue/context_menu.h"
 #include "webkit/glue/webwidget_delegate.h"
-#include "webkit/glue/window_open_disposition.h"
 
 namespace gfx {
 class Point;
@@ -198,6 +193,12 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
   virtual void WindowObjectCleared(WebFrame* webframe) {
   }
 
+  // Notifies that the documentElement for the document in a webframe has been
+  // created. This is called before anything else is parsed or executed for the
+  // document.
+  virtual void DocumentElementAvailable(WebFrame* webframe) {
+  }
+
   // PolicyDelegate ----------------------------------------------------------
 
   // This method is called to notify the delegate, and let it modify a
@@ -255,6 +256,7 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
   //  @discussion This method is called after the provisional data source has
   //  failed to load.  The frame will continue to display the contents of the
   //  committed data source if there is one.
+  //  This notification is only received for errors like network errors.
   virtual void DidFailProvisionalLoadWithError(WebView* webview,
                                                const WebError& error,
                                                WebFrame* frame) {
@@ -651,11 +653,7 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
     return true;
   }
 
-  virtual void SetSmartInsertDeleteEnabled(bool enabled) {
-    // This method is only used in test shell, which overrides this
-    // method.
-    NOTREACHED();
-  }
+  virtual void SetSmartInsertDeleteEnabled(bool enabled);
 
   virtual bool IsSelectTrailingWhitespaceEnabled() {
 #if defined(OS_WIN)
@@ -665,11 +663,7 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
 #endif
   }
 
-  virtual void SetSelectTrailingWhitespaceEnabled(bool enabled) {
-    // This method is only used in test shell, which overrides this
-    // method.
-    NOTREACHED();
-  }
+  virtual void SetSelectTrailingWhitespaceEnabled(bool enabled);
 
   virtual void DidBeginEditing() { }
   virtual void DidChangeSelection(bool is_empty_selection) { }
@@ -705,9 +699,7 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
   // error pages. |error_name| tells the delegate what type of error page we
   // want (e.g., 404 vs dns errors).
   virtual GURL GetAlternateErrorPageURL(const GURL& failedURL,
-                                        ErrorPageType error_type) {
-    return GURL();
-  }
+                                        ErrorPageType error_type);
 
   // History Related ---------------------------------------------------------
 

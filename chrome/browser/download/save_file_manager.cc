@@ -2,8 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <Windows.h>
-#include <objbase.h>
+#include "build/build_config.h"
 
 #include "chrome/browser/download/save_file_manager.h"
 
@@ -16,17 +15,25 @@
 #include "chrome/browser/download/save_file.h"
 #include "chrome/browser/download/save_package.h"
 #include "chrome/browser/renderer_host/resource_dispatcher_host.h"
-#include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/browser/tab_contents/tab_util.h"
 #include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/stl_util-inl.h"
-#include "chrome/common/win_util.h"
-#include "chrome/common/win_safe_util.h"
 #include "googleurl/src/gurl.h"
 #include "net/base/net_util.h"
 #include "net/base/io_buffer.h"
 #include "net/url_request/url_request_context.h"
+
+#if defined(OS_WIN)
+#include "chrome/common/win_util.h"
+#endif
+
+#if defined(OS_WIN)
+// TODO(port): port these headers to posix.
+#include "chrome/browser/tab_contents/tab_contents.h"
+#elif defined(OS_POSIX)
+#include "chrome/common/temp_scaffolding_stubs.h"
+#endif
 
 SaveFileManager::SaveFileManager(MessageLoop* ui_loop,
                                  MessageLoop* io_loop,
@@ -87,7 +94,7 @@ int SaveFileManager::GetNextId() {
   return next_id_++;
 }
 
-void SaveFileManager::RegisterStartingRequest(const std::wstring& save_url,
+void SaveFileManager::RegisterStartingRequest(const GURL& save_url,
                                               SavePackage* save_package) {
   // Make sure it runs in the UI thread.
   DCHECK(MessageLoop::current() == ui_loop_);
@@ -96,19 +103,19 @@ void SaveFileManager::RegisterStartingRequest(const std::wstring& save_url,
   // Register this starting request.
   StartingRequestsMap& starting_requests = tab_starting_requests_[tab_id];
   bool never_present = starting_requests.insert(
-      StartingRequestsMap::value_type(save_url, save_package)).second;
+      StartingRequestsMap::value_type(save_url.spec(), save_package)).second;
   DCHECK(never_present);
 }
 
 SavePackage* SaveFileManager::UnregisterStartingRequest(
-    const std::wstring& save_url, int tab_id) {
+    const GURL& save_url, int tab_id) {
   // Make sure it runs in UI thread.
   DCHECK(MessageLoop::current() == ui_loop_);
 
   TabToStartingRequestsMap::iterator it = tab_starting_requests_.find(tab_id);
   if (it != tab_starting_requests_.end()) {
     StartingRequestsMap& requests = it->second;
-    StartingRequestsMap::iterator sit = requests.find(save_url);
+    StartingRequestsMap::iterator sit = requests.find(save_url.spec());
     if (sit == requests.end())
       return NULL;
 
@@ -149,12 +156,12 @@ SavePackage* SaveFileManager::LookupPackage(int save_id) {
 }
 
 // Call from SavePackage for starting a saving job
-void SaveFileManager::SaveURL(const std::wstring& url,
-                              const std::wstring& referrer,
+void SaveFileManager::SaveURL(const GURL& url,
+                              const GURL& referrer,
                               int render_process_host_id,
                               int render_view_id,
                               SaveFileCreateInfo::SaveFileSource save_source,
-                              const std::wstring& file_full_path,
+                              const FilePath& file_full_path,
                               URLRequestContext* request_context,
                               SavePackage* save_package) {
   DCHECK(MessageLoop::current() == ui_loop_);
@@ -166,14 +173,13 @@ void SaveFileManager::SaveURL(const std::wstring& url,
   // Register a saving job.
   RegisterStartingRequest(url, save_package);
   if (save_source == SaveFileCreateInfo::SAVE_FILE_FROM_NET) {
-    GURL save_url(url);
-    DCHECK(save_url.is_valid());
+    DCHECK(url.is_valid());
 
     io_loop_->PostTask(FROM_HERE,
         NewRunnableMethod(this,
                           &SaveFileManager::OnSaveURL,
-                          save_url,
-                          GURL(referrer),
+                          url,
+                          referrer,
                           render_process_host_id,
                           render_view_id,
                           request_context));
@@ -195,7 +201,7 @@ void SaveFileManager::SaveURL(const std::wstring& url,
 // If the save id is -1, it means we just send a request to save, but the
 // saving action has still not happened, need to call UnregisterStartingRequest
 // to remove it from the tracking map.
-void SaveFileManager::RemoveSaveFile(int save_id, const std::wstring& save_url,
+void SaveFileManager::RemoveSaveFile(int save_id, const GURL& save_url,
                                      SavePackage* package) {
   DCHECK(MessageLoop::current() == ui_loop_ && package);
   // A save page job(SavePackage) can only have one manager,
@@ -225,7 +231,7 @@ SavePackage* SaveFileManager::GetSavePackageFromRenderIds(
 }
 
 // Utility function for deleting specified file.
-void SaveFileManager::DeleteDirectoryOrFile(const std::wstring& full_path,
+void SaveFileManager::DeleteDirectoryOrFile(const FilePath& full_path,
                                             bool is_dir) {
   DCHECK(MessageLoop::current() == ui_loop_);
   MessageLoop* loop = GetSaveLoop();
@@ -295,7 +301,7 @@ void SaveFileManager::UpdateSaveProgress(int save_id,
 // thread, which will use the save URL to find corresponding request record and
 // delete it.
 void SaveFileManager::SaveFinished(int save_id,
-                                   std::wstring save_url,
+                                   GURL save_url,
                                    int render_process_id,
                                    bool is_success) {
   DCHECK(MessageLoop::current() == GetSaveLoop());
@@ -312,7 +318,7 @@ void SaveFileManager::SaveFinished(int save_id,
     save_file->Finish();
   } else if (save_id == -1) {
     // Before saving started, we got error. We still call finish process.
-    DCHECK(!save_url.empty());
+    DCHECK(!save_url.is_empty());
     ui_loop_->PostTask(FROM_HERE,
         NewRunnableMethod(this,
                           &SaveFileManager::OnErrorFinished,
@@ -375,7 +381,7 @@ void SaveFileManager::OnSaveFinished(int save_id,
     package->SaveFinished(save_id, bytes_so_far, is_success);
 }
 
-void SaveFileManager::OnErrorFinished(std::wstring save_url, int tab_id) {
+void SaveFileManager::OnErrorFinished(GURL save_url, int tab_id) {
   DCHECK(MessageLoop::current() == ui_loop_);
   SavePackage* save_package = UnregisterStartingRequest(save_url, tab_id);
   if (save_package)
@@ -473,7 +479,7 @@ void SaveFileManager::CancelSave(int save_id) {
 // It is possible that SaveItem which has specified save_id has been canceled
 // before this function runs. So if we can not find corresponding SaveFile by
 // using specified save_id, just return.
-void SaveFileManager::SaveLocalFile(const std::wstring& original_file_url,
+void SaveFileManager::SaveLocalFile(const GURL& original_file_url,
                                     int save_id,
                                     int render_process_id) {
   DCHECK(MessageLoop::current() == GetSaveLoop());
@@ -488,10 +494,9 @@ void SaveFileManager::SaveLocalFile(const std::wstring& original_file_url,
   // Close the save file before the copy operation.
   save_file->Finish();
 
-  GURL file_url(original_file_url);
-  DCHECK(file_url.SchemeIsFile());
-  std::wstring file_path;
-  net::FileURLToFilePath(file_url, &file_path);
+  DCHECK(original_file_url.SchemeIsFile());
+  FilePath file_path;
+  net::FileURLToFilePath(original_file_url, &file_path);
   // If we can not get valid file path from original URL, treat it as
   // disk error.
   if (file_path.empty())
@@ -499,14 +504,13 @@ void SaveFileManager::SaveLocalFile(const std::wstring& original_file_url,
 
   // Copy the local file to the temporary file. It will be renamed to its
   // final name later.
-  bool success = CopyFile(file_path.c_str(),
-                          save_file->full_path().c_str(), FALSE) != 0;
+  bool success = file_util::CopyFile(file_path, save_file->full_path());
   if (!success)
     file_util::Delete(save_file->full_path(), false);
   SaveFinished(save_id, original_file_url, render_process_id, success);
 }
 
-void SaveFileManager::OnDeleteDirectoryOrFile(const std::wstring& full_path,
+void SaveFileManager::OnDeleteDirectoryOrFile(const FilePath& full_path,
                                               bool is_dir) {
   DCHECK(MessageLoop::current() == GetSaveLoop());
   DCHECK(!full_path.empty());
@@ -516,14 +520,19 @@ void SaveFileManager::OnDeleteDirectoryOrFile(const std::wstring& full_path,
 
 // Open a saved page package, show it in a Windows Explorer window.
 // We run on this thread to avoid blocking the UI with slow Shell operations.
-void SaveFileManager::OnShowSavedFileInShell(const std::wstring full_path) {
+void SaveFileManager::OnShowSavedFileInShell(const FilePath full_path) {
   DCHECK(MessageLoop::current() == GetSaveLoop());
-  win_util::ShowItemInFolder(full_path);
+  // TODO(port): make an equivalent call on mac/linux.
+#if defined(OS_WIN)
+  win_util::ShowItemInFolder(full_path.value());
+#elif defined(OS_POSIX)
+  NOTIMPLEMENTED();
+#endif
 }
 
 void SaveFileManager::RenameAllFiles(
     const FinalNameList& final_names,
-    const std::wstring& resource_dir,
+    const FilePath& resource_dir,
     int render_process_id,
     int render_view_id) {
   DCHECK(MessageLoop::current() == GetSaveLoop());
@@ -573,7 +582,7 @@ void SaveFileManager::RemoveSavedFileFromFileMap(
     if (it != save_file_map_.end()) {
       SaveFile* save_file = it->second;
       DCHECK(!save_file->in_progress());
-      DeleteFile(save_file->full_path().c_str());
+      file_util::Delete(save_file->full_path(), false);
       delete save_file;
       save_file_map_.erase(it);
     }

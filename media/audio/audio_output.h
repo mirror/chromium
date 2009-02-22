@@ -5,6 +5,8 @@
 #ifndef MEDIA_AUDIO_AUDIO_OUTPUT_H_
 #define MEDIA_AUDIO_AUDIO_OUTPUT_H_
 
+#include "base/basictypes.h"
+
 // Low-level audio output support. To make sound there are 3 objects involved:
 // - AudioSource : produces audio samples on a pull model. Implements
 //   the AudioSourceCallback interface.
@@ -39,6 +41,12 @@
 // a given AudioOutputStream might or might not talk directly to hardware.
 class AudioOutputStream {
  public:
+  enum State {
+    STATE_STARTED = 0,  // The output stream is started.
+    STATE_PAUSED,       // The output stream is paused.
+    STATE_ERROR,        // The output stream is in error state.
+  };
+
   // Audio sources must implement AudioSourceCallback. This interface will be
   // called in a random thread which very likely is a high priority thread. Do
   // not rely on using this thread TLS or make calls that alter the thread
@@ -102,9 +110,11 @@ class AudioOutputStream {
 class AudioManager {
  public:
   enum Format {
-    AUDIO_PCM_LINEAR,  // Pulse code modulation means 'raw' amplitude samples.
-    AUDIO_PCM_DELTA,   // Delta-encoded pulse code modulation. 
-    AUDIO_MOCK         // Creates a dummy AudioOutputStream object.
+    AUDIO_PCM_LINEAR = 0, // Pulse code modulation means 'raw' amplitude
+                          // samples.
+    AUDIO_PCM_DELTA,      // Delta-encoded pulse code modulation.
+    AUDIO_MOCK,           // Creates a dummy AudioOutputStream object.
+    AUDIO_LAST_FORMAT     // Only used for validation of format.
   };
 
   // Telephone quality sample rate, mostly for speech-only audio.

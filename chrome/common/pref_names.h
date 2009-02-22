@@ -62,6 +62,7 @@ extern const wchar_t kPromptForDownload[];
 extern const wchar_t kAlternateErrorPagesEnabled[];
 extern const wchar_t kDnsPrefetchingEnabled[];
 extern const wchar_t kDnsStartupPrefetchList[];
+extern const wchar_t kDnsHostReferralList[];
 extern const wchar_t kIpcDisabledMessages[];
 extern const wchar_t kShowHomeButton[];
 extern const wchar_t kRecentlySelectedEncoding[];
@@ -116,7 +117,7 @@ extern const wchar_t kSecurityRendererOnSboxDesktop[];
 extern const wchar_t kSecurityRendererOnDefaultDesktop[];
 
 extern const wchar_t kStabilityPluginStats[];
-extern const wchar_t kStabilityPluginPath[];
+extern const wchar_t kStabilityPluginName[];
 extern const wchar_t kStabilityPluginLaunches[];
 extern const wchar_t kStabilityPluginInstances[];
 extern const wchar_t kStabilityPluginCrashes[];
@@ -162,6 +163,9 @@ extern const wchar_t kNumBookmarksInOtherBookmarkFolder[];
 extern const wchar_t kNumFoldersInOtherBookmarkFolder[];
 
 extern const wchar_t kNumKeywords[];
+
+extern const wchar_t kEnableExtensions[];
+extern const wchar_t kEnableUserScripts[];
 }
 
 #endif  // CHROME_COMMON_PREF_NAMES_H_

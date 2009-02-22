@@ -5,7 +5,7 @@
 #include "chrome/browser/password_manager/password_manager.h"
 
 #include "base/string_util.h"
-#include "chrome/app/theme/theme_resources.h"
+#include "grit/theme_resources.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/common/l10n_util.h"
@@ -88,9 +88,9 @@ void PasswordManager::RegisterUserPrefs(PrefService* prefs) {
 }
 
 PasswordManager::PasswordManager(WebContents* web_contents)
-    : web_contents_(web_contents),
-      observer_(NULL),
-      login_managers_deleter_(&pending_login_managers_) {
+    : login_managers_deleter_(&pending_login_managers_),
+      web_contents_(web_contents),
+      observer_(NULL) {
   password_manager_enabled_.Init(prefs::kPasswordManagerEnabled,
       web_contents->profile()->GetPrefs(), NULL);
 }
@@ -228,11 +228,12 @@ void PasswordManager::Autofill(const PasswordForm& form_for_autofill,
       // schemed password form may have been freed, so we need to distinguish.
       bool action_mismatch = form_for_autofill.action.GetWithEmptyPath() !=
                              preferred_match->action.GetWithEmptyPath();
-      scoped_ptr<PasswordFormDomManager::FillData> fill_data(
-          PasswordFormDomManager::CreateFillData(form_for_autofill,
-                                                 best_matches, preferred_match,
-                                                 action_mismatch));
-      web_contents_->render_view_host()->FillPasswordForm(*fill_data);
+      PasswordFormDomManager::FillData fill_data;
+      PasswordFormDomManager::InitFillData(form_for_autofill,
+                                           best_matches, preferred_match,
+                                           action_mismatch,
+                                           &fill_data);
+      web_contents_->render_view_host()->FillPasswordForm(fill_data);
       return;
     }
     default:

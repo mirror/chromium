@@ -7,6 +7,7 @@
 #include "chrome/browser/chrome_thread.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_manager.h"
+#include "chrome/browser/history/history.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/search_engines/template_url_model.h"
@@ -24,9 +25,11 @@ using base::Time;
 
 // Done so that we can use invokeLater on BrowsingDataRemovers and not have
 // BrowsingDataRemover implement RefCounted.
+template<>
 void RunnableMethodTraits<BrowsingDataRemover>::RetainCallee(
     BrowsingDataRemover* remover) {
 }
+template<>
 void RunnableMethodTraits<BrowsingDataRemover>::ReleaseCallee(
     BrowsingDataRemover* remover) {
 }

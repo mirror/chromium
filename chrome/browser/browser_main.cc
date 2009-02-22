@@ -27,9 +27,14 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_process_impl.h"
 #include "chrome/browser/browser_shutdown.h"
+#include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/browser/first_run.h"
+#include "chrome/browser/metrics/metrics_service.h"
+#include "chrome/browser/net/dns_global.h"
+#include "chrome/browser/plugin_service.h"
 #include "chrome/browser/profile_manager.h"
 #include "chrome/browser/shell_integration.h"
+#include "chrome/browser/user_data_manager.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
@@ -64,21 +69,16 @@
 #include "chrome/browser/automation/automation_provider.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_trial.h"
-#include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/browser/extensions/extension_protocols.h"
 #include "chrome/browser/jankometer.h"
-#include "chrome/browser/message_window.h"
-#include "chrome/browser/metrics/metrics_service.h"
 #include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/net/dns_global.h"
 #include "chrome/browser/net/sdch_dictionary_fetcher.h"
 #include "chrome/browser/net/url_fixer_upper.h"
-#include "chrome/browser/plugin_service.h"
 #include "chrome/browser/printing/print_job_manager.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/profile_manager.h"
 #include "chrome/browser/rlz/rlz.h"
-#include "chrome/browser/user_data_manager.h"
 #include "chrome/browser/views/user_data_dir_dialog.h"
 #include "chrome/common/env_vars.h"
 #include "chrome/common/win_util.h"
@@ -99,6 +99,7 @@
 
 #if !defined(OS_MACOSX)
 #include "net_resources.h"
+#include "chrome/browser/process_singleton.h"
 #endif
 
 namespace Platform {
@@ -108,7 +109,7 @@ void WillTerminate();
 
 #if defined(OS_WIN) || defined(OS_LINUX)
 // Perform any platform-specific work that needs to be done before the main
-// message loop is created and initialized. 
+// message loop is created and initialized.
 void WillInitializeMainMessageLoop(const CommandLine & command_line) {
 }
 
@@ -230,7 +231,7 @@ int BrowserMain(const MainFunctionParams& parameters) {
 
   FilePath user_data_dir;
   PathService::Get(chrome::DIR_USER_DATA, &user_data_dir);
-  MessageWindow message_window(user_data_dir);
+  ProcessSingleton process_singleton(user_data_dir);
 
   bool is_first_run = FirstRun::IsChromeFirstRun() ||
       parsed_command_line.HasSwitch(switches::kFirstRun);
@@ -379,19 +380,8 @@ int BrowserMain(const MainFunctionParams& parameters) {
 
   // If the command line specifies 'uninstall' then we need to work here
   // unless we detect another chrome browser running.
-  if (parsed_command_line.HasSwitch(switches::kUninstall)) {
-    if (already_running) {
-#if defined(OS_WIN)
-      const std::wstring text = l10n_util::GetString(IDS_UNINSTALL_CLOSE_APP);
-      const std::wstring caption = l10n_util::GetString(IDS_PRODUCT_NAME);
-      win_util::MessageBox(NULL, text, caption,
-                           MB_OK | MB_ICONWARNING | MB_TOPMOST);
-#endif
-      return ResultCodes::UNINSTALL_CHROME_ALIVE;
-    } else {
-      return DoUninstallTasks();
-    }
-  }
+  if (parsed_command_line.HasSwitch(switches::kUninstall))
+    return DoUninstallTasks(already_running);
 
   if (parsed_command_line.HasSwitch(switches::kHideIcons) ||
       parsed_command_line.HasSwitch(switches::kShowIcons)) {
@@ -410,10 +400,10 @@ int BrowserMain(const MainFunctionParams& parameters) {
     return FirstRun::ImportNow(profile, parsed_command_line);
 
   // When another process is running, use it instead of starting us.
-  if (message_window.NotifyOtherProcess())
+  if (process_singleton.NotifyOtherProcess())
     return ResultCodes::NORMAL_EXIT;
 
-  message_window.HuntForZombieChromeProcesses();
+  process_singleton.HuntForZombieChromeProcesses();
 
   // Do the tasks if chrome has been upgraded while it was last running.
   if (!already_running && DoUpgradeTasks(parsed_command_line)) {
@@ -430,7 +420,7 @@ int BrowserMain(const MainFunctionParams& parameters) {
   if (CheckMachineLevelInstall())
     return ResultCodes::MACHINE_LEVEL_INSTALL_EXISTS;
 
-  message_window.Create();
+  process_singleton.Create();
 
   // Show the First Run UI if this is the first time Chrome has been run on
   // this computer, or we're being compelled to do so by a command line flag.
@@ -440,9 +430,9 @@ int BrowserMain(const MainFunctionParams& parameters) {
   if (is_first_run && !first_run_ui_bypass) {
     // We need to avoid dispatching new tabs when we are doing the import
     // because that will lead to data corruption or a crash. Lock() does that.
-    message_window.Lock();
+    process_singleton.Lock();
     OpenFirstRunDialog(profile);
-    message_window.Unlock();
+    process_singleton.Unlock();
   }
 
   // Sets things up so that if we crash from this point on, a dialog will
@@ -453,11 +443,14 @@ int BrowserMain(const MainFunctionParams& parameters) {
 #if defined(OS_WIN)
   // Initialize Winsock.
   net::EnsureWinsockInit();
+#endif  // defined(OS_WIN)
 
   // Initialize the DNS prefetch system
   chrome_browser_net::DnsPrefetcherInit dns_prefetch_init(user_prefs);
   chrome_browser_net::DnsPrefetchHostNamesAtStartup(user_prefs, local_state);
+  chrome_browser_net::RestoreSubresourceReferrers(local_state);
 
+#if defined(OS_WIN)
   // Init common control sex.
   INITCOMMONCONTROLSEX config;
   config.dwSize = sizeof(config);
@@ -473,10 +466,13 @@ int BrowserMain(const MainFunctionParams& parameters) {
 
   // Config the network module so it has access to resources.
   net::NetModule::SetResourceProvider(NetResourceProvider);
+#endif
 
   // Register our global network handler for chrome-ui:// and
   // chrome-extension:// URLs.
   RegisterURLRequestChromeJob();
+
+#if defined(OS_WIN)
   RegisterExtensionProtocols();
 
   sandbox::BrokerServices* broker_services =
