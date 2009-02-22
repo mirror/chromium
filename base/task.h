@@ -2,16 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef BASE_TASK_H__
-#define BASE_TASK_H__
+#ifndef BASE_TASK_H_
+#define BASE_TASK_H_
 
-#include <set>
-
-#include "base/basictypes.h"
 #include "base/logging.h"
 #include "base/non_thread_safe.h"
 #include "base/revocable_store.h"
-#include "base/time.h"
 #include "base/tracked.h"
 #include "base/tuple.h"
 
@@ -70,7 +66,7 @@ class CancelableTask : public Task {
 //
 //     // The factories are not thread safe, so always invoke on
 //     // |MessageLoop::current()|.
-//     MessageLoop::current()->PostTask(FROM_HERE,
+//     MessageLoop::current()->PostDelayedTask(FROM_HERE,
 //         some_method_factory_.NewRunnableMethod(&MyClass::SomeMethod),
 //         kSomeMethodDelayMS);
 //   }
@@ -667,5 +663,4 @@ class UnboundMethod {
   Params p_;
 };
 
-#endif  // BASE_TASK_H__
-
+#endif  // BASE_TASK_H_

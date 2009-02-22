@@ -19,12 +19,12 @@
 #include "chrome/browser/sessions/session_service.h"
 #include "chrome/browser/sessions/session_types.h"
 #include "chrome/browser/sessions/tab_restore_service.h"
+#include "chrome/browser/tab_contents/interstitial_page.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/site_instance.h"
 #include "chrome/browser/tab_contents/tab_contents_type.h"
 #include "chrome/browser/tab_contents/web_contents.h"
-#include "chrome/common/child_process_info.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/l10n_util.h"
@@ -42,12 +42,15 @@
 #include "net/url_request/url_request_context.h"
 #include "webkit/glue/window_open_disposition.h"
 
+#if defined(OS_WIN) || defined(OS_LINUX)
+#include "chrome/browser/status_bubble.h"
+#endif
+
 #if defined(OS_WIN)
 
 #include <windows.h>
 #include <shellapi.h>
 
-#include "chrome/app/locales/locale_settings.h"
 #include "chrome/browser/automation/ui_controls.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_url_handler.h"
@@ -61,8 +64,6 @@
 #include "chrome/browser/history_tab_ui.h"
 #include "chrome/browser/options_window.h"
 #include "chrome/browser/ssl/ssl_error_info.h"
-#include "chrome/browser/status_bubble.h"
-#include "chrome/browser/tab_contents/interstitial_page.h"
 #include "chrome/browser/tab_contents/web_contents_view.h"
 #include "chrome/browser/task_manager.h"
 #include "chrome/browser/user_data_manager.h"
@@ -70,10 +71,11 @@
 #include "chrome/browser/views/download_tab_view.h"
 #include "chrome/browser/views/location_bar_view.h"
 #include "chrome/browser/window_sizer.h"
+#include "chrome/common/child_process_host.h"
 #include "chrome/common/win_util.h"
-
-#include "chromium_strings.h"
-#include "generated_resources.h"
+#include "grit/chromium_strings.h"
+#include "grit/generated_resources.h"
+#include "grit/locale_settings.h"
 
 #endif  // OS_WIN
 
@@ -97,10 +99,8 @@ class ReduceChildProcessesWorkingSetTask : public Task {
  public:
   virtual void Run() {
 #if defined(OS_WIN)
-    for (ChildProcessInfo::Iterator iter; !iter.Done(); ++iter) {
-      DCHECK(iter->process().handle());
-      iter->process().ReduceWorkingSet();
-    }
+    for (ChildProcessHost::Iterator iter; !iter.Done(); ++iter)
+      iter->ReduceWorkingSet();
 #endif
   }
 };
@@ -713,6 +713,12 @@ void Browser::ConvertPopupToTabbedBrowser() {
   browser->window()->Show();
 }
 
+void Browser::ToggleFullscreenMode() {
+  UserMetrics::RecordAction(L"ToggleFullscreen", profile_);
+  window_->SetFullscreen(!window_->IsFullscreen());
+  UpdateCommandsForFullscreenMode(window_->IsFullscreen());
+}
+
 void Browser::Exit() {
   UserMetrics::RecordAction(L"Exit", profile_);
   BrowserList::CloseAllBrowsers(true);
@@ -734,8 +740,7 @@ void Browser::BookmarkCurrentPage() {
     return;
 
   model->SetURLStarred(url, entry->title(), true);
-  if (!window_->IsBookmarkBubbleVisible())
-    window_->ShowBookmarkBubble(url, model->IsBookmarked(url));
+  window_->ShowBookmarkBubble(url, model->IsBookmarked(url));
 }
 
 void Browser::ViewSource() {
@@ -1105,6 +1110,7 @@ void Browser::ExecuteCommand(int id) {
     case IDC_DUPLICATE_TAB:         DuplicateTab();                break;
     case IDC_RESTORE_TAB:           RestoreTab();                  break;
     case IDC_SHOW_AS_TAB:           ConvertPopupToTabbedBrowser(); break;
+    case IDC_FULLSCREEN:            ToggleFullscreenMode();        break;
     case IDC_EXIT:                  Exit();                        break;
 
     // Page-related commands
@@ -1936,6 +1942,7 @@ void Browser::InitCommandState() {
   command_updater_.UpdateCommandEnabled(IDC_NEW_TAB, true);
   command_updater_.UpdateCommandEnabled(IDC_CLOSE_TAB, true);
   command_updater_.UpdateCommandEnabled(IDC_DUPLICATE_TAB, true);
+  command_updater_.UpdateCommandEnabled(IDC_FULLSCREEN, true);
   command_updater_.UpdateCommandEnabled(IDC_EXIT, true);
 
   // Page-related commands
@@ -2000,10 +2007,8 @@ void Browser::InitCommandState() {
 
     // Navigation commands
     command_updater_.UpdateCommandEnabled(IDC_HOME, normal_window);
-    command_updater_.UpdateCommandEnabled(IDC_OPEN_CURRENT_URL, normal_window);
 
     // Window management commands
-    command_updater_.UpdateCommandEnabled(IDC_PROFILE_MENU, normal_window);
     command_updater_.UpdateCommandEnabled(IDC_SELECT_NEXT_TAB, normal_window);
     command_updater_.UpdateCommandEnabled(IDC_SELECT_PREVIOUS_TAB,
                                           normal_window);
@@ -2018,33 +2023,10 @@ void Browser::InitCommandState() {
     command_updater_.UpdateCommandEnabled(IDC_SELECT_LAST_TAB, normal_window);
     command_updater_.UpdateCommandEnabled(IDC_RESTORE_TAB,
         normal_window && !profile_->IsOffTheRecord());
-    command_updater_.UpdateCommandEnabled(IDC_SHOW_AS_TAB,
-                                          (type() == TYPE_POPUP));
-
-    // Focus various bits of UI
-    command_updater_.UpdateCommandEnabled(IDC_FOCUS_TOOLBAR, normal_window);
-    command_updater_.UpdateCommandEnabled(IDC_FOCUS_LOCATION, normal_window);
-    command_updater_.UpdateCommandEnabled(IDC_FOCUS_SEARCH, normal_window);
-
-    // Show various bits of UI
-    command_updater_.UpdateCommandEnabled(IDC_DEVELOPER_MENU, normal_window);
-#if defined(OS_WIN)
-    command_updater_.UpdateCommandEnabled(IDC_DEBUGGER,
-        // The debugger doesn't work in single process mode.
-        normal_window && !RenderProcessHost::run_renderer_in_process());
-#endif
-    command_updater_.UpdateCommandEnabled(IDC_NEW_PROFILE, normal_window);
-    command_updater_.UpdateCommandEnabled(IDC_REPORT_BUG, normal_window);
-    command_updater_.UpdateCommandEnabled(IDC_SHOW_BOOKMARK_BAR, normal_window);
-    command_updater_.UpdateCommandEnabled(IDC_CLEAR_BROWSING_DATA,
-                                          normal_window);
-    command_updater_.UpdateCommandEnabled(IDC_IMPORT_SETTINGS, normal_window);
-    command_updater_.UpdateCommandEnabled(IDC_OPTIONS, normal_window);
-    command_updater_.UpdateCommandEnabled(IDC_EDIT_SEARCH_ENGINES,
-                                          normal_window);
-    command_updater_.UpdateCommandEnabled(IDC_VIEW_PASSWORDS, normal_window);
-    command_updater_.UpdateCommandEnabled(IDC_ABOUT, normal_window);
   }
+
+  // Initialize other commands whose state changes based on fullscreen mode.
+  UpdateCommandsForFullscreenMode(false);
 }
 
 void Browser::UpdateCommandsForTabState() {
@@ -2067,7 +2049,7 @@ void Browser::UpdateCommandsForTabState() {
     bool is_web_contents = web_contents != NULL;
 
     // Page-related commands
-    // Only allow bookmarking for tabbed browsers.
+    // Only allow bookmarking for web content in normal windows.
     command_updater_.UpdateCommandEnabled(IDC_STAR,
         is_web_contents && (type() == TYPE_NORMAL));
     window_->SetStarredState(is_web_contents && web_contents->is_starred());
@@ -2099,6 +2081,40 @@ void Browser::UpdateCommandsForTabState() {
     command_updater_.UpdateCommandEnabled(IDC_CREATE_SHORTCUTS,
         is_web_contents && !current_tab->GetFavIcon().isNull());
   }
+}
+
+void Browser::UpdateCommandsForFullscreenMode(bool is_fullscreen) {
+  const bool show_main_ui = (type() == TYPE_NORMAL) && !is_fullscreen;
+
+  // Navigation commands
+  command_updater_.UpdateCommandEnabled(IDC_OPEN_CURRENT_URL, show_main_ui);
+
+  // Window management commands
+  command_updater_.UpdateCommandEnabled(IDC_PROFILE_MENU, show_main_ui);
+  command_updater_.UpdateCommandEnabled(IDC_SHOW_AS_TAB,
+      (type() == TYPE_POPUP) && !is_fullscreen);
+
+  // Focus various bits of UI
+  command_updater_.UpdateCommandEnabled(IDC_FOCUS_TOOLBAR, show_main_ui);
+  command_updater_.UpdateCommandEnabled(IDC_FOCUS_LOCATION, show_main_ui);
+  command_updater_.UpdateCommandEnabled(IDC_FOCUS_SEARCH, show_main_ui);
+
+  // Show various bits of UI
+  command_updater_.UpdateCommandEnabled(IDC_DEVELOPER_MENU, show_main_ui);
+#if defined(OS_WIN)
+  command_updater_.UpdateCommandEnabled(IDC_DEBUGGER,
+      // The debugger doesn't work in single process mode.
+      show_main_ui && !RenderProcessHost::run_renderer_in_process());
+#endif
+  command_updater_.UpdateCommandEnabled(IDC_NEW_PROFILE, show_main_ui);
+  command_updater_.UpdateCommandEnabled(IDC_REPORT_BUG, show_main_ui);
+  command_updater_.UpdateCommandEnabled(IDC_SHOW_BOOKMARK_BAR, show_main_ui);
+  command_updater_.UpdateCommandEnabled(IDC_CLEAR_BROWSING_DATA, show_main_ui);
+  command_updater_.UpdateCommandEnabled(IDC_IMPORT_SETTINGS, show_main_ui);
+  command_updater_.UpdateCommandEnabled(IDC_OPTIONS, show_main_ui);
+  command_updater_.UpdateCommandEnabled(IDC_EDIT_SEARCH_ENGINES, show_main_ui);
+  command_updater_.UpdateCommandEnabled(IDC_VIEW_PASSWORDS, show_main_ui);
+  command_updater_.UpdateCommandEnabled(IDC_ABOUT, show_main_ui);
 }
 
 void Browser::UpdateStopGoState(bool is_loading) {

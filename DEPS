@@ -1,7 +1,7 @@
 vars = {
   "webkit_trunk":
     "http://svn.webkit.org/repository/webkit/trunk",
-  "webkit_revision": "41017",
+  "webkit_revision": "41077",
 }
 
 
@@ -19,7 +19,7 @@ deps = {
     "http://googletest.googlecode.com/svn/trunk@167",
 
   "src/third_party/WebKit":
-    "/trunk/deps/third_party/WebKit@9859",
+    "/trunk/deps/third_party/WebKit@10151",
 
   "src/third_party/icu38":
     "/trunk/deps/third_party/icu38@9252",
@@ -30,8 +30,8 @@ deps = {
   "src/webkit/data/layout_tests/LayoutTests":
     Var("webkit_trunk") + "/LayoutTests@" + Var("webkit_revision"),
 
-  "src/third_party/WebKit/WebKit":
-    Var("webkit_trunk") + "/WebKit@" + Var("webkit_revision"),
+  "src/third_party/WebKit/WebKit/mac":
+    Var("webkit_trunk") + "/WebKit/mac@" + Var("webkit_revision"),
 
   "src/third_party/WebKit/WebKitLibraries":
     Var("webkit_trunk") + "/WebKitLibraries@" + Var("webkit_revision"),
@@ -52,6 +52,8 @@ deps_os = {
   "mac": {
     "src/third_party/GTM":
       "http://google-toolbox-for-mac.googlecode.com/svn/trunk/@77",
+    "src/third_party/pdfsqueeze":
+      "http://pdfsqueeze.googlecode.com/svn/trunk/@2",
   },
 }
 

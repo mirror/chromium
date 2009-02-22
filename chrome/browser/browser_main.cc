@@ -30,8 +30,11 @@
 #include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/browser/first_run.h"
 #include "chrome/browser/metrics/metrics_service.h"
+#include "chrome/browser/net/dns_global.h"
+#include "chrome/browser/plugin_service.h"
 #include "chrome/browser/profile_manager.h"
 #include "chrome/browser/shell_integration.h"
+#include "chrome/browser/user_data_manager.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
@@ -69,16 +72,13 @@
 #include "chrome/browser/extensions/extension_protocols.h"
 #include "chrome/browser/jankometer.h"
 #include "chrome/browser/metrics/user_metrics.h"
-#include "chrome/browser/process_singleton.h"
 #include "chrome/browser/net/dns_global.h"
 #include "chrome/browser/net/sdch_dictionary_fetcher.h"
 #include "chrome/browser/net/url_fixer_upper.h"
-#include "chrome/browser/plugin_service.h"
 #include "chrome/browser/printing/print_job_manager.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/profile_manager.h"
 #include "chrome/browser/rlz/rlz.h"
-#include "chrome/browser/user_data_manager.h"
 #include "chrome/browser/views/user_data_dir_dialog.h"
 #include "chrome/common/env_vars.h"
 #include "chrome/common/win_util.h"
@@ -99,6 +99,7 @@
 
 #if !defined(OS_MACOSX)
 #include "net_resources.h"
+#include "chrome/browser/process_singleton.h"
 #endif
 
 namespace Platform {
@@ -108,7 +109,7 @@ void WillTerminate();
 
 #if defined(OS_WIN) || defined(OS_LINUX)
 // Perform any platform-specific work that needs to be done before the main
-// message loop is created and initialized. 
+// message loop is created and initialized.
 void WillInitializeMainMessageLoop(const CommandLine & command_line) {
 }
 
@@ -442,12 +443,14 @@ int BrowserMain(const MainFunctionParams& parameters) {
 #if defined(OS_WIN)
   // Initialize Winsock.
   net::EnsureWinsockInit();
+#endif  // defined(OS_WIN)
 
   // Initialize the DNS prefetch system
   chrome_browser_net::DnsPrefetcherInit dns_prefetch_init(user_prefs);
   chrome_browser_net::DnsPrefetchHostNamesAtStartup(user_prefs, local_state);
   chrome_browser_net::RestoreSubresourceReferrers(local_state);
 
+#if defined(OS_WIN)
   // Init common control sex.
   INITCOMMONCONTROLSEX config;
   config.dwSize = sizeof(config);

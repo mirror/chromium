@@ -4,26 +4,27 @@
 
 #include "build/build_config.h"
 
-#include <algorithm>
-
 #include "chrome/common/l10n_util.h"
 
 #include "base/command_line.h"
+#include "base/file_path.h"
 #include "base/file_util.h"
-#include "base/logging.h"
 #include "base/path_service.h"
 #include "base/scoped_ptr.h"
+#include "base/string16.h"
+#include "base/string_piece.h"
 #include "base/string_util.h"
+#include "base/sys_string_conversions.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/gfx/chrome_canvas.h"
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_LINUX)
 // TODO(port): re-enable.
 #include "chrome/common/resource_bundle.h"
+#endif
+#if defined(OS_WIN)
 #include "chrome/views/view.h"
 #endif  // defined(OS_WIN)
-#include "unicode/coll.h"
-#include "unicode/locid.h"
 #include "unicode/rbbi.h"
 #include "unicode/uchar.h"
 
@@ -96,45 +97,6 @@ UBool SetICUDefaultLocale(const std::wstring& locale_string) {
   // it does not hurt to have it as a sanity check.
   return U_SUCCESS(error_code);
 }
-
-// Compares two wstrings and returns true if the first arg is less than the
-// second arg.  This uses the locale specified in the constructor.
-class StringComparator : public std::binary_function<const std::wstring&,
-                                                     const std::wstring&,
-                                                     bool> {
- public:
-  explicit StringComparator(Collator* collator)
-      : collator_(collator) { }
-
-  // Returns true if lhs preceeds rhs.
-  bool operator() (const std::wstring& lhs, const std::wstring& rhs) {
-    UErrorCode error = U_ZERO_ERROR;
-#if defined(WCHAR_T_IS_UTF32)
-    // Need to convert to UTF-16 to be compatible with UnicodeString's
-    // constructor.
-    string16 lhs_utf16 = WideToUTF16(lhs);
-    string16 rhs_utf16 = WideToUTF16(rhs);
-
-    UCollationResult result = collator_->compare(
-        static_cast<const UChar*>(lhs_utf16.c_str()),
-        static_cast<int>(lhs_utf16.length()),
-        static_cast<const UChar*>(rhs_utf16.c_str()),
-        static_cast<int>(rhs_utf16.length()),
-        error);
-#else
-    UCollationResult result = collator_->compare(
-        static_cast<const UChar*>(lhs.c_str()), static_cast<int>(lhs.length()),
-        static_cast<const UChar*>(rhs.c_str()), static_cast<int>(rhs.length()),
-        error);
-#endif
-    DCHECK(U_SUCCESS(error));
-
-    return result == UCOL_LESS;
-  }
-
- private:
-  Collator* collator_;
-};
 
 // Returns true if |locale_name| has an alias in the ICU data file.
 bool IsDuplicateName(const std::string& locale_name) {
@@ -248,6 +210,35 @@ std::wstring GetSystemLocale() {
   return ASCIIToWide(ret);
 }
 
+// Compares the character data stored in two different strings by specified
+// Collator instance.
+UCollationResult CompareStringWithCollator(const Collator* collator,
+                                           const std::wstring& lhs,
+                                           const std::wstring& rhs) {
+  DCHECK(collator);
+  UErrorCode error = U_ZERO_ERROR;
+#if defined(WCHAR_T_IS_UTF32)
+  // Need to convert to UTF-16 to be compatible with UnicodeString's
+  // constructor.
+  string16 lhs_utf16 = WideToUTF16(lhs);
+  string16 rhs_utf16 = WideToUTF16(rhs);
+
+  UCollationResult result = collator->compare(
+      static_cast<const UChar*>(lhs_utf16.c_str()),
+      static_cast<int>(lhs_utf16.length()),
+      static_cast<const UChar*>(rhs_utf16.c_str()),
+      static_cast<int>(rhs_utf16.length()),
+      error);
+#else
+  UCollationResult result = collator->compare(
+      static_cast<const UChar*>(lhs.c_str()), static_cast<int>(lhs.length()),
+      static_cast<const UChar*>(rhs.c_str()), static_cast<int>(rhs.length()),
+      error);
+#endif
+  DCHECK(U_SUCCESS(error));
+  return result;
+}
+
 }  // namespace
 
 namespace l10n_util {
@@ -318,14 +309,14 @@ std::wstring GetLocalName(const std::wstring& locale_code_wstr,
   DCHECK(U_SUCCESS(error));
   name_local.resize(actual_size);
   // Add an RTL mark so parentheses are properly placed.
-  if (is_for_ui && GetTextDirection() == RIGHT_TO_LEFT)
-    return name_local + kRightToLeftMark;
-  else
-    return name_local;
+  if (is_for_ui && GetTextDirection() == RIGHT_TO_LEFT) {
+    name_local.push_back(static_cast<wchar_t>(kRightToLeftMark));
+  }
+  return name_local;
 }
 
 std::wstring GetString(int message_id) {
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_LINUX)
   ResourceBundle &rb = ResourceBundle::GetSharedInstance();
   return rb.GetLocalizedString(message_id);
 #else
@@ -341,7 +332,7 @@ static std::wstring GetStringF(int message_id,
                                const std::wstring& c,
                                const std::wstring& d,
                                std::vector<size_t>* offsets) {
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_LINUX)
 // TODO(port): re-enable.
   const std::wstring& format_string = GetString(message_id);
   std::wstring formatted = ReplaceStringPlaceholders(format_string, a, b, c,
@@ -529,12 +520,17 @@ bool AdjustStringForLocaleDirection(const std::wstring& text,
 }
 
 bool StringContainsStrongRTLChars(const std::wstring& text) {
-  const wchar_t* string = text.c_str();
-  int length = static_cast<int>(text.length());
-  int position = 0;
+#if defined(WCHAR_T_IS_UTF32)
+  string16 text_utf16 = WideToUTF16(text);
+  const UChar* string = text_utf16.c_str();
+#else
+  const UChar* string = text.c_str();
+#endif
+  size_t length = text.length();
+  size_t position = 0;
   while (position < length) {
     UChar32 character;
-    int next_position = position;
+    size_t next_position = position;
     U16_NEXT(string, next_position, length, character);
 
     // Now that we have the character, we use ICU in order to query for the
@@ -551,18 +547,60 @@ bool StringContainsStrongRTLChars(const std::wstring& text) {
 
 void WrapStringWithLTRFormatting(std::wstring* text) {
   // Inserting an LRE (Left-To-Right Embedding) mark as the first character.
-  text->insert(0, L"\x202A");
+  text->insert(0, 1, static_cast<wchar_t>(kLeftToRightEmbeddingMark));
 
   // Inserting a PDF (Pop Directional Formatting) mark as the last character.
-  text->append(L"\x202C");
+  text->push_back(static_cast<wchar_t>(kPopDirectionalFormatting));
 }
 
 void WrapStringWithRTLFormatting(std::wstring* text) {
   // Inserting an RLE (Right-To-Left Embedding) mark as the first character.
-  text->insert(0, L"\x202B");
+  text->insert(0, 1, static_cast<wchar_t>(kRightToLeftEmbeddingMark));
 
   // Inserting a PDF (Pop Directional Formatting) mark as the last character.
-  text->append(L"\x202C");
+  text->push_back(static_cast<wchar_t>(kPopDirectionalFormatting));
+}
+
+void WrapPathWithLTRFormatting(const FilePath& path,
+                               string16* rtl_safe_path) {
+  // Split the path.
+  std::vector<FilePath::StringType> path_components;
+  file_util::PathComponents(path, &path_components);
+  // Compose the whole path from components with the following 2 additions:
+  // 1. Wrap the overall path with LRE-PDF pair which essentialy marks the
+  // string as a Left-To-Right string. Otherwise, the punctuation (if there is
+  // any) at the end of the path will not be displayed at the correct position.
+  // Inserting an LRE (Left-To-Right Embedding) mark as the first character.
+  rtl_safe_path->push_back(kLeftToRightEmbeddingMark);
+  char16 path_separator = static_cast<char16>(FilePath::kSeparators[0]);
+  for (size_t index = 0; index < path_components.size(); ++index) {
+#if defined(OS_MACOSX)
+    rtl_safe_path->append(UTF8ToUTF16(path_components[index]));
+#elif defined(OS_WIN)
+    rtl_safe_path->append(path_components[index]);
+#else  // defined(OS_LINUX)
+    std::wstring one_component =
+        base::SysNativeMBToWide(path_components[index]);
+    rtl_safe_path->append(WideToUTF16(one_component));
+#endif
+    bool first_component_is_separator =
+        ((index == 0) &&
+         (path_components[0].length() == 1) &&
+         (FilePath::IsSeparator(path_components[0][0])));
+    bool last_component = (index == path_components.size() - 1);
+    // Add separator for components except for the first component if itself is
+    // a separator, and except for the last component.
+    if (!last_component && !first_component_is_separator) {
+      rtl_safe_path->push_back(path_separator);
+      // 2. Add left-to-right mark after path separator to force each subfolder
+      // in the path to have LTR directionality. Otherwise, folder path
+      // "CBA/FED" (in which, "CBA" and "FED" stand for folder names in Hebrew,
+      // and "FED" is a subfolder of "CBA") will be displayed as "FED/CBA".
+      rtl_safe_path->push_back(kLeftToRightMark);
+    }
+  }
+  // Inserting a PDF (Pop Directional Formatting) mark as the last character.
+  rtl_safe_path->push_back(kPopDirectionalFormatting);
 }
 
 int DefaultCanvasTextAlignment() {
@@ -599,18 +637,20 @@ void HWNDSetRTLLayout(HWND hwnd) {
 }
 #endif  // defined(OS_WIN)
 
+// Specialization of operator() method for std::wstring version.
+template <>
+bool StringComparator<std::wstring>::operator()(const std::wstring& lhs,
+                                                const std::wstring& rhs) {
+  // If we can not get collator instance for specified locale, just do simple
+  // string compare.
+  if (!collator_)
+    return lhs < rhs;
+  return CompareStringWithCollator(collator_, lhs, rhs) == UCOL_LESS;
+};
+
 void SortStrings(const std::wstring& locale,
                  std::vector<std::wstring>* strings) {
-  UErrorCode error = U_ZERO_ERROR;
-  Locale loc(WideToUTF8(locale).c_str());
-  scoped_ptr<Collator> collator(Collator::createInstance(loc, error));
-  if (U_FAILURE(error)) {
-    // Just do an string sort.
-    sort(strings->begin(), strings->end());
-    return;
-  }
-  StringComparator c(collator.get());
-  sort(strings->begin(), strings->end(), c);
+  SortVectorWithStringKey(locale, strings, false);
 }
 
 const std::vector<std::wstring>& GetAvailableLocales() {

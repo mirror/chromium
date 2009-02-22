@@ -11,8 +11,7 @@
 // The SafeBrowsingProtocolParser class to do the actual parsing.
 
 #include <deque>
-#include <string>
-#include <vector>
+#include <set>
 
 #include "base/hash_tables.h"
 #include "base/scoped_ptr.h"
@@ -22,12 +21,12 @@
 #include "chrome/browser/safe_browsing/protocol_parser.h"
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/browser/safe_browsing/safe_browsing_util.h"
-#include "net/url_request/url_request.h"
 #include "testing/gtest/include/gtest/gtest_prod.h"
 
 class MessageLoop;
 class Task;
 class Timer;
+class URLRequestStatus;
 
 #if defined(COMPILER_GCC)
 // Allows us to use URLFetchers in a hash_map with gcc (MSVC is okay without
@@ -87,6 +86,11 @@ class SafeBrowsingProtocolManager : public URLFetcher::Delegate {
 
   // The last time we received an update.
   base::Time last_update() const { return last_update_; }
+
+  // Report a malware resource to the SafeBrowsing service.
+  void ReportMalware(const GURL& malware_url,
+                     const GURL& page_url,
+                     const GURL& referrer_url);
 
  private:
   // Internal API for fetching information from the SafeBrowsing servers. The
@@ -224,6 +228,9 @@ class SafeBrowsingProtocolManager : public URLFetcher::Delegate {
 
   // Track the size of each update (in bytes).
   int update_size_;
+
+  // Track outstanding malware report fetchers for clean up.
+  std::set<const URLFetcher*> malware_reports_;
 
   DISALLOW_COPY_AND_ASSIGN(SafeBrowsingProtocolManager);
 };

@@ -342,11 +342,27 @@
 			>
 		</File>
 		<File
+			RelativePath=".\child_process_host.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\child_process_host.h"
+			>
+		</File>
+		<File
 			RelativePath=".\child_process_info.cc"
 			>
 		</File>
 		<File
 			RelativePath=".\child_process_info.h"
+			>
+		</File>
+		<File
+			RelativePath=".\child_thread.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\child_thread.h"
 			>
 		</File>
 		<File
@@ -529,7 +545,7 @@
 			RelativePath=".\notification_details.h"
 			>
 		</File>
-                <File
+		<File
 			RelativePath=".\notification_observer.h"
 			>
 		</File>
@@ -731,6 +747,14 @@
 		</File>
 		<File
 			RelativePath=".\time_format.h"
+			>
+		</File>
+		<File
+			RelativePath=".\transport_dib.h"
+			>
+		</File>
+		<File
+			RelativePath=".\transport_dib_win.cc"
 			>
 		</File>
 		<File

@@ -9,18 +9,24 @@
 #include <string>
 
 #include "base/scoped_ptr.h"
+#include "base/task.h"
 #include "chrome/browser/command_updater.h"
 #include "chrome/browser/gtk/menu_gtk.h"
 #include "chrome/common/pref_member.h"
 
+class BackForwardMenuModelGtk;
 class Browser;
+class CustomContainerButton;
+class CustomDrawButton;
 class Profile;
+class TabContents;
 class ToolbarModel;
 
 // View class that displays the GTK version of the toolbar and routes gtk
 // events back to the Browser.
 class BrowserToolbarGtk : public CommandUpdater::CommandObserver,
-                          public MenuGtk::Delegate {
+                          public MenuGtk::Delegate,
+                          public NotificationObserver {
  public:
   // Height of the toolbar, in pixels.
   static const int kToolbarHeight;
@@ -42,32 +48,48 @@ class BrowserToolbarGtk : public CommandUpdater::CommandObserver,
   virtual bool IsItemChecked(int id) const;
   virtual void ExecuteCommand(int command_id);
 
+  // NotificationObserver implementation.
+  void Observe(NotificationType type,
+               const NotificationSource& source,
+               const NotificationDetails& details);
+
   void SetProfile(Profile* profile);
 
- private:
-  class CustomDrawButton;  // Defined in the .cc file.
+  // Message that we should react to a state change.
+  void UpdateTabContents(TabContents* contents, bool should_restore_state);
 
+ private:
   // Builds a toolbar button with all the properties set.
   CustomDrawButton* BuildToolbarButton(int normal_id,
                                        int active_id,
                                        int highlight_id,
                                        int depressed_id,
-                                       const std::wstring& localized_tooltip,
-                                       bool menu_button);
+                                       const std::wstring& localized_tooltip);
+
+  CustomContainerButton* BuildToolbarMenuButton(
+      int icon_id,
+      const std::wstring& localized_tooltip);
+
+  // Gtk callback for the "activate" signal on the |entry_| widget. Responds to
+  // enter.
+  static void OnEntryActivate(GtkEntry *entry, BrowserToolbarGtk* toolbar);
 
   // Gtk callback for the "clicked" signal.
   static void OnButtonClick(GtkWidget* button, BrowserToolbarGtk* toolbar);
 
   // Gtk callback to intercept mouse clicks to the menu buttons.
-  static gint OnMenuButtonPressEvent(GtkWidget* button,
-                                      GdkEvent *event,
-                                      BrowserToolbarGtk* toolbar);
+  static gboolean OnMenuButtonPressEvent(GtkWidget* button,
+                                         GdkEvent *event,
+                                         BrowserToolbarGtk* toolbar);
 
   // Displays the page menu.
   void RunPageMenu(GdkEvent* button_press_event);
 
   // Displays the app menu.
   void RunAppMenu(GdkEvent* button_press_event);
+
+  // Construct the Home button.
+  CustomDrawButton* MakeHomeButton();
 
   // Gtk widgets. The toolbar is an hbox with each of the other pieces of the
   // toolbar placed side by side.
@@ -76,11 +98,15 @@ class BrowserToolbarGtk : public CommandUpdater::CommandObserver,
   // Tooltip container for all GTK widgets in this class.
   GtkTooltips* toolbar_tooltips_;
 
+  // Our temporary URL bar (until we get the omnibox up).
+  GtkWidget* entry_;
+
   // All the buttons in the toolbar.
   scoped_ptr<CustomDrawButton> back_, forward_;
-  scoped_ptr<CustomDrawButton> reload_, home_;
+  scoped_ptr<CustomDrawButton> reload_;
+  scoped_ptr<CustomDrawButton> home_;  // May be NULL.
   scoped_ptr<CustomDrawButton> star_, go_;
-  scoped_ptr<CustomDrawButton> page_menu_button_, app_menu_button_;
+  scoped_ptr<CustomContainerButton> page_menu_button_, app_menu_button_;
 
   // The model that contains the security level, text, icon to display...
   ToolbarModel* model_;
@@ -88,15 +114,42 @@ class BrowserToolbarGtk : public CommandUpdater::CommandObserver,
   scoped_ptr<MenuGtk> page_menu_;
   scoped_ptr<MenuGtk> app_menu_;
 
-  // TODO(port): Port BackForwardMenuModel
-  // scoped_ptr<BackForwardMenuModel> back_menu_model_;
-  // scoped_ptr<BackForwardMenuModel> forward_menu_model_;
-
   Browser* browser_;
   Profile* profile_;
 
   // Controls whether or not a home button should be shown on the toolbar.
   BooleanPrefMember show_home_button_;
+
+  // Back/Forward menus ------------------------------------------------------
+  // When clicked, these buttons will navigate forward or backward. When
+  // pressed and held, they show a dropdown menu of recent web sites.
+  // TODO(port): to match windows, we need to immediately show the back/forward
+  // menu when the user starts dragging the mouse.
+
+  // Builds a toolbar button for the back or forward dropdown menus.
+  CustomDrawButton* BuildBackForwardButton(
+    int normal_id,
+    int active_id,
+    int highlight_id,
+    int depressed_id,
+    const std::wstring& localized_tooltip);
+
+  // Starts a timer to show the dropdown menu.
+  static gboolean OnBackForwardPressEvent(GtkWidget* button,
+                                          GdkEventButton* event,
+                                          BrowserToolbarGtk* toolbar);
+
+  // Shows the dropdown menu when the timer fires. |button_type| refers to the
+  // click that originated the button press event.
+  void ShowBackForwardMenu(GtkWidget* button, gint button_type);
+
+  // The back/forward menu gets reset every time it is shown.
+  scoped_ptr<MenuGtk> back_forward_menu_;
+
+  scoped_ptr<BackForwardMenuModelGtk> back_menu_model_;
+  scoped_ptr<BackForwardMenuModelGtk> forward_menu_model_;
+
+  ScopedRunnableMethodFactory<BrowserToolbarGtk> show_menu_factory_;
 };
 
 #endif  // CHROME_BROWSER_GTK_BROWSER_TOOLBAR_VIEW_GTK_H_

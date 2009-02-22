@@ -410,14 +410,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\process_singleton_win.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\process_singleton.h"
-				>
-			</File>
-			<File
 				RelativePath=".\meta_table_helper.cc"
 				>
 			</File>
@@ -463,6 +455,14 @@
 			</File>
 			<File
 				RelativePath="..\tools\build\win\precompiled_wtl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\process_singleton.h"
+				>
+			</File>
+			<File
+				RelativePath=".\process_singleton_win.cc"
 				>
 			</File>
 			<File
@@ -639,6 +639,14 @@
 			</File>
 			<File
 				RelativePath=".\back_forward_menu_model.h"
+				>
+			</File>
+			<File
+				RelativePath=".\back_forward_menu_model_win.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\back_forward_menu_model_win.h"
 				>
 			</File>
 			<File
@@ -1398,14 +1406,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\printing\units.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\printing\units.h"
-				>
-			</File>
-			<File
 				RelativePath=".\printing\win_printing_context.cc"
 				>
 			</File>
@@ -1514,6 +1514,22 @@
 				>
 			</File>
 			<File
+				RelativePath=".\dom_ui\downloads_ui.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\dom_ui\downloads_ui.h"
+				>
+			</File>
+			<File
+				RelativePath=".\dom_ui\fileicon_source.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\dom_ui\fileicon_source.h"
+				>
+			</File>
+			<File
 				RelativePath=".\dom_ui\history_ui.cc"
 				>
 			</File>
@@ -1583,14 +1599,6 @@
 			</File>
 			<File
 				RelativePath=".\net\dns_master.h"
-				>
-			</File>
-			<File
-				RelativePath=".\net\dns_slave.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\net\dns_slave.h"
 				>
 			</File>
 			<File

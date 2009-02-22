@@ -614,6 +614,7 @@ bool NavigationController::RendererDidNavigate(
   details->is_main_frame = PageTransition::IsMainFrame(params.transition);
   details->serialized_security_info = params.security_info;
   details->is_content_filtered = params.is_content_filtered;
+  details->http_status_code = params.http_status_code;
   NotifyNavigationEntryCommitted(details);
 
   // It is now a safe time to schedule collection for any tab contents of a
@@ -722,6 +723,7 @@ void NavigationController::RendererDidNavigateToNewPage(
   }
 
   new_entry->set_url(params.url);
+  new_entry->set_referrer(params.referrer);
   new_entry->set_page_id(params.page_id);
   new_entry->set_transition_type(params.transition);
   new_entry->set_site_instance(active_contents_->GetSiteInstance());

@@ -10,10 +10,10 @@
 #include "base/path_service.h"
 #include "base/scoped_ptr.h"
 #include "base/string_util.h"
-#include "chrome/app/locales/locale_settings.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/extensions/extensions_service.h"
 #include "chrome/browser/extensions/user_script_master.h"
 #include "chrome/browser/history/history.h"
@@ -31,10 +31,8 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
-#include "chrome/common/pref_service.h"
 #include "chrome/common/render_messages.h"
-#include "chrome/common/resource_bundle.h"
-#include "net/url_request/url_request_context.h"
+#include "grit/locale_settings.h"
 
 #if defined(OS_POSIX)
 // TODO(port): get rid of this include. It's used just to provide declarations
@@ -44,10 +42,8 @@
 
 // TODO(port): Get rid of this section and finish porting.
 #if defined(OS_WIN)
-#include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/search_engines/template_url_fetcher.h"
 #include "chrome/browser/spellchecker.h"
-#include "chrome/browser/tab_contents/navigation_controller.h"
 #endif
 
 using base::Time;
@@ -75,6 +71,8 @@ void Profile::RegisterUserPrefs(PrefService* prefs) {
       IDS_SPELLCHECK_DICTIONARY);
 #endif
   prefs->RegisterBooleanPref(prefs::kEnableSpellCheck, true);
+  prefs->RegisterBooleanPref(prefs::kEnableUserScripts, false);
+  prefs->RegisterBooleanPref(prefs::kEnableExtensions, false);
 }
 
 // static
@@ -355,10 +353,13 @@ void ProfileImpl::InitExtensions() {
     return;  // Already initialized.
 
   const CommandLine* command_line = CommandLine::ForCurrentProcess();
+  PrefService* prefs = GetPrefs();
   bool user_scripts_enabled =
-      command_line->HasSwitch(switches::kEnableUserScripts);
+      command_line->HasSwitch(switches::kEnableUserScripts) || 
+      prefs->GetBoolean(prefs::kEnableUserScripts);
   bool extensions_enabled =
-      command_line->HasSwitch(switches::kEnableExtensions);
+      command_line->HasSwitch(switches::kEnableExtensions) || 
+      prefs->GetBoolean(prefs::kEnableExtensions);
 
   FilePath script_dir;
   if (user_scripts_enabled) {

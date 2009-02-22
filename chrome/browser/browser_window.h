@@ -37,7 +37,11 @@ class BrowserWindow {
 
   // Closes the frame as soon as possible.  If the frame is not in a drag
   // session, it will close immediately; otherwise, it will move offscreen (so
-  // events are still fired) until the drag ends, then close.
+  // events are still fired) until the drag ends, then close. This assumes
+  // that the Browser is not immediately destroyed, but will be eventually
+  // destroyed by other means (eg, the tab strip going to zero elements).
+  // Bad things happen if the Browser dtor is called directly as a result of
+  // invoking this method.
   virtual void Close() = 0;
 
   // Activates (brings to front) the window. Restores the window from minimized
@@ -85,6 +89,10 @@ class BrowserWindow {
   // Returns true if the frame is maximized (aka zoomed).
   virtual bool IsMaximized() const = 0;
 
+  // Accessors for fullscreen mode state.
+  virtual void SetFullscreen(bool fullscreen) = 0;
+  virtual bool IsFullscreen() const = 0;
+
   // Returns the location bar.
   virtual LocationBar* GetLocationBar() const = 0;
 
@@ -120,9 +128,6 @@ class BrowserWindow {
 
   // Shows the Bookmark Manager window.
   virtual void ShowBookmarkManager() = 0;
-
-  // Returns true if the Bookmark bubble is visible.
-  virtual bool IsBookmarkBubbleVisible() const = 0;
 
   // Shows the Bookmark bubble. |url| is the URL being bookmarked,
   // |already_bookmarked| is true if the url is already bookmarked.

@@ -7,6 +7,7 @@
 
 #include "base/file_path.h"
 #include "base/file_util.h"
+#include "base/json_reader.h"
 #include "base/message_loop.h"
 #include "base/path_service.h"
 #include "base/string_util.h"
@@ -73,6 +74,11 @@ class ExtensionsServiceTestFrontend
   }
 
   virtual void OnExtensionLoadError(const std::string& message) {
+    // In the development environment, we get errors when trying to load
+    // extensions out of the .svn directories.
+    if (message.find(".svn") != std::string::npos)
+      return;
+
     errors_.push_back(message);
   }
 
@@ -80,9 +86,10 @@ class ExtensionsServiceTestFrontend
     extensions_.insert(extensions_.end(), new_extensions->begin(),
                        new_extensions->end());
     delete new_extensions;
-    // In the tests we rely on extensions being in particular order,
+    // In the tests we rely on extensions and errors being in particular order,
     // which is not always the case (and is not guaranteed by used APIs).
     std::stable_sort(extensions_.begin(), extensions_.end(), ExtensionsOrder());
+    std::stable_sort(errors_.begin(), errors_.end());
   }
 
   virtual void OnExtensionInstallError(const std::string& message) {
@@ -150,7 +157,7 @@ TEST_F(ExtensionsServiceTest, LoadAllExtensionsFromDirectorySuccess) {
             frontend->extensions()->at(0)->description());
 
   Extension* extension = frontend->extensions()->at(0);
-  const UserScriptList& scripts = extension->user_scripts();
+  const UserScriptList& scripts = extension->content_scripts();
   ASSERT_EQ(2u, scripts.size());
   EXPECT_EQ(2u, scripts[0].url_patterns().size());
   EXPECT_EQ("http://*.google.com/*",
@@ -170,7 +177,9 @@ TEST_F(ExtensionsServiceTest, LoadAllExtensionsFromDirectorySuccess) {
             frontend->extensions()->at(1)->name());
   EXPECT_EQ(std::string(""),
             frontend->extensions()->at(1)->description());
-  ASSERT_EQ(0u, frontend->extensions()->at(1)->user_scripts().size());
+  EXPECT_EQ(frontend->extensions()->at(1)->path().AppendASCII("npapi").value(),
+            frontend->extensions()->at(1)->plugins_dir().value());
+  ASSERT_EQ(0u, frontend->extensions()->at(1)->content_scripts().size());
 
   EXPECT_EQ(std::string("com.google.myextension3"),
             frontend->extensions()->at(2)->id());
@@ -178,7 +187,7 @@ TEST_F(ExtensionsServiceTest, LoadAllExtensionsFromDirectorySuccess) {
             frontend->extensions()->at(2)->name());
   EXPECT_EQ(std::string(""),
             frontend->extensions()->at(2)->description());
-  ASSERT_EQ(0u, frontend->extensions()->at(2)->user_scripts().size());
+  ASSERT_EQ(0u, frontend->extensions()->at(2)->content_scripts().size());
 };
 
 // Test loading bad extensions from the profile directory.
@@ -197,10 +206,23 @@ TEST_F(ExtensionsServiceTest, LoadAllExtensionsFromDirectoryFail) {
       scoped_refptr<ExtensionsServiceFrontendInterface>(frontend.get())));
   frontend->GetMessageLoop()->RunAllPending();
 
-  // Note: There can be more errors if there are extra directories, like .svn
-  // directories.
-  EXPECT_TRUE(frontend->errors()->size() >= 3u);
-  ASSERT_EQ(0u, frontend->extensions()->size());
+  EXPECT_EQ(4u, frontend->errors()->size());
+  EXPECT_EQ(0u, frontend->extensions()->size());
+
+  EXPECT_TRUE(MatchPattern(frontend->errors()->at(0),
+      std::string("Could not load extension from '*'. * ") +
+      JSONReader::kBadRootElementType));
+
+  EXPECT_TRUE(MatchPattern(frontend->errors()->at(1),
+      std::string("Could not load extension from '*'. ") +
+      Extension::kInvalidJsListError));
+
+  EXPECT_TRUE(MatchPattern(frontend->errors()->at(2),
+      std::string("Could not load extension from '*'. ") +
+      Extension::kInvalidManifestError));
+
+  EXPECT_TRUE(MatchPattern(frontend->errors()->at(3),
+      "Could not load extension from '*'. Could not read '*' file."));
 };
 
 // Test installing extensions.

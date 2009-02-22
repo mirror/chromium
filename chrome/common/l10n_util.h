@@ -13,18 +13,30 @@
 #if defined(OS_WIN)
 #include <windows.h>
 #endif
+#include <algorithm>
+#include <functional>
 #include <string>
 #include <vector>
 
 #include "base/basictypes.h"
+#include "base/logging.h"
+#include "base/scoped_ptr.h"
+#include "base/string16.h"
+#include "base/string_util.h"
 #include "third_party/icu38/public/common/unicode/ubidi.h"
+#include "unicode/coll.h"
+#include "unicode/locid.h"
 
+class FilePath;
 class PrefService;
 
 namespace l10n_util {
 
-const wchar_t kRightToLeftMark[] = L"\x200f";
-const wchar_t kLeftToRightMark[] = L"\x200e";
+const char16 kRightToLeftMark = 0x200f;
+const char16 kLeftToRightMark = 0x200e;
+const char16 kLeftToRightEmbeddingMark = 0x202A;
+const char16 kRightToLeftEmbeddingMark = 0x202B;
+const char16 kPopDirectionalFormatting = 0x202C;
 
 // This method is responsible for determining the locale as defined below. In
 // nearly all cases you shouldn't call this, rather use GetApplicationLocale
@@ -144,6 +156,12 @@ void WrapStringWithLTRFormatting(std::wstring* text);
 // strings are rendered properly in an LTR context.
 void WrapStringWithRTLFormatting(std::wstring* text);
 
+// Wraps individual file path components to get them to display correctly in an
+// RTL UI. All filepaths should be passed through this function before display
+// in UI for RTL locales.
+void WrapPathWithLTRFormatting(const FilePath& path,
+                               string16* rtl_safe_path);
+
 // Returns the locale-dependent extended window styles.
 // This function is used for adding locale-dependent extended window styles
 // (e.g. WS_EX_LAYOUTRTL, WS_EX_RTLREADING, etc.) when creating a window.
@@ -171,6 +189,73 @@ int DefaultCanvasTextAlignment();
 // such as Hebrew.
 void HWNDSetRTLLayout(HWND hwnd);
 #endif
+
+// Compares two elements' string keys and returns true if the first element's
+// string key is less than the second element's string key. The Element must
+// have a method like the follow format to return the string key.
+// const std::wstring& GetStringKey() const;
+// This uses the locale specified in the constructor.
+template <class Element>
+class StringComparator : public std::binary_function<const Element&,
+                                                     const Element&,
+                                                     bool> {
+ public:
+  explicit StringComparator(Collator* collator)
+      : collator_(collator) { }
+
+  // Returns true if lhs precedes rhs.
+  bool operator()(const Element& lhs, const Element& rhs) {
+    const std::wstring& lhs_string_key = lhs.GetStringKey();
+    const std::wstring& rhs_string_key = rhs.GetStringKey();
+
+    return StringComparator<std::wstring>(collator_)(lhs_string_key,
+                                                     rhs_string_key);
+  }
+
+ private:
+  Collator* collator_;
+};
+
+// Specialization of operator() method for std::wstring version.
+template <>
+bool StringComparator<std::wstring>::operator()(const std::wstring& lhs,
+                                                const std::wstring& rhs);
+
+// In place sorting of |elements| of a vector according to the string key of
+// each element in the vector by using collation rules for |locale|.
+// |begin_index| points to the start position of elements in the vector which
+// want to be sorted. |end_index| points to the end position of elements in the
+// vector which want to be sorted
+template <class Element>
+void SortVectorWithStringKey(const std::wstring& locale,
+                             std::vector<Element>* elements,
+                             unsigned int begin_index,
+                             unsigned int end_index,
+                             bool needs_stable_sort) {
+  DCHECK(begin_index >= 0 && begin_index < end_index &&
+         end_index <= static_cast<unsigned int>(elements->size()));
+  UErrorCode error = U_ZERO_ERROR;
+  Locale loc(WideToASCII(locale).c_str());
+  scoped_ptr<Collator> collator(Collator::createInstance(loc, error));
+  if (U_FAILURE(error))
+    collator.reset();
+  StringComparator<Element> c(collator.get());
+  if (needs_stable_sort) {
+    stable_sort(elements->begin() + begin_index,
+                elements->begin() + end_index,
+                c);
+  } else {
+    sort(elements->begin() + begin_index, elements->begin() + end_index, c);
+  }
+}
+
+template <class Element>
+void SortVectorWithStringKey(const std::wstring& locale,
+                             std::vector<Element>* elements,
+                             bool needs_stable_sort) {
+  SortVectorWithStringKey<Element>(locale, elements, 0, elements->size(),
+                                   needs_stable_sort);
+}
 
 // In place sorting of strings using collation rules for |locale|.
 void SortStrings(const std::wstring& locale,

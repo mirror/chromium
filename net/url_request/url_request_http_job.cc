@@ -17,10 +17,12 @@
 #include "net/base/net_errors.h"
 #include "net/base/net_util.h"
 #include "net/base/sdch_manager.h"
+#include "net/http/http_response_headers.h"
 #include "net/http/http_response_info.h"
 #include "net/http/http_transaction.h"
 #include "net/http/http_transaction_factory.h"
 #include "net/url_request/url_request.h"
+#include "net/url_request/url_request_context.h"
 #include "net/url_request/url_request_error_job.h"
 
 // TODO(darin): make sure the port blocking code is not lost
@@ -68,8 +70,15 @@ URLRequestHttpJob::~URLRequestHttpJob() {
     // Prior to reaching the destructor, request_ has been set to a NULL
     // pointer, so request_->url() is no longer valid in the destructor, and we
     // use an alternate copy |request_info_.url|.
-    SdchManager::Global()->FetchDictionary(request_info_.url,
-                                           sdch_dictionary_url_);
+    SdchManager* manager = SdchManager::Global();
+    // To be extra safe, since this is a "different time" from when we decided
+    // to get the dictionary, we'll validate that an SdchManager is available.
+    // At shutdown time, care is taken to be sure that we don't delete this
+    // globally useful instance "too soon," so this check is just defensive
+    // coding to assure that IF the system is shutting down, we don't have any
+    // problem if the manager was deleted ahead of time.
+    if (manager)  // Defensive programming.
+      manager->FetchDictionary(request_info_.url, sdch_dictionary_url_);
   }
 }
 

@@ -23,6 +23,7 @@
 #include "net/http/http_chunked_decoder.h"
 #include "net/http/http_network_session.h"
 #include "net/http/http_request_info.h"
+#include "net/http/http_response_headers.h"
 #include "net/http/http_util.h"
 
 using base::Time;
@@ -126,9 +127,36 @@ void HttpNetworkTransaction::PrepareForAuthRestart(HttpAuth::Target target) {
       auth_identity_[target].username, auth_identity_[target].password,
       AuthPath(target));
 
-  next_state_ = STATE_INIT_CONNECTION;
-  connection_.set_socket(NULL);
-  connection_.Reset();
+  bool keep_alive = false;
+  if (response_.headers->IsKeepAlive()) {
+    // If there is a response body of known length, we need to drain it first.
+    if (content_length_ > 0 || chunked_decoder_.get()) {
+      next_state_ = STATE_DRAIN_BODY_FOR_AUTH_RESTART;
+      read_buf_ = new IOBuffer(kDrainBodyBufferSize);  // A bit bucket
+      read_buf_len_ = kDrainBodyBufferSize;
+      return;
+    }
+    if (content_length_ == 0)  // No response body to drain.
+      keep_alive = true;
+    // content_length_ is -1 and we're not using chunked encoding.  We don't
+    // know the length of the response body, so we can't reuse this connection
+    // even though the server says it's keep-alive.
+  }
+
+  // We don't need to drain the response body, so we act as if we had drained
+  // the response body.
+  DidDrainBodyForAuthRestart(keep_alive);
+}
+
+void HttpNetworkTransaction::DidDrainBodyForAuthRestart(bool keep_alive) {
+  if (keep_alive) {
+    next_state_ = STATE_WRITE_HEADERS;
+    reused_socket_ = true;
+  } else {
+    next_state_ = STATE_INIT_CONNECTION;
+    connection_.set_socket(NULL);
+    connection_.Reset();
+  }
 
   // Reset the other member variables.
   ResetStateForRestart();
@@ -378,6 +406,17 @@ int HttpNetworkTransaction::DoLoop(int result) {
         rv = DoReadBodyComplete(rv);
         TRACE_EVENT_END("http.read_body", request_, request_->url.spec());
         break;
+      case STATE_DRAIN_BODY_FOR_AUTH_RESTART:
+        DCHECK(rv == OK);
+        TRACE_EVENT_BEGIN("http.drain_body_for_auth_restart",
+                          request_, request_->url.spec());
+        rv = DoDrainBodyForAuthRestart();
+        break;
+      case STATE_DRAIN_BODY_FOR_AUTH_RESTART_COMPLETE:
+        rv = DoDrainBodyForAuthRestartComplete(rv);
+        TRACE_EVENT_END("http.drain_body_for_auth_restart",
+                        request_, request_->url.spec());
+        break;
       default:
         NOTREACHED() << "bad state";
         rv = ERR_FAILED;
@@ -405,6 +444,12 @@ int HttpNetworkTransaction::DoResolveProxy() {
 int HttpNetworkTransaction::DoResolveProxyComplete(int result) {
   next_state_ = STATE_INIT_CONNECTION;
 
+  // Since we only support HTTP proxies or DIRECT connections, remove
+  // any other type of proxy from the list (i.e. SOCKS).
+  // Supporting SOCKS is issue http://crbug.com/469.
+  proxy_info_.RemoveProxiesWithoutScheme(
+      ProxyServer::SCHEME_DIRECT | ProxyServer::SCHEME_HTTP);
+
   pac_request_ = NULL;
 
   if (result != OK) {
@@ -426,7 +471,7 @@ int HttpNetworkTransaction::DoInitConnection() {
   // Build the string used to uniquely identify connections of this type.
   std::string connection_group;
   if (using_proxy_ || using_tunnel_)
-    connection_group = "proxy/" + proxy_info_.proxy_server() + "/";
+    connection_group = "proxy/" + proxy_info_.proxy_server().ToURI() + "/";
   if (!using_proxy_)
     connection_group.append(request_->url.GetOrigin().spec());
 
@@ -460,14 +505,9 @@ int HttpNetworkTransaction::DoResolveHost() {
 
   // Determine the host and port to connect to.
   if (using_proxy_ || using_tunnel_) {
-    const std::string& proxy = proxy_info_.proxy_server();
-    StringTokenizer t(proxy, ":");
-    // TODO(darin): Handle errors here.  Perhaps HttpProxyInfo should do this
-    // before claiming a proxy server configuration.
-    t.GetNext();
-    host = t.token();
-    t.GetNext();
-    port = StringToInt(t.token());
+    ProxyServer proxy_server = proxy_info_.proxy_server();
+    host = proxy_server.host();
+    port = proxy_server.port();
   } else {
     // Direct connection
     host = request_->url.host();
@@ -777,7 +817,7 @@ int HttpNetworkTransaction::DoReadBodyComplete(int result) {
     }
   }
 
-  // Clean up the HttpConnection if we are done.
+  // Clean up connection_ if we are done.
   if (done) {
     LogTransactionMetrics();
     if (!keep_alive)
@@ -791,6 +831,62 @@ int HttpNetworkTransaction::DoReadBodyComplete(int result) {
   read_buf_len_ = 0;
 
   return result;
+}
+
+int HttpNetworkTransaction::DoDrainBodyForAuthRestart() {
+  // This method differs from DoReadBody only in the next_state_.  So we just
+  // call DoReadBody and override the next_state_.  Perhaps there is a more
+  // elegant way for these two methods to share code.
+  int rv = DoReadBody();
+  DCHECK(next_state_ == STATE_READ_BODY_COMPLETE);
+  next_state_ = STATE_DRAIN_BODY_FOR_AUTH_RESTART_COMPLETE;
+  return rv;
+}
+
+// TODO(wtc): The first two thirds of this method and the DoReadBodyComplete
+// method are almost the same.  Figure out a good way for these two methods
+// to share code.
+int HttpNetworkTransaction::DoDrainBodyForAuthRestartComplete(int result) {
+  bool unfiltered_eof = (result == 0);
+
+  // Filter incoming data if appropriate.  FilterBuf may return an error.
+  if (result > 0 && chunked_decoder_.get()) {
+    result = chunked_decoder_->FilterBuf(read_buf_->data(), result);
+    if (result == 0 && !chunked_decoder_->reached_eof()) {
+      // Don't signal completion of the Read call yet or else it'll look like
+      // we received end-of-file.  Wait for more data.
+      next_state_ = STATE_DRAIN_BODY_FOR_AUTH_RESTART;
+      return OK;
+    }
+  }
+
+  bool done = false, keep_alive = false;
+  if (result < 0) {
+    // Error while reading the socket.
+    done = true;
+  } else {
+    content_read_ += result;
+    if (unfiltered_eof ||
+        (content_length_ != -1 && content_read_ >= content_length_) ||
+        (chunked_decoder_.get() && chunked_decoder_->reached_eof())) {
+      done = true;
+      keep_alive = response_.headers->IsKeepAlive();
+      // We can't reuse the connection if we read more than the advertised
+      // content length.
+      if (unfiltered_eof ||
+          (content_length_ != -1 && content_read_ > content_length_))
+        keep_alive = false;
+    }
+  }
+
+  if (done) {
+    DidDrainBodyForAuthRestart(keep_alive);
+  } else {
+    // Keep draining.
+    next_state_ = STATE_DRAIN_BODY_FOR_AUTH_RESTART;
+  }
+
+  return OK;
 }
 
 void HttpNetworkTransaction::LogTransactionMetrics() const {
@@ -868,14 +964,6 @@ int HttpNetworkTransaction::DidReadResponseHeaders() {
   response_.headers = headers;
   response_.vary_data.Init(*request_, *response_.headers);
 
-  int rv = HandleAuthChallenge();
-  if (rv == WILL_RESTART_TRANSACTION) {
-    DCHECK(next_state_ == STATE_INIT_CONNECTION);
-    return OK;
-  }
-  if (rv != OK)
-    return rv;
-
   // Figure how to determine EOF:
 
   // For certain responses, we know the content length is always 0.
@@ -899,6 +987,12 @@ int HttpNetworkTransaction::DidReadResponseHeaders() {
       // close the connection.
     }
   }
+
+  int rv = HandleAuthChallenge();
+  if (rv == WILL_RESTART_TRANSACTION)
+    return OK;
+  if (rv != OK)
+    return rv;
 
   if (using_ssl_ && !establishing_tunnel_) {
     SSLClientSocket* ssl_socket =
@@ -1099,7 +1193,7 @@ void HttpNetworkTransaction::ApplyAuth() {
 
 GURL HttpNetworkTransaction::AuthOrigin(HttpAuth::Target target) const {
   return target == HttpAuth::AUTH_PROXY ?
-      GURL("http://" + proxy_info_.proxy_server()) :
+      GURL("http://" + proxy_info_.proxy_server().host_and_port()) :
       request_->url.GetOrigin();
 }
 
@@ -1270,7 +1364,7 @@ void HttpNetworkTransaction::PopulateAuthChallenge(HttpAuth::Target target) {
   // TODO(eroman): decode realm according to RFC 2047.
   auth_info->realm = ASCIIToWide(auth_handler_[target]->realm());
   if (target == HttpAuth::AUTH_PROXY) {
-    auth_info->host = ASCIIToWide(proxy_info_.proxy_server());
+    auth_info->host = ASCIIToWide(proxy_info_.proxy_server().host_and_port());
   } else {
     DCHECK(target == HttpAuth::AUTH_SERVER);
     auth_info->host = ASCIIToWide(request_->url.host());

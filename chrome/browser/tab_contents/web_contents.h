@@ -12,6 +12,7 @@
 #include "base/basictypes.h"
 #include "base/hash_tables.h"
 #include "chrome/browser/cancelable_request.h"
+#include "chrome/browser/download/save_package.h"
 #include "chrome/browser/fav_icon_helper.h"
 #include "chrome/browser/renderer_host/render_view_host_delegate.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
@@ -25,7 +26,6 @@
 // Remove when we've finished porting the supporting classes.
 #include "chrome/common/temp_scaffolding_stubs.h"
 #elif defined(OS_WIN)
-#include "chrome/browser/download/save_package.h"
 #include "chrome/browser/printing/print_view_manager.h"
 #include "chrome/browser/shell_dialogs.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
@@ -275,10 +275,12 @@ class WebContents : public TabContents,
                                           const GURL& target_url);
   virtual void DidLoadResourceFromMemoryCache(const GURL& url,
                                               const std::string& security_info);
-  virtual void DidFailProvisionalLoadWithError(RenderViewHost* render_view_host,
-                                               bool is_main_frame,
-                                               int error_code,
-                                               const GURL& url);
+  virtual void DidFailProvisionalLoadWithError(
+      RenderViewHost* render_view_host,
+      bool is_main_frame,
+      int error_code,
+      const GURL& url,
+      bool showing_repost_interstitial);
   virtual void UpdateFavIconURL(RenderViewHost* render_view_host,
                                 int32 page_id, const GURL& icon_url);
   virtual void DidDownloadImage(RenderViewHost* render_view_host,
@@ -398,6 +400,8 @@ class WebContents : public TabContents,
   friend class WebContentsViewWin;
 #elif defined(OS_MACOSX)
   friend class WebContentsViewMac;
+#elif defined(OS_LINUX)
+  friend class WebContentsViewGtk;
 #endif
 
   // So InterstitialPage can access SetIsLoading.

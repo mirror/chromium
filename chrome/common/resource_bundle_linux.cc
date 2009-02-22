@@ -4,6 +4,8 @@
 
 #include "chrome/common/resource_bundle.h"
 
+#include <gtk/gtk.h>
+
 #include "base/base_paths.h"
 #include "base/data_pack.h"
 #include "base/file_path.h"
@@ -37,7 +39,15 @@ void ResourceBundle::LoadResources(const std::wstring& pref_locale) {
   bool success = resources_data_->Load(resources_data_path);
   DCHECK(success) << "failed to load chrome.pak";
 
-  // TODO(tc): Load the .pak file for locale_resources_data_.
+  FilePath locale_path;
+  PathService::Get(chrome::DIR_LOCALES, &locale_path);
+  // TODO(tc): Handle other locales properly.
+  NOTIMPLEMENTED() << " loading en-US strings only";
+  locale_path = locale_path.Append(FILE_PATH_LITERAL("en-US.pak"));
+  DCHECK(locale_resources_data_ == NULL) << "locale data already loaded!";
+  locale_resources_data_ = new base::DataPack;
+  success = locale_resources_data_->Load(locale_path);
+  DCHECK(success) << "failed to load locale pak file";
 }
 
 FilePath ResourceBundle::GetLocaleFilePath(const std::wstring& pref_locale) {
@@ -100,6 +110,33 @@ std::wstring ResourceBundle::GetLocalizedString(int message_id) {
       return std::wstring();
     }
   }
-  // Copy into a wstring and return.
-  return UTF8ToWide(data.as_string());
+
+  // Data pack encodes strings as UTF16.
+  string16 msg(reinterpret_cast<const char16*>(data.data()),
+               data.length() / 2);
+  return UTF16ToWide(msg);
+}
+
+GdkPixbuf* ResourceBundle::LoadPixbuf(int resource_id) {
+  ResourceBundle& rb = ResourceBundle::GetSharedInstance();
+  std::vector<unsigned char> data;
+  rb.LoadImageResourceBytes(resource_id, &data);
+
+  GdkPixbufLoader* loader = gdk_pixbuf_loader_new();
+  bool ok = gdk_pixbuf_loader_write(loader, static_cast<guint8*>(data.data()),
+      data.size(), NULL);
+  DCHECK(ok) << "failed to write " << resource_id;
+  // Calling gdk_pixbuf_loader_close forces the data to be parsed by the
+  // loader.  We must do this before calling gdk_pixbuf_loader_get_pixbuf.
+  ok = gdk_pixbuf_loader_close(loader, NULL);
+  DCHECK(ok) << "close failed " << resource_id;
+  GdkPixbuf* pixbuf = gdk_pixbuf_loader_get_pixbuf(loader);
+  DCHECK(pixbuf) << "failed to load " << resource_id << " " << data.size();
+
+  // The pixbuf is owned by the loader, so add a ref so when we delete the
+  // loader, the pixbuf still exists.
+  g_object_ref(pixbuf);
+  g_object_unref(loader);
+
+  return pixbuf;
 }

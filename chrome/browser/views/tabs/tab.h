@@ -69,6 +69,12 @@ class Tab : public TabRenderer,
     // other than the user releasing the mouse. Returns whether the tab has been
     // destroyed.
     virtual bool EndDrag(bool canceled) = 0;
+
+    // Returns true if the associated TabStrip's delegate supports tab moving or
+    // detaching. Used by the Frame to determine if dragging on the Tab
+    // itself should move the window in cases where there's only one
+    // non drag-able Tab.
+    virtual bool HasAvailableDragActions() const = 0;
   };
 
   explicit Tab(TabDelegate* delegate);

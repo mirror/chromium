@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "build/build_config.h"
+
 #include "chrome/browser/plugin_service.h"
 
 #include "base/command_line.h"
@@ -9,13 +11,19 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_plugin_host.h"
 #include "chrome/browser/chrome_thread.h"
-#include "chrome/browser/plugin_process_host.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/resource_message_filter.h"
 #include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/logging_chrome.h"
 #include "webkit/glue/plugins/plugin_list.h"
+
+#if defined(OS_WIN)
+// TODO(port): port this file and get rid of child_process_info.h include.
+#include "chrome/browser/plugin_process_host.h"
+#else
+#include "chrome/common/child_process_info.h"
+#endif
 
 // static
 PluginService* PluginService::GetInstance() {
@@ -61,6 +69,12 @@ const FilePath& PluginService::GetChromePluginDataDir() {
   return chrome_plugin_data_dir_;
 }
 
+void PluginService::AddExtraPluginDir(const FilePath& plugin_dir) {
+  AutoLock lock(lock_);
+  NPAPI::PluginList::ResetPluginsLoaded();
+  NPAPI::PluginList::AddExtraPluginDir(plugin_dir);
+}
+
 const std::wstring& PluginService::GetUILocale() {
   return ui_locale_;
 }
@@ -75,7 +89,7 @@ PluginProcessHost* PluginService::FindPluginProcess(
     return NULL;
   }
 
-  for (ChildProcessInfo::Iterator iter(ChildProcessInfo::PLUGIN_PROCESS);
+  for (ChildProcessHost::Iterator iter(ChildProcessInfo::PLUGIN_PROCESS);
        !iter.Done(); ++iter) {
     PluginProcessHost* plugin = static_cast<PluginProcessHost*>(*iter);
     if (plugin->info().path == plugin_path)
@@ -102,7 +116,7 @@ PluginProcessHost* PluginService::FindOrStartPluginProcess(
   }
 
   // This plugin isn't loaded by any plugin process, so create a new process.
-  plugin_host = new PluginProcessHost();
+  plugin_host = new PluginProcessHost(main_message_loop_);
   if (!plugin_host->Init(info, clsid, ui_locale_)) {
     DCHECK(false);  // Init is not expected to fail
     delete plugin_host;
@@ -170,7 +184,7 @@ void PluginService::Shutdown() {
 }
 
 void PluginService::OnShutdown() {
-  for (ChildProcessInfo::Iterator iter(ChildProcessInfo::PLUGIN_PROCESS);
+  for (ChildProcessHost::Iterator iter(ChildProcessInfo::PLUGIN_PROCESS);
        !iter.Done(); ++iter) {
     static_cast<PluginProcessHost*>(*iter)->Shutdown();
   }

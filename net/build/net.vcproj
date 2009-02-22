@@ -14,7 +14,7 @@
 	</Platforms>
 	<ToolFiles>
 		<ToolFile
-			RelativePath="convert_tld_data.rules"
+			RelativePath=".\convert_tld_data.rules"
 		/>
 	</ToolFiles>
 	<Configurations>
@@ -185,6 +185,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\base\client_socket.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\base\client_socket.h"
 				>
 			</File>
@@ -322,6 +326,10 @@
 			</File>
 			<File
 				RelativePath="..\base\host_resolver.h"
+				>
+			</File>
+			<File
+				RelativePath="..\base\io_buffer.cc"
 				>
 			</File>
 			<File
@@ -701,6 +709,46 @@
 				>
 			</File>
 			<File
+				RelativePath="..\http\http_auth.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth.h"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_cache.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_cache.h"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler.h"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler_basic.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler_basic.h"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler_digest.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\http\http_auth_handler_digest.h"
+				>
+			</File>
+			<File
 				RelativePath="..\http\http_cache.cc"
 				>
 			</File>
@@ -749,6 +797,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\http\http_response_info.cc"
+				>
+			</File>
+			<File
 				RelativePath="..\http\http_response_info.h"
 				>
 			</File>
@@ -769,78 +821,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\http\http_auth.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_auth.h"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_auth_cache.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_auth_cache.h"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_auth_handler.h"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_auth_handler.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_auth_handler_basic.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_auth_handler_basic.h"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_auth_handler_digest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_auth_handler_digest.h"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_auth.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_auth.h"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_auth_handler.h"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_auth_handler.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_auth_handler_basic.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_auth_handler_basic.h"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_auth_handler_digest.cc"
-				>
-			</File>
-			<File
-				RelativePath="..\http\http_auth_handler_digest.h"
-				>
-			</File>
-			<File
 				RelativePath="..\http\http_vary_data.cc"
 				>
 			</File>
@@ -852,6 +832,10 @@
 		<Filter
 			Name="disk_cache"
 			>
+			<File
+				RelativePath="..\disk_cache\addr.cc"
+				>
+			</File>
 			<File
 				RelativePath="..\disk_cache\addr.h"
 				>
@@ -1038,6 +1022,14 @@
 			</File>
 			<File
 				RelativePath="..\proxy\proxy_script_fetcher.h"
+				>
+			</File>
+			<File
+				RelativePath="..\proxy\proxy_server.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\proxy\proxy_server.h"
 				>
 			</File>
 			<File

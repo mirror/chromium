@@ -4,12 +4,8 @@
 
 #include "chrome/browser/renderer_host/save_file_resource_handler.h"
 
-#if defined(OS_POSIX)
-#include "chrome/common/temp_scaffolding_stubs.h"
-#elif defined(OS_WIN)
+#include "base/string_util.h"
 #include "chrome/browser/download/save_file_manager.h"
-#endif
-
 #include "net/base/io_buffer.h"
 
 SaveFileResourceHandler::SaveFileResourceHandler(int render_process_host_id,
@@ -88,4 +84,9 @@ bool SaveFileResourceHandler::OnResponseCompleted(
                         status.is_success() && !status.is_io_pending()));
   read_buffer_ = NULL;
   return true;
+}
+
+void SaveFileResourceHandler::set_content_length(
+    const std::string& content_length) {
+  content_length_ = StringToInt64(content_length);
 }

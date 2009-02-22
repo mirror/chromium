@@ -4,6 +4,8 @@
 
 #include "chrome/browser/tab_contents/web_contents_view_gtk.h"
 
+#include <gtk/gtk.h>
+
 #include "base/gfx/point.h"
 #include "base/gfx/rect.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
@@ -16,10 +18,12 @@ WebContentsView* WebContentsView::Create(WebContents* web_contents) {
 }
 
 WebContentsViewGtk::WebContentsViewGtk(WebContents* web_contents)
-    : web_contents_(web_contents) {
+    : web_contents_(web_contents),
+      vbox_(gtk_vbox_new(FALSE, 0)) {
 }
 
 WebContentsViewGtk::~WebContentsViewGtk() {
+  gtk_widget_destroy(vbox_);
 }
 
 WebContents* WebContentsViewGtk::GetWebContents() {
@@ -35,13 +39,13 @@ RenderWidgetHostView* WebContentsViewGtk::CreateViewForWidget(
   DCHECK(!render_widget_host->view());
   RenderWidgetHostViewGtk* view =
       new RenderWidgetHostViewGtk(render_widget_host);
-  // TODO(port): do we need to do any extra setup?
+  gtk_widget_show(view->native_view());
+  gtk_box_pack_start(GTK_BOX(vbox_), view->native_view(), TRUE, TRUE, 0);
   return view;
 }
 
 gfx::NativeView WebContentsViewGtk::GetNativeView() const {
-  NOTIMPLEMENTED();
-  return NULL;
+  return vbox_;
 }
 
 gfx::NativeView WebContentsViewGtk::GetContentNativeView() const {

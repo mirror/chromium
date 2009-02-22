@@ -6,6 +6,7 @@
 
 #include "base/json_reader.h"
 #include "base/json_writer.h"
+#include "base/string_util.h"
 #include "base/values.h"
 #include "chrome/common/l10n_util.h"
 
@@ -45,6 +46,11 @@ void DOMUI::ProcessDOMUIMessage(const std::string& message,
 
   // Forward this message and content on.
   callback->second->Run(value.get());
+}
+
+void DOMUI::CallJavascriptFunction(const std::wstring& function_name) {
+  std::wstring javascript = function_name + L"();";
+  ExecuteJavascript(javascript);
 }
 
 void DOMUI::CallJavascriptFunction(const std::wstring& function_name,
@@ -123,3 +129,42 @@ void DOMMessageHandler::SetURLAndTitle(DictionaryValue* dictionary,
   }
   dictionary->SetString(L"title", title_to_set);
 }
+
+bool DOMMessageHandler::ExtractIntegerValue(const Value* value, int* out_int) {
+  if (value && value->GetType() == Value::TYPE_LIST) {
+    const ListValue* list_value = static_cast<const ListValue*>(value);
+    Value* list_member;
+
+    // Get id.
+    if (list_value->Get(0, &list_member) &&
+        list_member->GetType() == Value::TYPE_STRING) {
+      const StringValue* string_value =
+          static_cast<const StringValue*>(list_member);
+      std::wstring wstring_value;
+      string_value->GetAsString(&wstring_value);
+      *out_int = StringToInt(wstring_value);
+      return true;
+    }
+  }
+
+  return false;
+}
+
+std::wstring DOMMessageHandler::ExtractStringValue(const Value* value) {
+  if (value && value->GetType() == Value::TYPE_LIST) {
+    const ListValue* list_value = static_cast<const ListValue*>(value);
+    Value* list_member;
+
+    // Get id.
+    if (list_value->Get(0, &list_member) &&
+        list_member->GetType() == Value::TYPE_STRING) {
+      const StringValue* string_value =
+          static_cast<const StringValue*>(list_member);
+      std::wstring wstring_value;
+      string_value->GetAsString(&wstring_value);
+      return wstring_value;
+    }
+  }
+  return std::wstring();
+}
+

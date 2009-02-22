@@ -6,6 +6,7 @@
 
 #include <limits>
 
+#include "base/string_util.h"
 #include "base/base_drag_source.h"
 #include "grit/theme_resources.h"
 #include "chrome/browser/bookmarks/bookmark_context_menu.h"
@@ -1103,6 +1104,13 @@ int BookmarkBarView::OnPerformDrop(const DropTargetEvent& event) {
     parent_node = root;
   }
   return PerformDropImpl(data, parent_node, index);
+}
+
+void BookmarkBarView::OnFullscreenToggled(bool fullscreen) {
+  if (!fullscreen)
+    size_animation_->Reset(IsAlwaysShown() ? 1 : 0);
+  else if (IsAlwaysShown())
+    size_animation_->Reset(0);
 }
 
 bool BookmarkBarView::IsDetachedStyle() {

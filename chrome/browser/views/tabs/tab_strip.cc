@@ -513,10 +513,6 @@ int TabStrip::GetPreferredHeight() {
   return GetPreferredSize().height();
 }
 
-bool TabStrip::HasAvailableDragActions() const {
-  return model_->delegate()->GetDragActions() != 0;
-}
-
 bool TabStrip::CanProcessInputEvents() const {
   return IsAnimating() == NULL;
 }
@@ -527,11 +523,6 @@ bool TabStrip::PointIsWithinWindowCaption(const gfx::Point& point) {
   // If there is no control at this location, claim the hit was in the title
   // bar to get a move action.
   if (v == this)
-    return true;
-
-  // If the point is within the bounds of a Tab, the point can be considered
-  // part of the caption if there are no available drag operations for the Tab.
-  if (v->GetClassName() == Tab::kTabClassName && !HasAvailableDragActions())
     return true;
 
   // Check to see if the point is within the non-button parts of the new tab
@@ -1025,6 +1016,10 @@ void TabStrip::ContinueDrag(const views::MouseEvent& event) {
 
 bool TabStrip::EndDrag(bool canceled) {
   return drag_controller_.get() ? drag_controller_->EndDrag(canceled) : false;
+}
+
+bool TabStrip::HasAvailableDragActions() const {
+  return model_->delegate()->GetDragActions() != 0;
 }
 
 ///////////////////////////////////////////////////////////////////////////////

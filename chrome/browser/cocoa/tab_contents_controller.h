@@ -8,6 +8,7 @@
 #include <Cocoa/Cocoa.h>
 
 class CommandUpdater;
+@class GrowBoxView;
 class LocationBar;
 class TabContents;
 class TabContentsCommandObserver;
@@ -36,6 +37,7 @@ class TabStripModel;
   IBOutlet NSButton* starButton_;
   IBOutlet NSTextField* locationBar_;
   IBOutlet NSBox* contentsBox_;
+  IBOutlet GrowBoxView* growBox_;
 }
 
 // Create the contents of a tab represented by |contents| and loaded from the
@@ -67,6 +69,10 @@ class TabStripModel;
 
 // Sets whether or not the current page in the frontmost tab is bookmarked.
 - (void)setStarredState:(BOOL)isStarred;
+
+// Return the rect, in WebKit coordinates (flipped), of the window's grow box
+// in the coordinate system of the content area of this tab.
+- (NSRect)growBoxRect;
 
 @end
 

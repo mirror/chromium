@@ -9,11 +9,11 @@
 #include "base/file_version_info.h"
 #include "base/process_util.h"
 #include "base/string_util.h"
-#include "chrome/app/locales/locale_settings.h"
 #include "chrome/browser/autofill_manager.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/dom_operation_notification_details.h"
+#include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/gears_integration.h"
 #include "chrome/browser/google_util.h"
 #include "chrome/browser/js_before_unload_handler.h"
@@ -26,6 +26,7 @@
 #include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/renderer_host/render_widget_host_view.h"
 #include "chrome/browser/search_engines/template_url_model.h"
+#include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/provisional_load_details.h"
 #include "chrome/browser/tab_contents/web_contents_view.h"
 #include "chrome/common/chrome_switches.h"
@@ -34,6 +35,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/render_messages.h"
+#include "grit/locale_settings.h"
 #include "net/base/mime_util.h"
 #include "net/base/net_errors.h"
 #include "net/base/registry_controlled_domain.h"
@@ -43,19 +45,17 @@
 // TODO(port): fill these in as we flesh out the implementation of this class
 #include "chrome/browser/cache_manager_host.h"
 #include "chrome/browser/character_encoding.h"
-#include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/download/download_request_manager.h"
 #include "chrome/browser/modal_html_dialog_delegate.h"
 #include "chrome/browser/plugin_installer.h"
 #include "chrome/browser/plugin_service.h"
 #include "chrome/browser/printing/print_job.h"
 #include "chrome/browser/search_engines/template_url_fetcher.h"
-#include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/views/hung_renderer_view.h"  // TODO(brettw) delete me.
 #include "chrome/common/resource_bundle.h"
 #endif
 
-#include "generated_resources.h"
+#include "grit/generated_resources.h"
 
 #if !defined(OS_MACOSX)
 // TODO(port): port this to mac.
@@ -357,11 +357,8 @@ std::wstring WebContents::GetStatusText() const {
     case net::LOAD_STATE_SENDING_REQUEST:
       return l10n_util::GetString(IDS_LOAD_STATE_SENDING_REQUEST);
     case net::LOAD_STATE_WAITING_FOR_RESPONSE:
-#if defined(OS_WIN)
-      // TODO(port): GetStringF() is currently disabled for non-win platforms.
       return l10n_util::GetStringF(IDS_LOAD_STATE_WAITING_FOR_RESPONSE,
                                    load_state_host_);
-#endif
     // Ignore net::LOAD_STATE_READING_RESPONSE and net::LOAD_STATE_IDLE
     case net::LOAD_STATE_IDLE:
     case net::LOAD_STATE_READING_RESPONSE:
@@ -869,7 +866,8 @@ void WebContents::DidFailProvisionalLoadWithError(
     RenderViewHost* render_view_host,
     bool is_main_frame,
     int error_code,
-    const GURL& url) {
+    const GURL& url,
+    bool showing_repost_interstitial) {
   if (!controller())
     return;
 
@@ -1168,7 +1166,7 @@ GURL WebContents::GetAlternateErrorPageURL() const {
 WebPreferences WebContents::GetWebkitPrefs() {
   // Initialize web_preferences_ to chrome defaults.
   WebPreferences web_prefs;
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_LINUX)
   PrefService* prefs = profile()->GetPrefs();
 
   web_prefs.fixed_font_family =

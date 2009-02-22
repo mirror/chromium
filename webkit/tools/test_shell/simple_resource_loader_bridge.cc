@@ -40,6 +40,7 @@
 #include "net/base/io_buffer.h"
 #include "net/base/net_util.h"
 #include "net/base/upload_data.h"
+#include "net/http/http_response_headers.h"
 #include "net/proxy/proxy_service.h"
 #include "net/url_request/url_request.h"
 #include "webkit/glue/resource_loader_bridge.h"
@@ -539,7 +540,7 @@ bool FindProxyForUrl(const GURL& url, std::string* proxy_list) {
   net::ProxyInfo proxy_info;
   int rv = sync_proxy_service->ResolveProxy(url, &proxy_info);
   if (rv == net::OK) {
-    *proxy_list = proxy_info.GetAnnotatedProxyList();
+    *proxy_list = proxy_info.ToPacString();
   }
 
   return rv == net::OK;

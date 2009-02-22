@@ -851,4 +851,13 @@ IPC_BEGIN_MESSAGES(Automation)
   IPC_SYNC_MESSAGE_ROUTED1_0(AutomationMsg_SavePackageShouldPromptUser,
                              bool /* false if we want to not show the dialog */)
 
+  // This message is an outgoing message from Chrome to an external host.
+  // It is a notification that a navigation failed
+  // Request:
+  //   -int : The status code.
+  //   -GURL:  The URL we failed to navigate to.
+  // Response:
+  //   None expected
+  IPC_MESSAGE_ROUTED2(AutomationMsg_NavigationFailed, int, GURL)
+
 IPC_END_MESSAGES(Automation)

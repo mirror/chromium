@@ -12,6 +12,7 @@
 #include "chrome/browser/chrome_plugin_browsing_context.h"
 #include "chrome/browser/chrome_thread.h"
 #include "chrome/browser/net/dns_global.h"
+#include "chrome/browser/plugin_service.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/renderer_host/audio_renderer_host.h"
 #include "chrome/browser/renderer_host/browser_render_process_host.h"
@@ -24,11 +25,11 @@
 #include "chrome/common/render_messages.h"
 #include "net/base/cookie_monster.h"
 #include "net/base/mime_util.h"
+#include "net/url_request/url_request_context.h"
 #include "webkit/glue/webkit_glue.h"
 #include "webkit/glue/webplugin.h"
 
 #if defined(OS_WIN)
-#include "chrome/browser/plugin_service.h"
 #include "chrome/browser/printing/print_job_manager.h"
 #include "chrome/browser/printing/printer_query.h"
 #include "chrome/browser/spellchecker.h"
@@ -233,6 +234,12 @@ bool ResourceMessageFilter::OnMessageReceived(const IPC::Message& message) {
                         OnNotifyAudioPacketReady)
     IPC_MESSAGE_HANDLER(ViewHostMsg_GetAudioVolume, OnGetAudioVolume)
     IPC_MESSAGE_HANDLER(ViewHostMsg_SetAudioVolume, OnSetAudioVolume)
+#if defined(OS_MACOSX)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_AllocTransportDIB,
+                        OnAllocTransportDIB)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_FreeTransportDIB,
+                        OnFreeTransportDIB)
+#endif
     IPC_MESSAGE_UNHANDLED(
         handled = false)
   IPC_END_MESSAGE_MAP_EX()
@@ -793,3 +800,15 @@ void ResourceMessageFilter::OnSetAudioVolume(
     double left_channel, double right_channel) {
   // TODO(hclam): delegate to AudioRendererHost and handle this message.
 }
+
+#if defined(OS_MACOSX)
+void ResourceMessageFilter::OnAllocTransportDIB(
+    size_t size, IPC::Maybe<TransportDIB::Handle>* handle) {
+  render_widget_helper_->AllocTransportDIB(size, handle);
+}
+
+void ResourceMessageFilter::OnFreeTransportDIB(
+    TransportDIB::Id dib_id) {
+  render_widget_helper_->FreeTransportDIB(dib_id);
+}
+#endif

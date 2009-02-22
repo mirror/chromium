@@ -16,6 +16,8 @@
 #include "base/gfx/native_widget_types.h"
 #include "base/shared_memory.h"
 #include "chrome/common/ipc_message_macros.h"
+#include "chrome/common/ipc_maybe.h"
+#include "chrome/common/transport_dib.h"
 #include "skia/include/SkBitmap.h"
 #include "webkit/glue/console_message_level.h"
 #include "webkit/glue/dom_operations.h"
@@ -238,6 +240,24 @@ IPC_BEGIN_MESSAGES(View)
   IPC_MESSAGE_ROUTED1(ViewMsg_DebugCommand,
                       std::wstring  /* cmd */)
 
+  // Message addressed to ToolsClient. It results from forwarding
+  // ViewHostMsg_ToolsClientMsg by the browser.
+  IPC_MESSAGE_ROUTED2(ViewMsg_ToolsClientMsg,
+                      int, /* tools msg type */
+                      std::wstring  /* body */)
+
+  // Message addressed to ToolsAgent. It results from forwarding
+  // ViewHostMsg_ToolsAgentMsg by the browser.
+  IPC_MESSAGE_ROUTED2(ViewMsg_ToolsAgentMsg,
+                      int, /* tools msg type */
+                      std::wstring  /* body */)
+
+  // RenderViewHostDelegate::RendererCreated method sends this message to a new
+  // renderer to notify it that it will host developer tools UI and should set
+  // up all neccessary bindings and create ToolsClient instance that will
+  // handle communication with inspected page ToolsAgent.
+  IPC_MESSAGE_ROUTED0(ViewMsg_SetUpToolsClient)
+
   // Change the zoom level in the renderer.
   IPC_MESSAGE_ROUTED1(ViewMsg_Zoom,
                       int /* One of PageZoom::Function */)
@@ -404,8 +424,8 @@ IPC_BEGIN_MESSAGES(View)
   // which contain all resource links that have local copy.
   IPC_MESSAGE_ROUTED3(ViewMsg_GetSerializedHtmlDataForCurrentPageWithLocalLinks,
                       std::vector<GURL> /* urls that have local copy */,
-                      std::vector<std::wstring> /* paths of local copy */,
-                      std::wstring /* local directory path */)
+                      std::vector<FilePath> /* paths of local copy */,
+                      FilePath /* local directory path */)
 
   // Requests application info for the page. The renderer responds back with
   // ViewHostMsg_DidGetApplicationInfo.
@@ -477,6 +497,31 @@ IPC_BEGIN_MESSAGES(View)
   // blocked popup until notified otherwise.
   IPC_MESSAGE_ROUTED1(ViewMsg_PopupNotificationVisiblityChanged,
                       bool /* Whether it is visible */)
+
+  // Sent by AudioRendererHost to renderer to request an audio packet.
+  IPC_MESSAGE_ROUTED1(ViewMsg_RequestAudioPacket,
+                      int /* stream id */)
+
+  // Tell the renderer process that the audio stream has been created, renderer
+  // process would be given a ShareMemoryHandle that it should write to from
+  // then on.
+  IPC_MESSAGE_ROUTED3(ViewMsg_NotifyAudioStreamCreated,
+                      int /* stream id */,
+                      base::SharedMemoryHandle /* handle */,
+                      int /* length */)
+
+  // Notification message sent from AudioRendererHost to renderer for state
+  // update after the renderer has requested a Create/Start/Close.
+  IPC_MESSAGE_ROUTED3(ViewMsg_NotifyAudioStreamStateChanged,
+                      int /* stream id */,
+                      AudioOutputStream::State /* new state */,
+                      int /* additional information (e.g. platform specific
+                             error code*/)
+
+  IPC_MESSAGE_ROUTED3(ViewMsg_NotifyAudioStreamVolume,
+                      int /* stream id */,
+                      double /* left channel */,
+                      double /* right channel */)
 
 IPC_END_MESSAGES(View)
 
@@ -966,6 +1011,18 @@ IPC_BEGIN_MESSAGES(ViewHost)
   IPC_MESSAGE_ROUTED1(ViewHostMsg_DebuggerOutput,
                       std::wstring /* msg */)
 
+  // Message addressed to ToolsClient sent by ToolsAgent to browser so that the
+  // latter can forward it.
+  IPC_MESSAGE_ROUTED2(ViewHostMsg_ToolsClientMsg,
+                      int, /* tools msg type */
+                      std::wstring  /* body */)
+
+  // Message addressed to ToolsAgent sent by ToolsClient to browser so that the
+  // latter can forward it.
+  IPC_MESSAGE_ROUTED2(ViewHostMsg_ToolsAgentMsg,
+                      int, /* tools msg type */
+                      std::wstring  /* body */)
+
   // Send back a string to be recorded by UserMetrics.
   IPC_MESSAGE_ROUTED1(ViewHostMsg_UserMetricsRecordAction,
                       std::wstring /* action */)
@@ -1137,5 +1194,20 @@ IPC_BEGIN_MESSAGES(ViewHost)
                       int /* stream_id */,
                       double /* left_channel */,
                       double /* right_channel */)
+
+#if defined(OS_MACOSX)
+  // On OSX, we cannot allocated shared memory from within the sandbox, so
+  // this call exists for the renderer to ask the browser to allocate memory
+  // on its behalf. We return a file descriptor to the POSIX shared memory.
+  IPC_SYNC_MESSAGE_CONTROL1_1(ViewHostMsg_AllocTransportDIB,
+                              size_t, /* bytes requested */
+                              IPC::Maybe<TransportDIB::Handle> /* DIB */)
+
+  // Since the browser keeps handles to the allocated transport DIBs, this
+  // message is sent to tell the browser that it may release them when the
+  // renderer is finished with them.
+  IPC_MESSAGE_CONTROL1(ViewHostMsg_FreeTransportDIB,
+                       TransportDIB::Id /* DIB id */)
+#endif
 
 IPC_END_MESSAGES(ViewHost)

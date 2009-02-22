@@ -95,21 +95,6 @@ void AutocompleteMatch::ClassifyLocationInString(
 
 //--------------------------------------------------------------------------
 
-UserDataManager* UserDataManager::instance_ = NULL;
-
-UserDataManager* UserDataManager::Create() {
-  DCHECK(!instance_);
-  std::wstring user_data;
-  PathService::Get(chrome::DIR_USER_DATA, &user_data);
-  instance_ = new UserDataManager(user_data);
-  return instance_;
-}
-
-UserDataManager* UserDataManager::Get() {
-  DCHECK(instance_);
-  return instance_;
-}
-
 bool ShellIntegration::SetAsDefaultBrowser() {
   NOTIMPLEMENTED();
   return true;
@@ -164,30 +149,9 @@ void OpenFirstRunDialog(Profile* profile) { NOTIMPLEMENTED(); }
 
 GURL NewTabUIURL() {
   NOTIMPLEMENTED();
-  // TODO(port): returning a blank URL here confuses the page IDs so make sure 
+  // TODO(port): returning a blank URL here confuses the page IDs so make sure
   // we load something
   return GURL("http://dev.chromium.org");
-}
-
-//--------------------------------------------------------------------------
-
-PluginService* PluginService::GetInstance() {
-  return Singleton<PluginService>::get();
-}
-
-PluginService::PluginService()
-    : main_message_loop_(MessageLoop::current()),
-      resource_dispatcher_host_(NULL),
-      ui_locale_(g_browser_process->GetApplicationLocale()),
-      plugin_shutdown_handler_(NULL) {
-}
-
-PluginService::~PluginService() {
-}
-
-void PluginService::SetChromePluginDataDir(const FilePath& data_dir) {
-  AutoLock lock(lock_);
-  chrome_plugin_data_dir_ = data_dir;
 }
 
 //--------------------------------------------------------------------------
@@ -201,27 +165,6 @@ void UninstallJankometer() {
 }
 
 //--------------------------------------------------------------------------
-
-TabContents* TabContents::CreateWithType(TabContentsType type,
-                                         Profile* profile,
-                                         SiteInstance* instance) {
-  TabContents* contents;
-
-  switch (type) {
-    case TAB_CONTENTS_WEB:
-      contents = new WebContents(profile, instance, NULL, MSG_ROUTING_NONE,
-                                 NULL);
-      break;
-    default:
-      NOTREACHED() << "Don't know how to create tab contents of type " << type;
-      contents = NULL;
-  }
-
-  if (contents)
-    contents->CreateView();
-
-  return contents;
-}
 
 void TabContents::SetupController(Profile* profile) {
   DCHECK(!controller_);
@@ -242,6 +185,8 @@ void TabContents::CloseContents() {
 void TabContents::Destroy() {
   // TODO(pinkerton): this isn't the real version of Destroy(), just enough to
   // get the scaffolding working.
+
+  is_being_destroyed_ = true;
 
   // Notify any observer that have a reference on this tab contents.
   NotificationService::current()->Notify(
@@ -275,7 +220,7 @@ const std::wstring& TabContents::GetTitle() const {
   NavigationEntry* entry = controller_->GetTransientEntry();
   if (entry)
     return entry->GetTitleForDisplay();
-  
+
   entry = controller_->GetLastCommittedEntry();
   if (entry)
     return entry->GetTitleForDisplay();
@@ -324,7 +269,7 @@ void TabContents::UpdateMaxPageID(int32 page_id) {
   // testing.
   if (GetSiteInstance())
     GetSiteInstance()->UpdateMaxPageID(page_id);
-  
+
   if (AsWebContents())
     AsWebContents()->process()->UpdateMaxPageID(page_id);
   else
@@ -350,29 +295,8 @@ bool RLZTracker::RecordProductEvent(Product product, AccessPoint point,
 
 // This depends on porting all the plugin IPC messages.
 bool IsPluginProcess() {
-  NOTIMPLEMENTED();
   return false;
 }
-
-//--------------------------------------------------------------------------
-
-namespace chrome_browser_net {
-
-void EnableDnsPrefetch(bool) { NOTIMPLEMENTED(); }
-
-void DnsPrefetchGetHtmlInfo(std::string* output) { NOTIMPLEMENTED(); }
-
-void DnsPrefetchList(const std::vector<std::string>& hostnames) {
-  NOTIMPLEMENTED();
-}
-
-void SaveHostNamesForNextStartup(PrefService* local_state) { NOTIMPLEMENTED(); }
-
-void TrimSubresourceReferrers()  { NOTIMPLEMENTED(); }
-
-void SaveSubresourceReferrers(PrefService* local_state) { NOTIMPLEMENTED(); }
-
-}  // namespace chrome_browser_net
 
 //--------------------------------------------------------------------------
 
@@ -583,3 +507,9 @@ bool NewTabUIHandleURL(GURL* url,
   NOTIMPLEMENTED();
   return false;
 }
+
+CPBrowserFuncs* GetCPBrowserFuncsForBrowser() {
+  NOTIMPLEMENTED();
+  return NULL;
+}
+

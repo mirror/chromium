@@ -155,7 +155,6 @@ RenderWidgetHostViewGtk::RenderWidgetHostViewGtk(RenderWidgetHost* widget_host)
 }
 
 RenderWidgetHostViewGtk::~RenderWidgetHostViewGtk() {
-  gtk_widget_destroy(view_);
 }
 
 void RenderWidgetHostViewGtk::DidBecomeSelected() {
@@ -267,7 +266,11 @@ void RenderWidgetHostViewGtk::RendererGone() {
 }
 
 void RenderWidgetHostViewGtk::Destroy() {
-  NOTIMPLEMENTED();
+  // We need to disconnect ourselves from our parent widget at this time; this
+  // does the right thing, automatically removing ourselves from our parent
+  // container.
+  gtk_widget_destroy(view_);
+  view_ = NULL;
 }
 
 void RenderWidgetHostViewGtk::SetTooltipText(const std::wstring& tooltip_text) {
@@ -289,6 +292,8 @@ void RenderWidgetHostViewGtk::Paint(const gfx::Rect& damage_rect) {
       damage_rect.height()
     };
     GdkWindow* window = view_->window;
+    DCHECK(window) << "Trying to impossibly paint object " << view_;
+
     gdk_window_begin_paint_rect(window, &grect);
 
     skia::PlatformDeviceLinux &platdev =
@@ -299,7 +304,6 @@ void RenderWidgetHostViewGtk::Paint(const gfx::Rect& damage_rect) {
     cairo_set_source_surface(cairo_drawable, bitdev->surface(), 0, 0);
     cairo_paint(cairo_drawable);
     cairo_destroy(cairo_drawable);
-
     gdk_window_end_paint(window);
   } else {
     NOTIMPLEMENTED();

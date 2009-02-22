@@ -8,6 +8,7 @@
 #include "chrome/browser/net/url_fetcher_protect.h"
 #include "chrome/common/chrome_plugin_lib.h"
 #include "net/base/ssl_test_util.h"
+#include "net/http/http_response_headers.h"
 #include "net/url_request/url_request_unittest.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -103,10 +104,6 @@ class URLFetcherBadHTTPSTest : public URLFetcherTest {
                                   int response_code,
                                   const ResponseCookies& cookies,
                                   const std::string& data);
-
- protected:
-  FilePath GetExpiredCertPath();
-  SSLTestUtil util_;
 
  private:
   FilePath cert_dir_;
@@ -299,10 +296,6 @@ void URLFetcherBadHTTPSTest::OnURLFetchComplete(
   io_loop_.Quit();
 }
 
-FilePath URLFetcherBadHTTPSTest::GetExpiredCertPath() {
-  return cert_dir_.AppendASCII("expired_cert.pem");
-}
-
 void URLFetcherCancelTest::CreateFetcher(const GURL& url) {
   fetcher_ = new URLFetcher(url, URLFetcher::GET, this);
   fetcher_->set_request_context(
@@ -435,8 +428,7 @@ TEST_F(URLFetcherBadHTTPSTest, BadHTTPSTest) {
 TEST_F(URLFetcherBadHTTPSTest, DISABLED_BadHTTPSTest) {
 #endif
   scoped_refptr<HTTPSTestServer> server =
-      HTTPSTestServer::CreateServer(util_.kHostName, util_.kBadHTTPSPort,
-          kDocRoot, util_.GetExpiredCertPath().ToWStringHack());
+      HTTPSTestServer::CreateExpiredServer(kDocRoot);
   ASSERT_TRUE(NULL != server.get());
 
   CreateFetcher(GURL(server->TestServerPage("defaultresponse")));

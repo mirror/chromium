@@ -47,6 +47,11 @@ class PluginService {
   void SetChromePluginDataDir(const FilePath& data_dir);
   const FilePath& GetChromePluginDataDir();
 
+  // Add an extra plugin directory to scan when we actually do the loading.
+  // This will force a refresh of the plugin list the next time plugins are
+  // requested.
+  void AddExtraPluginDir(const FilePath& plugin_dir);
+
   // Gets the browser's UI locale.
   const std::wstring& GetUILocale();
 
@@ -101,7 +106,7 @@ class PluginService {
   void Shutdown();
 
  private:
-  friend DefaultSingletonTraits<PluginService>;
+  friend struct DefaultSingletonTraits<PluginService>;
 
   // Creates the PluginService object, but doesn't actually build the plugin
   // list yet.  It's generated lazily.

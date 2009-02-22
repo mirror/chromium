@@ -6,19 +6,11 @@
 #include <psapi.h>
 
 #include "base/file_version_info.h"
-#include "base/histogram.h"
-#include "base/image_util.h"
-#include "base/message_loop.h"
-#include "base/process_util.h"
-#include "base/scoped_ptr.h"
-#include "base/thread.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chrome_thread.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
-#include "chrome/browser/renderer_host/render_view_host.h"
-#include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/browser/tab_contents/web_contents.h"
-#include "chrome/common/child_process_info.h"
+#include "chrome/common/child_process_host.h"
 
 class RenderViewHostDelegate;
 
@@ -73,12 +65,9 @@ void MemoryDetails::CollectChildInfoOnIOThread() {
   std::vector<ProcessMemoryInformation> child_info;
 
   // Collect the list of child processes.
-  for (ChildProcessInfo::Iterator iter; !iter.Done(); ++iter) {
-    if (!iter->process().handle())
-      continue;
-
+  for (ChildProcessHost::Iterator iter; !iter.Done(); ++iter) {
     ProcessMemoryInformation info;
-    info.pid = iter->process().pid();
+    info.pid = iter->pid();
     if (!info.pid)
       continue;
 

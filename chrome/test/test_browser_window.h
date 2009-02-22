@@ -35,6 +35,8 @@ class TestBrowserWindow : public BrowserWindow {
   virtual void SetStarredState(bool is_starred) {}
   virtual gfx::Rect GetNormalBounds() const { return gfx::Rect(); }
   virtual bool IsMaximized() const { return false; }
+  virtual void SetFullscreen(bool fullscreen) {}
+  virtual bool IsFullscreen() const { return false; }
   virtual LocationBar* GetLocationBar() const {
     return const_cast<TestLocationBar*>(&location_bar_);
   }
@@ -48,7 +50,6 @@ class TestBrowserWindow : public BrowserWindow {
   virtual void ToggleBookmarkBar() {}
   virtual void ShowAboutChromeDialog() {}
   virtual void ShowBookmarkManager() {}
-  virtual bool IsBookmarkBubbleVisible() const { return false; }
   virtual void ShowBookmarkBubble(const GURL& url, bool already_bookmarked) {}
   virtual void ShowReportBugDialog() {}
   virtual void ShowClearBrowsingDataDialog() {}

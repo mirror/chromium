@@ -31,6 +31,9 @@ void BrowserWindowCocoa::SetBounds(const gfx::Rect& bounds) {
       [screen frame].size.height - bounds.height() - bounds.y();
 }
 
+// Callers assume that this doesn't immediately delete the Browser object.
+// The controller implementing the window delegate methods called from
+// |-performClose:| must take precautiions to ensure that.
 void BrowserWindowCocoa::Close() {
   [window_ orderOut:controller_];
   [window_ performClose:controller_];
@@ -87,8 +90,18 @@ bool BrowserWindowCocoa::IsMaximized() const {
   return [window_ isZoomed];
 }
 
+void BrowserWindowCocoa::SetFullscreen(bool fullscreen) {
+  NOTIMPLEMENTED();
+}
+
+bool BrowserWindowCocoa::IsFullscreen() const {
+  NOTIMPLEMENTED();
+  return false;
+}
+
 gfx::Rect BrowserWindowCocoa::GetRootWindowResizerRect() const {
-  return gfx::Rect();
+  NSRect tabRect = [controller_ selectedTabGrowBoxRect];
+  return gfx::Rect(NSRectToCGRect(tabRect));
 }
 
 LocationBar* BrowserWindowCocoa::GetLocationBar() const {
@@ -128,11 +141,6 @@ void BrowserWindowCocoa::ShowAboutChromeDialog() {
 
 void BrowserWindowCocoa::ShowBookmarkManager() {
   NOTIMPLEMENTED();
-}
-
-bool BrowserWindowCocoa::IsBookmarkBubbleVisible() const {
-  NOTIMPLEMENTED();
-  return false;
 }
 
 void BrowserWindowCocoa::ShowBookmarkBubble(const GURL& url,

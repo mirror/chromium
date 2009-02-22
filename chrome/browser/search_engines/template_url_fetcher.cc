@@ -2,15 +2,71 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "build/build_config.h"
+
 #include "chrome/browser/search_engines/template_url_fetcher.h"
 
+#include "chrome/browser/net/url_fetcher.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/search_engines/template_url.h"
 #include "chrome/browser/search_engines/template_url_model.h"
 #include "chrome/browser/search_engines/template_url_parser.h"
+
+#if defined(OS_WIN)
 #include "chrome/browser/views/edit_keyword_controller.h"
+#endif
 
 // RequestDelegate ------------------------------------------------------------
+class TemplateURLFetcher::RequestDelegate : public URLFetcher::Delegate {
+ public:
+  RequestDelegate(TemplateURLFetcher* fetcher,
+                  const std::wstring& keyword,
+                  const GURL& osdd_url,
+                  const GURL& favicon_url,
+                  gfx::NativeView parent_window,
+                  bool autodetected)
+      : ALLOW_THIS_IN_INITIALIZER_LIST(url_fetcher_(osdd_url,
+                                                    URLFetcher::GET, this)),
+        fetcher_(fetcher),
+        keyword_(keyword),
+        osdd_url_(osdd_url),
+        favicon_url_(favicon_url),
+        autodetected_(autodetected),
+        parent_window_(parent_window) {
+    url_fetcher_.set_request_context(fetcher->profile()->GetRequestContext());
+    url_fetcher_.Start();
+  }
+
+  // If data contains a valid OSDD, a TemplateURL is created and added to
+  // the TemplateURLModel.
+  virtual void OnURLFetchComplete(const URLFetcher* source,
+                                  const GURL& url,
+                                  const URLRequestStatus& status,
+                                  int response_code,
+                                  const ResponseCookies& cookies,
+                                  const std::string& data);
+
+  // URL of the OSDD.
+  const GURL& url() const { return osdd_url_; }
+
+  // Keyword to use.
+  const std::wstring keyword() const { return keyword_; }
+
+ private:
+  URLFetcher url_fetcher_;
+  TemplateURLFetcher* fetcher_;
+  const std::wstring keyword_;
+  const GURL osdd_url_;
+  const GURL favicon_url_;
+  bool autodetected_;
+
+  // Used to determine where to place a confirmation dialog. May be NULL,
+  // in which case the confirmation will be centered in the screen if needed.
+  gfx::NativeView parent_window_;
+
+  DISALLOW_COPY_AND_ASSIGN(RequestDelegate);
+};
+
 
 void TemplateURLFetcher::RequestDelegate::OnURLFetchComplete(
     const URLFetcher* source,
@@ -66,6 +122,7 @@ void TemplateURLFetcher::RequestDelegate::OnURLFetchComplete(
       template_url->set_safe_for_autoreplace(true);
       model->Add(template_url.release());
     } else {
+#if defined(OS_WIN)
       // Confirm addition and allow user to edit default choices. It's ironic
       // that only *non*-autodetected additions get confirmed, but the user
       // expects feedback that his action did something.
@@ -77,6 +134,10 @@ void TemplateURLFetcher::RequestDelegate::OnURLFetchComplete(
                                     NULL,  // no KeywordEditorView
                                     fetcher_->profile());
       controller->Show();
+#else
+      // TODO(port): port EditKeywordController.
+      NOTIMPLEMENTED() << "EditKeywordController.";
+#endif
     }
   }
   fetcher_->RequestCompleted(this);
@@ -89,10 +150,13 @@ TemplateURLFetcher::TemplateURLFetcher(Profile* profile) : profile_(profile) {
   DCHECK(profile_);
 }
 
+TemplateURLFetcher::~TemplateURLFetcher() {
+}
+
 void TemplateURLFetcher::ScheduleDownload(const std::wstring& keyword,
                                           const GURL& osdd_url,
                                           const GURL& favicon_url,
-                                          const HWND parent_window,
+                                          const gfx::NativeView parent_window,
                                           bool autodetected) {
   DCHECK(!keyword.empty() && osdd_url.is_valid());
   // Make sure we aren't already downloading this request.

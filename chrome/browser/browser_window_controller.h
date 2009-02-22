@@ -55,6 +55,10 @@ class BrowserWindow;
 // Sets whether or not the current page in the frontmost tab is bookmarked.
 - (void)setStarredState:(BOOL)isStarred;
 
+// Return the rect, in WebKit coordinates (flipped), of the window's grow box
+// in the coordinate system of the content area of the currently selected tab.
+- (NSRect)selectedTabGrowBoxRect;
+
 @end
 
 #endif  // CHROME_BROWSER_BROWSER_WINDOW_CONTROLLER_H_
