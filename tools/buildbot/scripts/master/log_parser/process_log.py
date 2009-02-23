@@ -294,16 +294,6 @@ class Graph(object):
     return False
 
 
-class JSONGraphEncoder(simplejson.JSONEncoder):
-  def default(self, obj):
-    if isinstance(obj, Graph):
-      return {'units': obj.units, 'traces': obj.traces}
-    if isinstance(obj, Trace):
-      # NB: We do not encode the 'important' value: the plot doesn't need it.
-      return [obj.value, obj.stddev]
-    return simplejson.JSONEncoder.default(self, obj)
-
-
 class GraphingLogProcessor(PerformanceLogProcessor):
   """Parent class for any log processor expecting standard data to be graphed.
 
@@ -411,6 +401,50 @@ class GraphingLogProcessor(PerformanceLogProcessor):
     """
     return chromium_utils.FilteredMeanAndStandardDeviation(value_list)
 
+  def __BuildSummaryJSON(self, graph):
+    """Sorts the traces and returns a summary JSON encoding of the graph.
+
+    Although JS objects are not ordered, according to the spec, in practice
+    everyone iterates in order, since not doing so is a compatibility problem.
+    So we'll count on it here and produce an ordered list of traces.
+
+    But since Python dicts are *not* ordered, we'll need to construct the JSON
+    manually so we don't lose the trace order.
+    """
+    traces = []
+    remaining_traces = graph.traces.copy()
+
+    def AddTrace(trace_name):
+      if trace_name in remaining_traces:
+        traces.append(trace_name)
+        del remaining_traces[trace_name]
+
+    # First pull out any important traces in alphabetical order, and their
+    # _ref traces even if not important.
+    keys = [x for x in graph.traces.keys() if graph.traces[x].important]
+    keys.sort()
+    for name in keys:
+      AddTrace(name)
+      AddTrace(name + "_ref")
+
+    # Now append any other traces that have corresponding _ref traces, in
+    # alphabetical order.
+    keys = [x for x in graph.traces.keys() if x + "_ref" in remaining_traces]
+    keys.sort()
+    for name in keys:
+      AddTrace(name)
+      AddTrace(name + "_ref")
+
+    # Finally, append any remaining traces, in alphabetical order.
+    keys = remaining_traces.keys()
+    keys.sort()
+    traces.extend(keys)
+
+    # Now build the JSON.
+    trace_json = ', '.join(['"%s": [%s, %s]' %
+        (x, graph.traces[x].value, graph.traces[x].stddev) for x in traces])
+    return '{"traces": {%s}, "rev": "%s"}' % (trace_json, self._revision)
+
   def __CreateSummaryOutput(self):
     """Write the summary data file and collect the waterfall display text.
 
@@ -424,9 +458,7 @@ class GraphingLogProcessor(PerformanceLogProcessor):
       if  self._ShouldWriteResults():
         filename = os.path.join(self._output_dir,
                                 "%s-summary.dat" % graph_name)
-        json = simplejson.dumps({'rev': self._revision,
-                                 'traces': graph.traces}, cls=JSONGraphEncoder)
-        Prepend(filename, json + "\n")
+        Prepend(filename, self.__BuildSummaryJSON(graph) + "\n")
 
       # Add a line to the waterfall for each important trace.
       for trace_name, trace in graph.traces.iteritems():
