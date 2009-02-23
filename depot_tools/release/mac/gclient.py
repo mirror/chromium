@@ -36,7 +36,7 @@ Files
 """
 
 __author__ = "darinf@gmail.com (Darin Fisher)"
-__version__ = "0.2"
+__version__ = "0.1"
 
 import errno
 import optparse
@@ -66,9 +66,8 @@ SVN_COMMAND = "svn"
 
 # default help text
 DEFAULT_USAGE_TEXT = (
-"""usage: %prog <subcommand> [options] [--] [svn options/args...]
+    """usage: %prog <subcommand> [options] [--] [svn options/args...]
 a wrapper for managing a set of client modules in svn.
-Version """ + __version__ + """
 
 subcommands:
    config
@@ -991,7 +990,7 @@ def DoHelp(options, args):
   if len(args) == 1 and args[0] in COMMAND_USAGE_TEXT:
     print >>options.stdout, COMMAND_USAGE_TEXT[args[0]]
   else:
-    raise Error("unknown subcommand '%s'; see 'gclient help'" % args[0])
+    raise Error("unknown subcommand; see 'gclient help'")
 
 
 def DoStatus(options, args):
@@ -1075,7 +1074,7 @@ def DispatchCommand(command, options, args, command_map=None):
   if command in command_map:
     return command_map[command](options, args)
   else:
-    raise Error("unknown subcommand '%s'; see 'gclient help'" % command)
+    raise Error("unknown subcommand; see 'gclient help'")
 
 
 def Main(argv):
@@ -1108,13 +1107,17 @@ def Main(argv):
                            help="Skip svn up whenever possible by requesting "
                            "actual HEAD revision from the repository")
 
-  options, args = option_parser.parse_args(argv[1:])
-
-  if not args or (len(args) == 1 and args[0] == "help"):
+  if len(argv) < 2:
     # Users don't need to be told to use the 'help' command.
     option_parser.print_help()
     return 1
-  command = args.pop(0)
+
+  command = argv[1]
+  options, args = option_parser.parse_args(argv[2:])
+
+  if len(argv) < 3 and command == "help":
+    option_parser.print_help()
+    return 0
 
   # Files used for configuration and state saving.
   options.config_filename = os.environ.get("GCLIENT_FILE", ".gclient")
