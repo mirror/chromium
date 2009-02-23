@@ -268,14 +268,13 @@ static void writeImageToDataObject(ChromiumDataObject* dataObject, Element* elem
     // use the alt tag if one exists, otherwise we fall back on the suggested
     // filename in the http header, and finally we resort to using the filename
     // in the URL.
-    String extension = MIMETypeRegistry::getPreferredExtensionForMIMEType(
+    dataObject->fileExtension = ".";
+    dataObject->fileExtension += MIMETypeRegistry::getPreferredExtensionForMIMEType(
         cachedImage->response().mimeType());
-    dataObject->fileExtension = extension.isEmpty() ? "" : "." + extension;
     String title = element->getAttribute(altAttr);
-    if (title.isEmpty())
+    if (title.isEmpty()) {
         title = cachedImage->response().suggestedFilename();
-
-    title = ClipboardChromium::validateFileName(title, dataObject);
+    }
     dataObject->fileContentFilename = title + dataObject->fileExtension;
 }
 
