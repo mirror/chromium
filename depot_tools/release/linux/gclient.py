@@ -933,12 +933,19 @@ class GClient(object):
       # have any changes in it.
       prev_entries = self._ReadEntries()
       for entry in prev_entries:
-        e_dir = "%s/%s" % (self._root_dir, entry)
+        e_dir = os.path.join(self._root_dir, entry)
         if entry not in entries and self._options.path_exists(e_dir):
-          entries[entry] = None  # Keep warning until removed.
-          print >> self._options.stdout, (
-              "\nWARNING: \"%s\" is no longer part of this client.  "
-              "It is recommended that you manually remove it.\n") % entry
+          if CaptureSVNStatus(self._options, e_dir):
+            # There are modified files in this entry
+            entries[entry] = None  # Keep warning until removed.
+            print >> self._options.stdout, (
+                "\nWARNING: \"%s\" is no longer part of this client.  "
+                "It is recommended that you manually remove it.\n") % entry
+          else:
+            # Delete the entry
+            print >> self._options.stdout, ("\n________ deleting \'%s\' " +
+                "in \'%s\'") % (entry, self._root_dir)
+            RemoveDirectory(e_dir)
       # record the current list of entries for next time
       self._SaveEntries(entries)
 
