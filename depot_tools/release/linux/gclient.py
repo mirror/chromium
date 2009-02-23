@@ -736,6 +736,44 @@ class GClient(object):
         return self._local_scope["vars"][var_name]
       raise Error("Var is not defined: %s" % var_name)
 
+  class _DepInfo:
+    """Contains info about a DEPS file entry."""
+    def __init__(self, base_path, entry):
+      """Constructor.
+
+      Args:
+        base_path: The directory of the DEPS file which declared
+                   this dependency.
+        entry: If entry is a string, it will be treated as a scm URL to be
+               used to update the dependency. Otherwise, entry is assumed to
+               be a _FromImpl object (created when the From syntax is used in
+               a DEPS file.
+      """
+      self._entry = entry
+      self._base_path = base_path
+
+    def __eq__(self, rhs):
+      return (self._base_path == rhs._base_path and
+              self._entry == rhs._entry)
+
+    def IsUrl(self):
+      """Returns true if the entry is a URL, false if it is module_name
+         (generated with a From declaration)."""
+      return type(self._entry) == str
+
+    def GetBasePath(self):
+      return self._base_path
+
+    def GetUrl(self):
+      """Returns the URL for the dependency. The return value is invalid if
+         IsUrl() returns false; callers should check accordingly."""
+      return self._entry
+
+    def GetModuleName(self):
+      """Returns the module name for the dependency. This value is invalid if
+         IsUrl() returns true; callers should check appropriately."""
+      return self._entry.module_name
+
   def _GetDefaultSolutionDeps(self, solution_name, custom_vars):
     """Fetches the DEPS file for the specified solution.
 
@@ -744,7 +782,8 @@ class GClient(object):
       vars: A dict of vars to override any vars defined in the DEPS file.
 
     Returns:
-      A dict mapping module names (as relative paths) to URLs or an empty
+      A dict mapping module names (as relative paths) to _DepInfo objects
+      (which contain the appropriate URL for the dependency) or an empty
       dict if the solution does not have a DEPS file.
     """
     deps_file = os.path.join(self._root_dir, solution_name,
@@ -794,7 +833,12 @@ class GClient(object):
         else:
           deps.update(os_deps)
 
-    return deps
+    # Translate all deps to _DepInfo objects.
+    base_path = os.path.dirname(deps_file)
+    deps_objects = {}
+    for path, entry in deps.items():
+      deps_objects[path] = self._DepInfo(base_path, entry)
+    return deps_objects 
 
   def _GetAllDeps(self, solution_urls):
     """Get the complete list of dependencies for the client.
@@ -805,8 +849,9 @@ class GClient(object):
         is passed as an optimization.
 
     Returns:
-      A dict mapping module names (as relative paths) to URLs corresponding
-      to the entire set of dependencies to checkout for the given client.
+      A dict mapping module names (as relative paths) to _DepInfo objects
+      (which contain the appropriate URL for the dependency). The map contains
+      the entire set of dependencies to checkout for the given client.
 
     Raises:
       Error: If a dependency conflicts with another dependency or of a solution.
@@ -823,22 +868,25 @@ class GClient(object):
           url = solution["custom_deps"][d]
           if url is None:
             continue
+          dep_info = self._DepInfo(d.GetBasePath(), url)
         else:
-          url = solution_deps[d]
+          dep_info = solution_deps[d]
           # if we have a From reference dependent on another solution, then
           # just skip the From reference. When we pull deps for the solution,
           # we will take care of this dependency.
           #
           # If multiple solutions all have the same From reference, then we
           # should only add one to our list of dependencies.
-          if type(url) != str:
-            if url.module_name in solution_urls:
+          if not dep_info.IsUrl():
+            module_name = dep_info.GetModuleName()
+            if module_name in solution_urls:
               # Already parsed.
               continue
-            if d in deps and type(deps[d]) != str:
-              if url.module_name == deps[d].module_name:
+            if d in deps and not deps[d].IsUrl():
+              if module_name == deps[d].GetModuleName():
                 continue
           else:
+            url = dep_info.GetUrl()
             parsed_url = urlparse.urlparse(url)
             scheme = parsed_url[0]
             if not scheme:
@@ -848,17 +896,18 @@ class GClient(object):
                 raise Error(
                     "relative DEPS entry \"%s\" must begin with a slash" % d)
               # Create a scm just to query the full url.
-              scm = self._options.scm_wrapper(solution["url"], self._root_dir,
+              scm = self._options.scm_wrapper(solution["url"],
+                                              dep_info.GetBasePath(),
                                               None)
               url = scm.FullUrlForRelativeUrl(url)
-        if d in deps and deps[d] != url:
+        if d in deps and deps[d] != dep_info:
           raise Error(
               "Solutions have conflicting versions of dependency \"%s\"" % d)
-        if d in solution_urls and solution_urls[d] != url:
+        if d in solution_urls and solution_urls[d] != dep_info.GetUrl():
           raise Error(
               "Dependency \"%s\" conflicts with specified solution" % d)
         # Grab the dependency.
-        deps[d] = url
+        deps[d] = self._DepInfo(dep_info.GetBasePath(), url)
     return deps
 
   def RunOnDeps(self, command, args):
@@ -910,21 +959,24 @@ class GClient(object):
     
     # First pass for direct dependencies.
     for d in deps_to_process:
-      if type(deps[d]) == str:
-        url = deps[d]
+      dep_info = deps[d]
+      if dep_info.IsUrl():
+        url = dep_info.GetUrl()
         entries[d] = url
         self._options.revision = revision_overrides.get(d)
-        scm = self._options.scm_wrapper(url, self._root_dir, d)
+        scm = self._options.scm_wrapper(url, dep_info.GetBasePath(), d)
         scm.RunCommand(command, self._options, args)
 
     # Second pass for inherited deps (via the From keyword)
     for d in deps_to_process:
-      if type(deps[d]) != str:
-        sub_deps = self._GetDefaultSolutionDeps(deps[d].module_name)
-        url = sub_deps[d]
+      dep_info = deps[d]
+      if not dep_info.IsUrl():
+        sub_deps = self._GetDefaultSolutionDeps(dep_info.GetModuleName())
+        sub_dep_info = sub_deps[d]
+        url = sub_dep_info.GetUrl()
         entries[d] = url
         self._options.revision = revision_overrides.get(d)
-        scm = self._options.scm_wrapper(url, self._root_dir, d)
+        scm = self._options.scm_wrapper(url, sub_dep_info.GetBasePath(), d)
         scm.RunCommand(command, self._options, args)
 
     if command == 'update':
@@ -933,12 +985,19 @@ class GClient(object):
       # have any changes in it.
       prev_entries = self._ReadEntries()
       for entry in prev_entries:
-        e_dir = "%s/%s" % (self._root_dir, entry)
+        e_dir = os.path.join(self._root_dir, entry)
         if entry not in entries and self._options.path_exists(e_dir):
-          entries[entry] = None  # Keep warning until removed.
-          print >> self._options.stdout, (
-              "\nWARNING: \"%s\" is no longer part of this client.  "
-              "It is recommended that you manually remove it.\n") % entry
+          if CaptureSVNStatus(self._options, e_dir):
+            # There are modified files in this entry
+            entries[entry] = None  # Keep warning until removed.
+            print >> self._options.stdout, (
+                "\nWARNING: \"%s\" is no longer part of this client.  "
+                "It is recommended that you manually remove it.\n") % entry
+          else:
+            # Delete the entry
+            print >> self._options.stdout, ("\n________ deleting \'%s\' " +
+                "in \'%s\'") % (entry, self._root_dir)
+            RemoveDirectory(e_dir)
       # record the current list of entries for next time
       self._SaveEntries(entries)
 
