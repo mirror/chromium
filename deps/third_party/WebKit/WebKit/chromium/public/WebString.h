@@ -77,6 +77,7 @@ namespace WebKit {
         WebString& operator=(const string16& s)
         {
             assign(s.data(), s.length());
+            return *this;
         }
 
         operator string16() const
