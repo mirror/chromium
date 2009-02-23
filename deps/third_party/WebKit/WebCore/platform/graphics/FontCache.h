@@ -97,7 +97,6 @@ private:
     // These methods are implemented by each platform.
     FontPlatformData* getSimilarFontPlatformData(const Font&);
     FontPlatformData* createFontPlatformData(const FontDescription&, const AtomicString& family);
-    static const AtomicString& alternateFamilyName(const AtomicString& family);
 
     friend class SimpleFontData;
     friend class FontFallbackList;
