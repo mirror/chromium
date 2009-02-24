@@ -41,6 +41,9 @@
   #define WEBKIT_API
 #endif
 
+#define WEBKIT_USING(WEBKIT_FEATURE) \
+    (defined( WEBKIT_USING_##WEBKIT_FEATURE ) && WEBKIT_USING_##WEBKIT_FEATURE)
+
 namespace WebKit {
 
     // -------------------------------------------------------------------------

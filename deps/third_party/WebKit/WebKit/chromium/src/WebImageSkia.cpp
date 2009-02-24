@@ -37,7 +37,7 @@ namespace WebKit {
 
 class WebImagePrivate : public SkBitmap {
 public:
-    WebImagePrivate(const WebImagePrivate* other) : SkBitmap(*other) { }
+    WebImagePrivate(const SkBitmap& bitmap) : SkBitmap(bitmap) { }
 };
 
 void WebImage::reset()
@@ -58,7 +58,19 @@ void WebImage::assign(const WebImage& image)
 {
     if (m_private)
         delete m_private;
-    m_private = new WebImagePrivate(image.m_private);
+
+    if (image.m_private)
+        m_private = new WebImagePrivate(*image.m_private);
+    else
+        m_private = 0;
+}
+
+void WebImage::assign(const SkBitmap& bitmap)
+{
+    if (m_private)
+        delete m_private;
+
+    m_private = new WebImagePrivate(bitmap);
 }
 
 const void* WebImage::lockPixels()

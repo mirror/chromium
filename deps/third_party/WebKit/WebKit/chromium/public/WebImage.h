@@ -34,7 +34,7 @@
 #include "WebCommon.h"
 #include "WebSize.h"
 
-#ifdef WEBKIT_IMPLEMENTATION
+#if WEBKIT_USING(SKIA)
 class SkBitmap;
 #endif
 
@@ -58,16 +58,22 @@ namespace WebKit {
         }
 
         WEBKIT_API void reset();
-
-        bool isNull() const { return m_private != NULL; }
-
         WEBKIT_API WebSize size() const;
 
         WebImagePixels pixels() const;
+        bool isNull() const { return m_private != NULL; }
 
-#ifdef WEBKIT_IMPLEMENTATION
-        WebImage(const SkBitmap&);
-        WebImage& operator=(const SkBitmap&);
+#if WEBKIT_USING(SKIA)
+        WebImage(const SkBitmap& bitmap) : m_private(0)
+        {
+            assign(bitmap);
+        }
+
+        WebImage& operator=(const SkBitmap& bitmap)
+        {
+            assign(bitmap);
+            return *this;
+        }
 #endif
 
     private:
@@ -76,6 +82,10 @@ namespace WebKit {
         WEBKIT_API void assign(const WebImage&);
         WEBKIT_API const void* lockPixels();
         WEBKIT_API void unlockPixels();
+
+#if WEBKIT_USING(SKIA)
+        WEBKIT_API void assign(const SkBitmap&);
+#endif
 
         WebImagePrivate* m_private;
     };
