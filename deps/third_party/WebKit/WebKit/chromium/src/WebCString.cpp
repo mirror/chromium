@@ -51,10 +51,12 @@ void WebCString::assign(const WebCString& other)
     assign(const_cast<WebCStringPrivate*>(other.m_private));
 }
 
-void WebCString::assign(const char* bytes, size_t length)
+void WebCString::assign(const char* characters, size_t length)
 {
-    RefPtr<WebCore::CStringBuffer> buffer = WebCore::CStringBuffer::create(length);
-    memcpy(buffer->data(), bytes, length);
+    char* data;
+    RefPtr<WebCore::CStringBuffer> buffer =
+        WebCore::CString::newUninitialized(length, data).buffer();
+    memcpy(data, characters, length);
     assign(static_cast<WebCStringPrivate*>(buffer.get()));
 }
 
@@ -67,8 +69,6 @@ const char* WebCString::characters() const
 {
     return m_private ? const_cast<WebCStringPrivate*>(m_private)->data() : 0;
 }
-
-#ifdef HAVE_MERGED_WEBCORE_TO_R41105
 
 WebCString::WebCString(const WebCore::CString& s)
     : m_private(static_cast<WebCStringPrivate*>(s.buffer()))
@@ -87,27 +87,6 @@ WebCString::operator WebCore::CString() const
 {
     return m_private;
 }
-
-#else
-
-WebCString::WebCString(const WebCore::CString& s)
-    : m_private(NULL)
-{
-    assign(s.data(), s.length());
-}
-
-WebCString& WebCString::operator=(const WebCore::CString& s)
-{
-    assign(s.data(), s.length());
-    return *this;
-}
-
-WebCString::operator WebCore::CString() const
-{
-    return WebCore::CString(characters(), length());
-}
-
-#endif
 
 void WebCString::assign(WebCStringPrivate* p)
 {
