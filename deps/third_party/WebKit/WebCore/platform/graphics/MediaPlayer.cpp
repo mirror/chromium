@@ -29,6 +29,7 @@
 #include "MediaPlayer.h"
 #include "MediaPlayerPrivate.h"
 
+#include "ContentType.h"
 #include "IntRect.h"
 #include "MIMETypeRegistry.h"
 #include "FrameView.h"
@@ -95,6 +96,12 @@ public:
     virtual void setRect(const IntRect&) { }
 
     virtual void paint(GraphicsContext*, const IntRect&) { }
+
+#if ENABLE(PLUGIN_PROXY_FOR_VIDEO)
+    virtual void setPoster(const String& /*url*/) { }
+    virtual void deliverNotification(MediaPlayerProxyNotificationType) { }
+    virtual void setMediaPlayerProxy(WebMediaPlayerProxy*) { }
+#endif
 };
 
 static MediaPlayerPrivateInterface* createNullMediaPlayer(MediaPlayer* player) 
@@ -176,6 +183,9 @@ MediaPlayer::MediaPlayer(MediaPlayerClient* client)
     , m_visible(false)
     , m_rate(1.0f)
     , m_volume(1.0f)
+#if ENABLE(PLUGIN_PROXY_FOR_VIDEO)
+    , m_playerProxy(0)
+#endif
 {
 }
 
@@ -187,7 +197,7 @@ void MediaPlayer::load(const String& url, const String& mimeType)
 {
     // if we don't know the MIME type, see if the path can help
     String type = mimeType.isEmpty() ? MIMETypeRegistry::getMIMETypeForPath(url) : mimeType;
-    String codecs = MIMETypeRegistry::getParameterFromMIMEType(type, "codecs");
+    String codecs = ContentType(type).parameter("codecs");
 
     MediaPlayerFactory* engine = chooseBestEngineForTypeAndCodecs(type, codecs);
 
@@ -200,6 +210,10 @@ void MediaPlayer::load(const String& url, const String& mimeType)
         m_currentMediaEngine = engine;
         m_private.clear();
         m_private.set(engine->constructor(this));
+#if ENABLE(PLUGIN_PROXY_FOR_VIDEO)
+        m_private->setMediaPlayerProxy(m_playerProxy);
+#endif
+
     }
 
     if (m_private)
@@ -394,9 +408,10 @@ void MediaPlayer::deliverNotification(MediaPlayerProxyNotificationType notificat
     m_private->deliverNotification(notification);
 }
 
-void MediaPlayer::setMediaPlayerProxy(WebMediaPlayerProxy* helper)
+void MediaPlayer::setMediaPlayerProxy(WebMediaPlayerProxy* proxy)
 {
-    m_private->setMediaPlayerProxy(helper);
+    m_playerProxy = proxy;
+    m_private->setMediaPlayerProxy(proxy);
 }
 #endif
 

@@ -83,6 +83,8 @@ javascriptcore_sources += \
 	JavaScriptCore/jit/ExecutableAllocatorPosix.cpp \
 	JavaScriptCore/jit/JIT.h \
 	JavaScriptCore/jit/JITInlineMethods.h \
+	JavaScriptCore/jit/JITStubs.cpp \
+	JavaScriptCore/jit/JITStubs.h \
 	JavaScriptCore/bytecode/StructureStubInfo.cpp \
 	JavaScriptCore/bytecode/StructureStubInfo.h \
 	JavaScriptCore/bytecode/CodeBlock.cpp \
@@ -161,6 +163,8 @@ javascriptcore_sources += \
 	JavaScriptCore/profiler/TreeProfile.h \
 	JavaScriptCore/interpreter/CallFrame.cpp \
 	JavaScriptCore/interpreter/CallFrame.h \
+	JavaScriptCore/runtime/TimeoutChecker.cpp \
+	JavaScriptCore/runtime/TimeoutChecker.h \
 	JavaScriptCore/runtime/InitializeThreading.cpp \
 	JavaScriptCore/runtime/InitializeThreading.h \
 	JavaScriptCore/runtime/JSActivation.cpp \
@@ -422,6 +426,8 @@ javascriptcore_sources += \
 	JavaScriptCore/runtime/StringPrototype.cpp \
 	JavaScriptCore/runtime/StringPrototype.h \
 	JavaScriptCore/runtime/SymbolTable.h \
+	JavaScriptCore/runtime/TimeoutChecker.cpp \
+	JavaScriptCore/runtime/TimeoutChecker.h \
 	JavaScriptCore/runtime/Tracing.h \
 	JavaScriptCore/runtime/UString.cpp \
 	JavaScriptCore/runtime/UString.h \

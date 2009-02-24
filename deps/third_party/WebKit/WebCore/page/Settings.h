@@ -208,9 +208,6 @@ namespace WebCore {
         void setAllowScriptsToCloseWindows(bool);
         bool allowScriptsToCloseWindows() const { return m_allowScriptsToCloseWindows; }
 
-        void setNeedsIChatMemoryCacheCallsQuirk(bool);
-        bool needsIChatMemoryCacheCallsQuirk() const { return m_needsIChatMemoryCacheCallsQuirk; }
-
     private:
         Page* m_page;
         
@@ -265,7 +262,6 @@ namespace WebCore {
         size_t m_maximumDecodedImageSize;
         bool m_usesEncodingDetector : 1;
         bool m_allowScriptsToCloseWindows : 1;
-        bool m_needsIChatMemoryCacheCallsQuirk : 1;
 
 #if USE(SAFARI_THEME)
         static bool gShouldPaintNativeControls;

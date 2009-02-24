@@ -72,6 +72,7 @@ SOURCES += \
     runtime/JSVariableObject.cpp \
     runtime/JSActivation.cpp \
     runtime/JSNotAnObject.cpp \
+    runtime/TimeoutChecker.cpp \
     bytecode/CodeBlock.cpp \
     bytecode/StructureStubInfo.cpp \
     bytecode/JumpTable.cpp \
@@ -80,6 +81,7 @@ SOURCES += \
     jit/JITArithmetic.cpp \
     jit/JITPropertyAccess.cpp \
     jit/ExecutableAllocator.cpp \
+    jit/JITStubs.cpp \
     bytecompiler/BytecodeGenerator.cpp \
     runtime/ExceptionHelpers.cpp \
     runtime/JSPropertyNameIterator.cpp \

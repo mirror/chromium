@@ -88,7 +88,6 @@ Settings::Settings(Page* page)
     , m_maximumDecodedImageSize(std::numeric_limits<size_t>::max())
     , m_usesEncodingDetector(false)
     , m_allowScriptsToCloseWindows(false)
-    , m_needsIChatMemoryCacheCallsQuirk(false)
 {
     // A Frame may not have been created yet, so we initialize the AtomicString 
     // hash before trying to use it.
@@ -422,11 +421,6 @@ void Settings::setUsesUniversalDetector(bool usesEncodingDetector)
 void Settings::setAllowScriptsToCloseWindows(bool allowScriptsToCloseWindows)
 {
     m_allowScriptsToCloseWindows = allowScriptsToCloseWindows;
-}
-
-void Settings::setNeedsIChatMemoryCacheCallsQuirk(bool needsIChatMemoryCacheCallsQuirk)
-{
-    m_needsIChatMemoryCacheCallsQuirk = needsIChatMemoryCacheCallsQuirk;
 }
 
 } // namespace WebCore

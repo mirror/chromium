@@ -32,6 +32,7 @@
 #include "FrameView.h"
 #include "InlineTextBox.h"
 #include "MutationEvent.h"
+#include "Page.h"
 #include "RenderTheme.h"
 #include "RootInlineBox.h"
 #include <wtf/CurrentTime.h>
@@ -42,9 +43,10 @@ static void dispatchChildInsertionEvents(Node*, ExceptionCode&);
 static void dispatchChildRemovalEvents(Node*, ExceptionCode&);
 
 typedef Vector<std::pair<NodeCallback, RefPtr<Node> > > NodeCallbackQueue;
-static NodeCallbackQueue* s_postAttachCallbackQueue = 0;
+static NodeCallbackQueue* s_postAttachCallbackQueue;
 
-static size_t s_attachDepth = 0;
+static size_t s_attachDepth;
+static bool s_shouldReEnableMemoryCacheCallsAfterAttach;
 
 void ContainerNode::removeAllChildren()
 {
@@ -385,25 +387,25 @@ bool ContainerNode::removeChildren()
     if (!m_firstChild)
         return false;
 
-    Node* n;
+    // The container node can be removed from event handlers.
+    RefPtr<Node> protect(this);
     
-    // do any prep work needed before actually starting to detach
-    // and remove... e.g. stop loading frames, fire unload events
-    for (n = m_firstChild; n; n = n->nextSibling())
-        willRemoveChild(n);
+    // Do any prep work needed before actually starting to detach
+    // and remove... e.g. stop loading frames, fire unload events.
+    // FIXME: Adding new children from event handlers can cause an infinite loop here.
+    for (RefPtr<Node> n = m_firstChild; n; n = n->nextSibling())
+        willRemoveChild(n.get());
     
     // exclude this node when looking for removed focusedNode since only children will be removed
     document()->removeFocusedNodeOfSubtree(this, true);
 
     forbidEventDispatch();
     int childCountDelta = 0;
-    while ((n = m_firstChild) != 0) {
+    while (RefPtr<Node> n = m_firstChild) {
         childCountDelta--;
 
-        Node *next = n->nextSibling();
+        Node* next = n->nextSibling();
         
-        n->ref();
-
         // Remove the node from the tree before calling detach or removedFromDocument (4427024, 4129744)
         n->setPreviousSibling(0);
         n->setNextSibling(0);
@@ -418,8 +420,6 @@ bool ContainerNode::removeChildren()
         
         if (n->inDocument())
             n->removedFromDocument();
-
-        n->deref();
     }
     allowEventDispatch();
 
@@ -532,13 +532,29 @@ ContainerNode* ContainerNode::addChild(PassRefPtr<Node> newChild)
 
 void ContainerNode::suspendPostAttachCallbacks()
 {
+    if (!s_attachDepth) {
+        ASSERT(!s_shouldReEnableMemoryCacheCallsAfterAttach);
+        if (Page* page = document()->page()) {
+            if (page->areMemoryCacheClientCallsEnabled()) {
+                page->setMemoryCacheClientCallsEnabled(false);
+                s_shouldReEnableMemoryCacheCallsAfterAttach = true;
+            }
+        }
+    }
     ++s_attachDepth;
 }
 
 void ContainerNode::resumePostAttachCallbacks()
 {
-    if (s_attachDepth == 1 && s_postAttachCallbackQueue)
-        dispatchPostAttachCallbacks();
+    if (s_attachDepth == 1) {
+        if (s_postAttachCallbackQueue)
+            dispatchPostAttachCallbacks();
+        if (s_shouldReEnableMemoryCacheCallsAfterAttach) {
+            s_shouldReEnableMemoryCacheCallsAfterAttach = false;
+            if (Page* page = document()->page())
+                page->setMemoryCacheClientCallsEnabled(true);
+        }
+    }
     --s_attachDepth;
 }
 
@@ -566,15 +582,13 @@ void ContainerNode::dispatchPostAttachCallbacks()
 
 void ContainerNode::attach()
 {
-    ++s_attachDepth;
+    suspendPostAttachCallbacks();
 
     for (Node* child = m_firstChild; child; child = child->nextSibling())
         child->attach();
     Node::attach();
 
-    if (s_attachDepth == 1 && s_postAttachCallbackQueue)
-        dispatchPostAttachCallbacks();
-    --s_attachDepth;
+    resumePostAttachCallbacks();
 }
 
 void ContainerNode::detach()

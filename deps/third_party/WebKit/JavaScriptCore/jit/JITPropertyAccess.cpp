@@ -57,7 +57,7 @@ void JIT::compileGetByIdHotPath(int resultVReg, int baseVReg, Identifier* ident,
 
     emitPutJITStubArg(regT0, 1);
     emitPutJITStubArgConstant(ident, 2);
-    emitCTICall(Interpreter::cti_op_get_by_id_generic);
+    emitCTICall(JITStubs::cti_op_get_by_id_generic);
     emitPutVirtualRegister(resultVReg);
 }
 
@@ -78,7 +78,7 @@ void JIT::compilePutByIdHotPath(int baseVReg, Identifier* ident, int valueVReg, 
     emitPutJITStubArgConstant(ident, 2);
     emitPutJITStubArg(regT0, 1);
     emitPutJITStubArg(regT1, 3);
-    emitCTICall(Interpreter::cti_op_put_by_id_generic);
+    emitCTICall(JITStubs::cti_op_put_by_id_generic);
 }
 
 void JIT::compilePutByIdSlowCase(int, Identifier*, int, Vector<SlowCaseEntry>::iterator&, unsigned)
@@ -134,7 +134,7 @@ void JIT::compileGetByIdSlowCase(int resultVReg, int baseVReg, Identifier* ident
 #endif
     emitPutJITStubArg(regT0, 1);
     emitPutJITStubArgConstant(ident, 2);
-    Call call = emitCTICall(Interpreter::cti_op_get_by_id);
+    Call call = emitCTICall(JITStubs::cti_op_get_by_id);
     emitPutVirtualRegister(resultVReg);
 
     ASSERT(differenceBetween(coldPathBegin, call) == patchOffsetGetByIdSlowCaseCall);
@@ -176,7 +176,7 @@ void JIT::compilePutByIdSlowCase(int baseVReg, Identifier* ident, int, Vector<Sl
     emitPutJITStubArgConstant(ident, 2);
     emitPutJITStubArg(regT0, 1);
     emitPutJITStubArg(regT1, 3);
-    Call call = emitCTICall(Interpreter::cti_op_put_by_id);
+    Call call = emitCTICall(JITStubs::cti_op_put_by_id);
 
     // Track the location of the call; this will be used to recover patch information.
     m_propertyAccessCompilationInfo[propertyAccessInstructionIndex].callReturnLocation = call;
@@ -226,7 +226,8 @@ void JIT::privateCompilePutByIdTransition(StructureStubInfo* stubInfo, Structure
     Call callTarget;
 
     // emit a call only if storage realloc is needed
-    if (transitionWillNeedStorageRealloc(oldStructure, newStructure)) {
+    bool willNeedStorageRealloc = transitionWillNeedStorageRealloc(oldStructure, newStructure);
+    if (willNeedStorageRealloc) {
         pop(X86::ebx);
 #if PLATFORM(X86_64)
         move(Imm32(newStructure->propertyStorageCapacity()), regT1);
@@ -256,22 +257,17 @@ void JIT::privateCompilePutByIdTransition(StructureStubInfo* stubInfo, Structure
 
     ret();
     
-    Jump failureJump;
-    bool plantedFailureJump = false;
-    if (!failureCases.empty()) {
-        failureCases.link(this);
-        restoreArgumentReferenceForTrampoline();
-        failureJump = jump();
-        plantedFailureJump = true;
-    }
+    ASSERT(!failureCases.empty());
+    failureCases.link(this);
+    restoreArgumentReferenceForTrampoline();
+    Call failureCall = tailRecursiveCall();
 
     void* code = m_assembler.executableCopy(m_codeBlock->executablePool());
     PatchBuffer patchBuffer(code);
 
-    if (plantedFailureJump)
-        patchBuffer.linkTailRecursive(failureJump, Interpreter::cti_op_put_by_id_fail);
+    patchBuffer.link(failureCall, JITStubs::cti_op_put_by_id_fail);
 
-    if (transitionWillNeedStorageRealloc(oldStructure, newStructure))
+    if (willNeedStorageRealloc)
         patchBuffer.link(callTarget, resizePropertyStorage);
     
     stubInfo->stubRoutine = patchBuffer.entry();
@@ -282,8 +278,8 @@ void JIT::privateCompilePutByIdTransition(StructureStubInfo* stubInfo, Structure
 void JIT::patchGetByIdSelf(StructureStubInfo* stubInfo, Structure* structure, size_t cachedOffset, ProcessorReturnAddress returnAddress)
 {
     // We don't want to patch more than once - in future go to cti_op_get_by_id_generic.
-    // Should probably go to Interpreter::cti_op_get_by_id_fail, but that doesn't do anything interesting right now.
-    returnAddress.relinkCallerToFunction(Interpreter::cti_op_get_by_id_self_fail);
+    // Should probably go to JITStubs::cti_op_get_by_id_fail, but that doesn't do anything interesting right now.
+    returnAddress.relinkCallerToFunction(JITStubs::cti_op_get_by_id_self_fail);
 
     // Patch the offset into the propoerty map to load from, then patch the Structure to look for.
     stubInfo->hotPathBegin.dataLabelPtrAtOffset(patchOffsetGetByIdStructure).repatch(structure);
@@ -293,8 +289,8 @@ void JIT::patchGetByIdSelf(StructureStubInfo* stubInfo, Structure* structure, si
 void JIT::patchPutByIdReplace(StructureStubInfo* stubInfo, Structure* structure, size_t cachedOffset, ProcessorReturnAddress returnAddress)
 {
     // We don't want to patch more than once - in future go to cti_op_put_by_id_generic.
-    // Should probably go to Interpreter::cti_op_put_by_id_fail, but that doesn't do anything interesting right now.
-    returnAddress.relinkCallerToFunction(Interpreter::cti_op_put_by_id_generic);
+    // Should probably go to JITStubs::cti_op_put_by_id_fail, but that doesn't do anything interesting right now.
+    returnAddress.relinkCallerToFunction(JITStubs::cti_op_put_by_id_generic);
 
     // Patch the offset into the propoerty map to load from, then patch the Structure to look for.
     stubInfo->hotPathBegin.dataLabelPtrAtOffset(patchOffsetPutByIdStructure).repatch(structure);
@@ -306,7 +302,7 @@ void JIT::privateCompilePatchGetArrayLength(ProcessorReturnAddress returnAddress
     StructureStubInfo* stubInfo = &m_codeBlock->getStubInfo(returnAddress);
 
     // We don't want to patch more than once - in future go to cti_op_put_by_id_generic.
-    returnAddress.relinkCallerToFunction(Interpreter::cti_op_get_by_id_array_fail);
+    returnAddress.relinkCallerToFunction(JITStubs::cti_op_get_by_id_array_fail);
 
     // Check eax is an array
     Jump failureCases1 = branchPtr(NotEqual, Address(regT0), ImmPtr(m_interpreter->m_jsArrayVptr));
@@ -351,11 +347,14 @@ void JIT::privateCompileGetByIdSelf(StructureStubInfo* stubInfo, Structure* stru
     loadPtr(Address(regT0, cachedOffset * sizeof(JSValuePtr)), regT0);
     ret();
 
+    Call failureCases1Call = makeTailRecursiveCall(failureCases1);
+    Call failureCases2Call = makeTailRecursiveCall(failureCases2);
+
     void* code = m_assembler.executableCopy(m_codeBlock->executablePool());
     PatchBuffer patchBuffer(code);
 
-    patchBuffer.linkTailRecursive(failureCases1, Interpreter::cti_op_get_by_id_self_fail);
-    patchBuffer.linkTailRecursive(failureCases2, Interpreter::cti_op_get_by_id_self_fail);
+    patchBuffer.link(failureCases1Call, JITStubs::cti_op_get_by_id_self_fail);
+    patchBuffer.link(failureCases2Call, JITStubs::cti_op_get_by_id_self_fail);
 
     stubInfo->stubRoutine = patchBuffer.entry();
 
@@ -366,7 +365,7 @@ void JIT::privateCompileGetByIdProto(StructureStubInfo* stubInfo, Structure* str
 {
 #if USE(CTI_REPATCH_PIC)
     // We don't want to patch more than once - in future go to cti_op_put_by_id_generic.
-    returnAddress.relinkCallerToFunction(Interpreter::cti_op_get_by_id_proto_list);
+    returnAddress.relinkCallerToFunction(JITStubs::cti_op_get_by_id_proto_list);
 
     // The prototype object definitely exists (if this stub exists the CodeBlock is referencing a Structure that is
     // referencing the prototype object - let's speculatively load it's table nice and early!)
@@ -432,9 +431,9 @@ void JIT::privateCompileGetByIdProto(StructureStubInfo* stubInfo, Structure* str
     void* code = m_assembler.executableCopy(m_codeBlock->executablePool());
     PatchBuffer patchBuffer(code);
 
-    patchBuffer.link(failureCases1, Interpreter::cti_op_get_by_id_proto_fail);
-    patchBuffer.link(failureCases2, Interpreter::cti_op_get_by_id_proto_fail);
-    patchBuffer.link(failureCases3, Interpreter::cti_op_get_by_id_proto_fail);
+    patchBuffer.link(failureCases1, JITStubs::cti_op_get_by_id_proto_fail);
+    patchBuffer.link(failureCases2, JITStubs::cti_op_get_by_id_proto_fail);
+    patchBuffer.link(failureCases3, JITStubs::cti_op_get_by_id_proto_fail);
 
     stubInfo->stubRoutine = patchBuffer.entry();
 
@@ -582,7 +581,7 @@ void JIT::privateCompileGetByIdChain(StructureStubInfo* stubInfo, Structure* str
 {
 #if USE(CTI_REPATCH_PIC)
     // We don't want to patch more than once - in future go to cti_op_put_by_id_generic.
-    returnAddress.relinkCallerToFunction(Interpreter::cti_op_get_by_id_proto_list);
+    returnAddress.relinkCallerToFunction(JITStubs::cti_op_get_by_id_proto_list);
 
     ASSERT(count);
     
@@ -664,7 +663,7 @@ void JIT::privateCompileGetByIdChain(StructureStubInfo* stubInfo, Structure* str
 
     void* code = m_assembler.executableCopy(m_codeBlock->executablePool());
 
-    patchBuffer.link(bucketsOfFail, Interpreter::cti_op_get_by_id_proto_fail);
+    patchBuffer.link(bucketsOfFail, JITStubs::cti_op_get_by_id_proto_fail);
 
     stubInfo->stubRoutine = patchBuffer.entry();
 
@@ -683,11 +682,14 @@ void JIT::privateCompilePutByIdReplace(StructureStubInfo* stubInfo, Structure* s
     storePtr(regT1, Address(regT0, cachedOffset * sizeof(JSValuePtr)));
     ret();
 
+    Call failureCases1Call = makeTailRecursiveCall(failureCases1);
+    Call failureCases2Call = makeTailRecursiveCall(failureCases2);
+
     void* code = m_assembler.executableCopy(m_codeBlock->executablePool());
     PatchBuffer patchBuffer(code);
     
-    patchBuffer.linkTailRecursive(failureCases1, Interpreter::cti_op_put_by_id_fail);
-    patchBuffer.linkTailRecursive(failureCases2, Interpreter::cti_op_put_by_id_fail);
+    patchBuffer.link(failureCases1Call, JITStubs::cti_op_put_by_id_fail);
+    patchBuffer.link(failureCases2Call, JITStubs::cti_op_put_by_id_fail);
 
     stubInfo->stubRoutine = patchBuffer.entry();
     

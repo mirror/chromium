@@ -378,11 +378,11 @@ bool CachedResource::wasPurged() const
 
 unsigned CachedResource::overheadSize() const
 {
-    // FIXME: Find some programmatic lightweight way to calculate the size of the different CachedResource classes.
-    return sizeof(CachedResource) +
-        m_response.size() + 
-        m_url.length() * 2 +
-        384; // average size of m_clients hash map
+    return sizeof(CachedResource) + m_response.memoryUsage() + 576;
+    /*
+        576 = 192 +                   // average size of m_url
+              384;                    // average size of m_clients hash map
+    */
 }
 
 }

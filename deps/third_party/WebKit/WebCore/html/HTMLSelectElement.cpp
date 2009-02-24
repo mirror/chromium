@@ -422,6 +422,9 @@ RenderObject* HTMLSelectElement::createRenderer(RenderArena* arena, RenderStyle*
 
 bool HTMLSelectElement::appendFormData(FormDataList& list, bool)
 {
+    if (name().isEmpty())
+        return false;
+
     bool successful = false;
     const Vector<HTMLElement*>& items = listItems();
 
@@ -1103,9 +1106,8 @@ void HTMLSelectElement::setLength(unsigned newLen, ExceptionCode& ec)
 
     if (diff < 0) { // add dummy elements
         do {
-            RefPtr<Element> option = document()->createElement("option", ec);
-            if (!option)
-                break;
+            RefPtr<Element> option = document()->createElement(optionTag, false);
+            ASSERT(option);
             add(static_cast<HTMLElement*>(option.get()), 0, ec);
             if (ec)
                 break;

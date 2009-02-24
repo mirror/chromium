@@ -1052,9 +1052,8 @@ void Document::setTitle(const String& title, Element* titleElement)
             m_titleElement = 0;
         else if (!m_titleElement) {
             if (HTMLElement* headElement = head()) {
+                m_titleElement = createElement(titleTag, false);
                 ExceptionCode ec = 0;
-                m_titleElement = createElement("title", ec);
-                ASSERT(!ec);
                 headElement->appendChild(m_titleElement, ec);
                 ASSERT(!ec);
             }
@@ -1404,11 +1403,10 @@ void Document::detach()
     
     RenderObject* render = renderer();
 
-#if USE(ACCELERATED_COMPOSITING)
-    if (render)
-        renderView()->willMoveOffscreen();
-#endif
-
+    // Send out documentWillBecomeInactive() notifications to registered elements,
+    // in order to stop media elements
+    documentWillBecomeInactive();
+    
     // indicate destruction mode,  i.e. attached() but renderer == 0
     setRenderer(0);
     
@@ -1910,6 +1908,11 @@ void Document::updateBaseURL()
         m_elemSheet->setHref(m_baseURL.string());
     if (m_mappedElementSheet)
         m_mappedElementSheet->setHref(m_baseURL.string());
+}
+
+String Document::userAgent(const KURL& url) const
+{
+    return frame() ? frame()->loader()->userAgent(url) : String();
 }
 
 void Document::setCSSStyleSheet(const String& url, const String& charset, const CachedCSSStyleSheet* sheet)
@@ -3018,13 +3021,7 @@ void Document::dispatchImageLoadEventsNow()
     // will set a timer and eventually be processed.
     if (!m_imageLoadEventDispatchingList.isEmpty())
         return;
-#ifdef BUILDING_ON_LEOPARD
-    bool shouldReenableMemoryCacheClientCalls = false;
-    if (settings() && settings()->needsIChatMemoryCacheCallsQuirk() && page()->areMemoryCacheClientCallsEnabled()) {
-        shouldReenableMemoryCacheClientCalls = true;
-        page()->setMemoryCacheClientCallsEnabled(false);
-    }
-#endif
+
     m_imageLoadEventTimer.stop();
 
     m_imageLoadEventDispatchingList = m_imageLoadEventDispatchSoonList;
@@ -3035,10 +3032,6 @@ void Document::dispatchImageLoadEventsNow()
             image->dispatchLoadEvent();
     }
     m_imageLoadEventDispatchingList.clear();
-#ifdef BUILDING_ON_LEOPARD
-    if (shouldReenableMemoryCacheClientCalls && page())
-        page()->setMemoryCacheClientCallsEnabled(true);
-#endif
 }
 
 void Document::imageLoadEventTimerFired(Timer<Document>*)

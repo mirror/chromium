@@ -959,8 +959,7 @@ PassRefPtr<CSSComputedStyleDeclaration> Frame::selectionComputedStyle(Node*& nod
     ExceptionCode ec = 0;
 
     if (m_typingStyle) {
-        styleElement = document()->createElementNS(xhtmlNamespaceURI, "span", ec);
-        ASSERT(ec == 0);
+        styleElement = document()->createElement(spanTag, false);
 
         styleElement->setAttribute(styleAttr, m_typingStyle->cssText().impl(), ec);
         ASSERT(ec == 0);
@@ -1329,10 +1328,9 @@ RenderStyle *Frame::styleForSelectionStart(Node *&nodeToRemove) const
     if (!m_typingStyle)
         return node->renderer()->style();
     
-    ExceptionCode ec = 0;
-    RefPtr<Element> styleElement = document()->createElementNS(xhtmlNamespaceURI, "span", ec);
-    ASSERT(ec == 0);
+    RefPtr<Element> styleElement = document()->createElement(spanTag, false);
     
+    ExceptionCode ec = 0;
     String styleText = m_typingStyle->cssText() + " display: inline";
     styleElement->setAttribute(styleAttr, styleText.impl(), ec);
     ASSERT(ec == 0);

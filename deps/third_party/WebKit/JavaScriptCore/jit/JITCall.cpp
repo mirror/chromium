@@ -52,6 +52,7 @@ void JIT::unlinkCall(CallLinkInfo* callLinkInfo)
     callLinkInfo->hotPathBegin.repatch(JSValuePtr::encode(jsImpossibleValue()));
 }
 
+//void JIT::linkCall(JSFunction* , CodeBlock* , JITCode , CallLinkInfo* callLinkInfo, int )
 void JIT::linkCall(JSFunction* callee, CodeBlock* calleeCodeBlock, JITCode ctiCode, CallLinkInfo* callLinkInfo, int callerArgCount)
 {
     // Currently we only link calls with the exact number of arguments.
@@ -131,7 +132,7 @@ void JIT::compileOpCall(OpcodeID opcodeID, Instruction* instruction, unsigned)
         emitGetVirtualRegister(callee, regT2);
         compileOpCallEvalSetupArgs(instruction);
 
-        emitCTICall(Interpreter::cti_op_call_eval);
+        emitCTICall(JITStubs::cti_op_call_eval);
         wasEval = branchPtr(NotEqual, regT0, ImmPtr(JSValuePtr::encode(jsImpossibleValue())));
     }
 
@@ -148,7 +149,7 @@ void JIT::compileOpCall(OpcodeID opcodeID, Instruction* instruction, unsigned)
 
     // First, in the case of a construct, allocate the new object.
     if (opcodeID == op_construct) {
-        emitCTICall(Interpreter::cti_op_construct_JSConstruct);
+        emitCTICall(JITStubs::cti_op_construct_JSConstruct);
         emitPutVirtualRegister(registerOffset - RegisterFile::CallFrameHeaderSize - argCount);
         emitGetVirtualRegister(callee, regT2);
     }
@@ -177,7 +178,7 @@ void JIT::compileOpCallSlowCase(Instruction* instruction, Vector<SlowCaseEntry>:
     linkSlowCase(iter);
 
     // This handles host functions
-    emitCTICall(((opcodeID == op_construct) ? Interpreter::cti_op_construct_NotJSConstruct : Interpreter::cti_op_call_NotJSFunction));
+    emitCTICall(((opcodeID == op_construct) ? JITStubs::cti_op_construct_NotJSConstruct : JITStubs::cti_op_call_NotJSFunction));
     // Put the return value in dst. In the interpreter, op_ret does this.
     emitPutVirtualRegister(dst);
 
@@ -185,12 +186,6 @@ void JIT::compileOpCallSlowCase(Instruction* instruction, Vector<SlowCaseEntry>:
 }
 
 #else
-
-static NO_RETURN void unreachable()
-{
-    ASSERT_NOT_REACHED();
-    exit(1);
-}
 
 void JIT::compileOpCall(OpcodeID opcodeID, Instruction* instruction, unsigned callLinkInfoIndex)
 {
@@ -205,7 +200,7 @@ void JIT::compileOpCall(OpcodeID opcodeID, Instruction* instruction, unsigned ca
         emitGetVirtualRegister(callee, regT2);
         compileOpCallEvalSetupArgs(instruction);
 
-        emitCTICall(Interpreter::cti_op_call_eval);
+        emitCTICall(JITStubs::cti_op_call_eval);
         wasEval = branchPtr(NotEqual, regT0, ImmPtr(JSValuePtr::encode(jsImpossibleValue())));
     }
 
@@ -227,7 +222,7 @@ void JIT::compileOpCall(OpcodeID opcodeID, Instruction* instruction, unsigned ca
 
         emitPutJITStubArg(regT2, 1);
         emitPutJITStubArgFromVirtualRegister(proto, 4, regT0);
-        emitCTICall(Interpreter::cti_op_construct_JSConstruct);
+        emitCTICall(JITStubs::cti_op_construct_JSConstruct);
         emitPutVirtualRegister(thisRegister);
         emitGetVirtualRegister(callee, regT2);
     }
@@ -243,7 +238,7 @@ void JIT::compileOpCall(OpcodeID opcodeID, Instruction* instruction, unsigned ca
     addPtr(Imm32(registerOffset * sizeof(Register)), callFrameRegister);
 
     // Call to the callee
-    m_callStructureStubCompilationInfo[callLinkInfoIndex].hotPathOther = emitNakedCall(reinterpret_cast<void*>(unreachable));
+    m_callStructureStubCompilationInfo[callLinkInfoIndex].hotPathOther = emitNakedCall(reinterpret_cast<void*>(0));
     
     if (opcodeID == op_call_eval)
         wasEval.link(this);
@@ -275,7 +270,7 @@ void JIT::compileOpCallSlowCase(Instruction* instruction, Vector<SlowCaseEntry>:
 
     // First, in the case of a construct, allocate the new object.
     if (opcodeID == op_construct) {
-        emitCTICall(Interpreter::cti_op_construct_JSConstruct);
+        emitCTICall(JITStubs::cti_op_construct_JSConstruct);
         emitPutVirtualRegister(registerOffset - RegisterFile::CallFrameHeaderSize - argCount);
         emitGetVirtualRegister(callee, regT2);
     }
@@ -309,7 +304,7 @@ void JIT::compileOpCallSlowCase(Instruction* instruction, Vector<SlowCaseEntry>:
     isNotObject.link(this);
     callLinkFailNotObject.link(this);
     callLinkFailNotJSFunction.link(this);
-    emitCTICall(((opcodeID == op_construct) ? Interpreter::cti_op_construct_NotJSConstruct : Interpreter::cti_op_call_NotJSFunction));
+    emitCTICall(((opcodeID == op_construct) ? JITStubs::cti_op_construct_NotJSConstruct : JITStubs::cti_op_call_NotJSFunction));
     Jump wasNotJSFunction = jump();
 
     // Next, handle JSFunctions...
@@ -317,7 +312,7 @@ void JIT::compileOpCallSlowCase(Instruction* instruction, Vector<SlowCaseEntry>:
 
     // First, in the case of a construct, allocate the new object.
     if (opcodeID == op_construct) {
-        emitCTICall(Interpreter::cti_op_construct_JSConstruct);
+        emitCTICall(JITStubs::cti_op_construct_JSConstruct);
         emitPutVirtualRegister(registerOffset - RegisterFile::CallFrameHeaderSize - argCount);
         emitGetVirtualRegister(callee, regT2);
     }
