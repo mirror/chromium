@@ -1,10 +1,10 @@
 /*
- * Copyright (C) 2009 Google Inc. All rights reserved.
- * 
+ * Copyright (C) 2008, 2009 Google Inc. All rights reserved.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
  *     * Redistributions in binary form must reproduce the above
@@ -28,52 +28,45 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef WorkerRunLoop_h
-#define WorkerRunLoop_h
+#ifndef ScriptSourceCode_h
+#define ScriptSourceCode_h
 
-#if ENABLE(WORKERS)
-
-#include "ScriptExecutionContext.h"
-#include <wtf/MessageQueue.h>
-#include <wtf/OwnPtr.h>
-#include <wtf/PassRefPtr.h>
+#include "CachedScript.h"
+#include "KURL.h"
+#include "PlatformString.h"
 
 namespace WebCore {
 
-    class ModePredicate;
-    class WorkerContext;
-    class WorkerSharedTimer;
+class ScriptSourceCode {
+public:
+    ScriptSourceCode(const String& source, const KURL& url = KURL(), int startLine = 1)
+        : m_source(source)
+        , m_url(url)
+        , m_startLine(startLine)
+    {
+    }
 
-    class WorkerRunLoop {
-    public:
-        WorkerRunLoop();
-        ~WorkerRunLoop();
-        
-        // Blocking call. Waits for tasks and timers, invokes the callbacks.
-        void run(WorkerContext*);
+    // We lose the encoding information from CachedScript.
+    // Not sure if that matters.
+    ScriptSourceCode(CachedScript* cs)
+        : m_source(cs->script())
+        , m_url(cs->url())
+        , m_startLine(1)
+    {
+    }
 
-        // Waits for a single task and returns.
-        MessageQueueWaitResult runInMode(WorkerContext*, const String& mode);
+    bool isEmpty() const { return m_source.isEmpty(); }
 
-        void terminate();
-        bool terminated() { return m_messageQueue.killed(); }
+    const String& source() const { return m_source; }
+    const KURL& url() const { return m_url; }
+    int startLine() const { return m_startLine; }
 
-        void postTask(PassRefPtr<ScriptExecutionContext::Task>);
-        void postTaskForMode(PassRefPtr<ScriptExecutionContext::Task>, const String& mode);
-
-        static String defaultMode();
-        class Task;
-    private:
-        friend class RunLoopSetup;
-        MessageQueueWaitResult runInMode(WorkerContext*, const ModePredicate&);
-
-        MessageQueue<RefPtr<Task> > m_messageQueue;
-        OwnPtr<WorkerSharedTimer> m_sharedTimer;
-        int m_nestedCount;
-    };
+private:
+    String m_source;
+    KURL m_url;
+    int m_startLine;
+};
 
 } // namespace WebCore
 
-#endif // ENABLE(WORKERS)
-
-#endif // WorkerRunLoop_h
+#endif // ScriptSourceCode_h

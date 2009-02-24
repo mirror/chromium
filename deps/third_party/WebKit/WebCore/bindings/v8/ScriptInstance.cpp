@@ -1,10 +1,10 @@
 /*
- * Copyright (C) 2009 Google Inc. All rights reserved.
- * 
+ * Copyright (C) 2008, 2009 Google Inc. All rights reserved.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
  *     * Redistributions in binary form must reproduce the above
@@ -28,52 +28,56 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef WorkerRunLoop_h
-#define WorkerRunLoop_h
+#include "config.h"
+#include "ScriptInstance.h"
 
-#if ENABLE(WORKERS)
-
-#include "ScriptExecutionContext.h"
-#include <wtf/MessageQueue.h>
-#include <wtf/OwnPtr.h>
-#include <wtf/PassRefPtr.h>
+#ifndef NDEBUG
+#include "V8Proxy.h"
+#endif
+#include <wtf/Assertions.h>
 
 namespace WebCore {
 
-    class ModePredicate;
-    class WorkerContext;
-    class WorkerSharedTimer;
+V8ScriptInstance::V8ScriptInstance()
+{
+}
 
-    class WorkerRunLoop {
-    public:
-        WorkerRunLoop();
-        ~WorkerRunLoop();
-        
-        // Blocking call. Waits for tasks and timers, invokes the callbacks.
-        void run(WorkerContext*);
+V8ScriptInstance::V8ScriptInstance(v8::Handle<v8::Object> instance)
+{
+    set(instance);
+}
 
-        // Waits for a single task and returns.
-        MessageQueueWaitResult runInMode(WorkerContext*, const String& mode);
+V8ScriptInstance::~V8ScriptInstance()
+{
+    clear();
+}
 
-        void terminate();
-        bool terminated() { return m_messageQueue.killed(); }
+v8::Persistent<v8::Object> V8ScriptInstance::instance()
+{
+    return m_instance;
+}
 
-        void postTask(PassRefPtr<ScriptExecutionContext::Task>);
-        void postTaskForMode(PassRefPtr<ScriptExecutionContext::Task>, const String& mode);
+void V8ScriptInstance::clear()
+{
+    if (m_instance.IsEmpty())
+        return;
+#ifndef NDEBUG
+    V8Proxy::UnregisterGlobalHandle(this, m_instance);
+#endif
+    m_instance.Dispose();
+    m_instance.Clear();
+}
 
-        static String defaultMode();
-        class Task;
-    private:
-        friend class RunLoopSetup;
-        MessageQueueWaitResult runInMode(WorkerContext*, const ModePredicate&);
+void V8ScriptInstance::set(v8::Handle<v8::Object> instance)
+{
+    clear();
+    if (instance.IsEmpty())
+        return;
 
-        MessageQueue<RefPtr<Task> > m_messageQueue;
-        OwnPtr<WorkerSharedTimer> m_sharedTimer;
-        int m_nestedCount;
-    };
+    m_instance = v8::Persistent<v8::Object>::New(instance);
+#ifndef NDEBUG
+    V8Proxy::RegisterGlobalHandle(SCRIPTINSTANCE, this, m_instance);
+#endif
+}
 
 } // namespace WebCore
-
-#endif // ENABLE(WORKERS)
-
-#endif // WorkerRunLoop_h

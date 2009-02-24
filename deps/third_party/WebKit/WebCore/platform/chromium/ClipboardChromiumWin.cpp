@@ -1,5 +1,6 @@
 /*
- * Copyright (C) 2008 Apple Computer, Inc.  All rights reserved.
+ * Copyright (C) 2009 Apple Inc.  All rights reserved.
+ * Copyright (C) 2009 Google Inc.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -20,33 +21,36 @@
  * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
  * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef JSBasePrivate_h
-#define JSBasePrivate_h
+#include "config.h"
+#include "ClipboardChromium.h"
 
-#include <JavaScriptCore/JSBase.h>
-#include <JavaScriptCore/WebKitAvailability.h>
+#include "ChromiumDataObject.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <shlwapi.h>
 
-/*!
-@function
-@abstract Reports an object's non-GC memory payload to the garbage collector.
-@param ctx The execution context to use.
-@param size The payload's size, in bytes.
-@discussion Use this function to notify the garbage collector that a GC object
-owns a large non-GC memory region. Calling this function will encourage the
-garbage collector to collect soon, hoping to reclaim that large non-GC memory
-region.
-*/
-JS_EXPORT void JSReportExtraMemoryCost(JSContextRef ctx, size_t size) AVAILABLE_IN_WEBKIT_VERSION_4_0;
+namespace WebCore {
 
-#ifdef __cplusplus
+// Returns true if the specified character is not valid in a file name. This
+// is intended for use with removeCharacters.
+static bool isInvalidFileCharacter(UChar c)
+{
+    return (PathGetCharType(c) & (GCT_LFNCHAR | GCT_SHORTCHAR)) == 0;
 }
-#endif
 
-#endif /* JSBasePrivate_h */
+String ClipboardChromium::validateFileName(const String& title, ChromiumDataObject* dataObject)
+{
+    // Remove any invalid file system characters.
+    String result = title.removeCharacters(&isInvalidFileCharacter);
+    if (result.length() + dataObject->fileExtension.length() + 1 >= MAX_PATH) {
+        if (dataObject->fileExtension.length() + 1 >= MAX_PATH)
+            dataObject->fileExtension = "";
+        if (result.length() + dataObject->fileExtension.length() + 1 >= MAX_PATH)
+            result = result.substring(0, MAX_PATH - dataObject->fileExtension.length() - 1);
+    }
+    return result;
+}
+
+}  // namespace WebCore

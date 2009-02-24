@@ -1,10 +1,10 @@
 /*
- * Copyright (C) 2009 Google Inc. All rights reserved.
- * 
+ * Copyright (C) 2008, 2009 Google Inc. All rights reserved.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
  *     * Redistributions in binary form must reproduce the above
@@ -28,52 +28,46 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef WorkerRunLoop_h
-#define WorkerRunLoop_h
+#ifndef ScriptCallFrame_h
+#define ScriptCallFrame_h
 
-#if ENABLE(WORKERS)
+#include "KURL.h"
+#include "ScriptString.h"
 
-#include "ScriptExecutionContext.h"
-#include <wtf/MessageQueue.h>
-#include <wtf/OwnPtr.h>
-#include <wtf/PassRefPtr.h>
+#include <wtf/Vector.h>
+
+namespace v8 {
+    class Arguments;
+}
 
 namespace WebCore {
+    class ScriptValue;
 
-    class ModePredicate;
-    class WorkerContext;
-    class WorkerSharedTimer;
-
-    class WorkerRunLoop {
+    // FIXME: Implement retrieving line number and source URL and storing here
+    // for all call frames, not just the first one.
+    // See <https://bugs.webkit.org/show_bug.cgi?id=22556> and
+    // <https://bugs.webkit.org/show_bug.cgi?id=21180>
+    class ScriptCallFrame  {
     public:
-        WorkerRunLoop();
-        ~WorkerRunLoop();
-        
-        // Blocking call. Waits for tasks and timers, invokes the callbacks.
-        void run(WorkerContext*);
+        ScriptCallFrame(const String& functionName, const String& urlString, int lineNumber, const v8::Arguments&, unsigned skipArgumentCount);
+        ~ScriptCallFrame();
 
-        // Waits for a single task and returns.
-        MessageQueueWaitResult runInMode(WorkerContext*, const String& mode);
+        const ScriptString& functionName() const { return m_functionName; }
+        const KURL& sourceURL() const { return m_sourceURL; }
+        unsigned lineNumber() const { return m_lineNumber; }
 
-        void terminate();
-        bool terminated() { return m_messageQueue.killed(); }
+        // argument retrieval methods
+        const ScriptValue& argumentAt(unsigned) const;
+        unsigned argumentCount() const { return m_arguments.size(); }
 
-        void postTask(PassRefPtr<ScriptExecutionContext::Task>);
-        void postTaskForMode(PassRefPtr<ScriptExecutionContext::Task>, const String& mode);
-
-        static String defaultMode();
-        class Task;
     private:
-        friend class RunLoopSetup;
-        MessageQueueWaitResult runInMode(WorkerContext*, const ModePredicate&);
+        ScriptString m_functionName;
+        KURL m_sourceURL;
+        unsigned m_lineNumber;
 
-        MessageQueue<RefPtr<Task> > m_messageQueue;
-        OwnPtr<WorkerSharedTimer> m_sharedTimer;
-        int m_nestedCount;
+        Vector<ScriptValue> m_arguments;
     };
 
 } // namespace WebCore
 
-#endif // ENABLE(WORKERS)
-
-#endif // WorkerRunLoop_h
+#endif // ScriptCallFrame_h

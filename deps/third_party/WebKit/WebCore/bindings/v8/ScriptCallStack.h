@@ -1,10 +1,10 @@
 /*
- * Copyright (C) 2009 Google Inc. All rights reserved.
- * 
+ * Copyright (C) 2008, 2009 Google Inc. All rights reserved.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
  *     * Redistributions in binary form must reproduce the above
@@ -28,52 +28,32 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef WorkerRunLoop_h
-#define WorkerRunLoop_h
+#ifndef ScriptCallStack_h
+#define ScriptCallStack_h
 
-#if ENABLE(WORKERS)
+#include "ScriptCallFrame.h"
+#include "ScriptValue.h"
+#include <wtf/Noncopyable.h>
 
-#include "ScriptExecutionContext.h"
-#include <wtf/MessageQueue.h>
-#include <wtf/OwnPtr.h>
-#include <wtf/PassRefPtr.h>
+namespace v8 {
+    class Arguments;
+}
 
 namespace WebCore {
 
-    class ModePredicate;
-    class WorkerContext;
-    class WorkerSharedTimer;
-
-    class WorkerRunLoop {
+    class ScriptCallStack : public Noncopyable {
     public:
-        WorkerRunLoop();
-        ~WorkerRunLoop();
-        
-        // Blocking call. Waits for tasks and timers, invokes the callbacks.
-        void run(WorkerContext*);
+        ScriptCallStack(const v8::Arguments&, unsigned skipArgumentCount = 0);
+        ~ScriptCallStack();
 
-        // Waits for a single task and returns.
-        MessageQueueWaitResult runInMode(WorkerContext*, const String& mode);
+        const ScriptCallFrame& at(unsigned) const;
+        // FIXME: implement retrieving and storing call stack trace
+        unsigned size() const { return 1; }
 
-        void terminate();
-        bool terminated() { return m_messageQueue.killed(); }
-
-        void postTask(PassRefPtr<ScriptExecutionContext::Task>);
-        void postTaskForMode(PassRefPtr<ScriptExecutionContext::Task>, const String& mode);
-
-        static String defaultMode();
-        class Task;
     private:
-        friend class RunLoopSetup;
-        MessageQueueWaitResult runInMode(WorkerContext*, const ModePredicate&);
-
-        MessageQueue<RefPtr<Task> > m_messageQueue;
-        OwnPtr<WorkerSharedTimer> m_sharedTimer;
-        int m_nestedCount;
+        ScriptCallFrame m_lastCaller;
     };
 
 } // namespace WebCore
 
-#endif // ENABLE(WORKERS)
-
-#endif // WorkerRunLoop_h
+#endif // ScriptCallStack_h

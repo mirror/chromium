@@ -848,10 +848,10 @@ InspectorController::~InspectorController()
 
 void InspectorController::inspectedPageDestroyed()
 {
-    close();
-
     ASSERT(m_inspectedPage);
     m_inspectedPage = 0;
+
+    close();
 }
 
 bool InspectorController::enabled() const

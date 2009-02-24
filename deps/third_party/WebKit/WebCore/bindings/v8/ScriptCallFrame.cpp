@@ -1,10 +1,10 @@
 /*
- * Copyright (C) 2009 Google Inc. All rights reserved.
- * 
+ * Copyright (C) 2008, 2009 Google Inc. All rights reserved.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
  *     * Redistributions in binary form must reproduce the above
@@ -28,52 +28,35 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef WorkerRunLoop_h
-#define WorkerRunLoop_h
+#include "config.h"
+#include "ScriptCallFrame.h"
 
-#if ENABLE(WORKERS)
+#include <v8.h>
 
-#include "ScriptExecutionContext.h"
-#include <wtf/MessageQueue.h>
-#include <wtf/OwnPtr.h>
-#include <wtf/PassRefPtr.h>
+#include "PlatformString.h"
+#include "V8Binding.h"
+#include "V8Proxy.h"
+#include "ScriptValue.h"
 
 namespace WebCore {
 
-    class ModePredicate;
-    class WorkerContext;
-    class WorkerSharedTimer;
+ScriptCallFrame::ScriptCallFrame(const String& functionName, const String& urlString, int lineNumber, const v8::Arguments& arguments, unsigned skipArgumentCount)
+    : m_functionName(functionName)
+    , m_sourceURL(urlString)
+    , m_lineNumber(lineNumber)
+{
+    for (int i = 0; i < arguments.Length(); ++i)
+        m_arguments.append(ScriptValue(arguments[i]));
+}
 
-    class WorkerRunLoop {
-    public:
-        WorkerRunLoop();
-        ~WorkerRunLoop();
-        
-        // Blocking call. Waits for tasks and timers, invokes the callbacks.
-        void run(WorkerContext*);
+ScriptCallFrame::~ScriptCallFrame()
+{
+}
 
-        // Waits for a single task and returns.
-        MessageQueueWaitResult runInMode(WorkerContext*, const String& mode);
-
-        void terminate();
-        bool terminated() { return m_messageQueue.killed(); }
-
-        void postTask(PassRefPtr<ScriptExecutionContext::Task>);
-        void postTaskForMode(PassRefPtr<ScriptExecutionContext::Task>, const String& mode);
-
-        static String defaultMode();
-        class Task;
-    private:
-        friend class RunLoopSetup;
-        MessageQueueWaitResult runInMode(WorkerContext*, const ModePredicate&);
-
-        MessageQueue<RefPtr<Task> > m_messageQueue;
-        OwnPtr<WorkerSharedTimer> m_sharedTimer;
-        int m_nestedCount;
-    };
+const ScriptValue& ScriptCallFrame::argumentAt(unsigned index) const
+{
+    ASSERT(m_arguments.size() > index);
+    return m_arguments[index];
+}
 
 } // namespace WebCore
-
-#endif // ENABLE(WORKERS)
-
-#endif // WorkerRunLoop_h
