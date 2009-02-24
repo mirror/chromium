@@ -208,7 +208,7 @@ class InputApi(object):
 
       Remember to check for the None case and show an appropriate error!
     """
-    local_path = _GetSVNFileInfo(depot_path, 'Path')
+    local_path = _GetSVNFileInfo(depot_path).get('Path')
     if not local_path:
       return None
     else:
@@ -224,7 +224,7 @@ class InputApi(object):
     Returns:
       The depot path (SVN URL) of the file if mapped, otherwise None.
     """
-    depot_path = _GetSVNFileInfo(local_path, 'URL')
+    depot_path = _GetSVNFileInfo(local_path).get('URL')
     if not depot_path:
       return None
     else:
@@ -329,7 +329,7 @@ class AffectedFile(object):
 
     Returns the empty string if the file does not exist in SCM.
     """
-    return _GetSVNFileInfo(self.AbsoluteLocalPath(), 'URL')
+    return _GetSVNFileInfo(self.AbsoluteLocalPath()).get('URL')
 
   def LocalPath(self):
     """Returns the path of this file on the local disk relative to client root.
@@ -343,7 +343,7 @@ class AffectedFile(object):
 
   def IsDirectory(self):
     """Returns true if this object is a directory."""
-    return _GetSVNFileInfo(self.path, 'Node Kind') == 'directory'
+    return _GetSVNFileInfo(self.path).get('Node Kind') == 'directory'
 
   def SvnProperty(self, property_name):
     """Returns the specified SVN property of this file, or the empty string

@@ -25,18 +25,18 @@ class PresubmitUnittest(unittest.TestCase):
     presubmit._IsFile = MockIsFile
 
     self.original_GetSVNFileInfo = presubmit._GetSVNFileInfo
-    def MockGetSVNFileInfo(path, key):
+    def MockGetSVNFileInfo(path):
       if path.count('notfound'):
-        return ''
-      elif key == 'Path':
-        return path[len('svn:/foo/'):]
-      elif key == 'URL':
-        return 'svn:/foo/%s' % path.replace('\\', '/')
-      elif key == 'Node Kind':
-        if path.endswith('isdir'):
-          return 'directory'
-        else:
-          return 'file'
+        return {}
+      results = {
+        'Path': path[len('svn:/foo/'):],
+        'URL': 'svn:/foo/%s' % path.replace('\\', '/'),
+      }
+      if path.endswith('isdir'):
+        results['Node Kind'] = 'directory'
+      else:
+        results['Node Kind'] = 'file'
+      return results
     presubmit._GetSVNFileInfo = MockGetSVNFileInfo
 
     self.original_GetSVNFileProperty = presubmit._GetSVNFileProperty

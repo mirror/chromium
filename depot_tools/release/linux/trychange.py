@@ -266,8 +266,8 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
   if options.revision == 0:
     options.revision = None
   elif not options.revision:
-    svn_url = gcl.GetSVNFileInfo(os.getcwd(), "Repository Root")
-    options.revision = int(gcl.GetSVNFileInfo(svn_url, "Revision"))
+    svn_url = gcl.GetSVNFileInfo(os.getcwd())["Repository Root"]
+    options.revision = int(gcl.GetSVNFileInfo(svn_url)["Revision"])
 
   try:
     # Convert options.diff into the content of the diff.

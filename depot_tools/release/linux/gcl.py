@@ -44,14 +44,16 @@ MISSING_TEST_MSG = "Change contains new or modified methods, but no new tests!"
 read_gcl_info = False
 
 
-def GetSVNFileInfo(file, field):
-  """Returns a field from the svn info output for the given file."""
+def GetSVNFileInfo(file):
+  """Returns a dictionary from the svn info output for the given file."""
   output = RunShell(["svn", "info", file])
+  result = {}
+  re_key_value_pair = re.compile('^(.*)\: (.*)$')
   for line in output.splitlines():
-    search = field + ": "
-    if line.startswith(search):
-      return line[len(search):]
-  return ""
+    key_value_pair = re_key_value_pair.match(line)
+    if key_value_pair:
+      result[key_value_pair.group(1)] = key_value_pair.group(2)
+  return result
 
 
 def GetSVNFileProperty(file, property_name):
@@ -81,14 +83,14 @@ def GetRepositoryRoot():
   """
   global repository_root
   if not repository_root:
-    cur_dir_repo_root = GetSVNFileInfo(os.getcwd(), "Repository Root")
+    cur_dir_repo_root = GetSVNFileInfo(os.getcwd()).get("Repository Root")
     if not cur_dir_repo_root:
       ErrorExit("gcl run outside of repository")
 
     repository_root = os.getcwd()
     while True:
       parent = os.path.dirname(repository_root)
-      if GetSVNFileInfo(parent, "Repository Root") != cur_dir_repo_root:
+      if GetSVNFileInfo(parent).get("Repository Root") != cur_dir_repo_root:
         break
       repository_root = parent
   return repository_root
@@ -111,8 +113,9 @@ def GetCodeReviewSetting(key):
     cached_settings_file = os.path.join(GetInfoDir(), CODEREVIEW_SETTINGS_FILE)
     if (not os.path.exists(cached_settings_file) or
         os.stat(cached_settings_file).st_mtime > 60*60*24*3):
-      repo_root = GetSVNFileInfo(".", "Repository Root")
-      url_path = GetSVNFileInfo(".", "URL")
+      dir_info = GetSVNFileInfo(".")
+      repo_root = dir_info["Repository Root"]
+      url_path = dir_info["URL"]
       settings = ""
       while True:
         # Look for the codereview.settings file at the current level.
@@ -644,7 +647,7 @@ def GenerateDiff(files, root=None):
   for file in files:
     # Use svn info output instead of os.path.isdir because the latter fails
     # when the file is deleted.
-    if GetSVNFileInfo(file, "Node Kind") == "directory":
+    if GetSVNFileInfo(file).get("Node Kind") == "directory":
       continue
     # If the user specified a custom diff command in their svn config file,
     # then it'll be used when we do svn diff, which we don't want to happen
