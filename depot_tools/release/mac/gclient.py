@@ -36,7 +36,7 @@ Files
 """
 
 __author__ = "darinf@gmail.com (Darin Fisher)"
-__version__ = "0.1"
+__version__ = "0.2"
 
 import errno
 import optparse
@@ -66,8 +66,9 @@ SVN_COMMAND = "svn"
 
 # default help text
 DEFAULT_USAGE_TEXT = (
-    """usage: %prog <subcommand> [options] [--] [svn options/args...]
+"""usage: %prog <subcommand> [options] [--] [svn options/args...]
 a wrapper for managing a set of client modules in svn.
+Version """ + __version__ + """
 
 subcommands:
    config
@@ -990,7 +991,7 @@ def DoHelp(options, args):
   if len(args) == 1 and args[0] in COMMAND_USAGE_TEXT:
     print >>options.stdout, COMMAND_USAGE_TEXT[args[0]]
   else:
-    raise Error("unknown subcommand; see 'gclient help'")
+    raise Error("unknown subcommand '%s'; see 'gclient help'" % args[0])
 
 
 def DoStatus(options, args):
@@ -1074,7 +1075,7 @@ def DispatchCommand(command, options, args, command_map=None):
   if command in command_map:
     return command_map[command](options, args)
   else:
-    raise Error("unknown subcommand; see 'gclient help'")
+    raise Error("unknown subcommand '%s'; see 'gclient help'" % command)
 
 
 def Main(argv):
@@ -1111,6 +1112,14 @@ def Main(argv):
     # Users don't need to be told to use the 'help' command.
     option_parser.print_help()
     return 1
+  # Add manual support for --version as first argument.
+  if argv[1] == '--version':
+    option_parser.print_version()
+    return 0
+
+  # Add manual support for --help as first argument.
+  if argv[1] == '--help':
+    argv[1] = 'help'
 
   command = argv[1]
   options, args = option_parser.parse_args(argv[2:])
