@@ -131,7 +131,7 @@ class GateKeeper(MailNotifier):
     # If we have not failed, or are not interested in this builder,
     # then we have nothing to do.
     builder = build.getBuilder()
-    if results[0] != FAILURE or not isInterestingBuilder(builder, name):
+    if results[0] != FAILURE or not self.isInterestingBuilder(builder, name):
       return
 
     name  = builder.getName()
