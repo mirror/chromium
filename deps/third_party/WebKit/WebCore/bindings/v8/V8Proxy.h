@@ -37,9 +37,9 @@
 
 namespace WebCore {
 
-    // Used by a bindings function to inform its interceptor that it's up to the
-    // interceptor to provide the result of this call.
-    inline static v8::Local<v8::Object> deferToInterceptor()
+    // Used by an interceptor callback that it hasn't found anything to
+    // intercept.
+    inline static v8::Local<v8::Object> notHandledByInterceptor()
     {
         return v8::Local<v8::Object>();
     }
@@ -48,6 +48,19 @@ namespace WebCore {
     {
         V8Proxy::ThrowError(type, message);
         return v8::Undefined();
+    }
+
+    inline v8::Handle<v8::Primitive> throwError(ExceptionCode ec)
+    {
+        V8Proxy::SetDOMException(ec);
+        return v8::Undefined();
+    }
+
+    template <class T> inline v8::Handle<v8::Object> toV8(PassRefPtr<T> object, v8::Local<v8::Object> holder)
+    {
+        object->ref();
+        V8Proxy::SetJSWrapperForDOMObject(object.get(), v8::Persistent<v8::Object>::New(holder));
+        return holder;
     }
 
 }
