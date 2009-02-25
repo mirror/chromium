@@ -122,6 +122,7 @@ F. Mac and Linux platform headers (common/p{mac,linux}.h):
    - public/common/unicode/umachine.h was updated to include pmac.h instead of
      platform.h on the Mac;
    - icu.xcodeproj was added to enable ICU to build using Xcode on the Mac.
+   - icu.gyp was added to enable gyp-based builds to use ICU.
 
    Linux:
    - Similarly to the Mac case.  Let ICUROOT be third_party/icu38.  Then:
