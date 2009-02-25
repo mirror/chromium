@@ -29,78 +29,24 @@
  */
 
 #include "config.h"
-#include "WebCString.h"
+#include "WebKit.h"
 
-#include "CString.h"
+#include <wtf/Assertions.h>
 
 namespace WebKit {
 
-class WebCStringPrivate : public WebCore::CStringBuffer {
-};
+static WebKitClient* g_webKitClient;
 
-void WebCString::reset()
+void initialize(WebKitClient* webKitClient)
 {
-    if (m_private) {
-        m_private->deref();
-        m_private = 0;
-    }
+    ASSERT(webKitClient);
+    ASSERT(!g_webKitClient);
+    g_webKitClient = webKitClient;
 }
 
-void WebCString::assign(const WebCString& other)
+WebKitClient* webKitClient()
 {
-    assign(const_cast<WebCStringPrivate*>(other.m_private));
-}
-
-void WebCString::assign(const char* characters, size_t length)
-{
-    char* data;
-    RefPtr<WebCore::CStringBuffer> buffer =
-        WebCore::CString::newUninitialized(length, data).buffer();
-    memcpy(data, characters, length);
-    assign(static_cast<WebCStringPrivate*>(buffer.get()));
-}
-
-size_t WebCString::length() const
-{
-    if (!m_private)
-        return 0;
-    // NOTE: The buffer's length includes the null byte.
-    return const_cast<WebCStringPrivate*>(m_private)->length() - 1;
-}
-
-const char* WebCString::characters() const
-{
-    if (!m_private)
-        return 0;
-    return const_cast<WebCStringPrivate*>(m_private)->data();
-}
-
-WebCString::WebCString(const WebCore::CString& s)
-    : m_private(static_cast<WebCStringPrivate*>(s.buffer()))
-{
-    if (m_private)
-        m_private->ref();
-}
-
-WebCString& WebCString::operator=(const WebCore::CString& s)
-{
-    assign(static_cast<WebCStringPrivate*>(s.buffer()));
-    return *this;
-}
-
-WebCString::operator WebCore::CString() const
-{
-    return m_private;
-}
-
-void WebCString::assign(WebCStringPrivate* p)
-{
-    // Take care to handle the case where m_private == p
-    if (p)
-        p->ref();
-    if (m_private)
-        m_private->deref();
-    m_private = p;
+    return g_webKitClient;
 }
 
 } // namespace WebKit

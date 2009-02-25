@@ -61,7 +61,7 @@ namespace WebKit {
         WEBKIT_API WebSize size() const;
 
         WebImagePixels pixels() const;
-        bool isNull() const { return m_private != NULL; }
+        bool isNull() const { return m_private == 0; }
 
 #if WEBKIT_USING(SKIA)
         WebImage(const SkBitmap& bitmap) : m_private(0)

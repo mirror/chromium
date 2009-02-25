@@ -64,6 +64,9 @@ namespace WebKit {
         WEBKIT_API size_t length() const;
         WEBKIT_API const char* characters() const;
 
+        bool isEmpty() const { return length() == 0; }
+        bool isNull() const { return m_private == 0; }
+
 #if defined(WEBKIT_IMPLEMENTATION)
         WebCString(const WebCore::CString&);
         WebCString& operator=(const WebCore::CString&);
@@ -83,7 +86,7 @@ namespace WebKit {
         operator std::string() const
         {
             size_t len = length();
-            return len ? string(characters(), len) : string16();
+            return len ? std::string(characters(), len) : std::string();
         }
 #endif
 

@@ -28,79 +28,38 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "config.h"
-#include "WebCString.h"
+#ifndef WebClipboard_h
+#define WebClipboard_h
 
-#include "CString.h"
+#include "WebCommon.h"
 
 namespace WebKit {
+    class WebImage;
+    class WebString;
+    class WebURL;
 
-class WebCStringPrivate : public WebCore::CStringBuffer {
-};
+    class WebClipboard {
+    public:
+        enum Format {
+            FormatHTML,
+            FormatBookmark,
+            FormatSmartPaste
+        };
 
-void WebCString::reset()
-{
-    if (m_private) {
-        m_private->deref();
-        m_private = 0;
-    }
-}
+        virtual bool isFormatAvailable(Format) = 0;
 
-void WebCString::assign(const WebCString& other)
-{
-    assign(const_cast<WebCStringPrivate*>(other.m_private));
-}
+        virtual WebString readPlainText() = 0;
+        virtual WebString readHTML(WebURL*) = 0;
 
-void WebCString::assign(const char* characters, size_t length)
-{
-    char* data;
-    RefPtr<WebCore::CStringBuffer> buffer =
-        WebCore::CString::newUninitialized(length, data).buffer();
-    memcpy(data, characters, length);
-    assign(static_cast<WebCStringPrivate*>(buffer.get()));
-}
-
-size_t WebCString::length() const
-{
-    if (!m_private)
-        return 0;
-    // NOTE: The buffer's length includes the null byte.
-    return const_cast<WebCStringPrivate*>(m_private)->length() - 1;
-}
-
-const char* WebCString::characters() const
-{
-    if (!m_private)
-        return 0;
-    return const_cast<WebCStringPrivate*>(m_private)->data();
-}
-
-WebCString::WebCString(const WebCore::CString& s)
-    : m_private(static_cast<WebCStringPrivate*>(s.buffer()))
-{
-    if (m_private)
-        m_private->ref();
-}
-
-WebCString& WebCString::operator=(const WebCore::CString& s)
-{
-    assign(static_cast<WebCStringPrivate*>(s.buffer()));
-    return *this;
-}
-
-WebCString::operator WebCore::CString() const
-{
-    return m_private;
-}
-
-void WebCString::assign(WebCStringPrivate* p)
-{
-    // Take care to handle the case where m_private == p
-    if (p)
-        p->ref();
-    if (m_private)
-        m_private->deref();
-    m_private = p;
-}
+        virtual void writeHTML(
+            const WebString& htmlText, const WebURL&,
+            const WebString& plainText, bool writeSmartPaste) = 0;
+        virtual void writeURL(
+            const WebURL&, const WebString& title) = 0;
+        virtual void writeImage(
+            const WebImage&, const WebURL&, const WebString& title) = 0;
+    };
 
 } // namespace WebKit
+
+#endif

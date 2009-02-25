@@ -96,6 +96,16 @@ namespace WebKit {
             return m_isValid;
         }
 
+        bool isEmpty() const
+        {
+            return m_spec.isEmpty();
+        }
+
+        bool isNull() const
+        {
+            return m_spec.isEmpty();
+        }
+
 #if defined(WEBKIT_IMPLEMENTATION)
         WebURL(const WebCore::KURL&);
         WebURL& operator=(const WebCore::KURL&);
@@ -113,11 +123,12 @@ namespace WebKit {
             m_spec = g.possibly_invalid_spec();
             m_parsed = g.parsed_for_possibly_invalid_spec();
             m_isValid = g.is_valid();
+            return *this;
         }
 
         operator GURL() const
         {
-            return GURL(m_spec.bytes(), m_spec.length(), m_parsed, m_isValid);
+            return GURL(m_spec.characters(), m_spec.length(), m_parsed, m_isValid);
         }
 #endif
 

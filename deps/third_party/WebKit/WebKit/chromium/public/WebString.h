@@ -64,6 +64,9 @@ namespace WebKit {
         WEBKIT_API size_t length() const;
         WEBKIT_API const WebUChar* characters() const;
 
+        bool isEmpty() const { return length() == 0; }
+        bool isNull() const { return m_private == 0; }
+
 #if defined(WEBKIT_IMPLEMENTATION)
         WebString(const WebCore::String&);
         WebString& operator=(const WebCore::String&);
