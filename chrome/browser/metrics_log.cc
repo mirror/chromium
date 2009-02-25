@@ -366,6 +366,8 @@ void MetricsLog::WriteStabilityElement() {
   pref->SetString(prefs::kStabilityUptimeSec, L"0");
 
   WritePluginStabilityElements(pref);
+  
+  EndElement();
 }
 
 void MetricsLog::WritePluginStabilityElements(PrefService* pref) {
@@ -410,8 +412,6 @@ void MetricsLog::WritePluginStabilityElements(PrefService* pref) {
     pref->ClearPref(prefs::kStabilityPluginStats);
     EndElement();
   }
-
-  EndElement();
 }
 
 void MetricsLog::WriteRequiredStabilityAttributes(PrefService* pref) {
