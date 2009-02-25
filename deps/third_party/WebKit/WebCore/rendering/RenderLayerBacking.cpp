@@ -259,16 +259,8 @@ void RenderLayerBacking::updateGraphicsLayerGeometry()
         m_graphicsLayer->setAnchorPoint(anchor);
 
         RenderStyle* style = renderer()->style();
-        if (style->perspective() > 0) {
-            FloatPoint perspectiveOrigin = computePerspectiveOrigin(borderBox);
-            
-            float xOffset = perspectiveOrigin.x() - (float)borderBox.width() / 2.0f;
-            float yOffset = perspectiveOrigin.y() - (float)borderBox.height() / 2.0f;
-
-            TransformationMatrix t;
-            t.translate(xOffset, yOffset);
-            t.applyPerspective(style->perspective());
-            t.translate(-xOffset, -yOffset);
+        if (style->hasPerspective()) {
+            TransformationMatrix t = owningLayer()->perspectiveTransform();
             
             if (m_clippingLayer) {
                 m_clippingLayer->setChildrenTransform(t);
@@ -552,9 +544,9 @@ bool RenderLayerBacking::hasNonCompositingContent() const
         }
     }
 
-    Vector<RenderLayer*>* overflowList = m_owningLayer->overflowList();
-    if (overflowList && overflowList->size() > 0) {
-        for (Vector<RenderLayer*>::const_iterator it = overflowList->begin(); it != overflowList->end(); ++it) {
+    Vector<RenderLayer*>* normalFlowList = m_owningLayer->normalFlowList();
+    if (normalFlowList && normalFlowList->size() > 0) {
+        for (Vector<RenderLayer*>::const_iterator it = normalFlowList->begin(); it != normalFlowList->end(); ++it) {
             RenderLayer* curLayer = (*it);
             if (!curLayer->isComposited())
                 return true;
@@ -820,9 +812,9 @@ void RenderLayerBacking::paintIntoLayer(RenderLayer* rootLayer, GraphicsContext*
         }
 
         // Paint any child layers that have overflow.
-        Vector<RenderLayer*>* overflowList = m_owningLayer->overflowList();
-        if (overflowList) {
-            for (Vector<RenderLayer*>::iterator it = overflowList->begin(); it != overflowList->end(); ++it)
+        Vector<RenderLayer*>* normalFlowList = m_owningLayer->normalFlowList();
+        if (normalFlowList) {
+            for (Vector<RenderLayer*>::iterator it = normalFlowList->begin(); it != normalFlowList->end(); ++it)
                 it[0]->paintLayer(rootLayer, context, paintDirtyRect, haveTransparency, paintRestriction, paintingRoot);
         }
 

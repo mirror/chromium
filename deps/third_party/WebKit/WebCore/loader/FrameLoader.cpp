@@ -745,6 +745,9 @@ bool FrameLoader::executeIfJavaScriptURL(const KURL& url, bool userGesture, bool
     if (!url.protocolIs("javascript"))
         return false;
 
+    if (m_frame->page() && !m_frame->page()->javaScriptURLsAreAllowed())
+        return true;
+
     String script = decodeURLEscapeSequences(url.string().substring(strlen("javascript:")));
     ScriptValue result = executeScript(script, userGesture);
 
@@ -907,6 +910,14 @@ void FrameLoader::begin(const KURL& url, bool dispatch, SecurityOrigin* origin)
     // might destroy the document that owns it.
     RefPtr<SecurityOrigin> forcedSecurityOrigin = origin;
 
+    RefPtr<Document> document;
+
+    // Create a new document before clearing the frame, because it may need to inherit an aliased security context.
+    if (!m_isDisplayingInitialEmptyDocument && m_client->shouldUsePluginDocument(m_responseMIMEType))
+        document = PluginDocument::create(m_frame);
+    else
+        document = DOMImplementation::createDocument(m_responseMIMEType, m_frame, m_frame->inViewSourceMode());
+
     bool resetScripting = !(m_isDisplayingInitialEmptyDocument && m_frame->document()->securityOrigin()->isSecureTransitionTo(url));
     clear(resetScripting, resetScripting);
     if (resetScripting)
@@ -925,12 +936,6 @@ void FrameLoader::begin(const KURL& url, bool dispatch, SecurityOrigin* origin)
     m_outgoingReferrer = ref.string();
     m_URL = url;
 
-    RefPtr<Document> document;
-    
-    if (!m_isDisplayingInitialEmptyDocument && m_client->shouldUsePluginDocument(m_responseMIMEType))
-        document = PluginDocument::create(m_frame);
-    else
-        document = DOMImplementation::createDocument(m_responseMIMEType, m_frame, m_frame->inViewSourceMode());
     m_frame->setDocument(document);
 
     if (dispatch)

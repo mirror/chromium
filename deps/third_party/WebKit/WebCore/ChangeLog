@@ -1,3 +1,589 @@
+2009-02-25  Jian Li  <jianli@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Remove "#if ENABLE(WORKERS)" wrap from CrossThreadCopier files.
+        https://bugs.webkit.org/show_bug.cgi?id=24145
+
+        * platform/CrossThreadCopier.cpp:
+        * platform/CrossThreadCopier.h:
+
+2009-02-25  David Levin  <levin@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Bug 23688: ThreadableLoader needs a sync implementation for Workers.
+        <https://bugs.webkit.org/show_bug.cgi?id=23688>
+
+        No observable change in behavior, so no test.
+
+        * loader/ThreadableLoader.cpp:
+        (WebCore::ThreadableLoader::loadResourceSynchronously):
+        * loader/ThreadableLoaderClientWrapper.h:
+        (WebCore::ThreadableLoaderClientWrapper::clearClient):
+        (WebCore::ThreadableLoaderClientWrapper::done):
+        (WebCore::ThreadableLoaderClientWrapper::didFinishLoading):
+        (WebCore::ThreadableLoaderClientWrapper::didFail):
+        (WebCore::ThreadableLoaderClientWrapper::didFailRedirectCheck):
+        (WebCore::ThreadableLoaderClientWrapper::ThreadableLoaderClientWrapper):
+        Expose whether the loader is done (based on what callbacks were done).
+
+        * loader/WorkerThreadableLoader.cpp:
+        (WebCore::WorkerThreadableLoader::WorkerThreadableLoader):
+        (WebCore::WorkerThreadableLoader::loadResourceSynchronously):
+        Each loader is given its own mode so that only its callbacks get through the run loop.
+
+        The xhr spec says that the readystatechange events are synchronous, so in the case of a
+        nested sync xhr no readystatechange events should be fired for the outer xhr.
+
+        (WebCore::WorkerThreadableLoader::MainThreadBridge::MainThreadBridge):
+
+        * loader/WorkerThreadableLoader.h:
+        (WebCore::WorkerThreadableLoader::create):
+        (WebCore::WorkerThreadableLoader::done):
+
+        * workers/WorkerRunLoop.cpp:
+        (WebCore::WorkerRunLoop::WorkerRunLoop):
+        * workers/WorkerRunLoop.h:
+        (WebCore::WorkerRunLoop::createUniqueId):
+        Simple method to create a uniqueId on demand with respect to the run loop.
+
+        * workers/WorkerThread.h:
+
+2009-02-25  David Levin  <levin@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Bug 24089: ThreadableLoader::loadResourceSynchronously should do callbacks like the async code.
+        <https://bugs.webkit.org/show_bug.cgi?id=24089>
+
+        Make threadable loader callbacks to happen during the sync load call.
+
+        Changes the behavior of sync xhr for insecure redirects in two ways:
+        + Sends an error event instead of an abort event (which is the same as async xhr's behavior).
+        + Throws a network exception which is what other browsers do and what the spec
+        says to do (http://www.w3.org/TR/XMLHttpRequest/).
+
+        * loader/DocumentThreadableLoader.cpp:
+        (WebCore::DocumentThreadableLoader::loadResourceSynchronously):
+        * loader/DocumentThreadableLoader.h:
+        * loader/ThreadableLoader.cpp:
+        (WebCore::ThreadableLoader::loadResourceSynchronously):
+        * loader/ThreadableLoader.h:
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::XMLHttpRequest::XMLHttpRequest):
+        (WebCore::XMLHttpRequest::loadRequestSynchronously):
+        (WebCore::XMLHttpRequest::loadRequestAsynchronously):
+        (WebCore::XMLHttpRequest::didFail):
+        (WebCore::XMLHttpRequest::didFailRedirectCheck):
+        * xml/XMLHttpRequest.h:
+
+2009-02-24  Chris Marrin  <cmarrin@apple.com>
+
+        Reviewed by David Hyatt.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23368
+
+        Added logic to correctly hit test accelerated layers.
+
+        Tests: animations/animation-hit-test-transform.html
+               animations/animation-hit-test.html
+               transitions/transition-hit-test-transform.html
+               transitions/transition-hit-test.html
+
+        * page/animation/KeyframeAnimation.cpp:
+        (WebCore::KeyframeAnimation::animate):
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::hitTestLayer):
+        (WebCore::RenderLayer::updateClipRects):
+        * rendering/RenderLayerBacking.cpp:
+        (WebCore::RenderLayerBacking::updateGraphicsLayerGeometry):
+
+2009-02-25  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24067
+        REGRESSION: Crash in WebCore::Document::initSecurityContext
+
+        The crash started to happen when we removed a check for frame->document() being null.
+        However, the original document shouldn't be null here, because it is needed to alias
+        security origins. So, this patch fixes the crash by correcting security origin behavior.
+
+        Test: http/tests/security/aboutBlank/window-open-self-about-blank.html
+        This tests for not crashing, and for inheriting the domain from the document being replaced.
+        Preserving the aliasing cannot be tested for automatically, because we'd need a non-trivial
+        domain to remove a prefix from.
+
+        * loader/FrameLoader.cpp: (WebCore::FrameLoader::begin): Create a new document before
+        clearing the frame, so that Document::initSecurityContext() could access the old one.
+
+2009-02-25  Jay Campan  <jcampan@google.com>
+
+        Reviewed by Darin Fisher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24066
+
+        Items in drop-downs were not painted correctly.  Makes sure the
+        PopupListBox invalidates in the coordinates of the window as this is
+        FramelessScrollView::invalidateRect paints to.
+
+        * platform/chromium/PopupMenuChromium.cpp:
+        (WebCore::PopupListBox::invalidateRow):
+
+2009-02-24  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Anders Carlsson
+
+        https://bugs.webkit.org/show_bug.cgi?id=15081
+        
+        Make display:none work for applet, emebed and object elements
+        by calling rendererIsNeeded() on superclasses.
+
+        Tests: fast/replaced/applet-display-none.html
+               fast/replaced/embed-display-none.html
+               fast/replaced/object-display-none.html
+
+        * html/HTMLAppletElement.cpp:
+        (WebCore::HTMLAppletElement::rendererIsNeeded):
+        * html/HTMLElement.cpp:
+        (WebCore::HTMLElement::rendererIsNeeded):
+        * html/HTMLEmbedElement.cpp:
+        (WebCore::HTMLEmbedElement::rendererIsNeeded):
+        * html/HTMLObjectElement.cpp:
+        (WebCore::HTMLObjectElement::rendererIsNeeded):
+
+2009-02-24  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+
+        https://bugs.webkit.org/show_bug.cgi?id=24137
+        
+        Fix localToAbsolute() and absoluteToLocal() to map points through 3d transforms,
+        taking perspective and transform-style: preserve-3d into account.
+        
+        In order to support transform-style: preserve-3d, which keeps elements in a
+        3d space, we have to carry along an accumulated matrix in TransformState.
+        We also need to apply the perspective from the parent, if any, with the
+        appropriate origin.
+
+        * GNUmakefile.am:
+        * WebCore.base.exp:
+        * WebCore.pro:
+        * WebCore.scons:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+        * css/CSSComputedStyleDeclaration.cpp:
+        (WebCore::CSSComputedStyleDeclaration::getPropertyCSSValue):
+        * platform/graphics/transforms/TransformationMatrix.cpp:
+        (WebCore::TransformationMatrix::translate):
+        (WebCore::TransformationMatrix::translate3d):
+        (WebCore::TransformationMatrix::translateRight3d):
+        * platform/graphics/transforms/TransformationMatrix.h:
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::mapLocalToAbsolutePoint):
+        (WebCore::RenderBox::mapAbsoluteToLocalPoint):
+        * rendering/RenderBox.h:
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::updateTransform):
+        (WebCore::RenderLayer::perspectiveTransform):
+        (WebCore::RenderLayer::perspectiveOrigin):
+        * rendering/RenderLayer.h:
+        * rendering/RenderLayerBacking.cpp:
+        (WebCore::RenderLayerBacking::updateGraphicsLayerGeometry):
+        * rendering/RenderLayerCompositor.cpp:
+        (WebCore::requiresCompositingLayerForTransform):
+        (WebCore::RenderLayerCompositor::layerHas3DContent):
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::localToAbsolute):
+        (WebCore::RenderObject::absoluteToLocal):
+        (WebCore::RenderObject::mapLocalToAbsolutePoint):
+        (WebCore::RenderObject::mapAbsoluteToLocalPoint):
+        * rendering/RenderObject.h:
+        * rendering/RenderTableCell.cpp:
+        (WebCore::RenderTableCell::mapLocalToAbsolutePoint):
+        (WebCore::RenderTableCell::mapAbsoluteToLocalPoint):
+        * rendering/RenderTableCell.h:
+        * rendering/RenderView.cpp:
+        (WebCore::RenderView::mapLocalToAbsolutePoint):
+        (WebCore::RenderView::mapAbsoluteToLocalPoint):
+        * rendering/RenderView.h:
+        * rendering/TransformState.cpp: Added.
+        (WebCore::TransformState::move):
+        (WebCore::TransformState::applyTransform):
+        (WebCore::TransformState::flatten):
+        * rendering/TransformState.h: Added.
+        (WebCore::TransformState::):
+        (WebCore::TransformState::TransformState):
+        (WebCore::TransformState::move):
+        * rendering/style/RenderStyle.h:
+        (WebCore::InheritedFlags::hasPerspective):
+
+2009-02-24  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by David Hyatt.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=23990
+        Regression (r40837): JavaScript image popup doesn't work
+
+        Make the getClientRects and getBoundingClientRect methods return rects
+        relative to the viewport.
+
+        Test: fast/dom/getBoundingClientRect-getClientRects-relative-to-viewport.html
+
+        * dom/Element.cpp:
+        (WebCore::Element::getClientRects):
+        (WebCore::Element::getBoundingClientRect):
+
+2009-02-24  Ojan Vafai  <ojan@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        SVG pages don't have a body or an html element! 
+        Don't return early if there is no body.
+
+        * editing/VisiblePosition.cpp:
+        (WebCore::VisiblePosition::canonicalPosition):
+
+2009-02-23  David Hyatt  <hyatt@apple.com>
+
+        Reviewed by Eric Seidel
+
+        https://bugs.webkit.org/show_bug.cgi?id=23740, painting order wrong for normal flow elements with overflow: hidden
+        
+        This patch reworks the painting of overflow.  There is now the concept of a "self-painting layer."  All
+        layers are considered to be self-painting except for overflow layers that are normal flow (and that don't have
+        reflections or masks).
+        
+        If an overflow layer is not self-painting, then it ends up painted by its parent just like any other normal flow object.
+        The only difference is that the clip has to be pushed and popped when painting the object's children.
+        
+        The lightweight clipping scheme used for controls has been extended to cover overflow now in this simplified case.  With
+        the code consolidated into reusable push/pop functions, all of the renderers that use overflow have been patched to
+        use the new functions.
+        
+        Hit testing has also been patched to check the overflow clip rect first before recurring into children.
+        
+        Scrollbar paint has been moved into RenderBlock for now, since none of the table objects support scrollbars
+        yet, and scrollbar hit testing was already there anyway.  Now the two code paths are more symmetrical.
+        
+        Masks are now treated like normal flow layers (just like reflections).
+
+        A couple of test cases have been added to fast/overflow to test the stacking order. 
+
+        * rendering/InlineFlowBox.cpp:
+        (WebCore::InlineFlowBox::nodeAtPoint):
+        (WebCore::InlineFlowBox::paint):
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::repaintOverhangingFloats):
+        (WebCore::RenderBlock::paint):
+        (WebCore::RenderBlock::paintChildren):
+        (WebCore::RenderBlock::paintObject):
+        (WebCore::RenderBlock::paintFloats):
+        (WebCore::RenderBlock::insertFloatingObject):
+        (WebCore::RenderBlock::floatRect):
+        (WebCore::RenderBlock::lowestPosition):
+        (WebCore::RenderBlock::rightmostPosition):
+        (WebCore::RenderBlock::leftmostPosition):
+        (WebCore::RenderBlock::addOverhangingFloats):
+        (WebCore::RenderBlock::nodeAtPoint):
+        (WebCore::RenderBlock::hitTestContents):
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::nodeAtPoint):
+        (WebCore::RenderBox::pushContentsClip):
+        (WebCore::RenderBox::popContentsClip):
+        * rendering/RenderBox.h:
+        (WebCore::RenderBox::paintObject):
+        * rendering/RenderBoxModelObject.cpp:
+        (WebCore::RenderBoxModelObject::hasSelfPaintingLayer):
+        * rendering/RenderBoxModelObject.h:
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::paintLayer):
+        (WebCore::RenderLayer::hitTestLayer):
+        (WebCore::RenderLayer::shouldBeNormalFlowOnly):
+        (WebCore::RenderLayer::isSelfPaintingLayer):
+        * rendering/RenderLayer.h:
+        * rendering/RenderTable.cpp:
+        (WebCore::RenderTable::paint):
+        (WebCore::RenderTable::paintObject):
+        (WebCore::RenderTable::nodeAtPoint):
+        * rendering/RenderTable.h:
+        * rendering/RenderTableCell.cpp:
+        (WebCore::RenderTableCell::paint):
+        * rendering/RenderTableRow.cpp:
+        (WebCore::RenderTableRow::nodeAtPoint):
+        (WebCore::RenderTableRow::paint):
+        * rendering/RenderTableRow.h:
+        * rendering/RenderTableSection.cpp:
+        (WebCore::RenderTableSection::paint):
+        (WebCore::RenderTableSection::paintObject):
+        (WebCore::RenderTableSection::nodeAtPoint):
+        * rendering/RenderTableSection.h:
+        * rendering/RenderTreeAsText.cpp:
+        (WebCore::write):
+        (WebCore::writeLayers):
+
+2009-02-24  David Levin  <levin@chromium.org>
+
+        Reviewed by NOBODY (build fix).
+
+        Attempted build fix for wx-mac.
+
+        * WebCoreSources.bkl:
+
+2009-02-24  David Levin  <levin@chromium.org>
+
+        Reviewed by NOBODY (build fix).
+
+        Attempted build fixes for qt-linux and wx-mac.
+
+        * WebCore.pro:
+        * webcore-base.bkl:
+
+2009-02-24  Ojan Vafai  <ojan@dhcp-172-31-134-214.sfo.corp.google.com>
+
+        Reviewed by Sam Weinig.
+
+        Fix null pointer error. If the node is the Document, then ownerDocument() 
+        returns null, document() does not.
+
+        * editing/VisiblePosition.cpp:
+        (WebCore::VisiblePosition::canonicalPosition):
+
+2009-02-24  Jian Li  <jianli@chromium.org>
+
+        Reviewed by NOBODY (attempted build fixes).
+
+        Fix build break for Windows and Linux.
+
+        * GNUmakefile.am:
+        * WebCore.vcproj/WebCore.vcproj:
+
+2009-02-24  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24131
+        Fix-up COM/RefCounted dichotomy in Chromium port.
+
+        * page/chromium/AccessibilityObjectWrapper.h:
+        (WebCore::AccessibilityObjectWrapper::AccessibilityObjectWrapper): Added
+        explicit setting of recount.
+
+2009-02-24  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24141
+        Add clarity to V8 interceptor helper function.
+
+        * bindings/v8/custom/V8HTMLPlugInElementCustom.cpp:
+        (WebCore::NAMED_PROPERTY_GETTER): Renamed to notHandledByInterceptor.
+        (WebCore::NAMED_PROPERTY_SETTER): Ditto.
+        (WebCore::INDEXED_PROPERTY_GETTER): Ditto.
+        (WebCore::INDEXED_PROPERTY_SETTER): Ditto.
+
+2009-02-24  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Eric Seidel
+
+        Minor numeric cleanup: convert float literals to doubles.
+        
+        * platform/graphics/transforms/RotateTransformOperation.cpp:
+        (WebCore::RotateTransformOperation::blend):
+
+2009-02-24  Mark Mentovai  <mark@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24139
+        Add missing include.
+
+        * bindings/v8/ScriptInstance.h:
+
+2009-02-24  Jian Li  <jianli@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Move worker related files from dom directory to worker directory under WebCore.
+        https://bugs.webkit.org/show_bug.cgi?id=24123
+
+        * DerivedSources.make:
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.scons:
+        * WebCore.vcproj/MigrateIDLAndScripts:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * platform/CrossThreadCopier.cpp: Renamed from WebCore/dom/CrossThreadCopier.cpp.
+        * platform/CrossThreadCopier.h: Renamed from WebCore/dom/CrossThreadCopier.h.
+        * workers/GenericWorkerTask.h: Renamed from WebCore/dom/GenericWorkerTask.h.
+        * workers/Worker.cpp: Renamed from WebCore/dom/Worker.cpp.
+        * workers/Worker.h: Renamed from WebCore/dom/Worker.h.
+        * workers/Worker.idl: Renamed from WebCore/dom/Worker.idl.
+        * workers/WorkerContext.cpp: Renamed from WebCore/dom/WorkerContext.cpp.
+        * workers/WorkerContext.h: Renamed from WebCore/dom/WorkerContext.h.
+        * workers/WorkerContext.idl: Renamed from WebCore/dom/WorkerContext.idl.
+        * workers/WorkerContextProxy.h: Renamed from WebCore/dom/WorkerContextProxy.h.
+        * workers/WorkerLocation.cpp: Renamed from WebCore/dom/WorkerLocation.cpp.
+        * workers/WorkerLocation.h: Renamed from WebCore/dom/WorkerLocation.h.
+        * workers/WorkerLocation.idl: Renamed from WebCore/dom/WorkerLocation.idl.
+        * workers/WorkerMessagingProxy.cpp: Renamed from WebCore/dom/WorkerMessagingProxy.cpp.
+        * workers/WorkerMessagingProxy.h: Renamed from WebCore/dom/WorkerMessagingProxy.h.
+        * workers/WorkerObjectProxy.h: Renamed from WebCore/dom/WorkerObjectProxy.h.
+        * workers/WorkerRunLoop.cpp: Renamed from WebCore/dom/WorkerRunLoop.cpp.
+        * workers/WorkerRunLoop.h: Renamed from WebCore/dom/WorkerRunLoop.h.
+        * workers/WorkerThread.cpp: Renamed from WebCore/dom/WorkerThread.cpp.
+        * workers/WorkerThread.h: Renamed from WebCore/dom/WorkerThread.h.
+
+2009-02-05  Ojan Vafai  <ojan@chromium.org> and Eric Seidel <eric@webkit.org>
+
+        Reviewed by Dave Hyatt.
+
+        Make cursor positions match IE6/IE7/FF3 when clicking in margins/padding
+        around divs inside editable regions.
+        https://bugs.webkit.org/show_bug.cgi?id=23605
+
+        Fix clicks outside editable regions from focusing the editable region.
+        https://bugs.webkit.org/show_bug.cgi?id=23607
+
+        Removed editing/selection/contenteditable-click-outside.html as it's
+        not as useful as our new tests.
+
+        Clean up RenderBlock::positionForCoordinates to remove dead code,
+        duplicate code, and generally make it more readable.
+
+        Tests: editing/selection/click-in-margins-inside-editable-div.html
+               editing/selection/click-in-padding-with-multiple-line-boxes.html
+               editing/selection/click-outside-editable-div.html
+
+        * editing/VisiblePosition.cpp:
+        (WebCore::VisiblePosition::canonicalPosition):
+        * rendering/RenderBlock.cpp:
+        (WebCore::positionForPointRespectingEditingBoundaries):
+        (WebCore::positionForPointWithInlineChildren):
+        (WebCore::RenderBlock::positionForCoordinates):
+        (WebCore::RenderBlock::updateFirstLetter):
+
+2009-02-24  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey Garen.
+
+        Related to <rdar://problem/6590295>
+        Allow disabling javascript: urls.
+
+        * WebCore.base.exp:
+        * html/HTMLAnchorElement.cpp:
+        (WebCore::HTMLAnchorElement::parseMappedAttribute):
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::executeIfJavaScriptURL):
+        * page/Page.cpp:
+        (WebCore::Page::Page):
+        (WebCore::Page::setJavaScriptURLsAreAllowed):
+        (WebCore::Page::javaScriptURLsAreAllowed):
+        * page/Page.h:
+
+2009-02-24  Simon Fraser  <simon.fraser@apple.com>
+
+        Fix build when ACCELERATED_COMPOSITING is turned on
+        (overflowList() -> normalFlowList()).
+    
+        * rendering/RenderLayerBacking.cpp:
+        (WebCore::RenderLayerBacking::hasNonCompositingContent):
+        (WebCore::RenderLayerBacking::paintIntoLayer):
+        * rendering/RenderLayerCompositor.cpp:
+        (WebCore::RenderLayerCompositor::calculateCompositedBounds):
+        (WebCore::RenderLayerCompositor::computeCompositingRequirements):
+        (WebCore::RenderLayerCompositor::rebuildCompositingLayerTree):
+        (WebCore::RenderLayerCompositor::recursiveRepaintLayerRect):
+        (WebCore::RenderLayerCompositor::layerHas3DContent):
+
+2009-02-24  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Darin Adler
+        
+        https://bugs.webkit.org/show_bug.cgi?id=24135
+        
+        Round the FloatPoint returned by absoluteToLocal(), rather than
+        truncating it.
+
+        * dom/MouseRelatedEvent.cpp:
+        (WebCore::MouseRelatedEvent::receivedTarget):
+
+2009-02-24  Beth Dakin  <bdakin@apple.com>
+
+        Reviewed by Sam Weinig.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=24004 REGRESSION: 
+        Ordered list item marker misaligned when line height is not 1.2 
+        -and corresponding <rdar://problem/6602506>
+
+        This is a regression from http://trac.webkit.org/changeset/40880 
+        where createInlineBox was taken off of RenderObject and moved to 
+        RenderBox. The problem was that the RenderBox version still needs 
+        to be virtual because there is still an existing implementation in 
+        RenderListMarker. 
+
+        * rendering/RenderBox.h:
+        * rendering/RenderListMarker.cpp:
+        (WebCore::RenderListMarker::createInlineBox):
+        * rendering/RenderListMarker.h:
+
+2009-02-24  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24128
+        Upstream more V8 custom bindings: constructors, XSLTProcessor.
+
+        * bindings/v8/custom/V8DOMParserConstructor.cpp: Added.
+        (WebCore::CALLBACK_FUNC_DECL):
+        * bindings/v8/custom/V8MessageChannelConstructor.cpp: Added.
+        (WebCore::CALLBACK_FUNC_DECL):
+        * bindings/v8/custom/V8WebKitCSSMatrixConstructor.cpp: Added.
+        (WebCore::CALLBACK_FUNC_DECL):
+        * bindings/v8/custom/V8XMLSerializerConstructor.cpp: Added.
+        (WebCore::CALLBACK_FUNC_DECL):
+        * bindings/v8/custom/V8XPathEvaluatorConstructor.cpp: Added.
+        (WebCore::CALLBACK_FUNC_DECL):
+        * bindings/v8/custom/V8XSLTProcessorCustom.cpp: Added.
+        (WebCore::CALLBACK_FUNC_DECL):
+
+2009-02-24  David Levin  <levin@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Bug 24090: WorkerThreadableLoader needs to be able to post tasks for a mode.
+        <https://bugs.webkit.org/show_bug.cgi?id=24090>
+
+        No observable change in behavior, so no test.
+
+        * dom/WorkerMessagingProxy.cpp:
+        (WebCore::WorkerMessagingProxy::postMessageToWorkerContext):
+        (WebCore::WorkerMessagingProxy::postTaskToWorkerContext):
+        Fixed the bug that m_unconfirmedMessageCount was getting incremented for non-message tasks.
+
+        (WebCore::WorkerMessagingProxy::postTaskForModeToWorkerContext):
+
+        * dom/WorkerMessagingProxy.h:
+        * loader/ThreadableLoader.cpp:
+        (WebCore::ThreadableLoader::create):
+        * loader/WorkerThreadableLoader.cpp:
+        (WebCore::WorkerThreadableLoader::WorkerThreadableLoader):
+        (WebCore::WorkerThreadableLoader::MainThreadBridge::MainThreadBridge):
+        (WebCore::WorkerThreadableLoader::MainThreadBridge::didSendData):
+        (WebCore::WorkerThreadableLoader::MainThreadBridge::didReceiveResponse):
+        (WebCore::WorkerThreadableLoader::MainThreadBridge::didReceiveData):
+        (WebCore::WorkerThreadableLoader::MainThreadBridge::didFinishLoading):
+        (WebCore::WorkerThreadableLoader::MainThreadBridge::didFail):
+        (WebCore::WorkerThreadableLoader::MainThreadBridge::didFailRedirectCheck):
+        (WebCore::WorkerThreadableLoader::MainThreadBridge::didReceiveAuthenticationCancellation):
+        Changed these methods to post task using a mode.
+
+        * loader/WorkerThreadableLoader.h:
+        (WebCore::WorkerThreadableLoader::create):
+
 2009-02-24  Alexey Proskuryakov  <ap@webkit.org>
 
         Reviewed by Darin Adler.

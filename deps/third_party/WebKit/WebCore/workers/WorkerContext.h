@@ -129,6 +129,3 @@ namespace WebCore {
 #endif // ENABLE(WORKERS)
 
 #endif // WorkerContext_h
-
-
-

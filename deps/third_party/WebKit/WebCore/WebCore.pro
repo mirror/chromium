@@ -185,6 +185,7 @@ INCLUDEPATH +=  $$PWD \
                 $$PWD/xml \
                 $$PWD/html \
                 $$PWD/wml \
+                $$PWD/workers \
                 $$PWD/bindings/js \
                 $$PWD/svg \
                 $$PWD/platform/image-decoders \
@@ -307,9 +308,6 @@ IDL_BINDINGS += \
     dom/WebKitAnimationEvent.idl \
     dom/WebKitTransitionEvent.idl \
     dom/WheelEvent.idl \
-    dom/Worker.idl \
-    dom/WorkerContext.idl \
-    dom/WorkerLocation.idl \
     html/CanvasGradient.idl \
     html/CanvasPattern.idl \
     html/CanvasRenderingContext2D.idl \
@@ -394,6 +392,9 @@ IDL_BINDINGS += \
     plugins/MimeType.idl \
     plugins/PluginArray.idl \
     plugins/MimeTypeArray.idl \
+    workers/Worker.idl \
+    workers/WorkerContext.idl \
+    workers/WorkerLocation.idl \
     xml/DOMParser.idl \
     xml/XMLHttpRequest.idl \
     xml/XMLHttpRequestException.idl \
@@ -571,7 +572,6 @@ SOURCES += \
     dom/ClipboardEvent.cpp \
     dom/Comment.cpp \
     dom/ContainerNode.cpp \
-    dom/CrossThreadCopier.cpp \
     dom/CSSMappedAttributeDeclaration.cpp \
     dom/Document.cpp \
     dom/DocumentFragment.cpp \
@@ -872,6 +872,7 @@ SOURCES += \
     platform/text/BidiContext.cpp \
     platform/ContentType.cpp \
     platform/ContextMenu.cpp \
+    platform/CrossThreadCopier.cpp \
     platform/text/CString.cpp \
     platform/DeprecatedPtrListImpl.cpp \
     platform/DragData.cpp \
@@ -1019,6 +1020,7 @@ SOURCES += \
     rendering/RootInlineBox.cpp \
     rendering/SVGRenderTreeAsText.cpp \
     rendering/TextControlInnerElements.cpp \
+    rendering/TransformState.cpp \
     rendering/style/BindingURI.cpp \
     rendering/style/ContentData.cpp \
     rendering/style/CounterDirectives.cpp \

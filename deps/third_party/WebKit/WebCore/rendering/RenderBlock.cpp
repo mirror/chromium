@@ -1547,7 +1547,7 @@ void RenderBlock::repaintOverhangingFloats(bool paintAllDescendants)
             // Only repaint the object if it is overhanging, is not in its own layer, and
             // is our responsibility to paint (m_shouldPaint is set). When paintAllDescendants is true, the latter
             // condition is replaced with being a descendant of us.
-            if (r->m_bottom > height() && (paintAllDescendants && r->m_renderer->isDescendantOf(this) || r->m_shouldPaint) && !r->m_renderer->hasLayer()) {                
+            if (r->m_bottom > height() && (paintAllDescendants && r->m_renderer->isDescendantOf(this) || r->m_shouldPaint) && !r->m_renderer->hasSelfPaintingLayer()) {                
                 r->m_renderer->repaint();
                 r->m_renderer->repaintOverhangingFloats();
             }
@@ -1574,36 +1574,16 @@ void RenderBlock::paint(PaintInfo& paintInfo, int tx, int ty)
             return;
     }
 
-    bool useControlClip = phase != PaintPhaseBlockBackground && phase != PaintPhaseSelfOutline && phase != PaintPhaseMask && hasControlClip();
-
-    // Push a clip.
-    if (useControlClip) {
-        if (phase == PaintPhaseOutline)
-            paintInfo.phase = PaintPhaseChildOutlines;
-        else if (phase == PaintPhaseChildBlockBackground) {
-            paintInfo.phase = PaintPhaseBlockBackground;
-            paintObject(paintInfo, tx, ty);
-            paintInfo.phase = PaintPhaseChildBlockBackgrounds;
-        }
-        IntRect clipRect(controlClipRect(tx, ty));
-        if (clipRect.isEmpty())
-            return;
-        paintInfo.context->save();
-        paintInfo.context->clip(clipRect);
-    }
-
+    bool pushedClip = pushContentsClip(paintInfo, tx, ty);
     paintObject(paintInfo, tx, ty);
-    
-    // Pop the clip.
-    if (useControlClip) {
-        paintInfo.context->restore();
-        if (phase == PaintPhaseOutline) {
-            paintInfo.phase = PaintPhaseSelfOutline;
-            paintObject(paintInfo, tx, ty);
-            paintInfo.phase = phase;
-        } else if (phase == PaintPhaseChildBlockBackground)
-            paintInfo.phase = phase;
-    }
+    if (pushedClip)
+        popContentsClip(paintInfo, phase, tx, ty);
+
+    // Our scrollbar widgets paint exactly when we tell them to, so that they work properly with
+    // z-index.  We paint after we painted the background/border, so that the scrollbars will
+    // sit above the background/border.
+    if (hasOverflowClip() && (phase == PaintPhaseBlockBackground || phase == PaintPhaseChildBlockBackground))
+        layer()->paintOverflowControls(paintInfo.context, tx, ty, paintInfo.rect);
 }
 
 void RenderBlock::paintColumnRules(PaintInfo& paintInfo, int tx, int ty)
@@ -1727,7 +1707,7 @@ void RenderBlock::paintChildren(PaintInfo& paintInfo, int tx, int ty)
             return;
         }
 
-        if (!child->hasLayer() && !child->isFloating())
+        if (!child->hasSelfPaintingLayer() && !child->isFloating())
             child->paint(info, tx, ty);
 
         // Check for page-break-after: always, and if it's set, break and bail.
@@ -1815,7 +1795,7 @@ void RenderBlock::paintObject(PaintInfo& paintInfo, int tx, int ty)
     if ((paintPhase == PaintPhaseOutline || paintPhase == PaintPhaseChildOutlines)) {
         if (inlineContinuation() && inlineContinuation()->hasOutline() && inlineContinuation()->style()->visibility() == VISIBLE) {
             RenderInline* inlineRenderer = toRenderInline(inlineContinuation()->node()->renderer());
-            if (!inlineRenderer->hasLayer())
+            if (!inlineRenderer->hasSelfPaintingLayer())
                 containingBlock()->addContinuationWithOutline(inlineRenderer);
             else if (!inlineRenderer->firstLineBox())
                 inlineRenderer->paintOutline(paintInfo.context, tx - x() + inlineRenderer->containingBlock()->x(),
@@ -1842,7 +1822,7 @@ void RenderBlock::paintFloats(PaintInfo& paintInfo, int tx, int ty, bool preserv
     DeprecatedPtrListIterator<FloatingObject> it(*m_floatingObjects);
     for (; (r = it.current()); ++it) {
         // Only paint the object if our m_shouldPaint flag is set.
-        if (r->m_shouldPaint && !r->m_renderer->hasLayer()) {
+        if (r->m_shouldPaint && !r->m_renderer->hasSelfPaintingLayer()) {
             PaintInfo currentPaintInfo(paintInfo);
             currentPaintInfo.phase = preservePhase ? paintInfo.phase : PaintPhaseBlockBackground;
             int currentTX = tx + r->m_left - r->m_renderer->x() + r->m_renderer->marginLeft();
@@ -2376,7 +2356,7 @@ void RenderBlock::insertFloatingObject(RenderBox* o)
     newObj->m_top = -1;
     newObj->m_bottom = -1;
     newObj->m_width = o->width() + o->marginLeft() + o->marginRight();
-    newObj->m_shouldPaint = !o->hasLayer(); // If a layer exists, the float will paint itself.  Otherwise someone else will.
+    newObj->m_shouldPaint = !o->hasSelfPaintingLayer(); // If a layer exists, the float will paint itself.  Otherwise someone else will.
     newObj->m_isDescendant = true;
     newObj->m_renderer = o;
 
@@ -2672,7 +2652,7 @@ IntRect RenderBlock::floatRect() const
     FloatingObject* r;
     DeprecatedPtrListIterator<FloatingObject> it(*m_floatingObjects);
     for (; (r = it.current()); ++it) {
-        if (r->m_shouldPaint && !r->m_renderer->hasLayer()) {
+        if (r->m_shouldPaint && !r->m_renderer->hasSelfPaintingLayer()) {
             IntRect childRect = r->m_renderer->overflowRect(false);
             childRect.move(r->m_left + r->m_renderer->marginLeft(), r->m_top + r->m_renderer->marginTop());
             result.unite(childRect);
@@ -2741,7 +2721,7 @@ int RenderBlock::lowestPosition(bool includeOverflowInterior, bool includeSelf) 
         FloatingObject* r;
         DeprecatedPtrListIterator<FloatingObject> it(*m_floatingObjects);
         for ( ; (r = it.current()); ++it ) {
-            if (r->m_shouldPaint || r->m_renderer->hasLayer()) {
+            if (r->m_shouldPaint || r->m_renderer->hasSelfPaintingLayer()) {
                 int lp = r->m_top + r->m_renderer->marginTop() + r->m_renderer->lowestPosition(false);
                 bottom = max(bottom, lp + relativeOffset);
             }
@@ -2817,7 +2797,7 @@ int RenderBlock::rightmostPosition(bool includeOverflowInterior, bool includeSel
         FloatingObject* r;
         DeprecatedPtrListIterator<FloatingObject> it(*m_floatingObjects);
         for ( ; (r = it.current()); ++it ) {
-            if (r->m_shouldPaint || r->m_renderer->hasLayer()) {
+            if (r->m_shouldPaint || r->m_renderer->hasSelfPaintingLayer()) {
                 int rp = r->m_left + r->m_renderer->marginLeft() + r->m_renderer->rightmostPosition(false);
                 right = max(right, rp + relativeOffset);
             }
@@ -2898,7 +2878,7 @@ int RenderBlock::leftmostPosition(bool includeOverflowInterior, bool includeSelf
         FloatingObject* r;
         DeprecatedPtrListIterator<FloatingObject> it(*m_floatingObjects);
         for ( ; (r = it.current()); ++it ) {
-            if (r->m_shouldPaint || r->m_renderer->hasLayer()) {
+            if (r->m_shouldPaint || r->m_renderer->hasSelfPaintingLayer()) {
                 int lp = r->m_left + r->m_renderer->marginLeft() + r->m_renderer->leftmostPosition(false);
                 left = min(left, lp + relativeOffset);
             }
@@ -3094,7 +3074,8 @@ int RenderBlock::addOverhangingFloats(RenderBlock* child, int xoff, int yoff, bo
                 }
                 m_floatingObjects->append(floatingObj);
             }
-        } else if (makeChildPaintOtherFloats && !r->m_shouldPaint && !r->m_renderer->hasLayer() && r->m_renderer->isDescendantOf(child) && r->m_renderer->enclosingLayer() == child->enclosingLayer())
+        } else if (makeChildPaintOtherFloats && !r->m_shouldPaint && !r->m_renderer->hasSelfPaintingLayer() &&
+                   r->m_renderer->isDescendantOf(child) && r->m_renderer->enclosingLayer() == child->enclosingLayer())
             // The float is not overhanging from this block, so if it is a descendant of the child, the child should
             // paint it (the other case is that it is intruding into the child), unless it has its own layer or enclosing
             // layer.
@@ -3102,7 +3083,7 @@ int RenderBlock::addOverhangingFloats(RenderBlock* child, int xoff, int yoff, bo
             // it should paint.
             r->m_shouldPaint = true;
 
-        if (r->m_shouldPaint && !r->m_renderer->hasLayer()) {
+        if (r->m_shouldPaint && !r->m_renderer->hasSelfPaintingLayer()) {
             IntRect floatOverflowRect = r->m_renderer->overflowRect(false);
             floatOverflowRect.move(r->m_left + r->m_renderer->marginLeft(), r->m_top + r->m_renderer->marginTop());
             floatsOverflowRect.unite(floatOverflowRect);
@@ -3264,16 +3245,16 @@ bool RenderBlock::nodeAtPoint(const HitTestRequest& request, HitTestResult& resu
             return false;
     }
 
-    if (isPointInOverflowControl(result, _x, _y, tx, ty)) {
-        if (hitTestAction == HitTestBlockBackground) {
-            updateHitTestResult(result, IntPoint(_x - tx, _y - ty));
-            return true;
-        }
-        return false;
+    if ((hitTestAction == HitTestBlockBackground || hitTestAction == HitTestChildBlockBackground) && isPointInOverflowControl(result, _x, _y, tx, ty)) {
+        updateHitTestResult(result, IntPoint(_x - tx, _y - ty));
+        return true;
     }
 
-     // If we have lightweight control clipping, then we can't have any spillout. 
-    if (!hasControlClip() || controlClipRect(tx, ty).contains(_x, _y)) {
+    // If we have clipping, then we can't have any spillout.
+    bool useOverflowClip = hasOverflowClip() && !hasSelfPaintingLayer();
+    bool useClip = (hasControlClip() || useOverflowClip);
+    bool checkChildren = !useClip || (hasControlClip() ? controlClipRect(tx, ty).contains(_x, _y) : overflowClipRect(tx, ty).contains(_x, _y));
+    if (checkChildren) {
         // Hit test descendants first.
         int scrolledX = tx;
         int scrolledY = ty;
@@ -3298,7 +3279,7 @@ bool RenderBlock::nodeAtPoint(const HitTestRequest& request, HitTestResult& resu
             FloatingObject* o;
             DeprecatedPtrListIterator<FloatingObject> it(*m_floatingObjects);
             for (it.toLast(); (o = it.current()); --it) {
-                if (o->m_shouldPaint && !o->m_renderer->hasLayer()) {
+                if (o->m_shouldPaint && !o->m_renderer->hasSelfPaintingLayer()) {
                     int xoffset = scrolledX + o->m_left + o->m_renderer->marginLeft() - o->m_renderer->x();
                     int yoffset =  scrolledY + o->m_top + o->m_renderer->marginTop() - o->m_renderer->y();
                     if (o->m_renderer->hitTest(request, result, IntPoint(_x, _y), xoffset, yoffset)) {
@@ -3369,10 +3350,8 @@ bool RenderBlock::hitTestContents(const HitTestRequest& request, HitTestResult& 
         HitTestAction childHitTest = hitTestAction;
         if (hitTestAction == HitTestChildBlockBackgrounds)
             childHitTest = HitTestChildBlockBackground;
-        for (RenderObject* child = lastChild(); child; child = child->previousSibling()) {
-            // FIXME: We have to skip over inline flows, since they can show up inside RenderTables at the moment (a demoted inline <form> for example).  If we ever implement a
-            // table-specific hit-test method (which we should do for performance reasons anyway), then we can remove this check.
-            if (!child->hasLayer() && !child->isFloating() && !child->isRenderInline() && child->nodeAtPoint(request, result, x, y, tx, ty, childHitTest)) {
+        for (RenderBox* child = lastChildBox(); child; child = child->previousSiblingBox()) {
+            if (!child->hasSelfPaintingLayer() && !child->isFloating() && child->nodeAtPoint(request, result, x, y, tx, ty, childHitTest)) {
                 updateHitTestResult(result, IntPoint(x - tx, y - ty));
                 return true;
             }
@@ -3416,118 +3395,114 @@ Position RenderBlock::positionForRenderer(RenderObject* renderer, bool start) co
     return Position(n, offset);
 }
 
+// FIXME: This function should go on RenderObject as an instance method. Then
+// all cases in which positionForCoordinates recurs could call this instead to
+// prevent crossing editable boundaries. This would require many tests.
+static VisiblePosition positionForPointRespectingEditingBoundaries(RenderBox* parent, RenderBox* child, const IntPoint& parentCoords)
+{
+    int xInChildCoords = parentCoords.x() - child->x();
+    int yInChildCoords = parentCoords.y() - child->y();
+
+    // If this is an anonymous renderer, we just recur normally
+    Node* childNode = child->node();
+    if (!childNode)
+        return child->positionForCoordinates(xInChildCoords, yInChildCoords);
+
+    // Otherwise, first make sure that the editability of the parent and child agree.
+    // If they don't agree, then we return a visible position just before or after the child
+    RenderObject* ancestor = parent;
+    while (ancestor && !ancestor->node())
+        ancestor = ancestor->parent();
+
+    // If we can't find an ancestor to check editability on, or editability is unchanged, we recur like normal
+    if (!ancestor || ancestor->node()->isContentEditable() == childNode->isContentEditable())
+        return child->positionForCoordinates(xInChildCoords, yInChildCoords);
+
+    // Otherwise return before or after the child, depending on if the click was left or right of the child
+    int childMidX = child->width() / 2;
+    if (xInChildCoords < childMidX)
+        return VisiblePosition(ancestor->node(), childNode->nodeIndex(), DOWNSTREAM);
+    return VisiblePosition(ancestor->node(), childNode->nodeIndex() + 1, UPSTREAM);
+}
+
+static VisiblePosition positionForPointWithInlineChildren(RenderBlock* block, const IntPoint& pointInContents)
+{
+    ASSERT(block->childrenInline());
+
+    if (!block->firstRootBox())
+        return VisiblePosition(block->node(), 0, DOWNSTREAM);
+
+    InlineBox* closestBox = 0;
+    // look for the closest line box in the root box which is at the passed-in y coordinate
+    for (RootInlineBox* root = block->firstRootBox(); root; root = root->nextRootBox()) {
+        int bottom;
+        // set the bottom based on whether there is a next root box
+        if (root->nextRootBox())
+            // FIXME: make the break point halfway between the bottom of the previous root box and the top of the next root box
+            bottom = root->nextRootBox()->topOverflow();
+        else
+            bottom = root->bottomOverflow() + verticalLineClickFudgeFactor;
+        // check if this root line box is located at this y coordinate
+        if (pointInContents.y() < bottom && root->firstChild()) {
+            closestBox = root->closestLeafChildForXPos(pointInContents.x());
+            if (closestBox)
+                // pass the box a y position that is inside it
+                break;
+        }
+    }
+
+    // y coordinate is below last root line box, pretend we hit it
+    if (!closestBox)
+        closestBox = block->lastRootBox()->closestLeafChildForXPos(pointInContents.x());
+
+    if (closestBox) {
+        // pass the box a y position that is inside it
+        return closestBox->renderer()->positionForCoordinates(pointInContents.x(), closestBox->m_y);
+    }
+
+    // Can't reach this.  We have a root line box, but it has no kids.
+    ASSERT_NOT_REACHED();
+    return VisiblePosition(block->node(), 0, DOWNSTREAM);
+}
+
 VisiblePosition RenderBlock::positionForCoordinates(int x, int y)
 {
     if (isTable())
         return RenderBox::positionForCoordinates(x, y); 
 
-    int top = borderTop();
-    int bottom = top + paddingTop() + contentHeight() + paddingBottom();
-
-    int left = borderLeft();
-    int right = left + paddingLeft() + contentWidth() + paddingRight();
-
-    Node* n = node();
-    
     int contentsX = x;
     int contentsY = y;
     offsetForContents(contentsX, contentsY);
+    IntPoint pointInContents(contentsX, contentsY);
 
     if (isReplaced()) {
         if (y < 0 || y < height() && x < 0)
-            return VisiblePosition(n, caretMinOffset(), DOWNSTREAM);
+            return VisiblePosition(node(), caretMinOffset(), DOWNSTREAM);
         if (y >= height() || y >= 0 && x >= width())
-            return VisiblePosition(n, caretMaxOffset(), DOWNSTREAM);
+            return VisiblePosition(node(), caretMaxOffset(), DOWNSTREAM);
     } 
 
-    // If we start inside the shadow tree, we will stay inside (even if the point is above or below).
-    if (!(n && n->isShadowNode()) && !childrenInline()) {
-        // Don't return positions inside editable roots for coordinates outside those roots, except for coordinates outside
-        // a document that is entirely editable.
-        bool isEditableRoot = n && n->rootEditableElement() == n && !n->hasTagName(bodyTag) && !n->hasTagName(htmlTag);
-
-        if (y < top || (isEditableRoot && (y < bottom && x < left))) {
-            if (!isEditableRoot)
-                if (RenderBox* c = firstChildBox()) { // FIXME: This code doesn't make any sense.  This child could be an inline or a positioned element or a float, etc.
-                    VisiblePosition p = c->positionForCoordinates(contentsX - c->x(), contentsY - c->y());
-                    if (p.isNotNull())
-                        return p;
-                }
-            if (n) {
-                if (Node* sp = n->shadowParentNode())
-                    n = sp;
-                if (Node* p = n->parent())
-                    return VisiblePosition(p, n->nodeIndex(), DOWNSTREAM);
-            }
-            return VisiblePosition(n, 0, DOWNSTREAM);
-        }
-
-        if (y >= bottom || (isEditableRoot && (y >= top && x >= right))) {
-            if (!isEditableRoot)
-                if (RenderBox* c = lastChildBox()) { // FIXME: This code doesn't make any sense.  This child could be an inline or a positioned element or a float, etc.
-                    VisiblePosition p = c->positionForCoordinates(contentsX - c->x(), contentsY - c->y());
-                    if (p.isNotNull())
-                        return p;
-                }
-            if (n) {
-                if (Node* sp = n->shadowParentNode())
-                    n = sp;
-                if (Node* p = n->parent())
-                    return VisiblePosition(p, n->nodeIndex() + 1, DOWNSTREAM);
-            }
-            return VisiblePosition(n, 0, DOWNSTREAM);
-        }
-    }
-
     if (childrenInline()) {
-        if (!firstRootBox())
-            return VisiblePosition(n, 0, DOWNSTREAM);
-
-        if (contentsY < firstRootBox()->topOverflow() - verticalLineClickFudgeFactor)
-            // y coordinate is above first root line box
-            return VisiblePosition(positionForBox(firstRootBox()->firstLeafChild(), true), DOWNSTREAM);
-        
-        // look for the closest line box in the root box which is at the passed-in y coordinate
-        for (RootInlineBox* root = firstRootBox(); root; root = root->nextRootBox()) {
-            // set the bottom based on whether there is a next root box
-            if (root->nextRootBox())
-                // FIXME: make the break point halfway between the bottom of the previous root box and the top of the next root box
-                bottom = root->nextRootBox()->topOverflow();
-            else
-                bottom = root->bottomOverflow() + verticalLineClickFudgeFactor;
-            // check if this root line box is located at this y coordinate
-            if (contentsY < bottom && root->firstChild()) {
-                InlineBox* closestBox = root->closestLeafChildForXPos(x);
-                if (closestBox)
-                    // pass the box a y position that is inside it
-                    return closestBox->renderer()->positionForCoordinates(contentsX, closestBox->m_y);
-            }
-        }
-
-        if (lastRootBox())
-            // y coordinate is below last root line box
-            return VisiblePosition(positionForBox(lastRootBox()->lastLeafChild(), false), DOWNSTREAM);
-
-        return VisiblePosition(n, 0, DOWNSTREAM);
+        return positionForPointWithInlineChildren(this, pointInContents);
     }
-    
-    // See if any child blocks exist at this y coordinate.
+
+    // Check top/bottom child-margin/parent-padding for clicks and place them in the first/last child
+    // FIXME: This will not correctly handle first or last children being positioned or non-visible
     if (firstChildBox() && contentsY < firstChildBox()->y())
-        return VisiblePosition(n, 0, DOWNSTREAM);
-    for (RenderBox* renderer = firstChildBox(); renderer; renderer = renderer->nextSiblingBox()) {
-        if (renderer->height() == 0 || renderer->style()->visibility() != VISIBLE || renderer->isFloatingOrPositioned())
+        return positionForPointRespectingEditingBoundaries(this, firstChildBox(), pointInContents);
+    if (lastChildBox() && contentsY > lastChildBox()->y())
+        return positionForPointRespectingEditingBoundaries(this, lastChildBox(), pointInContents);
+
+    for (RenderBox* childBox = firstChildBox(); childBox; childBox = childBox->nextSiblingBox()) {
+        if (childBox->height() == 0 || childBox->style()->visibility() != VISIBLE || childBox->isFloatingOrPositioned())
             continue;
-        RenderBox* next = renderer->nextSiblingBox();
-        while (next && next->isFloatingOrPositioned())
-            next = next->nextSiblingBox();
-        if (next) 
-            bottom = next->y();
-        else
-            bottom = top + scrollHeight();
-        if (contentsY >= renderer->y() && contentsY < bottom)
-            return renderer->positionForCoordinates(contentsX - renderer->x(), contentsY - renderer->y());
+        // We hit this child if our click was above the bottom of its padding box (like IE6/7 and FF3)
+        if (contentsY < childBox->y() + childBox->height())
+            return positionForPointRespectingEditingBoundaries(this, childBox, pointInContents);
     }
-    
+
+    // We only get here if there are no, or only floated/positioned, or only
+    // non-visible block children below the click.
     return RenderBox::positionForCoordinates(x, y);
 }
 
@@ -4485,7 +4460,7 @@ void RenderBlock::updateFirstLetter()
 {
     if (!document()->usesFirstLetterRules())
         return;
-    // Don't recurse
+    // Don't recur
     if (style()->styleType() == FIRST_LETTER)
         return;
 

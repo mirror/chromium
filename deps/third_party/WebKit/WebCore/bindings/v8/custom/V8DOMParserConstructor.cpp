@@ -14,7 +14,7 @@
  *     * Neither the name of Google Inc. nor the names of its
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -29,44 +29,17 @@
  */
 
 #include "config.h"
-#include "ThreadableLoader.h"
+#include "DOMParser.h"
 
-#include "ScriptExecutionContext.h"
-#include "Document.h"
-#include "DocumentThreadableLoader.h"
-#include "WorkerContext.h"
-#include "WorkerRunLoop.h"
-#include "WorkerThreadableLoader.h"
+#include "V8Binding.h"
+#include "V8Proxy.h"
 
 namespace WebCore {
 
-PassRefPtr<ThreadableLoader> ThreadableLoader::create(ScriptExecutionContext* context, ThreadableLoaderClient* client, const ResourceRequest& request, LoadCallbacks callbacksSetting, ContentSniff contentSniff) 
+CALLBACK_FUNC_DECL(DOMParserConstructor)
 {
-    ASSERT(client);
-    ASSERT(context);
-
-#if ENABLE(WORKERS)
-    if (context->isWorkerContext())
-        return WorkerThreadableLoader::create(static_cast<WorkerContext*>(context), client, WorkerRunLoop::defaultMode(), request, callbacksSetting, contentSniff);
-#endif // ENABLE(WORKERS)
-
-    ASSERT(context->isDocument());
-    return DocumentThreadableLoader::create(static_cast<Document*>(context), client, request, callbacksSetting, contentSniff);
-}
-
-void ThreadableLoader::loadResourceSynchronously(ScriptExecutionContext* context, const ResourceRequest& request, ThreadableLoaderClient& client)
-{
-    ASSERT(context);
-
-#if ENABLE(WORKERS)
-    if (context->isWorkerContext()) {
-        WorkerThreadableLoader::loadResourceSynchronously(static_cast<WorkerContext*>(context), request, client);
-        return;
-    }
-#endif // ENABLE(WORKERS)
-
-    ASSERT(context->isDocument());
-    DocumentThreadableLoader::loadResourceSynchronously(static_cast<Document*>(context), request, client);
+    INC_STATS("DOM.DOMParser.Contructor");
+    return V8Proxy::ConstructDOMObject<V8ClassIndex::DOMPARSER, DOMParser>(args);
 }
 
 } // namespace WebCore

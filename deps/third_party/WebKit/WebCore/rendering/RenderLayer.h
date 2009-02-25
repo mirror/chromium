@@ -218,6 +218,7 @@ public:
     void suspendMarquees();
 
     bool isNormalFlowOnly() const { return m_isNormalFlowOnly; }
+    bool isSelfPaintingLayer() const;
 
     bool requiresSlowRepaints() const;
 
@@ -403,6 +404,7 @@ public:
     // Returns true if the layer has a -webkit-perspective.
     // Note that this transform has the perspective-origin baked in.
     TransformationMatrix perspectiveTransform() const;
+    FloatPoint perspectiveOrigin() const;
 
     void destroy(RenderArena*);
 
@@ -457,7 +459,7 @@ private:
 
     void computeScrollDimensions(bool* needHBar = 0, bool* needVBar = 0);
 
-    bool shouldBeNormalFlowOnly() const;
+    bool shouldBeNormalFlowOnly() const; 
 
     virtual void valueChanged(Scrollbar*);
     virtual void invalidateScrollbarRect(Scrollbar*, const IntRect&);

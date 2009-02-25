@@ -150,8 +150,3 @@ void WorkerThread::stop()
 } // namespace WebCore
 
 #endif // ENABLE(WORKERS)
-
-
-
-
-

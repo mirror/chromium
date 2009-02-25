@@ -138,8 +138,6 @@ public:
     virtual void absoluteRects(Vector<IntRect>&, int tx, int ty, bool topLevel = true);
     virtual void absoluteQuads(Vector<FloatQuad>&, bool topLevel = true);
     
-    virtual FloatPoint localToAbsolute(FloatPoint localPoint = FloatPoint(), bool fixed = false, bool useTransforms = false) const;
-    virtual FloatPoint absoluteToLocal(FloatPoint containerPoint, bool fixed = false, bool useTransforms = false) const;
     virtual FloatQuad localToContainerQuad(const FloatQuad&, RenderBoxModelObject* repaintContainer, bool fixed = false) const;
 
     IntRect reflectionBox() const;
@@ -178,7 +176,7 @@ public:
 
     void positionLineBox(InlineBox*);
 
-    InlineBox* createInlineBox();
+    virtual InlineBox* createInlineBox();
     void dirtyLineBoxes(bool fullLayout);
 
     // For inline replaced elements, this function returns the inline box that owns us.  Enables
@@ -250,7 +248,10 @@ public:
     IntRect clipRect(int tx, int ty);
     virtual bool hasControlClip() const { return false; }
     virtual IntRect controlClipRect(int /*tx*/, int /*ty*/) const { return IntRect(); }
+    bool pushContentsClip(PaintInfo&, int tx, int ty);
+    void popContentsClip(PaintInfo&, PaintPhase originalPhase, int tx, int ty);
 
+    virtual void paintObject(PaintInfo&, int /*tx*/, int /*ty*/) { ASSERT_NOT_REACHED(); }
     virtual void paintBoxDecorations(PaintInfo&, int tx, int ty);
     virtual void paintMask(PaintInfo& paintInfo, int tx, int ty);
     virtual void imageChanged(WrappedImagePtr, const IntRect* = 0);
@@ -301,6 +302,9 @@ protected:
     void calcAbsoluteHorizontal();
     
     virtual bool shouldCalculateSizeAsReplaced() const { return isReplaced() && !isInlineBlockOrInlineTable(); }
+
+    virtual void mapLocalToAbsolutePoint(bool fixed, bool useTransforms, TransformState&) const;
+    virtual void mapAbsoluteToLocalPoint(bool fixed, bool useTransforms, TransformState&) const;
 
 private:
     bool includeVerticalScrollbarSize() const { return hasOverflowClip() && (style()->overflowY() == OSCROLL || style()->overflowY() == OAUTO); }

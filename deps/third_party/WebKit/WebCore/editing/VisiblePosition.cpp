@@ -478,7 +478,7 @@ Position VisiblePosition::canonicalPosition(const Position& position)
 
     // The new position must be in the same editable element. Enforce that first.
     // Unless the descent is from a non-editable html element to an editable body.
-    if (node->hasTagName(htmlTag) && !node->isContentEditable())
+    if (node->hasTagName(htmlTag) && !node->isContentEditable() && node->document()->body() && node->document()->body()->isContentEditable())
         return next.isNotNull() ? next : prev;
 
     Node* editingRoot = editableRootForPosition(position);
@@ -492,10 +492,10 @@ Position VisiblePosition::canonicalPosition(const Position& position)
     bool nextIsInSameEditableElement = nextNode && editableRootForPosition(next) == editingRoot;
     if (prevIsInSameEditableElement && !nextIsInSameEditableElement)
         return prev;
-        
+
     if (nextIsInSameEditableElement && !prevIsInSameEditableElement)
         return next;
-        
+
     if (!nextIsInSameEditableElement && !prevIsInSameEditableElement)
         return Position();
 

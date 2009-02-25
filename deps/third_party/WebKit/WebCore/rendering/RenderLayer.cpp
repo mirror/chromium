@@ -313,7 +313,9 @@ void RenderLayer::updateLayerPositions(bool doFullRepaint, bool checkForRepaint)
 
 void RenderLayer::updateTransform()
 {
-    bool hasTransform = renderer()->hasTransform();
+    // hasTransform() on the renderer is also true when there is transform-style: preserve-3d or perspective set,
+    // so check style too.
+    bool hasTransform = renderer()->hasTransform() && renderer()->style()->hasTransform();
     bool hadTransform = m_transform;
     if (hasTransform != hadTransform) {
         if (hasTransform)
@@ -504,7 +506,7 @@ TransformationMatrix RenderLayer::perspectiveTransform() const
         return TransformationMatrix();
 
     RenderStyle* style = renderer()->style();
-    if (!style->perspective())
+    if (!style->hasPerspective())
         return TransformationMatrix();
 
     // Maybe fetch the perspective from the backing?
@@ -515,6 +517,8 @@ TransformationMatrix RenderLayer::perspectiveTransform() const
     float perspectiveOriginX = style->perspectiveOriginX().calcFloatValue(boxWidth);
     float perspectiveOriginY = style->perspectiveOriginY().calcFloatValue(boxHeight);
 
+    // A perspective origin of 0,0 makes the vanishing point in the center of the element.
+    // We want it to be in the top-left, so subtract half the height and width.
     perspectiveOriginX -= boxWidth / 2.0f;
     perspectiveOriginY -= boxHeight / 2.0f;
     
@@ -524,6 +528,18 @@ TransformationMatrix RenderLayer::perspectiveTransform() const
     t.translate(-perspectiveOriginX, -perspectiveOriginY);
     
     return t;
+}
+
+FloatPoint RenderLayer::perspectiveOrigin() const
+{
+    if (!renderer()->hasTransform())
+        return FloatPoint();
+
+    const IntRect borderBox = toRenderBox(renderer())->borderBoxRect();
+    RenderStyle* style = renderer()->style();
+
+    return FloatPoint(style->perspectiveOriginX().calcFloatValue(borderBox.width()),
+                      style->perspectiveOriginY().calcFloatValue(borderBox.height()));
 }
 
 RenderLayer *RenderLayer::stackingContext() const
@@ -1938,11 +1954,6 @@ RenderLayer::paintLayer(RenderLayer* rootLayer, GraphicsContext* p,
         RenderObject::PaintInfo paintInfo(p, damageRect, PaintPhaseBlockBackground, false, paintingRootForRenderer, 0);
         renderer()->paint(paintInfo, tx, ty);
 
-        // Our scrollbar widgets paint exactly when we tell them to, so that they work properly with
-        // z-index.  We paint after we painted the background/border, so that the scrollbars will
-        // sit above the background/border.
-        paintOverflowControls(p, x, y, damageRect);
-        
         // Restore the clip.
         restoreClip(p, paintDirtyRect, damageRect);
     }
@@ -1987,9 +1998,11 @@ RenderLayer::paintLayer(RenderLayer* rootLayer, GraphicsContext* p,
     
     // Paint any child layers that have overflow.
     if (m_normalFlowList)
-        for (Vector<RenderLayer*>::iterator it = m_normalFlowList->begin(); it != m_normalFlowList->end(); ++it)
-            it[0]->paintLayer(rootLayer, p, paintDirtyRect, haveTransparency, paintRestriction, paintingRoot, false, temporaryClipRects);
-    
+        for (Vector<RenderLayer*>::iterator it = m_normalFlowList->begin(); it != m_normalFlowList->end(); ++it) {
+            if (it[0]->isSelfPaintingLayer())
+                it[0]->paintLayer(rootLayer, p, paintDirtyRect, haveTransparency, paintRestriction, paintingRoot, false, temporaryClipRects);
+        }
+
     // Now walk the sorted list of children with positive z-indices.
     if (m_posZOrderList)
         for (Vector<RenderLayer*>::iterator it = m_posZOrderList->begin(); it != m_posZOrderList->end(); ++it)
@@ -2065,7 +2078,7 @@ RenderLayer* RenderLayer::hitTestLayer(RenderLayer* rootLayer, const HitTestRequ
                                        const IntRect& hitTestRect, const IntPoint& hitTestPoint, bool appliedTransform)
 {
     // Apply a transform if we have one.
-    if (paintsWithTransform() && !appliedTransform) {
+    if (renderer()->hasTransform() && !appliedTransform) {
         // If the transform can't be inverted, then don't hit test this layer at all.
         if (!m_transform->isInvertible())
             return 0;
@@ -2087,7 +2100,20 @@ RenderLayer* RenderLayer::hitTestLayer(RenderLayer* rootLayer, const HitTestRequ
         convertToLayerCoords(rootLayer, x, y);
         TransformationMatrix transform;
         transform.translate(x, y);
-        transform = *m_transform * transform;
+        
+        TransformationMatrix localTransform;
+        
+#if USE(ACCELERATED_COMPOSITING)
+        if (renderer()->style()->isRunningAcceleratedAnimation()) {
+            const IntRect borderBox = toRenderBox(renderer())->borderBoxRect();
+            RefPtr<RenderStyle> animatedStyle = renderer()->animation()->getAnimatedStyleForRenderer(renderer());
+            const TransformOperations& transformOperations = animatedStyle->transform();
+            transformOperations.apply(borderBox.size(), localTransform);
+        } else
+#endif
+            localTransform = *m_transform;
+
+        transform = localTransform * transform;
         
         // Map the hit test point into the transformed space and then do a hit test with the root layer shifted to be us.
         return hitTestLayer(this, request, result, transform.inverse().mapRect(hitTestRect), transform.inverse().mapPoint(hitTestPoint), true);
@@ -2120,7 +2146,8 @@ RenderLayer* RenderLayer::hitTestLayer(RenderLayer* rootLayer, const HitTestRequ
     // Now check our overflow objects.
     if (m_normalFlowList) {
         for (int i = m_normalFlowList->size() - 1; i >= 0; --i) {
-            insideLayer = m_normalFlowList->at(i)->hitTestLayer(rootLayer, request, result, hitTestRect, hitTestPoint);
+            if (m_normalFlowList->at(i)->isSelfPaintingLayer())
+                insideLayer = m_normalFlowList->at(i)->hitTestLayer(rootLayer, request, result, hitTestRect, hitTestPoint);
             if (insideLayer)
                 return insideLayer;
         }
@@ -2742,11 +2769,16 @@ void RenderLayer::setBackingNeedsRepaintInRect(const IntRect& r)
 
 bool RenderLayer::shouldBeNormalFlowOnly() const
 {
-    return (renderer()->hasOverflowClip() || renderer()->hasReflection()) && 
+    return (renderer()->hasOverflowClip() || renderer()->hasReflection() || renderer()->hasMask()) &&
            !renderer()->isPositioned() &&
            !renderer()->isRelPositioned() &&
            !renderer()->hasTransform() &&
            !isTransparent();
+}
+
+bool RenderLayer::isSelfPaintingLayer() const
+{
+    return !isNormalFlowOnly() || renderer()->hasReflection() || renderer()->hasMask() || renderer()->isTableRow();
 }
 
 void RenderLayer::styleChanged(StyleDifference diff, const RenderStyle*)

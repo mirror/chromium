@@ -1,6 +1,5 @@
 /*
- * Copyright (C) 2008 Apple Inc. All Rights Reserved.
- * Copyright (C) 2008 Google Inc.
+ * Copyright (C) 2009 Apple Inc.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -11,10 +10,10 @@
  *    notice, this list of conditions and the following disclaimer in the
  *    documentation and/or other materials provided with the distribution.
  *
- * THIS SOFTWARE IS PROVIDED BY APPLE INC. ``AS IS'' AND ANY
+ * THIS SOFTWARE IS PROVIDED BY APPLE COMPUTER, INC. ``AS IS'' AND ANY
  * EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
- * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL APPLE INC. OR
+ * PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL APPLE COMPUTER, INC. OR
  * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
  * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
@@ -24,31 +23,40 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-#ifndef AccessibilityObjectWrapper_h
-#define AccessibilityObjectWrapper_h
+#ifndef TransformState_h
+#define TransformState_h
+
+#include "FloatPoint.h"
+#include "IntSize.h"
+#include "TransformationMatrix.h"
 
 namespace WebCore {
 
-    class AccessibilityObject;
-    class AccessibilityObjectWrapper : public RefCounted<AccessibilityObjectWrapper> {
-    public:
-        virtual ~AccessibilityObjectWrapper() {}
-        virtual void detach() = 0;
-        bool attached() const { return m_object; }
-        AccessibilityObject* accessibilityObject() const { return m_object; }
+class TransformState {
+public:
+    enum TransformDirection { ApplyTransformDirection, UnapplyInverseTransformDirection };
+    TransformState(const FloatPoint& p, TransformDirection mappingDirection)
+        : m_lastPlanarPoint(p)
+        , m_accumulatingTransform(false)
+        , m_direction(mappingDirection)
+    {
+    }
 
-    protected:
-        AccessibilityObjectWrapper(AccessibilityObject* obj)
-            : m_object(obj)
-        {
-            // FIXME: Remove this once our immediate subclass no longer uses COM.
-            m_refCount = 0;
-        }
-        AccessibilityObjectWrapper() : m_object(0) { }
+    void move(const IntSize& s)
+    {
+        move(s.width(), s.height());
+    }
+    
+    void move(int x, int y);
+    void applyTransform(const TransformationMatrix& transformFromContainer, bool accumulateTransform);
+    void flatten();
 
-        AccessibilityObject* m_object;
-    };
+    FloatPoint m_lastPlanarPoint;
+    TransformationMatrix m_accumulatedTransform;
+    bool m_accumulatingTransform;
+    TransformDirection m_direction;
+};
 
 } // namespace WebCore
 
-#endif
+#endif // TransformState_h

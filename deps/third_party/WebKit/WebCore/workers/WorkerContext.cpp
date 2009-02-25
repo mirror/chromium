@@ -217,6 +217,3 @@ void WorkerContext::dispatchMessage(const String& message)
 } // namespace WebCore
 
 #endif // ENABLE(WORKERS)
-
-
-

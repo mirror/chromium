@@ -31,6 +31,7 @@
 #include "HTMLTableCellElement.h"
 #include "RenderTableCol.h"
 #include "RenderView.h"
+#include "TransformState.h"
 
 using namespace std;
 
@@ -216,24 +217,25 @@ void RenderTableCell::computeRectForRepaint(RenderBoxModelObject* repaintContain
     RenderBlock::computeRectForRepaint(repaintContainer, r, fixed);
 }
 
-FloatPoint RenderTableCell::localToAbsolute(FloatPoint localPoint, bool fixed, bool useTransforms) const
+void RenderTableCell::mapLocalToAbsolutePoint(bool fixed, bool useTransforms, TransformState& transformState) const
 {
     RenderView* v = view();
     if ((!v || !v->layoutStateEnabled()) && parent()) {
         // Rows are in the same coordinate space, so don't add their offset in.
-        localPoint.move(-parentBox()->x(), -parentBox()->y());
+        // FIXME: this is wrong with transforms
+        transformState.move(-parentBox()->x(), -parentBox()->y());
     }
-    return RenderBlock::localToAbsolute(localPoint, fixed, useTransforms);
+    RenderBlock::mapLocalToAbsolutePoint(fixed, useTransforms, transformState);
 }
 
-FloatPoint RenderTableCell::absoluteToLocal(FloatPoint containerPoint, bool fixed, bool useTransforms) const
+void RenderTableCell::mapAbsoluteToLocalPoint(bool fixed, bool useTransforms, TransformState& transformState) const
 {
-    FloatPoint localPoint = RenderBlock::absoluteToLocal(containerPoint, fixed, useTransforms);
+    RenderBlock::mapAbsoluteToLocalPoint(fixed, useTransforms, transformState);
     if (parent()) {
         // Rows are in the same coordinate space, so add their offset back in.
-        localPoint.move(parentBox()->x(), parentBox()->y());
+        // FIXME: this is wrong with transforms
+        transformState.move(parentBox()->x(), parentBox()->y());
     }
-    return localPoint;
 }
 
 FloatQuad RenderTableCell::localToContainerQuad(const FloatQuad& localQuad, RenderBoxModelObject* repaintContainer, bool fixed) const
@@ -649,22 +651,17 @@ int RenderTableCell::borderHalfBottom(bool outer) const
 
 void RenderTableCell::paint(PaintInfo& paintInfo, int tx, int ty)
 {
-    tx += x();
-    ty += y();
-
-    // check if we need to do anything at all...
-    int os = 2 * maximalOutlineSize(paintInfo.phase);
-
     if (paintInfo.phase == PaintPhaseCollapsedTableBorders && style()->visibility() == VISIBLE) {
-        if (ty - table()->outerBorderTop() >= paintInfo.rect.bottom() + os ||
-                ty + height() + table()->outerBorderBottom() <= paintInfo.rect.y() - os)
-            return;
-        paintCollapsedBorder(paintInfo.context, tx, ty, width(), height());
-    } else {
-        if (ty + overflowTop(false) >= paintInfo.rect.bottom() + os || ty + overflowHeight(false) <= paintInfo.rect.y() - os)
-            return;
-        RenderBlock::paintObject(paintInfo, tx, ty);
-    }
+        tx += x();
+        ty += y();
+        int os = 2 * maximalOutlineSize(paintInfo.phase);
+        if (ty - table()->outerBorderTop() < paintInfo.rect.bottom() + os &&
+            ty + height() + table()->outerBorderBottom() > paintInfo.rect.y() - os)
+            paintCollapsedBorder(paintInfo.context, tx, ty, width(), height());
+        return;
+    } 
+    
+    RenderBlock::paint(paintInfo, tx, ty);
 }
 
 static EBorderStyle collapsedBorderStyle(EBorderStyle style)

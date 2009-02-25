@@ -14,7 +14,7 @@
  *     * Neither the name of Google Inc. nor the names of its
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- *
+ * 
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -29,38 +29,49 @@
  */
 
 #include "config.h"
+#include "MessageChannel.h"
 
-#if ENABLE(WORKERS)
+#include "Document.h"
+#include "Frame.h"
 
-#include "CrossThreadCopier.h"
+#include "V8Binding.h"
+#include "V8Proxy.h"
 
-#include "PlatformString.h"
-#include "ResourceError.h"
-#include "ResourceRequest.h"
-#include "ResourceResponse.h"
+#include <wtf/RefPtr.h>
 
 namespace WebCore {
 
-CrossThreadCopierBase<false, String>::Type CrossThreadCopierBase<false, String>::copy(const String& str)
+CALLBACK_FUNC_DECL(MessageChannelConstructor)
 {
-    return str.copy();
+    INC_STATS("DOM.MessageChannel.Constructor");
+    // FIXME: The logic here is almost exact duplicate of V8::ConstructDOMObject.
+    // Consider refactoring to reduce duplication.
+    if (!args.IsConstructCall())
+        return throwError("DOM object constructor cannot be called as a function.");
+
+    // Get the document.
+    Frame* frame = V8Proxy::retrieveFrame();
+    if (!frame)
+        return v8::Undefined();
+
+    Document* document = frame->document();
+
+    // Note: it's OK to let this RefPtr go out of scope because we also call
+    // SetDOMWrapper(), which effectively holds a reference to obj.
+    RefPtr<MessageChannel> obj = MessageChannel::create(document);
+
+    v8::Local<v8::Object> messageChannel = args.Holder();
+
+    // Create references from the MessageChannel wrapper to the two
+    // MessagePort wrappers to make sure that the MessagePort wrappers
+    // stay alive as long as the MessageChannel wrapper is around.
+    messageChannel->SetInternalField(kMessageChannelPort1Index, V8Proxy::ToV8Object(V8ClassIndex::MESSAGEPORT, obj->port1()));
+    messageChannel->SetInternalField(kMessageChannelPort2Index, V8Proxy::ToV8Object(V8ClassIndex::MESSAGEPORT, obj->port2()));
+
+    // Setup the standard wrapper object internal fields.
+    V8Proxy::SetDOMWrapper(messageChannel, V8ClassIndex::MESSAGECHANNEL, obj.get());
+    return toV8(obj.release(), messageChannel);
 }
 
-CrossThreadCopierBase<false, ResourceError>::Type CrossThreadCopierBase<false, ResourceError>::copy(const ResourceError& error)
-{
-    return error.copy();
-}
-
-CrossThreadCopierBase<false, ResourceRequest>::Type CrossThreadCopierBase<false, ResourceRequest>::copy(const ResourceRequest& request)
-{
-    return request.copyData();
-}
-
-CrossThreadCopierBase<false, ResourceResponse>::Type CrossThreadCopierBase<false, ResourceResponse>::copy(const ResourceResponse& response)
-{
-    return response.copyData();
-}
 
 } // namespace WebCore
-
-#endif // ENABLE(WORKERS)

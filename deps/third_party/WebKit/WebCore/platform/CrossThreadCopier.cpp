@@ -29,44 +29,34 @@
  */
 
 #include "config.h"
-#include "ThreadableLoader.h"
 
-#include "ScriptExecutionContext.h"
-#include "Document.h"
-#include "DocumentThreadableLoader.h"
-#include "WorkerContext.h"
-#include "WorkerRunLoop.h"
-#include "WorkerThreadableLoader.h"
+#include "CrossThreadCopier.h"
+
+#include "PlatformString.h"
+#include "ResourceError.h"
+#include "ResourceRequest.h"
+#include "ResourceResponse.h"
 
 namespace WebCore {
 
-PassRefPtr<ThreadableLoader> ThreadableLoader::create(ScriptExecutionContext* context, ThreadableLoaderClient* client, const ResourceRequest& request, LoadCallbacks callbacksSetting, ContentSniff contentSniff) 
+CrossThreadCopierBase<false, String>::Type CrossThreadCopierBase<false, String>::copy(const String& str)
 {
-    ASSERT(client);
-    ASSERT(context);
-
-#if ENABLE(WORKERS)
-    if (context->isWorkerContext())
-        return WorkerThreadableLoader::create(static_cast<WorkerContext*>(context), client, WorkerRunLoop::defaultMode(), request, callbacksSetting, contentSniff);
-#endif // ENABLE(WORKERS)
-
-    ASSERT(context->isDocument());
-    return DocumentThreadableLoader::create(static_cast<Document*>(context), client, request, callbacksSetting, contentSniff);
+    return str.copy();
 }
 
-void ThreadableLoader::loadResourceSynchronously(ScriptExecutionContext* context, const ResourceRequest& request, ThreadableLoaderClient& client)
+CrossThreadCopierBase<false, ResourceError>::Type CrossThreadCopierBase<false, ResourceError>::copy(const ResourceError& error)
 {
-    ASSERT(context);
+    return error.copy();
+}
 
-#if ENABLE(WORKERS)
-    if (context->isWorkerContext()) {
-        WorkerThreadableLoader::loadResourceSynchronously(static_cast<WorkerContext*>(context), request, client);
-        return;
-    }
-#endif // ENABLE(WORKERS)
+CrossThreadCopierBase<false, ResourceRequest>::Type CrossThreadCopierBase<false, ResourceRequest>::copy(const ResourceRequest& request)
+{
+    return request.copyData();
+}
 
-    ASSERT(context->isDocument());
-    DocumentThreadableLoader::loadResourceSynchronously(static_cast<Document*>(context), request, client);
+CrossThreadCopierBase<false, ResourceResponse>::Type CrossThreadCopierBase<false, ResourceResponse>::copy(const ResourceResponse& response)
+{
+    return response.copyData();
 }
 
 } // namespace WebCore
