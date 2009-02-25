@@ -84,8 +84,6 @@ public:
     void setLastModifiedDate(time_t);
     time_t lastModifiedDate() const;
 
-    unsigned size() const { return 0; }
-    
     bool cacheControlContainsNoCache() const
     {
         if (!m_haveParsedCacheControl)
