@@ -72,7 +72,6 @@ void Font::drawGlyphs(GraphicsContext* gc, const SimpleFontData* font,
     }
 
     SkCanvas* canvas = gc->platformContext()->canvas();
-    SkPaint paint;
     int textMode = gc->platformContext()->getTextDrawingMode();
 
     // We draw text up to two times (once for fill, once for stroke).
