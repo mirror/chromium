@@ -13,6 +13,7 @@
 
 #include "chrome/installer/util/shell_util.h"
 
+#include "base/command_line.h"
 #include "base/file_util.h"
 #include "base/logging.h"
 #include "base/path_service.h"
@@ -197,35 +198,13 @@ bool IsChromeRegistered(const std::wstring& chrome_exe) {
   return registered;
 }
 
-bool CreateChromeRegKeysForXP(HKEY root_key, const std::wstring& chrome_exe) {
+bool BindChromeAssociations(HKEY root_key, const std::wstring& chrome_exe) {
   // Create a list of registry entries to create so that we can rollback
   // in case of problem.
   scoped_ptr<WorkItemList> items(WorkItem::CreateWorkItemList());
-  std::wstring classes_path(ShellUtil::kRegClasses);
-
-  std::wstring exe_name = file_util::GetFilenameFromPath(chrome_exe);
-  std::wstring chrome_open = ShellUtil::GetChromeShellOpenCmd(chrome_exe);
-  std::wstring chrome_icon(chrome_exe);
-  ShellUtil::GetChromeIcon(chrome_icon);
-
-  // Create Software\Classes\ChromeHTML
-  std::wstring html_prog_id = classes_path + L"\\" +
-                              ShellUtil::kChromeHTMLProgId;
-  items->AddCreateRegKeyWorkItem(root_key, html_prog_id);
-  items->AddSetRegValueWorkItem(root_key, html_prog_id,
-                                L"", ShellUtil::kChromeHTMLProgIdDesc, true);
-  items->AddSetRegValueWorkItem(root_key, html_prog_id,
-                                ShellUtil::kRegUrlProtocol, L"", true);
-  std::wstring default_icon = html_prog_id + ShellUtil::kRegDefaultIcon;
-  items->AddCreateRegKeyWorkItem(root_key, default_icon);
-  items->AddSetRegValueWorkItem(root_key, default_icon, L"",
-                                chrome_icon, true);
-  std::wstring open_cmd = html_prog_id + ShellUtil::kRegShellOpen;
-  items->AddCreateRegKeyWorkItem(root_key, open_cmd);
-  items->AddSetRegValueWorkItem(root_key, open_cmd, L"",
-                                chrome_open, true);
 
   // file extension associations
+  std::wstring classes_path(ShellUtil::kRegClasses);
   for (int i = 0; ShellUtil::kFileAssociations[i] != NULL; i++) {
     std::wstring key_path = classes_path + L"\\" +
                             ShellUtil::kFileAssociations[i];
@@ -235,6 +214,9 @@ bool CreateChromeRegKeysForXP(HKEY root_key, const std::wstring& chrome_exe) {
   }
 
   // protocols associations
+  std::wstring chrome_open = ShellUtil::GetChromeShellOpenCmd(chrome_exe);
+  std::wstring chrome_icon(chrome_exe);
+  ShellUtil::GetChromeIcon(chrome_icon);
   for (int i = 0; ShellUtil::kProtocolAssociations[i] != NULL; i++) {
     std::wstring key_path = classes_path + L"\\" +
                             ShellUtil::kProtocolAssociations[i];
@@ -259,6 +241,7 @@ bool CreateChromeRegKeysForXP(HKEY root_key, const std::wstring& chrome_exe) {
   }
 
   // start->Internet shortcut.
+  std::wstring exe_name = file_util::GetFilenameFromPath(chrome_exe);
   std::wstring start_internet(ShellUtil::kRegStartMenuInternet);
   items->AddCreateRegKeyWorkItem(root_key, start_internet);
   items->AddSetRegValueWorkItem(root_key, start_internet, L"",
@@ -320,8 +303,8 @@ ShellUtil::RegisterStatus RegisterOnVista(const std::wstring& chrome_exe,
       BrowserDistribution* dist = BrowserDistribution::GetDistribution();
       RegKey key(HKEY_CURRENT_USER, dist->GetUninstallRegPath().c_str());
       key.ReadValue(installer_util::kUninstallStringField, &exe_path);
-      exe_path = exe_path.substr(0, exe_path.find_first_of(L" --"));
-      TrimString(exe_path, L" \"", &exe_path);
+      CommandLine command_line(exe_path);
+      exe_path = command_line.program();
     }
     if (file_util::PathExists(exe_path)) {
       std::wstring params(L"--");
@@ -508,6 +491,8 @@ bool ShellUtil::CreateChromeQuickLaunchShortcut(const std::wstring& chrome_exe,
 bool ShellUtil::MakeChromeDefault(int shell_change,
                                   const std::wstring chrome_exe) {
   bool ret = true;
+  // First use the new "recommended" way on Vista to make Chrome default
+  // browser.
   if (win_util::GetWinVersion() == win_util::WINVERSION_VISTA) {
     LOG(INFO) << "Registering Chrome as default browser on Vista.";
     IApplicationAssociationRegistration* pAAR;
@@ -523,17 +508,22 @@ bool ShellUtil::MakeChromeDefault(int shell_change,
       ret = false;
       LOG(ERROR) << "Could not make Chrome default browser.";
     }
-  } else {
-    // Change the default browser for current user.
-    if ((shell_change & ShellUtil::CURRENT_USER) &&
-        !CreateChromeRegKeysForXP(HKEY_CURRENT_USER, chrome_exe))
-      ret = false;
-
-    // Chrome as default browser at system level.
-    if ((shell_change & ShellUtil::SYSTEM_LEVEL) &&
-        !CreateChromeRegKeysForXP(HKEY_LOCAL_MACHINE, chrome_exe))
-      ret = false;
   }
+
+  // Now use the old way to associate Chrome with supported protocols and file
+  // associations. This should not be required on Vista but since some
+  // applications still read Software\Classes\http key directly, we have to do
+  // this on Vista also.
+  // Change the default browser for current user.
+  // Change the default browser for current user.
+  if ((shell_change & ShellUtil::CURRENT_USER) &&
+      !BindChromeAssociations(HKEY_CURRENT_USER, chrome_exe))
+    ret = false;
+
+  // Chrome as default browser at system level.
+  if ((shell_change & ShellUtil::SYSTEM_LEVEL) &&
+      !BindChromeAssociations(HKEY_LOCAL_MACHINE, chrome_exe))
+    ret = false;
 
   // Send Windows notification event so that it can update icons for
   // file associations.
