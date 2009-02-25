@@ -22,7 +22,6 @@ class MasterFactory(object):
 
   # gclient additional custom deps
   CUSTOM_DEPS_DISABLE_WEBKIT = ('src/third_party/WebKit', None)
-  CUSTOM_DEPS_DISABLE_V8 = ('src/v8', None)
   CUSTOM_DEPS_V8_LATEST = ('src/v8',
     'http://v8.googlecode.com/svn/branches/bleeding_edge')
   CUSTOM_DEPS_WEBKIT_ORG = [
@@ -458,7 +457,6 @@ class MasterFactory(object):
       custom_deps_internal = []
 
     custom_deps.extend([
-      self.CUSTOM_DEPS_DISABLE_V8,
       self.CUSTOM_DEPS_DISABLE_WEBKIT])
     self._FixDeps(custom_deps, custom_deps_internal, tests)
     gclient_spec = self._BuildGClientSpec(self._svn_url,
