@@ -71,6 +71,69 @@ def RunCommand(command):
   return output
 
 
+def GenerateDiff(files, root=None):
+  """Returns a string containing the diff for the given file list.
+
+  The files in the list should either be absolute paths or relative to the
+  given root. If no root directory is provided, the repository root will be
+  used.
+  """
+  previous_cwd = os.getcwd()
+  if root is None:
+    os.chdir(gcl.GetRepositoryRoot())
+  else:
+    os.chdir(root)
+
+  diff = []
+  for file in files:
+    # Use svn info output instead of os.path.isdir because the latter fails
+    # when the file is deleted.
+    if gcl.GetSVNFileInfo(file).get("Node Kind") == "directory":
+      continue
+    # If the user specified a custom diff command in their svn config file,
+    # then it'll be used when we do svn diff, which we don't want to happen
+    # since we want the unified diff.  Using --diff-cmd=diff doesn't always
+    # work, since they can have another diff executable in their path that
+    # gives different line endings.  So we use a bogus temp directory as the
+    # config directory, which gets around these problems.
+    if sys.platform.startswith("win"):
+      parent_dir = tempfile.gettempdir()
+    else:
+      parent_dir = sys.path[0]  # tempdir is not secure.
+    bogus_dir = os.path.join(parent_dir, "temp_svn_config")
+    if not os.path.exists(bogus_dir):
+      os.mkdir(bogus_dir)
+    # Grabs the diff data.
+    data = gcl.RunShell(["svn", "diff", "--config-dir", bogus_dir, file])
+    # Does it contain a mergeinfo? Note that we could have used the '+' status
+    # information too.
+    if 'svn:mergeinfo' in data:
+      # We know the diff will be incorrectly formatted. Fix it.
+      file_infos = gcl.GetSVNFileInfo(file)
+      if (file_infos.get('Copied From URL') and
+          file_infos.get('Copied From Rev')):
+        # The file is "new" in the patch sense. Generate a homebrew diff.
+        # We can't use ReadFile() since it's not using binary mode.
+        file_handle = open(file, 'rb')
+        file_content = file_handle.read()
+        file_handle.close()
+        file_content = gcl.ReadFile(file)
+        # Prepend '+ ' to every lines.
+        file_content = ['+ ' + i for i in file_content.splitlines(True)]
+        nb_lines = len(file_content)
+        data = "Index: %s\n" % file
+        data += ("============================================================="
+                 "======\n")
+        # Note: Should we use /dev/null instead?
+        data += "--- %s\n" % file
+        data += "+++ %s\n" % file
+        data += "@@ -0,0 +1,%d @@\n" % nb_lines
+        data += ''.join(file_content)
+    diff.append(data)
+  os.chdir(previous_cwd)
+  return "".join(diff)
+
+
 def _SendChangeHTTP(options):
   """Send a change to the try server using the HTTP protocol."""
   script_locals = ExecuteTryServerScript()
@@ -291,7 +354,7 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
       source_root = GetSourceRoot()
       prefix = PathDifference(source_root, gcl.GetRepositoryRoot())
       adjusted_paths = [os.path.join(prefix, x) for x in options.files]
-      options.diff = gcl.GenerateDiff(adjusted_paths, root=source_root)
+      options.diff = GenerateDiff(adjusted_paths, root=source_root)
 
     # Send the patch. Defaults to HTTP.
     if not options.use_svn or options.use_http:
