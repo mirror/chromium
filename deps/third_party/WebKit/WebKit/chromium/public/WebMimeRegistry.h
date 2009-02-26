@@ -28,23 +28,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef WebKit_h
-#define WebKit_h
+#ifndef WebMimeRegistry_h
+#define WebMimeRegistry_h
 
 #include "WebCommon.h"
 
 namespace WebKit {
-    class WebKitClient;
+    class WebString;
 
-    // Must be called on the thread that will be the main WebKit thread before
-    // using any other WebKit APIs.  The provided WebKitClient must be non-null
-    // and must remain valid until the current thread calls shutdown.
-    WEBKIT_API void initialize(WebKitClient*);
+    class WebMimeRegistry {
+    public:
+        virtual bool supportsImageMIMEType(const WebString& mimeType) = 0;
+        virtual bool supportsJavaScriptMIMEType(const WebString& mimeType) = 0;
+        virtual bool supportsNonImageMIMEType(const WebString& mimeType) = 0;
 
-    // Once shutdown, the WebKitClient passed to initialize will no longer be
-    // accessed.  No other WebKit objects should be in use when this function
-    // is called.
-    WEBKIT_API void shutdown();
+        virtual WebString mimeTypeForExtension(const WebString& fileExtension) = 0;
+        virtual WebString mimeTypeFromFile(const WebString& filePath) = 0;
+        virtual WebString preferredExtensionForMIMEType(const WebString& mimeType) = 0;
+    };
 
 } // namespace WebKit
 

@@ -33,11 +33,15 @@
 
 namespace WebKit {
     class WebClipboard;
+    class WebMimeRegistry;
 
     class WebKitClient {
     public:
         // Must return non-null.
         virtual WebClipboard* clipboard() = 0;
+
+        // Must return non-null.
+        virtual WebMimeRegistry* mimeRegistry() = 0;
     };
 
 } // namespace WebKit

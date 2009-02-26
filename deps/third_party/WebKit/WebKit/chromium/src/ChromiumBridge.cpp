@@ -35,6 +35,7 @@
 #include "WebImage.h"
 #include "WebKitClient.h"
 #include "WebKitPrivate.h"
+#include "WebMimeRegistry.h"
 #include "WebString.h"
 #include "WebURL.h"
 
@@ -105,6 +106,40 @@ void ChromiumBridge::clipboardWriteImage(const NativeImageSkia* image,
     // FIXME clipboardWriteImage probably shouldn't take a NativeImageSkia
     notImplemented();
 #endif
+}
+
+//-----------------------------------------------------------------------------
+// MIME
+
+bool ChromiumBridge::isSupportedImageMIMEType(const char* mimeType) {
+    return webKitClient()->mimeRegistry()->supportsImageMIMEType(String(mimeType));
+}
+
+bool ChromiumBridge::isSupportedJavascriptMIMEType(const char* mimeType) {
+    return webKitClient()->mimeRegistry()->supportsJavaScriptMIMEType(String(mimeType));
+}
+
+bool ChromiumBridge::isSupportedNonImageMIMEType(const char* mimeType) {
+    return webKitClient()->mimeRegistry()->supportsNonImageMIMEType(String(mimeType));
+}
+
+bool ChromiumBridge::matchesMIMEType(const String& pattern,
+                                     const String& type) {
+    // FIXME: This method should be removed from ChromiumBridge
+    ASSERT_NOT_REACHED();
+    return false;
+}
+
+String ChromiumBridge::mimeTypeForExtension(const String& extension) {
+    return webKitClient()->mimeRegistry()->mimeTypeForExtension(extension);
+}
+
+String ChromiumBridge::mimeTypeFromFile(const String& path) {
+    return webKitClient()->mimeRegistry()->mimeTypeFromFile(path);
+}
+
+String ChromiumBridge::preferredExtensionForMIMEType(const String& mimeType) {
+    return webKitClient()->mimeRegistry()->preferredExtensionForMIMEType(mimeType);
 }
 
 } // namespace WebCore

@@ -35,19 +35,23 @@
 
 namespace WebKit {
 
-static WebKitClient* g_webKitClient;
+static WebKitClient* s_webKitClient = 0;
 
 void initialize(WebKitClient* webKitClient)
 {
     ASSERT(webKitClient);
-    // FIXME: Re-enable this once Chromium unit tests are OK.
-    //ASSERT(!g_webKitClient);
-    g_webKitClient = webKitClient;
+    ASSERT(!s_webKitClient);
+    s_webKitClient = webKitClient;
+}
+
+void shutdown()
+{
+    s_webKitClient = 0;
 }
 
 WebKitClient* webKitClient()
 {
-    return g_webKitClient;
+    return s_webKitClient;
 }
 
 } // namespace WebKit
