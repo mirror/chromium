@@ -62,6 +62,7 @@
 #include "v8_binding.h"
 #include "Page.h"
 #include "Range.h"
+#include "RenderInline.h"
 #include "ResourceRequest.h"
 #include "ResourceResponse.h"
 #include "ScriptCallStack.h"
@@ -501,18 +502,11 @@ Node* InspectorController::getResourceDocumentNode(unsigned long identifier) {
 }
 void InspectorController::highlightDOMNode(Node* node)
 {
-    if (!enabled())
-        return;
-    
-    ASSERT_ARG(node, node);
-    m_client->highlight(node);
+    highlight(node);
 }
 void InspectorController::hideDOMNodeHighlight()
 {
-    if (!enabled())
-        return;
-
-    m_client->hideHighlight();
+    hideHighlight();
 }
 
 void InspectorController::loaded() { 
@@ -1915,112 +1909,150 @@ void InspectorController::moveWindowBy(float x, float y) const
     m_page->chrome()->setWindowRect(frameRect);
 }
 
-static void drawOutlinedRect(GraphicsContext& context, const IntRect& rect, const Color& fillColor)
+static Path quadToPath(const FloatQuad& quad)
 {
-    static const int outlineThickness = 1;
-    static const Color outlineColor(62, 86, 180, 228);
-
-    IntRect outline = rect;
-    outline.inflate(outlineThickness);
-
-    context.clearRect(outline);
-
-    context.save();
-    context.clipOut(rect);
-    context.fillRect(outline, outlineColor);
-    context.restore();
-
-    context.fillRect(rect, fillColor);
+    Path quadPath;
+    quadPath.moveTo(quad.p1());
+    quadPath.addLineTo(quad.p2());
+    quadPath.addLineTo(quad.p3());
+    quadPath.addLineTo(quad.p4());
+    quadPath.closeSubpath();
+    return quadPath;
 }
 
-static void drawHighlightForBoxes(GraphicsContext& context, const Vector<IntRect>& lineBoxRects, const IntRect& contentBox, const IntRect& paddingBox, const IntRect& borderBox, const IntRect& marginBox)
+static void drawOutlinedQuad(GraphicsContext& context, const FloatQuad& quad, const Color& fillColor)
+{
+    static const int outlineThickness = 2;
+    static const Color outlineColor(62, 86, 180, 228);
+ 
+    Path quadPath = quadToPath(quad);
+
+    // Clip out the quad, then draw with a 2px stroke to get a pixel
+    // of outline (because inflating a quad is hard)
+    {
+        context.save();
+        context.addPath(quadPath);
+        context.clipOut(quadPath);
+
+        context.addPath(quadPath);
+        context.setStrokeThickness(outlineThickness);
+        context.setStrokeColor(outlineColor);
+        context.strokePath();
+
+        context.restore();
+    }
+    
+    // Now do the fill
+    context.addPath(quadPath);
+    context.setFillColor(fillColor);
+    context.fillPath();
+}
+
+static void drawOutlinedQuadWithClip(GraphicsContext& context, const FloatQuad& quad, const FloatQuad& clipQuad, const Color& fillColor)
+{
+    context.save();
+    Path clipQuadPath = quadToPath(clipQuad);
+    context.clipOut(clipQuadPath);
+    drawOutlinedQuad(context, quad, fillColor);
+    context.restore();
+}
+
+static void drawHighlightForBox(GraphicsContext& context, const FloatQuad& contentQuad, const FloatQuad& paddingQuad, const FloatQuad& borderQuad, const FloatQuad& marginQuad)
 {
     static const Color contentBoxColor(125, 173, 217, 128);
     static const Color paddingBoxColor(125, 173, 217, 160);
     static const Color borderBoxColor(125, 173, 217, 192);
     static const Color marginBoxColor(125, 173, 217, 228);
+ 
+    if (marginQuad != borderQuad)
+        drawOutlinedQuadWithClip(context, marginQuad, borderQuad, marginBoxColor);
+    if (borderQuad != paddingQuad)
+        drawOutlinedQuadWithClip(context, borderQuad, paddingQuad, borderBoxColor);
+    if (paddingQuad != contentQuad)
+        drawOutlinedQuadWithClip(context, paddingQuad, contentQuad, paddingBoxColor);
 
-    if (!lineBoxRects.isEmpty()) {
-        for (size_t i = 0; i < lineBoxRects.size(); ++i)
-            drawOutlinedRect(context, lineBoxRects[i], contentBoxColor);
-        return;
-    }
-
-    if (marginBox != borderBox)
-        drawOutlinedRect(context, marginBox, marginBoxColor);
-    if (borderBox != paddingBox)
-        drawOutlinedRect(context, borderBox, borderBoxColor);
-    if (paddingBox != contentBox)
-        drawOutlinedRect(context, paddingBox, paddingBoxColor);
-    drawOutlinedRect(context, contentBox, contentBoxColor);
+    drawOutlinedQuad(context, contentQuad, contentBoxColor);
 }
 
-static inline void convertFromFrameToMainFrame(Frame* frame, IntRect& rect) 
-{ 
-    rect = frame->page()->mainFrame()->view()->windowToContents(frame->view()->contentsToWindow(rect)); 
-} 
+static void drawHighlightForLineBoxes(GraphicsContext& context, const Vector<FloatQuad>& lineBoxQuads)
+{
+    static const Color lineBoxColor(125, 173, 217, 128);
 
+    for (size_t i = 0; i < lineBoxQuads.size(); ++i)
+        drawOutlinedQuad(context, lineBoxQuads[i], lineBoxColor);
+}
+
+static inline void convertFromFrameToMainFrame(Frame* frame, IntRect& rect)
+{
+    rect = frame->page()->mainFrame()->view()->windowToContents(frame->view()->contentsToWindow(rect));
+}
+
+static inline IntSize frameToMainFrameOffset(Frame* frame)
+{
+    IntPoint mainFramePoint = frame->page()->mainFrame()->view()->windowToContents(frame->view()->contentsToWindow(IntPoint()));
+    return mainFramePoint - IntPoint();
+}
+ 
 void InspectorController::drawNodeHighlight(GraphicsContext& context) const
 {
     if (!m_highlightedNode)
         return;
-
-    RenderBox* renderer = m_highlightedNode->renderBox();
-    Frame* containingFrame = m_highlightedNode->document()->frame(); 
-    if (!renderer || !containingFrame) 
+ 
+    RenderObject* renderer = m_highlightedNode->renderer();
+    Frame* containingFrame = m_highlightedNode->document()->frame();
+    if (!renderer || !containingFrame)
         return;
 
-    IntRect contentBox = renderer->absoluteContentBox();
-    IntRect boundingBox = renderer->absoluteBoundingBoxRect();
+    IntSize mainFrameOffset = frameToMainFrameOffset(containingFrame);
+    IntRect boundingBox = renderer->absoluteBoundingBoxRect(true);
+    boundingBox.move(mainFrameOffset);
 
-    // FIXME: Should we add methods to RenderObject to obtain these rects?
-    IntRect paddingBox(contentBox.x() - renderer->paddingLeft(), contentBox.y() - renderer->paddingTop(), contentBox.width() + renderer->paddingLeft() + renderer->paddingRight(), contentBox.height() + renderer->paddingTop() + renderer->paddingBottom());
-    IntRect borderBox(paddingBox.x() - renderer->borderLeft(), paddingBox.y() - renderer->borderTop(), paddingBox.width() + renderer->borderLeft() + renderer->borderRight(), paddingBox.height() + renderer->borderTop() + renderer->borderBottom());
-    IntRect marginBox(borderBox.x() - renderer->marginLeft(), borderBox.y() - renderer->marginTop(), borderBox.width() + renderer->marginLeft() + renderer->marginRight(), borderBox.height() + renderer->marginTop() + renderer->marginBottom());
-
-    convertFromFrameToMainFrame(containingFrame, contentBox); 
-    convertFromFrameToMainFrame(containingFrame, paddingBox); 
-    convertFromFrameToMainFrame(containingFrame, borderBox); 
-    convertFromFrameToMainFrame(containingFrame, marginBox); 
-    convertFromFrameToMainFrame(containingFrame, boundingBox);
-    
-    Vector<IntRect> lineBoxRects;
-    if (renderer->isInline() || (renderer->isText() && !m_highlightedNode->isSVGElement())) {
-        // FIXME: We should show margins/padding/border for inlines.
-        renderer->absoluteRectsForRange(lineBoxRects);
-    }
-
-    for (unsigned i = 0; i < lineBoxRects.size(); ++i) 
-        convertFromFrameToMainFrame(containingFrame, lineBoxRects[i]); 
-
-    if (lineBoxRects.isEmpty() && contentBox.isEmpty()) {
-        // If we have no line boxes and our content box is empty, we'll just draw our bounding box.
-        // This can happen, e.g., with an <a> enclosing an <img style="float:right">.
-        // FIXME: Can we make this better/more accurate? The <a> in the above case has no
-        // width/height but the highlight makes it appear to be the size of the <img>.
-        lineBoxRects.append(boundingBox);
-    }
-
-    ASSERT(m_inspectedPage); 
-
+    ASSERT(m_inspectedPage);
+ 
     FrameView* view = m_inspectedPage->mainFrame()->view();
     FloatRect overlayRect = view->visibleContentRect();
-
-    if (!overlayRect.contains(boundingBox) && !boundingBox.contains(enclosingIntRect(overlayRect))) {
-        Element* element;
-        if (m_highlightedNode->isElementNode())
-            element = static_cast<Element*>(m_highlightedNode.get());
-        else
-            element = static_cast<Element*>(m_highlightedNode->parent());
-        element->scrollIntoViewIfNeeded();
+    if (!overlayRect.contains(boundingBox) && !boundingBox.contains(enclosingIntRect(overlayRect)))
         overlayRect = view->visibleContentRect();
-    }
 
+    context.save();
     context.translate(-overlayRect.x(), -overlayRect.y());
+ 
+    if (renderer->isBox()) {
+        RenderBox* renderBox = toRenderBox(renderer);
 
-    drawHighlightForBoxes(context, lineBoxRects, contentBox, paddingBox, borderBox, marginBox);
+        IntRect contentBox = renderBox->contentBoxRect();
+
+        IntRect paddingBox(contentBox.x() - renderBox->paddingLeft(), contentBox.y() - renderBox->paddingTop(),
+                           contentBox.width() + renderBox->paddingLeft() + renderBox->paddingRight(), contentBox.height() + renderBox->paddingTop() + renderBox->paddingBottom());
+        IntRect borderBox(paddingBox.x() - renderBox->borderLeft(), paddingBox.y() - renderBox->borderTop(),
+                          paddingBox.width() + renderBox->borderLeft() + renderBox->borderRight(), paddingBox.height() + renderBox->borderTop() + renderBox->borderBottom());
+        IntRect marginBox(borderBox.x() - renderBox->marginLeft(), borderBox.y() - renderBox->marginTop(),
+                          borderBox.width() + renderBox->marginLeft() + renderBox->marginRight(), borderBox.height() + renderBox->marginTop() + renderBox->marginBottom());
+
+        FloatQuad absContentQuad = renderBox->localToAbsoluteQuad(FloatRect(contentBox));
+        FloatQuad absPaddingQuad = renderBox->localToAbsoluteQuad(FloatRect(paddingBox));
+        FloatQuad absBorderQuad = renderBox->localToAbsoluteQuad(FloatRect(borderBox));
+        FloatQuad absMarginQuad = renderBox->localToAbsoluteQuad(FloatRect(marginBox));
+
+        absContentQuad.move(mainFrameOffset);
+        absPaddingQuad.move(mainFrameOffset);
+        absBorderQuad.move(mainFrameOffset);
+        absMarginQuad.move(mainFrameOffset);
+
+        drawHighlightForBox(context, absContentQuad, absPaddingQuad, absBorderQuad, absMarginQuad);
+    } else if (renderer->isRenderInline()) {
+        RenderInline* renderInline = toRenderInline(renderer);
+
+        // FIXME: We should show margins/padding/border for inlines.
+        Vector<FloatQuad> lineBoxQuads;
+        renderInline->absoluteQuadsForRange(lineBoxQuads);
+        for (unsigned i = 0; i < lineBoxQuads.size(); ++i)
+            lineBoxQuads[i] += mainFrameOffset;
+
+        drawHighlightForLineBoxes(context, lineBoxQuads);
+    }
+    context.restore();
 }
-
 // TODO(dglazkov): These next three methods  should be easy to implement or gain
 // for free when we unfork inspector
 
