@@ -165,7 +165,7 @@ DnsBenefit DnsHostInfo::AcruePrefetchBenefits(DnsHostInfo* later_host_info) {
 
   if (later_host_info->resolve_duration_ > kMaxNonNetworkDnsLookupDuration) {
     // Our precache effort didn't help since HTTP stack hit the network.
-    UMA_HISTOGRAM_TIMES(L"DNS.PrefetchCacheEviction", resolve_duration_);
+    UMA_HISTOGRAM_LONG_TIMES(L"DNS.PrefetchCacheEvictionL", resolve_duration_);
     DLogResultsStats("DNS PrefetchCacheEviction");
     return PREFETCH_CACHE_EVICTION;
   }
