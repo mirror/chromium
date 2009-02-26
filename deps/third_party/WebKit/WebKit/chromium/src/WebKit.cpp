@@ -39,6 +39,10 @@ static WebKitClient* g_webKitClient;
 
 void initialize(WebKitClient* webKitClient)
 {
+    // FIXME: This is a gross HACK to workaround Chromium unit tests.
+    if (g_webKitClient && g_webKitClient == webKitClient)
+        return;
+
     ASSERT(webKitClient);
     ASSERT(!g_webKitClient);
     g_webKitClient = webKitClient;
