@@ -33,14 +33,39 @@ Files
                   of all modules in the client
   <module>/DEPS : Python script defining var 'deps' as a map from each requisite
                   submodule name to a URL where it can be found (via one SCM)
+
+Hooks
+  .gclient and DEPS files may optionally contain a list named "hooks" to
+  allow custom actions to be performed based on files that have changed in the
+  working copy as a result of a "sync" or "revert" operation.
+
+  Each item in a "hooks" list is a dict, containing these two keys:
+    "pattern"  The associated value is a string containing a regular
+               expression.  When a file whose pathname matches the expression
+               is checked out, updated, or reverted, the hook's "action" will
+               run.
+    "action"   A list describing a command to run along with its arguments, if
+               any.  An action command will run at most one time per gclient
+               invocation, regardless of how many files matched the pattern.
+               The action is executed in the same directory as the .gclient
+               file.  If the first item in the list is the string "python",
+               the current Python interpreter (sys.executable) will be used
+               to run the command.
+
+  Example:
+    hooks = [
+      { "pattern": "\\.(gif|jpe?g|pr0n|png)$",
+        "action":  ["python", "image_indexer.py", "--all"]},
+    ]
 """
 
 __author__ = "darinf@gmail.com (Darin Fisher)"
-__version__ = "0.2"
+__version__ = "0.3"
 
 import errno
 import optparse
 import os
+import re
 import stat
 import subprocess
 import sys
@@ -330,6 +355,27 @@ def RemoveDirectory(*path):
     os.rmdir(file_path)
 
 
+def SubprocessCall(command, in_directory, out):
+  """Runs command, a list, in directory in_directory.
+
+  A message indicating what is being done is printed to out.
+
+  Raises an Error exception if command fails.
+  """
+
+  print >> out, ("\n________ running \'%s\' in \'%s\'"
+      % (' '.join(command), in_directory))
+
+  # *Sigh*:  Windows needs shell=True, or else it won't search %PATH% for the
+  # executable, but shell=True makes subprocess on Linux fail when it's called
+  # with a list because it only tries to execute the first item in the list.
+  rv = subprocess.call(command, cwd=in_directory,
+                       shell=(sys.platform == 'win32'))
+
+  if rv:
+    raise Error("failed to run command: %s" % " ".join(command))
+
+
 # -----------------------------------------------------------------------------
 # SVN utils:
 
@@ -347,18 +393,7 @@ def RunSVN(options, args, in_directory):
   c = [SVN_COMMAND]
   c.extend(args)
 
-  print >> options.stdout, ("\n________ running \'%s\' in \'%s\'"
-         % (' '.join(c), os.path.realpath(in_directory)))
-
-  # *Sigh*:  Windows needs shell=True, or else it won't search %PATH% for
-  # the svn.exe executable, but shell=True makes subprocess on Linux fail
-  # when it's called with a list because it only tries to execute the
-  # first string ("svn").
-  rv = subprocess.call(c, cwd=in_directory, shell=(sys.platform == 'win32'))
-
-  if rv:
-    raise Error("failed to run command: %s" % " ".join(c))
-  return rv
+  SubprocessCall(c, in_directory, options.stdout)
 
 
 def CaptureSVN(options, args, in_directory):
@@ -380,6 +415,61 @@ def CaptureSVN(options, args, in_directory):
   # first string ("svn").
   return subprocess.Popen(c, cwd=in_directory, shell=(sys.platform == 'win32'),
                           stdout=subprocess.PIPE).communicate()[0]
+
+
+# When "svn checkout" or "svn update" prints a line about a file that is
+# changing, it matches this pattern.  This pattern's first match group should
+# be the relevant path.  "checkout" and "update" both print a column for file
+# status, a column for property status, and a column for lock status, followed
+# by two spaces, and then the path to the file being checked out or updated.
+_svn_update_line_re = re.compile('^...  (.*)$')
+
+def RunSVNAndGetFileList(options, args, in_directory, file_list):
+  """Runs svn checkout or update, output to stdout.
+
+  svn's stdout is parsed to collect a list of files checked out or updated.
+  These files are appended to file_list.  svn's stdout is also printed to
+  sys.stdout as in RunSVN.
+
+  Args:
+    args: A sequence of command line parameters to be passed to svn.
+    in_directory: The directory where svn is to be run.
+
+  Raises:
+    Error: An error occurred while running the svn command.
+  """
+  command = [SVN_COMMAND]
+  command.extend(args)
+
+  print >> options.stdout, ("\n________ running \'%s\' in \'%s\'"
+      % (' '.join(command), os.path.realpath(in_directory)))
+
+  # *Sigh*:  Windows needs shell=True, or else it won't search %PATH% for
+  # the svn.exe executable, but shell=True makes subprocess on Linux fail
+  # when it's called with a list because it only tries to execute the
+  # first string ("svn").
+  kid = subprocess.Popen(command, cwd=in_directory, stdout=subprocess.PIPE,
+                         shell=(sys.platform == 'win32'))
+
+  # Use this instead of |for line in kid.stdout| because the latter can
+  # introduce additional buffering.  This method allows data to be collected
+  # from kid.stdout as soon as it's placed there.
+  while True:
+    line = kid.stdout.readline()
+    if len(line) == 0:
+      break
+
+    # Use this instead of print because line already has a newline sequence
+    options.stdout.write(line)
+
+    match = _svn_update_line_re.match(line)
+    if match:
+      file_list.append(match.group(1))
+
+  rv = kid.wait()
+
+  if rv:
+    raise Error("failed to run command: %s" % " ".join(command))
 
 
 def CaptureSVNInfo(options, relpath, in_directory):
@@ -468,25 +558,35 @@ class SCMWrapper(object):
     # Find the forth '/' and strip from there. A bit hackish.
     return '/'.join(self.url.split('/')[:4]) + url
 
-  def RunCommand(self, command, options, args):
-    if command == 'update':
-      self.update(options, args)
-    elif command == 'revert':
-      self.revert(options, args)
-    elif command == 'status':
-      self.status(options, args)
-    elif command == 'diff':
-      self.diff(options, args)
-    else:
+  def RunCommand(self, command, options, args, file_list=None):
+    # file_list will have all files that are modified appended to it.  This is
+    # only effective for the "update" or "revert" commands, because those are
+    # the only ones that can result in files changing.
+
+    if file_list == None:
+      file_list = []
+
+    commands = {
+          'update': self.update,
+          'revert': self.revert,
+          'status': self.status,
+          'diff':   self.diff,
+        }
+
+    if not command in commands:
       raise Error('Unknown command %s' % command)
 
-  def diff(self, options, args):
+    return commands[command](options, args, file_list)
+
+  def diff(self, options, args, file_list):
     command = ['diff']
     command.extend(args)
     RunSVN(options, command, os.path.join(self._root_dir, self.relpath))
 
-  def update(self, options, args):
+  def update(self, options, args, file_list):
     """Runs SCM to update or transparently checkout the working copy.
+
+    All updated files will be appended to file_list.
 
     Raises:
       Error: if can't get URL for relative path.
@@ -521,8 +621,7 @@ class SCMWrapper(object):
     if not options.path_exists(os.path.join(self._root_dir, self.relpath)):
       # We need to checkout.
       command = ['checkout', url, os.path.join(self._root_dir, self.relpath)]
-      RunSVN(options, command, self._root_dir)
-      return
+      RunSVNAndGetFileList(options, command, self._root_dir, file_list)
 
     # Get the existing scm url and the revision number of the current checkout.
     from_info = CaptureSVNInfo(options,
@@ -567,10 +666,14 @@ class SCMWrapper(object):
     command = ["update", os.path.join(self._root_dir, self.relpath)]
     if revision:
       command.extend(['--revision', str(revision)])
-    return RunSVN(options, command, self._root_dir)
+    RunSVNAndGetFileList(options, command, self._root_dir, file_list)
 
-  def revert(self, options, args):
-    """Reverts local modifications. Subversion specific."""
+  def revert(self, options, args, file_list):
+    """Reverts local modifications. Subversion specific.
+
+    All reverted files will be appended to file_list, even if Subversion
+    doesn't know about them.
+    """
     path = os.path.join(self._root_dir, self.relpath)
     if not os.path.isdir(path):
       # We can't revert path that doesn't exist.
@@ -590,6 +693,7 @@ class SCMWrapper(object):
       if file.text_status in ('?', '~'):
         # Remove extraneous file. Also remove unexpected unversioned
         # directories. svn won't touch them but we want to delete these.
+        file_list.append(file_path)
         try:
           os.remove(file_path)
         except EnvironmentError:
@@ -597,6 +701,7 @@ class SCMWrapper(object):
 
       if file.text_status != '?':
         # For any other status, svn revert will work.
+        file_list.append(file_path)
         files_to_revert.append(file.path)
 
     # Revert them all at once.
@@ -618,7 +723,7 @@ class SCMWrapper(object):
         RunSVN(options, command + accumulated_paths,
                os.path.join(self._root_dir, self.relpath))
 
-  def status(self, options, args):
+  def status(self, options, args, file_list):
     """Display status information."""
     command = ['status']
     command.extend(args)
@@ -638,6 +743,7 @@ class GClient(object):
     self._options = options
     self._config_content = None
     self._config_dict = {}
+    self._deps_hooks = []
 
   def SetConfig(self, content):
     self._config_dict = {}
@@ -795,6 +901,9 @@ class GClient(object):
         else:
           deps.update(os_deps)
 
+    if 'hooks' in local_scope:
+      self._deps_hooks.extend(local_scope['hooks'])
+
     return deps
 
   def _GetAllDeps(self, solution_urls):
@@ -892,6 +1001,7 @@ class GClient(object):
       raise Error("No solution specified")
 
     entries = {}
+    file_list = []
     # Run on the base solutions first.
     for solution in solutions:
       name = solution["name"]
@@ -901,7 +1011,7 @@ class GClient(object):
       entries[name] = url
       self._options.revision = revision_overrides.get(name)
       scm = self._options.scm_wrapper(url, self._root_dir, name)
-      scm.RunCommand(command, self._options, args)
+      scm.RunCommand(command, self._options, args, file_list)
 
     # Process the dependencies next (sort alphanumerically to ensure that
     # containing directories get populated first and for readability)
@@ -916,7 +1026,7 @@ class GClient(object):
         entries[d] = url
         self._options.revision = revision_overrides.get(d)
         scm = self._options.scm_wrapper(url, self._root_dir, d)
-        scm.RunCommand(command, self._options, args)
+        scm.RunCommand(command, self._options, args, file_list)
 
     # Second pass for inherited deps (via the From keyword)
     for d in deps_to_process:
@@ -926,7 +1036,31 @@ class GClient(object):
         entries[d] = url
         self._options.revision = revision_overrides.get(d)
         scm = self._options.scm_wrapper(url, self._root_dir, d)
-        scm.RunCommand(command, self._options, args)
+        scm.RunCommand(command, self._options, args, file_list)
+
+    # Get any hooks from the .gclient file.
+    hooks = self.GetVar("hooks", [])
+    # Add any hooks found in DEPS files.
+    hooks.extend(self._deps_hooks)
+
+    for hook_dict in hooks:
+      pattern = re.compile(hook_dict['pattern'])
+      for file in file_list:
+        if not pattern.search(file):
+          continue
+
+        command = hook_dict['action'][:]
+        if command[0] == 'python':
+          # If the hook specified "python" as the first item, the action is a
+          # Python script.  Run it by starting a new copy of the same
+          # interpreter.
+          command[0] = sys.executable
+
+        SubprocessCall(command, self._root_dir, self._options.stdout)
+ 
+        # The hook's action only runs once.  Don't bother looking for any
+        # more matches.
+        break
 
     if command == 'update':
       # notify the user if there is an orphaned entry in their working copy.
