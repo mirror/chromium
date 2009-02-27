@@ -354,6 +354,9 @@
               'source/stubdata/stubdata.c',
             ],
         },],
+        [ 'OS == "linux"', {
+            'cflags': ['-Wno-unused-function'],
+        },],
       ],
     },
   ],
