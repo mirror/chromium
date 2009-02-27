@@ -1,3 +1,572 @@
+2009-02-26  Darin Fisher  <darin@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Minor cleanup of ChromiumBridge:
+        Removing unused matchesMIMEType method and s/Javascript/JavaScript/
+
+        * platform/chromium/ChromiumBridge.h:
+        * platform/chromium/MimeTypeRegistryChromium.cpp:
+        (WebCore::MIMETypeRegistry::isSupportedImageMIMEType):
+        (WebCore::MIMETypeRegistry::isSupportedJavaScriptMIMEType):
+        (WebCore::MIMETypeRegistry::isSupportedNonImageMIMEType):
+
+2009-02-26  David Hyatt  <hyatt@apple.com>
+
+        Reviewed by Sam Weinig
+
+        Fix text-bottom vertical alignment.  It was incorrectly aligning the bottom of the descent instead of including
+        the line-height below the descent.
+
+        Added fast/inline/vertical-align-text-bottom.html
+
+        * rendering/RenderBoxModelObject.cpp:
+        (WebCore::RenderBoxModelObject::verticalPosition):
+
+2009-02-26  Dirk Schulze  <krit@webkit.org>
+
+        Reviewed by Eric Seidel.
+
+        Make SVG Masking platform independet with the use of ImageBuffer::getImageData(),
+        ImageBuffer::putImageData() and GraphicsContext::clipToImageBuffer(). Every platform has
+        just to implement this three methods to support SVG Masking now.
+ 
+        Make SVG Masking platform aware
+        https://bugs.webkit.org/show_bug.cgi?id=19243
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * svg/graphics/SVGResourceMasker.cpp:
+        (WebCore::SVGResourceMasker::applyMask):
+        * svg/graphics/cairo/SVGResourceMaskerCairo.cpp: Removed.
+        * svg/graphics/cg/SVGResourceMaskerCg.cpp: Removed.
+        * svg/graphics/cg/SVGResourceMaskerCg.mm: Removed.
+        * svg/graphics/qt/SVGResourceMaskerQt.cpp: Removed.
+        * svg/graphics/skia/SVGResourceMaskerSkia.cpp: Removed.
+
+2009-02-26  Yong Li  <yong.li@torchmobile.com>
+
+        Reviewed by Darin Adler, Antti Koivisto and Alexey Proskuryakov.
+
+        Test: http/tests/misc/slow-preload-cancel.html
+
+        https://bugs.webkit.org/show_bug.cgi?id=24133
+        Clear all pending preloads in the DocLoader object when we decide to
+        cancel its all requests.
+
+        * loader/DocLoader.cpp:
+        (WebCore::DocLoader::clearPendingPreloads):
+        * loader/DocLoader.h:
+        * loader/loader.cpp:
+        (WebCore::Loader::cancelRequests):
+
+2009-02-26  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24182
+        Add NodeFilter, NodeIterator, and TreeWalker custom V8 bindings.
+
+        * bindings/v8/custom/V8NodeFilterCustom.cpp: Added.
+        (WebCore::CALLBACK_FUNC_DECL):
+        * bindings/v8/custom/V8NodeIteratorCustom.cpp: Added.
+        (WebCore::toV8):
+        (WebCore::CALLBACK_FUNC_DECL):
+        * bindings/v8/custom/V8TreeWalkerCustom.cpp: Added.
+        (WebCore::toV8):
+        (WebCore::CALLBACK_FUNC_DECL):
+
+2009-02-26  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23500
+        KURL::parse() incorrectly compares its result to original string
+
+        * platform/KURL.cpp: (WebCore::KURL::parse): Take string length into account.
+
+2009-02-26  Ojan Vafai  <ojan@chromium.org>
+
+        Reviewed by Kevin McCullough.
+
+        Manual test for inspector node highlighting.
+
+        * manual-tests/inspector/highlight-nodes.html: Added.
+
+2009-02-16  Anantanarayanan Iyengar  <ananta@chromium.org>
+
+        Reviewed by Darin Fisher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23973
+        ScrollView::scrollContents can be invoked during view shutdown.  In
+        this scenario the FrameView::hostWindow method can return NULL, which
+        indicates that the frame/page is being destroyed. This causes a crash
+        when we try to dereference a NULL hostWindow pointer.  Fix is to add a
+        NULL check for this.  
+
+        * platform/ScrollView.cpp:
+        (WebCore::ScrollView::scrollContents):
+
+2009-02-26  Rahul Kuchhal  <kuchhal@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24003
+        Fix a crash caused by unsafe type conversion.
+
+        Test: fast/block/positioning/absolute-in-inline-rtl-4.html
+
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::calcAbsoluteHorizontalValues):
+
+2009-02-26  Ojan Vafai  <ojan@chromium.org>
+
+        Reviewed by Adam Roben.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24202
+        Have drawNodeHighlight clip instead of clearing. This makes it work for
+        both Safari and Chromium since Chromium draws the inspector highlighting
+        in the same buffer as the page.
+
+        * inspector/InspectorController.cpp:
+        (WebCore::quadToPath):
+        (WebCore::drawOutlinedQuad):
+        (WebCore::drawOutlinedQuadWithClip):
+        (WebCore::drawHighlightForBox):
+
+2009-02-26  David Hyatt  <hyatt@apple.com>
+
+        Reviewed by Dan Bernstein & Darin Adler
+
+        Make sure the border/padding are properly omitted at the start of an inline that is a continuation.
+        
+        Added fast/inline/inline-continuation-borders.html
+
+        * rendering/InlineFlowBox.cpp:
+        (WebCore::InlineFlowBox::determineSpacingForFlowBoxes):
+
+2009-02-26  Simon Fraser  <simon.fraser@apple.com>
+
+        Build fix, no review.
+        
+        Try to fix the wx build after r41218.
+
+        * WebCoreSources.bkl:
+
+2009-02-26  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=19527
+        ASSERTION FAILED: containerA && containerB
+
+        Test: fast/dom/Range/bug-19527.html
+
+        * dom/Range.cpp:
+        (WebCore::Range::isPointInRange):
+        (WebCore::Range::comparePoint):
+        Bring the behavior in line with current Firefox, making it impossible for these methods
+        to pass a null container to compareBoundaryPoints().
+
+2009-02-26  Jonathon Jongsma  <jonathon@quotidian.org>
+
+        Reviewed by Holger Freyther.
+
+        https://bugs.webkit.org/show_bug.cgi?id=20358
+
+        * platform/graphics/gtk/SimpleFontDataGtk.cpp:
+        (WebCore::SimpleFontData::smallCapsFontData): the small-caps font data
+        should set the computed size rather than the specified size, otherwise
+        the caps just get rendered normal size.
+
+2009-02-26  Benjamin Meyer  <benjamin.meyer@torchmobile.com>
+
+        Reviewed by George Staikos.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24062
+        QNetworkCookieJar expects the url and not the policy url.  Sending the
+        policy url will cause QNetworkCookieJar to behave incorrectly.  One
+        example would be a cookie that does not have a path or domain.
+        QNetworkCookieJar will use the url it is given to fill in default values.
+        This allows setting cookies on the url of the main frame from an iFrame
+        when the cookie should be set on the url of the iFrame.
+
+        Originally noticed on http://writer.zoho.com/jsp/home.jsp?serviceurl=/index.do
+
+        * platform/qt/CookieJarQt.cpp:
+        (WebCore::setCookies):
+
+2009-02-26  Charles Wei  <charles.wei@torchmobile.com.cn>
+
+        Reviewed by George Staikos.
+
+        make WebKit/Qt compile with SVG disabled
+
+        * WebCore.pro:
+        * platform/graphics/qt/FontPlatformDataQt.cpp:
+
+2009-02-25  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Unreviewed build fix. Add WebCore/workers to the list of paths
+        searched by the bindings generator perl script.
+
+        * GNUmakefile.am:
+
+2009-02-25  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey Garen.
+
+        Add canvas to the list of RenderObjects that can mark a page as
+        visually not empty.
+
+        * rendering/RenderHTMLCanvas.cpp:
+        (WebCore::RenderHTMLCanvas::RenderHTMLCanvas):
+
+2009-02-25  Eric Carlson  <eric.carlson@apple.com>
+
+        Reviewed by Dave Hyatt.
+
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::nodeAtPoint): Remove assertion fired when child has layer
+        as RenderMedia with controls always has a layer.
+
+2009-02-25  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Simon Fraser.
+
+        - fix https://bugs.webkit.org/show_bug.cgi?id=24130
+          <rdar://problem/6618196> Paint very slow when horizontally resizing
+
+        Test: fast/gradients/background-clipped.html
+
+        * rendering/RenderBoxModelObject.cpp:
+        (WebCore::RenderBoxModelObject::paintFillLayerExtended): Intersect the
+        destination rectangle passed to drawTiledImage() with the dirty
+        rectangle. This makes it more likely for the destination rect to be
+        contained in a single tile rect, which results in a faster code path
+        being taken down the road (just drawing a single tile instead of
+        tiling).
+
+2009-02-25  Ojan Vafai  <ojan@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Fix test regressions from positionForCoordinates patch.
+        https://bugs.webkit.org/show_bug.cgi?id=24148
+
+        * rendering/RenderBlock.cpp:
+        (WebCore::positionForPointWithInlineChildren):
+        Remove ASSERT that placeholder text codepath is hitting.
+
+2009-02-25  Chris Fleizach  <cfleizach@apple.com>
+
+        Reviewed by Beth Dakin.
+
+        Bug 24143: Crash occurs at WebCore::AccessibilityTable::isTableExposableThroughAccessibility() when applying a link in GMail
+        https://bugs.webkit.org/show_bug.cgi?id=24143
+
+        When an AX object is marked dirty, do not create AX elements while going up the parent chain.
+        Do not allow AXRenderObjects to remove their own IDs from the cache, all the cache to do that work
+        Make sure the AXObjectWrapper's have an object before calling them
+        In AXObjectCache, change get -> getOrCreate. Use get() to only retrieve an element if it exists
+
+        Test: platform/mac-snowleopard/accessibility/table-updating.html
+
+        * WebCore.base.exp:
+        * page/AXObjectCache.cpp:
+        (WebCore::AXObjectCache::~AXObjectCache):
+        (WebCore::AXObjectCache::get):
+        (WebCore::AXObjectCache::getOrCreate):
+        (WebCore::AXObjectCache::removeAXID):
+        (WebCore::AXObjectCache::handleActiveDescendantChanged):
+        (WebCore::AXObjectCache::handleAriaRoleChanged):
+        * page/AXObjectCache.h:
+        * page/AccessibilityImageMapLink.cpp:
+        (WebCore::AccessibilityImageMapLink::parentObject):
+        * page/AccessibilityListBox.cpp:
+        (WebCore::AccessibilityListBox::listBoxOptionAccessibilityObject):
+        (WebCore::AccessibilityListBox::doAccessibilityHitTest):
+        * page/AccessibilityListBoxOption.cpp:
+        (WebCore::AccessibilityListBoxOption::elementRect):
+        (WebCore::AccessibilityListBoxOption::parentObject):
+        * page/AccessibilityObject.cpp:
+        (WebCore::AccessibilityObject::detach):
+        (WebCore::AccessibilityObject::parentObjectIfExists):
+        (WebCore::replacedNodeNeedsCharacter):
+        (WebCore::AccessibilityObject::accessibilityObjectForPosition):
+        * page/AccessibilityObject.h:
+        * page/AccessibilityRenderObject.cpp:
+        (WebCore::AccessibilityRenderObject::firstChild):
+        (WebCore::AccessibilityRenderObject::lastChild):
+        (WebCore::AccessibilityRenderObject::previousSibling):
+        (WebCore::AccessibilityRenderObject::nextSibling):
+        (WebCore::AccessibilityRenderObject::parentObjectIfExists):
+        (WebCore::AccessibilityRenderObject::parentObject):
+        (WebCore::AccessibilityRenderObject::isAttachment):
+        (WebCore::AccessibilityRenderObject::headingLevel):
+        (WebCore::AccessibilityRenderObject::anchorElement):
+        (WebCore::AccessibilityRenderObject::menuForMenuButton):
+        (WebCore::AccessibilityRenderObject::menuButtonForMenu):
+        (WebCore::AccessibilityRenderObject::checkboxOrRadioRect):
+        (WebCore::AccessibilityRenderObject::internalLinkElement):
+        (WebCore::AccessibilityRenderObject::addRadioButtonGroupMembers):
+        (WebCore::AccessibilityRenderObject::titleUIElement):
+        (WebCore::AccessibilityRenderObject::accessibilityIsIgnored):
+        (WebCore::AccessibilityRenderObject::accessibilityParentForImageMap):
+        (WebCore::AccessibilityRenderObject::getDocumentLinks):
+        (WebCore::AccessibilityRenderObject::doAccessibilityHitTest):
+        (WebCore::AccessibilityRenderObject::focusedUIElement):
+        (WebCore::AccessibilityRenderObject::activeDescendant):
+        (WebCore::AccessibilityRenderObject::observableObject):
+        (WebCore::AccessibilityRenderObject::childrenChanged):
+        (WebCore::AccessibilityRenderObject::addChildren):
+        * page/AccessibilityRenderObject.h:
+        (WebCore::AccessibilityRenderObject::setRenderObject):
+        * page/AccessibilityTable.cpp:
+        (WebCore::AccessibilityTable::addChildren):
+        (WebCore::AccessibilityTable::headerContainer):
+        (WebCore::AccessibilityTable::cellForColumnAndRow):
+        * page/AccessibilityTableCell.cpp:
+        (WebCore::AccessibilityTableCell::isTableCell):
+        (WebCore::AccessibilityTableCell::titleUIElement):
+        * page/AccessibilityTableColumn.cpp:
+        (WebCore::AccessibilityTableColumn::headerObjectForSection):
+        * page/AccessibilityTableRow.cpp:
+        (WebCore::AccessibilityTableRow::isTableRow):
+        * page/gtk/AccessibilityObjectWrapperAtk.cpp:
+        * page/mac/AXObjectCacheMac.mm:
+        (WebCore::AXObjectCache::postNotification):
+        (WebCore::AXObjectCache::postNotificationToElement):
+        * page/mac/AccessibilityObjectWrapper.mm:
+        (textMarkerForVisiblePosition):
+        (AXLinkElementForNode):
+        (nsStringForReplacedNode):
+        (-[AccessibilityObjectWrapper doAXAttributedStringForTextMarkerRange:]):
+        (-[AccessibilityObjectWrapper accessibilityActionNames]):
+        (-[AccessibilityObjectWrapper accessibilityAttributeNames]):
+        (-[AccessibilityObjectWrapper accessibilityFocusedUIElement]):
+        (-[AccessibilityObjectWrapper accessibilityHitTest:]):
+        (-[AccessibilityObjectWrapper accessibilityIsAttributeSettable:]):
+        (-[AccessibilityObjectWrapper accessibilityIsIgnored]):
+        (-[AccessibilityObjectWrapper accessibilityParameterizedAttributeNames]):
+        (-[AccessibilityObjectWrapper accessibilityPerformPressAction]):
+        (-[AccessibilityObjectWrapper accessibilityPerformAction:]):
+        (-[AccessibilityObjectWrapper accessibilitySetValue:forAttribute:]):
+        (-[AccessibilityObjectWrapper _accessibilityParentForSubview:]):
+        (-[AccessibilityObjectWrapper accessibilityIndexOfChild:]):
+        (-[AccessibilityObjectWrapper accessibilityArrayAttributeCount:]):
+        (-[AccessibilityObjectWrapper accessibilityArrayAttributeValues:index:maxCount:]):
+
+2009-02-25  Beth Dakin  <bdakin@apple.com>
+
+        Reviewed by Geoff Garen.
+
+        Re-working of <rdar://problem/6487249> repro crash in 
+        WebCore::CSSParser::parseFillImage copying entire contents of this 
+        page
+        -and corresponding: https://bugs.webkit.org/show_bug.cgi?id=24172
+
+        Fixes a bunch of layout test failures I caused!
+
+        * css/CSSParser.cpp:
+        (WebCore::CSSParser::parseValue):
+        (WebCore::CSSParser::parseContent):
+        (WebCore::CSSParser::parseFillImage):
+        (WebCore::CSSParser::parseFontFaceSrc):
+        (WebCore::CSSParser::parseBorderImage):
+
+2009-02-25  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24174
+        Add more V8 custom bindings.
+
+        * bindings/v8/custom/V8CSSStyleDeclarationCustom.cpp: Added.
+        (WebCore::hasCSSPropertyNamePrefix):
+        (WebCore::cssPropertyName):
+        (WebCore::NAMED_PROPERTY_GETTER):
+        (WebCore::NAMED_PROPERTY_SETTER):
+        * bindings/v8/custom/V8DOMStringListCustom.cpp: Added.
+        (WebCore::INDEXED_PROPERTY_GETTER):
+        (WebCore::CALLBACK_FUNC_DECL):
+        * bindings/v8/custom/V8EventCustom.cpp: Added.
+        (WebCore::ACCESSOR_SETTER):
+        (WebCore::ACCESSOR_GETTER):
+        * bindings/v8/custom/V8HTMLDocumentCustom.cpp: Added.
+        (WebCore::NAMED_PROPERTY_DELETER):
+        (WebCore::NAMED_PROPERTY_SETTER):
+        (WebCore::NAMED_PROPERTY_GETTER):
+        * bindings/v8/custom/V8HTMLFrameSetElementCustom.cpp: Added.
+        (WebCore::NAMED_PROPERTY_GETTER):
+        * bindings/v8/custom/V8NamedNodeMapCustom.cpp: Added.
+        (WebCore::INDEXED_PROPERTY_GETTER):
+        (WebCore::NAMED_PROPERTY_GETTER):
+        * bindings/v8/custom/V8NodeListCustom.cpp: Added.
+        (WebCore::NAMED_PROPERTY_GETTER):
+        * bindings/v8/custom/V8StyleSheetListCustom.cpp: Added.
+        (WebCore::NAMED_PROPERTY_GETTER):
+
+2009-02-25  Scott Violet  <sky@google.com>
+
+        Reviewed by Dave Hyatt.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24171
+        Provides a RenderTheme method for getting the scroll bar size and
+        changes RenderListBox to use it. RenderTheme returns a size of regular,
+        and Mac's override to return small. Changes ScrollbarThemeChromium to
+        use the scrollbarsize of the scrollbar when getting the size
+        instead of passing in no-args.
+
+        * platform/chromium/ScrollbarThemeChromium.cpp:
+        (WebCore::ScrollbarThemeChromium::trackRect):
+        (WebCore::ScrollbarThemeChromium::buttonSize):
+        * rendering/RenderListBox.cpp:
+        (WebCore::RenderListBox::createScrollbar):
+        * rendering/RenderTheme.h:
+        (WebCore::RenderTheme::scrollbarControlSizeForPart):
+        * rendering/RenderThemeChromiumMac.h:
+        (WebCore::RenderThemeChromiumMac::scrollbarControlSizeForPart):
+        * rendering/RenderThemeMac.h:
+        (WebCore::RenderThemeMac::scrollbarControlSizeForPart):
+
+2009-02-25  Beth Dakin  <bdakin@apple.com>
+
+        Reviewed by Darin Adler.
+
+        Fix for <rdar://problem/6487249> repro crash in 
+        WebCore::CSSParser::parseFillImage copying entire contents of this 
+        page
+        -and corresponding: https://bugs.webkit.org/show_bug.cgi?id=24172
+
+        * css/CSSParser.cpp:
+        (WebCore::CSSParser::parseValue): Null-check m_styleSheet
+
+2009-02-25  Adam Treat  <adam.treat@torchmobile.com>
+
+        Fix the Qt build.
+
+        * WebCore.pro:
+
+2009-02-25  Jan Michael Alonzo  <jmalonzo@webkit.org>
+
+        Gtk build fix. Not reviewed.
+
+        Add files to the build per r41218.
+        Rename WebkitPoint.h to WebKitPoint.h in DOMWindow.cpp
+
+        * GNUmakefile.am:
+        * page/DOMWindow.cpp:
+
+2009-02-25  Zan Dobersek  <zandobersek@gmail.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24043
+        When faced with URLs with unsupported protocol on Gtk port,
+        report the error through an idle function and return true, so
+        a proper resource handle is created.
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::reportUnknownProtocolError):
+        (WebCore::ResourceHandle::start):
+
+2009-02-25  Steve Falkenburg  <sfalken@apple.com>
+
+        Windows build fix.
+        Use struct to forward declare ResourceRequest.
+
+        * history/HistoryItem.h:
+        * inspector/InspectorController.h:
+        * loader/DocumentThreadableLoader.h:
+        * loader/FrameLoaderClient.h:
+        * loader/MainResourceLoader.h:
+        * loader/SubresourceLoader.h:
+        * loader/SubresourceLoaderClient.h:
+        * loader/ThreadableLoader.h:
+        * loader/WorkerThreadableLoader.h:
+        * platform/CrossThreadCopier.h:
+        * platform/network/ResourceHandle.h:
+        * platform/network/ResourceHandleClient.h:
+        * platform/network/ResourceRequestBase.h:
+        * platform/network/cf/ResourceRequestCFNet.h:
+        * xml/XMLHttpRequest.h:
+
+2009-02-25  Steve Falkenburg  <sfalken@apple.com>
+
+        Partial Windows build fix.
+        
+        * DerivedSources.cpp:
+        * WebCore.vcproj/WebCore.vcproj:
+
+2009-02-25  Dirk Schulze  <krit@webkit.org>
+
+        Reviewed by Oliver Hunt.
+
+        Ported arcTo to Qt. Qt has no native support for arcTo. This changes
+        calculate the behavior of arcTo and draws it with lineTo and arc.
+
+        [QT] implement Canvas arcTo
+        https://bugs.webkit.org/show_bug.cgi?id=23873
+
+        * platform/graphics/qt/PathQt.cpp:
+        (WebCore::Path::addArcTo):
+
+2009-02-25  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dan Bernstein
+
+        Remove idl files from Resources, and sort.
+        
+        * WebCore.xcodeproj/project.pbxproj:
+
+2009-02-25  Chris Marrin  <cmarrin@apple.com>
+
+        Reviewed by Simon Fraser.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23943
+
+        Added webkitConvertPointFromNodeToPage and webkitConvertPointFromPageToNode on
+        the window object. Also added WebKitPoint object, which is passed in and out
+        of these functions.
+
+        Test: fast/dom/Window/webkitConvertPoint.html
+
+        * DerivedSources.make:
+        * WebCore.pro:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+        * bindings/js/JSDOMWindowBase.cpp:
+        (jsDOMWindowBaseWebKitPoint):
+        (setJSDOMWindowBaseWebKitPoint):
+        * bindings/js/JSWebKitPointConstructor.cpp: Added.
+        (WebCore::):
+        (WebCore::JSWebKitPointConstructor::JSWebKitPointConstructor):
+        (WebCore::constructWebKitPoint):
+        (WebCore::JSWebKitPointConstructor::getConstructData):
+        * bindings/js/JSWebKitPointConstructor.h: Added.
+        (WebCore::JSWebKitPointConstructor::classInfo):
+        * dom/Node.cpp:
+        (WebCore::Node::convertToPage):
+        (WebCore::Node::convertFromPage):
+        * dom/Node.h:
+        * page/DOMWindow.cpp:
+        (WebCore::DOMWindow::webkitConvertPointFromNodeToPage):
+        (WebCore::DOMWindow::webkitConvertPointFromPageToNode):
+        * page/DOMWindow.h:
+        * page/DOMWindow.idl:
+        * page/WebKitPoint.h: Added.
+        (WebCore::WebKitPoint::create):
+        (WebCore::WebKitPoint::x):
+        (WebCore::WebKitPoint::y):
+        (WebCore::WebKitPoint::setX):
+        (WebCore::WebKitPoint::setY):
+        (WebCore::WebKitPoint::WebKitPoint):
+        * page/WebKitPoint.idl: Added.
+
 2009-02-25  Jian Li  <jianli@chromium.org>
 
         Reviewed by Alexey Proskuryakov.

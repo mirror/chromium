@@ -1,4 +1,3 @@
-<<<<<<< .working
 <?xml version="1.0" encoding="windows-1251"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
@@ -252,6 +251,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\wtf\CurrentTime.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\wtf\CurrentTime.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\wtf\Deque.h"
 			>
 		</File>
@@ -368,6 +375,10 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\wtf\PtrAndFlags.h"
+			>
+		</File>
+		<File
 			RelativePath="..\..\wtf\RandomNumber.cpp"
 			>
 		</File>
@@ -452,22 +463,6 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\wtf\Threading.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\wtf\ThreadingWin.cpp"
-			>
-		</File>
-		<File
-			RelativePath="..\..\wtf\ThreadSpecific.h"
-			>
-		</File>
-		<File
-			RelativePath="..\..\wtf\ThreadSpecificWin.cpp"
-			>
-		</File>
-		<File
 			RelativePath="..\..\wtf\TypeTraits.h"
 			>
 		</File>
@@ -503,4 +498,3 @@
 	<Globals>
 	</Globals>
 </VisualStudioProject>
->>>>>>> .merge-right.r39829

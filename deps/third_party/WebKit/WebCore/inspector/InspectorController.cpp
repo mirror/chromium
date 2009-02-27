@@ -1924,7 +1924,7 @@ static void drawOutlinedQuad(GraphicsContext& context, const FloatQuad& quad, co
 {
     static const int outlineThickness = 2;
     static const Color outlineColor(62, 86, 180, 228);
- 
+
     Path quadPath = quadToPath(quad);
 
     // Clip out the quad, then draw with a 2px stroke to get a pixel

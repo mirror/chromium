@@ -387,6 +387,7 @@ IDL_BINDINGS += \
     page/Navigator.idl \
     page/PositionError.idl \
     page/Screen.idl \
+    page/WebKitPoint.idl \
     page/WorkerNavigator.idl \
     plugins/Plugin.idl \
     plugins/MimeType.idl \
@@ -466,6 +467,7 @@ SOURCES += \
     bindings/js/JSTextCustom.cpp \
     bindings/js/JSTreeWalkerCustom.cpp \
     bindings/js/JSWebKitCSSMatrixConstructor.cpp \
+    bindings/js/JSWebKitPointConstructor.cpp \
     bindings/js/JSXMLHttpRequestConstructor.cpp \
     bindings/js/JSXMLHttpRequestCustom.cpp \
     bindings/js/JSXMLHttpRequestUploadCustom.cpp \
@@ -1823,8 +1825,7 @@ contains(DEFINES, ENABLE_SVG=1) {
         rendering/SVGRootInlineBox.cpp
 
 SOURCES += \
-        svg/graphics/qt/SVGResourceFilterQt.cpp \
-        svg/graphics/qt/SVGResourceMaskerQt.cpp
+        svg/graphics/qt/SVGResourceFilterQt.cpp
 
 
         # GENERATOR 5-C:
@@ -1893,7 +1894,7 @@ SOURCES += \
     # GENERATOR 6-B:
     cssvalues.output = $$GENERATED_SOURCES_DIR/${QMAKE_FILE_BASE}.c
     cssvalues.input = WALDOCSSVALUES
-    cssvalues.commands = $(COPY_FILE) ${QMAKE_FILE_NAME} $$GENERATED_SOURCES_DIR && cd $$GENERATED_SOURCES_DIR && perl $$PWD/css/makevalues.pl && $(DEL_FILE) ${QMAKE_FILE_BASE}.in ${QMAKE_FILE_BASE}.strip ${QMAKE_FILE_BASE}.gperf
+    cssvalues.commands = perl -ne \"print lc\" ${QMAKE_FILE_NAME} > $$GENERATED_SOURCES_DIR/${QMAKE_FILE_BASE}.in && cd $$GENERATED_SOURCES_DIR && perl $$PWD/css/makevalues.pl && $(DEL_FILE) ${QMAKE_FILE_BASE}.in ${QMAKE_FILE_BASE}.strip ${QMAKE_FILE_BASE}.gperf
     cssvalues.CONFIG = target_predeps no_link
     cssvalues.clean = ${QMAKE_FILE_OUT} ${QMAKE_VAR_GENERATED_SOURCES_DIR_SLASH}${QMAKE_FILE_BASE}.h
     addExtraCompiler(cssvalues)

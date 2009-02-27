@@ -111,23 +111,16 @@ void ChromiumBridge::clipboardWriteImage(const NativeImageSkia* image,
 //-----------------------------------------------------------------------------
 // MIME
 
-bool ChromiumBridge::isSupportedImageMIMEType(const char* mimeType) {
-    return webKitClient()->mimeRegistry()->supportsImageMIMEType(String(mimeType));
+bool ChromiumBridge::isSupportedImageMIMEType(const String& mimeType) {
+    return webKitClient()->mimeRegistry()->supportsImageMIMEType(mimeType);
 }
 
-bool ChromiumBridge::isSupportedJavascriptMIMEType(const char* mimeType) {
-    return webKitClient()->mimeRegistry()->supportsJavaScriptMIMEType(String(mimeType));
+bool ChromiumBridge::isSupportedJavaScriptMIMEType(const String& mimeType) {
+    return webKitClient()->mimeRegistry()->supportsJavaScriptMIMEType(mimeType);
 }
 
-bool ChromiumBridge::isSupportedNonImageMIMEType(const char* mimeType) {
-    return webKitClient()->mimeRegistry()->supportsNonImageMIMEType(String(mimeType));
-}
-
-bool ChromiumBridge::matchesMIMEType(const String& pattern,
-                                     const String& type) {
-    // FIXME: This method should be removed from ChromiumBridge
-    ASSERT_NOT_REACHED();
-    return false;
+bool ChromiumBridge::isSupportedNonImageMIMEType(const String& mimeType) {
+    return webKitClient()->mimeRegistry()->supportsNonImageMIMEType(mimeType);
 }
 
 String ChromiumBridge::mimeTypeForExtension(const String& extension) {

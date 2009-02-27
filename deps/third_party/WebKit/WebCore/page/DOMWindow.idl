@@ -137,6 +137,9 @@ module window {
                                        in DOMString pseudoElement,
                                        in [Optional] boolean authorOnly);
         attribute [Replaceable] double devicePixelRatio;
+        
+        WebKitPoint webkitConvertPointFromPageToNode(in Node node, in WebKitPoint p);
+        WebKitPoint webkitConvertPointFromNodeToPage(in Node node, in WebKitPoint p);
 
 #if ENABLE_OFFLINE_WEB_APPLICATIONS
         readonly attribute DOMApplicationCache applicationCache;
@@ -384,6 +387,7 @@ module window {
 	attribute XMLHttpRequestConstructor XMLHttpRequest;
 	attribute XSLTProcessorConstructor XSLTProcessor;
 	attribute MessageChannelConstructor MessageChannel;
+	attribute WebKitPointConstructor WebKitPoint;
 #if ENABLE_WORKERS
         attribute WorkerConstructor Worker;
 #endif
