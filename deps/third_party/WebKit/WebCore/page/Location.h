@@ -58,31 +58,12 @@ namespace WebCore {
 
         String toString() const;
 
-#if USE(V8)
-        void setHash(const String& str);
-        void setHost(const String& str);
-        void setHostname(const String&);
-        void setHref(const String&);
-        void setPathname(const String&);
-        void setPort(const String&);
-        void setProtocol(const String&);
-        void setSearch(const String&);
-
-        void reload(bool forceget);
-        void replace(const String& url);
-        void assign(const String& url);
-#endif
-
     private:
         Location(Frame*);
 
         const KURL& url() const;
 
         Frame* m_frame;
-
-#if USE(V8)
-        friend class WindowV8;
-#endif
     };
 
 } // namespace WebCore

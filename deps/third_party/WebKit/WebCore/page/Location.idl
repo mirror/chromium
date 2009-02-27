@@ -26,44 +26,29 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#if defined(V8_BINDING)
-
-module core {
-  interface [CheckDomainSecurity] Location {
-    attribute DOMString hash;
-    attribute DOMString host;
-    attribute DOMString hostname;
-    attribute [DoNotCheckDomainSecurityOnSet, DontDelete, v8DisallowShadowing] DOMString href;
-    attribute DOMString pathname;
-    attribute DOMString port;
-    attribute DOMString protocol;
-    attribute DOMString search;
-
-    // For security reasons, these functions are on the instance
-    // instead of on the prototype object to insure that they cannot
-    // be overwritten.
-    [DoNotCheckDomainSecurity, v8OnInstance] void reload(in boolean forceget);
-    [DoNotCheckDomainSecurity, v8OnInstance] void replace(in DOMString url);
-    [DoNotCheckDomainSecurity, v8OnInstance] void assign(in DOMString url);
-    [ReadOnly, DontEnum, v8OnInstance] DOMString toString();
-    [Custom, ReadOnly, DontEnum, v8OnInstance] DOMObject valueOf();
-  };
-}
-
-#else
-
 module window {
+
     interface [
+#if defined(V8_BINDING)
+        CheckDomainSecurity,
+#endif
         CustomGetOwnPropertySlot,
         CustomPutFunction,
         CustomDeleteProperty,
         CustomGetPropertyNames
     ] Location {
-                 attribute [CustomSetter] DOMString href;
+                 attribute [CustomSetter, v8DisallowShadowing, DontDelete] DOMString href;
 
+#if defined(V8_BINDING)
+        [Custom, v8OnInstance] void assign(in DOMString url);
+        [Custom, v8OnInstance] void replace(in DOMString url);
+        [Custom, v8OnInstance] void reload();
+        [Custom, v8OnInstance, ReadOnly, DontEnum] DOMObject valueOf();
+#else
         [Custom] void assign(in DOMString url);
         [Custom] void replace(in DOMString url);
         [Custom] void reload();
+#endif
 
         // URI decomposition attributes
                  attribute [CustomSetter] DOMString protocol;
@@ -75,9 +60,8 @@ module window {
                  attribute [CustomSetter] DOMString hash;
 
 #if defined(LANGUAGE_JAVASCRIPT)
-        [DontEnum, Custom] DOMString toString();
+        [ReadOnly, DontEnum, Custom, v8OnInstance] DOMString toString();
 #endif
     };
-}
 
-#endif // V8_BINDING
+}
