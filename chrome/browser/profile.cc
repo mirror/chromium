@@ -71,8 +71,8 @@ void Profile::RegisterUserPrefs(PrefService* prefs) {
       IDS_SPELLCHECK_DICTIONARY);
 #endif
   prefs->RegisterBooleanPref(prefs::kEnableSpellCheck, true);
-  prefs->RegisterBooleanPref(prefs::kEnableUserScripts, false);
-  prefs->RegisterBooleanPref(prefs::kEnableExtensions, false);
+  prefs->RegisterBooleanPref(prefs::kEnableUserScripts, true);
+  prefs->RegisterBooleanPref(prefs::kEnableExtensions, true);
 }
 
 // static
