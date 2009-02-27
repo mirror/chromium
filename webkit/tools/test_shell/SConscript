@@ -20,16 +20,21 @@ if env.Bit('windows'):
   )
 
 env.Append(
+    CPPDEFINES = [
+        'WEBKIT_USING_SKIA'
+    ],
     CPPPATH = [
         '$BREAKPAD_DIR/src',
         '$WEBKIT_DIR/glue',
         '$GTEST_DIR/include',
+        '$THIRD_PARTY_WEBKIT_DIR/WebKit/chromium/public',
     ],
     LIBS = [
         'glue',
         'port',
         'base',
         'base_gfx',
+        'browser',
         'googleurl',
         'net',
         'sdch',
@@ -37,6 +42,7 @@ env.Append(
         'gtest',
         'V8Bindings',
         'WebCore',
+        'WebKit',
         'WTF',
         env['ICU_LIBS'],  # TODO(sgk):  '$ICU_LIBS' when scons is fixed
         'libjpeg',

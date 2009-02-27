@@ -120,6 +120,10 @@ const wchar_t kPluginDataDir[]                 = L"plugin-data-dir";
 // UserDatadir.
 const wchar_t kDiskCacheDir[]                  = L"disk-cache-dir";
 
+// Whether the multiple profiles feature based on the user-data-dir flag is
+// enabled or not.
+const wchar_t kEnableUserDataDirProfiles[]     = L"enable-udd-profiles";
+
 // Specifies the path to the user data folder for the parent profile.
 const wchar_t kParentProfile[]                 = L"parent-profile";
 
@@ -180,6 +184,9 @@ const wchar_t kDisableLogging[]                = L"disable-logging";
 // INFO = 0, WARNING = 1, LOG_ERROR = 2, LOG_FATAL = 3.
 const wchar_t kLoggingLevel[]                  = L"log-level";
 
+// Make plugin processes log their sent and received messages to LOG(INFO).
+const wchar_t kLogPluginMessages[]             = L"log-plugin-messages";
+
 // Dump any accumualted histograms to the log when browser terminates (requires
 // logging to be enabled to really do anything).  Used by developers and test
 // scripts.
@@ -199,7 +206,9 @@ const wchar_t kOmniBoxPopupCount[]             = L"omnibox-popup-count";
 const wchar_t kAutomationClientChannelID[]     = L"automation-channel";
 
 // Indicates the last session should be restored on startup. This overrides
-// the preferences value and is primarily intended for testing.
+// the preferences value and is primarily intended for testing. The value of
+// this switch is the number of tabs to wait until loaded before
+// 'load completed' is sent to the ui_test.
 const wchar_t kRestoreLastSession[]            = L"restore-last-session";
 
 // Chrome supports a playback and record mode.  Record mode saves *everything*

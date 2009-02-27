@@ -191,6 +191,13 @@ static LRESULT CALLBACK FocusWindowCallback(HWND window, UINT message,
         if (RerouteMouseWheel(window, wParam, lParam))
           return 0;
         break;
+      case WM_IME_CHAR:
+        // Issue 7707: A rich-edit control may crash when it receives a
+        // WM_IME_CHAR message while it is processing a WM_IME_COMPOSITION
+        // message. Since view controls don't need WM_IME_CHAR messages,
+        // we prevent WM_IME_CHAR messages from being dispatched to view
+        // controls via the CallWindowProc() call.
+        return 0;
       default:
         break;
     }
@@ -230,7 +237,7 @@ void FocusManager::InstallFocusSubclass(HWND window, View* view) {
       !win_util::IsSubclassed(window, &FocusWindowCallback)) {
     NOTREACHED() << "window sub-classed by someone other than the FocusManager";
     // Track in UMA so we know if this case happens.
-    UMA_HISTOGRAM_COUNTS(L"FocusManager.MultipleSubclass", 1);
+    UMA_HISTOGRAM_COUNTS("FocusManager.MultipleSubclass", 1);
   } else {
     win_util::Subclass(window, &FocusWindowCallback);
     SetProp(window, kFocusSubclassInstalled, reinterpret_cast<HANDLE>(true));
@@ -842,4 +849,3 @@ void FocusManager::RemoveFocusChangeListener(FocusChangeListener* listener) {
 }
 
 }  // namespace views
-

@@ -12,10 +12,13 @@
 #include "base/task.h"
 #include "build/build_config.h"
 #include "chrome/common/child_thread.h"
+#include "chrome/renderer/renderer_histogram_snapshots.h"
 
 class FilePath;
 class NotificationService;
 class RenderDnsMaster;
+class RendererHistogram;
+class RendererWebKitClientImpl;
 class SkBitmap;
 class UserScriptSlave;
 class VisitedLinkSlave;
@@ -30,9 +33,6 @@ class RenderThreadBase {
   virtual ~RenderThreadBase() {}
 
   virtual bool Send(IPC::Message* msg) = 0;
-
-  // True if currently sending a message.
-  virtual bool InSend() const = 0;
 
   // Called to add or remove a listener for a particular message routing ID.
   // These methods normally get delegated to a MessageRouter.
@@ -70,10 +70,6 @@ class RenderThread : public RenderThreadBase,
     return ChildThread::Send(msg);
   }
 
-  virtual bool InSend() const {
-    return ChildThread::InSend();
-  }
-
   virtual void AddRoute(int32 routing_id, IPC::Channel::Listener* listener) {
     return ChildThread::AddRoute(routing_id, listener);
   }
@@ -84,14 +80,19 @@ class RenderThread : public RenderThreadBase,
   virtual void AddFilter(IPC::ChannelProxy::MessageFilter* filter);
   virtual void RemoveFilter(IPC::ChannelProxy::MessageFilter* filter);
 
-  // Gets the VisitedLinkSlave instance for this thread
-  VisitedLinkSlave* visited_link_slave() const { return visited_link_slave_; }
+  VisitedLinkSlave* visited_link_slave() const {
+    return visited_link_slave_.get();
+  }
 
-  // Gets the UserScriptSlave instance for this thread
-  UserScriptSlave* user_script_slave() const { return user_script_slave_; }
+  UserScriptSlave* user_script_slave() const {
+    return user_script_slave_.get();
+  }
 
   // Do DNS prefetch resolution of a hostname.
   void Resolve(const char* name, size_t length);
+
+  // Send all the Histogram data to browser.
+  void SendHistograms();
 
   // Invokes InformHostOfCacheStats after a short delay.  Used to move this
   // bookkeeping operation off the critical latency path.
@@ -120,20 +121,28 @@ class RenderThread : public RenderThreadBase,
                             size_t capacity);
   void OnGetCacheResourceStats();
 
+  // Send all histograms to browser.
+  void OnGetRendererHistograms();
+
   // Gather usage statistics from the in-memory cache and inform our host.
   // These functions should be call periodically so that the host can make
   // decisions about how to allocation resources using current information.
   void InformHostOfCacheStats();
 
   // These objects live solely on the render thread.
-  VisitedLinkSlave* visited_link_slave_;
-  UserScriptSlave* user_script_slave_;
+  scoped_ptr<VisitedLinkSlave> visited_link_slave_;
 
-  scoped_ptr<RenderDnsMaster> render_dns_master_;
+  scoped_ptr<UserScriptSlave> user_script_slave_;
+
+  scoped_ptr<RenderDnsMaster> dns_master_;
+
+  scoped_ptr<RendererHistogramSnapshots> histogram_snapshots_;
 
   scoped_ptr<ScopedRunnableMethodFactory<RenderThread> > cache_stats_factory_;
 
   scoped_ptr<NotificationService> notification_service_;
+
+  scoped_ptr<RendererWebKitClientImpl> webkit_client_impl_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderThread);
 };

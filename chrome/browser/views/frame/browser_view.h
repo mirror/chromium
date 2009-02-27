@@ -24,6 +24,8 @@ class BookmarkBarView;
 class Browser;
 class BrowserToolbarView;
 class EncodingMenuControllerDelegate;
+class FindBarWin;
+class FullscreenExitBubble;
 class InfoBarContainer;
 class Menu;
 class StatusBubbleViews;
@@ -51,6 +53,7 @@ class BrowserView : public BrowserWindow,
   virtual ~BrowserView();
 
   void set_frame(BrowserFrame* frame) { frame_ = frame; }
+  BrowserFrame* frame() const { return frame_; }
 
   // Returns a pointer to the BrowserView* interface implementation (an
   // instance of this object, typically) for a given HWND, or NULL if there is
@@ -65,12 +68,34 @@ class BrowserView : public BrowserWindow,
   // any dependent popup windows should be repositioned.
   void WindowMoved();
 
+  // Called by the frame to notify the BrowserView that a move or resize was
+  // initiated.
+  void WindowMoveOrResizeStarted();
+
+  // Returns whether the browser can be resized _now_.  This differs from
+  // CanResize() below, which returns whether the window is ever resizable in
+  // principle.
+  bool CanCurrentlyResize() const;
+
   // Returns the bounds of the toolbar, in BrowserView coordinates.
   gfx::Rect GetToolbarBounds() const;
 
   // Returns the bounds of the content area, in the coordinates of the
   // BrowserView's parent.
   gfx::Rect GetClientAreaBounds() const;
+
+  // Returns true if the Find Bar should be rendered such that it appears to
+  // blend with the Bookmarks Bar. False if it should appear to blend with the
+  // main Toolbar. The return value will vary depending on whether or not the
+  // Bookmark Bar is always shown.
+  bool ShouldFindBarBlendWithBookmarksBar() const;
+
+  // Returns the constraining bounding box that should be used to lay out the
+  // FindBar within. This is _not_ the size of the find bar, just the bounding
+  // box it should be laid out within. The coordinate system of the returned
+  // rect is in the coordinate system of the frame, since the FindBar is a child
+  // window.
+  gfx::Rect GetFindBarBoundingBox() const;
 
   // Returns the preferred height of the TabStrip. Used to position the OTR
   // avatar icon.
@@ -82,9 +107,6 @@ class BrowserView : public BrowserWindow,
   // Returns true if various window components are visible.
   bool IsToolbarVisible() const;
   bool IsTabStripVisible() const;
-
-  // Returns true if the toolbar is displaying its normal set of controls.
-  bool IsToolbarDisplayModeNormal() const;
 
   // Returns true if the profile associated with this Browser window is
   // off the record.
@@ -146,9 +168,11 @@ class BrowserView : public BrowserWindow,
     FEATURE_DOWNLOADSHELF = 64
   };
 
-  // Returns true if the Browser object associated with this BrowserView
-  // supports the specified feature.
-  bool SupportsWindowFeature(WindowFeature feature) const;
+  // Returns true if the Browser object associated with this BrowserView is a
+  // normal-type window (i.e. a browser window, not an app or popup).
+  bool IsBrowserTypeNormal() const {
+    return browser_->type() == Browser::TYPE_NORMAL;
+  }
 
   // Register preferences specific to this view.
   static void RegisterBrowserViewPrefs(PrefService* prefs);
@@ -180,6 +204,7 @@ class BrowserView : public BrowserWindow,
   virtual bool IsBookmarkBarVisible() const;
   virtual gfx::Rect GetRootWindowResizerRect() const;
   virtual void ToggleBookmarkBar();
+  virtual void ShowFindBar();
   virtual void ShowAboutChromeDialog();
   virtual void ShowBookmarkManager();
   virtual void ShowBookmarkBubble(const GURL& url, bool already_bookmarked);
@@ -192,6 +217,8 @@ class BrowserView : public BrowserWindow,
   virtual void ShowNewProfileDialog();
   virtual void ShowHTMLDialog(HtmlDialogContentsDelegate* delegate,
                               void* parent_window);
+  virtual bool GetFindBarWindowInfo(gfx::Point* position,
+                                    bool* fully_visible) const;
 
   // Overridden from BrowserWindowTesting:
   virtual BookmarkBarView* GetBookmarkBarView() const;
@@ -263,6 +290,7 @@ class BrowserView : public BrowserWindow,
   // Information saved before going into fullscreen mode, used to restore the
   // window afterwards.
   struct SavedWindowInfo {
+    bool maximized;
     LONG style;
     LONG ex_style;
     RECT window_rect;
@@ -270,6 +298,10 @@ class BrowserView : public BrowserWindow,
 
   // Creates the system menu.
   void InitSystemMenu();
+
+  // Returns true if the Browser object associated with this BrowserView
+  // supports the specified feature.
+  bool SupportsWindowFeature(WindowFeature feature) const;
 
   // Returns true if the event should be forwarded to the TabStrip. This
   // returns true if y coordinate is less than the bottom of the tab strip, and
@@ -356,6 +388,8 @@ class BrowserView : public BrowserWindow,
   scoped_ptr<Browser> browser_;
 
   // Tool/Info bars that we are currently showing. Used for layout.
+  // active_bookmark_bar_ is either NULL, if the bookmark bar isn't showing,
+  // or is bookmark_bar_view_ if the bookmark bar is showing.
   views::View* active_bookmark_bar_;
   views::View* active_download_shelf_;
 
@@ -370,6 +404,13 @@ class BrowserView : public BrowserWindow,
 
   // The InfoBarContainer that contains InfoBars for the current tab.
   InfoBarContainer* infobar_container_;
+
+  // The Find Bar. This may be NULL if there is no Find Bar, and if it is
+  // non-NULL, it may or may not be visible.
+  scoped_ptr<FindBarWin> find_bar_;
+
+  // The distance the FindBar is from the top of the window, in pixels.
+  int find_bar_y_;
 
   // The view that contains the selected TabContents.
   TabContentsContainerView* contents_container_;
@@ -388,6 +429,8 @@ class BrowserView : public BrowserWindow,
 
   // Saved window information from before entering fullscreen mode.
   SavedWindowInfo saved_window_info_;
+
+  scoped_ptr<FullscreenExitBubble> fullscreen_bubble_;
 
   // Lazily created representation of the system menu.
   scoped_ptr<Menu> system_menu_;
@@ -434,7 +477,7 @@ class BrowserView : public BrowserWindow,
   bool personalization_enabled_;
 #endif
 
-  DISALLOW_EVIL_CONSTRUCTORS(BrowserView);
+  DISALLOW_COPY_AND_ASSIGN(BrowserView);
 };
 
 #endif  // CHROME_BROWSER_VIEWS_FRAME_BROWSER_VIEW_H_

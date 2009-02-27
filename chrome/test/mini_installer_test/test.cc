@@ -14,7 +14,7 @@ class MiniInstallTest : public testing::Test {
     virtual void SetUp() {
       ChromeMiniInstaller userinstall(mini_installer_constants::kUserInstall);
       userinstall.UnInstall();
-      if (win_util::GetWinVersion() != win_util::WINVERSION_VISTA) {
+      if (win_util::GetWinVersion() < win_util::WINVERSION_VISTA) {
         ChromeMiniInstaller systeminstall(
                             mini_installer_constants::kSystemInstall);
         systeminstall.UnInstall();
@@ -34,7 +34,7 @@ TEST_F(MiniInstallTest, MiniInstallerOverChromeMetaInstallerTest) {
 }
 
 TEST_F(MiniInstallTest, MiniInstallerSystemInstallTest) {
-  if (win_util::GetWinVersion() != win_util::WINVERSION_VISTA) {
+  if (win_util::GetWinVersion() < win_util::WINVERSION_VISTA) {
     ChromeMiniInstaller installer(mini_installer_constants::kSystemInstall);
     installer.InstallMiniInstaller();
   }
@@ -43,5 +43,11 @@ TEST_F(MiniInstallTest, MiniInstallerSystemInstallTest) {
 TEST_F(MiniInstallTest, MiniInstallerUserInstallTest) {
   ChromeMiniInstaller installer(mini_installer_constants::kUserInstall);
   installer.InstallMiniInstaller();
+}
+
+TEST(InstallUtilTests, MiniInstallTestValidWindowsVersion) {
+  // We run the tests on all supported OSes.
+  // Make sure the code agrees.
+  EXPECT_TRUE(InstallUtil::IsOSSupported());
 }
 

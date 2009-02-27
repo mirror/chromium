@@ -9,6 +9,7 @@
 #include "net/base/mime_sniffer.h"
 #include "chrome/browser/renderer_host/download_throttling_resource_handler.h"
 #include "chrome/browser/renderer_host/resource_dispatcher_host.h"
+#include "chrome/common/url_constants.h"
 #include "net/base/mime_sniffer.h"
 #include "net/base/io_buffer.h"
 #include "net/http/http_response_headers.h"
@@ -20,16 +21,16 @@ const int kMaxBytesToSniff = 512;
 void RecordSnifferMetrics(bool sniffing_blocked,
                           bool we_would_like_to_sniff,
                           const std::string& mime_type) {
-  static BooleanHistogram nosniff_usage(L"nosniff.usage");
+  static BooleanHistogram nosniff_usage("nosniff.usage");
   nosniff_usage.SetFlags(kUmaTargetedHistogramFlag);
   nosniff_usage.AddBoolean(sniffing_blocked);
 
   if (sniffing_blocked) {
-    static BooleanHistogram nosniff_otherwise(L"nosniff.otherwise");
+    static BooleanHistogram nosniff_otherwise("nosniff.otherwise");
     nosniff_otherwise.SetFlags(kUmaTargetedHistogramFlag);
     nosniff_otherwise.AddBoolean(we_would_like_to_sniff);
 
-    static BooleanHistogram nosniff_empty_mime_type(L"nosniff.empty_mime_type");
+    static BooleanHistogram nosniff_empty_mime_type("nosniff.empty_mime_type");
     nosniff_empty_mime_type.SetFlags(kUmaTargetedHistogramFlag);
     nosniff_empty_mime_type.AddBoolean(mime_type.empty());
   }
@@ -164,8 +165,8 @@ bool BufferedResourceHandler::ShouldBuffer(const GURL& url,
                                            const std::string& mime_type) {
   // We are willing to buffer for HTTP and HTTPS.
   bool sniffable_scheme = url.is_empty() ||
-                          url.SchemeIs("http") ||
-                          url.SchemeIs("https");
+                          url.SchemeIs(chrome::kHttpScheme) ||
+                          url.SchemeIs(chrome::kHttpsScheme);
   if (!sniffable_scheme)
     return false;
 
@@ -264,11 +265,15 @@ bool BufferedResourceHandler::CompleteResponseStarted(int request_id,
       CHECK((buf_len >= bytes_read_) && (bytes_read_ >= 0));
       memcpy(buf->data(), read_buffer_->data(), bytes_read_);
     }
-    // Update the renderer with the response headers which will cause it to
-    // cancel the request.
-    // TODO(paulg): Send the renderer a response that indicates that the request
-    //              will be handled by an external source (the browser).
+
+    // Send the renderer a response that indicates that the request will be
+    // handled by an external source (the browser's DownloadManager).
     real_handler_->OnResponseStarted(info->request_id, response_);
+    URLRequestStatus status(URLRequestStatus::HANDLED_EXTERNALLY, 0);
+    real_handler_->OnResponseCompleted(info->request_id, status);
+
+    // Ditch the old async handler that talks to the renderer for the new
+    // download handler that talks to the DownloadManager.
     real_handler_ = download_handler;
   }
   return real_handler_->OnResponseStarted(request_id, response_);

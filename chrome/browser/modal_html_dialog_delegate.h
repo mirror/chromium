@@ -7,6 +7,7 @@
 
 #include <vector>
 
+#include "base/gfx/size.h"
 #include "chrome/browser/dom_ui/html_dialog_contents.h"
 #include "chrome/common/notification_observer.h"
 
@@ -27,13 +28,11 @@ class ModalHtmlDialogDelegate
                        const NotificationSource& source,
                        const NotificationDetails& details);
 
-  // views::WindowDelegate implementation:
-  virtual bool IsModal() const;
-  virtual std::wstring GetWindowTitle() const { return L"Google Gears"; }
-
-  // ModalHtmlDialogContents::ModalHTMLDialogContentsDelegate implementation:
+  // HTMLDialogContentsDelegate implementation:
+  virtual bool IsDialogModal() const;
+  virtual std::wstring GetDialogTitle() const { return L"Google Gears"; }
   virtual GURL GetDialogContentURL() const;
-  virtual void GetDialogSize(CSize* size) const;
+  virtual void GetDialogSize(gfx::Size* size) const;
   virtual std::string GetDialogArgs() const;
   virtual void OnDialogClosed(const std::string& json_retval);
 

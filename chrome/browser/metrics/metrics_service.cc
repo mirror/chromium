@@ -306,6 +306,7 @@ void MetricsService::RegisterPrefs(PrefService* local_state) {
   local_state->RegisterStringPref(prefs::kStabilityLaunchTimeSec, L"0");
   local_state->RegisterStringPref(prefs::kStabilityLastTimestampSec, L"0");
   local_state->RegisterStringPref(prefs::kStabilityUptimeSec, L"0");
+  local_state->RegisterStringPref(prefs::kStabilityStatsVersion, L"");
   local_state->RegisterBooleanPref(prefs::kStabilityExitedCleanly, true);
   local_state->RegisterBooleanPref(prefs::kStabilitySessionEndCompleted, true);
   local_state->RegisterIntegerPref(prefs::kMetricsSessionID, -1);
@@ -334,6 +335,31 @@ void MetricsService::RegisterPrefs(PrefService* local_state) {
   local_state->RegisterIntegerPref(prefs::kNumKeywords, 0);
   local_state->RegisterListPref(prefs::kMetricsInitialLogs);
   local_state->RegisterListPref(prefs::kMetricsOngoingLogs);
+}
+
+// static
+void MetricsService::DiscardOldStabilityStats(PrefService* local_state) {
+  local_state->SetBoolean(prefs::kStabilityExitedCleanly, true);
+
+  local_state->SetInteger(prefs::kStabilityIncompleteSessionEndCount, 0);
+  local_state->SetInteger(prefs::kStabilityBreakpadRegistrationSuccess, 0);
+  local_state->SetInteger(prefs::kStabilityBreakpadRegistrationFail, 0);
+  local_state->SetInteger(prefs::kStabilityDebuggerPresent, 0);
+  local_state->SetInteger(prefs::kStabilityDebuggerNotPresent, 0);
+
+  local_state->SetInteger(prefs::kStabilityLaunchCount, 0);
+  local_state->SetInteger(prefs::kStabilityCrashCount, 0);
+
+  local_state->SetInteger(prefs::kStabilityPageLoadCount, 0);
+  local_state->SetInteger(prefs::kStabilityRendererCrashCount, 0);
+  local_state->SetInteger(prefs::kStabilityRendererHangCount, 0);
+
+  local_state->SetInteger(prefs::kSecurityRendererOnSboxDesktop, 0);
+  local_state->SetInteger(prefs::kSecurityRendererOnDefaultDesktop, 0);
+
+  local_state->SetString(prefs::kStabilityUptimeSec, L"0");
+
+  local_state->ClearPref(prefs::kStabilityPluginStats);
 }
 
 MetricsService::MetricsService()
@@ -550,6 +576,15 @@ void MetricsService::InitializeMetricsState() {
   PrefService* pref = g_browser_process->local_state();
   DCHECK(pref);
 
+  if (WideToUTF8(pref->GetString(prefs::kStabilityStatsVersion)) !=
+      MetricsLog::GetVersionString()) {
+    // This is a new version, so we don't want to confuse the stats about the
+    // old version with info that we upload.
+    DiscardOldStabilityStats(pref);
+    pref->SetString(prefs::kStabilityStatsVersion,
+                    UTF8ToWide(MetricsLog::GetVersionString()));
+  }
+
   client_id_ = WideToUTF8(pref->GetString(prefs::kMetricsClientID));
   if (client_id_.empty()) {
     client_id_ = GenerateClientID();
@@ -701,7 +736,7 @@ void MetricsService::StopRecording(MetricsLog** log) {
   // TODO(jar): Integrate bounds on log recording more consistently, so that we
   // can stop recording logs that are too big much sooner.
   if (current_log_->num_events() > log_event_limit_) {
-    UMA_HISTOGRAM_COUNTS(L"UMA.Discarded Log Events",
+    UMA_HISTOGRAM_COUNTS("UMA.Discarded Log Events",
                          current_log_->num_events());
     current_log_->CloseLog();
     delete current_log_;
@@ -713,9 +748,7 @@ void MetricsService::StopRecording(MetricsLog** log) {
   // end of all log transmissions (initial log handles this separately).
   // Don't bother if we're going to discard current_log_.
   if (log) {
-    // TODO(jar): when initial logs and ongoing logs have equal survivability,
-    // uncomment the following line to expedite stability data uploads.
-    // current_log_->RecordIncrementalStabilityElements();
+    current_log_->RecordIncrementalStabilityElements();
     RecordCurrentHistograms();
   }
 
@@ -779,7 +812,7 @@ void MetricsService::PushPendingLogsToUnsentLists() {
       state_ = SEND_OLD_INITIAL_LOGS;
     } else {
       // TODO(jar): Verify correctness in other states, including sending unsent
-      // iniitial logs.
+      // initial logs.
       PushPendingLogTextToUnsentOngoingLogs();
     }
     DiscardPendingLog();
@@ -800,7 +833,7 @@ void MetricsService::PushPendingLogTextToUnsentOngoingLogs() {
 
   if (pending_log_text_.length() >
       static_cast<size_t>(kUploadLogAvoidRetransmitSize)) {
-    UMA_HISTOGRAM_COUNTS(L"UMA.Large Accumulated Log Not Persisted",
+    UMA_HISTOGRAM_COUNTS("UMA.Large Accumulated Log Not Persisted",
                          static_cast<int>(pending_log_text_.length()));
     return;
   }
@@ -1193,12 +1226,12 @@ void MetricsService::OnURLFetchComplete(const URLFetcher* source,
   if (response_code != 200 &&
       pending_log_text_.length() >
       static_cast<size_t>(kUploadLogAvoidRetransmitSize)) {
-    UMA_HISTOGRAM_COUNTS(L"UMA.Large Rejected Log was Discarded",
+    UMA_HISTOGRAM_COUNTS("UMA.Large Rejected Log was Discarded",
                          static_cast<int>(pending_log_text_.length()));
     discard_log = true;
   } else if (response_code == 400) {
     // Bad syntax.  Retransmission won't work.
-    UMA_HISTOGRAM_COUNTS(L"UMA.Unacceptable_Log_Discarded", state_);
+    UMA_HISTOGRAM_COUNTS("UMA.Unacceptable_Log_Discarded", state_);
     discard_log = true;
   }
 
@@ -1509,7 +1542,7 @@ void MetricsService::LogLoadComplete(NotificationType type,
 
   // TODO(jar): There is a bug causing this to be called too many times, and
   // the log overflows.  For now, we won't record these events.
-  UMA_HISTOGRAM_COUNTS(L"UMA.LogLoadComplete called", 1);
+  UMA_HISTOGRAM_COUNTS("UMA.LogLoadComplete called", 1);
   return;
 
   const Details<LoadNotificationDetails> load_details(details);
@@ -1722,8 +1755,20 @@ void MetricsService::RecordCurrentState(PrefService* pref) {
   RecordPluginChanges(pref);
 }
 
+void MetricsService::CollectRendererHistograms() {
+  for (RenderProcessHost::iterator it = RenderProcessHost::begin();
+       it != RenderProcessHost::end(); ++it) {
+    it->second->Send(new ViewMsg_GetRendererHistograms());
+  }
+}
+
 void MetricsService::RecordCurrentHistograms() {
   DCHECK(current_log_);
+
+  CollectRendererHistograms();
+
+  // TODO(raman): Delay the metrics collection activities until we get all the
+  // updates from the renderers, or we time out (1 second?  3 seconds?).
 
   StatisticsRecorder::Histograms histograms;
   StatisticsRecorder::GetHistograms(&histograms);

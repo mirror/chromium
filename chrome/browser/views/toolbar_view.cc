@@ -6,6 +6,7 @@
 
 #include <string>
 
+#include "base/command_line.h"
 #include "base/logging.h"
 #include "base/path_service.h"
 #include "chrome/app/chrome_dll_resource.h"
@@ -27,6 +28,7 @@
 #include "chrome/browser/views/toolbar_star_toggle.h"
 #include "chrome/browser/view_ids.h"
 #include "chrome/common/chrome_constants.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/common/drag_drop_types.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
@@ -61,6 +63,12 @@ static const int kMenuButtonOffset = 3;
 // Padding to the right of the location bar
 static const int kPaddingRight = 2;
 
+static const int kPopupTopSpacingNonGlass = 3;
+static const int kPopupBottomSpacingNonGlass = 2;
+static const int kPopupBottomSpacingGlass = 1;
+
+static SkBitmap* kPopupBackgroundEdge = NULL;
+
 BrowserToolbarView::BrowserToolbarView(Browser* browser)
     : EncodingMenuControllerDelegate(browser),
       model_(browser->toolbar_model()),
@@ -90,6 +98,11 @@ BrowserToolbarView::BrowserToolbarView(Browser* browser)
     display_mode_ = DISPLAYMODE_NORMAL;
   else
     display_mode_ = DISPLAYMODE_LOCATION;
+
+  if (!kPopupBackgroundEdge) {
+    kPopupBackgroundEdge = ResourceBundle::GetSharedInstance().GetBitmapNamed(
+        IDR_LOCATIONBG_POPUPMODE_EDGE);
+  }
 }
 
 BrowserToolbarView::~BrowserToolbarView() {
@@ -259,8 +272,10 @@ void BrowserToolbarView::Layout() {
     return;
 
   if (!IsDisplayModeNormal()) {
-    location_bar_->SetBounds(0, 0, width(),
-                             location_bar_->GetPreferredSize().height());
+    int edge_width = (browser_->window() && browser_->window()->IsMaximized()) ?
+        0 : kPopupBackgroundEdge->width();  // See Paint().
+    location_bar_->SetBounds(edge_width, PopupTopSpacing(),
+        width() - (edge_width * 2), location_bar_->GetPreferredSize().height());
     return;
   }
 
@@ -320,13 +335,35 @@ void BrowserToolbarView::Layout() {
                        app_menu_width, child_height);
 }
 
+void BrowserToolbarView::Paint(ChromeCanvas* canvas) {
+  View::Paint(canvas);
+
+  if (IsDisplayModeNormal())
+    return;
+
+  // In maximized mode, we don't draw the endcaps on the location bar, because
+  // when they're flush against the edge of the screen they just look glitchy.
+  if (!browser_->window() || !browser_->window()->IsMaximized()) {
+    int top_spacing = PopupTopSpacing();
+    canvas->DrawBitmapInt(*kPopupBackgroundEdge, 0, top_spacing);
+    canvas->DrawBitmapInt(*kPopupBackgroundEdge,
+                          width() - kPopupBackgroundEdge->width(), top_spacing);
+  }
+
+  // For glass, we need to draw a black line below the location bar to separate
+  // it from the content area.  For non-glass, the NonClientView draws the
+  // toolbar background below the location bar for us.
+  if (win_util::ShouldUseVistaFrame())
+    canvas->FillRectInt(SK_ColorBLACK, 0, height() - 1, width(), 1);
+}
+
 void BrowserToolbarView::DidGainFocus() {
   // Check to see if MSAA focus should be restored to previously focused button,
   // and if button is an enabled, visibled child of toolbar.
-  if (!acc_focused_view() ||
-      (acc_focused_view()->GetParent()->GetID() != VIEW_ID_TOOLBAR) ||
-      !acc_focused_view()->IsEnabled() ||
-      !acc_focused_view()->IsVisible()) {
+  if (!acc_focused_view_ ||
+      (acc_focused_view_->GetParent()->GetID() != VIEW_ID_TOOLBAR) ||
+      !acc_focused_view_->IsEnabled() ||
+      !acc_focused_view_->IsVisible()) {
     // Find first accessible child (-1 to start search at parent).
     int first_acc_child = GetNextAccessibleViewIndex(-1, false);
 
@@ -341,15 +378,15 @@ void BrowserToolbarView::DidGainFocus() {
   int view_index = VIEW_ID_TOOLBAR;
 
   // Set hot-tracking for child, and update focused_view for MSAA focus event.
-  if (acc_focused_view()) {
-    acc_focused_view()->SetHotTracked(true);
+  if (acc_focused_view_) {
+    acc_focused_view_->SetHotTracked(true);
 
     // Show the tooltip for the view that got the focus.
     if (GetWidget()->GetTooltipManager())
       GetWidget()->GetTooltipManager()->ShowKeyboardTooltip(acc_focused_view_);
 
     // Update focused_view with MSAA-adjusted child id.
-    view_index = acc_focused_view()->GetID();
+    view_index = acc_focused_view_->GetID();
   }
 
   HWND hwnd = GetWidget()->GetHWND();
@@ -360,9 +397,9 @@ void BrowserToolbarView::DidGainFocus() {
 }
 
 void BrowserToolbarView::WillLoseFocus() {
-  if (acc_focused_view()) {
+  if (acc_focused_view_) {
     // Resetting focus state.
-    acc_focused_view()->SetHotTracked(false);
+    acc_focused_view_->SetHotTracked(false);
   }
   // Any tooltips that are active should be hidden when toolbar loses focus.
   if (GetWidget() && GetWidget()->GetTooltipManager())
@@ -459,19 +496,10 @@ gfx::Size BrowserToolbarView::GetPreferredSize() {
     return gfx::Size(0, normal_background.height());
   }
 
-  // With the non-Vista frame, we'll draw a client edge below the toolbar for
-  // non-maximized popups.
-  // Note: We make sure to return the same value in the "no browser window" case
-  // as the "not maximized" case, so that when a popup is opened at a particular
-  // requested size, we'll report the same preferred size during the initial
-  // window size calculation (when there isn't yet a browser window) as when
-  // we're actually laying things out after setting up the browser window.  This
-  // prevents the content area from being off by |kClientEdgeThickness| px.
-  int client_edge_height = win_util::ShouldUseVistaFrame() ||
-      (browser_->window() && browser_->window()->IsMaximized()) ?
-      0 : views::NonClientView::kClientEdgeThickness;
-  return gfx::Size(0,
-      location_bar_->GetPreferredSize().height() + client_edge_height);
+  int vertical_spacing = PopupTopSpacing() + (win_util::ShouldUseVistaFrame() ?
+      kPopupBottomSpacingGlass : kPopupBottomSpacingNonGlass);
+  return gfx::Size(0, location_bar_->GetPreferredSize().height() +
+      vertical_spacing);
 }
 
 void BrowserToolbarView::RunPageMenu(const CPoint& pt, HWND hwnd) {
@@ -556,13 +584,18 @@ void BrowserToolbarView::RunAppMenu(const CPoint& pt, HWND hwnd) {
   // Enumerate profiles asynchronously and then create the parent menu item.
   // We will create the child menu items for this once the asynchronous call is
   // done.  See OnGetProfilesDone().
-  profiles_helper_->GetProfiles(NULL);
-  profiles_menu_ = menu.AppendSubMenu(IDC_PROFILE_MENU,
-                                      l10n_util::GetString(IDS_PROFILE_MENU));
+  const CommandLine& command_line = *CommandLine::ForCurrentProcess();
+  if (command_line.HasSwitch(switches::kEnableUserDataDirProfiles)) {
+    profiles_helper_->GetProfiles(NULL);
+    profiles_menu_ = menu.AppendSubMenu(IDC_PROFILE_MENU,
+                                        l10n_util::GetString(IDS_PROFILE_MENU));
+  }
 
   menu.AppendSeparator();
   menu.AppendMenuItemWithLabel(IDC_SHOW_BOOKMARK_BAR,
                                l10n_util::GetString(IDS_SHOW_BOOKMARK_BAR));
+  menu.AppendMenuItemWithLabel(IDC_FULLSCREEN,
+                               l10n_util::GetString(IDS_FULLSCREEN));
   menu.AppendSeparator();
   menu.AppendMenuItemWithLabel(IDC_SHOW_HISTORY,
                                l10n_util::GetString(IDS_SHOW_HISTORY));
@@ -647,20 +680,20 @@ void BrowserToolbarView::OnGetProfilesDone(
       l10n_util::GetString(IDS_SELECT_PROFILE_DIALOG_NEW_PROFILE_ENTRY));
 }
 
-bool BrowserToolbarView::GetAccessibleRole(VARIANT* role) {
-  DCHECK(role);
-
-  role->vt = VT_I4;
-  role->lVal = ROLE_SYSTEM_TOOLBAR;
-  return true;
-}
-
 bool BrowserToolbarView::GetAccessibleName(std::wstring* name) {
   if (!accessible_name_.empty()) {
     (*name).assign(accessible_name_);
     return true;
   }
   return false;
+}
+
+bool BrowserToolbarView::GetAccessibleRole(VARIANT* role) {
+  DCHECK(role);
+
+  role->vt = VT_I4;
+  role->lVal = ROLE_SYSTEM_TOOLBAR;
+  return true;
 }
 
 void BrowserToolbarView::SetAccessibleName(const std::wstring& name) {
@@ -696,8 +729,8 @@ int BrowserToolbarView::GetNextAccessibleViewIndex(int view_index,
 }
 
 void BrowserToolbarView::ShowContextMenu(int x, int y, bool is_mouse_gesture) {
-  if (GetAccFocusedChildView())
-    GetAccFocusedChildView()->ShowContextMenu(x, y, is_mouse_gesture);
+  if (acc_focused_view_)
+    acc_focused_view_->ShowContextMenu(x, y, is_mouse_gesture);
 }
 
 int BrowserToolbarView::GetDragOperations(views::View* sender, int x, int y) {
@@ -768,6 +801,11 @@ void BrowserToolbarView::EnabledStateChangedForCommand(int id, bool enabled) {
 
 void BrowserToolbarView::ButtonPressed(views::BaseButton* sender) {
   browser_->ExecuteCommand(sender->GetTag());
+}
+
+// static
+int BrowserToolbarView::PopupTopSpacing() {
+  return win_util::ShouldUseVistaFrame() ? 0 : kPopupTopSpacingNonGlass;
 }
 
 void BrowserToolbarView::Observe(NotificationType type,

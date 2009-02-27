@@ -5,6 +5,7 @@
 #include "chrome/browser/renderer_host/render_widget_host.h"
 
 #include "base/gfx/native_widget_types.h"
+#include "base/histogram.h"
 #include "base/message_loop.h"
 #include "base/keyboard_codes.h"
 #include "chrome/browser/renderer_host/backing_store.h"
@@ -91,8 +92,8 @@ void RenderWidgetHost::Shutdown() {
 }
 
 IPC_DEFINE_MESSAGE_MAP(RenderWidgetHost)
-  IPC_MESSAGE_HANDLER(ViewHostMsg_RendererReady, OnMsgRendererReady)
-  IPC_MESSAGE_HANDLER(ViewHostMsg_RendererGone, OnMsgRendererGone)
+  IPC_MESSAGE_HANDLER(ViewHostMsg_RenderViewReady, OnMsgRenderViewReady)
+  IPC_MESSAGE_HANDLER(ViewHostMsg_RenderViewGone, OnMsgRenderViewGone)
   IPC_MESSAGE_HANDLER(ViewHostMsg_Close, OnMsgClose)
   IPC_MESSAGE_HANDLER(ViewHostMsg_RequestMove, OnMsgRequestMove)
   IPC_MESSAGE_HANDLER(ViewHostMsg_PaintRect, OnMsgPaintRect)
@@ -230,6 +231,13 @@ BackingStore* RenderWidgetHost::GetBackingStore() {
   return backing_store;
 }
 
+BackingStore* RenderWidgetHost::AllocBackingStore(const gfx::Size& size) {
+  if (!view_)
+    return NULL;
+
+  return view_->AllocBackingStore(size);
+}
+
 void RenderWidgetHost::StartHangMonitorTimeout(TimeDelta delay) {
   time_when_considered_hung_ = Time::Now() + delay;
 
@@ -298,6 +306,14 @@ void RenderWidgetHost::ForwardInputEvent(const WebInputEvent& input_event,
   if (!process_->channel())
     return;
 
+  if (WebInputEvent::IsKeyboardEventType(input_event.type)) {
+    // Put all WebKeyboardEvent objects in a queue since we can't trust the
+    // renderer and we need to give something to the UnhandledInputEvent
+    // handler.
+    key_queue_.push(static_cast<const WebKeyboardEvent&>(input_event));
+    HISTOGRAM_COUNTS_100("Renderer.KeyboardQueueSize", key_queue_.size());
+  }
+
   IPC::Message* message = new ViewMsg_HandleInputEvent(routing_id_);
   message->WriteData(
       reinterpret_cast<const char*>(&input_event), event_size);
@@ -321,8 +337,8 @@ void RenderWidgetHost::RendererExited() {
   is_hidden_ = false;
 
   if (view_) {
-    view_->RendererGone();
-    view_ = NULL;  // The View should be deleted by RendererGone.
+    view_->RenderViewGone();
+    view_ = NULL;  // The View should be deleted by RenderViewGone.
   }
 
   BackingStoreManager::RemoveBackingStore(this);
@@ -376,11 +392,11 @@ void RenderWidgetHost::RendererIsResponsive() {
   }
 }
 
-void RenderWidgetHost::OnMsgRendererReady() {
+void RenderWidgetHost::OnMsgRenderViewReady() {
   WasResized();
 }
 
-void RenderWidgetHost::OnMsgRendererGone() {
+void RenderWidgetHost::OnMsgRenderViewGone() {
   // TODO(evanm): This synchronously ends up calling "delete this".
   // Is that really what we want in response to this message?  I'm matching
   // previous behavior of the code here.
@@ -418,7 +434,7 @@ void RenderWidgetHost::OnMsgPaintRect(
   if (is_repaint_ack) {
     repaint_ack_pending_ = false;
     TimeDelta delta = TimeTicks::Now() - repaint_start_time_;
-    UMA_HISTOGRAM_TIMES(L"MPArch.RWH_RepaintDelta", delta);
+    UMA_HISTOGRAM_TIMES("MPArch.RWH_RepaintDelta", delta);
   }
 
   DCHECK(!params.bitmap_rect.IsEmpty());
@@ -475,7 +491,7 @@ void RenderWidgetHost::OnMsgPaintRect(
 
   // Log the time delta for processing a paint message.
   TimeDelta delta = TimeTicks::Now() - paint_start;
-  UMA_HISTOGRAM_TIMES(L"MPArch.RWH_OnMsgPaintRect", delta);
+  UMA_HISTOGRAM_TIMES("MPArch.RWH_OnMsgPaintRect", delta);
 }
 
 void RenderWidgetHost::OnMsgScrollRect(
@@ -521,13 +537,13 @@ void RenderWidgetHost::OnMsgScrollRect(
 
   // Log the time delta for processing a scroll message.
   TimeDelta delta = TimeTicks::Now() - scroll_start;
-  UMA_HISTOGRAM_TIMES(L"MPArch.RWH_OnMsgScrollRect", delta);
+  UMA_HISTOGRAM_TIMES("MPArch.RWH_OnMsgScrollRect", delta);
 }
 
 void RenderWidgetHost::OnMsgInputEventAck(const IPC::Message& message) {
   // Log the time delta for processing an input event.
   TimeDelta delta = TimeTicks::Now() - input_event_start_time_;
-  UMA_HISTOGRAM_TIMES(L"MPArch.RWH_InputEventDelta", delta);
+  UMA_HISTOGRAM_TIMES("MPArch.RWH_InputEventDelta", delta);
 
   // Cancel pending hung renderer checks since the renderer is responsive.
   StopHangMonitorTimeout();
@@ -547,12 +563,24 @@ void RenderWidgetHost::OnMsgInputEventAck(const IPC::Message& message) {
     }
   }
 
-  const char* data = NULL;
-  int length = 0;
-  if (message.ReadData(&iter, &data, &length)) {
-    const WebInputEvent* input_event =
-        reinterpret_cast<const WebInputEvent*>(data);
-    UnhandledInputEvent(*input_event);
+  if (WebInputEvent::IsKeyboardEventType(type)) {
+    if (key_queue_.size() == 0) {
+      LOG(ERROR) << "Got a KeyEvent back from the renderer but we "
+                 << "don't seem to have sent it to the renderer!";
+    } else if (key_queue_.front().type != type) {
+      LOG(ERROR) << "We seem to have a different key type sent from "
+                 << "the renderer. Ignoring event.";
+    } else {
+      bool processed = false;
+      r = message.ReadBool(&iter, &processed);
+      DCHECK(r);
+
+      if (!processed) {
+        UnhandledKeyboardEvent(key_queue_.front());
+      }
+
+      key_queue_.pop();
+    }
   }
 }
 
@@ -592,13 +620,9 @@ void RenderWidgetHost::PaintBackingStoreRect(TransportDIB* bitmap,
     return;
   }
 
-  // We use the view size according to the render view, which may not be
-  // quite the same as the size of our window.
-  gfx::Rect view_rect(0, 0, view_size.width(), view_size.height());
-
   bool needs_full_paint = false;
   BackingStore* backing_store =
-      BackingStoreManager::PrepareBackingStore(this, view_rect,
+      BackingStoreManager::PrepareBackingStore(this, view_size,
                                                process_->process().handle(),
                                                bitmap, bitmap_rect,
                                                &needs_full_paint);

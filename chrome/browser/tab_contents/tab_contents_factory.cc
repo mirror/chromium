@@ -11,7 +11,6 @@
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/debugger/debugger_contents.h"
 #include "chrome/browser/tab_contents/tab_contents_factory.h"
-#include "chrome/browser/tab_contents/view_source_contents.h"
 #include "chrome/browser/tab_contents/web_contents.h"
 #include "net/base/net_util.h"
 
@@ -49,27 +48,20 @@ TabContents* TabContents::CreateWithType(TabContentsType type,
     case TAB_CONTENTS_WEB:
       contents = new WebContents(profile, instance, NULL, MSG_ROUTING_NONE, NULL);
       break;
+    case TAB_CONTENTS_ABOUT_UI:
+      contents = new BrowserAboutHandler(profile, instance, NULL);
+      break;
 // TODO(port): remove this platform define, either by porting the tab contents
 // types or removing them completely.
 #if defined(OS_WIN)
-    case TAB_CONTENTS_NEW_TAB_UI:
-      contents = new NewTabUIContents(profile, instance, NULL);
-      break;
     case TAB_CONTENTS_HTML_DIALOG:
       contents = new HtmlDialogContents(profile, instance, NULL);
       break;
     case TAB_CONTENTS_NATIVE_UI:
       contents = new NativeUIContents(profile);
       break;
-    case TAB_CONTENTS_VIEW_SOURCE:
-      contents = new ViewSourceContents(profile, instance);
-      break;
-    case TAB_CONTENTS_ABOUT_UI:
-      contents = new BrowserAboutHandler(profile, instance, NULL);
-      break;
     case TAB_CONTENTS_DEBUGGER:
-      contents = new DebuggerContents(profile, instance);
-      break;
+    case TAB_CONTENTS_NEW_TAB_UI:
     case TAB_CONTENTS_DOM_UI:
       contents = new DOMUIContents(profile, instance, NULL);
       break;
@@ -123,12 +115,12 @@ TabContentsType TabContents::TypeForURL(GURL* url) {
   if (url->SchemeIs(DOMUIContents::GetScheme().c_str()))
     return TAB_CONTENTS_DOM_UI;
 
-  if (url->SchemeIs("view-source")) {
-    // Load the inner URL instead, but render it using a ViewSourceContents.
-    *url = GURL(url->path());
-    return TAB_CONTENTS_VIEW_SOURCE;
-  }
 #elif defined(OS_POSIX)
+  TabContentsType type(TAB_CONTENTS_UNKNOWN_TYPE);
+  if (BrowserURLHandler::HandleBrowserURL(url, &type) &&
+      type == TAB_CONTENTS_ABOUT_UI) {
+    return type;
+  }
   NOTIMPLEMENTED();
 #endif
 

@@ -1,7 +1,7 @@
 vars = {
   "webkit_trunk":
     "http://svn.webkit.org/repository/webkit/trunk",
-  "webkit_revision": "41077",
+  "webkit_revision": "41217",
 }
 
 
@@ -10,7 +10,7 @@ deps = {
     "http://google-breakpad.googlecode.com/svn/trunk/src@285",
 
   "src/googleurl":
-    "http://google-url.googlecode.com/svn/trunk@95",
+    "http://google-url.googlecode.com/svn/trunk@96",
 
   "src/sdch/open-vcdiff":
     "http://open-vcdiff.googlecode.com/svn/trunk@22",
@@ -19,10 +19,14 @@ deps = {
     "http://googletest.googlecode.com/svn/trunk@167",
 
   "src/third_party/WebKit":
-    "/trunk/deps/third_party/WebKit@10151",
+    "/trunk/deps/third_party/WebKit@10557",
 
   "src/third_party/icu38":
-    "/trunk/deps/third_party/icu38@9252",
+    "/trunk/deps/third_party/icu38@10364",
+
+  # TODO(mark): Remove once this has moved into depot_tools.
+  "src/tools/gyp":
+    "http://gyp.googlecode.com/svn/trunk",
 
   "src/v8":
     "http://v8.googlecode.com/svn/trunk@1266",

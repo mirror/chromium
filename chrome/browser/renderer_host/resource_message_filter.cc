@@ -4,6 +4,10 @@
 
 #include "chrome/browser/renderer_host/resource_message_filter.h"
 
+#if defined(OS_LINUX)
+#include <gtk/gtk.h>
+#endif
+
 #include "base/clipboard.h"
 #include "base/gfx/native_widget_types.h"
 #include "base/histogram.h"
@@ -17,6 +21,7 @@
 #include "chrome/browser/renderer_host/audio_renderer_host.h"
 #include "chrome/browser/renderer_host/browser_render_process_host.h"
 #include "chrome/browser/renderer_host/render_widget_helper.h"
+#include "chrome/browser/spellchecker.h"
 #include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/common/chrome_plugin_util.h"
 #include "chrome/common/notification_service.h"
@@ -32,7 +37,6 @@
 #if defined(OS_WIN)
 #include "chrome/browser/printing/print_job_manager.h"
 #include "chrome/browser/printing/printer_query.h"
-#include "chrome/browser/spellchecker.h"
 #include "chrome/common/clipboard_service.h"
 #elif defined(OS_MACOSX) || defined(OS_LINUX)
 // TODO(port) remove this.
@@ -135,7 +139,7 @@ ResourceMessageFilter::~ResourceMessageFilter() {
 void ResourceMessageFilter::OnFilterAdded(IPC::Channel* channel) {
   channel_ = channel;
 
-  // Add the observers to intercept 
+  // Add the observers to intercept.
   NotificationService::current()->AddObserver(
       this,
       NotificationType::SPELLCHECKER_REINITIALIZED,
@@ -193,6 +197,8 @@ bool ResourceMessageFilter::OnMessageReceived(const IPC::Message& message) {
                                     OnOpenChannelToPlugin)
     IPC_MESSAGE_HANDLER_DELAY_REPLY(ViewHostMsg_SpellCheck, OnSpellCheck)
     IPC_MESSAGE_HANDLER(ViewHostMsg_DnsPrefetch, OnDnsPrefetch)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_RendererHistograms,
+                        OnRendererHistograms)
     IPC_MESSAGE_HANDLER_GENERIC(ViewHostMsg_PaintRect,
         render_widget_helper_->DidReceivePaintMsg(message))
     IPC_MESSAGE_HANDLER(ViewHostMsg_ClipboardWriteObjectsAsync,
@@ -206,7 +212,7 @@ bool ResourceMessageFilter::OnMessageReceived(const IPC::Message& message) {
                         OnClipboardReadAsciiText)
     IPC_MESSAGE_HANDLER(ViewHostMsg_ClipboardReadHTML,
                         OnClipboardReadHTML)
-#if defined(OS_WIN)
+#if defined(OS_WIN)|| defined(OS_LINUX)
     IPC_MESSAGE_HANDLER(ViewHostMsg_GetWindowRect, OnGetWindowRect)
     IPC_MESSAGE_HANDLER(ViewHostMsg_GetRootWindowRect, OnGetRootWindowRect)
 #endif
@@ -408,7 +414,7 @@ void ResourceMessageFilter::OnPluginSyncMessage(const FilePath& plugin_path,
   }
 }
 
-#if defined(OS_WIN)  // This hack is Windows-specific. 
+#if defined(OS_WIN)  // This hack is Windows-specific.
 void ResourceMessageFilter::OnLoadFont(LOGFONT font) {
   // If renderer is running in a sandbox, GetTextMetrics
   // can sometimes fail. If a font has not been loaded
@@ -426,7 +432,7 @@ void ResourceMessageFilter::OnLoadFont(LOGFONT font) {
   static HDC hdcs[kFontCacheSize] = {0};
   static size_t font_index = 0;
 
-  UMA_HISTOGRAM_COUNTS_100(L"Memory.CachedFontAndDC",
+  UMA_HISTOGRAM_COUNTS_100("Memory.CachedFontAndDC",
       fonts[kFontCacheSize-1] ? kFontCacheSize : static_cast<int>(font_index));
 
   HDC hdc = GetDC(NULL);
@@ -496,7 +502,7 @@ void ResourceMessageFilter::OnClipboardWriteObjects(
   // on the UI thread. We'll copy the relevant data and get a handle to any
   // shared memory so it doesn't go away when we resume the renderer, and post
   // a task to perform the write on the UI thread.
-  Clipboard::ObjectMap* long_living_objects = new Clipboard::ObjectMap(objects); 
+  Clipboard::ObjectMap* long_living_objects = new Clipboard::ObjectMap(objects);
 
   // We pass the render_handle_ to assist the clipboard with using shared
   // memory objects. render_handle_ is a handle to the process that would
@@ -556,7 +562,38 @@ void ResourceMessageFilter::OnGetRootWindowRect(gfx::NativeViewId window_id,
   *rect = window_rect;
 }
 
-#endif  // OS_WIN
+#elif defined(OS_LINUX)
+
+// Returns the rectangle of the WebWidget in screen coordinates.
+void ResourceMessageFilter::OnGetWindowRect(gfx::NativeViewId window_id,
+                                            gfx::Rect* rect) {
+  // Ideally this would be gtk_widget_get_window but that's only
+  // from gtk 2.14 onwards. :(
+  GdkWindow* window = gfx::NativeViewFromId(window_id)->window;
+  DCHECK(window);
+  gint x, y, width, height;
+  // This is the "position of a window in root window coordinates".
+  gdk_window_get_origin(window, &x, &y);
+  gdk_window_get_size(window, &width, &height);
+  *rect = gfx::Rect(x, y, width, height);
+}
+
+// Returns the rectangle of the window in which this WebWidget is embedded.
+void ResourceMessageFilter::OnGetRootWindowRect(gfx::NativeViewId window_id,
+                                                gfx::Rect* rect) {
+  // Windows uses GetAncestor(window, GA_ROOT) here which probably means
+  // we want the top level window.
+  GdkWindow* window =
+      gdk_window_get_toplevel(gfx::NativeViewFromId(window_id)->window);
+  DCHECK(window);
+  gint x, y, width, height;
+  // This is the "position of a window in root window coordinates".
+  gdk_window_get_origin(window, &x, &y);
+  gdk_window_get_size(window, &width, &height);
+  *rect = gfx::Rect(x, y, width, height);
+}
+
+#endif  // OS_LINUX
 
 void ResourceMessageFilter::OnGetMimeTypeFromExtension(
     const FilePath::StringType& ext, std::string* mime_type) {
@@ -591,20 +628,20 @@ void ResourceMessageFilter::OnDuplicateSection(
 
 void ResourceMessageFilter::OnResourceTypeStats(
     const CacheManager::ResourceTypeStats& stats) {
-  HISTOGRAM_COUNTS(L"WebCoreCache.ImagesSizeKB",
+  HISTOGRAM_COUNTS("WebCoreCache.ImagesSizeKB",
                    static_cast<int>(stats.images.size / 1024));
-  HISTOGRAM_COUNTS(L"WebCoreCache.CSSStylesheetsSizeKB",
+  HISTOGRAM_COUNTS("WebCoreCache.CSSStylesheetsSizeKB",
                    static_cast<int>(stats.css_stylesheets.size / 1024));
-  HISTOGRAM_COUNTS(L"WebCoreCache.ScriptsSizeKB",
+  HISTOGRAM_COUNTS("WebCoreCache.ScriptsSizeKB",
                    static_cast<int>(stats.scripts.size / 1024));
-  HISTOGRAM_COUNTS(L"WebCoreCache.XSLStylesheetsSizeKB",
+  HISTOGRAM_COUNTS("WebCoreCache.XSLStylesheetsSizeKB",
                    static_cast<int>(stats.xsl_stylesheets.size / 1024));
-  HISTOGRAM_COUNTS(L"WebCoreCache.FontsSizeKB",
+  HISTOGRAM_COUNTS("WebCoreCache.FontsSizeKB",
                    static_cast<int>(stats.fonts.size / 1024));
 }
 
 void ResourceMessageFilter::OnResolveProxy(const GURL& url,
-                                           IPC::Message* reply_msg) { 
+                                           IPC::Message* reply_msg) {
   resolve_proxy_msg_helper_.Start(url, reply_msg);
 }
 
@@ -729,7 +766,7 @@ ClipboardService* ResourceMessageFilter::GetClipboardService() {
 // the spellcheck dictionaries into the browser process, and all renderers ask
 // the browsers to do SpellChecking.
 //
-// This filter should not try to initialize the spellchecker. It is up to the 
+// This filter should not try to initialize the spellchecker. It is up to the
 // profile to initialize it when required, and send it here. If |spellchecker_|
 // is made NULL, it corresponds to spellchecker turned off - i.e., all
 // spellings are correct.
@@ -752,7 +789,7 @@ void ResourceMessageFilter::OnSpellCheck(const std::wstring& word,
   return;
 }
 
-void ResourceMessageFilter::Observe(NotificationType type, 
+void ResourceMessageFilter::Observe(NotificationType type,
                                     const NotificationSource &source,
                                     const NotificationDetails &details) {
   if (type == NotificationType::SPELLCHECKER_REINITIALIZED) {
@@ -766,9 +803,14 @@ void ResourceMessageFilter::OnDnsPrefetch(
   chrome_browser_net::DnsPrefetchList(hostnames);
 }
 
+void ResourceMessageFilter::OnRendererHistograms(
+    const std::vector<std::string>& histograms) {
+  Histogram::DeserializeHistogramList(histograms);
+}
+
 void ResourceMessageFilter::OnCreateAudioStream(
-   const IPC::Message& msg, int stream_id,
-   const ViewHostMsg_Audio_CreateStream& params) {
+  const IPC::Message& msg, int stream_id,
+  const ViewHostMsg_Audio_CreateStream& params) {
   // TODO(hclam): call to AudioRendererHost::CreateStream and send a message to
   // renderer to notify the result.
 }

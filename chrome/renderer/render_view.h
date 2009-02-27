@@ -44,6 +44,8 @@
 class AudioRendererImpl;
 class DictionaryValue;
 class DebugMessageHandler;
+class DevToolsAgent;
+class DevToolsClient;
 class FilePath;
 class GlueAccessibility;
 class GURL;
@@ -359,6 +361,11 @@ class RenderView : public RenderWidget,
   void GetAudioVolume(int stream_id);
   void SetAudioVolume(int stream_id, double left, double right);
 
+ protected:
+  // RenderWidget override.
+  virtual void OnResize(const gfx::Size& new_size,
+                        const gfx::Rect& resizer_rect);
+
  private:
   FRIEND_TEST(RenderViewTest, OnLoadAlternateHTMLText);
   FRIEND_TEST(RenderViewTest, OnNavStateChanged);
@@ -455,6 +462,7 @@ class RenderView : public RenderWidget,
   void OnCopyImageAt(int x, int y);
   void OnInspectElement(int x, int y);
   void OnShowJavaScriptConsole();
+  void OnSetupDevToolsClient();
   void OnCancelDownload(int32 download_id);
   void OnFind(const FindInPageRequest& request);
   void OnZoom(int function);
@@ -507,6 +515,8 @@ class RenderView : public RenderWidget,
   void OnGetAccessibilityInfo(const AccessibilityInParams& in_params,
                               AccessibilityOutParams* out_params);
   void OnClearAccessibilityInfo(int iaccessible_id, bool clear_all);
+
+  void OnMoveOrResizeStarted();
 
   // Checks if the RenderView should close, runs the beforeunload handler and
   // sends ViewMsg_ShouldClose to the browser.
@@ -582,6 +592,10 @@ class RenderView : public RenderWidget,
   // Exposes the DOMAutomationController object that allows JS to send
   // information to the browser process.
   void BindDOMAutomationController(WebFrame* webframe);
+
+  // Creates DevToolsClient and sets up JavaScript bindings for developer tools
+  // UI that is going to be hosted by this RenderView.
+  void CreateDevToolsClient();
 
   void set_opened_by_user_gesture(bool value) {
     opened_by_user_gesture_ = value;
@@ -724,6 +738,13 @@ class RenderView : public RenderWidget,
   gfx::Size printing_view_size_;
 
   scoped_refptr<DebugMessageHandler> debug_message_handler_;
+
+  // Provides access to this renderer from the remote Inspector UI.
+  scoped_refptr<DevToolsAgent> dev_tools_agent_;
+
+  // DevToolsClient for renderer hosting developer tools UI. It's NULL for other
+  // render views.
+  scoped_ptr<DevToolsClient> dev_tools_client_;
 
   scoped_ptr<WebFileChooserCallback> file_chooser_;
 

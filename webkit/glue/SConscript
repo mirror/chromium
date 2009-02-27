@@ -7,9 +7,20 @@ Import('env')
 env = env.Clone()
 
 env.Append(
+    CPPDEFINES = [
+        'WEBKIT_USING_SKIA'
+    ],
     CPPPATH = [
         '$WEBKIT_DIR/build/WebCore',
-    ]
+        '$THIRD_PARTY_WEBKIT_DIR/WebKit/chromium/public',
+    ],
+    LIBS = [
+        'port',
+        'renderer',
+        'V8Bindings',
+        'WebCore',
+        'WTF',
+    ],
 )
 
 if env.Bit('windows'):
@@ -67,7 +78,9 @@ input_files = [
   'resource_handle_impl.cc',
   'resource_loader_bridge.cc',
   'searchable_form_data.cc',
+  'simple_webmimeregistry_impl.cc',
   'stacking_order_iterator.cc',
+  'webclipboard_impl.cc',
   'webcursor.cc',
   'webdatasource_impl.cc',
   'webdocumentloader_impl.cc',
@@ -75,6 +88,7 @@ input_files = [
   'webframe_impl.cc',
   'webframeloaderclient_impl.cc',
   'webhistoryitem_impl.cc',
+  'webkitclient_impl.cc',
   'webkit_glue.cc',
   'webmediaplayer_impl.cc',
   'webplugin_delegate.cc',

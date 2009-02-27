@@ -18,6 +18,7 @@
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/l10n_util.h"
+#include "chrome/common/l10n_util_win.h"
 #include "chrome/common/plugin_messages.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/common/resource_bundle.h"
@@ -399,7 +400,7 @@ void RenderWidgetHostViewWin::DidScrollRect(
   Redraw(gfx::Rect(invalid_rect));
 }
 
-void RenderWidgetHostViewWin::RendererGone() {
+void RenderWidgetHostViewWin::RenderViewGone() {
   // TODO(darin): keep this around, and draw sad-tab into it.
   UpdateCursorIfOverSelf();
   DestroyWindow();
@@ -441,6 +442,11 @@ void RenderWidgetHostViewWin::SetTooltipText(const std::wstring& tooltip_text) {
         ::SendMessage(tooltip_hwnd_, TTM_POP, 0, 0);
     }
   }
+}
+
+BackingStore* RenderWidgetHostViewWin::AllocBackingStore(
+    const gfx::Size& size) {
+  return new BackingStore(size);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -518,20 +524,7 @@ void RenderWidgetHostViewWin::OnPaint(HDC dc) {
     }
     if (!whiteout_start_time_.is_null()) {
       TimeDelta whiteout_duration = TimeTicks::Now() - whiteout_start_time_;
-
-      // If field trial is active, report results in special histogram.
-      static scoped_refptr<FieldTrial> trial(
-          FieldTrialList::Find(BrowserTrial::kMemoryModelFieldTrial));
-      if (trial.get()) {
-        if (trial->boolean_value())
-          UMA_HISTOGRAM_TIMES(L"MPArch.RWHH_WhiteoutDuration_trial_high_memory",
-                              whiteout_duration);
-        else
-          UMA_HISTOGRAM_TIMES(L"MPArch.RWHH_WhiteoutDuration_trial_med_memory",
-                              whiteout_duration);
-      } else {
-        UMA_HISTOGRAM_TIMES(L"MPArch.RWHH_WhiteoutDuration", whiteout_duration);
-      }
+      UMA_HISTOGRAM_TIMES("MPArch.RWHH_WhiteoutDuration", whiteout_duration);
 
       // Reset the start time to 0 so that we start recording again the next
       // time the backing store is NULL...

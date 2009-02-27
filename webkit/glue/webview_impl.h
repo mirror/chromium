@@ -100,10 +100,12 @@ class WebViewImpl : public WebView, public base::RefCounted<WebViewImpl> {
   virtual void DragTargetDragLeave();
   virtual void DragTargetDrop(
       int client_x, int client_y, int screen_x, int screen_y);
+  virtual int32 GetDragIdentity();
   virtual void AutofillSuggestionsForNode(
       int64 node_id,
       const std::vector<std::wstring>& suggestions,
       int default_suggestion_index);
+  virtual void HideAutofillPopup();
 
   // WebViewImpl
 
@@ -180,8 +182,6 @@ class WebViewImpl : public WebView, public base::RefCounted<WebViewImpl> {
 
   // Start a system drag and drop operation.
   void StartDragging(const WebDropData& drop_data);
-
-  virtual const WebCore::Node* getInspectedNode(WebCore::Frame* frame);
 
   // ImageResourceFetcher callback.
   void ImageResourceDownloadDone(ImageResourceFetcher* fetcher,
@@ -292,6 +292,14 @@ class WebViewImpl : public WebView, public base::RefCounted<WebViewImpl> {
 
   // Represents whether or not this object should process incoming IME events.
   bool ime_accept_events_;
+
+  // True while dispatching system drag and drop events to drag/drop targets
+  // within this WebView.
+  bool drag_target_dispatch_;
+
+  // Valid when drag_target_dispatch_ is true; the identity of the drag data
+  // copied from the WebDropData object sent from the browser process.
+  int32 drag_identity_;
 
   // The autocomplete popup.  Kept around and reused every-time new suggestions
   // should be shown.

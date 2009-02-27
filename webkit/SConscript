@@ -169,6 +169,7 @@ env.Prepend(
         '$CHROME_SRC_DIR/third_party/WebKit/WebCore/svg',
         '$CHROME_SRC_DIR/third_party/WebKit/WebCore/svg/animation',
         '$CHROME_SRC_DIR/third_party/WebKit/WebCore/svg/graphics',
+        '$CHROME_SRC_DIR/third_party/WebKit/WebCore/workers',
         '$CHROME_SRC_DIR/third_party/WebKit/WebCore/xml',
 
         '$CHROME_SRC_DIR',
@@ -229,6 +230,7 @@ sconscript_dirs = env.ChromiumLoadComponentSConscripts(
   bindings = 'build/port/SConscript',
   V8Bindings = 'build/V8Bindings/SConscript',
   WebCore = 'build/WebCore/SConscript',
+  WebKit = 'build/WebKit/SConscript',
   default_plugin = 'default_plugin/SConscript',
   glue = 'glue/SConscript',
   npapi_test_plugin = 'glue/plugins/test/SConscript',

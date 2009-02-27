@@ -7,9 +7,11 @@
 
 #include <string>
 
+#include "base/gfx/size.h"
 #include "chrome/browser/dom_ui/html_dialog_contents.h"
 #include "chrome/browser/tab_contents/tab_contents_delegate.h"
 #include "chrome/browser/views/dom_view.h"
+#include "chrome/views/window_delegate.h"
 
 class Browser;
 namespace views {
@@ -26,9 +28,10 @@ class Window;
 //
 ////////////////////////////////////////////////////////////////////////////////
 class HtmlDialogView
-  : public DOMView,
-    public HtmlDialogContentsDelegate,
-    public TabContentsDelegate {
+    : public DOMView,
+      public TabContentsDelegate,
+      public HtmlDialogContentsDelegate,
+      public views::WindowDelegate {
  public:
   HtmlDialogView(Browser* parent_browser,
                  Profile* profile,
@@ -50,8 +53,10 @@ class HtmlDialogView
   virtual views::View* GetInitiallyFocusedView();
 
   // Overridden from HtmlDialogContentsDelegate:
+  virtual bool IsDialogModal() const;
+  virtual std::wstring GetDialogTitle() const;
   virtual GURL GetDialogContentURL() const;
-  virtual void GetDialogSize(CSize* size) const;
+  virtual void GetDialogSize(gfx::Size* size) const;
   virtual std::string GetDialogArgs() const;
   virtual void OnDialogClosed(const std::string& json_retval);
 

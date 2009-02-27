@@ -4,8 +4,8 @@
 
 // A handful of resource-like constants related to the Chrome application.
 
-#ifndef CHROME_COMMON_CHROME_CONSTANTS_H__
-#define CHROME_COMMON_CHROME_CONSTANTS_H__
+#ifndef CHROME_COMMON_CHROME_CONSTANTS_H_
+#define CHROME_COMMON_CHROME_CONSTANTS_H_
 
 #include "base/file_path.h"
 
@@ -38,14 +38,15 @@ extern const FilePath::CharType kUserScriptsDirname[];
 extern const FilePath::CharType kWebDataFilename[];
 extern const FilePath::CharType kBookmarksFileName[];
 extern const FilePath::CharType kHistoryBookmarksFileName[];
-extern const wchar_t kCustomDictionaryFileName[];
+extern const FilePath::CharType kCustomDictionaryFileName[];
 
 extern const unsigned int kMaxRendererProcessCount;
 extern const int kStatsMaxThreads;
 extern const int kStatsMaxCounters;
 
 extern const bool kRecordModeEnabled;
-}
 
-#endif  // CHROME_COMMON_CHROME_CONSTANTS_H__
+}  // namespace chrome
+
+#endif  // CHROME_COMMON_CHROME_CONSTANTS_H_
 

@@ -67,6 +67,39 @@ class ResourceRequestTask : public Task {
 
 }  // namespace
 
+class InterstitialPage::InterstitialPageRVHViewDelegate
+    : public RenderViewHostDelegate::View {
+ public:
+  explicit InterstitialPageRVHViewDelegate(InterstitialPage* page);
+
+  // RenderViewHostDelegate::View implementation:
+  virtual void CreateNewWindow(int route_id,
+                               base::WaitableEvent* modal_dialog_event);
+  virtual void CreateNewWidget(int route_id, bool activatable);
+  virtual void ShowCreatedWindow(int route_id,
+                                 WindowOpenDisposition disposition,
+                                 const gfx::Rect& initial_pos,
+                                 bool user_gesture);
+  virtual void ShowCreatedWidget(int route_id,
+                                 const gfx::Rect& initial_pos);
+  virtual void ShowContextMenu(const ContextMenuParams& params);
+  virtual void StartDragging(const WebDropData& drop_data);
+  virtual void UpdateDragCursor(bool is_drop_target);
+  virtual void TakeFocus(bool reverse);
+  virtual void HandleKeyboardEvent(const WebKeyboardEvent& event);
+  virtual void ForwardMessageToDevToolsClient(const IPC::Message& message);
+  virtual void OnFindReply(int request_id,
+                           int number_of_matches,
+                           const gfx::Rect& selection_rect,
+                           int active_match_ordinal,
+                           bool final_update);
+
+ private:
+  InterstitialPage* interstitial_page_;
+
+  DISALLOW_COPY_AND_ASSIGN(InterstitialPageRVHViewDelegate);
+};
+
 // static
 InterstitialPage::InterstitialPageMap*
     InterstitialPage::tab_to_interstitial_page_ =  NULL;
@@ -84,7 +117,8 @@ InterstitialPage::InterstitialPage(WebContents* tab,
       original_rvh_id_(tab->render_view_host()->routing_id()),
       should_revert_tab_title_(false),
       resource_dispatcher_host_notified_(false),
-      ui_loop_(MessageLoop::current()) {
+      ui_loop_(MessageLoop::current()),
+      rvh_view_delegate_(new InterstitialPageRVHViewDelegate(this)) {
   InitInterstitialPageMap();
   // It would be inconsistent to create an interstitial with no new navigation
   // (which is the case when the interstitial was triggered by a sub-resource on
@@ -297,7 +331,10 @@ void InterstitialPage::DontProceed() {
 
 void InterstitialPage::SetSize(const gfx::Size& size) {
 #if defined(OS_WIN)
-  render_view_host_->view()->SetSize(size);
+  // When a tab is closed, we might be resized after our view was NULLed
+  // (typically if there was an info-bar).
+  if (render_view_host_->view())
+    render_view_host_->view()->SetSize(size);
 #else
   // TODO(port): do Mac or Linux need to SetSize?
   NOTIMPLEMENTED();
@@ -335,7 +372,7 @@ void InterstitialPage::DidNavigate(
 #endif
 }
 
-void InterstitialPage::RendererGone(RenderViewHost* render_view_host) {
+void InterstitialPage::RenderViewGone(RenderViewHost* render_view_host) {
   // Our renderer died. This should not happen in normal cases.
   // Just dismiss the interstitial.
   DontProceed();
@@ -360,6 +397,10 @@ void InterstitialPage::UpdateTitle(RenderViewHost* render_view_host,
   }
   entry->set_title(title);
   tab_->NotifyNavigationStateChanged(TabContents::INVALIDATE_TITLE);
+}
+
+RenderViewHostDelegate::View* InterstitialPage::GetViewDelegate() const {
+  return rvh_view_delegate_.get();
 }
 
 void InterstitialPage::Disable() {
@@ -408,5 +449,67 @@ InterstitialPage* InterstitialPage::GetInterstitialPage(
     return NULL;
 
   return iter->second;
+}
+
+InterstitialPage::InterstitialPageRVHViewDelegate::
+    InterstitialPageRVHViewDelegate(InterstitialPage* page)
+    : interstitial_page_(page) {
+}
+
+void InterstitialPage::InterstitialPageRVHViewDelegate::CreateNewWindow(
+    int route_id, base::WaitableEvent* modal_dialog_event) {
+  NOTREACHED() << "InterstitialPage does not support showing popups yet.";
+}
+
+void InterstitialPage::InterstitialPageRVHViewDelegate::CreateNewWidget(
+    int route_id, bool activatable) {
+  NOTREACHED() << "InterstitialPage does not support showing drop-downs yet.";
+}
+
+void InterstitialPage::InterstitialPageRVHViewDelegate::ShowCreatedWindow(
+    int route_id, WindowOpenDisposition disposition,
+    const gfx::Rect& initial_pos, bool user_gesture) {
+  NOTREACHED() << "InterstitialPage does not support showing popups yet.";
+}
+
+void InterstitialPage::InterstitialPageRVHViewDelegate::ShowCreatedWidget(
+    int route_id, const gfx::Rect& initial_pos) {
+  NOTREACHED() << "InterstitialPage does not support showing drop-downs yet.";
+}
+
+void InterstitialPage::InterstitialPageRVHViewDelegate::ShowContextMenu(
+    const ContextMenuParams& params) {
+}
+
+void InterstitialPage::InterstitialPageRVHViewDelegate::StartDragging(
+    const WebDropData& drop_data) {
+  NOTREACHED() << "InterstitialPage does not support dragging yet.";
+}
+
+void InterstitialPage::InterstitialPageRVHViewDelegate::UpdateDragCursor(
+    bool is_drop_target) {
+  NOTREACHED() << "InterstitialPage does not support dragging yet.";
+}
+
+void InterstitialPage::InterstitialPageRVHViewDelegate::TakeFocus(
+    bool reverse) {
+  if (interstitial_page_->tab() && interstitial_page_->tab()->GetViewDelegate())
+    interstitial_page_->tab()->GetViewDelegate()->TakeFocus(reverse);
+}
+
+void InterstitialPage::InterstitialPageRVHViewDelegate::HandleKeyboardEvent(
+    const WebKeyboardEvent& event) {
+  if (interstitial_page_->tab() && interstitial_page_->tab()->GetViewDelegate())
+    interstitial_page_->tab()->GetViewDelegate()->HandleKeyboardEvent(event);
+}
+
+void InterstitialPage::InterstitialPageRVHViewDelegate::
+    ForwardMessageToDevToolsClient(const IPC::Message& message) {
+  NOTREACHED() << "InterstitialPage does not support developer tools content.";
+}
+
+void InterstitialPage::InterstitialPageRVHViewDelegate::OnFindReply(
+    int request_id, int number_of_matches, const gfx::Rect& selection_rect,
+    int active_match_ordinal, bool final_update) {
 }
 

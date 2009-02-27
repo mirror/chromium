@@ -181,7 +181,7 @@ void RenderWidgetHostViewMac::DidScrollRect(
   [cocoa_view_ setNeedsDisplayInRect:[cocoa_view_ RectToNSRect:dirty_rect]];
 }
 
-void RenderWidgetHostViewMac::RendererGone() {
+void RenderWidgetHostViewMac::RenderViewGone() {
   // TODO(darin): keep this around, and draw sad-tab into it.
   UpdateCursorIfOverSelf();
   Destroy();
@@ -206,6 +206,11 @@ void RenderWidgetHostViewMac::SetTooltipText(const std::wstring& tooltip_text) {
     NSString* tooltip_nsstring = base::SysWideToNSString(tooltip_text_);
     [cocoa_view_ setToolTip:tooltip_nsstring];
   }
+}
+
+BackingStore* RenderWidgetHostViewMac::AllocBackingStore(
+    const gfx::Size& size) {
+  return new BackingStore(size);
 }
 
 void RenderWidgetHostViewMac::ShutdownHost() {
@@ -305,20 +310,7 @@ void RenderWidgetHostViewMac::ShutdownHost() {
     if (!renderWidgetHostView_->whiteout_start_time().is_null()) {
       base::TimeDelta whiteout_duration = base::TimeTicks::Now() -
           renderWidgetHostView_->whiteout_start_time();
-
-      // If field trial is active, report results in special histogram.
-      static scoped_refptr<FieldTrial> trial(
-          FieldTrialList::Find(BrowserTrial::kMemoryModelFieldTrial));
-      if (trial.get()) {
-        if (trial->boolean_value())
-          UMA_HISTOGRAM_TIMES(L"MPArch.RWHH_WhiteoutDuration_trial_high_memory",
-                              whiteout_duration);
-        else
-          UMA_HISTOGRAM_TIMES(L"MPArch.RWHH_WhiteoutDuration_trial_med_memory",
-                              whiteout_duration);
-      } else {
-        UMA_HISTOGRAM_TIMES(L"MPArch.RWHH_WhiteoutDuration", whiteout_duration);
-      }
+      UMA_HISTOGRAM_TIMES("MPArch.RWHH_WhiteoutDuration", whiteout_duration);
 
       // Reset the start time to 0 so that we start recording again the next
       // time the backing store is NULL...

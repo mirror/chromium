@@ -18,15 +18,7 @@
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/gfx/chrome_canvas.h"
-#if defined(OS_WIN) || defined(OS_LINUX)
-// TODO(port): re-enable.
 #include "chrome/common/resource_bundle.h"
-#endif
-#if defined(OS_WIN)
-#include "chrome/views/view.h"
-#endif  // defined(OS_WIN)
-#include "unicode/rbbi.h"
-#include "unicode/uchar.h"
 
 // TODO(playmobil): remove this undef once SkPostConfig.h is fixed.
 // skia/include/corecg/SkPostConfig.h #defines strcasecmp() so we can't use
@@ -34,6 +26,12 @@
 #undef strcasecmp
 
 namespace {
+
+#if defined(OS_WIN)
+static const FilePath::CharType kLocaleFileExtension[] = L".dll";
+#elif defined(OS_POSIX)
+static const FilePath::CharType kLocaleFileExtension[] = ".pak";
+#endif
 
 // Added to the end of strings that are too big in TrucateString.
 static const wchar_t* const kElideString = L"\x2026";
@@ -52,7 +50,7 @@ void GetLanguageAndRegionFromOS(std::string* lang, std::string* region) {
   *region = country;
 }
 
-// Convert Chrome locale name (DLL name) to ICU locale name
+// Convert Chrome locale name to ICU locale name
 std::string ICULocaleName(const std::wstring& locale_string) {
   // If not Spanish, just return it.
   if (locale_string.substr(0, 2) != L"es")
@@ -124,13 +122,14 @@ bool IsLocaleAvailable(const std::wstring& locale,
                        const std::wstring& locale_path) {
   std::wstring test_locale = locale;
   // If locale has any illegal characters in it, we don't want to try to
-  // load it because it may be pointing outside the locale dll directory.
+  // load it because it may be pointing outside the locale data file directory.
   file_util::ReplaceIllegalCharacters(&test_locale, ' ');
   if (test_locale != locale)
     return false;
 
-  std::wstring test_path = locale_path;
-  file_util::AppendToPath(&test_path, locale + L".dll");
+  FilePath test_path = FilePath::FromWStringHack(locale_path)
+      .Append(FilePath::FromWStringHack(locale))
+      .ReplaceExtension(kLocaleFileExtension);
   return file_util::PathExists(test_path) && SetICUDefaultLocale(locale);
 }
 
@@ -210,35 +209,6 @@ std::wstring GetSystemLocale() {
   return ASCIIToWide(ret);
 }
 
-// Compares the character data stored in two different strings by specified
-// Collator instance.
-UCollationResult CompareStringWithCollator(const Collator* collator,
-                                           const std::wstring& lhs,
-                                           const std::wstring& rhs) {
-  DCHECK(collator);
-  UErrorCode error = U_ZERO_ERROR;
-#if defined(WCHAR_T_IS_UTF32)
-  // Need to convert to UTF-16 to be compatible with UnicodeString's
-  // constructor.
-  string16 lhs_utf16 = WideToUTF16(lhs);
-  string16 rhs_utf16 = WideToUTF16(rhs);
-
-  UCollationResult result = collator->compare(
-      static_cast<const UChar*>(lhs_utf16.c_str()),
-      static_cast<int>(lhs_utf16.length()),
-      static_cast<const UChar*>(rhs_utf16.c_str()),
-      static_cast<int>(rhs_utf16.length()),
-      error);
-#else
-  UCollationResult result = collator->compare(
-      static_cast<const UChar*>(lhs.c_str()), static_cast<int>(lhs.length()),
-      static_cast<const UChar*>(rhs.c_str()), static_cast<int>(rhs.length()),
-      error);
-#endif
-  DCHECK(U_SUCCESS(error));
-  return result;
-}
-
 }  // namespace
 
 namespace l10n_util {
@@ -276,13 +246,8 @@ std::wstring GetApplicationLocale(const std::wstring& pref_locale) {
   if (IsLocaleAvailable(fallback_locale, locale_path))
     return fallback_locale;
 
-#if defined(OS_WIN)
-  // No DLL, we shouldn't get here.
+  // No locale data file was found; we shouldn't get here.
   NOTREACHED();
-#else
-  // We need a locale data file.
-  NOTIMPLEMENTED();
-#endif
 
   return std::wstring();
 }
@@ -316,14 +281,8 @@ std::wstring GetLocalName(const std::wstring& locale_code_wstr,
 }
 
 std::wstring GetString(int message_id) {
-#if defined(OS_WIN) || defined(OS_LINUX)
   ResourceBundle &rb = ResourceBundle::GetSharedInstance();
   return rb.GetLocalizedString(message_id);
-#else
-  NOTIMPLEMENTED();  // TODO(port): Real implementation of GetString.
-  // Return something non-empty so callers don't freak out.
-  return L"true";
-#endif
 }
 
 static std::wstring GetStringF(int message_id,
@@ -332,16 +291,10 @@ static std::wstring GetStringF(int message_id,
                                const std::wstring& c,
                                const std::wstring& d,
                                std::vector<size_t>* offsets) {
-#if defined(OS_WIN) || defined(OS_LINUX)
-// TODO(port): re-enable.
   const std::wstring& format_string = GetString(message_id);
   std::wstring formatted = ReplaceStringPlaceholders(format_string, a, b, c,
                                                      d, offsets);
   return formatted;
-#else
-  NOTIMPLEMENTED();
-  return L"GetStringF NOTIMPLEMENTED";
-#endif  // defined(OS_WIN)
 }
 
 std::wstring GetStringF(int message_id,
@@ -502,6 +455,40 @@ TextDirection GetTextDirection() {
   return g_text_direction;
 }
 
+TextDirection GetFirstStrongCharacterDirection(const std::wstring& text) {
+#if defined(WCHAR_T_IS_UTF32)
+  string16 text_utf16 = WideToUTF16(text);
+  const UChar* string = text_utf16.c_str();
+#else
+  const UChar* string = text.c_str();
+#endif
+  size_t length = text.length();
+  size_t position = 0;
+  while (position < length) {
+    UChar32 character;
+    size_t next_position = position;
+    U16_NEXT(string, next_position, length, character);
+
+    // Now that we have the character, we use ICU in order to query for the
+    // appropriate Unicode BiDi character type.
+    int32_t property = u_getIntPropertyValue(character, UCHAR_BIDI_CLASS);
+    if ((property == U_RIGHT_TO_LEFT) ||
+        (property == U_RIGHT_TO_LEFT_ARABIC) ||
+        (property == U_RIGHT_TO_LEFT_EMBEDDING) ||
+        (property == U_RIGHT_TO_LEFT_OVERRIDE)) {
+      return RIGHT_TO_LEFT;
+    } else if ((property == U_LEFT_TO_RIGHT) ||
+               (property == U_LEFT_TO_RIGHT_EMBEDDING) ||
+               (property == U_LEFT_TO_RIGHT_OVERRIDE)) {
+      return LEFT_TO_RIGHT;
+    }
+
+    position = next_position;
+  }
+
+  return LEFT_TO_RIGHT;
+}
+
 bool AdjustStringForLocaleDirection(const std::wstring& text,
                                     std::wstring* localized_text) {
   if (GetTextDirection() == LEFT_TO_RIGHT || text.length() == 0)
@@ -611,31 +598,35 @@ int DefaultCanvasTextAlignment() {
   }
 }
 
-#if defined(OS_WIN)
-int GetExtendedStyles() {
-  return GetTextDirection() == LEFT_TO_RIGHT ? 0 :
-      WS_EX_LAYOUTRTL | WS_EX_RTLREADING;
+
+// Compares the character data stored in two different strings by specified
+// Collator instance.
+UCollationResult CompareStringWithCollator(const Collator* collator,
+                                           const std::wstring& lhs,
+                                           const std::wstring& rhs) {
+  DCHECK(collator);
+  UErrorCode error = U_ZERO_ERROR;
+#if defined(WCHAR_T_IS_UTF32)
+  // Need to convert to UTF-16 to be compatible with UnicodeString's
+  // constructor.
+  string16 lhs_utf16 = WideToUTF16(lhs);
+  string16 rhs_utf16 = WideToUTF16(rhs);
+
+  UCollationResult result = collator->compare(
+      static_cast<const UChar*>(lhs_utf16.c_str()),
+      static_cast<int>(lhs_utf16.length()),
+      static_cast<const UChar*>(rhs_utf16.c_str()),
+      static_cast<int>(rhs_utf16.length()),
+      error);
+#else
+  UCollationResult result = collator->compare(
+      static_cast<const UChar*>(lhs.c_str()), static_cast<int>(lhs.length()),
+      static_cast<const UChar*>(rhs.c_str()), static_cast<int>(rhs.length()),
+      error);
+#endif
+  DCHECK(U_SUCCESS(error));
+  return result;
 }
-
-int GetExtendedTooltipStyles() {
-  return GetTextDirection() == LEFT_TO_RIGHT ? 0 : WS_EX_LAYOUTRTL;
-}
-
-void HWNDSetRTLLayout(HWND hwnd) {
-  DWORD ex_style = ::GetWindowLong(hwnd, GWL_EXSTYLE);
-
-  // We don't have to do anything if the style is already set for the HWND.
-  if (!(ex_style & WS_EX_LAYOUTRTL)) {
-    ex_style |= WS_EX_LAYOUTRTL;
-    ::SetWindowLong(hwnd, GWL_EXSTYLE, ex_style);
-
-    // Right-to-left layout changes are not applied to the window immediately
-    // so we should make sure a WM_PAINT is sent to the window by invalidating
-    // the entire window rect.
-    ::InvalidateRect(hwnd, NULL, true);
-  }
-}
-#endif  // defined(OS_WIN)
 
 // Specialization of operator() method for std::wstring version.
 template <>
@@ -662,7 +653,7 @@ const std::vector<std::wstring>& GetAvailableLocales() {
       // Filter out the names that have aliases.
       if (IsDuplicateName(locale_name))
         continue;
-      // Normalize underscores to hyphens because that's what our locale dlls
+      // Normalize underscores to hyphens because that's what our locale files
       // use.
       std::replace(locale_name.begin(), locale_name.end(), '_', '-');
 

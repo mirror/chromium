@@ -43,6 +43,12 @@ const wchar_t kPluginFlashThrottle[] = L"FlashThrottle";
 // this seems to work well enough.
 const int kFlashWMUSERMessageThrottleDelayMs = 5;
 
+// Flash displays popups in response to user clicks by posting a WM_USER
+// message to the plugin window. The handler for this message displays
+// the popup. To ensure that the popups allowed state is sent correctly
+// to the renderer we reset the popups allowed state in a timer.
+const int kWindowedPluginPopupTimerMs = 50;
+
 // The current instance of the plugin which entered the modal loop.
 WebPluginDelegateImpl* g_current_plugin_instance = NULL;
 
@@ -149,8 +155,7 @@ WebPluginDelegateImpl::WebPluginDelegateImpl(
       handle_event_depth_(0),
       user_gesture_message_posted_(false),
 #pragma warning(suppress: 4355)  // can use this
-      user_gesture_msg_factory_(this),
-      plugin_module_handle_(NULL) {
+      user_gesture_msg_factory_(this) {
   memset(&window_, 0, sizeof(window_));
 
   const WebPluginInfo& plugin_info = instance_->plugin_lib()->plugin_info();
@@ -195,8 +200,6 @@ WebPluginDelegateImpl::WebPluginDelegateImpl(
     quirks_ |= PLUGIN_QUIRK_PATCH_TRACKPOPUP_MENU;
     quirks_ |= PLUGIN_QUIRK_PATCH_SETCURSOR;
   }
-
-  plugin_module_handle_ = ::GetModuleHandle(plugin_info.path.value().c_str());
 }
 
 WebPluginDelegateImpl::~WebPluginDelegateImpl() {
@@ -277,7 +280,7 @@ bool WebPluginDelegateImpl::Initialize(const GURL& url,
   if (windowless_ && !g_iat_patch_track_popup_menu.Pointer()->is_patched() &&
       (quirks_ & PLUGIN_QUIRK_PATCH_TRACKPOPUP_MENU)) {
     g_iat_patch_track_popup_menu.Pointer()->Patch(
-        plugin_module_handle_, "user32.dll", "TrackPopupMenu",
+        GetPluginPath().value().c_str(), "user32.dll", "TrackPopupMenu",
         WebPluginDelegateImpl::TrackPopupMenuPatch);
   }
 
@@ -290,7 +293,7 @@ bool WebPluginDelegateImpl::Initialize(const GURL& url,
   if (windowless_ && !g_iat_patch_set_cursor.Pointer()->is_patched() &&
       (quirks_ & PLUGIN_QUIRK_PATCH_SETCURSOR)) {
     g_iat_patch_set_cursor.Pointer()->Patch(
-        plugin_module_handle_, "user32.dll", "SetCursor",
+        GetPluginPath().value().c_str(), "user32.dll", "SetCursor",
         WebPluginDelegateImpl::SetCursorPatch);
   }
   return true;
@@ -884,9 +887,10 @@ LRESULT CALLBACK WebPluginDelegateImpl::NativeWndProc(
 
     delegate->instance()->PushPopupsEnabledState(true);
 
-    MessageLoop::current()->PostTask(FROM_HERE,
+    MessageLoop::current()->PostDelayedTask(FROM_HERE,
         delegate->user_gesture_msg_factory_.NewRunnableMethod(
-            &WebPluginDelegateImpl::OnUserGestureEnd));
+            &WebPluginDelegateImpl::OnUserGestureEnd),
+        kWindowedPluginPopupTimerMs);
   }
 
   LRESULT result = CallWindowProc(delegate->plugin_wnd_proc_, hwnd, message,

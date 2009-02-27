@@ -33,7 +33,12 @@ if env.Bit('posix'):
 env.Append(
     CPPPATH = [
         '$THIRD_PARTY_DIR/sqlite/preprocessed'
-    ]
+    ],
+    LIBS = [
+        'WebKit',
+        'V8Bindings',
+        'JavaScriptCore_pcre',
+    ],
 )
 
 input_files = [
@@ -115,7 +120,6 @@ input_files = [
     '$WEBCORE_DIR/dom/ClipboardEvent.cpp',
     '$WEBCORE_DIR/dom/Comment.cpp',
     '$WEBCORE_DIR/dom/ContainerNode.cpp',
-    '$WEBCORE_DIR/dom/CrossThreadCopier.cpp',
     '$WEBCORE_DIR/dom/CSSMappedAttributeDeclaration.cpp',
     '$WEBCORE_DIR/dom/Document.cpp',
     '$WEBCORE_DIR/dom/DocumentFragment.cpp',
@@ -177,12 +181,6 @@ input_files = [
     '$WEBCORE_DIR/dom/WebKitAnimationEvent.cpp',
     '$WEBCORE_DIR/dom/WebKitTransitionEvent.cpp',
     '$WEBCORE_DIR/dom/WheelEvent.cpp',
-    '$WEBCORE_DIR/dom/Worker.cpp',
-    '$WEBCORE_DIR/dom/WorkerContext.cpp',
-    '$WEBCORE_DIR/dom/WorkerLocation.cpp',
-    '$WEBCORE_DIR/dom/WorkerMessagingProxy.cpp',
-    '$WEBCORE_DIR/dom/WorkerRunLoop.cpp',
-    '$WEBCORE_DIR/dom/WorkerThread.cpp',
     '$WEBCORE_DIR/dom/XMLTokenizer.cpp',
     '$WEBCORE_DIR/dom/XMLTokenizerLibxml2.cpp',
 
@@ -428,7 +426,9 @@ input_files = [
     '$WEBCORE_DIR/page/chromium/FrameChromium.cpp',
 
     '$WEBCORE_DIR/platform/Arena.cpp',
+    '$WEBCORE_DIR/platform/ContentType.cpp',
     '$WEBCORE_DIR/platform/ContextMenu.cpp',
+    '$WEBCORE_DIR/platform/CrossThreadCopier.cpp',
     '$WEBCORE_DIR/platform/DeprecatedPtrListImpl.cpp',
     '$WEBCORE_DIR/platform/DragData.cpp',
     '$WEBCORE_DIR/platform/DragImage.cpp',
@@ -691,6 +691,7 @@ input_files = [
     '$WEBCORE_DIR/rendering/SVGRenderTreeAsText.cpp',
     '$WEBCORE_DIR/rendering/SVGRootInlineBox.cpp',
     '$WEBCORE_DIR/rendering/TextControlInnerElements.cpp',
+    '$WEBCORE_DIR/rendering/TransformState.cpp',
 
     '$WEBCORE_DIR/rendering/style/BindingURI.cpp',
     '$WEBCORE_DIR/rendering/style/ContentData.cpp',
@@ -883,6 +884,13 @@ input_files = [
     '$WEBCORE_DIR/svg/graphics/skia/SVGResourceFilterSkia.cpp',
     '$WEBCORE_DIR/svg/graphics/skia/SVGResourceMaskerSkia.cpp',
 
+    '$WEBCORE_DIR/workers/Worker.cpp',
+    '$WEBCORE_DIR/workers/WorkerContext.cpp',
+    '$WEBCORE_DIR/workers/WorkerLocation.cpp',
+    '$WEBCORE_DIR/workers/WorkerMessagingProxy.cpp',
+    '$WEBCORE_DIR/workers/WorkerRunLoop.cpp',
+    '$WEBCORE_DIR/workers/WorkerThread.cpp',
+
     '$WEBCORE_DIR/xml/DOMParser.cpp',
     '$WEBCORE_DIR/xml/NativeXPathNSResolver.cpp',
     '$WEBCORE_DIR/xml/XMLHttpRequest.cpp',
@@ -918,6 +926,7 @@ if env.Bit('windows'):
     '$WEBCORE_DIR/platform/chromium/SoundChromiumWin.cpp',
     '$WEBCORE_DIR/platform/chromium/WindowsVersion.cpp',
 
+    '$WEBCORE_DIR/platform/chromium/ClipboardChromiumWin.cpp',
     '$WEBCORE_DIR/platform/graphics/chromium/FontCacheChromiumWin.cpp',
     '$WEBCORE_DIR/platform/graphics/chromium/FontPlatformDataChromiumWin.cpp',
     '$WEBCORE_DIR/platform/graphics/chromium/FontUtilsChromiumWin.cpp',
@@ -943,6 +952,7 @@ if env.Bit('linux'):
     '$WEBCORE_DIR/platform/chromium/ScrollbarThemeChromiumLinux.cpp',
     '$WEBCORE_DIR/platform/chromium/SoundChromiumPosix.cpp',
 
+    '$WEBCORE_DIR/platform/chromium/ClipboardChromiumLinux.cpp',
     '$WEBCORE_DIR/platform/graphics/chromium/FontCacheLinux.cpp',
     '$WEBCORE_DIR/platform/graphics/chromium/FontLinux.cpp',
     '$WEBCORE_DIR/platform/graphics/chromium/FontPlatformDataLinux.cpp',

@@ -179,7 +179,7 @@ LaunchMode GetLaunchSortcutKind() {
 // LaunchMode enum for the actual values of the buckets.
 void RecordLaunchModeHistogram(LaunchMode mode) {
   int bucket = (mode == LM_TO_BE_DECIDED) ? GetLaunchSortcutKind() : mode;
-  UMA_HISTOGRAM_COUNTS_100(L"Launch.Modes", bucket);
+  UMA_HISTOGRAM_COUNTS_100("Launch.Modes", bucket);
 }
 
 }  // namespace
@@ -450,11 +450,18 @@ bool BrowserInit::ProcessCommandLine(
       // compatibility with the old testing code
       // If there are any loose parameters, we expect each one to generate a
       // new tab; if there are none then we get one homepage tab.
+      int expected_tab_count = 1;
+      if (command_line.HasSwitch(switches::kRestoreLastSession)) {
+        StringToInt(command_line.GetSwitchValue(switches::kRestoreLastSession),
+                    &expected_tab_count);
+      } else {
+        expected_tab_count =
+            std::max(1, static_cast<int>(command_line.GetLooseValues().size()));
+      }
       CreateAutomationProvider<TestingAutomationProvider>(
           testing_channel_id,
           profile,
-          std::max(static_cast<int>(command_line.GetLooseValues().size()),
-                   1));
+          static_cast<size_t>(expected_tab_count));
     }
 #endif
   }
@@ -495,7 +502,10 @@ bool BrowserInit::ProcessCommandLine(
         command_line.GetSwitchValue(switches::kInstallExtension);
     FilePath path = FilePath::FromWStringHack(path_string);
     profile->GetExtensionsService()->InstallExtension(path);
-    silent_launch = true;
+
+    // If the chrome process was already running, install the extension without
+    // popping up another browser window.
+    silent_launch = !process_startup;
   }
 
   // If we don't want to launch a new browser window or tab (in the case

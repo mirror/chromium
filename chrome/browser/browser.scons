@@ -21,6 +21,14 @@ env.SConscript([
     '$ZLIB_DIR/using_zlib.scons',
 ], {'env':env})
 
+env.Append(
+    LIBS = [
+        'debugger',
+        'glue',
+        'views',
+    ],
+)
+
 env.Prepend(
     CPPPATH = [
         '$CHROME_DIR/app',
@@ -393,6 +401,8 @@ input_files = ChromeFileList([
   MSVSFilter('DOM UI', [
     'dom_ui/chrome_url_data_manager.cc',
     'dom_ui/chrome_url_data_manager.h',
+    'dom_ui/dev_tools_ui.cc',
+    'dom_ui/dev_tools_ui.h',
     'dom_ui/dom_ui.cc',
     'dom_ui/dom_ui.h',
     'dom_ui/dom_ui_contents.cc',
@@ -472,6 +482,7 @@ input_files = ChromeFileList([
     'download/download_item_model.h',
     'download/download_manager.cc',
     'download/download_manager.h',
+    'download/download_request_dialog_delegate.h',
     'download/download_request_manager.cc',
     'download/download_request_manager.h',
     'download/download_util.cc',
@@ -486,8 +497,6 @@ input_files = ChromeFileList([
     'download/save_item.h',
     'download/save_package.cc',
     'download/save_package.h',
-    'download/save_page_model.cc',
-    'download/save_page_model.h',
     'download/save_types.h',
   ]),
   MSVSFilter('Autofill', [
@@ -581,8 +590,6 @@ input_files = ChromeFileList([
     'tab_contents/tab_contents_type.h',
     'tab_contents/tab_util.cc',
     'tab_contents/tab_util.h',
-    'tab_contents/view_source_contents.cc',
-    'tab_contents/view_source_contents.h',
     'tab_contents/web_contents.cc',
     'tab_contents/web_contents.h',
     'tab_contents/web_contents_view.cc',
@@ -657,35 +664,17 @@ if not env.Bit('windows'):
   # TODO: Port these.
   input_files.Remove(
       'app_modal_dialog_queue.cc',
-      'autocomplete/autocomplete.cc',
       'autocomplete/autocomplete_accessibility.cc',
       'autocomplete/autocomplete_edit.cc',
       'autocomplete/autocomplete_popup.cc',
       'autocomplete/edit_drop_target.cc',
-      'autocomplete/history_url_provider.cc',
-      'autocomplete/search_provider.cc',
-      'automation/automation_provider.cc',
-      'automation/automation_provider_list.cc',
       'automation/ui_controls.cc',
-      'bookmarks/bookmark_context_menu.cc',
-      'bookmarks/bookmark_drag_data.cc',
-      'bookmarks/bookmark_drop_info.cc',
-      'bookmarks/bookmark_utils.cc',
       'browser_accessibility.cc',
       'browser_accessibility_manager.cc',
-      'chrome_plugin_host.cc',
       'dock_info.cc',
-      'dom_ui/dom_ui_contents.cc',
-      'dom_ui/dom_ui_host.cc',
-      'dom_ui/dom_ui.cc',
-      'dom_ui/history_ui.cc',
       'dom_ui/html_dialog_contents.cc',
-      'dom_ui/new_tab_ui.cc',
       'download/download_exe.cc',
-      'download/download_item_model.cc',
       'download/download_util.cc',
-      'download/download_request_manager.cc',
-      'download/save_page_model.cc',
       'drag_utils.cc',
       'encoding_menu_controller_delegate.cc',
       'external_protocol_handler.cc',
@@ -704,7 +693,6 @@ if not env.Bit('windows'):
       'importer/firefox3_importer.cc',
       'importer/firefox_importer_utils.cc',
       'importer/ie_importer.cc',
-      'importer/importer.cc',
       'importer/toolbar_importer.cc',
       'jankometer.cc',
       'login_prompt.cc',
@@ -712,8 +700,6 @@ if not env.Bit('windows'):
       'modal_html_dialog_delegate.cc',
       'google_update.cc',
       'password_manager/encryptor.cc',
-      'plugin_installer.cc',
-      'plugin_process_host.cc',
       'printing/page_overlays.cc',
       'printing/print_job.cc',
       'printing/print_job_manager.cc',
@@ -728,13 +714,9 @@ if not env.Bit('windows'):
       'sandbox_policy.cc',
       'shell_integration.cc',
       'tab_contents/native_ui_contents.cc',
-      'tab_contents/render_view_context_menu.cc',
-      'tab_contents/view_source_contents.cc',
-      'tab_contents/web_drag_source.cc',
       'tab_contents/web_drop_target.cc',
       'task_manager.cc',
       'task_manager_resource_providers.cc',
-      'toolbar_model.cc',
       'views/download_tab_view.cc',
       'window_sizer.cc',
   )
@@ -761,7 +743,7 @@ if not env.Bit('windows'):
   # Add files shared across non-Windows platforms.
   input_files.Append(
       'importer/firefox_profile_lock_posix.cc',
-      'renderer_host/backing_store_posix.cc',
+      'renderer_host/backing_store_x.cc',
   )
 
 

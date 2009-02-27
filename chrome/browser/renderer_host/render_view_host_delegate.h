@@ -113,12 +113,10 @@ class RenderViewHostDelegate {
     // event (used for keyboard shortcuts).
     virtual void HandleKeyboardEvent(const WebKeyboardEvent& event) = 0;
 
-    // A find operation in the current page completed.
-    virtual void OnFindReply(int request_id,
-                             int number_of_matches,
-                             const gfx::Rect& selection_rect,
-                             int active_match_ordinal,
-                             bool final_update) = 0;
+    // Forwards message to DevToolsClient in developer tools window open for
+    // this page.
+    virtual void ForwardMessageToDevToolsClient(
+        const IPC::Message& message) = 0;
   };
 
   // Interface for saving web pages.
@@ -157,13 +155,13 @@ class RenderViewHostDelegate {
   // The RenderView is being constructed (message sent to the renderer process
   // to construct a RenderView).  Now is a good time to send other setup events
   // to the RenderView.  This precedes any other commands to the RenderView.
-  virtual void RendererCreated(RenderViewHost* render_view_host) { }
+  virtual void RenderViewCreated(RenderViewHost* render_view_host) { }
 
   // The RenderView has been constructed.
-  virtual void RendererReady(RenderViewHost* render_view_host) { }
+  virtual void RenderViewReady(RenderViewHost* render_view_host) { }
 
   // The RenderView died somehow (crashed or was killed by the user).
-  virtual void RendererGone(RenderViewHost* render_view_host) { }
+  virtual void RenderViewGone(RenderViewHost* render_view_host) { }
 
   // The RenderView was navigated to a different page.
   virtual void DidNavigate(RenderViewHost* render_view_host,
@@ -259,8 +257,7 @@ class RenderViewHostDelegate {
   // A message for external host. By default we ignore such messages.
   // |receiver| can be a receiving script and |message| is any
   // arbitrary string that makes sense to the receiver.
-  virtual void ProcessExternalHostMessage(const std::string& receiver,
-                                          const std::string& message) { }
+  virtual void ProcessExternalHostMessage(const std::string& message) { }
 
   // Navigate to the history entry for the given offset from the current
   // position within the NavigationController.  Makes no change if offset is
@@ -401,7 +398,13 @@ class RenderViewHostDelegate {
 
   // If this view can be terminated without any side effects
   virtual bool CanTerminate() const { return true; }
+
+  // A find operation in the current page completed.
+  virtual void OnFindReply(int request_id,
+                           int number_of_matches,
+                           const gfx::Rect& selection_rect,
+                           int active_match_ordinal,
+                           bool final_update) { }
 };
 
 #endif  // CHROME_BROWSER_RENDERER_HOST_RENDER_VIEW_HOST_DELEGATE_H_
-

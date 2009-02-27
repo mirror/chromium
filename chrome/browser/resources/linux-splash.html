@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Chromium Alpha Warning</title>
+    <style>
+      h3 {
+        font-size: 1em;
+        margin-left: -1em;
+        color: black;
+      }
+
+      div.faq {
+        margin-left: 1em;
+        width: 60%;
+        color: #444;
+      }
+
+      div.stopcorner {
+        border-style: solid;
+        border-color: red white;
+        width: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <center>
+      <div>
+        <!-- Stop sign using CSS hacks!  For an octagon with sides of length
+             50px, the corners must be sqrt(1/2)*50 = 30 px. -->
+        <div class='stopcorner' style='border-width: 0px 35px 35px; width:50px'> </div>
+        <div style='display:table-cell;
+                    background: red; color: white;
+                    width: 120px; height: 50px;
+                    text-align: center; vertical-align: middle;
+                    font-size: 40px; font-family: sans-serif'>STOP</div>
+        <div class='stopcorner' style='border-width: 35px 35px 0px; width:50px'> </div>
+      </div>
+      <h1>This browser is not ready yet!</h1>
+    </center>
+
+    <p>This is a <i>pre-alpha</i> build of Chromium on Linux. It is woefully
+    incomplete.</p>
+
+    <div class="faq">
+
+    <h3>It's &lsquo;Chromium&rsquo;, not &lsquo;Google Chrome&rsquo;:</h3>
+
+    <p><a href="http://code.google.com/chromium/">Chromium</a> is an open
+    source browser project. <a href="http://www.google.com/chrome">Google
+      Chrome</a> is a browser from Google, based on the Chromium project. This
+    is a build of Chromium. No versions of Google Chrome for Linux will exist
+    until Google makes an official release.</p>
+
+    <h3>Please don't file bugs:</h3>
+
+    <p>At this point there are so many gaping holes that finding bugs is not
+    the problem and dealing with them is just a distraction.</p>
+
+    <h3>Blogging about it is not helpful:</h3>
+
+    <p>Chromium's problem is not a lack of media attention, but an excess of
+    it. Coverage encourages people to try it out in this incomplete state which
+    only creates negative first impressions. Also, dealing with
+    misunderstandings/questions etc only distracts the team from the job of
+    improving it.</p>
+
+    <p>Likewise, keep in mind that we won't see your comments if they're on a
+    random blog somewhere.</p>
+
+    <h3>How to help:</h3>
+
+    <p>Chromium is an open source project, you are welcome to help out. We have
+    <a href="http://dev.chromium.org/">documentation for developers</a> as well
+    as mailing lists and an IRC channel.</p>
+
+    </div>
+
+    <p></p>
+  </body>
+</html>

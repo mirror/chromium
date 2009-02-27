@@ -23,8 +23,11 @@
 #include "chrome/common/render_messages.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/thumbnail_score.h"
+#include "chrome/common/url_constants.h"
 #include "chrome/renderer/about_handler.h"
 #include "chrome/renderer/debug_message_handler.h"
+#include "chrome/renderer/dev_tools_agent.h"
+#include "chrome/renderer/dev_tools_client.h"
 #include "chrome/renderer/localized_error.h"
 #include "chrome/renderer/media/audio_renderer_impl.h"
 #include "chrome/renderer/render_process.h"
@@ -146,7 +149,7 @@ class RenderViewExtraRequestData : public WebRequest::ExtraData {
  private:
   int32 pending_page_id_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(RenderViewExtraRequestData);
+  DISALLOW_COPY_AND_ASSIGN(RenderViewExtraRequestData);
 };
 
 }  // namespace
@@ -168,6 +171,8 @@ RenderView::RenderView(RenderThreadBase* render_thread)
       method_factory_(this),
       first_default_plugin_(NULL),
       printed_document_width_(0),
+      dev_tools_agent_(NULL),
+      dev_tools_client_(NULL),
       history_back_list_count_(0),
       history_forward_list_count_(0),
       disable_popup_blocking_(false),
@@ -196,6 +201,7 @@ RenderView::~RenderView() {
   }
 
   render_thread_->RemoveFilter(debug_message_handler_);
+  render_thread_->RemoveFilter(dev_tools_agent_);
 
 #ifdef CHROME_PERSONALIZATION
   Personalization::CleanupRendererPersonalization(personalization_);
@@ -313,6 +319,9 @@ void RenderView::Init(gfx::NativeViewId parent_hwnd,
 
   debug_message_handler_ = new DebugMessageHandler(this);
   render_thread_->AddFilter(debug_message_handler_);
+
+  dev_tools_agent_ = new DevToolsAgent(this, MessageLoop::current());
+  render_thread_->AddFilter(dev_tools_agent_);
 }
 
 void RenderView::OnMessageReceived(const IPC::Message& message) {
@@ -330,6 +339,10 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
 
   // Let the resource dispatcher intercept resource messages first.
   if (resource_dispatcher_->OnMessageReceived(message))
+    return;
+
+  // If this is developer tools renderer intercept tools messages first.
+  if (dev_tools_client_.get() && dev_tools_client_->OnMessageReceived(message))
     return;
 
   IPC_BEGIN_MESSAGE_MAP(RenderView, message)
@@ -355,6 +368,7 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewMsg_SetPageEncoding, OnSetPageEncoding)
     IPC_MESSAGE_HANDLER(ViewMsg_InspectElement, OnInspectElement)
     IPC_MESSAGE_HANDLER(ViewMsg_ShowJavaScriptConsole, OnShowJavaScriptConsole)
+    IPC_MESSAGE_HANDLER(ViewMsg_SetupDevToolsClient, OnSetupDevToolsClient)
     IPC_MESSAGE_HANDLER(ViewMsg_DownloadImage, OnDownloadImage)
     IPC_MESSAGE_HANDLER(ViewMsg_ScriptEvalRequest, OnScriptEvalRequest)
     IPC_MESSAGE_HANDLER(ViewMsg_AddMessageToConsole, OnAddMessageToConsole)
@@ -413,6 +427,7 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewMsg_NotifyAudioStreamStateChanged,
                         OnAudioStreamStateChanged)
     IPC_MESSAGE_HANDLER(ViewMsg_NotifyAudioStreamVolume, OnAudioStreamVolume)
+    IPC_MESSAGE_HANDLER(ViewMsg_MoveOrResizeStarted, OnMoveOrResizeStarted)
 
     // Have the super handle all other messages.
     IPC_MESSAGE_UNHANDLED(RenderWidget::OnMessageReceived(message))
@@ -900,6 +915,11 @@ void RenderView::OnInspectElement(int x, int y) {
 
 void RenderView::OnShowJavaScriptConsole() {
   webview()->ShowJavaScriptConsole();
+}
+
+void RenderView::OnSetupDevToolsClient() {
+  DCHECK(!dev_tools_client_.get());
+  dev_tools_client_.reset(new DevToolsClient(this));
 }
 
 void RenderView::OnStopFinding(bool clear_selection) {
@@ -1551,7 +1571,7 @@ WindowOpenDisposition RenderView::DispositionForNavigationAction(
   // to, for example, opening a new window).
   // But we sometimes navigate to about:blank to clear a tab, and we want to
   // still allow that.
-  if (disposition == CURRENT_TAB && !(url.SchemeIs("about"))) {
+  if (disposition == CURRENT_TAB && !(url.SchemeIs(chrome::kAboutScheme))) {
     // GetExtraData is NULL when we did not issue the request ourselves (see
     // OnNavigate), and so such a request may correspond to a link-click,
     // script, or drag-n-drop initiated navigation.
@@ -1560,7 +1580,7 @@ WindowOpenDisposition RenderView::DispositionForNavigationAction(
       // punt them up to the browser to handle.
       if (enable_dom_ui_bindings_ ||
           frame->GetInViewSourceMode() ||
-          url.SchemeIs("view-source")) {
+          url.SchemeIs(chrome::kViewSourceScheme)) {
         OpenURL(webview, url, GURL(), disposition);
         return IGNORE_ACTION;  // Suppress the load here.
       } else if (url.SchemeIs(kBackForwardNavigationScheme)) {
@@ -2069,7 +2089,7 @@ void RenderView::OnGetApplicationInfo(int page_id) {
   // to decode arbitrary data URLs in the browser process.  See
   // http://b/issue?id=1162972
   for (size_t i = 0; i < app_info.icons.size(); ++i) {
-    if (app_info.icons[i].url.SchemeIs("data")) {
+    if (app_info.icons[i].url.SchemeIs(chrome::kDataScheme)) {
       app_info.icons.erase(app_info.icons.begin() + i);
       --i;
     }
@@ -2191,28 +2211,27 @@ void RenderView::OnFind(const FindInPageRequest& request) {
   //                fix for 792423.
   webview()->SetFocusedFrame(NULL);
 
-  // We send back word that we found some matches, because we don't want to lag
-  // when notifying the user that we found something. At this point we only know
-  // that we found 1 match, but the scoping effort will tell us more. However,
-  // if this is a FindNext request, the scoping effort is already under way, or
-  // done already, so we have partial results. In that case we set it to -1 so
-  // that it gets ignored by the FindInPageController.
-  int match_count = result ? 1 : 0;  // 1 here means possibly more coming.
-  if (request.find_next)
-    match_count = -1;
+  if (request.find_next) {
+    // Force the main_frame to report the actual count.
+    main_frame->IncreaseMatchCount(0, request.request_id);
+  } else {
+    // If nothing is found, set result to "0 of 0", otherwise, set it to
+    // "-1 of 1" to indicate that we found at least one item, but we don't know
+    // yet what is active.
+    int ordinal = result ? -1 : 0;  // -1 here means, we might know more later.
+    int match_count = result ? 1 : 0;  // 1 here means possibly more coming.
 
-  // If we find no matches (or if this is Find Next) then this will be our last
-  // status update. Otherwise the scoping effort will send more results.
-  bool final_status_update = !result || request.find_next;
+    // If we find no matches then this will be our last status update.
+    // Otherwise the scoping effort will send more results.
+    bool final_status_update = !result;
 
-  // Send the search result over to the browser process.
-  Send(new ViewHostMsg_Find_Reply(routing_id_, request.request_id,
-                                  match_count,
-                                  selection_rect,
-                                  -1,  // Don't update active match ordinal.
-                                  final_status_update));
+    // Send the search result over to the browser process.
+    Send(new ViewHostMsg_Find_Reply(routing_id_, request.request_id,
+                                    match_count,
+                                    selection_rect,
+                                    ordinal,
+                                    final_status_update));
 
-  if (!request.find_next) {
     // Scoping effort begins, starting with the mainframe.
     search_frame = main_frame;
 
@@ -2871,7 +2890,7 @@ MessageLoop* RenderView::GetMessageLoopForIO() {
 
 void RenderView::OnRequestAudioPacket(int stream_id) {
   AudioRendererImpl* audio_renderer = audio_renderers_.Lookup(stream_id);
-  if (!audio_renderer){
+  if (!audio_renderer) {
     NOTREACHED();
     return;
   }
@@ -2881,7 +2900,7 @@ void RenderView::OnRequestAudioPacket(int stream_id) {
 void RenderView::OnAudioStreamCreated(
     int stream_id, base::SharedMemoryHandle handle, int length) {
   AudioRendererImpl* audio_renderer = audio_renderers_.Lookup(stream_id);
-  if (!audio_renderer){
+  if (!audio_renderer) {
     NOTREACHED();
     return;
   }
@@ -2891,7 +2910,7 @@ void RenderView::OnAudioStreamCreated(
 void RenderView::OnAudioStreamStateChanged(
     int stream_id, AudioOutputStream::State state, int info) {
   AudioRendererImpl* audio_renderer = audio_renderers_.Lookup(stream_id);
-  if (!audio_renderer){
+  if (!audio_renderer) {
     NOTREACHED();
     return;
   }
@@ -2900,11 +2919,16 @@ void RenderView::OnAudioStreamStateChanged(
 
 void RenderView::OnAudioStreamVolume(int stream_id, double left, double right) {
   AudioRendererImpl* audio_renderer = audio_renderers_.Lookup(stream_id);
-  if (!audio_renderer){
+  if (!audio_renderer) {
     NOTREACHED();
     return;
   }
   audio_renderer->OnVolume(left, right);
+}
+
+void RenderView::OnMoveOrResizeStarted() {
+  if (webview())
+    webview()->HideAutofillPopup();
 }
 
 int32 RenderView::CreateAudioStream(AudioRendererImpl* audio_renderer,
@@ -2958,4 +2982,11 @@ void RenderView::SetAudioVolume(int stream_id, double left, double right) {
   // TODO(hclam): make sure this method is called on render thread.
   DCHECK(audio_renderers_.Lookup(stream_id) != NULL);
   Send(new ViewHostMsg_SetAudioVolume(routing_id_, stream_id, left, right));
+}
+
+void RenderView::OnResize(const gfx::Size& new_size,
+                          const gfx::Rect& resizer_rect) {
+  if (webview())
+    webview()->HideAutofillPopup();
+  RenderWidget::OnResize(new_size, resizer_rect);
 }

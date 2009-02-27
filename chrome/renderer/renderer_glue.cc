@@ -24,8 +24,6 @@
 #include "chrome/renderer/render_view.h"
 #include "chrome/renderer/visitedlink_slave.h"
 #include "googleurl/src/url_util.h"
-#include "net/base/mime_util.h"
-#include "net/base/net_errors.h"
 #include "webkit/glue/scoped_clipboard_writer_glue.h"
 #include "webkit/glue/webframe.h"
 #include "webkit/glue/webkit_glue.h"
@@ -84,15 +82,15 @@ class ResizableStackArray {
 };
 
 #if defined(OS_WIN)
-// This definition of WriteBitmap uses shared memory to communicate across
-// processes.
-void ScopedClipboardWriterGlue::WriteBitmap(const SkBitmap& bitmap) {
-  // do not try to write a bitmap more than once
+// This definition of WriteBitmapFromPixels uses shared memory to communicate
+// across processes.
+void ScopedClipboardWriterGlue::WriteBitmapFromPixels(const void* pixels,
+                                                      const gfx::Size& size) {
+  // Do not try to write a bitmap more than once
   if (shared_buf_)
     return;
 
-  size_t buf_size = bitmap.getSize();
-  gfx::Size size(bitmap.width(), bitmap.height());
+  size_t buf_size = 4 * size.width() * size.height();
 
   // Allocate a shared memory buffer to hold the bitmap bits
   shared_buf_ = new base::SharedMemory;
@@ -104,8 +102,7 @@ void ScopedClipboardWriterGlue::WriteBitmap(const SkBitmap& bitmap) {
   }
 
   // Copy the bits into shared memory
-  SkAutoLockPixels bitmap_lock(bitmap);
-  memcpy(shared_buf_->memory(), bitmap.getPixels(), buf_size);
+  memcpy(shared_buf_->memory(), pixels, buf_size);
   shared_buf_->Unmap();
 
   Clipboard::ObjectMapParam param1, param2;
@@ -173,45 +170,6 @@ void PrecacheUrl(const wchar_t* url, int url_length) {
 
 void AppendToLog(const char* file, int line, const char* msg) {
   logging::LogMessage(file, line).stream() << msg;
-}
-
-bool GetMimeTypeFromExtension(const FilePath::StringType &ext,
-                              std::string *mime_type) {
-  if (IsPluginProcess())
-    return net::GetMimeTypeFromExtension(ext, mime_type);
-
-  // The sandbox restricts our access to the registry, so we need to proxy
-  // these calls over to the browser process.
-  DCHECK(mime_type->empty());
-  RenderThread::current()->Send(
-      new ViewHostMsg_GetMimeTypeFromExtension(ext, mime_type));
-  return !mime_type->empty();
-}
-
-bool GetMimeTypeFromFile(const FilePath &file_path,
-                         std::string *mime_type) {
-  if (IsPluginProcess())
-    return net::GetMimeTypeFromFile(file_path, mime_type);
-
-  // The sandbox restricts our access to the registry, so we need to proxy
-  // these calls over to the browser process.
-  DCHECK(mime_type->empty());
-  RenderThread::current()->Send(
-      new ViewHostMsg_GetMimeTypeFromFile(file_path, mime_type));
-  return !mime_type->empty();
-}
-
-bool GetPreferredExtensionForMimeType(const std::string& mime_type,
-                                      FilePath::StringType* ext) {
-  if (IsPluginProcess())
-    return net::GetPreferredExtensionForMimeType(mime_type, ext);
-
-  // The sandbox restricts our access to the registry, so we need to proxy
-  // these calls over to the browser process.
-  DCHECK(ext->empty());
-  RenderThread::current()->Send(
-      new ViewHostMsg_GetPreferredExtensionForMimeType(mime_type, ext));
-  return !ext->empty();
 }
 
 std::string GetDataResource(int resource_id) {

@@ -18,7 +18,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)..\build\debug.vsprops;.\glue.vsprops"
+			InheritedPropertySheets="$(SolutionDir)..\build\debug.vsprops;.\glue.vsprops;..\build\WebKit\using_WebKit.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -69,7 +69,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)..\build\release.vsprops;.\glue.vsprops"
+			InheritedPropertySheets="$(SolutionDir)..\build\release.vsprops;.\glue.vsprops;..\build\WebKit\using_WebKit.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -190,6 +190,10 @@
 			</File>
 			<File
 				RelativePath=".\webinputevent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\webinputevent_win.cc"
 				>
 			</File>
 			<File
@@ -525,11 +529,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\simple_webmimeregistry_impl.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\simple_webmimeregistry_impl.h"
+				>
+			</File>
+			<File
 				RelativePath=".\stacking_order_iterator.cc"
 				>
 			</File>
 			<File
 				RelativePath=".\stacking_order_iterator.h"
+				>
+			</File>
+			<File
+				RelativePath=".\webclipboard_impl.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\webclipboard_impl.h"
 				>
 			</File>
 			<File
@@ -601,10 +621,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\webinputevent_win.cc"
-				>
-			</File>
-			<File
 				RelativePath=".\webkit_glue.cc"
 				>
 			</File>
@@ -614,6 +630,14 @@
 			</File>
 			<File
 				RelativePath=".\webkit_glue_win.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\webkitclient_impl.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\webkitclient_impl.h"
 				>
 			</File>
 			<File

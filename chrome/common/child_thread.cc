@@ -14,19 +14,14 @@
 ChildThread::ChildThread(Thread::Options options)
     : Thread("Chrome_ChildThread"),
       owner_loop_(MessageLoop::current()),
-      in_send_(0),
       options_(options) {
   DCHECK(owner_loop_);
   channel_name_ = CommandLine::ForCurrentProcess()->GetSwitchValue(
       switches::kProcessChannelID);
 
   if (CommandLine::ForCurrentProcess()->HasSwitch(switches::kUserAgent)) {
-#if defined(OS_WIN)
-    // TODO(port): calling this connects an, otherwise disconnected, subgraph
-    // of symbols, causing huge numbers of linker errors.
     webkit_glue::SetUserAgent(WideToUTF8(
         CommandLine::ForCurrentProcess()->GetSwitchValue(switches::kUserAgent)));
-#endif
   }
 }
 
@@ -47,10 +42,7 @@ bool ChildThread::Send(IPC::Message* msg) {
     return false;
   }
 
-  in_send_++;
-  bool rv = channel_->Send(msg);
-  in_send_--;
-  return rv;
+  return channel_->Send(msg);
 }
 
 void ChildThread::AddRoute(int32 routing_id, IPC::Channel::Listener* listener) {

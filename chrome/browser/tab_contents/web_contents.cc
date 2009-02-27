@@ -21,6 +21,7 @@
 #include "chrome/browser/load_from_memory_cache_details.h"
 #include "chrome/browser/load_notification_details.h"
 #include "chrome/browser/password_manager/password_manager.h"
+#include "chrome/browser/plugin_installer.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
@@ -35,6 +36,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/render_messages.h"
+#include "chrome/common/url_constants.h"
 #include "grit/locale_settings.h"
 #include "net/base/mime_util.h"
 #include "net/base/net_errors.h"
@@ -47,7 +49,6 @@
 #include "chrome/browser/character_encoding.h"
 #include "chrome/browser/download/download_request_manager.h"
 #include "chrome/browser/modal_html_dialog_delegate.h"
-#include "chrome/browser/plugin_installer.h"
 #include "chrome/browser/plugin_service.h"
 #include "chrome/browser/printing/print_job.h"
 #include "chrome/browser/search_engines/template_url_fetcher.h"
@@ -182,6 +183,9 @@ class WebContents::GearsCreateShortcutCallbackFunctor {
   WebContents* contents_;
 };
 
+// static
+int WebContents::find_request_id_counter_ = -1;
+
 WebContents::WebContents(Profile* profile,
                          SiteInstance* site_instance,
                          RenderViewHostFactory* render_view_factory,
@@ -201,8 +205,10 @@ WebContents::WebContents(Profile* profile,
 #endif
       ALLOW_THIS_IN_INITIALIZER_LIST(fav_icon_helper_(this)),
       suppress_javascript_messages_(false),
-      load_state_(net::LOAD_STATE_IDLE) {
-
+      load_state_(net::LOAD_STATE_IDLE),
+      find_ui_active_(false),
+      find_op_aborted_(false),
+      current_find_request_id_(find_request_id_counter_++) {
   pending_install_.page_id = 0;
   pending_install_.callback_functor = NULL;
 
@@ -386,7 +392,7 @@ bool WebContents::NavigateToPendingEntry(bool reload) {
     // do not generate content.  What we really need is a message from the
     // renderer telling us that a new page was not created.  The same message
     // could be used for mailto: URLs and the like.
-    if (entry->url().SchemeIs("javascript"))
+    if (entry->url().SchemeIs(chrome::kJavaScriptScheme))
       return false;
   }
 
@@ -532,6 +538,43 @@ void WebContents::CreateShortcut() {
   render_view_host()->GetApplicationInfo(pending_install_.page_id);
 }
 
+void WebContents::StartFinding(const std::wstring& find_text,
+                               bool forward_direction) {
+  // If find_text is empty, it means FindNext was pressed with a keyboard
+  // shortcut so unless we have something to search for we return early.
+  if (find_text.empty() && find_text_.empty())
+    return;
+
+  // This is a FindNext operation if we are searching for the same text again,
+  // or if the passed in search text is empty (FindNext keyboard shortcut). The
+  // exception to this is if the Find was aborted (then we don't want FindNext
+  // because the highlighting has been cleared and we need it to reappear). We
+  // therefore treat FindNext after an aborted Find operation as a full fledged
+  // Find.
+  bool find_next = (find_text_ == find_text || find_text.empty()) &&
+                   !find_op_aborted_;
+  if (!find_next)
+    current_find_request_id_ = find_request_id_counter_++;
+
+  if (!find_text.empty())
+    find_text_ = find_text;
+
+  find_op_aborted_ = false;
+
+  render_view_host()->StartFinding(current_find_request_id_,
+                                   find_text_,
+                                   forward_direction,
+                                   false,  // case sensitive
+                                   find_next);
+}
+
+void WebContents::StopFinding(bool clear_selection) {
+  find_ui_active_ = false;
+  find_op_aborted_ = true;
+  find_result_ = FindNotificationDetails();
+  render_view_host()->StopFinding(clear_selection);
+}
+
 void WebContents::OnJavaScriptMessageBoxClosed(IPC::Message* reply_msg,
                                                bool success,
                                                const std::wstring& prompt) {
@@ -591,9 +634,6 @@ bool WebContents::PrintNow() {
   if (showing_interstitial_page())
     return false;
 
-  // If we have a find bar it needs to hide as well.
-  view_->HideFindBar(false);
-
   return render_view_host()->PrintPages();
 }
 
@@ -633,7 +673,21 @@ Profile* WebContents::GetProfile() const {
   return profile();
 }
 
-void WebContents::RendererReady(RenderViewHost* rvh) {
+void WebContents::RenderViewCreated(RenderViewHost* render_view_host) {
+  if (!controller())
+    return;
+  NavigationEntry* entry = controller()->GetActiveEntry();
+  if (!entry)
+    return;
+
+  if (entry->IsViewSourceMode()) {
+    // Put the renderer in view source mode.
+    render_view_host->Send(
+        new ViewMsg_EnableViewSourceMode(render_view_host->routing_id()));
+  }
+}
+
+void WebContents::RenderViewReady(RenderViewHost* rvh) {
   if (rvh != render_view_host()) {
     // Don't notify the world, since this came from a renderer in the
     // background.
@@ -644,9 +698,9 @@ void WebContents::RendererReady(RenderViewHost* rvh) {
   SetIsCrashed(false);
 }
 
-void WebContents::RendererGone(RenderViewHost* rvh) {
+void WebContents::RenderViewGone(RenderViewHost* rvh) {
   // Ask the print preview if this renderer was valuable.
-  if (!printing_.OnRendererGone(rvh))
+  if (!printing_.OnRenderViewGone(rvh))
     return;
   if (rvh != render_view_host()) {
     // The pending page's RenderViewHost is gone.
@@ -953,10 +1007,9 @@ void WebContents::DomOperationResponse(const std::string& json_string,
       Details<DomOperationNotificationDetails>(&details));
 }
 
-void WebContents::ProcessExternalHostMessage(const std::string& receiver,
-                                             const std::string& message) {
+void WebContents::ProcessExternalHostMessage(const std::string& message) {
   if (delegate())
-    delegate()->ForwardMessageToExternalHost(receiver, message);
+    delegate()->ForwardMessageToExternalHost(message);
 }
 
 void WebContents::GoToEntryAtOffset(int offset) {
@@ -1356,6 +1409,33 @@ void WebContents::OnEnterOrSpace() {
 #endif
 }
 
+void WebContents::OnFindReply(int request_id,
+                              int number_of_matches,
+                              const gfx::Rect& selection_rect,
+                              int active_match_ordinal,
+                              bool final_update) {
+  // Ignore responses for requests other than the one we have most recently
+  // issued. That way we won't act on stale results when the user has
+  // already typed in another query.
+  if (request_id != current_find_request_id_)
+    return;
+
+  if (number_of_matches == -1)
+    number_of_matches = find_result_.number_of_matches();
+  if (active_match_ordinal == -1)
+    active_match_ordinal = find_result_.active_match_ordinal();
+
+  // Notify the UI, automation and any other observers that a find result was
+  // found.
+  find_result_ = FindNotificationDetails(request_id, number_of_matches,
+                                         selection_rect, active_match_ordinal,
+                                         final_update);
+  NotificationService::current()->Notify(
+      NotificationType::FIND_RESULT_AVAILABLE,
+      Source<TabContents>(this),
+      Details<FindNotificationDetails>(&find_result_));
+}
+
 bool WebContents::CanTerminate() const {
   if (!delegate())
     return true;
@@ -1390,6 +1470,13 @@ void WebContents::UpdateRenderViewSizeForRenderManager() {
   view_->SizeContents(view_->GetContainerSize());
 }
 
+NavigationEntry*
+WebContents::GetLastCommittedNavigationEntryForRenderManager() {
+  if (!controller())
+    return NULL;
+  return controller()->GetLastCommittedEntry();
+}
+  
 bool WebContents::CreateRenderViewForRenderManager(
     RenderViewHost* render_view_host) {
   RenderWidgetHostView* rwh_view = view_->CreateViewForWidget(render_view_host);
@@ -1497,12 +1584,6 @@ void WebContents::DidNavigateMainFramePostCommit(
 
   // Close constrained popups if necessary.
   MaybeCloseChildWindows(details.previous_url, details.entry->url());
-
-  // We hide the FindInPage window when the user navigates away, except on
-  // reload.
-  if (PageTransition::StripQualifier(params.transition) !=
-      PageTransition::RELOAD)
-    view_->HideFindBar(true);
 
   // Update the starred state.
   UpdateStarredStateForCurrentURL();

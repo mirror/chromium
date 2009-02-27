@@ -11,6 +11,7 @@
 #include "base/task.h"
 #include "build/build_config.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #include "chrome/browser/tab_contents/tab_util.h"
@@ -28,7 +29,7 @@
 #endif
 
 // Throttle updates to the UI thread so that a fast moving download doesn't
-// cause it to become unresponsive (ins milliseconds).
+// cause it to become unresponsive (in milliseconds).
 static const int kUpdatePeriodMs = 500;
 
 // Timer task for posting UI updates. This task is created and maintained by
@@ -72,11 +73,11 @@ bool DownloadFile::Initialize() {
   return false;
 }
 
-// FIXME bug 595247: handle errors on file writes.
 bool DownloadFile::AppendDataToFile(const char* data, int data_len) {
   if (file_) {
-    fwrite(data, 1, data_len, file_);
-    bytes_so_far_ += data_len;
+    // FIXME bug 595247: handle errors on file writes.
+    size_t written = fwrite(data, 1, data_len, file_);
+    bytes_so_far_ += written;
     return true;
   }
   return false;
@@ -136,7 +137,7 @@ bool DownloadFile::Open(const char* open_mode) {
   // Sets the Zone to tell Windows that this file comes from the internet.
   // We ignore the return value because a failure is not fatal.
   win_util::SetInternetZoneIdentifier(full_path_);
-#elif defined(OS_MAC)
+#elif defined(OS_MACOSX)
   // TODO(port) there should be an equivalent on Mac (there isn't on Linux).
   NOTREACHED();
 #endif

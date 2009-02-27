@@ -5,12 +5,14 @@
 #ifndef CHROME_BROWSER_RENDERER_HOST_RENDER_WIDGET_HOST_H_
 #define CHROME_BROWSER_RENDERER_HOST_RENDER_WIDGET_HOST_H_
 
+#include <queue>
 #include <vector>
 
 #include "base/gfx/size.h"
 #include "base/timer.h"
 #include "chrome/common/ipc_channel.h"
 #include "testing/gtest/include/gtest/gtest_prod.h"
+#include "webkit/glue/webinputevent.h"
 
 namespace gfx {
 class Rect;
@@ -174,6 +176,10 @@ class RenderWidgetHost : public IPC::Channel::Listener {
   // not be created.
   BackingStore* GetBackingStore();
 
+  // Allocate a new backing store of the given size. Returns NULL on failure
+  // (for example, if we don't currently have a RenderWidgetHostView.)
+  BackingStore* AllocBackingStore(const gfx::Size& size);
+
   // Checks to see if we can give up focus to this widget through a JS call.
   virtual bool CanBlur() const { return true; }
 
@@ -217,7 +223,7 @@ class RenderWidgetHost : public IPC::Channel::Listener {
 
   // Called when we an InputEvent was not processed by the renderer. This is
   // overridden by RenderView to send upwards to its delegate.
-  virtual void UnhandledInputEvent(const WebInputEvent& event) {}
+  virtual void UnhandledKeyboardEvent(const WebKeyboardEvent& event) {}
 
   // Notification that the user pressed the enter key or the spacebar. The
   // render view host overrides this to forward the information to its delegate
@@ -247,8 +253,8 @@ class RenderWidgetHost : public IPC::Channel::Listener {
   void RendererIsResponsive();
 
   // IPC message handlers
-  void OnMsgRendererReady();
-  void OnMsgRendererGone();
+  void OnMsgRenderViewReady();
+  void OnMsgRenderViewGone();
   void OnMsgClose();
   void OnMsgRequestMove(const gfx::Rect& pos);
   void OnMsgPaintRect(const ViewHostMsg_PaintRect_Params& params);
@@ -345,6 +351,11 @@ class RenderWidgetHost : public IPC::Channel::Listener {
   // Used for UMA histogram logging to measure the time for a repaint view
   // operation to finish.
   base::TimeTicks repaint_start_time_;
+
+  // A queue of keyboard events. We can't trust data from the renderer so we
+  // stuff key events into a queue and pop them out on ACK, feeding our copy
+  // back to whatever unhandled handler instead of the returned version.
+  std::queue<WebKeyboardEvent> key_queue_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHost);
 };

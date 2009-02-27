@@ -115,6 +115,7 @@ env_dll.Append(
         'WTF',
         'V8Bindings',
         'WebCore',
+        'WebKit',
         'default_plugin',
         'glue',
         'JavaScriptCore_pcre',
@@ -129,6 +130,10 @@ env_dll.Append(
         'sdch',
         'sqlite',
         'v8_snapshot',
+
+        'X11',
+        'Xrender',
+        'Xext',
     ],
 )
 

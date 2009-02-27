@@ -19,7 +19,7 @@ using base::TimeDelta;
 using base::TimeTicks;
 
 bool BrowserProxy::ActivateTab(int tab_index) {
-  return ActivateTabWithTimeout(tab_index, INFINITE, NULL);
+  return ActivateTabWithTimeout(tab_index, base::kNoTimeout, NULL);
 }
 
 bool BrowserProxy::ActivateTabWithTimeout(int tab_index, uint32 timeout_ms,
@@ -39,7 +39,7 @@ bool BrowserProxy::ActivateTabWithTimeout(int tab_index, uint32 timeout_ms,
 }
 
 bool BrowserProxy::BringToFront() {
-  return BringToFrontWithTimeout(INFINITE, NULL);
+  return BringToFrontWithTimeout(base::kNoTimeout, NULL);
 }
 
 bool BrowserProxy::BringToFrontWithTimeout(uint32 timeout_ms,
@@ -81,7 +81,7 @@ bool BrowserProxy::AppendTab(const GURL& tab_url) {
 }
 
 bool BrowserProxy::GetActiveTabIndex(int* active_tab_index) const {
-  return GetActiveTabIndexWithTimeout(active_tab_index, INFINITE, NULL);
+  return GetActiveTabIndexWithTimeout(active_tab_index, base::kNoTimeout, NULL);
 }
 
 bool BrowserProxy::GetActiveTabIndexWithTimeout(int* active_tab_index,
@@ -124,7 +124,7 @@ TabProxy* BrowserProxy::GetTab(int tab_index) const {
 }
 
 TabProxy* BrowserProxy::GetActiveTab() const {
-  return GetActiveTabWithTimeout(INFINITE, NULL);
+  return GetActiveTabWithTimeout(base::kNoTimeout, NULL);
 }
 
 TabProxy* BrowserProxy::GetActiveTabWithTimeout(uint32 timeout_ms,
@@ -136,7 +136,7 @@ TabProxy* BrowserProxy::GetActiveTabWithTimeout(uint32 timeout_ms,
 }
 
 bool BrowserProxy::GetTabCount(int* num_tabs) const {
-  return GetTabCountWithTimeout(num_tabs, INFINITE, NULL);
+  return GetTabCountWithTimeout(num_tabs, base::kNoTimeout, NULL);
 }
 
 bool BrowserProxy::GetTabCountWithTimeout(int* num_tabs, uint32 timeout_ms,
@@ -175,7 +175,7 @@ bool BrowserProxy::SimulateDrag(const POINT& start,
                                 const POINT& end,
                                 int flags,
                                 bool press_escape_en_route) {
-  return SimulateDragWithTimeout(start, end, flags, INFINITE, NULL,
+  return SimulateDragWithTimeout(start, end, flags, base::kNoTimeout, NULL,
                                  press_escape_en_route);
 }
 
@@ -251,6 +251,35 @@ bool BrowserProxy::WaitForTabToBecomeActive(int tab,
   return false;
 }
 
+bool BrowserProxy::OpenFindInPage() {
+  if (!is_valid())
+    return false;
+
+  return sender_->Send(new AutomationMsg_OpenFindInPage(0, handle_));
+  // This message expects no response.
+}
+
+bool BrowserProxy::GetFindWindowLocation(int* x, int* y) {
+  if (!is_valid() || !x || !y)
+    return false;
+
+  return sender_->Send(
+      new AutomationMsg_FindWindowLocation(0, handle_, x, y));
+}
+
+bool BrowserProxy::IsFindWindowFullyVisible(bool* is_visible) {
+  if (!is_valid())
+    return false;
+
+  if (!is_visible) {
+    NOTREACHED();
+    return false;
+  }
+
+  return sender_->Send(
+      new AutomationMsg_FindWindowVisibility(0, handle_, is_visible));
+}
+
 bool BrowserProxy::GetHWND(HWND* handle) const {
   if (!is_valid())
     return false;
@@ -319,7 +348,7 @@ bool BrowserProxy::GetBooleanPreference(const std::wstring& name,
     return false;
 
   bool result = false;
-  
+
   sender_->Send(new AutomationMsg_GetBooleanPreference(0, handle_, name, value,
                                                        &result));
   return result;

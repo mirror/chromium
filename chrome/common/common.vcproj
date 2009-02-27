@@ -506,6 +506,14 @@
 			>
 		</File>
 		<File
+			RelativePath=".\l10n_util_win.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\l10n_util_win.h"
+			>
+		</File>
+		<File
 			RelativePath=".\libxml_utils.cc"
 			>
 		</File>
@@ -763,6 +771,14 @@
 		</File>
 		<File
 			RelativePath=".\unzip.h"
+			>
+		</File>
+		<File
+			RelativePath=".\url_constants.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\url_constants.h"
 			>
 		</File>
 		<File

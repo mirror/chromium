@@ -1490,6 +1490,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\dom_ui\dev_tools_ui.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\dom_ui\dev_tools_ui.h"
+				>
+			</File>
+			<File
 				RelativePath=".\dom_ui\dom_ui.cc"
 				>
 			</File>
@@ -1798,6 +1806,18 @@
 				>
 			</File>
 			<File
+				RelativePath=".\download\download_request_dialog_delegate.h"
+				>
+			</File>
+			<File
+				RelativePath=".\download\download_request_dialog_delegate_win.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\download\download_request_dialog_delegate_win.h"
+				>
+			</File>
+			<File
 				RelativePath=".\download\download_request_manager.cc"
 				>
 			</File>
@@ -1847,14 +1867,6 @@
 			</File>
 			<File
 				RelativePath=".\download\save_package.h"
-				>
-			</File>
-			<File
-				RelativePath=".\download\save_page_model.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\download\save_page_model.h"
 				>
 			</File>
 			<File
@@ -2215,14 +2227,6 @@
 			</File>
 			<File
 				RelativePath=".\tab_contents\tab_util.h"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_contents\view_source_contents.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_contents\view_source_contents.h"
 				>
 			</File>
 			<File

@@ -10,6 +10,7 @@
 
 class DictionaryValue;
 class DOMMessageHandler;
+class RenderViewHost;
 class Value;
 
 // A DOMUI sets up the datasources and message handlers for a given HTML-based
@@ -20,6 +21,8 @@ class DOMUI {
 
   virtual ~DOMUI();
   virtual void Init() = 0;
+
+  virtual void RenderViewCreated(RenderViewHost* render_view_host) {}
 
   // Called from DOMUIContents.
   void ProcessDOMUIMessage(const std::string& message,
@@ -42,6 +45,20 @@ class DOMUI {
                               const Value& arg1,
                               const Value& arg2);
 
+  // Overriddable control over the contents.
+  // Favicon should be displayed normally.
+  virtual bool ShouldDisplayFavIcon() { return true; }
+  // No special bookmark bar behavior
+  virtual bool IsBookmarkBarAlwaysVisible() { return false; }
+  // When NTP gets the initial focus, focus the URL bar.
+  virtual void SetInitialFocus() {};
+  // Whether we want to display the page's URL.
+  virtual bool ShouldDisplayURL() { return true; }
+  // Hide the referrer.
+  virtual void RequestOpenURL(const GURL& url, const GURL&,
+      WindowOpenDisposition disposition);
+
+  DOMUIContents* get_contents() { return contents_; }
   Profile* get_profile() { return contents_->profile(); }
 
  protected:
@@ -69,7 +86,7 @@ class DOMUI {
 class DOMMessageHandler {
  public:
   explicit DOMMessageHandler(DOMUI* dom_ui);
-  virtual ~DOMMessageHandler();
+  virtual ~DOMMessageHandler() {};
 
  protected:
   // Adds "url" and "title" keys on incoming dictionary, setting title
@@ -89,6 +106,5 @@ class DOMMessageHandler {
  private:
   DISALLOW_COPY_AND_ASSIGN(DOMMessageHandler);
 };
-
 
 #endif  // CHROME_BROWSER_DOM_UI_H__

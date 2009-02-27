@@ -6,14 +6,13 @@
 
 #include <algorithm>
 
+#include "base/basictypes.h"
 #include "base/string_util.h"
 #include "chrome/browser/autocomplete/history_url_provider.h"
 #include "chrome/browser/autocomplete/history_contents_provider.h"
 #include "chrome/browser/autocomplete/keyword_provider.h"
 #include "chrome/browser/autocomplete/search_provider.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
-#include "chrome/browser/external_protocol_handler.h"
-#include "chrome/browser/history_tab_ui.h"
 #include "chrome/browser/net/url_fixer_upper.h"
 #include "chrome/browser/profile.h"
 #include "chrome/common/gfx/text_elider.h"
@@ -21,11 +20,21 @@
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
+#include "chrome/common/url_constants.h"
 #include "googleurl/src/gurl.h"
 #include "googleurl/src/url_canon_ip.h"
 #include "grit/generated_resources.h"
 #include "net/base/net_util.h"
 #include "net/base/registry_controlled_domain.h"
+#include "net/url_request/url_request.h"
+
+// TODO(port): Port this file.
+#if defined(OS_WIN)
+#include "chrome/browser/external_protocol_handler.h"
+#include "chrome/browser/history_tab_ui.h"
+#else
+#include "chrome/common/temp_scaffolding_stubs.h"
+#endif
 
 using base::TimeDelta;
 
@@ -110,8 +119,9 @@ AutocompleteInput::Type AutocompleteInput::Parse(const std::wstring& text,
     // reach the renderer or else the renderer handles internally without
     // reaching the URLRequest logic.  We thus won't catch these above, but we
     // should still claim to handle them.
-    if ((parsed_scheme == L"view-source") || (parsed_scheme == L"javascript") ||
-        (parsed_scheme == L"data"))
+    if (LowerCaseEqualsASCII(parsed_scheme, chrome::kViewSourceScheme) ||
+        LowerCaseEqualsASCII(parsed_scheme, chrome::kJavaScriptScheme) ||
+        LowerCaseEqualsASCII(parsed_scheme, chrome::kDataScheme))
       return URL;
 
     // Finally, check and see if the user has explicitly opened this scheme as
@@ -176,7 +186,8 @@ AutocompleteInput::Type AutocompleteInput::Parse(const std::wstring& text,
     // more likely a search (for the answer to a math problem) than a URL.
     url_parse::Component components[4];
     const bool found_ipv4 =
-        url_canon::FindIPv4Components(text.c_str(), parts->host, components);
+        url_canon::FindIPv4Components(WideToUTF8(text).c_str(),
+                                      parts->host, components);
     DCHECK(found_ipv4);
     for (size_t i = 0; i < arraysize(components); ++i) {
       if (!components[i].is_nonempty())
@@ -418,9 +429,15 @@ void AutocompleteProvider::SetProfile(Profile* profile) {
 std::wstring AutocompleteProvider::StringForURLDisplay(
     const GURL& url,
     bool check_accept_lang) {
-  return gfx::ElideUrl(url, ChromeFont(), 0, check_accept_lang && profile_ ?
+#if !defined(OS_MACOSX)
+  return gfx::GetCleanStringFromUrl(url, check_accept_lang && profile_ ?
       profile_->GetPrefs()->GetString(prefs::kAcceptLanguages) :
-      std::wstring());
+      std::wstring(), NULL, NULL);
+#else
+  // TODO(port): need gfx::GetCleanStringFromUrl
+  NOTIMPLEMENTED();
+  return UTF8ToWide(url.spec());
+#endif
 }
 
 void AutocompleteProvider::UpdateStarredStateOfMatches() {

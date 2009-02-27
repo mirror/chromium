@@ -3,6 +3,7 @@
 # found in the LICENSE file.
 
 Import('env')
+Import('bdict_reader_o', 'bdict_writer_o')
 
 env = env.Clone()
 
@@ -52,6 +53,11 @@ env.Prepend(
         'JavaScriptCore_pcre',
         'port',
         'WebCore',
+        'WebKit',
+
+        'X11',
+        'Xrender',
+        'Xext',
     ],
 )
 
@@ -154,6 +160,7 @@ input_files = ChromeFileList([
     '$CHROME_DIR/browser/history/query_parser_unittest.cc',
     '$CHROME_DIR/browser/renderer_host/renderer_security_policy_unittest.cc',
     '$CHROME_DIR/browser/renderer_host/resource_dispatcher_host_unittest.cc',
+    '$CHROME_DIR/browser/renderer_host/test_render_view_host.cc',
     '$CHROME_DIR/browser/rlz/rlz_unittest.cc',
     '$CHROME_DIR/browser/safe_browsing/safe_browsing_database_unittest.cc',
     '$CHROME_DIR/browser/safe_browsing/safe_browsing_util_unittest.cc',
@@ -238,9 +245,9 @@ input_files = ChromeFileList([
     '$CHROME_DIR/tools/convert_dict/aff_reader$OBJSUFFIX',
     '$CHROME_DIR/tools/convert_dict/aff_reader.h',
     '$CHROME_DIR/third_party/hunspell/google/bdict.h',
-    '$CHROME_DIR/third_party/hunspell/google/bdict_reader$OBJSUFFIX',
+    bdict_reader_o,
     '$CHROME_DIR/third_party/hunspell/google/bdict_reader.h',
-    '$CHROME_DIR/third_party/hunspell/google/bdict_writer$OBJSUFFIX',
+    bdict_writer_o,
     '$CHROME_DIR/third_party/hunspell/google/bdict_writer.h',
     '$CHROME_DIR/tools/convert_dict/dic_reader$OBJSUFFIX',
     '$CHROME_DIR/tools/convert_dict/dic_reader.h',

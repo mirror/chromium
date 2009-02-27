@@ -10,7 +10,6 @@ SCons build system.
 import os
 import getopt
 import types
-import shutil
 import sys
 
 from grit import grd_reader
@@ -158,14 +157,6 @@ are exported to translation interchange files (e.g. XMB files), etc.
     for output in self.res.GetOutputFiles():
       self.VerboseOut('Creating %s...' % output.GetFilename())
 
-      # Don't build data package files on mac/windows because it's not used and
-      # there are project dependency issues.  We still need to create the file
-      # to satisfy build dependencies.
-      if output.GetType() == 'data_package' and sys.platform != 'linux2':
-        f = open(output.GetOutputFilename(), 'wb')
-        f.close()
-        continue
-
       # Microsoft's RC compiler can only deal with single-byte or double-byte
       # files (no UTF-8), so we make all RC files UTF-16 to support all
       # character sets.
@@ -173,6 +164,11 @@ are exported to translation interchange files (e.g. XMB files), etc.
         encoding = 'cp1252'
       else:
         encoding = 'utf_16'
+
+      # Make the output directory if it doesn't exist.
+      outdir = os.path.split(output.GetOutputFilename())[0]
+      if not os.path.exists(outdir):
+        os.makedirs(outdir)
       outfile = self.fo_create(output.GetOutputFilename(), 'wb')
 
       if output.GetType() != 'data_package':
@@ -188,22 +184,8 @@ are exported to translation interchange files (e.g. XMB files), etc.
       # Iterate in-order through entire resource tree, calling formatters on
       # the entry into a node and on exit out of it.
       self.ProcessNode(self.res, output, outfile)
-      
       outfile.close()
 
-      # Generate the header and also put a copy in a grit subdir.  We do this
-      # so our include paths can have 'grit' in them.
-      # TODO(tc): Once we transition all the #include lines to have 'grit' in
-      # the path, we can only generate one header.
-      if output.GetType() == 'rc_header':
-        dir_name, header_name = os.path.split(output.GetOutputFilename())
-        dir_name = os.path.join(dir_name, 'grit')
-        try:
-          os.makedirs(dir_name)
-        except OSError, e:
-          pass
-        shutil.copy2(output.GetOutputFilename(),
-                     os.path.join(dir_name, header_name))
       self.VerboseOut(' done.\n')
     
     # Print warnings if there are any duplicate shortcuts.

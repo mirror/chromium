@@ -240,23 +240,11 @@ IPC_BEGIN_MESSAGES(View)
   IPC_MESSAGE_ROUTED1(ViewMsg_DebugCommand,
                       std::wstring  /* cmd */)
 
-  // Message addressed to ToolsClient. It results from forwarding
-  // ViewHostMsg_ToolsClientMsg by the browser.
-  IPC_MESSAGE_ROUTED2(ViewMsg_ToolsClientMsg,
-                      int, /* tools msg type */
-                      std::wstring  /* body */)
-
-  // Message addressed to ToolsAgent. It results from forwarding
-  // ViewHostMsg_ToolsAgentMsg by the browser.
-  IPC_MESSAGE_ROUTED2(ViewMsg_ToolsAgentMsg,
-                      int, /* tools msg type */
-                      std::wstring  /* body */)
-
-  // RenderViewHostDelegate::RendererCreated method sends this message to a new
-  // renderer to notify it that it will host developer tools UI and should set
-  // up all neccessary bindings and create ToolsClient instance that will
-  // handle communication with inspected page ToolsAgent.
-  IPC_MESSAGE_ROUTED0(ViewMsg_SetUpToolsClient)
+  // RenderViewHostDelegate::RenderViewCreated method sends this message to a
+  // new renderer to notify it that it will host developer tools UI and should
+  // set up all neccessary bindings and create DevToolsClient instance that
+  // will handle communication with inspected page DevToolsAgent.
+  IPC_MESSAGE_ROUTED0(ViewMsg_SetupDevToolsClient)
 
   // Change the zoom level in the renderer.
   IPC_MESSAGE_ROUTED1(ViewMsg_Zoom,
@@ -460,6 +448,9 @@ IPC_BEGIN_MESSAGES(View)
   // resource types.
   IPC_MESSAGE_CONTROL0(ViewMsg_GetCacheResourceStats)
 
+  // Asks the renderer to send back Histograms.
+  IPC_MESSAGE_CONTROL0(ViewMsg_GetRendererHistograms)
+
   // Notifies the renderer about ui theme changes
   IPC_MESSAGE_ROUTED0(ViewMsg_ThemeChanged)
 
@@ -523,6 +514,9 @@ IPC_BEGIN_MESSAGES(View)
                       double /* left channel */,
                       double /* right channel */)
 
+  // Notification that a move or resize renderer's containing window has
+  // started.
+  IPC_MESSAGE_ROUTED0(ViewMsg_MoveOrResizeStarted)
 IPC_END_MESSAGES(View)
 
 
@@ -585,11 +579,11 @@ IPC_BEGIN_MESSAGES(ViewHost)
 
   // Indicates the renderer is ready in response to a ViewMsg_New or
   // a ViewMsg_CreatingNew_ACK.
-  IPC_MESSAGE_ROUTED0(ViewHostMsg_RendererReady)
+  IPC_MESSAGE_ROUTED0(ViewHostMsg_RenderViewReady)
 
   // Indicates the renderer process is gone.  This actually is sent by the
   // browser process to itself, but keeps the interface cleaner.
-  IPC_MESSAGE_ROUTED0(ViewHostMsg_RendererGone)
+  IPC_MESSAGE_ROUTED0(ViewHostMsg_RenderViewGone)
 
   // Sent by the renderer process to request that the browser close the view.
   // This corresponds to the window.close() API, and the browser may ignore
@@ -821,12 +815,7 @@ IPC_BEGIN_MESSAGES(ViewHost)
                       std::string  /* args (as a JSON string) */)
 
   // A message for an external host.
-  // |receiver| can be a receiving script and |message| is any
-  // arbitrary string that makes sense to the receiver. For
-  // example, a user of automation can use it to execute a script
-  // in the form of javascript:receiver("message");
-  IPC_MESSAGE_ROUTED2(ViewHostMsg_ForwardMessageToExternalHost,
-                      std::string  /* receiver */,
+  IPC_MESSAGE_ROUTED1(ViewHostMsg_ForwardMessageToExternalHost,
                       std::string  /* message */)
 
 #ifdef CHROME_PERSONALIZATION
@@ -1011,14 +1000,16 @@ IPC_BEGIN_MESSAGES(ViewHost)
   IPC_MESSAGE_ROUTED1(ViewHostMsg_DebuggerOutput,
                       std::wstring /* msg */)
 
-  // Message addressed to ToolsClient sent by ToolsAgent to browser so that the
-  // latter can forward it.
-  IPC_MESSAGE_ROUTED2(ViewHostMsg_ToolsClientMsg,
-                      int, /* tools msg type */
-                      std::wstring  /* body */)
+  // Wraps an IPC message that's destined to the DevToolsClient on
+  // DevToolsAgent->browser hop.
+  IPC_MESSAGE_ROUTED1(ViewHostMsg_ForwardToDevToolsClient,
+                      IPC::Message /* one of DevToolsClientMsg_XXX types */)
 
-  // Message addressed to ToolsAgent sent by ToolsClient to browser so that the
-  // latter can forward it.
+  // Wraps an IPC message that's destined to the DevToolsAgent on
+  // DevToolsClient->browser hop.
+  IPC_MESSAGE_ROUTED1(ViewHostMsg_ForwardToDevToolsAgent,
+                      IPC::Message /* one of DevToolsAgentMsg_XXX types */)
+
   IPC_MESSAGE_ROUTED2(ViewHostMsg_ToolsAgentMsg,
                       int, /* tools msg type */
                       std::wstring  /* body */)
@@ -1026,6 +1017,9 @@ IPC_BEGIN_MESSAGES(ViewHost)
   // Send back a string to be recorded by UserMetrics.
   IPC_MESSAGE_ROUTED1(ViewHostMsg_UserMetricsRecordAction,
                       std::wstring /* action */)
+
+  // Send back histograms as vector of pickled-histogram strings.
+  IPC_MESSAGE_CONTROL1(ViewHostMsg_RendererHistograms, std::vector<std::string>)
 
   // Request for a DNS prefetch of the names in the array.
   // NameList is typedef'ed std::vector<std::string>

@@ -39,6 +39,14 @@ def _SourceToFile(source):
 
 
 def _Builder(target, source, env):
+  # We fork GRIT into a separate process so we can use more processes between
+  # scons and GRIT. This already runs as separate threads, but because of the
+  # python GIL, all these threads have to share the same process.  By using
+  # fork, we can use multiple processes and processors.
+  pid = os.fork()
+  if pid != 0:
+    os.waitpid(pid, 0)
+    return
   from grit import grit_runner
   from grit.tool import build
   options = grit_runner.Options()
@@ -65,6 +73,9 @@ def _Builder(target, source, env):
   builder.scons_targets = [str(t) for t in target]
   builder.Run(options, [])
 
+  # Exit the child process.
+  os._exit(0)
+
 
 def _Emitter(target, source, env):
   '''A SCons emitter for .grd files, which modifies the list of targes to
@@ -84,9 +95,6 @@ def _Emitter(target, source, env):
 
   target = []
   lang_folders = {}
-  # TODO(tc): new_header_output is a hack while we migrate to
-  # grit_derived_sources/grit/ as the new output dir for headers.
-  new_header_output = None
   # Add all explicitly-specified output files
   for output in grd.GetOutputFiles():
     path = os.path.join(base_dir, output.GetFilename())
@@ -94,7 +102,6 @@ def _Emitter(target, source, env):
 
     if path.endswith('.h'):
       path, filename = os.path.split(path)
-      new_header_output = os.path.join(path, 'grit', filename)
     if _IsDebugEnabled():
       print "GRIT: Added target %s" % path
     if output.attrs['lang'] != '':
@@ -115,13 +122,6 @@ def _Emitter(target, source, env):
             if _IsDebugEnabled():
               print "GRIT: Added target %s" % path
 
-  if new_header_output:
-    target.append(new_header_output)
-
-  # GRIT is not thread safe so we should only build one grit target at a time. 
-  # We tell scons about this by making a fake side effect target.
-  env.SideEffect('grit_lock', target)
-
   # return target and source lists
   return (target, source)
 
@@ -138,17 +138,18 @@ def _Scanner(file_node, env, path):
   # line to get this to work with Repository() directories.
   # Get this functionality folded back into the upstream grit tool.
   #grd = grd_reader.Parse(str(file_node)), debug=_IsDebugEnabled())
-  grd = grd_reader.Parse(str(file_node.rfile()), debug=_IsDebugEnabled())
+  grd = grd_reader.Parse(os.path.abspath(_SourceToFile(file_node)),
+                         debug=_IsDebugEnabled())
   files = []
   for node in grd:
     if (node.name == 'structure' or node.name == 'skeleton' or
         (node.name == 'file' and node.parent and
          node.parent.name == 'translations')):
       files.append(os.path.abspath(node.GetFilePath()))
-    elif node.name == 'include' and node.attrs['filenameonly'] == 'false':
-      # TODO(tc): This doesn't work because the path is often relative to 
-      #files.append(node.FilenameToOpen())
-      pass
+    elif node.name == 'include':
+      # Only include files that we actually plan on using.
+      if node.SatisfiesOutputCondition():
+        files.append(node.FilenameToOpen())
 
   # Add in the grit source files.  If one of these change, we want to re-run
   # grit.

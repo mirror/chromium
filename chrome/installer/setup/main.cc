@@ -508,7 +508,7 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
 
   // If --register-chrome-browser option is specified, register all
   // Chrome protocol/file associations as well as register it as a valid
-  // browser for StarMenu->Internet shortcut. This option should only
+  // browser for Start Menu->Internet shortcut. This option should only
   // be used when setup.exe is launched with admin rights. We do not
   // make any user specific changes in this option.
   if (parsed_command_line.HasSwitch(
@@ -524,7 +524,7 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
   }
 
   if (system_install && !IsUserAnAdmin()) {
-    if (win_util::GetWinVersion() == win_util::WINVERSION_VISTA &&
+    if (win_util::GetWinVersion() >= win_util::WINVERSION_VISTA &&
         !parsed_command_line.HasSwitch(installer_util::switches::kRunAsAdmin)) {
       std::wstring exe = parsed_command_line.program();
       std::wstring params(command_line);

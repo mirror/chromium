@@ -32,6 +32,9 @@
 #include "webkit/tools/test_shell/test_shell_platform_delegate.h"
 #include "webkit/tools/test_shell/test_shell_request_context.h"
 #include "webkit/tools/test_shell/test_shell_switches.h"
+#include "webkit/tools/test_shell/test_shell_webkit_init.h"
+
+#include "WebKit.h"
 
 #include <iostream>
 using namespace std;
@@ -85,14 +88,13 @@ int main(int argc, char* argv[]) {
                          layout_test_mode,
                          enable_gp_fault_error_box);
 
-  // Set this early before we start using WebCore.
-  webkit_glue::SetLayoutTestMode(layout_test_mode);
+  // Initialize WebKit for this scope.
+  TestShellWebKitInit test_shell_webkit_init(layout_test_mode);
 
   // Suppress abort message in v8 library in debugging mode.
   // V8 calls abort() when it hits assertion errors.
-  if (suppress_error_dialogs) {
+  if (suppress_error_dialogs)
     platform.SuppressErrorReporting();
-  }
 
   if (parsed_command_line.HasSwitch(test_shell::kEnableTracing))
     base::TraceLog::StartTracing();

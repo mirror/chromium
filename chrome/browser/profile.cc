@@ -24,6 +24,7 @@
 #include "chrome/browser/ssl/ssl_host_state.h"
 #include "chrome/browser/sessions/session_service.h"
 #include "chrome/browser/sessions/tab_restore_service.h"
+#include "chrome/browser/spellchecker.h"
 #include "chrome/browser/visitedlink_master.h"
 #include "chrome/browser/webdata/web_data_service.h"
 #include "chrome/common/chrome_constants.h"
@@ -43,7 +44,6 @@
 // TODO(port): Get rid of this section and finish porting.
 #if defined(OS_WIN)
 #include "chrome/browser/search_engines/template_url_fetcher.h"
-#include "chrome/browser/spellchecker.h"
 #endif
 
 using base::Time;
@@ -758,14 +758,14 @@ void ProfileImpl::InitializeSpellChecker(bool need_to_broadcast) {
   bool enable_spellcheck = prefs->GetBoolean(prefs::kEnableSpellCheck);
 
   if (enable_spellcheck) {
-    std::wstring dict_dir;
+    FilePath dict_dir;
     PathService::Get(chrome::DIR_APP_DICTIONARIES, &dict_dir);
     // Note that, as the object pointed to by previously by spellchecker_
     // is being deleted in the io thread, the spellchecker_ can be made to point
     // to a new object (RE-initialized) in parallel in this UI thread.
     spellchecker_ = new SpellChecker(dict_dir,
         prefs->GetString(prefs::kSpellCheckDictionary), GetRequestContext(),
-        std::wstring());
+        FilePath());
     spellchecker_->AddRef();  // Manual refcounting.
   } else {
     spellchecker_ = NULL;

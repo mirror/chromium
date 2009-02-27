@@ -5,7 +5,12 @@
 #ifndef CHROME_TEST_AUTOMATION_TAB_PROXY_H_
 #define CHROME_TEST_AUTOMATION_TAB_PROXY_H_
 
+#include "build/build_config.h"
+
+#if defined(OS_WIN)
 #include <wtypes.h>
+#endif
+
 #include <string>
 #include <vector>
 
@@ -127,9 +132,13 @@ class TabProxy : public AutomationResourceProxy {
   // the last tab.
   bool Close(bool wait_until_closed);
 
+#if defined(OS_WIN)
+  // TODO(port): Use portable replacement for HWND.
+
   // Gets the HWND that corresponds to the content area of this tab.
   // Returns true if the call was successful.
   bool GetHWND(HWND* hwnd) const;
+#endif  // defined(OS_WIN)
 
   // Gets the process ID that corresponds to the content area of this tab.
   // Returns true if the call was successful.  If the specified tab has no
@@ -158,18 +167,6 @@ class TabProxy : public AutomationResourceProxy {
   // visible. The return value indicates success. On failure, |*is_visible| is
   // unchanged.
   bool IsShelfVisible(bool* is_visible);
-
-  // Opens the FindInPage box. Note: If you just want to search within a tab
-  // you don't need to call this function, just use FindInPage(...) directly.
-  bool OpenFindInPage();
-
-  // Returns whether the Find window is fully visible If animating, |is_visible|
-  // will be false. Returns false on failure.
-  bool IsFindWindowFullyVisible(bool* is_visible);
-
-  // Get the x, y coordinates for the Find window. If animating, |x| and |y|
-  // will be -1, -1. Returns false on failure.
-  bool GetFindWindowLocation(int* x, int* y);
 
   // Starts a search within the current tab. The parameter |search_string|
   // specifies what string to search for, |forward| specifies whether to search
@@ -209,6 +206,9 @@ class TabProxy : public AutomationResourceProxy {
   // page has been hidden. Return false if a failure happens.
   bool HideInterstitialPage();
 
+#if defined(OS_WIN)
+  // TODO(port): Use something portable.
+
   // This sets the keyboard accelerators to be used by an externally
   // hosted tab. This call is not valid on a regular tab hosted within
   // Chrome.
@@ -218,6 +218,7 @@ class TabProxy : public AutomationResourceProxy {
   // accelerator keys that it did not process. This gives the tab a chance
   // to handle the keys
   bool ProcessUnhandledAccelerator(const MSG& msg);
+#endif  // defined(OS_WIN)
 
   // Ask the tab to set focus to either the first or last element on the page.
   bool SetInitialFocus(bool reverse);

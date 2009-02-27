@@ -156,9 +156,11 @@ TrimPositions TrimWhitespace(const std::string& input,
 std::wstring CollapseWhitespace(const std::wstring& text,
                                 bool trim_sequences_with_line_breaks);
 
-// These convert between ASCII (7-bit) and UTF16 strings.
+// These convert between ASCII (7-bit) and Wide/UTF16 strings.
 std::string WideToASCII(const std::wstring& wide);
 std::wstring ASCIIToWide(const std::string& ascii);
+std::string UTF16ToASCII(const string16& utf16);
+string16 ASCIIToUTF16(const std::string& ascii);
 
 // These convert between UTF-8, -16, and -32 strings. They are potentially slow,
 // so avoid unnecessary conversions. The low-level versions return a boolean
@@ -180,6 +182,19 @@ bool UTF8ToUTF16(const char* src, size_t src_len, string16* output);
 string16 UTF8ToUTF16(const std::string& utf8);
 bool UTF16ToUTF8(const char16* src, size_t src_len, std::string* output);
 std::string UTF16ToUTF8(const string16& utf16);
+
+// We are trying to get rid of wstring as much as possible, but it's too big
+// a mess to do it all at once.  These conversions should be used when we
+// really should just be passing a string16 around, but we haven't finished
+// porting whatever module uses wstring and the conversion is being used as a
+// stopcock.  This makes it easy to grep for the ones that should be removed.
+#if defined(OS_WIN)
+# define WideToUTF16Hack
+# define UTF16ToWideHack
+#else
+# define WideToUTF16Hack WideToUTF16
+# define UTF16ToWideHack UTF16ToWide
+#endif
 
 // Defines the error handling modes of WideToCodepage and CodepageToWide.
 class OnStringUtilConversionError {
@@ -222,6 +237,7 @@ bool IsStringUTF8(const std::string& str);
 bool IsStringWideUTF8(const std::wstring& str);
 bool IsStringASCII(const std::wstring& str);
 bool IsStringASCII(const std::string& str);
+bool IsStringASCII(const string16& str);
 
 // ASCII-specific tolower.  The standard library's tolower is locale sensitive,
 // so we don't want to use it here.

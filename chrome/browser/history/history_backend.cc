@@ -22,6 +22,7 @@
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/notification_type.h"
 #include "chrome/common/sqlite_utils.h"
+#include "chrome/common/url_constants.h"
 #include "googleurl/src/gurl.h"
 #include "net/base/registry_controlled_domain.h"
 
@@ -368,7 +369,7 @@ void HistoryBackend::AddPage(scoped_refptr<HistoryAddPageArgs> request) {
 
     PageTransition::Type redirect_info = PageTransition::CHAIN_START;
 
-    if (request->redirects[0].SchemeIs("about")) {
+    if (request->redirects[0].SchemeIs(chrome::kAboutScheme)) {
       // When the redirect source + referrer is "about" we skip it. This
       // happens when a page opens a new frame/window to about:blank and then
       // script sets the URL to somewhere else (used to hide the referrer). It
@@ -567,7 +568,7 @@ void HistoryBackend::InitImpl() {
   // Start expiring old stuff.
   expirer_.StartArchivingOldStuff(TimeDelta::FromDays(kArchiveDaysThreshold));
 
-  HISTOGRAM_TIMES(L"History.InitTime",
+  HISTOGRAM_TIMES("History.InitTime",
                   TimeTicks::Now() - beginning_time);
 }
 
@@ -997,7 +998,7 @@ void HistoryBackend::QueryHistory(scoped_refptr<QueryHistoryRequest> request,
   request->ForwardResult(QueryHistoryRequest::TupleType(request->handle(),
                                                         &request->value));
 
-  HISTOGRAM_TIMES(L"History.QueryHistory",
+  HISTOGRAM_TIMES("History.QueryHistory",
                   TimeTicks::Now() - beginning_time);
 }
 
@@ -1231,7 +1232,7 @@ void HistoryBackend::GetPageThumbnailDirectly(
     if (!success)
       *data = NULL;  // This will tell the callback there was an error.
 
-    HISTOGRAM_TIMES(L"History.GetPageThumbnail",
+    HISTOGRAM_TIMES("History.GetPageThumbnail",
                     TimeTicks::Now() - beginning_time);
   }
 }
@@ -1397,7 +1398,7 @@ void HistoryBackend::GetFavIconForURL(
           TimeDelta::FromDays(kFavIconRefetchDays);
     }
 
-    HISTOGRAM_TIMES(L"History.GetFavIconForURL",
+    HISTOGRAM_TIMES("History.GetFavIconForURL",
                     TimeTicks::Now() - beginning_time);
   }
 
@@ -1831,4 +1832,3 @@ BookmarkService* HistoryBackend::GetBookmarkService() {
 }
 
 }  // namespace history
-

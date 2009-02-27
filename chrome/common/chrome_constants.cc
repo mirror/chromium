@@ -9,6 +9,7 @@
 #define FPL FILE_PATH_LITERAL
 
 namespace chrome {
+
 // The following should not be used for UI strings; they are meant
 // for system strings only. UI changes should be made in the GRD.
 const wchar_t kBrowserProcessExecutableName[] = L"chrome.exe";
@@ -44,7 +45,8 @@ const FilePath::CharType kWebDataFilename[] = FPL("Web Data");
 const FilePath::CharType kBookmarksFileName[] = FPL("Bookmarks");
 const FilePath::CharType kHistoryBookmarksFileName[] =
     FPL("Bookmarks From History");
-const wchar_t kCustomDictionaryFileName[] = L"Custom Dictionary.txt";
+const FilePath::CharType kCustomDictionaryFileName[] =
+    FPL("Custom Dictionary.txt");
 
 // This number used to be limited to 32 in the past (see b/535234).
 const unsigned int kMaxRendererProcessCount = 42;
@@ -60,5 +62,6 @@ const bool kRecordModeEnabled = true;
 #else
 const bool kRecordModeEnabled = false;
 #endif
-}
+
+}  // namespace chrome
 

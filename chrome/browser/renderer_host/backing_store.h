@@ -14,8 +14,10 @@
 
 #if defined(OS_WIN)
 #include <windows.h>
-#elif defined(OS_POSIX)
+#elif defined(OS_MACOSX)
 #include "skia/ext/platform_canvas.h"
+#elif defined(OS_LINUX)
+#include "chrome/common/x11_util.h"
 #endif
 
 class RenderWidgetHost;
@@ -26,19 +28,42 @@ class TransportDIB;
 // Represents a backing store for the pixels in a RenderWidgetHost.
 class BackingStore {
  public:
+#if defined(OS_WIN) || defined(OS_MACOSX)
   explicit BackingStore(const gfx::Size& size);
+#elif defined(OS_LINUX)
+  // Create a backing store on the X server.
+  //   size: the size of the server-side pixmap
+  //   x_connection: the display to target
+  //   depth: the depth of the X window which will be drawn into
+  //   visual: An Xlib Visual describing the format of the target window
+  //   root_window: The X id of the root window
+  //   use_render: if true, the X server supports Xrender
+  //   use_shared_memory: if true, the X server is local
+  BackingStore(const gfx::Size& size, Display* x_connection, int depth,
+               void* visual, XID root_window, bool use_render,
+               bool use_shared_memory);
+  // This is for unittesting only. An object constructed using this constructor
+  // will silently ignore all paints
+  explicit BackingStore(const gfx::Size& size);
+#endif
   ~BackingStore();
 
   const gfx::Size& size() { return size_; }
 
 #if defined(OS_WIN)
   HDC hdc() { return hdc_; }
-#elif defined(OS_POSIX)
+#elif defined(OS_MACOSX)
   skia::PlatformCanvas* canvas() { return &canvas_; }
+#elif defined(OS_LINUX)
+  // Copy from the server-side backing store to the target window
+  //   display: the display of the backing store and target window
+  //   damage: the area to copy
+  //   target: the X id of the target window
+  void ShowRect(const gfx::Rect& damage, XID target);
 #endif
 
   // Paints the bitmap from the renderer onto the backing store.
-  bool PaintRect(base::ProcessHandle process,
+  void PaintRect(base::ProcessHandle process,
                  TransportDIB* bitmap,
                  const gfx::Rect& bitmap_rect);
 
@@ -72,9 +97,34 @@ class BackingStore {
 
   // Handle to the original bitmap in the dc.
   HANDLE original_bitmap_;
-#elif defined(OS_POSIX)
+#elif defined(OS_MACOSX)
   skia::PlatformCanvas canvas_;
-#endif  // defined(OS_WIN)
+#elif defined(OS_LINUX)
+  // Paints the bitmap from the renderer onto the backing store without
+  // using Xrender to composite the pixmaps.
+  void PaintRectWithoutXrender(TransportDIB* bitmap,
+                               const gfx::Rect& bitmap_rect);
+
+  // This is the connection to the X server where this backing store will be
+  // displayed.
+  Display *const display_;
+  // If this is true, then |connection_| is good for MIT-SHM (X shared memory).
+  const bool use_shared_memory_;
+  // If this is true, then we can use Xrender to composite our pixmaps.
+  const bool use_render_;
+  // If |use_render_| is false, this is the number of bits-per-pixel for |depth|
+  int pixmap_bpp_;
+  // This is the depth of the target window.
+  const int visual_depth_;
+  // The parent window (probably a GtkDrawingArea) for this backing store.
+  const XID root_window_;
+  // This is a handle to the server side pixmap which is our backing store.
+  XID pixmap_;
+  // This is the RENDER picture pointing at |pixmap_|.
+  XID picture_;
+  // This is a default graphic context, used in XCopyArea
+  void* pixmap_gc_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(BackingStore);
 };
@@ -99,7 +149,7 @@ class BackingStoreManager {
   // bitmap from the renderer has been copied into the backing store dc, or the
   // bitmap in the backing store dc references the renderer bitmap.
   //
-  // backing_store_rect
+  // backing_store_size
   //   The desired backing store dimensions.
   // process_handle
   //   The renderer process handle.
@@ -111,7 +161,7 @@ class BackingStoreManager {
   //   Set if we need to send out a request to paint the view
   //   to the renderer.
   static BackingStore* PrepareBackingStore(RenderWidgetHost* host,
-                                           const gfx::Rect& backing_store_rect,
+                                           const gfx::Size& backing_store_size,
                                            base::ProcessHandle process_handle,
                                            TransportDIB* bitmap,
                                            const gfx::Rect& bitmap_rect,

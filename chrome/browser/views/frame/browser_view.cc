@@ -21,7 +21,9 @@
 #include "chrome/browser/views/bug_report_view.h"
 #include "chrome/browser/views/clear_browsing_data.h"
 #include "chrome/browser/views/download_shelf_view.h"
+#include "chrome/browser/views/find_bar_win.h"
 #include "chrome/browser/views/frame/browser_frame.h"
+#include "chrome/browser/views/fullscreen_exit_bubble.h"
 #include "chrome/browser/views/html_dialog_view.h"
 #include "chrome/browser/views/importer_view.h"
 #include "chrome/browser/views/infobars/infobar_container.h"
@@ -49,6 +51,7 @@
 #include "chrome/views/hwnd_notification_source.h"
 #include "chrome/views/native_scroll_bar.h"
 #include "chrome/views/non_client_view.h"
+#include "chrome/views/root_view.h"
 #include "chrome/views/view.h"
 #include "chrome/views/window.h"
 #include "grit/chromium_strings.h"
@@ -85,6 +88,8 @@ static const int kDefaultHungPluginDetectFrequency = 2000;
 static const int kDefaultPluginMessageResponseTimeout = 30000;
 // The number of milliseconds between loading animation frames.
 static const int kLoadingAnimationFrameTimeMs = 30;
+// The amount of space we expect the window border to take up.
+static const int kWindowBorderWidth = 5;
 
 // If not -1, windows are shown with this state.
 static int explicit_show_state = -1;
@@ -122,9 +127,15 @@ static const struct {
 
 class ResizeCorner : public views::View {
  public:
-  ResizeCorner() {}
+  explicit ResizeCorner(const BrowserView* parent)
+      : parent_(parent) {
+  }
+
   virtual void Paint(ChromeCanvas* canvas) {
-    SkBitmap * bitmap = ResourceBundle::GetSharedInstance().GetBitmapNamed(
+    if (parent_ && !parent_->CanCurrentlyResize())
+      return;
+
+    SkBitmap* bitmap = ResourceBundle::GetSharedInstance().GetBitmapNamed(
         IDR_TEXTAREA_RESIZER);
     bitmap->buildMipMap(false);
     bool rtl_dir = (l10n_util::GetTextDirection() == l10n_util::RIGHT_TO_LEFT);
@@ -134,18 +145,22 @@ class ResizeCorner : public views::View {
       canvas->save();
     }
     canvas->DrawBitmapInt(*bitmap, width() - bitmap->width(),
-        height() - bitmap->height());
+                          height() - bitmap->height());
     if (rtl_dir)
       canvas->restore();
   }
 
   static gfx::Size GetSize() {
-    return gfx::Size(views::NativeScrollBar::GetVerticalScrollBarWidth(),
-        views::NativeScrollBar::GetHorizontalScrollBarHeight());
+    // This is disabled until we find what makes us slower when we let
+    // WebKit know that we have a resizer rect...
+    // return gfx::Size(views::NativeScrollBar::GetVerticalScrollBarWidth(),
+    //     views::NativeScrollBar::GetHorizontalScrollBarHeight());
+    return gfx::Size();
   }
 
   virtual gfx::Size GetPreferredSize() {
-    return GetSize();
+    return (parent_ && !parent_->CanCurrentlyResize()) ?
+        gfx::Size() : GetSize();
   }
 
   virtual void Layout() {
@@ -155,11 +170,12 @@ class ResizeCorner : public views::View {
       // No need to handle Right to left text direction here,
       // our parent must take care of it for us...
       SetBounds(parent_view->width() - ps.width(),
-          parent_view->height() - ps.height(), ps.width(), ps.height());
+                parent_view->height() - ps.height(), ps.width(), ps.height());
     }
   }
 
  private:
+  const BrowserView* parent_;
   DISALLOW_COPY_AND_ASSIGN(ResizeCorner);
 };
 
@@ -179,6 +195,8 @@ BrowserView::BrowserView(Browser* browser)
       active_bookmark_bar_(NULL),
       active_download_shelf_(NULL),
       toolbar_(NULL),
+      infobar_container_(NULL),
+      find_bar_y_(0),
       contents_container_(NULL),
       initialized_(false),
       fullscreen_(false),
@@ -220,9 +238,7 @@ int BrowserView::GetShowState() const {
   si.cb = sizeof(si);
   si.dwFlags = STARTF_USESHOWWINDOW;
   GetStartupInfo(&si);
-  // When launched from bash, for some reason si.wShowWindow is set to SW_HIDE,
-  // so we need to correct that condition.
-  return si.wShowWindow == SW_HIDE ? SW_SHOWNORMAL : si.wShowWindow;
+  return si.wShowWindow;
 }
 
 void BrowserView::WindowMoved() {
@@ -240,6 +256,16 @@ void BrowserView::WindowMoved() {
     toolbar_->GetLocationBarView()->location_entry()->ClosePopup();
 }
 
+void BrowserView::WindowMoveOrResizeStarted() {
+  TabContents* tab_contents = GetSelectedTabContents();
+  if (tab_contents && tab_contents->AsWebContents())
+    tab_contents->AsWebContents()->WindowMoveOrResizeStarted();
+}
+
+bool BrowserView::CanCurrentlyResize() const {
+  return !IsMaximized() && !IsFullscreen();
+}
+
 gfx::Rect BrowserView::GetToolbarBounds() const {
   return toolbar_->bounds();
 }
@@ -252,8 +278,49 @@ gfx::Rect BrowserView::GetClientAreaBounds() const {
   return container_bounds;
 }
 
+bool BrowserView::ShouldFindBarBlendWithBookmarksBar() const {
+  if (bookmark_bar_view_.get())
+    return bookmark_bar_view_->IsAlwaysShown();
+  return false;
+}
+
+gfx::Rect BrowserView::GetFindBarBoundingBox() const {
+  // This function returns the area the Find Bar can be laid out within. This
+  // basically implies the "user-perceived content area" of the browser window
+  // excluding the vertical scrollbar. This is not quite so straightforward as
+  // positioning based on the TabContentsContainerView since the BookmarkBarView
+  // may be visible but not persistent (in the New Tab case) and we position
+  // the Find Bar over the top of it in that case since the BookmarkBarView is
+  // not _visually_ connected to the Toolbar.
+
+  // First determine the bounding box of the content area in Widget coordinates.
+  gfx::Rect bounding_box(contents_container_->bounds());
+
+  gfx::Point topleft;
+  views::View::ConvertPointToWidget(contents_container_, &topleft);
+  bounding_box.set_origin(topleft);
+
+  // Adjust the position and size of the bounding box by the find bar offset
+  // calculated during the last Layout.
+  int height_delta = find_bar_y_ - bounding_box.y();
+  bounding_box.set_y(find_bar_y_);
+  bounding_box.set_height(std::max(0, bounding_box.height() + height_delta));
+
+  // Finally decrease the width of the bounding box by the width of the vertical
+  // scroll bar.
+  int scrollbar_width = views::NativeScrollBar::GetVerticalScrollBarWidth();
+  bounding_box.set_width(std::max(0, bounding_box.width() - scrollbar_width));
+  if (UILayoutIsRightToLeft())
+    bounding_box.set_x(bounding_box.x() + scrollbar_width);
+
+  return bounding_box;
+}
+
 int BrowserView::GetTabStripHeight() const {
-  return tabstrip_->GetPreferredHeight();
+  // We want to return tabstrip_->height(), but we might be called in the midst
+  // of layout, when that hasn't yet been updated to reflect the current state.
+  // So return what the tabstrip height _ought_ to be right now.
+  return IsTabStripVisible() ? tabstrip_->GetPreferredSize().height() : 0;
 }
 
 bool BrowserView::IsToolbarVisible() const {
@@ -265,16 +332,12 @@ bool BrowserView::IsTabStripVisible() const {
   return SupportsWindowFeature(FEATURE_TABSTRIP);
 }
 
-bool BrowserView::IsToolbarDisplayModeNormal() const {
-  return toolbar_->IsDisplayModeNormal();
-}
-
 bool BrowserView::IsOffTheRecord() const {
   return browser_->profile()->IsOffTheRecord();
 }
 
 bool BrowserView::ShouldShowOffTheRecordAvatar() const {
-  return IsOffTheRecord() && browser_->type() == Browser::TYPE_NORMAL;
+  return IsOffTheRecord() && IsBrowserTypeNormal();
 }
 
 bool BrowserView::AcceleratorPressed(const views::Accelerator& accelerator) {
@@ -365,22 +428,6 @@ void BrowserView::PrepareToRunSystemMenu(HMENU menu) {
   }
 }
 
-bool BrowserView::SupportsWindowFeature(WindowFeature feature) const {
-  const Browser::Type type = browser_->type();
-  unsigned int features = FEATURE_INFOBAR | FEATURE_DOWNLOADSHELF;
-  if (type == Browser::TYPE_NORMAL)
-     features |= FEATURE_BOOKMARKBAR;
-  if (!fullscreen_) {
-    if (type == Browser::TYPE_NORMAL)
-      features |= FEATURE_TABSTRIP | FEATURE_TOOLBAR;
-    else
-      features |= FEATURE_TITLEBAR;
-    if (type != Browser::TYPE_APP)
-      features |= FEATURE_LOCATIONBAR;
-  }
-  return !!(features & feature);
-}
-
 // static
 void BrowserView::RegisterBrowserViewPrefs(PrefService* prefs) {
   prefs->RegisterIntegerPref(prefs::kPluginMessageResponseTimeout,
@@ -419,6 +466,8 @@ void BrowserView::Init() {
 
   infobar_container_ = new InfoBarContainer(this);
   AddChildView(infobar_container_);
+
+  find_bar_.reset(new FindBarWin(this));
 
   contents_container_ = new TabContentsContainerView;
   set_contents_view(contents_container_);
@@ -538,11 +587,9 @@ void BrowserView::SetStarredState(bool is_starred) {
 }
 
 gfx::Rect BrowserView::GetNormalBounds() const {
-  // If we're in fullscreen mode, we've changed the rect associated with the
-  // current window style to the monitor rect.  If we weren't maximized, that
-  // means it's the rcNormalPosition which has been changed, so we need to
-  // return the saved rect here instead of the current one.
-  if (fullscreen_ && !IsMaximized())
+  // If we're in fullscreen mode, we've changed the normal bounds to the monitor
+  // rect, so return the saved bounds instead.
+  if (fullscreen_)
     return gfx::Rect(saved_window_info_.window_rect);
 
   WINDOWPLACEMENT wp;
@@ -577,10 +624,16 @@ void BrowserView::SetFullscreen(bool fullscreen) {
   if (bookmark_bar_view_.get())
     bookmark_bar_view_->OnFullscreenToggled(fullscreen_);
 
-  HWND hwnd = GetWidget()->GetHWND();
-  gfx::Rect new_rect;
+  // Size/position/style window appropriately.
+  views::Widget* widget = GetWidget();
+  HWND hwnd = widget->GetHWND();
   if (fullscreen_) {
-    // Save current window information.
+    // Save current window information.  We force the window into restored mode
+    // before going fullscreen because Windows doesn't seem to hide the
+    // taskbar if the window is in the maximized state.
+    saved_window_info_.maximized = IsMaximized();
+    if (saved_window_info_.maximized)
+      frame_->GetWindow()->ExecuteSystemMenuCommand(SC_RESTORE);
     saved_window_info_.style = GetWindowLong(hwnd, GWL_STYLE);
     saved_window_info_.ex_style = GetWindowLong(hwnd, GWL_EXSTYLE);
     GetWindowRect(hwnd, &saved_window_info_.window_rect);
@@ -595,16 +648,27 @@ void BrowserView::SetFullscreen(bool fullscreen) {
     monitor_info.cbSize = sizeof(monitor_info);
     GetMonitorInfo(MonitorFromWindow(hwnd, MONITOR_DEFAULTTOPRIMARY),
                    &monitor_info);
-    new_rect = monitor_info.rcMonitor;
+    gfx::Rect new_rect(monitor_info.rcMonitor);
+    SetWindowPos(hwnd, NULL, new_rect.x(), new_rect.y(), new_rect.width(),
+                 new_rect.height(),
+                 SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
   } else {
-    // Reset original window style and size.
+    // Reset original window style and size.  The multiple window size/moves
+    // here are ugly, but if SetWindowPos() doesn't redraw, the taskbar won't be
+    // repainted.  Better-looking methods welcome.
+    gfx::Rect new_rect(saved_window_info_.window_rect);
     SetWindowLong(hwnd, GWL_STYLE, saved_window_info_.style);
     SetWindowLong(hwnd, GWL_EXSTYLE, saved_window_info_.ex_style);
-    new_rect = saved_window_info_.window_rect;
+    SetWindowPos(hwnd, NULL, new_rect.x(), new_rect.y(), new_rect.width(),
+                 new_rect.height(),
+                 SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
+    if (saved_window_info_.maximized)
+      frame_->GetWindow()->ExecuteSystemMenuCommand(SC_MAXIMIZE);
   }
-  // This will cause the window to re-layout.
-  SetWindowPos(hwnd, NULL, new_rect.x(), new_rect.y(), new_rect.width(),
-      new_rect.height(), SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
+
+  // Turn fullscreen bubble on or off.
+  fullscreen_bubble_.reset(fullscreen_ ?
+      new FullscreenExitBubble(widget, browser_.get()) : NULL);
 }
 
 bool BrowserView::IsFullscreen() const {
@@ -640,7 +704,10 @@ void BrowserView::FocusToolbar() {
   // Do not restore the button that previously had accessibility focus, if
   // focus is set by using the toolbar focus keyboard shortcut.
   toolbar_->set_acc_focused_view(NULL);
-  toolbar_->RequestFocus();
+  // HACK: Do not use RequestFocus() here, as the toolbar is not marked as
+  // "focusable".  Instead bypass the sanity check in RequestFocus() and just
+  // force it to focus, which will do the right thing.
+  GetRootView()->FocusView(toolbar_);
 }
 
 void BrowserView::DestroyBrowser() {
@@ -653,13 +720,12 @@ void BrowserView::DestroyBrowser() {
 
 bool BrowserView::IsBookmarkBarVisible() const {
   return SupportsWindowFeature(FEATURE_BOOKMARKBAR) &&
-      bookmark_bar_view_.get() &&
-      (bookmark_bar_view_->GetPreferredSize().height() != 0);
+      active_bookmark_bar_ &&
+      (active_bookmark_bar_->GetPreferredSize().height() != 0);
 }
 
 gfx::Rect BrowserView::GetRootWindowResizerRect() const {
-  // There is no resize corner when we are maximized
-  if (IsMaximized())
+  if (!CanCurrentlyResize())
     return gfx::Rect();
 
   // We don't specify a resize corner size if we have a bottom shelf either.
@@ -685,6 +751,10 @@ gfx::Rect BrowserView::GetRootWindowResizerRect() const {
 
 void BrowserView::ToggleBookmarkBar() {
   BookmarkBarView::ToggleWhenVisible(browser_->profile());
+}
+
+void BrowserView::ShowFindBar() {
+  find_bar_->Show();
 }
 
 void BrowserView::ShowAboutChromeDialog() {
@@ -793,6 +863,22 @@ LocationBarView* BrowserView::GetLocationBarView() const {
   return toolbar_->GetLocationBarView();
 }
 
+bool BrowserView::GetFindBarWindowInfo(gfx::Point* position,
+                                       bool* fully_visible) const {
+  CRect window_rect;
+  if (!find_bar_.get() ||
+      !::IsWindow(find_bar_->GetHWND()) ||
+      !::GetWindowRect(find_bar_->GetHWND(), &window_rect)) {
+    *position = gfx::Point(0, 0);
+    *fully_visible = false;
+    return false;
+  }
+
+  *position = gfx::Point(window_rect.TopLeft().x, window_rect.TopLeft().y);
+  *fully_visible = find_bar_->IsVisible() && !find_bar_->IsAnimating();
+  return true;
+}
+
 ///////////////////////////////////////////////////////////////////////////////
 // BrowserView, NotificationObserver implementation:
 
@@ -821,6 +907,10 @@ void BrowserView::TabDetachedAt(TabContents* contents, int index) {
     // on the selected TabContents when it is removed.
     infobar_container_->ChangeTabContents(NULL);
     contents_container_->SetTabContents(NULL);
+    // When dragging the last TabContents out of a window there is no selection
+    // notification that causes the find bar for that window to be un-registered
+    // for notifications from this TabContents.
+    find_bar_->ChangeWebContents(NULL);
   }
 }
 
@@ -855,6 +945,9 @@ void BrowserView::TabSelectedAt(TabContents* old_contents,
   toolbar_->SetProfile(new_contents->profile());
   UpdateToolbar(new_contents, true);
   UpdateUIForContents(new_contents);
+
+  if (find_bar_.get())
+    find_bar_->ChangeWebContents(new_contents->AsWebContents());
 }
 
 void BrowserView::TabStripEmpty() {
@@ -941,8 +1034,7 @@ bool BrowserView::GetSavedWindowBounds(gfx::Rect* bounds) const {
     // - the size of the content area (inner size).
     // We need to use these values to determine the appropriate size and
     // position of the resulting window.
-    if (SupportsWindowFeature(FEATURE_TOOLBAR) ||
-        SupportsWindowFeature(FEATURE_LOCATIONBAR)) {
+    if (IsToolbarVisible()) {
       // If we're showing the toolbar, we need to adjust |*bounds| to include
       // its desired height, since the toolbar is considered part of the
       // window's client area as far as GetWindowBoundsForClientBounds is
@@ -1025,8 +1117,7 @@ int BrowserView::NonClientHitTest(const gfx::Point& point) {
   // area of the window. So we need to treat hit-tests in these regions as
   // hit-tests of the titlebar.
 
-  // There is not resize corner when we are maximised
-  if (!IsMaximized()) {
+  if (CanCurrentlyResize()) {
     CRect client_rect;
     ::GetClientRect(frame_->GetWindow()->GetHWND(), &client_rect);
     gfx::Size resize_corner_size = ResizeCorner::GetSize();
@@ -1107,6 +1198,11 @@ void BrowserView::Layout() {
   top = LayoutBookmarkAndInfoBars(top);
   int bottom = LayoutDownloadShelf();
   LayoutTabContents(top, bottom);
+  // This must be done _after_ we lay out the TabContents since this code calls
+  // back into us to find the bounding box the find bar must be laid out within,
+  // and that code depends on the TabContentsContainer's bounds being up to
+  // date.
+  find_bar_->MoveWindowIfNecessary(gfx::Rect(), true);
   LayoutStatusBubble(bottom);
 #ifdef CHROME_PERSONALIZATION
   if (IsPersonalizationEnabled()) {
@@ -1114,8 +1210,6 @@ void BrowserView::Layout() {
                                                    toolbar_, 0);
   }
 #endif
-
-
   SchedulePaint();
 }
 
@@ -1190,7 +1284,7 @@ void BrowserView::InitSystemMenu() {
   int insertion_index = std::max(0, system_menu_->ItemCount() - 1);
   // We add the menu items in reverse order so that insertion_index never needs
   // to change.
-  if (browser_->type() == Browser::TYPE_NORMAL) {
+  if (IsBrowserTypeNormal()) {
     system_menu_->AddSeparator(insertion_index);
     system_menu_->AddMenuItemWithLabel(insertion_index, IDC_TASK_MANAGER,
                                        l10n_util::GetString(IDS_TASK_MANAGER));
@@ -1199,6 +1293,21 @@ void BrowserView::InitSystemMenu() {
   } else {
     BuildMenuForTabStriplessWindow(system_menu_.get(), insertion_index);
   }
+}
+
+bool BrowserView::SupportsWindowFeature(WindowFeature feature) const {
+  unsigned int features = FEATURE_INFOBAR | FEATURE_DOWNLOADSHELF;
+  if (IsBrowserTypeNormal())
+     features |= FEATURE_BOOKMARKBAR;
+  if (!fullscreen_) {
+    if (IsBrowserTypeNormal())
+      features |= FEATURE_TABSTRIP | FEATURE_TOOLBAR;
+    else
+      features |= FEATURE_TITLEBAR;
+    if (browser_->type() != Browser::TYPE_APP)
+      features |= FEATURE_LOCATIONBAR;
+  }
+  return !!(features & feature);
 }
 
 bool BrowserView::ShouldForwardToTabStrip(
@@ -1251,6 +1360,7 @@ int BrowserView::LayoutToolbar(int top) {
     Personalization::AdjustBrowserView(personalization_, &browser_view_width);
 #endif
   bool visible = IsToolbarVisible();
+  toolbar_->GetLocationBarView()->SetFocusable(visible);
   int y = top -
       ((visible && IsTabStripVisible()) ? kToolbarTabStripVerticalOverlap : 0);
   int height = visible ? toolbar_->GetPreferredSize().height() : 0;
@@ -1260,21 +1370,22 @@ int BrowserView::LayoutToolbar(int top) {
 }
 
 int BrowserView::LayoutBookmarkAndInfoBars(int top) {
-  if (bookmark_bar_view_.get()) {
+  find_bar_y_ = top + y() - 1;
+  if (active_bookmark_bar_) {
     // If we're showing the Bookmark bar in detached style, then we need to show
     // any Info bar _above_ the Bookmark bar, since the Bookmark bar is styled
     // to look like it's part of the page.
     if (bookmark_bar_view_->IsDetachedStyle())
       return LayoutBookmarkBar(LayoutInfoBar(top));
-
     // Otherwise, Bookmark bar first, Info bar second.
     top = LayoutBookmarkBar(top);
   }
+  find_bar_y_ = top + y() - 1;
   return LayoutInfoBar(top);
 }
 
 int BrowserView::LayoutBookmarkBar(int top) {
-  DCHECK(bookmark_bar_view_.get());
+  DCHECK(active_bookmark_bar_);
   bool visible = IsBookmarkBarVisible();
   int height, y = top;
   if (visible) {
@@ -1328,9 +1439,8 @@ void BrowserView::LayoutStatusBubble(int top) {
 
 bool BrowserView::MaybeShowBookmarkBar(TabContents* contents) {
   views::View* new_bookmark_bar_view = NULL;
-  views::View* old_bookmark_bar_view = bookmark_bar_view_.get();
   if (SupportsWindowFeature(FEATURE_BOOKMARKBAR) && contents) {
-    if (!old_bookmark_bar_view) {
+    if (!bookmark_bar_view_.get()) {
       bookmark_bar_view_.reset(new BookmarkBarView(contents->profile(),
                                                    browser_.get()));
       bookmark_bar_view_->SetParentOwned(false);
@@ -1340,8 +1450,7 @@ bool BrowserView::MaybeShowBookmarkBar(TabContents* contents) {
     bookmark_bar_view_->SetPageNavigator(contents);
     new_bookmark_bar_view = bookmark_bar_view_.get();
   }
-  return UpdateChildViewAndLayout(new_bookmark_bar_view,
-                                  &old_bookmark_bar_view);
+  return UpdateChildViewAndLayout(new_bookmark_bar_view, &active_bookmark_bar_);
 }
 
 bool BrowserView::MaybeShowInfoBar(TabContents* contents) {
@@ -1356,7 +1465,7 @@ bool BrowserView::MaybeShowDownloadShelf(TabContents* contents) {
   if (contents && contents->IsDownloadShelfVisible()) {
     new_shelf = contents->GetDownloadShelfView();
     if (new_shelf != active_download_shelf_)
-      new_shelf->AddChildView(new ResizeCorner());
+      new_shelf->AddChildView(new ResizeCorner(this));
   }
   return UpdateChildViewAndLayout(new_shelf, &active_download_shelf_);
 }
@@ -1517,8 +1626,12 @@ int BrowserView::GetCommandIDForAppCommandID(int app_command_id) const {
 }
 
 void BrowserView::LoadingAnimationCallback() {
-  if (SupportsWindowFeature(FEATURE_TABSTRIP)) {
-    // Loading animations are shown in the tab for tabbed windows.
+  if (browser_->type() == Browser::TYPE_NORMAL) {
+    // Loading animations are shown in the tab for tabbed windows.  We check the
+    // browser type instead of calling IsTabStripVisible() because the latter
+    // will return false for fullscreen windows, but we still need to update
+    // their animations (so that when they come out of fullscreen mode they'll
+    // be correct).
     tabstrip_->UpdateLoadingAnimations();
   } else if (ShouldShowWindowIcon()) {
     // ... or in the window icon area for popups and app windows.

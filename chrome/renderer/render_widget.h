@@ -63,9 +63,6 @@ class RenderWidget : public IPC::Channel::Listener,
   // IPC::Message::Sender
   virtual bool Send(IPC::Message* msg);
 
-  // True if the underlying IPC is currently sending data.
-  bool InSend() const;
-
   // WebWidgetDelegate
   virtual gfx::NativeViewId GetContainingView(WebWidget* webwidget);
   virtual void DidInvalidateRect(WebWidget* webwidget, const gfx::Rect& rect);
@@ -117,7 +114,8 @@ class RenderWidget : public IPC::Channel::Listener,
   // RenderWidget IPC message handlers
   void OnClose();
   void OnCreatingNewAck(gfx::NativeViewId parent);
-  void OnResize(const gfx::Size& new_size, const gfx::Rect& resizer_rect);
+  virtual void OnResize(const gfx::Size& new_size,
+                        const gfx::Rect& resizer_rect);
   void OnWasHidden();
   void OnWasRestored(bool needs_repainting);
   void OnPaintRectAck();

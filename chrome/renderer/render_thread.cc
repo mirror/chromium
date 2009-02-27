@@ -29,10 +29,12 @@
 #include "chrome/renderer/net/render_dns_master.h"
 #include "chrome/renderer/render_process.h"
 #include "chrome/renderer/render_view.h"
+#include "chrome/renderer/renderer_webkitclient_impl.h"
 #include "chrome/renderer/user_script_slave.h"
 #include "chrome/renderer/visitedlink_slave.h"
 #include "webkit/glue/cache_manager.h"
 
+#include "WebKit.h"
 
 static const unsigned int kCacheStatsDelayMS = 2000 /* milliseconds */;
 
@@ -47,19 +49,13 @@ static const size_t kStackSize = 1024 * 1024;
 RenderThread::RenderThread()
     : ChildThread(
           base::Thread::Options(RenderProcess::InProcessPlugins() ?
-              MessageLoop::TYPE_UI : MessageLoop::TYPE_DEFAULT, kStackSize)),
-      visited_link_slave_(NULL),
-      user_script_slave_(NULL),
-      render_dns_master_(NULL) {
+              MessageLoop::TYPE_UI : MessageLoop::TYPE_DEFAULT, kStackSize)) {
 }
 
 RenderThread::RenderThread(const std::wstring& channel_name)
     : ChildThread(
           base::Thread::Options(RenderProcess::InProcessPlugins() ?
-              MessageLoop::TYPE_UI : MessageLoop::TYPE_DEFAULT, kStackSize)),
-      visited_link_slave_(NULL),
-      user_script_slave_(NULL),
-      render_dns_master_(NULL) {
+              MessageLoop::TYPE_UI : MessageLoop::TYPE_DEFAULT, kStackSize)) {
   SetChannelName(channel_name);
 }
 
@@ -80,41 +76,53 @@ void RenderThread::RemoveFilter(IPC::ChannelProxy::MessageFilter* filter) {
 }
 
 void RenderThread::Resolve(const char* name, size_t length) {
-  return render_dns_master_->Resolve(name, length);
+  return dns_master_->Resolve(name, length);
+}
+
+void RenderThread::SendHistograms() {
+  return histogram_snapshots_->SendHistograms();
 }
 
 void RenderThread::Init() {
-  ChildThread::Init();
-  notification_service_.reset(new NotificationService);
-  cache_stats_factory_.reset(
-      new ScopedRunnableMethodFactory<RenderThread>(this));
-
+  // TODO(darin): Why do we need COM here?  This is probably bogus.
 #if defined(OS_WIN)
   // The renderer thread should wind-up COM.
   CoInitialize(0);
 #endif
 
-  visited_link_slave_ = new VisitedLinkSlave();
-  user_script_slave_ = new UserScriptSlave();
-  render_dns_master_.reset(new RenderDnsMaster());
+  ChildThread::Init();
+  notification_service_.reset(new NotificationService);
+  cache_stats_factory_.reset(
+      new ScopedRunnableMethodFactory<RenderThread>(this));
+
+  webkit_client_impl_.reset(new RendererWebKitClientImpl);
+  WebKit::initialize(webkit_client_impl_.get());
+
+  visited_link_slave_.reset(new VisitedLinkSlave());
+  user_script_slave_.reset(new UserScriptSlave());
+  dns_master_.reset(new RenderDnsMaster());
+  histogram_snapshots_.reset(new RendererHistogramSnapshots());
 }
 
 void RenderThread::CleanUp() {
+  // Shutdown in reverse of the initialization order.
+
+  histogram_snapshots_.reset();
+  dns_master_.reset();
+  user_script_slave_.reset();
+  visited_link_slave_.reset();
+
+  WebKit::shutdown();
+
+  notification_service_.reset();
+
   ChildThread::CleanUp();
 
-// TODO(port)
+  // TODO(port)
 #if defined(OS_WIN)
   // Clean up plugin channels before this thread goes away.
   PluginChannelBase::CleanupChannels();
 #endif
-
-  notification_service_.reset();
-
-  delete visited_link_slave_;
-  visited_link_slave_ = NULL;
-
-  delete user_script_slave_;
-  user_script_slave_ = NULL;
 
 #if defined(OS_WIN)
   CoUninitialize();
@@ -140,6 +148,8 @@ void RenderThread::OnControlMessageReceived(const IPC::Message& msg) {
     // is there a new non-windows message I should add here?
     IPC_MESSAGE_HANDLER(ViewMsg_New, OnCreateNewView)
     IPC_MESSAGE_HANDLER(ViewMsg_SetCacheCapacities, OnSetCacheCapacities)
+    IPC_MESSAGE_HANDLER(ViewMsg_GetRendererHistograms,
+                          OnGetRendererHistograms)
     IPC_MESSAGE_HANDLER(ViewMsg_GetCacheResourceStats,
                         OnGetCacheResourceStats)
     IPC_MESSAGE_HANDLER(ViewMsg_PluginMessage, OnPluginMessage)
@@ -210,6 +220,10 @@ void RenderThread::OnGetCacheResourceStats() {
   // TODO(port)
   NOTIMPLEMENTED();
 #endif
+}
+
+void RenderThread::OnGetRendererHistograms() {
+  SendHistograms();
 }
 
 void RenderThread::InformHostOfCacheStats() {

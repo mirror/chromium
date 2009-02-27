@@ -16,14 +16,6 @@
 #include "chrome/browser/extensions/user_script_master.h"
 #include "googleurl/src/gurl.h"
 
-// The URL schemes Chromium extensions and user scripts are served from. These
-// really should be in extension_protocols.h, but that causes link errors on
-// linux because extension_protocols.cc refers to undefined symbols.
-// TODO(aa): Move these back to extension_protocols.h when more of Linux and
-// Mac are up and running.
-extern const char kExtensionURLScheme[];
-extern const char kUserScriptURLScheme[];
-
 // Represents a Chromium extension.
 class Extension {
  public:
@@ -71,6 +63,9 @@ class Extension {
   static const char* kInvalidVersionError;
   static const char* kInvalidZipHashError;
   static const char* kInvalidPluginsDirError;
+
+  // The number of bytes in a legal id.
+  static const size_t kIdSize;
 
   // Creates an absolute url to a resource inside an extension. The
   // |extension_url| argument should be the url() from an Extension object. The

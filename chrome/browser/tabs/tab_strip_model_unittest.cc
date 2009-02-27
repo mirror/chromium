@@ -16,6 +16,7 @@
 #include "chrome/browser/tabs/tab_strip_model_order_controller.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/stl_util-inl.h"
+#include "chrome/common/url_constants.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 const TabContentsType kHTTPTabContentsType =
@@ -30,7 +31,7 @@ class TabStripDummyDelegate : public TabStripModelDelegate {
   virtual ~TabStripDummyDelegate() {}
 
   // Overridden from TabStripModelDelegate:
-  virtual GURL GetBlankTabURL() const { return NewTabUIURL(); }
+  virtual GURL GetBlankTabURL() const { return NewTabUI::GetBaseURL(); }
   virtual void CreateNewStripWithContents(TabContents* contents,
                                           const gfx::Rect& window_bounds,
                                           const DockInfo& dock_info) {}
@@ -42,7 +43,7 @@ class TabStripDummyDelegate : public TabStripModelDelegate {
       PageTransition::Type transition,
       bool defer_load,
       SiteInstance* instance) const {
-    if (url == NewTabUIURL())
+    if (url == NewTabUI::GetBaseURL())
       return dummy_contents_;
     return NULL;
   }
@@ -82,7 +83,7 @@ class TabStripModelTestTabContentsFactory : public TabContentsFactory {
   }
 
   virtual bool CanHandleURL(const GURL& url) {
-    return url.scheme() == "http";
+    return url.SchemeIs(chrome::kHttpScheme);
   }
 };
 

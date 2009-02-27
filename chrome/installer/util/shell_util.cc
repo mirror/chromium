@@ -54,8 +54,6 @@ class RegistryEntry {
 
     entries.push_front(new RegistryEntry(L"Software\\Classes\\ChromeHTML",
                                          ShellUtil::kChromeHTMLProgIdDesc));
-    entries.push_front(new RegistryEntry(L"Software\\Classes\\ChromeHTML",
-                                         ShellUtil::kRegUrlProtocol, L""));
     entries.push_front(new RegistryEntry(
         L"Software\\Classes\\ChromeHTML\\DefaultIcon", icon_path));
     entries.push_front(new RegistryEntry(
@@ -216,7 +214,7 @@ bool IsChromeRegistered(const std::wstring& chrome_exe) {
       registered = false;
     delete (*itr);
   }
-  LOG(INFO) << "Check for Chrome registeration returned " << registered;
+  LOG(INFO) << "Check for Chrome registration returned " << registered;
   return registered;
 }
 
@@ -366,6 +364,13 @@ ShellUtil::RegisterStatus RegisterOnVista(const std::wstring& chrome_exe,
   return ShellUtil::FAILURE;
 }
 
+// Remove unnecessary "URL Protocol" entry from shell registration.  This value
+// was written by older installers so ignoring error conditions.
+void RemoveUrlProtocol(HKEY root) {
+  RegKey key(root, L"Software\\Classes\\ChromeHTML", KEY_ALL_ACCESS);
+  key.DeleteValue(ShellUtil::kRegUrlProtocol);
+}
+
 }  // namespace
 
 
@@ -396,10 +401,13 @@ const wchar_t* ShellUtil::kChromeExtProgIdDesc = L"Chrome Extension Installer";
 
 ShellUtil::RegisterStatus ShellUtil::AddChromeToSetAccessDefaults(
     const std::wstring& chrome_exe, bool skip_if_not_admin) {
+  RemoveUrlProtocol(HKEY_LOCAL_MACHINE);
+  RemoveUrlProtocol(HKEY_CURRENT_USER);
+
   if (IsChromeRegistered(chrome_exe))
     return ShellUtil::SUCCESS;
 
-  if (win_util::GetWinVersion() == win_util::WINVERSION_VISTA)
+  if (win_util::GetWinVersion() >= win_util::WINVERSION_VISTA)
     return RegisterOnVista(chrome_exe, skip_if_not_admin);
 
   // Try adding these entries to HKLM first and if that fails try adding
@@ -462,7 +470,7 @@ bool ShellUtil::GetQuickLaunchPath(bool system_level, std::wstring* path) {
     if ((p == NULL) || ((p)(qlaunch, &size) != TRUE))
       return false;
     *path = qlaunch;
-    if (win_util::GetWinVersion() == win_util::WINVERSION_VISTA) {
+    if (win_util::GetWinVersion() >= win_util::WINVERSION_VISTA) {
       file_util::AppendToPath(path, L"AppData\\Roaming");
     } else {
       file_util::AppendToPath(path, L"Application Data");
@@ -551,7 +559,7 @@ bool ShellUtil::MakeChromeDefault(int shell_change,
   bool ret = true;
   // First use the new "recommended" way on Vista to make Chrome default
   // browser.
-  if (win_util::GetWinVersion() == win_util::WINVERSION_VISTA) {
+  if (win_util::GetWinVersion() >= win_util::WINVERSION_VISTA) {
     LOG(INFO) << "Registering Chrome as default browser on Vista.";
     IApplicationAssociationRegistration* pAAR;
     HRESULT hr = CoCreateInstance(CLSID_ApplicationAssociationRegistration,

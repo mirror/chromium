@@ -21,6 +21,7 @@
 #include "chrome/browser/sessions/session_id.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
 #include "chrome/browser/tab_contents/tab_contents_delegate.h"
+#include "chrome/browser/toolbar_model.h"
 #include "chrome/common/notification_observer.h"
 #include "chrome/common/pref_member.h"
 #include "base/gfx/rect.h"
@@ -30,7 +31,6 @@
 #if defined(OS_WIN)
 #include "chrome/browser/shell_dialogs.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
-#include "chrome/browser/toolbar_model.h"
 #endif
 
 class BrowserIdleTimer;
@@ -248,11 +248,11 @@ class Browser : public TabStripModelDelegate,
 
   // Page-related commands
   void BookmarkCurrentPage();
+  void SavePage();
   void ViewSource();
 #if defined(OS_WIN)
   void ClosePopups();
   void Print();
-  void SavePage();
   void ToggleEncodingAutoDetect();
   void OverrideEncoding(int encoding_id);
 
@@ -508,9 +508,10 @@ class Browser : public TabStripModelDelegate,
   GURL GetHomePage();
 
 #if defined(OS_WIN)
-  // Advance the find selection by one. Direction is either forward or
-  // backwards depending on parameter passed in.
-  void AdvanceFindSelection(bool forward_direction);
+  // Shows the Find Bar, optionally selecting the next entry that matches the
+  // existing search string for that Tab. |forward_direction| controls the
+  // search direction.
+  void FindInPage(bool find_next, bool forward_direction);
 #endif
 
   // Closes the frame.
@@ -571,7 +572,7 @@ class Browser : public TabStripModelDelegate,
   private:
     Browser* browser_;
 
-    DISALLOW_EVIL_CONSTRUCTORS(BrowserToolbarModel);
+    DISALLOW_COPY_AND_ASSIGN(BrowserToolbarModel);
   };
 
   // The model for the toolbar view.

@@ -10,6 +10,7 @@
 #include "base/string_util.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/l10n_util.h"
+#include "chrome/common/stl_util-inl.h"
 #if !defined(OS_MACOSX)
 #include "chrome/test/data/resource.h"
 #endif
@@ -19,7 +20,20 @@
 
 namespace {
 
-class L10nUtilTest: public PlatformTest {
+class StringWrapper {
+ public:
+  explicit StringWrapper(const std::wstring& string) : string_(string) {}
+  const std::wstring& string() const { return string_; }
+
+ private:
+  std::wstring string_;
+
+  DISALLOW_COPY_AND_ASSIGN(StringWrapper);
+};
+
+}  // namespace
+
+class L10nUtilTest : public PlatformTest {
 };
 
 #if defined(OS_WIN)
@@ -80,20 +94,27 @@ TEST_F(L10nUtilTest, GetAppLocale) {
   PathService::Override(chrome::DIR_LOCALES, new_locale_dir);
   // Make fake locale files.
   const wchar_t* filenames[] = {
-    L"en-US.dll",
-    L"en-GB.dll",
-    L"fr.dll",
-    L"es-419.dll",
-    L"es.dll",
-    L"zh-TW.dll",
-    L"zh-CN.dll",
-    L"he.dll",
-    L"fil.dll",
-    L"nb.dll",
+    L"en-US",
+    L"en-GB",
+    L"fr",
+    L"es-419",
+    L"es",
+    L"zh-TW",
+    L"zh-CN",
+    L"he",
+    L"fil",
+    L"nb",
   };
+
+#if defined(OS_WIN)
+  static const wchar_t kLocaleFileExtension[] = L".dll";
+#elif defined(OS_POSIX)
+  static const wchar_t kLocaleFileExtension[] = L".pak";
+#endif
   for (size_t i = 0; i < arraysize(filenames); ++i) {
     std::wstring filename = new_locale_dir;
     file_util::AppendToPath(&filename, filenames[i]);
+    filename += kLocaleFileExtension;
     file_util::WriteFile(filename, "", 0);
   }
 
@@ -158,6 +179,116 @@ TEST_F(L10nUtilTest, GetAppLocale) {
   file_util::Delete(new_locale_dir, true);
   UErrorCode error_code = U_ZERO_ERROR;
   Locale::setDefault(locale, error_code);
+}
+
+TEST_F(L10nUtilTest, SortStringsUsingFunction) {
+  std::vector<StringWrapper*> strings;
+  strings.push_back(new StringWrapper(L"C"));
+  strings.push_back(new StringWrapper(L"d"));
+  strings.push_back(new StringWrapper(L"b"));
+  strings.push_back(new StringWrapper(L"a"));
+  l10n_util::SortStringsUsingMethod(L"en-US", &strings, &StringWrapper::string);
+  ASSERT_TRUE(L"a" == strings[0]->string());
+  ASSERT_TRUE(L"b" == strings[1]->string());
+  ASSERT_TRUE(L"C" == strings[2]->string());
+  ASSERT_TRUE(L"d" == strings[3]->string());
+  STLDeleteElements(&strings);
+}
+
+TEST_F(L10nUtilTest, GetFirstStrongCharacterDirection) {
+  // Test pure LTR string.
+  std::wstring string(L"foo bar");
+  EXPECT_EQ(l10n_util::LEFT_TO_RIGHT,
+            l10n_util::GetFirstStrongCharacterDirection(string));
+
+  // Test bidi string in which the first character with strong directionality
+  // is a character with type L.
+  string.assign(L"foo \x05d0 bar");
+  EXPECT_EQ(l10n_util::LEFT_TO_RIGHT,
+            l10n_util::GetFirstStrongCharacterDirection(string));
+
+  // Test bidi string in which the first character with strong directionality
+  // is a character with type R.
+  string.assign(L"\x05d0 foo bar");
+  EXPECT_EQ(l10n_util::RIGHT_TO_LEFT,
+            l10n_util::GetFirstStrongCharacterDirection(string));
+
+  // Test bidi string which starts with a character with weak directionality
+  // and in which the first character with strong directionality is a character
+  // with type L.
+  string.assign(L"!foo \x05d0 bar");
+  EXPECT_EQ(l10n_util::LEFT_TO_RIGHT,
+            l10n_util::GetFirstStrongCharacterDirection(string));
+
+  // Test bidi string which starts with a character with weak directionality
+  // and in which the first character with strong directionality is a character
+  // with type R.
+  string.assign(L",\x05d0 foo bar");
+  EXPECT_EQ(l10n_util::RIGHT_TO_LEFT,
+            l10n_util::GetFirstStrongCharacterDirection(string));
+
+  // Test bidi string in which the first character with strong directionality
+  // is a character with type LRE.
+  string.assign(L"\x202a \x05d0 foo  bar");
+  EXPECT_EQ(l10n_util::LEFT_TO_RIGHT,
+            l10n_util::GetFirstStrongCharacterDirection(string));
+
+  // Test bidi string in which the first character with strong directionality
+  // is a character with type LRO.
+  string.assign(L"\x202d \x05d0 foo  bar");
+  EXPECT_EQ(l10n_util::LEFT_TO_RIGHT,
+            l10n_util::GetFirstStrongCharacterDirection(string));
+
+  // Test bidi string in which the first character with strong directionality
+  // is a character with type RLE.
+  string.assign(L"\x202b foo \x05d0 bar");
+  EXPECT_EQ(l10n_util::RIGHT_TO_LEFT,
+            l10n_util::GetFirstStrongCharacterDirection(string));
+
+  // Test bidi string in which the first character with strong directionality
+  // is a character with type RLO.
+  string.assign(L"\x202e foo \x05d0 bar");
+  EXPECT_EQ(l10n_util::RIGHT_TO_LEFT,
+            l10n_util::GetFirstStrongCharacterDirection(string));
+
+  // Test bidi string in which the first character with strong directionality
+  // is a character with type AL.
+  string.assign(L"\x0622 foo \x05d0 bar");
+  EXPECT_EQ(l10n_util::RIGHT_TO_LEFT,
+            l10n_util::GetFirstStrongCharacterDirection(string));
+
+  // Test a string without strong directionality characters.
+  string.assign(L",!.{}");
+  EXPECT_EQ(l10n_util::LEFT_TO_RIGHT,
+            l10n_util::GetFirstStrongCharacterDirection(string));
+
+  // Test empty string.
+  string.assign(L"");
+  EXPECT_EQ(l10n_util::LEFT_TO_RIGHT,
+            l10n_util::GetFirstStrongCharacterDirection(string));
+
+  // Test characters in non-BMP (e.g. Phoenician letters. Please refer to
+  // http://demo.icu-project.org/icu-bin/ubrowse?scr=151&b=10910 for more
+  // information).
+#if defined(WCHAR_T_IS_UTF32)
+  string.assign(L" ! \x10910" L"abc 123");
+#elif defined(WCHAR_T_IS_UTF16)
+  string.assign(L" ! \xd802\xdd10" L"abc 123");
+#else
+#error wchar_t should be either UTF-16 or UTF-32
+#endif
+  EXPECT_EQ(l10n_util::RIGHT_TO_LEFT,
+            l10n_util::GetFirstStrongCharacterDirection(string));
+
+#if defined(WCHAR_T_IS_UTF32)
+  string.assign(L" ! \x10401" L"abc 123");
+#elif defined(WCHAR_T_IS_UTF16)
+  string.assign(L" ! \xd801\xdc01" L"abc 123");
+#else
+#error wchar_t should be either UTF-16 or UTF-32
+#endif
+  EXPECT_EQ(l10n_util::LEFT_TO_RIGHT,
+            l10n_util::GetFirstStrongCharacterDirection(string));
 }
 
 typedef struct {
@@ -238,5 +369,3 @@ TEST_F(L10nUtilTest, WrapPathWithLTRFormatting) {
     EXPECT_EQ(wrapped_path, test_data[i].wrapped_path);
   }
 }
-}
-

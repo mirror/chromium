@@ -320,6 +320,11 @@ class RenderViewHost : public RenderWidgetHost {
   // Must be called before CreateRenderView().
   void AllowDOMUIBindings();
 
+  // Tells the renderer which render view should be inspected by developer
+  // tools loaded in it. This method should be called before renderer is
+  // created.
+  void SetInspectedView(int inspected_process_id, int inspected_view_id);
+
   // Sets a property with the given name and value on the DOM UI binding object.
   // Must call AllowDOMUIBindings() on this renderer first.
   void SetDOMUIProperty(const std::string& name, const std::string& value);
@@ -404,6 +409,10 @@ class RenderViewHost : public RenderWidgetHost {
                                    int request_id,
                                    int default_suggestion_index);
 
+  // Notifies the Renderer that a move or resize of its containing window has
+  // started (this is used to hide the autocomplete popups if any).
+  void WindowMoveOrResizeStarted();
+
   // RenderWidgetHost public overrides.
   virtual void Init();
   virtual void Shutdown();
@@ -414,7 +423,7 @@ class RenderViewHost : public RenderWidgetHost {
 
  protected:
   // RenderWidgetHost protected overrides.
-  virtual void UnhandledInputEvent(const WebInputEvent& event);
+  virtual void UnhandledKeyboardEvent(const WebKeyboardEvent& event);
   virtual void OnEnterOrSpace();
   virtual void NotifyRendererUnresponsive();
   virtual void NotifyRendererResponsive();
@@ -428,8 +437,8 @@ class RenderViewHost : public RenderWidgetHost {
                      bool user_gesture);
   void OnMsgShowWidget(int route_id, const gfx::Rect& initial_pos);
   void OnMsgRunModal(IPC::Message* reply_msg);
-  void OnMsgRendererReady();
-  void OnMsgRendererGone();
+  void OnMsgRenderViewReady();
+  void OnMsgRenderViewGone();
   void OnMsgNavigate(const IPC::Message& msg);
   void OnMsgUpdateState(int32 page_id,
                         const std::string& state);
@@ -471,8 +480,7 @@ class RenderViewHost : public RenderWidgetHost {
                                  int automation_id);
   void OnMsgDOMUISend(const std::string& message,
                       const std::string& content);
-  void OnMsgForwardMessageToExternalHost(const std::string& receiver,
-                                         const std::string& message);
+  void OnMsgForwardMessageToExternalHost(const std::string& message);
 #ifdef CHROME_PERSONALIZATION
   void OnPersonalizationEvent(const std::string& message,
                               const std::string& content);
@@ -506,6 +514,8 @@ class RenderViewHost : public RenderWidgetHost {
                              const std::wstring& source_id);
   void OnDebuggerOutput(const std::wstring& output);
   void DidDebugAttach();
+  void OnForwardToDevToolsAgent(const IPC::Message& message);
+  void OnForwardToDevToolsClient(const IPC::Message& message);
   void OnUserMetricsRecordAction(const std::wstring& action);
   void OnMissingPluginStatus(int status);
   void OnMessageReceived(IPC::Message* msg) { }
@@ -609,6 +619,12 @@ class RenderViewHost : public RenderWidgetHost {
   bool is_waiting_for_unload_ack_;
 
   bool are_javascript_messages_suppressed_;
+
+  // When this renderer hosts developer tools this two fields contain rerndeder
+  // process id and render view id of the page being inspected. Both fieldes
+  // are -1 if the content of this renderer is not developer tools frontend.
+  int inspected_process_id_;
+  int inspected_view_id_;
 
   DISALLOW_EVIL_CONSTRUCTORS(RenderViewHost);
 };

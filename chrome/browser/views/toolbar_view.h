@@ -52,6 +52,7 @@ class BrowserToolbarView : public views::View,
 
   // views::View
   virtual void Layout();
+  virtual void Paint(ChromeCanvas* canvas);
   virtual void DidGainFocus();
   virtual void WillLoseFocus();
   virtual bool OnKeyPressed(const views::KeyEvent& e);
@@ -80,38 +81,32 @@ class BrowserToolbarView : public views::View,
 
   LocationBarView* GetLocationBarView() const { return location_bar_; }
 
-  bool IsDisplayModeNormal() const {
-    return display_mode_ == DISPLAYMODE_NORMAL;
-  }
-
   // Updates the toolbar (and transitively the location bar) with the states of
   // the specified |tab|.  If |should_restore_state| is true, we're switching
   // (back?) to this tab and should restore any previous location bar state
   // (such as user editing) as well.
   void Update(TabContents* tab, bool should_restore_state);
 
-  void OnInputInProgress(bool in_progress);
+  virtual void OnInputInProgress(bool in_progress);
+
+  // Returns a brief, identifying string, containing a unique, readable name.
+  virtual bool GetAccessibleName(std::wstring* name);
 
   // Returns the MSAA role of the current view. The role is what assistive
   // technologies (ATs) use to determine what behavior to expect from a given
   // control.
-  bool GetAccessibleRole(VARIANT* role);
-
-  // Returns a brief, identifying string, containing a unique, readable name.
-  bool GetAccessibleName(std::wstring* name);
+  virtual bool GetAccessibleRole(VARIANT* role);
 
   // Assigns an accessible string name.
-  void SetAccessibleName(const std::wstring& name);
+  virtual void SetAccessibleName(const std::wstring& name);
+
+  virtual View* GetAccFocusedChildView() { return acc_focused_view_; }
 
   // Returns the index of the next view of the toolbar, starting from the given
   // view index (skipping the location bar), in the given navigation direction
   // (nav_left true means navigation right to left, and vice versa). -1 finds
   // first accessible child, based on the above policy.
   int GetNextAccessibleViewIndex(int view_index, bool nav_left);
-
-  views::View* acc_focused_view() {
-    return acc_focused_view_;
-  }
 
   void set_acc_focused_view(views::View* acc_focused_view) {
     acc_focused_view_ = acc_focused_view;
@@ -134,6 +129,9 @@ class BrowserToolbarView : public views::View,
     DISPLAYMODE_NORMAL,
     DISPLAYMODE_LOCATION
   };
+
+  // Returns the number of pixels above the location bar in non-normal display.
+  static int PopupTopSpacing();
 
   // NotificationObserver
   virtual void Observe(NotificationType type,
@@ -167,6 +165,10 @@ class BrowserToolbarView : public views::View,
   // context menu on to the toolbar child view that currently has the
   // accessibility focus.
   virtual void ShowContextMenu(int x, int y, bool is_mouse_gesture);
+
+  bool IsDisplayModeNormal() const {
+    return display_mode_ == DISPLAYMODE_NORMAL;
+  }
 
   scoped_ptr<BackForwardMenuModelWin> back_menu_model_;
   scoped_ptr<BackForwardMenuModelWin> forward_menu_model_;

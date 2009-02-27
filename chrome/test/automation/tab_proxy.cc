@@ -43,35 +43,6 @@ bool TabProxy::IsShelfVisible(bool* is_visible) {
                                                          is_visible));
 }
 
-bool TabProxy::OpenFindInPage() {
-  if (!is_valid())
-    return false;
-
-  return sender_->Send(new AutomationMsg_OpenFindInPage(0, handle_));
-  // This message expects no response.
-}
-
-bool TabProxy::IsFindWindowFullyVisible(bool* is_visible) {
-  if (!is_valid())
-    return false;
-
-  if (!is_visible) {
-    NOTREACHED();
-    return false;
-  }
-
-  return sender_->Send(new AutomationMsg_FindWindowVisibility(
-      0, handle_, is_visible));
-}
-
-bool TabProxy::GetFindWindowLocation(int* x, int* y) {
-  if (!is_valid() || !x || !y)
-    return false;
-
-  return sender_->Send(new AutomationMsg_FindWindowLocation(
-      0, handle_, x, y));
-}
-
 int TabProxy::FindInPage(const std::wstring& search_string,
                          FindInPageDirection forward,
                          FindInPageCase match_case,
@@ -101,7 +72,7 @@ int TabProxy::FindInPage(const std::wstring& search_string,
 }
 
 AutomationMsg_NavigationResponseValues TabProxy::NavigateToURL(const GURL& url) {
-  return NavigateToURLWithTimeout(url, INFINITE, NULL);
+  return NavigateToURLWithTimeout(url, base::kNoTimeout, NULL);
 }
 
 AutomationMsg_NavigationResponseValues TabProxy::NavigateToURLWithTimeout(

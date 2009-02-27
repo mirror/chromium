@@ -16,6 +16,7 @@
 #include "chrome/browser/download/save_package.h"
 #include "chrome/browser/profile.h"
 #include "chrome/browser/search_engines/template_url_model.h"
+#include "chrome/browser/spellchecker.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/web_contents.h"
@@ -24,6 +25,7 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
+#include "chrome/common/url_constants.h"
 #include "grit/generated_resources.h"
 #include "net/base/escape.h"
 #include "net/base/net_util.h"
@@ -31,7 +33,6 @@
 
 #if defined(OS_WIN)
 // TODO(port): port these files.
-#include "chrome/browser/spellchecker.h"
 #include "chrome/browser/views/options/fonts_languages_window_view.h"
 #include "chrome/browser/views/page_info_window.h"
 #include "chrome/common/clipboard_service.h"
@@ -77,7 +78,7 @@ void RenderViewContextMenuController::WriteTextToClipboard(
 }
 
 void RenderViewContextMenuController::WriteURLToClipboard(const GURL& url) {
-  if (url.SchemeIs("mailto"))
+  if (url.SchemeIs(chrome::kMailToScheme))
     WriteTextToClipboard(UTF8ToWide(url.path()));
   else
     WriteTextToClipboard(UTF8ToWide(url.spec()));
@@ -98,7 +99,7 @@ std::wstring RenderViewContextMenuController::GetLabel(int id) const {
     }
 
     case IDS_CONTENT_CONTEXT_COPYLINKLOCATION:
-      if (params_.link_url.SchemeIs("mailto"))
+      if (params_.link_url.SchemeIs(chrome::kMailToScheme))
         return l10n_util::GetString(IDS_CONTENT_CONTEXT_COPYEMAILADDRESS);
 
     default:
@@ -519,17 +520,17 @@ bool RenderViewContextMenuController::IsDevCommandEnabled(int id) const {
     return false;
 
   // Don't inspect view source.
-  if (source_web_contents_->type() == TAB_CONTENTS_VIEW_SOURCE)
+  if (active_entry->IsViewSourceMode())
     return false;
 
   // Don't inspect inspector, new tab UI, etc.
-  if (active_entry->url().SchemeIs("chrome"))
+  if (active_entry->url().SchemeIs(chrome::kChromeUIScheme))
     return false;
 
   // Don't inspect about:network, about:memory, etc.
   // However, we do want to inspect about:blank, which is often
   // used by ordinary web pages.
-  if (active_entry->display_url().SchemeIs("about") &&
+  if (active_entry->display_url().SchemeIs(chrome::kAboutScheme) &&
       !LowerCaseEqualsASCII(active_entry->display_url().path(), "blank"))
     return false;
 

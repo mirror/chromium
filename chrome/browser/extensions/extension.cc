@@ -9,9 +9,7 @@
 #include "base/string_util.h"
 #include "net/base/net_util.h"
 #include "chrome/common/extensions/user_script.h"
-
-const char kExtensionURLScheme[] = "chrome-extension";
-const char kUserScriptURLScheme[] = "chrome-user-script";
+#include "chrome/common/url_constants.h"
 
 const char Extension::kManifestFilename[] = "manifest.json";
 
@@ -71,17 +69,16 @@ const char* Extension::kInvalidZipHashError =
 const char* Extension::kInvalidPluginsDirError =
     "Invalid value for 'plugins_dir'.";
 
+const size_t Extension::kIdSize = 20;  // SHA1 (160 bits) == 20 bytes
+
 const std::string Extension::VersionString() const {
   return version_->GetString();
 }
 
-// Defined in extension_protocols.h.
-extern const char kExtensionURLScheme[];
-
 // static
 GURL Extension::GetResourceURL(const GURL& extension_url,
                                const std::string& relative_path) {
-  DCHECK(extension_url.SchemeIs(kExtensionURLScheme));
+  DCHECK(extension_url.SchemeIs(chrome::kExtensionScheme));
   DCHECK(extension_url.path() == "/");
 
   GURL ret_val = GURL(extension_url.spec() + relative_path);
@@ -177,25 +174,18 @@ bool Extension::InitFromValue(const DictionaryValue& source,
     *error = kInvalidIdError;
     return false;
   }
-  // Verify that the id is legal.  This test is basically verifying that it
-  // is ASCII and doesn't have any path components in it.
-  // TODO(erikkay): verify the actual id format - it will be more restrictive
-  // than this.  Perhaps just a hex string?
-  if (!IsStringASCII(id_)) {
-    *error = kInvalidIdError;
-    return false;
-  }
-  FilePath id_path;
-  id_path = id_path.AppendASCII(id_);
-  if ((id_path.value() == FilePath::kCurrentDirectory) ||
-      (id_path.value() == FilePath::kParentDirectory) ||
-      !(id_path.BaseName() == id_path)) {
+
+  // Verify that the id is legal.  The id is a hex string of the SHA-1 hash of
+  // the public key.
+  std::vector<uint8> id_bytes;
+  if (!HexStringToBytes(id_, &id_bytes) || id_bytes.size() != kIdSize) {
     *error = kInvalidIdError;
     return false;
   }
 
   // Initialize URL.
-  extension_url_ = GURL(std::string(kExtensionURLScheme) + "://" + id_ + "/");
+  extension_url_ = GURL(std::string(chrome::kExtensionScheme) +
+                        chrome::kStandardSchemeSeparator + id_ + "/");
 
   // Initialize version.
   std::string version_str;

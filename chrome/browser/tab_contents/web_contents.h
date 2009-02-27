@@ -14,6 +14,7 @@
 #include "chrome/browser/cancelable_request.h"
 #include "chrome/browser/download/save_package.h"
 #include "chrome/browser/fav_icon_helper.h"
+#include "chrome/browser/find_notification_details.h"
 #include "chrome/browser/renderer_host/render_view_host_delegate.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/render_view_host_manager.h"
@@ -106,6 +107,8 @@ class WebContents : public TabContents,
     return view_.get();
   }
 
+  // Page state getters & setters ----------------------------------------------
+
   bool is_starred() const { return is_starred_; }
 
   const std::wstring& encoding() const { return encoding_; }
@@ -171,6 +174,40 @@ class WebContents : public TabContents,
     return render_manager_.interstitial_page();
   }
 
+  // Find in Page --------------------------------------------------------------
+
+  // Starts the Find operation by calling StartFinding on the Tab. This function
+  // can be called from the outside as a result of hot-keys, so it uses the
+  // last remembered search string as specified with set_find_string(). This
+  // function does not block while a search is in progress. The controller will
+  // receive the results through the notification mechanism. See Observe(...)
+  // for details.
+  void StartFinding(const std::wstring& find_text, bool forward_direction);
+
+  // Stops the current Find operation. If |clear_selection| is true, it will
+  // also clear the selection on the focused frame.
+  void StopFinding(bool clear_selection);
+
+  // Accessors/Setters for find_ui_active_.
+  bool find_ui_active() const { return find_ui_active_; }
+  void set_find_ui_active(bool find_ui_active) {
+      find_ui_active_ = find_ui_active;
+  }
+
+  // Used _only_ by testing to set the current request ID, since it calls
+  // StartFinding on the RenderViewHost directly, rather than by using
+  // StartFinding's more limited API.
+  void set_current_find_request_id(int current_find_request_id) {
+    current_find_request_id_ = current_find_request_id;
+  }
+
+  // Accessor for find_text_. Used to determine if this WebContents has any
+  // active searches.
+  std::wstring find_text() const { return find_text_; }
+
+  // Accessor for find_result_.
+  const FindNotificationDetails& find_result() const { return find_result_; }
+
   // Misc state & callbacks ----------------------------------------------------
 
   // Set whether the contents should block javascript message boxes or not.
@@ -228,6 +265,10 @@ class WebContents : public TabContents,
     render_manager_.CrossSiteNavigationCanceled();
   }
 
+  void WindowMoveOrResizeStarted() {
+    render_view_host()->WindowMoveOrResizeStarted();
+  }
+
  protected:
   // Should be deleted via CloseContents.
   virtual ~WebContents();
@@ -247,8 +288,9 @@ class WebContents : public TabContents,
   virtual RenderViewHostDelegate::Save* GetSaveDelegate() const;
   virtual Profile* GetProfile() const;
   virtual WebContents* GetAsWebContents() { return this; }
-  virtual void RendererReady(RenderViewHost* render_view_host);
-  virtual void RendererGone(RenderViewHost* render_view_host);
+  virtual void RenderViewCreated(RenderViewHost* render_view_host);
+  virtual void RenderViewReady(RenderViewHost* render_view_host);
+  virtual void RenderViewGone(RenderViewHost* render_view_host);
   virtual void DidNavigate(RenderViewHost* render_view_host,
                            const ViewHostMsg_FrameNavigate_Params& params);
   virtual void UpdateState(RenderViewHost* render_view_host,
@@ -292,8 +334,7 @@ class WebContents : public TabContents,
                               WindowOpenDisposition disposition);
   virtual void DomOperationResponse(const std::string& json_string,
                                     int automation_id);
-  virtual void ProcessExternalHostMessage(const std::string& receiver,
-                                          const std::string& message);
+  virtual void ProcessExternalHostMessage(const std::string& message);
   virtual void GoToEntryAtOffset(int offset);
   virtual void GetHistoryListCount(int* back_list_count,
                                    int* forward_list_count);
@@ -346,6 +387,11 @@ class WebContents : public TabContents,
       int32 page_id,
       const webkit_glue::WebApplicationInfo& info);
   virtual void OnEnterOrSpace();
+  virtual void OnFindReply(int request_id,
+                           int number_of_matches,
+                           const gfx::Rect& selection_rect,
+                           int active_match_ordinal,
+                           bool final_update);
   virtual bool CanTerminate() const;
 
 
@@ -365,8 +411,9 @@ class WebContents : public TabContents,
       RenderViewHost* render_view_host, int32 page_id) {
     DidStartLoading(render_view_host, page_id);
   }
-  virtual void RendererGoneFromRenderManager(RenderViewHost* render_view_host) {
-    RendererGone(render_view_host);
+  virtual void RenderViewGoneFromRenderManager(
+      RenderViewHost* render_view_host) {
+    RenderViewGone(render_view_host);
   }
   virtual void UpdateRenderViewSizeForRenderManager();
   virtual void NotifySwappedFromRenderManager() {
@@ -375,6 +422,7 @@ class WebContents : public TabContents,
   virtual NavigationController* GetControllerForRenderManager() {
     return controller();
   }
+  virtual NavigationEntry* GetLastCommittedNavigationEntryForRenderManager();
 
   // Initializes the given renderer if necessary and creates the view ID
   // corresponding to this view host. If this method is not called and the
@@ -588,6 +636,32 @@ class WebContents : public TabContents,
   // The current load state and the URL associated with it.
   net::LoadState load_state_;
   std::wstring load_state_host_;
+
+  // True if the Find UI is active for this Tab.
+  bool find_ui_active_;
+
+  // True if a Find operation was aborted. This can happen if the Find box is
+  // closed or if the search term inside the Find box is erased while a search
+  // is in progress.
+  bool find_op_aborted_;
+
+  // Each time a search request comes in we assign it an id before passing it
+  // over the IPC so that when the results come in we can evaluate whether we
+  // still care about the results of the search (in some cases we don't because
+  // the user has issued a new search).
+  static int find_request_id_counter_;
+
+  // This variable keeps track of what the most recent request id is.
+  int current_find_request_id_;
+
+  // The last string we searched for. This is used to figure out if this is a
+  // Find or a FindNext operation (FindNext should not increase the request id).
+  std::wstring find_text_;
+
+  // The last find result. This object contains details about the number of
+  // matches, the find selection rectangle, etc. The UI can access this
+  // information to build its presentation.
+  FindNotificationDetails find_result_;
 
   DISALLOW_COPY_AND_ASSIGN(WebContents);
 };

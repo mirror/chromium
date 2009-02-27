@@ -9,6 +9,7 @@
 #include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/browser/dom_ui/dom_ui.h"
 #include "chrome/browser/dom_ui/dom_ui_contents.h"
+#include "chrome/browser/cancelable_request.h"
 
 class GURL;
 
@@ -70,9 +71,9 @@ class BrowsingHistoryHandler : public DOMMessageHandler,
 
   // Browsing history remover
   BrowsingDataRemover* remover_;
-
+  
   // Our consumer for the history service.
-  CancelableRequestConsumerT<PageUsageData*, NULL> cancelable_consumer_;
+  CancelableRequestConsumerTSimple<PageUsageData*> cancelable_consumer_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowsingHistoryHandler);
 };
@@ -83,6 +84,9 @@ class HistoryUI : public DOMUI {
 
   // Return the URL for the front page of this UI.
   static GURL GetBaseURL();
+
+  // Return the URL for a given search term.
+  static const GURL GetHistoryURLWithSearchText(const std::wstring& text);
 
   // DOMUI Implementation
   virtual void Init();

@@ -152,6 +152,9 @@ class WidgetWin : public Widget,
   // Hides the window. This does NOT delete the window, it just hides it.
   virtual void Hide();
 
+  // Shows the window without changing size/position/activation state.
+  virtual void Show();
+
   // Closes the window synchronously.  Note that this should not be called from
   // an ATL message callback as it deletes the WidgetWin and ATL will
   // dereference it after the callback is processed.
@@ -189,6 +192,7 @@ class WidgetWin : public Widget,
     MSG_WM_DESTROY(OnDestroy)
     MSG_WM_ERASEBKGND(OnEraseBkgnd)
     MSG_WM_ENDSESSION(OnEndSession)
+    MSG_WM_ENTERSIZEMOVE(OnEnterSizeMove)
     MSG_WM_EXITMENULOOP(OnExitMenuLoop)
     MSG_WM_HSCROLL(OnHScroll)
     MSG_WM_INITMENU(OnInitMenu)
@@ -359,6 +363,7 @@ class WidgetWin : public Widget,
   // leak a few things.
   virtual void OnDestroy();
   virtual void OnEndSession(BOOL ending, UINT logoff) { SetMsgHandled(FALSE); }
+  virtual void OnEnterSizeMove() { SetMsgHandled(FALSE); }
   virtual void OnExitMenuLoop(BOOL is_track_popup_menu) { SetMsgHandled(FALSE); }
   virtual LRESULT OnEraseBkgnd(HDC dc);
   virtual LRESULT OnGetObject(UINT uMsg, WPARAM w_param, LPARAM l_param);

@@ -15,13 +15,14 @@
 #include "base/string_piece.h"
 #include "base/singleton.h"
 #include "base/task.h"
-#include "chrome/browser/autocomplete/autocomplete.h"
 #include "chrome/browser/autocomplete/history_url_provider.h"
-#include "chrome/browser/bookmarks/bookmark_utils.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/cache_manager_host.h"
 #include "chrome/browser/debugger/debugger_shell.h"
+#include "chrome/browser/dom_ui/dom_ui.h"
+#include "chrome/browser/download/download_request_dialog_delegate.h"
+#include "chrome/browser/download/download_request_manager.h"
 #include "chrome/browser/first_run.h"
 #include "chrome/browser/history/in_memory_history_backend.h"
 #include "chrome/browser/memory_details.h"
@@ -40,58 +41,9 @@
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/process_watcher.h"
-#include "chrome/common/resource_bundle.h"
 #include "net/url_request/url_request_context.h"
 #include "webkit/glue/webcursor.h"
 #include "webkit/glue/webkit_glue.h"
-
-//--------------------------------------------------------------------------
-
-// static
-size_t AutocompleteProvider::max_matches_;
-
-AutocompleteProvider::~AutocompleteProvider() {
-  // Though nothing needs this function yet, we want to get the C++ metadata
-  // for this class grounded in this file.
-  NOTIMPLEMENTED();
-}
-
-std::wstring AutocompleteProvider::StringForURLDisplay(const GURL& url,
-                                                       bool check_accept_lang) {
-  NOTIMPLEMENTED();
-  return L"";
-}
-
-// static
-size_t AutocompleteResult::max_matches_;
-
-AutocompleteMatch::AutocompleteMatch(AutocompleteProvider* provider,
-                                     int relevance,
-                                     bool deletable,
-                                     Type type) {
-  NOTIMPLEMENTED();
-}
-
-//static
-std::string AutocompleteInput::TypeToString(AutocompleteInput::Type type) {
-  NOTIMPLEMENTED();
-  return "";
-}
-
-//static
-std::string AutocompleteMatch::TypeToString(AutocompleteMatch::Type type) {
-  NOTIMPLEMENTED();
-  return "";
-}
-
-void AutocompleteMatch::ClassifyLocationInString(
-    size_t match_location,
-    size_t match_length,
-    size_t overall_length,
-    int style,
-    ACMatchClassifications* classification) {
-  NOTIMPLEMENTED();
-}
 
 //--------------------------------------------------------------------------
 
@@ -147,21 +99,14 @@ bool Upgrade::SwapNewChromeExeIfPresent() {
 
 void OpenFirstRunDialog(Profile* profile) { NOTIMPLEMENTED(); }
 
-GURL NewTabUIURL() {
-  NOTIMPLEMENTED();
-  // TODO(port): returning a blank URL here confuses the page IDs so make sure
-  // we load something
-  return GURL("http://dev.chromium.org");
-}
-
 //--------------------------------------------------------------------------
 
 void InstallJankometer(const CommandLine&) {
-  NOTIMPLEMENTED();
+  // http://code.google.com/p/chromium/issues/detail?id=8077
 }
 
 void UninstallJankometer() {
-  NOTIMPLEMENTED();
+  // http://code.google.com/p/chromium/issues/detail?id=8077
 }
 
 //--------------------------------------------------------------------------
@@ -279,17 +224,17 @@ void TabContents::UpdateMaxPageID(int32 page_id) {
 //--------------------------------------------------------------------------
 
 void RLZTracker::CleanupRlz() {
-  NOTIMPLEMENTED();
+  // http://code.google.com/p/chromium/issues/detail?id=8152
 }
 
 bool RLZTracker::GetAccessPointRlz(AccessPoint point, std::wstring* rlz) {
-  NOTIMPLEMENTED();
+  // http://code.google.com/p/chromium/issues/detail?id=8152
   return false;
 }
 
 bool RLZTracker::RecordProductEvent(Product product, AccessPoint point,
                                     Event event) {
-  NOTIMPLEMENTED();
+  // http://code.google.com/p/chromium/issues/detail?id=8152
   return false;
 }
 
@@ -297,11 +242,6 @@ bool RLZTracker::RecordProductEvent(Product product, AccessPoint point,
 bool IsPluginProcess() {
   return false;
 }
-
-//--------------------------------------------------------------------------
-
-// This is from chrome_plugin_util.cc.
-void CPB_Free(void* memory) { NOTIMPLEMENTED(); }
 
 //--------------------------------------------------------------------------
 
@@ -324,38 +264,6 @@ void RunBeforeUnloadDialog(WebContents* web_contents,
 
 void RunRepostFormWarningDialog(NavigationController*) {
 }
-
-#if defined(OS_MACOSX)
-ResourceBundle* ResourceBundle::g_shared_instance_ = NULL;
-
-// GetBitmapNamed() will leak, but there's no way around it for stubs.
-SkBitmap* ResourceBundle::GetBitmapNamed(int) {
-  NOTIMPLEMENTED();
-  return new SkBitmap();
-}
-ResourceBundle::ResourceBundle() { }
-ResourceBundle& ResourceBundle::GetSharedInstance() {
-  NOTIMPLEMENTED();
-  if (!g_shared_instance_)
-    g_shared_instance_ = new ResourceBundle;
-  return *g_shared_instance_;
-}
-
-StringPiece ResourceBundle::GetRawDataResource(int resource_id) {
-  NOTIMPLEMENTED();
-  return StringPiece();
-}
-
-std::string ResourceBundle::GetDataResource(int resource_id) {
-  NOTIMPLEMENTED();
-  return "";
-}
-
-void ResourceBundle::CleanupSharedInstance() {
-  NOTIMPLEMENTED();
-}
-
-#endif
 
 LoginHandler* CreateLoginPrompt(net::AuthChallengeInfo* auth_info,
                                 URLRequest* request,
@@ -401,68 +309,6 @@ void DebuggerShell::ProcessCommand(const std::wstring& data) {
 }
 #endif  // !CHROME_DEBUGGER_DISABLED
 
-void HistoryURLProvider::ExecuteWithDB(history::HistoryBackend*,
-                                       history::URLDatabase*,
-                                       HistoryURLProviderParams*) {
-  NOTIMPLEMENTED();
-}
-
-namespace bookmark_utils {
-
-bool DoesBookmarkContainText(BookmarkNode* node, const std::wstring& text) {
-  NOTIMPLEMENTED();
-  return false;
-}
-
-void GetMostRecentlyAddedEntries(BookmarkModel* model,
-                                 size_t count,
-                                 std::vector<BookmarkNode*>* nodes) {
-  NOTIMPLEMENTED();
-}
-
-std::vector<BookmarkNode*> GetMostRecentlyModifiedGroups(BookmarkModel* model,
-                                                         size_t max_count) {
-  NOTIMPLEMENTED();
-  return std::vector<BookmarkNode*>();
-}
-
-void GetBookmarksContainingText(BookmarkModel* model,
-                                const std::wstring& text,
-                                size_t max_count,
-                                std::vector<BookmarkNode*>* nodes) {
-  NOTIMPLEMENTED();
-}
-
-void GetBookmarksMatchingText(BookmarkModel* model,
-                              const std::wstring& text,
-                              size_t max_count,
-                              std::vector<TitleMatch>* matches) {
-  NOTIMPLEMENTED();
-}
-
-bool MoreRecentlyAdded(BookmarkNode* n1, BookmarkNode* n2) {
-  NOTIMPLEMENTED();
-  return false;
-}
-
-}
-
-ScopableCPRequest::~ScopableCPRequest() {
-  NOTIMPLEMENTED();
-}
-
-#if defined(OS_MACOSX)
-namespace gfx {
-std::wstring GetCleanStringFromUrl(const GURL& url,
-                                   const std::wstring& languages,
-                                   url_parse::Parsed* new_parsed,
-                                   size_t* prefix_end) {
-  NOTIMPLEMENTED();
-  return L"";
-}
-}
-#endif
-
 MemoryDetails::MemoryDetails() {
   NOTIMPLEMENTED();
 }
@@ -486,30 +332,21 @@ InfoBar* LinkInfoBarDelegate::CreateInfoBar() {
   return NULL;
 }
 
-void CPHandleCommand(int command, CPCommandInterface* data,
-                     CPBrowsingContext context) {
-  NOTIMPLEMENTED();
-}
-
 bool CanImportURL(const GURL& url) {
   NOTIMPLEMENTED();
   return false;
 }
 
-bool DOMUIContentsCanHandleURL(GURL* url,
-                               TabContentsType* result_type) {
-  NOTIMPLEMENTED();
-  return false;
-}
-
-bool NewTabUIHandleURL(GURL* url,
-                       TabContentsType* result_type) {
-  NOTIMPLEMENTED();
-  return false;
-}
-
-CPBrowserFuncs* GetCPBrowserFuncsForBrowser() {
+DownloadRequestDialogDelegate* DownloadRequestDialogDelegate::Create(
+    TabContents* tab,
+    DownloadRequestManager::TabDownloadState* host) {
   NOTIMPLEMENTED();
   return NULL;
+}
+
+views::Window* CreateInputWindow(gfx::NativeWindow parent_hwnd,
+                                 InputWindowDelegate* delegate) {
+  NOTIMPLEMENTED();
+  return new views::Window();
 }
 

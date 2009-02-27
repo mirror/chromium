@@ -211,6 +211,8 @@ input_files = ChromeFileList([
     'time_format.h',
     'unzip.cc',
     'unzip.h',
+    'url_constants.cc',
+    'url_constants.h',
     'visitedlink_common.cc',
     'visitedlink_common.h',
     'win_safe_util.cc',
@@ -230,7 +232,6 @@ if not env.Bit('windows'):
 
   # TODO(port): Port these.
   input_files.Remove(
-      'chrome_plugin_util.cc',
       'chrome_process_filter.cc',
       'drag_drop_types.cc',
       'gfx/emf.cc',
@@ -238,8 +239,6 @@ if not env.Bit('windows'):
       'gfx/path.cc',
       'os_exchange_data.cc',
       'process_watcher.cc',
-      'child_process_host.cc',
-      'child_process_host.h',
   )
 
 if not env.Bit('windows'):
@@ -284,7 +283,8 @@ if env.Bit('windows'):
 
 if env.Bit('linux'):
   input_files.Append(
-      'transport_dib_linux.cc'
+      'transport_dib_linux.cc',
+      'x11_util.cc'
   )
 
 if env.Bit('mac'):

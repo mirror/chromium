@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "base/command_line.h"
+#include "base/histogram.h"
 #include "base/message_loop.h"
 #include "base/path_service.h"
 #include "base/platform_thread.h"
@@ -69,6 +70,13 @@ static void HandleRendererErrorTestParameters(const CommandLine& command_line) {
 int RendererMain(const MainFunctionParams& parameters) {
   const CommandLine& parsed_command_line = parameters.command_line_;
   base::ScopedNSAutoreleasePool* pool = parameters.autorelease_pool_;
+
+  // This function allows pausing execution using the --renderer-startup-dialog
+  // flag allowing us to attach a debugger.
+  // Do not move this function down since that would mean we can't easily debug
+  // whatever occurs before it.
+  HandleRendererErrorTestParameters(parsed_command_line);
+
   RendererMainPlatformDelegate platform(parameters);
 
   StatsScope<StatsCounterTimer>
@@ -87,7 +95,12 @@ int RendererMain(const MainFunctionParams& parameters) {
   bool no_sandbox = parsed_command_line.HasSwitch(switches::kNoSandbox);
   platform.InitSandboxTests(no_sandbox);
 
-  HandleRendererErrorTestParameters(parsed_command_line);
+  // Initialize histogram statistics gathering system.
+  // Don't create StatisticsRecorde in the single process mode.
+  scoped_ptr<StatisticsRecorder> statistics;
+  if (!StatisticsRecorder::WasStarted()) {
+    statistics.reset(new StatisticsRecorder());
+  }
 
   {
     RenderProcess render_process;

@@ -15,6 +15,7 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
+#include "chrome/common/url_constants.h"
 #include "googleurl/src/url_util.h"
 #include "grit/generated_resources.h"
 #include "net/base/escape.h"
@@ -325,7 +326,8 @@ bool SearchProvider::ParseSuggestResults(Value* root_val) {
           site_val->GetAsString(&site_name)) {
         // We can't blindly trust the URL coming from the server to be valid.
         GURL result_url =
-            GURL(URLFixerUpper::FixupURL(suggestion_str, std::wstring()));
+            GURL(URLFixerUpper::FixupURL(WideToUTF8(suggestion_str),
+                                         std::string()));
         if (result_url.is_valid()) {
           navigation_results_.push_back(NavigationResult(result_url,
                                                          site_name));
@@ -577,7 +579,8 @@ AutocompleteMatch SearchProvider::NavigationToMatch(
   match.contents = StringForURLDisplay(navigation.url, true);
   // TODO(kochi): Consider moving HistoryURLProvider::TrimHttpPrefix() to some
   // public utility function.
-  if (!url_util::FindAndCompareScheme(input_.text(), "http", NULL))
+  if (!url_util::FindAndCompareScheme(WideToUTF8(input_.text()),
+                                      "http", NULL))
     TrimHttpPrefix(&match.contents);
   AutocompleteMatch::ClassifyMatchInString(input_.text(), match.contents,
                                            ACMatchClassification::URL,
@@ -604,7 +607,8 @@ AutocompleteMatch SearchProvider::NavigationToMatch(
 // static
 size_t SearchProvider::TrimHttpPrefix(std::wstring* url) {
   url_parse::Component scheme;
-  if (!url_util::FindAndCompareScheme(*url, "http", &scheme))
+  if (!url_util::FindAndCompareScheme(WideToUTF8(*url), chrome::kHttpScheme,
+                                      &scheme))
     return 0;  // Not "http".
 
   // Erase scheme plus up to two slashes.

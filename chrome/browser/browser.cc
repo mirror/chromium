@@ -12,6 +12,8 @@
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_shutdown.h"
+#include "chrome/browser/browser_window.h"
+#include "chrome/browser/dom_ui/new_tab_ui.h"
 #include "chrome/browser/location_bar.h"
 #include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/net/url_fixer_upper.h"
@@ -47,21 +49,19 @@
 #endif
 
 #if defined(OS_WIN)
-
 #include <windows.h>
 #include <shellapi.h>
 
 #include "chrome/browser/automation/ui_controls.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_url_handler.h"
-#include "chrome/browser/browser_window.h"
 #include "chrome/browser/cert_store.h"
 #include "chrome/browser/character_encoding.h"
 #include "chrome/browser/debugger/debugger_window.h"
 #include "chrome/browser/dock_info.h"
-#include "chrome/browser/dom_ui/new_tab_ui.h"
+#include "chrome/browser/dom_ui/downloads_ui.h"
+#include "chrome/browser/dom_ui/history_ui.h"
 #include "chrome/browser/download/save_package.h"
-#include "chrome/browser/history_tab_ui.h"
 #include "chrome/browser/options_window.h"
 #include "chrome/browser/ssl/ssl_error_info.h"
 #include "chrome/browser/tab_contents/web_contents_view.h"
@@ -320,6 +320,9 @@ void Browser::OpenApplicationWindow(Profile* profile, const GURL& url) {
   Browser* browser = Browser::CreateForApp(app_name, profile);
   browser->AddTabWithURL(url, GURL(), PageTransition::START_PAGE, true, NULL);
   browser->window()->Show();
+  // TODO(jcampan): http://crbug.com/8123 we should not need to set the initial
+  //                focus explicitly.
+  browser->GetSelectedTabContents()->SetInitialFocus();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -637,6 +640,9 @@ void Browser::NewIncognitoWindow() {
 
 void Browser::NewProfileWindowByIndex(int index) {
 #if defined(OS_WIN)
+  const CommandLine& command_line = *CommandLine::ForCurrentProcess();
+  if (!command_line.HasSwitch(switches::kEnableUserDataDirProfiles))
+    return;
   UserMetrics::RecordAction(L"NewProfileWindowByIndex", profile_);
   UserDataManager::Get()->LaunchChromeForProfile(index);
 #endif
@@ -743,6 +749,11 @@ void Browser::BookmarkCurrentPage() {
   window_->ShowBookmarkBubble(url, model->IsBookmarked(url));
 }
 
+void Browser::SavePage() {
+  UserMetrics::RecordAction(L"SavePage", profile_);
+  GetSelectedTabContents()->AsWebContents()->OnSavePage();
+}
+
 void Browser::ViewSource() {
   UserMetrics::RecordAction(L"ViewSource", profile_);
 
@@ -764,11 +775,6 @@ void Browser::ClosePopups() {
 void Browser::Print() {
   UserMetrics::RecordAction(L"PrintPreview", profile_);
   GetSelectedTabContents()->AsWebContents()->PrintPreview();
-}
-
-void Browser::SavePage() {
-  UserMetrics::RecordAction(L"SavePage", profile_);
-  GetSelectedTabContents()->AsWebContents()->OnSavePage();
 }
 
 void Browser::ToggleEncodingAutoDetect() {
@@ -845,18 +851,17 @@ void Browser::Paste() {
 
 void Browser::Find() {
   UserMetrics::RecordAction(L"Find", profile_);
-  GetSelectedTabContents()->AsWebContents()->view()->FindInPage(*this, false,
-                                                                false);
+  FindInPage(false, false);
 }
 
 void Browser::FindNext() {
   UserMetrics::RecordAction(L"FindNext", profile_);
-  AdvanceFindSelection(true);
+  FindInPage(true, true);
 }
 
 void Browser::FindPrevious() {
   UserMetrics::RecordAction(L"FindPrevious", profile_);
-  AdvanceFindSelection(false);
+  FindInPage(true, false);
 }
 
 void Browser::ZoomIn() {
@@ -943,6 +948,9 @@ void Browser::OpenSelectProfileDialog() {
 }
 
 void Browser::OpenNewProfileDialog() {
+  const CommandLine& command_line = *CommandLine::ForCurrentProcess();
+  if (!command_line.HasSwitch(switches::kEnableUserDataDirProfiles))
+    return;
   UserMetrics::RecordAction(L"CreateProfile", profile_);
   window_->ShowNewProfileDialog();
 }
@@ -959,7 +967,9 @@ void Browser::ToggleBookmarkBar() {
 
 void Browser::ShowHistoryTab() {
   UserMetrics::RecordAction(L"ShowHistory", profile_);
-  ShowNativeUITab(HistoryTabUI::GetURL());
+  GURL downloads_url = HistoryUI::GetBaseURL();
+  AddTabWithURL(downloads_url, GURL(), PageTransition::AUTO_BOOKMARK, true,
+                NULL);
 }
 
 void Browser::OpenBookmarkManager() {
@@ -969,7 +979,9 @@ void Browser::OpenBookmarkManager() {
 
 void Browser::ShowDownloadsTab() {
   UserMetrics::RecordAction(L"ShowDownloads", profile_);
-  ShowNativeUITab(DownloadTabUI::GetURL());
+  GURL downloads_url = DownloadsUI::GetBaseURL();
+  AddTabWithURL(downloads_url, GURL(), PageTransition::AUTO_BOOKMARK, true,
+                NULL);
 }
 
 void Browser::OpenClearBrowsingDataDialog() {
@@ -1114,12 +1126,12 @@ void Browser::ExecuteCommand(int id) {
     case IDC_EXIT:                  Exit();                        break;
 
     // Page-related commands
+    case IDC_SAVE_PAGE:             SavePage();                    break;
     case IDC_STAR:                  BookmarkCurrentPage();         break;
     case IDC_VIEW_SOURCE:           ViewSource();                  break;
 #if defined(OS_WIN)
     case IDC_CLOSE_POPUPS:          ClosePopups();                 break;
     case IDC_PRINT:                 Print();                       break;
-    case IDC_SAVE_PAGE:             SavePage();                    break;
     case IDC_ENCODING_AUTO_DETECT:  ToggleEncodingAutoDetect();    break;
     case IDC_ENCODING_UTF8:
     case IDC_ENCODING_UTF16LE:
@@ -1215,7 +1227,7 @@ void Browser::ExecuteCommand(int id) {
 // Browser, TabStripModelDelegate implementation:
 
 GURL Browser::GetBlankTabURL() const {
-  return NewTabUIURL();
+  return NewTabUI::GetBaseURL();
 }
 
 void Browser::CreateNewStripWithContents(TabContents* detached_contents,
@@ -1238,20 +1250,6 @@ void Browser::CreateNewStripWithContents(TabContents* detached_contents,
   // won't start if the page is loading.
   browser->LoadingStateChanged(detached_contents);
   browser->window()->Show();
-
-#if defined(OS_WIN)
-  // When we detach a tab we need to make sure any associated Find window moves
-  // along with it to its new home (basically we just make new_window the
-  // parent of the Find window).
-  // TODO(brettw) this could probably be improved, see
-  // WebContentsView::ReparentFindWindow for more.
-  WebContents* web_contents = detached_contents->AsWebContents();
-  if (web_contents)
-    web_contents->view()->ReparentFindWindow(browser);
-#else
-  // TODO(port): remove the view dependency from this.
-  NOTIMPLEMENTED() << "need to reparent find window";
-#endif
 }
 
 int Browser::GetDragActions() const {
@@ -1398,18 +1396,6 @@ void Browser::TabInsertedAt(TabContents* contents,
 
   SyncHistoryWithTabs(tabstrip_model_.GetIndexOfTabContents(contents));
 
-#if defined(OS_WIN)
-  // When a tab is dropped into a tab strip we need to make sure that the
-  // associated Find window is moved along with it. We therefore change the
-  // parent of the Find window (if the parent is already correctly set this
-  // does nothing).
-  // TODO(brettw) this could probably be improved, see
-  // WebContentsView::ReparentFindWindow for more.
-  WebContents* web_contents = contents->AsWebContents();
-  if (web_contents)
-    web_contents->view()->ReparentFindWindow(this);
-#endif
-
   // Make sure the loading state is updated correctly, otherwise the throbber
   // won't start if the page is loading.
   LoadingStateChanged(contents);
@@ -1458,9 +1444,13 @@ void Browser::TabSelectedAt(TabContents* old_contents,
     ProcessPendingUIUpdates();
 
   if (old_contents) {
+#if defined(OS_WIN)
     // Save what the user's currently typing, so it can be restored when we
     // switch back to this tab.
     window_->GetLocationBar()->SaveStateToContents(old_contents);
+#else
+    NOTIMPLEMENTED();
+#endif
   }
 
   // Propagate the profile to the location bar.
@@ -2023,6 +2013,13 @@ void Browser::InitCommandState() {
     command_updater_.UpdateCommandEnabled(IDC_SELECT_LAST_TAB, normal_window);
     command_updater_.UpdateCommandEnabled(IDC_RESTORE_TAB,
         normal_window && !profile_->IsOffTheRecord());
+
+    // Show various bits of UI
+#if defined(OS_WIN)
+    command_updater_.UpdateCommandEnabled(IDC_DEBUGGER,
+        // The debugger doesn't work in single process mode.
+        normal_window && !RenderProcessHost::run_renderer_in_process());
+#endif
   }
 
   // Initialize other commands whose state changes based on fullscreen mode.
@@ -2048,6 +2045,9 @@ void Browser::UpdateCommandsForTabState() {
     WebContents* web_contents = current_tab->AsWebContents();
     bool is_web_contents = web_contents != NULL;
 
+    // Current navigation entry, may be NULL.
+    NavigationEntry* active_entry = current_tab->controller()->GetActiveEntry();
+
     // Page-related commands
     // Only allow bookmarking for web content in normal windows.
     command_updater_.UpdateCommandEnabled(IDC_STAR,
@@ -2055,8 +2055,7 @@ void Browser::UpdateCommandsForTabState() {
     window_->SetStarredState(is_web_contents && web_contents->is_starred());
     // View-source should not be enabled if already in view-source mode.
     command_updater_.UpdateCommandEnabled(IDC_VIEW_SOURCE,
-        is_web_contents && (current_tab->type() != TAB_CONTENTS_VIEW_SOURCE) &&
-        current_tab->controller()->GetActiveEntry());
+        is_web_contents && active_entry && !active_entry->IsViewSourceMode());
     command_updater_.UpdateCommandEnabled(IDC_PRINT, is_web_contents);
     command_updater_.UpdateCommandEnabled(IDC_SAVE_PAGE,
         is_web_contents && SavePackage::IsSavableURL(current_tab->GetURL()));
@@ -2101,11 +2100,6 @@ void Browser::UpdateCommandsForFullscreenMode(bool is_fullscreen) {
 
   // Show various bits of UI
   command_updater_.UpdateCommandEnabled(IDC_DEVELOPER_MENU, show_main_ui);
-#if defined(OS_WIN)
-  command_updater_.UpdateCommandEnabled(IDC_DEBUGGER,
-      // The debugger doesn't work in single process mode.
-      show_main_ui && !RenderProcessHost::run_renderer_in_process());
-#endif
   command_updater_.UpdateCommandEnabled(IDC_NEW_PROFILE, show_main_ui);
   command_updater_.UpdateCommandEnabled(IDC_REPORT_BUG, show_main_ui);
   command_updater_.UpdateCommandEnabled(IDC_SHOW_BOOKMARK_BAR, show_main_ui);
@@ -2396,22 +2390,28 @@ void Browser::BuildPopupWindow(TabContents* source,
 }
 
 GURL Browser::GetHomePage() {
+#if defined(OS_LINUX)
+  return GURL("about:linux-splash");
+#endif
   if (profile_->GetPrefs()->GetBoolean(prefs::kHomePageIsNewTabPage))
-    return NewTabUIURL();
+    return NewTabUI::GetBaseURL();
   GURL home_page = GURL(URLFixerUpper::FixupURL(
       WideToUTF8(profile_->GetPrefs()->GetString(prefs::kHomePage)),
       std::string()));
   if (!home_page.is_valid())
-    return NewTabUIURL();
+    return NewTabUI::GetBaseURL();
   return home_page;
 }
 
 #if defined(OS_WIN)
-void Browser::AdvanceFindSelection(bool forward_direction) {
-  GetSelectedTabContents()->AsWebContents()->view()->FindInPage(
-      *this, true, forward_direction);
+void Browser::FindInPage(bool find_next, bool forward_direction) {
+  window_->ShowFindBar();
+  if (find_next) {
+    GetSelectedTabContents()->AsWebContents()->StartFinding(
+        std::wstring(),
+        forward_direction);
+  }
 }
-
 #endif  // OS_WIN
 
 void Browser::CloseFrame() {

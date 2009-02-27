@@ -150,10 +150,15 @@ gfx::Size AeroGlassNonClientView::CalculateWindowSizeForClientSize(
 
 gfx::Point AeroGlassNonClientView::GetSystemMenuPoint() const {
   gfx::Point system_menu_point;
-  if (browser_view_->IsTabStripVisible()) {
-    system_menu_point.SetPoint(
-        NonClientBorderThickness() - kClientEdgeThickness,
-        NonClientTopBorderHeight() + browser_view_->GetTabStripHeight());
+  if (browser_view_->IsBrowserTypeNormal()) {
+    // The maximized mode bit here is because in maximized mode the frame edge
+    // and the client edge are both offscreen, whereas in the opaque frame
+    // (where we don't do this trick) maximized windows have no client edge and
+    // only the frame edge is offscreen.
+    system_menu_point.SetPoint(NonClientBorderThickness() -
+        (frame_->IsMaximized() ? 0 : kClientEdgeThickness),
+        NonClientTopBorderHeight() + browser_view_->GetTabStripHeight() -
+        kClientEdgeThickness);
   } else {
     system_menu_point.SetPoint(0, -kFrameShadowThickness);
   }
@@ -162,10 +167,11 @@ gfx::Point AeroGlassNonClientView::GetSystemMenuPoint() const {
 }
 
 int AeroGlassNonClientView::NonClientHitTest(const gfx::Point& point) {
-  // If we don't have a tabstrip, we haven't customized the frame, so Windows
-  // can figure this out.  If the point isn't within our bounds, then it's in
-  // the native portion of the frame, so again Windows can figure it out.
-  if (!browser_view_->IsTabStripVisible() || !bounds().Contains(point))
+  // If the browser isn't in normal mode, we haven't customized the frame, so
+  // Windows can figure this out.  If the point isn't within our bounds, then
+  // it's in the native portion of the frame, so again Windows can figure it
+  // out.
+  if (!browser_view_->IsBrowserTypeNormal() || !bounds().Contains(point))
     return HTNOWHERE;
 
   int frame_component = frame_->client_view()->NonClientHitTest(point);
@@ -185,12 +191,13 @@ int AeroGlassNonClientView::NonClientHitTest(const gfx::Point& point) {
 // AeroGlassNonClientView, views::View overrides:
 
 void AeroGlassNonClientView::Paint(ChromeCanvas* canvas) {
+  if (!browser_view_->IsTabStripVisible())
+    return;  // Nothing is visible, so don't bother to paint.
+
   PaintDistributorLogo(canvas);
-  if (browser_view_->IsTabStripVisible())
-    PaintToolbarBackground(canvas);
+  PaintToolbarBackground(canvas);
   PaintOTRAvatar(canvas);
-  if (browser_view_->IsTabStripVisible())
-    PaintClientEdge(canvas);
+  PaintClientEdge(canvas);
 }
 
 void AeroGlassNonClientView::Layout() {
@@ -271,21 +278,13 @@ void AeroGlassNonClientView::PaintOTRAvatar(ChromeCanvas* canvas) {
 }
 
 void AeroGlassNonClientView::PaintClientEdge(ChromeCanvas* canvas) {
+  // The client edges start below the toolbar upper corner images regardless
+  // of how tall the toolbar itself is.
   int client_area_top =
-      frame_->client_view()->y() + browser_view_->GetToolbarBounds().bottom();
-  gfx::Rect client_area_bounds = CalculateClientAreaBounds(width(), height());
-  // The toolbar draws a client edge along its own bottom edge when it's visible
-  // and in normal mode.  However, it only draws this for the width of the
-  // actual client area, leaving a gap at the left and right edges:
-  //
-  // |             Toolbar             | <-- part of toolbar
-  //  ----- (toolbar client edge) -----  <-- gap
-  // |           Client area           | <-- right client edge
-  //
-  // To address this, we extend the left and right client edges up to fill the
-  // gap, by pretending the toolbar is shorter than it really is.
-  client_area_top -= kClientEdgeThickness;
+      frame_->client_view()->y() + browser_view_->GetToolbarBounds().y() +
+      resources_->GetPartBitmap(FRAME_CLIENT_EDGE_TOP_LEFT)->height();
 
+  gfx::Rect client_area_bounds = CalculateClientAreaBounds(width(), height());
   int client_area_bottom =
       std::max(client_area_top, height() - NonClientBorderThickness());
   int client_area_height = client_area_bottom - client_area_top;
@@ -326,10 +325,15 @@ void AeroGlassNonClientView::LayoutDistributorLogo() {
 void AeroGlassNonClientView::LayoutOTRAvatar() {
   SkBitmap otr_avatar_icon = browser_view_->GetOTRAvatarIcon();
   int top_height = NonClientTopBorderHeight();
-  int tabstrip_height = browser_view_->GetTabStripHeight() - kOTRBottomSpacing;
-  int otr_height = frame_->IsMaximized() ?
-      (tabstrip_height - kOTRMaximizedTopSpacing) :
-      otr_avatar_icon.height();
+  int tabstrip_height, otr_height;
+  if (browser_view_->IsTabStripVisible()) {
+    tabstrip_height = browser_view_->GetTabStripHeight() - kOTRBottomSpacing;
+    otr_height = frame_->IsMaximized() ?
+        (tabstrip_height - kOTRMaximizedTopSpacing) :
+        otr_avatar_icon.height();
+  } else {
+    tabstrip_height = otr_height = 0;
+  }
   otr_avatar_bounds_.SetRect(NonClientBorderThickness() + kOTRSideSpacing,
                              top_height + tabstrip_height - otr_height,
                              otr_avatar_icon.width(), otr_height);

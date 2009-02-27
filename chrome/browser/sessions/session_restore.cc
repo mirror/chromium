@@ -359,6 +359,9 @@ class SessionRestoreImpl : public NotificationObserver {
         std::min(initial_tab_count + std::max(0, selected_session_index),
                  browser->tab_count() - 1), true);
     browser->window()->Show();
+    // TODO(jcampan): http://crbug.com/8123 we should not need to set the
+    //                initial focus explicitly.
+    browser->GetSelectedTabContents()->SetInitialFocus();
   }
 
   void AppendURLsToBrowser(Browser* browser, const std::vector<GURL>& urls) {

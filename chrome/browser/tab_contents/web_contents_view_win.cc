@@ -7,8 +7,9 @@
 #include <windows.h>
 
 #include "chrome/browser/bookmarks/bookmark_drag_data.h"
-#include "chrome/browser/browser.h" // TODO(beng): this dependency is awful.
+#include "chrome/browser/browser.h"  // TODO(beng): this dependency is awful.
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/debugger/dev_tools_window.h"
 #include "chrome/browser/download/download_request_manager.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
@@ -20,10 +21,10 @@
 #include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/browser/tab_contents/web_drag_source.h"
 #include "chrome/browser/tab_contents/web_drop_target.h"
-#include "chrome/browser/views/find_bar_win.h"
 #include "chrome/browser/views/sad_tab_view.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/os_exchange_data.h"
+#include "chrome/common/url_constants.h"
 #include "net/base/net_util.h"
 #include "webkit/glue/plugins/webplugin_delegate_impl.h"
 #include "webkit/glue/webdropdata.h"
@@ -124,7 +125,7 @@ void WebContentsViewWin::StartDragging(const WebDropData& drop_data) {
   if (!drop_data.text_html.empty())
     data->SetHtml(drop_data.text_html, drop_data.html_base_url);
   if (drop_data.url.is_valid()) {
-    if (drop_data.url.SchemeIs("javascript")) {
+    if (drop_data.url.SchemeIs(chrome::kJavaScriptScheme)) {
       // We don't want to allow javascript URLs to be dragged to the desktop,
       // but we do want to allow them to be added to the bookmarks bar
       // (bookmarklets).
@@ -180,10 +181,6 @@ void WebContentsViewWin::OnContentsDestroy() {
   // automatically. The detached plugin windows will get cleaned up in proper
   // sequence as part of the usual cleanup when the plugin instance goes away.
   EnumChildWindows(GetHWND(), DetachPluginWindowsCallback, NULL);
-
-  // Close the find bar if any.
-  if (find_bar_.get())
-    find_bar_->Close();
 }
 
 void WebContentsViewWin::OnDestroy() {
@@ -216,50 +213,24 @@ void WebContentsViewWin::SizeContents(const gfx::Size& size) {
   WasSized(size);
 }
 
-void WebContentsViewWin::FindInPage(const Browser& browser,
-                                    bool find_next, bool forward_direction) {
-  if (!find_bar_.get()) {
-    // We want the Chrome top-level (Frame) window.
-    HWND hwnd = reinterpret_cast<HWND>(browser.window()->GetNativeHandle());
-    find_bar_.reset(new FindBarWin(this, hwnd));
-  } else {
-    find_bar_->Show();
-  }
+void WebContentsViewWin::OpenDeveloperTools() {
+  if (!dev_tools_window_.get())
+    dev_tools_window_.reset(new DevToolsWindow);
 
-  if (find_next && !find_bar_->find_string().empty())
-    find_bar_->StartFinding(forward_direction);
+  RenderViewHost* host = web_contents_->render_view_host();
+  if (!host)
+    return;
+
+  dev_tools_window_->Show(host->process()->host_id(), host->routing_id());
 }
 
-void WebContentsViewWin::HideFindBar(bool end_session) {
-  if (find_bar_.get()) {
-    if (end_session)
-      find_bar_->EndFindSession();
-    else
-      find_bar_->DidBecomeUnselected();
+void WebContentsViewWin::ForwardMessageToDevToolsClient(
+    const IPC::Message& message) {
+  if (!dev_tools_window_.get()) {
+    NOTREACHED() << "Developer tools window is not open.";
+    return;
   }
-}
-
-void WebContentsViewWin::ReparentFindWindow(Browser* new_browser) const {
-  if (find_bar_.get()) {
-    find_bar_->SetParent(
-        reinterpret_cast<HWND>(new_browser->window()->GetNativeHandle()));
-  }
-}
-
-bool WebContentsViewWin::GetFindBarWindowInfo(gfx::Point* position,
-                                              bool* fully_visible) const {
-  CRect window_rect;
-  if (!find_bar_.get() ||
-      !::IsWindow(find_bar_->GetHWND()) ||
-      !::GetWindowRect(find_bar_->GetHWND(), &window_rect)) {
-    *position = gfx::Point(0, 0);
-    *fully_visible = false;
-    return false;
-  }
-
-  *position = gfx::Point(window_rect.TopLeft().x, window_rect.TopLeft().y);
-  *fully_visible = find_bar_->IsVisible() && !find_bar_->IsAnimating();
-  return true;
+  dev_tools_window_->SendDevToolsClientMessage(message);
 }
 
 void WebContentsViewWin::UpdateDragCursor(bool is_drop_target) {
@@ -324,17 +295,6 @@ void WebContentsViewWin::HandleKeyboardEvent(const WebKeyboardEvent& event) {
                 event.actual_message.message,
                 event.actual_message.wParam,
                 event.actual_message.lParam);
-}
-
-void WebContentsViewWin::OnFindReply(int request_id,
-                                     int number_of_matches,
-                                     const gfx::Rect& selection_rect,
-                                     int active_match_ordinal,
-                                     bool final_update) {
-  if (find_bar_.get()) {
-    find_bar_->OnFindReply(request_id, number_of_matches, selection_rect,
-                           active_match_ordinal, final_update);
-  }
 }
 
 void WebContentsViewWin::ShowContextMenu(const ContextMenuParams& params) {
@@ -568,10 +528,6 @@ void WebContentsViewWin::OnWindowPosChanged(WINDOWPOS* window_pos) {
     // size hasn't changed.
     if (!(window_pos->flags & SWP_NOSIZE))
       WasSized(gfx::Size(window_pos->cx, window_pos->cy));
-
-    // If we have a FindInPage dialog, notify it that the window changed.
-    if (find_bar_.get() && find_bar_->IsVisible())
-      find_bar_->MoveWindowIfNecessary(gfx::Rect());
   }
 }
 
@@ -620,14 +576,10 @@ void WebContentsViewWin::ScrollCommon(UINT message, int scroll_type,
 
 void WebContentsViewWin::WasHidden() {
   web_contents_->HideContents();
-  if (find_bar_.get())
-    find_bar_->DidBecomeUnselected();
 }
 
 void WebContentsViewWin::WasShown() {
   web_contents_->ShowContents();
-  if (find_bar_.get())
-    find_bar_->DidBecomeSelected();
 }
 
 void WebContentsViewWin::WasSized(const gfx::Size& size) {
@@ -635,8 +587,6 @@ void WebContentsViewWin::WasSized(const gfx::Size& size) {
     web_contents_->interstitial_page()->SetSize(size);
   if (web_contents_->render_widget_host_view())
     web_contents_->render_widget_host_view()->SetSize(size);
-  if (find_bar_.get())
-    find_bar_->RespondToResize(size);
 
   // TODO(brettw) this function can probably be moved to this class.
   web_contents_->RepositionSupressedPopupsToFit(size);

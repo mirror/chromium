@@ -189,6 +189,14 @@
 			Name="filters"
 			>
 			<File
+				RelativePath="..\filters\audio_renderer_base.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\filters\audio_renderer_base.h"
+				>
+			</File>
+			<File
 				RelativePath="..\filters\audio_renderer_impl.cc"
 				>
 			</File>
@@ -204,6 +212,15 @@
 				RelativePath="..\filters\file_data_source.h"
 				>
 			</File>
+			<File
+				RelativePath="..\filters\video_renderer_base.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\filters\video_renderer_base.h"
+				>
+			</File>
+
 			<File
 				RelativePath="..\filters\null_audio_renderer.cc"
 				>

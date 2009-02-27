@@ -3,9 +3,11 @@
 // found in the LICENSE file.
 
 #include "base/basictypes.h"
+#include "base/keyboard_codes.h"
 #include "base/scoped_ptr.h"
 #include "base/shared_memory.h"
 #include "build/build_config.h"
+#include "chrome/browser/renderer_host/backing_store.h"
 #include "chrome/browser/renderer_host/test_render_view_host.h"
 #include "chrome/common/render_messages.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -109,9 +111,37 @@ class TestView : public TestRenderWidgetHostView {
     return bounds_;
   }
 
+  BackingStore* AllocBackingStore(const gfx::Size& size) {
+    return new BackingStore(size);
+  }
+
  protected:
   gfx::Rect bounds_;
   DISALLOW_COPY_AND_ASSIGN(TestView);
+};
+
+// MockRenderWidgetHostTest ----------------------------------------------------
+
+class MockRenderWidgetHost : public RenderWidgetHost {
+ public:
+  MockRenderWidgetHost(RenderProcessHost* process, int routing_id)
+      : RenderWidgetHost(process, routing_id),
+        unhandled_keyboard_event_called_(false) {
+  }
+
+  // Tests that make sure we ignore keyboard event acknowledgments to events we
+  // didn't send work by making sure we didn't call UnhandledKeyboardEvent().
+  bool unhandled_keyboard_event_called() const {
+    return unhandled_keyboard_event_called_;
+  }
+
+ protected:
+  virtual void UnhandledKeyboardEvent(const WebKeyboardEvent& event) {
+    unhandled_keyboard_event_called_ = true;
+  }
+
+ private:
+  bool unhandled_keyboard_event_called_;
 };
 
 // RenderWidgetHostTest --------------------------------------------------------
@@ -128,7 +158,7 @@ class RenderWidgetHostTest : public testing::Test {
   void SetUp() {
     profile_.reset(new TestingProfile());
     process_ = new RenderWidgetHostProcess(profile_.get());
-    host_.reset(new RenderWidgetHost(process_, 1));
+    host_.reset(new MockRenderWidgetHost(process_, 1));
     view_.reset(new TestView);
     host_->set_view(view_.get());
   }
@@ -146,7 +176,7 @@ class RenderWidgetHostTest : public testing::Test {
 
   scoped_ptr<TestingProfile> profile_;
   RenderWidgetHostProcess* process_;  // Deleted automatically by the widget.
-  scoped_ptr<RenderWidgetHost> host_;
+  scoped_ptr<MockRenderWidgetHost> host_;
   scoped_ptr<TestView> view_;
 
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostTest);
@@ -299,3 +329,38 @@ TEST_F(RenderWidgetHostTest, HiddenPaint) {
   ViewMsg_WasRestored::Read(restored, &needs_repaint);
   EXPECT_TRUE(needs_repaint);
 }
+
+TEST_F(RenderWidgetHostTest, HandleKeyEventsWeSent) {
+  WebKeyboardEvent key_event;
+  key_event.type = WebInputEvent::KEY_DOWN;
+  key_event.modifiers = WebInputEvent::CTRL_KEY;
+  key_event.key_code = base::VKEY_L;  // non-null made up value.
+
+  host_->ForwardKeyboardEvent(key_event);
+
+  // Make sure we sent the input event to the renderer.
+  EXPECT_TRUE(process_->sink().GetUniqueMessageMatching(
+                  ViewMsg_HandleInputEvent::ID));
+  process_->sink().ClearMessages();
+
+  // Send the simulated response from the renderer back.
+  scoped_ptr<IPC::Message> response(
+      new ViewHostMsg_HandleInputEvent_ACK(0));
+  response->WriteInt(key_event.type);
+  response->WriteBool(false);
+  host_->OnMessageReceived(*response);
+
+  EXPECT_TRUE(host_->unhandled_keyboard_event_called());
+}
+
+TEST_F(RenderWidgetHostTest, IgnoreKeyEventsWeDidntSend) {
+  // Send a simulated, unrequested key response. We should ignore this.
+  scoped_ptr<IPC::Message> response(
+      new ViewHostMsg_HandleInputEvent_ACK(0));
+  response->WriteInt(WebInputEvent::KEY_DOWN);
+  response->WriteBool(false);
+  host_->OnMessageReceived(*response);
+
+  EXPECT_FALSE(host_->unhandled_keyboard_event_called());
+}
+

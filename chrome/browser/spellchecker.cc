@@ -31,6 +31,7 @@ static const int kMaxSuggestions = 5;  // Max number of dictionary suggestions.
 
 namespace {
 
+// TODO(rohitrao): Convert these constants from wchar_t* to char*.
 static const struct {
   // The language.
   const wchar_t* language;
@@ -242,27 +243,26 @@ class SpellChecker::DictionaryDownloadController
  public:
   DictionaryDownloadController(
       Task* spellchecker_flag_set_task,
-      const std::wstring& dic_file_path,
+      const FilePath& dic_file_path,
       URLRequestContext* url_request_context,
       MessageLoop* ui_loop)
       : spellchecker_flag_set_task_(spellchecker_flag_set_task),
         url_request_context_(url_request_context),
-        download_server_url_(
-            L"http://cache.pack.google.com/edgedl/chrome/dict/"),
         ui_loop_(ui_loop) {
     // Determine dictionary file path and name.
-    fetcher_.reset(NULL);
-    dic_zip_file_path_ = file_util::GetDirectoryFromPath(dic_file_path);
-    file_name_ = file_util::GetFilenameFromPath(dic_file_path);
-
-    name_of_file_to_download_ = l10n_util::ToLower(file_name_);
+    dic_zip_file_path_ = dic_file_path.DirName();
+    file_name_ = dic_file_path.BaseName();
   }
 
   // Save the file in memory buffer to the designated dictionary file.
   // returns the number of bytes it could save.
   // Invoke this on the file thread.
   void StartDownload() {
-    GURL url(WideToUTF8(download_server_url_ + name_of_file_to_download_));
+    static const char kDownloadServerUrl[] =
+        "http://cache.pack.google.com/edgedl/chrome/dict/";
+
+    GURL url = GURL(std::string(kDownloadServerUrl) + WideToUTF8(
+                        l10n_util::ToLower(file_name_.ToWStringHack())));
     fetcher_.reset(new URLFetcher(url, URLFetcher::GET, this));
     fetcher_->set_request_context(url_request_context_);
     fetcher_->Start();
@@ -271,8 +271,7 @@ class SpellChecker::DictionaryDownloadController
  private:
   // The file has been downloaded in memory - need to write it down to file.
   bool SaveBufferToFile(const std::string& data) {
-    std::wstring file_to_write = dic_zip_file_path_;
-    file_util::AppendToPath(&file_to_write, file_name_);
+    FilePath file_to_write = dic_zip_file_path_.Append(file_name_);
     int num_bytes = data.length();
     return file_util::WriteFile(file_to_write, data.data(), num_bytes) ==
         num_bytes;
@@ -286,7 +285,6 @@ class SpellChecker::DictionaryDownloadController
                                   const ResponseCookies& cookies,
                                   const std::string& data) {
     DCHECK(source);
-    fetcher_.reset(NULL);
     bool save_success = false;
     if ((response_code / 100) == 2 ||
         response_code == 401 ||
@@ -297,6 +295,7 @@ class SpellChecker::DictionaryDownloadController
     // Set Flag that dictionary is not downloading anymore.
     ui_loop_->PostTask(FROM_HERE,
                        new UIProxyForIOTask(spellchecker_flag_set_task_));
+    fetcher_.reset(NULL);
   }
 
   // factory object to invokelater back to spellchecker in io thread on
@@ -311,16 +310,10 @@ class SpellChecker::DictionaryDownloadController
   scoped_ptr<URLFetcher> fetcher_;
 
   // The file path where both the dic files have to be written locally.
-  std::wstring dic_zip_file_path_;
-
-  // The name of the file in the server which has to be downloaded.
-  std::wstring name_of_file_to_download_;
+  FilePath dic_zip_file_path_;
 
   // The name of the file which has to be stored locally.
-  std::wstring file_name_;
-
-  // The URL of the server from where the file has to be downloaded.
-  const std::wstring download_server_url_;
+  FilePath file_name_;
 
   // this invokes back to io loop when downloading is over.
   MessageLoop* ui_loop_;
@@ -335,8 +328,8 @@ void SpellChecker::set_file_is_downloading(bool value) {
 // This part of the code is used for spell checking.
 // ################################################################
 
-std::wstring SpellChecker::GetVersionedFileName(const Language& input_language,
-                                                const std::wstring& dict_dir) {
+FilePath SpellChecker::GetVersionedFileName(const Language& input_language,
+                                            const FilePath& dict_dir) {
   // The default version string currently in use.
   static const wchar_t kDefaultVersionString[] = L"-1-2";
 
@@ -345,7 +338,7 @@ std::wstring SpellChecker::GetVersionedFileName(const Language& input_language,
   // languages (included below in the struct), the version is kept at 1-1. The
   // others (19 of them) have been updated to new default version 1-2 which
   // contains many new words.
-  // TODO (sidchat): Work on these 8 languages to bring them upto version 1-2.
+  // TODO(sidchat): Work on these 8 languages to bring them upto version 1-2.
   static const struct {
     // The language input.
     const char* language;
@@ -379,15 +372,13 @@ std::wstring SpellChecker::GetVersionedFileName(const Language& input_language,
     }
   }
 
-  std::wstring bdict_file_name(dict_dir);
-  file_util::AppendToPath(&bdict_file_name, versioned_bdict_file_name);
-  return bdict_file_name;
+  return dict_dir.Append(FilePath::FromWStringHack(versioned_bdict_file_name));
 }
 
-SpellChecker::SpellChecker(const std::wstring& dict_dir,
+SpellChecker::SpellChecker(const FilePath& dict_dir,
                            const std::wstring& language,
                            URLRequestContext* request_context,
-                           const std::wstring& custom_dictionary_file_name)
+                           const FilePath& custom_dictionary_file_name)
     : custom_dictionary_file_name_(custom_dictionary_file_name),
       tried_to_init_(false),
 #ifndef NDEBUG
@@ -411,11 +402,10 @@ SpellChecker::SpellChecker(const std::wstring& dict_dir,
 
   // Get the path to the custom dictionary file.
   if (custom_dictionary_file_name_.empty()) {
-    std::wstring personal_file_directory;
+    FilePath personal_file_directory;
     PathService::Get(chrome::DIR_USER_DATA, &personal_file_directory);
-    custom_dictionary_file_name_ = personal_file_directory;
-    file_util::AppendToPath(&custom_dictionary_file_name_,
-                            chrome::kCustomDictionaryFileName);
+    custom_dictionary_file_name_ =
+        personal_file_directory.Append(chrome::kCustomDictionaryFileName);
   }
 
   // Use this dictionary language as the default one of the
@@ -471,11 +461,11 @@ bool SpellChecker::Initialize() {
   // Control has come so far - both files probably exist.
   TimeTicks begin_time = TimeTicks::Now();
   bdict_file_.reset(new file_util::MemoryMappedFile());
-  if (bdict_file_->Initialize(FilePath::FromWStringHack(bdict_file_name_))) {
+  if (bdict_file_->Initialize(bdict_file_name_)) {
     hunspell_.reset(new Hunspell(bdict_file_->data(), bdict_file_->length()));
     AddCustomWordsToHunspell();
   }
-  DHISTOGRAM_TIMES(L"Spellcheck.InitTime", TimeTicks::Now() - begin_time);
+  DHISTOGRAM_TIMES("Spellcheck.InitTime", TimeTicks::Now() - begin_time);
 
   tried_to_init_ = true;
   return false;
@@ -485,7 +475,7 @@ void SpellChecker::AddCustomWordsToHunspell() {
   // Add custom words to Hunspell.
   // This should be done in File Loop, but since Hunspell is in this IO Loop,
   // this too has to be initialized here.
-  // TODO (sidchat): Work out a way to initialize Hunspell in the File Loop.
+  // TODO(sidchat): Work out a way to initialize Hunspell in the File Loop.
   std::string contents;
   file_util::ReadFileToString(custom_dictionary_file_name_, &contents);
   std::vector<std::string> list_of_words;
@@ -561,7 +551,7 @@ bool SpellChecker::SpellCheckWord(
     {
       TimeTicks begin_time = TimeTicks::Now();
       bool word_ok = !!hunspell_->spell(encoded_word.c_str());
-      DHISTOGRAM_TIMES(L"Spellcheck.CheckTime", TimeTicks::Now() - begin_time);
+      DHISTOGRAM_TIMES("Spellcheck.CheckTime", TimeTicks::Now() - begin_time);
       if (word_ok)
         continue;
     }
@@ -580,7 +570,7 @@ bool SpellChecker::SpellCheckWord(
       TimeTicks begin_time = TimeTicks::Now();
       int number_of_suggestions = hunspell_->suggest(&suggestions,
                                                      encoded_word.c_str());
-      DHISTOGRAM_TIMES(L"Spellcheck.SuggestTime",
+      DHISTOGRAM_TIMES("Spellcheck.SuggestTime",
                        TimeTicks::Now() - begin_time);
 
       // Populate the vector of WideStrings.
@@ -601,9 +591,9 @@ bool SpellChecker::SpellCheckWord(
 // dictionary in disc.
 class AddWordToCustomDictionaryTask : public Task {
  public:
-  AddWordToCustomDictionaryTask(const std::wstring& file_name,
+  AddWordToCustomDictionaryTask(const FilePath& file_name,
                                 const std::wstring& word)
-      : file_name_(WideToUTF8(file_name)),
+      : file_name_(file_name),
         word_(WideToUTF8(word)) {
   }
 
@@ -620,7 +610,7 @@ class AddWordToCustomDictionaryTask : public Task {
     file_util::CloseFile(f);
   }
 
-  std::string file_name_;
+  FilePath file_name_;
   std::string word_;
 };
 

@@ -61,10 +61,6 @@ enum {
   FRAME_NO_TOOLBAR_TOP_CENTER,
   FRAME_NO_TOOLBAR_TOP_RIGHT,
 
-  // Popup-mode toolbar edges.
-  FRAME_TOOLBAR_POPUP_EDGE_LEFT,
-  FRAME_TOOLBAR_POPUP_EDGE_RIGHT,
-
   FRAME_PART_BITMAP_COUNT  // Must be last.
 };
 
@@ -99,7 +95,6 @@ class ActiveWindowResources : public views::WindowResources {
             IDR_CONTENT_BOTTOM_RIGHT_CORNER, IDR_CONTENT_BOTTOM_CENTER,
             IDR_CONTENT_BOTTOM_LEFT_CORNER, IDR_CONTENT_LEFT_SIDE,
         IDR_APP_TOP_LEFT, IDR_APP_TOP_CENTER, IDR_APP_TOP_RIGHT,
-        IDR_LOCATIONBG_POPUPMODE_LEFT, IDR_LOCATIONBG_POPUPMODE_RIGHT,
       };
 
       ResourceBundle& rb = ResourceBundle::GetSharedInstance();
@@ -145,7 +140,6 @@ class InactiveWindowResources : public views::WindowResources {
             IDR_CONTENT_BOTTOM_RIGHT_CORNER, IDR_CONTENT_BOTTOM_CENTER,
             IDR_CONTENT_BOTTOM_LEFT_CORNER, IDR_CONTENT_LEFT_SIDE,
         IDR_APP_TOP_LEFT, IDR_APP_TOP_CENTER, IDR_APP_TOP_RIGHT,
-        IDR_LOCATIONBG_POPUPMODE_LEFT, IDR_LOCATIONBG_POPUPMODE_RIGHT,
       };
 
       ResourceBundle& rb = ResourceBundle::GetSharedInstance();
@@ -191,7 +185,6 @@ class OTRActiveWindowResources : public views::WindowResources {
             IDR_CONTENT_BOTTOM_RIGHT_CORNER, IDR_CONTENT_BOTTOM_CENTER,
             IDR_CONTENT_BOTTOM_LEFT_CORNER, IDR_CONTENT_LEFT_SIDE,
         IDR_APP_TOP_LEFT, IDR_APP_TOP_CENTER, IDR_APP_TOP_RIGHT,
-        IDR_LOCATIONBG_POPUPMODE_LEFT, IDR_LOCATIONBG_POPUPMODE_RIGHT,
       };
 
       ResourceBundle& rb = ResourceBundle::GetSharedInstance();
@@ -238,7 +231,6 @@ class OTRInactiveWindowResources : public views::WindowResources {
             IDR_CONTENT_BOTTOM_RIGHT_CORNER, IDR_CONTENT_BOTTOM_CENTER,
             IDR_CONTENT_BOTTOM_LEFT_CORNER, IDR_CONTENT_LEFT_SIDE,
         IDR_APP_TOP_LEFT, IDR_APP_TOP_CENTER, IDR_APP_TOP_RIGHT,
-        IDR_LOCATIONBG_POPUPMODE_LEFT, IDR_LOCATIONBG_POPUPMODE_RIGHT,
       };
 
       ResourceBundle& rb = ResourceBundle::GetSharedInstance();
@@ -478,11 +470,9 @@ gfx::Size OpaqueNonClientView::CalculateWindowSizeForClientSize(
 }
 
 gfx::Point OpaqueNonClientView::GetSystemMenuPoint() const {
-  int tabstrip_height = browser_view_->IsTabStripVisible() ?
-      browser_view_->GetTabStripHeight() : 0;
   gfx::Point system_menu_point(FrameBorderThickness(),
-      NonClientTopBorderHeight() + tabstrip_height -
-      BottomEdgeThicknessWithinNonClientHeight());
+      NonClientTopBorderHeight() + browser_view_->GetTabStripHeight() -
+      kClientEdgeThickness);
   ConvertPointToScreen(this, &system_menu_point);
   return system_menu_point;
 }
@@ -679,10 +669,9 @@ int OpaqueNonClientView::TopResizeHeight() const {
 }
 
 int OpaqueNonClientView::NonClientBorderThickness() const {
-  // In maximized mode, we don't show a client edge.
+  // When we fill the screen, we don't show a client edge.
   return FrameBorderThickness() +
-      ((frame_->IsMaximized() || browser_view_->IsFullscreen()) ?
-      0 : kClientEdgeThickness);
+      (browser_view_->CanCurrentlyResize() ? kClientEdgeThickness : 0);
 }
 
 int OpaqueNonClientView::NonClientTopBorderHeight() const {
@@ -691,14 +680,18 @@ int OpaqueNonClientView::NonClientTopBorderHeight() const {
     return TitleCoordinates(&title_top_spacing, &title_thickness);
   }
 
-  return FrameBorderThickness() +
-      ((frame_->IsMaximized() || browser_view_->IsFullscreen()) ?
-      0 : kNonClientRestoredExtraThickness);
+  return FrameBorderThickness() + (browser_view_->CanCurrentlyResize() ?
+      kNonClientRestoredExtraThickness : 0);
 }
 
-int OpaqueNonClientView::BottomEdgeThicknessWithinNonClientHeight() const {
+int OpaqueNonClientView::UnavailablePixelsAtBottomOfNonClientHeight() const {
+  // Tricky: When a toolbar is edging the titlebar, it not only draws its own
+  // shadow and client edge, but an extra, light "shadow" pixel as well, which
+  // is treated as available space.  Thus the nonclient area actually _fails_ to
+  // include some available pixels, leading to a negative number here.
   if (browser_view_->IsToolbarVisible())
-    return 0;
+    return -kFrameShadowThickness;
+
   return kFrameShadowThickness +
       (frame_->IsMaximized() ? 0 : kClientEdgeThickness);
 }
@@ -727,7 +720,7 @@ int OpaqueNonClientView::TitleCoordinates(int* title_top_spacing,
   *title_thickness = std::max(title_font_.height(),
       min_titlebar_height - *title_top_spacing - title_bottom_spacing);
   return *title_top_spacing + *title_thickness + title_bottom_spacing +
-      BottomEdgeThicknessWithinNonClientHeight();
+      UnavailablePixelsAtBottomOfNonClientHeight();
 }
 
 void OpaqueNonClientView::PaintRestoredFrameBorder(ChromeCanvas* canvas) {
@@ -823,28 +816,34 @@ void OpaqueNonClientView::PaintTitleBar(ChromeCanvas* canvas) {
 void OpaqueNonClientView::PaintToolbarBackground(ChromeCanvas* canvas) {
   if (!browser_view_->IsToolbarVisible())
     return;
-  
+
   gfx::Rect toolbar_bounds(browser_view_->GetToolbarBounds());
   gfx::Point toolbar_origin(toolbar_bounds.origin());
   View::ConvertPointToView(frame_->client_view(), this, &toolbar_origin);
   toolbar_bounds.set_origin(toolbar_origin);
 
-  bool normal_mode = browser_view_->IsToolbarDisplayModeNormal();
-  SkBitmap* toolbar_left = resources()->GetPartBitmap(normal_mode ?
-      FRAME_CLIENT_EDGE_TOP_LEFT : FRAME_TOOLBAR_POPUP_EDGE_LEFT);
+  SkBitmap* toolbar_left =
+      resources()->GetPartBitmap(FRAME_CLIENT_EDGE_TOP_LEFT);
   canvas->DrawBitmapInt(*toolbar_left,
                         toolbar_bounds.x() - toolbar_left->width(),
                         toolbar_bounds.y());
 
-  if (normal_mode) {
-    SkBitmap* toolbar_center =
-        resources()->GetPartBitmap(FRAME_CLIENT_EDGE_TOP);
-    canvas->TileImageInt(*toolbar_center, toolbar_bounds.x(),
-        toolbar_bounds.y(), toolbar_bounds.width(), toolbar_center->height());
-  }
+  // Gross hack: We split the toolbar image into two pieces, since sometimes
+  // (popup mode) the toolbar isn't tall enough to show the whole image.  The
+  // split happens between the top shadow section and the bottom gradient
+  // section so that we never break the gradient.
+  int split_point = kFrameShadowThickness * 2;
+  SkBitmap* toolbar_center =
+      resources()->GetPartBitmap(FRAME_CLIENT_EDGE_TOP);
+  canvas->TileImageInt(*toolbar_center, 0, 0, toolbar_bounds.x(),
+      toolbar_bounds.y(), toolbar_bounds.width(), split_point);
+  canvas->TileImageInt(*toolbar_center, 0,
+      toolbar_center->height() - toolbar_bounds.height() + split_point,
+      toolbar_bounds.x(), toolbar_bounds.y() + split_point,
+      toolbar_bounds.width(), toolbar_bounds.height() - split_point);
 
-  canvas->DrawBitmapInt(*resources()->GetPartBitmap(normal_mode ?
-      FRAME_CLIENT_EDGE_TOP_RIGHT : FRAME_TOOLBAR_POPUP_EDGE_RIGHT),
+  canvas->DrawBitmapInt(
+      *resources()->GetPartBitmap(FRAME_CLIENT_EDGE_TOP_RIGHT),
       toolbar_bounds.right(), toolbar_bounds.y());
 }
 
@@ -861,23 +860,14 @@ void OpaqueNonClientView::PaintOTRAvatar(ChromeCanvas* canvas) {
 }
 
 void OpaqueNonClientView::PaintRestoredClientEdge(ChromeCanvas* canvas) {
-  int client_area_top =
-      frame_->client_view()->y() + browser_view_->GetToolbarBounds().bottom();
+  int client_area_top = frame_->client_view()->y();
 
   gfx::Rect client_area_bounds = CalculateClientAreaBounds(width(), height());
-  if (browser_view_->IsToolbarVisible() &&
-      browser_view_->IsToolbarDisplayModeNormal()) {
-    // The toolbar draws a client edge along its own bottom edge when it's
-    // visible and in normal mode.  However, it only draws this for the width of
-    // the actual client area, leaving a gap at the left and right edges:
-    //
-    // |             Toolbar             | <-- part of toolbar
-    //  ----- (toolbar client edge) -----  <-- gap
-    // |           Client area           | <-- right client edge
-    //
-    // To address this, we extend the left and right client edges up to fill the
-    // gap, by pretending the toolbar is shorter than it really is.
-    client_area_top -= kClientEdgeThickness;
+  if (browser_view_->IsToolbarVisible()) {
+    // The client edges start below the toolbar upper corner images regardless
+    // of how tall the toolbar itself is.
+    client_area_top += browser_view_->GetToolbarBounds().y() +
+        resources()->GetPartBitmap(FRAME_CLIENT_EDGE_TOP_LEFT)->height();
   } else {
     // The toolbar isn't going to draw a client edge for us, so draw one
     // ourselves.
@@ -997,7 +987,7 @@ void OpaqueNonClientView::LayoutTitleBar() {
   int title_top_spacing, title_thickness;
   int top_height = TitleCoordinates(&title_top_spacing, &title_thickness);
   int available_height = top_height - frame_thickness -
-      BottomEdgeThicknessWithinNonClientHeight();
+      UnavailablePixelsAtBottomOfNonClientHeight();
 
   // The icon takes up a constant fraction of the available height, down to a
   // minimum size, and is always an even number of pixels on a side (presumably
@@ -1035,10 +1025,15 @@ void OpaqueNonClientView::LayoutTitleBar() {
 void OpaqueNonClientView::LayoutOTRAvatar() {
   SkBitmap otr_avatar_icon = browser_view_->GetOTRAvatarIcon();
   int top_height = NonClientTopBorderHeight();
-  int tabstrip_height = browser_view_->GetTabStripHeight() - kOTRBottomSpacing;
-  int otr_height = frame_->IsMaximized() ?
-      (tabstrip_height - kOTRMaximizedTopSpacing) :
-      otr_avatar_icon.height();
+  int tabstrip_height, otr_height;
+  if (browser_view_->IsTabStripVisible()) {
+    tabstrip_height = browser_view_->GetTabStripHeight() - kOTRBottomSpacing;
+    otr_height = frame_->IsMaximized() ?
+        (tabstrip_height - kOTRMaximizedTopSpacing) :
+        otr_avatar_icon.height();
+  } else {
+    tabstrip_height = otr_height = 0;
+  }
   otr_avatar_bounds_.SetRect(NonClientBorderThickness() + kOTRSideSpacing,
                              top_height + tabstrip_height - otr_height,
                              otr_avatar_icon.width(), otr_height);

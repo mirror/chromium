@@ -241,7 +241,13 @@ void WidgetWin::MoveToFront(bool should_activate) {
   if (!should_activate) {
     flags |= SWP_NOACTIVATE;
   }
-  SetWindowPos(HWND_NOTOPMOST, 0, 0, 0, 0, flags);
+
+  // Keep the window topmost if it was already topmost.
+  WINDOWINFO wi;
+  wi.cbSize = sizeof WINDOWINFO;
+  GetWindowInfo(GetHWND(), &wi);
+  SetWindowPos((wi.dwExStyle & WS_EX_TOPMOST) ? HWND_TOPMOST : HWND_NOTOPMOST,
+               0, 0, 0, 0, flags);
 }
 
 HWND WidgetWin::GetHWND() const {
@@ -347,6 +353,9 @@ RootView* WidgetWin::FindRootView(HWND hwnd) {
 }
 
 void WidgetWin::Close() {
+  if (!IsWindow())
+    return;  // No need to do anything.
+
   // Let's hide ourselves right away.
   Hide();
   if (close_widget_factory_.empty()) {
@@ -361,13 +370,20 @@ void WidgetWin::Close() {
 }
 
 void WidgetWin::Hide() {
-  // NOTE: Be careful not to activate any windows here (for example, calling
-  // ShowWindow(SW_HIDE) will automatically activate another window).  This
-  // code can be called while a window is being deactivated, and activating
-  // another window will screw up the activation that is already in progress.
-  SetWindowPos(NULL, 0, 0, 0, 0,
-               SWP_HIDEWINDOW | SWP_NOACTIVATE | SWP_NOMOVE |
-               SWP_NOREPOSITION | SWP_NOSIZE | SWP_NOZORDER);
+  if (IsWindow()) {
+    // NOTE: Be careful not to activate any windows here (for example, calling
+    // ShowWindow(SW_HIDE) will automatically activate another window).  This
+    // code can be called while a window is being deactivated, and activating
+    // another window will screw up the activation that is already in progress.
+    SetWindowPos(NULL, 0, 0, 0, 0,
+                 SWP_HIDEWINDOW | SWP_NOACTIVATE | SWP_NOMOVE |
+                 SWP_NOREPOSITION | SWP_NOSIZE | SWP_NOZORDER);
+  }
+}
+
+void WidgetWin::Show() {
+  if (IsWindow())
+    ShowWindow(SW_SHOWNOACTIVATE);
 }
 
 void WidgetWin::CloseNow() {
@@ -508,12 +524,12 @@ LRESULT WidgetWin::OnGetObject(UINT uMsg, WPARAM w_param, LPARAM l_param) {
 
 void WidgetWin::OnKeyDown(TCHAR c, UINT rep_cnt, UINT flags) {
   KeyEvent event(Event::ET_KEY_PRESSED, c, rep_cnt, flags);
-  root_view_->ProcessKeyEvent(event);
+  SetMsgHandled(root_view_->ProcessKeyEvent(event));
 }
 
 void WidgetWin::OnKeyUp(TCHAR c, UINT rep_cnt, UINT flags) {
   KeyEvent event(Event::ET_KEY_RELEASED, c, rep_cnt, flags);
-  root_view_->ProcessKeyEvent(event);
+  SetMsgHandled(root_view_->ProcessKeyEvent(event));
 }
 
 void WidgetWin::OnLButtonDown(UINT flags, const CPoint& point) {
@@ -572,11 +588,11 @@ LRESULT WidgetWin::OnMouseRange(UINT msg, WPARAM w_param, LPARAM l_param) {
 }
 
 void WidgetWin::OnNCLButtonDblClk(UINT flags, const CPoint& point) {
-  SetMsgHandled(ProcessMousePressed(point, MK_LBUTTON, true, true));
+  SetMsgHandled(ProcessMousePressed(point, flags | MK_LBUTTON, true, true));
 }
 
 void WidgetWin::OnNCLButtonDown(UINT flags, const CPoint& point) {
-  SetMsgHandled(ProcessMousePressed(point, MK_LBUTTON, false, true));
+  SetMsgHandled(ProcessMousePressed(point, flags | MK_LBUTTON, false, true));
 }
 
 void WidgetWin::OnNCLButtonUp(UINT flags, const CPoint& point) {
@@ -584,11 +600,11 @@ void WidgetWin::OnNCLButtonUp(UINT flags, const CPoint& point) {
 }
 
 void WidgetWin::OnNCMButtonDblClk(UINT flags, const CPoint& point) {
-  SetMsgHandled(ProcessMousePressed(point, MK_MBUTTON, true, true));
+  SetMsgHandled(ProcessMousePressed(point, flags | MK_MBUTTON, true, true));
 }
 
 void WidgetWin::OnNCMButtonDown(UINT flags, const CPoint& point) {
-  SetMsgHandled(ProcessMousePressed(point, MK_MBUTTON, false, true));
+  SetMsgHandled(ProcessMousePressed(point, flags | MK_MBUTTON, false, true));
 }
 
 void WidgetWin::OnNCMButtonUp(UINT flags, const CPoint& point) {
@@ -613,11 +629,11 @@ LRESULT WidgetWin::OnNCMouseMove(UINT flags, const CPoint& point) {
 }
 
 void WidgetWin::OnNCRButtonDblClk(UINT flags, const CPoint& point) {
-  SetMsgHandled(ProcessMousePressed(point, MK_RBUTTON, true, true));
+  SetMsgHandled(ProcessMousePressed(point, flags | MK_RBUTTON, true, true));
 }
 
 void WidgetWin::OnNCRButtonDown(UINT flags, const CPoint& point) {
-  SetMsgHandled(ProcessMousePressed(point, MK_RBUTTON, false, true));
+  SetMsgHandled(ProcessMousePressed(point, flags | MK_RBUTTON, false, true));
 }
 
 void WidgetWin::OnNCRButtonUp(UINT flags, const CPoint& point) {
@@ -713,9 +729,14 @@ bool WidgetWin::ProcessMousePressed(const CPoint& point,
                                     bool dbl_click,
                                     bool non_client) {
   last_mouse_event_was_move_ = false;
+  // Windows gives screen coordinates for nonclient events, while the RootView
+  // expects window coordinates; convert if necessary.
+  gfx::Point converted_point(point);
+  if (non_client)
+    View::ConvertPointToView(NULL, root_view_.get(), &converted_point);
   MouseEvent mouse_pressed(Event::ET_MOUSE_PRESSED,
-                           point.x,
-                           point.y,
+                           converted_point.x(),
+                           converted_point.y(),
                            (dbl_click ? MouseEvent::EF_IS_DOUBLE_CLICK : 0) |
                            (non_client ? MouseEvent::EF_IS_NON_CLIENT : 0) |
                            Event::ConvertWindowsFlags(flags));

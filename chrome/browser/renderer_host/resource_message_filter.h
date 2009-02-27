@@ -5,6 +5,9 @@
 #ifndef CHROME_BROWSER_RENDERER_HOST_RESOURCE_MSG_FILTER_H_
 #define CHROME_BROWSER_RENDERER_HOST_RESOURCE_MSG_FILTER_H_
 
+#include <string>
+#include <vector>
+
 #include "base/clipboard.h"
 #include "base/file_path.h"
 #include "base/gfx/rect.h"
@@ -146,6 +149,7 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   void OnSpellCheck(const std::wstring& word,
                     IPC::Message* reply_msg);
   void OnDnsPrefetch(const std::vector<std::string>& hostnames);
+  void OnRendererHistograms(const std::vector<std::string>& histogram_info);
   void OnReceiveContextMenuMsg(const IPC::Message& msg);
   // Clipboard messages
   void OnClipboardWriteObjects(const Clipboard::ObjectMap& objects);
@@ -153,7 +157,7 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   void OnClipboardReadText(std::wstring* result);
   void OnClipboardReadAsciiText(std::string* result);
   void OnClipboardReadHTML(std::wstring* markup, GURL* src_url);
-#if defined(OS_WIN)
+#if defined(OS_WIN)|| defined(OS_LINUX)
   void OnGetWindowRect(gfx::NativeViewId window, gfx::Rect *rect);
   void OnGetRootWindowRect(gfx::NativeViewId window, gfx::Rect *rect);
 #endif

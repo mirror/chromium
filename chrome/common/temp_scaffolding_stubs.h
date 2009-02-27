@@ -20,6 +20,7 @@
 #include "base/ref_counted.h"
 #include "base/gfx/native_widget_types.h"
 #include "base/gfx/rect.h"
+#include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/cache_manager_host.h"
 #include "chrome/browser/cancelable_request.h"
@@ -53,6 +54,7 @@
 #include "webkit/glue/webplugin.h"
 #include "webkit/glue/window_open_disposition.h"
 
+class BookmarkContextMenu;
 class Browser;
 class CommandLine;
 class ConstrainedWindow;
@@ -79,7 +81,6 @@ class SessionCommand;
 class SessionID;
 class SiteInstance;
 class SpellChecker;
-class TabContents;
 class TabContentsDelegate;
 class TabContentsFactory;
 class TabNavigation;
@@ -164,14 +165,6 @@ class GoogleUpdateSettings {
   DISALLOW_IMPLICIT_CONSTRUCTORS(GoogleUpdateSettings);
 };
 
-class AutomationProviderList {
- public:
-  static AutomationProviderList* GetInstance() {
-    NOTIMPLEMENTED();
-    return NULL;
-  }
-};
-
 namespace browser {
 void RegisterAllPrefs(PrefService*, PrefService*);
 }
@@ -179,8 +172,6 @@ void RegisterAllPrefs(PrefService*, PrefService*);
 void OpenFirstRunDialog(Profile* profile);
 
 void InstallJankometer(const CommandLine&);
-
-GURL NewTabUIURL();
 
 //---------------------------------------------------------------------------
 // These stubs are for BrowserProcessImpl
@@ -236,25 +227,22 @@ class PrintJobManager {
 
 }  // namespace printing
 
-class DownloadRequestManager
-    : public base::RefCountedThreadSafe<DownloadRequestManager> {
- public:
-  DownloadRequestManager(MessageLoop* io_loop, MessageLoop* ui_loop) {
-    NOTIMPLEMENTED();
-  }
-  class Callback {
-   public:
-    virtual void ContinueDownload() = 0;
-    virtual void CancelDownload() = 0;
-  };
-  void CanDownloadOnIOThread(int render_process_host_id,
-                             int render_view_id,
-                             Callback* callback) {
-    NOTIMPLEMENTED();
-  }
-};
-
 namespace sandbox {
+
+enum ResultCode {
+  SBOX_ALL_OK = 0,
+  SBOX_ERROR_GENERIC = 1,
+  SBOX_ERROR_BAD_PARAMS = 2,
+  SBOX_ERROR_UNSUPPORTED = 3,
+  SBOX_ERROR_NO_SPACE = 4,
+  SBOX_ERROR_INVALID_IPC = 5,
+  SBOX_ERROR_FAILED_IPC = 6,
+  SBOX_ERROR_NO_HANDLE = 7,
+  SBOX_ERROR_UNEXPECTED_CALL = 8,
+  SBOX_ERROR_WAIT_ALREADY_CALLED = 9,
+  SBOX_ERROR_CHANNEL_ERROR = 10,
+  SBOX_ERROR_LAST
+};
 
 class BrokerServices {
  public:
@@ -290,12 +278,115 @@ class TableModel {
   virtual int RowCount() = 0;
 };
 
+class MenuItemView {
+ public:
+  enum Type {
+    NORMAL,
+    SUBMENU,
+    CHECKBOX,
+    RADIO,
+    SEPARATOR
+  };
+  enum AnchorPosition {
+    TOPLEFT,
+    TOPRIGHT
+  };
+  MenuItemView(BookmarkContextMenu*) { NOTIMPLEMENTED(); }
+  void RunMenuAt(gfx::NativeWindow parent, const gfx::Rect& bounds,
+                 AnchorPosition anchor, bool has_mnemonics) {
+    NOTIMPLEMENTED();
+  }
+  void Cancel() { NOTIMPLEMENTED(); }
+  void AppendMenuItem(int item_id, const std::wstring& label, Type type) {
+    NOTIMPLEMENTED();
+  }
+  void AppendMenuItemWithLabel(int item_id, const std::wstring& label) {
+    NOTIMPLEMENTED();
+  }
+  void AppendSeparator() { NOTIMPLEMENTED(); }
+};
+
+class MenuDelegate {
+};
+
+class Window {
+ public:
+  void Show() { NOTIMPLEMENTED(); }
+  virtual void Close() { NOTIMPLEMENTED(); }
+};
+
 }  // namespace views
+
+class InputWindowDelegate {
+};
 
 class Menu {
  public:
+  enum AnchorPoint {
+    TOPLEFT,
+    TOPRIGHT
+  };
+  enum MenuItemType {
+    NORMAL,
+    CHECKBOX,
+    RADIO,
+    SEPARATOR
+  };
   class Delegate {
   };
+  Menu(Delegate* delegate, AnchorPoint anchor, gfx::NativeWindow owner) {
+    NOTIMPLEMENTED();
+  }
+  void AppendMenuItem(int item_id, const std::wstring& label,
+                      MenuItemType type) {
+    NOTIMPLEMENTED();
+  }
+  void AppendMenuItemWithLabel(int item_id, const std::wstring& label) {
+    NOTIMPLEMENTED();
+  }
+  Menu* AppendSubMenu(int item_id, const std::wstring& label) {
+    NOTIMPLEMENTED();
+    return NULL;
+  }
+  void AppendSeparator() { NOTIMPLEMENTED(); }
+  void AppendDelegateMenuItem(int item_id) { NOTIMPLEMENTED(); }
+};
+
+views::Window* CreateInputWindow(gfx::NativeWindow parent_hwnd,
+                                 InputWindowDelegate* delegate);
+
+class BookmarkManagerView {
+ public:
+   static BookmarkManagerView* current() {
+     NOTIMPLEMENTED();
+     return NULL;
+   }
+   static void Show(Profile* profile) { NOTIMPLEMENTED(); }
+   void SelectInTree(BookmarkNode* node) { NOTIMPLEMENTED(); }
+   Profile* profile() const {
+    NOTIMPLEMENTED();
+    return NULL;
+  }
+};
+
+class BookmarkEditorView {
+ public:
+  class Handler {
+  };
+  enum Configuration {
+    SHOW_TREE,
+    NO_TREE
+  };
+  static void Show(gfx::NativeWindow parent_window, Profile* profile,
+                   BookmarkNode* parent, BookmarkNode* node,
+                   Configuration configuration, Handler* handler) {
+    NOTIMPLEMENTED();
+  }
+};
+
+class BookmarkBarView {
+ public:
+  static void ToggleWhenVisible(Profile* profile) { NOTIMPLEMENTED(); }
 };
 
 //---------------------------------------------------------------------------
@@ -330,7 +421,7 @@ class TabContents : public PageNavigator, public NotificationObserver {
     INVALIDATE_LOAD = 8,
     INVALIDATE_EVERYTHING = 0xFFFFFFFF
   };
-  TabContents(TabContentsType type) 
+  TabContents(TabContentsType type)
       : type_(type), is_active_(true), is_loading_(false),
         is_being_destroyed_(false), controller_(),
         delegate_(), max_page_id_(-1) { }
@@ -351,10 +442,10 @@ class TabContents : public PageNavigator, public NotificationObserver {
   Profile* profile() const;
   virtual void CloseContents();
   virtual void SetupController(Profile* profile);
-  bool WasHidden() {
+  virtual void WasHidden() {
     NOTIMPLEMENTED();
-    return false;
   }
+  virtual void SetInitialFocus() { NOTIMPLEMENTED(); }
   virtual void RestoreFocus() { NOTIMPLEMENTED(); }
   static TabContentsType TypeForURL(GURL* url);
   static TabContents* CreateWithType(TabContentsType type,
@@ -407,10 +498,14 @@ class TabContents : public PageNavigator, public NotificationObserver {
   static TabContentsFactory* RegisterFactory(TabContentsType type,
                                              TabContentsFactory* factory);
   void OnStartDownload(DownloadItem* download) { NOTIMPLEMENTED(); }
+  void RemoveInfoBar(InfoBarDelegate* delegate) { NOTIMPLEMENTED(); }
+  virtual bool ShouldDisplayURL() { return true; }
  protected:
   typedef std::vector<ConstrainedWindow*> ConstrainedWindowList;
   ConstrainedWindowList child_windows_;
  private:
+  friend class AutomationProvider;
+
   TabContentsType type_;
   bool is_active_;
   bool is_loading_;
@@ -450,10 +545,6 @@ class DockInfo {
     return false;
   }
   void AdjustOtherWindowBounds() const { NOTIMPLEMENTED(); }
-};
-
-class ToolbarModel {
- public:
 };
 
 class WindowSizer {
@@ -497,31 +588,6 @@ class Encryptor {
   }
 };
 
-class SpellChecker : public base::RefCountedThreadSafe<SpellChecker> {
- public:
-  typedef std::wstring Language;
-  typedef std::vector<Language> Languages;
-  SpellChecker(const std::wstring& dict_dir,
-               const Language& language,
-               URLRequestContext* request_context,
-               const std::wstring& custom_dictionary_file_name) {}
-
-  bool SpellCheckWord(const wchar_t* in_word,
-                     int in_word_len,
-                     int* misspelling_start,
-                     int* misspelling_len,
-                    std::vector<std::wstring>* optional_suggestions) {
-    NOTIMPLEMENTED();
-    return true;
-  }
-  static int GetSpellCheckLanguagesToDisplayInContextMenu(
-      Profile* profile,
-      Languages* display_languages) {
-    NOTIMPLEMENTED();
-    return 0;
-  }
-};
-
 class WebAppLauncher {
  public:
   static void Launch(Profile* profile, const GURL& url) {
@@ -552,7 +618,7 @@ class PrintViewManager {
   PrintViewManager(WebContents&) { }
   void Stop() { NOTIMPLEMENTED(); }
   void Destroy() { NOTIMPLEMENTED(); }
-  bool OnRendererGone(RenderViewHost*) {
+  bool OnRenderViewGone(RenderViewHost*) {
     NOTIMPLEMENTED();
     return true;  // Assume for now that all renderer crashes are important.
   }
@@ -562,63 +628,6 @@ class PrintViewManager {
   }
 };
 }
-
-class PluginInstaller {
- public:
-  PluginInstaller(WebContents*) { }
-};
-
-class ChildProcessHost : public ChildProcessInfo {
- public:
-  class Iterator {
-   public:
-    explicit Iterator(ProcessType type) { NOTIMPLEMENTED(); }
-    ChildProcessInfo* operator->() { return *iterator_; }
-    ChildProcessInfo* operator*() { return *iterator_; }
-    ChildProcessInfo* operator++() { return NULL; }
-    bool Done() {
-      NOTIMPLEMENTED();
-      return true;
-    }
-   private:
-    std::list<ChildProcessInfo*>::iterator iterator_;
-  };
- protected:
-  ChildProcessHost(ProcessType type, MessageLoop* main_message_loop)
-      : ChildProcessInfo(type) {
-    NOTIMPLEMENTED();
-  }
-};
-
-class PluginProcessHost : public ChildProcessHost {
- public:
-  explicit PluginProcessHost(MessageLoop* main_message_loop)
-      : ChildProcessHost(PLUGIN_PROCESS, main_message_loop) {
-    NOTIMPLEMENTED();
-  }
-  bool Init(const WebPluginInfo& info,
-            const std::string& activex_clsid,
-            const std::wstring& locale) {
-    NOTIMPLEMENTED();
-    return false;
-  }
-  void OpenChannelToPlugin(ResourceMessageFilter* renderer_message_filter,
-                           const std::string& mime_type,
-                           IPC::Message* reply_msg) {
-    NOTIMPLEMENTED();
-  }
-  static void ReplyToRenderer(ResourceMessageFilter* renderer_message_filter,
-                              const std::wstring& channel,
-                              const FilePath& plugin_path,
-                              IPC::Message* reply_msg) {
-    NOTIMPLEMENTED();
-  }
-  void Shutdown() { NOTIMPLEMENTED(); }
-  const WebPluginInfo& info() const { return info_; }
- private:
-  WebPluginInfo info_;
-  DISALLOW_EVIL_CONSTRUCTORS(PluginProcessHost);
-};
 
 class HungRendererWarning {
  public:
@@ -644,6 +653,16 @@ class ModalHtmlDialogDelegate : public HtmlDialogContentsDelegate {
  public:
   ModalHtmlDialogDelegate(const GURL&, int, int, const std::string&,
                           IPC::Message*, WebContents*) { }
+};
+
+class HtmlDialogContents {
+ public:
+  struct HtmlDialogParams {
+    GURL url;
+    int width;
+    int height;
+    std::string json_input;
+  };
 };
 
 class CharacterEncoding {
@@ -688,6 +707,15 @@ LoginHandler* CreateLoginPrompt(net::AuthChallengeInfo* auth_info,
 
 class ExternalProtocolHandler {
  public:
+  enum BlockState {
+    DONT_BLOCK,
+    BLOCK,
+    UNKNOWN,
+  };
+  static BlockState GetBlockState(const std::wstring& scheme) {
+    NOTIMPLEMENTED();
+    return UNKNOWN;
+  }
   static void LaunchUrl(const GURL& url, int render_process_host_id,
                         int tab_contents_id) {
     NOTIMPLEMENTED();
@@ -721,6 +749,23 @@ class FontsLanguagesWindowView {
  public:
   explicit FontsLanguagesWindowView(Profile* profile) { NOTIMPLEMENTED(); }
   void SelectLanguagesTab() { NOTIMPLEMENTED(); }
+};
+
+class HistoryTabUI {
+ public:
+  static const GURL GetHistoryURLWithSearchText(const std::wstring& text) {
+    NOTIMPLEMENTED();
+    return GURL();
+  }
+};
+
+class OSExchangeData {
+ public:
+  void SetString(const std::wstring& data) { NOTIMPLEMENTED(); }
+  void SetURL(const GURL& url, const std::wstring& title) { NOTIMPLEMENTED(); }
+};
+
+class BaseDragSource {
 };
 
 #endif  // CHROME_COMMON_TEMP_SCAFFOLDING_STUBS_H_

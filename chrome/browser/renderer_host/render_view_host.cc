@@ -28,6 +28,7 @@
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/notification_type.h"
+#include "chrome/common/url_constants.h"
 #include "chrome/common/thumbnail_score.h"
 #include "net/base/net_util.h"
 #include "skia/include/SkBitmap.h"
@@ -41,10 +42,10 @@ void FilterURL(RendererSecurityPolicy* policy, int renderer_id, GURL* url) {
   if (!url->is_valid())
     return;  // We don't need to block invalid URLs.
 
-  if (url->SchemeIs("about")) {
+  if (url->SchemeIs(chrome::kAboutScheme)) {
     // The renderer treats all URLs in the about: scheme as being about:blank.
     // Canonicalize about: URLs to about:blank.
-    *url = GURL("about:blank");
+    *url = GURL(chrome::kAboutBlankURL);
   }
 
   if (!policy->CanRequestURL(renderer_id, *url)) {
@@ -96,7 +97,9 @@ RenderViewHost::RenderViewHost(SiteInstance* instance,
       run_modal_reply_msg_(NULL),
       has_unload_listener_(false),
       is_waiting_for_unload_ack_(false),
-      are_javascript_messages_suppressed_(false) {
+      are_javascript_messages_suppressed_(false),
+      inspected_process_id_(-1),
+      inspected_view_id_(-1) {
   DCHECK(instance_);
   DCHECK(delegate_);
   if (modal_dialog_event == NULL)
@@ -179,7 +182,7 @@ bool RenderViewHost::CreateRenderView() {
       routing_id(), enable_dom_ui_bindings_, enable_external_host_bindings_));
 
   // Let our delegate know that we created a RenderView.
-  delegate_->RendererCreated(this);
+  delegate_->RenderViewCreated(this);
 
   return true;
 }
@@ -656,7 +659,7 @@ bool RenderViewHost::CanTerminate() const {
 void RenderViewHost::OnMessageReceived(const IPC::Message& msg) {
   if (msg.is_sync() && !msg.is_caller_pumping_messages()) {
     NOTREACHED() << "Can't send sync messages to UI thread without pumping "
-        "messages in the renderer or else deadlocks can occur if the page"
+        "messages in the renderer or else deadlocks can occur if the page "
         "has windowed plugins! (message type " << msg.type() << ")";
     IPC::Message* reply = IPC::SyncMessage::GenerateReply(&msg);
     reply->set_reply_error();
@@ -671,8 +674,8 @@ void RenderViewHost::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(ViewHostMsg_ShowView, OnMsgShowView)
     IPC_MESSAGE_HANDLER(ViewHostMsg_ShowWidget, OnMsgShowWidget)
     IPC_MESSAGE_HANDLER_DELAY_REPLY(ViewHostMsg_RunModal, OnMsgRunModal)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_RendererReady, OnMsgRendererReady)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_RendererGone, OnMsgRendererGone)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_RenderViewReady, OnMsgRenderViewReady)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_RenderViewGone, OnMsgRenderViewGone)
     IPC_MESSAGE_HANDLER_GENERIC(ViewHostMsg_FrameNavigate, OnMsgNavigate(msg))
     IPC_MESSAGE_HANDLER(ViewHostMsg_UpdateState, OnMsgUpdateState)
     IPC_MESSAGE_HANDLER(ViewHostMsg_UpdateTitle, OnMsgUpdateTitle)
@@ -732,6 +735,10 @@ void RenderViewHost::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(ViewHostMsg_AddMessageToConsole, OnAddMessageToConsole)
     IPC_MESSAGE_HANDLER(ViewHostMsg_DebuggerOutput, OnDebuggerOutput);
     IPC_MESSAGE_HANDLER(ViewHostMsg_DidDebugAttach, DidDebugAttach);
+    IPC_MESSAGE_HANDLER(ViewHostMsg_ForwardToDevToolsAgent,
+                        OnForwardToDevToolsAgent);
+    IPC_MESSAGE_HANDLER(ViewHostMsg_ForwardToDevToolsClient,
+                        OnForwardToDevToolsClient);
     IPC_MESSAGE_HANDLER(ViewHostMsg_UserMetricsRecordAction,
                         OnUserMetricsRecordAction)
     IPC_MESSAGE_HANDLER(ViewHostMsg_MissingPluginStatus, OnMissingPluginStatus);
@@ -818,12 +825,12 @@ void RenderViewHost::OnMsgRunModal(IPC::Message* reply_msg) {
   // an app-modal fashion.
 }
 
-void RenderViewHost::OnMsgRendererReady() {
+void RenderViewHost::OnMsgRenderViewReady() {
   WasResized();
-  delegate_->RendererReady(this);
+  delegate_->RenderViewReady(this);
 }
 
-void RenderViewHost::OnMsgRendererGone() {
+void RenderViewHost::OnMsgRenderViewGone() {
   // Our base class RenderWidgetHouse needs to reset some stuff.
   RendererExited();
 
@@ -831,7 +838,7 @@ void RenderViewHost::OnMsgRendererGone() {
   // from a crashed renderer.
   renderer_initialized_ = false;
 
-  delegate_->RendererGone(this);
+  delegate_->RenderViewGone(this);
   OnDebugDisconnect();
 }
 
@@ -966,11 +973,8 @@ void RenderViewHost::OnMsgFindReply(int request_id,
                                     const gfx::Rect& selection_rect,
                                     int active_match_ordinal,
                                     bool final_update) {
-  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
-  if (!view)
-    return;
-  view->OnFindReply(request_id, number_of_matches, selection_rect,
-                        active_match_ordinal, final_update);
+  delegate_->OnFindReply(request_id, number_of_matches, selection_rect,
+                         active_match_ordinal, final_update);
 
   // Send a notification to the renderer that we are ready to receive more
   // results from the scoping effort of the Find operation. The FindInPage
@@ -1039,9 +1043,8 @@ void RenderViewHost::OnMsgDOMUISend(
 }
 
 void RenderViewHost::OnMsgForwardMessageToExternalHost(
-    const std::string& receiver,
     const std::string& message) {
-  delegate_->ProcessExternalHostMessage(receiver, message);
+  delegate_->ProcessExternalHostMessage(message);
 }
 
 #ifdef CHROME_PERSONALIZATION
@@ -1171,11 +1174,33 @@ void RenderViewHost::DidDebugAttach() {
   }
 }
 
+void RenderViewHost::SetInspectedView(int inspected_process_id,
+                                      int inspected_view_id) {
+  inspected_process_id_ = inspected_process_id;
+  inspected_view_id_ = inspected_view_id;
+}
+
+void RenderViewHost::OnForwardToDevToolsAgent(const IPC::Message& message) {
+  RenderViewHost* host = RenderViewHost::FromID(inspected_process_id_,
+                                                inspected_view_id_);
+  if (!host)
+    return;
+  IPC::Message* m = new IPC::Message(message);
+  m->set_routing_id(inspected_view_id_);
+  host->Send(m);
+}
+
+void RenderViewHost::OnForwardToDevToolsClient(const IPC::Message& message) {
+  RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
+  if (view)
+    view->ForwardMessageToDevToolsClient(message);
+}
+
 void RenderViewHost::OnUserMetricsRecordAction(const std::wstring& action) {
   UserMetrics::RecordComputedAction(action.c_str(), process()->profile());
 }
 
-void RenderViewHost::UnhandledInputEvent(const WebInputEvent& event) {
+void RenderViewHost::UnhandledKeyboardEvent(const WebKeyboardEvent& event) {
   RenderViewHostDelegate::View* view = delegate_->GetViewDelegate();
   if (view) {
     // TODO(brettw) why do we have to filter these types of events here. Can't
@@ -1183,8 +1208,7 @@ void RenderViewHost::UnhandledInputEvent(const WebInputEvent& event) {
     // should be able to decide which ones it wants or not?
     if ((event.type == WebInputEvent::KEY_DOWN) ||
         (event.type == WebInputEvent::CHAR)) {
-      view->HandleKeyboardEvent(
-          static_cast<const WebKeyboardEvent&>(event));
+      view->HandleKeyboardEvent(event);
     }
   }
 }
@@ -1267,6 +1291,10 @@ void RenderViewHost::AutofillSuggestionsReturned(
   Send(new ViewMsg_AutofillSuggestions(routing_id(), node_id,
       request_id, suggestions, -1));
   // Default index -1 means no default suggestion.
+}
+
+void RenderViewHost::WindowMoveOrResizeStarted() {
+  Send(new ViewMsg_MoveOrResizeStarted(routing_id()));
 }
 
 void RenderViewHost::NotifyRendererUnresponsive() {
