@@ -23,7 +23,7 @@ HELP_STRING = "Sorry, Tryserver is not available."
 SCRIPT_PATH = os.path.join('tools', 'tryserver', 'tryserver.py')
 
 
-class InvalidScript(Exception): 
+class InvalidScript(Exception):
   def __str__(self):
     return self.args[0] + '\n' + HELP_STRING
 
@@ -163,7 +163,7 @@ def _SendChangeHTTP(options):
   if options.root:
     values['root'] = options.root
   values['patch'] = options.diff
-  
+
   url = 'http://%s:%s/send_try_patch' % (options.host, options.port)
   proxies = None
   if options.proxy:
@@ -203,7 +203,7 @@ def _SendChangeSVN(options):
     values['tests'] = ','.join(options.tests)
   if options.root:
     values['root'] = options.root
-  
+
   description = ''
   for (k,v) in values.iteritems():
     description += "%s=%s\n" % (k,v)
@@ -375,4 +375,3 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
 
 if __name__ == "__main__":
   TryChange(sys.argv)
- 

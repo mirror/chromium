@@ -542,7 +542,7 @@ def CaptureSVNStatus(options, path):
 
 class SCMWrapper(object):
   """Add necessary glue between all the supported SCM.
-  
+
   This is the abstraction layer to bind to different SCM. Since currently only
   subversion is supported, a lot of subersionism remains. This can be sorted out
   once another SCM is supported."""
@@ -737,7 +737,7 @@ class GClient(object):
   """Object that represent a gclient checkout."""
 
   supported_commands = ['diff', 'revert', 'status', 'update']
-  
+
   def __init__(self, root_dir, options):
     self._root_dir = root_dir
     self._options = options
@@ -761,7 +761,7 @@ class GClient(object):
 
   def ConfigContent(self):
     return self._config_content
-  
+
   def GetVar(self, key, default=None):
     return self._config_dict.get(key, default)
 
@@ -793,7 +793,7 @@ class GClient(object):
     """Creates a .gclient_entries file to record the list of unique checkouts.
 
     The .gclient_entries file lives in the same directory as .gclient.
-    
+
     Args:
       entries: A sequence of solution names.
     """
@@ -1018,7 +1018,7 @@ class GClient(object):
     deps = self._GetAllDeps(entries)
     deps_to_process = deps.keys()
     deps_to_process.sort()
-    
+
     # First pass for direct dependencies.
     for d in deps_to_process:
       if type(deps[d]) == str:
@@ -1057,7 +1057,7 @@ class GClient(object):
           command[0] = sys.executable
 
         SubprocessCall(command, self._root_dir, self._options.stdout)
- 
+
         # The hook's action only runs once.  Don't bother looking for any
         # more matches.
         break

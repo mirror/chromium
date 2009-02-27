@@ -63,9 +63,9 @@ def SetRevisionForUpdate(chrome_root):
     if solution["name"] == "src":
       splitter = solution["url"].split("@")
       if len(splitter) == 1:
-	solution["url"] = splitter[0] + "@" + str(rev)
+        solution["url"] = splitter[0] + "@" + str(rev)
       else:
-	rev = int(splitter[1])
+        rev = int(splitter[1])
       break
 
   # Write out the new .gclient file.
@@ -118,16 +118,17 @@ def DoBuild(chrome_root, chrome_sln, clean, type):
 def Main():
   parser = optparse.OptionParser()
   parser.add_option("", "--clean", action="store_true", default=False,
-		    help="wipe Debug output directory before building")
+                    help="wipe Debug output directory before building")
   parser.add_option("", "--solution", default="src\\chrome\\chrome.sln",
-		    help="path to the .sln file to build (absolute, or "
-		    "relative to chrome trunk")
+                    help="path to the .sln file to build (absolute, or "
+                         "relative to chrome trunk")
   parser.add_option("", "--release", action="store_true", default=False,
-		    help="build the release configuration in addition of the debug configuration.")
+                    help="build the release configuration in addition of the "
+                         "debug configuration.")
   parser.add_option("", "--nosync", action="store_true", default=False,
-		    help="doesn't sync before building")
+                    help="doesn't sync before building")
   parser.add_option("", "--print-latest", action="store_true", default=False,
-		    help="print the latest buildable revision and exit")
+                    help="print the latest buildable revision and exit")
   options, args = parser.parse_args()
 
   if options.print_latest:

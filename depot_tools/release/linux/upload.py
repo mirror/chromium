@@ -642,7 +642,7 @@ class VersionControlSystem(object):
 
   def GetBaseFiles(self, diff):
     """Helper that calls GetBase file for each file in the patch.
-    
+
     Returns:
       A dictionary that maps from filename to GetBaseFile's tuple.  Filenames
       are retrieved based on lines that start with "Index:" or
@@ -1114,7 +1114,7 @@ class MercurialVCS(VersionControlSystem):
     if out[0].startswith('%s: ' % relpath):
       out = out[1:]
     if len(out) > 1:
-      # Moved/copied => considered as modified, use old filename to 
+      # Moved/copied => considered as modified, use old filename to
       # retrieve base contents
       oldrelpath = out[1].strip()
       status = "M"
