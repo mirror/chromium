@@ -34,6 +34,8 @@
 namespace WebKit {
     class WebClipboard;
     class WebMimeRegistry;
+    class WebString;
+    class WebURL;
 
     class WebKitClient {
     public:
@@ -42,6 +44,26 @@ namespace WebKit {
 
         // Must return non-null.
         virtual WebMimeRegistry* mimeRegistry() = 0;
+
+        virtual void setCookies(const WebURL& url, const WebURL& policyURL, const WebString&) = 0;
+        virtual WebString cookies(const WebURL& url, const WebURL& policyURL) = 0;
+
+        // A suggestion to prefetch IP information for the given hostname.
+        virtual void prefetchHostName(const WebString&) = 0;
+
+        // Returns a value such as "en-US".
+        virtual WebString defaultLocale() = 0;
+
+        // Wall clock time in seconds since the epoch.
+        virtual double currentTime() = 0;
+
+        // Delayed work is driven by a shared timer.
+        virtual void setSharedTimerFiredFunction(void (*func)()) = 0;
+        virtual void setSharedTimerFireTime(double fireTime) = 0;
+        virtual void stopSharedTimer() = 0;
+
+        // Callable from a background WebKit thread.
+        virtual void callOnMainThread(void (*func)()) = 0;
     };
 
 } // namespace WebKit

@@ -28,14 +28,17 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef WebKitPrivate_h
-#define WebKitPrivate_h
+#include "config.h"
+#include <wtf/CurrentTime.h>
 
-namespace WebKit {
-    class WebKitClient;
+#include "WebKit.h"
+#include "WebKitClient.h"
 
-    WebKitClient* webKitClient();
+namespace WTF {
 
-} // namespace WebKit
+double currentTime()
+{
+    return WebKit::webKitClient()->currentTime();
+}
 
-#endif
+}  // namespace WTF

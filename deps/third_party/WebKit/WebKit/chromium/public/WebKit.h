@@ -35,6 +35,7 @@
 
 namespace WebKit {
     class WebKitClient;
+    class WebString;
 
     // Must be called on the thread that will be the main WebKit thread before
     // using any other WebKit APIs.  The provided WebKitClient must be non-null
@@ -43,8 +44,20 @@ namespace WebKit {
 
     // Once shutdown, the WebKitClient passed to initialize will no longer be
     // accessed.  No other WebKit objects should be in use when this function
-    // is called.
+    // is called.  Any background threads created by WebKit are promised to be
+    // terminated by the time this function returns.
     WEBKIT_API void shutdown();
+
+    // Returns the WebKitClient instance passed to initialize.
+    WEBKIT_API WebKitClient* webKitClient();
+
+    // Alters the rendering of content to conform to a fixed set of rules.
+    WEBKIT_API void setLayoutTestMode(bool);
+    WEBKIT_API bool layoutTestMode();
+
+    // Registers a URL scheme to be treated as a local scheme (i.e., with the
+    // same security rules as those applied to "file" URLs).
+    WEBKIT_API void registerURLSchemeAsLocal(const WebString&);
 
 } // namespace WebKit
 

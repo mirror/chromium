@@ -33,8 +33,8 @@
 
 #include "WebClipboard.h"
 #include "WebImage.h"
+#include "WebKit.h"
 #include "WebKitClient.h"
-#include "WebKitPrivate.h"
 #include "WebMimeRegistry.h"
 #include "WebString.h"
 #include "WebURL.h"
@@ -50,7 +50,6 @@ using namespace WebKit;
 namespace WebCore {
 
 //-----------------------------------------------------------------------------
-// Clipboard
 
 COMPILE_ASSERT(
     int(PasteboardPrivate::HTMLFormat) == int(WebClipboard::FormatHTML),
@@ -109,30 +108,93 @@ void ChromiumBridge::clipboardWriteImage(const NativeImageSkia* image,
 }
 
 //-----------------------------------------------------------------------------
-// MIME
 
-bool ChromiumBridge::isSupportedImageMIMEType(const String& mimeType) {
+void ChromiumBridge::setCookies(const KURL& url, const KURL& policyURL,
+                                const String& cookie)
+{
+    webKitClient()->setCookies(url, policyURL, cookie);
+}
+
+String ChromiumBridge::cookies(const KURL& url, const KURL& policyURL)
+{
+    return webKitClient()->cookies(url, policyURL);
+}
+
+//-----------------------------------------------------------------------------
+
+void ChromiumBridge::prefetchDNS(const String& hostname)
+{
+    webKitClient()->prefetchHostName(hostname);
+}
+
+//-----------------------------------------------------------------------------
+
+String ChromiumBridge::computedDefaultLanguage()
+{
+    return webKitClient()->defaultLocale();
+}
+
+//-----------------------------------------------------------------------------
+
+bool ChromiumBridge::layoutTestMode()
+{
+    return WebKit::layoutTestMode();
+}
+
+//-----------------------------------------------------------------------------
+
+bool ChromiumBridge::isSupportedImageMIMEType(const String& mimeType)
+{
     return webKitClient()->mimeRegistry()->supportsImageMIMEType(mimeType);
 }
 
-bool ChromiumBridge::isSupportedJavaScriptMIMEType(const String& mimeType) {
+bool ChromiumBridge::isSupportedJavaScriptMIMEType(const String& mimeType)
+{
     return webKitClient()->mimeRegistry()->supportsJavaScriptMIMEType(mimeType);
 }
 
-bool ChromiumBridge::isSupportedNonImageMIMEType(const String& mimeType) {
+bool ChromiumBridge::isSupportedNonImageMIMEType(const String& mimeType)
+{
     return webKitClient()->mimeRegistry()->supportsNonImageMIMEType(mimeType);
 }
 
-String ChromiumBridge::mimeTypeForExtension(const String& extension) {
+String ChromiumBridge::mimeTypeForExtension(const String& extension)
+{
     return webKitClient()->mimeRegistry()->mimeTypeForExtension(extension);
 }
 
-String ChromiumBridge::mimeTypeFromFile(const String& path) {
+String ChromiumBridge::mimeTypeFromFile(const String& path)
+{
     return webKitClient()->mimeRegistry()->mimeTypeFromFile(path);
 }
 
-String ChromiumBridge::preferredExtensionForMIMEType(const String& mimeType) {
+String ChromiumBridge::preferredExtensionForMIMEType(const String& mimeType)
+{
     return webKitClient()->mimeRegistry()->preferredExtensionForMIMEType(mimeType);
+}
+
+//-----------------------------------------------------------------------------
+
+void ChromiumBridge::setSharedTimerFiredFunction(void (*func)())
+{
+    webKitClient()->setSharedTimerFiredFunction(func);
+}
+
+void ChromiumBridge::setSharedTimerFireTime(double fireTime)
+{
+    webKitClient()->setSharedTimerFireTime(fireTime);
+}
+
+void ChromiumBridge::stopSharedTimer()
+{
+    webKitClient()->stopSharedTimer();
+}
+
+//-----------------------------------------------------------------------------
+
+double ChromiumBridge::currentTime()
+{
+    return webKitClient()->currentTime();
 }
 
 } // namespace WebCore

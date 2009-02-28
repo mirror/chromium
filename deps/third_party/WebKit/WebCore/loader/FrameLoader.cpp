@@ -1179,7 +1179,6 @@ static LocalSchemesMap& localSchemes()
 
     if (localSchemes.isEmpty()) {
         localSchemes.add("file");
-        localSchemes.add("chrome-ui");
 #if PLATFORM(MAC)
         localSchemes.add("applewebdata");
 #endif

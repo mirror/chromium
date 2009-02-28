@@ -29,53 +29,22 @@
  */
 
 #include "config.h"
+#include <wtf/chromium/ChromiumThreading.h>
+
 #include "WebKit.h"
+#include "WebKitClient.h"
 
-#include "WebString.h"
+#include <wtf/MainThread.h>
 
-#include "AtomicString.h"
-#include "FrameLoader.h"
-#include <wtf/Assertions.h>
-#include <wtf/Threading.h>
+namespace WTF {
 
-namespace WebKit {
-
-static WebKitClient* s_webKitClient = 0;
-static bool s_layoutTestMode = false;
-
-void initialize(WebKitClient* webKitClient)
+void ChromiumThreading::initializeMainThread()
 {
-    ASSERT(webKitClient);
-    ASSERT(!s_webKitClient);
-    s_webKitClient = webKitClient;
-
-    WTF::initializeThreading();
-    WebCore::AtomicString::init();
 }
 
-void shutdown()
+void ChromiumThreading::scheduleDispatchFunctionsOnMainThread()
 {
-    s_webKitClient = 0;
+    WebKit::webKitClient()->callOnMainThread(&WTF::dispatchFunctionsFromMainThread);
 }
 
-WebKitClient* webKitClient()
-{
-    return s_webKitClient;
-}
-
-void setLayoutTestMode(bool value)
-{
-    s_layoutTestMode = value;
-}
-
-bool layoutTestMode()
-{
-    return s_layoutTestMode;
-}
-
-void registerURLSchemeAsLocal(const WebString& scheme)
-{
-    WebCore::FrameLoader::registerURLSchemeAsLocal(scheme);
-}
-
-} // namespace WebKit
+}  // namespace WTF
