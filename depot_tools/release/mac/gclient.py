@@ -37,7 +37,11 @@ Files
 Hooks
   .gclient and DEPS files may optionally contain a list named "hooks" to
   allow custom actions to be performed based on files that have changed in the
-  working copy as a result of a "sync" or "revert" operation.
+  working copy as a result of a "sync"/"update" or "revert" operation.  Hooks
+  can also be run based on what files have been modified in the working copy
+  with the "runhooks" operation.  If any of these operation are run with
+  --force, all known hooks will run regardless of the state of the working
+  copy.
 
   Each item in a "hooks" list is a dict, containing these two keys:
     "pattern"  The associated value is a string containing a regular
@@ -60,7 +64,7 @@ Hooks
 """
 
 __author__ = "darinf@gmail.com (Darin Fisher)"
-__version__ = "0.3"
+__version__ = "0.3.1"
 
 import errno
 import optparse
@@ -102,6 +106,7 @@ subcommands:
    status
    sync
    update
+   runhooks
 
 Options and extra arguments can be passed to invoked svn commands by
 appending them to the command line.  Note that if the first such
@@ -203,6 +208,17 @@ Valid options:
 usage: help [options] [subcommand]
 
 Valid options:
+  --verbose           : output additional diagnostics
+""",
+    "runhooks":
+    """Runs hooks for files that have been modified in the local working copy,
+according to 'svn status'.
+
+usage: runhooks [options]
+
+Valid options:
+  --force             : runs all known hooks, regardless of the working
+                        copy status
   --verbose           : output additional diagnostics
 """,
 }
@@ -358,7 +374,8 @@ def RemoveDirectory(*path):
 def SubprocessCall(command, in_directory, out):
   """Runs command, a list, in directory in_directory.
 
-  A message indicating what is being done is printed to out.
+  A message indicating what is being done is printed to out.  Command output
+  is sent to stdout.
 
   Raises an Error exception if command fails.
   """
@@ -371,6 +388,52 @@ def SubprocessCall(command, in_directory, out):
   # with a list because it only tries to execute the first item in the list.
   rv = subprocess.call(command, cwd=in_directory,
                        shell=(sys.platform == 'win32'))
+
+  if rv:
+    raise Error("failed to run command: %s" % " ".join(command))
+
+
+def SubprocessCallAndCapture(command, in_directory, out, pattern,
+                             capture_list):
+  """Runs command, a list, in directory in_directory.
+
+  A message indicating what is being done, as well as the command's stdout,
+  is printed to out.
+
+  Any line in the output matching pattern will have its first match group
+  appended to capture_list.
+
+  Raises an Error exception if command fails.
+  """
+
+  print >> out, ("\n________ running \'%s\' in \'%s\'"
+      % (' '.join(command), in_directory))
+
+  # *Sigh*:  Windows needs shell=True, or else it won't search %PATH% for the
+  # executable, but shell=True makes subprocess on Linux fail when it's called
+  # with a list because it only tries to execute the first item in the list.
+  kid = subprocess.Popen(command, cwd=in_directory, stdout=subprocess.PIPE,
+                         shell=(sys.platform == 'win32'))
+
+  compiled_pattern = re.compile(pattern)
+
+  # Use this instead of |for line in kid.stdout| because the latter can
+  # introduce additional buffering.  This method allows data to be collected
+  # from kid.stdout as soon as it's placed there.
+  while True:
+    line = kid.stdout.readline()
+    if len(line) == 0:
+      break
+
+    # Use this instead of print because line already has a newline sequence
+    out.write(line)
+
+    # pattern might not be expecting the newline, so don't feed it to search.
+    match = compiled_pattern.search(line.rstrip('\r\n'))
+    if match:
+      capture_list.append(match.group(1))
+
+  rv = kid.wait()
 
   if rv:
     raise Error("failed to run command: %s" % " ".join(command))
@@ -417,15 +480,10 @@ def CaptureSVN(options, args, in_directory):
                           stdout=subprocess.PIPE).communicate()[0]
 
 
-# When "svn checkout" or "svn update" prints a line about a file that is
-# changing, it matches this pattern.  This pattern's first match group should
-# be the relevant path.  "checkout" and "update" both print a column for file
-# status, a column for property status, and a column for lock status, followed
-# by two spaces, and then the path to the file being checked out or updated.
-_svn_update_line_re = re.compile('^...  (.*)$')
-
 def RunSVNAndGetFileList(options, args, in_directory, file_list):
-  """Runs svn checkout or update, output to stdout.
+  """Runs svn checkout, update, or status, output to stdout.
+
+  The first item in args must be either "checkout", "update", or "status".
 
   svn's stdout is parsed to collect a list of files checked out or updated.
   These files are appended to file_list.  svn's stdout is also printed to
@@ -441,35 +499,29 @@ def RunSVNAndGetFileList(options, args, in_directory, file_list):
   command = [SVN_COMMAND]
   command.extend(args)
 
-  print >> options.stdout, ("\n________ running \'%s\' in \'%s\'"
-      % (' '.join(command), os.path.realpath(in_directory)))
+  # svn update and svn checkout use the same pattern: the first three columns
+  # are for file status, property status, and lock status.  This is followed
+  # by two spaces, and then the path to the file.
+  update_pattern = '^...  (.*)$'
 
-  # *Sigh*:  Windows needs shell=True, or else it won't search %PATH% for
-  # the svn.exe executable, but shell=True makes subprocess on Linux fail
-  # when it's called with a list because it only tries to execute the
-  # first string ("svn").
-  kid = subprocess.Popen(command, cwd=in_directory, stdout=subprocess.PIPE,
-                         shell=(sys.platform == 'win32'))
+  # The first three columns of svn status are the same as for svn update and
+  # svn checkout.  The next three columns indicate addition-with-history,
+  # switch, and remote lock status.  This is followed by one space, and then
+  # the path to the file.
+  status_pattern = '^...... (.*)$'
 
-  # Use this instead of |for line in kid.stdout| because the latter can
-  # introduce additional buffering.  This method allows data to be collected
-  # from kid.stdout as soon as it's placed there.
-  while True:
-    line = kid.stdout.readline()
-    if len(line) == 0:
-      break
+  # args[0] must be a supported command.  This will blow up if it's something
+  # else, which is good.  Note that the patterns are only effective when
+  # these commands are used in their ordinary forms, the patterns are invalid
+  # for "svn status --show-updates", for example.
+  pattern = {
+        'checkout': update_pattern,
+        'status':   status_pattern,
+        'update':   update_pattern,
+      }[args[0]]
 
-    # Use this instead of print because line already has a newline sequence
-    options.stdout.write(line)
-
-    match = _svn_update_line_re.match(line)
-    if match:
-      file_list.append(match.group(1))
-
-  rv = kid.wait()
-
-  if rv:
-    raise Error("failed to run command: %s" % " ".join(command))
+  SubprocessCallAndCapture(command, in_directory, options.stdout,
+                           pattern, file_list)
 
 
 def CaptureSVNInfo(options, relpath, in_directory):
@@ -559,18 +611,17 @@ class SCMWrapper(object):
     return '/'.join(self.url.split('/')[:4]) + url
 
   def RunCommand(self, command, options, args, file_list=None):
-    # file_list will have all files that are modified appended to it.  This is
-    # only effective for the "update" or "revert" commands, because those are
-    # the only ones that can result in files changing.
+    # file_list will have all files that are modified appended to it.
 
     if file_list == None:
       file_list = []
 
     commands = {
-          'update': self.update,
-          'revert': self.revert,
-          'status': self.status,
-          'diff':   self.diff,
+          'update':   self.update,
+          'revert':   self.revert,
+          'status':   self.status,
+          'diff':     self.diff,
+          'runhooks': self.status,
         }
 
     if not command in commands:
@@ -579,6 +630,7 @@ class SCMWrapper(object):
     return commands[command](options, args, file_list)
 
   def diff(self, options, args, file_list):
+    # NOTE: This function does not currently modify file_list.
     command = ['diff']
     command.extend(args)
     RunSVN(options, command, os.path.join(self._root_dir, self.relpath))
@@ -727,7 +779,8 @@ class SCMWrapper(object):
     """Display status information."""
     command = ['status']
     command.extend(args)
-    RunSVN(options, command, os.path.join(self._root_dir, self.relpath))
+    RunSVNAndGetFileList(options, command,
+                         os.path.join(self._root_dir, self.relpath), file_list)
 
 
 ## GClient implementation.
@@ -736,7 +789,7 @@ class SCMWrapper(object):
 class GClient(object):
   """Object that represent a gclient checkout."""
 
-  supported_commands = ['diff', 'revert', 'status', 'update']
+  supported_commands = ['diff', 'revert', 'status', 'update', 'runhooks']
 
   def __init__(self, root_dir, options):
     self._root_dir = root_dir
@@ -843,6 +896,44 @@ class GClient(object):
         return self._local_scope["vars"][var_name]
       raise Error("Var is not defined: %s" % var_name)
 
+  class _DepInfo:
+    """Contains info about a DEPS file entry."""
+    def __init__(self, base_path, entry):
+      """Constructor.
+
+      Args:
+        base_path: The directory of the DEPS file which declared
+                   this dependency.
+        entry: If entry is a string, it will be treated as a scm URL to be
+               used to update the dependency. Otherwise, entry is assumed to
+               be a _FromImpl object (created when the From syntax is used in
+               a DEPS file.
+      """
+      self._entry = entry
+      self._base_path = base_path
+
+    def __eq__(self, rhs):
+      return (self._base_path == rhs._base_path and
+              self._entry == rhs._entry)
+
+    def IsUrl(self):
+      """Returns true if the entry is a URL, false if it is module_name
+         (generated with a From declaration)."""
+      return type(self._entry) == str
+
+    def GetBasePath(self):
+      return self._base_path
+
+    def GetUrl(self):
+      """Returns the URL for the dependency. The return value is invalid if
+         IsUrl() returns false; callers should check accordingly."""
+      return self._entry
+
+    def GetModuleName(self):
+      """Returns the module name for the dependency. This value is invalid if
+         IsUrl() returns true; callers should check appropriately."""
+      return self._entry.module_name
+
   def _GetDefaultSolutionDeps(self, solution_name, custom_vars):
     """Fetches the DEPS file for the specified solution.
 
@@ -851,7 +942,8 @@ class GClient(object):
       vars: A dict of vars to override any vars defined in the DEPS file.
 
     Returns:
-      A dict mapping module names (as relative paths) to URLs or an empty
+      A dict mapping module names (as relative paths) to _DepInfo objects
+      (which contain the appropriate URL for the dependency) or an empty
       dict if the solution does not have a DEPS file.
     """
     deps_file = os.path.join(self._root_dir, solution_name,
@@ -904,7 +996,19 @@ class GClient(object):
     if 'hooks' in local_scope:
       self._deps_hooks.extend(local_scope['hooks'])
 
-    return deps
+    # Provides legacy support for DEPS files that specify their paths
+    # relative to the solution file.
+    use_relative_paths = local_scope.get('use_relative_paths')
+    if use_relative_paths:
+      base_path = os.path.dirname(deps_file)
+    else:
+      base_path = self._root_dir
+
+    # Translate all deps to _DepInfo objects.
+    deps_objects = {}
+    for path, entry in deps.items():
+      deps_objects[path] = self._DepInfo(base_path, entry)
+    return deps_objects 
 
   def _GetAllDeps(self, solution_urls):
     """Get the complete list of dependencies for the client.
@@ -915,8 +1019,9 @@ class GClient(object):
         is passed as an optimization.
 
     Returns:
-      A dict mapping module names (as relative paths) to URLs corresponding
-      to the entire set of dependencies to checkout for the given client.
+      A dict mapping module names (as relative paths) to _DepInfo objects
+      (which contain the appropriate URL for the dependency). The map contains
+      the entire set of dependencies to checkout for the given client.
 
     Raises:
       Error: If a dependency conflicts with another dependency or of a solution.
@@ -933,22 +1038,25 @@ class GClient(object):
           url = solution["custom_deps"][d]
           if url is None:
             continue
+          dep_info = self._DepInfo(d.GetBasePath(), url)
         else:
-          url = solution_deps[d]
+          dep_info = solution_deps[d]
           # if we have a From reference dependent on another solution, then
           # just skip the From reference. When we pull deps for the solution,
           # we will take care of this dependency.
           #
           # If multiple solutions all have the same From reference, then we
           # should only add one to our list of dependencies.
-          if type(url) != str:
-            if url.module_name in solution_urls:
+          if not dep_info.IsUrl():
+            module_name = dep_info.GetModuleName()
+            if module_name in solution_urls:
               # Already parsed.
               continue
-            if d in deps and type(deps[d]) != str:
-              if url.module_name == deps[d].module_name:
+            if d in deps and not deps[d].IsUrl():
+              if module_name == deps[d].GetModuleName():
                 continue
           else:
+            url = dep_info.GetUrl()
             parsed_url = urlparse.urlparse(url)
             scheme = parsed_url[0]
             if not scheme:
@@ -958,18 +1066,64 @@ class GClient(object):
                 raise Error(
                     "relative DEPS entry \"%s\" must begin with a slash" % d)
               # Create a scm just to query the full url.
-              scm = self._options.scm_wrapper(solution["url"], self._root_dir,
+              scm = self._options.scm_wrapper(solution["url"],
+                                              dep_info.GetBasePath(),
                                               None)
               url = scm.FullUrlForRelativeUrl(url)
-        if d in deps and deps[d] != url:
+        if d in deps and deps[d] != dep_info:
           raise Error(
               "Solutions have conflicting versions of dependency \"%s\"" % d)
-        if d in solution_urls and solution_urls[d] != url:
+        if d in solution_urls and solution_urls[d] != dep_info.GetUrl():
           raise Error(
               "Dependency \"%s\" conflicts with specified solution" % d)
         # Grab the dependency.
-        deps[d] = url
+        deps[d] = self._DepInfo(dep_info.GetBasePath(), url)
     return deps
+
+  def _RunHookAction(self, hook_dict):
+    """Runs the action from a single hook.
+    """
+    command = hook_dict['action'][:]
+    if command[0] == 'python':
+      # If the hook specified "python" as the first item, the action is a
+      # Python script.  Run it by starting a new copy of the same
+      # interpreter.
+      command[0] = sys.executable
+
+    SubprocessCall(command, self._root_dir, self._options.stdout)
+
+  def _RunHooks(self, command, file_list):
+    """Evaluates all hooks, running actions as needed.
+    """
+    # Hooks only run for these command types.
+    if not command in ('update', 'revert', 'runhooks'):
+      return
+
+    # Get any hooks from the .gclient file.
+    hooks = self.GetVar("hooks", [])
+    # Add any hooks found in DEPS files.
+    hooks.extend(self._deps_hooks)
+
+    # If "--force" was specified, run all hooks regardless of what files have
+    # changed.
+    if self._options.force:
+      for hook_dict in hooks:
+        self._RunHookAction(hook_dict)
+      return
+
+    # Run hooks on the basis of whether the files from the gclient operation
+    # match each hook's pattern.
+    for hook_dict in hooks:
+      pattern = re.compile(hook_dict['pattern'])
+      for file in file_list:
+        if not pattern.search(file):
+          continue
+
+        self._RunHookAction(hook_dict)
+
+        # The hook's action only runs once.  Don't bother looking for any
+        # more matches.
+        break
 
   def RunOnDeps(self, command, args):
     """Runs an command on each dependency in a client and its dependencies.
@@ -1000,6 +1154,11 @@ class GClient(object):
     if not solutions:
       raise Error("No solution specified")
 
+    # When running runhooks --force, there's no need to consult the SCM.
+    # All known hooks are expected to run unconditionally regardless of working
+    # copy state, so skip the SCM status check.
+    run_scm = not (command == 'runhooks' and self._options.force)
+
     entries = {}
     file_list = []
     # Run on the base solutions first.
@@ -1010,8 +1169,9 @@ class GClient(object):
       url = solution["url"]
       entries[name] = url
       self._options.revision = revision_overrides.get(name)
-      scm = self._options.scm_wrapper(url, self._root_dir, name)
-      scm.RunCommand(command, self._options, args, file_list)
+      if run_scm:
+        scm = self._options.scm_wrapper(url, self._root_dir, name)
+        scm.RunCommand(command, self._options, args, file_list)
 
     # Process the dependencies next (sort alphanumerically to ensure that
     # containing directories get populated first and for readability)
@@ -1021,46 +1181,29 @@ class GClient(object):
 
     # First pass for direct dependencies.
     for d in deps_to_process:
-      if type(deps[d]) == str:
-        url = deps[d]
+      dep_info = deps[d]
+      if dep_info.IsUrl():
+        url = dep_info.GetUrl()
         entries[d] = url
         self._options.revision = revision_overrides.get(d)
-        scm = self._options.scm_wrapper(url, self._root_dir, d)
-        scm.RunCommand(command, self._options, args, file_list)
+        if run_scm:
+          scm = self._options.scm_wrapper(url, dep_info.GetBasePath(), d)
+          scm.RunCommand(command, self._options, args, file_list)
 
     # Second pass for inherited deps (via the From keyword)
     for d in deps_to_process:
-      if type(deps[d]) != str:
-        sub_deps = self._GetDefaultSolutionDeps(deps[d].module_name)
-        url = sub_deps[d]
+      dep_info = deps[d]
+      if not dep_info.IsUrl():
+        sub_deps = self._GetDefaultSolutionDeps(dep_info.GetModuleName())
+        sub_dep_info = sub_deps[d]
+        url = sub_dep_info.GetUrl()
         entries[d] = url
         self._options.revision = revision_overrides.get(d)
-        scm = self._options.scm_wrapper(url, self._root_dir, d)
-        scm.RunCommand(command, self._options, args, file_list)
+        if run_scm:
+          scm = self._options.scm_wrapper(url, sub_dep_info.GetBasePath(), d)
+          scm.RunCommand(command, self._options, args, file_list)
 
-    # Get any hooks from the .gclient file.
-    hooks = self.GetVar("hooks", [])
-    # Add any hooks found in DEPS files.
-    hooks.extend(self._deps_hooks)
-
-    for hook_dict in hooks:
-      pattern = re.compile(hook_dict['pattern'])
-      for file in file_list:
-        if not pattern.search(file):
-          continue
-
-        command = hook_dict['action'][:]
-        if command[0] == 'python':
-          # If the hook specified "python" as the first item, the action is a
-          # Python script.  Run it by starting a new copy of the same
-          # interpreter.
-          command[0] = sys.executable
-
-        SubprocessCall(command, self._root_dir, self._options.stdout)
-
-        # The hook's action only runs once.  Don't bother looking for any
-        # more matches.
-        break
+    self._RunHooks(command, file_list)
 
     if command == 'update':
       # notify the user if there is an orphaned entry in their working copy.
@@ -1190,6 +1333,22 @@ def DoRevert(options, args):
   return client.RunOnDeps('revert', args)
 
 
+def DoRunHooks(options, args):
+  """Handle the runhooks subcommand.
+
+  Raises:
+    Error: if client isn't configured properly.
+  """
+  client = options.gclient.LoadCurrentConfig(options)
+  if not client:
+    raise Error("client not configured; see 'gclient config'")
+  if options.verbose:
+    # Print out the .gclient file.  This is longer than if we just printed the
+    # client dict, but more legible, and it might contain helpful comments.
+    print >>options.stdout, client.ConfigContent()
+  return client.RunOnDeps('runhooks', args)
+
+
 gclient_command_map = {
     "config": DoConfig,
     "diff": DoDiff,
@@ -1198,6 +1357,7 @@ gclient_command_map = {
     "sync": DoUpdate,
     "update": DoUpdate,
     "revert": DoRevert,
+    "runhooks": DoRunHooks,
     }
 
 
