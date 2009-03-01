@@ -121,7 +121,6 @@ F. Mac and Linux platform headers (common/p{mac,linux}.h):
      concerned with wchar_t strings containing UTF-32 data on the Mac;
    - public/common/unicode/umachine.h was updated to include pmac.h instead of
      platform.h on the Mac;
-   - icu.xcodeproj was added to enable ICU to build using Xcode on the Mac.
    - icu.gyp was added to enable gyp-based builds to use ICU.
 
    Linux:
