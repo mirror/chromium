@@ -219,7 +219,8 @@ class GClient(commands.SourceBase):
         d.addCallback(self.doCopy)
     if self.patch:
         d.addCallback(self.doPatch)
-    d.addCallbacks(self.doRunHooks, self._sendRC, self._checkAbandoned)
+    d.addCallback(self.doRunHooks)
+    d.addCallbacks(self._sendRC, self._checkAbandoned)
     return d
 
   def sourcedirIsPatched(self):
