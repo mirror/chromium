@@ -219,7 +219,7 @@ class GClient(commands.SourceBase):
         d.addCallback(self.doCopy)
     if self.patch:
         d.addCallback(self.doPatch)
-    d.addCallbacks(self._sendRC, self._checkAbandoned)
+    d.addCallbacks(self.doRunHooks, self._sendRC, self._checkAbandoned)
     return d
 
   def sourcedirIsPatched(self):
@@ -407,6 +407,18 @@ class GClient(commands.SourceBase):
     if self.revision and not self.branch:
       self.branch = 'src'
     return self.doVCUpdate()
+
+  def doRunHooks(self, dummy):
+    """Runs "gclient runhooks" after patching."""
+
+    command = [chromium_utils.GetGClientCommand(), 'runhooks']
+    c = commands.ShellCommand(self.builder, command, dir,
+                              sendRC=False, timeout=self.timeout,
+                              keepStdout=True, environ=self.env)
+    self.command = c
+    d = c.start()
+    d.addCallback(self._abandonOnFailure)
+    return d
 
   def writeSourcedata(self, res):
     """Write the sourcedata file and remove any dead source directory."""
