@@ -896,7 +896,7 @@ class GClient(object):
         return self._local_scope["vars"][var_name]
       raise Error("Var is not defined: %s" % var_name)
 
-  class _DepInfo:
+  class _DepInfo(PrintableObject):
     """Contains info about a DEPS file entry."""
     def __init__(self, base_path, entry):
       """Constructor.
@@ -916,6 +916,9 @@ class GClient(object):
       return (self._base_path == rhs._base_path and
               self._entry == rhs._entry)
 
+    def __ne__(self, rhs):
+      return not self.__eq__(rhs)
+
     def IsUrl(self):
       """Returns true if the entry is a URL, false if it is module_name
          (generated with a From declaration)."""
@@ -934,12 +937,13 @@ class GClient(object):
          IsUrl() returns true; callers should check appropriately."""
       return self._entry.module_name
 
-  def _GetDefaultSolutionDeps(self, solution_name, custom_vars):
+  def _GetDefaultSolutionDeps(self, solution_name, custom_vars, solution_url):
     """Fetches the DEPS file for the specified solution.
 
     Args:
       solution_name: The name of the solution to query.
       vars: A dict of vars to override any vars defined in the DEPS file.
+      solution_url: The SCM url of the solution to query.
 
     Returns:
       A dict mapping module names (as relative paths) to _DepInfo objects
@@ -1007,6 +1011,19 @@ class GClient(object):
     # Translate all deps to _DepInfo objects.
     deps_objects = {}
     for path, entry in deps.items():
+      parsed_url = urlparse.urlparse(entry)
+      scheme = parsed_url[0]
+      if not scheme:
+        # A relative url. Fetch the real base.
+        path = parsed_url[2]
+        if path[0] != "/":
+          raise Error(
+              "relative DEPS entry \"%s\" must begin with a slash" % d)
+        # Create a scm just to query the full url.
+        scm = self._options.scm_wrapper(solution_url,
+                                        path,
+                                        None)
+        entry = scm.FullUrlForRelativeUrl(entry)
       deps_objects[path] = self._DepInfo(base_path, entry)
     return deps_objects 
 
@@ -1030,7 +1047,8 @@ class GClient(object):
     for solution in self.GetVar("solutions"):
       custom_vars = solution.get("custom_vars", {})
       solution_deps = self._GetDefaultSolutionDeps(solution["name"],
-                                                   custom_vars)
+                                                   custom_vars,
+                                                   solution["url"])
 
       for d in solution_deps:
         if "custom_deps" in solution and d in solution["custom_deps"]:
@@ -1194,7 +1212,10 @@ class GClient(object):
     for d in deps_to_process:
       dep_info = deps[d]
       if not dep_info.IsUrl():
-        sub_deps = self._GetDefaultSolutionDeps(dep_info.GetModuleName())
+        # TODO(maruel): Fix custom_vars.
+        sub_deps = self._GetDefaultSolutionDeps(dep_info.GetModuleName(),
+                                                {},
+                                                dep_info.GetUrl())
         sub_dep_info = sub_deps[d]
         url = sub_dep_info.GetUrl()
         entries[d] = url
