@@ -411,7 +411,7 @@ class GClient(commands.SourceBase):
 
   def doRunHooks(self, dummy):
     """Runs "gclient runhooks" after patching."""
-
+    dir = os.path.join(self.builder.basedir, self.srcdir)
     command = [chromium_utils.GetGClientCommand(), 'runhooks']
     c = commands.ShellCommand(self.builder, command, dir,
                               sendRC=False, timeout=self.timeout,
