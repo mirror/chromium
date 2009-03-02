@@ -44,6 +44,11 @@ namespace WebCore {
         return v8::Local<v8::Object>();
     }
 
+    inline static v8::Local<v8::Boolean> deletionNotHandledByInterceptor()
+    {
+        return v8::Local<v8::Boolean>();
+    }
+
     inline v8::Handle<v8::Primitive> throwError(const char* message, V8Proxy::ErrorType type = V8Proxy::TYPE_ERROR)
     {
         V8Proxy::ThrowError(type, message);
@@ -53,6 +58,12 @@ namespace WebCore {
     inline v8::Handle<v8::Primitive> throwError(ExceptionCode ec)
     {
         V8Proxy::SetDOMException(ec);
+        return v8::Undefined();
+    }
+
+    inline v8::Handle<v8::Primitive> throwError(v8::Local<v8::Value> exception)
+    {
+        v8::ThrowException(exception);
         return v8::Undefined();
     }
 

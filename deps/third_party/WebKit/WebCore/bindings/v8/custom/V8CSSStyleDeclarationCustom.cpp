@@ -88,8 +88,7 @@ static bool hasCSSPropertyNamePrefix(const String& propertyName, const char* pre
 // not the property name was prefixed with 'pos-' or 'pixel-'.
 static String cssPropertyName(const String& propertyName, bool& hadPixelOrPosPrefix)
 {
-    if (hadPixelOrPosPrefix)
-        hadPixelOrPosPrefix = false;
+    hadPixelOrPosPrefix = false;
 
     unsigned length = propertyName.length();
     if (!length)
@@ -104,20 +103,16 @@ static String cssPropertyName(const String& propertyName, bool& hadPixelOrPosPre
         i += 3;
     else if (hasCSSPropertyNamePrefix(propertyName, "pixel")) {
         i += 5;
-        if (hadPixelOrPosPrefix)
-            hadPixelOrPosPrefix = true;
+        hadPixelOrPosPrefix = true;
     } else if (hasCSSPropertyNamePrefix(propertyName, "pos")) {
         i += 3;
-        if (hadPixelOrPosPrefix)
-            hadPixelOrPosPrefix = true;
+        hadPixelOrPosPrefix = true;
     } else if (hasCSSPropertyNamePrefix(propertyName, "webkit")
             || hasCSSPropertyNamePrefix(propertyName, "khtml")
             || hasCSSPropertyNamePrefix(propertyName, "apple"))
         name.append('-');
-    else {
-        if (WTF::isASCIIUpper(propertyName[0]))
-            return String();
-    }
+    else if (WTF::isASCIIUpper(propertyName[0]))
+        return String();
 
     name.append(WTF::toASCIILower(propertyName[i++]));
 

@@ -54,6 +54,22 @@ namespace WebCore {
         return ToWebCoreString(obj);
     }
 
+        // FIXME: Rename valueToStringWithNullCheck once migration is complete
+    inline String toWebCoreStringWithNullCheck(v8::Handle<v8::Value> value)
+    {
+        return valueToStringWithNullCheck(value);
+    }
+
+    inline bool isUndefinedOrNull(v8::Handle<v8::Value> value)
+    {
+        return value->IsNull() || value->IsUndefined();
+    }
+
+    inline v8::Handle<v8::Boolean> v8Boolean(bool value)
+    {
+        return value ? v8::True() : v8::False();
+    }
+
 }
 
 #endif // V8Binding_h
