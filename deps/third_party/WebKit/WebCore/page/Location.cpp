@@ -123,7 +123,7 @@ String Location::search() const
         return String();
 
     const KURL& url = this->url();
-    return url.query();
+    return url.query().isEmpty() ? "" : "?" + url.query();
 }
 
 String Location::hash() const
