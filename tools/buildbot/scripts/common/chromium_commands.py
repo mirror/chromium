@@ -383,7 +383,13 @@ class GClient(commands.SourceBase):
     root = None
     if len(self.patch) >= 3:
       root = self.patch[2]
-    command = [commands.getCommand("patch"), '-p%d' % patchlevel]
+    command = [
+        commands.getCommand("patch"),
+        '-p%d' % patchlevel,
+        '--remove-empty-files',
+        '--force',
+        '--forward',
+    ]
     dir = os.path.join(self.builder.basedir, self.workdir)
     # Mark the directory so we don't try to update it later.
     open(os.path.join(dir, ".buildbot-patched"), "w").write("patched\n")
