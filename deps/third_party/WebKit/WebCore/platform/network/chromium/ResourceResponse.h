@@ -58,6 +58,10 @@ namespace WebCore {
             m_isContentFiltered = isContentFiltered;
         }
 
+        // FIXME: This is a temporary change to investigate performance regression
+        // see http://crbug.com/8207
+        unsigned memoryUsage() const { return 0; }
+
     private:
         friend class ResourceResponseBase;
 
