@@ -219,7 +219,7 @@ class GClient(commands.SourceBase):
         d.addCallback(self.doCopy)
     if self.patch:
         d.addCallback(self.doPatch)
-    d.addCallback(self.doRunHooks)
+        d.addCallback(self.doRunHooks)
     d.addCallbacks(self._sendRC, self._checkAbandoned)
     return d
 
