@@ -425,11 +425,10 @@ def SubprocessCallAndCapture(command, in_directory, out, pattern,
     if len(line) == 0:
       break
 
-    # Use this instead of print because line already has a newline sequence
-    out.write(line)
+    line = line.rstrip('\r\n')
+    print line
 
-    # pattern might not be expecting the newline, so don't feed it to search.
-    match = compiled_pattern.search(line.rstrip('\r\n'))
+    match = compiled_pattern.search(line)
     if match:
       capture_list.append(match.group(1))
 
