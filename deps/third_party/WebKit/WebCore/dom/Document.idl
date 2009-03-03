@@ -94,14 +94,14 @@ module core {
         // DOM Level 2 Tranversal and Range (DocumentTraversal interface)
 
         [OldStyleObjC] NodeIterator createNodeIterator(in Node root,
-                                              in unsigned long whatToShow,
-                                              in NodeFilter filter,
-                                              in boolean entityReferenceExpansion)
+                                                       in unsigned long whatToShow,
+                                                       in NodeFilter filter,
+                                                       in boolean expandEntityReferences)
             raises(DOMException);
         [OldStyleObjC] TreeWalker createTreeWalker(in Node root,
-                                            in unsigned long whatToShow,
-                                            in NodeFilter filter,
-                                            in boolean entityReferenceExpansion)
+                                                   in unsigned long whatToShow,
+                                                   in NodeFilter filter,
+                                                   in boolean expandEntityReferences)
             raises(DOMException);
 
         // DOM Level 2 Abstract Views (DocumentView interface)
@@ -221,16 +221,12 @@ module core {
         [UsesView] CSSRuleList getMatchedCSSRules(in Element element,
                                                   in DOMString pseudoElement,
                                                   in [Optional] boolean authorOnly);
-
+                                                  
 #endif
 
 #if !defined(LANGUAGE_COM)
 #if !defined(LANGUAGE_OBJECTIVE_C)
-#if defined(V8_BINDING)
-        CanvasRenderingContext2D getCSSCanvasContext(in DOMString contextId, in DOMString name, in long width, in long height);
-#else
-        DOMObject getCSSCanvasContext(in DOMString contextId, in DOMString name, in long width, in long height);
-#endif // V8_BINDING
+        [V8Custom] DOMObject getCSSCanvasContext(in DOMString contextId, in DOMString name, in long width, in long height);
 #endif
 #endif
 

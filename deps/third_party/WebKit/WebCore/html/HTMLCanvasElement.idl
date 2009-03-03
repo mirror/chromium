@@ -37,11 +37,9 @@ module html {
         DOMString toDataURL(in [ConvertUndefinedOrNullToNullString] DOMString type)
             raises(DOMException);
 
-#if defined(V8_BINDING)
-        CanvasRenderingContext2D getContext(in DOMString contextId);
-#elif !defined(LANGUAGE_OBJECTIVE_C)
-        DOMObject getContext(in DOMString contextId);
-#endif // V8_BINDING
+#if !defined(LANGUAGE_OBJECTIVE_C)
+        [V8Custom] DOMObject getContext(in DOMString contextId);
+#endif
 
     };
 
