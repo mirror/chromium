@@ -183,12 +183,8 @@ Frame::~Frame()
     frameCounter.decrement();
 #endif
 
-#if USE(JSC)
     if (m_script.haveWindowShell())
         m_script.windowShell()->disconnectFrame();
-#elif USE(V8)
-    m_script.disconnectFrame();
-#endif
 
     disconnectOwnerElement();
     
