@@ -560,14 +560,14 @@ int RenderTextControl::scrollTop() const
 
 void RenderTextControl::setScrollLeft(int newLeft)
 {
-  if (m_innerText)
-      m_innerText->setScrollLeft(newLeft);
+    if (m_innerText)
+        m_innerText->setScrollLeft(newLeft);
 }
 
 void RenderTextControl::setScrollTop(int newTop)
 {
-  if (m_innerText)
-      m_innerText->setScrollTop(newTop);
+    if (m_innerText)
+        m_innerText->setScrollTop(newTop);
 }
 
 bool RenderTextControl::scroll(ScrollDirection direction, ScrollGranularity granularity, float multiplier)

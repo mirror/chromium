@@ -108,13 +108,12 @@ protected:
 
     FormControlElement* formControlElement() const;
 
-    RefPtr<TextControlInnerTextElement> m_innerText;
-
 private:
     String finishText(Vector<UChar>&) const;
 
     bool m_edited;
     bool m_userEdited;
+    RefPtr<TextControlInnerTextElement> m_innerText;
 };
 
 inline RenderTextControl* toRenderTextControl(RenderObject* o)
