@@ -1,3 +1,54 @@
+2009-03-01  David Kilzer  <ddkilzer@apple.com>
+
+        <rdar://problem/6635688> Move HAVE_DTRACE check to Base.xcconfig
+
+        Reviewed by Mark Rowe.
+
+        * Configurations/Base.xcconfig: Set HAVE_DTRACE Xcode variable
+        based on PLATFORM_NAME and MAC_OS_X_VERSION_MAJOR.  Also define
+        it as a preprocessor macro by modifying
+        GCC_PREPROCESSOR_DEFINITIONS.
+        * JavaScriptCore.xcodeproj/project.pbxproj: Changed "Generate
+        DTrace header" script phase to check for HAVE_DTRACE instead of
+        MACOSX_DEPLOYMENT_TARGET.
+        * wtf/Platform.h: Removed definition of HAVE_DTRACE macro since
+        it's defined in Base.xcconfig now.
+
+2009-03-01  Horia Olaru  <olaru@adobe.com>
+
+        By looking in grammar.y there are only a few types of statement nodes
+        on which the debugger should stop. 
+
+        Removed isBlock and isLoop virtual calls. No need to emit debug hooks in
+        the "statementListEmitCode" method as long as the necessary hooks can be
+        added in each "emitCode".
+
+        https://bugs.webkit.org/show_bug.cgi?id=21073
+
+        Reviewed by Kevin McCullough.
+
+        * parser/Nodes.cpp:
+        (JSC::ConstStatementNode::emitBytecode):
+        (JSC::statementListEmitCode):
+        (JSC::EmptyStatementNode::emitBytecode):
+        (JSC::ExprStatementNode::emitBytecode):
+        (JSC::VarStatementNode::emitBytecode):
+        (JSC::IfNode::emitBytecode):
+        (JSC::IfElseNode::emitBytecode):
+        (JSC::DoWhileNode::emitBytecode):
+        (JSC::WhileNode::emitBytecode):
+        (JSC::ForNode::emitBytecode):
+        (JSC::ForInNode::emitBytecode):
+        (JSC::ContinueNode::emitBytecode):
+        (JSC::BreakNode::emitBytecode):
+        (JSC::ReturnNode::emitBytecode):
+        (JSC::WithNode::emitBytecode):
+        (JSC::SwitchNode::emitBytecode):
+        (JSC::LabelNode::emitBytecode):
+        (JSC::ThrowNode::emitBytecode):
+        (JSC::TryNode::emitBytecode):
+        * parser/Nodes.h:
+
 2009-02-26  Gavin Barraclough  <barraclough@apple.com>
 
         Reviewed by Geoff Garen.
@@ -13187,6 +13238,7 @@
         replace or a transition to a new StructureID.
 
         Reduces memory use on Membuster head test (30 pages open) by ~15MB.
+        Windows
 
         * JavaScriptCore.exp:
         * runtime/JSObject.h:
@@ -13232,6 +13284,8 @@
         (JSC::StructureID::get): Build PropertyMap on demand
 
 2008-11-14  Csaba Osztrogonac  <oszi@inf.u-szeged.hu>
+        Create the docs/ directory so that we can write bytecode.html into it.
+        This matches what JavaScriptCore.xcodeproj does.
 
         Reviewed by Simon Hausmann.
 
@@ -14799,6 +14853,7 @@
 
         * JavaScriptCore.xcodeproj/project.pbxproj: Added a script
         phase that runs the check-for-exit-time-destructors script.
+        work items from thread to thread. This removes #ifdefs for WIN and CHROMIUM from platform-independent code.
 
         * wtf/MainThread.cpp:
         (WTF::mainThreadFunctionQueueMutex): Changed to leak an object
@@ -21558,7 +21613,18 @@
         
         Nokia acquired Trolltech ASA, assets were transferred on September 26th 2008.
         
+        (WTF::callOnMainThread):
+        (WTF::callOnMainThreadAndWait):
+        Only schedule dispatch if the queue was empty - to avoid many posted messages in the run loop queue.
 
+        * wtf/mac/MainThreadMac.mm:
+        (WTF::scheduleDispatchFunctionsOnMainThread):
+        Use static instance of the mainThreadCaller instead of allocating and releasing it each time.
+        (WTF::initializeMainThreadPlatform):
+        * wtf/gtk/MainThreadChromium.cpp:
+        (WTF::initializeMainThreadPlatform):
+        * wtf/gtk/MainThreadGtk.cpp:
+        (WTF::initializeMainThreadPlatform):
         * wtf/qt/MainThreadQt.cpp:
 
 2008-09-29  Simon Hausmann  <hausmann@webkit.org>
@@ -27928,6 +27994,9 @@
         Build fix.
 
         * wtf/win/MainThreadWin.cpp:
+        (WTF::initializeMainThreadPlatform):
+        * wtf/wx/MainThreadWx.cpp:
+        (WTF::initializeMainThreadPlatform):
 
 2008-09-02  Kevin McCullough  <kmccullough@apple.com>
 
@@ -29479,6 +29548,31 @@
         sweeping the heap.
 
 == Rolled over to ChangeLog-2008-08-10 ==
+        (JSC::AbstractMacroAssembler::CodeLocationCommon::CodeLocationCommon):
+        (JSC::AbstractMacroAssembler::CodeLocationCommon::operator bool):
+        (JSC::AbstractMacroAssembler::CodeLocationCommon::reset):
+        (JSC::AbstractMacroAssembler::CodeLocationLabel::addressForSwitch):
+        (JSC::AbstractMacroAssembler::CodeLocationLabel::addressForExceptionHandler):
+        (JSC::AbstractMacroAssembler::CodeLocationLabel::addressForJSR):
+        (JSC::AbstractMacroAssembler::CodeLocationLabel::getJumpDestination):
+        (JSC::AbstractMacroAssembler::CodeLocationJump::relink):
+        (JSC::AbstractMacroAssembler::CodeLocationJump::CodeLocationJump):
+        (JSC::AbstractMacroAssembler::CodeLocationCall::relink):
+        (JSC::AbstractMacroAssembler::CodeLocationCall::calleeReturnAddressValue):
+        (JSC::AbstractMacroAssembler::CodeLocationCall::CodeLocationCall):
+        (JSC::AbstractMacroAssembler::CodeLocationDataLabel32::repatch):
+        (JSC::AbstractMacroAssembler::CodeLocationDataLabel32::CodeLocationDataLabel32):
+        (JSC::AbstractMacroAssembler::CodeLocationDataLabelPtr::repatch):
+        (JSC::AbstractMacroAssembler::CodeLocationDataLabelPtr::CodeLocationDataLabelPtr):
+        (JSC::AbstractMacroAssembler::ProcessorReturnAddress::ProcessorReturnAddress):
+        (JSC::AbstractMacroAssembler::ProcessorReturnAddress::relinkCallerToFunction):
+        (JSC::AbstractMacroAssembler::ProcessorReturnAddress::operator void*):
+        (JSC::AbstractMacroAssembler::PatchBuffer::link):
+        (JSC::::CodeLocationCommon::labelAtOffset):
+        (JSC::::CodeLocationCommon::jumpAtOffset):
+        (JSC::::CodeLocationCommon::callAtOffset):
+        (JSC::::CodeLocationCommon::dataLabelPtrAtOffset):
+        (JSC::::CodeLocationCommon::dataLabel32AtOffset):
 
 2009-02-11  Sam Weinig  <sam@webkit.org>
 

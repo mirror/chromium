@@ -127,18 +127,6 @@ void RenderBox::styleWillChange(StyleDifference diff, const RenderStyle* newStyl
     s_hadOverflowClip = hasOverflowClip();
 
     if (style()) {
-        // If our z-index changes value or our visibility changes,
-        // we need to dirty our stacking context's z-order list.
-        if (newStyle) {
-            if (hasLayer() && (style()->hasAutoZIndex() != newStyle->hasAutoZIndex() ||
-                               style()->zIndex() != newStyle->zIndex() ||
-                               style()->visibility() != newStyle->visibility())) {
-                layer()->dirtyStackingContextZOrderLists();
-                if (style()->hasAutoZIndex() != newStyle->hasAutoZIndex() || style()->visibility() != newStyle->visibility())
-                    layer()->dirtyZOrderLists();
-            }
-        }
-        
         // The background of the root element or the body element could propagate up to
         // the canvas.  Just dirty the entire canvas when our style changes substantially.
         if (diff >= StyleDifferenceRepaint && node() &&
@@ -2737,12 +2725,15 @@ bool RenderBox::isAfterContent(RenderObject* child) const
     return (child && child->style()->styleType() == AFTER && (!child->isText() || child->isBR()));
 }
 
-VisiblePosition RenderBox::positionForCoordinates(int xPos, int yPos)
+VisiblePosition RenderBox::positionForPoint(const IntPoint& point)
 {
     // no children...return this render object's element, if there is one, and offset 0
     if (!firstChild())
         return VisiblePosition(node(), 0, DOWNSTREAM);
-        
+
+    int xPos = point.x();
+    int yPos = point.y();
+
     if (isTable() && node()) {
         int right = contentWidth() + borderRight() + paddingRight() + borderLeft() + paddingLeft();
         int bottom = contentHeight() + borderTop() + paddingTop() + borderBottom() + paddingBottom();

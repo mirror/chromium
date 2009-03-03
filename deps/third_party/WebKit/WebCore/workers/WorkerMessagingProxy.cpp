@@ -62,7 +62,7 @@ private:
 
         context->dispatchMessage(m_message);
 
-        static_cast<WorkerMessagingProxy*>(context->thread()->workerObjectProxy())->confirmWorkerThreadMessage(context->hasPendingActivity());
+        context->thread()->workerObjectProxy()->confirmMessageFromWorkerObject(context->hasPendingActivity());
     }
 
 private:
@@ -172,10 +172,12 @@ private:
 };
 
 
+#if !PLATFORM(CHROMIUM)
 WorkerContextProxy* WorkerContextProxy::create(Worker* worker)
 {
     return new WorkerMessagingProxy(worker);
 }
+#endif
 
 WorkerMessagingProxy::WorkerMessagingProxy(Worker* workerObject)
     : m_scriptExecutionContext(workerObject->scriptExecutionContext())
@@ -309,7 +311,7 @@ void WorkerMessagingProxy::terminateWorkerContext()
         m_workerThread->stop();
 }
 
-void WorkerMessagingProxy::confirmWorkerThreadMessage(bool hasPendingActivity)
+void WorkerMessagingProxy::confirmMessageFromWorkerObject(bool hasPendingActivity)
 {
     m_scriptExecutionContext->postTask(WorkerThreadActivityReportTask::create(this, true, hasPendingActivity));
     // Will execute reportPendingActivityInternal() on context's thread.

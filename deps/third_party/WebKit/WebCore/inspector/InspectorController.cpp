@@ -99,16 +99,16 @@ namespace WebCore {
 // Maximum size of the console message cache.
 static const size_t MAX_CONSOLE_MESSAGES = 250;
 
-struct ConsoleMessage {	
-    ConsoleMessage(MessageSource s, MessageLevel l, const String& m, unsigned li, const String& u, unsigned g)	
-        : source(s)	
-        , level(l)	
-        , message(m)	
-        , line(li)	
-        , url(u)	
+struct ConsoleMessage { 
+    ConsoleMessage(MessageSource s, MessageLevel l, const String& m, unsigned li, const String& u, unsigned g)  
+        : source(s)     
+        , level(l)      
+        , message(m)    
+        , line(li)      
+        , url(u)        
         , groupLevel(g) 
         , repeatCount(1) 
-    {	
+    {   
     }
 
     ConsoleMessage(MessageSource s, MessageLevel l, ScriptCallStack* callStack, unsigned g)
@@ -152,16 +152,16 @@ struct ConsoleMessage {
             && msg.groupLevel == this->groupLevel;
     }
 
-    MessageSource source;	
-    MessageLevel level;	
-    String message;	
+    MessageSource source;       
+    MessageLevel level; 
+    String message;     
 #if USE(JSC)
     Vector<ProtectedJSValuePtr> wrappedArguments;
 #elif USE(V8)
     Vector<ScriptValue> arguments;
 #endif
-    unsigned line;	
-    String url;	
+    unsigned line;      
+    String url; 
     unsigned groupLevel;
     unsigned repeatCount;
 };
@@ -1887,7 +1887,7 @@ void InspectorController::didUseDOMStorage(StorageArea* storageArea, bool isLoca
     DOMStorageResourcesSet::iterator domStorageEnd = m_domStorageResources.end();
     for (DOMStorageResourcesSet::iterator it = m_domStorageResources.begin(); it != domStorageEnd; ++it) {
         InspectorDOMStorageResource* resource = it->get();
-        if (equalIgnoringCase(resource->frame->document()->securityOrigin()->domain(), frame->document()->securityOrigin()->domain()) && resource->isLocalStorage == isLocalStorage)
+        if (equalIgnoringCase(resource->frame->document()->securityOrigin()->host(), frame->document()->securityOrigin()->host()) && resource->isLocalStorage == isLocalStorage)
             return;
     }
     RefPtr<Storage> domStorage = Storage::create(frame, storageArea);

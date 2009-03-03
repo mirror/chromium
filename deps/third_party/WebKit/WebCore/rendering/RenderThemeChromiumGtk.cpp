@@ -434,13 +434,24 @@ int RenderThemeChromiumGtk::popupInternalPaddingBottom(RenderStyle* style) const
     return menuListInternalPadding(style, BottomPadding);
 }
 
-void RenderThemeChromiumGtk::adjustButtonInnerStyle(RenderStyle* style) const
+int RenderThemeChromiumGtk::buttonInternalPaddingLeft() const
 {
-    // This inner padding matches Firefox.
-    style->setPaddingTop(Length(1, Fixed));
-    style->setPaddingRight(Length(3, Fixed));
-    style->setPaddingBottom(Length(1, Fixed));
-    style->setPaddingLeft(Length(3, Fixed));
+    return 3;
+}
+
+int RenderThemeChromiumGtk::buttonInternalPaddingRight() const
+{
+    return 3;
+}
+
+int RenderThemeChromiumGtk::buttonInternalPaddingTop() const
+{
+    return 1;
+}
+
+int RenderThemeChromiumGtk::buttonInternalPaddingBottom() const
+{
+    return 1;
 }
 
 bool RenderThemeChromiumGtk::controlSupportsTints(const RenderObject* o) const

@@ -1,3 +1,755 @@
+2009-03-02  Ojan Vafai  <ojan@chromium.org>
+
+        Reviewed by Adele Peterson.
+
+        Bug 24048: extra windows button padding doesn't apply when there's no appearance
+        <https://bugs.webkit.org/show_bug.cgi?id=24048>
+
+        Replace adjustButtonInnerStyle with buttonInternalPaddingLeft/Right/Top/Bottom.
+
+        No tests added as existing tests already cover this behavior.
+
+        * rendering/RenderButton.cpp:
+        (WebCore::RenderButton::setupInnerStyle):
+        * rendering/RenderTheme.cpp:
+        * rendering/RenderTheme.h:
+        (WebCore::RenderTheme::buttonInternalPaddingLeft):
+        (WebCore::RenderTheme::buttonInternalPaddingRight):
+        (WebCore::RenderTheme::buttonInternalPaddingTop):
+        * rendering/RenderThemeChromiumGtk.cpp:
+        (WebCore::RenderThemeWin::buttonInternalPaddingLeft):
+        (WebCore::RenderThemeWin::buttonInternalPaddingRight):
+        (WebCore::RenderThemeWin::buttonInternalPaddingTop):
+        (WebCore::RenderThemeWin::buttonInternalPaddingBottom):
+        * rendering/RenderThemeChromiumGtk.h:
+        * rendering/RenderThemeChromiumWin.cpp:
+        (WebCore::RenderThemeChromiumWin::buttonInternalPaddingLeft):
+        (WebCore::RenderThemeChromiumWin::buttonInternalPaddingRight):
+        (WebCore::RenderThemeChromiumWin::buttonInternalPaddingTop):
+        (WebCore::RenderThemeChromiumWin::buttonInternalPaddingBottom):
+        * rendering/RenderThemeChromiumWin.h:
+        * rendering/RenderThemeWin.cpp:
+        (WebCore::RenderThemeWin::buttonInternalPaddingLeft):
+        (WebCore::RenderThemeWin::buttonInternalPaddingRight):
+        (WebCore::RenderThemeWin::buttonInternalPaddingTop):
+        (WebCore::RenderThemeWin::buttonInternalPaddingBottom):
+        * rendering/RenderThemeWin.h:
+
+2009-03-02  Adam Treat  <adam.treat@torchmobile.com>
+
+        Build fix for Qt port.  Remove unnecessary assert.
+
+        * platform/graphics/qt/ImageBufferQt.cpp:
+        (WebCore::ImageBuffer::putImageData):
+
+2009-03-02  Adam Treat  <adam.treat@torchmobile.com>
+
+        Reviewed by Adam Roben and previously by Eric Seidel and Simon Fraser.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24227
+        Ensure that the checkForSolidColor() optimization is correctly triggered
+        for all cases of drawPattern.  Currently, the optimization was not triggered
+        when the check had not been previously performed via a request for the
+        image's NativeImagePtr.
+
+        Implement the Qt version of the checkForSolidColor() method.  Combined with
+        the bug fix this reduces the time it takes to draw a repeating background
+        of a 1x1 image from ~50msecs to ~0msecs on my machine.
+
+        * platform/graphics/BitmapImage.cpp:
+        (WebCore::BitmapImage::BitmapImage):
+        * platform/graphics/BitmapImage.h:
+        (WebCore::BitmapImage::mayFillWithSolidColor):
+        * platform/graphics/Image.h:
+        (WebCore::Image::mayFillWithSolidColor):
+        * platform/graphics/cairo/ImageCairo.cpp:
+        (WebCore::BitmapImage::BitmapImage):
+        (WebCore::BitmapImage::checkForSolidColor):
+        * platform/graphics/cg/ImageCG.cpp:
+        (WebCore::BitmapImage::BitmapImage):
+        (WebCore::BitmapImage::checkForSolidColor):
+        * platform/graphics/qt/ImageQt.cpp:
+        (WebCore::BitmapImage::checkForSolidColor):
+        * platform/graphics/skia/ImageSkia.cpp:
+        (WebCore::BitmapImage::checkForSolidColor):
+        * platform/graphics/wx/ImageWx.cpp:
+        (WebCore::BitmapImage::checkForSolidColor):
+
+2009-03-02  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Unreviewed build fix; adding missing files to EXTRA_DIST, so that
+        they show up in the tarball.
+
+        * GNUmakefile.am:
+
+2009-03-02  Dirk Schulze  <krit@webkit.org>
+
+        Reviewed by Holger Freyther.
+
+        Added putImageData to Qt. Discussed with Ariya Hidayat.
+
+        [Qt] lacks putImageData support in Canvas
+        https://bugs.webkit.org/show_bug.cgi?id=22186
+
+        * platform/graphics/qt/ImageBufferQt.cpp:
+        (WebCore::ImageBuffer::putImageData):
+
+2009-03-02  Timothy Hatcher  <timothy@apple.com>
+
+        Show exception messages again when evaluating bad expressions in the
+        Web Inspector's console.
+
+        https://bugs.webkit.org/show_bug.cgi?id=19890
+
+        Reviewed by Oliver Hunt.
+
+        * bindings/js/JSQuarantinedObjectWrapper.cpp:
+        (WebCore::JSQuarantinedObjectWrapper::transferExceptionToExecState):
+        Fix the order in which the exception is set and cleared now that the
+        exception is stored in the shared GlobalData, not per ExecState.
+
+2009-02-28  Timothy Hatcher  <timothy@apple.com>
+
+        Make input in the Web Inspector console print before any output
+        that might be added by the called function.
+
+        https://bugs.webkit.org/show_bug.cgi?id=19931
+
+        Reviewed by Oliver Hunt.
+
+        * inspector/front-end/Console.js:
+        (WebInspector.Console.prototype._enterKeyPressed): Add the command
+        message before evaluating the result. Associate the originating
+        command to the result, so if they are adjacent there is no divider.
+        (WebInspector.ConsoleCommand): No longer take a result.
+        (WebInspector.ConsoleCommand.prototype.toMessageElement): Result
+        code removed since it isn't used now.
+        (WebInspector.ConsoleCommandResult): Subclass ConsoleMessage.
+        (WebInspector.ConsoleCommandResult.prototype.toMessageElement):
+        Call the ConsoleMessage toMessageElement and add a style class.
+        * inspector/front-end/inspector.css: Add a new style class for
+        adjacent results to hide the divider. Also tweak the position of
+        the disclosure triangle for objects to not use the left margin.
+
+2009-03-01  Chris Fleizach  <cfleizach@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Bug 24282: AX Palindrome error when asking for a specific index of the AXChildren array
+        <https://bugs.webkit.org/show_bug.cgi?id=24282>
+
+        When fetching an array of elements with a range, attachment views need to be returned
+        instead of the actual attachment.
+
+        * page/mac/AccessibilityObjectWrapper.mm:
+        (-[AccessibilityObjectWrapper accessibilityIndexOfChild:]):
+        (-[AccessibilityObjectWrapper accessibilityArrayAttributeValues:index:maxCount:]):
+
+2009-03-01  Ojan Vafai  <ojan@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        Bug 24251: Cleanup: replace positionForCoordinates with positionForPoint
+        <https://bugs.webkit.org/show_bug.cgi?id=24251>
+        
+        Make RenderObject::positionForCoordinate non-virtual and
+        RenderObject::positionForPoint virtual in preparation for
+        removing positionFor* from RenderObject/RenderText.
+
+        * page/Frame.cpp:
+        (WebCore::Frame::visiblePositionForPoint):
+        * rendering/RenderBR.cpp:
+        (WebCore::RenderBR::positionForPoint):
+        * rendering/RenderBR.h:
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::positionForPoint):
+        * rendering/RenderBlock.h:
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::positionForPoint):
+        * rendering/RenderBox.h:
+        * rendering/RenderInline.cpp:
+        (WebCore::RenderInline::positionForPoint):
+        * rendering/RenderInline.h:
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::positionForCoordinates):
+        (WebCore::RenderObject::positionForPoint):
+        * rendering/RenderObject.h:
+        * rendering/RenderReplaced.cpp:
+        (WebCore::RenderReplaced::positionForPoint):
+        * rendering/RenderReplaced.h:
+        * rendering/RenderSVGInlineText.cpp:
+        (WebCore::RenderSVGInlineText::positionForPoint):
+        * rendering/RenderSVGInlineText.h:
+        * rendering/RenderText.cpp:
+        (WebCore::RenderText::positionForPoint):
+        * rendering/RenderText.h:
+
+2009-03-01  Larry Ewing  <lewing@novell.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24080
+        NPN_GetValue casting to the wrong type and writing outside bounds
+
+        Make sure to cast the value to the correct type so that only
+        memory owned by the value is written to.
+
+        * plugins/gtk/PluginViewGtk.cpp (PluginView::getValueStatic): 
+        * plugins/qt/PluginViewQt.cpp (PluginView::getValueStatic):
+        * plugins/mac/PluginViewMac.cpp (PluginView::getValueStatic): 
+        (PluginView::getValue):
+
+2009-03-01  Jeremy Moskovich  <jeremy@chromium.org>
+
+        Reviewed by Simon Fraser.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24197 and
+        https://bugs.webkit.org/show_bug.cgi?id=23512
+
+        The Windows version of cgColor() is conditionally compiled using
+        !PLATFORM(MAC) change this to PLATFORM(WIN_OS) so that Chrome
+        can use the OS X version instead of the Windows version.
+
+        Also rename cgColor() -> createCGColor()
+
+        No observable change in behavior, so no test.
+
+        * platform/graphics/Color.h:
+        * platform/graphics/cg/ColorCG.cpp:
+        (WebCore::createCGColor):
+        * platform/graphics/cg/GraphicsContextCG.cpp:
+        (WebCore::GraphicsContext::setPlatformShadow):
+        * platform/graphics/mac/ColorMac.mm:
+        (WebCore::createCGColor):
+        * platform/graphics/mac/GraphicsContextMac.mm:
+        (WebCore::GraphicsContext::drawFocusRing):
+        * platform/graphics/mac/GraphicsLayerCA.mm:
+        (WebCore::setLayerBorderColor):
+        (WebCore::setLayerBackgroundColor):
+        (WebCore::GraphicsLayerCA::setBackgroundColor):
+        * platform/graphics/win/GraphicsContextCGWin.cpp:
+        (WebCore::GraphicsContext::drawFocusRing):
+        * svg/graphics/filters/cg/SVGFEHelpersCg.mm:
+        (WebCore::ciColor):
+
+2009-03-01  David Levin  <levin@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Bug 24271: XMLHttpRequest needs js bindings for Workers.
+        <https://bugs.webkit.org/show_bug.cgi?id=24271>
+
+        Tests: http/tests/xmlhttprequest/workers/methods-async.html
+               http/tests/xmlhttprequest/workers/methods.html
+
+        * bindings/js/JSWorkerContextBase.cpp:
+        (WebCore::JSWorkerContextBase::getOwnPropertySlot):
+        (jsWorkerContextBaseXMLHttpRequest):
+        (setJSWorkerContextBaseXMLHttpRequest):
+        Expose XMLHttpRequest to Workers.
+
+        * bindings/js/JSWorkerContextBase.h:
+
+        * bindings/js/JSXMLHttpRequestConstructor.cpp:
+        (WebCore::JSXMLHttpRequestConstructor::JSXMLHttpRequestConstructor):
+        (WebCore::constructXMLHttpRequest):
+        (WebCore::JSXMLHttpRequestConstructor::mark):
+        Removed the dependencies on Document.
+
+        * bindings/js/JSXMLHttpRequestConstructor.h:
+        (WebCore::JSXMLHttpRequestConstructor::scriptExecutionContext):
+        * dom/EventException.idl:
+        * dom/EventListener.idl:
+        Chnage to have the NoStaticTables attribute since they are used from XHR.
+
+        * loader/WorkerThreadableLoader.cpp:
+        (WebCore::workerContextDidFinishLoading):
+        (WebCore::WorkerThreadableLoader::MainThreadBridge::didFinishLoading):
+        Fixed identifier to be unsigned long.
+
+        * loader/WorkerThreadableLoader.h:
+        * workers/WorkerThread.cpp:
+        (WebCore::WorkerThread::workerThread):
+        Stop active objects when the thread is getting shutdown so that xhr gets properly shutdown.
+
+        * xml/XMLHttpRequestUpload.cpp:
+
+        * xml/XMLHttpRequest.idl:
+        * xml/XMLHttpRequestException.idl:
+        * xml/XMLHttpRequestProgressEvent.idl:
+        * xml/XMLHttpRequestUpload.idl:
+        Chnage to have the NoStaticTables attribute since they are used from XHR.
+
+2009-03-01  Horia Olaru  <olaru@adobe.com>
+
+        Adding manual debugger test cases for bug.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21073
+
+        Reviewed by Kevin McCullough.
+
+        * manual-tests/inspector/debugger-step-on-do-while-statements.html: Added.
+        * manual-tests/inspector/debugger-step-on-for-in-statements.html: Added.
+        * manual-tests/inspector/debugger-step-on-for-statements.html: Added.
+        * manual-tests/inspector/debugger-step-on-while-statements.html: Added.
+        * manual-tests/inspector/resources/loop-statements.js: Added.
+
+2009-03-01  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Darin Adler.
+
+        - fix <rdar://problem/6634768> Reproducible crash in RenderLayer::updateScrollCornerStyle() using full-page zoom at MobileMe Contacts
+
+        Test: fast/events/scroll-during-zoom-change.html
+
+        * dom/Document.cpp:
+        (WebCore::Document::recalcStyle): Pause scheduled events during style
+        reclaculation. Changes to the zoom property result in scroll events
+        being generated during style recalc, and those events need to be
+        deferred until the render tree is consistent.
+        * page/FrameView.cpp:
+        (WebCore::FrameView::layout): Changed to account for a case in which the
+        post-layout tasks trigger a nested layout, which reactivates the
+        post-layout task timer.
+
+2009-03-01  Ross Boucher  <rboucher@gmail.com>
+
+        Alphabetically sort scripts in the Script's panel file popup menu.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23395
+
+        Reviewed by Timothy Hatcher.
+
+        * inspector/front-end/ScriptsPanel.js:
+        (WebInspector.ScriptsPanel.prototype._addScriptToFilesMenu):
+        * inspector/front-end/utilities.js:
+        (insertionIndexForObjectInListSortedByFunction):
+        (indexOfObjectInListSortedByFunction):
+
+2009-03-01  Yael Aharon  <yael.aharon@nokia.com>
+
+        Pass securityOrigin->host() instead of securityOrigin->domain() to WebInspector
+        when creating databases, localStorage or sessionStorage. Changing document.domain
+        should have no affect on databases, localStorage and sessionStorage in Web Inspector.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23844
+
+        Reviewed by Timothy Hatcher.
+
+        * inspector/InspectorController.cpp:
+        (WebCore::InspectorController::addDOMStorageScriptResource):
+        (WebCore::InspectorController::didUseDOMStorage):
+        * storage/Database.cpp:
+        (WebCore::Database::openDatabase):
+
+2009-03-01  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Reviewed by Holger Freyther.
+
+        Avoid leaking errors when reporting GIO errors.
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::readCallback):
+        (WebCore::openCallback):
+        (WebCore::queryInfoCallback):
+
+2009-03-01  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Reviewed by Holger Freyther.
+
+        Fixes crash when the GIO backend is given the URI for a directory.
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::networkErrorForFile):
+
+2009-02-28  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Darin Fisher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24261
+        Fix V8 custom binding scrubbing error.
+
+        Test: fast/dom/TreeWalker/TreeWalker-currentNode.html
+        Test: traversal/exception-forwarding.html
+        TesT: traversal/stay-within-root.html
+
+        * bindings/v8/custom/V8CSSStyleDeclarationCustom.cpp:
+        * bindings/v8/custom/V8NodeIteratorCustom.cpp:
+        (WebCore::toV8): Replace v8::Undefined() return value with v8::Null().
+        * bindings/v8/custom/V8TreeWalkerCustom.cpp:
+        (WebCore::toV8): Ditto.
+
+2009-02-28  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Darin Fisher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24261
+        Fix V8 custom binding scrubbing error.
+
+        Test: fast/dom/CSSStyleDeclaration/css-properties-case-sensitive.html
+
+        * WebCore.xcodeproj/project.pbxproj:
+        * bindings/v8/custom/V8CSSStyleDeclarationCustom.cpp:
+        (WebCore::cssPropertyName):  Remove dubious checks, left over from
+            incomplete conversion of parameter from pointer to pass-by-ref.
+        (WebCore::NAMED_PROPERTY_GETTER): Initialize parameter.
+        (WebCore::NAMED_PROPERTY_SETTER): Ditto.
+
+2009-02-28  Xan Lopez  <xan@gnome.org>
+
+        Reviewed by Holger Freyther.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24263
+        [GTK] ref ResourceHandle until we are finished with it
+
+        Add a ref to the ResourceHandle in startHttp so we can keep it
+        alive untill all callbacks have been executed, and unref it when
+        soup tells us it's done with the SoupMessage (in
+        finishedCallback). Fixes a number of crashes when calling
+        didReceiveData whould crash because of the handle dying.
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::finishedCallback):
+        (WebCore::ResourceHandle::startHttp):
+
+2009-02-28  Adam Bergkvist <adam.bergkvist@ericsson.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24226
+        [SOUP] HTTP status text is never set
+
+        Set HTTP status text to SoupMessage reason_phrase.
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::fillResponseFromMessage):
+
+2009-02-28  Dan Bernstein  <mitz@apple.com>
+
+        - fix malformed project file
+
+        * WebCore.xcodeproj/project.pbxproj:
+
+2009-02-28  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        - fix https://bugs.webkit.org/show_bug.cgi?id=23848
+          <rdar://problem/6573250> REGRESSION: Crash when mouse cursor moves over a link on www.opportuno.de
+
+        Test: fast/layers/inline-dirty-z-order-lists.html
+
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::styleWillChange): Moved the code that dirties a
+        layer's and its stacking context's z-order lists when the layer's
+        z-index or visibility change from here...
+        * rendering/RenderBoxModelObject.cpp:
+        (WebCore::RenderBoxModelObject::styleWillChange): ...to here, so that
+        it will apply to RenderInline too.
+
+2009-02-27  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by David Hyatt.
+
+        Don't include TextResourceDecoder.h in Document.h
+
+        This undoes inlining of Document::displayStringModifiedByEncoding() to avoid world rebuilds
+        when TextResourceDecoder.h is modified. Performance impact is expected to be negligible.
+
+        * dom/Document.cpp:
+        (WebCore::Document::displayStringModifiedByEncoding):
+        (WebCore::Document::displayBufferModifiedByEncoding):
+        * dom/Document.h:
+        * WebCore.base.exp:
+
+2009-02-27  Matt Pennig  <pennig@apple.com>
+
+        Reviewed by David Hyatt.
+
+        Resolves: https://bugs.webkit.org/show_bug.cgi?id=24107
+        "Fixed elements have 0 as an offsetLeft property"
+        
+        Code also brings offsetLeft/Top in full conformance with the spec.
+        Added two tests, one for fixed-position elements, and one for <html>.
+        
+        Tests: fast/dom/Element/fixed-position-offset-parent.html
+               fast/dom/Element/offsetLeft-offsetTop-html.html
+
+        * rendering/RenderBoxModelObject.cpp:
+        (WebCore::RenderBoxModelObject::offsetLeft):
+        (WebCore::RenderBoxModelObject::offsetTop):
+
+2009-02-27  Dean Jackson  <dino@apple.com>
+
+        Reviewed by Simon Fraser.
+
+        renderer()->hasTransform() returns true for elements
+        with perspective, but no transform, so test for transform
+        when hit testing. This fixes ASSERT from
+        https://bugs.webkit.org/show_bug.cgi?id=24252
+
+        Test: transforms/no_transform_hit_testing.html
+
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::hitTestLayer):
+
+2009-02-27  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Darin Fisher.
+
+        Fix scrubbing error -- a reversed condition.
+
+        * bindings/v8/ScriptValue.h:
+        (WebCore::ScriptValue::clear): Change early exit for empty value, not the opposite.
+
+2009-02-27  Jian Li  <jianli@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Add confirmMessageFromWorkerObject to WorkerObjectProxy.
+        https://bugs.webkit.org/show_bug.cgi?id=24152
+
+        * workers/WorkerMessagingProxy.cpp:
+        (WebCore::MessageWorkerContextTask::performTask):
+        (WebCore::WorkerMessagingProxy::confirmMessageFromWorkerObject):
+        * workers/WorkerMessagingProxy.h:
+        * workers/WorkerObjectProxy.h:
+
+2009-02-27  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by David Hyatt.
+
+        Revert r41295, the fix for https://bugs.webkit.org/show_bug.cgi?id=24227 
+        because it leads to assertion failures in the Mac port.
+        
+        * platform/graphics/BitmapImage.cpp:
+        (WebCore::BitmapImage::BitmapImage):
+        * platform/graphics/BitmapImage.h:
+        (WebCore::BitmapImage::mayFillWithSolidColor):
+        * platform/graphics/Image.h:
+        (WebCore::Image::mayFillWithSolidColor):
+        * platform/graphics/cairo/ImageCairo.cpp:
+        (WebCore::BitmapImage::BitmapImage):
+        * platform/graphics/cg/ImageCG.cpp:
+        (WebCore::BitmapImage::BitmapImage):
+        (WebCore::BitmapImage::checkForSolidColor):
+        * platform/graphics/qt/ImageQt.cpp:
+        (WebCore::BitmapImage::checkForSolidColor):
+        * platform/graphics/skia/ImageSkia.cpp:
+        (WebCore::BitmapImage::checkForSolidColor):
+        * platform/graphics/wx/ImageWx.cpp:
+        (WebCore::BitmapImage::checkForSolidColor):
+
+2009-02-27  Adam Barth  <abarth@webkit.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=20249
+
+        Add a preference to allow universal access from local URLs to mitigate
+        some attacks.  Some clients still want to allow this access, so we
+        expose this as a preference.
+
+        * WebCore.base.exp:
+        * dom/Document.cpp:
+        (WebCore::Document::initSecurityContext):
+        * page/SecurityOrigin.cpp:
+        (WebCore::SecurityOrigin::SecurityOrigin):
+        * page/Settings.cpp:
+        (WebCore::Settings::Settings):
+        (WebCore::Settings::setAllowUniversalAccessFromFileUrls):
+        * page/Settings.h:
+        (WebCore::Settings::allowUniversalAccessFromFileUrls):
+
+2009-02-27  Adam Treat  <adam.treat@torchmobile.com>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24229
+        If an image has no alpha channel there is no reason to use SourceOver.
+
+        * platform/graphics/qt/ImageQt.cpp:
+        (WebCore::Image::drawPattern):
+        (WebCore::BitmapImage::draw):
+
+2009-02-27  Adam Treat  <adam.treat@torchmobile.com>
+
+        Reviewed by Eric Seidel and Simon Fraser.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24227
+        Ensure that the checkForSolidColor() optimization is correctly triggered
+        for all cases of drawPattern.  Currently, the optimization was not triggered
+        when the check had not been previously performed via a request for the
+        image's NativeImagePtr.
+
+        Implement the Qt version of the checkForSolidColor() method.  Combined with
+        the bug fix this reduces the time it takes to draw a repeating background
+        of a 1x1 image from ~50msecs to ~0msecs on my machine.
+
+        * platform/graphics/BitmapImage.cpp:
+        (WebCore::BitmapImage::BitmapImage):
+        * platform/graphics/BitmapImage.h:
+        (WebCore::BitmapImage::mayFillWithSolidColor):
+        * platform/graphics/Image.h:
+        (WebCore::Image::mayFillWithSolidColor):
+        * platform/graphics/cairo/ImageCairo.cpp:
+        (WebCore::BitmapImage::BitmapImage):
+        * platform/graphics/cg/ImageCG.cpp:
+        (WebCore::BitmapImage::BitmapImage):
+        (WebCore::BitmapImage::checkForSolidColor):
+        * platform/graphics/qt/ImageQt.cpp:
+        (WebCore::BitmapImage::checkForSolidColor):
+        * platform/graphics/skia/ImageSkia.cpp:
+        (WebCore::BitmapImage::checkForSolidColor):
+        * platform/graphics/wx/ImageWx.cpp:
+        (WebCore::BitmapImage::checkForSolidColor):
+
+2009-02-27  Dirk Schulze  <krit@webkit.org>
+
+        Reviewed by Zack Rusin.
+
+        Added support for gradients and pattern on Fonts for Qt.
+
+        [Qt] gradients and patterns for FontQt
+        https://bugs.webkit.org/show_bug.cgi?id=24243
+
+        * platform/graphics/qt/FontQt.cpp:
+        (WebCore::Font::drawComplexText):
+
+2009-02-27  Jian Li  <jianli@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        WorkerContextProxy::create in WorkerMessagingProxy.cpp should only be provided for non-Chromium platform.
+        https://bugs.webkit.org/show_bug.cgi?id=24113
+
+        * workers/WorkerMessagingProxy.cpp:
+
+2009-02-27  Yael Aharon  <yael.aharon@nokia.com>
+
+        Added a refresh button to storage views.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24040
+
+        Reviewed by Timothy Hatcher.
+
+        * inspector/front-end/DOMStorageItemsView.js:
+        (WebInspector.DOMStorageItemsView):
+        (WebInspector.DOMStorageItemsView.prototype.get statusBarItems):
+        (WebInspector.DOMStorageItemsView.prototype.update):
+        (WebInspector.DOMStorageItemsView.prototype._refreshButtonClicked):
+        * inspector/front-end/DatabaseTableView.js:
+        (WebInspector.DatabaseTableView):
+        (WebInspector.DatabaseTableView.prototype.get statusBarItems):
+        (WebInspector.DatabaseTableView.prototype._refreshButtonClicked):
+        * inspector/front-end/DatabasesPanel.js:
+        (WebInspector.DatabasesPanel):
+        (WebInspector.DatabasesPanel.prototype.get statusBarItems):
+        (WebInspector.DatabasesPanel.prototype.reset):
+        (WebInspector.DatabasesPanel.prototype.showDatabase):
+        (WebInspector.DatabasesPanel.prototype.showDOMStorage):
+        (WebInspector.DatabasesPanel.prototype._updateSidebarWidth):
+        * inspector/front-end/inspector.css:
+
+2009-02-27  Yael Aharon  <yael.aharon@nokia.com>
+
+        Added support for editing/deleting localStorage and sessionStorage items
+        directly from Web Inspector.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23866.
+
+        Reviewed by Timothy Hatcher.
+
+        * WebCore.vcproj/WebCore.vcproj:
+        * inspector/front-end/DOMStorageDataGrid.js: Added.
+        (WebInspector.DOMStorageDataGrid):
+        (WebInspector.DOMStorageDataGrid.prototype._ondblclick):
+        (WebInspector.DOMStorageDataGrid.prototype._startEditing):
+        (WebInspector.DOMStorageDataGrid.prototype._editingCommitted):
+        (WebInspector.DOMStorageDataGrid.prototype._editingCancelled):
+        (WebInspector.DOMStorageDataGrid.prototype.deleteSelectedRow):
+        * inspector/front-end/DOMStorageItemsView.js:
+        (WebInspector.DOMStorageItemsView):
+        (WebInspector.DOMStorageItemsView.prototype.get statusBarItems):
+        (WebInspector.DOMStorageItemsView.prototype.hide):
+        (WebInspector.DOMStorageItemsView.prototype.update):
+        (WebInspector.DOMStorageItemsView.prototype._deleteButtonClicked):
+        * inspector/front-end/DatabasesPanel.js:
+        (WebInspector.DatabasesPanel):
+        (WebInspector.DatabasesPanel.prototype.get statusBarItems):
+        (WebInspector.DatabasesPanel.prototype.reset):
+        (WebInspector.DatabasesPanel.prototype.showDOMStorage):
+        (WebInspector.DatabasesPanel.prototype.dataGridForDOMStorage):
+        (WebInspector.DatabasesPanel.prototype._updateSidebarWidth):
+        * inspector/front-end/WebKit.qrc:
+        * inspector/front-end/inspector.css:
+        * inspector/front-end/inspector.html:
+
+2009-02-26  Brett Wilson  <brettw@chromium.org>
+
+        Fix Windows transparency for the Chromium port. Implement a helper
+        class for handling transparency on Windows. It allows semitransparent
+        ClearType and semitransparent form controls by making new layers in the
+        background.
+
+        It also replaces the "ThemeHelper" which allows better
+        scaling and transforms on Windows form controls. In addition to the
+        functionality that the ThemeHelper did, but additionally handles the
+        antialiasing properly so that the form controls aren't composited on a
+        white square.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24101
+
+        Reviewed by Eric Seidel.
+
+        * platform/graphics/chromium/FontChromiumWin.cpp:
+        (WebCore::):
+        (WebCore::TransparencyAwareFontPainter::TransparencyAwareFontPainter::TransparencyAwareFontPainter):
+        (WebCore::TransparencyAwareFontPainter::TransparencyAwareFontPainter::initializeForGDI):
+        (WebCore::TransparencyAwareFontPainter::TransparencyAwareFontPainter::~TransparencyAwareFontPainter):
+        (WebCore::TransparencyAwareFontPainter::TransparencyAwareFontPainter::drawGlyphs):
+        (WebCore::Font::drawGlyphs):
+        * platform/graphics/chromium/ThemeHelperChromiumWin.cpp:
+        * platform/graphics/chromium/ThemeHelperChromiumWin.h:
+        * platform/graphics/chromium/TransparencyWin.cpp: Added.
+        (WebCore::):
+        (WebCore::TransparencyWin::OwnedBuffers::OwnedBuffers):
+        (WebCore::TransparencyWin::OwnedBuffers::destBitmap):
+        (WebCore::TransparencyWin::OwnedBuffers::referenceBitmap):
+        (WebCore::TransparencyWin::OwnedBuffers::canHandleSize):
+        (WebCore::TransparencyWin::TransparencyWin):
+        (WebCore::TransparencyWin::~TransparencyWin):
+        (WebCore::TransparencyWin::init):
+        (WebCore::TransparencyWin::computeLayerSize):
+        (WebCore::TransparencyWin::setupLayer):
+        (WebCore::TransparencyWin::setupLayerForNoLayer):
+        (WebCore::TransparencyWin::setupLayerForOpaqueCompositeLayer):
+        (WebCore::TransparencyWin::setupLayerForTextComposite):
+        (WebCore::TransparencyWin::setupLayerForWhiteLayer):
+        (WebCore::TransparencyWin::setupTransform):
+        (WebCore::TransparencyWin::setupTransformForKeepTransform):
+        (WebCore::TransparencyWin::setupTransformForUntransform):
+        (WebCore::TransparencyWin::setupTransformForScaleTransform):
+        (WebCore::TransparencyWin::setTextCompositeColor):
+        (WebCore::TransparencyWin::initializeNewContext):
+        (WebCore::TransparencyWin::compositeOpaqueComposite):
+        (WebCore::TransparencyWin::compositeTextComposite):
+        (WebCore::TransparencyWin::makeLayerOpaque):
+        * platform/graphics/chromium/TransparencyWin.h: Added.
+        (WebCore::TransparencyWin::):
+        (WebCore::TransparencyWin::context):
+        (WebCore::TransparencyWin::platformContext):
+        (WebCore::TransparencyWin::drawRect):
+        * platform/graphics/skia/GraphicsContextSkia.cpp:
+        (WebCore::GraphicsContext::endTransparencyLayer):
+        * platform/graphics/skia/ImageSkia.cpp:
+        (WebCore::paintSkBitmap):
+        * rendering/RenderThemeChromiumWin.cpp:
+        (WebCore::):
+        (WebCore::RenderThemeChromiumWin::paintButton):
+        (WebCore::RenderThemeChromiumWin::paintMenuList):
+        (WebCore::RenderThemeChromiumWin::paintTextFieldInternal):
+
 2009-02-27  Dimitri Glazkov  <dglazkov@chromium.org>
 
         Reviewed by Eric Seidel.

@@ -110,7 +110,7 @@ static CGColorRef CGColorFromNSColor(NSColor* color)
     return cgColor;
 }
 
-CGColorRef cgColor(const Color& c)
+CGColorRef createCGColor(const Color& c)
 {
     // We could directly create a CGColor here, but that would
     // skip any RGB caching the nsColor method does. A direct 
@@ -118,6 +118,7 @@ CGColorRef cgColor(const Color& c)
     return CGColorFromNSColor(nsColor(c));
 }
 
+#if !PLATFORM(CHROMIUM)
 Color focusRingColor()
 {
     static bool tintIsKnown = false;
@@ -135,6 +136,7 @@ Color focusRingColor()
     
     return systemFocusRingColor;
 }
+#endif
 
 bool usesTestModeFocusRingColor()
 {

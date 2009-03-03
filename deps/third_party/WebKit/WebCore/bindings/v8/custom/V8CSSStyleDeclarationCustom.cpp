@@ -139,7 +139,7 @@ NAMED_PROPERTY_GETTER(CSSStyleDeclaration)
     // Search the style declaration.
     CSSStyleDeclaration* imp = V8Proxy::ToNativeObject<CSSStyleDeclaration>(V8ClassIndex::CSSSTYLEDECLARATION, info.Holder());
 
-    bool hadPixelOrPosPrefix;
+    bool hadPixelOrPosPrefix = false;
     String propertyName = cssPropertyName(toWebCoreString(name), hadPixelOrPosPrefix);
 
     // Do not handle non-property names.
@@ -171,7 +171,7 @@ NAMED_PROPERTY_SETTER(CSSStyleDeclaration)
     INC_STATS("DOM.CSSStyleDeclaration.NamedPropertySetter");
     CSSStyleDeclaration* imp = V8Proxy::ToNativeObject<CSSStyleDeclaration>(V8ClassIndex::CSSSTYLEDECLARATION, info.Holder());
 
-    bool hadPixelOrPosPrefix;
+    bool hadPixelOrPosPrefix = false;
     String prop = cssPropertyName(toWebCoreString(name), hadPixelOrPosPrefix);
     if (!CSSStyleDeclaration::isPropertyName(prop))
         return notHandledByInterceptor();

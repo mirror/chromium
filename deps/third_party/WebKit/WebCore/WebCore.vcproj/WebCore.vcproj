@@ -16329,6 +16329,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\inspector\front-end\DOMStorageDataGrid.js"
+					>
+				</File>
+				<File
 					RelativePath="..\inspector\front-end\DOMStorageItemsView.js"
 					>
 				</File>
