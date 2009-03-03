@@ -7,9 +7,10 @@
 The GateKeeper class can be given a dictionary of categories of builder to a set
 of critical steps to validate. If no steps are given for a category, we simply
 check the results for FAILURES. If no categories are given, we check all
-builders for FAILURES results. A list of builder exclusions can also be given so
-that some specific builders could be ignored. The rest of the arguments are the
-same as the MailNotifier, refer to its documentation for more details.
+builders for FAILURES results. A dictionary of builder steps exclusions can also
+be given so that some specific steps of specific builders could be ignored.
+The rest of the arguments are the same as the MailNotifier, refer to its
+documentation for more details.
 
 Since the behavior is very similar to the MainNotifier, we simply inherit from
 it and also reuse some of its methods to send emails.
@@ -82,9 +83,10 @@ class GateKeeper(MailNotifier):
                              categories, and the empty string category can be
                              used to say all builders.
 
-    @type exclusions: list of strings
-    @param exclusions: A list of builder names which we want to ignore. Defaults
-                       to None.
+    @type exclusions: dictionary of strings to arrays of strings
+    @param exclusions: The key is a builder name for which we want to ignore a
+                       series of step names set as the value in the form of an
+                       array of strings. Defaults to None.
     """
     for param in self.params:
       if param in kwargs:
@@ -95,11 +97,14 @@ class GateKeeper(MailNotifier):
     if self.lookup is not None and type(self.lookup) is str:
       self.lookup = Domain(self.lookup)
 
+    if not self.exclusions:
+      self.exclusions = {}
+
     MailNotifier.__init__(self, lookup=self.lookup, *args, **kwargs)
 
   def isInterestingBuilder(self, builder, name):
     """Confirm if we are interested in this builder."""
-    if self.exclusions and name in self.exclusions:
+    if (name in self.exclusions and not self.exclusions[name]):
       return False
     if not self.categories_steps or '' in self.categories_steps:
       return True
@@ -135,8 +140,14 @@ class GateKeeper(MailNotifier):
     if results[0] != FAILURE or not self.isInterestingBuilder(builder, name):
       return
 
+    steps_text = step.getText()
+    if name in self.exclusions:
+      for step_text in steps_text:
+        if step_text in self.exclusions[name]:
+          return
+
     if not self.categories_steps:
-      return self.closeTree(name, build, step.getText())
+      return self.closeTree(name, build, steps_text)
 
     # Check if the slave is still alive.
     # We should not close the tree for inactive slaves.
@@ -155,7 +166,7 @@ class GateKeeper(MailNotifier):
     if '' in self.categories_steps:
       steps_to_check += self.categories_steps['']
 
-    for step_text in step.getText():
+    for step_text in steps_text:
       if step_text in steps_to_check:
         return self.closeTree(name, build, step_text)
 
