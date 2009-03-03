@@ -609,6 +609,10 @@ Advanced commands:
    gcl settings
       Print the code review settings for this directory.
 
+   gcl status
+      Lists modified and unknown files in the current directory and
+      subdirectories.
+
    gcl try change_name
       Sends the change to the tryserver so a trybot can do a test run on your
       code. To send multiple changes as one path, use a comma-separated list
@@ -980,6 +984,11 @@ def main(argv=None):
   command = argv[1]
   if command == "opened":
     Opened()
+    return 0
+  if command == "status":
+    Opened()
+    print "\n--- Not in any changelist:"
+    UnknownFiles([])
     return 0
   if command == "nothave":
     UnknownFiles(argv[2:])
