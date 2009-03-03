@@ -184,8 +184,6 @@ class MasterFactory(object):
       factory_cmd_obj.AddPurifyTest('layout', timeout=3600)
     if self._ShouldRunTest(tests, 'selenium'):
       factory_cmd_obj.AddSeleniumTests()
-    if self._ShouldRunTest(tests, 'qemu'):
-      factory_cmd_obj.AddQueryQemu()
     if self._ShouldRunTest(tests, 'playback'):
       factory_cmd_obj.AddPlaybackTest('gmail', 'gmail.zip')
       factory_cmd_obj.AddPlaybackTest('maps', 'maps.zip')
@@ -317,11 +315,11 @@ class MasterFactory(object):
       clobber: whether to delete the build output directory before building
       tests: list of tests to run, chosen from
                ('unit', 'ui', 'test_shell', 'webkit', 'plugin', 'page_cycler',
-                'page_cycler_http', 'startup', 'selenium', 'qemu',
+                'page_cycler_http', 'startup', 'selenium', 'reliability',
                 'purify_webkit', 'purify_base', 'purify_net', 'purify_unit',
                 'purify_layout', 'purify_ui', 'playback', 'node_leak',
                 'tab_switching', 'omnibox', 'memory, 'interactive_ui', 'base',
-                'net', 'reliability', 'media', 'valgrind_net', 'valgrind_ipc',
+                'net', 'media', 'valgrind_net', 'valgrind_ipc',
                 'valgrind_unit', 'valgrind_base', 'printing').
          The 'unit' suite includes the IPC tests.
       arhive_webkit_results: whether to archive the webkit test output
@@ -569,7 +567,7 @@ class MasterFactory(object):
                                                        'release', '',
                                                        self._target_platform)
     factory_cmd_obj.AddUpdateScriptStep()
-    factory_cmd_obj.AddQueryQemu()
+    factory_cmd_obj.AddReliabilityTests()
     return factory
 
 

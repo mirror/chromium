@@ -201,8 +201,8 @@ class FactoryCommands(object):
                                               'archive_layout_test_results.py')
     self._node_leak_test_tool = self.PathJoin(self._script_dir,
                                               'node_leak_test_wrapper.py')
-    self._qemu_tool = self.PathJoin(self._script_dir, '..', 'private',
-                                    'query_qemu_results.py')
+    self._reliability_tool = self.PathJoin(self._script_dir, '..', 'private',
+                                           'reliability_tests.py')
     self._playback_tool = self.PathJoin(self._script_dir, 'playback_tests.py')
     self._extract_tool = self.PathJoin(self._script_dir, 'extract_build.py')
 
@@ -729,18 +729,18 @@ class FactoryCommands(object):
   #######
   # Chrome tests
 
-  def GetQemuCommand(self):
-    """Returns a command list to call the _qemu_tool to report QEMU results."""
-    return [self._depot_tools_python, self._qemu_tool]
+  def GetReliabilityCommand(self):
+    """Returns a command list to call the _reliability_tool."""
+    return [self._depot_tools_python, self._reliability_tool,
+            '--build-dir', self._build_dir]
 
-  def AddQueryQemu(self, timeout=360):
-    """Adds a step to the factory to query the QEMU distributed-testing
-    results.
+  def AddReliabilityTests(self, timeout=360):
+    """Adds a step to the factory to query the reliability testing results.
     """
     self.AddTestStep(retcode_command.ReturnCodeCommand,
                      timeout=timeout,
                      test_name='reliability tests',
-                     test_command=self.GetQemuCommand())
+                     test_command=self.GetReliabilityCommand())
 
   def AddDebuggerTestStep(self, timeout=60):
     """Adds a step to the factory to run the debugger test."""

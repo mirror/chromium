@@ -377,8 +377,7 @@ class Stager(object):
 
     if not DRY_RUN:
       if not options.official:
-        # Record the latest revision in the developer archive directory.  QEMU
-        # uses this to know when it needs to run another test.
+        # Record the latest revision in the developer archive directory.
         latest_file_path = os.path.join(self._www_dir_base, 'LATEST')
         print 'Saving revision to %s' % latest_file_path
         latest_file = open(latest_file_path, 'w')
