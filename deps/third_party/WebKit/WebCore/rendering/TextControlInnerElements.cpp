@@ -44,7 +44,7 @@ public:
     RenderTextControlInnerBlock(Node* node, bool isMultiLine) : RenderBlock(node), m_multiLine(isMultiLine) { }
 
     virtual bool nodeAtPoint(const HitTestRequest&, HitTestResult&, int x, int y, int tx, int ty, HitTestAction);
-    virtual VisiblePosition positionForCoordinates(int x, int y);
+    virtual VisiblePosition positionForPoint(const IntPoint&);
 private:
     bool m_multiLine;
 };
@@ -59,10 +59,10 @@ bool RenderTextControlInnerBlock::nodeAtPoint(const HitTestRequest& request, Hit
     return RenderBlock::nodeAtPoint(request, result, x, y, tx, ty, placeholderIsVisible ? HitTestBlockBackground : hitTestAction);
 }
 
-VisiblePosition RenderTextControlInnerBlock::positionForCoordinates(int x, int y)
+VisiblePosition RenderTextControlInnerBlock::positionForPoint(const IntPoint& point)
 {
-    int contentsX = x;
-    int contentsY = y;
+    int contentsX = point.x();
+    int contentsY = point.y();
 
     // Multiline text controls have the scroll on shadowAncestorNode, so we need to take that
     // into account here.
@@ -72,7 +72,7 @@ VisiblePosition RenderTextControlInnerBlock::positionForCoordinates(int x, int y
             renderer->layer()->addScrolledContentOffset(contentsX, contentsY);
     }
 
-    return RenderBlock::positionForCoordinates(contentsX, contentsY);
+    return RenderBlock::positionForPoint(IntPoint(contentsX, contentsY));
 }
 
 TextControlInnerElement::TextControlInnerElement(Document* doc, Node* shadowParent)
