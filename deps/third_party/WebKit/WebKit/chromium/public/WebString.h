@@ -67,6 +67,8 @@ namespace WebKit {
         bool isEmpty() const { return length() == 0; }
         bool isNull() const { return m_private == 0; }
 
+        WEBKIT_API static WebString fromUTF8(const char* characters, size_t length);
+
 #if defined(WEBKIT_IMPLEMENTATION)
         WebString(const WebCore::String&);
         WebString& operator=(const WebCore::String&);
@@ -87,6 +89,11 @@ namespace WebKit {
         {
             size_t len = length();
             return len ? string16(characters(), len) : string16();
+        }
+
+        static WebString fromUTF8(const std::string& s)
+        {
+            return fromUTF8(s.data(), s.length());
         }
 #endif
 

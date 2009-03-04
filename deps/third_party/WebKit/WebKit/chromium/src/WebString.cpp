@@ -67,6 +67,11 @@ const WebUChar* WebString::characters() const
     return m_private ? const_cast<WebStringPrivate*>(m_private)->characters() : 0;
 }
 
+WebString WebString::fromUTF8(const char* characters, size_t length)
+{
+    return WebCore::String::fromUTF8(characters, length);
+}
+
 WebString::WebString(const WebCore::String& s)
     : m_private(static_cast<WebStringPrivate*>(s.impl()))
 {
