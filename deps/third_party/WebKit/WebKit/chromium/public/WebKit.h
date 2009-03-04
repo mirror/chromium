@@ -33,6 +33,10 @@
 
 #include "WebCommon.h"
 
+namespace v8 {
+    class Extension;
+}
+
 namespace WebKit {
     class WebKitClient;
     class WebString;
@@ -58,6 +62,10 @@ namespace WebKit {
     // Registers a URL scheme to be treated as a local scheme (i.e., with the
     // same security rules as those applied to "file" URLs).
     WEBKIT_API void registerURLSchemeAsLocal(const WebString&);
+
+    // Will only affect v8 contexts initialized after this call. Takes ownership
+    // of the v8::Extension object passed.
+    WEBKIT_API void registerExtension(v8::Extension*);
 
 } // namespace WebKit
 

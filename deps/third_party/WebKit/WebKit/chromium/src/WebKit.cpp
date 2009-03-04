@@ -31,6 +31,7 @@
 #include "config.h"
 #include "WebKit.h"
 
+#include "V8Proxy.h"
 #include "WebString.h"
 
 #include "AtomicString.h"
@@ -76,6 +77,11 @@ bool layoutTestMode()
 void registerURLSchemeAsLocal(const WebString& scheme)
 {
     WebCore::FrameLoader::registerURLSchemeAsLocal(scheme);
+}
+
+void registerExtension(v8::Extension* extension)
+{
+    WebCore::V8Proxy::RegisterExtension(extension);
 }
 
 } // namespace WebKit
