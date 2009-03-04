@@ -54,7 +54,7 @@ namespace WebCore {
         return ToWebCoreString(obj);
     }
 
-        // FIXME: Rename valueToStringWithNullCheck once migration is complete
+    // FIXME: Rename valueToStringWithNullCheck once migration is complete
     inline String toWebCoreStringWithNullCheck(v8::Handle<v8::Value> value)
     {
         return valueToStringWithNullCheck(value);

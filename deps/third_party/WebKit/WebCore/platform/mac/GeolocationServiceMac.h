@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2008 Apple Inc. All Rights Reserved.
+ * Copyright (C) 2009 Apple Inc. All Rights Reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -23,41 +23,53 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
  */
 
-#include "config.h"
-#include "JSWebKitCSSMatrixConstructor.h"
+#ifndef GeolocationServiceMac_h
+#define GeolocationServiceMac_h
 
-#include "WebKitCSSMatrix.h"
-#include "JSWebKitCSSMatrix.h"
+#if ENABLE(GEOLOCATION)
 
-using namespace JSC;
+#include "GeolocationService.h"
+#include <wtf/PassRefPtr.h>
+#include <wtf/RefPtr.h>
+#include <wtf/RetainPtr.h>
+
+#ifdef __OBJC__
+@class CLLocationManager;
+@class WebCoreCoreLocationObserver;
+#else
+class CLLocationManager;
+class WebCoreCoreLocationObserver;
+#endif
 
 namespace WebCore {
 
-const ClassInfo JSWebKitCSSMatrixConstructor::s_info = { "WebKitCSSMatrixConstructor", 0, 0, 0 };
-
-JSWebKitCSSMatrixConstructor::JSWebKitCSSMatrixConstructor(ExecState* exec)
-    : DOMObject(JSWebKitCSSMatrixConstructor::createStructure(exec->lexicalGlobalObject()->objectPrototype()))
-{
-    putDirect(exec->propertyNames().prototype, JSWebKitCSSMatrixPrototype::self(exec), None);
-    putDirect(exec->propertyNames().length, jsNumber(exec, 1), ReadOnly|DontDelete|DontEnum);
-}
-
-static JSObject* constructWebKitCSSMatrix(ExecState* exec, JSObject*, const ArgList& args)
-{
-    String s;
-    if (args.size() >= 1)
-        s = args.at(exec, 0).toString(exec);
+class GeolocationServiceMac : public GeolocationService {
+public:
+    GeolocationServiceMac(GeolocationServiceClient*);
+    virtual ~GeolocationServiceMac();
     
-    ExceptionCode ec = 0;
-    RefPtr<WebKitCSSMatrix> matrix = WebKitCSSMatrix::create(s, ec);
-    setDOMException(exec, ec);
-    return CREATE_DOM_OBJECT_WRAPPER(exec, WebKitCSSMatrix, matrix.get());
-}
+    virtual bool startUpdating(PositionOptions*);
+    virtual void stopUpdating();
 
-ConstructType JSWebKitCSSMatrixConstructor::getConstructData(ConstructData& constructData)
-{
-    constructData.native.function = constructWebKitCSSMatrix;
-    return ConstructTypeHost;
-}
+    virtual void suspend();
+    virtual void resume();
 
+    virtual Geoposition* lastPosition() const { return m_lastPosition.get(); }
+    virtual PositionError* lastError() const { return m_lastError.get(); }
+
+    void positionChanged(PassRefPtr<Geoposition>);
+    void errorOccurred(PassRefPtr<PositionError>);
+
+private:
+    RetainPtr<CLLocationManager> m_locationManager;
+    RetainPtr<WebCoreCoreLocationObserver> m_objcObserver;
+    
+    RefPtr<Geoposition> m_lastPosition;
+    RefPtr<PositionError> m_lastError;
+};
+    
 } // namespace WebCore
+
+#endif // ENABLE(GEOLOCATION)
+
+#endif // GeolocationServiceMac_h

@@ -90,7 +90,9 @@ bool RenderTextControlMultiLine::nodeAtPoint(const HitTestRequest& request, HitT
     if (!RenderTextControl::nodeAtPoint(request, result, x, y, tx, ty, hitTestAction))
         return false;
 
-    hitInnerTextBlock(result, x, y, tx, ty);
+    if (result.innerNode() == node())
+        hitInnerTextBlock(result, x, y, tx, ty);
+
     return true;
 }
 
