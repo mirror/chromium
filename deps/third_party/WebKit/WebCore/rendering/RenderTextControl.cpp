@@ -523,61 +523,6 @@ void RenderTextControl::addFocusRingRects(GraphicsContext* graphicsContext, int 
     graphicsContext->addFocusRingRect(IntRect(tx, ty, width(), height()));
 }
 
-void RenderTextControl::autoscroll()
-{
-    RenderLayer* layer = m_innerText->renderBox()->layer();
-    if (layer)
-        layer->autoscroll();
-}
-
-int RenderTextControl::scrollWidth() const
-{
-    if (m_innerText)
-        return m_innerText->scrollWidth();
-    return RenderBlock::scrollWidth();
-}
-
-int RenderTextControl::scrollHeight() const
-{
-    if (m_innerText)
-        return m_innerText->scrollHeight();
-    return RenderBlock::scrollHeight();
-}
-
-int RenderTextControl::scrollLeft() const
-{
-    if (m_innerText)
-        return m_innerText->scrollLeft();
-    return RenderBlock::scrollLeft();
-}
-
-int RenderTextControl::scrollTop() const
-{
-    if (m_innerText)
-        return m_innerText->scrollTop();
-    return RenderBlock::scrollTop();
-}
-
-void RenderTextControl::setScrollLeft(int newLeft)
-{
-    if (m_innerText)
-        m_innerText->setScrollLeft(newLeft);
-}
-
-void RenderTextControl::setScrollTop(int newTop)
-{
-    if (m_innerText)
-        m_innerText->setScrollTop(newTop);
-}
-
-bool RenderTextControl::scroll(ScrollDirection direction, ScrollGranularity granularity, float multiplier)
-{
-    RenderLayer* layer = m_innerText->renderBox()->layer();
-    if (layer && layer->scroll(direction, granularity, multiplier))
-        return true;
-    return RenderBlock::scroll(direction, granularity, multiplier);
-}
-
 HTMLElement* RenderTextControl::innerTextElement() const
 {
     return m_innerText.get();
