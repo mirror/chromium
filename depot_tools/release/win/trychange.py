@@ -121,6 +121,8 @@ def GenerateDiff(files, root=None):
         # Prepend '+ ' to every lines.
         file_content = ['+ ' + i for i in file_content.splitlines(True)]
         nb_lines = len(file_content)
+        # We need to use / since patch on unix will fail otherwise.
+        file = file.replace('\\', '/')
         data = "Index: %s\n" % file
         data += ("============================================================="
                  "======\n")
