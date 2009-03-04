@@ -5212,10 +5212,6 @@
 		1A762C700A074F2600989F5B /* JSXPathNSResolver.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = JSXPathNSResolver.h; sourceTree = "<group>"; };
 		1A762C710A074F2600989F5B /* JSXPathResult.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; path = JSXPathResult.cpp; sourceTree = "<group>"; };
 		1A762C720A074F2600989F5B /* JSXPathResult.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = JSXPathResult.h; sourceTree = "<group>"; };
-		1A7CCB0C0CD9462C00B7B64E /* SQLStatementCallback.idl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SQLStatementCallback.idl; sourceTree = "<group>"; };
-		1A7CCB0D0CD9462C00B7B64E /* SQLStatementErrorCallback.idl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SQLStatementErrorCallback.idl; sourceTree = "<group>"; };
-		1A7CCB0E0CD9462C00B7B64E /* SQLTransactionCallback.idl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SQLTransactionCallback.idl; sourceTree = "<group>"; };
-		1A7CCB0F0CD9462C00B7B64E /* SQLTransactionErrorCallback.idl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SQLTransactionErrorCallback.idl; sourceTree = "<group>"; };
 		1A7CCB150CD9469A00B7B64E /* SQLStatementCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLStatementCallback.h; sourceTree = "<group>"; };
 		1A7CCB160CD9469A00B7B64E /* SQLStatementErrorCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLStatementErrorCallback.h; sourceTree = "<group>"; };
 		1A7CCB170CD9469A00B7B64E /* SQLTransactionCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SQLTransactionCallback.h; sourceTree = "<group>"; };
@@ -9660,16 +9656,12 @@
 				515B03980CD1642A00B7EA9C /* SQLStatement.cpp */,
 				515B03970CD1642A00B7EA9C /* SQLStatement.h */,
 				1A7CCB150CD9469A00B7B64E /* SQLStatementCallback.h */,
-				1A7CCB0C0CD9462C00B7B64E /* SQLStatementCallback.idl */,
 				1A7CCB160CD9469A00B7B64E /* SQLStatementErrorCallback.h */,
-				1A7CCB0D0CD9462C00B7B64E /* SQLStatementErrorCallback.idl */,
 				1ABFE7520CD968D000FE4834 /* SQLTransaction.cpp */,
 				1A7CCB220CD946FD00B7B64E /* SQLTransaction.h */,
 				1A7CCB230CD946FD00B7B64E /* SQLTransaction.idl */,
 				1A7CCB170CD9469A00B7B64E /* SQLTransactionCallback.h */,
-				1A7CCB0E0CD9462C00B7B64E /* SQLTransactionCallback.idl */,
 				1A7CCB180CD9469A00B7B64E /* SQLTransactionErrorCallback.h */,
-				1A7CCB0F0CD9462C00B7B64E /* SQLTransactionErrorCallback.idl */,
 				51E0BB220DA572A600A9E417 /* SessionStorage.cpp */,
 				51E0BB210DA572A600A9E417 /* SessionStorage.h */,
 				514B49DE0DB6D6B6001C3770 /* SessionStorageArea.cpp */,
@@ -17010,7 +17002,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -f ../WebKitTools/Scripts/check-for-weak-vtables ]; then\n    ../WebKitTools/Scripts/check-for-weak-vtables || exit $?\nfi";
+			shellScript = "if [ \"${ACTION}\" = \"installhdrs\" ]; then\n    exit 0;\nfi\n\nif [ -f ../WebKitTools/Scripts/check-for-weak-vtables ]; then\n    ../WebKitTools/Scripts/check-for-weak-vtables || exit $?\nfi";
 		};
 		5D2F7DA00C6879C600B5B72B /* Update Info.plist with version information */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -17040,7 +17032,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -f ../WebKitTools/Scripts/check-for-exit-time-destructors ]; then\n    ../WebKitTools/Scripts/check-for-exit-time-destructors || exit $?\nfi";
+			shellScript = "if [ \"${ACTION}\" = \"installhdrs\" ]; then\n    exit 0;\nfi\n\nif [ -f ../WebKitTools/Scripts/check-for-exit-time-destructors ]; then\n    ../WebKitTools/Scripts/check-for-exit-time-destructors || exit $?\nfi";
 		};
 		939D050109D9FF6B00984996 /* Check For Global Initializers */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -17054,7 +17046,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -f ../WebKitTools/Scripts/check-for-global-initializers ]; then\n    ../WebKitTools/Scripts/check-for-global-initializers || exit $?\nfi";
+			shellScript = "if [ \"${ACTION}\" = \"installhdrs\" ]; then\n    exit 0;\nfi\n\nif [ -f ../WebKitTools/Scripts/check-for-global-initializers ]; then\n    ../WebKitTools/Scripts/check-for-global-initializers || exit $?\nfi";
 		};
 		DD041FBD09D9DDBE0010AF2A /* Generate Derived Sources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -17068,7 +17060,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/DerivedSources/WebCore\"\ncd \"${BUILT_PRODUCTS_DIR}/DerivedSources/WebCore\"\n\nif [ \"${BUILD_STYLE}\" = \"Release\" -o \"${BUILD_STYLE}\" = \"Debug\" ] ; then\n    export CREATE_HASH_TABLE=\"${BUILT_PRODUCTS_DIR}/JavaScriptCore.framework/PrivateHeaders/create_hash_table\"\nelse\n    export CREATE_HASH_TABLE=\"${NEXT_ROOT}${SYSTEM_LIBRARY_DIR}/Frameworks/JavaScriptCore.framework/PrivateHeaders/create_hash_table\"\nfi\n\nln -sfh \"${SRCROOT}\" WebCore\nexport WebCore=\"WebCore\"\n\nif [ \"${ACTION}\" = \"build\" -o \"${ACTION}\" = \"install\" ]; then\n    make -f \"WebCore/DerivedSources.make\" -j `/usr/sbin/sysctl -n hw.availcpu`\nfi\n";
+			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/DerivedSources/WebCore\"\ncd \"${BUILT_PRODUCTS_DIR}/DerivedSources/WebCore\"\n\nexport CREATE_HASH_TABLE=\"${JAVASCRIPTCORE_PRIVATE_HEADERS_DIR}/create_hash_table\"\n\nln -sfh \"${SRCROOT}\" WebCore\nexport WebCore=\"WebCore\"\n\nif [ \"${ACTION}\" = \"build\" -o \"${ACTION}\" = \"install\" -o \"${ACTION}\" = \"installhdrs\" ]; then\n    make -f \"WebCore/DerivedSources.make\" -j `/usr/sbin/sysctl -n hw.availcpu`\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

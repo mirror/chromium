@@ -1,3 +1,254 @@
+2009-03-02  Kim Grönholm  <kim.gronholm@nomovok.com>
+
+        Reviewed by Simon Hausmann.
+
+        Improvement to 3d transformations rendering in QtWebKit. QTransform is used
+        instead of QMatrix. This allows perspective transformations since QTransform is
+        a true 3x3 matrix.
+
+        * platform/graphics/qt/GraphicsContextQt.cpp: Use QTransform instead of QMatrix everywhere.
+        (WebCore::GraphicsContext::getCTM):
+        (WebCore::GraphicsContext::restorePlatformState):
+        (WebCore::GraphicsContext::fillPath):
+        (WebCore::GraphicsContext::strokePath):
+        (WebCore::GraphicsContext::fillRect):
+        (WebCore::GraphicsContext::translate):
+        (WebCore::GraphicsContext::rotate):
+        (WebCore::GraphicsContext::scale):
+        (WebCore::GraphicsContext::concatCTM):
+        * platform/graphics/qt/ImageQt.cpp:
+        (WebCore::Image::drawPattern):
+        * platform/graphics/qt/PathQt.cpp:
+        (WebCore::Path::translate):
+        (WebCore::Path::transform):
+        * platform/graphics/qt/PatternQt.cpp:
+        (WebCore::Pattern::createPlatformPattern):
+        * platform/graphics/qt/TransformationMatrixQt.cpp:
+        (WebCore::TransformationMatrix::operator QTransform): Replace the conversion operator
+        to QMatrix with one to QTransform.
+        * platform/graphics/transforms/TransformationMatrix.h:
+        * platform/graphics/qt/FontQt.cpp:
+
+2009-02-24  Laszlo Gombos  <laszlo.1.gombos@nokia.com>
+
+        Reviewed by Simon Hausmann.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24151
+        Fix Qt/S60 build break
+
+        * platform/FileSystem.h: Create a default case for non-win and non-mac Qt builds
+        * platform/qt/FileSystemQt.cpp: Ditto
+        (WebCore::unloadModule):
+
+2009-03-03  Mike Belshe  <mike@belshe.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21939
+        Uninitialized ExceptionCode in DOMWindow::postMessage
+
+        * dom/MessagePort.cpp:
+        (WebCore::MessagePort::postMessage):
+
+2009-03-03  David Kilzer  <ddkilzer@apple.com>
+
+        <rdar://problem/6581203> WebCore and WebKit should install the same set of headers during installhdrs phase as build phase
+
+        Reviewed by Mark Rowe.
+
+        The fix is to add INSTALLHDRS_COPY_PHASE = YES and
+        INSTALLHDRS_SCRIPT_PHASE = YES to WebCore.xcconfig, then to make
+        sure various build phase scripts work with the installhdrs build
+        phase.
+
+        * Configurations/Base.xcconfig: Defined REAL_PLATFORM_NAME
+        based on PLATFORM_NAME to work around the missing definition on
+        Tiger.
+        * Configurations/WebCore.xcconfig: Added
+        JAVASCRIPTCORE_PRIVATE_HEADERS_DIR variable to simplify logic in
+        the "Generate Derived Sources" script.  Added
+        INSTALLHDRS_COPY_PHASE = YES and INSTALLHDRS_SCRIPT_PHASE = YES.
+
+        * WebCore.xcodeproj/project.pbxproj:
+        - Added shell code to prevent running "Check For Global
+          Initializers", "Check For Exit Time Destructors" and "Check
+          For Weak VTables" scripts during the installhdrs build phase.
+        - Made "Generate Derived Sources" work for the installhdrs build
+          phase.  Also simplified setting of CREATE_HASH_TABLE by using
+          JAVASCRIPTCORE_PRIVATE_HEADERS_DIR.
+
+2009-03-02  Adam Langley  <agl@google.com>
+
+        Reviewed by Darin Fisher.
+
+        Chromium Linux: Switch to using Skia to render widgets.
+
+        In order to sandbox the Chromium renderer on Linux we need to remove
+        the X connection. GTK cannot render without an X connection so, for
+        now, we render widgets ourselves.
+
+        Previously didn't use anti-alias fonts in order to match Windows font
+        rendering exactly. This was helpful when bootstrapping our layout
+        tests. Now, however, we are ready to enable it.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24244
+
+        * platform/chromium/ScrollbarThemeChromium.cpp:
+        (WebCore::ScrollbarThemeChromium::buttonSize):
+        * platform/chromium/ScrollbarThemeChromiumLinux.cpp:
+        (WebCore::ScrollbarThemeChromium::scrollbarThickness):
+        (WebCore::ScrollbarThemeChromium::paintTrackPiece):
+        (WebCore::ScrollbarThemeChromium::paintButton):
+        (WebCore::ScrollbarThemeChromium::paintThumb):
+        * platform/graphics/chromium/FontPlatformDataLinux.cpp:
+        (WebCore::FontPlatformData::setupPaint):
+        * platform/graphics/skia/PlatformContextSkia.cpp:
+        (PlatformContextSkia::PlatformContextSkia):
+        (PlatformContextSkia::~PlatformContextSkia):
+        * platform/graphics/skia/PlatformContextSkia.h:
+        * rendering/RenderThemeChromiumGtk.cpp: Removed.
+        * rendering/RenderThemeChromiumGtk.h: Removed.
+        * rendering/RenderThemeChromiumLinux.cpp: Added.
+        * rendering/RenderThemeChromiumLinux.h: Added.
+
+2009-03-03  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Darin Fisher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24261
+        Fix return types.
+
+        Test: LayoutTests/dom/svg/level3/xpath/XPathEvaluator_evaluate_TYPE_ERR.svg
+
+        * bindings/v8/V8Binding.h:
+        (WebCore::toInt32): change return type to int
+        (WebCore::toFloat): change return type to float.
+
+2009-03-03  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by John Sullivan.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22884
+        <rdar://problem/6449783>
+        modified layout test crashes Safari
+
+        Null check NPStream before dereferencing it.
+        
+        * plugins/PluginView.cpp:
+        (WebCore::PluginView::destroyStream):
+
+2009-03-03  Eric Carlson  <eric.carlson@apple.com>
+
+        Reviewed by Simon Fraser.
+
+        Fix for <rdar://problem/6641045>
+        Don't call QTKit to get movie properties until movie metadata has been loaded.
+
+        * platform/graphics/mac/MediaPlayerPrivateQTKit.h:
+        (WebCore::MediaPlayerPrivate::metaDataAvailable): defined
+        * platform/graphics/mac/MediaPlayerPrivateQTKit.mm:
+        (WebCore::MediaPlayerPrivate::createQTTime): return default if !metaDataAvailable.
+        (WebCore::MediaPlayerPrivate::play): Ditto.
+        (WebCore::MediaPlayerPrivate::pause): Ditto.
+        (WebCore::MediaPlayerPrivate::duration): Ditto.
+        (WebCore::MediaPlayerPrivate::currentTime): Ditto.
+        (WebCore::MediaPlayerPrivate::seek): Ditto.
+        (WebCore::MediaPlayerPrivate::seekTimerFired): Ditto.
+        (WebCore::MediaPlayerPrivate::paused): Ditto.
+        (WebCore::MediaPlayerPrivate::seeking): Ditto.
+        (WebCore::MediaPlayerPrivate::naturalSize): Ditto.
+        (WebCore::MediaPlayerPrivate::hasVideo): Ditto.
+        (WebCore::MediaPlayerPrivate::setVolume): Ditto.
+        (WebCore::MediaPlayerPrivate::setRate): Ditto.
+        (WebCore::MediaPlayerPrivate::dataRate): Ditto.
+        (WebCore::MediaPlayerPrivate::maxTimeLoaded): Ditto.
+        (WebCore::MediaPlayerPrivate::totalBytes): Ditto.
+
+2009-03-03  Kevin McCullough  <kmccullough@apple.com>
+
+        - Spelling fix.
+
+        * page/Console.cpp:
+        (WebCore::Console::profile):
+
+2009-03-03  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Darin Fisher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23657
+        Remove Database API callback IDLs from the project. 
+        They were removed in r40633.
+
+        * WebCore.xcodeproj/project.pbxproj: Removed IDL files from the project.
+
+2009-03-03  Kevin McCullough  <kmccullough@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        <rdar://problem/6639110> console.profile() doesn't work without a title
+
+        * page/Console.cpp:
+        (WebCore::Console::profile): If there is no title assume this is a user
+        initiated profile and give it the next incremented title name.
+
+2009-03-03  Timothy Hatcher  <timothy@apple.com>
+
+        Fix a regression that broke dirxml and caused an ASSERT in debug builds. Also simplified
+        the console code and refactored things to have fewer code paths and duplication.
+
+        rdar://problem/6367127
+        https://bugs.webkit.org/show_bug.cgi?id=24329
+
+        Reviewed by Kevin McCullough.
+
+        Test: manual-tests/inspector/console-dir.html
+
+        * bindings/js/JSInspectedObjectWrapper.cpp:
+        (WebCore::JSInspectedObjectWrapper::wrap): Use the lexicalGlobalObject instead of dynamicGlobalObject
+        to fix an ASSERT about using a wrapper from the wrong ExecState.
+        * bindings/js/JSQuarantinedObjectWrapper.cpp:
+        (WebCore::JSQuarantinedObjectWrapper::JSQuarantinedObjectWrapper): Ditto.
+        (WebCore::JSQuarantinedObjectWrapper::allowsUnwrappedAccessFrom): Ditto.
+        * inspector/front-end/Console.js:
+        (WebInspector.Console.prototype._format): Remove the inline argument and add forceObjectFormat.
+        When forceObjectFormat is true, the only formatter used is _formatobject.
+        (WebInspector.Console.prototype._formatvalue): Remove the inline argument.
+        (WebInspector.Console.prototype._formatstring): Ditto.
+        (WebInspector.Console.prototype._formatregexp): Ditto.
+        (WebInspector.Console.prototype._formatarray): Ditto.
+        (WebInspector.Console.prototype._formatnode): Remove the inline argument and make a DOM tree instead of an anchor.
+        (WebInspector.Console.prototype._formatobject): Remove the inline argument and always make a property graph.
+        (WebInspector.Console.prototype._formaterror): Remove the inline argument.
+        (WebInspector.ConsoleMessage): Remove the case for MessageLevel.Node and
+        simplify the case for MessageLevel.Object to use the normal _format code path with the %O formatter.
+        (WebInspector.ConsoleMessage.prototype._format.formatForConsole): Don't pass an additional true argument for inline.
+        (WebInspector.ConsoleMessage.prototype._format.formatAsObjectForConsole): Added. Pass a true argument for forceObjectFormat.
+        (WebInspector.ConsoleMessage.prototype._format): Added support for the %O formatter. Use formatForConsole for all arguments.
+        (WebInspector.ConsoleMessage.prototype.toString): Add the other message levels.
+        * inspector/front-end/inspector.css: Tweak styles to look and work correctly.
+        * inspector/front-end/utilities.js:
+        (Object.type): Return "node" for Node objects.
+        (Object.describe): Handle the "node" type.
+        * page/Console.cpp:
+        (WebCore::printMessageSourceAndLevelPrefix): Fix an assert by adding the other message level types.
+        (WebCore::Console::dirxml): Use the standard log fuction since it prints a DOM tree for nodes by default.
+        * page/Console.h:
+        (WebCore::enum MessageLevel): Removed NodeMessageLevel. Added a FIXME.
+
+2009-03-03  Scott Violet  <sky@google.com>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24325
+        Crash on replacing document contents during drop.
+
+        Makes sure a node is in the document during a move before using it.
+
+        Test: fast/events/crash-on-mutate-during-drop.html
+
+        * editing/MoveSelectionCommand.cpp:
+        (WebCore::MoveSelectionCommand::doApply):
+
 2009-03-03  Jungshik Shin <jshin@chromium.org>
 
         Reviewed by Eric Seidel.
