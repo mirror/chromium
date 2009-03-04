@@ -136,6 +136,24 @@ def GenerateDiff(files, root=None):
   return "".join(diff)
 
 
+def _ParseSendChangeOptions(options):
+  """Parse common options passed to _SendChangeHTTP and _SendChangeSVN."""
+  values = {}
+  if options.email:
+    values['email'] = options.email
+  values['user'] = options.user
+  values['name'] = options.name
+  if options.bot:
+    values['bot'] = ','.join(options.bot)
+  if options.revision:
+    values['revision'] = options.revision
+  if options.tests:
+    values['tests'] = ','.join(options.tests)
+  if options.root:
+    values['root'] = options.root
+  return values
+
+
 def _SendChangeHTTP(options):
   """Send a change to the try server using the HTTP protocol."""
   script_locals = ExecuteTryServerScript()
@@ -151,19 +169,7 @@ def _SendChangeHTTP(options):
       raise NoTryServerAccess('Please use the --port option to specify the try '
           'server port to connect to.')
 
-  values = {}
-  if options.email:
-    values['email'] = options.email
-  values['user'] = options.user
-  values['name'] = options.name
-  if options.bot:
-    values['bot'] = ','.join(options.bot)
-  if options.revision:
-    values['revision'] = options.revision
-  if options.tests:
-    values['tests'] = ','.join(options.tests)
-  if options.root:
-    values['root'] = options.root
+  values = _ParseSendChangeOptions(options)
   values['patch'] = options.diff
 
   url = 'http://%s:%s/send_try_patch' % (options.host, options.port)
@@ -174,7 +180,14 @@ def _SendChangeHTTP(options):
       proxies = {}
     else:
       proxies = {'http': options.proxy, 'https': options.proxy}
-  connection = urllib.urlopen(url, urllib.urlencode(values), proxies=proxies)
+  try:
+    connection = urllib.urlopen(url, urllib.urlencode(values), proxies=proxies)
+  except IOError, e:
+    # TODO(thestig) this probably isn't quite right.
+    if values['bot'] and e[2] == 'got a bad status line':
+      raise NoTryServerAccess('%s is unaccessible. Bad --bot argument?' % url)
+    else:
+      raise NoTryServerAccess('%s is unaccessible.' % url)
   if not connection:
     raise NoTryServerAccess('%s is unaccessible.' % url)
   if connection.read() != 'OK':
@@ -192,20 +205,7 @@ def _SendChangeSVN(options):
       raise NoTryServerAccess('Please use the --svn_repo option to specify the'
                               ' try server svn repository to connect to.')
 
-  values = {}
-  if options.email:
-    values['email'] = options.email
-  values['user'] = options.user
-  values['name'] = options.name
-  if options.bot:
-    values['bot'] = ','.join(options.bot)
-  if options.revision:
-    values['revision'] = options.revision
-  if options.tests:
-    values['tests'] = ','.join(options.tests)
-  if options.root:
-    values['root'] = options.root
-
+  values = _ParseSendChangeOptions(options)
   description = ''
   for (k,v) in values.iteritems():
     description += "%s=%s\n" % (k,v)
@@ -264,14 +264,15 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
   group.add_option("-e", "--email", default=os.environ.get('EMAIL_ADDRESS'),
                    help="Email address where to send the results. Use the "
                         "EMAIL_ADDRESS environment variable to set the default "
-                        "email address")
+                        "email address.")
   group.add_option("-n", "--name", default=name,
                    help="Name of the try change.")
   parser.add_option_group(group)
 
   group = optparse.OptionGroup(parser, "Try run options")
   group.add_option("-b", "--bot", action="append",
-                    help="Force the use specifics build slave")
+                    help="Force the use of specifics build slave, "
+                         "i.e. linux, mac, win.")
   group.add_option("-r", "--revision", default=None, type='int',
                     help="Revision to use for testing.")
   # group.add_option("-t", "--tests", action="append",
