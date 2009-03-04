@@ -171,7 +171,6 @@ private:
     bool m_hasPendingActivity;
 };
 
-
 #if !PLATFORM(CHROMIUM)
 WorkerContextProxy* WorkerContextProxy::create(Worker* worker)
 {
