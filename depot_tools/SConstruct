@@ -49,8 +49,8 @@ def DoSubstitute(target, source, env):
     os.unlink(target)
   except EnvironmentError:
     pass
-  tfp = open(target, 'w')
-  sfp = open(source, 'r')
+  tfp = open(target, 'wb')
+  sfp = open(source, 'rb')
   c = string.Template(sfp.read())
   tfp.write(c.safe_substitute(env.Dictionary()))
   if mode:

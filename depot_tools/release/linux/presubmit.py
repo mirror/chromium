@@ -6,16 +6,20 @@
 """Enables directory-specific presubmit checks to run at upload and/or commit.
 """
 
+__version__ = '1.0'
+
 # TODO(joi) Add caching where appropriate/needed. The API is designed to allow
 # caching (between all different invocations of presubmit scripts for a given
 # change). We should add it as our presubmit scripts start feeling slow.
 
-import pickle  # Exposed through the API.
 import cPickle  # Exposed through the API.
 import cStringIO  # Exposed through the API.
 import exceptions
+import fnmatch
 import marshal  # Exposed through the API.
+import optparse
 import os  # Somewhat exposed through the API.
+import pickle  # Exposed through the API.
 import re  # Exposed through the API.
 import sets  # Exposed through the API.
 import subprocess  # Exposed through the API.
@@ -587,7 +591,11 @@ class PresubmitExecuter(object):
     return result
 
 
-def DoPresubmitChecks(change_info, committing, output_stream, input_stream):
+def DoPresubmitChecks(change_info,
+                      committing,
+                      verbose,
+                      output_stream,
+                      input_stream):
   """Runs all presubmit checks that apply to the files in the change.
 
   This finds all PRESUBMIT.py files in directories enclosing the files in the
@@ -600,6 +608,7 @@ def DoPresubmitChecks(change_info, committing, output_stream, input_stream):
   Args:
     change_info: The ChangeInfo object for the change.
     committing: True if 'gcl commit' is running, False if 'gcl upload' is.
+    verbose: Prints debug info.
     output_stream: A stream to write output from presubmit tests to.
     input_stream: A stream to read input from the user.
 
@@ -607,9 +616,13 @@ def DoPresubmitChecks(change_info, committing, output_stream, input_stream):
     True if execution can continue, False if not.
   """
   presubmit_files = ListRelevantPresubmitFiles(change_info.FileList())
+  if not presubmit_files and verbose:
+    print "Warning, no presubmit.py found."
   results = []
   executer = PresubmitExecuter(change_info, committing)
   for filename in presubmit_files:
+    if verbose:
+      print "Running %s" % filename
     presubmit_script = _ReadFile(filename)
     presubmit_script = presubmit_script.replace('\r\n', '\n')
     presubmit_script = presubmit_script.replace('\r', '\n')
@@ -644,3 +657,45 @@ def DoPresubmitChecks(change_info, committing, output_stream, input_stream):
     if response.strip().lower() != 'y':
       error_count += 1
   return (error_count == 0)
+
+
+def ScanSubDirs(path, mask, recursive):
+  results = []
+  for root, dirs, files in os.walk(r"."):
+    if not recursive:
+      dirs.clear()
+    if '.svn' in dirs:
+      dirs.remove('.svn')
+    for name in files:
+      full_path = os.path.join(root, name)
+      if fnmatch.fnmatch(full_path, mask):
+        results.append(full_path)
+  return results
+
+
+def Main(argv):
+  parser = optparse.OptionParser(usage="%prog [options]",
+                                 version="%prog " + str(__version__))
+  parser.add_option("-c", "--commit", action="store_true",
+                   help="Use commit instead of upload checks")
+  parser.add_option("-r", "--recursive", action="store_true",
+                   help="Act recursively")
+  parser.add_option("-v", "--verbose", action="store_true",
+                   help="Verbose output")
+  options, args = parser.parse_args(argv)
+  files = []
+  for arg in args:
+    files.extend([('M', file) for file in ScanSubDirs('',
+                                                      arg,
+                                                      options.recursive)])
+  if options.verbose:
+    print "Found %d files." % len(files)
+  return DoPresubmitChecks(gcl.ChangeInfo(name='temp', files=files),
+                           options.commit,
+                           options.verbose,
+                           sys.stdout,
+                           sys.stdin)
+
+
+if __name__ == '__main__':
+  sys.exit(Main(sys.argv))

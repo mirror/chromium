@@ -951,8 +951,11 @@ def DoPresubmitChecks(change_info, committing):
   """Imports presubmit, then calls presubmit.DoPresubmitChecks."""
   # Need to import here to avoid circular dependency.
   import presubmit
-  result = presubmit.DoPresubmitChecks(change_info, committing,
-                                       sys.stdout, sys.stdin)
+  result = presubmit.DoPresubmitChecks(change_info,
+                                       committing,
+                                       verbose=False,
+                                       output_stream=sys.stdout,
+                                       input_stream=sys.stdin)
   if not result:
     print "\nPresubmit errors, can't continue (use --no_presubmit to bypass)"
   return result
