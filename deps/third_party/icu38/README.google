@@ -7,7 +7,7 @@ A. This directory contains the source code of ICU 3.8 for C/C++ with CJK
 
        $ svn export --native-eol LF -r 22777 http://source.icu-project.org/repos/icu/icu/trunk icu38
 
-    2. Apply the following 8 patches :
+    2. Apply the following  patches :
         
        * segmentation.patch.txt  (CJ segmentation patch : code change + data)
        * data.patch.txt (ICU data customization patch)
@@ -29,6 +29,7 @@ A. This directory contains the source code of ICU 3.8 for C/C++ with CJK
        * uconv.security.patch (patches for ICU bug 5691/Chrome bug 2074.
          The patch for HZ encoding is not included because we don't
          support HZ).
+       * regex.patch (patch for ICU bug 6149/Chrome bug 8198)
 
   - Once CJK segmentation is included in an ICU release, we can use that
     release, instead of applying the first patch above.
