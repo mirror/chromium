@@ -14,6 +14,8 @@
 #include "chrome/views/window.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
+using namespace views;
+
 namespace {
 
 class ViewTest : public testing::Test {
@@ -91,9 +93,6 @@ class EmptyWindow : public CWindowImpl<EmptyWindow,
   DISALLOW_EVIL_CONSTRUCTORS(EmptyWindow);
 };
 */
-}
-
-using namespace views;
 
 ////////////////////////////////////////////////////////////////////////////////
 //
@@ -102,7 +101,7 @@ using namespace views;
 ////////////////////////////////////////////////////////////////////////////////
 class TestView : public View {
  public:
-  TestView() {
+   TestView() : View(){
   }
 
   virtual ~TestView() {}
@@ -187,6 +186,8 @@ void TestView::ViewHierarchyChanged(bool is_add, View *parent, View *child) {
   }
   parent_ = parent;
   child_ = child;
+}
+
 }
 
 TEST_F(ViewTest, AddRemoveNotifications) {
@@ -353,7 +354,7 @@ void CheckRect(const SkRect& check_rect, const SkRect& target_rect) {
 }
 
 /* This test is disabled because it is flakey on some systems.
-TEST_F(ViewTest, Painting) {
+TEST_F(ViewTest, DISABLED_Painting) {
   // Determine if InvalidateRect generates an empty paint rectangle.
   EmptyWindow paint_window(CRect(50, 50, 650, 650));
   paint_window.RedrawWindow(CRect(0, 0, 600, 600), NULL,

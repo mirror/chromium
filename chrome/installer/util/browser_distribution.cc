@@ -23,7 +23,7 @@ BrowserDistribution* BrowserDistribution::GetDistribution() {
 }
 
 void BrowserDistribution::DoPostUninstallOperations(
-    const installer::Version& version) {
+    const installer::Version& version, const std::wstring& local_data_path) {
 }
 
 std::wstring BrowserDistribution::GetApplicationName() {
@@ -36,6 +36,10 @@ std::wstring BrowserDistribution::GetInstallSubDir() {
 
 std::wstring BrowserDistribution::GetPublisherName() {
   return L"Chromium";
+}
+
+std::wstring BrowserDistribution::GetAppDescription() {
+  return L"Browse the web";
 }
 
 int BrowserDistribution::GetInstallReturnCode(

@@ -201,7 +201,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\gfx\path.cc"
+				RelativePath=".\gfx\path_win.cc"
 				>
 			</File>
 			<File
@@ -300,6 +300,14 @@
 				RelativePath=".\render_messages_internal.h"
 				>
 			</File>
+			<File
+				RelativePath=".\worker_messages.h"
+				>
+			</File>
+			<File
+				RelativePath=".\worker_messages_internal.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="extensions"
@@ -331,6 +339,10 @@
 		</File>
 		<File
 			RelativePath=".\animation.h"
+			>
+		</File>
+		<File
+			RelativePath=".\bindings_policy.h"
 			>
 		</File>
 		<File

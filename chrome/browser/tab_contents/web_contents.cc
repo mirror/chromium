@@ -523,7 +523,7 @@ void WebContents::CreateShortcut() {
   // effectively cancel the pending install request.
   pending_install_.page_id = entry->page_id();
   pending_install_.icon = GetFavIcon();
-  pending_install_.title = GetTitle();
+  pending_install_.title = UTF16ToWideHack(GetTitle());
   pending_install_.url = GetURL();
   if (pending_install_.callback_functor) {
     pending_install_.callback_functor->Cancel();
@@ -597,7 +597,7 @@ void WebContents::OnSavePage() {
   DCHECK(prefs);
 
   FilePath suggest_name = SavePackage::GetSuggestNameForSaveAs(prefs,
-      FilePath::FromWStringHack(GetTitle()));
+      FilePath::FromWStringHack(UTF16ToWideHack(GetTitle())));
 
   SavePackage::SavePackageParam param(contents_mime_type());
   param.prefs = prefs;
@@ -1219,7 +1219,6 @@ GURL WebContents::GetAlternateErrorPageURL() const {
 WebPreferences WebContents::GetWebkitPrefs() {
   // Initialize web_preferences_ to chrome defaults.
   WebPreferences web_prefs;
-#if defined(OS_WIN) || defined(OS_LINUX)
   PrefService* prefs = profile()->GetPrefs();
 
   web_prefs.fixed_font_family =
@@ -1296,13 +1295,6 @@ WebPreferences WebContents::GetWebkitPrefs() {
     web_prefs.default_encoding = prefs->GetString(
         prefs::kDefaultCharset);
   }
-#else
-  // TODO(port): we skip doing the above settings because the default values
-  // for these prefs->GetFoo() calls aren't filled in yet.  By leaving the
-  // the WebPreferences alone, we get the moderately-sane default values out
-  // of WebKit.  Remove this ifdef block once we properly load font sizes, etc.
-  NOTIMPLEMENTED();
-#endif
 
   DCHECK(!web_prefs.default_encoding.empty());
   return web_prefs;
@@ -1736,10 +1728,10 @@ bool WebContents::UpdateTitleForEntry(NavigationEntry* entry,
     explicit_set = true;
   }
 
-  if (final_title == entry->title())
+  if (final_title == UTF16ToWideHack(entry->title()))
     return false;  // Nothing changed, don't bother.
 
-  entry->set_title(final_title);
+  entry->set_title(WideToUTF16Hack(final_title));
 
   // Update the history system for this page.
   if (!profile()->IsOffTheRecord() && !received_page_title_) {

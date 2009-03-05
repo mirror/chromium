@@ -4,17 +4,22 @@
 
 #include "chrome/views/window.h"
 
+#include <shellapi.h>
+
 #include "base/win_util.h"
 #include "chrome/app/chrome_dll_resource.h"
+#include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/chrome_font.h"
 #include "chrome/common/gfx/icon_util.h"
+#include "chrome/common/gfx/path.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
 #include "chrome/views/client_view.h"
-#include "chrome/views/custom_frame_window.h"
+#include "chrome/views/custom_frame_view.h"
+#include "chrome/views/native_frame_view.h"
 #include "chrome/views/non_client_view.h"
 #include "chrome/views/root_view.h"
 #include "chrome/views/window_delegate.h"
@@ -22,8 +27,47 @@
 
 namespace views {
 
-// static
-HCURSOR Window::nwse_cursor_ = NULL;
+// A scoping class that prevents a window from being able to redraw in response
+// to invalidations that may occur within it for the lifetime of the object.
+//
+// Why would we want such a thing? Well, it turns out Windows has some
+// "unorthodox" behavior when it comes to painting its non-client areas.
+// Occasionally, Windows will paint portions of the default non-client area
+// right over the top of the custom frame. This is not simply fixed by handling
+// WM_NCPAINT/WM_PAINT, with some investigation it turns out that this
+// rendering is being done *inside* the default implementation of some message
+// handlers and functions:
+//  . WM_SETTEXT
+//  . WM_SETICON
+//  . WM_NCLBUTTONDOWN
+//  . EnableMenuItem, called from our WM_INITMENU handler
+// The solution is to handle these messages and call DefWindowProc ourselves,
+// but prevent the window from being able to update itself for the duration of
+// the call. We do this with this class, which automatically calls its
+// associated Window's lock and unlock functions as it is created and destroyed.
+// See documentation in those methods for the technique used.
+//
+// IMPORTANT: Do not use this scoping object for large scopes or periods of
+//            time! IT WILL PREVENT THE WINDOW FROM BEING REDRAWN! (duh).
+//
+// I would love to hear Raymond Chen's explanation for all this. And maybe a
+// list of other messages that this applies to ;-)
+class Window::ScopedRedrawLock {
+ public:
+  explicit ScopedRedrawLock(Window* window) : window_(window) {
+    window_->LockUpdates();
+  }
+
+  ~ScopedRedrawLock() {
+    window_->UnlockUpdates();
+  }
+
+ private:
+  // The window having its style changed.
+  Window* window_;
+};
+
+HCURSOR Window::resize_cursors_[6];
 
 // If the hung renderer warning doesn't fit on screen, the amount of padding to
 // be left between the edge of the window and the edge of the nearest monitor,
@@ -40,21 +84,10 @@ Window::~Window() {
 Window* Window::CreateChromeWindow(HWND parent,
                                    const gfx::Rect& bounds,
                                    WindowDelegate* window_delegate) {
-  Window* window = NULL;
-  if (win_util::ShouldUseVistaFrame()) {
-    window = new Window(window_delegate);
-  } else {
-    window = new CustomFrameWindow(window_delegate);
-  }
+  Window* window = new Window(window_delegate);
+  window->non_client_view_->SetFrameView(window->CreateFrameViewForWindow());
   window->Init(parent, bounds);
   return window;
-}
-
-gfx::Size Window::CalculateWindowSizeForClientSize(
-    const gfx::Size& client_size) const {
-  RECT r = { 0, 0, client_size.width(), client_size.height() };
-  ::AdjustWindowRectEx(&r, window_style(), FALSE, window_ex_style());
-  return gfx::Size(r.right - r.left, r.bottom - r.top);
 }
 
 gfx::Size Window::CalculateMaximumSize() const {
@@ -96,8 +129,18 @@ void Window::Show(int show_state) {
   // always first call ShowWindow with the specified value from STARTUPINFO,
   // otherwise all future ShowWindow calls will be ignored (!!#@@#!). Instead,
   // we call ShowWindow again in this case.
-  if (show_state == SW_HIDE)
-    ShowWindow(SW_SHOWNORMAL);
+  if (show_state == SW_HIDE) {
+    show_state = SW_SHOWNORMAL;
+    ShowWindow(show_state);
+  }
+
+  // We need to explicitly activate the window if we've been shown with a state
+  // that should activate, because if we're opened from a desktop shortcut while
+  // an existing window is already running it doesn't seem to be enough to use
+  // one of these flags to activate the window.
+  if (show_state == SW_SHOWNORMAL)
+    Activate();
+
   SetInitialFocus();
 }
 
@@ -130,7 +173,7 @@ void Window::Close() {
     return;
   }
 
-  if (client_view_->CanClose()) {
+  if (non_client_view_->CanClose()) {
     SaveWindowPosition();
     RestoreEnabledIfNecessary();
     WidgetWin::Close();
@@ -155,7 +198,12 @@ bool Window::IsMinimized() const {
 }
 
 void Window::EnableClose(bool enable) {
-  EnableMenuItem(::GetSystemMenu(GetHWND(), false),
+  // If the native frame is rendering its own close button, ask it to disable.
+  non_client_view_->EnableClose(enable);
+
+  // Disable the native frame's close button regardless of whether or not the
+  // native frame is in use, since this also affects the system menu.
+  EnableMenuItem(GetSystemMenu(GetHWND(), false),
                  SC_CLOSE, enable ? MF_ENABLED : MF_GRAYED);
 
   // Let the window know the frame changed.
@@ -165,22 +213,31 @@ void Window::EnableClose(bool enable) {
                    SWP_NOSENDCHANGING | SWP_NOSIZE | SWP_NOZORDER);
 }
 
-void Window::DisableInactiveRendering(bool disable) {
-  disable_inactive_rendering_ = disable;
-  if (!disable_inactive_rendering_)
-    DefWindowProc(GetHWND(), WM_NCACTIVATE, FALSE, 0);
+void Window::DisableInactiveRendering() {
+  disable_inactive_rendering_ = true;
+  non_client_view_->DisableInactiveRendering(disable_inactive_rendering_);
 }
 
 void Window::UpdateWindowTitle() {
+  // If the non-client view is rendering its own title, it'll need to relayout
+  // now.
+  non_client_view_->Layout();
+
+  // Update the native frame's text. We do this regardless of whether or not
+  // the native frame is being used, since this also updates the taskbar, etc.
   std::wstring window_title = window_delegate_->GetWindowTitle();
   std::wstring localized_text;
   if (l10n_util::AdjustStringForLocaleDirection(window_title, &localized_text))
     window_title.assign(localized_text);
-
   SetWindowText(GetHWND(), window_title.c_str());
 }
 
 void Window::UpdateWindowIcon() {
+  // If the non-client view is rendering its own icon, we need to tell it to repaint.
+  non_client_view_->SchedulePaint();
+
+  // Update the native frame's icon. We do this regardless of whether or not
+  // the native frame is being used, since this also updates the taskbar, etc.
   SkBitmap icon = window_delegate_->GetWindowIcon();
   if (!icon.isNull()) {
     HICON windows_icon = IconUtil::CreateHICONFromSkBitmap(icon);
@@ -202,6 +259,11 @@ void Window::UpdateWindowIcon() {
 void Window::ExecuteSystemMenuCommand(int command) {
   if (command)
     SendMessage(GetHWND(), WM_SYSCOMMAND, command, 0);
+}
+
+gfx::Rect Window::GetWindowBoundsForClientBounds(
+    const gfx::Rect& client_bounds) {
+  return non_client_view_->GetWindowBoundsForClientBounds(client_bounds);
 }
 
 // static
@@ -251,8 +313,7 @@ Window::Window(WindowDelegate* window_delegate)
     : WidgetWin(),
       focus_on_creation_(true),
       window_delegate_(window_delegate),
-      non_client_view_(NULL),
-      client_view_(NULL),
+      non_client_view_(new NonClientView(this)),
       owning_hwnd_(NULL),
       minimum_size_(100, 100),
       is_modal_(false),
@@ -260,6 +321,9 @@ Window::Window(WindowDelegate* window_delegate)
       is_always_on_top_(false),
       window_closed_(false),
       disable_inactive_rendering_(false),
+      is_active_(false),
+      lock_updates_(false),
+      saved_window_style_(0),
       saved_maximized_state_(0) {
   InitClass();
   DCHECK(window_delegate_);
@@ -289,13 +353,13 @@ void Window::Init(HWND parent, const gfx::Rect& bounds) {
   WidgetWin::Init(parent, bounds, true);
   win_util::SetWindowUserData(GetHWND(), this);
   
-  std::wstring window_title = window_delegate_->GetWindowTitle();
-  std::wstring localized_text;
-  if (l10n_util::AdjustStringForLocaleDirection(window_title, &localized_text))
-    window_title.assign(localized_text);
-  SetWindowText(GetHWND(), window_title.c_str());
+  // Create the ClientView, add it to the NonClientView and add the
+  // NonClientView to the RootView. This will cause everything to be parented.
+  non_client_view_->set_client_view(window_delegate_->CreateClientView(this));
+  WidgetWin::SetContentsView(non_client_view_);
 
-  SetClientView(window_delegate_->CreateClientView(this));
+  UpdateWindowTitle();
+
   SetInitialBounds(bounds);
   InitAlwaysOnTopState();
 
@@ -305,31 +369,25 @@ void Window::Init(HWND parent, const gfx::Rect& bounds) {
         NotificationType::ALL_APPWINDOWS_CLOSED,
         NotificationService::AllSources());
   }
+
+  ResetWindowRegion(false);
 }
 
-void Window::SetClientView(ClientView* client_view) {
-  DCHECK(client_view && !client_view_ && GetHWND());
-  client_view_ = client_view;
-  if (non_client_view_) {
-    // This will trigger the ClientView to be added by the non-client view.
-    WidgetWin::SetContentsView(non_client_view_);
-  } else {
-    WidgetWin::SetContentsView(client_view_);
-  }
+NonClientFrameView* Window::CreateFrameViewForWindow() {
+  if (non_client_view_->UseNativeFrame())
+    return new NativeFrameView(this);
+  return new CustomFrameView(this);
+}
+
+void Window::UpdateFrameAfterFrameChange() {
+  // We've either gained or lost a custom window region, so reset it now.
+  ResetWindowRegion(true);
 }
 
 void Window::SizeWindowToDefault() {
-  gfx::Size pref;
-  if (non_client_view_) {
-    pref = non_client_view_->GetPreferredSize();
-  } else {
-    pref = client_view_->GetPreferredSize();
-  }
-  DCHECK(pref.width() > 0 && pref.height() > 0);
-  // CenterAndSizeWindow adjusts the window size to accommodate the non-client
-  // area.
-  win_util::CenterAndSizeWindow(owning_window(), GetHWND(), pref.ToSIZE(),
-                                true);
+  win_util::CenterAndSizeWindow(owning_window(), GetHWND(),
+                                non_client_view_->GetPreferredSize().ToSIZE(),
+                                false);
 }
 
 void Window::RunSystemMenu(const gfx::Point& point) {
@@ -353,6 +411,18 @@ void Window::OnActivate(UINT action, BOOL minimized, HWND window) {
     SaveWindowPosition();
 }
 
+void Window::OnActivateApp(BOOL active, DWORD thread_id) {
+  if (!active && thread_id != GetCurrentThreadId()) {
+    // Another application was activated, we should reset any state that
+    // disables inactive rendering now.
+    disable_inactive_rendering_ = false;
+    non_client_view_->DisableInactiveRendering(false);
+    // Update the native frame too, since it could be rendering the non-client
+    // area.
+    CallDefaultNCActivateHandler(FALSE);
+  }
+}
+
 LRESULT Window::OnAppCommand(HWND window, short app_command, WORD device,
                              int keystate) {
   // We treat APPCOMMAND ids as an extension of our command namespace, and just
@@ -374,57 +444,320 @@ void Window::OnCommand(UINT notification_code, int command_id, HWND window) {
 }
 
 void Window::OnDestroy() {
-  if (client_view_) {
-    client_view_->WindowClosing();
-    window_delegate_ = NULL;
-  }
+  non_client_view_->WindowClosing();
+  window_delegate_ = NULL;
   RestoreEnabledIfNecessary();
   WidgetWin::OnDestroy();
 }
 
+namespace {
+static BOOL CALLBACK SendDwmCompositionChanged(HWND window, LPARAM param) {
+  SendMessage(window, WM_DWMCOMPOSITIONCHANGED, 0, 0);
+  return TRUE;
+}
+}  // namespace
+
+LRESULT Window::OnDwmCompositionChanged(UINT msg, WPARAM w_param,
+                                        LPARAM l_param) {
+  // We respond to this in response to WM_DWMCOMPOSITIONCHANGED since that is
+  // the only thing we care about - we don't actually respond to WM_THEMECHANGED
+  // messages.
+  non_client_view_->SystemThemeChanged();
+
+  // WM_DWMCOMPOSITIONCHANGED is only sent to top level windows, however we want
+  // to notify our children too, since we can have MDI child windows who need to
+  // update their appearance.
+  EnumChildWindows(GetHWND(), &SendDwmCompositionChanged, NULL);
+  return 0;
+}
+
+namespace {
+static void EnableMenuItem(HMENU menu, UINT command, bool enabled) {
+  UINT flags = MF_BYCOMMAND | (enabled ? MF_ENABLED : MF_DISABLED | MF_GRAYED);
+  EnableMenuItem(menu, command, flags);
+}
+}  // namespace
+
+void Window::OnInitMenu(HMENU menu) {
+  // We only need to manually enable the system menu if we're not using a native
+  // frame.
+  if (non_client_view_->UseNativeFrame())
+    WidgetWin::OnInitMenu(menu);
+
+  bool is_minimized = IsMinimized();
+  bool is_maximized = IsMaximized();
+  bool is_restored = !is_minimized && !is_maximized;
+
+  ScopedRedrawLock lock(this);
+  EnableMenuItem(menu, SC_RESTORE, !is_restored);
+  EnableMenuItem(menu, SC_MOVE, is_restored);
+  EnableMenuItem(menu, SC_SIZE, window_delegate()->CanResize() && is_restored);
+  EnableMenuItem(menu, SC_MAXIMIZE,
+                 window_delegate()->CanMaximize() && !is_maximized);
+  EnableMenuItem(menu, SC_MINIMIZE,
+                 window_delegate()->CanMaximize() && !is_minimized);
+}
+
+void Window::OnMouseLeave() {
+  // We only need to manually track WM_MOUSELEAVE messages between the client
+  // and non-client area when we're not using the native frame.
+  if (non_client_view_->UseNativeFrame()) {
+    SetMsgHandled(FALSE);
+    return;
+  }
+
+  bool process_mouse_exited = true;
+  POINT pt;
+  if (GetCursorPos(&pt)) {
+    LRESULT ht_component =
+        ::SendMessage(GetHWND(), WM_NCHITTEST, 0, MAKELPARAM(pt.x, pt.y));
+    if (ht_component != HTNOWHERE) {
+      // If the mouse moved into a part of the window's non-client area, then
+      // don't send a mouse exited event since the mouse is still within the
+      // bounds of the ChromeView that's rendering the frame. Note that we do
+      // _NOT_ do this for windows with native frames, since in that case the
+      // mouse really will have left the bounds of the RootView.
+      process_mouse_exited = false;
+    }
+  }
+
+  if (process_mouse_exited)
+    ProcessMouseExited();
+}
+
 LRESULT Window::OnNCActivate(BOOL active) {
+  is_active_ = !!active;
+
+  // If we're not using the native frame, we need to force a synchronous repaint
+  // otherwise we'll be left in the wrong activation state until something else
+  // causes a repaint later.
+  if (!non_client_view_->UseNativeFrame()) {
+    // We can get WM_NCACTIVATE before we're actually visible. If we're not
+    // visible, no need to paint.
+    if (IsWindowVisible(GetHWND())) {
+      non_client_view_->SchedulePaint();
+      // We need to force a paint now, as a user dragging a window will block
+      // painting operations while the move is in progress.
+      PaintNow(root_view_->GetScheduledPaintRect());
+    }
+  }
+
+  // If we're active again, we should be allowed to render as inactive, so
+  // tell the non-client view. This must be done independently of the check for
+  // disable_inactive_rendering_ since that check is valid even if the frame
+  // is not active, but this can only be done if we've become active.
+  if (is_active_)
+    non_client_view_->DisableInactiveRendering(false);
+
+  // Reset the disable inactive rendering state since activation has changed.
   if (disable_inactive_rendering_) {
     disable_inactive_rendering_ = false;
-    return DefWindowProc(GetHWND(), WM_NCACTIVATE, TRUE, 0);
+    return CallDefaultNCActivateHandler(TRUE);
   }
-  // Otherwise just do the default thing.
-  return WidgetWin::OnNCActivate(active);
+  return CallDefaultNCActivateHandler(active);
+}
+
+LRESULT Window::OnNCCalcSize(BOOL mode, LPARAM l_param) {
+  // We only need to adjust the client size/paint handling when we're not using
+  // the native frame.
+  if (non_client_view_->UseNativeFrame())
+    return WidgetWin::OnNCCalcSize(mode, l_param);
+
+  RECT* client_rect = mode ?
+      &reinterpret_cast<NCCALCSIZE_PARAMS*>(l_param)->rgrc[0] :
+      reinterpret_cast<RECT*>(l_param);
+  if (IsMaximized()) {
+    // Make the maximized mode client rect fit the screen exactly, by
+    // subtracting the border Windows automatically adds for maximized mode.
+    int border_thickness = GetSystemMetrics(SM_CXSIZEFRAME);
+    InflateRect(client_rect, -border_thickness, -border_thickness);
+
+    // Find all auto-hide taskbars along the screen edges and adjust in by the
+    // thickness of the auto-hide taskbar on each such edge, so the window isn't
+    // treated as a "fullscreen app", which would cause the taskbars to
+    // disappear.
+    HMONITOR monitor = MonitorFromWindow(GetHWND(), MONITOR_DEFAULTTONEAREST);
+    if (win_util::EdgeHasAutoHideTaskbar(ABE_LEFT, monitor))
+      client_rect->left += win_util::kAutoHideTaskbarThicknessPx;
+    if (win_util::EdgeHasAutoHideTaskbar(ABE_TOP, monitor))
+      client_rect->top += win_util::kAutoHideTaskbarThicknessPx;
+    if (win_util::EdgeHasAutoHideTaskbar(ABE_RIGHT, monitor))
+      client_rect->right -= win_util::kAutoHideTaskbarThicknessPx;
+    if (win_util::EdgeHasAutoHideTaskbar(ABE_BOTTOM, monitor))
+      client_rect->bottom -= win_util::kAutoHideTaskbarThicknessPx;
+  }
+
+  // We need to repaint all when the window bounds change.
+  return mode ? WVR_REDRAW : 0;
 }
 
 LRESULT Window::OnNCHitTest(const CPoint& point) {
-  // First, give the ClientView a chance to test the point to see if it is part
-  // of the non-client area.
+  // First, give the NonClientView a chance to test the point to see if it
+  // provides any of the non-client area.
   CPoint temp = point;
   MapWindowPoints(HWND_DESKTOP, GetHWND(), &temp, 1);
-  int component = HTNOWHERE;
-  if (non_client_view_) {
-    component = non_client_view_->NonClientHitTest(gfx::Point(temp));
-  } else {
-    component = client_view_->NonClientHitTest(gfx::Point(temp));
-  }
+  int component = non_client_view_->NonClientHitTest(gfx::Point(temp));
   if (component != HTNOWHERE)
     return component;
 
   // Otherwise, we let Windows do all the native frame non-client handling for
   // us.
-  SetMsgHandled(FALSE);
-  return 0;
+  return WidgetWin::OnNCHitTest(point);
+}
+
+namespace {
+struct ClipState {
+  // The window being painted.
+  HWND parent;
+
+  // DC painting to.
+  HDC dc;
+
+  // Origin of the window in terms of the screen.
+  int x;
+  int y;
+};
+
+// See comments in OnNCPaint for details of this function.
+static BOOL CALLBACK ClipDCToChild(HWND window, LPARAM param) {
+  ClipState* clip_state = reinterpret_cast<ClipState*>(param);
+  if (GetParent(window) == clip_state->parent && IsWindowVisible(window)) {
+    RECT bounds;
+    GetWindowRect(window, &bounds);
+    ExcludeClipRect(clip_state->dc,
+                    bounds.left - clip_state->x,
+                    bounds.top - clip_state->y,
+                    bounds.right - clip_state->x,
+                    bounds.bottom - clip_state->y);
+  }
+  return TRUE;
+}
+}  // namespace
+
+void Window::OnNCPaint(HRGN rgn) {
+  // We only do non-client painting if we're not using the native frame.
+  if (non_client_view_->UseNativeFrame())
+    return WidgetWin::OnNCPaint(rgn);
+
+  // We have an NC region and need to paint it. We expand the NC region to
+  // include the dirty region of the root view. This is done to minimize
+  // paints.
+  CRect window_rect;
+  GetWindowRect(&window_rect);
+
+  if (window_rect.Width() != root_view_->width() ||
+      window_rect.Height() != root_view_->height()) {
+    // If the size of the window differs from the size of the root view it
+    // means we're being asked to paint before we've gotten a WM_SIZE. This can
+    // happen when the user is interactively resizing the window. To avoid
+    // mass flickering we don't do anything here. Once we get the WM_SIZE we'll
+    // reset the region of the window which triggers another WM_NCPAINT and
+    // all is well.
+    return;
+  }
+
+  CRect dirty_region;
+  // A value of 1 indicates paint all.
+  if (!rgn || rgn == reinterpret_cast<HRGN>(1)) {
+    dirty_region = CRect(0, 0, window_rect.Width(), window_rect.Height());
+  } else {
+    RECT rgn_bounding_box;
+    GetRgnBox(rgn, &rgn_bounding_box);
+    if (!IntersectRect(&dirty_region, &rgn_bounding_box, &window_rect))
+      return;  // Dirty region doesn't intersect window bounds, bale.
+
+    // rgn_bounding_box is in screen coordinates. Map it to window coordinates.
+    OffsetRect(&dirty_region, -window_rect.left, -window_rect.top);
+  }
+
+  // In theory GetDCEx should do what we want, but I couldn't get it to work.
+  // In particular the docs mentiond DCX_CLIPCHILDREN, but as far as I can tell
+  // it doesn't work at all. So, instead we get the DC for the window then
+  // manually clip out the children.
+  HDC dc = GetWindowDC(GetHWND());
+  ClipState clip_state;
+  clip_state.x = window_rect.left;
+  clip_state.y = window_rect.top;
+  clip_state.parent = GetHWND();
+  clip_state.dc = dc;
+  EnumChildWindows(GetHWND(), &ClipDCToChild,
+                   reinterpret_cast<LPARAM>(&clip_state));
+
+  RootView* root_view = GetRootView();
+  CRect old_paint_region = root_view->GetScheduledPaintRectConstrainedToSize();
+
+  if (!old_paint_region.IsRectEmpty()) {
+    // The root view has a region that needs to be painted. Include it in the
+    // region we're going to paint.
+
+    CRect tmp = dirty_region;
+    UnionRect(&dirty_region, &tmp, &old_paint_region);
+  }
+
+  root_view->SchedulePaint(gfx::Rect(dirty_region), false);
+
+  // ChromeCanvasPaints destructor does the actual painting. As such, wrap the
+  // following in a block to force paint to occur so that we can release the dc.
+  {
+    ChromeCanvasPaint canvas(dc, opaque(), dirty_region.left, dirty_region.top,
+                             dirty_region.Width(), dirty_region.Height());
+
+    root_view->ProcessPaint(&canvas);
+  }
+
+  ReleaseDC(GetHWND(), dc);
 }
 
 void Window::OnNCLButtonDown(UINT ht_component, const CPoint& point) {
-  if (ht_component == HTSYSMENU) {
-    gfx::Point system_menu_point;
-    if (non_client_view_) {
-      system_menu_point = non_client_view_->GetSystemMenuPoint();
-    } else {
-      CPoint temp(0, -NonClientView::kFrameShadowThickness);
-      MapWindowPoints(GetHWND(), HWND_DESKTOP, &temp, 1);
-      system_menu_point = gfx::Point(temp);
+  // When we're using a native frame, window controls work without us
+  // interfering.
+  if (!non_client_view_->UseNativeFrame()) {
+    switch (ht_component) {
+      case HTCLOSE:
+      case HTMINBUTTON:
+      case HTMAXBUTTON: {
+        // When the mouse is pressed down in these specific non-client areas, we
+        // need to tell the RootView to send the mouse pressed event (which sets
+        // capture, allowing subsequent WM_LBUTTONUP (note, _not_ WM_NCLBUTTONUP)
+        // to fire so that the appropriate WM_SYSCOMMAND can be sent by the
+        // applicable button's ButtonListener. We _have_ to do this this way
+        // rather than letting Windows just send the syscommand itself (as would
+        // happen if we never did this dance) because for some insane reason
+        // DefWindowProc for WM_NCLBUTTONDOWN also renders the pressed window
+        // control button appearance, in the Windows classic style, over our
+        // view! Ick! By handling this message we prevent Windows from doing this
+        // undesirable thing, but that means we need to roll the sys-command
+        // handling ourselves.
+        ProcessNCMousePress(point, MK_LBUTTON);
+        return;
+      }
     }
-    RunSystemMenu(system_menu_point);
-  } else {
-    WidgetWin::OnNCLButtonDown(ht_component, point);
   }
+
+  // TODO(beng): figure out why we need to run the system menu manually
+  //             ourselves. This is wrong and causes many subtle bugs.
+  //             From my initial research, it looks like DefWindowProc tries
+  //             to run it but fails before sending the initial WM_MENUSELECT
+  //             for the sysmenu.
+  if (ht_component == HTSYSMENU)
+    RunSystemMenu(non_client_view_->GetSystemMenuPoint());
+  else
+    WidgetWin::OnNCLButtonDown(ht_component, point);
+
+  /* TODO(beng): Fix the standard non-client over-painting bug. This code
+                 doesn't work but identifies the problem.
+  if (!IsMsgHandled()) {
+    // Window::OnNCLButtonDown set the message as unhandled. This normally
+    // means WidgetWin::ProcessWindowMessage will pass it to
+    // DefWindowProc. Sadly, DefWindowProc for WM_NCLBUTTONDOWN does weird
+    // non-client painting, so we need to call it directly here inside a
+    // scoped update lock.
+    ScopedRedrawLock lock(this);
+    DefWindowProc(GetHWND(), WM_NCLBUTTONDOWN, ht_component,
+                  MAKELPARAM(point.x, point.y));
+    SetMsgHandled(TRUE);
+  }
+  */
 }
 
 void Window::OnNCRButtonDown(UINT ht_component, const CPoint& point) {
@@ -434,17 +767,62 @@ void Window::OnNCRButtonDown(UINT ht_component, const CPoint& point) {
     WidgetWin::OnNCRButtonDown(ht_component, point);
 }
 
+LRESULT Window::OnNCUAHDrawCaption(UINT msg, WPARAM w_param,
+                                              LPARAM l_param) {
+  // See comment in widget_win.h at the definition of WM_NCUAHDRAWCAPTION for
+  // an explanation about why we need to handle this message.
+  SetMsgHandled(!non_client_view_->UseNativeFrame());
+  return 0;
+}
+
+LRESULT Window::OnNCUAHDrawFrame(UINT msg, WPARAM w_param,
+                                            LPARAM l_param) {
+  // See comment in widget_win.h at the definition of WM_NCUAHDRAWCAPTION for
+  // an explanation about why we need to handle this message.
+  SetMsgHandled(!non_client_view_->UseNativeFrame());
+  return 0;
+}
 
 LRESULT Window::OnSetCursor(HWND window, UINT hittest_code, UINT message) {
-  if (hittest_code == HTBOTTOMRIGHT) {
-    // If the mouse was over the resize gripper, make sure the right cursor is
-    // supplied...
-    SetCursor(nwse_cursor_);
-    return TRUE;
+  int index = RC_NORMAL;
+  switch (hittest_code) {
+    case HTTOP:
+    case HTBOTTOM:
+      index = RC_VERTICAL;
+      break;
+    case HTTOPLEFT:
+    case HTBOTTOMRIGHT:
+      index = RC_NWSE;
+      break;
+    case HTTOPRIGHT:
+    case HTBOTTOMLEFT:
+      index = RC_NESW;
+      break;
+    case HTLEFT:
+    case HTRIGHT:
+      index = RC_HORIZONTAL;
+      break;
+    case HTCAPTION:
+    case HTCLIENT:
+      index = RC_NORMAL;
+      break;
   }
-  // Otherwise just let Windows do the rest.
-  SetMsgHandled(FALSE);
-  return TRUE;
+  SetCursor(resize_cursors_[index]);
+  return 0;
+}
+
+LRESULT Window::OnSetIcon(UINT size_type, HICON new_icon) {
+  // This shouldn't hurt even if we're using the native frame.
+  ScopedRedrawLock lock(this);
+  return DefWindowProc(GetHWND(), WM_SETICON, size_type,
+                       reinterpret_cast<LPARAM>(new_icon));
+}
+
+LRESULT Window::OnSetText(const wchar_t* text) {
+  // This shouldn't hurt even if we're using the native frame.
+  ScopedRedrawLock lock(this);
+  return DefWindowProc(GetHWND(), WM_SETTEXT, NULL,
+                       reinterpret_cast<LPARAM>(text));
 }
 
 void Window::OnSize(UINT size_param, const CSize& new_size) {
@@ -454,9 +832,32 @@ void Window::OnSize(UINT size_param, const CSize& new_size) {
   SaveWindowPosition();
   ChangeSize(size_param, new_size);
   RedrawWindow(GetHWND(), NULL, NULL, RDW_INVALIDATE | RDW_ALLCHILDREN);
+
+  // ResetWindowRegion is going to trigger WM_NCPAINT. By doing it after we've
+  // invoked OnSize we ensure the RootView has been laid out.
+  ResetWindowRegion(false);
 }
 
 void Window::OnSysCommand(UINT notification_code, CPoint click) {
+  if (!non_client_view_->UseNativeFrame()) {
+    // Windows uses the 4 lower order bits of |notification_code| for type-
+    // specific information so we must exclude this when comparing.
+    static const int sc_mask = 0xFFF0;
+    if ((notification_code & sc_mask) == SC_MINIMIZE ||
+        (notification_code & sc_mask) == SC_MAXIMIZE ||
+        (notification_code & sc_mask) == SC_RESTORE) {
+      non_client_view_->ResetWindowControls();
+    } else if ((notification_code & sc_mask) == SC_MOVE ||
+               (notification_code & sc_mask) == SC_SIZE) {
+      if (lock_updates_) {
+        // We were locked, before entering a resize or move modal loop. Now that
+        // we've begun to move the window, we need to unlock updates so that the
+        // sizing/moving feedback can be continuous.
+        UnlockUpdates();
+      }
+    }
+  }
+
   // First see if the delegate can handle it.
   if (window_delegate_->ExecuteWindowsCommand(notification_code))
     return;
@@ -465,22 +866,21 @@ void Window::OnSysCommand(UINT notification_code, CPoint click) {
     is_always_on_top_ = !is_always_on_top_;
 
     // Change the menu check state.
-    HMENU system_menu = ::GetSystemMenu(GetHWND(), FALSE);
+    HMENU system_menu = GetSystemMenu(GetHWND(), FALSE);
     MENUITEMINFO menu_info;
     memset(&menu_info, 0, sizeof(MENUITEMINFO));
     menu_info.cbSize = sizeof(MENUITEMINFO);
-    BOOL r = ::GetMenuItemInfo(system_menu, IDC_ALWAYS_ON_TOP,
-                               FALSE, &menu_info);
+    BOOL r = GetMenuItemInfo(system_menu, IDC_ALWAYS_ON_TOP,
+                             FALSE, &menu_info);
     DCHECK(r);
     menu_info.fMask = MIIM_STATE;
     if (is_always_on_top_)
       menu_info.fState = MFS_CHECKED;
-    r = ::SetMenuItemInfo(system_menu, IDC_ALWAYS_ON_TOP, FALSE, &menu_info);
+    r = SetMenuItemInfo(system_menu, IDC_ALWAYS_ON_TOP, FALSE, &menu_info);
 
     // Now change the actual window's behavior.
     AlwaysOnTopChanged();
-  } else if ((notification_code == SC_KEYMENU) && (click.x == VK_SPACE) &&
-             non_client_view_) {
+  } else if ((notification_code == SC_KEYMENU) && (click.x == VK_SPACE)) {
     // Run the system menu at the NonClientView's desired location.
     RunSystemMenu(non_client_view_->GetSystemMenuPoint());
   } else {
@@ -675,10 +1075,77 @@ void Window::SaveWindowPosition() {
       gfx::Rect(win_placement.rcNormalPosition), maximized, is_always_on_top_);
 }
 
+void Window::LockUpdates() {
+  lock_updates_ = true;
+  saved_window_style_ = GetWindowLong(GetHWND(), GWL_STYLE);
+  SetWindowLong(GetHWND(), GWL_STYLE, saved_window_style_ & ~WS_VISIBLE);
+}
+
+void Window::UnlockUpdates() {
+  SetWindowLong(GetHWND(), GWL_STYLE, saved_window_style_);
+  lock_updates_ = false;
+}
+
+void Window::ResetWindowRegion(bool force) {
+  // A native frame uses the native window region, and we don't want to mess
+  // with it.
+  if (non_client_view_->UseNativeFrame()) {
+    if (force)
+      SetWindowRgn(NULL, TRUE);
+    return;
+  }
+
+  // Changing the window region is going to force a paint. Only change the
+  // window region if the region really differs.
+  HRGN current_rgn = CreateRectRgn(0, 0, 0, 0);
+  int current_rgn_result = GetWindowRgn(GetHWND(), current_rgn);
+
+  CRect window_rect;
+  GetWindowRect(&window_rect);
+  HRGN new_region;
+  gfx::Path window_mask;
+  non_client_view_->GetWindowMask(
+      gfx::Size(window_rect.Width(), window_rect.Height()), &window_mask);
+  new_region = window_mask.CreateHRGN();
+
+  if (current_rgn_result == ERROR || !EqualRgn(current_rgn, new_region)) {
+    // SetWindowRgn takes ownership of the HRGN created by CreateHRGN.
+    SetWindowRgn(new_region, TRUE);
+  } else {
+    DeleteObject(new_region);
+  }
+
+  DeleteObject(current_rgn);
+}
+
+void Window::ProcessNCMousePress(const CPoint& point, int flags) {
+  CPoint temp = point;
+  MapWindowPoints(HWND_DESKTOP, GetHWND(), &temp, 1);
+  UINT message_flags = 0;
+  if ((GetKeyState(VK_CONTROL) & 0x80) == 0x80)
+    message_flags |= MK_CONTROL;
+  if ((GetKeyState(VK_SHIFT) & 0x80) == 0x80)
+    message_flags |= MK_SHIFT;
+  message_flags |= flags;
+  ProcessMousePressed(temp, message_flags, false);
+}
+
+LRESULT Window::CallDefaultNCActivateHandler(BOOL active) {
+  // The DefWindowProc handling for WM_NCACTIVATE renders the classic-look
+  // window title bar directly, so we need to use a redraw lock here to prevent
+  // it from doing so.
+  ScopedRedrawLock lock(this);
+  return DefWindowProc(GetHWND(), WM_NCACTIVATE, active, 0);
+}
+
 void Window::InitClass() {
   static bool initialized = false;
   if (!initialized) {
-    nwse_cursor_ = LoadCursor(NULL, IDC_SIZENWSE);
+    resize_cursors_[RC_NORMAL] = LoadCursor(NULL, IDC_ARROW);
+    resize_cursors_[RC_VERTICAL] = LoadCursor(NULL, IDC_SIZENS);
+    resize_cursors_[RC_HORIZONTAL] = LoadCursor(NULL, IDC_SIZEWE);
+    resize_cursors_[RC_NESW] = LoadCursor(NULL, IDC_SIZENESW);
+    resize_cursors_[RC_NWSE] = LoadCursor(NULL, IDC_SIZENWSE);
     initialized = true;
   }
 }

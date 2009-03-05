@@ -25,6 +25,8 @@
 #include "Widget.h"
 #include <wtf/CurrentTime.h>
 
+#include "WebKit.h"
+
 #undef LOG
 #include "base/file_util.h"
 #include "base/message_loop.h"
@@ -42,9 +44,11 @@
 #include "webkit/glue/chrome_client_impl.h"
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/plugins/plugin_instance.h"
+#include "webkit/glue/screen_info.h"
 #include "webkit/glue/webcursor.h"
 #include "webkit/glue/webkit_glue.h"
 #include "webkit/glue/webplugin_impl.h"
+#include "webkit/glue/webview.h"
 
 #if defined(OS_WIN)
 #include <windows.h>
@@ -93,28 +97,6 @@ ChromeClientImpl* ToChromeClient(WebCore::Widget* widget) {
 
 namespace WebCore {
 
-// Cookies --------------------------------------------------------------------
-
-void ChromiumBridge::setCookies(
-    const KURL& url, const KURL& policy_url, const String& cookie) {
-  webkit_glue::SetCookie(
-      webkit_glue::KURLToGURL(url),
-      webkit_glue::KURLToGURL(policy_url),
-      webkit_glue::StringToStdString(cookie));
-}
-
-String ChromiumBridge::cookies(const KURL& url, const KURL& policy_url) {
-  return webkit_glue::StdStringToString(webkit_glue::GetCookies(
-      webkit_glue::KURLToGURL(url),
-      webkit_glue::KURLToGURL(policy_url)));
-}
-
-// DNS ------------------------------------------------------------------------
-
-void ChromiumBridge::prefetchDNS(const String& hostname) {
-  webkit_glue::PrefetchDns(webkit_glue::StringToStdString(hostname));
-}
-
 // Font -----------------------------------------------------------------------
 
 #if defined(OS_WIN)
@@ -126,19 +108,18 @@ bool ChromiumBridge::ensureFontLoaded(HFONT font) {
 // JavaScript -----------------------------------------------------------------
 
 void ChromiumBridge::notifyJSOutOfMemory(Frame* frame) {
-  webkit_glue::NotifyJSOutOfMemory(frame);
-}
+  if (!frame)
+    return;
 
-// Language -------------------------------------------------------------------
-
-String ChromiumBridge::computedDefaultLanguage() {
-  return webkit_glue::StdWStringToString(webkit_glue::GetWebKitLocale());
-}
-
-// LayoutTestMode -------------------------------------------------------------
-
-bool ChromiumBridge::layoutTestMode() {
-  return webkit_glue::IsLayoutTestMode();
+  // Dispatch to the delegate of the view that owns the frame.
+  WebFrame* webframe = WebFrameImpl::FromFrame(frame);
+  WebView* webview = webframe->GetView();
+  if (!webview)
+    return;
+  WebViewDelegate* delegate = webview->GetDelegate();
+  if (!delegate)
+    return;
+  delegate->JSOutOfMemory();
 }
 
 // Plugin ---------------------------------------------------------------------
@@ -231,7 +212,7 @@ PassRefPtr<Image> ChromiumBridge::loadPlatformImageResource(const char* name) {
   } else if (!strcmp(name, "linuxRadioOn")) {
     resource_id = IDR_LINUX_RADIO_ON;
   } else if (!strcmp(name, "deleteButton")) {
-    if (webkit_glue::IsLayoutTestMode()) {
+    if (WebKit::layoutTestMode()) {
       RefPtr<Image> image = BitmapImage::create();
       // Create a red 30x30 square used only in layout tests.
       const char red_square[] =
@@ -289,65 +270,6 @@ IntRect ChromiumBridge::screenAvailableRect(Widget* widget) {
       webkit_glue::GetScreenInfo(ToNativeId(widget)).available_rect);
 }
 
-// SharedTimers ----------------------------------------------------------------
-// Called by SharedTimerChromium.cpp
-
-class SharedTimerTask;
-
-// We maintain a single active timer and a single active task for
-// setting timers directly on the platform.
-static SharedTimerTask* shared_timer_task;
-static void (*shared_timer_function)();
-
-// Timer task to run in the chrome message loop.
-class SharedTimerTask : public Task {
- public:
-  SharedTimerTask(void (*callback)()) : callback_(callback) {}
-
-  virtual void Run() {
-    if (!callback_)
-      return;
-    // Since we only have one task running at a time, verify 'this' is it
-    DCHECK(shared_timer_task == this);
-    shared_timer_task = NULL;
-    callback_();
-  }
-
-  void Cancel() {
-    callback_ = NULL;
-  }
-
- private:
-  void (*callback_)();
-  DISALLOW_COPY_AND_ASSIGN(SharedTimerTask);
-};
-
-void ChromiumBridge::setSharedTimerFiredFunction(void (*func)()) {
-  shared_timer_function = func;
-}
-
-void ChromiumBridge::setSharedTimerFireTime(double fire_time) {
-  DCHECK(shared_timer_function);
-  int interval = static_cast<int>((fire_time - WTF::currentTime()) * 1000);
-  if (interval < 0)
-    interval = 0;
-
-  stopSharedTimer();
-
-  // Verify that we didn't leak the task or timer objects.
-  DCHECK(shared_timer_task == NULL);
-  shared_timer_task = new SharedTimerTask(shared_timer_function);
-  MessageLoop::current()->PostDelayedTask(FROM_HERE, shared_timer_task,
-                                          interval);
-}
-
-void ChromiumBridge::stopSharedTimer() {
-  if (!shared_timer_task)
-    return;
-  shared_timer_task->Cancel();
-  shared_timer_task = NULL;
-}
-
 // StatsCounters --------------------------------------------------------------
 
 void ChromiumBridge::decrementStatsCounter(const char* name) {
@@ -365,15 +287,6 @@ void ChromiumBridge::initV8CounterFunction() {
   v8::V8::SetCounterFunction(StatsTable::FindLocation);
 }
 #endif
-
-// SystemTime -----------------------------------------------------------------
-// Called by SystemTimeChromium.cpp
-
-double ChromiumBridge::currentTime() {
-  // TODO(mbelshe): This can be deleted; SystemTimeChromium does not need this
-  // anymore.
-  return base::Time::Now().ToDoubleT();
-}
 
 // Theming --------------------------------------------------------------------
 

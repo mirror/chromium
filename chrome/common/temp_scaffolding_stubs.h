@@ -18,12 +18,14 @@
 #include "base/logging.h"
 #include "base/message_loop.h"
 #include "base/ref_counted.h"
+#include "base/string16.h"
 #include "base/gfx/native_widget_types.h"
 #include "base/gfx/rect.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/cache_manager_host.h"
 #include "chrome/browser/cancelable_request.h"
+#include "chrome/browser/download/download_shelf.h"
 #include "chrome/browser/download/save_types.h"
 #include "chrome/browser/history/download_types.h"
 #include "chrome/browser/history/history.h"
@@ -75,6 +77,7 @@ class ProfileManager;
 class Profile;
 class RenderProcessHost;
 class RenderWidgetHelper;
+class RenderViewHostDelegate;
 class ResourceMessageFilter;
 class SessionBackend;
 class SessionCommand;
@@ -392,15 +395,6 @@ class BookmarkBarView {
 //---------------------------------------------------------------------------
 // These stubs are for Browser
 
-#if defined(OS_MACOSX)
-class StatusBubble {
- public:
-  void SetStatus(const std::wstring&) { NOTIMPLEMENTED(); }
-  void Hide() { NOTIMPLEMENTED(); }
-  void SetURL(const GURL&, const std::wstring&) { NOTIMPLEMENTED(); }
-};
-#endif
-
 class DebuggerWindow : public base::RefCountedThreadSafe<DebuggerWindow> {
  public:
 };
@@ -422,9 +416,9 @@ class TabContents : public PageNavigator, public NotificationObserver {
     INVALIDATE_EVERYTHING = 0xFFFFFFFF
   };
   TabContents(TabContentsType type)
-      : type_(type), is_active_(true), is_loading_(false),
-        is_being_destroyed_(false), controller_(),
-        delegate_(), max_page_id_(-1) { }
+      : type_(type), is_crashed_(false), is_active_(true), is_loading_(false),
+        is_being_destroyed_(false), waiting_for_response_(false), 
+        shelf_visible_(false), controller_(), delegate_(), max_page_id_(-1) { }
   virtual ~TabContents() { }
   NavigationController* controller() const { return controller_; }
   void set_controller(NavigationController* c) { controller_ = c; }
@@ -434,7 +428,7 @@ class TabContents : public PageNavigator, public NotificationObserver {
   }
   virtual SkBitmap GetFavIcon() const;
   const GURL& GetURL() const;
-  virtual const std::wstring& GetTitle() const;
+  virtual const string16& GetTitle() const;
   TabContentsType type() const { return type_; }
   void set_type(TabContentsType type) { type_ = type; }
   virtual void Focus() { NOTIMPLEMENTED(); }
@@ -446,6 +440,7 @@ class TabContents : public PageNavigator, public NotificationObserver {
     NOTIMPLEMENTED();
   }
   virtual void SetInitialFocus() { NOTIMPLEMENTED(); }
+  virtual void SetInitialFocus(bool reverse) { NOTIMPLEMENTED(); }
   virtual void RestoreFocus() { NOTIMPLEMENTED(); }
   static TabContentsType TypeForURL(GURL* url);
   static TabContents* CreateWithType(TabContentsType type,
@@ -455,10 +450,12 @@ class TabContents : public PageNavigator, public NotificationObserver {
                        const NotificationSource& source,
                        const NotificationDetails& details) { NOTIMPLEMENTED(); }
   virtual void DidBecomeSelected() { NOTIMPLEMENTED(); }
-  virtual void SetDownloadShelfVisible(bool) { NOTIMPLEMENTED(); }
+  virtual void SetDownloadShelfVisible(bool visible);
+  bool IsDownloadShelfVisible() { return shelf_visible_; }
   virtual void Destroy();
   virtual void SetIsLoading(bool, LoadNotificationDetails*);
-  virtual void SetIsCrashed(bool) { NOTIMPLEMENTED(); }
+  bool is_crashed() const { return is_crashed_; }
+  virtual void SetIsCrashed(bool);
   bool capturing_contents() const {
     NOTIMPLEMENTED();
     return false;
@@ -468,7 +465,8 @@ class TabContents : public PageNavigator, public NotificationObserver {
   void set_is_active(bool active) { is_active_ = active; }
   bool is_loading() const { return is_loading_; }
   bool is_being_destroyed() const { return is_being_destroyed_; }
-  void SetNotWaitingForResponse() { NOTIMPLEMENTED(); }
+  bool waiting_for_response() const { return waiting_for_response_; }
+  void SetNotWaitingForResponse() { waiting_for_response_ = false; }
   void NotifyNavigationStateChanged(unsigned int);
   TabContentsDelegate* delegate() const { return delegate_; }
   void set_delegate(TabContentsDelegate* d) { delegate_ = d; }
@@ -485,31 +483,37 @@ class TabContents : public PageNavigator, public NotificationObserver {
   int32 GetMaxPageID();
   void UpdateMaxPageID(int32);
   virtual bool NavigateToPendingEntry(bool) { NOTIMPLEMENTED(); return true; }
-  virtual DOMUIHost* AsDOMUIHost() { NOTIMPLEMENTED(); return NULL; }
+  virtual DOMUIHost* AsDOMUIHost() { return NULL; }
   virtual std::wstring GetStatusText() const { return std::wstring(); }
   static void RegisterUserPrefs(PrefService* prefs) {
     prefs->RegisterBooleanPref(prefs::kBlockPopups, false);
-  }
-  static void MigrateShelfView(TabContents* from, TabContents* to) {
-    NOTIMPLEMENTED();
   }
   virtual void CreateView() {}
   virtual gfx::NativeView GetNativeView() const { return NULL; }
   static TabContentsFactory* RegisterFactory(TabContentsType type,
                                              TabContentsFactory* factory);
-  void OnStartDownload(DownloadItem* download) { NOTIMPLEMENTED(); }
   void RemoveInfoBar(InfoBarDelegate* delegate) { NOTIMPLEMENTED(); }
   virtual bool ShouldDisplayURL() { return true; }
+  void ToolbarSizeChanged(bool is_animating);
+  void OnStartDownload(DownloadItem* download);
+  DownloadShelf* GetDownloadShelf();
+  static void MigrateShelf(TabContents* from, TabContents* to);
+  void MigrateShelfFrom(TabContents* tab_contents);
  protected:
   typedef std::vector<ConstrainedWindow*> ConstrainedWindowList;
   ConstrainedWindowList child_windows_;
  private:
+  virtual void ReleaseDownloadShelf();
   friend class AutomationProvider;
 
+  scoped_ptr<DownloadShelf> download_shelf_;
   TabContentsType type_;
+  bool is_crashed_;
   bool is_active_;
   bool is_loading_;
   bool is_being_destroyed_;
+  bool waiting_for_response_;
+  bool shelf_visible_;
   GURL url_;
   std::wstring title_;
   NavigationController* controller_;
@@ -575,14 +579,14 @@ class SharedMemory;
 
 class Encryptor {
  public:
-  static bool EncryptWideString(const std::wstring& plaintext,
-                                std::string* ciphertext) {
+  static bool EncryptString16(const string16& plaintext,
+                              std::string* ciphertext) {
     NOTIMPLEMENTED();
     return false;
   }
 
-  static bool DecryptWideString(const std::string& ciphertext,
-                                std::wstring* plaintext) {
+  static bool DecryptString16(const std::string& ciphertext,
+                              string16* plaintext) {
     NOTIMPLEMENTED();
     return false;
   }
@@ -766,6 +770,21 @@ class OSExchangeData {
 };
 
 class BaseDragSource {
+};
+
+//---------------------------------------------------------------------------
+// These stubs are for extensions
+
+class HWNDHtmlView {
+ public:
+  HWNDHtmlView(const GURL& content_url, RenderViewHostDelegate* delegate,
+               bool allow_dom_ui_bindings) {
+    NOTIMPLEMENTED();
+  }
+  virtual ~HWNDHtmlView() {}
+
+  RenderViewHost* render_view_host() { NOTIMPLEMENTED(); return NULL; }
+  void InitHidden() { NOTIMPLEMENTED(); }
 };
 
 #endif  // CHROME_COMMON_TEMP_SCAFFOLDING_STUBS_H_

@@ -21,6 +21,7 @@
 #include "chrome/browser/sessions/session_service.h"
 #include "chrome/browser/sessions/session_types.h"
 #include "chrome/browser/sessions/tab_restore_service.h"
+#include "chrome/browser/status_bubble.h"
 #include "chrome/browser/tab_contents/interstitial_page.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
@@ -37,16 +38,15 @@
 #ifdef CHROME_PERSONALIZATION
 #include "chrome/personalization/personalization.h"
 #endif
+#include "grit/chromium_strings.h"
+#include "grit/generated_resources.h"
+#include "grit/locale_settings.h"
 #include "net/base/cookie_monster.h"
 #include "net/base/cookie_policy.h"
 #include "net/base/net_util.h"
 #include "net/base/registry_controlled_domain.h"
 #include "net/url_request/url_request_context.h"
 #include "webkit/glue/window_open_disposition.h"
-
-#if defined(OS_WIN) || defined(OS_LINUX)
-#include "chrome/browser/status_bubble.h"
-#endif
 
 #if defined(OS_WIN)
 #include <windows.h>
@@ -68,14 +68,10 @@
 #include "chrome/browser/task_manager.h"
 #include "chrome/browser/user_data_manager.h"
 #include "chrome/browser/view_ids.h"
-#include "chrome/browser/views/download_tab_view.h"
 #include "chrome/browser/views/location_bar_view.h"
 #include "chrome/browser/window_sizer.h"
 #include "chrome/common/child_process_host.h"
 #include "chrome/common/win_util.h"
-#include "grit/chromium_strings.h"
-#include "grit/generated_resources.h"
-#include "grit/locale_settings.h"
 
 #endif  // OS_WIN
 
@@ -266,8 +262,8 @@ Browser* Browser::CreateForPopup(Profile* profile) {
 
 // static
 Browser* Browser::CreateForApp(const std::wstring& app_name,
-                               Profile* profile) {
-  Browser* browser = new Browser(TYPE_APP, profile);
+                               Profile* profile, bool is_popup) {
+  Browser* browser = new Browser(is_popup? TYPE_APP_POPUP : TYPE_APP, profile);
   browser->app_name_ = app_name;
   browser->CreateBrowserWindow();
   return browser;
@@ -317,7 +313,7 @@ void Browser::OpenApplicationWindow(Profile* profile, const GURL& url) {
   std::wstring app_name = ComputeApplicationNameFromURL(url);
   RegisterAppPrefs(app_name);
 
-  Browser* browser = Browser::CreateForApp(app_name, profile);
+  Browser* browser = Browser::CreateForApp(app_name, profile, false);
   browser->AddTabWithURL(url, GURL(), PageTransition::START_PAGE, true, NULL);
   browser->window()->Show();
   // TODO(jcampan): http://crbug.com/8123 we should not need to set the initial
@@ -339,7 +335,7 @@ std::wstring Browser::GetWindowPlacementKey() const {
 
 bool Browser::ShouldSaveWindowPlacement() const {
   // We don't save window position for popups.
-  return type() != TYPE_POPUP;
+  return (type() & TYPE_POPUP) == 0;
 }
 
 void Browser::SaveWindowPlacement(const gfx::Rect& bounds, bool maximized) {
@@ -395,24 +391,19 @@ SkBitmap Browser::GetCurrentPageIcon() const {
 }
 
 std::wstring Browser::GetCurrentPageTitle() const {
-#if defined(OS_WIN)
   TabContents* contents = tabstrip_model_.GetSelectedTabContents();
   std::wstring title;
 
   // |contents| can be NULL because GetCurrentPageTitle is called by the window
   // during the window's creation (before tabs have been added).
   if (contents) {
-    title = contents->GetTitle();
+    title = UTF16ToWideHack(contents->GetTitle());
     FormatTitleForDisplay(&title);
   }
   if (title.empty())
     title = l10n_util::GetString(IDS_TAB_UNTITLED_TITLE);
 
   return l10n_util::GetStringF(IDS_BROWSER_WINDOW_TITLE_FORMAT, title);
-#elif defined(OS_POSIX)
-  // TODO(port): turn on when generating chrome_strings.h from grit
-  return L"untitled";
-#endif
 }
 
 // static
@@ -479,7 +470,7 @@ void Browser::OnWindowClosing() {
 TabContents* Browser::AddTabWithURL(
     const GURL& url, const GURL& referrer, PageTransition::Type transition,
     bool foreground, SiteInstance* instance) {
-  if (type_ == TYPE_APP && tabstrip_model_.count() == 1) {
+  if ((type_ & TYPE_APP) != 0 && tabstrip_model_.count() == 1) {
     NOTREACHED() << "Cannot add a tab in a mono tab application.";
     return NULL;
   }
@@ -536,22 +527,18 @@ void Browser::ReplaceRestoredTab(
       restored_controller);
 }
 
-void Browser::ShowNativeUITab(const GURL& url) {
+void Browser::ShowSingleDOMUITab(const GURL& url) {
   int i, c;
   TabContents* tc;
   for (i = 0, c = tabstrip_model_.count(); i < c; ++i) {
     tc = tabstrip_model_.GetTabContentsAt(i);
-    if (tc->type() == TAB_CONTENTS_NATIVE_UI &&
+    if (tc->type() == TAB_CONTENTS_DOM_UI &&
         tc->GetURL() == url) {
       tabstrip_model_.SelectTabContentsAt(i, false);
       return;
     }
   }
-
-  TabContents* contents = CreateTabContentsForURL(url, GURL(), profile_,
-                                                  PageTransition::LINK, false,
-                                                  NULL);
-  AddNewContents(NULL, contents, NEW_FOREGROUND_TAB, gfx::Rect(), true);
+  AddTabWithURL(url, GURL(), PageTransition::AUTO_BOOKMARK, true, NULL);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -745,8 +732,13 @@ void Browser::BookmarkCurrentPage() {
   if (url.is_empty() || !url.is_valid())
     return;
 
-  model->SetURLStarred(url, entry->title(), true);
-  window_->ShowBookmarkBubble(url, model->IsBookmarked(url));
+  bool was_bookmarked = model->IsBookmarked(url);
+  model->SetURLStarred(url, UTF16ToWideHack(entry->title()), true);
+  if (window_->IsActive()) {
+    // Only show the bubble if the window is active, otherwise we may get into
+    // weird situations were the bubble is deleted as soon as it is shown.
+    window_->ShowBookmarkBubble(url, was_bookmarked);
+  }
 }
 
 void Browser::SavePage() {
@@ -763,6 +755,21 @@ void Browser::ViewSource() {
     GURL url("view-source:" + entry->url().spec());
     OpenURL(url, GURL(), NEW_FOREGROUND_TAB, PageTransition::LINK);
   }
+}
+
+bool Browser::SupportsWindowFeature(WindowFeature feature) const {
+  unsigned int features = FEATURE_INFOBAR | FEATURE_DOWNLOADSHELF;
+  if (type() == TYPE_NORMAL)
+     features |= FEATURE_BOOKMARKBAR;
+  if (!window_ || !window_->IsFullscreen()) {
+    if (type() == TYPE_NORMAL)
+      features |= FEATURE_TABSTRIP | FEATURE_TOOLBAR;
+    else
+      features |= FEATURE_TITLEBAR;
+    if ((type() & Browser::TYPE_APP) == 0)
+      features |= FEATURE_LOCATIONBAR;
+  }
+  return !!(features & feature);
 }
 
 #if defined(OS_WIN)
@@ -967,9 +974,7 @@ void Browser::ToggleBookmarkBar() {
 
 void Browser::ShowHistoryTab() {
   UserMetrics::RecordAction(L"ShowHistory", profile_);
-  GURL downloads_url = HistoryUI::GetBaseURL();
-  AddTabWithURL(downloads_url, GURL(), PageTransition::AUTO_BOOKMARK, true,
-                NULL);
+  ShowSingleDOMUITab(HistoryUI::GetBaseURL());
 }
 
 void Browser::OpenBookmarkManager() {
@@ -979,9 +984,7 @@ void Browser::OpenBookmarkManager() {
 
 void Browser::ShowDownloadsTab() {
   UserMetrics::RecordAction(L"ShowDownloads", profile_);
-  GURL downloads_url = DownloadsUI::GetBaseURL();
-  AddTabWithURL(downloads_url, GURL(), PageTransition::AUTO_BOOKMARK, true,
-                NULL);
+  ShowSingleDOMUITab(DownloadsUI::GetBaseURL());
 }
 
 void Browser::OpenClearBrowsingDataDialog() {
@@ -1310,8 +1313,8 @@ void Browser::DuplicateContentsAt(int index) {
                                    PageTransition::LINK, true);
   } else {
     Browser* browser = NULL;
-    if (type_ == TYPE_APP) {
-      browser = Browser::CreateForApp(app_name_, profile_);
+    if (type_ & TYPE_APP) {
+      browser = Browser::CreateForApp(app_name_, profile_, type_ & TYPE_POPUP);
     } else if (type_ == TYPE_POPUP) {
       browser = Browser::CreateForPopup(profile_);
     }
@@ -1541,7 +1544,7 @@ void Browser::OpenURLFromTab(TabContents* source,
 
   // If this is an application we can only have one tab so a new tab always
   // goes into a tabbed browser window.
-  if (disposition != NEW_WINDOW && type_ == TYPE_APP) {
+  if (disposition != NEW_WINDOW && type_ & TYPE_APP) {
     // If the disposition is OFF_THE_RECORD we don't want to create a new
     // browser that will itself create another OTR browser. This will result in
     // a browser leak (and crash below because no tab is created or selected).
@@ -1666,7 +1669,7 @@ void Browser::AddNewContents(TabContents* source,
     // This means we need to open the tab with the START PAGE transition.
     // AddNewContents doesn't support this but the TabStripModel's
     // AddTabContents method does.
-    if (type_ == TYPE_APP)
+    if (type_ & TYPE_APP)
       transition = PageTransition::START_PAGE;
     b->tabstrip_model()->AddTabContents(new_contents, -1, transition, true);
     b->window()->Show();
@@ -1724,7 +1727,7 @@ void Browser::CloseContents(TabContents* source) {
 }
 
 void Browser::MoveContents(TabContents* source, const gfx::Rect& pos) {
-  if (type() != TYPE_POPUP) {
+  if ((type() & TYPE_POPUP) == 0) {
     NOTREACHED() << "moving invalid browser type";
     return;
   }
@@ -1733,7 +1736,7 @@ void Browser::MoveContents(TabContents* source, const gfx::Rect& pos) {
 
 bool Browser::IsPopup(TabContents* source) {
   // A non-tabbed BROWSER is an unconstrained popup.
-  return (type() == TYPE_POPUP);
+  return (type() & TYPE_POPUP);
 }
 
 void Browser::ToolbarSizeChanged(TabContents* source, bool is_animating) {
@@ -1779,7 +1782,7 @@ void Browser::ContentsZoomChange(bool zoom_in) {
 }
 
 bool Browser::IsApplication() const {
-  return type_ == TYPE_APP;
+  return (type_ & TYPE_APP) != 0;
 }
 
 void Browser::ConvertContentsToApplication(TabContents* contents) {
@@ -1792,7 +1795,7 @@ void Browser::ConvertContentsToApplication(TabContents* contents) {
   RegisterAppPrefs(app_name);
 
   tabstrip_model_.DetachTabContentsAt(index);
-  Browser* browser = Browser::CreateForApp(app_name, profile_);
+  Browser* browser = Browser::CreateForApp(app_name, profile_, false);
   browser->tabstrip_model()->AppendTabContents(contents, true);
   browser->window()->Show();
 }
@@ -1856,6 +1859,9 @@ void Browser::SetFocusToLocationBar() {
   window_->SetFocusToLocationBar();
 }
 
+void Browser::RenderWidgetShowing() {
+  window_->DisableInactiveFrame();
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, SelectFileDialog::Listener implementation:
@@ -2091,7 +2097,7 @@ void Browser::UpdateCommandsForFullscreenMode(bool is_fullscreen) {
   // Window management commands
   command_updater_.UpdateCommandEnabled(IDC_PROFILE_MENU, show_main_ui);
   command_updater_.UpdateCommandEnabled(IDC_SHOW_AS_TAB,
-      (type() == TYPE_POPUP) && !is_fullscreen);
+      (type() & TYPE_POPUP) && !is_fullscreen);
 
   // Focus various bits of UI
   command_updater_.UpdateCommandEnabled(IDC_FOCUS_TOOLBAR, show_main_ui);
@@ -2376,7 +2382,7 @@ void Browser::BuildPopupWindow(TabContents* source,
                                TabContents* new_contents,
                                const gfx::Rect& initial_pos) {
   Browser* browser =
-      new Browser((type_ == TYPE_APP) ? TYPE_APP : TYPE_POPUP, profile_);
+      new Browser((type_ & TYPE_APP) ? TYPE_APP_POPUP : TYPE_POPUP, profile_);
   browser->set_override_bounds(initial_pos);
   browser->CreateBrowserWindow();
   // We need to Show before AddNewContents, otherwise AddNewContents will focus

@@ -66,11 +66,11 @@ int GetCurrentProcId();
 
 // Returns the ProcessHandle of the current process.
 ProcessHandle GetCurrentProcessHandle();
-  
+
 // Converts a PID to a process handle. This handle must be closed by
 // CloseProcessHandle when you are done with it.
 ProcessHandle OpenProcessHandle(int pid);
-  
+
 // Closes the process handle opened by OpenProcessHandle.
 void CloseProcessHandle(ProcessHandle process);
 
@@ -179,6 +179,10 @@ bool WaitForProcessesToExit(const std::wstring& executable_name,
 // the given time limit.
 bool WaitForSingleProcess(ProcessHandle handle,
                           int wait_milliseconds);
+
+// Returns true when |wait_milliseconds| have elapsed and the process
+// is still running.
+bool CrashAwareSleep(ProcessHandle handle, int wait_milliseconds);
 
 // Waits a certain amount of time (can be 0) for all the processes with a given
 // executable name to exit, then kills off any of them that are still around.

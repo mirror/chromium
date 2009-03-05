@@ -32,10 +32,13 @@ const FilePath::CharType kExtensionFileExtension[] = FPL("crx");
 // filenames
 const wchar_t kArchivedHistoryFilename[] = L"Archived History";
 const FilePath::CharType kCacheDirname[] = FPL("Cache");
+const FilePath::CharType kMediaCacheDirname[] = FPL("Media Cache");
+const FilePath::CharType kOffTheRecordMediaCacheDirname[] =
+    FPL("Incognito Media Cache");
 const wchar_t kChromePluginDataDirname[] = L"Plugin Data";
 const FilePath::CharType kCookieFilename[] = FPL("Cookies");
 const FilePath::CharType kHistoryFilename[] = FPL("History");
-const wchar_t kLocalStateFilename[] = L"Local State";
+const FilePath::CharType kLocalStateFilename[] = FPL("Local State");
 const FilePath::CharType kPreferencesFilename[] = FPL("Preferences");
 const FilePath::CharType kSafeBrowsingFilename[] = FPL("Safe Browsing");
 const wchar_t kThumbnailsFilename[] = L"Thumbnails";

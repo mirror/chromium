@@ -77,6 +77,7 @@ SKIP : LayoutTests/http/tests/xmlhttprequest/svg-created-by-xhr-disallowed-in-da
 LayoutTests/svg/custom/embedded-svg-disallowed-in-dashboard.xml = FAIL
 LayoutTests/svg/custom/manually-parsed-embedded-svg-disallowed-in-dashboard.html = FAIL
 LayoutTests/svg/custom/manually-parsed-svg-disallowed-in-dashboard.html = FAIL
+LayoutTests/svg/custom/svg-disallowed-in-dashboard-object.html = FAIL
 
 // Chrome uses different keyboard accelerators from those used by Safari, so
 // these tests will always fail.
@@ -97,7 +98,7 @@ LayoutTests/webarchive/loading/test-loading-archive.html = TIMEOUT
 
 // Run the Mac-specific platform tests, but only to check for crashes.
 LayoutTests/platform/gtk = FAIL PASS
-LayoutTests/platform/mac = FAIL PASS
+LayoutTests/platform/mac = FAIL PASS TIMEOUT
 LayoutTests/platform/mac-leopard = FAIL PASS
 LayoutTests/platform/mac-snowleopard = FAIL PASS
 LayoutTests/platform/mac-tiger = FAIL PASS

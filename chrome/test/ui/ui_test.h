@@ -223,13 +223,6 @@ class UITest : public testing::Test {
     in_process_renderer_ = value;
   }
 
-  // Get/Set a flag to run the plugins in the renderer process when running the
-  // tests.
-  static bool in_process_plugins() { return in_process_plugins_; }
-  static void set_in_process_plugins(bool value) {
-    in_process_plugins_ = value;
-  }
-
   // Get/Set a flag to run the renderer outside the sandbox when running the
   // tests
   static bool no_sandbox() { return no_sandbox_; }
@@ -290,6 +283,11 @@ class UITest : public testing::Test {
   static std::wstring js_flags() { return js_flags_; }
   static void set_js_flags(const std::wstring& value) {
     js_flags_ = value;
+  }
+
+  static std::wstring log_level() { return log_level_; }
+  static void set_log_level(const std::wstring& value) {
+    log_level_ = value;
   }
 
   // Called by some tests that wish to have a base profile to start from. This
@@ -423,7 +421,6 @@ class UITest : public testing::Test {
   FILETIME test_start_time_;            // Time the test was started
                                         // (so we can check for new crash dumps)
 #endif
-  static bool in_process_plugins_;
   static bool no_sandbox_;
   static bool safe_plugins_;
   static bool full_memory_dump_;        // If true, write full memory dump
@@ -440,6 +437,7 @@ class UITest : public testing::Test {
   static int timeout_ms_;               // Timeout in milliseconds to wait
                                         // for an test to finish.
   static std::wstring js_flags_;        // Flags passed to the JS engine.
+  static std::wstring log_level_;       // Logging level.
 #if defined(OS_WIN)
   // TODO(port): restore me after AutomationProxy works.
   scoped_ptr<AutomationProxy> server_;

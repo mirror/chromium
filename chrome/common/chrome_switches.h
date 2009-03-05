@@ -30,6 +30,7 @@ extern const wchar_t kBrowserStartRenderersManually[];
 extern const wchar_t kRendererProcess[];
 extern const wchar_t kRendererPath[];
 extern const wchar_t kPluginProcess[];
+extern const wchar_t kWorkerProcess[];
 extern const wchar_t kSingleProcess[];
 extern const wchar_t kProcessPerTab[];
 extern const wchar_t kProcessPerSite[];
@@ -78,6 +79,7 @@ extern const wchar_t kShowIcons[];
 extern const wchar_t kMakeDefaultBrowser[];
 
 extern const wchar_t kProxyServer[];
+extern const wchar_t kV8ProxyResolver[];
 extern const wchar_t kDebugPrint[];
 
 extern const wchar_t kDnsLogDetails[];
@@ -148,6 +150,8 @@ extern const wchar_t kEnableVideo[];
 extern const wchar_t kTestName[];
 
 extern const wchar_t kRendererCmdPrefix[];
+
+extern const wchar_t kIPCUseFIFO[];
 
 }  // namespace switches
 

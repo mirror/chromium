@@ -16,6 +16,7 @@
 #include "base/singleton.h"
 #include "base/task.h"
 #include "chrome/browser/autocomplete/history_url_provider.h"
+#include "chrome/browser/automation/automation_provider.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/cache_manager_host.h"
@@ -44,6 +45,135 @@
 #include "net/url_request/url_request_context.h"
 #include "webkit/glue/webcursor.h"
 #include "webkit/glue/webkit_glue.h"
+
+//--------------------------------------------------------------------------
+
+WebContents* AutomationProvider::GetWebContentsForHandle(
+    int handle, NavigationController** tab) {
+  NOTIMPLEMENTED();
+  return NULL;
+}
+
+void AutomationProvider::GetActiveWindow(int* handle) { NOTIMPLEMENTED(); }
+
+void AutomationProvider::IsWindowActive(int handle, bool* success,
+                                        bool* is_active) {
+  *success = false;
+  NOTIMPLEMENTED();
+}
+
+void AutomationProvider::ActivateWindow(int handle) { NOTIMPLEMENTED(); }
+
+void AutomationProvider::SetWindowVisible(int handle, bool visible,
+                                          bool* result) { NOTIMPLEMENTED(); }
+
+void AutomationProvider::GetFocusedViewID(int handle, int* view_id) {
+  NOTIMPLEMENTED();
+}
+
+void AutomationProvider::OpenNewBrowserWindow(int show_command) {
+  NOTIMPLEMENTED();
+}
+
+void AutomationProvider::GetWindowForBrowser(int browser_handle,
+                                             bool* success,
+                                             int* handle) {
+  *success = false;
+  NOTIMPLEMENTED();
+}
+
+void AutomationProvider::GetAutocompleteEditForBrowser(
+    int browser_handle,
+    bool* success,
+    int* autocomplete_edit_handle) {
+  *success = false;
+  NOTIMPLEMENTED();
+}
+
+void AutomationProvider::GetBrowserForWindow(int window_handle,
+                                             bool* success,
+                                             int* browser_handle) {
+  *success = false;
+  NOTIMPLEMENTED();
+}
+
+void AutomationProvider::GetSecurityState(int handle, bool* success,
+                                          SecurityStyle* security_style,
+                                          int* ssl_cert_status,
+                                          int* mixed_content_status) {
+  *success = false;
+  NOTIMPLEMENTED();
+}
+
+void AutomationProvider::GetPageType(int handle, bool* success,
+                                     NavigationEntry::PageType* page_type) {
+  *success = false;
+  NOTIMPLEMENTED();
+}
+
+void AutomationProvider::ActionOnSSLBlockingPage(int handle, bool proceed,
+                                                 IPC::Message* reply_message) {
+  NOTIMPLEMENTED();
+}
+
+void AutomationProvider::PrintNow(int tab_handle,
+                                  IPC::Message* reply_message) {
+  NOTIMPLEMENTED();
+}
+
+void AutomationProvider::SavePage(int tab_handle,
+                                  const std::wstring& file_name,
+                                  const std::wstring& dir_path,
+                                  int type,
+                                  bool* success) {
+  *success = false;
+  NOTIMPLEMENTED();
+}
+
+void AutomationProvider::GetAutocompleteEditText(int autocomplete_edit_handle,
+                                                 bool* success,
+                                                 std::wstring* text) {
+  *success = false;
+  NOTIMPLEMENTED();
+}
+
+void AutomationProvider::SetAutocompleteEditText(int autocomplete_edit_handle,
+                                                 const std::wstring& text,
+                                                 bool* success) {
+  *success = false;
+  NOTIMPLEMENTED();
+}
+
+void AutomationProvider::AutocompleteEditGetMatches(
+    int autocomplete_edit_handle,
+    bool* success,
+    std::vector<AutocompleteMatchData>* matches) {
+  *success = false;
+  NOTIMPLEMENTED();
+}
+
+void AutomationProvider::AutocompleteEditIsQueryInProgress(
+    int autocomplete_edit_handle,
+    bool* success,
+    bool* query_in_progress) {
+  *success = false;
+  NOTIMPLEMENTED();
+}
+
+void AutomationProvider::OnMessageFromExternalHost(
+    int handle, const std::string& message) {
+  NOTIMPLEMENTED();
+}
+
+void AutomationProvider::GetShowingAppModalDialog(bool* showing_dialog,
+                                                  int* dialog_button) {
+  NOTIMPLEMENTED();
+}
+
+void AutomationProvider::ClickAppModalDialogButton(int button, bool* success) {
+  *success = false;
+  NOTIMPLEMENTED();
+}
 
 //--------------------------------------------------------------------------
 
@@ -155,7 +285,7 @@ const GURL& TabContents::GetURL() const {
   return entry ? entry->display_url() : GURL::EmptyGURL();
 }
 
-const std::wstring& TabContents::GetTitle() const {
+const string16& TabContents::GetTitle() const {
   // We use the title for the last committed entry rather than a pending
   // navigation entry. For example, when the user types in a URL, we want to
   // keep the old page's title until the new load has committed and we get a new
@@ -164,14 +294,14 @@ const std::wstring& TabContents::GetTitle() const {
   // their title, as they are not committed.
   NavigationEntry* entry = controller_->GetTransientEntry();
   if (entry)
-    return entry->GetTitleForDisplay();
+    return entry->GetTitleForDisplay(controller_);
 
   entry = controller_->GetLastCommittedEntry();
   if (entry)
-    return entry->GetTitleForDisplay();
+    return entry->GetTitleForDisplay(controller_);
   else if (controller_->LoadingURLLazily())
     return controller_->GetLazyTitle();
-  return EmptyWString();
+  return EmptyString16();
 }
 
 void TabContents::NotifyNavigationStateChanged(unsigned changed_flags) {
@@ -188,8 +318,27 @@ void TabContents::OpenURL(const GURL& url, const GURL& referrer,
 
 void TabContents::SetIsLoading(bool is_loading,
                                LoadNotificationDetails* details) {
-  // TODO(port): this is a subset of SetIsLoading() as a stub
+  if (is_loading == is_loading_)
+    return;
+
   is_loading_ = is_loading;
+  waiting_for_response_ = is_loading;
+
+  // Suppress notifications for this TabContents if we are not active.
+  if (!is_active_)
+    return;
+
+  if (delegate_)
+    delegate_->LoadingStateChanged(this);
+
+  NotificationType type = is_loading ? NotificationType::LOAD_START :
+      NotificationType::LOAD_STOP;
+  NotificationDetails det = NotificationService::NoDetails();;
+  if (details)
+      det = Details<LoadNotificationDetails>(details);
+  NotificationService::current()->Notify(type, 
+      Source<NavigationController>(this->controller()),
+      det);
 }
 
 bool TabContents::SupportsURL(GURL* url) {
@@ -220,6 +369,38 @@ void TabContents::UpdateMaxPageID(int32 page_id) {
   else
     max_page_id_ = std::max(max_page_id_, page_id);
 }
+
+void TabContents::SetIsCrashed(bool state) {
+  if (state == is_crashed_)
+    return;
+
+  is_crashed_ = state;
+  if (delegate_)
+    delegate_->ContentsStateChanged(this);
+}
+
+#if defined(OS_MACOSX)
+void TabContents::OnStartDownload(DownloadItem* download){
+  NOTIMPLEMENTED();
+}
+
+DownloadShelf* TabContents::GetDownloadShelf(){
+  NOTIMPLEMENTED();
+  return NULL;
+}
+
+void TabContents::ReleaseDownloadShelf() {
+  NOTIMPLEMENTED();
+}
+
+void TabContents::MigrateShelf(TabContents* from, TabContents* to){
+  NOTIMPLEMENTED();
+}
+
+void TabContents::MigrateShelfFrom(TabContents* tab_contents){
+  NOTIMPLEMENTED();
+}
+#endif
 
 //--------------------------------------------------------------------------
 

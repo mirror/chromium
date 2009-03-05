@@ -9,6 +9,7 @@
 
 #include "base/gfx/rect.h"
 #include "chrome/browser/autocomplete/autocomplete_edit.h"
+#include "chrome/browser/autocomplete/autocomplete_edit_view_win.h"
 #include "chrome/browser/location_bar.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/browser/toolbar_model.h"
@@ -267,7 +268,8 @@ class LocationBarView : public LocationBar,
     // The currently shown info bubble if any.
     InfoBubble* info_bubble_;
 
-    // A task used to display the info bubble when the mouse hovers on the image.
+    // A task used to display the info bubble when the mouse hovers on the
+    // image.
     ShowInfoBubbleTask* show_info_bubble_task_;
 
     Profile* profile_;
@@ -335,7 +337,7 @@ class LocationBarView : public LocationBar,
   Profile* profile_;
 
   // The Autocomplete Edit field.
-  scoped_ptr<AutocompleteEditView> location_entry_;
+  scoped_ptr<AutocompleteEditViewWin> location_entry_;
 
   // The CommandUpdater for the Browser object that corresponds to this View.
   CommandUpdater* command_updater_;

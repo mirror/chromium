@@ -13,15 +13,12 @@ env.SConscript([
     '$MEDIA_DIR/using_media.scons',
     '$NPAPI_DIR/using_npapi.scons',
     '$SKIA_DIR/using_skia.scons',
+    '$WEBKIT_DIR/build/WebKit/using_webkit.scons',
 ], {'env':env})
 
 env.Prepend(
-    CPPDEFINES = [
-        'WEBKIT_USING_SKIA'
-    ],
     CPPPATH = [
         '$CHROME_SRC_DIR',
-        '$THIRD_PARTY_WEBKIT_DIR/WebKit/chromium/public',
     ],
 )
 
@@ -59,6 +56,10 @@ input_files = ChromeFileList([
     'net/render_dns_master.h',
     'net/render_dns_queue.cc',
     'net/render_dns_queue.h',
+  ]),
+  MSVSFilter('extensions', [
+    'extensions/extension_bindings.cc',
+    'extensions/extension_bindings.h',
   ]),
     'about_handler.cc',
     'about_handler.h',
@@ -107,6 +108,8 @@ input_files = ChromeFileList([
     'webmediaplayer_delegate_impl.h',
     'webplugin_delegate_proxy.cc',
     'webplugin_delegate_proxy.h',
+    'webworker_proxy.cc',
+    'webworker_proxy.h',
 ])
 
 if not env.Bit('windows'):

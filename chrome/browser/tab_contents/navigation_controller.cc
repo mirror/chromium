@@ -7,6 +7,7 @@
 #include "base/file_util.h"
 #include "base/logging.h"
 #include "base/string_util.h"
+#include "chrome/browser/browser_about_handler.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/dom_ui/dom_ui_host.h"
 #include "chrome/browser/sessions/session_types.h"
@@ -45,7 +46,7 @@ void NotifyPrunedEntries(NavigationController* nav_controller,
 
 // Ensure the given NavigationEntry has a valid state, so that WebKit does not
 // get confused if we navigate back to it.
-// 
+//
 // An empty state is treated as a new navigation by WebKit, which would mean
 // losing the navigation entries and generating a new navigation entry after
 // this one. We don't want that. To avoid this we create a valid state which
@@ -54,7 +55,7 @@ void SetContentStateIfEmpty(NavigationEntry* entry) {
   if (entry->content_state().empty() &&
       (entry->tab_type() == TAB_CONTENTS_WEB ||
        entry->tab_type() == TAB_CONTENTS_NEW_TAB_UI ||
-       entry->tab_type() == TAB_CONTENTS_ABOUT_UI ||
+       entry->tab_type() == TAB_CONTENTS_DOM_UI ||
        entry->tab_type() == TAB_CONTENTS_HTML_DIALOG ||
        entry->IsViewSourceMode())) {
     entry->set_content_state(
@@ -157,7 +158,7 @@ NavigationController::NavigationController(TabContents* contents,
       transient_entry_index_(-1),
       active_contents_(contents),
       max_restored_page_id_(-1),
-      ssl_manager_(this, NULL),
+      ALLOW_THIS_IN_INITIALIZER_LIST(ssl_manager_(this, NULL)),
       needs_reload_(false),
       load_pending_entry_when_active_(false) {
   if (contents)
@@ -176,7 +177,7 @@ NavigationController::NavigationController(
       transient_entry_index_(-1),
       active_contents_(NULL),
       max_restored_page_id_(-1),
-      ssl_manager_(this, NULL),
+      ALLOW_THIS_IN_INITIALIZER_LIST(ssl_manager_(this, NULL)),
       needs_reload_(true),
       load_pending_entry_when_active_(false) {
   DCHECK(profile_);
@@ -246,6 +247,11 @@ NavigationEntry* NavigationController::GetEntryWithPageID(
 }
 
 void NavigationController::LoadEntry(NavigationEntry* entry) {
+  // Handle non-navigational URLs that popup dialogs and such, these should not
+  // actually navigate.
+  if (HandleNonNavigationAboutURL(entry->url()))
+    return;
+
   // When navigating to a new page, we don't know for sure if we will actually
   // end up leaving the current page.  The new page load could for example
   // result in a download or a 'no content' response (e.g., a mailto: URL).
@@ -462,25 +468,23 @@ NavigationEntry* NavigationController::CreateNavigationEntry(
 
   // If the active contents supports |url|, use it.
   // Note: in both cases, we give TabContents a chance to rewrite the URL.
+  //
+  // TODO(brettw): The BrowserURLHandler::HandleBrowserURL call should just be
+  // moved here from inside TypeForURL once the tab contents types are removed.
   TabContents* active = active_contents();
   if (active && active->SupportsURL(&real_url))
     type = active->type();
   else
     type = TabContents::TypeForURL(&real_url);
-
-  if (url.SchemeIs(chrome::kViewSourceScheme)) {
-    // Load the inner URL instead, setting the original URL as the "display".
-    real_url = GURL(url.path());
-  }
-
+  
   NavigationEntry* entry = new NavigationEntry(type, NULL, -1, real_url,
                                                referrer,
-                                               std::wstring(), transition);
+                                               string16(), transition);
   entry->set_display_url(url);
   entry->set_user_typed_url(url);
   if (url.SchemeIsFile()) {
-    entry->set_title(file_util::GetFilenameFromPath(UTF8ToWide(url.host() +
-                                                               url.path())));
+    entry->set_title(WideToUTF16Hack(
+        file_util::GetFilenameFromPath(UTF8ToWide(url.host() + url.path()))));
   }
   return entry;
 }
@@ -513,7 +517,7 @@ void NavigationController::LoadURLLazily(const GURL& url,
                                          const std::wstring& title,
                                          SkBitmap* icon) {
   NavigationEntry* entry = CreateNavigationEntry(url, referrer, type);
-  entry->set_title(title);
+  entry->set_title(WideToUTF16Hack(title));
   if (icon)
     entry->favicon().set_bitmap(*icon);
 
@@ -526,11 +530,11 @@ bool NavigationController::LoadingURLLazily() {
   return load_pending_entry_when_active_;
 }
 
-const std::wstring& NavigationController::GetLazyTitle() const {
+const string16& NavigationController::GetLazyTitle() const {
   if (pending_entry_)
-    return pending_entry_->GetTitleForDisplay();
+    return pending_entry_->GetTitleForDisplay(this);
   else
-    return EmptyWString();
+    return EmptyString16();
 }
 
 const SkBitmap& NavigationController::GetLazyFavIcon() const {
@@ -770,7 +774,7 @@ void NavigationController::RendererDidNavigateToExistingPage(
   // actually change any other state, just kill the pointer.
   if (entry == pending_entry_)
     DiscardNonCommittedEntriesInternal();
-  
+
   last_committed_entry_index_ = entry_index;
 }
 
@@ -932,7 +936,7 @@ void NavigationController::DiscardNonCommittedEntries() {
     // If we are transitioning from two types of WebContents, we need to migrate
     // the download shelf if it is visible. The download shelf may have been
     // created before the error that caused us to discard the entry.
-    TabContents::MigrateShelfView(from_contents, active_contents_);
+    TabContents::MigrateShelf(from_contents, active_contents_);
 
     if (from_contents->delegate()) {
       from_contents->delegate()->ReplaceContents(from_contents,

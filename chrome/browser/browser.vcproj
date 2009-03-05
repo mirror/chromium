@@ -158,19 +158,35 @@
 				>
 			</File>
 			<File
-				RelativePath=".\autocomplete\autocomplete_popup.cc"
+				RelativePath=".\autocomplete\autocomplete_edit_view.h"
 				>
 			</File>
 			<File
-				RelativePath=".\autocomplete\autocomplete_popup.h"
+				RelativePath=".\autocomplete\autocomplete_edit_view_win.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\autocomplete\edit_drop_target.cc"
+				RelativePath=".\autocomplete\autocomplete_edit_view_win.h"
 				>
 			</File>
 			<File
-				RelativePath=".\autocomplete\edit_drop_target.h"
+				RelativePath=".\autocomplete\autocomplete_popup_model.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\autocomplete\autocomplete_popup_model.h"
+				>
+			</File>
+			<File
+				RelativePath=".\autocomplete\autocomplete_popup_view.h"
+				>
+			</File>
+			<File
+				RelativePath=".\autocomplete\autocomplete_popup_view_win.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\autocomplete\autocomplete_popup_view_win.h"
 				>
 			</File>
 			<File
@@ -763,42 +779,6 @@
 			</File>
 			<File
 				RelativePath=".\window_sizer.h"
-				>
-			</File>
-		</Filter>
-		<Filter
-			Name="Destination"
-			>
-			<File
-				RelativePath=".\base_history_model.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\base_history_model.h"
-				>
-			</File>
-			<File
-				RelativePath=".\views\download_tab_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\views\download_tab_view.h"
-				>
-			</File>
-			<File
-				RelativePath=".\history_model.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\history_model.h"
-				>
-			</File>
-			<File
-				RelativePath=".\history_view.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\history_view.h"
 				>
 			</File>
 		</Filter>
@@ -1563,18 +1543,6 @@
 			</File>
 		</Filter>
 		<Filter
-			Name="NativeUI"
-			>
-			<File
-				RelativePath=".\history_tab_ui.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\history_tab_ui.h"
-				>
-			</File>
-		</Filter>
-		<Filter
 			Name="Net"
 			>
 			<File
@@ -1826,6 +1794,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\download\download_shelf.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\download\download_shelf.h"
+				>
+			</File>
+			<File
 				RelativePath=".\download\download_util.cc"
 				>
 			</File>
@@ -1898,6 +1874,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\extensions\extension_error_reporter.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\extensions\extension_error_reporter.h"
+				>
+			</File>
+			<File
 				RelativePath=".\extensions\extension_protocols.cc"
 				>
 			</File>
@@ -1906,11 +1890,27 @@
 				>
 			</File>
 			<File
+				RelativePath=".\extensions\extension_view.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\extensions\extension_view.h"
+				>
+			</File>
+			<File
 				RelativePath=".\extensions\extensions_service.cc"
 				>
 			</File>
 			<File
 				RelativePath=".\extensions\extensions_service.h"
+				>
+			</File>
+			<File
+				RelativePath=".\extensions\extensions_ui.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\extensions\extensions_ui.h"
 				>
 			</File>
 			<File
@@ -2119,14 +2119,6 @@
 			</File>
 			<File
 				RelativePath=".\tab_contents\interstitial_page.h"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_contents\native_ui_contents.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\tab_contents\native_ui_contents.h"
 				>
 			</File>
 			<File
@@ -2391,6 +2383,26 @@
 			</File>
 			<File
 				RelativePath=".\ssl\ssl_policy.h"
+				>
+			</File>
+		</Filter>
+		<Filter
+			Name="Worker Host"
+			>
+			<File
+				RelativePath=".\worker_host\worker_process_host.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\worker_host\worker_process_host.h"
+				>
+			</File>
+			<File
+				RelativePath=".\worker_host\worker_service.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\worker_host\worker_service.h"
 				>
 			</File>
 		</Filter>

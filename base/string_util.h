@@ -7,9 +7,10 @@
 #ifndef BASE_STRING_UTIL_H_
 #define BASE_STRING_UTIL_H_
 
+#include <stdarg.h>   // va_list
+
 #include <string>
 #include <vector>
-#include <stdarg.h>   // va_list
 
 #include "base/basictypes.h"
 #include "base/string16.h"
@@ -111,6 +112,7 @@ bool IsWprintfFormatPortable(const wchar_t* format);
 // These functions are threadsafe.
 const std::string& EmptyString();
 const std::wstring& EmptyWString();
+const string16& EmptyString16();
 
 extern const wchar_t kWhitespaceWide[];
 extern const char kWhitespaceASCII[];
@@ -176,7 +178,7 @@ std::wstring UTF8ToWide(const std::string& utf8);
 bool WideToUTF16(const wchar_t* src, size_t src_len, string16* output);
 string16 WideToUTF16(const std::wstring& wide);
 bool UTF16ToWide(const char16* src, size_t src_len, std::wstring* output);
-std::wstring UTF16ToWide(const string16& utf8);
+std::wstring UTF16ToWide(const string16& utf16);
 
 bool UTF8ToUTF16(const char* src, size_t src_len, string16* output);
 string16 UTF8ToUTF16(const std::string& utf8);
@@ -259,6 +261,26 @@ template <class str> inline str StringToLowerASCII(const str& s) {
   return output;
 }
 
+// ASCII-specific toupper.  The standard library's toupper is locale sensitive,
+// so we don't want to use it here.
+template <class Char> inline Char ToUpperASCII(Char c) {
+  return (c >= 'a' && c <= 'z') ? (c + ('A' - 'a')) : c;
+}
+
+// Converts the elements of the given string.  This version uses a pointer to
+// clearly differentiate it from the non-pointer variant.
+template <class str> inline void StringToUpperASCII(str* s) {
+  for (typename str::iterator i = s->begin(); i != s->end(); ++i)
+    *i = ToUpperASCII(*i);
+}
+
+template <class str> inline str StringToUpperASCII(const str& s) {
+  // for std::string and std::wstring
+  str output(s);
+  StringToUpperASCII(&output);
+  return output;
+}
+
 // Compare the lower-case form of the given string against the given ASCII
 // string.  This is useful for doing checking if an input string matches some
 // token, and it is optimized to avoid intermediate string copies.  This API is
@@ -338,10 +360,10 @@ std::wstring FormatNumber(int64 number);
 
 // Starting at |start_offset| (usually 0), replace the first instance of
 // |find_this| with |replace_with|.
-void ReplaceFirstSubstringAfterOffset(std::wstring* str,
-                                      std::wstring::size_type start_offset,
-                                      const std::wstring& find_this,
-                                      const std::wstring& replace_with);
+void ReplaceFirstSubstringAfterOffset(string16* str,
+                                      string16::size_type start_offset,
+                                      const string16& find_this,
+                                      const string16& replace_with);
 void ReplaceFirstSubstringAfterOffset(std::string* str,
                                       std::string::size_type start_offset,
                                       const std::string& find_this,
@@ -353,10 +375,10 @@ void ReplaceFirstSubstringAfterOffset(std::string* str,
 // This does entire substrings; use std::replace in <algorithm> for single
 // characters, for example:
 //   std::replace(str.begin(), str.end(), 'a', 'b');
-void ReplaceSubstringsAfterOffset(std::wstring* str,
-                                  std::wstring::size_type start_offset,
-                                  const std::wstring& find_this,
-                                  const std::wstring& replace_with);
+void ReplaceSubstringsAfterOffset(string16* str,
+                                  string16::size_type start_offset,
+                                  const string16& find_this,
+                                  const string16& replace_with);
 void ReplaceSubstringsAfterOffset(std::string* str,
                                   std::string::size_type start_offset,
                                   const std::string& find_this,
@@ -387,18 +409,18 @@ std::wstring DoubleToWString(double value);
 //    |*output| will be set to 0.
 //  - Empty string.  |*output| will be set to 0.
 bool StringToInt(const std::string& input, int* output);
-bool StringToInt(const std::wstring& input, int* output);
+bool StringToInt(const string16& input, int* output);
 bool StringToInt64(const std::string& input, int64* output);
-bool StringToInt64(const std::wstring& input, int64* output);
+bool StringToInt64(const string16& input, int64* output);
 bool HexStringToInt(const std::string& input, int* output);
-bool HexStringToInt(const std::wstring& input, int* output);
+bool HexStringToInt(const string16& input, int* output);
 
 // Similar to the previous functions, except that output is a vector of bytes.
 // |*output| will contain as many bytes as were successfully parsed prior to the
 // error.  There is no overflow, but input.size() must be evenly divisible by 2.
 // Leading 0x or +/- are not allowed.
 bool HexStringToBytes(const std::string& input, std::vector<uint8>* output);
-bool HexStringToBytes(const std::wstring& input, std::vector<uint8>* output);
+bool HexStringToBytes(const string16& input, std::vector<uint8>* output);
 
 // For floating-point conversions, only conversions of input strings in decimal
 // form are defined to work.  Behavior with strings representing floating-point
@@ -407,19 +429,19 @@ bool HexStringToBytes(const std::wstring& input, std::vector<uint8>* output);
 // variants.  This expects the input string to NOT be specific to the locale.
 // If your input is locale specific, use ICU to read the number.
 bool StringToDouble(const std::string& input, double* output);
-bool StringToDouble(const std::wstring& input, double* output);
+bool StringToDouble(const string16& input, double* output);
 
 // Convenience forms of the above, when the caller is uninterested in the
 // boolean return value.  These return only the |*output| value from the
 // above conversions: a best-effort conversion when possible, otherwise, 0.
 int StringToInt(const std::string& value);
-int StringToInt(const std::wstring& value);
+int StringToInt(const string16& value);
 int64 StringToInt64(const std::string& value);
-int64 StringToInt64(const std::wstring& value);
+int64 StringToInt64(const string16& value);
 int HexStringToInt(const std::string& value);
-int HexStringToInt(const std::wstring& value);
+int HexStringToInt(const string16& value);
 double StringToDouble(const std::string& value);
-double StringToDouble(const std::wstring& value);
+double StringToDouble(const string16& value);
 
 // Return a C++ string given printf-like input.
 std::string StringPrintf(const char* format, ...);
@@ -574,5 +596,6 @@ bool MatchPattern(const std::string& string, const std::string& pattern);
 // the absolute max size for |size| should be is
 //   std::numeric_limits<size_t>::max() / 2
 std::string HexEncode(const void* bytes, size_t size);
+
 
 #endif  // BASE_STRING_UTIL_H_

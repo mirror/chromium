@@ -19,7 +19,6 @@
 #include "base/system_monitor.h"
 #include "base/tracked_objects.h"
 #include "base/values.h"
-#include "chrome/app/result_codes.h"
 #include "chrome/browser/browser_main_win.h"
 #include "chrome/browser/browser_init.h"
 #include "chrome/browser/browser_list.h"
@@ -43,6 +42,7 @@
 #include "chrome/common/main_function_params.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
+#include "chrome/common/result_codes.h"
 #include "chrome/common/resource_bundle.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
@@ -71,12 +71,10 @@
 #include "chrome/browser/extensions/extension_protocols.h"
 #include "chrome/browser/jankometer.h"
 #include "chrome/browser/metrics/user_metrics.h"
-#include "chrome/browser/net/dns_global.h"
 #include "chrome/browser/net/sdch_dictionary_fetcher.h"
 #include "chrome/browser/net/url_fixer_upper.h"
 #include "chrome/browser/printing/print_job_manager.h"
 #include "chrome/browser/profile.h"
-#include "chrome/browser/profile_manager.h"
 #include "chrome/browser/rlz/rlz.h"
 #include "chrome/browser/views/user_data_dir_dialog.h"
 #include "chrome/common/env_vars.h"
@@ -295,8 +293,8 @@ int BrowserMain(const MainFunctionParams& parameters) {
   // inherit and reset the user's setting.
   if (!local_state_file_exists &&
       parsed_command_line.HasSwitch(switches::kParentProfile)) {
-    std::wstring parent_profile =
-        parsed_command_line.GetSwitchValue(switches::kParentProfile);
+    FilePath parent_profile = FilePath::FromWStringHack(
+        parsed_command_line.GetSwitchValue(switches::kParentProfile));
     PrefService parent_local_state(parent_profile);
     parent_local_state.RegisterStringPref(prefs::kApplicationLocale,
                                           std::wstring());

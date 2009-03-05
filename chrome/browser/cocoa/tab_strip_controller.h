@@ -34,9 +34,11 @@ class ToolbarModel;
   TabStripModel* tabModel_;  // weak
   ToolbarModel* toolbarModel_;  // weak, one per browser
   CommandUpdater* commands_;  // weak, may be nil
-  // maps TabContents to a TabContentsController (which owns the parent view
-  // for the toolbar and associated tab contents)
-  NSMutableDictionary* tabContentsToController_;
+  // access to the TabContentsControllers (which own the parent view
+  // for the toolbar and associated tab contents) given an index. This needs
+  // to be kept in the same order as the tab strip's model as we will be
+  // using its index from the TabStripModelObserver calls.
+  NSMutableArray* tabControllerArray_;
 }
 
 // Initialize the controller with a view, model, and command updater for
@@ -63,6 +65,12 @@ class ToolbarModel;
 // Return the rect, in WebKit coordinates (flipped), of the window's grow box
 // in the coordinate system of the content area of the currently selected tab.
 - (NSRect)selectedTabGrowBoxRect;
+
+// Called to tell the selected tab to update its loading state.
+- (void)setIsLoading:(BOOL)isLoading;
+
+// Make the location bar the first responder, if possible.
+- (void)focusLocationBar;
 
 @end
 

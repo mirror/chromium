@@ -23,7 +23,6 @@
 #include "base/singleton.h"
 #include "base/string_util.h"
 #include "base/thread.h"
-#include "chrome/app/result_codes.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/cache_manager_host.h"
 #include "chrome/browser/extensions/user_script_master.h"
@@ -43,6 +42,7 @@
 #include "chrome/common/pref_service.h"
 #include "chrome/common/process_watcher.h"
 #include "chrome/common/render_messages.h"
+#include "chrome/common/result_codes.h"
 #include "chrome/renderer/render_process.h"
 #include "grit/generated_resources.h"
 
@@ -260,7 +260,11 @@ bool BrowserRenderProcessHost::Init() {
     switches::kRendererStartupDialog,
     switches::kNoSandbox,
     switches::kTestSandbox,
+#if !defined (GOOGLE_CHROME_BUILD)
+    // This is an unsupported and not fully tested mode, so don't enable it for
+    // official Chrome builds.
     switches::kInProcessPlugins,
+#endif
     switches::kDomAutomationController,
     switches::kUserAgent,
     switches::kJavaScriptFlags,
@@ -297,10 +301,12 @@ bool BrowserRenderProcessHost::Init() {
   cmd_line.AppendSwitchWithValue(switches::kLang, locale);
 
   bool in_sandbox = !browser_command_line.HasSwitch(switches::kNoSandbox);
+#if !defined (GOOGLE_CHROME_BUILD)
   if (browser_command_line.HasSwitch(switches::kInProcessPlugins)) {
     // In process plugins won't work if the sandbox is enabled.
     in_sandbox = false;
   }
+#endif
 
 #if defined(OS_WIN)
   bool child_needs_help =
@@ -795,7 +801,11 @@ void BrowserRenderProcessHost::OnChannelError() {
        i != local_listeners.end(); ++i) {
     i->second->OnMessageReceived(ViewHostMsg_RenderViewGone(i->first));
   }
-  // at this point, this object should be deleted
+
+  ClearTransportDIBCache();
+
+  // this object is not deleted at this point and may be reused later.
+  // TODO(darin): clean this up
 }
 
 void BrowserRenderProcessHost::Unregister() {
@@ -829,9 +839,23 @@ void BrowserRenderProcessHost::OnUpdatedCacheStats(
 void BrowserRenderProcessHost::SetBackgrounded(bool backgrounded) {
   // If the process_ is NULL, the process hasn't been created yet.
   if (process_.handle()) {
-    bool rv = process_.SetProcessBackgrounded(backgrounded);
-    if (!rv) {
-      return;
+    bool should_set_backgrounded = true;
+
+#if defined(OS_WIN)
+    // The cbstext.dll loads as a global GetMessage hook in the browser process
+    // and intercepts/unintercepts the kernel32 API SetPriorityClass in a
+    // background thread. If the UI thread invokes this API just when it is
+    // intercepted the stack is messed up on return from the interceptor
+    // which causes random crashes in the browser process. Our hack for now
+    // is to not invoke the SetPriorityClass API if the dll is loaded.
+    should_set_backgrounded = (GetModuleHandle(L"cbstext.dll") == NULL);
+#endif // OS_WIN
+
+    if (should_set_backgrounded) {
+      bool rv = process_.SetProcessBackgrounded(backgrounded);
+      if (!rv) {
+        return;
+      }
     }
 
     // Now tune the memory footprint of the renderer.

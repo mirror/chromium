@@ -302,19 +302,11 @@ IPC_BEGIN_MESSAGES(View)
   // Notifies the renderer that the system DoDragDrop call has ended.
   IPC_MESSAGE_ROUTED0(ViewMsg_DragSourceSystemDragEnded)
 
-  // Used to tell a render view whether it should expose DOM Automation bindings
-  // that allow JS content in the DOM to send a JSON-encoded value to the
-  // browser process.  (By default this isn't allowed unless the app has
-  // been started up with the --dom-automation switch.)
-  IPC_MESSAGE_ROUTED1(ViewMsg_AllowDomAutomationBindings,
-                      bool /* binding_allowed */)
-
-  // Used to tell a render view whether it should expose DOM UI bindings
-  // that allow JS content in the DOM to send a JSON-encoded value to the
-  // browser process.  This is for HTML-based UI.
-  IPC_MESSAGE_ROUTED2(ViewMsg_AllowBindings,
-                      bool /* enable_dom_ui_bindings */,
-                      bool /* enable_external_host_bindings */)
+  // Used to tell a render view whether it should expose various bindings
+  // that allow JS content extended privileges.  See BindingsPolicy for valid
+  // flag values.
+  IPC_MESSAGE_ROUTED1(ViewMsg_AllowBindings,
+                      int /* enabled_bindings_flags */)
 
   // Tell the renderer to add a property to the DOMUI binding object.  This
   // only works if we allowed DOMUI bindings.
@@ -339,12 +331,12 @@ IPC_BEGIN_MESSAGES(View)
   // This message sends a string being composed with IME.
   // Parameters
   // * string_type (int)
-  //   Represents the type of the string in the 'ime_string' parameter.
+  //   Represents the type of the 'ime_string' parameter.
   //   Its possible values and description are listed below:
   //     Value         Description
-  //     0             The parameter is not used.
-  //     GCS_RESULTSTR The parameter represents a result string.
-  //     GCS_COMPSTR   The parameter represents a composition string.
+  //     -1            The parameter is not used.
+  //     1             The parameter represents a result string.
+  //     0             The parameter represents a composition string.
   // * cursor_position (int)
   //   Represents the position of the cursor
   // * target_start (int)
@@ -465,8 +457,7 @@ IPC_BEGIN_MESSAGES(View)
                       std::string /* event arguments */)
 #endif
   // Posts a message to the renderer.
-  IPC_MESSAGE_ROUTED2(ViewMsg_HandleMessageFromExternalHost,
-                      std::string /* The target for the message */,
+  IPC_MESSAGE_ROUTED1(ViewMsg_HandleMessageFromExternalHost,
                       std::string /* The message */)
 
   // Sent to the renderer when a popup window should no longer count against
@@ -849,11 +840,11 @@ IPC_BEGIN_MESSAGES(ViewHost)
                               int /* format */,
                               bool /* result */)
   IPC_SYNC_MESSAGE_CONTROL0_1(ViewHostMsg_ClipboardReadText,
-                              std::wstring /* result */)
+                              string16 /* result */)
   IPC_SYNC_MESSAGE_CONTROL0_1(ViewHostMsg_ClipboardReadAsciiText,
                               std::string /* result */)
   IPC_SYNC_MESSAGE_CONTROL0_2(ViewHostMsg_ClipboardReadHTML,
-                              std::wstring /* markup */,
+                              string16 /* markup */,
                               GURL /* url */)
 
 #if defined(OS_WIN)
@@ -1167,8 +1158,9 @@ IPC_BEGIN_MESSAGES(ViewHost)
 
   // Tell the browser the audio buffer prepared for stream
   // (render_view_id, stream_id) is filled and is ready to be consumed.
-  IPC_MESSAGE_ROUTED1(ViewHostMsg_NotifyAudioPacketReady,
-                      int /* stream_id */)
+  IPC_MESSAGE_ROUTED2(ViewHostMsg_NotifyAudioPacketReady,
+                      int /* stream_id */,
+                      size_t /* packet size */)
 
   // Start playing the audio stream specified by (render_view_id, stream_id).
   IPC_MESSAGE_ROUTED1(ViewHostMsg_StartAudioStream,
@@ -1203,5 +1195,17 @@ IPC_BEGIN_MESSAGES(ViewHost)
   IPC_MESSAGE_CONTROL1(ViewHostMsg_FreeTransportDIB,
                        TransportDIB::Id /* DIB id */)
 #endif
+
+  // A renderer sends this to the browser process when it wants to create a
+  // worker.  The browser will create the worker process if necessary, and
+  // will return the route id on success.  On error returns MSG_ROUTING_NONE.
+  IPC_SYNC_MESSAGE_CONTROL1_1(ViewHostMsg_CreateDedicatedWorker,
+                              GURL /* url */,
+                              int /* route_id */)
+
+  // Wraps an IPC message that's destined to the worker on the renderer->browser
+  // hop.
+  IPC_MESSAGE_CONTROL1(ViewHostMsg_ForwardToWorker,
+                       IPC::Message /* message */)
 
 IPC_END_MESSAGES(ViewHost)

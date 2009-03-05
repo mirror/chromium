@@ -122,10 +122,9 @@ TEST(StringUtilTest, IsStringUTF8) {
   EXPECT_TRUE(IsStringUTF8("a\xc2\x81\xe1\x80\xbf\xf1\x80\xa0\xbf"));
   EXPECT_TRUE(IsStringUTF8("\xef\xbb\xbf" "abc")); // UTF-8 BOM
 
-
-  // surrogate code points 
+  // surrogate code points
   EXPECT_FALSE(IsStringUTF8("\xed\xa0\x80\xed\xbf\xbf"));
-  EXPECT_FALSE(IsStringUTF8("\xed\xa0\x8f")); 
+  EXPECT_FALSE(IsStringUTF8("\xed\xa0\x8f"));
   EXPECT_FALSE(IsStringUTF8("\xed\xbf\xbf"));
 
   // overlong sequences
@@ -166,14 +165,14 @@ TEST(StringUtilTest, IsStringUTF8) {
 
   // Strings in legacy encodings. We can certainly make up strings
   // in a legacy encoding that are valid in UTF-8, but in real data,
-  // most of them are invalid as UTF-8. 
+  // most of them are invalid as UTF-8.
   EXPECT_FALSE(IsStringUTF8("caf\xe9")); // cafe with U+00E9 in ISO-8859-1
   EXPECT_FALSE(IsStringUTF8("\xb0\xa1\xb0\xa2")); // U+AC00, U+AC001 in EUC-KR
   EXPECT_FALSE(IsStringUTF8("\xa7\x41\xa6\x6e")); // U+4F60 U+597D in Big5
   // "abc" with U+201[CD] in windows-125[0-8]
-  EXPECT_FALSE(IsStringUTF8("\x93" "abc\x94")); 
+  EXPECT_FALSE(IsStringUTF8("\x93" "abc\x94"));
   // U+0639 U+064E U+0644 U+064E in ISO-8859-6
-  EXPECT_FALSE(IsStringUTF8("\xd9\xee\xe4\xee")); 
+  EXPECT_FALSE(IsStringUTF8("\xd9\xee\xe4\xee"));
   // U+03B3 U+03B5 U+03B9 U+03AC in ISO-8859-7
   EXPECT_FALSE(IsStringUTF8("\xe3\xe5\xe9\xdC"));
 }
@@ -572,6 +571,32 @@ TEST(StringUtilTest, ConvertASCII) {
   EXPECT_EQ(0, string_with_nul.compare(narrow_with_nul));
 }
 
+TEST(StringUtilTest, ToUpperASCII) {
+  EXPECT_EQ('C', ToUpperASCII('C'));
+  EXPECT_EQ('C', ToUpperASCII('c'));
+  EXPECT_EQ('2', ToUpperASCII('2'));
+
+  EXPECT_EQ(L'C', ToUpperASCII(L'C'));
+  EXPECT_EQ(L'C', ToUpperASCII(L'c'));
+  EXPECT_EQ(L'2', ToUpperASCII(L'2'));
+
+  std::string in_place_a("Cc2");
+  StringToUpperASCII(&in_place_a);
+  EXPECT_EQ("CC2", in_place_a);
+
+  std::wstring in_place_w(L"Cc2");
+  StringToUpperASCII(&in_place_w);
+  EXPECT_EQ(L"CC2", in_place_w);
+
+  std::string original_a("Cc2");
+  std::string upper_a = StringToUpperASCII(original_a);
+  EXPECT_EQ("CC2", upper_a);
+
+  std::wstring original_w(L"Cc2");
+  std::wstring upper_w = StringToUpperASCII(original_w);
+  EXPECT_EQ(L"CC2", upper_w);
+}
+
 static const struct {
   const wchar_t* src_w;
   const char*    src_a;
@@ -647,60 +672,62 @@ TEST(StringUtilTest, FormatBytes) {
 
 TEST(StringUtilTest, ReplaceSubstringsAfterOffset) {
   static const struct {
-    const wchar_t* str;
-    std::wstring::size_type start_offset;
-    const wchar_t* find_this;
-    const wchar_t* replace_with;
-    const wchar_t* expected;
+    const char* str;
+    string16::size_type start_offset;
+    const char* find_this;
+    const char* replace_with;
+    const char* expected;
   } cases[] = {
-    {L"aaa", 0, L"a", L"b", L"bbb"},
-    {L"abb", 0, L"ab", L"a", L"ab"},
-    {L"Removing some substrings inging", 0, L"ing", L"", L"Remov some substrs "},
-    {L"Not found", 0, L"x", L"0", L"Not found"},
-    {L"Not found again", 5, L"x", L"0", L"Not found again"},
-    {L" Making it much longer ", 0, L" ", L"Four score and seven years ago",
-     L"Four score and seven years agoMakingFour score and seven years agoit"
-     L"Four score and seven years agomuchFour score and seven years agolonger"
-     L"Four score and seven years ago"},
-    {L"Invalid offset", 9999, L"t", L"foobar", L"Invalid offset"},
-    {L"Replace me only me once", 9, L"me ", L"", L"Replace me only once"},
-    {L"abababab", 2, L"ab", L"c", L"abccc"},
+    {"aaa", 0, "a", "b", "bbb"},
+    {"abb", 0, "ab", "a", "ab"},
+    {"Removing some substrings inging", 0, "ing", "", "Remov some substrs "},
+    {"Not found", 0, "x", "0", "Not found"},
+    {"Not found again", 5, "x", "0", "Not found again"},
+    {" Making it much longer ", 0, " ", "Four score and seven years ago",
+     "Four score and seven years agoMakingFour score and seven years agoit"
+     "Four score and seven years agomuchFour score and seven years agolonger"
+     "Four score and seven years ago"},
+    {"Invalid offset", 9999, "t", "foobar", "Invalid offset"},
+    {"Replace me only me once", 9, "me ", "", "Replace me only once"},
+    {"abababab", 2, "ab", "c", "abccc"},
   };
 
   for (size_t i = 0; i < ARRAYSIZE_UNSAFE(cases); i++) {
-    std::wstring str(cases[i].str);
+    string16 str = ASCIIToUTF16(cases[i].str);
     ReplaceSubstringsAfterOffset(&str, cases[i].start_offset,
-                                 cases[i].find_this, cases[i].replace_with);
-    EXPECT_EQ(cases[i].expected, str);
+                                 ASCIIToUTF16(cases[i].find_this),
+                                 ASCIIToUTF16(cases[i].replace_with));
+    EXPECT_EQ(ASCIIToUTF16(cases[i].expected), str);
   }
 }
 
 TEST(StringUtilTest, ReplaceFirstSubstringAfterOffset) {
   static const struct {
-    const wchar_t* str;
-    std::wstring::size_type start_offset;
-    const wchar_t* find_this;
-    const wchar_t* replace_with;
-    const wchar_t* expected;
+    const char* str;
+    string16::size_type start_offset;
+    const char* find_this;
+    const char* replace_with;
+    const char* expected;
   } cases[] = {
-    {L"aaa", 0, L"a", L"b", L"baa"},
-    {L"abb", 0, L"ab", L"a", L"ab"},
-    {L"Removing some substrings inging", 0, L"ing", L"",
-      L"Remov some substrings inging"},
-    {L"Not found", 0, L"x", L"0", L"Not found"},
-    {L"Not found again", 5, L"x", L"0", L"Not found again"},
-    {L" Making it much longer ", 0, L" ", L"Four score and seven years ago",
-     L"Four score and seven years agoMaking it much longer "},
-    {L"Invalid offset", 9999, L"t", L"foobar", L"Invalid offset"},
-    {L"Replace me only me once", 4, L"me ", L"", L"Replace only me once"},
-    {L"abababab", 2, L"ab", L"c", L"abcabab"},
+    {"aaa", 0, "a", "b", "baa"},
+    {"abb", 0, "ab", "a", "ab"},
+    {"Removing some substrings inging", 0, "ing", "",
+      "Remov some substrings inging"},
+    {"Not found", 0, "x", "0", "Not found"},
+    {"Not found again", 5, "x", "0", "Not found again"},
+    {" Making it much longer ", 0, " ", "Four score and seven years ago",
+     "Four score and seven years agoMaking it much longer "},
+    {"Invalid offset", 9999, "t", "foobar", "Invalid offset"},
+    {"Replace me only me once", 4, "me ", "", "Replace only me once"},
+    {"abababab", 2, "ab", "c", "abcabab"},
   };
 
   for (size_t i = 0; i < ARRAYSIZE_UNSAFE(cases); i++) {
-    std::wstring str(cases[i].str);
+    string16 str = ASCIIToUTF16(cases[i].str);
     ReplaceFirstSubstringAfterOffset(&str, cases[i].start_offset,
-                                     cases[i].find_this, cases[i].replace_with);
-    EXPECT_EQ(cases[i].expected, str);
+                                     ASCIIToUTF16(cases[i].find_this),
+                                     ASCIIToUTF16(cases[i].replace_with));
+    EXPECT_EQ(ASCIIToUTF16(cases[i].expected), str);
   }
 }
 
@@ -802,8 +829,9 @@ TEST(StringUtilTest, StringToInt) {
     EXPECT_EQ(cases[i].output, output);
 
     std::wstring wide_input = ASCIIToWide(cases[i].input);
-    EXPECT_EQ(cases[i].output, StringToInt(wide_input));
-    EXPECT_EQ(cases[i].success, StringToInt(wide_input, &output));
+    EXPECT_EQ(cases[i].output, StringToInt(WideToUTF16Hack(wide_input)));
+    EXPECT_EQ(cases[i].success, StringToInt(WideToUTF16Hack(wide_input),
+                                            &output));
     EXPECT_EQ(cases[i].output, output);
   }
 
@@ -817,7 +845,7 @@ TEST(StringUtilTest, StringToInt) {
   EXPECT_EQ(6, output);
 
   std::wstring wide_input = ASCIIToWide(input_string);
-  EXPECT_FALSE(StringToInt(wide_input, &output));
+  EXPECT_FALSE(StringToInt(WideToUTF16Hack(wide_input), &output));
   EXPECT_EQ(6, output);
 }
 
@@ -866,8 +894,9 @@ TEST(StringUtilTest, StringToInt64) {
     EXPECT_EQ(cases[i].output, output);
 
     std::wstring wide_input = ASCIIToWide(cases[i].input);
-    EXPECT_EQ(cases[i].output, StringToInt64(wide_input));
-    EXPECT_EQ(cases[i].success, StringToInt64(wide_input, &output));
+    EXPECT_EQ(cases[i].output, StringToInt64(WideToUTF16Hack(wide_input)));
+    EXPECT_EQ(cases[i].success, StringToInt64(WideToUTF16Hack(wide_input),
+                                              &output));
     EXPECT_EQ(cases[i].output, output);
   }
 
@@ -881,7 +910,7 @@ TEST(StringUtilTest, StringToInt64) {
   EXPECT_EQ(6, output);
 
   std::wstring wide_input = ASCIIToWide(input_string);
-  EXPECT_FALSE(StringToInt64(wide_input, &output));
+  EXPECT_FALSE(StringToInt64(WideToUTF16Hack(wide_input), &output));
   EXPECT_EQ(6, output);
 }
 
@@ -927,8 +956,9 @@ TEST(StringUtilTest, HexStringToInt) {
     EXPECT_EQ(cases[i].output, output);
 
     std::wstring wide_input = ASCIIToWide(cases[i].input);
-    EXPECT_EQ(cases[i].output, HexStringToInt(wide_input));
-    EXPECT_EQ(cases[i].success, HexStringToInt(wide_input, &output));
+    EXPECT_EQ(cases[i].output, HexStringToInt(WideToUTF16Hack(wide_input)));
+    EXPECT_EQ(cases[i].success, HexStringToInt(WideToUTF16Hack(wide_input),
+                                               &output));
     EXPECT_EQ(cases[i].output, output);
   }
   // One additional test to verify that conversion of numbers in strings with
@@ -941,7 +971,7 @@ TEST(StringUtilTest, HexStringToInt) {
   EXPECT_EQ(0xc0ffee, output);
 
   std::wstring wide_input = ASCIIToWide(input_string);
-  EXPECT_FALSE(HexStringToInt(wide_input, &output));
+  EXPECT_FALSE(HexStringToInt(WideToUTF16Hack(wide_input), &output));
   EXPECT_EQ(0xc0ffee, output);
 }
 
@@ -987,7 +1017,8 @@ TEST(StringUtilTest, HexStringToBytes) {
     compare.clear();
 
     std::wstring wide_input = ASCIIToWide(cases[i].input);
-    EXPECT_EQ(cases[i].success, HexStringToBytes(wide_input, &output)) <<
+    EXPECT_EQ(cases[i].success,
+              HexStringToBytes(WideToUTF16Hack(wide_input), &output)) <<
         i << ": " << cases[i].input;
     for (size_t j = 0; j < cases[i].output_len; ++j)
       compare.push_back(static_cast<uint8>(cases[i].output[j]));
@@ -1039,8 +1070,10 @@ TEST(StringUtilTest, StringToDouble) {
     EXPECT_DOUBLE_EQ(cases[i].output, output);
 
     std::wstring wide_input = ASCIIToWide(cases[i].input);
-    EXPECT_DOUBLE_EQ(cases[i].output, StringToDouble(wide_input));
-    EXPECT_EQ(cases[i].success, StringToDouble(wide_input, &output));
+    EXPECT_DOUBLE_EQ(cases[i].output,
+                     StringToDouble(WideToUTF16Hack(wide_input)));
+    EXPECT_EQ(cases[i].success, StringToDouble(WideToUTF16Hack(wide_input),
+                                               &output));
     EXPECT_DOUBLE_EQ(cases[i].output, output);
   }
 
@@ -1054,7 +1087,7 @@ TEST(StringUtilTest, StringToDouble) {
   EXPECT_DOUBLE_EQ(3.14, output);
 
   std::wstring wide_input = ASCIIToWide(input_string);
-  EXPECT_FALSE(StringToDouble(wide_input, &output));
+  EXPECT_FALSE(StringToDouble(WideToUTF16Hack(wide_input), &output));
   EXPECT_DOUBLE_EQ(3.14, output);
 }
 

@@ -22,6 +22,7 @@
 #include "chrome/browser/renderer_host/browser_render_process_host.h"
 #include "chrome/browser/renderer_host/render_widget_helper.h"
 #include "chrome/browser/spellchecker.h"
+#include "chrome/browser/worker_host/worker_service.h"
 #include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/common/chrome_plugin_util.h"
 #include "chrome/common/notification_service.h"
@@ -117,12 +118,14 @@ ResourceMessageFilter::ResourceMessageFilter(
       profile_(profile),
       render_widget_helper_(render_widget_helper),
       audio_renderer_host_(audio_renderer_host) {
-
   DCHECK(request_context_.get());
   DCHECK(request_context_->cookie_store());
+  DCHECK(audio_renderer_host_.get());
 }
 
 ResourceMessageFilter::~ResourceMessageFilter() {
+  WorkerService::GetInstance()->RendererShutdown(this);
+
   if (render_handle_)
     base::CloseProcessHandle(render_handle_);
 
@@ -151,6 +154,9 @@ void ResourceMessageFilter::OnChannelConnected(int32 peer_pid) {
   DCHECK(!render_handle_);
   render_handle_ = base::OpenProcessHandle(peer_pid);
   DCHECK(render_handle_);
+  // Hook AudioRendererHost to this object after channel is connected so it can
+  // this object for sending messages.
+  audio_renderer_host_->IPCChannelConnected(this);
 }
 
 // Called on the IPC thread:
@@ -160,6 +166,9 @@ void ResourceMessageFilter::OnChannelClosing() {
   // Unhook us from all pending network requests so they don't get sent to a
   // deleted object.
   resource_dispatcher_host_->CancelRequestsForProcess(render_process_host_id_);
+
+  // Unhook AudioRendererHost.
+  audio_renderer_host_->IPCChannelClosing();
 }
 
 // Called on the IPC thread:
@@ -195,6 +204,10 @@ bool ResourceMessageFilter::OnMessageReceived(const IPC::Message& message) {
         OnReceiveContextMenuMsg(message))
     IPC_MESSAGE_HANDLER_DELAY_REPLY(ViewHostMsg_OpenChannelToPlugin,
                                     OnOpenChannelToPlugin)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_CreateDedicatedWorker,
+                        OnCreateDedicatedWorker)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_ForwardToWorker,
+                        OnForwardToWorker)
     IPC_MESSAGE_HANDLER_DELAY_REPLY(ViewHostMsg_SpellCheck, OnSpellCheck)
     IPC_MESSAGE_HANDLER(ViewHostMsg_DnsPrefetch, OnDnsPrefetch)
     IPC_MESSAGE_HANDLER(ViewHostMsg_RendererHistograms,
@@ -486,6 +499,16 @@ void ResourceMessageFilter::OnOpenChannelToPlugin(const GURL& url,
                                        locale, reply_msg);
 }
 
+void ResourceMessageFilter::OnCreateDedicatedWorker(const GURL& url,
+                                                    int* route_id) {
+  *route_id = render_widget_helper_->GetNextRoutingID();
+  WorkerService::GetInstance()->CreateDedicatedWorker(url, this, *route_id);
+}
+
+void ResourceMessageFilter::OnForwardToWorker(const IPC::Message& message) {
+  WorkerService::GetInstance()->ForwardMessage(message);
+}
+
 void ResourceMessageFilter::OnDownloadUrl(const IPC::Message& message,
                                           const GURL& url,
                                           const GURL& referrer) {
@@ -528,7 +551,7 @@ void ResourceMessageFilter::OnClipboardIsFormatAvailable(unsigned int format,
 #endif
 }
 
-void ResourceMessageFilter::OnClipboardReadText(std::wstring* result) {
+void ResourceMessageFilter::OnClipboardReadText(string16* result) {
   GetClipboardService()->ReadText(result);
 }
 
@@ -536,7 +559,7 @@ void ResourceMessageFilter::OnClipboardReadAsciiText(std::string* result) {
   GetClipboardService()->ReadAsciiText(result);
 }
 
-void ResourceMessageFilter::OnClipboardReadHTML(std::wstring* markup,
+void ResourceMessageFilter::OnClipboardReadHTML(string16* markup,
                                                 GURL* src_url) {
   std::string src_url_str;
   GetClipboardService()->ReadHTML(markup, &src_url_str);
@@ -809,38 +832,40 @@ void ResourceMessageFilter::OnRendererHistograms(
 }
 
 void ResourceMessageFilter::OnCreateAudioStream(
-  const IPC::Message& msg, int stream_id,
-  const ViewHostMsg_Audio_CreateStream& params) {
-  // TODO(hclam): call to AudioRendererHost::CreateStream and send a message to
-  // renderer to notify the result.
+    const IPC::Message& msg, int stream_id,
+    const ViewHostMsg_Audio_CreateStream& params) {
+  audio_renderer_host_->CreateStream(
+      render_handle_, msg.routing_id(), stream_id, params.format,
+      params.channels, params.sample_rate, params.bits_per_sample,
+      params.packet_size);
 }
 
 void ResourceMessageFilter::OnNotifyAudioPacketReady(
-    const IPC::Message& msg, int stream_id) {
-  // TODO(hclam): delegate to AudioRendererHost and handle this message.
+    const IPC::Message& msg, int stream_id, size_t packet_size) {
+  audio_renderer_host_->NotifyPacketReady(msg.routing_id(),
+                                          stream_id, packet_size);
 }
 
 void ResourceMessageFilter::OnStartAudioStream(
     const IPC::Message& msg, int stream_id) {
-  // TODO(hclam): delegate to AudioRendererHost and handle this message.
+  audio_renderer_host_->Start(msg.routing_id(), stream_id);
 }
-
 
 void ResourceMessageFilter::OnCloseAudioStream(
     const IPC::Message& msg, int stream_id) {
-  // TODO(hclam): delegate to AudioRendererHost and handle this message.
+  audio_renderer_host_->Close(msg.routing_id(), stream_id);
 }
 
 void ResourceMessageFilter::OnGetAudioVolume(
     const IPC::Message& msg, int stream_id) {
-  // TODO(hclam): delegate to AudioRendererHost and handle this message. Send
-  // a message about the volume.
+  audio_renderer_host_->GetVolume(msg.routing_id(), stream_id);
 }
 
 void ResourceMessageFilter::OnSetAudioVolume(
     const IPC::Message& msg, int stream_id,
     double left_channel, double right_channel) {
-  // TODO(hclam): delegate to AudioRendererHost and handle this message.
+  audio_renderer_host_->SetVolume(
+      msg.routing_id(), stream_id, left_channel, right_channel);
 }
 
 #if defined(OS_MACOSX)

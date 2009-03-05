@@ -14,6 +14,7 @@
 #include "base/string_piece.h"
 #include "base/string_util.h"
 #include "build/build_config.h"
+#include "chrome/common/bindings_policy.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/gfx/favicon_size.h"
 #include "chrome/common/gfx/color_utils.h"
@@ -35,6 +36,7 @@
 #include "chrome/renderer/visitedlink_slave.h"
 #include "chrome/renderer/webmediaplayer_delegate_impl.h"
 #include "chrome/renderer/webplugin_delegate_proxy.h"
+#include "chrome/renderer/webworker_proxy.h"
 #include "grit/generated_resources.h"
 #include "grit/renderer_resources.h"
 #include "net/base/escape.h"
@@ -158,9 +160,7 @@ class RenderViewExtraRequestData : public WebRequest::ExtraData {
 
 RenderView::RenderView(RenderThreadBase* render_thread)
     : RenderWidget(render_thread, true),
-      enable_dom_automation_(false),
-      enable_dom_ui_bindings_(false),
-      enable_external_host_bindings_(false),
+      enabled_bindings_(0),
       target_url_status_(TARGET_NONE),
       is_loading_(false),
       navigation_gesture_(NavigationGestureUnknown),
@@ -312,8 +312,8 @@ void RenderView::Init(gfx::NativeViewId parent_hwnd,
   modal_dialog_event_.reset(modal_dialog_event);
 
   const CommandLine& command_line = *CommandLine::ForCurrentProcess();
-  enable_dom_automation_ =
-      command_line.HasSwitch(switches::kDomAutomationController);
+  if (command_line.HasSwitch(switches::kDomAutomationController))
+    enabled_bindings_ |= BindingsPolicy::DOM_AUTOMATION;
   disable_popup_blocking_ =
       command_line.HasSwitch(switches::kDisablePopupBlocking);
 
@@ -382,8 +382,6 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
     IPC_MESSAGE_HANDLER(ViewMsg_DragTargetDragOver, OnDragTargetDragOver)
     IPC_MESSAGE_HANDLER(ViewMsg_DragTargetDragLeave, OnDragTargetDragLeave)
     IPC_MESSAGE_HANDLER(ViewMsg_DragTargetDrop, OnDragTargetDrop)
-    IPC_MESSAGE_HANDLER(ViewMsg_AllowDomAutomationBindings,
-                        OnAllowDomAutomationBindings)
     IPC_MESSAGE_HANDLER(ViewMsg_AllowBindings, OnAllowBindings)
     IPC_MESSAGE_HANDLER(ViewMsg_SetDOMUIProperty, OnSetDOMUIProperty)
     IPC_MESSAGE_HANDLER(ViewMsg_DragSourceEndedOrMoved,
@@ -1163,8 +1161,7 @@ void RenderView::UpdateURL(WebFrame* frame) {
     glue_accessibility_->ClearIAccessibleMap(-1, true);
   }
 #else
-  // TODO(port): accessibility not yet implemented
-  NOTIMPLEMENTED();
+  // TODO(port): accessibility not yet implemented. See http://crbug.com/8288.
 #endif
 }
 
@@ -1531,17 +1528,22 @@ void RenderView::BindDOMAutomationController(WebFrame* webframe) {
 void RenderView::WindowObjectCleared(WebFrame* webframe) {
   external_js_object_.set_render_view(this);
   external_js_object_.BindToJavascript(webframe, L"external");
-  if (enable_dom_automation_)
+  if (BindingsPolicy::is_dom_automation_enabled(enabled_bindings_))
     BindDOMAutomationController(webframe);
-  if (enable_dom_ui_bindings_) {
+  if (BindingsPolicy::is_dom_ui_enabled(enabled_bindings_)) {
     dom_ui_bindings_.set_message_sender(this);
     dom_ui_bindings_.set_routing_id(routing_id_);
     dom_ui_bindings_.BindToJavascript(webframe, L"chrome");
   }
-  if (enable_external_host_bindings_) {
+  if (BindingsPolicy::is_external_host_enabled(enabled_bindings_)) {
     external_host_bindings_.set_message_sender(this);
     external_host_bindings_.set_routing_id(routing_id_);
     external_host_bindings_.BindToJavascript(webframe, L"externalHost");
+  }
+  if (BindingsPolicy::is_extension_enabled(enabled_bindings_)) {
+    extension_bindings_.set_message_sender(this);
+    extension_bindings_.set_routing_id(routing_id_);
+    extension_bindings_.BindToJavascript(webframe, L"extension");
   }
 
 #ifdef CHROME_PERSONALIZATION
@@ -1578,7 +1580,7 @@ WindowOpenDisposition RenderView::DispositionForNavigationAction(
     if (frame == webview->GetMainFrame() && !request->GetExtraData()) {
       // When we received such unsolicited navigations, we sometimes want to
       // punt them up to the browser to handle.
-      if (enable_dom_ui_bindings_ ||
+      if (BindingsPolicy::is_dom_ui_enabled(enabled_bindings_) ||
           frame->GetInViewSourceMode() ||
           url.SchemeIs(chrome::kViewSourceScheme)) {
         OpenURL(webview, url, GURL(), disposition);
@@ -1969,6 +1971,16 @@ void RenderView::OnMissingPluginStatus(WebPluginDelegate* delegate,
 #else
   // TODO(port): plugins current not supported
   NOTIMPLEMENTED();
+#endif
+}
+
+WebWorker* RenderView::CreateWebWorker(WebWorkerClient* client) {
+#if defined(OS_WIN)
+  return new WebWorkerProxy(this, client);
+#else
+  // TODO(port): out of process workers
+  NOTIMPLEMENTED();
+  return NULL;
 #endif
 }
 
@@ -2529,19 +2541,13 @@ void RenderView::OnDebugAttach() { NOTIMPLEMENTED(); }
 void RenderView::OnDebugDetach() { NOTIMPLEMENTED(); }
 #endif
 
-void RenderView::OnAllowDomAutomationBindings(bool allow_bindings) {
-  enable_dom_automation_ = allow_bindings;
-}
-
-void RenderView::OnAllowBindings(bool enable_dom_ui_bindings,
-                                 bool enable_external_host_bindings) {
-  enable_dom_ui_bindings_ = enable_dom_ui_bindings;
-  enable_external_host_bindings_ = enable_external_host_bindings;
+void RenderView::OnAllowBindings(int enabled_bindings_flags) {
+  enabled_bindings_ |= enabled_bindings_flags;
 }
 
 void RenderView::OnSetDOMUIProperty(const std::string& name,
                                     const std::string& value) {
-  DCHECK(enable_dom_ui_bindings_);
+  DCHECK(BindingsPolicy::is_dom_ui_enabled(enabled_bindings_));
   dom_ui_bindings_.SetProperty(name, value);
 }
 
@@ -2828,28 +2834,11 @@ void RenderView::DidAddHistoryItem() {
   history_forward_list_count_ = 0;
 }
 
-void RenderView::OnMessageFromExternalHost(
-    const std::string& target, const std::string& message) {
+void RenderView::OnMessageFromExternalHost(const std::string& message) {
   if (message.empty())
     return;
 
-  WebFrame* main_frame = webview()->GetMainFrame();
-  if (!main_frame)
-    return;
-
-  std::string script = "javascript:";
-  script += target;
-  script += "(";
-  script += "'";
-  script += message;
-  script += "'";
-  script += ");void(0);";
-
-  GURL script_url(script);
-  scoped_ptr<WebRequest> request(WebRequest::Create(script_url));
-  // TODO(iyengar)
-  // Need a mechanism to send results back.
-  main_frame->LoadRequest(request.get());
+  external_host_bindings_.ForwardMessageFromExternalHost(message);
 }
 
 void RenderView::OnDisassociateFromPopupCount() {
@@ -2966,10 +2955,10 @@ void RenderView::CloseAudioStream(int stream_id) {
   Send(new ViewHostMsg_CloseAudioStream(routing_id_, stream_id));
 }
 
-void RenderView::NotifyAudioPacketReady(int stream_id) {
+void RenderView::NotifyAudioPacketReady(int stream_id, size_t size) {
   // TODO(hclam): make sure this method is called on render thread.
   DCHECK(audio_renderers_.Lookup(stream_id) != NULL);
-  Send(new ViewHostMsg_NotifyAudioPacketReady(routing_id_, stream_id));
+  Send(new ViewHostMsg_NotifyAudioPacketReady(routing_id_, stream_id, size));
 }
 
 void RenderView::GetAudioVolume(int stream_id) {

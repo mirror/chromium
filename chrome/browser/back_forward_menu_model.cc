@@ -7,6 +7,7 @@
 #include "chrome/browser/back_forward_menu_model.h"
 
 #include "chrome/browser/browser.h"
+#include "chrome/browser/dom_ui/history_ui.h"
 #include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
@@ -16,7 +17,6 @@
 
 #if defined(OS_WIN)
 // TODO(port): port these headers and remove the platform defines.
-#include "chrome/browser/history_tab_ui.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
 #elif defined(OS_POSIX)
 #include "chrome/common/temp_scaffolding_stubs.h"
@@ -170,7 +170,7 @@ void BackForwardMenuModel::ExecuteCommandById(int menu_id) {
     UserMetrics::RecordComputedAction(BuildActionName(L"ShowFullHistory", -1),
                                       controller->profile());
 #if defined(OS_WIN)
-    browser_->ShowNativeUITab(HistoryTabUI::GetURL());
+    browser_->ShowSingleDOMUITab(HistoryUI::GetBaseURL());
 #else
     NOTIMPLEMENTED();
 #endif
@@ -222,7 +222,7 @@ std::wstring BackForwardMenuModel::GetItemLabel(int menu_id) const {
     return L"";
 
   NavigationEntry* entry = GetNavigationEntry(menu_id);
-  return entry->title();
+  return UTF16ToWideHack(entry->title());
 }
 
 const SkBitmap& BackForwardMenuModel::GetItemIcon(int menu_id) const {

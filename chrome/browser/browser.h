@@ -53,7 +53,19 @@ class Browser : public TabStripModelDelegate,
   enum Type {
     TYPE_NORMAL = 0,
     TYPE_POPUP = 1,
-    TYPE_APP = 2
+    TYPE_APP = 2,
+    TYPE_APP_POPUP = TYPE_APP | TYPE_POPUP,
+  };
+
+  // Possible elements of the Browser window.
+  enum WindowFeature {
+    FEATURE_TITLEBAR = 1,
+    FEATURE_TABSTRIP = 2,
+    FEATURE_TOOLBAR = 4,
+    FEATURE_LOCATIONBAR = 8,
+    FEATURE_BOOKMARKBAR = 16,
+    FEATURE_INFOBAR = 32,
+    FEATURE_DOWNLOADSHELF = 64
   };
 
   // Constructors, Creation, Showing //////////////////////////////////////////
@@ -72,8 +84,9 @@ class Browser : public TabStripModelDelegate,
   static Browser* CreateForPopup(Profile* profile);
 
   // Like Create, but creates a tabstrip-less and toolbar-less "app" window for
-  // the specified app.
-  static Browser* CreateForApp(const std::wstring& app_name, Profile* profile);
+  // the specified app. Passing popup=true will create a TYPE_APP_POPUP browser
+  static Browser* CreateForApp(const std::wstring& app_name, Profile* profile,
+                               bool is_popup);
 
   // Set overrides for the initial window bounds and maximized state.
   void set_override_bounds(const gfx::Rect& bounds) {
@@ -211,10 +224,10 @@ class Browser : public TabStripModelDelegate,
       const std::vector<TabNavigation>& navigations,
       int selected_navigation);
 
-  // Show a native UI tab given a URL. If a tab with the same URL is already
+  // Show a DOMUI tab given a URL. If a tab with the same URL is already
   // visible in this browser, it becomes selected. Otherwise a new tab is
   // created.
-  void ShowNativeUITab(const GURL& url);
+  void ShowSingleDOMUITab(const GURL& url);
 
   // Assorted browser commands ////////////////////////////////////////////////
 
@@ -250,7 +263,16 @@ class Browser : public TabStripModelDelegate,
   void BookmarkCurrentPage();
   void SavePage();
   void ViewSource();
+
+  // Show various bits of UI.
+  void ShowDownloadsTab();
+
+  // Returns true if the Browser supports the specified feature.
+  bool SupportsWindowFeature(WindowFeature feature) const;
+
+// TODO(port): port these, and re-merge the two function declaration lists.
 #if defined(OS_WIN)
+  // Page-related commands.
   void ClosePopups();
   void Print();
   void ToggleEncodingAutoDetect();
@@ -289,7 +311,6 @@ class Browser : public TabStripModelDelegate,
   void ToggleBookmarkBar();
   void ShowHistoryTab();
   void OpenBookmarkManager();
-  void ShowDownloadsTab();
   void OpenClearBrowsingDataDialog();
   void OpenImportSettingsDialog();
   void OpenOptionsDialog();
@@ -391,6 +412,7 @@ class Browser : public TabStripModelDelegate,
   virtual void ShowHtmlDialog(HtmlDialogContentsDelegate* delegate,
                               void* parent_window);
   virtual void SetFocusToLocationBar();
+  virtual void RenderWidgetShowing();
 
   // Overridden from SelectFileDialog::Listener:
   virtual void FileSelected(const std::wstring& path, void* params);

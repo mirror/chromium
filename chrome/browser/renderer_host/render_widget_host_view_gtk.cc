@@ -43,8 +43,6 @@ class RenderWidgetHostViewGtkWidget {
                      G_CALLBACK(KeyPressReleaseEvent), host_view);
     g_signal_connect(widget, "key-release-event",
                      G_CALLBACK(KeyPressReleaseEvent), host_view);
-    g_signal_connect(widget, "focus",
-                     G_CALLBACK(Focus), host_view);
     g_signal_connect(widget, "focus-in-event",
                      G_CALLBACK(FocusIn), host_view);
     g_signal_connect(widget, "focus-out-event",
@@ -79,24 +77,7 @@ class RenderWidgetHostViewGtkWidget {
                                        RenderWidgetHostViewGtk* host_view) {
     WebKeyboardEvent wke(event);
     host_view->GetRenderWidgetHost()->ForwardKeyboardEvent(wke);
-
-    // See note in webwidget_host_gtk.cc::HandleKeyPress().
-    if (event->type == GDK_KEY_PRESS) {
-      wke.type = WebKeyboardEvent::CHAR;
-      host_view->GetRenderWidgetHost()->ForwardKeyboardEvent(wke);
-    }
-
     return FALSE;
-  }
-
-  static gboolean Focus(GtkWidget* widget, GtkDirectionType focus,
-                        RenderWidgetHostViewGtk* host_view) {
-    // We override this so that pressing tab navigates within the web contents
-    // rather than tabbing out of it.  However, we do want to be able to tab
-    // out of it at the appropriate points.  TODO(port): study how this works
-    // on Windows and implement it.
-    NOTIMPLEMENTED();
-    return TRUE;
   }
 
   static gboolean FocusIn(GtkWidget* widget, GdkEventFocus* focus,

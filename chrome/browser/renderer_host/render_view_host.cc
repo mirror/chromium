@@ -10,7 +10,6 @@
 #include "base/gfx/native_widget_types.h"
 #include "base/string_util.h"
 #include "base/waitable_event.h"
-#include "chrome/app/result_codes.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/cross_site_request_manager.h"
 #include "chrome/browser/debugger/debugger_wrapper.h"
@@ -24,10 +23,12 @@
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/site_instance.h"
 #include "chrome/browser/tab_contents/web_contents.h"
+#include "chrome/common/bindings_policy.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/notification_type.h"
+#include "chrome/common/result_codes.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/common/thumbnail_score.h"
 #include "net/base/net_util.h"
@@ -88,9 +89,8 @@ RenderViewHost::RenderViewHost(SiteInstance* instance,
       renderer_initialized_(false),
       waiting_for_drag_context_response_(false),
       debugger_attached_(false),
-      enable_dom_ui_bindings_(false),
+      enabled_bindings_(0),
       pending_request_id_(0),
-      enable_external_host_bindings_(false),
       modal_dialog_count_(0),
       navigations_suspended_(false),
       suspended_nav_message_(NULL),
@@ -178,8 +178,7 @@ bool RenderViewHost::CreateRenderView() {
 
   // If it's enabled, tell the renderer to set up the Javascript bindings for
   // sending messages back to the browser.
-  Send(new ViewMsg_AllowBindings(
-      routing_id(), enable_dom_ui_bindings_, enable_external_host_bindings_));
+  Send(new ViewMsg_AllowBindings(routing_id(), enabled_bindings_));
 
   // Let our delegate know that we created a RenderView.
   delegate_->RenderViewCreated(this);
@@ -574,24 +573,30 @@ void RenderViewHost::DragSourceSystemDragEnded() {
 }
 
 void RenderViewHost::AllowDomAutomationBindings() {
-  // Expose the binding that allows the DOM to send messages here.
-  Send(new ViewMsg_AllowDomAutomationBindings(routing_id(), true));
+  DCHECK(!renderer_initialized_);
+  enabled_bindings_ |= BindingsPolicy::DOM_AUTOMATION;
+}
+
+void RenderViewHost::AllowExternalHostBindings() {
+  DCHECK(!renderer_initialized_);
+  enabled_bindings_ |= BindingsPolicy::EXTERNAL_HOST;
 }
 
 void RenderViewHost::AllowDOMUIBindings() {
   DCHECK(!renderer_initialized_);
-  enable_dom_ui_bindings_ = true;
+  enabled_bindings_ |= BindingsPolicy::DOM_UI;
   RendererSecurityPolicy::GetInstance()->GrantDOMUIBindings(
       process()->host_id());
 }
 
-void RenderViewHost::AllowExternalHostBindings() {
-  enable_external_host_bindings_ = true;
+void RenderViewHost::AllowExtensionBindings() {
+  DCHECK(!renderer_initialized_);
+  enabled_bindings_ |= BindingsPolicy::EXTENSION;
 }
 
 void RenderViewHost::SetDOMUIProperty(const std::string& name,
                                       const std::string& value) {
-  DCHECK(enable_dom_ui_bindings_);
+  DCHECK(BindingsPolicy::is_dom_ui_enabled(enabled_bindings_));
   Send(new ViewMsg_SetDOMUIProperty(routing_id(), name, value));
 }
 
@@ -1206,7 +1211,8 @@ void RenderViewHost::UnhandledKeyboardEvent(const WebKeyboardEvent& event) {
     // TODO(brettw) why do we have to filter these types of events here. Can't
     // the renderer just send us the ones we care abount, or maybe the view
     // should be able to decide which ones it wants or not?
-    if ((event.type == WebInputEvent::KEY_DOWN) ||
+    if ((event.type == WebInputEvent::RAW_KEY_DOWN) ||
+        (event.type == WebInputEvent::KEY_DOWN) ||
         (event.type == WebInputEvent::CHAR)) {
       view->HandleKeyboardEvent(event);
     }
@@ -1328,7 +1334,6 @@ void RenderViewHost::RaisePersonalizationEvent(std::string event_name,
 #endif
 
 void RenderViewHost::ForwardMessageFromExternalHost(
-    const std::string& target, const std::string& message) {
-  Send(new ViewMsg_HandleMessageFromExternalHost(routing_id(), target,
-                                                 message));
+    const std::string& message) {
+  Send(new ViewMsg_HandleMessageFromExternalHost(routing_id(), message));
 }

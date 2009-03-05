@@ -17,8 +17,9 @@ class HtmlDialogContentsDelegate;
 // TabContents and to provide necessary functionality.
 class TabContentsDelegate : public PageNavigator {
  public:
-  // Opens a new URL inside the passed in TabContents, if source is 0 open
-  // in the current front-most tab.
+  // Opens a new URL inside the passed in TabContents (if source is 0 open
+  // in the current front-most tab), unless |disposition| indicates the url
+  // should be opened in a new tab or window.
   virtual void OpenURLFromTab(TabContents* source,
                               const GURL& url, const GURL& referrer,
                               WindowOpenDisposition disposition,
@@ -146,6 +147,11 @@ class TabContentsDelegate : public PageNavigator {
   // This is called when the tab wants to encourage user input, like for the
   // new tab page.
   virtual void SetFocusToLocationBar() {}
+
+  // Called when a popup select is about to be displayed. The delegate can use
+  // this to disable inactive rendering for the frame in the window the select
+  // is opened within if necessary.
+  virtual void RenderWidgetShowing() {}
 };
 
 #endif  // CHROME_BROWSER_TAB_CONTENTS_TAB_CONTENTS_DELEGATE_H_

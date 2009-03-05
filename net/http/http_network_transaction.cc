@@ -123,9 +123,15 @@ void HttpNetworkTransaction::PrepareForAuthRestart(HttpAuth::Target target) {
   // the identity is valid yet, but if it is valid we want other transactions
   // to know about it. If an entry for (origin, handler->realm()) already
   // exists, we update it.
-  session_->auth_cache()->Add(AuthOrigin(target), auth_handler_[target],
-      auth_identity_[target].username, auth_identity_[target].password,
-      AuthPath(target));
+  //
+  // If auth_identity_[target].source is HttpAuth::IDENT_SRC_NONE,
+  // auth_identity_[target] contains no identity because identity is not
+  // required yet.
+  if (auth_identity_[target].source != HttpAuth::IDENT_SRC_NONE) {
+    session_->auth_cache()->Add(AuthOrigin(target), auth_handler_[target],
+        auth_identity_[target].username, auth_identity_[target].password,
+        AuthPath(target));
+  }
 
   bool keep_alive = false;
   if (response_.headers->IsKeepAlive()) {
@@ -141,6 +147,36 @@ void HttpNetworkTransaction::PrepareForAuthRestart(HttpAuth::Target target) {
     // content_length_ is -1 and we're not using chunked encoding.  We don't
     // know the length of the response body, so we can't reuse this connection
     // even though the server says it's keep-alive.
+  }
+
+  // If the auth scheme is connection-based but the proxy/server mistakenly
+  // marks the connection as not keep-alive, the auth is going to fail, so log
+  // an error message.
+  if (!keep_alive && auth_handler_[target]->is_connection_based() &&
+      auth_identity_[target].source != HttpAuth::IDENT_SRC_NONE) {
+    std::string auth_target(target == HttpAuth::AUTH_PROXY ?
+                            "proxy" : "server");
+    LOG(ERROR) << "Can't perform " << auth_handler_[target]->scheme()
+               << " auth to the " << auth_target << " "
+               << AuthOrigin(target).spec()
+               << " over a non-keep-alive connection";
+
+    HttpVersion http_version = response_.headers->GetHttpVersion();
+    LOG(ERROR) << "  HTTP version is " << http_version.major_value() << "."
+               << http_version.minor_value();
+
+    std::string connection_val;
+    void* iter = NULL;
+    while (response_.headers->EnumerateHeader(&iter, "connection",
+                                              &connection_val)) {
+      LOG(ERROR) << "  Has header Connection: " << connection_val;
+    }
+
+    iter = NULL;
+    while (response_.headers->EnumerateHeader(&iter, "proxy-connection",
+                                              &connection_val)) {
+      LOG(ERROR) << "  Has header Proxy-Connection: " << connection_val;
+    }
   }
 
   // We don't need to drain the response body, so we act as if we had drained
@@ -783,6 +819,8 @@ int HttpNetworkTransaction::DoReadBody() {
 
 int HttpNetworkTransaction::DoReadBodyComplete(int result) {
   // We are done with the Read call.
+  DCHECK(!establishing_tunnel_) <<
+      "We should never read a response body of a tunnel.";
 
   bool unfiltered_eof = (result == 0);
 
@@ -809,10 +847,9 @@ int HttpNetworkTransaction::DoReadBodyComplete(int result) {
       done = true;
       keep_alive = response_.headers->IsKeepAlive();
       // We can't reuse the connection if we read more than the advertised
-      // content length, or if the tunnel was not established successfully.
+      // content length.
       if (unfiltered_eof ||
-          (content_length_ != -1 && content_read_ > content_length_) ||
-          establishing_tunnel_)
+          (content_length_ != -1 && content_read_ > content_length_))
         keep_alive = false;
     }
   }
@@ -925,24 +962,44 @@ int HttpNetworkTransaction::DidReadResponseHeaders() {
   }
 
   if (establishing_tunnel_) {
-    if (headers->response_code() == 200) {
-      if (header_buf_body_offset_ != header_buf_len_) {
-        // The proxy sent extraneous data after the headers.
+    switch (headers->response_code()) {
+      case 200:  // OK
+        if (header_buf_body_offset_ != header_buf_len_) {
+          // The proxy sent extraneous data after the headers.
+          return ERR_TUNNEL_CONNECTION_FAILED;
+        }
+        next_state_ = STATE_SSL_CONNECT_OVER_TUNNEL;
+        // Reset for the real request and response headers.
+        request_headers_.clear();
+        request_headers_bytes_sent_ = 0;
+        header_buf_len_ = 0;
+        header_buf_body_offset_ = 0;
+        establishing_tunnel_ = false;
+        return OK;
+
+      // We aren't able to CONNECT to the remote host through the proxy.  We
+      // need to be very suspicious about the response because an active network
+      // attacker can force us into this state by masquerading as the proxy.
+      // The only safe thing to do here is to fail the connection because our
+      // client is expecting an SSL protected response.
+      // See http://crbug.com/7338.
+      case 407:  // Proxy Authentication Required
+        // We need this status code to allow proxy authentication.  Our
+        // authentication code is smart enough to avoid being tricked by an
+        // active network attacker.
+        break;
+      default:
+        // For all other status codes, we conservatively fail the CONNECT
+        // request.
+        // We lose something by doing this.  We have seen proxy 403, 404, and
+        // 501 response bodies that contain a useful error message.  For
+        // example, Squid uses a 404 response to report the DNS error: "The
+        // domain name does not exist."
+        LOG(WARNING) <<
+            "Blocked proxy response to CONNECT request with status " <<
+            headers->response_code() << ".";
         return ERR_TUNNEL_CONNECTION_FAILED;
-      }
-      next_state_ = STATE_SSL_CONNECT_OVER_TUNNEL;
-      // Reset for the real request and response headers.
-      request_headers_.clear();
-      request_headers_bytes_sent_ = 0;
-      header_buf_len_ = 0;
-      header_buf_body_offset_ = 0;
-      establishing_tunnel_ = false;
-      return OK;
     }
-    // Sanitize any illegal response code for CONNECT to prevent us from
-    // handling it by mistake.  See http://crbug.com/7338.
-    if (headers->response_code() < 400 || headers->response_code() > 599)
-      headers->set_response_code(500);  // Masquerade as a 500.
   }
 
   // Check for an intermediate 100 Continue response.  An origin server is
@@ -1241,7 +1298,10 @@ bool HttpNetworkTransaction::SelectPreemptiveAuth(HttpAuth::Target target) {
   HttpAuthCache::Entry* entry = session_->auth_cache()->LookupByPath(
       AuthOrigin(target), AuthPath(target));
 
-  if (entry) {
+  // We don't support preemptive authentication for connection-based
+  // authentication schemes because they can't reuse entry->handler().
+  // Hopefully we can remove this limitation in the future.
+  if (entry && !entry->handler()->is_connection_based()) {
     auth_identity_[target].source = HttpAuth::IDENT_SRC_PATH_LOOKUP;
     auth_identity_[target].invalid = false;
     auth_identity_[target].username = entry->username();
@@ -1317,12 +1377,10 @@ int HttpNetworkTransaction::HandleAuthChallenge() {
   if (target == HttpAuth::AUTH_PROXY && proxy_info_.is_direct())
     return ERR_UNEXPECTED_PROXY_AUTH;
 
-  if (target == HttpAuth::AUTH_SERVER && establishing_tunnel_)
-    return ERR_UNEXPECTED_SERVER_AUTH;
-
   // The auth we tried just failed, hence it can't be valid. Remove it from
-  // the cache so it won't be used again.
-  if (HaveAuth(target))
+  // the cache so it won't be used again, unless it's a null identity.
+  if (HaveAuth(target) &&
+      auth_identity_[target].source != HttpAuth::IDENT_SRC_NONE)
     InvalidateRejectedAuthFromCache(target);
 
   auth_identity_[target].invalid = true;
@@ -1332,14 +1390,34 @@ int HttpNetworkTransaction::HandleAuthChallenge() {
                                 target,
                                 &auth_handler_[target]);
 
-  // We found no supported challenge -- let the transaction continue
-  // so we end up displaying the error page.
-  if (!auth_handler_[target])
+  if (!auth_handler_[target]) {
+    if (establishing_tunnel_) {
+      // We are establishing a tunnel, we can't show the error page because an
+      // active network attacker could control its contents.  Instead, we just
+      // fail to establish the tunnel.
+      return ERR_PROXY_AUTH_REQUESTED;
+    }
+    // We found no supported challenge -- let the transaction continue
+    // so we end up displaying the error page.
     return OK;
+  }
 
-  // Pick a new auth identity to try, by looking to the URL and auth cache.
-  // If an identity to try is found, it is saved to auth_identity_[target].
-  bool has_identity_to_try = SelectNextAuthIdentityToTry(target);
+  bool has_identity_to_try;
+  if (auth_handler_[target]->NeedsIdentity()) {
+    // Pick a new auth identity to try, by looking to the URL and auth cache.
+    // If an identity to try is found, it is saved to auth_identity_[target].
+    has_identity_to_try = SelectNextAuthIdentityToTry(target);
+  } else {
+    // Proceed with a null identity.
+    //
+    // TODO(wtc): Add a safeguard against infinite transaction restarts, if
+    // the server keeps returning "NTLM".
+    auth_identity_[target].source = HttpAuth::IDENT_SRC_NONE;
+    auth_identity_[target].invalid = false;
+    auth_identity_[target].username.clear();
+    auth_identity_[target].password.clear();
+    has_identity_to_try = true;
+  }
   DCHECK(has_identity_to_try == !auth_identity_[target].invalid);
 
   if (has_identity_to_try) {

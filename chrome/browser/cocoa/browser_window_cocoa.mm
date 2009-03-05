@@ -48,6 +48,10 @@ void BrowserWindowCocoa::FlashFrame() {
       requestUserAttention:NSInformationalRequest];
 }
 
+bool BrowserWindowCocoa::IsActive() const {
+  return [window_ isKeyWindow];
+}
+
 void* BrowserWindowCocoa::GetNativeHandle() {
   return [controller_ window];
 }
@@ -65,11 +69,12 @@ void BrowserWindowCocoa::SelectedTabToolbarSizeChanged(bool is_animating) {
 }
 
 void BrowserWindowCocoa::UpdateTitleBar() {
-  NOTIMPLEMENTED();
+  // This is used on windows to update the favicon and title in the window
+  // icon, which we don't use on the mac.
 }
 
 void BrowserWindowCocoa::UpdateLoadingAnimations(bool should_animate) {
-  NOTIMPLEMENTED();
+  [controller_ updateLoadingAnimations:should_animate ? YES : NO];
 }
 
 void BrowserWindowCocoa::SetStarredState(bool is_starred) {
@@ -109,11 +114,11 @@ LocationBar* BrowserWindowCocoa::GetLocationBar() const {
 }
 
 void BrowserWindowCocoa::SetFocusToLocationBar() {
-  NOTIMPLEMENTED();
+  [controller_ focusLocationBar];
 }
 
 void BrowserWindowCocoa::UpdateStopGoState(bool is_loading) {
-  NOTIMPLEMENTED();
+  [controller_ setIsLoading:is_loading ? YES : NO];
 }
 
 void BrowserWindowCocoa::UpdateToolbar(TabContents* contents,

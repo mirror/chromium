@@ -23,6 +23,7 @@
 #include "chrome/renderer/automation/dom_automation_controller.h"
 #include "chrome/renderer/dom_ui_bindings.h"
 #include "chrome/renderer/external_host_bindings.h"
+#include "chrome/renderer/extensions/extension_bindings.h"
 #include "chrome/renderer/external_js_object.h"
 #include "chrome/renderer/render_widget.h"
 #include "media/audio/audio_output.h"
@@ -238,6 +239,7 @@ class RenderView : public RenderWidget,
       const std::string& mime_type,
       const std::string& clsid,
       std::string* actual_mime_type);
+  virtual WebWorker* CreateWebWorker(WebWorkerClient* client);
   virtual webkit_glue::WebMediaPlayerDelegate* CreateMediaPlayerDelegate();
   virtual void OnMissingPluginStatus(WebPluginDelegate* delegate, int status);
   virtual void OpenURL(WebView* webview, const GURL& url,
@@ -357,7 +359,7 @@ class RenderView : public RenderWidget,
                           size_t packet_size);
   void StartAudioStream(int stream_id);
   void CloseAudioStream(int stream_id);
-  void NotifyAudioPacketReady(int stream_id);
+  void NotifyAudioPacketReady(int stream_id, size_t size);
   void GetAudioVolume(int stream_id);
   void SetAudioVolume(int stream_id, double left, double right);
 
@@ -370,6 +372,7 @@ class RenderView : public RenderWidget,
   FRIEND_TEST(RenderViewTest, OnLoadAlternateHTMLText);
   FRIEND_TEST(RenderViewTest, OnNavStateChanged);
   FRIEND_TEST(RenderViewTest, OnImeStateChanged);
+  FRIEND_TEST(RenderViewTest, ImeComposition);
 
   explicit RenderView(RenderThreadBase* render_thread);
 
@@ -483,9 +486,7 @@ class RenderView : public RenderWidget,
   void OnDragTargetDragLeave();
   void OnDragTargetDrop(const gfx::Point& client_pt,
                         const gfx::Point& screen_pt);
-  void OnAllowDomAutomationBindings(bool allow_binding);
-  void OnAllowBindings(bool enable_dom_ui_bindings,
-                       bool enable_external_host_bindings);
+  void OnAllowBindings(int enabled_bindings_flags);
   void OnSetDOMUIProperty(const std::string& name, const std::string& value);
   void OnSetInitialFocus(bool reverse);
   void OnUpdateWebPreferences(const WebPreferences& prefs);
@@ -544,8 +545,7 @@ class RenderView : public RenderWidget,
 #endif
 
   // Handles messages posted from automation.
-  void OnMessageFromExternalHost(const std::string& target,
-                                 const std::string& message);
+  void OnMessageFromExternalHost(const std::string& message);
 
   // Message that we should no longer be part of the current popup window
   // grouping, and should form our own grouping.
@@ -624,12 +624,14 @@ class RenderView : public RenderWidget,
   // Handles resource loads for this view.
   scoped_refptr<ResourceDispatcher> resource_dispatcher_;
 
+  // Bitwise-ORed set of extra bindings that have been enabled.  See
+  // BindingsPolicy for details.
+  int enabled_bindings_;
+
   // DOM Automation Controller CppBoundClass.
-  bool enable_dom_automation_;
   DomAutomationController dom_automation_controller_;
 
   // Chrome page<->browser messaging CppBoundClass.
-  bool enable_dom_ui_bindings_;
   DOMUIBindings dom_ui_bindings_;
 
 #ifdef CHROME_PERSONALIZATION
@@ -640,8 +642,10 @@ class RenderView : public RenderWidget,
   ExternalJSObject external_js_object_;
 
   // External host exposed through automation controller.
-  bool enable_external_host_bindings_;
   ExternalHostBindings external_host_bindings_;
+
+  // Extension bindings exposed for script running in the extension process.
+  ExtensionBindings extension_bindings_;
 
   // The last gotten main frame's encoding.
   std::wstring last_encoding_name_;

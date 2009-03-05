@@ -4,7 +4,6 @@
 
 #include "chrome/browser/views/hung_renderer_view.h"
 
-#include "chrome/app/result_codes.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
@@ -15,14 +14,15 @@
 #include "chrome/common/gfx/path.h"
 #include "chrome/common/logging_chrome.h"
 #include "chrome/common/resource_bundle.h"
+#include "chrome/common/result_codes.h"
 #include "chrome/views/client_view.h"
-#include "chrome/views/custom_frame_window.h"
 #include "chrome/views/dialog_delegate.h"
 #include "chrome/views/grid_layout.h"
 #include "chrome/views/group_table_view.h"
 #include "chrome/views/image_view.h"
 #include "chrome/views/label.h"
 #include "chrome/views/native_button.h"
+#include "chrome/views/window.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 #include "grit/theme_resources.h"
@@ -82,7 +82,7 @@ int HungPagesTableModel::RowCount() {
 
 std::wstring HungPagesTableModel::GetText(int row, int column_id) {
   DCHECK(row >= 0 && row < RowCount());
-  std::wstring title = webcontentses_.at(row)->GetTitle();
+  std::wstring title = UTF16ToWideHack(webcontentses_.at(row)->GetTitle());
   if (title.empty())
     title = l10n_util::GetString(IDS_TAB_UNTITLED_TITLE);
   // TODO(xji): Consider adding a special case if the title text is a URL,
@@ -449,4 +449,3 @@ void HungRendererWarning::HideForWebContents(WebContents* contents) {
   if (!logging::DialogsAreSuppressed() && instance_)
     instance_->EndForWebContents(contents);
 }
-

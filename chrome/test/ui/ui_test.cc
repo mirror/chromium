@@ -48,7 +48,6 @@ const wchar_t UITest::kFailedNoCrashService[] =
     L"running. Start it manually before running this test (see the build "
     L"output directory).";
 bool UITest::in_process_renderer_ = false;
-bool UITest::in_process_plugins_ = false;
 bool UITest::no_sandbox_ = false;
 bool UITest::full_memory_dump_ = false;
 bool UITest::safe_plugins_ = false;
@@ -60,6 +59,7 @@ bool UITest::silent_dump_on_dcheck_ = false;
 bool UITest::disable_breakpad_ = false;
 int UITest::timeout_ms_ = 20 * 60 * 1000;
 std::wstring UITest::js_flags_ = L"";
+std::wstring UITest::log_level_ = L"";
 
 
 // Specify the time (in milliseconds) that the ui_tests should wait before
@@ -185,27 +185,27 @@ void UITest::InitializeTimeouts() {
   const CommandLine& command_line = *CommandLine::ForCurrentProcess();
   if (command_line.HasSwitch(kUiTestTimeout)) {
     std::wstring timeout_str = command_line.GetSwitchValue(kUiTestTimeout);
-    int timeout = StringToInt(timeout_str);
+    int timeout = StringToInt(WideToUTF16Hack(timeout_str));
     command_execution_timeout_ms_ = std::max(kMaxTestExecutionTime, timeout);
   }
 
   if (command_line.HasSwitch(kUiTestActionTimeout)) {
     std::wstring act_str = command_line.GetSwitchValue(kUiTestActionTimeout);
-    int act_timeout = StringToInt(act_str);
+    int act_timeout = StringToInt(WideToUTF16Hack(act_str));
     action_timeout_ms_ = std::max(kWaitForActionMsec, act_timeout);
   }
 
   if (command_line.HasSwitch(kUiTestActionMaxTimeout)) {
     std::wstring action_max_str =
         command_line.GetSwitchValue(kUiTestActionMaxTimeout);
-    int max_timeout = StringToInt(action_max_str);
+    int max_timeout = StringToInt(WideToUTF16Hack(action_max_str));
     action_max_timeout_ms_ = std::max(kWaitForActionMaxMsec, max_timeout);
   }
 
   if (CommandLine::ForCurrentProcess()->HasSwitch(kUiTestSleepTimeout)) {
     std::wstring sleep_timeout_str =
         CommandLine::ForCurrentProcess()->GetSwitchValue(kUiTestSleepTimeout);
-    int sleep_timeout = StringToInt(sleep_timeout_str);
+    int sleep_timeout = StringToInt(WideToUTF16Hack(sleep_timeout_str));
     sleep_timeout_ms_ = std::max(kWaitForActionMsec, sleep_timeout);
   }
 }
@@ -291,8 +291,6 @@ void UITest::LaunchBrowser(const CommandLine& arguments, bool clear_profile) {
   }
   if (in_process_renderer_)
     command_line.AppendSwitch(switches::kSingleProcess);
-  if (in_process_plugins_)
-    command_line.AppendSwitch(switches::kInProcessPlugins);
   if (no_sandbox_)
     command_line.AppendSwitch(switches::kNoSandbox);
   if (full_memory_dump_)
@@ -315,6 +313,8 @@ void UITest::LaunchBrowser(const CommandLine& arguments, bool clear_profile) {
   if (!js_flags_.empty())
     command_line.AppendSwitchWithValue(switches::kJavaScriptFlags,
                                        js_flags_);
+  if (!log_level_.empty())
+    command_line.AppendSwitchWithValue(switches::kLoggingLevel, log_level_);
 
   command_line.AppendSwitch(switches::kMetricsRecordingOnly);
 
@@ -576,7 +576,7 @@ bool UITest::IsBrowserRunning() {
 }
 
 bool UITest::CrashAwareSleep(int time_out_ms) {
-  return WAIT_TIMEOUT == WaitForSingleObject(process_, time_out_ms);
+  return base::CrashAwareSleep(process_, time_out_ms);
 }
 
 /*static*/

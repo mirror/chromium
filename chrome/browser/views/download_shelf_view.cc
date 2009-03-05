@@ -7,13 +7,11 @@
 #include <algorithm>
 
 #include "base/logging.h"
-#include "chrome/browser/browser.h"
 #include "chrome/browser/download/download_item_model.h"
 #include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/browser/views/download_item_view.h"
-#include "chrome/browser/views/download_tab_view.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
@@ -74,8 +72,13 @@ int CenterPosition(int size, int target_size) {
 
 }  // namespace
 
+// static
+DownloadShelf* DownloadShelf::Create(TabContents* tab_contents) {
+  return new DownloadShelfView(tab_contents);
+}
+
 DownloadShelfView::DownloadShelfView(TabContents* tab_contents)
-    : tab_contents_(tab_contents) {
+    : DownloadShelf(tab_contents) {
   Init();
 }
 
@@ -107,6 +110,9 @@ void DownloadShelfView::Init() {
   shelf_animation_.reset(new SlideAnimation(this));
   shelf_animation_->SetSlideDuration(kShelfAnimationDurationMs);
   shelf_animation_->Show();
+
+  // The download shelf view is always owned by its tab contents.
+  SetParentOwned(false);
 }
 
 void DownloadShelfView::AddDownloadView(View* view) {
@@ -122,15 +128,9 @@ void DownloadShelfView::AddDownloadView(View* view) {
   new_item_animation_->Show();
 }
 
-void DownloadShelfView::ChangeTabContents(TabContents* old_contents,
-                                          TabContents* new_contents) {
-  DCHECK(old_contents == tab_contents_);
-  tab_contents_ = new_contents;
-}
-
-void DownloadShelfView::AddDownload(DownloadItem* download) {
+void DownloadShelfView::AddDownload(BaseDownloadItemModel* download_model) {
   DownloadItemView* view = new DownloadItemView(
-      download, this, new DownloadItemModel(download));
+      download_model->download(), this, download_model);
   AddDownloadView(view);
 }
 
@@ -259,13 +259,8 @@ void DownloadShelfView::Layout() {
   }
 }
 
-// Open the download page.
 void DownloadShelfView::LinkActivated(views::Link* source, int event_flags) {
-  int index;
-  NavigationController* controller = tab_contents_->controller();
-  Browser* browser = Browser::GetBrowserForController(controller, &index);
-  DCHECK(browser);
-  browser->ShowDownloadsTab();
+  ShowAllDownloads();
 }
 
 void DownloadShelfView::ButtonPressed(views::BaseButton* button) {

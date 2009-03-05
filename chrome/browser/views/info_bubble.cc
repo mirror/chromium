@@ -73,12 +73,18 @@ InfoBubble* InfoBubble::Show(HWND parent_hwnd,
   InfoBubble* window = new InfoBubble();
   DLOG(WARNING) << "new bubble=" << window;
   window->Init(parent_hwnd, position_relative_to, content);
-  window->ShowWindow(SW_SHOW);
+  // Set the delegate before we show, on the off chance the delegate is needed
+  // during showing.
   window->delegate_ = delegate;
+  window->ShowWindow(SW_SHOW);
   return window;
 }
 
-InfoBubble::InfoBubble() : content_view_(NULL), closed_(false) {
+InfoBubble::InfoBubble()
+    : delegate_(NULL),
+      parent_(NULL),
+      content_view_(NULL),
+      closed_(false) {
 }
 
 InfoBubble::~InfoBubble() {
@@ -94,7 +100,7 @@ void InfoBubble::Init(HWND parent_hwnd,
   DCHECK(BrowserView::GetBrowserViewForHWND(owning_frame_hwnd));
   parent_ = reinterpret_cast<views::Window*>(win_util::GetWindowUserData(
       owning_frame_hwnd));
-  parent_->DisableInactiveRendering(true);
+  parent_->DisableInactiveRendering();
 
   if (kInfoBubbleCornerTopLeft == NULL) {
     kInfoBubbleCornerTopLeft = ResourceBundle::GetSharedInstance()
@@ -201,7 +207,6 @@ void InfoBubble::Close(bool closed_by_escape) {
   // We don't fade out because it looks terrible.
   if (delegate_)
     delegate_->InfoBubbleClosing(this, closed_by_escape);
-  parent_->DisableInactiveRendering(false);
   closed_ = true;
   WidgetWin::Close();
 }

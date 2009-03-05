@@ -30,6 +30,7 @@
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/drag_drop_types.h"
+#include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/os_exchange_data.h"
@@ -46,7 +47,7 @@
 #include "chrome/views/label.h"
 #include "chrome/views/non_client_view.h"
 #include "chrome/views/tooltip_manager.h"
-#include "chrome/views/widget.h"
+#include "chrome/views/window.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 #include "grit/theme_resources.h"
@@ -353,7 +354,7 @@ void BrowserToolbarView::Paint(ChromeCanvas* canvas) {
   // For glass, we need to draw a black line below the location bar to separate
   // it from the content area.  For non-glass, the NonClientView draws the
   // toolbar background below the location bar for us.
-  if (win_util::ShouldUseVistaFrame())
+  if (GetWidget()->AsWindow()->UseNativeFrame())
     canvas->FillRectInt(SK_ColorBLACK, 0, height() - 1, width(), 1);
 }
 
@@ -496,8 +497,9 @@ gfx::Size BrowserToolbarView::GetPreferredSize() {
     return gfx::Size(0, normal_background.height());
   }
 
-  int vertical_spacing = PopupTopSpacing() + (win_util::ShouldUseVistaFrame() ?
-      kPopupBottomSpacingGlass : kPopupBottomSpacingNonGlass);
+  int vertical_spacing = PopupTopSpacing() +
+      (GetWidget()->AsWindow()->UseNativeFrame() ? kPopupBottomSpacingGlass
+                                                 : kPopupBottomSpacingNonGlass);
   return gfx::Size(0, location_bar_->GetPreferredSize().height() +
       vertical_spacing);
 }
@@ -768,7 +770,8 @@ void BrowserToolbarView::WriteDragData(views::View* sender,
     }
   }
 
-  drag_utils::SetURLAndDragImage(tab_->GetURL(), tab_->GetTitle(),
+  drag_utils::SetURLAndDragImage(tab_->GetURL(),
+                                 UTF16ToWideHack(tab_->GetTitle()),
                                  tab_->GetFavIcon(), data);
 }
 
@@ -805,7 +808,8 @@ void BrowserToolbarView::ButtonPressed(views::BaseButton* sender) {
 
 // static
 int BrowserToolbarView::PopupTopSpacing() {
-  return win_util::ShouldUseVistaFrame() ? 0 : kPopupTopSpacingNonGlass;
+  return GetWidget()->AsWindow()->UseNativeFrame() ? 0 
+                                                   : kPopupTopSpacingNonGlass;
 }
 
 void BrowserToolbarView::Observe(NotificationType type,

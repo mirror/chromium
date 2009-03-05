@@ -134,6 +134,7 @@ MSVC_POP_WARNING();
 #include "skia/ext/platform_canvas.h"
 #include "webkit/glue/alt_error_page_resource_fetcher.h"
 #include "webkit/glue/dom_operations.h"
+#include "webkit/glue/dom_operations_private.h"
 #include "webkit/glue/glue_serialize.h"
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/webdocumentloader_impl.h"
@@ -1489,10 +1490,6 @@ bool WebFrameImpl::CaptureImage(scoped_ptr<skia::BitmapPlatformDevice>* image,
 
   skia::BitmapPlatformDevice& device =
       static_cast<skia::BitmapPlatformDevice&>(canvas.getTopPlatformDevice());
-
-#if defined(OS_WIN)
-  device.fixupAlphaBeforeCompositing();
-#endif
 
   image->reset(new skia::BitmapPlatformDevice(device));
   return true;

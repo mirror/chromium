@@ -4,13 +4,15 @@
 
 #include "chrome/browser/autocomplete/autocomplete_accessibility.h"
 
+#include "chrome/browser/autocomplete/autocomplete_edit.h"
+#include "chrome/browser/autocomplete/autocomplete_edit_view_win.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/views/accessibility/accessible_wrapper.h"
 #include "chrome/views/view.h"
 #include "grit/generated_resources.h"
 
 HRESULT AutocompleteAccessibility::Initialize(
-    const AutocompleteEditView* edit_box) {
+    const AutocompleteEditViewWin* edit_box) {
   if (edit_box == NULL) {
     return E_INVALIDARG;
   }
@@ -263,5 +265,3 @@ STDMETHODIMP AutocompleteAccessibility::put_accValue(VARIANT var_id,
   // Deprecated.
   return DISP_E_MEMBERNOTFOUND;
 }
-
-

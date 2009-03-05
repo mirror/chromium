@@ -14,6 +14,7 @@ env.ApplySConscript([
     '$BASE_DIR/using_base.scons',
     '$BZIP2_DIR/using_bzip2.scons',
     '$CHROME_SRC_DIR/build/using_googleurl.scons',
+    '$CHROME_SRC_DIR/build/using_v8.scons',
     '$GTEST_DIR/../using_gtest.scons',
     '$ICU38_DIR/using_icu38.scons',
     '$MODP_B64_DIR/using_modp_b64.scons',
@@ -58,6 +59,7 @@ input_files = ChromeFileList([
     'disk_cache/storage_block_unittest.cc',
     ]),
    MSVSFilter('http', [
+    'http/des_unittest.cc',
     'http/http_auth_cache_unittest.cc',
     'http/http_auth_handler_basic_unittest.cc',
     'http/http_auth_handler_digest_unittest.cc',
@@ -109,6 +111,8 @@ input_files = ChromeFileList([
     'url_request/url_request_unittest.h',
     ]),
    MSVSFilter('proxy', [
+    'proxy/proxy_list_unittest.cc',
+    'proxy/proxy_resolver_v8_unittest.cc',
     'proxy/proxy_script_fetcher_unittest.cc',
     'proxy/proxy_server_unittest.cc',
     'proxy/proxy_service_unittest.cc',

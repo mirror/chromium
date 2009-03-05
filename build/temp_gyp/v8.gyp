@@ -8,18 +8,6 @@
     'chromium_code': 1,
     'base_source_files': [
       '../../v8/src/third_party/dtoa/dtoa.c',
-      '../../v8/src/third_party/jscre/ASCIICType.h',
-      '../../v8/src/third_party/jscre/config.h',
-      '../../v8/src/third_party/jscre/pcre.h',
-      '../../v8/src/third_party/jscre/pcre_chartables.c',
-      '../../v8/src/third_party/jscre/pcre_compile.cpp',
-      '../../v8/src/third_party/jscre/pcre_exec.cpp',
-      '../../v8/src/third_party/jscre/pcre_internal.h',
-      '../../v8/src/third_party/jscre/pcre_tables.cpp',
-      '../../v8/src/third_party/jscre/pcre_ucp_searchfuncs.cpp',
-      '../../v8/src/third_party/jscre/pcre_xclass.cpp',
-      '../../v8/src/third_party/jscre/ucpinternal.h',
-      '../../v8/src/third_party/jscre/ucptable.cpp',
       '../../v8/src/accessors.cc',
       '../../v8/src/accessors.h',
       '../../v8/src/allocation.cc',
@@ -218,8 +206,6 @@
       # These files are #included by others and are not meant to be compiled
       # directly.
       '../../v8/src/third_party/dtoa/dtoa.c',
-      '../../v8/src/third_party/jscre/pcre_chartables.c',
-      '../../v8/src/third_party/jscre/ucptable.cpp',
     ],
     'd8_source_files': [
       '../../v8/src/d8-debug.cc',
@@ -345,8 +331,8 @@
           # dtoa-specific warnings by modifying dtoa as was done in Chromium
           # r9255.  Refer to that revision for details.
           'msvs_disabled_warnings': [4355, 4800, 4018, 4244],
-          'all_dependent_settings':  {
-            'msvs_system_libraries': [ 'winmm.lib' ],
+          'link_settings':  {
+            'libraries': [ '-lwinmm.lib' ],
           },
         }],
       ],

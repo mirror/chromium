@@ -27,6 +27,16 @@
 
 namespace {
 
+// Force the singleton used by Empty[W]String[16] to be a unique type. This
+// prevents other code that might accidentally use Singleton<string> from
+// getting our internal one.
+struct EmptyStrings {
+  EmptyStrings() {}
+  const std::string s;
+  const std::wstring ws;
+  const string16 s16;
+};
+
 // Hack to convert any char-like type to its unsigned counterpart.
 // For example, it will convert char, signed char and unsigned char to unsigned
 // char.
@@ -127,14 +137,25 @@ class StringToLongTraits {
   }
 };
 
-class WStringToLongTraits {
+class String16ToLongTraits {
  public:
-  typedef std::wstring string_type;
+  typedef string16 string_type;
   typedef long value_type;
   static const int kBase = 10;
   static inline value_type convert_func(const string_type::value_type* str,
                                         string_type::value_type** endptr) {
+#if defined(WCHAR_T_IS_UTF16)
     return wcstol(str, endptr, kBase);
+#elif defined(WCHAR_T_IS_UTF32)
+    std::string ascii_string = UTF16ToASCII(string16(str));
+    char* ascii_end = NULL;
+    value_type ret = strtol(ascii_string.c_str(), &ascii_end, kBase);
+    if (ascii_string.c_str() + ascii_string.length() == ascii_end) {
+      *endptr =
+          const_cast<string_type::value_type*>(str) + ascii_string.length();
+    }
+    return ret;
+#endif
   }
   static inline bool valid_func(const string_type& str) {
     return !str.empty() && !iswspace(str[0]);
@@ -159,9 +180,9 @@ class StringToInt64Traits {
   }
 };
 
-class WStringToInt64Traits {
+class String16ToInt64Traits {
  public:
-  typedef std::wstring string_type;
+  typedef string16 string_type;
   typedef int64 value_type;
   static const int kBase = 10;
   static inline value_type convert_func(const string_type::value_type* str,
@@ -169,7 +190,14 @@ class WStringToInt64Traits {
 #ifdef OS_WIN
     return _wcstoi64(str, endptr, kBase);
 #else  // assume OS_POSIX
-    return wcstoll(str, endptr, kBase);
+    std::string ascii_string = UTF16ToASCII(string16(str));
+    char* ascii_end = NULL;
+    value_type ret = strtoll(ascii_string.c_str(), &ascii_end, kBase);
+    if (ascii_string.c_str() + ascii_string.length() == ascii_end) {
+      *endptr =
+          const_cast<string_type::value_type*>(str) + ascii_string.length();
+    }
+    return ret;
 #endif
   }
   static inline bool valid_func(const string_type& str) {
@@ -194,14 +222,25 @@ class HexStringToLongTraits {
   }
 };
 
-class HexWStringToLongTraits {
+class HexString16ToLongTraits {
  public:
-  typedef std::wstring string_type;
+  typedef string16 string_type;
   typedef long value_type;
   static const int kBase = 16;
   static inline value_type convert_func(const string_type::value_type* str,
                                         string_type::value_type** endptr) {
+#if defined(WCHAR_T_IS_UTF16)
     return wcstoul(str, endptr, kBase);
+#elif defined(WCHAR_T_IS_UTF32)
+    std::string ascii_string = UTF16ToASCII(string16(str));
+    char* ascii_end = NULL;
+    value_type ret = strtoul(ascii_string.c_str(), &ascii_end, kBase);
+    if (ascii_string.c_str() + ascii_string.length() == ascii_end) {
+      *endptr =
+          const_cast<string_type::value_type*>(str) + ascii_string.length();
+    }
+    return ret;
+#endif
   }
   static inline bool valid_func(const string_type& str) {
     return !str.empty() && !iswspace(str[0]);
@@ -221,22 +260,23 @@ class StringToDoubleTraits {
   }
 };
 
-class WStringToDoubleTraits {
+class String16ToDoubleTraits {
  public:
-  typedef std::wstring string_type;
+  typedef string16 string_type;
   typedef double value_type;
   static inline value_type convert_func(const string_type::value_type* str,
                                         string_type::value_type** endptr) {
-    // Because dmg_fp::strtod does not like wchar_t, we convert it to ASCII.
-    // In theory, this should be safe, but it's possible that wide chars
+    // Because dmg_fp::strtod does not like char16, we convert it to ASCII.
+    // In theory, this should be safe, but it's possible that 16-bit chars
     // might get ignored by accident causing something to be parsed when it
     // shouldn't.
-    std::string ascii_string = WideToASCII(std::wstring(str));
+    std::string ascii_string = UTF16ToASCII(string16(str));
     char* ascii_end = NULL;
     value_type ret = dmg_fp::strtod(ascii_string.c_str(), &ascii_end);
     if (ascii_string.c_str() + ascii_string.length() == ascii_end) {
       // Put endptr at end of input string, so it's not recognized as an error.
-      *endptr = const_cast<string_type::value_type*>(str) + wcslen(str);
+      *endptr =
+          const_cast<string_type::value_type*>(str) + ascii_string.length();
     }
 
     return ret;
@@ -293,11 +333,15 @@ bool IsWprintfFormatPortable(const wchar_t* format) {
 
 
 const std::string& EmptyString() {
-  return *Singleton<std::string>::get();
+  return Singleton<EmptyStrings>::get()->s;
 }
 
 const std::wstring& EmptyWString() {
-  return *Singleton<std::wstring>::get();
+  return Singleton<EmptyStrings>::get()->ws;
+}
+
+const string16& EmptyString16() {
+  return Singleton<EmptyStrings>::get()->s16;
 }
 
 const wchar_t kWhitespaceWide[] = {
@@ -813,10 +857,10 @@ void DoReplaceSubstringsAfterOffset(StringType* str,
   }
 }
 
-void ReplaceFirstSubstringAfterOffset(std::wstring* str,
-                                      std::wstring::size_type start_offset,
-                                      const std::wstring& find_this,
-                                      const std::wstring& replace_with) {
+void ReplaceFirstSubstringAfterOffset(string16* str,
+                                      string16::size_type start_offset,
+                                      const string16& find_this,
+                                      const string16& replace_with) {
   DoReplaceSubstringsAfterOffset(str, start_offset, find_this, replace_with,
                                  false);  // replace first instance
 }
@@ -829,10 +873,10 @@ void ReplaceFirstSubstringAfterOffset(std::string* str,
                                  false);  // replace first instance
 }
 
-void ReplaceSubstringsAfterOffset(std::wstring* str,
-                                  std::wstring::size_type start_offset,
-                                  const std::wstring& find_this,
-                                  const std::wstring& replace_with) {
+void ReplaceSubstringsAfterOffset(string16* str,
+                                  string16::size_type start_offset,
+                                  const string16& find_this,
+                                  const string16& replace_with) {
   DoReplaceSubstringsAfterOffset(str, start_offset, find_this, replace_with,
                                  true);  // replace all instances
 }
@@ -1426,18 +1470,18 @@ bool StringToInt(const std::string& input, int* output) {
                                             reinterpret_cast<long*>(output));
 }
 
-bool StringToInt(const std::wstring& input, int* output) {
+bool StringToInt(const string16& input, int* output) {
   COMPILE_ASSERT(sizeof(int) == sizeof(long), cannot_wcstol_to_int);
-  return StringToNumber<WStringToLongTraits>(input,
-                                             reinterpret_cast<long*>(output));
+  return StringToNumber<String16ToLongTraits>(input,
+                                              reinterpret_cast<long*>(output));
 }
 
 bool StringToInt64(const std::string& input, int64* output) {
   return StringToNumber<StringToInt64Traits>(input, output);
 }
 
-bool StringToInt64(const std::wstring& input, int64* output) {
-  return StringToNumber<WStringToInt64Traits>(input, output);
+bool StringToInt64(const string16& input, int64* output) {
+  return StringToNumber<String16ToInt64Traits>(input, output);
 }
 
 bool HexStringToInt(const std::string& input, int* output) {
@@ -1446,9 +1490,9 @@ bool HexStringToInt(const std::string& input, int* output) {
                                                reinterpret_cast<long*>(output));
 }
 
-bool HexStringToInt(const std::wstring& input, int* output) {
+bool HexStringToInt(const string16& input, int* output) {
   COMPILE_ASSERT(sizeof(int) == sizeof(long), cannot_wcstol_to_int);
-  return StringToNumber<HexWStringToLongTraits>(
+  return StringToNumber<HexString16ToLongTraits>(
       input, reinterpret_cast<long*>(output));
 }
 
@@ -1490,7 +1534,7 @@ bool HexStringToBytes(const std::string& input, std::vector<uint8>* output) {
   return HexStringToBytesT(input, output);
 }
 
-bool HexStringToBytes(const std::wstring& input, std::vector<uint8>* output) {
+bool HexStringToBytes(const string16& input, std::vector<uint8>* output) {
   return HexStringToBytesT(input, output);
 }
 
@@ -1500,7 +1544,7 @@ int StringToInt(const std::string& value) {
   return result;
 }
 
-int StringToInt(const std::wstring& value) {
+int StringToInt(const string16& value) {
   int result;
   StringToInt(value, &result);
   return result;
@@ -1512,7 +1556,7 @@ int64 StringToInt64(const std::string& value) {
   return result;
 }
 
-int64 StringToInt64(const std::wstring& value) {
+int64 StringToInt64(const string16& value) {
   int64 result;
   StringToInt64(value, &result);
   return result;
@@ -1524,7 +1568,7 @@ int HexStringToInt(const std::string& value) {
   return result;
 }
 
-int HexStringToInt(const std::wstring& value) {
+int HexStringToInt(const string16& value) {
   int result;
   HexStringToInt(value, &result);
   return result;
@@ -1534,8 +1578,8 @@ bool StringToDouble(const std::string& input, double* output) {
   return StringToNumber<StringToDoubleTraits>(input, output);
 }
 
-bool StringToDouble(const std::wstring& input, double* output) {
-  return StringToNumber<WStringToDoubleTraits>(input, output);
+bool StringToDouble(const string16& input, double* output) {
+  return StringToNumber<String16ToDoubleTraits>(input, output);
 }
 
 double StringToDouble(const std::string& value) {
@@ -1544,7 +1588,7 @@ double StringToDouble(const std::string& value) {
   return result;
 }
 
-double StringToDouble(const std::wstring& value) {
+double StringToDouble(const string16& value) {
   double result;
   StringToDouble(value, &result);
   return result;
@@ -1587,7 +1631,7 @@ bool ElideString(const std::wstring& input, int max_len, std::wstring* output) {
     output->assign(input);
     return false;
   }
-  
+
   switch (max_len) {
     case 0:
       output->clear();

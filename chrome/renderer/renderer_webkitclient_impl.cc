@@ -5,13 +5,52 @@
 #include "chrome/renderer/renderer_webkitclient_impl.h"
 
 #include "WebString.h"
+#include "WebURL.h"
 
+#include "base/command_line.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/plugin/npobject_util.h"
+#include "chrome/renderer/net/render_dns_master.h"
 #include "chrome/renderer/render_thread.h"
 #include "webkit/glue/glue_util.h"
+#include "webkit/glue/webkit_glue.h"
 
 using WebKit::WebString;
+using WebKit::WebURL;
+
+//------------------------------------------------------------------------------
+
+void RendererWebKitClientImpl::setCookies(
+    const WebURL& url, const WebURL& policy_url, const WebString& value) {
+  std::string value_utf8;
+  UTF16ToUTF8(value.characters(), value.length(), &value_utf8);
+  RenderThread::current()->Send(
+      new ViewHostMsg_SetCookie(url, policy_url, value_utf8));
+}
+
+WebString RendererWebKitClientImpl::cookies(
+    const WebURL& url, const WebURL& policy_url) {
+  std::string value;
+  RenderThread::current()->Send(
+      new ViewHostMsg_GetCookies(url, policy_url, &value));
+  return WebString::fromUTF8(value);
+}
+
+void RendererWebKitClientImpl::prefetchHostName(const WebString& hostname) {
+  if (!hostname.isEmpty()) {
+    std::string hostname_utf8;
+    UTF16ToUTF8(hostname.characters(), hostname.length(), &hostname_utf8);
+    DnsPrefetchCString(hostname_utf8.data(), hostname_utf8.length());
+  }
+}
+
+WebString RendererWebKitClientImpl::defaultLocale() {
+  // TODO(darin): Eliminate this webkit_glue call.
+  return WideToUTF16(webkit_glue::GetWebKitLocale());
+}
+
+//------------------------------------------------------------------------------
 
 WebString RendererWebKitClientImpl::MimeRegistry::mimeTypeForExtension(
     const WebString& file_extension) {

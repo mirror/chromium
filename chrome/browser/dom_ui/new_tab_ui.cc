@@ -66,7 +66,8 @@ namespace {
 // messages and wait for the page to stop repainting.
 class PaintTimer : public RenderWidgetHost::PaintObserver {
  public:
-  PaintTimer() : method_factory_(this) {
+  PaintTimer()
+      : ALLOW_THIS_IN_INITIALIZER_LIST(method_factory_(this)) {
     Start();
   }
 
@@ -256,7 +257,7 @@ void NewTabHTMLSource::StartDataRequest(const std::string& path,
 // IncognitoTabHTMLSource
 
 IncognitoTabHTMLSource::IncognitoTabHTMLSource()
-    : DataSource("new-tab", MessageLoop::current()) {
+    : DataSource(kNewTabHost, MessageLoop::current()) {
 }
 
 void IncognitoTabHTMLSource::StartDataRequest(const std::string& path,
@@ -596,7 +597,7 @@ void RecentlyClosedTabsHandler::HandleReopenTab(const Value* content) {
           static_cast<const StringValue*>(list_member);
       std::wstring wstring_value;
       if (string_value->GetAsString(&wstring_value)) {
-        int session_to_restore = StringToInt(wstring_value);
+        int session_to_restore = StringToInt(WideToUTF16Hack(wstring_value));
         tab_restore_service_->RestoreEntryById(browser, session_to_restore,
                                                true);
         // The current tab has been nuked at this point; don't touch any member
@@ -719,9 +720,10 @@ void HistoryHandler::HandleShowHistoryPage(const Value*) {
   if (controller) {
 #if defined(OS_WIN)
 // TODO(port): include this once history is converted to HTML
-    controller->LoadURL(HistoryUI::GetBaseURL(), GURL(), PageTransition::LINK);
     UserMetrics::RecordAction(L"NTP_ShowHistory",
         dom_ui_->get_profile());
+    controller->LoadURL(HistoryUI::GetBaseURL(), GURL(), PageTransition::LINK);
+    // We are deleted by LoadURL, so do not call anything else.
 #else
     NOTIMPLEMENTED();
 #endif
@@ -749,6 +751,7 @@ void HistoryHandler::HandleSearchHistoryPage(const Value* content) {
             HistoryUI::GetHistoryURLWithSearchText(wstring_value),
             GURL(),
             PageTransition::LINK);
+        // We are deleted by LoadURL, so do not call anything else.
 #else
         NOTIMPLEMENTED();
 #endif
@@ -792,17 +795,6 @@ NewTabUI::NewTabUI(DOMUIContents* contents) :
     motd_message_id_(0),
     incognito_(false),
     most_visited_handler_(NULL) {
-  // Show profile name in the title if the current profile is not the default.
-  std::wstring title;
-  if (UserDataManager::Get()->is_current_profile_default()) {
-    title = l10n_util::GetString(IDS_NEW_TAB_TITLE);
-  } else {
-    title = l10n_util::GetStringF(
-        IDS_NEW_TAB_TITLE_WITH_PROFILE_NAME,
-        UserDataManager::Get()->current_profile_name());
-  }
-  set_forced_title(title);
-
   if (get_profile()->IsOffTheRecord())
     incognito_ = true;
 

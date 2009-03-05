@@ -16,6 +16,7 @@
 #include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/common/notification_service.h"
+#include "chrome/common/url_constants.h"
 #include "chrome/plugin/npobject_util.h"
 // TODO(port)
 #if defined(OS_WIN)
@@ -35,11 +36,10 @@
 #include "webkit/glue/cache_manager.h"
 
 #include "WebKit.h"
+#include "WebString.h"
 
 static const unsigned int kCacheStatsDelayMS = 2000 /* milliseconds */;
 
-// V8 needs a 1MB stack size.
-static const size_t kStackSize = 1024 * 1024;
 
 //-----------------------------------------------------------------------------
 // Methods below are only called on the owner's thread:
@@ -49,13 +49,13 @@ static const size_t kStackSize = 1024 * 1024;
 RenderThread::RenderThread()
     : ChildThread(
           base::Thread::Options(RenderProcess::InProcessPlugins() ?
-              MessageLoop::TYPE_UI : MessageLoop::TYPE_DEFAULT, kStackSize)) {
+              MessageLoop::TYPE_UI : MessageLoop::TYPE_DEFAULT, kV8StackSize)) {
 }
 
 RenderThread::RenderThread(const std::wstring& channel_name)
     : ChildThread(
           base::Thread::Options(RenderProcess::InProcessPlugins() ?
-              MessageLoop::TYPE_UI : MessageLoop::TYPE_DEFAULT, kStackSize)) {
+              MessageLoop::TYPE_UI : MessageLoop::TYPE_DEFAULT, kV8StackSize)) {
   SetChannelName(channel_name);
 }
 
@@ -95,9 +95,6 @@ void RenderThread::Init() {
   cache_stats_factory_.reset(
       new ScopedRunnableMethodFactory<RenderThread>(this));
 
-  webkit_client_impl_.reset(new RendererWebKitClientImpl);
-  WebKit::initialize(webkit_client_impl_.get());
-
   visited_link_slave_.reset(new VisitedLinkSlave());
   user_script_slave_.reset(new UserScriptSlave());
   dns_master_.reset(new RenderDnsMaster());
@@ -112,7 +109,10 @@ void RenderThread::CleanUp() {
   user_script_slave_.reset();
   visited_link_slave_.reset();
 
-  WebKit::shutdown();
+  if (webkit_client_.get()) {
+    WebKit::shutdown();
+    webkit_client_.reset();
+  }
 
   notification_service_.reset();
 
@@ -185,6 +185,8 @@ void RenderThread::OnCreateNewView(gfx::NativeViewId parent_hwnd,
                                    ModalDialogEvent modal_dialog_event,
                                    const WebPreferences& webkit_prefs,
                                    int32 view_id) {
+  EnsureWebKitInitialized();
+
   // When bringing in render_view, also bring in webkit's glue and jsbindings.
   base::WaitableEvent* waitable_event = new base::WaitableEvent(
 #if defined(OS_WIN)
@@ -203,23 +205,15 @@ void RenderThread::OnCreateNewView(gfx::NativeViewId parent_hwnd,
 void RenderThread::OnSetCacheCapacities(size_t min_dead_capacity,
                                         size_t max_dead_capacity,
                                         size_t capacity) {
-#if defined(OS_WIN) || defined(OS_LINUX)
+  EnsureWebKitInitialized();
   CacheManager::SetCapacities(min_dead_capacity, max_dead_capacity, capacity);
-#else
-  // TODO(port)
-  NOTIMPLEMENTED();
-#endif
 }
 
 void RenderThread::OnGetCacheResourceStats() {
-#if defined(OS_WIN) || defined(OS_LINUX)
+  EnsureWebKitInitialized();
   CacheManager::ResourceTypeStats stats;
   CacheManager::GetResourceTypeStats(&stats);
   Send(new ViewHostMsg_ResourceTypeStats(stats));
-#else
-  // TODO(port)
-  NOTIMPLEMENTED();
-#endif
 }
 
 void RenderThread::OnGetRendererHistograms() {
@@ -227,14 +221,10 @@ void RenderThread::OnGetRendererHistograms() {
 }
 
 void RenderThread::InformHostOfCacheStats() {
-#if defined(OS_WIN) || defined(OS_LINUX)
+  EnsureWebKitInitialized();
   CacheManager::UsageStats stats;
   CacheManager::GetUsageStats(&stats);
   Send(new ViewHostMsg_UpdatedCacheStats(stats));
-#else
-  // TODO(port)
-  NOTIMPLEMENTED();
-#endif
 }
 
 void RenderThread::InformHostOfCacheStatsLater() {
@@ -246,4 +236,12 @@ void RenderThread::InformHostOfCacheStatsLater() {
       cache_stats_factory_->NewRunnableMethod(
           &RenderThread::InformHostOfCacheStats),
       kCacheStatsDelayMS);
+}
+
+void RenderThread::EnsureWebKitInitialized() {
+  if (webkit_client_.get())
+    return;
+  webkit_client_.reset(new RendererWebKitClientImpl);
+  WebKit::initialize(webkit_client_.get());
+  WebKit::registerURLSchemeAsLocal(ASCIIToUTF16(chrome::kChromeUIScheme));
 }

@@ -11,7 +11,6 @@
 #include "base/path_service.h"
 #include "base/string_util.h"
 #include "base/sys_info.h"
-#include "chrome/app/result_codes.h"
 #include "chrome/browser/autocomplete/autocomplete.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
@@ -31,6 +30,7 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
+#include "chrome/common/result_codes.h"
 #include "net/base/cookie_monster.h"
 #include "webkit/glue/webkit_glue.h"
 
@@ -143,14 +143,14 @@ enum LaunchMode {
   LM_SHORTCUT_QUICKLAUNCH,    // Launched from the quick launch bar.
   LM_SHORTCUT_DESKTOP,        // Launched from a desktop shortcut.
   LM_SHORTCUT_STARTMENU,      // Launched from start menu.
-  LM_LINUX_MAC_BEOS           // Other OS buckets start here. 
+  LM_LINUX_MAC_BEOS           // Other OS buckets start here.
 };
 
 #if defined(OS_WIN)
 // Undocumented flag in the startup info structure tells us what shortcut was
 // used to launch the browser. See http://www.catch22.net/tuts/undoc01 for
 // more information. Confirmed to work on XP, Vista and Win7.
-LaunchMode GetLaunchSortcutKind() {
+LaunchMode GetLaunchShortcutKind() {
   STARTUPINFOW si = { sizeof(si) };
   GetStartupInfoW(&si);
   if (si.dwFlags & 0x800) {
@@ -170,7 +170,7 @@ LaunchMode GetLaunchSortcutKind() {
 }
 #else
 // TODO(cpu): Port to other platforms.
-LaunchMode GetLaunchSortcutKind() {
+LaunchMode GetLaunchShortcutKind() {
   return LM_LINUX_MAC_BEOS;
 }
 #endif
@@ -178,7 +178,7 @@ LaunchMode GetLaunchSortcutKind() {
 // Log in a histogram the frequency of launching by the different methods. See
 // LaunchMode enum for the actual values of the buckets.
 void RecordLaunchModeHistogram(LaunchMode mode) {
-  int bucket = (mode == LM_TO_BE_DECIDED) ? GetLaunchSortcutKind() : mode;
+  int bucket = (mode == LM_TO_BE_DECIDED) ? GetLaunchShortcutKind() : mode;
   UMA_HISTOGRAM_COUNTS_100("Launch.Modes", bucket);
 }
 
@@ -217,7 +217,7 @@ bool BrowserInit::LaunchWithProfile::Launch(Profile* profile,
     if (!RenderProcessHost::run_renderer_in_process()) {
       std::wstring port_str =
           command_line_.GetSwitchValue(switches::kRemoteShellPort);
-      int64 port = StringToInt64(port_str);
+      int64 port = StringToInt64(WideToUTF16Hack(port_str));
       if (port > 0 && port < 65535) {
         g_browser_process->InitDebuggerWrapper(static_cast<int>(port));
       } else {
@@ -339,6 +339,10 @@ Browser* BrowserInit::LaunchWithProfile::OpenURLsInBrowser(
       AddCrashedInfoBarIfNecessary(tab);
   }
   browser->window()->Show();
+  // TODO(jcampan): http://crbug.com/8123 we should not need to set the initial
+  //                focus explicitly.
+  browser->GetSelectedTabContents()->SetInitialFocus();
+
   return browser;
 }
 
@@ -421,7 +425,7 @@ bool BrowserInit::ProcessCommandLine(
         command_line.GetSwitchValue(switches::kOmniBoxPopupCount);
     if (!popup_count_string.empty()) {
       int count = 0;
-      if (StringToInt(popup_count_string, &count)) {
+      if (StringToInt(WideToUTF16Hack(popup_count_string), &count)) {
         const int popup_count = std::max(0, count);
         AutocompleteResult::set_max_matches(popup_count);
         AutocompleteProvider::set_max_matches(popup_count / 2);
@@ -435,7 +439,7 @@ bool BrowserInit::ProcessCommandLine(
         command_line.GetSwitchValue(switches::kTabCountToLoadOnSessionRestore);
     if (!tab_count_string.empty()) {
       int count = 0;
-      if (StringToInt(tab_count_string, &count)) {
+      if (StringToInt(WideToUTF16Hack(tab_count_string), &count)) {
         const int tab_count = std::max(0, count);
         SessionRestore::num_tabs_to_load_ = static_cast<size_t>(tab_count);
       }

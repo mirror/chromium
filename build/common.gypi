@@ -5,11 +5,16 @@
 {
   'variables': {
     'chromium_code%': 0,
+    'branding%': 'Chromium',
   },
   'target_defaults': {
-    # TODO(bradnelson): This should really be able to be either:
-    #   CHROMIUM_BUILD or GOOGLE_CHROME_BUILD
-    'defines': ['CHROMIUM_BUILD'],
+    'conditions': [
+      ['branding=="Chrome"', {
+        'defines': ['GOOGLE_CHROME_BUILD'],
+      }, {  # else: branding!="Chrome"
+        'defines': ['CHROMIUM_BUILD'],
+      }],
+    ],
     'default_configuration': 'Debug',
     'configurations': {
       'Debug': {
@@ -89,6 +94,9 @@
           }],
           ['_type!="static_library"', {
             'xcode_settings': {'OTHER_LDFLAGS': ['-Wl,-search_paths_first']},
+          }],
+          ['_type=="application"', {
+            'xcode_settings': {'OTHER_LDFLAGS': ['-Wl,-ObjC']},
           }],
           ['_type=="application" or _type=="executable"', {
             'postbuilds': [
@@ -201,11 +209,6 @@
     # files to appear (when present) in the UI as actual files and not red
     # red "missing file" proxies, the correct path to PROJECT_DERIVED_FILE_DIR,
     # and therefore SYMROOT, needs to be set at the project level.
-    #
-    # xcodebuild_gyp is a temporary name to avoid colliding with the xcodebuild
-    # directory used by the non-gyp Xcode build system.  When the gyp-based
-    # Xcode build system replaces the older system, this should be changed to
-    # simply "xcodebuild" or some other suitable name.
-    'SYMROOT': '<(DEPTH)/xcodebuild_gyp',
+    'SYMROOT': '<(DEPTH)/xcodebuild',
   },
 }

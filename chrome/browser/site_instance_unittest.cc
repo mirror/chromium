@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/string16.h"
 #include "chrome/browser/renderer_host/browser_render_process_host.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
@@ -10,12 +11,12 @@
 #include "chrome/test/testing_profile.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace {
-
 class SiteInstanceTest : public testing::Test {
  private:
   MessageLoopForUI message_loop_;
 };
+
+namespace {
 
 class TestBrowsingInstance : public BrowsingInstance {
  public:
@@ -79,7 +80,7 @@ TEST_F(SiteInstanceTest, SiteInstanceDestructor) {
 
   NavigationEntry* e1 = new NavigationEntry(TAB_CONTENTS_WEB, instance, 0, url,
                                             GURL(),
-                                            std::wstring(),
+                                            string16(),
                                             PageTransition::LINK);
 
   // Redundantly setting e1's SiteInstance shouldn't affect the ref count.
@@ -88,7 +89,7 @@ TEST_F(SiteInstanceTest, SiteInstanceDestructor) {
 
   // Add a second reference
   NavigationEntry* e2 = new NavigationEntry(TAB_CONTENTS_WEB, instance, 0, url,
-                                            GURL(), std::wstring(),
+                                            GURL(), string16(),
                                             PageTransition::LINK);
 
   // Now delete both entries and be sure the SiteInstance goes away.
@@ -140,7 +141,7 @@ TEST_F(SiteInstanceTest, CloneNavigationEntry) {
 
   NavigationEntry* e1 = new NavigationEntry(TAB_CONTENTS_WEB, instance1, 0,
                                             url, GURL(),
-                                            std::wstring(),
+                                            string16(),
                                             PageTransition::LINK);
   // Clone the entry
   NavigationEntry* e2 = new NavigationEntry(*e1);

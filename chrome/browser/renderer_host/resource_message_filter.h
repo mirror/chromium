@@ -14,6 +14,7 @@
 #include "base/gfx/native_widget_types.h"
 #include "base/ref_counted.h"
 #include "base/shared_memory.h"
+#include "base/string16.h"
 #include "build/build_config.h"
 #include "chrome/browser/net/resolve_proxy_msg_helper.h"
 #include "chrome/browser/renderer_host/resource_dispatcher_host.h"
@@ -143,6 +144,8 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
                              const std::string& clsid,
                              const std::wstring& locale,
                              IPC::Message* reply_msg);
+  void OnCreateDedicatedWorker(const GURL& url, int* route_id);
+  void OnForwardToWorker(const IPC::Message& msg);
   void OnDownloadUrl(const IPC::Message& message,
                      const GURL& url,
                      const GURL& referrer);
@@ -154,9 +157,9 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   // Clipboard messages
   void OnClipboardWriteObjects(const Clipboard::ObjectMap& objects);
   void OnClipboardIsFormatAvailable(unsigned int format, bool* result);
-  void OnClipboardReadText(std::wstring* result);
+  void OnClipboardReadText(string16* result);
   void OnClipboardReadAsciiText(std::string* result);
-  void OnClipboardReadHTML(std::wstring* markup, GURL* src_url);
+  void OnClipboardReadHTML(string16* markup, GURL* src_url);
 #if defined(OS_WIN)|| defined(OS_LINUX)
   void OnGetWindowRect(gfx::NativeViewId window, gfx::Rect *rect);
   void OnGetRootWindowRect(gfx::NativeViewId window, gfx::Rect *rect);
@@ -202,7 +205,8 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   // Audio related IPC message handlers.
   void OnCreateAudioStream(const IPC::Message& msg, int stream_id,
                            const ViewHostMsg_Audio_CreateStream& params);
-  void OnNotifyAudioPacketReady(const IPC::Message& msg, int stream_id);
+  void OnNotifyAudioPacketReady(const IPC::Message& msg, int stream_id,
+                                size_t packet_size);
   void OnStartAudioStream(const IPC::Message& msg, int stream_id);
   void OnCloseAudioStream(const IPC::Message& msg, int stream_id);
   void OnGetAudioVolume(const IPC::Message& msg, int stream_id);

@@ -14,6 +14,7 @@
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/download/download_manager.h"
+#include "chrome/browser/extensions/extension_error_reporter.h"
 #include "chrome/browser/extensions/extensions_service.h"
 #include "chrome/browser/extensions/user_script_master.h"
 #include "chrome/browser/history/history.h"
@@ -71,8 +72,8 @@ void Profile::RegisterUserPrefs(PrefService* prefs) {
       IDS_SPELLCHECK_DICTIONARY);
 #endif
   prefs->RegisterBooleanPref(prefs::kEnableSpellCheck, true);
-  prefs->RegisterBooleanPref(prefs::kEnableUserScripts, true);
-  prefs->RegisterBooleanPref(prefs::kEnableExtensions, true);
+  prefs->RegisterBooleanPref(prefs::kEnableUserScripts, false);
+  prefs->RegisterBooleanPref(prefs::kEnableExtensions, false);
 }
 
 // static
@@ -206,6 +207,20 @@ class OffTheRecordProfileImpl : public Profile,
     return request_context_;
   }
 
+  virtual URLRequestContext* GetRequestContextForMedia() {
+    if (!media_request_context_) {
+      FilePath cache_path = GetPath();
+      cache_path.Append(chrome::kOffTheRecordMediaCacheDirname);
+      media_request_context_ =
+          ChromeURLRequestContext::CreateOffTheRecordForMedia(
+              this, cache_path);
+      media_request_context_->AddRef();
+
+      DCHECK(media_request_context_->cookie_store());
+    }
+    return media_request_context_;
+  }
+
   virtual SessionService* GetSessionService() {
     // Don't save any sessions when off the record.
     return NULL;
@@ -310,6 +325,9 @@ class OffTheRecordProfileImpl : public Profile,
   // The context to use for requests made from this OTR session.
   ChromeURLRequestContext* request_context_;
 
+  // The context for requests for media resources.
+  ChromeURLRequestContext* media_request_context_;
+
   // The download manager that only stores downloaded items in memory.
   scoped_refptr<DownloadManager> download_manager_;
 
@@ -367,10 +385,10 @@ void ProfileImpl::InitExtensions() {
     script_dir = script_dir.Append(chrome::kUserScriptsDirname);
   }
 
+  ExtensionErrorReporter::Init(true);  // allow noisy errors.
   user_script_master_ = new UserScriptMaster(
       g_browser_process->file_thread()->message_loop(), script_dir);
-  extensions_service_ = new ExtensionsService(
-      FilePath(GetPath()), user_script_master_.get());
+  extensions_service_ = new ExtensionsService(this, user_script_master_.get());
 
   // If we have extensions, the extension service will kick off the first scan
   // after extensions are loaded. Otherwise, we need to do that now.
@@ -524,7 +542,7 @@ SSLHostState* ProfileImpl::GetSSLHostState() {
 
 PrefService* ProfileImpl::GetPrefs() {
   if (!prefs_.get()) {
-    prefs_.reset(new PrefService(GetPrefFilePath().ToWStringHack()));
+    prefs_.reset(new PrefService(GetPrefFilePath()));
 
     // The Profile class and ProfileManager class may read some prefs so
     // register known prefs as soon as possible.
@@ -583,6 +601,20 @@ URLRequestContext* ProfileImpl::GetRequestContext() {
   }
 
   return request_context_;
+}
+
+URLRequestContext* ProfileImpl::GetRequestContextForMedia() {
+  if (!media_request_context_) {
+    FilePath cache_path = GetPath();
+    cache_path.Append(chrome::kMediaCacheDirname);
+    media_request_context_ = ChromeURLRequestContext::CreateOriginalForMedia(
+        this, cache_path);
+    media_request_context_->AddRef();
+
+    DCHECK(media_request_context_->cookie_store());
+  }
+
+  return media_request_context_;
 }
 
 HistoryService* ProfileImpl::GetHistoryService(ServiceAccessType sat) {

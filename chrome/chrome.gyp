@@ -112,7 +112,8 @@
         'common/gfx/icon_util.cc',
         'common/gfx/icon_util.h',
         'common/gfx/insets.h',
-        'common/gfx/path.cc',
+        'common/gfx/path_gtk.cc',
+        'common/gfx/path_win.cc',
         'common/gfx/path.h',
         'common/gfx/text_elider.cc',
         'common/gfx/text_elider.h',
@@ -125,6 +126,7 @@
         'common/accessibility.h',
         'common/animation.cc',
         'common/animation.h',
+        'common/bindings_policy.h',
         'common/child_process.cc',
         'common/child_process.h',
         'common/child_process_host.cc',
@@ -141,7 +143,7 @@
         'common/chrome_paths.h',
         'common/chrome_paths_internal.h',
         'common/chrome_paths_linux.cc',
-        'common/chrome_paths_mac.cc',
+        'common/chrome_paths_mac.mm',
         'common/chrome_paths_win.cc',
         'common/chrome_plugin_api.h',
         'common/chrome_plugin_lib.cc',
@@ -241,6 +243,7 @@
         'common/resource_bundle_win.cc',
         'common/resource_dispatcher.cc',
         'common/resource_dispatcher.h',
+        'common/result_codes.h',
         'common/sandbox_init_wrapper.cc',
         'common/sandbox_init_wrapper.h',
         'common/scoped_vector.h',
@@ -293,7 +296,6 @@
           'sources!': [
             'common/gfx/emf.cc',
             'common/gfx/icon_util.cc',
-            'common/gfx/path.cc',
             'common/chrome_process_filter.cc',
             'common/classfactory.cc',
             'common/drag_drop_types.cc',
@@ -329,8 +331,11 @@
         'browser/autocomplete/autocomplete_accessibility.h',
         'browser/autocomplete/autocomplete_edit.cc',
         'browser/autocomplete/autocomplete_edit.h',
-        'browser/autocomplete/autocomplete_popup.cc',
-        'browser/autocomplete/autocomplete_popup.h',
+        'browser/autocomplete/autocomplete_popup_model.cc',
+        'browser/autocomplete/autocomplete_popup_model.h',
+        'browser/autocomplete/autocomplete_popup_view.h',
+        'browser/autocomplete/autocomplete_popup_view_win.cc',
+        'browser/autocomplete/autocomplete_popup_view_win.h',
         'browser/autocomplete/edit_drop_target.cc',
         'browser/autocomplete/edit_drop_target.h',
         'browser/autocomplete/history_contents_provider.cc',
@@ -450,6 +455,8 @@
         'browser/download/download_request_dialog_delegate_win.h',
         'browser/download/download_request_manager.cc',
         'browser/download/download_request_manager.h',
+        'browser/download/download_shelf.cc',
+        'browser/download/download_shelf.h',
         'browser/download/download_util.cc',
         'browser/download/download_util.h',
         'browser/download/save_file.cc',
@@ -465,10 +472,16 @@
         'browser/download/save_types.h',
         'browser/extensions/extension.cc',
         'browser/extensions/extension.h',
+        'browser/extensions/extension_error_reporter.cc',
+        'browser/extensions/extension_error_reporter.h',
+        'browser/extensions/extension_view.cc',
+        'browser/extensions/extension_view.h',
         'browser/extensions/extension_protocols.cc',
         'browser/extensions/extension_protocols.h',
         'browser/extensions/extensions_service.cc',
         'browser/extensions/extensions_service.h',
+        'browser/extensions/extensions_ui.cc',
+        'browser/extensions/extensions_ui.h',
         'browser/extensions/user_script_master.cc',
         'browser/extensions/user_script_master.h',
         'browser/gtk/back_forward_menu_model_gtk.cc',
@@ -734,8 +747,6 @@
         'browser/tab_contents/infobar_delegate.h',
         'browser/tab_contents/interstitial_page.cc',
         'browser/tab_contents/interstitial_page.h',
-        'browser/tab_contents/native_ui_contents.cc',
-        'browser/tab_contents/native_ui_contents.h',
         'browser/tab_contents/navigation_controller.cc',
         'browser/tab_contents/navigation_controller.h',
         'browser/tab_contents/navigation_entry.cc',
@@ -866,8 +877,6 @@
         'browser/views/download_shelf_view.h',
         'browser/views/download_started_animation.cc',
         'browser/views/download_started_animation.h',
-        'browser/views/download_tab_view.cc',
-        'browser/views/download_tab_view.h',
         'browser/views/edit_keyword_controller.cc',
         'browser/views/edit_keyword_controller.h',
         'browser/views/event_utils.cc',
@@ -952,6 +961,10 @@
         'browser/webdata/web_database.cc',
         'browser/webdata/web_database.h',
         'browser/webdata/web_database_win.cc',
+        'browser/worker_host/worker_process_host.cc',
+        'browser/worker_host/worker_process_host.h',
+        'browser/worker_host/worker_service.cc',
+        'browser/worker_host/worker_service.h',
         'browser/alternate_nav_url_fetcher.cc',
         'browser/alternate_nav_url_fetcher.h',
         'browser/app_controller_mac.h',
@@ -964,8 +977,6 @@
         'browser/back_forward_menu_model.h',
         'browser/back_forward_menu_model_win.cc',
         'browser/back_forward_menu_model_win.h',
-        'browser/base_history_model.cc',
-        'browser/base_history_model.h',
         'browser/browser.cc',
         'browser/browser.h',
         'browser/browser_about_handler.cc',
@@ -1043,12 +1054,6 @@
         'browser/google_url_tracker.h',
         'browser/google_util.cc',
         'browser/google_util.h',
-        'browser/history_model.cc',
-        'browser/history_model.h',
-        'browser/history_tab_ui.cc',
-        'browser/history_tab_ui.h',
-        'browser/history_view.cc',
-        'browser/history_view.h',
         'browser/icon_loader.cc',
         'browser/icon_loader.h',
         'browser/icon_manager.cc',
@@ -1132,11 +1137,12 @@
             ['include', '^browser/dom_ui/dom_ui\\.cc$'],
             ['include', '^browser/dom_ui/dom_ui_contents\\.cc$'],
             ['include', '^browser/dom_ui/dom_ui_host\\.cc$'],
+            ['include', '^browser/dom_ui/history_ui\\.cc$'],
             ['include', '^browser/dom_ui/new_tab_ui\\.cc$'],
 
             # Exclude most of download.
             ['exclude', '^browser/download/'],
-            ['include', '^browser/download/download_(file|manager)\\.cc$'],
+            ['include', '^browser/download/download_(file|manager|shelf)\\.cc$'],
             ['include', '^browser/download/download_request_manager\\.cc$'],
             ['include', '^browser/download/save_(file(_manager)?|item|package)\\.cc$'],
 
@@ -1160,17 +1166,13 @@
           'sources!': [
             'browser/autocomplete/autocomplete_accessibility.cc',
             'browser/autocomplete/autocomplete_edit.cc',
-            'browser/autocomplete/autocomplete_popup.cc',
+            'browser/autocomplete/autocomplete_popup_model.cc',
             'browser/autocomplete/edit_drop_target.cc',
             'browser/bookmarks/bookmark_context_menu.cc',
             'browser/bookmarks/bookmark_drop_info.cc',
             'browser/debugger/debugger_view.cc',
             'browser/debugger/debugger_window.cc',
-            'browser/importer/firefox2_importer.cc',
-            'browser/importer/firefox3_importer.cc',
-            'browser/importer/firefox_importer_utils.cc',
             'browser/importer/ie_importer.cc',
-            'browser/tab_contents/native_ui_contents.cc',
             'browser/tab_contents/render_view_context_menu_controller.cc',
             'browser/tab_contents/web_drag_source.cc',
             'browser/tab_contents/web_drop_target.cc',
@@ -1184,8 +1186,6 @@
             'browser/external_tab_container.cc',
             'browser/first_run.cc',
             'browser/google_update.cc',
-            'browser/history_tab_ui.cc',
-            'browser/history_view.cc',
             'browser/icon_loader.cc',
             'browser/icon_manager.cc',
             'browser/ime_input.cc',
@@ -1222,6 +1222,8 @@
         # All .cc, .h, and .mm files under renderer except tests and mocks.
         'renderer/automation/dom_automation_controller.cc',
         'renderer/automation/dom_automation_controller.h',
+        'renderer/extensions/extension_bindings.cc',
+        'renderer/extensions/extension_bindings.h',
         'renderer/media/audio_renderer_impl.cc',
         'renderer/media/audio_renderer_impl.h',
         'renderer/media/data_source_impl.cc',
@@ -1305,7 +1307,7 @@
         'renderer',
       ],
       'sources': [
-        # All .cc, .h, and .mm files under app except for tests.
+        # All .cc, .h, .m, and .mm files under app except for tests.
         'app/breakpad.cc',
         'app/breakpad.h',
         'app/chrome_dll_main.cc',
@@ -1318,14 +1320,14 @@
         'app/client_util.h',
         'app/google_update_client.cc',
         'app/google_update_client.h',
-        'app/result_codes.h',
+        'app/keystone_glue.h',
+        'app/keystone_glue.m',
         'app/scoped_ole_initializer.h',
       ],
       'mac_bundle_resources': [
-        'app/nibs/English.lproj/BrowserWindow.xib',
-        'app/nibs/English.lproj/MainMenu.xib',
-        'app/nibs/English.lproj/TabContents.xib',
-        'app/theme/chromium/chromium.icns',
+        'app/nibs/en.lproj/BrowserWindow.xib',
+        'app/nibs/en.lproj/MainMenu.xib',
+        'app/nibs/en.lproj/TabContents.xib',
         'app/theme/back.pdf',
         'app/theme/forward.pdf',
         'app/theme/go.pdf',
@@ -1335,6 +1337,7 @@
         'app/theme/sadtab.png',
         'app/theme/star.pdf',
         'app/theme/starred.pdf',
+        'app/theme/stop.pdf',
         'app/app-Info.plist',
       ],
       # TODO(mark): Come up with a fancier way to do this.  It should only
@@ -1347,7 +1350,18 @@
         'INFOPLIST_FILE': 'app/app-Info.plist',
       },
       'conditions': [
-        ['OS=="mac"', {'product_name': 'Chromium'}],
+        ['OS=="mac"', {
+          # 'branding' is a variable defined in common.gypi
+          # (e.g. "Chromium", "Chrome")
+	  'product_name': '<(branding)',
+	  'conditions': [
+            ['branding=="Chrome"', {
+              'mac_bundle_resources': ['app/theme/google_chrome/chrome.icns'],
+            }, {  # else: branding!="Chrome"
+              'mac_bundle_resources': ['app/theme/chromium/chromium.icns'],
+            }],
+          ],
+        }],
         ['OS!="win"', {
           'variables': {
             'repack_path': '../tools/data_pack/repack.py',
@@ -1361,6 +1375,7 @@
                   '<(SHARED_INTERMEDIATE_DIR)/chrome/debugger_resources.pak',
                   '<(SHARED_INTERMEDIATE_DIR)/chrome/common_resources.pak',
                   '<(SHARED_INTERMEDIATE_DIR)/chrome/renderer_resources.pak',
+                  '<(SHARED_INTERMEDIATE_DIR)/webkit/webkit_resources.pak',
                 ],
               },
               'inputs': [
@@ -1399,6 +1414,7 @@
                   '<(SHARED_INTERMEDIATE_DIR)/chrome/generated_resources_en-US.pak',
                   '<(SHARED_INTERMEDIATE_DIR)/chrome/chromium_strings_en-US.pak',
                   '<(SHARED_INTERMEDIATE_DIR)/chrome/locale_settings_en-US.pak',
+                  '<(SHARED_INTERMEDIATE_DIR)/webkit/webkit_strings_en-US.pak',
                 ],
               },
               'inputs': [
@@ -1408,7 +1424,7 @@
               'conditions': [
                 ['OS=="mac"', {
                   'outputs': [
-                    '<(INTERMEDIATE_DIR)/repack/English.lproj/locale.pak',
+                    '<(INTERMEDIATE_DIR)/repack/en.lproj/locale.pak',
                   ],
                 }, {  # else: OS!="mac"
                   'outputs': [
@@ -1514,6 +1530,10 @@
         'test/unit/run_all_unittests.cc',
       ],
       'conditions': [
+        ['OS=="mac"', {
+          # mac tests load the resources from the built app beside the test
+          'dependencies': ['app'],
+        }],
         # There are only real ui_tests on Windows.  On other platforms,
         # there's just a dummy stub that looks like a test.  Since it's not
         # a real ui_tests executable, it builds test/unit/run_all_unittests.cc
@@ -1674,6 +1694,10 @@
         'test/unit/run_all_unittests.cc',
       ],
       'conditions': [
+        ['OS=="mac"', {
+          # mac tests load the resources from the built app beside the test
+          'dependencies': ['app'],
+        }],
         ['OS!="win"', {
           'sources!': [
             'browser/autocomplete/autocomplete_unittest.cc',
@@ -1683,14 +1707,12 @@
             'browser/bookmarks/bookmark_drag_data_unittest.cc',
             'browser/bookmarks/bookmark_folder_tree_model_unittest.cc',
             'browser/bookmarks/bookmark_html_writer_unittest.cc',
-            'browser/bookmarks/bookmark_model_unittest.cc',
             'browser/bookmarks/bookmark_table_model_unittest.cc',
             'browser/bookmarks/bookmark_utils_unittest.cc',
             'browser/download/download_manager_unittest.cc',
             'browser/download/download_request_manager_unittest.cc',
             'browser/extensions/user_script_master_unittest.cc',
             'browser/history/text_database_manager_unittest.cc',
-            'browser/history/text_database_unittest.cc',
             'browser/history/thumbnail_database_unittest.cc',
             'browser/importer/firefox_importer_unittest.cc',
             'browser/importer/importer_unittest.cc',
@@ -1702,8 +1724,6 @@
             'browser/printing/page_number_unittest.cc',
             'browser/printing/page_overlays_unittest.cc',
             'browser/printing/print_job_unittest.cc',
-            'browser/renderer_host/render_view_host_unittest.cc',
-            'browser/renderer_host/render_widget_host_unittest.cc',
             'browser/rlz/rlz_unittest.cc',
             'browser/sessions/session_backend_unittest.cc',
             'browser/sessions/session_service_unittest.cc',
@@ -1717,15 +1737,11 @@
             'browser/browser_commands_unittest.cc',
             'browser/login_prompt_unittest.cc',
             'browser/navigation_controller_unittest.cc',
-            'browser/site_instance_unittest.cc',
-            'browser/spellcheck_unittest.cc',
             'browser/visitedlink_unittest.cc',
             'browser/webdata/web_database_unittest.cc',
             'browser/window_sizer_unittest.cc',
-            'common/gfx/chrome_font_unittest.cc',
             'common/gfx/emf_unittest.cc',
             'common/gfx/icon_util_unittest.cc',
-            'common/gfx/text_elider_unittest.cc',
             'common/net/url_util_unittest.cc',
             'common/chrome_plugin_unittest.cc',
             'common/os_exchange_data_unittest.cc',
@@ -1738,4 +1754,30 @@
       ],
     },
   ],
+  # On Mac only, add a project target called "package_app" that only
+  # runs a shell script (package_chrome.sh).
+  'conditions': [
+    ['OS=="mac"',
+      { 'targets': [
+        {
+          'target_name': 'package_app',
+          # do NOT place this in the 'all' list; most won't want it.
+          # In gyp, booleans are 0/1 not True/False.
+          'suppress_wildcard': 1,
+          'type': 'none',
+          'dependencies': [
+            'app',
+          ],
+          'actions': [
+            {
+              'inputs': [],
+              'outputs': [],
+              'action_name': 'package_chrome',
+              'action': ['tools/mac/package_chrome.sh' ],
+            },
+          ],  # 'actions'
+        },
+      ]},  # 'targets'
+    ],  # OS=="mac"
+  ],  # 'conditions'
 }

@@ -11,7 +11,10 @@
 #include "base/file_path.h"
 #include "base/scoped_ptr.h"
 
-#ifdef OS_MACOSX
+#if defined(OS_WIN)
+struct tagVS_FIXEDFILEINFO;
+typedef tagVS_FIXEDFILEINFO VS_FIXEDFILEINFO;
+#elif defined(OS_MACOSX)
 #ifdef __OBJC__
 @class NSBundle;
 #else
@@ -81,7 +84,7 @@ class FileVersionInfo {
   VS_FIXEDFILEINFO* fixed_file_info_;
 #elif defined(OS_MACOSX)
   explicit FileVersionInfo(NSBundle *bundle);
-  
+
   NSBundle *bundle_;
 #elif defined(OS_LINUX)
   FileVersionInfo();

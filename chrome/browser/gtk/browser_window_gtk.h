@@ -13,6 +13,7 @@
 #include "chrome/browser/tabs/tab_strip_model.h"
 
 class BrowserToolbarGtk;
+class LocationBar;
 class NineBox;
 class StatusBubbleGtk;
 class TabContentsContainerGtk;
@@ -33,6 +34,7 @@ class BrowserWindowGtk : public BrowserWindow,
   virtual void SetBounds(const gfx::Rect& bounds);
   virtual void Close();
   virtual void Activate();
+  virtual bool IsActive() const;
   virtual void FlashFrame();
   virtual void* GetNativeHandle();
   virtual BrowserWindowTesting* GetBrowserWindowTesting();
@@ -120,4 +122,3 @@ class BrowserWindowGtk : public BrowserWindow,
 };
 
 #endif  // CHROME_BROWSER_GTK_BROWSER_WINDOW_GTK_H_
-

@@ -21,8 +21,6 @@ class UITestSuite : public ChromeTestSuite {
     const CommandLine& parsed_command_line = *CommandLine::ForCurrentProcess();
     UITest::set_in_process_renderer(
         parsed_command_line.HasSwitch(switches::kSingleProcess));
-    UITest::set_in_process_plugins(
-        parsed_command_line.HasSwitch(switches::kInProcessPlugins));
     UITest::set_no_sandbox(
         parsed_command_line.HasSwitch(switches::kNoSandbox));
     UITest::set_full_memory_dump(
@@ -42,12 +40,17 @@ class UITestSuite : public ChromeTestSuite {
     std::wstring test_timeout =
         parsed_command_line.GetSwitchValue(UITestSuite::kTestTimeout);
     if (!test_timeout.empty()) {
-      UITest::set_test_timeout_ms(StringToInt(test_timeout));
+      UITest::set_test_timeout_ms(StringToInt(WideToUTF16Hack(test_timeout)));
     }
     std::wstring js_flags =
       parsed_command_line.GetSwitchValue(switches::kJavaScriptFlags);
     if (!js_flags.empty()) {
       UITest::set_js_flags(js_flags);
+    }
+    std::wstring log_level =
+      parsed_command_line.GetSwitchValue(switches::kLoggingLevel);
+    if (!log_level.empty()) {
+      UITest::set_log_level(log_level);
     }
   }
 
@@ -64,4 +67,3 @@ class UITestSuite : public ChromeTestSuite {
 };
 
 #endif  // CHROME_TEST_UI_UI_TEST_SUITE_H_
-

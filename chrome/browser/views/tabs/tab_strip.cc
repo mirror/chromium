@@ -25,6 +25,7 @@
 #include "chrome/common/win_util.h"
 #include "chrome/views/image_view.h"
 #include "chrome/views/painter.h"
+#include "chrome/views/window.h"
 #include "grit/generated_resources.h"
 #include "grit/theme_resources.h"
 
@@ -315,34 +316,12 @@ class RemoveTabAnimation : public TabStrip::TabAnimation {
   }
 
   virtual void AnimationEnded(const Animation* animation) {
-    RemoveTabAt(index_);
+    tabstrip_->RemoveTabAt(index_);
     HighlightCloseButton();
     TabStrip::TabAnimation::AnimationEnded(animation);
   }
 
  private:
-  // Cleans up the Tab from the TabStrip at the specified |index| once its
-  // animated removal is complete.
-  void RemoveTabAt(int index) const {
-    // Save a pointer to the Tab before we remove the TabData, we'll need this
-    // later.
-    Tab* removed = tabstrip_->tab_data_.at(index).tab;
-
-    // Remove the Tab from the TabStrip's list...
-    tabstrip_->tab_data_.erase(tabstrip_->tab_data_.begin() + index);
-
-    // If the TabContents being detached was removed as a result of a drag
-    // gesture from its corresponding Tab, we don't want to remove the Tab from
-    // the child list, because if we do so it'll stop receiving events and the
-    // drag will stall. So we only remove if a drag isn't active, or the Tab
-    // was for some other TabContents.
-    if (!tabstrip_->IsDragSessionActive() ||
-        !tabstrip_->drag_controller_->IsDragSourceTab(removed)) {
-      tabstrip_->RemoveChildView(removed);
-      delete removed;
-    }
-  }
-
   // When the animation completes, we send the Container a message to simulate
   // a mouse moved event at the current mouse position. This tickles the Tab
   // the mouse is currently over to show the "hot" state of the close button.
@@ -524,6 +503,11 @@ bool TabStrip::PointIsWithinWindowCaption(const gfx::Point& point) {
   if (v == this)
     return true;
 
+  // If the point is within the bounds of a Tab, the point can be considered
+  // part of the caption if there are no available drag operations for the Tab.
+  if (v->GetClassName() == Tab::kTabClassName && !HasAvailableDragActions())
+    return true;
+
   // Check to see if the point is within the non-button parts of the new tab
   // button. The button has a non-rectangular shape, so if it's not in the
   // visual portions of the button we treat it as a click to the caption.
@@ -618,7 +602,7 @@ void TabStrip::PaintChildren(ChromeCanvas* canvas) {
     }
   }
 
-  if (win_util::ShouldUseVistaFrame()) {
+  if (GetWidget()->AsWindow()->UseNativeFrame()) {
     // Make sure unselected tabs are somewhat transparent.
     SkPaint paint;
     paint.setColor(SkColorSetARGB(200, 255, 255, 255));
@@ -1534,3 +1518,19 @@ bool TabStrip::IsPointInTab(Tab* tab,
   return tab->HitTest(point_in_tab_coords);
 }
 
+void TabStrip::RemoveTabAt(int index) {
+  Tab* removed = tab_data_.at(index).tab;
+
+  // Remove the Tab from the TabStrip's list...
+  tab_data_.erase(tab_data_.begin() + index);
+
+  // If the TabContents being detached was removed as a result of a drag
+  // gesture from its corresponding Tab, we don't want to remove the Tab from
+  // the child list, because if we do so it'll stop receiving events and the
+  // drag will stall. So we only remove if a drag isn't active, or the Tab
+  // was for some other TabContents.
+  if (!IsDragSessionActive() || !drag_controller_->IsDragSourceTab(removed)) {
+    removed->GetParent()->RemoveChildView(removed);
+    delete removed;
+  }
+}

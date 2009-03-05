@@ -20,7 +20,6 @@
 #include "base/process_util.h"
 #include "base/registry.h"
 #include "base/string_util.h"
-#include "chrome/app/result_codes.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/pref_names.h"
@@ -33,6 +32,7 @@
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/pref_service.h"
+#include "chrome/common/result_codes.h"
 #include "chrome/installer/util/browser_distribution.h"
 #include "chrome/installer/util/google_update_constants.h"
 #include "chrome/installer/util/google_update_settings.h"
@@ -148,8 +148,11 @@ bool FirstRun::CreateChromeDesktopShortcut() {
   std::wstring chrome_exe;
   if (!PathService::Get(base::FILE_EXE, &chrome_exe))
     return false;
+  BrowserDistribution *dist = BrowserDistribution::GetDistribution();
+  if (!dist)
+    return false;
   return ShellUtil::CreateChromeDesktopShortcut(chrome_exe,
-    ShellUtil::CURRENT_USER, // create only for current user
+    dist->GetAppDescription(), ShellUtil::CURRENT_USER,
     true); // create if doesnt exist
 }
 

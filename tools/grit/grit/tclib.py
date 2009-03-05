@@ -76,9 +76,6 @@ class BaseMessage(object):
     assert isinstance(placeholder, Placeholder)
     dup = False
     for other in self.GetPlaceholders():
-      if (other.presentation.find(placeholder.presentation) != -1 or
-          placeholder.presentation.find(other.presentation) != -1):
-        assert(False, "Placeholder names must be unique and must not overlap")
       if other.presentation == placeholder.presentation:
         assert other.original == placeholder.original
         dup = True
@@ -144,13 +141,23 @@ class BaseMessage(object):
 class Message(BaseMessage):
   '''A message.'''  
   
-  def __init__(self, text='', placeholders=[], description='', meaning=''):
+  def __init__(self, text='', placeholders=[], description='', meaning='',
+               assigned_id=None):
     BaseMessage.__init__(self, text, placeholders, description, meaning)
+    self.assigned_id = assigned_id
   
   def ToTclibMessage(self):
     msg = grit.extern.tclib.Message('utf-8', meaning=self.meaning)
     self.FillTclibBaseMessage(msg)
     return msg
+
+  def GetId(self):
+    '''Use the assigned id if we have one.'''
+    if self.assigned_id:
+      return self.assigned_id
+
+    return BaseMessage.GetId(self)
+
 
 class Translation(BaseMessage):
   '''A translation.'''

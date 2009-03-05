@@ -167,7 +167,6 @@ class WidgetWin : public Widget,
     // Range handlers must go first!
     MESSAGE_RANGE_HANDLER_EX(WM_MOUSEFIRST, WM_MOUSELAST, OnMouseRange)
     MESSAGE_RANGE_HANDLER_EX(WM_NCMOUSEMOVE, WM_NCMOUSEMOVE, OnMouseRange)
-    MESSAGE_RANGE_HANDLER_EX(WM_SETTINGCHANGE, WM_SETTINGCHANGE, OnSettingChange)
 
     // Reflected message handler
     MESSAGE_HANDLER_EX(kReflectedMessage, OnReflectedMessage)
@@ -176,6 +175,9 @@ class WidgetWin : public Widget,
     MESSAGE_HANDLER_EX(WM_NCUAHDRAWCAPTION, OnNCUAHDrawCaption)
     MESSAGE_HANDLER_EX(WM_NCUAHDRAWFRAME, OnNCUAHDrawFrame)
 
+    // Vista and newer
+    MESSAGE_HANDLER_EX(WM_DWMCOMPOSITIONCHANGED, OnDwmCompositionChanged)
+
     // Non-atlcrack.h handlers
     MESSAGE_HANDLER_EX(WM_GETOBJECT, OnGetObject)
     MESSAGE_HANDLER_EX(WM_NCMOUSELEAVE, OnNCMouseLeave)
@@ -183,6 +185,7 @@ class WidgetWin : public Widget,
 
     // This list is in _ALPHABETICAL_ order! OR I WILL HURT YOU.
     MSG_WM_ACTIVATE(OnActivate)
+    MSG_WM_ACTIVATEAPP(OnActivateApp)
     MSG_WM_APPCOMMAND(OnAppCommand)
     MSG_WM_CANCELMODE(OnCancelMode)
     MSG_WM_CAPTURECHANGED(OnCaptureChanged)
@@ -236,6 +239,7 @@ class WidgetWin : public Widget,
     MSG_WM_SETFOCUS(OnSetFocus)
     MSG_WM_SETICON(OnSetIcon)
     MSG_WM_SETTEXT(OnSetText)
+    MSG_WM_SETTINGCHANGE(OnSettingChange)
     MSG_WM_SIZE(OnSize)
     MSG_WM_SYSCOMMAND(OnSysCommand)
     MSG_WM_THEMECHANGED(OnThemeChanged)
@@ -347,7 +351,12 @@ class WidgetWin : public Widget,
   //       handling to the appropriate Process* function. This is so that
   //       subclasses can easily override these methods to do different things
   //       and have a convenient function to call to get the default behavior.
-  virtual void OnActivate(UINT action, BOOL minimized, HWND window) { }
+  virtual void OnActivate(UINT action, BOOL minimized, HWND window) {
+    SetMsgHandled(FALSE);
+  }
+  virtual void OnActivateApp(BOOL active, DWORD thread_id) {
+    SetMsgHandled(FALSE);
+  }
   virtual LRESULT OnAppCommand(HWND window, short app_command, WORD device,
                                int keystate) {
     SetMsgHandled(FALSE);
@@ -356,15 +365,24 @@ class WidgetWin : public Widget,
   virtual void OnCancelMode() {}
   virtual void OnCaptureChanged(HWND hwnd);
   virtual void OnClose();
-  virtual void OnCommand(
-    UINT notification_code, int command_id, HWND window) { SetMsgHandled(FALSE); }
+  virtual void OnCommand(UINT notification_code, int command_id, HWND window) {
+    SetMsgHandled(FALSE);
+  }
   virtual LRESULT OnCreate(LPCREATESTRUCT create_struct) { return 0; }
   // WARNING: If you override this be sure and invoke super, otherwise we'll
   // leak a few things.
   virtual void OnDestroy();
+  virtual LRESULT OnDwmCompositionChanged(UINT msg,
+                                          WPARAM w_param,
+                                          LPARAM l_param) {
+    SetMsgHandled(FALSE);
+    return 0;
+  }
   virtual void OnEndSession(BOOL ending, UINT logoff) { SetMsgHandled(FALSE); }
   virtual void OnEnterSizeMove() { SetMsgHandled(FALSE); }
-  virtual void OnExitMenuLoop(BOOL is_track_popup_menu) { SetMsgHandled(FALSE); }
+  virtual void OnExitMenuLoop(BOOL is_track_popup_menu) {
+    SetMsgHandled(FALSE);
+  }
   virtual LRESULT OnEraseBkgnd(HDC dc);
   virtual LRESULT OnGetObject(UINT uMsg, WPARAM w_param, LPARAM l_param);
   virtual void OnHScroll(int scroll_type, short position, HWND scrollbar) {
@@ -384,7 +402,7 @@ class WidgetWin : public Widget,
   virtual void OnMButtonUp(UINT flags, const CPoint& point);
   virtual LRESULT OnMouseActivate(HWND window, UINT hittest_code, UINT message);
   virtual void OnMouseMove(UINT flags, const CPoint& point);
-  virtual LRESULT OnMouseLeave(UINT uMsg, WPARAM w_param, LPARAM l_param);
+  virtual LRESULT OnMouseLeave(UINT message, WPARAM w_param, LPARAM l_param);
   virtual void OnMove(const CPoint& point) { SetMsgHandled(FALSE); }
   virtual void OnMoving(UINT param, const LPRECT new_bounds) { }
   virtual LRESULT OnMouseWheel(UINT flags, short distance, const CPoint& point);
@@ -445,7 +463,7 @@ class WidgetWin : public Widget,
     SetMsgHandled(FALSE);
     return 0;
   }
-  virtual LRESULT OnSettingChange(UINT msg, WPARAM w_param, LPARAM l_param);
+  virtual void OnSettingChange(UINT flags, const wchar_t* section);
   virtual void OnSize(UINT param, const CSize& size);
   virtual void OnSysCommand(UINT notification_code, CPoint click) { }
   virtual void OnThemeChanged();
@@ -468,10 +486,7 @@ class WidgetWin : public Widget,
   // Actually handle mouse events. These functions are called by subclasses who
   // override the message handlers above to do the actual real work of handling
   // the event in the View system.
-  bool ProcessMousePressed(const CPoint& point,
-                           UINT flags,
-                           bool dbl_click,
-                           bool non_client);
+  bool ProcessMousePressed(const CPoint& point, UINT flags, bool dbl_click);
   void ProcessMouseDragged(const CPoint& point, UINT flags);
   void ProcessMouseReleased(const CPoint& point, UINT flags);
   void ProcessMouseMoved(const CPoint& point, UINT flags, bool is_nonclient);

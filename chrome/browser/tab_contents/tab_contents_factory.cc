@@ -17,7 +17,6 @@
 #if defined(OS_WIN)
 // TODO(port): port these headers to posix.
 #include "chrome/browser/dom_ui/html_dialog_contents.h"
-#include "chrome/browser/tab_contents/native_ui_contents.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
 #elif defined(OS_POSIX)
 #include "chrome/common/temp_scaffolding_stubs.h"
@@ -48,24 +47,18 @@ TabContents* TabContents::CreateWithType(TabContentsType type,
     case TAB_CONTENTS_WEB:
       contents = new WebContents(profile, instance, NULL, MSG_ROUTING_NONE, NULL);
       break;
-    case TAB_CONTENTS_ABOUT_UI:
-      contents = new BrowserAboutHandler(profile, instance, NULL);
-      break;
 // TODO(port): remove this platform define, either by porting the tab contents
 // types or removing them completely.
 #if defined(OS_WIN)
     case TAB_CONTENTS_HTML_DIALOG:
       contents = new HtmlDialogContents(profile, instance, NULL);
       break;
-    case TAB_CONTENTS_NATIVE_UI:
-      contents = new NativeUIContents(profile);
-      break;
+#endif  // defined(OS_WIN)
     case TAB_CONTENTS_DEBUGGER:
     case TAB_CONTENTS_NEW_TAB_UI:
     case TAB_CONTENTS_DOM_UI:
       contents = new DOMUIContents(profile, instance, NULL);
       break;
-#endif  // defined(OS_WIN)
     default:
       if (g_extra_types) {
         TabContentsFactoryMap::const_iterator it = g_extra_types->find(type);
@@ -86,6 +79,8 @@ TabContents* TabContents::CreateWithType(TabContentsType type,
 
 // static
 TabContentsType TabContents::TypeForURL(GURL* url) {
+  // The BrowserURLHandler::HandleBrowserURL call should just be inside the
+  // NavigationController once this class is deleted.
   DCHECK(url);
   if (g_extra_types) {
     TabContentsFactoryMap::const_iterator it = g_extra_types->begin();
@@ -103,9 +98,6 @@ TabContentsType TabContents::TypeForURL(GURL* url) {
   if (BrowserURLHandler::HandleBrowserURL(url, &type))
     return type;
 
-  if (url->SchemeIs(NativeUIContents::GetScheme().c_str()))
-    return TAB_CONTENTS_NATIVE_UI;
-
   if (HtmlDialogContents::IsHtmlDialogUrl(*url))
     return TAB_CONTENTS_HTML_DIALOG;
 
@@ -114,13 +106,13 @@ TabContentsType TabContents::TypeForURL(GURL* url) {
 
   if (url->SchemeIs(DOMUIContents::GetScheme().c_str()))
     return TAB_CONTENTS_DOM_UI;
-
 #elif defined(OS_POSIX)
   TabContentsType type(TAB_CONTENTS_UNKNOWN_TYPE);
-  if (BrowserURLHandler::HandleBrowserURL(url, &type) &&
-      type == TAB_CONTENTS_ABOUT_UI) {
+  if (BrowserURLHandler::HandleBrowserURL(url, &type)) {
     return type;
   }
+  if (url->SchemeIs(DOMUIContents::GetScheme().c_str()))
+    return TAB_CONTENTS_DOM_UI;
   NOTIMPLEMENTED();
 #endif
 

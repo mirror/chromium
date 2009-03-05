@@ -190,7 +190,7 @@ void InterstitialPage::Hide() {
   // Let's revert to the original title if necessary.
   NavigationEntry* entry = tab_->controller()->GetActiveEntry();
   if (!new_navigation_ && should_revert_tab_title_) {
-    entry->set_title(original_tab_title_);
+    entry->set_title(WideToUTF16Hack(original_tab_title_));
     tab_->NotifyNavigationStateChanged(TabContents::INVALIDATE_TITLE);
   }
   delete this;
@@ -256,11 +256,11 @@ RenderViewHost* InterstitialPage::CreateRenderViewHost() {
   view->set_parent_hwnd(tab_->GetContentNativeView());
   WebContentsViewWin* web_contents_view =
       static_cast<WebContentsViewWin*>(tab_->view());
+  render_view_host->AllowDomAutomationBindings();
   render_view_host->CreateRenderView();
   // SetSize must be called after CreateRenderView or the HWND won't show.
   view->SetSize(web_contents_view->GetContainerSize());
 
-  render_view_host->AllowDomAutomationBindings();
   return render_view_host;
 #else
   // TODO(port): RenderWidgetHost* is implemented, but Create and
@@ -392,10 +392,10 @@ void InterstitialPage::UpdateTitle(RenderViewHost* render_view_host,
   // If this interstitial is shown on an existing navigation entry, we'll need
   // to remember its title so we can revert to it when hidden.
   if (!new_navigation_ && !should_revert_tab_title_) {
-    original_tab_title_ = entry->title();
+    original_tab_title_ = UTF16ToWideHack(entry->title());
     should_revert_tab_title_ = true;
   }
-  entry->set_title(title);
+  entry->set_title(WideToUTF16Hack(title));
   tab_->NotifyNavigationStateChanged(TabContents::INVALIDATE_TITLE);
 }
 

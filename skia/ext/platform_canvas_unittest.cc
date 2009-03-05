@@ -23,8 +23,10 @@ namespace skia {
 
 namespace {
 
-// Return true if the canvas is filled to canvas_color,
-// and contains a single rectangle filled to rect_color.
+// Return true if the canvas is filled to canvas_color, and contains a single
+// rectangle filled to rect_color. This function ignores the alpha channel,
+// since Windows will sometimes clear the alpha channel when drawing, and we
+// will fix that up later in cases it's necessary.
 bool VerifyRect(const PlatformCanvas& canvas,
                 uint32_t canvas_color, uint32_t rect_color,
                 int x, int y, int w, int h) {
@@ -32,16 +34,21 @@ bool VerifyRect(const PlatformCanvas& canvas,
   const SkBitmap& bitmap = device.accessBitmap(false);
   SkAutoLockPixels lock(bitmap);
 
+  // For masking out the alpha values.
+  uint32_t alpha_mask = 0xFF << SK_A32_SHIFT;
+
   for (int cur_y = 0; cur_y < bitmap.height(); cur_y++) {
     for (int cur_x = 0; cur_x < bitmap.width(); cur_x++) {
       if (cur_x >= x && cur_x < x + w &&
           cur_y >= y && cur_y < y + h) {
         // Inside the square should be rect_color
-        if (*bitmap.getAddr32(cur_x, cur_y) != rect_color)
+        if ((*bitmap.getAddr32(cur_x, cur_y) | alpha_mask) !=
+            (rect_color | alpha_mask))
           return false;
       } else {
         // Outside the square should be canvas_color
-        if (*bitmap.getAddr32(cur_x, cur_y) != canvas_color)
+        if ((*bitmap.getAddr32(cur_x, cur_y) | alpha_mask) !=
+            (canvas_color | alpha_mask))
           return false;
       }
     }
@@ -116,9 +123,6 @@ class LayerSaver {
   }
 
   ~LayerSaver() {
-#if defined(OS_WIN)
-    canvas_.getTopPlatformDevice().fixupAlphaBeforeCompositing();
-#endif
     canvas_.restore();
   }
 
@@ -177,9 +181,6 @@ TEST(PlatformCanvas, ClipRegion) {
   // with a black rectangle.
   // Note: Don't use LayerSaver, since internally it sets a clip region.
   DrawNativeRect(canvas, 0, 0, 16, 16);
-#if defined(OS_WIN)
-  canvas.getTopPlatformDevice().fixupAlphaBeforeCompositing();
-#endif
   EXPECT_TRUE(VerifyCanvasColor(canvas, SK_ColorBLACK));
 
   // Test that intersecting disjoint clip rectangles sets an empty clip region
@@ -205,6 +206,9 @@ TEST(PlatformCanvas, FillLayer) {
   {
     LayerSaver layer(canvas, kLayerX, kLayerY, kLayerW, kLayerH);
     DrawNativeRect(canvas, 0, 0, 100, 100);
+#if defined(OS_WIN)
+    canvas.getTopPlatformDevice().makeOpaque(0, 0, 100, 100);
+#endif
   }
   EXPECT_TRUE(VerifyBlackRect(canvas, kLayerX, kLayerY, kLayerW, kLayerH));
 
@@ -213,6 +217,10 @@ TEST(PlatformCanvas, FillLayer) {
   {
     LayerSaver layer(canvas, kLayerX, kLayerY, kLayerW, kLayerH);
     DrawNativeRect(canvas, kInnerX, kInnerY, kInnerW, kInnerH);
+#if defined(OS_WIN)
+    canvas.getTopPlatformDevice().makeOpaque(kInnerX, kInnerY,
+                                             kInnerW, kInnerH);
+#endif
   }
   EXPECT_TRUE(VerifyBlackRect(canvas, kInnerX, kInnerY, kInnerW, kInnerH));
 
@@ -223,6 +231,10 @@ TEST(PlatformCanvas, FillLayer) {
     canvas.save();
     AddClip(canvas, kInnerX, kInnerY, kInnerW, kInnerH);
     DrawNativeRect(canvas, 0, 0, 100, 100);
+#if defined(OS_WIN)
+    canvas.getTopPlatformDevice().makeOpaque(
+        kInnerX, kInnerY, kInnerW, kInnerH);
+#endif
     canvas.restore();
   }
   EXPECT_TRUE(VerifyBlackRect(canvas, kInnerX, kInnerY, kInnerW, kInnerH));
@@ -234,6 +246,9 @@ TEST(PlatformCanvas, FillLayer) {
   {
     LayerSaver layer(canvas, kLayerX, kLayerY, kLayerW, kLayerH);
     DrawNativeRect(canvas, 0, 0, 100, 100);
+#if defined(OS_WIN)
+    canvas.getTopPlatformDevice().makeOpaque(0, 0, 100, 100);
+#endif
   }
   canvas.restore();
   EXPECT_TRUE(VerifyBlackRect(canvas, kInnerX, kInnerY, kInnerW, kInnerH));
@@ -252,6 +267,9 @@ TEST(PlatformCanvas, TranslateLayer) {
   {
     LayerSaver layer(canvas, kLayerX, kLayerY, kLayerW, kLayerH);
     DrawNativeRect(canvas, 0, 0, 100, 100);
+#if defined(OS_WIN)
+    canvas.getTopPlatformDevice().makeOpaque(0, 0, 100, 100);
+#endif
   }
   canvas.restore();
   EXPECT_TRUE(VerifyBlackRect(canvas, kLayerX + 1, kLayerY + 1,
@@ -264,6 +282,10 @@ TEST(PlatformCanvas, TranslateLayer) {
   {
     LayerSaver layer(canvas, kLayerX, kLayerY, kLayerW, kLayerH);
     DrawNativeRect(canvas, kInnerX, kInnerY, kInnerW, kInnerH);
+#if defined(OS_WIN)
+    canvas.getTopPlatformDevice().makeOpaque(kInnerX, kInnerY,
+                                             kInnerW, kInnerH);
+#endif
   }
   canvas.restore();
   EXPECT_TRUE(VerifyBlackRect(canvas, kInnerX + 1, kInnerY + 1,
@@ -276,6 +298,10 @@ TEST(PlatformCanvas, TranslateLayer) {
     LayerSaver layer(canvas, kLayerX, kLayerY, kLayerW, kLayerH);
     canvas.translate(1, 1);
     DrawNativeRect(canvas, kInnerX, kInnerY, kInnerW, kInnerH);
+#if defined(OS_WIN)
+    canvas.getTopPlatformDevice().makeOpaque(kInnerX, kInnerY,
+                                             kInnerW, kInnerH);
+#endif
   }
   canvas.restore();
   EXPECT_TRUE(VerifyBlackRect(canvas, kInnerX + 1, kInnerY + 1,
@@ -290,6 +316,10 @@ TEST(PlatformCanvas, TranslateLayer) {
     canvas.translate(1, 1);
     AddClip(canvas, kInnerX, kInnerY, kInnerW, kInnerH);
     DrawNativeRect(canvas, 0, 0, 100, 100);
+#if defined(OS_WIN)
+    canvas.getTopPlatformDevice().makeOpaque(kInnerX, kInnerY,
+                                             kInnerW, kInnerH);
+#endif
   }
   canvas.restore();
   EXPECT_TRUE(VerifyBlackRect(canvas, kInnerX + 2, kInnerY + 2,

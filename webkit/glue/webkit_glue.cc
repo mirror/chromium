@@ -31,13 +31,17 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "SharedBuffer.h"
 MSVC_POP_WARNING();
 
+#include "WebString.h"
+
 #undef LOG
 #include "webkit/glue/webkit_glue.h"
 
 #include "base/file_version_info.h"
 #include "base/singleton.h"
+#include "base/string_piece.h"
 #include "base/string_util.h"
 #include "base/sys_info.h"
+#include "base/sys_string_conversions.h"
 #include "skia/include/SkBitmap.h"
 #include "webkit/glue/event_conversion.h"
 #include "webkit/glue/glue_util.h"
@@ -66,26 +70,10 @@ void SetRecordPlaybackMode(bool value) {
 #endif
 }
 
-
 void SetShouldExposeGCController(bool enable) {
 #if USE(V8)
   WebCore::ScriptController::setShouldExposeGCController(enable);
 #endif
-}
-
-static bool layout_test_mode_ = false;
-
-void SetLayoutTestMode(bool enable) {
-  layout_test_mode_ = enable;
-}
-
-bool IsLayoutTestMode() {
-  return layout_test_mode_;
-}
-
-void InitializeForTesting() {
-  WTF::initializeThreading();
-  WebCore::AtomicString::init();
 }
 
 void EnableWebCoreNotImplementedLogging() {
@@ -291,6 +279,22 @@ bool DecodeImage(const std::string& image_data, SkBitmap* image) {
 #endif
 }
 
+FilePath::StringType WebStringToFilePathString(const WebKit::WebString& str) {
+#if defined(OS_POSIX)
+  return base::SysWideToNativeMB(UTF16ToWideHack(str));
+#elif defined(OS_WIN)
+  return UTF16ToWideHack(str);
+#endif
+}
+
+WebKit::WebString FilePathStringToWebString(const FilePath::StringType& str) {
+#if defined(OS_POSIX)
+  return WideToUTF16Hack(base::SysNativeMBToWide(str));
+#elif defined(OS_WIN)
+  return WideToUTF16Hack(str);
+#endif
+}
+
 // Convert from WebKit types to Glue types and notify the embedder. This should
 // not perform complex processing since it may be called a lot.
 void NotifyFormStateChanged(const WebCore::Document* document) {
@@ -421,21 +425,6 @@ const std::string& GetUserAgent(const GURL& url) {
     }
   }
   return g_user_agent->user_agent;
-}
-
-void NotifyJSOutOfMemory(WebCore::Frame* frame) {
-  if (!frame)
-    return;
-
-  // Dispatch to the delegate of the view that owns the frame.
-  WebFrame* webframe = WebFrameImpl::FromFrame(frame);
-  WebView* webview = webframe->GetView();
-  if (!webview)
-    return;
-  WebViewDelegate* delegate = webview->GetDelegate();
-  if (!delegate)
-    return;
-  delegate->JSOutOfMemory();
 }
 
 void SetForcefullyTerminatePluginProcess(bool value) {

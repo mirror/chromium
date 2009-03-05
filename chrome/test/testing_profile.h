@@ -102,7 +102,7 @@ class TestingProfile : public Profile {
     prefs_filename =
         prefs_filename.Append(FILE_PATH_LITERAL("TestPreferences"));
     if (!prefs_.get()) {
-      prefs_.reset(new PrefService(prefs_filename.ToWStringHack()));
+      prefs_.reset(new PrefService(prefs_filename));
       Profile::RegisterUserPrefs(prefs_.get());
       browser::RegisterAllPrefs(prefs_.get(), prefs_.get());
     }
@@ -121,6 +121,9 @@ class TestingProfile : public Profile {
     return false;
   }
   virtual URLRequestContext* GetRequestContext() {
+    return NULL;
+  }
+  virtual URLRequestContext* GetRequestContextForMedia() {
     return NULL;
   }
   void set_session_service(SessionService* session_service) {

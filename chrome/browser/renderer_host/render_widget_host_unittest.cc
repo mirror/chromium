@@ -12,8 +12,6 @@
 #include "chrome/common/render_messages.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
-namespace {
-
 // RenderWidgetHostProcess -----------------------------------------------------
 
 class RenderWidgetHostProcess : public MockRenderProcessHost {
@@ -148,7 +146,7 @@ class MockRenderWidgetHost : public RenderWidgetHost {
 
 class RenderWidgetHostTest : public testing::Test {
  public:
-   RenderWidgetHostTest() : process_(NULL) {
+  RenderWidgetHostTest() : process_(NULL) {
   }
   ~RenderWidgetHostTest() {
   }
@@ -181,8 +179,6 @@ class RenderWidgetHostTest : public testing::Test {
 
   DISALLOW_COPY_AND_ASSIGN(RenderWidgetHostTest);
 };
-
-}  // namespace
 
 // -----------------------------------------------------------------------------
 
@@ -334,7 +330,7 @@ TEST_F(RenderWidgetHostTest, HandleKeyEventsWeSent) {
   WebKeyboardEvent key_event;
   key_event.type = WebInputEvent::KEY_DOWN;
   key_event.modifiers = WebInputEvent::CTRL_KEY;
-  key_event.key_code = base::VKEY_L;  // non-null made up value.
+  key_event.windows_key_code = base::VKEY_L;  // non-null made up value.
 
   host_->ForwardKeyboardEvent(key_event);
 

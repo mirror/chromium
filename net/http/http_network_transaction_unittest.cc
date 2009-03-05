@@ -1060,6 +1060,220 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthProxyKeepAlive) {
   EXPECT_EQ(L"basic", response->auth_challenge->scheme);
 }
 
+static void ConnectStatusHelperWithExpectedStatus(
+    const MockRead& status, int expected_status) {
+  // Configure against proxy server "myproxy:70".
+  scoped_ptr<net::ProxyService> proxy_service(
+      CreateFixedProxyService("myproxy:70"));
+
+  scoped_refptr<net::HttpNetworkSession> session(
+      CreateSession(proxy_service.get()));
+
+  scoped_ptr<net::HttpTransaction> trans(new net::HttpNetworkTransaction(
+      session.get(), &mock_socket_factory));
+
+  net::HttpRequestInfo request;
+  request.method = "GET";
+  request.url = GURL("https://www.google.com/");
+  request.load_flags = 0;
+
+  // Since we have proxy, should try to establish tunnel.
+  MockWrite data_writes[] = {
+    MockWrite("CONNECT www.google.com:443 HTTP/1.1\r\n"
+              "Host: www.google.com\r\n\r\n"),
+  };
+
+  MockRead data_reads[] = {
+    status,
+    MockRead("Content-Length: 10\r\n\r\n"),
+    // No response body because the test stops reading here.
+    MockRead(false, net::ERR_UNEXPECTED),  // Should not be reached.
+  };
+
+  MockSocket data;
+  data.writes = data_writes;
+  data.reads = data_reads;
+  mock_sockets[0] = &data;
+  mock_sockets[1] = NULL;
+
+  TestCompletionCallback callback;
+
+  int rv = trans->Start(&request, &callback);
+  EXPECT_EQ(net::ERR_IO_PENDING, rv);
+
+  rv = callback.WaitForResult();
+  EXPECT_EQ(expected_status, rv);
+}
+
+static void ConnectStatusHelper(const MockRead& status) {
+  ConnectStatusHelperWithExpectedStatus(
+      status, net::ERR_TUNNEL_CONNECTION_FAILED);
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus100) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 100 Continue\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus101) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 101 Switching Protocols\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus201) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 201 Created\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus202) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 202 Accepted\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus203) {
+  ConnectStatusHelper(
+      MockRead("HTTP/1.1 203 Non-Authoritative Information\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus204) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 204 No Content\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus205) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 205 Reset Content\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus206) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 206 Partial Content\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus300) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 300 Multiple Choices\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus301) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 301 Moved Permanently\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus302) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 302 Found\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus303) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 303 See Other\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus304) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 304 Not Modified\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus305) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 305 Use Proxy\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus306) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 306\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus307) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 307 Temporary Redirect\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus400) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 400 Bad Request\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus401) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 401 Unauthorized\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus402) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 402 Payment Required\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus403) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 403 Forbidden\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus404) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 404 Not Found\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus405) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 405 Method Not Allowed\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus406) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 406 Not Acceptable\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus407) {
+  ConnectStatusHelperWithExpectedStatus(
+      MockRead("HTTP/1.1 407 Proxy Authentication Required\r\n"),
+      net::ERR_PROXY_AUTH_REQUESTED);
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus408) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 408 Request Timeout\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus409) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 409 Conflict\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus410) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 410 Gone\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus411) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 411 Length Required\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus412) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 412 Precondition Failed\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus413) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 413 Request Entity Too Large\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus414) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 414 Request-URI Too Long\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus415) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 415 Unsupported Media Type\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus416) {
+  ConnectStatusHelper(
+      MockRead("HTTP/1.1 416 Requested Range Not Satisfiable\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus417) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 417 Expectation Failed\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus500) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 500 Internal Server Error\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus501) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 501 Not Implemented\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus502) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 502 Bad Gateway\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus503) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 503 Service Unavailable\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus504) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 504 Gateway Timeout\r\n"));
+}
+
+TEST_F(HttpNetworkTransactionTest, ConnectStatus505) {
+  ConnectStatusHelper(MockRead("HTTP/1.1 505 HTTP Version Not Supported\r\n"));
+}
+
 // Test the flow when both the proxy server AND origin server require
 // authentication. Again, this uses basic auth for both since that is
 // the simplest to mock.
@@ -1198,6 +1412,131 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthProxyThenServer) {
   EXPECT_EQ(100, response->headers->GetContentLength());
 }
 
+// Test NTLM authentication.
+// TODO(wtc): This test doesn't work because we need to control the 8 random
+// bytes and the "workstation name" for a deterministic expected result.
+TEST_F(HttpNetworkTransactionTest, DISABLED_NTLMAuth) {
+  scoped_ptr<net::ProxyService> proxy_service(CreateNullProxyService());
+  scoped_ptr<net::HttpTransaction> trans(new net::HttpNetworkTransaction(
+      CreateSession(proxy_service.get()), &mock_socket_factory));
+
+  net::HttpRequestInfo request;
+  request.method = "GET";
+  request.url = GURL("http://172.22.68.17/kids/login.aspx");
+  request.load_flags = 0;
+
+  MockWrite data_writes1[] = {
+    MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
+              "Host: 172.22.68.17\r\n"
+              "Connection: keep-alive\r\n\r\n"),
+  };
+
+  MockRead data_reads1[] = {
+    MockRead("HTTP/1.1 401 Access Denied\r\n"),
+    // Negotiate and NTLM are often requested together.  We only support NTLM.
+    MockRead("WWW-Authenticate: Negotiate\r\n"),
+    MockRead("WWW-Authenticate: NTLM\r\n"),
+    MockRead("Connection: close\r\n"),
+    MockRead("Content-Length: 42\r\n"),
+    MockRead("Content-Type: text/html\r\n"),
+    MockRead("Proxy-Support: Session-Based-Authentication\r\n\r\n"),
+    // Missing content -- won't matter, as connection will be reset.
+    MockRead(false, net::ERR_UNEXPECTED),
+  };
+
+  MockWrite data_writes2[] = {
+    // After automatically restarting with a null identity, this is the
+    // request we should be issuing -- the final header line contains a Type
+    // 1 message.
+    MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
+              "Host: 172.22.68.17\r\n"
+              "Connection: keep-alive\r\n"
+              "Authorization: NTLM "
+              "TlRMTVNTUAABAAAAB4IIAAAAAAAAAAAAAAAAAAAAAAA=\r\n\r\n"),
+
+    // After calling trans->RestartWithAuth(), we should send a Type 3 message
+    // (the credentials for the origin server).  The second request continues
+    // on the same connection.
+    MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
+              "Host: 172.22.68.17\r\n"
+              "Connection: keep-alive\r\n"
+              "Authorization: NTLM TlRMTVNTUAADAAAAGAAYAHAAAAAYABgAiA"
+              "AAAAAAAABAAAAAGAAYAEAAAAAYABgAWAAAAAAAAAAAAAAABYIIAHQA"
+              "ZQBzAHQAaQBuAGcALQBuAHQAbABtAHcAdABjAGgAYQBuAGcALQBjAG"
+              "8AcgBwAMertjYHfqUhAAAAAAAAAAAAAAAAAAAAAEP3kddZKtMDMssm"
+              "KYA6SCllVGUeyoQppQ==\r\n\r\n"),
+  };
+
+  MockRead data_reads2[] = {
+    // The origin server responds with a Type 2 message.
+    MockRead("HTTP/1.1 401 Access Denied\r\n"),
+    MockRead("WWW-Authenticate: NTLM "
+             "TlRMTVNTUAACAAAADAAMADgAAAAFgokCTroKF1e/DRcAAAAAAAAAALo"
+             "AugBEAAAABQEoCgAAAA9HAE8ATwBHAEwARQACAAwARwBPAE8ARwBMAE"
+             "UAAQAaAEEASwBFAEUAUwBBAFIAQQAtAEMATwBSAFAABAAeAGMAbwByA"
+             "HAALgBnAG8AbwBnAGwAZQAuAGMAbwBtAAMAQABhAGsAZQBlAHMAYQBy"
+             "AGEALQBjAG8AcgBwAC4AYQBkAC4AYwBvAHIAcAAuAGcAbwBvAGcAbAB"
+             "lAC4AYwBvAG0ABQAeAGMAbwByAHAALgBnAG8AbwBnAGwAZQAuAGMAbw"
+             "BtAAAAAAA=\r\n"),
+    MockRead("Content-Length: 42\r\n"),
+    MockRead("Content-Type: text/html\r\n"),
+    MockRead("Proxy-Support: Session-Based-Authentication\r\n\r\n"),
+    MockRead("You are not authorized to view this page\r\n"),
+
+    // Lastly we get the desired content.
+    MockRead("HTTP/1.1 200 OK\r\n"),
+    MockRead("Content-Type: text/html; charset=utf-8\r\n"),
+    MockRead("Content-Length: 13\r\n\r\n"),
+    MockRead("Please Login\r\n"),
+    MockRead(false, net::OK),
+  };
+
+  MockSocket data1;
+  data1.reads = data_reads1;
+  data1.writes = data_writes1;
+  MockSocket data2;
+  data2.reads = data_reads2;
+  data2.writes = data_writes2;
+  mock_sockets[0] = &data1;
+  mock_sockets[1] = &data2;
+  mock_sockets[2] = NULL;
+
+  TestCompletionCallback callback1;
+
+  int rv = trans->Start(&request, &callback1);
+  EXPECT_EQ(net::ERR_IO_PENDING, rv);
+
+  rv = callback1.WaitForResult();
+  EXPECT_EQ(net::OK, rv);
+
+  const net::HttpResponseInfo* response = trans->GetResponseInfo();
+  EXPECT_FALSE(response == NULL);
+
+  // The password prompt info should have been set in response->auth_challenge.
+  EXPECT_FALSE(response->auth_challenge.get() == NULL);
+
+  // TODO(eroman): this should really include the effective port (80)
+  EXPECT_EQ(L"172.22.68.17", response->auth_challenge->host);
+  EXPECT_EQ(L"", response->auth_challenge->realm);
+  EXPECT_EQ(L"ntlm", response->auth_challenge->scheme);
+
+  // Pass a null identity to the first RestartWithAuth.
+  // TODO(wtc): In the future we may pass the actual identity to the first
+  // RestartWithAuth.
+
+  TestCompletionCallback callback2;
+
+  rv = trans->RestartWithAuth(L"testing-ntlm", L"testing-ntlm", &callback2);
+  EXPECT_EQ(net::ERR_IO_PENDING, rv);
+
+  rv = callback2.WaitForResult();
+  EXPECT_EQ(net::OK, rv);
+
+  response = trans->GetResponseInfo();
+  EXPECT_TRUE(response->auth_challenge.get() == NULL);
+  EXPECT_EQ(13, response->headers->GetContentLength());
+}
+
 // Test reading a server response which has only headers, and no body.
 // After some maximum number of bytes is consumed, the transaction should
 // fail with ERR_RESPONSE_HEADERS_TOO_BIG.
@@ -1269,7 +1608,6 @@ TEST_F(HttpNetworkTransactionTest, DontRecycleTCPSocketForSSLTunnel) {
   MockRead data_reads1[] = {
     MockRead("HTTP/1.1 404 Not Found\r\n"),
     MockRead("Content-Length: 10\r\n\r\n"),
-    MockRead("0123456789"),
     MockRead(false, net::ERR_UNEXPECTED),  // Should not be reached.
   };
 
@@ -1285,19 +1623,10 @@ TEST_F(HttpNetworkTransactionTest, DontRecycleTCPSocketForSSLTunnel) {
   EXPECT_EQ(net::ERR_IO_PENDING, rv);
 
   rv = callback1.WaitForResult();
-  EXPECT_EQ(net::OK, rv);
+  EXPECT_EQ(net::ERR_TUNNEL_CONNECTION_FAILED, rv);
 
   const net::HttpResponseInfo* response = trans->GetResponseInfo();
-  EXPECT_FALSE(response == NULL);
-
-  EXPECT_TRUE(response->headers->IsKeepAlive());
-  EXPECT_EQ(404, response->headers->response_code());
-  EXPECT_EQ(10, response->headers->GetContentLength());
-  EXPECT_TRUE(net::HttpVersion(1, 1) == response->headers->GetHttpVersion());
-
-  std::string response_data;
-  rv = ReadTransaction(trans.get(), &response_data);
-  EXPECT_STREQ("0123456789", response_data.c_str());
+  EXPECT_TRUE(response == NULL);
 
   // We now check to make sure the TCPClientSocket was not added back to
   // the pool.

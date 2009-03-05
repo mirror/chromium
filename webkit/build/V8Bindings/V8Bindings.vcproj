@@ -128,6 +128,18 @@
 			Name="custom"
 			>
 		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8CanvasRenderingContext2DCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8ClipboardCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8CSSStyleDeclarationCustom.cpp"
+			>
+		</File>
+		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8CustomBinding.h"
 			>
 		</File>
@@ -136,7 +148,27 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8DocumentCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8DOMParserConstructor.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8DOMStringListCustom.cpp"
+			>
+		</File>
+		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8DOMWindowCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8EventCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8HTMLCanvasElementCustom.cpp"
 			>
 		</File>
 		<File
@@ -144,7 +176,15 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8HTMLDocumentCustom.cpp"
+			>
+		</File>
+		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8HTMLFormElementCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8HTMLFrameSetElementCustom.cpp"
 			>
 		</File>
 		<File
@@ -172,11 +212,43 @@
 			>
 		</File>
 		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8MessageChannelConstructor.cpp"
+			>
+		</File>
+		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8NamedNodesCollection.cpp"
 			>
 		</File>
 		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8NamedNodesCollection.h"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8NamedNodeMapCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8NavigatorCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8NodeCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8NodeFilterCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8NodeIteratorCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8NodeListCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8StyleSheetListCustom.cpp"
 			>
 		</File>
 		<File
@@ -189,6 +261,26 @@
 		</File>
 		<File
 			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8SVGMatrixCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8TreeWalkerCustom.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8WebKitCSSMatrixConstructor.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8XMLSerializerConstructor.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8XPathEvaluatorConstructor.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\custom\V8XSLTProcessorCustom.cpp"
 			>
 		</File>
 		</Filter>
@@ -2340,6 +2432,14 @@
 				>
 			</File>
 			<File
+				RelativePath="$(IntDir)\DerivedSources\V8WebKitPoint.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(IntDir)\DerivedSources\V8WebKitPoint.h"
+				>
+			</File>
+			<File
 				RelativePath="$(IntDir)\DerivedSources\V8WebKitTransitionEvent.cpp"
 				>
 			</File>
@@ -2568,6 +2668,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\port\bindings\v8\extensions\Gears.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\port\bindings\v8\extensions\Gears.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\port\bindings\v8\extensions\Interval.cpp"
 				>
 			</File>
@@ -2637,27 +2745,31 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\ScheduledAction.h"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\ScheduledAction.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\ScriptCachedPageData.h"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\ScheduledAction.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\ScriptCallFrame.cpp"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\ScriptCachedFrameData.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\ScriptCallFrame.h"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\ScriptCallFrame.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\ScriptCallStack.cpp"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\ScriptCallFrame.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\ScriptCallStack.h"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\ScriptCallStack.cpp"
+			>
+		</File>
+		<File
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\ScriptCallStack.h"
 			>
 		</File>
 		<File
@@ -2669,31 +2781,31 @@
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\ScriptInstance.cpp"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\ScriptInstance.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\ScriptInstance.h"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\ScriptInstance.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\ScriptSourceCode.h"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\ScriptSourceCode.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\ScriptState.h"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\ScriptState.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\ScriptString.h"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\ScriptString.h"
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\ScriptValue.cpp"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\ScriptValue.cpp"
 			>
 		</File>
 		<File
-			RelativePath="..\..\port\bindings\v8\ScriptValue.h"
+			RelativePath="..\..\..\third_party\WebKit\WebCore\bindings\v8\ScriptValue.h"
 			>
 		</File>
 		<File

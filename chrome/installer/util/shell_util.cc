@@ -448,7 +448,8 @@ bool ShellUtil::GetChromeShortcutName(std::wstring* shortcut) {
 
 bool ShellUtil::GetDesktopPath(bool system_level, std::wstring* path) {
   wchar_t desktop[MAX_PATH];
-  int dir = system_level ? CSIDL_COMMON_DESKTOPDIRECTORY : CSIDL_DESKTOP;
+  int dir = system_level ? CSIDL_COMMON_DESKTOPDIRECTORY :
+                           CSIDL_DESKTOPDIRECTORY;
   if (FAILED(SHGetFolderPath(NULL, dir, NULL, SHGFP_TYPE_CURRENT, desktop)))
     return false;
   *path = desktop;
@@ -486,6 +487,7 @@ bool ShellUtil::GetQuickLaunchPath(bool system_level, std::wstring* path) {
 }
 
 bool ShellUtil::CreateChromeDesktopShortcut(const std::wstring& chrome_exe,
+                                            const std::wstring& description,
                                             int shell_change,
                                             bool create_new) {
   std::wstring shortcut_name;
@@ -498,7 +500,7 @@ bool ShellUtil::CreateChromeDesktopShortcut(const std::wstring& chrome_exe,
     if (ShellUtil::GetDesktopPath(false, &shortcut_path)) {
       file_util::AppendToPath(&shortcut_path, shortcut_name);
       ret = ShellUtil::UpdateChromeShortcut(chrome_exe, shortcut_path,
-                                            create_new);
+                                            description, create_new);
     } else {
       ret = false;
     }
@@ -510,7 +512,7 @@ bool ShellUtil::CreateChromeDesktopShortcut(const std::wstring& chrome_exe,
       // Note we need to call the create operation and then AND the result
       // with the create operation of user level shortcut.
       ret = ShellUtil::UpdateChromeShortcut(chrome_exe, shortcut_path,
-                                            create_new) && ret;
+                                            description, create_new) && ret;
     } else {
       ret = false;
     }
@@ -532,7 +534,7 @@ bool ShellUtil::CreateChromeQuickLaunchShortcut(const std::wstring& chrome_exe,
     if (ShellUtil::GetQuickLaunchPath(false, &user_ql_path)) {
       file_util::AppendToPath(&user_ql_path, shortcut_name);
       ret = ShellUtil::UpdateChromeShortcut(chrome_exe, user_ql_path,
-                                            create_new);
+                                            L"", create_new);
     } else {
       ret = false;
     }
@@ -545,7 +547,7 @@ bool ShellUtil::CreateChromeQuickLaunchShortcut(const std::wstring& chrome_exe,
     if (ShellUtil::GetQuickLaunchPath(true, &default_ql_path)) {
       file_util::AppendToPath(&default_ql_path, shortcut_name);
       ret = ShellUtil::UpdateChromeShortcut(chrome_exe, default_ql_path,
-                                            create_new) && ret;
+                                            L"", create_new) && ret;
     } else {
       ret = false;
     }
@@ -657,6 +659,7 @@ bool ShellUtil::RemoveChromeQuickLaunchShortcut(int shell_change) {
 
 bool ShellUtil::UpdateChromeShortcut(const std::wstring& chrome_exe,
                                      const std::wstring& shortcut,
+                                     const std::wstring& description,
                                      bool create_new) {
   std::wstring chrome_path = file_util::GetDirectoryFromPath(chrome_exe);
   if (create_new) {
@@ -664,7 +667,7 @@ bool ShellUtil::UpdateChromeShortcut(const std::wstring& chrome_exe,
                                          shortcut.c_str(),        // shortcut
                                          chrome_path.c_str(),     // working dir
                                          NULL,                    // arguments
-                                         NULL,                    // description
+                                         description.c_str(),     // description
                                          chrome_exe.c_str(),      // icon file
                                          0);                      // icon index
   } else {
@@ -672,7 +675,7 @@ bool ShellUtil::UpdateChromeShortcut(const std::wstring& chrome_exe,
                                          shortcut.c_str(),        // shortcut
                                          chrome_path.c_str(),     // working dir
                                          NULL,                    // arguments
-                                         NULL,                    // description
+                                         description.c_str(),     // description
                                          chrome_exe.c_str(),      // icon file
                                          0);                      // icon index
   }

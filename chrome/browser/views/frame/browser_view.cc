@@ -2,10 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/command_line.h"
-
 #include "chrome/browser/views/frame/browser_view.h"
 
+#include "base/command_line.h"
 #include "base/file_version_info.h"
 #include "base/time.h"
 #include "chrome/app/chrome_dll_resource.h"
@@ -39,8 +38,10 @@
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/browser/tab_contents/web_contents_view.h"
+#include "chrome/browser/window_sizer.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/drag_drop_types.h"
+#include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/os_exchange_data.h"
@@ -80,8 +81,6 @@ static const int kSeparationLineHeight = 1;
 // The name of a key to store on the window handle so that other code can
 // locate this object using just the handle.
 static const wchar_t* kBrowserViewKey = L"__BROWSER_VIEW__";
-// The distance between tiled windows.
-static const int kWindowTilePixels = 10;
 // How frequently we check for hung plugin windows.
 static const int kDefaultHungPluginDetectFrequency = 2000;
 // How long do we wait before we consider a window hung (in ms).
@@ -324,12 +323,12 @@ int BrowserView::GetTabStripHeight() const {
 }
 
 bool BrowserView::IsToolbarVisible() const {
-  return SupportsWindowFeature(FEATURE_TOOLBAR) ||
-         SupportsWindowFeature(FEATURE_LOCATIONBAR);
+  return browser_->SupportsWindowFeature(Browser::FEATURE_TOOLBAR) ||
+         browser_->SupportsWindowFeature(Browser::FEATURE_LOCATIONBAR);
 }
 
 bool BrowserView::IsTabStripVisible() const {
-  return SupportsWindowFeature(FEATURE_TABSTRIP);
+  return browser_->SupportsWindowFeature(Browser::FEATURE_TABSTRIP);
 }
 
 bool BrowserView::IsOffTheRecord() const {
@@ -365,19 +364,6 @@ bool BrowserView::GetAccelerator(int cmd_id, views::Accelerator* accelerator) {
     }
   }
   return false;
-}
-
-bool BrowserView::SystemCommandReceived(UINT notification_code,
-                                        const gfx::Point& point) {
-  bool handled = false;
-
-  if (browser_->command_updater()->SupportsCommand(notification_code) &&
-      browser_->command_updater()->IsCommandEnabled(notification_code)) {
-    browser_->ExecuteCommand(notification_code);
-    handled = true;
-  }
-
-  return handled;
 }
 
 void BrowserView::AddViewToDropList(views::View* view) {
@@ -489,8 +475,8 @@ void BrowserView::Init() {
 
 void BrowserView::Show() {
   // If the window is already visible, just activate it.
-  if (frame_->GetWindow()->IsVisible()) {
-    frame_->GetWindow()->Activate();
+  if (frame_->IsVisible()) {
+    frame_->Activate();
     return;
   }
 
@@ -508,28 +494,29 @@ void BrowserView::Show() {
   if (selected_tab_contents)
     selected_tab_contents->RestoreFocus();
 
-  frame_->GetWindow()->Show();
-  int show_state = frame_->GetWindow()->GetShowState();
-  if (show_state == SW_SHOWNORMAL || show_state == SW_SHOWMAXIMIZED)
-    frame_->GetWindow()->Activate();
+  frame_->Show();
 }
 
 void BrowserView::SetBounds(const gfx::Rect& bounds) {
-  frame_->GetWindow()->SetBounds(bounds);
+  frame_->SetBounds(bounds);
 }
 
 void BrowserView::Close() {
-  frame_->GetWindow()->Close();
+  frame_->Close();
 }
 
 void BrowserView::Activate() {
-  frame_->GetWindow()->Activate();
+  frame_->Activate();
+}
+
+bool BrowserView::IsActive() const {
+  return frame_->IsActive();
 }
 
 void BrowserView::FlashFrame() {
   FLASHWINFO fwi;
   fwi.cbSize = sizeof(fwi);
-  fwi.hwnd = frame_->GetWindow()->GetHWND();
+  fwi.hwnd = frame_->GetHWND();
   fwi.dwFlags = FLASHW_ALL;
   fwi.uCount = 4;
   fwi.dwTimeout = 0;
@@ -560,9 +547,9 @@ void BrowserView::SelectedTabToolbarSizeChanged(bool is_animating) {
 }
 
 void BrowserView::UpdateTitleBar() {
-  frame_->GetWindow()->UpdateWindowTitle();
+  frame_->UpdateWindowTitle();
   if (ShouldShowWindowIcon())
-    frame_->GetWindow()->UpdateWindowIcon();
+    frame_->UpdateWindowIcon();
 }
 
 void BrowserView::UpdateLoadingAnimations(bool should_animate) {
@@ -594,13 +581,13 @@ gfx::Rect BrowserView::GetNormalBounds() const {
 
   WINDOWPLACEMENT wp;
   wp.length = sizeof(wp);
-  const bool ret = !!GetWindowPlacement(frame_->GetWindow()->GetHWND(), &wp);
+  const bool ret = !!GetWindowPlacement(frame_->GetHWND(), &wp);
   DCHECK(ret);
   return gfx::Rect(wp.rcNormalPosition);
 }
 
 bool BrowserView::IsMaximized() const {
-  return frame_->GetWindow()->IsMaximized();
+  return frame_->IsMaximized();
 }
 
 void BrowserView::SetFullscreen(bool fullscreen) {
@@ -633,7 +620,7 @@ void BrowserView::SetFullscreen(bool fullscreen) {
     // taskbar if the window is in the maximized state.
     saved_window_info_.maximized = IsMaximized();
     if (saved_window_info_.maximized)
-      frame_->GetWindow()->ExecuteSystemMenuCommand(SC_RESTORE);
+      frame_->ExecuteSystemMenuCommand(SC_RESTORE);
     saved_window_info_.style = GetWindowLong(hwnd, GWL_STYLE);
     saved_window_info_.ex_style = GetWindowLong(hwnd, GWL_EXSTYLE);
     GetWindowRect(hwnd, &saved_window_info_.window_rect);
@@ -663,7 +650,7 @@ void BrowserView::SetFullscreen(bool fullscreen) {
                  new_rect.height(),
                  SWP_NOZORDER | SWP_NOACTIVATE | SWP_FRAMECHANGED);
     if (saved_window_info_.maximized)
-      frame_->GetWindow()->ExecuteSystemMenuCommand(SC_MAXIMIZE);
+      frame_->ExecuteSystemMenuCommand(SC_MAXIMIZE);
   }
 
   // Turn fullscreen bubble on or off.
@@ -719,7 +706,7 @@ void BrowserView::DestroyBrowser() {
 }
 
 bool BrowserView::IsBookmarkBarVisible() const {
-  return SupportsWindowFeature(FEATURE_BOOKMARKBAR) &&
+  return browser_->SupportsWindowFeature(Browser::FEATURE_BOOKMARKBAR) &&
       active_bookmark_bar_ &&
       (active_bookmark_bar_->GetPreferredSize().height() != 0);
 }
@@ -735,7 +722,7 @@ gfx::Rect BrowserView::GetRootWindowResizerRect() const {
   // Other tests should be added here if we add more bottom shelves.
   TabContents* current_tab = browser_->GetSelectedTabContents();
   if (current_tab && current_tab->IsDownloadShelfVisible()) {
-    DownloadShelfView* download_shelf = current_tab->GetDownloadShelfView();
+    DownloadShelf* download_shelf = current_tab->GetDownloadShelf();
     if (download_shelf && download_shelf->IsShowing())
       return gfx::Rect();
   }
@@ -747,6 +734,10 @@ gfx::Rect BrowserView::GetRootWindowResizerRect() const {
     x = 0;
   return gfx::Rect(x, client_rect.height() - resize_corner_size.height(),
                    resize_corner_size.width(), resize_corner_size.height());
+}
+
+void BrowserView::DisableInactiveFrame() {
+  frame_->DisableInactiveRendering();
 }
 
 void BrowserView::ToggleBookmarkBar() {
@@ -981,20 +972,22 @@ views::View* BrowserView::GetInitiallyFocusedView() {
 }
 
 bool BrowserView::ShouldShowWindowTitle() const {
-  return SupportsWindowFeature(FEATURE_TITLEBAR);
+  return browser_->SupportsWindowFeature(Browser::FEATURE_TITLEBAR);
 }
 
 SkBitmap BrowserView::GetWindowIcon() {
-  if (browser_->type() == Browser::TYPE_APP)
+  if (browser_->type() & Browser::TYPE_APP)
     return browser_->GetCurrentPageIcon();
   return SkBitmap();
 }
 
 bool BrowserView::ShouldShowWindowIcon() const {
-  return SupportsWindowFeature(FEATURE_TITLEBAR);
+  return browser_->SupportsWindowFeature(Browser::FEATURE_TITLEBAR);
 }
 
 bool BrowserView::ExecuteWindowsCommand(int command_id) {
+  // This function handles WM_SYSCOMMAND, WM_APPCOMMAND, and WM_COMMAND.
+
   // Translate WM_APPCOMMAND command ids into a command id that the browser
   // knows how to handle.
   int command_id_from_app_command = GetCommandIDForAppCommandID(command_id);
@@ -1027,7 +1020,7 @@ void BrowserView::SaveWindowPlacement(const gfx::Rect& bounds,
 
 bool BrowserView::GetSavedWindowBounds(gfx::Rect* bounds) const {
   *bounds = browser_->GetSavedWindowBounds();
-  if (browser_->type() == Browser::TYPE_POPUP) {
+  if (browser_->type() & Browser::TYPE_POPUP) {
     // We are a popup window. The value passed in |bounds| represents two
     // pieces of information:
     // - the position of the window, in screen coordinates (outer position).
@@ -1043,14 +1036,15 @@ bool BrowserView::GetSavedWindowBounds(gfx::Rect* bounds) const {
           bounds->height() + toolbar_->GetPreferredSize().height());
     }
 
-    gfx::Rect window_rect = frame_->GetWindowBoundsForClientBounds(*bounds);
+    gfx::Rect window_rect =
+        frame_->GetWindowBoundsForClientBounds(*bounds);
     window_rect.set_origin(bounds->origin());
 
     // When we are given x/y coordinates of 0 on a created popup window,
     // assume none were given by the window.open() command.
     if (window_rect.x() == 0 && window_rect.y() == 0) {
-      window_rect.set_origin(GetNormalBounds().origin());
-      window_rect.Offset(kWindowTilePixels, kWindowTilePixels);
+      gfx::Size size = window_rect.size();
+      window_rect.set_origin(WindowSizer::GetDefaultPopupOrigin(size));
     }
 
     *bounds = window_rect;
@@ -1098,7 +1092,7 @@ bool BrowserView::CanClose() const {
     // Tab strip isn't empty.  Hide the frame (so it appears to have closed
     // immediately) and close all the tabs, allowing the renderers to shut
     // down. When the tab strip is empty we'll be called back again.
-    frame_->GetWindow()->Hide();
+    frame_->Hide();
     browser_->OnWindowClosing();
     return false;
   }
@@ -1106,7 +1100,7 @@ bool BrowserView::CanClose() const {
   // Empty TabStripModel, it's now safe to allow the Window to be closed.
   NotificationService::current()->Notify(
       NotificationType::WINDOW_CLOSED,
-      Source<HWND>(frame_->GetWindow()->GetHWND()),
+      Source<HWND>(frame_->GetHWND()),
       NotificationService::NoDetails());
   return true;
 }
@@ -1119,7 +1113,7 @@ int BrowserView::NonClientHitTest(const gfx::Point& point) {
 
   if (CanCurrentlyResize()) {
     CRect client_rect;
-    ::GetClientRect(frame_->GetWindow()->GetHWND(), &client_rect);
+    ::GetClientRect(frame_->GetHWND(), &client_rect);
     gfx::Size resize_corner_size = ResizeCorner::GetSize();
     gfx::Rect resize_corner_rect(client_rect.right - resize_corner_size.width(),
         client_rect.bottom - resize_corner_size.height(),
@@ -1279,7 +1273,7 @@ int BrowserView::OnPerformDrop(const views::DropTargetEvent& event) {
 // BrowserView, private:
 
 void BrowserView::InitSystemMenu() {
-  HMENU system_menu = GetSystemMenu(frame_->GetWindow()->GetHWND(), FALSE);
+  HMENU system_menu = GetSystemMenu(frame_->GetHWND(), FALSE);
   system_menu_.reset(new Menu(system_menu));
   int insertion_index = std::max(0, system_menu_->ItemCount() - 1);
   // We add the menu items in reverse order so that insertion_index never needs
@@ -1293,21 +1287,6 @@ void BrowserView::InitSystemMenu() {
   } else {
     BuildMenuForTabStriplessWindow(system_menu_.get(), insertion_index);
   }
-}
-
-bool BrowserView::SupportsWindowFeature(WindowFeature feature) const {
-  unsigned int features = FEATURE_INFOBAR | FEATURE_DOWNLOADSHELF;
-  if (IsBrowserTypeNormal())
-     features |= FEATURE_BOOKMARKBAR;
-  if (!fullscreen_) {
-    if (IsBrowserTypeNormal())
-      features |= FEATURE_TABSTRIP | FEATURE_TOOLBAR;
-    else
-      features |= FEATURE_TITLEBAR;
-    if (browser_->type() != Browser::TYPE_APP)
-      features |= FEATURE_LOCATIONBAR;
-  }
-  return !!(features & feature);
 }
 
 bool BrowserView::ShouldForwardToTabStrip(
@@ -1401,7 +1380,7 @@ int BrowserView::LayoutBookmarkBar(int top) {
 }
 
 int BrowserView::LayoutInfoBar(int top) {
-  bool visible = SupportsWindowFeature(FEATURE_INFOBAR);
+  bool visible = browser_->SupportsWindowFeature(Browser::FEATURE_INFOBAR);
   int height = visible ? infobar_container_->GetPreferredSize().height() : 0;
   infobar_container_->SetVisible(visible);
   infobar_container_->SetBounds(0, top, width(), height);
@@ -1415,7 +1394,8 @@ void BrowserView::LayoutTabContents(int top, int bottom) {
 int BrowserView::LayoutDownloadShelf() {
   int bottom = height();
   if (active_download_shelf_) {
-    bool visible = SupportsWindowFeature(FEATURE_DOWNLOADSHELF);
+    bool visible = browser_->SupportsWindowFeature(
+        Browser::FEATURE_DOWNLOADSHELF);
     int height =
         visible ? active_download_shelf_->GetPreferredSize().height() : 0;
     active_download_shelf_->SetVisible(visible);
@@ -1430,7 +1410,7 @@ void BrowserView::LayoutStatusBubble(int top) {
   // In restored mode, the client area has a client edge between it and the
   // frame.
   int overlap = kStatusBubbleOverlap +
-      (IsMaximized() ? 0 : views::NonClientView::kClientEdgeThickness);
+      (IsMaximized() ? 0 : views::NonClientFrameView::kClientEdgeThickness);
   gfx::Point origin(-overlap, top - kStatusBubbleHeight + overlap);
   ConvertPointToView(this, GetParent(), &origin);
   status_bubble_->SetBounds(origin.x(), origin.y(), width() / 3,
@@ -1439,7 +1419,8 @@ void BrowserView::LayoutStatusBubble(int top) {
 
 bool BrowserView::MaybeShowBookmarkBar(TabContents* contents) {
   views::View* new_bookmark_bar_view = NULL;
-  if (SupportsWindowFeature(FEATURE_BOOKMARKBAR) && contents) {
+  if (browser_->SupportsWindowFeature(Browser::FEATURE_BOOKMARKBAR)
+      && contents) {
     if (!bookmark_bar_view_.get()) {
       bookmark_bar_view_.reset(new BookmarkBarView(contents->profile(),
                                                    browser_.get()));
@@ -1463,7 +1444,7 @@ bool BrowserView::MaybeShowInfoBar(TabContents* contents) {
 bool BrowserView::MaybeShowDownloadShelf(TabContents* contents) {
   views::View* new_shelf = NULL;
   if (contents && contents->IsDownloadShelfVisible()) {
-    new_shelf = contents->GetDownloadShelfView();
+    new_shelf = static_cast<DownloadShelfView*>(contents->GetDownloadShelf());
     if (new_shelf != active_download_shelf_)
       new_shelf->AddChildView(new ResizeCorner(this));
   }
@@ -1675,3 +1656,11 @@ void BrowserView::InitClass() {
     initialized = true;
   }
 }
+
+// static
+BrowserWindow* BrowserWindow::CreateBrowserWindow(Browser* browser) {
+  BrowserView* browser_view = new BrowserView(browser);
+  (new BrowserFrame(browser_view))->Init();
+  return browser_view;
+}
+

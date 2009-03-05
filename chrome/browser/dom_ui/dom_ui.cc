@@ -79,6 +79,10 @@ void DOMUI::RegisterMessageCallback(const std::string &message,
   message_callbacks_.insert(std::make_pair(message, callback));
 }
 
+void DOMUI::SetInitialFocus(bool reverse) {
+  get_contents()->render_view_host()->SetInitialFocus(reverse);
+}
+
 void DOMUI::RequestOpenURL(const GURL& url,
                            const GURL& /* referer */,
                            WindowOpenDisposition disposition) {
@@ -148,7 +152,7 @@ bool DOMMessageHandler::ExtractIntegerValue(const Value* value, int* out_int) {
           static_cast<const StringValue*>(list_member);
       std::wstring wstring_value;
       string_value->GetAsString(&wstring_value);
-      *out_int = StringToInt(wstring_value);
+      *out_int = StringToInt(WideToUTF16Hack(wstring_value));
       return true;
     }
   }
@@ -173,4 +177,3 @@ std::wstring DOMMessageHandler::ExtractStringValue(const Value* value) {
   }
   return std::wstring();
 }
-

@@ -35,8 +35,9 @@ class ToolbarModel;
   ToolbarModel* toolbarModel_;  // weak, one per window
   IBOutlet NSButton* backButton_;
   IBOutlet NSButton* forwardButton_;
-  IBOutlet NSButton* reloadStopButton_;
+  IBOutlet NSButton* reloadButton_;
   IBOutlet NSButton* starButton_;
+  IBOutlet NSButton* goButton_;
   IBOutlet NSTextField* locationBar_;
   IBOutlet NSBox* contentsBox_;
   IBOutlet GrowBoxView* growBox_;
@@ -63,8 +64,9 @@ class ToolbarModel;
 - (void)willBecomeSelectedTab;
 
 // Called when the tab contents is updated in some non-descript way (the
-// notification from the model isn't specific).
-- (void)tabDidChange;
+// notification from the model isn't specific). |updatedContents| could reflect
+// an entirely new tab contents object.
+- (void)tabDidChange:(TabContents*)updatedContents;
 
 // Called when any url bar state changes. If |tabForRestoring| is non-NULL,
 // it points to a TabContents whose state we should restore.
@@ -76,6 +78,13 @@ class ToolbarModel;
 // Return the rect, in WebKit coordinates (flipped), of the window's grow box
 // in the coordinate system of the content area of this tab.
 - (NSRect)growBoxRect;
+
+// Called to update the loading state. Handles updating the go/stop button
+// state.
+- (void)setIsLoading:(BOOL)isLoading;
+
+// Make the location bar the first responder, if possible.
+- (void)focusLocationBar;
 
 @end
 

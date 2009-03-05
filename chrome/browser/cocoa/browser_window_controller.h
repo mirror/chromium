@@ -12,6 +12,8 @@
 
 class Browser;
 class BrowserWindow;
+class LocationBar;
+class TabContents;
 @class TabStripView;
 @class TabContentsController;
 @class TabStripController;
@@ -58,6 +60,15 @@ class BrowserWindow;
 // Return the rect, in WebKit coordinates (flipped), of the window's grow box
 // in the coordinate system of the content area of the currently selected tab.
 - (NSRect)selectedTabGrowBoxRect;
+
+// Called to tell the selected tab to update its loading state.
+- (void)setIsLoading:(BOOL)isLoading;
+
+// Called to start/stop the loading animations.
+- (void)updateLoadingAnimations:(BOOL)animate;
+
+// Make the location bar the first responder, if possible.
+- (void)focusLocationBar;
 
 @end
 

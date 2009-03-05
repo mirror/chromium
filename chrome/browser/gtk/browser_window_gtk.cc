@@ -204,6 +204,11 @@ void BrowserWindowGtk::Activate() {
   gtk_window_present(window_);
 }
 
+bool BrowserWindowGtk::IsActive() const {
+  NOTIMPLEMENTED();
+  return true;
+}
+
 void BrowserWindowGtk::FlashFrame() {
   // May not be respected by all window managers.
   gtk_window_set_urgency_hint(window_, TRUE);
@@ -227,7 +232,12 @@ void BrowserWindowGtk::SelectedTabToolbarSizeChanged(bool is_animating) {
 }
 
 void BrowserWindowGtk::UpdateTitleBar() {
-  NOTIMPLEMENTED();
+  std::wstring title = browser_->GetCurrentPageTitle();
+  gtk_window_set_title(window_, WideToUTF8(title).c_str());
+  if (browser_->SupportsWindowFeature(Browser::FEATURE_TITLEBAR)) {
+    // If we're showing a title bar, we should update the app icon.
+    NOTIMPLEMENTED();
+  }
 }
 
 void BrowserWindowGtk::UpdateLoadingAnimations(bool should_animate) {
@@ -247,21 +257,22 @@ bool BrowserWindowGtk::IsMaximized() const {
 }
 
 void BrowserWindowGtk::SetFullscreen(bool fullscreen) {
-  NOTIMPLEMENTED();
+  // Need to implement full screen mode.
+  // http://code.google.com/p/chromium/issues/detail?id=8405
 }
 
 bool BrowserWindowGtk::IsFullscreen() const {
-  NOTIMPLEMENTED();
+  // Need to implement full screen mode.
+  // http://code.google.com/p/chromium/issues/detail?id=8405
   return false;
 }
 
 LocationBar* BrowserWindowGtk::GetLocationBar() const {
-  NOTIMPLEMENTED();
-  return NULL;
+  return toolbar_->GetLocationBar();
 }
 
 void BrowserWindowGtk::SetFocusToLocationBar() {
-  NOTIMPLEMENTED();
+  toolbar_->FocusLocationBar();
 }
 
 void BrowserWindowGtk::UpdateStopGoState(bool is_loading) {

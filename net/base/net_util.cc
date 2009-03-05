@@ -15,7 +15,10 @@
 #if defined(OS_WIN)
 #include <windows.h>
 #include <winsock2.h>
+#include <ws2tcpip.h>
+#include <wspiapi.h>  // Needed for Win2k compat.
 #elif defined(OS_POSIX)
+#include <netdb.h>
 #include <sys/socket.h>
 #include <fcntl.h>
 #endif
@@ -40,6 +43,9 @@
 #include "googleurl/src/url_parse.h"
 #include "net/base/escape.h"
 #include "net/base/net_module.h"
+#if defined(OS_WIN)
+#include "net/base/winsock_init.h"
+#endif
 #include "net/base/base64.h"
 #include "unicode/datefmt.h"
 
@@ -985,7 +991,7 @@ bool GetHostAndPort(std::string::const_iterator host_and_port_begin,
 
   if (!hostname_component.is_nonempty())
     return false;  // Failed parsing.
-  
+
   int parsed_port_number = -1;
   if (port_component.is_nonempty()) {
     parsed_port_number = url_parse::ParsePort(auth_begin, port_component);
@@ -1002,7 +1008,7 @@ bool GetHostAndPort(std::string::const_iterator host_and_port_begin,
   // Pass results back to caller.
   host->assign(auth_begin + hostname_component.begin, hostname_component.len);
   *port = parsed_port_number;
-  
+
   return true;  // Success.
 }
 
@@ -1010,6 +1016,40 @@ bool GetHostAndPort(const std::string& host_and_port,
                     std::string* host,
                     int* port) {
   return GetHostAndPort(host_and_port.begin(), host_and_port.end(), host, port);
+}
+
+std::string NetAddressToString(const struct addrinfo* net_address) {
+#if defined(OS_WIN)
+  EnsureWinsockInit();
+#endif
+
+  // This buffer is large enough to fit the biggest IPv6 string.
+  char buffer[INET6_ADDRSTRLEN];
+
+  int result = getnameinfo(net_address->ai_addr,
+      net_address->ai_addrlen, buffer, sizeof(buffer), NULL, 0, NI_NUMERICHOST);
+
+  if (result != 0) {
+    DLOG(INFO) << "getnameinfo() failed with " << result;
+    buffer[0] = '\0';
+  }
+  return std::string(buffer);
+}
+
+std::string GetMyHostName() {
+#if defined(OS_WIN)
+  EnsureWinsockInit();
+#endif
+
+  // Maximum size of 256 is somewhat arbitrary. Mozilla uses a size of 100
+  // so this should cover the majority of cases.
+  char buffer[256];
+  int result = gethostname(buffer, sizeof(buffer));
+  if (result != 0) {
+    DLOG(INFO) << "gethostname() failed with " << result;
+    buffer[0] = '\0';
+  }
+  return std::string(buffer);
 }
 
 }  // namespace net

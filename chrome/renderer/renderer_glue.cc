@@ -28,6 +28,10 @@
 #include "webkit/glue/webframe.h"
 #include "webkit/glue/webkit_glue.h"
 
+#include "WebKit.h"
+#include "WebKitClient.h"
+#include "WebString.h"
+
 #include <vector>
 
 #include "SkBitmap.h"
@@ -156,16 +160,14 @@ bool IsMediaPlayerAvailable() {
   return g_media_player_available;
 }
 
-void PrefetchDns(const std::string& hostname) {
-  if (!hostname.empty())
-    DnsPrefetchCString(hostname.c_str(), hostname.length());
-}
-
 void PrecacheUrl(const wchar_t* url, int url_length) {
   // TBD: jar: Need implementation that loads the targetted URL into our cache.
   // For now, at least prefetch DNS lookup
-  GURL parsed_url(WideToUTF8(std::wstring(url, url_length)));
-  PrefetchDns(parsed_url.host());
+  std::string url_string;
+  WideToUTF8(url, url_length, &url_string);
+  const std::string host = GURL(url_string).host();
+  if (!host.empty())
+    DnsPrefetchCString(host.data(), host.length());
 }
 
 void AppendToLog(const char* file, int line, const char* msg) {
@@ -209,7 +211,7 @@ bool ClipboardIsFormatAvailable(unsigned int format) {
   return result;
 }
 
-void ClipboardReadText(std::wstring* result) {
+void ClipboardReadText(string16* result) {
   RenderThread::current()->Send(new ViewHostMsg_ClipboardReadText(result));
 }
 
@@ -217,7 +219,7 @@ void ClipboardReadAsciiText(std::string* result) {
   RenderThread::current()->Send(new ViewHostMsg_ClipboardReadAsciiText(result));
 }
 
-void ClipboardReadHTML(std::wstring* markup, GURL* url) {
+void ClipboardReadHTML(string16* markup, GURL* url) {
   RenderThread::current()->Send(new ViewHostMsg_ClipboardReadHTML(markup, url));
 }
 
@@ -226,7 +228,7 @@ GURL GetInspectorURL() {
 }
 
 std::string GetUIResourceProtocol() {
-  return "chrome";
+  return "chrome-ui";
 }
 
 bool GetPlugins(bool refresh, std::vector<WebPluginInfo>* plugins) {
@@ -298,17 +300,6 @@ ResourceLoaderBridge* ResourceLoaderBridge::Create(
   return dispatcher->CreateBridge(method, url, policy_url, referrer, headers,
                                   load_flags, origin_pid, resource_type,
                                   mixed_content, 0);
-}
-
-void SetCookie(const GURL& url, const GURL& policy_url,
-               const std::string& cookie) {
-  RenderThread::current()->Send(new ViewHostMsg_SetCookie(url, policy_url, cookie));
-}
-
-std::string GetCookies(const GURL& url, const GURL& policy_url) {
-  std::string cookies;
-  RenderThread::current()->Send(new ViewHostMsg_GetCookies(url, policy_url, &cookies));
-  return cookies;
 }
 
 void NotifyCacheStats() {

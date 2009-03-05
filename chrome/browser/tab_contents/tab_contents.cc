@@ -9,6 +9,8 @@
 #endif
 
 #include "chrome/browser/cert_store.h"
+#include "chrome/browser/download/download_item_model.h"
+#include "chrome/browser/download/download_shelf.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/tab_contents_delegate.h"
 #include "chrome/browser/tab_contents/web_contents.h"
@@ -21,7 +23,6 @@
 #if defined(OS_WIN)
 // TODO(port): some of these headers should be ported.
 #include "chrome/browser/tab_contents/infobar_delegate.h"
-#include "chrome/browser/views/download_shelf_view.h"
 #include "chrome/browser/views/download_started_animation.h"
 #include "chrome/browser/views/blocked_popup_container.h"
 #include "chrome/views/native_scroll_bar.h"
@@ -148,7 +149,7 @@ const GURL& TabContents::GetURL() const {
   return entry ? entry->display_url() : GURL::EmptyGURL();
 }
 
-const std::wstring& TabContents::GetTitle() const {
+const string16& TabContents::GetTitle() const {
   // We use the title for the last committed entry rather than a pending
   // navigation entry. For example, when the user types in a URL, we want to
   // keep the old page's title until the new load has committed and we get a new
@@ -157,14 +158,14 @@ const std::wstring& TabContents::GetTitle() const {
   // their title, as they are not committed.
   NavigationEntry* entry = controller_->GetTransientEntry();
   if (entry)
-    return entry->GetTitleForDisplay();
+    return entry->GetTitleForDisplay(controller_);
   
   entry = controller_->GetLastCommittedEntry();
   if (entry)
-    return entry->GetTitleForDisplay();
+    return entry->GetTitleForDisplay(controller_);
   else if (controller_->LoadingURLLazily())
     return controller_->GetLazyTitle();
-  return EmptyWString();
+  return EmptyString16();
 }
 
 int32 TabContents::GetMaxPageID() {
@@ -463,12 +464,19 @@ void TabContents::RemoveInfoBar(InfoBarDelegate* delegate) {
     }
   }
 }
+#endif  // defined(OS_WIN)
+
+void TabContents::ToolbarSizeChanged(bool is_animating) {
+  TabContentsDelegate* d = delegate();
+  if (d)
+    d->ToolbarSizeChanged(this, is_animating);
+}
 
 void TabContents::SetDownloadShelfVisible(bool visible) {
   if (shelf_visible_ != visible) {
     if (visible) {
-      // Invoke GetDownloadShelfView to force the shelf to be created.
-      GetDownloadShelfView();
+      // Invoke GetDownloadShelf to force the shelf to be created.
+      GetDownloadShelf();
     }
     shelf_visible_ = visible;
 
@@ -482,48 +490,61 @@ void TabContents::SetDownloadShelfVisible(bool visible) {
   ToolbarSizeChanged(false);
 }
 
-void TabContents::ToolbarSizeChanged(bool is_animating) {
-  TabContentsDelegate* d = delegate();
-  if (d)
-    d->ToolbarSizeChanged(this, is_animating);
-}
-
+#if defined(OS_WIN) || defined(OS_LINUX)
 void TabContents::OnStartDownload(DownloadItem* download) {
   DCHECK(download);
   TabContents* tab_contents = this;
 
+// TODO(port): port contraining contents.
+#if defined(OS_WIN)
   // Download in a constrained popup is shown in the tab that opened it.
   TabContents* constraining_tab = delegate()->GetConstrainingContents(this);
   if (constraining_tab)
     tab_contents = constraining_tab;
+#endif
 
-  // GetDownloadShelfView creates the download shelf if it was not yet created.
-  tab_contents->GetDownloadShelfView()->AddDownload(download);
+  // GetDownloadShelf creates the download shelf if it was not yet created.
+  tab_contents->GetDownloadShelf()->AddDownload(
+      new DownloadItemModel(download));
   tab_contents->SetDownloadShelfVisible(true);
 
+// TODO(port): port animatinos.
+#if defined(OS_WIN)
   // This animation will delete itself when it finishes, or if we become hidden
   // or destroyed.
   if (IsWindowVisible(GetNativeView())) {  // For minimized windows, unit
                                            // tests, etc.
     new DownloadStartedAnimation(tab_contents);
   }
+#endif
 }
 
-DownloadShelfView* TabContents::GetDownloadShelfView() {
-  if (!download_shelf_view_.get()) {
-    download_shelf_view_.reset(new DownloadShelfView(this));
-    // The TabContents owns the download-shelf.
-    download_shelf_view_->SetParentOwned(false);
-  }
-  return download_shelf_view_.get();
+DownloadShelf* TabContents::GetDownloadShelf() {
+  if (!download_shelf_.get())
+    download_shelf_.reset(DownloadShelf::Create(this));
+  return download_shelf_.get();
 }
 
-void TabContents::MigrateShelfViewFrom(TabContents* tab_contents) {
-  download_shelf_view_.reset(tab_contents->GetDownloadShelfView());
-  download_shelf_view_->ChangeTabContents(tab_contents, this);
-  tab_contents->ReleaseDownloadShelfView();
+void TabContents::MigrateShelfFrom(TabContents* tab_contents) {
+  download_shelf_.reset(tab_contents->GetDownloadShelf());
+  download_shelf_->ChangeTabContents(tab_contents, this);
+  tab_contents->ReleaseDownloadShelf();
 }
 
+void TabContents::ReleaseDownloadShelf() {
+  download_shelf_.release();
+}
+
+// static
+void TabContents::MigrateShelf(TabContents* from, TabContents* to) {
+  bool was_shelf_visible = from->IsDownloadShelfVisible();
+  if (was_shelf_visible)
+    to->MigrateShelfFrom(from);
+  to->SetDownloadShelfVisible(was_shelf_visible);
+}
+#endif  // defined(OS_WIN) || defined(OS_LINUX)
+
+#if defined(OS_WIN)
 void TabContents::WillClose(ConstrainedWindow* window) {
   ConstrainedWindowList::iterator it =
       find(child_windows_.begin(), child_windows_.end(), window);
@@ -554,14 +575,6 @@ void TabContents::Observe(NotificationType type,
   NavigationController::LoadCommittedDetails& committed_details =
       *(Details<NavigationController::LoadCommittedDetails>(details).ptr());
   ExpireInfoBars(committed_details);
-}
-
-// static
-void TabContents::MigrateShelfView(TabContents* from, TabContents* to) {
-  bool was_shelf_visible = from->IsDownloadShelfVisible();
-  if (was_shelf_visible)
-    to->MigrateShelfViewFrom(from);
-  to->SetDownloadShelfVisible(was_shelf_visible);
 }
 
 void TabContents::SetIsLoading(bool is_loading,
@@ -603,10 +616,6 @@ void TabContents::RepositionSupressedPopupsToFit(const gfx::Size& new_size) {
 
   if (blocked_popups_)
     blocked_popups_->RepositionConstrainedWindowTo(anchor_position);
-}
-
-void TabContents::ReleaseDownloadShelfView() {
-  download_shelf_view_.release();
 }
 
 bool TabContents::ShowingBlockedPopupNotification() const {

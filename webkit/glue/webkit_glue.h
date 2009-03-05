@@ -15,34 +15,19 @@
 #include <vector>
 
 #include "base/clipboard.h"
+#include "base/file_path.h"
 #include "base/gfx/native_widget_types.h"
 #include "base/string16.h"
-#include "webkit/glue/screen_info.h"
-#include "webkit/glue/webplugin.h"
 
-// We do not include the header files for these interfaces since this header
-// file is included by code in webkit/port
-class SharedCursor;
-class WebView;
-class WebViewDelegate;
-class WebRequest;
-class WebFrame;
-class WebFrameImpl;
 class GURL;
-struct _NPNetscapeFuncs;
-typedef _NPNetscapeFuncs NPNetscapeFuncs;
-
-#if defined(OS_WIN)
-struct IMLangFontLink2;
-#endif
-
-// TODO(darin): This file should not be dealing in WebCore types!!
-namespace WebCore {
-class Document;
-class Frame;
-}
-
 class SkBitmap;
+class WebView;
+class WebFrame;
+struct WebPluginInfo;
+
+namespace WebKit {
+class WebString;
+}
 
 #if defined(OS_MACOSX)
 // TODO(port):
@@ -67,21 +52,14 @@ typedef SkBitmap GlueBitmap;
 
 namespace webkit_glue {
 
-//-----------------------------------------------------------------------------
-// Functions implemented by JS engines.
+struct ScreenInfo;
+
+
+//---- BEGIN FUNCTIONS IMPLEMENTED BY WEBKIT/GLUE -----------------------------
+
 void SetJavaScriptFlags(const std::wstring& flags);
 void SetRecordPlaybackMode(bool value);
 void SetShouldExposeGCController(bool enable);
-
-//-----------------------------------------------------------------------------
-// Functions implemented by WebKit, called by the embedder:
-
-// Turns on "layout test" mode, which tries to mimic the font and widget sizing
-// of the Mac DumpRenderTree.
-void SetLayoutTestMode(bool enable);
-bool IsLayoutTestMode();
-
-void InitializeForTesting();
 
 // Turn on the logging for notImplemented() calls from WebCore.
 void EnableWebCoreNotImplementedLogging();
@@ -139,8 +117,22 @@ void CheckForLeaks();
 // Returns false if the image could not be decoded.
 bool DecodeImage(const std::string& image_data, SkBitmap* image);
 
-//-----------------------------------------------------------------------------
-// Functions implemented by the embedder, called by WebKit:
+// Tells the plugin thread to terminate the process forcefully instead of
+// exiting cleanly.
+void SetForcefullyTerminatePluginProcess(bool value);
+
+// Returns true if the plugin thread should terminate the process forcefully
+// instead of exiting cleanly.
+bool ShouldForcefullyTerminatePluginProcess();
+
+// File path string conversions.
+FilePath::StringType WebStringToFilePathString(const WebKit::WebString& str);
+WebKit::WebString FilePathStringToWebString(const FilePath::StringType& str);
+
+//---- END FUNCTIONS IMPLEMENTED BY WEBKIT/GLUE -------------------------------
+
+
+//---- BEGIN FUNCTIONS IMPLEMENTED BY EMBEDDER --------------------------------
 
 // Set during RenderProcess::GlobalInit when --enable-video has been passed in
 // and all media related libraries were successfully loaded.
@@ -150,10 +142,6 @@ void SetMediaPlayerAvailable(bool value);
 // Returns true if media player is available and can be created.
 bool IsMediaPlayerAvailable();
 
-// This function is called to request a prefetch of the DNS resolution for the
-// provided hostname.
-void PrefetchDns(const std::string& hostname);
-
 // This function is called to request a prefetch of the entire URL, loading it
 // into our cache for (expected) future needs.  The given URL may NOT be in
 // canonical form and it will NOT be null-terminated; use the length instead.
@@ -161,18 +149,6 @@ void PrecacheUrl(const char16* url, int url_length);
 
 // This function is called to add a line to the application's log file.
 void AppendToLog(const char* filename, int line, const char* message);
-
-// Sets a cookie string for the given URL.  The policy_url argument indicates
-// the URL of the topmost frame, which may be useful for determining whether or
-// not to allow this cookie setting.  NOTE: the cookie string is a standard
-// cookie string of the form "name=value; option1=x; option2=y"
-void SetCookie(const GURL& url, const GURL& policy_url,
-               const std::string& cookie);
-
-// Returns all cookies in the form "a=1; b=2; c=3" for the given URL.  NOTE:
-// this string should not include any options that may have been specified when
-// the cookie was set.  Semicolons delimit individual cookies in this context.
-std::string GetCookies(const GURL& url, const GURL& policy_url);
 
 // Gather usage statistics from the in-memory cache and inform our host, if
 // applicable.
@@ -211,13 +187,13 @@ Clipboard* ClipboardGetClipboard();
 bool ClipboardIsFormatAvailable(Clipboard::FormatType format);
 
 // Reads UNICODE text from the clipboard, if available.
-void ClipboardReadText(std::wstring* result);
+void ClipboardReadText(string16* result);
 
 // Reads ASCII text from the clipboard, if available.
 void ClipboardReadAsciiText(std::string* result);
 
 // Reads HTML from the clipboard, if available.
-void ClipboardReadHTML(std::wstring* markup, GURL* url);
+void ClipboardReadHTML(string16* markup, GURL* url);
 
 // Gets the directory where the application data and libraries exist.  This
 // may be a versioned subdirectory, or it may be the same directory as the
@@ -254,8 +230,6 @@ bool EnsureFontLoaded(HFONT font);
 // Returns screen information corresponding to the given window.
 ScreenInfo GetScreenInfo(gfx::NativeViewId window);
 
-// Functions implemented by webkit_glue for WebKit ----------------------------
-
 // Returns a bool indicating if the Null plugin should be enabled or not.
 bool IsDefaultPluginEnabled();
 
@@ -275,17 +249,6 @@ bool FindProxyForUrl(const GURL& url, std::string* proxy_list);
 // the form language-country (e.g., en-US or pt-BR).
 std::wstring GetWebKitLocale();
 
-// Notifies the browser that the current page runs out of JS memory.
-void NotifyJSOutOfMemory(WebCore::Frame* frame);
-
-// Tells the plugin thread to terminate the process forcefully instead of
-// exiting cleanly.
-void SetForcefullyTerminatePluginProcess(bool value);
-
-// Returns true if the plugin thread should terminate the process forcefully
-// instead of exiting cleanly.
-bool ShouldForcefullyTerminatePluginProcess();
-
 // Returns the hash for the given canonicalized URL for use in visited link
 // coloring.
 uint64 VisitedLinkHash(const char* canonical_url, size_t length);
@@ -293,6 +256,9 @@ uint64 VisitedLinkHash(const char* canonical_url, size_t length);
 // Returns whether the given link hash is in the user's history. The hash must
 // have been generated by calling VisitedLinkHash().
 bool IsLinkVisited(uint64 link_hash);
+
+// ---- END FUNCTIONS IMPLEMENTED BY EMBEDDER ---------------------------------
+
 
 } // namespace webkit_glue
 

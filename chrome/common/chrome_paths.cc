@@ -74,19 +74,8 @@ bool PathProvider(int key, FilePath* result) {
       create_dir = true;
       break;
     case chrome::DIR_DEFAULT_DOWNLOADS:
-      // On Vista, we can get the download path using a Win API
-      // (http://msdn.microsoft.com/en-us/library/bb762584(VS.85).aspx),
-      // but it can be set to Desktop, which is dangerous. Instead,
-      // we just use 'Downloads' under DIR_USER_DOCUMENTS. Localizing
-      // 'downloads' is not a good idea because Chrome's UI language
-      // can be changed. 
-      if (!PathService::Get(chrome::DIR_USER_DOCUMENTS, &cur))
+      if (!GetUserDownloadsDirectory(&cur))
         return false;
-      cur = cur.Append(FILE_PATH_LITERAL("Downloads"));
-      // TODO(port): this may not be what we want on other platforms. But it
-      // is not clear what we would prefer: $XDG_DOWNLOAD_DIR appears to point
-      // to ~/Downloads for many users, which is something we want to avoid.
-      // We probably need to add a GetUserDownloadsDirectory().
       break;
     case chrome::DIR_CRASH_DUMPS:
       // The crash reports are always stored relative to the default user data
@@ -105,7 +94,7 @@ bool PathProvider(int key, FilePath* result) {
     case chrome::DIR_RESOURCES:
       if (!PathService::Get(chrome::DIR_APP, &cur))
         return false;
-      cur = cur.Append(FILE_PATH_LITERAL("resources"));
+      cur = cur.Append(FILE_PATH_LITERAL("Resources"));
       create_dir = true;
       break;
     case chrome::DIR_INSPECTOR:
@@ -123,7 +112,14 @@ bool PathProvider(int key, FilePath* result) {
     case chrome::DIR_LOCALES:
       if (!PathService::Get(chrome::DIR_APP, &cur))
         return false;
+#if defined(OS_MACOSX)
+      // On Mac, locale files are in Contents/Resources, a sibling of the
+      // App dir.
+      cur = cur.DirName();
+      cur = cur.Append(FILE_PATH_LITERAL("Resources"));
+#else
       cur = cur.Append(FILE_PATH_LITERAL("locales"));
+#endif
       create_dir = true;
       break;
     case chrome::DIR_APP_DICTIONARIES:
@@ -135,7 +131,7 @@ bool PathProvider(int key, FilePath* result) {
     case chrome::FILE_LOCAL_STATE:
       if (!PathService::Get(chrome::DIR_USER_DATA, &cur))
         return false;
-      cur = cur.AppendASCII(WideToASCII(chrome::kLocalStateFilename));
+      cur = cur.Append(chrome::kLocalStateFilename);
       break;
     case chrome::FILE_RECORDED_SCRIPT:
       if (!PathService::Get(chrome::DIR_USER_DATA, &cur))

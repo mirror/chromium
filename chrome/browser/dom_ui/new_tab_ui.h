@@ -151,12 +151,14 @@ class RecentlyBookmarkedHandler : public DOMMessageHandler,
   virtual void BookmarkNodeChanged(BookmarkModel* model,
                                    BookmarkNode* node);
 
-  // These two won't effect what is shown, so they do nothing.
+  // These won't effect what is shown, so they do nothing.
   virtual void BookmarkNodeMoved(BookmarkModel* model,
                                  BookmarkNode* old_parent,
                                  int old_index,
                                  BookmarkNode* new_parent,
                                  int new_index) {}
+  virtual void BookmarkNodeChildrenReordered(BookmarkModel* model,
+                                             BookmarkNode* node) {}
   virtual void BookmarkNodeFavIconLoaded(BookmarkModel* model,
                                          BookmarkNode* node) {}
 
@@ -253,13 +255,6 @@ class NewTabUI : public DOMUI {
   // DOMUI Implementation
   virtual void Init();
 
-  // Set the title that overrides any other title provided for the tab.
-  // This lets you set the title that's displayed before the content loads,
-  // as well as override any "Loading..." text.
-  void set_forced_title(const std::wstring& title) {
-    forced_title_ = title;
-  }
-
   // Overridden from DOMUI.
   // Favicon should not be displayed.
   virtual bool ShouldDisplayFavIcon() { return false; }
@@ -283,10 +278,6 @@ class NewTabUI : public DOMUI {
   // Whether the user is in incognito mode or not, used to determine
   // what HTML to load.
   bool incognito_;
-
-  // A title for the page we force display of.
-  // This prevents intermediate titles (like "Loading...") from displaying.
-  std::wstring forced_title_;
 
   // A pointer to the handler for most visited.
   // Owned by the DOMUIHost.

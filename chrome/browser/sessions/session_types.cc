@@ -4,6 +4,7 @@
 
 #include "chrome/browser/sessions/session_types.h"
 
+#include "base/string_util.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 
 // TabNavigation --------------------------------------------------------------
@@ -21,7 +22,7 @@ NavigationEntry* TabNavigation::ToNavigationEntry(int page_id) const {
       page_id,
       real_url,
       referrer_,
-      title_,
+      WideToUTF16Hack(title_),
       // Use a transition type of reload so that we don't incorrectly
       // increase the typed count.
       PageTransition::RELOAD);
@@ -34,7 +35,7 @@ NavigationEntry* TabNavigation::ToNavigationEntry(int page_id) const {
 void TabNavigation::SetFromNavigationEntry(const NavigationEntry& entry) {
   url_ = entry.display_url();
   referrer_ = entry.referrer();
-  title_ = entry.title();
+  title_ = UTF16ToWideHack(entry.title());
   state_ = entry.content_state();
   transition_ = entry.transition_type();
   type_mask_ = entry.has_post_data() ? TabNavigation::HAS_POST_DATA : 0;
