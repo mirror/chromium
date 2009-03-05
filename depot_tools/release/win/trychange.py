@@ -184,7 +184,7 @@ def _SendChangeHTTP(options):
     connection = urllib.urlopen(url, urllib.urlencode(values), proxies=proxies)
   except IOError, e:
     # TODO(thestig) this probably isn't quite right.
-    if values['bot'] and e[2] == 'got a bad status line':
+    if values.get('bot') and e[2] == 'got a bad status line':
       raise NoTryServerAccess('%s is unaccessible. Bad --bot argument?' % url)
     else:
       raise NoTryServerAccess('%s is unaccessible.' % url)
