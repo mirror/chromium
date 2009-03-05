@@ -46,6 +46,16 @@ class Master(chromium_config_private.Master):
     master_port_alt = 8014
     # Used by the waterfall display.
     project_name = 'Chromium'
+  
+  class ChromiumFYI(chromium_config_private.Master.Chromium):
+    # Used for the waterfall URL and the waterfall's WebStatus object.
+    master_port = 8016
+    # Which port slaves use to connect to the master.
+    slave_port = 8017
+    # The alternate read-only page.
+    master_port_alt = 8019
+    # Used by the waterfall display.
+    project_name = 'Chromium FYI'
 
   # Used for the Try server.
   class TryServer(chromium_config_private.Master.TryServer):
