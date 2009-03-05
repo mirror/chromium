@@ -16,6 +16,7 @@ import cPickle  # Exposed through the API.
 import cStringIO  # Exposed through the API.
 import exceptions
 import fnmatch
+import glob
 import marshal  # Exposed through the API.
 import optparse
 import os  # Somewhat exposed through the API.
@@ -287,6 +288,9 @@ class InputApi(object):
     """Same as input_api.change.AffectedTextFiles() except only lists files
     in the same directory as the current presubmit script, or subdirectories
     thereof.
+
+    Warning: This function retrieves the svn property on each file so it can be
+    slow for large change lists.
     """
     return InputApi.FilterTextFiles(self.AffectedFiles(include_dirs=False),
                                     include_deletes)
@@ -347,7 +351,12 @@ class AffectedFile(object):
 
   def IsDirectory(self):
     """Returns true if this object is a directory."""
-    return _GetSVNFileInfo(self.path).get('Node Kind') == 'directory'
+    if os.path.exists(self.path):
+      # Retrieve directly from the file system; it is much faster than querying
+      # subversion, especially on Windows.
+      return os.path.isdir(self.path)
+    else:
+      return _GetSVNFileInfo(self.path).get('Node Kind') == 'directory'
 
   def SvnProperty(self, property_name):
     """Returns the specified SVN property of this file, or the empty string
@@ -659,19 +668,24 @@ def DoPresubmitChecks(change_info,
   return (error_count == 0)
 
 
-def ScanSubDirs(path, mask, recursive):
-  results = []
-  for root, dirs, files in os.walk(r"."):
-    if not recursive:
-      dirs.clear()
-    if '.svn' in dirs:
-      dirs.remove('.svn')
-    for name in files:
-      full_path = os.path.join(root, name)
-      if fnmatch.fnmatch(full_path, mask):
-        results.append(full_path)
-  return results
+def ScanSubDirs(mask, recursive):
+  if not recursive:
+    return [x for x in glob.glob(mask) if '.svn' not in x]
+  else:
+    results = []
+    for root, dirs, files in os.walk('.'):
+      if '.svn' in dirs:
+        dirs.remove('.svn')
+      for name in files:
+        if fnmatch.fnmatch(name, mask):
+          results.append(os.path.join(root, name))
+    return results
 
+def ParseFiles(args, recursive):
+  files = []
+  for arg in args:
+    files.extend([('M', file) for file in ScanSubDirs(arg, recursive)])
+  return files
 
 def Main(argv):
   parser = optparse.OptionParser(usage="%prog [options]",
@@ -682,12 +696,8 @@ def Main(argv):
                    help="Act recursively")
   parser.add_option("-v", "--verbose", action="store_true",
                    help="Verbose output")
-  options, args = parser.parse_args(argv)
-  files = []
-  for arg in args:
-    files.extend([('M', file) for file in ScanSubDirs('',
-                                                      arg,
-                                                      options.recursive)])
+  options, args = parser.parse_args(argv[1:])
+  files = ParseFiles(args, options.recursive)
   if options.verbose:
     print "Found %d files." % len(files)
   return DoPresubmitChecks(gcl.ChangeInfo(name='temp', files=files),
