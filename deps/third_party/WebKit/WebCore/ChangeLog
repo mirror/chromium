@@ -1,3 +1,315 @@
+2009-03-05  Xan Lopez  <xan@gnome.org>
+
+        Reviewed by Mark Rowe.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24377
+        [GTK] Comply better with coding style guidelines in ResourceHandleSoup
+
+        Use C++ booleans, 0 instead of NULL, prefix boolean variables with
+        'is', do not use 'else if' if the previous if had a return, delete
+        trailing whitespace, etc.
+
+        * platform/network/ResourceHandleInternal.h:
+        (WebCore::ResourceHandleInternal::ResourceHandleInternal):
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::WebCoreSynchronousLoader::WebCoreSynchronousLoader):
+        (WebCore::fillResponseFromMessage):
+        (WebCore::restartedCallback):
+        (WebCore::finishedCallback):
+        (WebCore::parseDataUrl):
+        (WebCore::ensureSessionIsInitialized):
+        (WebCore::ResourceHandle::startHttp):
+        (WebCore::reportUnknownProtocolError):
+        (WebCore::ResourceHandle::start):
+        (WebCore::cleanupGioOperation):
+        (WebCore::closeCallback):
+        (WebCore::readCallback):
+        (WebCore::openCallback):
+        (WebCore::queryInfoCallback):
+        (WebCore::ResourceHandle::startGio):
+
+2009-03-04  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Eric Seidel
+
+        https://bugs.webkit.org/show_bug.cgi?id=24328
+        
+        If an element has backface-visibility: hidden, hit testing should not
+        hit the back sides of elements. Test for that by inverting the accumulated
+        transform and looking at the z vector.
+
+        Tested by transforms/3d/hit-testing/backface-hit-test.html
+        
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::hitTestLayer):
+
+2009-03-04  Adam Langley  <agl@google.com>
+
+        Reviewed by Darin Fisher.
+
+        r41362 mistakenly added functions "RenderThemeWin::" into
+        RenderThemeChromiumGtk.cpp. When correcting this, I somehow changed
+        them to void return types. This patch switches them back to ints.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24360
+
+        * rendering/RenderThemeChromiumLinux.cpp:
+        (WebCore::RenderThemeChromiumLinux::buttonInternalPaddingLeft):
+        (WebCore::RenderThemeChromiumLinux::buttonInternalPaddingRight):
+        (WebCore::RenderThemeChromiumLinux::buttonInternalPaddingTop):
+        (WebCore::RenderThemeChromiumLinux::buttonInternalPaddingBottom):
+
+2009-03-04  Adam Langley  <agl@google.com>
+
+        Reviewed by Darin Fisher.
+
+        Chromium Linux: change some metrics to better match Windows after
+        r41416. Aesthetically this may be worse, but web-compat is king.
+
+        Also, the previous code had an off by one error when drawing
+        scrollbars which caused the scrollbar to overflow it's bounds by 1px
+        at the right and bottom edges.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24369
+
+        * rendering/RenderThemeChromiumLinux.cpp:
+        (WebCore::):
+        (WebCore::RenderThemeChromiumLinux::systemFont):
+        * platform/chromium/ScrollbarThemeChromiumLinux.cpp:
+        (WebCore::ScrollbarThemeChromium::paintTrackPiece):
+
+2009-03-04  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Adam Roben.
+
+        Add an ASSERT to better demonstrate the cause of the crash in
+        https://bugs.webkit.org/show_bug.cgi?id=23736
+
+        * loader/DocLoader.cpp:
+        (WebCore::DocLoader::~DocLoader):
+
+2009-03-04  David Levin  <levin@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Bug 24337: Assert when doing sync XHR in a worker for a cacheable response.
+        <https://bugs.webkit.org/show_bug.cgi?id=24337>
+
+        Tests: http/tests/xmlhttprequest/access-control-basic-denied-preflight-cache.html
+               http/tests/xmlhttprequest/workers/xmlhttprequest-file-not-found.html
+
+        * loader/mac/ResourceLoaderMac.mm:
+        (WebCore::ResourceLoader::willCacheResponse):
+        An identifier is only asssigned if resource load callbacks are done.  So don't send
+        willCacheResponse which uses identifier if resource load callbacks aren't being sent.
+
+2009-03-04  David Levin  <levin@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Bug 24330: Sync xhr in workers should send an abort exception when the worker is terminated.
+        <https://bugs.webkit.org/show_bug.cgi?id=24330>
+
+        Test: http/tests/xmlhttprequest/workers/abort-exception-assert.html
+
+        * dom/ExceptionCode.cpp:
+        (WebCore::xmlHttpRequestExceptionNames):
+        Added missing ABORT_ERR whose absence caused an assert.
+
+        * loader/WorkerThreadableLoader.cpp:
+        (WebCore::WorkerThreadableLoader::loadResourceSynchronously):
+        (WebCore::WorkerThreadableLoader::MainThreadBridge::cancel):
+        Add more logic to handle the termination case for sync xhr.
+
+2009-03-04  Eric Carlson  <eric.carlson@apple.com>
+
+        Reviewed by Antti Koivisto.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24364
+        Add support for HTMLMediaElement canPlayType method. Make
+        MediaPlayer::supportsType take a ContentType instead of a
+        separate mime type and codecs parameter.
+
+        Test: media/video-can-play-type.html
+
+        * dom/DOMImplementation.cpp:
+        (WebCore::DOMImplementation::createDocument):
+        * html/HTMLMediaElement.cpp:
+        (WebCore::HTMLMediaElement::canPlayType): Add canPlayType method.
+        (WebCore::HTMLMediaElement::loadInternal): selectMediaURL returns a ContentType.
+        (WebCore::HTMLMediaElement::selectMediaURL): Return a ContentType instead of raw MIME type.
+        (WebCore::HTMLMediaElement::initialURL): selectMediaURL returns a ContentType.
+        * html/HTMLMediaElement.h: Add prototype.
+        * html/HTMLMediaElement.idl: Ditto.
+        * platform/graphics/MediaPlayer.cpp:
+        (WebCore::MediaPlayer::load): Take a ContentType instead of raw MIME type.
+        (WebCore::MediaPlayer::supportsType): Ditto.
+        * platform/graphics/MediaPlayer.h:
+
+2009-03-04  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Dave Hyatt.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24359
+        Repaint throttling mechanism
+        
+        Excessive repainting can slow down page loadind. This implements a timer
+        based throttling mechanism. It is behind ENABLE(REPAINT_THROTTLING) and not 
+        enabled by default.
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::checkCompleted):
+        * page/EventHandler.cpp:
+        (WebCore::EventHandler::dispatchDragEvent):
+        (WebCore::EventHandler::dispatchMouseEvent):
+        (WebCore::EventHandler::keyEvent):
+        (WebCore::EventHandler::handleTextInputEvent):
+        * page/FrameView.cpp:
+        (WebCore::FrameView::FrameView):
+        (WebCore::FrameView::reset):
+        (WebCore::FrameView::repaintContentRectangle):
+        (WebCore::FrameView::beginDeferredRepaints):
+        (WebCore::FrameView::endDeferredRepaints):
+        (WebCore::FrameView::checkStopDelayingDeferredRepaints):
+        (WebCore::FrameView::doDeferredRepaints):
+        (WebCore::FrameView::updateDeferredRepaintDelay):
+        (WebCore::FrameView::resetDeferredRepaintDelay):
+        (WebCore::FrameView::adjustedDeferredRepaintDelay):
+        (WebCore::FrameView::deferredRepaintTimerFired):
+        (WebCore::FrameView::paintContents):
+        * page/FrameView.h:
+
+2009-03-04  Sam Weinig  <sam@webkit.org>
+
+        Rubber-stamped by Antti Koivisto.
+
+        Remove LOW_BANDWIDTH_DISPLAY as it is not being used by any platforms.
+
+        * dom/Document.cpp:
+        (WebCore::Document::Document):
+        * dom/Document.h:
+        (WebCore::Document::haveStylesheetsLoaded):
+        * html/HTMLTokenizer.cpp:
+        (WebCore::HTMLTokenizer::scriptHandler):
+        * loader/Cache.cpp:
+        (WebCore::Cache::requestResource):
+        * loader/CachedCSSStyleSheet.cpp:
+        (WebCore::CachedCSSStyleSheet::checkNotify):
+        * loader/DocLoader.h:
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::FrameLoader):
+        (WebCore::FrameLoader::requestFrame):
+        (WebCore::FrameLoader::stopLoading):
+        (WebCore::FrameLoader::begin):
+        (WebCore::FrameLoader::write):
+        (WebCore::FrameLoader::endIfNotLoadingMainResource):
+        (WebCore::FrameLoader::checkCompleted):
+        (WebCore::FrameLoader::requestObject):
+        (WebCore::FrameLoader::loadItem):
+        * loader/FrameLoader.h:
+
+2009-03-02  Xan Lopez  <xan@gnome.org>
+
+        Reviewed by Mark Rowe.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24287
+        [GTK] Move auth dialog feature to WebKit/
+
+        Remove WebKitSoupAuthDialog files from build and stop using it.
+
+        * GNUmakefile.am:
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::ensureSessionIsInitialized):
+        * platform/network/soup/webkit-soup-auth-dialog.c: Removed.
+        * platform/network/soup/webkit-soup-auth-dialog.h: Removed.
+
+2009-03-04  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+        
+        https://bugs.webkit.org/show_bug.cgi?id=24361
+        
+        Reinstate code that sets result.innerNode when hitTest() returns true,
+        but never filled in the innerNode. Fixes hit testing of generated content.
+
+        Test: fast/css-generated-content/hit-test-generated-content.html
+
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::hitTestContents):
+
+2009-03-04  Adam Barth  <abath@webkit.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24356
+
+        Fix WebKit style for allowUniversalAccessFromFileURLs.
+
+        * WebCore.base.exp:
+        * dom/Document.cpp:
+        (WebCore::Document::initSecurityContext):
+        * page/Settings.cpp:
+        (WebCore::Settings::Settings):
+        (WebCore::Settings::setAllowUniversalAccessFromFileURLs):
+        * page/Settings.h:
+        (WebCore::Settings::allowUniversalAccessFromFileURLs):
+
+2009-03-04  Brady Eidson  <beidson@apple.com>
+
+        Reviewed by Darin Adler
+
+        <rdar://problem/6619630> Quick Look of vCards stuck on image of first card opened.
+
+        I narrowed this down to http://trac.webkit.org/changeset/39304 which, among other things,
+        consolidated some of the various decision making pieces of the Cache into the new method
+        FrameLoader::cachePolicy().
+
+        Before 39304, when deciding whether to use an existing CachedResource, we checked if the FrameLoader 
+        is reloading.  If it is, we'd evict any existing resource then recreate it.  Quick looks uses the
+        same URL for this image every time and expects it to be reloaded with each new card.
+
+        The FrameLoader::isReloading() check did one thing - Ask the DocumentLoader if it's cache policy
+        is "ReloadIgnoringCacheData".  This check was lost in the consolidation to the new method.  
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::cachePolicy): Restore the DocumentLoader's cachePolicy check as a possible
+          condition for returning CachePolicyReload.
+
+2009-03-04  Timothy Hatcher  <timothy@apple.com>
+
+        * English.lproj/localizedStrings.js: Update strings to include "DATABASES",
+        "LOCAL STORAGE" and "SESSION STORAGE".
+
+2009-03-04  Timothy Hatcher  <timothy@apple.com>
+
+        Fix a regression where the Web Inspector console would not animate
+        in or out correctly.
+
+        Reviewed by Anders Carlsson.
+
+        * inspector/front-end/inspector.css: Move a z-index to a child element
+        to get the correct stacking order during the animation.
+
+2009-03-03  David Hyatt  <hyatt@apple.com>
+
+        https://bugs.webkit.org/show_bug.cgi?id=24201, pathologically bad block layout.
+
+        Make sure to factor clear deltas into y position estimates.  Also avoid doing the comparison of
+        the final position against the y position estimate until after the clear has happened.  This gets rid
+        of some duplicated cut/pasted code and also ensures a layout delta only has to be put in once.
+
+        Reviewed by Dan Bernstein
+
+        Added fast/block/float/nested-clearance.html
+
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::collapseMargins):
+        (WebCore::RenderBlock::clearFloatsIfNeeded):
+        (WebCore::RenderBlock::estimateVerticalPosition):
+        (WebCore::RenderBlock::layoutBlockChildren):
+        (WebCore::RenderBlock::getClearDelta):
+        * rendering/RenderBlock.h:
+
 2009-03-02  Kim Grönholm  <kim.gronholm@nomovok.com>
 
         Reviewed by Simon Hausmann.
@@ -941,7 +1253,7 @@
         (WebCore::JSXMLHttpRequestConstructor::scriptExecutionContext):
         * dom/EventException.idl:
         * dom/EventListener.idl:
-        Chnage to have the NoStaticTables attribute since they are used from XHR.
+        Change to have the NoStaticTables attribute since they are used from XHR.
 
         * loader/WorkerThreadableLoader.cpp:
         (WebCore::workerContextDidFinishLoading):
@@ -959,7 +1271,7 @@
         * xml/XMLHttpRequestException.idl:
         * xml/XMLHttpRequestProgressEvent.idl:
         * xml/XMLHttpRequestUpload.idl:
-        Chnage to have the NoStaticTables attribute since they are used from XHR.
+        Change to have the NoStaticTables attribute since they are used from XHR.
 
 2009-03-01  Horia Olaru  <olaru@adobe.com>
 
@@ -11965,7 +12277,7 @@
 
         Rubber-stamped by Ada Chan.
 
-        * dom/Document.h: Chnaged HitTestRequest to a class from a struct.
+        * dom/Document.h: Changed HitTestRequest to a class from a struct.
         * page/EventHandler.h: Ditto.
         * rendering/EllipsisBox.h: Ditto.
         * rendering/InlineBox.h: Ditto.

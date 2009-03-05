@@ -325,9 +325,6 @@ Document::Document(Frame* frame, bool isXHTML)
     , m_hasOpenDatabases(false)
 #endif
     , m_usingGeolocation(false)
-#if USE(LOW_BANDWIDTH_DISPLAY)
-    , m_inLowBandwidthDisplay(false)
-#endif
 {
     m_document.resetSkippingRef(this);
 
@@ -4269,7 +4266,7 @@ void Document::initSecurityContext()
           // sites.
           securityOrigin()->grantUniversalAccess();
 
-        } else if(settings->allowUniversalAccessFromFileUrls() && securityOrigin()->isLocal()) {
+        } else if (settings->allowUniversalAccessFromFileURLs() && securityOrigin()->isLocal()) {
           // Some clients want file:// URLs to have universal access, but that
           // setting is dangerous for other clients.
           securityOrigin()->grantUniversalAccess();

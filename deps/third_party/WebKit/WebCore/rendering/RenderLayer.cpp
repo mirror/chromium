@@ -2209,6 +2209,14 @@ RenderLayer* RenderLayer::hitTestLayer(RenderLayer* rootLayer, RenderLayer* cont
         if (!newTransformState->m_accumulatedTransform.isInvertible())
             return 0;
 
+        // Check for hit test on backface if backface-visibility is 'hidden'
+        if (renderer()->style()->backfaceVisibility() == BackfaceVisibilityHidden) {
+            TransformationMatrix invertedMatrix = newTransformState->m_accumulatedTransform.inverse();
+            // If the z-vector of the matrix is negative, the back is facing towards the viewer.
+            if (invertedMatrix.m33() < 0)
+                return 0;
+        }
+
         // Compute the point and the hit test rect in the coords of this layer by using the values
         // from the transformState, which store the point and quad in the coords of the last flattened
         // layer, and the accumulated transform which lets up map through preserve-3d layers.
@@ -2218,8 +2226,6 @@ RenderLayer* RenderLayer::hitTestLayer(RenderLayer* rootLayer, RenderLayer* cont
         IntPoint localPoint = roundedIntPoint(newTransformState->mappedPoint());
         IntRect localHitTestRect = newTransformState->mappedQuad().enclosingBoundingBox();
 
-        // FIXME: check for hit test on backface if backface-visibility is 'hidden'
-        
         // Now do a hit test with the root layer shifted to be us.
         return hitTestLayer(this, containerLayer, request, result, localHitTestRect, localPoint, true, newTransformState.get(), zOffset);
     }
@@ -2382,10 +2388,25 @@ RenderLayer* RenderLayer::hitTestLayer(RenderLayer* rootLayer, RenderLayer* cont
 
 bool RenderLayer::hitTestContents(const HitTestRequest& request, HitTestResult& result, const IntRect& layerBounds, const IntPoint& hitTestPoint, HitTestFilter hitTestFilter) const
 {
-    return renderer()->hitTest(request, result, hitTestPoint,
+    if (!renderer()->hitTest(request, result, hitTestPoint,
                             layerBounds.x() - renderBoxX(),
                             layerBounds.y() - renderBoxY(), 
-                            hitTestFilter);
+                            hitTestFilter))
+        return false;
+
+    // For positioned generated content, we might still not have a
+    // node by the time we get to the layer level, since none of
+    // the content in the layer has an element. So just walk up
+    // the tree.
+    if (!result.innerNode() || !result.innerNonSharedNode()) {
+        Node* e = enclosingElement();
+        if (!result.innerNode())
+            result.setInnerNode(e);
+        if (!result.innerNonSharedNode())
+            result.setInnerNonSharedNode(e);
+    }
+        
+    return true;
 }
 
 void RenderLayer::updateClipRects(const RenderLayer* rootLayer)
