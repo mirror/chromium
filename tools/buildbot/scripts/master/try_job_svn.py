@@ -29,7 +29,6 @@ class TryJobSubversion(TryBase):
     self.watcher.setServiceParent(self)
 
   def parseJob(self, comment, diff):
-    builderNames = []
     options = dict(item.split('=') for item in comment.splitlines())
     job_name = options.get('name', 'Unnamed')
     user = options.get('user', 'John Doe')
@@ -45,7 +44,7 @@ class TryJobSubversion(TryBase):
     buildsetID = options.get('reason', "%s: %s" % (user, job_name))
     builderNames = []
     if 'bot' in options:
-      builderNames = [ options['bot'] ]
+      builderNames = options['bot'].split(',')
     # TODO(maruel): Don't select the builders right now if not specified.
     builderNames = self.pools.Select(builderNames)
     tests = options.get('tests', None)

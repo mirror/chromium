@@ -79,7 +79,7 @@ class TryJobHTTP(TryBase):
     buildsetID = options.get('reason', "%s: %s" % (user, job_name))
     builderNames = []
     if 'bot' in options:
-      builderNames = [ options['bot'] ]
+      builderNames = options['bot'].split(',')
     # TODO(maruel): Don't select the builders right now if not specified.
     builderNames = self.pools.Select(builderNames)
     tests = options.get('tests', None)
