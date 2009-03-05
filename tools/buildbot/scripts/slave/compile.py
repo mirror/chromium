@@ -90,6 +90,9 @@ def main_scons(options, args):
   elif options.mode == 'purify':
     os.environ['CHROME_BUILD_TYPE'] = '_purify'
 
+  # Force scons to always check for dependency changes.
+  command.extend(['--implicit-deps-changed'])
+
   # Here's what you can uncomment if you need to see more info
   # about what the build is doing on a slave:
   #
