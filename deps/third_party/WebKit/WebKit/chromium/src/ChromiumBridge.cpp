@@ -109,6 +109,8 @@ void ChromiumBridge::clipboardWriteImage(const NativeImageSkia* image,
 
 //-----------------------------------------------------------------------------
 
+// FIXME: re-enable once the intl1 performance issue is resolved.
+#if 0
 void ChromiumBridge::setCookies(const KURL& url, const KURL& policyURL,
                                 const String& cookie)
 {
@@ -119,6 +121,7 @@ String ChromiumBridge::cookies(const KURL& url, const KURL& policyURL)
 {
     return webKitClient()->cookies(url, policyURL);
 }
+#endif
 
 //-----------------------------------------------------------------------------
 
