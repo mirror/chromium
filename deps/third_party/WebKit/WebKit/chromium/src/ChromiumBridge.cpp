@@ -31,6 +31,8 @@
 #include "config.h"
 #include "ChromiumBridge.h"
 
+#include <googleurl/src/url_util.h>
+
 #include "WebClipboard.h"
 #include "WebImage.h"
 #include "WebKit.h"
@@ -39,6 +41,7 @@
 #include "WebString.h"
 #include "WebURL.h"
 
+#include "BitmapImage.h"
 #include "KURL.h"
 #include "NativeImageSkia.h"
 #include "NotImplemented.h"
@@ -49,7 +52,7 @@ using namespace WebKit;
 
 namespace WebCore {
 
-//-----------------------------------------------------------------------------
+// Clipboard ------------------------------------------------------------------
 
 COMPILE_ASSERT(
     int(PasteboardPrivate::HTMLFormat) == int(WebClipboard::FormatHTML),
@@ -107,7 +110,7 @@ void ChromiumBridge::clipboardWriteImage(const NativeImageSkia* image,
 #endif
 }
 
-//-----------------------------------------------------------------------------
+// Cookies --------------------------------------------------------------------
 
 void ChromiumBridge::setCookies(const KURL& url, const KURL& policyURL,
                                 const String& cookie)
@@ -120,28 +123,28 @@ String ChromiumBridge::cookies(const KURL& url, const KURL& policyURL)
     return webKitClient()->cookies(url, policyURL);
 }
 
-//-----------------------------------------------------------------------------
+// DNS ------------------------------------------------------------------------
 
 void ChromiumBridge::prefetchDNS(const String& hostname)
 {
     webKitClient()->prefetchHostName(hostname);
 }
 
-//-----------------------------------------------------------------------------
+// Language -------------------------------------------------------------------
 
 String ChromiumBridge::computedDefaultLanguage()
 {
     return webKitClient()->defaultLocale();
 }
 
-//-----------------------------------------------------------------------------
+// LayoutTestMode -------------------------------------------------------------
 
 bool ChromiumBridge::layoutTestMode()
 {
     return WebKit::layoutTestMode();
 }
 
-//-----------------------------------------------------------------------------
+// MimeType -------------------------------------------------------------------
 
 bool ChromiumBridge::isSupportedImageMIMEType(const String& mimeType)
 {
@@ -173,7 +176,22 @@ String ChromiumBridge::preferredExtensionForMIMEType(const String& mimeType)
     return webKitClient()->mimeRegistry()->preferredExtensionForMIMEType(mimeType);
 }
 
-//-----------------------------------------------------------------------------
+// Resources ------------------------------------------------------------------
+
+PassRefPtr<Image> ChromiumBridge::loadPlatformImageResource(const char* name)
+{
+    const WebCString& resource = webKitClient()->loadResource(name);
+    if (resource.isEmpty())
+        return Image::nullImage();
+
+    RefPtr<SharedBuffer> buffer =
+        SharedBuffer::create(resource.characters(), resource.length());
+    RefPtr<Image> image = BitmapImage::create();
+    image->setData(buffer, true);
+    return image;
+}
+
+// SharedTimers ---------------------------------------------------------------
 
 void ChromiumBridge::setSharedTimerFiredFunction(void (*func)())
 {
@@ -190,11 +208,62 @@ void ChromiumBridge::stopSharedTimer()
     webKitClient()->stopSharedTimer();
 }
 
-//-----------------------------------------------------------------------------
+// SystemTime -----------------------------------------------------------------
 
 double ChromiumBridge::currentTime()
 {
     return webKitClient()->currentTime();
+}
+
+// Visited Links --------------------------------------------------------------
+
+WebCore::LinkHash ChromiumBridge::visitedLinkHash(const UChar* url,
+                                                  unsigned length)
+{
+    url_canon::RawCanonOutput<2048> buffer;
+    url_parse::Parsed parsed;
+    if (!url_util::Canonicalize(url, length, NULL, &buffer, &parsed))
+        return 0;  // Invalid URLs are unvisited.
+    return webKitClient()->visitedLinkHash(buffer.data(), buffer.length());
+}
+
+WebCore::LinkHash ChromiumBridge::visitedLinkHash(const WebCore::KURL& base,
+                                                  const WebCore::AtomicString& attributeURL)
+{
+    // Resolve the relative URL using googleurl and pass the absolute URL up to
+    // the embedder. We could create a GURL object from the base and resolve
+    // the relative URL that way, but calling the lower-level functions
+    // directly saves us the string allocation in most cases.
+    url_canon::RawCanonOutput<2048> buffer;
+    url_parse::Parsed parsed;
+
+#if USE(GOOGLEURL)
+    const WebCore::CString& cstr = base.utf8String();
+    const char* data = cstr.data();
+    int length = cstr.length();
+    const url_parse::Parsed& srcParsed = base.parsed();
+#else
+    // When we're not using GoogleURL, first canonicalize it so we can resolve it
+    // below.
+    url_canon::RawCanonOutput<2048> srcCanon;
+    url_parse::Parsed srcParsed;
+    WebCore::String str = base.string();
+    if (!url_util::Canonicalize(str.characters(), str.length(), NULL, &srcCanon, &srcParsed))
+        return 0;
+    const char* data = srcCanon.data();
+    int length = srcCanon.length();
+#endif
+
+    if (!url_util::ResolveRelative(data, length, srcParsed, attributeURL.characters(),
+                                   attributeURL.length(), NULL, &buffer, &parsed))
+        return 0;  // Invalid resolved URL.
+
+    return webKitClient()->visitedLinkHash(buffer.data(), buffer.length());
+}
+
+bool ChromiumBridge::isLinkVisited(WebCore::LinkHash visitedLinkHash)
+{
+    return webKitClient()->isLinkVisited(visitedLinkHash);
 }
 
 } // namespace WebCore
