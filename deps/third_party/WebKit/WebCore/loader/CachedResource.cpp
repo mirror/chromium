@@ -378,16 +378,11 @@ bool CachedResource::wasPurged() const
 
 unsigned CachedResource::overheadSize() const
 {
-#if 0
     return sizeof(CachedResource) + m_response.memoryUsage() + 576;
     /*
         576 = 192 +                   // average size of m_url
               384;                    // average size of m_clients hash map
     */
-#else
-    // TEST: use the old algorithm to see how it impacts page load perf.
-    return sizeof(CachedResource) + m_response.memoryUsage() + 2 * m_url.length() + 384;
-#endif
 }
 
 }
