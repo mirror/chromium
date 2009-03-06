@@ -439,10 +439,6 @@ namespace WebCore {
 
         void applyUserAgent(ResourceRequest& request);
 
-        // See bug 802075
-        bool firingUnloadEvents() { return m_firingUnloadEvents; }
-        void setFiringUnloadEvents(bool value) { m_firingUnloadEvents = value; }
-
     private:
         PassRefPtr<HistoryItem> createHistoryItem(bool useOriginal);
         PassRefPtr<HistoryItem> createHistoryItemTree(Frame* targetFrame, bool clipAtTarget);
@@ -605,7 +601,6 @@ namespace WebCore {
         bool m_wasUnloadEventEmitted;
         bool m_isComplete;
         bool m_isLoadingMainResource;
-        bool m_firingUnloadEvents;  // frame or loader is firing unload or beforeUnload events.
 
         KURL m_URL;
         KURL m_workingURL;

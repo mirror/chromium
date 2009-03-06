@@ -79,7 +79,6 @@
 using std::min;
 using std::max;
 
-
 namespace WebCore {
 
 class PostMessageTimer : public TimerBase {
@@ -329,6 +328,7 @@ Storage* DOMWindow::sessionStorage() const
 
     RefPtr<StorageArea> storageArea = page->sessionStorage()->storageArea(document->securityOrigin());
     page->inspectorController()->didUseDOMStorage(storageArea.get(), false, m_frame);
+
     m_sessionStorage = Storage::create(m_frame, storageArea.release());
     return m_sessionStorage.get();
 }
@@ -485,10 +485,6 @@ void DOMWindow::print()
 void DOMWindow::stop()
 {
     if (!m_frame)
-        return;
-
-    // Ignores stop() in unload event handlers.  See bug 802075.
-    if (m_frame->loader()->firingUnloadEvents())
         return;
 
     // We must check whether the load is complete asynchronously, because we might still be parsing

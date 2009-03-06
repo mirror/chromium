@@ -1572,6 +1572,8 @@ void Frame::pageDestroyed()
     if (page() && page()->focusController()->focusedFrame() == this)
         page()->focusController()->setFocusedFrame(0);
 
+    script()->clearWindowShell();
+
     // This will stop any JS timers
     if (script()->haveWindowShell())
         script()->windowShell()->disconnectFrame();
@@ -1635,17 +1637,12 @@ bool Frame::shouldClose()
     if (!body)
         return true;
 
-    loader()->setFiringUnloadEvents(true); // Bug 802075.
-
     RefPtr<BeforeUnloadEvent> beforeUnloadEvent = BeforeUnloadEvent::create();
     beforeUnloadEvent->setTarget(doc);
     doc->handleWindowEvent(beforeUnloadEvent.get(), false);
 
     if (!beforeUnloadEvent->defaultPrevented())
         doc->defaultEventHandler(beforeUnloadEvent.get());
-
-    loader()->setFiringUnloadEvents(false);
-
     if (beforeUnloadEvent->result().isNull())
         return true;
 

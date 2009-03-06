@@ -240,7 +240,6 @@ FrameLoader::FrameLoader(Frame* frame, FrameLoaderClient* client)
     , m_wasUnloadEventEmitted(false)
     , m_isComplete(false)
     , m_isLoadingMainResource(false)
-    , m_firingUnloadEvents(false)
     , m_cancellingWithLoadInProgress(false)
     , m_needsClear(false)
     , m_receivedData(false)
@@ -573,9 +572,7 @@ void FrameLoader::stopLoading(bool sendUnload)
                 Node* currentFocusedNode = m_frame->document()->focusedNode();
                 if (currentFocusedNode)
                     currentFocusedNode->aboutToUnload();
-                setFiringUnloadEvents(true);
                 m_frame->document()->dispatchWindowEvent(eventNames().unloadEvent, false, false);
-                setFiringUnloadEvents(false);
                 if (m_frame->document())
                     m_frame->document()->updateRendering();
                 m_wasUnloadEventEmitted = true;
