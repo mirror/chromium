@@ -31,6 +31,8 @@
 #ifndef WebCommon_h
 #define WebCommon_h
 
+#include <stddef.h> // For size_t
+
 // Make sure we have some basic types.
 #ifdef WIN32
 typedef unsigned char uint8_t;
