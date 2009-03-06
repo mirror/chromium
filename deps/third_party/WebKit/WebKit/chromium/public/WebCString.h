@@ -49,7 +49,12 @@ namespace WebKit {
         ~WebCString() { reset(); }
 
         WebCString() : m_private(0) { }
-        WebCString(const char* characters, size_t len) { assign(characters, len); }
+
+        WebCString(const char* characters, size_t len) : m_private(0)
+        {
+            assign(characters, len);
+        }
+
         WebCString(const WebCString& s) : m_private(0) { assign(s); }
 
         WebCString& operator=(const WebCString& s)
