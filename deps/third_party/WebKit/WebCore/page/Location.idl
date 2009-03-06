@@ -37,18 +37,11 @@ module window {
         CustomDeleteProperty,
         CustomGetPropertyNames
     ] Location {
-                 attribute [CustomSetter, v8DisallowShadowing, DontDelete] DOMString href;
+                 attribute [CustomSetter, v8DisallowShadowing] DOMString href;
 
-#if defined(V8_BINDING)
         [Custom, v8OnInstance] void assign(in DOMString url);
         [Custom, v8OnInstance] void replace(in DOMString url);
         [Custom, v8OnInstance] void reload();
-        [Custom, v8OnInstance, ReadOnly, DontEnum] DOMObject valueOf();
-#else
-        [Custom] void assign(in DOMString url);
-        [Custom] void replace(in DOMString url);
-        [Custom] void reload();
-#endif
 
         // URI decomposition attributes
                  attribute [CustomSetter] DOMString protocol;
@@ -61,6 +54,9 @@ module window {
 
 #if defined(LANGUAGE_JAVASCRIPT)
         [ReadOnly, DontEnum, Custom, v8OnInstance] DOMString toString();
+#endif
+#if defined(V8_BINDING)
+        [ReadOnly, DontEnum, Custom, v8OnInstance] DOMObject valueOf();
 #endif
     };
 

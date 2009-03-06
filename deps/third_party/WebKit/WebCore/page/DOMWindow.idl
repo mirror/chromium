@@ -24,9 +24,8 @@
  */
 
 module window {
+
     interface [
-        // DOMWindow object has CheckDomainSecurity on the front
-        // object in the V8 bindings.
         CheckDomainSecurity,
         CustomDefineGetter,
         CustomDefineSetter,
@@ -54,7 +53,7 @@ module window {
         attribute [Replaceable] BarInfo toolbar;
         attribute [Replaceable] Navigator navigator;
         attribute [Replaceable] Navigator clientInformation;
-        attribute [DoNotCheckDomainSecurity, CustomSetter, DontDelete, v8DisallowShadowing] Location location;
+        attribute [DoNotCheckDomainSecurity, CustomSetter, v8DisallowShadowing] Location location;
 
         DOMSelection getSelection();
 
@@ -118,12 +117,12 @@ module window {
 
         // Self referential attributes
         attribute [Replaceable, DoNotCheckDomainSecurityOnGet] DOMWindow self;
-        readonly attribute [DoNotCheckDomainSecurity, DontDelete, v8DisallowShadowing] DOMWindow window;
+        readonly attribute [DoNotCheckDomainSecurity, v8DisallowShadowing] DOMWindow window;
         attribute [Replaceable, DoNotCheckDomainSecurityOnGet] DOMWindow frames;
 
         attribute [Replaceable, V8CustomSetter, DoNotCheckDomainSecurity] DOMWindow opener;
         attribute [Replaceable, DoNotCheckDomainSecurity] DOMWindow parent;
-        readonly attribute [DoNotCheckDomainSecurity, DontDelete, v8DisallowShadowing] DOMWindow top;
+        readonly attribute [DoNotCheckDomainSecurity, v8DisallowShadowing] DOMWindow top;
 
         // DOM Level 2 AbstractView Interface
         readonly attribute Document document;
@@ -144,8 +143,7 @@ module window {
 #if ENABLE_OFFLINE_WEB_APPLICATIONS
         readonly attribute DOMApplicationCache applicationCache;
 #endif    
-#if 0 && ENABLE_DATABASE
-        // Temporarily disabled until database binding support for v8 is up to snuff
+#if ENABLE_DATABASE
         Database openDatabase(in DOMString name, in DOMString version, in DOMString displayName, in unsigned long estimatedSize)
             raises(DOMException);
 #endif
@@ -162,11 +160,11 @@ module window {
 
         // Timers
         [Custom] long setTimeout(in TimeoutHandler handler, in long timeout);
-        // [JSCCustom] long setTimeout(in DOMString code, in long timeout);
+        // [Custom] long setTimeout(in DOMString code, in long timeout);
         [Custom] void clearTimeout(in long handle);
 
         [Custom] long setInterval(in TimeoutHandler handler, in long timeout);
-        // [JSCCustom] long setInterval(in DOMString code, in long timeout);
+        // [Custom] long setInterval(in DOMString code, in long timeout);
         [Custom] void clearInterval(in long handle);
 
         // Base64
@@ -219,7 +217,7 @@ module window {
                                           in EventListener listener,
                                           in boolean useCapture);
         // FIXME: Implement dispatchEvent
- 
+
 #if defined(LANGUAGE_JAVASCRIPT)
         // Global constructors
         attribute StyleSheetConstructor StyleSheet;
@@ -237,7 +235,7 @@ module window {
         attribute CSSMediaRuleConstructor CSSMediaRule;
         attribute CSSPageRuleConstructor CSSPageRule;
         attribute CSSStyleRuleConstructor CSSStyleRule;
-
+        
         attribute CSSVariablesRuleConstructor CSSVariablesRule;
         attribute CSSVariablesDeclarationConstructor CSSVariablesDeclaration;
 
@@ -384,15 +382,15 @@ module window {
         attribute XMLHttpRequestExceptionConstructor XMLHttpRequestException;
 #if defined(V8_BINDING)
         // With JSC, these are added in JSDOMWindowBase.cpp.
-	attribute XMLHttpRequestConstructor XMLHttpRequest;
-	attribute XSLTProcessorConstructor XSLTProcessor;
-	attribute MessageChannelConstructor MessageChannel;
-	attribute WebKitPointConstructor WebKitPoint;
+        attribute XMLHttpRequestConstructor XMLHttpRequest;
+        attribute XSLTProcessorConstructor XSLTProcessor;
+        attribute MessageChannelConstructor MessageChannel;
+        attribute WebKitPointConstructor WebKitPoint;
 #if ENABLE_WORKERS
         attribute WorkerConstructor Worker;
 #endif
         attribute WebKitCSSMatrixConstructor WebKitCSSMatrix;
-#endif
+#endif  // V8_BINDING
 
         attribute PluginConstructor Plugin;
         attribute PluginArrayConstructor PluginArray;
@@ -454,7 +452,7 @@ module window {
 #endif // defined(LANGUAGE_JAVASCRIPT)
 
 #if defined(V8_BINDING)
-    // These were implemented in KJS::Window and not moved to IDL yet.
+    // These were implemented in JSCDOMWindowBase and not moved to IDL yet.
 
     [Custom] DOMWindow open(in DOMString url,
                             in DOMString name,
@@ -464,8 +462,7 @@ module window {
                                        in [Optional] DOMObject dialogArgs,
                                        in [Optional] DOMString featureArgs);
 
-    // These are defined on the window object in WebKit/KJS, but they
-    // are not implemented.
+    // These are defined on JSDOMWindowBase, but not implemented.
     [Custom=DOMWindowNOP] void captureEvents(in long eventFlags);
     [Custom=DOMWindowNOP] void releaseEvents(in long eventFlags);
 
