@@ -81,9 +81,9 @@ struct InspectorResource;
 
 class InspectorController : public RefCounted<InspectorController>
 #if ENABLE(JAVASCRIPT_DEBUGGER)
-                            , JavaScriptDebugListener
+                          , JavaScriptDebugListener
 #endif
-{
+                                                      {
 public:
 
     typedef HashMap<unsigned long, RefPtr<InspectorResource> > ResourcesMap;
@@ -138,7 +138,11 @@ public:
         } m_simpleContent;
     };
 
-    InspectorController(Page*, InspectorClient*);
+    static PassRefPtr<InspectorController> create(Page* page, InspectorClient* inspectorClient)
+    {
+        return adoptRef(new InspectorController(page, inspectorClient));
+    }
+
     ~InspectorController();
 
     void inspectedPageDestroyed();
@@ -291,6 +295,7 @@ public:
 #endif
 
 private:
+    InspectorController(Page*, InspectorClient*);
     void focusNode();
 
     void addConsoleMessage(ScriptState*, ConsoleMessage*);
