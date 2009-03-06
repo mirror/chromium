@@ -6,6 +6,7 @@
 """Set of utilities to add commands to a buildbot factory."""
 
 import os
+import sys
 
 from buildbot.steps import shell
 from buildbot.steps import transfer
@@ -877,8 +878,13 @@ class FactoryCommands(object):
     """Returns a command list to call the _valgrind_tool on the given exe,
     passing the arg_list, if any, to that executable.
     """
+    build_dir = os.path.join(self._build_dir, self._target)
+    if sys.platform == 'darwin':  # Mac binaries reside in src/xcodebuild
+      build_dir = os.path.join(self._build_dir, '..', 'xcodebuild',
+                               self._target)
+      build_dir = os.path.normpath(build_dir)
     cmd = ['sh', self._valgrind_tool,
-           '--build_dir', os.path.join(self._build_dir, self._target),
+           '--build_dir', build_dir,
            '--test', test_name]
     return cmd
 

@@ -116,6 +116,12 @@ class MasterFactory(object):
     self._RemoveUnusedComponents(self.NEEDED_COMPONENTS_INTERNAL,
                                  custom_deps_internal, tests)
 
+  def _AddValgrindTest(self, factory_cmd_obj, test_name):
+    """Add a Valgrind test. |test_name| should begin with valgrind_."""
+    prefix = 'valgrind_'
+    if test_name.startswith(prefix):
+      factory_cmd_obj.AddValgrindTest(test_name[len(prefix):])
+
   def _ShouldRunTest(self, tests, name):
     for test in tests:
       if re.match(name, test):
@@ -170,18 +176,13 @@ class MasterFactory(object):
       factory_cmd_obj.AddPurifyTest('net')
     if self._ShouldRunTest(tests, 'purify_unit'):
       factory_cmd_obj.AddPurifyTest('unit')
-    if self._ShouldRunTest(tests, 'valgrind_base'):
-      factory_cmd_obj.AddValgrindTest('base')
-    if self._ShouldRunTest(tests, 'valgrind_unit'):
-      factory_cmd_obj.AddValgrindTest('unit')
-    if self._ShouldRunTest(tests, 'valgrind_net'):
-      factory_cmd_obj.AddValgrindTest('bet')
-    if self._ShouldRunTest(tests, 'valgrind_ipc'):
-      factory_cmd_obj.AddValgrindTest('ipc')
     if self._ShouldRunTest(tests, 'purify_ui'):
       factory_cmd_obj.AddPurifyTest('ui', timeout=3600)
     if self._ShouldRunTest(tests, 'purify_layout'):
       factory_cmd_obj.AddPurifyTest('layout', timeout=3600)
+    for test in tests:  # Valgrind Tests
+      if test.startswith('valgrind_'):
+        self._AddValgrindTest(factory_cmd_obj, test)
     if self._ShouldRunTest(tests, 'selenium'):
       factory_cmd_obj.AddSeleniumTests()
     if self._ShouldRunTest(tests, 'playback'):
@@ -319,8 +320,10 @@ class MasterFactory(object):
                 'purify_webkit', 'purify_base', 'purify_net', 'purify_unit',
                 'purify_layout', 'purify_ui', 'playback', 'node_leak',
                 'tab_switching', 'omnibox', 'memory, 'interactive_ui', 'base',
-                'net', 'media', 'valgrind_net', 'valgrind_ipc',
-                'valgrind_unit', 'valgrind_base', 'printing').
+                'net', 'media', 'printing', 'valgrind_net',
+                'valgrind_ipc', 'valgrind_unit', 'valgrind_base',
+                'valgrind_googleurl', 'valgrind_test_shell',
+                'valgrind_media', 'valgrind_ui', 'valgrind_printing').
          The 'unit' suite includes the IPC tests.
       arhive_webkit_results: whether to archive the webkit test output
       show_perf_results: whether to add links to the test perf result graphs
