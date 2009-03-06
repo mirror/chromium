@@ -65,6 +65,14 @@ void WebImage::assign(const WebImage& image)
         m_private = 0;
 }
 
+WebImage::operator SkBitmap() const
+{
+    if (!m_private)
+        return SkBitmap();
+
+    return *m_private;
+}
+
 void WebImage::assign(const SkBitmap& bitmap)
 {
     if (m_private)

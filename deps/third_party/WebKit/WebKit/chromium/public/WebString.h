@@ -49,6 +49,7 @@ namespace WebKit {
         ~WebString() { reset(); }
 
         WebString() : m_private(0) { }
+        WebString(const WebUChar* characters, size_t len) { assign(characters, len); }
         WebString(const WebString& s) : m_private(0) { assign(s); }
 
         WebString& operator=(const WebString& s)

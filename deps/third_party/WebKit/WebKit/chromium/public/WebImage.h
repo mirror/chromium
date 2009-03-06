@@ -74,6 +74,8 @@ namespace WebKit {
             assign(bitmap);
             return *this;
         }
+
+        WEBKIT_API operator SkBitmap() const;
 #endif
 
     private:
