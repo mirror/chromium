@@ -53,7 +53,7 @@ module window {
         attribute [Replaceable] BarInfo toolbar;
         attribute [Replaceable] Navigator navigator;
         attribute [Replaceable] Navigator clientInformation;
-        attribute [DoNotCheckDomainSecurity, CustomSetter, v8DisallowShadowing] Location location;
+        attribute [DoNotCheckDomainSecurity, CustomSetter, V8DisallowShadowing] Location location;
 
         DOMSelection getSelection();
 
@@ -117,12 +117,12 @@ module window {
 
         // Self referential attributes
         attribute [Replaceable, DoNotCheckDomainSecurityOnGet] DOMWindow self;
-        readonly attribute [DoNotCheckDomainSecurity, v8DisallowShadowing] DOMWindow window;
+        readonly attribute [DoNotCheckDomainSecurity, V8DisallowShadowing] DOMWindow window;
         attribute [Replaceable, DoNotCheckDomainSecurityOnGet] DOMWindow frames;
 
         attribute [Replaceable, V8CustomSetter, DoNotCheckDomainSecurity] DOMWindow opener;
         attribute [Replaceable, DoNotCheckDomainSecurity] DOMWindow parent;
-        readonly attribute [DoNotCheckDomainSecurity, v8DisallowShadowing] DOMWindow top;
+        readonly attribute [DoNotCheckDomainSecurity, V8DisallowShadowing] DOMWindow top;
 
         // DOM Level 2 AbstractView Interface
         readonly attribute Document document;
@@ -143,7 +143,8 @@ module window {
 #if ENABLE_OFFLINE_WEB_APPLICATIONS
         readonly attribute DOMApplicationCache applicationCache;
 #endif    
-#if ENABLE_DATABASE
+#if 0 /* ENABLE_DATABASE */
+        // FIXME(dglazkov): Need to enable these when ready
         Database openDatabase(in DOMString name, in DOMString version, in DOMString displayName, in unsigned long estimatedSize)
             raises(DOMException);
 #endif
@@ -467,7 +468,7 @@ module window {
     [Custom=DOMWindowNOP] void releaseEvents(in long eventFlags);
 
     // window.toString requires special handling
-    [v8DoNotCheckSignature, DoNotCheckDomainSecurity, Custom, DontEnum] DOMString toString();
+    [V8DoNotCheckSignature, DoNotCheckDomainSecurity, Custom, DontEnum] DOMString toString();
 #endif // defined(V8_BINDING)
   };
 }
