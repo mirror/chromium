@@ -120,6 +120,22 @@ int RenderTextControlMultiLine::baselinePosition(bool, bool) const
     return height() + marginTop() + marginBottom();
 }
 
+int RenderTextControlMultiLine::scrollHeight() const
+{
+    // Matches IE, where the scrollHeight is the height of the text.
+    int numLines = 0;
+
+    RenderBlock* renderer = static_cast<RenderBlock*>(innerTextElement()->renderer());
+    for (RootInlineBox* root = renderer->firstRootBox(); root; root = root->nextRootBox()) {
+        numLines++;
+    }
+
+    if (!numLines)
+        numLines = 1;
+
+    return lineHeight(true, true) * numLines + paddingTop() + paddingBottom();
+}
+
 void RenderTextControlMultiLine::updateFromElement()
 {
     createSubtreeIfNeeded(0);

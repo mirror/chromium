@@ -38,6 +38,8 @@ public:
     virtual bool nodeAtPoint(const HitTestRequest&, HitTestResult&, int x, int y, int tx, int ty, HitTestAction);
     void forwardEvent(Event*);
 
+    virtual int scrollHeight() const;
+
 private:
     virtual int preferredContentWidth(float charWidth) const;
     virtual void adjustControlHeightBasedOnLineHeight(int lineHeight);
