@@ -185,7 +185,7 @@ PassRefPtr<Image> ChromiumBridge::loadPlatformImageResource(const char* name)
         return Image::nullImage();
 
     RefPtr<SharedBuffer> buffer =
-        SharedBuffer::create(resource.characters(), resource.length());
+        SharedBuffer::create(resource.data(), resource.length());
     RefPtr<Image> image = BitmapImage::create();
     image->setData(buffer, true);
     return image;
@@ -208,11 +208,41 @@ void ChromiumBridge::stopSharedTimer()
     webKitClient()->stopSharedTimer();
 }
 
+// StatsCounters --------------------------------------------------------------
+
+void ChromiumBridge::decrementStatsCounter(const char* name)
+{
+    webKitClient()->decrementStatsCounter(name);
+}
+
+void ChromiumBridge::incrementStatsCounter(const char* name)
+{
+    webKitClient()->incrementStatsCounter(name);
+}
+
+void ChromiumBridge::initV8CounterFunction()
+{
+    // FIXME: Remove this ChromiumBridge method since it is unused.
+    ASSERT_NOT_REACHED();
+}
+
 // SystemTime -----------------------------------------------------------------
 
 double ChromiumBridge::currentTime()
 {
     return webKitClient()->currentTime();
+}
+
+// Trace Event ----------------------------------------------------------------
+
+void ChromiumBridge::traceEventBegin(const char* name, void* id, const char* extra)
+{
+    webKitClient()->traceEventBegin(name, id, extra);
+}
+
+void ChromiumBridge::traceEventEnd(const char* name, void* id, const char* extra)
+{
+    webKitClient()->traceEventEnd(name, id, extra);
 }
 
 // Visited Links --------------------------------------------------------------

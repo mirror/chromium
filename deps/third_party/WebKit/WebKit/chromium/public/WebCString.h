@@ -50,9 +50,9 @@ namespace WebKit {
 
         WebCString() : m_private(0) { }
 
-        WebCString(const char* characters, size_t len) : m_private(0)
+        WebCString(const char* data, size_t len) : m_private(0)
         {
-            assign(characters, len);
+            assign(data, len);
         }
 
         WebCString(const WebCString& s) : m_private(0) { assign(s); }
@@ -65,10 +65,10 @@ namespace WebKit {
 
         WEBKIT_API void reset();
         WEBKIT_API void assign(const WebCString&);
-        WEBKIT_API void assign(const char* characters, size_t len);
+        WEBKIT_API void assign(const char* data, size_t len);
 
         WEBKIT_API size_t length() const;
-        WEBKIT_API const char* characters() const;
+        WEBKIT_API const char* data() const;
 
         bool isEmpty() const { return length() == 0; }
         bool isNull() const { return m_private == 0; }
@@ -92,7 +92,7 @@ namespace WebKit {
         operator std::string() const
         {
             size_t len = length();
-            return len ? std::string(characters(), len) : std::string();
+            return len ? std::string(data(), len) : std::string();
         }
 #endif
 

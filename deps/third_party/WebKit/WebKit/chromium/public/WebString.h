@@ -50,9 +50,9 @@ namespace WebKit {
 
         WebString() : m_private(0) { }
 
-        WebString(const WebUChar* characters, size_t len) : m_private(0)
+        WebString(const WebUChar* data, size_t len) : m_private(0)
         {
-            assign(characters, len);
+            assign(data, len);
         }
 
         WebString(const WebString& s) : m_private(0) { assign(s); }
@@ -65,15 +65,15 @@ namespace WebKit {
 
         WEBKIT_API void reset();
         WEBKIT_API void assign(const WebString&);
-        WEBKIT_API void assign(const WebUChar* characters, size_t len);
+        WEBKIT_API void assign(const WebUChar* data, size_t len);
 
         WEBKIT_API size_t length() const;
-        WEBKIT_API const WebUChar* characters() const;
+        WEBKIT_API const WebUChar* data() const;
 
         bool isEmpty() const { return length() == 0; }
         bool isNull() const { return m_private == 0; }
 
-        WEBKIT_API static WebString fromUTF8(const char* characters, size_t length);
+        WEBKIT_API static WebString fromUTF8(const char* data, size_t length);
 
 #if defined(WEBKIT_IMPLEMENTATION)
         WebString(const WebCore::String&);
@@ -94,7 +94,7 @@ namespace WebKit {
         operator string16() const
         {
             size_t len = length();
-            return len ? string16(characters(), len) : string16();
+            return len ? string16(data(), len) : string16();
         }
 
         static WebString fromUTF8(const std::string& s)

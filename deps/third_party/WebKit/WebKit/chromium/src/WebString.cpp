@@ -51,10 +51,10 @@ void WebString::assign(const WebString& other)
     assign(const_cast<WebStringPrivate*>(other.m_private));
 }
 
-void WebString::assign(const WebUChar* characters, size_t length)
+void WebString::assign(const WebUChar* data, size_t length)
 {
     assign(static_cast<WebStringPrivate*>(
-        WebCore::StringImpl::create(characters, length).get()));
+        WebCore::StringImpl::create(data, length).get()));
 }
 
 size_t WebString::length() const
@@ -62,14 +62,14 @@ size_t WebString::length() const
     return m_private ? const_cast<WebStringPrivate*>(m_private)->length() : 0;
 }
 
-const WebUChar* WebString::characters() const
+const WebUChar* WebString::data() const
 {
     return m_private ? const_cast<WebStringPrivate*>(m_private)->characters() : 0;
 }
 
-WebString WebString::fromUTF8(const char* characters, size_t length)
+WebString WebString::fromUTF8(const char* data, size_t length)
 {
-    return WebCore::String::fromUTF8(characters, length);
+    return WebCore::String::fromUTF8(data, length);
 }
 
 WebString::WebString(const WebCore::String& s)

@@ -69,6 +69,17 @@ namespace WebKit {
         virtual void prefetchHostName(const WebString&) = 0;
 
 
+        // ---- Profiling ----
+
+        virtual void decrementStatsCounter(const char* name) = 0;
+        virtual void incrementStatsCounter(const char* name) = 0;
+
+        // An event is identified by the pair (name, id).  The extra parameter
+        // specifies additional data to log with the event.
+        virtual void traceEventBegin(const char* name, void* id, const char* extra) = 0;
+        virtual void traceEventEnd(const char* name, void* id, const char* extra) = 0;
+
+
         // ---- Resources ----
 
         // Returns a blob of data corresponding to the named resource.

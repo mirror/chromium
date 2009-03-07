@@ -51,12 +51,12 @@ void WebCString::assign(const WebCString& other)
     assign(const_cast<WebCStringPrivate*>(other.m_private));
 }
 
-void WebCString::assign(const char* characters, size_t length)
+void WebCString::assign(const char* data, size_t length)
 {
-    char* data;
+    char* newData;
     RefPtr<WebCore::CStringBuffer> buffer =
-        WebCore::CString::newUninitialized(length, data).buffer();
-    memcpy(data, characters, length);
+        WebCore::CString::newUninitialized(length, newData).buffer();
+    memcpy(newData, data, length);
     assign(static_cast<WebCStringPrivate*>(buffer.get()));
 }
 
@@ -68,7 +68,7 @@ size_t WebCString::length() const
     return const_cast<WebCStringPrivate*>(m_private)->length() - 1;
 }
 
-const char* WebCString::characters() const
+const char* WebCString::data() const
 {
     if (!m_private)
         return 0;

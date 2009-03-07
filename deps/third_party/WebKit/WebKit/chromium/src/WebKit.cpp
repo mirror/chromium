@@ -31,11 +31,11 @@
 #include "config.h"
 #include "WebKit.h"
 
-#include "V8Proxy.h"
 #include "WebString.h"
 
 #include "AtomicString.h"
 #include "FrameLoader.h"
+#include "V8Proxy.h"
 #include <wtf/Assertions.h>
 #include <wtf/Threading.h>
 
