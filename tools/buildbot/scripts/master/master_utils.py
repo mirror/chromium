@@ -133,8 +133,7 @@ class MasterFactory(object):
                 show_perf_results=False,
                 with_pageheap=False,
                 perf_id=None,
-                archive_webkit_results=False,
-                run_single_process_ui=True):
+                archive_webkit_results=False):
     """Add the tests listed in 'tests' to the factory_cmd_obj."""
     # Start the crash handler process.
     if run_crash_handler:
@@ -143,8 +142,9 @@ class MasterFactory(object):
     if self._ShouldRunTest(tests, 'unit'):
       factory_cmd_obj.AddChromeUnitTests()
     if self._ShouldRunTest(tests, 'ui'):
-      factory_cmd_obj.AddUITests(with_pageheap,
-                                 run_single_process=run_single_process_ui)
+      factory_cmd_obj.AddUITests(with_pageheap)
+    if self._ShouldRunTest(tests, 'ui-single'):
+      factory_cmd_obj.AddUITests(with_pageheap, single_process=True)
     if self._ShouldRunTest(tests, 'interactive_ui'):
       factory_cmd_obj.AddInteractiveUITests()
     if self._ShouldRunTest(tests, 'test_shell'):
@@ -315,12 +315,12 @@ class MasterFactory(object):
           given, self._svn_url_internal will be used.
       clobber: whether to delete the build output directory before building
       tests: list of tests to run, chosen from
-               ('unit', 'ui', 'test_shell', 'webkit', 'plugin', 'page_cycler',
+               ('unit', 'ui', 'ui-single', 'test_shell', 'webkit', 'plugin',
                 'page_cycler_http', 'startup', 'selenium', 'reliability',
                 'purify_webkit', 'purify_base', 'purify_net', 'purify_unit',
                 'purify_layout', 'purify_ui', 'playback', 'node_leak',
                 'tab_switching', 'omnibox', 'memory, 'interactive_ui', 'base',
-                'net', 'media', 'printing', 'valgrind_net',
+                'net', 'media', 'printing', 'valgrind_net', 'page_cycler',
                 'valgrind_ipc', 'valgrind_unit', 'valgrind_base',
                 'valgrind_googleurl', 'valgrind_test_shell',
                 'valgrind_media', 'valgrind_ui', 'valgrind_printing').
@@ -400,14 +400,12 @@ class MasterFactory(object):
       factory_cmd_obj.AddDownloadBuild()
       factory_cmd_obj.AddExtractBuild()
 
-    run_single_process_ui = slave_type != 'Trybot'
     self._AddTests(factory_cmd_obj, tests,
                    run_crash_handler=run_crash_handler,
                    show_perf_results=show_perf_results,
                    with_pageheap=with_pageheap,
                    perf_id=perf_id,
-                   archive_webkit_results=archive_webkit_results,
-                   run_single_process_ui=run_single_process_ui)
+                   archive_webkit_results=archive_webkit_results)
 
     # We want to purify layout test to run over and over
     if 'purify_layout' in tests:

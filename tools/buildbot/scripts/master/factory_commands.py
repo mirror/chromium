@@ -772,7 +772,7 @@ class FactoryCommands(object):
     if 'jsc' not in self._identifier and self._target_platform == 'win32':
       self.AddDebuggerTestStep()
 
-  def AddUITests(self, with_pageheap, run_single_process=True):
+  def AddUITests(self, with_pageheap, single_process=False):
     """Adds a step to the factory to run the UI tests in both regular and
     single-process modes.  If with_pageheap is True, page-heap checking will be
     enabled for chrome.
@@ -783,14 +783,14 @@ class FactoryCommands(object):
       pageheap_description = ' (--enable-pageheap)'
       options = ['--enable-pageheap']
 
-    self.AddTestStep(
-        gtest_command.GTestCommand,
-        'ui_tests',
-        timeout=300,
-        test_description=pageheap_description,
-        test_command=self.GetTestCommand('ui_tests', options))
-
-    if run_single_process:
+    if not single_process:
+      self.AddTestStep(
+          gtest_command.GTestCommand,
+          'ui_tests',
+          timeout=300,
+          test_description=pageheap_description,
+          test_command=self.GetTestCommand('ui_tests', options))
+    else:
       options = ['--single-process']
       self.AddTestStep(
           gtest_command.GTestCommand,
