@@ -187,6 +187,7 @@ MediaPlayerPrivate::MediaPlayerPrivate(MediaPlayer* player)
     , m_startedPlaying(false)
     , m_isStreaming(false)
     , m_visible(false)
+    , m_rect()
 #if DRAW_FRAME_RATE
     , m_frameCountWhilePlaying(0)
     , m_timeStartedPlaying(0)
@@ -295,8 +296,11 @@ void MediaPlayerPrivate::createQTMovieView()
         addedCustomMethods = true;
     }
 
+    // delay callbacks as we *will* get notifications during setup
+    [m_objcObserver.get() setDelayCallbacks:YES];
+
     m_qtMovieView.adoptNS([[QTMovieView alloc] init]);
-    setRect(m_player->rect());
+    setSize(m_player->size());
     NSView* parentView = m_player->frameView()->documentView();
     [parentView addSubview:m_qtMovieView.get()];
 #ifdef BUILDING_ON_TIGER
@@ -317,6 +321,8 @@ void MediaPlayerPrivate::createQTMovieView()
     // Note that we expect mainThreadSetNeedsDisplay to be invoked only when synchronous drawing is requested.
     if (!m_player->inMediaDocument())
         wkQTMovieViewSetDrawSynchronously(m_qtMovieView.get(), YES);
+
+    [m_objcObserver.get() setDelayCallbacks:NO];
 }
 
 void MediaPlayerPrivate::detachQTMovieView()
@@ -732,18 +738,19 @@ void MediaPlayerPrivate::didEnd()
     m_player->timeChanged();
 }
 
-void MediaPlayerPrivate::setRect(const IntRect& r) 
+void MediaPlayerPrivate::setSize(const IntSize& size) 
 { 
     if (!m_qtMovieView) 
         return;
 
+    m_rect.setSize(size);
     if (m_player->inMediaDocument())
         // We need the QTMovieView to be placed in the proper location for document mode.
-        [m_qtMovieView.get() setFrame:r];
+        [m_qtMovieView.get() setFrame:m_rect];
     else {
         // We don't really need the QTMovieView in any specific location so let's just get it out of the way
         // where it won't intercept events or try to bring up the context menu.
-        IntRect farAwayButCorrectSize(r);
+        IntRect farAwayButCorrectSize(m_rect);
         farAwayButCorrectSize.move(-1000000, -1000000);
         [m_qtMovieView.get() setFrame:farAwayButCorrectSize];
     }   
@@ -803,8 +810,14 @@ void MediaPlayerPrivate::paint(GraphicsContext* context, const IntRect& r)
         [NSGraphicsContext setCurrentContext:newContext];
         [(id<WebKitVideoRenderingDetails>)qtVideoRenderer drawInRect:paintRect];
         [NSGraphicsContext restoreGraphicsState];
-    } else
+    } else {
+        if (m_player->inMediaDocument() && r != m_rect) {
+            // the QTMovieView needs to be placed in the proper location for document mode
+            m_rect = r;
+            [view setFrame:m_rect];
+        }
         [view displayRectIgnoringOpacity:paintRect inContext:newContext];
+    }
 
 #if DRAW_FRAME_RATE
     // Draw the frame rate only after having played more than 10 frames.

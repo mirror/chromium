@@ -331,6 +331,7 @@ TextResourceDecoder::TextResourceDecoder(const String& mimeType, const TextEncod
     , m_checkedForBOM(false)
     , m_checkedForCSSCharset(false)
     , m_checkedForHeadCharset(false)
+    , m_useLenientXMLDecoding(false)
     , m_sawError(false)
     , m_usesEncodingDetector(usesEncodingDetector)
 {
@@ -874,14 +875,14 @@ String TextResourceDecoder::decode(const char* data, size_t len)
         memcpy(m_buffer.data() + oldSize, data, len);
     }
 
-    String result = m_decoder.decode(m_buffer.data(), m_buffer.size(), false, m_contentType == XML, m_sawError);
+    String result = m_decoder.decode(m_buffer.data(), m_buffer.size(), false, m_contentType == XML && !m_useLenientXMLDecoding, m_sawError);
     m_buffer.clear();
     return result;
 }
 
 String TextResourceDecoder::flush()
 {
-    // For HTML and XML document, if we can not find proper encoding even
+    String result = m_decoder.decode(m_buffer.data(), m_buffer.size(), true, m_contentType == XML && !m_useLenientXMLDecoding, m_sawError);
     // document is completely loaded, we need to use automatically detect
     // the encoding of document if user has enabled this option.
     if (m_buffer.size() && !m_checkedForHeadCharset &&
@@ -891,7 +892,6 @@ String TextResourceDecoder::flush()
           m_hintDecoder->source() == AutoDetectedEncoding)))
         detectEncoding(m_buffer.data(), m_buffer.size());
 
-    String result = m_decoder.decode(m_buffer.data(), m_buffer.size(), true, m_contentType == XML, m_sawError);
     m_buffer.clear();
     m_decoder.reset(m_decoder.encoding());
     return result;

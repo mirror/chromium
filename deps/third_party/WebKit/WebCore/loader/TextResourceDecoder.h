@@ -51,7 +51,8 @@ public:
 
     String decode(const char* data, size_t length);
     String flush();
-    
+
+    void useLenientXMLDecoding() { m_useLenientXMLDecoding = true; }
     bool sawError() const { return m_sawError; }
 
     EncodingSource source() const { return m_source; }
@@ -77,6 +78,7 @@ private:
     bool m_checkedForBOM;
     bool m_checkedForCSSCharset;
     bool m_checkedForHeadCharset;
+    bool m_useLenientXMLDecoding; // Don't stop on XML decoding errors.
     bool m_sawError;
     bool m_usesEncodingDetector;
 };

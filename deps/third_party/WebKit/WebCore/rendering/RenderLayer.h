@@ -401,6 +401,11 @@ public:
     bool hasTransform() const { return renderer()->hasTransform(); }
     // Note that this transform has the transform-origin baked in.
     TransformationMatrix* transform() const { return m_transform.get(); }
+    // currentTransform computes a transform which takes accelerated animations into account. The
+    // resulting transform has transform-origin baked in. If the layer does not have a transform,
+    // returns the identity matrix.
+    TransformationMatrix currentTransform() const;
+    
     // Get the perspective transform, which is applied to transformed sublayers.
     // Returns true if the layer has a -webkit-perspective.
     // Note that this transform has the perspective-origin baked in.
@@ -408,8 +413,6 @@ public:
     FloatPoint perspectiveOrigin() const;
     bool preserves3D() const { return renderer()->style()->transformStyle3D() == TransformStyle3DPreserve3D; }
     bool has3DTransform() const { return m_transform && !m_transform->isAffine(); }
-
-    void destroy(RenderArena*);
 
      // Overloaded new operator.  Derived classes must override operator new
     // in order to allocate out of the RenderArena.
@@ -514,6 +517,10 @@ private:
 private:
     friend class RenderLayerBacking;
     friend class RenderLayerCompositor;
+    friend class RenderBoxModelObject;
+
+    // Only safe to call from RenderBoxModelObject::destroyLayer(RenderArena*)
+    void destroy(RenderArena*);
 
 protected:
     RenderBoxModelObject* m_renderer;

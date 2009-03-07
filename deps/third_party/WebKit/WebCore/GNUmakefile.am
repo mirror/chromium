@@ -212,6 +212,7 @@ IDL_BINDINGS += \
 	WebCore/html/ImageData.idl \
 	WebCore/html/TextMetrics.idl \
 	WebCore/inspector/JavaScriptCallFrame.idl \
+	WebCore/inspector/InspectorController.idl \
 	WebCore/page/BarInfo.idl \
 	WebCore/page/Console.idl \
 	WebCore/page/DOMSelection.idl \
@@ -312,6 +313,7 @@ webcore_sources += \
 	WebCore/bindings/js/JSInspectedObjectWrapper.h \
 	WebCore/bindings/js/JSInspectorCallbackWrapper.cpp \
 	WebCore/bindings/js/JSInspectorCallbackWrapper.h \
+	WebCore/bindings/js/JSInspectorControllerCustom.cpp \
 	WebCore/bindings/js/JSJavaScriptCallFrameCustom.cpp \
 	WebCore/bindings/js/JSLocationCustom.cpp \
 	WebCore/bindings/js/JSLocationCustom.h \
@@ -1015,9 +1017,17 @@ webcore_sources += \
 	WebCore/icu/unicode/utf_old.h \
 	WebCore/icu/unicode/utypes.h \
 	WebCore/icu/unicode/uversion.h \
+	WebCore/inspector/ConsoleMessage.cpp \
+	WebCore/inspector/ConsoleMessage.h \
+	WebCore/inspector/InspectorDatabaseResource.cpp \
+	WebCore/inspector/InspectorDatabaseResource.h \
+	WebCore/inspector/InspectorDOMStorageResource.cpp \
+	WebCore/inspector/InspectorDOMStorageResource.h \
 	WebCore/inspector/InspectorClient.h \
 	WebCore/inspector/InspectorController.cpp \
 	WebCore/inspector/InspectorController.h \
+	WebCore/inspector/InspectorResource.cpp \
+	WebCore/inspector/InspectorResource.h \
 	WebCore/inspector/JavaScriptCallFrame.cpp \
 	WebCore/inspector/JavaScriptCallFrame.h \
 	WebCore/inspector/JavaScriptDebugListener.h \

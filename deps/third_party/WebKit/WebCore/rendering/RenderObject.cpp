@@ -1688,7 +1688,7 @@ TransformationMatrix RenderObject::transformFromContainer(const RenderObject* co
     containerTransform.translate(offsetInContainer.width(), offsetInContainer.height());
     RenderLayer* layer;
     if (hasLayer() && (layer = toRenderBox(this)->layer()) && layer->transform())
-        containerTransform.multLeft(*layer->transform());
+        containerTransform.multLeft(layer->currentTransform());
     
     if (containerObject && containerObject->style()->hasPerspective()) {
         // Perpsective on the container affects us, so we have to factor it in here.
@@ -1839,10 +1839,9 @@ void RenderObject::destroy()
 
     // FIXME: Would like to do this in RenderBoxModelObject, but the timing is so complicated that this can't easily
     // be moved into RenderBoxModelObject::destroy.
-    RenderArena* arena = renderArena();
     if (hasLayer())
-        toRenderBoxModelObject(this)->layer()->destroy(arena);
-    arenaDelete(arena, this);
+        toRenderBoxModelObject(this)->destroyLayer();
+    arenaDelete(renderArena(), this);
 }
 
 void RenderObject::arenaDelete(RenderArena* arena, void* base)

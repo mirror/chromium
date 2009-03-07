@@ -1,3 +1,619 @@
+2009-03-06  Peter Kasting  <pkasting@google.com>
+
+        Build bustage fix.
+
+        * dom/Node.cpp:
+        (WebCore::Node::dispatchWheelEvent):
+
+2009-03-06  Eric Carlson  <eric.carlson@apple.com>
+
+        Reviewed by Antti Koivisto.
+
+        * platform/graphics/mac/MediaPlayerPrivateQTKit.mm:
+        (WebCore::MediaPlayerPrivate::createQTMovieView):  Delay callback while setting up movieview.
+
+2009-03-06  Douglas R. Davidson  <ddavidso@apple.com>
+
+        Reviewed by Justin Garcia.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=24108
+
+        Update spelling and grammar checking to use the new combined text 
+        checking (with automatic language identification) on Snow Leopard. 
+        Tested manually in Mail and Safari; automated tests to come later. 
+        
+        * editing/Editor.cpp:
+        (WebCore::findFirstMisspellingOrBadGrammarInRange):
+        (WebCore::Editor::advanceToNextMisspelling):
+        (WebCore::guessesForMisspelledOrUngrammaticalRange):
+        (WebCore::Editor::guessesForMisspelledOrUngrammaticalSelection):
+        (WebCore::Editor::markMisspellingsAfterTypingToPosition):
+        (WebCore::markAllMisspellingsAndBadGrammarInRanges):
+        (WebCore::Editor::markMisspellingsAndBadGrammar):
+        * editing/Editor.h:
+        * loader/EmptyClients.h:
+        (WebCore::EmptyEditorClient::checkSpellingAndGrammarOfParagraph):
+        * page/EditorClient.h:
+        * page/Frame.cpp:
+        (WebCore::Frame::respondToChangedSelection):
+        * platform/ContextMenu.cpp:
+        (WebCore::ContextMenu::populate):
+
+2009-03-06  Peter Kasting  <pkasting@google.com>
+
+        Reviewed by Darin Fisher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24407
+        Windows scroll amount was too small, and wheel scroll distance
+        conversion code was overly complex.
+
+        * page/EventHandler.cpp:
+        (WebCore::scrollAndAcceptEvent):
+        * platform/PlatformWheelEvent.h:
+        (WebCore::):
+        * platform/ScrollView.cpp:
+        (WebCore::ScrollView::wheelEvent):
+        * platform/Scrollbar.h:
+        * platform/gtk/WheelEventGtk.cpp:
+        (WebCore::PlatformWheelEvent::PlatformWheelEvent):
+        * platform/mac/WheelEventMac.mm:
+        (WebCore::PlatformWheelEvent::PlatformWheelEvent):
+        * platform/qt/WheelEventQt.cpp:
+        * platform/win/WheelEventWin.cpp:
+        (WebCore::horizontalScrollChars):
+        (WebCore::verticalScrollLines):
+        (WebCore::PlatformWheelEvent::PlatformWheelEvent):
+        * platform/wx/MouseWheelEventWx.cpp:
+        (WebCore::PlatformWheelEvent::PlatformWheelEvent):
+
+2009-03-06  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Adam Roben.
+
+        Generate valid bindings with HTML5 database support disabled. 
+
+        * inspector/InspectorController.idl: Added feature guard around 
+        databaseTableNames definition.
+
+2009-03-04  Xan Lopez  <xan@gnome.org>
+
+        Reviewed by Holger Freyther.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24358
+        [GTK] Scrollbars not clipped correctly
+
+        Do not take into account the case of being a ScrollView scrollbar,
+        since those are native in our case.
+
+        * platform/gtk/ScrollbarGtk.cpp:
+        (ScrollbarGtk::frameRectsChanged):
+
+2009-03-04  Xan Lopez  <xan@gnome.org>
+
+        Reviewed by Holger Freyther.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24358
+        [GTK] Scrollbars not clipped correctly
+
+        Move Widget::paint to ScrollbarGtk::paint, since it's scrollbar
+        specific and it's our only Widget anyway.
+
+        * platform/gtk/ScrollbarGtk.cpp:
+        (ScrollbarGtk::paint):
+        * platform/gtk/ScrollbarGtk.h:
+        * platform/gtk/WidgetGtk.cpp:
+
+2009-03-04  Xan Lopez  <xan@gnome.org>
+
+        Reviewed by Holger Freyther.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24358
+        [GTK] Scrollbars not clipped correctly
+
+        Use correct clip rectangle and apply coordinate translation needed
+        for non-ScrollView scrollbars.
+
+        We were ignoring the clip rectangle passed as parameter, which is
+        wrong in the case of non coalesced expose events. This, in turn,
+        uncovers the fact that we were not applying coordinate translation
+        to our position.
+
+        * platform/gtk/WidgetGtk.cpp:
+        (WebCore::Widget::paint):
+
+2009-03-06  Eric Carlson  <eric.carlson@apple.com>
+
+        Build fix, no review
+
+        * platform/graphics/chromium/MediaPlayerPrivateChromium.h: fix setSize declaration
+
+2009-03-06  Eric Carlson  <eric.carlson@apple.com>
+
+        Reviewed by Simon Fraser.
+
+        https://bugs.webkit.org/show_bug.cgi?id=22790
+        Bug 22790: [Transforms] MediaPlayer::setRect() makes no sense with transforms
+        Replace media engine setRect with setSize since they don't use about the 
+        position anyway.
+
+        * platform/graphics/MediaPlayer.cpp:
+        (WebCore::NullMediaPlayerPrivate::setSize): Changed from setRect.
+        (WebCore::MediaPlayer::setSize): Ditto.
+        * platform/graphics/MediaPlayer.h:
+        (WebCore::MediaPlayer::size): Changed from rect().
+
+        * platform/graphics/MediaPlayerPrivate.h: Changed setRect to setSize.
+
+        * platform/graphics/chromium/MediaPlayerPrivateChromium.h: Ditto.
+
+        * platform/graphics/gtk/MediaPlayerPrivateGStreamer.cpp: 
+        (WebCore::MediaPlayerPrivate::MediaPlayerPrivate): Initialize m_size instead of m_rect
+        (WebCore::MediaPlayerPrivate::setSize): Changed from setRect
+        (WebCore::MediaPlayerPrivate::paint): update comment
+        * platform/graphics/gtk/MediaPlayerPrivateGStreamer.h: m_rect -> m_size.
+
+        * platform/graphics/mac/MediaPlayerPrivateQTKit.h:  m_rect
+        * platform/graphics/mac/MediaPlayerPrivateQTKit.mm:
+        (WebCore::MediaPlayerPrivate::MediaPlayerPrivate): Initialize m_rect.
+        (WebCore::MediaPlayerPrivate::createQTMovieView): setRect-> setSize.
+        (WebCore::MediaPlayerPrivate::setSize): Changed from setRect
+        (WebCore::MediaPlayerPrivate::paint): Call view:setFrame: when in a media document so 
+        the movie is drawn in the correct location.
+
+        * platform/graphics/qt/MediaPlayerPrivatePhonon.cpp:
+        (WebCore::MediaPlayerPrivate::setSize):  Changed from setRect
+        * platform/graphics/qt/MediaPlayerPrivatePhonon.h:
+
+        * platform/graphics/win/MediaPlayerPrivateQuickTimeWin.cpp:
+        (WebCore::MediaPlayerPrivate::setSize):  Changed from setRect
+        * platform/graphics/win/MediaPlayerPrivateQuickTimeWin.h:
+
+        * rendering/RenderVideo.cpp:
+        (WebCore::RenderVideo::updatePlayer): Call setSize instead of setRect.
+
+2009-03-06  Darin Adler  <darin@apple.com>
+
+        Reviewed by Darin Fisher.
+
+        Bug 24422: REGRESSION: null-URL crash in FrameLoader setting location.hash on new window
+        https://bugs.webkit.org/show_bug.cgi?id=24422
+        rdar://problem/6402208
+
+        Test: fast/dom/location-new-window-no-crash.html
+
+        The issue here is empty (or null) URLs. I picked the "schedule navigation" bottleneck
+        to add some checks for empty URLs. We could also put the empty URL checks at some
+        other bottleneck level and add more assertions over time. I tried adding a few more
+        assertions to functions like loadURL and hit them while running the regression tests,
+        so it's probably going to be a bit tricky to clean this up throughout the loader.
+
+        * loader/FrameLoader.cpp:
+        (WebCore::ScheduledRedirection::ScheduledRedirection): Explicitly marked this struct
+        immutable by making all its members const. Added assertions about the arguments,
+        including that the URL is not empty. Initialized one uninitialized member in one of
+        the constructors.
+        (WebCore::FrameLoader::scheduleHTTPRedirection): Added an early exit to make this
+        a no-op if passed an empty URL.
+        (WebCore::FrameLoader::scheduleLocationChange): Ditto.
+        (WebCore::FrameLoader::scheduleRefresh): Ditto.
+
+2009-03-06  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Reviewed by Holger Freyther.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24423
+        Use new soup_message_body_set_accumulate API in soup backend
+
+        Disable accumulating chunks for request_body on file uploads,
+        using the new soup API.
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::ResourceHandle::startHttp):
+
+2009-03-06  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Reviewed by Holger Freyther.
+
+        Replace use of deprecated SOUP_MESSAGE_OVERWRITE_CHUNKS flag with
+        the new soup_message_body_set_accumulate API in soup.
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::gotHeadersCallback):
+        (WebCore::ResourceHandle::startHttp):
+
+2009-03-06  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Reviewed by Holger Freyther.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24051
+        Soup backend needs content sniffing capabilities
+
+        Perform content sniffing when using soup, so that we have a chance
+        of figuring out the Content-Type of the file if it's not sent by
+        the server.
+
+        * platform/network/ResourceHandleInternal.h:
+        (WebCore::ResourceHandleInternal::ResourceHandleInternal):
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::gotHeadersCallback):
+        (WebCore::gotChunkCallback):
+
+2009-03-06  Hironori Bono  <hbono@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24342
+        Cannot insert a Thai character after a Thai prepend character when using ICU 4.0
+
+        This change creates a new break iterator "cursorMovementIterator" for
+        moving cursors and use it when moving an input cursor.
+        In "TextBreakIteratorICU.cpp", this break iterator uses custom ruleset
+        based on the one of ICU 3.8.
+        On the other hand, in "TextBreakIteratorQt.cpp", this break iterator
+        just calls the characterBreakIterator() function.
+
+        Test: editing/inserting/insert-thai-characters-001.html
+
+        * platform/text/TextBreakIterator.h: Added a new function cursorMovementIterator().
+        * platform/text/TextBreakIteratorICU.cpp: Implemented the cursorMovementIterator() function for ICU.
+        (WebCore::setUpIteratorWithRules): Ditto.
+        (WebCore::cursorMovementIterator): Ditto.
+        * platform/text/qt/TextBreakIteratorQt.cpp: Implemented the cursorMovementIterator() function for Qt.
+        (WebCore::cursorMovementIterator): Ditto.
+        * rendering/RenderText.cpp: Call the cursorMovementIterator() function when moving an input cursor.
+        (WebCore::RenderText::previousOffset): Ditto.
+        (WebCore::RenderText::nextOffset): Ditto.
+
+2009-03-05  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Oliver Hunt.
+
+        <rdar://problem/6621701> Safari 4 Beta Breaks XMLHttpRequest Response Text With Special
+        Characters (a compatibility issue with widgets).
+
+        Test: http/tests/xmlhttprequest/broken-xml-encoding.html
+
+        Revert part of an Acid 3 fix - now we are no longer strict when decoding XMLHttpRequest XML
+        responses.
+
+        * loader/TextResourceDecoder.cpp:
+        (WebCore::TextResourceDecoder::TextResourceDecoder):
+        (WebCore::TextResourceDecoder::decode):
+        (WebCore::TextResourceDecoder::flush):
+        * loader/TextResourceDecoder.h:
+        (WebCore::TextResourceDecoder::useLenientXMLDecoding):
+        Don't stop on XML decoding errors if useLenientXMLDecoding() was called.
+
+        * xml/XMLHttpRequest.cpp: (WebCore::XMLHttpRequest::didReceiveData): Don't stop on XML
+        decoding errors. This behavior is now limited to other kinds of XML content.
+
+2009-03-05  Simone Fiorentino  <simone.fiorentino@consulenti.fastweb.it>
+
+        Bug 24382: request to add SH4 platform
+
+        <https://bugs.webkit.org/show_bug.cgi?id=24382>
+
+        Reviewed by David Kilzer.
+
+        * platform/text/AtomicString.cpp:
+        (WebCore::equal): Aligned memory access on SH4 platform.
+
+2009-03-05  Jeremy Moskovich  <jeremy@chromium.org>
+
+        Reviewed by Simon Fraser.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=24215
+
+        Gears expects an object tag with display:none to instantiate the plugin,
+        so we add a workaround to make this work and fix Gears on WebKit trunk.
+
+        * html/HTMLObjectElement.cpp:
+        (WebCore::HTMLObjectElement::rendererIsNeeded):
+
+2009-03-05  Avi Drissman  <avi@chromium.org>
+
+        Reviewed by Darin Fisher.
+
+        Need to have Chromium Mac match Safari Mac's accesskey handling
+        https://bugs.webkit.org/show_bug.cgi?id=24404
+
+        * page/chromium/EventHandlerChromium.cpp:
+        (WebCore::EventHandler::accessKeyModifiers): Share access key modifiers with Mac Safari when building for the Mac.
+
+2009-03-05  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+
+        https://bugs.webkit.org/show_bug.cgi?id=24412
+        
+        Fix crash when hit-testing elements with -webkit-transform-style: preserve-3d
+        but no transform. We need to make localTransformState if we see preserve-3d.
+        Also need to call update3DTransformedDescendantStatus() before we test
+        m_has3DTransformedDescendant.
+
+        Test: transforms/3d/hit-testing/hit-preserves-3d.html
+
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::hitTestLayer):
+
+2009-03-05  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by David Hyatt.
+
+        Changes to RenderLayer destruction to hopefully help catch an elusive crasher
+        https://bugs.webkit.org/show_bug.cgi?id=24409
+        
+        Added a new RenderBoxModelObject::destroyLayer() call which is
+        now the only way which RenderLayers should ever be destroyed.
+        This ensures that the pointer to the layer is cleared in the
+        RenderObject after destruction, allowing us to ASSERT in the
+        RenderBoxModelObject destructor.
+
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::calcAbsoluteHorizontalReplaced):
+        * rendering/RenderBoxModelObject.cpp:
+        (WebCore::RenderBoxModelObject::~RenderBoxModelObject):
+        (WebCore::RenderBoxModelObject::destroyLayer):
+        (WebCore::RenderBoxModelObject::destroy):
+        (WebCore::RenderBoxModelObject::styleDidChange):
+        * rendering/RenderBoxModelObject.h:
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::stackingContext):
+        (WebCore::RenderLayer::destroy):
+        (WebCore::RenderLayer::removeOnlyThisLayer):
+        * rendering/RenderLayer.h:
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::destroy):
+        * rendering/RenderWidget.cpp:
+        (WebCore::RenderWidget::destroy):
+
+2009-03-05  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by David Hyatt.
+
+        Remove old, unused IE 5.5 scrollbar-* CSS properties.
+        Sort the unimplemented getComputedStyle properties so it's
+        easier to see which ones actually need implementation.
+
+        * css/CSSComputedStyleDeclaration.cpp:
+        (WebCore::CSSComputedStyleDeclaration::getPropertyCSSValue):
+        * css/CSSParser.cpp:
+        (WebCore::CSSParser::parseValue):
+        * css/CSSPropertyNames.in:
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::applyProperty):
+
+2009-03-05  Justin Garcia  <justin.garcia@apple.com>
+
+        Reviewed by Darin Adler.
+        
+        WebViewDidChangeSelectionNotifications weren't being sent for commands that change the selection's position
+        within the document without changing its position in the DOM.  For example, pressing return in (caret marked by ^):
+        <div contentEditable="true"><div>^Hello</div></div>
+        Undo was being enabled, shouldDeleteDOMRange called, etc. when doing no-op deletes (a delete in an empty document 
+        for example). 
+
+        Changes to layout tests demonstrate fix.
+        
+        * editing/EditCommand.cpp:
+        (WebCore::EditCommand::apply): Don't call applyEditing for a TypingCommand.  The TypingCommand knows whether or
+        not it did work that needs to be applied.
+        * editing/Editor.cpp:
+        (WebCore::Editor::appliedEditing): Moved code (but did not alter) to changeSelectionAfterCommand.
+        (WebCore::Editor::unappliedEditing): Ditto.
+        (WebCore::Editor::reappliedEditing): Ditto.
+        (WebCore::Editor::changeSelectionAfterCommand): Moved code from *appliedEditing into here.  Also call out to
+        EditorClient::respondToChangedSelection() for commands that changed the selection's position in the document
+        even if they did not change it's position in the DOM.  Any TypingCommand that gets this far changed it's position
+        in the document.
+        * editing/Editor.h:
+        * editing/TypingCommand.cpp:
+        (WebCore::TypingCommand::TypingCommand): Removed unused m_appliedEditing.
+        (WebCore::TypingCommand::typingAddedToOpenCommand): Always apply editing.  We won't get this far if we don't need to.
+        (WebCore::TypingCommand::deleteKeyPressed): Don't do any of the things that only make sense for Range selections, like
+        adding to the killring and responding to a change in selections if the delete was a no-op.
+        (WebCore::TypingCommand::forwardDeleteKeyPressed): Ditto.
+        * editing/TypingCommand.h:
+
+2009-03-05  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Adam Roben.
+
+        Eliminate a ref-counting leak in InspectorController.
+
+        * inspector/InspectorController.h: Made constructor private, added static create method.
+        * page/Page.cpp:
+        (WebCore::Page::Page): Change initializer to use static create method.
+
+2009-03-05  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Timothy Hatcher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24355
+        Add InspectorController.idl and convert InspectorController.cpp to use
+        JSC bindings.
+
+        * DerivedSources.make: Added InspectorController.idl
+        * WebCore.xcodeproj/project.pbxproj: Added idl, bindings files.
+        * bindings/js/JSInspectorControllerCustom.cpp: Added.
+        * bindings/scripts/CodeGeneratorJS.pm: Added Array to no-header types.
+        * inspector/InspectorController.cpp: Removed hand-rolled bindings.
+        * inspector/InspectorController.h: Added platform and addSourceToFrame methods.
+        * inspector/InspectorController.idl: Added.
+        * page/Page.h: Changed member to RefPtr since InspectorController is now ref-counted.
+
+2009-03-05  Eric Carlson  <eric.carlson@apple.com>
+
+        Reviewed by Simon Fraser.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24400
+        Bug 24400: Remove "start", "end", "loopStart", "loopEnd", "currentLoop", and "playCount" 
+        media element attributes
+
+        Test: media/video-loop.html
+
+        * html/HTMLMediaElement.cpp:
+        (WebCore::HTMLMediaElement::HTMLMediaElement):
+        (WebCore::HTMLMediaElement::loadInternal):
+        (WebCore::HTMLMediaElement::setNetworkState):
+        (WebCore::HTMLMediaElement::seek):
+        (WebCore::HTMLMediaElement::playInternal):
+        (WebCore::HTMLMediaElement::loop):
+        (WebCore::HTMLMediaElement::setLoop):
+        (WebCore::HTMLMediaElement::mediaPlayerTimeChanged):
+        (WebCore::HTMLMediaElement::endedPlayback):
+        (WebCore::HTMLMediaElement::updatePlayState):
+        * html/HTMLMediaElement.h:
+        * html/HTMLMediaElement.idl:
+
+2009-03-05  Steve Falkenburg  <sfalken@apple.com>
+
+        <rdar://problem/6651112> Safari asks about re-posting a form even when page is cached
+        
+        Reviewed by Ada Chan.
+
+        * platform/network/cf/ResourceHandleCFNet.cpp:
+        (WebCore::ResourceHandle::willLoadFromCache): Ported from Mac version.
+
+2009-03-05  David Hyatt  <hyatt@apple.com>
+
+        Reviewed by Eric Seidel
+
+        https://bugs.webkit.org/show_bug.cgi?id=24248
+
+        Make sure painting of overflow controls checks that visibility:visible is set on the block before
+        painting.  Pixel tests caught this regression.
+
+        Make sure resizer painting pushes a clip of the corner rect.  It was relying on the clip layers happened
+        to do to their bounds (which had nothing to do with overflow).
+
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::paint):
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::paintResizer):
+
+2009-03-05  Yong Li  <yong.li@torchmobile.com>
+
+        Reviewed by Simon Fraser.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24386
+        A faster implementation of extractMIMETypeFromMediaType.
+
+        * platform/network/HTTPParsers.cpp:
+        (WebCore::extractMIMETypeFromMediaType):
+
+2009-03-05  Yong Li  <yong.li@torchmobile.com>
+
+        Reviewed by Antti Koivisto.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24392
+        Do not get the current time for unless we're doing PRELOAD_DEBUG as this
+        can be unnecessarily expensive.
+
+        * html/PreloadScanner.cpp:
+        (WebCore::PreloadScanner::write):
+
+2009-03-04  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+
+        https://bugs.webkit.org/show_bug.cgi?id=24327
+        
+        When mapping points and hit testing through transforms, work
+        correctly when acclerated animations of transforms are running.
+        
+        Tested by LayoutTests/animations/animation-hit-test-transform.html,
+        which only failed when ACCELERATED_COMPOSITING was turned on.
+
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::currentTransform):
+        * rendering/RenderLayer.h:
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::transformFromContainer):
+
+2009-03-05  Mike Belshe  <mike@belshe.com>
+
+        Reviewed by Darin Fisher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24391
+        Frame.cpp uses JSC specific includes
+
+        * page/Frame.cpp:
+
+2009-03-05  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24389
+        WebKitGTK+ crashes when cancelling plugin loads
+
+        Remove bogus calls to the client's didFinishLoading method from
+        our ResourceHandle::cancel implementation. Calling
+        didFinishLoading here is mostly inoffensive for most loads, but
+        causes crashes when plugin loads are cancelled.
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::ResourceHandle::cancel):
+
+2009-03-05  Steve Falkenburg  <sfalken@apple.com>
+
+        Windows build fix.
+        
+        * WebCore.vcproj/QTMovieWin.vcproj:
+
+2009-03-05  Adam Treat  <adam.treat@torchmobile.com>
+
+        Build fix for when ENABLE_NETSCAPE_PLUGIN_API = 0.  The method
+        ScriptController::jsObjectForPluginElement(HTMLPlugInElement*); is not
+        protected by an #if and uses HTMLPlugInElement so it must be included.
+
+        * bindings/js/ScriptController.cpp:
+
+2009-03-05  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        GTK Build fix.
+
+        * inspector/ConsoleMessage.h: Use proper header.
+
+2009-03-05  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Timothy Hatcher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24376
+        Split InspectorController.cpp file into separate classes.
+
+        * GNUmakefile.am: Modified to include new files.
+        * WebCore.pro: Ditto.
+        * WebCore.scons: Ditto.
+        * WebCore.vcproj/WebCore.vcproj: Ditto.
+        * WebCore.xcodeproj/project.pbxproj: Ditto.
+        * WebCoreSources.bkl: Ditto.
+        * inspector/ConsoleMessage.cpp: Added.
+        * inspector/ConsoleMessage.h: Added.
+        * inspector/InspectorController.cpp:
+        * inspector/InspectorDOMStorageResource.cpp: Added.
+        * inspector/InspectorDOMStorageResource.h: Added.
+        * inspector/InspectorDatabaseResource.cpp: Added.
+        * inspector/InspectorDatabaseResource.h: Added.
+        * inspector/InspectorResource.cpp: Added.
+        * inspector/InspectorResource.h: Added.
+
+2009-03-05  Eric Carlson  <eric.carlson@apple.com>
+
+        Reviewed by Darin Adler
+
+        https://bugs.webkit.org/show_bug.cgi?id=24387
+        Remove media element bufferingRate attribute. No test necessary as there
+        were none for this attribute.
+
+        * html/HTMLMediaElement.cpp:
+        (WebCore::HTMLMediaElement::HTMLMediaElement): Don't initialize m_bufferingRate.
+        (WebCore::HTMLMediaElement::loadInternal): Ditto.
+        (WebCore::HTMLMediaElement::setNetworkState): Ditto.
+        (WebCore::HTMLMediaElement::progressEventTimerFired): Don't calculate m_bufferingRate.
+        * html/HTMLMediaElement.h: Remove m_bufferingRate.
+        * html/HTMLMediaElement.idl: Ditto.
+
 2009-03-05  Xan Lopez  <xan@gnome.org>
 
         Reviewed by Mark Rowe.

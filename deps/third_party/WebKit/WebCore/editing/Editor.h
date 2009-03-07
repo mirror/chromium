@@ -195,9 +195,11 @@ public:
     bool isSelectionMisspelled();
     Vector<String> guessesForMisspelledSelection();
     Vector<String> guessesForUngrammaticalSelection();
+    Vector<String> guessesForMisspelledOrUngrammaticalSelection(bool& misspelled, bool& ungrammatical);
     void markMisspellingsAfterTypingToPosition(const VisiblePosition&);
     void markMisspellings(const VisibleSelection&);
     void markBadGrammar(const VisibleSelection&);
+    void markMisspellingsAndBadGrammar(const VisibleSelection& spellingSelection, bool markGrammar, const VisibleSelection& grammarSelection);
     void advanceToNextMisspelling(bool startBeforeSelection = false);
     void showSpellingGuessPanel();
     bool spellingPanelIsShowing();
@@ -299,6 +301,8 @@ private:
 
     PassRefPtr<Range> firstVisibleRange(const String&, bool caseFlag);
     PassRefPtr<Range> lastVisibleRange(const String&, bool caseFlag);
+    
+    void changeSelectionAfterCommand(const VisibleSelection& newSelection, bool closeTyping, bool clearTypingStyle, EditCommand*);
 };
 
 inline void Editor::setStartNewKillRingSequence(bool flag)

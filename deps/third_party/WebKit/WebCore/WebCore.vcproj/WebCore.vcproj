@@ -992,6 +992,14 @@
 				>
 			</File>
 			<File
+				RelativePath="$(WebKitOutputDir)\obj\$(ProjectName)\DerivedSources\JSInspectorController.cpp"
+				>
+			</File>
+			<File
+				RelativePath="$(WebKitOutputDir)\obj\$(ProjectName)\DerivedSources\JSInspectorController.h"
+				>
+			</File>
+			<File
 				RelativePath="$(WebKitOutputDir)\obj\$(ProjectName)\DerivedSources\JSJavaScriptCallFrame.h"
 				>
 			</File>
@@ -14149,6 +14157,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\bindings\js\JSInspectorControllerCustom.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\bindings\js\JSJavaScriptCallFrameCustom.cpp"
 					>
 				</File>
@@ -16218,6 +16230,30 @@
 				>
 			</File>
 			<File
+				RelativePath="..\inspector\ConsoleMessage.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\inspector\ConsoleMessage.h"
+				>
+			</File>
+			<File
+				RelativePath="..\inspector\InspectorDatabaseResource.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\inspector\InspectorDatabaseResource.h"
+				>
+			</File>
+			<File
+				RelativePath="..\inspector\InspectorDOMStorageResource.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\inspector\InspectorDOMStorageResource.h"
+				>
+			</File>
+			<File
 				RelativePath="..\inspector\InspectorController.cpp"
 				>
 				<FileConfiguration
@@ -16231,6 +16267,14 @@
 			</File>
 			<File
 				RelativePath="..\inspector\InspectorController.h"
+				>
+			</File>
+			<File
+				RelativePath="..\inspector\InspectorResource.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\inspector\InspectorResource.h"
 				>
 			</File>
 			<File

@@ -341,6 +341,23 @@ void RenderLayer::updateTransform()
         dirty3DTransformedDescendantStatus();
 }
 
+TransformationMatrix RenderLayer::currentTransform() const
+{
+    if (!m_transform)
+        return TransformationMatrix();
+
+#if USE(ACCELERATED_COMPOSITING)
+    if (renderer()->style()->isRunningAcceleratedAnimation()) {
+        TransformationMatrix currTransform;
+        RefPtr<RenderStyle> style = renderer()->animation()->getAnimatedStyleForRenderer(renderer());
+        style->applyTransform(currTransform, renderBox()->borderBoxRect().size(), RenderStyle::IncludeTransformOrigin);
+        return currTransform;
+    }
+#endif
+
+    return *m_transform;
+}
+
 void RenderLayer::setHasVisibleContent(bool b)
 { 
     if (m_hasVisibleContent == b && !m_visibleContentStatusDirty)
@@ -593,13 +610,12 @@ FloatPoint RenderLayer::perspectiveOrigin() const
                       style->perspectiveOriginY().calcFloatValue(borderBox.height()));
 }
 
-RenderLayer *RenderLayer::stackingContext() const
+RenderLayer* RenderLayer::stackingContext() const
 {
-    RenderLayer* curr = parent();
-    for ( ; curr && !curr->renderer()->isRenderView() && !curr->renderer()->isRoot() &&
-          curr->renderer()->style()->hasAutoZIndex();
-          curr = curr->parent()) { }
-    return curr;
+    RenderLayer* layer = parent();
+    while (layer && !layer->renderer()->isRenderView() && !layer->renderer()->isRoot() && layer->renderer()->style()->hasAutoZIndex())
+        layer = layer->parent();
+    return layer;
 }
 
 RenderLayer* RenderLayer::enclosingPositionedAncestor() const
@@ -753,7 +769,7 @@ void RenderLayer::operator delete(void* ptr, size_t sz)
 }
 
 void RenderLayer::destroy(RenderArena* renderArena)
-{    
+{
     delete this;
 
     // Recover the size left there for us by operator delete and free the memory.
@@ -863,8 +879,8 @@ void RenderLayer::removeOnlyThisLayer()
         current->updateLayerPositions();
         current = next;
     }
-    
-    destroy(renderer()->renderArena());
+
+    m_renderer->destroyLayer();
 }
 
 void RenderLayer::insertOnlyThisLayer()
@@ -1771,6 +1787,7 @@ void RenderLayer::paintResizer(GraphicsContext* context, int tx, int ty, const I
     // Clipping will exclude the right and bottom edges of this frame.
     if (m_hBar || m_vBar) {
         context->save();
+        context->clip(absRect);
         IntRect largerCorner = absRect;
         largerCorner.setSize(IntSize(largerCorner.width() + 1, largerCorner.height() + 1));
         context->setStrokeColor(Color(makeRGB(217, 217, 217)));
@@ -2229,13 +2246,17 @@ RenderLayer* RenderLayer::hitTestLayer(RenderLayer* rootLayer, RenderLayer* cont
         // Now do a hit test with the root layer shifted to be us.
         return hitTestLayer(this, containerLayer, request, result, localHitTestRect, localPoint, true, newTransformState.get(), zOffset);
     }
+
+    // Ensure our lists and 3d status are up-to-date.
+    updateLayerListsIfNeeded();
+    update3DTransformedDescendantStatus();
     
     RefPtr<HitTestingTransformState> localTransformState;
     if (appliedTransform) {
         // We computed the correct state in the caller (above code), so just reference it.
         ASSERT(transformState);
         localTransformState = const_cast<HitTestingTransformState*>(transformState);
-    } else if (transformState || m_has3DTransformedDescendant) {
+    } else if (transformState || m_has3DTransformedDescendant || preserves3D()) {
         // We need transform state for the first time, or to offset the container state, so create it here.
         localTransformState = createLocalTransformState(rootLayer, containerLayer, hitTestRect, hitTestPoint, transformState);
     }
@@ -2255,10 +2276,6 @@ RenderLayer* RenderLayer::hitTestLayer(RenderLayer* rootLayer, RenderLayer* cont
     IntRect outlineRect;
     calculateRects(rootLayer, hitTestRect, layerBounds, bgRect, fgRect, outlineRect);
     
-    // Ensure our lists and 3d status are up-to-date.
-    updateLayerListsIfNeeded();
-    update3DTransformedDescendantStatus();
-
     // The following are used for keeping track of the z-depth of the hit point of 3d-transformed
     // descendants.
     double localZOffset = -numeric_limits<double>::infinity();

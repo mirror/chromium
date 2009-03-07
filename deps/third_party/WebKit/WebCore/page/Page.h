@@ -215,7 +215,6 @@ namespace WebCore {
         // To fix crash in inspector window (Bug 904340)
         RefPtr<InspectorController> m_inspectorController;
 #else
-        OwnPtr<InspectorController> m_inspectorController;
 #endif
         OwnPtr<Settings> m_settings;
         OwnPtr<ProgressTracker> m_progress;
