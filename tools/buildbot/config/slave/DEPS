@@ -13,4 +13,7 @@ deps = {
 
   "scripts/slave":
     "/trunk/tools/buildbot/scripts/slave",
+
+  "third_party/lighttpd":
+    "/trunk/src/third_party/lighttpd",
 }
