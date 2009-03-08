@@ -296,7 +296,7 @@ class MasterFactory(object):
                       gclient_custom_deps=None,
                       gclient_custom_deps_internal=None, mode=None,
                       slave_type='BuilderTester', run_crash_handler=False,
-                      options=None, compile_timeout=1200):
+                      options=None, compile_timeout=1200, build_url=None):
     """Returns a new build factory, including download, build, and test steps.
 
     Args:
@@ -343,6 +343,8 @@ class MasterFactory(object):
       run_crash_handler: whether to run crash_service.exe before the tests.
       options: Builder-specific options to be added to the CompileStep.
       compile_timeout: Timeout for the compile step.
+      build_url: if slave_type=Tester, build_url contains the url to the build
+          to download.
     Returns:
       A buildbot factory.
     """
@@ -393,12 +395,10 @@ class MasterFactory(object):
     # Archive the full output directory if the machine is a builder.
     if slave_type == 'Builder':
       factory_cmd_obj.AddArchiveBuild('full', show_url=False)
-      factory_cmd_obj.AddUploadBuild()
 
     # Download the full output directory if the machine is a tester.
     if slave_type == 'Tester':
-      factory_cmd_obj.AddDownloadBuild()
-      factory_cmd_obj.AddExtractBuild()
+      factory_cmd_obj.AddExtractBuild(build_url)
 
     self._AddTests(factory_cmd_obj, tests,
                    run_crash_handler=run_crash_handler,

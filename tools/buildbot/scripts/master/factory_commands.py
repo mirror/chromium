@@ -379,18 +379,19 @@ class FactoryCommands(object):
                         link_text=text,
                         command=self.GetArchiveBuildCommand(mode=mode))
 
-  def GetExtractCommand(self):
+  def GetExtractCommand(self, build_url):
     """Returns the command to call the extract tool."""
     return [self._python, self._extract_tool,
             '--build-dir', self._build_dir,
-            '--target', self._target]
+            '--target', self._target,
+            '--build-url', build_url]
 
-  def AddExtractBuild(self, timeout=240):
+  def AddExtractBuild(self, build_url, timeout=240):
     """Adds a step to the factory to extract a build."""
     self.AddTestStep(retcode_command.ReturnCodeCommand,
                      timeout=timeout,
                      test_name='extract build',
-                     test_command=self.GetExtractCommand())
+                     test_command=self.GetExtractCommand(build_url))
 
   def GetMasterZip(self):
     """Returns the relative path to the build output zip file on the master,
