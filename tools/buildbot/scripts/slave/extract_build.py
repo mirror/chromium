@@ -10,6 +10,7 @@ import optparse
 import os
 import shutil
 import sys
+import urllib
 
 import chromium_utils
 
@@ -24,6 +25,17 @@ def main(options, args):
   project_dir = os.path.abspath(options.build_dir)
   build_dir = os.path.join(project_dir, options.target)
   output_dir = os.path.join(project_dir, 'full-build-win32')
+
+  # Download the file.
+  try:
+    f_src = urllib.urlopen(options.build_url)
+    f_dest = open('full-build-win32.zip', 'wb')
+    f_dest.write(f_src.read())
+    f_src.close()
+    f_dest.close()
+  except IOError:
+    print 'Failed to download archived build'
+    return WARNING_EXIT_CODE
 
   try:
     chromium_utils.ExtractZip('full-build-win32.zip', project_dir)
@@ -41,6 +53,8 @@ if '__main__' == __name__:
   option_parser.add_option('', '--build-dir', default='chrome',
                            help='path to main build directory (the parent of '
                                 'the Release or Debug directory)')
+  option_parser.add_option('', '--build-url', default=None,
+                           help='url where to find the build to extract')
 
   options, args = option_parser.parse_args()
   sys.exit(main(options, args))
