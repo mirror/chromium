@@ -212,11 +212,15 @@ void ChromiumBridge::stopSharedTimer()
 
 void ChromiumBridge::decrementStatsCounter(const char* name)
 {
+    if (!webKitClient())
+        return;  // TODO(eroman): temp hack!
     webKitClient()->decrementStatsCounter(name);
 }
 
 void ChromiumBridge::incrementStatsCounter(const char* name)
 {
+    if (!webKitClient())
+        return;  // TODO(eroman): temp hack!
     webKitClient()->incrementStatsCounter(name);
 }
 
