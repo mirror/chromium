@@ -399,29 +399,6 @@ class FactoryCommands(object):
     zip_name = '%s.zip' % self._identifier
     return os.path.join('build_output', zip_name)
 
-  def AddUploadBuild(self):
-    """Adds a step to upload the target folder.
-    """
-    zip_src = self.PathJoin(self._staging_dir, 'full-build-win32.zip')
-    zip_dest = self.GetMasterZip()
-    self._factory.addStep(transfer.FileUpload,
-                          name='Upload Build',
-                          blocksize=640*1024,
-                          slavesrc=zip_src,
-                          masterdest=zip_dest)
-
-  def AddDownloadBuild(self):
-    """Adds a step to download the target folder.
-    """
-    zip_src = self.GetMasterZip()
-    zip_dest = 'full-build-win32.zip'
-    self._factory.addStep(transfer.FileDownload,
-                          haltOnFailure=True,
-                          blocksize=640*1024,
-                          name='Download Build',
-                          mastersrc=zip_src,
-                          slavedest=zip_dest)
-
   #######
   # Build steps
 
