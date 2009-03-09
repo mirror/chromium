@@ -427,7 +427,7 @@ class WaterfallStatusResource(waterfall.WaterfallStatusResource):
     stop_gap_in_seconds = 60 * 60 * 24 * 2
     earliest_accepted_time = util.now() - stop_gap_in_seconds
     # Will throw a TypeError if last_time is not a number.
-    last_time = int(request.args.get('last_time'))
+    last_time = int(request.args.get('last_time', 0))
     if (last_time and
         last_time < earliest_accepted_time and
         not request.args.get('force')):
