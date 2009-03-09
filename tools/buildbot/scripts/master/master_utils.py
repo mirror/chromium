@@ -28,7 +28,7 @@ class MasterFactory(object):
     ('src/third_party/WebKit', config.Master.webkit_mirror_url),
     ('src/third_party/WebKit/WebKit/chromium',
      config.Master.server_url +
-         '/chrome/trunk/deps/third_party/WebKit/WebKit/chromium"),
+         '/chrome/trunk/deps/third_party/WebKit/WebKit/chromium'),
     ('src/third_party/WebKit/WebKit', None),
     ('src/third_party/WebKit/WebKit', None),
     ('src/third_party/WebKit/WebKitLibraries', None),
