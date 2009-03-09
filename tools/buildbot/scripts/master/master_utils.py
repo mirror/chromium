@@ -29,7 +29,7 @@ class MasterFactory(object):
     ('src/third_party/WebKit/WebKit/chromium',
      config.Master.server_url +
          '/chrome/trunk/deps/third_party/WebKit/WebKit/chromium'),
-    ('src/third_party/WebKit/WebKit', None),
+    ('src/third_party/WebKit/WebKit/mac', None),
     ('src/third_party/WebKit/WebKit', None),
     ('src/third_party/WebKit/WebKitLibraries', None),
     ('src/webkit/data/layout_tests/LayoutTests', None)]
