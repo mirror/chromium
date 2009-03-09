@@ -427,10 +427,10 @@ class WaterfallStatusResource(waterfall.WaterfallStatusResource):
     stop_gap_in_seconds = 60 * 60 * 24 * 2
     earliest_accepted_time = util.now() - stop_gap_in_seconds
     # Will throw a TypeError if last_time is not a number.
-    last_time = int(request.args.get('last_time', 0))
+    last_time = int(request.args.get('last_time', [0])[0])
     if (last_time and
         last_time < earliest_accepted_time and
-        not request.args.get('force')):
+        not request.args.get('force', [False])[0]):
       return """To prevent DOS of the waterfall, heavy request like this
 are blocked. If you know what you are doing, ask a Chromium Buildbot
 administrator how to bypass the protection."""
