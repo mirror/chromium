@@ -118,6 +118,14 @@ def RemoveFile(*path):
     if e.errno != errno.ENOENT:
       raise
 
+def MoveFile(path, new_path):
+  """Moves the file located at 'path' to 'new_path', if it exists."""
+  try:
+    RemoveFile(new_path)
+    os.rename(path, new_path)
+  except OSError, e:
+    if e.errno != errno.ENOENT:
+      raise
 
 def LocateFiles(pattern, root=os.curdir):
   """Yeilds files matching pattern found in root and its subdirectories.
@@ -275,7 +283,8 @@ def MakeZip(output_dir, archive_name, file_list, file_relative_dir,
 
   # Pack the zip file.
   output_file = '%s.zip' % archive_dir
-  RemoveFile(output_file)
+  previous_file = '%s_old.zip' % archive_dir
+  MoveFile(output_file, previous_file)
   print 'Creating %s' % output_file
   def _Addfiles(to_zip_file, dirname, files_to_add):
     for this_file in files_to_add:
