@@ -422,13 +422,18 @@ class WaterfallStatusResource(waterfall.WaterfallStatusResource):
     IRC topic."""
 
     # Limit access to the X last days. Buildbot doesn't scale well.
-    seven_days_in_seconds = 60 * 60 * 24 * 7
-    two_days_ago = util.now() - seven_days_in_seconds
-    last_time = request.args.get('last_time')
+    # TODO(maruel) Throttle the requests instead or just fix the code to cache
+    # data.
+    stop_gap_in_seconds = 60 * 60 * 24 * 2
+    earliest_accepted_time = util.now() - stop_gap_in_seconds
+    # Will throw a TypeError if last_time is not a number.
+    last_time = int(request.args.get('last_time'))
     if (last_time and
-        last_time < two_days_ago and
+        last_time < earliest_accepted_time and
         not request.args.get('force')):
-      return 'Stop hammering our server!'
+      return """To prevent DOS of the waterfall, heavy request like this
+are blocked. If you know what you are doing, ask a Chromium Buildbot
+administrator how to bypass the protection."""
     else:
       data = waterfall.WaterfallStatusResource.body(self, request)
       return "%s %s" % (self.__TreeStatus(), data)
