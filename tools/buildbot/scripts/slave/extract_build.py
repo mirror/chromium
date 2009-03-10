@@ -26,15 +26,27 @@ def main(options, args):
   build_dir = os.path.join(project_dir, options.target)
   output_dir = os.path.join(project_dir, 'full-build-win32')
 
-  # Download the file.
-  print "Downloading build..."
-  try:
-    urllib.urlretrieve(options.build_url, 'full-build-win32.zip')
-  except IOError:
-    print 'Failed to download archived build'
-    return WARNING_EXIT_CODE
+  # Download the file. Use the checked out revision to determine the filename.
+  current_revision = slave_utils.SubversionRevision(project_dir)
 
-  print "Extracting build..."
+  print 'Fetching build %d...' % current_revision
+  failure = False
+  try:
+    urllib.urlretrieve(options.build_url,
+                       'full-build-win32_%d.zip' % current_revision)
+  except IOError:
+    print 'Failed to download archived build at revision %d'  + current_revision
+    failure = True
+
+  print 'Fetching latest build...'
+  if failure:
+    try:
+      urllib.urlretrieve(options.build_url, 'full-build-win32.zip')
+    except IOError:
+      print 'Failed to download generic archived build'
+      return WARNING_EXIT_CODE
+
+  print 'Extracting build...'
   try:
     chromium_utils.ExtractZip('full-build-win32.zip', project_dir)
     chromium_utils.RemoveDirectory(build_dir)
@@ -42,6 +54,8 @@ def main(options, args):
   except:
     return WARNING_EXIT_CODE
 
+  if failure:
+    return WARNING_EXIT_CODE
   return 0
 
 if '__main__' == __name__:

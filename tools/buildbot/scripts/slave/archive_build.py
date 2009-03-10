@@ -420,6 +420,11 @@ class Stager(object):
     if not os.path.exists(zip_file):
       raise StagingError('Failed to make zip package %s' % zip_file)
 
+    # Create a versionned copy of the file.
+    current_revision = slave_utils.SubversionRevision(self._chrome_dir)
+    versionned_file = zip_file.replace('.zip', '_%d.zip' % current_revision)
+    shutil.copyfile(zip_file, versionned_file)
+
     return 0
 
 def main(options, args):
