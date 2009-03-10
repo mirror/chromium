@@ -13,6 +13,7 @@ import sys
 import urllib
 
 import chromium_utils
+import slave_utils
 
 # Exit code to use for warnings, to distinguish script issues from reliability
 # crashes.
