@@ -33,8 +33,9 @@ def main(options, args):
   print 'Fetching build %d...' % current_revision
   failure = False
   try:
-    urllib.urlretrieve(options.build_url,
-                       'full-build-win32_%d.zip' % current_revision)
+    build_archive = 'full-build-win32_%d.zip' % current_revision
+    urllib.urlretrieve(options.build_url, build_archive)
+    shutil.copyfile(build_archive, 'full-build-win32.zip')
   except IOError:
     print 'Failed to download archived build at revision %d' % current_revision
     failure = True
