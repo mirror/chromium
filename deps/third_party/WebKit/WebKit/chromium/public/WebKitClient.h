@@ -38,6 +38,7 @@ namespace WebKit {
     class WebCString;
     class WebMimeRegistry;
     class WebString;
+    class WebThemeEngine;
     class WebURL;
 
     class WebKitClient {
@@ -47,6 +48,9 @@ namespace WebKit {
 
         // Must return non-null.
         virtual WebMimeRegistry* mimeRegistry() = 0;
+
+        // May return null on some platforms.
+        virtual WebThemeEngine* themeEngine() = 0;
 
 
         // ---- History ----

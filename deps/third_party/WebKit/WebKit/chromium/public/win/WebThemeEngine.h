@@ -28,68 +28,45 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "config.h"
-#include "WebImage.h"
+#ifndef WebThemeEngine_h
+#define WebThemeEngine_h
 
-#include <SkBitmap.h>
+#include "WebCanvas.h"
+#include "WebColor.h"
 
 namespace WebKit {
+    struct WebRect;
 
-class WebImagePrivate : public SkBitmap {
-public:
-    WebImagePrivate(const SkBitmap& bitmap) : SkBitmap(bitmap) { }
-};
+    // The part and state parameters correspond to values defined by the
+    // Windows Theme API.  The classicState parameter corresponds to the uState
+    // parameter of the Windows DrawFrameRect function.
+    class WebThemeEngine {
+    public:
+        virtual void paintButton(
+            WebCanvas*, int part, int state, int classicState,
+            const WebRect&) = 0;
 
-void WebImage::reset()
-{
-    delete m_private;
-    m_private = 0;
-}
+        virtual void paintMenuList(
+            WebCanvas*, int part, int state, int classicState,
+            const WebRect&) = 0;
 
-WebSize WebImage::size() const
-{
-    if (!m_private)
-        return WebSize();
+        virtual void paintScrollbarArrow(
+            WebCanvas*, int state, int classicState,
+            const WebRect&) = 0;
 
-    return WebSize(m_private->width(), m_private->height());
-}
+        virtual void paintScrollbarThumb(
+            WebCanvas*, int part, int state, int classicState,
+            const WebRect&) = 0;
 
-void WebImage::assign(const WebImage& image)
-{
-    if (m_private)
-        delete m_private;
+        virtual void paintScrollbarTrack(
+            WebCanvas*, int part, int state, int classicState,
+            const WebRect&, const WebRect& alignRect) = 0;
 
-    if (image.m_private)
-        m_private = new WebImagePrivate(*image.m_private);
-    else
-        m_private = 0;
-}
-
-WebImage::operator SkBitmap() const
-{
-    if (!m_private)
-        return SkBitmap();
-
-    return *m_private;
-}
-
-void WebImage::assign(const SkBitmap& bitmap)
-{
-    if (m_private)
-        delete m_private;
-
-    m_private = new WebImagePrivate(bitmap);
-}
-
-const void* WebImage::lockPixels()
-{
-    m_private->lockPixels();
-    return static_cast<void*>(m_private->getPixels());
-}
-
-void WebImage::unlockPixels()
-{
-    m_private->unlockPixels();
-}
+        virtual void paintTextField(
+            WebCanvas*, int part, int state, int classicState,
+            const WebRect&, WebColor, bool fillContentArea, bool drawEdges) = 0;
+    };
 
 } // namespace WebKit
+
+#endif

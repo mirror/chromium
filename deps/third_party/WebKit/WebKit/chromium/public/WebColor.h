@@ -28,68 +28,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "config.h"
-#include "WebImage.h"
-
-#include <SkBitmap.h>
+#ifndef WebColor_h
+#define WebColor_h
 
 namespace WebKit {
 
-class WebImagePrivate : public SkBitmap {
-public:
-    WebImagePrivate(const SkBitmap& bitmap) : SkBitmap(bitmap) { }
-};
-
-void WebImage::reset()
-{
-    delete m_private;
-    m_private = 0;
-}
-
-WebSize WebImage::size() const
-{
-    if (!m_private)
-        return WebSize();
-
-    return WebSize(m_private->width(), m_private->height());
-}
-
-void WebImage::assign(const WebImage& image)
-{
-    if (m_private)
-        delete m_private;
-
-    if (image.m_private)
-        m_private = new WebImagePrivate(*image.m_private);
-    else
-        m_private = 0;
-}
-
-WebImage::operator SkBitmap() const
-{
-    if (!m_private)
-        return SkBitmap();
-
-    return *m_private;
-}
-
-void WebImage::assign(const SkBitmap& bitmap)
-{
-    if (m_private)
-        delete m_private;
-
-    m_private = new WebImagePrivate(bitmap);
-}
-
-const void* WebImage::lockPixels()
-{
-    m_private->lockPixels();
-    return static_cast<void*>(m_private->getPixels());
-}
-
-void WebImage::unlockPixels()
-{
-    m_private->unlockPixels();
-}
+    typedef unsigned WebColor;  // RGBA quad
 
 } // namespace WebKit
+
+#endif

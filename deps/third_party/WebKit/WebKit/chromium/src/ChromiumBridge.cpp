@@ -41,10 +41,17 @@
 #include "WebString.h"
 #include "WebURL.h"
 
+#if PLATFORM(WIN_OS)
+#include "WebRect.h"
+#include "WebThemeEngine.h"
+#endif
+
 #include "BitmapImage.h"
+#include "GraphicsContext.h"
 #include "KURL.h"
 #include "NativeImageSkia.h"
 #include "NotImplemented.h"
+#include "PlatformContextSkia.h"
 #include <wtf/Assertions.h>
 
 // We are part of the WebKit implementation.
@@ -232,6 +239,63 @@ double ChromiumBridge::currentTime()
 {
     return webKitClient()->currentTime();
 }
+
+// Theming --------------------------------------------------------------------
+
+#if PLATFORM(WIN_OS)
+
+void ChromiumBridge::paintButton(
+    GraphicsContext* gc, int part, int state, int classicState,
+    const IntRect& rect)
+{
+    webKitClient()->themeEngine()->paintButton(
+        gc->platformContext()->canvas(), part, state, classicState, rect);
+}
+
+void ChromiumBridge::paintMenuList(
+    GraphicsContext* gc, int part, int state, int classicState,
+    const IntRect& rect)
+{
+    webKitClient()->themeEngine()->paintMenuList(
+        gc->platformContext()->canvas(), part, state, classicState, rect);
+}
+
+void ChromiumBridge::paintScrollbarArrow(
+    GraphicsContext* gc, int state, int classicState,
+    const IntRect& rect)
+{
+    webKitClient()->themeEngine()->paintScrollbarArrow(
+        gc->platformContext()->canvas(), state, classicState, rect);
+}
+
+void ChromiumBridge::paintScrollbarThumb(
+    GraphicsContext* gc, int part, int state, int classicState,
+    const IntRect& rect)
+{
+    webKitClient()->themeEngine()->paintScrollbarThumb(
+        gc->platformContext()->canvas(), part, state, classicState, rect);
+}
+
+void ChromiumBridge::paintScrollbarTrack(
+    GraphicsContext* gc, int part, int state, int classicState,
+    const IntRect& rect, const IntRect& alignRect)
+{
+    webKitClient()->themeEngine()->paintScrollbarTrack(
+        gc->platformContext()->canvas(), part, state, classicState, rect,
+        alignRect);
+}
+
+void ChromiumBridge::paintTextField(
+    GraphicsContext* gc, int part, int state, int classicState,
+    const IntRect& rect, const Color& color, bool fillContentArea,
+    bool drawEdges)
+{
+    webKitClient()->themeEngine()->paintTextField(
+        gc->platformContext()->canvas(), part, state, classicState, rect,
+        color.rgb(), fillContentArea, drawEdges);
+}
+
+#endif
 
 // Trace Event ----------------------------------------------------------------
 
