@@ -1,3 +1,527 @@
+2009-03-06  Darin Fisher  <darin@chromium.org>
+
+        Reviewed by Sam Weinig.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24437
+
+        Add support for registering noAccess URL schemes:
+        1-  Add FrameLoader::registerURLSchemeAsNoAccess, and have SecurityOrigin check
+        that list upon construction (similar to how isLocal is implemented).
+        2-  Make InspectorController call grantUniversalAccess on its Document's
+        SecurityOrigin at the time when windowScriptObjectAvailable is called.
+
+        This enables content such as the inspector to be loaded from a custom (non-file)
+        URL, which is how Chromium loads the inspector.  It also allows other URL schemes
+        to be treated like data: URLs, which Chromium utilizes for its various HTML-based
+        UI panels.
+
+        * inspector/InspectorController.cpp:
+        (WebCore::InspectorController::windowScriptObjectAvailable):
+        * loader/FrameLoader.cpp:
+        (WebCore::localSchemes):
+        (WebCore::noAccessSchemes):
+        (WebCore::FrameLoader::loadItem):
+        * loader/FrameLoader.h:
+        * page/SecurityOrigin.cpp:
+        (WebCore::SecurityOrigin::SecurityOrigin):
+        (WebCore::SecurityOrigin::isLocal):
+
+2009-03-10  Xan Lopez  <xlopez@igalia.com>
+
+        Build fix, no review
+
+        * page/mac/AccessibilityObjectWrapper.mm:
+        (textMarkerForVisiblePosition):
+        (visiblePositionForTextMarker):
+
+2009-03-10  Xan Lopez  <xlopez@igalia.com>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24491
+        Rename posOffset to m_offset, get rid of accessor
+
+        As suggested in dom/Position.h, this patch gets rid of the
+        'offset()' accessor and renames posOffset to m_offset. I've used
+        m_offset instead of offset to follow the style guide lines, since
+        Position is still a class and not a structure. If the long term
+        plan is still to make it a structure it would be pretty easy to
+        just s/m_offset/offset/ globally when that is achieved.
+
+        * dom/Position.cpp:
+        (WebCore::Position::previous):
+        (WebCore::Position::next):
+        (WebCore::Position::atStart):
+        (WebCore::Position::atEnd):
+        (WebCore::Position::renderedOffset):
+        (WebCore::Position::isCandidate):
+        (WebCore::Position::inRenderedText):
+        (WebCore::Position::isRenderedCharacter):
+        (WebCore::Position::rendersInDifferentPosition):
+        (WebCore::Position::leadingWhitespacePosition):
+        (WebCore::Position::debugPosition):
+        (WebCore::Position::formatForDebugger):
+        * dom/Position.h:
+        (WebCore::Position::Position):
+        * dom/PositionIterator.h:
+        (WebCore::PositionIterator::PositionIterator):
+        * dom/Range.cpp:
+        * dom/RangeBoundaryPoint.h:
+        (WebCore::RangeBoundaryPoint::position):
+        (WebCore::RangeBoundaryPoint::set):
+        (WebCore::RangeBoundaryPoint::setOffset):
+        (WebCore::RangeBoundaryPoint::setToChild):
+        (WebCore::RangeBoundaryPoint::setToStart):
+        (WebCore::RangeBoundaryPoint::setToEnd):
+        (WebCore::RangeBoundaryPoint::childBeforeWillBeRemoved):
+        * editing/ApplyStyleCommand.cpp:
+        (WebCore::ApplyStyleCommand::applyRelativeFontStyleChange):
+        (WebCore::ApplyStyleCommand::applyInlineStyleToRange):
+        (WebCore::ApplyStyleCommand::removeInlineStyle):
+        (WebCore::ApplyStyleCommand::nodeFullySelected):
+        (WebCore::ApplyStyleCommand::nodeFullyUnselected):
+        (WebCore::ApplyStyleCommand::splitTextAtStartIfNeeded):
+        (WebCore::ApplyStyleCommand::splitTextAtEndIfNeeded):
+        (WebCore::ApplyStyleCommand::splitTextElementAtStartIfNeeded):
+        (WebCore::ApplyStyleCommand::splitTextElementAtEndIfNeeded):
+        (WebCore::ApplyStyleCommand::mergeStartWithPreviousIfIdentical):
+        (WebCore::ApplyStyleCommand::mergeEndWithNextIfIdentical):
+        (WebCore::ApplyStyleCommand::joinChildTextNodes):
+        * editing/BreakBlockquoteCommand.cpp:
+        (WebCore::BreakBlockquoteCommand::doApply):
+        * editing/CompositeEditCommand.cpp:
+        (WebCore::CompositeEditCommand::insertNodeAt):
+        (WebCore::CompositeEditCommand::positionOutsideTabSpan):
+        (WebCore::CompositeEditCommand::rebalanceWhitespaceAt):
+        (WebCore::CompositeEditCommand::prepareWhitespaceAtPositionForSplit):
+        (WebCore::CompositeEditCommand::deleteInsignificantText):
+        (WebCore::CompositeEditCommand::removePlaceholderAt):
+        (WebCore::CompositeEditCommand::moveParagraphs):
+        (WebCore::CompositeEditCommand::breakOutOfEmptyMailBlockquotedParagraph):
+        * editing/DeleteSelectionCommand.cpp:
+        (WebCore::updatePositionForNodeRemoval):
+        (WebCore::updatePositionForTextRemoval):
+        (WebCore::DeleteSelectionCommand::handleGeneralDelete):
+        (WebCore::DeleteSelectionCommand::fixupWhitespace):
+        * editing/Editor.cpp:
+        (WebCore::Editor::setComposition):
+        (WebCore::Editor::advanceToNextMisspelling):
+        (WebCore::Editor::getCompositionSelection):
+        * editing/InsertLineBreakCommand.cpp:
+        (WebCore::InsertLineBreakCommand::doApply):
+        * editing/InsertParagraphSeparatorCommand.cpp:
+        (WebCore::InsertParagraphSeparatorCommand::doApply):
+        * editing/InsertTextCommand.cpp:
+        (WebCore::InsertTextCommand::performTrivialReplace):
+        (WebCore::InsertTextCommand::input):
+        (WebCore::InsertTextCommand::insertTab):
+        * editing/MoveSelectionCommand.cpp:
+        (WebCore::MoveSelectionCommand::doApply):
+        * editing/ReplaceSelectionCommand.cpp:
+        (WebCore::ReplaceSelectionCommand::doApply):
+        * editing/SelectionController.cpp:
+        (WebCore::SelectionController::debugRenderer):
+        * editing/TextIterator.cpp:
+        (WebCore::TextIterator::rangeFromLocationAndLength):
+        * editing/TypingCommand.cpp:
+        (WebCore::TypingCommand::deleteKeyPressed):
+        (WebCore::TypingCommand::forwardDeleteKeyPressed):
+        * editing/VisiblePosition.cpp:
+        (WebCore::VisiblePosition::characterAfter):
+        (WebCore::VisiblePosition::debugPosition):
+        (WebCore::makeRange):
+        (WebCore::setStart):
+        (WebCore::setEnd):
+        * editing/VisibleSelection.cpp:
+        (WebCore::VisibleSelection::toNormalizedRange):
+        (WebCore::makeSearchRange):
+        (WebCore::VisibleSelection::debugPosition):
+        (WebCore::VisibleSelection::showTreeForThis):
+        * editing/htmlediting.cpp:
+        (WebCore::comparePositions):
+        (WebCore::rangeCompliantEquivalent):
+        (WebCore::isFirstPositionAfterTable):
+        (WebCore::isLastPositionBeforeTable):
+        * editing/visible_units.cpp:
+        (WebCore::previousBoundary):
+        (WebCore::nextBoundary):
+        (WebCore::startPositionForLine):
+        (WebCore::startOfLine):
+        (WebCore::endPositionForLine):
+        (WebCore::nextLinePosition):
+        (WebCore::startOfParagraph):
+        (WebCore::endOfParagraph):
+        * page/AccessibilityObject.cpp:
+        (WebCore::updateAXLineStartForVisiblePosition):
+        * page/AccessibilityRenderObject.cpp:
+        (WebCore::AccessibilityRenderObject::indexForVisiblePosition):
+        * page/DOMSelection.cpp:
+        (WebCore::DOMSelection::anchorOffset):
+        (WebCore::DOMSelection::baseOffset):
+        (WebCore::DOMSelection::focusOffset):
+        (WebCore::DOMSelection::extentOffset):
+        * page/EventHandler.cpp:
+        (WebCore::EventHandler::handleMousePressEventSingleClick):
+        * page/Frame.cpp:
+        (WebCore::Frame::selectionLayoutChanged):
+        * rendering/RenderTextControl.cpp:
+        (WebCore::RenderTextControl::indexForVisiblePosition):
+        * rendering/RenderTreeAsText.cpp:
+        (WebCore::writeSelection):
+
+2009-03-10  Darin Adler  <darin@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Bug 23564: REGRESSION (r39230-39286): crash loading page that changes <input> display type and then calls innerHTML
+        https://bugs.webkit.org/show_bug.cgi?id=23564
+        rdar://problem/6537238
+
+        Test: fast/dom/HTMLElement/innerHTML-selection-crash.html
+
+        * editing/markup.cpp: (WebCore::createMarkup): Added updateLayoutIgnorePendingStylesheets
+        call to the one of the two overloads of this function that wasn't calling it. This fixes
+        this crash and other possible crashes inside innerHTML.
+
+2009-03-10  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24285
+        Text resource loading checks for BOM twice
+
+        This removes TextDecoder class, since its only purpose was to check for BOM, which is
+        already done in TextResourceDecoder. Callers that use TextEncoding::decode() won't get
+        BOM checked, but I didn't find any cases where it would significantly change behavior.
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.scons:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+        Remove TextDecoder.{h,cpp}.
+
+        * platform/text/TextDecoder.cpp: Removed.
+        * platform/text/TextDecoder.h: Removed.
+
+        * loader/TextResourceDecoder.h: Instead of a TextDecoder object, keep TextEncoding and
+        TextCodec separately.
+
+        * loader/TextResourceDecoder.cpp:
+        (WebCore::TextResourceDecoder::TextResourceDecoder): Updated for m_encoding being a member.
+        (WebCore::TextResourceDecoder::setEncoding): Ditto.
+        (WebCore::TextResourceDecoder::checkForBOM): Removed a FIXME saying that a BOM could override
+        even a user-chosen encoding - this is how it already worked due to TextDecoder checking for
+        BOM again. Made this function return the detected BOM length.
+        (WebCore::TextResourceDecoder::decode): Skip the BOM if it was found at the beginning of
+        a text resource.
+        (WebCore::TextResourceDecoder::flush): Reset m_checkedForBOM, so that re-decoding the same
+        resource again (as frequently done by CachedResource subclasses) will skip the BOM correctly.
+
+        * platform/text/TextEncoding.cpp: (WebCore::TextEncoding::decode):
+        Use TextCodec directly without a TextDecoder wrapper. This means that this method no longer
+        checks for BOM, which was a counter-intuitive feature.
+
+        * loader/CachedScript.cpp:
+        (WebCore::CachedScript::CachedScript):
+        (WebCore::CachedScript::setEncoding):
+        (WebCore::CachedScript::encoding):
+        (WebCore::CachedScript::script):
+        * loader/CachedScript.h:
+        * loader/appcache/ManifestParser.cpp:
+        (WebCore::parseManifest):
+        Use TextResourceDecoder, as TextEncoding::decode() no longer checks for BOM.
+        A side effect of this is that these resources will now be subject to encoding auto-detection.
+
+        * loader/CachedFont.cpp: (WebCore::CachedFont::ensureSVGFontData):
+        * page/Page.cpp: (WebCore::Page::userStyleSheet):
+        Be sure to flush TextResourceDecoder, pushing any remaining bytes out, and making the decoder
+        re-usable (for repeated decoding of the same resource).
+
+        * platform/text/TextEncodingRegistry.h: Updated comments for newTextCodec().
+
+2009-03-10  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24488
+        An assertion failure when updating an offline application cache after emptying caches
+
+        Emptying appcache cannot be performed automatically, so no test.
+
+        * loader/appcache/ApplicationCacheGroup.cpp:
+        (WebCore::ApplicationCacheGroup::checkIfLoadIsComplete): Ensure that the cache is in disk
+        storage, even if the application wasn't updated server side.
+
+2009-03-10  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        <rdar://problem/6425807> Implement WorkerUtils.importScripts()
+        <https://bugs.webkit.org/show_bug.cgi?id=22721>
+
+        Implement importScripts, currently uses a series of synchronous loads
+        to fetch the scripts, but this is simpler than a synchronous load of
+        multiple loads in parallel.  In future we'll want to switch to parallel
+        loading, but this will do for now.
+        
+        Test: http/tests/workers/worker-importScripts.html
+
+        * GNUmakefile.am:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * bindings/js/JSWorkerContextCustom.cpp:
+        (WebCore::JSWorkerContext::importScripts):
+        * bindings/js/ScriptValue.h:
+        (WebCore::ScriptValue::hasNoValue):
+        * bindings/js/WorkerScriptController.cpp:
+        (WebCore::WorkerScriptController::evaluate):
+        (WebCore::WorkerScriptController::setException):
+        * bindings/js/WorkerScriptController.h:
+        * dom/Document.cpp:
+        (WebCore::Document::scriptImported):
+        * dom/Document.h:
+        * dom/ScriptExecutionContext.h:
+        * inspector/InspectorController.cpp:
+        (WebCore::InspectorController::scriptImported):
+        * inspector/InspectorController.h:
+        * inspector/InspectorResource.cpp:
+        (WebCore::InspectorResource::setScriptProperties):
+        * inspector/InspectorResource.h:
+        * workers/WorkerContext.cpp:
+        (WebCore::WorkerContext::scriptImported):
+        (WebCore::WorkerContext::importScripts):
+        * workers/WorkerContext.h:
+        * workers/WorkerContext.idl:
+        * workers/WorkerImportScriptsClient.cpp: Added.
+        (WebCore::WorkerImportScriptsClient::didReceiveResponse):
+        (WebCore::WorkerImportScriptsClient::didReceiveData):
+        (WebCore::WorkerImportScriptsClient::didFinishLoading):
+        (WebCore::WorkerImportScriptsClient::didFail):
+        (WebCore::WorkerImportScriptsClient::didFailRedirectCheck):
+        (WebCore::WorkerImportScriptsClient::didReceiveAuthenticationCancellation):
+        * workers/WorkerImportScriptsClient.h: Added.
+        (WebCore::WorkerImportScriptsClient::WorkerImportScriptsClient):
+        (WebCore::WorkerImportScriptsClient::script):
+        (WebCore::WorkerImportScriptsClient::failed):
+
+2009-03-10  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24462
+        Move cross-origin access control code out of XMLHttpRequest
+
+        Step 1: move preflight result cache and access control helper functions.
+
+        No change in behavior, so no test.
+
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.scons:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+        * loader/CrossOriginAccessControl.cpp: Added.
+        (WebCore::isOnAccessControlSimpleRequestHeaderWhitelist):
+        (WebCore::isSimpleCrossOriginAccessRequest):
+        (WebCore::createAllowedCrossOriginResponseHeadersSet):
+        (WebCore::isOnAccessControlResponseHeaderWhitelist):
+        (WebCore::passesAccessControlCheck):
+        * loader/CrossOriginAccessControl.h: Added.
+        * loader/CrossOriginPreflightResultCache.cpp: Added.
+        (WebCore::parseAccessControlMaxAge):
+        (WebCore::addToAccessControlAllowList):
+        (WebCore::parseAccessControlAllowList):
+        (WebCore::CrossOriginPreflightResultCacheItem::parse):
+        (WebCore::CrossOriginPreflightResultCacheItem::allowsCrossOriginMethod):
+        (WebCore::CrossOriginPreflightResultCacheItem::allowsCrossOriginHeaders):
+        (WebCore::CrossOriginPreflightResultCacheItem::allowsRequest):
+        (WebCore::CrossOriginPreflightResultCache::shared):
+        (WebCore::CrossOriginPreflightResultCache::appendEntry):
+        (WebCore::CrossOriginPreflightResultCache::canSkipPreflight):
+        * loader/CrossOriginPreflightResultCache.h: Added.
+        (WebCore::CrossOriginPreflightResultCacheItem::CrossOriginPreflightResultCacheItem):
+        (WebCore::CrossOriginPreflightResultCache::CrossOriginPreflightResultCache):
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::XMLHttpRequestStaticData::XMLHttpRequestStaticData):
+        (WebCore::XMLHttpRequest::createRequest):
+        (WebCore::XMLHttpRequest::makeCrossOriginAccessRequest):
+        (WebCore::XMLHttpRequest::makeSimpleCrossOriginAccessRequest):
+        (WebCore::XMLHttpRequest::makeCrossOriginAccessRequestWithPreflight):
+        (WebCore::XMLHttpRequest::didReceiveResponse):
+        (WebCore::XMLHttpRequest::didReceiveResponsePreflight):
+        * xml/XMLHttpRequest.h:
+
+2009-03-10  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=19797
+        Bring the list of forbidden headers in sync with XMLHttpRequest spec draft
+
+        Added new checks to http/tests/xmlhttprequest/set-dangerous-headers.html.
+
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::XMLHttpRequestStaticData::XMLHttpRequestStaticData): Added all headers from
+        XMLHttpRequest 2 draft.
+
+2009-03-10  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Adele Peterson.
+
+        - fix https://bugs.webkit.org/show_bug.cgi?id=23975
+          <rdar://problem/6593610> REGRESSION: Scrollbar arrow not repainted
+
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::invalidateScrollbarRect): Corrected the vertical
+        scrollbar rect calculation.
+
+2009-03-09  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dan Bernstein, Oliver Hunt
+
+        https://bugs.webkit.org/show_bug.cgi?id=24475
+        
+        When repainting replaced elements, need to union the selection
+        and overflow rects because either may extend outside the other.
+        
+        Test: fast/repaint/transform-replaced-shadows.html
+
+        * rendering/RenderReplaced.cpp:
+        (WebCore::RenderReplaced::clippedOverflowRectForRepaint):
+
+2009-03-09  Stephanie Lewis  <slewis@apple.com>
+
+        Fix build.
+
+        * editing/Editor.cpp:
+        (WebCore::Editor::advanceToNextMisspelling):
+        (WebCore::markAllMisspellingsAndBadGrammarInRanges):
+
+2009-03-09  Kim Christensen  <kimworking@gmail.com>
+
+        Reviewed by Darin Fisher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24276
+        Dropdown / select boxes do not consider the windows task bar in Chromium.
+
+        * platform/chromium/PopupMenuChromium.cpp:
+        (WebCore::PopupContainer::showPopup):
+
+2009-03-09  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Adele Peterson and Dave Hyatt.
+
+        - fix <rdar://problem/6654344> REGRESSION (r41041): Zillow.com has
+          misaligned edit fields
+
+        Test: fast/forms/legend-display-none.html
+
+        * css/CSSStyleSelector.cpp:
+        (WebCore::CSSStyleSelector::adjustRenderStyle): Change the display
+        property of legend elements to 'block' unless it is 'none'.
+        * css/html4.css: Do not force the display property of legend elements to
+        'block' using CSS, because that prevents style rules from setting it to
+        'none'.
+
+2009-03-09  Alpha Lam  <hclam@chromium.org>
+
+        Reviewed by Dave Hyatt.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23024
+
+        Fix an incorrect criteria in the if statement that leaves references to
+        deleted floating objects in RenderBlock.
+
+        Test: fast/block/float/crash-on-absolute-positioning.html
+
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::markAllDescendantsWithFloatsForLayout):
+
+2009-03-09  Mike Belshe  <mike@belshe.com>
+
+        Reviewed by Eric Seidel.
+
+        Unify JSC/V8 idl file.
+        https://bugs.webkit.org/show_bug.cgi?id=24424
+
+        * page/Location.idl:
+
+2009-03-09  Mike Belshe  <mike@belshe.com>
+
+        Reviewed by Eric Seidel.
+
+        Unify JSC/V8 for History.idl.
+
+        * page/History.idl:
+
+2009-03-09  Mike Belshe  <mike@belshe.com>
+
+        Reviewed by Eric Seidel.
+
+        Unify JSC/V8 implementations of DOMWindow.idl.
+
+        * page/DOMWindow.idl:
+
+2009-03-09  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+
+        https://bugs.webkit.org/show_bug.cgi?id=24163
+        
+        Implement mapping of FloatQuads through 3D transforms.
+        
+        Removed the redundant localToContainerQuad() methods, which can now 
+        shared code with the old mapLocalToAbsolutePoint(), which was
+        renamed to mapLocalToContainer(). This can now convert a point,
+        and optionally a FloatQuad, which are carried along in the TransformState.
+        
+        Optimized TransformState to reduce to simple FloatPoint.move()
+        if there are no transforms, and to heap-allocate a transform only if
+        necessary to accumulate transforms (when using preserve-3d).
+        
+        Tested by 3d point mapping tests, and the inspector highlight (which now shows
+        the correct quads for 3d-transformed elements).
+
+        * platform/graphics/transforms/TransformationMatrix.cpp:
+        (WebCore::TransformationMatrix::projectQuad):
+        (WebCore::TransformationMatrix::translateRight):
+        (WebCore::TransformationMatrix::translateRight3d):
+        * platform/graphics/transforms/TransformationMatrix.h:
+        * rendering/RenderBox.cpp:
+        (WebCore::RenderBox::mapLocalToContainer):
+        (WebCore::RenderBox::mapAbsoluteToLocalPoint):
+        * rendering/RenderBox.h:
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::localToAbsolute):
+        (WebCore::RenderObject::absoluteToLocal):
+        (WebCore::RenderObject::mapLocalToContainer):
+        (WebCore::RenderObject::localToContainerQuad):
+        * rendering/RenderObject.h:
+        * rendering/RenderTableCell.cpp:
+        (WebCore::RenderTableCell::mapLocalToContainer):
+        * rendering/RenderTableCell.h:
+        * rendering/RenderView.cpp:
+        (WebCore::RenderView::mapLocalToContainer):
+        * rendering/RenderView.h:
+        * rendering/TransformState.cpp:
+        (WebCore::TransformState::move):
+        (WebCore::TransformState::applyTransform):
+        (WebCore::TransformState::flatten):
+        (WebCore::TransformState::mappedPoint):
+        (WebCore::TransformState::mappedQuad):
+        (WebCore::TransformState::flattenWithTransform):
+        (WebCore::HitTestingTransformState::mappedQuad):
+        * rendering/TransformState.h:
+        (WebCore::TransformState::TransformState):
+        (WebCore::TransformState::move):
+        (WebCore::TransformState::lastPlanarPoint):
+        (WebCore::TransformState::lastPlanarQuad):
+        * rendering/style/RenderStyle.h:
+        (WebCore::InheritedFlags::preserves3D):
+
 2009-03-09  Simon Fraser  <simon.fraser@apple.com>
 
         Reviewed by Dave Hyatt
@@ -1242,7 +1766,7 @@
         (WebCore::RenderBlock::getClearDelta):
         * rendering/RenderBlock.h:
 
-2009-03-02  Kim Grönholm  <kim.gronholm@nomovok.com>
+2009-03-02  Kim GrÃ¶nholm  <kim.gronholm@nomovok.com>
 
         Reviewed by Simon Hausmann.
 
@@ -9473,7 +9997,7 @@
 
 2009-02-07  Simon Hausmann  <simon.hausmann@nokia.com>
 
-        Reviewed by Tor Arne Vestbø.
+        Reviewed by Tor Arne VestbÃ¸.
 
         For the Qt port implement Image::drawPattern via
         BitmapImage::drawPatterns' implementation and implement
@@ -9949,7 +10473,7 @@
 
 2009-02-06  Simon Hausmann  <simon.hausmann@nokia.com>
 
-        Reviewed by Tor Arne Vestbø.
+        Reviewed by Tor Arne VestbÃ¸.
 
         Added support for different ownership models for wrapped QObjects in
         the JavaScript environment.
@@ -11106,7 +11630,7 @@
         * platform/animation/Animation.h:
         * rendering/style/RenderStyleConstants.h:
 
-2009-02-04  Tor Arne Vestbø  <tavestbo@trolltech.com>
+2009-02-04  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
 
         Reviewed by Darin Adler.
 
@@ -12599,7 +13123,7 @@
 
 2009-02-03  Simon Hausmann  <simon.hausmann@nokia.com>
 
-        Reviewed by Tor Arne Vestbø.
+        Reviewed by Tor Arne VestbÃ¸.
 
         Fix conversion of QByteArray to JavaScript and back. Instead of
         converting it to a String (data loss!) we now map it to JSByteArray.
@@ -15685,7 +16209,7 @@
 
         Fix for
 
-        <rdar://problem/6531287> REGRESSION: CrashTracer: [USER] 12 crashes in Safari at com.apple.WebCore • WebCore::RenderBlock::removeFloatingObject + 59
+        <rdar://problem/6531287> REGRESSION: CrashTracer: [USER] 12 crashes in Safari at com.apple.WebCore â€¢ WebCore::RenderBlock::removeFloatingObject + 59
 
         My tightening up of markAllDescendantsWithFloatsForLayout exposed a buggy check in that code that could
         lead to a bad cast.

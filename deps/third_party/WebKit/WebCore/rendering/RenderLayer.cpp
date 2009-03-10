@@ -1401,7 +1401,7 @@ void RenderLayer::invalidateScrollbarRect(Scrollbar* scrollbar, const IntRect& r
     RenderBox* box = renderBox();
     ASSERT(box);
     if (scrollbar == m_vBar.get())
-        scrollRect.move(box->width() - box->borderRight() - box->width(), box->borderTop());
+        scrollRect.move(box->width() - box->borderRight() - scrollbar->width(), box->borderTop());
     else
         scrollRect.move(box->borderLeft(), box->height() - box->borderBottom() - scrollbar->height());
     renderer()->repaintRectangle(scrollRect);
@@ -2180,8 +2180,6 @@ PassRefPtr<HitTestingTransformState> RenderLayer::createLocalTransformState(Rend
         convertToLayerCoords(rootLayer, offsetX, offsetY);
     }
     
-    // FIXME: need to have transformFromContainer be able to use getAnimatedStyleForRenderer()
-    // when doing accelerated animations.
     TransformationMatrix containerTransform = renderer()->transformFromContainer(containerLayer ? containerLayer->renderer() : 0, IntSize(offsetX, offsetY));
     transformState->applyTransform(containerTransform, true);
     return transformState;

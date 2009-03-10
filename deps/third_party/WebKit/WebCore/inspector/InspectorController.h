@@ -234,6 +234,7 @@ public:
 #elif USE(V8)
     void resourceRetrievedByXMLHttpRequest(unsigned long identifier, const String& sourceString);
 #endif
+    void scriptImported(unsigned long identifier, const String& sourceString);
 
 #if ENABLE(DATABASE)
     void didOpenDatabase(Database*, const String& domain, const String& name, const String& version);

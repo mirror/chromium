@@ -1859,6 +1859,11 @@ void InspectorController::resourceRetrievedByXMLHttpRequest(unsigned long identi
     notImplemented();
 }
 
+void InspectorController::scriptImported(unsigned long identifier, const String& sourceString)
+{
+    notImplemented();
+}
+
 #if ENABLE(DATABASE)
 void InspectorController::didOpenDatabase(Database* database, const String& domain, const String& name, const String& version)
 {

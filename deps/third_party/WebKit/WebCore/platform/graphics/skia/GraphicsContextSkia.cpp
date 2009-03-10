@@ -665,6 +665,12 @@ void GraphicsContext::drawRect(const IntRect& rect)
         return;
 
     SkRect r = rect;
+    /*
+    r.fLeft++;
+    r.fRight--;
+    r.fTop++;
+    r.fBottom--;
+    */
     if (!isRectSkiaSafe(getCTM(), r))
         // See the fillRect below.
         ClipRectToCanvas(*platformContext()->canvas(), r, &r);

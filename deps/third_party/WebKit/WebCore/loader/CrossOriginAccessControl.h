@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2004, 2006 Apple Computer, Inc.  All rights reserved.
+ * Copyright (C) 2008 Apple Inc. All Rights Reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -21,44 +21,20 @@
  * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+ *
  */
-
-#ifndef TextDecoder_h
-#define TextDecoder_h
-
-#include "PlatformString.h"
-#include "TextCodec.h"
-#include "TextEncoding.h"
-#include <wtf/OwnPtr.h>
 
 namespace WebCore {
 
-    class TextCodec;
+    class HTTPHeaderMap;
+    class ResourceResponse;
+    class SecurityOrigin;
+    class String;
 
-    class TextDecoder {
-    public:
-        TextDecoder(const TextEncoding&);
-        void reset(const TextEncoding&);
-        const TextEncoding& encoding() const { return m_encoding; };
+    bool isSimpleCrossOriginAccessRequest(const String& method, const HTTPHeaderMap&);
+    bool isOnAccessControlSimpleRequestHeaderWhitelist(const String&);
+    bool isOnAccessControlResponseHeaderWhitelist(const String&);
 
-        String decode(const char* data, size_t length, bool flush, bool stopOnError, bool& sawError)
-        {
-            if (!m_checkedForBOM)
-                return checkForBOM(data, length, flush, stopOnError, sawError);
-            return m_codec->decode(data, length, flush, stopOnError, sawError);
-        }
-
-    private:
-        String checkForBOM(const char*, size_t length, bool flush, bool stopOnError, bool& sawError);
-
-        TextEncoding m_encoding;
-        OwnPtr<TextCodec> m_codec;
-
-        bool m_checkedForBOM;
-        unsigned char m_numBufferedBytes;
-        unsigned char m_bufferedBytes[3];
-    };
+    bool passesAccessControlCheck(const ResourceResponse&, bool includeCredentials, SecurityOrigin*);
 
 } // namespace WebCore
-
-#endif // TextDecoder_h
