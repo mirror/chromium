@@ -36,11 +36,11 @@ def main(options, args):
     urllib.urlretrieve(options.build_url,
                        'full-build-win32_%d.zip' % current_revision)
   except IOError:
-    print 'Failed to download archived build at revision %d'  + current_revision
+    print 'Failed to download archived build at revision %d' % current_revision
     failure = True
 
-  print 'Fetching latest build...'
   if failure:
+    print 'Fetching latest build...'
     try:
       urllib.urlretrieve(options.build_url, 'full-build-win32.zip')
     except IOError:
