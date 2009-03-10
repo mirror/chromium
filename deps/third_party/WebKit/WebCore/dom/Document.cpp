@@ -840,7 +840,7 @@ String Document::readyState() const
     return String();
 }
 
-String Document::inputEncoding() const
+String Document::encoding() const
 {
     if (TextResourceDecoder* d = decoder())
         return d->encoding().name();

@@ -1,3 +1,319 @@
+2009-03-09  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+
+        https://bugs.webkit.org/show_bug.cgi?id=24433
+        
+        During hit testing with transforms, if a layer has backface-visibility: hidden,
+        we need to check for it whether or not the layer has a transform, because it
+        might be an ancestor that is transformed.
+
+        Test: transforms/3d/hit-testing/backface-no-transform-hit-test.html
+
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::hitTestLayer):
+
+2009-03-09  Laszlo Gombos  <laszlo.1.gombos@nokia.com>
+
+        Reviewed by George Staikos.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24353
+        Allow to overrule default build options for Qt build.
+
+        * WebCore.pro: Allow to overrule ENABLE_VIDEO and ENABLE_NETSCAPE_PLUGIN_API
+
+2009-03-09  Adam Treat  <adam.treat@torchmobile.com>
+
+        Reviewed by George Staikos.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24463
+        WebCore::qstring is detaching and copying twice for every single
+        WebCore::TextRun that is processed and drawn.  This elevates this method
+        to one of the top-ten most expensive methods in all of QtWebKit according
+        to profiling.  This changes the method so that QString only detaches
+        when absolutely necessary.
+
+        * platform/graphics/qt/FontQt.cpp:
+        (WebCore::qstring):
+        (WebCore::fixSpacing):
+        (WebCore::Font::drawComplexText):
+        (WebCore::Font::floatWidthForComplexText):
+        (WebCore::Font::offsetForPositionForComplexText):
+        (WebCore::Font::selectionRectForComplexText):
+
+2009-03-08  Mark Rowe  <mrowe@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Split ScrollAlignment and ScrollBehavior out of RenderLayer.h so that
+        Frame.h no longer needs to include it.  This cuts the size of the symbols
+        for a debug build by around 3%.
+
+        * dom/Element.cpp:
+        (WebCore::Element::scrollIntoView):
+        (WebCore::Element::scrollIntoViewIfNeeded):
+        * editing/Editor.cpp:
+        (WebCore::Editor::insertTextWithoutSendingTextEvent):
+        (WebCore::Editor::revealSelectionAfterEditingOperation):
+        * editing/SelectionController.cpp:
+        (WebCore::SelectionController::setSelection):
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::gotoAnchor):
+        * page/ContextMenuController.cpp:
+        (WebCore::ContextMenuController::contextMenuItemSelected):
+        * page/Frame.cpp:
+        (WebCore::Frame::revealSelection):
+        (WebCore::Frame::revealCaret):
+        * page/Frame.h:
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::getRectToExpose):
+        (WebCore::RenderLayer::autoscroll):
+        * rendering/RenderLayer.h:
+        * rendering/ScrollBehavior.cpp: Added.
+        (WebCore::):
+        * rendering/ScrollBehavior.h: Added.
+        (WebCore::):
+        (WebCore::ScrollAlignment::getVisibleBehavior):
+        (WebCore::ScrollAlignment::getPartialBehavior):
+        (WebCore::ScrollAlignment::getHiddenBehavior):
+
+        Add the new files to the build systems:
+        * GNUmakefile.am:
+        * WebCore.base.exp:
+        * WebCore.pro:
+        * WebCore.scons:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+
+        Add includes that were previously pulled in by way of RenderLayer.h from Frame.h:
+        * dom/Clipboard.cpp:
+        * editing/EditorCommand.cpp:
+        * editing/InsertLineBreakCommand.cpp:
+        * editing/TypingCommand.cpp:
+        * html/HTMLFormControlElement.cpp:
+        * loader/archive/cf/LegacyWebArchive.cpp:
+        * loader/icon/IconLoader.cpp:
+        * page/animation/AnimationController.cpp:
+        * rendering/RenderSlider.cpp:
+        * rendering/RenderTextControl.cpp:
+
+
+2009-03-08  Mark Rowe  <mrowe@apple.com>
+
+        Reviewed Dan Bernstein.
+
+        Push the include of Frame.h out of RenderView.h and down to those files
+        that need it.  This cuts the size of symbols for RenderFoo object files
+        by around 15% in a debug build.
+
+        * bindings/objc/DOM.mm:
+        * rendering/RenderFileUploadControl.cpp:
+        * rendering/RenderInline.cpp:
+        * rendering/RenderObject.cpp:
+        * rendering/RenderReplaced.cpp:
+        * rendering/RenderText.cpp:
+        * rendering/RenderView.cpp:
+        (WebCore::RenderView::zoomFactor):
+        * rendering/RenderView.h:
+
+2009-03-08  Mark Rowe  <mrowe@apple.com>
+
+        Rubber-stamped by Dan Bernstein.
+
+        Remove some unnecessary or redundant includes from files related to the JS bindings.
+        This cuts the size of the symbols for a debug build by around 3%.
+
+        * bindings/js/JSCustomPositionCallback.cpp:
+        * bindings/js/JSCustomPositionErrorCallback.cpp:
+        * bindings/js/JSCustomSQLStatementCallback.cpp:
+        * bindings/js/JSCustomSQLStatementErrorCallback.cpp:
+        * bindings/js/JSCustomSQLTransactionCallback.cpp:
+        * bindings/js/JSCustomSQLTransactionErrorCallback.cpp:
+        * bindings/js/JSCustomVoidCallback.cpp:
+        * bindings/js/JSCustomXPathNSResolver.cpp:
+        * bindings/js/JSDocumentCustom.cpp:
+        * bindings/js/JSPluginElementFunctions.cpp:
+        * bindings/js/JSSVGPODTypeWrapper.h:
+
+2009-03-08  Cameron Zwarich  <cwzwarich@uwaterloo.ca>
+
+        Reviewed by Oliver Hunt.
+
+        Remove the unused methods previousHistoryItem(), setPreviousHistoryItem()
+        and provisionalHistoryItem() from FrameLoader.
+
+        * WebCore.base.exp:
+        * WebCore.order:
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::frameLoadCompleted):
+        (WebCore::FrameLoader::loadItem):
+        * loader/FrameLoader.h:
+
+2009-03-08  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Reviewed by Holger Freyther.
+
+        Implement proper logging for the GTK+ port, inspired by the one in
+        Qt. We use the WEBKIT_DEBUG environment variable which was already
+        being used to decide whether to setup a logger for soup or not.
+
+        * platform/gtk/LoggingGtk.cpp:
+        (WebCore::getChannelFromName):
+        (WebCore::InitializeLoggingChannelsIfNecessary):
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::ensureSessionIsInitialized):
+
+2009-03-07  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Mark Rowe.
+
+        - WebCore part of removing build-time and run-time support for legacy
+          versions of CFNetwork and Core Graphics
+
+        * platform/graphics/win/FontCGWin.cpp:
+        (WebCore::Font::drawGlyphs):
+        * platform/graphics/win/FontCustomPlatformData.cpp:
+        (WebCore::FontCustomPlatformData::fontPlatformData):
+        * platform/graphics/win/FontPlatformDataCGWin.cpp:
+        (WebCore::FontPlatformData::platformDataInit):
+        * platform/network/cf/FormDataStreamCFNet.cpp:
+        (WebCore::setHTTPBody):
+        (WebCore::httpBodyFromRequest):
+        * platform/network/cf/ResourceHandleCFNet.cpp:
+        (WebCore::didSendBodyData):
+        (WebCore::shouldUseCredentialStorageCallback):
+        (WebCore::ResourceHandle::start):
+        * platform/network/win/CookieJarCFNetWin.cpp:
+        (WebCore::filterCookies):
+
+2009-03-07  Adele Peterson  <adele@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=24444
+        No multiple JS property for <input type="file" multiple />
+
+        * html/HTMLInputElement.cpp:
+        (WebCore::HTMLInputElement::multiple):
+        (WebCore::HTMLInputElement::setMultiple):
+        * html/HTMLInputElement.h:
+        * html/HTMLInputElement.idl:
+
+2009-03-07  Xan Lopez  <xan@gnome.org>
+
+        Reviewed by Holger Freyther.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24358
+        [GTK] Scrollbars not clipped correctly
+
+        ScrollView scrollbars in subframes are *not* native, so take that
+        into account again.
+
+        * platform/gtk/ScrollbarGtk.cpp:
+        (ScrollbarGtk::getLocationInParentWindow):
+        (ScrollbarGtk::frameRectsChanged):
+        (ScrollbarGtk::paint):
+        * platform/gtk/ScrollbarGtk.h:
+
+2009-03-06  Peter Kasting  <pkasting@google.com>
+
+        Reviewed by Darin Fisher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24405
+        Horizontal scrolling on Windows was reversed from Mac (and intuition).
+
+        * platform/gtk/WheelEventGtk.cpp:
+        (WebCore::PlatformWheelEvent::PlatformWheelEvent):
+        * platform/win/WheelEventWin.cpp:
+        (WebCore::PlatformWheelEvent::PlatformWheelEvent):
+
+2009-03-06  Peter Kasting  <pkasting@google.com>
+
+        Reviewed by Sam Weinig.
+
+        Convert some C-style casts to static_cast<>()s.
+
+        * platform/gtk/WheelEventGtk.cpp:
+        (WebCore::PlatformWheelEvent::PlatformWheelEvent):
+        * platform/mac/WheelEventMac.mm:
+        (WebCore::PlatformWheelEvent::PlatformWheelEvent):
+        * platform/win/WheelEventWin.cpp:
+        (WebCore::PlatformWheelEvent::PlatformWheelEvent):
+        * platform/wx/MouseWheelEventWx.cpp:
+        (WebCore::PlatformWheelEvent::PlatformWheelEvent):
+
+2009-03-06  Adele Peterson  <adele@apple.com>
+
+        Reviewed by Oliver Hunt.
+
+        Fix for <rdar://problem/6607524> REGRESSION (Safari 3-4): I can't tab back to the URL field in an empty window (key loop is broken)
+
+        I haven't been able to make a test for this since the problem is not reproducible within an empty iframe.
+
+        * page/EventHandler.cpp: (WebCore::eventTargetNodeForDocument): We used to ensure that every html document had a body element.
+          That is no longer true, so we should return the document element for a truly empty document.
+
+2009-03-06  Jay Campan  <jcampan@google.com>
+
+        Reviewed by Darin Fisher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24306
+
+        Adding a flag to ResourceRequestBase to indicate whether or not upload
+        progress notifications are needed for a resource. This is useful to
+        avoid sending these notifications when there are no consumers
+        (especially in the Chromium case where IPC is involved). 
+
+        * platform/network/ResourceRequestBase.h:
+        (WebCore::ResourceRequestBase::reportUploadProgress):
+        (WebCore::ResourceRequestBase::setReportUploadProgress):
+        (WebCore::ResourceRequestBase::ResourceRequestBase):
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::XMLHttpRequest::loadRequestAsynchronously):
+
+2009-03-06  Dmitry Titov  <dimich@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24150
+        Add virtual ScriptExecutionContext::encoding()
+
+        Test: http/tests/workers/text-encoding.html
+
+        * dom/Document.cpp:
+        (WebCore::Document::encoding):
+        * dom/Document.h:
+        (WebCore::Document::inputEncoding):
+        (WebCore::Document::charset):
+        (WebCore::Document::characterSet):
+        Add new virtual method and route DOM synonym functions on Document through it.
+
+        * dom/ScriptExecutionContext.h:
+        * workers/Worker.cpp:
+        (WebCore::Worker::Worker):
+        (WebCore::Worker::notifyFinished):
+        * workers/WorkerContext.cpp:
+        (WebCore::WorkerContext::WorkerContext):
+        (WebCore::WorkerContext::encoding):
+        (WebCore::WorkerContext::completeURL): Added comment on why this is different from Document::completeURL
+        * workers/WorkerContext.h:
+        (WebCore::WorkerContext::create):
+        * workers/WorkerContextProxy.h:
+        * workers/WorkerMessagingProxy.cpp:
+        (WebCore::WorkerMessagingProxy::startWorkerContext):
+        * workers/WorkerMessagingProxy.h:
+        * workers/WorkerThread.cpp:
+        (WebCore::WorkerThreadStartupData::create):
+        (WebCore::WorkerThreadStartupData::WorkerThreadStartupData):
+        (WebCore::WorkerThread::create):
+        (WebCore::WorkerThread::WorkerThread):
+        (WebCore::WorkerThread::workerThread):
+        * workers/WorkerThread.h:
+        All of the above route the 'encoding' parameter of parent context to the new
+        instance of WorkerContext - from Worker::notifyFinished() via WorkerMessagingProxy
+        through WorkerThread through WorkerThreadStartupData and into constructor of WorkerContext.
+
 2009-03-06  Peter Kasting  <pkasting@google.com>
 
         Build bustage fix.

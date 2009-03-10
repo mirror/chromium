@@ -110,14 +110,18 @@ CONFIG(QTDIR_build) {
 !contains(DEFINES, ENABLE_SVG_USE=.): DEFINES += ENABLE_SVG_USE=1
 
 # HTML5 media support
-contains(QT_CONFIG, phonon):DEFINES += ENABLE_VIDEO=1
-else:DEFINES += ENABLE_VIDEO=0
+!contains(DEFINES, ENABLE_VIDEO=.) {
+    contains(QT_CONFIG, phonon):DEFINES += ENABLE_VIDEO=1
+    else:DEFINES += ENABLE_VIDEO=0
+}
 
 # Nescape plugins support (NPAPI)
-unix|win32-*:!embedded:!wince*:!symbian {
-    DEFINES += ENABLE_NETSCAPE_PLUGIN_API=1
-} else {
-    DEFINES += ENABLE_NETSCAPE_PLUGIN_API=0
+!contains(DEFINES, ENABLE_NETSCAPE_PLUGIN_API=.) {
+    unix|win32-*:!embedded:!wince*:!symbian {
+        DEFINES += ENABLE_NETSCAPE_PLUGIN_API=1
+    } else {
+        DEFINES += ENABLE_NETSCAPE_PLUGIN_API=0
+    }
 }
 
 DEFINES += WTF_USE_JAVASCRIPTCORE_BINDINGS=1 WTF_CHANGES=1
@@ -1010,15 +1014,15 @@ SOURCES += \
     rendering/RenderScrollbarPart.cpp \
     rendering/RenderScrollbarTheme.cpp \
     rendering/RenderSlider.cpp \
+    rendering/RenderTable.cpp \
     rendering/RenderTableCell.cpp \
     rendering/RenderTableCol.cpp \
-    rendering/RenderTable.cpp \
     rendering/RenderTableRow.cpp \
     rendering/RenderTableSection.cpp \
+    rendering/RenderText.cpp \
     rendering/RenderTextControl.cpp \
     rendering/RenderTextControlMultiLine.cpp \
     rendering/RenderTextControlSingleLine.cpp \
-    rendering/RenderText.cpp \
     rendering/RenderTextFragment.cpp \
     rendering/RenderTheme.cpp \
     rendering/RenderTreeAsText.cpp \
@@ -1027,6 +1031,7 @@ SOURCES += \
     rendering/RenderWordBreak.cpp \
     rendering/RootInlineBox.cpp \
     rendering/SVGRenderTreeAsText.cpp \
+    rendering/ScrollBehavior.cpp \
     rendering/TextControlInnerElements.cpp \
     rendering/TransformState.cpp \
     rendering/style/BindingURI.cpp \

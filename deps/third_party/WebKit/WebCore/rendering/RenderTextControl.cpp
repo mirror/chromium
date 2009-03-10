@@ -31,12 +31,13 @@
 #include "HTMLFormControlElement.h"
 #include "HTMLNames.h"
 #include "HitTestResult.h"
+#include "RenderLayer.h"
 #include "RenderText.h"
 #include "ScrollbarTheme.h"
 #include "SelectionController.h"
 #include "SimpleFontData.h"
-#include "TextControlInnerElements.h"
 #include "Text.h"
+#include "TextControlInnerElements.h"
 #include "TextIterator.h"
 
 using namespace std;

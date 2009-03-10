@@ -36,6 +36,7 @@
 #include "HTMLTextAreaElement.h"
 #include "MouseEvent.h"
 #include "RenderTextControlSingleLine.h"
+#include "RenderLayer.h"
 
 namespace WebCore {
 
