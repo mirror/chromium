@@ -108,7 +108,8 @@ void AddInstallerCopyTasks(const std::wstring& exe_path,
 
   install_list->AddCopyTreeWorkItem(exe_path, exe_dst, temp_path,
                                     WorkItem::ALWAYS);
-  install_list->AddMoveTreeWorkItem(archive_path, archive_dst, temp_path);
+  install_list->AddCopyTreeWorkItem(archive_path, archive_dst, temp_path,
+                                    WorkItem::ALWAYS);
 }
 
 
@@ -148,11 +149,11 @@ bool installer::InstallNewVersion(const std::wstring& exe_path,
   install_list->AddCreateDirWorkItem(temp_dir);
   install_list->AddCreateDirWorkItem(install_path);
 
-  // Move the version folder
-  install_list->AddMoveTreeWorkItem(
+  // Copy the version folder
+  install_list->AddCopyTreeWorkItem(
       AppendPath(src_path, new_version.GetString()),
       AppendPath(install_path, new_version.GetString()),
-      temp_dir);
+      temp_dir, WorkItem::ALWAYS);    // Always overwrite.
 
   // Delete any new_chrome.exe if present (we will end up create a new one
   // if required) and then copy chrome.exe
@@ -175,10 +176,10 @@ bool installer::InstallNewVersion(const std::wstring& exe_path,
 
   // Extra executable for 64 bit systems.
   if (Is64bit()) {
-    install_list->AddMoveTreeWorkItem(
+    install_list->AddCopyTreeWorkItem(
         AppendPath(src_path, installer::kWowHelperExe),
         AppendPath(install_path, installer::kWowHelperExe),
-        temp_dir);
+        temp_dir, WorkItem::ALWAYS);
   }
 
   // Copy the default Dictionaries only if the folder doesnt exist already
