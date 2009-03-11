@@ -176,6 +176,9 @@ class FactoryCommands(object):
     # Gears test runner lives in the gears src tree.
     self._gears_test_runner = self.PathJoin('src', 'gears', 'gears',
                                             'test', 'runner', 'bootstrap.py')
+    
+    # Gears src root.
+    self._gears_root = self.PathJoin('src', 'gears', 'gears')
 
     # These tools aren't in the script_dir either.
     # TODO(pamg): For consistency, move them into the script_dir if possible.
@@ -1007,6 +1010,31 @@ class FactoryCommands(object):
     """Adds a step to the factory to run the test_shell_tests."""
     self.AddBasicGTestTestStep('test_shell_tests')
   
+  def AddGearsMake(self, mode, clean=True):
+    """Adds a step to the factory to build gears using make."""
+    # Making gears from the open source repo requires a lot of setup,
+    # so to simplify things this helper script is required to be
+    # available on the builder.
+    setup_env_and_make = r'c:\make_gears.bat'
+    mode = mode or 'dbg'
+    if clean:
+      command_list = ['rm', '-rf', 'bin-%s' % mode]
+      clean_timeout = 60
+      self._factory.addStep(shell.ShellCommand,
+                            description='make gears clean',
+                            timeout=clean_timeout,
+                            workdir=self._gears_root,
+                            command=command_list)
+
+    command_list = [setup_env_and_make, 'BROWSER=NPAPI',
+                    'MODE=%s' % mode]
+    gears_make_timeout = 300
+    self._factory.addStep(shell.ShellCommand,
+                          description='make gears %s' % mode,
+                          timeout=gears_make_timeout,
+                          workdir=self._gears_root,
+                          command=command_list)
+
   def AddGearsTests(self, mode):
     """Adds a step to the factory to run the gears browser tests."""
     command_list = [self._python, self._gears_test_runner,

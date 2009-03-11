@@ -552,15 +552,8 @@ class MasterFactory(object):
     if target == 'Release':
       mode = 'opt'
 
-    factory_cmd_obj = factory_commands.FactoryCommands(factory, identifier,
-                                                       'Hammer', 'src/gears',
-                                                       self._target_platform)
-
-    factory_cmd_obj.AddCompileStep(self._solution,
-                                   options=['--build-tool=scons',
-                                            '--build-args=gears '
-                                            'BROWSER=CHROME MODE=%s' % 
-                                            (mode or 'dbg')])
+    # Gears doesn't do incremental builds, so clean first then make.
+    factory_cmd_obj.AddGearsMake(mode, clean=True)
 
     # Add test step.
     factory_cmd_obj.AddGearsTests(mode)
