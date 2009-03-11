@@ -1035,7 +1035,9 @@ String createMarkup(const Node* node, EChildrenOnly includeChildren, Vector<Node
         deleteButton->disable();
     }
 
-    document->updateLayoutIgnorePendingStylesheets();
+    // FIXME: this causes a significant page cycler regression.  revert this
+    // when https://bugs.webkit.org/show_bug.cgi?id=24517 is fixed.
+    //document->updateLayoutIgnorePendingStylesheets();
 
     appendMarkup(result, const_cast<Node*>(node), includeChildren, nodes);
 
