@@ -24,6 +24,7 @@
     {
       'target_name': 'icudata',
       'type': 'static_library',
+      'msvs_guid': 'A0D94973-D355-47A5-A1E2-3456F321F010',
       'sources': [
         'icudt38.dll',
          # These are hand-generated, but will do for now.  The linux
@@ -51,6 +52,7 @@
     {
       'target_name': 'icui18n',
       'type': 'static_library',
+      'msvs_guid': 'F22022F0-2D3B-5610-4E80-C674A8E01C5A',
       'sources': [
         'source/i18n/anytrans.cpp',
         'source/i18n/astro.cpp',
@@ -190,6 +192,7 @@
     {
       'target_name': 'icuuc',
       'type': 'static_library',
+      'msvs_guid': '8C27D792-2648-4F5E-9ED0-374276327308',
       'sources': [
         'source/common/bmpset.cpp',
         'source/common/brkeng.cpp',
