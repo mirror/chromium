@@ -90,10 +90,9 @@ bool RenderTextControlMultiLine::nodeAtPoint(const HitTestRequest& request, HitT
     if (!RenderTextControl::nodeAtPoint(request, result, x, y, tx, ty, hitTestAction))
         return false;
 
-    // Don't check if result.innerNode() is our node().
-    // Otherwise this would break layout test:
-    // LayoutTests/fast/forms/textarea-scrolled-endline-caret.html.
-    hitInnerTextBlock(result, x, y, tx, ty);
+    if (result.innerNode() == node())
+        hitInnerTextElement(result, x, y, tx, ty);
+
     return true;
 }
 

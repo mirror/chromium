@@ -1,3 +1,209 @@
+2009-03-11  Hironori Bono  <hbono@chromium.org>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=15790
+        Ligatures aren't accounted for when manipulating VisiblePositions
+
+        Changed cursorMovementIterator rules to prevent a cursor from moving in the middle of an
+        Indic ligature which uses a virama sign.
+        
+        Test: editing/deleting/skip-virama-001.html
+
+        * platform/text/TextBreakIteratorICU.cpp:
+        (WebCore::cursorMovementIterator):
+
+2009-03-11  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by George Staikos.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24513
+        REGRESSION: Cursor movement doesn't work on Tiger (ICU 3.2)
+
+        Fixes existing tests on Tiger.
+
+        * platform/text/TextBreakIteratorICU.cpp: (WebCore::cursorMovementIterator):
+        Use characterBreakIterator on Tiger (like we used to do).
+
+2009-03-11  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Oliver Hunt.
+
+        <rdar://problem/4072827> Downloaded non-ASCII file name becomes garbled
+
+        * platform/network/mac/ResourceRequestMac.mm:
+        (WebCore::ResourceRequest::doUpdatePlatformRequest): Correct selector name
+        in instancesRespondToSelector.
+
+2009-03-11  Jan Michael Alonzo  <jmalonzo@webkit.org>
+
+        Reviewed by Holger Freyther.
+
+        [GTK]DumpRenderTree doesn't compile for non-X11 GTK ports anymore
+        https://bugs.webkit.org/show_bug.cgi?id=2260
+
+        Add missing stdio.h include to get the build going
+
+        * plugins/gtk/PluginPackageGtk.cpp:
+
+2009-03-10  Justin Garcia  <justin.garcia@apple.com>
+
+        Reviewed by Ken Kocienda.
+
+        * dom/Range.cpp:
+        (WebCore::Range::addLineBoxRects): If the range ended at [div, 0], addLineBoxRects
+        would include rects for the divs contents.  Set the correct RenderObject to stop at.
+
+2009-03-10  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Sam Weinig.
+
+        <rdar://problem/6123770> Restrict access to document.cookie when making a cross-site XHR
+
+        * xml/XMLHttpRequest.cpp: (WebCore::XMLHttpRequest::responseXML): Removed an incorrect
+        comment about cookie support. Firefox doesn't expose cookies on responseXML at all, and
+        there are security concerns with exposing them for cross-origin requests, so it's not clear
+        if we want to change anything here.
+
+2009-03-10  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Darin Adler
+
+        https://bugs.webkit.org/show_bug.cgi?id=24503
+        
+        Fix hit testing of absolutely positioned single line text controls by
+        ensuring that we set result.innerNode() correctly. If the hit node is
+        a descendant of the inner text element or if it is the <input> itself,
+        then we say we hit the innerTextElement.
+        
+        Rename hitInnerTextBlock() to hitInnerTextElement() to match the
+        'innerTextElement' terminology used elsewhere.
+        
+        Assert that if renderer()->hitTest() returns false, no-one set
+        result.innerNode().
+
+        Test: fast/forms/search-abs-pos-cancel-button.html
+
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::hitTestContents):
+        * rendering/RenderTextControl.cpp:
+        (WebCore::RenderTextControl::hitInnerTextElement):
+        * rendering/RenderTextControl.h:
+        * rendering/RenderTextControlMultiLine.cpp:
+        (WebCore::RenderTextControlMultiLine::nodeAtPoint):
+        * rendering/RenderTextControlSingleLine.cpp:
+        (WebCore::RenderTextControlSingleLine::nodeAtPoint):
+
+2009-03-10  Antti Koivisto  <antti@apple.com>
+
+        Reviewed by Mark Rowe.
+
+        <rdar://problem/6668238> WebCore is registering text encodings needlessly from KURL constructor.
+        
+        Another case where we would trigger extended encoding loading needlessly.
+
+        * platform/text/TextEncoding.cpp:
+        (WebCore::TextEncoding::isNonByteBasedEncoding):
+
+2009-03-10  Beth Dakin  <bdakin@apple.com>
+
+        Reviewed by Darin Adler.
+
+        Fix for <rdar://problem/6624769> REGRESSION (Safari 4 PB): No 
+        scroll bar appears for long line of text with NOWRAP set
+
+        This is a regression from http://trac.webkit.org/changeset/32226
+        I talked with Dan about the original change, and we decided that 
+        the best fix was to remove his small potential-optimization that 
+        only created a separate line box for whitespace under certain 
+        circumstances. This new code will always create a separate line 
+        box.
+
+        * rendering/bidi.cpp:
+        (WebCore::RenderBlock::layoutInlineChildren):
+
+2009-03-10  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Geoffrey Garen.
+
+        Fix for <rdar://problem/6166844>
+        https://bugs.webkit.org/show_bug.cgi?id=24495
+
+        Use same rule for loading java applets as we do for images.
+
+        * html/HTMLAppletElement.cpp:
+        (WebCore::HTMLAppletElement::createRenderer):
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::loadItem):
+
+2009-03-10  Justin Garcia  <justin.garcia@apple.com>
+
+        Reviewed by David Kilzer.
+
+        Get rid of revealCaret and use revealSelection instead.
+
+        * WebCore.base.exp:
+        * editing/SelectionController.cpp:
+        (WebCore::SelectionController::setSelection):
+        * page/Frame.cpp:
+        (WebCore::Frame::revealSelection):
+        * page/Frame.h:
+
+2009-03-10  Cameron Zwarich  <cwzwarich@uwaterloo.ca>
+
+        Reviewed by Geoff Garen.
+
+        Bug 23736: WebKit Crashes on http://g-conquest.fr/~server2
+        <https://bugs.webkit.org/show_bug.cgi?id=23736>
+        <rdar://problem/6560278>
+
+        Before replacing the document, FrameLoader::executeIfJavaScriptURL()
+        should call stopAllLoaders(), just like continueLoadAfterNavigationPolicy().
+
+        * loader/FrameLoader.cpp:
+        (WebCore::FrameLoader::executeIfJavaScriptURL):
+
+2009-03-10  Darin Adler  <darin@apple.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Bug 24494: crash when deleting at end of document and merging paragraphs
+        https://bugs.webkit.org/show_bug.cgi?id=24494
+        rdar://problem/6571537
+
+        Test: editing/deleting/merge-at-end-of-document.html
+
+        * dom/Range.cpp:
+        (WebCore::Range::compareBoundaryPoints): Split out assertion. It's better not to
+        use && in assertions since we'd like to know which condition is failing.
+
+        * editing/ApplyStyleCommand.cpp:
+        (WebCore::ApplyStyleCommand::applyInlineStyleToRange): Added a null check before
+        calling compareBoundaryPoints, since a 0 for the node is ambiguous and so the
+        function doesn't know which value to return.
+
+2009-03-10  Dirk Schulze  <krit@webkit.org>
+
+        Reviewed by Eric Seidel. Math checked by Oliver Hunt.
+
+        Implement the Cairo version of the checkForSolidColor() method. This halfes the
+        time to draw on 1x1 px background images.
+        I added two new calls to Color for the pixel manipulation on cairo_surface's.
+        They are neede to premultiply/unpremultiply the colors of the surface.
+
+        [CAIRO] Introduce single-pixel image optimizations
+        https://bugs.webkit.org/show_bug.cgi?id=17284
+
+        * platform/graphics/Color.cpp:
+        (WebCore::colorFromPremultipliedARGB):
+        (WebCore::premultipliedARGBFromColor):
+        * platform/graphics/Color.h:
+        * platform/graphics/cairo/ImageBufferCairo.cpp:
+        (WebCore::ImageBuffer::getImageData):
+        (WebCore::ImageBuffer::putImageData):
+        * platform/graphics/cairo/ImageCairo.cpp:
+        (WebCore::BitmapImage::checkForSolidColor):
+
 2009-03-06  Darin Fisher  <darin@chromium.org>
 
         Reviewed by Sam Weinig.
