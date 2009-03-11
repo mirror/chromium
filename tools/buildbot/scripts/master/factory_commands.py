@@ -650,7 +650,7 @@ class FactoryCommands(object):
                        timeout=timeout,
                        test_command=self.GetPageCyclerCommand('Dhtml', http))
 
-  def AddStartupTests(self, show_results, perf_id=None, timeout=300):
+  def AddStartupTests(self, show_results, perf_id=None, timeout=500):
     """Adds a step to the factory to run the startup test."""
     c = self.GetStartupTestCommand(perf_id, show_results)
     # We don't want to run the Reference tests in debug mode
