@@ -45,6 +45,8 @@ processes=[
     'mspdbsrv.exe',
     # The JIT debugger may start when devenv.exe crashes.
     'vsjitdebugger.exe',
+    # This process is also crashing once in a while during compile.
+    'midlc.exe',
 
     # Things built by/for Chromium.
     'base_unittests.exe',
