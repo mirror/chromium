@@ -731,8 +731,7 @@ class FactoryCommands(object):
 
   def GetReliabilityCommand(self):
     """Returns a command list to call the _reliability_tool."""
-    return [self._depot_tools_python, self._reliability_tool,
-            '--build-dir', self._build_dir]
+    return [self._depot_tools_python, self._reliability_tool]
 
   def AddReliabilityTests(self, timeout=360):
     """Adds a step to the factory to query the reliability testing results.
