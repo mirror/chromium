@@ -81,15 +81,9 @@ def main(options, args):
   print 'host name: %s' % socket.gethostname()
 
   dest_dir = os.path.join(DEST_DIR_BASE, build_name, last_change)
-  if sys.platform in ['cygwin', 'win32']:
-    chromium_utils.MaybeMakeDirectory(dest_dir)
-    print 'saving results to %s' % dest_dir
-    chromium_utils.CopyFileToDir(zip_file, dest_dir)
-  elif sys.platform in ['linux', 'linux2', 'darwin']:
-    chromium_utils.SshMakeDirectory(config.Archive.archive_host, dest_dir)
-    print 'saving results to "%s" on "%s"' % (dest_dir,
-                                              config.Archive.archive_host)
-    chromium_utils.SshCopyFiles(zip_file, config.Archive.archive_host, dest_dir)
+  chromium_utils.MaybeMakeDirectory(dest_dir)
+  print 'saving results to %s' % dest_dir
+  chromium_utils.CopyFileToDir(zip_file, dest_dir)
 
 if '__main__' == __name__:
   option_parser = optparse.OptionParser()

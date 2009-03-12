@@ -27,10 +27,7 @@ _gflags_exe = None
 
 def SubversionExe():
   # TODO(pamg): move this into platform_utils to support Mac and Linux.
-  if sys.platform in ['cygwin', 'win32']:
-    return 'svn.bat' # Find it in the user's path.
-  elif sys.platform in ['linux', 'linux2', 'darwin']:
-    return 'svn' # Find it in the user's path.
+  return 'svn.bat' # Find it in the user's path.
 
 
 def SubversionRevision(wc_dir):
