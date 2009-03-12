@@ -209,6 +209,9 @@ class FactoryCommands(object):
     self._playback_tool = self.PathJoin(self._script_dir, 'playback_tests.py')
     self._extract_tool = self.PathJoin(self._script_dir, 'extract_build.py')
 
+    self._reliability_data = self.PathJoin(self._script_dir, '..', 'private',
+                                           'data', 'reliability')
+
     # chrome_staging directory, relative to the build directory.
     self._staging_dir = self.PathJoin('..', 'chrome_staging')
 
@@ -731,7 +734,8 @@ class FactoryCommands(object):
 
   def GetReliabilityCommand(self):
     """Returns a command list to call the _reliability_tool."""
-    return [self._depot_tools_python, self._reliability_tool]
+    return [self._depot_tools_python, self._reliability_tool,
+            '--data-dir', self._reliability_data]
 
   def AddReliabilityTests(self, timeout=360):
     """Adds a step to the factory to query the reliability testing results.
