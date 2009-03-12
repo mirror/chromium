@@ -79,6 +79,11 @@ void registerURLSchemeAsLocal(const WebString& scheme)
     WebCore::FrameLoader::registerURLSchemeAsLocal(scheme);
 }
 
+void registerURLSchemeAsNoAccess(const WebString& scheme)
+{
+    WebCore::FrameLoader::registerURLSchemeAsNoAccess(scheme);
+}
+
 void registerExtension(v8::Extension* extension)
 {
     WebCore::V8Proxy::RegisterExtension(extension);

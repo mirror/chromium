@@ -60,8 +60,14 @@ namespace WebKit {
     WEBKIT_API bool layoutTestMode();
 
     // Registers a URL scheme to be treated as a local scheme (i.e., with the
-    // same security rules as those applied to "file" URLs).
+    // same security rules as those applied to "file" URLs).  This means that
+    // normal pages cannot link to or access URLs of this scheme.
     WEBKIT_API void registerURLSchemeAsLocal(const WebString&);
+
+    // Registers a URL scheme to be treated as a noAccess scheme.  This means
+    // that pages loaded with this URL scheme cannot access pages loaded with
+    // any other URL scheme.
+    WEBKIT_API void registerURLSchemeAsNoAccess(const WebString&);
 
     // Will only affect v8 contexts initialized after this call. Takes ownership
     // of the v8::Extension object passed.

@@ -309,6 +309,15 @@ void ChromiumBridge::traceEventEnd(const char* name, void* id, const char* extra
     webKitClient()->traceEventEnd(name, id, extra);
 }
 
+// URL ------------------------------------------------------------------------
+
+KURL ChromiumBridge::inspectorURL()
+{
+    // FIXME: Remove this ChromiumBridge method since it is unused.
+    ASSERT_NOT_REACHED();
+    return KURL();
+}
+
 // Visited Links --------------------------------------------------------------
 
 WebCore::LinkHash ChromiumBridge::visitedLinkHash(const UChar* url,
