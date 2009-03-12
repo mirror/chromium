@@ -205,6 +205,8 @@ class MasterFactory(object):
       factory_cmd_obj.AddMediaTests()
     if self._ShouldRunTest(tests, 'printing'):
       factory_cmd_obj.AddPrintingTests()
+    if self._ShouldRunTest(tests, 'dom_checker'):
+      factory_cmd_obj.AddDomCheckerTests()
     # When adding a test that uses a new executable, update kill_processes.py.
 
   def _BuildGClientSolution(self, svnurl, custom_deps_list):
@@ -327,7 +329,8 @@ class MasterFactory(object):
                 'net', 'media', 'printing', 'valgrind_net', 'page_cycler',
                 'valgrind_ipc', 'valgrind_unit', 'valgrind_base',
                 'valgrind_googleurl', 'valgrind_test_shell',
-                'valgrind_media', 'valgrind_ui', 'valgrind_printing').
+                'valgrind_media', 'valgrind_ui', 'valgrind_printing',
+                'dom_checker').
          The 'unit' suite includes the IPC tests.
       arhive_webkit_results: whether to archive the webkit test output
       show_perf_results: whether to add links to the test perf result graphs

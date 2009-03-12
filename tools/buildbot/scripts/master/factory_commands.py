@@ -589,6 +589,25 @@ class FactoryCommands(object):
     cmd.extend([self.GetExecutableName('page_cycler_tests'),
                 '--gtest_filter=PageCycler*.%s%s' % (test_name, test_type)])
     return cmd
+    
+  def GetDomCheckerTestCommand(self):
+    """Returns a command list to call the _test_tool for the DOM checker tests.
+
+    The command list will have the appropriate GTest filter and arguments.
+    """
+    cmd = [self._python, self._test_tool,
+           '--target', self._target,
+           '--build-dir', self._build_dir]
+
+    cmd.extend(['--with-httpd',
+                self.PathJoin('src', 'chrome', 'test', 'data', 'dom_checker')])
+
+    cmd.extend([self.GetExecutableName('ui_tests'),
+                '--gtest_filter=DomCheckerTest.Http',
+                '--gtest_print_time',
+                '--run-dom-checker-test'])
+
+    return cmd
 
   def AddPageCyclerTests(self, show_results, perf_id=None, timeout=600,
                          http=False):
@@ -830,6 +849,14 @@ class FactoryCommands(object):
         timeout=timeout,
         test_name='selenium_tests',
         test_command=self.GetTestCommand('selenium_tests'))
+
+  def AddDomCheckerTests(self, timeout=120):
+    """Adds a step to the factory to run the DOM checker tests."""
+    self.AddTestStep(
+        shell.ShellCommand,
+        timeout=timeout,
+        test_name='dom_checker_tests',
+        test_command=self.GetDomCheckerTestCommand())
 
   #######
   # Purify Tests
