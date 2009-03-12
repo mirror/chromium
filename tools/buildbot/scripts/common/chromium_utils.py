@@ -449,3 +449,41 @@ def GetGClientCommand(platform=None):
     return 'gclient.bat'
   else:
     return 'gclient'
+
+
+# Linux scripts use ssh to to move files to the archive host.
+def SshMakeDirectory(host, dest_path):
+  """Creates the entire dest_path on the remote ssh host.
+  """
+  command = ['ssh', host, 'mkdir', '-p', dest_path]
+  result = RunCommand(command)
+  if result:
+    raise ExternalError('Failed to ssh mkdir "%s" on "%s" (%s)' %
+                        (dest_path, host, result))
+
+def SshCopyFiles(srcs, host, dst):
+  """Copies the srcs file(s) to dst on the remote ssh host.
+  dst is expected to exist.
+  """
+  command = ['scp', srcs, host + ':' + dst]
+  result = RunCommand(command)
+  if result:
+    raise ExternalError('Failed to scp "%s" to "%s" (%s)' %
+                        (srcs, host + ':' + dst, result))
+
+def SshCopyTree(srctree, host, dst):
+  """Recursively copies the srctree to dst on the remote ssh host.
+  For consistency with shutil, dst is expected to not exist.
+  """
+  command = ['ssh', host, '[ -d "%s" ]' % dst]
+  result = RunCommand(command)
+  if result:
+    raise ExternalError('SshCopyTree destination directory "%s" already exists.'
+                       % host + ':' + dst)
+
+  SshMakeDirectory(host, os.path.dirname(dst))
+  command = ['scp', '-r', '-p', srctree, host + ':' + dst]
+  result = RunCommand(command)
+  if result:
+    raise ExternalError('Failed to scp "%s" to "%s" (%s)' %
+                       (srctree, host + ':' + dst, result))

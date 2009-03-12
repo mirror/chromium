@@ -186,6 +186,7 @@ class Archive(chromium_config_private.Archive):
 
   # Directories in which to store built files, for dev, official, and full
   # builds. (We don't use the full ones yet.)
+  archive_host = chromium_config_private.Archive.archive_host
   www_dir_base_dev = chromium_config_private.Archive.www_dir_base + 'snapshots'
   www_dir_base_official = (
       chromium_config_private.Archive.www_dir_base + 'official_builds')
