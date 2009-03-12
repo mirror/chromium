@@ -69,12 +69,13 @@ public:
     int descent() const { return m_descent; }
     int lineSpacing() const { return m_lineSpacing; }
     int lineGap() const { return m_lineGap; }
-    int maxCharWidth() const { return m_maxCharWidth; }
-    int avgCharWidth() const { return m_avgCharWidth; }
 
     float xHeight() const { return m_xHeight; }
     unsigned unitsPerEm() const { return m_unitsPerEm; }
 
+    // horizontal metrics
+    float maxCharWidth() const { return m_maxCharWidth; }
+    float avgCharWidth() const { return m_avgCharWidth; }
     float widthForGlyph(Glyph) const;
     float platformWidthForGlyph(Glyph) const;
 
@@ -155,8 +156,8 @@ public:
     int m_descent;
     int m_lineSpacing;
     int m_lineGap;
-    int m_maxCharWidth;
-    int m_avgCharWidth;
+    float m_maxCharWidth;
+    float m_avgCharWidth;
     float m_xHeight;
     unsigned m_unitsPerEm;
 

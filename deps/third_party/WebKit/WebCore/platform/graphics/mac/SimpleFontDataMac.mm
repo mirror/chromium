@@ -271,12 +271,46 @@ void SimpleFontData::platformInit()
         m_xHeight = MAX(NSMaxX(xBox), NSMaxY(xBox));
     } else
         m_xHeight = [m_font.font() xHeight];
-#if PLATFORM(CHROMIUM)
-    static const UChar32 numeral_zero_char = '0';
-    m_avgCharWidth = widthForGlyph(glyphPageZero->glyphDataForCharacter(numeral_zero_char).glyph);
-    static const UChar32 letter_W_char = 'W';
-    m_maxCharWidth = widthForGlyph(glyphPageZero->glyphDataForCharacter(letter_W_char).glyph);
-#endif  
+
+    // If the font is a Windows font with an 'OS/2' table, extract the
+    // average character width so that we can match the text
+    // field sizes that are computed by most browsers under Windows.
+    m_avgCharWidth = 0.0;
+    CFDataRef os2TableRef = CGFontCopyTableForTag(m_font.cgFont(), 'OS/2');
+    if (os2TableRef && CFDataGetLength(os2TableRef) >= 68) {
+        const UInt8* buffer = CFDataGetBytePtr(os2TableRef);
+        SInt16 iAvgWidth = buffer[2] * 256 + buffer[3];
+        m_avgCharWidth = scaleEmToUnits(iAvgWidth, m_unitsPerEm) * pointSize;
+        CFRelease(os2TableRef);
+    }
+    if (m_avgCharWidth <= 0.0) {
+        // if there was no OS/2 table or it was malformed, we (by definition) can't
+        // match Windows metrics, so we fall back to the previous WebKit behavior of using
+        // the width of the digit '0' as a reasonable estimate.  If for some reason we can't
+        // retrieve the width of a '0', fall back to the x height.
+        if (glyphPageZero) {
+            static const UChar32 digit_zero_char = '0';
+            m_avgCharWidth = widthForGlyph(glyphPageZero->glyphDataForCharacter(digit_zero_char).glyph);
+        } else
+            m_avgCharWidth = m_xHeight;
+    }
+    // compute the maximum width of a character in this font.  For CJK or full
+    // Unicode fonts, use the width of an ideographic characater.  For
+    // roman fonts, declare 'W' to be the widest roman character and measure
+    // it directly.  If for some reason we can't retrieve the width of a 'W',
+    // fall back to the ascent as an estimate.
+    if (glyphPageZero) {
+        static const UChar32 letter_4e00 = 0x4e00; // start of CJK unified ideographs
+        m_maxCharWidth = 0.0;
+        m_maxCharWidth = widthForGlyph(glyphPageZero->glyphDataForCharacter(letter_4e00).glyph);
+        if (!m_maxCharWidth == 0.0 || m_maxCharWidth == widthForGlyph(0)) {
+            // if the width of U+4E00 is zero or the same as the width of the missing character,
+            // assume this is not a CJK font
+            static const UChar32 letter_W_char = 'W';
+            m_maxCharWidth = widthForGlyph(glyphPageZero->glyphDataForCharacter(letter_W_char).glyph);
+        }
+    } else
+        m_maxCharWidth = m_ascent;
 }
 
 void SimpleFontData::platformDestroy()

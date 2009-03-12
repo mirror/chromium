@@ -484,7 +484,7 @@ void RenderTextControl::calcPrefWidths()
         m_minPrefWidth = m_maxPrefWidth = calcContentBoxWidth(style()->width().value());
     else {
         // Use average character width. Matches IE.
-        int charWidth = style()->font().primaryFont()->avgCharWidth();
+        float charWidth = style()->font().primaryFont()->avgCharWidth();
         m_maxPrefWidth = preferredContentWidth(charWidth) + m_innerText->renderBox()->paddingLeft() + m_innerText->renderBox()->paddingRight();
     }
 
