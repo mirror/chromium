@@ -41,6 +41,7 @@
 #include "FrameView.h"
 #include "Page.h"
 #include "PlatformScreen.h"
+#include "ScriptSourceCode.h"
 #include "Settings.h"
 #include "WindowFeatures.h"
 
@@ -628,8 +629,7 @@ NAMED_PROPERTY_GETTER(DOMWindow)
         V8Proxy* proxy = V8Proxy::retrieve(window->frame());
         ASSERT(proxy);
 
-        v8::Local<v8::Value> result = proxy->Evaluate(propName, 0, code, 0);
-        return result;
+        return proxy->evaluate(WebCore::ScriptSourceCode(code), 0);
     }
 
     // Search named items in the document.
