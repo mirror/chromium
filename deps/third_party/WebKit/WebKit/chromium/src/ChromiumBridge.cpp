@@ -43,6 +43,7 @@
 
 #if PLATFORM(WIN_OS)
 #include "WebRect.h"
+#include "WebSandboxSupport.h"
 #include "WebThemeEngine.h"
 #endif
 
@@ -136,6 +137,15 @@ void ChromiumBridge::prefetchDNS(const String& hostname)
 {
     webKitClient()->prefetchHostName(hostname);
 }
+
+// Font -----------------------------------------------------------------------
+
+#if defined(OS_WIN)
+bool ChromiumBridge::ensureFontLoaded(HFONT font)
+{
+    return webKitClient()->sandboxSupport()->ensureFontLoaded(font);
+}
+#endif
 
 // Language -------------------------------------------------------------------
 

@@ -37,6 +37,7 @@ namespace WebKit {
     class WebClipboard;
     class WebCString;
     class WebMimeRegistry;
+    class WebSandboxSupport;
     class WebString;
     class WebThemeEngine;
     class WebURL;
@@ -48,6 +49,9 @@ namespace WebKit {
 
         // Must return non-null.
         virtual WebMimeRegistry* mimeRegistry() = 0;
+
+        // May return null on some platforms.
+        virtual WebSandboxSupport* sandboxSupport() = 0;
 
         // May return null on some platforms.
         virtual WebThemeEngine* themeEngine() = 0;
