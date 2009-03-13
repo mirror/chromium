@@ -256,7 +256,7 @@ class InputApi(object):
           output_files.append(af)
     return output_files
 
-  def AffectedFiles(self, include_dirs=False):
+  def AffectedFiles(self, include_dirs=False, include_deletes=True):
     """Same as input_api.change.AffectedFiles() except only lists files
     (and optionally directories) in the same directory as the current presubmit
     script, or subdirectories thereof.
@@ -266,7 +266,7 @@ class InputApi(object):
         "%s/" % os.path.dirname(self.current_presubmit_path))
     if len(dir_with_slash) == 1:
       dir_with_slash = ''
-    for af in self.change.AffectedFiles(include_dirs):
+    for af in self.change.AffectedFiles(include_dirs, include_deletes):
       af_path = normpath(af.LocalPath())
       if af_path.startswith(dir_with_slash):
         output_files.append(af)
@@ -337,7 +337,7 @@ class AffectedFile(object):
 
     Returns the empty string if the file does not exist in SCM.
     """
-    return _GetSVNFileInfo(self.AbsoluteLocalPath()).get('URL')
+    return _GetSVNFileInfo(self.AbsoluteLocalPath()).get('URL', '')
 
   def LocalPath(self):
     """Returns the path of this file on the local disk relative to client root.
@@ -465,19 +465,25 @@ class GclChange(object):
     if attr in self.tags:
       return self.tags[attr]
 
-  def AffectedFiles(self, include_dirs=False):
+  def AffectedFiles(self, include_dirs=False, include_deletes=True):
     """Returns a list of AffectedFile instances for all files in the change.
 
     Args:
+      include_deletes: If false, deleted files will be filtered out.
       include_dirs: True to include directories in the list
 
     Returns:
       [AffectedFile(path, action), AffectedFile(path, action)]
     """
     if include_dirs:
-      return self.affected_files
+      affected = self.affected_files
     else:
-      return filter(lambda x: not x.IsDirectory(), self.affected_files)
+      affected = filter(lambda x: not x.IsDirectory(), self.affected_files)
+
+    if include_deletes:
+      return affected
+    else:
+      return filter(lambda x: x.Action() != 'D', affected)
 
   def AffectedTextFiles(self, include_deletes=True):
     """Return a list of the text files in a change.

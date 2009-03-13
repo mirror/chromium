@@ -218,9 +218,11 @@ class PresubmitUnittest(unittest.TestCase):
     self.failUnless(change.BUG == '123')
     self.failUnless(change.STORY == 'http://foo/')
 
-    affected_files = change.AffectedFiles()
-    self.failUnless(len(affected_files) == 4)
+    self.failUnless(len(change.AffectedFiles()) == 4)
     self.failUnless(len(change.AffectedFiles(include_dirs=True)) == 5)
+    self.failUnless(len(change.AffectedFiles(include_deletes=False)) == 3)
+    self.failUnless(len(change.AffectedFiles(include_dirs=True,
+                                             include_deletes=False)) == 4)
 
     affected_text_files = change.AffectedTextFiles(include_deletes=True)
     self.failUnless(len(affected_text_files) == 3)
@@ -386,7 +388,7 @@ class PresubmitUnittest(unittest.TestCase):
     output = StringIO.StringIO()
     input = StringIO.StringIO('y\n')
 
-    self.failIf(presubmit.DoPresubmitChecks(ci, False, output, input))
+    self.failIf(presubmit.DoPresubmitChecks(ci, False, False, output, input))
     self.failUnless(output.getvalue().count('!!'))
 
   def testDoPresubmitChecksPromptsAfterWarnings(self):
@@ -403,13 +405,17 @@ class PresubmitUnittest(unittest.TestCase):
     output = StringIO.StringIO()
     input = StringIO.StringIO('n\n')  # say no to the warning
 
-    self.failIf(presubmit.DoPresubmitChecks(ci, False, output, input))
+    self.failIf(presubmit.DoPresubmitChecks(ci, False, False, output, input))
     self.failUnless(output.getvalue().count('??'))
 
     output = StringIO.StringIO()
     input = StringIO.StringIO('y\n')  # say yes to the warning
 
-    self.failUnless(presubmit.DoPresubmitChecks(ci, False, output, input))
+    self.failUnless(presubmit.DoPresubmitChecks(ci,
+                                                False,
+                                                False,
+                                                output,
+                                                input))
     self.failUnless(output.getvalue().count('??'))
 
   def testDoPresubmitChecksNoWarningPromptIfErrors(self):
@@ -427,7 +433,7 @@ class PresubmitUnittest(unittest.TestCase):
     output = StringIO.StringIO()
     input = StringIO.StringIO()  # should be unused
 
-    self.failIf(presubmit.DoPresubmitChecks(ci, False, output, input))
+    self.failIf(presubmit.DoPresubmitChecks(ci, False, False, output, input))
     self.failUnless(output.getvalue().count('??'))
     self.failUnless(output.getvalue().count('XX!!XX'))
     self.failIf(output.getvalue().count('(y/N)'))
