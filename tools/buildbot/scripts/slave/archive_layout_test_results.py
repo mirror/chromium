@@ -86,6 +86,9 @@ def main(options, args):
     print 'saving results to %s' % dest_dir
     chromium_utils.CopyFileToDir(zip_file, dest_dir)
   elif sys.platform in ['linux', 'linux2', 'darwin']:
+    # Files are created umask 077 by default, so make it world-readable before
+    # pushing to web server.
+    os.chmod(zip_file, 0644)
     chromium_utils.SshMakeDirectory(config.Archive.archive_host, dest_dir)
     print 'saving results to "%s" on "%s"' % (dest_dir,
                                               config.Archive.archive_host)
