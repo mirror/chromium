@@ -90,6 +90,9 @@ def main(options, args):
     print 'saving results to "%s" on "%s"' % (dest_dir,
                                               config.Archive.archive_host)
     chromium_utils.SshCopyFiles(zip_file, config.Archive.archive_host, dest_dir)
+  else:
+    raise chromium_utils.NotImplemented(
+          'Platform "%s" is not currently supported.' % sys.platform)
 
 if '__main__' == __name__:
   option_parser = optparse.OptionParser()

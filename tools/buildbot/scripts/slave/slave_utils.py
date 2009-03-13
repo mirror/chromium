@@ -31,6 +31,9 @@ def SubversionExe():
     return 'svn.bat' # Find it in the user's path.
   elif sys.platform in ['linux', 'linux2', 'darwin']:
     return 'svn' # Find it in the user's path.
+  else:
+    raise chromium_utils.NotImplemented(
+          'Platform "%s" is not currently supported.' % sys.platform)
 
 
 def SubversionRevision(wc_dir):
