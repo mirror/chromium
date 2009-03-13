@@ -37,6 +37,7 @@
 #include "V8Proxy.h"
 
 #include "DOMTimer.h"
+#include "Frame.h"
 #include "FrameLoadRequest.h"
 #include "FrameView.h"
 #include "Page.h"

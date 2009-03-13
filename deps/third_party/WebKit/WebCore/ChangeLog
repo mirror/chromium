@@ -1,3 +1,209 @@
+2009-03-11  David Kilzer  <ddkilzer@apple.com>
+
+        Clarify comments regarding order of FEATURE_DEFINES
+
+        Rubber-stamped by Mark Rowe.
+
+        * Configurations/WebCore.xcconfig: Added warning about the
+        consequences when FEATURE_DEFINES are not kept in sync.
+
+2009-03-11  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Reviewed by Holger Freyther.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24515
+        [GTK] soup backend should use GMappedFile instead of mmap directly
+
+        Rewrite mmap code used to upload files to use GMappedFile, so that
+        it is platform-independent.
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::ResourceHandle::startHttp):
+
+2009-03-11  Dan Bernstein  <mitz@apple.com>
+
+        Reviewed by Darin Adler.
+
+        - WebCore part of fixing <rdar://problem/3919124> Thai text selection
+          in Safari is incorrect
+
+        Test: platform/mac/editing/selection/word-thai.html
+
+        Tested on Mac, but should work on all ICU platforms (or more precisely
+        on all platforms that implement
+        WTF::Unicode::hasLineBreakingPropertyComplexContext() correctly).
+
+        * editing/TextIterator.cpp:
+        (WebCore::BackwardsCharacterIterator::BackwardsCharacterIterator):
+        Added.
+        (WebCore::BackwardsCharacterIterator::range): Added.
+        (WebCore::BackwardsCharacterIterator::advance): Added.
+
+        * editing/TextIterator.h: Added BackwardsCharacterIterator with the
+        minimal functionality required for this patch.
+        (WebCore::BackwardsCharacterIterator::atEnd): Added.
+
+        * editing/visible_units.cpp:
+        (WebCore::firstNonComplexContextLineBreak): Added this helper function
+        that returns the index of the first character in the string whose
+        Unicode line breaking property value is not SA ("Complex Context"), or
+        the length of the string if there is no such character.
+        (WebCore::lastNonComplexContextLineBreak): Added this helper function
+        that returns the index of the last character in the string whose
+        Unicode line breaking property value is not SA ("Complex Context"), or
+        -1 if there is no such character.
+        (WebCore::previousBoundary): Changed the signature of the search
+        function to include an offset parameter. Renamed the 'exception' local
+        variable to 'ec' and changed its type to ExceptionCode. Extend the
+        string forwards until the first character with Unicode line breaking
+        property value other than SA. This gives the boundary search function
+        enough context in the forward direction. Changed to use a
+        BackwardsCharacterIterator for translating the backwards offset into
+        a position.
+        (WebCore::nextBoundary): Changed the signature of the search
+        function to include an offset parameter. Extend the string backwards
+        until the first character with Unicode line breaking property value
+        other than SA. This gives the boundary search function enough context in
+        the backwards direction. Restricted the workaround for <rdar://5192593>
+        only to the line break case, because it was causing an extra character
+        to be selected following a word that ended with a combining mark.
+        (WebCore::startWordBoundary): Added an offset parameter. Check that
+        going backwards from the given offset, there is a character with Unicode
+        line breaking property value other than SA, and otherwise return 0 to
+        request more context.
+        (WebCore::endWordBoundary): Similar, but in reverse.
+        (WebCore::previousWordPositionBoundary): Similar.
+        (WebCore::nextWordPositionBoundary): Similar.
+        (WebCore::startSentenceBoundary): Updated for the new search function
+        signature.
+        (WebCore::endSentenceBoundary): Ditto.
+        (WebCore::previousSentencePositionBoundary): Ditto.
+        (WebCore::nextSentencePositionBoundary): Ditto.
+
+2009-03-11  Darin Adler  <darin@apple.com>
+
+        Reviewed by Mark Rowe.
+
+        Don't use "::" in thread names because it is ugly!
+
+        * loader/icon/IconDatabase.cpp:
+        (WebCore::IconDatabase::open): Use "WebCore: " instead of "WebCore::".
+        * platform/network/cf/ResourceHandleCFNet.cpp:
+        (WebCore::ResourceHandle::loaderRunLoop): Call this "WebCore: CFNetwork Loader" to make
+        it clear this is a WebCore-created thread.
+        * storage/DatabaseThread.cpp:
+        (WebCore::DatabaseThread::start): Use "WebCore: " instead of "WebCore::".
+        * storage/LocalStorageThread.cpp:
+        (WebCore::LocalStorageThread::start): Use "WebCore: " instead of "WebCore::".
+        * workers/WorkerThread.cpp:
+        (WebCore::WorkerThread::start): Use "WebCore: " instead of "WebCore::".
+
+2009-03-11  Mark Rowe  <mrowe@apple.com>
+
+        Rubber-stamped by Darin Adler.
+
+        <rdar://problem/6653286> WebCore's implementation of screenIsMonochrome is needlessly complex
+
+        * platform/mac/PlatformScreenMac.mm:
+        (WebCore::screenIsMonochrome): Return false.
+
+2009-03-11  Beth Dakin  <bdakin@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        Fix for https://bugs.webkit.org/show_bug.cgi?id=14749 percentage 
+        top value on position:relative child not calculated correctly if 
+        parent has percentage height
+        - and corresponding -
+        <rdar://problem/6172925>
+
+        * rendering/RenderBoxModelObject.cpp:
+        (WebCore::RenderBoxModelObject::relativePositionOffsetY):
+
+2009-03-11  Jian Li  <jianli@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        Implement ScriptValue::hasNoValue for V8.
+        https://bugs.webkit.org/show_bug.cgi?id=24507
+
+        * bindings/v8/ScriptValue.h:
+        (WebCore::ScriptValue::hasNoValue):
+
+2009-03-11  David Levin  <levin@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        Bug 24459: Add v8 bindings for event.
+        <https://bugs.webkit.org/show_bug.cgi?id=24459>
+
+        Adding custom event bindings.
+
+        * bindings/v8/custom/V8AbstractEventListener.cpp: Added.
+        * bindings/v8/custom/V8AbstractEventListener.h: Added.
+        * bindings/v8/custom/V8AttrCustom.cpp:
+        Fixed messed up copyright header.
+        * bindings/v8/custom/V8CustomEventListener.cpp: Added.
+        * bindings/v8/custom/V8CustomEventListener.h:
+        Replaced forwarding header with the real implementation.
+        * bindings/v8/custom/V8ElementCustom.cpp:
+        * bindings/v8/custom/V8LazyEventListener.cpp: Added.
+        * bindings/v8/custom/V8LazyEventListener.h: Added.
+        * bindings/v8/custom/V8ObjectEventListener.cpp: Added.
+        * bindings/v8/custom/V8ObjectEventListener.h: Added.
+        * bindings/v8/custom/V8WorkerContextEventListener.cpp: Added.
+        * bindings/v8/custom/V8WorkerContextEventListener.h: Added.
+
+2009-03-11  Darin Fisher  <darin@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24521
+        Add some missing includes for the non-JSC build.
+
+        * platform/text/PlatformString.h: added OwnPtr.h
+        * xml/XMLHttpRequest.cpp: added SecurityOrigin.h
+
+2009-03-11  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Darin Adler
+
+        https://bugs.webkit.org/show_bug.cgi?id=24531
+        
+        Make sure that AnimationControllerPrivate::getAnimatedStyleForRenderer() never
+        returns a null style if it has a valid renderer, which could happen if a
+        CompositeAnimation existed, but wasn't running any animations or transitions.
+
+        * page/animation/AnimationController.cpp:
+        (WebCore::AnimationControllerPrivate::getAnimatedStyleForRenderer):
+
+2009-03-11  Simon Fraser  <simon.fraser@apple.com>
+
+        Fix Scons build. Patch from Alexander Guy.
+
+        * WebCore.scons:
+
+2009-03-11  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dan Bernstein
+       
+        https://bugs.webkit.org/show_bug.cgi?id=23093
+        
+        When the cancel button in the search field is shown or hidden,
+        we need to explicitly setStyle() on the cancel button's renderer,
+        to ensure that repaint happens. Changing the style without telling
+        the renderer won't work.
+
+        Test: fast/repaint/search-field-cancel.html
+
+        * rendering/RenderTextControlSingleLine.cpp:
+        (WebCore::RenderTextControlSingleLine::subtreeHasChanged):
+        (WebCore::RenderTextControlSingleLine::updateFromElement):
+        (WebCore::RenderTextControlSingleLine::createCancelButtonStyle):
+        (WebCore::RenderTextControlSingleLine::updateCancelButtonVisibility):
+        (WebCore::RenderTextControlSingleLine::visibilityForCancelButton):
+        * rendering/RenderTextControlSingleLine.h:
+
 2009-03-11  Hironori Bono  <hbono@chromium.org>
 
         Reviewed by Alexey Proskuryakov.
