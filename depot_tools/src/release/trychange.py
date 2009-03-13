@@ -109,28 +109,8 @@ def GenerateDiff(files, root=None):
     # information too.
     if 'svn:mergeinfo' in data:
       # We know the diff will be incorrectly formatted. Fix it.
-      file_infos = gcl.GetSVNFileInfo(file)
-      if (file_infos.get('Copied From URL') and
-          file_infos.get('Copied From Rev')):
-        # The file is "new" in the patch sense. Generate a homebrew diff.
-        # We can't use ReadFile() since it's not using binary mode.
-        file_handle = open(file, 'rb')
-        file_content = file_handle.read()
-        file_handle.close()
-        file_content = gcl.ReadFile(file)
-        # Prepend '+ ' to every lines.
-        file_content = ['+ ' + i for i in file_content.splitlines(True)]
-        nb_lines = len(file_content)
-        # We need to use / since patch on unix will fail otherwise.
-        file = file.replace('\\', '/')
-        data = "Index: %s\n" % file
-        data += ("============================================================="
-                 "======\n")
-        # Note: Should we use /dev/null instead?
-        data += "--- %s\n" % file
-        data += "+++ %s\n" % file
-        data += "@@ -0,0 +1,%d @@\n" % nb_lines
-        data += ''.join(file_content)
+      if gcl.IsSVNMoved(file):
+        data = gcl.DiffPrint(file)
     diff.append(data)
   os.chdir(previous_cwd)
   return "".join(diff)

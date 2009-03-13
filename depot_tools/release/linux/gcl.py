@@ -44,6 +44,37 @@ MISSING_TEST_MSG = "Change contains new or modified methods, but no new tests!"
 read_gcl_info = False
 
 
+def DiffPrint(filename):
+  """Return file content in unified diff format as though it's been added"""
+  # The file is "new" in the patch sense. Generate a homebrew diff.
+  # We can't use ReadFile() since it's not using binary mode.
+  file_handle = open(filename, 'rb')
+  file_content = file_handle.read()
+  file_handle.close()
+  # Prepend '+ ' to every lines.
+  file_content = ['+ ' + i for i in file_content.splitlines(True)]
+  nb_lines = len(file_content)
+  # We need to use / since patch on unix will fail otherwise.
+  filename = filename.replace('\\', '/')
+  data = "Index: %s\n" % filename
+  data += ("============================================================="
+           "======\n")
+  # Note: Should we use /dev/null instead?
+  data += "--- %s\n" % filename
+  data += "+++ %s\n" % filename
+  data += "@@ -0,0 +1,%d @@\n" % nb_lines
+  data += ''.join(file_content)
+  return data
+
+
+def IsSVNMoved(filename):
+  """Determine if a file has been added through svn mv"""
+  info = GetSVNFileInfo(filename)
+  return (info.get('Copied From URL') and
+          info.get('Copied From Rev') and
+          info.get('Schedule') == 'add')
+
+
 def GetSVNFileInfo(file):
   """Returns a dictionary from the svn info output for the given file."""
   output = RunShell(["svn", "info", file])
@@ -256,6 +287,13 @@ class ChangeInfo:
     data = [("description", self.description),]
     ctype, body = upload.EncodeMultipartFormData(data, [])
     SendToRietveld("/" + self.issue + "/description", body, ctype)
+
+  def GetMoved(self, root=None):
+    """Return a list of files that have been added through svn mv"""
+    moved = [f[1] for f in self.files if IsSVNMoved(f[1])]
+    if root:
+      moved = [os.path.join(root, f) for f in moved]
+      return moved
 
   def MissingTests(self):
     """Returns True if the change looks like it needs unit tests but has none.
@@ -1056,6 +1094,11 @@ def main(argv=None):
     args =["svn", command]
     root = GetRepositoryRoot()
     args.extend([os.path.join(root, x) for x in change_info.FileList()])
+    if command == "diff":
+      moved_files = change_info.GetMoved(root=root)
+      for f in moved_files:
+        args.remove(f)
+        print DiffPrint(f)
     RunShell(args, True)
   return 0
 
