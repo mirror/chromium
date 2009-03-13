@@ -30,6 +30,7 @@ banana.SIZE_LIMIT = 100 * 1024 * 1024
 class MissingArgument(Exception): pass
 class PathNotFound(Exception): pass
 class ExternalError(Exception): pass
+class NotImplemented(Exception): pass
 
 def MeanAndStandardDeviation(data):
   """Calculates mean and standard deviation for the values in the list.
