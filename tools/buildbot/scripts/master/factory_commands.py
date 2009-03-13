@@ -177,8 +177,8 @@ class FactoryCommands(object):
     self._gears_test_runner = self.PathJoin('src', 'gears', 'gears',
                                             'test', 'runner', 'bootstrap.py')
     
-    # Gears src root.
-    self._gears_root = self.PathJoin('src', 'gears', 'gears')
+    # Gears working dir.
+    self._gears_root = self.PathJoin('build', 'src', 'gears', 'gears')
 
     # These tools aren't in the script_dir either.
     # TODO(pamg): For consistency, move them into the script_dir if possible.
@@ -1048,7 +1048,7 @@ class FactoryCommands(object):
     setup_env_and_make = r'c:\make_gears.bat'
     mode = mode or 'dbg'
     if clean:
-      command_list = ['rm', '-rf', 'bin-%s' % mode]
+      command_list = ['RD', '/S', '/Q', 'bin-%s' % mode]
       clean_timeout = 60
       self._factory.addStep(shell.ShellCommand,
                             description='make gears clean',
