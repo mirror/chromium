@@ -39,11 +39,7 @@ module html {
 
 #if defined(LANGUAGE_JAVASCRIPT)
         // FIXME: This should eventually be available (if they are wanted) for all languages.
-#if defined(V8_BINDING)
-        readonly attribute HTMLCollection all;
-#else
                  attribute [Custom, Deletable] HTMLCollection all;
-#endif // V8_BINDING
 #endif
 
         void clear();
