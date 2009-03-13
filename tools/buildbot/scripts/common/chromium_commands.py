@@ -460,6 +460,25 @@ class GClient(commands.SourceBase):
         return int(m.group(2))
     return None
 
+  def maybeDoVCFallback(self, rc):
+    """Called after doVCUpdate."""
+    if type(rc) is int and rc == 2:
+      # Non-VC failure, return 2 to turn the step red.
+      return rc
+
+    # super
+    return commands.SourceBase.maybeDoVCFallback(self, rc)
+
+  def maybeDoVCRetry(self, res):
+    """Called after doVCFull."""
+    if type(res) is int and res == 2:
+      # Non-VC failure, return 2 to turn the step red.
+      return res
+
+    # super
+    return commands.SourceBase.maybeDoVCRetry(self, res)
+
+
 try:
   # We run this code in a try because it fails with an assertion if
   # the module is loaded twice.
