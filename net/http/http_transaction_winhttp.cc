@@ -1476,7 +1476,7 @@ int HttpTransactionWinHttp::DidReceiveHeaders() {
   session_callback_->set_load_state(LOAD_STATE_IDLE);
 
   DWORD response_code = 0;
-  DWORD size = 0;
+  DWORD size = sizeof(response_code);
   if (!WinHttpQueryHeaders(request_handle_,
                            WINHTTP_QUERY_STATUS_CODE |
                            WINHTTP_QUERY_FLAG_NUMBER,
@@ -1506,6 +1506,7 @@ int HttpTransactionWinHttp::DidReceiveHeaders() {
     return ERR_TUNNEL_CONNECTION_FAILED;
   }
 
+  size = 0;
   if (!WinHttpQueryHeaders(request_handle_,
                            WINHTTP_QUERY_RAW_HEADERS,
                            WINHTTP_HEADER_NAME_BY_INDEX,
