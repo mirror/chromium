@@ -423,6 +423,11 @@ class Stager(object):
     # Create a versionned copy of the file.
     current_revision = slave_utils.SubversionRevision(self._chrome_dir)
     versionned_file = zip_file.replace('.zip', '_%d.zip' % current_revision)
+    if os.path.exists(versionned_file):
+      # This file already exists. Maybe we are doing a clobber build at the same
+      # revision. We can move this file away.
+      old_file = versionned_file.replace('.zip', '_old.zip')
+      chromium_utils.MoveFile(versionned_file, old_file)
     shutil.copyfile(zip_file, versionned_file)
 
     return 0
