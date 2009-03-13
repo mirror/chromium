@@ -979,6 +979,17 @@ int HttpTransactionWinHttp::Read(char* buf, int buf_len,
   DCHECK(!callback_);
   DCHECK(request_handle_);
 
+  if (is_https_ && !response_.ssl_info.cert) {
+    // We're trying to read the body of the response but we're still trying to
+    // establish an SSL tunnel through the proxy.  We can't read these bytes
+    // when establishing a tunnel because they might be controlled by an active
+    // network attacker.  We don't worry about this for HTTP because an active
+    // network attacker can already control HTTP sessions.
+    // We reach this case when the user cancels a 407 proxy auth prompt.
+    // See http://crbug.com/8473
+    return ERR_TUNNEL_CONNECTION_FAILED;
+  }
+
   // If we have already received the full response, then we know we are done.
   if (content_length_remaining_ == 0) {
     LogTransactionMetrics();
@@ -1464,7 +1475,37 @@ void HttpTransactionWinHttp::LogTransactionMetrics() const {
 int HttpTransactionWinHttp::DidReceiveHeaders() {
   session_callback_->set_load_state(LOAD_STATE_IDLE);
 
+  DWORD response_code = 0;
   DWORD size = 0;
+  if (!WinHttpQueryHeaders(request_handle_,
+                           WINHTTP_QUERY_STATUS_CODE |
+                           WINHTTP_QUERY_FLAG_NUMBER,
+                           NULL,
+                           &response_code,
+                           &size,
+                           NULL)) {
+    DLOG(ERROR) << "WinHttpQueryHeaders failed: " << GetLastError();
+    return TranslateLastOSError();
+  }
+
+  if (is_https_ && !response_.ssl_info.cert && response_code != 407) {
+    // We're trying to talk HTTPS to the remote server but we haven't gotten a
+    // certificate from WinHTTP.  That means we're getting a response from the
+    // proxy server and not from the actual remote server.  We need to stop here
+    // or risk rendering content provided by an active network attacker.
+    //
+    // The one exception is in the case of a 407 response, which indicates that
+    // the proxy server would like us to authenticate before tunneling to the
+    // remote server.  In that case, |PopulateAuthChallenge()| is responsible
+    // for bailing out.
+    LOG(WARNING) << "Blocked proxy response with status "
+                 << response_code
+                 << " to CONNECT request for "
+                 << request_->url.host() << ":"
+                 << request_->url.EffectiveIntPort() << ".";
+    return ERR_TUNNEL_CONNECTION_FAILED;
+  }
+
   if (!WinHttpQueryHeaders(request_handle_,
                            WINHTTP_QUERY_RAW_HEADERS,
                            WINHTTP_HEADER_NAME_BY_INDEX,
@@ -1549,8 +1590,15 @@ int HttpTransactionWinHttp::PopulateAuthChallenge() {
   std::string header_value;
   std::string header_name = auth_info->is_proxy ?
       "Proxy-Authenticate" : "WWW-Authenticate";
-  if (!response_.headers->EnumerateHeader(NULL, header_name, &header_value))
+  if (!response_.headers->EnumerateHeader(NULL, header_name, &header_value)) {
+    if (is_https_ && !response_.ssl_info.cert && auth_info->is_proxy) {
+      // We are establishing a tunnel, we can't show the error page because an
+      // active network attacker could control its contents.  Instead, we just
+      // fail to establish the tunnel.
+      return ERR_PROXY_AUTH_REQUESTED;
+    }
     return OK;
+  }
 
   // TODO(darin): Need to support RFC 2047 encoded realm strings.  For now, we
   // limit our support to ASCII and "native code page" realm strings.

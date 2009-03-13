@@ -84,6 +84,9 @@ NET_ERROR(NO_SSL_VERSIONS_ENABLED, -112)
 // cipher suite.
 NET_ERROR(SSL_VERSION_OR_CIPHER_MISMATCH, -113)
 
+// The proxy requested authentication (for tunnel establishment).
+NET_ERROR(PROXY_AUTH_REQUESTED, -115)
+
 // Certificate error codes
 //
 // The values of certificate error codes must be consecutive.
