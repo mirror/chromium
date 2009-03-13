@@ -40,11 +40,12 @@ class Installer(object):
 
 
 class Archive(object):
+  archive_host = 'localhost'
   # Skip any filenames (exes, symbols, etc.) starting with these strings
   # entirely, typically because they're not built for this distribution.
   exes_to_skip_entirely = []
   # Web server base path.
-  www_dir_base = "\\\\localhost\\www\\"
+  www_dir_base = "\\\\" + archive_host + "\\www\\"
 
 
 class IRC(object):
