@@ -1,10 +1,10 @@
 /*
- * Copyright (C) 2008, 2009 Google Inc. All rights reserved.
- *
+ * Copyright (C) 2009 Google Inc. All rights reserved.
+ * 
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- *
+ * 
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
  *     * Redistributions in binary form must reproduce the above
@@ -28,36 +28,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef ScriptCallStack_h
-#define ScriptCallStack_h
+/* These styles override the default styling for HTML elements as defined in
+   WebCore/css/themeWin.css. */
+#include "themeWin.css"
 
-#include "ScriptCallFrame.h"
-#include "ScriptState.h"
-#include "ScriptValue.h"
-#include <wtf/Noncopyable.h>
-
-namespace v8 {
-    class Arguments;
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-decoration,
+input[type="search"]::-webkit-search-results-button {
+    margin: 0 0 0 0;
 }
-
-namespace WebCore {
-
-    class ScriptCallStack : public Noncopyable {
-    public:
-        ScriptCallStack(const v8::Arguments&, unsigned skipArgumentCount = 0);
-        ~ScriptCallStack();
-
-        const ScriptCallFrame& at(unsigned) const;
-        // FIXME: implement retrieving and storing call stack trace
-        unsigned size() const { return 1; }
-
-        // FIXME: This method is obviously not implemented.
-        ScriptState* state() const { return 0; }
-
-    private:
-        ScriptCallFrame m_lastCaller;
-    };
-
-} // namespace WebCore
-
-#endif // ScriptCallStack_h

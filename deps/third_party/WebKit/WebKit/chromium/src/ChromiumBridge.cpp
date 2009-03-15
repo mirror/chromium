@@ -237,12 +237,6 @@ void ChromiumBridge::incrementStatsCounter(const char* name)
     webKitClient()->incrementStatsCounter(name);
 }
 
-void ChromiumBridge::initV8CounterFunction()
-{
-    // FIXME: Remove this ChromiumBridge method since it is unused.
-    ASSERT_NOT_REACHED();
-}
-
 // SystemTime -----------------------------------------------------------------
 
 double ChromiumBridge::currentTime()
@@ -317,15 +311,6 @@ void ChromiumBridge::traceEventBegin(const char* name, void* id, const char* ext
 void ChromiumBridge::traceEventEnd(const char* name, void* id, const char* extra)
 {
     webKitClient()->traceEventEnd(name, id, extra);
-}
-
-// URL ------------------------------------------------------------------------
-
-KURL ChromiumBridge::inspectorURL()
-{
-    // FIXME: Remove this ChromiumBridge method since it is unused.
-    ASSERT_NOT_REACHED();
-    return KURL();
 }
 
 // Visited Links --------------------------------------------------------------

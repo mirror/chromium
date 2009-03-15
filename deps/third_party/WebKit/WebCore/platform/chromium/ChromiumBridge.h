@@ -92,6 +92,7 @@ namespace WebCore {
 
         // JavaScript ---------------------------------------------------------
         static void notifyJSOutOfMemory(Frame*);
+        static bool allowScriptDespiteSettings(const KURL& documentURL);
 
         // Language -----------------------------------------------------------
         static String computedDefaultLanguage();
@@ -113,7 +114,7 @@ namespace WebCore {
         static bool popupsAllowed(NPP);
 
         // Protocol -----------------------------------------------------------
-        static String uiResourceProtocol();
+        static String uiResourceProtocol();  // deprecated
 
         // Resources ----------------------------------------------------------
         static PassRefPtr<Image> loadPlatformImageResource(const char* name);
@@ -133,7 +134,6 @@ namespace WebCore {
         // StatsCounters ------------------------------------------------------
         static void decrementStatsCounter(const char* name);
         static void incrementStatsCounter(const char* name);
-        static void initV8CounterFunction();
 
         // SystemTime ---------------------------------------------------------
         static double currentTime();
@@ -157,9 +157,6 @@ namespace WebCore {
         // Trace Event --------------------------------------------------------
         static void traceEventBegin(const char* name, void* id, const char* extra);
         static void traceEventEnd(const char* name, void* id, const char* extra);
-
-        // URL ----------------------------------------------------------------
-        static KURL inspectorURL();
 
         // Visited links ------------------------------------------------------
         static LinkHash visitedLinkHash(const UChar* url, unsigned length);

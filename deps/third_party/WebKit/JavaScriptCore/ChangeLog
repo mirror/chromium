@@ -1,3 +1,58 @@
+2009-03-12  Mark Rowe  <mrowe@apple.com>
+
+        Reviewed by Darin Adler.
+
+        <rdar://problem/6548446> TCMalloc_SystemRelease should use madvise rather than re-mmaping span of pages
+
+        * wtf/FastMalloc.cpp:
+        (WTF::mergeDecommittedStates): If either of the spans has been released to the system, release the other
+        span as well so that the flag in the merged span is accurate.
+        * wtf/Platform.h:
+        * wtf/TCSystemAlloc.cpp: Track decommitted spans when using MADV_FREE_REUSABLE / MADV_FREE_REUSE.
+        (TCMalloc_SystemRelease): Use madvise with MADV_FREE_REUSABLE when it is available.
+        (TCMalloc_SystemCommit): Use madvise with MADV_FREE_REUSE when it is available.
+        * wtf/TCSystemAlloc.h:
+
+2009-03-12  Adam Treat  <adam.treat@torchmobile.com>
+
+        Reviewed by NOBODY (Build fix).
+
+        Include string.h for strlen usage.
+
+        * wtf/Threading.cpp:
+
+2009-03-12  David Kilzer  <ddkilzer@apple.com>
+
+        Add NO_RETURN attribute to runInteractive() when not using readline
+
+        Reviewed by Darin Adler.
+
+        * jsc.cpp:
+        (runInteractive): If the readline library is not used, this method
+        will never return, thus the NO_RETURN attribute is needed to prevent
+        a gcc warning.
+
+2009-03-12  Adam Roben  <aroben@apple.com>
+
+        Adopt setThreadNameInternal on Windows
+
+        Also changed a Windows-only assertion about thread name length to an
+        all-platform log message.
+
+        Reviewed by Adam Treat.
+
+        * wtf/Threading.cpp:
+        (WTF::createThread): Warn if the thread name is longer than 31
+        characters, as Visual Studio will truncate names longer than that
+        length.
+
+        * wtf/ThreadingWin.cpp:
+        (WTF::setThreadNameInternal): Renamed from setThreadName and changed
+        to always operate on the current thread.
+        (WTF::initializeThreading): Changed to use setThreadNameInternal.
+        (WTF::createThreadInternal): Removed call to setThreadName. This is
+        now handled by threadEntryPoint and setThreadNameInternal.
+
 2009-03-11  David Kilzer  <ddkilzer@apple.com>
 
         Clarify comments regarding order of FEATURE_DEFINES

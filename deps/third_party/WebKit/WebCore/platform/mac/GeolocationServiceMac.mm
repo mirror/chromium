@@ -160,14 +160,16 @@ void GeolocationServiceMac::errorOccurred(PassRefPtr<PositionError> error)
         altitude = 0.0;
     }
     
+    WTF::RefPtr<WebCore::Coordinates> newCoordinates = WebCore::Coordinates::create(
+                            newLocation.coordinate.latitude,
+                            newLocation.coordinate.longitude,
+                            altitude,
+                            newLocation.horizontalAccuracy,
+                            altitudeAccuracy,
+                            newLocation.course,
+                            newLocation.speed);
     WTF::RefPtr<WebCore::Geoposition> newPosition = WebCore::Geoposition::create(
-                             newLocation.coordinate.latitude,
-                             newLocation.coordinate.longitude,
-                             altitude,
-                             newLocation.horizontalAccuracy,
-                             altitudeAccuracy,
-                             newLocation.course,
-                             newLocation.speed,
+                             newCoordinates.release(),
                              [newLocation.timestamp timeIntervalSinceReferenceDate] * 1000.0); // seconds -> milliseconds
     
     m_callback->positionChanged(newPosition.release());
@@ -184,10 +186,13 @@ void GeolocationServiceMac::errorOccurred(PassRefPtr<PositionError> error)
     switch ([error code]) {
         case kCLErrorDenied:
             code = PositionError::PERMISSION_DENIED;
+            break;
         case kCLErrorLocationUnknown:
             code = PositionError::POSITION_UNAVAILABLE;
+            break;
         default:
             code = PositionError::POSITION_UNAVAILABLE;
+            break;
     }
 
     m_callback->errorOccurred(PositionError::create(code, [error localizedDescription]));

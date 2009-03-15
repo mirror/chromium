@@ -1,3 +1,405 @@
+2009-03-12  Adam Treat  <adam.treat@torchmobile.com>
+
+        Reviewed by Oliver Hunt.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24498
+        Fix the Qt port to use the same algorithm for drawing dashed and dotted
+        borders as the other ports.  This makes the Qt port pixel-for-pixel perfect
+        compared to border drawing with Apple's canonical mac port and much closer
+        to konqueror and firefox behavior.
+
+        * platform/graphics/qt/GraphicsContextQt.cpp:
+        (WebCore::GraphicsContext::drawLine):
+
+2009-02-26  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Justin Garcia.
+
+        Clean up DOMSelection to use some helper functions
+        making the code smaller, and less error-prone.
+        https://bugs.webkit.org/show_bug.cgi?id=19221
+
+        I tried moving DOMSelection off of rangeCompliantEquivalent
+        but failed.  VisibleSelection holds positions like (table, 1) to mean
+        "after the table".
+
+        * page/DOMSelection.cpp:
+        (WebCore::DOMSelection::visibleSelection):
+        (WebCore::anchorPosition):
+        (WebCore::focusPosition):
+        (WebCore::basePosition):
+        (WebCore::extentPosition):
+        (WebCore::DOMSelection::anchorNode):
+        (WebCore::DOMSelection::anchorOffset):
+        (WebCore::DOMSelection::focusNode):
+        (WebCore::DOMSelection::focusOffset):
+        (WebCore::DOMSelection::baseNode):
+        (WebCore::DOMSelection::baseOffset):
+        (WebCore::DOMSelection::extentNode):
+        (WebCore::DOMSelection::extentOffset):
+        * page/DOMSelection.h:
+
+2009-03-12  Dmitry Titov  <dimich@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24563
+        Change ResourceRequest to be a struct rather then a class to match other declarations.
+
+        * platform/network/chromium/ResourceRequest.h:
+
+2009-03-12  David Levin  <levin@chromium.org>
+
+        Reviewed by  Darin Fisher.
+
+        Bug 24530: width100percent-searchfield.html should be fixed for chromium.
+        <https://bugs.webkit.org/show_bug.cgi?id=24530>
+
+        Compensate for r39924 in chromium, which broke LayoutTests/fast/replaced/width100percent-searchfield.html
+
+        * css/themeChromiumWin.css: Added.
+        Overrides the changes to start supporting input[type="search"] on Windows (since
+        Chromium doesn't do anything special for this).
+
+        * rendering/RenderThemeChromiumWin.cpp:
+        (WebCore::supportsFocus):
+        (WebCore::RenderThemeChromiumWin::extraDefaultStyleSheet):
+        (WebCore::RenderThemeChromiumWin::determineState):
+        (WebCore::RenderThemeChromiumWin::getThemeData):
+
+2009-03-12  Greg Bolsinga  <bolsinga@apple.com>
+
+        Reviewed by Antti Koivisto.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24506
+        Geolocation in Safari differs from the spec, no Coordinates attribute on Position
+        
+        Get up to date.
+
+        * DerivedSources.make:
+        * GNUmakefile.am:
+        * WebCore.pro:
+        * WebCore.scons:
+        * WebCore.vcproj/WebCore.vcproj:
+        * WebCore.xcodeproj/project.pbxproj:
+        * WebCoreSources.bkl:
+        * bindings/js/JSGeolocationCustom.cpp:
+        (WebCore::createPositionOptions):
+        * page/Coordinates.cpp: Added.
+        (WebCore::Coordinates::toString):
+        * page/Coordinates.h: Added.
+        (WebCore::Coordinates::create):
+        (WebCore::Coordinates::latitude):
+        (WebCore::Coordinates::longitude):
+        (WebCore::Coordinates::altitude):
+        (WebCore::Coordinates::accuracy):
+        (WebCore::Coordinates::altitudeAccuracy):
+        (WebCore::Coordinates::heading):
+        (WebCore::Coordinates::speed):
+        (WebCore::Coordinates::Coordinates):
+        * page/Coordinates.idl: Added.
+        * page/Geoposition.cpp:
+        (WebCore::Geoposition::toString):
+        * page/Geoposition.h:
+        (WebCore::Geoposition::create):
+        (WebCore::Geoposition::coords):
+        (WebCore::Geoposition::Geoposition):
+        * page/Geoposition.idl:
+        * page/PositionOptions.h:
+        (WebCore::PositionOptions::create):
+        (WebCore::PositionOptions::maximumAge):
+        (WebCore::PositionOptions::setMaximumAge):
+        (WebCore::PositionOptions::PositionOptions):
+        * platform/mac/GeolocationServiceMac.mm:
+        (-[WebCoreCoreLocationObserver locationManager:didUpdateToLocation:fromLocation:]):
+
+2009-03-12  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Darin Fisher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24496
+        Fix console logging of non-string values by coercing the argument to
+        a string, for V8 bindings.
+
+        Test: fast/js/console-non-string-values.html
+
+        * bindings/v8/ScriptValue.cpp: Added toString method.
+        (WebCore::ScriptValue::toString):
+        * bindings/v8/ScriptValue.h: Added PlatformString, ScriptState includes
+            and toString declaration.
+
+2009-03-12  Darin Fisher  <darin@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        Eliminate ChromiumBridge::uiResourceProtocol
+        https://bugs.webkit.org/show_bug.cgi?id=24558
+
+        * platform/chromium/ChromiumBridge.h:
+
+2009-03-12  Greg Bolsinga  <bolsinga@apple.com>
+
+        Reviewed by Simon Fraser.
+
+        Missing breaks in switch statement
+        https://bugs.webkit.org/show_bug.cgi?id=24556
+
+        * platform/mac/GeolocationServiceMac.mm:
+        (-[WebCoreCoreLocationObserver locationManager:didFailWithError:]):
+
+2009-03-12  Darin Fisher  <darin@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24554
+        Remove some unused functions from ChromiumBridge.
+
+        * platform/chromium/ChromiumBridge.h:
+
+2009-03-02  Eric Seidel  <eric@webkit.org>
+
+        Reviewed by Darin Fisher and Justin Garcia.
+
+        Safari crashes during drag and drop in Google presentations
+        due to mutation event handlers removing DOM content during insertNode
+        https://bugs.webkit.org/show_bug.cgi?id=22634
+
+        Added a bunch of "null" checks to make sure nodes are still
+        in the document before we operate on them.  This is an
+        inelegant solution, but it's the best we have for now.
+        
+        Test: editing/selection/crash-on-drag-with-mutation-events.html
+
+        * editing/CompositeEditCommand.cpp:
+        (WebCore::CompositeEditCommand::insertNodeAt):
+        * editing/ReplaceSelectionCommand.cpp:
+        (WebCore::ReplaceSelectionCommand::doApply):
+
+2009-03-12  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Adam Treat.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24525
+        REGRESSION: Inspector window doesn't close when inspected page is
+        destroyed. This is a revert of r41158, which became unnecessary when
+        InspectorController became ref-counted in r41462.
+
+        * inspector/InspectorController.cpp:
+        (WebCore::InspectorController::inspectedPageDestroyed): Reset m_inspectedPage
+            after calling close().
+        (WebCore::InspectorController::stopUserInitiatedProfiling): Remove
+            m_inspectedPage check guard around profile logic.
+
+2009-03-12  Peter Kasting  <pkasting@google.com>
+
+        Reviewed by Darin Fisher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24502
+        Make horizontal scrolling on Windows always go the correct direction.
+
+        * platform/PlatformWheelEvent.h:
+        * platform/win/WheelEventWin.cpp:
+        (WebCore::PlatformWheelEvent::PlatformWheelEvent):
+
+2009-03-12  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Simon Fraser.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24496
+        Fix console logging of non-string values by coercing the argument to
+        a string.
+
+        Test: fast/js/console-non-string-values.html
+
+        * bindings/js/ScriptValue.cpp: Removed PlatformString include.
+        * bindings/js/ScriptValue.h: Added toString method.
+        (WebCore::ScriptValue::toString):
+        * page/Console.cpp:
+        (WebCore::getFirstArgumentAsString): Changed firstArgumentAsString method to use
+            ScriptValue::toString.
+        (WebCore::Console::addMessage): added extra ScriptState argument to callsite.
+        (WebCore::Console::count): Ditto.
+
+2009-03-12  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Adele Peterson.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=24508
+        
+        Fix updating of text field with placeholder text when value is set
+        by ensuring that updatePlaceholderVisibility() is called after
+        the value has been updated, not before.
+
+        Test: fast/forms/placeholder-set-value.html
+
+        * html/HTMLInputElement.cpp:
+        (WebCore::HTMLInputElement::setValue):
+
+2009-03-12  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Dave Hyatt
+        
+        https://bugs.webkit.org/show_bug.cgi?id=24552
+        
+        Hit testing involving normal flow, self-painting layers (e.g. reflections)
+        was broken because it was not null-testing the result of hitTestLayer(),
+        so bailing early with a nil hit layer.
+
+        Test: fast/layers/normal-flow-hit-test.html
+
+        * rendering/RenderLayer.cpp:
+        (WebCore::RenderLayer::hitTestLayer):
+
+2009-03-12  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Cameron Zwarich.
+
+        Removed zero-sized files, left over from improperly applied patch.
+
+        * platform/graphics/chromium/ThemeHelperChromiumWin.cpp: Removed.
+        * platform/graphics/chromium/ThemeHelperChromiumWin.h: Removed.
+
+2009-03-12  Adam Treat  <adam.treat@torchmobile.com>
+
+        Reviewed by George Staikos.
+
+        Do not ignore alpha color in optimization.  Hard to believe, but there
+        are websites that fill the entire page with a tiled image consisting of
+        nothing but a 100% transparent 1x1 image. <cough>orbitz.com</cough>
+
+        * platform/graphics/qt/ImageQt.cpp:
+        (WebCore::BitmapImage::checkForSolidColor):
+
+2009-03-12  Julien Chaffraix  <jchaffraix@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        Bug 24110: cloneNode should call cloneElement and not the reverse
+
+        - Splitted the code from cloneNode into cloneElementWithChildren and cloneElementWithChildren.
+          Now cloneNode calls one of the 2 previous methods.
+
+        - Renamed cloneElement to cloneElementWithoutChildren as it was the previous behaviour.
+
+        - Moved cloneNode to the Element private section so that WebCore callers cannot use it.
+
+        - Removed Element::cloneNode usage through WebCore.
+
+        * dom/Element.cpp:
+        (WebCore::Element::cloneNode): Moved to Element's private section and it
+        now calls the two next methods.
+        (WebCore::Element::cloneElementWithChildren): Added.
+        (WebCore::Element::cloneElementWithoutChildren): Renamed from cloneElement
+        to avoid ambiguity.
+        * dom/Element.h:
+
+        * editing/ApplyStyleCommand.cpp:
+        (WebCore::ApplyStyleCommand::addInlineStyleIfNeeded): Changed call to cloneElement
+        to call to cloneElementWithoutChildren.
+        * editing/BreakBlockquoteCommand.cpp:
+        (WebCore::BreakBlockquoteCommand::doApply): Ditto.
+        * editing/IndentOutdentCommand.cpp:
+        (WebCore::IndentOutdentCommand::indentRegion): Ditto.
+        * editing/InsertParagraphSeparatorCommand.cpp:
+        (WebCore::InsertParagraphSeparatorCommand::doApply): Ditto.
+        * editing/ModifySelectionListLevel.cpp:
+        (WebCore::IncreaseSelectionListLevelCommand::doApply): Ditto.
+        * editing/SplitElementCommand.cpp:
+        (WebCore::SplitElementCommand::doApply): Ditto.
+        * editing/markup.cpp:
+        (WebCore::createFragmentFromText): Ditto.
+        * svg/SVGUseElement.cpp:
+        (WebCore::SVGUseElement::buildShadowTree): Ditto.
+        (WebCore::SVGUseElement::expandUseElementsInShadowTree): Ditto.
+
+2009-03-12  Dirk Schulze  <krit@webkit.org>
+
+        Reviewed by Oliver Hunt.
+
+        Fixed a crash on the 1x1 pixel check for background image in gtk.
+        We need to load the image first and need to be sure that the image
+        is not null before checking the type. 
+
+        * platform/graphics/cairo/ImageCairo.cpp:
+        (WebCore::BitmapImage::checkForSolidColor):
+
+2009-03-12  Xan Lopez  <xlopez@igalia.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24544
+        Rename setUrl to setURL
+
+        Use proper case for setUrl method, rename it to setURL.
+
+        * platform/network/ResourceResponseBase.cpp:
+        (WebCore::ResourceResponseBase::adopt):
+        * platform/network/ResourceResponseBase.h:
+        * platform/network/curl/ResourceHandleManager.cpp:
+        (WebCore::writeCallback):
+        (WebCore::headerCallback):
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::fillResponseFromMessage):
+        (WebCore::queryInfoCallback):
+
+2009-03-12  Xan Lopez  <xlopez@igalia.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24519
+        [GTK] Use two argument KURL ctor in ResourceHandleSoup
+
+        Use two argument KURL ctor, the single argument ctor expects its
+        input to be the output of a previous KURL::parse call, which is
+        not the case here.
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::fillResponseFromMessage):
+        (WebCore::queryInfoCallback):
+
+2009-03-11  Jon Honeycutt  <jhoneycutt@apple.com>
+
+        Fix for <rdar://6418681>
+        https://bugs.webkit.org/show_bug.cgi?id=22644
+
+        Reviewed by Steve Falkenburg.
+
+        * plugins/win/PluginPackageWin.cpp:
+        (WebCore::PluginPackage::isPluginBlacklisted): Add the Citrix ICA
+        Client plug-in to the blacklist; it requires a Mozilla-based browser.
+
+2009-03-12  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by NOBODY (build fix).
+
+        build fix.
+
+        * html/CanvasRenderingContext2D.h:
+
+2009-03-11  Oliver Hunt  <oliver@apple.com>
+
+        Reviewed by Adele Peterson.
+
+        <rdar://problem/6673852> Widget "Simple World Clock" does not display with Safari 4
+
+        A number of dashboard widgets rely on canvas failing silently when given invalid
+        colors for gradient stops, but both the spec and firefox throw exceptions here.
+        So we work around this by creating a dashboard quirk that will only suppress the
+        exception in dashboard compatibility mode.
+
+        Test: fast/canvas/canvas-gradient-addStop-error.html
+
+        * html/CanvasGradient.cpp:
+        (WebCore::CanvasGradient::CanvasGradient):
+        (WebCore::CanvasGradient::addColorStop):
+        * html/CanvasGradient.h:
+        (WebCore::CanvasGradient::setDashboardCompatibilityMode):
+        * html/CanvasRenderingContext2D.cpp:
+        (WebCore::CanvasRenderingContext2D::prepareGradientForDashboard):
+        (WebCore::CanvasRenderingContext2D::createLinearGradient):
+        (WebCore::CanvasRenderingContext2D::createRadialGradient):
+        * html/CanvasRenderingContext2D.h:
+
 2009-03-11  David Kilzer  <ddkilzer@apple.com>
 
         Clarify comments regarding order of FEATURE_DEFINES
