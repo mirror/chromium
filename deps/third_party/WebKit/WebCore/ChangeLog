@@ -1,3 +1,218 @@
+2009-03-16   Mike Belshe  <mike@belse.com>
+
+        Reviewed by Dimitri Glazkov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24580
+        Fix query() to match KURL behavior, this time with the code that
+        compiles.
+
+        * platform/KURLGoogle.cpp:
+        (WebCore::KURL::query): Fix copy/paste mistake.
+
+2009-03-16  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=21752
+        REGRESSION: referencing XHR constructor for a not yet loaded frame permanently breaks it
+
+        Test: fast/dom/Window/window-early-properties-xhr.html
+
+        For some transitions, the Window object is not replaced, but Document is. When this happened,
+        window.document property was updated, but references to Document kept in cached constructors
+        were not.
+
+        * bindings/js/JSAudioConstructor.cpp:
+        (WebCore::JSAudioConstructor::JSAudioConstructor):
+        (WebCore::JSAudioConstructor::document):
+        (WebCore::JSAudioConstructor::mark):
+        * bindings/js/JSAudioConstructor.h:
+        * bindings/js/JSImageConstructor.cpp:
+        (WebCore::JSImageConstructor::JSImageConstructor):
+        (WebCore::JSImageConstructor::document):
+        (WebCore::JSImageConstructor::mark):
+        * bindings/js/JSImageConstructor.h:
+        * bindings/js/JSMessageChannelConstructor.cpp:
+        (WebCore::JSMessageChannelConstructor::JSMessageChannelConstructor):
+        (WebCore::JSMessageChannelConstructor::scriptExecutionContext):
+        (WebCore::JSMessageChannelConstructor::mark):
+        * bindings/js/JSMessageChannelConstructor.h:
+        * bindings/js/JSOptionConstructor.cpp:
+        (WebCore::JSOptionConstructor::JSOptionConstructor):
+        (WebCore::JSOptionConstructor::document):
+        (WebCore::JSOptionConstructor::mark):
+        * bindings/js/JSOptionConstructor.h:
+        * bindings/js/JSXMLHttpRequestConstructor.cpp:
+        (WebCore::JSXMLHttpRequestConstructor::JSXMLHttpRequestConstructor):
+        (WebCore::JSXMLHttpRequestConstructor::scriptExecutionContext):
+        (WebCore::JSXMLHttpRequestConstructor::mark):
+        * bindings/js/JSXMLHttpRequestConstructor.h:
+        Changed cached constructors to keep a reference to Window, not Document.
+
+2009-03-15  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24549
+        Impose a limit on Access-Control-Max-Age value
+
+        * loader/CrossOriginPreflightResultCache.cpp:
+        (WebCore::CrossOriginPreflightResultCacheItem::parse):
+
+2009-03-15  Greg Bolsinga  <bolsinga@apple.com>
+
+        Reviewed by David Kilzer.
+
+        <rdar://problem/6668875> Normalize Geolocation results
+
+        * platform/mac/GeolocationServiceMac.mm:
+        (-[WebCoreCoreLocationObserver locationManager:didUpdateToLocation:fromLocation:]):
+
+2009-03-15  Greg Bolsinga  <bolsinga@apple.com>
+
+        Reviewed by David Kilzer.
+
+        Update ::toString format as suggested by Darin Adler.
+
+        * page/Geoposition.cpp:
+        (WebCore::Geoposition::toString):
+
+2009-03-15  David Kilzer  <ddkilzer@apple.com>
+
+        <rdar://problem/6668238> WebCore is registering text encodings needlessly from KURL constructor.
+
+        Reviewed by Darin Adler.
+
+        Yet another case where we would trigger extended encoding loading needlessly.
+
+        * platform/text/TextEncoding.cpp:
+        (WebCore::TextEncoding::encodingForFormSubmission):
+
+2009-03-15  Simon Fraser  <simon.fraser@apple.com>
+
+        Build fix: no review.
+
+        * rendering/style/ContentData.h:
+
+2009-03-15  David Kilzer  <ddkilzer@apple.com>
+
+        Bug 24542: Improve ContentData encapsulation
+
+        <https://bugs.webkit.org/show_bug.cgi?id=24542>
+
+        Reviewed by Simon Fraser.
+
+        No tests since there is no change in behavior.
+
+        * rendering/RenderObject.cpp:
+        (WebCore::RenderObject::createObject): Used getter methods
+        instead of data members on ContentData class.  Used isImage()
+        convenience method.
+        * rendering/RenderObjectChildList.cpp:
+        (WebCore::RenderObjectChildList::updateBeforeAfterContent): Ditto.
+
+        * rendering/style/ContentData.cpp:
+        (WebCore::ContentData::clear): Extracted code into
+        deleteContent() method.
+        (WebCore::ContentData::dataEquivalent): Added.  Extracted code
+        from StyleRareNonInheritedData::contentDataEquivalent().
+        (WebCore::ContentData::deleteContent): Added.  Used by setter
+        methods.
+        * rendering/style/ContentData.h: Made m_type, m_content and
+        m_next private.
+        (WebCore::ContentData::isCounter): Added.
+        (WebCore::ContentData::isImage): Added.
+        (WebCore::ContentData::isNone): Added.
+        (WebCore::ContentData::isText): Added.
+        (WebCore::ContentData::type): Added.
+        (WebCore::ContentData::dataEquivalent): Added.
+        (WebCore::ContentData::image): Added.
+        (WebCore::ContentData::setImage): Added.
+        (WebCore::ContentData::text): Added.
+        (WebCore::ContentData::setText): Added.
+        (WebCore::ContentData::counter): Added.
+        (WebCore::ContentData::setCounter): Added.
+        (WebCore::ContentData::next): Added.
+        (WebCore::ContentData::setNext): Added.
+
+        * rendering/style/CounterContent.h:
+        (WebCore::operator!=): Removed.
+        (WebCore::operator==): Renamed operator!=() and reversed its
+        logic after extracting code from
+        StyleRareNonInheritedData::contentDataEquivalent() to create
+        ContentData::dataEquivalent().
+
+        * rendering/style/RenderStyle.cpp:
+        (WebCore::RenderStyle::setContent): Used new getters and setters
+        on ContentData class.  Changed first argument from a StringImpl*
+        to a PassRefPtr<StrimgImpl>.  Used isText() convenience method.
+        * rendering/style/RenderStyle.h:
+        (WebCore::RenderStyle::setContent): Updated declaration.
+        * rendering/style/StyleRareNonInheritedData.cpp:
+        (WebCore::StyleRareNonInheritedData::contentDataEquivalent):
+        Extracted most logic in while() loop into
+        ContentData::dataEquivalent().
+
+2009-03-15  Gustavo Noronha Silva  <gns@gnome.org>
+
+        Reviewed by Anders Carlsson.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24602
+        [Gtk] Searching in thepiratebay.org doesn't work with more than 1 word
+
+        Reintroduce the URI into the soup message after having set it in
+        the KURL, on redirects, to make sure it is properly encoded. This
+        fixes bad request problems when servers give bad URIs on their
+        response's Location header.
+
+        * platform/network/soup/ResourceHandleSoup.cpp:
+        (WebCore::restartedCallback):
+
+2009-03-15  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=19737
+        No cursor and paste not enabled right clicking text field/area
+
+        Test: fast/events/right-click-focus.html
+
+        * page/EventHandler.cpp:
+        (WebCore::EventHandler::handleMousePressEventSingleClick):
+        (WebCore::EventHandler::handleMousePressEvent):
+        Take normal code path for right clicks (we were taking it for Ctrl-clicks anyway).
+
+2009-03-15  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Adele Peterson.
+
+        https://bugs.webkit.org/show_bug.cgi?id=23949
+        HTMLSelectElement is in inconsistent state when handling mutation events
+
+        Test: fast/forms/mutation-event-recalc.html
+
+        * dom/ContainerNode.cpp:
+        (WebCore::ContainerNode::insertBefore):
+        (WebCore::ContainerNode::appendChild):
+        Call childrenChanged() before dispatching modification events, not after.
+
+        * html/HTMLOptGroupElement.cpp:
+        (WebCore::HTMLOptGroupElement::insertBefore):
+        (WebCore::HTMLOptGroupElement::replaceChild):
+        (WebCore::HTMLOptGroupElement::removeChild):
+        (WebCore::HTMLOptGroupElement::appendChild):
+        (WebCore::HTMLOptGroupElement::removeChildren):
+        * html/HTMLSelectElement.cpp:
+        (WebCore::HTMLSelectElement::add):
+        (WebCore::HTMLSelectElement::remove):
+        (WebCore::HTMLSelectElement::insertBefore):
+        (WebCore::HTMLSelectElement::replaceChild):
+        (WebCore::HTMLSelectElement::removeChild):
+        (WebCore::HTMLSelectElement::appendChild):
+        (WebCore::HTMLSelectElement::removeChildren):
+        Remove calls to recalcSelectOptions(). It is too late to recalc now, after mutation events
+        were already dispatched.
+
 2009-03-14  Greg Bolsinga  <bolsinga@apple.com>
 
         <rdar://problem/6683465>
