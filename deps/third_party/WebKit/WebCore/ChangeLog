@@ -1,3 +1,417 @@
+2009-03-14  Greg Bolsinga  <bolsinga@apple.com>
+
+        <rdar://problem/6683465>
+
+        Geolocation has to be able to handle NULL Frames.
+
+        Reviewed by Mark Rowe
+    
+2009-03-14  Greg Bolsinga  <bolsinga@apple.com>
+
+        Reviewed by David Kilzer.
+
+        Geoposition::toString was missing the Coordinates after the update.
+
+        * page/Geoposition.cpp:
+        (WebCore::Geoposition::toString):
+
+2009-03-14  Jan Michael Alonzo  <jmalonzo@webkit.org>
+
+        Reviewed by Mark Rowe.
+
+        [Gtk] Build fix - pass a Coordinate to Geoposition::create
+        https://bugs.webkit.org/show_bug.cgi?id=24603
+
+        Gtk build fix per r41650
+        https://bugs.webkit.org/show_bug.cgi?id=24506
+        Geolocation in Safari differs from the spec, no Coordinates attribute on Position
+
+        Pass a Coordinate to Geoposition::create.
+
+        * platform/gtk/GeolocationServiceGtk.cpp:
+        (WebCore::GeolocationServiceGtk::updatePosition):
+
+2009-03-14  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24545
+        Make cross-site XHR simple request definition match current spec draft
+
+        Tests: http/tests/xmlhttprequest/access-control-basic-post-fail-non-simple-content-type.html
+               http/tests/xmlhttprequest/access-control-basic-whitelist-request-headers.html
+
+        * loader/CrossOriginAccessControl.cpp:
+        (WebCore::isOnAccessControlSimpleRequestHeaderWhitelist): Added Content-Language.
+        (WebCore::isSimpleCrossOriginAccessRequest): Added HEAD. Restricted content types to those
+        that could be sent via form submission.
+
+2009-03-14  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Darin Adler.
+
+        https://bugs.webkit.org/show_bug.cgi?id=15172
+        object fallback - empty string for first argument of setAttributeNS does not work like null
+
+        https://bugs.webkit.org/show_bug.cgi?id=24548
+        createElementNS("", name) should create an element in null namespace
+
+        Tests: fast/dom/createElementNS-empty-namespace.html
+               fast/dom/setAttributeNS-empty-namespace.html
+
+        * dom/QualifiedName.h: (WebCore::QualifiedName::QualifiedNameImpl::QualifiedNameImpl):
+        Convert empty namespaces to null.
+
+2009-03-13  Mark Rowe  <mrowe@apple.com>
+
+        Rubber-stamped by Dan Bernstein.
+
+        Take advantage of the ability of recent versions of Xcode to easily switch the active
+        architecture.
+
+        * Configurations/DebugRelease.xcconfig:
+
+2009-03-13  John Abd-El-Malek  <jam@google.com>
+
+        Reviewed by Darin Fisher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24593
+        Added requestorID so we can track the request to its WebView without using frame (which was removed).
+
+        * platform/network/chromium/ResourceRequest.h:
+        (WebCore::ResourceRequest::ResourceRequest):
+        (WebCore::ResourceRequest::requestorID):
+        (WebCore::ResourceRequest::setRequestorID):
+        (WebCore::ResourceRequest::setTargetType):
+        (WebCore::ResourceRequest::policyURL):
+        (WebCore::ResourceRequest::setPolicyURL):
+        (WebCore::ResourceRequest::requestorPid):
+        (WebCore::ResourceRequest::setRequestorPid):
+
+2009-03-13  Mike Belshe  <mike@belshe.com>
+
+        Reviewed by Dimitri Glazkov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24561
+        Add custom V8 bindings for HTMLElementCanvas, Location.
+
+        * bindings/v8/custom/V8HTMLCanvasElementCustom.cpp: Added.
+        * bindings/v8/custom/V8LocationCustom.cpp: Added.
+
+2009-03-13  Stephen White  <senorblanco@chromium.org>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24584
+
+        Fix transparent text rendering on Chromium.  FontChromiumWin
+        was calling beginTransparencyLayer()/endTransparencyLayer(), with
+        a TransparencyWin inside to do GDI ClearType rendering over an
+        opaque background.  TransparencyWin does its special sauce
+        in the destructor, but it was being called too late to be used
+        correctly in the layer.  Put the special sauce into a new function,
+        composite(), and call that explicitly instead.
+
+        * platform/graphics/chromium/FontChromiumWin.cpp:
+        (WebCore::TransparencyAwareFontPainter::TransparencyAwareFontPainter::~TransparencyAwareFontPainter):
+        * platform/graphics/chromium/TransparencyWin.cpp:
+        (WebCore::TransparencyWin::~TransparencyWin):
+        (WebCore::TransparencyWin::composite):
+        (WebCore::TransparencyWin::init):
+        * platform/graphics/chromium/TransparencyWin.h:
+        * rendering/RenderThemeChromiumWin.cpp:
+        (WebCore::):
+
+2009-03-13  Mike Belshe  <mike@belshe.com>
+
+        Reviewed by Dimitri Glazkov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24562
+        Add custom implementation for getCSSCanvasContext to V8 bindings.
+
+        * bindings/v8/custom/V8DocumentCustom.cpp: Added new method.
+
+2009-03-13  Mike Belshe  <mike@belse.com>
+
+        Reviewed by Dimitri Glazkov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24580
+        Fix query() to match KURL behavior.
+
+        * platform/KURLGoogle.cpp:
+        (WebCore::KURL::query): remove extra logic around question mark.
+
+2009-03-13  Chris Fleizach  <cfleizach@apple.com>
+
+        Reviewed by Beth Dakin.
+
+        Bug 24474: AX: in multi-body tables, asking for a cell at a specific coordinate can return nil
+        https://bugs.webkit.org/show_bug.cgi?id=24474
+
+        Test: platform/mac-snowleopard/accessibility/table-multi-bodies.html
+
+        * page/AccessibilityTable.cpp:
+        (WebCore::AccessibilityTable::cellForColumnAndRow):
+
+2009-03-13  Jian Li  <jianli@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24589
+        Upstream changes to V8 event listeners (Chromium r11133) in order to
+        fix worker functionality break in Chromium.
+
+        * bindings/v8/V8AbstractEventListener.cpp:
+        (WebCore::V8AbstractEventListener::invokeEventHandler):
+        (WebCore::V8AbstractEventListener::handleEvent):
+        * bindings/v8/V8AbstractEventListener.h:
+        * bindings/v8/V8WorkerContextEventListener.cpp:
+        (WebCore::V8WorkerContextEventListener::handleEvent):
+
+2009-03-13  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Timothy Hatcher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24524
+        Introduce ScriptObject and ScriptFunctionCall abstractions.
+
+        * GNUmakefile.am: Added ScriptObject and ScriptFunctionCall to project.
+        * WebCore.pro: Ditto.
+        * WebCore.vcproj/WebCore.vcproj: Ditto.
+        * WebCore.xcodeproj/project.pbxproj: Ditto.
+        * WebCoreSources.bkl: Ditto.
+        * bindings/js/ScriptFunctionCall.cpp: Added.
+        * bindings/js/ScriptFunctionCall.h: Added.
+        * bindings/js/ScriptObject.cpp: Added.
+        * bindings/js/ScriptObject.h: Added.
+        * bindings/js/ScriptObjectQuarantine.cpp: Added.
+        * bindings/js/ScriptObjectQuarantine.h: Added.
+        * inspector/InspectorController.cpp:
+        (WebCore::InspectorController::populateScriptObjects): Changed to use InspectorDatabaseResource::bind.
+        (WebCore::InspectorController::resetScriptObjects): Changed to use InspectorDatabaseResource::unbind.
+        (WebCore::InspectorController::didOpenDatabase): Changed to use InspectorDatabaseResource::unbind.
+        * inspector/InspectorController.h: Removed addScriptDatabaseResource and
+        removeScriptDatabaseResource declarations.
+        * inspector/InspectorDatabaseResource.cpp:
+        (WebCore::InspectorDatabaseResource::InspectorDatabaseResource):
+        (WebCore::InspectorDatabaseResource::bind): Added.
+        (WebCore::InspectorDatabaseResource::unbind): Added.
+        * inspector/InspectorDatabaseResource.h: Added bind and unbind declarations.
+
+2009-03-13  Peter Kasting  <pkasting@google.com>
+
+        Reviewed by Eric Seidel.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24467
+        Make Skia drawRect() and stroke behavior match CG.
+
+        This makes drawRect() ignore the stroke width (like CG does), and
+        adds a warning comment about that to the appropriate header.
+
+        It also eliminates some hacky code in Skia's stroke preparation,
+        which tried to adjust odd-width strokes to fall on pixel boundaries.
+        Not only did this not match CG, it wouldn't necessarily work right,
+        because there could be other transforms (e.g. full-page zoom) that
+        would affect the stroke before it reached the device pixel level.
+
+        * platform/graphics/GraphicsContext.h:
+        * platform/graphics/skia/GraphicsContextSkia.cpp:
+        (WebCore::GraphicsContext::drawRect):
+        (WebCore::GraphicsContext::fillRect):
+        * platform/graphics/skia/PlatformContextSkia.cpp:
+        (PlatformContextSkia::drawRect):
+        (PlatformContextSkia::setupPaintForStroking):
+
+2009-03-13  Jian Li  <jianli@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24583
+        Need to change scope of constructor and destructor of V8ObjectEventListener from private
+        to protected so that they could be used in its derived class V8WorkerContextEventListener.
+
+        * bindings/v8/V8ObjectEventListener.h:
+
+2009-03-13  David Levin  <levin@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24579
+        Many V8*Event* files are misplaced.
+
+        This code is infrastructure for supporting the bindings and thus should
+        be in the bindings/v8 directory.
+
+        * bindings/v8/V8AbstractEventListener.cpp: Renamed from WebCore/bindings/v8/custom/V8AbstractEventListener.cpp.
+        * bindings/v8/V8AbstractEventListener.h: Renamed from WebCore/bindings/v8/custom/V8AbstractEventListener.h.
+        * bindings/v8/V8LazyEventListener.cpp: Renamed from WebCore/bindings/v8/custom/V8LazyEventListener.cpp.
+        * bindings/v8/V8LazyEventListener.h: Renamed from WebCore/bindings/v8/custom/V8LazyEventListener.h.
+        * bindings/v8/V8ObjectEventListener.cpp: Renamed from WebCore/bindings/v8/custom/V8ObjectEventListener.cpp.
+        * bindings/v8/V8ObjectEventListener.h: Renamed from WebCore/bindings/v8/custom/V8ObjectEventListener.h.
+        * bindings/v8/V8WorkerContextEventListener.cpp: Renamed from WebCore/bindings/v8/custom/V8WorkerContextEventListener.cpp.
+        * bindings/v8/V8WorkerContextEventListener.h: Renamed from WebCore/bindings/v8/custom/V8WorkerContextEventListener.h.
+
+2009-03-13  Adele Peterson  <adele@apple.com>
+
+        Reviewed by Justin Garcia.
+
+        Fix for <rdar://problem/5089327> Color of quoted content is wrong when pasted inside other quoted content
+
+        Test: editing/pasteboard/5089327.html
+
+        Handle spans being pasted within a quoted region in the same way we handle "paste as quotation" content.
+
+        * editing/ReplaceSelectionCommand.cpp:
+        (WebCore::handleStyleSpansBeforeInsertion):
+        (WebCore::ReplaceSelectionCommand::handleStyleSpans):
+
+2009-03-13  Greg Bolsinga  <bolsinga@apple.com>
+
+        Reviewed by Simon Fraser.
+
+        Update Geolocation perimission dialogs to be asynchronous.
+        https://bugs.webkit.org/show_bug.cgi?id=24505
+
+        Geolocation now requests permission from the Chrome asynchronously.
+        The Chrome is passed the Geolocation object, and the Chrome sets the permission
+        on the Geolocation. Geolocation also tracks if the Chrome should clear its cache
+        of SecurityOrigins with geolocation permission. This is so that the GeolocationService
+        can inform the Chrome of its request, and the Chrome is also free to implement its
+        own policy.
+        
+        * WebCore.base.exp:
+        * WebCore.xcodeproj/project.pbxproj:
+        * page/Chrome.cpp:
+        (WebCore::Chrome::requestGeolocationPermissionForFrame):
+        * page/Chrome.h:
+        * page/ChromeClient.h:
+        (WebCore::ChromeClient::requestGeolocationPermissionForFrame):
+        * page/Geolocation.cpp:
+        (WebCore::Geolocation::Geolocation):
+        (WebCore::Geolocation::getCurrentPosition):
+        (WebCore::Geolocation::watchPosition):
+        (WebCore::Geolocation::setIsAllowed):
+        (WebCore::Geolocation::displayChallengeIfNecessary):
+        (WebCore::Geolocation::geolocationServicePositionChanged):
+        * page/Geolocation.h:
+        (WebCore::Geolocation::isAllowed):
+        (WebCore::Geolocation::setShouldClearCache):
+        (WebCore::Geolocation::shouldClearCache):
+        (WebCore::Geolocation::):
+
+2009-03-13  Anders Carlsson  <andersca@apple.com>
+
+        Reviewed by Dan Bernstein.
+
+        <rdar://problem/6610666> Revise the Cocoa event model text API
+        
+        Add a NPCocoaEventTextInput event type. Remove the text input variables.
+        
+        * bridge/npapi.h:
+        (_NPCocoaEvent::):
+
+2009-03-13  Kevin Decker  <kdecker@apple.com>
+
+        Reviewed by Anders.
+
+        <rdar://problem/6630340> REGRESSION (39114-39115): Unity Web Player no longer works if Flip4Mac is also installed
+        
+        The code assumed if we have a plug-in that supports "application/x-oleobject" we should always prefer the object tag
+        over of an embed tag. That assumption can cause the Mac platform to load the wrong plug-in, as Flip4Mac claims supports
+        for x-oleobject.
+        
+        * rendering/RenderPartObject.cpp:
+        (WebCore::shouldUseEmbedDescendant): Made the Mac platform always return true here. 
+
+2009-03-13  Jian Li  <jianli@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24559
+        Need to port JSC fix (r41565) to V8 in order to fix layout test onload-single-line-comment.html.
+
+        * bindings/v8/custom/V8LazyEventListener.cpp:
+        (WebCore::V8LazyEventListener::getListenerFunction):
+        (WebCore::V8LazyEventListener::getWrappedListenerFunction):
+
+2009-03-13  Jian Li  <jianli@chromium.org>
+
+        Reviewed by Dimitri Glazkov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24557
+        This is to support running multiple workers in a single worker process in chromium.
+
+        * bindings/v8/custom/V8WorkerContextEventListener.cpp:
+        (WebCore::V8WorkerContextEventListener::handleEvent):
+        Add locker to v8 event listener of worker context.
+
+2009-03-13  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Sam Weinig.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24575
+        XHR response is incorrect after a network error.
+
+        Tests: http/tests/xmlhttprequest/cross-site-denied-response-sync-2.html
+               http/tests/xmlhttprequest/cross-site-denied-response-sync.html
+               http/tests/xmlhttprequest/cross-site-denied-response.html
+
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::XMLHttpRequest::networkError): Call internalAbort() to fully reset the request.
+        (WebCore::XMLHttpRequest::didFailRedirectCheck): No need to call internalAbort() here. Note
+        that since internalAbort() can drop GC protection, it is not safe to use the object after
+        this call.
+        (WebCore::XMLHttpRequest::didReceiveData): Check that the request wasn't aborted, and
+        return early if it was. This can happen during sync requests, as the loader does not know
+        that it was aborted, and just synthesizes all callbacks.
+
+2009-03-13  Adam Bergkvist <adam.bergkvist@ericsson.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=3547
+        XMLHttpRequest.statusText returns always "OK"
+
+        Covered by existing tests (which now pass on all platforms but Mac).
+
+        * xml/XMLHttpRequest.cpp:
+        (WebCore::XMLHttpRequest::statusText): Return ResourceResponse status text. It is now up
+        to each platform to correctly set the status text or set it to "OK" to retain current
+        behavior.
+
+2009-03-13  Adam Bergkvist <adam.bergkvist@ericsson.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24349
+        [QT] HTTP status text is never set
+
+        Set HTTP status text to the reason phrase attribute of QNetworkReply.
+
+        * platform/network/qt/QNetworkReplyHandler.cpp:
+        (WebCore::QNetworkReplyHandler::sendResponseIfNeeded):
+
+2009-03-12  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Mark Rowe
+
+        <rdar://problem/6622300>: Reproducible crash on
+        <http://www.editgrid.com/explore/tnc/dave/FusionChart%3A_Candlestick>
+        
+        Prevent CSSStyleSheet::checkLoaded() writing to freed memory when it gets
+        deleted from under itself. The sheetLoaded() notification can allow scripts
+        to run via HTMLTokenizer::executeScriptsWaitingForStylesheets(),
+        which can cause the last ref to the CSSStyleSheet to be released.
+
+        * css/CSSStyleSheet.cpp:
+        (WebCore::CSSStyleSheet::checkLoaded):
+
+2009-03-12  Kevin Ollivier  <kevino@theolliviers.com>
+
+        wx build fix. Allow make-generated-sources.sh to pass args down to DerivedSources.make
+
+        * make-generated-sources.sh:
+
 2009-03-12  Adam Treat  <adam.treat@torchmobile.com>
 
         Reviewed by Oliver Hunt.

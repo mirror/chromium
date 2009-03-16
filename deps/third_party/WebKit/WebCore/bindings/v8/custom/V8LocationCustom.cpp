@@ -1,10 +1,10 @@
 /*
  * Copyright (C) 2009 Google Inc. All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
  *     * Redistributions in binary form must reproduce the above
@@ -14,7 +14,7 @@
  *     * Neither the name of Google Inc. nor the names of its
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -106,7 +106,7 @@ ACCESSOR_SETTER(LocationHost)
     if (!frame)
         return;
 
-    KURL url = frame->loader()->url();  
+    KURL url = frame->loader()->url();
     String newHost = host.left(host.find(":"));
     String newPort = host.substring(host.find(":") + 1);
     url.setHost(newHost);
@@ -164,7 +164,7 @@ ACCESSOR_SETTER(LocationPathname)
     if (!frame)
         return;
 
-    KURL url = frame->loader()->url();  
+    KURL url = frame->loader()->url();
     url.setPath(pathname);
 
     navigateIfAllowed(frame, url, false, false);
@@ -181,7 +181,7 @@ ACCESSOR_SETTER(LocationPort)
     if (!frame)
         return;
 
-    KURL url = frame->loader()->url();  
+    KURL url = frame->loader()->url();
     url.setPort(port.toUInt());
 
     navigateIfAllowed(frame, url, false, false);
@@ -235,9 +235,8 @@ ACCESSOR_GETTER(LocationReload)
     if (!V8Proxy::CanAccessFrame(imp->frame(), false)) {
         static v8::Persistent<v8::FunctionTemplate> sharedTemplate = v8::Persistent<v8::FunctionTemplate>::New(v8::FunctionTemplate::New(v8LocationReloadCallback, v8::Handle<v8::Value>(), v8::Signature::New(V8Location::GetRawTemplate())));
         return sharedTemplate->GetFunction();
-    } else {
+    } else
         return privateTemplate->GetFunction();
-    }
 }
 
 ACCESSOR_GETTER(LocationReplace)
@@ -254,9 +253,8 @@ ACCESSOR_GETTER(LocationReplace)
     if (!V8Proxy::CanAccessFrame(imp->frame(), false)) {
         static v8::Persistent<v8::FunctionTemplate> sharedTemplate = v8::Persistent<v8::FunctionTemplate>::New(v8::FunctionTemplate::New(v8LocationReplaceCallback, v8::Handle<v8::Value>(), v8::Signature::New(V8Location::GetRawTemplate())));
         return sharedTemplate->GetFunction();
-    } else {
+    } else
         return privateTemplate->GetFunction();
-    }
 }
 
 ACCESSOR_GETTER(LocationAssign)
@@ -274,9 +272,8 @@ ACCESSOR_GETTER(LocationAssign)
     if (!V8Proxy::CanAccessFrame(imp->frame(), false)) {
         static v8::Persistent<v8::FunctionTemplate> sharedTemplate = v8::Persistent<v8::FunctionTemplate>::New(v8::FunctionTemplate::New(v8LocationAssignCallback, v8::Handle<v8::Value>(), v8::Signature::New(V8Location::GetRawTemplate())));
         return sharedTemplate->GetFunction();
-    } else {
+    } else
         return privateTemplate->GetFunction();
-    }
 }
 
 CALLBACK_FUNC_DECL(LocationReload)

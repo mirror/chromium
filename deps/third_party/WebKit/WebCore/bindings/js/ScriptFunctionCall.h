@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2006, 2007, 2008, 2009 Google Inc. All rights reserved.
+ * Copyright (C) 2009 Google Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
@@ -28,30 +28,37 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef V8ObjectEventListener_h
-#define V8ObjectEventListener_h
+#ifndef ScriptFunctionCall_h
+#define ScriptFunctionCall_h
 
-#include "V8CustomEventListener.h"
-#include <v8.h>
-#include <wtf/PassRefPtr.h>
+#include "PlatformString.h"
+#include "ScriptObject.h"
+#include "ScriptState.h"
+
+#include <runtime/ArgList.h>
 
 namespace WebCore {
+    class ScriptValue;
 
-    class Frame;
-
-    // V8ObjectEventListener is a special listener wrapper for objects not in the DOM.  It keeps the JS listener as a weak pointer.
-    class V8ObjectEventListener : public V8EventListener {
+    class ScriptFunctionCall {
     public:
-        static PassRefPtr<V8ObjectEventListener> create(Frame* frame, v8::Local<v8::Object> listener, bool isInline)
-        {
-            return adoptRef(new V8ObjectEventListener(frame, listener, isInline));
-        }
+        ScriptFunctionCall(ScriptState* exec, const ScriptObject& thisObject, const char* name);
+        virtual ~ScriptFunctionCall() {};
 
-    private:
-        V8ObjectEventListener(Frame*, v8::Local<v8::Object> listener, bool isInline);
-        virtual ~V8ObjectEventListener();
+        void appendArgument(const ScriptObject& parameter);
+        void appendArgument(const ScriptValue& parameter);
+        void appendArgument(const String& parameter);
+        ScriptValue call(bool& hadException);
+        ScriptObject construct(bool& hadException);
+
+    protected:
+        ScriptState* m_exec;
+        ScriptObject m_thisObject;
+        String m_name;
+        JSC::ArgList m_arguments;
+        bool m_quarantineObjects;
     };
 
 } // namespace WebCore
 
-#endif // V8ObjectEventListener_h
+#endif // ScriptFunctionCall

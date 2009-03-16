@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2008, Google Inc. All rights reserved.
- * 
+ * Copyright (C) 2006, 2007, 2008, 2009 Google Inc. All rights reserved.
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are
  * met:
- * 
+ *
  *     * Redistributions of source code must retain the above copyright
  * notice, this list of conditions and the following disclaimer.
  *     * Redistributions in binary form must reproduce the above
@@ -14,7 +14,7 @@
  *     * Neither the name of Google Inc. nor the names of its
  * contributors may be used to endorse or promote products derived from
  * this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -28,34 +28,30 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef ScriptValue_h
-#define ScriptValue_h
+#ifndef V8ObjectEventListener_h
+#define V8ObjectEventListener_h
 
-#include "PlatformString.h"
-#include "ScriptState.h"
-#include <runtime/Protect.h>
+#include "V8CustomEventListener.h"
+#include <v8.h>
+#include <wtf/PassRefPtr.h>
 
 namespace WebCore {
 
-class String;
+    class Frame;
 
-class ScriptValue {
-public:
-    ScriptValue(JSC::JSValuePtr value = JSC::noValue()) : m_value(value) {}
-    virtual ~ScriptValue() {}
+    // V8ObjectEventListener is a special listener wrapper for objects not in the DOM.  It keeps the JS listener as a weak pointer.
+    class V8ObjectEventListener : public V8EventListener {
+    public:
+        static PassRefPtr<V8ObjectEventListener> create(Frame* frame, v8::Local<v8::Object> listener, bool isInline)
+        {
+            return adoptRef(new V8ObjectEventListener(frame, listener, isInline));
+        }
 
-    JSC::JSValuePtr jsValue() const { return m_value.get(); }
-    bool getString(String& result) const;
-    String toString(ScriptState* scriptState) const { return m_value.get().toString(scriptState); }
-    bool isNull() const;
-    bool isUndefined() const;
-    bool hasNoValue() const { return m_value == JSC::noValue(); }
-
-private:
-    JSC::ProtectedJSValuePtr m_value;
-};
+    protected:
+        V8ObjectEventListener(Frame*, v8::Local<v8::Object> listener, bool isInline);
+        virtual ~V8ObjectEventListener();
+    };
 
 } // namespace WebCore
 
-#endif // ScriptValue_h
-
+#endif // V8ObjectEventListener_h

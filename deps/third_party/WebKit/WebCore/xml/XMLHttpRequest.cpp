@@ -728,6 +728,7 @@ void XMLHttpRequest::networkError()
         if (m_upload)
             m_upload->dispatchErrorEvent();
     }
+    internalAbort();
 }
 
 void XMLHttpRequest::abortError()
@@ -911,12 +912,11 @@ int XMLHttpRequest::status(ExceptionCode& ec) const
 
 String XMLHttpRequest::statusText(ExceptionCode& ec) const
 {
-    // FIXME: <http://bugs.webkit.org/show_bug.cgi?id=3547> XMLHttpRequest.statusText returns always "OK".
-    if (m_response.httpStatusCode())
-        return "OK";
+    if (!m_response.httpStatusText().isNull())
+        return m_response.httpStatusText();
 
     if (m_state == OPENED) {
-        // See comments in getStatus() above.
+        // See comments in status() above.
         ec = INVALID_STATE_ERR;
     }
 
@@ -941,7 +941,6 @@ void XMLHttpRequest::didFail(const ResourceError& error)
 
 void XMLHttpRequest::didFailRedirectCheck()
 {
-    internalAbort();
     networkError();
 }
 
@@ -1048,7 +1047,7 @@ void XMLHttpRequest::didReceiveAuthenticationCancellation(const ResourceResponse
 
 void XMLHttpRequest::didReceiveData(const char* data, int len)
 {
-    if (m_inPreflight)
+    if (m_inPreflight || m_error)
         return;
 
     if (m_state < HEADERS_RECEIVED)

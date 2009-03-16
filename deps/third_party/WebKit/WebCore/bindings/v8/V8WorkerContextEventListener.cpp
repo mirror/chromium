@@ -62,13 +62,20 @@ void V8WorkerContextEventListener::handleEvent(Event* event, bool isWindowEvent)
     // See issue 889829.
     RefPtr<V8AbstractEventListener> protect(this);
 
+    v8::Locker locker;
     v8::HandleScope handleScope;
 
     v8::Handle<v8::Context> context = m_proxy->GetContext();
     if (context.IsEmpty())
         return;
 
-    invokeEventHandler(context, event, isWindowEvent);
+    // Enter the V8 context in which to perform the event handling.
+    v8::Context::Scope scope(context);
+
+    // Get the V8 wrapper for the event object.
+    v8::Handle<v8::Value> jsEvent = WorkerContextExecutionProxy::EventToV8Object(event);
+
+    invokeEventHandler(context, event, jsEvent, isWindowEvent);
 }
 
 v8::Local<v8::Value> V8WorkerContextEventListener::callListenerFunction(v8::Handle<v8::Value> jsEvent, Event* event, bool isWindowEvent)
