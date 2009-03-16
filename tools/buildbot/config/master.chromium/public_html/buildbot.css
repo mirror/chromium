@@ -93,6 +93,71 @@ td.Event {
 	-webkit-border-radius: 5px;
 }
 
+td.DevRev {
+        padding: 4px 8px 4px 8px;
+        color: #333333;
+        -webkit-border-top-left-radius: 5px;
+        background-color: #eee;
+        width: 1%;
+}
+
+td.DevName {
+        padding: 4px 8px 4px 8px;
+        color: #333333;
+        background-color: #eee;
+        width: 1%;
+}
+
+td.DevStatus {
+        padding: 4px 4px 4px 4px;
+        color: #333333;
+        -webkit-border-top-right-radius: 5px;
+        background-color: #eee;
+}
+
+td.DevComment {
+        font-weight: normal;
+        padding: 8px 8px 8px 8px;
+        color: #333333;
+        -webkit-border-bottom-right-radius: 5px;
+        -webkit-border-bottom-left-radius: 5px;
+        background-color: #eee;
+        text-align: left;
+}
+
+td.DevRevAlt {
+        padding: 4px 8px 4px 8px;
+        color: #333333;
+        -webkit-border-top-left-radius: 5px;
+        background-color: #CCCCCC;
+        width: 1%;
+}
+
+td.DevNameAlt {
+        color: #333333;
+        background-color: #CCCCCC;
+        padding: 4px 8px 4px 8px;
+        width: 1%;
+}
+
+td.DevStatusAlt {
+        padding: 4px 4px 4px 4px;
+        color: #333333;
+        -webkit-border-top-right-radius: 5px;
+        background-color: #CCCCCC;
+}
+
+td.DevCommentAlt {
+        font-weight: normal;
+        padding: 8px 8px 8px 8px;
+        color: #333333;
+        -webkit-border-bottom-right-radius: 5px;
+        -webkit-border-bottom-left-radius: 5px;
+        background-color: #CCCCCC;
+        text-align: left;
+}
+
+
 td.Activity {
 	border-top-left-radius: 10px;
 	-webkit-border-top-left-radius: 10px;
@@ -111,6 +176,47 @@ td.idle, td.waiting, td.offline, td.building {
 	border-top-right-radius: 5px;	
 	-webkit-border-top-right-radius: 5px;	
 }
+
+.legend {
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        width: 100px;
+        max-width: 100px;
+        text-align:center;
+        padding: 2px 2px 2px 2px;
+        height:14px;
+        white-space:nowrap;
+}
+
+.DevStatusBox {
+  text-align:center;
+  height:20px;
+  padding:0 2px;
+  line-height:0;
+  white-space:nowrap;
+}
+
+.DevStatusBox a {
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  display:block;
+  width:100%;
+  height:20px;
+  line-height:20px;
+}
+
+.center_align {
+  text-align: center;
+}
+
+.right_align {
+  text-align: right;
+}
+
+.left_align {
+  text-align: left;
+}
+
 
 /* LastBuild, BuildStep states */
 .success {
@@ -143,6 +249,12 @@ td.idle, td.waiting, td.offline, td.building {
 	-webkit-border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
 	-webkit-border-bottom-right-radius: 10px;
+}
+
+.notstarted {
+  border-width:1px;
+  border-style:solid;
+  border-color:#aaa;
 }
 
 .closed {
