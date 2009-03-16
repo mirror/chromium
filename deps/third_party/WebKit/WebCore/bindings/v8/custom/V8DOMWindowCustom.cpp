@@ -108,8 +108,7 @@ CALLBACK_FUNC_DECL(DOMWindowAddEventListener)
     if (!proxy)
         return v8::Undefined();
 
-    RefPtr<EventListener> listener =
-        proxy->FindOrCreateV8EventListener(args[1], false);
+    RefPtr<EventListener> listener = proxy->FindOrCreateV8EventListener(args[1], false);
 
     if (listener) {
         String eventType = ToWebCoreString(args[0]);
@@ -140,8 +139,7 @@ CALLBACK_FUNC_DECL(DOMWindowRemoveEventListener)
     if (!proxy)
         return v8::Undefined();
 
-    RefPtr<EventListener> listener =
-        proxy->FindV8EventListener(args[1], false);
+    RefPtr<EventListener> listener = proxy->FindV8EventListener(args[1], false);
 
     if (listener) {
         String eventType = ToWebCoreString(args[0]);
@@ -173,13 +171,11 @@ CALLBACK_FUNC_DECL(DOMWindowPostMessage)
     // or
     //   postMessage(message, domain);
     if (args.Length() > 2) {
-        if (V8Proxy::IsWrapperOfType(args[1], V8ClassIndex::MESSAGEPORT)) {
+        if (V8Proxy::IsWrapperOfType(args[1], V8ClassIndex::MESSAGEPORT))
             port = V8Proxy::ToNativeObject<MessagePort>(V8ClassIndex::MESSAGEPORT, args[1]);
-        }
         domain = valueToStringWithNullOrUndefinedCheck(args[2]);
-    } else {
+    } else
         domain = valueToStringWithNullOrUndefinedCheck(args[1]);
-    }
 
     if (tryCatch.HasCaught())
         return v8::Undefined();
@@ -293,20 +289,10 @@ static Frame* createWindow(Frame* openerFrame,
             url.isEmpty() ? KURL("") : activeFrame->document()->completeURL(url);
         bool userGesture = activeFrame->script()->processingUserGesture();
 
-        if (created) {
-            newFrame->loader()->changeLocation(
-                completedUrl,
-                activeFrame->loader()->outgoingReferrer(),
-                false,
-                false,
-                userGesture);
-        } else if (!url.isEmpty()) {
-            newFrame->loader()->scheduleLocationChange(
-                completedUrl.string(),
-                activeFrame->loader()->outgoingReferrer(),
-                false,
-                userGesture);
-        }
+        if (created)
+            newFrame->loader()->changeLocation(completedUrl, activeFrame->loader()->outgoingReferrer(), false, false, userGesture);
+        else if (!url.isEmpty())
+            newFrame->loader()->scheduleLocationChange(completedUrl.string(), activeFrame->loader()->outgoingReferrer(), false, userGesture);
     }
 
     return newFrame;
@@ -331,8 +317,7 @@ CALLBACK_FUNC_DECL(DOMWindowShowModalDialog)
     v8::Local<v8::Value> dialogArgs = args[1];
     String featureArgs = valueToStringWithNullOrUndefinedCheck(args[2]);
 
-    const HashMap<String, String> features =
-        parseModalDialogFeatures(featureArgs);
+    const HashMap<String, String> features = parseModalDialogFeatures(featureArgs);
 
     const bool trusted = false;
 
@@ -364,10 +349,8 @@ CALLBACK_FUNC_DECL(DOMWindowShowModalDialog)
 
     wargs.dialog = true;
     wargs.resizable = WindowFeatures::boolFeature(features, "resizable");
-    wargs.scrollbarsVisible =
-        WindowFeatures::boolFeature(features, "scroll", true);
-    wargs.statusBarVisible =
-        WindowFeatures::boolFeature(features, "status", !trusted);
+    wargs.scrollbarsVisible = WindowFeatures::boolFeature(features, "scroll", true);
+    wargs.statusBarVisible = WindowFeatures::boolFeature(features, "status", !trusted);
     wargs.menuBarVisible = false;
     wargs.toolBarVisible = false;
     wargs.locationBarVisible = false;
@@ -460,8 +443,7 @@ CALLBACK_FUNC_DECL(DOMWindowOpen)
     // Parse the values, and then work with a copy of the parsed values
     // so we can restore the values we may not want to overwrite after
     // we do the multiple monitor fixes.
-    WindowFeatures rawFeatures(
-        valueToStringWithNullOrUndefinedCheck(args[2]));
+    WindowFeatures rawFeatures(valueToStringWithNullOrUndefinedCheck(args[2]));
     WindowFeatures windowFeatures(rawFeatures);
     FloatRect screenRect = screenAvailableRect(page->mainFrame()->view());
 
@@ -484,8 +466,7 @@ CALLBACK_FUNC_DECL(DOMWindowOpen)
         windowFeatures.heightSet = true;
     }
 
-    FloatRect windowRect(windowFeatures.x, windowFeatures.y,
-                          windowFeatures.width, windowFeatures.height);
+    FloatRect windowRect(windowFeatures.x, windowFeatures.y, windowFeatures.width, windowFeatures.height);
 
     // The new window's location is relative to its current screen, so shift
     // it in case it's on a secondary monitor. See http://b/viewIssue?id=967905.
@@ -551,8 +532,7 @@ NAMED_PROPERTY_GETTER(DOMWindow)
     if (holder.IsEmpty())
         return v8::Handle<v8::Value>();
 
-    DOMWindow* window = V8Proxy::ToNativeObject<DOMWindow>(
-        V8ClassIndex::DOMWINDOW, holder);
+    DOMWindow* window = V8Proxy::ToNativeObject<DOMWindow>(V8ClassIndex::DOMWINDOW, holder);
     if (!window)
         return v8::Handle<v8::Value>();
 
@@ -569,8 +549,7 @@ NAMED_PROPERTY_GETTER(DOMWindow)
         return V8Proxy::ToV8Object(V8ClassIndex::DOMWINDOW, child->domWindow());
 
     // Search IDL functions defined in the prototype
-    v8::Handle<v8::Value> result =
-        holder->GetRealNamedPropertyInPrototypeChain(name);
+    v8::Handle<v8::Value> result = holder->GetRealNamedPropertyInPrototypeChain(name);
     if (!result.IsEmpty())
         return result;
 
@@ -638,11 +617,10 @@ NAMED_PROPERTY_GETTER(DOMWindow)
     if (doc) {
         RefPtr<HTMLCollection> items = doc->windowNamedItems(propName);
         if (items->length() >= 1) {
-            if (items->length() == 1) {
+            if (items->length() == 1)
                 return V8Proxy::NodeToV8Object(items->firstItem());
-            } else {
+            else
                 return V8Proxy::ToV8Object(V8ClassIndex::HTMLCOLLECTION, items.get());
-            }
         }
     }
 
