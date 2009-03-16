@@ -213,7 +213,7 @@ class Stager(object):
                                                raise_error=options.official)
     if not os.path.exists(zip_file):
       raise StagingError('Failed to make zip package %s' % zip_file)
-    return (zip_dir, zip_file)
+    return (zip_dir, [zip_file])
 
   def _CreateDebArchive(self):
     """Put the build files into a Debian installer package.
