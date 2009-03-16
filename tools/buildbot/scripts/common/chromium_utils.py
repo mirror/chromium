@@ -32,6 +32,15 @@ class PathNotFound(Exception): pass
 class ExternalError(Exception): pass
 class NotImplemented(Exception): pass
 
+def IsWindows():
+  return sys.platform in ('cygwin', 'win32')
+
+def IsLinux():
+  return sys.platform in ('linux', 'linux2')
+
+def IsMac():
+  return sys.platform == 'darwin'
+
 def MeanAndStandardDeviation(data):
   """Calculates mean and standard deviation for the values in the list.
 
