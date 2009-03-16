@@ -66,9 +66,10 @@ class TryJobHTTP(TryBase):
     """Grab a http post connection."""
     job_name = options.get('name', 'Unnamed')
     user = options.get('user', 'John Doe')
-    email = options.get('email', None)
+    email = options.get('email', '')
     if 'user' in options and not email:
       email = '%s@%s' % (user, config.Master.master_domain)
+    emails = email.split(',')
     diff = options.get('patch', None)
     root = options.get('root', None)
     clobber = options.get('clobber', False)
@@ -89,7 +90,7 @@ class TryJobHTTP(TryBase):
     else:
       patch = None
     jobstamp = TryJobStamp(branch=branch, revision=revision, patch=patch,
-                           author_name=user, author_emails=email,
+                           author_name=user, author_emails=emails,
                            job_name=job_name, tests=tests)
     return builderNames, jobstamp, buildsetID
 
