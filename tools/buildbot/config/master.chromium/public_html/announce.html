@@ -40,7 +40,7 @@
                <b>Sheriffs:</b>
             </td>
             <td>
-              nsylvain, tony, laforge
+              jar, ojan, jonc
             </td>
           </tr>
           <tr>
@@ -54,10 +54,12 @@
                 } else if (document.location.port == 8016 || document.location.port == 8019) {
                   // internal version of experimental, add link to the main waterfall.
                   document.write('<a href="http://' + document.location.hostname + ':8010">main waterfall</a>');
-                } else if (document.location.pathname == '/buildbot/waterfall/waterfall') {
+                } else if (document.location.pathname == '/buildbot/waterfall/waterfall' ||
+                           document.location.pathname == '/buildbot/waterfall/grid') {
                   // external version of chromium, add link to experimental.
                   document.write('<a href="../waterfall.fyi">experimental builders</a>');
-                } else if (document.location.pathname == '/buildbot/waterfall.fyi/waterfall') {
+                } else if (document.location.pathname == '/buildbot/waterfall.fyi/waterfall' ||
+                           document.location.pathname == '/buildbot/waterfall.fyi/grid') {
                   // external version of experimental, add link to main waterfall.
                   document.write('<a href="../waterfall">main waterfall</a>');
                 }
@@ -83,7 +85,8 @@
             if (document.location.port == 8016 || document.location.port == 8019) {
               bar = 'http://' + document.location.hostname + ':8010/' + bar
               waterfall = 'http://' + document.location.hostname + ':8010/' + waterfall
-            } else if (document.location.pathname == '/buildbot/waterfall.fyi/waterfall') {
+            } else if (document.location.pathname == '/buildbot/waterfall.fyi/waterfall' ||
+                       document.location.pathname == '/buildbot/waterfall.fyi/grid') {
               bar = '../waterfall/' + bar
               waterfall = '../waterfall/' + waterfall
             }
@@ -100,6 +103,7 @@
             DisplayBar(webkit, "Webkit");
             DisplayBar(modules, "Modules");
           </script>
+          <tr><td></td><td><b><font color=red>Try the new <a href=./grid>Developer View!</a> (beta)</font></b></td></tr>
         </table>
       </td>
       <td width="3%">
