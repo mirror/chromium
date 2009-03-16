@@ -38,7 +38,7 @@ class TryJobSubversion(TryBase):
     root = options.get('root', None)
     clobber = options.get('clobber', False)
     # -pN argument to patch.
-    patchlevel = options.get('patchlevel', 0)
+    patchlevel = int(options.get('patchlevel', 0))
     branch = options.get('branch', None)
     revision = options.get('revision', None)
     buildsetID = options.get('reason', "%s: %s" % (user, job_name))
