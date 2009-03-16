@@ -131,6 +131,8 @@ def _ParseSendChangeOptions(options):
     values['tests'] = ','.join(options.tests)
   if options.root:
     values['root'] = options.root
+  if options.patchlevel:
+    values['patchlevel'] = options.patchlevel
   return values
 
 
@@ -240,21 +242,21 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
 
   group = optparse.OptionGroup(parser, "Result and status options")
   group.add_option("-u", "--user", default=getpass.getuser(),
-                   help="User name to be used.")
+                   help="User name to be used")
   group.add_option("-e", "--email", default=os.environ.get('EMAIL_ADDRESS'),
                    help="Email address where to send the results. Use the "
                         "EMAIL_ADDRESS environment variable to set the default "
-                        "email address.")
+                        "email address")
   group.add_option("-n", "--name", default=name,
-                   help="Name of the try change.")
+                   help="Name of the try change")
   parser.add_option_group(group)
 
   group = optparse.OptionGroup(parser, "Try run options")
   group.add_option("-b", "--bot", action="append",
                     help="Force the use of specifics build slave, "
-                         "i.e. linux, mac, win.")
+                         "i.e. linux, mac, win")
   group.add_option("-r", "--revision", default=None, type='int',
-                    help="Revision to use for testing.")
+                    help="Revision to use for testing")
   # group.add_option("-t", "--tests", action="append",
   #                   help="Override the list of tests to run, use multiple"
   #                        "times to list many tests (or comma separated)")
@@ -264,7 +266,7 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
   group.add_option("-f", "--file", default=file_list, dest="files",
                    metavar="FILE", action="append",
                    help="Use many times to list the files to include in the "
-                        "try, relative to the repository root.")
+                        "try, relative to the repository root")
   # group.add_option("-i", "--issue", default=issue,
   #                  help="Rietveld's issue id to use instead of a local"
   #                       " diff.")
@@ -272,26 +274,28 @@ def TryChange(argv, name='Unnamed', file_list=None, swallow_exception=False,
   #                  help="Rietveld's patchset id to use instead of a local"
   #                       " diff.")
   group.add_option("--diff", default=None,
-                   help="File containing the diff to try.")
+                   help="File containing the diff to try")
   group.add_option("--url", default=None,
-                   help="Url where to grab a patch.")
+                   help="Url where to grab a patch")
   group.add_option("--root", default=None,
-                   help="Root to use for the patch.")
+                   help="Root to use for the patch")
+  group.add_option("--patchlevel", default=None, type='int',
+                   help="To be used as -pN parameter to patch")
   parser.add_option_group(group)
 
   group = optparse.OptionGroup(parser, "How to access the try server")
   group.add_option("--use_http", action="store_true",
-                   help="Use HTTP to talk to the try server.")
+                   help="Use HTTP to talk to the try server")
   group.add_option("--host", default=None,
-                   help="Host address to use to talk to the try server.")
+                   help="Host address to use to talk to the try server")
   group.add_option("--port", default=None,
-                   help="HTTP port to use to talk to the try server.")
+                   help="HTTP port to use to talk to the try server")
   group.add_option("--proxy", default=None,
                    help="HTTP proxy.")
   group.add_option("--use_svn", action="store_true",
-                   help="Use SVN to talk to the try server.")
+                   help="Use SVN to talk to the try server")
   group.add_option("--svn_repo", default=None,
-                   help="SVN url to use to write the changes in.")
+                   help="SVN url to use to write the changes in")
   parser.add_option_group(group)
 
   options, args = parser.parse_args(argv)
