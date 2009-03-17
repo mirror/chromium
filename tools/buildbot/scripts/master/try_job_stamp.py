@@ -8,6 +8,7 @@
 import copy
 import datetime
 import re
+import urllib2
 
 from buildbot import buildset
 from buildbot.sourcestamp import SourceStamp
@@ -17,8 +18,12 @@ from twisted.python import log
 class TryJobStamp(SourceStamp):
   params = ['author_name', 'author_emails', 'job_name', 'timestamp', 'tests']
   # Simplistic email matching regexp.
-  EMAIL_VALIDATOR = re.compile(
+  _EMAIL_VALIDATOR = re.compile(
       r"[a-zA-Z\.\+\-\_]+@[a-zA-Z\.\-]+\.[a-zA-Z]{2,3}$")
+
+  _LAST_KNOWN_GOOD_REV_URL = 'http://chromium-status.appspot.com/lkgr'
+  
+  _last_known_good_rev = 0
 
   """Store additional information about a source specific run to execute. Just
   storing the actual patch (like SourceStamp does) is insufficient."""
@@ -29,6 +34,17 @@ class TryJobStamp(SourceStamp):
       else:
         setattr(self, param, None)
     SourceStamp.__init__(self, *args, **kwargs)
+
+    # TODO(maruel): Enable this code.
+    if not self.revision and False:
+      # Grab last known good revision number.
+      try:
+        self.revision = int(urllib2.urlopen(self._LAST_KNOWN_GOOD_REV_URL,
+                                            timeout=10).read().strip())
+        TryJobStamp._last_known_good_rev = self.revision
+      except IOError:
+        if TryJobStamp._last_known_good_rev:
+          self.revision = TryJobStamp._last_known_good_rev
 
     # Print out debug info.
     patch_info = '(No patch)'
@@ -53,7 +69,7 @@ class TryJobStamp(SourceStamp):
     # Do sanitization after logging.
     for email in self.author_emails:
       # Quick sanitization.
-      if not self.EMAIL_VALIDATOR.match(email):
+      if not self._EMAIL_VALIDATOR.match(email):
         log.msg("'%s' is an invalid email address!" % email)
         self.author_emails.remove(email)
 
