@@ -68,7 +68,8 @@ class GateKeeper(MailNotifier):
   _last_time_mail_sent = None
   
   # Attributes we want to set from provided arguments, or set to None
-  params = ['reply_to', 'lookup', 'categories_steps', 'exclusions']
+  params = ['reply_to', 'lookup', 'categories_steps', 'exclusions',
+            'forgiving_steps']
 
   def __init__(self, *args, **kwargs):
     """Constructor with following specific arguments (on top of base class').
@@ -83,10 +84,14 @@ class GateKeeper(MailNotifier):
                              categories, and the empty string category can be
                              used to say all builders.
 
-    @type exclusions: dictionary of strings to arrays of strings
+    @type exclusions: Dictionary of strings to arrays of strings.
     @param exclusions: The key is a builder name for which we want to ignore a
                        series of step names set as the value in the form of an
                        array of strings. Defaults to None.
+
+    @type forgiving_steps: List of strings.
+    @param forgiving_steps: The list of steps for which a failure email should
+                            NOT be sent to the blame list.
     """
     for param in self.params:
       if param in kwargs:
@@ -100,11 +105,14 @@ class GateKeeper(MailNotifier):
     if not self.exclusions:
       self.exclusions = {}
 
+    if not self.forgiving_steps:
+      self.forgiving_steps = []
+
     MailNotifier.__init__(self, lookup=self.lookup, *args, **kwargs)
 
   def isInterestingBuilder(self, builder, name):
     """Confirm if we are interested in this builder."""
-    if (name in self.exclusions and not self.exclusions[name]):
+    if name in self.exclusions and not self.exclusions[name]:
       return False
     if not self.categories_steps or '' in self.categories_steps:
       return True
@@ -168,9 +176,9 @@ class GateKeeper(MailNotifier):
 
     for step_text in steps_text:
       if step_text in steps_to_check:
-        return self.closeTree(name, build, step_text)
+        return self.closeTree(name, build, [step_text])
 
-  def closeTree(self, name, build, step_text):
+  def closeTree(self, name, build, steps_text):
     # We don't want to do this too often
     if (self._last_time_mail_sent and self._last_time_mail_sent >
         time.time() - self._MINIMUM_DELAY_BETWEEN_CLOSE):
@@ -200,11 +208,11 @@ class GateKeeper(MailNotifier):
         latest_revision = 0
 
     # Send the notification email.
-    defered_object = self.buildMessage(name, build, step_text)
+    defered_object = self.buildMessage(name, build, steps_text)
 
     # Post a request to close the tree.
     message = ('Tree is closed (Automatic: "%s" on "%s" from %d: %s)' %
-               (step_text, name, latest_revision,
+               (", ".join(steps_text), name, latest_revision,
                 ", ".join(build.getResponsibleUsers())))
     password_file = file(".status_password")
     params = urllib.urlencode({'message': message,
@@ -214,7 +222,7 @@ class GateKeeper(MailNotifier):
 
     return defered_object
 
-  def buildMessage(self, name, build, step_text):
+  def buildMessage(self, name, build, steps_text):
     """Send an email about the tree closing.
 
     Don't attach the patch as MailNotifier.buildMessage do.
@@ -225,7 +233,7 @@ class GateKeeper(MailNotifier):
     build_url = self.status.getURLForThing(build)
     waterfall_url = self.status.getBuildbotURL()
     status_text = ('Automatically closing tree for "%s" on "%s"' %
-                   (step_text, name))
+                   (", ".join(steps_text), name))
     blame_list = ",".join(build.getResponsibleUsers())
     revisions_string = ''
     latest_revision = 0
@@ -320,10 +328,16 @@ Buildbot waterfall: http://build.chromium.org/
     recipients = list(self.extraRecipients[:])
     recipients.extend(BuildSheriffs.GetSheriffs())
     if self.sendToInterestedUsers and self.lookup:
-      for u in build.getInterestedUsers():
-        d = defer.maybeDeferred(self.lookup.getAddress, u)
-        d.addCallback(recipients.append)
-        dl.append(d)
+      blame_interested_users = False
+      for step_text in steps_text:
+        if step_text not in self.forgiving_steps:
+          blame_interested_users = True
+          break
+      if blame_interested_users:
+        for u in build.getInterestedUsers():
+          d = defer.maybeDeferred(self.lookup.getAddress, u)
+          d.addCallback(recipients.append)
+          dl.append(d)
     d = defer.DeferredList(dl)
     d.addCallback(self._gotRecipients, recipients, m)
     return d
