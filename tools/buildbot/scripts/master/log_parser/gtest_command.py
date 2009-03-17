@@ -20,6 +20,8 @@ class TestObserver(buildstep.LogLineObserver):
     self._current_test_case = ''
     self._current_test = ''
     self._current_failure = None
+    self._suites_started = 0
+    self._suites_ended = 0
 
     # This may be either text or a number. It will be used in the phrase
     # '%s disabled' on the waterfall display.
@@ -29,30 +31,26 @@ class TestObserver(buildstep.LogLineObserver):
     self.failed_tests = {}
 
     # Regular expressions for parsing GTest logs
-    self._test_case_start = re.compile('\[----------\] .+ test.+from (\w+)')
+    self._test_case_start = re.compile('\[----------\] \d+ tests? from (\w+)')
     self._test_start = re.compile('^\[ RUN      \] .+\.(\w+)')
     self._test_end   = re.compile('^^\[(       OK |  FAILED  )] .+\.(\w+)')
-    self._disabled   = re.compile('  YOU HAVE(.*)DISABLED TEST')
+    self._disabled   = re.compile('  YOU HAVE (\d+) DISABLED TEST')
+    self._suite_start = re.compile(
+        '^\[==========\] Running \d+ tests? from \d+ test cases?.')
     self._suite_end  = re.compile(
-        '^\[----------\] Global test environment tear-down')
+        '^\[==========\] \d+ tests? from \d+ test cases? ran.')
+
+  def RunningTests(self):
+    """Returns True if we appear to be in the middle of running tests."""
+    return self._suites_started > self._suites_ended
 
   def outLineReceived(self, line):
     """This is called once with each line of the test log."""
 
-    # Is it the first line in a test case?
-    results = self._test_case_start.search(line)
+    # Is it the first line of the suite?
+    results = self._suite_start.search(line)
     if results:
-      self._current_test = ''
-      self._failure_description = []
-      self._current_test_case = results.group(1)
-      return
-
-    # Is it the last line of the suite (if so, clear state)
-    results = self._suite_end.search(line)
-    if results:
-      self._current_test_case = ''
-      self._current_test = ''
-      self._failure_description = []
+      self._suites_started += 1
       return
 
     # Is it a line reporting disabled tests?
@@ -68,6 +66,27 @@ class TestObserver(buildstep.LogLineObserver):
         # If we can't parse the line, at least give a heads-up. This is a
         # safety net for a case that shouldn't happen but isn't a fatal error.
         self.disabled_tests = 'some'
+      return
+
+    # We don't care about anything else if we're not in the list of tests.
+    if not self.RunningTests():
+      return
+
+    # Is it the first line in a test case?
+    results = self._test_case_start.search(line)
+    if results:
+      self._current_test = ''
+      self._failure_description = []
+      self._current_test_case = results.group(1)
+      return
+
+    # Is it the last line of the suite (if so, clear state)?
+    results = self._suite_end.search(line)
+    if results:
+      self._suites_ended += 1
+      self._current_test_case = ''
+      self._current_test = ''
+      self._failure_description = []
       return
 
     # Is it the start of an individual test?
@@ -110,6 +129,9 @@ class GTestCommand(shell.ShellCommand):
       return basic_info
     elif results == builder.WARNINGS:
       return basic_info + ['warnings']
+
+    if self.test_observer.RunningTests():
+      basic_info += ['did not complete']
 
     if len(self.test_observer.failed_tests) > 0:
       failure_text = ['failed %d' % len(self.test_observer.failed_tests)]
