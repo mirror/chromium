@@ -1,3 +1,375 @@
+2009-03-17  Xan Lopez  <xlopez@igalia.com>
+
+        Reviewed by Holger Freyther.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24592
+        [GTK] Crash in FcPatternHash
+
+        Style fixes.
+
+        * platform/graphics/gtk/FontPlatformDataGtk.cpp:
+        (WebCore::FontPlatformData::operator=):
+        * platform/graphics/gtk/FontPlatformDataPango.cpp:
+
+2009-03-17  Xan Lopez  <xlopez@igalia.com>
+
+        Reviewed by Holger Freyther.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24592
+        [GTK] Crash in FcPatternHash
+
+        Sanitize memory management in pango fonts.
+
+        Release memory allocated by FontPlatformDataPango in its own
+        destructor instead of doing it from other classes, and add copy
+        constructor and '=' operator to be able to track referenced
+        objects properly.
+
+        * platform/graphics/gtk/FontPlatformDataPango.cpp:
+        (WebCore::FontPlatformData::~FontPlatformData):
+        (WebCore::FontPlatformData::operator=):
+        (WebCore::FontPlatformData::FontPlatformData):
+        * platform/graphics/gtk/SimpleFontDataPango.cpp:
+
+2009-03-17  Darin Adler  <darin@apple.com>
+
+        Reviewed by Alexey Proskuryakov.
+
+        Bug 24624: Crash in imageLoadEventTimerFired after adoptNode used on <img>,
+        seen with inspector, which uses adoptNode
+        https://bugs.webkit.org/show_bug.cgi?id=24624
+        rdar://problem/6422850
+
+        Test: fast/dom/HTMLImageElement/image-load-cross-document.html
+
+        * dom/Document.cpp:
+        (WebCore::Document::Document): Removed m_imageLoadEventTimer.
+        (WebCore::Document::detach): Removed m_imageLoadEventDispatchSoonList and
+        m_imageLoadEventDispatchingList.
+        (WebCore::Document::implicitClose): Called ImageLoader::dispatchPendingLoadEvents
+        instead of dispatchImageLoadEventsNow.
+
+        * dom/Document.h: Removed ImageLoader, dispatchImageLoadEventSoon,
+        dispatchImageLoadEventsNow, removeImage, m_imageLoadEventDispatchSoonList,
+        m_imageLoadEventDispatchingList, m_imageLoadEventTimer, and imageLoadEventTimerFired.
+
+        * loader/ImageLoader.cpp:
+        (WebCore::loadEventSender): Added. Returns the single global ImageLoadEventSender
+        object used privately as the target of the load event timer.
+        (WebCore::ImageLoader::~ImageLoader): Call ImageLoadEventSender::cancelLoadEvent
+        rather than Document::removeImage.
+        (WebCore::ImageLoader::setImage): Use m_element directly, not element().
+        (WebCore::ImageLoader::updateFromElement): Ditto. Also name the local variable
+        document instead of doc.
+        (WebCore::ImageLoader::notifyFinished): Call ImageLoadEventSender::dispatchLoadEventSoon
+        rather than Document::dispatchImageLoadEventSoon.
+        (WebCore::ImageLoader::dispatchPendingLoadEvent): Added. Handles the common logic
+        about when load events can be dispatched so that dispatchLoadEvent only has to
+        have the specific part for each derived class. This includes a check that the
+        document is attached, which used to be handled by having documents empty out the
+        image load event vectors in the detach function.
+        (WebCore::ImageLoader::dispatchPendingLoadEvents): Added. Calls the appropriate
+        function on the ImageLoadEventSender, which avoids the need to have that class be
+        public in the ImageLoader header.
+        (WebCore::ImageLoadEventSender::ImageLoadEventSender): Added. Has the code that
+        was previously in the Document constructor.
+        (WebCore::ImageLoadEventSender::dispatchLoadEventSoon): Added. Has the code that
+        was previously in Document::dispatchImageLoadEventSoon.
+        (WebCore::ImageLoadEventSender::cancelLoadEvent): Added. Has the code that was
+        previously in Document::removeImage.
+        (WebCore::ImageLoadEventSender::dispatchPendingLoadEvents): Added. Has the code
+        that was previously in Document::dispatchImageLoadEventsNow.
+        (WebCore::ImageLoadEventSender::timerFired): Added. Calls dispatchPendingLoadEvents.
+
+        * loader/ImageLoader.h: Improved comments. Made the virtual functions private
+        or protected rather than public. Added static dispatchPendingLoadEvents function
+        for use by Document and private dispatchPendingLoadEvent function for use by
+        ImageLoadEventSender. Made setLoadingImage private and eliminated
+        setHaveFiredLoadEvent since that can all be done inside the class without any
+        member functions.
+
+        * html/HTMLImageLoader.cpp:
+        (WebCore::HTMLImageLoader::dispatchLoadEvent): Removed logic to check whether a
+        load event already fired and whether image() is 0. These are now both base class
+        responsibilities.
+        * svg/SVGImageLoader.cpp:
+        (WebCore::SVGImageLoader::dispatchLoadEvent): Ditto.
+        * wml/WMLImageLoader.cpp:
+        (WebCore::WMLImageLoader::dispatchLoadEvent): Ditto.
+
+2009-03-17  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Timothy Hatcher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24623
+        Refactor ConsoleMessage to use ScriptFuncitonCall and eliminate JSC
+        dependencies.
+
+        * bindings/js/ScriptFunctionCall.cpp:
+        (WebCore::ScriptFunctionCall::appendArgument): Added uint and ScriptString-taking methods.
+        * bindings/js/ScriptFunctionCall.h:
+        * bindings/js/ScriptObjectQuarantine.cpp:
+        (WebCore::quarantineValue): Added generic ScriptValue quarantine helper.
+        * bindings/js/ScriptObjectQuarantine.h:
+        * bindings/js/ScriptValue.cpp:
+        (WebCore::ScriptValue::isEqual): Added.
+        * bindings/js/ScriptValue.h:
+        * inspector/ConsoleMessage.cpp:
+        (WebCore::ConsoleMessage::ConsoleMessage):
+        (WebCore::ConsoleMessage::addToConsole): Added.
+        (WebCore::ConsoleMessage::isEqual): Changed to use ScriptValue::isEqual.
+        * inspector/ConsoleMessage.h:
+        (WebCore::ConsoleMessage::incrementCount): Added.
+        * inspector/InspectorController.cpp:
+        (WebCore::InspectorController::addConsoleMessage): Changed to use ConsoleMessage::addToConsole.
+        (WebCore::InspectorController::populateScriptObjects): Ditto.
+        * inspector/InspectorController.h:
+
+2009-03-17  Kevin Ollivier  <kevino@theolliviers.com>
+
+        Reviewed by Mark Rowe.
+
+        Get BUILDING_ON_* defines from Platform.h.
+        
+        https://bugs.webkit.org/show_bug.cgi?id=24630
+
+        * WebCorePrefix.h:
+
+2009-03-16  Xan Lopez  <xlopez@igalia.com>
+
+        Reviewed by Holger Freyther.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24592
+        [GTK] Crash in FcPatternHash
+
+        Sanitize memory management in gtk fonts.
+
+        Release memory allocated by FontPlatformDataGtk in its own
+        destructor instead of doing it from other classes, and add copy
+        constructor and '=' operator to be able to track referenced
+        objects properly.
+
+        * platform/graphics/gtk/FontPlatformData.h:
+        * platform/graphics/gtk/FontPlatformDataGtk.cpp:
+        (WebCore::FontPlatformData::operator=):
+        (WebCore::FontPlatformData::FontPlatformData):
+        (WebCore::FontPlatformData::~FontPlatformData):
+        * platform/graphics/gtk/SimpleFontDataGtk.cpp:
+        (WebCore::SimpleFontData::platformDestroy):
+
+2009-03-17  Ariya Hidayat  <ariya.hidayat@nokia.com>
+
+        Build fix for Qt < 4.5.
+
+        As reported by Yael Aharon  <yael.aharon@nokia.com>
+
+        * platform/graphics/qt/GraphicsContextQt.cpp:
+        (WebCore::GraphicsContext::drawLine):
+
+2009-03-17  Alexey Proskuryakov  <ap@webkit.org>
+
+        Reviewed by Sam Weinig.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24614
+        Access control checks are different in cached and uncached cases
+
+        Test: http/tests/xmlhttprequest/access-control-basic-non-simple-deny-cached.html
+
+        * loader/CrossOriginAccessControl.cpp:
+        (WebCore::isOnAccessControlSimpleRequestMethodWhitelist): Factored out simple method
+        check for use in both cached and uncached cases. In cached case, an old definition that
+        omitted HEAD was still used.
+        (WebCore::isOnAccessControlSimpleRequestHeaderWhitelist): Check that content type has an
+        allowed value. This is needed in all call sites. Also changed to compare MIME type, not
+        content type.
+        (WebCore::isSimpleCrossOriginAccessRequest): Use the above methods.
+
+        * loader/CrossOriginAccessControl.h: Expose isOnAccessControlSimpleRequestMethodWhitelist.
+
+        * loader/CrossOriginPreflightResultCache.cpp:
+        (WebCore::CrossOriginPreflightResultCacheItem::allowsCrossOriginMethod):
+        (WebCore::CrossOriginPreflightResultCacheItem::allowsCrossOriginHeaders):
+        Use the new checks for simple method and header.
+
+2009-03-16  Gustavo Noronha Silva  <gns@gnome.org> and Thadeu Lima de Souza Cascardo <cascardo@holoscopio.com>
+
+        Reviewed by Mark Rowe.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24638
+        [GTK] HTML5 media tags do not work
+
+        Add a repaint-requested signal to the video sink, and use it to
+        call MediaPlayerPrivate::repaint, so that the video actually
+        plays.
+
+        * platform/graphics/gtk/MediaPlayerPrivateGStreamer.cpp:
+        (WebCore::mediaPlayerPrivateRepaintCallback):
+        (WebCore::MediaPlayerPrivate::createGSTPlayBin):
+        * platform/graphics/gtk/VideoSinkGStreamer.cpp:
+        (webkit_video_sink_idle_func):
+        (webkit_video_sink_render):
+        (webkit_video_sink_class_init):
+
+2009-03-16  Gustavo Noronha Silva  <gns@gnome.org> and Thadeu Lima de Souza Cascardo <cascardo@holoscopio.com>
+
+        Reviewed by Holger Freyther.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24638
+        [GTK] HTML5 media tags do not work
+
+        Work-around the fact that gst_element_query_duration returns true even
+        though it is unable to figure out the duration when in stream (push)
+        mode.
+
+        * platform/graphics/gtk/MediaPlayerPrivateGStreamer.cpp:
+        (WebCore::MediaPlayerPrivate::duration):
+
+2009-03-16  Darin Adler  <darin@apple.com>
+
+        Reviewed by Kevin Decker.
+
+        <rdar://problem/6642742> Top Sites malfunction when switching text zoom mode
+
+        * page/Frame.cpp:
+        (WebCore::Frame::setNeedsReapplyStyles): Don’t do anything if the frame is
+        currently showing a non-HTML view.
+
+2009-03-16  Darin Adler  <darin@apple.com>
+
+        Reviewed by Adele Peterson.
+
+        Bug 24629: moving forward or backward a paragraph fails at edge of document
+        https://bugs.webkit.org/show_bug.cgi?id=24629
+        rdar://problem/6544413
+
+        Test: editing/selection/move-paragraph-document-edges.html
+
+        * editing/visible_units.cpp:
+        (WebCore::previousParagraphPosition): Use the last result from
+        previousLinePosition rather than going all the way back to what was originally
+        passed in when we hit exception cases like null or not moving. This correctly
+        inherits the behavior of previousLinePosition when we are in a paragraph at the
+        edge of a document.
+        (WebCore::nextParagraphPosition): Ditto.
+
+2009-03-16  Darin Adler  <darin@apple.com>
+
+        Reviewed by Adele Peterson.
+
+        Bug 24619: RenderObject::selectionStartEnd does not need to be a virtual function
+        https://bugs.webkit.org/show_bug.cgi?id=24619
+
+        * rendering/RenderObject.h: Remove virtual keyword from selectionStartEnd declaration.
+        * rendering/RenderView.h: Ditto.
+
+2009-03-16  Peter Kasting  <pkasting@google.com>
+
+        Reviewed by David Hyatt.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24368
+        DOM scroll events should be based off the actual number of wheel
+        ticks, not off the number of lines scrolled.  This matches IE.
+
+        * dom/Node.cpp:
+        (WebCore::Node::dispatchWheelEvent):
+        * dom/WheelEvent.cpp:
+        (WebCore::WheelEvent::WheelEvent):
+        * dom/WheelEvent.h:
+        (WebCore::WheelEvent::create):
+        * platform/PlatformWheelEvent.h:
+        (WebCore::PlatformWheelEvent::wheelTicksX):
+        (WebCore::PlatformWheelEvent::wheelTicksY):
+        * platform/gtk/WheelEventGtk.cpp:
+        (WebCore::PlatformWheelEvent::PlatformWheelEvent):
+        * platform/mac/WheelEventMac.mm:
+        (WebCore::PlatformWheelEvent::PlatformWheelEvent):
+        * platform/qt/WheelEventQt.cpp:
+        * platform/win/WheelEventWin.cpp:
+        (WebCore::PlatformWheelEvent::PlatformWheelEvent):
+        * platform/wx/MouseWheelEventWx.cpp:
+        (WebCore::PlatformWheelEvent::PlatformWheelEvent):
+
+2009-03-16  Simon Fraser  <simon.fraser@apple.com>
+
+        Reviewed by Eric Seidel
+        
+        Clean up a few issues in the Animation code:
+
+        * page/animation/AnimationBase.cpp:
+        (WebCore::AnimationBase::updateStateMachine):
+        Whitespace
+        
+        (WebCore::AnimationBase::willNeedService):
+        Don't round to float, use std::max
+
+        * page/animation/AnimationController.cpp:
+        (WebCore::AnimationControllerPrivate::startTimeResponse):
+        Fix erroneously copied line to null out m_lastResponseWaiter.
+
+2009-03-12  David Hyatt  <hyatt@apple.com>
+
+        Reviewed by Eric Seidel
+
+        https://bugs.webkit.org/show_bug.cgi?id=13632
+
+        Overflow scrolling needs to account for the bottom/right padding on the object itself as well
+        as for bottom/right margins on children.
+
+        Existing tests cover this.
+
+        * rendering/RenderBlock.cpp:
+        (WebCore::RenderBlock::lowestPosition):
+        (WebCore::RenderBlock::rightmostPosition):
+
+2009-03-16  Sam Weinig  <sam@webkit.org>
+
+        Reviewed by Anders Carlsson.
+
+        Fix for <rdar://problem/6320555>
+        Add an upper limit for setting HTMLSelectElement.length.
+
+        Test: fast/forms/select-max-length.html
+
+        * html/HTMLSelectElement.cpp:
+        (WebCore::HTMLSelectElement::setOption):
+        (WebCore::HTMLSelectElement::setLength):
+
+2009-03-16  Eric Carlson  <eric.carlson@apple.com>
+
+        Reviewed by Simon Fraser.
+
+        <rdar://problem/6686721> Media document crash in 64-bit WebKit
+
+        * platform/graphics/mac/MediaPlayerPrivateQTKit.mm:
+        (WebCore::MediaPlayerPrivate::createQTMovieView): QTMovieContentViewClass is only used when
+        rendering inline with old versions of QuickTime, so don't look for it when we are in a 
+        media document.
+
+2009-03-16  Dimitri Glazkov  <dglazkov@chromium.org>
+
+        Reviewed by Timothy Hatcher.
+
+        https://bugs.webkit.org/show_bug.cgi?id=24590
+        Refactor InspectorDOMStorageResource to use ScriptFunctionCall.
+
+        * bindings/js/ScriptFunctionCall.cpp:
+        (WebCore::ScriptFunctionCall::appendArgument): Added method for bool argument.
+        * bindings/js/ScriptFunctionCall.h: Ditto, also cleaned up.
+        * bindings/js/ScriptObjectQuarantine.cpp:
+        (WebCore::getQuarantinedScriptObject): Added Storage helper.
+        * bindings/js/ScriptObjectQuarantine.h: Ditto.
+        * inspector/InspectorController.cpp:
+        (WebCore::InspectorController::populateScriptObjects): Changed to use bind method.
+        (WebCore::InspectorController::resetScriptObjects): Changed to use unbind method.
+        (WebCore::InspectorController::didUseDOMStorage): Changed to use isSameHostAndType and bind methods.
+        * inspector/InspectorController.h: Removed add/remove methods for DOM storage.
+        * inspector/InspectorDOMStorageResource.cpp:
+        (WebCore::InspectorDOMStorageResource::InspectorDOMStorageResource):
+        (WebCore::InspectorDOMStorageResource::isSameHostAndType): Added.
+        (WebCore::InspectorDOMStorageResource::bind): Added.
+        (WebCore::InspectorDOMStorageResource::unbind): Added.
+        * inspector/InspectorDOMStorageResource.h:
+
 2009-03-16   Mike Belshe  <mike@belse.com>
 
         Reviewed by Dimitri Glazkov.
@@ -3209,7 +3581,7 @@
         (WebCore::RenderBlock::getClearDelta):
         * rendering/RenderBlock.h:
 
-2009-03-02  Kim GrÃ¶nholm  <kim.gronholm@nomovok.com>
+2009-03-02  Kim Grönholm  <kim.gronholm@nomovok.com>
 
         Reviewed by Simon Hausmann.
 
@@ -11440,7 +11812,7 @@
 
 2009-02-07  Simon Hausmann  <simon.hausmann@nokia.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         For the Qt port implement Image::drawPattern via
         BitmapImage::drawPatterns' implementation and implement
@@ -11916,7 +12288,7 @@
 
 2009-02-06  Simon Hausmann  <simon.hausmann@nokia.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Added support for different ownership models for wrapped QObjects in
         the JavaScript environment.
@@ -13073,7 +13445,7 @@
         * platform/animation/Animation.h:
         * rendering/style/RenderStyleConstants.h:
 
-2009-02-04  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2009-02-04  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Darin Adler.
 
@@ -14566,7 +14938,7 @@
 
 2009-02-03  Simon Hausmann  <simon.hausmann@nokia.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Fix conversion of QByteArray to JavaScript and back. Instead of
         converting it to a String (data loss!) we now map it to JSByteArray.
@@ -17652,7 +18024,7 @@
 
         Fix for
 
-        <rdar://problem/6531287> REGRESSION: CrashTracer: [USER] 12 crashes in Safari at com.apple.WebCore â€¢ WebCore::RenderBlock::removeFloatingObject + 59
+        <rdar://problem/6531287> REGRESSION: CrashTracer: [USER] 12 crashes in Safari at com.apple.WebCore • WebCore::RenderBlock::removeFloatingObject + 59
 
         My tightening up of markAllDescendantsWithFloatsForLayout exposed a buggy check in that code that could
         lead to a bad cast.
@@ -25311,7 +25683,7 @@
         (WebCore::isVistaOrNewer):
         * platform/chromium/WindowsVersion.h: Added.
 
-2009-01-13  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2009-01-13  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -25324,7 +25696,7 @@
         * platform/graphics/qt/MediaPlayerPrivatePhonon.cpp:
         (WebCore::MediaPlayerPrivate::updateStates):
 
-2009-01-13  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2009-01-13  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -25335,7 +25707,7 @@
 
 2009-01-13  Simon Hausmann  <simon.hausmann@nokia.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Fix crash in the Qt port when deleting a popup from within a
         JavaScript onchange handler.
@@ -25347,7 +25719,7 @@
 
 2009-01-12  Holger Hans Peter Freyther  <zecke@selfish.org>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         [GIO] Make sure to untef the GFile and the GInputStream on destruction
 
@@ -25368,7 +25740,7 @@
 
 2009-01-12  Holger Hans Peter Freyther  <zecke@selfish.org>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         [GIO] Attach the ResourceHandle to the GObject and get it from the GObject
 
@@ -25394,7 +25766,7 @@
 
 2009-01-12  Holger Hans Peter Freyther  <zecke@selfish.org>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         [GIO] Invoke cleanupGioOperation before calling didFail to avoid crashes
 
@@ -25412,7 +25784,7 @@
         (WebCore::openCallback):
         (WebCore::queryInfoCallback):
 
-2009-01-13  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2009-01-13  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -26703,7 +27075,7 @@
 
 2009-01-09  Simon Hausmann  <simon.hausmann@nokia.com>
 
-        Rubber-stamped by Tor Arne VestbÃ¸.
+        Rubber-stamped by Tor Arne Vestbø.
 
         Swap the .h and the .cpp output in the Qt build for the
         UserAgentStyleSheetData files, to put the definition in the .cpp file
@@ -26721,7 +27093,7 @@
 
         * ForwardingHeaders/wtf/PtrAndFlags.h: Added.
 
-2009-01-09  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2009-01-09  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -26735,7 +27107,7 @@
 
 2009-01-09  Simon Hausmann  <simon.hausmann@nokia.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Fix qmake warning about missing test function, a contains() call was
         missing.
@@ -26744,7 +27116,7 @@
 
 2009-01-09  Simon Hausmann  <simon.hausmann@nokia.com>
 
-        Rubber-stamped by Tor Arne VestbÃ¸.
+        Rubber-stamped by Tor Arne Vestbø.
 
         Add the Qt API headers to HEADERS, too, for improved completion in IDEs.
 
@@ -29464,7 +29836,7 @@
         (WebCore::mapRect): new method to map a rect contained
         in one rect to an equivalent rect inside another rect.
 
-2008-12-29  Konstantin KÃ¤fer  <kkaefer@gmail.com>
+2008-12-29  Konstantin Käfer  <kkaefer@gmail.com>
 
         Reviewed by Tim Hatcher.
 
@@ -31304,7 +31676,7 @@
 
 2008-12-19  Jade Han <jade.han@nokia.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         [Qt] Allow conversion of JavaScript Number and Boolean types to Qt types
 
@@ -31313,7 +31685,7 @@
         * bridge/qt/qt_runtime.cpp:
         (JSC::Bindings::convertValueToQVariant):
 
-2008-12-19  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-19  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Holger Freyther.
 
@@ -31825,7 +32197,7 @@
 
 2008-12-16 Yael Aharon <yael.aharon@nokia.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Qt/Win build fix
 
@@ -32619,7 +32991,7 @@
         (WebCore::setSharedTimerFireTime): Always delete and create the timer instead of using ChangeTimerQueueTimer.
         (WebCore::stopSharedTimer): Call DeleteTimerQueueTimer directly.
 
-2008-12-12  Kai BrÃ¼ning  <kai@granus.net>
+2008-12-12  Kai Brüning  <kai@granus.net>
 
         Reviewed and tweaked by Darin Adler.
 
@@ -32688,7 +33060,7 @@
         (WebCore::HTMLCanvasElement::createImageBuffer):
         (WebCore::HTMLCanvasElement::baseTransform):
 
-2008-12-12  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-12  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Oliver Hunt.
 
@@ -32706,7 +33078,7 @@
         (WebCore::PluginView::paint):
         * plugins/win/PluginViewWin.cpp:
 
-2008-12-12  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-12  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -32720,7 +33092,7 @@
         (WebCore::PluginView::setNPWindowIfNeeded):
         (WebCore::PluginView::updatePluginWidget):
 
-2008-12-12  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-12  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Oliver Hunt.
 
@@ -32743,7 +33115,7 @@
         * plugins/wx/PluginViewWx.cpp:
         (WebCore::PluginView::updatePluginWidget):
 
-2008-12-12  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-12  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -33143,7 +33515,7 @@
         (WebCore::screenDepth):
         (WebCore::screenRect):
 
-2008-12-08  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-08  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Darin Adler and Holger Freyther.
 
@@ -33168,7 +33540,7 @@
 
 2008-12-11  Holger Hans Peter Freyther  <zecke@selfish.org>
 
-        Reviewed and implemented with Tor Arne VestbÃ¸.
+        Reviewed and implemented with Tor Arne Vestbø.
 
         Reimplement RenderTheme::caretBlinkInterval for Qt.
 
@@ -33181,7 +33553,7 @@
 
 2008-12-09  Trenton Schulz <trenton.schulz@nokia.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         [Qt/Mac] Don't call HIGetScaleFactor() if we're not on Tiger or better
 
@@ -34081,7 +34453,7 @@
 
 2008-12-08  Trenton Schulz <trenton.schulz@nokia.com>
 
-        Rubber-stamped by Tor Arne VestbÃ¸.
+        Rubber-stamped by Tor Arne Vestbø.
 
         Fix build warning on Mac
 
@@ -34834,7 +35206,7 @@
         reverts a recent change that made the behavior slightly closer to Firefox - but the
         compatibility effect should be very minor if any, and Firefox itself behaves inconsistently.
 
-2008-12-05  Tobias KÃ¶nig <tobias.koenig@nokia.com>
+2008-12-05  Tobias König <tobias.koenig@nokia.com>
 
         Reviewed by Simon Hausmann.
 
@@ -34843,7 +35215,7 @@
 
         * WebCore.pro:
 
-2008-12-05  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-05  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -35138,14 +35510,14 @@
 
 2008-12-04  Friedemann Kleint  <friedemann.kleint@nokia.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Fix small translation glitch in the Qt file chooser.
 
         * platform/qt/FileChooserQt.cpp:
         (WebCore::FileChooser::basenameForWidth):
 
-2008-12-04  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-04  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -35561,7 +35933,7 @@
         * page/Console.h: Add WMLMessageSource.
         (WebCore::):
 
-2008-12-03  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-03  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -35964,7 +36336,7 @@
 
 2008-12-01 Laszlo Gombos <laszlo.1.gombos@nokia.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         MinGW compilation fix for PluginPackageWin.cpp
 
@@ -35982,7 +36354,7 @@
 
 2008-12-02  Simon Hausmann  <hausmann@webkit.org>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Build JavaScriptCore into libQtWebKit.so through a direct build
         instead of a static library. When linking a static library into
@@ -36036,7 +36408,7 @@
         (WebCore::XMLHttpRequest::didReceiveResponsePreflight):
         Change XMLHttpRequest to use ScriptExecutionContext instead of Document to access securityOrigin().
 
-2008-12-02  AndrÃ© PÃ¶nitz  <apoenitz@trolltech.com>
+2008-12-02  André Pönitz  <apoenitz@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -36339,7 +36711,7 @@
         (WebCore::KeyframeAnimation::sendAnimationEvent):
         (WebCore::KeyframeAnimation::resumeOverriddenAnimations):
 
-2008-12-01  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-12-01  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -36564,7 +36936,7 @@
 
 2008-11-27  Laszlo Gombos  <laszlo.1.gombos@nokia.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Regression seen on QtWebKit - causes a build failure on Win using MinGW
 
@@ -36574,7 +36946,7 @@
 
 2008-11-28  Simon Hausmann  <hausmann@webkit.org>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Fix compilation and linking on Windows CE.
 
@@ -39108,7 +39480,7 @@
 
         * WebCore.base.exp: Export __ZTVN7WebCore17FrameLoaderClientE
 
-2008-11-18  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-18  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -39122,7 +39494,7 @@
         * platform/qt/WidgetQt.cpp:
         (WebCore::Widget::setFrameRect):
 
-2008-11-18  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-18  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -39191,7 +39563,7 @@
 
 2008-11-18  Ariya Hidayat  <ariya.hidayat@trolltech.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Fix the bug where select elements are painted without border.
         http://trolltech.com/developer/task-tracker/index_html?id=218957&method=entry
@@ -40557,7 +40929,7 @@
         * platform/text/String.cpp:
         (WebCore::charactersToDouble):
 
-2008-11-14  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -40566,7 +40938,7 @@
         * platform/qt/ScrollbarQt.cpp:
         (WebCore::Scrollbar::contextMenu):
 
-2008-11-14  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -40629,7 +41001,7 @@
         (WebCore::AnimationBase::playStatePlaying):
         * page/animation/AnimationBase.h:
 
-2008-11-12  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-12  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -41122,7 +41494,7 @@
         (WebCore::numEnclosingMailBlockquotes): Added.
         * editing/htmlediting.h:
 
-2008-11-10  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-10  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -41137,7 +41509,7 @@
         * platform/mac/WebCoreNSStringExtras.mm:
         (stringEncodingForResource):
 
-2008-11-10  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-10  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -41405,7 +41777,7 @@
 
 2008-11-11  Ariya Hidayat  <ariya.hidayat@trolltech.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Fix crash when rendering the file chooser.
         Also proper implementation for multi-selected files.
@@ -41544,7 +41916,7 @@
 
 2008-11-10  Tom Cooksey  <thomas.cooksey@trolltech.com>
 
-        Reviewed by Tor Arne VestbÃ¸.
+        Reviewed by Tor Arne Vestbø.
 
         Fix QtWebkit build failure on arm.
 
@@ -41553,7 +41925,7 @@
         * platform/graphics/qt/GraphicsContextQt.cpp:
         (WebCore::GraphicsContext::setLineDash):
 
-2008-11-10  Morten SÃ¸rvig  <msorvig@trolltech.com>
+2008-11-10  Morten Sørvig  <msorvig@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -41785,14 +42157,14 @@
         (WebCore::LayoutStateMaintainer::push):
         (WebCore::LayoutStateMaintainer::didPush):
 
-2008-11-07  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-07  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Fix the QtWebKit build on Mac
 
         * platform/qt/TemporaryLinkStubs.cpp:
         (PluginView::invalidateRect):
 
-2008-11-07  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-07  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -42202,7 +42574,7 @@
         * xml/XPathValue.cpp:
         (WebCore::XPath::Value::toNodeSet): Ditto
 
-2008-11-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Rubber-stamped by Simon Hausmann.
 
@@ -42300,14 +42672,14 @@
 
         * WebCore.pro:
 
-2008-11-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Fix build break in debug mode when XSLT is not enabled
 
         * loader/Cache.cpp:
         (WebCore::Cache::dumpStats):
 
-2008-11-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-11-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon Hausmann.
 
@@ -42692,7 +43064,7 @@
 
 2008-11-05  Simon Hausmann  <hausmann@webkit.org>
 
-        Reviewed by Tor Arne VestbÃ¸
+        Reviewed by Tor Arne Vestbø
 
         Fix loading of Flash 10 in the Qt port by faking the toolkit to be Gtk.
 
@@ -42707,7 +43079,7 @@
 
 2008-11-05  Simon Hausmann  <hausmann@webkit.org>
 
-        Reviewed by Tor Arne VestbÃ¸
+        Reviewed by Tor Arne Vestbø
 
         Unify determineQuirks between the Qt and the Gtk PluginPackage.
         Share the code for parsing the module version from the description.
@@ -48710,7 +49082,7 @@
         <input type=file> to use File objects instead of path strings and
         also to append multiple files if the file list has them.
 
-2008-10-14  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-10-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -48720,7 +49092,7 @@
         (WebCore::ScrollbarThemeQt::paint):
         (WebCore::ScrollbarThemeQt::paintScrollCorner):
 
-2008-10-14  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-10-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -48729,7 +49101,7 @@
         * platform/qt/ScrollbarThemeQt.cpp:
         (WebCore::styleOptionSlider):
 
-2008-10-14  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-10-14  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -50474,7 +50846,7 @@
         (.toolbar-item:active .toolbar-label): Make this rule also require the
         toggleable class with the toolbar-item class.
 
-2008-10-08  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-10-08  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -50711,7 +51083,7 @@
 
         * GNUmakefile.am:
 
-2008-10-07  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-10-07  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -50872,7 +51244,7 @@
         (WebCore::drawControl):
         * rendering/RenderThemeWin.h:
 
-2008-10-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-10-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -50890,7 +51262,7 @@
         * platform/wx/KeyboardEventWx.cpp:
         (WebCore::PlatformKeyboardEvent::PlatformKeyboardEvent):
 
-2008-10-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-10-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -50901,7 +51273,7 @@
         * platform/text/cf/StringCF.cpp:
         * platform/text/cf/StringImplCF.cpp:
 
-2008-10-06  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-10-06  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -53834,7 +54206,7 @@
 
         * platform/qt/PlatformKeyboardEventQt.cpp:
 
-2008-09-29  Morten SÃ¸rvig  <msorvig@trolltech.com>
+2008-09-29  Morten Sørvig  <msorvig@trolltech.com>
 
         Reviewed by Simon.
 
@@ -56139,7 +56511,7 @@
         to the WebInspector.ConsoleMessage constructor call.
         (WebInspector.Resource.prototype._checkWarning): Ditto.
 
-2008-09-23  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-23  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -57174,7 +57546,7 @@
         (WebCore::JSHTMLAllCollection::createStructureID):
         (WebCore::JSHTMLAllCollection::toBoolean):
 
-2008-09-22  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-22  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -59768,7 +60140,7 @@
         * platform/text/TextCodecICU.cpp:
         (WebCore::TextCodecICU::registerExtendedEncodingNames): Updated for new encoding names.
 
-2008-09-17  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-17  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Fix the QtWebKit/Mac build
 
@@ -60026,7 +60398,7 @@
         (WebCore::writeFunction):
         (WebCore::ImageBuffer::toDataURL):
 
-2008-09-16  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-16  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -60560,7 +60932,7 @@
         * platform/graphics/cg/ImageCG.cpp:
         (WebCore::BitmapImage::draw):
 
-2008-09-15  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-15  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -60587,7 +60959,7 @@
         c'tor and will only be deleted in the c'tor. The Q_ASSERTs would
         only check if we use the MediaPlayerPrivate after it has been deleted.
 
-        Acked-by: Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+        Acked-by: Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         * platform/graphics/qt/MediaPlayerPrivatePhonon.cpp:
         (WebCore::MediaPlayerPrivate::play):
@@ -60607,7 +60979,7 @@
         * html/CanvasRenderingContext2D.cpp:
         (WebCore::CanvasRenderingContext2D::createPattern):
 
-2008-09-15  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-15  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -60628,7 +61000,7 @@
         * platform/graphics/qt/MediaPlayerPrivatePhonon.cpp:
         (WebCore::MediaPlayerPrivate::updateStates):
 
-2008-09-15  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-15  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -60636,7 +61008,7 @@
 
         * WebCore.pro:
 
-2008-09-15  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-15  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -63021,7 +63393,7 @@
         * platform/text/PlatformString.h: Added a missing #include of
         PassRefPtr.h.
 
-2008-09-04  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-04  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -63034,7 +63406,7 @@
         (KJS::Bindings::convertQVariantToValue):
         (KJS::Bindings::QtConnectionObject::execute):
 
-2008-09-04  Tor Arne VestbÃ¸  <tavestbo@trolltech.com>
+2008-09-04  Tor Arne Vestbø  <tavestbo@trolltech.com>
 
         Reviewed by Simon.
 
@@ -66369,7 +66741,7 @@
         (WebCore::InspectorController::setWindowVisible): Call stopDebugging()
         if the window is no longer visible.
 
-2008-08-15  HÃ¥vard Wall  <hwall@trolltech.com>
+2008-08-15  Håvard Wall  <hwall@trolltech.com>
 
         Reviewed by Simon.
 
@@ -66381,7 +66753,7 @@
         (WebCore::PlatformScrollbar::handleMouseMoveEvent):
         (WebCore::PlatformScrollbar::handleContextMenuEvent):
 
-2008-08-15  HÃ¥vard Wall  <hwall@trolltech.com>
+2008-08-15  Håvard Wall  <hwall@trolltech.com>
 
         Reviewed by Simon.
 
