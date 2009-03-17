@@ -606,7 +606,7 @@ class FactoryCommands(object):
                 self.PathJoin('src', 'chrome', 'test', 'data', 'dom_checker')])
 
     cmd.extend([self.GetExecutableName('ui_tests'),
-                '--gtest_filter=DomCheckerTest.Http',
+                '--gtest_filter=DomCheckerTest.*',
                 '--gtest_print_time',
                 '--run-dom-checker-test'])
 
