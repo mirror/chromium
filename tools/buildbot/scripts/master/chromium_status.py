@@ -13,6 +13,7 @@ import urllib
 from buildbot import util
 import buildbot.status.web.base as base
 import buildbot.status.web.baseweb as baseweb
+import buildbot.status.web.grid as grid
 import buildbot.status.web.waterfall as waterfall
 import buildbot.status.web.changes as changes
 import buildbot.status.web.builder as builder
@@ -33,284 +34,6 @@ from zope.interface import declarations
 
 import chromium_config as config
 import chromium_process
-import irc_contact
-
-# Global that is used by status objects to pickup IRC topic.
-DEFAULT_IRC_TOPIC = config.IRC.default_topic
-current_irc_topic = DEFAULT_IRC_TOPIC
-# Values that represent builder status.
-OPEN, CLOSED, UNKNOWN = range(3)
-# Constant that is used by TreeStatus to indicate all the builders.
-ALL_BUILDERS = 'ALL_BUILDERS'
-# Name of an attribute that we dynamically set on Builder object
-# to represent its status and it can be one of OPEN, CLOSED, UNKNOWN constant
-# values. IrcStatusBot sets the value after interpreting topic on monitored
-# IRC channel and then waterfall uses the value to render the builder boxes.
-BUILDER_TREE_STATUS_ATTRIBUTE = 'tree_status'
-
-
-class IrcStatusBot(words.IrcStatusBot):
-
-  def __init__(self, *args):
-    words.IrcStatusBot.__init__(self, *args)
-    # container for all the closed builder names that are identified
-    # by the _ReflectTopicNameOnBuilders method.
-    self._closed_builder_names = set()
-    for builder in self.status.botmaster.builders.values():
-      setattr(builder, BUILDER_TREE_STATUS_ATTRIBUTE, UNKNOWN)
-
-  def topicUpdated(self, user, channel, topic):
-    global current_irc_topic
-    current_irc_topic = topic
-    self._ReflectTopicNameOnBuilders(topic, channel)
-    self._AnnounceClosedBuilders(channel)
-
-  def _AnnounceClosedBuilders(self, channel):
-    """Announces names of closed builders on all available IRC channels."""
-    if len(self._closed_builder_names) == 0:
-      return
-    if len(self._closed_builder_names) == 1:
-      announcement = "%s is closed now!" % self._closed_builder_names.pop()
-    else:
-      announcement = ('%s are closed now!'
-                      % ', '.join(self._closed_builder_names))
-
-    self.say(channel, announcement)
-
-  def _ReflectTopicNameOnBuilders(self, topic, channel):
-    """Identifies which project trees are closed and sets
-    BUILDER_TREE_STATUS_ATTRIBUTE attribute on each
-    buildbot.process.builer.Builder instances any of OPEN, CLOSED, UNKNOWN
-    values.
-
-    If there is no connection it is set to UNKNOWN. If the closed project name
-    matches the prefix of the builder name it is set as CLOSED. Otherwise we
-    have an OPEN builder.
-    """
-    class TreeState:
-      SCOPE, STATEMENT, STATUS, END_OF_STATEMENT, IGNORE = range(5)
-      """ Class that provides some heuristical logic to find out what projects
-      are declared as closed.
-      """
-      negative_scope = ['except', 'besides', 'but']
-      positive_scope = ['all', 'everything']
-      # 'Tree' counts as 'everything' only if no project has been seen, and is
-      # ignored otherwise.  This allows 'tree is closed' as well as
-      # 'chrome tree is closed'.
-      tree_scope = ['tree']
-      scope = negative_scope + positive_scope
-      statement = ['is', 'are']
-      status = ['closed', 'open']
-      end_of_statement = ['.', ';'] # and last word except status types
-
-      def __init__(self, phrase):
-        self.__words = self._Tokenize(phrase.lower())
-
-      def ClosedTrees(self):
-        """ Heuristically identifies what projects are closed.
-
-        Can return [ALL_BUILDERS] if all the projects are closed.
-        Currently we recognize statements such as:
-        'tree is closed',
-        'all trees are closed',
-        'chrome tree is closed',
-        'chrome, webkit and v8 are closed',
-        'chrome and webkit are closed'
-        'projectname is closed and rest are open. Coffee time.',
-        'proj1, proj2 are closed and rest are open',
-        'everything is open except webkit',
-        'everything is open except proj1 and proj2'
-
-        'everything is closed except webkit' approach is not supported.
-        """
-        closed_projects = []
-        current_projects = []
-
-        consider_everything = False
-        maybe_rest_are_closed = False
-        previous_status = None
-        word_index = 0
-
-        for word in self.__words:
-          word_index +=1
-          is_last_word = (word_index == len(self.__words))
-          has_projects = (len(current_projects) > 0)
-          word_type = self._IdentifyType(word, has_projects, is_last_word)
-
-          if word_type == TreeState.SCOPE:
-            if word in self.negative_scope:
-              current_projects = []
-              consider_everything = False
-              if previous_status == 'open':
-                maybe_rest_are_closed = True
-            elif word in self.positive_scope or word in self.tree_scope:
-              consider_everything = True
-
-          elif word_type == TreeState.STATEMENT:
-            if word == 'is' and len(current_projects) > 1:
-              current_projects = current_projects[-1:]
-
-          elif word_type == TreeState.STATUS:
-            if word == 'closed':
-              if consider_everything:
-                closed_projects = [ALL_BUILDERS]
-                continue
-              closed_projects.extend(current_projects)
-            current_projects = []
-            consider_everything = False
-            previous_status = word
-
-          elif word_type == TreeState.END_OF_STATEMENT:
-            if maybe_rest_are_closed:
-              if not word in self.end_of_statement:  #last word
-                current_projects.append(word)
-              if len(current_projects):
-                closed_projects.extend(current_projects)
-            current_projects = []
-            consider_everything = False
-
-          elif word_type != TreeState.IGNORE:
-            current_projects.append(word)
-
-        return closed_projects
-
-      def _IdentifyType(self, word, has_projects, is_last_word):
-        """Finds out what class of word we are processing."""
-        word_type = None
-        if word in self.scope:
-          word_type = TreeState.SCOPE
-        elif word in self.statement:
-          word_type = TreeState.STATEMENT
-        elif word in self.status:
-          word_type = TreeState.STATUS
-        elif word in self.end_of_statement or is_last_word:
-          word_type = TreeState.END_OF_STATEMENT
-        elif word in self.tree_scope:
-          if has_projects:
-            word_type = TreeState.IGNORE
-          else:
-            word_type = TreeState.SCOPE
-        return word_type
-
-      def _Tokenize(self, phrase):
-        """Splits phrase into words. Recognizes some punctuation."""
-        words = []
-        punctuation = [',', '.', ';', '!', ':']
-        current_word = []
-
-        for character in phrase:
-          if character.isspace() or punctuation.count(character) > 0:
-            if len(current_word) > 0:
-              words.append(''.join(current_word))
-              current_word = []
-            if punctuation.count(character) > 0:
-              words.append(character)
-          else:
-            current_word.append(character)
-        # store the last word
-        if len(current_word) > 0:
-          words.append(''.join(current_word))
-        return words
-
-    closed_trees = TreeState(topic).ClosedTrees()
-    self._closed_builder_names = set() # reset closed builder names
-    for buildername in self.status.botmaster.builders:
-      builder = self.status.botmaster.builders[buildername]
-      should_close = False
-      if ALL_BUILDERS in closed_trees:
-        should_close = True
-        self._closed_builder_names = set(['everything'])
-      else:
-        for prefix in closed_trees:
-          if buildername[:len(prefix)] == prefix:
-             should_close = True
-             self._closed_builder_names.add(prefix + '*')
-             break
-      if should_close:
-        setattr(builder, BUILDER_TREE_STATUS_ATTRIBUTE, CLOSED)
-      else:
-        setattr(builder, BUILDER_TREE_STATUS_ATTRIBUTE, OPEN)
-
-
-class IrcStatusChatterBot(IrcStatusBot):
-  """Provides additional chat responses and interaction."""
-  # Only one line of this method, noted, has been changed from the base
-  # words.IrcStatusBot behavior.
-  def privmsg(self, user, channel, message):
-    user = user.split('!', 1)[0] # rest is ~user@hostname
-    # channel is '#twisted' or 'buildbot' (for private messages)
-    channel = channel.lower()
-    #print "privmsg:", user, channel, message
-    if channel == self.nickname:
-      # private message
-      contact = self.getContact(user)
-      contact.handleMessage(message, user)
-      return
-    # else it's a broadcast message, maybe for us, maybe not. 'channel'
-    # is '#twisted' or the like.
-    contact = self.getContact(channel)
-    # Change: look at all messages, even ones that aren't to the buildbot.
-    contact.handleMessage(message, user)
-
-  # Only one line of this method, noted, has been changed from the base
-  # words.IrcStatusBot behavior.
-  def getContact(self, name):
-    if name in self.contacts:
-      return self.contacts[name]
-    # Change: instantiate our IRCContact instead of the base one in words.
-    new_contact = irc_contact.IRCContact(self, name, self.nickname)
-    self.contacts[name] = new_contact
-    return new_contact
-
-  # Only one line of this method, noted, has been changed from the base
-  # words.IrcStatusBot behavior.
-  def action(self, user, channel, data):
-    #log.msg("action: %s,%s,%s" % (user, channel, data))
-    user = user.split('!', 1)[0] # rest is ~user@hostname
-    # somebody did an action (/me actions) in the broadcast channel
-    contact = self.getContact(channel)
-    # Change: look for our nickname rather than hard-coded "buildbot".
-    if self.nickname in data:
-      contact.handleAction(data, user)
-
-  # Adds to the parent IRCStatusBot's behavior (see above) to pass the user and
-  # topic to the contact.
-  def topicUpdated(self, user, channel, topic):
-    global current_irc_topic
-    # Don't tell the contact if we've just started up.
-    if current_irc_topic != DEFAULT_IRC_TOPIC:
-      contact = self.getContact(channel)
-      contact.TopicChanged(user, topic)
-    current_irc_topic = topic
-    self._ReflectTopicNameOnBuilders(topic, channel)
-    self._AnnounceClosedBuilders(channel)
-
-
-class CurrentBox(waterfall.CurrentBox):
-  """Adds "CLOSED" indicator to the waterfall display for closed builders."""
-  def getBox(self, status):
-    box = waterfall.CurrentBox.getBox(self, status)
-
-    builderName = self.original.getName()
-    builder = status.botmaster.builders[builderName]
-    if (hasattr(builder, BUILDER_TREE_STATUS_ATTRIBUTE)
-                and getattr(builder, BUILDER_TREE_STATUS_ATTRIBUTE) == CLOSED):
-      box.text.append('<div class="large">CLOSED</div>')
-      box.class_ = 'closed'
-    return box
-
-# First unregister ICurrentBox registered by waterfall.py.
-# We won't be able to unregister it without messing with ALLOW_DUPLICATES
-# in twisted.python.components. Instead, work directly with adapter to
-# remove the component:
-origInterface = statusbuilder.BuilderStatus
-origInterface = declarations.implementedBy(origInterface)
-registry = components.getRegistry()
-# setting to None does the trick.
-registry.register([origInterface], base.ICurrentBox, '', None)
-# Finally, register our CurrentBox:
-components.registerAdapter(CurrentBox, statusbuilder.BuilderStatus,
-                            base.ICurrentBox)
 
 class BuildBox(waterfall.BuildBox):
   """Build the yellow starting-build box for a waterfall column.
@@ -339,9 +62,13 @@ class BuildBox(waterfall.BuildBox):
       class_ = base.build_get_class(b)
     return base.Box([text], color=color, class_="BuildStep " + class_)
 
-# See comments for re-registering ICurrentBox.
+# First unregister ICurrentBox registered by waterfall.py.
+# We won't be able to unregister it without messing with ALLOW_DUPLICATES
+# in twisted.python.components. Instead, work directly with adapter to
+# remove the component:
 origInterface = statusbuilder.BuildStatus
 origInterface = declarations.implementedBy(origInterface)
+registry = components.getRegistry()
 registry.register([origInterface], base.IBox, '', None)
 components.registerAdapter(BuildBox, statusbuilder.BuildStatus, base.IBox)
 
@@ -367,13 +94,6 @@ class HorizontalOneBoxPerBuilder(base.HtmlResource):
         classname = base.ITopBox(builder).getBox(request).class_
         title = builder_name
 
-        builder_status = status.botmaster.builders[builder_name]
-        if (hasattr(builder_status, BUILDER_TREE_STATUS_ATTRIBUTE)
-            and getattr(builder_status,
-                        BUILDER_TREE_STATUS_ATTRIBUTE) == CLOSED):
-          classname += ' mini-closed'
-          title = "CLOSED: " + title
-
         url = (self.path_to_root(request) + "waterfall?builder=" +
                urllib.quote(builder_name, safe=''))
         link = '<a href="%s" class="%s" title="%s" \
@@ -382,29 +102,34 @@ class HorizontalOneBoxPerBuilder(base.HtmlResource):
 
       data += "</tr></table>"
 
-      global current_irc_topic
-      escaped_topic = cgi.escape(current_irc_topic)
-
-      # If we're just loading the status-summary page, remove margins and set
-      # the title to the IRC topic.
-      data += "<script> \
-          if (top.location.toString().match(/status-summary\.html$/)) { \
-            document.body.style.marginLeft=0; \
-            document.body.style.marginRight=0; \
-            top.document.title='%s'; \
-          }</script>" % escaped_topic
-
       return data
 
+
+ANNOUNCEMENT_FILE = 'public_html/announce.html'
+DEFAULT_REFRESH_TIME = 60
+def GetAnnounce():
+  """Creates DIV that provides visuals on tree status.
+  """
+  return GetStaticFileContent(ANNOUNCEMENT_FILE)
+
+def GetStaticFileContent(file):
+  if os.path.exists(file):
+    announce = open(file, 'rb')
+    data = announce.read().strip()
+    announce.close()
+    return data
+  else:
+    return ''
+    
+def GetRefresh(reload_time):
+  if reload_time is None:
+    reload_time = DEFAULT_REFRESH_TIME
+  return '<meta http-equiv="refresh" content="%d">\n' % reload_time
 
 class WaterfallStatusResource(waterfall.WaterfallStatusResource):
   """Class that overrides default behavior of
   waterfall.WaterfallStatusResource. """
 
-  ANNOUNCEMENT_FILE = 'public_html/announce.html'
-  SUMMARY_FILE = 'public_html/status-summary.html'
-
-  DEFAULT_REFRESH_TIME = 60
 
   def head(self, request):
     """ Adds META to refresh page by specified value in the request,
@@ -412,20 +137,16 @@ class WaterfallStatusResource(waterfall.WaterfallStatusResource):
     # Don't auto-refresh when last_time is set.
     if request.args.get('last_time'):
       return ""
-    reload_time = self.get_reload_time(request)
-    if reload_time is None:
-      reload_time = WaterfallStatusResource.DEFAULT_REFRESH_TIME
-    return '<meta http-equiv="refresh" content="%d">\n' % reload_time
+    return GetRefresh(self.get_reload_time(request))
 
   def body(self, request):
-    """Calls default body method and prepends Tree Status HTML based on
-    IRC topic."""
-
+    """Calls default body method and prepends the Announce file"""
     # Limit access to the X last days. Buildbot doesn't scale well.
     # TODO(maruel) Throttle the requests instead or just fix the code to cache
     # data.
     stop_gap_in_seconds = 60 * 60 * 24 * 2
     earliest_accepted_time = util.now() - stop_gap_in_seconds
+
     # Will throw a TypeError if last_time is not a number.
     last_time = int(request.args.get('last_time', [0])[0])
     if (last_time and
@@ -436,26 +157,21 @@ are blocked. If you know what you are doing, ask a Chromium Buildbot
 administrator how to bypass the protection."""
     else:
       data = waterfall.WaterfallStatusResource.body(self, request)
-      return "%s %s" % (self.__TreeStatus(), data)
+      return "%s %s" % (GetAnnounce(), data)
 
-  def __TreeStatus(self):
-    """Creates DIV that provides visuals on tree status.
+class GridStatusResource(grid.GridStatusResource):
+  """Class that overrides default behavior of grid.GridStatusResource. """
 
-    """
-    data = '<div class="Announcement">\n'
-    data += '<iframe width="100%" height="60" frameborder="0" scrolling="no" src="http://chromium-status.appspot.com/current"></iframe>\n' 
-    data += self.__GetStaticFileContent(
-        WaterfallStatusResource.ANNOUNCEMENT_FILE)
-    data += '</div>\n'
-    data += self.__GetStaticFileContent(WaterfallStatusResource.SUMMARY_FILE)
+  def head(self, request):
+    """ Adds META to refresh page by specified value in the request,
+    sets to one minute by default. """
+    return GetRefresh(self.get_reload_time(request))
 
-    return data
+  def body(self, request):
+    """Calls default body method and prepends the announce file"""    
 
-  def __GetStaticFileContent(self, file):
-    if os.path.exists(file):
-      return open(file).read().strip()
-    else:
-      return ''
+    data = grid.GridStatusResource.body(self, request)
+    return "%s %s" % (GetAnnounce(), data)
 
 class StatusResourceBuilder(builder.StatusResourceBuilder):
   """Class that overrides default behavior of builders.StatusResourceBuilder.
@@ -701,6 +417,7 @@ class WebStatus(baseweb.WebStatus):
     baseweb.WebStatus.setupUsualPages(self)
 
     self.putChild("waterfall", WaterfallStatusResource())
+    self.putChild("grid", GridStatusResource())
     self.putChild("builders", BuildersResource())
     self.putChild("horizontal_one_box_per_builder",
                   HorizontalOneBoxPerBuilder())
