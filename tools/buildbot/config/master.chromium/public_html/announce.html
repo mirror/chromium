@@ -1,3 +1,17 @@
+<script>
+  function autoLink(className) {
+    var comments = document.querySelectorAll(className);
+    for(var i = 0; i < comments.length; i++) {
+      comments[i].innerHTML = comments[i].innerHTML.replace(/http:\/\/[^ \t\n<]*/g, '<a href="$&">$&</a>');
+    }
+  }
+
+  window.onload = function() { 
+    autoLink('.DevComment');
+    autoLink('.DevCommentAlt');
+  }
+</script>
+
 <center>
   <table width="100%" valign="top" bgcolor="#efefef" style="border-top-left-radius: 10px; -webkit-border-top-left-radius: 40px;  -webkit-border-top-right-radius: 40px;  -webkit-border-bottom-left-radius: 40px;  -webkit-border-bottom-right-radius: 40px; ">
     <tr>
@@ -40,7 +54,7 @@
                <b>Sheriffs:</b>
             </td>
             <td>
-              jar, ojan, jonc
+              pam, maruel, laforge
             </td>
           </tr>
           <tr>
