@@ -73,6 +73,9 @@ namespace WebKit {
     // of the v8::Extension object passed.
     WEBKIT_API void registerExtension(v8::Extension*);
 
+    // Enables HTML5 worker support.
+    WEBKIT_API void enableWebWorkers(bool);
+
 } // namespace WebKit
 
 #endif

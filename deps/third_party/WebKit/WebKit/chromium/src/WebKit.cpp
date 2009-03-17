@@ -36,6 +36,7 @@
 #include "AtomicString.h"
 #include "FrameLoader.h"
 #include "V8Proxy.h"
+#include "WorkerContextExecutionProxy.h"
 #include <wtf/Assertions.h>
 #include <wtf/Threading.h>
 
@@ -87,6 +88,13 @@ void registerURLSchemeAsNoAccess(const WebString& scheme)
 void registerExtension(v8::Extension* extension)
 {
     WebCore::V8Proxy::RegisterExtension(extension);
+}
+
+void enableWebWorkers(bool value)
+{
+#if ENABLE(WORKERS)
+    WebCore::WorkerContextExecutionProxy::EnableWebWorkers(value);
+#endif
 }
 
 } // namespace WebKit
