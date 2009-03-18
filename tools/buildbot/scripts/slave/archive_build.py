@@ -509,6 +509,9 @@ class Stager(object):
           finally:
             latest_file.close()
         elif chromium_utils.IsLinux():
+          # Files are created umask 077 by default, so make it world-readable
+          # before pushing to web server.
+          os.chmod(self._last_change_file, 0644)
           print 'Saving revision to %s:%s' % (config.Archive.archive_host,
                                            latest_file_path)
           chromium_utils.SshCopyFiles(self._last_change_file,
