@@ -93,7 +93,7 @@ void registerExtension(v8::Extension* extension)
 void enableWebWorkers(bool value)
 {
 #if ENABLE(WORKERS)
-    WebCore::WorkerContextExecutionProxy::EnableWebWorkers(value);
+    WebCore::WorkerContextExecutionProxy::enableWebWorkers(value);
 #endif
 }
 
