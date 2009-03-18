@@ -405,6 +405,9 @@ class Stager(object):
         for filename in extras_with_path:
           chromium_utils.SshCopyFiles(filename, config.Archive.archive_host,
                                       www_dir)
+        # Files are created umask 077 by default, so make it world-readable
+        # before pushing to web server.
+        os.chmod(changelog_path, 0644)
         chromium_utils.SshCopyFiles(changelog_path, config.Archive.archive_host,
                                     www_dir)
     else:
