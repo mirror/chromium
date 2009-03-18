@@ -398,6 +398,7 @@ WebInspector.Console.prototype = {
     {
         if (WebInspector.panels.scripts && WebInspector.panels.scripts.paused)
             return WebInspector.panels.scripts.evaluateInSelectedCallFrame(expression);
+
         var inspectedWindow = InspectorController.inspectedWindow();
         if (!inspectedWindow._inspectorCommandLineAPI) {
             inspectedWindow.eval("window._inspectorCommandLineAPI = { \

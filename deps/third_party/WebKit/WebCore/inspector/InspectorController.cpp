@@ -441,46 +441,40 @@ private:
 
 // JavaScript Callbacks 
 
-void InspectorController::addSourceToFrame(unsigned long identifier, Node* node) 
-{    
-    RefPtr<InspectorResource> resource = this->resources().get(identifier);
-    ASSERT(resource);
-    if (!resource)
-        return;
+bool InspectorController::addSourceToFrame(const String& mimeType, const String& source, Node* frameNode)
+{
+    ASSERT_ARG(frameNode, frameNode);
 
-    String sourceString = resource->sourceString();
-    if (sourceString.isEmpty())
-        return;
+    if (!frameNode)
+        return false;
 
-    ASSERT(node);
-    if (!node)
-        return;
-
-    if (!node->attached()) {
+    if (!frameNode->attached()) {
         ASSERT_NOT_REACHED();
-        return;
+        return false;
     }
 
-    ASSERT(node->isElementNode());
-    if (!node->isElementNode())
-        return;
+    ASSERT(frameNode->isElementNode());
+    if (!frameNode->isElementNode())
+        return false;
 
-    Element* element = static_cast<Element*>(node);
+    Element* element = static_cast<Element*>(frameNode);
     ASSERT(element->isFrameOwnerElement());
     if (!element->isFrameOwnerElement())
-        return;
+        return false;
 
     HTMLFrameOwnerElement* frameOwner = static_cast<HTMLFrameOwnerElement*>(element);
     ASSERT(frameOwner->contentFrame());
     if (!frameOwner->contentFrame())
-        return;
+        return false;
 
     FrameLoader* loader = frameOwner->contentFrame()->loader();
 
-    loader->setResponseMIMEType(resource->mimeType);
+    loader->setResponseMIMEType(mimeType);
     loader->begin();
-    loader->write(sourceString);
+    loader->write(source);
     loader->end();
+
+    return true;
 }
 
 Node* InspectorController::getResourceDocumentNode(unsigned long identifier) { 
@@ -894,7 +888,7 @@ void InspectorController::inspect(Node* node)
         return;
     }
 
-    if (windowVisible())
+    if (m_windowVisible)
         focusNode();
 }
 
@@ -941,7 +935,7 @@ void InspectorController::hideHighlight()
 
 bool InspectorController::windowVisible()
 {
-    return m_windowVisible;
+    return true;
 }
 
 void InspectorController::setWindowVisible(bool visible, bool attached)
@@ -1032,7 +1026,7 @@ void InspectorController::addConsoleMessage(ScriptState*, ConsoleMessage* consol
     }
     m_previousMessage = consoleMessage;
     m_consoleMessages.append(consoleMessage);
-    if (windowVisible())
+    if (m_windowVisible)
         addScriptConsoleMessage(m_previousMessage);
 }
 
@@ -1601,7 +1595,7 @@ void InspectorController::pruneResources(ResourcesMap* resourceMap, DocumentLoad
 
         if (!loaderToKeep || resource->loader != loaderToKeep) {
             removeResource(resource);
-            if (windowVisible() && resource->hasScriptObject())
+            if (m_windowVisible && resource->hasScriptObject())
                 removeScriptResource(resource);
         }
     }

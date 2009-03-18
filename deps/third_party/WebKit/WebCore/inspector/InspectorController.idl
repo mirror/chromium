@@ -6,7 +6,7 @@
 
 module core {
     interface InspectorController { 
-        void addSourceToFrame(in unsigned long identifier, in Node frame);
+        boolean addSourceToFrame(in DOMString mimeType, in DOMString source, in Node frame);
         Node getResourceDocumentNode(in unsigned long identifier);
         void highlightDOMNode(in Node node);
         void hideDOMNodeHighlight();
@@ -18,15 +18,27 @@ module core {
         DOMWindow inspectedWindow();
         DOMString platform();
         DOMString localizedStringsURL();
+
         DOMString hiddenPanels();
         [v8implname=clearConsoleMessages] void clearMessages();
+        void closeWindow();
+        [ImplementationFunction=toggleSearchForNodeInPage] void toggleNodeSearch();
+
+        [Custom] boolean debuggerEnabled();
+        [Custom] boolean pauseOnExceptions();
+        [Custom] boolean profilerEnabled();
+        [ImplementationFunction=windowVisible] boolean isWindowVisible();
+        [ImplementationFunction=searchingForNodeInPage] boolean searchingForNode();
+	
+#if ENABLE_DATABASE
+        [Custom] DOMObject databaseTableNames(in Database database);
+#endif
+
+        [ImplementationFunction=moveWindowBy] void moveByUnrestricted(in float x, in float y);
+        void setAttachedWindowHeight(in unsigned long height);
+        [Custom] DOMObject wrapCallback(in DOMObject callback);
 
         /* TODO(ojan): add these. These are in trunk webkit.
-        #if ENABLE(DATABASE)
-        { "databaseTableNames", databaseTableNames, kJSPropertyAttributeNone },
-        #endif
-        { "moveByUnrestricted", moveByUnrestricted, kJSPropertyAttributeNone },
-        { "wrapCallback", wrapCallback, kJSPropertyAttributeNone },
         { "startDebuggingAndReloadInspectedPage", WebCore::startDebuggingAndReloadInspectedPage, kJSPropertyAttributeNone },
         { "stopDebugging", WebCore::stopDebugging, kJSPropertyAttributeNone },
         { "debuggerAttached", WebCore::debuggerAttached, kJSPropertyAttributeNone },

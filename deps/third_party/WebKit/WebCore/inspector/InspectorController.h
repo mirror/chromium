@@ -282,7 +282,7 @@ public:
 
 #if USE(V8)
     // InspectorController.idl
-    void addSourceToFrame(unsigned long identifier, Node* frame);
+    bool addSourceToFrame(const String& mimeType, const String& source, Node*);
     Node* getResourceDocumentNode(unsigned long identifier);
     void highlightDOMNode(Node* node);
     void hideDOMNodeHighlight();

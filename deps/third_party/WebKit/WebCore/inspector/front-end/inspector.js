@@ -282,10 +282,9 @@ WebInspector.loaded = function()
     this.panels = {
         elements: new WebInspector.ElementsPanel(),
         resources: new WebInspector.ResourcesPanel(),
-        // We don't use next tabs, so don't show them.
-        //scripts: new WebInspector.ScriptsPanel(),
-        //profiles: new WebInspector.ProfilesPanel(),
-        //databases: new WebInspector.DatabasesPanel()
+        scripts: new WebInspector.ScriptsPanel(),
+        profiles: new WebInspector.ProfilesPanel(),
+        databases: new WebInspector.DatabasesPanel()
     };
 
     var hiddenPanels = (InspectorController.hiddenPanels() || "").split(',');
@@ -1275,33 +1274,3 @@ WebInspector.MIMETypes = {
     "text/jscript":                {4: true},
     "text/livescript":             {4: true},
 }
-
-
-// Stubs for some methods called in ElementsPanel.js which are not yet 
-// supported by Chrome version of InspectorController
-InspectorController.wrapCallback = function f(a) {
-  return a;
-};
-
-InspectorController.searchingForNode = function() {
-  return false;
-};
-
-InspectorController.toggleNodeSearch = function() {
-};
-
-InspectorController.isWindowVisible = function() {
-  return true;
-};
-
-InspectorController.closeWindow =  function() {
-};
-
-InspectorController.clearMessages = function() {
-};
-
-InspectorController.setAttachedWindowHeight = function(height) {
-};
-
-InspectorController.moveByUnrestricted = function(x, y) {
-};
