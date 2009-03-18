@@ -93,6 +93,59 @@ td.Event {
 	-webkit-border-radius: 5px;
 }
 
+td.DevRev {
+        padding: 4px 8px 4px 8px;
+        color: #333333;
+        -webkit-border-top-left-radius: 5px;
+        background-color: #eee;
+        width: 1%;
+}
+
+td.DevRevCollapse {
+        -webkit-border-bottom-left-radius: 5px;
+}
+
+td.DevName {
+        padding: 4px 8px 4px 8px;
+        color: #333333;
+        background-color: #eee;
+        width: 1%;
+        text-align: left;
+}
+
+td.DevStatus {
+        padding: 4px 4px 4px 4px;
+        color: #333333;
+        -webkit-border-top-right-radius: 5px;
+        background-color: #eee;
+}
+
+td.DevStatusCollapse {
+        -webkit-border-bottom-right-radius: 5px;
+}
+
+td.DevDetails {
+        font-weight: normal;
+        padding: 8px 8px 8px 8px;
+        color: #333333;
+        background-color: #eee;
+        text-align: left;
+}
+
+td.DevComment {
+        font-weight: normal;
+        padding: 8px 8px 8px 8px;
+        color: #333333;
+        -webkit-border-bottom-right-radius: 5px;
+        -webkit-border-bottom-left-radius: 5px;
+        background-color: #eee;
+        text-align: left;
+}
+
+td.Alt {
+        background-color: #CCCCCC;
+}
+
 td.Activity {
 	border-top-left-radius: 10px;
 	-webkit-border-top-left-radius: 10px;
@@ -112,30 +165,113 @@ td.idle, td.waiting, td.offline, td.building {
 	-webkit-border-top-right-radius: 5px;	
 }
 
+.legend {
+        border-radius: 5px;
+        -webkit-border-radius: 5px;
+        width: 100px;
+        max-width: 100px;
+        text-align:center;
+        padding: 2px 2px 2px 2px;
+        height:14px;
+        white-space:nowrap;
+}
+
+.DevStatusBox {
+  text-align:center;
+  height:20px;
+  padding:0 2px;
+  line-height:0;
+  white-space:nowrap;
+}
+
+.DevStatusBox a {
+  border-width:1px;
+  border-style:solid;
+  border-radius: 7px;
+  -webkit-border-radius: 7px;
+  display:block;
+  width:100%;
+  height:20px;
+  line-height:20px;
+}
+
+a.noround {
+  border-radius: 0px;
+  -webkit-border-radius: 0px;
+  position: relative;
+  margin-top: -7px;
+  margin-bottom: -7px;
+  height: 34px;
+  border-top-width: 0;
+  border-bottom-width: 0;
+}
+
+a.begin {
+  border-top-width:1px;
+  position: relative;
+  margin-top: 0px;
+  margin-bottom: -7px;
+  height: 27px;
+	border-top-left-radius: 7px;
+	-webkit-border-top-left-radius: 7px;
+	border-top-right-radius: 7px;	
+	-webkit-border-top-right-radius: 7px;
+}
+
+a.end {
+  border-bottom-width:1px;
+  position: relative;
+  margin-top: -7px;
+  margin-bottom: 0px;
+  height: 27px;
+	border-bottom-left-radius: 7px;
+	-webkit-border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;	
+	-webkit-border-bottom-right-radius: 7px;
+}
+
+.center_align {
+  text-align: center;
+}
+
+.right_align {
+  text-align: right;
+}
+
+.left_align {
+  text-align: left;
+}
+
+
 /* LastBuild, BuildStep states */
 .success {
 	color: #FFFFFF;
 	background-color: #8fdf5f;
+        border-color: #4F8530;
 }
 
 .failure {
 	color: #FFFFFF;
 	background-color: #e98080;
+        border-color: #A77272;
 }
 
 .warnings {
 	color: #FFFFFF;
 	background-color: #ffc343;
+        border-color: #C29D46;
 }
 
 .exception, td.offline {
 	color: #FFFFFF;
 	background-color: #e0b0ff;
+        border-color: #ACA0B3;
 }
 
 .start,.running, td.building {
 	color: #666666;
 	background-color: #fffc6c;
+        border-color: #C5C56D;
 }
 
 .start {
@@ -143,6 +279,12 @@ td.idle, td.waiting, td.offline, td.building {
 	-webkit-border-bottom-left-radius: 10px;
 	border-bottom-right-radius: 10px;
 	-webkit-border-bottom-right-radius: 10px;
+}
+
+.notstarted {
+  border-width:1px;
+  border-style:solid;
+  border-color:#aaa;
 }
 
 .closed {
