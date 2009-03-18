@@ -221,7 +221,6 @@ void HTMLSelectElement::add(HTMLElement *element, HTMLElement *before, Exception
     if (!element || !(element->hasLocalName(optionTag) || element->hasLocalName(hrTag)))
         return;
 
-    ec = 0;
     insertBefore(element, before, ec);
 }
 
@@ -293,36 +292,6 @@ void HTMLSelectElement::restoreState(const String& state)
             static_cast<HTMLOptionElement*>(items[i])->setSelectedState(state[i] == 'X');
             
     setChanged();
-}
-
-bool HTMLSelectElement::insertBefore(PassRefPtr<Node> newChild, Node* refChild, ExceptionCode& ec, bool shouldLazyAttach)
-{
-    bool result = HTMLFormControlElementWithState::insertBefore(newChild, refChild, ec, shouldLazyAttach);
-    return result;
-}
-
-bool HTMLSelectElement::replaceChild(PassRefPtr<Node> newChild, Node *oldChild, ExceptionCode& ec, bool shouldLazyAttach)
-{
-    bool result = HTMLFormControlElementWithState::replaceChild(newChild, oldChild, ec, shouldLazyAttach);
-    return result;
-}
-
-bool HTMLSelectElement::removeChild(Node* oldChild, ExceptionCode& ec)
-{
-    bool result = HTMLFormControlElementWithState::removeChild(oldChild, ec);
-    return result;
-}
-
-bool HTMLSelectElement::appendChild(PassRefPtr<Node> newChild, ExceptionCode& ec, bool shouldLazyAttach)
-{
-    bool result = HTMLFormControlElementWithState::appendChild(newChild, ec, shouldLazyAttach);
-    return result;
-}
-
-bool HTMLSelectElement::removeChildren()
-{
-    bool result = HTMLFormControlElementWithState::removeChildren();
-    return result;
 }
 
 void HTMLSelectElement::parseMappedAttribute(MappedAttribute *attr)
@@ -528,6 +497,7 @@ void HTMLSelectElement::childrenChanged(bool changedByParser, Node* beforeChange
 void HTMLSelectElement::setRecalcListItems()
 {
     m_recalcListItems = true;
+    m_activeSelectionAnchorIndex = -1; // Manual selection anchor is reset when manipulating the select programmatically.
     if (renderer()) {
         if (usesMenuList())
             static_cast<RenderMenuList*>(renderer())->setOptionsChanged(true);

@@ -52,7 +52,6 @@ RenderLayerBacking::RenderLayerBacking(RenderLayer* layer)
     , m_graphicsLayer(0)
     , m_contentsLayer(0)
     , m_clippingLayer(0)
-    , m_forceCompositingLayer(false)
     , m_isSimpleContainerCompositingLayer(false)
     , m_simpleCompositingLayerStatusDirty(true)
     , m_compositingContentOffsetDirty(true)
@@ -113,8 +112,10 @@ void RenderLayerBacking::updateLayerTransform()
     // FIXME: This could use m_owningLayer->transform(), but that currently has transform-origin
     // baked into it, and we don't want that.
     TransformationMatrix t;
-    if (m_owningLayer->hasTransform())
+    if (m_owningLayer->hasTransform()) {
         style->applyTransform(t, toRenderBox(renderer())->borderBoxRect().size(), RenderStyle::ExcludeTransformOrigin);
+        makeMatrixRenderable(t);
+    }
     
     m_graphicsLayer->setTransform(t);
 }
@@ -580,11 +581,6 @@ void RenderLayerBacking::detectDrawingOptimizations()
 void RenderLayerBacking::invalidateDrawingOptimizations()
 {
     m_simpleCompositingLayerStatusDirty = true;
-}
-
-void RenderLayerBacking::forceCompositingLayer(bool force)
-{
-    m_forceCompositingLayer = force;
 }
 
 FloatPoint3D RenderLayerBacking::computeTransformOrigin(const IntRect& borderBox) const

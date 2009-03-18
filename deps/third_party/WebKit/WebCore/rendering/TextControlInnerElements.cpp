@@ -35,8 +35,8 @@
 #include "HTMLNames.h"
 #include "HTMLTextAreaElement.h"
 #include "MouseEvent.h"
-#include "RenderTextControlSingleLine.h"
 #include "RenderLayer.h"
+#include "RenderTextControlSingleLine.h"
 
 namespace WebCore {
 
@@ -46,8 +46,8 @@ public:
 
     virtual bool nodeAtPoint(const HitTestRequest&, HitTestResult&, int x, int y, int tx, int ty, HitTestAction);
     virtual VisiblePosition positionForPoint(const IntPoint&);
-private:
-    bool m_multiLine;
+    private:
+        bool m_multiLine;
 };
 
 bool RenderTextControlInnerBlock::nodeAtPoint(const HitTestRequest& request, HitTestResult& result, int x, int y, int tx, int ty, HitTestAction hitTestAction)

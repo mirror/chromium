@@ -52,48 +52,13 @@ void RenderTextControlMultiLine::subtreeHasChanged()
         frame->textDidChangeInTextArea(static_cast<Element*>(node()));
 }
 
-void RenderTextControlMultiLine::layout()
-{
-    int oldHeight = height();
-    calcHeight();
-
-    int oldWidth = width();
-    calcWidth();
-
-    bool relayoutChildren = oldHeight != height() || oldWidth != width();
-    RenderBox* innerTextRenderer = innerTextElement()->renderBox();
-
-    // Set the text block height
-    int desiredHeight = textBlockHeight();
-    if (desiredHeight != innerTextRenderer->height())
-        relayoutChildren = true;
-
-    int scrollbarSize = 0;
-    if (style()->overflowY() != OHIDDEN)
-        scrollbarSize = scrollbarThickness();
-
-    // Set the text block width
-    int desiredWidth = textBlockWidth() - scrollbarSize;
-    if (style()->htmlHacks())
-        // Matches width in IE quirksmode. We can't just remove the CSS padding in 
-        // quirks.css because then text will wrap differently than in IE.
-        desiredWidth -= 2;
-    if (desiredWidth != innerTextRenderer->width())
-        relayoutChildren = true;
-    innerTextRenderer->style()->setWidth(Length(desiredWidth, Fixed));
-
-    RenderBlock::layoutBlock(relayoutChildren);
-}
-
 bool RenderTextControlMultiLine::nodeAtPoint(const HitTestRequest& request, HitTestResult& result, int x, int y, int tx, int ty, HitTestAction hitTestAction)
 {
     if (!RenderTextControl::nodeAtPoint(request, result, x, y, tx, ty, hitTestAction))
         return false;
 
-    // Don't check if result.innerNode() is our node().
-    // Otherwise this would break layout test:
-    // LayoutTests/fast/forms/textarea-scrolled-endline-caret.html.
-    hitInnerTextElement(result, x, y, tx, ty);
+    if (result.innerNode() == node() || result.innerNode() == innerTextElement())
+        hitInnerTextElement(result, x, y, tx, ty);
 
     return true;
 }
@@ -106,10 +71,7 @@ void RenderTextControlMultiLine::forwardEvent(Event* event)
 int RenderTextControlMultiLine::preferredContentWidth(float charWidth) const
 {
     int factor = static_cast<HTMLTextAreaElement*>(node())->cols();
-    int scrollbarSize = 0;
-    if (style()->overflowY() != OHIDDEN)
-        scrollbarSize = scrollbarThickness();
-    return static_cast<int>(ceilf(charWidth * factor)) + scrollbarSize;
+    return static_cast<int>(ceilf(charWidth * factor)) + scrollbarThickness();
 }
 
 void RenderTextControlMultiLine::adjustControlHeightBasedOnLineHeight(int lineHeight)
@@ -158,10 +120,9 @@ PassRefPtr<RenderStyle> RenderTextControlMultiLine::createInnerTextStyle(const R
 
     adjustInnerTextStyle(startStyle, textBlockStyle.get());
 
-    // The inner text block should not ever have scrollbars.
-    textBlockStyle->setOverflowX(OVISIBLE);
-    textBlockStyle->setOverflowY(OVISIBLE);
-
+    // FIXME: This code should just map wrap into CSS in the DOM code.
+    // Then here we should set the textBlockStyle appropriately based off this
+    // object's style()->whiteSpace() and style->wordWrap().
     // Set word wrap property based on wrap attribute.
     if (static_cast<HTMLTextAreaElement*>(node())->shouldWrapText()) {
         textBlockStyle->setWhiteSpace(PRE_WRAP);

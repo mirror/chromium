@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2007 Kevin Ollivier <kevino@theolliviers.com>
+ * Copyright (C) 2009 Apple Inc. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -24,30 +24,21 @@
  */
 
 #include "config.h"
-#include "PlatformWheelEvent.h"
-#include "Scrollbar.h"
+#include "ResourceLoader.h"
 
-#include <wx/defs.h>
-#include <wx/event.h>
+#include "FrameLoader.h"
+#include "FrameLoaderClient.h"
 
 namespace WebCore {
 
-PlatformWheelEvent::PlatformWheelEvent(const wxMouseEvent& event, const wxPoint& globalPoint)
-    : m_position(event.GetPosition())
-    , m_globalPosition(globalPoint)
-    , m_granularity(ScrollByPixelWheelEvent)
-    , m_shiftKey(event.ShiftDown())
-    , m_ctrlKey(event.ControlDown())
-    , m_altKey(event.AltDown())
-    , m_metaKey(event.MetaDown()) // FIXME: We'll have to test other browsers
-    , m_deltaX(0) // wx doesn't support horizontal mouse wheel scrolling
-    , m_deltaY(event.GetWheelRotation() / event.GetWheelDelta())
-    , m_wheelTicksX(m_deltaX)
-    , m_wheelTicksY(m_deltaY)
-    , m_isAccepted(false)
+bool ResourceLoader::shouldCacheResponse(ResourceHandle*, CFCachedURLResponseRef cachedResponse)
 {
-    // FIXME: retrieve the user setting for the number of lines to scroll on each wheel event
-    m_deltaY *= static_cast<float>(cScrollbarPixelsPerLineStep);
+    if (!m_sendResourceLoadCallbacks)
+        return 0;
+
+    CFURLResponseRef response = CFCachedURLResponseGetWrappedResponse(cachedResponse);
+    CFDataRef data = CFCachedURLResponseGetReceiverData(cachedResponse);
+    return frameLoader()->client()->shouldCacheResponse(documentLoader(), identifier(), response, CFDataGetBytePtr(data), CFDataGetLength(data));
 }
 
-}
+} // namespace WebCore
