@@ -946,7 +946,7 @@ class FactoryCommands(object):
     # issues with escaping; the Python scripts handle them fine.
     return '/'.join(['..', '..', 'layout-test-results'])
 
-  def GetWebkitTestCommand(self, with_pageheap):
+  def GetWebkitTestCommand(self, with_pageheap, mode=None):
     """Returns a command list to call the _layout_test_tool to run the WebKit
     layout tests.  If with_pageheap is True, page-heap checking will be enabled
     for test_shell.
@@ -958,8 +958,15 @@ class FactoryCommands(object):
       build_type_id = 'kjs'
     else:
       build_type_id = 'v8'
+    if 'Hammer' == self._target:
+      if mode == 'opt':
+        target = 'Release'
+      else:
+        target = 'Debug'
+    else:
+      target = self._target
     cmd = [self._python, self._layout_test_tool,
-           '--target', self._target,
+           '--target', target,
            '--build-type', build_type_id,
            '-o', self.GetWebkitResultDir(),
            '--build-dir', self._build_dir]
@@ -1004,7 +1011,7 @@ class FactoryCommands(object):
             '--build-dir', self._build_dir]
 
   def AddWebkitTests(self, with_pageheap, test_timeout=600,
-                     archive_timeout=600, archive_results=False):
+                     archive_timeout=600, archive_results=False, mode=None):
     """Adds a step to the factory to run the WebKit layout tests.
 
     Args:
@@ -1024,7 +1031,8 @@ class FactoryCommands(object):
                      test_name='webkit_tests',
                      timeout=test_timeout,
                      test_description=pageheap_description,
-                     test_command=self.GetWebkitTestCommand(with_pageheap))
+                     test_command=self.GetWebkitTestCommand(with_pageheap,
+                                                            mode))
 
     if archive_results:
       url = '%s/%s/%s' % (self._archive_url, 'layout_test_results',

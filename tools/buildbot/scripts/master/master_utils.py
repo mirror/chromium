@@ -137,7 +137,8 @@ class MasterFactory(object):
                 show_perf_results=False,
                 with_pageheap=False,
                 perf_id=None,
-                archive_webkit_results=False):
+                archive_webkit_results=False,
+                mode=None):
     """Add the tests listed in 'tests' to the factory_cmd_obj."""
     # Start the crash handler process.
     if run_crash_handler:
@@ -157,7 +158,8 @@ class MasterFactory(object):
       factory_cmd_obj.AddNodeLeakTest('alexa_100.zip', 'alexa_100.txt')
     if self._ShouldRunTest(tests, 'webkit'):
       factory_cmd_obj.AddWebkitTests(with_pageheap,
-                                     archive_results=archive_webkit_results)
+                                     archive_results=archive_webkit_results,
+                                     mode=mode)
     if self._ShouldRunTest(tests, 'plugin'):
       factory_cmd_obj.AddPluginTests()
     if self._ShouldRunTest(tests, 'page_cycler'):
@@ -412,7 +414,8 @@ class MasterFactory(object):
                    show_perf_results=show_perf_results,
                    with_pageheap=with_pageheap,
                    perf_id=perf_id,
-                   archive_webkit_results=archive_webkit_results)
+                   archive_webkit_results=archive_webkit_results,
+                   mode=mode)
 
     # We want to purify layout test to run over and over
     if 'purify_layout' in tests:
