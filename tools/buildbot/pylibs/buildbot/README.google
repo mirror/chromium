@@ -10,3 +10,13 @@ slave/bot.py:
 status/web/build.py
   Make the time it took to run the step appears in the build status page
   Original version saved as build_orig.py
+
+status/web/baseweb.py
+  Add the console in setupUsualPages.
+  Original version saved as baseweb_orig.py
+
+status/web/console.py
+  New waterfall "developer view"
+
+status/web/console_resources.py
+  New resource file for console.py
