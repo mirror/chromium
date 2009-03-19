@@ -1,5 +1,0 @@
-This directory contains the latest stable release of the depot tools.
-
-Please use http://src.chromium.org/svn/trunk/depot_tools/release/[platform]
-instead so that you are always using the most up-to-date version of the depot
-tools!

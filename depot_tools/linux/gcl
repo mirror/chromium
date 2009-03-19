@@ -1,5 +1,0 @@
-#!/bin/sh
-
-base_dir=$(dirname "$0")
-
-exec python "$base_dir/release/gcl.py" "$@"
