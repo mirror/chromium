@@ -1,0 +1,4914 @@
+--- source/common/utypes.c	2007-01-04 17:26:08.926533000 -0800
++++ source/common/utypes.c	2008-04-08 13:40:28.305931000 -0700
+@@ -1,7 +1,7 @@
+ /*
+ ******************************************************************************
+ *
+-*   Copyright (C) 1997-2007, International Business Machines
++*   Copyright (C) 1997-2008, International Business Machines
+ *   Corporation and others.  All Rights Reserved.
+ *
+ ******************************************************************************
+@@ -116,7 +116,8 @@
+     "U_ILLEGAL_PAD_POSITION",
+     "U_UNMATCHED_BRACES",
+     "U_UNSUPPORTED_PROPERTY",
+-    "U_UNSUPPORTED_ATTRIBUTE"
++    "U_UNSUPPORTED_ATTRIBUTE",
++    "U_ARGUMENT_TYPE_MISMATCH"
+ };
+ 
+ static const char * const
+--- source/i18n/Makefile.in	2007-08-03 11:43:04.440027000 -0700
++++ source/i18n/Makefile.in	2008-04-08 13:40:28.343936000 -0700
+@@ -1,6 +1,6 @@
+ #******************************************************************************
+ #
+-#   Copyright (C) 1998-2007, International Business Machines
++#   Copyright (C) 1998-2008, International Business Machines
+ #   Corporation and others.  All Rights Reserved.
+ #
+ #******************************************************************************
+@@ -78,7 +78,8 @@
+ regexcmp.o rematch.o repattrn.o regexst.o udatpg.o uregex.o uregexc.o \
+ ulocdata.o measfmt.o currfmt.o curramt.o currunit.o measure.o utmscale.o \
+ csdetect.o csmatch.o csr2022.o csrecog.o csrmbcs.o csrsbcs.o csrucode.o csrutf8.o inputext.o \
+-windtfmt.o winnmfmt.o basictz.o dtrule.o rbtz.o tzrule.o tztrans.o vtzone.o
++windtfmt.o winnmfmt.o basictz.o dtrule.o rbtz.o tzrule.o tztrans.o vtzone.o \
++plurrule.o plurfmt.o
+ 
+ ## Header files to install
+ HEADERS = $(srcdir)/unicode/*.h
+--- source/i18n/i18n.vcproj	2007-08-03 11:43:04.440027000 -0700
++++ source/i18n/i18n.vcproj	2008-04-08 13:40:28.350929000 -0700
+@@ -1045,6 +1045,10 @@
+ 				</FileConfiguration>
+ 			</File>
+ 			<File
++				RelativePath=".\msgfmt_impl.h"
++				>
++			</File>
++			<File
+ 				RelativePath=".\nfrlist.h"
+ 				>
+ 			</File>
+@@ -1115,6 +1119,58 @@
+ 				>
+ 			</File>
+ 			<File
++				RelativePath=".\plurfmt.cpp"
++				>
++			</File>
++			<File
++				RelativePath=".\unicode\plurfmt.h"
++				>
++				<FileConfiguration
++					Name="Release|Win32"
++					>
++					<Tool
++						Name="VCCustomBuildTool"
++						CommandLine="copy &quot;$(InputPath)&quot; ..\..\include\unicode&#x0D;&#x0A;"
++						Outputs="..\..\include\unicode\$(InputFileName)"
++					/>
++				</FileConfiguration>
++				<FileConfiguration
++					Name="Debug|Win32"
++					>
++					<Tool
++						Name="VCCustomBuildTool"
++						CommandLine="copy &quot;$(InputPath)&quot; ..\..\include\unicode&#x0D;&#x0A;"
++						Outputs="..\..\include\unicode\$(InputFileName)"
++					/>
++				</FileConfiguration>
++			</File>
++			<File
++				RelativePath=".\plurrule.cpp"
++				>
++			</File>
++			<File
++				RelativePath=".\unicode\plurrule.h"
++				>
++				<FileConfiguration
++					Name="Release|Win32"
++					>
++					<Tool
++						Name="VCCustomBuildTool"
++						CommandLine="copy &quot;$(InputPath)&quot; ..\..\include\unicode&#x0D;&#x0A;"
++						Outputs="..\..\include\unicode\$(InputFileName)"
++					/>
++				</FileConfiguration>
++				<FileConfiguration
++					Name="Debug|Win32"
++					>
++					<Tool
++						Name="VCCustomBuildTool"
++						CommandLine="copy &quot;$(InputPath)&quot; ..\..\include\unicode&#x0D;&#x0A;"
++						Outputs="..\..\include\unicode\$(InputFileName)"
++					/>
++				</FileConfiguration>
++			</File>
++			<File
+ 				RelativePath=".\rbnf.cpp"
+ 				>
+ 			</File>
+--- source/i18n/msgfmt.cpp	2006-09-04 09:36:21.000000000 -0700
++++ source/i18n/msgfmt.cpp	2008-04-08 13:40:28.377931000 -0700
+@@ -1,6 +1,6 @@
+ /*
+ *******************************************************************************
+-* Copyright (C) 1997-2006, International Business Machines Corporation and    *
++* Copyright (C) 2007-2008, International Business Machines Corporation and         *
+ * others. All Rights Reserved.                                                *
+ *******************************************************************************
+ *
+@@ -28,15 +28,18 @@
+ #include "unicode/datefmt.h"
+ #include "unicode/smpdtfmt.h"
+ #include "unicode/choicfmt.h"
++#include "unicode/plurfmt.h"
+ #include "unicode/ustring.h"
+ #include "unicode/ucnv_err.h"
+ #include "unicode/uchar.h"
+ #include "unicode/umsg.h"
+ #include "unicode/rbnf.h"
+-#include "ustrfmt.h"
+ #include "cmemory.h"
++#include "msgfmt_impl.h"
+ #include "util.h"
+ #include "uassert.h"
++#include "ustrfmt.h"
++#include "uvector.h"
+ 
+ // *****************************************************************************
+ // class MessageFormat
+@@ -75,6 +78,9 @@
+ static const UChar ID_DURATION[]  = {
+     0x64, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0 /* "duration" */
+ };
++static const UChar ID_PLURAL[]  = {
++    0x70, 0x6c, 0x75, 0x72, 0x61, 0x6c, 0  /* "plural" */
++};
+ 
+ // MessageFormat Type List  Number, Date, Time or Choice
+ static const UChar * const TYPE_IDS[] = {
+@@ -86,6 +92,7 @@
+     ID_SPELLOUT,
+     ID_ORDINAL,
+     ID_DURATION,
++    ID_PLURAL,
+     NULL,
+ };
+  
+@@ -145,6 +152,7 @@
+ 
+ // -------------------------------------
+ UOBJECT_DEFINE_RTTI_IMPLEMENTATION(MessageFormat)
++UOBJECT_DEFINE_RTTI_IMPLEMENTATION(FormatNameEnumeration)
+ 
+ //--------------------------------------------------------------------
+ 
+@@ -182,6 +190,69 @@
+     return appendTo;
+ }
+ 
++/*
++ * A structure representing one subformat of this MessageFormat.
++ * Each subformat has a Format object, an offset into the plain
++ * pattern text fPattern, and an argument number.  The argument
++ * number corresponds to the array of arguments to be formatted.
++ * @internal
++ */
++class MessageFormat::Subformat : public UMemory {
++public:
++    /**
++     * @internal 
++     */
++    Format* format; // formatter
++    /**
++     * @internal 
++     */
++    int32_t offset; // offset into fPattern
++    /**
++     * @internal 
++     */
++    // TODO (claireho) or save the number to argName and use itos to convert to number.=> we need this number
++    int32_t argNum;    // 0-based argument number
++    /**
++     * @internal 
++     */
++    UnicodeString* argName; // argument name or number
++     
++    /**
++     * Clone that.format and assign it to this.format
++     * Do NOT delete this.format
++     * @internal
++     */
++    Subformat& operator=(const Subformat& that) {
++        if (this != &that) {
++            format = that.format ? that.format->clone() : NULL;
++            offset = that.offset;
++            argNum = that.argNum;
++            argName = (that.argNum==-1) ? new UnicodeString(*that.argName): NULL;
++        }
++        return *this;
++    }
++
++    /**
++     * @internal 
++     */
++    UBool operator==(const Subformat& that) const {
++        // Do cheap comparisons first
++        return offset == that.offset &&
++               argNum == that.argNum &&
++               ((argName == that.argName) ||
++                (*argName == *that.argName)) &&
++               ((format == that.format) || // handles NULL
++                (*format == *that.format));
++    }
++
++    /**
++     * @internal
++     */
++    UBool operator!=(const Subformat& that) const {
++        return !operator==(that);
++    }
++};
++
+ // -------------------------------------
+ // Creates a MessageFormat instance based on the pattern.
+ 
+@@ -190,12 +261,15 @@
+ : fLocale(Locale::getDefault()),  // Uses the default locale
+   formatAliases(NULL),
+   formatAliasesCapacity(0),
++  idStart(UCHAR_ID_START),
++  idContinue(UCHAR_ID_CONTINUE),
+   subformats(NULL),
+   subformatCount(0),
+   subformatCapacity(0),
+   argTypes(NULL),
+   argTypeCount(0),
+   argTypeCapacity(0),
++  isArgNumeric(TRUE),
+   defaultNumberFormat(NULL),
+   defaultDateFormat(NULL)
+ {
+@@ -214,12 +288,15 @@
+ : fLocale(newLocale),
+   formatAliases(NULL),
+   formatAliasesCapacity(0),
++  idStart(UCHAR_ID_START),
++  idContinue(UCHAR_ID_CONTINUE),
+   subformats(NULL),
+   subformatCount(0),
+   subformatCapacity(0),
+   argTypes(NULL),
+   argTypeCount(0),
+   argTypeCapacity(0),
++  isArgNumeric(TRUE),
+   defaultNumberFormat(NULL),
+   defaultDateFormat(NULL)
+ {
+@@ -239,12 +316,15 @@
+ : fLocale(newLocale),
+   formatAliases(NULL),
+   formatAliasesCapacity(0),
++  idStart(UCHAR_ID_START),
++  idContinue(UCHAR_ID_CONTINUE),
+   subformats(NULL),
+   subformatCount(0),
+   subformatCapacity(0),
+   argTypes(NULL),
+   argTypeCount(0),
+   argTypeCapacity(0),
++  isArgNumeric(TRUE),
+   defaultNumberFormat(NULL),
+   defaultDateFormat(NULL)
+ {
+@@ -261,12 +341,15 @@
+ : Format(that),
+   formatAliases(NULL),
+   formatAliasesCapacity(0),
++  idStart(UCHAR_ID_START),
++  idContinue(UCHAR_ID_CONTINUE),
+   subformats(NULL),
+   subformatCount(0),
+   subformatCapacity(0),
+   argTypes(NULL),
+   argTypeCount(0),
+   argTypeCapacity(0),
++  isArgNumeric(TRUE),
+   defaultNumberFormat(NULL),
+   defaultDateFormat(NULL)
+ {
+@@ -278,6 +361,7 @@
+     int32_t idx;
+     for (idx = 0; idx < subformatCount; idx++) {
+         delete subformats[idx].format;
++        delete subformats[idx].argName;
+     }
+     uprv_free(subformats);
+     subformats = NULL;
+@@ -380,7 +464,7 @@
+ 
+         fPattern = that.fPattern;
+         setLocale(that.fLocale);
+-        
++        isArgNumeric = that.isArgNumeric;
+         int32_t j;
+         for (j=0; j<subformatCount; ++j) {
+             delete subformats[j].format;
+@@ -411,7 +495,8 @@
+     // Check class ID before checking MessageFormat members
+     if (!Format::operator==(rhs) ||
+         fPattern != that.fPattern ||
+-        fLocale != that.fLocale) {
++        fLocale != that.fLocale ||
++        isArgNumeric != that.isArgNumeric) {
+         return FALSE;
+     }
+ 
+@@ -421,7 +506,7 @@
+             return FALSE;
+         }
+     }
+-
++    
+     return TRUE;
+ }
+ 
+@@ -623,7 +708,12 @@
+         copyAndFixQuotes(fPattern, lastOffset, subformats[i].offset, appendTo);
+         lastOffset = subformats[i].offset;
+         appendTo += LEFT_CURLY_BRACE;
+-        itos(subformats[i].arg, appendTo);
++        if (isArgNumeric) {
++            itos(subformats[i].argNum, appendTo);
++        }
++        else {
++            appendTo += *subformats[i].argName;
++        }
+         Format* fmt = subformats[i].format;
+         if (fmt == NULL) {
+             // do nothing, string format
+@@ -743,6 +833,10 @@
+             appendTo += ID_CHOICE;
+             appendTo += COMMA;
+             appendTo += ((ChoiceFormat*)fmt)->toPattern(buffer);
++        }
++        else if (fmt->getDynamicClassID() == PluralFormat::getStaticClassID()) {
++            UnicodeString buffer;
++            appendTo += ((PluralFormat*)fmt)->toPattern(buffer);
+         } 
+         else {
+             //appendTo += ", unknown";
+@@ -781,7 +875,7 @@
+         }
+     }
+ 
+-    // TODO: What about the .offset and .arg fields?
++    // TODO: What about the .offset and .argNum fields?
+ }   
+ 
+ // -------------------------------------
+@@ -812,8 +906,8 @@
+ }   
+  
+ // -------------------------------------
+-// Adopt a single format.
+-// Do nothing is the format number is not less than the array count.
++// Adopt a single format by format number.
++// Do nothing if the format number is not less than the array count.
+  
+ void
+ MessageFormat::adoptFormat(int32_t n, Format *newFormat) {
+@@ -826,8 +920,37 @@
+ }
+ 
+ // -------------------------------------
++// Adopt a single format by format name.
++// Do nothing if there is no match of formatName.
++void
++MessageFormat::adoptFormat(const UnicodeString& formatName, 
++                           Format* formatToAdopt,
++                           UErrorCode& status) {
++    if (isArgNumeric ) {
++        int32_t argumentNumber = stou(formatName);
++        if (argumentNumber<0) {
++            status = U_ARGUMENT_TYPE_MISMATCH;
++            return; 
++        }
++        adoptFormat(argumentNumber, formatToAdopt);
++        return;
++    }
++    for (int32_t i=0; i<subformatCount; ++i) {
++        if (formatName==*subformats[i].argName) {
++            delete subformats[i].format;
++            if ( formatToAdopt== NULL) {
++                // This should never happen -- but we'll be nice if it does
++                subformats[i].format = NULL;
++            } else {
++                subformats[i].format = formatToAdopt;
++            }
++        }
++    }
++}
++
++// -------------------------------------
+ // Set a single format.
+-// Do nothing is the variable is not less than the array count.
++// Do nothing if the variable is not less than the array count.
+  
+ void
+ MessageFormat::setFormat(int32_t n, const Format& newFormat) {
+@@ -841,7 +964,64 @@
+         }
+     }
+ }
+- 
++
++// -------------------------------------
++// Get a single format by format name.
++// Do nothing if the variable is not less than the array count.
++Format *
++MessageFormat::getFormat(const UnicodeString& formatName, UErrorCode& status) {
++
++    if (U_FAILURE(status)) return NULL;
++    
++    if (isArgNumeric ) {
++        int32_t argumentNumber = stou(formatName);
++        if (argumentNumber<0) {
++            status = U_ARGUMENT_TYPE_MISMATCH;
++            return NULL; 
++        }
++        if (argumentNumber < 0 || argumentNumber >= subformatCount) {
++            return subformats[argumentNumber].format;
++        }
++        else {
++            return NULL;
++        }
++    }
++    
++    for (int32_t i=0; i<subformatCount; ++i) {
++        if (formatName==*subformats[i].argName)
++        {
++            return subformats[i].format;
++        }
++    }
++    return NULL;
++}
++
++// -------------------------------------
++// Set a single format by format name
++// Do nothing if the variable is not less than the array count.
++void
++MessageFormat::setFormat(const UnicodeString& formatName,
++                         const Format& newFormat,
++                         UErrorCode& status) {
++    if (isArgNumeric) {
++        status = U_ARGUMENT_TYPE_MISMATCH;
++        return;
++    }
++    for (int32_t i=0; i<subformatCount; ++i) {
++        if (formatName==*subformats[i].argName)
++        {
++            delete subformats[i].format;
++            if (&newFormat == NULL) {
++                // This should never happen -- but we'll be nice if it does
++                subformats[i].format = NULL;
++            } else {
++                subformats[i].format = newFormat.clone();
++            }
++            break;
++        }
++    }
++}
++
+ // -------------------------------------
+ // Gets the format array.
+  
+@@ -879,6 +1059,28 @@
+     return (const Format**)formatAliases;
+ }
+  
++
++StringEnumeration*
++MessageFormat::getFormatNames(UErrorCode& status) {
++    if (U_FAILURE(status))  return NULL;
++    
++    if (isArgNumeric) {
++        status = U_ARGUMENT_TYPE_MISMATCH;
++        return NULL;
++    }   
++    UVector *fFormatNames = new UVector(status);
++    if (U_FAILURE(status)) {
++        status = U_MEMORY_ALLOCATION_ERROR;
++        return NULL;
++    }
++    for (int32_t i=0; i<subformatCount; ++i) {
++        fFormatNames->addElement(new UnicodeString(*subformats[i].argName), status);
++    }
++
++    StringEnumeration* nameEnumerator = new FormatNameEnumeration(fFormatNames, status);
++    return nameEnumerator;
++}
++
+ // -------------------------------------
+ // Formats the source Formattable array and copy into the result buffer.
+ // Ignore the FieldPosition result for error checking.
+@@ -937,62 +1139,115 @@
+     
+     return format(tmpPtr, cnt, appendTo, ignore, 0, success);
+ }
+- 
++
++
++UnicodeString&
++MessageFormat::format(const UnicodeString* argumentNames,
++                      const Formattable* arguments,
++                      int32_t count,
++                      UnicodeString& appendTo,
++                      UErrorCode& success) const {
++    FieldPosition ignore(0);
++    return format(arguments, argumentNames, count, appendTo, ignore, 0, success);
++}
++
++UnicodeString&
++MessageFormat::format(const Formattable* arguments, 
++                      int32_t cnt, 
++                      UnicodeString& appendTo, 
++                      FieldPosition& status, 
++                      int32_t recursionProtection,
++                      UErrorCode& success) const 
++{
++    return format(arguments, NULL, cnt, appendTo, status, recursionProtection, success);
++}
++
+ // -------------------------------------
+ // Formats the arguments Formattable array and copy into the appendTo buffer.
+ // Ignore the FieldPosition result for error checking.
+ 
+ UnicodeString&
+-MessageFormat::format(const Formattable* arguments, 
++MessageFormat::format(const Formattable* arguments,
++                      const UnicodeString *argumentNames,
+                       int32_t cnt, 
+                       UnicodeString& appendTo, 
+                       FieldPosition& status, 
+                       int32_t recursionProtection,
+                       UErrorCode& success) const 
+-{
+-    // Allow NULL array only if cnt == 0
++{   
++    int32_t lastOffset = 0;
++    int32_t argumentNumber=0;
+     if (cnt < 0 || (cnt && arguments == NULL)) {
+         success = U_ILLEGAL_ARGUMENT_ERROR;
+         return appendTo;
+     }
+-    
+-    int32_t lastOffset = 0;
++ 
++    if ( !isArgNumeric && argumentNames== NULL ) {
++        success = U_ILLEGAL_ARGUMENT_ERROR;
++        return appendTo;
++    }
++ 
++    const Formattable *obj=NULL;
+     for (int32_t i=0; i<subformatCount; ++i) {
+         // Append the prefix of current format element.
+         appendTo.append(fPattern, lastOffset, subformats[i].offset - lastOffset);
+         lastOffset = subformats[i].offset;
+-        int32_t argumentNumber = subformats[i].arg;
+-        // Checks the scope of the argument number.
+-        if (argumentNumber >= cnt) {
+-            appendTo += LEFT_CURLY_BRACE;
+-            itos(argumentNumber, appendTo);
+-            appendTo += RIGHT_CURLY_BRACE;
+-            continue;
++        obj = NULL;
++        if (isArgNumeric) {
++            argumentNumber = subformats[i].argNum;
++
++            // Checks the scope of the argument number.
++            if (argumentNumber >= cnt) {
++                appendTo += LEFT_CURLY_BRACE;
++                itos(argumentNumber, appendTo);
++                appendTo += RIGHT_CURLY_BRACE;
++                continue;
++            }
++            obj = arguments+argumentNumber;
++        }
++        else {
++            for (int32_t j=0; j<cnt; ++j) {
++                if (argumentNames[j]== *subformats[i].argName ) {
++                    obj = arguments+j;
++                    break;
++                }
++            }
++            if (obj == NULL ) {
++                appendTo += LEFT_CURLY_BRACE;
++                appendTo += *subformats[i].argName;
++                appendTo += RIGHT_CURLY_BRACE;
++                continue;
++                
++            }
+         }
+-
+-        const Formattable *obj = arguments + argumentNumber;
+         Formattable::Type type = obj->getType();
+ 
+         // Recursively calling the format process only if the current
+         // format argument refers to a ChoiceFormat object.
+         Format* fmt = subformats[i].format;
+         if (fmt != NULL) {
+-            UnicodeString arg;
+-            fmt->format(*obj, arg, success);
++            UnicodeString argNum;
++            fmt->format(*obj, argNum, success);
+ 
+             // Needs to reprocess the ChoiceFormat option by using the
+             // MessageFormat pattern application.
+-            if (fmt->getDynamicClassID() == ChoiceFormat::getStaticClassID() &&
+-                arg.indexOf(LEFT_CURLY_BRACE) >= 0) {
+-                MessageFormat temp(arg, fLocale, success);
++            if ((fmt->getDynamicClassID() == ChoiceFormat::getStaticClassID() ||
++                 fmt->getDynamicClassID() == PluralFormat::getStaticClassID()) &&
++                argNum.indexOf(LEFT_CURLY_BRACE) >= 0) {
++                MessageFormat temp(argNum, fLocale, success);
+                 // TODO: Implement recursion protection
+-                temp.format(arguments, cnt, appendTo, status, recursionProtection, success);
++                if ( isArgNumeric ) {
++                    temp.format(arguments, NULL, cnt, appendTo, status, recursionProtection, success);
++                }
++                else {
++                    temp.format(arguments, argumentNames, cnt, appendTo, status, recursionProtection, success);
++                }
+                 if (U_FAILURE(success)) { 
+                     return appendTo; 
+                 }
+             }
+             else {
+-                appendTo += arg;
++                appendTo += argNum;
+             }
+         }
+         // If the obj data type is a number, use a NumberFormat instance.
+@@ -1052,6 +1307,11 @@
+     ParsePosition tempPos(0);
+     count = 0; // {sfb} reset to zero
+     int32_t len;
++    // If resultArray could not be created, exit out.
++    // Avoid crossing initialization of variables above.
++    if (resultArray == NULL) {
++        goto PARSE_ERROR;
++    }
+     for (int32_t i = 0; i < subformatCount; ++i) {
+         // match up to format
+         len = subformats[i].offset - patternOffset;
+@@ -1066,7 +1326,7 @@
+         
+         // now use format
+         Format* fmt = subformats[i].format;
+-        int32_t arg = subformats[i].arg;
++        int32_t argNum = subformats[i].argNum;
+         if (fmt == NULL) {   // string format
+             // if at end, use longest possible match
+             // otherwise uses first match to intervening string
+@@ -1093,14 +1353,19 @@
+                 UnicodeString strValue = buffer;
+                 UnicodeString temp(LEFT_CURLY_BRACE);
+                 // {sfb} check this later
+-                itos(arg, temp);
++                if (isArgNumeric) {
++                    itos(argNum, temp);
++                }
++                else {
++                    temp+=(*subformats[i].argName);
++                }
+                 temp += RIGHT_CURLY_BRACE;
+                 if (strValue != temp) {
+                     source.extract(sourceOffset,next - sourceOffset, buffer);
+-                    resultArray[arg].setString(buffer);
++                    resultArray[argNum].setString(buffer);
+                     // {sfb} not sure about this
+-                    if ((arg + 1) > count) {
+-                        count = arg + 1;
++                    if ((argNum + 1) > count) {
++                        count = argNum + 1;
+                     }
+                 }
+                 sourceOffset = next;
+@@ -1108,13 +1373,13 @@
+         } 
+         else {
+             tempPos.setIndex(sourceOffset);
+-            fmt->parseObject(source, resultArray[arg], tempPos);
++            fmt->parseObject(source, resultArray[argNum], tempPos);
+             if (tempPos.getIndex() == sourceOffset) {
+                 goto PARSE_ERROR;
+             }
+             
+-            if ((arg + 1) > count) {
+-                count = arg + 1;
++            if ((argNum + 1) > count) {
++                count = argNum + 1;
+             }
+             sourceOffset = tempPos.getIndex(); // update
+         }
+@@ -1144,6 +1409,10 @@
+                      int32_t& cnt,
+                      UErrorCode& success) const
+ {
++    if (!isArgNumeric ) {
++        success = U_ARGUMENT_TYPE_MISMATCH;
++        return NULL;   
++    }
+     ParsePosition status(0);
+     // Calls the actual implementation method and starts
+     // from zero offset of the source text.
+@@ -1195,11 +1464,11 @@
+ 
+ static Format* makeRBNF(URBNFRuleSetTag tag, const Locale& locale, const UnicodeString& defaultRuleSet, UErrorCode& ec) {
+     RuleBasedNumberFormat* fmt = new RuleBasedNumberFormat(tag, locale, ec);
+-    if (U_SUCCESS(ec) && defaultRuleSet.length() > 0) {
+-        fmt->setDefaultRuleSet(defaultRuleSet, ec);
+-    if (U_FAILURE(ec)) { // ignore unrecognized default rule set
+-        ec = U_ZERO_ERROR;
+-    }
++    if (fmt == NULL) {
++        ec = U_MEMORY_ALLOCATION_ERROR;
++    } else if (U_SUCCESS(ec) && defaultRuleSet.length() > 0) {
++        UErrorCode localStatus = U_ZERO_ERROR; // ignore unrecognized default rule set
++        fmt->setDefaultRuleSet(defaultRuleSet, localStatus);
+     }
+     return fmt;
+ }
+@@ -1226,9 +1495,21 @@
+ 
+     // Parse the argument number
+     int32_t argumentNumber = stou(segments[1]); // always unlocalized!
++    UnicodeString argumentName;
+     if (argumentNumber < 0) {
+-        ec = U_INVALID_FORMAT_ERROR;
+-        return;
++        if ( (isArgNumeric==TRUE) && (formatNumber !=0) ) {
++            ec = U_INVALID_FORMAT_ERROR;
++            return;
++        }
++        isArgNumeric = FALSE;
++        argumentNumber=formatNumber;
++    }
++    if (!isArgNumeric) {
++        if ( !isLegalArgName(segments[1]) ) {
++            ec = U_INVALID_FORMAT_ERROR;
++            return;
++        }
++        argumentName = segments[1];
+     }
+ 
+     // Parse the format, recording the argument type and creating a
+@@ -1237,6 +1518,8 @@
+     Format *fmt = NULL;
+     int32_t typeID, styleID;
+     DateFormat::EStyle style;
++    UnicodeString unquotedPattern, quotedPattern;
++    UBool inQuote = FALSE;
+ 
+     switch (typeID = findKeyword(segments[2], TYPE_IDS)) {
+ 
+@@ -1308,6 +1591,26 @@
+         argType = Formattable::kDouble;
+         fmt = makeRBNF(URBNF_DURATION, fLocale, segments[3], ec);
+         break;
++    case 8: // plural
++        argType = Formattable::kDouble;
++        quotedPattern = segments[3];
++        for (int32_t i = 0; i < quotedPattern.length(); ++i) {
++            UChar ch = quotedPattern.charAt(i);
++            if (ch == SINGLE_QUOTE) {
++                if (i+1 < quotedPattern.length() && quotedPattern.charAt(i+1)==SINGLE_QUOTE) {
++                    unquotedPattern+=ch;
++                    ++i;
++                }
++                else {
++                    inQuote = !inQuote;
++                }
++            } 
++            else {
++                unquotedPattern += ch;
++            }
++        }
++        fmt = new PluralFormat(fLocale, unquotedPattern, ec);
++        break;
+     default:
+         argType = Formattable::kString;
+         ec = U_ILLEGAL_ARGUMENT_ERROR;
+@@ -1331,7 +1634,14 @@
+     // Parse succeeded; record results in our arrays
+     subformats[formatNumber].format = fmt;
+     subformats[formatNumber].offset = segments[0].length();
+-    subformats[formatNumber].arg = argumentNumber;
++    if (isArgNumeric) {
++        subformats[formatNumber].argName = NULL;
++        subformats[formatNumber].argNum = argumentNumber;
++    }
++    else {
++        subformats[formatNumber].argName = new UnicodeString(argumentName);
++        subformats[formatNumber].argNum = -1;
++    }
+     subformatCount = formatNumber+1;
+ 
+     // Careful here: argumentNumber may in general arrive out of
+@@ -1459,6 +1769,56 @@
+     return defaultDateFormat;
+ }
+ 
++UBool
++MessageFormat::usesNamedArguments() const {
++    return !isArgNumeric;
++}
++
++UBool
++MessageFormat::isLegalArgName(const UnicodeString& argName) const {
++    if(!u_hasBinaryProperty(argName.charAt(0), idStart)) {
++        return FALSE;
++    }
++    for (int32_t i=1; i<argName.length(); ++i) {
++        if(!u_hasBinaryProperty(argName.charAt(i), idContinue)) {
++            return FALSE;
++        }
++    }
++    return TRUE;
++}
++
++FormatNameEnumeration::FormatNameEnumeration(UVector *fNameList, UErrorCode& /*status*/) {
++    pos=0;
++    fFormatNames = fNameList;
++}
++
++const UnicodeString*
++FormatNameEnumeration::snext(UErrorCode& status) {
++    if (U_SUCCESS(status) && pos < fFormatNames->size()) {
++        return (const UnicodeString*)fFormatNames->elementAt(pos++);
++    }
++    return NULL;
++}
++
++void
++FormatNameEnumeration::reset(UErrorCode& /*status*/) {
++    pos=0;
++}
++
++int32_t
++FormatNameEnumeration::count(UErrorCode& /*status*/) const {
++       return (fFormatNames==NULL) ? 0 : fFormatNames->size();
++}
++
++FormatNameEnumeration::~FormatNameEnumeration() {
++    UnicodeString *s;
++    for (int32_t i=0; i<fFormatNames->size(); ++i) {
++        if ((s=(UnicodeString *)fFormatNames->elementAt(i))!=NULL) {
++            delete s;
++        }
++    }
++    delete fFormatNames;
++}
+ U_NAMESPACE_END
+ 
+ #endif /* #if !UCONFIG_NO_FORMATTING */
+--- source/i18n/msgfmt_impl.h	1969-12-31 16:00:00.000000000 -0800
++++ source/i18n/msgfmt_impl.h	2008-04-08 13:40:47.065376000 -0700
+@@ -0,0 +1,33 @@
++/*
++*******************************************************************************
++* Copyright (C) 2007-2008, International Business Machines Corporation and
++* others. All Rights Reserved.                                                *
++*******************************************************************************
++*
++* File MSGFMT.H
++*
++*******************************************************************************
++*/
++
++#ifndef __MSGFMT_IMPL_H__
++#define __MSGFMT_IMPL_H__
++
++U_NAMESPACE_BEGIN
++
++class FormatNameEnumeration : public StringEnumeration {
++public:
++    FormatNameEnumeration(UVector *fFormatNames, UErrorCode& status);
++    virtual ~FormatNameEnumeration();
++    static UClassID U_EXPORT2 getStaticClassID(void);
++    virtual UClassID getDynamicClassID(void) const;
++    virtual const UnicodeString* snext(UErrorCode& status);
++    virtual void reset(UErrorCode& status);
++    virtual int32_t count(UErrorCode& status) const;
++private:
++    int32_t pos;
++    UVector *fFormatNames;
++};
++
++U_NAMESPACE_END
++
++#endif
+--- source/i18n/plurfmt.cpp	1969-12-31 16:00:00.000000000 -0800
++++ source/i18n/plurfmt.cpp	2008-04-08 13:40:47.083358000 -0700
+@@ -0,0 +1,455 @@
++/*
++*******************************************************************************
++* Copyright (C) 2008, International Business Machines Corporation and
++* others. All Rights Reserved.
++*******************************************************************************
++*
++* File PLURFMT.CPP
++*
++* Modification History:
++*
++*   Date        Name        Description
++*******************************************************************************
++*/
++
++
++#include "unicode/utypes.h"
++#include "unicode/plurfmt.h"
++#include "unicode/plurrule.h"
++#include "plurrule_impl.h"
++
++#if !UCONFIG_NO_FORMATTING
++
++U_CDECL_BEGIN
++static void U_CALLCONV
++deleteHashStrings(void *obj) {
++    delete (UnicodeString *)obj;
++}
++U_CDECL_END
++
++U_NAMESPACE_BEGIN
++UOBJECT_DEFINE_RTTI_IMPLEMENTATION(PluralFormat)
++
++#define MAX_KEYWORD_SIZE 30
++
++PluralFormat::PluralFormat(UErrorCode& status) {
++    init(NULL, Locale::getDefault(), status);
++}
++
++PluralFormat::PluralFormat(const Locale& loc, UErrorCode& status) {
++    init(NULL, loc, status);
++}
++
++PluralFormat::PluralFormat(const PluralRules& rules, UErrorCode& status) {
++    init(&rules, Locale::getDefault(), status);
++}
++
++PluralFormat::PluralFormat(const Locale& loc, const PluralRules& rules, UErrorCode& status) {
++    init(&rules, loc, status);
++}
++
++PluralFormat::PluralFormat(const UnicodeString& pat, UErrorCode& status) {
++    init(NULL, Locale::getDefault(), status);
++    applyPattern(pat, status);
++}
++
++PluralFormat::PluralFormat(const Locale& loc, const UnicodeString& pat, UErrorCode& status) {
++    init(NULL, loc, status);
++    applyPattern(pat, status);
++}
++
++PluralFormat::PluralFormat(const PluralRules& rules, const UnicodeString& pat, UErrorCode& status) {
++    init(&rules, Locale::getDefault(), status);
++    applyPattern(pat, status);
++}
++
++PluralFormat::PluralFormat(const Locale& loc, const PluralRules& rules, const UnicodeString& pat, UErrorCode& status) {
++    init(&rules, loc, status);
++    applyPattern(pat, status);
++}
++
++PluralFormat::PluralFormat(const PluralFormat& other) : Format(other) {
++    UErrorCode status = U_ZERO_ERROR;
++    locale = other.locale;
++    pluralRules = other.pluralRules->clone();
++    pattern = other.pattern;
++    copyHashtable(other.fParsedValuesHash, status);
++    numberFormat=NumberFormat::createInstance(locale, status);
++    replacedNumberFormat=other.replacedNumberFormat;
++}
++
++PluralFormat::~PluralFormat() {
++    delete pluralRules;   
++    delete fParsedValuesHash;
++    delete numberFormat;
++}
++
++void
++PluralFormat::init(const PluralRules* rules, const Locale& curLocale, UErrorCode& status) {
++    locale = curLocale;
++    if ( rules==NULL) {
++        pluralRules = PluralRules::forLocale(locale, status);
++    }
++    else {
++        pluralRules = rules->clone();
++    }
++    fParsedValuesHash=NULL;
++    pattern.remove();
++    numberFormat= NumberFormat::createInstance(curLocale, status);
++    replacedNumberFormat=NULL;
++}
++
++void
++PluralFormat::applyPattern(const UnicodeString& newPattern, UErrorCode& status) {
++    this->pattern = newPattern;
++    UnicodeString token;
++    int32_t braceCount=0;
++    fmtToken type;
++    UBool spaceIncluded=FALSE;
++    
++    if (fParsedValuesHash==NULL) {
++        fParsedValuesHash = new Hashtable(TRUE, status);
++        if (U_FAILURE(status)) {
++            return;
++        }
++        fParsedValuesHash->setValueDeleter(deleteHashStrings);
++    }
++    
++    UBool getKeyword=TRUE;
++    UnicodeString hashKeyword;
++    UnicodeString *hashPattern;
++    
++    for (int32_t i=0; i<pattern.length(); ++i) {
++        UChar ch=pattern.charAt(i);
++
++        if ( !inRange(ch, type) ) {
++            if (getKeyword) {
++                status = U_ILLEGAL_CHARACTER;
++                return;
++            }
++            else {
++                token += ch;
++                continue;
++            }
++        }
++        switch (type) {
++            case tSpace:
++                if (token.length()==0) {
++                    continue;
++                }
++                if (getKeyword) {
++                    // space after keyword
++                    spaceIncluded = TRUE;
++                }
++                else {
++                    token += ch;
++                }
++                break;
++            case tLeftBrace:
++                if ( getKeyword ) {
++                    if (fParsedValuesHash->get(token)!= NULL) {
++                        status = U_DUPLICATE_KEYWORD;
++                        return; 
++                    }
++                    if (token.length()==0) {
++                        status = U_PATTERN_SYNTAX_ERROR;
++                        return;
++                    }
++                    if (!pluralRules->isKeyword(token) && 
++                        pluralRules->getKeywordOther()!=token) {
++                        status = U_UNDEFINED_KEYWORD;
++                        return;
++                    }
++                    hashKeyword = token;
++                    getKeyword = FALSE;
++                    token.remove();
++                }
++                else  {
++                    if (braceCount==0) {
++                        status = U_UNEXPECTED_TOKEN;
++                        return;
++                    }
++                    else {
++                        token += ch;
++                    }
++                }
++                braceCount++;
++                spaceIncluded = FALSE;
++                break;
++            case tRightBrace:
++                if ( getKeyword ) {
++                    status = U_UNEXPECTED_TOKEN;
++                    return;
++                }
++                else  {
++                    hashPattern = new UnicodeString(token);
++                    fParsedValuesHash->put(hashKeyword, hashPattern, status);
++                    braceCount--;
++                    if ( braceCount==0 ) {
++                        getKeyword=TRUE;
++                        hashKeyword.remove();
++                        hashPattern=NULL;
++                        token.remove();
++                    }
++                    else {
++                        token += ch;
++                    }
++                }
++                spaceIncluded = FALSE;
++                break;
++            case tLetter:
++            case tNumberSign:
++                if (spaceIncluded) {
++                    status = U_PATTERN_SYNTAX_ERROR;
++                    return;
++                }
++            default:
++                token+=ch;
++                break;
++        }
++    }
++    if ( checkSufficientDefinition() ) {
++        return;
++    }
++    else {
++        status = U_DEFAULT_KEYWORD_MISSING;
++        return;
++    }
++}
++
++UnicodeString&
++PluralFormat::format(const Formattable& obj,
++                   UnicodeString& appendTo,
++                   FieldPosition& pos,
++                   UErrorCode& status) const
++{
++    if (U_FAILURE(status)) return appendTo;
++    int32_t number;
++    
++    switch (obj.getType())
++    {
++    case Formattable::kDouble:
++        return format((int32_t)obj.getDouble(), appendTo, pos, status);
++        break;
++    case Formattable::kLong:
++        number = (int32_t)obj.getLong();
++        return format(number, appendTo, pos, status);
++        break;
++    case Formattable::kInt64:
++        return format((int32_t)obj.getInt64(), appendTo, pos, status);
++    default:
++        status = U_ILLEGAL_ARGUMENT_ERROR;
++        return appendTo;
++    }
++}
++
++UnicodeString
++PluralFormat::format(int32_t number, UErrorCode& status) const {
++    FieldPosition fpos(0);
++    UnicodeString result;
++    
++    return format(number, result, fpos, status);
++}
++
++UnicodeString&
++PluralFormat::format(int32_t number,
++                     UnicodeString& appendTo, 
++                     FieldPosition& pos,
++                     UErrorCode& /*status*/) const {
++
++    if (fParsedValuesHash==NULL) {
++        if ( replacedNumberFormat== NULL ) {
++            return numberFormat->format(number, appendTo, pos);
++        }
++        else {
++            replacedNumberFormat->format(number, appendTo, pos);
++        }
++    }
++    UnicodeString selectedRule = pluralRules->select(number);
++    UnicodeString *selectedPattern = (UnicodeString *)fParsedValuesHash->get(selectedRule);
++    if (selectedPattern==NULL) {
++        selectedPattern = (UnicodeString *)fParsedValuesHash->get(pluralRules->getKeywordOther());
++    }
++    appendTo = insertFormattedNumber(number, *selectedPattern, appendTo, pos);
++    
++    return appendTo;
++}
++
++UnicodeString&
++PluralFormat::toPattern(UnicodeString& appendTo) {
++    appendTo+= pattern;
++    return appendTo;
++}
++
++UBool
++PluralFormat::inRange(UChar ch, fmtToken& type) {
++    if ((ch>=CAP_A) && (ch<=CAP_Z)) {
++        // we assume all characters are in lower case already.
++        return FALSE;
++    }
++    if ((ch>=LOW_A) && (ch<=LOW_Z)) {
++        type = tLetter;
++        return TRUE;
++    }
++    switch (ch) {
++        case LEFTBRACE: 
++            type = tLeftBrace;
++            return TRUE;
++        case SPACE:
++            type = tSpace;
++            return TRUE;
++        case RIGHTBRACE:
++            type = tRightBrace;
++            return TRUE;
++        case NUMBER_SIGN:
++            type = tNumberSign;
++            return TRUE;
++        default :
++            type = none;
++            return FALSE;
++    }
++}
++
++UBool
++PluralFormat::checkSufficientDefinition() {
++    // Check that at least the default rule is defined.
++    if (fParsedValuesHash==NULL)  return FALSE;
++    if (fParsedValuesHash->get(pluralRules->getKeywordOther()) == NULL) {
++        return FALSE;
++    }
++    else {
++        return TRUE;
++    }
++}
++
++void
++PluralFormat::setLocale(const Locale& loc, UErrorCode& status) {
++    if (pluralRules!=NULL) {
++        delete pluralRules;
++        pluralRules=NULL;
++    }
++    if (fParsedValuesHash!= NULL) {
++        delete fParsedValuesHash;
++        fParsedValuesHash = NULL;
++    }
++    if (numberFormat!=NULL) {
++        delete numberFormat;
++        numberFormat = NULL;
++        replacedNumberFormat=NULL;
++    }
++    init(NULL, loc, status);
++}
++
++void
++PluralFormat::setNumberFormat(const NumberFormat* format, UErrorCode& /*status*/) {
++    // TODO: The copy constructor and assignment op of NumberFormat class are protected.
++    // create a pointer as the workaround.
++    replacedNumberFormat = (NumberFormat *)format;
++}
++
++Format*
++PluralFormat::clone() const
++{
++    return new PluralFormat(*this);
++}
++
++/*
++Format*
++PluralFormat::clone() const {
++}
++*/
++
++UBool
++PluralFormat::operator==(const Format& other) const {
++    // This protected comparison operator should only be called by subclasses
++    // which have confirmed that the other object being compared against is
++    // an instance of a sublcass of PluralFormat.  THIS IS IMPORTANT.
++    // Format::operator== guarantees that this cast is safe
++    PluralFormat* fmt = (PluralFormat*)&other;
++    return ((*pluralRules == *(fmt->pluralRules)) && 
++            (*numberFormat == *(fmt->numberFormat)));
++}
++
++UBool
++PluralFormat::operator!=(const Format& other) const {
++    return  !operator==(other);
++}
++
++void
++PluralFormat::parseObject(const UnicodeString& /*source*/,
++                        Formattable& /*result*/,
++                        ParsePosition& /*pos*/) const
++{
++    // TODO: not yet supported in icu4j and icu4c
++}
++
++UnicodeString
++PluralFormat::insertFormattedNumber(int32_t number, 
++                                    UnicodeString& message,
++                                    UnicodeString& appendTo,
++                                    FieldPosition& pos) const {
++    UnicodeString result;
++    int32_t braceStack=0;
++    int32_t startIndex=0;
++    
++    if (message.length()==0) {
++        return result;
++    }
++    appendTo = numberFormat->format(number, appendTo, pos);
++    for(int32_t i=0; i<message.length(); ++i) {
++        switch(message.charAt(i)) {
++        case LEFTBRACE:
++            ++braceStack;
++            break;
++        case RIGHTBRACE:
++            --braceStack;
++            break;
++        case NUMBER_SIGN:
++            if (braceStack==0) {
++                result += UnicodeString(message, startIndex, i);
++                result += appendTo;
++                startIndex = i + 1;
++            }
++            break;
++        }
++    }
++    if ( startIndex < message.length() ) {
++        result += UnicodeString(message, startIndex, message.length()-startIndex);
++    }
++    appendTo = result;
++    return result;
++}
++
++void
++PluralFormat::copyHashtable(Hashtable *other, UErrorCode& status) {
++    if (other == NULL) {
++        fParsedValuesHash = NULL;
++        return;
++    }
++    fParsedValuesHash = new Hashtable(TRUE, status);
++    if(U_FAILURE(status)){
++        return;
++    }
++    fParsedValuesHash->setValueDeleter(deleteHashStrings);
++    int32_t pos = -1;
++    const UHashElement* elem = NULL;
++    // walk through the hash table and create a deep clone
++    while((elem = other->nextElement(pos))!= NULL){
++        const UHashTok otherKeyTok = elem->key;
++        UnicodeString* otherKey = (UnicodeString*)otherKeyTok.pointer;
++        const UHashTok otherKeyToVal = elem->value;
++        UnicodeString* otherValue = (UnicodeString*)otherKeyToVal.pointer;
++        fParsedValuesHash->put(*otherKey, new UnicodeString(*otherValue), status);
++        if(U_FAILURE(status)){
++            return;
++        }
++    }
++}
++
++
++U_NAMESPACE_END
++
++
++#endif /* #if !UCONFIG_NO_FORMATTING */
++
++//eof
+--- source/i18n/plurrule.cpp	1969-12-31 16:00:00.000000000 -0800
++++ source/i18n/plurrule.cpp	2008-04-08 13:40:47.105362000 -0700
+@@ -0,0 +1,1149 @@
++/*
++*******************************************************************************
++* Copyright (C) 2007-2008, International Business Machines Corporation and
++* others. All Rights Reserved.
++*******************************************************************************
++*
++* File PLURRULE.CPP
++*
++* Modification History:
++*
++*   Date        Name        Description
++*******************************************************************************
++*/
++
++
++#include "unicode/uniset.h"
++#include "unicode/utypes.h"
++#include "unicode/plurrule.h"
++#include "cmemory.h"
++#include "cstring.h"
++#include "hash.h"
++#include "mutex.h"
++#include "plurrule_impl.h"
++#include "putilimp.h"
++#include "ucln_in.h"
++#include "ustrfmt.h"
++#include "locutil.h"
++
++#if !UCONFIG_NO_FORMATTING
++
++// gPluralRuleLocaleHash is a global hash table that maps locale name to
++// the pointer of PluralRule. gPluralRuleLocaleHash is built only once and
++// resides in the memory until end of application. We will remove the
++// gPluralRuleLocaleHash table when we move plural rules data to resource
++// bundle in ICU4.0 release.  If Valgrind reports the memory is still 
++// reachable, please ignore it.
++static Hashtable *gPluralRuleLocaleHash=NULL;
++
++
++U_NAMESPACE_BEGIN
++
++#define ARRAY_SIZE(array) (int32_t)(sizeof array  / sizeof array[0])
++
++// TODO: Plural rule data - will move to ResourceBundle.
++#define NUMBER_PLURAL_RULES 13
++static const UChar uCharPluralRules[NUMBER_PLURAL_RULES][128] = {
++ // other: n/ja,ko,tr,v
++ {LOW_O,LOW_T,LOW_H,LOW_E,LOW_R,COLON,SPACE,LOW_N,SLASH,LOW_J,LOW_A,COMMA,LOW_K,LOW_O,COMMA,LOW_T,
++  LOW_R,COMMA,LOW_V,LOW_I, 0},
++  // one: n is 1/da,de,el,en,eo,es,et,fi,fo,he,hu,it,nb,nl,nn,no,pt,sv
++ {LOW_O,LOW_N,LOW_E,COLON,SPACE,LOW_N,SPACE,LOW_I,LOW_S,SPACE,U_ONE,SLASH,LOW_D,LOW_A,COMMA,LOW_D,
++  LOW_E,COMMA,LOW_E,LOW_L,COMMA,LOW_E,LOW_N,COMMA,LOW_E,LOW_O,COMMA,LOW_E,LOW_S,COMMA,LOW_E,LOW_T,
++  COMMA,LOW_F,LOW_I,COMMA,LOW_F,LOW_O,COMMA,LOW_H,LOW_E,COMMA,LOW_H,LOW_U,COMMA,LOW_I,LOW_T,COMMA,
++  LOW_N,LOW_B,COMMA,LOW_N,LOW_L,COMMA,LOW_N,LOW_N,COMMA,LOW_N,LOW_O,COMMA,LOW_P,LOW_T,COMMA,LOW_S,
++  LOW_V, 0},
++  // one: n in 0..1/fr,pt_BR
++ {LOW_O,LOW_N,LOW_E,COLON,SPACE,LOW_N,SPACE,LOW_I,LOW_N,SPACE,U_ZERO,DOT,DOT,U_ONE,SLASH,LOW_F,
++  LOW_R,COMMA,LOW_P,LOW_T,LOWLINE,CAP_B,CAP_R, 0},
++  // zero: n is 0; one: n mod 10 is 1 and n mod 100 is not 11/lv
++ {LOW_Z,LOW_E,LOW_R,LOW_O,COLON,SPACE,LOW_N,SPACE,LOW_I,LOW_S,SPACE,U_ZERO,SEMI_COLON,SPACE,LOW_O,
++  LOW_N,LOW_E,COLON,SPACE,LOW_N,SPACE,LOW_M,LOW_O,LOW_D,SPACE,U_ONE,U_ZERO,SPACE,LOW_I,LOW_S,SPACE,
++  U_ONE,SPACE,LOW_A,LOW_N,LOW_D,SPACE,LOW_N,SPACE,LOW_M,LOW_O,LOW_D,SPACE,U_ONE,U_ZERO,U_ZERO,SPACE,
++  LOW_I,LOW_S,SPACE,LOW_N,LOW_O,LOW_T,SPACE,U_ONE,U_ONE,SLASH,LOW_L,LOW_V, 0},
++  // one: n is 1; two: n is 2/ga
++ {LOW_O,LOW_N,LOW_E,COLON,SPACE,LOW_N,SPACE,LOW_I,LOW_S,SPACE,U_ONE,SEMI_COLON,SPACE,LOW_T,LOW_W,
++  LOW_O,COLON,SPACE,LOW_N,SPACE,LOW_I,LOW_S,SPACE,U_TWO,SLASH,LOW_G,LOW_A, 0},
++  // zero: n is 0; one: n is 1; zero: n mod 100 in 1..19/ro
++ {LOW_Z,LOW_E,LOW_R,LOW_O,COLON,SPACE,LOW_N,SPACE,LOW_I,LOW_S,SPACE,U_ZERO,SEMI_COLON,SPACE,LOW_O,
++  LOW_N,LOW_E,COLON,SPACE,LOW_N,SPACE,LOW_I,LOW_S,SPACE,U_ONE,SEMI_COLON,SPACE,LOW_Z,LOW_E,LOW_R,
++  LOW_O,COLON,SPACE,LOW_N,SPACE,LOW_M,LOW_O,LOW_D,SPACE,U_ONE,U_ZERO,U_ZERO,SPACE,LOW_I,LOW_N,SPACE,
++  U_ONE,DOT,DOT,U_ONE,U_NINE,SLASH,LOW_R,LOW_O, 0},
++  // other: n mod 100 in 11..19; one: n mod 10 is 1; few: n mod 10 in 2..9/lt
++ {LOW_O,LOW_T,LOW_H,LOW_E,LOW_R,COLON,SPACE,LOW_N,SPACE,LOW_M,LOW_O,LOW_D,SPACE,U_ONE,U_ZERO,U_ZERO,
++  SPACE,LOW_I,LOW_N,SPACE,U_ONE,U_ONE,DOT,DOT,U_ONE,U_NINE,SEMI_COLON,SPACE,LOW_O,LOW_N,LOW_E,COLON,
++  SPACE,LOW_N,SPACE,LOW_M,LOW_O,LOW_D,SPACE,U_ONE,U_ZERO,SPACE,LOW_I,LOW_S,SPACE,U_ONE,SEMI_COLON,
++  SPACE,LOW_F,LOW_E,LOW_W,COLON,SPACE,LOW_N,SPACE,LOW_M,LOW_O,LOW_D,SPACE,U_ONE,U_ZERO,SPACE,LOW_I,
++  LOW_N,SPACE,U_TWO,DOT,DOT,U_NINE,SLASH,LOW_L,LOW_T, 0},
++ // one: n mod 10 is 1 and n mod 100 is not 11; few: n mod 10 in 2..4
++ // and n mod 100 not in 12..14/hr,ru,sr,uk
++ {LOW_O,LOW_N,LOW_E,COLON,SPACE,LOW_N,SPACE,LOW_M,LOW_O,LOW_D,SPACE,U_ONE,U_ZERO,SPACE,LOW_I,LOW_S,
++  SPACE,U_ONE,SPACE,LOW_A,LOW_N,LOW_D,SPACE,LOW_N,SPACE,LOW_M,LOW_O,LOW_D,SPACE,U_ONE,U_ZERO,U_ZERO,
++  SPACE,LOW_I,LOW_S,SPACE,LOW_N,LOW_O,LOW_T,SPACE,U_ONE,U_ONE,SEMI_COLON,SPACE,LOW_F,LOW_E,LOW_W,
++  COLON,SPACE,LOW_N,SPACE,LOW_M,LOW_O,LOW_D,SPACE,U_ONE,U_ZERO,SPACE,LOW_I,LOW_N,SPACE,U_TWO,DOT,
++  DOT,U_FOUR,SPACE,LOW_A,LOW_N,LOW_D,SPACE,LOW_N,SPACE,LOW_M,LOW_O,LOW_D,SPACE,U_ONE,
++  U_ZERO,U_ZERO,SPACE,LOW_N,LOW_O,LOW_T,SPACE,LOW_I,LOW_N,SPACE,U_ONE,U_TWO,DOT,DOT,U_ONE,U_FOUR,
++  SLASH,LOW_H,LOW_R,COMMA,LOW_R,LOW_U,COMMA,LOW_S,LOW_R,COMMA,LOW_U,LOW_K, 0},
++  // one: n is 1; few: n in 2..4/cs,sk
++ {LOW_O,LOW_N,LOW_E,COLON,SPACE,LOW_N,SPACE,LOW_I,LOW_S,SPACE,U_ONE,SEMI_COLON,SPACE,LOW_F,LOW_E,
++  LOW_W,COLON,SPACE,LOW_N,SPACE,LOW_I,LOW_N,SPACE,U_TWO,DOT,DOT,U_FOUR,SLASH,LOW_C,LOW_S,COMMA,
++  LOW_S,LOW_K, 0},
++  // one: n is 1; few: n mod 10 in 2..4 and n mod 100 not in 12..14/pl
++ {LOW_O,LOW_N,LOW_E,COLON,SPACE,LOW_N,SPACE,LOW_I,LOW_S,SPACE,U_ONE,SEMI_COLON,SPACE,LOW_F,LOW_E,
++  LOW_W,COLON,SPACE,LOW_N,SPACE,LOW_M,LOW_O,LOW_D,SPACE,U_ONE,U_ZERO,SPACE,LOW_I,LOW_N,SPACE,U_TWO,
++  DOT,DOT,U_FOUR,SPACE,LOW_A,LOW_N,LOW_D,SPACE,LOW_N,SPACE,LOW_M,LOW_O,LOW_D,SPACE,U_ONE,U_ZERO,
++  U_ZERO,SPACE,LOW_N,LOW_O,LOW_T,SPACE,LOW_I,LOW_N,SPACE,U_ONE,U_TWO,DOT,DOT,U_ONE,U_FOUR,SLASH,
++  LOW_P,LOW_L, 0},
++  // one: n mod 100 is 1; two: n mod 100 is 2; few: n mod 100 in 3..4/sl
++ {LOW_O,LOW_N,LOW_E,COLON,SPACE,LOW_N,SPACE,LOW_M,LOW_O,LOW_D,SPACE,U_ONE,U_ZERO,U_ZERO,SPACE,LOW_I,
++  LOW_S,SPACE,U_ONE,SEMI_COLON,SPACE,LOW_T,LOW_W,LOW_O,COLON,SPACE,LOW_N,SPACE,LOW_M,LOW_O,LOW_D,
++  SPACE,U_ONE,U_ZERO,U_ZERO,SPACE,LOW_I,LOW_S,SPACE,U_TWO,SEMI_COLON,SPACE,LOW_F,LOW_E,LOW_W,COLON,
++  SPACE,LOW_N,SPACE,LOW_M,LOW_O,LOW_D,SPACE,U_ONE,U_ZERO,U_ZERO,SPACE,LOW_I,LOW_N,SPACE,U_THREE,DOT,
++  DOT,U_FOUR,SLASH,LOW_S,LOW_L, 0},
++  // zero: n is 0; one: n is 1; two: n is 2; few: n is 3..10; many: n in 11..99/ar
++ {LOW_Z,LOW_E,LOW_R,LOW_O,COLON,SPACE,LOW_N,SPACE,LOW_I,LOW_S,SPACE,U_ZERO,SEMI_COLON,SPACE,LOW_O,
++  LOW_N,LOW_E,COLON,SPACE,LOW_N,SPACE,LOW_I,LOW_S,SPACE,U_ONE,SEMI_COLON,SPACE,LOW_T,LOW_W,LOW_O,
++  COLON,SPACE,LOW_N,SPACE,LOW_I,LOW_S,SPACE,U_TWO,SEMI_COLON,SPACE,LOW_F,LOW_E,LOW_W,COLON,SPACE,
++  LOW_N,SPACE,LOW_I,LOW_S,SPACE,U_THREE,DOT,DOT,U_ONE,U_ZERO,SEMI_COLON,SPACE,LOW_M,LOW_A,LOW_N,
++  LOW_Y,COLON,SPACE,LOW_N,SPACE,LOW_I,LOW_N,SPACE,U_ONE,U_ONE,DOT,DOT,U_NINE,U_NINE,SLASH,LOW_A,
++  LOW_R, 0},
++};
++
++static const UChar PLURAL_KEYWORD_ZERO[] = {LOW_Z,LOW_E,LOW_R,LOW_O, 0};
++static const UChar PLURAL_KEYWORD_ONE[]={LOW_O,LOW_N,LOW_E,0};
++static const UChar PLURAL_KEYWORD_TWO[]={LOW_T,LOW_W,LOW_O,0};
++static const UChar PLURAL_KEYWORD_FEW[]={LOW_F,LOW_E,LOW_W,0};
++static const UChar PLURAL_KEYWORD_MANY[]={LOW_M,LOW_A,LOW_N,LOW_Y,0};
++static const UChar PLURAL_KEYWORD_OTHER[]={LOW_O,LOW_T,LOW_H,LOW_E,LOW_R,0};
++static const UChar PLURAL_DEFAULT_RULE[]={LOW_O,LOW_T,LOW_H,LOW_E,LOW_R,COLON,SPACE,LOW_N,0};
++static const UChar PK_IN[]={LOW_I,LOW_N,0};
++static const UChar PK_NOT[]={LOW_N,LOW_O,LOW_T,0};
++static const UChar PK_IS[]={LOW_I,LOW_S,0};
++static const UChar PK_MOD[]={LOW_M,LOW_O,LOW_D,0};
++static const UChar PK_AND[]={LOW_A,LOW_N,LOW_D,0};
++static const UChar PK_OR[]={LOW_O,LOW_R,0};
++static const UChar PK_VAR_N[]={LOW_N,0};
++
++UOBJECT_DEFINE_RTTI_IMPLEMENTATION(PluralRules)
++UOBJECT_DEFINE_RTTI_IMPLEMENTATION(PluralKeywordEnumeration)
++
++PluralRules::PluralRules(UErrorCode& status)
++:
++    fLocaleStringsHash(NULL),
++    mRules(NULL),
++    mParser(new RuleParser())
++{
++    initHashtable(status);
++    if (U_SUCCESS(status)) {
++        getRuleData(status);
++    }
++}
++
++PluralRules::PluralRules(const PluralRules& other)
++: UObject(other),
++    fLocaleStringsHash(NULL),
++    mRules(NULL),
++    mParser(new RuleParser())
++{
++    *this=other;
++}
++
++PluralRules::~PluralRules() {
++    delete mRules;
++    delete mParser;
++}
++
++PluralRules*
++PluralRules::clone() const {
++    return new PluralRules(*this);
++}
++
++PluralRules&
++PluralRules::operator=(const PluralRules& other) {
++    if (this != &other) {
++        fLocaleStringsHash=other.fLocaleStringsHash;
++        delete mRules;
++        mRules = new RuleChain(*other.mRules);
++        delete mParser;
++        mParser = new RuleParser();
++    }
++
++    return *this;
++}
++
++PluralRules* U_EXPORT2
++PluralRules::createRules(const UnicodeString& description, UErrorCode& status) {
++    RuleChain   rules;
++
++    PluralRules *newRules = new PluralRules(status);
++    if ( (newRules != NULL)&& U_SUCCESS(status) ) {
++        newRules->parseDescription((UnicodeString &)description, rules, status);
++        if (U_SUCCESS(status)) {
++            newRules->addRules(rules, status);
++        }
++    }
++    if (U_FAILURE(status)) {
++        delete newRules;
++        return NULL;
++    }
++    else {
++        return newRules;
++    }
++}
++
++PluralRules* U_EXPORT2
++PluralRules::createDefaultRules(UErrorCode& status) {
++    return createRules(PLURAL_DEFAULT_RULE, status);
++}
++
++PluralRules* U_EXPORT2
++PluralRules::forLocale(const Locale& locale, UErrorCode& status) {
++    RuleChain *locRules;
++
++    PluralRules *newRules = new PluralRules(status);
++    if (U_FAILURE(status)) {
++        delete newRules;
++        return NULL;
++    }
++    UnicodeString localeName;
++    LocaleUtility::initNameFromLocale(locale, localeName);
++    {
++        Mutex lock;
++        locRules = (RuleChain *) (newRules->fLocaleStringsHash->get(localeName));
++    }
++    if (locRules == NULL) {
++        // Check parent locales.
++        char parentLocaleName[ULOC_FULLNAME_CAPACITY];
++        const char *curLocaleName=locale.getName();
++        int32_t localeNameLen=0;
++        uprv_strcpy(parentLocaleName, curLocaleName);
++        while ((localeNameLen=uloc_getParent(parentLocaleName, parentLocaleName, ULOC_FULLNAME_CAPACITY, &status)) > 0) {
++            Mutex lock;
++            locRules = (RuleChain *) (newRules->fLocaleStringsHash->get(localeName));
++            if (locRules != NULL) {
++                break;
++            }
++        }
++    }
++    if (locRules==NULL) {
++        delete newRules; // Remove newRules to avoid memory leak since it is not needed anymore.
++        return createRules(PLURAL_DEFAULT_RULE, status);
++    }
++
++    newRules->addRules(*locRules, status);
++    return newRules;
++}
++
++UnicodeString
++PluralRules::select(int32_t number) const {
++    if (mRules == NULL) {
++        return PLURAL_DEFAULT_RULE;
++    }
++    else {
++        return mRules->select(number);
++    }
++}
++
++StringEnumeration*
++PluralRules::getKeywords(UErrorCode& status) const {
++    if (U_FAILURE(status))  return NULL;
++    StringEnumeration* nameEnumerator = new PluralKeywordEnumeration(status);
++    return nameEnumerator;
++}
++
++
++UBool
++PluralRules::isKeyword(const UnicodeString& keyword) const {
++    if ( mRules == NULL) {
++        return (UBool)( keyword == PLURAL_DEFAULT_RULE );
++    }
++    else {
++        return mRules->isKeyword(keyword);
++    }
++}
++
++UnicodeString
++PluralRules::getKeywordOther() const {
++    return PLURAL_KEYWORD_OTHER;
++}
++
++UBool
++PluralRules::operator==(const PluralRules& other) const  {
++    int32_t limit;
++    UBool sameList = TRUE;
++    const UnicodeString *ptrKeyword;
++    UErrorCode status= U_ZERO_ERROR;
++
++    if ( this == &other ) {
++        return TRUE;
++    }
++    StringEnumeration* myKeywordList = getKeywords(status);
++    StringEnumeration* otherKeywordList =other.getKeywords(status);
++
++    if (myKeywordList->count(status)!=otherKeywordList->count(status)) {
++        sameList = FALSE;
++    }
++    else {
++        myKeywordList->reset(status);
++        while (sameList && (ptrKeyword=myKeywordList->snext(status))!=NULL) {
++            if (!other.isKeyword(*ptrKeyword)) {
++                sameList = FALSE;
++            }
++        }
++        otherKeywordList->reset(status);
++        while (sameList && (ptrKeyword=otherKeywordList->snext(status))!=NULL) {
++            if (!this->isKeyword(*ptrKeyword))  {
++                sameList = FALSE;
++            }
++        }
++        delete myKeywordList;
++        delete otherKeywordList;
++        if (!sameList) {
++            return FALSE;
++        }
++    }
++
++    if ((limit=this->getRepeatLimit()) != other.getRepeatLimit()) {
++        return FALSE;
++    }
++    UnicodeString myKeyword, otherKeyword;
++    for (int32_t i=0; i<limit; ++i) {
++        myKeyword = this->select(i);
++        otherKeyword = other.select(i);
++        if (myKeyword!=otherKeyword) {
++            return FALSE;
++        }
++    }
++    return TRUE;
++}
++
++void
++PluralRules::getRuleData(UErrorCode& status) {
++    UnicodeString ruleData;
++    UnicodeString localeData;
++    UnicodeString localeName;
++    int32_t i;
++    UChar cSlash = (UChar)0x002F;
++
++    i=0;
++    while ( i<NUMBER_PLURAL_RULES && U_SUCCESS(status) ) {
++        RuleChain   rules;
++        UnicodeString pluralRuleData = UnicodeString(uCharPluralRules[i]);
++        int32_t slashIndex = pluralRuleData.indexOf(cSlash);
++        if ( slashIndex < 0 ) {
++            break;
++        }
++        ruleData=UnicodeString(pluralRuleData, 0, slashIndex);
++        localeData=UnicodeString(pluralRuleData, slashIndex+1);
++        parseDescription(ruleData, rules, status);
++        int32_t curIndex=0;
++        while (curIndex < localeData.length() && U_SUCCESS(status)) {
++            getNextLocale(localeData, &curIndex, localeName);
++            addRules(localeName, rules, TRUE, status);
++        }
++        i++;
++    }
++}
++
++void
++PluralRules::parseDescription(UnicodeString& data, RuleChain& rules, UErrorCode &status)
++{
++    int32_t ruleIndex=0;
++    UnicodeString token;
++    tokenType type;
++    tokenType prevType=none;
++    RuleChain *ruleChain=NULL;
++    AndConstraint *curAndConstraint=NULL;
++    OrConstraint *orNode=NULL;
++
++    UnicodeString ruleData = data.toLower();
++    while (ruleIndex< ruleData.length()) {
++        mParser->getNextToken(ruleData, &ruleIndex, token, type, status);
++        if (U_FAILURE(status)) {
++            return;
++        }
++        mParser->checkSyntax(prevType, type, status);
++        if (U_FAILURE(status)) {
++            return;
++        }
++        switch (type) {
++        case tAnd:
++            curAndConstraint = curAndConstraint->add();
++            break;
++        case tOr:
++            orNode=rules.ruleHeader;
++            while (orNode->next != NULL) {
++                orNode = orNode->next;
++            }
++            orNode->next= new OrConstraint();
++            orNode=orNode->next;
++            orNode->next=NULL;
++            curAndConstraint = orNode->add();
++            break;
++        case tIs:
++            curAndConstraint->rangeHigh=-1;
++            break;
++        case tNot:
++            curAndConstraint->notIn=TRUE;
++            break;
++        case tIn:
++            curAndConstraint->rangeHigh=PLURAL_RANGE_HIGH;
++            break;
++        case tNumber:
++            if ( (curAndConstraint->op==AndConstraint::MOD)&&
++                 (curAndConstraint->opNum == -1 ) ) {
++                curAndConstraint->opNum=getNumberValue(token);
++            }
++            else {
++                if (curAndConstraint->rangeLow == -1) {
++                    curAndConstraint->rangeLow=getNumberValue(token);
++                }
++                else {
++                    curAndConstraint->rangeHigh=getNumberValue(token);
++                }
++            }
++            break;
++        case tMod:
++            curAndConstraint->op=AndConstraint::MOD;
++            break;
++        case tKeyword:
++            if (ruleChain==NULL) {
++                ruleChain = &rules;
++            }
++            else {
++                while (ruleChain->next!=NULL){
++                    ruleChain=ruleChain->next;
++                }
++                ruleChain=ruleChain->next=new RuleChain();
++            }
++            orNode = ruleChain->ruleHeader = new OrConstraint();
++            curAndConstraint = orNode->add();
++            ruleChain->keyword = token;
++            break;
++        default:
++            break;
++        }
++        prevType=type;
++    }
++}
++
++int32_t
++PluralRules::getNumberValue(const UnicodeString& token) const {
++    int32_t i;
++    char digits[128];
++
++    i = token.extract(0, token.length(), digits, ARRAY_SIZE(digits), US_INV);
++    digits[i]='\0';
++
++    return((int32_t)atoi(digits));
++}
++
++
++void
++PluralRules::getNextLocale(const UnicodeString& localeData, int32_t* curIndex, UnicodeString& localeName) {
++    int32_t i=*curIndex;
++
++    localeName.remove();
++    while (i< localeData.length()) {
++       if ( (localeData.charAt(i)!= SPACE) && (localeData.charAt(i)!= COMMA) ) {
++           break;
++       }
++       i++;
++    }
++
++    while (i< localeData.length()) {
++       if ( (localeData.charAt(i)== SPACE) || (localeData.charAt(i)== COMMA) ) {
++           break;
++       }
++       localeName+=localeData.charAt(i++);
++    }
++    *curIndex=i;
++}
++
++
++int32_t
++PluralRules::getRepeatLimit() const {
++    return mRules->getRepeatLimit();
++}
++
++void
++PluralRules::initHashtable(UErrorCode& status) {
++    if (fLocaleStringsHash!=NULL) {
++        return;
++    }
++    {
++        Mutex lock;
++        if (gPluralRuleLocaleHash == NULL) {
++        // This static PluralRule hashtable residents in memory until end of application.
++            if ((gPluralRuleLocaleHash = new Hashtable(TRUE, status))!=NULL) {
++                fLocaleStringsHash = gPluralRuleLocaleHash;
++                return;
++            }
++        }
++        else {
++            fLocaleStringsHash = gPluralRuleLocaleHash;
++        }
++    }
++}
++
++void
++PluralRules::addRules(RuleChain& rules, UErrorCode& status) {
++    addRules(mLocaleName, rules, FALSE, status);
++}
++
++void
++PluralRules::addRules(const UnicodeString& localeName, RuleChain& rules, UBool addToHash, UErrorCode& status) {
++    RuleChain *newRule = new RuleChain(rules);
++    if ( addToHash )
++    {
++        {  
++            Mutex lock;
++            if ( (RuleChain *)fLocaleStringsHash->get(localeName) == NULL ) {
++                fLocaleStringsHash->put(localeName, newRule, status);
++            }
++            else {
++                delete newRule;
++                return;
++            }
++        }
++    }
++    else {
++        this->mRules=newRule;
++    }
++    newRule->setRepeatLimit();
++}
++
++AndConstraint::AndConstraint() {
++    op = AndConstraint::NONE;
++    opNum=-1;
++    rangeLow=-1;
++    rangeHigh=-1;
++    notIn=FALSE;
++    next=NULL;
++}
++
++
++AndConstraint::AndConstraint(const AndConstraint& other) {
++    this->op = other.op;
++    this->opNum=other.opNum;
++    this->rangeLow=other.rangeLow;
++    this->rangeHigh=other.rangeHigh;
++    this->notIn=other.notIn;
++    if (other.next==NULL) {
++        this->next=NULL;
++    }
++    else {
++        this->next = new AndConstraint(*other.next);
++    }
++}
++
++AndConstraint::~AndConstraint() {
++    if (next!=NULL) {
++        delete next;
++    }
++}
++
++
++UBool
++AndConstraint::isFulfilled(int32_t number) {
++    UBool result=TRUE;
++    int32_t value=number;
++    
++    if ( op == MOD ) {
++        value = value % opNum;
++    }
++    if ( rangeHigh == -1 ) {
++        if ( rangeLow == -1 ) {
++            result = TRUE; // empty rule
++        }
++        else {
++            if ( value == rangeLow ) {
++                result = TRUE;
++            }
++            else {
++                result = FALSE;
++            }
++        }
++    }
++    else {
++        if ((rangeLow <= value) && (value <= rangeHigh)) {
++            result = TRUE;
++        }
++        else {
++            result = FALSE;
++        }
++    }
++    if (notIn) {
++        return !result;
++    }
++    else {
++        return result;
++    }
++}
++
++int32_t
++AndConstraint::updateRepeatLimit(int32_t maxLimit) {
++    
++    if ( op == MOD ) {
++        return uprv_max(opNum, maxLimit);
++    }
++    else {
++        if ( rangeHigh == -1 ) {
++            return(rangeLow>maxLimit? rangeLow : maxLimit);
++            return uprv_max(rangeLow, maxLimit);
++        }
++        else{
++            return uprv_max(rangeHigh, maxLimit);
++        }
++    }
++}
++
++
++AndConstraint*
++AndConstraint::add()
++{
++    this->next = new AndConstraint();
++    return this->next;
++}
++
++OrConstraint::OrConstraint() {
++    childNode=NULL;
++    next=NULL;
++}
++
++OrConstraint::OrConstraint(const OrConstraint& other) {
++    if ( other.childNode == NULL ) {
++        this->childNode = NULL;
++    }
++    else {
++        this->childNode = new AndConstraint(*(other.childNode));
++    }
++    if (other.next == NULL ) {
++        this->next = NULL;
++    }
++    else {
++        this->next = new OrConstraint(*(other.next));
++    }
++}
++
++OrConstraint::~OrConstraint() {
++    if (childNode!=NULL) {
++        delete childNode;
++    }
++    if (next!=NULL) {
++        delete next;
++    }
++}
++
++AndConstraint*
++OrConstraint::add()
++{
++    OrConstraint *curOrConstraint=this;
++    {
++        while (curOrConstraint->next!=NULL) {
++            curOrConstraint = curOrConstraint->next;
++        }
++        curOrConstraint->next = NULL;
++        curOrConstraint->childNode = new AndConstraint();
++    }
++    return curOrConstraint->childNode;
++}
++
++UBool
++OrConstraint::isFulfilled(int32_t number) {
++    OrConstraint* orRule=this;
++    UBool result=FALSE;
++    
++    while (orRule!=NULL && !result) {
++        result=TRUE;
++        AndConstraint* andRule = orRule->childNode;
++        while (andRule!=NULL && result) {
++            result = andRule->isFulfilled(number);
++            andRule=andRule->next;
++        }
++        orRule = orRule->next;
++    }
++    
++    return result;
++}
++
++
++RuleChain::RuleChain() {
++    ruleHeader=NULL;
++    next = NULL;
++    repeatLimit=0;
++}
++
++RuleChain::RuleChain(const RuleChain& other) {
++    
++    this->repeatLimit = other.repeatLimit;
++    this->keyword=other.keyword;
++    if (other.ruleHeader != NULL) {
++        this->ruleHeader = new OrConstraint(*(other.ruleHeader));
++    }
++    else {
++        this->ruleHeader = NULL;
++    }
++    if (other.next != NULL ) {
++        this->next = new RuleChain(*other.next);
++    }
++    else
++    {
++        this->next = NULL;
++    }
++}
++
++RuleChain::~RuleChain() {
++    if (next != NULL) {
++        delete next;
++    }
++    if ( ruleHeader != NULL ) {
++        delete ruleHeader;
++    }
++}
++
++UnicodeString
++RuleChain::select(int32_t number) const {
++   
++   if ( ruleHeader != NULL ) {
++       if (ruleHeader->isFulfilled(number)) {
++           return keyword;
++       }
++   }
++   if ( next != NULL ) {
++       return next->select(number);
++   }
++   else {
++       return PLURAL_KEYWORD_OTHER;
++   }
++
++}
++
++void
++RuleChain::dumpRules(UnicodeString& result) {
++    UChar digitString[16];
++    
++    if ( ruleHeader != NULL ) {
++        result +=  keyword;
++        OrConstraint* orRule=ruleHeader;
++        while ( orRule != NULL ) {
++            AndConstraint* andRule=orRule->childNode;
++            while ( andRule != NULL ) {
++                if ( (andRule->op==AndConstraint::NONE) && (andRule->rangeHigh==-1) ) {
++                    result += UNICODE_STRING_SIMPLE(" n is ");
++                    if (andRule->notIn) {
++                        result += UNICODE_STRING_SIMPLE("not ");
++                    }
++                    uprv_itou(digitString,16, andRule->rangeLow,10,0);
++                    result += UnicodeString(digitString);
++                }
++                else {
++                    if (andRule->op==AndConstraint::MOD) {
++                        result += UNICODE_STRING_SIMPLE("  n mod ");
++                        uprv_itou(digitString,16, andRule->opNum,10,0);
++                        result += UnicodeString(digitString);
++                    }
++                    else {
++                        result += UNICODE_STRING_SIMPLE("  n ");
++                    }
++                    if (andRule->rangeHigh==-1) {
++                        if (andRule->notIn) {
++                            result += UNICODE_STRING_SIMPLE(" is not ");
++                            uprv_itou(digitString,16, andRule->rangeLow,10,0);
++                            result += UnicodeString(digitString);
++                        }
++                        else {
++                            result += UNICODE_STRING_SIMPLE(" is ");
++                            uprv_itou(digitString,16, andRule->rangeLow,10,0);
++                            result += UnicodeString(digitString);
++                        }
++                    }
++                    else {
++                        if (andRule->notIn) {
++                            result += UNICODE_STRING_SIMPLE("  not in ");
++                            uprv_itou(digitString,16, andRule->rangeLow,10,0);
++                            result += UnicodeString(digitString);
++                            result += UNICODE_STRING_SIMPLE(" .. ");
++                            uprv_itou(digitString,16, andRule->rangeHigh,10,0);
++                            result += UnicodeString(digitString);
++                        }
++                        else {
++                            result += UNICODE_STRING_SIMPLE(" in ");
++                            uprv_itou(digitString,16, andRule->rangeLow,10,0);
++                            result += UnicodeString(digitString);
++                            result += UNICODE_STRING_SIMPLE(" .. ");
++                            uprv_itou(digitString,16, andRule->rangeHigh,10,0);
++                        }
++                    }
++                }
++                if ( (andRule=andRule->next) != NULL) {
++                    result += PK_AND;
++                }
++            }
++            if ( (orRule = orRule->next) != NULL ) {
++                result += PK_OR;
++            }
++        }
++    }
++    if ( next != NULL ) {
++        next->dumpRules(result);
++    }
++}
++
++int32_t
++RuleChain::getRepeatLimit () {
++    return repeatLimit;
++}
++
++void
++RuleChain::setRepeatLimit () {
++    int32_t limit=0;
++
++    if ( next != NULL ) {
++        next->setRepeatLimit();
++        limit = next->repeatLimit;
++    }
++
++    if ( ruleHeader != NULL ) {
++        OrConstraint* orRule=ruleHeader;
++        while ( orRule != NULL ) {
++            AndConstraint* andRule=orRule->childNode;
++            while ( andRule != NULL ) {
++                limit = andRule->updateRepeatLimit(limit);
++                andRule = andRule->next;
++            }
++            orRule = orRule->next;
++        }
++    }
++    repeatLimit = limit;
++}
++
++UErrorCode
++RuleChain::getKeywords(int32_t capacityOfKeywords, UnicodeString* keywords, int32_t& arraySize) const {
++    if ( arraySize < capacityOfKeywords-1 ) {
++        keywords[arraySize++]=keyword;
++    }
++    else {
++        return U_BUFFER_OVERFLOW_ERROR;
++    }
++
++    if ( next != NULL ) {
++        return next->getKeywords(capacityOfKeywords, keywords, arraySize);
++    }
++    else {
++        return U_ZERO_ERROR;
++    }
++}
++
++UBool
++RuleChain::isKeyword(const UnicodeString& keywordParam) const {
++    if ( keyword == keywordParam ) {
++        return TRUE;
++    }
++
++    if ( next != NULL ) {
++        return next->isKeyword(keywordParam);
++    }
++    else {
++        return FALSE;
++    }
++}
++
++
++RuleParser::RuleParser() {
++    UErrorCode err=U_ZERO_ERROR;
++    const UnicodeString idStart=UNICODE_STRING_SIMPLE("[[a-z]]");
++    const UnicodeString idContinue=UNICODE_STRING_SIMPLE("[[a-z][A-Z][_][0-9]]");
++    idStartFilter = new UnicodeSet(idStart, err);
++    idContinueFilter = new UnicodeSet(idContinue, err);
++}
++
++RuleParser::~RuleParser() {
++    delete idStartFilter;
++    delete idContinueFilter;
++}
++
++void
++RuleParser::checkSyntax(tokenType prevType, tokenType curType, UErrorCode &status)
++{
++    if (U_FAILURE(status)) {
++        return;
++    }
++    switch(prevType) {
++    case none:
++    case tSemiColon:
++        if (curType!=tKeyword) {
++            status = U_UNEXPECTED_TOKEN;
++        }
++        break;
++    case tVariableN :
++        if (curType != tIs && curType != tMod && curType != tIn && curType != tNot) {
++            status = U_UNEXPECTED_TOKEN;
++        }
++        break;
++    case tZero:
++    case tOne:
++    case tTwo:
++    case tFew:
++    case tMany:
++    case tOther:
++    case tKeyword:
++        if (curType != tColon) {
++            status = U_UNEXPECTED_TOKEN;
++        }
++        break;
++    case tColon :
++        if (curType != tVariableN) {
++            status = U_UNEXPECTED_TOKEN;
++        }
++        break;
++    case tIs:
++        if ( curType != tNumber && curType != tNot) {
++            status = U_UNEXPECTED_TOKEN;
++        }
++        break;
++    case tNot:
++        if (curType != tNumber && curType != tIn) {
++            status = U_UNEXPECTED_TOKEN;
++        }
++        break;
++    case tMod:
++    case tDot:
++    case tIn:
++    case tAnd:
++    case tOr:
++        if (curType != tNumber && curType != tVariableN) {
++            status = U_UNEXPECTED_TOKEN;
++        }
++        break;
++    case tNumber:
++        if (curType != tDot && curType != tSemiColon && curType != tIs && curType != tNot &&
++            curType != tIn && curType != tAnd && curType != tOr)
++        {
++            status = U_UNEXPECTED_TOKEN;
++        }
++        break;
++    default:
++        status = U_UNEXPECTED_TOKEN;
++        break;
++    }
++}
++
++void
++RuleParser::getNextToken(const UnicodeString& ruleData,
++                         int32_t *ruleIndex,
++                         UnicodeString& token,
++                         tokenType& type,
++                         UErrorCode &status)
++{
++    int32_t curIndex= *ruleIndex;
++    UChar ch;
++    tokenType prevType=none;
++
++    while (curIndex<ruleData.length()) {
++        ch = ruleData.charAt(curIndex);
++        if ( !inRange(ch, type) ) {
++            status = U_ILLEGAL_CHARACTER;
++            return;
++        }
++        switch (type) {
++        case tSpace:
++            if ( *ruleIndex != curIndex ) { // letter
++                token=UnicodeString(ruleData, *ruleIndex, curIndex-*ruleIndex);
++                *ruleIndex=curIndex;
++                type=prevType;
++                getKeyType(token, type, status);
++                return;
++            }
++            else {
++                *ruleIndex=*ruleIndex+1;
++            }
++            break; // consective space
++        case tColon:
++        case tSemiColon:
++            if ( *ruleIndex != curIndex ) {
++                token=UnicodeString(ruleData, *ruleIndex, curIndex-*ruleIndex);
++                *ruleIndex=curIndex;
++                type=prevType;
++                getKeyType(token, type, status);
++                return;
++            }
++            else {
++                *ruleIndex=curIndex+1;
++                return;
++            }
++        case tLetter:
++             if ((type==prevType)||(prevType==none)) {
++                prevType=type;
++                break;
++             }
++             break;
++        case tNumber:
++             if ((type==prevType)||(prevType==none)) {
++                prevType=type;
++                break;
++             }
++             else {
++                *ruleIndex=curIndex+1;
++                return;
++             }
++         case tDot:
++             if (prevType==none) {  // first dot
++                prevType=type;
++                continue;
++             }
++             else {
++                 if ( *ruleIndex != curIndex ) {
++                    token=UnicodeString(ruleData, *ruleIndex, curIndex-*ruleIndex);
++                    *ruleIndex=curIndex;  // letter
++                    type=prevType;
++                    getKeyType(token, type, status);
++                    return;
++                 }
++                 else {  // two consective dots
++                    *ruleIndex=curIndex+2;
++                    return;
++                 }
++             }
++             break;
++         default:
++             status = U_UNEXPECTED_TOKEN;
++             return;
++        }
++        curIndex++;
++    }
++    if ( curIndex>=ruleData.length() ) {
++        if ( (type == tLetter)||(type == tNumber) ) {
++            token=UnicodeString(ruleData, *ruleIndex, curIndex-*ruleIndex);
++            getKeyType(token, type, status);
++        }
++        *ruleIndex = ruleData.length();
++    }
++}
++
++UBool
++RuleParser::inRange(UChar ch, tokenType& type) {
++    if ((ch>=CAP_A) && (ch<=CAP_Z)) {
++        // we assume all characters are in lower case already.
++        return FALSE;
++    }
++    if ((ch>=LOW_A) && (ch<=LOW_Z)) {
++        type = tLetter;
++        return TRUE;
++    }
++    if ((ch>=U_ZERO) && (ch<=U_NINE)) {
++        type = tNumber;
++        return TRUE;
++    }
++    switch (ch) {
++    case COLON:
++        type = tColon;
++        return TRUE;
++    case SPACE:
++        type = tSpace;
++        return TRUE;
++    case SEMI_COLON:
++        type = tSemiColon;
++        return TRUE;
++    case DOT:
++        type = tDot;
++        return TRUE;
++    default :
++        type = none;
++        return FALSE;
++    }
++}
++
++
++void
++RuleParser::getKeyType(const UnicodeString& token, tokenType& keyType, UErrorCode &status)
++{
++    if ( keyType==tNumber) {
++    }
++    else if (token==PK_VAR_N) {
++        keyType = tVariableN;
++    }
++    else if (token==PK_IS) {
++        keyType = tIs;
++    }
++    else if (token==PK_AND) {
++        keyType = tAnd;
++    }
++    else if (token==PK_IN) {
++        keyType = tIn;
++    }
++    else if (token==PK_NOT) {
++        keyType = tNot;
++    }
++    else if (token==PK_MOD) {
++        keyType = tMod;
++    }
++    else if (token==PK_OR) {
++        keyType = tOr;
++    }
++    else if ( isValidKeyword(token) ) {
++        keyType = tKeyword;
++    }
++    else {
++        status = U_UNEXPECTED_TOKEN;
++    }
++}
++
++UBool
++RuleParser::isValidKeyword(const UnicodeString& token) {
++    if ( token.length()==0 ) {
++        return FALSE;
++    }
++    if ( idStartFilter->contains(token.charAt(0) )==TRUE ) {
++        int32_t i;
++        for (i=1; i< token.length(); i++) {
++            if (idContinueFilter->contains(token.charAt(i))== FALSE) {
++                return FALSE;
++            }
++        }
++        return TRUE;
++    }
++    else {
++        return FALSE;
++    }
++}
++
++PluralKeywordEnumeration::PluralKeywordEnumeration(UErrorCode& status) :
++fKeywordNames(status)
++{
++    pos=0;
++}
++
++const UnicodeString*
++PluralKeywordEnumeration::snext(UErrorCode& status) {
++    if (U_SUCCESS(status) && pos < fKeywordNames.size()) {
++        return (const UnicodeString*)fKeywordNames.elementAt(pos++);
++    }
++    return NULL;
++}
++
++void
++PluralKeywordEnumeration::reset(UErrorCode& /*status*/) {
++    pos=0;
++}
++
++int32_t
++PluralKeywordEnumeration::count(UErrorCode& /*status*/) const {
++       return fKeywordNames.size();
++}
++
++PluralKeywordEnumeration::~PluralKeywordEnumeration() {
++    UnicodeString *s;
++    for (int32_t i=0; i<fKeywordNames.size(); ++i) {
++        if ((s=(UnicodeString *)fKeywordNames.elementAt(i))!=NULL) {
++            delete s;
++        }
++    }
++}
++
++U_NAMESPACE_END
++
++
++#endif /* #if !UCONFIG_NO_FORMATTING */
++
++//eof
+--- source/i18n/plurrule_impl.h	1969-12-31 16:00:00.000000000 -0800
++++ source/i18n/plurrule_impl.h	2008-04-08 13:40:47.129320000 -0700
+@@ -0,0 +1,219 @@
++/*
++*******************************************************************************
++* Copyright (C) 2007-2008, International Business Machines Corporation and
++* others. All Rights Reserved.
++*******************************************************************************
++*
++* File PLURRULE_IMPL.H
++*
++*******************************************************************************
++*/
++
++
++#ifndef PLURRULE_IMPLE
++#define PLURRULE_IMPLE
++
++/**
++ * \file
++ * \brief C++ API: Defines rules for mapping positive long values onto a small set of keywords.
++ */
++ 
++#if !UCONFIG_NO_FORMATTING
++
++#include "unicode/format.h"
++#include "unicode/locid.h"
++#include "unicode/parseerr.h"
++#include "unicode/utypes.h"
++#include "uvector.h"
++#include "hash.h"
++
++U_NAMESPACE_BEGIN
++
++#define DOT               ((UChar)0x002E)
++#define SINGLE_QUOTE      ((UChar)0x0027)
++#define SLASH             ((UChar)0x002F)
++#define BACKSLASH         ((UChar)0x005C)
++#define SPACE             ((UChar)0x0020)
++#define QUOTATION_MARK    ((UChar)0x0022)
++#define NUMBER_SIGN       ((UChar)0x0023)
++#define ASTERISK          ((UChar)0x002A)
++#define COMMA             ((UChar)0x002C)
++#define HYPHEN            ((UChar)0x002D)
++#define U_ZERO            ((UChar)0x0030)
++#define U_ONE             ((UChar)0x0031)
++#define U_TWO             ((UChar)0x0032)
++#define U_THREE           ((UChar)0x0033)
++#define U_FOUR            ((UChar)0x0034)
++#define U_FIVE            ((UChar)0x0035)
++#define U_SIX             ((UChar)0x0036)
++#define U_SEVEN           ((UChar)0x0037)
++#define U_EIGHT           ((UChar)0x0038)
++#define U_NINE            ((UChar)0x0039)
++#define COLON             ((UChar)0x003A)
++#define SEMI_COLON        ((UChar)0x003B)
++#define CAP_A             ((UChar)0x0041)
++#define CAP_B             ((UChar)0x0042)
++#define CAP_R             ((UChar)0x0052)
++#define CAP_Z             ((UChar)0x005A)
++#define LOWLINE           ((UChar)0x005F)
++#define LEFTBRACE         ((UChar)0x007B)
++#define RIGHTBRACE        ((UChar)0x007D)
++
++#define LOW_A             ((UChar)0x0061)
++#define LOW_B             ((UChar)0x0062)
++#define LOW_C             ((UChar)0x0063)
++#define LOW_D             ((UChar)0x0064)
++#define LOW_E             ((UChar)0x0065)
++#define LOW_F             ((UChar)0x0066)
++#define LOW_G             ((UChar)0x0067)
++#define LOW_H             ((UChar)0x0068)
++#define LOW_I             ((UChar)0x0069)
++#define LOW_J             ((UChar)0x006a)
++#define LOW_K             ((UChar)0x006B)
++#define LOW_L             ((UChar)0x006C)
++#define LOW_M             ((UChar)0x006D)
++#define LOW_N             ((UChar)0x006E)
++#define LOW_O             ((UChar)0x006F)
++#define LOW_P             ((UChar)0x0070)
++#define LOW_Q             ((UChar)0x0071)
++#define LOW_R             ((UChar)0x0072)
++#define LOW_S             ((UChar)0x0073)
++#define LOW_T             ((UChar)0x0074)
++#define LOW_U             ((UChar)0x0075)
++#define LOW_V             ((UChar)0x0076)
++#define LOW_W             ((UChar)0x0077)
++#define LOW_Y             ((UChar)0x0079)
++#define LOW_Z             ((UChar)0x007A)
++
++
++#define PLURAL_RANGE_HIGH  0x7fffffff;
++
++
++class UnicodeSet;
++
++typedef enum PluralKey {
++  pZero,
++  pOne,
++  pTwo,
++  pFew,
++  pMany,
++  pOther,
++  pLast
++}PluralKey;
++
++typedef enum tokenType {
++  none,
++  tLetter,
++  tNumber,
++  tComma,
++  tSemiColon,
++  tSpace,
++  tColon,
++  tDot,
++  tKeyword,
++  tZero,
++  tOne,
++  tTwo,
++  tFew,
++  tMany,
++  tOther,
++  tAnd,
++  tOr,
++  tMod,
++  tNot,
++  tIn,
++  tNotIn,
++  tVariableN,
++  tIs,
++  tLeftBrace,
++  tRightBrace
++}tokenType;
++
++class RuleParser : public UMemory {
++public:
++    RuleParser();
++    virtual ~RuleParser();
++    void getNextToken(const UnicodeString& ruleData, int32_t *ruleIndex, UnicodeString& token, 
++                            tokenType& type, UErrorCode &status);
++    void checkSyntax(tokenType prevType, tokenType curType, UErrorCode &status);
++private:
++    UnicodeSet      *idStartFilter;
++    UnicodeSet      *idContinueFilter;
++    
++    void getKeyType(const UnicodeString& token, tokenType& type, UErrorCode &status);
++    UBool inRange(UChar ch, tokenType& type);
++    UBool isValidKeyword(const UnicodeString& token);
++};
++
++class AndConstraint : public UMemory  {
++public:
++    typedef enum RuleOp {
++        NONE,
++        MOD
++    } RuleOp;
++    RuleOp  op;
++    int32_t opNum;
++    int32_t rangeLow;
++    int32_t rangeHigh;
++    UBool   notIn;
++    AndConstraint *next;
++    
++    AndConstraint();
++    AndConstraint(const AndConstraint& other);
++    virtual ~AndConstraint();
++    AndConstraint* add();
++    UBool isFulfilled(int32_t number);
++    int32_t updateRepeatLimit(int32_t maxLimit);
++};
++
++class OrConstraint : public UMemory  {
++public:
++    AndConstraint *childNode;
++    OrConstraint *next;
++    OrConstraint();
++    
++    OrConstraint(const OrConstraint& other);
++    virtual ~OrConstraint();
++    AndConstraint* add();
++    UBool isFulfilled(int32_t number);
++};
++
++class RuleChain : public UMemory  {
++public:
++    OrConstraint *ruleHeader;
++    UnicodeString keyword;
++    RuleChain();
++    RuleChain(const RuleChain& other);
++    RuleChain *next;
++    
++    virtual ~RuleChain();
++    UnicodeString select(int32_t number) const;
++    void dumpRules(UnicodeString& result);
++    int32_t getRepeatLimit();  
++    UErrorCode getKeywords(int32_t maxArraySize, UnicodeString *keywords, int32_t& arraySize) const;
++    UBool isKeyword(const UnicodeString& keyword) const;
++    void setRepeatLimit();
++private:
++    int32_t repeatLimit;
++};
++
++class PluralKeywordEnumeration : public StringEnumeration {
++public:
++    PluralKeywordEnumeration(UErrorCode& status);
++    virtual ~PluralKeywordEnumeration();
++    static UClassID U_EXPORT2 getStaticClassID(void);
++    virtual UClassID getDynamicClassID(void) const;
++    virtual const UnicodeString* snext(UErrorCode& status);
++    virtual void reset(UErrorCode& status);
++    virtual int32_t count(UErrorCode& status) const;
++private:
++    int32_t pos;
++    UVector fKeywordNames;
++};
++
++U_NAMESPACE_END
++
++#endif /* #if !UCONFIG_NO_FORMATTING */
++
++#endif // _PLURRULE_IMPL
++//eof
+--- source/test/intltest/Makefile.in	2007-08-09 19:09:24.942749000 -0700
++++ source/test/intltest/Makefile.in	2008-04-08 13:40:28.447941000 -0700
+@@ -45,7 +45,7 @@
+ dtptngts.o encoll.o escoll.o ficoll.o frcoll.o g7coll.o intltest.o	\
+ itercoll.o itformat.o itmajor.o itutil.o jacoll.o lcukocol.o	\
+ loctest.o miscdtfm.o mnkytst.o msfmrgts.o nmfmapts.o nmfmtrt.o		\
+-numfmtst.o numrgts.o pptest.o regcoll.o restest.o restsnew.o \
++numfmtst.o numrgts.o  plurults.o plurfmts.o pptest.o regcoll.o restest.o restsnew.o \
+ sdtfmtts.o svccoll.o tchcfmt.o	\
+ tfsmalls.o tmsgfmt.o trcoll.o tscoll.o tsdate.o tsdcfmsy.o tsdtfmsy.o	\
+ tsmthred.o tsnmfmt.o tsputil.o tstnrapi.o tstnorm.o tzbdtest.o		\
+--- source/test/intltest/intltest.vcproj	2007-08-09 19:21:27.828129000 -0700
++++ source/test/intltest/intltest.vcproj	2008-04-08 13:40:28.453929000 -0700
+@@ -710,6 +710,22 @@
+ 				>
+ 			</File>
+ 			<File
++				RelativePath=".\plurfmts.cpp"
++				>
++			</File>
++			<File
++				RelativePath=".\plurfmts.h"
++				>
++			</File>
++			<File
++				RelativePath=".\plurults.cpp"
++				>
++			</File>
++			<File
++				RelativePath=".\plurults.h"
++				>
++			</File>
++			<File
+ 				RelativePath=".\pptest.cpp"
+ 				>
+ 			</File>
+--- source/test/intltest/itformat.cpp	2007-08-09 19:09:24.942749000 -0700
++++ source/test/intltest/itformat.cpp	2008-04-08 13:40:28.458936000 -0700
+@@ -46,7 +46,8 @@
+ #include "dadrcal.h"        // DataDrivenCalendarTest
+ #include "dadrfmt.h"        // DataDrivenFormatTest
+ #include "dtptngts.h"       // IntlTestDateTimePatternGeneratorAPI
+-
++#include "plurults.h"       // PluralRulesTest
++#include "plurfmts.h"       // PluralFormatTest
+ 
+ #define TESTCLASS(id, TestClass)          \
+     case id:                              \
+@@ -110,7 +111,8 @@
+         TESTCLASS(30,DataDrivenCalendarTest);
+         TESTCLASS(31,DataDrivenFormatTest);
+         TESTCLASS(32,IntlTestDateTimePatternGeneratorAPI);
+-
++        TESTCLASS(33,PluralRulesTest);
++        TESTCLASS(34,PluralFormatTest);
+ 
+         default: name = ""; break; //needed to end loop
+     }
+--- source/test/intltest/plurfmts.cpp	1969-12-31 16:00:00.000000000 -0800
++++ source/test/intltest/plurfmts.cpp	2008-04-08 13:40:47.288286000 -0700
+@@ -0,0 +1,491 @@
++/********************************************************************
++ * COPYRIGHT: 
++ * Copyright (c) 2007-2007, International Business Machines Corporation and
++ * others. All Rights Reserved.
++ ********************************************************************/
++
++#include "unicode/utypes.h"
++
++#if !UCONFIG_NO_FORMATTING
++
++#include "plurults.h"
++#include "plurfmts.h"
++#include "cmemory.h"
++#include "unicode/plurrule.h"
++#include "unicode/plurfmt.h"
++
++
++const UnicodeString oddAndEvenRule = UNICODE_STRING_SIMPLE("odd: n mod 2 is 1");
++#define PLURAL_PATTERN_DATA 4
++#define PLURAL_TEST_ARRAY_SIZE 256
++
++#define PLURAL_SYNTAX_DATA 8
++
++// The value must be same as PLKeywordLookups[] order.
++#define PFT_ZERO   0
++#define PFT_ONE    1
++#define PFT_TWO    2
++#define PFT_FEW    3
++#define PFT_MANY   4
++#define PFT_OTHER  5
++
++void PluralFormatTest::runIndexedTest( int32_t index, UBool exec, const char* &name, char* /*par*/ )
++{
++    if (exec) logln("TestSuite PluralFormat");
++    switch (index) {
++        TESTCASE(0, pluralFormatBasicTest);
++        TESTCASE(1, pluralFormatUnitTest);
++        TESTCASE(2, pluralFormatLocaleTest);
++        default: name = "";
++            break;
++    }
++}
++
++/**
++ * Test various generic API methods of PluralFormat for Basic usage.
++ */
++void PluralFormatTest::pluralFormatBasicTest(/*char *par*/)
++{
++    UErrorCode status[8];
++    PluralFormat* plFmt[8];
++    Locale        locale = Locale::getDefault();
++    UnicodeString otherPattern = UnicodeString("other{#}");
++    UnicodeString message=UnicodeString("ERROR: PluralFormat basic test");
++
++    // ========= Test constructors
++    logln(" Testing PluralFormat constructors ...");
++    status[0] = U_ZERO_ERROR;
++    PluralRules*  plRules = PluralRules::createDefaultRules(status[0]);
++  
++    status[0] = U_ZERO_ERROR;
++    NumberFormat *numFmt = NumberFormat::createInstance(status[0]);
++    if (U_FAILURE(status[0])) {
++        dataerrln("ERROR: Could not create NumberFormat instance with default locale ");
++    }   
++    
++    for (int32_t i=0; i< 8; ++i) {
++        status[i] = U_ZERO_ERROR;
++    }
++    plFmt[0] = new PluralFormat(status[0]);
++    plFmt[1] = new PluralFormat(*plRules, status[1]);
++    plFmt[2] = new PluralFormat(locale, status[2]);
++    plFmt[3] = new PluralFormat(locale, *plRules, status[3]);
++    plFmt[4] = new PluralFormat(otherPattern, status[4]);
++    plFmt[5] = new PluralFormat(*plRules, otherPattern, status[5]);
++    plFmt[6] = new PluralFormat(locale, otherPattern, status[6]);
++    plFmt[7] = new PluralFormat(locale, *plRules, otherPattern, status[7]);
++    
++    for (int32_t i=0; i< 8; ++i) {
++        if (U_SUCCESS(status[i])) {
++            numberFormatTest(plFmt[i], numFmt, 1, 12, NULL, NULL, FALSE, &message);
++            numberFormatTest(plFmt[i], numFmt, 100, 112, NULL, NULL, FALSE, &message);
++        }
++        else {
++            dataerrln("ERROR: PluralFormat constructor failed!");
++        }
++       delete plFmt[i];
++    }
++    delete numFmt;
++    delete plRules;
++}
++
++/**
++ * Unit tests of PluralFormat class.
++ */
++void PluralFormatTest::pluralFormatUnitTest(/*char *par*/)
++{
++    UnicodeString patternTestData[PLURAL_PATTERN_DATA] = {
++        UNICODE_STRING_SIMPLE("odd {# is odd.} other{# is even.}"),
++        UNICODE_STRING_SIMPLE("other{# is odd or even.}"),
++        UNICODE_STRING_SIMPLE("odd{The number {0, number, #.#0} is odd.}other{The number {0, number, #.#0} is even.}"),
++        UNICODE_STRING_SIMPLE("odd{The number {#} is odd.}other{The number {#} is even.}"),
++    };
++    UnicodeString patternOddTestResult[PLURAL_PATTERN_DATA] = {
++        UNICODE_STRING_SIMPLE(" is odd."),
++        UNICODE_STRING_SIMPLE(" is odd or even."),
++        UNICODE_STRING_SIMPLE("The number {0, number, #.#0} is odd."),
++        UNICODE_STRING_SIMPLE("The number {#} is odd."),
++    };
++    UnicodeString patternEvenTestResult[PLURAL_PATTERN_DATA] = {
++        UNICODE_STRING_SIMPLE(" is even."),
++        UNICODE_STRING_SIMPLE(" is odd or even."),
++        UNICODE_STRING_SIMPLE("The number {0, number, #.#0} is even."),
++        UNICODE_STRING_SIMPLE("The number {#} is even."),
++    };
++    UnicodeString checkSyntaxtData[PLURAL_SYNTAX_DATA] = {
++        UNICODE_STRING_SIMPLE("odd{foo} odd{bar} other{foobar}"),
++        UNICODE_STRING_SIMPLE("odd{foo} other{bar} other{foobar}"),
++        UNICODE_STRING_SIMPLE("odd{foo}"),
++        UNICODE_STRING_SIMPLE("otto{foo} other{bar}"),
++        UNICODE_STRING_SIMPLE("1odd{foo} other{bar}"),
++        UNICODE_STRING_SIMPLE("odd{foo},other{bar}"),
++        UNICODE_STRING_SIMPLE("od d{foo} other{bar}"),
++        UNICODE_STRING_SIMPLE("odd{foo}{foobar}other{foo}"),
++    };
++
++    UErrorCode status = U_ZERO_ERROR;
++    PluralRules*  plRules = PluralRules::createRules(oddAndEvenRule, status);
++    if (U_FAILURE(status)) {
++        dataerrln("ERROR:  create PluralRules instance failed in unit tests.- exitting");
++        return;
++    }
++    
++    // ======= Test PluralRules pattern syntax.
++    logln("Testing PluralRules pattern syntax.");
++    for (int32_t i=0; i<PLURAL_SYNTAX_DATA; ++i) {
++        status = U_ZERO_ERROR;
++        
++        PluralFormat plFmt=PluralFormat(*plRules, status);
++        if (U_FAILURE(status)) {
++            dataerrln("ERROR:  PluralFormat constructor failed in unit tests.- exitting");
++            return;
++        }
++        plFmt.applyPattern(checkSyntaxtData[i], status);
++        if (U_SUCCESS(status)) {
++            errln("ERROR:  PluralFormat failed to detect syntax error with pattern: "+checkSyntaxtData[i]);
++        }
++    }
++    
++
++
++    // ======= Test applying various pattern
++    logln("Testing various patterns");
++    status = U_ZERO_ERROR;
++    UBool overwrite[PLURAL_PATTERN_DATA] = {FALSE, FALSE, TRUE, TRUE};
++    
++    NumberFormat *numFmt = NumberFormat::createInstance(status);
++    UnicodeString message=UnicodeString("ERROR: PluralFormat tests various pattern ...");
++    if (U_FAILURE(status)) {
++        dataerrln("ERROR: Could not create NumberFormat instance with default locale ");
++    }
++    for(int32_t i=0; i<PLURAL_PATTERN_DATA; ++i) {
++        status = U_ZERO_ERROR;
++        PluralFormat plFmt=PluralFormat(*plRules, status);
++        if (U_FAILURE(status)) {
++            dataerrln("ERROR:  PluralFormat constructor failed in unit tests.- exitting");
++            return;
++        }
++        plFmt.applyPattern(patternTestData[i], status);
++        if (U_FAILURE(status)) {
++            errln("ERROR:  PluralFormat failed to apply pattern- "+patternTestData[i]);
++            continue;
++        }
++        numberFormatTest(&plFmt, numFmt, 1, 10, (UnicodeString *)&patternOddTestResult[i], 
++                         (UnicodeString *)&patternEvenTestResult[i], overwrite[i], &message);
++    }
++    delete plRules;
++    delete numFmt;
++    
++    // ======= Test set locale
++    status = U_ZERO_ERROR;
++    plRules = PluralRules::createRules(UNICODE_STRING_SIMPLE("odd: n mod 2 is 1"), status);  
++    PluralFormat pluralFmt = PluralFormat(*plRules, status);
++    if (U_FAILURE(status)) {
++        dataerrln("ERROR: Could not create PluralFormat instance in setLocale() test - exitting. ");
++        delete plRules;
++        return;
++    }
++    pluralFmt.applyPattern(UNICODE_STRING_SIMPLE("odd{odd} other{even}"), status);
++    pluralFmt.setLocale(Locale::getEnglish(), status);
++    if (U_FAILURE(status)) {
++        dataerrln("ERROR: Could not setLocale() with English locale ");
++        delete plRules;
++        return;
++    }
++    message = UNICODE_STRING_SIMPLE("Error set locale: pattern is not reset!");
++    
++    // Check that pattern gets deleted.
++    logln("\n Test setLocale() ..\n");
++    numFmt = NumberFormat::createInstance(Locale::getEnglish(), status);
++    if (U_FAILURE(status)) {
++        dataerrln("ERROR: Could not create NumberFormat instance with English locale ");
++    }
++    numberFormatTest(&pluralFmt, numFmt, 5, 5, NULL, NULL, FALSE, &message);
++    pluralFmt.applyPattern(UNICODE_STRING_SIMPLE("odd__{odd} other{even}"), status);
++    if (U_SUCCESS(status)) {
++        errln("SetLocale should reset rules but did not.");
++    }
++    status = U_ZERO_ERROR;
++    pluralFmt.applyPattern(UNICODE_STRING_SIMPLE("one{one} other{not one}"), status);
++    if (U_FAILURE(status)) {
++        errln("SetLocale should reset rules but did not.");
++    }
++    UnicodeString one = UNICODE_STRING_SIMPLE("one");
++    UnicodeString notOne = UNICODE_STRING_SIMPLE("not one");
++    UnicodeString plResult, numResult;
++    for (int32_t i=0; i<20; ++i) {
++        plResult = pluralFmt.format(i, status);
++        if ( i==1 ) {
++            numResult = one;
++        }
++        else {
++            numResult = notOne;
++        }
++        if ( numResult != plResult ) {
++            errln("Wrong ruleset loaded by setLocale() - got:"+plResult+ UnicodeString("  expecting:")+numResult);
++        }
++    }
++    
++    // =========== Test copy constructor
++    logln("Test copy constructor and == operator of PluralFormat");
++    PluralFormat dupPFmt = PluralFormat(pluralFmt);
++    if (pluralFmt != dupPFmt) {
++        errln("Failed in PluralFormat copy constructor or == operator");
++    }
++    
++    delete plRules;
++    delete numFmt;
++}
++
++
++
++/**
++ * Test locale data used in PluralFormat class.
++ */
++void 
++PluralFormatTest::pluralFormatLocaleTest(/*char *par*/)
++{
++    int8_t pluralResults[PLURAL_TEST_ARRAY_SIZE];  // 0: is for default
++
++    // ======= Test DefaultRule
++    logln("Testing PluralRules with no rule.");
++    const char* oneRuleLocales[4] = {"ja", "ko", "tr", "vi"};
++    UnicodeString testPattern = UNICODE_STRING_SIMPLE("other{other}");
++    uprv_memset(pluralResults, -1, sizeof(pluralResults));
++    pluralResults[0]= PFT_OTHER; // other
++    helperTestRusults(oneRuleLocales, 4, testPattern, pluralResults);
++    
++    // ====== Test Singular1 locales.
++    logln("Testing singular1 locales.");
++    const char* singular1Locales[19] = {"da","de","el","en","eo","es","et","fi",
++                    "fo","he","hu","it","nb","nl","nn","no","pt","sv"};
++    testPattern = UNICODE_STRING_SIMPLE("one{one} other{other}");
++    uprv_memset(pluralResults, -1, sizeof(pluralResults));
++    pluralResults[0]= PFT_OTHER;
++    pluralResults[1]= PFT_ONE;
++    pluralResults[2]= PFT_OTHER;
++    helperTestRusults(singular1Locales, 19, testPattern, pluralResults);
++    
++    // ======== Test Singular01 locales.
++    logln("Testing singular1 locales.");
++    const char* singular01Locales[2] = {"fr","pt_BR"};
++    testPattern = UNICODE_STRING_SIMPLE("one{one} other{other}");
++    uprv_memset(pluralResults, -1, sizeof(pluralResults));
++    pluralResults[0]= PFT_ONE;
++    pluralResults[2]= PFT_OTHER;
++    helperTestRusults(singular01Locales, 2, testPattern, pluralResults);
++    
++    // ======== Test ZeroSingular locales.
++    logln("Testing singular1 locales.");
++    const char* zeroSingularLocales[1] = {"lv"};
++    testPattern = UNICODE_STRING_SIMPLE("zero{zero} one{one} other{other}");
++    uprv_memset(pluralResults, -1, sizeof(pluralResults));
++    pluralResults[0]= PFT_ZERO;
++    pluralResults[1]= PFT_ONE;
++    pluralResults[2]= PFT_OTHER;
++    for (int32_t i=2; i<20; ++i) {
++        if (i==11)  continue;
++        pluralResults[i*10+1] = PFT_ONE;
++        pluralResults[i*10+2] = PFT_OTHER;
++    }
++    helperTestRusults(zeroSingularLocales, 1, testPattern, pluralResults);
++    
++    // ======== Test singular dual locales.
++    logln("Testing singular1 locales.");
++    const char* singularDualLocales[1] = {"ga"};
++    testPattern = UNICODE_STRING_SIMPLE("one{one} two{two} other{other}");
++    uprv_memset(pluralResults, -1, sizeof(pluralResults));
++    pluralResults[0]= PFT_OTHER;
++    pluralResults[1]= PFT_ONE;
++    pluralResults[2]= PFT_TWO;
++    pluralResults[3]= PFT_OTHER;
++    helperTestRusults(singularDualLocales, 1, testPattern, pluralResults);
++    
++    // ======== Test Singular Zero Some locales.
++    logln("Testing singular1 locales.");
++    const char* singularZeroSomeLocales[1] = {"ro"};
++    testPattern = UNICODE_STRING_SIMPLE("zero{zero} one{one} other{other}");
++    uprv_memset(pluralResults, -1, sizeof(pluralResults));
++    pluralResults[0]= PFT_ZERO;
++    pluralResults[1]= PFT_ONE;
++    pluralResults[2]= PFT_ZERO;
++    pluralResults[20]= PFT_OTHER;
++    pluralResults[101]= PFT_ZERO;
++    pluralResults[120]= PFT_OTHER;
++    helperTestRusults(singularZeroSomeLocales, 1, testPattern, pluralResults);
++    
++    // ======== Test Special 12/19.
++    logln("Testing special 12 and 19.");
++    const char* special12_19Locales[1] = {"lt"};
++    testPattern = UNICODE_STRING_SIMPLE("one{one} few{few} other{other}");
++    uprv_memset(pluralResults, -1, sizeof(pluralResults));
++    pluralResults[0]= PFT_OTHER;
++    pluralResults[1]= PFT_ONE;
++    pluralResults[2]= PFT_FEW;
++    pluralResults[10]= PFT_OTHER;
++    for (int32_t i=2; i<20; ++i) {
++        if (i==11)  continue;
++        pluralResults[i*10+1] = PFT_ONE;
++        pluralResults[i*10+2] = PFT_FEW;
++        pluralResults[(i+1)*10] = PFT_OTHER;
++    }
++    helperTestRusults(special12_19Locales, 1, testPattern, pluralResults);
++    
++    // ======== Test Paucal Except 11 14.
++    logln("Testing Paucal Except 11 and 14.");
++    const char* paucal01Locales[4] = {"hr","ru","sr","uk"};
++    testPattern = UNICODE_STRING_SIMPLE("one{one} few{few} other{other}");
++    uprv_memset(pluralResults, -1, sizeof(pluralResults));
++    pluralResults[0]= PFT_OTHER;
++    pluralResults[1]= PFT_ONE;
++    pluralResults[2]= PFT_FEW;
++    pluralResults[5]= PFT_OTHER;
++    for (int32_t i=2; i<20; ++i) {
++        if (i==11)  continue;
++        pluralResults[i*10+1] = PFT_ONE;
++        pluralResults[i*10+2] = PFT_FEW;
++        pluralResults[i*10+5] = PFT_OTHER;
++    }
++    helperTestRusults(paucal01Locales, 4, testPattern, pluralResults);
++    
++    // ======== Test Singular Paucal.
++    logln("Testing Singular Paucal.");
++    const char* singularPaucalLocales[2] = {"cs","sk"};
++    testPattern = UNICODE_STRING_SIMPLE("one{one} few{few} other{other}");
++    uprv_memset(pluralResults, -1, sizeof(pluralResults));
++    pluralResults[0]= PFT_OTHER;
++    pluralResults[1]= PFT_ONE;
++    pluralResults[2]= PFT_FEW;
++    pluralResults[5]= PFT_OTHER;
++    helperTestRusults(singularPaucalLocales, 2, testPattern, pluralResults);
++
++    // ======== Test Paucal (1), (2,3,4).
++    logln("Testing Paucal (1), (2,3,4).");
++    const char* paucal02Locales[1] = {"pl"};
++    testPattern = UNICODE_STRING_SIMPLE("one{one} few{few} other{other}");
++    uprv_memset(pluralResults, -1, sizeof(pluralResults));
++    pluralResults[0]= PFT_OTHER;
++    pluralResults[1]= PFT_ONE;
++    pluralResults[2]= PFT_FEW;
++    pluralResults[5]= PFT_OTHER;
++    for (int32_t i=2; i<20; ++i) {
++        if (i==11)  continue;
++        pluralResults[i*10+2] = PFT_FEW;
++        pluralResults[i*10+5] = PFT_OTHER;
++    }
++    helperTestRusults(paucal02Locales, 1, testPattern, pluralResults);
++    
++    // ======== Test Paucal (1), (2), (3,4).
++    logln("Testing Paucal (1), (2), (3,4).");
++    const char* paucal03Locales[1] = {"sl"};
++    testPattern = UNICODE_STRING_SIMPLE("one{one} two{two} few{few} other{other}");
++    uprv_memset(pluralResults, -1, sizeof(pluralResults));
++    pluralResults[0]= PFT_OTHER;
++    pluralResults[1]= PFT_ONE;
++    pluralResults[2]= PFT_TWO;
++    pluralResults[3]= PFT_FEW;
++    pluralResults[5]= PFT_OTHER;
++    pluralResults[101]= PFT_ONE;
++    pluralResults[102]= PFT_TWO;
++    pluralResults[103]= PFT_FEW;
++    pluralResults[105]= PFT_OTHER;
++    helperTestRusults(paucal03Locales, 1, testPattern, pluralResults);
++}
++
++void
++PluralFormatTest::numberFormatTest(PluralFormat* plFmt, 
++                                   NumberFormat *numFmt,
++                                   int32_t start,
++                                   int32_t end,
++                                   UnicodeString *numOddAppendStr,
++                                   UnicodeString *numEvenAppendStr,
++                                   UBool overwrite,  // overwrite the numberFormat.format result
++                                   UnicodeString *message) {
++    UErrorCode status = U_ZERO_ERROR;
++    
++    if ( (plFmt==NULL) || (numFmt==NULL) ) {
++        dataerrln("ERROR: Could not create PluralFormat or NumberFormat - exitting");
++        return;
++    }
++    UnicodeString plResult, numResult ;
++    
++    for (int32_t i=start; i<= end; ++i ) {
++        numResult.remove();
++        numResult = numFmt->format(i, numResult);
++        plResult = plFmt->format(i, status);
++        if ((numOddAppendStr!= NULL)&&(numEvenAppendStr!=NULL)) {
++            if (overwrite) {
++                if (i&1) {
++                    numResult = *numOddAppendStr;
++                }
++                else {
++                    numResult = *numEvenAppendStr;
++                }
++            }
++            else {  // Append the string
++                if (i&1) {
++                    numResult += *numOddAppendStr;
++                }
++                else{
++                    numResult += *numEvenAppendStr;
++                }
++            }
++        }
++        if ( (numResult!=plResult) || U_FAILURE(status) ) {
++            if ( message == NULL ) {
++                errln("ERROR: Unexpected plural format - got:"+plResult+ UnicodeString("  expecting:")+numResult);
++            }
++            else {
++                errln( *message+UnicodeString("  got:")+plResult+UnicodeString("  expecting:")+numResult);
++                
++            }
++        }
++    }
++    return;
++}
++
++
++void
++PluralFormatTest::helperTestRusults(const char** localeArray, 
++                                    int32_t capacityOfArray, 
++                                    UnicodeString& testPattern,
++                                    int8_t *expResults) {
++    UErrorCode status;
++    UnicodeString plResult;
++    const UnicodeString PLKeywordLookups[6] = {
++        UNICODE_STRING_SIMPLE("zero"),
++        UNICODE_STRING_SIMPLE("one"),
++        UNICODE_STRING_SIMPLE("two"),
++        UNICODE_STRING_SIMPLE("few"),
++        UNICODE_STRING_SIMPLE("many"),
++        UNICODE_STRING_SIMPLE("other"),
++    };
++    
++    for (int32_t i=0; i<capacityOfArray; ++i) {
++        const char *locale = localeArray[i];
++        Locale ulocale((const char *)locale);
++        status = U_ZERO_ERROR;
++        PluralFormat plFmt(ulocale, testPattern, status);
++        if (U_FAILURE(status)) {
++            errln("Failed to apply pattern to locale:"+UnicodeString(localeArray[i]));
++            continue;
++        }
++        for (int32_t n=0; n<PLURAL_TEST_ARRAY_SIZE; ++n) {
++            if (expResults[n]!=-1) {
++                status = U_ZERO_ERROR;
++                plResult = plFmt.format(n, status);
++                if (U_FAILURE(status)) {
++                    errln("ERROR: Failed to format number in locale data tests with locale: "+
++                           UnicodeString(localeArray[i]));
++                }
++                if (plResult != PLKeywordLookups[expResults[n]]){
++                    errln("ERROR: Unexpected format result in locale: "+UnicodeString(localeArray[i])+
++                          UnicodeString("got:")+plResult+ UnicodeString("  expecting:")+
++                          PLKeywordLookups[expResults[n]]);
++                }
++            }
++        }
++    }
++}
++
++#endif /* #if !UCONFIG_NO_FORMATTING */
+--- source/test/intltest/plurfmts.h	1969-12-31 16:00:00.000000000 -0800
++++ source/test/intltest/plurfmts.h	2008-04-08 13:40:47.298308000 -0700
+@@ -0,0 +1,48 @@
++/********************************************************************
++ * COPYRIGHT: 
++ * Copyright (c) 1997-2001, International Business Machines Corporation and
++ * others. All Rights Reserved.
++ ********************************************************************/
++
++#ifndef _PLURALFORMATTEST
++#define _PLURALFORMATTEST
++
++#include "unicode/utypes.h"
++#include "unicode/plurrule.h"
++#include "unicode/plurfmt.h"
++
++
++#if !UCONFIG_NO_FORMATTING
++
++#include "intltest.h"
++
++/**
++ * Test basic functionality of various API functions
++ **/
++class PluralFormatTest : public IntlTest {
++    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par = NULL );  
++
++private:
++    /**
++     * Performs tests on many API functions, see detailed comments in source code
++     **/
++    void pluralFormatBasicTest(/* char* par */);
++    void pluralFormatUnitTest(/* char* par */);
++    void pluralFormatLocaleTest(/* char* par */);
++    void numberFormatTest(PluralFormat* plFmt, 
++                          NumberFormat *numFmt, 
++                          int32_t start, 
++                          int32_t end, 
++                          UnicodeString* numOddAppendStr,
++                          UnicodeString* numEvenAppendStr, 
++                          UBool overwrite, // overwrite the numberFormat.format result
++                          UnicodeString *message);
++    void helperTestRusults(const char** localeArray, 
++                           int32_t capacityOfArray, 
++                           UnicodeString& testPattern, 
++                           int8_t *expectingResults);
++};
++
++#endif /* #if !UCONFIG_NO_FORMATTING */
++
++#endif
+--- source/test/intltest/plurults.cpp	1969-12-31 16:00:00.000000000 -0800
++++ source/test/intltest/plurults.cpp	2008-04-08 13:40:47.336298000 -0700
+@@ -0,0 +1,242 @@
++/*
++*******************************************************************************
++* Copyright (C) 2007-2008, International Business Machines Corporation and
++* others. All Rights Reserved.
++********************************************************************************
++
++* File PLURRULTS.cpp
++*
++********************************************************************************
++*/
++
++#include "unicode/utypes.h"
++
++#if !UCONFIG_NO_FORMATTING
++
++#include "plurults.h"
++#include "unicode/plurrule.h"
++
++
++
++void setupResult(const int32_t testSource[], char result[], int32_t* max);
++UBool checkEqual(PluralRules *test, char *result, int32_t max);
++UBool testEquality(PluralRules *test);
++
++// This is an API test, not a unit test.  It doesn't test very many cases, and doesn't
++// try to test the full functionality.  It just calls each function in the class and
++// verifies that it works on a basic level.
++
++void PluralRulesTest::runIndexedTest( int32_t index, UBool exec, const char* &name, char* /*par*/ )
++{
++    if (exec) logln("TestSuite PluralRulesAPI");
++    switch (index) {
++        TESTCASE(0, testAPI);
++        default: name = ""; break;
++    }
++}
++
++#define PLURAL_TEST_NUM    13
++/**
++ * Test various generic API methods of PluralRules for API coverage.
++ */
++void PluralRulesTest::testAPI(/*char *par*/)
++{
++    UnicodeString pluralTestData[PLURAL_TEST_NUM] = {
++            UNICODE_STRING_SIMPLE("a: n is 1"),
++            UNICODE_STRING_SIMPLE("a: n mod 10 is 2"),
++            UNICODE_STRING_SIMPLE("a: n is not 1"),
++            UNICODE_STRING_SIMPLE("a: n mod 3 is not 1"),
++            UNICODE_STRING_SIMPLE("a: n in 2..5"),
++            UNICODE_STRING_SIMPLE("a: n not in 2..5"),
++            UNICODE_STRING_SIMPLE("a: n mod 10 in 2..5"),
++            UNICODE_STRING_SIMPLE("a: n mod 10 is 2 and n is not 12"),
++            UNICODE_STRING_SIMPLE("a: n mod 10 in 2..3 or n mod 10 is 5"),
++            UNICODE_STRING_SIMPLE("a: n is 1 or n is 4 or n is 23"),
++            UNICODE_STRING_SIMPLE("a: n mod 2 is 1 and n is not 3 and n in 1..11"),
++            UNICODE_STRING_SIMPLE("a: n mod 2 is 1 or n mod 5 is 1 and n is not 6"),
++            "",
++    };
++    static const int32_t pluralTestResult[PLURAL_TEST_NUM][30] = {
++        {1, 0},
++        {2,12,22, 0},
++        {0,2,3,4,5,0},
++        {0,2,3,5,6,8,9,0},
++        {2,3,4,5,0},
++        {0,1,6,7,8, 0},
++        {2,3,4,5,12,13,14,15,22,23,24,25,0},
++        {2,22,32,42,0},
++        {2,3,5,12,13,15,22,23,25,0},
++        {1,4,23,0},
++        {1,5,7,9,11,0},
++        {1,3,5,7,9,11,13,15,16,0},
++    };
++    UErrorCode status = U_ZERO_ERROR;
++
++    // ======= Test constructors
++    logln("Testing PluralRules constructors");
++    
++        
++    logln("\n start default locale test case ..\n");
++        
++    PluralRules defRule(status); 
++    PluralRules* test=new PluralRules(status);
++    PluralRules* newEnPlural= test->forLocale(Locale::getEnglish(), status);
++    if(U_FAILURE(status)) {
++        dataerrln("ERROR: Could not create PluralRules (default) - exitting");
++        delete test;
++        return;
++    }
++    delete newEnPlural;
++
++    // ======= Test empty plural rules   
++    logln("Testing Simple PluralRules");
++      
++    PluralRules* empRule = test->createRules(UNICODE_STRING_SIMPLE("a:n"), status);
++    UnicodeString key;
++    for (int32_t i=0; i<10; ++i) {
++        key = empRule->select(i);
++        if ( key.charAt(0)!='a' ) {
++            errln("ERROR:  empty plural rules test failed! - exitting");
++        }
++    }
++    if (empRule!=NULL) {
++        delete empRule;
++    }
++    
++    // ======= Test simple plural rules   
++    logln("Testing Simple PluralRules");
++        
++    char result[100];
++    int32_t max;
++        
++    for (int32_t i=0; i<PLURAL_TEST_NUM-1; ++i) {
++       PluralRules *newRules = test->createRules(pluralTestData[i], status);
++       setupResult(pluralTestResult[i], result, &max);
++       if ( !checkEqual(newRules, result, max) ) {
++            errln("ERROR:  simple plural rules failed! - exitting");
++            delete test;
++            return;
++        }
++       if (newRules!=NULL) {
++           delete newRules;
++       }
++    }
++       
++
++    // ======= Test complex plural rules   
++    logln("Testing Complex PluralRules");
++    // TODO: the complex test data is hard coded. It's better to implement 
++    // a parser to parse the test data.
++    UnicodeString complexRule = UNICODE_STRING_SIMPLE("a: n in 2..5; b: n in 5..8; c: n mod 2 is 1"); 
++    char cRuleResult[] = {
++        'o','c','a','a','a','a','b','b','b','c',
++        'o','c'};
++    PluralRules *newRules = test->createRules(complexRule, status);
++    if ( !checkEqual(newRules, cRuleResult, 12) ) {
++         errln("ERROR:  complex plural rules failed! - exitting");
++         delete test;
++         return;
++     }
++    if (newRules!=NULL) {
++        delete newRules;
++        newRules=NULL;
++    }
++    
++    // ======= Test Equality
++    logln("Testing Equality of PluralRules");
++    
++
++    if ( !testEquality(test) ) {
++         errln("ERROR:  complex plural rules failed! - exitting");
++         delete test;
++         return;
++     }
++
++  
++// ======= Test getStaticClassID()
++    logln("Testing getStaticClassID()");
++    
++    if(test->getDynamicClassID() != PluralRules::getStaticClassID()) {
++        errln("ERROR: getDynamicClassID() didn't return the expected value");
++    }
++    delete test;
++}
++
++void setupResult(const int32_t testSource[], char result[], int32_t* max) {
++    int32_t i=0;
++    int32_t curIndex=0;
++    
++    do {
++        while (curIndex < testSource[i]) {
++            result[curIndex++]='o'; //other
++        }
++        result[curIndex++]='a';
++        
++    } while(testSource[++i]>0);
++    *max=curIndex;
++}
++
++
++UBool checkEqual(PluralRules *test, char *result, int32_t max) {
++    UnicodeString key;
++    for (int32_t i=0; i<max; ++i) {
++        key= test->select(i);
++        if ( key.charAt(0)!=result[i] ) {
++            return FALSE;
++        }
++    }
++    return TRUE;
++}
++
++#define MAX_EQ_ROW  2
++#define MAX_EQ_COL  5
++UBool testEquality(PluralRules *test) {
++    UnicodeString testEquRules[MAX_EQ_ROW][MAX_EQ_COL] = {
++        {   UNICODE_STRING_SIMPLE("a: n in 2..3"),
++            UNICODE_STRING_SIMPLE("a: n is 2 or n is 3"), 
++            UNICODE_STRING_SIMPLE( "a:n is 3 and n in 2..5 or n is 2"),
++            "",
++        },
++        {   UNICODE_STRING_SIMPLE("a: n is 12; b:n mod 10 in 2..3"),
++            UNICODE_STRING_SIMPLE("b: n mod 10 in 2..3 and n is not 12; a: n in 12..12"),
++            UNICODE_STRING_SIMPLE("b: n is 13; a: n in 12..13; b: n mod 10 is 2 or n mod 10 is 3"),
++            "",
++        }
++    };
++    UErrorCode status = U_ZERO_ERROR;
++    UnicodeString key[MAX_EQ_COL];
++    UBool ret=TRUE;
++    for (int32_t i=0; i<MAX_EQ_ROW; ++i) {
++        PluralRules* rules[MAX_EQ_COL];
++        
++        for (int32_t j=0; j<MAX_EQ_COL; ++j) {
++            rules[j]=NULL;
++        }
++        int32_t totalRules=0;
++        while((totalRules<MAX_EQ_COL) && (testEquRules[i][totalRules].length()>0) ) {
++            rules[totalRules]=test->createRules(testEquRules[i][totalRules], status);
++            totalRules++;
++        }
++        for (int32_t n=0; n<300 && ret ; ++n) {
++            for(int32_t j=0; j<totalRules;++j) {
++                key[j] = rules[j]->select(n);
++            }
++            for(int32_t j=0; j<totalRules-1;++j) {
++                if (key[j]!=key[j+1]) {
++                    ret= FALSE;
++                    break;
++                }
++            }
++            
++        }
++        for (int32_t j=0; j<MAX_EQ_COL; ++j) {
++            if (rules[j]!=NULL) {
++                delete rules[j];
++            }
++        }
++    }
++    
++    return ret;
++}
++#endif /* #if !UCONFIG_NO_FORMATTING */
++
+--- source/test/intltest/plurults.h	1969-12-31 16:00:00.000000000 -0800
++++ source/test/intltest/plurults.h	2008-04-08 13:40:47.359292000 -0700
+@@ -0,0 +1,31 @@
++/********************************************************************
++ * COPYRIGHT: 
++ * Copyright (c) 1997-2001, International Business Machines Corporation and
++ * others. All Rights Reserved.
++ ********************************************************************/
++
++#ifndef _PluralRulesTest
++#define _PluralRulesTest
++
++#include "unicode/utypes.h"
++
++#if !UCONFIG_NO_FORMATTING
++
++#include "intltest.h"
++
++/**
++ * Test basic functionality of various API functions
++ **/
++class PluralRulesTest : public IntlTest {
++    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par = NULL );  
++
++private:
++    /**
++     * Performs tests on many API functions, see detailed comments in source code
++     **/
++    void testAPI(/* char* par */);
++};
++
++#endif /* #if !UCONFIG_NO_FORMATTING */
++
++#endif
+--- source/test/intltest/tmsgfmt.cpp	2007-07-26 20:12:12.288784000 -0700
++++ source/test/intltest/tmsgfmt.cpp	2008-04-08 13:40:28.479943000 -0700
+@@ -1,5 +1,5 @@
+ /********************************************************************
+- * Copyright (c) 1997-2007, International Business Machines
++ * Copyright (c) 1997-2008, International Business Machines
+  * Corporation and others. All Rights Reserved.
+  ********************************************************************
+  * File TMSGFMT.CPP
+@@ -52,6 +52,7 @@
+         TESTCASE(18,TestRBNF);
+         TESTCASE(19,TestTurkishCasing);
+         TESTCASE(20,testAutoQuoteApostrophe);
++        TESTCASE(21,testMsgFormatPlural);
+         default: name = ""; break;
+     }
+ }
+@@ -161,7 +162,7 @@
+     UErrorCode status = U_ZERO_ERROR;
+     UnicodeString result;
+     // {sfb} use double format in pattern, so result will match (not strictly necessary)
+-    const UnicodeString pattern = "There {0,choice,0.0#are no files|1.0#is one file|1.0<are {0, number} files} on disk {1}. ";
++    const UnicodeString pattern = "There {0,choice,0#are no files|1#is one file|1<are {0, number} files} on disk {1}. ";
+     logln("The input pattern : " + pattern);
+     MessageFormat *fmt = new MessageFormat(pattern, status);
+     if (U_FAILURE(status)) {
+@@ -517,6 +518,99 @@
+ }
+ 
+ 
++void TestMessageFormat::testMsgFormatPlural(/* char* par */)
++{
++    logln("running TestMessageFormat::testMsgFormatPlural");
++
++    UErrorCode err = U_ZERO_ERROR;
++    UnicodeString t1("{0, plural, one{C''est # fichier} other{Ce sont # fichiers}} dans la liste."); 
++    UnicodeString t2("{argument, plural, one{C''est # fichier} other {Ce sont # fichiers}} dans la liste.");
++    UnicodeString t3("There {0, plural, one{is # zavod}few{are {0, number,###.0} zavoda} other{are # zavodov}} in the directory.");
++    UnicodeString t4("There {argument, plural, one{is # zavod}few{are {argument, number,###.0} zavoda} other{are #zavodov}} in the directory.");
++    UnicodeString t5("{0, plural, one {{0, number,C''''est #,##0.0# fichier}} other {Ce sont # fichiers}} dans la liste.");
++    MessageFormat* mfNum = new MessageFormat(t1, Locale("fr"), err);
++    if (U_FAILURE(err)) {
++        errln("TestMessageFormat::testMsgFormatPlural #1 - argumentIndex");
++        logln(UnicodeString("TestMessageFormat::testMsgFormatPlural #1 with error code ")+(int32_t)err);
++        return;
++    }
++    Formattable testArgs1((int32_t)0);
++    FieldPosition ignore(FieldPosition::DONT_CARE);
++    UnicodeString numResult1;
++    mfNum->format(&testArgs1, 1, numResult1, ignore, err);
++   
++    MessageFormat* mfAlpha = new MessageFormat(t2, Locale("fr"), err);
++    UnicodeString argName[] = {UnicodeString("argument")};
++    UnicodeString argNameResult;
++    mfAlpha->format(argName, &testArgs1, 1, argNameResult, err);
++    if (U_FAILURE(err)) {
++        errln("TestMessageFormat::testMsgFormatPlural #1 - argumentName");
++        logln(UnicodeString("TestMessageFormat::testMsgFormatPlural #1 with error code ")+(int32_t)err);
++        delete mfNum;
++        return;
++    }
++    if ( numResult1 != argNameResult){
++        errln("TestMessageFormat::testMsgFormatPlural #1");
++        logln(UnicodeString("The results of argumentName and argumentIndex are not the same."));
++    }
++    if ( numResult1 != UnicodeString("C\'est 0 fichier dans la liste.")) {
++        errln("TestMessageFormat::testMsgFormatPlural #1");
++        logln(UnicodeString("The results of argumentName and argumentIndex are not the same."));
++    }
++    err = U_ZERO_ERROR;
++  
++    delete mfNum;
++    delete mfAlpha;
++
++    MessageFormat* mfNum2 = new MessageFormat(t3, Locale("ru"), err);
++    numResult1.remove();
++    Formattable testArgs2((int32_t)4);
++    mfNum2->format(&testArgs2, 1, numResult1, ignore, err);
++    MessageFormat* mfAlpha2 = new MessageFormat(t4, Locale("ru"), err);
++    argNameResult.remove();
++    mfAlpha2->format(argName, &testArgs2, 1, argNameResult, err);
++
++    if (U_FAILURE(err)) {
++        errln("TestMessageFormat::testMsgFormatPlural #2 - argumentName");
++        logln(UnicodeString("TestMessageFormat::testMsgFormatPlural #2 with error code ")+(int32_t)err);
++        delete mfNum2;
++        return;
++    }
++    if ( numResult1 != argNameResult){
++        errln("TestMessageFormat::testMsgFormatPlural #2");
++        logln(UnicodeString("The results of argumentName and argumentIndex are not the same."));
++    }
++    if ( numResult1 != UnicodeString("There are 4,0 zavoda in the directory.")) {
++        errln("TestMessageFormat::testMsgFormatPlural #2");
++        logln(UnicodeString("The results of argumentName and argumentIndex are not the same."));
++    }
++
++    delete mfNum2;
++    delete mfAlpha2;
++    
++    // nested formats
++    err = U_ZERO_ERROR;
++    MessageFormat* msgFmt = new MessageFormat(t5, Locale("fr"), err);
++    if (U_FAILURE(err)) {
++        errln("TestMessageFormat::test nested PluralFormat with argumentName");
++        logln(UnicodeString("TestMessageFormat::test nested PluralFormat with error code ")+(int32_t)err);
++        delete msgFmt;
++        return;
++    }
++    Formattable testArgs3((int32_t)0);
++    argNameResult.remove();
++    msgFmt->format(&testArgs3, 1, argNameResult, ignore, err);
++    if (U_FAILURE(err)) {
++        errln("TestMessageFormat::test nested PluralFormat with argumentName");
++    }
++    if ( argNameResult!= UnicodeString("C'est 0,0 fichier dans la liste.")) {
++        errln(UnicodeString("TestMessageFormat::test nested named PluralFormat."));
++        logln(UnicodeString("The unexpected nested named PluralFormat."));
++    }
++    delete msgFmt;
++}
++
++
+ //---------------------------------
+ //  API Tests
+ //---------------------------------
+--- source/test/intltest/tmsgfmt.h	2005-06-07 16:38:09.000000000 -0700
++++ source/test/intltest/tmsgfmt.h	2008-04-08 13:40:28.483940000 -0700
+@@ -56,6 +56,10 @@
+      * tests MesageFormat functionality with a format including a ChoiceFormat
+      **/
+     void testMsgFormatChoice(/* char* par */);
++    /** 
++     * tests MesageFormat functionality with a PluralFormat.
++     **/
++    void testMsgFormatPlural(/* char* par */);
+ 
+     /**
+      * Verify that MessageFormat accomodates more than 10 arguments
+--- public/common/unicode/utypes.h	2007-08-19 01:59:28.631815000 -0700
++++ public/common/unicode/utypes.h	2008-04-08 13:40:28.268936000 -0700
+@@ -1,6 +1,6 @@
+ /*
+ **********************************************************************
+-*   Copyright (C) 1996-2007, International Business Machines
++*   Copyright (C) 1996-2008, International Business Machines
+ *   Corporation and others.  All Rights Reserved.
+ **********************************************************************
+ *
+@@ -503,6 +503,10 @@
+     return q;
+ }
+ 
++#ifdef _Ret_bytecap_
++/* This is only needed to suppress a Visual C++ 2008 warning for operator new[]. */
++_Ret_bytecap_(_Size)
++#endif
+ /**
+  * Global operator new[], defined only inside ICU4C, must not be used.
+  * Crashes intentionally.
+@@ -678,6 +682,10 @@
+     U_UNMATCHED_BRACES,               /**< Braces do not match in message pattern */
+     U_UNSUPPORTED_PROPERTY,           /**< UNUSED as of ICU 2.4 */
+     U_UNSUPPORTED_ATTRIBUTE,          /**< UNUSED as of ICU 2.4 */
++    U_ARGUMENT_TYPE_MISMATCH,         /**< Argument name and argument index mismatch in MessageFormat functions */
++    U_DUPLICATE_KEYWORD,              /**< Duplicate keyword in PluralFormat */
++    U_UNDEFINED_KEYWORD,              /**< Undefined Pluarl keyword */
++    U_DEFAULT_KEYWORD_MISSING,        /**< Missing DEFAULT rule in plural rules */
+     U_FMT_PARSE_ERROR_LIMIT,          /**< The limit for format library errors */
+ 
+     /*
+--- public/i18n/unicode/msgfmt.h	2006-08-29 16:16:55.000000000 -0700
++++ public/i18n/unicode/msgfmt.h	2008-04-08 13:40:28.400941000 -0700
+@@ -1,5 +1,5 @@
+ /*
+-* Copyright (C) 1997-2006, International Business Machines Corporation and others. All Rights Reserved.
++* Copyright (C) 2007, International Business Machines Corporation and others. All Rights Reserved.
+ ********************************************************************************
+ *
+ * File MSGFMT.H
+@@ -29,6 +29,7 @@
+ #include "unicode/format.h"
+ #include "unicode/locid.h"
+ #include "unicode/parseerr.h"
++#include "unicode/uchar.h"
+ 
+ U_NAMESPACE_BEGIN
+ 
+@@ -58,6 +59,42 @@
+  * formats it into a string.  The resultant strings are then assembled
+  * within the string template of the MessageFormat to produce the
+  * final output string.
++ * <p>
++ * <strong>Note:</strong>
++ * In ICU 4.0 MessageFormat supports named arguments.  If a named argument
++ * is used, all arguments must be named.  Names start with a character in 
++ * <code>UCHAR_ID_START</code> and continue with characters in 
++ * <code>UCHARID_CONTINUE</code>, in particular they do not start with a digit.
++ * If named arguments are used, {@link #usesNamedArguments()} will return true.
++ * <p>
++ * The other new methods supporting named arguments are 
++ * {@link #getFormatNames(UErrorCode& status)},
++ * {@link #getFormat(const UnicodeString& formatName, UErrorCode& status)}
++ * {@link #setFormat(const UnicodeString& formatName, const Format& format, UErrorCode& status)},
++ * {@link #adoptFormat(const UnicodeString& formatName, Format* formatToAdopt, UErrorCode& status)},
++ * {@link #format(const Formattable* arguments, const UnicodeString *argumentNames, int32_t cnt, UnicodeString& appendTo, FieldPosition& status, int32_t recursionProtection, UErrorCode& success)},
++ * {@link #format(const UnicodeString* argumentNames, const Formattable* arguments, int32_t count, UnicodeString& appendTo,UErrorCode& status)}.
++ * These methods are all compatible with patterns that do not used named arguments-- 
++ * in these cases the keys in the input or output use <code>UnicodeString</code>s 
++ * that name the argument indices, e.g. "0", "1", "2"... etc.
++ * <p>
++ * When named arguments are used, certain methods on MessageFormat that take or
++ * return arrays do not perform any action, since it is not possible to
++ * identify positions in an array using a name.  UErrorCode is set to
++ * U_ARGUMENT_TYPE_MISMATCH if there is a status/success field in the method.
++ * These methods are 
++ * {@link #adoptFormats(Format** newFormats, int32_t count)},
++ * {@link #setFormats(const Format** newFormats,int32_t count)},
++ * {@link #adoptFormat(int32_t n, Format *newFormat)},
++ * {@link #getFormats(int32_t& cnt)},
++ * {@link #format(const Formattable* source,int32_t cnt,UnicodeString& appendTo, FieldPosition& ignore, UErrorCode& success)},
++ * {@link #format(const UnicodeString& pattern,const Formattable* arguments,int32_t cnt,UnicodeString& appendTo,UErrorCode& success)},
++ * {@link #format(const Formattable& source, UnicodeString& appendTo,FieldPosition& ignore, UErrorCode& success)},
++ * {@link #format(const Formattable* arguments, int32_t cnt, UnicodeString& appendTo, FieldPosition& status, int32_t recursionProtection,UErrorCode& success)},
++ * {@link #parse(const UnicodeString& source, ParsePosition& pos,int32_t& count)},
++ * {@link #parse(const UnicodeString& source, int32_t& cnt, UErrorCode& status)}
++ * <p>
++ *
+  * <P>
+  * During parsing, an input string is matched against the string
+  * template of the MessageFormat to produce an array of Formattable
+@@ -147,7 +184,7 @@
+  *  \code
+  *       messageFormatPattern := string ( "{" messageFormatElement "}" string )*
+  *
+- *       messageFormatElement := argumentIndex { "," elementFormat }
++ *       messageFormatElement := argumentIndex | argumentName { "," elementFormat }
+  *
+  *       elementFormat := "time" { "," datetimeStyle }
+  *                      | "date" { "," datetimeStyle }
+@@ -166,6 +203,8 @@
+  *                      | numberFormatPattern
+  *
+  *       choiceStyle :=   choiceFormatPattern
++ * 
++ *       pluralStyle := pluralFormatPattern
+  * \endcode
+  * </pre>
+  * If there is no elementFormat, then the argument must be a string,
+@@ -427,7 +466,7 @@
+      * @param newFormats the new format to be set.
+      * @param cnt        the size of the array.
+      */
+-    virtual void setFormats(const Format** newFormats,int32_t cnt);
++    virtual void setFormats(const Format** newFormats, int32_t cnt);
+ 
+ 
+     /**
+@@ -454,6 +493,62 @@
+     virtual void setFormat(int32_t formatNumber, const Format& format);
+ 
+     /**
++     * Gets format names. This function returns formatNames in StringEnumerations
++     * which can be used with getFormat() and setFormat() to export formattable 
++     * array from current MessageFormat to another.  It is caller's resposibility 
++     * to delete the returned formatNames.
++     * @param status  output param set to success/failure code.
++     * @draft ICU 4.0
++     */
++    virtual StringEnumeration* getFormatNames(UErrorCode& status);
++    
++    /**
++     * Gets subformat pointer for given format name.   
++     * This function supports both named and numbered
++     * arguments-- if numbered, the formatName is the
++     * corresponding UnicodeStrings (e.g. "0", "1", "2"...).
++     * The returned Format object should not be deleted by the caller,
++     * nor should the ponter of other object .  The pointer and its 
++     * contents remain valid only until the next call to any method
++     * of this class is made with this object. 
++     * @param status  output param set to success/failure code.
++     * @draft ICU 4.0
++     */
++    virtual Format* getFormat(const UnicodeString& formatName, UErrorCode& status);
++    
++    /**
++     * Sets one subformat for given format name.
++     * See the class description about format name. 
++     * This function supports both named and numbered
++     * arguments-- if numbered, the formatName is the
++     * corresponding UnicodeStrings (e.g. "0", "1", "2"...).
++     * If there is no matched formatName or wrong type,
++     * the item will be ignored.
++     * @param formatName  Name of the subformat.
++     * @param format      the format to be set.
++     * @param status  output param set to success/failure code.
++     * @draft ICU 4.0
++     */
++    virtual void setFormat(const UnicodeString& formatName, const Format& format, UErrorCode& status);
++    
++    /**
++     * Sets one subformat for given format name.
++     * See the class description about format name. 
++     * This function supports both named and numbered
++     * arguments-- if numbered, the formatName is the
++     * corresponding UnicodeStrings (e.g. "0", "1", "2"...).
++     * If there is no matched formatName or wrong type,
++     * the item will be ignored.
++     * The caller should not delete the Format object after this call.
++     * @param formatName  Name of the subformat.
++     * @param format      Format to be adopted.
++     * @param status      output param set to success/failure code.
++     * @draft ICU 4.0
++     */
++    virtual void adoptFormat(const UnicodeString& formatName, Format* formatToAdopt, UErrorCode& status);
++
++
++    /**
+      * Gets an array of subformats of this object.  The returned array
+      * should not be deleted by the caller, nor should the pointers
+      * within the array.  The array and its contents remain valid only
+@@ -500,11 +595,11 @@
+      * @return          Reference to 'appendTo' parameter.
+      * @stable ICU 2.0
+      */
+-    static UnicodeString& format(   const UnicodeString& pattern,
+-                                    const Formattable* arguments,
+-                                    int32_t count,
+-                                    UnicodeString& appendTo,
+-                                    UErrorCode& status);
++    static UnicodeString& format(const UnicodeString& pattern,
++                                 const Formattable* arguments,
++                                 int32_t count,
++                                 UnicodeString& appendTo,
++                                 UErrorCode& status);
+ 
+     /**
+      * Formats the given array of arguments into a user-readable
+@@ -545,8 +640,32 @@
+     UnicodeString& format(const Formattable& obj,
+                           UnicodeString& appendTo,
+                           UErrorCode& status) const;
++    
+ 
+     /**
++     * Formats the given array of arguments into a user-defined argument name
++     * array. This function supports both named and numbered
++     * arguments-- if numbered, the formatName is the
++     * corresponding UnicodeStrings (e.g. "0", "1", "2"...).
++     *
++     * @param argumentNames argument name array
++     * @param arguments An array of objects to be formatted.
++     * @param count     The number of elements of 'argumentNames' and 
++     *                  arguments.  The number of argumentNames and arguments
++     *                  must be the same.
++     * @param appendTo  Output parameter to receive result.
++     *                  Result is appended to existing contents.
++     * @param status    Input/output error code.  If the
++     *                  pattern cannot be parsed, set to failure code.
++     * @return          Reference to 'appendTo' parameter.
++     * @stable ICU 4.0
++     */
++    UnicodeString& format(const UnicodeString* argumentNames,
++                          const Formattable* arguments,
++                          int32_t count,
++                          UnicodeString& appendTo,
++                          UErrorCode& status) const;
++    /**
+      * Parses the given string into an array of output arguments.
+      *
+      * @param source    String to be parsed.
+@@ -569,9 +688,12 @@
+      * @param source    String to be parsed.
+      * @param count     Output param to receive size of returned array.
+      * @param status    Input/output error code.  If the
+-     *                  pattern cannot be parsed, set to failure code.
++     *                  pattern cannot be parsed, set to failure code. 
++     *                  If the MessageFormat is named argument, the status is 
++     *                  set to U_ARGUMENT_TYPE_MISMATCH.
+      * @return an array of parsed arguments.  The caller owns both
+-     * the array and its contents.
++     * the array and its contents. Return NULL if status is not U_ZERO_ERROR.
++     * 
+      * @stable ICU 2.0
+      */
+     virtual Formattable* parse( const UnicodeString& source,
+@@ -615,7 +737,16 @@
+      */
+     static UnicodeString autoQuoteApostrophe(const UnicodeString& pattern, 
+         UErrorCode& status);
+-
++    
++    /**
++     * Returns true if this MessageFormat uses named arguments,
++     * and false otherwise.  See class description.
++     *
++     * @return true if named arguments are used.
++     * @draft ICU 4.0
++     */
++    UBool usesNamedArguments() const;
++    
+     /**
+      * Returns a unique class ID POLYMORPHICALLY.  Pure virtual override.
+      * This method is to implement a simple version of RTTI, since not all
+@@ -648,6 +779,8 @@
+     UnicodeString       fPattern;
+     Format**            formatAliases; // see getFormats
+     int32_t             formatAliasesCapacity;
++    UProperty           idStart;
++    UProperty           idContinue;
+ 
+     MessageFormat(); // default constructor not implemented
+ 
+@@ -658,51 +791,7 @@
+      * number corresponds to the array of arguments to be formatted.
+      * @internal
+      */
+-    class Subformat {
+-    public:
+-        /**
+-         * @internal 
+-         */
+-        Format* format; // formatter
+-        /**
+-         * @internal 
+-         */
+-        int32_t offset; // offset into fPattern
+-        /**
+-         * @internal 
+-         */
+-        int32_t arg;    // 0-based argument number
+-
+-        /**
+-         * Clone that.format and assign it to this.format
+-         * Do NOT delete this.format
+-         * @internal
+-         */
+-        Subformat& operator=(const Subformat& that) {
+-            format = that.format ? that.format->clone() : NULL;
+-            offset = that.offset;
+-            arg = that.arg;
+-            return *this;
+-        }
+-
+-        /**
+-         * @internal 
+-         */
+-        UBool operator==(const Subformat& that) const {
+-            // Do cheap comparisons first
+-            return offset == that.offset &&
+-                   arg == that.arg &&
+-                   ((format == that.format) || // handles NULL
+-                    (*format == *that.format));
+-        }
+-
+-        /**
+-         * @internal
+-         */
+-        UBool operator!=(const Subformat& that) const {
+-            return !operator==(that);
+-        }
+-    };
++    class Subformat;
+ 
+     /**
+      * A MessageFormat contains an array of subformats.  This array
+@@ -724,6 +813,12 @@
+     int32_t            argTypeCount;
+     int32_t            argTypeCapacity;
+ 
++    /**
++      * Is true iff all argument names are non-negative numbers.
++      * 
++      */
++    UBool isArgNumeric;
++
+     // Variable-size array management
+     UBool allocateSubformats(int32_t capacity);
+     UBool allocateArgTypes(int32_t capacity);
+@@ -776,6 +871,14 @@
+                             FieldPosition& status,
+                             int32_t recursionProtection,
+                             UErrorCode& success) const;
++    
++    UnicodeString&  format( const Formattable* arguments, 
++                            const UnicodeString *argumentNames,
++                            int32_t cnt,
++                            UnicodeString& appendTo,
++                            FieldPosition& status,
++                            int32_t recursionProtection,
++                            UErrorCode& success) const;
+ 
+     void             makeFormat(int32_t offsetNumber,
+                                 UnicodeString* segments,
+@@ -810,7 +913,14 @@
+         listCount = argTypeCount;
+         return argTypes; 
+     }
+-
++    
++    /**
++     * Returns FALSE if the argument name is not legal.
++     * @param  argName   argument name.
++     * @return TRUE if the argument name is legal, otherwise return FALSE.
++     */
++    UBool isLegalArgName(const UnicodeString& argName) const;
++    
+     friend class MessageFormatAdapter; // getFormatTypeList() access
+ };
+ 
+--- public/i18n/unicode/plurfmt.h	1969-12-31 16:00:00.000000000 -0800
++++ public/i18n/unicode/plurfmt.h	2008-04-08 13:40:47.214293000 -0700
+@@ -0,0 +1,506 @@
++/*
++*******************************************************************************
++* Copyright (C) 2007-2008, International Business Machines Corporation and
++* others. All Rights Reserved.
++*******************************************************************************
++*
++
++* File PLURFMT.H
++*
++* Modification History:*
++*   Date        Name        Description
++*
++********************************************************************************
++*/
++
++#ifndef PLURFMT
++#define PLURFMT
++
++#include "unicode/utypes.h"
++
++/**
++ * \file
++ * \brief C++ API: PluralFormat object
++ */
++
++#if !UCONFIG_NO_FORMATTING
++
++#include "unicode/numfmt.h"
++#include "unicode/plurrule.h"
++
++U_NAMESPACE_BEGIN
++
++class Hashtable;
++
++/**
++ * <p>
++ * <code>PluralFormat</code> supports the creation of internationalized
++ * messages with plural inflection. It is based on <i>plural
++ * selection</i>, i.e. the caller specifies messages for each
++ * plural case that can appear in the users language and the
++ * <code>PluralFormat</code> selects the appropriate message based on
++ * the number.
++ * </p>
++ * <h4>The Problem of Plural Forms in Internationalized Messages</h4>
++ * <p>
++ * Different languages have different ways to inflect
++ * plurals. Creating internationalized messages that include plural
++ * forms is only feasible when the framework is able to handle plural
++ * forms of <i>all</i> languages correctly. <code>ChoiceFormat</code>
++ * doesn't handle this well, because it attaches a number interval to
++ * each message and selects the message whose interval contains a
++ * given number. This can only handle a finite number of
++ * intervals. But in some languages, like Polish, one plural case
++ * applies to infinitely many intervals (e.g., paucal applies to
++ * numbers ending with 2, 3, or 4 except those ending with 12, 13, or
++ * 14). Thus <code>ChoiceFormat</code> is not adequate.
++ * </p><p>
++ * <code>PluralFormat</code> deals with this by breaking the problem
++ * into two parts:
++ * <ul>
++ * <li>It uses <code>PluralRules</code> that can define more complex
++ *     conditions for a plural case than just a single interval. These plural
++ *     rules define both what plural cases exist in a language, and to
++ *     which numbers these cases apply.
++ * <li>It provides predefined plural rules for many locales. Thus, the programmer
++ *     need not worry about the plural cases of a language. On the flip side,
++ *     the localizer does not have to specify the plural cases; he can simply
++ *     use the predefined keywords. The whole plural formatting of messages can
++ *     be done using localized patterns from resource bundles.
++ * </ul>
++ * </p>
++ * <h4>Usage of <code>PluralFormat</code></h4>
++ * <p>
++ * This discussion assumes that you use <code>PluralFormat</code> with
++ * a predefined set of plural rules. You can create one using one of
++ * the constructors that takes a <code>locale</code> object. To
++ * specify the message pattern, you can either pass it to the
++ * constructor or set it explicitly using the
++ * <code>applyPattern()</code> method. The <code>format()</code>
++ * method takes a number object and selects the message of the
++ * matching plural case. This message will be returned.
++ * </p>
++ * <h5>Patterns and Their Interpretation</h5>
++ * <p>
++ * The pattern text defines the message output for each plural case of the
++ * used locale. The pattern is a sequence of
++ * <code><i>caseKeyword</i>{<i>message</i>}</code> clauses, separated by white
++ * space characters. Each clause assigns the message <code><i>message</i></code>
++ * to the plural case identified by <code><i>caseKeyword</i></code>.
++ * </p><p>
++ * You always have to define a message text for the default plural case
++ * "<code>other</code>" which is contained in every rule set. If the plural
++ * rules of the <code>PluralFormat</code> object do not contain a plural case
++ * identified by <code><i>caseKeyword</i></code>, U_DEFAULT_KEYWORD_MISSING
++ * will be set to status.
++ * If you do not specify a message text for a particular plural case, the
++ * message text of the plural case "<code>other</code>" gets assigned to this
++ * plural case. If you specify more than one message for the same plural case,
++ * U_DUPLICATE_KEYWORD will be set to status.
++ * <br/>
++ * Spaces between <code><i>caseKeyword</i></code> and
++ * <code><i>message</i></code>  will be ignored; spaces within
++ * <code><i>message</i></code> will be preserved.
++ * </p><p>
++ * The message text for a particular plural case may contain other message
++ * format patterns. <code>PluralFormat</code> preserves these so that you
++ * can use the strings produced by <code>PluralFormat</code> with other
++ * formatters. If you are using <code>PluralFormat</code> inside a
++ * <code>MessageFormat</code> pattern, <code>MessageFormat</code> will
++ * automatically evaluate the resulting format pattern.<br/>
++ * Thus, curly braces (<code>{</code>, <code>}</code>) are <i>only</i> allowed
++ * in message texts to define a nested format pattern.<br/>
++ * The pound sign (<code>#</code>) will be interpreted as the number placeholder
++ * in the message text, if it is not contained in curly braces (to preserve
++ * <code>NumberFormat</code> patterns). <code>PluralFormat</code> will
++ * replace each of those pound signs by the number passed to the
++ * <code>format()</code> method. It will be formatted using a
++ * <code>NumberFormat</code> for the <code>PluralFormat</code>'s locale. If you
++ * need special number formatting, you have to explicitly specify a
++ * <code>NumberFormat</code> for the <code>PluralFormat</code> to use.
++ * </p>
++ * Example
++ * <pre>
++ * UErrorCode status = U_ZERO_ERROR;
++ * MessageFormat* msgFmt = new MessageFormat(UnicodeString("{0, plural,
++ *   one{0, number, C''est #,##0.0#  fichier} other {Ce sont # fichiers}} dans la liste."),
++ *   Locale("fr"), status);
++ * if (U_FAILURE(status)) {
++ *     return;
++ * }
++ * Formattable args1[] = {(int32_t)0};
++ * Formattable args2[] = {(int32_t)3};
++ * FieldPosition ignore(FieldPosition::DONT_CARE);
++ * UnicodeString result;
++ * msgFmt->format(args1, 1, result, ignore, status);
++ * cout << result << endl;
++ * result.remove();
++ * msgFmt->format(args2, 1, result, ignore, status);
++ * cout << result << endl;
++ * </pre>
++ * Produces the output:<br/>
++ * <code>C'est 0,0 fichier dans la liste.</code><br/>
++ * <code>Ce sont 3 fichiers dans la liste."</code>
++ * <p>
++ * <strong>Note:</strong><br/>
++ *   Currently <code>PluralFormat</code>
++ *   does not make use of quotes like <code>MessageFormat</code>.
++ *   If you use plural format strings with <code>MessageFormat</code> and want
++ *   to use a quote sign "<code>'</code>", you have to write "<code>''</code>".
++ *   <code>MessageFormat</code> unquotes this pattern and  passes the unquoted
++ *   pattern to <code>PluralFormat</code>. It's a bit trickier if you use
++ *   nested formats that do quoting. In the example above, we wanted to insert
++ *   "<code>'</code>" in the number format pattern. Since
++ *   <code>NumberFormat</code> supports quotes, we had to insert
++ *   "<code>''</code>". But since <code>MessageFormat</code> unquotes the
++ *   pattern before it gets passed to <code>PluralFormat</code>, we have to
++ *   double these quotes, i.e. write "<code>''''</code>".
++ * </p>
++ * <h4>Defining Custom Plural Rules</h4>
++ * <p>If you need to use <code>PluralFormat</code> with custom rules, you can
++ * create a <code>PluralRules</code> object and pass it to
++ * <code>PluralFormat</code>'s constructor. If you also specify a locale in this
++ * constructor, this locale will be used to format the number in the message
++ * texts.
++ * </p><p>
++ * For more information about <code>PluralRules</code>, see
++ * {@link PluralRules}.
++ * </p>
++ *
++ * ported from Java
++ * @draft ICU 4.0
++ */
++
++class U_I18N_API PluralFormat : public Format {
++public:
++
++    /**
++     * Creates a new <code>PluralFormat</code> for the default locale.
++     * This locale will be used to get the set of plural rules and for standard
++     * number formatting.
++     * @param status  output param set to success/failure code on exit, which
++     *                must not indicate a failure before the function call.
++     * @draft ICU 4.0
++     */
++    PluralFormat(UErrorCode& status);
++
++    /**
++     * Creates a new <code>PluralFormat</code> for a given locale.
++     * @param locale the <code>PluralFormat</code> will be configured with
++     *               rules for this locale. This locale will also be used for
++     *               standard number formatting.
++     * @param status output param set to success/failure code on exit, which
++     *               must not indicate a failure before the function call.
++     * @draft ICU 4.0
++     */
++    PluralFormat(const Locale& locale, UErrorCode& status);
++
++    /**
++     * Creates a new <code>PluralFormat</code> for a given set of rules.
++     * The standard number formatting will be done using the default locale.
++     * @param rules   defines the behavior of the <code>PluralFormat</code>
++     *                object.
++     * @param status  output param set to success/failure code on exit, which
++     *                must not indicate a failure before the function call.
++     * @draft ICU 4.0
++     */
++    PluralFormat(const PluralRules& rules, UErrorCode& status);
++
++    /**
++     * Creates a new <code>PluralFormat</code> for a given set of rules.
++     * The standard number formatting will be done using the given locale.
++     * @param locale  the default number formatting will be done using this
++     *                locale.
++     * @param rules   defines the behavior of the <code>PluralFormat</code>
++     *                object.
++     * @param status  output param set to success/failure code on exit, which
++     *                must not indicate a failure before the function call.
++     * @draft ICU 4.0
++     */
++    PluralFormat(const Locale& locale, const PluralRules& rules, UErrorCode& status);
++
++    /**
++     * Creates a new <code>PluralFormat</code> for a given pattern string.
++     * The default locale will be used to get the set of plural rules and for
++     * standard number formatting.
++     * @param  pattern the pattern for this <code>PluralFormat</code>.
++     *                 errors are returned to status if the pattern is invalid.
++     * @param status   output param set to success/failure code on exit, which
++     *                 must not indicate a failure before the function call.
++     * @draft ICU 4.0
++     */
++    PluralFormat(const UnicodeString& pattern, UErrorCode& status);
++
++    /**
++     * Creates a new <code>PluralFormat</code> for a given pattern string and
++     * locale.
++     * The locale will be used to get the set of plural rules and for
++     * standard number formatting.
++     * @param locale   the <code>PluralFormat</code> will be configured with
++     *                 rules for this locale. This locale will also be used for
++     *                 standard number formatting.
++     * @param pattern  the pattern for this <code>PluralFormat</code>.
++     *                 errors are returned to status if the pattern is invalid.
++     * @param status   output param set to success/failure code on exit, which
++     *                 must not indicate a failure before the function call.
++     * @draft ICU 4.0
++     */
++    PluralFormat(const Locale& locale, const UnicodeString& pattern, UErrorCode& status);
++
++    /**
++     * Creates a new <code>PluralFormat</code> for a given set of rules, a
++     * pattern and a locale.
++     * @param rules    defines the behavior of the <code>PluralFormat</code>
++     *                 object.
++     * @param pattern  the pattern for this <code>PluralFormat</code>.
++     *                 errors are returned to status if the pattern is invalid.
++     * @param status   output param set to success/failure code on exit, which
++     *                 must not indicate a failure before the function call.
++     * @draft ICU 4.0
++     */
++    PluralFormat(const PluralRules& rules,
++                 const UnicodeString& pattern,
++                 UErrorCode& status);
++
++    /**
++     * Creates a new <code>PluralFormat</code> for a given set of rules, a
++     * pattern and a locale.
++     * @param locale  the <code>PluralFormat</code> will be configured with
++     *                rules for this locale. This locale will also be used for
++     *                standard number formatting.
++     * @param rules   defines the behavior of the <code>PluralFormat</code>
++     *                object.
++     * @param pattern the pattern for this <code>PluralFormat</code>.
++     *                errors are returned to status if the pattern is invalid.
++     * @param status  output param set to success/failure code on exit, which
++     *                must not indicate a failure before the function call.
++     * @draft ICU 4.0
++     */
++    PluralFormat(const Locale& locale,
++                 const PluralRules& rules,
++                 const UnicodeString& pattern,
++                 UErrorCode& status);
++
++    /**
++      * copy constructor.
++      * @draft ICU 4.0
++      */
++    PluralFormat(const PluralFormat& other);
++
++    /**
++     * Destructor.
++     * @draft ICU 4.0
++     */
++    virtual ~PluralFormat();
++
++    /**
++     * Sets the pattern used by this plural format.
++     * The method parses the pattern and creates a map of format strings
++     * for the plural rules.
++     * Patterns and their interpretation are specified in the class description.
++     *
++     * @param pattern the pattern for this plural format
++     *                errors are returned to status if the pattern is invalid.
++     * @param status  output param set to success/failure code on exit, which
++     *                must not indicate a failure before the function call.
++     * @draft ICU 4.0
++     */
++    void applyPattern(const UnicodeString& pattern, UErrorCode& status);
++
++    /**
++     * Formats a plural message for a given number.
++     *
++     * @param number  a number for which the plural message should be formatted
++     *                for. If no pattern has been applied to this
++     *                <code>PluralFormat</code> object yet, the formatted number
++     *                will be returned.
++     * @param status  output param set to success/failure code on exit, which
++     *                must not indicate a failure before the function call.
++     * @return        the string containing the formatted plural message.
++     * @draft ICU 4.0
++     */
++    UnicodeString format(int32_t number, UErrorCode& status) const;
++
++    /**
++     * Formats a plural message for a given number.
++     *
++     * @param number   a number for which the plural message should be formatted
++     *                 for. If no pattern has been applied to this
++     *                 <code>PluralFormat</code> object yet, the formatted number
++     *                 will be returned.
++     * @param appendTo output parameter to receive result.
++     *                 result is appended to existing contents.
++     * @param pos      On input: an alignment field, if desired.
++     *                 On output: the offsets of the alignment field.
++     * @param status   output param set to success/failure code on exit, which
++     *                 must not indicate a failure before the function call.
++     * @return         the string containing the formatted plural message.
++     * @draft ICU 4.0
++     */
++    UnicodeString& format(int32_t number,
++                          UnicodeString& appendTo,
++                          FieldPosition& pos,
++                          UErrorCode& status) const;
++
++    /**
++     * Sets the locale used by this <code>PluraFormat</code> object.
++     * Note: Calling this method resets this <code>PluraFormat</code> object,
++     *     i.e., a pattern that was applied previously will be removed,
++     *     and the NumberFormat is set to the default number format for
++     *     the locale.  The resulting format behaves the same as one
++     *     constructed from {@link #PluralFormat(locale)}.
++     * @param locale  the <code>locale</code> to use to configure the formatter.
++     * @param status  output param set to success/failure code on exit, which
++     *                must not indicate a failure before the function call.
++     * @draft ICU 4.0
++     */
++    void setLocale(const Locale& locale, UErrorCode& status);
++
++    /**
++      * Sets the number format used by this formatter.  You only need to
++      * call this if you want a different number format than the default
++      * formatter for the locale.
++      * @param format  the number format to use.
++      * @param status  output param set to success/failure code on exit, which
++      *                must not indicate a failure before the function call.
++      * @draft ICU 4.0
++      */
++    void setNumberFormat(const NumberFormat* format, UErrorCode& status);
++
++    /**
++       * Assignment operator
++       *
++       * @param other    the PluralFormat object to copy from.
++       * @draft ICU 4.0
++       */
++    PluralFormat& operator=(const PluralFormat& other);
++
++    /**
++      * Return true if another object is semantically equal to this one.
++      *
++      * @param other    the PluralFormat object to be compared with.
++      * @return         true if other is semantically equal to this.
++      * @draft ICU 4.0
++      */
++    virtual UBool operator==(const Format& other) const;
++
++    /**
++     * Return true if another object is semantically unequal to this one.
++     *
++     * @param other    the PluralFormat object to be compared with.
++     * @return         true if other is semantically unequal to this.
++     * @draft ICU 4.0
++     */
++    virtual UBool operator!=(const Format& other) const;
++
++    /**
++     * Clones this Format object polymorphically.  The caller owns the
++     * result and should delete it when done.
++     * @draft ICU 4.0
++     */
++    virtual Format* clone(void) const;
++
++    /**
++    * Redeclared Format method.
++    *
++    * @param obj       The object to be formatted into a string.
++    * @param appendTo  output parameter to receive result.
++    *                  Result is appended to existing contents.
++    * @param pos       On input: an alignment field, if desired.
++    *                  On output: the offsets of the alignment field.
++    * @param status    output param filled with success/failure status.
++    * @return          Reference to 'appendTo' parameter.
++    * @draft ICU 4.0
++    */
++   UnicodeString& format(const Formattable& obj,
++                         UnicodeString& appendTo,
++                         FieldPosition& pos,
++                         UErrorCode& status) const;
++
++   /**
++    * Returns the pattern from applyPattern() or constructor().
++    *
++    * @param  appendTo  output parameter to receive result.
++     *                  Result is appended to existing contents.
++    * @return the UnicodeString with inserted pattern.
++    * @draft ICU 4.0
++    */
++   UnicodeString& toPattern(UnicodeString& appendTo);
++
++   /**
++    * This method is not yet supported by <code>PluralFormat</code>.
++    * <P>
++    * Before calling, set parse_pos.index to the offset you want to start
++    * parsing at in the source. After calling, parse_pos.index is the end of
++    * the text you parsed. If error occurs, index is unchanged.
++    * <P>
++    * When parsing, leading whitespace is discarded (with a successful parse),
++    * while trailing whitespace is left as is.
++    * <P>
++    * See Format::parseObject() for more.
++    *
++    * @param source    The string to be parsed into an object.
++    * @param result    Formattable to be set to the parse result.
++    *                  If parse fails, return contents are undefined.
++    * @param parse_pos The position to start parsing at. Upon return
++    *                  this param is set to the position after the
++    *                  last character successfully parsed. If the
++    *                  source is not parsed successfully, this param
++    *                  will remain unchanged.
++    * @draft ICU 4.0
++    */
++   virtual void parseObject(const UnicodeString& source,
++                            Formattable& result,
++                            ParsePosition& parse_pos) const;
++
++    /**
++     * ICU "poor man's RTTI", returns a UClassID for this class.
++     *
++     * @draft ICU 4.0
++     *
++     */
++    static UClassID U_EXPORT2 getStaticClassID(void);
++
++    /**
++     * ICU "poor man's RTTI", returns a UClassID for the actual class.
++     *
++     * @draft ICU 4.0
++     */
++     virtual UClassID getDynamicClassID() const;
++
++private:
++    typedef enum fmtToken {
++        none,
++        tLetter,
++        tNumber,
++        tSpace,
++        tNumberSign,
++        tLeftBrace,
++        tRightBrace
++    }fmtToken;
++
++    Locale  locale;
++    PluralRules* pluralRules;
++    UnicodeString pattern;
++    Hashtable  *fParsedValuesHash;
++    NumberFormat*  numberFormat;
++    NumberFormat*  replacedNumberFormat;
++
++    PluralFormat();   // default constructor not implemented
++    void init(const PluralRules* rules, const Locale& curlocale, UErrorCode& status);
++    UBool inRange(UChar ch, fmtToken& type);
++    UBool checkSufficientDefinition();
++    void parsingFailure();
++    UnicodeString insertFormattedNumber(int32_t number,
++                                        UnicodeString& message,
++                                        UnicodeString& appendTo,
++                                        FieldPosition& pos) const;
++    void copyHashtable(Hashtable *other, UErrorCode& status);
++};
++
++U_NAMESPACE_END
++
++#endif /* #if !UCONFIG_NO_FORMATTING */
++
++#endif // _PLURFMT
++//eof
+--- public/i18n/unicode/plurrule.h	1969-12-31 16:00:00.000000000 -0800
++++ public/i18n/unicode/plurrule.h	2008-04-08 13:40:47.242293000 -0700
+@@ -0,0 +1,263 @@
++/*
++*******************************************************************************
++* Copyright (C) 2008, International Business Machines Corporation and
++* others. All Rights Reserved.
++*******************************************************************************
++*
++*
++* File PLURRULE.H
++*
++* Modification History:*
++*   Date        Name        Description
++*
++********************************************************************************
++*/
++
++#ifndef PLURRULE
++#define PLURRULE
++
++#include "unicode/utypes.h"
++
++/**
++ * \file
++ * \brief C++ API: PluralRules object
++ */
++
++#if !UCONFIG_NO_FORMATTING
++
++#include "unicode/format.h"
++
++U_NAMESPACE_BEGIN
++
++class Hashtable;
++class RuleChain;
++class RuleParser;
++
++/**
++ * Defines rules for mapping positive long values onto a small set of
++ * keywords. Rules are constructed from a text description, consisting
++ * of a series of keywords and conditions.  The {@link #select} method
++ * examines each condition in order and returns the keyword for the
++ * first condition that matches the number.  If none match,
++ * default rule(other) is returned.
++ *
++ * Examples:<pre>
++ *   "one: n is 1; few: n in 2..4"</pre>
++ *  This defines two rules, for 'one' and 'few'.  The condition for
++ *  'one' is "n is 1" which means that the number must be equal to
++ *  1 for this condition to pass.  The condition for 'few' is
++ *  "n in 2..4" which means that the number must be between 2 and
++ *  4 inclusive for this condition to pass.  All other numbers
++ *  are assigned the keyword "other" by the default rule.
++ *  </p><pre>
++ *    "zero: n is 0; one: n is 1; zero: n mod 100 in 1..19"</pre>
++ *  This illustrates that the same keyword can be defined multiple times.
++ *  Each rule is examined in order, and the first keyword whose condition
++ *  passes is the one returned.  Also notes that a modulus is applied
++ *  to n in the last rule.  Thus its condition holds for 119, 219, 319...
++ *  </p><pre>
++ *    "one: n is 1; few: n mod 10 in 2..4 and n mod 100 not in 12..14"</pre>
++ *  This illustrates conjunction and negation.  The condition for 'few'
++ *  has two parts, both of which must be met: "n mod 10 in 2..4" and
++ *  "n mod 100 not in 12..14".  The first part applies a modulus to n
++ *  before the test as in the previous example.  The second part applies
++ *  a different modulus and also uses negation, thus it matches all
++ *  numbers _not_ in 12, 13, 14, 112, 113, 114, 212, 213, 214...
++ *  </p><pre>
++ *
++ *  Keywords
++ *  could be defined by users or from ICU locale data. There are 6
++ *  predefined values in ICU - 'zero', 'one', 'two', 'few', 'many' and
++ *  'other'. Callers need to check the value of keyword returned by
++ *  {@link #select} method.
++ *  </p><pre>
++ *
++ * Examples:<pre>
++ * UnicodeString keyword = pl->select(number);
++ * if (keyword== UnicodeString("one") {
++ *     ...
++ * }
++ * else if ( ... )
++ *
++ */
++class U_I18N_API PluralRules : public UObject {
++public:
++
++    /**
++     * Constructor.
++     * @param status  Output param set to success/failure code on exit, which
++     *                must not indicate a failure before the function call.
++     *
++     * @draft ICU 4.0
++     */
++    PluralRules(UErrorCode& status);
++
++    /**
++     * Copy constructor.
++     * @draft ICU 4.0
++     */
++    PluralRules(const PluralRules& other);
++
++    /**
++     * Destructor.
++     * @draft ICU 4.0
++     */
++    virtual ~PluralRules();
++
++    /**
++     * Clone
++     * @draft ICU 4.0
++     */
++    PluralRules* clone() const;
++
++    /**
++      * Assignment operator.
++      * @draft ICU 4.0
++      */
++    PluralRules& operator=(const PluralRules&);
++
++    /**
++     * Creates a PluralRules from a description if it is parsable, otherwise
++     * returns null.
++     *
++     * @param description rule description
++     * @param status      Output param set to success/failure code on exit, which
++     *                    must not indicate a failure before the function call.
++     * @return            new PluralRules pointer. NULL if there is an error.
++     * @draft ICU 4.0
++     */
++    static PluralRules* U_EXPORT2 createRules(const UnicodeString& description,
++                                              UErrorCode& status);
++
++    /**
++     * The default rules that accept any number.
++     *
++     * @param status  Output param set to success/failure code on exit, which
++     *                must not indicate a failure before the function call.
++     * @return        new PluralRules pointer. NULL if there is an error.
++     * @draft ICU 4.0
++     */
++    static PluralRules* U_EXPORT2 createDefaultRules(UErrorCode& status);
++
++    /**
++     * Provides access to the predefined <code>PluralRules</code> for a given
++     * locale.
++     *
++     * @param locale  The locale for which a <code>PluralRules</code> object is
++     *                returned.
++     * @param status  Output param set to success/failure code on exit, which
++     *                must not indicate a failure before the function call.
++     * @return        The predefined <code>PluralRules</code> object pointer for
++     *                this locale. If there's no predefined rules for this locale,
++     *                the rules for the closest parent in the locale hierarchy
++     *                that has one will  be returned.  The final fallback always
++     *                returns the default 'other' rules.
++     * @draft ICU 4.0
++     */
++    static PluralRules* U_EXPORT2 forLocale(const Locale& locale, UErrorCode& status);
++
++    /**
++     * Given a number, returns the keyword of the first rule that applies to
++     * the number.  This function can be used with isKeyword* functions to
++     * determine the keyword for default plural rules.
++     *
++     * @param number  The number for which the rule has to be determined.
++     * @return        The keyword of the selected rule.
++     * @draft ICU 4.0
++     */
++    UnicodeString select(int32_t number) const;
++
++    /**
++     * Returns a list of all rule keywords used in this <code>PluralRules</code>
++     * object.  The rule 'other' is always present by default.
++     *
++     * @param status Output param set to success/failure code on exit, which
++     *               must not indicate a failure before the function call.
++     * @return       StringEnumeration with the keywords.
++     *               The caller must delete the object.
++     * @draft ICU 4.0
++     */
++    StringEnumeration* getKeywords(UErrorCode& status) const;
++
++    /**
++     * Returns TRUE if the given keyword is defined in this
++     * <code>PluralRules</code> object.
++     *
++     * @param keyword  the input keyword.
++     * @return         TRUE if the input keyword is defined.
++     *                 Otherwise, return FALSE.
++     * @draft ICU 4.0
++     */
++    UBool isKeyword(const UnicodeString& keyword) const;
++
++
++    /**
++     * Returns keyword for default plural form.
++     *
++     * @return         keyword for default plural form.
++     * @internal 4.0
++     * @draft ICU 4.0
++     */
++    UnicodeString getKeywordOther() const;
++
++    /**
++     * Compares the equality of two PluralRules objects.
++     *
++     * @param other The other PluralRules object to be compared with.
++     * @return      True if the given PluralRules is the same as this
++     *              PluralRules; false otherwise.
++     * @draft ICU 4.0
++     */
++    virtual UBool operator==(const PluralRules& other) const;
++
++    /**
++     * Compares the inequality of two PluralRules objects.
++     *
++     * @param other The PluralRules object to be compared with.
++     * @return      True if the given PluralRules is not the same as this
++     *              PluralRules; false otherwise.
++     * @draft ICU 4.0
++     */
++    UBool operator!=(const PluralRules& other) const  {return !operator==(other);}
++
++
++    /**
++     * ICU "poor man's RTTI", returns a UClassID for this class.
++     *
++     * @draft ICU 4.0
++     *
++    */
++    static UClassID U_EXPORT2 getStaticClassID(void);
++
++    /**
++     * ICU "poor man's RTTI", returns a UClassID for the actual class.
++     *
++     * @draft ICU 4.0
++     */
++    virtual UClassID getDynamicClassID() const;
++
++
++private:
++    Hashtable       *fLocaleStringsHash;
++    UnicodeString   mLocaleName;
++    RuleChain       *mRules;
++    RuleParser      *mParser;
++
++    PluralRules();   // default constructor not implemented
++    void getRuleData(UErrorCode& status);
++    int32_t getRepeatLimit() const;
++    void parseDescription(UnicodeString& ruleData, RuleChain& rules, UErrorCode &status);
++    void getNextLocale(const UnicodeString& localeData, int32_t* curIndex, UnicodeString& localeName);
++    void addRules(RuleChain& rules, UErrorCode& err);
++    void addRules(const UnicodeString& localeName, RuleChain& rules, UBool addToHash, UErrorCode& err);
++    void initHashtable(UErrorCode& err);
++    int32_t getNumberValue(const UnicodeString& token) const;
++
++};
++
++U_NAMESPACE_END
++
++#endif /* #if !UCONFIG_NO_FORMATTING */
++
++#endif // _PLURRULE
++//eof

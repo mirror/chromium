@@ -1,0 +1,22 @@
+--- r22777/source/data/makedata.mak	2007-08-15 14:42:41.636529000 -0700
++++ trie.chrome/source/data/makedata.mak	2008-07-14 19:01:56.086161000 -0700
+@@ -587,7 +587,7 @@
+ # If you modify this, modify winmode.c in pkgdata.
+ "$(ICUTMP)\icudata.res": "$(ICUMISC)\icudata.rc"
+ 	@echo Creating data DLL version information from $**
+-	@rc.exe /i "..\..\..\..\common" /r /fo $@ $**
++	@rc.exe /i "..\..\..\..\common;..\..\..\..\..\public\common" /r /fo $@ $**
+ 
+ # Targets for unames.icu
+ "$(ICUBLD_PKG)\unames.icu": "$(ICUUNIDATA)\*.txt" "$(ICUTOOLS)\gennames\$(CFG)\gennames.exe"
+--- r22777/source/tools/toolutil/toolutil.c	2007-02-08 15:41:05.142808000 -0800
++++ trie.chrome/source/tools/toolutil/toolutil.c	2008-07-14 19:01:32.734573000 -0700
+@@ -42,7 +42,7 @@
+ getLongPathname(const char *pathname) {
+ #ifdef U_WINDOWS
+     /* anticipate problems with "short" pathnames */
+-    static WIN32_FIND_DATA info;
++    static WIN32_FIND_DATAA info;
+     HANDLE file=FindFirstFileA(pathname, &info);
+     if(file!=INVALID_HANDLE_VALUE) {
+         if(info.cAlternateFileName[0]!=0) {

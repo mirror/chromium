@@ -1,0 +1,131 @@
+<html>
+  <head>
+    <title>Chrome Perf Overview</title>
+    <script src="js/common.js"></script>
+    <script language="javascript">
+      function DisplayGraph(name) {
+        document.write('<td><iframe scrolling="no" height="250" width="400" src="http://build.chromium.org/buildbot/perf/');
+        document.write(name);
+        document.write('/report.html?history=50')
+        var params = ParseParams();
+        if ('graph' in params) {
+          document.write('&graph=');
+          document.write(params.graph);
+        }
+        document.write('&lookout"></iframe></td>');
+      }
+    </script>
+  </head>
+  <body>
+    <center>
+      <h1>
+        Currently showing
+        <script language=javascript>
+          var params = ParseParams();
+          if ('graph' in params) {
+            document.write(params.graph)
+          } else {
+            document.write('page-load-time')
+          }
+        </script>
+      </h1>
+      <br>
+      [ <a href="overview.html">page-load-time</a> |
+        <a href="overview.html?graph=vm_peak_b">vm-peak-browser</a> |
+        <a href="overview.html?graph=vm_peak_r">vm-peak-renderer</a> |
+        <a href="overview.html?graph=ws_peak_b">ws-peak-browser</a> |
+        <a href="overview.html?graph=ws_peak_r">ws-peak-renderer</a> |
+        <a href="overview.html?graph=total_op_b">io-op-browser</a> |
+        <a href="overview.html?graph=total_byte_b">io-byte-browser</a> ]
+      <h1>Chromium XP Dual Core</h1>
+      <table>
+        <tr>
+            <script>DisplayGraph("xp-release-dual-core/moz");</script>
+            <script>DisplayGraph("xp-release-dual-core/intl1");</script>
+            <script>DisplayGraph("xp-release-dual-core/intl2");</script>
+        </tr>
+        <tr>
+            <script>DisplayGraph("xp-release-dual-core/moz-http");</script>
+            <script>DisplayGraph("xp-release-dual-core/bloat-http");</script>
+            <script>DisplayGraph("xp-release-dual-core/dhtml");</script>
+        </tr>
+        <tr>
+            <script>DisplayGraph("xp-release-dual-core/startup");</script>
+            <script>DisplayGraph("xp-release-dual-core/new-tab-ui-cold");</script>
+            <script>DisplayGraph("xp-release-dual-core/memory");</script>
+        </tr>
+      </table>
+      <h1>Chromium XP Single Core</h1>
+      <table>
+        <tr>
+            <script>DisplayGraph("xp-release-single-core/moz");</script>
+            <script>DisplayGraph("xp-release-single-core/intl1");</script>
+            <script>DisplayGraph("xp-release-single-core/intl2");</script>
+        </tr>
+        <tr>
+            <script>DisplayGraph("xp-release-single-core/moz-http");</script>
+            <script>DisplayGraph("xp-release-single-core/bloat-http");</script>
+            <script>DisplayGraph("xp-release-single-core/dhtml");</script>
+        </tr>
+        <tr>
+            <script>DisplayGraph("xp-release-single-core/startup");</script>
+            <script>DisplayGraph("xp-release-single-core/new-tab-ui-cold");</script>
+            <script>DisplayGraph("xp-release-single-core/memory");</script>
+        </tr>
+      </table>
+
+      <h1>Chromium Vista Dual Core</h1>
+      <table>
+        <tr>
+            <script>DisplayGraph("vista-release-dual-core/moz");</script>
+            <script>DisplayGraph("vista-release-dual-core/intl1");</script>
+            <script>DisplayGraph("vista-release-dual-core/intl2");</script>
+        </tr>
+        <tr>
+            <script>DisplayGraph("vista-release-dual-core/dhtml");</script>
+            <script>DisplayGraph("vista-release-dual-core/startup");</script>
+            <script>DisplayGraph("vista-release-dual-core/new-tab-ui-cold");</script>
+        </tr>
+         <tr>
+            <script>DisplayGraph("vista-release-dual-core/memory");</script>
+        </tr>
+      </table>
+
+      <h1>Chromium Vista single Core</h1>
+      <table>
+        <tr>
+            <script>DisplayGraph("vista-release-single-core/moz");</script>
+            <script>DisplayGraph("vista-release-single-core/intl1");</script>
+            <script>DisplayGraph("vista-release-single-core/intl2");</script>
+        </tr>
+        <tr>
+            <script>DisplayGraph("vista-release-single-core/dhtml");</script>
+            <script>DisplayGraph("vista-release-single-core/startup");</script>
+            <script>DisplayGraph("vista-release-single-core/new-tab-ui-cold");</script>
+        </tr>
+         <tr>
+            <script>DisplayGraph("vista-release-single-core/memory");</script>
+        </tr>
+      </table>
+      <h1>Chromium XP v8-latest</h1>
+      <table>
+        <tr>
+            <script>DisplayGraph("xp-release-v8-latest/moz");</script>
+            <script>DisplayGraph("xp-release-v8-latest/intl1");</script>
+            <script>DisplayGraph("xp-release-v8-latest/intl2");</script>
+        </tr>
+        <tr>
+            <script>DisplayGraph("xp-release-v8-latest/moz-http");</script>
+            <script>DisplayGraph("xp-release-v8-latest/bloat-http");</script>
+            <script>DisplayGraph("xp-release-v8-latest/dhtml");</script>
+        </tr>
+        <tr>
+            <script>DisplayGraph("xp-release-v8-latest/startup");</script>
+            <script>DisplayGraph("xp-release-v8-latest/new-tab-ui-cold");</script>
+            <script>DisplayGraph("xp-release-v8-latest/memory");</script>
+        </tr>
+      </table>
+    </center>
+  </body>
+</html>
+

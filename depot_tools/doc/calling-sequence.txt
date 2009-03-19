@@ -1,0 +1,69 @@
+The layers here can be a little opaque.  On a user's system, the
+calling sequence goes like this:
+
+  depot_tools/gclient{.bat,}
+  depot_tools/bootstrap/update.{bat,sh}
+  depot_tools/release/gclient.{bat,sh}
+  depot_tools/release/gclient.py
+
+The sources of the above scripts are found in the following
+corresponding locations in this checked-out tree:
+
+  src/wrappers/*/gclient{.bat,}
+  src/wrappers/*/bootstrap/update.{bat,sh}
+  src/release/gclient.{bat,sh}
+  src/release/gclient.py
+
+Breaking this down into the individual steps:
+
+  depot_tools/gclient{.bat,}
+
+    What the user initially executes.
+    
+    Its responsibility is to update the release/ subdirectory to the
+    latest, and then call release/gclient.{bat.sh}.
+    
+    The release/ subdirectory update will be handled by
+    bootstrap/update.{bat,sh} (the next script), which this script
+    only calls if the DEPOT_TOOLS_UPDATE environment variable is not
+    "0" and the depot_tools/.svn directory exists.
+    
+    Note that DEPOT_TOOLS_UPDATE must be explicitly "0" to disable the
+    update, and that this script behaves like there's an implicit default
+    value of "1" if DEPOT_TOOLS_UPDATE is uninitialized.
+
+  depot_tools/bootstrap/update.{bat,sh}
+
+    Handles the specifics of updating the release/ subdirectory.
+
+    This calls svn to update the release/ subdirectory if either
+    the release/ subdirectory does not exist (because then it's
+    the first time the user ran the gclient wrapper , and we have to
+    get things started) or if the release/.svn subdirectory exists.
+
+    If the release/ subdirectory does not exist (that is, it's the
+    first time), a message gets printed, since sync'ing everything
+    may take some time.
+
+  depot_tools/release/gclient.{bat,sh}
+
+    Wrapper around the Python script containing the underlying
+    functionality.
+
+    Its responsibility is to update the the ../ directory, and then call
+    the release/gclient.py script.  We do this two-step with updating
+    release/ subdirectory and then the wrappers to avoid trying to update
+    a script while we're actually executing it, while still allowing us
+    to keep the tool chain synchronized to the latest with minimal (no)
+    user intervention.
+
+    Like the release/subdirectory update, the ../ directory update only
+    occurs if the DEPOT_TOOLS_UPDATE environment variable is not "0"
+    and the ../.svn directory exists.  The DEPOT_TOOLS_UPDATE variable
+    must be explicitly "0" to disable the update, and the update will
+    occur if DEPOT_TOOLS_UPDATE is uninitialized.
+
+  depot_tools/release/gclient.py
+
+    The platform-independent script that actual implements gclient
+    functionality.

@@ -1,0 +1,17 @@
+This is the source to the corresponding binaries in trunk\src\third_part\cygwin.
+
+If you need to update the source to modify or add to the build tools in 
+trunk/src/third_pary/cygwin, please replace the archive with an image of the 
+sources you use.
+
+See CYGWIN_LICENSE and the README in trunk/src/third_party/cygwin for the terms
+under which the source code may be used.
+--------------------------------------------------------------------------------
+convert.py modified the cygwin1.dll so that it can be used in the build system
+without disrupting an existing cygwin installation.
+
+Create cygwin1.dll and run
+
+  convert.py cygwin1.dll.original
+  
+Replace trunk/src/third_party/cygwin/bin/cygwin1.dll with the resulting dll.

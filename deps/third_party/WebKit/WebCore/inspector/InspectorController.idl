@@ -1,0 +1,47 @@
+// Copyright (c) 2008 The Chromium Authors. All rights reserved.  Use of this
+// source code is governed by a BSD-style license that can be found in the
+// LICENSE file.
+
+/* if ENABLE(DATABASE), there should be a databaseTableNames method. */
+
+module core {
+    interface InspectorController { 
+        boolean addSourceToFrame(in DOMString mimeType, in DOMString source, in Node frame);
+        Node getResourceDocumentNode(in unsigned long identifier);
+        void highlightDOMNode(in Node node);
+        void hideDOMNodeHighlight();
+        void loaded();
+        [v8implname=close] void windowUnloading();
+        void attach();
+        void detach();
+        void search(in Node node, in DOMString query);
+        DOMWindow inspectedWindow();
+        DOMString platform();
+        DOMString localizedStringsURL();
+
+        DOMString hiddenPanels();
+        [v8implname=clearConsoleMessages] void clearMessages();
+        void closeWindow();
+        [ImplementationFunction=toggleSearchForNodeInPage] void toggleNodeSearch();
+
+        [Custom] boolean debuggerEnabled();
+        [Custom] boolean pauseOnExceptions();
+        [Custom] boolean profilerEnabled();
+        [ImplementationFunction=windowVisible] boolean isWindowVisible();
+        [ImplementationFunction=searchingForNodeInPage] boolean searchingForNode();
+	
+#if ENABLE_DATABASE
+        [Custom] DOMObject databaseTableNames(in Database database);
+#endif
+
+        [ImplementationFunction=moveWindowBy] void moveByUnrestricted(in float x, in float y);
+        void setAttachedWindowHeight(in unsigned long height);
+        [Custom] DOMObject wrapCallback(in DOMObject callback);
+
+        /* TODO(ojan): add these. These are in trunk webkit.
+        { "startDebuggingAndReloadInspectedPage", WebCore::startDebuggingAndReloadInspectedPage, kJSPropertyAttributeNone },
+        { "stopDebugging", WebCore::stopDebugging, kJSPropertyAttributeNone },
+        { "debuggerAttached", WebCore::debuggerAttached, kJSPropertyAttributeNone },
+        */
+    };
+}

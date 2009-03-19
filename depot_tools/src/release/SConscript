@@ -1,0 +1,36 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+Import('env')
+
+source_files = [
+    'README',
+    'cpplint.py',
+    'gcl.py',
+    'gclient.py',
+    'presubmit.py',
+    'presubmit_canned_checks.py',
+    'revert.py',
+    'trychange.py',
+    'upload.py',
+]
+
+if env['RELEASE_ARCH'] in ('linux', 'mac'):
+  source_files.extend([
+      'gclient.sh',
+  ])
+elif env['RELEASE_ARCH'] in ('win',):
+  source_files.extend([
+      'chrome-update-create-task.bat',
+      'chrome-update.bat',
+      'chrome-update.py',
+      'gclient.bat',
+  ])
+  env.CopySubversionTree('$RELEASE_DIR/python_24', '../win/python_24')
+  env.CopySubversionTree('$RELEASE_DIR/svn', '../win/svn')
+else:
+  import sys
+  sys.stderr.write(env.subst('Unknown RELEASE_ARCH $RELEASE_ARCH\n'))
+
+env.InstallSubstitutions('$RELEASE_DIR', source_files)

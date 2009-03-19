@@ -1,0 +1,33 @@
+This package contains tools for working with Chromium development.
+
+The "gclient" wrapper knows how to keep this repository updated to
+the latest versions of these tools as found at:
+
+    http://src.chromium.org/svn/trunk/depot_tools
+
+TODO(sgk):  describe how to disable automatic updates
+
+This package contains:
+
+  gcl
+    A tool for uploading and managing code reviews on the Chromium
+    project, using the Rietveld code review tool.  More info at:
+    http://code.google.com/p/rietveld/
+   
+  gclient
+    A script for managing a workspace with modular dependencies that
+    are each checked out independently from different repositories.
+    More info at:
+    http://code.google.com/p/gclient/
+
+  hammer
+    A wrapper script for building Chromium with the SCons software
+    construction tool.  More info at:
+    http://www.scons.org/
+
+  svn [Windows only]
+    The revision control system for Chromium development.  More info at:
+    http://subversion.tigris.com/
+
+To update this distribution manually, run bootstrap\update.bat on Windows,
+or bootstrap/update.sh on Linux or Mac.

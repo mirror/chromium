@@ -1,0 +1,77 @@
+# Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+depot_tools provides a set of tools for managing the Chromium
+software development cycle in a consistent way across platforms.
+
+This directory pulls together wrappers around, and (for some platforms)
+pre-built binaries of, various necessary tools.
+
+The intent is to try to make things "just work" for individuals
+participating in Chromium development, while also supporting uprades
+of these tool and wrappers without any action on the developers' parts.
+
+Trying to make things drop-dead-simple for developers causes the process
+of making changes to *these* tools and wrappers themselves to be a little
+more complicated.  This is a good tradeoff, but it means you need to
+follow directions.  In particular:
+
+  DO NOT EDIT FILES IN-PLACE IN THE PUBLICLY-VISIBLE DIRECTORIES
+  (linux/, mac/, win/ or release/).  EDIT THEM IN THE src SUBDIRECTORY
+  AND FOLLOW THE INSTRUCTIONS TO PROPAGATE YOUR CHANGES TO THE OTHER
+  PUBLIC DIRECTORIES.
+
+
+Directory Layout
+================
+
+  linux/
+  mac/
+  win/
+
+    These are the publicly-visible "bootstrap" directories.  People who
+    already have Subversion installed can sync directly from these
+    directories to get started.  The contents are just thin wrapper
+    scripts that call into the utilities in the release/ directory,
+    after possibly updating their contents from the publicly-visible URL.
+
+    DO NOT EDIT FILES IN THESE DIRECTORIES DIRECTLY.  Make changes to
+    the underlying files underneath the src/ directory and follow the
+    procedures to update these directories and check in the results.
+
+  release/
+
+    This contains the publicly-visible directories that get updated
+    by the wrappers, to keep the toolchain up-to-date without any
+    explicit action on the developer's part.
+
+    DO NOT EDIT THINGS IN THIS DIRECTORY DIRECTLY.  Make changes to
+    the underlying files underneath the src/ directory and follow the
+    procedures to update this directory and check in the results.
+
+  bin/
+
+    Utility scripts for working on these depot_tools:  managing our
+    process of building the publicly-visible directories from the
+    underlying src/, and making the contents visible by checking in
+    the updates.
+
+  development/
+    development/linux/
+    development/mac/
+    development/win/
+    development/release/
+
+    This hierarchy gets checked in so that people working on
+    depot_tools have a place to update and test downloads from
+    a live SVN server without changing the public, released
+    stuff in {linux,mac,release,win}.
+
+  doc/
+
+    Various documents describing what's going on here.
+
+  src/
+
+    THIS IS THE DIRECTORY IN WHICH YOU SHOULD MAKE CHANGES.

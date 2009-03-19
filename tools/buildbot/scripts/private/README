@@ -1,0 +1,3 @@
+This directory contains the "private" configuration settings and any other
+relevant scripts. Feel free to modify the configuration or copy it to a
+different repository and ajust your .gclient to pull your private copy.

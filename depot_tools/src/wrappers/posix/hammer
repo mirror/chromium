@@ -1,0 +1,14 @@
+#!/bin/sh
+
+SCONS="third_party/scons/scons.py"
+SITE_SCONS="site_scons"
+
+if [ ! -e "${SCONS}" ]
+then
+  # We're not in the top-level "src" directory, fall back to assuming
+  # we're being invoked from a "base" "net" "chrome" etc. subdirectory.
+  SCONS="../${SCONS}"
+  SITE_SCONS="../${SITE_SCONS}"
+fi
+
+exec python "${SCONS}" "--site-dir=${SITE_SCONS}" "$@"

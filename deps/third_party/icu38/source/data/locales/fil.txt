@@ -1,0 +1,754 @@
+﻿// ***************************************************************************
+// *
+// * Copyright (C) 2007 International Business Machines
+// * Corporation and others.  All Rights Reserved.
+// * Tool: com.ibm.icu.dev.tool.cldr.LDML2ICUConverter.java
+// * Source File:<path>/common/main/fil.xml
+// *
+// ***************************************************************************
+fil{
+    // Google-specific fix to exemplar characters according to
+    // feedback from native speaker and
+    // http://en.wikipilipinas.org/index.php?title=Tagalog_alphabet
+    AuxExemplarCharacters{"[áéíóúàèìòùâêîôû]"}
+    Countries{
+        AD{"Andorra"}
+        AE{"United Arab Emirates"}
+        AF{"Afghanistan"}
+        AG{"Antigua at Barbuda"}
+        AI{"Anguilla"}
+        AL{"Albanya"}
+        AM{"Armenya"}
+        AN{"Netherlands Antilles"}
+        AO{"Angola"}
+        AQ{"Antartika"}
+        AR{"Arhentina"}
+        AS{"American Samoa"}
+        AT{"Austriya"}
+        AU{"Australiya"}
+        AW{"Aruba"}
+        AX{"Aland Islands"}
+        AZ{"Azerbaijan"}
+        BA{"Bosnia and Herzegovina"}
+        BB{"Barbados"}
+        BD{"Bangladesh"}
+        BE{"Belgium"}
+        BF{"Burkina Faso"}
+        BG{"Bulgaria"}
+        BH{"Bahrain"}
+        BI{"Burundi"}
+        BJ{"Benin"}
+        BM{"Bermuda"}
+        BN{"Brunei"}
+        BO{"Bolivia"}
+        BR{"Brazil"}
+        BS{"Bahamas"}
+        BT{"Bhutan"}
+        BV{"Bouvet Island"}
+        BW{"Botswana"}
+        BY{"Belarus"}
+        BZ{"Belize"}
+        CA{"Canada"}
+        CC{"Cocos Islands"}
+        CD{"Congo, Democratic Republic of the"}
+        CF{"Central African Republic"}
+        CG{"Congo"}
+        CH{"Switzerland"}
+        CI{"Côte d'Ivoire"}
+        CK{"Cook Islands"}
+        CL{"Chile"}
+        CM{"Cameroon"}
+        CN{"Tsina"}
+        CO{"Colombia"}
+        CR{"Costa Rica"}
+        CS{"Serbia at Montenegro"}
+        CU{"Cuba"}
+        CV{"Cape Verde"}
+        CX{"Christmas Island"}
+        CY{"Cyprus"}
+        CZ{"Czech Republic"}
+        DE{"Alemaya"}
+        DJ{"Djibouti"}
+        DK{"Denmark"}
+        DM{"Dominica"}
+        DO{"Dominican Republic"}
+        DZ{"Algerya"}
+        EC{"Ecuador"}
+        EE{"Estonia"}
+        EG{"Ehipto"}
+        EH{"Western Sahara"}
+        ER{"Eritrea"}
+        ES{"Espanya"}
+        ET{"Ethiopia"}
+        FI{"Finland"}
+        FJ{"Fiji"}
+        FK{"Falkland Islands"}
+        FM{"Micronesia"}
+        FO{"Faroe Islands"}
+        FR{"Pranses"}
+        GA{"Gabon"}
+        GB{"United Kingdom"}
+        GE{"Georgia"}
+        GF{"French Guiana"}
+        GG{"Guernsey"}
+        GH{"Ghana"}
+        GL{"Greenland"}
+        GM{"Gambia"}
+        GN{"Guinea"}
+        GQ{"Equatorial Guinea"}
+        GR{"Griyego"}
+        GS{"South Georgia and the South Sandwich Islands"}
+        GW{"Guinea-Bissau"}
+        HM{"Heard Island and McDonald Islands"}
+        HN{"Honduras"}
+        HR{"Croatia"}
+        HT{"Haiti"}
+        HU{"Hungary"}
+        ID{"Indonesia"}
+        IE{"Ireland"}
+        IL{"Israel"}
+        IM{"Isle of Man"}
+        IN{"India"}
+        IO{"British Indian Ocean Territory"}
+        IQ{"Iraq"}
+        IR{"Iran"}
+        IS{"Iceland"}
+        IT{"Italya"}
+        JE{"Jersey"}
+        JO{"Jordan"}
+        JP{"Japan"}
+        KE{"Kenya"}
+        KG{"Kyrgyzstan"}
+        KH{"Cambodia"}
+        KI{"Kiribati"}
+        KM{"Comoros"}
+        KN{"Saint Kitts and Nevis"}
+        KP{"Hilagang Korea"}
+        KR{"Timog Korea"}
+        KY{"Cayman Islands"}
+        KZ{"Kazakhstan"}
+        LA{"Laos"}
+        LB{"Lebanon"}
+        LC{"Saint Lucia"}
+        LI{"Liechtenstein"}
+        LK{"Sri Lanka"}
+        LR{"Liberia"}
+        LS{"Lesotho"}
+        LT{"Lithuania"}
+        LV{"Latvia"}
+        LY{"Libya"}
+        MA{"Morocco"}
+        MD{"Moldova"}
+        ME{"Montenegro"}
+        MG{"Madagascar"}
+        MH{"Marshall Islands"}
+        MK{"Macedonia"}
+        ML{"Mali"}
+        MM{"Myanmar"}
+        MN{"Mongolia"}
+        MO{"Macao"}
+        MP{"Northern Mariana Islands"}
+        MR{"Mauritania"}
+        MW{"Malawi"}
+        MX{"Mehiko"}
+        MY{"Malaysia"}
+        MZ{"Mozambique"}
+        NA{"Namibia"}
+        NC{"New Caledonia"}
+        NE{"Niger"}
+        NF{"Norfolk Island"}
+        NG{"Nigeria"}
+        NI{"Nicaragua"}
+        NL{"Netherlands"}
+        NO{"Norway"}
+        NP{"Nepal"}
+        NZ{"New Zealand"}
+        OM{"Oman"}
+        PE{"Peru"}
+        PF{"French Polynesia"}
+        PG{"Papua New Guinea"}
+        PH{"Pilipinas"}
+        PK{"Pakistan"}
+        PL{"Poland"}
+        PM{"Saint Pierre at Miquelon"}
+        PS{"Palestine"}
+        PT{"Portugal"}
+        PY{"Paraguay"}
+        RO{"Romania"}
+        RS{"Serbia"}
+        RU{"Russia"}
+        RW{"Rwanda"}
+        SA{"Saudi Arabya"}
+        SB{"Solomon Islands"}
+        SC{"Seychelles"}
+        SD{"Sudan"}
+        SE{"Sweden"}
+        SH{"Saint Helena"}
+        SI{"Slovenia"}
+        SJ{"Svalbard and Jan Mayen"}
+        SK{"Slovakia"}
+        SL{"Sierra Leone"}
+        SM{"San Marino"}
+        SN{"Senegal"}
+        SO{"Somalia"}
+        SR{"Suriname"}
+        ST{"São Tomé and Príncipe"}
+        SV{"El Salvador"}
+        SY{"Syria"}
+        SZ{"Swaziland"}
+        TC{"Turks and Caicos Islands"}
+        TD{"Chad"}
+        TF{"French Southern Territories"}
+        TG{"Togo"}
+        TH{"Thailand"}
+        TJ{"Tajikistan"}
+        TK{"Tokelau"}
+        TL{"East Timor"}
+        TM{"Turkmenistan"}
+        TN{"Tunisia"}
+        TO{"Tonga"}
+        TR{"Turkey"}
+        TT{"Trinidad and Tobago"}
+        TV{"Tuvalu"}
+        TW{"Taiwan"}
+        TZ{"Tanzania"}
+        UA{"Ukraine"}
+        UG{"Uganda"}
+        UM{"United States minor outlying islands"}
+        US{"United States"}
+        UY{"Uruguay"}
+        UZ{"Uzbekistan"}
+        VA{"Vatican City"}
+        VC{"Saint Vincent and the Grenadines"}
+        VE{"Venezuela"}
+        VG{"British Virgin Islands"}
+        VI{"Virgin Islands, U.S."}
+        VN{"Vietnam"}
+        VU{"Vanuatu"}
+        WF{"Wallis and Futuna"}
+        WS{"Samoa"}
+        YE{"Yemen"}
+        ZA{"Timog Afrika"}
+        ZM{"Zambia"}
+        ZW{"Zimbabwe"}
+    }
+    Currencies{
+        AED{
+            "AED",
+            "United Arab Emirates Dirham",
+        }
+        ARS{
+            "ARS",
+            "Argentine Peso",
+        }
+        AUD{
+            "AUD",
+            "Dolyares ng Australia",
+        }
+        BGN{
+            "BGN",
+            "Bulgarian Lev",
+        }
+        BOB{
+            "BOB",
+            "Bolivian Boliviano",
+        }
+        BRL{
+            "R$",
+            "Brazilian Real",
+        }
+        CAD{
+            "CAD",
+            "Dolyares ng Canada",
+        }
+        CHF{
+            "CHF",
+            "Swiss Francs",
+        }
+        CLP{
+            "CLP",
+            "Chilean Peso",
+        }
+        CNY{
+            "CNY",
+            "Yuan Renminbi",
+        }
+        COP{
+            "COP",
+            "Colombian Peso",
+        }
+        CZK{
+            "CZK",
+            "Czech Koruna",
+        }
+        DEM{
+            "DEM",
+            "Deutsche Marks",
+        }
+        DKK{
+            "DKK",
+            "Denmark Kroner",
+        }
+        EEK{
+            "EEK",
+            "Estonian Kroon",
+        }
+        EGP{
+            "EGP",
+            "Egyptian Pound",
+        }
+        EUR{
+            "€",
+            "Euros",
+        }
+        FRF{
+            "FRF",
+            "French Franks",
+        }
+        GBP{
+            "UK£",
+            "British Pounds Sterling",
+        }
+        HKD{
+            "HKD",
+            "Hong Kong Dollars",
+        }
+        HRK{
+            "HRK",
+            "Croatian Kuna",
+        }
+        HUF{
+            "HUF",
+            "Hungarian Forint",
+        }
+        IDR{
+            "IDR",
+            "Indonesian Rupiah",
+        }
+        ILS{
+            "ILS",
+            "Israeli Shekel",
+        }
+        INR{
+            "=0#Rs.|1#Re.|1<Rs." /** (choice)  */,
+            "Indian Rupee",
+        }
+        JPY{
+            "JP¥",
+            "Yen ng Hapon",
+        }
+        KRW{
+            "KRW",
+            "South Korean Won",
+        }
+        LTL{
+            "LTL",
+            "Lithuanian Litas",
+        }
+        MAD{
+            "MAD",
+            "Moroccan Dirham",
+        }
+        MXN{
+            "MXN",
+            "Mexico Peso",
+        }
+        MYR{
+            "MYR",
+            "Ringgit ng Malaysia",
+        }
+        NOK{
+            "NOK",
+            "Norwegian Kroner",
+        }
+        NZD{
+            "NZD",
+            "New Zealand Dollars",
+        }
+        PEN{
+            "PEN",
+            "Peruvian Nuevo Sol",
+        }
+        PHP{
+            "PhP",
+            "Philippine Peso",
+        }
+        PKR{
+            "PKR",
+            "Pakistan Rupee",
+        }
+        PLN{
+            "PLN",
+            "Polish NewZloty",
+        }
+        RON{
+            "RON",
+            "Romanian Leu",
+        }
+        RSD{
+            "RSD",
+            "Serbian Dinar",
+        }
+        RUB{
+            "RUB",
+            "Russian Rouble",
+        }
+        SAR{
+            "SAR",
+            "Saudi Riyal",
+        }
+        SEK{
+            "SEK",
+            "Sweden Kronor",
+        }
+        SGD{
+            "SGD",
+            "Singapore Dollars",
+        }
+        SIT{
+            "SIT",
+            "Slovenian Tolar",
+        }
+        SKK{
+            "SKK",
+            "Slovak Koruna",
+        }
+        THB{
+            "THB",
+            "Thai Baht",
+        }
+        TRL{
+            "TRL",
+            "Turkish Lira",
+        }
+        TRY{
+            "TRY",
+            "Bagong Turkish Lira",
+        }
+        TWD{
+            "TWD",
+            "New Taiwan Dollar",
+        }
+        USD{
+            "US$",
+            "Dolyares ng US",
+        }
+        VEB{
+            "VEB",
+            "Venezuela Bolivar",
+        }
+        ZAR{
+            "ZAR",
+            "South African Rand",
+        }
+    }
+    // Google-specific fix to exemplar characters according to
+    // feedback from native speaker and
+    // http://en.wikipilipinas.org/index.php?title=Tagalog_alphabet
+    ExemplarCharacters{"[a-z {ng} ñ]"}
+    Languages{
+        af{"Afrikaans"}
+        am{"Amharic"}
+        ar{"Arabo"}
+        as{"Asamis"}
+        az{"Azerbaijani"}
+        be{"Belarusyan"}
+        bg{"Bulgarian"}
+        bh{"Bihari"}
+        bn{"Bengali; Bangla"}
+        br{"Breton"}
+        bs{"Bosnian"}
+        ca{"Catalan"}
+        cs{"Czech"}
+        cy{"Welsh"}
+        da{"Danish"}
+        de{"Aleman"}
+        el{"Griyego"}
+        en{"Ingles"}
+        en_AU{"Ingles (Australia)"}
+        en_GB{"Ingles (UK)"}
+        en_US{"Ingles (US)"}
+        eo{"Esperanto"}
+        es{"Espanyol"}
+        et{"Estonian"}
+        eu{"Basque"}
+        fa{"Persiyano"}
+        fi{"Finnish"}
+        fil{"Filipino"}
+        fo{"Faroeso"}
+        fr{"Pranses"}
+        fy{"Prisian"}
+        ga{"Irish"}
+        gd{"Scots Gaelic"}
+        gl{"Galician"}
+        gn{"Guarani"}
+        gu{"Mga Gujarat"}
+        he{"Hebreo"}
+        hi{"Hindu"}
+        hr{"Croatian"}
+        hu{"Hungarian"}
+        hy{"Taga-Armenya"}
+        ia{"Interlingua"}
+        id{"Indones"}
+        ie{"Kawikaan"}
+        is{"Icelandic"}
+        it{"Italyano"}
+        ja{"Hapon"}
+        jv{"Javanese"}
+        ka{"Georgian"}
+        km{"Kambodyan"}
+        kn{"Kannada"}
+        ko{"Koreano"}
+        ku{"Kurdish"}
+        ky{"Kergis"}
+        la{"Latino"}
+        ln{"Lingala"}
+        lo{"Laothian"}
+        lt{"Lithuanian"}
+        lv{"Latvian"}
+        mk{"Macedonian"}
+        ml{"Malayalam"}
+        mn{"Mongolian"}
+        mr{"Marathi"}
+        ms{"Malay"}
+        mt{"Maltese"}
+        ne{"Nepali"}
+        nl{"Dutch"}
+        no{"Norwegian"}
+        oc{"Occitan"}
+        or{"Oriya"}
+        pa{"Punjabi"}
+        pl{"Polish"}
+        ps{"Pashto"}
+        pt{"Portuges"}
+        pt_BR{"Portuges (Brasil)"}
+        rm{"Rhaeto-Romance"}
+        ro{"Romanian"}
+        ru{"Ruso"}
+        sa{"Sanskrit"}
+        sd{"Sindhi"}
+        sh{"Serbo-Kroasyan"}
+        si{"Sinhalese"}
+        sk{"Eslobak"}
+        sl{"Eslobenyan"}
+        so{"Somali"}
+        sq{"Albano"}
+        sr{"Serbiran"}
+        st{"Sesoto"}
+        su{"Taga Sundan"}
+        sv{"Suwiso"}
+        sw{"Swahili"}
+        ta{"Tamil"}
+        te{"Telugu"}
+        th{"Thai"}
+        ti{"Tigrinya"}
+        tk{"Turkmen"}
+        tl{"Tagalog"}
+        tlh{"Klingon"}
+        tr{"Turko"}
+        tw{"Twi"}
+        ug{"Uighur"}
+        uk{"Ukranian"}
+        ur{"Urdu"}
+        uz{"Uzbeko"}
+        vi{"Vietnamese"}
+        wo{"Wolof"}
+        xh{"Xhosa"}
+        yi{"Yiddish"}
+        zh_Hans{"Intsik (Pinadali)"}
+        zh_Hant{"Intsik (Tradisyunal)"}
+        zu{"Zulu"}
+    }
+    // Google-specific addition of LocaleScript which is not specified in CLDR 1.5.
+    // Necessary to make ICU tests pass.
+    // Should be added to CLDR.
+    LocaleScript{
+        "Latn",
+    }
+    Version{"1.7"}
+    calendar{
+        gregorian{
+            // Google-specific fix, DateTimeElements copied from en_PH.
+            // Satisfies ICU cintltst consistency check.
+            DateTimeElements:intvector{
+                1,
+                1,
+            }
+            DateTimePatterns{
+                "HH:mm:ss v",
+                "HH:mm:ss z",
+                "HH:mm:ss",
+                "HH:mm",
+                "EEEE, MMMM dd yyyy",
+                "MMMM d, yyyy",
+                "MMM d, yyyy",
+                "M/d/yy",
+                "{1} {0}",
+            }
+            availableFormats{
+                yyMM{"yy-MM"}
+                yyMMM{"MMM yy"}
+            }
+            dayNames{
+                format{
+                    abbreviated{
+                        "Lin",
+                        "Lun",
+                        "Mar",
+                        "Mye",
+                        "Huw",
+                        "Bye",
+                        "Sab",
+                    }
+                    wide{
+                        "Linggo",
+                        "Lunes",
+                        "Martes",
+                        "Miyerkules",
+                        "Huwebes",
+                        "Biyernes",
+                        "Sabado",
+                    }
+                }
+                stand-alone{
+                    narrow{
+                        "L",
+                        "L",
+                        "M",
+                        "M",
+                        "H",
+                        "B",
+                        "S",
+                    }
+                    wide{
+                        "Linggo",
+                        "Lunes",
+                        "Martes",
+                        "Miyerkules",
+                        "Huwebes",
+                        "Biyernes",
+                        "Sabado",
+                    }
+                }
+            }
+            monthNames{
+                format{
+                    abbreviated{
+                        "Ene",
+                        "Peb",
+                        "Mar",
+                        "Abr",
+                        "May",
+                        "Hun",
+                        "Hul",
+                        "Ago",
+                        "Set",
+                        "Okt",
+                        "Nob",
+                        "Dis",
+                    }
+                    wide{
+                        "Enero",
+                        "Pebrero",
+                        "Marso",
+                        "Abril",
+                        "Mayo",
+                        "Hunyo",
+                        "Hulyo",
+                        "Agosto",
+                        "Setyembre",
+                        "Oktubre",
+                        "Nobyembre",
+                        "Disyembre",
+                    }
+                }
+                stand-alone{
+                    narrow{
+                        "E",
+                        "P",
+                        "M",
+                        "A",
+                        "M",
+                        "H",
+                        "H",
+                        "A",
+                        "S",
+                        "O",
+                        "N",
+                        "D",
+                    }
+                    wide{
+                        "Enero",
+                        "Pebrero",
+                        "Marso",
+                        "Abril",
+                        "Mayo",
+                        "Hunyo",
+                        "Hulyo",
+                        "Agosto",
+                        "Setyembre",
+                        "Oktubre",
+                        "Nobyembre",
+                        "Disyembre",
+                    }
+                }
+            }
+        }
+    }
+    zoneStrings{
+        "Africa:Conakry"{
+            ec{"Conarky"}
+        }
+        "Africa:Harare"{
+            ec{"Harare."}
+        }
+        "Africa:Kinshasa"{
+            ec{"Kinsashasa"}
+        }
+        "Africa:Maseru"{
+            ec{"Maseru."}
+        }
+        "Africa:Porto-Novo"{
+            ec{"Porto - Novo"}
+        }
+        "America:Anchorage"{
+            ec{"Alaska Time"}
+        }
+        "America:Port_of_Spain"{
+            ec{"Port nang Espanya"}
+        }
+        "America:St_Kitts"{
+            ec{"St. Kitts"}
+        }
+        "America:St_Lucia"{
+            ec{"St. Lucia"}
+        }
+        "America:St_Thomas"{
+            ec{"St. Thomas"}
+        }
+        "America:St_Vincent"{
+            ec{"St. Vincent"}
+        }
+        "Antarctica:DumontDUrville"{
+            ec{"Dumont D'Urville"}
+        }
+        "Asia:Dushanbe"{
+            ec{"Dushanbe."}
+        }
+        "Asia:Hovd"{
+            ec{"Hovd."}
+        }
+        "Asia:Tbilisi"{
+            ec{"Tbilisi."}
+        }
+        "Atlantic:Canary"{
+            ec{"Canary Islands"}
+        }
+        "Indian:Christmas"{
+            ec{"Pasko."}
+        }
+        "Pacific:Easter"{
+            ec{"Easter Island"}
+        }
+    }
+}

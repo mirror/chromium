@@ -1,0 +1,2108 @@
+diff -urN trie.clean/source/data/brkitr/char.txt trie.chrome/source/data/brkitr/char.txt
+--- trie.clean/source/data/brkitr/char.txt	2006-08-11 12:37:57.000000000 -0700
++++ trie.chrome/source/data/brkitr/char.txt	2008-07-14 14:22:11.216487000 -0700
+@@ -9,6 +9,10 @@
+ #      These rules are based on TR29 Version 5.0.0
+ #        Includes post-5.0 change to treat Japanese half width voicing marks
+ #        as Grapheme Extend.
++# BEGIN Chrome ADD
++#        Also includes support for extended grapheme clsuters for Indic scripts
++#        (taken from TR 29 revision 12)
++# END Chrome ADD
+ #
+ 
+ #
+@@ -22,6 +26,18 @@
+ $VoiceMarks = [\uff9e\uff9f]; 
+ $Extend  = [\p{Grapheme_Cluster_Break = Extend} $VoiceMarks];
+ 
++# BEGIN Chrome ADD
++# $Prepend and $SpacingMark come from ICU 4.0. They're
++# defined as following in ICU 4.0 (and TR29 rev12):
++# $Prepend     = [\p{Grapheme_Cluster_Break = Prepend}];
++# $SpacingMark = [\p{Grapheme_Cluster_Break = SpacingMark}];
++# Because they use two Unicode properties new in Unicode 5.1,
++# they're defined in terms of properties available in Unicode 5.0.
++# Both definitions are equivalent to each other.
++$Prepend = [\p{Logical_Order_Exception = true}];
++$SpacingMark = [[\p{General_Category = Spacing Mark}] - $Extend];
++# END Chrome ADD
++
+ #
+ # Korean Syllable Definitions
+ #
+@@ -32,33 +48,68 @@
+ $LV      = [\p{Grapheme_Cluster_Break = LV}];
+ $LVT     = [\p{Grapheme_Cluster_Break = LVT}];
+ 
+-$HangulSyllable = $L+ | ($L* ($LV? $V+ | $LV | $LVT) $T*) | $T+;
++# BEGIN Chrome DELETE
++# $HangulSyllable = $L+ | ($L* ($LV? $V+ | $LV | $LVT) $T*) | $T+;
++# END Chrome DELETE
+ 
+ ## -------------------------------------------------
++# BEGIN Chrome ADD
++!!chain;
++# END Chrome ADD
+ 
+ !!forward;
+ 
+ $CR $LF;
+-([^$Control $CR $LF] | $HangulSyllable) $Extend*;
++# BEGIN Chrome DELETE
++#([^$Control $CR $LF] | $HangulSyllable) $Extend*;
++# END Chrome DELETE
++ 
++# BEGIN Chrome ADD
++$L ($L | $V | $LV | $LVT);
++($LV | $V) ($V | $T);
++($LVT | $T) $T;
++
++[^$Control $CR $LF] $Extend;
++
++[^$Control $CR $LF] $SpacingMark;
++$Prepend [^$Control $CR $LF];
++# END Chrome ADD
+ 
+ ## -------------------------------------------------
+ 
+ !!reverse;
+ 
+-$BackHangulSyllable = $L+ | ($T* ($V+$LV? | $LV | $LVT) $L*) | $T+;
+-$BackOneCluster = ($LF $CR) | ($Extend* ([^$Control $CR $LF] | $BackHangulSyllable));
+-$BackOneCluster;
++# BEGIN Chrome ADD
++$LF $CR;
++($L | $V | $LV | $LVT) $L;
++($V | $T) ($LV | $V);
++$T ($LVT | $T);
++
++$Extend      [^$Control $CR $LF];
++$SpacingMark [^$Control $CR $LF];
++[^$Control $CR $LF] $Prepend;
++# END Chrome ADD
++
++# BEGIN Chrome DELETE
++#$BackHangulSyllable = $L+ | ($T* ($V+$LV? | $LV | $LVT) $L*) | $T+;
++#$BackOneCluster = ($LF $CR) | ($Extend* ([^$Control $CR $LF] | $BackHangulSyllable));
++#$BackOneCluster;
++# END Chrome DELETE
+ 
+ ## -------------------------------------------------
+ 
+ !!safe_reverse;
+ 
+-# rule 6, 7, 8
+-$V+ $L;
++# BEGIN Chrome DELETE
++# # rule 6, 7, 8
++# $V+ $L;
++# END Chrome DELETE
+ 
+ ## -------------------------------------------------
+ 
+ !!safe_forward;
+ 
+-# rule 6, 7, 8
+-$V+ $T;
++# BEGIN Chrome DELETE
++# # rule 6, 7, 8
++# $V+ $T;
++# END Chrome DELETE
+diff -urN trie.clean/source/data/brkitr/line.txt trie.chrome/source/data/brkitr/line.txt
+--- trie.clean/source/data/brkitr/line.txt	2006-06-25 21:54:00.000000000 -0700
++++ trie.chrome/source/data/brkitr/line.txt	2008-04-30 13:43:03.185251000 -0700
+@@ -60,7 +60,7 @@
+ $BK = [:LineBreak =  Mandatory_Break:];
+ $B2 = [:LineBreak =  Break_Both:];
+ $CB = [:LineBreak =  Contingent_Break:];
+-$CL = [:LineBreak =  Close_Punctuation:];
++$CL = [[:LineBreak =  Close_Punctuation:] - [\u3001\u3002]];
+ $CM = [:LineBreak =  Combining_Mark:];
+ $CR = [:LineBreak =  Carriage_Return:];
+ $EX = [:LineBreak =  Exclamation:];
+@@ -76,7 +76,7 @@
+ $JT = [:LineBreak =  JT:];
+ $LF = [:LineBreak =  Line_Feed:];
+ $NL = [:LineBreak =  Next_Line:];
+-$NS = [:LineBreak =  Nonstarter:];
++$NS = [[:LineBreak =  Nonstarter:] \u3001\u3002];
+ $NU = [:LineBreak =  Numeric:];
+ $OP = [:LineBreak =  Open_Punctuation:];
+ $PO = [:LineBreak =  Postfix_Numeric:];
+diff -urN trie.clean/source/data/coll/collocal.mk trie.chrome/source/data/coll/collocal.mk
+--- trie.clean/source/data/coll/collocal.mk	1969-12-31 16:00:00.000000000 -0800
++++ trie.chrome/source/data/coll/collocal.mk	2008-03-18 14:56:46.393132000 -0700
+@@ -0,0 +1,86 @@
++# *   Copyright (C) 1998-2007, International Business Machines
++# *   Corporation and others.  All Rights Reserved.
++COLLATION_CLDR_VERSION = 1.5
++# A list of txt's to build
++# Note: 
++#
++#   If you are thinking of modifying this file, READ THIS. 
++#
++# Instead of changing this file [unless you want to check it back in],
++# you should consider creating a 'collocal.mk' file in this same directory.
++# Then, you can have your local changes remain even if you upgrade or
++# reconfigure ICU.
++#
++# Example 'collocal.mk' files:
++#
++#  * To add an additional locale to the list: 
++#    _____________________________________________________
++#    |  COLLATION_SOURCE_LOCAL =   myLocale.txt ...
++#
++#  * To REPLACE the default list and only build with a few
++#     locale:
++#    _____________________________________________________
++#    |  COLLATION_SOURCE = ar.txt ar_AE.txt en.txt de.txt zh.txt
++#
++#
++# Generated by LDML2ICUConverter, from LDML source files. 
++
++# Aliases which do not have a corresponding xx.xml file (see icu-config.xml & build.xml)
++COLLATION_SYNTHETIC_ALIAS = de_.txt de__PHONEBOOK.txt es_.txt es__TRADITIONAL.txt\
++ hi_.txt hi__DIRECT.txt in.txt in_ID.txt iw.txt\
++ iw_IL.txt no.txt no_NO.txt\
++ sr_BA.txt sr_ME.txt sr_RS.txt zh_.txt\
++ zh_CN.txt zh_HK.txt zh_MO.txt zh_SG.txt zh_TW.txt\
++ zh_TW_STROKE.txt zh__PINYIN.txt
++
++
++# All aliases (to not be included under 'installed'), but not including root.
++COLLATION_ALIAS_SOURCE = $(COLLATION_SYNTHETIC_ALIAS)
++
++
++# Empty locales, used for validSubLocale fallback.
++COLLATION_EMPTY_SOURCE = ar_AE.txt ar_BH.txt ar_DZ.txt ar_EG.txt\
++ ar_IQ.txt ar_JO.txt ar_KW.txt ar_LB.txt ar_LY.txt\
++ ar_MA.txt ar_OM.txt ar_QA.txt ar_SA.txt ar_SD.txt\
++ ar_SY.txt ar_TN.txt ar_YE.txt \
++ bg_BG.txt ca_ES.txt cs_CZ.txt da_DK.txt de_AT.txt\
++ de_BE.txt de_CH.txt de_DE.txt de_LU.txt el_GR.txt\
++ en_AU.txt en_BW.txt en_CA.txt en_GB.txt en_HK.txt\
++ en_IE.txt en_IN.txt en_MT.txt en_NZ.txt en_PH.txt\
++ en_SG.txt en_US.txt en_US_POSIX.txt en_VI.txt en_ZA.txt\
++ en_ZW.txt es_AR.txt es_BO.txt es_CL.txt es_CO.txt\
++ es_CR.txt es_DO.txt es_EC.txt es_ES.txt es_GT.txt\
++ es_HN.txt es_MX.txt es_NI.txt es_PA.txt es_PE.txt\
++ es_PR.txt es_PY.txt es_SV.txt es_US.txt es_UY.txt\
++ es_VE.txt fi_FI.txt\
++ fr_BE.txt fr_CA.txt fr_CH.txt fr_FR.txt fr_LU.txt\
++ ga.txt ga_IE.txt he_IL.txt hi_IN.txt\
++ hr_HR.txt hu_HU.txt id.txt id_ID.txt\
++ it_CH.txt it_IT.txt ja_JP.txt\
++ ko_KR.txt lt_LT.txt lv_LV.txt\
++ nb_NO.txt nl.txt nl_BE.txt nl_NL.txt nn_NO.txt\
++ pl_PL.txt\
++ pt.txt pt_BR.txt pt_PT.txt ro_RO.txt ru_RU.txt\
++ ru_UA.txt sk_SK.txt sl_SI.txt sr_Cyrl.txt\
++ sr_Cyrl_BA.txt sr_Cyrl_ME.txt sr_Cyrl_RS.txt sr_Latn_BA.txt sr_Latn_ME.txt\
++ sr_Latn_RS.txt sv_FI.txt sv_SE.txt\
++ th_TH.txt tr_TR.txt uk_UA.txt vi_VN.txt zh_Hans.txt\
++ zh_Hans_CN.txt zh_Hans_SG.txt zh_Hant_HK.txt zh_Hant_MO.txt zh_Hant_TW.txt
++
++
++# Ordinary resources
++# Filiphino is the only missing language among 40 Languages
++COLLATION_SOURCE = $(COLLATION_EMPTY_SOURCE) ar.txt  bg.txt\
++ ca.txt cs.txt da.txt\
++ de.txt el.txt en.txt\
++ es.txt et.txt fi.txt\
++ fr.txt he.txt\
++ hi.txt hr.txt hu.txt it.txt\
++ ja.txt\
++ ko.txt lt.txt lv.txt\
++ nb.txt nn.txt\
++ pl.txt\
++ ro.txt ru.txt sk.txt sl.txt\
++ sr.txt sr_Latn.txt sv.txt\
++ th.txt tr.txt uk.txt vi.txt zh.txt\
++ zh_Hant.txt
+diff -urN trie.clean/source/data/locales/es_DO.txt trie.chrome/source/data/locales/es_DO.txt
+--- trie.clean/source/data/locales/es_DO.txt	2007-07-26 10:24:12.946142000 -0700
++++ trie.chrome/source/data/locales/es_DO.txt	2008-06-02 13:57:03.587854000 -0700
+@@ -7,5 +7,19 @@
+ // *
+ // ***************************************************************************
+ es_DO{
++    NumberElements{
++        ".",
++        ",",
++        ";",
++        "%",
++        "0",
++        "#",
++        "-",
++        "E",
++        "‰",
++        "∞",
++        "NaN",
++        "+",
++    }
+     Version{"1.49"}
+ }
+diff -urN trie.clean/source/data/locales/es_GT.txt trie.chrome/source/data/locales/es_GT.txt
+--- trie.clean/source/data/locales/es_GT.txt	2007-07-26 10:24:12.946142000 -0700
++++ trie.chrome/source/data/locales/es_GT.txt	2008-06-02 13:57:03.613828000 -0700
+@@ -7,6 +7,20 @@
+ // *
+ // ***************************************************************************
+ es_GT{
++    NumberElements{
++        ".",
++        ",",
++        ";",
++        "%",
++        "0",
++        "#",
++        "-",
++        "E",
++        "‰",
++        "∞",
++        "NaN",
++        "+",
++    }
+     Version{"1.49"}
+     calendar{
+         gregorian{
+diff -urN trie.clean/source/data/locales/es_HN.txt trie.chrome/source/data/locales/es_HN.txt
+--- trie.clean/source/data/locales/es_HN.txt	2007-07-26 10:24:12.946142000 -0700
++++ trie.chrome/source/data/locales/es_HN.txt	2008-06-02 13:57:03.624838000 -0700
+@@ -7,6 +7,20 @@
+ // *
+ // ***************************************************************************
+ es_HN{
++    NumberElements{
++        ".",
++        ",",
++        ";",
++        "%",
++        "0",
++        "#",
++        "-",
++        "E",
++        "‰",
++        "∞",
++        "NaN",
++        "+",
++    }
+     Version{"1.50"}
+     calendar{
+         gregorian{
+diff -urN trie.clean/source/data/locales/es_MX.txt trie.chrome/source/data/locales/es_MX.txt
+--- trie.clean/source/data/locales/es_MX.txt	2007-07-26 10:24:12.946142000 -0700
++++ trie.chrome/source/data/locales/es_MX.txt	2008-06-02 13:57:03.641802000 -0700
+@@ -13,5 +13,19 @@
+             "peso mexicano",
+         }
+     }
+-    Version{"1.48"}
++    NumberElements{
++        ".",
++        ",",
++        ";",
++        "%",
++        "0",
++        "#",
++        "-",
++        "E",
++        "‰",
++        "∞",
++        "NaN",
++        "+",
++    }
++    Version{"1.49"}
+ }
+diff -urN trie.clean/source/data/locales/es_NI.txt trie.chrome/source/data/locales/es_NI.txt
+--- trie.clean/source/data/locales/es_NI.txt	2007-07-26 10:24:12.946142000 -0700
++++ trie.chrome/source/data/locales/es_NI.txt	2008-06-02 13:57:03.706736000 -0700
+@@ -7,5 +7,19 @@
+ // *
+ // ***************************************************************************
+ es_NI{
++    NumberElements{
++        ".",
++        ",",
++        ";",
++        "%",
++        "0",
++        "#",
++        "-",
++        "E",
++        "‰",
++        "∞",
++        "NaN",
++        "+",
++    }
+     Version{"1.49"}
+ }
+diff -urN trie.clean/source/data/locales/es_PA.txt trie.chrome/source/data/locales/es_PA.txt
+--- trie.clean/source/data/locales/es_PA.txt	2007-07-26 10:24:12.946142000 -0700
++++ trie.chrome/source/data/locales/es_PA.txt	2008-06-02 13:57:03.716727000 -0700
+@@ -7,6 +7,20 @@
+ // *
+ // ***************************************************************************
+ es_PA{
++    NumberElements{
++        ".",
++        ",",
++        ";",
++        "%",
++        "0",
++        "#",
++        "-",
++        "E",
++        "‰",
++        "∞",
++        "NaN",
++        "+",
++    }
+     Version{"1.50"}
+     calendar{
+         gregorian{
+diff -urN trie.clean/source/data/locales/es_PE.txt trie.chrome/source/data/locales/es_PE.txt
+--- trie.clean/source/data/locales/es_PE.txt	2007-07-26 10:24:12.946142000 -0700
++++ trie.chrome/source/data/locales/es_PE.txt	2008-06-02 13:57:03.722724000 -0700
+@@ -7,6 +7,20 @@
+ // *
+ // ***************************************************************************
+ es_PE{
++    NumberElements{
++        ".",
++        ",",
++        ";",
++        "%",
++        "0",
++        "#",
++        "-",
++        "E",
++        "‰",
++        "∞",
++        "NaN",
++        "+",
++    }
+     Version{"1.51"}
+     calendar{
+         gregorian{
+diff -urN trie.clean/source/data/locales/es_PR.txt trie.chrome/source/data/locales/es_PR.txt
+--- trie.clean/source/data/locales/es_PR.txt	2007-07-26 10:24:12.946142000 -0700
++++ trie.chrome/source/data/locales/es_PR.txt	2008-06-02 13:57:03.736712000 -0700
+@@ -13,6 +13,20 @@
+             "dólar estadounidense",
+         }
+     }
++    NumberElements{
++        ".",
++        ",",
++        ";",
++        "%",
++        "0",
++        "#",
++        "-",
++        "E",
++        "‰",
++        "∞",
++        "NaN",
++        "+",
++    }
+     Version{"1.51"}
+     calendar{
+         gregorian{
+diff -urN trie.clean/source/data/locales/es_SV.txt trie.chrome/source/data/locales/es_SV.txt
+--- trie.clean/source/data/locales/es_SV.txt	2007-07-26 10:24:12.946142000 -0700
++++ trie.chrome/source/data/locales/es_SV.txt	2008-06-02 13:57:03.750697000 -0700
+@@ -7,5 +7,19 @@
+ // *
+ // ***************************************************************************
+ es_SV{
++    NumberElements{
++        ".",
++        ",",
++        ";",
++        "%",
++        "0",
++        "#",
++        "-",
++        "E",
++        "‰",
++        "∞",
++        "NaN",
++        "+",
++    }
+     Version{"1.49"}
+ }
+diff -urN trie.clean/source/data/locales/es_US.txt trie.chrome/source/data/locales/es_US.txt
+--- trie.clean/source/data/locales/es_US.txt	2007-07-26 10:24:12.946142000 -0700
++++ trie.chrome/source/data/locales/es_US.txt	2008-06-02 13:57:03.767678000 -0700
+@@ -12,6 +12,20 @@
+         279,
+         216,
+     }
++    NumberElements{
++        ".",
++        ",",
++        ";",
++        "%",
++        "0",
++        "#",
++        "-",
++        "E",
++        "‰",
++        "∞",
++        "NaN",
++        "+",
++    }
+     Version{"1.58"}
+     calendar{
+         gregorian{
+diff -urN trie.clean/source/data/locales/fil_PH.txt trie.chrome/source/data/locales/fil_PH.txt
+--- trie.clean/source/data/locales/fil_PH.txt	1969-12-31 16:00:00.000000000 -0800
++++ trie.chrome/source/data/locales/fil_PH.txt	2008-05-14 14:55:55.222445000 -0700
+@@ -0,0 +1,12 @@
++// ***************************************************************************
++// *
++// * Copyright (C) 2007 International Business Machines
++// * Corporation and others.  All Rights Reserved.
++// * Tool: com.ibm.icu.dev.tool.cldr.LDML2ICUConverter.java
++// * Source File:<path>/common/main/fil_PH.xml
++// *
++// ***************************************************************************
++
++fil_PH{
++    Version{"1.0"}
++}
+diff -urN trie.clean/source/data/locales/fil.txt trie.chrome/source/data/locales/fil.txt
+--- trie.clean/source/data/locales/fil.txt	1969-12-31 16:00:00.000000000 -0800
++++ trie.chrome/source/data/locales/fil.txt	2008-05-14 14:55:55.217454000 -0700
+@@ -0,0 +1,754 @@
++﻿// ***************************************************************************
++// *
++// * Copyright (C) 2007 International Business Machines
++// * Corporation and others.  All Rights Reserved.
++// * Tool: com.ibm.icu.dev.tool.cldr.LDML2ICUConverter.java
++// * Source File:<path>/common/main/fil.xml
++// *
++// ***************************************************************************
++fil{
++    // Google-specific fix to exemplar characters according to
++    // feedback from native speaker and
++    // http://en.wikipilipinas.org/index.php?title=Tagalog_alphabet
++    AuxExemplarCharacters{"[áéíóúàèìòùâêîôû]"}
++    Countries{
++        AD{"Andorra"}
++        AE{"United Arab Emirates"}
++        AF{"Afghanistan"}
++        AG{"Antigua at Barbuda"}
++        AI{"Anguilla"}
++        AL{"Albanya"}
++        AM{"Armenya"}
++        AN{"Netherlands Antilles"}
++        AO{"Angola"}
++        AQ{"Antartika"}
++        AR{"Arhentina"}
++        AS{"American Samoa"}
++        AT{"Austriya"}
++        AU{"Australiya"}
++        AW{"Aruba"}
++        AX{"Aland Islands"}
++        AZ{"Azerbaijan"}
++        BA{"Bosnia and Herzegovina"}
++        BB{"Barbados"}
++        BD{"Bangladesh"}
++        BE{"Belgium"}
++        BF{"Burkina Faso"}
++        BG{"Bulgaria"}
++        BH{"Bahrain"}
++        BI{"Burundi"}
++        BJ{"Benin"}
++        BM{"Bermuda"}
++        BN{"Brunei"}
++        BO{"Bolivia"}
++        BR{"Brazil"}
++        BS{"Bahamas"}
++        BT{"Bhutan"}
++        BV{"Bouvet Island"}
++        BW{"Botswana"}
++        BY{"Belarus"}
++        BZ{"Belize"}
++        CA{"Canada"}
++        CC{"Cocos Islands"}
++        CD{"Congo, Democratic Republic of the"}
++        CF{"Central African Republic"}
++        CG{"Congo"}
++        CH{"Switzerland"}
++        CI{"Côte d'Ivoire"}
++        CK{"Cook Islands"}
++        CL{"Chile"}
++        CM{"Cameroon"}
++        CN{"Tsina"}
++        CO{"Colombia"}
++        CR{"Costa Rica"}
++        CS{"Serbia at Montenegro"}
++        CU{"Cuba"}
++        CV{"Cape Verde"}
++        CX{"Christmas Island"}
++        CY{"Cyprus"}
++        CZ{"Czech Republic"}
++        DE{"Alemaya"}
++        DJ{"Djibouti"}
++        DK{"Denmark"}
++        DM{"Dominica"}
++        DO{"Dominican Republic"}
++        DZ{"Algerya"}
++        EC{"Ecuador"}
++        EE{"Estonia"}
++        EG{"Ehipto"}
++        EH{"Western Sahara"}
++        ER{"Eritrea"}
++        ES{"Espanya"}
++        ET{"Ethiopia"}
++        FI{"Finland"}
++        FJ{"Fiji"}
++        FK{"Falkland Islands"}
++        FM{"Micronesia"}
++        FO{"Faroe Islands"}
++        FR{"Pranses"}
++        GA{"Gabon"}
++        GB{"United Kingdom"}
++        GE{"Georgia"}
++        GF{"French Guiana"}
++        GG{"Guernsey"}
++        GH{"Ghana"}
++        GL{"Greenland"}
++        GM{"Gambia"}
++        GN{"Guinea"}
++        GQ{"Equatorial Guinea"}
++        GR{"Griyego"}
++        GS{"South Georgia and the South Sandwich Islands"}
++        GW{"Guinea-Bissau"}
++        HM{"Heard Island and McDonald Islands"}
++        HN{"Honduras"}
++        HR{"Croatia"}
++        HT{"Haiti"}
++        HU{"Hungary"}
++        ID{"Indonesia"}
++        IE{"Ireland"}
++        IL{"Israel"}
++        IM{"Isle of Man"}
++        IN{"India"}
++        IO{"British Indian Ocean Territory"}
++        IQ{"Iraq"}
++        IR{"Iran"}
++        IS{"Iceland"}
++        IT{"Italya"}
++        JE{"Jersey"}
++        JO{"Jordan"}
++        JP{"Japan"}
++        KE{"Kenya"}
++        KG{"Kyrgyzstan"}
++        KH{"Cambodia"}
++        KI{"Kiribati"}
++        KM{"Comoros"}
++        KN{"Saint Kitts and Nevis"}
++        KP{"Hilagang Korea"}
++        KR{"Timog Korea"}
++        KY{"Cayman Islands"}
++        KZ{"Kazakhstan"}
++        LA{"Laos"}
++        LB{"Lebanon"}
++        LC{"Saint Lucia"}
++        LI{"Liechtenstein"}
++        LK{"Sri Lanka"}
++        LR{"Liberia"}
++        LS{"Lesotho"}
++        LT{"Lithuania"}
++        LV{"Latvia"}
++        LY{"Libya"}
++        MA{"Morocco"}
++        MD{"Moldova"}
++        ME{"Montenegro"}
++        MG{"Madagascar"}
++        MH{"Marshall Islands"}
++        MK{"Macedonia"}
++        ML{"Mali"}
++        MM{"Myanmar"}
++        MN{"Mongolia"}
++        MO{"Macao"}
++        MP{"Northern Mariana Islands"}
++        MR{"Mauritania"}
++        MW{"Malawi"}
++        MX{"Mehiko"}
++        MY{"Malaysia"}
++        MZ{"Mozambique"}
++        NA{"Namibia"}
++        NC{"New Caledonia"}
++        NE{"Niger"}
++        NF{"Norfolk Island"}
++        NG{"Nigeria"}
++        NI{"Nicaragua"}
++        NL{"Netherlands"}
++        NO{"Norway"}
++        NP{"Nepal"}
++        NZ{"New Zealand"}
++        OM{"Oman"}
++        PE{"Peru"}
++        PF{"French Polynesia"}
++        PG{"Papua New Guinea"}
++        PH{"Pilipinas"}
++        PK{"Pakistan"}
++        PL{"Poland"}
++        PM{"Saint Pierre at Miquelon"}
++        PS{"Palestine"}
++        PT{"Portugal"}
++        PY{"Paraguay"}
++        RO{"Romania"}
++        RS{"Serbia"}
++        RU{"Russia"}
++        RW{"Rwanda"}
++        SA{"Saudi Arabya"}
++        SB{"Solomon Islands"}
++        SC{"Seychelles"}
++        SD{"Sudan"}
++        SE{"Sweden"}
++        SH{"Saint Helena"}
++        SI{"Slovenia"}
++        SJ{"Svalbard and Jan Mayen"}
++        SK{"Slovakia"}
++        SL{"Sierra Leone"}
++        SM{"San Marino"}
++        SN{"Senegal"}
++        SO{"Somalia"}
++        SR{"Suriname"}
++        ST{"São Tomé and Príncipe"}
++        SV{"El Salvador"}
++        SY{"Syria"}
++        SZ{"Swaziland"}
++        TC{"Turks and Caicos Islands"}
++        TD{"Chad"}
++        TF{"French Southern Territories"}
++        TG{"Togo"}
++        TH{"Thailand"}
++        TJ{"Tajikistan"}
++        TK{"Tokelau"}
++        TL{"East Timor"}
++        TM{"Turkmenistan"}
++        TN{"Tunisia"}
++        TO{"Tonga"}
++        TR{"Turkey"}
++        TT{"Trinidad and Tobago"}
++        TV{"Tuvalu"}
++        TW{"Taiwan"}
++        TZ{"Tanzania"}
++        UA{"Ukraine"}
++        UG{"Uganda"}
++        UM{"United States minor outlying islands"}
++        US{"United States"}
++        UY{"Uruguay"}
++        UZ{"Uzbekistan"}
++        VA{"Vatican City"}
++        VC{"Saint Vincent and the Grenadines"}
++        VE{"Venezuela"}
++        VG{"British Virgin Islands"}
++        VI{"Virgin Islands, U.S."}
++        VN{"Vietnam"}
++        VU{"Vanuatu"}
++        WF{"Wallis and Futuna"}
++        WS{"Samoa"}
++        YE{"Yemen"}
++        ZA{"Timog Afrika"}
++        ZM{"Zambia"}
++        ZW{"Zimbabwe"}
++    }
++    Currencies{
++        AED{
++            "AED",
++            "United Arab Emirates Dirham",
++        }
++        ARS{
++            "ARS",
++            "Argentine Peso",
++        }
++        AUD{
++            "AUD",
++            "Dolyares ng Australia",
++        }
++        BGN{
++            "BGN",
++            "Bulgarian Lev",
++        }
++        BOB{
++            "BOB",
++            "Bolivian Boliviano",
++        }
++        BRL{
++            "R$",
++            "Brazilian Real",
++        }
++        CAD{
++            "CAD",
++            "Dolyares ng Canada",
++        }
++        CHF{
++            "CHF",
++            "Swiss Francs",
++        }
++        CLP{
++            "CLP",
++            "Chilean Peso",
++        }
++        CNY{
++            "CNY",
++            "Yuan Renminbi",
++        }
++        COP{
++            "COP",
++            "Colombian Peso",
++        }
++        CZK{
++            "CZK",
++            "Czech Koruna",
++        }
++        DEM{
++            "DEM",
++            "Deutsche Marks",
++        }
++        DKK{
++            "DKK",
++            "Denmark Kroner",
++        }
++        EEK{
++            "EEK",
++            "Estonian Kroon",
++        }
++        EGP{
++            "EGP",
++            "Egyptian Pound",
++        }
++        EUR{
++            "€",
++            "Euros",
++        }
++        FRF{
++            "FRF",
++            "French Franks",
++        }
++        GBP{
++            "UK£",
++            "British Pounds Sterling",
++        }
++        HKD{
++            "HKD",
++            "Hong Kong Dollars",
++        }
++        HRK{
++            "HRK",
++            "Croatian Kuna",
++        }
++        HUF{
++            "HUF",
++            "Hungarian Forint",
++        }
++        IDR{
++            "IDR",
++            "Indonesian Rupiah",
++        }
++        ILS{
++            "ILS",
++            "Israeli Shekel",
++        }
++        INR{
++            "=0#Rs.|1#Re.|1<Rs." /** (choice)  */,
++            "Indian Rupee",
++        }
++        JPY{
++            "JP¥",
++            "Yen ng Hapon",
++        }
++        KRW{
++            "KRW",
++            "South Korean Won",
++        }
++        LTL{
++            "LTL",
++            "Lithuanian Litas",
++        }
++        MAD{
++            "MAD",
++            "Moroccan Dirham",
++        }
++        MXN{
++            "MXN",
++            "Mexico Peso",
++        }
++        MYR{
++            "MYR",
++            "Ringgit ng Malaysia",
++        }
++        NOK{
++            "NOK",
++            "Norwegian Kroner",
++        }
++        NZD{
++            "NZD",
++            "New Zealand Dollars",
++        }
++        PEN{
++            "PEN",
++            "Peruvian Nuevo Sol",
++        }
++        PHP{
++            "PhP",
++            "Philippine Peso",
++        }
++        PKR{
++            "PKR",
++            "Pakistan Rupee",
++        }
++        PLN{
++            "PLN",
++            "Polish NewZloty",
++        }
++        RON{
++            "RON",
++            "Romanian Leu",
++        }
++        RSD{
++            "RSD",
++            "Serbian Dinar",
++        }
++        RUB{
++            "RUB",
++            "Russian Rouble",
++        }
++        SAR{
++            "SAR",
++            "Saudi Riyal",
++        }
++        SEK{
++            "SEK",
++            "Sweden Kronor",
++        }
++        SGD{
++            "SGD",
++            "Singapore Dollars",
++        }
++        SIT{
++            "SIT",
++            "Slovenian Tolar",
++        }
++        SKK{
++            "SKK",
++            "Slovak Koruna",
++        }
++        THB{
++            "THB",
++            "Thai Baht",
++        }
++        TRL{
++            "TRL",
++            "Turkish Lira",
++        }
++        TRY{
++            "TRY",
++            "Bagong Turkish Lira",
++        }
++        TWD{
++            "TWD",
++            "New Taiwan Dollar",
++        }
++        USD{
++            "US$",
++            "Dolyares ng US",
++        }
++        VEB{
++            "VEB",
++            "Venezuela Bolivar",
++        }
++        ZAR{
++            "ZAR",
++            "South African Rand",
++        }
++    }
++    // Google-specific fix to exemplar characters according to
++    // feedback from native speaker and
++    // http://en.wikipilipinas.org/index.php?title=Tagalog_alphabet
++    ExemplarCharacters{"[a-z {ng} ñ]"}
++    Languages{
++        af{"Afrikaans"}
++        am{"Amharic"}
++        ar{"Arabo"}
++        as{"Asamis"}
++        az{"Azerbaijani"}
++        be{"Belarusyan"}
++        bg{"Bulgarian"}
++        bh{"Bihari"}
++        bn{"Bengali; Bangla"}
++        br{"Breton"}
++        bs{"Bosnian"}
++        ca{"Catalan"}
++        cs{"Czech"}
++        cy{"Welsh"}
++        da{"Danish"}
++        de{"Aleman"}
++        el{"Griyego"}
++        en{"Ingles"}
++        en_AU{"Ingles (Australia)"}
++        en_GB{"Ingles (UK)"}
++        en_US{"Ingles (US)"}
++        eo{"Esperanto"}
++        es{"Espanyol"}
++        et{"Estonian"}
++        eu{"Basque"}
++        fa{"Persiyano"}
++        fi{"Finnish"}
++        fil{"Filipino"}
++        fo{"Faroeso"}
++        fr{"Pranses"}
++        fy{"Prisian"}
++        ga{"Irish"}
++        gd{"Scots Gaelic"}
++        gl{"Galician"}
++        gn{"Guarani"}
++        gu{"Mga Gujarat"}
++        he{"Hebreo"}
++        hi{"Hindu"}
++        hr{"Croatian"}
++        hu{"Hungarian"}
++        hy{"Taga-Armenya"}
++        ia{"Interlingua"}
++        id{"Indones"}
++        ie{"Kawikaan"}
++        is{"Icelandic"}
++        it{"Italyano"}
++        ja{"Hapon"}
++        jv{"Javanese"}
++        ka{"Georgian"}
++        km{"Kambodyan"}
++        kn{"Kannada"}
++        ko{"Koreano"}
++        ku{"Kurdish"}
++        ky{"Kergis"}
++        la{"Latino"}
++        ln{"Lingala"}
++        lo{"Laothian"}
++        lt{"Lithuanian"}
++        lv{"Latvian"}
++        mk{"Macedonian"}
++        ml{"Malayalam"}
++        mn{"Mongolian"}
++        mr{"Marathi"}
++        ms{"Malay"}
++        mt{"Maltese"}
++        ne{"Nepali"}
++        nl{"Dutch"}
++        no{"Norwegian"}
++        oc{"Occitan"}
++        or{"Oriya"}
++        pa{"Punjabi"}
++        pl{"Polish"}
++        ps{"Pashto"}
++        pt{"Portuges"}
++        pt_BR{"Portuges (Brasil)"}
++        rm{"Rhaeto-Romance"}
++        ro{"Romanian"}
++        ru{"Ruso"}
++        sa{"Sanskrit"}
++        sd{"Sindhi"}
++        sh{"Serbo-Kroasyan"}
++        si{"Sinhalese"}
++        sk{"Eslobak"}
++        sl{"Eslobenyan"}
++        so{"Somali"}
++        sq{"Albano"}
++        sr{"Serbiran"}
++        st{"Sesoto"}
++        su{"Taga Sundan"}
++        sv{"Suwiso"}
++        sw{"Swahili"}
++        ta{"Tamil"}
++        te{"Telugu"}
++        th{"Thai"}
++        ti{"Tigrinya"}
++        tk{"Turkmen"}
++        tl{"Tagalog"}
++        tlh{"Klingon"}
++        tr{"Turko"}
++        tw{"Twi"}
++        ug{"Uighur"}
++        uk{"Ukranian"}
++        ur{"Urdu"}
++        uz{"Uzbeko"}
++        vi{"Vietnamese"}
++        wo{"Wolof"}
++        xh{"Xhosa"}
++        yi{"Yiddish"}
++        zh_Hans{"Intsik (Pinadali)"}
++        zh_Hant{"Intsik (Tradisyunal)"}
++        zu{"Zulu"}
++    }
++    // Google-specific addition of LocaleScript which is not specified in CLDR 1.5.
++    // Necessary to make ICU tests pass.
++    // Should be added to CLDR.
++    LocaleScript{
++        "Latn",
++    }
++    Version{"1.7"}
++    calendar{
++        gregorian{
++            // Google-specific fix, DateTimeElements copied from en_PH.
++            // Satisfies ICU cintltst consistency check.
++            DateTimeElements:intvector{
++                1,
++                1,
++            }
++            DateTimePatterns{
++                "HH:mm:ss v",
++                "HH:mm:ss z",
++                "HH:mm:ss",
++                "HH:mm",
++                "EEEE, MMMM dd yyyy",
++                "MMMM d, yyyy",
++                "MMM d, yyyy",
++                "M/d/yy",
++                "{1} {0}",
++            }
++            availableFormats{
++                yyMM{"yy-MM"}
++                yyMMM{"MMM yy"}
++            }
++            dayNames{
++                format{
++                    abbreviated{
++                        "Lin",
++                        "Lun",
++                        "Mar",
++                        "Mye",
++                        "Huw",
++                        "Bye",
++                        "Sab",
++                    }
++                    wide{
++                        "Linggo",
++                        "Lunes",
++                        "Martes",
++                        "Miyerkules",
++                        "Huwebes",
++                        "Biyernes",
++                        "Sabado",
++                    }
++                }
++                stand-alone{
++                    narrow{
++                        "L",
++                        "L",
++                        "M",
++                        "M",
++                        "H",
++                        "B",
++                        "S",
++                    }
++                    wide{
++                        "Linggo",
++                        "Lunes",
++                        "Martes",
++                        "Miyerkules",
++                        "Huwebes",
++                        "Biyernes",
++                        "Sabado",
++                    }
++                }
++            }
++            monthNames{
++                format{
++                    abbreviated{
++                        "Ene",
++                        "Peb",
++                        "Mar",
++                        "Abr",
++                        "May",
++                        "Hun",
++                        "Hul",
++                        "Ago",
++                        "Set",
++                        "Okt",
++                        "Nob",
++                        "Dis",
++                    }
++                    wide{
++                        "Enero",
++                        "Pebrero",
++                        "Marso",
++                        "Abril",
++                        "Mayo",
++                        "Hunyo",
++                        "Hulyo",
++                        "Agosto",
++                        "Setyembre",
++                        "Oktubre",
++                        "Nobyembre",
++                        "Disyembre",
++                    }
++                }
++                stand-alone{
++                    narrow{
++                        "E",
++                        "P",
++                        "M",
++                        "A",
++                        "M",
++                        "H",
++                        "H",
++                        "A",
++                        "S",
++                        "O",
++                        "N",
++                        "D",
++                    }
++                    wide{
++                        "Enero",
++                        "Pebrero",
++                        "Marso",
++                        "Abril",
++                        "Mayo",
++                        "Hunyo",
++                        "Hulyo",
++                        "Agosto",
++                        "Setyembre",
++                        "Oktubre",
++                        "Nobyembre",
++                        "Disyembre",
++                    }
++                }
++            }
++        }
++    }
++    zoneStrings{
++        "Africa:Conakry"{
++            ec{"Conarky"}
++        }
++        "Africa:Harare"{
++            ec{"Harare."}
++        }
++        "Africa:Kinshasa"{
++            ec{"Kinsashasa"}
++        }
++        "Africa:Maseru"{
++            ec{"Maseru."}
++        }
++        "Africa:Porto-Novo"{
++            ec{"Porto - Novo"}
++        }
++        "America:Anchorage"{
++            ec{"Alaska Time"}
++        }
++        "America:Port_of_Spain"{
++            ec{"Port nang Espanya"}
++        }
++        "America:St_Kitts"{
++            ec{"St. Kitts"}
++        }
++        "America:St_Lucia"{
++            ec{"St. Lucia"}
++        }
++        "America:St_Thomas"{
++            ec{"St. Thomas"}
++        }
++        "America:St_Vincent"{
++            ec{"St. Vincent"}
++        }
++        "Antarctica:DumontDUrville"{
++            ec{"Dumont D'Urville"}
++        }
++        "Asia:Dushanbe"{
++            ec{"Dushanbe."}
++        }
++        "Asia:Hovd"{
++            ec{"Hovd."}
++        }
++        "Asia:Tbilisi"{
++            ec{"Tbilisi."}
++        }
++        "Atlantic:Canary"{
++            ec{"Canary Islands"}
++        }
++        "Indian:Christmas"{
++            ec{"Pasko."}
++        }
++        "Pacific:Easter"{
++            ec{"Easter Island"}
++        }
++    }
++}
+diff -urN trie.clean/source/data/locales/id.txt trie.chrome/source/data/locales/id.txt
+--- trie.clean/source/data/locales/id.txt	2007-08-07 16:20:42.081227000 -0700
++++ trie.chrome/source/data/locales/id.txt	2008-07-14 14:23:15.223007000 -0700
+@@ -507,6 +507,17 @@
+     Version{"1.64"}
+     calendar{
+         gregorian{
++            DateTimePatterns{
++                "HH:mm:ss v",
++                "HH:mm:ss z",
++                "HH:mm:ss",
++                "HH:mm",
++                "EEEE, yyyy MMMM dd",
++                "dd MMMM yyyy",
++                "dd MMM yyyy",
++                "dd/MM/yy",
++                "{1} {0}",
++            }
+             dayNames{
+                 format{
+                     abbreviated{
+diff -urN trie.clean/source/data/locales/ja.txt trie.chrome/source/data/locales/ja.txt
+--- trie.clean/source/data/locales/ja.txt	2007-08-21 09:57:21.998780000 -0700
++++ trie.chrome/source/data/locales/ja.txt	2008-07-14 13:42:44.855420000 -0700
+@@ -1994,15 +1994,15 @@
+                 "{1} {0}",
+             }
+             availableFormats{
+-                Ed{"d 日（E）"}
++                Ed{"d日(E)"}
+                 GGGGyMd{"GGGGy年M月d日"}
+-                H{"H 時"}
+-                MMMEd{"MMM/d（E）"}
+-                MMMMd{"MMMM d 日"}
++                H{"H時"}
++                MMMEd{"MMM/d(E)"}
++                MMMMd{"MMMMd日"}
+                 MMdd{"MM/dd"}
+                 Md{"M/d"}
+                 mmss{"mm:ss"}
+-                yyMMM{"yy 年 MMM"}
++                yyMMM{"yy年MMM"}
+                 yyQ{"yy/Q"}
+             }
+             dayNames{
+@@ -2093,32 +2093,32 @@
+             monthNames{
+                 format{
+                     abbreviated{
+-                        "1 月",
+-                        "2 月",
+-                        "3 月",
+-                        "4 月",
+-                        "5 月",
+-                        "6 月",
+-                        "7 月",
+-                        "8 月",
+-                        "9 月",
+-                        "10 月",
+-                        "11 月",
+-                        "12 月",
++                        "1月",
++                        "2月",
++                        "3月",
++                        "4月",
++                        "5月",
++                        "6月",
++                        "7月",
++                        "8月",
++                        "9月",
++                        "10月",
++                        "11月",
++                        "12月",
+                     }
+                     wide{
+-                        "1 月",
+-                        "2 月",
+-                        "3 月",
+-                        "4 月",
+-                        "5 月",
+-                        "6 月",
+-                        "7 月",
+-                        "8 月",
+-                        "9 月",
+-                        "10 月",
+-                        "11 月",
+-                        "12 月",
++                        "1月",
++                        "2月",
++                        "3月",
++                        "4月",
++                        "5月",
++                        "6月",
++                        "7月",
++                        "8月",
++                        "9月",
++                        "10月",
++                        "11月",
++                        "12月",
+                     }
+                 }
+                 stand-alone{
+diff -urN trie.clean/source/data/locales/reslocal.mk trie.chrome/source/data/locales/reslocal.mk
+--- trie.clean/source/data/locales/reslocal.mk	1969-12-31 16:00:00.000000000 -0800
++++ trie.chrome/source/data/locales/reslocal.mk	2008-06-02 14:34:33.621451000 -0700
+@@ -0,0 +1,84 @@
++# *   Copyright (C) 1998-2007, International Business Machines
++# *   Corporation and others.  All Rights Reserved.
++GENRB_CLDR_VERSION = 1.5
++# A list of txt's to build
++# Note: 
++#
++#   If you are thinking of modifying this file, READ THIS. 
++#
++# Instead of changing this file [unless you want to check it back in],
++# you should consider creating a 'reslocal.mk' file in this same directory.
++# Then, you can have your local changes remain even if you upgrade or
++# reconfigure ICU.
++#
++# Example 'reslocal.mk' files:
++#
++#  * To add an additional locale to the list: 
++#    _____________________________________________________
++#    |  GENRB_SOURCE_LOCAL =   myLocale.txt ...
++#
++#  * To REPLACE the default list and only build with a few
++#     locale:
++#    _____________________________________________________
++#    |  GENRB_SOURCE = ar.txt ar_AE.txt en.txt de.txt zh.txt
++#
++#
++# Generated by LDML2ICUConverter, from LDML source files. 
++
++# Aliases which do not have a corresponding xx.xml file (see icu-config.xml & build.xml)
++GENRB_SYNTHETIC_ALIAS = in.txt iw.txt no.txt
++
++
++# All aliases (to not be included under 'installed'), but not including root.
++GENRB_ALIAS_SOURCE = $(GENRB_SYNTHETIC_ALIAS)\
++ zh_CN.txt\
++ zh_TW.txt
++
++
++# Ordinary resources
++GENRB_SOURCE =\
++ ar.txt\
++ bg.txt\
++ ca.txt\
++ cs.txt\
++ da.txt\
++ de.txt\
++ el.txt\
++ en.txt\
++ en_GB.txt\
++ en_US.txt\
++ es.txt es_ES.txt\
++ es_AR.txt  es_CO.txt  es_EC.txt  es_HN.txt  es_PA.txt  es_PY.txt  es_UY.txt\
++ es_BO.txt  es_CR.txt  es_MX.txt  es_PE.txt  es_SV.txt  es_VE.txt  es_CL.txt\
++ es_DO.txt  es_GT.txt  es_NI.txt  es_PR.txt  es_US.txt\
++ et.txt\
++ fi.txt\
++ fil.txt\
++ fr.txt\
++ he.txt\
++ hi.txt\
++ hr.txt\
++ hu.txt\
++ id.txt\
++ it.txt\
++ ja.txt\
++ ko.txt\
++ lt.txt\
++ lv.txt\
++ nb.txt\
++ nl.txt\
++ pl.txt\
++ pt.txt pt_BR.txt\
++ pt_PT.txt\
++ ro.txt\
++ ru.txt\
++ sk.txt\
++ sl.txt\
++ sr.txt\
++ sv.txt\
++ th.txt\
++ tr.txt\
++ uk.txt\
++ vi.txt\
++ zh.txt zh_Hans.txt zh_Hans_CN.txt\
++ zh_Hant.txt zh_Hant_TW.txt
+diff -urN trie.clean/source/data/Makefile.in trie.chrome/source/data/Makefile.in
+--- trie.clean/source/data/Makefile.in	2007-12-04 18:56:34.154310000 -0800
++++ trie.chrome/source/data/Makefile.in	2008-01-10 18:17:56.502939000 -0800
+@@ -201,7 +201,9 @@
+ #  2005-may-05 Removed Unicode properties files (unorm.icu, uprops.icu, ucase.icu, ubidi.icu)
+ #  from data build. See Jitterbug 4497. (makedata.mak revision 1.117)
+ #
+-DAT_FILES_SHORT=pnames.icu unames.icu cnvalias.icu ucadata.icu invuca.icu uidna.spp 
++# CHROME : invuca.icu and unames.icu are excluded from the icu data file 
++# to save space.
++DAT_FILES_SHORT=pnames.icu cnvalias.icu ucadata.icu uidna.spp 
+ DAT_FILES=$(DAT_FILES_SHORT:%=$(BUILDDIR)/%)
+ 
+ ## BRK files
+@@ -223,11 +225,12 @@
+ endif
+ 
+ ## UCM files
++# CHROME : do not include ucmebcdic.mk and two IBM EBCDIC code pages  
+ -include $(UCMSRCDIR)/ucmcore.mk
+ -include $(UCMSRCDIR)/ucmfiles.mk
+--include $(UCMSRCDIR)/ucmebcdic.mk
++# -include $(UCMSRCDIR)/ucmebcdic.mk
+ -include $(UCMSRCDIR)/ucmlocal.mk
+-ALL_UCM_SOURCE=ibm-37_P100-1995.ucm ibm-1047_P100-1995.ucm $(UCM_SOURCE_CORE) $(UCM_SOURCE_FILES) $(UCM_SOURCE_EBCDIC) $(UCM_SOURCE_LOCAL)
++ALL_UCM_SOURCE= $(UCM_SOURCE_CORE) $(UCM_SOURCE_FILES) $(UCM_SOURCE_EBCDIC) $(UCM_SOURCE_LOCAL)
+ UCM_FILES = $(ALL_UCM_SOURCE:%=$(SRCDATADIR)/%)
+ CNV_FILES = $(ALL_UCM_SOURCE:%.ucm=$(BUILDDIR)/%.cnv)
+ CNV_FILES_SHORT = $(ALL_UCM_SOURCE:%.ucm=%.cnv)
+@@ -262,7 +265,8 @@
+ TRANSLIT_SRC_FILES = $(TRANSLIT_SRC:%=$(TRANSLITSRCDIR)/%)
+ INSTALLED_TRANSLIT_FILES = $(TRANSLIT_SOURCE:%.txt=%)  $(TRANSLIT_SOURCE_LOCAL:%.txt=%)
+ endif
+-GENRBOPTS=-k
++# CHROME : To save space, use '-R' option
++GENRBOPTS=-k -R
+ 
+ ## MISC files
+ -include $(MISCSRCDIR)/miscfiles.mk
+@@ -403,7 +407,9 @@
+ # ucadata.icu
+ # used to depend on $(BUILDDIR)/$(ICUDT)unorm.icu $(BUILDDIR)/$(ICUDT)ucase.icu
+ # see Jitterbug 4497
+-$(BUILDDIR)/ucadata.icu $(BUILDDIR)/$(ICUDT)invuca.icu: $(UNICODEDATADIR)/FractionalUCA.txt $(BINDIR)/genuca$(EXEEXT)
++# CHROME : we don't need invuca.icu
++#$(BUILDDIR)/ucadata.icu $(BUILDDIR)/invuca.icu: $(UNICODEDATADIR)/FractionalUCA.txt $(BINDIR)/genuca$(EXEEXT)
++$(BUILDDIR)/ucadata.icu: $(UNICODEDATADIR)/FractionalUCA.txt $(BINDIR)/genuca$(EXEEXT)
+ 	$(INVOKE) $(BINDIR)/genuca -s $(UNICODEDATADIR) -d $(BUILDDIR) -i $(BUILDDIR) 
+ 
+ # unames.icu
+@@ -415,7 +421,8 @@
+ 	$(INVOKE) $(BINDIR)/gencnval -d $(BUILDDIR) $(UCMSRCDIR)/convrtrs.txt
+ 
+ # uidna.spp
+-$(BUILDDIR)/uidna.spp: $(MISCSRCDIR)/NamePrepProfile.txt $(BINDIR)/gensprep$(EXEEXT) $(BUILDDIR)/unames.icu $(BUILDDIR)/pnames.icu
++# CHROME : we don't need Unicode character names (unames.icu)
++$(BUILDDIR)/uidna.spp: $(MISCSRCDIR)/NamePrepProfile.txt $(BINDIR)/gensprep$(EXEEXT) $(BUILDDIR)/pnames.icu
+ 	$(INVOKE) $(BINDIR)/gensprep -d $(BUILDDIR) -i $(BUILDDIR) -s $(MISCSRCDIR) -b uidna -n $(UNICODEDATADIR) -u 3.2.0 -k NamePrepProfile.txt
+ 
+ ####################################################    BRK
+@@ -601,4 +608,3 @@
+ 	$(RMV) $(LIBICUUC)
+ 	(cd ../common && $(MAKE) RECURSIVE=YES) || exit;
+ endif
+-
+diff -urN trie.clean/source/data/mappings/convrtrs.txt trie.chrome/source/data/mappings/convrtrs.txt
+--- trie.clean/source/data/mappings/convrtrs.txt	2007-10-11 15:18:11.412145000 -0700
++++ trie.chrome/source/data/mappings/convrtrs.txt	2008-07-15 12:51:22.896168000 -0700
+@@ -519,10 +519,6 @@
+ ibm-33722_P12A_P12A-2004_U2 { UTR22* }
+                         ibm-33722   # Leave untagged because this isn't the default
+                         ibm-5050    # Leave untagged because this isn't the default, and yes this alias is correct
+-                        EUC-JP { IANA MIME* WINDOWS }
+-                        Extended_UNIX_Code_Packed_Format_for_Japanese { IANA* WINDOWS }
+-                        csEUCPkdFmtJapanese { IANA WINDOWS }
+-                        X-EUC-JP { WINDOWS }   # Japan EUC. x-euc-jp is a MIME name
+                         windows-51932 { WINDOWS* }
+                         ibm-33722_VPUA
+                         IBM-eucJP
+@@ -535,12 +531,13 @@
+ # ibm-954 seems to be almost a superset of ibm-33722 and ibm-1350
+ # ibm-1350 seems to be almost a superset of ibm-33722
+ # ibm-954 contains more PUA characters than the others.
++# CHROME : Instead of ibm-33722_P*, we use ibm-954 for EUC-JP.
+ ibm-954_P101-2007 { UTR22* }
+                         ibm-954 { IBM* }
+-                        EUC-JP { JAVA* } # Matches more closely with ibm-1350
+-                        Extended_UNIX_Code_Packed_Format_for_Japanese { JAVA }
+-                        csEUCPkdFmtJapanese { JAVA }
+-                        X-EUC-JP { JAVA }   # Japan EUC. x-euc-jp is a MIME name
++                        EUC-JP { IANA MIME* JAVA* WINDOWS* } # Matches more closely with ibm-1350
++                        Extended_UNIX_Code_Packed_Format_for_Japanese { IANA* JAVA WINDOWS }
++                        csEUCPkdFmtJapanese { IANA JAVA WINDOWS }
++                        X-EUC-JP { JAVA WINDOWS }   # Japan EUC. x-euc-jp is a MIME name
+                         eucjis { JAVA }
+                         ujis # Linux sometimes uses this name. This is an unfortunate generic and rarely used name. Its use is discouraged.
+                         # eucJP # This is closest to Solaris EUC-JP.
+@@ -578,31 +575,38 @@
+                         cp1386
+                         windows-936 # Alternate mapping. Leave untagged. This is the IBM interpretation of a Windows codepage.
+                         ibm-1386_VSUB_VPUA
++# CHROME: Added 4 GB2312 aliases and EUC-CN to Windows-936 to reflect the 
++#         reality of the web (GB2312 is treated synonymously with its 
++#         superset, Windows-936/GBK)
++#         All the aliases listed for this converter (windows-936-2000)
++#         are removed from the list of aliases for other simplified Chinese 
++#         converters above.
+ windows-936-2000 { UTR22* }
+-                        GBK { IANA* WINDOWS JAVA* }
++                        GB2312 { IANA* MIME* }
++                        windows-936 { IANA WINDOWS* JAVA }
++                        GBK { WINDOWS JAVA* }
+                         CP936 { IANA JAVA }
+                         MS936 { IANA }  # In JDK 1.5, this goes to x-mswin-936. This is an IANA name split.
+-                        windows-936 { IANA WINDOWS* JAVA }
++                        chinese { IANA }
++                        iso-ir-58 { IANA }
++                        gb2312-1980
++                        EUC-CN
++                        csGB2312 { IANA }
++                        GB_2312-80 { IANA }
+ 
+-# Java has two different tables for ibm-1383 and gb2312. We pick closest set for tagging.
++# Java has two different tables for ibm-1383 and gb2312. We pick closest set for tagging. 
+ ibm-1383_P110-1999 { UTR22* }       # China EUC.
+                         ibm-1383 { IBM* JAVA }
+-                        GB2312 { IANA* MIME* }
+-                        csGB2312 { IANA }
+                         cp1383 { JAVA* }
+                         1383 { JAVA }
+-                        EUC-CN  # According to other platforms, windows-20936 looks more like euc-cn. x-euc-cn is also a MIME name
++                        #EUC-CN  # According to other platforms, windows-20936 looks more like euc-cn. x-euc-cn is also a MIME name
+                         ibm-eucCN
+                         hp15CN  # From HP-UX?
+                         ibm-1383_VPUA
+                         # gb          # This is not an IANA name. gb in IANA means Great Britain.
+ 
+ ibm-5478_P100-1995 { UTR22* } ibm-5478 { IBM* } # This gb_2312_80 DBCS mapping is needed by iso-2022.
+-                        GB_2312-80 { IANA* }    # Windows maps this alias incorrectly
+-                        chinese { IANA }
+-                        iso-ir-58 { IANA }
+-                        csISO58GB231280 { IANA }
+-                        gb2312-1980
++                        csISO58GB231280 { IANA* }
+                         GB2312.1980-0   # From X11R6
+ 
+ ibm-964_P110-1999 { UTR22* }                # Taiwan EUC. x-euc-tw is a MIME name
+@@ -651,13 +655,8 @@
+ # Java has both ibm-970 and EUC-KR as separate converters.
+ ibm-970_P110_P110-2006_U2 { UTR22* }
+                         ibm-970 { IBM* JAVA }
+-                        EUC-KR { IANA* MIME* WINDOWS JAVA }
+-                        KS_C_5601-1987 { JAVA }
+                         windows-51949 { WINDOWS* }
+-                        csEUCKR { IANA WINDOWS }  # x-euc-kr is also a MIME name
+                         ibm-eucKR { JAVA }
+-                        KSC_5601 { JAVA } # Needed by iso-2022
+-                        5601 { JAVA }
+                         cp970 { JAVA* }
+                         970 { JAVA }
+                         ibm-970_VPUA
+@@ -669,16 +668,9 @@
+ # ibm-1363 is almost a superset of ibm-970.
+ ibm-1363_P11B-1998 { UTR22* }
+                         ibm-1363 # Leave untagged because this isn't the default
+-                        KS_C_5601-1987 { IANA* }
+-                        KS_C_5601-1989 { IANA }
+-                        KSC_5601 { MIME* IANA } # Needed by iso-2022
+-                        csKSC56011987 { IANA }
+-                        korean { IANA }
+-                        iso-ir-149 { IANA }
+-                        5601
+                         cp1363
+                         ksc
+-                        windows-949 # Alternate mapping. Leave untagged. This is the IBM interpretation of a Windows codepage.
++                        #windows-949 # Alternate mapping. Leave untagged. This is the IBM interpretation of a Windows codepage.
+                         ibm-1363_VSUB_VPUA
+                         # ks_x_1001:1992
+                         # ksc5601-1992
+@@ -687,27 +679,47 @@
+                         ibm-1363 { IBM* }
+                         ibm-1363_VASCII_VSUB_VPUA
+ 
++# CHROME: Windows-949 is NOT EUC-KR, but a superset of EUC-KR with 8,822 
++#         additional Hangul syllables. However, the reality of the web 
++#         dictates that we make a compromise and make EUC-KR a synonym of 
++#         windows-949. A better alternative is to be generous in what
++#         we accepts and be stricts in what we emit (as Mozilla does),
++#         but the ICU converter does not support this kind of 
++#         asymetry. 
++#         All the aliases listed for this converter (windows-949-2000)
++#         are removed from the list of aliases for other Korean converters
++#         above.
+ windows-949-2000 { UTR22* }
+-                        windows-949 { JAVA* WINDOWS* }
+-                        KS_C_5601-1987 { WINDOWS }
+-                        KS_C_5601-1989 { WINDOWS }
+-                        KSC_5601 { WINDOWS } # Needed by iso-2022
++                        EUC-KR { IANA* MIME* WINDOWS }
++                        windows-949 { JAVA* WINDOWS }
++                        KS_C_5601-1987 { WINDOWS* IANA }
++                        KS_C_5601-1989 { WINDOWS IANA }
++                        KSC_5601 { IANA WINDOWS } # Needed by iso-2022
+                         csKSC56011987 { WINDOWS }
+-                        korean { WINDOWS }
+-                        iso-ir-149 { WINDOWS }
++                        korean { IANA WINDOWS }
++                        iso-ir-149 { IANA WINDOWS }
+                         ms949 { JAVA }
++                        csEUCKR { IANA WINDOWS }
++                        5601
++                        x-windows-949 # Mozilla
++                        x-UHC   # Mozilla (Unified Hangul Code)
++
++
+ 
++# TIS-620, ISO-8859-11 and Windows-874 are slightly different from
++# each other, but they're used as if they're identical on the web. 
++# Again, asymmetry as done by Mozilla would be more desirable.
+ windows-874-2000 { UTR22* }   # Thai (w/ euro update)
+-                        TIS-620 { WINDOWS }
+-                        windows-874 { JAVA* WINDOWS* }
++                        TIS-620 { IANA* WINDOWS MIME* }
++                        windows-874 { JAVA* WINDOWS* MIME }
+                         MS874 { JAVA }
+-                        # iso-8859-11 { WINDOWS } # iso-8859-11 is similar to TIS-620. ibm-13162 is a closer match.
++                        iso-8859-11 { IANA WINDOWS MIME } # iso-8859-11 is similar to TIS-620. ibm-13162 is a closer match.
+ 
+ ibm-874_P100-1995 { UTR22* }    # Thai PC (w/o euro update).
+                         ibm-874 { IBM* JAVA }
+                         ibm-9066 { IBM }    # Yes ibm-874 == ibm-9066. ibm-1161 has the euro update.
+                         cp874 { JAVA* }
+-                        TIS-620 { IANA* JAVA }  # This is actually separate from ibm-874, which is similar to this table
++                        #TIS-620 { JAVA }  # This is actually separate from ibm-874, which is similar to this table
+                         tis620.2533 { JAVA }    # This is actually separate from ibm-874, which is similar to this table
+                         eucTH               # eucTH is an unusual alias from Solaris.  eucTH has fewer mappings than TIS620
+ 
+@@ -772,7 +784,8 @@
+ ibm-5353_P100-1998 { UTR22* }   ibm-5353 { IBM* } windows-1257  # Somewhat old Windows Baltic (w/ euro update)
+ ibm-1258_P100-1997 { UTR22* }   ibm-1258 { IBM* } windows-1258  # Old Windows Vietnamese (w/o euro update)
+ 
+-macos-0_2-10.2 { UTR22* }       macintosh { IANA* MIME* WINDOWS } mac { IANA } csMacintosh { IANA } windows-10000 { WINDOWS* } # Apple latin 1
++# CHROME : macroman and x-macroman are rather popular aliases for Macintosh.
++macos-0_2-10.2 { UTR22* }       macintosh { IANA* MIME* WINDOWS } mac { IANA } csMacintosh { IANA } windows-10000 { WINDOWS* } macroman x-macroman # Apple latin 1
+ macos-6_2-10.4 { UTR22* }       x-mac-greek { MIME* WINDOWS } windows-10006 { WINDOWS* } macgr           # Apple Greek
+ macos-7_3-10.2 { UTR22* }       x-mac-cyrillic { MIME* WINDOWS } windows-10007 { WINDOWS* } mac-cyrillic maccy # Apple Cyrillic
+ macos-29-10.2 { UTR22* }        x-mac-centraleurroman { MIME* } windows-10029 { WINDOWS* } x-mac-ce { WINDOWS } macce   # Apple Central Europe
+diff -urN trie.clean/source/data/mappings/iso-8859_16-2001.ucm trie.chrome/source/data/mappings/iso-8859_16-2001.ucm
+--- trie.clean/source/data/mappings/iso-8859_16-2001.ucm	1969-12-31 16:00:00.000000000 -0800
++++ trie.chrome/source/data/mappings/iso-8859_16-2001.ucm	2008-01-10 17:19:01.000000000 -0800
+@@ -0,0 +1,301 @@
++#
++#	Name:             ISO/IEC 8859-16:2001 to Unicode
++#	Unicode version:  3.0
++#	Table version:    1.0
++#	Table format:     Format A
++#	Date:             2001 July 26
++#	Authors:          Markus Kuhn <http://www.cl.cam.ac.uk/~mgk25/>
++#
++#	Copyright (c) 1999-2001 Unicode, Inc.  All Rights reserved.
++#
++#	This file is provided as-is by Unicode, Inc. (The Unicode Consortium).
++#	No claims are made as to fitness for any particular purpose.  No
++#	warranties of any kind are expressed or implied.  The recipient
++#	agrees to determine applicability of information provided.  If this
++#	file has been provided on optical media by Unicode, Inc., the sole
++#	remedy for any claim will be exchange of defective media within 90
++#	days of receipt.
++#
++#	Unicode, Inc. hereby grants the right to freely use the information
++#	supplied in this file in the creation of products supporting the
++#	Unicode Standard, and to make copies of this file in any form for
++#	internal or external distribution as long as this notice remains
++#	attached.
++#
++#	General notes:
++#
++#	This table contains the data the Unicode Consortium has on how
++#       ISO/IEC 8859-16:2001 characters map into Unicode.
++#
++#	Format:  The ICU UCM format
++#
++#	Updated versions of this file may be found in:
++#		<ftp://ftp.unicode.org/Public/MAPPINGS/>
++#
++#	Any comments or problems, contact <errata@unicode.org>
++#	Please note that <errata@unicode.org> is an archival address;
++#	notices will be checked, but do not expect an immediate response.
++#
++<code_set_name>               "iso-8859_16-2001"
++<mb_cur_max>                  1
++<mb_cur_min>                  1
++<uconv_class>                 "SBCS"
++<subchar>                     \x1A
++CHARMAP
++<U0000> \x00 |0
++<U0001> \x01 |0
++<U0002> \x02 |0
++<U0003> \x03 |0
++<U0004> \x04 |0
++<U0005> \x05 |0
++<U0006> \x06 |0
++<U0007> \x07 |0
++<U0008> \x08 |0
++<U0009> \x09 |0
++<U000A> \x0A |0
++<U000B> \x0B |0
++<U000C> \x0C |0
++<U000D> \x0D |0
++<U000E> \x0E |0
++<U000F> \x0F |0
++<U0010> \x10 |0
++<U0011> \x11 |0
++<U0012> \x12 |0
++<U0013> \x13 |0
++<U0014> \x14 |0
++<U0015> \x15 |0
++<U0016> \x16 |0
++<U0017> \x17 |0
++<U0018> \x18 |0
++<U0019> \x19 |0
++<U001A> \x1A |0
++<U001B> \x1B |0
++<U001C> \x1C |0
++<U001D> \x1D |0
++<U001E> \x1E |0
++<U001F> \x1F |0
++<U0020> \x20 |0
++<U0021> \x21 |0
++<U0022> \x22 |0
++<U0023> \x23 |0
++<U0024> \x24 |0
++<U0025> \x25 |0
++<U0026> \x26 |0
++<U0027> \x27 |0
++<U0028> \x28 |0
++<U0029> \x29 |0
++<U002A> \x2A |0
++<U002B> \x2B |0
++<U002C> \x2C |0
++<U002D> \x2D |0
++<U002E> \x2E |0
++<U002F> \x2F |0
++<U0030> \x30 |0
++<U0031> \x31 |0
++<U0032> \x32 |0
++<U0033> \x33 |0
++<U0034> \x34 |0
++<U0035> \x35 |0
++<U0036> \x36 |0
++<U0037> \x37 |0
++<U0038> \x38 |0
++<U0039> \x39 |0
++<U003A> \x3A |0
++<U003B> \x3B |0
++<U003C> \x3C |0
++<U003D> \x3D |0
++<U003E> \x3E |0
++<U003F> \x3F |0
++<U0040> \x40 |0
++<U0041> \x41 |0
++<U0042> \x42 |0
++<U0043> \x43 |0
++<U0044> \x44 |0
++<U0045> \x45 |0
++<U0046> \x46 |0
++<U0047> \x47 |0
++<U0048> \x48 |0
++<U0049> \x49 |0
++<U004A> \x4A |0
++<U004B> \x4B |0
++<U004C> \x4C |0
++<U004D> \x4D |0
++<U004E> \x4E |0
++<U004F> \x4F |0
++<U0050> \x50 |0
++<U0051> \x51 |0
++<U0052> \x52 |0
++<U0053> \x53 |0
++<U0054> \x54 |0
++<U0055> \x55 |0
++<U0056> \x56 |0
++<U0057> \x57 |0
++<U0058> \x58 |0
++<U0059> \x59 |0
++<U005A> \x5A |0
++<U005B> \x5B |0
++<U005C> \x5C |0
++<U005D> \x5D |0
++<U005E> \x5E |0
++<U005F> \x5F |0
++<U0060> \x60 |0
++<U0061> \x61 |0
++<U0062> \x62 |0
++<U0063> \x63 |0
++<U0064> \x64 |0
++<U0065> \x65 |0
++<U0066> \x66 |0
++<U0067> \x67 |0
++<U0068> \x68 |0
++<U0069> \x69 |0
++<U006A> \x6A |0
++<U006B> \x6B |0
++<U006C> \x6C |0
++<U006D> \x6D |0
++<U006E> \x6E |0
++<U006F> \x6F |0
++<U0070> \x70 |0
++<U0071> \x71 |0
++<U0072> \x72 |0
++<U0073> \x73 |0
++<U0074> \x74 |0
++<U0075> \x75 |0
++<U0076> \x76 |0
++<U0077> \x77 |0
++<U0078> \x78 |0
++<U0079> \x79 |0
++<U007A> \x7A |0
++<U007B> \x7B |0
++<U007C> \x7C |0
++<U007D> \x7D |0
++<U007E> \x7E |0
++<U007F> \x7F |0
++<U0080> \x80 |0
++<U0081> \x81 |0
++<U0082> \x82 |0
++<U0083> \x83 |0
++<U0084> \x84 |0
++<U0085> \x85 |0
++<U0086> \x86 |0
++<U0087> \x87 |0
++<U0088> \x88 |0
++<U0089> \x89 |0
++<U008A> \x8A |0
++<U008B> \x8B |0
++<U008C> \x8C |0
++<U008D> \x8D |0
++<U008E> \x8E |0
++<U008F> \x8F |0
++<U0090> \x90 |0
++<U0091> \x91 |0
++<U0092> \x92 |0
++<U0093> \x93 |0
++<U0094> \x94 |0
++<U0095> \x95 |0
++<U0096> \x96 |0
++<U0097> \x97 |0
++<U0098> \x98 |0
++<U0099> \x99 |0
++<U009A> \x9A |0
++<U009B> \x9B |0
++<U009C> \x9C |0
++<U009D> \x9D |0
++<U009E> \x9E |0
++<U009F> \x9F |0
++<U00A0> \xA0 |0
++<U00A7> \xA7 |0
++<U00A9> \xA9 |0
++<U00AB> \xAB |0
++<U00AD> \xAD |0
++<U00B0> \xB0 |0
++<U00B1> \xB1 |0
++<U00B6> \xB6 |0
++<U00B7> \xB7 |0
++<U00BB> \xBB |0
++<U00C0> \xC0 |0
++<U00C1> \xC1 |0
++<U00C2> \xC2 |0
++<U00C4> \xC4 |0
++<U00C6> \xC6 |0
++<U00C7> \xC7 |0
++<U00C8> \xC8 |0
++<U00C9> \xC9 |0
++<U00CA> \xCA |0
++<U00CB> \xCB |0
++<U00CC> \xCC |0
++<U00CD> \xCD |0
++<U00CE> \xCE |0
++<U00CF> \xCF |0
++<U00D2> \xD2 |0
++<U00D3> \xD3 |0
++<U00D4> \xD4 |0
++<U00D6> \xD6 |0
++<U00D9> \xD9 |0
++<U00DA> \xDA |0
++<U00DB> \xDB |0
++<U00DC> \xDC |0
++<U00DF> \xDF |0
++<U00E0> \xE0 |0
++<U00E1> \xE1 |0
++<U00E2> \xE2 |0
++<U00E4> \xE4 |0
++<U00E6> \xE6 |0
++<U00E7> \xE7 |0
++<U00E8> \xE8 |0
++<U00E9> \xE9 |0
++<U00EA> \xEA |0
++<U00EB> \xEB |0
++<U00EC> \xEC |0
++<U00ED> \xED |0
++<U00EE> \xEE |0
++<U00EF> \xEF |0
++<U00F2> \xF2 |0
++<U00F3> \xF3 |0
++<U00F4> \xF4 |0
++<U00F6> \xF6 |0
++<U00F9> \xF9 |0
++<U00FA> \xFA |0
++<U00FB> \xFB |0
++<U00FC> \xFC |0
++<U00FF> \xFF |0
++<U0102> \xC3 |0
++<U0103> \xE3 |0
++<U0104> \xA1 |0
++<U0105> \xA2 |0
++<U0106> \xC5 |0
++<U0107> \xE5 |0
++<U010C> \xB2 |0
++<U010D> \xB9 |0
++<U0110> \xD0 |0
++<U0111> \xF0 |0
++<U0118> \xDD |0
++<U0119> \xFD |0
++<U0141> \xA3 |0
++<U0142> \xB3 |0
++<U0143> \xD1 |0
++<U0144> \xF1 |0
++<U0150> \xD5 |0
++<U0151> \xF5 |0
++<U0152> \xBC |0
++<U0153> \xBD |0
++<U015A> \xD7 |0
++<U015B> \xF7 |0
++<U0160> \xA6 |0
++<U0161> \xA8 |0
++<U0170> \xD8 |0
++<U0171> \xF8 |0
++<U0178> \xBE |0
++<U0179> \xAC |0
++<U017A> \xAE |0
++<U017B> \xAF |0
++<U017C> \xBF |0
++<U017D> \xB4 |0
++<U017E> \xB8 |0
++<U0218> \xAA |0
++<U0219> \xBA |0
++<U021A> \xDE |0
++<U021B> \xFE |0
++<U201D> \xB5 |0
++<U201E> \xA5 |0
++<U20AC> \xA4 |0
++END CHARMAP
+diff -urN trie.clean/source/data/mappings/ucmebcdic.mk trie.chrome/source/data/mappings/ucmebcdic.mk
+--- trie.clean/source/data/mappings/ucmebcdic.mk	2007-05-09 23:40:31.936518000 -0700
++++ trie.chrome/source/data/mappings/ucmebcdic.mk	1969-12-31 16:00:00.000000000 -0800
+@@ -1,27 +0,0 @@
+-# Copyright (c) 1999-2007, International Business Machines Corporation and
+-# others. All Rights Reserved.
+-# A list of EBCDIC UCM's to build
+-# ibm-37 and ibm-1047 are already mentioned in makedata.mak and Makefile.in
+-
+-UCM_SOURCE_EBCDIC = ebcdic-xml-us.ucm\
+-ibm-1025_P100-1995.ucm ibm-1026_P100-1995.ucm ibm-1097_P100-1995.ucm\
+-ibm-1112_P100-1995.ucm ibm-1122_P100-1999.ucm ibm-1130_P100-1997.ucm\
+-ibm-1132_P100-1998.ucm ibm-1137_P100-1999.ucm ibm-1364_P110-2007.ucm\
+-ibm-1371_P100-1999.ucm ibm-1388_P103-2001.ucm ibm-1390_P110-2003.ucm\
+-ibm-1399_P110-2003.ucm ibm-870_P100-1995.ucm ibm-875_P100-1995.ucm\
+-ibm-838_P100-1995.ucm ibm-918_P100-1995.ucm ibm-930_P120-1999.ucm\
+-ibm-933_P110-1995.ucm ibm-935_P110-1999.ucm ibm-937_P110-1999.ucm\
+-ibm-939_P120-1999.ucm ibm-1123_P100-1995.ucm ibm-1140_P100-1997.ucm\
+-ibm-1141_P100-1997.ucm ibm-1142_P100-1997.ucm ibm-1143_P100-1997.ucm\
+-ibm-1144_P100-1997.ucm ibm-1145_P100-1997.ucm ibm-1146_P100-1997.ucm\
+-ibm-1147_P100-1997.ucm ibm-1148_P100-1997.ucm ibm-1149_P100-1997.ucm\
+-ibm-1153_P100-1999.ucm ibm-1154_P100-1999.ucm ibm-1155_P100-1999.ucm\
+-ibm-1156_P100-1999.ucm ibm-1157_P100-1999.ucm ibm-1158_P100-1999.ucm\
+-ibm-1160_P100-1999.ucm ibm-1164_P100-1999.ucm ibm-871_P100-1995.ucm\
+-ibm-12712_P100-1998.ucm ibm-16804_X110-1999.ucm ibm-273_P100-1995.ucm\
+-ibm-277_P100-1995.ucm ibm-278_P100-1995.ucm ibm-280_P100-1995.ucm\
+-ibm-284_P100-1995.ucm ibm-285_P100-1995.ucm ibm-290_P100-1995.ucm\
+-ibm-297_P100-1995.ucm ibm-420_X120-1999.ucm ibm-424_P100-1995.ucm\
+-ibm-4517_P100-2005.ucm ibm-4899_P100-1998.ucm ibm-4971_P100-1999.ucm\
+-ibm-500_P100-1995.ucm ibm-5123_P100-1999.ucm ibm-803_P100-1999.ucm\
+-ibm-8482_P100-1999.ucm ibm-9067_X100-2005.ucm ibm-16684_P110-2003.ucm
+diff -urN trie.clean/source/data/mappings/ucmlocal.mk trie.chrome/source/data/mappings/ucmlocal.mk
+--- trie.clean/source/data/mappings/ucmlocal.mk	1969-12-31 16:00:00.000000000 -0800
++++ trie.chrome/source/data/mappings/ucmlocal.mk	2008-07-14 20:15:39.153182000 -0700
+@@ -0,0 +1,54 @@
++# Note: A number of encodings are handled with purely algorithmic converters,
++# without any mapping tables:
++# US-ASCII, ISO 8859-1, UTF-7/8/16/32, SCSU
++
++# Listed here:
++
++# * ISO 8859-2..9,10,13,14,15,16
++#   - 8859-11 table is not included. It's rather treated as a synonym of
++#     Windows-874
++# * Windows-125[0-8]
++# * Simplified Chinese : GBK(Windows cp936), GB 18030
++#   - GB2312 table was removed and 4 aliases for GB2312 were added
++#     to GBK in convrtrs.txt to treat GB2312 as a synonym of GBK.
++#   - For HZ, we need ibm-1386_P100_P100-2001, but we'd waste quite a lot 
++#     of space. We'd better patch ICU to use the GB2312 table for HZ
++# * Traditional Chinese : Big5 (Windows cp950), Big5HKSCS (no PUA)
++# * Japanese : SJIS (Windows cp932), EUC-JP (ibm-954_P101-2007)
++# * Korean : Windows-949
++#  - EUC-KR table was removed. It's different from Windows-949, but
++#    in practice EUC-KR and Windows-949 are treated synonymously.
++#  - icu-internal-25546.ucm is necessary for ISO-2022-KR, but the encoding 
++#    is extremley rarely used for web pages. Even if we decide to support it,
++#    we'd better modify ICU to share the table with Windows-949 converter.
++# * Thai : Windows-874 
++#   - TIS-620 and ISO-8859-11 are treated as synonyms of Windows-874
++#     although they're not the same.
++# * Mac encodings : MacRoman
++# * Cyrillic : KOI8-R, KOI8-U
++# * WebKit wants PC-Arabic (DOS 720 = IBM-864)
++#
++# * Missing 
++#  - Armenian, Georgian  : extremly rare 
++#  - Mac encodings (other than Roman) : extremly rare
++
++UCM_SOURCE_FILES=
++
++UCM_SOURCE_CORE=ibm-912_P100-1995.ucm ibm-913_P100-2000.ucm\
++ibm-914_P100-1995.ucm ibm-915_P100-1995.ucm\
++ibm-1089_P100-1995.ucm ibm-9005_X110-2007.ucm\
++ibm-5012_P100-1999.ucm ibm-920_P100-1995.ucm\
++iso-8859_10-1998.ucm\
++ibm-921_P100-1995.ucm iso-8859_14-1998.ucm ibm-923_P100-1998.ucm\
++iso-8859_16-2001.ucm\
++ibm-5346_P100-1998.ucm ibm-5347_P100-1998.ucm ibm-5348_P100-1997.ucm\
++ibm-5349_P100-1998.ucm ibm-5350_P100-1998.ucm ibm-9447_P100-2002.ucm\
++ibm-9448_X100-2005.ucm ibm-9449_P100-2002.ucm ibm-5354_P100-1998.ucm\
++windows-936-2000.ucm gb18030.ucm\
++windows-950-2000.ucm ibm-1375_P100-2007.ucm\
++ibm-943_P15A-2003.ucm ibm-954_P101-2007.ucm\
++windows-949-2000.ucm\
++windows-874-2000.ucm ibm-874_P100-1995.ucm\
++macos-0_2-10.2.ucm macos-7_3-10.2.ucm\
++ibm-878_P100-1996.ucm ibm-1168_P100-2002.ucm\
++ibm-864_X110-1999.ucm
+diff -urN trie.clean/source/data/mappings/windows-936-2000.ucm trie.chrome/source/data/mappings/windows-936-2000.ucm
+--- trie.clean/source/data/mappings/windows-936-2000.ucm	2007-05-09 23:40:31.936518000 -0700
++++ trie.chrome/source/data/mappings/windows-936-2000.ucm	2008-01-10 17:37:03.127248000 -0800
+@@ -37,7 +37,8 @@
+ 
+ # build an extension-only (delta) .cnv file
+ # requires the base .cnv file at runtime
+-<icu:base>                    "ibm-1386_P100-2001"
++# CHROME : we don't want ibm-1386
++#<icu:base>                    "ibm-1386_P100-2001"
+ 
+ # The following was the generated state table.
+ # This does not account for unassigned characters
+diff -urN trie.clean/source/data/mappings/windows-949-2000.ucm trie.chrome/source/data/mappings/windows-949-2000.ucm
+--- trie.clean/source/data/mappings/windows-949-2000.ucm	2003-12-18 15:16:48.000000000 -0800
++++ trie.chrome/source/data/mappings/windows-949-2000.ucm	2008-01-10 17:35:21.000000000 -0800
+@@ -37,7 +37,8 @@
+ 
+ # build an extension-only (delta) .cnv file
+ # requires the base .cnv file at runtime
+-<icu:base>                    "ibm-1363_P11B-1998"
++# CHROME : we don't want IBM-1363
++#<icu:base>                    "ibm-1363_P11B-1998"
+ 
+ # The following was the generated state table.
+ # This does not account for unassigned characters
+diff -urN trie.clean/source/data/mappings/windows-950-2000.ucm trie.chrome/source/data/mappings/windows-950-2000.ucm
+--- trie.clean/source/data/mappings/windows-950-2000.ucm	2003-12-18 15:16:48.000000000 -0800
++++ trie.chrome/source/data/mappings/windows-950-2000.ucm	2008-01-10 13:49:30.000000000 -0800
+@@ -37,7 +37,8 @@
+ 
+ # build an extension-only (delta) .cnv file
+ # requires the base .cnv file at runtime
+-<icu:base>                    "ibm-1373_P100-2002"
++# CHROME : we don't want to include ibm-1373
++#<icu:base>                    "ibm-1373_P100-2002"
+ 
+ # The following was the generated state table.
+ # This does not account for unassigned characters
+diff -urN trie.clean/source/data/translit/trnslocal.mk trie.chrome/source/data/translit/trnslocal.mk
+--- trie.clean/source/data/translit/trnslocal.mk        1969-12-31 16:00:00.000000000 -0800
++++ trie.chrome/source/data/translit/trnslocal.mk  2008-12-08 15:57:16.463443000 -0800
+@@ -0,0 +1 @@
++TRANSLIT_SOURCE=

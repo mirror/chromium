@@ -1,0 +1,166 @@
+A. This directory contains the source code of ICU 3.8 for C/C++ with CJK
+  segmentation, plural formatting and other locale-data updates added:
+
+  - It was obtained with the following:
+
+    1. Download the clean ICU source tree (revision 22777) with the following :
+
+       $ svn export --native-eol LF -r 22777 http://source.icu-project.org/repos/icu/icu/trunk icu38
+
+    2. Apply the following  patches :
+        
+       * segmentation.patch.txt  (CJ segmentation patch : code change + data)
+       * data.patch.txt (ICU data customization patch)
+       * data.patch2.txt, data.patch3.txt
+         (Additional ICU data customization patches: to be applied on top of
+          data.patch.txt)
+       * eucjp.patch.txt (to be applied on top of 3 data patches above).
+       * indian8_locales.txt (to be applied on top of above data paches) :
+         Add locale data for 8 Indian languages
+       * gbk.patch.txt (to be applied after the above patches) : Make
+         GBK converter in ICU used outside Webkit behave identically
+	 to GBK converter used in Webkit (see
+	 WebCore/platform/text/TextCodecICU.cpp : getGbkEscapes())
+       * windows.patch (Windows-specific patch)
+       * uconv.patch (thread-safety patch for uconv. Ported from the ICU trunk)
+       * wpo.patch (see section E).
+       * plural.patch (for plural formatting. Ported back from ICU 4.0. See
+         section G for details).
+       * uconv.security.patch (patches for ICU bug 5691/Chrome bug 2074.
+         The patch for HZ encoding is not included because we don't
+         support HZ).
+       * regex.patch (patch for ICU bug 6149/Chrome bug 8198)
+
+  - Once CJK segmentation is included in an ICU release, we can use that
+    release, instead of applying the first patch above.
+
+  - The first patch contains the word frequency list derived from 3
+    sources. For details, see the license terms and copyright notice
+    at the beginning of the following two files: 
+      source/data/brkitr/cjdict.txt 
+      source/data/brkitr/cc_cedict.txt 
+     
+
+B. We build ICU 3.8 with VC++ 8 statically linked to VC8 runtime library
+  via the project files in the build directory.  The files under
+  source\common\unicode and source\i18n\unicode were moved under public
+  so that consumer don't accidently include internal header files.
+
+C. The data tables DLL (icudt38.dll) is converted from the archive file 
+  (trunk/third_party/icu38/source/data/in/icudt38l.dat) built on Linux.
+  Consumers normally just copy the converted file (icudt38.dll) by including
+  the build/icudt.vcproj file.  Additionally, icudt38l_dat.s is included as
+  prebuilt ICU data for the Mac and Linux builds in the mac and linux
+  subdirectories.
+
+D. The following procedure was taken to build a customized icudt38l.dat on Linux. 
+
+   1. Download the ICU 3.8 source as explained in A.1 above.
+
+     $ svn export --native-eol LF -r 22777 http://source.icu-project.org/repos/icu/icu/trunk icu38
+
+   2. Apply the first two patches listed in A.2 above. 
+   'data.patch.txt' contains the following data customization:
+      
+      - Customized encoding coverter tables and aliases
+      - Locale data customizations
+      - removal of source/data/ucmebcdic.mk
+      - fil (Filipino locale) copied from google's copy of ICU
+      - A few changes in makefiles to reduce the data size 
+        (e.g. excluding invicu.dat).
+
+     Below are the list of changes ported back from ICU 4.0. When
+     we upgrade to ICU 4.0, we don't have to modify files listed below.
+
+      - es_XX locale fixes for some Latin-American locales (locales/es*.txt)
+      - ja (Japanese) and id (Indonesian) date formatting fixes
+        (locales/ja.txt locales/id.txt)
+      - character iterator for extended grapheme cluster support
+        (brkitr/char.txt)
+      - line iterators : Fixes an issue with Ideographic punctuation marks. 
+        (brkitr/line.txt)
+
+   3. Configure the source in $ICUROOT/source
+
+      $ runConfigureICU Linux
+
+   4. Run 'make' and icudt38l.dat will be generated in source/data/out/tmp
+
+   5. Check in icudt38l.dat as 
+     trunk/third_party/icu38/source/data/in/icudt38l.dat
+
+   6. If you build 'icudt-build' solution on Windows, you will get
+
+      trunk/third_party/icu38/build/{Debug,Release}/icudt38.dll
+
+   7. icudt38.dll need to be checked in as 
+
+      trunk/third_party/icu38/icudt38.dll
+
+   8. As mentioned above, consumers just use icudt38.dll by including build/icudt.vcproj file.
+  
+E. In addition to files included in patches listed in A2, the following files
+   are modified in our copy of ICU 3.8 to build on Windows:
+
+     source\stubdata\stubdatabuilt.txt  (just an empty file added)
+     source\common\udata.c              (fix WPO issue, see wpo.patch)
+     source\common\ucmndata.h           (fix WPO issue, see wpo.patch)
+     source\stubdata\stubdata.c         (fix WPO issue, see wpo.patch)
+
+F. Mac and Linux platform headers (common/p{mac,linux}.h):
+
+   Mac:
+   - A platform.h equivalent for Mac was generated by running configure on
+     a Mac;
+   - The generated file was renamed from platform.h to pmac.h to avoid
+     colliding with other autoconf-based platforms that also natively use
+     platform.h.  The name pmac.h was selected to follow the scheme used by
+     other prebuilt platform files in the ICU distribution, such as pwin32.h;
+   - The file was moved from source/common/unicode to public/common/unicode
+     (see B above);
+   - The U_WCHAR_IS_UTF32 macro was added to pmac.h, because we're only
+     concerned with wchar_t strings containing UTF-32 data on the Mac;
+   - public/common/unicode/umachine.h was updated to include pmac.h instead of
+     platform.h on the Mac;
+   - icu.gyp was added to enable gyp-based builds to use ICU.
+
+   Linux:
+   - Similarly to the Mac case.  Let ICUROOT be third_party/icu38.  Then:
+
+     cd $ICUROOT/source
+     ln -s ../public/common/unicode ./common/
+     ./runConfigureICU Linux
+     mv -f ./common/unicode/platform.h ./common/unicode/plinux.h
+     rm ./common/unicode
+
+     This produces the plinux.h header file.
+
+G. Plural formatter was ported back from ICU 4.0 to ICU 3.8 by 
+   applying the patch (plural.patch). The files affected are :
+
+       source/common/utypes.c	
+       source/i18n/Makefile.in
+       source/i18n/i18n.vcproj
+       source/i18n/msgfmt.cpp	
+       source/i18n/msgfmt_impl.h	
+       source/i18n/plurfmt.cpp	
+       source/i18n/plurrule.cpp
+       source/i18n/plurrule_impl.h
+       source/test/intltest/Makefile.in
+       source/test/intltest/intltest.vcproj
+       source/test/intltest/itformat.cpp	
+       source/test/intltest/plurfmts.cpp
+       source/test/intltest/plurfmts.h	
+       source/test/intltest/plurults.cpp
+       source/test/intltest/plurults.h
+       source/test/intltest/tmsgfmt.cpp	
+       source/test/intltest/tmsgfmt.h	
+       public/common/unicode/utypes.h
+       public/i18n/unicode/msgfmt.h
+       public/i18n/unicode/plurfmt.h
+       public/i18n/unicode/plurrule.h
+
+  Besides, builds/icu.vcproj was modified to add plurrule.cpp and
+  plurfmt.cpp to the list of files to compile. Note that this change
+  is not a part of plural.patch because builds/icu.vcproj is 
+  our own file. 
