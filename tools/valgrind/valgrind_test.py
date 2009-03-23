@@ -21,6 +21,8 @@ import common
 
 import valgrind_analyze
 
+import google.logging_utils
+
 rmtree = shutil.rmtree
 
 class Valgrind(object):
@@ -54,9 +56,17 @@ class Valgrind(object):
                             help="path to a valgrind suppression file")
     self._parser.add_option("", "--gtest_filter", default="",
                             help="which test case to run")
+    self._parser.add_option("", "--gtest_print_time", action="store_true",
+                            default=False,
+                            help="show how long each test takes")
+    self._parser.add_option("", "--show_all_leaks", action="store_true",
+                            default=False,
+                            help="also show less blatant leaks")
     self._parser.add_option("", "--generate_suppressions", action="store_true",
                             default=False,
                             help="Skip analysis and generate suppressions")
+    self._parser.add_option("-v", "--verbose", action="store_true", default=False,
+                    help="verbose output - enable debug log messages")
     self._parser.description = __doc__
 
   def ParseArgv(self):
@@ -68,6 +78,13 @@ class Valgrind(object):
     self._source_dir = self._options.source_dir
     if self._options.gtest_filter != "":
       self._args.append("--gtest_filter=%s" % self._options.gtest_filter)
+    if self._options.gtest_print_time:
+      self._args.append("--gtest_print_time");
+    if self._options.verbose:
+      google.logging_utils.config_root(logging.DEBUG)
+    else:
+      google.logging_utils.config_root()
+
     return True
 
   def Setup(self):
@@ -84,6 +101,11 @@ class Valgrind(object):
     logging.info("starting execution...")
 
     proc = self.ValgrindCommand()
+    os.putenv("G_SLICE", "always-malloc")
+    logging.info("export G_SLICE=always-malloc");
+    os.putenv("NSS_DISABLE_ARENA_FREE_LIST", "1")
+    logging.info("export NSS_DISABLE_ARENA_FREE_LIST=1");
+
     common.RunSubprocess(proc, self._timeout)
 
     # Always return true, even if running the subprocess failed. We depend on
@@ -94,7 +116,7 @@ class Valgrind(object):
   def Analyze(self):
     # Glob all the files in the "valgrind.tmp" directory
     filenames = glob.glob(self.TMP_DIR + "/valgrind.*")
-    analyzer = valgrind_analyze.ValgrindAnalyze(self._source_dir, filenames)
+    analyzer = valgrind_analyze.ValgrindAnalyze(self._source_dir, filenames, self._options.show_all_leaks)
     return analyzer.Report()
 
   def Cleanup(self):
@@ -152,6 +174,9 @@ class ValgrindLinux(Valgrind):
     # the "--track-origins" option...
     proc = ["valgrind", "--smc-check=all", "--leak-check=full",
             "--num-callers=30"]
+
+    if self._options.show_all_leaks:
+      proc += ["--show-reachable=yes"];
 
     # Either generate suppressions or load them.
     if self._generate_suppressions:

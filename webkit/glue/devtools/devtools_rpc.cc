@@ -20,15 +20,20 @@ DevToolsRpc::DevToolsRpc(Delegate* delegate) : delegate_(delegate) {
 DevToolsRpc::~DevToolsRpc() {
 }
 
-void DevToolsRpc::SendValueMessage(const Value* value) {
-  std::string json;
-  JSONWriter::Write(value, false, &json);
-  delegate_->SendRpcMessage(json);
+void DevToolsRpc::SendValueMessage(const Value& value) {
+  delegate_->SendRpcMessage(Serialize(value));
 }
 
 // static
 Value* DevToolsRpc::ParseMessage(const std::string& raw_msg) {
   return JSONReader::Read(raw_msg, false);
+}
+
+// static
+std::string DevToolsRpc::Serialize(const Value& value) {
+  std::string json;
+  JSONWriter::Write(&value, false, &json);
+  return json;
 }
 
 // static
@@ -61,6 +66,14 @@ void DevToolsRpc::GetListValue(
 void DevToolsRpc::GetListValue(
     const ListValue& message,
     int index,
+    std::string* value) {
+  message.GetString(index, value);
+}
+
+// static
+void DevToolsRpc::GetListValue(
+    const ListValue& message,
+    int index,
     Value** value) {
   message.Get(index, value);
 }
@@ -69,6 +82,11 @@ void DevToolsRpc::GetListValue(
 Value* DevToolsRpc::CreateValue(const String* value) {
   return Value::CreateStringValue(
       webkit_glue::StringToStdString(*value));
+}
+
+// static
+Value* DevToolsRpc::CreateValue(const std::string* value) {
+  return Value::CreateStringValue(*value);
 }
 
 // static

@@ -312,10 +312,8 @@ class Browser : public TabStripModelDelegate,
   // Focus various bits of UI
   void FocusToolbar();
 #endif
-#if defined(OS_WIN) || defined(OS_LINUX)
   void FocusLocationBar();
   void FocusSearch();
-#endif
 
   // Show various bits of UI
 #if defined(OS_WIN) || defined(OS_LINUX)
@@ -425,9 +423,9 @@ class Browser : public TabStripModelDelegate,
   virtual void ToolbarSizeChanged(TabContents* source, bool is_animating);
   virtual void URLStarredChanged(TabContents* source, bool starred);
 
-#if defined(OS_WIN)
-  virtual void ContentsMouseEvent(TabContents* source, uint32 message);
-#endif
+  // A mouse event occurred; motion==true is mouse movement, motion==false
+  // is the mouse leaving the view.
+  virtual void ContentsMouseEvent(TabContents* source, bool motion);
   virtual void UpdateTargetURL(TabContents* source, const GURL& url);
 
   virtual void ContentsZoomChange(bool zoom_in);

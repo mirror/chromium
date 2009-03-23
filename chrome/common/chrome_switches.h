@@ -139,7 +139,6 @@ extern const wchar_t kLoadPlugin[];
 extern const wchar_t kUserScriptsDir[];
 
 extern const wchar_t kIncognito[];
-extern const wchar_t kUseOldSafeBrowsing[];
 
 extern const wchar_t kEnableRendererAccessibility[];
 
@@ -156,6 +155,10 @@ extern const wchar_t kIPCUseFIFO[];
 extern const wchar_t kEnableOutOfProcessDevTools[];
 
 extern const wchar_t kEnableWebWorkers[];
+
+extern const wchar_t kViewsGtk[];
+
+extern const wchar_t kBookmarkMenu[];
 
 }  // namespace switches
 

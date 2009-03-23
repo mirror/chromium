@@ -5,7 +5,6 @@
 #ifndef CHROME_VIEWS_CONTROLS_BUTTON_NATIVE_BUTTON_WIN_H_
 #define CHROME_VIEWS_CONTROLS_BUTTON_NATIVE_BUTTON_WIN_H_
 
-#include "chrome/common/gfx/chrome_font.h"
 #include "chrome/views/controls/native_control_win.h"
 #include "chrome/views/controls/button/native_button_wrapper.h"
 
@@ -15,17 +14,13 @@ namespace views {
 class NativeButtonWin : public NativeControlWin,
                         public NativeButtonWrapper {
  public:
-  explicit NativeButtonWin(NativeButtonWrapperListener* listener);
+  explicit NativeButtonWin(NativeButton2* native_button);
   virtual ~NativeButtonWin();
 
   // Overridden from NativeButtonWrapper:
-  virtual void SetLabel(const std::wstring& label);
-  virtual std::wstring GetLabel() const;
-  virtual void SetFont(const ChromeFont& font);
-  virtual void SetDefaultButton(bool is_default);
-  virtual bool IsDefaultButton() const;
-  virtual void SetMinimumSizeInPlatformUnits(const gfx::Size& minimum_size);
-  virtual void SetIgnoreMinimumSize(bool ignore_minimum_size);
+  virtual void UpdateLabel();
+  virtual void UpdateFont();
+  virtual void UpdateDefault();
   virtual View* GetView();
 
   // Overridden from View:
@@ -42,25 +37,12 @@ class NativeButtonWin : public NativeControlWin,
   virtual void CreateNativeControl();
   virtual void NativeControlCreated(HWND control_hwnd);
 
+  // Returns true if this button is actually a checkbox or radio button.
+  virtual bool IsCheckbox() const { return false; }
+
  private:
-  // Our listener.
-  NativeButtonWrapperListener* listener_;
-
-  // The button label.
-  std::wstring label_;
-
-  // True if the button is the default button in its context.
-  bool is_default_;
-
-  // The font used to render the button label.
-  ChromeFont font_;
-
-  // True if the button should ignore the minimum size for the platform. Default
-  // is false.
-  bool ignore_minimum_size_;
-
-  // Minimum size, in dlus (see SetMinimumSizeInPlatformUnits).
-  gfx::Size min_dlu_size_;
+  // The NativeButton we are bound to.
+  NativeButton2* native_button_;
 
   DISALLOW_COPY_AND_ASSIGN(NativeButtonWin);
 };
@@ -68,13 +50,15 @@ class NativeButtonWin : public NativeControlWin,
 // A View that hosts a native Windows checkbox.
 class NativeCheckboxWin : public NativeButtonWin {
  public:
-  explicit NativeCheckboxWin(NativeButtonWrapperListener* listener);
+  explicit NativeCheckboxWin(Checkbox2* native_button);
   virtual ~NativeCheckboxWin();
 
+  // Overridden from View:
+  virtual gfx::Size GetPreferredSize();
+
   // Overridden from NativeButtonWrapper:
-  virtual void SetSelected(bool selected);
-  virtual bool IsSelected() const;
-  virtual void SetHighlight(bool highlight);
+  virtual void UpdateChecked();
+  virtual void SetPushed(bool pushed);
 
   // Overridden from NativeControlWin:
   virtual LRESULT ProcessMessage(UINT message,
@@ -84,10 +68,11 @@ class NativeCheckboxWin : public NativeButtonWin {
  protected:
   virtual void CreateNativeControl();
   virtual void NativeControlCreated(HWND control_hwnd);
+  virtual bool IsCheckbox() const { return true; }
 
  private:
-  // True if this checkbox is checked.
-  bool selected_;
+  // The Checkbox we are bound to.
+  Checkbox2* checkbox_;
 
   DISALLOW_COPY_AND_ASSIGN(NativeCheckboxWin);
 };
@@ -95,7 +80,7 @@ class NativeCheckboxWin : public NativeButtonWin {
 // A View that hosts a native Windows radio button.
 class NativeRadioButtonWin : public NativeCheckboxWin {
  public:
-  explicit NativeRadioButtonWin(NativeButtonWrapperListener* listener);
+  explicit NativeRadioButtonWin(RadioButton2* radio_button);
   virtual ~NativeRadioButtonWin();
 
  protected:
@@ -105,7 +90,7 @@ class NativeRadioButtonWin : public NativeCheckboxWin {
  private:
   DISALLOW_COPY_AND_ASSIGN(NativeRadioButtonWin);
 };
-  
+
 }  // namespace views
 
 #endif  // #ifndef CHROME_VIEWS_CONTROLS_BUTTON_NATIVE_BUTTON_WIN_H_

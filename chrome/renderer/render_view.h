@@ -32,6 +32,7 @@
 #include "webkit/glue/feed.h"
 #include "webkit/glue/form_data.h"
 #include "webkit/glue/password_form_dom_manager.h"
+#include "webkit/glue/webaccessibilitymanager.h"
 #include "webkit/glue/webview_delegate.h"
 #include "webkit/glue/webview.h"
 
@@ -48,18 +49,16 @@ class DebugMessageHandler;
 class DevToolsAgent;
 class DevToolsClient;
 class FilePath;
-class GlueAccessibility;
 class GURL;
 class RenderThread;
 class ResourceDispatcher;
 class SkBitmap;
+class WebAccessibilityManager;
 class WebError;
 class WebFrame;
 class WebPluginDelegate;
 class WebPluginDelegateProxy;
 class WebDevToolsAgentDelegate;
-struct AccessibilityInParams;
-struct AccessibilityOutParams;
 struct FindInPageRequest;
 struct ThumbnailScore;
 struct ViewMsg_Navigate_Params;
@@ -74,6 +73,9 @@ class WaitableEvent;
 
 namespace webkit_glue {
 struct FileUploadData;
+//class WebAccessibility;
+//struct InParams;
+//struct OutParams;
 }
 
 // We need to prevent a page from trying to create infinite popups. It is not
@@ -153,6 +155,8 @@ class RenderView : public RenderWidget,
   virtual void QueryFormFieldAutofill(const std::wstring& field_name,
                                       const std::wstring& text,
                                       int64 node_id);
+  virtual void RemoveStoredAutofillEntry(const std::wstring& field_name,
+                                         const std::wstring& text);
   virtual void UpdateTargetURL(WebView* webview,
                                const GURL& url);
   virtual void RunFileChooser(bool multi_select,
@@ -517,9 +521,10 @@ class RenderView : public RenderWidget,
   void OnEnableViewSourceMode();
   void OnUpdateBackForwardListCount(int back_list_count,
                                     int forward_list_count);
-  void OnGetAccessibilityInfo(const AccessibilityInParams& in_params,
-                              AccessibilityOutParams* out_params);
-  void OnClearAccessibilityInfo(int iaccessible_id, bool clear_all);
+  void OnGetAccessibilityInfo(
+      const webkit_glue::WebAccessibility::InParams& in_params,
+      webkit_glue::WebAccessibility::OutParams* out_params);
+  void OnClearAccessibilityInfo(int acc_obj_id, bool clear_all);
 
   void OnMoveOrResizeStarted();
 
@@ -572,17 +577,10 @@ class RenderView : public RenderWidget,
   // Notification of volume property of an audio output stream.
   void OnAudioStreamVolume(int stream_id, double left, double right);
 
-  // Switches the frame's CSS media type to "print" and calculate the number of
-  // printed pages that are to be expected. |frame| will be used to calculate
-  // the number of expected pages for this frame only.
-  int SwitchFrameToPrintMediaType(const ViewMsg_Print_Params& params,
-                                  WebFrame* frame);
-
-  // Switches the frame's CSS media type to "display".
-  void SwitchFrameToDisplayMediaType(WebFrame* frame);
-
   // Prints the page listed in |params|.
-  void PrintPage(const ViewMsg_PrintPage_Params& params, WebFrame* frame);
+  void PrintPage(const ViewMsg_PrintPage_Params& params,
+                 const gfx::Size& canvas_size,
+                 WebFrame* frame);
 
   // Prints all the pages listed in |params|.
   void PrintPages(const ViewMsg_PrintPages_Params& params, WebFrame* frame);
@@ -733,13 +731,6 @@ class RenderView : public RenderWidget,
   // check this to know if they should pump messages/tasks then.
   scoped_ptr<base::WaitableEvent> modal_dialog_event_;
 
-  // Document width when in print CSS media type. 0 otherwise.
-  int printed_document_width_;
-
-  // Backup the view size before printing since it needs to be overriden. This
-  // value is set to restore the view size when printing is done.
-  gfx::Size printing_view_size_;
-
   scoped_refptr<DebugMessageHandler> debug_message_handler_;
 
   // Provides access to this renderer from the remote Inspector UI.
@@ -770,11 +761,11 @@ class RenderView : public RenderWidget,
   // shouldn't count against their own |shared_popup_counter_|.
   bool decrement_shared_popup_at_destruction_;
 
-  // TODO(port): revisit once qwe have accessibility
+  // TODO(port): revisit once we have accessibility
 #if defined(OS_WIN)
   // Handles accessibility requests into the renderer side, as well as
   // maintains the cache and other features of the accessibility tree.
-  scoped_ptr<GlueAccessibility> glue_accessibility_;
+  scoped_ptr<webkit_glue::WebAccessibilityManager> web_accessibility_manager_;
 #endif
 
   // Resource message queue. Used to queue up resource IPCs if we need

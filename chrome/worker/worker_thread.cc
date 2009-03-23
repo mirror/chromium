@@ -8,8 +8,7 @@
 #include "chrome/worker/webworkerclient_proxy.h"
 #include "chrome/worker/worker_process.h"
 #include "chrome/worker/worker_webkitclient_impl.h"
-
-#include "WebKit.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebKit.h"
 
 WorkerThread::WorkerThread()
     : ChildThread(base::Thread::Options(MessageLoop::TYPE_DEFAULT,
@@ -43,5 +42,6 @@ void WorkerThread::OnControlMessageReceived(const IPC::Message& msg) {
 }
 
 void WorkerThread::OnCreateWorker(const GURL& url, int route_id) {
+  // WebWorkerClientProxy owns itself.
   WebWorkerClientProxy* worker = new WebWorkerClientProxy(url, route_id);
 }

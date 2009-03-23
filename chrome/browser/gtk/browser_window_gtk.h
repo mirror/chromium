@@ -9,8 +9,10 @@
 
 #include "base/gfx/rect.h"
 #include "base/scoped_ptr.h"
+#include "base/task.h"
 #include "chrome/browser/browser_window.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
+#include "chrome/views/widget/widget_gtk.h"
 
 class BrowserToolbarGtk;
 class FindBarController;
@@ -104,14 +106,14 @@ class BrowserWindowGtk : public BrowserWindow,
   static gboolean OnContentAreaExpose(GtkWidget* widget, GdkEventExpose* e,
                                       BrowserWindowGtk* window);
 
-  static gboolean OnWindowDestroyed(GtkWidget* window,
-                                    BrowserWindowGtk* browser_win);
-
   static gboolean OnAccelerator(GtkAccelGroup* accel_group,
                                 GObject* acceleratable,
                                 guint keyval,
                                 GdkModifierType modifier,
                                 BrowserWindowGtk* browser_window);
+
+  // A small shim for browser_->ExecuteCommand.
+  void ExecuteBrowserCommand(int id);
 
   gfx::Rect bounds_;
   GdkWindowState state_;
@@ -137,6 +139,13 @@ class BrowserWindowGtk : public BrowserWindow,
   // non-NULL, it may or may not be visible.  It is possible for the Find Bar
   // to move among windows as tabs are dragged around.
   scoped_ptr<FindBarController> find_bar_controller_;
+
+  // When it goes out of scope during our destruction, |method_factory_| will
+  // cancel its pending tasks (which depend on us still existing).
+  ScopedRunnableMethodFactory<BrowserWindowGtk> method_factory_;
+
+  // Experiment with using views for gtk.
+  scoped_ptr<views::WidgetGtk> experimental_widget_;
 };
 
 #endif  // CHROME_BROWSER_GTK_BROWSER_WINDOW_GTK_H_

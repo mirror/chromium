@@ -14,7 +14,6 @@
 #include "base/ref_counted.h"
 #include "base/shared_memory.h"
 #include "chrome/browser/renderer_host/resource_handler.h"
-#include "chrome/common/accessibility.h"
 #include "chrome/common/filter_policy.h"
 #include "chrome/common/ipc_message_utils.h"
 #include "chrome/common/modal_dialog_event.h"
@@ -25,8 +24,8 @@
 #include "net/base/upload_data.h"
 #include "net/http/http_response_headers.h"
 #include "net/url_request/url_request_status.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebCache.h"
 #include "webkit/glue/autofill_form.h"
-#include "webkit/glue/cache_manager.h"
 #include "webkit/glue/context_menu.h"
 #include "webkit/glue/feed.h"
 #include "webkit/glue/form_data.h"
@@ -34,6 +33,7 @@
 #include "webkit/glue/password_form_dom_manager.h"
 #include "webkit/glue/resource_loader_bridge.h"
 #include "webkit/glue/screen_info.h"
+#include "webkit/glue/webaccessibility.h"
 #include "webkit/glue/webdropdata.h"
 #include "webkit/glue/webinputevent.h"
 #include "webkit/glue/webplugin.h"
@@ -594,30 +594,30 @@ struct ParamTraits<ViewHostMsg_UpdateFeedList_Params> {
 };
 
 template <>
-struct ParamTraits<AccessibilityInParams> {
-  typedef AccessibilityInParams param_type;
+struct ParamTraits<webkit_glue::WebAccessibility::InParams> {
+  typedef webkit_glue::WebAccessibility::InParams param_type;
   static void Write(Message* m, const param_type& p) {
-    WriteParam(m, p.iaccessible_id);
-    WriteParam(m, p.iaccessible_function_id);
-    WriteParam(m, p.input_variant_lval);
+    WriteParam(m, p.object_id);
+    WriteParam(m, p.function_id);
+    WriteParam(m, p.child_id);
     WriteParam(m, p.input_long1);
     WriteParam(m, p.input_long2);
   }
   static bool Read(const Message* m, void** iter, param_type* p) {
     return
-      ReadParam(m, iter, &p->iaccessible_id) &&
-      ReadParam(m, iter, &p->iaccessible_function_id) &&
-      ReadParam(m, iter, &p->input_variant_lval) &&
+      ReadParam(m, iter, &p->object_id) &&
+      ReadParam(m, iter, &p->function_id) &&
+      ReadParam(m, iter, &p->child_id) &&
       ReadParam(m, iter, &p->input_long1) &&
       ReadParam(m, iter, &p->input_long2);
   }
   static void Log(const param_type& p, std::wstring* l) {
     l->append(L"(");
-    LogParam(p.iaccessible_id, l);
+    LogParam(p.object_id, l);
     l->append(L", ");
-    LogParam(p.iaccessible_function_id, l);
+    LogParam(p.function_id, l);
     l->append(L", ");
-    LogParam(p.input_variant_lval, l);
+    LogParam(p.child_id, l);
     l->append(L", ");
     LogParam(p.input_long1, l);
     l->append(L", ");
@@ -627,11 +627,10 @@ struct ParamTraits<AccessibilityInParams> {
 };
 
 template <>
-struct ParamTraits<AccessibilityOutParams> {
-  typedef AccessibilityOutParams param_type;
+struct ParamTraits<webkit_glue::WebAccessibility::OutParams> {
+  typedef webkit_glue::WebAccessibility::OutParams param_type;
   static void Write(Message* m, const param_type& p) {
-    WriteParam(m, p.iaccessible_id);
-    WriteParam(m, p.output_variant_lval);
+    WriteParam(m, p.object_id);
     WriteParam(m, p.output_long1);
     WriteParam(m, p.output_long2);
     WriteParam(m, p.output_long3);
@@ -641,8 +640,7 @@ struct ParamTraits<AccessibilityOutParams> {
   }
   static bool Read(const Message* m, void** iter, param_type* p) {
     return
-      ReadParam(m, iter, &p->iaccessible_id) &&
-      ReadParam(m, iter, &p->output_variant_lval) &&
+      ReadParam(m, iter, &p->object_id) &&
       ReadParam(m, iter, &p->output_long1) &&
       ReadParam(m, iter, &p->output_long2) &&
       ReadParam(m, iter, &p->output_long3) &&
@@ -652,9 +650,7 @@ struct ParamTraits<AccessibilityOutParams> {
   }
   static void Log(const param_type& p, std::wstring* l) {
     l->append(L"(");
-    LogParam(p.iaccessible_id, l);
-    l->append(L", ");
-    LogParam(p.output_variant_lval, l);
+    LogParam(p.object_id, l);
     l->append(L", ");
     LogParam(p.output_long1, l);
     l->append(L", ");
@@ -1165,27 +1161,80 @@ struct ParamTraits<net::UploadData::Element> {
   }
 };
 
-// Traits for CacheManager::UsageStats
+// Traits for WebKit::WebCache::UsageStats
 template <>
-struct ParamTraits<CacheManager::UsageStats> {
-  typedef CacheManager::UsageStats param_type;
+struct ParamTraits<WebKit::WebCache::UsageStats> {
+  typedef WebKit::WebCache::UsageStats param_type;
   static void Write(Message* m, const param_type& p) {
-    WriteParam(m, p.min_dead_capacity);
-    WriteParam(m, p.max_dead_capacity);
+    WriteParam(m, p.minDeadCapacity);
+    WriteParam(m, p.maxDeadCapacity);
     WriteParam(m, p.capacity);
-    WriteParam(m, p.live_size);
-    WriteParam(m, p.dead_size);
+    WriteParam(m, p.liveSize);
+    WriteParam(m, p.deadSize);
   }
   static bool Read(const Message* m, void** iter, param_type* r) {
     return
-      ReadParam(m, iter, &r->min_dead_capacity) &&
-      ReadParam(m, iter, &r->max_dead_capacity) &&
+      ReadParam(m, iter, &r->minDeadCapacity) &&
+      ReadParam(m, iter, &r->maxDeadCapacity) &&
       ReadParam(m, iter, &r->capacity) &&
-      ReadParam(m, iter, &r->live_size) &&
-      ReadParam(m, iter, &r->dead_size);
+      ReadParam(m, iter, &r->liveSize) &&
+      ReadParam(m, iter, &r->deadSize);
   }
   static void Log(const param_type& p, std::wstring* l) {
-    l->append(L"<CacheManager::UsageStats>");
+    l->append(L"<WebCache::UsageStats>");
+  }
+};
+
+template <>
+struct ParamTraits<WebKit::WebCache::ResourceTypeStat> {
+  typedef WebKit::WebCache::ResourceTypeStat param_type;
+  static void Write(Message* m, const param_type& p) {
+    WriteParam(m, p.count);
+    WriteParam(m, p.size);
+    WriteParam(m, p.liveSize);
+    WriteParam(m, p.decodedSize);
+  }
+  static bool Read(const Message* m, void** iter, param_type* r) {
+    bool result =
+        ReadParam(m, iter, &r->count) &&
+        ReadParam(m, iter, &r->size) &&
+        ReadParam(m, iter, &r->liveSize) &&
+        ReadParam(m, iter, &r->decodedSize);
+    return result;
+  }
+  static void Log(const param_type& p, std::wstring* l) {
+    l->append(StringPrintf(L"%d %d %d %d", p.count, p.size, p.liveSize,
+        p.decodedSize));
+  }
+};
+
+template <>
+struct ParamTraits<WebKit::WebCache::ResourceTypeStats> {
+  typedef WebKit::WebCache::ResourceTypeStats param_type;
+  static void Write(Message* m, const param_type& p) {
+    WriteParam(m, p.images);
+    WriteParam(m, p.cssStyleSheets);
+    WriteParam(m, p.scripts);
+    WriteParam(m, p.xslStyleSheets);
+    WriteParam(m, p.fonts);
+  }
+  static bool Read(const Message* m, void** iter, param_type* r) {
+    bool result =
+      ReadParam(m, iter, &r->images) &&
+      ReadParam(m, iter, &r->cssStyleSheets) &&
+      ReadParam(m, iter, &r->scripts) &&
+      ReadParam(m, iter, &r->xslStyleSheets) &&
+      ReadParam(m, iter, &r->fonts);
+    return result;
+  }
+  static void Log(const param_type& p, std::wstring* l) {
+    l->append(L"<WebCoreStats>");
+    LogParam(p.images, l);
+    LogParam(p.cssStyleSheets, l);
+    LogParam(p.scripts, l);
+    LogParam(p.xslStyleSheets, l);
+    LogParam(p.fonts, l);
+    l->append(L"</WebCoreStats>");
   }
 };
 
@@ -1832,7 +1881,6 @@ struct ParamTraits<AudioOutputStream::State> {
     LogParam(state, l);
   }
 };
-
 
 }  // namespace IPC
 

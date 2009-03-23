@@ -95,6 +95,15 @@ struct RpcTypeTrait<String> {
   }
 };
 
+template<>
+struct RpcTypeTrait<std::string> {
+  typedef const std::string& ApiType;
+  typedef std::string DispatchType;
+  static const DispatchType& Pass(const DispatchType& t) {
+    return t;
+  }
+};
+
 ///////////////////////////////////////////////////////
 // RPC Api method declarations
 
@@ -306,7 +315,7 @@ class DevToolsRpc {
     ListValue message;
     message.Append(CreateValue(&class_id));
     message.Append(CreateValue(&method));
-    SendValueMessage(&message);
+    SendValueMessage(message);
   }
   template<class T1>
   void InvokeAsync(int class_id, int method, T1 t1) {
@@ -314,7 +323,7 @@ class DevToolsRpc {
     message.Append(CreateValue(&class_id));
     message.Append(CreateValue(&method));
     message.Append(CreateValue(t1));
-    SendValueMessage(&message);
+    SendValueMessage(message);
   }
   template<class T1, class T2>
   void InvokeAsync(int class_id, int method, T1 t1, T2 t2) {
@@ -323,7 +332,7 @@ class DevToolsRpc {
     message.Append(CreateValue(&method));
     message.Append(CreateValue(t1));
     message.Append(CreateValue(t2));
-    SendValueMessage(&message);
+    SendValueMessage(message);
   }
   template<class T1, class T2, class T3>
   void InvokeAsync(int class_id, int method, T1 t1, T2 t2, T3 t3) {
@@ -333,16 +342,21 @@ class DevToolsRpc {
     message.Append(CreateValue(t1));
     message.Append(CreateValue(t2));
     message.Append(CreateValue(t3));
-    SendValueMessage(&message);
+    SendValueMessage(message);
   }
 
   static Value* ParseMessage(const std::string& raw_msg);
+  static std::string Serialize(const Value& value);
   static void GetListValue(const ListValue& message, int index, bool* value);
   static void GetListValue(const ListValue& message, int index, int* value);
   static void GetListValue(
       const ListValue& message,
       int index,
       String* value);
+  static void GetListValue(
+      const ListValue& message,
+      int index,
+      std::string* value);
   static void GetListValue(const ListValue& message, int index, Value** value);
 
  protected:
@@ -352,11 +366,12 @@ class DevToolsRpc {
  private:
   // Value adapters for supported Rpc types.
   static Value* CreateValue(const String* value);
+  static Value* CreateValue(const std::string* value);
   static Value* CreateValue(int* value);
   static Value* CreateValue(bool* value);
   static Value* CreateValue(const Value* value);
 
-  void SendValueMessage(const Value* value);
+  void SendValueMessage(const Value& value);
 
   Delegate* delegate_;
   DISALLOW_COPY_AND_ASSIGN(DevToolsRpc);

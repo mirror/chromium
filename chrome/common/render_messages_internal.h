@@ -384,9 +384,9 @@ IPC_BEGIN_MESSAGES(View)
 
   // Retreive information from the MSAA DOM subtree, for accessibility purposes.
   IPC_SYNC_MESSAGE_ROUTED1_1(ViewMsg_GetAccessibilityInfo,
-                             AccessibilityInParams
+                             webkit_glue::WebAccessibility::InParams
                              /* input parameters */,
-                             AccessibilityOutParams
+                             webkit_glue::WebAccessibility::OutParams
                              /* output parameters */)
 
   // Requests the renderer to clear cashed accessibility information. Takes an
@@ -569,7 +569,7 @@ IPC_BEGIN_MESSAGES(ViewHost)
   IPC_SYNC_MESSAGE_ROUTED0_0(ViewHostMsg_RunModal)
 
   IPC_MESSAGE_CONTROL1(ViewHostMsg_UpdatedCacheStats,
-                       CacheManager::UsageStats /* stats */)
+                       WebKit::WebCache::UsageStats /* stats */)
 
   // Indicates the renderer is ready in response to a ViewMsg_New or
   // a ViewMsg_CreatingNew_ACK.
@@ -1132,7 +1132,7 @@ IPC_BEGIN_MESSAGES(ViewHost)
   // Provide the browser process with information about the WebCore resource
   // cache.
   IPC_MESSAGE_CONTROL1(ViewHostMsg_ResourceTypeStats,
-                       CacheManager::ResourceTypeStats)
+                       WebKit::WebCache::ResourceTypeStats)
 
   // Notify the browser that this render either has or doesn't have a
   // beforeunload or unload handler.
@@ -1156,6 +1156,12 @@ IPC_BEGIN_MESSAGES(ViewHost)
                       std::wstring /* user entered text */,
                       int64 /* id of the text input field */,
                       int /* id of this message */)
+
+  // Instructs the browser to remove the specified autofill-entry from the
+  // database.
+  IPC_MESSAGE_ROUTED2(ViewHostMsg_RemoveAutofillEntry,
+                      std::wstring /* field name */,
+                      std::wstring /* value */)
 
   // Get the list of proxies to use for |url|, as a semicolon delimited list
   // of "<TYPE> <HOST>:<PORT>" | "DIRECT". See also

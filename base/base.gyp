@@ -47,7 +47,9 @@
         'base_drop_target.h',
         'base_paths.cc',
         'base_paths.h',
+        'base_paths_linux.h',
         'base_paths_linux.cc',
+        'base_paths_mac.h',
         'base_paths_mac.mm',
         'base_paths_win.cc',
         'base_paths_win.h',
@@ -100,6 +102,7 @@
         'file_version_info_mac.mm',
         'fix_wp64.h',
         'float_util.h',
+        'foundation_utils_mac.h',
         'hash_tables.h',
         'histogram.cc',
         'histogram.h',
@@ -133,6 +136,7 @@
         'lock_impl_win.cc',
         'logging.cc',
         'logging.h',
+        'mac_util.h',
         'mac_util.mm',
         'md5.cc',
         'md5.h',
@@ -144,7 +148,10 @@
         'message_pump_default.cc',
         'message_pump_default.h',
         'message_pump_glib.cc',
+        'message_pump_glib.h',
         'message_pump_libevent.cc',
+        'message_pump_libevent.h',
+        'message_pump_mac.h',
         'message_pump_mac.mm',
         'message_pump_win.cc',
         'message_pump_win.h',
@@ -193,6 +200,7 @@
         'revocable_store.h',
         'scoped_bstr_win.cc',
         'scoped_bstr_win.h',
+        'scoped_cftyperef.h',
         'scoped_clipboard_writer.cc',
         'scoped_clipboard_writer.h',
         'scoped_comptr_win.h',
@@ -200,9 +208,12 @@
         'scoped_handle_win.h',
         'scoped_nsautorelease_pool.h',
         'scoped_nsautorelease_pool.mm',
+        'scoped_nsobject.h',
         'scoped_ptr.h',
         'scoped_temp_dir.cc',
         'scoped_temp_dir.h',
+        'scoped_variant_win.cc',
+        'scoped_variant_win.h',
         'sha2.cc',
         'sha2.h',
         'shared_memory.h',
@@ -317,7 +328,19 @@
               # so use idle_timer_none.cc instead.
               'idle_timer.cc',
             ],
-            'cflags': ['-Wno-write-strings'],
+            'dependencies': [
+              '../build/linux/system.gyp:gtk',
+              '../build/linux/system.gyp:nss',
+            ],
+            'cflags': [
+              '-Wno-write-strings',
+            ],
+            'link_settings': {
+              'libraries': [
+                # We need rt for clock_gettime().
+                '-lrt',
+              ],
+            },
           },
           {  # else: OS != "linux"
             'sources!': [
@@ -434,6 +457,11 @@
         'base',
       ],
       'conditions': [
+        ['OS == "linux"', {
+          'dependencies': [
+            '../build/linux/system.gyp:gtk',
+          ],
+        }],
         [ 'OS != "win"', { 'sources!': [
             'gfx/gdi_util.cc',
             'gfx/native_theme.cc',
@@ -488,6 +516,7 @@
         'scoped_comptr_win_unittest.cc',
         'scoped_ptr_unittest.cc',
         'scoped_temp_dir_unittest.cc',
+        'scoped_variant_win_unittest.cc',
         'sha2_unittest.cc',
         'shared_memory_unittest.cc',
         'simple_thread_unittest.cc',
@@ -539,6 +568,9 @@
             # if we want it yet, so leave it 'unported' for now.
             'idletimer_unittest.cc',
           ],
+          'dependencies': [
+            '../build/linux/system.gyp:gtk',
+          ],
         }],
         ['OS != "mac"', {
           'sources!': [
@@ -562,6 +594,7 @@
             'pe_image_unittest.cc',
             'scoped_bstr_win_unittest.cc',
             'scoped_comptr_win_unittest.cc',
+            'scoped_variant_win_unittest.cc',
             'system_monitor_unittest.cc',
             'time_win_unittest.cc',
             'win_util_unittest.cc',
@@ -586,6 +619,17 @@
           'PERF_TEST',
         ],
       },
+      'conditions': [
+        ['OS == "linux"', {
+          'dependencies': [
+            # Needed to handle the #include chain:
+            #   base/perf_test_suite.h
+            #   base/test_suite.h
+            #   gtk/gtk.h
+            '../build/linux/system.gyp:gtk',
+          ],
+        }],
+      ],
     },
   ],
   'conditions': [

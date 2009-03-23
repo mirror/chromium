@@ -29,6 +29,7 @@
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/renderer_host/render_widget_host_view.h"
+#include "chrome/browser/renderer_host/web_cache_manager.h"
 #include "chrome/browser/search_engines/template_url_model.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/provisional_load_details.h"
@@ -49,7 +50,6 @@
 
 #if defined(OS_WIN)
 // TODO(port): fill these in as we flesh out the implementation of this class
-#include "chrome/browser/cache_manager_host.h"
 #include "chrome/browser/download/download_request_manager.h"
 #include "chrome/browser/modal_html_dialog_delegate.h"
 #include "chrome/browser/plugin_service.h"
@@ -471,7 +471,7 @@ void WebContents::DidBecomeSelected() {
   // If pid() is -1, that means the RenderProcessHost still hasn't been
   // initialized.  It'll register with CacheManagerHost when it is.
   if (process()->pid() != -1)
-    CacheManagerHost::GetInstance()->ObserveActivity(process()->pid());
+    WebCacheManager::GetInstance()->ObserveActivity(process()->pid());
 }
 
 void WebContents::WasHidden() {
@@ -584,7 +584,7 @@ void WebContents::CreateShortcut() {
   render_view_host()->GetApplicationInfo(pending_install_.page_id);
 }
 
-void WebContents::StartFinding(const std::wstring& find_text,
+void WebContents::StartFinding(const string16& find_text,
                                bool forward_direction) {
   // If find_text is empty, it means FindNext was pressed with a keyboard
   // shortcut so unless we have something to search for we return early.
@@ -1211,6 +1211,11 @@ void WebContents::GetAutofillSuggestions(const std::wstring& field_name,
     const std::wstring& user_text, int64 node_id, int request_id) {
   GetAutofillManager()->FetchValuesForName(field_name, user_text,
       kMaxAutofillMenuItems, node_id, request_id);
+}
+
+void WebContents::RemoveAutofillEntry(const std::wstring& field_name,
+                                      const std::wstring& value) {
+  GetAutofillManager()->RemoveValueForName(field_name, value);
 }
 
 // Checks to see if we should generate a keyword based on the OSDD, and if

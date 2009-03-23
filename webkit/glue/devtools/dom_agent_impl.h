@@ -32,8 +32,8 @@ class DomAgentImpl : public DomAgent {
   virtual ~DomAgentImpl();
 
   // DomAgent implementation.
-  void GetDocumentElement();
-  void GetChildNodes(int element_id);
+  void GetDocumentElement(int call_id);
+  void GetChildNodes(int call_id, int element_id);
   void SetAttribute(
       int element_id,
       const WebCore::String& name,
@@ -110,7 +110,9 @@ class DomAgentImpl : public DomAgent {
   int last_node_id_;
   ListHashSet<RefPtr<WebCore::Document> > documents_;
   RefPtr<WebCore::EventListener> event_listener_;
-  bool document_element_requested_;
+  // Captures pending document element request's call id.
+  // Defaults to 0 meaning no pending request.
+  int document_element_call_id_;
 
   DISALLOW_COPY_AND_ASSIGN(DomAgentImpl);
 };

@@ -7,6 +7,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 
 #include "base/file_path.h"
 #include "base/scoped_ptr.h"
@@ -14,6 +15,7 @@
 #include "base/values.h"
 #include "base/version.h"
 #include "chrome/browser/extensions/user_script_master.h"
+#include "chrome/common/extensions/url_pattern.h"
 #include "googleurl/src/gurl.h"
 
 // Represents a Chromium extension.
@@ -31,19 +33,20 @@ class Extension {
 
   // Keys used in JSON representation of extensions.
   static const wchar_t* kContentScriptsKey;
+  static const wchar_t* kCssKey;
   static const wchar_t* kDescriptionKey;
   static const wchar_t* kFormatVersionKey;
   static const wchar_t* kIdKey;
   static const wchar_t* kJsKey;
-  static const wchar_t* kCssKey;
   static const wchar_t* kMatchesKey;
   static const wchar_t* kNameKey;
+  static const wchar_t* kPermissionsKey;
+  static const wchar_t* kPluginsDirKey;
   static const wchar_t* kRunAtKey;
+  static const wchar_t* kThemeKey;
+  static const wchar_t* kToolstripsKey;
   static const wchar_t* kVersionKey;
   static const wchar_t* kZipHashKey;
-  static const wchar_t* kPluginsDirKey;
-  static const wchar_t* kThemeKey;
-  static const wchar_t* kToolstripKey;
 
   // Some values expected in manifests.
   static const char* kRunAtDocumentStartValue;
@@ -57,7 +60,6 @@ class Extension {
   static const char* kInvalidDescriptionError;
   static const char* kInvalidFormatVersionError;
   static const char* kInvalidIdError;
-  static const char* kInvalidJsCountError;
   static const char* kInvalidJsError;
   static const char* kInvalidJsListError;
   static const char* kInvalidManifestError;
@@ -68,7 +70,12 @@ class Extension {
   static const char* kInvalidPluginsDirError;
   static const char* kInvalidRunAtError;
   static const char* kInvalidToolstripError;
+  static const char* kInvalidToolstripsError;
   static const char* kInvalidVersionError;
+  static const char* kInvalidPermissionsError;
+  static const char* kInvalidPermissionCountWarning;
+  static const char* kInvalidPermissionError;
+  static const char* kInvalidPermissionSchemeError;
   static const char* kInvalidZipHashError;
   static const char* kMissingFileError;
 
@@ -117,7 +124,9 @@ class Extension {
   const std::string& description() const { return description_; }
   const UserScriptList& content_scripts() const { return content_scripts_; }
   const FilePath& plugins_dir() const { return plugins_dir_; }
-  const GURL& toolstrip_url() const { return toolstrip_url_; }
+  const std::vector<std::string>& toolstrips() const { return toolstrips_; }
+  const std::vector<URLPattern>& permissions() const {
+      return permissions_; }
 
  private:
   // Helper method that loads a UserScript object from a
@@ -156,8 +165,8 @@ class Extension {
   // contains.
   FilePath plugins_dir_;
 
-  // Optional URL of an HTML file to be displayed in the toolbar.
-  GURL toolstrip_url_;
+  // Paths to HTML files to be displayed in the toolbar.
+  std::vector<std::string> toolstrips_;
 
   // A SHA1 hash of the contents of the zip file.  Note that this key is only
   // present in the manifest that's prepended to the zip.  The inner manifest
@@ -166,6 +175,8 @@ class Extension {
 
   // A map of resource id's to relative file paths.
   std::map<const std::wstring, std::string> theme_paths_;
+
+  std::vector<URLPattern> permissions_;
 
   // We implement copy, but not assign.
   void operator=(const Extension&);

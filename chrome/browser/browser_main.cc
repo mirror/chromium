@@ -269,15 +269,6 @@ int BrowserMain(const MainFunctionParams& parameters) {
       local_state->SetString(prefs::kApplicationLocale, install_lang);
     if (GoogleUpdateSettings::GetCollectStatsConsent())
       local_state->SetBoolean(prefs::kMetricsReportingEnabled, true);
-    // On first run, we  need to process the master preferences before the
-    // browser's profile_manager object is created.
-    first_run_ui_bypass =
-        !FirstRun::ProcessMasterPreferences(user_data_dir, FilePath(), NULL);
-
-    // If we are running in App mode, we do not want to show the importer
-    // (first run) UI.
-    if (!first_run_ui_bypass && parsed_command_line.HasSwitch(switches::kApp))
-      first_run_ui_bypass = true;
   }
 
   // If the local state file for the current profile doesn't exist and the
@@ -308,6 +299,19 @@ int BrowserMain(const MainFunctionParams& parameters) {
         local_state->GetString(prefs::kApplicationLocale));
     // We only load the theme dll in the browser process.
     ResourceBundle::GetSharedInstance().LoadThemeResources();
+  }
+
+  if (is_first_run) {
+    // On first run, we  need to process the master preferences before the
+    // browser's profile_manager object is created, but after ResourceBundle
+    // is initialized.
+    first_run_ui_bypass =
+        !FirstRun::ProcessMasterPreferences(user_data_dir, FilePath(), NULL);
+
+    // If we are running in App mode, we do not want to show the importer
+    // (first run) UI.
+    if (!first_run_ui_bypass && parsed_command_line.HasSwitch(switches::kApp))
+      first_run_ui_bypass = true;
   }
 
   if (!parsed_command_line.HasSwitch(switches::kNoErrorDialogs)) {
@@ -435,10 +439,20 @@ int BrowserMain(const MainFunctionParams& parameters) {
   net::EnsureWinsockInit();
 #endif  // defined(OS_WIN)
 
-  // Initialize the DNS prefetch system
-  chrome_browser_net::DnsPrefetcherInit dns_prefetch_init(user_prefs);
-  chrome_browser_net::DnsPrefetchHostNamesAtStartup(user_prefs, local_state);
-  chrome_browser_net::RestoreSubresourceReferrers(local_state);
+  // Set up a field trial.
+  FieldTrial::Probability kDIVISOR = 100;
+  FieldTrial::Probability kDISABLE = 1;  // 1%.
+  scoped_refptr<FieldTrial> dns_trial = new FieldTrial("DnsImpact", kDIVISOR);
+  int disabled_group = dns_trial->AppendGroup("_disabled_prefetch", kDISABLE);
+
+  scoped_ptr<chrome_browser_net::DnsPrefetcherInit> dns_prefetch_init;
+  if (dns_trial->group() != disabled_group) {
+    // Initialize the DNS prefetch system
+    dns_prefetch_init.reset(
+        new chrome_browser_net::DnsPrefetcherInit(user_prefs));
+    chrome_browser_net::DnsPrefetchHostNamesAtStartup(user_prefs, local_state);
+    chrome_browser_net::RestoreSubresourceReferrers(local_state);
+  }
 
 #if defined(OS_WIN)
   // Init common control sex.

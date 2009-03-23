@@ -183,6 +183,8 @@
         'disk_cache/trace.h',
         'ftp/ftp_auth_cache.cc',
         'ftp/ftp_auth_cache.h',
+        'ftp/ftp_directory_parser.cc',
+        'ftp/ftp_directory_parser.h',
         'ftp/ftp_network_layer.cc',
         'ftp/ftp_network_layer.h',
         'ftp/ftp_network_session.h',
@@ -300,6 +302,11 @@
         '../base/base.gyp:base',
       ],
       'conditions': [
+        [ 'OS == "linux"', {
+          'dependencies': [
+            '../build/linux/system.gyp:nss',
+          ],
+        }],
         [ 'OS == "win"', {
             'sources/': [ ['exclude', '_(mac|linux|posix)\\.cc$'] ],
             'sources!': [
@@ -433,6 +440,9 @@
           },
         ],
         [ 'OS == "linux"', {
+            'dependencies': [
+              '../build/linux/system.gyp:gtk',
+            ],
             'sources!': [
               'base/sdch_filter_unittest.cc',
               'base/ssl_config_service_unittest.cc',

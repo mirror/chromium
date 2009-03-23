@@ -18,6 +18,10 @@
 
 //-----------------------------------------------------------------------------
 
+namespace net {
+
+// TODO(eroman): Now that this is inside the net namespace, remove the redundant
+// net:: qualifiers.
 
 struct MockConnect {
   // Asynchronous connection success.
@@ -298,7 +302,7 @@ void FillLargeHeadersString(std::string* str, int size) {
 
 // Alternative functions that eliminate randomness and dependency on the local
 // host name so that the generated NTLM messages are reproducible.
-void MyGenerateRandom1(uint8* output, size_t n) {
+void MockGenerateRandom1(uint8* output, size_t n) {
   static const uint8 bytes[] = {
     0x55, 0x29, 0x66, 0x26, 0x6b, 0x9c, 0x73, 0x54
   };
@@ -309,7 +313,7 @@ void MyGenerateRandom1(uint8* output, size_t n) {
   }
 }
 
-void MyGenerateRandom2(uint8* output, size_t n) {
+void MockGenerateRandom2(uint8* output, size_t n) {
   static const uint8 bytes[] = {
     0x96, 0x79, 0x85, 0xe7, 0x49, 0x93, 0x70, 0xa1,
     0x4e, 0xe7, 0x87, 0x45, 0x31, 0x5b, 0xd3, 0x1f
@@ -321,13 +325,8 @@ void MyGenerateRandom2(uint8* output, size_t n) {
   }
 }
 
-void MyGetHostName(char* name, size_t namelen) {
-  static const char hostname[] = "WTC-WIN7";
-  if (namelen >= arraysize(hostname)) {
-    memcpy(name, hostname, arraysize(hostname));
-  } else {
-    name[0] = '\0';
-  }
+std::string MockGetHostName() {
+  return "WTC-WIN7";
 }
 
 //-----------------------------------------------------------------------------
@@ -1576,8 +1575,8 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthProxyThenServer) {
 
 // Enter the correct password and authenticate successfully.
 TEST_F(HttpNetworkTransactionTest, NTLMAuth1) {
-  net::HttpAuthHandlerNTLM::SetGenerateRandomProc(MyGenerateRandom1);
-  net::HttpAuthHandlerNTLM::SetHostNameProc(MyGetHostName);
+  net::HttpAuthHandlerNTLM::ScopedProcSetter proc_setter(MockGenerateRandom1,
+                                                         MockGetHostName);
 
   scoped_ptr<net::ProxyService> proxy_service(CreateNullProxyService());
   scoped_ptr<net::HttpTransaction> trans(new net::HttpNetworkTransaction(
@@ -1698,8 +1697,8 @@ TEST_F(HttpNetworkTransactionTest, NTLMAuth1) {
 
 // Enter a wrong password, and then the correct one.
 TEST_F(HttpNetworkTransactionTest, NTLMAuth2) {
-  net::HttpAuthHandlerNTLM::SetGenerateRandomProc(MyGenerateRandom2);
-  net::HttpAuthHandlerNTLM::SetHostNameProc(MyGetHostName);
+  net::HttpAuthHandlerNTLM::ScopedProcSetter proc_setter(MockGenerateRandom2,
+                                                         MockGetHostName);
 
   scoped_ptr<net::ProxyService> proxy_service(CreateNullProxyService());
   scoped_ptr<net::HttpTransaction> trans(new net::HttpNetworkTransaction(
@@ -2560,3 +2559,64 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthCacheAndPreauth) {
     EXPECT_EQ(100, response->headers->GetContentLength());
   }
 }
+
+// Test the ResetStateForRestart() private method.
+TEST_F(HttpNetworkTransactionTest, ResetStateForRestart) {
+  // Create a transaction (the dependencies aren't important).
+  scoped_ptr<ProxyService> proxy_service(CreateNullProxyService());
+  scoped_ptr<HttpNetworkTransaction> trans(new HttpNetworkTransaction(
+      CreateSession(proxy_service.get()), &mock_socket_factory));
+
+  // Setup some state (which we expect ResetStateForRestart() will clear).
+  trans->header_buf_.reset(static_cast<char*>(malloc(10)));
+  trans->header_buf_capacity_ = 10;
+  trans->header_buf_len_ = 3;
+  trans->header_buf_body_offset_ = 11;
+  trans->header_buf_http_offset_ = 0;
+  trans->response_body_length_ = 100;
+  trans->response_body_read_ = 1;
+  trans->read_buf_ = new IOBuffer(15);
+  trans->read_buf_len_ = 15;
+  trans->request_headers_ = "Authorization: NTLM";
+  trans->request_headers_bytes_sent_ = 3;
+
+  // Setup state in response_
+  trans->response_.auth_challenge = new AuthChallengeInfo();
+  trans->response_.ssl_info.cert_status = -15;
+  trans->response_.response_time = base::Time::Now();
+  trans->response_.was_cached = true; // (Wouldn't ever actually be true...)
+
+  { // Setup state for response_.vary_data
+    HttpRequestInfo request;
+    std::string temp("HTTP/1.1 200 OK\nVary: foo, bar\n\n");
+    std::replace(temp.begin(), temp.end(), '\n', '\0');
+    scoped_refptr<HttpResponseHeaders> response = new HttpResponseHeaders(temp);
+    request.extra_headers = "Foo: 1\nbar: 23";
+    EXPECT_TRUE(trans->response_.vary_data.Init(request, *response));
+  }
+
+  // Cause the above state to be reset.
+  trans->ResetStateForRestart();
+
+  // Verify that the state that needed to be reset, has been reset.
+  EXPECT_EQ(NULL, trans->header_buf_.get());
+  EXPECT_EQ(0, trans->header_buf_capacity_);
+  EXPECT_EQ(0, trans->header_buf_len_);
+  EXPECT_EQ(-1, trans->header_buf_body_offset_);
+  EXPECT_EQ(-1, trans->header_buf_http_offset_);
+  EXPECT_EQ(-1, trans->response_body_length_);
+  EXPECT_EQ(0, trans->response_body_read_);
+  EXPECT_EQ(NULL, trans->read_buf_.get());
+  EXPECT_EQ(0, trans->read_buf_len_);
+  EXPECT_EQ("", trans->request_headers_);
+  EXPECT_EQ(0U, trans->request_headers_bytes_sent_);
+  EXPECT_EQ(NULL, trans->response_.auth_challenge.get());
+  EXPECT_EQ(NULL, trans->response_.headers.get());
+  EXPECT_EQ(false, trans->response_.was_cached);
+  EXPECT_EQ(base::kInvalidPlatformFileValue,
+            trans->response_.response_data_file);
+  EXPECT_EQ(0, trans->response_.ssl_info.cert_status);
+  EXPECT_FALSE(trans->response_.vary_data.is_valid());
+}
+
+}  // namespace net

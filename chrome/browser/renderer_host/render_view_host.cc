@@ -342,7 +342,7 @@ bool RenderViewHost::PrintPages() {
 }
 
 void RenderViewHost::StartFinding(int request_id,
-                                  const std::wstring& search_string,
+                                  const string16& search_string,
                                   bool forward,
                                   bool match_case,
                                   bool find_next) {
@@ -760,6 +760,8 @@ void RenderViewHost::OnMessageReceived(const IPC::Message& msg) {
                         OnUnloadListenerChanged);
     IPC_MESSAGE_HANDLER(ViewHostMsg_QueryFormFieldAutofill,
                         OnQueryFormFieldAutofill)
+    IPC_MESSAGE_HANDLER(ViewHostMsg_RemoveAutofillEntry,
+                        OnRemoveAutofillEntry)
     IPC_MESSAGE_HANDLER(ViewHostMsg_UpdateFeedList, OnMsgUpdateFeedList)
     // Have the super handle all other messages.
     IPC_MESSAGE_UNHANDLED(RenderWidgetHost::OnMessageReceived(msg))
@@ -1192,11 +1194,12 @@ void RenderViewHost::DidDebugAttach() {
 }
 
 void RenderViewHost::OnForwardToDevToolsAgent(const IPC::Message& message) {
-  g_browser_process->devtools_manager()->ForwardToDevToolsAgent(this, message);
+  g_browser_process->devtools_manager()->ForwardToDevToolsAgent(*this, message);
 }
 
 void RenderViewHost::OnForwardToDevToolsClient(const IPC::Message& message) {
-  g_browser_process->devtools_manager()->ForwardToDevToolsClient(this, message);
+  g_browser_process->devtools_manager()->ForwardToDevToolsClient(*this,
+                                                                 message);
 }
 
 void RenderViewHost::OnUserMetricsRecordAction(const std::wstring& action) {
@@ -1288,6 +1291,11 @@ void RenderViewHost::OnQueryFormFieldAutofill(const std::wstring& field_name,
                                               int64 node_id,
                                               int request_id) {
   delegate_->GetAutofillSuggestions(field_name, user_text, node_id, request_id);
+}
+
+void RenderViewHost::OnRemoveAutofillEntry(const std::wstring& field_name,
+                                           const std::wstring& value) {
+  delegate_->RemoveAutofillEntry(field_name, value);
 }
 
 void RenderViewHost::AutofillSuggestionsReturned(

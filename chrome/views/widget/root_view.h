@@ -7,6 +7,10 @@
 
 #include "build/build_config.h"
 
+#if defined(OS_LINUX)
+#include <gtk/gtk.h>
+#endif
+
 #if defined(OS_WIN)
 #include "base/ref_counted.h"
 #endif
@@ -78,10 +82,8 @@ class RootView : public View,
   // Invoked by the Widget to discover what rectangle should be painted.
   const gfx::Rect& GetScheduledPaintRect();
 
-#if defined(OS_WIN)
   // Returns the region scheduled to paint clipped to the RootViews bounds.
-  RECT GetScheduledPaintRectConstrainedToSize();
-#endif
+  gfx::Rect GetScheduledPaintRectConstrainedToSize();
 
   // Tree functions
 
@@ -182,6 +184,8 @@ class RootView : public View,
 #if defined(OS_WIN)
   // Invoked from the Widget to service a WM_PAINT call.
   void OnPaint(HWND hwnd);
+#elif defined(OS_LINUX)
+  void OnPaint(GdkEventExpose* event);
 #endif
 
 #if defined(OS_WIN)

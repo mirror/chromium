@@ -7,12 +7,8 @@ Import('env')
 env = env.Clone()
 
 env.Append(
-    CPPDEFINES = [
-        'WEBKIT_USING_SKIA'
-    ],
     CPPPATH = [
         '$WEBKIT_DIR/build/WebCore',
-        '$THIRD_PARTY_WEBKIT_DIR/WebKit/chromium/public',
     ],
     LIBS = [
         'port',
@@ -39,7 +35,6 @@ input_files = [
   'alt_error_page_resource_fetcher.cc',
   'autofill_form.cc',
   'back_forward_list_client_impl.cc',
-  'cache_manager.cc',
   'chrome_client_impl.cc',
   'chromium_bridge_impl.cc',
   'clipboard_conversion.cc',
@@ -50,6 +45,7 @@ input_files = [
   'debugger_bridge.cc',
   'devtools/devtools_rpc.cc',
   'devtools/devtools_rpc.h',
+  'devtools/devtools_rpc_js.h',
   'devtools/dom_agent.h',
   'devtools/dom_agent_impl.cc',
   'devtools/dom_agent_impl.h',
@@ -121,7 +117,8 @@ if env.Bit('windows'):
   input_files.extend([
     '$PENDING_DIR/AccessibleBase.cpp',
     '$PENDING_DIR/AccessibleDocument.cpp',
-    'glue_accessibility.cc',
+    'webaccessibilitymanager_impl.cc',
+    'glue_accessibility_object.cc'
     'plugins/mozilla_extensions.cc',
     'plugins/webplugin_delegate_impl.cc',
     'webdropdata.cc',

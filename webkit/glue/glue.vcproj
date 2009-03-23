@@ -13,15 +13,21 @@
 		/>
 	</Platforms>
 	<ToolFiles>
+		<ToolFile
+			RelativePath=".\devtools\devtools_copy.rules"
+		/>
 	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)..\build\debug.vsprops;.\glue.vsprops;..\build\WebKit\using_WebKit.vsprops"
+			InheritedPropertySheets="$(SolutionDir)..\build\debug.vsprops;.\glue.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="devtools file copy"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -69,7 +75,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)..\build\release.vsprops;.\glue.vsprops;..\build\WebKit\using_WebKit.vsprops"
+			InheritedPropertySheets="..\..\build\release.vsprops;.\glue.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -133,10 +139,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cache_manager.h"
-				>
-			</File>
-			<File
 				RelativePath=".\console_message_level.h"
 				>
 			</File>
@@ -174,6 +176,14 @@
 			</File>
 			<File
 				RelativePath=".\screen_info.h"
+				>
+			</File>
+			<File
+				RelativePath=".\webaccessibility.h"
+				>
+			</File>
+			<File
+				RelativePath=".\webaccessibilitymanager.h"
 				>
 			</File>
 			<File
@@ -321,10 +331,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cache_manager.cc"
-				>
-			</File>
-			<File
 				RelativePath=".\chrome_client_impl.cc"
 				>
 			</File>
@@ -433,11 +439,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\glue_accessibility.cc"
+				RelativePath=".\glue_accessibility_object.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\glue_accessibility.h"
+				RelativePath=".\glue_accessibility_object.h"
 				>
 			</File>
 			<File
@@ -566,6 +572,14 @@
 			</File>
 			<File
 				RelativePath=".\stacking_order_iterator.h"
+				>
+			</File>
+			<File
+				RelativePath=".\webaccessibilitymanager_impl.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\webaccessibilitymanager_impl.h"
 				>
 			</File>
 			<File
@@ -877,6 +891,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\devtools\devtools_rpc_js.h"
+				>
+			</File>
+			<File
 				RelativePath=".\devtools\dom_agent.h"
 				>
 			</File>
@@ -904,6 +922,46 @@
 				RelativePath=".\devtools\tools_agent.h"
 				>
 			</File>
+			<Filter
+				Name="js"
+				>
+				<File
+					RelativePath=".\devtools\js\base.js"
+					>
+				</File>
+				<File
+					RelativePath=".\devtools\js\devtools.html"
+					>
+				</File>
+				<File
+					RelativePath=".\devtools\js\devtools.js"
+					>
+				</File>
+				<File
+					RelativePath=".\devtools\js\devtools_host_stub.js"
+					>
+				</File>
+				<File
+					RelativePath=".\devtools\js\dom_agent.js"
+					>
+				</File>
+				<File
+					RelativePath=".\devtools\js\inspector_controller.js"
+					>
+				</File>
+				<File
+					RelativePath=".\devtools\js\inspector_controller_impl.js"
+					>
+				</File>
+				<File
+					RelativePath=".\devtools\js\json.js"
+					>
+				</File>
+				<File
+					RelativePath=".\devtools\js\net_agent.js"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

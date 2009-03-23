@@ -7,11 +7,13 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "base/base_paths_linux.h"
+#include "base/command_line.h"
 #include "base/logging.h"
 #include "base/message_loop.h"
 #include "base/path_service.h"
 #include "chrome/app/chrome_dll_resource.h"
 #include "chrome/browser/browser.h"
+#include "chrome/browser/browser_list.h"
 #include "chrome/browser/find_bar_controller.h"
 #include "chrome/browser/gtk/browser_toolbar_gtk.h"
 #include "chrome/browser/gtk/find_bar_gtk.h"
@@ -21,7 +23,10 @@
 #include "chrome/browser/location_bar.h"
 #include "chrome/browser/renderer_host/render_widget_host_view_gtk.h"
 #include "chrome/browser/tab_contents/web_contents.h"
+#include "chrome/browser/tab_contents/web_contents_view.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/common/resource_bundle.h"
+#include "chrome/views/controls/button/text_button.h"
 #include "grit/theme_resources.h"
 
 namespace {
@@ -67,6 +72,30 @@ gboolean MainWindowStateChanged(GtkWindow* window, GdkEventWindowState* event,
   return FALSE;
 }
 
+// Callback for the delete event.  This event is fired when the user tries to
+// close the window (e.g., clicking on the X in the window manager title bar).
+gboolean MainWindowDeleteEvent(GtkWidget* widget, GdkEvent* event,
+                               BrowserWindowGtk* window) {
+  window->Close();
+
+  // Return true to prevent the gtk window from being destroyed.  Close will
+  // destroy it for us.
+  return TRUE;
+}
+
+void MainWindowDestroy(GtkWidget* widget, BrowserWindowGtk* window) {
+  // BUG 8712. When we gtk_widget_destroy() in Close(), this will emit the
+  // signal right away, and we will be here (while Close() is still in the
+  // call stack).  In order to not reenter Close(), and to also follow the
+  // expectations of BrowserList, we should run the BrowserWindowGtk destructor
+  // not now, but after the run loop goes back to process messages.  Otherwise
+  // we will remove ourself from BrowserList while it's being iterated.
+  // Additionally, now that we know the window is gone, we need to make sure to
+  // set window_ to NULL, otherwise we will try to close the window again when
+  // we call Close() in the destructor.
+  MessageLoop::current()->DeleteSoon(FROM_HERE, window);
+}
+
 // Using gtk_window_get_position/size creates a race condition, so only use
 // this to get the initial bounds.  After window creation, we pick up the
 // normal bounds by connecting to the configure-event signal.
@@ -77,32 +106,42 @@ gfx::Rect GetInitialWindowBounds(GtkWindow* window) {
   return gfx::Rect(x, y, width, height);
 }
 
-const guint kFocusLocationKey = GDK_l;
-const guint kFocusSearchKey = GDK_k;
-const guint kOpenFileKey = GDK_o;
+const struct AcceleratorMapping {
+  guint keyval;
+  int command_id;
+} kAcceleratorMap[] = {
+  { GDK_k, IDC_FOCUS_SEARCH },
+  { GDK_l, IDC_FOCUS_LOCATION },
+  { GDK_o, IDC_OPEN_FILE },
+  { GDK_w, IDC_CLOSE_TAB },
+};
 
-static int GetCommandFromKeyval(guint accel_key) {
-  switch (accel_key) {
-    case kFocusLocationKey:
-      return IDC_FOCUS_LOCATION;
-    case kFocusSearchKey:
-      return IDC_FOCUS_SEARCH;
-    case kOpenFileKey:
-      return IDC_OPEN_FILE;
-    default:
-      NOTREACHED();
-      return 0;
+int GetCommandFromKeyval(guint accel_key) {
+  for (size_t i = 0; i < arraysize(kAcceleratorMap); ++i) {
+    if (kAcceleratorMap[i].keyval == accel_key)
+      return kAcceleratorMap[i].command_id;
   }
+  NOTREACHED();
+  return 0;
 }
 
-// Usually accelerators are checked before propagating the key event, but in our
-// case we want to reverse the order of things to allow webkit to handle key
-// events like ctrl-l. If the window's children can handle the key event, this
-// will return TRUE and the signal won't be propagated further. If the window's
-// children cannot handle the key event then this will return FALSE and the
-// default GtkWindow key press handler will be invoked.
-gboolean OnKeyPress(GtkWindow* window, GdkEventKey* event, gpointer userdata) {
-  return gtk_window_propagate_key_event(window, event);
+// Usually accelerators are checked before propagating the key event, but if the
+// focus is on the render area we want to reverse the order of things to allow
+// webkit to handle key events like ctrl-l.
+gboolean OnKeyPress(GtkWindow* window, GdkEventKey* event, Browser* browser) {
+  TabContents* current_tab_contents =
+      browser->tabstrip_model()->GetSelectedTabContents();
+  // If there is no current tab contents or it is not focused then let the
+  // default GtkWindow key handler run.
+  if (!current_tab_contents)
+    return FALSE;
+  if (!gtk_widget_is_focus(current_tab_contents->GetContentNativeView()))
+    return FALSE;
+
+  // If the content area is focused, let it handle the key event.
+  gboolean result = gtk_window_propagate_key_event(window, event);
+  DCHECK(result);
+  return TRUE;
 }
 
 }  // namespace
@@ -112,17 +151,20 @@ gboolean OnKeyPress(GtkWindow* window, GdkEventKey* event, gpointer userdata) {
 BrowserWindowGtk::BrowserWindowGtk(Browser* browser)
     :  browser_(browser),
        // TODO(port): make this a pref.
-       custom_frame_(false) {
+       custom_frame_(false),
+       method_factory_(this) {
   window_ = GTK_WINDOW(gtk_window_new(GTK_WINDOW_TOPLEVEL));
   gtk_window_set_default_size(window_, 640, 480);
+  g_signal_connect(window_, "delete-event",
+                   G_CALLBACK(MainWindowDeleteEvent), this);
   g_signal_connect(window_, "destroy",
-                   G_CALLBACK(OnWindowDestroyed), this);
+                   G_CALLBACK(MainWindowDestroy), this);
   g_signal_connect(window_, "configure-event",
                    G_CALLBACK(MainWindowConfigured), this);
   g_signal_connect(window_, "window-state-event",
                    G_CALLBACK(MainWindowStateChanged), this);
   g_signal_connect(window_, "key-press-event",
-                   G_CALLBACK(OnKeyPress), NULL);
+                   G_CALLBACK(OnKeyPress), browser_.get());
   ConnectAccelerators();
   bounds_ = GetInitialWindowBounds(window_);
 
@@ -146,6 +188,20 @@ BrowserWindowGtk::BrowserWindowGtk(Browser* browser)
   gtk_widget_set_double_buffered(vbox_, FALSE);
   g_signal_connect(G_OBJECT(vbox_), "expose-event",
                    G_CALLBACK(&OnContentAreaExpose), this);
+
+  // Temporary hack hidden behind a command line option to add one of the
+  // experimental ViewsGtk objects to the Gtk hierarchy.
+  const CommandLine& parsed_command_line = *CommandLine::ForCurrentProcess();
+  if (parsed_command_line.HasSwitch(switches::kViewsGtk)) {
+    experimental_widget_.reset(new views::WidgetGtk());
+    experimental_widget_->Init(gfx::Rect(), false);
+    experimental_widget_->SetContentsView(
+        new views::TextButton(NULL, L"Button"));
+
+    gtk_box_pack_start(GTK_BOX(vbox_),
+                       experimental_widget_->GetNativeView(),
+                       false, false, 2);
+  }
 
   toolbar_.reset(new BrowserToolbarGtk(browser_.get()));
   toolbar_->Init(browser_->profile(), window_);
@@ -174,8 +230,6 @@ BrowserWindowGtk::BrowserWindowGtk(Browser* browser)
 
 BrowserWindowGtk::~BrowserWindowGtk() {
   browser_->tabstrip_model()->RemoveObserver(this);
-
-  Close();
 }
 
 gboolean BrowserWindowGtk::OnContentAreaExpose(GtkWidget* widget,
@@ -229,13 +283,15 @@ void BrowserWindowGtk::SetBounds(const gfx::Rect& bounds) {
 }
 
 void BrowserWindowGtk::Close() {
+  // TODO(tc): There's a lot missing here that's in the windows shutdown code
+  // path.  This method should try to close (see BrowserView::CanClose),
+  // although it may not succeed (e.g., if the page has an unload handler).
+  // Currently we just go ahead and close.
+
   // TODO(tc): Once the tab strip model is hooked up, this call can be removed.
   // It should get called by TabDetachedAt when the window is being closed, but
   // we don't have a TabStripModel yet.
   find_bar_controller_->ChangeWebContents(NULL);
-
-  if (!window_)
-    return;
 
   GtkWidget* window = GTK_WIDGET(window_);
   // To help catch bugs in any event handlers that might get fired during the
@@ -276,9 +332,6 @@ void BrowserWindowGtk::SelectedTabToolbarSizeChanged(bool is_animating) {
 }
 
 void BrowserWindowGtk::UpdateTitleBar() {
-  if (!window_)
-    return;
-
   std::wstring title = browser_->GetCurrentPageTitle();
   gtk_window_set_title(window_, WideToUTF8(title).c_str());
   if (browser_->SupportsWindowFeature(Browser::FEATURE_TITLEBAR)) {
@@ -414,6 +467,9 @@ void BrowserWindowGtk::TabDetachedAt(TabContents* contents, int index) {
   }
 }
 
+// TODO(estade): this function should probably be unforked from the BrowserView
+// function of the same name by having a shared partial BrowserWindow
+// implementation.
 void BrowserWindowGtk::TabSelectedAt(TabContents* old_contents,
                                      TabContents* new_contents,
                                      int index,
@@ -427,6 +483,12 @@ void BrowserWindowGtk::TabSelectedAt(TabContents* old_contents,
   contents_container_->SetTabContents(new_contents);
 
   new_contents->DidBecomeSelected();
+  // TODO(estade): after we manage browser activation, add a check to make sure
+  // we are the active browser before calling RestoreFocus().
+  if (!browser_->tabstrip_model()->closing_all() &&
+      new_contents->AsWebContents()) {
+    new_contents->AsWebContents()->view()->RestoreFocus();
+  }
 
   // Update all the UI bits.
   UpdateTitleBar();
@@ -458,15 +520,12 @@ void BrowserWindowGtk::ConnectAccelerators() {
   // Drop the initial ref on |accel_group| so |window_| will own it.
   g_object_unref(accel_group);
 
-  gtk_accel_group_connect(
-      accel_group, kFocusLocationKey, GDK_CONTROL_MASK, GtkAccelFlags(0),
-      g_cclosure_new(G_CALLBACK(OnAccelerator), this, NULL));
-  gtk_accel_group_connect(
-      accel_group, kFocusSearchKey, GDK_CONTROL_MASK, GtkAccelFlags(0),
-      g_cclosure_new(G_CALLBACK(OnAccelerator), this, NULL));
-  gtk_accel_group_connect(
-      accel_group, kOpenFileKey, GDK_CONTROL_MASK, GtkAccelFlags(0),
-      g_cclosure_new(G_CALLBACK(OnAccelerator), this, NULL));
+  for (size_t i = 0; i < arraysize(kAcceleratorMap); ++i) {
+    gtk_accel_group_connect(
+        accel_group, kAcceleratorMap[i].keyval, GDK_CONTROL_MASK,
+        GtkAccelFlags(0), g_cclosure_new(G_CALLBACK(OnAccelerator),
+        this, NULL));
+  }
 }
 
 void BrowserWindowGtk::SetCustomFrame(bool custom_frame) {
@@ -481,28 +540,28 @@ void BrowserWindowGtk::SetCustomFrame(bool custom_frame) {
 }
 
 // static
-gboolean BrowserWindowGtk::OnWindowDestroyed(GtkWidget* window,
-                                             BrowserWindowGtk* browser_win) {
-  // BUG 8712. When we gtk_widget_destroy() in Close(), this will emit the
-  // signal right away, and we will be here (while Close() is still in the
-  // call stack).  In order to not reenter Close(), and to also follow the
-  // expectations of BrowserList, we should run the BrowserWindowGtk destructor
-  // not now, but after the run loop goes back to process messages.  Otherwise
-  // we will remove ourself from BrowserList while it's being iterated.
-  // Additionally, now that we know the window is gone, we need to make sure to
-  // set window_ to NULL, otherwise we will try to close the window again when
-  // we call Close() in the destructor.
-  browser_win->window_ = NULL;
-  MessageLoop::current()->DeleteSoon(FROM_HERE, browser_win);
-  return FALSE;  // Don't stop this message.
-}
-
-// static
 gboolean BrowserWindowGtk::OnAccelerator(GtkAccelGroup* accel_group,
                                          GObject* acceleratable,
                                          guint keyval,
                                          GdkModifierType modifier,
                                          BrowserWindowGtk* browser_window) {
-  browser_window->browser_->ExecuteCommand(GetCommandFromKeyval(keyval));
+  int command_id = GetCommandFromKeyval(keyval);
+  // We have to delay certain commands that may try to destroy widgets to which
+  // GTK is currently holding a reference. (For now the only such command is
+  // tab closing.) GTK will hold a reference on the RWHV widget when the
+  // event came through on that widget but GTK focus was elsewhere.
+  if (IDC_CLOSE_TAB == command_id) {
+    MessageLoop::current()->PostTask(FROM_HERE,
+        browser_window->method_factory_.NewRunnableMethod(
+            &BrowserWindowGtk::ExecuteBrowserCommand,
+            command_id));
+  } else {
+    browser_window->ExecuteBrowserCommand(command_id);
+  }
+
   return TRUE;
+}
+
+void BrowserWindowGtk::ExecuteBrowserCommand(int id) {
+  browser_->ExecuteCommand(id);
 }

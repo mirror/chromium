@@ -21,8 +21,8 @@
 namespace {
 
 // Called when the content view gtk widget is tabbed to. We always return true
-// and grab focus if we don't have it. The call to SetInitialFocus() forwards
-// the tab to webkit. We leave focus via TakeFocus().
+// and grab focus if we don't have it. The call to SetInitialFocus(bool)
+// forwards the tab to webkit. We leave focus via TakeFocus().
 // We cast the WebContents to a TabContents because SetInitialFocus is public
 // in TabContents and protected in WebContents.
 gboolean OnFocus(GtkWidget* widget, GtkDirectionType focus,
@@ -34,6 +34,22 @@ gboolean OnFocus(GtkWidget* widget, GtkDirectionType focus,
   bool reverse = focus == GTK_DIR_TAB_BACKWARD;
   tab_contents->SetInitialFocus(reverse);
   return TRUE;
+}
+
+// Called when the mouse leaves the widget. We notify our delegate.
+gboolean OnLeaveNotify(GtkWidget* widget, GdkEventCrossing* event,
+                       WebContents* web_contents) {
+  if (web_contents->delegate())
+    web_contents->delegate()->ContentsMouseEvent(web_contents, false);
+  return FALSE;
+}
+
+// Called when the mouse moves within the widget. We notify our delegate.
+gboolean OnMouseMove(GtkWidget* widget, GdkEventMotion* event,
+                     WebContents* web_contents) {
+  if (web_contents->delegate())
+    web_contents->delegate()->ContentsMouseEvent(web_contents, true);
+  return FALSE;
 }
 
 // Callback used in WebContentsViewGtk::CreateViewForWidget().
@@ -71,10 +87,17 @@ RenderWidgetHostView* WebContentsViewGtk::CreateViewForWidget(
   RenderWidgetHostViewGtk* view =
       new RenderWidgetHostViewGtk(render_widget_host);
   view->InitAsChild();
-  g_signal_connect(view->native_view(), "focus",
+  content_view_ = view->native_view();
+  g_signal_connect(content_view_, "focus",
                    G_CALLBACK(OnFocus), web_contents_);
+  g_signal_connect(view->native_view(), "leave-notify-event",
+                   G_CALLBACK(OnLeaveNotify), web_contents_);
+  g_signal_connect(view->native_view(), "motion-notify-event",
+                   G_CALLBACK(OnMouseMove), web_contents_);
+  gtk_widget_add_events(view->native_view(), GDK_LEAVE_NOTIFY_MASK |
+                        GDK_POINTER_MOTION_MASK);
   gtk_container_foreach(GTK_CONTAINER(vbox_.get()), RemoveWidget, vbox_.get());
-  gtk_box_pack_start(GTK_BOX(vbox_.get()), view->native_view(), TRUE, TRUE, 0);
+  gtk_box_pack_start(GTK_BOX(vbox_.get()), content_view_, TRUE, TRUE, 0);
   return view;
 }
 
@@ -83,8 +106,7 @@ gfx::NativeView WebContentsViewGtk::GetNativeView() const {
 }
 
 gfx::NativeView WebContentsViewGtk::GetContentNativeView() const {
-  NOTIMPLEMENTED();
-  return NULL;
+  return content_view_;
 }
 
 gfx::NativeWindow WebContentsViewGtk::GetTopLevelNativeWindow() const {
@@ -96,7 +118,8 @@ void WebContentsViewGtk::GetContainerBounds(gfx::Rect* out) const {
 }
 
 void WebContentsViewGtk::OnContentsDestroy() {
-  NOTIMPLEMENTED();
+  // TODO(estade): Windows uses this function cancel pending drag-n-drop drags.
+  // We don't have drags yet, so do nothing for now.
 }
 
 void WebContentsViewGtk::SetPageTitle(const std::wstring& title) {
@@ -131,15 +154,21 @@ bool WebContentsViewGtk::GetFindBarWindowInfo(gfx::Point* position,
 }
 
 void WebContentsViewGtk::SetInitialFocus() {
-  // TODO(port)
+  if (web_contents_->FocusLocationBarByDefault())
+    web_contents_->delegate()->SetFocusToLocationBar();
+  else
+    gtk_widget_grab_focus(content_view_);
 }
 
 void WebContentsViewGtk::StoreFocus() {
-  // TODO(port)
+  NOTIMPLEMENTED();
 }
 
 void WebContentsViewGtk::RestoreFocus() {
-  // TODO(port)
+  // TODO(estade): implement this function.
+  // For now just assume we are viewing the tab for the first time.
+  SetInitialFocus();
+  NOTIMPLEMENTED();
 }
 
 void WebContentsViewGtk::UpdateDragCursor(bool is_drop_target) {

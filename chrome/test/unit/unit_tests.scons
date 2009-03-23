@@ -26,9 +26,9 @@ env.SConscript([
     '$MEDIA_DIR/using_media.scons',
     '$NET_DIR/using_net.scons',
     '$NPAPI_DIR/using_npapi.scons',
+    '$PRINTING_DIR/using_printing.scons',
     '$SDCH_DIR/using_sdch.scons',
     '$SKIA_DIR/using_skia.scons',
-    '$WEBKIT_DIR/build/WebKit/using_webkit.scons',
     '$ZLIB_DIR/using_zlib.scons',
 ], {'env':env})
 
@@ -38,6 +38,8 @@ env.Prepend(
         '$CHROME_SRC_DIR',
     ],
     LIBS = [
+        'views',
+
         'browser',
         'common',
         'debugger',
@@ -54,6 +56,7 @@ env.Prepend(
         'JavaScriptCore_pcre',
         'port',
         'WebCore',
+        'WebKit',
 
         'X11',
         'Xrender',
@@ -120,7 +123,6 @@ input_files = ChromeFileList([
     '$CHROME_DIR/browser/bookmarks/bookmark_table_model_unittest.cc',
     '$CHROME_DIR/browser/bookmarks/bookmark_utils_unittest.cc',
     '$CHROME_DIR/browser/browser_commands_unittest.cc',
-    '$CHROME_DIR/browser/cache_manager_host_unittest.cc',
     '$CHROME_DIR/browser/chrome_thread_unittest.cc',
     '$CHROME_DIR/browser/safe_browsing/chunk_range_unittest.cc',
     '$CHROME_DIR/browser/command_updater_unittest.cc',
@@ -163,6 +165,7 @@ input_files = ChromeFileList([
     '$CHROME_DIR/browser/renderer_host/renderer_security_policy_unittest.cc',
     '$CHROME_DIR/browser/renderer_host/resource_dispatcher_host_unittest.cc',
     '$CHROME_DIR/browser/renderer_host/test_render_view_host.cc',
+    '$CHROME_DIR/browser/renderer_host/web_cache_manager_unittest.cc',
     '$CHROME_DIR/browser/rlz/rlz_unittest.cc',
     '$CHROME_DIR/browser/safe_browsing/safe_browsing_database_unittest.cc',
     '$CHROME_DIR/browser/safe_browsing/safe_browsing_util_unittest.cc',

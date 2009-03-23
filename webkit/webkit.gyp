@@ -979,10 +979,10 @@
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8CustomSQLTransactionErrorCallback.h',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8CustomVoidCallback.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8CustomVoidCallback.h',
+        '../third_party/WebKit/WebCore/bindings/v8/custom/V8DatabaseCustom.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8DOMParserConstructor.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8DOMStringListCustom.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8DOMWindowCustom.cpp',
-        '../third_party/WebKit/WebCore/bindings/v8/custom/V8DatabaseCustom.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8DocumentCustom.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8EventCustom.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8HTMLCollectionCustom.cpp',
@@ -1034,6 +1034,7 @@
         '../third_party/WebKit/WebCore/bindings/v8/V8AbstractEventListener.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/V8AbstractEventListener.h',
         '../third_party/WebKit/WebCore/bindings/v8/V8Binding.h',
+        '../third_party/WebKit/WebCore/bindings/v8/V8Collection.h',
         '../third_party/WebKit/WebCore/bindings/v8/V8LazyEventListener.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/V8LazyEventListener.h',
         '../third_party/WebKit/WebCore/bindings/v8/V8ObjectEventListener.cpp',
@@ -1064,7 +1065,11 @@
         'port/bindings/v8/V8SVGPODTypeWrapper.h',
         'port/bindings/v8/V8WorkerContextCustom.cpp',
         'port/bindings/v8/V8WorkerCustom.cpp',
+        'port/bindings/v8/V8XMLHttpRequestConstructor.cpp',
         'port/bindings/v8/V8XMLHttpRequestCustom.cpp',
+        'port/bindings/v8/V8XMLHttpRequestUploadCustom.cpp',
+        'port/bindings/v8/V8XMLHttpRequestUtilities.cpp',
+        'port/bindings/v8/V8XMLHttpRequestUtilities.h',
         'port/bindings/v8/WorkerContextExecutionProxy.cpp',
         'port/bindings/v8/WorkerContextExecutionProxy.h',
         'port/bindings/v8/WorkerScriptController.cpp',
@@ -1077,7 +1082,6 @@
         'port/bindings/v8/npruntime_internal.h',
         'port/bindings/v8/npruntime_priv.h',
         'port/bindings/v8/v8_binding.h',
-        'port/bindings/v8/v8_collection.h',
         'port/bindings/v8/v8_custom.cpp',
         'port/bindings/v8/v8_custom.h',
         'port/bindings/v8/v8_helpers.cpp',
@@ -2089,6 +2093,7 @@
         '../third_party/WebKit/WebCore/platform/graphics/cg/PatternCG.cpp',
         '../third_party/WebKit/WebCore/platform/graphics/cg/TransformationMatrixCG.cpp',
         '../third_party/WebKit/WebCore/platform/graphics/chromium/ColorChromium.cpp',
+        '../third_party/WebKit/WebCore/platform/graphics/chromium/ColorChromiumMac.mm',
         '../third_party/WebKit/WebCore/platform/graphics/chromium/FontCacheChromiumWin.cpp',
         '../third_party/WebKit/WebCore/platform/graphics/chromium/FontCacheLinux.cpp',
         '../third_party/WebKit/WebCore/platform/graphics/chromium/FontChromiumWin.cpp',
@@ -3753,13 +3758,10 @@
       'sources/': [
 
         # Don't build bindings for storage/database.
-        ['exclude', '/third_party/WebKit/WebCore/storage/[^/]*\\.idl$'],
+        ['exclude', '/third_party/WebKit/WebCore/storage/Storage[^/]*\\.idl$'],
 
         # SVG_FILTERS only.
         ['exclude', '/third_party/WebKit/WebCore/svg/SVG(FE|Filter)[^/]*\\.idl$'],
-
-        # Don't build custom bindings for storage.
-        ['exclude', '/third_party/WebKit/WebCore/bindings/v8/custom/V8((Custom)?SQL|Database)[^/]*\\.cpp$'],
 
         # Fortunately, many things can be excluded by using broad patterns.
 
@@ -3827,9 +3829,6 @@
         # TODO(mark): I don't know why these are excluded, either.
         # Someone (me?) should figure it out and add appropriate comments.
         '../third_party/WebKit/WebCore/css/CSSUnknownRule.idl',
-
-        # Don't build custom bindings for VoidCallback.
-        '../third_party/WebKit/WebCore/bindings/v8/custom/V8CustomVoidCallback.cpp',
 
         # A few things can't be excluded by patterns.  List them individually.
 
@@ -3937,6 +3936,9 @@
       },
       'conditions': [
         ['OS=="linux"', {
+          'dependencies': [
+            '../build/linux/system.gyp:gtk',
+          ],
           'sources!': [
             # Not yet ported to Linux.
             '../third_party/WebKit/WebCore/platform/graphics/chromium/FontCustomPlatformData.cpp',
@@ -3950,9 +3952,11 @@
             ['include', 'third_party/WebKit/WebCore/platform/graphics/chromium/GlyphPageTreeNodeLinux\\.cpp$'],
             ['include', 'third_party/WebKit/WebCore/platform/graphics/chromium/SimpleFontDataLinux\\.cpp$'],
           ],
-          # for:
-          #   .../WebCore/platform/image-decoders/bmp/BMPImageDecoder.cpp
-          'cflags': ['-Wno-multichar'],
+          'cflags': [
+            # -Wno-multichar for:
+            #   .../WebCore/platform/image-decoders/bmp/BMPImageDecoder.cpp
+            '-Wno-multichar',
+          ],
           # TODO(sgk):  unnecessary once common.gypi gets Linux settings
           # necessary to avoid build failure due to warnings generated by:
           #   ../third_party/WebKit/WebCore/dom/Document.cpp
@@ -4106,31 +4110,23 @@
         '../third_party/WebKit/WebKit/chromium/src/ChromiumBridge.cpp',
         '../third_party/WebKit/WebKit/chromium/src/ChromiumCurrentTime.cpp',
         '../third_party/WebKit/WebKit/chromium/src/ChromiumThreading.cpp',
+        '../third_party/WebKit/WebKit/chromium/src/WebCache.cpp',
         '../third_party/WebKit/WebKit/chromium/src/WebCString.cpp',
         '../third_party/WebKit/WebKit/chromium/src/WebImageSkia.cpp',
         '../third_party/WebKit/WebKit/chromium/src/WebKit.cpp',
         '../third_party/WebKit/WebKit/chromium/src/WebString.cpp',
         '../third_party/WebKit/WebKit/chromium/src/WebURL.cpp',
       ],
-      'direct_dependent_settings': {
-        'include_dirs': [
-          '../third_party/WebKit/WebKit/chromium/public',
-        ],
-      },
       'conditions': [
+        ['OS=="linux"', {
+          'dependencies': [
+            '../build/linux/system.gyp:gtk',
+          ],
+        }],
         ['OS=="mac"', {
           'sources!': [
             '../third_party/WebKit/WebKit/chromium/src/WebImageSkia.cpp',
           ],
-        }, {  # else: OS!="mac"
-          'defines': [
-            'WEBKIT_USING_SKIA',
-          ],
-          'direct_dependent_settings': {
-            'defines': [
-              'WEBKIT_USING_SKIA',
-            ],
-          },
         }],
         ['OS=="win"', {
           'sources': [
@@ -4206,6 +4202,7 @@
         # names.
         'glue/devtools/devtools_rpc.cc',
         'glue/devtools/devtools_rpc.h',
+        'glue/devtools/devtools_rpc_js.h',
         'glue/devtools/dom_agent.h',
         'glue/devtools/dom_agent_impl.cc',
         'glue/devtools/dom_agent_impl.h',
@@ -4253,8 +4250,6 @@
         'glue/autofill_form.h',
         'glue/back_forward_list_client_impl.cc',
         'glue/back_forward_list_client_impl.h',
-        'glue/cache_manager.cc',
-        'glue/cache_manager.h',
         'glue/chrome_client_impl.cc',
         'glue/chrome_client_impl.h',
         'glue/chromium_bridge_impl.cc',
@@ -4421,6 +4416,10 @@
       ],
       'conditions': [
         ['OS=="linux"', {
+          'dependencies': [
+            '../build/linux/system.gyp:gtk',
+            '../build/linux/system.gyp:pangoft2',
+          ],
           'sources!': [
             'glue/plugins/plugin_stubs.cc',
           ],

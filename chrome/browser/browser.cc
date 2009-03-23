@@ -16,6 +16,7 @@
 #include "chrome/browser/browser_window.h"
 #include "chrome/browser/character_encoding.h"
 #include "chrome/browser/debugger/devtools_manager.h"
+#include "chrome/browser/debugger/devtools_window.h"
 #include "chrome/browser/location_bar.h"
 #include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/net/url_fixer_upper.h"
@@ -905,7 +906,6 @@ void Browser::FocusToolbar() {
 }
 #endif
 
-#if defined(OS_WIN) || defined(OS_LINUX)
 void Browser::FocusLocationBar() {
   UserMetrics::RecordAction(L"FocusLocation", profile_);
   window_->SetFocusToLocationBar();
@@ -916,7 +916,6 @@ void Browser::FocusSearch() {
   UserMetrics::RecordAction(L"FocusSearch", profile_);
   window_->GetLocationBar()->FocusSearch();
 }
-#endif
 
 #if defined(OS_WIN) || defined(OS_LINUX)
 void Browser::OpenFile() {
@@ -943,11 +942,19 @@ void Browser::OpenDebuggerWindow() {
 #ifndef CHROME_DEBUGGER_DISABLED
   UserMetrics::RecordAction(L"Debugger", profile_);
   TabContents* current_tab = GetSelectedTabContents();
-  if (current_tab->AsWebContents()) {
+  WebContents* wc = current_tab->AsWebContents();
+  if (wc) {
     if (CommandLine::ForCurrentProcess()->HasSwitch(
             switches::kEnableOutOfProcessDevTools)) {
-      WebContents* wc = current_tab->AsWebContents();
-      g_browser_process->devtools_manager()->ShowDevToolsForWebContents(wc);
+      DevToolsManager* manager = g_browser_process->devtools_manager();
+      DevToolsClientHost* host = manager->GetDevToolsClientHostFor(*wc);
+      if (!host) {
+        host = DevToolsWindow::Create();
+        manager->RegisterDevToolsClientHostFor(*wc, host);
+      }
+      DevToolsWindow* window = host->AsDevToolsWindow();
+      if (window)
+        window->Show();
     } else {
       // Only one debugger instance can exist at a time right now.
       // TODO(erikkay): need an alert, dialog, something
@@ -1229,10 +1236,8 @@ void Browser::ExecuteCommand(int id) {
 #if defined(OS_WIN)
     case IDC_FOCUS_TOOLBAR:         FocusToolbar();                break;
 #endif
-#if defined(OS_WIN) || defined(OS_LINUX)
     case IDC_FOCUS_LOCATION:        FocusLocationBar();            break;
     case IDC_FOCUS_SEARCH:          FocusSearch();                 break;
-#endif
 
     // Show various bits of UI
 #if defined(OS_WIN)|| defined(OS_LINUX)
@@ -1797,21 +1802,18 @@ void Browser::URLStarredChanged(TabContents* source, bool starred) {
     window_->SetStarredState(starred);
 }
 
-#if defined(OS_WIN)
-// TODO(port): Refactor this to win-specific delegate?
-void Browser::ContentsMouseEvent(TabContents* source, UINT message) {
+void Browser::ContentsMouseEvent(TabContents* source, bool motion) {
   if (!GetStatusBubble())
     return;
 
   if (source == GetSelectedTabContents()) {
-    if (message == WM_MOUSEMOVE) {
+    if (motion) {
       GetStatusBubble()->MouseMoved();
-    } else if (message == WM_MOUSELEAVE) {
+    } else {
       GetStatusBubble()->SetURL(GURL(), std::wstring());
     }
   }
 }
-#endif
 
 void Browser::UpdateTargetURL(TabContents* source, const GURL& url) {
   if (!GetStatusBubble())
@@ -2446,9 +2448,6 @@ void Browser::BuildPopupWindow(TabContents* source,
 }
 
 GURL Browser::GetHomePage() {
-#if defined(OS_LINUX)
-  return GURL("about:linux-splash");
-#endif
   if (profile_->GetPrefs()->GetBoolean(prefs::kHomePageIsNewTabPage))
     return GURL(chrome::kChromeUINewTabURL);
   GURL home_page = GURL(URLFixerUpper::FixupURL(
@@ -2463,7 +2462,7 @@ void Browser::FindInPage(bool find_next, bool forward_direction) {
   window_->ShowFindBar();
   if (find_next) {
     GetSelectedTabContents()->AsWebContents()->StartFinding(
-        std::wstring(),
+        string16(),
         forward_direction);
   }
 }

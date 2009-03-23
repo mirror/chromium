@@ -1,7 +1,7 @@
 vars = {
   "webkit_trunk":
     "http://svn.webkit.org/repository/webkit/trunk",
-  "webkit_revision": "41807",
+  "webkit_revision": "41860",
 }
 
 
@@ -16,20 +16,20 @@ deps = {
     "http://open-vcdiff.googlecode.com/svn/trunk@22",
 
   "src/testing/gtest":
-    "http://googletest.googlecode.com/svn/trunk@167",
+    "http://googletest.googlecode.com/svn/trunk@214",
 
   "src/third_party/WebKit":
-    "/trunk/deps/third_party/WebKit@12011",
+    "/trunk/deps/third_party/WebKit@12202",
 
   "src/third_party/icu38":
     "/trunk/deps/third_party/icu38@11496",
 
   # TODO(mark): Remove once this has moved into depot_tools.
   "src/tools/gyp":
-    "http://gyp.googlecode.com/svn/trunk@372",
+    "http://gyp.googlecode.com/svn/trunk@390",
 
   "src/v8":
-    "http://v8.googlecode.com/svn/trunk@1512",
+    "http://v8.googlecode.com/svn/trunk@1564",
 
   "src/webkit/data/layout_tests/LayoutTests":
     Var("webkit_trunk") + "/LayoutTests@" + Var("webkit_revision"),

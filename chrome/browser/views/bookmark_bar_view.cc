@@ -1222,7 +1222,7 @@ void BookmarkBarView::RunMenu(views::View* view,
   View::ConvertPointToScreen(this, &screen_loc);
   bookmark_menu_ = new BookmarkMenuController(
       browser_, profile_, page_navigator_, GetWidget()->GetNativeView(),
-      node, start_index);
+      node, start_index, false);
   bookmark_menu_->set_observer(this);
   bookmark_menu_->RunMenuAt(gfx::Rect(screen_loc.x(), screen_loc.y(),
                             view->width(), bar_height),
@@ -1369,9 +1369,12 @@ bool BookmarkBarView::AddExtensionToolstrips(const ExtensionList* extensions) {
   bool added_toolstrip = false;
   for (ExtensionList::const_iterator extension = extensions->begin();
        extension != extensions->end(); ++extension) {
-    if (!(*extension)->toolstrip_url().is_empty()) {
-      ExtensionToolstrip* view =
-          new ExtensionToolstrip((*extension)->toolstrip_url(), profile_);
+    for (std::vector<std::string>::const_iterator toolstrip =
+         (*extension)->toolstrips().begin();
+         toolstrip != (*extension)->toolstrips().end(); ++toolstrip) {
+      ExtensionToolstrip* view = 
+          new ExtensionToolstrip((*extension)->GetResourceURL(*toolstrip),
+                                 profile_);
       int index = GetBookmarkButtonCount() + num_extension_toolstrips_;
       AddChildView(index, view);
       added_toolstrip = true;
@@ -1446,7 +1449,7 @@ void BookmarkBarView::ShowDropFolderForNode(BookmarkNode* node) {
   drop_info_->is_menu_showing = true;
   bookmark_drop_menu_ = new BookmarkMenuController(
       browser_, profile_, page_navigator_, GetWidget()->GetNativeView(),
-      node, start_index);
+      node, start_index, false);
   bookmark_drop_menu_->set_observer(this);
   gfx::Point screen_loc;
   View::ConvertPointToScreen(view_to_position_menu_from, &screen_loc);

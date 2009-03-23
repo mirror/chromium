@@ -4,10 +4,10 @@
 
 #include "webkit/glue/webthemeengine_impl_win.h"
 
-#include "WebRect.h"
-
 #include "base/gfx/native_theme.h"
+#include "skia/ext/platform_canvas.h"
 #include "skia/ext/skia_utils_win.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebRect.h"
 
 using WebKit::WebCanvas;
 using WebKit::WebColor;
@@ -98,6 +98,18 @@ void WebThemeEngineImpl::paintTextField(
   gfx::NativeTheme::instance()->PaintTextField(
       hdc, part, state, classic_state, &native_rect, c, fill_content_area,
       draw_edges);
+
+  canvas->endPlatformPaint();
+}
+
+void WebThemeEngineImpl::paintTrackbar(
+    WebCanvas* canvas, int part, int state, int classic_state,
+    const WebRect& rect) {
+  HDC hdc = canvas->beginPlatformPaint();
+
+  RECT native_rect = WebRectToRECT(rect);
+  gfx::NativeTheme::instance()->PaintTrackbar(
+      hdc, part, state, classic_state, &native_rect, canvas);
 
   canvas->endPlatformPaint();
 }
