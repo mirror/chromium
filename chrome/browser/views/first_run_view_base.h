@@ -6,11 +6,11 @@
 #define CHROME_BROWSER_VIEWS_FIRST_RUN_VIEW_BASE_H_
 
 #include "chrome/browser/importer/importer.h"
-#include "chrome/views/dialog_delegate.h"
 #include "chrome/views/view.h"
+#include "chrome/views/window/dialog_delegate.h"
 
 namespace views {
-class CheckBox;
+class Checkbox;
 class Window;
 class ImageView;
 class Separator;
@@ -77,7 +77,7 @@ class FirstRunViewBase : public views::View,
 
   scoped_refptr<ImporterHost> importer_host_;
   Profile* profile_;
-  views::CheckBox* default_browser_;
+  views::Checkbox* default_browser_;
 
  private:
   // Initializes the controls on the dialog.
@@ -91,4 +91,3 @@ class FirstRunViewBase : public views::View,
 };
 
 #endif  // CHROME_BROWSER_VIEWS_FIRST_RUN_VIEW_BASE_H_
-

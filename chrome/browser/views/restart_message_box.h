@@ -6,7 +6,7 @@
 #define CHROME_BROWSER_VIEWS_RESTART_MESSAGE_BOX_H_
 
 #include "base/basictypes.h"
-#include "chrome/views/dialog_delegate.h"
+#include "chrome/views/window/dialog_delegate.h"
 
 class MessageBoxView;
 
@@ -24,7 +24,7 @@ class RestartMessageBox : public views::DialogDelegate {
   virtual std::wstring GetWindowTitle() const;
 
   // views::WindowDelegate:
-  virtual void WindowClosing();
+  virtual void DeleteDelegate();
   virtual bool IsModal() const;
   virtual views::View* GetContentsView();
 
@@ -38,4 +38,3 @@ class RestartMessageBox : public views::DialogDelegate {
 };
 
 #endif  // CHROME_BROWSER_VIEWS_RESTART_MESSAGE_BOX_H_
-

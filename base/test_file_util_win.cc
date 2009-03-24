@@ -10,6 +10,7 @@
 
 #include "base/file_path.h"
 #include "base/file_util.h"
+#include "base/logging.h"
 #include "base/scoped_handle.h"
 
 namespace file_util {
@@ -157,4 +158,3 @@ bool CopyRecursiveDirNoCache(const std::wstring& source_dir,
 }
 
 }  // namespace file_util
-

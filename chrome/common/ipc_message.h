@@ -9,7 +9,6 @@
 
 #include "base/basictypes.h"
 #include "base/pickle.h"
-#include "testing/gtest/include/gtest/gtest_prod.h"
 
 #ifndef NDEBUG
 #define IPC_MESSAGE_LOG_ENABLED
@@ -278,4 +277,3 @@ enum SpecialRoutingIDs {
 #define IPC_LOGGING_ID 0xFFF1  // Special message id for logging
 
 #endif  // CHROME_COMMON_IPC_MESSAGE_H__
-

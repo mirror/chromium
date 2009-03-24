@@ -406,6 +406,7 @@ AutocompleteEditViewWin::AutocompleteEditViewWin(
       toolbar_model_(toolbar_model),
       command_updater_(command_updater),
       popup_window_mode_(popup_window_mode),
+      force_hidden_(false),
       tracking_click_(false),
       tracking_double_click_(false),
       double_click_time_(0),
@@ -593,7 +594,7 @@ void AutocompleteEditViewWin::Update(
     CHARRANGE sel;
     GetSelection(sel);
     const bool was_reversed = (sel.cpMin > sel.cpMax);
-    const bool was_sel_all = (sel.cpMin != sel.cpMax) && 
+    const bool was_sel_all = (sel.cpMin != sel.cpMax) &&
       IsSelectAllForRange(sel);
 
     RevertAll();
@@ -1201,6 +1202,28 @@ LRESULT AutocompleteEditViewWin::OnImeComposition(UINT message,
   return result;
 }
 
+LRESULT AutocompleteEditViewWin::OnImeNotify(UINT message,
+                                             WPARAM wparam,
+                                             LPARAM lparam) {
+  if (wparam == IMN_SETOPENSTATUS) {
+    // A user has activated (or deactivated) IMEs (but not started a
+    // composition).
+    // Some IMEs get confused when we accept keywords while they are composing
+    // text. To prevent this situation, we accept keywords when an IME is
+    // activated.
+    HIMC imm_context = ImmGetContext(m_hWnd);
+    if (imm_context) {
+      if (ImmGetOpenStatus(imm_context) &&
+          model_->is_keyword_hint() && !model_->keyword().empty()) {
+        ScopedFreeze freeze(this, GetTextObjectModel());
+        model_->AcceptKeyword();
+      }
+      ImmReleaseContext(m_hWnd, imm_context);
+    }
+  }
+  return DefWindowProc(message, wparam, lparam);
+}
+
 void AutocompleteEditViewWin::OnKeyDown(TCHAR key,
                                         UINT repeat_count,
                                         UINT flags) {
@@ -1578,6 +1601,12 @@ void AutocompleteEditViewWin::OnSysChar(TCHAR ch,
     SetMsgHandled(false);
 }
 
+void AutocompleteEditViewWin::OnWindowPosChanging(WINDOWPOS* window_pos) {
+  if (force_hidden_)
+    window_pos->flags &= ~SWP_SHOWWINDOW;
+  SetMsgHandled(true);
+}
+
 void AutocompleteEditViewWin::HandleKeystroke(UINT message,
                                               TCHAR key,
                                               UINT repeat_count,
@@ -1826,11 +1855,8 @@ void AutocompleteEditViewWin::EmphasizeURLComponents() {
   ScopedFreeze freeze(this, text_object_model);
   ScopedSuspendUndo suspend_undo(text_object_model);
 
-  // Save the selection.  Bug 8314: Purify started reporting uninitialized
-  // memory access in saved_sel.  This would suggest that GetSelection(), which
-  // is calling the rich edit's GetSel() is failing.  I'm not sure how or why
-  // this would happen.  For now just initialize the CHARRANGE to be safe.
-  CHARRANGE saved_sel = {0, 0};
+  // Save the selection.
+  CHARRANGE saved_sel;
   GetSelection(saved_sel);
 
   // See whether the contents are a URL with a non-empty host portion, which we
@@ -2017,7 +2043,7 @@ void AutocompleteEditViewWin::TextChanged() {
 std::wstring AutocompleteEditViewWin::GetClipboardText() const {
   // Try text format.
   ClipboardService* clipboard = g_browser_process->clipboard_service();
-  if (clipboard->IsFormatAvailable(CF_UNICODETEXT)) {
+  if (clipboard->IsFormatAvailable(Clipboard::GetPlainTextWFormatType())) {
     std::wstring text;
     clipboard->ReadText(&text);
 

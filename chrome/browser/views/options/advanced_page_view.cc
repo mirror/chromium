@@ -13,12 +13,12 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
-#include "chrome/views/dialog_delegate.h"
+#include "chrome/views/controls/message_box_view.h"
+#include "chrome/views/controls/button/native_button.h"
+#include "chrome/views/controls/scroll_view.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/message_box_view.h"
-#include "chrome/views/native_button.h"
-#include "chrome/views/scroll_view.h"
-#include "chrome/views/window.h"
+#include "chrome/views/window/dialog_delegate.h"
+#include "chrome/views/window/window.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 
@@ -58,7 +58,7 @@ class ResetDefaultsConfirmBox : public views::DialogDelegate {
     return true;
   }
   // views::WindowDelegate
-  virtual void WindowClosing() { delete this; }
+  virtual void DeleteDelegate() { delete this; }
   virtual bool IsModal() const { return true; }
   virtual views::View* GetContentsView() { return message_box_view_; }
 
@@ -152,9 +152,9 @@ void AdvancedPageView::ResetToDefaults() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// AdvancedPageView, views::NativeButton::Listener implementation:
+// AdvancedPageView, views::ButtonListener implementation:
 
-void AdvancedPageView::ButtonPressed(views::NativeButton* sender) {
+void AdvancedPageView::ButtonPressed(views::Button* sender) {
   if (sender == reset_to_default_button_) {
     UserMetricsRecordAction(L"Options_ResetToDefaults", NULL);
     ResetDefaultsConfirmBox::ShowConfirmBox(GetRootWindow(), this);
@@ -166,8 +166,7 @@ void AdvancedPageView::ButtonPressed(views::NativeButton* sender) {
 
 void AdvancedPageView::InitControlLayout() {
   reset_to_default_button_ = new views::NativeButton(
-      l10n_util::GetString(IDS_OPTIONS_RESET));
-  reset_to_default_button_->SetListener(this);
+      this, l10n_util::GetString(IDS_OPTIONS_RESET));
   advanced_scroll_view_ = new AdvancedScrollViewContainer(profile());
 
   using views::GridLayout;
@@ -188,4 +187,3 @@ void AdvancedPageView::InitControlLayout() {
   layout->AddView(reset_to_default_button_, 1, 1,
                   GridLayout::TRAILING, GridLayout::CENTER);
 }
-

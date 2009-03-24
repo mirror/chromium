@@ -9,7 +9,7 @@
 #include "chrome/browser/tabs/tab_strip_model.h"
 #include "chrome/browser/views/tabs/hwnd_photobooth.h"
 #include "chrome/browser/views/tabs/tab_renderer.h"
-#include "chrome/views/widget_win.h"
+#include "chrome/views/widget/widget_win.h"
 #include "skia/include/SkShader.h"
 
 const int kTransparentAlpha = 200;
@@ -107,7 +107,7 @@ void DraggedTabView::AnimateToBounds(const gfx::Rect& bounds,
   animation_callback_.reset(callback);
 
   RECT wr;
-  GetWindowRect(GetWidget()->GetHWND(), &wr);
+  GetWindowRect(GetWidget()->GetNativeView(), &wr);
   animation_start_bounds_ = wr;
   animation_end_bounds_ = bounds;
 
@@ -229,7 +229,7 @@ void DraggedTabView::PaintDetachedView(ChromeCanvas* canvas) {
 
 void DraggedTabView::ResizeContainer() {
   gfx::Size ps = GetPreferredSize();
-  SetWindowPos(container_->GetHWND(), HWND_TOPMOST, 0, 0,
+  SetWindowPos(container_->GetNativeView(), HWND_TOPMOST, 0, 0,
                ScaleValue(ps.width()), ScaleValue(ps.height()),
                SWP_NOMOVE | SWP_NOZORDER | SWP_NOACTIVATE);
 }
@@ -237,4 +237,3 @@ void DraggedTabView::ResizeContainer() {
 int DraggedTabView::ScaleValue(int value) {
   return attached_ ? value : static_cast<int>(value * kScalingFactor);
 }
-

@@ -12,6 +12,8 @@
 			Name="Win32"
 		/>
 	</Platforms>
+	<ToolFiles>
+	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
@@ -662,6 +664,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\url_request\url_request_new_ftp_job.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\url_request\url_request_new_ftp_job.h"
+				>
+			</File>
+			<File
 				RelativePath="..\url_request\url_request_simple_job.cc"
 				>
 			</File>
@@ -1054,15 +1064,15 @@
 				>
 			</File>
 			<File
+				RelativePath="..\proxy\proxy_resolver_script.h"
+				>
+			</File>
+			<File
 				RelativePath="..\proxy\proxy_resolver_v8.cc"
 				>
 			</File>
 			<File
 				RelativePath="..\proxy\proxy_resolver_v8.h"
-				>
-			</File>
-			<File
-				RelativePath="..\proxy\proxy_resolver_script.h"
 				>
 			</File>
 			<File
@@ -1111,6 +1121,14 @@
 			</File>
 			<File
 				RelativePath="..\ftp\ftp_auth_cache.h"
+				>
+			</File>
+			<File
+				RelativePath="..\ftp\ftp_directory_parser.cc"
+				>
+			</File>
+			<File
+				RelativePath="..\ftp\ftp_directory_parser.h"
 				>
 			</File>
 			<File

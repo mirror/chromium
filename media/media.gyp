@@ -26,6 +26,7 @@
       'include_dirs': [
         '..',
       ],
+      'msvs_guid': '6AE76406-B03B-11DD-94B1-80B556D89593',
       'sources': [
         'audio/linux/audio_manager_linux.cc',
         'audio/mac/audio_manager_mac.cc',
@@ -54,14 +55,22 @@
         'base/pipeline_impl.h',
         'base/synchronizer.cc',
         'base/synchronizer.h',
+        'base/video_frame_impl.cc',
+        'base/video_frame_impl.h',
+        'base/yuv_convert.cc',
+        'base/yuv_convert.h',
         'filters/audio_renderer_base.cc',
         'filters/audio_renderer_base.h',
         'filters/audio_renderer_impl.cc',
         'filters/audio_renderer_impl.h',
+        'filters/decoder_base.h',
         'filters/file_data_source.cc',
         'filters/file_data_source.h',
+        'filters/test_video_decoder.h',
         'filters/null_audio_renderer.cc',
         'filters/null_audio_renderer.h',
+        'filters/video_renderer_base.cc',
+        'filters/video_renderer_base.h',
         'player/player.cc',
       ],
       'direct_dependent_settings': {
@@ -83,7 +92,22 @@
         'base/data_buffer_unittest.cc',
         'base/pipeline_impl_unittest.cc',
         'base/run_all_unittests.cc',
+        'base/video_frame_impl_unittest.cc',
+        'base/yuv_convert_unittest.cc',
         'filters/file_data_source_unittest.cc',
+        'filters/video_decoder_unittest.cc',
+        'filters/video_renderer_unittest.cc',
+      ],
+      'conditions': [
+        ['OS=="linux"', {
+          'dependencies': [
+            # Needed for the following #include chain:
+            #   base/run_all_unittests.cc
+            #   ../base/test_suite.h
+            #   gtk/gtk.h
+            '../build/linux/system.gyp:gtk',
+          ],
+        }],
       ],
     },
   ],

@@ -28,10 +28,12 @@ const wchar_t kUninstallRegistryValueName[] = L"UninstallString";
 const wchar_t kCleanupRegistryValueName[] = L"ChromeInstallerCleanup";
 // Paths for the above two registry keys
 #if defined(GOOGLE_CHROME_BUILD)
-const wchar_t kUninstallRegistryKey[] = L"Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Google Chrome";
+const wchar_t kUninstallRegistryKey[] =
+    L"Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Google Chrome";
 const wchar_t kCleanupRegistryKey[] = L"Software\\Google";
 #else
-const wchar_t kUninstallRegistryKey[] = L"Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Chromium";
+const wchar_t kUninstallRegistryKey[] =
+    L"Software\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\Chromium";
 const wchar_t kCleanupRegistryKey[] = L"Software\\Chromium";
 #endif
 
@@ -45,4 +47,3 @@ const wchar_t kManifestFilename[] = L"packed_files.txt";
 }  // namespace mini_installer
 
 #endif  // CHROME_INSTALLER_MINI_INSTALLER__
-

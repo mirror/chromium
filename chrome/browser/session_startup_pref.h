@@ -31,7 +31,8 @@ struct SessionStartupPref {
 
   // What should happen on startup for the specified profile.
   static void SetStartupPref(Profile* profile, const SessionStartupPref& pref);
-  static void SetStartupPref(PrefService* prefs, const SessionStartupPref& pref);
+  static void SetStartupPref(PrefService* prefs,
+                             const SessionStartupPref& pref);
   static SessionStartupPref GetStartupPref(Profile* profile);
   static SessionStartupPref GetStartupPref(PrefService* prefs);
 
@@ -47,4 +48,3 @@ struct SessionStartupPref {
 };
 
 #endif  // CHROME_BROWSER_SESSION_STARTUP_PREF_H__
-

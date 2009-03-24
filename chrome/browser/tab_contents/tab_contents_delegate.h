@@ -88,8 +88,8 @@ class TabContentsDelegate : public PageNavigator {
   // Notification that the target URL has changed
   virtual void UpdateTargetURL(TabContents* source, const GURL& url) = 0;
 
-  // Notification that the target URL has changed
-  virtual void ContentsMouseEvent(TabContents* source, uint32 message) { }
+  // Notification that there was a mouse event
+  virtual void ContentsMouseEvent(TabContents* source, bool motion) { }
 
   // Request the delegate to change the zoom level of the current tab.
   virtual void ContentsZoomChange(bool zoom_in) { }
@@ -138,7 +138,10 @@ class TabContentsDelegate : public PageNavigator {
   }
 
   // Send IPC to external host. Default implementation is do nothing.
-  virtual void ForwardMessageToExternalHost(const std::string& message) {}
+  virtual void ForwardMessageToExternalHost(const std::string& message,
+                                            const std::string& origin,
+                                            const std::string& target) {
+  }
 
   // If the delegate is hosting tabs externally.
   virtual bool IsExternalTabContainer() const { return false; }

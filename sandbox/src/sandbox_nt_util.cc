@@ -342,7 +342,7 @@ UNICODE_STRING* GetBackingFilePath(PVOID address) {
 }
 
 UNICODE_STRING* ExtractModuleName(const UNICODE_STRING* module_path) {
-  if ((!module_path) || (!module_path->Buffer)) 
+  if ((!module_path) || (!module_path->Buffer))
     return NULL;
 
   wchar_t* sep = NULL;
@@ -502,4 +502,3 @@ void __cdecl operator delete(void* memory, void* buffer,
   UNREFERENCED_PARAMETER(buffer);
   UNREFERENCED_PARAMETER(type);
 }
-

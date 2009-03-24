@@ -93,11 +93,13 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "GraphicsContext.h"
 #include "HTMLHeadElement.h"
 #include "HTMLLinkElement.h"
+#include "HTMLNames.h"
 #include "HistoryItem.h"
 #include "InspectorController.h"
 #include "markup.h"
 #include "Page.h"
 #include "PlatformContextSkia.h"
+#include "PrintContext.h"
 #include "RenderFrame.h"
 #if defined(OS_WIN)
 #include "RenderThemeChromiumWin.h"
@@ -135,9 +137,9 @@ MSVC_POP_WARNING();
 #include "webkit/glue/alt_error_page_resource_fetcher.h"
 #include "webkit/glue/dom_operations.h"
 #include "webkit/glue/dom_operations_private.h"
+#include "webkit/glue/feed.h"
 #include "webkit/glue/glue_serialize.h"
 #include "webkit/glue/glue_util.h"
-#include "webkit/glue/webdocumentloader_impl.h"
 #include "webkit/glue/webdatasource_impl.h"
 #include "webkit/glue/weberror_impl.h"
 #include "webkit/glue/webframe_impl.h"
@@ -279,6 +281,42 @@ static void FrameContentAsPlainText(int max_chars, Frame* frame,
   }
 }
 
+// Simple class to override some of PrintContext behavior.
+class ChromePrintContext : public WebCore::PrintContext {
+ public:
+  ChromePrintContext(Frame* frame)
+      : PrintContext(frame),
+        printed_page_width_(0) {
+  }
+  void begin(float width) {
+    DCHECK(!printed_page_width_);
+    printed_page_width_ = width;
+    WebCore::PrintContext::begin(printed_page_width_);
+  }
+  // Spools the printed page, a subrect of m_frame.
+  // Skip the scale step. NativeTheme doesn't play well with scaling. Scaling
+  // is done browser side instead.
+  // Returns the scale to be applied.
+  float spoolPage(GraphicsContext& ctx, int pageNumber) {
+    IntRect pageRect = m_pageRects[pageNumber];
+    float scale = printed_page_width_ / pageRect.width();
+
+    ctx.save();
+    ctx.translate(static_cast<float>(-pageRect.x()),
+                  static_cast<float>(-pageRect.y()));
+    ctx.clip(pageRect);
+    m_frame->view()->paintContents(&ctx, pageRect);
+    ctx.restore();
+    return scale;
+  }
+ protected:
+  // Set when printing.
+  float printed_page_width_;
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(ChromePrintContext);
+};
+
 // WebFrameImpl ----------------------------------------------------------------
 
 int WebFrameImpl::live_object_count_ = 0;
@@ -299,8 +337,7 @@ MSVC_POP_WARNING()
     total_matchcount_(-1),
     frames_scoping_count_(-1),
     scoping_complete_(false),
-    next_invalidate_after_(0),
-    printing_(false) {
+    next_invalidate_after_(0) {
   StatsCounter(kWebFrameActiveCount).Increment();
   live_object_count_++;
 }
@@ -361,8 +398,8 @@ void WebFrameImpl::InternalLoadRequest(const WebRequest* request,
 
     // TODO(darin): Is this the best API to use here?  It works and seems good,
     // but will it change out from under us?
-    String script =
-        decodeURLEscapeSequences(kurl.string().substring(sizeof("javascript:")-1));
+    String script = decodeURLEscapeSequences(
+        kurl.string().substring(sizeof("javascript:")-1));
     WebCore::ScriptValue result = frame_->loader()->executeScript(script, true);
     String scriptResult;
     if (result.getString(scriptResult) &&
@@ -486,13 +523,75 @@ GURL WebFrameImpl::GetOSDDURL() const {
   return GURL();
 }
 
+scoped_refptr<FeedList> WebFrameImpl::GetFeedList() const {
+  scoped_refptr<FeedList> feedlist = new FeedList();
+
+  WebCore::FrameLoader* frame_loader = frame_->loader();
+  if (frame_loader->state() != WebCore::FrameStateComplete ||
+      !frame_->document() ||
+      !frame_->document()->head() ||
+      frame_->tree()->parent())
+    return feedlist;
+
+  // We only consider HTML documents with <head> tags.
+  // (Interestingly, isHTMLDocument() returns false for some pages --
+  // perhaps an XHTML thing?  It doesn't really matter because head() is
+  // a method on Documents anyway.)
+  WebCore::HTMLHeadElement* head = frame_->document()->head();
+  if (!head)
+    return feedlist;
+
+  // Iterate through all children of the <head>, looking for feed links.
+  for (WebCore::Node* node = head->firstChild();
+       node; node = node->nextSibling()) {
+    // Skip over all nodes except <link ...>.
+    if (!node->isHTMLElement())
+      continue;
+    if (!static_cast<WebCore::Element*>(node)->hasLocalName("link"))
+      continue;
+
+    const WebCore::HTMLLinkElement* link =
+        static_cast<WebCore::HTMLLinkElement*>(node);
+
+    // Look at the 'rel' tag and see if we have a feed.
+    std::wstring rel = webkit_glue::StringToStdWString(link->rel());
+    bool is_feed = false;
+    if (LowerCaseEqualsASCII(rel, "feed") ||
+        LowerCaseEqualsASCII(rel, "feed alternate")) {
+      // rel="feed" or rel="alternate feed" always means this is a feed.
+      is_feed = true;
+    } else if (LowerCaseEqualsASCII(rel, "alternate")) {
+      // Otherwise, rel="alternate" may mean a feed if it has a certain mime
+      // type.
+      std::wstring link_type = webkit_glue::StringToStdWString(link->type());
+      TrimWhitespace(link_type, TRIM_ALL, &link_type);
+      if (LowerCaseEqualsASCII(link_type, "application/atom+xml") ||
+          LowerCaseEqualsASCII(link_type, "application/rss+xml")) {
+        is_feed = true;
+      }
+    }
+
+    if (is_feed) {
+      FeedItem feedItem;
+      feedItem.title = webkit_glue::StringToStdWString(link->title());
+      TrimWhitespace(feedItem.title, TRIM_ALL, &feedItem.title);
+      feedItem.type = webkit_glue::StringToStdWString(link->type());
+      TrimWhitespace(feedItem.type, TRIM_ALL, &feedItem.type);
+      feedItem.url = webkit_glue::KURLToGURL(link->href());
+      feedlist->Add(feedItem);
+    }
+  }
+
+  return feedlist;
+}
+
 bool WebFrameImpl::GetPreviousHistoryState(std::string* history_state) const {
   // We use the previous item here because documentState (filled-out forms)
   // only get saved to history when it becomes the previous item.  The caller
   // is expected to query the history state after a navigation occurs, after
   // the desired history item has become the previous entry.
   RefPtr<HistoryItem> item = webview_impl_->GetPreviousHistoryItem();
-  if (!item || item->lastVisitWasFailure())
+  if (!item)
     return false;
 
   static StatsCounterTimer history_timer("GetHistoryTimer");
@@ -544,8 +643,7 @@ void WebFrameImpl::LoadDocumentData(const KURL& base_url,
 }
 
 static WebDataSource* DataSourceForDocLoader(DocumentLoader* loader) {
-  return (loader ?
-          static_cast<WebDocumentLoaderImpl*>(loader)->GetDataSource() : NULL);
+  return loader ? WebDataSourceImpl::FromLoader(loader) : NULL;
 }
 
 WebDataSource* WebFrameImpl::GetDataSource() const {
@@ -627,6 +725,13 @@ WebFrame* WebFrameImpl::GetParent() const {
   return NULL;
 }
 
+WebFrame* WebFrameImpl::GetTop() const {
+  if (frame_)
+    return FromFrame(frame_->tree()->top());
+
+  return NULL;
+}
+
 WebFrame* WebFrameImpl::GetChildFrame(const std::wstring& xpath) const {
   // xpath string can represent a frame deep down the tree (across multiple
   // frame DOMs).
@@ -693,6 +798,15 @@ WebView* WebFrameImpl::GetView() const {
   return webview_impl_;
 }
 
+std::string WebFrameImpl::GetSecurityOrigin() const {
+  if (frame_) {
+    if (frame_->document())
+      return webkit_glue::StringToStdString(
+          frame_->document()->securityOrigin()->toString());
+  }
+  return "null";
+}
+
 void WebFrameImpl::BindToWindowObject(const std::wstring& name,
                                       NPObject* object) {
   assert(frame_);
@@ -711,8 +825,8 @@ void WebFrameImpl::BindToWindowObject(const std::wstring& name,
   JSC::ExecState* exec = window->globalExec();
   JSC::Bindings::RootObject* root = frame_->script()->bindingRootObject();
   ASSERT(exec);
-  JSC::RuntimeObjectImp* instance = JSC::Bindings::Instance::createRuntimeObject(
-      exec, JSC::Bindings::CInstance::create(object, root));
+  JSC::RuntimeObjectImp* instance(JSC::Bindings::Instance::createRuntimeObject(
+      exec, JSC::Bindings::CInstance::create(object, root)));
   JSC::Identifier id(exec, key.latin1().data());
   JSC::PutPropertySlot slot;
   window->put(exec, id, instance, slot);
@@ -739,6 +853,13 @@ void WebFrameImpl::GetContentAsPlainText(int max_chars,
     return;
 
   FrameContentAsPlainText(max_chars, frame_, text);
+}
+
+NPObject* WebFrameImpl::GetWindowNPObject() {
+  if (!frame_)
+    return NULL;
+
+  return frame_->script()->windowScriptNPObject();
 }
 
 void WebFrameImpl::InvalidateArea(AreaToInvalidate area) {
@@ -805,7 +926,7 @@ bool WebFrameImpl::Find(const FindInPageRequest& request,
                         bool wrap_within_frame,
                         gfx::Rect* selection_rect) {
   WebCore::String webcore_string =
-      webkit_glue::StdWStringToString(request.search_string);
+      webkit_glue::String16ToString(request.search_string);
 
   WebFrameImpl* const main_frame_impl =
       static_cast<WebFrameImpl*>(GetView()->GetMainFrame());
@@ -924,9 +1045,9 @@ bool WebFrameImpl::ShouldScopeMatches(FindInPageRequest request) {
   // time it was searched, then we don't have to search it again if the user is
   // just adding to the search string or sending the same search string again.
   if (scoping_complete_ &&
-      last_search_string_ != std::wstring(L"") && last_match_count_ == 0) {
+      !last_search_string_.empty() && last_match_count_ == 0) {
     // Check to see if the search string prefixes match.
-    std::wstring previous_search_prefix =
+    string16 previous_search_prefix =
         request.search_string.substr(0, last_search_string_.length());
 
     if (previous_search_prefix == last_search_string_) {
@@ -1021,12 +1142,12 @@ void WebFrameImpl::ScopeStringMatches(FindInPageRequest request,
   }
 
   WebCore::String webcore_string =
-      webkit_glue::StdWStringToString(request.search_string);
+      webkit_glue::String16ToString(request.search_string);
 
   RefPtr<Range> search_range(rangeOfContents(frame()->document()));
 
   ExceptionCode ec = 0, ec2 = 0;
-  if (!reset && resume_scoping_from_range_.get()) {
+  if (resume_scoping_from_range_.get()) {
     // This is a continuation of a scoping operation that timed out and didn't
     // complete last time around, so we should start from where we left off.
     search_range->setStart(resume_scoping_from_range_->startContainer(),
@@ -1564,14 +1685,45 @@ void WebFrameImpl::LoadAlternateHTMLErrorPage(const WebRequest* request,
                                       error_page_url));
 }
 
-void WebFrameImpl::ExecuteJavaScript(const std::string& js_code,
-                                     const GURL& script_url,
-                                     int start_line) {
-  WebCore::ScriptSourceCode source_code(
-      webkit_glue::StdStringToString(js_code),
-      webkit_glue::GURLToKURL(script_url),
-      start_line);
-  frame_->loader()->executeScript(source_code);
+void WebFrameImpl::ExecuteScript(const webkit_glue::WebScriptSource& source) {
+  frame_->loader()->executeScript(
+      WebCore::ScriptSourceCode(
+          webkit_glue::StdStringToString(source.source),
+          webkit_glue::GURLToKURL(source.url),
+          source.start_line));
+}
+
+bool WebFrameImpl::InsertCSSStyles(const std::string& css) {
+  Document* document = frame()->document();
+  if (!document)
+    return false;
+  WebCore::Element* document_element = document->documentElement();
+  if (!document_element)
+    return false;
+
+  RefPtr<WebCore::Element> stylesheet = document->createElement(
+      WebCore::HTMLNames::styleTag, false);
+  ExceptionCode err = 0;
+  stylesheet->setTextContent(webkit_glue::StdStringToString(css), err);
+  DCHECK(!err) << "Failed to set style element content";
+  WebCore::Node* first = document_element->firstChild();
+  bool success = document_element->insertBefore(stylesheet, first, err);
+  DCHECK(success) << "Failed to insert stylesheet";
+  return success;
+}
+
+void WebFrameImpl::ExecuteScriptInNewContext(
+    const webkit_glue::WebScriptSource* sources_in, int num_sources) {
+  Vector<WebCore::ScriptSourceCode> sources;
+
+  for (int i = 0; i < num_sources; ++i) {
+    sources.append(WebCore::ScriptSourceCode(
+        webkit_glue::StdStringToString(sources_in[i].source),
+        webkit_glue::GURLToKURL(sources_in[i].url),
+        sources_in[i].start_line));
+  }
+
+  frame_->script()->evaluateInNewContext(sources);
 }
 
 std::wstring WebFrameImpl::GetName() {
@@ -1583,15 +1735,6 @@ WebTextInput* WebFrameImpl::GetTextInput() {
     webtextinput_impl_.reset(new WebTextInputImpl(this));
   }
   return webtextinput_impl_.get();
-}
-
-void WebFrameImpl::SetPrinting(bool printing,
-                               float page_width_min,
-                               float page_width_max) {
-  frame_->setPrinting(printing,
-                      page_width_min,
-                      page_width_max,
-                      true);
 }
 
 bool WebFrameImpl::Visible() {
@@ -1637,14 +1780,16 @@ PassRefPtr<Frame> WebFrameImpl::CreateChildFrame(
   // this child frame.
   HistoryItem* parent_item = frame_->loader()->currentHistoryItem();
   FrameLoadType load_type = frame_->loader()->loadType();
-  FrameLoadType child_load_type = WebCore::FrameLoadTypeRedirectWithLockedBackForwardList;
+  FrameLoadType child_load_type =
+      WebCore::FrameLoadTypeRedirectWithLockedBackForwardList;
   KURL new_url = request.resourceRequest().url();
 
   // If we're moving in the backforward list, we might want to replace the
   // content of this child frame with whatever was there at that point.
   if (parent_item && parent_item->children().size() != 0 &&
       isBackForwardLoadType(load_type)) {
-    HistoryItem* child_item = parent_item->childItemWithName(request.frameName());
+    HistoryItem* child_item =
+        parent_item->childItemWithName(request.frameName());
     if (child_item) {
       // Use the original URL to ensure we get all the side-effects, such as
       // onLoad handlers, of any redirects that happened. An example of where
@@ -1731,78 +1876,29 @@ void WebFrameImpl::SetAllowsScrolling(bool flag) {
   frame_->view()->setCanHaveScrollbars(flag);
 }
 
-bool WebFrameImpl::SetPrintingMode(bool printing,
-                                  float page_width_min,
-                                  float page_width_max,
-                                  int* width) {
-  // Make sure main frame is loaded.
-  WebCore::FrameView* view = frameview();
-  if (!view) {
-    NOTREACHED();
-    return false;
-  }
-  printing_ = printing;
-  if (printing) {
-    view->setScrollbarModes(WebCore::ScrollbarAlwaysOff,
-                            WebCore::ScrollbarAlwaysOff);
-  } else {
-    view->setScrollbarModes(WebCore::ScrollbarAuto,
-                            WebCore::ScrollbarAuto);
-  }
+bool WebFrameImpl::BeginPrint(const gfx::Size& page_size_px,
+                              int* page_count) {
   DCHECK_EQ(frame()->document()->isFrameSet(), false);
 
-  SetPrinting(printing, page_width_min, page_width_max);
-  if (!printing)
-    pages_.clear();
-
-  // The document width is well hidden.
-  if (width) {
-    WebCore::RenderObject* obj = frame()->document()->renderer();
-    *width = WebCore::toRenderBox(obj)->width();
-  }
+  print_context_.reset(new ChromePrintContext(frame()));
+  WebCore::FloatRect rect(0, 0,
+                          static_cast<float>(page_size_px.width()),
+                          static_cast<float>(page_size_px.height()));
+  print_context_->begin(rect.width());
+  float page_height;
+  // We ignore the overlays calculation for now since they are generated in the
+  // browser. page_height is actually an output parameter.
+  print_context_->computePageRects(rect, 0, 0, 1.0, page_height);
+  if (page_count)
+    *page_count = print_context_->pageCount();
   return true;
 }
 
-int WebFrameImpl::ComputePageRects(const gfx::Size& page_size_px) {
-  if (!printing_ ||
-      !frame() ||
-      !frame()->document()) {
+float WebFrameImpl::PrintPage(int page, skia::PlatformCanvas* canvas) {
+  // Ensure correct state.
+  if (!print_context_.get() || page < 0 || !frame() || !frame()->document()) {
     NOTREACHED();
     return 0;
-  }
-  // In Safari, they are using:
-  // (0,0) + soft margins top/left
-  // (phys width, phys height) - hard margins -
-  //     soft margins top/left - soft margins right/bottom
-  // TODO(maruel): Weird. We don't do that.
-  // Everything is in pixels :(
-  // pages_ and page_height are actually output parameters.
-  int page_height;
-  WebCore::IntRect rect(0, 0, page_size_px.width(), page_size_px.height());
-  computePageRectsForFrame(frame(), rect, 0, 0, 1.0, pages_, page_height);
-  return pages_.size();
-}
-
-void WebFrameImpl::GetPageRect(int page, gfx::Rect* page_size) const {
-  if (page < 0 || page >= static_cast<int>(pages_.size())) {
-    NOTREACHED();
-    return;
-  }
-  *page_size = webkit_glue::FromIntRect(pages_[page]);
-}
-
-bool WebFrameImpl::SpoolPage(int page, skia::PlatformCanvas* canvas) {
-  // Ensure correct state.
-  if (!printing_ ||
-      page < 0 ||
-      page >= static_cast<int>(pages_.size())) {
-    NOTREACHED();
-    return false;
-  }
-
-  if (!frame() || !frame()->document()) {
-    NOTREACHED();
-    return false;
   }
 
 #if defined(OS_WIN) || defined(OS_LINUX)
@@ -1813,12 +1909,14 @@ bool WebFrameImpl::SpoolPage(int page, skia::PlatformCanvas* canvas) {
   GraphicsContext spool(context);
 #endif
 
-  DCHECK(pages_[page].x() == 0);
-  // Offset to get the right square.
-  spool.translate(0, -static_cast<float>(pages_[page].y()));
-  // Make sure we're not printing the ScrollView (with scrollbars!)
-  frame()->view()->paintContents(&spool, pages_[page]);
-  return true;
+  return print_context_->spoolPage(spool, page);
+}
+
+void WebFrameImpl::EndPrint() {
+  DCHECK(print_context_.get());
+  if (print_context_.get())
+    print_context_->end();
+  print_context_.reset(NULL);
 }
 
 int WebFrameImpl::PendingFrameUnloadEventCount() const {

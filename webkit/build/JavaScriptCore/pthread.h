@@ -55,7 +55,7 @@ inline int pthread_mutex_unlock(pthread_mutex_t* mutex) {
 
 #define PTHREAD_MUTEX_INITIALIZER 0
 
-// 
+//
 // pthread_cond_t
 typedef int pthread_cond_t;
 
@@ -78,4 +78,3 @@ inline int pthread_cond_broadcast(pthread_cond_t *) {
 
 
 #endif  // CHROME_WEBKIT_BUILD_JAVASCRIPTCORE_PTHREAD_H__
-

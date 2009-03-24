@@ -4,6 +4,7 @@
 #include <map>
 
 #include "base/logging.h"
+#include "base/scoped_ptr.h"
 #include "base/string_util.h"
 
 #include "installer_util_strings.h"
@@ -234,4 +235,3 @@ std::wstring GetLocalizedEulaResource() {
 }
 
 }  // namespace installer_util
-

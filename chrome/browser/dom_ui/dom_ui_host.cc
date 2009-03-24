@@ -74,7 +74,7 @@ void DOMUIHost::CallJavascriptFunction(
 void DOMUIHost::ProcessDOMUIMessage(const std::string& message,
                                     const std::string& content) {
   // Look up the callback for this message.
-  MessageCallbackMap::const_iterator callback = message_callbacks_.find(message);
+  MessageCallbackMap::const_iterator callback(message_callbacks_.find(message));
   if (callback == message_callbacks_.end())
     return;
 
@@ -105,4 +105,3 @@ WebPreferences DOMUIHost::GetWebkitPrefs() {
 void DOMUIHost::ExecuteJavascript(const std::wstring& javascript) {
   render_view_host()->ExecuteJavascriptInWebFrame(std::wstring(), javascript);
 }
-

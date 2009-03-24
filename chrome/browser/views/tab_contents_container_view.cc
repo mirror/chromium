@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include <algorithm>
-
 #include "chrome/browser/views/tab_contents_container_view.h"
+
+#include <algorithm>
 
 #include "base/logging.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
@@ -14,8 +14,8 @@
 #include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/browser/view_ids.h"
 #include "chrome/common/notification_service.h"
-#include "chrome/views/root_view.h"
-#include "chrome/views/widget.h"
+#include "chrome/views/widget/root_view.h"
+#include "chrome/views/widget/widget.h"
 
 using views::FocusTraversable;
 using views::FocusManager;
@@ -246,8 +246,8 @@ void TabContentsContainerView::RenderViewHostChanged(RenderViewHost* old_host,
   }
 
   // If we are focused, we need to pass the focus to the new RenderViewHost.
-  FocusManager* focus_manager =
-      FocusManager::GetFocusManager(GetRootView()->GetWidget()->GetHWND());
+  FocusManager* focus_manager = FocusManager::GetFocusManager(
+      GetRootView()->GetWidget()->GetNativeView());
   if (focus_manager->GetFocusedView() == this)
     Focus();
 }
@@ -258,4 +258,3 @@ void TabContentsContainerView::TabContentsDestroyed(TabContents* contents) {
   DCHECK(contents == tab_contents_);
   SetTabContents(NULL);
 }
-

@@ -102,6 +102,13 @@ class BrowserProcessImpl : public BrowserProcess, public NonThreadSafe {
     return debugger_wrapper_.get();
   }
 
+  virtual DevToolsManager* devtools_manager() {
+    DCHECK(CalledOnValidThread());
+    if (!created_devtools_manager_)
+      CreateDevToolsManager();
+    return devtools_manager_.get();
+  }
+
   virtual ClipboardService* clipboard_service() {
     DCHECK(CalledOnValidThread());
     return clipboard_service_.get();
@@ -191,6 +198,7 @@ class BrowserProcessImpl : public BrowserProcess, public NonThreadSafe {
   void CreateViewedPageTracker();
   void CreateIconManager();
   void CreateDebuggerWrapper(int port);
+  void CreateDevToolsManager();
   void CreateAcceleratorHandler();
   void CreateGoogleURLTracker();
 
@@ -226,6 +234,9 @@ class BrowserProcessImpl : public BrowserProcess, public NonThreadSafe {
   bool created_debugger_wrapper_;
   scoped_refptr<DebuggerWrapper> debugger_wrapper_;
 
+  bool created_devtools_manager_;
+  scoped_ptr<DevToolsManager> devtools_manager_;
+
   scoped_ptr<ClipboardService> clipboard_service_;
 
   scoped_ptr<AutomationProviderList> automation_provider_list_;
@@ -255,4 +266,3 @@ class BrowserProcessImpl : public BrowserProcess, public NonThreadSafe {
 };
 
 #endif  // CHROME_BROWSER_BROWSER_PROCESS_IMPL_H__
-

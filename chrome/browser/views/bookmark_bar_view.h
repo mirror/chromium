@@ -6,13 +6,15 @@
 #define CHROME_BROWSER_VIEWS_BOOKMARK_BAR_VIEW_H_
 
 #include "chrome/browser/bookmarks/bookmark_drag_data.h"
+#include "chrome/browser/bookmarks/bookmark_menu_controller.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
+#include "chrome/browser/extensions/extensions_service.h"
 #include "chrome/common/slide_animation.h"
-#include "chrome/views/label.h"
-#include "chrome/views/menu.h"
-#include "chrome/views/menu_button.h"
+#include "chrome/views/controls/button/menu_button.h"
+#include "chrome/views/controls/label.h"
+#include "chrome/views/controls/menu/menu.h"
+#include "chrome/views/controls/menu/view_menu_delegate.h"
 #include "chrome/views/view.h"
-#include "chrome/views/view_menu_delegate.h"
 
 class Browser;
 class PageNavigator;
@@ -38,13 +40,13 @@ class MenuItemView;
 class BookmarkBarView : public views::View,
                         public BookmarkModelObserver,
                         public views::ViewMenuDelegate,
-                        public views::BaseButton::ButtonListener,
+                        public views::ButtonListener,
                         public Menu::Delegate,
                         public NotificationObserver,
                         public views::ContextMenuController,
                         public views::DragController,
-                        public AnimationDelegate {
-  friend class MenuRunner;
+                        public AnimationDelegate,
+                        public BookmarkMenuController::Observer {
   friend class ShowFolderMenuTask;
 
  public:
@@ -71,12 +73,6 @@ class BookmarkBarView : public views::View,
 
   explicit BookmarkBarView(Profile* profile, Browser* browser);
   virtual ~BookmarkBarView();
-
-  // Toggles whether the bookmark bar is shown only on the new tab page or on
-  // all tabs.
-  static void ToggleWhenVisible(Profile* profile);
-
-  static void RegisterUserPrefs(PrefService* prefs);
 
   // Resets the profile. This removes any buttons for the current profile and
   // recreates the models.
@@ -151,6 +147,9 @@ class BookmarkBarView : public views::View,
   // SlideAnimationDelegate implementation.
   void AnimationProgressed(const Animation* animation);
   void AnimationEnded(const Animation* animation);
+
+  // BookmarkMenuController::Observer
+  virtual void BookmarkMenuDeleted(BookmarkMenuController* controller);
 
   // Returns the button at the specified index.
   views::TextButton* GetBookmarkButton(int index);
@@ -302,7 +301,7 @@ class BookmarkBarView : public views::View,
 
   // Invoked when a star entry corresponding to a URL on the bookmark bar is
   // pressed. Forwards to the PageNavigator to open the URL.
-  virtual void ButtonPressed(views::BaseButton* sender);
+  virtual void ButtonPressed(views::Button* sender);
 
   // Invoked for this View, one of the buttons or the 'other' button. Shows the
   // appropriate context menu.
@@ -358,19 +357,6 @@ class BookmarkBarView : public views::View,
                              bool* is_over_overflow,
                              bool* is_over_other);
 
-  // Invokes CanDropAt to determine if this is a valid location for the data,
-  // then returns the appropriate drag operation based on the data.
-  int CalculateDropOperation(const views::DropTargetEvent& event,
-                             const BookmarkDragData& data,
-                             BookmarkNode* parent,
-                             int index);
-
-  // Performs a drop of the specified data at the specified location. Returns
-  // the result.
-  int PerformDropImpl(const BookmarkDragData& data,
-                      BookmarkNode* parent_node,
-                      int index);
-
   // Returns the index of the first hidden bookmark button. If all buttons are
   // visible, this returns GetBookmarkButtonCount().
   int GetFirstHiddenNodeIndex();
@@ -384,6 +370,11 @@ class BookmarkBarView : public views::View,
   // throbs.
   void StopThrobbing(bool immediate);
 
+  // Add any extension toolstrips which may be requested by the given
+  // extensions.  Views for the toolstrips are inserted after the last bookmark
+  // button.  Returns true if there were any new toolstrips added.
+  bool AddExtensionToolstrips(const ExtensionList* extensions);
+
   Profile* profile_;
 
   // Used for opening urls.
@@ -393,14 +384,14 @@ class BookmarkBarView : public views::View,
   // shown. This is owned by the Profile.
   BookmarkModel* model_;
 
-  // Used to manage showing a Menu: either for the most recently bookmarked
+  // Used to manage showing a Menu, either for the most recently bookmarked
   // entries, or for the a starred group.
-  scoped_ptr<MenuRunner> menu_runner_;
+  BookmarkMenuController* bookmark_menu_;
 
   // Used when showing a menu for drag and drop. That is, if the user drags
-  // over a group this becomes non-null and is the MenuRunner used to manage
-  // the menu showing the contents of the node.
-  scoped_ptr<MenuRunner> drop_menu_runner_;
+  // over a group this becomes non-null and manages the menu showing the
+  // contents of the node.
+  BookmarkMenuController* bookmark_drop_menu_;
 
   // Shows the other bookmark entries.
   views::MenuButton* other_bookmarked_button_;
@@ -434,10 +425,12 @@ class BookmarkBarView : public views::View,
   // If the bookmark bubble is showing, this is the visible ancestor of the URL.
   // The visible ancestor is either the other_bookmarked_button_,
   // overflow_button_ or a button on the bar.
-  views::BaseButton* throbbing_view_;
+  views::CustomButton* throbbing_view_;
+
+  // How many extension toolstrips we have showing in the toolbar.
+  int num_extension_toolstrips_;
 
   DISALLOW_COPY_AND_ASSIGN(BookmarkBarView);
 };
 
 #endif  // CHROME_BROWSER_VIEWS_BOOKMARK_BAR_VIEW_H_
-

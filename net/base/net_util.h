@@ -14,8 +14,6 @@
 #endif
 
 #include "base/basictypes.h"
-#include "googleurl/src/url_canon.h"
-#include "googleurl/src/url_parse.h"
 
 struct addrinfo;
 class FilePath;
@@ -164,4 +162,3 @@ int SetNonBlocking(int fd);
 }  // namespace net
 
 #endif  // NET_BASE_NET_UTIL_H__
-

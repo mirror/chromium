@@ -6,7 +6,7 @@
 #define CHROME_BROWSER_VIEWS_REPOST_FORM_WARNING_VIEW_H_
 
 #include "chrome/common/notification_observer.h"
-#include "chrome/views/dialog_delegate.h"
+#include "chrome/views/window/dialog_delegate.h"
 
 class MessageBoxView;
 class NavigationController;
@@ -24,7 +24,7 @@ class RepostFormWarningView : public views::DialogDelegate,
   // views::DialogDelegate Methods:
   virtual std::wstring GetWindowTitle() const;
   virtual std::wstring GetDialogButtonLabel(DialogButton button) const;
-  virtual void WindowClosing();
+  virtual void DeleteDelegate();
   virtual bool Cancel();
   virtual bool Accept();
 

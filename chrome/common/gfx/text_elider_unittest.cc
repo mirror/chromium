@@ -5,7 +5,6 @@
 #include "base/string_util.h"
 #include "chrome/common/gfx/chrome_font.h"
 #include "chrome/common/gfx/text_elider.h"
-#include "chrome/views/label.h"
 #include "googleurl/src/gurl.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -144,7 +143,7 @@ TEST(TextEliderTest, TestFilenameEliding) {
 // so it's not worth using FilePath stuff at the moment.
 #if defined(OS_POSIX)
   const std::wstring kPathSeparator(L"/");
-#elif defined(OS_WINDOWS)
+#elif defined(OS_WIN)
   const std::wstring kPathSeparator(L"\\");
 #endif
 

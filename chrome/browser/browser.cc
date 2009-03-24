@@ -8,12 +8,15 @@
 #include "base/idle_timer.h"
 #include "base/logging.h"
 #include "base/string_util.h"
+#include "base/thread.h"
 #include "chrome/app/chrome_dll_resource.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/browser_window.h"
-#include "chrome/browser/dom_ui/new_tab_ui.h"
+#include "chrome/browser/character_encoding.h"
+#include "chrome/browser/debugger/devtools_manager.h"
+#include "chrome/browser/debugger/devtools_window.h"
 #include "chrome/browser/location_bar.h"
 #include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/browser/net/url_fixer_upper.h"
@@ -28,6 +31,7 @@
 #include "chrome/browser/tab_contents/site_instance.h"
 #include "chrome/browser/tab_contents/tab_contents_type.h"
 #include "chrome/browser/tab_contents/web_contents.h"
+#include "chrome/browser/tab_contents/web_contents_view.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/l10n_util.h"
@@ -35,6 +39,7 @@
 #include "chrome/common/page_transition_types.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
+#include "chrome/common/url_constants.h"
 #ifdef CHROME_PERSONALIZATION
 #include "chrome/personalization/personalization.h"
 #endif
@@ -56,11 +61,8 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/browser_url_handler.h"
 #include "chrome/browser/cert_store.h"
-#include "chrome/browser/character_encoding.h"
 #include "chrome/browser/debugger/debugger_window.h"
 #include "chrome/browser/dock_info.h"
-#include "chrome/browser/dom_ui/downloads_ui.h"
-#include "chrome/browser/dom_ui/history_ui.h"
 #include "chrome/browser/download/save_package.h"
 #include "chrome/browser/options_window.h"
 #include "chrome/browser/ssl/ssl_error_info.h"
@@ -174,14 +176,14 @@ Browser::Browser(Type type, Profile* profile)
       toolbar_model_(this),
       chrome_updater_factory_(this),
       is_attempting_to_close_browser_(false),
-      override_maximized_(false),
+      maximized_state_(MAXIMIZED_STATE_DEFAULT),
       method_factory_(this),
       idle_task_(new BrowserIdleTimer) {
   tabstrip_model_.AddObserver(this);
 
   NotificationService::current()->AddObserver(
       this,
-      NotificationType::SSL_STATE_CHANGED,
+      NotificationType::SSL_VISIBLE_STATE_CHANGED,
       NotificationService::AllSources());
 
   InitCommandState();
@@ -226,7 +228,7 @@ Browser::~Browser() {
 
   NotificationService::current()->RemoveObserver(
       this,
-      NotificationType::SSL_STATE_CHANGED,
+      NotificationType::SSL_VISIBLE_STATE_CHANGED,
       NotificationService::AllSources());
 
   if (profile_->IsOffTheRecord() &&
@@ -318,7 +320,7 @@ void Browser::OpenApplicationWindow(Profile* profile, const GURL& url) {
   browser->window()->Show();
   // TODO(jcampan): http://crbug.com/8123 we should not need to set the initial
   //                focus explicitly.
-  browser->GetSelectedTabContents()->SetInitialFocus();
+  browser->GetSelectedTabContents()->AsWebContents()->view()->SetInitialFocus();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -376,8 +378,14 @@ bool Browser::GetSavedMaximizedState() const {
   if (CommandLine::ForCurrentProcess()->HasSwitch(switches::kStartMaximized))
     return true;
 
+  if (maximized_state_ == MAXIMIZED_STATE_MAXIMIZED)
+    return true;
+  if (maximized_state_ == MAXIMIZED_STATE_UNMAXIMIZED)
+    return false;
+
+  // An explicit maximized state was not set. Query the window sizer.
   gfx::Rect restored_bounds;
-  bool maximized = override_maximized_;
+  bool maximized = false;
   WindowSizer::GetBrowserWindowBounds(app_name_, restored_bounds,
                                       &restored_bounds, &maximized);
   return maximized;
@@ -528,16 +536,16 @@ void Browser::ReplaceRestoredTab(
 }
 
 void Browser::ShowSingleDOMUITab(const GURL& url) {
-  int i, c;
-  TabContents* tc;
-  for (i = 0, c = tabstrip_model_.count(); i < c; ++i) {
-    tc = tabstrip_model_.GetTabContentsAt(i);
-    if (tc->type() == TAB_CONTENTS_DOM_UI &&
-        tc->GetURL() == url) {
+  // See if we already have a tab with the given URL and select it if so.
+  for (int i = 0; i < tabstrip_model_.count(); i++) {
+    TabContents* tc = tabstrip_model_.GetTabContentsAt(i);
+    if (tc->GetURL() == url) {
       tabstrip_model_.SelectTabContentsAt(i, false);
       return;
     }
   }
+
+  // Otherwise, just create a new tab.
   AddTabWithURL(url, GURL(), PageTransition::AUTO_BOOKMARK, true, NULL);
 }
 
@@ -651,8 +659,7 @@ void Browser::NewTab() {
     // The call to AddBlankTab above did not set the focus to the tab as its
     // window was not active, so we have to do it explicitly.
     // See http://crbug.com/6380.
-    TabContents* tab = b->GetSelectedTabContents();
-    tab->RestoreFocus();
+    b->GetSelectedTabContents()->AsWebContents()->view()->RestoreFocus();
   }
 }
 
@@ -783,6 +790,7 @@ void Browser::Print() {
   UserMetrics::RecordAction(L"PrintPreview", profile_);
   GetSelectedTabContents()->AsWebContents()->PrintPreview();
 }
+#endif  // #if defined(OS_WIN)
 
 void Browser::ToggleEncodingAutoDetect() {
   UserMetrics::RecordAction(L"AutoDetectChange", profile_);
@@ -809,6 +817,7 @@ void Browser::OverrideEncoding(int encoding_id) {
   }
 }
 
+#if defined(OS_WIN)
 // TODO(devint): http://b/issue?id=1117225 Cut, Copy, and Paste are always
 // enabled in the page menu regardless of whether the command will do
 // anything. When someone selects the menu item, we just act as if they hit
@@ -855,6 +864,7 @@ void Browser::Paste() {
   UserMetrics::RecordAction(L"Paste", profile_);
   ui_controls::SendKeyPress(L'V', true, false, false);
 }
+#endif  // #if defined(OS_WIN)
 
 void Browser::Find() {
   UserMetrics::RecordAction(L"Find", profile_);
@@ -889,14 +899,16 @@ void Browser::ZoomOut() {
       PageZoom::SMALLER);
 }
 
+#if defined(OS_WIN)
 void Browser::FocusToolbar() {
   UserMetrics::RecordAction(L"FocusToolbar", profile_);
   window_->FocusToolbar();
 }
+#endif
 
 void Browser::FocusLocationBar() {
   UserMetrics::RecordAction(L"FocusLocation", profile_);
-  window_->GetLocationBar()->FocusLocation();
+  window_->SetFocusToLocationBar();
 }
 
 void Browser::FocusSearch() {
@@ -905,19 +917,22 @@ void Browser::FocusSearch() {
   window_->GetLocationBar()->FocusSearch();
 }
 
+#if defined(OS_WIN) || defined(OS_LINUX)
 void Browser::OpenFile() {
   UserMetrics::RecordAction(L"OpenFile", profile_);
   if (!select_file_dialog_.get())
     select_file_dialog_ = SelectFileDialog::Create(this);
 
   // TODO(beng): figure out how to juggle this.
-  HWND parent_hwnd = reinterpret_cast<HWND>(window_->GetNativeHandle());
+  gfx::NativeWindow parent_window = window_->GetNativeHandle();
   select_file_dialog_->SelectFile(SelectFileDialog::SELECT_OPEN_FILE,
                                   std::wstring(), std::wstring(),
                                   std::wstring(), std::wstring(),
-                                  parent_hwnd, NULL);
+                                  parent_window, NULL);
 }
+#endif
 
+#if defined(OS_WIN)
 void Browser::OpenCreateShortcutsDialog() {
   UserMetrics::RecordAction(L"CreateShortcut", profile_);
   GetSelectedTabContents()->AsWebContents()->CreateShortcut();
@@ -927,13 +942,27 @@ void Browser::OpenDebuggerWindow() {
 #ifndef CHROME_DEBUGGER_DISABLED
   UserMetrics::RecordAction(L"Debugger", profile_);
   TabContents* current_tab = GetSelectedTabContents();
-  if (current_tab->AsWebContents()) {
-    // Only one debugger instance can exist at a time right now.
-    // TODO(erikkay): need an alert, dialog, something
-    // or better yet, fix the one instance limitation
-    if (!DebuggerWindow::DoesDebuggerExist())
-      debugger_window_ = new DebuggerWindow();
-    debugger_window_->Show(current_tab);
+  WebContents* wc = current_tab->AsWebContents();
+  if (wc) {
+    if (CommandLine::ForCurrentProcess()->HasSwitch(
+            switches::kEnableOutOfProcessDevTools)) {
+      DevToolsManager* manager = g_browser_process->devtools_manager();
+      DevToolsClientHost* host = manager->GetDevToolsClientHostFor(*wc);
+      if (!host) {
+        host = DevToolsWindow::Create();
+        manager->RegisterDevToolsClientHostFor(*wc, host);
+      }
+      DevToolsWindow* window = host->AsDevToolsWindow();
+      if (window)
+        window->Show();
+    } else {
+      // Only one debugger instance can exist at a time right now.
+      // TODO(erikkay): need an alert, dialog, something
+      // or better yet, fix the one instance limitation
+      if (!DebuggerWindow::DoesDebuggerExist())
+        debugger_window_ = new DebuggerWindow();
+      debugger_window_->Show(current_tab);
+    }
   }
 #endif
 }
@@ -950,6 +979,9 @@ void Browser::OpenTaskManager() {
 }
 
 void Browser::OpenSelectProfileDialog() {
+  const CommandLine& command_line = *CommandLine::ForCurrentProcess();
+  if (!command_line.HasSwitch(switches::kEnableUserDataDirProfiles))
+    return;
   UserMetrics::RecordAction(L"SelectProfile", profile_);
   window_->ShowSelectProfileDialog();
 }
@@ -966,27 +998,34 @@ void Browser::OpenBugReportDialog() {
   UserMetrics::RecordAction(L"ReportBug", profile_);
   window_->ShowReportBugDialog();
 }
+#endif  // #if defined(OS_WIN)
 
+
+#if defined(OS_WIN) || defined(OS_MACOSX)
 void Browser::ToggleBookmarkBar() {
   UserMetrics::RecordAction(L"ShowBookmarksBar", profile_);
   window_->ToggleBookmarkBar();
 }
+#endif
 
-void Browser::ShowHistoryTab() {
-  UserMetrics::RecordAction(L"ShowHistory", profile_);
-  ShowSingleDOMUITab(HistoryUI::GetBaseURL());
-}
-
+#if defined(OS_WIN)
 void Browser::OpenBookmarkManager() {
   UserMetrics::RecordAction(L"ShowBookmarkManager", profile_);
   window_->ShowBookmarkManager();
 }
+#endif  // #if defined(OS_WIN)
+
+void Browser::ShowHistoryTab() {
+  UserMetrics::RecordAction(L"ShowHistory", profile_);
+  ShowSingleDOMUITab(GURL(chrome::kChromeUIHistoryURL));
+}
 
 void Browser::ShowDownloadsTab() {
   UserMetrics::RecordAction(L"ShowDownloads", profile_);
-  ShowSingleDOMUITab(DownloadsUI::GetBaseURL());
+  ShowSingleDOMUITab(GURL(chrome::kChromeUIDownloadsURL));
 }
 
+#if defined(OS_WIN)
 void Browser::OpenClearBrowsingDataDialog() {
   UserMetrics::RecordAction(L"ClearBrowsingData_ShowDlg", profile_);
   window_->ShowClearBrowsingDataDialog();
@@ -1015,14 +1054,14 @@ void Browser::OpenAboutChromeDialog() {
   UserMetrics::RecordAction(L"AboutChrome", profile_);
   window_->ShowAboutChromeDialog();
 }
+#endif
 
 void Browser::OpenHelpTab() {
-  GURL help_url(l10n_util::GetString(IDS_HELP_CONTENT_URL));
+  GURL help_url(WideToASCII(l10n_util::GetString(IDS_HELP_CONTENT_URL)));
   AddTabWithURL(help_url, GURL(), PageTransition::AUTO_BOOKMARK, true,
                 NULL);
 }
 
-#endif
 ///////////////////////////////////////////////////////////////////////////////
 
 // static
@@ -1135,6 +1174,7 @@ void Browser::ExecuteCommand(int id) {
 #if defined(OS_WIN)
     case IDC_CLOSE_POPUPS:          ClosePopups();                 break;
     case IDC_PRINT:                 Print();                       break;
+#endif
     case IDC_ENCODING_AUTO_DETECT:  ToggleEncodingAutoDetect();    break;
     case IDC_ENCODING_UTF8:
     case IDC_ENCODING_UTF16LE:
@@ -1170,14 +1210,17 @@ void Browser::ExecuteCommand(int id) {
     case IDC_ENCODING_ISO88596:
     case IDC_ENCODING_WINDOWS1256:
     case IDC_ENCODING_ISO88598:
+    case IDC_ENCODING_ISO88598I:
     case IDC_ENCODING_WINDOWS1255:
     case IDC_ENCODING_WINDOWS1258:  OverrideEncoding(id);          break;
 
+#if defined(OS_WIN)
     // Clipboard commands
     case IDC_CUT:                   Cut();                         break;
     case IDC_COPY:                  Copy();                        break;
     case IDC_COPY_URL:              CopyCurrentPageURL();          break;
     case IDC_PASTE:                 Paste();                       break;
+#endif
 
     // Find-in-page
     case IDC_FIND:                  Find();                        break;
@@ -1190,12 +1233,17 @@ void Browser::ExecuteCommand(int id) {
     case IDC_ZOOM_MINUS:            ZoomOut();                     break;
 
     // Focus various bits of UI
+#if defined(OS_WIN)
     case IDC_FOCUS_TOOLBAR:         FocusToolbar();                break;
+#endif
     case IDC_FOCUS_LOCATION:        FocusLocationBar();            break;
     case IDC_FOCUS_SEARCH:          FocusSearch();                 break;
 
     // Show various bits of UI
+#if defined(OS_WIN)|| defined(OS_LINUX)
     case IDC_OPEN_FILE:             OpenFile();                    break;
+#endif
+#if defined(OS_WIN)
     case IDC_CREATE_SHORTCUTS:      OpenCreateShortcutsDialog();   break;
     case IDC_DEBUGGER:              OpenDebuggerWindow();          break;
     case IDC_JS_CONSOLE:            OpenJavaScriptConsole();       break;
@@ -1203,10 +1251,18 @@ void Browser::ExecuteCommand(int id) {
     case IDC_SELECT_PROFILE:        OpenSelectProfileDialog();     break;
     case IDC_NEW_PROFILE:           OpenNewProfileDialog();        break;
     case IDC_REPORT_BUG:            OpenBugReportDialog();         break;
+#endif
+
+#if defined(OS_WIN) || defined(OS_MACOSX)
     case IDC_SHOW_BOOKMARK_BAR:     ToggleBookmarkBar();           break;
-    case IDC_SHOW_HISTORY:          ShowHistoryTab();              break;
+#endif
+
+#if defined(OS_WIN)
     case IDC_SHOW_BOOKMARK_MANAGER: OpenBookmarkManager();         break;
+#endif
+    case IDC_SHOW_HISTORY:          ShowHistoryTab();              break;
     case IDC_SHOW_DOWNLOADS:        ShowDownloadsTab();            break;
+#if defined(OS_WIN)
 #ifdef CHROME_PERSONALIZATION
     case IDC_P13N_INFO:
       Personalization::HandleMenuItemClick(profile());             break;
@@ -1217,8 +1273,8 @@ void Browser::ExecuteCommand(int id) {
     case IDC_EDIT_SEARCH_ENGINES:   OpenKeywordEditor();           break;
     case IDC_VIEW_PASSWORDS:        OpenPasswordManager();         break;
     case IDC_ABOUT:                 OpenAboutChromeDialog();       break;
-    case IDC_HELP_PAGE:             OpenHelpTab();                 break;
 #endif
+    case IDC_HELP_PAGE:             OpenHelpTab();                 break;
 
     default:
       LOG(WARNING) << "Received Unimplemented Command: " << id;
@@ -1230,7 +1286,7 @@ void Browser::ExecuteCommand(int id) {
 // Browser, TabStripModelDelegate implementation:
 
 GURL Browser::GetBlankTabURL() const {
-  return NewTabUI::GetBaseURL();
+  return GURL(chrome::kChromeUINewTabURL);
 }
 
 void Browser::CreateNewStripWithContents(TabContents* detached_contents,
@@ -1246,7 +1302,8 @@ void Browser::CreateNewStripWithContents(TabContents* detached_contents,
   // Create an empty new browser window the same size as the old one.
   Browser* browser = new Browser(TYPE_NORMAL, profile_);
   browser->set_override_bounds(new_window_bounds);
-  browser->set_override_maximized(maximize);
+  browser->set_maximized_state(
+      maximize ? MAXIMIZED_STATE_MAXIMIZED : MAXIMIZED_STATE_UNMAXIMIZED);
   browser->CreateBrowserWindow();
   browser->tabstrip_model()->AppendTabContents(detached_contents, true);
   // Make sure the loading state is updated correctly, otherwise the throbber
@@ -1256,13 +1313,7 @@ void Browser::CreateNewStripWithContents(TabContents* detached_contents,
 }
 
 int Browser::GetDragActions() const {
-  int result = 0;
-  if (BrowserList::GetBrowserCountForType(profile_, TYPE_NORMAL) > 1 ||
-      tab_count() > 1)
-    result |= TAB_TEAROFF_ACTION;
-  if (tab_count() > 1)
-    result |= TAB_MOVE_ACTION;
-  return result;
+  return TAB_TEAROFF_ACTION | (tab_count() > 1 ? TAB_MOVE_ACTION : 0);
 }
 
 TabContents* Browser::CreateTabContentsForURL(
@@ -1751,21 +1802,18 @@ void Browser::URLStarredChanged(TabContents* source, bool starred) {
     window_->SetStarredState(starred);
 }
 
-#if defined(OS_WIN)
-// TODO(port): Refactor this to win-specific delegate?
-void Browser::ContentsMouseEvent(TabContents* source, UINT message) {
+void Browser::ContentsMouseEvent(TabContents* source, bool motion) {
   if (!GetStatusBubble())
     return;
 
   if (source == GetSelectedTabContents()) {
-    if (message == WM_MOUSEMOVE) {
+    if (motion) {
       GetStatusBubble()->MouseMoved();
-    } else if (message == WM_MOUSELEAVE) {
+    } else {
       GetStatusBubble()->SetURL(GURL(), std::wstring());
     }
   }
 }
-#endif
 
 void Browser::UpdateTargetURL(TabContents* source, const GURL& url) {
   if (!GetStatusBubble())
@@ -1890,7 +1938,7 @@ void Browser::Observe(NotificationType type,
       }
       break;
 
-    case NotificationType::SSL_STATE_CHANGED:
+    case NotificationType::SSL_VISIBLE_STATE_CHANGED:
       // When the current tab's SSL state changes, we need to update the URL
       // bar to reflect the new state. Note that it's possible for the selected
       // tab contents to be NULL. This is because we listen for all sources
@@ -1978,6 +2026,7 @@ void Browser::InitCommandState() {
   command_updater_.UpdateCommandEnabled(IDC_ENCODING_ISO88596, true);
   command_updater_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1256, true);
   command_updater_.UpdateCommandEnabled(IDC_ENCODING_ISO88598, true);
+  command_updater_.UpdateCommandEnabled(IDC_ENCODING_ISO88598I, true);
   command_updater_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1255, true);
   command_updater_.UpdateCommandEnabled(IDC_ENCODING_WINDOWS1258, true);
 
@@ -2213,6 +2262,9 @@ void Browser::ProcessPendingUIUpdates() {
       updated_stuff[contents] |= TabContents::INVALIDATE_FAVICON;
     }
 
+    if (flags & TabContents::INVALIDATE_FEEDLIST)
+      window()->GetLocationBar()->UpdateFeedIcon();
+
     // Updating the URL happens synchronously in ScheduleUIUpdate.
 
     if (flags & TabContents::INVALIDATE_LOAD && GetStatusBubble())
@@ -2396,29 +2448,24 @@ void Browser::BuildPopupWindow(TabContents* source,
 }
 
 GURL Browser::GetHomePage() {
-#if defined(OS_LINUX)
-  return GURL("about:linux-splash");
-#endif
   if (profile_->GetPrefs()->GetBoolean(prefs::kHomePageIsNewTabPage))
-    return NewTabUI::GetBaseURL();
+    return GURL(chrome::kChromeUINewTabURL);
   GURL home_page = GURL(URLFixerUpper::FixupURL(
       WideToUTF8(profile_->GetPrefs()->GetString(prefs::kHomePage)),
       std::string()));
   if (!home_page.is_valid())
-    return NewTabUI::GetBaseURL();
+    return GURL(chrome::kChromeUINewTabURL);
   return home_page;
 }
 
-#if defined(OS_WIN)
 void Browser::FindInPage(bool find_next, bool forward_direction) {
   window_->ShowFindBar();
   if (find_next) {
     GetSelectedTabContents()->AsWebContents()->StartFinding(
-        std::wstring(),
+        string16(),
         forward_direction);
   }
 }
-#endif  // OS_WIN
 
 void Browser::CloseFrame() {
   window_->Close();

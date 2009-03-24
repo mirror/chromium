@@ -80,7 +80,7 @@ class TestNavigationEntry {
   std::string state_;
 
   mutable scoped_refptr<WebHistoryItem> cached_history_item_;
-  
+
   std::wstring target_frame_;
 
   DISALLOW_COPY_AND_ASSIGN(TestNavigationEntry);
@@ -192,4 +192,3 @@ class TestNavigationController {
 };
 
 #endif // WEBKIT_TOOLS_TEST_SHELL_TEST_NAVIGATION_CONTROLLER_H_
-

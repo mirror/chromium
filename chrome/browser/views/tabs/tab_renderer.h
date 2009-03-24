@@ -9,8 +9,8 @@
 #include "chrome/common/animation.h"
 #include "chrome/common/slide_animation.h"
 #include "chrome/common/throb_animation.h"
-#include "chrome/views/button.h"
-#include "chrome/views/menu.h"
+#include "chrome/views/controls/button/image_button.h"
+#include "chrome/views/controls/menu/menu.h"
 #include "chrome/views/view.h"
 
 class TabContents;
@@ -23,6 +23,7 @@ class TabContents;
 //
 ///////////////////////////////////////////////////////////////////////////////
 class TabRenderer : public views::View,
+                    public views::ButtonListener,
                     public AnimationDelegate {
  public:
   // Possible animation states.
@@ -63,12 +64,19 @@ class TabRenderer : public views::View,
   // available.
   static gfx::Size GetStandardSize();
 
+  // Loads the images to be used for the tab background. Uses the images for
+  // Vista if |use_vista_images| is true.
+  static void LoadTabImages(bool use_vista_images);
+
  protected:
-  views::Button* close_button() const { return close_button_; }
+  views::ImageButton* close_button() const { return close_button_; }
   const gfx::Rect& title_bounds() const { return title_bounds_; }
 
   // Returns the title of the Tab.
   std::wstring GetTitle() const;
+
+  // views::ButtonListener overrides:
+  virtual void ButtonPressed(views::Button* sender) {}
 
  private:
   // Overridden from views::View:
@@ -125,7 +133,7 @@ class TabRenderer : public views::View,
   int animation_frame_;
 
   // Close Button.
-  views::Button* close_button_;
+  views::ImageButton* close_button_;
 
   // Hover animation.
   scoped_ptr<SlideAnimation> hover_animation_;
@@ -146,6 +154,18 @@ class TabRenderer : public views::View,
     bool show_download_icon;
   };
   TabData data_;
+
+  struct TabImage {
+    SkBitmap* image_l;
+    SkBitmap* image_c;
+    SkBitmap* image_r;
+    int l_width;
+    int r_width;
+  };
+  static TabImage tab_active;
+  static TabImage tab_inactive;
+  static TabImage tab_inactive_otr;
+  static TabImage tab_hover;
 
   // Whether we're showing the icon. It is cached so that we can detect when it
   // changes and layout appropriately.
@@ -174,4 +194,3 @@ class TabRenderer : public views::View,
 };
 
 #endif  // CHROME_BROWSER_VIEWS_TABS_TAB_RENDERER_H__
-

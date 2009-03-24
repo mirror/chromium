@@ -12,11 +12,12 @@
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/slide_animation.h"
 #include "chrome/views/background.h"
-#include "chrome/views/button.h"
-#include "chrome/views/external_focus_tracker.h"
-#include "chrome/views/image_view.h"
-#include "chrome/views/label.h"
-#include "chrome/views/widget.h"
+#include "chrome/views/controls/button/image_button.h"
+#include "chrome/views/controls/button/native_button.h"
+#include "chrome/views/controls/image_view.h"
+#include "chrome/views/controls/label.h"
+#include "chrome/views/focus/external_focus_tracker.h"
+#include "chrome/views/widget/widget.h"
 #include "grit/generated_resources.h"
 #include "grit/theme_resources.h"
 
@@ -71,7 +72,7 @@ class InfoBarBackground : public views::Background {
 
 InfoBar::InfoBar(InfoBarDelegate* delegate)
     : delegate_(delegate),
-      close_button_(new views::Button),
+      close_button_(new views::ImageButton(this)),
       delete_factory_(this) {
   // We delete ourselves when we're removed from the view hierarchy.
   SetParentOwned(false);
@@ -79,13 +80,12 @@ InfoBar::InfoBar(InfoBarDelegate* delegate)
   set_background(new InfoBarBackground);
 
   ResourceBundle& rb = ResourceBundle::GetSharedInstance();
-  close_button_->SetImage(views::Button::BS_NORMAL,
+  close_button_->SetImage(views::CustomButton::BS_NORMAL,
                           rb.GetBitmapNamed(IDR_CLOSE_BAR));
-  close_button_->SetImage(views::Button::BS_HOT,
+  close_button_->SetImage(views::CustomButton::BS_HOT,
                           rb.GetBitmapNamed(IDR_CLOSE_BAR_H));
-  close_button_->SetImage(views::Button::BS_PUSHED,
+  close_button_->SetImage(views::CustomButton::BS_PUSHED,
                           rb.GetBitmapNamed(IDR_CLOSE_BAR_P));
-  close_button_->SetListener(this, 0);
   close_button_->SetAccessibleName(l10n_util::GetString(IDS_ACCNAME_CLOSE));
   AddChildView(close_button_);
 
@@ -157,9 +157,9 @@ void InfoBar::RemoveInfoBar() const {
   container_->RemoveDelegate(delegate());
 }
 
-// InfoBar, views::BaseButton::ButtonListener implementation: ------------------
+// InfoBar, views::ButtonListener implementation: ------------------
 
-void InfoBar::ButtonPressed(views::BaseButton* sender) {
+void InfoBar::ButtonPressed(views::Button* sender) {
   if (sender == close_button_)
     RemoveInfoBar();
 }
@@ -192,7 +192,7 @@ void InfoBar::InfoBarAdded() {
   if (widget) {
     focus_tracker_.reset(
         new views::ExternalFocusTracker(this,
-            views::FocusManager::GetFocusManager(widget->GetHWND())));
+            views::FocusManager::GetFocusManager(widget->GetNativeView())));
   }
 }
 
@@ -214,7 +214,7 @@ void InfoBar::DestroyFocusTracker(bool restore_focus) {
       focus_tracker_->FocusLastFocusedExternalView();
     focus_tracker_->SetFocusManager(NULL);
     focus_tracker_.reset(NULL);
-  }  
+  }
 }
 
 void InfoBar::DeleteSelf() {
@@ -373,11 +373,9 @@ ConfirmInfoBar::ConfirmInfoBar(ConfirmInfoBarDelegate* delegate)
       initialized_(false),
       AlertInfoBar(delegate) {
   ok_button_ = new views::NativeButton(
-      delegate->GetButtonLabel(ConfirmInfoBarDelegate::BUTTON_OK));
-  ok_button_->SetListener(this);
+      this, delegate->GetButtonLabel(ConfirmInfoBarDelegate::BUTTON_OK));
   cancel_button_ = new views::NativeButton(
-      delegate->GetButtonLabel(ConfirmInfoBarDelegate::BUTTON_CANCEL));
-  cancel_button_->SetListener(this);
+      this, delegate->GetButtonLabel(ConfirmInfoBarDelegate::BUTTON_CANCEL));
 }
 
 ConfirmInfoBar::~ConfirmInfoBar() {
@@ -423,9 +421,10 @@ void ConfirmInfoBar::ViewHierarchyChanged(bool is_add,
   }
 }
 
-// ConfirmInfoBar, views::NativeButton::Listener implementation: ---------------
+// ConfirmInfoBar, views::ButtonListener implementation: ---------------
 
-void ConfirmInfoBar::ButtonPressed(views::NativeButton* sender) {
+void ConfirmInfoBar::ButtonPressed(views::Button* sender) {
+  InfoBar::ButtonPressed(sender);
   if (sender == ok_button_) {
     if (GetDelegate()->Accept())
       RemoveInfoBar();

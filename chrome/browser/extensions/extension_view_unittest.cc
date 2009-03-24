@@ -18,10 +18,10 @@ namespace {
 
 // How long to wait for the extension to put up a javascript alert before giving
 // up.
-const int kAlertTimeoutMs = 10000;
+const int kAlertTimeoutMs = 20000;
 
 // How long to wait for the extension to load before giving up.
-const int kLoadTimeoutMs = 5000;
+const int kLoadTimeoutMs = 10000;
 
 // The extension we're using as our test case.
 const char* kExtensionId = "00123456789abcdef0123456789abcdef0123456";
@@ -30,8 +30,8 @@ const char* kExtensionId = "00123456789abcdef0123456789abcdef0123456";
 // up a javascript alert.
 class MockExtensionView : public ExtensionView {
  public:
-  MockExtensionView(const GURL& url, Profile* profile)
-      : ExtensionView(url, profile), got_message_(false) {
+  MockExtensionView(Extension* extension, const GURL& url, Profile* profile)
+      : ExtensionView(extension, url, profile), got_message_(false) {
     InitHidden();
     MessageLoop::current()->PostDelayedTask(FROM_HERE,
         new MessageLoop::QuitTask, kAlertTimeoutMs);
@@ -43,11 +43,17 @@ class MockExtensionView : public ExtensionView {
   virtual void RunJavaScriptMessage(
       const std::wstring& message,
       const std::wstring& default_prompt,
+      const GURL& frame_url,
       const int flags,
       IPC::Message* reply_msg,
       bool* did_suppress_message) {
     got_message_ = true;
     MessageLoopForUI::current()->Quit();
+
+    // Call super, otherwise we'll leak reply_msg.
+    ExtensionView::RunJavaScriptMessage(
+        message, default_prompt, frame_url, flags,
+        reply_msg, did_suppress_message);
   }
 
   bool got_message_;
@@ -98,6 +104,9 @@ class ExtensionViewTest : public InProcessBrowserTest {
     // with the wrong MessageLoop.
     ExtensionErrorReporter::Init(false);
 
+    // Use single-process in an attempt to speed it up and make it less flaky.
+    //EnableSingleProcess();
+
     InProcessBrowserTest::SetUp();
   }
 };
@@ -124,9 +133,9 @@ IN_PROC_BROWSER_TEST_F(ExtensionViewTest, Index) {
   // Now wait for it to load, and grab a pointer to it.
   Extension* extension = observer.WaitForExtension();
   ASSERT_TRUE(extension);
-  GURL url = Extension::GetResourceURL(extension->url(), "index.html");
+  GURL url = Extension::GetResourceURL(extension->url(), "toolstrip1.html");
 
   // Start the extension process and wait for it to show a javascript alert.
-  MockExtensionView view(url, profile);
+  MockExtensionView view(extension, url, profile);
   EXPECT_TRUE(view.got_message());
 }

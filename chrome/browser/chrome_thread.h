@@ -6,7 +6,6 @@
 #define CHROME_BROWSER_CHROME_THREAD_H__
 
 #include "base/lock.h"
-#include "base/logging.h"
 #include "base/thread.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -79,4 +78,3 @@ class ChromeThread : public base::Thread {
 };
 
 #endif  // #ifndef CHROME_BROWSER_CHROME_THREAD_H__
-

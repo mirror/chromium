@@ -7,6 +7,7 @@
 #include "base/compiler_specific.h"
 #include "base/logging.h"
 #include "base/message_loop.h"
+#include "base/process_util.h"
 #include "base/singleton.h"
 #include "base/waitable_event.h"
 #include "chrome/browser/chrome_thread.h"
@@ -14,6 +15,7 @@
 #include "chrome/common/notification_service.h"
 #include "chrome/common/notification_type.h"
 #include "chrome/common/process_watcher.h"
+#include "chrome/common/result_codes.h"
 
 typedef std::list<ChildProcessInfo*> ChildProcessList;
 
@@ -39,10 +41,10 @@ class ChildNotificationTask : public Task {
 
 
 ChildProcessHost::ChildProcessHost(
-    ProcessType type, MessageLoop* main_message_loop)
-    : ChildProcessInfo(type),
+    ProcessType type, ResourceDispatcherHost* resource_dispatcher_host)
+    : Receiver(type),
       ALLOW_THIS_IN_INITIALIZER_LIST(listener_(this)),
-      main_message_loop_(main_message_loop),
+      resource_dispatcher_host_(resource_dispatcher_host),
       opening_channel_(false),
       process_event_(NULL) {
   Singleton<ChildProcessList>::get()->push_back(this);
@@ -55,6 +57,12 @@ ChildProcessHost::~ChildProcessHost() {
   if (handle()) {
     watcher_.StopWatching();
     ProcessWatcher::EnsureProcessTerminated(handle());
+
+#if defined(OS_WIN)
+    // Above call took ownership, so don't want WaitableEvent to assert because
+    // the handle isn't valid anymore.
+    process_event_->Release();
+#endif
   }
 }
 
@@ -93,7 +101,7 @@ bool ChildProcessHost::Send(IPC::Message* msg) {
 }
 
 void ChildProcessHost::Notify(NotificationType type) {
-  main_message_loop_->PostTask(
+  resource_dispatcher_host_->ui_loop()->PostTask(
       FROM_HERE, new ChildNotificationTask(type, this));
 }
 
@@ -119,7 +127,8 @@ ChildProcessHost::ListenerHook::ListenerHook(ChildProcessHost* host)
     : host_(host) {
 }
 
-void ChildProcessHost::ListenerHook::OnMessageReceived(const IPC::Message& msg) {
+void ChildProcessHost::ListenerHook::OnMessageReceived(
+    const IPC::Message& msg) {
 #ifdef IPC_MESSAGE_LOG_ENABLED
   IPC::Logging* logger = IPC::Logging::current();
   if (msg.type() == IPC_LOGGING_ID) {
@@ -131,7 +140,14 @@ void ChildProcessHost::ListenerHook::OnMessageReceived(const IPC::Message& msg) 
     logger->OnPreDispatchMessage(msg);
 #endif
 
-  host_->OnMessageReceived(msg);
+  bool msg_is_ok = true;
+  bool handled = host_->resource_dispatcher_host_->OnMessageReceived(
+      msg, host_, &msg_is_ok);
+  if (!handled)
+    host_->OnMessageReceived(msg);
+
+  if (!msg_is_ok) 
+    base::KillProcess(host_->handle(), ResultCodes::KILLED_BAD_MESSAGE, false);
 
 #ifdef IPC_MESSAGE_LOG_ENABLED
   if (logger->Enabled())

@@ -63,10 +63,6 @@ class ExtensionsService : public ExtensionsServiceFrontendInterface {
   // Initialize and start all installed extensions.
   bool Init();
 
-  // Start the extension process for this extension.  TODO(mpcomplete): not sure
-  // how this should actually work yet.
-  void LaunchExtensionProcess(Extension* extension);
-
   // ExtensionsServiceFrontendInterface
   virtual MessageLoop* GetMessageLoop();
   virtual void InstallExtension(const FilePath& extension_path);
@@ -137,7 +133,7 @@ class ExtensionsServiceBackend
       scoped_refptr<ExtensionsServiceFrontendInterface> frontend);
 
   // Check externally updated extensions for updates and install if necessary.
-  // Errors are reported through ExtensionErrorReporter. 
+  // Errors are reported through ExtensionErrorReporter.
   // ReportExtensionInstalled is called on success.
   void CheckForExternalUpdates(
       scoped_refptr<ExtensionsServiceFrontendInterface> frontend);

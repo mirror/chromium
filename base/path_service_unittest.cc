@@ -7,7 +7,6 @@
 #include "base/basictypes.h"
 #include "base/file_util.h"
 #include "base/file_path.h"
-#include "base/logging.h"
 #if defined(OS_WIN)
 #include "base/win_util.h"
 #endif
@@ -61,4 +60,3 @@ TEST_F(PathServiceTest, Get) {
   }
 #endif
 }
-

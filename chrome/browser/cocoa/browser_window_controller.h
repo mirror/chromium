@@ -10,8 +10,11 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "chrome/browser/cocoa/tab_window_controller.h"
+
 class Browser;
 class BrowserWindow;
+class BrowserWindowCocoa;
 class LocationBar;
 class TabContents;
 @class TabStripView;
@@ -19,18 +22,11 @@ class TabContents;
 @class TabStripController;
 
 @interface BrowserWindowController :
-    NSWindowController<NSUserInterfaceValidations> {
+    TabWindowController<NSUserInterfaceValidations> {
  @private
-  Browser* browser_;
-  BrowserWindow* windowShim_;
   TabStripController* tabStripController_;
-
-  IBOutlet NSBox* contentBox_;
-  IBOutlet TabStripView* tabStripView_;
-
-  // Views for the toolbar
-  IBOutlet NSView* toolbarView_;
-  IBOutlet NSTextField* urlBarView_;
+  Browser* browser_;
+  BrowserWindowCocoa* windowShim_;
 }
 
 // Load the browser window nib and do any Cocoa-specific initialization.
@@ -69,6 +65,10 @@ class TabContents;
 
 // Make the location bar the first responder, if possible.
 - (void)focusLocationBar;
+
+- (BOOL)isBookmarkBarVisible;
+
+- (void)toggleBookmarkBar;
 
 @end
 

@@ -5,9 +5,7 @@
 #include <string>
 
 #include "base/file_util.h"
-#include "base/logging.h"
 #include "base/message_loop.h"
-#include "base/scoped_ptr.h"
 #include "base/string_util.h"
 #include "net/base/cookie_monster.h"
 #include "net/base/net_util.h"
@@ -52,7 +50,7 @@ class PluginTest : public TestShellTest {
   void WaitForFinish(const std::string &name, const std::string &id) {
     test_shell_->WaitTestFinished();
 
-    std::string cookies = 
+    std::string cookies =
         request_context_->cookie_store()->GetCookies(test_url_);
     EXPECT_FALSE(cookies.empty());
 
@@ -115,9 +113,8 @@ class PluginTest : public TestShellTest {
 };
 
 TEST_F(PluginTest, DISABLED_VerifyPluginWindowRect) {
-  std::wstring test_url = GetTestURL(plugin_data_dir_, 
+  std::wstring test_url = GetTestURL(plugin_data_dir_,
                                      L"verify_plugin_window_rect.html");
   NavigateToURL(test_url);
   WaitForFinish("checkwindowrect", "1");
 }
-

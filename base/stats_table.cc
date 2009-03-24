@@ -7,6 +7,7 @@
 #include "base/logging.h"
 #include "base/platform_thread.h"
 #include "base/process_util.h"
+#include "base/scoped_ptr.h"
 #include "base/shared_memory.h"
 #include "base/string_piece.h"
 #include "base/string_util.h"
@@ -501,9 +502,9 @@ int StatsTable::GetRowValue(int index, int pid) const {
 
   int rv = 0;
   int* row = impl_->row(index);
-  for (int index = 0; index < impl_->max_threads(); index++) {
-    if (pid == 0 || *impl_->thread_pid(index) == pid)
-      rv += row[index];
+  for (int slot_id = 0; slot_id < impl_->max_threads(); slot_id++) {
+    if (pid == 0 || *impl_->thread_pid(slot_id) == pid)
+      rv += row[slot_id];
   }
   return rv;
 }

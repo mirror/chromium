@@ -9,9 +9,9 @@
 #include "chrome/common/gfx/path.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
-#include "chrome/views/chrome_menu.h"
-#include "chrome/views/tooltip_manager.h"
-#include "chrome/views/widget.h"
+#include "chrome/views/controls/menu/chrome_menu.h"
+#include "chrome/views/widget/tooltip_manager.h"
+#include "chrome/views/widget/widget.h"
 #include "grit/generated_resources.h"
 
 const std::string Tab::kTabClassName = "browser/tabs/Tab";
@@ -50,7 +50,7 @@ class Tab::ContextMenuController : public views::MenuDelegate {
   }
 
   void RunMenuAt(int x, int y) {
-    menu_->RunMenuAt(tab_->GetWidget()->GetHWND(), gfx::Rect(x, y, 0, 0),
+    menu_->RunMenuAt(tab_->GetWidget()->GetNativeView(), gfx::Rect(x, y, 0, 0),
                      views::MenuItemView::TOPLEFT, true);
     if (tab_)
       tab_->ContextMenuClosed();
@@ -123,7 +123,6 @@ Tab::Tab(TabDelegate* delegate)
       delegate_(delegate),
       closing_(false),
       menu_controller_(NULL) {
-  close_button()->SetListener(this, 0);
   close_button()->SetAccessibleName(l10n_util::GetString(IDS_ACCNAME_CLOSE));
   close_button()->SetAnimationDuration(0);
   SetContextMenuController(this);
@@ -159,15 +158,6 @@ void Tab::GetHitTestMask(gfx::Path* mask) const {
 
 bool Tab::OnMousePressed(const views::MouseEvent& event) {
   if (event.IsLeftMouseButton()) {
-    // When only one tab is present, instead of ripping it out on drag,
-    // it dragged the whole window. This is done by sending a non-client
-    // message which is handled by the default window procedure and causes
-    // the window get the default drag-on-caption behavior.
-    if (!delegate_->HasAvailableDragActions()) {
-      SendMessage(GetWidget()->GetHWND(), WM_NCLBUTTONDOWN,
-                  HTCAPTION, MAKELPARAM(event.x(), event.y()));
-      return false;
-    }
     // Store whether or not we were selected just now... we only want to be
     // able to drag foreground tabs, so we don't start dragging the tab if
     // it was in the background.
@@ -246,9 +236,9 @@ void Tab::ShowContextMenu(views::View* source, int x, int y,
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// views::BaseButton::ButtonListener implementation:
+// views::ButtonListener implementation:
 
-void Tab::ButtonPressed(views::BaseButton* sender) {
+void Tab::ButtonPressed(views::Button* sender) {
   if (sender == close_button())
     delegate_->CloseTab(this);
 }

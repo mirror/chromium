@@ -12,7 +12,6 @@
 #include <algorithm>
 
 #include "base/command_line.h"
-#include "base/debug_util.h"
 #include "base/linked_ptr.h"
 #include "base/logging.h"
 #include "base/path_service.h"
@@ -24,7 +23,6 @@
 #include "base/string_util.h"
 #include "base/thread.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/cache_manager_host.h"
 #include "chrome/browser/extensions/user_script_master.h"
 #include "chrome/browser/history/history.h"
 #include "chrome/browser/plugin_service.h"
@@ -32,10 +30,10 @@
 #include "chrome/browser/renderer_host/render_widget_helper.h"
 #include "chrome/browser/renderer_host/renderer_security_policy.h"
 #include "chrome/browser/renderer_host/resource_message_filter.h"
+#include "chrome/browser/renderer_host/web_cache_manager.h"
 #include "chrome/browser/visitedlink_master.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/child_process_info.h"
-#include "chrome/common/debug_flags.h"
 #include "chrome/common/logging_chrome.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
@@ -45,6 +43,8 @@
 #include "chrome/common/result_codes.h"
 #include "chrome/renderer/render_process.h"
 #include "grit/generated_resources.h"
+
+using WebKit::WebCache;
 
 #if defined(OS_WIN)
 
@@ -67,10 +67,6 @@
 #include "skia/include/SkBitmap.h"
 
 
-namespace {
-
-// ----------------------------------------------------------------------------
-
 // This class creates the IO thread for the renderer when running in
 // single-process mode.  It's not used in multi-process mode.
 class RendererMainThread : public base::Thread {
@@ -79,6 +75,10 @@ class RendererMainThread : public base::Thread {
       : base::Thread("Chrome_InProcRendererThread"),
         channel_id_(channel_id),
         render_process_(NULL) {
+  }
+
+  ~RendererMainThread() {
+    Stop();
   }
 
  protected:
@@ -119,17 +119,6 @@ bool GetRendererPath(std::wstring* cmd_line) {
   return PathService::Get(base::FILE_EXE, cmd_line);
 }
 
-const wchar_t* const kDesktopName = L"ChromeRendererDesktop";
-
-}  // namespace
-
-//------------------------------------------------------------------------------
-
-// static
-void BrowserRenderProcessHost::RegisterPrefs(PrefService* prefs) {
-  prefs->RegisterBooleanPref(prefs::kStartRenderersManually, false);
-}
-
 BrowserRenderProcessHost::BrowserRenderProcessHost(Profile* profile)
     : RenderProcessHost(profile),
       visible_widgets_(0),
@@ -137,11 +126,7 @@ BrowserRenderProcessHost::BrowserRenderProcessHost(Profile* profile)
       ALLOW_THIS_IN_INITIALIZER_LIST(cached_dibs_cleaner_(
             base::TimeDelta::FromSeconds(5),
             this, &BrowserRenderProcessHost::ClearTransportDIBCache)) {
-  DCHECK(host_id() >= 0);  // We use a negative host_id_ in destruction.
-  widget_helper_ = new RenderWidgetHelper(host_id());
-
-  CacheManagerHost::GetInstance()->Add(host_id());
-  RendererSecurityPolicy::GetInstance()->Add(host_id());
+  widget_helper_ = new RenderWidgetHelper();
 
   PrefService* prefs = profile->GetPrefs();
   prefs->AddPrefObserver(prefs::kBlockPopups, this);
@@ -152,6 +137,16 @@ BrowserRenderProcessHost::BrowserRenderProcessHost(Profile* profile)
       NotificationType::USER_SCRIPTS_LOADED,
       NotificationService::AllSources());
 
+  if (run_renderer_in_process()) {
+    // We need a "renderer pid", but we don't have one when there's no renderer
+    // process.  So pick a value that won't clash with other child process pids.
+    // Linux has PID_MAX_LIMIT which is 2^22.  Windows always uses pids that are
+    // divisible by 4.  So...
+    static int next_pid = 4 * 1024 * 1024;
+    next_pid += 3;
+    SetProcessID(next_pid);
+  }
+
   // Note: When we create the BrowserRenderProcessHost, it's technically
   //       backgrounded, because it has no visible listeners.  But the process
   //       doesn't actually exist yet, so we'll Background it later, after
@@ -159,9 +154,10 @@ BrowserRenderProcessHost::BrowserRenderProcessHost(Profile* profile)
 }
 
 BrowserRenderProcessHost::~BrowserRenderProcessHost() {
-  // Some tests hold BrowserRenderProcessHost in a scoped_ptr, so we must call
-  // Unregister here as well as in response to Release().
-  Unregister();
+  if (pid() >= 0) {
+    WebCacheManager::GetInstance()->Remove(pid());
+    RendererSecurityPolicy::GetInstance()->Remove(pid());
+  }
 
   // We may have some unsent messages at this point, but that's OK.
   channel_.reset();
@@ -182,27 +178,6 @@ BrowserRenderProcessHost::~BrowserRenderProcessHost() {
   ClearTransportDIBCache();
 }
 
-// When we're started with the --start-renderers-manually flag, we pop up a
-// modal dialog requesting the user manually start up a renderer.
-// |cmd_line| is the command line to start the renderer with.
-static void RunStartRenderersManuallyDialog(const CommandLine& cmd_line) {
-#if defined(OS_WIN)
-  std::wstring message =
-      L"Please start a renderer process using:\n" +
-      cmd_line.command_line_string();
-
-  // We don't know the owner window for RenderProcessHost and therefore we
-  // pass a NULL HWND argument.
-  win_util::MessageBox(NULL,
-                       message,
-                       switches::kBrowserStartRenderersManually,
-                       MB_OK);
-#else
-  // TODO(port): refactor above code / pop up a message box here.
-  NOTIMPLEMENTED();
-#endif
-}
-
 bool BrowserRenderProcessHost::Init() {
   // calling Init() more than once does nothing, this makes it more convenient
   // for the view host which may not be sure in some cases
@@ -221,7 +196,6 @@ bool BrowserRenderProcessHost::Init() {
                                 audio_renderer_host_.get(),
                                 PluginService::GetInstance(),
                                 g_browser_process->print_job_manager(),
-                                host_id(),
                                 profile(),
                                 widget_helper_,
                                 profile()->GetSpellChecker());
@@ -241,13 +215,18 @@ bool BrowserRenderProcessHost::Init() {
   // be doing.
   channel_->set_sync_messages_with_no_timeout_allowed(false);
 
-  // build command line for renderer, we have to quote the executable name to
-  // deal with spaces
+  // Build command line for renderer, we have to quote the executable name to
+  // deal with spaces.
   std::wstring renderer_path =
       browser_command_line.GetSwitchValue(switches::kRendererPath);
-  if (renderer_path.empty())
-    if (!GetRendererPath(&renderer_path))
+  if (renderer_path.empty()) {
+    if (!GetRendererPath(&renderer_path)) {
+      // Need to reset the channel we created above or others might think the
+      // connection is live.
+      channel_.reset();
       return false;
+    }
+  }
   CommandLine cmd_line(renderer_path);
   if (logging::DialogsAreSuppressed())
     cmd_line.AppendSwitch(switches::kNoErrorDialogs);
@@ -285,8 +264,8 @@ bool BrowserRenderProcessHost::Init() {
     switches::kSilentDumpOnDCHECK,
     switches::kDisablePopupBlocking,
     switches::kUseLowFragHeapCrt,
-    switches::kGearsInRenderer,
     switches::kEnableVideo,
+    switches::kEnableWebWorkers,
   };
 
   for (size_t i = 0; i < arraysize(switch_names); ++i) {
@@ -300,27 +279,14 @@ bool BrowserRenderProcessHost::Init() {
   const std::wstring locale = g_browser_process->GetApplicationLocale();
   cmd_line.AppendSwitchWithValue(switches::kLang, locale);
 
-  bool in_sandbox = !browser_command_line.HasSwitch(switches::kNoSandbox);
-#if !defined (GOOGLE_CHROME_BUILD)
-  if (browser_command_line.HasSwitch(switches::kInProcessPlugins)) {
-    // In process plugins won't work if the sandbox is enabled.
-    in_sandbox = false;
-  }
-#endif
-
-#if defined(OS_WIN)
-  bool child_needs_help =
-      DebugFlags::ProcessDebugFlags(&cmd_line,
-                                    ChildProcessInfo::RENDER_PROCESS,
-                                    in_sandbox);
-#elif defined(OS_POSIX)
+#if defined(OS_POSIX)
   if (browser_command_line.HasSwitch(switches::kRendererCmdPrefix)) {
     // launch the renderer child with some prefix (usually "gdb --args")
     const std::wstring prefix =
         browser_command_line.GetSwitchValue(switches::kRendererCmdPrefix);
     cmd_line.PrependWrapper(prefix);
   }
-#endif
+#endif  // OS_POSIX
 
   cmd_line.AppendSwitchWithValue(switches::kProcessType,
                                  switches::kRendererProcess);
@@ -334,8 +300,7 @@ bool BrowserRenderProcessHost::Init() {
     cmd_line.AppendSwitchWithValue(switches::kUserDataDir,
                                    profile_path);
 
-  bool run_in_process = run_renderer_in_process();
-  if (run_in_process) {
+  if (run_renderer_in_process()) {
     // Crank up a thread and run the initialization there.  With the way that
     // messages flow between the browser and renderer, this thread is required
     // to prevent a deadlock in single-process mode.  When using multiple
@@ -346,104 +311,34 @@ bool BrowserRenderProcessHost::Init() {
     // communicating IO.  This can lead to deadlocks where the RenderThread is
     // waiting for the IO to complete, while the browsermain is trying to pass
     // an event to the RenderThread.
-    RendererMainThread* render_thread = new RendererMainThread(channel_id);
-
-    // This singleton keeps track of our pointers to avoid a leak.
-    Singleton<std::vector<linked_ptr<RendererMainThread> > >::get()->push_back(
-        linked_ptr<RendererMainThread>(render_thread));
+    in_process_renderer_.reset(new RendererMainThread(channel_id));
 
     base::Thread::Options options;
     options.message_loop_type = MessageLoop::TYPE_IO;
-    render_thread->StartWithOptions(options);
+    in_process_renderer_->StartWithOptions(options);
   } else {
-    if (g_browser_process->local_state() &&
-        g_browser_process->local_state()->GetBoolean(
-            prefs::kStartRenderersManually)) {
-      RunStartRenderersManuallyDialog(cmd_line);
-    } else {
+    base::ProcessHandle process = 0;
 #if defined(OS_WIN)
-      if (in_sandbox) {
-        // spawn the child process in the sandbox
-        sandbox::BrokerServices* broker_service =
-            g_browser_process->broker_services();
-
-        sandbox::ResultCode result;
-        PROCESS_INFORMATION target = {0};
-        sandbox::TargetPolicy* policy = broker_service->CreatePolicy();
-        policy->SetJobLevel(sandbox::JOB_LOCKDOWN, 0);
-
-        sandbox::TokenLevel initial_token = sandbox::USER_UNPROTECTED;
-        if (win_util::GetWinVersion() > win_util::WINVERSION_XP) {
-          // On 2003/Vista the initial token has to be restricted if the main
-          // token is restricted.
-          initial_token = sandbox::USER_RESTRICTED_SAME_ACCESS;
-        }
-
-        policy->SetTokenLevel(initial_token, sandbox::USER_LOCKDOWN);
-        policy->SetDelayedIntegrityLevel(sandbox::INTEGRITY_LEVEL_LOW);
-
-        HDESK desktop = CreateDesktop(kDesktopName, NULL, NULL, 0,
-                                      DESKTOP_CREATEWINDOW, NULL);
-        if (desktop) {
-          policy->SetDesktop(kDesktopName);
-        } else {
-          DLOG(WARNING) << "Failed to apply desktop security to the renderer";
-        }
-
-        if (!AddGenericPolicy(policy)) {
-          NOTREACHED();
-          return false;
-        }
-
-        if (browser_command_line.HasSwitch(switches::kGearsInRenderer)) {
-          if (!AddPolicyForGearsInRenderer(policy)) {
-            NOTREACHED();
-            return false;
-          }
-        }
-
-        if (!AddDllEvictionPolicy(policy)) {
-          NOTREACHED();
-          return false;
-        }
-
-        result =
-            broker_service->SpawnTarget(renderer_path.c_str(),
-                                        cmd_line.command_line_string().c_str(),
-                                        policy, &target);
-        policy->Release();
-
-        if (desktop)
-          CloseDesktop(desktop);
-
-        if (sandbox::SBOX_ALL_OK != result)
-          return false;
-
-        bool on_sandbox_desktop = (desktop != NULL);
-        NotificationService::current()->Notify(
-            NotificationType::RENDERER_PROCESS_IN_SBOX,
-            Source<BrowserRenderProcessHost>(this),
-            Details<bool>(&on_sandbox_desktop));
-
-        ResumeThread(target.hThread);
-        CloseHandle(target.hThread);
-        process_.set_handle(target.hProcess);
-
-        // Help the process a little. It can't start the debugger by itself if
-        // the process is in a sandbox.
-        if (child_needs_help)
-          DebugUtil::SpawnDebuggerOnProcess(target.dwProcessId);
-      } else
-#endif  // OS_WIN and sandbox
-      {
-        // spawn child process
-        base::ProcessHandle process = 0;
-        if (!SpawnChild(cmd_line, channel_.get(), &process))
-          return false;
-        process_.set_handle(process);
-      }
+    process = sandbox::StartProcess(&cmd_line);
+#else
+    base::file_handle_mapping_vector fds_to_map;
+    int src_fd = -1, dest_fd = -1;
+    channel_->GetClientFileDescriptorMapping(&src_fd, &dest_fd);
+    if (src_fd > -1)
+      fds_to_map.push_back(std::pair<int, int>(src_fd, dest_fd));
+    base::LaunchApp(cmd_line.argv(), fds_to_map, false, &process);
+#endif
+    if (!process) {
+      channel_.reset();
+      return false;
     }
+    process_.set_handle(process);
+    SetProcessID(process_.pid());
   }
+
+  resource_message_filter->Init(pid());
+  WebCacheManager::GetInstance()->Add(pid());
+  RendererSecurityPolicy::GetInstance()->Add(pid());
 
   // Now that the process is created, set it's backgrounding accordingly.
   SetBackgrounded(backgrounded_);
@@ -456,24 +351,6 @@ bool BrowserRenderProcessHost::Init() {
 
   return true;
 }
-
-#if defined(OS_WIN)
-bool BrowserRenderProcessHost::SpawnChild(const CommandLine& command_line,
-    IPC::SyncChannel* channel, base::ProcessHandle* process_handle) {
-  return base::LaunchApp(command_line, false, false, process_handle);
-}
-#elif defined(OS_POSIX)
-bool BrowserRenderProcessHost::SpawnChild(const CommandLine& command_line,
-    IPC::SyncChannel* channel, base::ProcessHandle* process_handle) {
-  base::file_handle_mapping_vector fds_to_map;
-  int src_fd = -1, dest_fd = -1;
-  channel->GetClientFileDescriptorMapping(&src_fd, &dest_fd);
-  if (src_fd > -1)
-    fds_to_map.push_back(std::pair<int, int>(src_fd, dest_fd));
-  return base::LaunchApp(command_line.argv(), fds_to_map, false,
-                         process_handle);
-}
-#endif
 
 int BrowserRenderProcessHost::GetNextRoutingID() {
   return widget_helper_->GetNextRoutingID();
@@ -758,8 +635,9 @@ void BrowserRenderProcessHost::OnChannelConnected(int32 peer_pid) {
 }
 
 // Static. This function can be called from the IO Thread or from the UI thread.
-void BrowserRenderProcessHost::BadMessageTerminateProcess(uint16 msg_type,
-                                                          base::ProcessHandle process) {
+void BrowserRenderProcessHost::BadMessageTerminateProcess(
+    uint16 msg_type,
+    base::ProcessHandle process) {
   LOG(ERROR) << "bad message " << msg_type << " terminating renderer.";
   if (BrowserRenderProcessHost::run_renderer_in_process()) {
     // In single process mode it is better if we don't suicide but just crash.
@@ -808,17 +686,6 @@ void BrowserRenderProcessHost::OnChannelError() {
   // TODO(darin): clean this up
 }
 
-void BrowserRenderProcessHost::Unregister() {
-  // RenderProcessHost::Unregister will clean up the host_id_, so we must
-  // do our cleanup that uses that variable before we call it.
-  if (host_id() >= 0) {
-    CacheManagerHost::GetInstance()->Remove(host_id());
-    RendererSecurityPolicy::GetInstance()->Remove(host_id());
-  }
-
-  RenderProcessHost::Unregister();
-}
-
 void BrowserRenderProcessHost::OnPageContents(const GURL& url,
                                        int32 page_id,
                                        const std::wstring& contents) {
@@ -832,8 +699,8 @@ void BrowserRenderProcessHost::OnPageContents(const GURL& url,
 }
 
 void BrowserRenderProcessHost::OnUpdatedCacheStats(
-    const CacheManager::UsageStats& stats) {
-  CacheManagerHost::GetInstance()->ObserveStats(host_id(), stats);
+    const WebCache::UsageStats& stats) {
+  WebCacheManager::GetInstance()->ObserveStats(pid(), stats);
 }
 
 void BrowserRenderProcessHost::SetBackgrounded(bool backgrounded) {

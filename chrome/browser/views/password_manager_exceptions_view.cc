@@ -2,23 +2,24 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/views/password_manager_exceptions_view.h"
+
 #include "base/string_util.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/browser/profile.h"
-#include "chrome/browser/views/password_manager_exceptions_view.h"
 #include "chrome/browser/views/standard_layout.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/views/background.h"
+#include "chrome/views/controls/button/native_button.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/native_button.h"
 #include "grit/generated_resources.h"
 
 using views::ColumnSet;
 using views::GridLayout;
 
 // We can only have one PasswordManagerExceptionsView at a time.
-static PasswordManagerExceptionsView* instance_ = NULL;
+PasswordManagerExceptionsView* PasswordManagerExceptionsView::instance_ = NULL;
 
 static const int kDefaultWindowWidth = 530;
 static const int kDefaultWindowHeight = 240;
@@ -74,6 +75,8 @@ void PasswordManagerExceptionsTableModel::OnWebDataServiceRequestDone(
   }
   if (observer_)
     observer_->OnModelChanged();
+  if (row_count_observer_)
+    row_count_observer_->OnRowCountChanged(RowCount());
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -96,15 +99,18 @@ void PasswordManagerExceptionsView::Show(Profile* profile) {
 }
 
 PasswordManagerExceptionsView::PasswordManagerExceptionsView(Profile* profile)
-    : remove_button_(l10n_util::GetString(
+    : remove_button_(this, l10n_util::GetString(
           IDS_PASSWORD_MANAGER_EXCEPTIONS_VIEW_REMOVE_BUTTON)),
-      remove_all_button_(l10n_util::GetString(
+      remove_all_button_(this, l10n_util::GetString(
           IDS_PASSWORD_MANAGER_EXCEPTIONS_VIEW_REMOVE_ALL_BUTTON)),
       table_model_(profile) {
   Init();
 }
 
 void PasswordManagerExceptionsView::SetupTable() {
+  // Tell the table model we are concern about how many rows it has.
+  table_model_.set_row_count_observer(this);
+
   // Creates the different columns for the table.
   // The float resize values are the result of much tinkering.
   std::vector<views::TableColumn> columns;
@@ -126,11 +132,9 @@ void PasswordManagerExceptionsView::SetupButtons() {
   // Tell View not to delete class stack allocated views.
 
   remove_button_.SetParentOwned(false);
-  remove_button_.SetListener(this);
   remove_button_.SetEnabled(false);
 
   remove_all_button_.SetParentOwned(false);
-  remove_all_button_.SetListener(this);
 }
 
 void PasswordManagerExceptionsView::Init() {
@@ -206,7 +210,7 @@ std::wstring PasswordManagerExceptionsView::GetWindowTitle() const {
   return l10n_util::GetString(IDS_PASSWORD_MANAGER_EXCEPTIONS_VIEW_TITLE);
 }
 
-void PasswordManagerExceptionsView::ButtonPressed(views::NativeButton* sender) {
+void PasswordManagerExceptionsView::ButtonPressed(views::Button* sender) {
   DCHECK(window());
   // Close will result in our destruction.
   if (sender == &remove_all_button_) {
@@ -239,4 +243,8 @@ void PasswordManagerExceptionsView::WindowClosing() {
 
 views::View* PasswordManagerExceptionsView::GetContentsView() {
   return this;
+}
+
+void PasswordManagerExceptionsView::OnRowCountChanged(size_t rows) {
+  remove_all_button_.SetEnabled(rows > 0);
 }

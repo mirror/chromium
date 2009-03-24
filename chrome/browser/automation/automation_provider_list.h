@@ -37,6 +37,7 @@ class AutomationProviderList {
 
 private:
   AutomationProviderList();
+  void OnLastProviderRemoved();
   list_type automation_providers_;
   static AutomationProviderList* instance_;
 
@@ -44,4 +45,3 @@ private:
 };
 
 #endif  // CHROME_BROWSER_AUTOMATION_AUTOMATION_PROVIDER_LIST_H__
-

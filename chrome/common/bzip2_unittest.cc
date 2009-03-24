@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/logging.h"
+#include "base/basictypes.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/bzip2/bzlib.h"
 
@@ -65,4 +65,3 @@ TEST(Bzip2Test, Roundtrip) {
   EXPECT_EQ(arraysize(input) - 1, stream.total_out_lo32);
   EXPECT_STREQ(input, output2);
 }
-

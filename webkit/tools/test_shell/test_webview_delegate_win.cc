@@ -124,7 +124,7 @@ void TestWebViewDelegate::GetRootWindowRect(WebWidget* webwidget,
   }
 }
 
-void TestWebViewDelegate::GetRootWindowResizerRect(WebWidget* webwidget, 
+void TestWebViewDelegate::GetRootWindowResizerRect(WebWidget* webwidget,
                                                    gfx::Rect* out_rect) {
   // Not necessary on Windows.
   *out_rect = gfx::Rect();
@@ -188,4 +188,3 @@ void TestWebViewDelegate::SetAddressBarURL(const GURL& url) {
   SendMessage(shell_->editWnd(), WM_SETTEXT, 0,
               reinterpret_cast<LPARAM>(url_string.c_str()));
 }
-

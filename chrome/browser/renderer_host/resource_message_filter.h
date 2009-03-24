@@ -17,13 +17,13 @@
 #include "base/string16.h"
 #include "build/build_config.h"
 #include "chrome/browser/net/resolve_proxy_msg_helper.h"
+#include "chrome/browser/renderer_host/render_widget_helper.h"
 #include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #include "chrome/common/ipc_channel_proxy.h"
-#include "chrome/common/ipc_maybe.h"
 #include "chrome/common/modal_dialog_event.h"
 #include "chrome/common/notification_observer.h"
 #include "chrome/common/transport_dib.h"
-#include "webkit/glue/cache_manager.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebCache.h"
 
 #if defined(OS_WIN)
 #include <windows.h>
@@ -69,11 +69,12 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
                         AudioRendererHost* audio_renderer_host,
                         PluginService* plugin_service,
                         printing::PrintJobManager* print_job_manager,
-                        int render_process_host_id,
                         Profile* profile,
                         RenderWidgetHelper* render_widget_helper,
                         SpellChecker* spellchecker);
   virtual ~ResourceMessageFilter();
+
+  void Init(int render_process_id);
 
   // IPC::ChannelProxy::MessageFilter methods:
   virtual void OnFilterAdded(IPC::Channel* channel);
@@ -83,13 +84,16 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
 
   // ResourceDispatcherHost::Receiver methods:
   virtual bool Send(IPC::Message* message);
+  virtual URLRequestContext* GetRequestContext(
+      uint32 request_id,
+      const ViewHostMsg_Resource_Request& request_data);
+  virtual int GetProcessId() const { return render_process_id_; }
 
-  // Access to the spell checker.
   SpellChecker* spellchecker() { return spellchecker_.get(); }
-
-  int render_process_host_id() const { return render_process_host_id_;}
-
-  base::ProcessHandle renderer_handle() const { return render_handle_;}
+  ResourceDispatcherHost* resource_dispatcher_host() {
+    return resource_dispatcher_host_;
+  }
+  MessageLoop* ui_loop() { return render_widget_helper_->ui_loop(); }
 
   // NotificationObserver implementation.
   virtual void Observe(NotificationType type,
@@ -100,15 +104,6 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   void OnMsgCreateWindow(int opener_id, bool user_gesture, int* route_id,
                          ModalDialogEvent* modal_dialog_event);
   void OnMsgCreateWidget(int opener_id, bool activatable, int* route_id);
-  void OnRequestResource(const IPC::Message& msg, int request_id,
-                         const ViewHostMsg_Resource_Request& request);
-  void OnCancelRequest(int request_id);
-  void OnClosePageACK(int new_render_process_host_id, int new_request_id);
-  void OnDataReceivedACK(int request_id);
-  void OnUploadProgressACK(int request_id);
-  void OnSyncLoad(int request_id,
-                  const ViewHostMsg_Resource_Request& request,
-                  IPC::Message* result_message);
   void OnSetCookie(const GURL& url, const GURL& policy_url,
                    const std::string& cookie);
   void OnGetCookies(const GURL& url, const GURL& policy_url,
@@ -144,7 +139,9 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
                              const std::string& clsid,
                              const std::wstring& locale,
                              IPC::Message* reply_msg);
-  void OnCreateDedicatedWorker(const GURL& url, int* route_id);
+  void OnCreateDedicatedWorker(const GURL& url,
+                               int render_view_route_id,
+                               int* route_id);
   void OnForwardToWorker(const IPC::Message& msg);
   void OnDownloadUrl(const IPC::Message& message,
                      const GURL& url,
@@ -156,14 +153,12 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   void OnReceiveContextMenuMsg(const IPC::Message& msg);
   // Clipboard messages
   void OnClipboardWriteObjects(const Clipboard::ObjectMap& objects);
-  void OnClipboardIsFormatAvailable(unsigned int format, bool* result);
+  void OnClipboardIsFormatAvailable(Clipboard::FormatType format, bool* result);
   void OnClipboardReadText(string16* result);
   void OnClipboardReadAsciiText(std::string* result);
   void OnClipboardReadHTML(string16* markup, GURL* src_url);
-#if defined(OS_WIN)|| defined(OS_LINUX)
   void OnGetWindowRect(gfx::NativeViewId window, gfx::Rect *rect);
   void OnGetRootWindowRect(gfx::NativeViewId window, gfx::Rect *rect);
-#endif
   void OnGetMimeTypeFromExtension(const FilePath::StringType& ext,
                                   std::string* mime_type);
   void OnGetMimeTypeFromFile(const FilePath& file_path,
@@ -173,7 +168,7 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   void OnGetCPBrowsingContext(uint32* context);
   void OnDuplicateSection(base::SharedMemoryHandle renderer_handle,
                           base::SharedMemoryHandle* browser_handle);
-  void OnResourceTypeStats(const CacheManager::ResourceTypeStats& stats);
+  void OnResourceTypeStats(const WebKit::WebCache::ResourceTypeStats& stats);
 
   void OnResolveProxy(const GURL& url, IPC::Message* reply_msg);
 
@@ -215,8 +210,12 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
 
   // Browser side transport DIB allocation
   void OnAllocTransportDIB(size_t size,
-                           IPC::Maybe<TransportDIB::Handle>* result);
+                           TransportDIB::Handle* result);
   void OnFreeTransportDIB(TransportDIB::Id dib_id);
+
+  void OnOpenChannelToExtension(const std::string& extension_id,
+                                int* channel_id);
+  void OnExtensionPostMessage(int channel_id, const std::string& message);
 
   // We have our own clipboard service because we want to access the clipboard
   // on the IO thread instead of forwarding (possibly synchronous) messages to
@@ -240,7 +239,7 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   // used by the ResourceDispatcherHost to look up the TabContents that
   // originated URLRequest.  Since the RenderProcessHost can be destroyed
   // before this object, we only hold an ID for lookup.
-  int render_process_host_id_;
+  int render_process_id_;
 
   // Our spellchecker object.
   scoped_refptr<SpellChecker> spellchecker_;
@@ -249,11 +248,11 @@ class ResourceMessageFilter : public IPC::ChannelProxy::MessageFilter,
   // the requests to the proxy service).
   ResolveProxyMsgHelper resolve_proxy_msg_helper_;
 
-  // Process handle of the renderer process.
-  base::ProcessHandle render_handle_;
-
   // Contextual information to be used for requests created here.
   scoped_refptr<URLRequestContext> request_context_;
+
+  // A request context specific for media resources.
+  scoped_refptr<URLRequestContext> media_request_context_;
 
   // A pointer to the profile associated with this filter.
   //

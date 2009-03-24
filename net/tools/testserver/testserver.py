@@ -15,7 +15,6 @@ To shut it down properly, visit localhost:8888/kill.
 import base64
 import BaseHTTPServer
 import cgi
-import md5
 import optparse
 import os
 import re
@@ -27,7 +26,14 @@ import tlslite
 import tlslite.api
 import pyftpdlib.ftpserver
 
-SERVER_HTTP = 0 
+try:
+  import hashlib
+  _new_md5 = hashlib.md5
+except ImportError:
+  import md5
+  _new_md5 = md5.new
+
+SERVER_HTTP = 0
 SERVER_FTP = 1
 
 debug_output = sys.stderr
@@ -114,10 +120,16 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       self.EchoAllHandler,
       self.EchoHandler] + self._get_handlers
 
-    self._mime_types = { 'gif': 'image/gif',  'jpeg' : 'image/jpeg', 'jpg' : 'image/jpeg' }
+    self._mime_types = {
+      'gif': 'image/gif',
+      'jpeg' : 'image/jpeg',
+      'jpg' : 'image/jpeg'
+    }
     self._default_mime_type = 'text/html'
 
-    BaseHTTPServer.BaseHTTPRequestHandler.__init__(self, request, client_address, socket_server)
+    BaseHTTPServer.BaseHTTPRequestHandler.__init__(self, request,
+                                                   client_address,
+                                                   socket_server)
 
   def _ShouldHandleRequest(self, handler_name):
     """Determines if the path can be handled by the handler.
@@ -168,7 +180,8 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     self.send_header('Content-type', 'text/html')
     self.end_headers()
 
-    self.wfile.write('<html><head><title>%s</title></head></html>' % time.time())
+    self.wfile.write('<html><head><title>%s</title></head></html>' %
+                     time.time())
 
     return True
 
@@ -184,7 +197,8 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     self.send_header('Content-type', 'text/html')
     self.end_headers()
 
-    self.wfile.write('<html><head><title>%s</title></head></html>' % time.time())
+    self.wfile.write('<html><head><title>%s</title></head></html>' %
+                     time.time())
 
     return True
 
@@ -200,7 +214,8 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     self.send_header('Content-type', 'text/html')
     self.end_headers()
 
-    self.wfile.write('<html><head><title>%s</title></head></html>' % time.time())
+    self.wfile.write('<html><head><title>%s</title></head></html>' %
+                     time.time())
 
     return True
 
@@ -216,7 +231,8 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     self.send_header('Content-type', 'text/html')
     self.end_headers()
 
-    self.wfile.write('<html><head><title>%s</title></head></html>' % time.time())
+    self.wfile.write('<html><head><title>%s</title></head></html>' %
+                     time.time())
 
     return True
 
@@ -232,7 +248,8 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     self.send_header('Cache-Control', 'max-age=60, proxy-revalidate')
     self.end_headers()
 
-    self.wfile.write('<html><head><title>%s</title></head></html>' % time.time())
+    self.wfile.write('<html><head><title>%s</title></head></html>' %
+                     time.time())
 
     return True
 
@@ -248,7 +265,8 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     self.send_header('Cache-Control', 'max-age=5, private')
     self.end_headers()
 
-    self.wfile.write('<html><head><title>%s</title></head></html>' % time.time())
+    self.wfile.write('<html><head><title>%s</title></head></html>' %
+                     time.time())
 
     return True
 
@@ -264,7 +282,8 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     self.send_header('Cache-Control', 'max-age=5, public')
     self.end_headers()
 
-    self.wfile.write('<html><head><title>%s</title></head></html>' % time.time())
+    self.wfile.write('<html><head><title>%s</title></head></html>' %
+                     time.time())
 
     return True
 
@@ -280,7 +299,8 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     self.send_header('Cache-Control', 'public, s-maxage = 60, max-age = 0')
     self.end_headers()
 
-    self.wfile.write('<html><head><title>%s</title></head></html>' % time.time())
+    self.wfile.write('<html><head><title>%s</title></head></html>' %
+                     time.time())
 
     return True
 
@@ -296,7 +316,8 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     self.send_header('Cache-Control', 'must-revalidate')
     self.end_headers()
 
-    self.wfile.write('<html><head><title>%s</title></head></html>' % time.time())
+    self.wfile.write('<html><head><title>%s</title></head></html>' %
+                     time.time())
 
     return True
 
@@ -313,7 +334,8 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     self.send_header('Cache-Control', 'max-age=60, must-revalidate')
     self.end_headers()
 
-    self.wfile.write('<html><head><title>%s</title></head></html>' % time.time())
+    self.wfile.write('<html><head><title>%s</title></head></html>' %
+                     time.time())
 
     return True
 
@@ -329,7 +351,8 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     self.send_header('Cache-Control', 'no-store')
     self.end_headers()
 
-    self.wfile.write('<html><head><title>%s</title></head></html>' % time.time())
+    self.wfile.write('<html><head><title>%s</title></head></html>' %
+                     time.time())
 
     return True
 
@@ -346,7 +369,8 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     self.send_header('Cache-Control', 'max-age=60, no-store')
     self.end_headers()
 
-    self.wfile.write('<html><head><title>%s</title></head></html>' % time.time())
+    self.wfile.write('<html><head><title>%s</title></head></html>' %
+                     time.time())
 
     return True
 
@@ -364,7 +388,8 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     self.send_header('Cache-Control', 'no-transform')
     self.end_headers()
 
-    self.wfile.write('<html><head><title>%s</title></head></html>' % time.time())
+    self.wfile.write('<html><head><title>%s</title></head></html>' %
+                     time.time())
 
     return True
 
@@ -410,11 +435,11 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
   def WriteFile(self):
     """This is handler dumps the content of POST request to a disk file into
     the data_dir/dump. Sub-directories are not supported."""
-    
+
     prefix='/writefile/'
     if not self.path.startswith(prefix):
       return False
-    
+
     file_name = self.path[len(prefix):]
 
     # do not allow fancy chars in file name
@@ -426,13 +451,13 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
       f = open(path, "wb")
       f.write(request);
       f.close()
-      
+
     self.send_response(200)
     self.send_header('Content-type', 'text/html')
     self.end_headers()
     self.wfile.write('<html>%s</html>' % file_name)
     return True
-    
+
   def EchoTitleHandler(self):
     """This handler is like Echo, but sets the page title to the request."""
 
@@ -724,15 +749,17 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
     # the request URL into this, but we don't care for testing.
     nonce_life = 10
     stale = False
-    if not self.server.nonce or (time.time() - self.server.nonce_time > nonce_life):
+    if (not self.server.nonce or
+        (time.time() - self.server.nonce_time > nonce_life)):
       if self.server.nonce:
         stale = True
       self.server.nonce_time = time.time()
       self.server.nonce = \
-          md5.new(time.ctime(self.server.nonce_time) + 'privatekey').hexdigest()
+          _new_md5(time.ctime(self.server.nonce_time) +
+                   'privatekey').hexdigest()
 
     nonce = self.server.nonce
-    opaque = md5.new('opaque').hexdigest()
+    opaque = _new_md5('opaque').hexdigest()
     password = 'secret'
     realm = 'testrealm'
 
@@ -754,13 +781,14 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
       # Check the 'response' value and make sure it matches our magic hash.
       # See http://www.ietf.org/rfc/rfc2617.txt
-      hash_a1 = md5.new(':'.join([pairs['username'], realm, password])).hexdigest()
-      hash_a2 = md5.new(':'.join([self.command, pairs['uri']])).hexdigest()
+      hash_a1 = _new_md5(
+          ':'.join([pairs['username'], realm, password])).hexdigest()
+      hash_a2 = _new_md5(':'.join([self.command, pairs['uri']])).hexdigest()
       if 'qop' in pairs and 'nc' in pairs and 'cnonce' in pairs:
-        response = md5.new(':'.join([hash_a1, nonce, pairs['nc'],
+        response = _new_md5(':'.join([hash_a1, nonce, pairs['nc'],
             pairs['cnonce'], pairs['qop'], hash_a2])).hexdigest()
       else:
-        response = md5.new(':'.join([hash_a1, nonce, hash_a2])).hexdigest()
+        response = _new_md5(':'.join([hash_a1, nonce, hash_a2])).hexdigest()
 
       if pairs['response'] != response:
         raise Exception('wrong password')
@@ -839,7 +867,8 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
   def ServerRedirectHandler(self):
     """Sends a server redirect to the given URL. The syntax is
-    '/server-redirect?http://foo.bar/asdf' to redirect to 'http://foo.bar/asdf'"""
+    '/server-redirect?http://foo.bar/asdf' to redirect to
+    'http://foo.bar/asdf'"""
 
     test_name = "/server-redirect"
     if not self._ShouldHandleRequest(test_name):
@@ -862,7 +891,8 @@ class TestPageHandler(BaseHTTPServer.BaseHTTPRequestHandler):
 
   def ClientRedirectHandler(self):
     """Sends a client redirect to the given URL. The syntax is
-    '/client-redirect?http://foo.bar/asdf' to redirect to 'http://foo.bar/asdf'"""
+    '/client-redirect?http://foo.bar/asdf' to redirect to
+    'http://foo.bar/asdf'"""
 
     test_name = "/client-redirect"
     if not self._ShouldHandleRequest(test_name):
@@ -1013,7 +1043,7 @@ def main(options, args):
 
     server.data_dir = MakeDataDir()
     MakeDumpDir(server.data_dir)
-    
+
   # means FTP Server
   else:
     my_data_dir = MakeDataDir()
@@ -1039,7 +1069,8 @@ def main(options, args):
     pyftpdlib.ftpserver.logline = line_logger
 
     # Define a customized banner (string returned when client connects)
-    ftp_handler.banner = "pyftpdlib %s based ftpd ready." % pyftpdlib.ftpserver.__ver__
+    ftp_handler.banner = ("pyftpdlib %s based ftpd ready." %
+                          pyftpdlib.ftpserver.__ver__)
 
     # Instantiate FTP server class and listen to 127.0.0.1:port
     address = ('127.0.0.1', port)
@@ -1069,4 +1100,3 @@ if __name__ == '__main__':
   options, args = option_parser.parse_args()
 
   sys.exit(main(options, args))
-  

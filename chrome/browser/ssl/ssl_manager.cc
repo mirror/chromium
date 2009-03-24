@@ -12,12 +12,12 @@
 #include "chrome/browser/renderer_host/resource_request_details.h"
 #include "chrome/browser/ssl/ssl_error_info.h"
 #include "chrome/browser/ssl/ssl_host_state.h"
+#include "chrome/browser/ssl/ssl_policy.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/provisional_load_details.h"
 #include "chrome/browser/tab_contents/tab_util.h"
 #include "chrome/browser/tab_contents/web_contents.h"
-#include "chrome/browser/ssl/ssl_policy.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
@@ -35,8 +35,7 @@
 #include "chrome/browser/load_notification_details.h"
 #include "chrome/browser/tab_contents/infobar_delegate.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
-#include "chrome/views/decision.h"
-#include "chrome/views/link.h"
+#include "chrome/views/controls/link.h"
 #else
 #include "chrome/common/temp_scaffolding_stubs.h"
 #endif
@@ -121,6 +120,8 @@ SSLManager::SSLManager(NavigationController* controller, Delegate* delegate)
                  Source<NavigationController>(controller_));
   registrar_.Add(this, NotificationType::LOAD_FROM_MEMORY_CACHE,
                  Source<NavigationController>(controller_));
+  registrar_.Add(this, NotificationType::SSL_INTERNAL_STATE_CHANGED,
+                 NotificationService::AllSources());
 }
 
 SSLManager::~SSLManager() {
@@ -190,6 +191,17 @@ void SSLManager::AddMessageToConsole(const std::wstring& msg,
 }
 
 // Delegate API method.
+void SSLManager::MarkHostAsBroken(const std::string& host) {
+  ssl_host_state_->MarkHostAsBroken(host);
+  DispatchSSLInternalStateChanged();
+}
+
+// Delegate API method.
+bool SSLManager::DidMarkHostAsBroken(const std::string& host) const {
+  return ssl_host_state_->DidMarkHostAsBroken(host);
+}
+
+// Delegate API method.
 void SSLManager::DenyCertForHost(net::X509Certificate* cert,
                                  const std::string& host) {
   // Remember that we don't like this cert for this host.
@@ -208,12 +220,14 @@ net::X509Certificate::Policy::Judgment SSLManager::QueryPolicy(
   return ssl_host_state_->QueryPolicy(cert, host);
 }
 
-bool SSLManager::CanShowInsecureContent(const GURL& url) {
-  return ssl_host_state_->CanShowInsecureContent(url);
+// Delegate API method.
+void SSLManager::AllowMixedContentForHost(const std::string& host) {
+  ssl_host_state_->AllowMixedContentForHost(host);
 }
 
-void SSLManager::AllowShowInsecureContentForURL(const GURL& url) {
-  ssl_host_state_->AllowShowInsecureContentForURL(url);
+// Delegate API method.
+bool SSLManager::DidAllowMixedContentForHost(const std::string& host) const {
+  return ssl_host_state_->DidAllowMixedContentForHost(host);
 }
 
 bool SSLManager::ProcessedSSLErrorFromRequest() const {
@@ -231,6 +245,9 @@ bool SSLManager::ProcessedSSLErrorFromRequest() const {
 
 SSLManager::ErrorHandler::ErrorHandler(ResourceDispatcherHost* rdh,
                                        URLRequest* request,
+                                       ResourceType::Type resource_type,
+                                       const std::string& frame_origin,
+                                       const std::string& main_frame_origin,
                                        MessageLoop* ui_loop)
     : ui_loop_(ui_loop),
       io_loop_(MessageLoop::current()),
@@ -238,12 +255,15 @@ SSLManager::ErrorHandler::ErrorHandler(ResourceDispatcherHost* rdh,
       request_id_(0, 0),
       resource_dispatcher_host_(rdh),
       request_url_(request->url()),
+      resource_type_(resource_type),
+      frame_origin_(frame_origin),
+      main_frame_origin_(main_frame_origin),
       request_has_been_notified_(false) {
   DCHECK(MessageLoop::current() != ui_loop);
 
   ResourceDispatcherHost::ExtraRequestInfo* info =
       ResourceDispatcherHost::ExtraInfoForRequest(request);
-  request_id_.render_process_host_id = info->render_process_host_id;
+  request_id_.process_id = info->process_id;
   request_id_.request_id = info->request_id;
 
   if (!tab_util::GetTabContentsID(request,
@@ -338,7 +358,11 @@ void SSLManager::ErrorHandler::CompleteCancelRequest(int error) {
       // The request can be NULL if it was cancelled by the renderer (as the
       // result of the user navigating to a new page from the location bar).
       DLOG(INFO) << "CompleteCancelRequest() url: " << request->url().spec();
-      request->CancelWithError(error);
+      SSLManager::CertError* cert_error = AsCertError();
+      if (cert_error)
+        request->SimulateSSLError(error, cert_error->ssl_info());
+      else
+        request->SimulateError(error);
     }
     request_has_been_notified_ = true;
 
@@ -424,12 +448,14 @@ SSLManager::CertError::CertError(
     ResourceDispatcherHost* rdh,
     URLRequest* request,
     ResourceType::Type resource_type,
+    const std::string& frame_origin,
+    const std::string& main_frame_origin,
     int cert_error,
     net::X509Certificate* cert,
     MessageLoop* ui_loop)
-    : ErrorHandler(rdh, request, ui_loop),
-      cert_error_(cert_error),
-      resource_type_(resource_type) {
+    : ErrorHandler(rdh, request, resource_type, frame_origin,
+                   main_frame_origin, ui_loop),
+      cert_error_(cert_error) {
   DCHECK(request == resource_dispatcher_host_->GetURLRequest(request_id_));
 
   // We cannot use the request->ssl_info(), it's not been initialized yet, so
@@ -454,50 +480,55 @@ void SSLManager::OnSSLCertificateError(ResourceDispatcherHost* rdh,
   // A certificate error occurred.  Construct a CertError object and hand it
   // over to the UI thread for processing.
   ui_loop->PostTask(FROM_HERE,
-      NewRunnableMethod(new CertError(rdh, request, info->resource_type,
-                                      cert_error, cert, ui_loop),
+      NewRunnableMethod(new CertError(rdh,
+                                      request,
+                                      info->resource_type,
+                                      info->frame_origin,
+                                      info->main_frame_origin,
+                                      cert_error,
+                                      cert,
+                                      ui_loop),
                         &CertError::Dispatch));
 }
 
 // static
-void SSLManager::OnMixedContentRequest(ResourceDispatcherHost* rdh,
-                                       URLRequest* request,
-                                       MessageLoop* ui_loop) {
+bool SSLManager::ShouldStartRequest(ResourceDispatcherHost* rdh,
+                                    URLRequest* request,
+                                    MessageLoop* ui_loop) {
+  ResourceDispatcherHost::ExtraRequestInfo* info =
+      ResourceDispatcherHost::ExtraInfoForRequest(request);
+  DCHECK(info);
+
+  // We cheat here and talk to the SSLPolicy on the IO thread because we need
+  // to respond synchronously to avoid delaying all network requests...
+  if (!SSLPolicy::IsMixedContent(request->url(),
+                                 info->resource_type,
+                                 info->filter_policy,
+                                 info->frame_origin))
+    return true;
+
+
   ui_loop->PostTask(FROM_HERE,
-      NewRunnableMethod(new MixedContentHandler(rdh, request, ui_loop),
+      NewRunnableMethod(new MixedContentHandler(rdh, request,
+                                                info->resource_type,
+                                                info->frame_origin,
+                                                info->main_frame_origin,
+                                                ui_loop),
                         &MixedContentHandler::Dispatch));
+  return false;
 }
 
 void SSLManager::OnCertError(CertError* error) {
-  // Ask our delegate to deal with the error.
-  NavigationEntry* entry = controller_->GetActiveEntry();
-  // We might not have a navigation entry in some cases (e.g. when a
-  // HTTPS page opens a popup with no URL and then populate it with
-  // document.write()). See bug http://crbug.com/3845.
-  if (!entry)
-    return;
-
-  delegate()->OnCertError(entry->url(), error);
+  delegate()->OnCertError(error);
 }
 
-void SSLManager::OnMixedContent(MixedContentHandler* mixed_content) {
-  // Ask our delegate to deal with the mixed content.
-  NavigationEntry* entry = controller_->GetActiveEntry();
-  // We might not have a navigation entry in some cases (e.g. when a
-  // HTTPS page opens a popup with no URL and then populate it with
-  // document.write()). See bug http://crbug.com/3845.
-  if (!entry)
-    return;
-
-  delegate()->OnMixedContent(controller_, entry->url(), mixed_content);
+void SSLManager::OnMixedContent(MixedContentHandler* handler) {
+  delegate()->OnMixedContent(handler);
 }
 
 void SSLManager::Observe(NotificationType type,
                          const NotificationSource& source,
                          const NotificationDetails& details) {
-  // We should only be getting notifications from our controller.
-  DCHECK(source == Source<NavigationController>(controller_));
-
   // Dispatch by type.
   switch (type.value) {
     case NotificationType::NAV_ENTRY_COMMITTED:
@@ -518,29 +549,40 @@ void SSLManager::Observe(NotificationType type,
       DidLoadFromMemoryCache(
           Details<LoadFromMemoryCacheDetails>(details).ptr());
       break;
+    case NotificationType::SSL_INTERNAL_STATE_CHANGED:
+      DidChangeSSLInternalState();
+      break;
     default:
       NOTREACHED() << "The SSLManager received an unexpected notification.";
   }
 }
 
-void SSLManager::InitializeEntryIfNeeded(NavigationEntry* entry) {
-  DCHECK(entry);
-
-  // If the security style of the entry is SECURITY_STYLE_UNKNOWN, then it is a
-  // fresh entry and should get the default style.
-  if (entry->ssl().security_style() == SECURITY_STYLE_UNKNOWN) {
-    entry->ssl().set_security_style(
-        delegate()->GetDefaultStyle(entry->url()));
-  }
+void SSLManager::DispatchSSLInternalStateChanged() {
+  NotificationService::current()->Notify(
+      NotificationType::SSL_INTERNAL_STATE_CHANGED,
+      Source<NavigationController>(controller_),
+      NotificationService::NoDetails());
 }
 
-void SSLManager::NavigationStateChanged() {
-  NavigationEntry* active_entry = controller_->GetActiveEntry();
-  if (!active_entry)
-    return;  // Nothing showing yet.
+void SSLManager::DispatchSSLVisibleStateChanged() {
+  NotificationService::current()->Notify(
+      NotificationType::SSL_VISIBLE_STATE_CHANGED,
+      Source<NavigationController>(controller_),
+      NotificationService::NoDetails());
+}
 
-  // This might be a new entry we've never seen before.
-  InitializeEntryIfNeeded(active_entry);
+void SSLManager::UpdateEntry(NavigationEntry* entry) {
+  // We don't always have a navigation entry to update, for example in the
+  // case of the Web Inspector.
+  if (!entry)
+    return;
+
+  NavigationEntry::SSLStatus original_ssl_status = entry->ssl();  // Copy!
+
+  delegate()->UpdateEntry(this, entry);
+
+  if (!entry->ssl().Equals(original_ssl_status))
+    DispatchSSLVisibleStateChanged();
 }
 
 void SSLManager::DidLoadFromMemoryCache(LoadFromMemoryCacheDetails* details) {
@@ -549,10 +591,20 @@ void SSLManager::DidLoadFromMemoryCache(LoadFromMemoryCacheDetails* details) {
   // Simulate loading this resource through the usual path.
   // Note that we specify SUB_RESOURCE as the resource type as WebCore only
   // caches sub-resources.
-  delegate()->OnRequestStarted(this, details->url(),
-                               ResourceType::SUB_RESOURCE,
-                               details->ssl_cert_id(),
-                               details->ssl_cert_status());
+  // This resource must have been loaded with FilterPolicy::DONT_FILTER because
+  // filtered resouces aren't cachable.
+  scoped_refptr<RequestInfo> info = new RequestInfo(
+      this,
+      details->url(),
+      ResourceType::SUB_RESOURCE,
+      details->frame_origin(),
+      details->main_frame_origin(),
+      FilterPolicy::DONT_FILTER,
+      details->ssl_cert_id(),
+      details->ssl_cert_status());
+
+  // Simulate loading this resource through the usual path.
+  delegate()->OnRequestStarted(info.get());
 }
 
 void SSLManager::DidCommitProvisionalLoad(
@@ -565,61 +617,28 @@ void SSLManager::DidCommitProvisionalLoad(
   if (details->is_in_page)
     return;
 
-  // Decode the security details.
-  int ssl_cert_id, ssl_cert_status, ssl_security_bits;
-  DeserializeSecurityInfo(details->serialized_security_info,
-                          &ssl_cert_id, &ssl_cert_status, &ssl_security_bits);
+  NavigationEntry* entry = controller_->GetActiveEntry();
 
-  bool changed = false;
   if (details->is_main_frame) {
-    // Update the SSL states of the pending entry.
-    NavigationEntry* entry = controller_->GetActiveEntry();
     if (entry) {
+      // Decode the security details.
+      int ssl_cert_id, ssl_cert_status, ssl_security_bits;
+      DeserializeSecurityInfo(details->serialized_security_info,
+                              &ssl_cert_id,
+                              &ssl_cert_status,
+                              &ssl_security_bits);
+
       // We may not have an entry if this is a navigation to an initial blank
       // page. Reset the SSL information and add the new data we have.
       entry->ssl() = NavigationEntry::SSLStatus();
-      InitializeEntryIfNeeded(entry);  // For security_style.
       entry->ssl().set_cert_id(ssl_cert_id);
       entry->ssl().set_cert_status(ssl_cert_status);
       entry->ssl().set_security_bits(ssl_security_bits);
-      changed = true;
     }
-
     ShowPendingMessages();
   }
 
-  // An HTTPS response may not have a certificate for some reason.  When that
-  // happens, use the unauthenticated (HTTP) rather than the authentication
-  // broken security style so that we can detect this error condition.
-  if (net::IsCertStatusError(ssl_cert_status)) {
-    changed |= SetMaxSecurityStyle(SECURITY_STYLE_AUTHENTICATION_BROKEN);
-    if (!details->is_main_frame &&
-        !details->entry->ssl().has_unsafe_content()) {
-      details->entry->ssl().set_has_unsafe_content();
-      changed = true;
-    }
-  } else if (details->entry->url().SchemeIsSecure() && !ssl_cert_id) {
-    if (details->is_main_frame) {
-      changed |= SetMaxSecurityStyle(SECURITY_STYLE_UNAUTHENTICATED);
-    } else {
-      // If the frame has been blocked we keep our security style as
-      // authenticated in that case as nothing insecure is actually showing or
-      // loaded.
-      if (!details->is_content_filtered &&
-          !details->entry->ssl().has_mixed_content()) {
-        details->entry->ssl().set_has_mixed_content();
-        changed = true;
-      }
-    }
-  }
-
-  if (changed) {
-    // Only send the notification when something actually changed.
-    NotificationService::current()->Notify(
-        NotificationType::SSL_STATE_CHANGED,
-        Source<NavigationController>(controller_),
-        NotificationService::NoDetails());
-  }
+  UpdateEntry(entry);
 }
 
 void SSLManager::DidFailProvisionalLoadWithError(
@@ -637,18 +656,28 @@ void SSLManager::DidFailProvisionalLoadWithError(
 void SSLManager::DidStartResourceResponse(ResourceRequestDetails* details) {
   DCHECK(details);
 
+  scoped_refptr<RequestInfo> info = new RequestInfo(
+      this,
+      details->url(),
+      details->resource_type(),
+      details->frame_origin(),
+      details->main_frame_origin(),
+      details->filter_policy(),
+      details->ssl_cert_id(),
+      details->ssl_cert_status());
+
   // Notify our delegate that we started a resource request.  Ideally, the
   // delegate should have the ability to cancel the request, but we can't do
   // that yet.
-  delegate()->OnRequestStarted(this, details->url(),
-                               details->resource_type(),
-                               details->ssl_cert_id() ,
-                               details->ssl_cert_status());
+  delegate()->OnRequestStarted(info.get());
 }
 
 void SSLManager::DidReceiveResourceRedirect(ResourceRedirectDetails* details) {
-  // TODO(jcampan): when we receive a redirect for a sub-resource, we may want
-  // to clear any mixed/unsafe content error that it may have triggered.
+  // TODO(abarth): Make sure our redirect behavior is correct.  If we ever see
+  //               a non-HTTPS resource in the redirect chain, we want to
+  //               trigger mixed content, even if the redirect chain goes back
+  //               to HTTPS.  This is because the network attacker can redirect
+  //               the HTTP request to https://attacker.com/payload.js.
 }
 
 void SSLManager::ShowPendingMessages() {
@@ -658,6 +687,10 @@ void SSLManager::ShowPendingMessages() {
     ShowMessageWithLink(iter->message, iter->link_text, iter->action);
   }
   ClearPendingMessages();
+}
+
+void SSLManager::DidChangeSSLInternalState() {
+  UpdateEntry(controller_->GetActiveEntry());
 }
 
 void SSLManager::ClearPendingMessages() {
@@ -691,10 +724,9 @@ bool SSLManager::DeserializeSecurityInfo(const std::string& state,
 
   Pickle pickle(state.data(), static_cast<int>(state.size()));
   void * iter = NULL;
-  pickle.ReadInt(&iter, cert_id);
-  pickle.ReadInt(&iter, cert_status);
-  pickle.ReadInt(&iter, security_bits);
-  return true;
+  return pickle.ReadInt(&iter, cert_id) &&
+         pickle.ReadInt(&iter, cert_status) &&
+         pickle.ReadInt(&iter, security_bits);
 }
 
 // static
@@ -725,4 +757,3 @@ bool SSLManager::GetEVCertNames(const net::X509Certificate& cert,
   }
   return true;
 }
-

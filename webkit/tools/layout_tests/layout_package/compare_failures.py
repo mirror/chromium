@@ -14,9 +14,10 @@ import test_failures
 import test_expectations
 
 
-def PrintFilesFromSet(filenames, header_text, output, opt_expectations=None):
+def PrintFilesFromSet(filenames, header_text, output, opt_expectations=None,
+    opt_relativizeFilenames=True):
   """A helper method to print a list of files to output.
-  
+
   Args:
   filenames: a list of absolute filenames
   header_text: a string to display before the list of filenames
@@ -25,7 +26,7 @@ def PrintFilesFromSet(filenames, header_text, output, opt_expectations=None):
   """
   if not len(filenames):
     return
-  
+
   filenames = list(filenames)
   filenames.sort()
   output.write("\n")
@@ -35,9 +36,9 @@ def PrintFilesFromSet(filenames, header_text, output, opt_expectations=None):
     output_string += " = %s" % opt_expectations
   output_string += "\n"
   for filename in filenames:
-    output.write(output_string % path_utils.RelativeTestFilename(filename))
-    
-
+    if opt_relativizeFilenames:
+      filename = path_utils.RelativeTestFilename(filename)
+    output.write(output_string % filename)
 
 class CompareFailures:
   # A list of which TestFailure classes count as a failure vs a crash.
@@ -70,7 +71,7 @@ class CompareFailures:
 
     # Print unexpected passes by category.
     passes = self._regressed_passes
-    PrintFilesFromSet(passes & self._expectations.GetFixableFailures(), 
+    PrintFilesFromSet(passes & self._expectations.GetFixableFailures(),
                       "Expected to fail, but passed",
                       output)
     PrintFilesFromSet(passes & self._expectations.GetFixableTimeouts(),
@@ -79,18 +80,18 @@ class CompareFailures:
     PrintFilesFromSet(passes & self._expectations.GetFixableCrashes(),
                       "Expected to crash, but passed",
                       output)
-    
-    PrintFilesFromSet(passes & self._expectations.GetIgnoredFailures(), 
+
+    PrintFilesFromSet(passes & self._expectations.GetWontFixFailures(),
                       "Expected to fail (ignored), but passed",
                       output)
-    PrintFilesFromSet(passes & self._expectations.GetIgnoredTimeouts(),
+    PrintFilesFromSet(passes & self._expectations.GetWontFixTimeouts(),
                       "Expected to timeout (ignored), but passed",
                       output)
     # Crashes should never be deferred.
-    PrintFilesFromSet(passes & self._expectations.GetFixableDeferredFailures(),	 
+    PrintFilesFromSet(passes & self._expectations.GetDeferredFailures(),
                       "Expected to fail (deferred), but passed",
-                      output)	 
-    PrintFilesFromSet(passes & self._expectations.GetFixableDeferredTimeouts(),	 
+                      output)
+    PrintFilesFromSet(passes & self._expectations.GetDeferredTimeouts(),
                       "Expected to timeout (deferred), but passed",
                       output)
     # Print real regressions.
@@ -113,7 +114,7 @@ class CompareFailures:
   def _CalculateRegressions(self):
     """Calculate regressions from this run through the layout tests."""
     worklist = self._test_files.copy()
-    
+
     passes = set()
     crashes = set()
     hangs = set()
@@ -146,7 +147,7 @@ class CompareFailures:
       # Check that all passing tests are expected to pass.
       expectations = self._expectations.GetExpectations(test)
       if not test_expectations.PASS in expectations: passes.add(test)
-      
+
     self._regressed_passes = passes
     self._regressed_crashes = crashes
     self._regressed_hangs = hangs

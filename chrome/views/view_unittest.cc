@@ -2,16 +2,18 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/message_loop.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/path.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/views/background.h"
-#include "chrome/views/checkbox.h"
-#include "chrome/views/dialog_delegate.h"
+#include "chrome/views/controls/button/checkbox.h"
 #include "chrome/views/event.h"
-#include "chrome/views/root_view.h"
 #include "chrome/views/view.h"
-#include "chrome/views/window.h"
+#include "chrome/views/widget/root_view.h"
+#include "chrome/views/widget/widget_win.h"
+#include "chrome/views/window/dialog_delegate.h"
+#include "chrome/views/window/window.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using namespace views;
@@ -27,7 +29,7 @@ class ViewTest : public testing::Test {
   ~ViewTest() {
     OleUninitialize();
   }
- 
+
  private:
   MessageLoopForUI message_loop_;
 };
@@ -592,7 +594,7 @@ class TestDialogView : public views::View,
  public:
   TestDialogView() {
   }
-  
+
   // views::DialogDelegate implementation:
   virtual int GetDialogButtons() const {
     return DIALOGBUTTON_OK | DIALOGBUTTON_CANCEL;
@@ -604,9 +606,9 @@ class TestDialogView : public views::View,
 
   virtual View* GetContentsView() {
     views::View* container = new views::View();
-    button1_ = new views::NativeButton(L"Button1");
-    button2_ = new views::NativeButton(L"Button2");
-    checkbox_ = new views::CheckBox(L"My checkbox");
+    button1_ = new views::NativeButton(NULL, L"Button1");
+    button2_ = new views::NativeButton(NULL, L"Button2");
+    checkbox_ = new views::Checkbox(L"My checkbox");
     container->AddChildView(button1_);
     container->AddChildView(button2_);
     container->AddChildView(checkbox_);
@@ -623,39 +625,39 @@ TEST_F(ViewTest, DialogDefaultButtonTest) {
       views::Window::CreateChromeWindow(NULL, gfx::Rect(0, 0, 100, 100),
                                         dialog_view_);
   views::DialogClientView* client_view =
-      static_cast<views::DialogClientView*>(window->client_view());
+      static_cast<views::DialogClientView*>(window->GetClientView());
   views::NativeButton* ok_button = client_view->ok_button();
   views::NativeButton* cancel_button = client_view->cancel_button();
 
-  EXPECT_TRUE(ok_button->IsDefaultButton());
+  EXPECT_TRUE(ok_button->is_default());
 
   // Simualte focusing another button, it should become the default button.
   client_view->FocusWillChange(ok_button, dialog_view_->button1_);
-  EXPECT_FALSE(ok_button->IsDefaultButton());
-  EXPECT_TRUE(dialog_view_->button1_->IsDefaultButton());
+  EXPECT_FALSE(ok_button->is_default());
+  EXPECT_TRUE(dialog_view_->button1_->is_default());
 
   // Now select something that is not a button, the OK should become the default
   // button again.
   client_view->FocusWillChange(dialog_view_->button1_, dialog_view_->checkbox_);
-  EXPECT_TRUE(ok_button->IsDefaultButton());
-  EXPECT_FALSE(dialog_view_->button1_->IsDefaultButton());
+  EXPECT_TRUE(ok_button->is_default());
+  EXPECT_FALSE(dialog_view_->button1_->is_default());
 
   // Select yet another button.
   client_view->FocusWillChange(dialog_view_->checkbox_, dialog_view_->button2_);
-  EXPECT_FALSE(ok_button->IsDefaultButton());
-  EXPECT_FALSE(dialog_view_->button1_->IsDefaultButton());
-  EXPECT_TRUE(dialog_view_->button2_->IsDefaultButton());
+  EXPECT_FALSE(ok_button->is_default());
+  EXPECT_FALSE(dialog_view_->button1_->is_default());
+  EXPECT_TRUE(dialog_view_->button2_->is_default());
 
   // Focus nothing.
   client_view->FocusWillChange(dialog_view_->button2_, NULL);
-  EXPECT_TRUE(ok_button->IsDefaultButton());
-  EXPECT_FALSE(dialog_view_->button1_->IsDefaultButton());
-  EXPECT_FALSE(dialog_view_->button2_->IsDefaultButton());
+  EXPECT_TRUE(ok_button->is_default());
+  EXPECT_FALSE(dialog_view_->button1_->is_default());
+  EXPECT_FALSE(dialog_view_->button2_->is_default());
 
   // Focus the cancel button.
   client_view->FocusWillChange(NULL, cancel_button);
-  EXPECT_FALSE(ok_button->IsDefaultButton());
-  EXPECT_TRUE(cancel_button->IsDefaultButton());
-  EXPECT_FALSE(dialog_view_->button1_->IsDefaultButton());
-  EXPECT_FALSE(dialog_view_->button2_->IsDefaultButton());
+  EXPECT_FALSE(ok_button->is_default());
+  EXPECT_TRUE(cancel_button->is_default());
+  EXPECT_FALSE(dialog_view_->button1_->is_default());
+  EXPECT_FALSE(dialog_view_->button2_->is_default());
 }

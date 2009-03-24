@@ -21,7 +21,6 @@ MSVC_PUSH_WARNING_LEVEL(0);
 MSVC_POP_WARNING();
 
 #include "base/basictypes.h"
-#include "base/scoped_ptr.h"
 
 namespace WebCore {
 class AtomicString;
@@ -197,4 +196,3 @@ class AutocompleteBodyListener : public WebCore::EventListener {
 }  // webkit_glue
 
 #endif  // WEBKIT_GLUE_AUTOCOMPLETE_INPUT_LISTENER_H__
-

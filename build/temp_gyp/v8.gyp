@@ -68,6 +68,8 @@
       '../../v8/src/debug-ia32.cc',
       '../../v8/src/debug.cc',
       '../../v8/src/debug.h',
+      '../../v8/src/debug-agent.cc',
+      '../../v8/src/debug-agent.h',
       '../../v8/src/disasm-arm.cc',
       '../../v8/src/disasm-ia32.cc',
       '../../v8/src/disasm.h',
@@ -106,6 +108,10 @@
       '../../v8/src/ic.h',
       '../../v8/src/interpreter-irregexp.cc',
       '../../v8/src/interpreter-irregexp.h',
+      '../../v8/src/jump-target.cc',
+      '../../v8/src/jump-target.h',
+      '../../v8/src/jump-target-arm.cc',
+      '../../v8/src/jump-target-ia32.cc',
       '../../v8/src/jsregexp-inl.h',
       '../../v8/src/jsregexp.cc',
       '../../v8/src/jsregexp.h',
@@ -128,6 +134,8 @@
       '../../v8/src/objects-inl.h',
       '../../v8/src/objects.cc',
       '../../v8/src/objects.h',
+      '../../v8/src/oprofile-agent.h',
+      '../../v8/src/oprofile-agent.cc',
       '../../v8/src/parser.cc',
       '../../v8/src/parser.h',
       '../../v8/src/platform-freebsd.cc',
@@ -153,6 +161,10 @@
       '../../v8/src/regexp-macro-assembler.h',
       '../../v8/src/regexp-stack.cc',
       '../../v8/src/regexp-stack.h',
+      '../../v8/src/register-allocator.h',
+      '../../v8/src/register-allocator.cc',
+      '../../v8/src/register-allocator-arm.cc',
+      '../../v8/src/register-allocator-ia32.cc',
       '../../v8/src/rewriter.cc',
       '../../v8/src/rewriter.h',
       '../../v8/src/runtime.cc',
@@ -198,6 +210,12 @@
       '../../v8/src/v8threads.h',
       '../../v8/src/variables.cc',
       '../../v8/src/variables.h',
+      '../../v8/src/virtual-frame.h',
+      '../../v8/src/virtual-frame.cc',
+      '../../v8/src/virtual-frame-arm.h',
+      '../../v8/src/virtual-frame-arm.cc',
+      '../../v8/src/virtual-frame-ia32.h',
+      '../../v8/src/virtual-frame-ia32.cc',
       '../../v8/src/zone-inl.h',
       '../../v8/src/zone.cc',
       '../../v8/src/zone.h',
@@ -265,10 +283,6 @@
             '<(SHARED_INTERMEDIATE_DIR)/v8/libraries-empty.cc',
           ],
           'action': ['python', '../../v8/tools/js2c.py', '<@(_outputs)', 'CORE', '<@(library_files)'],
-          # TODO(sgk):  figure out how to get gyp and SCons to play nice here.
-          'conditions': [
-            ['OS=="linux"', {'action=': ['python', '${SOURCES[0]}', '${TARGETS}', 'CORE', '${SOURCES[1:]}'],}],
-          ],
         },
       ],
     },
@@ -295,10 +309,6 @@
             '<(SHARED_INTERMEDIATE_DIR)/v8/d8-js-empty.cc',
           ],
           'action': ['python', '../../v8/tools/js2c.py', '<@(_outputs)', 'D8', '<@(library_files)'],
-          # TODO(sgk):  figure out how to get gyp and SCons to play nice here.
-          'conditions': [
-            ['OS=="linux"', {'action=': ['python', '${SOURCES[0]}', '${TARGETS}', 'D8', '${SOURCES[1:]}'],}],
-          ],
         },
       ],
     },
@@ -310,6 +320,7 @@
       'include_dirs': [
         '../../v8/src',
       ],
+      'msvs_guid': 'EC8B7909-62AF-470D-A75D-E1D89C837142',
       'sources': [
         '<@(base_source_files)',
       ],
@@ -358,6 +369,7 @@
       'dependencies': [
         'v8_nosnapshot',
       ],
+      'msvs_guid': '865575D0-37E2-405E-8CBA-5F6C485B5A26',
       'sources': [
         '../../v8/src/mksnapshot.cc',
       ],
@@ -370,6 +382,7 @@
         'mksnapshot',
         'v8_base',
       ],
+      'msvs_guid': '21E22961-22BF-4493-BD3A-868F93DA5179',
       'actions': [
         {
           'action_name': 'mksnapshot',

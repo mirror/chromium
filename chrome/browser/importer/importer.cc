@@ -10,7 +10,6 @@
 #include "base/file_util.h"
 #include "base/gfx/png_encoder.h"
 #include "base/string_util.h"
-#include "base/time.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_list.h"
@@ -40,7 +39,7 @@
 #if defined(OS_WIN)
 #include "chrome/browser/views/importer_lock_view.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/window.h"
+#include "chrome/views/window/window.h"
 #endif
 
 // ProfileWriter.

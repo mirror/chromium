@@ -154,7 +154,9 @@ bool Delete(const FilePath& path, bool recursive);
 bool Delete(const std::wstring& path, bool recursive);
 
 // Moves the given path, whether it's a file or a directory.
-// Returns true if successful, false otherwise.
+// If a simple rename is not possible, such as in the case where the paths are
+// on different volumes, this will attempt to copy and delete. Returns
+// true for success.
 bool Move(const FilePath& from_path, const FilePath& to_path);
 // Deprecated temporary compatibility function.
 bool Move(const std::wstring& from_path, const std::wstring& to_path);
@@ -254,6 +256,12 @@ bool UpdateShortcutLink(const wchar_t *source, const wchar_t *destination,
 // Return true if the given directory is empty
 bool IsDirectoryEmpty(const std::wstring& dir_path);
 
+// Copy from_path to to_path recursively and then delete from_path recursively.
+// Returns true if all operations succeed.
+// This function simulates Move(), but unlike Move() it works across volumes.
+// This fuction is not transactional.
+bool CopyAndDeleteDirectory(const FilePath& from_path,
+                            const FilePath& to_path);
 #endif
 
 // Get the temporary directory provided by the system.

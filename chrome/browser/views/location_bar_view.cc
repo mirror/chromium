@@ -26,8 +26,8 @@
 #include "chrome/common/win_util.h"
 #include "chrome/views/background.h"
 #include "chrome/views/border.h"
-#include "chrome/views/root_view.h"
-#include "chrome/views/widget.h"
+#include "chrome/views/widget/root_view.h"
+#include "chrome/views/widget/widget.h"
 #include "grit/generated_resources.h"
 #include "grit/theme_resources.h"
 
@@ -91,6 +91,7 @@ LocationBarView::LocationBarView(Profile* profile,
       keyword_hint_view_(profile),
       type_to_search_view_(l10n_util::GetString(IDS_OMNIBOX_EMPTY_TEXT)),
       security_image_view_(profile, model),
+      rss_image_view_(model),
       popup_window_mode_(popup_window_mode),
       first_run_bubble_(this) {
   DCHECK(profile_);
@@ -120,7 +121,7 @@ void LocationBarView::Init() {
   // URL edit field.
   views::Widget* widget = GetWidget();
   location_entry_.reset(new AutocompleteEditViewWin(font_, this, model_, this,
-                                                    widget->GetHWND(),
+                                                    widget->GetNativeView(),
                                                     profile_, command_updater_,
                                                     popup_window_mode_));
 
@@ -153,6 +154,10 @@ void LocationBarView::Init() {
   keyword_hint_view_.SetColor(gray);
   keyword_hint_view_.SetParentOwned(false);
 
+  AddChildView(&rss_image_view_);
+  rss_image_view_.SetVisible(false);
+  rss_image_view_.SetParentOwned(false);
+
   AddChildView(&security_image_view_);
   security_image_view_.SetVisible(false);
   security_image_view_.SetParentOwned(false);
@@ -174,11 +179,18 @@ void LocationBarView::Init() {
 
 void LocationBarView::Update(const TabContents* tab_for_state_restoring) {
   SetSecurityIcon(model_->GetIcon());
+  SetRssIconVisibility(model_->GetFeedList().get());
   std::wstring info_text, info_tooltip;
   SkColor text_color;
   model_->GetInfoText(&info_text, &text_color, &info_tooltip);
   SetInfoText(info_text, text_color, info_tooltip);
   location_entry_->Update(tab_for_state_restoring);
+  Layout();
+  SchedulePaint();
+}
+
+void LocationBarView::UpdateFeedIcon() {
+  SetRssIconVisibility(model_->GetFeedList().get());
   Layout();
   SchedulePaint();
 }
@@ -335,10 +347,16 @@ void LocationBarView::DoLayout(const bool force_layout) {
   location_entry_->GetClientRect(&edit_bounds);
 
   int entry_width = width() - (kEntryPadding * 2);
+
+  gfx::Size rss_image_size;
+  if (rss_image_view_.IsVisible()) {
+    rss_image_size = rss_image_view_.GetPreferredSize();
+    entry_width -= rss_image_size.width();
+  }
   gfx::Size security_image_size;
   if (security_image_view_.IsVisible()) {
     security_image_size = security_image_view_.GetPreferredSize();
-    entry_width -= security_image_size.width();
+    entry_width -= security_image_size.width() + kInnerPadding;
   }
   gfx::Size info_label_size;
   if (info_label_.IsVisible()) {
@@ -365,9 +383,18 @@ void LocationBarView::DoLayout(const bool force_layout) {
                           location_y,
                           info_label_size.width(), location_height);
   }
+  const int info_label_width = info_label_size.width() ?
+      info_label_size.width() + kInnerPadding : 0;
+  if (rss_image_view_.IsVisible()) {
+    rss_image_view_.SetBounds(width() - kEntryPadding -
+                                  info_label_width -
+                                  security_image_size.width() -
+                                  rss_image_size.width(),
+                              location_y,
+                              rss_image_size.width(),
+                              location_height);
+  }
   if (security_image_view_.IsVisible()) {
-    const int info_label_width = info_label_size.width() ?
-        info_label_size.width() + kInnerPadding : 0;
     security_image_view_.SetBounds(width() - kEntryPadding - info_label_width -
         security_image_size.width(), location_y, security_image_size.width(),
         location_height);
@@ -385,10 +412,7 @@ void LocationBarView::DoLayout(const bool force_layout) {
                &location_bounds);
   }
 
-  location_entry_view_->SetBounds(location_bounds.x(),
-                                  location_bounds.y(),
-                                  location_bounds.width(),
-                                  location_bounds.height());
+  location_entry_view_->SetBounds(location_bounds);
   if (!force_layout) {
     // If force_layout is false and we got this far it means one of the views
     // was added/removed or changed in size. We need to paint ourselves.
@@ -499,6 +523,12 @@ void LocationBarView::SetSecurityIcon(ToolbarModel::Icon icon) {
       security_image_view_.SetVisible(false);
       break;
   }
+}
+
+void LocationBarView::SetRssIconVisibility(FeedList* feeds) {
+  bool show_rss = feeds && feeds->list().size() > 0;
+  // TODO(finnur): Enable this when we have a good landing page to show feeds.
+  rss_image_view_.SetVisible(false);
 }
 
 void LocationBarView::SetInfoText(const std::wstring& text,
@@ -774,19 +804,20 @@ bool LocationBarView::ShouldLookupAccelerators(const views::KeyEvent& e) {
 
 class LocationBarView::ShowInfoBubbleTask : public Task {
  public:
-  explicit ShowInfoBubbleTask(LocationBarView::SecurityImageView* image_view);
+  explicit ShowInfoBubbleTask(
+      LocationBarView::LocationBarImageView* image_view);
   virtual void Run();
   void Cancel();
 
  private:
-  LocationBarView::SecurityImageView* image_view_;
+  LocationBarView::LocationBarImageView* image_view_;
   bool cancelled_;
 
   DISALLOW_EVIL_CONSTRUCTORS(ShowInfoBubbleTask);
 };
 
 LocationBarView::ShowInfoBubbleTask::ShowInfoBubbleTask(
-    LocationBarView::SecurityImageView* image_view)
+    LocationBarView::LocationBarImageView* image_view)
     : cancelled_(false),
       image_view_(image_view) {
 }
@@ -841,8 +872,78 @@ void LocationBarView::ShowFirstRunBubbleInternal() {
     bounds.set_x(location.x() - 20);
 
   FirstRunBubble::Show(profile_,
-      location_entry_view_->GetRootView()->GetWidget()->GetHWND(),
+      location_entry_view_->GetRootView()->GetWidget()->GetNativeView(),
       bounds);
+}
+
+// LocationBarImageView---------------------------------------------------------
+
+LocationBarView::LocationBarImageView::LocationBarImageView()
+  : show_info_bubble_task_(NULL),
+    info_bubble_(NULL) {
+}
+
+LocationBarView::LocationBarImageView::~LocationBarImageView() {
+  if (show_info_bubble_task_)
+    show_info_bubble_task_->Cancel();
+
+  if (info_bubble_) {
+    // We are going to be invalid, make sure the InfoBubble does not keep a
+    // pointer to us.
+    info_bubble_->SetDelegate(NULL);
+  }
+}
+
+void LocationBarView::LocationBarImageView::OnMouseMoved(
+    const views::MouseEvent& event) {
+  if (show_info_bubble_task_) {
+    show_info_bubble_task_->Cancel();
+    show_info_bubble_task_ = NULL;
+  }
+
+  if (info_bubble_) {
+    // If an info bubble is currently showing, nothing to do.
+    return;
+  }
+
+  show_info_bubble_task_ = new ShowInfoBubbleTask(this);
+  MessageLoop::current()->PostDelayedTask(FROM_HERE, show_info_bubble_task_,
+      kInfoBubbleHoverDelayMs);
+}
+
+void LocationBarView::LocationBarImageView::OnMouseExited(
+    const views::MouseEvent& event) {
+  if (show_info_bubble_task_) {
+    show_info_bubble_task_->Cancel();
+    show_info_bubble_task_ = NULL;
+  }
+
+  if (info_bubble_)
+    info_bubble_->Close();
+}
+
+void LocationBarView::LocationBarImageView::InfoBubbleClosing(
+    InfoBubble* info_bubble, bool closed_by_escape) {
+  info_bubble_ = NULL;
+}
+
+void LocationBarView::LocationBarImageView::ShowInfoBubbleImpl(
+    const std::wstring& text, SkColor text_color) {
+  gfx::Point location;
+  views::View::ConvertPointToScreen(this, &location);
+  gfx::Rect bounds(location.x(), location.y(), width(), height());
+
+  views::Label* label = new views::Label(text);
+  label->SetMultiLine(true);
+  label->SetColor(text_color);
+  label->SetFont(ResourceBundle::GetSharedInstance().GetFont(
+      ResourceBundle::BaseFont).DeriveFont(2));
+  label->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
+  label->SizeToFit(0);
+  DCHECK(info_bubble_ == NULL);
+  info_bubble_ = InfoBubble::Show(GetRootView()->GetWidget()->GetNativeView(),
+                                  bounds, label, this);
+  show_info_bubble_task_ = NULL;
 }
 
 // SecurityImageView------------------------------------------------------------
@@ -853,10 +954,9 @@ SkBitmap* LocationBarView::SecurityImageView::warning_icon_ = NULL;
 
 LocationBarView::SecurityImageView::SecurityImageView(Profile* profile,
                                                       ToolbarModel* model)
-    : profile_(profile),
-      model_(model),
-      show_info_bubble_task_(NULL),
-      info_bubble_(NULL) {
+  : LocationBarImageView(),
+    profile_(profile),
+    model_(model) {
   if (!lock_icon_) {
     ResourceBundle& rb = ResourceBundle::GetSharedInstance();
     lock_icon_ = rb.GetBitmapNamed(IDR_LOCK);
@@ -866,14 +966,6 @@ LocationBarView::SecurityImageView::SecurityImageView(Profile* profile,
 }
 
 LocationBarView::SecurityImageView::~SecurityImageView() {
-  if (show_info_bubble_task_)
-    show_info_bubble_task_->Cancel();
-
-  if (info_bubble_) {
-    // We are going to be invalid, make sure the InfoBubble does not keep a
-    // pointer to us.
-    info_bubble_->SetDelegate(NULL);
-  }
 }
 
 void LocationBarView::SecurityImageView::SetImageShown(Image image) {
@@ -890,56 +982,6 @@ void LocationBarView::SecurityImageView::SetImageShown(Image image) {
   }
 }
 
-void LocationBarView::SecurityImageView::ShowInfoBubble() {
-  std::wstring text;
-  SkColor text_color;
-  model_->GetIconHoverText(&text, &text_color);
-
-  gfx::Point location;
-  views::View::ConvertPointToScreen(this, &location);
-  gfx::Rect bounds(location.x(), location.y(), width(), height());
-
-  views::Label* label = new views::Label(text);
-  label->SetMultiLine(true);
-  label->SetColor(text_color);
-  label->SetFont(ResourceBundle::GetSharedInstance().GetFont(
-      ResourceBundle::BaseFont).DeriveFont(2));
-  label->SetHorizontalAlignment(views::Label::ALIGN_LEFT);
-  label->SizeToFit(0);
-  DCHECK(info_bubble_ == NULL);
-  info_bubble_ = InfoBubble::Show(GetRootView()->GetWidget()->GetHWND(),
-                                  bounds, label, this);
-  show_info_bubble_task_ = NULL;
-}
-
-void LocationBarView::SecurityImageView::OnMouseMoved(
-    const views::MouseEvent& event) {
-  if (show_info_bubble_task_) {
-    show_info_bubble_task_->Cancel();
-    show_info_bubble_task_ = NULL;
-  }
-
-  if (info_bubble_) {
-    // If an info bubble is currently showing, nothing to do.
-    return;
-  }
-
-  show_info_bubble_task_ = new ShowInfoBubbleTask(this);
-  MessageLoop::current()->PostDelayedTask(FROM_HERE, show_info_bubble_task_,
-                                          kInfoBubbleHoverDelayMs);
-}
-
-void LocationBarView::SecurityImageView::OnMouseExited(
-    const views::MouseEvent& event) {
-  if (show_info_bubble_task_) {
-    show_info_bubble_task_->Cancel();
-    show_info_bubble_task_ = NULL;
-  }
-
-  if (info_bubble_)
-    info_bubble_->Close();
-}
-
 bool LocationBarView::SecurityImageView::OnMousePressed(
     const views::MouseEvent& event) {
   NavigationEntry* nav_entry =
@@ -951,15 +993,62 @@ bool LocationBarView::SecurityImageView::OnMousePressed(
   }
   PageInfoWindow::CreatePageInfo(profile_,
                                  nav_entry,
-                                 GetRootView()->GetWidget()->GetHWND(),
+                                 GetRootView()->GetWidget()->GetNativeView(),
                                  PageInfoWindow::SECURITY);
   return true;
 }
 
-void LocationBarView::SecurityImageView::InfoBubbleClosing(
-    InfoBubble* info_bubble,
-    bool closed_by_escape) {
-  info_bubble_ = NULL;
+void LocationBarView::SecurityImageView::ShowInfoBubble() {
+  std::wstring text;
+  SkColor text_color;
+  model_->GetIconHoverText(&text, &text_color);
+
+  ShowInfoBubbleImpl(text, text_color);
+}
+
+// RssImageView------------------------------------------------------------
+
+// static
+SkBitmap* LocationBarView::RssImageView::rss_icon_ = NULL;
+
+LocationBarView::RssImageView::RssImageView(ToolbarModel* model)
+  : model_(model),
+    LocationBarImageView() {
+  if (!rss_icon_) {
+    ResourceBundle& rb = ResourceBundle::GetSharedInstance();
+    rss_icon_ = rb.GetBitmapNamed(IDR_RSS_ICON);
+  }
+  ImageView::SetImage(rss_icon_);
+}
+
+LocationBarView::RssImageView::~RssImageView() {
+}
+
+bool LocationBarView::RssImageView::OnMousePressed(
+    const views::MouseEvent& event) {
+  NavigationEntry* entry =
+      BrowserList::GetLastActive()->GetSelectedTabContents()->
+      controller()->GetActiveEntry();
+  if (!entry) {
+    NOTREACHED();
+    return true;
+  }
+
+  // Navigate to the first item in the feed list.
+  scoped_refptr<FeedList> feeds = model_->GetFeedList();
+  DCHECK(feeds.get() && feeds->list().size() > 0);
+
+  // TODO(finnur): Make this do more than just display the XML in the browser.
+  BrowserList::GetLastActive()->OpenURL(feeds->list()[0].url, GURL(),
+                                        CURRENT_TAB, PageTransition::LINK);
+  return true;
+}
+
+void LocationBarView::RssImageView::ShowInfoBubble() {
+  // TODO(finnur): Get this string from the resources.
+  std::wstring text = L"Subscribe to this feed";
+  SkColor text_color = SK_ColorBLUE;
+  ShowInfoBubbleImpl(text, text_color);
 }
 
 bool LocationBarView::OverrideAccelerator(

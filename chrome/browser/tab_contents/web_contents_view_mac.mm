@@ -8,9 +8,15 @@
 #include "chrome/browser/cocoa/sad_tab_view.h"
 #include "chrome/browser/renderer_host/render_widget_host.h"
 #include "chrome/browser/renderer_host/render_widget_host_view_mac.h"
+#include "chrome/browser/tab_contents/render_view_context_menu_mac.h"
 #include "chrome/browser/tab_contents/web_contents.h"
 
 #include "chrome/common/temp_scaffolding_stubs.h"
+
+@interface WebContentsViewCocoa (Private)
+- (id)initWithWebContentsViewMac:(WebContentsViewMac*)w;
+- (void)processKeyboardEvent:(NSEvent*)event;
+@end
 
 // static
 WebContentsView* WebContentsView::Create(WebContents* web_contents) {
@@ -34,11 +40,7 @@ WebContents* WebContentsViewMac::GetWebContents() {
 
 void WebContentsViewMac::CreateView() {
   WebContentsViewCocoa* view =
-      [[WebContentsViewCocoa alloc] initWithFrame:NSZeroRect];
-  // Under GC, ObjC and CF retains/releases are no longer equivalent. So we
-  // change our ObjC retain to a CF retain se we can use a scoped_cftyperef.
-  CFRetain(view);
-  [view release];
+      [[WebContentsViewCocoa alloc] initWithWebContentsViewMac:this];
   cocoa_view_.reset(view);
 }
 
@@ -47,14 +49,14 @@ RenderWidgetHostView* WebContentsViewMac::CreateViewForWidget(
   DCHECK(!render_widget_host->view());
   RenderWidgetHostViewMac* view =
       new RenderWidgetHostViewMac(render_widget_host);
-  
+
   // Fancy layout comes later; for now just make it our size and resize it
   // with us.
   NSView* view_view = view->native_view();
   [cocoa_view_.get() addSubview:view_view];
   [view_view setFrame:[cocoa_view_.get() bounds]];
   [view_view setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-  
+
   return view;
 }
 
@@ -68,7 +70,7 @@ gfx::NativeView WebContentsViewMac::GetContentNativeView() const {
   return web_contents_->render_widget_host_view()->GetPluginNativeView();
 }
 
-gfx::NativeWindow WebContentsViewMac::GetTopLevelNativeView() const {
+gfx::NativeWindow WebContentsViewMac::GetTopLevelNativeWindow() const {
   return [cocoa_view_.get() window];
 }
 
@@ -99,15 +101,6 @@ void WebContentsViewMac::SizeContents(const gfx::Size& size) {
   NOTIMPLEMENTED();  // Leaving the hack unimplemented.
 }
 
-void WebContentsViewMac::OpenDeveloperTools() {
-  NOTIMPLEMENTED();
-}
-
-void WebContentsViewMac::ForwardMessageToDevToolsClient(
-    const IPC::Message& message) {
-  NOTIMPLEMENTED();
-}
- 
 void WebContentsViewMac::FindInPage(const Browser& browser,
                                     bool find_next, bool forward_direction) {
   if (!find_bar_.get()) {
@@ -147,6 +140,18 @@ bool WebContentsViewMac::GetFindBarWindowInfo(gfx::Point* position,
   return true;
 }
 
+void WebContentsViewMac::SetInitialFocus() {
+  // TODO(port)
+}
+
+void WebContentsViewMac::StoreFocus() {
+  // TODO(port)
+}
+
+void WebContentsViewMac::RestoreFocus() {
+  // TODO(port)
+}
+
 void WebContentsViewMac::UpdateDragCursor(bool is_drop_target) {
   NOTIMPLEMENTED();
 }
@@ -155,10 +160,9 @@ void WebContentsViewMac::TakeFocus(bool reverse) {
   [cocoa_view_.get() becomeFirstResponder];
 }
 
-void WebContentsViewMac::HandleKeyboardEvent(const WebKeyboardEvent& event) {
-  // The renderer returned a keyboard event it did not process. TODO(avi):
-  // reconstruct an NSEvent and feed it to the view.
-  NOTIMPLEMENTED();
+void WebContentsViewMac::HandleKeyboardEvent(
+    const NativeWebKeyboardEvent& event) {
+  [cocoa_view_.get() processKeyboardEvent:event.os_event];
 }
 
 void WebContentsViewMac::OnFindReply(int request_id,
@@ -173,16 +177,31 @@ void WebContentsViewMac::OnFindReply(int request_id,
 }
 
 void WebContentsViewMac::ShowContextMenu(const ContextMenuParams& params) {
-  NOTIMPLEMENTED();
+  RenderViewContextMenuMac menu(web_contents_,
+                                params,
+                                GetNativeView());
 }
 
 WebContents* WebContentsViewMac::CreateNewWindowInternal(
     int route_id,
     base::WaitableEvent* modal_dialog_event) {
-  // I don't understand what role this plays in the grand scheme of things. I'm
-  // not going to fake it.
-  NOTIMPLEMENTED();
-  return NULL;
+  // Create the new web contents. This will automatically create the new
+  // WebContentsView. In the future, we may want to create the view separately.
+  WebContents* new_contents =
+      new WebContents(web_contents_->profile(),
+                      web_contents_->GetSiteInstance(),
+                      web_contents_->render_view_factory_,
+                      route_id,
+                      modal_dialog_event);
+  new_contents->SetupController(web_contents_->profile());
+  WebContentsView* new_view = new_contents->view();
+
+  new_view->CreateView();
+
+  // TODO(brettw) it seems bogus that we have to call this function on the
+  // newly created object and give it one of its own member variables.
+  new_view->CreateViewForWidget(new_contents->render_view_host());
+  return new_contents;
 }
 
 RenderWidgetHostView* WebContentsViewMac::CreateNewWidgetInternal(
@@ -199,9 +218,16 @@ void WebContentsViewMac::ShowCreatedWindowInternal(
     WindowOpenDisposition disposition,
     const gfx::Rect& initial_pos,
     bool user_gesture) {
-  // I don't understand what role this plays in the grand scheme of things. I'm
-  // not going to fake it.
-  NOTIMPLEMENTED();
+  if (!new_web_contents->render_widget_host_view() ||
+      !new_web_contents->process()->channel()) {
+    // The view has gone away or the renderer crashed. Nothing to do.
+    return;
+  }
+
+  // TODO(brettw) this seems bogus to reach into here and initialize the host.
+  new_web_contents->render_view_host()->Init();
+  web_contents_->AddNewContents(new_web_contents, disposition, initial_pos,
+                                user_gesture);
 }
 
 void WebContentsViewMac::ShowCreatedWidgetInternal(
@@ -225,10 +251,8 @@ void WebContentsViewMac::Observe(NotificationType type,
     }
     case NotificationType::WEB_CONTENTS_DISCONNECTED: {
       SadTabView* view = [[SadTabView alloc] initWithFrame:NSZeroRect];
-      CFRetain(view);
-      [view release];
       sad_tab_.reset(view);
-      
+
       // Set as the dominant child.
       [cocoa_view_.get() addSubview:view];
       [view setFrame:[cocoa_view_.get() bounds]];
@@ -241,6 +265,48 @@ void WebContentsViewMac::Observe(NotificationType type,
 }
 
 @implementation WebContentsViewCocoa
+
+- (id)initWithWebContentsViewMac:(WebContentsViewMac*)w {
+  self = [super initWithFrame:NSZeroRect];
+  if (self != nil) {
+    webContentsView_ = w;
+  }
+  return self;
+}
+
+- (void)processKeyboardEvent:(NSEvent*)event {
+  if ([event type] == NSKeyDown)
+    [super keyDown:event];
+  else if ([event type] == NSKeyUp)
+    [super keyUp:event];
+}
+
+- (void)mouseEvent:(NSEvent *)theEvent {
+  if (webContentsView_->GetWebContents()->delegate()) {
+    if ([theEvent type] == NSMouseMoved)
+      webContentsView_->GetWebContents()->delegate()->
+          ContentsMouseEvent(webContentsView_->GetWebContents(), true);
+    if ([theEvent type] == NSMouseExited)
+      webContentsView_->GetWebContents()->delegate()->
+          ContentsMouseEvent(webContentsView_->GetWebContents(), false);
+  }
+}
+
+// In the Windows version, we always have cut/copy/paste enabled. This is sub-
+// optimal, but we do it too. TODO(avi): Plumb the "can*" methods up from
+// WebCore.
+
+- (void)cut:(id)sender {
+  webContentsView_->GetWebContents()->Cut();
+}
+
+- (void)copy:(id)sender {
+  webContentsView_->GetWebContents()->Copy();
+}
+
+- (void)paste:(id)sender {
+  webContentsView_->GetWebContents()->Paste();
+}
 
 // Tons of stuff goes here, where we grab events going on in Cocoaland and send
 // them into the C++ system. TODO(avi): all that jazz

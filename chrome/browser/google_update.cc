@@ -13,7 +13,6 @@
 #include "base/task.h"
 #include "base/thread.h"
 #include "base/win_util.h"
-
 #include "chrome/app/client_util.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/installer/util/google_update_constants.h"
@@ -35,7 +34,7 @@ bool CanUpdateCurrentChrome(const std::wstring& chrome_exe_path) {
                  user_exe_path.begin(), tolower);
   std::transform(machine_exe_path.begin(), machine_exe_path.end(),
                  machine_exe_path.begin(), tolower);
-  if (chrome_exe_path != user_exe_path && 
+  if (chrome_exe_path != user_exe_path &&
       chrome_exe_path != machine_exe_path ) {
     LOG(ERROR) << L"Google Update cannot update Chrome installed in a "
                << L"non-standard location: " << chrome_exe_path.c_str()
@@ -98,7 +97,9 @@ class GoogleUpdateJobObserver
     COM_INTERFACE_ENTRY(IJobObserver)
   END_COM_MAP()
 
-  GoogleUpdateJobObserver() {}
+  GoogleUpdateJobObserver()
+    : result_(UPGRADE_ERROR) {
+  }
   virtual ~GoogleUpdateJobObserver() {}
 
   // Notifications from Google Update:

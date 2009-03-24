@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "chrome/browser/window_sizer.h"
+#include "base/logging.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 // Some standard monitor sizes (no task bar).
@@ -592,4 +593,3 @@ TEST(WindowSizerTest, PersistedBoundsCase) {
     EXPECT_EQ(initial_bounds, window_bounds);
   }
 }
-

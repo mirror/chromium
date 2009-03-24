@@ -6,17 +6,18 @@
 #define CHROME_BROWSER_VIEWS_INFOBARS_INFOBARS_H_
 
 #include "chrome/browser/tab_contents/infobar_delegate.h"
-#include "chrome/views/base_button.h"
-#include "chrome/views/link.h"
-#include "chrome/views/native_button.h"
+#include "chrome/common/animation.h"
+#include "chrome/views/controls/button/button.h"
+#include "chrome/views/controls/link.h"
 
 class InfoBarContainer;
 class SlideAnimation;
 namespace views {
-class Button;
 class ExternalFocusTracker;
+class ImageButton;
 class ImageView;
 class Label;
+class NativeButton;
 }
 
 // This file contains implementations for some general purpose InfoBars. See
@@ -24,7 +25,7 @@ class Label;
 // that you must implement to use these.
 
 class InfoBar : public views::View,
-                public views::BaseButton::ButtonListener,
+                public views::ButtonListener,
                 public AnimationDelegate {
  public:
   explicit InfoBar(InfoBarDelegate* delegate);
@@ -45,7 +46,7 @@ class InfoBar : public views::View,
   // Starts animating the InfoBar closed. It will not be closed until the
   // animation has completed, when |Close| will be called.
   void AnimateClose();
-  
+
   // Closes the InfoBar immediately and removes it from its container. Notifies
   // the delegate that it has closed. The InfoBar is deleted after this function
   // is called.
@@ -69,10 +70,10 @@ class InfoBar : public views::View,
   // (Will lead to this InfoBar being closed).
   void RemoveInfoBar() const;
 
- private:
-  // Overridden from views::Button::ButtonListener:
-  virtual void ButtonPressed(views::BaseButton* sender);
+  // Overridden from views::ButtonListener:
+  virtual void ButtonPressed(views::Button* sender);
 
+ private:
   // Overridden from AnimationDelegate:
   virtual void AnimationProgressed(const Animation* animation);
   virtual void AnimationEnded(const Animation* animation);
@@ -98,7 +99,7 @@ class InfoBar : public views::View,
   InfoBarDelegate* delegate_;
 
   // The Close Button at the right edge of the InfoBar.
-  views::Button* close_button_;
+  views::ImageButton* close_button_;
 
   // The animation that runs when the InfoBar is opened or closed.
   scoped_ptr<SlideAnimation> animation_;
@@ -157,8 +158,7 @@ class LinkInfoBar : public InfoBar,
   DISALLOW_COPY_AND_ASSIGN(LinkInfoBar);
 };
 
-class ConfirmInfoBar : public AlertInfoBar,
-                       public views::NativeButton::Listener {
+class ConfirmInfoBar : public AlertInfoBar {
  public:
   explicit ConfirmInfoBar(ConfirmInfoBarDelegate* delegate);
   virtual ~ConfirmInfoBar();
@@ -172,8 +172,8 @@ class ConfirmInfoBar : public AlertInfoBar,
                                     views::View* parent,
                                     views::View* child);
 
-  // Overridden from views::NativeButton::Listener:
-  virtual void ButtonPressed(views::NativeButton* sender);
+  // Overridden from views::ButtonListener:
+  virtual void ButtonPressed(views::Button* sender);
 
   // Overridden from InfoBar:
   virtual int GetAvailableWidth() const;

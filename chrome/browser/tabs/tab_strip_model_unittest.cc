@@ -31,7 +31,9 @@ class TabStripDummyDelegate : public TabStripModelDelegate {
   virtual ~TabStripDummyDelegate() {}
 
   // Overridden from TabStripModelDelegate:
-  virtual GURL GetBlankTabURL() const { return NewTabUI::GetBaseURL(); }
+  virtual GURL GetBlankTabURL() const { 
+    return GURL(chrome::kChromeUINewTabURL);
+  }
   virtual void CreateNewStripWithContents(TabContents* contents,
                                           const gfx::Rect& window_bounds,
                                           const DockInfo& dock_info) {}
@@ -43,7 +45,7 @@ class TabStripDummyDelegate : public TabStripModelDelegate {
       PageTransition::Type transition,
       bool defer_load,
       SiteInstance* instance) const {
-    if (url == NewTabUI::GetBaseURL())
+    if (url == GURL(chrome::kChromeUINewTabURL))
       return dummy_contents_;
     return NULL;
   }
@@ -142,7 +144,7 @@ class TabStripModelTest : public testing::Test {
   }
   TabContents* CreateNewTabTabContents() {
     TabStripModelTestTabContents* contents =
-        new TabStripModelTestTabContents(TAB_CONTENTS_NEW_TAB_UI);
+        new TabStripModelTestTabContents(TAB_CONTENTS_WEB);
     contents->SetupController(profile_);
     return contents;
   }
@@ -791,7 +793,8 @@ TEST_F(TabStripModelTest, TestContextMenuCloseCommands) {
   InsertTabContentses(&tabstrip, contents1, contents2, contents3);
   EXPECT_EQ(5, tabstrip.count());
 
-  tabstrip.ExecuteContextMenuCommand(0, TabStripModel::CommandCloseTabsOpenedBy);
+  tabstrip.ExecuteContextMenuCommand(0,
+                                     TabStripModel::CommandCloseTabsOpenedBy);
   EXPECT_EQ(2, tabstrip.count());
   EXPECT_EQ(dummy_contents, tabstrip.GetTabContentsAt(1));
 
@@ -1289,4 +1292,3 @@ TEST_F(TabStripModelTest, NavigationForgettingDoesntAffectNewTab) {
 
   strip.CloseAllTabs();
 }
-

@@ -92,7 +92,8 @@ void DebuggerInputOutputSocket::OutputLater(const std::string& out, bool lf) {
       this, &DebuggerInputOutputSocket::OutputToSocket, out, lf));
 }
 
-void DebuggerInputOutputSocket::OutputToSocket(const std::string& out, bool lf) {
+void DebuggerInputOutputSocket::OutputToSocket(const std::string& out,
+                                               bool lf) {
   DCHECK(MessageLoop::current() == io_loop_);
   if (connection_) {
     if (out.length()) {
@@ -124,5 +125,3 @@ void DebuggerInputOutputSocket::DidClose(ListenSocket *sock) {
     // TODO(erikkay): assert?
   }
 }
-
-

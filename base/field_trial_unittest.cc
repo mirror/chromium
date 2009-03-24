@@ -6,7 +6,6 @@
 
 #include "base/field_trial.h"
 
-#include "base/logging.h"
 #include "base/string_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -115,4 +114,3 @@ TEST_F(FieldTrialTest, OneWinner) {
   EXPECT_EQ(trial->group(), winner_index);
   EXPECT_EQ(winner_name, trial->group_name());
 }
-

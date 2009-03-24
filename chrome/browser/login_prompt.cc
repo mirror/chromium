@@ -19,7 +19,7 @@
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
-#include "chrome/views/dialog_delegate.h"
+#include "chrome/views/window/dialog_delegate.h"
 #include "grit/generated_resources.h"
 #include "net/base/auth.h"
 #include "net/url_request/url_request.h"
@@ -147,7 +147,8 @@ class LoginHandlerImpl : public LoginHandler,
           this, &LoginHandlerImpl::CancelAuthDeferred));
       SendNotifications();
     }
-
+  }
+  virtual void DeleteDelegate() {
     // Delete this object once all InvokeLaters have been called.
     request_loop_->ReleaseSoon(FROM_HERE, this);
   }
@@ -410,4 +411,3 @@ LoginHandler* CreateLoginPrompt(net::AuthChallengeInfo* auth_info,
   ui_loop->PostTask(FROM_HERE, new LoginDialogTask(auth_info, handler));
   return handler;
 }
-

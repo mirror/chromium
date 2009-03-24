@@ -15,6 +15,7 @@
 #define NET_BASE_SDCH_FILTER_H_
 
 #include <string>
+#include <vector>
 
 #include "base/scoped_ptr.h"
 #include "net/base/filter.h"
@@ -28,7 +29,7 @@ namespace open_vcdiff {
 
 class SdchFilter : public Filter {
  public:
-  SdchFilter();
+  explicit SdchFilter(const FilterContext& filter_context);
 
   virtual ~SdchFilter();
 
@@ -53,6 +54,10 @@ class SdchFilter : public Filter {
     META_REFRESH_RECOVERY,  // Decoding error being handled by a meta-refresh.
     PASS_THROUGH,  // Non-sdch content being passed without alteration.
   };
+
+  // Update the read_times_ array with time estimates for the number of packets
+  // read so far.
+  void UpdateReadTimes();
 
   // Identify the suggested dictionary, and initialize underlying decompressor.
   Filter::FilterStatus InitializeDictionary();
@@ -83,9 +88,10 @@ class SdchFilter : public Filter {
   // attempted.
   bool dictionary_hash_is_plausible_;
 
-  // We hold an in-memory copy of the dictionary during the entire decoding.
-  // The char* data is embedded in a RefCounted dictionary_.
-  SdchManager::Dictionary* dictionary_;
+  // We hold an in-memory copy of the dictionary during the entire decoding, as
+  // it is used directly by the VC-DIFF decoding system.
+  // That char* data is part of the dictionary_ we hold a reference to.
+  scoped_refptr<SdchManager::Dictionary> dictionary_;
 
   // The decoder may demand a larger output buffer than the target of
   // ReadFilteredData so we buffer the excess output between calls.
@@ -99,14 +105,31 @@ class SdchFilter : public Filter {
   size_t source_bytes_;
   size_t output_bytes_;
 
-  // Record of chunk processing times for this filter.  Used only for stats
-  // generations in histograms.
+  // Record of packet processing times for this filter.  Used only for stats
+  // generations in histograms.  There is one time entry each time the byte
+  // count receieved exceeds the next multiple of 1430 bytes (a common
+  // per-TCP/IP-packet payload size).
   std::vector<base::Time> read_times_;
 
   // Error recovery in content type may add an sdch filter type, in which case
   // we should gracefully perform pass through if the format is incorrect, or
   // an applicable dictionary can't be found.
   bool possible_pass_through_;
+
+  // The URL that is currently being filtered.
+  // This is used to restrict use of a dictionary to a specific URL or path.
+  GURL url_;
+
+  // To facilitate histogramming by individual filters, we store the connect
+  // time for the corresponding HTTP transaction, as well as whether this time
+  // was recalled from a cached entry.  The time is approximate, and may be
+  // bogus if the data was gotten from cache (i.e., it may be LOOOONG ago).
+  const base::Time connect_time_;
+  const bool was_cached_;
+
+  // To facilitate error recovery, allow filter to know if content is text/html
+  // by checking within this mime type (we may do a meta-refresh via html).
+  std::string mime_type_;
 
   DISALLOW_COPY_AND_ASSIGN(SdchFilter);
 };

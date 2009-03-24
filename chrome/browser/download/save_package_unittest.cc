@@ -5,7 +5,6 @@
 #include <string>
 
 #include "base/file_path.h"
-#include "base/logging.h"
 #include "base/path_service.h"
 #include "base/string_util.h"
 #include "chrome/browser/download/save_package.h"
@@ -174,4 +173,3 @@ TEST_F(SavePackageTest, TestLongSavePackageFilename) {
   EXPECT_TRUE(HasOrdinalNumber(filename2));
   EXPECT_NE(filename, filename2);
 }
-

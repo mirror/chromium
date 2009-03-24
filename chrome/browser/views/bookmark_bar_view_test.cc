@@ -13,9 +13,9 @@
 #include "chrome/common/pref_service.h"
 #include "chrome/test/testing_profile.h"
 #include "chrome/test/interactive_ui/view_event_test_base.h"
-#include "chrome/views/chrome_menu.h"
-#include "chrome/views/text_button.h"
-#include "chrome/views/window.h"
+#include "chrome/views/controls/button/text_button.h"
+#include "chrome/views/controls/menu/chrome_menu.h"
+#include "chrome/views/window/window.h"
 
 namespace {
 
@@ -36,7 +36,7 @@ class TestingPageNavigator : public PageNavigator {
 // Base class for event generating bookmark view tests. These test are intended
 // to exercise ChromeMenus, but that's easier done with BookmarkBarView rather
 // than ChromeMenu itself.
-// 
+//
 // SetUp creates a bookmark model with the following structure.
 // All folders are in upper case, all URLs in lower case.
 // F1
@@ -190,7 +190,7 @@ class BookmarkBarViewTest1 : public BookmarkBarViewEventTestBase {
 
     // Button should be depressed.
     views::TextButton* button = bb_view_->GetBookmarkButton(0);
-    ASSERT_TRUE(button->GetState() == views::BaseButton::BS_PUSHED);
+    ASSERT_TRUE(button->state() == views::CustomButton::BS_PUSHED);
 
     // Click on the 2nd menu item (A URL).
     ASSERT_TRUE(menu->GetSubmenu());
@@ -210,7 +210,7 @@ class BookmarkBarViewTest1 : public BookmarkBarViewEventTestBase {
 
     // Make sure button is no longer pushed.
     views::TextButton* button = bb_view_->GetBookmarkButton(0);
-    ASSERT_TRUE(button->GetState() == views::BaseButton::BS_NORMAL);
+    ASSERT_TRUE(button->state() == views::CustomButton::BS_NORMAL);
 
     views::MenuItemView* menu = bb_view_->GetMenu();
     ASSERT_TRUE(menu == NULL || !menu->GetSubmenu()->IsShowing());
@@ -258,7 +258,7 @@ class BookmarkBarViewTest2 : public BookmarkBarViewEventTestBase {
 
     // Make sure button is no longer pushed.
     views::TextButton* button = bb_view_->GetBookmarkButton(0);
-    ASSERT_TRUE(button->GetState() == views::BaseButton::BS_NORMAL);
+    ASSERT_TRUE(button->state() == views::CustomButton::BS_NORMAL);
 
     window_->Activate();
 
@@ -939,7 +939,7 @@ class BookmarkBarViewTest12 : public BookmarkBarViewEventTestBase {
     ASSERT_TRUE(child_menu != NULL);
     ui_controls::MoveMouseToCenterAndPress(child_menu, ui_controls::LEFT,
         ui_controls::DOWN | ui_controls::UP, NULL);
-    
+
     // Delay until we send tab, otherwise the message box doesn't appear
     // correctly.
     MessageLoop::current()->PostDelayedTask(FROM_HERE,

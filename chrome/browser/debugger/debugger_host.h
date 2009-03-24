@@ -27,7 +27,7 @@ class DebuggerHost : public base::RefCountedThreadSafe<DebuggerHost> {
   virtual void OnDebugAttach() = 0;
   // The renderer we're attached to is gone.
   virtual void OnDebugDisconnect() = 0;
-  
+
   virtual void DidDisconnect() = 0;
   virtual void DidConnect() {}
   virtual void ProcessCommand(const std::wstring& data) {}
@@ -40,4 +40,3 @@ class DebuggerHost : public base::RefCountedThreadSafe<DebuggerHost> {
 };
 
 #endif // CHROME_BROWSER_DEBUGGER_DEBUGGER_HOST_H_
-

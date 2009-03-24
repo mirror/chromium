@@ -6,7 +6,6 @@
 
 #include "base/base_paths.h"
 #include "base/file_util.h"
-#include "base/logging.h"
 #include "base/path_service.h"
 #include "base/registry.h"
 #include "base/scoped_ptr.h"
@@ -154,4 +153,3 @@ TEST_F(WorkItemListTest, ExecutionFailAndRollback) {
   EXPECT_FALSE(key.Open(HKEY_CURRENT_USER, key_to_create.c_str(), KEY_READ));
   EXPECT_FALSE(file_util::PathExists(top_dir_to_create));
 }
-

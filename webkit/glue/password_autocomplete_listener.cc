@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 //
-// This file provides the implementaiton of the password manager's autocomplete 
+// This file provides the implementaiton of the password manager's autocomplete
 // component.
 
 #include "webkit/glue/password_autocomplete_listener.h"
@@ -116,4 +116,3 @@ bool PasswordAutocompleteListener::TryToMatch(const std::wstring& input,
 }
 
 }  // webkit_glue
-

@@ -192,7 +192,7 @@ class WebActiveXSite : public MinimumIDispatchImpl,
   friend ActiveXPlugin;
 
  private:
-  // Call IOleObject::SetExtent to change the size of the control. width and 
+  // Call IOleObject::SetExtent to change the size of the control. width and
   // height should be in pixels.
   HRESULT SetExtent(int width, int height);
 
@@ -223,4 +223,3 @@ class WebActiveXSite : public MinimumIDispatchImpl,
 }  // namespace activex_shim
 
 #endif // #ifndef WEBKIT_ACTIVEX_SHIM_WEB_ACTIVEX_SITE_H__
-

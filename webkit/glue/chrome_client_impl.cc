@@ -22,14 +22,14 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #endif
 MSVC_POP_WARNING();
 
-#include "WebKit.h"
-
 #undef LOG
 
 #include "webkit/glue/chrome_client_impl.h"
 
+#include "base/logging.h"
 #include "base/gfx/rect.h"
 #include "googleurl/src/gurl.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebKit.h"
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/webframe_impl.h"
 #include "webkit/glue/webinputevent.h"
@@ -38,8 +38,6 @@ MSVC_POP_WARNING();
 #include "webkit/glue/webview_delegate.h"
 #include "webkit/glue/webview_impl.h"
 #include "webkit/glue/webwidget_impl.h"
-
-struct IWebURLResponse;
 
 // Callback class that's given to the WebViewDelegate during a file choose
 // operation.
@@ -289,12 +287,13 @@ bool ChromeClientImpl::canRunBeforeUnloadConfirmPanel() {
   return webview_->delegate() != NULL;
 }
 
-bool ChromeClientImpl::runBeforeUnloadConfirmPanel(const WebCore::String& message,
-                                                   WebCore::Frame* frame) {
+bool ChromeClientImpl::runBeforeUnloadConfirmPanel(
+    const WebCore::String& message,
+    WebCore::Frame* frame) {
   WebViewDelegate* d = webview_->delegate();
   if (d) {
     std::wstring wstr = webkit_glue::StringToStdWString(message);
-    return d->RunBeforeUnloadConfirm(webview_, wstr);
+    return d->RunBeforeUnloadConfirm(WebFrameImpl::FromFrame(frame), wstr);
   }
   return false;
 }
@@ -325,7 +324,7 @@ void ChromeClientImpl::runJavaScriptAlert(WebCore::Frame* frame,
 #endif
 
     std::wstring wstr = webkit_glue::StringToStdWString(message);
-    d->RunJavaScriptAlert(webview_, wstr);
+    d->RunJavaScriptAlert(WebFrameImpl::FromFrame(frame), wstr);
   }
 }
 
@@ -335,7 +334,7 @@ bool ChromeClientImpl::runJavaScriptConfirm(WebCore::Frame* frame,
   WebViewDelegate* d = webview_->delegate();
   if (d) {
     std::wstring wstr = webkit_glue::StringToStdWString(message);
-    return d->RunJavaScriptConfirm(webview_, wstr);
+    return d->RunJavaScriptConfirm(WebFrameImpl::FromFrame(frame), wstr);
   }
   return false;
 }
@@ -350,7 +349,7 @@ bool ChromeClientImpl::runJavaScriptPrompt(WebCore::Frame* frame,
     std::wstring wstr_message = webkit_glue::StringToStdWString(message);
     std::wstring wstr_default = webkit_glue::StringToStdWString(defaultValue);
     std::wstring wstr_result;
-    bool ok = d->RunJavaScriptPrompt(webview_,
+    bool ok = d->RunJavaScriptPrompt(WebFrameImpl::FromFrame(frame),
                                      wstr_message,
                                      wstr_default,
                                      &wstr_result);

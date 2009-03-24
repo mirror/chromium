@@ -92,6 +92,13 @@ class AsyncWriter : public Task {
       return false;  // Don't write to an invalid part of the file.
 
     size_t num_written = fwrite(data, 1, data_len, file);
+
+    // The write may not make it to the kernel (stdlib may buffer the write)
+    // until the next fseek/fclose call.  If we crash, it's easy for our used
+    // item count to be out of sync with the number of hashes we write. 
+    // Protect against this by calling fflush.
+    int ret = fflush(file);
+    DCHECK_EQ(0, ret);
     return num_written == data_len;
   }
 
@@ -249,20 +256,6 @@ void VisitedLinkMaster::InitMembers(base::Thread* file_thread,
 #ifndef NDEBUG
   posted_asynchronous_operation_ = false;
 #endif
-}
-
-// The shared memory name should be unique on the system and also needs to
-// change when we create a new table. The scheme we use includes the process
-// ID, an increasing serial number, and the profile ID.
-std::wstring VisitedLinkMaster::GetSharedMemoryName() const {
-  // When unit testing, there's no profile, so use an empty ID string.
-  std::wstring profile_id;
-  if (profile_)
-    profile_id = profile_->GetID().c_str();
-
-  return StringPrintf(L"GVisitedLinks_%lu_%lu_%ls",
-                      base::GetCurrentProcId(), shared_memory_serial_,
-                      profile_id.c_str());
 }
 
 bool VisitedLinkMaster::Init() {
@@ -582,6 +575,10 @@ bool VisitedLinkMaster::InitFromFile() {
   }
   used_items_ = used_count;
 
+#ifndef NDEBUG
+  DebugValidate();
+#endif
+
   file_ = file_closer.release();
   return true;
 }
@@ -596,6 +593,10 @@ bool VisitedLinkMaster::InitFromScratch(bool suppress_rebuild) {
   GenerateSalt(salt_);
   if (!CreateURLTable(table_size, true))
     return false;
+
+#ifndef NDEBUG
+  DebugValidate();
+#endif
 
   if (suppress_rebuild) {
     // When we disallow rebuilds (normally just unit tests), just use the
@@ -687,9 +688,11 @@ bool VisitedLinkMaster::CreateURLTable(int32 num_entries, bool init_to_empty) {
   if (!shared_memory_)
     return false;
 
-  if (!shared_memory_->Create(GetSharedMemoryName().c_str(),
-      false, false, alloc_size))
+  if (!shared_memory_->Create(std::wstring() /* anonymous */,
+                              false /* read-write */, false /* create */,
+                              alloc_size)) {
     return false;
+  }
 
   // Map into our process.
   if (!shared_memory_->Map(alloc_size)) {
@@ -713,10 +716,6 @@ bool VisitedLinkMaster::CreateURLTable(int32 num_entries, bool init_to_empty) {
   hash_table_ = reinterpret_cast<Fingerprint*>(
       static_cast<char*>(shared_memory_->memory()) + sizeof(SharedHeader));
 
-#ifndef NDEBUG
-  DebugValidate();
-#endif
-
   return true;
 }
 
@@ -731,6 +730,11 @@ bool VisitedLinkMaster::BeginReplaceURLTable(int32 num_entries) {
     table_length_ = old_table_length;
     return false;
   }
+
+#ifndef NDEBUG
+  DebugValidate();
+#endif
+
   return true;
 }
 

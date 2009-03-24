@@ -84,7 +84,7 @@ HWND PluginInstallDialog::Create(HWND parent_window, LPARAM init_param) {
     dialog_template_struct = rtl_layout_dialog_template_struct;
   }
 
-  HWND dialog_window = 
+  HWND dialog_window =
       CreateDialogIndirectParam(
           instance_handle,
           reinterpret_cast<DLGTEMPLATE*>(dialog_template_struct),
@@ -171,4 +171,3 @@ void PluginInstallDialog::AdjustTextDirectionality(std::wstring* text) const {
     text->append(L"\x202C");
   }
 }
-

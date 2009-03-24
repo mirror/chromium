@@ -5,10 +5,17 @@
 #ifndef CHROME_BROWSER_COCOA_BROWSER_WINDOW_COCOA_H_
 #define CHROME_BROWSER_COCOA_BROWSER_WINDOW_COCOA_H_
 
+#include "base/scoped_ptr.h"
 #include "chrome/browser/browser_window.h"
+#include "chrome/browser/bookmarks/bookmark_model.h"
+#include "chrome/browser/cocoa/bookmark_menu_bridge.h"
 
+class Browser;
 @class BrowserWindowController;
 @class NSWindow;
+@class NSMenu;
+
+class StatusBubbleMac;
 
 // An implementation of BrowserWindow for Cocoa. Bridges between C++ and
 // the Cocoa NSWindow. Cross-platform code will interact with this object when
@@ -16,18 +23,19 @@
 
 class BrowserWindowCocoa : public BrowserWindow {
  public:
-  BrowserWindowCocoa(BrowserWindowController* controller, NSWindow* window);
+  BrowserWindowCocoa(Browser* browser,
+                     BrowserWindowController* controller,
+                     NSWindow* window);
   virtual ~BrowserWindowCocoa();
 
   // Overridden from BrowserWindow
-  virtual void Init();
   virtual void Show();
   virtual void SetBounds(const gfx::Rect& bounds);
   virtual void Close();
   virtual void Activate();
   virtual bool IsActive() const;
   virtual void FlashFrame();
-  virtual void* GetNativeHandle();
+  virtual gfx::NativeWindow GetNativeHandle();
   virtual BrowserWindowTesting* GetBrowserWindowTesting();
   virtual StatusBubble* GetStatusBubble();
   virtual void SelectedTabToolbarSizeChanged(bool is_animating);
@@ -60,12 +68,17 @@ class BrowserWindowCocoa : public BrowserWindow {
   virtual void ShowNewProfileDialog();
   virtual void ShowHTMLDialog(HtmlDialogContentsDelegate* delegate,
                               void* parent_window);
+
  protected:
   virtual void DestroyBrowser();
 
  private:
+  Browser* browser_;
   BrowserWindowController* controller_;  // weak, owns us
   NSWindow* window_;  // weak, owned by |controller_|
+  // The status bubble manager.  Always non-NULL.
+  scoped_ptr<StatusBubbleMac> status_bubble_;
+  BookmarkMenuBridge bookmark_menu_bridge_;
 };
 
 #endif  // CHROME_BROWSER_COCOA_BROWSER_WINDOW_COCOA_H_

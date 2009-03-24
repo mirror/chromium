@@ -8,8 +8,8 @@
 #include "base/scoped_ptr.h"
 #include "chrome/browser/command_updater.h"
 #include "chrome/common/slide_animation.h"
-#include "chrome/views/link.h"
-#include "chrome/views/widget_win.h"
+#include "chrome/views/controls/link.h"
+#include "chrome/views/widget/widget_win.h"
 
 // FullscreenExitBubble is responsible for showing a bubble atop the screen in
 // fullscreen mode, telling users how to exit and providing a click target.
@@ -25,6 +25,7 @@ class FullscreenExitBubble : public views::LinkController,
 
  private:
   class FullscreenExitView;
+  class FullscreenExitPopup;
 
   static const double kOpacity;          // Opacity of the bubble, 0.0 - 1.0
   static const int kInitialDelayMs;      // Initial time bubble remains onscreen
@@ -60,9 +61,9 @@ class FullscreenExitBubble : public views::LinkController,
   // it.
   CommandUpdater::CommandUpdaterDelegate* delegate_;
 
-  // We use an HWND for the popup so that it may float above any plugins in the
-  // page.
-  views::WidgetWin* popup_;
+  // The popup itself, which is a slightly modified WidgetWin.  We need to use
+  // a WidgetWin (and thus an HWND) to make the popup float over other HWNDs.
+  FullscreenExitPopup* popup_;
 
   // The contents of the popup.
   FullscreenExitView* view_;

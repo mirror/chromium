@@ -9,7 +9,7 @@
 
 #include "chrome/browser/download/download_request_dialog_delegate.h"
 #include "chrome/browser/download/download_request_manager.h"
-#include "chrome/views/dialog_delegate.h"
+#include "chrome/views/window/dialog_delegate.h"
 
 class ConstrainedWindow;
 class MessageBoxView;
@@ -36,10 +36,7 @@ class DownloadRequestDialogDelegateWin : public DownloadRequestDialogDelegate,
   virtual int GetDefaultDialogButton() const {
     return DIALOGBUTTON_CANCEL;
   }
-  virtual void WindowClosing();
-
-  // The TabDownloadState we're displaying the dialog for. May be null.
-  DownloadRequestManager::TabDownloadState* host_;
+  virtual void DeleteDelegate();
 
   MessageBoxView* message_view_;
 
@@ -49,4 +46,3 @@ class DownloadRequestDialogDelegateWin : public DownloadRequestDialogDelegate,
 };
 
 #endif  // CHROME_BROWSER_DOWNLOAD_DOWNLOAD_REQUEST_DIALOG_DELEGATE_WIN_H_
-

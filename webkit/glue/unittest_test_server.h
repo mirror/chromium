@@ -38,15 +38,17 @@ class UnittestTestServer : public HTTPTestServer {
   virtual bool MakeGETRequest(const std::string& page_name) {
     GURL url(TestServerPage(page_name));
     scoped_ptr<ResourceLoaderBridge> loader(
-      ResourceLoaderBridge::Create(NULL, "GET",
+      ResourceLoaderBridge::Create("GET",
                                    url,
                                    url,            // policy_url
                                    GURL(),         // no referrer
                                    std::string(),  // no extra headers
+                                   "null",         // frame_origin
+                                   "null",         // main_frame_origin
                                    net::LOAD_NORMAL,
                                    0,
                                    ResourceType::SUB_RESOURCE,
-                                   false));
+                                   0));
     EXPECT_TRUE(loader.get());
 
     ResourceLoaderBridge::SyncLoadResponse resp;
@@ -56,4 +58,3 @@ class UnittestTestServer : public HTTPTestServer {
 };
 
 #endif  // WEBKIT_GLUE_UNITTEST_TEST_SERVER_H__
-

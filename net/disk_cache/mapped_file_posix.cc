@@ -7,6 +7,7 @@
 #include <errno.h>
 #include <sys/mman.h>
 
+#include "base/logging.h"
 #include "net/disk_cache/disk_cache.h"
 
 namespace disk_cache {
@@ -51,4 +52,3 @@ bool MappedFile::Store(const FileBlock* block) {
 }
 
 }  // namespace disk_cache
-

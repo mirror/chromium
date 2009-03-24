@@ -5,6 +5,8 @@
 #ifndef CHROME_RENDERER_WEBWORKER_PROXY_H_
 #define CHROME_RENDERER_WEBWORKER_PROXY_H_
 
+#include <vector>
+
 #include "base/basictypes.h"
 #include "chrome/common/ipc_channel.h"
 #include "webkit/glue/webworker.h"
@@ -17,14 +19,14 @@ class Message;
 }
 
 // This class provides an implementation of WebWorker that the renderer provides
-// to the glue.  This class converts function calls to IPC messages that are 
+// to the glue.  This class converts function calls to IPC messages that are
 // dispatched in the worker process by WebWorkerClientProxy.  It also receives
 // IPC messages from WebWorkerClientProxy which it converts to function calls to
 // WebWorkerClient.
 class WebWorkerProxy : public WebWorker,
                        public IPC::Channel::Listener {
  public:
-  WebWorkerProxy(IPC::Message::Sender* sender, WebWorkerClient* client);
+  WebWorkerProxy(WebWorkerClient* client, int render_view_route_id);
   virtual ~WebWorkerProxy();
 
   // WebWorker implementation.
@@ -43,12 +45,18 @@ class WebWorkerProxy : public WebWorker,
  private:
   bool Send(IPC::Message* message);
 
-  IPC::Message::Sender* sender_;
+  // The routing id used to reach WebWorkerClientProxy in the worker process.
   int route_id_;
+
+  // The routing id for the RenderView that created this worker.
+  int render_view_route_id_;
 
   // Used to communicate to the WebCore::Worker object in response to IPC
   // messages.
   WebWorkerClient* client_;
+
+  // Stores messages that were sent before the StartWorkerContext message.
+  std::vector<IPC::Message*> queued_messages_;
 
   DISALLOW_COPY_AND_ASSIGN(WebWorkerProxy);
 };

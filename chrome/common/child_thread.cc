@@ -24,7 +24,8 @@ ChildThread::ChildThread(Thread::Options options)
 
   if (CommandLine::ForCurrentProcess()->HasSwitch(switches::kUserAgent)) {
     webkit_glue::SetUserAgent(WideToUTF8(
-        CommandLine::ForCurrentProcess()->GetSwitchValue(switches::kUserAgent)));
+        CommandLine::ForCurrentProcess()->GetSwitchValue(
+            switches::kUserAgent)));
   }
 }
 
@@ -61,6 +62,10 @@ void ChildThread::RemoveRoute(int32 routing_id) {
 }
 
 void ChildThread::OnMessageReceived(const IPC::Message& msg) {
+  // Resource responses are sent to the resource dispatcher.
+  if (resource_dispatcher_->OnMessageReceived(msg))
+    return;
+
   if (msg.routing_id() == MSG_ROUTING_CONTROL) {
     OnControlMessageReceived(msg);
   } else {
@@ -79,6 +84,8 @@ void ChildThread::Init() {
 #ifdef IPC_MESSAGE_LOG_ENABLED
   IPC::Logging::current()->SetIPCSender(this);
 #endif
+
+  resource_dispatcher_.reset(new ResourceDispatcher(this));
 }
 
 void ChildThread::CleanUp() {
@@ -88,4 +95,5 @@ void ChildThread::CleanUp() {
   // Need to destruct the SyncChannel to the browser before we go away because
   // it caches a pointer to this thread.
   channel_.reset();
+  resource_dispatcher_.reset();
 }

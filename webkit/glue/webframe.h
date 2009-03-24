@@ -6,13 +6,14 @@
 #define WEBKIT_GLUE_WEBFRAME_H_
 
 #include "base/scoped_ptr.h"
+#include "googleurl/src/gurl.h"
 #include "skia/ext/bitmap_platform_device.h"
 #include "skia/ext/platform_canvas.h"
 #include "webkit/glue/console_message_level.h"
+#include "webkit/glue/feed.h"
 #include "webkit/glue/find_in_page_request.h"
+#include "webkit/glue/webscriptsource.h"
 
-class GURL;
-class PlatformContextSkia;
 class WebDataSource;
 class WebError;
 class WebRequest;
@@ -46,6 +47,8 @@ class WebFrame {
   // casts the return value to WebCore::Frame.
   // TODO(fqian): Remove this method when V8 supports NP runtime.
   virtual void* GetFrameImplementation() = 0;
+
+  virtual NPObject* GetWindowNPObject() = 0;
 
   // Loads the given WebRequest.
   virtual void LoadRequest(WebRequest* request) = 0;
@@ -85,13 +88,18 @@ class WebFrame {
                                           bool replace,
                                           const GURL& fake_url) = 0;
 
-  // Executes a string of JavaScript in the web frame. The script_url param is
-  // the URL where the script in question can be found, if any. The renderer may
-  // request this URL to show the developer the source of the error.  The
-  // start_line parameter is the base line number to use for error reporting.
-  virtual void ExecuteJavaScript(const std::string& js_code,
-                                 const GURL& script_url,
-                                 int start_line) = 0;
+  // Executes JavaScript in the web frame.
+  virtual void ExecuteScript(const webkit_glue::WebScriptSource& source) = 0;
+
+  // Executes JavaScript in a new context associated with the web frame. The
+  // script gets its own global scope and its own prototypes for intrinsic
+  // JavaScript objects (String, Array, and so-on). It shares the wrappers for
+  // all DOM nodes and DOM constructors.
+  virtual void ExecuteScriptInNewContext(
+      const webkit_glue::WebScriptSource* sources, int num_sources) = 0;
+
+  // Inserts the given CSS styles at the beginning of the document.
+  virtual bool InsertCSSStyles(const std::string& css) = 0;
 
   // Returns a string representing the state of the previous page load for
   // later use when loading. The previous page is the page that was loaded
@@ -114,11 +122,11 @@ class WebFrame {
   // lacks a history item.  Otherwise, this will always be true.
   virtual bool HasCurrentHistoryState() const = 0;
 
-  // Returns the current URL of the frame, or the empty string if there is no
+  // Returns the current URL of the frame, or an empty GURL if there is no
   // URL to retrieve (for example, the frame may never have had any content).
   virtual GURL GetURL() const = 0;
 
-  // Returns the URL to the favorite icon for the frame. An empty string is
+  // Returns the URL to the favorite icon for the frame. An empty GURL is
   // returned if the frame has not finished loading, or the frame's URL
   // protocol is not http or https.
   virtual GURL GetFavIconURL() const = 0;
@@ -126,6 +134,10 @@ class WebFrame {
   // Returns the URL to the OpenSearch description document for the frame. If
   // the page does not have a valid document, an empty GURL is returned.
   virtual GURL GetOSDDURL() const = 0;
+
+  // Return the list of feeds specified in the document for the frame. If
+  // the page does not have a valid document, an empty list is returned.
+  virtual scoped_refptr<class FeedList> GetFeedList() const = 0;
 
   // Returns the committed data source, which is the last data source that has
   // successfully started loading. Will return NULL if no provisional data
@@ -154,6 +166,9 @@ class WebFrame {
   // frame with no parent.
   virtual WebFrame* GetParent() const = 0;
 
+  // Returns the top-most frame in the frame hierarchy containing this frame.
+  virtual WebFrame* GetTop() const = 0;
+
   // Returns the child frame with the given xpath.
   // The document of this frame is used as the context node.
   // The xpath may need a recursive traversal if non-trivial
@@ -171,6 +186,9 @@ class WebFrame {
   // pointer is not AddRef'd and is only valid for the lifetime of the WebFrame
   // unless it is AddRef'd separately by the caller.
   virtual WebView* GetView() const = 0;
+
+  // Returns the serialization of the frame's security origin.
+  virtual std::string GetSecurityOrigin() const = 0;
 
   // Fills the contents of this frame into the given string. If the text is
   // longer than max_chars, it will be clipped to that length. Warning: this
@@ -336,29 +354,23 @@ class WebFrame {
   // The current scroll offset from the top of frame in pixels.
   virtual gfx::Size ScrollOffset() const = 0;
 
-  // Reformats the web page, i.e. the main frame and its subframes, for printing
-  // or for screen display, depending on |printing| argument. |page_width_min|
-  // and |page_width_max| are the minimum and maximum width, in pixels, that the
-  // layout can try to fit the whole content. |width| is the resulted choosen
-  // document width in pixel.
-  // Note: It fails if the main frame failed to load. It will succeed even if a
-  // child frame failed to load.
-  virtual bool SetPrintingMode(bool printing,
-                               float page_width_min,
-                               float page_width_max,
-                               int* width) = 0;
-
-  // Layouts the web page on paper. Calculates the rectangle of the web page
-  // each pages will "see". Then you can retrieve the exact view of a paper page
-  // with GetPageRect.
-  // Returns the number of printed pages computed.
-  virtual int ComputePageRects(const gfx::Size& page_size_px) = 0;
-
-  // Retrieves the paper page's view of the web page.
-  virtual void GetPageRect(int page, gfx::Rect* page_size) const = 0;
+  // Reformats the web frame for printing. |page_size_px| is the page size in
+  // pixels.
+  // |width| is the resulting document width in pixel.
+  // |page_count| is the number of printed pages.
+  // Returns false if it fails. It'll fail if the main frame failed to load but
+  // will succeed even if a child frame failed to load.
+  virtual bool BeginPrint(const gfx::Size& page_size_px,
+                          int* page_count) = 0;
 
   // Prints one page. |page| is 0-based.
-  virtual bool SpoolPage(int page, skia::PlatformCanvas* canvas) = 0;
+  // Returns the page shrinking factor calculated by webkit (usually between
+  // 1/1.25 and 1/2). Returns 0 if the page number is invalid or not in printing
+  // mode.
+  virtual float PrintPage(int page, skia::PlatformCanvas* canvas) = 0;
+
+  // Reformats the web frame for screen display.
+  virtual void EndPrint() = 0;
 
   // Only for test_shell
   virtual int PendingFrameUnloadEventCount() const = 0;

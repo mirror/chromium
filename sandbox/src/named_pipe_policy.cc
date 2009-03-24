@@ -6,8 +6,6 @@
 
 #include <string>
 
-#include "base/logging.h"
-#include "base/scoped_ptr.h"
 #include "sandbox/src/ipc_tags.h"
 #include "sandbox/src/policy_engine_opcodes.h"
 #include "sandbox/src/policy_params.h"
@@ -86,5 +84,3 @@ DWORD NamedPipePolicy::CreateNamedPipeAction(EvalResult eval_result,
 }
 
 }  // namespace sandbox
-
-

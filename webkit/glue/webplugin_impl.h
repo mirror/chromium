@@ -21,7 +21,6 @@ MSVC_PUSH_WARNING_LEVEL(0);
 MSVC_POP_WARNING();
 
 #include "base/basictypes.h"
-#include "base/scoped_ptr.h"
 #include "webkit/glue/webframe_impl.h"
 #include "webkit/glue/webplugin.h"
 #include "webkit/glue/webplugin_delegate.h"
@@ -67,6 +66,7 @@ class WebPluginContainer : public WebCore::Widget {
   virtual void hide();
   virtual void handleEvent(WebCore::Event* event);
   virtual void frameRectsChanged();
+  virtual void setParentVisible(bool visible);
   virtual void setParent(WebCore::ScrollView* view);
 
 #if USE(JSC)
@@ -185,7 +185,6 @@ class WebPluginImpl : public WebPlugin,
 
   NPObject* GetWindowScriptNPObject();
   NPObject* GetPluginElement();
-  virtual WebFrame* GetWebFrame() { return webframe_; }
 
   void SetCookie(const GURL& url,
                  const GURL& policy_url,
@@ -201,7 +200,7 @@ class WebPluginImpl : public WebPlugin,
   void InvalidateRect(const gfx::Rect& rect);
 
   // Widget implementation:
-  virtual WebCore::IntRect windowClipRect() const;
+  WebCore::IntRect windowClipRect() const;
 
   // Returns window-relative rectangles that should clip this widget.
   // Only rects that intersect the given bounds are relevant.
@@ -212,24 +211,28 @@ class WebPluginImpl : public WebPlugin,
   void windowCutoutRects(const WebCore::IntRect& bounds,
                          WTF::Vector<WebCore::IntRect>* rects) const;
 
-  // Override for when our window changes size or position.
+  // Called by WebPluginContainer::setFrameRect, which overrides
+  // Widget setFrameRect when our window changes size or position.
   // Used to notify the plugin when the size or position changes.
-  virtual void setFrameRect(const WebCore::IntRect& rect);
+  void setFrameRect(const WebCore::IntRect& rect,
+                    bool widget_dimensions_changed);
 
-  // Overrides paint so we can notify the underlying widget to repaint.
-  virtual void paint(WebCore::GraphicsContext*, const WebCore::IntRect& rect);
-  virtual void print(WebCore::GraphicsContext*);
+  // Called by WebPluginContainer::paint, which overrides Widget::paint so we
+  // can notify the underlying widget to repaint.
+  void paint(WebCore::GraphicsContext*, const WebCore::IntRect& rect);
+  void print(WebCore::GraphicsContext*);
 
-  // Override setFocus so we can notify the Plugin.
-  virtual void setFocus();
+  // Called by WebPluginContainer::setFocus, which overrides Widget::setFocus.
+  // Notifies the plugin about focus changes.
+  void setFocus();
 
-  // Override show and hide to be able to control the visible state of the
-  // plugin window.
-  virtual void show();
-  virtual void hide();
+  // Called by WebPluginContainer::show/hide, which overrides Widget show/hide.
+  // This allows us to control the visible state of the plugin window.
+  void show();
+  void hide();
 
   // Handle widget events.
-  virtual void handleEvent(WebCore::Event* event);
+  void handleEvent(WebCore::Event* event);
   void handleMouseEvent(WebCore::MouseEvent* event);
   void handleKeyboardEvent(WebCore::KeyboardEvent* event);
 

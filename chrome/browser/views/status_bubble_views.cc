@@ -6,7 +6,6 @@
 
 #include <algorithm>
 
-#include "base/scoped_ptr.h"
 #include "base/string_util.h"
 #include "chrome/common/animation.h"
 #include "chrome/common/gfx/chrome_canvas.h"
@@ -14,9 +13,9 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/l10n_util_win.h"
 #include "chrome/common/resource_bundle.h"
-#include "chrome/views/label.h"
-#include "chrome/views/root_view.h"
-#include "chrome/views/widget_win.h"
+#include "chrome/views/controls/label.h"
+#include "chrome/views/widget/root_view.h"
+#include "chrome/views/widget/widget_win.h"
 #include "googleurl/src/gurl.h"
 #include "grit/generated_resources.h"
 #include "grit/theme_resources.h"
@@ -324,7 +323,7 @@ void StatusBubbleViews::StatusView::Paint(ChromeCanvas* canvas) {
   paint.setColor(kBubbleColor);
 
   RECT parent_rect;
-  ::GetWindowRect(popup_->GetHWND(), &parent_rect);
+  ::GetWindowRect(popup_->GetNativeView(), &parent_rect);
 
   // Draw our background.
   SkRect rect;
@@ -476,7 +475,7 @@ void StatusBubbleViews::Init() {
                                 WS_EX_TRANSPARENT |
                                 l10n_util::GetExtendedTooltipStyles());
     popup_->SetLayeredAlpha(0x00);
-    popup_->Init(frame_->GetHWND(), rc, false);
+    popup_->Init(frame_->GetNativeView(), rc, false);
     popup_->SetContentsView(view_);
     Reposition();
     popup_->Show();
@@ -512,7 +511,7 @@ void StatusBubbleViews::SetURL(const GURL& url, const std::wstring& languages) {
 
   // Set Elided Text corresponding to the GURL object.
   RECT parent_rect;
-  ::GetWindowRect(popup_->GetHWND(), &parent_rect);
+  ::GetWindowRect(popup_->GetNativeView(), &parent_rect);
   int text_width = static_cast<int>(parent_rect.right -
                                     parent_rect.left - kTextPositionX -
                                     kTextPadding);

@@ -26,7 +26,6 @@ extern const wchar_t kPluginLauncher[];
 extern const wchar_t kProcessChannelID[];
 extern const wchar_t kTestingChannelID[];
 extern const wchar_t kHomePage[];
-extern const wchar_t kBrowserStartRenderersManually[];
 extern const wchar_t kRendererProcess[];
 extern const wchar_t kRendererPath[];
 extern const wchar_t kPluginProcess[];
@@ -124,13 +123,11 @@ extern const wchar_t kUseLowFragHeapCrt[];
 extern const wchar_t kGearsPluginPathOverride[];
 #endif
 
-extern const wchar_t kGearsInRenderer[];
-
 extern const wchar_t kEnableFastback[];
 
 extern const wchar_t kJavaScriptDebuggerPath[];
 
-extern const wchar_t kEnableP13n[];
+extern const wchar_t kDisableP13n[];
 
 extern const wchar_t kSdchFilter[];
 
@@ -139,9 +136,9 @@ extern const wchar_t kEnableExtensions[];
 extern const wchar_t kInstallExtension[];
 extern const wchar_t kLoadExtension[];
 extern const wchar_t kLoadPlugin[];
+extern const wchar_t kUserScriptsDir[];
 
 extern const wchar_t kIncognito[];
-extern const wchar_t kUseOldSafeBrowsing[];
 
 extern const wchar_t kEnableRendererAccessibility[];
 
@@ -151,9 +148,18 @@ extern const wchar_t kTestName[];
 
 extern const wchar_t kRendererCmdPrefix[];
 
+extern const wchar_t kNewFtp[];
+
 extern const wchar_t kIPCUseFIFO[];
+
+extern const wchar_t kEnableOutOfProcessDevTools[];
+
+extern const wchar_t kEnableWebWorkers[];
+
+extern const wchar_t kViewsGtk[];
+
+extern const wchar_t kBookmarkMenu[];
 
 }  // namespace switches
 
 #endif  // CHROME_COMMON_CHROME_SWITCHES_H__
-

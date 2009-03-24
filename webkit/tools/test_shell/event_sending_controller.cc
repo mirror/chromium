@@ -26,7 +26,6 @@
 #include "base/compiler_specific.h"
 #include "base/logging.h"
 #include "base/message_loop.h"
-#include "base/ref_counted.h"
 #include "base/string_util.h"
 #include "base/time.h"
 #include "webkit/glue/webinputevent_util.h"
@@ -566,4 +565,3 @@ void EventSendingController::clearKillRing(
     const CppArgumentList& args, CppVariant* result) {
   result->SetNull();
 }
-

@@ -73,7 +73,8 @@ bool StringToRanges(const std::string& input,
                     std::vector<ChunkRange>* ranges) {
   DCHECK(ranges);
 
-  // Crack the string into chunk parts, then crack each part looking for a range.
+  // Crack the string into chunk parts, then crack each part looking for a
+  // range.
   std::vector<std::string> chunk_parts;
   SplitString(input, ',', &chunk_parts);
 
@@ -119,4 +120,3 @@ bool IsChunkInRange(int chunk_number, const std::vector<ChunkRange>& ranges) {
 
   return false;
 }
-

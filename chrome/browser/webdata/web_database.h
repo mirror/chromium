@@ -13,6 +13,7 @@
 #include "chrome/browser/search_engines/template_url.h"
 #include "chrome/common/sqlite_utils.h"
 #include "skia/include/SkBitmap.h"
+#include "testing/gtest/include/gtest/gtest_prod.h"
 #include "webkit/glue/autofill_form.h"
 
 namespace base {
@@ -177,7 +178,10 @@ class WebDatabase {
   bool InsertPairIDAndDate(int64 pair_id, const base::Time date_created);
 
   // Removes row from the autofill tables given |pair_id|.
-  bool RemoveFormElement(int64 pair_id);
+  bool RemoveFormElementForID(int64 pair_id);
+
+  // Removes row from the autofill tables for the given |name| |value| pair.
+  bool RemoveFormElement(const std::wstring& name, const std::wstring& value);
 
   //////////////////////////////////////////////////////////////////////////////
   //

@@ -9,9 +9,9 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/views/standard_layout.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/text_button.h"
-#include "chrome/views/text_field.h"
-#include "chrome/views/window.h"
+#include "chrome/views/controls/button/text_button.h"
+#include "chrome/views/controls/text_field.h"
+#include "chrome/views/window/window.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_job.h"
 #include "net/url_request/url_request_job_tracker.h"
@@ -295,12 +295,9 @@ void AboutNetworkDialog::SetupControls() {
   views::GridLayout* layout = CreatePanelGridLayout(this);
   SetLayoutManager(layout);
 
-  track_toggle_ = new views::TextButton(kStartTrackingLabel);
-  track_toggle_->SetListener(this, 1);
-  show_button_ = new views::TextButton(kShowCurrentLabel);
-  show_button_->SetListener(this, 2);
-  clear_button_ = new views::TextButton(kClearLabel);
-  clear_button_->SetListener(this, 3);
+  track_toggle_ = new views::TextButton(this, kStartTrackingLabel);
+  show_button_ = new views::TextButton(this, kShowCurrentLabel);
+  clear_button_ = new views::TextButton(this, kClearLabel);
 
   text_field_ = new views::TextField(static_cast<views::TextField::StyleFlags>(
                                      views::TextField::STYLE_MULTILINE));
@@ -324,7 +321,8 @@ void AboutNetworkDialog::SetupControls() {
 
   static const int text_column_set = 2;
   column_set = layout->AddColumnSet(text_column_set);
-  column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL, 100.0f,
+  column_set->AddColumn(views::GridLayout::FILL, views::GridLayout::FILL,
+                        100.0f,
                         views::GridLayout::FIXED, 0, 0);
 
   layout->StartRow(0, first_column_set);
@@ -357,7 +355,7 @@ bool AboutNetworkDialog::CanResize() const {
   return true;
 }
 
-void AboutNetworkDialog::ButtonPressed(views::BaseButton* button) {
+void AboutNetworkDialog::ButtonPressed(views::Button* button) {
   if (button == track_toggle_) {
     if (tracking_) {
       track_toggle_->SetText(kStartTrackingLabel);

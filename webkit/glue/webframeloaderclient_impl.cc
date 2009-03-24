@@ -44,12 +44,13 @@ MSVC_POP_WARNING();
 #endif
 #include "webkit/glue/autofill_form.h"
 #include "webkit/glue/alt_404_page_resource_fetcher.h"
+#include "webkit/glue/devtools/net_agent_impl.h"
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/password_form_dom_manager.h"
 #include "webkit/glue/plugins/plugin_list.h"
 #include "webkit/glue/searchable_form_data.h"
 #include "webkit/glue/webdatasource_impl.h"
-#include "webkit/glue/webdocumentloader_impl.h"
+#include "webkit/glue/webdevtoolsagent_impl.h"
 #include "webkit/glue/weberror_impl.h"
 #include "webkit/glue/webframeloaderclient_impl.h"
 #include "webkit/glue/webhistoryitem_impl.h"
@@ -164,6 +165,10 @@ void WebFrameLoaderClient::assignIdentifierToInitialRequest(
     WebRequestImpl webreq(request);
     d->AssignIdentifierToRequest(webview, identifier, webreq);
   }
+  NetAgentImpl* net_agent = GetNetAgentImpl();
+  if (net_agent) {
+    net_agent->AssignIdentifierToRequest(loader, identifier, request);
+  }
 }
 
 // Determines whether the request being loaded by |loader| is a frame or a
@@ -190,13 +195,21 @@ static ResourceRequest::TargetType DetermineTargetTypeFromLoader(
 void WebFrameLoaderClient::dispatchWillSendRequest(
     DocumentLoader* loader, unsigned long identifier, ResourceRequest& request,
     const ResourceResponse& redirectResponse) {
-  // We set the Frame on the ResourceRequest to provide load context to the
-  // ResourceHandle implementation.
-  request.setFrame(webframe_->frame());
 
-  // We want to distinguish between a request for a document to be loaded into
-  // the main frame, a sub-frame, or the sub-objects in that document.
-  request.setTargetType(DetermineTargetTypeFromLoader(loader));
+  if (loader) {
+    // We want to distinguish between a request for a document to be loaded into
+    // the main frame, a sub-frame, or the sub-objects in that document.
+    request.setTargetType(DetermineTargetTypeFromLoader(loader));
+  }
+
+  // Inherit the policy URL from the request's frame. However, if the request
+  // is for a main frame, the current document's policyBaseURL is the old
+  // document, so we leave policyURL empty to indicate that the request is a
+  // first-party request.
+  if (request.targetType() != ResourceRequest::TargetIsMainFrame &&
+      webframe_->frame()->document()) {
+    request.setPolicyURL(webframe_->frame()->document()->policyBaseURL());
+  }
 
   // FrameLoader::loadEmptyDocumentSynchronously() creates an empty document
   // with no URL.  We don't like that, so we'll rename it to about:blank.
@@ -213,6 +226,10 @@ void WebFrameLoaderClient::dispatchWillSendRequest(
     d->WillSendRequest(webview, identifier, &webreq);
     request = webreq.frame_load_request().resourceRequest();
   }
+  NetAgentImpl* net_agent = GetNetAgentImpl();
+  if (net_agent) {
+    net_agent->WillSendRequest(loader, identifier, request);
+  }
 }
 
 bool WebFrameLoaderClient::shouldUseCredentialStorage(DocumentLoader*,
@@ -227,7 +244,7 @@ bool WebFrameLoaderClient::shouldUseCredentialStorage(DocumentLoader*,
   // This returns true for backward compatibility: the ability to override the
   // system credential store is new. (Actually, not yet fully implemented in
   // WebKit, as of this writing.)
-  return true;   
+  return true;
 }
 
 void WebFrameLoaderClient::dispatchDidReceiveAuthenticationChallenge(
@@ -277,12 +294,21 @@ void WebFrameLoaderClient::dispatchDidReceiveResponse(DocumentLoader* loader,
 
   // Cancel any pending loads.
   alt_404_page_fetcher_.reset(NULL);
+
+  NetAgentImpl* net_agent = GetNetAgentImpl();
+  if (net_agent) {
+    net_agent->DidReceiveResponse(loader, identifier, response);
+  }
 }
 
-void WebFrameLoaderClient::dispatchDidReceiveContentLength(DocumentLoader* loader,
-                                                           unsigned long identifier,
-                                                           int lengthReceived) {
-  // FIXME
+void WebFrameLoaderClient::dispatchDidReceiveContentLength(
+    DocumentLoader* loader,
+    unsigned long identifier,
+    int length_received) {
+  NetAgentImpl* net_agent = GetNetAgentImpl();
+  if (net_agent) {
+    net_agent->DidReceiveContentLength(loader, identifier, length_received);
+  }
 }
 
 // Called when a particular resource load completes
@@ -302,6 +328,11 @@ void WebFrameLoaderClient::dispatchDidFinishLoading(DocumentLoader* loader,
   WebViewDelegate* d = webview->delegate();
   if (d)
     d->DidFinishLoading(webview, identifier);
+
+  NetAgentImpl* net_agent = GetNetAgentImpl();
+  if (net_agent) {
+    net_agent->DidFinishLoading(loader, identifier);
+  }
 }
 
 GURL WebFrameLoaderClient::GetAlt404PageUrl(DocumentLoader* loader) {
@@ -342,6 +373,10 @@ void WebFrameLoaderClient::dispatchDidFailLoading(DocumentLoader* loader,
   if (webview && webview->delegate()) {
     webview->delegate()->DidFailLoadingWithError(webview, identifier,
                                                  WebErrorImpl(error));
+  }
+  NetAgentImpl* net_agent = GetNetAgentImpl();
+  if (net_agent) {
+    net_agent->DidFailLoading(loader, identifier, error);
   }
 }
 
@@ -393,14 +428,23 @@ bool WebFrameLoaderClient::dispatchDidLoadResourceFromMemoryCache(
     int length) {
   WebViewImpl* webview = webframe_->webview_impl();
   WebViewDelegate* d = webview->delegate();
+
+  bool result = false;
   if (d) {
     WebRequestImpl webreq(request);
     WebResponseImpl webresp(response);
-    return d->DidLoadResourceFromMemoryCache(webview, webreq, webresp,
-                                             webframe_);
+    result = d->DidLoadResourceFromMemoryCache(webview, webreq, webresp,
+                                               webframe_);
   }
-
-  return false;
+  NetAgentImpl* net_agent = GetNetAgentImpl();
+  if (net_agent) {
+    net_agent->DidLoadResourceFromMemoryCache(
+        loader,
+        request,
+        response,
+        length);
+  }
+  return result;
 }
 
 void WebFrameLoaderClient::dispatchDidHandleOnloadEvents() {
@@ -978,15 +1022,15 @@ void WebFrameLoaderClient::dispatchUnableToImplementPolicy(const ResourceError&)
 void WebFrameLoaderClient::dispatchWillSubmitForm(FramePolicyFunction function,
     PassRefPtr<FormState> form_ref) {
   SearchableFormData* form_data = SearchableFormData::Create(form_ref->form());
-  WebDocumentLoaderImpl* loader = static_cast<WebDocumentLoaderImpl*>(
+  WebDataSourceImpl* ds = WebDataSourceImpl::FromLoader(
       webframe_->frame()->loader()->provisionalDocumentLoader());
-  // Don't free the SearchableFormData, the loader will do that.
-  loader->set_searchable_form_data(form_data);
+  // Don't free the SearchableFormData, the datasource will do that.
+  ds->set_searchable_form_data(form_data);
 
   PasswordForm* pass_data =
       PasswordFormDomManager::CreatePasswordForm(form_ref->form());
-  // Don't free the PasswordFormData, the loader will do that.
-  loader->set_password_form_data(pass_data);
+  // Don't free the PasswordFormData, the datasource will do that.
+  ds->set_password_form_data(pass_data);
 
   WebViewImpl* webview = webframe_->webview_impl();
   WebViewDelegate* d = webview->delegate();
@@ -1001,7 +1045,7 @@ void WebFrameLoaderClient::dispatchWillSubmitForm(FramePolicyFunction function,
     }
   }
 
-  loader->set_form_submit(true);
+  ds->set_form_submit(true);
 
   (webframe_->frame()->loader()->*function)(PolicyUse);
 }
@@ -1049,7 +1093,13 @@ void WebFrameLoaderClient::postProgressFinishedNotification() {
 }
 
 void WebFrameLoaderClient::setMainFrameDocumentReady(bool ready) {
-  // FIXME
+  if (hasWebView()) {
+    WebDevToolsAgentImpl* tools_agent =
+        webframe_->webview_impl()->GetWebDevToolsAgentImpl();
+    if (tools_agent) {
+      tools_agent->SetMainFrameDocumentReady(ready);
+    }
+  }
 }
 
 // Creates a new connection and begins downloading from that (contrast this
@@ -1218,7 +1268,9 @@ void WebFrameLoaderClient::frameLoadCompleted() {
   // Note: Can be called multiple times.
   // Even if already complete, we might have set a previous item on a frame that
   // didn't do any data loading on the past transaction. Make sure to clear these out.
-  webframe_->frame()->loader()->setPreviousHistoryItem(0);
+
+  // FIXME: setPreviousHistoryItem() no longer exists. http://crbug.com/8566
+  // webframe_->frame()->loader()->setPreviousHistoryItem(0);
 }
 
 void WebFrameLoaderClient::saveViewStateToItem(HistoryItem*) {
@@ -1246,17 +1298,9 @@ void WebFrameLoaderClient::prepareForDataSourceReplacement() {
 PassRefPtr<DocumentLoader> WebFrameLoaderClient::createDocumentLoader(
     const ResourceRequest& request,
     const SubstituteData& data) {
-  RefPtr<WebDocumentLoaderImpl> loader = WebDocumentLoaderImpl::create(request,
-                                                                       data);
-
-  // Attach a datasource to the loader as a way of accessing requests.
-  WebDataSourceImpl* datasource =
-      WebDataSourceImpl::CreateInstance(webframe_, loader.get());
-  loader->SetDataSource(datasource);
-
-  webframe_->CacheCurrentRequestInfo(datasource);
-
-  return loader.release();
+  RefPtr<WebDataSourceImpl> ds = WebDataSourceImpl::Create(request, data);
+  webframe_->CacheCurrentRequestInfo(ds.get());
+  return ds.release();
 }
 
 void WebFrameLoaderClient::setTitle(const String& title, const KURL& url) {
@@ -1526,4 +1570,17 @@ bool WebFrameLoaderClient::ActionSpecifiesDisposition(
   else
     *disposition = shift ? NEW_WINDOW : SAVE_TO_DISK;
   return true;
+}
+
+NetAgentImpl* WebFrameLoaderClient::GetNetAgentImpl() {
+  WebViewImpl* web_view = webframe_->webview_impl();
+  if (!web_view) {
+    return NULL;
+  }
+  WebDevToolsAgentImpl* tools_agent = web_view->GetWebDevToolsAgentImpl();
+  if (tools_agent) {
+    return tools_agent->net_agent_impl();
+  } else {
+    return NULL;
+  }
 }

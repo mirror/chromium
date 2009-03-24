@@ -8,7 +8,6 @@
 #include <windows.h>
 #include <string>
 #include "base/basictypes.h"
-#include "base/scoped_ptr.h"
 
 namespace sandbox {
 
@@ -93,4 +92,3 @@ bool ResolveRegistryName(std::wstring name, std::wstring* resolved_name);
 void ResolveNTFunctionPtr(const char* name, void* ptr);
 
 #endif  // SANDBOX_SRC_WIN_UTILS_H_
-

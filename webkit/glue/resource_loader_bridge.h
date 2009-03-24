@@ -17,6 +17,11 @@
 #ifndef RESOURCE_LOADER_BRIDGE_H_
 #define RESOURCE_LOADER_BRIDGE_H_
 
+#include "build/build_config.h"
+#if defined(OS_POSIX)
+#include "base/file_descriptor_posix.h"
+#endif
+#include "base/platform_file.h"
 #include "base/ref_counted.h"
 #include "base/time.h"
 #include "googleurl/src/gurl.h"
@@ -61,6 +66,20 @@ class ResourceLoaderBridge {
 
     // Content length if available. -1 if not available
     int64 content_length;
+
+    // A platform specific handle for a file that carries response data. This
+    // entry is used if the resource request is of type ResourceType::MEDIA and
+    // the underlying cache layer keeps the response data in a standalone file.
+#if defined(OS_POSIX)
+    // If the response data file is available, the file handle is stored in
+    // response_data_file.fd, its value is base::kInvalidPlatformFileValue
+    // otherwise.
+    base::FileDescriptor response_data_file;
+#elif defined(OS_WIN)
+    // An asynchronous file handle to the response data file, its value is
+    // base::kInvalidPlatformFileValue if the file is not available.
+    base::PlatformFile response_data_file;
+#endif
   };
 
   // See the SyncLoad method declared below.  (The name of this struct is not
@@ -91,9 +110,16 @@ class ResourceLoaderBridge {
    public:
     virtual ~Peer() {}
 
+    // Called as download progress is made.
+    // note: only for requests with LOAD_ENABLE_DOWNLOAD_FILE set and the
+    // resource is downloaded to a standalone file and the file handle to it is
+    // passed in ResponseInfo during OnReceivedResponse. Note that size may be
+    // unknown and |size| will be kuint64max in that case.
+    virtual void OnDownloadProgress(uint64 position, uint64 size) {}
+
     // Called as upload progress is made.
     // note: only for requests with LOAD_ENABLE_UPLOAD_PROGRESS set
-    virtual void OnUploadProgress(uint64 position, uint64 size) {};
+    virtual void OnUploadProgress(uint64 position, uint64 size) = 0;
 
     // Called when a redirect occurs.
     virtual void OnReceivedRedirect(const GURL& new_url) = 0;
@@ -105,13 +131,14 @@ class ResourceLoaderBridge {
     virtual void OnReceivedResponse(const ResponseInfo& info,
                                     bool content_filtered) = 0;
 
-    // Called when a chunk of response data is available.  This method may
+    // Called when a chunk of response data is available. This method may
     // be called multiple times or not at all if an error occurs.
     virtual void OnReceivedData(const char* data, int len) = 0;
 
     // Called when the response is complete.  This method signals completion of
     // the resource load.ff
-    virtual void OnCompletedRequest(const URLRequestStatus& status) = 0;
+    virtual void OnCompletedRequest(const URLRequestStatus& status,
+                                    const std::string& security_info) = 0;
 
     // Returns the URL of the request, which allows us to display it in
     // debugging situations.
@@ -136,29 +163,27 @@ class ResourceLoaderBridge {
   // the standard MIME header encoding rules.  The headers parameter can also
   // be null if no extra request headers need to be set.
   //
-  // The WebFrame passed to this function provides context about the origin
-  // of the resource request.
-  //
   // policy_url is the URL of the document in the top-level window, which may be
   // checked by the third-party cookie blocking policy.
   //
   // load_flags is composed of the values defined in url_request_load_flags.h
   //
-  // mixed_content when true indicates that the resource associated with this
-  // request is over HTTP when the main page was loaded over HTTPS.
-  //
   // request_type indicates if the current request is the main frame load, a
   // sub-frame load, or a sub objects load.
-  static ResourceLoaderBridge* Create(WebFrame* frame,
-                                      const std::string& method,
+  //
+  // routing_id passed to this function allows it to be associated with a
+  // frame's network context.
+  static ResourceLoaderBridge* Create(const std::string& method,
                                       const GURL& url,
                                       const GURL& policy_url,
                                       const GURL& referrer,
+                                      const std::string& frame_origin,
+                                      const std::string& main_frame_origin,
                                       const std::string& headers,
                                       int load_flags,
-                                      int origin_pid,
+                                      int requestor_pid,
                                       ResourceType::Type request_type,
-                                      bool mixed_content);
+                                      int routing_id);
 
   // Call this method before calling Start() to append a chunk of binary data
   // to the request body.  May only be used with HTTP(S) POST requests.

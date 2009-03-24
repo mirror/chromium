@@ -4,6 +4,7 @@
 
 #include "net/disk_cache/disk_cache_test_util.h"
 
+#include "base/logging.h"
 #include "base/file_util.h"
 #include "base/path_service.h"
 #include "net/disk_cache/backend_impl.h"
@@ -50,8 +51,8 @@ std::wstring GetCachePath() {
 
 bool CreateCacheTestFile(const wchar_t* name) {
   using namespace disk_cache;
-  int flags = base::PLATFORM_FILE_CREATE_ALWAYS | 
-              base::PLATFORM_FILE_READ | 
+  int flags = base::PLATFORM_FILE_CREATE_ALWAYS |
+              base::PLATFORM_FILE_READ |
               base::PLATFORM_FILE_WRITE;
 
   scoped_refptr<File> file(new File(
@@ -75,6 +76,15 @@ bool CheckCacheIntegrity(const std::wstring& path) {
   if (!cache->Init())
     return false;
   return cache->SelfCheck() >= 0;
+}
+
+ScopedTestCache::ScopedTestCache() : path_(GetCachePath()) {
+  bool result = DeleteCache(path_.c_str());
+  DCHECK(result);
+}
+
+ScopedTestCache::~ScopedTestCache() {
+  file_util::Delete(path(), true);
 }
 
 // -----------------------------------------------------------------------

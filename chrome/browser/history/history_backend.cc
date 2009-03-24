@@ -166,7 +166,7 @@ class HistoryBackend::URLQuerier {
 
 // HistoryBackend --------------------------------------------------------------
 
-HistoryBackend::HistoryBackend(const std::wstring& history_dir,
+HistoryBackend::HistoryBackend(const FilePath& history_dir,
                                Delegate* delegate,
                                BookmarkService* bookmark_service)
     : delegate_(delegate),
@@ -238,16 +238,12 @@ void HistoryBackend::NotifyRenderProcessHostDestruction(const void* host) {
   tracker_.NotifyRenderProcessHostDestruction(host);
 }
 
-std::wstring HistoryBackend::GetThumbnailFileName() const {
-  std::wstring thumbnail_name = history_dir_;
-  file_util::AppendToPath(&thumbnail_name, chrome::kThumbnailsFilename);
-  return thumbnail_name;
+FilePath HistoryBackend::GetThumbnailFileName() const {
+  return history_dir_.Append(chrome::kThumbnailsFilename);
 }
 
-std::wstring HistoryBackend::GetArchivedFileName() const {
-  std::wstring archived_name = history_dir_;
-  file_util::AppendToPath(&archived_name, chrome::kArchivedHistoryFilename);
-  return archived_name;
+FilePath HistoryBackend::GetArchivedFileName() const {
+  return history_dir_.Append(chrome::kArchivedHistoryFilename);
 }
 
 SegmentID HistoryBackend::GetLastSegmentID(VisitID from_visit) {
@@ -349,6 +345,11 @@ void HistoryBackend::AddPage(scoped_refptr<HistoryAddPageArgs> request) {
     last_requested_time_ = request->time;
     last_recorded_time_ = last_requested_time_;
   }
+
+  // If the user is adding older history, we need to make sure our times
+  // are correct.
+  if (request->time < first_recorded_time_)
+    first_recorded_time_ = request->time;
 
   if (request->redirects.size() <= 1) {
     // The single entry is both a chain start and end.
@@ -471,14 +472,11 @@ void HistoryBackend::InitImpl() {
 
   // Compute the file names. Note that the index file can be removed when the
   // text db manager is finished being hooked up.
-  std::wstring history_name = history_dir_;
-  file_util::AppendToPath(&history_name,
-                          FilePath(chrome::kHistoryFilename).ToWStringHack());
-  std::wstring thumbnail_name = GetThumbnailFileName();
-  std::wstring archived_name = GetArchivedFileName();
-  std::wstring tmp_bookmarks_file = history_dir_;
-  file_util::AppendToPath(&tmp_bookmarks_file,
-      FilePath(chrome::kHistoryBookmarksFileName).ToWStringHack());
+  FilePath history_name = history_dir_.Append(chrome::kHistoryFilename);
+  FilePath thumbnail_name = GetThumbnailFileName();
+  FilePath archived_name = GetArchivedFileName();
+  FilePath tmp_bookmarks_file = history_dir_.Append(
+      chrome::kHistoryBookmarksFileName);
 
   // History database.
   db_.reset(new HistoryDatabase());
@@ -502,7 +500,7 @@ void HistoryBackend::InitImpl() {
   // Fill the in-memory database and send it back to the history service on the
   // main thread.
   InMemoryHistoryBackend* mem_backend = new InMemoryHistoryBackend;
-  if (mem_backend->Init(history_name))
+  if (mem_backend->Init(history_name.ToWStringHack()))
     delegate_->SetInMemoryBackend(mem_backend);  // Takes ownership of pointer.
   else
     delete mem_backend;  // Error case, run without the in-memory DB.
@@ -564,6 +562,9 @@ void HistoryBackend::InitImpl() {
     archived_db_->BeginTransaction();
   if (text_database_.get())
     text_database_->BeginTransaction();
+
+  // Get the first item in our database.
+  db_->GetStartDate(&first_recorded_time_);
 
   // Start expiring old stuff.
   expirer_.StartArchivingOldStuff(TimeDelta::FromDays(kArchiveDaysThreshold));
@@ -1042,6 +1043,9 @@ void HistoryBackend::QueryHistoryBasic(URLDatabase* url_db,
     // snippets and stuff don't apply to basic querying.
     result->AppendURLBySwapping(&url_result);
   }
+
+  if (options.begin_time <= first_recorded_time_)
+    result->set_reached_beginning(true);
 }
 
 void HistoryBackend::QueryHistoryFTS(const std::wstring& text_query,
@@ -1092,6 +1096,9 @@ void HistoryBackend::QueryHistoryFTS(const std::wstring& text_query,
     // result of the swap.
     result->AppendURLBySwapping(&url_result);
   }
+
+  if (options.begin_time <= first_recorded_time_)
+    result->set_reached_beginning(true);
 }
 
 // Frontend to GetMostRecentRedirectsFrom from the history thread.
@@ -1581,6 +1588,7 @@ void HistoryBackend::ReleaseDBTasks() {
 void HistoryBackend::DeleteURL(const GURL& url) {
   expirer_.DeleteURL(url);
 
+  db_->GetStartDate(&first_recorded_time_);
   // Force a commit, if the user is deleting something for privacy reasons, we
   // want to get it on disk ASAP.
   Commit();
@@ -1607,6 +1615,9 @@ void HistoryBackend::ExpireHistoryBetween(
       Commit();
     }
   }
+
+  if (begin_time <= first_recorded_time_)
+    db_->GetStartDate(&first_recorded_time_);
 
   request->ForwardResult(ExpireHistoryRequest::TupleType());
 
@@ -1715,7 +1726,7 @@ void HistoryBackend::DeleteAllHistory() {
   if (archived_db_.get()) {
     // Close the database and delete the file.
     archived_db_.reset();
-    std::wstring archived_file_name = GetArchivedFileName();
+    FilePath archived_file_name = GetArchivedFileName();
     file_util::Delete(archived_file_name, false);
 
     // Now re-initialize the database (which may fail).
@@ -1728,6 +1739,8 @@ void HistoryBackend::DeleteAllHistory() {
       archived_db_->BeginTransaction();
     }
   }
+
+  db_->GetStartDate(&first_recorded_time_);
 
   // Send out the notfication that history is cleared. The in-memory datdabase
   // will pick this up and clear itself.
@@ -1822,6 +1835,8 @@ bool HistoryBackend::ClearAllMainHistory(
   db_->CommitTransaction();
   db_->Vacuum();
   db_->BeginTransaction();
+  db_->GetStartDate(&first_recorded_time_);
+
   return true;
 }
 

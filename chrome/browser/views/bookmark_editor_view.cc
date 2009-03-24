@@ -13,16 +13,19 @@
 #include "chrome/browser/views/standard_layout.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/views/background.h"
-#include "chrome/views/focus_manager.h"
+#include "chrome/views/focus/focus_manager.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/label.h"
-#include "chrome/views/window.h"
+#include "chrome/views/controls/button/native_button.h"
+#include "chrome/views/controls/label.h"
+#include "chrome/views/widget/widget.h"
+#include "chrome/views/window/window.h"
 #include "googleurl/src/gurl.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 #include "grit/locale_settings.h"
 
 using base::Time;
+using views::Button;
 using views::ColumnSet;
 using views::GridLayout;
 using views::Label;
@@ -167,7 +170,7 @@ void BookmarkEditorView::ContentsChanged(TextField* sender,
   UserInputChanged();
 }
 
-void BookmarkEditorView::ButtonPressed(NativeButton* sender) {
+void BookmarkEditorView::ButtonPressed(Button* sender) {
   DCHECK(sender);
   switch (sender->GetID()) {
     case kNewGroupButtonID:
@@ -220,7 +223,8 @@ void BookmarkEditorView::ShowContextMenu(View* source,
   running_menu_for_root_ =
       (tree_model_->GetParent(tree_view_->GetSelectedNode()) ==
        tree_model_->GetRoot());
-  context_menu_.reset(new Menu(this, Menu::TOPLEFT, GetWidget()->GetHWND()));
+  context_menu_.reset(new Menu(this, Menu::TOPLEFT,
+                               GetWidget()->GetNativeView()));
   context_menu_->AppendMenuItemWithLabel(IDS_EDIT,
       l10n_util::GetString(IDS_EDIT));
   context_menu_->AppendMenuItemWithLabel(
@@ -246,13 +250,12 @@ void BookmarkEditorView::Init() {
   if (show_tree_) {
     tree_view_ = new views::TreeView();
     new_group_button_.reset(new views::NativeButton(
-        l10n_util::GetString(IDS_BOOMARK_EDITOR_NEW_FOLDER_BUTTON)));
+        this, l10n_util::GetString(IDS_BOOMARK_EDITOR_NEW_FOLDER_BUTTON)));
     new_group_button_->SetParentOwned(false);
     tree_view_->SetContextMenuController(this);
 
     tree_view_->SetRootShown(false);
     new_group_button_->SetEnabled(false);
-    new_group_button_->SetListener(this);
     new_group_button_->SetID(kNewGroupButtonID);
   }
 

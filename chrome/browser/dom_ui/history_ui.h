@@ -2,15 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_DOM_UI_HISTORY_UI_H__
-#define CHROME_BROWSER_DOM_UI_HISTORY_UI_H__
+#ifndef CHROME_BROWSER_DOM_UI_HISTORY_UI_H_
+#define CHROME_BROWSER_DOM_UI_HISTORY_UI_H_
 
 #include "base/scoped_ptr.h"
 #include "chrome/browser/browsing_data_remover.h"
 #include "chrome/browser/dom_ui/chrome_url_data_manager.h"
 #include "chrome/browser/dom_ui/dom_ui.h"
-#include "chrome/browser/dom_ui/dom_ui_contents.h"
 #include "chrome/browser/cancelable_request.h"
+#include "chrome/browser/history/history.h"
 
 class GURL;
 
@@ -60,8 +60,8 @@ class BrowsingHistoryHandler : public DOMMessageHandler,
                      history::QueryResults* results);
 
   // Extract the arguments from the call to HandleSearchHistory.
-  void ExtractSearchHistoryArguments(const Value* value, 
-                                     int* month, 
+  void ExtractSearchHistoryArguments(const Value* value,
+                                     int* month,
                                      std::wstring* query);
 
   // Figure out the query options for a month-wide query.
@@ -72,30 +72,22 @@ class BrowsingHistoryHandler : public DOMMessageHandler,
 
   // Browsing history remover
   scoped_ptr<BrowsingDataRemover> remover_;
-  
+
   // Our consumer for the history service.
-  CancelableRequestConsumerTSimple<PageUsageData*> cancelable_consumer_;
+  CancelableRequestConsumerT<int, 0> cancelable_consumer_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowsingHistoryHandler);
 };
 
 class HistoryUI : public DOMUI {
  public:
-  explicit HistoryUI(DOMUIContents* contents);
-
-  // Return the URL for the front page of this UI.
-  static GURL GetBaseURL();
+  explicit HistoryUI(WebContents* contents);
 
   // Return the URL for a given search term.
   static const GURL GetHistoryURLWithSearchText(const std::wstring& text);
 
-  // DOMUI Implementation
-  virtual void Init();
-
  private:
-  DOMUIContents* contents_;
-
   DISALLOW_COPY_AND_ASSIGN(HistoryUI);
 };
 
-#endif  // CHROME_BROWSER_DOM_UI_HISTORY_UI_H__
+#endif  // CHROME_BROWSER_DOM_UI_HISTORY_UI_H_

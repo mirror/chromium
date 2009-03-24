@@ -144,7 +144,7 @@ bool IncorrectChromeHtmlArguments(const std::wstring& command_line) {
   // The browser is being launched with chromehtml: somewhere on the command
   // line.  We will not launch unless it's preceded by the -- switch terminator.
   if (pos >= kOffset) {
-    if (equal(kChromeHtml, kChromeHtml + arraysize(kChromeHtml) - 1, 
+    if (equal(kChromeHtml, kChromeHtml + arraysize(kChromeHtml) - 1,
         command_line_lower.begin() + pos - kOffset)) {
       return false;
     }
@@ -154,6 +154,20 @@ bool IncorrectChromeHtmlArguments(const std::wstring& command_line) {
 }
 
 #endif  // OS_WIN
+
+#if defined(OS_LINUX)
+static void GtkFatalLogHandler(const gchar* log_domain,
+                               GLogLevelFlags log_level,
+                               const gchar* message,
+                               gpointer userdata) {
+  if (!log_domain)
+    log_domain = "<all>";
+  if (!message)
+    message = "<no message>";
+
+  NOTREACHED() << "GTK: (" << log_domain << "): " << message;
+}
+#endif
 
 // Register the invalid param handler and pure call handler to be able to
 // notify breakpad when it happens.
@@ -239,7 +253,7 @@ int ChromeMain(int argc, const char** argv) {
   // The exit manager is in charge of calling the dtors of singleton objects.
   base::AtExitManager exit_manager;
 
-  // We need this pool for all the objects created before we get to the 
+  // We need this pool for all the objects created before we get to the
   // event loop, but we don't want to leave them hanging around until the
   // app quits. Each "main" needs to flush this pool right before it goes into
   // its main event loop to get rid of the cruft.
@@ -259,6 +273,18 @@ int ChromeMain(int argc, const char** argv) {
     return 1;
 #endif
 
+  int browser_pid;
+  std::wstring process_type =
+    parsed_command_line.GetSwitchValue(switches::kProcessType);
+  if (process_type.empty()) {
+    browser_pid = base::GetCurrentProcId();
+  } else {
+    std::wstring channel_name =
+      parsed_command_line.GetSwitchValue(switches::kProcessChannelID);
+
+    browser_pid = StringToInt(WideToASCII(channel_name));
+    DCHECK(browser_pid != 0);
+  }
   SetupCRT(parsed_command_line);
 
   // Initialize the Chrome path provider.
@@ -271,9 +297,8 @@ int ChromeMain(int argc, const char** argv) {
   // of the process.  It is not cleaned up.
   // TODO(port): we probably need to shut this down correctly to avoid
   // leaking shared memory regions on posix platforms.
-  std::string statsfile = chrome::kStatsFilename;
-  std::string pid_string = StringPrintf("-%d", base::GetCurrentProcId());
-  statsfile += pid_string;
+  std::string statsfile =
+      StringPrintf("%s-%d", chrome::kStatsFilename, browser_pid);
   StatsTable *stats_table = new StatsTable(statsfile,
       chrome::kStatsMaxThreads, chrome::kStatsMaxCounters);
   StatsTable::set_current(stats_table);
@@ -287,9 +312,6 @@ int ChromeMain(int argc, const char** argv) {
   // Enable Message Loop related state asap.
   if (parsed_command_line.HasSwitch(switches::kMessageLoopHistogrammer))
     MessageLoop::EnableHistogrammer(true);
-
-  std::wstring process_type =
-    parsed_command_line.GetSwitchValue(switches::kProcessType);
 
   // Checks if the sandbox is enabled in this process and initializes it if this
   // is the case. The crash handler depends on this so it has to be done before
@@ -373,6 +395,15 @@ int ChromeMain(int argc, const char** argv) {
 #if defined(OS_LINUX)
     // gtk_init() can change |argc| and |argv|, but nobody else uses them.
     gtk_init(&argc, const_cast<char***>(&argv));
+    // Register GTK assertions to go through our logging system.
+    g_log_set_handler(NULL,  // All logging domains.
+                      static_cast<GLogLevelFlags>(G_LOG_FLAG_RECURSION |
+                                                  G_LOG_FLAG_FATAL |
+                                                  G_LOG_LEVEL_ERROR |
+                                                  G_LOG_LEVEL_CRITICAL |
+                                                  G_LOG_LEVEL_WARNING),
+                      GtkFatalLogHandler,
+                      NULL);
 #endif
 
     ScopedOleInitializer ole_initializer;
@@ -397,5 +428,3 @@ int ChromeMain(int argc, const char** argv) {
 
   return rv;
 }
-
-

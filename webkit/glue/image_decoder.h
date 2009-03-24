@@ -4,7 +4,6 @@
 
 #include "base/basictypes.h"
 #include "base/gfx/size.h"
-#include "base/scoped_ptr.h"
 
 class SkBitmap;
 
@@ -36,4 +35,3 @@ class ImageDecoder {
 };
 
 }  // namespace webkit_glue
-

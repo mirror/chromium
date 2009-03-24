@@ -45,10 +45,11 @@ class WebContents;
 // There is one SSLManager per tab.
 // The security state (secure/insecure) is stored in the navigation entry.
 // Along with it are stored any SSL error code and the associated cert.
-//
 
 class SSLManager : public NotificationObserver {
  public:
+  class CertError;
+
   // An ErrorHandler carries information from the IO thread to the UI thread
   // and is dispatched to the appropriate SSLManager when it arrives on the
   // UI thread.  Subclasses should override the OnDispatched/OnDispatchFailed
@@ -63,6 +64,8 @@ class SSLManager : public NotificationObserver {
    public:
     virtual ~ErrorHandler() { }
 
+    virtual CertError* AsCertError() { return NULL; }
+
     // Find the appropriate SSLManager for the URLRequest and begin handling
     // this error.
     //
@@ -71,6 +74,15 @@ class SSLManager : public NotificationObserver {
 
     // Available on either thread.
     const GURL& request_url() const { return request_url_; }
+
+    // Available on either thread.
+    ResourceType::Type resource_type() const { return resource_type_; }
+
+    // Available on either thread.
+    const std::string& frame_origin() const { return frame_origin_; }
+
+    // Available on either thread.
+    const std::string& main_frame_origin() const { return main_frame_origin_; }
 
     // Call on the UI thread.
     SSLManager* manager() const { return manager_; }
@@ -114,6 +126,9 @@ class SSLManager : public NotificationObserver {
     // Construct on the IO thread.
     ErrorHandler(ResourceDispatcherHost* resource_dispatcher_host,
                  URLRequest* request,
+                 ResourceType::Type resource_type,
+                 const std::string& frame_origin,
+                 const std::string& main_frame_origin,
                  MessageLoop* ui_loop);
 
     // The following 2 methods are the methods subclasses should implement.
@@ -160,14 +175,28 @@ class SSLManager : public NotificationObserver {
     int render_process_host_id_;
     int tab_contents_id_;
 
+    // The URL that we requested.
     // This read-only member can be accessed on any thread.
-    const GURL request_url_;  // The URL that we requested.
+    const GURL request_url_;
 
+    // What kind of resource is associated with the requested that generated
+    // that error.
+    // This read-only member can be accessed on any thread.
+    const ResourceType::Type resource_type_;
+
+    // The origin of the frame associated with this request.
+    // This read-only member can be accessed on any thread.
+    const std::string frame_origin_;
+
+    // The origin of the main frame associated with this request.
+    // This read-only member can be accessed on any thread.
+    const std::string main_frame_origin_;
+
+    // A flag to make sure we notify the URLRequest exactly once.
     // Should only be accessed on the IO thread
-    bool request_has_been_notified_;  // A flag to make sure we notify the
-                                      // URLRequest exactly once.
+    bool request_has_been_notified_;
 
-    DISALLOW_EVIL_CONSTRUCTORS(ErrorHandler);
+    DISALLOW_COPY_AND_ASSIGN(ErrorHandler);
   };
 
   // A CertError represents an error that occurred with the certificate in an
@@ -175,11 +204,13 @@ class SSLManager : public NotificationObserver {
   // thread and allows us to cancel/continue a request it is associated with.
   class CertError : public ErrorHandler {
    public:
+
+    virtual CertError* AsCertError() { return this; }
+
     // These accessors are available on either thread
     const net::SSLInfo& ssl_info() const { return ssl_info_; }
     int cert_error() const { return cert_error_; }
 
-    ResourceType::Type resource_type() const { return resource_type_; }
    private:
     // SSLManager is responsible for creating CertError objects.
     friend class SSLManager;
@@ -190,6 +221,8 @@ class SSLManager : public NotificationObserver {
     CertError(ResourceDispatcherHost* resource_dispatcher_host,
               URLRequest* request,
               ResourceType::Type resource_type,
+              const std::string& frame_origin,
+              const std::string& main_frame_origin,
               int cert_error,
               net::X509Certificate* cert,
               MessageLoop* ui_loop);
@@ -202,11 +235,7 @@ class SSLManager : public NotificationObserver {
     net::SSLInfo ssl_info_;
     const int cert_error_;  // The error we represent.
 
-    // What kind of resource is associated with the requested that generated
-    // that error.
-    ResourceType::Type resource_type_;
-
-    DISALLOW_EVIL_CONSTRUCTORS(CertError);
+    DISALLOW_COPY_AND_ASSIGN(CertError);
   };
 
   // The MixedContentHandler class is used to query what to do with
@@ -216,15 +245,64 @@ class SSLManager : public NotificationObserver {
     // Created on the IO thread.
     MixedContentHandler(ResourceDispatcherHost* rdh,
                         URLRequest* request,
+                        ResourceType::Type resource_type,
+                        const std::string& frame_origin,
+                        const std::string& main_frame_origin,
                         MessageLoop* ui_loop)
-        : ErrorHandler(rdh, request, ui_loop) { }
+        : ErrorHandler(rdh, request, resource_type, frame_origin,
+                       main_frame_origin, ui_loop) { }
 
    protected:
     virtual void OnDispatchFailed() { TakeNoAction(); }
     virtual void OnDispatched() { manager()->OnMixedContent(this); }
 
    private:
-    DISALLOW_EVIL_CONSTRUCTORS(MixedContentHandler);
+    DISALLOW_COPY_AND_ASSIGN(MixedContentHandler);
+  };
+
+  // RequestInfo wraps up the information SSLPolicy needs about a request in
+  // order to update our security IU.  RequestInfo is RefCounted in case we need
+  // to deal with the request asynchronously.
+  class RequestInfo : public base::RefCounted<RequestInfo> {
+   public:
+    RequestInfo(SSLManager* manager,
+                const GURL& url,
+                ResourceType::Type resource_type,
+                const std::string& frame_origin,
+                const std::string& main_frame_origin,
+                FilterPolicy::Type filter_policy,
+                int ssl_cert_id,
+                int ssl_cert_status)
+        : manager_(manager),
+          url_(url),
+          resource_type_(resource_type),
+          frame_origin_(frame_origin),
+          main_frame_origin_(main_frame_origin),
+          filter_policy_(filter_policy),
+          ssl_cert_id_(ssl_cert_id),
+          ssl_cert_status_(ssl_cert_status) {
+    }
+
+    SSLManager* manager() const { return manager_; }
+    const GURL& url() const { return url_; }
+    ResourceType::Type resource_type() const { return resource_type_; }
+    const std::string& frame_origin() const { return frame_origin_; }
+    const std::string& main_frame_origin() const { return main_frame_origin_; }
+    FilterPolicy::Type filter_policy() const { return filter_policy_; }
+    int ssl_cert_id() const { return ssl_cert_id_; }
+    int ssl_cert_status() const { return ssl_cert_status_; }
+
+   private:
+    SSLManager* manager_;
+    GURL url_;
+    ResourceType::Type resource_type_;
+    std::string frame_origin_;
+    std::string main_frame_origin_;
+    FilterPolicy::Type filter_policy_;
+    int ssl_cert_id_;
+    int ssl_cert_status_;
+
+    DISALLOW_COPY_AND_ASSIGN(RequestInfo);
   };
 
   // The SSLManager will ask its delegate to decide how to handle events
@@ -239,25 +317,18 @@ class SSLManager : public NotificationObserver {
   class Delegate {
    public:
     // An error occurred with the certificate in an SSL connection.
-    virtual void OnCertError(const GURL& main_frame_url, CertError* error) = 0;
+    virtual void OnCertError(CertError* error) = 0;
 
     // A request for a mixed-content resource was made.  Note that the resource
     // request was not started yet and the delegate is responsible for starting
     // it.
-    virtual void OnMixedContent(
-        NavigationController* navigation_controller,
-        const GURL& main_frame_url,
-        MixedContentHandler* mixed_content_handler) = 0;
+    virtual void OnMixedContent(MixedContentHandler* handler) = 0;
 
-    // We have started a resource request for the given URL.
-    virtual void OnRequestStarted(SSLManager* manager,
-                                  const GURL& url,
-                                  ResourceType::Type resource_type,
-                                  int ssl_cert_id,
-                                  int ssl_cert_status) = 0;
+    // We have started a resource request with the given info.
+    virtual void OnRequestStarted(RequestInfo* info) = 0;
 
-    // Returns the default security style for a given URL.
-    virtual SecurityStyle GetDefaultStyle(const GURL& url) = 0;
+    // Update the SSL information in |entry| to match the current state.
+    virtual void UpdateEntry(SSLManager* manager, NavigationEntry* entry) = 0;
   };
 
   static void RegisterUserPrefs(PrefService* prefs);
@@ -284,6 +355,14 @@ class SSLManager : public NotificationObserver {
                            const std::wstring& link_text,
                            Task* task);
 
+  // Records that a host is "broken," that is, the origin for that host has been
+  // contaminated with insecure content, either via HTTP or via HTTPS with a
+  // bad certificate.
+  void MarkHostAsBroken(const std::string& host);
+
+  // Returns whether the specified host was marked as broken.
+  bool DidMarkHostAsBroken(const std::string& host) const;
+
   // Sets the maximum security style for the page.  If the current security
   // style is lower than |style|, this will not have an effect on the security
   // indicators.
@@ -307,14 +386,11 @@ class SSLManager : public NotificationObserver {
   net::X509Certificate::Policy::Judgment QueryPolicy(
       net::X509Certificate* cert, const std::string& host);
 
-  // Allow mixed/unsafe content to be visible (non filtered) for the specified
-  // URL.
-  // Note that the current implementation allows on a host name basis.
-  void AllowShowInsecureContentForURL(const GURL& url);
+  // Allow mixed content to be visible (non filtered).
+  void AllowMixedContentForHost(const std::string& host);
 
-  // Returns whether the specified URL is allowed to show insecure (mixed or
-  // unsafe) content.
-  bool CanShowInsecureContent(const GURL& url);
+  // Returns whether the specified host is allowed to show mixed content.
+  bool DidAllowMixedContentForHost(const std::string& host) const;
 
   //
   //////////////////////////////////////////////////////////////////////////////
@@ -336,16 +412,17 @@ class SSLManager : public NotificationObserver {
                                     net::X509Certificate* cert,
                                     MessageLoop* ui_loop);
 
-  // Called when a mixed-content sub-resource request has been detected.  The
-  // request is not started yet.  The SSLManager will make a decision on whether
-  // to filter that request's content (with the filter_policy flag).
+  // Called before a URL request is about to be started.  Returns false if the
+  // resource request should be delayed while we figure out what to do.  We use
+  // this function as the entry point for our mixed content detection.
+  //
   // TODO(jcampan): Implement a way to just cancel the request.  This is not
   // straight-forward as canceling a request that has not been started will
   // not remove from the pending_requests_ of the ResourceDispatcherHost.
   // Called on the IO thread.
-  static void OnMixedContentRequest(ResourceDispatcherHost* resource_dispatcher,
-                                    URLRequest* request,
-                                    MessageLoop* ui_loop);
+  static bool ShouldStartRequest(ResourceDispatcherHost* resource_dispatcher,
+                                 URLRequest* request,
+                                 MessageLoop* ui_loop);
 
   // Called by CertError::Dispatch to kick off processing of the cert error by
   // the SSL manager.  The error originated from the ResourceDispatcherHost.
@@ -358,7 +435,7 @@ class SSLManager : public NotificationObserver {
   // ResourceDispatcherHost.
   //
   // Called on the UI thread.
-  void OnMixedContent(MixedContentHandler* mixed_content);
+  void OnMixedContent(MixedContentHandler* handler);
 
   // Entry point for navigation.  This function begins the process of updating
   // the security UI when the main frame navigates to a new URL.
@@ -368,15 +445,11 @@ class SSLManager : public NotificationObserver {
                        const NotificationSource& source,
                        const NotificationDetails& details);
 
-  // Entry point for navigation.  This function begins the process of updating
-  // the security UI when the main frame navigates.
-  //
-  // Called on the UI thread.
-  void NavigationStateChanged();
-
   // Called to determine if there were any processed SSL errors from request.
   bool ProcessedSSLErrorFromRequest() const;
 
+  // The navigation controller associated with this SSLManager.  The
+  // NavigationController is guaranteed to outlive the SSLManager.
   NavigationController* controller() { return controller_; }
 
   // Convenience methods for serializing/deserializing the security info.
@@ -429,9 +502,16 @@ class SSLManager : public NotificationObserver {
   void DidFailProvisionalLoadWithError(ProvisionalLoadDetails* details);
   void DidStartResourceResponse(ResourceRequestDetails* details);
   void DidReceiveResourceRedirect(ResourceRedirectDetails* details);
+  void DidChangeSSLInternalState();
 
-  // Convenience method for initializing navigation entries.
-  void InitializeEntryIfNeeded(NavigationEntry* entry);
+  // Dispatch NotificationType::SSL_INTERNAL_STATE_CHANGED notification.
+  void DispatchSSLInternalStateChanged();
+
+  // Dispatch NotificationType::SSL_VISIBLE_STATE_CHANGED notification.
+  void DispatchSSLVisibleStateChanged();
+
+  // Update the NavigationEntry with our current state.
+  void UpdateEntry(NavigationEntry* entry);
 
   // Shows the pending messages (in info-bars) if any.
   void ShowPendingMessages();

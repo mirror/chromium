@@ -5,7 +5,6 @@
 #include <string>
 
 #include "base/basictypes.h"
-#include "base/logging.h"
 #include "base/pickle.h"
 #include "base/scoped_ptr.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -168,7 +167,8 @@ TEST(PickleTest, Resize) {
       static_cast<int>(payload_size_after_header - sizeof(uint32)));
   size_t cur_payload = payload_size_after_header;
 
-  EXPECT_EQ(pickle.capacity(), unit);
+  // note: we assume 'unit' is a power of 2
+  EXPECT_EQ(unit, pickle.capacity());
   EXPECT_EQ(pickle.payload_size(), payload_size_after_header);
 
   // fill out a full page (noting data header)
@@ -177,10 +177,10 @@ TEST(PickleTest, Resize) {
   EXPECT_EQ(unit * 2, pickle.capacity());
   EXPECT_EQ(cur_payload, pickle.payload_size());
 
-  // one more byte should expand the capacity by one unit
+  // one more byte should double the capacity
   pickle.WriteData(data_ptr, 1);
   cur_payload += 5;
-  EXPECT_EQ(unit * 3, pickle.capacity());
+  EXPECT_EQ(unit * 4, pickle.capacity());
   EXPECT_EQ(cur_payload, pickle.payload_size());
 }
 
@@ -218,4 +218,3 @@ TEST(PickleTest, EqualsOperator) {
   copy = copy_refs_source_buffer;
   ASSERT_EQ(source.size(), copy.size());
 }
-

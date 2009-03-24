@@ -17,10 +17,10 @@
 #include "chrome/browser/views/go_button.h"
 #include "chrome/browser/views/location_bar_view.h"
 #include "chrome/common/pref_member.h"
-#include "chrome/views/menu.h"
-#include "chrome/views/menu_button.h"
+#include "chrome/views/controls/button/menu_button.h"
+#include "chrome/views/controls/menu/menu.h"
+#include "chrome/views/controls/menu/view_menu_delegate.h"
 #include "chrome/views/view.h"
-#include "chrome/views/view_menu_delegate.h"
 
 class Browser;
 class Profile;
@@ -42,7 +42,7 @@ class BrowserToolbarView : public views::View,
                            public NotificationObserver,
                            public GetProfilesHelper::Delegate,
                            public CommandUpdater::CommandObserver,
-                           public views::BaseButton::ButtonListener {
+                           public views::ButtonListener {
  public:
   explicit BrowserToolbarView(Browser* browser);
   virtual ~BrowserToolbarView();
@@ -121,7 +121,7 @@ class BrowserToolbarView : public views::View,
   virtual void EnabledStateChangedForCommand(int id, bool enabled);
 
   // Overridden from views::BaseButton::ButtonListener:
-  virtual void ButtonPressed(views::BaseButton* sender);
+  virtual void ButtonPressed(views::Button* sender);
 
  private:
   // Types of display mode this toolbar can have.
@@ -183,15 +183,17 @@ class BrowserToolbarView : public views::View,
   views::View* acc_focused_view_;
 
   // Controls
-  views::Button* back_;
-  views::Button* forward_;
-  views::Button* reload_;
-  views::Button* home_;
+  views::ImageButton* back_;
+  views::ImageButton* forward_;
+  views::ImageButton* reload_;
+  views::ImageButton* home_;
   ToolbarStarToggle* star_;
   LocationBarView* location_bar_;
   GoButton* go_;
   views::MenuButton* page_menu_;
   views::MenuButton* app_menu_;
+  // The bookmark menu button. This may be null.
+  views::MenuButton* bookmark_menu_;
   Profile* profile_;
   Browser* browser_;
 

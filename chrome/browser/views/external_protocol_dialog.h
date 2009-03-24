@@ -5,7 +5,7 @@
 #ifndef CHROME_BROWSER_EXTERNAL_PROTOCOL_DIALOG_H__
 #define CHROME_BROWSER_EXTERNAL_PROTOCOL_DIALOG_H__
 
-#include "chrome/views/dialog_delegate.h"
+#include "chrome/views/window/dialog_delegate.h"
 #include "googleurl/src/gurl.h"
 
 class MessageBoxView;
@@ -39,7 +39,7 @@ class ExternalProtocolDialog : public views::DialogDelegate {
   virtual int GetDefaultDialogButton() const;
   virtual std::wstring GetDialogButtonLabel(DialogButton button) const;
   virtual std::wstring GetWindowTitle() const;
-  virtual void WindowClosing();
+  virtual void DeleteDelegate();
   virtual bool Accept();
   virtual views::View* GetContentsView();
 

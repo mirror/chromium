@@ -6,13 +6,14 @@
 
 #include "base/scoped_handle.h"
 #include "base/string_util.h"
+#include "chrome/common/drag_drop_types.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/gfx/path.h"
 #include "chrome/common/os_exchange_data.h"
-#include "chrome/views/accessibility/accessible_wrapper.h"
+#include "chrome/views/accessibility/view_accessibility_wrapper.h"
 #include "chrome/views/border.h"
-#include "chrome/views/root_view.h"
-#include "chrome/views/widget.h"
+#include "chrome/views/widget/root_view.h"
+#include "chrome/views/widget/widget.h"
 
 namespace views {
 
@@ -21,7 +22,7 @@ FocusManager* View::GetFocusManager() {
   if (!widget)
     return NULL;
 
-  HWND hwnd = widget->GetHWND();
+  HWND hwnd = widget->GetNativeView();
   if (!hwnd)
     return NULL;
 
@@ -29,19 +30,22 @@ FocusManager* View::GetFocusManager() {
 }
 
 void View::DoDrag(const MouseEvent& e, int press_x, int press_y) {
+  int drag_operations = GetDragOperations(press_x, press_y);
+  if (drag_operations == DragDropTypes::DRAG_NONE)
+    return;
+
   scoped_refptr<OSExchangeData> data = new OSExchangeData;
   WriteDragData(press_x, press_y, data.get());
 
   // Message the RootView to do the drag and drop. That way if we're removed
   // the RootView can detect it and avoid calling us back.
   RootView* root_view = GetRootView();
-  root_view->StartDragForViewFromMouseEvent(
-      this, data, GetDragOperations(press_x, press_y));
+  root_view->StartDragForViewFromMouseEvent(this, data, drag_operations);
 }
 
-AccessibleWrapper* View::GetAccessibleWrapper() {
+ViewAccessibilityWrapper* View::GetViewAccessibilityWrapper() {
   if (accessibility_.get() == NULL) {
-    accessibility_.reset(new AccessibleWrapper(this));
+    accessibility_.reset(new ViewAccessibilityWrapper(this));
   }
   return accessibility_.get();
 }
@@ -71,7 +75,7 @@ void View::Focus() {
   // messages.
   FocusManager* focus_manager = GetFocusManager();
   if (focus_manager)
-    focus_manager->FocusHWND(GetRootView()->GetWidget()->GetHWND());
+    focus_manager->FocusHWND(GetRootView()->GetWidget()->GetNativeView());
 }
 
 int View::GetHorizontalDragThreshold() {

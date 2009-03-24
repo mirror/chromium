@@ -18,7 +18,6 @@
 #include "base/waitable_event.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/common/notification_service.h"
-#include "base/logging.h"
 
 class TestingBrowserProcess : public BrowserProcess {
  public:
@@ -76,6 +75,10 @@ class TestingBrowserProcess : public BrowserProcess {
     return NULL;
   }
 
+  virtual DevToolsManager* devtools_manager() {
+    return NULL;
+  }
+
   virtual ClipboardService* clipboard_service() {
     return NULL;
   }
@@ -122,7 +125,9 @@ class TestingBrowserProcess : public BrowserProcess {
 
   virtual MemoryModel memory_model() { return HIGH_MEMORY_MODEL; }
 
-  virtual base::WaitableEvent* shutdown_event() { return shutdown_event_.get(); }
+  virtual base::WaitableEvent* shutdown_event() {
+    return shutdown_event_.get();
+  }
 
  private:
   NotificationService notification_service_;

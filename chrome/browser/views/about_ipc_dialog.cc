@@ -25,13 +25,14 @@
 #include "chrome/common/plugin_messages.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/text_button.h"
-#include "chrome/views/window.h"
+#include "chrome/views/controls/button/text_button.h"
+#include "chrome/views/controls/hwnd_view.h"
+#include "chrome/views/widget/root_view.h"
+#include "chrome/views/widget/widget.h"
+#include "chrome/views/window/window.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_job.h"
 #include "net/url_request/url_request_job_tracker.h"
-#include "chrome/views/hwnd_view.h"
-#include "chrome/views/root_view.h"
 
 namespace {
 
@@ -232,7 +233,8 @@ INT_PTR CALLBACK DialogProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
       break;
     case WM_NOTIFY: {
       NMLISTVIEW* info = reinterpret_cast<NM_LISTVIEW*>(lparam);
-      if ((wparam == IDC_View || wparam == IDC_ViewHost || wparam == IDC_Plugin ||
+      if ((wparam == IDC_View || wparam == IDC_ViewHost ||
+           wparam == IDC_Plugin ||
            wparam == IDC_PluginHost || wparam == IDC_NPObject ||
            wparam == IDC_PluginProcess || wparam == IDC_PluginProcessHost) &&
           info->hdr.code == LVN_ITEMCHANGED) {
@@ -296,12 +298,9 @@ void AboutIPCDialog::SetupControls() {
   views::GridLayout* layout = CreatePanelGridLayout(this);
   SetLayoutManager(layout);
 
-  track_toggle_ = new views::TextButton(kStartTrackingLabel);
-  track_toggle_->SetListener(this, 1);
-  clear_button_ = new views::TextButton(kClearLabel);
-  clear_button_->SetListener(this, 2);
-  filter_button_ = new views::TextButton(kFilterLabel);
-  filter_button_->SetListener(this, 3);
+  track_toggle_ = new views::TextButton(this, kStartTrackingLabel);
+  clear_button_ = new views::TextButton(this, kClearLabel);
+  filter_button_ = new views::TextButton(this, kFilterLabel);
 
   table_ = new views::HWNDView();
 
@@ -347,7 +346,7 @@ std::wstring AboutIPCDialog::GetWindowTitle() const {
 
 void AboutIPCDialog::Layout() {
   if (!message_list_.m_hWnd) {
-    HWND parent_window = GetRootView()->GetWidget()->GetHWND();
+    HWND parent_window = GetRootView()->GetWidget()->GetNativeView();
 
     CRect rect(0, 0, 10, 10);
     HWND list_hwnd = message_list_.Create(parent_window,
@@ -417,7 +416,7 @@ bool AboutIPCDialog::CanResize() const {
   return true;
 }
 
-void AboutIPCDialog::ButtonPressed(views::BaseButton* button) {
+void AboutIPCDialog::ButtonPressed(views::Button* button) {
   if (button == track_toggle_) {
     if (tracking_) {
       track_toggle_->SetText(kStartTrackingLabel);
@@ -432,7 +431,7 @@ void AboutIPCDialog::ButtonPressed(views::BaseButton* button) {
   } else if (button == clear_button_) {
     message_list_.DeleteAllItems();
   } else if (button == filter_button_) {
-    RunSettingsDialog(GetRootView()->GetWidget()->GetHWND());
+    RunSettingsDialog(GetRootView()->GetWidget()->GetNativeView());
   }
 }
 

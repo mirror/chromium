@@ -74,7 +74,7 @@ IPC_BEGIN_MESSAGES(Automation)
   // This message notifies the AutomationProvider to navigate to a specified
   // url in the tab with given handle. The first parameter is the handle to
   // the tab resource. The second parameter is the target url.  The return
-  // value contains a status code which is nonnegative on success. 
+  // value contains a status code which is nonnegative on success.
   // See AutomationMsg_NavigationResponseValues for the return value.
   IPC_SYNC_MESSAGE_ROUTED2_1(AutomationMsg_NavigateToURL, int, GURL,
                              AutomationMsg_NavigationResponseValues)
@@ -128,7 +128,7 @@ IPC_BEGIN_MESSAGES(Automation)
   // The return value contains the size of the title string. On error, this
   // value should be -1 and empty string. Note that the title can be empty in
   // which case the size would be 0.
-  IPC_SYNC_MESSAGE_ROUTED1_2(AutomationMsg_TabTitle, 
+  IPC_SYNC_MESSAGE_ROUTED1_2(AutomationMsg_TabTitle,
                              int,
                              int,
                              std::wstring)
@@ -573,7 +573,7 @@ IPC_BEGIN_MESSAGES(Automation)
   //          and 0 means this was a redirect
   // Response:
   //   None expected
-  IPC_MESSAGE_ROUTED2(AutomationMsg_DidNavigate, int, int)
+  IPC_MESSAGE_ROUTED3(AutomationMsg_DidNavigate, int, int, GURL)
 
   // This message requests the different security states of the page displayed
   // in the specified tab.
@@ -723,13 +723,17 @@ IPC_BEGIN_MESSAGES(Automation)
                       int /* tab_handle */)
 
   // Posts a message from external host to chrome renderer.
-  IPC_MESSAGE_ROUTED2(AutomationMsg_HandleMessageFromExternalHost,
+  IPC_MESSAGE_ROUTED4(AutomationMsg_HandleMessageFromExternalHost,
                       int /* automation handle */,
-                      std::string /* message */ )
+                      std::string /* message */,
+                      std::string /* origin */,
+                      std::string /* target */)
 
   // A message for an external host.
-  IPC_MESSAGE_ROUTED1(AutomationMsg_ForwardMessageToExternalHost,
-                      std::string /* message*/)
+  IPC_MESSAGE_ROUTED3(AutomationMsg_ForwardMessageToExternalHost,
+                      std::string /* message */,
+                      std::string /* origin */,
+                      std::string /* target */)
 
   // This message starts a find within a tab corresponding to the supplied
   // tab handle. The parameter |request| specifies what to search for.
@@ -798,7 +802,7 @@ IPC_BEGIN_MESSAGES(Automation)
 
   // Queries whether an app modal dialog is currently being shown. (i.e. a
   // javascript alert) and which buttons it contains.
-  IPC_SYNC_MESSAGE_ROUTED0_2(AutomationMsg_ShowingAppModalDialog, 
+  IPC_SYNC_MESSAGE_ROUTED0_2(AutomationMsg_ShowingAppModalDialog,
                              bool /* showing dialog */,
                              int /* view::DelegateDialog::DialogButton */)
 
@@ -855,5 +859,13 @@ IPC_BEGIN_MESSAGES(Automation)
   // Response:
   //   None expected
   IPC_MESSAGE_ROUTED2(AutomationMsg_NavigationFailed, int, GURL)
+
+#if defined(OS_WIN)
+  // This message is an outgoing message from an automation client to Chrome.
+  // It is used to reposition a chrome tab window.
+  IPC_MESSAGE_ROUTED2(AutomationMsg_TabReposition,
+                      int /* tab handle */,
+                      IPC::Reposition_Params /* SetWindowPos params */)
+#endif  // defined(OS_WIN)
 
 IPC_END_MESSAGES(Automation)

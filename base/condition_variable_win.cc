@@ -8,6 +8,7 @@
 
 #include "base/lock.h"
 #include "base/logging.h"
+#include "base/time.h"
 
 using base::TimeDelta;
 
@@ -443,4 +444,3 @@ put so many assertions (DCHECKs) into the container class that it is trivial to
 code review and validate its correctness.
 
 */
-

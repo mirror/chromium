@@ -72,8 +72,10 @@ bool BufferedResourceHandler::OnResponseStarted(int request_id,
 
 
 bool BufferedResourceHandler::OnResponseCompleted(
-    int request_id, const URLRequestStatus& status) {
-  return real_handler_->OnResponseCompleted(request_id, status);
+    int request_id,
+    const URLRequestStatus& status,
+    const std::string& security_info) {
+  return real_handler_->OnResponseCompleted(request_id, status, security_info);
 }
 
 // We'll let the original event handler provide a buffer, and reuse it for
@@ -94,7 +96,7 @@ bool BufferedResourceHandler::OnWillRead(int request_id, net::IOBuffer** buf,
   bool ret = real_handler_->OnWillRead(request_id, buf, buf_size, min_size);
   read_buffer_ = *buf;
   read_buffer_size_ = *buf_size;
-  DCHECK(read_buffer_size_ >= kMaxBytesToSniff * 2); 
+  DCHECK(read_buffer_size_ >= kMaxBytesToSniff * 2);
   bytes_read_ = 0;
   return ret;
 }
@@ -242,7 +244,7 @@ bool BufferedResourceHandler::CompleteResponseStarted(int request_id,
       // own error page instead of triggering a download.
       // TODO(abarth): We should abstract the response_code test, but this kind
       //               of check is scattered throughout our codebase.
-      request_->CancelWithError(net::ERR_FILE_NOT_FOUND);
+      request_->SimulateError(net::ERR_FILE_NOT_FOUND);
       return false;
     }
 
@@ -252,8 +254,8 @@ bool BufferedResourceHandler::CompleteResponseStarted(int request_id,
         new DownloadThrottlingResourceHandler(host_,
                                            request_,
                                            request_->url(),
-                                           info->render_process_host_id,
-                                           info->render_view_id,
+                                           info->process_id,
+                                           info->route_id,
                                            request_id,
                                            in_complete);
     if (bytes_read_) {
@@ -270,7 +272,8 @@ bool BufferedResourceHandler::CompleteResponseStarted(int request_id,
     // handled by an external source (the browser's DownloadManager).
     real_handler_->OnResponseStarted(info->request_id, response_);
     URLRequestStatus status(URLRequestStatus::HANDLED_EXTERNALLY, 0);
-    real_handler_->OnResponseCompleted(info->request_id, status);
+    real_handler_->OnResponseCompleted(info->request_id, status,
+                                       std::string());
 
     // Ditch the old async handler that talks to the renderer for the new
     // download handler that talks to the DownloadManager.

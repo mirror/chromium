@@ -22,10 +22,10 @@
 #include "chrome/common/win_util.h"
 #include "chrome/views/background.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/image_view.h"
-#include "chrome/views/label.h"
-#include "chrome/views/native_button.h"
-#include "chrome/views/separator.h"
+#include "chrome/views/controls/button/native_button.h"
+#include "chrome/views/controls/image_view.h"
+#include "chrome/views/controls/label.h"
+#include "chrome/views/controls/separator.h"
 #include "grit/generated_resources.h"
 #include "grit/locale_settings.h"
 #include "grit/theme_resources.h"
@@ -516,8 +516,7 @@ void PageInfoWindow::Init(Profile* profile,
   cert_id_ = ssl.cert_id();
 
   cert_info_button_ = new views::NativeButton(
-      l10n_util::GetString(IDS_PAGEINFO_CERT_INFO_BUTTON));
-  cert_info_button_->SetListener(this);
+      this, l10n_util::GetString(IDS_PAGEINFO_CERT_INFO_BUTTON));
 
   contents_ = new PageInfoContentView();
   DWORD sys_color = ::GetSysColor(COLOR_3DFACE);
@@ -565,7 +564,7 @@ void PageInfoWindow::Init(Profile* profile,
 
   views::Window::CreateChromeWindow(parent, gfx::Rect(), this);
   // TODO(beng): (Cleanup) - cert viewer button should use GetExtraView.
-  
+
   if (cert_id_) {
     scoped_refptr<net::X509Certificate> cert;
     CertStore::GetSharedInstance()->RetrieveCert(cert_id_, &cert);
@@ -613,7 +612,7 @@ views::View* PageInfoWindow::GetContentsView() {
   return contents_;
 }
 
-void PageInfoWindow::ButtonPressed(views::NativeButton* sender) {
+void PageInfoWindow::ButtonPressed(views::Button* sender) {
   if (sender == cert_info_button_) {
     DCHECK(cert_id_ != 0);
     ShowCertDialog(cert_id_);
@@ -663,14 +662,14 @@ void PageInfoWindow::ShowCertDialog(int cert_id) {
   if (!cert.get()) {
     // The certificate was not found. Could be that the renderer crashed before
     // we displayed the page info.
-    return; 		
-  } 		
+    return;
+  }
 
-  CRYPTUI_VIEWCERTIFICATE_STRUCT view_info = { 0 }; 		
-  view_info.dwSize = sizeof(view_info); 		
-  // We set our parent to the tab window. This makes the cert dialog created 		
-  // in CryptUIDlgViewCertificate modal to the browser. 		
-  view_info.hwndParent = window()->owning_window();
+  CRYPTUI_VIEWCERTIFICATE_STRUCT view_info = { 0 };
+  view_info.dwSize = sizeof(view_info);
+  // We set our parent to the tab window. This makes the cert dialog created
+  // in CryptUIDlgViewCertificate modal to the browser.
+  view_info.hwndParent = window()->GetNativeWindow();
   view_info.dwFlags = CRYPTUI_DISABLE_EDITPROPERTIES |
                       CRYPTUI_DISABLE_ADDTOSTORE;
   view_info.pCertContext = cert->os_cert_handle();
@@ -684,4 +683,3 @@ void PageInfoWindow::ShowCertDialog(int cert_id) {
   // modal to the browser window.
   BOOL rv = ::CryptUIDlgViewCertificate(&view_info, &properties_changed);
 }
-

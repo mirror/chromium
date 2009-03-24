@@ -61,7 +61,7 @@ class WebContentsView : public RenderViewHostDelegate::View {
 
   // Returns the outermost native view. This will be used as the parent for
   // dialog boxes.
-  virtual gfx::NativeWindow GetTopLevelNativeView() const = 0;
+  virtual gfx::NativeWindow GetTopLevelNativeWindow() const = 0;
 
   // Computes the rectangle for the native widget that contains the contents of
   // the tab relative to its parent.
@@ -108,12 +108,16 @@ class WebContentsView : public RenderViewHostDelegate::View {
   // RenderWidgetHost is deleted. Removes |host| from internal maps.
   void RenderWidgetHostDestroyed(RenderWidgetHost* host);
 
-  // Opens developer tools window for the page.
-  virtual void OpenDeveloperTools() = 0;
+  // Sets focus to the appropriate element when the tab contents is shown the
+  // first time.
+  virtual void SetInitialFocus() = 0;
 
-  // Forwards message to DevToolsClient in developer tools window open for this
-  // page.
-  virtual void ForwardMessageToDevToolsClient(const IPC::Message& message) = 0;
+  // Stores the currently focused view.
+  virtual void StoreFocus() = 0;
+
+  // Restores focus to the last focus view. If StoreFocus has not yet been
+  // invoked, SetInitialFocus is invoked.
+  virtual void RestoreFocus() = 0;
 
  protected:
   WebContentsView() {}  // Abstract interface.

@@ -3,7 +3,7 @@
 <translationbundle lang="zh-CN">
 <translation id="IDS_WEB_FONT_FAMILY">Simsun</translation>
 <translation id="IDS_ACCEPT_LANGUAGES">zh-CN,zh</translation>
-<translation id="IDS_DEFAULT_ENCODING">gb18030</translation>
+<translation id="IDS_DEFAULT_ENCODING">GBK</translation>
 <translation id="IDS_STANDARD_FONT_IS_SERIF">false</translation>
 <translation id="IDS_FIXED_FONT_FAMILY">NSimsun</translation>
 <translation id="IDS_SERIF_FONT_FAMILY">Simsun</translation>
@@ -25,7 +25,7 @@
 <translation id="IDS_CLEARDATA_DIALOG_HEIGHT_LINES">15.5</translation>
 <translation id="IDS_IMPORT_DIALOG_WIDTH_CHARS">60</translation>
 <translation id="IDS_IMPORT_DIALOG_HEIGHT_LINES">14</translation>
-<translation id="IDS_ABOUT_DIALOG_WIDTH_CHARS">70</translation>
+<translation id="IDS_ABOUT_DIALOG_WIDTH_CHARS">83</translation>
 <translation id="IDS_ABOUT_DIALOG_MINIMUM_HEIGHT_LINES">5</translation>
 <translation id="IDS_FONTSLANG_DIALOG_WIDTH_CHARS">95</translation>
 <translation id="IDS_FONTSLANG_DIALOG_HEIGHT_LINES">26</translation>

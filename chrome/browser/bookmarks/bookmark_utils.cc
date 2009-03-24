@@ -16,8 +16,11 @@
 #include "chrome/browser/tab_contents/page_navigator.h"
 #include "chrome/common/drag_drop_types.h"
 #include "chrome/common/l10n_util.h"
+#include "chrome/common/notification_service.h"
+#include "chrome/common/pref_names.h"
+#include "chrome/common/pref_service.h"
+#include "chrome/views/controls/tree/tree_node_iterator.h"
 #include "chrome/views/event.h"
-#include "chrome/views/tree_node_iterator.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 
@@ -58,7 +61,8 @@ class NewBrowserPageNavigator : public PageNavigator {
       // Always open the first tab in the foreground.
       disposition = NEW_FOREGROUND_TAB;
     }
-    browser_->OpenURLFromTab(NULL, url, referrer, NEW_FOREGROUND_TAB, transition);
+    browser_->OpenURLFromTab(NULL, url, referrer, NEW_FOREGROUND_TAB,
+                             transition);
   }
 
  private:
@@ -134,7 +138,8 @@ void OpenAllImpl(BookmarkNode* node,
   }
 }
 
-bool ShouldOpenAll(gfx::NativeWindow parent, const std::vector<BookmarkNode*>& nodes) {
+bool ShouldOpenAll(gfx::NativeWindow parent,
+                   const std::vector<BookmarkNode*>& nodes) {
   int descendant_count = 0;
   for (size_t i = 0; i < nodes.size(); ++i)
     descendant_count += DescendantURLCount(nodes[i]);
@@ -199,6 +204,63 @@ int PreferredDropOperation(int source_operations, int operations) {
   return DragDropTypes::DRAG_NONE;
 }
 
+int BookmarkDragOperation(BookmarkNode* node) {
+  if (node->is_url()) {
+    return DragDropTypes::DRAG_COPY | DragDropTypes::DRAG_MOVE |
+           DragDropTypes::DRAG_LINK;
+  }
+  return DragDropTypes::DRAG_COPY | DragDropTypes::DRAG_MOVE;
+}
+
+int BookmarkDropOperation(Profile* profile,
+                          const views::DropTargetEvent& event,
+                          const BookmarkDragData& data,
+                          BookmarkNode* parent,
+                          int index) {
+  if (data.IsFromProfile(profile) && data.size() > 1)
+    // Currently only accept one dragged node at a time.
+    return DragDropTypes::DRAG_NONE;
+
+  if (!bookmark_utils::IsValidDropLocation(profile, data, parent, index))
+    return DragDropTypes::DRAG_NONE;
+
+  if (data.GetFirstNode(profile)) {
+    // User is dragging from this profile: move.
+    return DragDropTypes::DRAG_MOVE;
+  }
+  // User is dragging from another app, copy.
+  return PreferredDropOperation(event.GetSourceOperations(),
+      DragDropTypes::DRAG_COPY | DragDropTypes::DRAG_LINK);
+}
+
+int PerformBookmarkDrop(Profile* profile,
+                        const BookmarkDragData& data,
+                        BookmarkNode* parent_node,
+                        int index) {
+  BookmarkNode* dragged_node = data.GetFirstNode(profile);
+  BookmarkModel* model = profile->GetBookmarkModel();
+  if (dragged_node) {
+    // Drag from same profile, do a move.
+    model->Move(dragged_node, parent_node, index);
+    return DragDropTypes::DRAG_MOVE;
+  } else if (data.has_single_url()) {
+    // New URL, add it at the specified location.
+    std::wstring title = data.elements[0].title;
+    if (title.empty()) {
+      // No title, use the host.
+      title = UTF8ToWide(data.elements[0].url.host());
+      if (title.empty())
+        title = l10n_util::GetString(IDS_BOOMARK_BAR_UNKNOWN_DRAG_TITLE);
+    }
+    model->AddURL(parent_node, index, title, data.elements[0].url);
+    return DragDropTypes::DRAG_COPY | DragDropTypes::DRAG_LINK;
+  } else {
+    // Dropping a group from different profile. Always accept.
+    bookmark_utils::CloneDragData(model, data.elements, parent_node, index);
+    return DragDropTypes::DRAG_COPY;
+  }
+}
+
 bool IsValidDropLocation(Profile* profile,
                          const BookmarkDragData& data,
                          BookmarkNode* drop_parent,
@@ -254,12 +316,15 @@ void OpenAll(gfx::NativeWindow parent,
 
   NewBrowserPageNavigator navigator_impl(profile);
   if (!navigator) {
-    Browser* browser = 
+    Browser* browser =
         BrowserList::FindBrowserWithType(profile, Browser::TYPE_NORMAL);
     if (!browser || !browser->GetSelectedTabContents()) {
       navigator = &navigator_impl;
     } else {
-      browser->window()->Activate();
+      if (initial_disposition != NEW_WINDOW &&
+          initial_disposition != OFF_THE_RECORD) {
+        browser->window()->Activate();
+      }
       navigator = browser->GetSelectedTabContents();
     }
   }
@@ -465,6 +530,35 @@ bool DoesBookmarkContainText(BookmarkNode* node, const std::wstring& text) {
     return false;
 
   return (node->is_url() && DoesBookmarkContainWords(node, words));
+}
+
+// Formerly in BookmarkBarView
+void ToggleWhenVisible(Profile* profile) {
+  PrefService* prefs = profile->GetPrefs();
+  const bool always_show = !prefs->GetBoolean(prefs::kShowBookmarkBar);
+
+  // The user changed when the bookmark bar is shown, update the preferences.
+  prefs->SetBoolean(prefs::kShowBookmarkBar, always_show);
+  prefs->ScheduleSavePersistentPrefs(g_browser_process->file_thread());
+
+  // And notify the notification service.
+  Source<Profile> source(profile);
+  NotificationService::current()->Notify(
+      NotificationType::BOOKMARK_BAR_VISIBILITY_PREF_CHANGED,
+      source,
+      NotificationService::NoDetails());
+}
+
+void RegisterUserPrefs(PrefService* prefs) {
+  // Formerly in BookmarkBarView
+  prefs->RegisterBooleanPref(prefs::kShowBookmarkBar, false);
+
+  // Formerly in BookmarkTableView
+  prefs->RegisterIntegerPref(prefs::kBookmarkTableNameWidth1, -1);
+  prefs->RegisterIntegerPref(prefs::kBookmarkTableURLWidth1, -1);
+  prefs->RegisterIntegerPref(prefs::kBookmarkTableNameWidth2, -1);
+  prefs->RegisterIntegerPref(prefs::kBookmarkTableURLWidth2, -1);
+  prefs->RegisterIntegerPref(prefs::kBookmarkTablePathWidth, -1);
 }
 
 }  // namespace bookmark_utils

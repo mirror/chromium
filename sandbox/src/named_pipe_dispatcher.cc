@@ -5,7 +5,6 @@
 #include "sandbox/src/named_pipe_dispatcher.h"
 
 #include "base/basictypes.h"
-#include "base/logging.h"
 
 #include "sandbox/src/crosscall_client.h"
 #include "sandbox/src/interception.h"
@@ -64,4 +63,3 @@ bool NamedPipeDispatcher::CreateNamedPipe(
 }
 
 }  // namespace sandbox
-

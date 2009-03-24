@@ -35,7 +35,7 @@ class FileStreamTest : public PlatformTest {
 
 TEST_F(FileStreamTest, BasicOpenClose) {
   net::FileStream stream;
-  int rv = stream.Open(temp_file_path(), 
+  int rv = stream.Open(temp_file_path(),
       base::PLATFORM_FILE_OPEN | base::PLATFORM_FILE_READ);
   EXPECT_EQ(net::OK, rv);
 }
@@ -103,7 +103,7 @@ TEST_F(FileStreamTest, BasicRead) {
   EXPECT_TRUE(ok);
 
   net::FileStream stream;
-  int flags = base::PLATFORM_FILE_OPEN | 
+  int flags = base::PLATFORM_FILE_OPEN |
               base::PLATFORM_FILE_READ;
   int rv = stream.Open(temp_file_path(), flags);
   EXPECT_EQ(net::OK, rv);
@@ -133,8 +133,8 @@ TEST_F(FileStreamTest, AsyncRead) {
   EXPECT_TRUE(ok);
 
   net::FileStream stream;
-  int flags = base::PLATFORM_FILE_OPEN | 
-              base::PLATFORM_FILE_READ | 
+  int flags = base::PLATFORM_FILE_OPEN |
+              base::PLATFORM_FILE_READ |
               base::PLATFORM_FILE_ASYNC;
   int rv = stream.Open(temp_file_path(), flags);
   EXPECT_EQ(net::OK, rv);
@@ -168,7 +168,7 @@ TEST_F(FileStreamTest, BasicRead_FromOffset) {
   EXPECT_TRUE(ok);
 
   net::FileStream stream;
-  int flags = base::PLATFORM_FILE_OPEN | 
+  int flags = base::PLATFORM_FILE_OPEN |
               base::PLATFORM_FILE_READ;
   int rv = stream.Open(temp_file_path(), flags);
   EXPECT_EQ(net::OK, rv);
@@ -202,8 +202,8 @@ TEST_F(FileStreamTest, AsyncRead_FromOffset) {
   EXPECT_TRUE(ok);
 
   net::FileStream stream;
-  int flags = base::PLATFORM_FILE_OPEN | 
-              base::PLATFORM_FILE_READ | 
+  int flags = base::PLATFORM_FILE_OPEN |
+              base::PLATFORM_FILE_READ |
               base::PLATFORM_FILE_ASYNC;
   int rv = stream.Open(temp_file_path(), flags);
   EXPECT_EQ(net::OK, rv);
@@ -237,7 +237,7 @@ TEST_F(FileStreamTest, AsyncRead_FromOffset) {
 
 TEST_F(FileStreamTest, SeekAround) {
   net::FileStream stream;
-  int flags = base::PLATFORM_FILE_OPEN | 
+  int flags = base::PLATFORM_FILE_OPEN |
               base::PLATFORM_FILE_READ;
   int rv = stream.Open(temp_file_path(), flags);
   EXPECT_EQ(net::OK, rv);
@@ -260,7 +260,7 @@ TEST_F(FileStreamTest, SeekAround) {
 
 TEST_F(FileStreamTest, BasicWrite) {
   net::FileStream stream;
-  int flags = base::PLATFORM_FILE_CREATE_ALWAYS | 
+  int flags = base::PLATFORM_FILE_CREATE_ALWAYS |
               base::PLATFORM_FILE_WRITE;
   int rv = stream.Open(temp_file_path(), flags);
   EXPECT_EQ(net::OK, rv);
@@ -281,8 +281,8 @@ TEST_F(FileStreamTest, BasicWrite) {
 
 TEST_F(FileStreamTest, AsyncWrite) {
   net::FileStream stream;
-  int flags = base::PLATFORM_FILE_CREATE_ALWAYS | 
-              base::PLATFORM_FILE_WRITE | 
+  int flags = base::PLATFORM_FILE_CREATE_ALWAYS |
+              base::PLATFORM_FILE_WRITE |
               base::PLATFORM_FILE_ASYNC;
   int rv = stream.Open(temp_file_path(), flags);
   EXPECT_EQ(net::OK, rv);
@@ -311,7 +311,7 @@ TEST_F(FileStreamTest, AsyncWrite) {
 
 TEST_F(FileStreamTest, BasicWrite_FromOffset) {
   net::FileStream stream;
-  int flags = base::PLATFORM_FILE_OPEN | 
+  int flags = base::PLATFORM_FILE_OPEN |
               base::PLATFORM_FILE_WRITE;
   int rv = stream.Open(temp_file_path(), flags);
   EXPECT_EQ(net::OK, rv);
@@ -340,7 +340,7 @@ TEST_F(FileStreamTest, AsyncWrite_FromOffset) {
   EXPECT_TRUE(ok);
 
   net::FileStream stream;
-  int flags = base::PLATFORM_FILE_OPEN | 
+  int flags = base::PLATFORM_FILE_OPEN |
               base::PLATFORM_FILE_WRITE |
               base::PLATFORM_FILE_ASYNC;
   int rv = stream.Open(temp_file_path(), flags);
@@ -373,8 +373,8 @@ TEST_F(FileStreamTest, BasicReadWrite) {
   EXPECT_TRUE(ok);
 
   net::FileStream stream;
-  int flags = base::PLATFORM_FILE_OPEN | 
-              base::PLATFORM_FILE_READ | 
+  int flags = base::PLATFORM_FILE_OPEN |
+              base::PLATFORM_FILE_READ |
               base::PLATFORM_FILE_WRITE;
   int rv = stream.Open(temp_file_path(), flags);
   EXPECT_EQ(net::OK, rv);
@@ -404,6 +404,33 @@ TEST_F(FileStreamTest, BasicReadWrite) {
   ok = file_util::GetFileSize(temp_file_path(), &file_size);
   EXPECT_TRUE(ok);
   EXPECT_EQ(kTestDataSize * 2, file_size);
+}
+
+// Tests truncating a file.
+TEST_F(FileStreamTest, Truncate) {
+  int flags = base::PLATFORM_FILE_CREATE_ALWAYS | base::PLATFORM_FILE_WRITE;
+
+  net::FileStream write_stream;
+  ASSERT_EQ(net::OK, write_stream.Open(temp_file_path(), flags));
+
+  // Write some data to the file.
+  const char test_data[] = "0123456789";
+  write_stream.Write(test_data, arraysize(test_data), NULL);
+
+  // Truncate the file.
+  ASSERT_EQ(4, write_stream.Truncate(4));
+
+  // Write again.
+  write_stream.Write(test_data, 4, NULL);
+
+  // Close the stream.
+  write_stream.Close();
+
+  // Read in the contents and make sure we get back what we expected.
+  std::string read_contents;
+  file_util::ReadFileToString(temp_file_path(), &read_contents);
+
+  ASSERT_TRUE(read_contents == "01230123");
 }
 
 // TODO(erikkay): more READ_WRITE tests?

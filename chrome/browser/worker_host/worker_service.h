@@ -8,7 +8,6 @@
 #include <list>
 
 #include "base/basictypes.h"
-#include "base/hash_tables.h"
 #include "base/singleton.h"
 #include "googleurl/src/gurl.h"
 
@@ -27,6 +26,7 @@ class WorkerService {
 
   // Creates a dedicated worker.  Returns true on success.
   bool CreateDedicatedWorker(const GURL &url,
+                             int render_view_route_id,
                              ResourceMessageFilter* filter,
                              int renderer_route_id);
 

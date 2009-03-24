@@ -36,7 +36,7 @@ class MockProxyResolver : public net::ProxyResolver {
     results->UseNamedProxy(query_url.host());
     return net::OK;
   }
-  
+
   void Block() {
     is_blocked_ = true;
     event_.Reset();
@@ -78,7 +78,7 @@ struct ResultFuture {
   bool TimedWaitUntilDone(const base::TimeDelta& max_time) {
     return completed_.TimedWait(max_time);
   }
-  
+
   // These fields are only valid after returning from WaitUntilDone().
   IPC::Message* reply_msg;
   int error_code;
@@ -212,9 +212,11 @@ template<>
 void RunnableMethodTraits<RunnerBridge>::ReleaseCallee(RunnerBridge*) {}
 
 template<>
-void RunnableMethodTraits<AsyncRequestRunner>::RetainCallee(AsyncRequestRunner*) {}
+void RunnableMethodTraits<AsyncRequestRunner>::RetainCallee(
+    AsyncRequestRunner*) {}
 template<>
-void RunnableMethodTraits<AsyncRequestRunner>::ReleaseCallee(AsyncRequestRunner*) {}
+void RunnableMethodTraits<AsyncRequestRunner>::ReleaseCallee(
+    AsyncRequestRunner*) {}
 
 
 // Issue three sequential requests -- each should succeed.
@@ -349,4 +351,3 @@ TEST(ResolveProxyMsgHelperTest, CancelPendingRequests) {
   // It should also be the case that msg1, msg2, msg3 were deleted by the
   // cancellation. (Else will show up as a leak in Purify).
 }
-

@@ -56,6 +56,7 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "Image.h"
 #include "InspectorController.h"
 #include "IntRect.h"
+#include "KeyboardCodes.h"
 #include "KeyboardEvent.h"
 #include "MIMETypeRegistry.h"
 #include "NodeRenderStyle.h"
@@ -86,6 +87,7 @@ MSVC_POP_WARNING();
 #include "webkit/glue/chrome_client_impl.h"
 #include "webkit/glue/clipboard_conversion.h"
 #include "webkit/glue/context_menu_client_impl.h"
+#include "webkit/glue/webdevtoolsagent_impl.h"
 #include "webkit/glue/dragclient_impl.h"
 #include "webkit/glue/editor_client_impl.h"
 #include "webkit/glue/event_conversion.h"
@@ -99,6 +101,8 @@ MSVC_POP_WARNING();
 #include "webkit/glue/webinputevent.h"
 #include "webkit/glue/webkit_glue.h"
 #include "webkit/glue/webpreferences.h"
+#include "webkit/glue/webdevtoolsagent.h"
+#include "webkit/glue/webdevtoolsclient.h"
 #include "webkit/glue/webview_delegate.h"
 #include "webkit/glue/webview_impl.h"
 #include "webkit/glue/webwidget_impl.h"
@@ -161,12 +165,12 @@ class AutocompletePopupMenuClient : public WebCore::PopupMenuClient {
   // WebCore::PopupMenuClient implementation.
   virtual void valueChanged(unsigned listIndex, bool fireEvents = true) {
     text_field_->setValue(suggestions_[listIndex]);
-  }  
+  }
 
   virtual WebCore::String itemText(unsigned list_index) const {
     return suggestions_[list_index];
   }
-  
+
   virtual bool itemIsEnabled(unsigned listIndex) const {
     return true;
   }
@@ -246,7 +250,7 @@ class AutocompletePopupMenuClient : public WebCore::PopupMenuClient {
       ScrollbarClient* client,
       ScrollbarOrientation orientation,
       ScrollbarControlSize size) {
-    RefPtr<Scrollbar> widget = Scrollbar::createNativeScrollbar(client, 
+    RefPtr<Scrollbar> widget = Scrollbar::createNativeScrollbar(client,
                                                                 orientation,
                                                                 size);
     return widget.release();
@@ -264,10 +268,15 @@ class AutocompletePopupMenuClient : public WebCore::PopupMenuClient {
       selected_index_ = -1;
   }
 
+  void RemoveItemAtIndex(int index) {
+    DCHECK(index >= 0 && index < static_cast<int>(suggestions_.size()));
+    suggestions_.erase(suggestions_.begin() + index);
+  }
+
   WebCore::HTMLInputElement* text_field() const {
     return text_field_.get();
   }
-  
+
   WebCore::RenderStyle* GetTextFieldStyle() const {
     WebCore::RenderStyle* style = text_field_->computedStyle();
     if (!style) {
@@ -315,6 +324,9 @@ WebView* WebView::Create(WebViewDelegate* delegate,
   // Set the delegate after initializing the main frame, to avoid trying to
   // respond to notifications before we're fully initialized.
   instance->delegate_ = delegate;
+  instance->devtools_agent_.reset(
+      new WebDevToolsAgentImpl(instance,
+          delegate->GetWebDevToolsAgentDelegate()));
   // Restrict the access to the local file system
   // (see WebView.mm WebView::_commonInitializationWithFrameName).
   FrameLoader::setLocalLoadPolicy(
@@ -439,11 +451,7 @@ void WebViewImpl::MouseContextMenu(const WebMouseEvent& event) {
   MakePlatformMouseEvent pme(main_frame()->frameview(), event);
 
   // Find the right target frame. See issue 1186900.
-  IntPoint doc_point(
-      page_->mainFrame()->view()->windowToContents(pme.pos()));
-  HitTestResult result =
-      page_->mainFrame()->eventHandler()->hitTestResultAtPoint(
-          doc_point, false);
+  HitTestResult result = HitTestResultForWindowPos(pme.pos());
   Frame* target_frame;
   if (result.innerNonSharedNode())
     target_frame = result.innerNonSharedNode()->document()->frame();
@@ -538,6 +546,35 @@ bool WebViewImpl::AutocompleteHandleKeyEvent(const WebKeyboardEvent& event) {
     return false;
   }
 
+  // Pressing delete triggers the removal of the selected suggestion from the
+  // DB.
+  if (event.windows_key_code == base::VKEY_DELETE &&
+      autocomplete_popup_->selectedIndex() != -1) {
+    Node* node = GetFocusedNode();
+    if (!node || (node->nodeType() != WebCore::Node::ELEMENT_NODE)) {
+      NOTREACHED();
+      return false;
+    }
+    WebCore::Element* element = static_cast<WebCore::Element*>(node);
+    if (!element->hasLocalName(WebCore::HTMLNames::inputTag)) {
+      NOTREACHED();
+      return false;
+    }
+
+    int selected_index = autocomplete_popup_->selectedIndex();
+    WebCore::HTMLInputElement* input_element =
+        static_cast<WebCore::HTMLInputElement*>(element);
+    std::wstring name = webkit_glue::StringToStdWString(input_element->name());
+    std::wstring value = webkit_glue::StringToStdWString(
+        autocomplete_popup_client_->itemText(selected_index ));
+    delegate()->RemoveStoredAutofillEntry(name, value);
+    // Update the entries in the currently showing popup to reflect the
+    // deletion.
+    autocomplete_popup_client_->RemoveItemAtIndex(selected_index);
+    RefreshAutofillPopup();
+    return false;
+  }
+
   if (!autocomplete_popup_->isInterestedInEventForKey(event.windows_key_code))
     return false;
 
@@ -553,7 +590,7 @@ bool WebViewImpl::AutocompleteHandleKeyEvent(const WebKeyboardEvent& event) {
 
   return false;
 }
-  
+
 bool WebViewImpl::CharEvent(const WebKeyboardEvent& event) {
   DCHECK(event.type == WebInputEvent::CHAR);
 
@@ -600,7 +637,7 @@ bool WebViewImpl::CharEvent(const WebKeyboardEvent& event) {
 * webkit\webkit\win\WebView.cpp. The only significant change in this
 * function is the code to convert from a Keyboard event to the Right
 * Mouse button up event.
-* 
+*
 * This function is an ugly copy/paste and should be cleaned up when the
 * WebKitWin version is cleaned: https://bugs.webkit.org/show_bug.cgi?id=20438
 */
@@ -677,26 +714,25 @@ bool WebViewImpl::KeyEventDefault(const WebKeyboardEvent& event) {
 
   switch (event.type) {
     case WebInputEvent::CHAR: {
-#if defined(OS_WIN)
-      // TODO(pinkerton): hook this up for non-win32
-      if (event.windows_key_code == VK_SPACE) {
+      if (event.windows_key_code == VKEY_SPACE) {
         int key_code = ((event.modifiers & WebInputEvent::SHIFT_KEY) ?
-                         VK_PRIOR : VK_NEXT);
+                         VKEY_PRIOR : VKEY_NEXT);
         return ScrollViewWithKeyboard(key_code);
       }
-#endif
       break;
     }
 
+#if defined(OS_WIN)
     case WebInputEvent::RAW_KEY_DOWN: {
+#else
+    case WebInputEvent::KEY_DOWN: {
+#endif
       if (event.modifiers == WebInputEvent::CTRL_KEY) {
         switch (event.windows_key_code) {
           case 'A':
             GetFocusedFrame()->SelectAll();
             return true;
-#if defined(OS_WIN)
-          case VK_INSERT:
-#endif
+          case VKEY_INSERT:
           case 'C':
             GetFocusedFrame()->Copy();
             return true;
@@ -704,20 +740,16 @@ bool WebViewImpl::KeyEventDefault(const WebKeyboardEvent& event) {
           // key combinations which affect scrolling. Safari is buggy in the
           // sense that it scrolls the page for all Ctrl+scrolling key
           // combinations. For e.g. Ctrl+pgup/pgdn/up/down, etc.
-#if defined(OS_WIN)
-          case VK_HOME:
-          case VK_END:
-#endif
+          case VKEY_HOME:
+          case VKEY_END:
             break;
           default:
             return false;
         }
       }
-#if defined(OS_WIN)
       if (!event.system_key) {
         return ScrollViewWithKeyboard(event.windows_key_code);
       }
-#endif
       break;
     }
 
@@ -735,47 +767,42 @@ bool WebViewImpl::ScrollViewWithKeyboard(int key_code) {
   ScrollDirection scroll_direction;
   ScrollGranularity scroll_granularity;
 
-#if defined(OS_WIN)
   switch (key_code) {
-    case VK_LEFT:
+    case VKEY_LEFT:
       scroll_direction = ScrollLeft;
       scroll_granularity = ScrollByLine;
       break;
-    case VK_RIGHT:
+    case VKEY_RIGHT:
       scroll_direction = ScrollRight;
       scroll_granularity = ScrollByLine;
       break;
-    case VK_UP:
+    case VKEY_UP:
       scroll_direction = ScrollUp;
       scroll_granularity = ScrollByLine;
       break;
-    case VK_DOWN:
+    case VKEY_DOWN:
       scroll_direction = ScrollDown;
       scroll_granularity = ScrollByLine;
       break;
-    case VK_HOME:
+    case VKEY_HOME:
       scroll_direction = ScrollUp;
       scroll_granularity = ScrollByDocument;
       break;
-    case VK_END:
+    case VKEY_END:
       scroll_direction = ScrollDown;
       scroll_granularity = ScrollByDocument;
       break;
-    case VK_PRIOR:  // page up
+    case VKEY_PRIOR:  // page up
       scroll_direction = ScrollUp;
       scroll_granularity = ScrollByPage;
       break;
-    case VK_NEXT:  // page down
+    case VKEY_NEXT:  // page down
       scroll_direction = ScrollDown;
       scroll_granularity = ScrollByPage;
       break;
     default:
       return false;
   }
-#elif defined(OS_MACOSX) || defined(OS_LINUX)
-  scroll_direction = ScrollDown;
-  scroll_granularity = ScrollByLine;
-#endif
 
   bool scroll_handled =
       frame->eventHandler()->scrollOverflow(scroll_direction,
@@ -815,6 +842,7 @@ void WebViewImpl::Close() {
   // Do this first to prevent reentrant notifications from being sent to the
   // initiator of the close.
   delegate_ = NULL;
+  devtools_agent_.reset(NULL);
 
   if (page_.get()) {
     // Initiate shutdown for the entire frameset.  This will cause a lot of
@@ -1312,6 +1340,10 @@ void WebViewImpl::SetPreferences(const WebPreferences& preferences) {
   // Turn this on to cause WebCore to paint the resize corner for us.
   settings->setShouldPaintCustomScrollbars(true);
 
+  // Mitigate attacks from local HTML files by not granting file:// URLs
+  // universal access.
+  settings->setAllowUniversalAccessFromFileURLs(false);
+
 #if defined(OS_WIN)
   // RenderTheme is a singleton that needs to know the default font size to
   // draw some form controls.  We let it know each time the size changes.
@@ -1383,12 +1415,7 @@ void WebViewImpl::CopyImageAt(int x, int y) {
   if (!page_.get())
     return;
 
-  IntPoint point = IntPoint(x, y);
-
-  Frame* frame = page_->mainFrame();
-
-  HitTestResult result =
-      frame->eventHandler()->hitTestResultAtPoint(point, false);
+  HitTestResult result = HitTestResultForWindowPos(IntPoint(x, y));
 
   if (result.absoluteImageURL().isEmpty()) {
     // There isn't actually an image at these coordinates.  Might be because
@@ -1401,7 +1428,7 @@ void WebViewImpl::CopyImageAt(int x, int y) {
     return;
   }
 
-  frame->editor()->copyImage(result);
+  page_->mainFrame()->editor()->copyImage(result);
 }
 
 void WebViewImpl::InspectElement(int x, int y) {
@@ -1411,10 +1438,7 @@ void WebViewImpl::InspectElement(int x, int y) {
   if (x == -1 || y == -1) {
     page_->inspectorController()->inspect(NULL);
   } else {
-    IntPoint point = IntPoint(x, y);
-    HitTestResult result(point);
-
-    result = page_->mainFrame()->eventHandler()->hitTestResultAtPoint(point, false);
+    HitTestResult result = HitTestResultForWindowPos(IntPoint(x, y));
 
     if (!result.innerNonSharedNode())
       return;
@@ -1583,22 +1607,21 @@ void WebViewImpl::AutofillSuggestionsForNode(
 
     if (autocomplete_popup_showing_) {
       autocomplete_popup_client_->SetSuggestions(suggestions);
-      IntRect old_bounds = autocomplete_popup_->boundsRect();
-      autocomplete_popup_->refresh();
-      IntRect new_bounds = autocomplete_popup_->boundsRect();
-      // Let's resize the backing window if necessary.
-      if (old_bounds != new_bounds) {
-        WebWidgetImpl* web_widget =
-            static_cast<WebWidgetImpl*>(autocomplete_popup_->client());
-        web_widget->delegate()->SetWindowRect(
-            web_widget, webkit_glue::FromIntRect(new_bounds));
-      }
+      RefreshAutofillPopup();
     } else {
       autocomplete_popup_->show(focused_node->getRect(),
                                 focused_node->ownerDocument()->view(), 0);
       autocomplete_popup_showing_ = true;
     }
   }
+}
+
+WebDevToolsAgent* WebViewImpl::GetWebDevToolsAgent() {
+  return GetWebDevToolsAgentImpl();
+}
+
+WebDevToolsAgentImpl* WebViewImpl::GetWebDevToolsAgentImpl() {
+  return devtools_agent_.get();
 }
 
 void WebViewImpl::DidCommitLoad(bool* is_new_navigation) {
@@ -1692,6 +1715,20 @@ void WebViewImpl::HideAutofillPopup() {
   HideAutoCompletePopup();
 }
 
+void WebViewImpl::RefreshAutofillPopup() {
+  DCHECK(autocomplete_popup_showing_);
+  IntRect old_bounds = autocomplete_popup_->boundsRect();
+  autocomplete_popup_->refresh();
+  IntRect new_bounds = autocomplete_popup_->boundsRect();
+  // Let's resize the backing window if necessary.
+  if (old_bounds != new_bounds) {
+    WebWidgetImpl* web_widget =
+        static_cast<WebWidgetImpl*>(autocomplete_popup_->client());
+    web_widget->delegate()->SetWindowRect(
+        web_widget, webkit_glue::FromIntRect(new_bounds));
+  }
+}
+
 Node* WebViewImpl::GetFocusedNode() {
   Frame* frame = page_->focusController()->focusedFrame();
   if (!frame)
@@ -1702,4 +1739,11 @@ Node* WebViewImpl::GetFocusedNode() {
     return NULL;
 
   return document->focusedNode();
+}
+
+HitTestResult WebViewImpl::HitTestResultForWindowPos(const IntPoint& pos) {
+  IntPoint doc_point(
+      page_->mainFrame()->view()->windowToContents(pos));
+  return page_->mainFrame()->eventHandler()->
+      hitTestResultAtPoint(doc_point, false);
 }

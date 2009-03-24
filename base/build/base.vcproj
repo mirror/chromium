@@ -630,6 +630,14 @@
 			>
 		</File>
 		<File
+			RelativePath="..\profiler.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\profiler.h"
+			>
+		</File>
+		<File
 			RelativePath="..\third_party\nspr\prtime.cc"
 			>
 		</File>
@@ -727,6 +735,14 @@
 		</File>
 		<File
 			RelativePath="..\scoped_ptr.h"
+			>
+		</File>
+		<File
+			RelativePath="..\scoped_variant_win.cc"
+			>
+		</File>
+		<File
+			RelativePath="..\scoped_variant_win.h"
 			>
 		</File>
 		<File
@@ -1030,7 +1046,7 @@
 			>
 		</File>
 		<File
-			RelativePath="..\worker_pool.cc"
+			RelativePath="..\worker_pool_win.cc"
 			>
 		</File>
 		<File

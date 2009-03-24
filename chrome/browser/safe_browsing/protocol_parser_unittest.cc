@@ -4,8 +4,6 @@
 //
 // Program to test the SafeBrowsing protocol parsing v2.1.
 
-#include "base/hash_tables.h"
-#include "base/logging.h"
 #include "base/string_util.h"
 #include "chrome/browser/safe_browsing/protocol_parser.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -507,7 +505,7 @@ TEST(SafeBrowsingProtocolParsingTest, TestGetHashWithUnknownList) {
                                   &full_hashes));
 
   EXPECT_EQ(full_hashes.size(), static_cast<size_t>(1));
-  EXPECT_EQ(memcmp("12345678901234567890123456789012", 
+  EXPECT_EQ(memcmp("12345678901234567890123456789012",
                    &full_hashes[0].hash, sizeof(SBFullHash)), 0);
   EXPECT_EQ(full_hashes[0].list_name, "goog-phish-shavar");
   EXPECT_EQ(full_hashes[0].add_chunk_id, 1);
@@ -522,11 +520,11 @@ TEST(SafeBrowsingProtocolParsingTest, TestGetHashWithUnknownList) {
                                   &full_hashes));
 
   EXPECT_EQ(full_hashes.size(), static_cast<size_t>(2));
-  EXPECT_EQ(memcmp("12345678901234567890123456789012", 
+  EXPECT_EQ(memcmp("12345678901234567890123456789012",
                    &full_hashes[0].hash, sizeof(SBFullHash)), 0);
   EXPECT_EQ(full_hashes[0].list_name, "goog-phish-shavar");
   EXPECT_EQ(full_hashes[0].add_chunk_id, 1);
-  EXPECT_EQ(memcmp("abcdefghijklmnopqrstuvwxyz123457", 
+  EXPECT_EQ(memcmp("abcdefghijklmnopqrstuvwxyz123457",
                    &full_hashes[1].hash, sizeof(SBFullHash)), 0);
   EXPECT_EQ(full_hashes[1].list_name, "goog-malware-shavar");
   EXPECT_EQ(full_hashes[1].add_chunk_id, 7);
@@ -632,7 +630,7 @@ TEST(SafeBrowsingProtocolParsingTest, TestZeroSizeAddChunk) {
 
   EXPECT_EQ(chunks[1].chunk_number, 2);
   EXPECT_EQ(chunks[1].hosts.size(), static_cast<size_t>(0));
-  
+
   EXPECT_EQ(chunks[2].chunk_number, 3);
   EXPECT_EQ(chunks[2].hosts.size(), static_cast<size_t>(1));
   EXPECT_EQ(chunks[2].hosts[0].host, 0x65666163);
@@ -699,19 +697,35 @@ TEST(SafeBrowsingProtocolParsingTest, TestVerifyUpdateMac) {
       "m:XIU0LiQhAPJq6dynXwHbygjS5tw=\n"
       "n:1895\n"
       "i:goog-phish-shavar\n"
-      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_s_6501-6505:6501-6505,pcY6iVeT9-CBQ3fdAF0rpnKjR1Y=\n"
-      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_s_6506-6510:6506-6510,SDBrYC3rX3KEPe72LOypnP6QYac=\n"
-      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_s_6511-6520:6511-6520,9UQo-e7OkcsXT2wFWTAhOuWOsUs=\n"
-      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_s_6521-6560:6521-6560,qVNw6JIpR1q6PIXST7J4LJ9n3Zg=\n"
-      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_s_6561-6720:6561-6720,7OiJvCbiwvpzPITW-hQohY5NHuc=\n"
-      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_s_6721-6880:6721-6880,oBS3svhoi9deIa0sWZ_gnD0ujj8=\n"
-      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_s_6881-7040:6881-7040,a0r8Xit4VvH39xgyQHZTPczKBIE=\n"
-      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_s_7041-7200:7041-7163,q538LChutGknBw55s6kcE2wTcvU=\n"
-      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_a_8001-8160:8001-8024,8026-8045,8048-8049,8051-8134,8136-8152,8155-8160,j6XXAEWnjYk9tVVLBSdQvIEq2Wg=\n"
-      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_a_8161-8320:8161-8215,8217-8222,8224-8320,YaNfiqdQOt-uLCLWVLj46AZpAjQ=\n"
-      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_a_8321-8480:8321-8391,8393-8399,8402,8404-8419,8421-8425,8427,8431-8433,8435-8439,8441-8443,8445-8446,8448-8480,ALj31GQMwGiIeU3bM2ZYKITfU-U=\n"
-      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_a_8481-8640:8481-8500,8502-8508,8510-8511,8513-8517,8519-8525,8527-8531,8533,8536-8539,8541-8576,8578-8638,8640,TlQYRmS_kZ5PBAUIUyNQDq0Jprs=\n"
-      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_a_8641-8800:8641-8689,8691-8731,8733-8786,x1Qf7hdNrO8b6yym03ZzNydDS1o=\n";
+      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_s_6501-6505:6501-6505,"
+        "pcY6iVeT9-CBQ3fdAF0rpnKjR1Y=\n"
+      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_s_6506-6510:6506-6510,"
+        "SDBrYC3rX3KEPe72LOypnP6QYac=\n"
+      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_s_6511-6520:6511-6520,"
+        "9UQo-e7OkcsXT2wFWTAhOuWOsUs=\n"
+      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_s_6521-6560:6521-6560,"
+        "qVNw6JIpR1q6PIXST7J4LJ9n3Zg=\n"
+      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_s_6561-6720:6561-6720,"
+        "7OiJvCbiwvpzPITW-hQohY5NHuc=\n"
+      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_s_6721-6880:6721-6880,"
+        "oBS3svhoi9deIa0sWZ_gnD0ujj8=\n"
+      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_s_6881-7040:6881-7040,"
+        "a0r8Xit4VvH39xgyQHZTPczKBIE=\n"
+      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_s_7041-7200:7041-7163,"
+        "q538LChutGknBw55s6kcE2wTcvU=\n"
+      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_a_8001-8160:8001-8024,"
+        "8026-8045,8048-8049,8051-8134,8136-8152,8155-8160,"
+        "j6XXAEWnjYk9tVVLBSdQvIEq2Wg=\n"
+      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_a_8161-8320:8161-8215,"
+        "8217-8222,8224-8320,YaNfiqdQOt-uLCLWVLj46AZpAjQ=\n"
+      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_a_8321-8480:8321-8391,"
+        "8393-8399,8402,8404-8419,8421-8425,8427,8431-8433,8435-8439,8441-8443,"
+        "8445-8446,8448-8480,ALj31GQMwGiIeU3bM2ZYKITfU-U=\n"
+      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_a_8481-8640:8481-8500,"
+        "8502-8508,8510-8511,8513-8517,8519-8525,8527-8531,8533,8536-8539,"
+        "8541-8576,8578-8638,8640,TlQYRmS_kZ5PBAUIUyNQDq0Jprs=\n"
+      "u:s.ytimg.com/safebrowsing/rd/goog-phish-shavar_a_8641-8800:8641-8689,"
+        "8691-8731,8733-8786,x1Qf7hdNrO8b6yym03ZzNydDS1o=\n";
 
   bool re_key = false;
   bool reset = false;

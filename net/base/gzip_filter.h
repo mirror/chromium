@@ -23,7 +23,7 @@ typedef struct z_stream_s z_stream;
 
 class GZipFilter : public Filter {
  public:
-  GZipFilter();
+  explicit GZipFilter(const FilterContext& filter_context);
 
   virtual ~GZipFilter();
 
@@ -140,4 +140,3 @@ class GZipFilter : public Filter {
 };
 
 #endif  // NET_BASE_GZIP_FILTER_H__
-

@@ -2,9 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef NET_DISK_CACHE_ENTRY_IMPL_H__
-#define NET_DISK_CACHE_ENTRY_IMPL_H__
+#ifndef NET_DISK_CACHE_ENTRY_IMPL_H_
+#define NET_DISK_CACHE_ENTRY_IMPL_H_
 
+#include "base/scoped_ptr.h"
 #include "net/disk_cache/disk_cache.h"
 #include "net/disk_cache/storage_block.h"
 #include "net/disk_cache/storage_block-inl.h"
@@ -52,8 +53,12 @@ class EntryImpl : public Entry, public base::RefCounted<EntryImpl> {
   // Returns true if this entry matches the lookup arguments.
   bool IsSameEntry(const std::string& key, uint32 hash);
 
-  // Permamently destroys this entry
+  // Permamently destroys this entry.
   void InternalDoom();
+
+  // Deletes this entry from disk. If |everything| is false, only the user data
+  // will be removed, leaving the key and control data intact.
+  void DeleteEntryData(bool everything);
 
   // Returns the address of the next entry on the list of entries with the same
   // hash.
@@ -148,5 +153,4 @@ class EntryImpl : public Entry, public base::RefCounted<EntryImpl> {
 
 }  // namespace disk_cache
 
-#endif  // NET_DISK_CACHE_ENTRY_IMPL_H__
-
+#endif  // NET_DISK_CACHE_ENTRY_IMPL_H_

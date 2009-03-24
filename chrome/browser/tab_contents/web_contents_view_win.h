@@ -8,9 +8,8 @@
 #include "base/gfx/size.h"
 #include "base/scoped_ptr.h"
 #include "chrome/browser/tab_contents/web_contents_view.h"
-#include "chrome/views/widget_win.h"
+#include "chrome/views/widget/widget_win.h"
 
-class DevToolsWindow;
 class SadTabView;
 struct WebDropData;
 class WebDropTarget;
@@ -35,14 +34,15 @@ class WebContentsViewWin : public WebContentsView,
       RenderWidgetHost* render_widget_host);
   virtual gfx::NativeView GetNativeView() const;
   virtual gfx::NativeView GetContentNativeView() const;
-  virtual gfx::NativeWindow GetTopLevelNativeView() const;
+  virtual gfx::NativeWindow GetTopLevelNativeWindow() const;
   virtual void GetContainerBounds(gfx::Rect* out) const;
   virtual void OnContentsDestroy();
   virtual void SetPageTitle(const std::wstring& title);
   virtual void Invalidate();
   virtual void SizeContents(const gfx::Size& size);
-  virtual void OpenDeveloperTools();
-  virtual void ForwardMessageToDevToolsClient(const IPC::Message& message);
+  virtual void SetInitialFocus();
+  virtual void StoreFocus();
+  virtual void RestoreFocus();
 
   // Backend implementation of RenderViewHostDelegate::View.
   virtual WebContents* CreateNewWindowInternal(
@@ -59,7 +59,7 @@ class WebContentsViewWin : public WebContentsView,
   virtual void StartDragging(const WebDropData& drop_data);
   virtual void UpdateDragCursor(bool is_drop_target);
   virtual void TakeFocus(bool reverse);
-  virtual void HandleKeyboardEvent(const WebKeyboardEvent& event);
+  virtual void HandleKeyboardEvent(const NativeWebKeyboardEvent& event);
 
  private:
   // Windows events ------------------------------------------------------------
@@ -100,9 +100,6 @@ class WebContentsViewWin : public WebContentsView,
 
   WebContents* web_contents_;
 
-  // Allows to show exactly one developer tools window for this page.
-  scoped_ptr<DevToolsWindow> dev_tools_window_;
-
   // A drop target object that handles drags over this WebContents.
   scoped_refptr<WebDropTarget> drop_target_;
 
@@ -112,6 +109,9 @@ class WebContentsViewWin : public WebContentsView,
 
   // Whether to ignore the next CHAR keyboard event.
   bool ignore_next_char_event_;
+
+  // The id used in the ViewStorage to store the last focused view.
+  int last_focused_view_storage_id_;
 
   DISALLOW_COPY_AND_ASSIGN(WebContentsViewWin);
 };

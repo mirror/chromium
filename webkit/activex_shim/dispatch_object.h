@@ -9,7 +9,6 @@
 
 #include <list>
 
-#include "base/scoped_ptr.h"
 #include "webkit/glue/plugins/nphostapi.h"
 
 namespace activex_shim {
@@ -122,4 +121,3 @@ bool NPRemoveProperty(NPObject* npobj, NPIdentifier propertyName);
 }  // namespace activex_shim
 
 #endif // #ifndef WEBKIT_ACTIVEX_SHIM_DISPATCH_OBJECT_H__
-

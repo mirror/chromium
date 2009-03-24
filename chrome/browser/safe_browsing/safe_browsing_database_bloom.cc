@@ -538,7 +538,8 @@ void SafeBrowsingDatabaseBloom::InsertSub(
     } else {
       for (int i = 0; i < count; i++) {
         SBPrefix prefix = entry->PrefixAt(i);
-        encoded_add = EncodeChunkId(entry->ChunkIdAtPrefix(i), entry->list_id());
+        encoded_add = EncodeChunkId(entry->ChunkIdAtPrefix(i),
+                                    entry->list_id());
         InsertSubPrefix(prefix, encoded, encoded_add);
       }
     }
@@ -870,7 +871,7 @@ bool SafeBrowsingDatabaseBloom::BuildAddPrefixList(SBPair* adds) {
 }
 
 bool SafeBrowsingDatabaseBloom::RemoveSubs(
-    SBPair* adds, std::vector<bool>* adds_removed, 
+    SBPair* adds, std::vector<bool>* adds_removed,
     HashCache* add_cache, HashCache* sub_cache, int* subs) {
   DCHECK(add_cache && sub_cache && subs);
 

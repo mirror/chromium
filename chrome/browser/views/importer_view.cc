@@ -7,10 +7,10 @@
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/views/standard_layout.h"
 #include "chrome/common/l10n_util.h"
-#include "chrome/views/checkbox.h"
+#include "chrome/views/controls/button/checkbox.h"
+#include "chrome/views/controls/label.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/label.h"
-#include "chrome/views/window.h"
+#include "chrome/views/window/window.h"
 #include "grit/generated_resources.h"
 #include "grit/locale_settings.h"
 
@@ -154,27 +154,27 @@ std::wstring ImporterView::GetItemAt(views::ComboBox* source, int index) {
   return importer_host_->GetSourceProfileNameAt(index);
 }
 
-void ImporterView::ItemChanged(views::ComboBox* combo_box, 
+void ImporterView::ItemChanged(views::ComboBox* combo_box,
                                int prev_index, int new_index) {
   DCHECK(combo_box);
-  DCHECK(checkbox_items_.size() >= 
-      static_cast<size_t>(importer_host_->GetAvailableProfileCount()));                               
-                               
-  if (prev_index == new_index) 
+  DCHECK(checkbox_items_.size() >=
+      static_cast<size_t>(importer_host_->GetAvailableProfileCount()));
+
+  if (prev_index == new_index)
     return;
-  
+
   // Save the current state
   uint16 prev_items = GetCheckedItems();
   checkbox_items_[prev_index] = prev_items;
-  
+
   // Enable/Disable the checkboxes for this Item
   uint16 new_enabled_items = importer_host_->GetSourceProfileInfoAt(
       new_index).services_supported;
-  SetCheckedItemsState(new_enabled_items);   
-  
-  // Set the checked items for this Item    
+  SetCheckedItemsState(new_enabled_items);
+
+  // Set the checked items for this Item
   uint16 new_items = checkbox_items_[new_index];
-  SetCheckedItems(new_items);  
+  SetCheckedItems(new_items);
 }
 
 void ImporterView::ImportCanceled() {
@@ -186,25 +186,25 @@ void ImporterView::ImportComplete() {
   window()->Close();
 }
 
-views::CheckBox* ImporterView::InitCheckbox(const std::wstring& text,
+views::Checkbox* ImporterView::InitCheckbox(const std::wstring& text,
                                             bool checked) {
-  views::CheckBox* checkbox = new views::CheckBox(text);
-  checkbox->SetIsSelected(checked);
+  views::Checkbox* checkbox = new views::Checkbox(text);
+  checkbox->SetChecked(checked);
   return checkbox;
 }
 
 uint16 ImporterView::GetCheckedItems() {
   uint16 items = NONE;
-  if (history_checkbox_->IsEnabled() && history_checkbox_->IsSelected())
+  if (history_checkbox_->IsEnabled() && history_checkbox_->checked())
     items |= HISTORY;
-  if (favorites_checkbox_->IsEnabled() && favorites_checkbox_->IsSelected())
+  if (favorites_checkbox_->IsEnabled() && favorites_checkbox_->checked())
     items |= FAVORITES;
-  if (passwords_checkbox_->IsEnabled() && passwords_checkbox_->IsSelected())
+  if (passwords_checkbox_->IsEnabled() && passwords_checkbox_->checked())
     items |= PASSWORDS;
   if (search_engines_checkbox_->IsEnabled() &&
-      search_engines_checkbox_->IsSelected())
+      search_engines_checkbox_->checked())
     items |= SEARCH_ENGINES;
-  return items;   
+  return items;
 }
 
 void ImporterView::SetCheckedItemsState(uint16 items) {
@@ -212,58 +212,38 @@ void ImporterView::SetCheckedItemsState(uint16 items) {
     history_checkbox_->SetEnabled(true);
   } else {
     history_checkbox_->SetEnabled(false);
-    history_checkbox_->SetIsSelected(false);
+    history_checkbox_->SetChecked(false);
   }
   if (items & FAVORITES) {
     favorites_checkbox_->SetEnabled(true);
   } else {
     favorites_checkbox_->SetEnabled(false);
-    favorites_checkbox_->SetIsSelected(false);
+    favorites_checkbox_->SetChecked(false);
   }
   if (items & PASSWORDS) {
     passwords_checkbox_->SetEnabled(true);
   } else {
     passwords_checkbox_->SetEnabled(false);
-    passwords_checkbox_->SetIsSelected(false);
+    passwords_checkbox_->SetChecked(false);
   }
   if (items & SEARCH_ENGINES) {
     search_engines_checkbox_->SetEnabled(true);
   } else {
     search_engines_checkbox_->SetEnabled(false);
-    search_engines_checkbox_->SetIsSelected(false);
+    search_engines_checkbox_->SetChecked(false);
   }
 }
 
 void ImporterView::SetCheckedItems(uint16 items) {
-  if (history_checkbox_->IsEnabled()) {
-    if (items & HISTORY) {
-      history_checkbox_->SetIsSelected(true);
-    } else {
-      history_checkbox_->SetIsSelected(false);
-    }
-  }
-      
-  if (favorites_checkbox_->IsEnabled()) {
-    if (items & FAVORITES) {
-      favorites_checkbox_->SetIsSelected(true);
-    } else {
-      favorites_checkbox_->SetIsSelected(false);
-    }
-  }
-  
-  if (passwords_checkbox_->IsEnabled()) {
-    if (items & PASSWORDS) {
-      passwords_checkbox_->SetIsSelected(true);
-    } else {
-      passwords_checkbox_->SetIsSelected(false);
-    }
-  }
-  
-  if (search_engines_checkbox_->IsEnabled()) {
-    if (items & SEARCH_ENGINES) {
-      search_engines_checkbox_->SetIsSelected(true);
-    } else {
-      search_engines_checkbox_->SetIsSelected(false);
-    }
-  }
+  if (history_checkbox_->IsEnabled())
+    history_checkbox_->SetChecked(!!(items & HISTORY));
+
+  if (favorites_checkbox_->IsEnabled())
+    favorites_checkbox_->SetChecked(!!(items & FAVORITES));
+
+  if (passwords_checkbox_->IsEnabled())
+    passwords_checkbox_->SetChecked(!!(items & PASSWORDS));
+
+  if (search_engines_checkbox_->IsEnabled())
+    search_engines_checkbox_->SetChecked(!!(items & SEARCH_ENGINES));
 }

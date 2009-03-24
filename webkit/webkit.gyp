@@ -18,7 +18,7 @@
       'ENABLE_SVG_USE=1',
       'ENABLE_SVG_FOREIGN_OBJECT=1',
       'ENABLE_SVG_FONTS=1',
-      'ENABLE_WORKERS=0',
+      'ENABLE_WORKERS=1',
     ],
     'non_feature_defines': [
       'BUILDING_CHROMIUM__=1',
@@ -28,6 +28,7 @@
     'webcore_include_dirs': [
       'pending',
       '../third_party/WebKit/WebCore/bindings/v8',
+      '../third_party/WebKit/WebCore/bindings/v8/custom',
       '../third_party/WebKit/WebCore/css',
       '../third_party/WebKit/WebCore/dom',
       '../third_party/WebKit/WebCore/editing',
@@ -77,6 +78,8 @@
       }],
       ['OS=="mac"', {
         'non_feature_defines': [
+          # Ensure that only Leopard features are used when doing the Mac build.
+          'BUILDING_ON_LEOPARD',
           # Match Safari and Mozilla on Mac x86.
           'WEBCORE_NAVIGATOR_PLATFORM="MacIntel"',
         ],
@@ -231,8 +234,8 @@
         '../third_party/WebKit/JavaScriptCore/wtf/Assertions.h',
         '../third_party/WebKit/JavaScriptCore/wtf/ByteArray.cpp',
         '../third_party/WebKit/JavaScriptCore/wtf/ByteArray.h',
-        '../third_party/WebKit/JavaScriptCore/wtf/CurrentTime.cpp',
         '../third_party/WebKit/JavaScriptCore/wtf/CurrentTime.h',
+        '../third_party/WebKit/JavaScriptCore/wtf/CrossThreadRefCounted.h',
         '../third_party/WebKit/JavaScriptCore/wtf/Deque.h',
         '../third_party/WebKit/JavaScriptCore/wtf/DisallowCType.h',
         '../third_party/WebKit/JavaScriptCore/wtf/FastMalloc.cpp',
@@ -348,6 +351,12 @@
           'include_dirs!': [
             '<(SHARED_INTERMEDIATE_DIR)/webkit',
           ],
+        }],
+        ['OS=="linux"', {
+          'defines': ['WTF_USE_PTHREADS=1'],
+          'direct_dependent_settings': {
+            'defines': ['WTF_USE_PTHREADS=1'],
+          },
         }],
       ],
     },
@@ -482,7 +491,7 @@
             '../third_party/WebKit/WebCore/css/html4.css',
             '../third_party/WebKit/WebCore/css/quirks.css',
             '../third_party/WebKit/WebCore/css/view-source.css',
-            '../third_party/WebKit/WebCore/css/themeWin.css',
+            '../third_party/WebKit/WebCore/css/themeChromiumWin.css',
             '../third_party/WebKit/WebCore/css/themeWinQuirks.css',
             '../third_party/WebKit/WebCore/css/svg.css',
             '../third_party/WebKit/WebCore/css/mediaControls.css',
@@ -591,6 +600,7 @@
           },
           'action': ['python', 'build/rule_binding.py', '<(RULE_INPUT_PATH)', '<(INTERMEDIATE_DIR)/bindings', '<(SHARED_INTERMEDIATE_DIR)/webkit/bindings', '--', '<@(_inputs)', '--', '--defines', '<(feature_defines) LANGUAGE_JAVASCRIPT V8_BINDING', '--generator', 'V8', '<@(generator_include_dirs)'],
           'process_outputs_as_sources': 1,
+          'message': 'Generating binding from <(RULE_INPUT_PATH)',
         },
       ],
       'include_dirs': [
@@ -957,6 +967,7 @@
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8ClipboardCustom.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8CSSStyleDeclarationCustom.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8CustomBinding.h',
+        '../third_party/WebKit/WebCore/bindings/v8/custom/V8CustomEventListener.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8CustomEventListener.h',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8CustomSQLStatementCallback.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8CustomSQLStatementCallback.h',
@@ -968,10 +979,10 @@
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8CustomSQLTransactionErrorCallback.h',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8CustomVoidCallback.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8CustomVoidCallback.h',
+        '../third_party/WebKit/WebCore/bindings/v8/custom/V8DatabaseCustom.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8DOMParserConstructor.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8DOMStringListCustom.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8DOMWindowCustom.cpp',
-        '../third_party/WebKit/WebCore/bindings/v8/custom/V8DatabaseCustom.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8DocumentCustom.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8EventCustom.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8HTMLCollectionCustom.cpp',
@@ -984,6 +995,7 @@
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8HTMLPlugInElementCustom.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8HTMLSelectElementCustom.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8HTMLSelectElementCustom.h',
+        '../third_party/WebKit/WebCore/bindings/v8/custom/V8InspectorControllerCustom.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8LocationCustom.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8MessageChannelConstructor.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/custom/V8NamedNodeMapCustom.cpp',
@@ -1019,16 +1031,27 @@
         '../third_party/WebKit/WebCore/bindings/v8/ScriptString.h',
         '../third_party/WebKit/WebCore/bindings/v8/ScriptValue.cpp',
         '../third_party/WebKit/WebCore/bindings/v8/ScriptValue.h',
+        '../third_party/WebKit/WebCore/bindings/v8/V8AbstractEventListener.cpp',
+        '../third_party/WebKit/WebCore/bindings/v8/V8AbstractEventListener.h',
         '../third_party/WebKit/WebCore/bindings/v8/V8Binding.h',
+        '../third_party/WebKit/WebCore/bindings/v8/V8Collection.h',
+        '../third_party/WebKit/WebCore/bindings/v8/V8LazyEventListener.cpp',
+        '../third_party/WebKit/WebCore/bindings/v8/V8LazyEventListener.h',
+        '../third_party/WebKit/WebCore/bindings/v8/V8ObjectEventListener.cpp',
+        '../third_party/WebKit/WebCore/bindings/v8/V8ObjectEventListener.h',
         '../third_party/WebKit/WebCore/bindings/v8/V8Proxy.h',
-        'port/bindings/v8/extensions/GCController.cpp',
-        'port/bindings/v8/extensions/GCController.h',
-        'port/bindings/v8/extensions/Gears.cpp',
-        'port/bindings/v8/extensions/Gears.h',
-        'port/bindings/v8/extensions/Interval.cpp',
-        'port/bindings/v8/extensions/Interval.h',
-        'port/bindings/v8/extensions/Playback.cpp',
-        'port/bindings/v8/extensions/Playback.h',
+        '../third_party/WebKit/WebCore/bindings/v8/V8WorkerContextEventListener.cpp',
+        '../third_party/WebKit/WebCore/bindings/v8/V8WorkerContextEventListener.h',
+        'extensions/v8/gc_extension.cc',
+        'extensions/v8/gc_extension.h',
+        'extensions/v8/gears_extension.cc',
+        'extensions/v8/gears_extension.h',
+        'extensions/v8/interval_extension.cc',
+        'extensions/v8/interval_extension.h',
+        'extensions/v8/playback_extension.cc',
+        'extensions/v8/playback_extension.h',
+        'extensions/v8/profiler_extension.cc',
+        'extensions/v8/profiler_extension.h',
         'port/bindings/v8/JSDOMBinding.cpp',
         'port/bindings/v8/JSDOMBinding.h',
         'port/bindings/v8/JSXPathNSResolver.cpp',
@@ -1042,34 +1065,36 @@
         'port/bindings/v8/V8SVGPODTypeWrapper.h',
         'port/bindings/v8/V8WorkerContextCustom.cpp',
         'port/bindings/v8/V8WorkerCustom.cpp',
+        'port/bindings/v8/V8XMLHttpRequestConstructor.cpp',
         'port/bindings/v8/V8XMLHttpRequestCustom.cpp',
+        'port/bindings/v8/V8XMLHttpRequestUploadCustom.cpp',
+        'port/bindings/v8/V8XMLHttpRequestUtilities.cpp',
+        'port/bindings/v8/V8XMLHttpRequestUtilities.h',
         'port/bindings/v8/WorkerContextExecutionProxy.cpp',
         'port/bindings/v8/WorkerContextExecutionProxy.h',
         'port/bindings/v8/WorkerScriptController.cpp',
         'port/bindings/v8/WorkerScriptController.h',
         'port/bindings/v8/dom_wrapper_map.h',
-        'port/bindings/v8/np_v8object.cpp',
-        'port/bindings/v8/np_v8object.h',
+        'port/bindings/v8/NPV8Object.cpp',
+        'port/bindings/v8/NPV8Object.h',
         'port/bindings/v8/npruntime.cpp',
         'port/bindings/v8/npruntime_impl.h',
         'port/bindings/v8/npruntime_internal.h',
         'port/bindings/v8/npruntime_priv.h',
         'port/bindings/v8/v8_binding.h',
-        'port/bindings/v8/v8_collection.h',
+        'port/bindings/v8/v8_binding.cpp',
         'port/bindings/v8/v8_custom.cpp',
         'port/bindings/v8/v8_custom.h',
-        'port/bindings/v8/v8_events.cpp',
-        'port/bindings/v8/v8_events.h',
         'port/bindings/v8/v8_helpers.cpp',
         'port/bindings/v8/v8_helpers.h',
         'port/bindings/v8/v8_index.cpp',
         'port/bindings/v8/v8_index.h',
         'port/bindings/v8/v8_nodefilter.cpp',
         'port/bindings/v8/v8_nodefilter.h',
-        'port/bindings/v8/v8_np_utils.cpp',
-        'port/bindings/v8/v8_np_utils.h',
-        'port/bindings/v8/v8_npobject.cpp',
-        'port/bindings/v8/v8_npobject.h',
+        'port/bindings/v8/V8NPUtils.cpp',
+        'port/bindings/v8/V8NPUtils.h',
+        'port/bindings/v8/V8NPObject.cpp',
+        'port/bindings/v8/V8NPObject.h',
         'port/bindings/v8/v8_proxy.cpp',
         'port/bindings/v8/v8_proxy.h',
         'port/bindings/v8/v8_utility.h',
@@ -1757,6 +1782,10 @@
         '../third_party/WebKit/WebCore/loader/CachedXBLDocument.h',
         '../third_party/WebKit/WebCore/loader/CachedXSLStyleSheet.cpp',
         '../third_party/WebKit/WebCore/loader/CachedXSLStyleSheet.h',
+        '../third_party/WebKit/WebCore/loader/CrossOriginAccessControl.cpp',
+        '../third_party/WebKit/WebCore/loader/CrossOriginAccessControl.h',
+        '../third_party/WebKit/WebCore/loader/CrossOriginPreflightResultCache.cpp',
+        '../third_party/WebKit/WebCore/loader/CrossOriginPreflightResultCache.h',
         '../third_party/WebKit/WebCore/loader/DocLoader.cpp',
         '../third_party/WebKit/WebCore/loader/DocLoader.h',
         '../third_party/WebKit/WebCore/loader/DocumentLoader.cpp',
@@ -2030,7 +2059,6 @@
         '../third_party/WebKit/WebCore/platform/chromium/WidgetChromium.cpp',
         '../third_party/WebKit/WebCore/platform/chromium/WindowsVersion.cpp',
         '../third_party/WebKit/WebCore/platform/chromium/WindowsVersion.h',
-        '../third_party/WebKit/WebCore/platform/chromium/gtkdrawing.h',
         '../third_party/WebKit/WebCore/platform/graphics/cairo/CairoPath.h',
         '../third_party/WebKit/WebCore/platform/graphics/cairo/FontCairo.cpp',
         '../third_party/WebKit/WebCore/platform/graphics/cairo/GradientCairo.cpp',
@@ -2066,6 +2094,7 @@
         '../third_party/WebKit/WebCore/platform/graphics/cg/PatternCG.cpp',
         '../third_party/WebKit/WebCore/platform/graphics/cg/TransformationMatrixCG.cpp',
         '../third_party/WebKit/WebCore/platform/graphics/chromium/ColorChromium.cpp',
+        '../third_party/WebKit/WebCore/platform/graphics/chromium/ColorChromiumMac.mm',
         '../third_party/WebKit/WebCore/platform/graphics/chromium/FontCacheChromiumWin.cpp',
         '../third_party/WebKit/WebCore/platform/graphics/chromium/FontCacheLinux.cpp',
         '../third_party/WebKit/WebCore/platform/graphics/chromium/FontChromiumWin.cpp',
@@ -2735,8 +2764,6 @@
         '../third_party/WebKit/WebCore/platform/text/TextCodecUTF16.h',
         '../third_party/WebKit/WebCore/platform/text/TextCodecUserDefined.cpp',
         '../third_party/WebKit/WebCore/platform/text/TextCodecUserDefined.h',
-        '../third_party/WebKit/WebCore/platform/text/TextDecoder.cpp',
-        '../third_party/WebKit/WebCore/platform/text/TextDecoder.h',
         '../third_party/WebKit/WebCore/platform/text/TextDirection.h',
         '../third_party/WebKit/WebCore/platform/text/TextEncoding.cpp',
         '../third_party/WebKit/WebCore/platform/text/TextEncoding.h',
@@ -3175,8 +3202,8 @@
         '../third_party/WebKit/WebCore/rendering/RenderTextFragment.h',
         '../third_party/WebKit/WebCore/rendering/RenderTheme.cpp',
         '../third_party/WebKit/WebCore/rendering/RenderTheme.h',
-        '../third_party/WebKit/WebCore/rendering/RenderThemeChromiumGtk.cpp',
-        '../third_party/WebKit/WebCore/rendering/RenderThemeChromiumGtk.h',
+        '../third_party/WebKit/WebCore/rendering/RenderThemeChromiumLinux.cpp',
+        '../third_party/WebKit/WebCore/rendering/RenderThemeChromiumLinux.h',
         '../third_party/WebKit/WebCore/rendering/RenderThemeChromiumMac.h',
         '../third_party/WebKit/WebCore/rendering/RenderThemeChromiumMac.mm',
         '../third_party/WebKit/WebCore/rendering/RenderThemeChromiumWin.cpp',
@@ -3199,6 +3226,8 @@
         '../third_party/WebKit/WebCore/rendering/RenderWordBreak.h',
         '../third_party/WebKit/WebCore/rendering/RootInlineBox.cpp',
         '../third_party/WebKit/WebCore/rendering/RootInlineBox.h',
+        '../third_party/WebKit/WebCore/rendering/ScrollBehavior.cpp',
+        '../third_party/WebKit/WebCore/rendering/ScrollBehavior.h',
         '../third_party/WebKit/WebCore/rendering/SVGCharacterLayoutInfo.cpp',
         '../third_party/WebKit/WebCore/rendering/SVGCharacterLayoutInfo.h',
         '../third_party/WebKit/WebCore/rendering/SVGInlineFlowBox.cpp',
@@ -3659,6 +3688,8 @@
         '../third_party/WebKit/WebCore/workers/WorkerContext.cpp',
         '../third_party/WebKit/WebCore/workers/WorkerContext.h',
         '../third_party/WebKit/WebCore/workers/WorkerContextProxy.h',
+        '../third_party/WebKit/WebCore/workers/WorkerImportScriptsClient.cpp',
+        '../third_party/WebKit/WebCore/workers/WorkerImportScriptsClient.h',
         '../third_party/WebKit/WebCore/workers/WorkerLocation.cpp',
         '../third_party/WebKit/WebCore/workers/WorkerLocation.h',
         '../third_party/WebKit/WebCore/workers/WorkerMessagingProxy.cpp',
@@ -3728,13 +3759,10 @@
       'sources/': [
 
         # Don't build bindings for storage/database.
-        ['exclude', '/third_party/WebKit/WebCore/storage/[^/]*\\.idl$'],
+        ['exclude', '/third_party/WebKit/WebCore/storage/Storage[^/]*\\.idl$'],
 
         # SVG_FILTERS only.
         ['exclude', '/third_party/WebKit/WebCore/svg/SVG(FE|Filter)[^/]*\\.idl$'],
-
-        # Don't build custom bindings for storage.
-        ['exclude', '/third_party/WebKit/WebCore/bindings/v8/custom/V8((Custom)?SQL|Database)[^/]*\\.cpp$'],
 
         # Fortunately, many things can be excluded by using broad patterns.
 
@@ -3803,9 +3831,6 @@
         # Someone (me?) should figure it out and add appropriate comments.
         '../third_party/WebKit/WebCore/css/CSSUnknownRule.idl',
 
-        # Don't build custom bindings for VoidCallback.
-        '../third_party/WebKit/WebCore/bindings/v8/custom/V8CustomVoidCallback.cpp',
-
         # A few things can't be excluded by patterns.  List them individually.
 
         # Use history/BackForwardListChromium.cpp instead.
@@ -3831,6 +3856,9 @@
         '../third_party/WebKit/WebCore/plugins/PluginStream.cpp',
         '../third_party/WebKit/WebCore/plugins/PluginView.cpp',
         '../third_party/WebKit/WebCore/plugins/npapi.cpp',
+
+        # Use LinkHashChromium.cpp instead
+        '../third_party/WebKit/WebCore/platform/LinkHash.cpp',
 
         # Don't build these.
         # TODO(mark): I don't know exactly why these are excluded.  It would
@@ -3872,6 +3900,7 @@
           '../third_party/WebKit/WebCore/Resources/eastWestResizeCursor.png',
           '../third_party/WebKit/WebCore/Resources/helpCursor.png',
           '../third_party/WebKit/WebCore/Resources/linkCursor.png',
+          '../third_party/WebKit/WebCore/Resources/missingImage.png',
           '../third_party/WebKit/WebCore/Resources/moveCursor.png',
           '../third_party/WebKit/WebCore/Resources/noDropCursor.png',
           '../third_party/WebKit/WebCore/Resources/noneCursor.png',
@@ -3908,14 +3937,31 @@
       },
       'conditions': [
         ['OS=="linux"', {
+          'dependencies': [
+            '../build/linux/system.gyp:gtk',
+          ],
           'sources!': [
             # Not yet ported to Linux.
             '../third_party/WebKit/WebCore/platform/graphics/chromium/FontCustomPlatformData.cpp',
           ],
-          'defines': ['WTF_USE_PTHREADS=1'],
-          # for:
-          #   .../WebCore/platform/image-decoders/bmp/BMPImageDecoder.cpp
-          'cflags': ['-Wno-multichar'],
+          'sources/': [
+            # Cherry-pick files excluded by the broader regular expressions above.
+            ['include', 'third_party/WebKit/WebCore/platform/chromium/KeyCodeConversionGtk\\.cpp$'],
+            ['include', 'third_party/WebKit/WebCore/platform/graphics/chromium/FontCacheLinux\\.cpp$'],
+            ['include', 'third_party/WebKit/WebCore/platform/graphics/chromium/FontLinux\\.cpp$'],
+            ['include', 'third_party/WebKit/WebCore/platform/graphics/chromium/FontPlatformDataLinux\\.cpp$'],
+            ['include', 'third_party/WebKit/WebCore/platform/graphics/chromium/GlyphPageTreeNodeLinux\\.cpp$'],
+            ['include', 'third_party/WebKit/WebCore/platform/graphics/chromium/SimpleFontDataLinux\\.cpp$'],
+          ],
+          'cflags': [
+            # -Wno-multichar for:
+            #   .../WebCore/platform/image-decoders/bmp/BMPImageDecoder.cpp
+            '-Wno-multichar',
+          ],
+          # TODO(sgk):  unnecessary once common.gypi gets Linux settings
+          # necessary to avoid build failure due to warnings generated by:
+          #   ../third_party/WebKit/WebCore/dom/Document.cpp
+          'scons_remove' : {'CXXFLAGS' : ['-Werror']},
         }],
         ['OS=="mac"', {
           'actions': [
@@ -4048,6 +4094,8 @@
         'WEBKIT_IMPLEMENTATION',
       ],
       'sources': [
+        '../third_party/WebKit/WebKit/chromium/public/WebCanvas.h',
+        '../third_party/WebKit/WebKit/chromium/public/WebColor.h',
         '../third_party/WebKit/WebKit/chromium/public/WebCString.h',
         '../third_party/WebKit/WebKit/chromium/public/WebClipboard.h',
         '../third_party/WebKit/WebKit/chromium/public/WebCommon.h',
@@ -4063,54 +4111,39 @@
         '../third_party/WebKit/WebKit/chromium/src/ChromiumBridge.cpp',
         '../third_party/WebKit/WebKit/chromium/src/ChromiumCurrentTime.cpp',
         '../third_party/WebKit/WebKit/chromium/src/ChromiumThreading.cpp',
+        '../third_party/WebKit/WebKit/chromium/src/WebCache.cpp',
         '../third_party/WebKit/WebKit/chromium/src/WebCString.cpp',
         '../third_party/WebKit/WebKit/chromium/src/WebImageSkia.cpp',
         '../third_party/WebKit/WebKit/chromium/src/WebKit.cpp',
         '../third_party/WebKit/WebKit/chromium/src/WebString.cpp',
         '../third_party/WebKit/WebKit/chromium/src/WebURL.cpp',
       ],
-      'direct_dependent_settings': {
-        'include_dirs': [
-          '../third_party/WebKit/WebKit/chromium/public',
-        ],
-      },
       'conditions': [
+        ['OS=="linux"', {
+          'dependencies': [
+            '../build/linux/system.gyp:gtk',
+          ],
+        }],
         ['OS=="mac"', {
           'sources!': [
             '../third_party/WebKit/WebKit/chromium/src/WebImageSkia.cpp',
           ],
-        }, {  # else: OS!="mac"
-          'defines': [
-            'WEBKIT_USING_SKIA',
+        }],
+        ['OS=="win"', {
+          'sources': [
+            '../third_party/WebKit/WebKit/chromium/public/win/WebSandboxSupport.h',
+            '../third_party/WebKit/WebKit/chromium/public/win/WebThemeEngine.h',
           ],
-          'direct_dependent_settings': {
-            'defines': [
-              'WEBKIT_USING_SKIA',
-            ],
-          },
         }],
       ],
     },
     {
-      'target_name': 'glue',
-      'type': 'static_library',
+      'target_name': 'webkit_resources',
+      'type': 'none',
       'dependencies': [
         'webcore',
         'webkit',
         '../net/net.gyp:net',
-      ],
-      'actions': [
-        {
-          'action_name': 'webkit_version',
-          'inputs': [
-            'build/webkit_version.py',
-            '../third_party/WebKit/WebCore/Configurations/Version.xcconfig',
-          ],
-          'outputs': [
-            '<(INTERMEDIATE_DIR)/webkit_version.h',
-          ],
-          'action': ['python', '<@(_inputs)', '<(INTERMEDIATE_DIR)'],
-        },
       ],
       'rules': [
         {
@@ -4125,6 +4158,39 @@
           'action': ['python', '<@(_inputs)', '-i', '<(RULE_INPUT_PATH)', 'build', '-o', '<(SHARED_INTERMEDIATE_DIR)/webkit'],
         },
       ],
+      'sources': [
+        # grit rule
+        'glue/webkit_resources.grd',
+        'glue/webkit_strings.grd',
+      ],
+      'direct_dependent_settings': {
+        'include_dirs': [
+          '<(SHARED_INTERMEDIATE_DIR)/webkit',
+        ],
+      },
+    },
+    {
+      'target_name': 'glue',
+      'type': 'static_library',
+      'dependencies': [
+        'webcore',
+        'webkit',
+        '../net/net.gyp:net',
+        'webkit_resources',
+      ],
+      'actions': [
+        {
+          'action_name': 'webkit_version',
+          'inputs': [
+            'build/webkit_version.py',
+            '../third_party/WebKit/WebCore/Configurations/Version.xcconfig',
+          ],
+          'outputs': [
+            '<(INTERMEDIATE_DIR)/webkit_version.h',
+          ],
+          'action': ['python', '<@(_inputs)', '<(INTERMEDIATE_DIR)'],
+        },
+      ],
       'include_dirs': [
         '<(INTERMEDIATE_DIR)',
       ],
@@ -4132,13 +4198,19 @@
         # webkit_version rule
         '../third_party/WebKit/WebCore/Configurations/Version.xcconfig',
 
-        # grit rule
-        'glue/webkit_resources.grd',
-        'glue/webkit_strings.grd',
-
         # This list contains all .h, .cc, and .mm files in glue except for
         # those in the test subdirectory and those with unittest in in their
         # names.
+        'glue/devtools/devtools_rpc.cc',
+        'glue/devtools/devtools_rpc.h',
+        'glue/devtools/devtools_rpc_js.h',
+        'glue/devtools/dom_agent.h',
+        'glue/devtools/dom_agent_impl.cc',
+        'glue/devtools/dom_agent_impl.h',
+        'glue/devtools/net_agent.h',
+        'glue/devtools/net_agent_impl.cc',
+        'glue/devtools/net_agent_impl.h',
+        'glue/devtools/tools_agent.h',
         'glue/plugins/mozilla_extensions.cc',
         'glue/plugins/mozilla_extensions.h',
         'glue/plugins/nphostapi.h',
@@ -4179,8 +4251,6 @@
         'glue/autofill_form.h',
         'glue/back_forward_list_client_impl.cc',
         'glue/back_forward_list_client_impl.h',
-        'glue/cache_manager.cc',
-        'glue/cache_manager.h',
         'glue/chrome_client_impl.cc',
         'glue/chrome_client_impl.h',
         'glue/chromium_bridge_impl.cc',
@@ -4254,7 +4324,6 @@
         'glue/simple_webmimeregistry_impl.h',
         'glue/stacking_order_iterator.cc',
         'glue/stacking_order_iterator.h',
-        'glue/tools_proxy.h',
         'glue/webclipboard_impl.cc',
         'glue/webclipboard_impl.h',
         'glue/webcursor.cc',
@@ -4266,8 +4335,14 @@
         'glue/webdatasource.h',
         'glue/webdatasource_impl.cc',
         'glue/webdatasource_impl.h',
-        'glue/webdocumentloader_impl.cc',
-        'glue/webdocumentloader_impl.h',
+        'glue/webdevtoolsagent.h',
+        'glue/webdevtoolsagent_delegate.h',
+        'glue/webdevtoolsagent_impl.cc',
+        'glue/webdevtoolsagent_impl.h',
+        'glue/webdevtoolsclient.h',
+        'glue/webdevtoolsclient_delegate.h',
+        'glue/webdevtoolsclient_impl.cc',
+        'glue/webdevtoolsclient_impl.h',
         'glue/webdropdata.cc',
         'glue/webdropdata.h',
         'glue/weberror.h',
@@ -4284,6 +4359,8 @@
         'glue/webinputevent.h',
         'glue/webinputevent_linux.cc',
         'glue/webinputevent_mac.mm',
+        'glue/webinputevent_util.cc',
+        'glue/webinputevent_util.h',
         'glue/webinputevent_win.cc',
         'glue/webkit_glue.cc',
         'glue/webkit_glue.h',
@@ -4302,6 +4379,7 @@
         'glue/webplugin_impl.cc',
         'glue/webplugin_impl.h',
         'glue/webpreferences.h',
+        'glue/webscriptsource.h',
         'glue/webresponse.h',
         'glue/webresponse_impl.h',
         'glue/webtextinput.h',
@@ -4319,6 +4397,11 @@
         'glue/webwidget_delegate.h',
         'glue/webwidget_impl.cc',
         'glue/webwidget_impl.h',
+        'glue/webworker.h',
+        'glue/webworker_impl.cc',
+        'glue/webworker_impl.h',
+        'glue/webworkerclient_impl.cc',
+        'glue/webworkerclient_impl.h',
         'glue/window_open_disposition.h',
         'pending/AccessibleBase.cpp',
         'pending/AccessibleBase.h',
@@ -4333,8 +4416,16 @@
         'webcore',
       ],
       'conditions': [
-        ['OS!="linux"', {
-          'sources/': [['exclude', '_(linux|gtk)(_data)?\\.cc$']]
+        ['OS=="linux"', {
+          'dependencies': [
+            '../build/linux/system.gyp:gtk',
+            '../build/linux/system.gyp:pangoft2',
+          ],
+          'sources!': [
+            'glue/plugins/plugin_stubs.cc',
+          ],
+        }, { # else: OS!="linux"
+          'sources/': [['exclude', '_(linux|gtk)(_data)?\\.cc$']],
         }],
         ['OS!="mac"', {
           'sources/': [['exclude', '_mac\\.(cc|mm)$']]

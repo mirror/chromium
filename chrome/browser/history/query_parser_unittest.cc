@@ -3,7 +3,7 @@
 // found in the LICENSE file.
 
 #include "chrome/browser/history/query_parser.h"
-#include "base/logging.h"
+#include "base/basictypes.h"
 #include "chrome/common/scoped_vector.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -46,10 +46,14 @@ TEST_F(QueryParserTest, SimpleQueries) {
 
 // Quoted substring parsing.
 TEST_F(QueryParserTest, Quoted) {
-  EXPECT_EQ(L"\"Quoted\"", QueryToString(L"\"Quoted\""));    // ASCII quotes
-  EXPECT_EQ(L"\"miss end\"", QueryToString(L"\"miss end"));  // Missing end quotes
-  EXPECT_EQ(L"miss* beg*", QueryToString(L"miss beg\""));    // Missing begin quotes
-  EXPECT_EQ(L"\"Many\" \"quotes\"", QueryToString(L"\"Many   \"\"quotes")); // Weird formatting
+  // ASCII quotes
+  EXPECT_EQ(L"\"Quoted\"", QueryToString(L"\"Quoted\""));
+  // Missing end quotes
+  EXPECT_EQ(L"\"miss end\"", QueryToString(L"\"miss end"));
+  // Missing begin quotes
+  EXPECT_EQ(L"miss* beg*", QueryToString(L"miss beg\""));
+  // Weird formatting
+  EXPECT_EQ(L"\"Many\" \"quotes\"", QueryToString(L"\"Many   \"\"quotes"));
 }
 
 // Apostrophes within words should be preserved, but otherwise stripped.

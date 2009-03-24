@@ -12,6 +12,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/ref_counted_util.h"
+#include "chrome/common/url_constants.h"
 #include "googleurl/src/url_util.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_file_job.h"
@@ -43,7 +44,7 @@ class URLRequestChromeJob : public URLRequestJob {
   virtual void Start();
   virtual void Kill();
   virtual bool ReadRawData(net::IOBuffer* buf, int buf_size, int *bytes_read);
-  virtual bool GetMimeType(std::string* mime_type);
+  virtual bool GetMimeType(std::string* mime_type) const;
 
   // Called by ChromeURLDataManager to notify us that the data blob is ready
   // for us.
@@ -97,22 +98,31 @@ void RegisterURLRequestChromeJob() {
   }
 
   std::wstring inspector_dir;
-  if (PathService::Get(chrome::DIR_INSPECTOR, &inspector_dir))
+  if (PathService::Get(chrome::DIR_INSPECTOR, &inspector_dir)) {
+    // TODO(yurys): remove "inspector" source when new developer tools support
+    // all features of in-process Web Inspector and Console Debugger. For the
+    // time being we need to serve the same content from chrome-ui://inspector
+    // for the Console Debugger and in-process Web Inspector.
     chrome_url_data_manager.AddFileSource("inspector", inspector_dir);
+    chrome_url_data_manager.AddFileSource(chrome::kChromeUIDevToolsHost,
+                                          inspector_dir);
+  }
 
   URLRequest::RegisterProtocolFactory(kChromeURLScheme,
                                       &ChromeURLDataManager::Factory);
 #ifdef CHROME_PERSONALIZATION
   url_util::AddStandardScheme(kPersonalizationScheme);
   URLRequest::RegisterProtocolFactory(kPersonalizationScheme,
-                                      &ChromeURLDataManager::Factory); 
+                                      &ChromeURLDataManager::Factory);
 #endif
 }
 
 void UnregisterURLRequestChromeJob() {
   std::wstring inspector_dir;
-  if (PathService::Get(chrome::DIR_INSPECTOR, &inspector_dir))
+  if (PathService::Get(chrome::DIR_INSPECTOR, &inspector_dir)) {
     chrome_url_data_manager.RemoveFileSource("inspector");
+    chrome_url_data_manager.RemoveFileSource(chrome::kChromeUIDevToolsHost);
+  }
 }
 
 // static
@@ -278,7 +288,7 @@ void URLRequestChromeJob::Kill() {
   chrome_url_data_manager.RemoveRequest(this);
 }
 
-bool URLRequestChromeJob::GetMimeType(std::string* mime_type) {
+bool URLRequestChromeJob::GetMimeType(std::string* mime_type) const {
   *mime_type = mime_type_;
   return !mime_type_.empty();
 }
@@ -347,4 +357,3 @@ URLRequestChromeFileJob::URLRequestChromeFileJob(URLRequest* request,
 }
 
 URLRequestChromeFileJob::~URLRequestChromeFileJob() { }
-

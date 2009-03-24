@@ -8,28 +8,34 @@
 #include "chrome/renderer/render_view.h"
 #include "chrome/renderer/webmediaplayer_delegate_impl.h"
 #include "googleurl/src/gurl.h"
+#if defined(OS_WIN)
+// FFmpeg is not ready for Linux and Mac yet.
+#include "media/filters/ffmpeg_demuxer.h"
+#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // Task to be posted on main thread that fire WebMediaPlayer methods.
 
 class NotifyWebMediaPlayerTask : public CancelableTask {
  public:
-  NotifyWebMediaPlayerTask(webkit_glue::WebMediaPlayer* web_media_player_,
+  NotifyWebMediaPlayerTask(WebMediaPlayerDelegateImpl* delegate,
                            WebMediaPlayerMethod method)
-      : method_(method) {}
+      : delegate_(delegate),
+        method_(method) {}
 
   virtual void Run() {
-    if (web_media_player_) {
-      (web_media_player_->*(method_))();
+    if (delegate_) {
+      (delegate_->web_media_player()->*(method_))();
+      delegate_->DidTask(this);
     }
   }
 
   virtual void Cancel() {
-    web_media_player_ = NULL;
+    delegate_ = NULL;
   }
 
  private:
-  webkit_glue::WebMediaPlayer* web_media_player_;
+  WebMediaPlayerDelegateImpl* delegate_;
   WebMediaPlayerMethod method_;
 
   DISALLOW_COPY_AND_ASSIGN(NotifyWebMediaPlayerTask);
@@ -43,10 +49,17 @@ WebMediaPlayerDelegateImpl::WebMediaPlayerDelegateImpl(RenderView* view)
       ready_state_(webkit_glue::WebMediaPlayer::DATA_UNAVAILABLE),
       main_loop_(NULL),
       filter_factory_(new media::FilterFactoryCollection()),
+      audio_renderer_(NULL),
+      video_renderer_(NULL),
+      data_source_(NULL),
       web_media_player_(NULL),
       view_(view),
       tasks_(kLastTaskIndex) {
   // TODO(hclam): Add filter factory for demuxer and decoders.
+#if defined(OS_WIN)
+  // FFmpeg is not ready for Linux and Mac yet.
+  filter_factory_->AddFactory(media::FFmpegDemuxer::CreateFilterFactory());
+#endif
   filter_factory_->AddFactory(AudioRendererImpl::CreateFactory(this));
   filter_factory_->AddFactory(VideoRendererImpl::CreateFactory(this));
   filter_factory_->AddFactory(DataSourceImpl::CreateFactory(this));
@@ -60,7 +73,7 @@ WebMediaPlayerDelegateImpl::~WebMediaPlayerDelegateImpl() {
   // Cancel all tasks posted on the main_loop_.
   CancelAllTasks();
 
-  // After cancelling all tasks, we are sure there will be no calls to 
+  // After cancelling all tasks, we are sure there will be no calls to
   // web_media_player_, so we are safe to delete it.
   if (web_media_player_) {
     delete web_media_player_;
@@ -92,8 +105,6 @@ void WebMediaPlayerDelegateImpl::Load(const GURL& url) {
   // Initialize the pipeline
   pipeline_.Start(filter_factory_.get(), url.spec(),
       NewCallback(this, &WebMediaPlayerDelegateImpl::DidInitializePipeline));
-
-  // TODO(hclam): Calls to render_view_ to kick start a resource load.
 }
 
 void WebMediaPlayerDelegateImpl::CancelLoad() {
@@ -147,7 +158,7 @@ void WebMediaPlayerDelegateImpl::SetVolume(float volume) {
 
   pipeline_.SetVolume(volume);
 }
- 
+
 void WebMediaPlayerDelegateImpl::SetVisible(bool visible) {
   DCHECK(main_loop_ && MessageLoop::current() == main_loop_);
 
@@ -255,11 +266,12 @@ int64 WebMediaPlayerDelegateImpl::GetTotalBytes() const {
   return pipeline_.GetTotalBytes();
 }
 
-void WebMediaPlayerDelegateImpl::SetRect(const gfx::Rect& rect) {
+void WebMediaPlayerDelegateImpl::SetSize(const gfx::Size& size) {
   DCHECK(main_loop_ && MessageLoop::current() == main_loop_);
 
   if (video_renderer_) {
-    video_renderer_->SetRect(rect);
+    // TODO(scherkus): Change API to use SetSize().
+    video_renderer_->SetRect(gfx::Rect(0, 0, size.width(), size.height()));
   }
 }
 
@@ -271,8 +283,21 @@ void WebMediaPlayerDelegateImpl::Paint(skia::PlatformCanvas *canvas,
 }
 
 void WebMediaPlayerDelegateImpl::WillDestroyCurrentMessageLoop() {
-  // Stop the pipeline when the main thread is being destroyed so we won't be
-  // posting any more messages onto it. And we just let this obejct and
+  // Instruct the renderers and data source to release all Renderer related
+  // resources during destruction of render thread, because they won't have any
+  // chance to release these resources on render thread by posting tasks on it.
+  if (audio_renderer_) {
+    audio_renderer_->ReleaseRendererResources();
+    audio_renderer_ = NULL;
+  }
+
+  if (data_source_) {
+    data_source_->ReleaseRendererResources();
+    data_source_ = NULL;
+  }
+
+  // Stop the pipeline when the render thread is being destroyed so we won't be
+  // posting any more messages onto it. And we just let this object and
   // associated WebMediaPlayer to leak.
   pipeline_.Stop();
 }
@@ -296,10 +321,21 @@ void WebMediaPlayerDelegateImpl::DidInitializePipeline(bool successful) {
            &webkit_glue::WebMediaPlayer::NotifyReadyStateChange);
 }
 
+void WebMediaPlayerDelegateImpl::SetAudioRenderer(
+    AudioRendererImpl* audio_renderer) {
+  DCHECK(!audio_renderer_);
+  audio_renderer_ = audio_renderer;
+}
+
 void WebMediaPlayerDelegateImpl::SetVideoRenderer(
     VideoRendererImpl* video_renderer) {
   DCHECK(!video_renderer_);
   video_renderer_ = video_renderer;
+}
+
+void WebMediaPlayerDelegateImpl::SetDataSource(
+    DataSourceImpl* data_source) {
+  data_source_ = data_source;
 }
 
 void WebMediaPlayerDelegateImpl::DidTask(CancelableTask* task) {
@@ -327,10 +363,9 @@ void WebMediaPlayerDelegateImpl::PostTask(int index,
                                           WebMediaPlayerMethod method) {
   DCHECK(main_loop_);
 
-  AutoLock auto_lock(task_lock_);  
+  AutoLock auto_lock(task_lock_);
   if(!tasks_[index]) {
-    CancelableTask* task = new NotifyWebMediaPlayerTask(web_media_player_,
-                                                        method);
+    CancelableTask* task = new NotifyWebMediaPlayerTask(this, method);
     tasks_[index] = task;
     main_loop_->PostTask(FROM_HERE, task);
   }

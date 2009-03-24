@@ -8,7 +8,6 @@
 #include <string>
 #include <vector>
 
-#include "base/logging.h"
 #include "third_party/npapi/bindings/npapi.h"
 // #include "webkit/default_plugin/install_dialog.h"
 // #include "webkit/default_plugin/plugin_database_handler.h"
@@ -323,4 +322,3 @@ class PluginInstallerImpl {
 
 
 #endif  // WEBKIT_DEFAULT_PLUGIN_PLUGIN_IMPL_MAC_H_
-

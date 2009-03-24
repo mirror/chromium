@@ -17,7 +17,6 @@ MSVC_POP_WARNING();
 #include "webkit/glue/glue_serialize.h"
 
 #include "base/pickle.h"
-#include "base/scoped_ptr.h"
 #include "base/string_util.h"
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/webkit_glue.h"
@@ -158,7 +157,7 @@ inline String ReadString(const SerializeObject* obj) {
   // In version 2, the length field was the length in UChars.
   // In version 1 and 3 it is the length in bytes.
   int bytes = ((obj->version == 2) ? length * sizeof(UChar) : length);
-  
+
   const void* data;
   if (!ReadBytes(obj, &data, bytes))
     return String();
@@ -361,4 +360,3 @@ std::string CreateHistoryStateForURL(const GURL& url) {
 }
 
 }  // namespace webkit_glue
-

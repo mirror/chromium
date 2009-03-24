@@ -8,8 +8,8 @@
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
-#include "chrome/views/message_box_view.h"
-#include "chrome/views/window.h"
+#include "chrome/views/controls/message_box_view.h"
+#include "chrome/views/window/window.h"
 #include "grit/generated_resources.h"
 
 // Implementation of function declared in
@@ -64,7 +64,7 @@ std::wstring RepostFormWarningView::GetDialogButtonLabel(
   return L"";
 }
 
-void RepostFormWarningView::WindowClosing() {
+void RepostFormWarningView::DeleteDelegate() {
   delete this;
 }
 
@@ -102,4 +102,3 @@ void RepostFormWarningView::Observe(NotificationType type,
     window()->Close();
   }
 }
-

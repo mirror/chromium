@@ -2,23 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "chrome/browser/views/password_manager_view.h"
+
 #include "base/string_util.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/browser/profile.h"
-#include "chrome/browser/views/password_manager_view.h"
 #include "chrome/browser/views/standard_layout.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/views/background.h"
+#include "chrome/views/controls/button/native_button.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/native_button.h"
 #include "grit/generated_resources.h"
 
 using views::ColumnSet;
 using views::GridLayout;
 
-// We can only have one PasswordManagerView at a time.
-static PasswordManagerView* instance_ = NULL;
+PasswordManagerView* PasswordManagerView::instance_ = NULL;
 
 static const int kDefaultWindowWidth = 530;
 static const int kDefaultWindowHeight = 240;
@@ -26,9 +26,10 @@ static const int kDefaultWindowHeight = 240;
 ////////////////////////////////////////////////////////////////////////////////
 // MultiLabelButtons
 //
-MultiLabelButtons::MultiLabelButtons(const std::wstring& label,
+MultiLabelButtons::MultiLabelButtons(views::ButtonListener* listener,
+                                     const std::wstring& label,
                                      const std::wstring& alt_label)
-    : NativeButton(label),
+    : NativeButton(listener, label),
       label_(label),
       alt_label_(alt_label),
       pref_size_(-1, -1) {
@@ -37,7 +38,7 @@ MultiLabelButtons::MultiLabelButtons(const std::wstring& label,
 gfx::Size MultiLabelButtons::GetPreferredSize() {
   if (pref_size_.width() == -1 && pref_size_.height() == -1) {
     // Let's compute our preferred size.
-    std::wstring current_label = GetLabel();
+    std::wstring current_label = label();
     SetLabel(label_);
     pref_size_ = NativeButton::GetPreferredSize();
     SetLabel(alt_label_);
@@ -55,6 +56,7 @@ gfx::Size MultiLabelButtons::GetPreferredSize() {
 // PasswordManagerTableModel
 PasswordManagerTableModel::PasswordManagerTableModel(Profile* profile)
     : observer_(NULL),
+      row_count_observer_(NULL),
       pending_login_query_(NULL),
       saved_signons_cleanup_(&saved_signons_),
       profile_(profile) {
@@ -135,9 +137,10 @@ void PasswordManagerTableModel::OnWebDataServiceRequestDone(
     saved_signons_[i] = new PasswordRow(
         gfx::SortedDisplayURL(rows[i]->origin, languages), rows[i]);
   }
-  instance_->SetRemoveAllEnabled(RowCount() != 0);
   if (observer_)
     observer_->OnModelChanged();
+  if (row_count_observer_)
+    row_count_observer_->OnRowCountChanged(RowCount());
 }
 
 void PasswordManagerTableModel::CancelLoginsQuery() {
@@ -160,9 +163,10 @@ void PasswordManagerTableModel::ForgetAndRemoveSignon(int row) {
   web_data_service()->RemoveLogin(*(password_row->form.get()));
   delete password_row;
   saved_signons_.erase(target_iter);
-  instance_->SetRemoveAllEnabled(RowCount() != 0);
   if (observer_)
     observer_->OnItemsRemoved(row, 1);
+  if (row_count_observer_)
+    row_count_observer_->OnRowCountChanged(RowCount());
 }
 
 void PasswordManagerTableModel::ForgetAndRemoveAllSignons() {
@@ -174,9 +178,10 @@ void PasswordManagerTableModel::ForgetAndRemoveAllSignons() {
     delete row;
     iter = saved_signons_.erase(iter);
   }
-  instance_->SetRemoveAllEnabled(false);
   if (observer_)
     observer_->OnModelChanged();
+  if (row_count_observer_)
+    row_count_observer_->OnRowCountChanged(RowCount());
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -200,17 +205,21 @@ void PasswordManagerView::Show(Profile* profile) {
 
 PasswordManagerView::PasswordManagerView(Profile* profile)
     : show_button_(
+          this,
           l10n_util::GetString(IDS_PASSWORD_MANAGER_VIEW_SHOW_BUTTON),
           l10n_util::GetString(IDS_PASSWORD_MANAGER_VIEW_HIDE_BUTTON)),
-      remove_button_(l10n_util::GetString(
+      remove_button_(this, l10n_util::GetString(
           IDS_PASSWORD_MANAGER_VIEW_REMOVE_BUTTON)),
-      remove_all_button_(l10n_util::GetString(
+      remove_all_button_(this, l10n_util::GetString(
           IDS_PASSWORD_MANAGER_VIEW_REMOVE_ALL_BUTTON)),
       table_model_(profile) {
   Init();
 }
 
 void PasswordManagerView::SetupTable() {
+  // Tell the table model we are concern about how many rows it has.
+  table_model_.set_row_count_observer(this);
+
   // Creates the different columns for the table.
   // The float resize values are the result of much tinkering.
   std::vector<views::TableColumn> columns;
@@ -235,16 +244,13 @@ void PasswordManagerView::SetupButtonsAndLabels() {
   // Tell View not to delete class stack allocated views.
 
   show_button_.SetParentOwned(false);
-  show_button_.SetListener(this);
   show_button_.SetEnabled(false);
 
   remove_button_.SetParentOwned(false);
-  remove_button_.SetListener(this);
   remove_button_.SetEnabled(false);
 
   remove_all_button_.SetParentOwned(false);
-  remove_all_button_.SetListener(this);
-
+  
   password_label_.SetParentOwned(false);
 }
 
@@ -358,11 +364,7 @@ std::wstring PasswordManagerView::GetWindowTitle() const {
   return l10n_util::GetString(IDS_PASSWORD_MANAGER_VIEW_TITLE);
 }
 
-void PasswordManagerView::SetRemoveAllEnabled(bool enabled) {
-  instance_->remove_all_button_.SetEnabled(enabled);
-}
-
-void PasswordManagerView::ButtonPressed(views::NativeButton* sender) {
+void PasswordManagerView::ButtonPressed(views::Button* sender) {
   DCHECK(window());
   // Close will result in our destruction.
   if (sender == &remove_all_button_) {
@@ -405,4 +407,8 @@ void PasswordManagerView::WindowClosing() {
 
 views::View* PasswordManagerView::GetContentsView() {
   return this;
+}
+
+void PasswordManagerView::OnRowCountChanged(size_t rows) {
+  remove_all_button_.SetEnabled(rows > 0);
 }

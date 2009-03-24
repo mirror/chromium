@@ -777,14 +777,7 @@ NPError NPN_GetValue(NPP id, NPNVariable variable, void *value) {
   case NPNVSupportsWindowless:
   {
     NPBool* supports_windowless = reinterpret_cast<NPBool*>(value);
-#if defined(OS_LINUX)
-    // TODO(deanm): Remove me once windowless plugins work on Linux.  Right now
-    // it's better to tell the plugin we don't support windowless, then have it
-    // try and fail.
-    *supports_windowless = FALSE;
-#else
     *supports_windowless = TRUE;
-#endif
     rv = NPERR_NO_ERROR;
     break;
   }
@@ -878,7 +871,7 @@ NPError  NPN_SetValue(NPP id, NPPVariable variable, void *value) {
     // we only support the CoreGraphics drawing model
     if (reinterpret_cast<int>(value) == NPDrawingModelCoreGraphics)
       return NPERR_NO_ERROR;
-    return NPERR_GENERIC_ERROR;    
+    return NPERR_GENERIC_ERROR;
 #endif
   default:
     // TODO: implement me
@@ -926,4 +919,3 @@ void NPN_PluginThreadAsyncCall(NPP id,
 }
 
 } // extern "C"
-

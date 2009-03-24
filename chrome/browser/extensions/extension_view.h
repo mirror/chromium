@@ -14,6 +14,7 @@
 #include "chrome/common/temp_scaffolding_stubs.h"
 #endif
 
+class Extension;
 class Profile;
 struct WebPreferences;
 
@@ -24,23 +25,32 @@ struct WebPreferences;
 class ExtensionView : public HWNDHtmlView,
                       public RenderViewHostDelegate {
  public:
-  ExtensionView(const GURL& url, Profile* profile);
+  ExtensionView(Extension* extension, const GURL& url, Profile* profile);
 
   // HWNDHtmlView
   virtual void CreatingRenderer();
 
   // RenderViewHostDelegate
   virtual Profile* GetProfile() const { return profile_; }
+  virtual void RenderViewCreated(RenderViewHost* render_view_host);
   virtual WebPreferences GetWebkitPrefs();
   virtual void RunJavaScriptMessage(
       const std::wstring& message,
       const std::wstring& default_prompt,
+      const GURL& frame_url,
       const int flags,
       IPC::Message* reply_msg,
       bool* did_suppress_message);
 
+  Extension* extension() { return extension_; }
  private:
+  // The extension that we're hosting in this view.
+  Extension* extension_;
+
+  // The profile that owns this extension.
   Profile* profile_;
+
+  DISALLOW_COPY_AND_ASSIGN(ExtensionView);
 };
 
 #endif  // CHROME_BROWSER_EXTENSIONS_EXTENSION_VIEW_H_

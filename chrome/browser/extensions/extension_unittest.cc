@@ -5,6 +5,7 @@
 #include "base/string_util.h"
 #include "base/path_service.h"
 #include "chrome/browser/extensions/extension.h"
+#include "chrome/browser/extensions/extension_error_reporter.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/json_value_serializer.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -20,6 +21,7 @@ TEST(ExtensionTest, InitFromValueInvalid) {
 #endif
   Extension extension(path);
   std::string error;
+  ExtensionErrorReporter::Init(false);
 
   // Start with a valid extension manifest
   std::wstring extensions_dir;
@@ -134,28 +136,79 @@ TEST(ExtensionTest, InitFromValueInvalid) {
   input_value->GetList(Extension::kContentScriptsKey, &content_scripts);
   content_scripts->GetDictionary(0, &user_script);
   user_script->Remove(Extension::kJsKey, NULL);
+  user_script->Remove(Extension::kCssKey, NULL);
   EXPECT_FALSE(extension.InitFromValue(*input_value, &error));
-  EXPECT_TRUE(MatchPattern(error, Extension::kInvalidJsListError));
+  EXPECT_TRUE(MatchPattern(error, Extension::kMissingFileError));
 
   user_script->Set(Extension::kJsKey, Value::CreateIntegerValue(42));
   EXPECT_FALSE(extension.InitFromValue(*input_value, &error));
   EXPECT_TRUE(MatchPattern(error, Extension::kInvalidJsListError));
 
+  user_script->Set(Extension::kCssKey, new ListValue);
+  user_script->Set(Extension::kJsKey, new ListValue);
+  EXPECT_FALSE(extension.InitFromValue(*input_value, &error));
+  EXPECT_TRUE(MatchPattern(error, Extension::kMissingFileError));
+  user_script->Remove(Extension::kCssKey, NULL);
+
   ListValue* files = new ListValue;
   user_script->Set(Extension::kJsKey, files);
   EXPECT_FALSE(extension.InitFromValue(*input_value, &error));
-  EXPECT_TRUE(MatchPattern(error, Extension::kInvalidJsCountError));
+  EXPECT_TRUE(MatchPattern(error, Extension::kMissingFileError));
 
   // Test invalid file element
   files->Set(0, Value::CreateIntegerValue(42));
   EXPECT_FALSE(extension.InitFromValue(*input_value, &error));
   EXPECT_TRUE(MatchPattern(error, Extension::kInvalidJsError));
 
-  // Test too many file elements (more than one not yet supported)
-  files->Set(0, Value::CreateStringValue("foo.js"));
-  files->Set(1, Value::CreateStringValue("bar.js"));
+  user_script->Remove(Extension::kJsKey, NULL);
+  // Test the css element
+  user_script->Set(Extension::kCssKey, Value::CreateIntegerValue(42));
   EXPECT_FALSE(extension.InitFromValue(*input_value, &error));
-  EXPECT_TRUE(MatchPattern(error, Extension::kInvalidJsCountError));
+  EXPECT_TRUE(MatchPattern(error, Extension::kInvalidCssListError));
+
+  // Test invalid file element
+  ListValue* css_files = new ListValue;
+  user_script->Set(Extension::kCssKey, css_files);
+  css_files->Set(0, Value::CreateIntegerValue(42));
+  EXPECT_FALSE(extension.InitFromValue(*input_value, &error));
+  EXPECT_TRUE(MatchPattern(error, Extension::kInvalidCssError));
+
+  // Test missing and invalid permissions array
+  input_value.reset(static_cast<DictionaryValue*>(valid_value->DeepCopy()));
+  EXPECT_TRUE(extension.InitFromValue(*input_value, &error));
+  ListValue* permissions = NULL;
+  input_value->GetList(Extension::kPermissionsKey, &permissions);
+  ASSERT_FALSE(NULL == permissions);
+
+  permissions = new ListValue;
+  input_value->Set(Extension::kPermissionsKey, permissions);
+  EXPECT_TRUE(extension.InitFromValue(*input_value, &error));
+  const std::vector<std::string>* error_vector =
+      ExtensionErrorReporter::GetInstance()->GetErrors();
+  const std::string log_error = error_vector->at(error_vector->size() - 1);
+  EXPECT_TRUE(MatchPattern(log_error,
+      Extension::kInvalidPermissionCountWarning));
+
+  input_value->Set(Extension::kPermissionsKey, Value::CreateIntegerValue(9));
+  EXPECT_FALSE(extension.InitFromValue(*input_value, &error));
+  EXPECT_TRUE(MatchPattern(error, Extension::kInvalidPermissionsError));
+
+  input_value.reset(static_cast<DictionaryValue*>(valid_value->DeepCopy()));
+  input_value->GetList(Extension::kPermissionsKey, &permissions);
+  permissions->Set(0, Value::CreateIntegerValue(24));
+  EXPECT_FALSE(extension.InitFromValue(*input_value, &error));
+  EXPECT_TRUE(MatchPattern(error, Extension::kInvalidPermissionError));
+
+  permissions->Set(0, Value::CreateStringValue("www.google.com"));
+  EXPECT_FALSE(extension.InitFromValue(*input_value, &error));
+  EXPECT_TRUE(MatchPattern(error, Extension::kInvalidPermissionError));
+
+  // Test permissions scheme.
+  input_value.reset(static_cast<DictionaryValue*>(valid_value->DeepCopy()));
+  input_value->GetList(Extension::kPermissionsKey, &permissions);
+  permissions->Set(0, Value::CreateStringValue("file:///C:/foo.txt"));
+  EXPECT_FALSE(extension.InitFromValue(*input_value, &error));
+  EXPECT_TRUE(MatchPattern(error, Extension::kInvalidPermissionSchemeError));
 }
 
 TEST(ExtensionTest, InitFromValueValid) {

@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/basictypes.h"
+#include "base/process_util.h"
 #include "base/scoped_ptr.h"
 #include "base/time.h"
 #include "base/thread.h"
@@ -20,7 +21,7 @@
 
 #if defined(OS_WIN)
 // TODO(port): Enable this or equivalent.
-#include "chrome/views/dialog_delegate.h"
+#include "chrome/views/window/dialog_delegate.h"
 #endif
 
 class AutomationRequest;
@@ -118,6 +119,10 @@ class AutomationProxy : public IPC::Channel::Listener,
   // success.
   bool WaitForAppModalDialog(int wait_timeout);
 
+  // Block the thread until one of the tabs in any window (including windows
+  // opened after the call) displays given url. Returns true on success.
+  bool WaitForURLDisplayed(GURL url, int wait_timeout);
+
   // Returns the BrowserProxy for the browser window at the given index,
   // transferring ownership of the pointer to the caller.
   // On failure, returns NULL.
@@ -158,6 +163,10 @@ class AutomationProxy : public IPC::Channel::Listener,
   // Returns the ID of the automation IPC channel, so that it can be
   // passed to the app as a launch parameter.
   const std::wstring& channel_id() const { return channel_id_; }
+
+#if defined(OS_POSIX)
+  base::file_handle_mapping_vector fds_to_map() const;
+#endif
 
   // AutomationMessageSender implementations.
   virtual bool Send(IPC::Message* message);

@@ -21,7 +21,7 @@
  * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY
  * OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. 
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #import <Cocoa/Cocoa.h>
@@ -34,8 +34,6 @@
 
 #undef LOG
 #include "base/logging.h"
-
-static const unsigned long kDefaultScrollLinesPerWheelDelta = 3;
 
 // WebMouseEvent --------------------------------------------------------------
 
@@ -98,7 +96,7 @@ WebMouseEvent::WebMouseEvent(NSEvent *event, NSView* view) {
   location = [view convertPoint:windowLocal fromView:nil];
   y = [view frame].size.height - location.y;  // flip y
   x = location.x;
-  
+
   // set modifiers:
 
   if ([event modifierFlags] & NSControlKeyMask)
@@ -136,19 +134,22 @@ WebMouseWheelEvent::WebMouseWheelEvent(NSEvent *event, NSView* view) {
   x = location.x;
   y = [view frame].size.height - location.y;  // flip y
 
-  // Convert wheel delta amount to a number of lines to scroll.
+  // Convert wheel delta amount to a number of pixels to scroll.
+  static const float kScrollbarPixelsPerTick = 40.0f;
   float wheel_delta = [event deltaY];
-  const float delta_lines = wheel_delta * kDefaultScrollLinesPerWheelDelta;
+  const float delta_lines = wheel_delta * kScrollbarPixelsPerTick;
 
   // Set scroll amount based on above calculations.
   if ([event modifierFlags] & NSShiftKeyMask) {
-    // Scrolling up should move left, scrolling down should move right.  This is
-    // opposite Safari, but seems more consistent with vertical scrolling.
     delta_x = delta_lines;
     delta_y = 0;
+    wheel_ticks_x = wheel_delta;
+    wheel_ticks_y = 0;
   } else {
     delta_x = 0;
     delta_y = delta_lines;
+    wheel_ticks_x = 0;
+    wheel_ticks_y = wheel_delta;
   }
   scroll_by_page = false;
 }
@@ -178,22 +179,22 @@ static inline bool isKeyUpEvent(NSEvent *event)
         case 54: // Right Command
         case 55: // Left Command
             return ([event modifierFlags] & NSCommandKeyMask) == 0;
-            
+
         case 57: // Capslock
             return ([event modifierFlags] & NSAlphaShiftKeyMask) == 0;
-            
+
         case 56: // Left Shift
         case 60: // Right Shift
             return ([event modifierFlags] & NSShiftKeyMask) == 0;
-            
+
         case 58: // Left Alt
         case 61: // Right Alt
             return ([event modifierFlags] & NSAlternateKeyMask) == 0;
-            
+
         case 59: // Left Ctrl
         case 62: // Right Ctrl
             return ([event modifierFlags] & NSControlKeyMask) == 0;
-            
+
         case 63: // Function
             return ([event modifierFlags] & NSFunctionKeyMask) == 0;
     }
@@ -233,7 +234,7 @@ static bool isKeypadEvent(NSEvent* event)
         case 92: // 9
             return true;
      }
-     
+
      return false;
 }
 
@@ -246,30 +247,30 @@ static int windowsKeyCodeForKeyEvent(NSEvent* event)
         // VK_APPS (5D) Right windows/meta key
         case 54: // Right Command
             return 0x5D;
-            
+
         // VK_LWIN (5B) Left windows/meta key
         case 55: // Left Command
             return 0x5B;
-            
+
         // VK_CAPITAL (14) caps locks key
         case 57: // Capslock
             return 0x14;
-            
+
         // VK_SHIFT (10) either shift key
         case 56: // Left Shift
         case 60: // Right Shift
             return 0x10;
-            
+
         // VK_MENU (12) either alt key
         case 58: // Left Alt
         case 61: // Right Alt
             return 0x12;
-            
+
         // VK_CONTROL (11) either ctrl key
         case 59: // Left Ctrl
         case 62: // Right Ctrl
             return 0x11;
-            
+
         // VK_CLEAR (0C) CLEAR key
         case 71: return 0x0C;
 
@@ -611,8 +612,8 @@ static inline NSString* textFromEvent(NSEvent* event)
     return @"";
   return [event characters];
 }
-    
-    
+
+
 static inline NSString* unmodifiedTextFromEvent(NSEvent* event)
 {
   if ([event type] == NSFlagsChanged)
@@ -622,32 +623,32 @@ static inline NSString* unmodifiedTextFromEvent(NSEvent* event)
 
 static NSString* keyIdentifierForKeyEvent(NSEvent* event)
 {
-    if ([event type] == NSFlagsChanged) 
+    if ([event type] == NSFlagsChanged)
         switch ([event keyCode]) {
             case 54: // Right Command
             case 55: // Left Command
                 return @"Meta";
-                
+
             case 57: // Capslock
                 return @"CapsLock";
-                
+
             case 56: // Left Shift
             case 60: // Right Shift
                 return @"Shift";
-                
+
             case 58: // Left Alt
             case 61: // Right Alt
                 return @"Alt";
-                
+
             case 59: // Left Ctrl
             case 62: // Right Ctrl
                 return @"Control";
-                
+
             default:
                 ASSERT_NOT_REACHED();
                 return @"";
         }
-    
+
     NSString *s = [event charactersIgnoringModifiers];
     if ([s length] != 1) {
         return @"Unidentified";
@@ -914,7 +915,7 @@ static NSString* keyIdentifierForKeyEvent(NSEvent* event)
         // Standard says that DEL becomes U+007F.
         case NSDeleteFunctionKey:
             return @"U+007F";
-            
+
         // Always use 0x09 for tab instead of AppKit's backtab character.
         case NSBackTabCharacter:
             return @"U+0009";
@@ -958,10 +959,10 @@ WebKeyboardEvent::WebKeyboardEvent(NSEvent *event) {
     modifiers |= ALT_KEY;
   if ([event modifierFlags] & NSCommandKeyMask)
     modifiers |= META_KEY;
-    
+
   if (WebCore::isKeypadEvent(event))
     modifiers |= IS_KEYPAD;
-  
+
   if (([event type] != NSFlagsChanged) && [event isARepeat])
     modifiers |= IS_AUTO_REPEAT;
 
@@ -971,19 +972,19 @@ WebKeyboardEvent::WebKeyboardEvent(NSEvent *event) {
   NSString* text_str = WebCore::textFromEvent(event);
   NSString* unmodified_str = WebCore::unmodifiedTextFromEvent(event);
   NSString* identifier_str = WebCore::keyIdentifierForKeyEvent(event);
-  
+
   // Begin Apple code, copied from KeyEventMac.mm
-  
-  // Always use 13 for Enter/Return -- we don't want to use AppKit's 
+
+  // Always use 13 for Enter/Return -- we don't want to use AppKit's
   // different character for Enter.
   if (windows_key_code == '\r') {
     text_str = @"\r";
     unmodified_str = @"\r";
   }
-  
-  // The adjustments below are only needed in backward compatibility mode, 
+
+  // The adjustments below are only needed in backward compatibility mode,
   // but we cannot tell what mode we are in from here.
-  
+
   // Turn 0x7F into 8, because backspace needs to always be 8.
   if ([text_str isEqualToString:@"\x7F"])
     text_str = @"\x8";
@@ -995,13 +996,13 @@ WebKeyboardEvent::WebKeyboardEvent(NSEvent *event) {
     text_str = @"\x9";
     unmodified_str = @"\x9";
   }
-  
+
   // End Apple code.
-  
+
   memset(&text, 0, sizeof(text));
   memset(&unmodified_text, 0, sizeof(unmodified_text));
   memset(&key_identifier, 0, sizeof(key_identifier));
-  
+
   if ([text_str length] < kTextLengthCap &&
       [unmodified_str length] < kTextLengthCap) {
     [text_str getCharacters:&text[0]];

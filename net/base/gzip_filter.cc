@@ -8,8 +8,9 @@
 #include "net/base/gzip_header.h"
 #include "third_party/zlib/zlib.h"
 
-GZipFilter::GZipFilter()
-    : decoding_status_(DECODING_UNINITIALIZED),
+GZipFilter::GZipFilter(const FilterContext& filter_context)
+    : Filter(filter_context),
+      decoding_status_(DECODING_UNINITIALIZED),
       decoding_mode_(DECODE_MODE_UNKNOWN),
       gzip_header_status_(GZIP_CHECK_HEADER_IN_PROGRESS),
       zlib_header_added_(false),
@@ -41,7 +42,7 @@ bool GZipFilter::InitDecoding(Filter::FilterType filter_type) {
       decoding_mode_ = DECODE_MODE_DEFLATE;
       break;
     }
-    case Filter::FILTER_TYPE_GZIP_HELPING_SDCH:      
+    case Filter::FILTER_TYPE_GZIP_HELPING_SDCH:
       possible_sdch_pass_through_ =  true;  // Needed to optionally help sdch.
       // Fall through to GZIP case.
     case Filter::FILTER_TYPE_GZIP: {
@@ -105,7 +106,7 @@ Filter::FilterStatus GZipFilter::ReadFilteredData(char* dest_buffer,
         break;
       }
       case Filter::FILTER_ERROR: {
-        if (possible_sdch_pass_through_ && 
+        if (possible_sdch_pass_through_ &&
             GZIP_GET_INVALID_HEADER == gzip_header_status_) {
           decoding_status_ = DECODING_DONE;  // Become a pass through filter.
           return CopyOut(dest_buffer, dest_len);
@@ -290,4 +291,3 @@ void GZipFilter::SkipGZipFooter() {
       next_stream_data_ = NULL;
   }
 }
-

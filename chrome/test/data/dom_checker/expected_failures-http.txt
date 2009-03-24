@@ -1,0 +1,5 @@
+# Expected failures when running over HTTP.
+frames[0].history.forward(0) call
+frames[0].length read [value: 0]
+frames[0].postMessage read [value: function () { [native code] }]
+open() frame name lookup

@@ -19,11 +19,11 @@
 #include "chrome/browser/renderer_host/audio_renderer_host.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/common/notification_observer.h"
-#include "webkit/glue/cache_manager.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebCache.h"
 
 class CommandLine;
 class GURL;
-class PrefService;
+class RendererMainThread;
 class RenderWidgetHelper;
 class WebContents;
 
@@ -75,8 +75,6 @@ class BrowserRenderProcessHost : public RenderProcessHost,
   virtual void OnChannelConnected(int32 peer_pid);
   virtual void OnChannelError();
 
-  static void RegisterPrefs(PrefService* prefs);
-
   // If the a process has sent a message that cannot be decoded, it is deemed
   // corrupted and thus needs to be terminated using this call. This function
   // can be safely called from any thread.
@@ -89,9 +87,6 @@ class BrowserRenderProcessHost : public RenderProcessHost,
                        const NotificationDetails& details);
 
  private:
-  // RenderProcessHost implementation (protected portion).
-  virtual void Unregister();
-
   // Control message handlers.
   void OnPageContents(const GURL& url, int32 page_id,
                       const std::wstring& contents);
@@ -104,7 +99,7 @@ class BrowserRenderProcessHost : public RenderProcessHost,
   void OnClipboardReadAsciiText(std::string* result);
   void OnClipboardReadHTML(string16* markup, GURL* src_url);
 
-  void OnUpdatedCacheStats(const CacheManager::UsageStats& stats);
+  void OnUpdatedCacheStats(const WebKit::WebCache::UsageStats& stats);
 
   // Initialize support for visited links. Send the renderer process its initial
   // set of visited links.
@@ -113,11 +108,6 @@ class BrowserRenderProcessHost : public RenderProcessHost,
   // Initialize support for user scripts. Send the renderer process its initial
   // set of scripts and listen for updates to scripts.
   void InitUserScripts();
-
-  // Handles actually spawning the renderer process with the appropriate options
-  // for each platform.
-  bool SpawnChild(const CommandLine& command_line,
-      IPC::SyncChannel* channel, base::ProcessHandle* process_handle);
 
   // Sends the renderer process a new set of user scripts.
   void SendUserScriptsUpdate(base::SharedMemory* shared_memory);
@@ -158,6 +148,9 @@ class BrowserRenderProcessHost : public RenderProcessHost,
   void ClearTransportDIBCache();
   // This is used to clear our cache five seconds after the last use.
   base::DelayTimer<BrowserRenderProcessHost> cached_dibs_cleaner_;
+
+  // Used in single-process mode.
+  scoped_ptr<RendererMainThread> in_process_renderer_;
 
   DISALLOW_COPY_AND_ASSIGN(BrowserRenderProcessHost);
 };

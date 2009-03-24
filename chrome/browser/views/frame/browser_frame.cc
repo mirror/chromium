@@ -8,12 +8,13 @@
 #include <shellapi.h>
 
 #include "chrome/browser/browser_list.h"
+#include "chrome/browser/views/frame/browser_root_view.h"
 #include "chrome/browser/views/frame/browser_view.h"
 #include "chrome/browser/views/frame/glass_browser_frame_view.h"
 #include "chrome/browser/views/frame/opaque_browser_frame_view.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/window_delegate.h"
+#include "chrome/views/window/window_delegate.h"
 #include "grit/theme_resources.h"
 
 // static
@@ -23,28 +24,30 @@ static const int kClientEdgeThickness = 3;
 // BrowserFrame, public:
 
 BrowserFrame::BrowserFrame(BrowserView* browser_view)
-    : Window(browser_view),
+    : WindowWin(browser_view),
       browser_view_(browser_view),
       frame_initialized_(false) {
   browser_view_->set_frame(this);
-  non_client_view_->SetFrameView(CreateFrameViewForWindow());
+  GetNonClientView()->SetFrameView(CreateFrameViewForWindow());
+  // Don't focus anything on creation, selecting a tab will set the focus.
+  set_focus_on_creation(false);
 }
 
 BrowserFrame::~BrowserFrame() {
 }
 
 void BrowserFrame::Init() {
-  Window::Init(NULL, gfx::Rect());
+  WindowWin::Init(NULL, gfx::Rect());
 }
 
 int BrowserFrame::GetMinimizeButtonOffset() const {
   TITLEBARINFOEX titlebar_info;
   titlebar_info.cbSize = sizeof(TITLEBARINFOEX);
-  SendMessage(GetHWND(), WM_GETTITLEBARINFOEX, 0, (WPARAM)&titlebar_info);
+  SendMessage(GetNativeView(), WM_GETTITLEBARINFOEX, 0, (WPARAM)&titlebar_info);
 
   CPoint minimize_button_corner(titlebar_info.rgrect[2].left,
                                 titlebar_info.rgrect[2].top);
-  MapWindowPoints(HWND_DESKTOP, GetHWND(), &minimize_button_corner, 1);
+  MapWindowPoints(HWND_DESKTOP, GetNativeView(), &minimize_button_corner, 1);
 
   return minimize_button_corner.x;
 }
@@ -101,24 +104,24 @@ LRESULT BrowserFrame::OnNCActivate(BOOL active) {
 
   // Perform first time initialization of the DWM frame insets, only if we're
   // using the native frame.
-  if (non_client_view_->UseNativeFrame() && !frame_initialized_) {
+  if (GetNonClientView()->UseNativeFrame() && !frame_initialized_) {
     if (browser_view_->IsBrowserTypeNormal()) {
-      ::SetWindowPos(GetHWND(), NULL, 0, 0, 0, 0,
+      ::SetWindowPos(GetNativeView(), NULL, 0, 0, 0, 0,
                      SWP_NOSIZE | SWP_NOMOVE | SWP_FRAMECHANGED);
       UpdateDWMFrame();
     }
     frame_initialized_ = true;
   }
   browser_view_->ActivationChanged(!!active);
-  return Window::OnNCActivate(active);
+  return WindowWin::OnNCActivate(active);
 }
 
 LRESULT BrowserFrame::OnNCCalcSize(BOOL mode, LPARAM l_param) {
   // We don't adjust the client area unless we're a tabbed browser window and
   // are using the native frame.
-  if (!non_client_view_->UseNativeFrame() ||
+  if (!GetNonClientView()->UseNativeFrame() ||
       !browser_view_->IsBrowserTypeNormal()) {
-    return Window::OnNCCalcSize(mode, l_param);
+    return WindowWin::OnNCCalcSize(mode, l_param);
   }
 
   RECT* client_rect = mode ?
@@ -133,7 +136,8 @@ LRESULT BrowserFrame::OnNCCalcSize(BOOL mode, LPARAM l_param) {
     // thickness of the auto-hide taskbar on each such edge, so the window isn't
     // treated as a "fullscreen app", which would cause the taskbars to
     // disappear.
-    HMONITOR monitor = MonitorFromWindow(GetHWND(), MONITOR_DEFAULTTONEAREST);
+    HMONITOR monitor = MonitorFromWindow(GetNativeView(),
+                                         MONITOR_DEFAULTTONEAREST);
     if (win_util::EdgeHasAutoHideTaskbar(ABE_LEFT, monitor))
       client_rect->left += win_util::kAutoHideTaskbarThicknessPx;
     if (win_util::EdgeHasAutoHideTaskbar(ABE_RIGHT, monitor))
@@ -160,18 +164,23 @@ LRESULT BrowserFrame::OnNCCalcSize(BOOL mode, LPARAM l_param) {
   client_rect->bottom -= border_thickness;
 
   UpdateDWMFrame();
+
+  // We'd like to return WVR_REDRAW in some cases here, but because we almost
+  // always have nonclient area (except in fullscreen mode, where it doesn't
+  // matter), we can't.  See comments in window.cc:OnNCCalcSize() for more info.
   return 0;
 }
 
 LRESULT BrowserFrame::OnNCHitTest(const CPoint& pt) {
   // Only do DWM hit-testing when we are using the native frame.
-  if (non_client_view_->UseNativeFrame()) {
+  if (GetNonClientView()->UseNativeFrame()) {
     LRESULT result;
-    if (DwmDefWindowProc(GetHWND(), WM_NCHITTEST, 0, MAKELPARAM(pt.x, pt.y),
-                         &result))
+    if (DwmDefWindowProc(GetNativeView(), WM_NCHITTEST, 0,
+                         MAKELPARAM(pt.x, pt.y), &result)) {
       return result;
+    }
   }
-  return Window::OnNCHitTest(pt);
+  return WindowWin::OnNCHitTest(pt);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -182,7 +191,7 @@ int BrowserFrame::GetShowState() const {
 }
 
 views::NonClientFrameView* BrowserFrame::CreateFrameViewForWindow() {
-  if (non_client_view_->UseNativeFrame())
+  if (GetNonClientView()->UseNativeFrame())
     browser_frame_view_ = new GlassBrowserFrameView(this, browser_view_);
   else
     browser_frame_view_ = new OpaqueBrowserFrameView(this, browser_view_);
@@ -190,8 +199,13 @@ views::NonClientFrameView* BrowserFrame::CreateFrameViewForWindow() {
 }
 
 void BrowserFrame::UpdateFrameAfterFrameChange() {
-  Window::UpdateFrameAfterFrameChange();
+  WindowWin::UpdateFrameAfterFrameChange();
   UpdateDWMFrame();
+}
+
+
+views::RootView* BrowserFrame::CreateRootView() {
+  return new BrowserRootView(this);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -199,7 +213,7 @@ void BrowserFrame::UpdateFrameAfterFrameChange() {
 
 void BrowserFrame::UpdateDWMFrame() {
   // Nothing to do yet.
-  if (!client_view() || !browser_view_->IsBrowserTypeNormal())
+  if (!GetClientView() || !browser_view_->IsBrowserTypeNormal())
     return;
 
   // In fullscreen mode, we don't extend glass into the client area at all,
@@ -217,6 +231,5 @@ void BrowserFrame::UpdateDWMFrame() {
     margins.cyTopHeight =
         GetBoundsForTabStrip(browser_view_->tabstrip()).bottom();
   }
-  DwmExtendFrameIntoClientArea(GetHWND(), &margins);
+  DwmExtendFrameIntoClientArea(GetNativeView(), &margins);
 }
-

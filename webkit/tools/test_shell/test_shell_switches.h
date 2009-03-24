@@ -29,8 +29,9 @@ extern const wchar_t kEnableTracing[];
 extern const wchar_t kAllowScriptsToCloseWindows[];
 extern const wchar_t kCheckLayoutTestSystemDeps[];
 extern const wchar_t kEnableVideo[];
+extern const wchar_t kGDB[];
+extern const wchar_t kProfiler[];
 
 }  // namespace test_shell
 
 #endif  // WEBKIT_TOOLS_TEST_SHELL_TEST_SHELL_SWITCHES_H__
-

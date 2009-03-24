@@ -24,8 +24,8 @@ class ConstrainedWindowProxy;
 class GURL;
 class Value;
 
-typedef enum FindInPageDirection { BACK = 0, FWD = 1 };
-typedef enum FindInPageCase { IGNORE_CASE = 0, CASE_SENSITIVE = 1 };
+enum FindInPageDirection { BACK = 0, FWD = 1 };
+enum FindInPageCase { IGNORE_CASE = 0, CASE_SENSITIVE = 1 };
 
 class TabProxy : public AutomationResourceProxy {
  public:
@@ -253,7 +253,9 @@ class TabProxy : public AutomationResourceProxy {
 
   // Posts a message to the external tab.
   void HandleMessageFromExternalHost(AutomationHandle handle,
-                                     const std::string& message);
+                                     const std::string& message,
+                                     const std::string& origin,
+                                     const std::string& target);
 
   // Retrieves the number of SSL related info-bars currently showing in |count|.
   bool GetSSLInfoBarCount(int* count);
@@ -283,9 +285,14 @@ class TabProxy : public AutomationResourceProxy {
   // Uses the specified encoding to override encoding of the page in the tab.
   bool OverrideEncoding(const std::wstring& encoding);
 
+#if defined(OS_WIN)
+  // Resizes the tab window.
+  void Reposition(HWND window, HWND window_insert_after, int left, int top,
+                  int width, int height, int flags);
+#endif  // defined(OS_WIN)
+
  private:
   DISALLOW_COPY_AND_ASSIGN(TabProxy);
 };
 
 #endif  // CHROME_TEST_AUTOMATION_TAB_PROXY_H_
-

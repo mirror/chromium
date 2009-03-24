@@ -7,7 +7,6 @@
 
 #include "base/command_line.h"
 #include "base/basictypes.h"
-#include "base/logging.h"
 #include "base/string_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -127,4 +126,3 @@ TEST(CommandLineTest, AppendSwitches) {
   EXPECT_TRUE(cl.HasSwitch(switch4));
   EXPECT_EQ(value4, cl.GetSwitchValue(switch4));
 }
-

@@ -23,9 +23,10 @@
 #include "chrome/common/slide_animation.h"
 #include "chrome/common/stl_util-inl.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/image_view.h"
+#include "chrome/views/controls/image_view.h"
 #include "chrome/views/painter.h"
-#include "chrome/views/window.h"
+#include "chrome/views/window/non_client_view.h"
+#include "chrome/views/window/window.h"
 #include "grit/generated_resources.h"
 #include "grit/theme_resources.h"
 
@@ -59,9 +60,11 @@ static inline int Round(double x) {
 //
 //  A subclass of button that hit-tests to the shape of the new tab button.
 
-class NewTabButton : public views::Button {
+class NewTabButton : public views::ImageButton {
  public:
-  NewTabButton() {}
+  explicit NewTabButton(views::ButtonListener* listener)
+      : views::ImageButton(listener) {
+  }
   virtual ~NewTabButton() {}
 
  protected:
@@ -337,13 +340,14 @@ class RemoveTabAnimation : public TabStrip::TabAnimation {
     GetCursorPos(&pt);
     views::Widget* widget = tabstrip_->GetWidget();
     RECT wr;
-    GetWindowRect(widget->GetHWND(), &wr);
+    GetWindowRect(widget->GetNativeView(), &wr);
     pt.x -= wr.left;
     pt.y -= wr.top;
 
     // Return to message loop - otherwise we may disrupt some operation that's
     // in progress.
-    PostMessage(widget->GetHWND(), WM_MOUSEMOVE, 0, MAKELPARAM(pt.x, pt.y));
+    PostMessage(widget->GetNativeView(), WM_MOUSEMOVE, 0,
+                MAKELPARAM(pt.x, pt.y));
   }
 
   int index_;
@@ -503,11 +507,6 @@ bool TabStrip::PointIsWithinWindowCaption(const gfx::Point& point) {
   if (v == this)
     return true;
 
-  // If the point is within the bounds of a Tab, the point can be considered
-  // part of the caption if there are no available drag operations for the Tab.
-  if (v->GetClassName() == Tab::kTabClassName && !HasAvailableDragActions())
-    return true;
-
   // Check to see if the point is within the non-button parts of the new tab
   // button. The button has a non-rectangular shape, so if it's not in the
   // visual portions of the button we treat it as a click to the caption.
@@ -602,7 +601,7 @@ void TabStrip::PaintChildren(ChromeCanvas* canvas) {
     }
   }
 
-  if (GetWidget()->AsWindow()->UseNativeFrame()) {
+  if (GetWidget()->AsWindow()->GetNonClientView()->UseNativeFrame()) {
     // Make sure unselected tabs are somewhat transparent.
     SkPaint paint;
     paint.setColor(SkColorSetARGB(200, 255, 255, 255));
@@ -823,7 +822,7 @@ void TabStrip::TabInsertedAt(TabContents* contents,
   // Don't animate the first tab, it looks weird, and don't animate anything
   // if the containing window isn't visible yet.
   if (GetTabCount() > 1 && GetWidget() &&
-      IsWindowVisible(GetWidget()->GetHWND())) {
+      IsWindowVisible(GetWidget()->GetNativeView())) {
     StartInsertTabAnimation(index);
   } else {
     Layout();
@@ -1008,7 +1007,7 @@ bool TabStrip::HasAvailableDragActions() const {
 ///////////////////////////////////////////////////////////////////////////////
 // TabStrip, views::BaseButton::ButtonListener implementation:
 
-void TabStrip::ButtonPressed(views::BaseButton* sender) {
+void TabStrip::ButtonPressed(views::Button* sender) {
   if (sender == newtab_button_)
     model_->AddBlankTab(true);
 }
@@ -1072,16 +1071,15 @@ void TabStrip::DidProcessMessage(const MSG& msg) {
 
 void TabStrip::Init() {
   model_->AddObserver(this);
-  newtab_button_ = new NewTabButton;
-  newtab_button_->SetListener(this, TabStripModel::kNoTab);
+  newtab_button_ = new NewTabButton(this);
   ResourceBundle& rb = ResourceBundle::GetSharedInstance();
   SkBitmap* bitmap;
 
   bitmap = rb.GetBitmapNamed(IDR_NEWTAB_BUTTON);
-  newtab_button_->SetImage(views::Button::BS_NORMAL, bitmap);
-  newtab_button_->SetImage(views::Button::BS_PUSHED,
+  newtab_button_->SetImage(views::CustomButton::BS_NORMAL, bitmap);
+  newtab_button_->SetImage(views::CustomButton::BS_PUSHED,
                            rb.GetBitmapNamed(IDR_NEWTAB_BUTTON_P));
-  newtab_button_->SetImage(views::Button::BS_HOT,
+  newtab_button_->SetImage(views::CustomButton::BS_HOT,
                            rb.GetBitmapNamed(IDR_NEWTAB_BUTTON_H));
 
   newtab_button_size_.SetSize(bitmap->width(), bitmap->height());

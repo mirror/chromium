@@ -49,6 +49,11 @@ static FilePath* g_ahem_path = NULL;
 
 }
 
+static void TerminationSignalHandler(int signatl) {
+  TestShell::ShutdownTestShell();
+  exit(0);
+}
+
 // static
 void TestShell::InitializeTestShell(bool layout_test_mode) {
   window_list_ = new WindowList;
@@ -182,6 +187,10 @@ void TestShell::InitializeTestShell(bool layout_test_mode) {
 
   if (!FcConfigSetCurrent(fontcfg))
     LOG(FATAL) << "Failed to set the default font configuration";
+
+  // Install an signal handler so we clean up after ourselves.
+  signal(SIGINT, TerminationSignalHandler);
+  signal(SIGTERM, TerminationSignalHandler);
 }
 
 void TestShell::PlatformShutdown() {
@@ -400,6 +409,7 @@ static void AlarmHandler(int signatl) {
   puts("#TEST_TIMED_OUT\n");
   puts("#EOF\n");
   fflush(stdout);
+  TestShell::ShutdownTestShell();
   exit(0);
 }
 
@@ -495,7 +505,7 @@ void TestShell::ResizeSubViews() {
       static_cast<TestShell*>(g_object_get_data(G_OBJECT(window), "test-shell"));
   shell->ResetTestController();
 
-  // ResetTestController may have closed the window we were holding on to. 
+  // ResetTestController may have closed the window we were holding on to.
   // Grab the first window again.
   window = *(TestShell::windowList()->begin());
   shell = static_cast<TestShell*>(g_object_get_data(G_OBJECT(window), "test-shell"));

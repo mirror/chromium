@@ -4,7 +4,6 @@
 //
 // Unit tests for the SafeBrowsing storage system.
 
-#include "base/command_line.h"
 #include "base/file_path.h"
 #include "base/file_util.h"
 #include "base/logging.h"
@@ -16,7 +15,6 @@
 #include "base/time.h"
 #include "chrome/browser/safe_browsing/protocol_parser.h"
 #include "chrome/browser/safe_browsing/safe_browsing_database.h"
-#include "chrome/common/chrome_switches.h"
 #include "googleurl/src/gurl.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "testing/platform_test.h"
@@ -911,14 +909,7 @@ TEST(SafeBrowsingDatabase, HashCaching) {
   prefixes.clear();
   full_hashes.clear();
 
-  // Test receiving a full add chunk. The old implementation doesn't support
-  // this test, so we bail here.
-  if (CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kUseOldSafeBrowsing)) {
-    TearDownTestDatabase(database);
-    return;
-  }
-
+  // Test receiving a full add chunk.
   host.host = Sha256Prefix("www.fullevil.com/");
   host.entry = SBEntry::Create(SBEntry::ADD_FULL_HASH, 2);
   host.entry->set_chunk_id(20);
@@ -943,7 +934,7 @@ TEST(SafeBrowsingDatabase, HashCaching) {
   database->UpdateFinished(true);
 
   EXPECT_TRUE(database->ContainsUrl(GURL("http://www.fullevil.com/bad1.html"),
-                                    &listname, &prefixes, &full_hashes, 
+                                    &listname, &prefixes, &full_hashes,
                                     Time::Now()));
   EXPECT_EQ(full_hashes.size(), 1U);
   EXPECT_EQ(0, memcmp(full_hashes[0].hash.full_hash,
@@ -954,7 +945,7 @@ TEST(SafeBrowsingDatabase, HashCaching) {
   full_hashes.clear();
 
   EXPECT_TRUE(database->ContainsUrl(GURL("http://www.fullevil.com/bad2.html"),
-                                    &listname, &prefixes, &full_hashes, 
+                                    &listname, &prefixes, &full_hashes,
                                     Time::Now()));
   EXPECT_EQ(full_hashes.size(), 1U);
   EXPECT_EQ(0, memcmp(full_hashes[0].hash.full_hash,
@@ -986,13 +977,13 @@ TEST(SafeBrowsingDatabase, HashCaching) {
   database->UpdateFinished(true);
 
   EXPECT_FALSE(database->ContainsUrl(GURL("http://www.fullevil.com/bad1.html"),
-                                     &listname, &prefixes, &full_hashes, 
+                                     &listname, &prefixes, &full_hashes,
                                      Time::Now()));
   EXPECT_EQ(full_hashes.size(), 0U);
 
   // There should be one remaining full add.
   EXPECT_TRUE(database->ContainsUrl(GURL("http://www.fullevil.com/bad2.html"),
-                                    &listname, &prefixes, &full_hashes, 
+                                    &listname, &prefixes, &full_hashes,
                                     Time::Now()));
   EXPECT_EQ(full_hashes.size(), 1U);
   EXPECT_EQ(0, memcmp(full_hashes[0].hash.full_hash,
@@ -1010,10 +1001,10 @@ TEST(SafeBrowsingDatabase, HashCaching) {
   lists.clear();
 
   EXPECT_FALSE(database->ContainsUrl(GURL("http://www.fullevil.com/bad1.html"),
-                                     &listname, &prefixes, &full_hashes, 
+                                     &listname, &prefixes, &full_hashes,
                                      Time::Now()));
   EXPECT_FALSE(database->ContainsUrl(GURL("http://www.fullevil.com/bad2.html"),
-                                     &listname, &prefixes, &full_hashes, 
+                                     &listname, &prefixes, &full_hashes,
                                      Time::Now()));
 
   TearDownTestDatabase(database);
@@ -1176,22 +1167,22 @@ void UpdateDatabase(const std::wstring& initial_db,
 
 namespace {
 
-const wchar_t* GetOldSafeBrowsingPath() {
+std::wstring GetOldSafeBrowsingPath() {
   std::wstring path = L"old";
   file_util::AppendToPath(&path, L"SafeBrowsing");
-  return path.c_str();
+  return path;
 }
 
-const wchar_t* GetOldResponsePath() {
+std::wstring GetOldResponsePath() {
   std::wstring path = L"old";
   file_util::AppendToPath(&path, L"response");
-  return path.c_str();
+  return path;
 }
 
-const wchar_t* GetOldUpdatesPath() {
+std::wstring GetOldUpdatesPath() {
   std::wstring path = L"old";
   file_util::AppendToPath(&path, L"updates");
-  return path.c_str();
+  return path;
 }
 
 }  // namespace

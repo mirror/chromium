@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2004, 2006 Apple Computer, Inc.  All rights reserved.
- * Copyright (C) 2007 Google, Inc.  All rights reserved.
+ * Copyright (C) 2007-2009 Google, Inc.  All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
@@ -32,17 +32,16 @@
 #include <v8.h>
 
 #include "bindings/npruntime.h"
-#include "ChromiumBridge.h"
-#include "np_v8object.h"
+#include "NPV8Object.h"
 #include "npruntime_priv.h"
-#include "v8_npobject.h"
+#include "V8NPObject.h"
 
 #include <wtf/Assertions.h>
 
 using namespace v8;
 
 
-// TODO: Consider removing locks if we're singlethreaded already.
+// FIXME: Consider removing locks if we're singlethreaded already.
 // The static initializer here should work okay, but we want to avoid
 // static initialization in general.
 //
@@ -67,7 +66,7 @@ inline bool operator<(const StringKey& x, const StringKey& y) {
     else if (x.length > y.length)
         return false;
     else
-        return memcmp(x.string, y.string, y.length) < 0;          
+        return memcmp(x.string, y.string, y.length) < 0;
 }
 
 }  // namespace
@@ -81,7 +80,7 @@ static StringIdentifierMap* getStringIdentifierMap() {
     return stringIdentifierMap;
 }
 
-// TODO: Consider removing locks if we're singlethreaded already.
+// FIXME: Consider removing locks if we're singlethreaded already.
 // static Lock IntIdentifierMapLock;
 
 typedef std::map<int, PrivateIdentifier*> IntIdentifierMap;
@@ -186,8 +185,6 @@ void NPN_ReleaseVariantValue(NPVariant* variant) {
     variant->type = NPVariantType_Void;
 }
 
-static const char* kCounterNPObjects = "NPObjects";
-
 NPObject *NPN_CreateObject(NPP npp, NPClass* aClass) {
     ASSERT(aClass);
 
@@ -200,8 +197,6 @@ NPObject *NPN_CreateObject(NPP npp, NPClass* aClass) {
 
         obj->_class = aClass;
         obj->referenceCount = 1;
-
-        WebCore::ChromiumBridge::incrementStatsCounter(kCounterNPObjects);
         return obj;
     }
 
@@ -226,8 +221,6 @@ void _NPN_DeallocateObject(NPObject *obj) {
     ASSERT(obj->referenceCount >= 0);
 
     if (obj) {
-        WebCore::ChromiumBridge::decrementStatsCounter(kCounterNPObjects);
-
         // NPObjects that remain in pure C++ may never have wrappers.
         // Hence, if it's not already alive, don't unregister it.
         // If it is alive, unregister it as the *last* thing we do

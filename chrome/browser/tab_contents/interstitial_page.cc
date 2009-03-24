@@ -4,24 +4,21 @@
 
 #include "chrome/browser/tab_contents/interstitial_page.h"
 
+#include "base/compiler_specific.h"
 #include "base/message_loop.h"
 #include "base/thread.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/dom_operation_notification_details.h"
+#include "chrome/browser/renderer_host/render_widget_host_view.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/web_contents.h"
+#include "chrome/browser/tab_contents/web_contents_view.h"
 #include "chrome/common/notification_service.h"
-#include "chrome/views/window_delegate.h"
+#include "chrome/views/window/window_delegate.h"
 #include "grit/browser_resources.h"
 #include "net/base/escape.h"
-
-#if defined(OS_WIN)
-#include "chrome/browser/renderer_host/render_widget_host_view_win.h"
-#include "chrome/browser/tab_contents/web_contents_view_win.h"
-#include "chrome/views/window.h"
-#endif
 
 namespace {
 
@@ -40,15 +37,15 @@ class ResourceRequestTask : public Task {
   virtual void Run() {
     switch (action_) {
       case BLOCK:
-        resource_dispatcher_host_->BlockRequestsForRenderView(
+        resource_dispatcher_host_->BlockRequestsForRoute(
             process_id_, render_view_host_id_);
         break;
       case RESUME:
-        resource_dispatcher_host_->ResumeBlockedRequestsForRenderView(
+        resource_dispatcher_host_->ResumeBlockedRequestsForRoute(
             process_id_, render_view_host_id_);
         break;
       case CANCEL:
-        resource_dispatcher_host_->CancelBlockedRequestsForRenderView(
+        resource_dispatcher_host_->CancelBlockedRequestsForRoute(
             process_id_, render_view_host_id_);
         break;
       default:
@@ -86,8 +83,7 @@ class InterstitialPage::InterstitialPageRVHViewDelegate
   virtual void StartDragging(const WebDropData& drop_data);
   virtual void UpdateDragCursor(bool is_drop_target);
   virtual void TakeFocus(bool reverse);
-  virtual void HandleKeyboardEvent(const WebKeyboardEvent& event);
-  virtual void ForwardMessageToDevToolsClient(const IPC::Message& message);
+  virtual void HandleKeyboardEvent(const NativeWebKeyboardEvent& event);
   virtual void OnFindReply(int request_id,
                            int number_of_matches,
                            const gfx::Rect& selection_rect,
@@ -113,12 +109,13 @@ InterstitialPage::InterstitialPage(WebContents* tab,
       enabled_(true),
       action_taken_(false),
       render_view_host_(NULL),
-      original_rvh_process_id_(tab->render_view_host()->process()->host_id()),
+      original_rvh_process_id_(tab->render_view_host()->process()->pid()),
       original_rvh_id_(tab->render_view_host()->routing_id()),
       should_revert_tab_title_(false),
       resource_dispatcher_host_notified_(false),
       ui_loop_(MessageLoop::current()),
-      rvh_view_delegate_(new InterstitialPageRVHViewDelegate(this)) {
+      ALLOW_THIS_IN_INITIALIZER_LIST(rvh_view_delegate_(
+          new InterstitialPageRVHViewDelegate(this))) {
   InitInterstitialPageMap();
   // It would be inconsistent to create an interstitial with no new navigation
   // (which is the case when the interstitial was triggered by a sub-resource on
@@ -219,7 +216,7 @@ void InterstitialPage::Observe(NotificationType type,
         // The RenderViewHost is being destroyed (as part of the tab being
         // closed), make sure we clear the blocked requests.
         RenderViewHost* rvh = Source<RenderViewHost>(source).ptr();
-        DCHECK(rvh->process()->host_id() == original_rvh_process_id_ &&
+        DCHECK(rvh->process()->pid() == original_rvh_process_id_ &&
                rvh->routing_id() == original_rvh_id_);
         TakeActionOnResourceDispatcher(CANCEL);
       }
@@ -245,30 +242,19 @@ void InterstitialPage::Observe(NotificationType type,
 }
 
 RenderViewHost* InterstitialPage::CreateRenderViewHost() {
-#if defined(OS_WIN)
   RenderViewHost* render_view_host = new RenderViewHost(
       SiteInstance::CreateSiteInstance(tab()->profile()),
       this, MSG_ROUTING_NONE, NULL);
-  RenderWidgetHostViewWin* view =
-      new RenderWidgetHostViewWin(render_view_host);
+  WebContentsView* web_contents_view = tab()->view();
+  RenderWidgetHostView* view =
+      web_contents_view->CreateViewForWidget(render_view_host);
   render_view_host->set_view(view);
-  view->Create(tab_->GetContentNativeView());
-  view->set_parent_hwnd(tab_->GetContentNativeView());
-  WebContentsViewWin* web_contents_view =
-      static_cast<WebContentsViewWin*>(tab_->view());
   render_view_host->AllowDomAutomationBindings();
   render_view_host->CreateRenderView();
-  // SetSize must be called after CreateRenderView or the HWND won't show.
   view->SetSize(web_contents_view->GetContainerSize());
-
+  // Don't show the interstitial until we have navigated to it.
+  view->Hide();
   return render_view_host;
-#else
-  // TODO(port): RenderWidgetHost* is implemented, but Create and
-  // set_parent_hwnd are specific to RenderWidgetHostWin, so this should
-  // probably be refactored.
-  NOTIMPLEMENTED();
-  return NULL;
-#endif
 }
 
 void InterstitialPage::Proceed() {
@@ -348,7 +334,6 @@ Profile* InterstitialPage::GetProfile() const {
 void InterstitialPage::DidNavigate(
     RenderViewHost* render_view_host,
     const ViewHostMsg_FrameNavigate_Params& params) {
-#if defined(OS_WIN)
   // A fast user could have navigated away from the page that triggered the
   // interstitial while the interstitial was loading, that would have disabled
   // us. In that case we can dismiss ourselves.
@@ -359,17 +344,14 @@ void InterstitialPage::DidNavigate(
 
   // The RenderViewHost has loaded its contents, we can show it now.
   render_view_host_->view()->Show();
-  tab_->set_interstitial_page(this); 
+  tab_->set_interstitial_page(this);
 
   // Notify the tab we are not loading so the throbber is stopped. It also
   // causes a NOTIFY_LOAD_STOP notification, that the AutomationProvider (used
-  // by the UI tests) expects to consider a navigation as complete. Without this,
-  // navigating in a UI test to a URL that triggers an interstitial would hang.
+  // by the UI tests) expects to consider a navigation as complete. Without
+  // this, navigating in a UI test to a URL that triggers an interstitial would
+  // hang.
   tab_->SetIsLoading(false, NULL);
-#else
-  // TODO(port): we need RenderViewHost.
-  NOTIMPLEMENTED();
-#endif
 }
 
 void InterstitialPage::RenderViewGone(RenderViewHost* render_view_host) {
@@ -409,7 +391,7 @@ void InterstitialPage::Disable() {
 
 void InterstitialPage::TakeActionOnResourceDispatcher(
     ResourceRequestAction action) {
-  DCHECK(MessageLoop::current() == ui_loop_) << 
+  DCHECK(MessageLoop::current() == ui_loop_) <<
       "TakeActionOnResourceDispatcher should be called on the main thread.";
 
   if (action == CANCEL || action == RESUME) {
@@ -498,18 +480,12 @@ void InterstitialPage::InterstitialPageRVHViewDelegate::TakeFocus(
 }
 
 void InterstitialPage::InterstitialPageRVHViewDelegate::HandleKeyboardEvent(
-    const WebKeyboardEvent& event) {
+    const NativeWebKeyboardEvent& event) {
   if (interstitial_page_->tab() && interstitial_page_->tab()->GetViewDelegate())
     interstitial_page_->tab()->GetViewDelegate()->HandleKeyboardEvent(event);
-}
-
-void InterstitialPage::InterstitialPageRVHViewDelegate::
-    ForwardMessageToDevToolsClient(const IPC::Message& message) {
-  NOTREACHED() << "InterstitialPage does not support developer tools content.";
 }
 
 void InterstitialPage::InterstitialPageRVHViewDelegate::OnFindReply(
     int request_id, int number_of_matches, const gfx::Rect& selection_rect,
     int active_match_ordinal, bool final_update) {
 }
-

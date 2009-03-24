@@ -15,7 +15,12 @@
 class BookmarkModel;
 class BookmarkNode;
 class PageNavigator;
+class PrefService;
 class Profile;
+
+namespace views {
+class DropTargetEvent;
+}
 
 // A collection of bookmark utility functions used by various parts of the UI
 // that show bookmarks: bookmark manager, bookmark bar view ...
@@ -25,6 +30,25 @@ namespace bookmark_utils {
 // set of drop operations (|operations|). This prefers the following ordering:
 // COPY, LINK then MOVE.
 int PreferredDropOperation(int source_operations, int operations);
+
+// Returns the drag operations for the specified node.
+int BookmarkDragOperation(BookmarkNode* node);
+
+// Returns the preferred drop operation on a bookmark menu/bar.
+// |parent| is the parent node the drop is to occur on and |index| the index the
+// drop is over.
+int BookmarkDropOperation(Profile* profile,
+			  const views::DropTargetEvent& event,
+			  const BookmarkDragData& data,
+			  BookmarkNode* parent,
+			  int index);
+
+// Performs a drop of bookmark data onto |parent_node| at |index|. Returns the
+// type of drop the resulted.
+int PerformBookmarkDrop(Profile* profile,
+			const BookmarkDragData& data,
+			BookmarkNode* parent_node,
+			int index);
 
 // Returns true if the bookmark data can be dropped on |drop_parent| at
 // |index|. A drop from a separate profile is always allowed, where as
@@ -117,6 +141,13 @@ void GetBookmarksContainingText(BookmarkModel* model,
 
 // Returns true if |node|'s url or title contains the string |text|.
 bool DoesBookmarkContainText(BookmarkNode* node, const std::wstring& text);
+
+// Toggles whether the bookmark bar is shown only on the new tab page or on
+// all tabs.  This is a preference modifier, not a visual modifier.
+void ToggleWhenVisible(Profile* profile);
+
+// Register user prefs for BookmarkBar, BookmarkView, ...
+void RegisterUserPrefs(PrefService* prefs);
 
 // Number of bookmarks we'll open before prompting the user to see if they
 // really want to open all.

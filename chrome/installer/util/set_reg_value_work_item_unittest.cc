@@ -5,7 +5,6 @@
 #include <windows.h>
 
 #include "base/file_util.h"
-#include "base/logging.h"
 #include "base/registry.h"
 #include "base/scoped_ptr.h"
 #include "base/string_util.h"
@@ -225,4 +224,3 @@ TEST_F(SetRegValueWorkItemTest, WriteNonExistingKey) {
       parent_key, name, dword1, false));
   EXPECT_FALSE(work_item->Do());
 }
-

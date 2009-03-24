@@ -8,15 +8,15 @@
 #include <set>
 
 #include "chrome/browser/bookmarks/bookmark_model.h"
-#include "chrome/views/checkbox.h"
-#include "chrome/views/dialog_delegate.h"
-#include "chrome/views/menu.h"
-#include "chrome/views/native_button.h"
-#include "chrome/views/text_field.h"
-#include "chrome/views/tree_node_model.h"
-#include "chrome/views/tree_view.h"
+#include "chrome/views/controls/button/button.h"
+#include "chrome/views/controls/menu/menu.h"
+#include "chrome/views/controls/text_field.h"
+#include "chrome/views/controls/tree/tree_node_model.h"
+#include "chrome/views/controls/tree/tree_view.h"
+#include "chrome/views/window/dialog_delegate.h"
 
 namespace views {
+class NativeButton;
 class Window;
 }
 
@@ -33,7 +33,7 @@ class Profile;
 // To use BookmarkEditorView invoke the static show method.
 
 class BookmarkEditorView : public views::View,
-                           public views::NativeButton::Listener,
+                           public views::ButtonListener,
                            public views::TreeViewController,
                            public views::DialogDelegate,
                            public views::TextField::Controller,
@@ -111,8 +111,8 @@ class BookmarkEditorView : public views::View,
                                UINT message, TCHAR key, UINT repeat_count,
                                UINT flags) {}
 
-  // NativeButton/CheckBox.
-  virtual void ButtonPressed(views::NativeButton* sender);
+  // NativeButton.
+  virtual void ButtonPressed(views::Button* sender);
 
   // Menu::Delegate method.
   virtual void ExecuteCommand(int id);

@@ -60,6 +60,7 @@ ChildProcessInfo::ChildProcessInfo(ProcessType type) {
   // just a simple object that contains information about it.  So add it to our
   // list of running processes.
   type_ = type;
+  pid_ = -1;
 }
 
 
@@ -71,7 +72,7 @@ std::wstring ChildProcessInfo::GenerateRandomChannelID(void* instance) {
   // child processes determine the pid of the parent.
   // Build the channel ID.  This is composed of a unique identifier for the
   // parent browser process, an identifier for the child instance, and a random
-  // component. We use a random component so that a hacked child process can't 
+  // component. We use a random component so that a hacked child process can't
   // cause denial of service by causing future named pipe creation to fail.
   return StringPrintf(L"%d.%x.%d",
                       base::GetCurrentProcId(), instance,

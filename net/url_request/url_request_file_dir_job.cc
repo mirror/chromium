@@ -86,7 +86,7 @@ bool URLRequestFileDirJob::ReadRawData(net::IOBuffer* buf, int buf_size,
   return false;
 }
 
-bool URLRequestFileDirJob::GetMimeType(string* mime_type) {
+bool URLRequestFileDirJob::GetMimeType(string* mime_type) const {
   *mime_type = "text/html";
   return true;
 }
@@ -219,4 +219,3 @@ bool URLRequestFileDirJob::IsRedirectResponse(
 
   return false;
 }
-

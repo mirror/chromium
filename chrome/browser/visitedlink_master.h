@@ -81,10 +81,6 @@ class VisitedLinkMaster : public VisitedLinkCommon {
   bool ShareToProcess(base::ProcessHandle process,
                       base::SharedMemoryHandle *new_handle);
 
-  // returns the name of the shared memory object that slaves can use to map
-  // the data
-  std::wstring GetSharedMemoryName() const;
-
   // Returns the handle to the shared memory
   base::SharedMemoryHandle GetSharedMemoryHandle();
 
@@ -392,9 +388,8 @@ inline void VisitedLinkMaster::DebugValidate() {
     if (hash_table_[i])
       used_count++;
   }
-  DCHECK(used_count == used_items_);
+  DCHECK_EQ(used_count, used_items_);
 }
 #endif
 
 #endif // CHROME_BROWSER_VISITEDLINK_MASTER_H__
-

@@ -22,7 +22,7 @@ class WebErrorImpl : public WebError {
   // WebError implementation:
   virtual int GetErrorCode() const;
   virtual const GURL& GetFailedURL() const;
-  
+
  private:
   int error_code_;
   GURL failed_url_;
@@ -32,4 +32,3 @@ class WebErrorImpl : public WebError {
 };
 
 #endif  // WEBKIT_GLUE_WEBERROR_IMPL_H__
-

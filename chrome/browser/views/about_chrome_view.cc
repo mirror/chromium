@@ -20,9 +20,9 @@
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/installer/util/install_util.h"
-#include "chrome/views/text_field.h"
-#include "chrome/views/throbber.h"
-#include "chrome/views/window.h"
+#include "chrome/views/controls/text_field.h"
+#include "chrome/views/controls/throbber.h"
+#include "chrome/views/window/window.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 #include "grit/locale_settings.h"
@@ -784,7 +784,7 @@ void AboutChromeView::UpdateStatus(GoogleUpdateUpgradeResult result,
                                   new_version_available_);
       update_label_.SetText(update_string);
       show_success_indicator = true;
-      RestartMessageBox::ShowMessageBox(window()->GetHWND());
+      RestartMessageBox::ShowMessageBox(window()->GetNativeWindow());
       break;
     }
     case UPGRADE_ERROR:

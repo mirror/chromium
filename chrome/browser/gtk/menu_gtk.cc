@@ -4,6 +4,7 @@
 
 #include "chrome/browser/gtk/menu_gtk.h"
 
+#include "base/gfx/gtk_util.h"
 #include "base/logging.h"
 #include "base/string_util.h"
 #include "chrome/common/l10n_util.h"
@@ -12,16 +13,16 @@
 namespace {
 
 // GTK uses _ for accelerators.  Windows uses & with && as an escape for &.
-std::wstring ConvertAcceleratorsFromWindowsStyle(const std::wstring& label) {
-  std::wstring ret;
+std::string ConvertAcceleratorsFromWindowsStyle(const std::string& label) {
+  std::string ret;
   ret.reserve(label.length());
   for (size_t i = 0; i < label.length(); ++i) {
-    if (L'&' == label[i]) {
-      if (i + 1 < label.length() && L'&' == label[i + 1]) {
+    if ('&' == label[i]) {
+      if (i + 1 < label.length() && '&' == label[i + 1]) {
         ret.push_back(label[i]);
         ++i;
       } else {
-        ret.push_back(L'_');
+        ret.push_back('_');
       }
     } else {
       ret.push_back(label[i]);
@@ -31,64 +32,24 @@ std::wstring ConvertAcceleratorsFromWindowsStyle(const std::wstring& label) {
   return ret;
 }
 
-void FreePixels(guchar* pixels, gpointer data) {
-  free(data);
-}
-
-// We have to copy the pixels and reverse their order manually.
-GdkPixbuf* GdkPixbufFromSkBitmap(const SkBitmap* bitmap) {
-  bitmap->lockPixels();
-  int width = bitmap->width();
-  int height = bitmap->height();
-  int stride = bitmap->rowBytes();
-  const guchar* orig_data = static_cast<guchar*>(bitmap->getPixels());
-  guchar* data = static_cast<guchar*>(malloc(height * stride));
-
-  // Swap from BGRA to RGBA.
-  for (int i = 0; i < height; ++i) {
-    for (int j = 0; j < width; ++j) {
-      int idx = i * stride + j * 4;
-      data[idx] = orig_data[idx + 2];
-      data[idx + 1] = orig_data[idx + 1];
-      data[idx + 2] = orig_data[idx];
-      data[idx + 3] = orig_data[idx + 3];
-    }
-  }
-
-  // This pixbuf takes ownership of our malloc()ed data and will
-  // free it for us when it is destroyed.
-  GdkPixbuf* pixbuf = gdk_pixbuf_new_from_data(
-      data,
-      GDK_COLORSPACE_RGB,  // the only colorspace gtk supports
-      true, // there is an alpha channel
-      8,
-      width, height, stride, &FreePixels, data);
-
-  // Assume ownership of pixbuf.
-  g_object_ref_sink(pixbuf);
-  bitmap->unlockPixels();
-  return pixbuf;
-}
-
 }  // namespace
 
 MenuGtk::MenuGtk(MenuGtk::Delegate* delegate,
-                 const MenuCreateMaterial* menu_data)
+                 const MenuCreateMaterial* menu_data,
+                 GtkAccelGroup* accel_group)
     : delegate_(delegate),
       menu_(gtk_menu_new()) {
-  g_object_ref_sink(menu_);
-  BuildMenuIn(menu_, menu_data);
+  BuildMenuIn(menu_.get(), menu_data, accel_group);
 }
 
 MenuGtk::MenuGtk(MenuGtk::Delegate* delegate)
     : delegate_(delegate),
       menu_(gtk_menu_new()) {
-  g_object_ref_sink(menu_);
   BuildMenuFromDelegate();
 }
 
 MenuGtk::~MenuGtk() {
-  g_object_unref(menu_);
+  menu_.Destroy();
 }
 
 void MenuGtk::Popup(GtkWidget* widget, GdkEvent* event) {
@@ -100,50 +61,83 @@ void MenuGtk::Popup(GtkWidget* widget, GdkEvent* event) {
 }
 
 void MenuGtk::Popup(GtkWidget* widget, gint button_type, guint32 timestamp) {
-  gtk_container_foreach(GTK_CONTAINER(menu_), SetMenuItemInfo, this);
+  gtk_container_foreach(GTK_CONTAINER(menu_.get()), SetMenuItemInfo, this);
 
-  gtk_menu_popup(GTK_MENU(menu_), NULL, NULL,
+  gtk_menu_popup(GTK_MENU(menu_.get()), NULL, NULL,
                  MenuPositionFunc,
                  widget,
                  button_type, timestamp);
 }
 
+void MenuGtk::PopupAsContext() {
+  gtk_container_foreach(GTK_CONTAINER(menu_.get()), SetMenuItemInfo, this);
+
+  // TODO(estade): |button| value of 0 (6th argument) is not strictly true,
+  // but does it matter?
+  gtk_menu_popup(GTK_MENU(menu_.get()), NULL, NULL, NULL, NULL, 0,
+                 gtk_get_current_event_time());
+}
+
 void MenuGtk::BuildMenuIn(GtkWidget* menu,
-                          const MenuCreateMaterial* menu_data) {
-  for (; menu_data->type != MENU_END; menu_data++) {
+                          const MenuCreateMaterial* menu_data,
+                          GtkAccelGroup* accel_group) {
+  // We keep track of the last menu item in order to group radio items.
+  GtkWidget* last_menu_item = NULL;
+  for (; menu_data->type != MENU_END; ++menu_data) {
     GtkWidget* menu_item = NULL;
 
-    std::wstring label;
+    std::string label;
     if (menu_data->label_argument) {
-      label = l10n_util::GetStringF(
+      label = WideToUTF8(l10n_util::GetStringF(
           menu_data->label_id,
-          l10n_util::GetString(menu_data->label_argument));
+          l10n_util::GetString(menu_data->label_argument)));
     } else if (menu_data->label_id) {
-      label = l10n_util::GetString(menu_data->label_id);
-    } else {
-      DCHECK(menu_data->type == MENU_SEPARATOR) << "Menu definition broken";
+      label = WideToUTF8(l10n_util::GetString(menu_data->label_id));
+    } else if (menu_data->type != MENU_SEPARATOR) {
+      label = delegate_->GetLabel(menu_data->id);
+      DCHECK(!label.empty());
     }
 
     label = ConvertAcceleratorsFromWindowsStyle(label);
 
     switch (menu_data->type) {
+      case MENU_RADIO:
+        if (GTK_IS_RADIO_MENU_ITEM(last_menu_item)) {
+          menu_item = gtk_radio_menu_item_new_with_mnemonic_from_widget(
+              GTK_RADIO_MENU_ITEM(last_menu_item), label.c_str());
+        } else {
+          menu_item = gtk_radio_menu_item_new_with_mnemonic(
+              NULL, label.c_str());
+        }
+        break;
       case MENU_CHECKBOX:
-        menu_item = gtk_check_menu_item_new_with_mnemonic(
-            WideToUTF8(label).c_str());
+        menu_item = gtk_check_menu_item_new_with_mnemonic(label.c_str());
         break;
       case MENU_SEPARATOR:
         menu_item = gtk_separator_menu_item_new();
         break;
       case MENU_NORMAL:
       default:
-        menu_item = gtk_menu_item_new_with_mnemonic(WideToUTF8(label).c_str());
+        menu_item = gtk_menu_item_new_with_mnemonic(label.c_str());
         break;
     }
 
     if (menu_data->submenu) {
       GtkWidget* submenu = gtk_menu_new();
-      BuildMenuIn(submenu, menu_data->submenu);
+      BuildMenuIn(submenu, menu_data->submenu, accel_group);
       gtk_menu_item_set_submenu(GTK_MENU_ITEM(menu_item), submenu);
+    }
+
+    if (accel_group && menu_data->accel_key) {
+      // If we ever want to let the user do any key remaping, we'll need to
+      // change the following so we make a gtk_accel_map which keeps the actual
+      // keys.
+      gtk_widget_add_accelerator(menu_item,
+                                 "activate",
+                                 accel_group,
+                                 menu_data->accel_key,
+                                 GdkModifierType(menu_data->accel_modifiers),
+                                 GTK_ACCEL_VISIBLE);
     }
 
     g_object_set_data(G_OBJECT(menu_item), "menu-data",
@@ -154,6 +148,7 @@ void MenuGtk::BuildMenuIn(GtkWidget* menu,
 
     gtk_widget_show(menu_item);
     gtk_menu_append(menu, menu_item);
+    last_menu_item = menu_item;
   }
 }
 
@@ -168,7 +163,7 @@ void MenuGtk::BuildMenuFromDelegate() {
       menu_item = gtk_image_menu_item_new_with_label(
           delegate_->GetLabel(i).c_str());
       const SkBitmap* icon = delegate_->GetIcon(i);
-      GdkPixbuf* pixbuf = GdkPixbufFromSkBitmap(icon);
+      GdkPixbuf* pixbuf = gfx::GdkPixbufFromSkBitmap(icon);
       GtkWidget* widget = gtk_image_new_from_pixbuf(pixbuf);
       gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(menu_item), widget);
       g_object_unref(pixbuf);
@@ -183,7 +178,7 @@ void MenuGtk::BuildMenuFromDelegate() {
                      G_CALLBACK(OnMenuItemActivatedById), this);
 
     gtk_widget_show(menu_item);
-    gtk_menu_append(menu_, menu_item);
+    gtk_menu_shell_append(GTK_MENU_SHELL(menu_.get()), menu_item);
   }
 }
 
@@ -218,15 +213,8 @@ void MenuGtk::MenuPositionFunc(GtkMenu* menu,
                                void* void_widget) {
   GtkWidget* widget = GTK_WIDGET(void_widget);
   GtkRequisition menu_req;
-  GdkRectangle monitor;
 
   gtk_widget_size_request(GTK_WIDGET(menu), &menu_req);
-
-  GdkScreen* screen = gtk_widget_get_screen(GTK_WIDGET(menu));
-  gint monitor_num = gdk_screen_get_monitor_at_window(screen, widget->window);
-  if (monitor_num < 0)
-    monitor_num = 0;
-  gdk_screen_get_monitor_geometry(screen, monitor_num, &monitor);
 
   gdk_window_get_origin(widget->window, x, y);
   *x += widget->allocation.x;
@@ -235,10 +223,7 @@ void MenuGtk::MenuPositionFunc(GtkMenu* menu,
   // g_object_get_data() returns NULL if no such object is found. |left_align|
   // acts as a boolean, but we can't actually cast it to bool because gcc
   // complains about losing precision.
-  void* left_align =
-      g_object_get_data(G_OBJECT(widget), "left-align-popup");
-
-  if (!left_align)
+  if (!g_object_get_data(G_OBJECT(widget), "left-align-popup"))
     *x += widget->allocation.width - menu_req.width;
 
   // TODO(erg): Deal with this scrolling off the bottom of the screen.
@@ -250,8 +235,8 @@ void MenuGtk::MenuPositionFunc(GtkMenu* menu,
 }
 
 // static
-void MenuGtk::SetMenuItemInfo(GtkWidget* widget, void* raw_menu) {
-  MenuGtk* menu = static_cast<MenuGtk*>(raw_menu);
+void MenuGtk::SetMenuItemInfo(GtkWidget* widget, gpointer userdata) {
+  MenuGtk* menu = reinterpret_cast<MenuGtk*>(userdata);
   const MenuCreateMaterial* data =
       reinterpret_cast<const MenuCreateMaterial*>(
           g_object_get_data(G_OBJECT(widget), "menu-data"));
@@ -269,8 +254,8 @@ void MenuGtk::SetMenuItemInfo(GtkWidget* widget, void* raw_menu) {
 
       GtkWidget* submenu = gtk_menu_item_get_submenu(GTK_MENU_ITEM(widget));
       if (submenu) {
-        gtk_container_foreach(GTK_CONTAINER(submenu), &MenuGtk::SetMenuItemInfo,
-                              raw_menu);
+        gtk_container_foreach(GTK_CONTAINER(submenu), &SetMenuItemInfo,
+                              userdata);
       }
     }
   }

@@ -153,7 +153,7 @@ SessionCommand* BaseSessionService::CreateUpdateTabNavigationCommand(
       std::numeric_limits<SessionCommand::size_type>::max() - 1024;
 
   int bytes_written = 0;
-  
+
   WriteStringToPickle(pickle, &bytes_written, max_state_size,
                       entry.display_url().spec());
 
@@ -186,7 +186,7 @@ bool BaseSessionService::RestoreUpdateTabNavigationCommand(
   if (!pickle->ReadInt(&iterator, tab_id) ||
       !pickle->ReadInt(&iterator, &(navigation->index_)) ||
       !pickle->ReadString(&iterator, &url_spec) ||
-      !pickle->ReadWString(&iterator, &(navigation->title_)) ||
+      !pickle->ReadString16(&iterator, &(navigation->title_)) ||
       !pickle->ReadString(&iterator, &(navigation->state_)) ||
       !pickle->ReadInt(&iterator,
                        reinterpret_cast<int*>(&(navigation->transition_))))

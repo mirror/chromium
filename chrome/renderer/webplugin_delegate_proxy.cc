@@ -463,7 +463,7 @@ void WebPluginDelegateProxy::Paint(HDC hdc, const gfx::Rect& damaged_rect) {
       rect.x()-plugin_rect_.x(), rect.y()-plugin_rect_.y(), SRCCOPY);
 
   if (invalidate_pending_) {
-    // Only send the PaintAck message if this paint is in response to an 
+    // Only send the PaintAck message if this paint is in response to an
     // invalidate from the plugin, since this message acts as an access token
     // to ensure only one process is using the transport dib at a time.
     invalidate_pending_ = false;
@@ -472,7 +472,7 @@ void WebPluginDelegateProxy::Paint(HDC hdc, const gfx::Rect& damaged_rect) {
 }
 
 bool WebPluginDelegateProxy::BackgroundChanged(
-    HDC hdc, 
+    HDC hdc,
     const gfx::Rect& rect) {
   HBITMAP hbitmap = static_cast<HBITMAP>(GetCurrentObject(hdc, OBJ_BITMAP));
   if (hbitmap == NULL) {
@@ -497,9 +497,7 @@ bool WebPluginDelegateProxy::BackgroundChanged(
   // intersect their rects first.
   gfx::Rect bitmap_rect(static_cast<int>(-xf.eDx), static_cast<int>(-xf.eDy),
                         bitmap.bmWidth, bitmap.bmHeight);
-  gfx::Rect check_rect(rect);
-  check_rect.Intersect(bitmap_rect);
-
+  gfx::Rect check_rect = rect.Intersect(bitmap_rect);
   int row_byte_size = check_rect.width() * (bitmap.bmBitsPixel / 8);
   for (int y = check_rect.y(); y < check_rect.bottom(); y++) {
     char* hdc_row_start = static_cast<char*>(bitmap.bmBits) +

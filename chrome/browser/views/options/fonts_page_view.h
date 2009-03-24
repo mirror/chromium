@@ -8,14 +8,15 @@
 #include "chrome/browser/views/options/options_page_view.h"
 #include "chrome/browser/shell_dialogs.h"
 #include "chrome/common/pref_member.h"
-#include "chrome/views/combo_box.h"
-#include "chrome/views/native_button.h"
+#include "chrome/views/controls/combo_box.h"
+#include "chrome/views/controls/button/button.h"
 #include "chrome/views/view.h"
 
 
 namespace views {
 class GroupboxView;
 class Label;
+class NativeButton;
 class TableModel;
 class TableView;
 }
@@ -29,13 +30,13 @@ class DefaultEncodingComboboxModel;
 class FontsPageView : public OptionsPageView,
                       public views::ComboBox::Listener,
                       public SelectFontDialog::Listener,
-                      public views::NativeButton::Listener {
+                      public views::ButtonListener {
  public:
   explicit FontsPageView(Profile* profile);
   virtual ~FontsPageView();
 
-  // views::NativeButton::Listener implementation:
-  virtual void ButtonPressed(views::NativeButton* sender);
+  // views::ButtonListener implementation:
+  virtual void ButtonPressed(views::Button* sender);
 
   // views::ComboBox::Listener implementation:
   virtual void ItemChanged(views::ComboBox* combo_box,
@@ -121,4 +122,3 @@ class FontsPageView : public OptionsPageView,
 };
 
 #endif  // #ifndef CHROME_BROWSER_VIEWS_OPTIONS_FONTS_PAGE_VIEW_H__
-

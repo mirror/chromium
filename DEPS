@@ -1,7 +1,7 @@
 vars = {
   "webkit_trunk":
     "http://svn.webkit.org/repository/webkit/trunk",
-  "webkit_revision": "41420",
+  "webkit_revision": "41906",
 }
 
 
@@ -10,26 +10,26 @@ deps = {
     "http://google-breakpad.googlecode.com/svn/trunk/src@285",
 
   "src/googleurl":
-    "http://google-url.googlecode.com/svn/trunk@96",
+    "http://google-url.googlecode.com/svn/trunk@98",
 
   "src/sdch/open-vcdiff":
     "http://open-vcdiff.googlecode.com/svn/trunk@22",
 
   "src/testing/gtest":
-    "http://googletest.googlecode.com/svn/trunk@167",
+    "http://googletest.googlecode.com/svn/trunk@214",
 
   "src/third_party/WebKit":
-    "/trunk/deps/third_party/WebKit@10947",
+    "/trunk/deps/third_party/WebKit@12324",
 
   "src/third_party/icu38":
-    "/trunk/deps/third_party/icu38@10692",
+    "/trunk/deps/third_party/icu38@11496",
 
   # TODO(mark): Remove once this has moved into depot_tools.
   "src/tools/gyp":
-    "http://gyp.googlecode.com/svn/trunk",
+    "http://gyp.googlecode.com/svn/trunk@390",
 
   "src/v8":
-    "http://v8.googlecode.com/svn/trunk@1370",
+    "http://v8.googlecode.com/svn/trunk@1564",
 
   "src/webkit/data/layout_tests/LayoutTests":
     Var("webkit_trunk") + "/LayoutTests@" + Var("webkit_revision"),
@@ -45,7 +45,7 @@ deps = {
 deps_os = {
   "win": {
     "src/third_party/cygwin":
-      "/trunk/deps/third_party/cygwin@3248",
+      "/trunk/deps/third_party/cygwin@11984",
 
     "src/third_party/python_24":
       "/trunk/deps/third_party/python_24@7444",
@@ -55,7 +55,7 @@ deps_os = {
   },
   "mac": {
     "src/third_party/GTM":
-      "http://google-toolbox-for-mac.googlecode.com/svn/trunk/@77",
+      "http://google-toolbox-for-mac.googlecode.com/svn/trunk/@104",
     "src/third_party/pdfsqueeze":
       "http://pdfsqueeze.googlecode.com/svn/trunk/@2",
   },
@@ -92,7 +92,8 @@ skip_child_includes = [
 
 hooks = [
   {
-    "pattern": "\\.gypi?$",
+    # A change to a .gyp, .gypi, or to GYP itself shound run the generator.
+    "pattern": "\\.gypi?$|[/\\\\]src[/\\\\]tools[/\\\\]gyp[/\\\\]",
     "action": ["python", "src/tools/gyp/gyp_dogfood", "src/build/all.gyp"],
   },
 ]

@@ -204,7 +204,7 @@ struct ParamTraits<PluginMsg_URLRequestReply_Params> {
       ReadParam(m, iter, &p->resource_id) &&
       ReadParam(m, iter, &p->url) &&
       ReadParam(m, iter, &p->notify_needed) &&
-      ReadParam(m, iter, &p->notify_data) && 
+      ReadParam(m, iter, &p->notify_data) &&
       ReadParam(m, iter, &p->stream);
   }
   static void Log(const param_type& p, std::wstring* l) {
@@ -460,4 +460,3 @@ struct ParamTraits<NPVariant_Param> {
 #include "chrome/common/ipc_message_macros.h"
 
 #endif  // CHROME_COMMON_PLUGIN_MESSAGES_H__
-

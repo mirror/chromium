@@ -107,7 +107,8 @@ static const NPUTF8 *pluginPropertyIdentifierNames[NUM_PROPERTY_IDENTIFIERS] = {
 #define ID_TEST_POSTURL_FILE        19
 #define ID_TEST_CALLBACK_AND_GET_VALUE 20
 #define ID_TEST_CONSTRUCT           21
-#define NUM_METHOD_IDENTIFIERS      22
+#define ID_DESTROY_NULL_STREAM      22
+#define NUM_METHOD_IDENTIFIERS      23
 
 static NPIdentifier pluginMethodIdentifiers[NUM_METHOD_IDENTIFIERS];
 static const NPUTF8 *pluginMethodIdentifierNames[NUM_METHOD_IDENTIFIERS] = {
@@ -134,6 +135,7 @@ static const NPUTF8 *pluginMethodIdentifierNames[NUM_METHOD_IDENTIFIERS] = {
     // Chrome bug http://code.google.com/p/chromium/issues/detail?id=4270
     "testCallbackAndGetValue",
     "testConstruct",
+    "destroyNullStream",
 };
 
 static NPUTF8* createCStringFromNPVariant(const NPVariant* variant)
@@ -410,22 +412,29 @@ static bool destroyStream(PluginObject* obj, const NPVariant* args, uint32_t arg
     return true;
 }
 
+static bool destroyNullStream(PluginObject* obj, const NPVariant* args, uint32_t argCount, NPVariant* result)
+{
+    NPError npError = browser->destroystream(obj->npp, 0, NPRES_USER_BREAK);
+    INT32_TO_NPVARIANT(npError, *result);
+    return true;
+}
+
 static bool testEnumerate(PluginObject* obj, const NPVariant* args, uint32_t argCount, NPVariant* result)
 {
     if (argCount == 2 && NPVARIANT_IS_OBJECT(args[0]) && NPVARIANT_IS_OBJECT(args[1])) {
-        uint32_t count;            
+        uint32_t count;
         NPIdentifier* identifiers;
 
         if (browser->enumerate(obj->npp, NPVARIANT_TO_OBJECT(args[0]), &identifiers, &count)) {
             NPObject* outArray = NPVARIANT_TO_OBJECT(args[1]);
             NPIdentifier pushIdentifier = browser->getstringidentifier("push");
-            
+
             for (uint32_t i = 0; i < count; i++) {
                 NPUTF8* string = browser->utf8fromidentifier(identifiers[i]);
-                
+
                 if (!string)
                     continue;
-                                    
+
                 NPVariant args[1];
                 STRINGZ_TO_NPVARIANT(string, args[0]);
                 NPVariant browserResult;
@@ -433,12 +442,12 @@ static bool testEnumerate(PluginObject* obj, const NPVariant* args, uint32_t arg
                 browser->releasevariantvalue(&browserResult);
                 browser->memfree(string);
             }
-            
+
             browser->memfree(identifiers);
         }
-        
+
         VOID_TO_NPVARIANT(*result);
-        return true;            
+        return true;
     }
     return false;
 }
@@ -639,7 +648,7 @@ static bool pluginInvoke(NPObject* header, NPIdentifier name, const NPVariant* a
                 // object before returning it and the calling JS gets a garbage
                 // value.  Firefox handles it fine.
                 OBJECT_TO_NPVARIANT(NPVARIANT_TO_OBJECT(browserResult), *result);
-            } else {                
+            } else {
                 browser->releasevariantvalue(&browserResult);
                 VOID_TO_NPVARIANT(*result);
             }
@@ -682,21 +691,21 @@ static bool pluginInvoke(NPObject* header, NPIdentifier name, const NPVariant* a
             // NPObject.
             // Arguments:
             // arg1:  Callback that returns a script object.
-            // arg2:  Name of the method to call on the script object returned 
+            // arg2:  Name of the method to call on the script object returned
             //        from the callback
             NPObject *windowScriptObject;
-            browser->getvalue(plugin->npp, NPNVWindowNPObject, 
+            browser->getvalue(plugin->npp, NPNVWindowNPObject,
                               &windowScriptObject);
 
             // Arg1 is the name of the callback
             NPUTF8* callbackString = createCStringFromNPVariant(&args[0]);
-            NPIdentifier callbackIdentifier = 
+            NPIdentifier callbackIdentifier =
                   browser->getstringidentifier(callbackString);
             free(callbackString);
 
             // Invoke a callback that returns a script object
             NPVariant object_result;
-            browser->invoke(plugin->npp, windowScriptObject, callbackIdentifier, 
+            browser->invoke(plugin->npp, windowScriptObject, callbackIdentifier,
                             &args[1], 1, &object_result);
 
             // Script object returned
@@ -704,7 +713,7 @@ static bool pluginInvoke(NPObject* header, NPIdentifier name, const NPVariant* a
 
             // Arg2 is the name of the method to be called on the script object
             NPUTF8* object_mehod_string = createCStringFromNPVariant(&args[1]);
-            NPIdentifier object_method = 
+            NPIdentifier object_method =
                 browser->getstringidentifier(object_mehod_string);
             free(object_mehod_string);
 
@@ -729,18 +738,19 @@ static bool pluginInvoke(NPObject* header, NPIdentifier name, const NPVariant* a
                 // value.  Firefox handles it fine.
                 OBJECT_TO_NPVARIANT(NPVARIANT_TO_OBJECT(object_method_result),
                                     *result);
-            } else {                
+            } else {
                 browser->releasevariantvalue(&object_method_result);
                 VOID_TO_NPVARIANT(*result);
             }
             return true;
         }
     } else if (name == pluginMethodIdentifiers[ID_TEST_CALLBACK_AND_GET_VALUE]) {
-        return testCallbackAndGetValue(plugin, args, argCount, result);
+          return testCallbackAndGetValue(plugin, args, argCount, result);
     } else if (name == pluginMethodIdentifiers[ID_TEST_CONSTRUCT]) {
-        return testConstruct(plugin, args, argCount, result);
-    }
-
+          return testConstruct(plugin, args, argCount, result);
+    } else if (name == pluginMethodIdentifiers[ID_DESTROY_NULL_STREAM]) 
+          return destroyNullStream(plugin, args, argCount, result);
+    
     return false;
 }
 

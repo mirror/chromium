@@ -14,6 +14,7 @@
 #include "chrome/browser/extensions/extension.h"
 #include "chrome/browser/extensions/extension_error_reporter.h"
 #include "chrome/browser/extensions/extensions_service.h"
+#include "chrome/common/extensions/url_pattern.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/json_value_serializer.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -169,18 +170,29 @@ TEST_F(ExtensionsServiceTest, LoadAllExtensionsFromDirectorySuccess) {
 
   Extension* extension = frontend->extensions()->at(0);
   const UserScriptList& scripts = extension->content_scripts();
+  const std::vector<std::string>& toolstrips = extension->toolstrips();
   ASSERT_EQ(2u, scripts.size());
   EXPECT_EQ(2u, scripts[0].url_patterns().size());
   EXPECT_EQ("http://*.google.com/*",
             scripts[0].url_patterns()[0].GetAsString());
   EXPECT_EQ("https://*.google.com/*",
             scripts[0].url_patterns()[1].GetAsString());
+  EXPECT_EQ(2u, scripts[0].js_scripts().size());
   EXPECT_EQ(extension->path().AppendASCII("script1.js").value(),
-            scripts[0].path().value());
-  EXPECT_EQ(1u, scripts[1].url_patterns().size());
-  EXPECT_EQ("http://*.yahoo.com/*", scripts[1].url_patterns()[0].GetAsString());
+            scripts[0].js_scripts()[0].path().value());
   EXPECT_EQ(extension->path().AppendASCII("script2.js").value(),
-            scripts[1].path().value());
+            scripts[0].js_scripts()[1].path().value());
+  EXPECT_EQ(1u, scripts[1].url_patterns().size());
+  EXPECT_EQ("http://*.news.com/*", scripts[1].url_patterns()[0].GetAsString());
+  EXPECT_EQ(extension->path().AppendASCII("js_files").AppendASCII("script3.js")
+      .value(), scripts[1].js_scripts()[0].path().value());
+  const std::vector<URLPattern> permissions = extension->permissions();
+  ASSERT_EQ(2u, permissions.size());
+  EXPECT_EQ("http://*.google.com/*", permissions[0].GetAsString());
+  EXPECT_EQ("https://*.google.com/*", permissions[1].GetAsString());
+  ASSERT_EQ(2u, toolstrips.size());
+  EXPECT_EQ("toolstrip1.html", toolstrips[0]);
+  EXPECT_EQ("toolstrip2.html", toolstrips[1]);
 
   EXPECT_EQ(std::string("10123456789abcdef0123456789abcdef0123456"),
             frontend->extensions()->at(1)->id());
@@ -227,7 +239,7 @@ TEST_F(ExtensionsServiceTest, LoadAllExtensionsFromDirectoryFail) {
 
   EXPECT_TRUE(MatchPattern(GetErrors()[1],
       std::string("Could not load extension from '*'. ") +
-      Extension::kInvalidJsListError)) << GetErrors()[1];
+      Extension::kMissingFileError)) << GetErrors()[1];
 
   EXPECT_TRUE(MatchPattern(GetErrors()[2],
       std::string("Could not load extension from '*'. ") +

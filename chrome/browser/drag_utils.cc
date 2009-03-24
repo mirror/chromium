@@ -19,7 +19,7 @@
 #include "chrome/common/os_exchange_data.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/text_button.h"
+#include "chrome/views/controls/button/text_button.h"
 #include "googleurl/src/gurl.h"
 #include "grit/theme_resources.h"
 
@@ -91,7 +91,8 @@ void SetURLAndDragImage(const GURL& url,
   data->SetURL(url, title);
 
   // Create a button to render the drag image for us.
-  views::TextButton button(title.empty() ? UTF8ToWide(url.spec()) : title);
+  views::TextButton button(NULL,
+                           title.empty() ? UTF8ToWide(url.spec()) : title);
   button.set_max_width(BookmarkBarView::kMaxButtonWidth);
   if (icon.isNull()) {
     button.SetIcon(*ResourceBundle::GetSharedInstance().GetBitmapNamed(

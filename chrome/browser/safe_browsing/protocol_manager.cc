@@ -30,19 +30,23 @@ static const int kSbTimerStartIntervalSec = 5 * 60;
 
 // Update URL for querying about the latest set of chunk updates.
 static const char* const kSbUpdateUrl =
-    "http://safebrowsing.clients.google.com/safebrowsing/downloads?client=%s&appver=%s&pver=2.2";
+    "http://safebrowsing.clients.google.com/safebrowsing/downloads?client=%s"
+    "&appver=%s&pver=2.2";
 
 // GetHash request URL for retrieving full hashes.
 static const char* const kSbGetHashUrl =
-    "http://safebrowsing.clients.google.com/safebrowsing/gethash?client=%s&appver=%s&pver=2.2";
+    "http://safebrowsing.clients.google.com/safebrowsing/gethash?client=%s"
+    "&appver=%s&pver=2.2";
 
 // New MAC client key requests URL.
 static const char* const kSbNewKeyUrl =
-    "https://sb-ssl.google.com/safebrowsing/newkey?client=%s&appver=%s&pver=2.2";
+    "https://sb-ssl.google.com/safebrowsing/newkey?client=%s&appver=%s"
+    "&pver=2.2";
 
 // URL for reporting malware pages.
 static const char* const kSbMalwareReportUrl =
-    "http://safebrowsing.clients.google.com/safebrowsing/report?evts=malblhit&evtd=%s&evtr=%s&evhr=%s&client=%s&appver=%s";
+    "http://safebrowsing.clients.google.com/safebrowsing/report?evts=malblhit"
+    "&evtd=%s&evtr=%s&evhr=%s&client=%s&appver=%s";
 
 #if defined(GOOGLE_CHROME_BUILD)
 static const char* const kSbClientName = "googlechrome";
@@ -351,9 +355,8 @@ bool SafeBrowsingProtocolManager::HandleServiceResponse(const GURL& url,
       break;
     }
     case CHUNK_REQUEST: {
-      if (sb_service_->new_safe_browsing())
-        UMA_HISTOGRAM_TIMES("SB2.ChunkRequest",
-                            base::Time::Now() - chunk_request_start_);
+      UMA_HISTOGRAM_TIMES("SB2.ChunkRequest",
+                          base::Time::Now() - chunk_request_start_);
 
       const ChunkUrl chunk_url = chunk_request_urls_.front();
       bool re_key = false;
@@ -563,11 +566,7 @@ void SafeBrowsingProtocolManager::OnChunkInserted() {
   chunk_pending_to_write_ = false;
 
   if (chunk_request_urls_.empty()) {
-    // Don't pollute old implementation histograms with new implemetation data.
-    if (sb_service_->new_safe_browsing())
-      UMA_HISTOGRAM_LONG_TIMES("SB2.Update", Time::Now() - last_update_);
-    else
-      UMA_HISTOGRAM_LONG_TIMES("SB.Update", Time::Now() - last_update_);
+    UMA_HISTOGRAM_LONG_TIMES("SB2.Update", Time::Now() - last_update_);
     UpdateFinished(true);
   } else {
     IssueChunkRequest();

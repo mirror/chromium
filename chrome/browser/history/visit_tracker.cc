@@ -4,8 +4,6 @@
 
 #include "chrome/browser/history/visit_tracker.h"
 
-#include "base/logging.h"
-
 namespace history {
 
 // When the list gets longer than 'MaxItems', CleanupTransitionList will resize
@@ -104,4 +102,3 @@ void VisitTracker::CleanupTransitionList(TransitionList* transitions) {
 }
 
 }  // namespace history
-

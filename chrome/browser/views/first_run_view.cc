@@ -11,12 +11,12 @@
 #include "chrome/browser/views/standard_layout.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
-#include "chrome/views/checkbox.h"
-#include "chrome/views/image_view.h"
-#include "chrome/views/label.h"
-#include "chrome/views/throbber.h"
-#include "chrome/views/separator.h"
-#include "chrome/views/window.h"
+#include "chrome/views/controls/button/checkbox.h"
+#include "chrome/views/controls/image_view.h"
+#include "chrome/views/controls/label.h"
+#include "chrome/views/controls/throbber.h"
+#include "chrome/views/controls/separator.h"
+#include "chrome/views/window/window.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 #include "grit/locale_settings.h"
@@ -55,7 +55,7 @@ void FirstRunView::SetupControls() {
   using views::Label;
   using views::Link;
 
-  default_browser_->SetIsSelected(true);
+  default_browser_->SetChecked(true);
 
   welcome_label_ = new Label(l10n_util::GetString(IDS_FIRSTRUN_DLG_TEXT));
   welcome_label_->SetMultiLine(true);
@@ -150,12 +150,12 @@ void FirstRunView::Layout() {
 void FirstRunView::OpenCustomizeDialog() {
   // The customize dialog now owns the importer host object.
   views::Window::CreateChromeWindow(
-      window()->GetHWND(),
+      window()->GetNativeWindow(),
       gfx::Rect(),
       new FirstRunCustomizeView(profile_,
                                 importer_host_,
                                 this,
-                                default_browser_->IsSelected()))->Show();
+                                default_browser_->checked()))->Show();
 }
 
 void FirstRunView::LinkActivated(views::Link* source, int event_flags) {
@@ -178,11 +178,11 @@ bool FirstRunView::Accept() {
   customize_link_->SetEnabled(false);
   CreateDesktopShortcut();
   CreateQuickLaunchShortcut();
-  if (default_browser_->IsSelected())
+  if (default_browser_->checked())
     SetDefaultBrowser();
   // Index 0 is the default browser.
   FirstRun::ImportSettings(profile_, 0, GetDefaultImportItems(),
-                           window()->GetHWND());
+                           window()->GetNativeWindow());
   UserMetrics::RecordAction(L"FirstRunDef_Accept", profile_);
 
   return true;
@@ -203,4 +203,3 @@ void FirstRunView::CustomizeAccepted() {
 void FirstRunView::CustomizeCanceled() {
   UserMetrics::RecordAction(L"FirstRunCustom_Cancel", profile_);
 }
-

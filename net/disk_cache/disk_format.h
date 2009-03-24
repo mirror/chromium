@@ -52,8 +52,8 @@
 // being currently used, it means that the entry was not properly closed on a
 // previous run, so it is discarded.
 
-#ifndef NET_DISK_CACHE_DISK_FORMAT_H__
-#define NET_DISK_CACHE_DISK_FORMAT_H__
+#ifndef NET_DISK_CACHE_DISK_FORMAT_H_
+#define NET_DISK_CACHE_DISK_FORMAT_H_
 
 #include "base/basictypes.h"
 
@@ -66,12 +66,15 @@ const uint32 kIndexMagic = 0xC103CAC3;
 const uint32 kCurrentVersion = 0x20000;  // Version 2.0.
 
 struct LruData {
+  int32     pad1[2];
+  int32     filled;          // Flag to tell when we filled the cache.
+  int32     sizes[5];
   CacheAddr heads[5];
   CacheAddr tails[5];
   CacheAddr transaction;     // In-flight operation target.
   int32     operation;       // Actual in-flight operation.
   int32     operation_list;  // In-flight operation list.
-  int32     pad[7];
+  int32     pad2[7];
 };
 
 // Header for the master index file.
@@ -86,7 +89,8 @@ struct IndexHeader {
   int32       table_len;     // Actual size of the table (0 == kIndexTablesize).
   int32       crash;         // Signals a previous crash.
   int32       experiment;    // Id of an ongoing test.
-  int32       pad[62];
+  uint64      create_time;   // Creation time for this set of files.
+  int32       pad[52];
   LruData     lru;           // Eviction control data.
   IndexHeader() {
     memset(this, 0, sizeof(*this));
@@ -188,5 +192,4 @@ COMPILE_ASSERT(sizeof(BlockFileHeader) == kBlockHeaderSize, bad_header);
 
 }  // namespace disk_cache
 
-#endif  // NET_DISK_CACHE_DISK_FORMAT_H__
-
+#endif  // NET_DISK_CACHE_DISK_FORMAT_H_

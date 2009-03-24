@@ -8,8 +8,8 @@
 #include "chrome/browser/views/tabs/tab_strip.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/resource_bundle.h"
-#include "chrome/views/client_view.h"
-#include "chrome/views/window_resources.h"
+#include "chrome/views/window/client_view.h"
+#include "chrome/views/window/window_resources.h"
 #include "grit/theme_resources.h"
 
 // An enumeration of bitmap resources used by this window.
@@ -67,7 +67,8 @@ SkBitmap* GlassBrowserWindowResources::standard_frame_bitmaps_[];
 
 GlassBrowserWindowResources* GlassBrowserFrameView::resources_ = NULL;
 SkBitmap* GlassBrowserFrameView::distributor_logo_ = NULL;
-HICON GlassBrowserFrameView::throbber_icons_[GlassBrowserFrameView::kThrobberIconCount];
+HICON GlassBrowserFrameView::throbber_icons_[
+    GlassBrowserFrameView::kThrobberIconCount];
 
 namespace {
 // There are 3 px of client edge drawn inside the outer frame borders.
@@ -114,7 +115,7 @@ GlassBrowserFrameView::GlassBrowserFrameView(BrowserFrame* frame,
       throbber_running_(false),
       throbber_frame_(0) {
   InitClass();
-  if (frame_->window_delegate()->ShouldShowWindowIcon())
+  if (frame_->GetDelegate()->ShouldShowWindowIcon())
     InitThrobberIcons();
 }
 
@@ -164,7 +165,7 @@ gfx::Rect GlassBrowserFrameView::GetWindowBoundsForClientBounds(
     RECT rect = client_bounds.ToRECT();
     AdjustWindowRectEx(&rect, frame_->window_style(), FALSE,
                        frame_->window_ex_style());
-    return gfx::Rect(rect);    
+    return gfx::Rect(rect);
   }
 
   int top_height = NonClientTopBorderHeight();
@@ -201,7 +202,7 @@ int GlassBrowserFrameView::NonClientHitTest(const gfx::Point& point) {
   if (!browser_view_->IsBrowserTypeNormal() || !bounds().Contains(point))
     return HTNOWHERE;
 
-  int frame_component = frame_->client_view()->NonClientHitTest(point);
+  int frame_component = frame_->GetClientView()->NonClientHitTest(point);
   if (frame_component != HTNOWHERE)
     return frame_component;
 
@@ -209,7 +210,7 @@ int GlassBrowserFrameView::NonClientHitTest(const gfx::Point& point) {
   int window_component = GetHTComponentForFrame(point, border_thickness,
       NonClientBorderThickness(), border_thickness,
       kResizeAreaCornerSize - border_thickness,
-      frame_->window_delegate()->CanResize());
+      frame_->GetDelegate()->CanResize());
   // Fall back to the caption if no other component matches.
   return (window_component == HTNOWHERE) ? HTCAPTION : window_component;
 }
@@ -271,7 +272,7 @@ void GlassBrowserFrameView::PaintDistributorLogo(ChromeCanvas* canvas) {
 void GlassBrowserFrameView::PaintToolbarBackground(ChromeCanvas* canvas) {
   gfx::Rect toolbar_bounds(browser_view_->GetToolbarBounds());
   gfx::Point toolbar_origin(toolbar_bounds.origin());
-  View::ConvertPointToView(frame_->client_view(), this, &toolbar_origin);
+  View::ConvertPointToView(frame_->GetClientView(), this, &toolbar_origin);
   toolbar_bounds.set_origin(toolbar_origin);
 
   SkBitmap* toolbar_left =
@@ -296,7 +297,7 @@ void GlassBrowserFrameView::PaintOTRAvatar(ChromeCanvas* canvas) {
   SkBitmap otr_avatar_icon = browser_view_->GetOTRAvatarIcon();
   canvas->DrawBitmapInt(otr_avatar_icon, 0,
       (otr_avatar_icon.height() - otr_avatar_bounds_.height()) / 2,
-      otr_avatar_bounds_.width(), otr_avatar_bounds_.height(), 
+      otr_avatar_bounds_.width(), otr_avatar_bounds_.height(),
       MirroredLeftPointForRect(otr_avatar_bounds_), otr_avatar_bounds_.y(),
       otr_avatar_bounds_.width(), otr_avatar_bounds_.height(), false);
 }
@@ -305,7 +306,7 @@ void GlassBrowserFrameView::PaintRestoredClientEdge(ChromeCanvas* canvas) {
   // The client edges start below the toolbar upper corner images regardless
   // of how tall the toolbar itself is.
   int client_area_top =
-      frame_->client_view()->y() + browser_view_->GetToolbarBounds().y() +
+      frame_->GetClientView()->y() + browser_view_->GetToolbarBounds().y() +
       resources_->GetPartBitmap(FRAME_CLIENT_EDGE_TOP_LEFT)->height();
 
   gfx::Rect client_area_bounds = CalculateClientAreaBounds(width(), height());
@@ -384,7 +385,8 @@ void GlassBrowserFrameView::StartThrobber() {
     throbber_running_ = true;
     throbber_frame_ = 0;
     InitThrobberIcons();
-    SendMessage(frame_->GetHWND(), WM_SETICON, static_cast<WPARAM>(ICON_SMALL),
+    SendMessage(frame_->GetNativeView(), WM_SETICON,
+                static_cast<WPARAM>(ICON_SMALL),
                 reinterpret_cast<LPARAM>(throbber_icons_[throbber_frame_]));
   }
 }
@@ -396,7 +398,8 @@ void GlassBrowserFrameView::StopThrobber() {
 
 void GlassBrowserFrameView::DisplayNextThrobberFrame() {
   throbber_frame_ = (throbber_frame_ + 1) % kThrobberIconCount;
-  SendMessage(frame_->GetHWND(), WM_SETICON, static_cast<WPARAM>(ICON_SMALL),
+  SendMessage(frame_->GetNativeView(), WM_SETICON,
+              static_cast<WPARAM>(ICON_SMALL),
               reinterpret_cast<LPARAM>(throbber_icons_[throbber_frame_]));
 }
 
@@ -427,4 +430,3 @@ void GlassBrowserFrameView::InitClass() {
     initialized = true;
   }
 }
-

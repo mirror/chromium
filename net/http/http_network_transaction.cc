@@ -6,6 +6,7 @@
 
 #include "base/scoped_ptr.h"
 #include "base/compiler_specific.h"
+#include "base/field_trial.h"
 #include "base/string_util.h"
 #include "base/trace_event.h"
 #include "build/build_config.h"
@@ -52,8 +53,8 @@ HttpNetworkTransaction::HttpNetworkTransaction(HttpNetworkSession* session,
       header_buf_len_(0),
       header_buf_body_offset_(-1),
       header_buf_http_offset_(-1),
-      content_length_(-1),  // -1 means unspecified.
-      content_read_(0),
+      response_body_length_(-1),  // -1 means unspecified.
+      response_body_read_(0),
       read_buf_len_(0),
       next_state_(STATE_NONE) {
 #if defined(OS_WIN)
@@ -67,6 +68,7 @@ int HttpNetworkTransaction::Start(const HttpRequestInfo* request_info,
   UpdateConnectionTypeHistograms(CONNECTION_ANY);
 
   request_ = request_info;
+  start_time_ = base::Time::Now();
 
   next_state_ = STATE_RESOLVE_PROXY;
   int rv = DoLoop(OK);
@@ -136,17 +138,17 @@ void HttpNetworkTransaction::PrepareForAuthRestart(HttpAuth::Target target) {
   bool keep_alive = false;
   if (response_.headers->IsKeepAlive()) {
     // If there is a response body of known length, we need to drain it first.
-    if (content_length_ > 0 || chunked_decoder_.get()) {
+    if (response_body_length_ > 0 || chunked_decoder_.get()) {
       next_state_ = STATE_DRAIN_BODY_FOR_AUTH_RESTART;
       read_buf_ = new IOBuffer(kDrainBodyBufferSize);  // A bit bucket
       read_buf_len_ = kDrainBodyBufferSize;
       return;
     }
-    if (content_length_ == 0)  // No response body to drain.
+    if (response_body_length_ == 0)  // No response body to drain.
       keep_alive = true;
-    // content_length_ is -1 and we're not using chunked encoding.  We don't
-    // know the length of the response body, so we can't reuse this connection
-    // even though the server says it's keep-alive.
+    // response_body_length_ is -1 and we're not using chunked encoding. We
+    // don't know the length of the response body, so we can't reuse this
+    // connection even though the server says it's keep-alive.
   }
 
   // If the auth scheme is connection-based but the proxy/server mistakenly
@@ -206,6 +208,19 @@ int HttpNetworkTransaction::Read(IOBuffer* buf, int buf_len,
 
   if (!connection_.is_initialized())
     return 0;  // connection_ has been reset.  Treat like EOF.
+
+  if (establishing_tunnel_) {
+    // We're trying to read the body of the response but we're still trying to
+    // establish an SSL tunnel through the proxy.  We can't read these bytes
+    // when establishing a tunnel because they might be controlled by an active
+    // network attacker.  We don't worry about this for HTTP because an active
+    // network attacker can already control HTTP sessions.
+    // We reach this case when the user cancels a 407 proxy auth prompt.
+    // See http://crbug.com/8473
+    DCHECK(response_.headers->response_code() == 407);
+    LogBlockedTunnelResponse(response_.headers->response_code());
+    return ERR_TUNNEL_CONNECTION_FAILED;
+  }
 
   read_buf_ = buf;
   read_buf_len_ = buf_len;
@@ -638,7 +653,6 @@ int HttpNetworkTransaction::DoWriteHeaders() {
   // out the first bytes of the request headers.
   if (request_headers_bytes_sent_ == 0) {
     response_.request_time = Time::Now();
-    response_.was_cached = false;
   }
 
   const char* buf = request_headers_.data() + request_headers_bytes_sent_;
@@ -796,7 +810,8 @@ int HttpNetworkTransaction::DoReadBody() {
   next_state_ = STATE_READ_BODY_COMPLETE;
 
   // We may have already consumed the indicated content length.
-  if (content_length_ != -1 && content_read_ >= content_length_)
+  if (response_body_length_ != -1 &&
+      response_body_read_ >= response_body_length_)
     return 0;
 
   // We may have some data remaining in the header buffer.
@@ -840,16 +855,18 @@ int HttpNetworkTransaction::DoReadBodyComplete(int result) {
     // Error while reading the socket.
     done = true;
   } else {
-    content_read_ += result;
+    response_body_read_ += result;
     if (unfiltered_eof ||
-        (content_length_ != -1 && content_read_ >= content_length_) ||
+        (response_body_length_ != -1 &&
+         response_body_read_ >= response_body_length_) ||
         (chunked_decoder_.get() && chunked_decoder_->reached_eof())) {
       done = true;
       keep_alive = response_.headers->IsKeepAlive();
       // We can't reuse the connection if we read more than the advertised
       // content length.
       if (unfiltered_eof ||
-          (content_length_ != -1 && content_read_ > content_length_))
+          (response_body_length_ != -1 &&
+           response_body_read_ > response_body_length_))
         keep_alive = false;
     }
   }
@@ -902,16 +919,18 @@ int HttpNetworkTransaction::DoDrainBodyForAuthRestartComplete(int result) {
     // Error while reading the socket.
     done = true;
   } else {
-    content_read_ += result;
+    response_body_read_ += result;
     if (unfiltered_eof ||
-        (content_length_ != -1 && content_read_ >= content_length_) ||
+        (response_body_length_ != -1 &&
+         response_body_read_ >= response_body_length_) ||
         (chunked_decoder_.get() && chunked_decoder_->reached_eof())) {
       done = true;
       keep_alive = response_.headers->IsKeepAlive();
       // We can't reuse the connection if we read more than the advertised
       // content length.
       if (unfiltered_eof ||
-          (content_length_ != -1 && content_read_ > content_length_))
+          (response_body_length_ != -1 &&
+           response_body_read_ > response_body_length_))
         keep_alive = false;
     }
   }
@@ -930,11 +949,30 @@ void HttpNetworkTransaction::LogTransactionMetrics() const {
   base::TimeDelta duration = base::Time::Now() - response_.request_time;
   if (60 < duration.InMinutes())
     return;
-  UMA_HISTOGRAM_LONG_TIMES("Net.Transaction_Latency", duration);
+
+  base::TimeDelta total_duration = base::Time::Now() - start_time_;
+
+  UMA_HISTOGRAM_LONG_TIMES(FieldTrial::MakeName("Net.Transaction_Latency",
+      "DnsImpact").data(), duration);
+  UMA_HISTOGRAM_CLIPPED_TIMES(FieldTrial::MakeName(
+      "Net.Transaction_Latency_Under_10", "DnsImpact").data(), duration,
+      base::TimeDelta::FromMilliseconds(1), base::TimeDelta::FromMinutes(10),
+      100);
+  UMA_HISTOGRAM_CLIPPED_TIMES(FieldTrial::MakeName(
+      "Net.Transaction_Latency_Total_Under_10", "DnsImpact").data(),
+      total_duration, base::TimeDelta::FromMilliseconds(1),
+      base::TimeDelta::FromMinutes(10), 100);
   if (!duration.InMilliseconds())
     return;
   UMA_HISTOGRAM_COUNTS("Net.Transaction_Bandwidth",
-      static_cast<int> (content_read_ / duration.InMilliseconds()));
+      static_cast<int> (response_body_read_ / duration.InMilliseconds()));
+}
+
+void HttpNetworkTransaction::LogBlockedTunnelResponse(
+    int response_code) const {
+  LOG(WARNING) << "Blocked proxy response with status " << response_code
+               << " to CONNECT request for " << request_->url.host() << ":"
+               << request_->url.EffectiveIntPort() << ".";
 }
 
 int HttpNetworkTransaction::DidReadResponseHeaders() {
@@ -995,9 +1033,7 @@ int HttpNetworkTransaction::DidReadResponseHeaders() {
         // 501 response bodies that contain a useful error message.  For
         // example, Squid uses a 404 response to report the DNS error: "The
         // domain name does not exist."
-        LOG(WARNING) <<
-            "Blocked proxy response to CONNECT request with status " <<
-            headers->response_code() << ".";
+        LogBlockedTunnelResponse(headers->response_code());
         return ERR_TUNNEL_CONNECTION_FAILED;
     }
   }
@@ -1023,25 +1059,37 @@ int HttpNetworkTransaction::DidReadResponseHeaders() {
 
   // Figure how to determine EOF:
 
-  // For certain responses, we know the content length is always 0.
+  // For certain responses, we know the content length is always 0. From
+  // RFC 2616 Section 4.3 Message Body:
+  //
+  // For response messages, whether or not a message-body is included with
+  // a message is dependent on both the request method and the response
+  // status code (section 6.1.1). All responses to the HEAD request method
+  // MUST NOT include a message-body, even though the presence of entity-
+  // header fields might lead one to believe they do. All 1xx
+  // (informational), 204 (no content), and 304 (not modified) responses
+  // MUST NOT include a message-body. All other responses do include a
+  // message-body, although it MAY be of zero length.
   switch (response_.headers->response_code()) {
     case 204:  // No Content
     case 205:  // Reset Content
     case 304:  // Not Modified
-      content_length_ = 0;
+      response_body_length_ = 0;
       break;
   }
+  if (request_->method == "HEAD")
+    response_body_length_ = 0;
 
-  if (content_length_ == -1) {
+  if (response_body_length_ == -1) {
     // Ignore spurious chunked responses from HTTP/1.0 servers and proxies.
     // Otherwise "Transfer-Encoding: chunked" trumps "Content-Length: N"
     if (response_.headers->GetHttpVersion() >= HttpVersion(1, 1) &&
         response_.headers->HasHeaderValue("Transfer-Encoding", "chunked")) {
       chunked_decoder_.reset(new HttpChunkedDecoder());
     } else {
-      content_length_ = response_.headers->GetContentLength();
-      // If content_length_ is still -1, then we have to wait for the server to
-      // close the connection.
+      response_body_length_ = response_.headers->GetContentLength();
+      // If response_body_length_ is still -1, then we have to wait for the
+      // server to close the connection.
     }
   }
 
@@ -1136,16 +1184,15 @@ void HttpNetworkTransaction::ResetStateForRestart() {
   header_buf_len_ = 0;
   header_buf_body_offset_ = -1;
   header_buf_http_offset_ = -1;
-  content_length_ = -1;
-  content_read_ = 0;
+  response_body_length_ = -1;
+  response_body_read_ = 0;
   read_buf_ = NULL;
   read_buf_len_ = 0;
   request_headers_.clear();
   request_headers_bytes_sent_ = 0;
   chunked_decoder_.reset();
-  // Reset the scoped_refptr
-  response_.headers = NULL;
-  response_.auth_challenge = NULL;
+  // Reset all the members of response_.
+  response_ = HttpResponseInfo();
 }
 
 bool HttpNetworkTransaction::ShouldResendRequest() {
@@ -1392,9 +1439,30 @@ int HttpNetworkTransaction::HandleAuthChallenge() {
 
   if (!auth_handler_[target]) {
     if (establishing_tunnel_) {
+      // Log an error message to help debug http://crbug.com/8771.
+      std::string auth_target(target == HttpAuth::AUTH_PROXY ?
+                              "proxy" : "server");
+      LOG(ERROR) << "Can't perform auth to the " << auth_target << " "
+                 << AuthOrigin(target).spec()
+                 << " when establishing a tunnel";
+
+      std::string challenge;
+      void* iter = NULL;
+      while (response_.headers->EnumerateHeader(&iter, "Proxy-Authenticate",
+                                                &challenge)) {
+        LOG(ERROR) << "  Has header Proxy-Authenticate: " << challenge;
+      }
+
+      iter = NULL;
+      while (response_.headers->EnumerateHeader(&iter, "WWW-Authenticate",
+                                                &challenge)) {
+        LOG(ERROR) << "  Has header WWW-Authenticate: " << challenge;
+      }
+
       // We are establishing a tunnel, we can't show the error page because an
       // active network attacker could control its contents.  Instead, we just
       // fail to establish the tunnel.
+      DCHECK(target == HttpAuth::AUTH_PROXY);
       return ERR_PROXY_AUTH_REQUESTED;
     }
     // We found no supported challenge -- let the transaction continue

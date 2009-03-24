@@ -2,10 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_VIEWS_EVENT_H__
-#define CHROME_VIEWS_EVENT_H__
+#ifndef CHROME_VIEWS_EVENT_H_
+#define CHROME_VIEWS_EVENT_H_
 
 #include "base/basictypes.h"
+
+#if defined(OS_LINUX)
+#include <gdk/gdk.h>
+#endif
+
 #include "base/gfx/point.h"
 #include "webkit/glue/window_open_disposition.h"
 
@@ -80,11 +85,16 @@ class Event {
     return (flags_ & EF_ALT_DOWN) != 0;
   }
 
+#if defined(OS_WIN)
   // Returns the EventFlags in terms of windows flags.
   int GetWindowsFlags() const;
 
   // Convert windows flags to views::Event flags
   static int ConvertWindowsFlags(uint32 win_flags);
+#elif defined(OS_LINUX)
+  // Convert the state member on a GdkEvent to views::Event flags
+  static int GetFlagsFromGdkState(int state);
+#endif
 
   // Convert WebInputEvent::Modifiers flags to views::Event flags.
   // Note that this only deals with keyboard modifiers.
@@ -219,26 +229,29 @@ class MouseEvent : public LocatedEvent {
 ////////////////////////////////////////////////////////////////////////////////
 class KeyEvent : public Event {
  public:
+#if defined(OS_WIN)
   // Create a new key event
-  KeyEvent(EventType type, int ch, int repeat_count, int message_flags)
-      : Event(type, GetKeyStateFlags()),
-        character_(ch),
-        repeat_count_(repeat_count),
-        message_flags_(message_flags) {
-  }
+  KeyEvent(EventType type, int ch, int repeat_count, int message_flags);
+#elif defined(OS_LINUX)
+  KeyEvent(GdkEventKey* event);
+#endif
 
   int GetCharacter() const {
     return character_;
   }
 
+#if defined(OS_WIN)
   bool IsExtendedKey() const;
+#endif
 
   int GetRepeatCount() const {
     return repeat_count_;
   }
 
  private:
+#if defined(OS_WIN)
   int GetKeyStateFlags() const;
+#endif
 
   int character_;
   int repeat_count_;
@@ -306,5 +319,4 @@ class DropTargetEvent : public LocatedEvent {
 
 }  // namespace views
 
-#endif  // CHROME_VIEWS_EVENT_H__
-
+#endif  // CHROME_VIEWS_EVENT_H_

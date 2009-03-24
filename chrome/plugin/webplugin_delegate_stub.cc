@@ -5,7 +5,6 @@
 #include "chrome/plugin/webplugin_delegate_stub.h"
 
 #include "base/command_line.h"
-#include "base/time.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/gfx/emf.h"
 #include "chrome/common/plugin_messages.h"
@@ -80,8 +79,8 @@ void WebPluginDelegateStub::OnMessageReceived(const IPC::Message& msg) {
                         OnDidFinishLoadWithReason)
     IPC_MESSAGE_HANDLER(PluginMsg_SetFocus, OnSetFocus)
     IPC_MESSAGE_HANDLER(PluginMsg_HandleEvent, OnHandleEvent)
-    IPC_MESSAGE_HANDLER(PluginMsg_Paint, OnPaint)    
-    IPC_MESSAGE_HANDLER(PluginMsg_DidPaint, OnDidPaint)    
+    IPC_MESSAGE_HANDLER(PluginMsg_Paint, OnPaint)
+    IPC_MESSAGE_HANDLER(PluginMsg_DidPaint, OnDidPaint)
     IPC_MESSAGE_HANDLER(PluginMsg_Print, OnPrint)
     IPC_MESSAGE_HANDLER(PluginMsg_GetPluginScriptableObject,
                         OnGetPluginScriptableObject)
@@ -95,7 +94,8 @@ void WebPluginDelegateStub::OnMessageReceived(const IPC::Message& msg) {
                         OnDidFinishManualLoading)
     IPC_MESSAGE_HANDLER(PluginMsg_DidManualLoadFail, OnDidManualLoadFail)
     IPC_MESSAGE_HANDLER(PluginMsg_InstallMissingPlugin, OnInstallMissingPlugin)
-    IPC_MESSAGE_HANDLER(PluginMsg_HandleURLRequestReply, OnHandleURLRequestReply)
+    IPC_MESSAGE_HANDLER(PluginMsg_HandleURLRequestReply,
+                        OnHandleURLRequestReply)
     IPC_MESSAGE_HANDLER(PluginMsg_URLRequestRouted, OnURLRequestRouted)
     IPC_MESSAGE_UNHANDLED_ERROR()
   IPC_END_MESSAGE_MAP()
@@ -340,4 +340,3 @@ void WebPluginDelegateStub::OnURLRequestRouted(const std::string& url,
                                                HANDLE notify_data) {
   delegate_->URLRequestRouted(url, notify_needed, notify_data);
 }
-

@@ -81,7 +81,7 @@ Lock ThreadData::list_lock_;
 // static
 ThreadData::Status ThreadData::status_ = ThreadData::UNINITIALIZED;
 
-ThreadData::ThreadData() : message_loop_(MessageLoop::current()) {}
+ThreadData::ThreadData() : next_(NULL), message_loop_(MessageLoop::current()) {}
 
 // static
 ThreadData* ThreadData::current() {
@@ -904,4 +904,3 @@ void Comparator::WriteSnapshot(const Snapshot& sample,
 }
 
 }  // namespace tracked_objects
-

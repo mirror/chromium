@@ -6,7 +6,7 @@
 #define CHROME_BROWSER_VIEWS_HWND_HTML_VIEW_H_
 
 #include "googleurl/src/gurl.h"
-#include "chrome/views/hwnd_view.h"
+#include "chrome/views/controls/hwnd_view.h"
 
 class RenderViewHost;
 class RenderViewHostDelegate;
@@ -49,7 +49,7 @@ class HWNDHtmlView : public views::HWNDView {
 
   // Our HTML rendering component.
   RenderViewHost* render_view_host_;
-  
+
   // Whether or not the rendered content is permitted to send messages back to
   // the view, through |delegate_| via ProcessDOMUIMessage.
   bool allow_dom_ui_bindings_;
@@ -64,4 +64,3 @@ class HWNDHtmlView : public views::HWNDView {
 };
 
 #endif  // CHROME_BROWSER_VIEWS_HWND_HTML_VIEW_H_
-

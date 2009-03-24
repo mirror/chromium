@@ -16,7 +16,6 @@
 #include "base/gfx/native_widget_types.h"
 #include "base/shared_memory.h"
 #include "chrome/common/ipc_message_macros.h"
-#include "chrome/common/ipc_maybe.h"
 #include "chrome/common/transport_dib.h"
 #include "skia/include/SkBitmap.h"
 #include "webkit/glue/console_message_level.h"
@@ -53,12 +52,6 @@ IPC_BEGIN_MESSAGES(View)
                        size_t /* min_dead_capacity */,
                        size_t /* max_dead_capacity */,
                        size_t /* capacity */)
-
-  // Allows a chrome plugin loaded in the browser process to send arbitrary
-  // data to an instance of the same plugin loaded in a renderer process.
-  IPC_MESSAGE_CONTROL2(ViewMsg_PluginMessage,
-                       FilePath /* plugin_path of plugin */,
-                       std::vector<uint8> /* opaque data */)
 
   // Reply in response to ViewHostMsg_ShowView or ViewHostMsg_ShowWidget.
   // similar to the new command, but used when the renderer created a view
@@ -175,7 +168,14 @@ IPC_BEGIN_MESSAGES(View)
                       int /* request_id */,
                       ResourceResponseHead)
 
-  // Sent as upload progress is being made
+  // Sent as download progress is being made, size of the resource may be
+  // unknown, in that case |size| is -1.
+  IPC_MESSAGE_ROUTED3(ViewMsg_Resource_DownloadProgress,
+                      int /* request_id */,
+                      int64 /* position */,
+                      int64 /* size */)
+
+  // Sent as upload progress is being made.
   IPC_MESSAGE_ROUTED3(ViewMsg_Resource_UploadProgress,
                       int /* request_id */,
                       int64 /* position */,
@@ -194,9 +194,10 @@ IPC_BEGIN_MESSAGES(View)
                       int /* data_len */)
 
   // Sent when the request has been completed.
-  IPC_MESSAGE_ROUTED2(ViewMsg_Resource_RequestComplete,
+  IPC_MESSAGE_ROUTED3(ViewMsg_Resource_RequestComplete,
                       int /* request_id */,
-                      URLRequestStatus /* status */)
+                      URLRequestStatus /* status */,
+                      std::string /* security info */)
 
   // Request for the renderer to evaluate an xpath to a frame and execute a
   // javascript: url in that frame's context. The message is completely
@@ -383,9 +384,9 @@ IPC_BEGIN_MESSAGES(View)
 
   // Retreive information from the MSAA DOM subtree, for accessibility purposes.
   IPC_SYNC_MESSAGE_ROUTED1_1(ViewMsg_GetAccessibilityInfo,
-                             AccessibilityInParams
+                             webkit_glue::WebAccessibility::InParams
                              /* input parameters */,
-                             AccessibilityOutParams
+                             webkit_glue::WebAccessibility::OutParams
                              /* output parameters */)
 
   // Requests the renderer to clear cashed accessibility information. Takes an
@@ -457,8 +458,10 @@ IPC_BEGIN_MESSAGES(View)
                       std::string /* event arguments */)
 #endif
   // Posts a message to the renderer.
-  IPC_MESSAGE_ROUTED1(ViewMsg_HandleMessageFromExternalHost,
-                      std::string /* The message */)
+  IPC_MESSAGE_ROUTED3(ViewMsg_HandleMessageFromExternalHost,
+                      std::string /* The message */,
+                      std::string /* The origin */,
+                      std::string /* The target*/)
 
   // Sent to the renderer when a popup window should no longer count against
   // the current popup count (either because it's not a popup or because it was
@@ -508,6 +511,12 @@ IPC_BEGIN_MESSAGES(View)
   // Notification that a move or resize renderer's containing window has
   // started.
   IPC_MESSAGE_ROUTED0(ViewMsg_MoveOrResizeStarted)
+
+  // Send a message to an extension process.  channel_id is a handle that can
+  // be used for sending a response.
+  IPC_MESSAGE_ROUTED2(ViewMsg_HandleExtensionMessage,
+                      std::string /* message */,
+                      int /* channel_id */)
 IPC_END_MESSAGES(View)
 
 
@@ -534,16 +543,6 @@ IPC_BEGIN_MESSAGES(ViewHost)
                               bool /* focus on show */,
                               int /* route_id */)
 
-  // These two messages are sent as a result of the above two, in the browser
-  // process, from RenderWidgetHelper to RenderViewHost.
-  IPC_MESSAGE_ROUTED2(ViewHostMsg_CreateWindowWithRoute,
-                      int /* route_id */,
-                      ModalDialogEvent /* modal_dialog_event */)
-
-  IPC_MESSAGE_ROUTED2(ViewHostMsg_CreateWidgetWithRoute,
-                      int /* route_id */,
-                      bool /* activatable */)
-
   // These two messages are sent to the parent RenderViewHost to display the
   // page/widget that was created by CreateView/CreateWidget.  routing_id
   // refers to the id that was returned from the Create message above.
@@ -566,7 +565,7 @@ IPC_BEGIN_MESSAGES(ViewHost)
   IPC_SYNC_MESSAGE_ROUTED0_0(ViewHostMsg_RunModal)
 
   IPC_MESSAGE_CONTROL1(ViewHostMsg_UpdatedCacheStats,
-                       CacheManager::UsageStats /* stats */)
+                       WebKit::WebCache::UsageStats /* stats */)
 
   // Indicates the renderer is ready in response to a ViewMsg_New or
   // a ViewMsg_CreatingNew_ACK.
@@ -624,8 +623,10 @@ IPC_BEGIN_MESSAGES(ViewHost)
   // The security info is non empty if the resource was originally loaded over
   // a secure connection.
   // Note: May only be sent once per URL per frame per committed load.
-  IPC_MESSAGE_ROUTED2(ViewHostMsg_DidLoadResourceFromMemoryCache,
+  IPC_MESSAGE_ROUTED4(ViewHostMsg_DidLoadResourceFromMemoryCache,
                       GURL /* url */,
+                      std::string  /* frame_origin */,
+                      std::string  /* main_frame_origin */,
                       std::string  /* security info */)
 
   // Sent when the renderer starts a provisional load for a frame.
@@ -755,9 +756,10 @@ IPC_BEGIN_MESSAGES(ViewHost)
   IPC_MESSAGE_ROUTED1(ViewHostMsg_GoToEntryAtOffset,
                       int /* offset (from current) of history item to get */)
 
-  IPC_SYNC_MESSAGE_ROUTED3_2(ViewHostMsg_RunJavaScriptMessage,
+  IPC_SYNC_MESSAGE_ROUTED4_2(ViewHostMsg_RunJavaScriptMessage,
                              std::wstring /* in - alert message */,
                              std::wstring /* in - default prompt */,
+                             GURL         /* in - originating page URL */,
                              int          /* in - dialog flags */,
                              bool         /* out - success */,
                              std::wstring /* out - prompt field */)
@@ -806,8 +808,10 @@ IPC_BEGIN_MESSAGES(ViewHost)
                       std::string  /* args (as a JSON string) */)
 
   // A message for an external host.
-  IPC_MESSAGE_ROUTED1(ViewHostMsg_ForwardMessageToExternalHost,
-                      std::string  /* message */)
+  IPC_MESSAGE_ROUTED3(ViewHostMsg_ForwardMessageToExternalHost,
+                      std::string  /* message */,
+                      std::string  /* origin */,
+                      std::string  /* target */)
 
 #ifdef CHROME_PERSONALIZATION
   IPC_MESSAGE_ROUTED2(ViewHostMsg_PersonalizationEvent,
@@ -837,7 +841,7 @@ IPC_BEGIN_MESSAGES(ViewHost)
   IPC_SYNC_MESSAGE_CONTROL1_0(ViewHostMsg_ClipboardWriteObjectsSync,
       Clipboard::ObjectMap /* objects */)
   IPC_SYNC_MESSAGE_CONTROL1_1(ViewHostMsg_ClipboardIsFormatAvailable,
-                              int /* format */,
+                              std::string /* format */,
                               bool /* result */)
   IPC_SYNC_MESSAGE_CONTROL0_1(ViewHostMsg_ClipboardReadText,
                               string16 /* result */)
@@ -1032,7 +1036,8 @@ IPC_BEGIN_MESSAGES(ViewHost)
   // Displays a box to confirm that the user wants to navigate away from the
   // page. Replies true if yes, false otherwise, the reply string is ignored,
   // but is included so that we can use OnJavaScriptMessageBoxClosed.
-  IPC_SYNC_MESSAGE_ROUTED1_2(ViewHostMsg_RunBeforeUnloadConfirm,
+  IPC_SYNC_MESSAGE_ROUTED2_2(ViewHostMsg_RunBeforeUnloadConfirm,
+                             GURL,        /* in - originating frame URL */
                              std::wstring /* in - alert message */,
                              bool         /* out - success */,
                              std::wstring /* out - This is ignored.*/)
@@ -1104,8 +1109,13 @@ IPC_BEGIN_MESSAGES(ViewHost)
                       GURL /* last url */,
                       GURL /* url redirected to */)
 
-  // Sent when the renderer process to acknowlege receipt of and UploadProgress
-  // message.
+  // Sent by the renderer process to acknowledge receipt of a
+  // DownloadProgress message.
+  IPC_MESSAGE_ROUTED1(ViewHostMsg_DownloadProgress_ACK,
+                      int /* request_id */)
+
+  // Sent by the renderer process to acknowledge receipt of a
+  // UploadProgress message.
   IPC_MESSAGE_ROUTED1(ViewHostMsg_UploadProgress_ACK,
                       int /* request_id */)
 
@@ -1118,7 +1128,7 @@ IPC_BEGIN_MESSAGES(ViewHost)
   // Provide the browser process with information about the WebCore resource
   // cache.
   IPC_MESSAGE_CONTROL1(ViewHostMsg_ResourceTypeStats,
-                       CacheManager::ResourceTypeStats)
+                       WebKit::WebCache::ResourceTypeStats)
 
   // Notify the browser that this render either has or doesn't have a
   // beforeunload or unload handler.
@@ -1142,6 +1152,12 @@ IPC_BEGIN_MESSAGES(ViewHost)
                       std::wstring /* user entered text */,
                       int64 /* id of the text input field */,
                       int /* id of this message */)
+
+  // Instructs the browser to remove the specified autofill-entry from the
+  // database.
+  IPC_MESSAGE_ROUTED2(ViewHostMsg_RemoveAutofillEntry,
+                      std::wstring /* field name */,
+                      std::wstring /* value */)
 
   // Get the list of proxies to use for |url|, as a semicolon delimited list
   // of "<TYPE> <HOST>:<PORT>" | "DIRECT". See also
@@ -1187,7 +1203,7 @@ IPC_BEGIN_MESSAGES(ViewHost)
   // on its behalf. We return a file descriptor to the POSIX shared memory.
   IPC_SYNC_MESSAGE_CONTROL1_1(ViewHostMsg_AllocTransportDIB,
                               size_t, /* bytes requested */
-                              IPC::Maybe<TransportDIB::Handle> /* DIB */)
+                              TransportDIB::Handle /* DIB */)
 
   // Since the browser keeps handles to the allocated transport DIBs, this
   // message is sent to tell the browser that it may release them when the
@@ -1199,8 +1215,9 @@ IPC_BEGIN_MESSAGES(ViewHost)
   // A renderer sends this to the browser process when it wants to create a
   // worker.  The browser will create the worker process if necessary, and
   // will return the route id on success.  On error returns MSG_ROUTING_NONE.
-  IPC_SYNC_MESSAGE_CONTROL1_1(ViewHostMsg_CreateDedicatedWorker,
+  IPC_SYNC_MESSAGE_CONTROL2_1(ViewHostMsg_CreateDedicatedWorker,
                               GURL /* url */,
+                              int /* render_view_route_id */,
                               int /* route_id */)
 
   // Wraps an IPC message that's destined to the worker on the renderer->browser
@@ -1208,4 +1225,20 @@ IPC_BEGIN_MESSAGES(ViewHost)
   IPC_MESSAGE_CONTROL1(ViewHostMsg_ForwardToWorker,
                        IPC::Message /* message */)
 
+  // Notification when new feeds have been discovered on the page.
+  IPC_MESSAGE_ROUTED1(ViewHostMsg_UpdateFeedList,
+                      ViewHostMsg_UpdateFeedList_Params)
+
+  // Get a handle to a currently-running extension process for the extension
+  // with the given ID.  If no such extension is found, -1 is returned.  The
+  // handle can be used for sending messages to the extension.
+  IPC_SYNC_MESSAGE_CONTROL1_1(ViewHostMsg_OpenChannelToExtension,
+                              std::string /* extension_id */,
+                              int /* channel_id */)
+
+  // Send a message to an extension process.  The handle is the value returned
+  // by ViewHostMsg_OpenChannelToExtension.
+  IPC_MESSAGE_CONTROL2(ViewHostMsg_ExtensionPostMessage,
+                       int /* channel_id */,
+                       std::string /* message */)
 IPC_END_MESSAGES(ViewHost)

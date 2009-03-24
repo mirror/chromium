@@ -26,6 +26,7 @@
 #include "chrome/installer/util/l10n_string_util.h"
 #include "chrome/installer/util/logging_installer.h"
 #include "chrome/installer/util/lzma_util.h"
+#include "chrome/installer/util/google_update_settings.h"
 #include "chrome/installer/util/google_update_constants.h"
 #include "chrome/installer/util/master_preferences.h"
 #include "chrome/installer/util/shell_util.h"
@@ -252,7 +253,7 @@ int GetInstallOptions(const CommandLine& cmd_line) {
   if (preferences & installer_util::MASTER_PROFILE_VERBOSE_LOGGING ||
       cmd_line.HasSwitch(installer_util::switches::kVerboseLogging))
     options |= installer_util::VERBOSE_LOGGING;
-  
+
   return options;
 }
 
@@ -544,7 +545,10 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prev_instance,
   // Check if we need to show the EULA. If it is passed as a command line
   // then the dialog is shown and regardless of the outcome setup exits here.
   if (parsed_command_line.HasSwitch(installer_util::switches::kShowEula)) {
-    return ShowEULADialog();
+    installer_util::InstallStatus eula = ShowEULADialog();
+    if (installer_util::EULA_REJECTED != eula)
+      GoogleUpdateSettings::SetEULAConsent(true);
+    return eula;
   }
 
   // If --register-chrome-browser option is specified, register all

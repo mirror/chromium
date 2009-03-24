@@ -14,14 +14,28 @@
 namespace chrome {
 
 bool GetDefaultUserDataDirectory(FilePath* result) {
-  if (!PathService::Get(base::DIR_LOCAL_APP_DATA, result))
-    return false;
-  return true;
+  bool success = false;
+  NSArray* dirs =
+      NSSearchPathForDirectoriesInDomains(NSApplicationSupportDirectory,
+                                          NSUserDomainMask, YES);
+  if ([dirs count] && result) {
+    NSString* base = [dirs objectAtIndex:0];
+#if defined(GOOGLE_CHROME_BUILD)
+    base = [base stringByAppendingPathComponent@"Google"];
+    NSString* tail = @"Chrome";
+#else
+    NSString* tail = @"Chromium";
+#endif
+    NSString* path = [base stringByAppendingPathComponent:tail];
+    *result = FilePath([path fileSystemRepresentation]);
+    success = true;
+  }
+  return success;
 }
 
 bool GetUserDocumentsDirectory(FilePath* result) {
   bool success = false;
-  NSArray* docArray = 
+  NSArray* docArray =
       NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
                                           NSUserDomainMask,
                                           YES);
@@ -34,7 +48,7 @@ bool GetUserDocumentsDirectory(FilePath* result) {
 
 bool GetUserDownloadsDirectory(FilePath* result) {
   bool success = false;
-  NSArray* docArray = 
+  NSArray* docArray =
       NSSearchPathForDirectoriesInDomains(NSDownloadsDirectory,
                                           NSUserDomainMask,
                                           YES);
@@ -47,7 +61,7 @@ bool GetUserDownloadsDirectory(FilePath* result) {
 
 bool GetUserDesktop(FilePath* result) {
   bool success = false;
-  NSArray* docArray = 
+  NSArray* docArray =
       NSSearchPathForDirectoriesInDomains(NSDesktopDirectory,
                                           NSUserDomainMask,
                                           YES);

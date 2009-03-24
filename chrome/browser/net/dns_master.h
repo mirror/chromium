@@ -23,7 +23,6 @@
 #include "chrome/browser/net/dns_host_info.h"
 #include "chrome/browser/net/referrer.h"
 #include "chrome/common/net/dns.h"
-#include "googleurl/src/url_canon.h"
 #include "testing/gtest/include/gtest/gtest_prod.h"
 
 namespace chrome_browser_net {
@@ -176,4 +175,3 @@ class DnsMaster {
 }  // namespace chrome_browser_net
 
 #endif  // CHROME_BROWSER_NET_DNS_MASTER_H_
-

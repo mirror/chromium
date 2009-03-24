@@ -1,10 +1,10 @@
 // Copyright (c) 2008, Google Inc.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
 // met:
-// 
+//
 //     * Redistributions of source code must retain the above copyright
 // notice, this list of conditions and the following disclaimer.
 //     * Redistributions in binary form must reproduce the above
@@ -14,7 +14,7 @@
 //     * Neither the name of Google Inc. nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -38,11 +38,10 @@
 #include "v8_proxy.h"
 #include "dom_wrapper_map.h"
 #include "v8_index.h"
-#include "v8_events.h"
 #include "v8_binding.h"
 #include "v8_custom.h"
-#include "v8_collection.h"
 #include "v8_nodefilter.h"
+#include "V8Collection.h"
 #include "V8DOMWindow.h"
 
 #include "ChromiumBridge.h"
@@ -71,6 +70,7 @@
 #include "CSSStyleSheet.h"
 #include "CSSVariablesDeclaration.h"
 #include "CSSVariablesRule.h"
+#include "Database.h"
 #include "DocumentType.h"
 #include "DocumentFragment.h"
 #include "DOMCoreException.h"
@@ -130,21 +130,24 @@
 #include "ScriptExecutionContext.h"
 #include "SecurityOrigin.h"
 #include "Settings.h"
+#include "SQLTransaction.h"
+#include "SQLResultSet.h"
+#include "SQLResultSetRowList.h"
 #include "StyleSheet.h"
 #include "StyleSheetList.h"
+#include "SVGColor.h"
+#include "SVGPaint.h"
 #include "TextEvent.h"
 #include "TextMetrics.h"
 #include "TimeRanges.h"
 #include "TreeWalker.h"
-#include "XMLHttpRequest.h"
-#include "XMLHttpRequestUpload.h"
-#include "XMLHttpRequestException.h"
-#include "XMLSerializer.h"
-#include "XPathException.h"
-#include "XPathExpression.h"
-#include "XPathNSResolver.h"
-#include "XPathResult.h"
 #include "XSLTProcessor.h"
+#include "V8AbstractEventListener.h"
+#include "V8CustomEventListener.h"
+#include "V8DOMWindow.h"
+#include "V8HTMLElement.h"
+#include "V8LazyEventListener.h"
+#include "V8ObjectEventListener.h"
 #include "WebKitAnimationEvent.h"
 #include "WebKitCSSKeyframeRule.h"
 #include "WebKitCSSKeyframesRule.h"
@@ -153,10 +156,16 @@
 #include "WebKitPoint.h"
 #include "WebKitTransitionEvent.h"
 #include "WheelEvent.h"
+#include "XMLHttpRequest.h"
+#include "XMLHttpRequestException.h"
 #include "XMLHttpRequestProgressEvent.h"
+#include "XMLHttpRequestUpload.h"
+#include "XMLSerializer.h"
+#include "XPathException.h"
+#include "XPathExpression.h"
+#include "XPathNSResolver.h"
+#include "XPathResult.h"
 
-#include "V8DOMWindow.h"
-#include "V8HTMLElement.h"
 
 #include "ScriptController.h"
 
@@ -204,11 +213,6 @@
 #if ENABLE(XPATH)
 #include "XPathEvaluator.h"
 #endif
-
-#include "extensions/GCController.h"
-#include "extensions/Gears.h"
-#include "extensions/Interval.h"
-#include "extensions/Playback.h"
 
 
 namespace WebCore {
@@ -480,7 +484,7 @@ static HashMap<void*, SVGElement*>& svg_object_to_context_map()
 }
 
 v8::Handle<v8::Value> V8Proxy::SVGObjectWithContextToV8Object(
-    V8ClassIndex::V8WrapperType type, void* object) 
+    V8ClassIndex::V8WrapperType type, void* object)
 {
   if (!object)
     return v8::Null();
@@ -1109,8 +1113,8 @@ void V8Proxy::DestroyGlobal()
 
 
 bool V8Proxy::DOMObjectHasJSWrapper(void* obj) {
-    return GetDOMObjectMap().contains(obj) ||
-           GetActiveDOMObjectMap().contains(obj);
+  return GetDOMObjectMap().contains(obj) ||
+      GetActiveDOMObjectMap().contains(obj);
 }
 
 
@@ -1184,12 +1188,12 @@ static V8EventListener* FindEventListenerInList(V8EventListenerList& list,
   V8EventListenerList::iterator p = list.begin();
   while (p != list.end()) {
     V8EventListener* el = *p;
-    v8::Local<v8::Object> wrapper = el->GetListenerObject();
+    v8::Local<v8::Object> wrapper = el->getListenerObject();
     ASSERT(!wrapper.IsEmpty());
-    // Since the listener is an object, it is safe to compare for 
+    // Since the listener is an object, it is safe to compare for
     // strict equality (in the JS sense) by doing a simple equality
     // check using the == operator on the handles. This is much,
-    // much faster than calling StrictEquals through the API in 
+    // much faster than calling StrictEquals through the API in
     // the negative case.
     if (el->isInline() == isInline && listener == wrapper)
         return el;
@@ -1235,7 +1239,7 @@ PassRefPtr<V8EventListener> V8Proxy::FindOrCreateV8EventListener(v8::Local<v8::V
 // wrapper. So we can create a hidden reference from the JS wrapper to
 // to its JS function.
 //
-//                          (map) 
+//                          (map)
 //              XHR      <----------  JS_wrapper
 //               |             (hidden) :  ^
 //               V                      V  : (may reachable by closure)
@@ -1357,20 +1361,60 @@ bool V8Proxy::HandleOutOfMemory()
     return true;
 }
 
-v8::Local<v8::Value> V8Proxy::Evaluate(const String& fileName, int baseLine,
-                                       const String& str, Node* n)
+void V8Proxy::evaluateInNewContext(const Vector<ScriptSourceCode>& sources)
+{
+    InitContextIfNeeded();
+
+    v8::HandleScope handleScope;
+
+    // Set up the DOM window as the prototype of the new global object.
+    v8::Handle<v8::Context> windowContext = m_context;
+    v8::Handle<v8::Object> windowGlobal = windowContext->Global();
+    v8::Handle<v8::Value> windowWrapper =
+        V8Proxy::LookupDOMWrapper(V8ClassIndex::DOMWINDOW, windowGlobal);
+
+    ASSERT(V8Proxy::DOMWrapperToNative<DOMWindow>(windowWrapper) ==
+           m_frame->domWindow());
+
+    v8::Persistent<v8::Context> context =
+        createNewContext(v8::Handle<v8::Object>());
+    v8::Context::Scope context_scope(context);
+    v8::Handle<v8::Object> global = context->Global();
+
+    v8::Handle<v8::String> implicitProtoString = v8::String::New("__proto__");
+    global->Set(implicitProtoString, windowWrapper);
+
+    // Give the code running in the new context a way to get access to the
+    // original context.
+    global->Set(v8::String::New("contentWindow"), windowGlobal);
+
+    // Run code in the new context.
+    for (size_t i = 0; i < sources.size(); ++i)
+        evaluate(sources[i], 0);
+
+    // Using the default security token means that the canAccess is always
+    // called, which is slow.
+    // TODO(aa): Use tokens where possible. This will mean keeping track of all
+    // created contexts so that they can all be updated when the document domain
+    // changes.
+    context->UseDefaultSecurityToken();
+    context.Dispose();
+}
+
+v8::Local<v8::Value> V8Proxy::evaluate(const ScriptSourceCode& source, Node* n)
 {
     ASSERT(v8::Context::InContext());
 
     // Compile the script.
-    v8::Local<v8::String> code = v8ExternalString(str);
+    v8::Local<v8::String> code = v8ExternalString(source.source());
     ChromiumBridge::traceEventBegin("v8.compile", n, "");
-    v8::Handle<v8::Script> script = CompileScript(code, fileName, baseLine);
+
+    // NOTE: For compatibility with WebCore, ScriptSourceCode's line starts at
+    // 1, whereas v8 starts at 0.
+    v8::Handle<v8::Script> script = CompileScript(code, source.url(),
+                                                  source.startLine() - 1);
     ChromiumBridge::traceEventEnd("v8.compile", n, "");
 
-    // Set inlineCode to true for <a href="javascript:doSomething()">
-    // and false for <script>doSomething</script>. For some reason, fileName
-    // gives us this information.
     ChromiumBridge::traceEventBegin("v8.run", n, "");
     v8::Local<v8::Value> result;
     {
@@ -1379,7 +1423,11 @@ v8::Local<v8::Value> V8Proxy::Evaluate(const String& fileName, int baseLine,
       // evaluate from C++ when returning from here
       v8::TryCatch try_catch;
       try_catch.SetVerbose(true);
-      result = RunScript(script, fileName.isNull());
+
+      // Set inlineCode to true for <a href="javascript:doSomething()">
+      // and false for <script>doSomething</script>. We make a rough guess at
+      // this based on whether the script source has a URL.
+      result = RunScript(script, source.url().string().isNull());
     }
     ChromiumBridge::traceEventEnd("v8.run", n, "");
     return result;
@@ -1455,7 +1503,7 @@ v8::Local<v8::Value> V8Proxy::CallFunction(v8::Handle<v8::Function> function,
   // of recursion that stems from calling functions. This is in
   // contrast to the script evaluations.
   v8::Local<v8::Value> result;
-  { 
+  {
     ConsoleMessageScope scope;
 
     // Evaluating the JavaScript could cause the frame to be deallocated,
@@ -1476,34 +1524,56 @@ v8::Local<v8::Value> V8Proxy::CallFunction(v8::Handle<v8::Function> function,
 }
 
 
-v8::Local<v8::Function> V8Proxy::GetConstructor(V8ClassIndex::V8WrapperType t)
-{
-    ASSERT(ContextInitialized());
-    v8::Local<v8::Value> cached =
-        m_dom_constructor_cache->Get(v8::Integer::New(V8ClassIndex::ToInt(t)));
-    if (cached->IsFunction()) {
-        return v8::Local<v8::Function>::Cast(cached);
-    }
+v8::Local<v8::Function> V8Proxy::GetConstructor(V8ClassIndex::V8WrapperType t){
+  // A DOM constructor is a function instance created from a DOM constructor
+  // template. There is one instance per context. A DOM constructor is
+  // different from a normal function in two ways:
+  //   1) it cannot be called as constructor (aka, used to create a DOM object)
+  //   2) its __proto__ points to Object.prototype rather than
+  //      Function.prototype.
+  // The reason for 2) is that, in Safari, a DOM constructor is a normal JS
+  // object, but not a function. Hotmail relies on the fact that, in Safari,
+  // HTMLElement.__proto__ == Object.prototype.
+  //
+  // m_object_prototype is a cache of the original Object.prototype.
 
-    // Not in cache.
-    {
-        // Enter the context of the proxy to make sure that the
-        // function is constructed in the context corresponding to
-        // this proxy.
-        v8::Context::Scope scope(m_context);
-        v8::Handle<v8::FunctionTemplate> templ = GetTemplate(t);
-        // Getting the function might fail if we're running out of
-        // stack or memory.
-        v8::TryCatch try_catch;
-        v8::Local<v8::Function> value = templ->GetFunction();
-        if (value.IsEmpty())
-            return v8::Local<v8::Function>();
-        m_dom_constructor_cache->Set(v8::Integer::New(t), value);
-        // Hotmail fix, see comments in v8_proxy.h above
-        // m_dom_constructor_cache.
-        value->Set(v8::String::New("__proto__"), m_object_prototype);
-        return value;
-    }
+  ASSERT(ContextInitialized());
+  // Enter the context of the proxy to make sure that the
+  // function is constructed in the context corresponding to
+  // this proxy.
+  v8::Context::Scope scope(m_context);
+  v8::Handle<v8::FunctionTemplate> templ = GetTemplate(t);
+  // Getting the function might fail if we're running out of
+  // stack or memory.
+  v8::TryCatch try_catch;
+  v8::Local<v8::Function> value = templ->GetFunction();
+  if (value.IsEmpty())
+    return v8::Local<v8::Function>();
+  // Hotmail fix, see comments above.
+  value->Set(v8::String::New("__proto__"), m_object_prototype);
+  return value;
+}
+
+
+v8::Local<v8::Object> V8Proxy::CreateWrapperFromCache(V8ClassIndex::V8WrapperType type) {
+  int class_index = V8ClassIndex::ToInt(type);
+  v8::Local<v8::Value> cached_object =
+      m_wrapper_boilerplates->Get(v8::Integer::New(class_index));
+  if (cached_object->IsObject()) {
+    v8::Local<v8::Object> object = v8::Local<v8::Object>::Cast(cached_object);
+    return object->Clone();
+  }
+
+  // Not in cache.
+  InitContextIfNeeded();
+  v8::Context::Scope scope(m_context);
+  v8::Local<v8::Function> function = GetConstructor(type);
+  v8::Local<v8::Object> instance = SafeAllocation::NewInstance(function);
+  if (!instance.IsEmpty()) {
+    m_wrapper_boilerplates->Set(v8::Integer::New(class_index), instance);
+    return instance->Clone();
+  }
+  return v8::Local<v8::Object>();
 }
 
 
@@ -1562,22 +1632,22 @@ v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
       desc->InstanceTemplate()->SetNamedPropertyHandler(
           USE_NAMED_PROPERTY_GETTER(CSSStyleDeclaration),
           USE_NAMED_PROPERTY_SETTER(CSSStyleDeclaration));
-      SetCollectionStringOrNullIndexedGetter<CSSStyleDeclaration>(desc);
+      setCollectionStringOrNullIndexedGetter<CSSStyleDeclaration>(desc);
       break;
     case V8ClassIndex::CSSRULELIST:
-      SetCollectionIndexedGetter<CSSRuleList, CSSRule>(desc, 
+      setCollectionIndexedGetter<CSSRuleList, CSSRule>(desc,
                                                        V8ClassIndex::CSSRULE);
       break;
     case V8ClassIndex::CSSVALUELIST:
-      SetCollectionIndexedGetter<CSSValueList, CSSValue>(
+      setCollectionIndexedGetter<CSSValueList, CSSValue>(
           desc,
           V8ClassIndex::CSSVALUE);
       break;
     case V8ClassIndex::CSSVARIABLESDECLARATION:
-      SetCollectionStringOrNullIndexedGetter<CSSVariablesDeclaration>(desc);
+      setCollectionStringOrNullIndexedGetter<CSSVariablesDeclaration>(desc);
       break;
     case V8ClassIndex::WEBKITCSSTRANSFORMVALUE:
-      SetCollectionIndexedGetter<WebKitCSSTransformValue, CSSValue>(
+      setCollectionIndexedGetter<WebKitCSSTransformValue, CSSValue>(
           desc,
           V8ClassIndex::CSSVALUE);
       break;
@@ -1588,12 +1658,12 @@ v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
           USE_NAMED_PROPERTY_GETTER(HTMLCollection));
       desc->InstanceTemplate()->SetCallAsFunctionHandler(
           USE_CALLBACK(HTMLCollectionCallAsFunction));
-      SetCollectionIndexedGetter<HTMLCollection, Node>(desc, 
+      setCollectionIndexedGetter<HTMLCollection, Node>(desc,
                                                        V8ClassIndex::NODE);
       break;
     case V8ClassIndex::HTMLOPTIONSCOLLECTION:
-      SetCollectionNamedGetter<HTMLOptionsCollection, Node>(
-          desc, 
+      setCollectionNamedGetter<HTMLOptionsCollection, Node>(
+          desc,
           V8ClassIndex::NODE);
       desc->InstanceTemplate()->SetIndexedPropertyHandler(
           USE_INDEXED_PROPERTY_GETTER(HTMLOptionsCollection),
@@ -1603,24 +1673,24 @@ v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
       break;
     case V8ClassIndex::HTMLSELECTELEMENT:
       desc->InstanceTemplate()->SetNamedPropertyHandler(
-          NodeCollectionNamedPropertyGetter<HTMLSelectElement>,
+          nodeCollectionNamedPropertyGetter<HTMLSelectElement>,
           0,
           0,
           0,
           0,
           v8::Integer::New(V8ClassIndex::NODE));
       desc->InstanceTemplate()->SetIndexedPropertyHandler(
-          NodeCollectionIndexedPropertyGetter<HTMLSelectElement>,
+          nodeCollectionIndexedPropertyGetter<HTMLSelectElement>,
           USE_INDEXED_PROPERTY_SETTER(HTMLSelectElementCollection),
           0,
           0,
-          NodeCollectionIndexedPropertyEnumerator<HTMLSelectElement>,
+          nodeCollectionIndexedPropertyEnumerator<HTMLSelectElement>,
           v8::Integer::New(V8ClassIndex::NODE));
       break;
     case V8ClassIndex::HTMLDOCUMENT: {
       desc->InstanceTemplate()->SetNamedPropertyHandler(
           USE_NAMED_PROPERTY_GETTER(HTMLDocument),
-          USE_NAMED_PROPERTY_SETTER(HTMLDocument),
+          0,
           0,
           USE_NAMED_PROPERTY_DELETER(HTMLDocument));
 
@@ -1682,7 +1752,7 @@ v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
           0,
           0,
           0,
-          NodeCollectionIndexedPropertyEnumerator<HTMLFormElement>,
+          nodeCollectionIndexedPropertyEnumerator<HTMLFormElement>,
           v8::Integer::New(V8ClassIndex::NODE));
       break;
     case V8ClassIndex::CANVASPIXELARRAY:
@@ -1693,7 +1763,7 @@ v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
     case V8ClassIndex::STYLESHEET:  // fall through
     case V8ClassIndex::CSSSTYLESHEET: {
       // We add an extra internal field to hold a reference to
-      // the owner node. 
+      // the owner node.
       v8::Local<v8::ObjectTemplate> instance_template =
         desc->InstanceTemplate();
       ASSERT(instance_template->InternalFieldCount() ==
@@ -1703,10 +1773,10 @@ v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
       break;
     }
     case V8ClassIndex::MEDIALIST:
-      SetCollectionStringOrNullIndexedGetter<MediaList>(desc);
+      setCollectionStringOrNullIndexedGetter<MediaList>(desc);
       break;
     case V8ClassIndex::MIMETYPEARRAY:
-      SetCollectionIndexedAndNamedGetters<MimeTypeArray, MimeType>(
+      setCollectionIndexedAndNamedGetters<MimeTypeArray, MimeType>(
           desc,
           V8ClassIndex::MIMETYPE);
       break;
@@ -1718,28 +1788,28 @@ v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
           0,
           0,
           0,
-          CollectionIndexedPropertyEnumerator<NamedNodeMap>,
+          collectionIndexedPropertyEnumerator<NamedNodeMap>,
           v8::Integer::New(V8ClassIndex::NODE));
       break;
     case V8ClassIndex::NODELIST:
-      SetCollectionIndexedGetter<NodeList, Node>(desc, V8ClassIndex::NODE);
+      setCollectionIndexedGetter<NodeList, Node>(desc, V8ClassIndex::NODE);
       desc->InstanceTemplate()->SetNamedPropertyHandler(
           USE_NAMED_PROPERTY_GETTER(NodeList));
       break;
     case V8ClassIndex::PLUGIN:
-      SetCollectionIndexedAndNamedGetters<Plugin, MimeType>(
+      setCollectionIndexedAndNamedGetters<Plugin, MimeType>(
           desc,
           V8ClassIndex::MIMETYPE);
       break;
     case V8ClassIndex::PLUGINARRAY:
-      SetCollectionIndexedAndNamedGetters<PluginArray, Plugin>(
+      setCollectionIndexedAndNamedGetters<PluginArray, Plugin>(
           desc,
           V8ClassIndex::PLUGIN);
       break;
     case V8ClassIndex::STYLESHEETLIST:
       desc->InstanceTemplate()->SetNamedPropertyHandler(
           USE_NAMED_PROPERTY_GETTER(StyleSheetList));
-      SetCollectionIndexedGetter<StyleSheetList, StyleSheet>(
+      setCollectionIndexedGetter<StyleSheetList, StyleSheet>(
           desc,
           V8ClassIndex::STYLESHEET);
       break;
@@ -1893,12 +1963,11 @@ v8::Persistent<v8::FunctionTemplate> V8Proxy::GetTemplate(
 
 bool V8Proxy::ContextInitialized()
 {
-    // m_context, m_global, m_object_prototype, and
-    // m_dom_constructor_cache should all be non-empty if m_context is
-    // non-empty.
+    // m_context, m_global, m_object_prototype and m_wrapper_boilerplates should
+    // all be non-empty if if m_context is non-empty.
     ASSERT(m_context.IsEmpty() || !m_global.IsEmpty());
     ASSERT(m_context.IsEmpty() || !m_object_prototype.IsEmpty());
-    ASSERT(m_context.IsEmpty() || !m_dom_constructor_cache.IsEmpty());
+    ASSERT(m_context.IsEmpty() || !m_wrapper_boilerplates.IsEmpty());
     return !m_context.IsEmpty();
 }
 
@@ -1931,7 +2000,7 @@ Frame* V8Proxy::retrieveFrame(v8::Handle<v8::Context> context)
 Frame* V8Proxy::retrieveActiveFrame()
 {
     v8::Handle<v8::Context> context = v8::Context::GetEntered();
-    if (context.IsEmpty()) 
+    if (context.IsEmpty())
         return 0;
     return retrieveFrame(context);
 }
@@ -1985,8 +2054,8 @@ bool V8Proxy::isEnabled()
         return true;
 
     // If JavaScript has been disabled, we need to look at the frame to tell
-    // whether this script came from the web or the embedder. Scripts from the 
-    // embedder are safe to run, but scripts from the other sources are 
+    // whether this script came from the web or the embedder. Scripts from the
+    // embedder are safe to run, but scripts from the other sources are
     // disallowed.
     Document* document = m_frame->document();
     if (!document)
@@ -1998,6 +2067,10 @@ bool V8Proxy::isEnabled()
 
     if (origin->protocol() == "http" || origin->protocol() == "https")
         return false;  // Web site
+
+    // TODO(darin): the following are application decisions, and they should
+    // not be made at this layer.  instead, we should bridge out to the
+    // embedder to allow them to override policy here.
 
     if (origin->protocol() == ChromiumBridge::uiResourceProtocol())
         return true;   // Embedder's scripts are ok to run
@@ -2045,12 +2118,12 @@ void V8Proxy::DisposeContextHandles() {
         m_context.Clear();
     }
 
-    if (!m_dom_constructor_cache.IsEmpty()) {
+    if (!m_wrapper_boilerplates.IsEmpty()) {
 #ifndef NDEBUG
-        UnregisterGlobalHandle(this, m_dom_constructor_cache);
+        UnregisterGlobalHandle(this, m_wrapper_boilerplates);
 #endif
-        m_dom_constructor_cache.Dispose();
-        m_dom_constructor_cache.Clear();
+        m_wrapper_boilerplates.Dispose();
+        m_wrapper_boilerplates.Clear();
     }
 
     if (!m_object_prototype.IsEmpty()) {
@@ -2211,20 +2284,6 @@ bool V8Proxy::CanAccessPrivate(DOMWindow* target_window)
     if (!target_security_origin)
         return false;
 
-    String ui_resource_protocol = ChromiumBridge::uiResourceProtocol();
-    if (active_security_origin->protocol() == ui_resource_protocol) {
-        KURL inspector_url = ChromiumBridge::inspectorURL();
-        ASSERT(inspector_url.protocol() == ui_resource_protocol);
-
-        // The Inspector can access anything.
-        if (active_security_origin->host() == inspector_url.host())
-            return true;
-
-        // To mitigate XSS vulnerabilities on the browser itself, UI resources
-        // besides the Inspector can't access other documents.
-        return false;
-    }
-
     if (active_security_origin->canAccess(target_security_origin))
         return true;
 
@@ -2266,6 +2325,39 @@ bool V8Proxy::CheckNodeSecurity(Node* node)
     return CanAccessFrame(target, true);
 }
 
+v8::Persistent<v8::Context> V8Proxy::createNewContext(
+    v8::Handle<v8::Object> global)
+{
+    v8::Persistent<v8::Context> result;
+
+    // Create a new environment using an empty template for the shadow
+    // object.  Reuse the global object if one has been created earlier.
+    v8::Persistent<v8::ObjectTemplate> globalTemplate =
+        V8DOMWindow::GetShadowObjectTemplate();
+    if (globalTemplate.IsEmpty())
+        return result;
+
+    // Install a security handler with V8.
+    globalTemplate->SetAccessCheckCallbacks(
+        V8Custom::v8DOMWindowNamedSecurityCheck,
+        V8Custom::v8DOMWindowIndexedSecurityCheck,
+        v8::Integer::New(V8ClassIndex::DOMWINDOW));
+
+    // Dynamically tell v8 about our extensions now.
+    const char** extensionNames = new const char*[m_extensions.size()];
+    int index = 0;
+    V8ExtensionList::iterator it = m_extensions.begin();
+    while (it != m_extensions.end()) {
+        extensionNames[index++] = (*it)->name();
+        ++it;
+    }
+    v8::ExtensionConfiguration extensions(m_extensions.size(), extensionNames);
+    result = v8::Context::New(&extensions, globalTemplate, global);
+    delete [] extensionNames;
+    extensionNames = 0;
+
+    return result;
+}
 
 // Create a new environment and setup the global object.
 //
@@ -2301,19 +2393,15 @@ bool V8Proxy::CheckNodeSecurity(Node* node)
 // the outer window, and the outer window identify is preserved for
 // the frame. However, a new inner window is created for the new page.
 // If there are JS code holds a closure to the old inner window,
-// it won't be able to reach the outer window via its global object. 
+// it won't be able to reach the outer window via its global object.
 void V8Proxy::InitContextIfNeeded()
 {
   // Bail out if the context has already been initialized.
   if (!m_context.IsEmpty())
       return;
 
-  // Install counters handler with V8.
-  static bool v8_counters_initialized = false;
-  if (!v8_counters_initialized) {
-    ChromiumBridge::initV8CounterFunction();
-    v8_counters_initialized = true;
-  }
+  // Create a handle scope for all local handles.
+  v8::HandleScope handle_scope;
 
   // Setup the security handlers and message listener.  This only has
   // to be done once.
@@ -2331,49 +2419,16 @@ void V8Proxy::InitContextIfNeeded()
 
     v8::V8::SetFailedAccessCheckCallbackFunction(ReportUnsafeJavaScriptAccess);
 
-    // Register known extensions
-    RegisterExtension(GearsExtension::Get());
-    RegisterExtension(IntervalExtension::Get());
-    if (ScriptController::shouldExposeGCController())
-      RegisterExtension(GCExtension::Get());
-    if (ScriptController::RecordPlaybackMode())
-      RegisterExtension(PlaybackExtension::Get());
-
     v8_initialized = true;
   }
 
-  // Create a new environment using an empty template for the shadow
-  // object.  Reuse the global object if one has been created earlier.
-  v8::Persistent<v8::ObjectTemplate> global_template =
-    V8DOMWindow::GetShadowObjectTemplate();
-  if (global_template.IsEmpty())
-    return;
-
-  // Install a security handler with V8.
-  global_template->SetAccessCheckCallbacks(
-      V8Custom::v8DOMWindowNamedSecurityCheck,
-      V8Custom::v8DOMWindowIndexedSecurityCheck,
-      v8::Integer::New(V8ClassIndex::DOMWINDOW));
-
-  // Dynamically tell v8 about our extensions now.
-  const char** extension_names = new const char*[m_extensions.size()];
-  int index = 0;
-  V8ExtensionList::iterator it = m_extensions.begin();
-  while (it != m_extensions.end()) {
-    extension_names[index++] = (*it)->name();
-    ++it;
-  }
-  v8::ExtensionConfiguration extensions(m_extensions.size(), extension_names);
-  m_context = v8::Context::New(&extensions, global_template, m_global);
-  delete [] extension_names;
-  extension_names = 0;
-
+  m_context = createNewContext(m_global);
   if (m_context.IsEmpty())
     return;
 
   // Starting from now, use local context only.
   v8::Local<v8::Context> context = GetContext();
-  v8::Context::Scope scope(context);
+  v8::Context::Scope context_scope(context);
 
   // Store the first global object created so we can reuse it.
   if (m_global.IsEmpty()) {
@@ -2400,21 +2455,21 @@ void V8Proxy::InitContextIfNeeded()
     return;
   }
 
-  // Allocate DOM constructor cache.
+  // Allocate clone cache and pre-allocated objects
   v8::Handle<v8::Object> object = v8::Handle<v8::Object>::Cast(
       m_global->Get(object_string));
   m_object_prototype = v8::Persistent<v8::Value>::New(
       object->Get(prototype_string));
-  m_dom_constructor_cache = v8::Persistent<v8::Array>::New(
+  m_wrapper_boilerplates = v8::Persistent<v8::Array>::New(
       v8::Array::New(V8ClassIndex::WRAPPER_TYPE_COUNT));
   // Bail out if allocation failed.
-  if (m_object_prototype.IsEmpty() || m_dom_constructor_cache.IsEmpty()) {
+  if (m_object_prototype.IsEmpty()) {
     DisposeContextHandles();
     return;
   }
 #ifndef NDEBUG
   RegisterGlobalHandle(PROXY, this, m_object_prototype);
-  RegisterGlobalHandle(PROXY, this, m_dom_constructor_cache);
+  RegisterGlobalHandle(PROXY, this, m_wrapper_boilerplates);
 #endif
 
   // Create a new JS window object and use it as the prototype for the
@@ -2718,18 +2773,14 @@ v8::Local<v8::Object> V8Proxy::InstantiateV8Object(
     desc_type = V8ClassIndex::UNDETECTABLEHTMLCOLLECTION;
   }
 
-
-  v8::Local<v8::Function> function;
   V8Proxy* proxy = V8Proxy::retrieve();
+  v8::Local<v8::Object> instance;
   if (proxy) {
-    // Make sure that the context of the proxy has been initialized.
-    proxy->InitContextIfNeeded();
-    // Constructor is configured.
-    function = proxy->GetConstructor(desc_type);
+    instance = proxy->CreateWrapperFromCache(desc_type);
   } else {
-    function = GetTemplate(desc_type)->GetFunction();
+    v8::Local<v8::Function> function = GetTemplate(desc_type)->GetFunction();
+    instance = SafeAllocation::NewInstance(function);
   }
-  v8::Local<v8::Object> instance = SafeAllocation::NewInstance(function);
   if (!instance.IsEmpty()) {
     // Avoid setting the DOM wrapper for failed allocations.
     SetDOMWrapper(instance, V8ClassIndex::ToInt(cptr_type), imp);
@@ -3074,11 +3125,11 @@ v8::Handle<v8::Value> V8Proxy::EventToV8Object(Event* event)
   else if (event->isMessageEvent())
     type = V8ClassIndex::MESSAGEEVENT;
   else if (event->isProgressEvent()) {
-    if (event->isXMLHttpRequestProgressEvent()) 
+    if (event->isXMLHttpRequestProgressEvent())
       type = V8ClassIndex::XMLHTTPREQUESTPROGRESSEVENT;
-    else 
+    else
       type = V8ClassIndex::PROGRESSEVENT;
-  } else if (event->isWebKitAnimationEvent()) 
+  } else if (event->isWebKitAnimationEvent())
     type = V8ClassIndex::WEBKITANIMATIONEVENT;
   else if (event->isWebKitTransitionEvent())
     type = V8ClassIndex::WEBKITTRANSITIONEVENT;
@@ -3284,7 +3335,7 @@ v8::Handle<v8::Value> V8Proxy::EventListenerToV8Object(
   // TODO(fqian): can a user take a lazy event listener and set to other places?
   V8AbstractEventListener* v8listener =
       static_cast<V8AbstractEventListener*>(listener);
-  return v8listener->GetListenerObject();
+  return v8listener->getListenerObject();
 }
 
 
@@ -3346,7 +3397,7 @@ v8::Handle<v8::Value> V8Proxy::CSSValueToV8Object(CSSValue* value)
 
   V8ClassIndex::V8WrapperType type;
 
-  if (value->isWebKitCSSTransformValue()) 
+  if (value->isWebKitCSSTransformValue())
     type = V8ClassIndex::WEBKITCSSTRANSFORMVALUE;
   else if (value->isValueList())
     type = V8ClassIndex::CSSVALUELIST;
@@ -3435,6 +3486,20 @@ v8::Handle<v8::Value> V8Proxy::WindowToV8Object(DOMWindow* window)
     if (!frame)
         return v8::Handle<v8::Object>();
 
+    // Special case: Because of evaluateInNewContext() one DOMWindow can have
+    // multipe contexts and multiple global objects associated with it. When
+    // code running in one of those contexts accesses the window object, we
+    // want to return the global object associated with that context, not
+    // necessarily the first global object associated with that DOMWindow.
+    v8::Handle<v8::Context> current_context = v8::Context::GetCurrent();
+    v8::Handle<v8::Object> current_global = current_context->Global();
+    v8::Handle<v8::Object> windowWrapper =
+        LookupDOMWrapper(V8ClassIndex::DOMWINDOW, current_global);
+    if (!windowWrapper.IsEmpty())
+        if (DOMWrapperToNative<DOMWindow>(windowWrapper) == window)
+            return current_global;
+
+    // Otherwise, return the global object associated with this frame.
     v8::Handle<v8::Context> context = GetContext(frame);
     if (context.IsEmpty())
         return v8::Handle<v8::Object>();

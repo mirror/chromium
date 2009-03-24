@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_RENDERER_HOST_RENDER_VIEW_HOST_H__
-#define CHROME_BROWSER_RENDERER_HOST_RENDER_VIEW_HOST_H__
+#ifndef CHROME_BROWSER_RENDERER_HOST_RENDER_VIEW_HOST_H_
+#define CHROME_BROWSER_RENDERER_HOST_RENDER_VIEW_HOST_H_
 
 #include <string>
 #include <vector>
@@ -186,7 +186,7 @@ class RenderViewHost : public RenderWidgetHost {
   // Start looking for a string within the content of the page, with the
   // specified options.
   void StartFinding(int request_id,
-                    const std::wstring& search_string,
+                    const string16& search_string,
                     bool forward,
                     bool match_case,
                     bool find_next);
@@ -326,11 +326,6 @@ class RenderViewHost : public RenderWidgetHost {
   // Must be called before CreateRenderView().
   void AllowExtensionBindings();
 
-  // Tells the renderer which render view should be inspected by developer
-  // tools loaded in it. This method should be called before renderer is
-  // created.
-  void SetInspectedView(int inspected_process_id, int inspected_view_id);
-
   // Sets a property with the given name and value on the DOM UI binding object.
   // Must call AllowDOMUIBindings() on this renderer first.
   void SetDOMUIProperty(const std::string& name, const std::string& value);
@@ -398,7 +393,9 @@ class RenderViewHost : public RenderWidgetHost {
 #endif
 
   // Forward a message from external host to chrome renderer.
-  void ForwardMessageFromExternalHost(const std::string& message);
+  void ForwardMessageFromExternalHost(const std::string& message,
+                                      const std::string& origin,
+                                      const std::string& target);
 
   // Message the renderer that we should be counted as a new document and not
   // as a popup.
@@ -426,16 +423,20 @@ class RenderViewHost : public RenderWidgetHost {
   virtual bool CanBlur() const;
   virtual gfx::Rect GetRootWindowResizerRect() const;
 
+  // Creates a new RenderView with the given route id.
+  void CreateNewWindow(int route_id, ModalDialogEvent modal_dialog_event);
+
+  // Creates a new RenderWidget with the given route id.
+  void CreateNewWidget(int route_id, bool activatable);
+
  protected:
   // RenderWidgetHost protected overrides.
-  virtual void UnhandledKeyboardEvent(const WebKeyboardEvent& event);
+  virtual void UnhandledKeyboardEvent(const NativeWebKeyboardEvent& event);
   virtual void OnEnterOrSpace();
   virtual void NotifyRendererUnresponsive();
   virtual void NotifyRendererResponsive();
 
   // IPC message handlers.
-  void OnMsgCreateWindow(int route_id, ModalDialogEvent modal_dialog_event);
-  void OnMsgCreateWidget(int route_id, bool activatable);
   void OnMsgShowView(int route_id,
                      WindowOpenDisposition disposition,
                      const gfx::Rect& initial_pos,
@@ -461,6 +462,8 @@ class RenderViewHost : public RenderWidgetHost {
   void OnMsgDidStartLoading(int32 page_id);
   void OnMsgDidStopLoading(int32 page_id);
   void OnMsgDidLoadResourceFromMemoryCache(const GURL& url,
+                                           const std::string& frame_origin,
+                                           const std::string& main_frame_origin,
                                            const std::string& security_info);
   void OnMsgDidStartProvisionalLoadForFrame(bool main_frame,
                                             const GURL& url);
@@ -485,7 +488,9 @@ class RenderViewHost : public RenderWidgetHost {
                                  int automation_id);
   void OnMsgDOMUISend(const std::string& message,
                       const std::string& content);
-  void OnMsgForwardMessageToExternalHost(const std::string& message);
+  void OnMsgForwardMessageToExternalHost(const std::string& message,
+                                         const std::string& origin,
+                                         const std::string& target);
 #ifdef CHROME_PERSONALIZATION
   void OnPersonalizationEvent(const std::string& message,
                               const std::string& content);
@@ -498,9 +503,11 @@ class RenderViewHost : public RenderWidgetHost {
                            const std::wstring& filter);
   void OnMsgRunJavaScriptMessage(const std::wstring& message,
                                  const std::wstring& default_prompt,
+                                 const GURL& frame_url,
                                  const int flags,
                                  IPC::Message* reply_msg);
-  void OnMsgRunBeforeUnloadConfirm(const std::wstring& message,
+  void OnMsgRunBeforeUnloadConfirm(const GURL& frame_url,
+                                   const std::wstring& message,
                                    IPC::Message* reply_msg);
   void OnMsgShowModalHTMLDialog(const GURL& url, int width, int height,
                                 const std::string& json_arguments,
@@ -511,6 +518,7 @@ class RenderViewHost : public RenderWidgetHost {
   void OnUpdateDragCursor(bool is_drop_target);
   void OnTakeFocus(bool reverse);
   void OnMsgPageHasOSDD(int32 page_id, const GURL& doc_url, bool autodetected);
+  void OnMsgUpdateFeedList(const ViewHostMsg_UpdateFeedList_Params& params);
   void OnMsgInspectElementReply(int num_resources);
   void DidPrintPage(const ViewHostMsg_DidPrintPage_Params& params);
   void OnDebugMessage(const std::string& message);
@@ -542,6 +550,8 @@ class RenderViewHost : public RenderWidgetHost {
                                 const std::wstring& user_text,
                                 int64 node_id,
                                 int request_id);
+  void OnRemoveAutofillEntry(const std::wstring& field_name,
+                             const std::wstring& value);
 
   // Helper function to send a navigation message.  If a cross-site request is
   // in progress, we may be suspended while waiting for the onbeforeunload
@@ -621,12 +631,6 @@ class RenderViewHost : public RenderWidgetHost {
 
   bool are_javascript_messages_suppressed_;
 
-  // When this renderer hosts developer tools this two fields contain rerndeder
-  // process id and render view id of the page being inspected. Both fieldes
-  // are -1 if the content of this renderer is not developer tools frontend.
-  int inspected_process_id_;
-  int inspected_view_id_;
-
   DISALLOW_EVIL_CONSTRUCTORS(RenderViewHost);
 };
 
@@ -642,4 +646,4 @@ class RenderViewHostFactory {
       base::WaitableEvent* modal_dialog_event) = 0;
 };
 
-#endif  // CHROME_BROWSER_RENDERER_HOST_RENDER_VIEW_HOST_H__
+#endif  // CHROME_BROWSER_RENDERER_HOST_RENDER_VIEW_HOST_H_

@@ -239,8 +239,8 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(XMLHTTPREQUEST, XMLHttpRequest)                                     \
   WORKER_ACTIVE_OBJECT_WRAPPER_TYPES(V)
 
-// NOTE: DOM_OBJECT_TYPES is split into two halves because 
-//       Visual Studio's Intellinonsense crashes when macros get 
+// NOTE: DOM_OBJECT_TYPES is split into two halves because
+//       Visual Studio's Intellinonsense crashes when macros get
 //       too large.  10-29-08
 // DOM_OBJECT_TYPES are non-node DOM types.
 #define DOM_OBJECT_TYPES_1(V)                                           \
@@ -338,10 +338,17 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   VIDEO_NONNODE_TYPES(V)                                                \
   WORKER_NONNODE_WRAPPER_TYPES(V)
 
+#define DOM_OBJECT_DATABASE_TYPES(V)                                    \
+  V(DATABASE, Database)                                                 \
+  V(SQLERROR, SQLError)                                                 \
+  V(SQLRESULTSET, SQLResultSet)                                         \
+  V(SQLRESULTSETROWLIST, SQLResultSetRowList)                           \
+  V(SQLTRANSACTION, SQLTransaction)
+
 #define DOM_OBJECT_TYPES(V)                                             \
   DOM_OBJECT_TYPES_1(V)                                                 \
-  DOM_OBJECT_TYPES_2(V)
-
+  DOM_OBJECT_TYPES_2(V)                                                 \
+  DOM_OBJECT_DATABASE_TYPES(V)
 
 #if ENABLE(SVG)
 // SVG_OBJECT_TYPES are svg non-node, non-pod types.
@@ -418,7 +425,7 @@ typedef v8::Persistent<v8::FunctionTemplate> (*FunctionTemplateFactory)();
   V(SVGURIREFERENCE, SVGURIReference)                                   \
   V(SVGANIMATEDPOINTS, SVGAnimatedPoints)
 
-// SVG_NONNODE_TYPES are SVG non-node object types, pod typs and 
+// SVG_NONNODE_TYPES are SVG non-node object types, pod typs and
 // numerical types.
 #define SVG_NONNODE_TYPES(V)                                            \
   SVG_OBJECT_TYPES(V)                                                   \
@@ -479,4 +486,3 @@ class V8ClassIndex {
 }
 
 #endif  // V8_INDEX_H__
-

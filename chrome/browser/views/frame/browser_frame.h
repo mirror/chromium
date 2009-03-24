@@ -5,7 +5,7 @@
 #ifndef CHROME_BROWSER_VIEWS_FRAME_BROWSER_FRAME_
 #define CHROME_BROWSER_VIEWS_FRAME_BROWSER_FRAME_
 
-#include "chrome/views/window.h"
+#include "chrome/views/window/window_win.h"
 
 class AeroGlassNonClientView;
 class BrowserView;
@@ -29,10 +29,10 @@ class BrowserNonClientFrameView : public views::NonClientFrameView {
 ///////////////////////////////////////////////////////////////////////////////
 // BrowserFrame
 //
-//  BrowserFrame is a Window subclass that provides the window frame for the
+//  BrowserFrame is a WindowWin subclass that provides the window frame for the
 //  Chrome browser window.
 //
-class BrowserFrame : public views::Window {
+class BrowserFrame : public views::WindowWin {
  public:
   explicit BrowserFrame(BrowserView* browser_view);
   virtual ~BrowserFrame();
@@ -50,6 +50,8 @@ class BrowserFrame : public views::Window {
 
   // Tells the frame to update the throbber.
   void UpdateThrobber(bool running);
+
+  BrowserView* browser_view() const { return browser_view_; }
 
  protected:
   // Overridden from views::WidgetWin:
@@ -72,6 +74,7 @@ class BrowserFrame : public views::Window {
   virtual bool IsAppWindow() const { return true; }
   virtual views::NonClientFrameView* CreateFrameViewForWindow();
   virtual void UpdateFrameAfterFrameChange();
+  virtual views::RootView* CreateRootView();
 
  private:
   // Updates the DWM with the frame bounds.
@@ -89,4 +92,3 @@ class BrowserFrame : public views::Window {
 };
 
 #endif  // #ifndef CHROME_BROWSER_VIEWS_FRAME_BROWSER_FRAME_
-

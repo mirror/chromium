@@ -14,6 +14,7 @@
 
 #include "base/basictypes.h"
 #include "base/string16.h"
+#include "base/string_piece.h"  // For implicit conversions.
 
 // Safe standard library wrappers for all platforms.
 
@@ -130,9 +131,13 @@ bool TrimString(const std::string& input,
                 std::string* output);
 
 // Trims any whitespace from either end of the input string.  Returns where
-// whitespace was found.  The non-wide version of this function only looks for
-// ASCII whitespace; UTF-8 code-points are not searched for (use the wide
-// version instead).
+// whitespace was found.
+// The non-wide version has two functions:
+// * TrimWhitespaceASCII()
+//   This function is for ASCII strings and only looks for ASCII whitespace;
+// * TrimWhitespaceUTF8()
+//   This function is for UTF-8 strings and looks for Unicode whitespace.
+// Please choose the best one according to your usage.
 // NOTE: Safe to use the same variable for both input and output.
 enum TrimPositions {
   TRIM_NONE     = 0,
@@ -143,6 +148,15 @@ enum TrimPositions {
 TrimPositions TrimWhitespace(const std::wstring& input,
                              TrimPositions positions,
                              std::wstring* output);
+TrimPositions TrimWhitespaceASCII(const std::string& input,
+                                  TrimPositions positions,
+                                  std::string* output);
+TrimPositions TrimWhitespaceUTF8(const std::string& input,
+                                 TrimPositions positions,
+                                 std::string* output);
+
+// Deprecated. This function is only for backward compatibility and calls
+// TrimWhitespaceASCII().
 TrimPositions TrimWhitespace(const std::string& input,
                              TrimPositions positions,
                              std::string* output);
@@ -173,7 +187,7 @@ string16 ASCIIToUTF16(const std::string& ascii);
 bool WideToUTF8(const wchar_t* src, size_t src_len, std::string* output);
 std::string WideToUTF8(const std::wstring& wide);
 bool UTF8ToWide(const char* src, size_t src_len, std::wstring* output);
-std::wstring UTF8ToWide(const std::string& utf8);
+std::wstring UTF8ToWide(const StringPiece& utf8);
 
 bool WideToUTF16(const wchar_t* src, size_t src_len, string16* output);
 string16 WideToUTF16(const std::wstring& wide);

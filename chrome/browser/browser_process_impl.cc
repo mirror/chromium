@@ -11,6 +11,7 @@
 #include "chrome/browser/browser_trial.h"
 #include "chrome/browser/chrome_thread.h"
 #include "chrome/browser/debugger/debugger_wrapper.h"
+#include "chrome/browser/debugger/devtools_manager.h"
 #include "chrome/browser/download/download_file.h"
 #include "chrome/browser/download/save_file_manager.h"
 #include "chrome/browser/google_url_tracker.h"
@@ -23,6 +24,7 @@
 #include "chrome/browser/safe_browsing/safe_browsing_service.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
+#include "chrome/common/clipboard_service.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_names.h"
@@ -32,9 +34,8 @@
 #include "chrome/browser/automation/automation_provider_list.h"
 #include "chrome/browser/icon_manager.h"
 #include "chrome/browser/printing/print_job_manager.h"
-#include "chrome/common/clipboard_service.h"
-#include "chrome/views/accelerator_handler.h"
-#include "chrome/views/view_storage.h"
+#include "chrome/views/focus/view_storage.h"
+#include "chrome/views/widget/accelerator_handler.h"
 #elif defined(OS_POSIX)
 // TODO(port): Remove the temporary scaffolding as we port the above headers.
 #include "chrome/common/temp_scaffolding_stubs.h"
@@ -105,6 +106,7 @@ BrowserProcessImpl::BrowserProcessImpl(const CommandLine& command_line)
       broker_services_(NULL),
       created_icon_manager_(false),
       created_debugger_wrapper_(false),
+      created_devtools_manager_(false),
       module_ref_count_(0),
       memory_model_(MEDIUM_MEMORY_MODEL),
       checked_for_new_frames_(false),
@@ -195,13 +197,6 @@ BrowserProcessImpl::~BrowserProcessImpl() {
   // Wait for the pending print jobs to finish.
   print_job_manager_->OnQuit();
   print_job_manager_.reset();
-
-  // TODO(port): remove this completely from BrowserProcessImpl, it has no
-  // business being here.
-#if defined(OS_WIN)
-  // The ViewStorage needs to go before the NotificationService.
-  views::ViewStorage::DeleteSharedInstance();
-#endif
 
   // Now OK to destroy NotificationService.
   main_notification_service_.reset();
@@ -365,6 +360,12 @@ void BrowserProcessImpl::CreateDebuggerWrapper(int port) {
   debugger_wrapper_ = new DebuggerWrapper(port);
 }
 
+void BrowserProcessImpl::CreateDevToolsManager() {
+  DCHECK(!devtools_manager_.get());
+  created_devtools_manager_ = true;
+  devtools_manager_.reset(new DevToolsManager());
+}
+
 void BrowserProcessImpl::CreateAcceleratorHandler() {
 #if defined(OS_WIN)
   DCHECK(accelerator_handler_.get() == NULL);
@@ -381,4 +382,3 @@ void BrowserProcessImpl::CreateGoogleURLTracker() {
   scoped_ptr<GoogleURLTracker> google_url_tracker(new GoogleURLTracker);
   google_url_tracker_.swap(google_url_tracker);
 }
-

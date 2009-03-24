@@ -8,9 +8,6 @@
 #include "chrome/common/gfx/text_elider.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
-#if defined(OS_WIN)
-#include "chrome/views/label.h"
-#endif  // defined(OS_WIN)
 #include "googleurl/src/gurl.h"
 #include "net/base/escape.h"
 #include "net/base/net_util.h"
@@ -168,9 +165,9 @@ std::wstring ElideUrl(const GURL& url,
   }
 
   const int kMaxNumberOfUrlPathElementsAllowed = 1024;
-  if (url_path_number_of_elements <= 1 || 
+  if (url_path_number_of_elements <= 1 ||
       url_path_number_of_elements > kMaxNumberOfUrlPathElementsAllowed) {
-    // No path to elide, or too long of a path (could overflow in loop below) 
+    // No path to elide, or too long of a path (could overflow in loop below)
     // Just elide this as a text string.
     return ElideText(url_subdomain + url_domain + url_path_query_etc, font,
                      available_pixel_width);
@@ -376,7 +373,8 @@ void AppendFormattedComponent(const std::string& spec,
     out_component->begin = static_cast<int>(output->length());
 
     output->append(UnescapeAndDecodeUTF8URLComponent(
-        spec.substr(in_component.begin, in_component.len), UnescapeRule::NORMAL));
+        spec.substr(in_component.begin, in_component.len),
+        UnescapeRule::NORMAL));
 
     out_component->len =
         static_cast<int>(output->length()) - out_component->begin;

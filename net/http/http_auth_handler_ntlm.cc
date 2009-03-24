@@ -18,6 +18,7 @@
 #include "base/sys_string_conversions.h"
 #include "net/base/base64.h"
 #include "net/base/net_errors.h"
+#include "net/base/net_util.h"
 #include "net/http/des.h"
 #include "net/http/md4.h"
 
@@ -434,14 +435,21 @@ static int ParseType2Msg(const void* in_buf, uint32 in_len, Type2Msg* msg) {
   return OK;
 }
 
+static void GenerateRandom(uint8* output, size_t n) {
+  for (size_t i = 0; i < n; ++i)
+    output[i] = base::RandInt(0, 255);
+}
+
 // Returns OK or a network error code.
 static int GenerateType3Msg(const string16& domain,
                             const string16& username,
                             const string16& password,
-                            const void*     in_buf,
-                            uint32          in_len,
-                            void**          out_buf,
-                            uint32*         out_len) {
+                            const std::string& hostname,
+                            const void* rand_8_bytes,
+                            const void* in_buf,
+                            uint32 in_len,
+                            void** out_buf,
+                            uint32* out_len) {
   // in_buf contains Type-2 msg (the challenge) from server.
 
   int rv;
@@ -459,7 +467,7 @@ static int GenerateType3Msg(const string16& domain,
 #endif
   string16 ucs_host_buf;
   // Temporary buffers for oem strings
-  std::string oem_domain_buf, oem_user_buf, oem_host_buf;
+  std::string oem_domain_buf, oem_user_buf;
   // Pointers and lengths for the string buffers; encoding is unicode if
   // the "negotiate unicode" flag was set in the Type-2 message.
   const void* domain_ptr;
@@ -510,13 +518,9 @@ static int GenerateType3Msg(const string16& domain,
   //
   // Get workstation name (use local machine's hostname).
   //
-  char host_buf[256];  // Host names are limited to 255 bytes.
-  if (gethostname(host_buf, sizeof(host_buf)) != 0)
-    return ERR_UNEXPECTED;
-  host_len = strlen(host_buf);
   if (unicode) {
     // hostname is ASCII, so we can do a simple zero-pad expansion:
-    ucs_host_buf.assign(host_buf, host_buf + host_len);
+    ucs_host_buf.assign(hostname.begin(), hostname.end());
     host_ptr = ucs_host_buf.data();
     host_len = ucs_host_buf.length() * 2;
 #ifdef IS_BIG_ENDIAN
@@ -524,7 +528,8 @@ static int GenerateType3Msg(const string16& domain,
                    ucs_host_buf.length());
 #endif
   } else {
-    host_ptr = host_buf;
+    host_ptr = hostname.data();
+    host_len = hostname.length();
   }
 
   //
@@ -547,10 +552,7 @@ static int GenerateType3Msg(const string16& domain,
     MD5Digest session_hash;
     uint8 temp[16];
 
-    // TODO(wtc): Add a function that generates random bytes so we can say:
-    //   GenerateRandom(lm_resp, 8);
-    for (int i = 0; i < 8; ++i)
-      lm_resp[i] = base::RandInt(0, 255);
+    memcpy(lm_resp, rand_8_bytes, 8);
     memset(lm_resp + 8, 0, LM_RESP_LEN - 8);
 
     memcpy(temp, msg.challenge, 8);
@@ -621,71 +623,24 @@ static int GenerateType3Msg(const string16& domain,
   return OK;
 }
 
-//-----------------------------------------------------------------------------
-
-class NTLMAuthModule {
- public:
-  NTLMAuthModule() {}
-
-  ~NTLMAuthModule();
-
-  int Init(const string16& domain,
-           const string16& username,
-           const string16& password);
-
-  int GetNextToken(const void* in_token,
-                   uint32 in_token_len,
-                   void** out_token,
-                   uint32* out_token_len);
-
- private:
-  string16 domain_;
-  string16 username_;
-  string16 password_;
-};
-
-NTLMAuthModule::~NTLMAuthModule() {
-  ZapString(&password_);
-}
-
-int NTLMAuthModule::Init(const string16& domain,
-                         const string16& username,
-                         const string16& password) {
-  domain_ = domain;
-  username_ = username;
-  password_ = password;
-  return OK;
-}
-
-int NTLMAuthModule::GetNextToken(const void* in_token,
-                                 uint32 in_token_len,
-                                 void** out_token,
-                                 uint32* out_token_len) {
-  int rv;
-
-  // If in_token is non-null, then assume it contains a type 2 message...
-  if (in_token) {
-    LogToken("in-token", in_token, in_token_len);
-    rv = GenerateType3Msg(domain_, username_, password_, in_token,
-                          in_token_len, out_token, out_token_len);
-  } else {
-    rv = GenerateType1Msg(out_token, out_token_len);
-  }
-
-  if (rv == OK)
-    LogToken("out-token", *out_token, *out_token_len);
-
-  return rv;
-}
-
 // NTLM authentication is specified in "NTLM Over HTTP Protocol Specification"
 // [MS-NTHT].
 
-HttpAuthHandlerNTLM::HttpAuthHandlerNTLM()
-    : ntlm_module_(new NTLMAuthModule) {
+// static
+HttpAuthHandlerNTLM::GenerateRandomProc
+HttpAuthHandlerNTLM::generate_random_proc_ = GenerateRandom;
+
+// static
+HttpAuthHandlerNTLM::HostNameProc
+HttpAuthHandlerNTLM::get_host_name_proc_ = GetMyHostName;
+
+HttpAuthHandlerNTLM::HttpAuthHandlerNTLM() {
 }
 
 HttpAuthHandlerNTLM::~HttpAuthHandlerNTLM() {
+  // Wipe our copy of the password from memory, to reduce the chance of being
+  // written to the paging file on disk.
+  ZapString(&password_);
 }
 
 bool HttpAuthHandlerNTLM::NeedsIdentity() {
@@ -697,7 +652,6 @@ std::string HttpAuthHandlerNTLM::GenerateCredentials(
     const std::wstring& password,
     const HttpRequestInfo* request,
     const ProxyInfo* proxy) {
-  int rv;
   // TODO(wtc): See if we can use char* instead of void* for in_buf and
   // out_buf.  This change will need to propagate to GetNextToken,
   // GenerateType1Msg, and GenerateType3Msg, and perhaps further.
@@ -717,8 +671,9 @@ std::string HttpAuthHandlerNTLM::GenerateCredentials(
     domain = username.substr(0, backslash_idx);
     user = username.substr(backslash_idx + 1);
   }
-  rv = ntlm_module_->Init(WideToUTF16(domain), WideToUTF16(user),
-                          WideToUTF16(password));
+  domain_ = WideToUTF16(domain);
+  username_ = WideToUTF16(user);
+  password_ = WideToUTF16(password);
 
   // Initial challenge.
   if (auth_data_.empty()) {
@@ -742,7 +697,7 @@ std::string HttpAuthHandlerNTLM::GenerateCredentials(
     in_buf = decoded_auth_data.data();
   }
 
-  rv = ntlm_module_->GetNextToken(in_buf, in_buf_len, &out_buf, &out_buf_len);
+  int rv = GetNextToken(in_buf, in_buf_len, &out_buf, &out_buf_len);
   if (rv != OK)
     return std::string();
 
@@ -755,6 +710,23 @@ std::string HttpAuthHandlerNTLM::GenerateCredentials(
   if (!ok)
     return std::string();
   return std::string("NTLM ") + encode_output;
+}
+
+// static
+HttpAuthHandlerNTLM::GenerateRandomProc
+HttpAuthHandlerNTLM::SetGenerateRandomProc(
+    GenerateRandomProc proc) {
+  GenerateRandomProc old_proc = generate_random_proc_;
+  generate_random_proc_ = proc;
+  return old_proc;
+}
+
+// static
+HttpAuthHandlerNTLM::HostNameProc HttpAuthHandlerNTLM::SetHostNameProc(
+    HostNameProc proc) {
+  HostNameProc old_proc = get_host_name_proc_;
+  get_host_name_proc_ = proc;
+  return old_proc;
 }
 
 // The NTLM challenge header looks like:
@@ -782,6 +754,32 @@ bool HttpAuthHandlerNTLM::ParseChallenge(
   auth_data_.assign(challenge_begin, challenge_end);
 
   return true;
+}
+
+int HttpAuthHandlerNTLM::GetNextToken(const void* in_token,
+                                      uint32 in_token_len,
+                                      void** out_token,
+                                      uint32* out_token_len) {
+  int rv;
+
+  // If in_token is non-null, then assume it contains a type 2 message...
+  if (in_token) {
+    LogToken("in-token", in_token, in_token_len);
+    std::string hostname = get_host_name_proc_();
+    if (hostname.empty())
+      return ERR_UNEXPECTED;
+    uint8 rand_buf[8];
+    generate_random_proc_(rand_buf, 8);
+    rv = GenerateType3Msg(domain_, username_, password_, hostname, rand_buf,
+                          in_token, in_token_len, out_token, out_token_len);
+  } else {
+    rv = GenerateType1Msg(out_token, out_token_len);
+  }
+
+  if (rv == OK)
+    LogToken("out-token", *out_token, *out_token_len);
+
+  return rv;
 }
 
 }  // namespace net

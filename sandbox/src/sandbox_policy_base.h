@@ -9,7 +9,6 @@
 #include <list>
 
 #include "base/basictypes.h"
-#include "base/logging.h"
 #include "sandbox/src/ipc_tags.h"
 #include "sandbox/src/sandbox_policy.h"
 #include "sandbox/src/win_utils.h"
@@ -156,4 +155,3 @@ class PolicyBase : public Dispatcher, public TargetPolicy {
 }  // namespace sandbox
 
 #endif  // SANDBOX_SRC_SANDBOX_POLICY_BASE_H_
-

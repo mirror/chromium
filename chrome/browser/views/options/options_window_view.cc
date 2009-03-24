@@ -15,12 +15,13 @@
 #include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
 #ifdef CHROME_PERSONALIZATION
+#include "chrome/personalization/personalization.h"
 #include "chrome/personalization/views/user_data_page_view.h"
 #endif
-#include "chrome/views/dialog_delegate.h"
-#include "chrome/views/tabbed_pane.h"
-#include "chrome/views/root_view.h"
-#include "chrome/views/window.h"
+#include "chrome/views/controls/tabbed_pane.h"
+#include "chrome/views/widget/root_view.h"
+#include "chrome/views/window/dialog_delegate.h"
+#include "chrome/views/window/window.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 #include "grit/locale_settings.h"
@@ -200,10 +201,12 @@ void OptionsWindowView::Init() {
                        content_page, false);
 
 #ifdef CHROME_PERSONALIZATION
-  UserDataPageView* user_data_page = new UserDataPageView(profile_);
-  tabs_->AddTabAtIndex(tab_index++,
-                       l10n_util::GetString(IDS_OPTIONS_USER_DATA_TAB_LABEL),
-                       user_data_page, false);
+  if (!Personalization::IsP13NDisabled()) {
+    UserDataPageView* user_data_page = new UserDataPageView(profile_);
+    tabs_->AddTabAtIndex(tab_index++,
+                         l10n_util::GetString(IDS_OPTIONS_USER_DATA_TAB_LABEL),
+                         user_data_page, false);
+  }
 #endif
 
   AdvancedPageView* advanced_page = new AdvancedPageView(profile_);
@@ -238,4 +241,3 @@ void ShowOptionsWindow(OptionsPage page,
   }
   instance_->ShowOptionsPage(page, highlight_group);
 }
-

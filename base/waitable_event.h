@@ -16,7 +16,6 @@
 #include <utility>
 #include "base/condition_variable.h"
 #include "base/lock.h"
-#include "base/ref_counted.h"
 #endif
 
 #include "base/message_loop.h"
@@ -56,6 +55,9 @@ class WaitableEvent {
   // created. This objects takes ownership of the HANDLE and will close it when
   // deleted.
   explicit WaitableEvent(HANDLE event_handle);
+
+  // Releases ownership of the handle from this object.
+  HANDLE Release();
 #endif
 
   // WARNING: Destroying a WaitableEvent while threads are waiting on it is not

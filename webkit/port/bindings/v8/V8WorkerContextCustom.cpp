@@ -1,10 +1,10 @@
 // Copyright (c) 2009, Google Inc.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
 // met:
-// 
+//
 //     * Redistributions of source code must retain the above copyright
 // notice, this list of conditions and the following disclaimer.
 //     * Redistributions in binary form must reproduce the above
@@ -14,7 +14,7 @@
 //     * Neither the name of Google Inc. nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -33,15 +33,15 @@
 
 #include "v8_binding.h"
 #include "v8_custom.h"
-#include "v8_events.h"
 #include "v8_proxy.h"
 #include "WorkerContextExecutionProxy.h"
 
-#include "V8Document.h"
-#include "V8HTMLDocument.h"
-
 #include "ExceptionCode.h"
 #include "MessagePort.h"
+#include "NotImplemented.h"
+#include "V8Document.h"
+#include "V8HTMLDocument.h"
+#include "V8WorkerContextEventListener.h"
 #include "WorkerContext.h"
 
 namespace WebCore {
@@ -87,7 +87,7 @@ ACCESSOR_GETTER(WorkerContextSelf) {
   INC_STATS(L"DOM.WorkerContext.self._get");
   WorkerContext* imp = V8Proxy::ToNativeObject<WorkerContext>(
       V8ClassIndex::WORKERCONTEXT, info.Holder());
-  return V8Proxy::ToV8Object(V8ClassIndex::WORKERCONTEXT, imp);
+  return WorkerContextExecutionProxy::WorkerContextToV8Object(imp);
 }
 
 ACCESSOR_GETTER(WorkerContextOnmessage) {
@@ -97,7 +97,7 @@ ACCESSOR_GETTER(WorkerContextOnmessage) {
   if (imp->onmessage()) {
     V8WorkerContextEventListener* listener =
         static_cast<V8WorkerContextEventListener*>(imp->onmessage());
-    v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
+    v8::Local<v8::Object> v8_listener = listener->getListenerObject();
     return v8_listener;
   }
   return v8::Undefined();
@@ -111,7 +111,7 @@ ACCESSOR_SETTER(WorkerContextOnmessage) {
       static_cast<V8WorkerContextEventListener*>(imp->onmessage());
   if (value->IsNull()) {
     if (imp->onmessage()) {
-      v8::Local<v8::Object> old_v8_listener = old_listener->GetListenerObject();
+      v8::Local<v8::Object> old_v8_listener = old_listener->getListenerObject();
       RemoveHiddenDependency(info.Holder(), old_v8_listener);
     }
 
@@ -125,7 +125,7 @@ ACCESSOR_SETTER(WorkerContextOnmessage) {
     if (listener) {
       if (old_listener) {
         v8::Local<v8::Object> old_v8_listener =
-            old_listener->GetListenerObject();
+            old_listener->getListenerObject();
         RemoveHiddenDependency(info.Holder(), old_v8_listener);
       }
 
@@ -157,6 +157,12 @@ v8::Handle<v8::Value> ClearTimeoutOrInterval(const v8::Arguments& args) {
     imp->removeTimeout(tid);
   }
 
+  return v8::Undefined();
+}
+
+CALLBACK_FUNC_DECL(WorkerContextImportScripts) {
+  INC_STATS(L"DOM.WorkerContext.importScripts()");
+  notImplemented();
   return v8::Undefined();
 }
 

@@ -36,10 +36,12 @@ static ViewHostMsg_Resource_Request CreateResourceRequest(const char* method,
   request.url = url;
   request.policy_url = url;  // bypass third-party cookie blocking
   // init the rest to default values to prevent getting UMR.
+  request.frame_origin = "null";
+  request.main_frame_origin = "null";
   request.load_flags = 0;
   request.origin_pid = 0;
   request.resource_type = ResourceType::SUB_RESOURCE;
-  request.mixed_content = false;
+  request.request_context = 0;
   return request;
 }
 
@@ -85,14 +87,24 @@ void ResourceIPCAccumulator::GetClassifiedMessages(ClassifiedMessages* msgs) {
 class ResourceDispatcherHostTest : public testing::Test,
                                    public ResourceDispatcherHost::Receiver {
  public:
-  ResourceDispatcherHostTest() : host_(NULL) {
+  ResourceDispatcherHostTest()
+      : Receiver(ChildProcessInfo::RENDER_PROCESS), host_(NULL), pid_(-1) {
+    set_handle(base::GetCurrentProcessHandle());
   }
-  // ResourceDispatcherHost::Delegate implementation
+  // ResourceDispatcherHost::Receiver implementation
   virtual bool Send(IPC::Message* msg) {
     accum_.AddMessage(*msg);
     delete msg;
     return true;
   }
+
+  URLRequestContext* GetRequestContext(
+        uint32 request_id,
+        const ViewHostMsg_Resource_Request& request_data) {
+    return NULL;
+  }
+
+  virtual int GetProcessId() const { return pid_; }
 
  protected:
   // testing::Test
@@ -117,6 +129,11 @@ class ResourceDispatcherHostTest : public testing::Test,
                        int render_view_id,
                        int request_id,
                        const GURL& url);
+  void MakeTestRequest(ResourceDispatcherHost::Receiver* receiver,
+                       int render_process_id,
+                       int render_view_id,
+                       int request_id,
+                       const GURL& url);
   void MakeCancelRequest(int request_id);
 
   void EnsureTestSchemeIsAllowed() {
@@ -131,6 +148,7 @@ class ResourceDispatcherHostTest : public testing::Test,
   MessageLoopForIO message_loop_;
   ResourceDispatcherHost host_;
   ResourceIPCAccumulator accum_;
+  int pid_;
 };
 
 // Spin up the message loop to kick off the request.
@@ -142,11 +160,22 @@ void ResourceDispatcherHostTest::MakeTestRequest(int render_process_id,
                                                  int render_view_id,
                                                  int request_id,
                                                  const GURL& url) {
-  ViewHostMsg_Resource_Request request = CreateResourceRequest("GET", url);
+  MakeTestRequest(this, render_process_id, render_view_id, request_id, url);
+}
 
-  host_.BeginRequest(this, base::GetCurrentProcessHandle(), render_process_id,
-                     render_view_id, request_id, request, NULL, NULL);
+void ResourceDispatcherHostTest::MakeTestRequest(
+  ResourceDispatcherHost::Receiver* receiver,
+    int render_process_id,
+    int render_view_id,
+    int request_id,
+    const GURL& url) {
+  pid_ = render_process_id;
+  ViewHostMsg_Resource_Request request = CreateResourceRequest("GET", url);
+  ViewHostMsg_RequestResource msg(render_view_id, request_id, request);
+  bool msg_was_ok;
+  host_.OnMessageReceived(msg, receiver, &msg_was_ok);
   KickOffRequest();
+  pid_ = -1;
 }
 
 void ResourceDispatcherHostTest::MakeCancelRequest(int request_id) {
@@ -266,14 +295,22 @@ TEST_F(ResourceDispatcherHostTest, TestProcessCancel) {
   // pending and some canceled
   class TestReceiver : public ResourceDispatcherHost::Receiver {
    public:
-    TestReceiver() : has_canceled_(false), received_after_canceled_(0) {
-    }
+    TestReceiver()
+    : Receiver(ChildProcessInfo::RENDER_PROCESS),
+      has_canceled_(false),
+      received_after_canceled_(0) { }
+  // ResourceDispatcherHost::Receiver implementation
     virtual bool Send(IPC::Message* msg) {
       // no messages should be received when the process has been canceled
       if (has_canceled_)
         received_after_canceled_++;
       delete msg;
       return true;
+    }
+    URLRequestContext* GetRequestContext(
+        uint32 request_id,
+        const ViewHostMsg_Resource_Request& request_data) {
+      return NULL;
     }
     bool has_canceled_;
     int received_after_canceled_;
@@ -286,18 +323,13 @@ TEST_F(ResourceDispatcherHostTest, TestProcessCancel) {
 
   EXPECT_EQ(0, host_.GetOutstandingRequestsMemoryCost(0));
 
-  host_.BeginRequest(&test_receiver, base::GetCurrentProcessHandle(), 0,
-                     MSG_ROUTING_NONE, 1, request, NULL, NULL);
-  KickOffRequest();
+  MakeTestRequest(&test_receiver, 0, 0, 1, URLRequestTestJob::test_url_1());
 
   // request 2 goes to us
   MakeTestRequest(0, 0, 2, URLRequestTestJob::test_url_2());
 
   // request 3 goes to the test delegate
-  request.url = URLRequestTestJob::test_url_3();
-  host_.BeginRequest(&test_receiver, base::GetCurrentProcessHandle(), 0,
-                     MSG_ROUTING_NONE, 3, request, NULL, NULL);
-  KickOffRequest();
+  MakeTestRequest(&test_receiver, 0, 0, 3, URLRequestTestJob::test_url_3());
 
   // TODO(mbelshe):
   // Now that the async IO path is in place, the IO always completes on the
@@ -333,9 +365,9 @@ TEST_F(ResourceDispatcherHostTest, TestProcessCancel) {
 TEST_F(ResourceDispatcherHostTest, TestBlockingResumingRequests) {
   EXPECT_EQ(0, host_.GetOutstandingRequestsMemoryCost(0));
 
-  host_.BlockRequestsForRenderView(0, 1);
-  host_.BlockRequestsForRenderView(0, 2);
-  host_.BlockRequestsForRenderView(0, 3);
+  host_.BlockRequestsForRoute(0, 1);
+  host_.BlockRequestsForRoute(0, 2);
+  host_.BlockRequestsForRoute(0, 3);
 
   MakeTestRequest(0, 0, 1, URLRequestTestJob::test_url_1());
   MakeTestRequest(0, 1, 2, URLRequestTestJob::test_url_2());
@@ -358,7 +390,7 @@ TEST_F(ResourceDispatcherHostTest, TestBlockingResumingRequests) {
   CheckSuccessfulRequest(msgs[1], URLRequestTestJob::test_data_3());
 
   // Resume requests for RVH 1 and flush pending requests.
-  host_.ResumeBlockedRequestsForRenderView(0, 1);
+  host_.ResumeBlockedRequestsForRoute(0, 1);
   KickOffRequest();
   while (URLRequestTestJob::ProcessOnePendingMessage());
 
@@ -377,8 +409,8 @@ TEST_F(ResourceDispatcherHostTest, TestBlockingResumingRequests) {
   CheckSuccessfulRequest(msgs[0], URLRequestTestJob::test_data_1());
 
   // Now resumes requests for all RVH (2 and 3).
-  host_.ResumeBlockedRequestsForRenderView(0, 2);
-  host_.ResumeBlockedRequestsForRenderView(0, 3);
+  host_.ResumeBlockedRequestsForRoute(0, 2);
+  host_.ResumeBlockedRequestsForRoute(0, 3);
   KickOffRequest();
   while (URLRequestTestJob::ProcessOnePendingMessage());
 
@@ -395,7 +427,7 @@ TEST_F(ResourceDispatcherHostTest, TestBlockingResumingRequests) {
 TEST_F(ResourceDispatcherHostTest, TestBlockingCancelingRequests) {
   EXPECT_EQ(0, host_.GetOutstandingRequestsMemoryCost(0));
 
-  host_.BlockRequestsForRenderView(0, 1);
+  host_.BlockRequestsForRoute(0, 1);
 
   MakeTestRequest(0, 0, 1, URLRequestTestJob::test_url_1());
   MakeTestRequest(0, 1, 2, URLRequestTestJob::test_url_2());
@@ -416,7 +448,7 @@ TEST_F(ResourceDispatcherHostTest, TestBlockingCancelingRequests) {
   CheckSuccessfulRequest(msgs[1], URLRequestTestJob::test_data_3());
 
   // Cancel requests for RVH 1.
-  host_.CancelBlockedRequestsForRenderView(0, 1);
+  host_.CancelBlockedRequestsForRoute(0, 1);
   KickOffRequest();
   while (URLRequestTestJob::ProcessOnePendingMessage());
 
@@ -432,7 +464,7 @@ TEST_F(ResourceDispatcherHostTest, TestBlockedRequestsProcessDies) {
   EXPECT_EQ(0, host_.GetOutstandingRequestsMemoryCost(0));
   EXPECT_EQ(0, host_.GetOutstandingRequestsMemoryCost(1));
 
-  host_.BlockRequestsForRenderView(1, 0);
+  host_.BlockRequestsForRoute(1, 0);
 
   MakeTestRequest(0, 0, 1, URLRequestTestJob::test_url_1());
   MakeTestRequest(1, 0, 2, URLRequestTestJob::test_url_2());
@@ -466,9 +498,9 @@ TEST_F(ResourceDispatcherHostTest, TestBlockedRequestsProcessDies) {
 // If this test turns the Purify bot red, check the ResourceDispatcherHost
 // destructor to make sure the blocked requests are deleted.
 TEST_F(ResourceDispatcherHostTest, TestBlockedRequestsDontLeak) {
-  host_.BlockRequestsForRenderView(0, 1);
-  host_.BlockRequestsForRenderView(0, 2);
-  host_.BlockRequestsForRenderView(1, 1);
+  host_.BlockRequestsForRoute(0, 1);
+  host_.BlockRequestsForRoute(0, 2);
+  host_.BlockRequestsForRoute(1, 1);
 
   MakeTestRequest(0, 0, 1, URLRequestTestJob::test_url_1());
   MakeTestRequest(0, 1, 2, URLRequestTestJob::test_url_2());
@@ -617,4 +649,3 @@ TEST_F(ResourceDispatcherHostTest, TooManyOutstandingRequests) {
   CheckSuccessfulRequest(msgs[kMaxRequests + 3],
                          URLRequestTestJob::test_data_2());
 }
-

@@ -93,7 +93,7 @@ WebMouseEvent::WebMouseEvent(HWND hwnd, UINT message, WPARAM wparam,
 
   global_x = global_point.x;
   global_y = global_point.y;
-  
+
   // set modifiers:
 
   if (wparam & MK_CONTROL)
@@ -163,10 +163,8 @@ WebMouseWheelEvent::WebMouseWheelEvent(HWND hwnd,
         break;
     }
 
-    if (message == WM_HSCROLL) {
+    if (message == WM_HSCROLL)
       horizontal_scroll = true;
-      wheel_delta = -wheel_delta;
-    }
   } else {
     // Non-synthesized event; we can just read data off the event.
     get_key_state = GetKeyState;
@@ -176,10 +174,13 @@ WebMouseWheelEvent::WebMouseWheelEvent(HWND hwnd,
     global_y = static_cast<short>(HIWORD(lparam));
 
     wheel_delta = static_cast<float>(GET_WHEEL_DELTA_WPARAM(wparam));
-    if (((message == WM_MOUSEHWHEEL) || (key_state & MK_SHIFT)) &&
-        (wheel_delta != 0))
+    if (message == WM_MOUSEHWHEEL) {
       horizontal_scroll = true;
+      wheel_delta = -wheel_delta;  // Windows is <- -/+ ->, WebKit <- +/- ->.
+    }
   }
+  if (key_state & MK_SHIFT)
+    horizontal_scroll = true;
 
   // Set modifiers based on key state.
   if (key_state & MK_SHIFT)
@@ -195,30 +196,47 @@ WebMouseWheelEvent::WebMouseWheelEvent(HWND hwnd,
   x = client_point.x;
   y = client_point.y;
 
-  // Convert wheel delta amount to a number of lines/chars to scroll.
-  float scroll_delta = wheel_delta / WHEEL_DELTA;
+  // Convert wheel delta amount to a number of pixels to scroll.
+  //
+  // How many pixels should we scroll per line?  Gecko uses the height of the
+  // current line, which means scroll distance changes as you go through the
+  // page or go to different pages.  IE 7 is ~50 px/line, although the value
+  // seems to vary slightly by page and zoom level.  Since IE 7 has a smoothing
+  // algorithm on scrolling, it can get away with slightly larger scroll values
+  // without feeling jerky.  Here we use 100 px per three lines (the default
+  // scroll amount is three lines per wheel tick).
+  static const float kScrollbarPixelsPerLine = 100.0f / 3.0f;
+  wheel_delta /= WHEEL_DELTA;
+  float scroll_delta = wheel_delta;
   if (horizontal_scroll) {
     unsigned long scroll_chars = kDefaultScrollCharsPerWheelDelta;
     SystemParametersInfo(SPI_GETWHEELSCROLLCHARS, 0, &scroll_chars, 0);
-    scroll_delta *= static_cast<float>(scroll_chars);
+    // TODO(pkasting): Should probably have a different multiplier
+    // kScrollbarPixelsPerChar here.
+    scroll_delta *= static_cast<float>(scroll_chars) * kScrollbarPixelsPerLine;
   } else {
     unsigned long scroll_lines = kDefaultScrollLinesPerWheelDelta;
     SystemParametersInfo(SPI_GETWHEELSCROLLLINES, 0, &scroll_lines, 0);
     if (scroll_lines == WHEEL_PAGESCROLL)
       scroll_by_page = true;
-    if (!scroll_by_page)
-      scroll_delta *= static_cast<float>(scroll_lines);
+    if (!scroll_by_page) {
+      scroll_delta *=
+          static_cast<float>(scroll_lines) * kScrollbarPixelsPerLine;
+    }
   }
 
-  // Set scroll amount based on above calculations.
+  // Set scroll amount based on above calculations.  WebKit expects positive
+  // delta_y to mean "scroll up" and positive delta_x to mean "scroll left".
   if (horizontal_scroll) {
-    // Scrolling up should move left, scrolling down should move right.  This is
-    // opposite Safari, but seems more consistent with vertical scrolling.
     delta_x = scroll_delta;
     delta_y = 0;
+    wheel_ticks_x = wheel_delta;
+    wheel_ticks_y = 0;
   } else {
     delta_x = 0;
     delta_y = scroll_delta;
+    wheel_ticks_x = 0;
+    wheel_ticks_y = wheel_delta;
   }
 }
 
@@ -271,11 +289,6 @@ bool IsKeyPad(WPARAM wparam, LPARAM lparam) {
 WebKeyboardEvent::WebKeyboardEvent(HWND hwnd, UINT message, WPARAM wparam,
                                    LPARAM lparam) {
   system_key = false;
-
-  actual_message.hwnd = hwnd;
-  actual_message.message = message;
-  actual_message.wParam = wparam;
-  actual_message.lParam = lparam;
 
   windows_key_code = native_key_code = static_cast<int>(wparam);
 
@@ -330,4 +343,3 @@ WebKeyboardEvent::WebKeyboardEvent(HWND hwnd, UINT message, WPARAM wparam,
   if (IsKeyPad(wparam, lparam))
     modifiers |= IS_KEYPAD;
 }
-

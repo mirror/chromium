@@ -5,7 +5,11 @@
 #ifndef CHROME_BROWSER_TAB_CONTENTS_WEB_CONTENTS_VIEW_GTK_H_
 #define CHROME_BROWSER_TAB_CONTENTS_WEB_CONTENTS_VIEW_GTK_H_
 
+#include "base/scoped_ptr.h"
 #include "chrome/browser/tab_contents/web_contents_view.h"
+#include "chrome/common/owned_widget_gtk.h"
+
+class RenderViewContextMenuGtk;
 
 class WebContentsViewGtk : public WebContentsView {
  public:
@@ -24,20 +28,21 @@ class WebContentsViewGtk : public WebContentsView {
 
   virtual gfx::NativeView GetNativeView() const;
   virtual gfx::NativeView GetContentNativeView() const;
-  virtual gfx::NativeWindow GetTopLevelNativeView() const;
+  virtual gfx::NativeWindow GetTopLevelNativeWindow() const;
   virtual void GetContainerBounds(gfx::Rect* out) const;
   virtual void OnContentsDestroy();
   virtual void SetPageTitle(const std::wstring& title);
   virtual void Invalidate();
   virtual void SizeContents(const gfx::Size& size);
-  virtual void OpenDeveloperTools();
-  virtual void ForwardMessageToDevToolsClient(const IPC::Message& message);
   virtual void FindInPage(const Browser& browser,
                           bool find_next, bool forward_direction);
   virtual void HideFindBar(bool end_session);
   virtual void ReparentFindWindow(Browser* new_browser) const;
   virtual bool GetFindBarWindowInfo(gfx::Point* position,
                                     bool* fully_visible) const;
+  virtual void SetInitialFocus();
+  virtual void StoreFocus();
+  virtual void RestoreFocus();
 
   // Backend implementation of RenderViewHostDelegate::View.
   virtual WebContents* CreateNewWindowInternal(
@@ -54,7 +59,7 @@ class WebContentsViewGtk : public WebContentsView {
   virtual void StartDragging(const WebDropData& drop_data);
   virtual void UpdateDragCursor(bool is_drop_target);
   virtual void TakeFocus(bool reverse);
-  virtual void HandleKeyboardEvent(const WebKeyboardEvent& event);
+  virtual void HandleKeyboardEvent(const NativeWebKeyboardEvent& event);
   virtual void OnFindReply(int request_id,
                            int number_of_matches,
                            const gfx::Rect& selection_rect,
@@ -63,10 +68,17 @@ class WebContentsViewGtk : public WebContentsView {
  private:
   WebContents* web_contents_;
 
-  GtkWidget* vbox_;
+  // The native widget for the tab.
+  OwnedWidgetGtk vbox_;
+
+  // The native widget for the contents of the tab. We do not own this widget.
+  GtkWidget* content_view_;
+
+  // The context menu is reset every time we show it, but we keep a pointer to
+  // between uses so that it won't go out of scope before we're done with it.
+  scoped_ptr<RenderViewContextMenuGtk> context_menu_;
 
   DISALLOW_COPY_AND_ASSIGN(WebContentsViewGtk);
 };
 
 #endif  // CHROME_BROWSER_TAB_CONTENTS_WEB_CONTENTS_VIEW_GTK_H_
-

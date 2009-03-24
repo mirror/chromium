@@ -7,6 +7,8 @@
 
 #include "chrome/browser/download/download_util.h"
 
+#include "base/logging.h"
+
 namespace download_util {
 
 // For file extensions taken from mozilla:
@@ -144,4 +146,3 @@ void InitializeExeTypes(std::set<std::string>* exe_extensions) {
 }
 
 }  // namespace download_util
-

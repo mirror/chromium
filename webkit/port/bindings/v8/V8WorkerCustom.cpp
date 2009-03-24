@@ -1,10 +1,10 @@
 // Copyright (c) 2008, Google Inc.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
 // met:
-// 
+//
 //     * Redistributions of source code must retain the above copyright
 // notice, this list of conditions and the following disclaimer.
 //     * Redistributions in binary form must reproduce the above
@@ -14,7 +14,7 @@
 //     * Neither the name of Google Inc. nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -33,20 +33,26 @@
 
 #include "v8_binding.h"
 #include "v8_custom.h"
-#include "v8_events.h"
 #include "v8_proxy.h"
 
+#include "ExceptionCode.h"
+#include "Frame.h"
+#include "MessagePort.h"
 #include "V8Document.h"
 #include "V8HTMLDocument.h"
-
-#include "ExceptionCode.h"
-#include "MessagePort.h"
+#include "V8ObjectEventListener.h"
 #include "Worker.h"
+#include "WorkerContextExecutionProxy.h"
 
 namespace WebCore {
 
 CALLBACK_FUNC_DECL(WorkerConstructor) {
   INC_STATS(L"DOM.Worker.Constructor");
+
+  if (!WorkerContextExecutionProxy::isWebWorkersEnabled()) {
+    V8Proxy::ThrowError(V8Proxy::SYNTAX_ERROR, "Worker is not enabled.");
+    return v8::Undefined();
+  }
 
   if (!args.IsConstructCall()) {
     V8Proxy::ThrowError(V8Proxy::TYPE_ERROR,
@@ -81,7 +87,7 @@ CALLBACK_FUNC_DECL(WorkerConstructor) {
   ExceptionCode ec = 0;
   RefPtr<Worker> obj = Worker::create(
       ToWebCoreString(script_url), document, ec);
-  
+
   // Setup the standard wrapper object internal fields.
   v8::Handle<v8::Object> wrapper_object = args.Holder();
   V8Proxy::SetDOMWrapper(
@@ -89,7 +95,7 @@ CALLBACK_FUNC_DECL(WorkerConstructor) {
 
   obj->ref();
   V8Proxy::SetJSWrapperForActiveDOMObject(
-      obj.get(), v8::Persistent<v8::Object>::New(wrapper_object));  
+      obj.get(), v8::Persistent<v8::Object>::New(wrapper_object));
 
   return wrapper_object;
 }
@@ -139,7 +145,7 @@ ACCESSOR_GETTER(WorkerOnmessage) {
   if (imp->onmessage()) {
     V8ObjectEventListener* listener =
         static_cast<V8ObjectEventListener*>(imp->onmessage());
-    v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
+    v8::Local<v8::Object> v8_listener = listener->getListenerObject();
     return v8_listener;
   }
   return v8::Undefined();
@@ -153,7 +159,7 @@ ACCESSOR_SETTER(WorkerOnmessage) {
       static_cast<V8ObjectEventListener*>(imp->onmessage());
   if (value->IsNull()) {
     if (old_listener) {
-      v8::Local<v8::Object> old_v8_listener = old_listener->GetListenerObject();
+      v8::Local<v8::Object> old_v8_listener = old_listener->getListenerObject();
       RemoveHiddenDependency(info.Holder(), old_v8_listener);
     }
 
@@ -170,7 +176,7 @@ ACCESSOR_SETTER(WorkerOnmessage) {
     if (listener) {
       if (old_listener) {
         v8::Local<v8::Object> old_v8_listener =
-            old_listener->GetListenerObject();
+            old_listener->getListenerObject();
         RemoveHiddenDependency(info.Holder(), old_v8_listener);
       }
 
@@ -187,7 +193,7 @@ ACCESSOR_GETTER(WorkerOnerror) {
   if (imp->onerror()) {
     V8ObjectEventListener* listener =
         static_cast<V8ObjectEventListener*>(imp->onerror());
-    v8::Local<v8::Object> v8_listener = listener->GetListenerObject();
+    v8::Local<v8::Object> v8_listener = listener->getListenerObject();
     return v8_listener;
   }
   return v8::Undefined();
@@ -201,8 +207,8 @@ ACCESSOR_SETTER(WorkerOnerror) {
       static_cast<V8ObjectEventListener*>(imp->onerror());
   if (value->IsNull()) {
     if (old_listener) {
-      v8::Local<v8::Object> old_v8_listener = 
-          old_listener->GetListenerObject();
+      v8::Local<v8::Object> old_v8_listener =
+          old_listener->getListenerObject();
       RemoveHiddenDependency(info.Holder(), old_v8_listener);
     }
 
@@ -217,7 +223,7 @@ ACCESSOR_SETTER(WorkerOnerror) {
       proxy->FindOrCreateObjectEventListener(value, false);
     if (listener) {
       if (old_listener) {
-        v8::Local<v8::Object> old_v8_listener = old_listener->GetListenerObject();
+        v8::Local<v8::Object> old_v8_listener = old_listener->getListenerObject();
         RemoveHiddenDependency(info.Holder(), old_v8_listener);
       }
 

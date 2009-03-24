@@ -23,7 +23,9 @@
         '../third_party/icu38/icu38.gyp:icuuc',
         '../third_party/modp_b64/modp_b64.gyp:modp_b64',
         '../third_party/zlib/zlib.gyp:zlib',
+        'net_resources',
       ],
+      'msvs_guid': '326E9795-E760-410A-B69A-3F79DB3F5243',
       'sources': [
         'base/address_list.cc',
         'base/address_list.h',
@@ -89,7 +91,6 @@
         'base/net_errors.h',
         'base/net_module.cc',
         'base/net_module.h',
-        'base/net_resources.h',
         'base/net_util.cc',
         'base/net_util.h',
         'base/net_util_posix.cc',
@@ -182,6 +183,8 @@
         'disk_cache/trace.h',
         'ftp/ftp_auth_cache.cc',
         'ftp/ftp_auth_cache.h',
+        'ftp/ftp_directory_parser.cc',
+        'ftp/ftp_directory_parser.h',
         'ftp/ftp_network_layer.cc',
         'ftp/ftp_network_layer.h',
         'ftp/ftp_network_session.h',
@@ -281,6 +284,8 @@
         'url_request/url_request_job_metrics.h',
         'url_request/url_request_job_tracker.cc',
         'url_request/url_request_job_tracker.h',
+        'url_request/url_request_new_ftp_job.cc',
+        'url_request/url_request_new_ftp_job.h',
         'url_request/url_request_simple_job.cc',
         'url_request/url_request_simple_job.h',
         'url_request/url_request_status.h',
@@ -297,13 +302,17 @@
         '../base/base.gyp:base',
       ],
       'conditions': [
+        [ 'OS == "linux"', {
+          'dependencies': [
+            '../build/linux/system.gyp:nss',
+          ],
+        }],
         [ 'OS == "win"', {
             'sources/': [ ['exclude', '_(mac|linux|posix)\\.cc$'] ],
             'sources!': [
               'base/tcp_client_socket_libevent.cc',
             ],
             'dependencies': [
-              'net_resources',
               'tld_cleanup',
             ],
             'configurations': {
@@ -326,9 +335,6 @@
         ],
         [ 'OS == "linux"', {
             'sources/': [ ['exclude', '_(mac|win)\\.cc$'] ],
-            'dependencies': [
-              'net_resources',
-            ],
           },
           {  # else: OS != "linux"
             'sources!': [
@@ -364,6 +370,7 @@
         '../base/base.gyp:base',
         '../testing/gtest.gyp:gtest',
       ],
+      'msvs_guid': 'E99DA267-BE90-4F45-88A1-6919DB2C7567',
       'sources': [
         'base/base64_unittest.cc',
         'base/bzip2_filter_unittest.cc',
@@ -375,6 +382,7 @@
         'base/escape_unittest.cc',
         'base/file_stream_unittest.cc',
         'base/filter_unittest.cc',
+        'base/filter_unittest.h',
         'base/gzip_filter_unittest.cc',
         'base/host_resolver_unittest.cc',
         'base/listen_socket_unittest.cc',
@@ -432,6 +440,9 @@
           },
         ],
         [ 'OS == "linux"', {
+            'dependencies': [
+              '../build/linux/system.gyp:gtk',
+            ],
             'sources!': [
               'base/sdch_filter_unittest.cc',
               'base/ssl_config_service_unittest.cc',
@@ -461,13 +472,14 @@
         'net',
         'net_test_support',
         '../base/base.gyp:base',
+        '../base/base.gyp:test_support_base',
         '../testing/gtest.gyp:gtest',
       ],
+      'msvs_guid': 'AAC78796-B9A2-4CD9-BF89-09B03E92BF73',
       'sources': [
-        '../base/perftimer.cc',
-        '../base/run_all_perftests.cc',
         'base/cookie_monster_perftest.cc',
         'disk_cache/disk_cache_perftest.cc',
+        'proxy/proxy_resolver_perftest.cc',
       ],
       'conditions': [
         # This is needed to trigger the dll copy step on windows.
@@ -499,6 +511,7 @@
         '../base/base.gyp:base',
         '../build/temp_gyp/googleurl.gyp:googleurl',
       ],
+      'msvs_guid': 'E13045CD-7E1F-4A41-9B18-8D288B2E7B41',
       'sources': [
         'tools/tld_cleanup/tld_cleanup.cc',
       ],
@@ -511,6 +524,7 @@
         'net_test_support',
         '../base/base.gyp:base',
       ],
+      'msvs_guid': 'B0EE0599-2913-46A0-A847-A3EC813658D3',
       'sources': [
         'tools/crash_cache/crash_cache.cc',
       ],
@@ -527,43 +541,38 @@
         'disk_cache/disk_cache_test_util.h',
       ],
     },
-  ],
-  'conditions': [
-    ['OS!="mac"', {
-      'targets': [
+    {
+      'target_name': 'net_resources',
+      'type': 'none',
+      'msvs_guid': '8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942',
+      'rules': [
         {
-          'target_name': 'net_resources',
-          'type': 'none',
-          'sources': [
-            'base/net_resources.grd',
+          'rule_name': 'grit',
+          'extension': 'grd',
+          'inputs': [
+            '../tools/grit/grit.py',
           ],
-          #'msvs_tool_files': ['../tools/grit/build/grit_resources.rules'],
-          # This was orignally in grit_resources.rules
-          # NOTE: this version doesn't mimic the Properties specified there.
-          'rules': [
-            {
-              'rule_name': 'grit',
-              'extension': 'grd',
-              'inputs': [
-                '<(DEPTH)/tools/grit/grit.py',
-              ],
-              'outputs': [
-                '<(SHARED_INTERMEDIATE_DIR)/grit_derived_sources/grit/<(RULE_INPUT_ROOT).h',
-                '<(SHARED_INTERMEDIATE_DIR)/grit_derived_sources/<(RULE_INPUT_ROOT).rc',
-                '<(SHARED_INTERMEDIATE_DIR)/grit_derived_sources/<(RULE_INPUT_ROOT).pak',
-              ],
-              'action':
-                ['python', '<(DEPTH)/tools/grit/grit.py', '-i', '<(RULE_INPUT_PATH)', 'build', '-o', '<(SHARED_INTERMEDIATE_DIR)/grit_derived_sources'],
-            },
+          'outputs': [
+            '<(SHARED_INTERMEDIATE_DIR)/net/grit/<(RULE_INPUT_ROOT).h',
+            '<(SHARED_INTERMEDIATE_DIR)/net/<(RULE_INPUT_ROOT).rc',
+            '<(SHARED_INTERMEDIATE_DIR)/net/<(RULE_INPUT_ROOT).pak',
           ],
-          'direct_dependent_settings': {
-            'include_dirs': [
-              '<(SHARED_INTERMEDIATE_DIR)/grit_derived_sources',
-            ],
-          },
+          'action':
+            ['python', '<@(_inputs)', '-i', '<(RULE_INPUT_PATH)', 'build', '-o', '<(SHARED_INTERMEDIATE_DIR)/net'],
+          'message': 'Generating resources from <(RULE_INPUT_PATH)',
         },
       ],
-    }],
+      'sources': [
+        'base/net_resources.grd',
+      ],
+      'direct_dependent_settings': {
+        'include_dirs': [
+          '<(SHARED_INTERMEDIATE_DIR)/net',
+        ],
+      },
+    },
+  ],
+  'conditions': [
     ['OS=="win"', {
       'targets': [
         {

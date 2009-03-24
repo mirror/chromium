@@ -26,7 +26,7 @@ PluginThread::PluginThread()
     : ChildThread(base::Thread::Options(MessageLoop::TYPE_UI, 0)),
       preloaded_plugin_module_(NULL) {
   plugin_path_ = FilePath::FromWStringHack(
-      CommandLine::ForCurrentProcess()->GetSwitchValue(switches::kPluginPath));      
+      CommandLine::ForCurrentProcess()->GetSwitchValue(switches::kPluginPath));
 }
 
 PluginThread::~PluginThread() {
@@ -38,10 +38,6 @@ PluginThread* PluginThread::current() {
 }
 
 void PluginThread::OnControlMessageReceived(const IPC::Message& msg) {
-  // Resource responses are sent to the resource dispatcher.
-  if (resource_dispatcher_->OnMessageReceived(msg))
-    return;
-
   IPC_BEGIN_MESSAGE_MAP(PluginThread, msg)
     IPC_MESSAGE_HANDLER(PluginProcessMsg_CreateChannel, OnCreateChannel)
     IPC_MESSAGE_HANDLER(PluginProcessMsg_ShutdownResponse, OnShutdownResponse)
@@ -55,7 +51,6 @@ void PluginThread::Init() {
   PatchNPNFunctions();
   CoInitialize(NULL);
   notification_service_.reset(new NotificationService);
-  resource_dispatcher_ = new ResourceDispatcher(this);
 
   // Preload the library to avoid loading, unloading then reloading
   preloaded_plugin_module_ = NPAPI::PluginLib::LoadNativeLibrary(plugin_path_);
@@ -74,7 +69,6 @@ void PluginThread::Init() {
 }
 
 void PluginThread::CleanUp() {
-  ChildThread::CleanUp();
   if (preloaded_plugin_module_) {
     FreeLibrary(preloaded_plugin_module_);
     preloaded_plugin_module_ = NULL;
@@ -83,21 +77,25 @@ void PluginThread::CleanUp() {
   NPAPI::PluginLib::UnloadAllPlugins();
   ChromePluginLib::UnloadAllPlugins();
   notification_service_.reset();
-  resource_dispatcher_ = NULL;
   CoUninitialize();
 
   if (webkit_glue::ShouldForcefullyTerminatePluginProcess())
     TerminateProcess(GetCurrentProcess(), 0);
+
+  // Call this last because it deletes the ResourceDispatcher, which is used
+  // in some of the above cleanup.
+  // See http://code.google.com/p/chromium/issues/detail?id=8980
+  ChildThread::CleanUp();
 }
 
-void PluginThread::OnCreateChannel(int process_id, HANDLE renderer) {
+void PluginThread::OnCreateChannel() {
   std::wstring channel_name;
   scoped_refptr<PluginChannel> channel =
-      PluginChannel::GetPluginChannel(process_id, renderer, owner_loop());
+      PluginChannel::GetPluginChannel(owner_loop());
   if (channel.get())
     channel_name = channel->channel_name();
 
-  Send(new PluginProcessHostMsg_ChannelCreated(process_id, channel_name));
+  Send(new PluginProcessHostMsg_ChannelCreated(channel_name));
 }
 
 void PluginThread::OnShutdownResponse(bool ok_to_shutdown) {

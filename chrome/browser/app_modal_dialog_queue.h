@@ -7,7 +7,7 @@
 
 #include <queue>
 
-#include "chrome/views/app_modal_dialog_delegate.h"
+#include "chrome/views/window/app_modal_dialog_delegate.h"
 
 // Keeps a queue of AppModalDialogDelegates, making sure only one app modal
 // dialog is shown at a time.
@@ -64,4 +64,3 @@ class AppModalDialogQueue {
 };
 
 #endif // CHROME_BROWSER_APP_MODAL_DIALOG_QUEUE_H__
-

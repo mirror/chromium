@@ -19,6 +19,7 @@
 
 #include "base/basictypes.h"
 #include "base/hash_tables.h"
+#include "base/scoped_ptr.h"
 #include "base/task.h"
 #include "net/http/http_transaction_factory.h"
 
@@ -197,4 +198,3 @@ class HttpCache : public HttpTransactionFactory {
 }  // namespace net
 
 #endif  // NET_HTTP_HTTP_CACHE_H_
-

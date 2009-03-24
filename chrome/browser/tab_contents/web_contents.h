@@ -10,7 +10,6 @@
 #include <vector>
 
 #include "base/basictypes.h"
-#include "base/hash_tables.h"
 #include "chrome/browser/cancelable_request.h"
 #include "chrome/browser/download/save_package.h"
 #include "chrome/browser/fav_icon_helper.h"
@@ -18,6 +17,7 @@
 #include "chrome/browser/renderer_host/render_view_host_delegate.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/render_view_host_manager.h"
+#include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/common/gears_api.h"
 #include "net/base/load_states.h"
 #include "webkit/glue/password_form.h"
@@ -28,12 +28,14 @@
 #include "chrome/common/temp_scaffolding_stubs.h"
 #elif defined(OS_WIN)
 #include "chrome/browser/printing/print_view_manager.h"
+#endif
+#if defined(OS_LINUX) || defined(OS_WIN)
 #include "chrome/browser/shell_dialogs.h"
-#include "chrome/browser/tab_contents/tab_contents.h"
 #endif
 
 class AutofillForm;
 class AutofillManager;
+class DOMUI;
 class InterstitialPageDelegate;
 class LoadNotificationDetails;
 class PasswordManager;
@@ -116,11 +118,21 @@ class WebContents : public TabContents,
     encoding_ = encoding;
   }
 
+  // Window stuff --------------------------------------------------------------
+
+  // Returns true if the location bar should be focused by default rather than
+  // the page contents. The view will call this function when the tab is
+  // to see what it should do.
+  bool FocusLocationBarByDefault();
+
   // TabContents (public overrides) --------------------------------------------
 
   virtual void Destroy();
   virtual WebContents* AsWebContents() { return this; }
+  const string16& GetTitle() const;
   virtual SiteInstance* GetSiteInstance() const;
+  virtual bool ShouldDisplayURL();
+  virtual bool ShouldDisplayFavIcon();
   virtual std::wstring GetStatusText() const;
   virtual bool NavigateToPendingEntry(bool reload);
   virtual void Stop();
@@ -132,6 +144,7 @@ class WebContents : public TabContents,
   virtual void WasHidden();
   virtual void ShowContents();
   virtual void HideContents();
+  virtual bool IsBookmarkBarAlwaysVisible();
   virtual void SetDownloadShelfVisible(bool visible);
   virtual void PopupNotificationVisibilityChanged(bool visible);
 
@@ -182,7 +195,7 @@ class WebContents : public TabContents,
   // function does not block while a search is in progress. The controller will
   // receive the results through the notification mechanism. See Observe(...)
   // for details.
-  void StartFinding(const std::wstring& find_text, bool forward_direction);
+  void StartFinding(const string16& find_text, bool forward_direction);
 
   // Stops the current Find operation. If |clear_selection| is true, it will
   // also clear the selection on the focused frame.
@@ -203,7 +216,7 @@ class WebContents : public TabContents,
 
   // Accessor for find_text_. Used to determine if this WebContents has any
   // active searches.
-  std::wstring find_text() const { return find_text_; }
+  string16 find_text() const { return find_text_; }
 
   // Accessor for find_result_.
   const FindNotificationDetails& find_result() const { return find_result_; }
@@ -299,6 +312,8 @@ class WebContents : public TabContents,
   virtual void UpdateTitle(RenderViewHost* render_view_host,
                            int32 page_id,
                            const std::wstring& title);
+  virtual void UpdateFeedList(RenderViewHost* render_view_host,
+                              const ViewHostMsg_UpdateFeedList_Params& params);
   virtual void UpdateEncoding(RenderViewHost* render_view_host,
                               const std::wstring& encoding);
   virtual void UpdateTargetURL(int32 page_id, const GURL& url);
@@ -315,8 +330,11 @@ class WebContents : public TabContents,
   virtual void DidRedirectProvisionalLoad(int32 page_id,
                                           const GURL& source_url,
                                           const GURL& target_url);
-  virtual void DidLoadResourceFromMemoryCache(const GURL& url,
-                                              const std::string& security_info);
+  virtual void DidLoadResourceFromMemoryCache(
+      const GURL& url,
+      const std::string& frame_origin,
+      const std::string& main_frame_origin,
+      const std::string& security_info);
   virtual void DidFailProvisionalLoadWithError(
       RenderViewHost* render_view_host,
       bool is_main_frame,
@@ -334,7 +352,11 @@ class WebContents : public TabContents,
                               WindowOpenDisposition disposition);
   virtual void DomOperationResponse(const std::string& json_string,
                                     int automation_id);
-  virtual void ProcessExternalHostMessage(const std::string& message);
+  virtual void ProcessDOMUIMessage(const std::string& message,
+                                   const std::string& content);
+  virtual void ProcessExternalHostMessage(const std::string& message,
+                                          const std::string& origin,
+                                          const std::string& target);
   virtual void GoToEntryAtOffset(int offset);
   virtual void GetHistoryListCount(int* back_list_count,
                                    int* forward_list_count);
@@ -344,10 +366,12 @@ class WebContents : public TabContents,
                               const std::wstring& filter);
   virtual void RunJavaScriptMessage(const std::wstring& message,
                                     const std::wstring& default_prompt,
+                                    const GURL& frame_url,
                                     const int flags,
                                     IPC::Message* reply_msg,
                                     bool* did_suppress_message);
-  virtual void RunBeforeUnloadConfirm(const std::wstring& message,
+  virtual void RunBeforeUnloadConfirm(const GURL& frame_url,
+                                      const std::wstring& message,
                                       IPC::Message* reply_msg);
   virtual void ShowModalHTMLDialog(const GURL& url, int width, int height,
                                    const std::string& json_arguments,
@@ -356,6 +380,8 @@ class WebContents : public TabContents,
   virtual void AutofillFormSubmitted(const AutofillForm& form);
   virtual void GetAutofillSuggestions(const std::wstring& field_name,
       const std::wstring& user_text, int64 node_id, int request_id);
+  virtual void RemoveAutofillEntry(const std::wstring& field_name,
+                                   const std::wstring& value);
   virtual void PageHasOSDD(RenderViewHost* render_view_host,
                            int32 page_id, const GURL& url, bool autodetected);
   virtual void InspectElementReply(int num_resources);
@@ -365,6 +391,7 @@ class WebContents : public TabContents,
   virtual WebPreferences GetWebkitPrefs();
   virtual void OnMissingPluginStatus(int status);
   virtual void OnCrashedPlugin(const FilePath& plugin_path);
+  virtual void OnCrashedWorker();
   virtual void OnJSOutOfMemory();
   virtual void ShouldClosePage(bool proceed) {
     render_manager_.ShouldClosePage(proceed);
@@ -608,6 +635,11 @@ class WebContents : public TabContents,
   // PluginInstaller, lazily created.
   scoped_ptr<PluginInstaller> plugin_installer_;
 
+  // When the current page is a DOM UI page, this will point to the specific
+  // DOMUI object handling it. When we don't have a DOM UI page, this will be
+  // null.
+  scoped_ptr<DOMUI> dom_ui_;
+
   // Handles downloading favicons.
   FavIconHelper fav_icon_helper_;
 
@@ -656,7 +688,7 @@ class WebContents : public TabContents,
 
   // The last string we searched for. This is used to figure out if this is a
   // Find or a FindNext operation (FindNext should not increase the request id).
-  std::wstring find_text_;
+  string16 find_text_;
 
   // The last find result. This object contains details about the number of
   // matches, the find selection rectangle, etc. The UI can access this

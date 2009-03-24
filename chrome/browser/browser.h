@@ -10,7 +10,7 @@
 #include <set>
 #include <vector>
 
-#if defined(OS_MACOSX) || defined(OS_LINUX)
+#if defined(OS_MACOSX)
 // Remove when we've finished porting the supporting classes.
 #include "chrome/common/temp_scaffolding_stubs.h"
 #endif
@@ -19,18 +19,19 @@
 #include "chrome/browser/browser_window.h"
 #include "chrome/browser/command_updater.h"
 #include "chrome/browser/sessions/session_id.h"
+#include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
 #include "chrome/browser/tab_contents/tab_contents_delegate.h"
 #include "chrome/browser/toolbar_model.h"
 #include "chrome/common/notification_observer.h"
 #include "chrome/common/pref_member.h"
 #include "base/gfx/rect.h"
+#include "base/scoped_ptr.h"
 #include "base/task.h"
 #include "skia/include/SkBitmap.h"
 
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_LINUX)
 #include "chrome/browser/shell_dialogs.h"
-#include "chrome/browser/tab_contents/tab_contents.h"
 #endif
 
 class BrowserIdleTimer;
@@ -68,6 +69,19 @@ class Browser : public TabStripModelDelegate,
     FEATURE_DOWNLOADSHELF = 64
   };
 
+  // Maximized state on creation.
+  enum MaximizedState {
+    // The maximized state is set to the default, which varies depending upon
+    // what the user has done.
+    MAXIMIZED_STATE_DEFAULT,
+
+    // Maximized state is explicitly maximized.
+    MAXIMIZED_STATE_MAXIMIZED,
+
+    // Maximized state is explicitly not maximized (normal).
+    MAXIMIZED_STATE_UNMAXIMIZED
+  };
+
   // Constructors, Creation, Showing //////////////////////////////////////////
 
   // Creates a new browser of the given |type| and for the given |profile|. The
@@ -92,8 +106,8 @@ class Browser : public TabStripModelDelegate,
   void set_override_bounds(const gfx::Rect& bounds) {
     override_bounds_ = bounds;
   }
-  void set_override_maximized(bool maximized) {
-    override_maximized_ = maximized;
+  void set_maximized_state(MaximizedState state) {
+    maximized_state_ = state;
   }
 
   // Creates the Browser Window. Prefer to use the static helpers above where
@@ -264,9 +278,6 @@ class Browser : public TabStripModelDelegate,
   void SavePage();
   void ViewSource();
 
-  // Show various bits of UI.
-  void ShowDownloadsTab();
-
   // Returns true if the Browser supports the specified feature.
   bool SupportsWindowFeature(WindowFeature feature) const;
 
@@ -275,14 +286,17 @@ class Browser : public TabStripModelDelegate,
   // Page-related commands.
   void ClosePopups();
   void Print();
+#endif
   void ToggleEncodingAutoDetect();
   void OverrideEncoding(int encoding_id);
 
+#if defined(OS_WIN)
   // Clipboard commands
   void Cut();
   void Copy();
   void CopyCurrentPageURL();
   void Paste();
+#endif
 
   // Find-in-page
   void Find();
@@ -294,13 +308,18 @@ class Browser : public TabStripModelDelegate,
   void ZoomReset();
   void ZoomOut();
 
+#if defined(OS_WIN)
   // Focus various bits of UI
   void FocusToolbar();
+#endif
   void FocusLocationBar();
   void FocusSearch();
 
   // Show various bits of UI
+#if defined(OS_WIN) || defined(OS_LINUX)
   void OpenFile();
+#endif
+#if defined(OS_WIN)
   void OpenCreateShortcutsDialog();
   void OpenDebuggerWindow();
   void OpenJavaScriptConsole();
@@ -308,17 +327,26 @@ class Browser : public TabStripModelDelegate,
   void OpenSelectProfileDialog();
   void OpenNewProfileDialog();
   void OpenBugReportDialog();
+#endif  // defined(OS_WIN)
+
+#if defined(OS_WIN) || defined(OS_MACOSX)
   void ToggleBookmarkBar();
-  void ShowHistoryTab();
+#endif
+
+#if defined(OS_WIN)
   void OpenBookmarkManager();
+#endif
+  void ShowHistoryTab();
+  void ShowDownloadsTab();
+#if defined(OS_WIN)
   void OpenClearBrowsingDataDialog();
   void OpenImportSettingsDialog();
   void OpenOptionsDialog();
   void OpenKeywordEditor();
   void OpenPasswordManager();
   void OpenAboutChromeDialog();
-  void OpenHelpTab();
 #endif
+  void OpenHelpTab();
 
   /////////////////////////////////////////////////////////////////////////////
 
@@ -395,9 +423,9 @@ class Browser : public TabStripModelDelegate,
   virtual void ToolbarSizeChanged(TabContents* source, bool is_animating);
   virtual void URLStarredChanged(TabContents* source, bool starred);
 
-#if defined(OS_WIN)
-  virtual void ContentsMouseEvent(TabContents* source, uint32 message);
-#endif
+  // A mouse event occurred; motion==true is mouse movement, motion==false
+  // is the mouse leaving the view.
+  virtual void ContentsMouseEvent(TabContents* source, bool motion);
   virtual void UpdateTargetURL(TabContents* source, const GURL& url);
 
   virtual void ContentsZoomChange(bool zoom_in);
@@ -529,12 +557,10 @@ class Browser : public TabStripModelDelegate,
   // has not been set.
   GURL GetHomePage();
 
-#if defined(OS_WIN)
   // Shows the Find Bar, optionally selecting the next entry that matches the
   // existing search string for that Tab. |forward_direction| controls the
   // search direction.
   void FindInPage(bool find_next, bool forward_direction);
-#endif
 
   // Closes the frame.
   // TODO(beng): figure out if we need this now that the frame itself closes
@@ -636,7 +662,7 @@ class Browser : public TabStripModelDelegate,
   // obtained from the last window of the same type, or obtained from the
   // shell shortcut's startup info.
   gfx::Rect override_bounds_;
-  bool override_maximized_;
+  MaximizedState maximized_state_;
 
   // The following factory is used to close the frame at a later time.
   ScopedRunnableMethodFactory<Browser> method_factory_;

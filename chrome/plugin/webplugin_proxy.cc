@@ -50,7 +50,9 @@ WebPluginProxy::WebPluginProxy(
       SYNCHRONIZE,
       FALSE,
       0);
-  DCHECK(result) << "Couldn't duplicate the modal dialog handle for the plugin.";
+  DCHECK(result) <<
+      "Couldn't duplicate the modal dialog handle for the plugin." \
+      "handle: " << channel->renderer_handle() << ". err: " << GetLastError();
   modal_dialog_event_.reset(new base::WaitableEvent(event));
 }
 

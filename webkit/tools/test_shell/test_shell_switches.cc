@@ -67,5 +67,11 @@ extern const wchar_t kCheckLayoutTestSystemDeps[] =
 // Enable the media player by having this switch.
 extern const wchar_t kEnableVideo[] = L"enable-video";
 
-}  // namespace test_shell
+// If set, we are running under GDB so allow a certain class of errors
+// to happen even if in layout test mode.
+extern const wchar_t kGDB[] = L"gdb";
 
+// Make functions of the Profiler class available in javascript
+extern const wchar_t kProfiler[] = L"profiler";
+
+}  // namespace test_shell

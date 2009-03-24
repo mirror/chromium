@@ -27,14 +27,14 @@
 #include <wtf/ASCIICType.h>
 
 #include "v8_proxy.h"
-#include "v8_events.h"
 #include "v8_binding.h"
-#include "v8_npobject.h"
+#include "V8NPObject.h"
 #include "v8_custom.h"
 
 #include "V8Attr.h"
 #include "V8CanvasGradient.h"
 #include "V8CanvasPattern.h"
+#include "V8CustomEventListener.h"
 #include "V8Document.h"
 #include "V8DOMWindow.h"
 #include "V8HTMLCanvasElement.h"
@@ -615,7 +615,7 @@ CALLBACK_FUNC_DECL(CanvasRenderingContext2DStrokeText) {
 
 CALLBACK_FUNC_DECL(CanvasRenderingContext2DPutImageData) {
   INC_STATS("DOM.CanvasRenderingContext2D.putImageData()");
-  
+
   // Two froms:
   // * putImageData(ImageData, x, y)
   // * putImageData(ImageData, x, y, dirtyX, dirtyY, dirtyWidth, dirtyHeight)
@@ -853,7 +853,7 @@ v8::Handle<v8::Value> V8Custom::WindowSetTimeoutImpl(const v8::Arguments& args,
   if (!V8Proxy::CanAccessFrame(imp->frame(), true))
     return v8::Undefined();
 
-  ScriptExecutionContext* script_context = 
+  ScriptExecutionContext* script_context =
     static_cast<ScriptExecutionContext*>(imp->frame()->document());
 
   v8::Handle<v8::Value> function = args[0];
@@ -895,82 +895,6 @@ v8::Handle<v8::Value> V8Custom::WindowSetTimeoutImpl(const v8::Arguments& args,
   }
   return v8::Integer::New(id);
 }
-
-
-// HTMLDocument ----------------------------------------------------------------
-
-// Concatenates "args" to a string. If args is empty, returns empty string.
-// Firefox/Safari/IE support non-standard arguments to document.write, ex:
-//   document.write("a", "b", "c") --> document.write("abc")
-//   document.write() --> document.write("")
-static String WriteHelper_GetString(const v8::Arguments& args) {
-  String str = "";
-  for (int i = 0; i < args.Length(); ++i) {
-    str += ToWebCoreString(args[i]);
-  }
-  return str;
-}
-
-CALLBACK_FUNC_DECL(HTMLDocumentWrite) {
-  INC_STATS("DOM.HTMLDocument.write()");
-  HTMLDocument* imp = V8Proxy::DOMWrapperToNode<HTMLDocument>(args.Holder());
-  Frame* frame = V8Proxy::retrieveActiveFrame();
-  ASSERT(frame);
-  imp->write(WriteHelper_GetString(args), frame->document());
-  return v8::Undefined();
-}
-
-CALLBACK_FUNC_DECL(HTMLDocumentWriteln) {
-  INC_STATS("DOM.HTMLDocument.writeln()");
-  HTMLDocument* imp = V8Proxy::DOMWrapperToNode<HTMLDocument>(args.Holder());
-  Frame* frame = V8Proxy::retrieveActiveFrame();
-  ASSERT(frame);
-  imp->writeln(WriteHelper_GetString(args), frame->document());
-  return v8::Undefined();
-}
-
-CALLBACK_FUNC_DECL(HTMLDocumentOpen) {
-  INC_STATS("DOM.HTMLDocument.open()");
-  HTMLDocument* imp = V8Proxy::DOMWrapperToNode<HTMLDocument>(args.Holder());
-
-  if (args.Length() > 2) {
-    if (Frame* frame = imp->frame()) {
-      // Fetch the global object for the frame.
-      v8::Local<v8::Context> context = V8Proxy::GetContext(frame);
-      // Bail out if we cannot get the context.
-      if (context.IsEmpty()) return v8::Undefined();
-      v8::Local<v8::Object> global = context->Global();
-      // Get the open property of the global object.
-      v8::Local<v8::Value> function = global->Get(v8::String::New("open"));
-      // If the open property is not a function throw a type error.
-      if (!function->IsFunction()) {
-        V8Proxy::ThrowError(V8Proxy::TYPE_ERROR, "open is not a function");
-        return v8::Undefined();
-      }
-      // Wrap up the arguments and call the function.
-      v8::Local<v8::Value>* params = new v8::Local<v8::Value>[args.Length()];
-      for (int i = 0; i < args.Length(); i++) {
-        params[i] = args[i];
-      }
-
-      V8Proxy* proxy = V8Proxy::retrieve(frame);
-      ASSERT(proxy);
-
-      v8::Local<v8::Value> result =
-          proxy->CallFunction(v8::Local<v8::Function>::Cast(function),
-                              global, args.Length(), params);
-      delete[] params;
-      return result;
-    }
-  }
-
-  Frame* frame = V8Proxy::retrieveActiveFrame();
-  imp->open(frame->document());
-  // Return the document.
-  return args.Holder();
-}
-
-
 
 
 // DOMWindow -------------------------------------------------------------------
@@ -1064,7 +988,7 @@ CALLBACK_FUNC_DECL(DOMWindowNOP)
 
 CALLBACK_FUNC_DECL(HTMLFormElementSubmit) {
   INC_STATS("DOM.HTMLFormElement.submit()");
-  
+
   HTMLFormElement* form =
     V8Proxy::DOMWrapperToNative<HTMLFormElement>(args.Holder());
 
@@ -1086,9 +1010,9 @@ static String EventNameFromAttributeName(const String& name) {
         break;
       case 'd':
         ASSERT(event_type.length() > 7);
-        if (event_type[7] == 'a') 
+        if (event_type[7] == 'a')
           event_type = "webkitAnimationEnd";
-        else 
+        else
           event_type = "webkitTransitionEnd";
         break;
     }
@@ -1115,7 +1039,7 @@ ACCESSOR_SETTER(DOMWindowEventHandler) {
 
   String key = ToWebCoreString(name);
   String event_type = EventNameFromAttributeName(key);
- 
+
   if (value->IsNull()) {
     // Clear the event listener
     doc->removeWindowInlineEventListenerForType(event_type);

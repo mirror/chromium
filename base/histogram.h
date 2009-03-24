@@ -37,7 +37,6 @@
 
 #include "base/lock.h"
 #include "base/pickle.h"
-#include "base/scoped_ptr.h"
 #include "base/stats_counters.h"
 
 //------------------------------------------------------------------------------
@@ -58,6 +57,11 @@
 #define HISTOGRAM_COUNTS_100(name, sample) do { \
     static Histogram counter((name), 1, 100, 50); \
     counter.Add(sample); \
+  } while (0)
+
+#define HISTOGRAM_PERCENTAGE(name, under_one_hundred) do { \
+    static LinearHistogram counter((name), 1, 100, 101); \
+    counter.Add(under_one_hundred); \
   } while (0)
 
 // For folks that need real specific times, use this, but you'll only get
@@ -98,6 +102,8 @@
 #define DHISTOGRAM_COUNTS(name, sample) HISTOGRAM_COUNTS(name, sample)
 #define DASSET_HISTOGRAM_COUNTS(name, sample) ASSET_HISTOGRAM_COUNTS(name, \
                                                                      sample)
+#define DHISTOGRAM_PERCENTAGE(name, under_one_hundred) HISTOGRAM_PERCENTAGE(\
+    name, under_one_hundred)
 #define DHISTOGRAM_CLIPPED_TIMES(name, sample, min, max, bucket_count) \
     HISTOGRAM_CLIPPED_TIMES(name, sample, min, max, bucket_count)
 
@@ -106,6 +112,7 @@
 #define DHISTOGRAM_TIMES(name, sample) do {} while (0)
 #define DHISTOGRAM_COUNTS(name, sample) do {} while (0)
 #define DASSET_HISTOGRAM_COUNTS(name, sample) do {} while (0)
+#define DHISTOGRAM_PERCENTAGE(name, under_one_hundred) do {} while (0)
 #define DHISTOGRAM_CLIPPED_TIMES(name, sample, min, max, bucket_count) \
     do {} while (0)
 
@@ -174,6 +181,12 @@ static const int kRendererHistogramFlag = 1 << 4;
     static Histogram counter((name), 1, 1000, 50); \
     counter.SetFlags(kUmaTargetedHistogramFlag); \
     counter.Add(sample); \
+  } while (0)
+
+#define UMA_HISTOGRAM_PERCENTAGE(name, under_one_hundred) do { \
+    static LinearHistogram counter((name), 1, 100, 101); \
+    counter.SetFlags(kUmaTargetedHistogramFlag); \
+    counter.Add(under_one_hundred); \
   } while (0)
 
 //------------------------------------------------------------------------------
@@ -462,10 +475,10 @@ class ThreadSafeHistogram : public Histogram {
   // Provide locked versions to get precise counts.
   virtual void Accumulate(Sample value, Count count, size_t index);
 
-  virtual void SnapshotSample(SampleSet* sample);
+  virtual void SnapshotSample(SampleSet* sample) const;
 
  private:
-  Lock lock_;
+  mutable Lock lock_;
 
   DISALLOW_COPY_AND_ASSIGN(ThreadSafeHistogram);
 };

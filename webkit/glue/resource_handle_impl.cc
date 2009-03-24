@@ -28,9 +28,7 @@
 
 MSVC_PUSH_WARNING_LEVEL(0);
 #include "CString.h"
-#include "Console.h"
 #include "DocLoader.h"
-#include "DOMWindow.h"
 #include "FormData.h"
 #include "FrameLoader.h"
 #include "Page.h"
@@ -52,7 +50,6 @@ MSVC_POP_WARNING();
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/multipart_response_delegate.h"
 #include "webkit/glue/resource_loader_bridge.h"
-#include "webkit/glue/webframe_impl.h"
 #include "net/base/data_url.h"
 #include "net/base/net_errors.h"
 #include "net/base/net_util.h"
@@ -222,12 +219,14 @@ class ResourceHandleInternal : public ResourceLoaderBridge::Peer {
   void SetDefersLoading(bool value);
 
   // ResourceLoaderBridge::Peer implementation
+  virtual void OnUploadProgress(uint64 position, uint64 size);
   virtual void OnReceivedRedirect(const GURL& new_url);
   virtual void OnReceivedResponse(
       const ResourceLoaderBridge::ResponseInfo& info,
       bool content_filtered);
   virtual void OnReceivedData(const char* data, int len);
-  virtual void OnCompletedRequest(const URLRequestStatus& status);
+  virtual void OnCompletedRequest(const URLRequestStatus& status,
+                                  const std::string& security_info);
   virtual std::string GetURLForDebugging();
 
   // Handles a data: url internally instead of calling the bridge.
@@ -299,7 +298,7 @@ void ResourceHandleInternal::HandleDataUrl() {
       OnReceivedData(data.c_str(), data.size());
   }
 
-  OnCompletedRequest(status);
+  OnCompletedRequest(status, info.security_info);
 
   // We are done using the object. ResourceHandle and ResourceHandleInternal
   // might be destroyed now.
@@ -309,10 +308,6 @@ void ResourceHandleInternal::HandleDataUrl() {
 bool ResourceHandleInternal::Start(
     ResourceLoaderBridge::SyncLoadResponse* sync_load_response) {
   DCHECK(!bridge_.get());
-
-  // The WebFrame is the Frame's FrameWinClient
-  WebFrameImpl* webframe =
-      request_.frame() ? WebFrameImpl::FromFrame(request_.frame()) : NULL;
 
   CString method = request_.httpMethod().latin1();
   GURL referrer(webkit_glue::StringToStdString(request_.httpReferrer()));
@@ -331,17 +326,6 @@ bool ResourceHandleInternal::Start(
     client_ = feed_client_proxy_.get();
   }
 
-  // Inherit the policy URL from the request's frame. However, if the request
-  // is for a main frame, the current document's policyBaseURL is the old
-  // document, so we leave policyURL empty to indicate that the request is a
-  // first-party request.
-  GURL policy_url;
-  if (request_.targetType() != ResourceRequest::TargetIsMainFrame &&
-      request_.frame() && request_.frame()->document()) {
-    policy_url = GURL(webkit_glue::StringToStdString(
-        request_.frame()->document()->policyBaseURL()));
-  }
-
   switch (request_.cachePolicy()) {
     case ReloadIgnoringCacheData:
       // Required by LayoutTests/http/tests/misc/refresh-headers.php
@@ -356,6 +340,9 @@ bool ResourceHandleInternal::Start(
     case UseProtocolCachePolicy:
       break;
   }
+
+  if (request_.reportUploadProgress())
+    load_flags_ |= net::LOAD_ENABLE_UPLOAD_PROGRESS;
 
   // Translate the table of request headers to a formatted string blob
   String headerBuf;
@@ -389,31 +376,16 @@ bool ResourceHandleInternal::Start(
         (*it).second == "max-age=0")
       continue;
 
-    // WinInet dies if blank headers are set.  TODO(darin): Is this still an
-    // issue now that we are using WinHTTP?
-    if ((*it).first.isEmpty()) {
-      webframe->frame()->domWindow()->console()->addMessage(
-        JSMessageSource,
-        ErrorMessageLevel,
-        "Refused to set blank header",
-        1,
-        String());
-      continue;
-    }
     if (!headerBuf.isEmpty())
       headerBuf.append(crlf);
     headerBuf.append((*it).first + sep + (*it).second);
   }
 
   // TODO(jcampan): in the non out-of-process plugin case the request does not
-  // have a origin_pid. Find a better place to set this.
-  int origin_pid = request_.originPid();
-  if (origin_pid == 0)
-    origin_pid = base::GetCurrentProcId();
-
-  bool mixed_content =
-      webkit_glue::KURLToGURL(request_.mainDocumentURL()).SchemeIsSecure() &&
-      !url.SchemeIsSecure();
+  // have a requestor_pid. Find a better place to set this.
+  int requestor_pid = request_.requestorProcessID();
+  if (requestor_pid == 0)
+    requestor_pid = base::GetCurrentProcId();
 
   if (url.SchemeIs("data")) {
     if (sync_load_response) {
@@ -434,21 +406,29 @@ bool ResourceHandleInternal::Start(
     return true;
   }
 
+  // TODO(abarth): These are wrong!  I need to figure out how to get the right
+  //               strings here.  See: http://crbug.com/8706
+  std::string frame_origin =
+      webkit_glue::StringToStdString(request_.mainDocumentURL().string());
+  std::string main_frame_origin =
+      webkit_glue::StringToStdString(request_.mainDocumentURL().string());
+
   // TODO(darin): is latin1 really correct here?  It is if the strings are
   // already ASCII (i.e., if they are already escaped properly).
   // TODO(brettw) this should take parameter encoding into account when
   // creating the GURLs.
   bridge_.reset(ResourceLoaderBridge::Create(
-      webframe,
       webkit_glue::CStringToStdString(method),
       url,
-      policy_url,
+      webkit_glue::KURLToGURL(request_.policyURL()),
       referrer,
+      frame_origin,
+      main_frame_origin,
       webkit_glue::CStringToStdString(headerBuf.latin1()),
       load_flags_,
-      origin_pid,
+      requestor_pid,
       FromTargetType(request_.targetType()),
-      mixed_content));
+      request_.requestorID()));
   if (!bridge_.get())
     return false;
 
@@ -509,6 +489,11 @@ void ResourceHandleInternal::SetDefersLoading(bool value) {
 }
 
 // ResourceLoaderBridge::Peer impl --------------------------------------------
+
+void ResourceHandleInternal::OnUploadProgress(uint64 position, uint64 size) {
+  if (client_)
+    client_->didSendData(job_, position, size);
+}
 
 void ResourceHandleInternal::OnReceivedRedirect(const GURL& new_url) {
   DCHECK(pending_);
@@ -604,7 +589,8 @@ void ResourceHandleInternal::OnReceivedData(const char* data, int data_len) {
 }
 
 void ResourceHandleInternal::OnCompletedRequest(
-    const URLRequestStatus& status) {
+    const URLRequestStatus& status,
+    const std::string& security_info) {
   if (multipart_delegate_.get()) {
     multipart_delegate_->OnCompletedRequest();
     multipart_delegate_.reset(NULL);

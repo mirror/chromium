@@ -5,7 +5,6 @@
 #include <windows.h>
 
 #include "base/file_util.h"
-#include "base/logging.h"
 #include "base/registry.h"
 #include "base/scoped_ptr.h"
 #include "base/string_util.h"
@@ -174,4 +173,3 @@ TEST_F(CreateRegKeyWorkItemTest, RollbackWithSetValue) {
   // Rollback should not remove the key.
   EXPECT_TRUE(key.Open(HKEY_CURRENT_USER, key_to_create.c_str(), KEY_READ));
 }
-

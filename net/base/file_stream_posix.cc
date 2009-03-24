@@ -106,7 +106,7 @@ int64 FileStream::Seek(Whence whence, int64 offset) {
 
   // If we're in async, make sure we don't have a request in flight.
   DCHECK(!async_context_.get() || !async_context_->callback());
-  
+
   off_t res = lseek(file_, static_cast<off_t>(offset),
                     static_cast<int>(whence));
   if (res == static_cast<off_t>(-1))
@@ -199,6 +199,23 @@ int FileStream::Write(
     len -= res;
   }
   return total_bytes_written;
+}
+
+int64 FileStream::Truncate(int64 bytes) {
+  if (!IsOpen())
+    return ERR_UNEXPECTED;
+
+  // We better be open for reading.
+  DCHECK(open_flags_ & base::PLATFORM_FILE_WRITE);
+
+  // Seek to the position to truncate from.
+  int64 seek_position = Seek(FROM_BEGIN, bytes);
+  if (seek_position != bytes)
+    return ERR_UNEXPECTED;
+
+  // And truncate the file.
+  int result = ftruncate(file_, bytes);
+  return result == 0 ? seek_position : MapErrorCode(errno);
 }
 
 }  // namespace net

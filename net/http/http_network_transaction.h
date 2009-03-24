@@ -8,6 +8,7 @@
 #include <string>
 
 #include "base/ref_counted.h"
+#include "base/time.h"
 #include "net/base/address_list.h"
 #include "net/base/client_socket_handle.h"
 #include "net/base/host_resolver.h"
@@ -17,6 +18,7 @@
 #include "net/http/http_response_info.h"
 #include "net/http/http_transaction.h"
 #include "net/proxy/proxy_service.h"
+#include "testing/gtest/include/gtest/gtest_prod.h"
 
 namespace net {
 
@@ -45,6 +47,8 @@ class HttpNetworkTransaction : public HttpTransaction {
   virtual uint64 GetUploadProgress() const;
 
  private:
+  FRIEND_TEST(HttpNetworkTransactionTest, ResetStateForRestart);
+
   void BuildRequestHeaders();
   void BuildTunnelRequest();
   void DoCallback(int result);
@@ -81,6 +85,10 @@ class HttpNetworkTransaction : public HttpTransaction {
   // Record histogram of latency (first byte sent till last byte received) as
   // well as effective bandwidth used.
   void LogTransactionMetrics() const;
+
+  // Writes a log message to help debugging in the field when we block a proxy
+  // response to a CONNECT request.
+  void LogBlockedTunnelResponse(int response_code) const;
 
   // Called when header_buf_ contains the complete response headers.
   int DidReadResponseHeaders();
@@ -263,16 +271,19 @@ class HttpNetworkTransaction : public HttpTransaction {
   // Indicates the content length remaining to read.  If this value is less
   // than zero (and chunked_decoder_ is null), then we read until the server
   // closes the connection.
-  int64 content_length_;
+  int64 response_body_length_;
 
   // Keeps track of the number of response body bytes read so far.
-  int64 content_read_;
+  int64 response_body_read_;
 
   scoped_ptr<HttpChunkedDecoder> chunked_decoder_;
 
   // User buffer and length passed to the Read method.
   scoped_refptr<IOBuffer> read_buf_;
   int read_buf_len_;
+
+  // The time the Start method was called.
+  base::Time start_time_;
 
   enum State {
     STATE_RESOLVE_PROXY,
@@ -303,4 +314,3 @@ class HttpNetworkTransaction : public HttpTransaction {
 }  // namespace net
 
 #endif  // NET_HTTP_HTTP_NETWORK_TRANSACTION_H_
-

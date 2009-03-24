@@ -5,8 +5,8 @@
 #include "chrome/browser/views/html_dialog_view.h"
 
 #include "chrome/browser/browser.h"
-#include "chrome/views/root_view.h"
-#include "chrome/views/window.h"
+#include "chrome/views/widget/root_view.h"
+#include "chrome/views/window/window.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 // HtmlDialogView, public:
@@ -156,7 +156,8 @@ bool HtmlDialogView::IsPopup(TabContents* source) {
   return true;
 }
 
-void HtmlDialogView::ToolbarSizeChanged(TabContents* source, bool is_animating) {
+void HtmlDialogView::ToolbarSizeChanged(TabContents* source,
+                                        bool is_animating) {
   Layout();
 }
 
@@ -182,4 +183,3 @@ void HtmlDialogView::InitDialog() {
   host->Init(this);
   host->set_delegate(this);
 }
-

@@ -68,7 +68,7 @@ bool CopyTreeWorkItem::Do() {
              (overwrite_option_ == WorkItem::IF_NOT_PRESENT)) {
     // handle overwrite_option_ = IF_NOT_PRESENT case.
     return true;
-  } 
+  }
 
   // In all cases that reach here, move dest to a backup path.
   if (dest_exist) {
@@ -145,4 +145,3 @@ bool CopyTreeWorkItem::GetBackupPath() {
 
   return true;
 }
-

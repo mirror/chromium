@@ -9,11 +9,14 @@
 #include <vector>
 
 #include "base/ref_counted.h"
-#include "base/time.h"
 #include "googleurl/src/gurl.h"
 #include "net/base/load_states.h"
 #include "net/http/http_response_info.h"
 #include "net/url_request/url_request_status.h"
+
+namespace base {
+  class Time;
+}
 
 namespace net {
 
@@ -307,6 +310,13 @@ class URLRequest {
     return response_info_.ssl_info;
   }
 
+  // Returns the platform specific file handle for the standalone file that
+  // contains response data. base::kInvalidPlatformFileValue is returned if
+  // such file is not available.
+  base::PlatformFile response_data_file() {
+    return response_info_.response_data_file;
+  }
+
   // Returns the cookie values included in the response, if the request is one
   // that can have cookies.  Returns true if the request is a cookie-bearing
   // type, false otherwise.  This method may only be called once the
@@ -354,10 +364,15 @@ class URLRequest {
   // no effect once the response has completed.
   void Cancel();
 
-  // Similar to Cancel but sets the error to |os_error| (see net_error_list.h
-  // for values) instead of net::ERR_ABORTED.
-  // Used to attach a reason for canceling a request.
-  void CancelWithError(int os_error);
+  // Cancels the request and sets the error to |os_error| (see net_error_list.h
+  // for values).
+  void SimulateError(int os_error);
+
+  // Cancels the request and sets the error to |os_error| (see net_error_list.h
+  // for values) and attaches |ssl_info| as the SSLInfo for that request.  This
+  // is useful to attach a certificate and certificate error to a canceled
+  // request.
+  void SimulateSSLError(int os_error, const net::SSLInfo& ssl_info);
 
   // Read initiates an asynchronous read from the response, and must only
   // be called after the OnResponseStarted callback is received with a
@@ -434,6 +449,10 @@ class URLRequest {
   // away or the job being replaced. The job will not call us back when it has
   // been orphaned.
   void OrphanJob();
+
+  // Cancels the request and set the error and ssl info for this request to the
+  // passed values.
+  void DoCancel(int os_error, const net::SSLInfo& ssl_info);
 
   // Discard headers which have meaning in POST (Content-Length, Content-Type,
   // Origin).

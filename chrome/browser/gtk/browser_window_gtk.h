@@ -9,14 +9,18 @@
 
 #include "base/gfx/rect.h"
 #include "base/scoped_ptr.h"
+#include "base/task.h"
 #include "chrome/browser/browser_window.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
+#include "chrome/views/widget/widget_gtk.h"
 
 class BrowserToolbarGtk;
+class FindBarController;
 class LocationBar;
 class NineBox;
 class StatusBubbleGtk;
 class TabContentsContainerGtk;
+class TabStripGtk;
 
 // An implementation of BrowserWindow for GTK.
 // Cross-platform code will interact with this object when
@@ -29,14 +33,13 @@ class BrowserWindowGtk : public BrowserWindow,
   virtual ~BrowserWindowGtk();
 
   // Overridden from BrowserWindow
-  virtual void Init();
   virtual void Show();
   virtual void SetBounds(const gfx::Rect& bounds);
   virtual void Close();
   virtual void Activate();
   virtual bool IsActive() const;
   virtual void FlashFrame();
-  virtual void* GetNativeHandle();
+  virtual gfx::NativeWindow GetNativeHandle();
   virtual BrowserWindowTesting* GetBrowserWindowTesting();
   virtual StatusBubble* GetStatusBubble();
   virtual void SelectedTabToolbarSizeChanged(bool is_animating);
@@ -84,11 +87,16 @@ class BrowserWindowGtk : public BrowserWindow,
  protected:
   virtual void DestroyBrowser();
   GtkWindow* window_;
-  GtkWidget* vbox_;
+  GtkWidget* window_vbox_;
+  GtkWidget* content_vbox_;
 
   scoped_ptr<Browser> browser_;
 
  private:
+  // Connect accelerators that aren't connected to menu items (like ctrl-o,
+  // ctrl-l, etc.).
+  void ConnectAccelerators();
+
   // Change whether we're showing the custom blue frame.
   // Must be called once at startup.
   // Triggers relayout of the content.
@@ -99,6 +107,15 @@ class BrowserWindowGtk : public BrowserWindow,
   // It has a soft gray border when we have a custom frame.
   static gboolean OnContentAreaExpose(GtkWidget* widget, GdkEventExpose* e,
                                       BrowserWindowGtk* window);
+
+  static gboolean OnAccelerator(GtkAccelGroup* accel_group,
+                                GObject* acceleratable,
+                                guint keyval,
+                                GdkModifierType modifier,
+                                BrowserWindowGtk* browser_window);
+
+  // A small shim for browser_->ExecuteCommand.
+  void ExecuteBrowserCommand(int id);
 
   gfx::Rect bounds_;
   GdkWindowState state_;
@@ -119,6 +136,21 @@ class BrowserWindowGtk : public BrowserWindow,
   // (along with associated infobars, shelves, and other things that are part
   // of the content area).
   scoped_ptr<TabContentsContainerGtk> contents_container_;
+
+  // The Find Bar. This may be NULL if there is no Find Bar, and if it is
+  // non-NULL, it may or may not be visible.  It is possible for the Find Bar
+  // to move among windows as tabs are dragged around.
+  scoped_ptr<FindBarController> find_bar_controller_;
+
+  // The tab strip.  Always non-NULL.
+  scoped_ptr<TabStripGtk> tabstrip_;
+
+  // When it goes out of scope during our destruction, |method_factory_| will
+  // cancel its pending tasks (which depend on us still existing).
+  ScopedRunnableMethodFactory<BrowserWindowGtk> method_factory_;
+
+  // Experiment with using views for gtk.
+  scoped_ptr<views::WidgetGtk> experimental_widget_;
 };
 
 #endif  // CHROME_BROWSER_GTK_BROWSER_WINDOW_GTK_H_

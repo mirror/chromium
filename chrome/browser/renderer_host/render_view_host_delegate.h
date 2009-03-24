@@ -12,7 +12,9 @@
 #include "base/file_path.h"
 #include "base/gfx/rect.h"
 #include "base/logging.h"
+#include "chrome/common/native_web_keyboard_event.h"
 #include "net/base/load_states.h"
+#include "webkit/glue/feed.h"
 #include "webkit/glue/password_form.h"
 #include "webkit/glue/webpreferences.h"
 #include "webkit/glue/window_open_disposition.h"
@@ -29,6 +31,7 @@ struct ThumbnailScore;
 struct ContextMenuParams;
 struct ViewHostMsg_DidPrintPage_Params;
 struct ViewHostMsg_FrameNavigate_Params;
+struct ViewHostMsg_UpdateFeedList_Params;
 struct WebDropData;
 
 namespace base {
@@ -111,12 +114,7 @@ class RenderViewHostDelegate {
     // Callback to inform the browser that the renderer did not process the
     // specified events. This gives an opportunity to the browser to process the
     // event (used for keyboard shortcuts).
-    virtual void HandleKeyboardEvent(const WebKeyboardEvent& event) = 0;
-
-    // Forwards message to DevToolsClient in developer tools window open for
-    // this page.
-    virtual void ForwardMessageToDevToolsClient(
-        const IPC::Message& message) = 0;
+    virtual void HandleKeyboardEvent(const NativeWebKeyboardEvent& event) = 0;
   };
 
   // Interface for saving web pages.
@@ -177,6 +175,11 @@ class RenderViewHostDelegate {
                            int32 page_id,
                            const std::wstring& title) { }
 
+  // The list of feeds have been updated.
+  virtual void UpdateFeedList(
+      RenderViewHost* render_view_host,
+      const ViewHostMsg_UpdateFeedList_Params& params) { }
+
   // The page's encoding was changed and should be updated.
   virtual void UpdateEncoding(RenderViewHost* render_view_host,
                               const std::wstring& encoding) { }
@@ -216,7 +219,10 @@ class RenderViewHostDelegate {
   // The RenderView loaded a resource from an in-memory cache.
   // |security_info| contains the security info if this resource was originally
   // loaded over a secure connection.
-  virtual void DidLoadResourceFromMemoryCache(const GURL& url,
+  virtual void DidLoadResourceFromMemoryCache(
+      const GURL& url,
+      const std::string& frame_origin,
+      const std::string& main_frame_origin,
       const std::string& security_info) { }
 
   // The RenderView failed a provisional load with an error.
@@ -257,7 +263,10 @@ class RenderViewHostDelegate {
   // A message for external host. By default we ignore such messages.
   // |receiver| can be a receiving script and |message| is any
   // arbitrary string that makes sense to the receiver.
-  virtual void ProcessExternalHostMessage(const std::string& message) { }
+  virtual void ProcessExternalHostMessage(const std::string& message,
+                                          const std::string& origin,
+                                          const std::string& target) {
+  }
 
   // Navigate to the history entry for the given offset from the current
   // position within the NavigationController.  Makes no change if offset is
@@ -278,11 +287,13 @@ class RenderViewHostDelegate {
   // A javascript message, confirmation or prompt should be shown.
   virtual void RunJavaScriptMessage(const std::wstring& message,
                                     const std::wstring& default_prompt,
+                                    const GURL& frame_url,
                                     const int flags,
                                     IPC::Message* reply_msg,
                                     bool* did_suppress_message) { }
 
-  virtual void RunBeforeUnloadConfirm(const std::wstring& message,
+  virtual void RunBeforeUnloadConfirm(const GURL& frame_url,
+                                      const std::wstring& message,
                                       IPC::Message* reply_msg) { }
 
   // Display this RenderViewHost in a modal fashion.
@@ -308,6 +319,11 @@ class RenderViewHostDelegate {
                                       const std::wstring& user_text,
                                       int64 node_id,
                                       int request_id) { }
+
+  // Called when the user has indicated that she wants to remove the specified
+  // autofill suggestion from the database.
+  virtual void RemoveAutofillEntry(const std::wstring& field_name,
+                                   const std::wstring& value) { }
 
   // Notification that the page has an OpenSearch description document.
   virtual void PageHasOSDD(RenderViewHost* render_view_host,
@@ -348,6 +364,9 @@ class RenderViewHostDelegate {
 
   // Notification from the renderer that a plugin instance has crashed.
   virtual void OnCrashedPlugin(const FilePath& plugin_path) { }
+
+  // Notification that a worker process has crashed.
+  virtual void OnCrashedWorker() { }
 
   // Notification from the renderer that JS runs out of memory.
   virtual void OnJSOutOfMemory() { }

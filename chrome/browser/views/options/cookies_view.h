@@ -5,15 +5,17 @@
 #ifndef CHROME_BROWSER_VIEWS_OPTIONS_COOKIES_VIEW_H__
 #define CHROME_BROWSER_VIEWS_OPTIONS_COOKIES_VIEW_H__
 
-#include "chrome/views/dialog_delegate.h"
-#include "chrome/views/native_button.h"
-#include "chrome/views/table_view.h"
-#include "chrome/views/text_field.h"
+#include "base/task.h"
+#include "chrome/views/controls/button/button.h"
+#include "chrome/views/controls/table/table_view.h"
+#include "chrome/views/controls/text_field.h"
 #include "chrome/views/view.h"
-#include "chrome/views/window.h"
+#include "chrome/views/window/dialog_delegate.h"
+#include "chrome/views/window/window.h"
 
 namespace views {
 class Label;
+class NativeButton;
 }
 class CookieInfoView;
 class CookiesTableModel;
@@ -23,7 +25,7 @@ class Timer;
 
 class CookiesView : public views::View,
                     public views::DialogDelegate,
-                    public views::NativeButton::Listener,
+                    public views::ButtonListener,
                     public views::TableViewObserver,
                     public views::TextField::Controller {
  public:
@@ -35,8 +37,8 @@ class CookiesView : public views::View,
   // Updates the display to show only the search results.
   void UpdateSearchResults();
 
-  // views::NativeButton::Listener implementation:
-  virtual void ButtonPressed(views::NativeButton* sender);
+  // views::ButtonListener implementation:
+  virtual void ButtonPressed(views::Button* sender);
 
   // views::TableViewObserver implementation:
   virtual void OnSelectionChanged();

@@ -6,6 +6,7 @@
 
 #include "base/command_line.h"
 #include "base/logging.h"
+#include "chrome/browser/dom_ui/dom_ui_factory.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/renderer_host/render_view_host_delegate.h"
 #include "chrome/browser/renderer_host/render_widget_host_view.h"
@@ -148,8 +149,7 @@ bool RenderViewHostManager::ShouldCloseTabOnUnresponsiveRenderer() {
     // handler later finishes, this call will be ignored because the state in
     // CrossSiteResourceHandler will already be cleaned up.)
     current_host()->process()->CrossSiteClosePageACK(
-        pending_render_view_host_->site_instance()->process_host_id(), 
-        pending_request_id);
+        pending_render_view_host_->process()->pid(), pending_request_id);
   }
   return false;
 }
@@ -194,7 +194,7 @@ void RenderViewHostManager::OnCrossSiteResponse(int new_render_process_host_id,
   // means it is not a download or unsafe page, and we are going to perform the
   // navigation.  Thus, we no longer need to remember that the RenderViewHost
   // is part of a pending cross-site request.
-  pending_render_view_host_->SetHasPendingCrossSiteRequest(false, 
+  pending_render_view_host_->SetHasPendingCrossSiteRequest(false,
                                                            new_request_id);
 }
 
@@ -279,6 +279,13 @@ bool RenderViewHostManager::ShouldSwapRenderViewsForNavigation(
   // it as a new navigation). So require a view switch.
   if (cur_entry->IsViewSourceMode() != new_entry->IsViewSourceMode())
     return true;
+
+  // For security, we should transition between processes when one is a DOM UI
+  // page and one isn't.
+  if (DOMUIFactory::HasDOMUIScheme(cur_entry->url()) !=
+      DOMUIFactory::HasDOMUIScheme(new_entry->url()))
+    return true;
+
   return false;
 }
 
@@ -551,4 +558,3 @@ void RenderViewHostManager::CrossSiteNavigationCanceled() {
   if (pending_render_view_host_)
     CancelPendingRenderView();
 }
-

@@ -19,11 +19,10 @@
 // TODO(port): Port these files.
 #if defined(OS_WIN)
 #include "chrome/browser/tab_contents/tab_contents.h"
-#include "chrome/browser/views/bookmark_bar_view.h"
 #include "chrome/browser/views/bookmark_editor_view.h"
 #include "chrome/browser/views/bookmark_manager_view.h"
 #include "chrome/browser/views/input_window.h"
-#include "chrome/views/window.h"
+#include "chrome/views/window/window.h"
 #endif
 
 namespace {
@@ -118,7 +117,7 @@ class EditFolderController : public InputWindowDelegate,
   virtual void InputCanceled() {
   }
 
-  virtual void WindowClosing() {
+  virtual void DeleteDelegate() {
     delete this;
   }
 
@@ -271,7 +270,7 @@ BookmarkContextMenu::BookmarkContextMenu(
   menu_->AppendMenuItemWithLabel(
       IDS_BOOKMARK_BAR_REMOVE,
       l10n_util::GetString(IDS_BOOKMARK_BAR_REMOVE));
- 
+
   if (configuration == BOOKMARK_MANAGER_TABLE ||
       configuration == BOOKMARK_MANAGER_TABLE_OTHER ||
       configuration == BOOKMARK_MANAGER_ORGANIZE_MENU ||
@@ -428,7 +427,7 @@ void BookmarkContextMenu::ExecuteCommand(int id) {
     }
 
     case IDS_BOOMARK_BAR_ALWAYS_SHOW:
-      BookmarkBarView::ToggleWhenVisible(profile_);
+      bookmark_utils::ToggleWhenVisible(profile_);
       break;
 
     case IDS_BOOKMARK_MANAGER_SHOW_IN_FOLDER:

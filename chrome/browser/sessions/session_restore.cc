@@ -14,6 +14,8 @@
 #include "chrome/browser/sessions/session_service.h"
 #include "chrome/browser/sessions/session_types.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
+#include "chrome/browser/tab_contents/web_contents.h"
+#include "chrome/browser/tab_contents/web_contents_view.h"
 #include "chrome/common/notification_registrar.h"
 #include "chrome/common/notification_service.h"
 
@@ -300,7 +302,9 @@ class SessionRestoreImpl : public NotificationObserver {
       if (!browser) {
         browser = new Browser((*i)->type, profile_);
         browser->set_override_bounds((*i)->bounds);
-        browser->set_override_maximized((*i)->is_maximized);
+        browser->set_maximized_state((*i)->is_maximized ?
+            Browser::MAXIMIZED_STATE_MAXIMIZED :
+            Browser::MAXIMIZED_STATE_UNMAXIMIZED);
         browser->CreateBrowserWindow();
       }
       if ((*i)->type == Browser::TYPE_NORMAL)
@@ -361,7 +365,10 @@ class SessionRestoreImpl : public NotificationObserver {
     browser->window()->Show();
     // TODO(jcampan): http://crbug.com/8123 we should not need to set the
     //                initial focus explicitly.
-    browser->GetSelectedTabContents()->SetInitialFocus();
+    if (browser->GetSelectedTabContents()->AsWebContents()) {
+      browser->GetSelectedTabContents()->AsWebContents()->view()->
+          SetInitialFocus();
+    }
   }
 
   void AppendURLsToBrowser(Browser* browser, const std::vector<GURL>& urls) {

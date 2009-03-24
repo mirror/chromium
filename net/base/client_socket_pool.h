@@ -10,6 +10,7 @@
 #include <string>
 
 #include "base/ref_counted.h"
+#include "base/scoped_ptr.h"
 #include "base/timer.h"
 #include "net/base/completion_callback.h"
 
@@ -143,4 +144,3 @@ class ClientSocketPool : public base::RefCounted<ClientSocketPool> {
 }  // namespace net
 
 #endif  // NET_BASE_CLIENT_SOCKET_POOL_H_
-

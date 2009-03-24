@@ -9,6 +9,7 @@
 #include <string>
 
 #include "chrome/browser/gtk/standard_menus.h"
+#include "chrome/common/owned_widget_gtk.h"
 
 class SkBitmap;
 
@@ -38,22 +39,30 @@ class MenuGtk {
 
   // Builds a MenuGtk that uses |delegate| to perform actions and |menu_data|
   // to create the menu.
-  MenuGtk(MenuGtk::Delegate* delegate, const MenuCreateMaterial* menu_data);
+  MenuGtk(MenuGtk::Delegate* delegate, const MenuCreateMaterial* menu_data,
+          GtkAccelGroup* accel_group);
   // Builds a MenuGtk that uses |delegate| to create the menu as well as perform
   // actions.
   explicit MenuGtk(MenuGtk::Delegate* delegate);
   ~MenuGtk();
 
-  // Displays the menu. |timestamp| is the time of activation.
+  // Displays the menu. |timestamp| is the time of activation. The popup is
+  // statically positioned at |widget|.
   void Popup(GtkWidget* widget, gint button_type, guint32 timestamp);
 
-  // Displays the menu using the button type and timestamp of |event|.
+  // Displays the menu using the button type and timestamp of |event|. The popup
+  // is statically positioned at |widget|.
   void Popup(GtkWidget* widget, GdkEvent* event);
+
+  // Displays the menu as a context menu, i.e. at the current cursor location.
+  void PopupAsContext();
 
  private:
   // A recursive function that transforms a MenuCreateMaterial tree into a set
   // of GtkMenuItems.
-  void BuildMenuIn(GtkWidget* menu, const MenuCreateMaterial* menu_data);
+  void BuildMenuIn(GtkWidget* menu,
+                   const MenuCreateMaterial* menu_data,
+                   GtkAccelGroup* accel_group);
 
   // A function that creates a GtkMenu from |delegate_|. This function is not
   // recursive and does not support sub-menus.
@@ -86,8 +95,7 @@ class MenuGtk {
 
   // gtk_menu_popup() does not appear to take ownership of popup menus, so
   // MenuGtk explicitly manages the lifetime of the menu.
-  GtkWidget* menu_;
+  OwnedWidgetGtk menu_;
 };
 
 #endif  // CHROME_BROWSER_GTK_MENU_GTK_H_
-

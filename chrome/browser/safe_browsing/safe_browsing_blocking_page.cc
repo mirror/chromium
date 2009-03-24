@@ -19,6 +19,7 @@
 #include "chrome/common/jstemplate_builder.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
+#include "chrome/common/url_constants.h"
 #include "grit/browser_resources.h"
 #include "grit/generated_resources.h"
 #include "grit/locale_settings.h"
@@ -38,7 +39,8 @@ static const char* const kSbReportPhishingUrl =
     "http://www.google.com/safebrowsing/report_error/";
 
 static const wchar_t* const kSbDiagnosticHtml =
-    L"<a href=\"\" onClick=\"sendCommand('showDiagnostic'); return false;\" onMouseDown=\"return false;\">%ls</a>";
+    L"<a href=\"\" onClick=\"sendCommand('showDiagnostic'); return false;\" "
+    L"onMouseDown=\"return false;\">%ls</a>";
 
 // The commands returned by the page when the user performs an action.
 static const char* const kShowDiagnosticCommand = "showDiagnostic";
@@ -377,7 +379,7 @@ void SafeBrowsingBlockingPage::DontProceed() {
   // for the tab has by then already been destroyed.
   if (navigation_entry_index_to_remove_ != -1 && !tab()->is_being_destroyed()) {
     tab()->controller()->RemoveEntryAtIndex(navigation_entry_index_to_remove_,
-                                            NewTabUI::GetBaseURL());
+                                            GURL(chrome::kChromeUINewTabURL));
     navigation_entry_index_to_remove_ = -1;
   }
   InterstitialPage::DontProceed();
@@ -435,4 +437,3 @@ bool SafeBrowsingBlockingPage::IsMainPage(
   return unsafe_resources.size() == 1 &&
          unsafe_resources[0].resource_type == ResourceType::MAIN_FRAME;
 }
-

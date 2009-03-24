@@ -2,11 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#if defined(OS_WIN)
 #include "chrome/browser/tab_contents/tab_contents.h"
-#elif defined(OS_POSIX)
-#include "chrome/common/temp_scaffolding_stubs.h"
-#endif
 
 #include "chrome/browser/cert_store.h"
 #include "chrome/browser/download/download_item_model.h"
@@ -25,14 +21,9 @@
 #include "chrome/browser/tab_contents/infobar_delegate.h"
 #include "chrome/browser/views/download_started_animation.h"
 #include "chrome/browser/views/blocked_popup_container.h"
-#include "chrome/views/native_scroll_bar.h"
-#include "chrome/views/root_view.h"
-#include "chrome/views/view.h"
-#include "chrome/views/view_storage.h"
-#include "chrome/views/widget.h"
+#include "chrome/views/controls/scrollbar/native_scroll_bar.h"
 #endif
 
-// TODO(port): port the rest of this file.
 #if defined(OS_WIN)
 namespace {
 
@@ -44,6 +35,7 @@ BOOL CALLBACK InvalidateWindow(HWND hwnd, LPARAM lparam) {
 }
 
 }  // namespace
+#endif
 
 TabContents::TabContents(TabContentsType type)
     : type_(type),
@@ -55,21 +47,12 @@ TabContents::TabContents(TabContentsType type)
       waiting_for_response_(false),
       shelf_visible_(false),
       max_page_id_(-1),
-      blocked_popups_(NULL),
       capturing_contents_(false),
+      blocked_popups_(NULL),
       is_being_destroyed_(false) {
-  last_focused_view_storage_id_ =
-      views::ViewStorage::GetSharedInstance()->CreateStorageID();
 }
 
 TabContents::~TabContents() {
-  // Makes sure to remove any stored view we may still have in the ViewStorage.
-  //
-  // It is possible the view went away before us, so we only do this if the
-  // view is registered.
-  views::ViewStorage* view_storage = views::ViewStorage::GetSharedInstance();
-  if (view_storage->RetrieveView(last_focused_view_storage_id_) != NULL)
-    view_storage->RemoveView(last_focused_view_storage_id_);
 }
 
 // static
@@ -114,10 +97,12 @@ void TabContents::Destroy() {
       Source<TabContents>(this),
       NotificationService::NoDetails());
 
+#if defined(OS_WIN)
   // If we still have a window handle, destroy it. GetNativeView can return
   // NULL if this contents was part of a window that closed.
   if (GetNativeView())
     ::DestroyWindow(GetNativeView());
+#endif
 
   // Notify our NavigationController.  Make sure we are deleted first, so
   // that the controller is the last to die.
@@ -159,7 +144,7 @@ const string16& TabContents::GetTitle() const {
   NavigationEntry* entry = controller_->GetTransientEntry();
   if (entry)
     return entry->GetTitleForDisplay(controller_);
-  
+
   entry = controller_->GetLastCommittedEntry();
   if (entry)
     return entry->GetTitleForDisplay(controller_);
@@ -191,7 +176,6 @@ void TabContents::UpdateMaxPageID(int32 page_id) {
 const std::wstring TabContents::GetDefaultTitle() const {
   return l10n_util::GetString(IDS_DEFAULT_TAB_TITLE);
 }
-#endif  // defined(OS_WIN)
 
 SkBitmap TabContents::GetFavIcon() const {
   // Like GetTitle(), we also want to use the favicon for the last committed
@@ -236,6 +220,7 @@ bool TabContents::GetSSLEVText(std::wstring* ev_text,
 
   return SSLManager::GetEVCertNames(*cert, ev_text, ev_tooltip_text);
 }
+#endif
 
 void TabContents::SetIsCrashed(bool state) {
   if (state == is_crashed_)
@@ -255,8 +240,10 @@ void TabContents::DidBecomeSelected() {
   if (controller_)
     controller_->SetActive(true);
 
+#if defined(OS_WIN)
   // Invalidate all descendants. (take care to exclude invalidating ourselves!)
   EnumChildWindows(GetNativeView(), InvalidateWindow, 0);
+#endif
 }
 
 void TabContents::WasHidden() {
@@ -280,11 +267,13 @@ void TabContents::OpenURL(const GURL& url, const GURL& referrer,
 
 bool TabContents::NavigateToPendingEntry(bool reload) {
   // Our benavior is just to report that the entry was committed.
-  controller()->GetPendingEntry()->set_title(GetDefaultTitle());
+  string16 default_title = WideToUTF16Hack(GetDefaultTitle());
+  controller()->GetPendingEntry()->set_title(default_title);
   controller()->CommitPendingEntry();
   return true;
 }
 
+#if defined(OS_WIN)
 ConstrainedWindow* TabContents::CreateConstrainedDialog(
     views::WindowDelegate* window_delegate,
     views::View* contents_view) {
@@ -294,6 +283,7 @@ ConstrainedWindow* TabContents::CreateConstrainedDialog(
   child_windows_.push_back(window);
   return window;
 }
+#endif
 
 void TabContents::AddNewContents(TabContents* new_contents,
                                  WindowOpenDisposition disposition,
@@ -302,6 +292,7 @@ void TabContents::AddNewContents(TabContents* new_contents,
   if (!delegate_)
     return;
 
+#if defined(OS_WIN)
   if ((disposition == NEW_POPUP) && !user_gesture) {
     // Unrequested popups from normal pages are constrained.
     TabContents* popup_owner = this;
@@ -317,8 +308,14 @@ void TabContents::AddNewContents(TabContents* new_contents,
 
     PopupNotificationVisibilityChanged(ShowingBlockedPopupNotification());
   }
+#else
+  // TODO(port): implement the popup blocker stuff
+  delegate_->AddNewContents(this, new_contents, disposition, initial_pos,
+                            user_gesture);
+#endif
 }
 
+#if defined(OS_WIN)
 void TabContents::AddConstrainedPopup(TabContents* new_contents,
                                       const gfx::Rect& initial_pos) {
   if (!blocked_popups_) {
@@ -342,8 +339,10 @@ void TabContents::CloseAllSuppressedPopups() {
   if (blocked_popups_)
     blocked_popups_->CloseAllPopups();
 }
+#endif
 
 void TabContents::Focus() {
+#if defined(OS_WIN)
   HWND container_hwnd = GetNativeView();
   if (!container_hwnd)
     return;
@@ -355,71 +354,7 @@ void TabContents::Focus() {
   DCHECK(v);
   if (v)
     v->RequestFocus();
-}
-
-void TabContents::StoreFocus() {
-  views::ViewStorage* view_storage =
-      views::ViewStorage::GetSharedInstance();
-
-  if (view_storage->RetrieveView(last_focused_view_storage_id_) != NULL)
-    view_storage->RemoveView(last_focused_view_storage_id_);
-
-  views::FocusManager* focus_manager =
-      views::FocusManager::GetFocusManager(GetNativeView());
-  if (focus_manager) {
-    // |focus_manager| can be NULL if the tab has been detached but still
-    // exists.
-    views::View* focused_view = focus_manager->GetFocusedView();
-    if (focused_view)
-      view_storage->StoreView(last_focused_view_storage_id_, focused_view);
-
-    // If the focus was on the page, explicitly clear the focus so that we
-    // don't end up with the focused HWND not part of the window hierarchy.
-    // TODO(brettw) this should move to the view somehow.
-    HWND container_hwnd = GetNativeView();
-    if (container_hwnd) {
-      views::View* focused_view = focus_manager->GetFocusedView();
-      if (focused_view) {
-        HWND hwnd = focused_view->GetRootView()->GetWidget()->GetHWND();
-        if (container_hwnd == hwnd || ::IsChild(container_hwnd, hwnd))
-          focus_manager->ClearFocus();
-      }
-    }
-  }
-}
-
-void TabContents::RestoreFocus() {
-  views::ViewStorage* view_storage =
-      views::ViewStorage::GetSharedInstance();
-  views::View* last_focused_view =
-      view_storage->RetrieveView(last_focused_view_storage_id_);
-
-  if (!last_focused_view) {
-    SetInitialFocus();
-  } else {
-    views::FocusManager* focus_manager =
-        views::FocusManager::GetFocusManager(GetNativeView());
-
-    // If you hit this DCHECK, please report it to Jay (jcampan).
-    DCHECK(focus_manager != NULL) << "No focus manager when restoring focus.";
-
-    if (last_focused_view->IsFocusable() && focus_manager &&
-        focus_manager->ContainsView(last_focused_view)) {
-      last_focused_view->RequestFocus();
-    } else {
-      // The focused view may not belong to the same window hierarchy (e.g.
-      // if the location bar was focused and the tab is dragged out), or it may
-      // no longer be focusable (e.g. if the location bar was focused and then
-      // we switched to fullscreen mode).  In that case we default to the
-      // default focus.
-      SetInitialFocus();
-    }
-    view_storage->RemoveView(last_focused_view_storage_id_);
-  }
-}
-
-void TabContents::SetInitialFocus() {
-  ::SetFocus(GetNativeView());
+#endif
 }
 
 void TabContents::AddInfoBar(InfoBarDelegate* delegate) {
@@ -464,7 +399,6 @@ void TabContents::RemoveInfoBar(InfoBarDelegate* delegate) {
     }
   }
 }
-#endif  // defined(OS_WIN)
 
 void TabContents::ToolbarSizeChanged(bool is_animating) {
   TabContentsDelegate* d = delegate();
@@ -490,7 +424,6 @@ void TabContents::SetDownloadShelfVisible(bool visible) {
   ToolbarSizeChanged(false);
 }
 
-#if defined(OS_WIN) || defined(OS_LINUX)
 void TabContents::OnStartDownload(DownloadItem* download) {
   DCHECK(download);
   TabContents* tab_contents = this;
@@ -542,15 +475,14 @@ void TabContents::MigrateShelf(TabContents* from, TabContents* to) {
     to->MigrateShelfFrom(from);
   to->SetDownloadShelfVisible(was_shelf_visible);
 }
-#endif  // defined(OS_WIN) || defined(OS_LINUX)
 
-#if defined(OS_WIN)
 void TabContents::WillClose(ConstrainedWindow* window) {
   ConstrainedWindowList::iterator it =
       find(child_windows_.begin(), child_windows_.end(), window);
   if (it != child_windows_.end())
     child_windows_.erase(it);
 
+#if defined(OS_WIN)
   if (window == blocked_popups_)
     blocked_popups_ = NULL;
 
@@ -560,10 +492,13 @@ void TabContents::WillClose(ConstrainedWindow* window) {
     RepositionSupressedPopupsToFit(
         gfx::Size(client_rect.Width(), client_rect.Height()));
   }
+#endif
 }
 
 void TabContents::DidMoveOrResize(ConstrainedWindow* window) {
+#if defined(OS_WIN)
   UpdateWindow(GetNativeView());
+#endif
 }
 
 void TabContents::Observe(NotificationType type,
@@ -594,14 +529,15 @@ void TabContents::SetIsLoading(bool is_loading,
 
   NotificationType type = is_loading ? NotificationType::LOAD_START :
       NotificationType::LOAD_STOP;
-  NotificationDetails det = details ?
-      Details<LoadNotificationDetails>(details) :
-      NotificationService::NoDetails();
-  NotificationService::current()->Notify(type, 
+  NotificationDetails det = NotificationService::NoDetails();;
+  if (details)
+      det = Details<LoadNotificationDetails>(details);
+  NotificationService::current()->Notify(type,
       Source<NavigationController>(this->controller()),
       det);
 }
 
+#if defined(OS_WIN)
 // TODO(brettw) This should be on the WebContentsView.
 void TabContents::RepositionSupressedPopupsToFit(const gfx::Size& new_size) {
   // TODO(erg): There's no way to detect whether scroll bars are
@@ -622,6 +558,7 @@ bool TabContents::ShowingBlockedPopupNotification() const {
   return blocked_popups_ != NULL &&
       blocked_popups_->GetTabContentsCount() != 0;
 }
+#endif  // defined(OS_WIN)
 
 namespace {
 bool TransitionIsReload(PageTransition::Type transition) {
@@ -643,4 +580,3 @@ void TabContents::ExpireInfoBars(
       RemoveInfoBar(delegate);
   }
 }
-#endif  // defined(OS_WIN)

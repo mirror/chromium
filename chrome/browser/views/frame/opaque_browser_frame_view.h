@@ -7,19 +7,20 @@
 
 #include "chrome/browser/views/frame/browser_frame.h"
 #include "chrome/browser/views/tab_icon_view.h"
-#include "chrome/views/non_client_view.h"
-#include "chrome/views/button.h"
+#include "chrome/views/controls/button/button.h"
+#include "chrome/views/window/non_client_view.h"
 
 class BrowserView;
 class ChromeFont;
 class TabContents;
 class TabStrip;
 namespace views {
+class ImageButton;
 class WindowResources;
 }
 
 class OpaqueBrowserFrameView : public BrowserNonClientFrameView,
-                               public views::BaseButton::ButtonListener,
+                               public views::ButtonListener,
                                public TabIconView::TabIconViewModel {
  public:
   // Constructs a non-client view for an BrowserFrame. |is_otr| specifies if the
@@ -54,8 +55,8 @@ class OpaqueBrowserFrameView : public BrowserNonClientFrameView,
   virtual bool GetAccessibleName(std::wstring* name);
   virtual void SetAccessibleName(const std::wstring& name);
 
-  // Overridden from views::BaseButton::ButtonListener:
-  virtual void ButtonPressed(views::BaseButton* sender);
+  // Overridden from views::ButtonListener:
+  virtual void ButtonPressed(views::Button* sender);
 
   // Overridden from TabIconView::TabIconViewModel:
   virtual bool ShouldTabIconViewAnimate() const;
@@ -112,10 +113,10 @@ class OpaqueBrowserFrameView : public BrowserNonClientFrameView,
 
   // Returns the set of resources to use to paint this view.
   views::WindowResources* resources() const {
-    return frame_->is_active() || paint_as_active() ?
+    return frame_->IsActive() || paint_as_active() ?
         current_active_resources_ : current_inactive_resources_;
   }
-  
+
   // The layout rect of the title, if visible.
   gfx::Rect title_bounds_;
 
@@ -126,10 +127,10 @@ class OpaqueBrowserFrameView : public BrowserNonClientFrameView,
   gfx::Rect otr_avatar_bounds_;
 
   // Window controls.
-  views::Button* minimize_button_;
-  views::Button* maximize_button_;
-  views::Button* restore_button_;
-  views::Button* close_button_;
+  views::ImageButton* minimize_button_;
+  views::ImageButton* maximize_button_;
+  views::ImageButton* restore_button_;
+  views::ImageButton* close_button_;
 
   // The Window icon.
   TabIconView* window_icon_;
@@ -163,4 +164,3 @@ class OpaqueBrowserFrameView : public BrowserNonClientFrameView,
 };
 
 #endif  // #ifndef CHROME_BROWSER_VIEWS_FRAME_OPAQUE_BROWSER_FRAME_VIEW_H_
-

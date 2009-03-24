@@ -14,6 +14,7 @@
 struct WebDropData;
 struct WebPreferences;
 class GURL;
+class WebDevToolsAgent;
 class WebFrame;
 class WebViewDelegate;
 
@@ -168,7 +169,7 @@ class WebView : public WebWidget {
   virtual void DragSourceEndedAt(
       int client_x, int client_y, int screen_x, int screen_y) = 0;
 
-  // Notifies the webview that a drag and drop operation is in progress, with 
+  // Notifies the webview that a drag and drop operation is in progress, with
   // dropable items over the view.
   virtual void DragSourceMovedTo(
       int client_x, int client_y, int screen_x, int screen_y) = 0;
@@ -196,9 +197,11 @@ class WebView : public WebWidget {
   // Hides the autofill popup if any are showing.
   virtual void HideAutofillPopup() = 0;
 
+  // Returns development tools agent instance belonging to this view.
+  virtual WebDevToolsAgent* GetWebDevToolsAgent() = 0;
+
  private:
   DISALLOW_EVIL_CONSTRUCTORS(WebView);
 };
 
 #endif  // WEBKIT_GLUE_WEBVIEW_H__
-

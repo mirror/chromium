@@ -48,11 +48,11 @@ class RenderWidgetHostViewMac : public RenderWidgetHostView {
   // deleted it will delete this out from under the caller.
   explicit RenderWidgetHostViewMac(RenderWidgetHost* widget);
   virtual ~RenderWidgetHostViewMac();
-  
+
   RenderWidgetHost* render_widget_host() const { return render_widget_host_; }
-  
+
   base::TimeTicks& whiteout_start_time() { return whiteout_start_time_; }
-  
+
   gfx::NativeView native_view() const { return cocoa_view_; }
 
   // Implementation of RenderWidgetHostView:
@@ -116,4 +116,3 @@ class RenderWidgetHostViewMac : public RenderWidgetHostView {
 };
 
 #endif  // CHROME_BROWSER_RENDERER_HOST_RENDER_WIDGET_HOST_VIEW_MAC_H_
-

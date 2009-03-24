@@ -8,7 +8,6 @@
 
 #include "base/file_util.h"
 #include "base/logging.h"
-#include "base/scoped_ptr.h"
 #include "base/string_util.h"
 #include "base/task.h"
 #include "chrome/browser/browser_process.h"
@@ -588,4 +587,3 @@ void SaveFileManager::RemoveSavedFileFromFileMap(
     }
   }
 }
-

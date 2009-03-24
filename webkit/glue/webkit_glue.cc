@@ -2,26 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "base/compiler_specific.h"
-#include "build/build_config.h"
+#include "config.h"
+#include "webkit/glue/webkit_glue.h"
 
 #if defined(OS_WIN)
 #include <objidl.h>
 #include <mlang.h>
 #endif
 
-#include "config.h"
-#include "webkit_version.h"
-MSVC_PUSH_WARNING_LEVEL(0);
 #include "BackForwardList.h"
 #include "Document.h"
 #include "FrameTree.h"
 #include "FrameView.h"
 #include "Frame.h"
 #include "HistoryItem.h"
-#if defined(OS_WIN)  // TODO(port): unnecessary after the webkit merge lands.
 #include "ImageSource.h"
-#endif
 #include "KURL.h"
 #include "Page.h"
 #include "PlatformString.h"
@@ -29,13 +24,8 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "RenderView.h"
 #include "ScriptController.h"
 #include "SharedBuffer.h"
-MSVC_POP_WARNING();
-
-#include "WebString.h"
 
 #undef LOG
-#include "webkit/glue/webkit_glue.h"
-
 #include "base/file_version_info.h"
 #include "base/singleton.h"
 #include "base/string_piece.h"
@@ -43,11 +33,14 @@ MSVC_POP_WARNING();
 #include "base/sys_info.h"
 #include "base/sys_string_conversions.h"
 #include "skia/include/SkBitmap.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebString.h"
 #include "webkit/glue/event_conversion.h"
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/weburlrequest_impl.h"
 #include "webkit/glue/webframe_impl.h"
 #include "webkit/glue/webview_impl.h"
+
+#include "webkit_version.h"  // Generated
 
 //------------------------------------------------------------------------------
 // webkit_glue impl:
@@ -61,18 +54,6 @@ void SetJavaScriptFlags(const std::wstring& str) {
 #if USE(V8)
   std::string utf8_str = WideToUTF8(str);
   WebCore::ScriptController::setFlags(utf8_str.data(), static_cast<int>(utf8_str.size()));
-#endif
-}
-
-void SetRecordPlaybackMode(bool value) {
-#if USE(V8)
-  WebCore::ScriptController::setRecordPlaybackMode(value);
-#endif
-}
-
-void SetShouldExposeGCController(bool enable) {
-#if USE(V8)
-  WebCore::ScriptController::setShouldExposeGCController(enable);
 #endif
 }
 
@@ -184,7 +165,7 @@ static void DumpHistoryItem(WebCore::HistoryItem* item, int indent,
 
   if (item->hasChildren()) {
     WebCore::HistoryItemVector children = item->children();
-    // Must sort to eliminate arbitrary result ordering which defeats 
+    // Must sort to eliminate arbitrary result ordering which defeats
     // reproducible testing.
     std::sort(children.begin(), children.end(), HistoryItemCompareLess);
     for (unsigned i = 0; i < children.size(); i++) {
@@ -259,7 +240,6 @@ void CheckForLeaks() {
 }
 
 bool DecodeImage(const std::string& image_data, SkBitmap* image) {
-#if defined(OS_WIN)  // TODO(port): unnecessary after the webkit merge lands.
    RefPtr<WebCore::SharedBuffer> buffer(
        WebCore::SharedBuffer::create(image_data.data(),
                                      static_cast<int>(image_data.length())));
@@ -272,11 +252,6 @@ bool DecodeImage(const std::string& image_data, SkBitmap* image) {
   }
   // We failed to decode the image.
   return false;
-#else
-  // This ought to work; we just need the webkit merge.
-  NOTIMPLEMENTED();
-  return false;
-#endif
 }
 
 FilePath::StringType WebStringToFilePathString(const WebKit::WebString& str) {
@@ -419,7 +394,7 @@ const std::string& GetUserAgent(const GURL& url) {
   if (!g_user_agent->user_agent_is_overridden) {
     // For hotmail, we need to spoof as Safari (bug 4111).
     if (MatchPattern(url.host(), "*.mail.live.com")) {
-      if (g_user_agent->mimic_safari_user_agent.empty()) 
+      if (g_user_agent->mimic_safari_user_agent.empty())
         BuildUserAgent(true, &g_user_agent->mimic_safari_user_agent);
       return g_user_agent->mimic_safari_user_agent;
     }

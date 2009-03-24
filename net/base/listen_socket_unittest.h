@@ -18,7 +18,6 @@
 
 #include "base/thread.h"
 #include "base/basictypes.h"
-#include "base/logging.h"
 #include "base/message_loop.h"
 #include "base/string_util.h"
 #include "base/thread.h"
@@ -30,7 +29,7 @@
 #if defined(OS_POSIX)
 // Used same name as in Windows to avoid #ifdef where refrenced
 #define SOCKET int
-const int INVALID_SOCKET = -1; 
+const int INVALID_SOCKET = -1;
 const int SOCKET_ERROR = -1;
 #endif
 
@@ -73,7 +72,7 @@ class ListenSocketTester :
  public:
   ListenSocketTester()
       : thread_(NULL),
-        loop_(NULL), 
+        loop_(NULL),
         server_(NULL),
         connection_(NULL){
   }
@@ -123,4 +122,3 @@ class ListenSocketTester :
 };
 
 #endif  // NET_BASE_LISTEN_SOCKET_UNITTEST_H_
-

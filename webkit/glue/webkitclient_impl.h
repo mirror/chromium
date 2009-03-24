@@ -5,11 +5,12 @@
 #ifndef WEBKIT_CLIENT_IMPL_H_
 #define WEBKIT_CLIENT_IMPL_H_
 
-#include "WebKitClient.h"
-
-#include "base/scoped_ptr.h"
 #include "base/timer.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebKitClient.h"
 #include "webkit/glue/webclipboard_impl.h"
+#if defined(OS_WIN)
+#include "webkit/glue/webthemeengine_impl_win.h"
+#endif
 
 class MessageLoop;
 
@@ -19,16 +20,14 @@ class WebKitClientImpl : public WebKit::WebKitClient {
  public:
   WebKitClientImpl();
 
-  // WebKitClient methods:
+  // WebKitClient methods (partial implementation):
   virtual WebKit::WebClipboard* clipboard();
-  virtual WebKit::WebMimeRegistry* mimeRegistry() = 0;
-  virtual void setCookies(
-      const WebKit::WebURL& url, const WebKit::WebURL& policy_url,
-      const WebKit::WebString&) = 0;
-  virtual WebKit::WebString cookies(
-      const WebKit::WebURL& url, const WebKit::WebURL& policy_url) = 0;
-  virtual void prefetchHostName(const WebKit::WebString&) = 0;
-  virtual WebKit::WebString defaultLocale() = 0;
+  virtual WebKit::WebThemeEngine* themeEngine();
+  virtual void decrementStatsCounter(const char* name);
+  virtual void incrementStatsCounter(const char* name);
+  virtual void traceEventBegin(const char* name, void* id, const char* extra);
+  virtual void traceEventEnd(const char* name, void* id, const char* extra);
+  virtual WebKit::WebCString loadResource(const char* name);
   virtual double currentTime();
   virtual void setSharedTimerFiredFunction(void (*func)());
   virtual void setSharedTimerFireTime(double fireTime);
@@ -45,6 +44,10 @@ class WebKitClientImpl : public WebKit::WebKitClient {
   MessageLoop* main_loop_;
   base::OneShotTimer<WebKitClientImpl> shared_timer_;
   void (*shared_timer_func_)();
+
+#if defined(OS_WIN)
+  WebThemeEngineImpl theme_engine_;
+#endif
 };
 
 }  // namespace webkit_glue

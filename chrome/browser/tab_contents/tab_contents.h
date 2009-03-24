@@ -12,11 +12,14 @@
 
 #include "base/gfx/native_widget_types.h"
 #include "base/gfx/rect.h"
+#include "base/scoped_ptr.h"
 #if defined(OS_WIN)
 // TODO(evanm): I mean really, c'mon, this can't have broken the build, right?
 #include "chrome/browser/autocomplete/autocomplete_edit.h"
-#endif
 #include "chrome/browser/tab_contents/constrained_window.h"
+#else
+#include "chrome/common/temp_scaffolding_stubs.h"
+#endif
 #include "chrome/browser/tab_contents/infobar_delegate.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
 #include "chrome/browser/tab_contents/page_navigator.h"
@@ -35,6 +38,7 @@ class WindowDelegate;
 }
 
 class BlockedPopupContainer;
+class DOMUIContents;
 class DOMUIHost;
 class DownloadItem;
 class DownloadShelf;
@@ -70,10 +74,11 @@ class TabContents : public PageNavigator,
   // Flags passed to the TabContentsDelegate.NavigationStateChanged to tell it
   // what has changed. Combine them to update more than one thing.
   enum InvalidateTypes {
-    INVALIDATE_URL = 1,      // The URL has changed.
-    INVALIDATE_TITLE = 2,    // The title has changed.
-    INVALIDATE_FAVICON = 4,  // The favicon has changed.
-    INVALIDATE_LOAD = 8,     // The loading state has changed
+    INVALIDATE_URL = 1,        // The URL has changed.
+    INVALIDATE_TITLE = 2,      // The title has changed.
+    INVALIDATE_FAVICON = 4,    // The favicon has changed.
+    INVALIDATE_LOAD = 8,       // The loading state has changed.
+    INVALIDATE_FEEDLIST = 16,  // The Atom/RSS feed has changed.
 
     // Helper for forcing a refresh.
     INVALIDATE_EVERYTHING = 0xFFFFFFFF
@@ -139,6 +144,9 @@ class TabContents : public PageNavigator,
   // Returns this object as a DOMUIHost if it is one, and NULL otherwise.
   virtual DOMUIHost* AsDOMUIHost() { return NULL; }
 
+  // Returns this object as a DOMUIContents if it is one, and NULL otherwise.
+  virtual DOMUIContents* AsDOMUIContents() { return NULL; }
+
   TabContentsDelegate* delegate() const { return delegate_; }
   void set_delegate(TabContentsDelegate* d) { delegate_ = d; }
 
@@ -180,7 +188,7 @@ class TabContents : public PageNavigator,
   // pending may be provisional (e.g., the navigation could result in a
   // download, in which case the URL would revert to what it was previously).
   const GURL& GetURL() const;
-  virtual const string16& GetTitle() const;  // Overridden by DOMUIContents.
+  virtual const string16& GetTitle() const;
 
   // The max PageID of any page that this TabContents has loaded.  PageIDs
   // increase with each new page that is loaded by a tab.  If this is a
@@ -312,6 +320,7 @@ class TabContents : public PageNavigator,
 
   // Window management ---------------------------------------------------------
 
+#if defined(OS_WIN)
   // Create a new window constrained to this TabContents' clip and visibility.
   // The window is initialized by using the supplied delegate to obtain basic
   // window characteristics, and the supplied view for the content. The window
@@ -320,6 +329,7 @@ class TabContents : public PageNavigator,
   ConstrainedWindow* CreateConstrainedDialog(
       views::WindowDelegate* window_delegate,
       views::View* contents_view);
+#endif
 
   // Adds a new tab or window with the given already-created contents
   void AddNewContents(TabContents* new_contents,
@@ -368,13 +378,6 @@ class TabContents : public PageNavigator,
 
   // Make the tab the focused window.
   virtual void Focus();
-
-  // Stores the currently focused view.
-  virtual void StoreFocus();
-
-  // Restores focus to the last focus view. If StoreFocus has not yet been
-  // invoked, SetInitialFocus is invoked.
-  virtual void RestoreFocus();
 
   // Invoked the first time this tab is getting the focus through TAB traversal.
   // By default this does nothing, but is overridden to set the focus for the
@@ -445,12 +448,6 @@ class TabContents : public PageNavigator,
 
   // Called when a ConstrainedWindow we own is moved or resized.
   void DidMoveOrResize(ConstrainedWindow* window);
-
-  // Sets focus to the tab contents window, but doesn't actually set focus to
-  // a particular element in it (see also SetInitialFocus(bool) which does
-  // that in different circumstances).
-  // FIXME(brettw) having two SetInitialFocus that do different things is silly.
-  virtual void SetInitialFocus();
 
  protected:
   // NotificationObserver implementation:
@@ -543,9 +540,6 @@ class TabContents : public PageNavigator,
   // a WebContents, in which case the max page ID is stored separately with
   // each SiteInstance.
   int32 max_page_id_;
-
-  // The id used in the ViewStorage to store the last focused view.
-  int last_focused_view_storage_id_;
 
   // See capturing_contents() above.
   bool capturing_contents_;

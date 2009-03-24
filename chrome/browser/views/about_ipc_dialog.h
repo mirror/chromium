@@ -5,17 +5,11 @@
 #ifndef CHROME_BROWSER_VIEWS_ABOUT_IPC_DIALOG_H_
 #define CHROME_BROWSER_VIEWS_ABOUT_IPC_DIALOG_H_
 
-#include <atlbase.h>
-#include <atlapp.h>
-#include <atlcrack.h>
-#include <atlctrls.h>
-#include <atlmisc.h>
-
 #include "base/singleton.h"
 #include "chrome/common/ipc_logging.h"
-#include "chrome/views/base_button.h"
-#include "chrome/views/dialog_delegate.h"
-#include "chrome/views/table_view.h"
+#include "chrome/views/controls/button/button.h"
+#include "chrome/views/controls/table/table_view.h"
+#include "chrome/views/window/dialog_delegate.h"
 
 #if defined(OS_WIN) && defined(IPC_MESSAGE_LOG_ENABLED)
 
@@ -26,7 +20,7 @@ class HWNDView;
 }  // namespace views
 
 class AboutIPCDialog : public views::DialogDelegate,
-                       public views::BaseButton::ButtonListener,
+                       public views::ButtonListener,
                        public IPC::Logging::Consumer,
                        public views::View {
  public:
@@ -57,8 +51,8 @@ class AboutIPCDialog : public views::DialogDelegate,
   // views::WindowDelegate (via view::DialogDelegate).
   virtual bool CanResize() const;
 
-  // views::BaseButton::ButtonListener.
-  virtual void ButtonPressed(views::BaseButton* button);
+  // views::ButtonListener.
+  virtual void ButtonPressed(views::Button* button);
 
   CListViewCtrl message_list_;
 

@@ -11,8 +11,8 @@
 #include "chrome/common/gfx/path.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/root_view.h"
-#include "chrome/views/window.h"
+#include "chrome/views/widget/root_view.h"
+#include "chrome/views/window/window.h"
 #include "grit/theme_resources.h"
 
 using views::View;
@@ -71,7 +71,6 @@ InfoBubble* InfoBubble::Show(HWND parent_hwnd,
                              views::View* content,
                              InfoBubbleDelegate* delegate) {
   InfoBubble* window = new InfoBubble();
-  DLOG(WARNING) << "new bubble=" << window;
   window->Init(parent_hwnd, position_relative_to, content);
   // Set the delegate before we show, on the off chance the delegate is needed
   // during showing.
@@ -94,12 +93,10 @@ void InfoBubble::Init(HWND parent_hwnd,
                       const gfx::Rect& position_relative_to,
                       views::View* content) {
   HWND owning_frame_hwnd = GetAncestor(parent_hwnd, GA_ROOTOWNER);
-  // We should always have a frame, but there was a bug elsewhere that
-  // made it possible for the frame to be NULL, so we have the check. If
-  // you hit this, file a bug.
-  DCHECK(BrowserView::GetBrowserViewForHWND(owning_frame_hwnd));
-  parent_ = reinterpret_cast<views::Window*>(win_util::GetWindowUserData(
-      owning_frame_hwnd));
+  BrowserView* browser_view =
+      BrowserView::GetBrowserViewForHWND(owning_frame_hwnd);
+  DCHECK(browser_view);
+  parent_ = browser_view->frame();
   parent_->DisableInactiveRendering();
 
   if (kInfoBubbleCornerTopLeft == NULL) {
@@ -141,13 +138,13 @@ void InfoBubble::Init(HWND parent_hwnd,
 
   // Register the Escape accelerator for closing.
   views::FocusManager* focus_manager =
-      views::FocusManager::GetFocusManager(GetHWND());
+      views::FocusManager::GetFocusManager(GetNativeView());
   focus_manager->RegisterAccelerator(views::Accelerator(VK_ESCAPE, false,
                                                         false, false),
                                      this);
 
   // Set initial alpha value of the layered window.
-  SetLayeredWindowAttributes(GetHWND(),
+  SetLayeredWindowAttributes(GetNativeView(),
                              RGB(0xFF, 0xFF, 0xFF),
                              kMinimumAlpha,
                              LWA_ALPHA);
@@ -165,7 +162,7 @@ void InfoBubble::AnimationProgressed(const Animation* animation) {
       (fade_animation_->GetCurrentValue() * (255.0 - kMinimumAlpha) +
       kMinimumAlpha));
 
-  SetLayeredWindowAttributes(GetHWND(),
+  SetLayeredWindowAttributes(GetNativeView(),
                              RGB(0xFF, 0xFF, 0xFF),
                              alpha,
                              LWA_ALPHA);

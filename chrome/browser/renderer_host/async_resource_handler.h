@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_RENDERER_HOST_ASYNC_RESOURCE_HANDLER_H_
 #define CHROME_BROWSER_RENDERER_HOST_ASYNC_RESOURCE_HANDLER_H_
 
+#include <string>
+
 #include "base/process.h"
 #include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #include "chrome/browser/renderer_host/resource_handler.h"
@@ -16,9 +18,9 @@ class SharedIOBuffer;
 class AsyncResourceHandler : public ResourceHandler {
  public:
   AsyncResourceHandler(ResourceDispatcherHost::Receiver* receiver,
-                       int render_process_host_id,
+                       int process_id,
                        int routing_id,
-                       base::ProcessHandle render_process,
+                       base::ProcessHandle process_handle,
                        const GURL& url,
                        ResourceDispatcherHost* resource_dispatcher_host);
 
@@ -29,7 +31,9 @@ class AsyncResourceHandler : public ResourceHandler {
   bool OnWillRead(int request_id, net::IOBuffer** buf, int* buf_size,
                   int min_size);
   bool OnReadCompleted(int request_id, int* bytes_read);
-  bool OnResponseCompleted(int request_id, const URLRequestStatus& status);
+  bool OnResponseCompleted(int request_id,
+                           const URLRequestStatus& status,
+                           const std::string& security_info);
 
   static void GlobalCleanup();
 
@@ -41,9 +45,9 @@ class AsyncResourceHandler : public ResourceHandler {
 
   scoped_refptr<SharedIOBuffer> read_buffer_;
   ResourceDispatcherHost::Receiver* receiver_;
-  int render_process_host_id_;
+  int process_id_;
   int routing_id_;
-  base::ProcessHandle render_process_;
+  base::ProcessHandle process_handle_;
   ResourceDispatcherHost* rdh_;
 
   DISALLOW_COPY_AND_ASSIGN(AsyncResourceHandler);

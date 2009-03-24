@@ -6,9 +6,12 @@
 
 #import "base/sys_string_conversions.h"
 #import "chrome/app/chrome_dll_resource.h"
+#import "chrome/browser/bookmarks/bookmark_model.h"
 #import "chrome/browser/command_updater.h"
 #import "chrome/browser/location_bar.h"
+#import "chrome/browser/tab_contents/tab_contents.h"
 #import "chrome/browser/toolbar_model.h"
+#import "chrome/browser/net/url_fixer_upper.h"
 
 // For now, tab_contents lives here. TODO(port):fix
 #include "chrome/common/temp_scaffolding_stubs.h"
@@ -28,6 +31,7 @@ static NSString* const kStarredImageName = @"starred";
 
 @interface TabContentsController(Private)
 - (void)updateToolbarCommandStatus;
+- (void)applyContentsBoxOffset:(BOOL)apply;
 @end
 
 // A C++ bridge class that handles listening for updates to commands and
@@ -58,11 +62,12 @@ class LocationBarBridge : public LocationBar {
   virtual std::wstring GetInputString() const;
   virtual WindowOpenDisposition GetWindowOpenDisposition() const
       { NOTIMPLEMENTED(); return CURRENT_TAB; }
-  virtual PageTransition::Type GetPageTransition() const 
+  virtual PageTransition::Type GetPageTransition() const
       { NOTIMPLEMENTED(); return 0; }
   virtual void AcceptInput() { NOTIMPLEMENTED(); }
   virtual void FocusLocation();
   virtual void FocusSearch() { NOTIMPLEMENTED(); }
+  virtual void UpdateFeedIcon() { /* http://crbug.com/8832 */ }
   virtual void SaveStateToContents(TabContents* contents) { NOTIMPLEMENTED(); }
 
  private:
@@ -71,11 +76,12 @@ class LocationBarBridge : public LocationBar {
 
 @implementation TabContentsController
 
-- (id)initWithNibName:(NSString*)name 
+- (id)initWithNibName:(NSString*)name
                bundle:(NSBundle*)bundle
              contents:(TabContents*)contents
              commands:(CommandUpdater*)commands
-         toolbarModel:(ToolbarModel*)toolbarModel {
+         toolbarModel:(ToolbarModel*)toolbarModel
+        bookmarkModel:(BookmarkModel*)bookmarkModel {
   if ((self = [super initWithNibName:name bundle:bundle])) {
     commands_ = commands;
     if (commands_)
@@ -83,6 +89,7 @@ class LocationBarBridge : public LocationBar {
     locationBarBridge_ = new LocationBarBridge(self);
     contents_ = contents;
     toolbarModel_ = toolbarModel;
+    bookmarkModel_ = bookmarkModel;
   }
   return self;
 }
@@ -97,7 +104,8 @@ class LocationBarBridge : public LocationBar {
 
 - (void)awakeFromNib {
   [contentsBox_ setContentView:contents_->GetNativeView()];
-  
+  [self applyContentsBoxOffset:YES];
+
   // Provide a starting point since we won't get notifications if the state
   // doesn't change between tabs.
   [self updateToolbarCommandStatus];
@@ -185,7 +193,7 @@ class LocationBarBridge : public LocationBar {
 - (void)updateToolbarWithContents:(TabContents*)tab {
   // TODO(pinkerton): there's a lot of ui code in autocomplete_edit.cc
   // that we'll want to duplicate. For now, just handle setting the text.
-  
+
   // TODO(pinkerton): update the security lock icon and background color
 
   NSString* urlString = base::SysWideToNSString(toolbarModel_->GetText());
@@ -217,8 +225,8 @@ class LocationBarBridge : public LocationBar {
     localGrowBox = [contentView convertRect:localGrowBox
                                    fromView:[self view]];
     // Flip the rect in view coordinates
-    localGrowBox.origin.y = 
-        [contentView frame].size.height - localGrowBox.origin.y - 
+    localGrowBox.origin.y =
+        [contentView frame].size.height - localGrowBox.origin.y -
             localGrowBox.size.height;
   }
   return localGrowBox;
@@ -229,6 +237,47 @@ class LocationBarBridge : public LocationBar {
   if (isLoading)
     imageName = @"stop";
   [goButton_ setImage:[NSImage imageNamed:imageName]];
+}
+
+- (void)toggleBookmarkBar:(BOOL)enable {
+  contentsBoxHasOffset_ = enable;
+  [self applyContentsBoxOffset:enable];
+
+  if (enable) {
+    // TODO(jrg): display something useful in the bookmark bar
+    // TODO(jrg): use a BookmarksView, not a ToolbarView
+    // TODO(jrg): don't draw a border around it
+    // TODO(jrg): ...
+  }
+}
+
+// Apply a contents box offset to make (or remove) room for the
+// bookmark bar.  If apply==YES, always make room (the contentsBox_ is
+// "full size").  If apply==NO we are trying to undo an offset.  If no
+// offset there is nothing to undo.
+- (void)applyContentsBoxOffset:(BOOL)apply {
+
+  if (bookmarkView_ == nil) {
+    // We're too early, but awakeFromNib will call me again.
+    return;
+  }
+  if (!contentsBoxHasOffset_ && apply) {
+    // There is no offset to unconditionally apply.
+    return;
+  }
+
+  int offset = [bookmarkView_ frame].size.height;
+  NSRect frame = [contentsBox_ frame];
+  if (apply)
+    frame.size.height -= offset;
+  else
+    frame.size.height += offset;
+
+  // TODO(jrg): animate
+  [contentsBox_ setFrame:frame];
+
+  [bookmarkView_ setNeedsDisplay:YES];
+  [contentsBox_ setNeedsDisplay:YES];
 }
 
 @end
@@ -252,9 +301,9 @@ TabContentsCommandObserver::~TabContentsCommandObserver() {
   commands_->RemoveCommandObserver(this);
 }
 
-void TabContentsCommandObserver::EnabledStateChangedForCommand(int command, 
+void TabContentsCommandObserver::EnabledStateChangedForCommand(int command,
                                                                bool enabled) {
-  [controller_ enabledStateChangedForCommand:command 
+  [controller_ enabledStateChangedForCommand:command
                                      enabled:enabled ? YES : NO];
 }
 
@@ -265,7 +314,12 @@ LocationBarBridge::LocationBarBridge(TabContentsController* controller)
 }
 
 std::wstring LocationBarBridge::GetInputString() const {
-  return base::SysNSStringToWide([controller_ locationBarString]);
+  // TODO(shess): This code is temporary until the omnibox code takes
+  // over.
+  std::wstring url = base::SysNSStringToWide([controller_ locationBarString]);
+
+  // Try to flesh out the input to make a real URL.
+  return URLFixerUpper::FixupURL(url, std::wstring());
 }
 
 void LocationBarBridge::FocusLocation() {

@@ -15,7 +15,7 @@
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/win_util.h"
 // Included for SetRootViewForHWND.
-#include "chrome/views/widget_win.h"
+#include "chrome/views/widget/widget_win.h"
 #include "chrome/test/automation/automation_messages.h"
 
 static const wchar_t kWindowObjectKey[] = L"ChromeWindowObject";
@@ -172,7 +172,7 @@ LRESULT ExternalTabContainer::OnSetFocus(UINT msg, WPARAM wp, LPARAM lp,
                                          BOOL& handled) {
   if (automation_) {
     views::FocusManager* focus_manager =
-        views::FocusManager::GetFocusManager(GetHWND());
+        views::FocusManager::GetFocusManager(GetNativeView());
     DCHECK(focus_manager);
     if (focus_manager) {
       focus_manager->ClearFocus();
@@ -211,7 +211,8 @@ void ExternalTabContainer::NavigationStateChanged(const TabContents* source,
   }
 }
 
-void ExternalTabContainer::ReplaceContents(TabContents* source, TabContents* new_contents) {
+void ExternalTabContainer::ReplaceContents(TabContents* source,
+                                           TabContents* new_contents) {
 }
 
 void ExternalTabContainer::AddNewContents(TabContents* source,
@@ -259,10 +260,12 @@ void ExternalTabContainer::ToolbarSizeChanged(TabContents* source,
 }
 
 void ExternalTabContainer::ForwardMessageToExternalHost(
-    const std::string& message) {
+    const std::string& message, const std::string& origin,
+    const std::string& target) {
   if(automation_) {
     automation_->Send(
-        new AutomationMsg_ForwardMessageToExternalHost(0, message));
+        new AutomationMsg_ForwardMessageToExternalHost(0, message, origin,
+                                                       target));
   }
 }
 
@@ -283,7 +286,7 @@ void ExternalTabContainer::Observe(NotificationType type,
         const NavigationController::LoadCommittedDetails* commit =
             Details<NavigationController::LoadCommittedDetails>(details).ptr();
 
-        if (commit->http_status_code >= kHttpClientErrorStart && 
+        if (commit->http_status_code >= kHttpClientErrorStart &&
             commit->http_status_code <= kHttpServerErrorEnd) {
           automation_->Send(new AutomationMsg_NavigationFailed(
               0, commit->http_status_code, commit->entry->url()));
@@ -296,7 +299,8 @@ void ExternalTabContainer::Observe(NotificationType type,
           automation_->Send(new AutomationMsg_DidNavigate(
               0, commit->type,
               commit->previous_entry_index -
-                  tab_contents_->controller()->GetLastCommittedEntryIndex()));
+                  tab_contents_->controller()->GetLastCommittedEntryIndex(),
+              commit->entry->url()));
         }
       }
       break;
@@ -326,7 +330,7 @@ void ExternalTabContainer::GetBounds(gfx::Rect* out,
 void ExternalTabContainer::MoveToFront(bool should_activate) {
 }
 
-HWND ExternalTabContainer::GetHWND() const {
+gfx::NativeView ExternalTabContainer::GetNativeView() const {
   return m_hWnd;
 }
 

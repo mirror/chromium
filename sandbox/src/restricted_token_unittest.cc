@@ -8,7 +8,6 @@
 #include <atlbase.h>
 #include <atlsecurity.h>
 #include <vector>
-#include "base/scoped_ptr.h"
 #include "sandbox/src/restricted_token.h"
 #include "sandbox/src/sid.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -529,4 +528,3 @@ TEST(RestrictedTokenTest, DoubleInit) {
 #endif
 
 }  // namespace sandbox
-

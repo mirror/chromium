@@ -92,27 +92,7 @@ EntryImpl::EntryImpl(BackendImpl* backend, Addr address)
 // written before).
 EntryImpl::~EntryImpl() {
   if (doomed_) {
-    UMA_HISTOGRAM_COUNTS("DiskCache.DeleteHeader", GetDataSize(0));
-    UMA_HISTOGRAM_COUNTS("DiskCache.DeleteData", GetDataSize(1));
-    for (int index = 0; index < NUM_STREAMS; index++) {
-      Addr address(entry_.Data()->data_addr[index]);
-      if (address.is_initialized()) {
-        DeleteData(address, index);
-        backend_->ModifyStorageSize(entry_.Data()->data_size[index] -
-                                        unreported_size_[index], 0);
-      }
-    }
-    Addr address(entry_.Data()->long_key);
-    DeleteData(address, kKeyFileIndex);
-    backend_->ModifyStorageSize(entry_.Data()->key_len, 0);
-
-    memset(node_.buffer(), 0, node_.size());
-    memset(entry_.buffer(), 0, entry_.size());
-    node_.Store();
-    entry_.Store();
-
-    backend_->DeleteBlock(node_.address(), false);
-    backend_->DeleteBlock(entry_.address(), false);
+    DeleteEntryData(true);
   } else {
     bool ret = true;
     for (int index = 0; index < NUM_STREAMS; index++) {
@@ -399,11 +379,11 @@ base::PlatformFile EntryImpl::GetPlatformFile(int index) {
   if (!address.is_initialized() || !address.is_separate_file())
     return base::kInvalidPlatformFileValue;
 
-  File* cache_file = GetExternalFile(address, index);
-  if (!cache_file)
-    return base::kInvalidPlatformFileValue;
-
-  return cache_file->platform_file();
+  return base::CreatePlatformFile(backend_->GetFileName(address),
+                                  base::PLATFORM_FILE_OPEN |
+                                      base::PLATFORM_FILE_READ |
+                                  base::PLATFORM_FILE_ASYNC,
+                                  NULL);
 }
 
 uint32 EntryImpl::GetHash() {
@@ -472,6 +452,45 @@ void EntryImpl::InternalDoom() {
     node_.Store();
   }
   doomed_ = true;
+}
+
+void EntryImpl::DeleteEntryData(bool everything) {
+  DCHECK(doomed_ || !everything);
+
+  if (GetDataSize(0))
+    UMA_HISTOGRAM_COUNTS("DiskCache.DeleteHeader", GetDataSize(0));
+  if (GetDataSize(1))
+    UMA_HISTOGRAM_COUNTS("DiskCache.DeleteData", GetDataSize(1));
+  for (int index = 0; index < NUM_STREAMS; index++) {
+    Addr address(entry_.Data()->data_addr[index]);
+    if (address.is_initialized()) {
+      DeleteData(address, index);
+      backend_->ModifyStorageSize(entry_.Data()->data_size[index] -
+                                      unreported_size_[index], 0);
+      entry_.Data()->data_addr[index] = 0;
+      entry_.Data()->data_size[index] = 0;
+    }
+  }
+
+  if (!everything) {
+    entry_.Store();
+    return;
+  }
+
+  // Remove all traces of this entry.
+  backend_->RemoveEntry(this);
+
+  Addr address(entry_.Data()->long_key);
+  DeleteData(address, kKeyFileIndex);
+  backend_->ModifyStorageSize(entry_.Data()->key_len, 0);
+
+  memset(node_.buffer(), 0, node_.size());
+  memset(entry_.buffer(), 0, entry_.size());
+  node_.Store();
+  entry_.Store();
+
+  backend_->DeleteBlock(node_.address(), false);
+  backend_->DeleteBlock(entry_.address(), false);
 }
 
 CacheAddr EntryImpl::GetNextAddress() {
@@ -560,9 +579,9 @@ void EntryImpl::SetTimes(base::Time last_used, base::Time last_modified) {
 }
 
 bool EntryImpl::CreateDataBlock(int index, int size) {
-  Addr address(entry_.Data()->data_addr[index]);
   DCHECK(index >= 0 && index < NUM_STREAMS);
 
+  Addr address(entry_.Data()->data_addr[index]);
   if (!CreateBlock(size, &address))
     return false;
 

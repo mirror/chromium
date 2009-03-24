@@ -14,8 +14,8 @@
 WebWorkerClientProxy::WebWorkerClientProxy(const GURL& url, int route_id)
     : url_(url),
       route_id_(route_id),
-      started_worker_(false),
       ALLOW_THIS_IN_INITIALIZER_LIST(impl_(WebWorker::Create(this))) {
+  AddRef();
   WorkerThread::current()->AddRoute(route_id_, this);
   WorkerProcess::current()->AddRefProcess();
 }
@@ -48,7 +48,8 @@ void WebWorkerClientProxy::PostConsoleMessageToWorkerObject(
       route_id_, destination, source, level,message, line_number, source_url));
 }
 
-void WebWorkerClientProxy::ConfirmMessageFromWorkerObject(bool has_pending_activity) {
+void WebWorkerClientProxy::ConfirmMessageFromWorkerObject(
+    bool has_pending_activity) {
   Send(new WorkerHostMsg_ConfirmMessageFromWorkerObject(
       route_id_, has_pending_activity));
 }
@@ -60,36 +61,33 @@ void WebWorkerClientProxy::ReportPendingActivity(bool has_pending_activity) {
 
 void WebWorkerClientProxy::WorkerContextDestroyed() {
   Send(new WorkerHostMsg_WorkerContextDestroyed(route_id_));
+  impl_ = NULL;
+
+  WorkerThread::current()->message_loop()->ReleaseSoon(FROM_HERE, this);
 }
 
 bool WebWorkerClientProxy::Send(IPC::Message* message) {
+  if (MessageLoop::current() != WorkerThread::current()->message_loop()) {
+    WorkerThread::current()->message_loop()->PostTask(FROM_HERE,
+        NewRunnableMethod(this, &WebWorkerClientProxy::Send, message));
+    return true;
+  }
+
   return WorkerThread::current()->Send(message);
 }
 
 void WebWorkerClientProxy::OnMessageReceived(const IPC::Message& message) {
-  if (!started_worker_ && 
-      message.type() != WorkerMsg_StartWorkerContext::ID) {
-    queued_messages_.push_back(new IPC::Message(message));
+  if (!impl_)
     return;
-  }
 
-  WebWorker* worker = impl_.get();
   IPC_BEGIN_MESSAGE_MAP(WebWorkerClientProxy, message)
-    IPC_MESSAGE_FORWARD(WorkerMsg_StartWorkerContext, worker,
+    IPC_MESSAGE_FORWARD(WorkerMsg_StartWorkerContext, impl_,
                         WebWorker::StartWorkerContext)
-    IPC_MESSAGE_FORWARD(WorkerMsg_TerminateWorkerContext, worker,
+    IPC_MESSAGE_FORWARD(WorkerMsg_TerminateWorkerContext, impl_,
                         WebWorker::TerminateWorkerContext)
-    IPC_MESSAGE_FORWARD(WorkerMsg_PostMessageToWorkerContext, worker,
+    IPC_MESSAGE_FORWARD(WorkerMsg_PostMessageToWorkerContext, impl_,
                         WebWorker::PostMessageToWorkerContext)
-    IPC_MESSAGE_FORWARD(WorkerMsg_WorkerObjectDestroyed, worker,
+    IPC_MESSAGE_FORWARD(WorkerMsg_WorkerObjectDestroyed, impl_,
                         WebWorker::WorkerObjectDestroyed)
   IPC_END_MESSAGE_MAP()
-
-  if (message.type() == WorkerMsg_StartWorkerContext::ID) {
-    started_worker_ = true;
-    for (size_t i = 0; i < queued_messages_.size(); ++i)
-      OnMessageReceived(*queued_messages_[i]);
-
-    queued_messages_.clear();
-  }
 }

@@ -8,16 +8,15 @@
 #include <Windows.h>
 #include <map>
 
-#include "base/logging.h"
 #include "chrome/browser/search_engines/template_url_model.h"
-#include "chrome/views/dialog_delegate.h"
-#include "chrome/views/native_button.h"
-#include "chrome/views/table_view.h"
+#include "chrome/views/controls/button/button.h"
+#include "chrome/views/controls/table/table_view.h"
 #include "chrome/views/view.h"
+#include "chrome/views/window/dialog_delegate.h"
 
 namespace views {
-class CheckBox;
 class Label;
+class NativeButton;
 }
 
 namespace {
@@ -117,7 +116,7 @@ class TemplateURLTableModel : public views::TableModel {
 
 class KeywordEditorView : public views::View,
                           public views::TableViewObserver,
-                          public views::NativeButton::Listener,
+                          public views::ButtonListener,
                           public TemplateURLModelObserver,
                           public views::DialogDelegate {
   friend class KeywordEditorViewTest;
@@ -169,7 +168,7 @@ class KeywordEditorView : public views::View,
   virtual void OnDoubleClick();
 
   // Button::ButtonListener method.
-  virtual void ButtonPressed(views::NativeButton* sender);
+  virtual void ButtonPressed(views::Button* sender);
 
   // TemplateURLModelObserver notification.
   virtual void OnTemplateURLModelChanged();
@@ -203,4 +202,3 @@ class KeywordEditorView : public views::View,
 };
 
 #endif  // CHROME_BROWSER_VIEWS_KEYWORD_EDITOR_VIEW_H_
-

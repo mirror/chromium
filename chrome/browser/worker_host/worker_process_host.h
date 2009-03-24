@@ -8,7 +8,6 @@
 #include <list>
 
 #include "base/basictypes.h"
-#include "base/scoped_ptr.h"
 #include "chrome/common/child_process_host.h"
 #include "chrome/common/ipc_channel.h"
 #include "googleurl/src/gurl.h"
@@ -17,7 +16,7 @@ class ResourceMessageFilter;
 
 class WorkerProcessHost : public ChildProcessHost {
  public:
-  WorkerProcessHost(MessageLoop* main_message_loop);
+  WorkerProcessHost(ResourceDispatcherHost* resource_dispatcher_host_);
   ~WorkerProcessHost();
 
   // Starts the process.  Returns true iff it succeeded.
@@ -25,6 +24,7 @@ class WorkerProcessHost : public ChildProcessHost {
 
   // Creates a worker object in the process.
   void CreateWorker(const GURL& url,
+                    int render_view_route_id,
                     int worker_route_id,
                     int renderer_route_id,
                     ResourceMessageFilter* filter);
@@ -36,12 +36,22 @@ class WorkerProcessHost : public ChildProcessHost {
   void RendererShutdown(ResourceMessageFilter* filter);
 
  private:
+  // ResourceDispatcherHost::Receiver implementation:
+  virtual URLRequestContext* GetRequestContext(
+      uint32 request_id,
+      const ViewHostMsg_Resource_Request& request_data);
+
   // Called when a message arrives from the worker process.
   void OnMessageReceived(const IPC::Message& message);
+
+  // Updates the title shown in the task manager.
+  void UpdateTitle();
 
   // Contains information about each worker instance, needed to forward messages
   // between the renderer and worker processes.
   struct WorkerInstance {
+    GURL url;
+    int render_view_route_id;
     int worker_route_id;
     int renderer_route_id;
     ResourceMessageFilter* filter;

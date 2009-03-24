@@ -9,6 +9,7 @@
 
 #include "base/basictypes.h"
 #include "base/file_util.h"
+#include "base/platform_thread.h"
 
 class GoogleTest : public UITest {
  protected:
@@ -46,4 +47,3 @@ TEST_F(ColumnLayout, Crash) {
 
   // UIText will check if this crashed.
 }
-

@@ -86,7 +86,8 @@ class PluginRequestHandlerProxy
     }
   }
 
-  virtual void OnCompletedRequest(const URLRequestStatus& status) {
+  virtual void OnCompletedRequest(const URLRequestStatus& status,
+                                  const std::string& security_info) {
     completed_ = true;
 
     if (!status.is_success()) {
@@ -143,12 +144,14 @@ class PluginRequestHandlerProxy
             GURL(cprequest_->url),
             GURL(cprequest_->url),  // TODO(jackson): policy url?
             GURL(),  // TODO(mpcomplete): referrer?
+            "null",  // frame_origin
+            "null",  // main_frame_origin
             extra_headers_,
             load_flags_,
             GetCurrentProcessId(),
             ResourceType::OBJECT,
-            false,  // TODO (jcampan): mixed-content?
-            cprequest_->context));
+            cprequest_->context,
+            MSG_ROUTING_CONTROL));
     if (!bridge_.get())
       return CPERR_FAILURE;
 
@@ -614,4 +617,3 @@ CPBrowserFuncs* GetCPBrowserFuncsForPlugin() {
 
   return &browser_funcs;
 }
-

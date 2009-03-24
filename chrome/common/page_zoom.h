@@ -14,10 +14,9 @@ class PageZoom {
     STANDARD = 0,
     LARGER   = 1,
   };
- 
+
  private:
   PageZoom() {}  // For scoping only.
 };
 
 #endif  // CHROME_COMMON_PAGE_ZOOM_H_
-

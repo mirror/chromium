@@ -13,7 +13,6 @@
 #include <vector>
 
 #include "base/command_line.h"
-#include "base/debug_util.h"
 #include "base/file_path.h"
 #include "base/file_util.h"
 #include "base/file_version_info.h"
@@ -33,7 +32,6 @@
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/common/chrome_switches.h"
-#include "chrome/common/debug_flags.h"
 #include "chrome/common/logging_chrome.h"
 #include "chrome/common/render_messages.h"
 #include "net/base/cookie_monster.h"
@@ -145,9 +143,10 @@ void PluginDownloadUrlHelper::OnAuthRequired(
   DownloadCompletedHelper(false);
 }
 
-void PluginDownloadUrlHelper::OnSSLCertificateError(URLRequest* request,
-                                                    int cert_error,
-                                                    net::X509Certificate* cert) {
+void PluginDownloadUrlHelper::OnSSLCertificateError(
+    URLRequest* request,
+    int cert_error,
+    net::X509Certificate* cert) {
   URLRequest::Delegate::OnSSLCertificateError(request, cert_error, cert);
   DownloadCompletedHelper(false);
 }
@@ -363,17 +362,17 @@ void PluginProcessHost::AddWindow(HWND window) {
 
 #endif  // defined(OS_WIN)
 
-PluginProcessHost::PluginProcessHost(MessageLoop* main_message_loop)
-    : ChildProcessHost(PLUGIN_PROCESS, main_message_loop),
+PluginProcessHost::PluginProcessHost()
+    : ChildProcessHost(
+          PLUGIN_PROCESS,
+          PluginService::GetInstance()->resource_dispatcher_host()),
       ALLOW_THIS_IN_INITIALIZER_LIST(resolve_proxy_msg_helper_(this, NULL)) {
 }
 
 PluginProcessHost::~PluginProcessHost() {
-  // Cancel all requests for plugin processes.
-  // TODO(mpcomplete): use a real process ID when http://b/issue?id=1210062 is
-  // fixed.
+  // Cancel all requests for plugin process.
   PluginService::GetInstance()->resource_dispatcher_host()->
-      CancelRequestsForProcess(-1);
+      CancelRequestsForProcess(GetProcessId());
 
 #if defined(OS_WIN)
   // We erase HWNDs from the plugin_parent_windows_set_ when we receive a
@@ -471,61 +470,17 @@ bool PluginProcessHost::Init(const WebPluginInfo& info,
   cmd_line.AppendSwitchWithValue(switches::kPluginPath,
                                  info.path.ToWStringHack());
 
-  bool in_sandbox = !browser_command_line.HasSwitch(switches::kNoSandbox) &&
-                    browser_command_line.HasSwitch(switches::kSafePlugins);
-
-  if (in_sandbox) {
+  base::ProcessHandle process = 0;
 #if defined(OS_WIN)
-    bool child_needs_help = DebugFlags::ProcessDebugFlags(&cmd_line, type(),
-                                                          in_sandbox);
-    // spawn the child process in the sandbox
-    sandbox::BrokerServices* broker_service =
-        g_browser_process->broker_services();
-
-    sandbox::ResultCode result;
-    PROCESS_INFORMATION target = {0};
-    sandbox::TargetPolicy* policy = broker_service->CreatePolicy();
-
-    std::wstring trusted_plugins =
-        browser_command_line.GetSwitchValue(switches::kTrustedPlugins);
-    if (!AddPolicyForPlugin(info.path, activex_clsid, trusted_plugins,
-                            policy)) {
-      NOTREACHED();
-      return false;
-    }
-
-    if (!AddGenericPolicy(policy)) {
-      NOTREACHED();
-      return false;
-    }
-
-    result =
-        broker_service->SpawnTarget(exe_path.c_str(),
-                                    cmd_line.command_line_string().c_str(),
-                                    policy, &target);
-    policy->Release();
-    if (sandbox::SBOX_ALL_OK != result)
-      return false;
-
-    ResumeThread(target.hThread);
-    CloseHandle(target.hThread);
-    SetHandle(target.hProcess);
-
-    // Help the process a little. It can't start the debugger by itself if
-    // the process is in a sandbox.
-    if (child_needs_help)
-      DebugUtil::SpawnDebuggerOnProcess(target.dwProcessId);
+  process = sandbox::StartProcess(&cmd_line);
 #else
-    // TODO(port): Implement sandboxing.
-    NOTIMPLEMENTED() << "no support for sandboxing.";
+  // spawn child process
+  base::LaunchApp(cmd_line, false, false, &process);
 #endif
-  } else {
-    // spawn child process
-    base::ProcessHandle handle;
-    if (!base::LaunchApp(cmd_line, false, false, &handle))
-      return false;
-    SetHandle(handle);
-  }
+
+  if (!process)
+    return false;
+  SetHandle(process);
 
   FilePath gears_path;
   if (PathService::Get(chrome::FILE_GEARS_PLUGIN, &gears_path)) {
@@ -552,11 +507,6 @@ void PluginProcessHost::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(PluginProcessHostMsg_ShutdownRequest,
                         OnPluginShutdownRequest)
     IPC_MESSAGE_HANDLER(PluginProcessHostMsg_PluginMessage, OnPluginMessage)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_RequestResource, OnRequestResource)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_CancelRequest, OnCancelRequest)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_DataReceived_ACK, OnDataReceivedACK)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_UploadProgress_ACK, OnUploadProgressACK)
-    IPC_MESSAGE_HANDLER_DELAY_REPLY(ViewHostMsg_SyncLoad, OnSyncLoad)
     IPC_MESSAGE_HANDLER(PluginProcessHostMsg_GetCookies, OnGetCookies)
     IPC_MESSAGE_HANDLER_DELAY_REPLY(PluginProcessHostMsg_ResolveProxy,
                                     OnResolveProxy)
@@ -607,60 +557,6 @@ void PluginProcessHost::OpenChannelToPlugin(
   RequestPluginChannel(renderer_message_filter, mime_type, reply_msg);
 }
 
-void PluginProcessHost::OnRequestResource(
-    const IPC::Message& message,
-    int request_id,
-    const ViewHostMsg_Resource_Request& request) {
-  // TODO(mpcomplete): we need a "process_id" mostly for a unique identifier.
-  // We should decouple the idea of a render_process_host_id from the unique ID
-  // in ResourceDispatcherHost.
-  int render_process_host_id = -1;
-  URLRequestContext* context = CPBrowsingContextManager::Instance()->
-        ToURLRequestContext(request.request_context);
-  // TODO(mpcomplete): remove fallback case when Gears support is prevalent.
-  if (!context)
-    context = Profile::GetDefaultRequestContext();
-
-  PluginService::GetInstance()->resource_dispatcher_host()->
-      BeginRequest(this, handle(), render_process_host_id,
-                   MSG_ROUTING_CONTROL, request_id, request, context, NULL);
-}
-
-void PluginProcessHost::OnCancelRequest(int request_id) {
-  int render_process_host_id = -1;
-  PluginService::GetInstance()->resource_dispatcher_host()->
-      CancelRequest(render_process_host_id, request_id, true);
-}
-
-void PluginProcessHost::OnDataReceivedACK(int request_id) {
-  int render_process_host_id = -1;
-  PluginService::GetInstance()->resource_dispatcher_host()->
-      OnDataReceivedACK(render_process_host_id, request_id);
-}
-
-void PluginProcessHost::OnUploadProgressACK(int request_id) {
-  int render_process_host_id = -1;
-  PluginService::GetInstance()->resource_dispatcher_host()->
-      OnUploadProgressACK(render_process_host_id, request_id);
-}
-
-void PluginProcessHost::OnSyncLoad(
-    int request_id,
-    const ViewHostMsg_Resource_Request& request,
-    IPC::Message* sync_result) {
-  int render_process_host_id = -1;
-  URLRequestContext* context = CPBrowsingContextManager::Instance()->
-        ToURLRequestContext(request.request_context);
-  // TODO(mpcomplete): remove fallback case when Gears support is prevalent.
-  if (!context)
-    context = Profile::GetDefaultRequestContext();
-
-  PluginService::GetInstance()->resource_dispatcher_host()->
-      BeginRequest(this, handle(), render_process_host_id,
-                   MSG_ROUTING_CONTROL, request_id, request, context,
-                   sync_result);
-}
-
 void PluginProcessHost::OnGetCookies(uint32 request_context,
                                      const GURL& url,
                                      std::string* cookies) {
@@ -702,6 +598,12 @@ void PluginProcessHost::ReplyToRenderer(
   renderer_message_filter->Send(reply_msg);
 }
 
+URLRequestContext* PluginProcessHost::GetRequestContext(
+    uint32 request_id,
+    const ViewHostMsg_Resource_Request& request_data) {
+  return CPBrowsingContextManager::Instance()->ToURLRequestContext(request_id);
+}
+
 void PluginProcessHost::RequestPluginChannel(
     ResourceMessageFilter* renderer_message_filter,
     const std::string& mime_type, IPC::Message* reply_msg) {
@@ -711,23 +613,11 @@ void PluginProcessHost::RequestPluginChannel(
   // plugin process (i.e. unblocks a Send() call like a sync message) otherwise
   // a deadlock can occur if the plugin creation request from the renderer is
   // a result of a sync message by the plugin process.
-
-  // The plugin process expects to receive a handle to the renderer requesting
-  // the channel. The handle has to be valid in the plugin process.
-  HANDLE renderer_handle = NULL;
-  BOOL result = DuplicateHandle(GetCurrentProcess(),
-                                renderer_message_filter->renderer_handle(),
-                                handle(), &renderer_handle, 0, FALSE,
-                                DUPLICATE_SAME_ACCESS);
-  DCHECK(result);
-
-  PluginProcessMsg_CreateChannel* msg =
-      new PluginProcessMsg_CreateChannel(
-          renderer_message_filter->render_process_host_id(), renderer_handle);
+  PluginProcessMsg_CreateChannel* msg = new PluginProcessMsg_CreateChannel();
   msg->set_unblock(true);
   if (Send(msg)) {
-    sent_requests_.push_back(ChannelRequest(renderer_message_filter, mime_type,
-                             reply_msg));
+    sent_requests_.push(ChannelRequest(
+        renderer_message_filter, mime_type, reply_msg));
   } else {
     ReplyToRenderer(renderer_message_filter, std::wstring(), FilePath(),
                     reply_msg);
@@ -738,22 +628,12 @@ void PluginProcessHost::RequestPluginChannel(
 #endif
 }
 
-void PluginProcessHost::OnChannelCreated(int process_id,
-                                         const std::wstring& channel_name) {
-  for (size_t i = 0; i < sent_requests_.size(); ++i) {
-    if (sent_requests_[i].renderer_message_filter_->render_process_host_id()
-        == process_id) {
-      ReplyToRenderer(sent_requests_[i].renderer_message_filter_.get(),
-                      channel_name,
-                      info_.path,
-                      sent_requests_[i].reply_msg);
-
-      sent_requests_.erase(sent_requests_.begin() + i);
-      return;
-    }
-  }
-
-  NOTREACHED();
+void PluginProcessHost::OnChannelCreated(const std::wstring& channel_name) {
+  ReplyToRenderer(sent_requests_.front().renderer_message_filter_.get(),
+                  channel_name,
+                  info_.path,
+                  sent_requests_.front().reply_msg);
+  sent_requests_.pop();
 }
 
 void PluginProcessHost::OnDownloadUrl(const std::string& url,

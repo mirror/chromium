@@ -6,6 +6,8 @@
 
 #include "build/build_config.h"
 
+#include <vector>
+
 #if defined(OS_WIN)
 #include <windows.h>
 #include <wininet.h>
@@ -21,18 +23,13 @@
 #include "chrome/renderer/net/render_dns_master.h"
 #include "chrome/renderer/render_process.h"
 #include "chrome/renderer/render_thread.h"
-#include "chrome/renderer/render_view.h"
-#include "chrome/renderer/visitedlink_slave.h"
 #include "googleurl/src/url_util.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebKit.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebKitClient.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebString.h"
 #include "webkit/glue/scoped_clipboard_writer_glue.h"
 #include "webkit/glue/webframe.h"
 #include "webkit/glue/webkit_glue.h"
-
-#include "WebKit.h"
-#include "WebKitClient.h"
-#include "WebString.h"
-
-#include <vector>
 
 #include "SkBitmap.h"
 
@@ -98,9 +95,9 @@ void ScopedClipboardWriterGlue::WriteBitmapFromPixels(const void* pixels,
 
   // Allocate a shared memory buffer to hold the bitmap bits
   shared_buf_ = new base::SharedMemory;
-  shared_buf_->Create(L"", false /* read write */, true /* open existing */,
-                      buf_size);
-  if (!shared_buf_ || !shared_buf_->Map(buf_size)) {
+  const bool created = shared_buf_ && shared_buf_->Create(
+      L"", false /* read write */, true /* open existing */, buf_size);
+  if (!shared_buf_ || !created || !shared_buf_->Map(buf_size)) {
     NOTREACHED();
     return;
   }
@@ -178,10 +175,6 @@ std::string GetDataResource(int resource_id) {
   return ResourceBundle::GetSharedInstance().GetDataResource(resource_id);
 }
 
-SkBitmap* GetBitmapResource(int resource_id) {
-  return ResourceBundle::GetSharedInstance().GetBitmapNamed(resource_id);
-}
-
 #if defined(OS_WIN)
 HCURSOR LoadCursor(int cursor_id) {
   return ResourceBundle::GetSharedInstance().LoadCursor(cursor_id);
@@ -194,17 +187,7 @@ Clipboard* ClipboardGetClipboard(){
   return NULL;
 }
 
-#if defined(OS_LINUX)
-// TODO(port): This should replace the method below (the unsigned int is a
-// windows type).  We may need to convert the type of format so it can be sent
-// over IPC.
-bool ClipboardIsFormatAvailable(Clipboard::FormatType format) {
-  NOTIMPLEMENTED();
-  return false;
-}
-#endif
-
-bool ClipboardIsFormatAvailable(unsigned int format) {
+bool ClipboardIsFormatAvailable(const Clipboard::FormatType& format) {
   bool result;
   RenderThread::current()->Send(
       new ViewHostMsg_ClipboardIsFormatAvailable(format, &result));
@@ -236,14 +219,6 @@ bool GetPlugins(bool refresh, std::vector<WebPluginInfo>* plugins) {
       new ViewHostMsg_GetPlugins(refresh, plugins));
 }
 
-#if defined(OS_WIN)
-bool EnsureFontLoaded(HFONT font) {
-  LOGFONT logfont;
-  GetObject(font, sizeof(LOGFONT), &logfont);
-  return RenderThread::current()->Send(new ViewHostMsg_LoadFont(logfont));
-}
-#endif
-
 webkit_glue::ScreenInfo GetScreenInfo(gfx::NativeViewId window) {
   webkit_glue::ScreenInfo results;
   RenderThread::current()->Send(
@@ -251,55 +226,24 @@ webkit_glue::ScreenInfo GetScreenInfo(gfx::NativeViewId window) {
   return results;
 }
 
-uint64 VisitedLinkHash(const char* canonical_url, size_t length) {
-  return RenderThread::current()->visited_link_slave()->ComputeURLFingerprint(
-      canonical_url, length);
-}
-
-bool IsLinkVisited(uint64 link_hash) {
-  return RenderThread::current()->visited_link_slave()->IsVisited(link_hash);
-}
-
-#ifndef USING_SIMPLE_RESOURCE_LOADER_BRIDGE
-
-// Each RenderView has a ResourceDispatcher.  In unit tests, this function may
-// not work properly since there may be a ResourceDispatcher w/o a RenderView.
-// The WebView's delegate may be null, which typically happens as a WebView is
-// being closed (but it is also possible that it could be null at other times
-// since WebView has a SetDelegate method).
-static ResourceDispatcher* GetResourceDispatcher(WebFrame* frame) {
-  WebViewDelegate* d = frame->GetView()->GetDelegate();
-  return d ? static_cast<RenderView*>(d)->resource_dispatcher() : NULL;
-}
-
 // static factory function
 ResourceLoaderBridge* ResourceLoaderBridge::Create(
-    WebFrame* webframe,
     const std::string& method,
     const GURL& url,
     const GURL& policy_url,
     const GURL& referrer,
+    const std::string& frame_origin,
+    const std::string& main_frame_origin,
     const std::string& headers,
     int load_flags,
     int origin_pid,
     ResourceType::Type resource_type,
-    bool mixed_content) {
-  // TODO(darin): we need to eliminate the webframe parameter because webkit
-  // does not always supply it (see ResourceHandle::loadResourceSynchronously).
-  // Instead we should add context to ResourceRequest, which will be easy to do
-  // once we merge to the latest WebKit (r23806 at least).
-  if (!webframe) {
-    NOTREACHED() << "no webframe";
-    return NULL;
-  }
-  ResourceDispatcher* dispatcher = GetResourceDispatcher(webframe);
-  if (!dispatcher) {
-    DLOG(WARNING) << "no resource dispatcher";
-    return NULL;
-  }
-  return dispatcher->CreateBridge(method, url, policy_url, referrer, headers,
-                                  load_flags, origin_pid, resource_type,
-                                  mixed_content, 0);
+    int routing_id) {
+  ResourceDispatcher* dispatch = RenderThread::current()->resource_dispatcher();
+  return dispatch->CreateBridge(method, url, policy_url, referrer,
+                                frame_origin, main_frame_origin, headers,
+                                load_flags, origin_pid, resource_type,
+                                0, routing_id);
 }
 
 void NotifyCacheStats() {
@@ -310,6 +254,5 @@ void NotifyCacheStats() {
     RenderThread::current()->InformHostOfCacheStatsLater();
 }
 
-#endif  // !USING_SIMPLE_RESOURCE_LOADER_BRIDGE
 
 }  // namespace webkit_glue

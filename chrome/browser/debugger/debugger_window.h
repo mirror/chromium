@@ -6,8 +6,8 @@
 #define CHROME_BROWSER_DEBUGGER_DEBUGGER_WINDOW_H__
 
 #include "chrome/browser/debugger/debugger_io.h"
-#include "chrome/views/window.h"
-#include "chrome/views/window_delegate.h"
+#include "chrome/views/window/window.h"
+#include "chrome/views/window/window_delegate.h"
 
 class DebuggerView;
 class ListValue;
@@ -37,7 +37,7 @@ class DebuggerWindow : public DebuggerInputOutput,
   virtual void SetDebuggerBreak(bool brk);
 
   // Note that this method will take ownership of argv.
-  virtual void CallFunctionInPage(const std::wstring& name, 
+  virtual void CallFunctionInPage(const std::wstring& name,
                                   ListValue* argv);
 
   // views::WindowDelegate methods:
@@ -57,4 +57,3 @@ class DebuggerWindow : public DebuggerInputOutput,
 };
 
 #endif // CHROME_BROWSER_DEBUGGER_DEBUGGER_WINDOW_H__
-

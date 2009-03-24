@@ -7,7 +7,9 @@
 
 #include <string>
 
-#include "googleurl/src/url_parse.h"
+namespace url_parse {
+  struct Parsed;
+}
 
 class FilePath;
 
@@ -63,4 +65,3 @@ namespace URLFixerUpper {
 };
 
 #endif  // #ifndef CHROME_BROWSER_URL_FIXER_UPPER_H__
-

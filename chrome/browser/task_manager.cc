@@ -20,10 +20,11 @@
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/accelerator.h"
 #include "chrome/views/background.h"
-#include "chrome/views/link.h"
-#include "chrome/views/menu.h"
-#include "chrome/views/native_button.h"
-#include "chrome/views/window.h"
+#include "chrome/views/controls/button/native_button.h"
+#include "chrome/views/controls/link.h"
+#include "chrome/views/controls/menu/menu.h"
+#include "chrome/views/widget/widget.h"
+#include "chrome/views/window/window.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 #include "grit/theme_resources.h"
@@ -154,7 +155,7 @@ std::wstring TaskManagerTableModel::GetText(int row, int col_id) {
       if (!first_in_group)
         return std::wstring();
       return IntToWString(base::GetProcId(resource->GetProcess()));
-      
+
     case kGoatsTeleportedColumn:  // Goats Teleported.
       goats_teleported_ += rand();
       return FormatNumber(goats_teleported_);
@@ -264,7 +265,7 @@ HANDLE TaskManagerTableModel::GetProcessAt(int index) {
 
 void TaskManagerTableModel::StartUpdating() {
   DCHECK_NE(TASK_PENDING, update_state_);
- 
+
   // If update_state_ is STOPPING, it means a task is still pending.  Setting
   // it to TASK_PENDING ensures the tasks keep being posted (by Refresh()).
   if (update_state_ == IDLE) {
@@ -546,7 +547,7 @@ int TaskManagerTableModel::CompareValues(int row1, int row2, int column_id) {
       int proc2_id = base::GetProcId(resources_[row2]->GetProcess());
       return ValueCompare<int>(proc1_id, proc2_id);
     }
-      
+
     case kGoatsTeleportedColumn:
       return 0;  // Don't bother, numbers are random.
 
@@ -673,7 +674,7 @@ bool TaskManagerTableModel::GetProcessMetricsForRows(
 ////////////////////////////////////////////////////////////////////////////////
 
 class TaskManagerContents : public views::View,
-                            public views::NativeButton::Listener,
+                            public views::ButtonListener,
                             public views::TableViewObserver,
                             public views::LinkController,
                             public views::ContextMenuController,
@@ -691,8 +692,8 @@ class TaskManagerContents : public views::View,
   void GetSelection(std::vector<int>* selection);
   void GetFocused(std::vector<int>* focused);
 
-  // NativeButton::Listener implementation.
-  virtual void ButtonPressed(views::NativeButton* sender);
+  // ButtonListener implementation.
+  virtual void ButtonPressed(views::Button* sender);
 
   // views::TableViewObserver implementation.
   virtual void OnSelectionChanged();
@@ -777,8 +778,7 @@ void TaskManagerContents::Init(TaskManagerTableModel* table_model) {
   tab_table_->SetObserver(this);
   SetContextMenuController(this);
   kill_button_.reset(new views::NativeButton(
-      l10n_util::GetString(IDS_TASK_MANAGER_KILL)));
-  kill_button_->SetListener(this);
+      this, l10n_util::GetString(IDS_TASK_MANAGER_KILL)));
   about_memory_link_.reset(new views::Link(
       l10n_util::GetString(IDS_TASK_MANAGER_ABOUT_MEMORY_LINK)));
   about_memory_link_->SetController(this);
@@ -846,7 +846,7 @@ void TaskManagerContents::Layout() {
                         y() + kPanelVertMargin,
                         width() - 2 * kPanelHorizMargin,
                         height() - 2 * kPanelVertMargin - prefered_height);
-  
+
   // y-coordinate of button top left.
   gfx::Rect parent_bounds = GetParent()->GetLocalBounds(false);
   int y_buttons = parent_bounds.bottom() - prefered_height - kButtonVEdgeMargin;
@@ -892,9 +892,9 @@ void TaskManagerContents::GetFocused(std::vector<int>* focused) {
   }
 }
 
-// NativeButton::Listener implementation.
-void TaskManagerContents::ButtonPressed(views::NativeButton* sender) {
-  if (sender == kill_button_)
+// ButtonListener implementation.
+void TaskManagerContents::ButtonPressed(views::Button* sender) {
+  if (sender == kill_button_.get())
     task_manager_->KillSelectedProcesses();
 }
 
@@ -921,6 +921,8 @@ void TaskManagerContents::LinkActivated(views::Link* source,
   DCHECK(browser);
   browser->OpenURL(GURL("about:memory"), GURL(), NEW_FOREGROUND_TAB,
                    PageTransition::LINK);
+  // In case the browser window is minimzed, show it.
+  browser->window()->Show();
 }
 
 void TaskManagerContents::ShowContextMenu(views::View* source,
@@ -928,7 +930,7 @@ void TaskManagerContents::ShowContextMenu(views::View* source,
                                           int y,
                                           bool is_mouse_gesture) {
   UpdateStatsCounters();
-  Menu menu(this, Menu::TOPLEFT, source->GetWidget()->GetHWND());
+  Menu menu(this, Menu::TOPLEFT, source->GetWidget()->GetNativeView());
   for (std::vector<views::TableColumn>::iterator i =
        columns_.begin(); i != columns_.end(); ++i) {
     menu.AppendMenuItem(i->id, i->title, Menu::CHECKBOX);
@@ -965,7 +967,7 @@ TaskManager::~TaskManager() {
 void TaskManager::Open() {
   TaskManager* task_manager = GetInstance();
   if (task_manager->window()) {
-    task_manager->window()->MoveToFront(true);
+    task_manager->window()->Activate();
   } else {
     views::Window::CreateChromeWindow(NULL, gfx::Rect(), task_manager);
     task_manager->table_model_->StartUpdating();
@@ -1085,7 +1087,9 @@ void TaskManager::WindowClosing() {
   // non-client view.
   contents_->GetParent()->RemoveChildView(contents_.get());
   Close();
+}
 
+void TaskManager::DeleteDelegate() {
   ReleaseWindow();
 }
 
@@ -1097,4 +1101,3 @@ views::View* TaskManager::GetContentsView() {
 TaskManager* TaskManager::GetInstance() {
   return Singleton<TaskManager>::get();
 }
-

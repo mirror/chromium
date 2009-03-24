@@ -12,7 +12,7 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
-#include "chrome/views/window.h"
+#include "chrome/views/window/window.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 #include "grit/locale_settings.h"
@@ -99,4 +99,3 @@ void FontsLanguagesWindowView::Init() {
   tabs_->AddTab(l10n_util::GetString(
       IDS_FONT_LANGUAGE_SETTING_LANGUAGES_TAB_TITLE), languages_page_);
 }
-

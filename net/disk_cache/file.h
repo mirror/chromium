@@ -20,7 +20,7 @@ class FileIOCallback {
   // Notified of the actual number of bytes read or written. This value is
   // negative if an error occurred.
   virtual void OnFileIOComplete(int bytes_copied) = 0;
-  
+
   virtual ~FileIOCallback() {}
 };
 
@@ -87,4 +87,3 @@ class File : public base::RefCounted<File> {
 }  // namespace disk_cache
 
 #endif  // NET_DISK_CACHE_FILE_H_
-

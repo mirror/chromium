@@ -17,10 +17,11 @@
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/stl_util-inl.h"
 #include "chrome/views/background.h"
-#include "chrome/views/focus_manager.h"
+#include "chrome/views/controls/label.h"
+#include "chrome/views/controls/text_field.h"
+#include "chrome/views/focus/focus_manager.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/label.h"
-#include "chrome/views/text_field.h"
+#include "chrome/views/widget/widget.h"
 #include "grit/generated_resources.h"
 #include "grit/locale_settings.h"
 #include "grit/theme_resources.h"
@@ -374,9 +375,6 @@ bool ShelfItemDialog::IsModal() const {
   return true;
 }
 
-void ShelfItemDialog::WindowClosing() {
-}
-
 std::wstring ShelfItemDialog::GetDialogButtonLabel(DialogButton button) const {
   if (button == DialogDelegate::DIALOGBUTTON_OK)
     return l10n_util::GetString(IDS_ASI_ADD);
@@ -469,7 +467,7 @@ bool ShelfItemDialog::AcceleratorPressed(
     window()->Close();
   } else if (accelerator.GetKeyCode() == VK_RETURN) {
     views::FocusManager* fm = views::FocusManager::GetFocusManager(
-        GetWidget()->GetHWND());
+        GetWidget()->GetNativeView());
     if (fm->GetFocusedView() == url_table_) {
       // Return on table behaves like a double click.
       OnDoubleClick();
@@ -515,4 +513,3 @@ void ShelfItemDialog::OnDoubleClick() {
 GURL ShelfItemDialog::GetInputURL() const {
   return GURL(URLFixerUpper::FixupURL(url_field_->GetText(), L""));
 }
-

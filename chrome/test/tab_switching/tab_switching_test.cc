@@ -4,7 +4,6 @@
 
 #include "base/command_line.h"
 #include "base/file_util.h"
-#include "base/time.h"
 #include "chrome/app/chrome_dll_resource.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
@@ -101,9 +100,9 @@ class TabSwitchingUITest : public UITest {
     }
 
     // Print the average and standard deviation.
-    PrintResultMeanAndError(L"tab_switch", L"", L"t",
-        ASCIIToWide(average) + L", " + ASCIIToWide(std_dev), L"ms",
-        true /* important */);
+    PrintResultMeanAndError("tab_switch", "", "t",
+                            average + ", " + std_dev, "ms",
+                            true /* important */);
   }
 
  protected:
@@ -142,4 +141,3 @@ class TabSwitchingUITest : public UITest {
 TEST_F(TabSwitchingUITest, GenerateTabSwitchStats) {
   RunTabSwitchingUITest();
 }
-

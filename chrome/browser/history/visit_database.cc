@@ -36,7 +36,8 @@ bool VisitDatabase::InitVisitTable() {
         "from_visit INTEGER,"
         "transition INTEGER DEFAULT 0 NOT NULL,"
         "segment_id INTEGER,"
-        "is_indexed BOOLEAN)",  // True when we have indexed data for this visit.
+        // True when we have indexed data for this visit.
+        "is_indexed BOOLEAN)",
         NULL, NULL, NULL) != SQLITE_OK)
       return false;
   } else if (!DoesSqliteColumnExist(GetDB(), "visits",
@@ -364,6 +365,18 @@ bool VisitDatabase::GetVisitCountToHost(const GURL& url,
 
   *first_visit = Time::FromInternalValue(statement->column_int64(0));
   *count = statement->column_int(1);
+  return true;
+}
+
+bool VisitDatabase::GetStartDate(Time* first_visit) {
+  SQLITE_UNIQUE_STATEMENT(statement, GetStatementCache(),
+      "SELECT MIN(visit_time) FROM visits WHERE visit_time != 0");
+  if (!statement.is_valid() || statement->step() != SQLITE_ROW || 
+      statement->column_int64(0) == 0) {
+    *first_visit = Time::Now();
+    return false;
+  }
+  *first_visit = Time::FromInternalValue(statement->column_int64(0));
   return true;
 }
 

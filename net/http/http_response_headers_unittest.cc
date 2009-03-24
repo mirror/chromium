@@ -103,7 +103,7 @@ TEST(HttpResponseHeadersTest, NormalizeHeadersLeadingWhitespace) {
     "HTTP/1.1 202 Accepted\n"
     "Set-Cookie: a, b\n",
 
-    202, 
+    202,
     HttpVersion(1,1),
     HttpVersion(1,1)
   };
@@ -636,7 +636,8 @@ TEST(HttpResponseHeadersTest, GetMimeType) {
   for (size_t i = 0; i < arraysize(tests); ++i) {
     string headers(tests[i].raw_headers);
     HeadersToRaw(&headers);
-    scoped_refptr<HttpResponseHeaders> parsed = new HttpResponseHeaders(headers);
+    scoped_refptr<HttpResponseHeaders> parsed =
+        new HttpResponseHeaders(headers);
 
     std::string value;
     EXPECT_EQ(tests[i].has_mimetype, parsed->GetMimeType(&value));
@@ -762,7 +763,8 @@ TEST(HttpResponseHeadersTest, RequiresValidation) {
   for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {
     string headers(tests[i].headers);
     HeadersToRaw(&headers);
-    scoped_refptr<HttpResponseHeaders> parsed = new HttpResponseHeaders(headers);
+    scoped_refptr<HttpResponseHeaders> parsed =
+        new HttpResponseHeaders(headers);
 
     bool requires_validation =
         parsed->RequiresValidation(request_time, response_time, current_time);
@@ -1042,6 +1044,17 @@ TEST(HttpResponseHeadersTest, IsKeepAlive) {
     const char* headers;
     bool expected_keep_alive;
   } tests[] = {
+    // The status line fabricated by HttpNetworkTransaction for a 0.9 response.
+    // Treated as 0.9.
+    { "HTTP/0.9 200 OK",
+      false
+    },
+    // This could come from a broken server.  Treated as 1.0 because it has a
+    // header.
+    { "HTTP/0.9 200 OK\n"
+      "connection: keep-alive\n",
+      true
+    },
     { "HTTP/1.1 200 OK\n",
       true
     },
@@ -1072,9 +1085,21 @@ TEST(HttpResponseHeadersTest, IsKeepAlive) {
       "connection: keep-alive\n",
       true
     },
+    { "HTTP/1.0 200 OK\n"
+      "proxy-connection: close\n",
+      false
+    },
+    { "HTTP/1.0 200 OK\n"
+      "proxy-connection: keep-alive\n",
+      true
+    },
     { "HTTP/1.1 200 OK\n"
       "proxy-connection: close\n",
       false
+    },
+    { "HTTP/1.1 200 OK\n"
+      "proxy-connection: keep-alive\n",
+      true
     },
   };
   for (size_t i = 0; i < ARRAYSIZE_UNSAFE(tests); ++i) {

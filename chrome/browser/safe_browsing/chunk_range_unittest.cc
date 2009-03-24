@@ -4,7 +4,6 @@
 //
 // Test program to convert lists of integers into ranges, and vice versa.
 
-#include "base/logging.h"
 #include "chunk_range.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -192,5 +191,3 @@ TEST(SafeBrowsingChunkRangeTest, TestSearchChunkRanges) {
   EXPECT_FALSE(IsChunkInRange(990, ranges));
   EXPECT_FALSE(IsChunkInRange(2000, ranges));
 }
-
-

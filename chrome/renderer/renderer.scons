@@ -12,8 +12,8 @@ env.SConscript([
     '$ICU38_DIR/using_icu38.scons',
     '$MEDIA_DIR/using_media.scons',
     '$NPAPI_DIR/using_npapi.scons',
+    '$PRINTING_DIR/using_printing.scons',
     '$SKIA_DIR/using_skia.scons',
-    '$WEBKIT_DIR/build/WebKit/using_webkit.scons',
 ], {'env':env})
 
 env.Prepend(
@@ -58,21 +58,19 @@ input_files = ChromeFileList([
     'net/render_dns_queue.h',
   ]),
   MSVSFilter('extensions', [
-    'extensions/extension_bindings.cc',
-    'extensions/extension_bindings.h',
+    'extensions/renderer_extension_bindings.cc',
+    'extensions/renderer_extension_bindings.h',
   ]),
     'about_handler.cc',
     'about_handler.h',
-    'chrome_plugin_host.cc',
-    'chrome_plugin_host.h',
     'debug_message_handler.cc',
     'debug_message_handler.h',
-    'dev_tools_agent.cc',
-    'dev_tools_agent.h',
-    'dev_tools_client.cc',
-    'dev_tools_client.h',
-    'dev_tools_messages.h',
-    'dev_tools_messages_internal.h',
+    'devtools_agent.cc',
+    'devtools_agent.h',
+    'devtools_client.cc',
+    'devtools_client.h',
+    'devtools_messages.h',
+    'devtools_messages_internal.h',
     'dom_ui_bindings.cc',
     'dom_ui_bindings.h',
     'external_host_bindings.cc',
@@ -127,7 +125,6 @@ if env.Bit('linux'):
 
   # TODO(port): Port these to Linux
   input_files.Remove(
-      'chrome_plugin_host.cc',
       'plugin_channel_host.cc',
       'webplugin_delegate_proxy.cc',
   )
@@ -135,7 +132,6 @@ if env.Bit('linux'):
 # TODO(port): Port these to Mac
 if env.Bit('mac'):
   input_files.Remove(
-      'chrome_plugin_host.cc',
       'debug_message_handler.cc',
       'external_js_object.cc',
       'net/render_dns_master.cc',

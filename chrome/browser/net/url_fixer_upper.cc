@@ -12,7 +12,6 @@
 #include "chrome/common/gfx/text_elider.h"
 #include "chrome/common/url_constants.h"
 #include "googleurl/src/gurl.h"
-#include "googleurl/src/url_canon.h"
 #include "googleurl/src/url_file.h"
 #include "googleurl/src/url_parse.h"
 #include "googleurl/src/url_util.h"
@@ -37,7 +36,8 @@ static void PrepareStringForFileOps(const FilePath& text,
 static bool ValidPathForFile(const FilePath::StringType& text,
                              FilePath* full_path) {
   FilePath file_path(text);
-  file_util::AbsolutePath(&file_path);
+  if (!file_util::AbsolutePath(&file_path))
+    return false;
 
   if (!file_util::PathExists(file_path))
     return false;
@@ -265,7 +265,7 @@ string URLFixerUpper::SegmentURL(const string& text,
   *parts = url_parse::Parsed();
 
   string trimmed;
-  TrimWhitespace(text, TRIM_ALL, &trimmed);
+  TrimWhitespaceUTF8(text, TRIM_ALL, &trimmed);
   if (trimmed.empty())
     return string();  // Nothing to segment.
 

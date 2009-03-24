@@ -103,13 +103,6 @@ bool ExtensionsService::Init() {
   return true;
 }
 
-void ExtensionsService::LaunchExtensionProcess(Extension* extension) {
-  // TODO(mpcomplete): Do something useful here.
-  GURL url = Extension::GetResourceURL(extension->url(), "index.html");
-  ExtensionView* view = new ExtensionView(url, profile_);
-  view->InitHidden();
-}
-
 MessageLoop* ExtensionsService::GetMessageLoop() {
   return message_loop_;
 }
@@ -136,8 +129,7 @@ void ExtensionsService::LoadExtension(const FilePath& extension_path) {
           scoped_refptr<ExtensionsServiceFrontendInterface>(this)));
 }
 
-void ExtensionsService::OnExtensionsLoaded(
-    ExtensionList* new_extensions) {
+void ExtensionsService::OnExtensionsLoaded(ExtensionList* new_extensions) {
   extensions_.insert(extensions_.end(), new_extensions->begin(),
                      new_extensions->end());
 
@@ -306,14 +298,27 @@ Extension* ExtensionsServiceBackend::LoadExtension(
   }
 
   // Validate that claimed resources actually exist.
-  for (UserScriptList::const_iterator iter =
-       extension->content_scripts().begin();
-       iter != extension->content_scripts().end(); ++iter) {
-    if (!file_util::PathExists(iter->path())) {
-      ReportExtensionLoadError(extension_path,
-          StringPrintf("Could not load content script '%s'.",
-                       WideToUTF8(iter->path().ToWStringHack()).c_str()));
-      return NULL;
+  for (size_t i = 0; i < extension->content_scripts().size(); ++i) {
+    const UserScript& script = extension->content_scripts()[i];
+
+    for (size_t j = 0; j < script.js_scripts().size(); j++) {
+      const FilePath& path = script.js_scripts()[j].path();
+      if (!file_util::PathExists(path)) {
+        ReportExtensionLoadError(extension_path,
+          StringPrintf("Could not load '%s' for content script.",
+          WideToUTF8(path.ToWStringHack()).c_str()));
+        return NULL;
+      }
+    }
+
+    for (size_t j = 0; j < script.css_scripts().size(); j++) {
+      const FilePath& path = script.css_scripts()[j].path();
+      if (!file_util::PathExists(path)) {
+        ReportExtensionLoadError(extension_path,
+          StringPrintf("Could not load '%s' for content script.",
+          WideToUTF8(path.ToWStringHack()).c_str()));
+        return NULL;
+      }
     }
   }
 
@@ -371,7 +376,7 @@ DictionaryValue* ExtensionsServiceBackend::ReadManifest(
   }
   if (header.header_size > sizeof(ExtensionHeader))
     fseek(file.get(), header.header_size - sizeof(ExtensionHeader), SEEK_CUR);
-  
+
   char buf[1 << 16];
   std::string manifest_str;
   size_t read_size = std::min(sizeof(buf), header.manifest_size);
@@ -495,7 +500,7 @@ bool ExtensionsServiceBackend::CheckCurrentVersion(
     // has actually loaded successfully.
     FilePath version_dir = dest_dir.AppendASCII(current_version_str);
     if (file_util::PathExists(version_dir)) {
-      ReportExtensionInstallError(dest_dir, 
+      ReportExtensionInstallError(dest_dir,
           "Existing version is already up to date.");
       return false;
     }
@@ -503,7 +508,7 @@ bool ExtensionsServiceBackend::CheckCurrentVersion(
   return true;
 }
 
-bool ExtensionsServiceBackend::InstallDirSafely(const FilePath& source_dir, 
+bool ExtensionsServiceBackend::InstallDirSafely(const FilePath& source_dir,
                                                 const FilePath& dest_dir) {
 
   if (file_util::PathExists(dest_dir)) {
@@ -564,13 +569,13 @@ bool ExtensionsServiceBackend::SetCurrentVersion(const FilePath& dest_dir,
     // Restore the old CurrentVersion.
     if (file_util::PathExists(current_version_old)) {
       if (!file_util::Move(current_version_old, current_version)) {
-        LOG(WARNING) << "couldn't restore " << current_version_old.value() << 
+        LOG(WARNING) << "couldn't restore " << current_version_old.value() <<
             " to " << current_version.value();
 
         // TODO(erikkay): This is an ugly state to be in.  Try harder?
       }
     }
-    ReportExtensionInstallError(dest_dir, 
+    ReportExtensionInstallError(dest_dir,
                                 "Couldn't create CurrentVersion file.");
     return false;
   }
@@ -616,7 +621,7 @@ bool ExtensionsServiceBackend::InstallOrUpdateExtension(
 
   // If an expected id was provided, make sure it matches.
   if (expected_id.length() && expected_id != extension.id()) {
-    ReportExtensionInstallError(source_file, 
+    ReportExtensionInstallError(source_file,
         "ID in new extension manifest does not match expected ID.");
     return false;
   }
@@ -646,7 +651,7 @@ bool ExtensionsServiceBackend::InstallOrUpdateExtension(
   ScopedTempDir scoped_temp;
   scoped_temp.Set(temp_dir);
   if (!scoped_temp.IsValid()) {
-    ReportExtensionInstallError(source_file, 
+    ReportExtensionInstallError(source_file,
                                 "Couldn't create temporary directory.");
     return false;
   }

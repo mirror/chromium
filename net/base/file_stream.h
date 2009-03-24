@@ -12,6 +12,7 @@
 
 #include "base/file_path.h"
 #include "base/platform_file.h"
+#include "base/scoped_ptr.h"
 #include "net/base/completion_callback.h"
 
 namespace net {
@@ -70,12 +71,12 @@ class FileStream {
   // not complete synchronously, then ERR_IO_PENDING is returned, and the
   // callback will be notified on the current thread (via the MessageLoop) when
   // the read has completed.
-  // 
+  //
   // In the case of an asychronous read, the memory pointed to by |buf| must
   // remain valid until the callback is notified.  However, it is valid to
   // destroy or close the file stream while there is an asynchronous read in
   // progress.  That will cancel the read and allow the buffer to be freed.
-  // 
+  //
   // This method should not be called if the stream was opened WRITE_ONLY.
   //
   // You can pass NULL as the callback for synchronous I/O.
@@ -90,7 +91,7 @@ class FileStream {
 
   // Call this method to write data at the current stream position.  Up to
   // buf_len bytes will be written from buf. (In other words, partial writes are
-  // allowed.)  Returns the number of bytes written, or an error code if the 
+  // allowed.)  Returns the number of bytes written, or an error code if the
   // operation could not be performed.
   //
   // If opened with PLATFORM_FILE_ASYNC, then a non-null callback
@@ -98,16 +99,23 @@ class FileStream {
   // not complete synchronously, then ERR_IO_PENDING is returned, and the
   // callback will be notified on the current thread (via the MessageLoop) when
   // the write has completed.
-  // 
+  //
   // In the case of an asychronous write, the memory pointed to by |buf| must
   // remain valid until the callback is notified.  However, it is valid to
   // destroy or close the file stream while there is an asynchronous write in
   // progress.  That will cancel the write and allow the buffer to be freed.
-  // 
+  //
   // This method should not be called if the stream was opened READ_ONLY.
   //
   // You can pass NULL as the callback for synchronous I/O.
   int Write(const char* buf, int buf_len, CompletionCallback* callback);
+
+  // Truncates the file to be |bytes| length. This is only valid for writable
+  // files. After truncation the file stream is positioned at |bytes|. The new
+  // position is retured, or a value < 0 on error.
+  // WARNING: one may not truncate a file beyond its current length on any
+  //   platform with this call.
+  int64 Truncate(int64 bytes);
 
  private:
   class AsyncContext;

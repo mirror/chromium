@@ -36,10 +36,11 @@ class TestLocationBar : public LocationBar {
   virtual void AcceptInput() {}
   virtual void FocusLocation() {}
   virtual void FocusSearch() {}
+  virtual void UpdateFeedIcon() {}
   virtual void SaveStateToContents(TabContents* contents) {}
 
  private:
-  
+
   // Test-supplied values that will be returned through the LocationBar
   // interface.
   std::wstring input_string_;

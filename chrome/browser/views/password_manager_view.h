@@ -8,17 +8,33 @@
 #include <vector>
 
 #include "base/scoped_ptr.h"
+#include "chrome/browser/profile.h"
 #include "chrome/browser/webdata/web_data_service.h"
 #include "chrome/common/stl_util-inl.h"
 #include "chrome/common/gfx/text_elider.h"
-#include "chrome/views/dialog_delegate.h"
-#include "chrome/views/label.h"
-#include "chrome/views/native_button.h"
-#include "chrome/views/table_view.h"
-#include "chrome/views/window.h"
+#include "chrome/views/controls/button/native_button.h"
+#include "chrome/views/controls/label.h"
+#include "chrome/views/controls/table/table_view.h"
+#include "chrome/views/window/dialog_delegate.h"
+#include "chrome/views/window/window.h"
 #include "webkit/glue/password_form.h"
 
 class Profile;
+
+// An observer interface to notify change of row count in a table model. This
+// allow the container view of TableView(i.e. PasswordManagerView and
+// PasswordManagerExceptionsView), to be notified of row count changes directly
+// from the TableModel. We have two different observers in
+// PasswordManagerTableModel, namely views::TableModelObserver and
+// PasswordManagerTableModelObserver, rather than adding this event to
+// views::TableModelObserver because only container view of
+// PasswordManagerTableModel cares about this event. Because of the same reason
+// the relationship between a PasswordManagerTableModel and
+// PasswordManagerTableModelObserver is 1-to-1.
+class PasswordManagerTableModelObserver {
+ public:
+  virtual void OnRowCountChanged(size_t rows) = 0;
+};
 
 class PasswordManagerTableModel : public views::TableModel,
                                   public WebDataServiceConsumer {
@@ -49,6 +65,11 @@ class PasswordManagerTableModel : public views::TableModel,
   // Return the PasswordForm at the specified index.
   PasswordForm* GetPasswordFormAt(int row);
 
+  // Set the observer who concerns about how many rows are in the table.
+  void set_row_count_observer(PasswordManagerTableModelObserver* observer) {
+    row_count_observer_ = observer;
+  }
+
  protected:
   // Wraps the PasswordForm from the database and caches the display URL for
   // quick sorting.
@@ -57,7 +78,7 @@ class PasswordManagerTableModel : public views::TableModel,
         : display_url(url), form(password_form) {
     }
 
-    // Contains the URL that is displayed along with the 
+    // Contains the URL that is displayed along with the
     gfx::SortedDisplayURL display_url;
 
     // The underlying PasswordForm. We own this.
@@ -71,6 +92,10 @@ class PasswordManagerTableModel : public views::TableModel,
 
   // The TableView observing this model.
   views::TableModelObserver* observer_;
+
+  // Dispatching row count events specific to this password manager table model
+  // to this observer.
+  PasswordManagerTableModelObserver* row_count_observer_;
 
   // Handle to any pending WebDataService::GetLogins query.
   WebDataService::Handle pending_login_query_;
@@ -93,7 +118,9 @@ class PasswordManagerTableModel : public views::TableModel,
 // preferred size is the size of the widest string.
 class MultiLabelButtons : public views::NativeButton {
  public:
-  MultiLabelButtons(const std::wstring& label, const std::wstring& alt_label);
+  MultiLabelButtons(views::ButtonListener* listener,
+                    const std::wstring& label,
+                    const std::wstring& alt_label);
 
   virtual gfx::Size GetPreferredSize();
 
@@ -108,7 +135,8 @@ class MultiLabelButtons : public views::NativeButton {
 class PasswordManagerView : public views::View,
                             public views::DialogDelegate,
                             public views::TableViewObserver,
-                            public views::NativeButton::Listener {
+                            public views::ButtonListener,
+                            public PasswordManagerTableModelObserver {
  public:
   explicit PasswordManagerView(Profile* profile);
   virtual ~PasswordManagerView();
@@ -121,13 +149,11 @@ class PasswordManagerView : public views::View,
   virtual gfx::Size GetPreferredSize();
   virtual void ViewHierarchyChanged(bool is_add, views::View* parent,
                                     views::View* child);
-  virtual void SetRemoveAllEnabled(bool enabled);
-
   // views::TableViewObserver implementation.
   virtual void OnSelectionChanged();
 
-  // NativeButton::Listener implementation.
-  virtual void ButtonPressed(views::NativeButton* sender);
+  // ButtonListener implementation.
+  virtual void ButtonPressed(views::Button* sender);
 
   // views::DialogDelegate methods:
   virtual int GetDialogButtons() const;
@@ -138,6 +164,9 @@ class PasswordManagerView : public views::View,
   virtual std::wstring GetWindowTitle() const;
   virtual void WindowClosing();
   virtual views::View* GetContentsView();
+
+  // PasswordManagerTableModelObserver implementation.
+  virtual void OnRowCountChanged(size_t rows);
 
  private:
   // Wire up buttons, the model, and the table view, and query the DB for
@@ -160,7 +189,8 @@ class PasswordManagerView : public views::View,
   views::NativeButton remove_all_button_;
   views::Label password_label_;
 
+  static PasswordManagerView* instance_;
+
   DISALLOW_EVIL_CONSTRUCTORS(PasswordManagerView);
 };
 #endif  // CHROME_BROWSER_PASSWORD_MANAGER_VIEW_H__
-

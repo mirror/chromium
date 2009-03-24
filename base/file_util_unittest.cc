@@ -685,6 +685,36 @@ TEST_F(FileUtilTest, CreateShortcutTest) {
   DeleteFile(link_file.value().c_str());
   CoUninitialize();
 }
+
+TEST_F(FileUtilTest, CopyAndDeleteDirectoryTest) {
+  // Create a directory
+  FilePath dir_name_from =
+      test_dir_.Append(FILE_PATH_LITERAL("CopyAndDelete_From_Subdir"));
+  file_util::CreateDirectory(dir_name_from);
+  ASSERT_TRUE(file_util::PathExists(dir_name_from));
+
+  // Create a file under the directory
+  FilePath file_name_from =
+      dir_name_from.Append(FILE_PATH_LITERAL("CopyAndDelete_Test_File.txt"));
+  CreateTextFile(file_name_from, L"Gooooooooooooooooooooogle");
+  ASSERT_TRUE(file_util::PathExists(file_name_from));
+
+  // Move the directory by using CopyAndDeleteDirectory
+  FilePath dir_name_to = test_dir_.Append(
+      FILE_PATH_LITERAL("CopyAndDelete_To_Subdir"));
+  FilePath file_name_to =
+      dir_name_to.Append(FILE_PATH_LITERAL("CopyAndDelete_Test_File.txt"));
+
+  ASSERT_FALSE(file_util::PathExists(dir_name_to));
+
+  EXPECT_TRUE(file_util::CopyAndDeleteDirectory(dir_name_from, dir_name_to));
+
+  // Check everything has been moved.
+  EXPECT_FALSE(file_util::PathExists(dir_name_from));
+  EXPECT_FALSE(file_util::PathExists(file_name_from));
+  EXPECT_TRUE(file_util::PathExists(dir_name_to));
+  EXPECT_TRUE(file_util::PathExists(file_name_to));
+}
 #endif
 
 TEST_F(FileUtilTest, CreateTemporaryFileNameTest) {
@@ -1015,9 +1045,7 @@ TEST_F(FileUtilTest, PathComponentsTest) {
 }
 
 TEST_F(FileUtilTest, Contains) {
-  FilePath data_dir;
-  ASSERT_TRUE(PathService::Get(base::DIR_TEMP, &data_dir));
-  data_dir = data_dir.Append(FILE_PATH_LITERAL("FilePathTest"));
+  FilePath data_dir = test_dir_.Append(FILE_PATH_LITERAL("FilePathTest"));
 
   // Create a fresh, empty copy of this directory.
   if (file_util::PathExists(data_dir)) {

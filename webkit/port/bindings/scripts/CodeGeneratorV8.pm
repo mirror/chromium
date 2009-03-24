@@ -372,7 +372,7 @@ sub GenerateDomainSafeFunctionGetter
   my $funcName = $function->signature->name;
 
   my $signature = "v8::Signature::New(" . $className . "::GetRawTemplate())";
-  if ($function->signature->extendedAttributes->{"v8DoNotCheckSignature"}) {
+  if ($function->signature->extendedAttributes->{"V8DoNotCheckSignature"}) {
     $signature = "v8::Local<v8::Signature>()";
   }
 
@@ -511,7 +511,7 @@ END
 END
     }
 
-  } elsif ($attrExt->{"v8OnProto"} || $attrExt->{"v8DisallowShadowing"}) {
+  } elsif ($attrExt->{"v8OnProto"} || $attrExt->{"V8DisallowShadowing"}) {
     # perform lookup first
     push(@implContentDecls, <<END);
     v8::Handle<v8::Object> holder = V8Proxy::LookupDOMWrapper(V8ClassIndex::$classIndex, info.This());
@@ -897,11 +897,11 @@ sub GenerateBatchedAttributeData
       $accessControl = "v8::ALL_CAN_WRITE";
     } elsif ($attrExt->{"DoNotCheckDomainSecurity"}) {
       $accessControl = "v8::ALL_CAN_READ";
-       if (!($attribute->type =~ /^readonly/)) {
+       if (!($attribute->type =~ /^readonly/) && !($attrExt->{"V8ReadOnly"})) {
          $accessControl .= "|v8::ALL_CAN_WRITE";
        }
     }
-    if ($attrExt->{"v8DisallowShadowing"}) {
+    if ($attrExt->{"V8DisallowShadowing"}) {
       $accessControl .= "|v8::PROHIBITS_OVERWRITING";
     }
     $accessControl = "static_cast<v8::AccessControl>(" . $accessControl . ")";
@@ -928,7 +928,7 @@ sub GenerateBatchedAttributeData
     if ($attrExt->{"DontEnum"}) {
       $propAttr .= "|v8::DontEnum";
     }
-    if ($attrExt->{"DontDelete"}) {
+    if ($attrExt->{"V8DisallowShadowing"}) {
       $propAttr .= "|v8::DontDelete";
     }
 
@@ -989,7 +989,7 @@ sub GenerateBatchedAttributeData
     }
 
     # Read only attributes
-    if ($attribute->type =~ /^readonly/) {
+    if ($attribute->type =~ /^readonly/ || $attrExt->{"V8ReadOnly"}) {
       $setter = "0";
     }
 
@@ -1105,7 +1105,8 @@ sub GenerateImplementation
       } elsif ($attribute->signature->extendedAttributes->{"Replaceable"}) {
         $dataNode->extendedAttributes->{"ExtendsDOMGlobalObject"} || die "Replaceable attribute can only be used in interface that defines ExtendsDOMGlobalObject attribute!";
 #        GenerateReplaceableAttrSetter($implClassName);
-      } elsif ($attribute->type !~ /^readonly/) {
+      } elsif ($attribute->type !~ /^readonly/ && 
+               !$attribute->signature->extendedAttributes->{"V8ReadOnly"}) {
         GenerateNormalAttrSetter($attribute, $dataNode, $classIndex, $implClassName);
       }
     }
@@ -1146,7 +1147,7 @@ sub GenerateImplementation
     my @normal;
     if ($interfaceName eq "DOMWindow") {
       foreach my $attribute (@$attributes) {
-        if ($attribute->signature->extendedAttributes->{"v8DisallowShadowing"}) {
+        if ($attribute->signature->extendedAttributes->{"V8DisallowShadowing"}) {
           push(@disallows_shadowing, $attribute);
         } else {
           push(@normal, $attribute);
@@ -1237,14 +1238,14 @@ END
       if ($attrExt->{"DontEnum"}) {
         $property_attributes .= "|v8::DontEnum";
       }
-      if ($attrExt->{"ReadOnly"}) {
+      if ($attrExt->{"V8ReadOnly"}) {
         $property_attributes .= "|v8::ReadOnly";
       }
 
       my $commentInfo = "Function '$name' (ExtAttr: '" . join(' ', keys(%{$attrExt})) . "')";
  
       my $template = "proto";
-      if ($attrExt->{"v8OnInstance"}) {
+      if ($attrExt->{"V8OnInstance"}) {
         $template = "instance";
       }
 
@@ -1280,7 +1281,7 @@ END
       }
 
       my $signature = "default_signature";
-      if ($attrExt->{"v8DoNotCheckSignature"}){
+      if ($attrExt->{"V8DoNotCheckSignature"}){
         $signature = "v8::Local<v8::Signature>()";
       }
 

@@ -4,6 +4,7 @@
 
 #include "net/disk_cache/mem_entry_impl.h"
 
+#include "base/logging.h"
 #include "net/base/io_buffer.h"
 #include "net/base/net_errors.h"
 #include "net/disk_cache/mem_backend_impl.h"
@@ -16,6 +17,8 @@ MemEntryImpl::MemEntryImpl(MemBackendImpl* backend) {
   doomed_ = false;
   backend_ = backend;
   ref_count_ = 0;
+  next_ = NULL;
+  prev_ = NULL;
   for (int i = 0; i < NUM_STREAMS; i++)
     data_size_[i] = 0;
 }
@@ -176,4 +179,3 @@ void MemEntryImpl::UpdateRank(bool modified) {
 }
 
 }  // namespace disk_cache
-

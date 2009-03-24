@@ -102,9 +102,6 @@ class WebPlugin {
   // Returns the DOM element that loaded the plugin.
   virtual NPObject* GetPluginElement() = 0;
 
-  // Returns the WebFrame that contains this plugin.
-  virtual WebFrame* GetWebFrame() = 0;
-
   // Cookies
   virtual void SetCookie(const GURL& url,
                          const GURL& policy_url,
@@ -170,4 +167,3 @@ class WebPluginResourceClient {
 
 
 #endif  // #ifndef WEBKIT_GLUE_WEBPLUGIN_H__
-

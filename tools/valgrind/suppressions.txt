@@ -6,74 +6,15 @@
    fun:MOZ_Z_deflate
 }
 {
-   dlopen leak; not our problem.
+   gtk developers don't like cleaning up one-time leaks.  See http://mail.gnome.org/archives/gtk-devel-list/2004-April/msg00230.html
    Memcheck:Leak
-   fun:malloc
-   fun:_dl_map_object_from_fd
-   fun:_dl_map_object
-   fun:dl_open_worker
-   fun:_dl_catch_error
-   fun:_dl_open
-   fun:dlopen_doit
-   fun:_dl_catch_error
-   fun:_dlerror_run
-   fun:dlopen@@GLIBC_2.1
-   fun:PR_LoadLibraryWithFlags
-   obj:*
-}
-{
-   Leak inside GTK?
-   Memcheck:Leak
-   fun:calloc
-   fun:g_malloc0
-   obj:/usr/lib32/libgobject-2.0.so.0.1600.3
-   obj:/usr/lib32/libgobject-2.0.so.0.1600.3
-   fun:g_type_register_fundamental
-   obj:/usr/lib32/libgobject-2.0.so.0.1600.3
-   fun:g_type_init_with_debug_flags
-   fun:g_type_init
-   fun:gdk_pre_parse_libgtk_only
-   obj:/usr/lib32/libgtk-x11-2.0.so.0.1200.9
-   fun:g_option_context_parse
-   fun:gtk_parse_args
-}
-{
-   Leak inside GTK?
-   Memcheck:Leak
-   fun:memalign
-   fun:posix_memalign
-   obj:/usr/lib32/libglib-2.0.so.0.1600.3
-   fun:g_slice_alloc
-   fun:g_slice_alloc0
-   fun:g_type_create_instance
-   obj:/usr/lib32/libgobject-2.0.so.0.1600.3
-   fun:g_object_newv
-   fun:g_object_new_valist
-   fun:g_object_new
-   fun:gdk_display_open
-   fun:gdk_display_open_default_libgtk_only
+   ...
+   fun:gtk_init_check
 }
 {
    Fontconfig leak?
    Memcheck:Leak
-   fun:malloc
-   obj:/usr/lib32/libfontconfig.so.1.3.0
-   obj:/usr/lib32/libfontconfig.so.1.3.0
-   obj:/usr/lib32/libfontconfig.so.1.3.0
-   obj:/usr/lib32/libfontconfig.so.1.3.0
-   obj:/usr/lib32/libexpat.so.1.5.2
-   obj:/usr/lib32/libexpat.so.1.5.2
-   obj:/usr/lib32/libexpat.so.1.5.2
-   obj:/usr/lib32/libexpat.so.1.5.2
-   fun:XML_ParseBuffer
-   fun:FcConfigParseAndLoad
-   fun:FcConfigParseAndLoad
-   obj:/usr/lib32/libfontconfig.so.1.3.0
-   obj:/usr/lib32/libfontconfig.so.1.3.0
-   obj:/usr/lib32/libexpat.so.1.5.2
-   obj:/usr/lib32/libexpat.so.1.5.2
-   obj:/usr/lib32/libexpat.so.1.5.2
-   obj:/usr/lib32/libexpat.so.1.5.2
+   ...
    fun:XML_ParseBuffer
    fun:FcConfigParseAndLoad
    fun:FcInitLoadConfig
@@ -81,88 +22,30 @@
    fun:FcInit
 }
 {
-   Fontconfig Leak?
-   Memcheck:Leak
-   fun:malloc
-   fun:FcStrCopy
-   obj:/usr/lib32/libfontconfig.so.1.3.0
-   obj:/usr/lib32/libexpat.so.1.5.2
-   obj:/usr/lib32/libexpat.so.1.5.2
-   obj:/usr/lib32/libexpat.so.1.5.2
-   obj:/usr/lib32/libexpat.so.1.5.2
-   fun:XML_ParseBuffer
-   fun:FcConfigParseAndLoad
-   fun:FcConfigParseAndLoad
-   obj:/usr/lib32/libfontconfig.so.1.3.0
-   obj:/usr/lib32/libfontconfig.so.1.3.0
-   obj:/usr/lib32/libexpat.so.1.5.2
-   obj:/usr/lib32/libexpat.so.1.5.2
-   obj:/usr/lib32/libexpat.so.1.5.2
-   obj:/usr/lib32/libexpat.so.1.5.2
-   fun:XML_ParseBuffer
-   fun:FcConfigParseAndLoad
-   fun:FcInitLoadConfig
-   fun:FcInitLoadConfigAndFonts
-   fun:FcInit
+   dlopen invalid read, probably a bug in glibc.  TODO(dkegel): file glibc bug
+   Memcheck:Value4
+   ...
+   fun:dlopen@@GLIBC_2.1
+   fun:PR_LoadLibraryWithFlags
 }
 {
-   SECMOD leak
+   NSS/glibc leak.  See also http://sources.redhat.com/bugzilla/show_bug.cgi?id=2451
    Memcheck:Leak
-   fun:calloc
-   fun:PR_Calloc
-   obj:/usr/lib32/nss/libnssckbi.so
-   obj:/usr/lib32/nss/libnssckbi.so
-   obj:/usr/lib32/nss/libnssckbi.so
-   obj:/usr/lib32/nss/libnssckbi.so
-   obj:/usr/lib32/nss/libnssckbi.so
-   obj:/usr/lib32/nss/libnssckbi.so
-   obj:/usr/lib32/libnss3.so.1d
-   obj:/usr/lib32/libnss3.so.1d
-   fun:SECMOD_LoadModule
-   fun:SECMOD_LoadUserModule
+   ...
+   fun:dlopen@@GLIBC_2.1
+   fun:PR_LoadLibraryWithFlags
 }
 {
-   SECMOD leak?
+   Pure NSS leak, does not involve glibc.  TODO(dkegel): track down and fix or file bug.
    Memcheck:Leak
-   fun:malloc
-   fun:PR_Malloc
-   fun:PL_ArenaAllocate
-   obj:/usr/lib32/libnss3.so.1d
-   obj:/usr/lib32/libnss3.so.1d
-   obj:/usr/lib32/libnss3.so.1d
-   obj:/usr/lib32/libnss3.so.1d
-   obj:/usr/lib32/libnss3.so.1d
-   fun:SECMOD_LoadUserModule
-}
-{
-   NSS leak part 3.
-   Memcheck:Leak
-   fun:calloc
-   fun:PR_Calloc
-   obj:/usr/lib32/libnss3.so.1d
-   obj:/usr/lib32/libnss3.so.1d
-   obj:/usr/lib32/libnss3.so.1d
-   obj:/usr/lib32/libnss3.so.1d
-   obj:/usr/lib32/libnss3.so.1d
-   obj:/usr/lib32/libnss3.so.1d
+   ...
    fun:NSS_NoDB_Init
 }
 {
-   GTK leak?
+   Another pure NSS leak, does not involve glibc.  TODO(dkegel): track down and fix or file bug.  Shows up under --show-reachable=yes.
    Memcheck:Leak
-   fun:calloc
-   fun:g_malloc0
-   obj:/usr/lib32/libgobject-2.0.so.0.1600.3
-   obj:/usr/lib32/libgobject-2.0.so.0.1600.3
-   fun:g_type_register_fundamental
-   obj:/usr/lib32/libgobject-2.0.so.0.1600.3
-   fun:g_type_init_with_debug_flags
-   fun:g_type_init
-   fun:gdk_pre_parse_libgtk_only
-   obj:/usr/lib32/libgtk-x11-2.0.so.0.1200.9
-   fun:g_option_context_parse
-   fun:gtk_parse_args
-   fun:gtk_init_check
+   ...
+   fun:SECMOD_LoadUserModule
 }
 {
    (Probable memory leak in Skia)
@@ -180,4 +63,66 @@
    Memcheck:Overlap
    fun:memcpy
    fun:init_resb_result
+}
+
+{
+   libc
+   Memcheck:Cond
+   obj:/lib/ld-2.*.so
+   obj:/lib/ld-2.*.so
+}
+
+{
+   libc
+   Memcheck:Addr4
+   obj:/lib/ld-2.*.so
+   obj:/lib/ld-2.*.so
+}
+
+{
+   FIXME IPCing uninitialized data
+   Memcheck:Param
+   socketcall.sendmsg(msg.msg_iov[i])
+   fun:sendmsg
+   fun:_ZN3IPC7Channel11ChannelImpl4SendEPNS_7MessageE
+}
+
+{
+   # There is a fix in mainline, http://www.sqlite.org/cvstrac/chngview?cn=5968
+   # See also http://article.gmane.org/gmane.comp.db.sqlite.general/43177
+   SQLite write
+   Memcheck:Param
+   write(buf)
+   ...
+   fun:unixWrite
+   fun:sqlite3OsWrite
+   fun:writeJournalHdr
+}
+
+{
+   SQLite (when creating a new database) ?
+   Memcheck:Cond
+   fun:sqlite3VdbeMemShallowCopy
+   fun:sqlite3VdbeExec
+   fun:sqlite3Step
+}
+{
+   libevent does not provide a way to clean up unused oneshot timers at exit
+   Memcheck:Leak
+   fun:calloc
+   fun:event_base_once
+   fun:event_base_loopexit
+   fun:_ZN4base19MessagePumpLibevent3RunEPNS_11MessagePump8DelegateE
+}
+{
+   logging::InitLogging never frees filename. It would be hard to free properly.
+   Memcheck:Leak
+   ...
+   fun:_ZN7logging11InitLoggingEPKcNS_18LoggingDestinationENS_15LogLockingStateENS_20OldFileDeletionStateE
+}
+{
+   Linux tests don't bother to undo net::TestServerLauncher::LoadTestRootCert().
+   Memcheck:Leak
+   ...
+   fun:_ZN3net18TestServerLauncher16LoadTestRootCertEv
 }

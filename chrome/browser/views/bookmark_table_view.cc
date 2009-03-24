@@ -50,15 +50,6 @@ BookmarkTableView::BookmarkTableView(Profile* profile,
   UpdateColumns();
 }
 
-// static
-void BookmarkTableView::RegisterUserPrefs(PrefService* prefs) {
-  prefs->RegisterIntegerPref(prefs::kBookmarkTableNameWidth1, -1);
-  prefs->RegisterIntegerPref(prefs::kBookmarkTableURLWidth1, -1);
-  prefs->RegisterIntegerPref(prefs::kBookmarkTableNameWidth2, -1);
-  prefs->RegisterIntegerPref(prefs::kBookmarkTableURLWidth2, -1);
-  prefs->RegisterIntegerPref(prefs::kBookmarkTablePathWidth, -1);
-}
-
 bool BookmarkTableView::CanDrop(const OSExchangeData& data) {
   if (!parent_node_ || !profile_->GetBookmarkModel()->IsLoaded())
     return false;
@@ -431,9 +422,9 @@ void BookmarkTableView::PaintAltText() {
   // Pad by 1 for halo.
   canvas.DrawStringWithHalo(alt_text_, font, SK_ColorDKGRAY, SK_ColorWHITE, 1,
                             1, bounds.width() - 2, bounds.height() - 2,
-                            ChromeCanvas::TEXT_ALIGN_LEFT);
+                            l10n_util::DefaultCanvasTextAlignment());
   canvas.getTopPlatformDevice().drawToHDC(dc, bounds.x(), bounds.y(), NULL);
-  ReleaseDC(GetNativeControlHWND(), dc);  
+  ReleaseDC(GetNativeControlHWND(), dc);
 }
 
 gfx::Rect BookmarkTableView::GetAltTextBounds() {

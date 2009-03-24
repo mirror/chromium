@@ -19,7 +19,6 @@
 #include "chrome/browser/automation/automation_provider.h"
 #include "chrome/browser/browser.h"
 #include "chrome/browser/browser_shutdown.h"
-#include "chrome/browser/cache_manager_host.h"
 #include "chrome/browser/debugger/debugger_shell.h"
 #include "chrome/browser/dom_ui/dom_ui.h"
 #include "chrome/browser/download/download_request_dialog_delegate.h"
@@ -161,7 +160,8 @@ void AutomationProvider::AutocompleteEditIsQueryInProgress(
 }
 
 void AutomationProvider::OnMessageFromExternalHost(
-    int handle, const std::string& message) {
+    int handle, const std::string& message, const std::string& origin,
+    const std::string& target) {
   NOTIMPLEMENTED();
 }
 
@@ -241,169 +241,6 @@ void UninstallJankometer() {
 
 //--------------------------------------------------------------------------
 
-void TabContents::SetupController(Profile* profile) {
-  DCHECK(!controller_);
-  controller_ = new NavigationController(this, profile);
-}
-
-Profile* TabContents::profile() const {
-  return controller_ ? controller_->profile() : NULL;
-}
-
-void TabContents::CloseContents() {
-  // Destroy our NavigationController, which will Destroy all tabs it owns.
-  controller_->Destroy();
-  // Note that the controller may have deleted us at this point,
-  // so don't touch any member variables here.
-}
-
-void TabContents::Destroy() {
-  // TODO(pinkerton): this isn't the real version of Destroy(), just enough to
-  // get the scaffolding working.
-
-  is_being_destroyed_ = true;
-
-  // Notify any observer that have a reference on this tab contents.
-  NotificationService::current()->Notify(
-      NotificationType::TAB_CONTENTS_DESTROYED,
-      Source<TabContents>(this),
-      NotificationService::NoDetails());
-
-  // Notify our NavigationController.  Make sure we are deleted first, so
-  // that the controller is the last to die.
-  NavigationController* controller = controller_;
-  TabContentsType type = this->type();
-
-  delete this;
-
-  controller->TabContentsWasDestroyed(type);
-}
-
-const GURL& TabContents::GetURL() const {
-  // We may not have a navigation entry yet
-  NavigationEntry* entry = controller_->GetActiveEntry();
-  return entry ? entry->display_url() : GURL::EmptyGURL();
-}
-
-const string16& TabContents::GetTitle() const {
-  // We use the title for the last committed entry rather than a pending
-  // navigation entry. For example, when the user types in a URL, we want to
-  // keep the old page's title until the new load has committed and we get a new
-  // title.
-  // The exception is with transient pages, for which we really want to use
-  // their title, as they are not committed.
-  NavigationEntry* entry = controller_->GetTransientEntry();
-  if (entry)
-    return entry->GetTitleForDisplay(controller_);
-
-  entry = controller_->GetLastCommittedEntry();
-  if (entry)
-    return entry->GetTitleForDisplay(controller_);
-  else if (controller_->LoadingURLLazily())
-    return controller_->GetLazyTitle();
-  return EmptyString16();
-}
-
-void TabContents::NotifyNavigationStateChanged(unsigned changed_flags) {
-  if (delegate_)
-    delegate_->NavigationStateChanged(this, changed_flags);
-}
-
-void TabContents::OpenURL(const GURL& url, const GURL& referrer,
-                          WindowOpenDisposition disposition,
-                          PageTransition::Type transition) {
-  if (delegate_)
-    delegate_->OpenURLFromTab(this, url, referrer, disposition, transition);
-}
-
-void TabContents::SetIsLoading(bool is_loading,
-                               LoadNotificationDetails* details) {
-  if (is_loading == is_loading_)
-    return;
-
-  is_loading_ = is_loading;
-  waiting_for_response_ = is_loading;
-
-  // Suppress notifications for this TabContents if we are not active.
-  if (!is_active_)
-    return;
-
-  if (delegate_)
-    delegate_->LoadingStateChanged(this);
-
-  NotificationType type = is_loading ? NotificationType::LOAD_START :
-      NotificationType::LOAD_STOP;
-  NotificationDetails det = NotificationService::NoDetails();;
-  if (details)
-      det = Details<LoadNotificationDetails>(details);
-  NotificationService::current()->Notify(type, 
-      Source<NavigationController>(this->controller()),
-      det);
-}
-
-bool TabContents::SupportsURL(GURL* url) {
-  GURL u(*url);
-  if (TabContents::TypeForURL(&u) == type()) {
-    *url = u;
-    return true;
-  }
-  return false;
-}
-
-int32 TabContents::GetMaxPageID() {
-  if (GetSiteInstance())
-    return GetSiteInstance()->max_page_id();
-  else
-    return max_page_id_;
-}
-
-void TabContents::UpdateMaxPageID(int32 page_id) {
-  // Ensure both the SiteInstance and RenderProcessHost update their max page
-  // IDs in sync. Only WebContents will also have site instances, except during
-  // testing.
-  if (GetSiteInstance())
-    GetSiteInstance()->UpdateMaxPageID(page_id);
-
-  if (AsWebContents())
-    AsWebContents()->process()->UpdateMaxPageID(page_id);
-  else
-    max_page_id_ = std::max(max_page_id_, page_id);
-}
-
-void TabContents::SetIsCrashed(bool state) {
-  if (state == is_crashed_)
-    return;
-
-  is_crashed_ = state;
-  if (delegate_)
-    delegate_->ContentsStateChanged(this);
-}
-
-#if defined(OS_MACOSX)
-void TabContents::OnStartDownload(DownloadItem* download){
-  NOTIMPLEMENTED();
-}
-
-DownloadShelf* TabContents::GetDownloadShelf(){
-  NOTIMPLEMENTED();
-  return NULL;
-}
-
-void TabContents::ReleaseDownloadShelf() {
-  NOTIMPLEMENTED();
-}
-
-void TabContents::MigrateShelf(TabContents* from, TabContents* to){
-  NOTIMPLEMENTED();
-}
-
-void TabContents::MigrateShelfFrom(TabContents* tab_contents){
-  NOTIMPLEMENTED();
-}
-#endif
-
-//--------------------------------------------------------------------------
-
 void RLZTracker::CleanupRlz() {
   // http://code.google.com/p/chromium/issues/detail?id=8152
 }
@@ -426,7 +263,27 @@ bool IsPluginProcess() {
 
 //--------------------------------------------------------------------------
 
+#if defined(OS_MACOSX)
+
+class DownloadShelfMac : public DownloadShelf {
+ public:
+  explicit DownloadShelfMac(TabContents* tab_contents)
+      : DownloadShelf(tab_contents) { }
+  virtual void AddDownload(BaseDownloadItemModel* download_model) { }
+  virtual bool IsShowing() const { return false; }
+};
+
+// static
+DownloadShelf* DownloadShelf::Create(TabContents* tab_contents) {
+  return new DownloadShelfMac(tab_contents);
+}
+
+#endif
+
+//--------------------------------------------------------------------------
+
 void RunJavascriptMessageBox(WebContents* web_contents,
+                             const GURL& url,
                              int dialog_flags,
                              const std::wstring& message_text,
                              const std::wstring& default_prompt_text,
@@ -436,6 +293,7 @@ void RunJavascriptMessageBox(WebContents* web_contents,
 }
 
 void RunBeforeUnloadDialog(WebContents* web_contents,
+                           const GURL& url,
                            const std::wstring& message_text,
                            IPC::Message* reply_msg) {
   NOTIMPLEMENTED();
@@ -466,29 +324,7 @@ bool IsDefaultPluginEnabled() {
   return false;
 }
 
-#if defined(OS_MACOSX)
-bool ClipboardIsFormatAvailable(Clipboard::FormatType format) {
-  NOTIMPLEMENTED();
-  return false;
-}
-#endif
-
 }  // webkit_glue
-
-#ifndef CHROME_DEBUGGER_DISABLED
-DebuggerShell::DebuggerShell(DebuggerInputOutput *io) { }
-DebuggerShell::~DebuggerShell() { }
-void DebuggerShell::Start() { NOTIMPLEMENTED(); }
-void DebuggerShell::Debug(TabContents* tab) { NOTIMPLEMENTED(); }
-void DebuggerShell::DebugMessage(const std::wstring& msg) { NOTIMPLEMENTED(); }
-void DebuggerShell::OnDebugAttach() { NOTIMPLEMENTED(); }
-void DebuggerShell::OnDebugDisconnect() { NOTIMPLEMENTED(); }
-void DebuggerShell::DidConnect() { NOTIMPLEMENTED(); }
-void DebuggerShell::DidDisconnect() { NOTIMPLEMENTED(); }
-void DebuggerShell::ProcessCommand(const std::wstring& data) {
-  NOTIMPLEMENTED();
-}
-#endif  // !CHROME_DEBUGGER_DISABLED
 
 MemoryDetails::MemoryDetails() {
   NOTIMPLEMENTED();
@@ -513,11 +349,6 @@ InfoBar* LinkInfoBarDelegate::CreateInfoBar() {
   return NULL;
 }
 
-bool CanImportURL(const GURL& url) {
-  NOTIMPLEMENTED();
-  return false;
-}
-
 DownloadRequestDialogDelegate* DownloadRequestDialogDelegate::Create(
     TabContents* tab,
     DownloadRequestManager::TabDownloadState* host) {
@@ -531,3 +362,10 @@ views::Window* CreateInputWindow(gfx::NativeWindow parent_hwnd,
   return new views::Window();
 }
 
+namespace download_util {
+
+void DragDownload(const DownloadItem* download, SkBitmap* icon) {
+  NOTIMPLEMENTED();
+}
+
+}  // namespace download_util

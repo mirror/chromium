@@ -20,7 +20,7 @@
 
 #if defined(OS_WIN)
 // TODO(port): Enable when dialog_delegate is ported.
-#include "chrome/views/dialog_delegate.h"
+#include "chrome/views/window/dialog_delegate.h"
 #endif
 
 using base::TimeDelta;
@@ -343,6 +343,42 @@ bool AutomationProxy::WaitForAppModalDialog(int wait_timeout) {
 }
 #endif  // defined(OS_WIN)
 
+bool AutomationProxy::WaitForURLDisplayed(GURL url, int wait_timeout) {
+  const TimeTicks start = TimeTicks::Now();
+  const TimeDelta timeout = TimeDelta::FromMilliseconds(wait_timeout);
+  while (TimeTicks::Now() - start < timeout) {
+    int window_count;
+    if (!GetBrowserWindowCount(&window_count))
+      return false;
+
+    for (int i = 0; i < window_count; i++) {
+      BrowserProxy* window = GetBrowserWindow(i);
+      if (!window)
+        break;
+
+      int tab_count;
+      if (!window->GetTabCount(&tab_count))
+        continue;
+
+      for (int j = 0; j < tab_count; j++) {
+        TabProxy* tab = window->GetTab(j);
+        if (!tab)
+          break;
+
+        GURL tab_url;
+        if (!tab->GetCurrentURL(&tab_url))
+          continue;
+
+        if (tab_url == url)
+          return true;
+      }
+    }
+    PlatformThread::Sleep(automation::kSleepTime);
+  }
+
+  return false;
+}
+
 bool AutomationProxy::SetFilteredInet(bool enabled) {
   return Send(new AutomationMsg_SetFilteredInet(0, enabled));
 }
@@ -395,12 +431,24 @@ BrowserProxy* AutomationProxy::GetLastActiveBrowserWindow() {
 
   if (!SendWithTimeout(new AutomationMsg_LastActiveBrowserWindow(
       0, &handle), command_execution_timeout_ms(), NULL)) {
-    DLOG(ERROR) << "GetLastActiveBrowserWindow did not complete in a timely fashion";
+    DLOG(ERROR) <<
+        "GetLastActiveBrowserWindow did not complete in a timely fashion";
     return NULL;
   }
 
   return new BrowserProxy(this, tracker_.get(), handle);
 }
+
+#if defined(OS_POSIX)
+base::file_handle_mapping_vector AutomationProxy::fds_to_map() const {
+  base::file_handle_mapping_vector map;
+  int src_fd = -1, dest_fd = -1;
+  channel_->GetClientFileDescriptorMapping(&src_fd, &dest_fd);
+  if (src_fd > -1)
+    map.push_back(std::make_pair(src_fd, dest_fd));
+  return map;
+}
+#endif  // defined(OS_POSIX)
 
 bool AutomationProxy::Send(IPC::Message* message) {
   return SendWithTimeout(message, base::kNoTimeout, NULL);

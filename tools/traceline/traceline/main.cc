@@ -67,9 +67,9 @@ class Playground {
         : stack_unwind_depth_(0),
           log_heap_(false),
           log_lock_(false),
-          vista_(false) { } 
+          vista_(false) { }
 
-    
+
     // The maximum amount of frames we should unwind from the call stack.
     int stack_unwind_depth() { return stack_unwind_depth_; }
     void set_stack_unwind_depth(int depth) { stack_unwind_depth_ = depth; }
@@ -102,7 +102,7 @@ class Playground {
     // fields that we expect to be zero.  TODO this could be a lot better.
     memset(buf_, 0, sizeof(buf_));
   }
-  
+
   void AllocateInRemote() {
     // Try to get something out of the way and easy to debug.
     static void* kPlaygroundAddr = reinterpret_cast<void*>(0x66660000);
@@ -199,8 +199,14 @@ class Playground {
                  func_addr - 5, GetLastError());
     }
 
+    // TODO(deanm): It seems in more recent updates the compiler is generating
+    // complicated sequences for padding / alignment.  For example:
+    // 00000000  8DA42400000000    lea esp,[esp+0x0]
+    // 00000007  8D4900            lea ecx,[ecx+0x0]
+    // is used for a 16 byte alignment.  We need a better way of handling this.
     if (memcmp(buf, "\x90\x90\x90\x90\x90", 5) == 0 ||
-        memcmp(buf, "\x00\x8D\x64\x24\x00", 5) == 0) {
+        memcmp(buf, "\x00\x8D\x64\x24\x00", 5) == 0 ||
+        memcmp(buf, "\x00\x00\x8D\x49\x00", 5) == 0) {
       unsigned int instr_bytes = 0;
 
       // We might have a hotpatch no-op of mov edi, edi "\x8b\xff".  It is a
@@ -276,7 +282,7 @@ class Playground {
               (remote_addr_ + stub_offset + cb->size() + 5);
     cb->jmp_rel(off);
   }
-  
+
   // Makes a call to NtQueryPerformanceCounter, writing the timestamp to the
   // buffer pointed to by EDI.  EDI it not incremented.  EAX is not preserved.
   void AssembleQueryPerformanceCounter(CodeBuffer* cb) {
@@ -682,7 +688,7 @@ class Playground {
       cb.mov(EDX, ESP);
       cb.sysenter();
 
-      if (cb.size() > 200) { 
+      if (cb.size() > 200) {
         NOTREACHED("code too big: %d", cb.size());
       }
     }
@@ -718,7 +724,7 @@ class Playground {
       cb.pop(EDI);  // restore EDI that was saved in the record
       cb.ret();     // jmp back to the real ret ...
 
-      if (cb.size() > 56) { 
+      if (cb.size() > 56) {
         NOTREACHED("ug");
       }
     }
@@ -742,7 +748,7 @@ class Playground {
     // can the same lock have multiple different copies, I would assume not.
     {
       CodeBuffer cb(buf_ + kStubOffset);
-      
+
       // Set up an additional frame so that we capture the return.
       // TODO use memory instructions instead of using registers.
       cb.pop(EAX);  // return address
@@ -760,7 +766,7 @@ class Playground {
 
     {
       CodeBuffer cb(buf_ + kStubOffset + 40);
-      
+
       cb.push(ESI);
       cb.mov(ESI, ESP);
       cb.push(EAX);
@@ -789,7 +795,7 @@ class Playground {
 
     {
       CodeBuffer cb(buf_ + kStubOffset);
-      
+
       // Set up an additional frame so that we capture the return.
       // TODO use memory instructions instead of using registers.
       cb.pop(EAX);  // return address
@@ -806,7 +812,7 @@ class Playground {
 
     {
       CodeBuffer cb(buf_ + kStubOffset + 40);
-      
+
       cb.push(ESI);
       cb.mov(ESI, ESP);
       cb.push(EDI);
@@ -836,7 +842,7 @@ class Playground {
 
     std::string moved_instructions = PatchPreamble(kFuncName, kStubOffset);
     CodeBuffer cb(buf_ + kStubOffset);
-      
+
     // TODO use memory instructions instead of using registers.
     cb.pop(EDX);  // return address
     cb.pop(EAX);  // first argument (critical section pointer)
@@ -994,10 +1000,7 @@ class Playground {
 
     PatchThreadExit();
     PatchSetThreadName();
-#if 0
-    // FIXME
     PatchSyscall();
-#endif
 
     PatchApcDispatcher();
 

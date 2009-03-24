@@ -25,7 +25,7 @@ MSVC_POP_WARNING();
 #include "base/string_util.h"
 #include "webkit/glue/context_menu.h"
 #include "webkit/glue/glue_util.h"
-#include "webkit/glue/webdocumentloader_impl.h"
+#include "webkit/glue/webdatasource_impl.h"
 #include "webkit/glue/webresponse.h"
 #include "webkit/glue/weburlrequest_impl.h"
 #include "webkit/glue/webview_impl.h"
@@ -46,16 +46,16 @@ bool IsASingleWord(const std::wstring& text) {
         return false;
     }
   }
-  
+
   // Check for 0 words.
   if (!word_count)
     return false;
-  
+
   // Has a single word.
   return true;
 }
 
-// Helper function to get misspelled word on which context menu 
+// Helper function to get misspelled word on which context menu
 // is to be evolked. This function also sets the word on which context menu
 // has been evoked to be the selected word, as required.
 std::wstring GetMisspelledWord(const WebCore::ContextMenu* default_menu,
@@ -68,7 +68,7 @@ std::wstring GetMisspelledWord(const WebCore::ContextMenu* default_menu,
       false);
 
   // Don't provide suggestions for multiple words.
-  if (!misspelled_word_string.empty() && 
+  if (!misspelled_word_string.empty() &&
       !IsASingleWord(misspelled_word_string))
     return L"";
 
@@ -83,16 +83,16 @@ std::wstring GetMisspelledWord(const WebCore::ContextMenu* default_menu,
     selection = WebCore::VisibleSelection(pos);
     selection.expandUsingGranularity(WebCore::WordGranularity);
   }
-      
-  if (selection.isRange()) { 
+
+  if (selection.isRange()) {
     selected_frame->setSelectionGranularity(WebCore::WordGranularity);
   }
-        
+
   if (selected_frame->shouldChangeSelection(selection))
     selected_frame->selection()->setSelection(selection);
-       
+
   misspelled_word_string = CollapseWhitespace(
-      webkit_glue::StringToStdWString(selected_frame->selectedText()),                  
+      webkit_glue::StringToStdWString(selected_frame->selectedText()),
                                       false);
 
   // If misspelled word is empty, then that portion should not be selected.
@@ -124,8 +124,7 @@ static ContextNode GetTypeAndURLFromFrame(WebCore::Frame* frame,
   if (frame) {
     WebCore::DocumentLoader* dl = frame->loader()->documentLoader();
     if (dl) {
-      WebDataSource* ds = static_cast<WebDocumentLoaderImpl*>(dl)->
-          GetDataSource();
+      WebDataSource* ds = WebDataSourceImpl::FromLoader(dl);
       if (ds) {
         node = page_node;
         *url = ds->HasUnreachableURL() ? ds->GetUnreachableURL()
@@ -140,7 +139,7 @@ WebCore::PlatformMenuDescription
     ContextMenuClientImpl::getCustomMenuFromDefaultItems(
         WebCore::ContextMenu* default_menu) {
   // Displaying the context menu in this function is a big hack as we don't
-  // have context, i.e. whether this is being invoked via a script or in 
+  // have context, i.e. whether this is being invoked via a script or in
   // response to user input (Mouse event WM_RBUTTONDOWN,
   // Keyboard events KeyVK_APPS, Shift+F10). Check if this is being invoked
   // in response to the above input events before popping up the context menu.
@@ -172,7 +171,7 @@ WebCore::PlatformMenuDescription
   GURL frame_url;
   GURL page_url;
   std::string security_info;
-  
+
   std::wstring frame_encoding;
   // Send the frame and page URLs in any case.
   ContextNode frame_node = ContextNode(ContextNode::NONE);
@@ -203,7 +202,7 @@ WebCore::PlatformMenuDescription
                                                  selected_frame);
     }
   }
-  
+
   if (node.type == ContextNode::NONE) {
     if (selected_frame != webview_->main_frame()->frame()) {
       node = frame_node;
@@ -214,13 +213,10 @@ WebCore::PlatformMenuDescription
 
   // Now retrieve the security info.
   WebCore::DocumentLoader* dl = selected_frame->loader()->documentLoader();
-  if (dl) {
-    WebDataSource* ds = static_cast<WebDocumentLoaderImpl*>(dl)->
-        GetDataSource();
-    if (ds) {
-      const WebResponse& response = ds->GetResponse();
-      security_info = response.GetSecurityInfo();
-    }
+  WebDataSource* ds = WebDataSourceImpl::FromLoader(dl);
+  if (ds) {
+    const WebResponse& response = ds->GetResponse();
+    security_info = response.GetSecurityInfo();
   }
 
   int edit_flags = ContextNode::CAN_DO_NONE;

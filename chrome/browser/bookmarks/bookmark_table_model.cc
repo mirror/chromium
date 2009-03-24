@@ -7,7 +7,6 @@
 #include <limits>
 
 #include "base/string_util.h"
-#include "base/time.h"
 #include "base/time_format.h"
 #include "chrome/browser/bookmarks/bookmark_utils.h"
 #include "chrome/common/l10n_util.h"
@@ -274,7 +273,7 @@ BookmarkTableModel* BookmarkTableModel::CreateBookmarkTableModelForFolder(
 BookmarkTableModel* BookmarkTableModel::CreateSearchTableModel(
     BookmarkModel* model,
     const std::wstring& text) {
-  return new BookmarkSearchTableModel(model, text);        
+  return new BookmarkSearchTableModel(model, text);
 }
 
 BookmarkTableModel::BookmarkTableModel(BookmarkModel* model)

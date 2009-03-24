@@ -8,7 +8,7 @@
 #include "chrome/browser/metrics/user_metrics.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/pref_service.h"
-#include "chrome/views/widget.h"
+#include "chrome/views/widget/widget.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // OptionsPageView
@@ -56,5 +56,5 @@ void OptionsPageView::ViewHierarchyChanged(bool is_add,
 HWND OptionsPageView::GetRootWindow() const {
   // Our Widget is the TabbedPane content HWND, which is a child HWND.
   // We need the root HWND for parenting.
-  return GetAncestor(GetWidget()->GetHWND(), GA_ROOT);
+  return GetAncestor(GetWidget()->GetNativeView(), GA_ROOT);
 }

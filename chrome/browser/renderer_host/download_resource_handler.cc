@@ -56,7 +56,7 @@ bool DownloadResourceHandler::OnResponseStarted(int request_id,
   info->total_bytes = content_length_;
   info->state = DownloadItem::IN_PROGRESS;
   info->download_id = download_id_;
-  info->render_process_id = global_id_.render_process_host_id;
+  info->render_process_id = global_id_.process_id;
   info->render_view_id = render_view_id_;
   info->request_id = global_id_.request_id;
   info->content_disposition = content_disposition_;
@@ -113,7 +113,8 @@ bool DownloadResourceHandler::OnReadCompleted(int request_id, int* bytes_read) {
 
 bool DownloadResourceHandler::OnResponseCompleted(
     int request_id,
-    const URLRequestStatus& status) {
+    const URLRequestStatus& status,
+    const std::string& security_info) {
   download_manager_->file_loop()->PostTask(FROM_HERE,
       NewRunnableMethod(download_manager_,
                         &DownloadFileManager::DownloadFinished,
@@ -157,7 +158,7 @@ void DownloadResourceHandler::CheckWriteProgress() {
     StartPauseTimer();
 
   if (is_paused_ != should_pause) {
-    rdh_->PauseRequest(global_id_.render_process_host_id,
+    rdh_->PauseRequest(global_id_.process_id,
                        global_id_.request_id,
                        should_pause);
     is_paused_ = should_pause;

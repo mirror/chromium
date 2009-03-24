@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CHROME_BROWSER_VIEWS_DOWNLOAD_SHELF_VIEW_H_
-#define CHROME_BROWSER_VIEWS_DOWNLOAD_SHELF_VIEW_H_
+#ifndef CHROME_BROWSER_GTK_DOWNLOAD_SHELF_GTK_H_
+#define CHROME_BROWSER_GTK_DOWNLOAD_SHELF_GTK_H_
 
 #include <gtk/gtk.h>
 
@@ -11,14 +11,16 @@
 
 #include "base/scoped_ptr.h"
 #include "chrome/browser/download/download_shelf.h"
-#include "chrome/browser/gtk/custom_button.h"
 
 class BaseDownloadItemModel;
+class CustomDrawButton;
 class DownloadItemGtk;
 
 class DownloadShelfGtk : public DownloadShelf {
  public:
   explicit DownloadShelfGtk(TabContents* tab_contents);
+
+  ~DownloadShelfGtk();
 
   // DownloadShelf implementation.
   virtual void AddDownload(BaseDownloadItemModel* download_model);
@@ -31,10 +33,13 @@ class DownloadShelfGtk : public DownloadShelf {
   // Hide the shelf.
   void Hide();
 
-  static void OnCloseButtonClick(GtkWidget* button,
-                                 DownloadShelfGtk* toolbar);
+  static void OnButtonClick(GtkWidget* button, DownloadShelfGtk* toolbar);
 
-  // |bar_| is the highest level widget of the download shelf. It is an hbox.
+  // |hbox_| holds the download items and buttons of the shelf.
+  GtkWidget* hbox_;
+
+  // |shelf_| is the highest level widget of the shelf. See the constructor
+  // for an explanation of the widget layout.
   GtkWidget* shelf_;
 
   // The 'x' that the user can press to hide the download shelf.
@@ -47,4 +52,4 @@ class DownloadShelfGtk : public DownloadShelf {
   std::vector<DownloadItemGtk*> download_items_;
 };
 
-#endif  // CHROME_BROWSER_VIEWS_DOWNLOAD_SHELF_VIEW_H_
+#endif  // CHROME_BROWSER_GTK_DOWNLOAD_SHELF_GTK_H_

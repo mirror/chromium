@@ -62,6 +62,7 @@ void Profile::RegisterUserPrefs(PrefService* prefs) {
   prefs->RegisterBooleanPref(prefs::kSearchSuggestEnabled, true);
   prefs->RegisterBooleanPref(prefs::kSessionExitedCleanly, true);
   prefs->RegisterBooleanPref(prefs::kSafeBrowsingEnabled, true);
+  // TODO(estade): IDS_SPELLCHECK_DICTIONARY should be an ASCII string.
 #if defined(OS_MACOSX)
   // MASSIVE HACK!!! We don't have localization working yet. Undo this once we
   // do. TODO(port): take this out
@@ -98,6 +99,7 @@ class OffTheRecordProfileImpl : public Profile,
  public:
   explicit OffTheRecordProfileImpl(Profile* real_profile)
       : profile_(real_profile),
+        media_request_context_(NULL),
         start_time_(Time::Now()) {
     request_context_ = ChromeURLRequestContext::CreateOffTheRecord(this);
     request_context_->AddRef();
@@ -141,7 +143,9 @@ class OffTheRecordProfileImpl : public Profile,
   }
 
   virtual VisitedLinkMaster* GetVisitedLinkMaster() {
-    return profile_->GetVisitedLinkMaster();
+    // We don't provide access to the VisitedLinkMaster when we're OffTheRecord
+    // because we don't want to leak the sites that the user has visited before.
+    return NULL;
   }
 
   virtual ExtensionsService* GetExtensionsService() {
@@ -210,6 +214,15 @@ class OffTheRecordProfileImpl : public Profile,
   virtual URLRequestContext* GetRequestContextForMedia() {
     if (!media_request_context_) {
       FilePath cache_path = GetPath();
+
+      // Override the cache location if specified by the user.
+      const std::wstring user_cache_dir(
+          CommandLine::ForCurrentProcess()->GetSwitchValue(
+              switches::kDiskCacheDir));
+      if (!user_cache_dir.empty()) {
+        cache_path = FilePath::FromWStringHack(user_cache_dir);
+      }
+
       cache_path.Append(chrome::kOffTheRecordMediaCacheDirname);
       media_request_context_ =
           ChromeURLRequestContext::CreateOffTheRecordForMedia(
@@ -349,6 +362,7 @@ ProfileImpl::ProfileImpl(const FilePath& path)
       personalization_(NULL),
 #endif
       request_context_(NULL),
+      media_request_context_(NULL),
       history_service_created_(false),
       created_web_data_service_(false),
       created_download_manager_(false),
@@ -373,16 +387,22 @@ void ProfileImpl::InitExtensions() {
   const CommandLine* command_line = CommandLine::ForCurrentProcess();
   PrefService* prefs = GetPrefs();
   bool user_scripts_enabled =
-      command_line->HasSwitch(switches::kEnableUserScripts) || 
+      command_line->HasSwitch(switches::kEnableUserScripts) ||
       prefs->GetBoolean(prefs::kEnableUserScripts);
   bool extensions_enabled =
-      command_line->HasSwitch(switches::kEnableExtensions) || 
+      command_line->HasSwitch(switches::kEnableExtensions) ||
       prefs->GetBoolean(prefs::kEnableExtensions);
 
   FilePath script_dir;
   if (user_scripts_enabled) {
-    script_dir = GetPath();
-    script_dir = script_dir.Append(chrome::kUserScriptsDirname);
+    if (command_line->HasSwitch(switches::kUserScriptsDir)) {
+      std::wstring path_string =
+          command_line->GetSwitchValue(switches::kUserScriptsDir);
+      script_dir = FilePath::FromWStringHack(path_string);
+    } else {
+      script_dir = GetPath();
+      script_dir = script_dir.Append(chrome::kUserScriptsDirname);
+    }
   }
 
   ExtensionErrorReporter::Init(true);  // allow noisy errors.
@@ -606,6 +626,15 @@ URLRequestContext* ProfileImpl::GetRequestContext() {
 URLRequestContext* ProfileImpl::GetRequestContextForMedia() {
   if (!media_request_context_) {
     FilePath cache_path = GetPath();
+
+    // Override the cache location if specified by the user.
+    const std::wstring user_cache_dir(
+        CommandLine::ForCurrentProcess()->GetSwitchValue(
+            switches::kDiskCacheDir));
+    if (!user_cache_dir.empty()) {
+      cache_path = FilePath::FromWStringHack(user_cache_dir);
+    }
+
     cache_path.Append(chrome::kMediaCacheDirname);
     media_request_context_ = ChromeURLRequestContext::CreateOriginalForMedia(
         this, cache_path);
@@ -796,7 +825,8 @@ void ProfileImpl::InitializeSpellChecker(bool need_to_broadcast) {
     // is being deleted in the io thread, the spellchecker_ can be made to point
     // to a new object (RE-initialized) in parallel in this UI thread.
     spellchecker_ = new SpellChecker(dict_dir,
-        prefs->GetString(prefs::kSpellCheckDictionary), GetRequestContext(),
+        WideToASCII(prefs->GetString(prefs::kSpellCheckDictionary)),
+        GetRequestContext(),
         FilePath());
     spellchecker_->AddRef();  // Manual refcounting.
   } else {
@@ -862,6 +892,7 @@ void ProfileImpl::StopCreateSessionServiceTimer() {
 
 #ifdef CHROME_PERSONALIZATION
 ProfilePersonalization* ProfileImpl::GetProfilePersonalization() {
+  DCHECK(!Personalization::IsP13NDisabled());
   if (!personalization_.get())
     personalization_.reset(
         Personalization::CreateProfilePersonalization(this));

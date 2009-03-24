@@ -5,7 +5,7 @@
 #ifndef CHORME_BROWSER_ENCODING_MENU_CONTROLLER_DELEGATE_H__
 #define CHORME_BROWSER_ENCODING_MENU_CONTROLLER_DELEGATE_H__
 
-#include "chrome/views/menu.h"
+#include "chrome/views/controls/menu/menu.h"
 
 class Browser;
 class Controller;
@@ -35,4 +35,3 @@ class EncodingMenuControllerDelegate : public Menu::Delegate {
 };
 
 #endif // CHORME_BROWSER_ENCODING_MENU_CONTROLLER_DELEGATE_H__
-

@@ -13,8 +13,9 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/root_view.h"
-#include "chrome/views/window_resources.h"
+#include "chrome/views/controls/button/image_button.h"
+#include "chrome/views/widget/root_view.h"
+#include "chrome/views/window/window_resources.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 #include "grit/theme_resources.h"
@@ -167,7 +168,7 @@ class OTRActiveWindowResources : public views::WindowResources {
   virtual SkBitmap* GetPartBitmap(views::FramePartBitmap part) const {
     return standard_frame_bitmaps_[part];
   }
-  
+
  private:
   static void InitClass() {
     static bool initialized = false;
@@ -332,10 +333,10 @@ const int kCaptionTopSpacing = 1;
 OpaqueBrowserFrameView::OpaqueBrowserFrameView(BrowserFrame* frame,
                                                BrowserView* browser_view)
     : BrowserNonClientFrameView(),
-      minimize_button_(new views::Button),
-      maximize_button_(new views::Button),
-      restore_button_(new views::Button),
-      close_button_(new views::Button),
+      minimize_button_(new views::ImageButton(this)),
+      maximize_button_(new views::ImageButton(this)),
+      restore_button_(new views::ImageButton(this)),
+      close_button_(new views::ImageButton(this)),
       window_icon_(NULL),
       frame_(frame),
       browser_view_(browser_view) {
@@ -355,57 +356,53 @@ OpaqueBrowserFrameView::OpaqueBrowserFrameView(BrowserFrame* frame,
 
   views::WindowResources* resources = current_active_resources_;
   minimize_button_->SetImage(
-      views::Button::BS_NORMAL,
+      views::CustomButton::BS_NORMAL,
       resources->GetPartBitmap(FRAME_MINIMIZE_BUTTON_ICON));
   minimize_button_->SetImage(
-      views::Button::BS_HOT,
+      views::CustomButton::BS_HOT,
       resources->GetPartBitmap(FRAME_MINIMIZE_BUTTON_ICON_H));
   minimize_button_->SetImage(
-      views::Button::BS_PUSHED,
+      views::CustomButton::BS_PUSHED,
       resources->GetPartBitmap(FRAME_MINIMIZE_BUTTON_ICON_P));
-  minimize_button_->SetListener(this, -1);
   minimize_button_->SetAccessibleName(
       l10n_util::GetString(IDS_ACCNAME_MINIMIZE));
   AddChildView(minimize_button_);
 
   maximize_button_->SetImage(
-      views::Button::BS_NORMAL,
+      views::CustomButton::BS_NORMAL,
       resources->GetPartBitmap(FRAME_MAXIMIZE_BUTTON_ICON));
   maximize_button_->SetImage(
-      views::Button::BS_HOT,
+      views::CustomButton::BS_HOT,
       resources->GetPartBitmap(FRAME_MAXIMIZE_BUTTON_ICON_H));
   maximize_button_->SetImage(
-      views::Button::BS_PUSHED,
+      views::CustomButton::BS_PUSHED,
       resources->GetPartBitmap(FRAME_MAXIMIZE_BUTTON_ICON_P));
-  maximize_button_->SetListener(this, -1);
   maximize_button_->SetAccessibleName(
       l10n_util::GetString(IDS_ACCNAME_MAXIMIZE));
   AddChildView(maximize_button_);
 
   restore_button_->SetImage(
-      views::Button::BS_NORMAL,
+      views::CustomButton::BS_NORMAL,
       resources->GetPartBitmap(FRAME_RESTORE_BUTTON_ICON));
   restore_button_->SetImage(
-      views::Button::BS_HOT,
+      views::CustomButton::BS_HOT,
       resources->GetPartBitmap(FRAME_RESTORE_BUTTON_ICON_H));
   restore_button_->SetImage(
-      views::Button::BS_PUSHED,
+      views::CustomButton::BS_PUSHED,
       resources->GetPartBitmap(FRAME_RESTORE_BUTTON_ICON_P));
-  restore_button_->SetListener(this, -1);
   restore_button_->SetAccessibleName(
       l10n_util::GetString(IDS_ACCNAME_RESTORE));
   AddChildView(restore_button_);
 
   close_button_->SetImage(
-      views::Button::BS_NORMAL,
+      views::CustomButton::BS_NORMAL,
       resources->GetPartBitmap(FRAME_CLOSE_BUTTON_ICON));
   close_button_->SetImage(
-      views::Button::BS_HOT,
+      views::CustomButton::BS_HOT,
       resources->GetPartBitmap(FRAME_CLOSE_BUTTON_ICON_H));
   close_button_->SetImage(
-      views::Button::BS_PUSHED,
+      views::CustomButton::BS_PUSHED,
       resources->GetPartBitmap(FRAME_CLOSE_BUTTON_ICON_P));
-  close_button_->SetListener(this, -1);
   close_button_->SetAccessibleName(l10n_util::GetString(IDS_ACCNAME_CLOSE));
   AddChildView(close_button_);
 
@@ -474,7 +471,7 @@ int OpaqueBrowserFrameView::NonClientHitTest(const gfx::Point& point) {
   if (!bounds().Contains(point))
     return HTNOWHERE;
 
-  int frame_component = frame_->client_view()->NonClientHitTest(point);
+  int frame_component = frame_->GetClientView()->NonClientHitTest(point);
   if (frame_component != HTNOWHERE)
     return frame_component;
 
@@ -496,7 +493,7 @@ int OpaqueBrowserFrameView::NonClientHitTest(const gfx::Point& point) {
 
   int window_component = GetHTComponentForFrame(point, TopResizeHeight(),
       NonClientBorderThickness(), kResizeAreaCornerSize, kResizeAreaCornerSize,
-      frame_->window_delegate()->CanResize());
+      frame_->GetDelegate()->CanResize());
   // Fall back to the caption if no other component matches.
   return (window_component == HTNOWHERE) ? HTCAPTION : window_component;
 }
@@ -532,9 +529,9 @@ void OpaqueBrowserFrameView::EnableClose(bool enable) {
 }
 
 void OpaqueBrowserFrameView::ResetWindowControls() {
-  restore_button_->SetState(views::Button::BS_NORMAL);
-  minimize_button_->SetState(views::Button::BS_NORMAL);
-  maximize_button_->SetState(views::Button::BS_NORMAL);
+  restore_button_->SetState(views::CustomButton::BS_NORMAL);
+  minimize_button_->SetState(views::CustomButton::BS_NORMAL);
+  maximize_button_->SetState(views::CustomButton::BS_NORMAL);
   // The close button isn't affected by this constraint.
 }
 
@@ -617,17 +614,17 @@ void OpaqueBrowserFrameView::SetAccessibleName(const std::wstring& name) {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// OpaqueBrowserFrameView, views::BaseButton::ButtonListener implementation:
+// OpaqueBrowserFrameView, views::ButtonListener implementation:
 
-void OpaqueBrowserFrameView::ButtonPressed(views::BaseButton* sender) {
+void OpaqueBrowserFrameView::ButtonPressed(views::Button* sender) {
   if (sender == minimize_button_)
-    frame_->ExecuteSystemMenuCommand(SC_MINIMIZE);
+    frame_->Minimize();
   else if (sender == maximize_button_)
-    frame_->ExecuteSystemMenuCommand(SC_MAXIMIZE);
+    frame_->Maximize();
   else if (sender == restore_button_)
-    frame_->ExecuteSystemMenuCommand(SC_RESTORE);
+    frame_->Restore();
   else if (sender == close_button_)
-    frame_->ExecuteSystemMenuCommand(SC_CLOSE);
+    frame_->Close();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -642,7 +639,7 @@ bool OpaqueBrowserFrameView::ShouldTabIconViewAnimate() const {
 }
 
 SkBitmap OpaqueBrowserFrameView::GetFavIconForTabIconView() {
-  return frame_->window_delegate()->GetWindowIcon();
+  return frame_->GetDelegate()->GetWindowIcon();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -663,7 +660,7 @@ int OpaqueBrowserFrameView::NonClientBorderThickness() const {
 }
 
 int OpaqueBrowserFrameView::NonClientTopBorderHeight() const {
-  if (frame_->window_delegate()->ShouldShowWindowTitle()) {
+  if (frame_->GetDelegate()->ShouldShowWindowTitle()) {
     int title_top_spacing, title_thickness;
     return TitleCoordinates(&title_top_spacing, &title_thickness);
   }
@@ -772,7 +769,7 @@ void OpaqueBrowserFrameView::PaintMaximizedFrameBorder(ChromeCanvas* canvas) {
         resources()->GetPartBitmap(FRAME_NO_TOOLBAR_TOP_CENTER);
     int edge_height = top_center->height() - kClientEdgeThickness;
     canvas->TileImageInt(*top_center, 0,
-        frame_->client_view()->y() - edge_height, width(), edge_height);
+        frame_->GetClientView()->y() - edge_height, width(), edge_height);
   }
 }
 
@@ -787,7 +784,7 @@ void OpaqueBrowserFrameView::PaintDistributorLogo(ChromeCanvas* canvas) {
 
 void OpaqueBrowserFrameView::PaintTitleBar(ChromeCanvas* canvas) {
   // The window icon is painted by the TabIconView.
-  views::WindowDelegate* d = frame_->window_delegate();
+  views::WindowDelegate* d = frame_->GetDelegate();
   if (d->ShouldShowWindowTitle()) {
     canvas->DrawStringInt(d->GetWindowTitle(), title_font_, SK_ColorWHITE,
         MirroredLeftPointForRect(title_bounds_), title_bounds_.y(),
@@ -807,7 +804,7 @@ void OpaqueBrowserFrameView::PaintToolbarBackground(ChromeCanvas* canvas) {
 
   gfx::Rect toolbar_bounds(browser_view_->GetToolbarBounds());
   gfx::Point toolbar_origin(toolbar_bounds.origin());
-  View::ConvertPointToView(frame_->client_view(), this, &toolbar_origin);
+  View::ConvertPointToView(frame_->GetClientView(), this, &toolbar_origin);
   toolbar_bounds.set_origin(toolbar_origin);
 
   SkBitmap* toolbar_left =
@@ -842,13 +839,13 @@ void OpaqueBrowserFrameView::PaintOTRAvatar(ChromeCanvas* canvas) {
   SkBitmap otr_avatar_icon = browser_view_->GetOTRAvatarIcon();
   canvas->DrawBitmapInt(otr_avatar_icon, 0,
       (otr_avatar_icon.height() - otr_avatar_bounds_.height()) / 2,
-      otr_avatar_bounds_.width(), otr_avatar_bounds_.height(), 
+      otr_avatar_bounds_.width(), otr_avatar_bounds_.height(),
       MirroredLeftPointForRect(otr_avatar_bounds_), otr_avatar_bounds_.y(),
       otr_avatar_bounds_.width(), otr_avatar_bounds_.height(), false);
 }
 
 void OpaqueBrowserFrameView::PaintRestoredClientEdge(ChromeCanvas* canvas) {
-  int client_area_top = frame_->client_view()->y();
+  int client_area_top = frame_->GetClientView()->y();
 
   gfx::Rect client_area_bounds = CalculateClientAreaBounds(width(), height());
   if (browser_view_->IsToolbarVisible()) {
@@ -904,8 +901,8 @@ void OpaqueBrowserFrameView::PaintRestoredClientEdge(ChromeCanvas* canvas) {
 }
 
 void OpaqueBrowserFrameView::LayoutWindowControls() {
-  close_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
-                                   views::Button::ALIGN_BOTTOM);
+  close_button_->SetImageAlignment(views::ImageButton::ALIGN_LEFT,
+                                   views::ImageButton::ALIGN_BOTTOM);
   // Maximized buttons start at window top so that even if their images aren't
   // drawn flush with the screen edge, they still obey Fitts' Law.
   bool is_maximized = frame_->IsMaximized();
@@ -926,23 +923,23 @@ void OpaqueBrowserFrameView::LayoutWindowControls() {
   // When the window is restored, we show a maximized button; otherwise, we show
   // a restore button.
   bool is_restored = !is_maximized && !frame_->IsMinimized();
-  views::Button* invisible_button = is_restored ?
+  views::ImageButton* invisible_button = is_restored ?
       restore_button_ : maximize_button_;
   invisible_button->SetVisible(false);
 
-  views::Button* visible_button = is_restored ?
+  views::ImageButton* visible_button = is_restored ?
       maximize_button_ : restore_button_;
   visible_button->SetVisible(true);
-  visible_button->SetImageAlignment(views::Button::ALIGN_LEFT,
-                                    views::Button::ALIGN_BOTTOM);
+  visible_button->SetImageAlignment(views::ImageButton::ALIGN_LEFT,
+                                    views::ImageButton::ALIGN_BOTTOM);
   gfx::Size visible_button_size = visible_button->GetPreferredSize();
   visible_button->SetBounds(close_button_->x() - visible_button_size.width(),
                             caption_y, visible_button_size.width(),
                             visible_button_size.height() + top_extra_height);
 
   minimize_button_->SetVisible(true);
-  minimize_button_->SetImageAlignment(views::Button::ALIGN_LEFT,
-                                      views::Button::ALIGN_BOTTOM);
+  minimize_button_->SetImageAlignment(views::ImageButton::ALIGN_LEFT,
+                                      views::ImageButton::ALIGN_BOTTOM);
   gfx::Size minimize_button_size = minimize_button_->GetPreferredSize();
   minimize_button_->SetBounds(
       visible_button->x() - minimize_button_size.width(), caption_y,
@@ -991,7 +988,7 @@ void OpaqueBrowserFrameView::LayoutTitleBar() {
   if (!frame_->IsMaximized())
     icon_y -= kIconRestoredAdjust;
 
-  views::WindowDelegate* d = frame_->window_delegate();
+  views::WindowDelegate* d = frame_->GetDelegate();
   if (!d->ShouldShowWindowIcon())
     icon_size = 0;
   if (window_icon_)

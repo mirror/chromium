@@ -16,10 +16,8 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/resource_bundle.h"
-#include "chrome/views/button.h"
-#include "chrome/views/checkbox.h"
-#include "chrome/views/native_button.h"
-#include "chrome/views/text_field.h"
+#include "chrome/views/controls/button/native_button.h"
+#include "chrome/views/controls/text_field.h"
 #include "grit/generated_resources.h"
 #include "grit/theme_resources.h"
 
@@ -161,7 +159,7 @@ void BookmarkBubbleView::DidChangeBounds(const gfx::Rect& previous,
 void BookmarkBubbleView::BubbleShown() {
   DCHECK(GetWidget());
   views::FocusManager* focus_manager =
-      views::FocusManager::GetFocusManager(GetWidget()->GetHWND());
+      views::FocusManager::GetFocusManager(GetWidget()->GetNativeView());
   focus_manager->RegisterAccelerator(
       views::Accelerator(VK_RETURN, false, false, false), this);
 
@@ -207,11 +205,10 @@ void BookmarkBubbleView::Init() {
   remove_link_->SetController(this);
 
   edit_button_ = new NativeButton(
-      l10n_util::GetString(IDS_BOOMARK_BUBBLE_OPTIONS));
-  edit_button_->SetListener(this);
+      this, l10n_util::GetString(IDS_BOOMARK_BUBBLE_OPTIONS));
 
-  close_button_ = new NativeButton(l10n_util::GetString(IDS_CLOSE), true);
-  close_button_->SetListener(this);
+  close_button_ = new NativeButton(this, l10n_util::GetString(IDS_CLOSE));
+  close_button_->SetIsDefault(true);
 
   parent_combobox_ = new ComboBox(&parent_model_);
   parent_combobox_->SetSelectedItem(parent_model_.node_parent_index());
@@ -233,7 +230,7 @@ void BookmarkBubbleView::Init() {
   cs->AddColumn(GridLayout::CENTER, GridLayout::CENTER, 0, GridLayout::USE_PREF,
                 0, 0);
   cs->AddPaddingColumn(1, kUnrelatedControlHorizontalSpacing);
-  cs->AddColumn(GridLayout::CENTER, GridLayout::CENTER, 0, GridLayout::USE_PREF,		
+  cs->AddColumn(GridLayout::CENTER, GridLayout::CENTER, 0, GridLayout::USE_PREF,
                 0, 0);
 
   // Middle (input field) rows.
@@ -291,7 +288,7 @@ std::wstring BookmarkBubbleView::GetTitle() {
   return std::wstring();
 }
 
-void BookmarkBubbleView::ButtonPressed(views::NativeButton* sender) {		
+void BookmarkBubbleView::ButtonPressed(views::Button* sender) {
   if (sender == edit_button_) {
     UserMetrics::RecordAction(L"BookmarkBubble_Edit", profile_);
     ShowEditor();
@@ -299,7 +296,7 @@ void BookmarkBubbleView::ButtonPressed(views::NativeButton* sender) {
     DCHECK(sender == close_button_);
     Close();
   }
-  // WARNING: we've most likely been deleted when CloseWindow returns.		
+  // WARNING: we've most likely been deleted when CloseWindow returns.
 }
 
 void BookmarkBubbleView::LinkActivated(Link* source, int event_flags) {
@@ -361,7 +358,7 @@ void BookmarkBubbleView::ShowEditor() {
 
   // Parent the editor to our root ancestor (not the root we're in, as that
   // is the info bubble and will close shortly).
-  HWND parent = GetAncestor(GetWidget()->GetHWND(), GA_ROOTOWNER);
+  HWND parent = GetAncestor(GetWidget()->GetNativeView(), GA_ROOTOWNER);
 
   // We're about to show the bookmark editor. When the bookmark editor closes
   // we want the browser to become active. WidgetWin::Hide() does a hide in
@@ -370,7 +367,7 @@ void BookmarkBubbleView::ShowEditor() {
   // explicitly hide the bookmark bubble window in such a way that activation
   // status changes. That way, when the editor closes, activation is properly
   // restored to the browser.
-  ShowWindow(GetWidget()->GetHWND(), SW_HIDE);
+  ShowWindow(GetWidget()->GetNativeView(), SW_HIDE);
 
   // Even though we just hid the window, we need to invoke Close to schedule
   // the delete and all that.

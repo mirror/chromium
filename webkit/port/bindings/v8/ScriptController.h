@@ -42,6 +42,7 @@
 #include "bindings/npruntime.h"
 
 #include <wtf/HashMap.h>
+#include <wtf/Vector.h>
 
 #include "v8.h"
 #include "v8_proxy.h"
@@ -151,12 +152,18 @@ public:
     // as a string.
     ScriptValue evaluate(const ScriptSourceCode&);
 
+    // Executes JavaScript in a new context associated with the web frame. The
+    // script gets its own global scope and its own prototypes for intrinsic
+    // JavaScript objects (String, Array, and so-on). It shares the wrappers for
+    // all DOM nodes and DOM constructors.
+    void evaluateInNewContext(const Vector<ScriptSourceCode>& sources);
+
     // JSC has a WindowShell object, but for V8, the ScriptController
     // is the WindowShell.
     bool haveWindowShell() const { return true; }
 
     // Masquerade 'this' as the windowShell.
-    // This is a bit of a hack, but provides reasonable compatibility 
+    // This is a bit of a hack, but provides reasonable compatibility
     // with what JSC does as well.
     ScriptController* windowShell() { return this; }
 
@@ -211,29 +218,6 @@ public:
     static void gcProtectJSWrapper(void* object);
     static void gcUnprotectJSWrapper(void* object);
 
-    // Get/Set RecordPlaybackMode flag.
-    // This is a special mode where JS helps the browser implement
-    // playback/record mode.  Generally, in this mode, some functions
-    // of client-side randomness are removed.  For example, in
-    // this mode Math.random() and Date.getTime() may not return
-    // values which vary.
-    static bool RecordPlaybackMode() { return m_recordPlaybackMode; }
-    static void setRecordPlaybackMode(bool value) { m_recordPlaybackMode = value; }
-
-    // Set/Get ShouldExposeGCController flag.
-    // Some WebKit layout test need window.GCController.collect() to
-    // trigger GC, this flag lets the binding code expose
-    // window.GCController.collect() to the JavaScript code.
-    // 
-    // GCController.collect() needs V8 engine expose gc() function by passing
-    // '--expose-gc' flag to the engine.
-    static bool shouldExposeGCController() {
-        return m_shouldExposeGCController;
-    }
-    static void setShouldExposeGCController(bool value) {
-        m_shouldExposeGCController = value;
-    }
-
     void finishedWithEvent(Event*);
     void setEventHandlerLineno(int lineno);
 
@@ -259,9 +243,6 @@ public:
 #endif
 
 private:
-    static bool m_recordPlaybackMode;
-    static bool m_shouldExposeGCController;
-
     Frame* m_frame;
     const String* m_sourceURL;
 

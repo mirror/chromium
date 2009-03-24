@@ -15,8 +15,8 @@
 #include "base/ref_counted.h"
 #include "chrome/browser/shell_dialogs.h"
 #include "chrome/browser/user_data_manager.h"
-#include "chrome/views/combo_box.h"
-#include "chrome/views/dialog_delegate.h"
+#include "chrome/views/controls/combo_box.h"
+#include "chrome/views/window/dialog_delegate.h"
 
 class SelectProfileDialogHelper;
 namespace views {

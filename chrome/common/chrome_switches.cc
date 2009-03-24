@@ -63,11 +63,6 @@ const wchar_t kTestingChannelID[]              = L"testing-channel";
 // that the UI tests don't depend on what comes up for http://google.com.
 const wchar_t kHomePage[]                      = L"homepage";
 
-// When this switch is present, the browser will throw up a dialog box
-// asking the user to start a renderer process independently rather
-// than launching the renderer itself.  (This is useful for debugging.)
-const wchar_t kBrowserStartRenderersManually[] = L"start-renderers-manually";
-
 // Causes the process to run as renderer instead of as browser.
 const wchar_t kRendererProcess[]               = L"renderer";
 
@@ -342,16 +337,13 @@ const wchar_t kUseLowFragHeapCrt[]             = L"use-lf-heap";
 const wchar_t kGearsPluginPathOverride[]       = L"gears-plugin-path";
 #endif
 
-// Switch to load Gears in the renderer process.
-const wchar_t kGearsInRenderer[]               = L"gears-in-renderer";
-
 // Enable the fastback page cache.
 const wchar_t kEnableFastback[]                = L"enable-fastback";
 
 // Allow loading of the javascript debugger UI from the filesystem.
 const wchar_t kJavaScriptDebuggerPath[]        = L"javascript-debugger-path";
 
-const wchar_t kEnableP13n[]                    = L"enable-p13n";
+const wchar_t kDisableP13n[]                   = L"disable-p13n";
 
 // Enable support for SDCH filtering (dictionary based expansion of content).
 // Optional argument is *the* only domain name that will have SDCH suppport.
@@ -376,12 +368,11 @@ const wchar_t kLoadExtension[]                 = L"load-extension";
 // Load an NPAPI plugin from the specified path.
 const wchar_t kLoadPlugin[]                    = L"load-plugin";
 
+// directory to locate user scripts in as an over-ride of the default
+const wchar_t kUserScriptsDir[]                = L"user-scripts-dir";
+
 // Causes the browser to launch directly in incognito mode.
 const wchar_t kIncognito[]                     = L"incognito";
-
-// Turn on the old implementation of SafeBrowsing which may have performance
-// problems on some computers during updates.
-const wchar_t kUseOldSafeBrowsing[]            = L"old-safe-browsing";
 
 // Turns on the accessibility in the renderer.  Off by default until
 // http://b/issue?id=1432077 is fixed.
@@ -397,8 +388,24 @@ const wchar_t kTestName[]                      = L"test-name";
 // command line. (Useful values might be "valgrind" or "gdb --args")
 const wchar_t kRendererCmdPrefix[]             = L"renderer-cmd-prefix";
 
+// Temparary option for new ftp implemetation.
+const wchar_t kNewFtp[]                        = L"new-ftp";
+
 // On POSIX only: use FIFO for IPC channels so that "unrelated" process
 // can connect to a channel, provided it knows its name. For debugging purposes.
 const wchar_t kIPCUseFIFO[]                    = L"ipc-use-fifo";
+
+// If this flag is set open out of process developer tools window instead of
+// Console Debugger when user clicks "Debug JavaScript".
+const wchar_t kEnableOutOfProcessDevTools[]    = L"enable-oop-devtools";
+
+// Enable HTML5 Worker support
+const wchar_t kEnableWebWorkers[]              = L"enable-web-workers";
+
+// Enables experimental views under gtk.
+const wchar_t kViewsGtk[] = L"views-gtk";
+
+// Enables the bookmark menu.
+const wchar_t kBookmarkMenu[] = L"bookmark-menu";
 
 }  // namespace switches

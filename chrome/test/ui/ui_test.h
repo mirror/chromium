@@ -30,12 +30,10 @@
 #include "base/process.h"
 #include "base/scoped_ptr.h"
 #include "base/time.h"
-#if defined(OS_WIN)
 // TODO(evanm): we should be able to just forward-declare
 // AutomationProxy here, but many files that #include this one don't
 // themselves #include automation_proxy.h.
 #include "chrome/test/automation/automation_proxy.h"
-#endif
 #include "testing/gtest/include/gtest/gtest.h"
 
 class AutomationProxy;
@@ -72,6 +70,9 @@ class UITest : public testing::Test {
 
   // Launches the browser and IPC testing server.
   void LaunchBrowserAndServer();
+
+  // Overridable so that derived classes can provide their own AutomationProxy.
+  virtual AutomationProxy* CreateAutomationProxy(int execution_timeout);
 
   // Closes the browser and IPC testing server.
   void CloseBrowserAndServer();
@@ -133,6 +134,20 @@ class UITest : public testing::Test {
                                       int interval_ms,
                                       int time_out_ms);
 
+  // Polls the tab for a JavaScript condition and returns once one of the
+  // following conditions hold true:
+  // - The JavaScript condition evaluates to true (return true).
+  // - The browser process died (return false).
+  // - The time_out value has been exceeded (return false).
+  //
+  // The JavaScript expression is executed in the context of the frame that
+  // matches the provided xpath.
+  bool WaitUntilJavaScriptCondition(TabProxy* tab,
+                                    const std::wstring& frame_xpath,
+                                    const std::wstring& jscript,
+                                    int interval_ms,
+                                    int time_out_ms);
+
   // Polls up to kWaitForActionMaxMsec ms to attain a specific tab count. Will
   // assert that the tab count is valid at the end of the wait.
   void WaitUntilTabCount(int tab_count);
@@ -179,32 +194,32 @@ class UITest : public testing::Test {
   // produced for various builds, using the combined |measurement| + |modifier|
   // string to specify a particular graph and the |trace| to identify a trace
   // (i.e., data series) on that graph.
-  void PrintResult(const std::wstring& measurement,
-                   const std::wstring& modifier,
-                   const std::wstring& trace,
+  void PrintResult(const std::string& measurement,
+                   const std::string& modifier,
+                   const std::string& trace,
                    size_t value,
-                   const std::wstring& units,
+                   const std::string& units,
                    bool important);
 
   // Like PrintResult(), but prints a (mean, standard deviation) result pair.
   // The |<values>| should be two comma-seaprated numbers, the mean and
   // standard deviation (or other error metric) of the measurement.
-  void PrintResultMeanAndError(const std::wstring& measurement,
-                               const std::wstring& modifier,
-                               const std::wstring& trace,
-                               const std::wstring& mean_and_error,
-                               const std::wstring& units,
+  void PrintResultMeanAndError(const std::string& measurement,
+                               const std::string& modifier,
+                               const std::string& trace,
+                               const std::string& mean_and_error,
+                               const std::string& units,
                                bool important);
 
   // Like PrintResult(), but prints an entire list of results. The |values|
   // will generally be a list of comma-separated numbers. A typical
   // post-processing step might produce plots of their mean and standard
   // deviation.
-  void PrintResultList(const std::wstring& measurement,
-                       const std::wstring& modifier,
-                       const std::wstring& trace,
-                       const std::wstring& values,
-                       const std::wstring& units,
+  void PrintResultList(const std::string& measurement,
+                       const std::string& modifier,
+                       const std::string& trace,
+                       const std::string& values,
+                       const std::string& units,
                        bool important);
 
   // Gets the directory for the currently active profile in the browser.
@@ -344,31 +359,33 @@ class UITest : public testing::Test {
                      const std::string& test_complete_cookie,
                      const std::string& expected_cookie_value,
                      const int wait_time);
+
+  // Wrapper around EvictFileFromSystemCache to retry 10 times in case of
+  // error.
+  // Apparently needed for Windows buildbots (to workaround an error when
+  // file is in use).
+  // TODO(phajdan.jr): Move to test_file_util if we need it in more places.
+  bool EvictFileFromSystemCacheWrapper(const FilePath& path);
+
  private:
   // Check that no processes related to Chrome exist, displaying
   // the given message if any do.
   void AssertAppNotRunning(const std::wstring& error_message);
 
   // Common functionality for the public PrintResults methods.
-  void PrintResultsImpl(const std::wstring& measurement,
-                        const std::wstring& modifier,
-                        const std::wstring& trace,
-                        const std::wstring& values,
-                        const std::wstring& prefix,
-                        const std::wstring& suffix,
-                        const std::wstring& units,
+  void PrintResultsImpl(const std::string& measurement,
+                        const std::string& modifier,
+                        const std::string& trace,
+                        const std::string& values,
+                        const std::string& prefix,
+                        const std::string& suffix,
+                        const std::string& units,
                         bool important);
 
  protected:
   AutomationProxy* automation() {
-#if defined(OS_WIN)
     EXPECT_TRUE(server_.get());
     return server_.get();
-#else
-    // TODO(port): restore when AutomationProxy bits work.
-    NOTIMPLEMENTED();
-    return NULL;
-#endif
   }
 
   // Wait a certain amount of time for all the app processes to exit,
@@ -412,6 +429,7 @@ class UITest : public testing::Test {
                                         // true.
   bool use_existing_browser_;           // Duplicate of the static version.
                                         // Default value comes from static.
+  bool enable_file_cookies_;            // Enable file cookies, default is true.
 
  private:
 #if defined(OS_WIN)
@@ -438,10 +456,8 @@ class UITest : public testing::Test {
                                         // for an test to finish.
   static std::wstring js_flags_;        // Flags passed to the JS engine.
   static std::wstring log_level_;       // Logging level.
-#if defined(OS_WIN)
-  // TODO(port): restore me after AutomationProxy works.
+
   scoped_ptr<AutomationProxy> server_;
-#endif
 
   MessageLoop message_loop_;            // Enables PostTask to main thread.
 

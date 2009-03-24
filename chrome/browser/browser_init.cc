@@ -12,6 +12,8 @@
 #include "base/string_util.h"
 #include "base/sys_info.h"
 #include "chrome/browser/autocomplete/autocomplete.h"
+#include "chrome/browser/automation/automation_provider.h"
+#include "chrome/browser/automation/automation_provider_list.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/extensions/extensions_service.h"
@@ -23,6 +25,8 @@
 #include "chrome/browser/sessions/session_restore.h"
 #include "chrome/browser/tab_contents/infobar_delegate.h"
 #include "chrome/browser/tab_contents/navigation_controller.h"
+#include "chrome/browser/tab_contents/web_contents.h"
+#include "chrome/browser/tab_contents/web_contents_view.h"
 #include "chrome/browser/net/url_fixer_upper.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
@@ -37,8 +41,6 @@
 #if defined(OS_WIN)
 
 #include "base/win_util.h"
-#include "chrome/browser/automation/automation_provider.h"
-#include "chrome/browser/automation/automation_provider_list.h"
 #include "chrome/common/resource_bundle.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
@@ -341,7 +343,10 @@ Browser* BrowserInit::LaunchWithProfile::OpenURLsInBrowser(
   browser->window()->Show();
   // TODO(jcampan): http://crbug.com/8123 we should not need to set the initial
   //                focus explicitly.
-  browser->GetSelectedTabContents()->SetInitialFocus();
+  if (browser->GetSelectedTabContents()->AsWebContents()) {
+    browser->GetSelectedTabContents()->AsWebContents()->view()->
+        SetInitialFocus();
+  }
 
   return browser;
 }
@@ -417,8 +422,7 @@ void BrowserInit::LaunchWithProfile::AddStartupURLs(
 
 bool BrowserInit::ProcessCommandLine(
     const CommandLine& command_line, const std::wstring& cur_dir,
-    PrefService* prefs, bool process_startup, Profile* profile,
-    int* return_code) {
+    bool process_startup, Profile* profile, int* return_code) {
   DCHECK(profile);
   if (process_startup) {
     const std::wstring popup_count_string =
@@ -445,7 +449,6 @@ bool BrowserInit::ProcessCommandLine(
       }
     }
 
-#if defined(OS_WIN)
     // Look for the testing channel ID ONLY during process startup
     if (command_line.HasSwitch(switches::kTestingChannelID)) {
       std::wstring testing_channel_id =
@@ -456,7 +459,9 @@ bool BrowserInit::ProcessCommandLine(
       // new tab; if there are none then we get one homepage tab.
       int expected_tab_count = 1;
       if (command_line.HasSwitch(switches::kRestoreLastSession)) {
-        StringToInt(command_line.GetSwitchValue(switches::kRestoreLastSession),
+        std::wstring restore_session_value(
+            command_line.GetSwitchValue(switches::kRestoreLastSession));
+        StringToInt(WideToUTF16Hack(restore_session_value),
                     &expected_tab_count);
       } else {
         expected_tab_count =
@@ -467,17 +472,12 @@ bool BrowserInit::ProcessCommandLine(
           profile,
           static_cast<size_t>(expected_tab_count));
     }
-#endif
   }
 
   // Allow the command line to override the persisted setting of home page.
   SetOverrideHomePage(command_line, profile->GetPrefs());
 
-  if (command_line.HasSwitch(switches::kBrowserStartRenderersManually))
-    prefs->transient()->SetBoolean(prefs::kStartRenderersManually, true);
-
   bool silent_launch = false;
-#if defined(OS_WIN)
   if (command_line.HasSwitch(switches::kAutomationClientChannelID)) {
     std::wstring automation_channel_id =
         command_line.GetSwitchValue(switches::kAutomationClientChannelID);
@@ -491,7 +491,6 @@ bool BrowserInit::ProcessCommandLine(
     CreateAutomationProvider<AutomationProvider>(automation_channel_id,
                                                  profile, expected_tabs);
   }
-#endif
 
   if (command_line.HasSwitch(switches::kLoadExtension)) {
     std::wstring path_string =
@@ -531,7 +530,6 @@ bool BrowserInit::LaunchBrowser(const CommandLine& command_line,
   return result;
 }
 
-#if defined(OS_WIN)
 template <class AutomationProviderClass>
 void BrowserInit::CreateAutomationProvider(const std::wstring& channel_id,
                                            Profile* profile,
@@ -542,10 +540,10 @@ void BrowserInit::CreateAutomationProvider(const std::wstring& channel_id,
   automation->SetExpectedTabCount(expected_tabs);
 
   AutomationProviderList* list =
-      g_browser_process->InitAutomationProviderList();  DCHECK(list);
+      g_browser_process->InitAutomationProviderList();
+  DCHECK(list);
   list->AddProvider(automation);
 }
-#endif
 
 bool BrowserInit::LaunchBrowserImpl(const CommandLine& command_line,
                                     Profile* profile,

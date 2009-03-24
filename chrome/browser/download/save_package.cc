@@ -156,7 +156,7 @@ SavePackage::SavePackage(WebContents* web_content,
       save_type_(save_type),
       all_save_items_count_(0),
       wait_state_(INITIALIZE),
-      tab_id_(web_content->process()->host_id()) {
+      tab_id_(web_content->process()->pid()) {
   DCHECK(web_content);
   const GURL& current_page_url = web_contents_->GetURL();
   DCHECK(current_page_url.is_valid());
@@ -578,7 +578,7 @@ void SavePackage::CheckFinish() {
                         &SaveFileManager::RenameAllFiles,
                         final_names,
                         dir,
-                        web_contents_->process()->host_id(),
+                        web_contents_->process()->pid(),
                         web_contents_->render_view_host()->routing_id()));
 }
 
@@ -716,7 +716,7 @@ void SavePackage::SaveNextFile(bool process_all_remaining_items) {
     save_item->Start();
     file_manager_->SaveURL(save_item->url(),
                            save_item->referrer(),
-                           web_contents_->process()->host_id(),
+                           web_contents_->process()->pid(),
                            web_contents_->render_view_host()->routing_id(),
                            save_item->save_source(),
                            save_item->full_path(),
@@ -839,8 +839,8 @@ void SavePackage::OnReceivedSerializedHtmlData(const GURL& frame_url,
                                                const std::string& data,
                                                int32 status) {
   webkit_glue::DomSerializerDelegate::PageSavingSerializationStatus flag =
-      static_cast<webkit_glue::DomSerializerDelegate::PageSavingSerializationStatus>
-          (status);
+      static_cast<webkit_glue::DomSerializerDelegate::
+                      PageSavingSerializationStatus>(status);
   // Check current state.
   if (wait_state_ != HTML_DATA)
     return;
@@ -963,9 +963,18 @@ FilePath SavePackage::GetSuggestNameForSaveAs(PrefService* prefs,
   // If not, initialize it with default directory.
   if (!prefs->IsPrefRegistered(prefs::kSaveFileDefaultDirectory)) {
     FilePath default_save_path;
-    if (!PathService::Get(chrome::DIR_DEFAULT_DOWNLOADS,
-                          &default_save_path))
-      NOTREACHED();
+    if (!prefs->IsPrefRegistered(prefs::kDownloadDefaultDirectory)) {
+      if (!PathService::Get(chrome::DIR_DEFAULT_DOWNLOADS,
+                            &default_save_path)) {
+        NOTREACHED();
+      }
+    } else {
+      StringPrefMember default_download_path;
+      default_download_path.Init(prefs::kDownloadDefaultDirectory,
+                                 prefs, NULL);
+      default_save_path = FilePath::FromWStringHack(
+                          default_download_path.GetValue());
+    }
     prefs->RegisterFilePathPref(prefs::kSaveFileDefaultDirectory,
                                 default_save_path);
   }
@@ -1051,7 +1060,7 @@ bool SavePackage::GetSaveInfo(const FilePath& suggest_name,
   if (param->save_type == SavePackage::SAVE_AS_COMPLETE_HTML) {
     // Make new directory for saving complete file.
     param->dir = param->dir.Append(
-        param->saved_main_file_path.RemoveExtension().BaseName().value() + 
+        param->saved_main_file_path.RemoveExtension().BaseName().value() +
         FILE_PATH_LITERAL("_files"));
   }
 
@@ -1110,4 +1119,3 @@ bool SavePackage::GetSafePureFileName(const FilePath& dir_path,
   pure_file_name->clear();
   return false;
 }
-

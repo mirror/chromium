@@ -12,8 +12,8 @@
 #include "chrome/browser/tab_contents/tab_util.h"
 #include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/common/l10n_util.h"
-#include "chrome/views/message_box_view.h"
-#include "chrome/views/window.h"
+#include "chrome/views/controls/message_box_view.h"
+#include "chrome/views/window/window.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 
@@ -63,7 +63,7 @@ std::wstring ExternalProtocolDialog::GetWindowTitle() const {
   return l10n_util::GetString(IDS_EXTERNAL_PROTOCOL_TITLE);
 }
 
-void ExternalProtocolDialog::WindowClosing() {
+void ExternalProtocolDialog::DeleteDelegate() {
   delete this;
 }
 
@@ -138,4 +138,3 @@ std::wstring ExternalProtocolDialog::GetApplicationForProtocol(
     return std::wstring();
   }
 }
-

@@ -53,10 +53,11 @@ static CanonicalEncodingData canonical_encoding_names[] = {
   { IDC_ENCODING_ISO88597, L"ISO-8859-7", IDS_ENCODING_GREEK },
   { IDC_ENCODING_WINDOWS1253, L"windows-1253", IDS_ENCODING_GREEK },
   { IDC_ENCODING_WINDOWS1254, L"windows-1254", IDS_ENCODING_TURKISH },
-  { IDC_ENCODING_ISO88596, L"ISO-8859-6", IDS_ENCODING_ARABIC },
   { IDC_ENCODING_WINDOWS1256, L"windows-1256", IDS_ENCODING_ARABIC },
-  { IDC_ENCODING_ISO88598, L"ISO-8859-8", IDS_ENCODING_HEBREW },
+  { IDC_ENCODING_ISO88596, L"ISO-8859-6", IDS_ENCODING_ARABIC },
   { IDC_ENCODING_WINDOWS1255, L"windows-1255", IDS_ENCODING_HEBREW },
+  { IDC_ENCODING_ISO88598I, L"ISO-8859-8-I", IDS_ENCODING_HEBREW },
+  { IDC_ENCODING_ISO88598, L"ISO-8859-8", IDS_ENCODING_HEBREW },
   { IDC_ENCODING_WINDOWS1258, L"windows-1258", IDS_ENCODING_VIETNAMESE },
   { IDC_ENCODING_ISO88594, L"ISO-8859-4", IDS_ENCODING_BALTIC },
   { IDC_ENCODING_ISO885913, L"ISO-8859-13", IDS_ENCODING_BALTIC },
@@ -85,7 +86,8 @@ class CanonicalEncodingMap {
     return &locale_dependent_encoding_ids_;
   }
 
-  std::vector<CharacterEncoding::EncodingInfo>* const current_display_encodings() {
+  std::vector<CharacterEncoding::EncodingInfo>* const
+      current_display_encodings() {
     return &current_display_encodings_;
   }
 
@@ -98,7 +100,8 @@ class CanonicalEncodingMap {
   DISALLOW_EVIL_CONSTRUCTORS(CanonicalEncodingMap);
 };
 
-const IdToCanonicalEncodingNameMapType* CanonicalEncodingMap::GetIdToCanonicalEncodingNameMapData() {
+const IdToCanonicalEncodingNameMapType*
+    CanonicalEncodingMap::GetIdToCanonicalEncodingNameMapData() {
   // Testing and building map is not thread safe, this function is supposed to
   // only run in UI thread. Myabe I should add a lock in here for making it as
   // thread safe.
@@ -114,7 +117,8 @@ const IdToCanonicalEncodingNameMapType* CanonicalEncodingMap::GetIdToCanonicalEn
   return id_to_encoding_name_map_.get();
 }
 
-const CanonicalEncodingNameToIdMapType* CanonicalEncodingMap::GetCanonicalEncodingNameToIdMapData() {
+const CanonicalEncodingNameToIdMapType*
+    CanonicalEncodingMap::GetCanonicalEncodingNameToIdMapData() {
   if (!encoding_name_to_id_map_.get()) {
     encoding_name_to_id_map_.reset(new CanonicalEncodingNameToIdMapType);
     for (int i = 0; i < canonical_encoding_names_length; ++i) {
@@ -153,10 +157,11 @@ const int default_encoding_menus[] = {
   IDC_ENCODING_ISO88597,
   IDC_ENCODING_WINDOWS1253,
   IDC_ENCODING_WINDOWS1254,
-  IDC_ENCODING_ISO88596,
   IDC_ENCODING_WINDOWS1256,
-  IDC_ENCODING_ISO88598,
+  IDC_ENCODING_ISO88596,
   IDC_ENCODING_WINDOWS1255,
+  IDC_ENCODING_ISO88598I,
+  IDC_ENCODING_ISO88598,
   IDC_ENCODING_WINDOWS1258,
   IDC_ENCODING_ISO88594,
   IDC_ENCODING_ISO885913,
@@ -337,7 +342,8 @@ std::wstring CharacterEncoding::GetCanonicalEncodingNameByAliasName(
 // FireFox, we always put UTF-8 as toppest position, after then put user
 // recently selected encodings, then put local dependent encoding items.
 // At last, we put all rest encoding items.
-const std::vector<CharacterEncoding::EncodingInfo>* CharacterEncoding::GetCurrentDisplayEncodings(
+const std::vector<CharacterEncoding::EncodingInfo>*
+    CharacterEncoding::GetCurrentDisplayEncodings(
     const std::wstring& locale,
     const std::wstring& locale_encodings,
     const std::wstring& recently_select_encodings) {

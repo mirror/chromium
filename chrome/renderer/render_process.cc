@@ -19,7 +19,8 @@
 #include "base/histogram.h"
 #include "base/path_service.h"
 #include "base/sys_info.h"
-#include "chrome/browser/net/dns_global.h"  // TODO(jar): DNS calls should be renderer specific, not including browser.
+// TODO(jar): DNS calls should be renderer specific, not including browser.
+#include "chrome/browser/net/dns_global.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/ipc_channel.h"
@@ -105,7 +106,6 @@ RenderProcess::~RenderProcess() {
 
 void RenderProcess::Init() {
   in_process_plugins_ = InProcessPlugins();
-  in_process_gears_ = false;
   for (size_t i = 0; i < arraysize(shared_mem_cache_); ++i)
     shared_mem_cache_[i] = NULL;
 
@@ -131,10 +131,6 @@ void RenderProcess::Init() {
     webkit_glue::SetJavaScriptFlags(
       command_line.GetSwitchValue(switches::kJavaScriptFlags));
   }
-  if (command_line.HasSwitch(switches::kPlaybackMode) ||
-      command_line.HasSwitch(switches::kRecordMode)) {
-      webkit_glue::SetRecordPlaybackMode(true);
-  }
 
   if (command_line.HasSwitch(switches::kEnableWatchdog)) {
     // TODO(JAR): Need to implement renderer IO msgloop watchdog.
@@ -142,20 +138,6 @@ void RenderProcess::Init() {
 
   if (command_line.HasSwitch(switches::kDumpHistogramsOnExit)) {
     StatisticsRecorder::set_dump_on_exit(true);
-  }
-
-  if (command_line.HasSwitch(switches::kGearsInRenderer)) {
-#if defined(OS_WIN)
-    in_process_gears_ = true;
-    // Load gears.dll on startup so we can access it before the sandbox
-    // blocks us.
-    std::wstring path;
-    if (PathService::Get(chrome::FILE_GEARS_PLUGIN, &path))
-      LoadLibrary(path.c_str());
-#else
-    // TODO(port) Need to handle loading gears on non-Windows platforms
-    NOTIMPLEMENTED();
-#endif
   }
 
   if (command_line.HasSwitch(switches::kEnableVideo) && LoadFFmpeg()) {
@@ -194,13 +176,13 @@ TransportDIB* RenderProcess::CreateTransportDIB(size_t size) {
 #elif defined(OS_MACOSX)  // defined(OS_WIN) || defined(OS_LINUX)
   // Mac creates transport DIBs in the browser, so we need to do a sync IPC to
   // get one.
-  IPC::Maybe<TransportDIB::Handle> mhandle;
-  IPC::Message* msg = new ViewHostMsg_AllocTransportDIB(size, &mhandle);
+  TransportDIB::Handle handle;
+  IPC::Message* msg = new ViewHostMsg_AllocTransportDIB(size, &handle);
   if (!child_thread()->Send(msg))
     return NULL;
-  if (!mhandle.valid)
+  if (handle.fd < 0)
     return NULL;
-  return TransportDIB::Map(mhandle.value);
+  return TransportDIB::Map(handle);
 #endif  // defined(OS_MACOSX)
 }
 

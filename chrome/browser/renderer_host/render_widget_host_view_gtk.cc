@@ -10,11 +10,10 @@
 
 #include "base/logging.h"
 #include "base/string_util.h"
+#include "chrome/common/native_web_keyboard_event.h"
 #include "chrome/common/x11_util.h"
 #include "chrome/browser/renderer_host/backing_store.h"
 #include "chrome/browser/renderer_host/render_widget_host.h"
-#include "skia/ext/bitmap_platform_device_linux.h"
-#include "skia/ext/platform_device_linux.h"
 #include "webkit/glue/webinputevent.h"
 
 namespace {
@@ -75,9 +74,12 @@ class RenderWidgetHostViewGtkWidget {
 
   static gboolean KeyPressReleaseEvent(GtkWidget* widget, GdkEventKey* event,
                                        RenderWidgetHostViewGtk* host_view) {
-    WebKeyboardEvent wke(event);
+    NativeWebKeyboardEvent wke(event);
     host_view->GetRenderWidgetHost()->ForwardKeyboardEvent(wke);
-    return FALSE;
+    // We return TRUE because we did handle the event. If it turns out webkit
+    // can't handle the event, we'll deal with it in
+    // RenderView::UnhandledKeyboardEvent().
+    return TRUE;
   }
 
   static gboolean FocusIn(GtkWidget* widget, GdkEventFocus* focus,
@@ -88,6 +90,9 @@ class RenderWidgetHostViewGtkWidget {
 
   static gboolean FocusOut(GtkWidget* widget, GdkEventFocus* focus,
                            RenderWidgetHostViewGtk* host_view) {
+    // Whenever we lose focus, set the cursor back to that of our parent window,
+    // which should be the default arrow.
+    gdk_window_set_cursor(widget->window, NULL);
     host_view->GetRenderWidgetHost()->Blur();
     return FALSE;
   }
@@ -123,6 +128,12 @@ class RenderWidgetHostViewGtkWidget {
   DISALLOW_IMPLICIT_CONSTRUCTORS(RenderWidgetHostViewGtkWidget);
 };
 
+gboolean OnPopupParentFocusOut(GtkWidget* parent, GdkEventFocus* focus,
+                               RenderWidgetHost* host) {
+  host->Shutdown();
+  return FALSE;
+}
+
 }  // namespace
 
 // static
@@ -132,12 +143,48 @@ RenderWidgetHostView* RenderWidgetHostView::CreateViewForWidget(
 }
 
 RenderWidgetHostViewGtk::RenderWidgetHostViewGtk(RenderWidgetHost* widget_host)
-    : host_(widget_host) {
+    : host_(widget_host),
+      parent_host_view_(NULL),
+      parent_(NULL),
+      popup_signal_id_(0),
+      activatable_(true) {
   host_->set_view(this);
-  view_ = RenderWidgetHostViewGtkWidget::CreateNewWidget(this);
 }
 
 RenderWidgetHostViewGtk::~RenderWidgetHostViewGtk() {
+}
+
+void RenderWidgetHostViewGtk::InitAsChild() {
+  view_.Own(RenderWidgetHostViewGtkWidget::CreateNewWidget(this));
+  gtk_widget_show(view_.get());
+}
+
+void RenderWidgetHostViewGtk::InitAsPopup(
+    RenderWidgetHostView* parent_host_view, const gfx::Rect& pos) {
+  parent_host_view_ = parent_host_view;
+  parent_ = parent_host_view->GetPluginNativeView();
+  GtkWidget* popup = gtk_window_new(GTK_WINDOW_POPUP);
+  view_.Own(RenderWidgetHostViewGtkWidget::CreateNewWidget(this));
+  gtk_container_add(GTK_CONTAINER(popup), view_.get());
+
+  // If we are not activatable, we don't want to grab keyboard input,
+  // and webkit will manage our destruction.
+  if (activatable_) {
+    // Grab all input for the app. If a click lands outside the bounds of the
+    // popup, WebKit will notice and destroy us.
+    gtk_grab_add(view_.get());
+    // We also destroy ourselves if our parent loses focus.
+    popup_signal_id_ = g_signal_connect(parent_, "focus-out-event",
+        G_CALLBACK(OnPopupParentFocusOut), host_);
+    // Our parent widget actually keeps GTK focus within its window, but we have
+    // to make the webkit selection box disappear to maintain appearances.
+    parent_host_view->Blur();
+  }
+
+  gtk_window_set_default_size(GTK_WINDOW(popup),
+                              pos.width(), pos.height());
+  gtk_widget_show_all(popup);
+  gtk_window_move(GTK_WINDOW(popup), pos.x(), pos.y());
 }
 
 void RenderWidgetHostViewGtk::DidBecomeSelected() {
@@ -156,7 +203,7 @@ gfx::NativeView RenderWidgetHostViewGtk::GetPluginNativeView() {
   // TODO(port): We need to pass some widget pointer out here because the
   // renderer echos it back to us when it asks for GetScreenInfo. However, we
   // should probably be passing the top-level window or some such instead.
-  return view_;
+  return view_.get();
 }
 
 void RenderWidgetHostViewGtk::MovePluginWindows(
@@ -168,11 +215,11 @@ void RenderWidgetHostViewGtk::MovePluginWindows(
 }
 
 void RenderWidgetHostViewGtk::Focus() {
-  NOTIMPLEMENTED();
+  host_->Focus();
 }
 
 void RenderWidgetHostViewGtk::Blur() {
-  NOTIMPLEMENTED();
+  host_->Blur();
 }
 
 bool RenderWidgetHostViewGtk::HasFocus() {
@@ -189,8 +236,8 @@ void RenderWidgetHostViewGtk::Hide() {
 }
 
 gfx::Rect RenderWidgetHostViewGtk::GetViewBounds() const {
-  return gfx::Rect(view_->allocation.x, view_->allocation.y,
-                   view_->allocation.width, view_->allocation.height);
+  GtkAllocation* alloc = &view_.get()->allocation;
+  return gfx::Rect(alloc->x, alloc->y, alloc->width, alloc->height);
 }
 
 void RenderWidgetHostViewGtk::UpdateCursor(const WebCursor& cursor) {
@@ -213,7 +260,7 @@ void RenderWidgetHostViewGtk::UpdateCursor(const WebCursor& cursor) {
       return;
     gdk_cursor = gdk_cursor_new(new_cursor_type);
   }
-  gdk_window_set_cursor(view_->window, gdk_cursor);
+  gdk_window_set_cursor(view_.get()->window, gdk_cursor);
   // The window now owns the cursor.
   gdk_cursor_unref(gdk_cursor);
 }
@@ -249,29 +296,38 @@ void RenderWidgetHostViewGtk::RenderViewGone() {
 }
 
 void RenderWidgetHostViewGtk::Destroy() {
+  // If |parent_| is non-null, we are a popup and we must disconnect from our
+  // parent and destroy the popup window.
+  if (parent_) {
+    if (activatable_) {
+      g_signal_handler_disconnect(parent_, popup_signal_id_);
+      parent_host_view_->Focus();
+    }
+    gtk_widget_destroy(gtk_widget_get_parent(view_.get()));
+  }
+
   // We need to disconnect ourselves from our parent widget at this time; this
   // does the right thing, automatically removing ourselves from our parent
   // container.
-  gtk_widget_destroy(view_);
-  view_ = NULL;
+  view_.Destroy();
 }
 
 void RenderWidgetHostViewGtk::SetTooltipText(const std::wstring& tooltip_text) {
   if (tooltip_text.empty()) {
-    gtk_widget_set_has_tooltip(view_, FALSE);
+    gtk_widget_set_has_tooltip(view_.get(), FALSE);
   } else {
-    gtk_widget_set_tooltip_text(view_, WideToUTF8(tooltip_text).c_str());
+    gtk_widget_set_tooltip_text(view_.get(), WideToUTF8(tooltip_text).c_str());
   }
 }
 
 BackingStore* RenderWidgetHostViewGtk::AllocBackingStore(
     const gfx::Size& size) {
   Display* display = x11_util::GetXDisplay();
-  void* visual = x11_util::GetVisualFromGtkWidget(view_);
+  void* visual = x11_util::GetVisualFromGtkWidget(view_.get());
   XID root_window = x11_util::GetX11RootWindow();
   bool use_render = x11_util::QueryRenderSupport(display);
   bool use_shared_memory = x11_util::QuerySharedMemorySupport(display);
-  int depth = gtk_widget_get_visual(view_)->depth;
+  int depth = gtk_widget_get_visual(view_.get())->depth;
 
   return new BackingStore(size, display, depth, visual, root_window,
                           use_render, use_shared_memory);
@@ -284,13 +340,12 @@ void RenderWidgetHostViewGtk::Paint(const gfx::Rect& damage_rect) {
     // Only render the widget if it is attached to a window; there's a short
     // period where this object isn't attached to a window but hasn't been
     // Destroy()ed yet and it receives paint messages...
-    GdkWindow* window = view_->window;
+    GdkWindow* window = view_.get()->window;
     if (window) {
       backing_store->ShowRect(
-          damage_rect, x11_util::GetX11WindowFromGtkWidget(view_));
+          damage_rect, x11_util::GetX11WindowFromGtkWidget(view_.get()));
     }
   } else {
     NOTIMPLEMENTED();
   }
 }
-

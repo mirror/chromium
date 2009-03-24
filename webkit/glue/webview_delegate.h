@@ -45,6 +45,7 @@ struct WebDropData;
 struct WebPreferences;
 class AutofillForm;
 class SkBitmap;
+class WebDevToolsAgentDelegate;
 class WebError;
 class WebFrame;
 class WebHistoryItem;
@@ -487,6 +488,11 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
                                       int64 node_id) {
   }
 
+  // Instructs the browser to remove the autofill entry specified from it DB.
+  virtual void RemoveStoredAutofillEntry(const std::wstring& name,
+                                         const std::wstring& value) {
+  }
+
   // UIDelegate --------------------------------------------------------------
 
   // Asks the browser to show a modal HTML dialog.  The dialog is passed the
@@ -498,9 +504,10 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
   }
 
   // Displays a JavaScript alert panel associated with the given view. Clients
-  // should visually indicate that this panel comes from JavaScript. The panel
+  // should visually indicate that this panel comes from JavaScript and some
+  // information about the originating frame (at least the domain). The panel
   // should have a single OK button.
-  virtual void RunJavaScriptAlert(WebView* webview,
+  virtual void RunJavaScriptAlert(WebFrame* webframe,
                                   const std::wstring& message) {
   }
 
@@ -508,7 +515,7 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
   // Clients should visually indicate that this panel comes
   // from JavaScript. The panel should have two buttons, e.g. "OK" and
   // "Cancel". Returns true if the user hit OK, or false if the user hit Cancel.
-  virtual bool RunJavaScriptConfirm(WebView* webview,
+  virtual bool RunJavaScriptConfirm(WebFrame* webframe,
                                     const std::wstring& message) {
     return false;
   }
@@ -520,7 +527,7 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
   // panel when it is shown. If the user hit OK, returns true and fills result
   // with the text in the box.  The value of result is undefined if the user
   // hit Cancel.
-  virtual bool RunJavaScriptPrompt(WebView* webview,
+  virtual bool RunJavaScriptPrompt(WebFrame* webframe,
                                    const std::wstring& message,
                                    const std::wstring& default_value,
                                    std::wstring* result) {
@@ -536,7 +543,7 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
   // that the navigation should continue, and Cancel means that the navigation
   // should be cancelled, leaving the user on the current page.  Returns true
   // if the user hit OK, or false if the user hit Cancel.
-  virtual bool RunBeforeUnloadConfirm(WebView* webview,
+  virtual bool RunBeforeUnloadConfirm(WebFrame* webframe,
                                       const std::wstring& message) {
     return true;  // OK, continue to navigate away
   }
@@ -739,6 +746,12 @@ class WebViewDelegate : virtual public WebWidgetDelegate {
   // Downloading -------------------------------------------------------------
 
   virtual void DownloadUrl(const GURL& url, const GURL& referrer) { }
+
+  // DevTools ----------------------------------------------------------------
+
+  virtual WebDevToolsAgentDelegate* GetWebDevToolsAgentDelegate() {
+    return NULL;
+  }
 
   // Editor Client -----------------------------------------------------------
 

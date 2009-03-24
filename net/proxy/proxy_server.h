@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef NET_PROXY_SERVER_H_
-#define NET_PROXY_SERVER_H_
+#ifndef NET_PROXY_PROXY_SERVER_H_
+#define NET_PROXY_PROXY_SERVER_H_
 
 #include <string>
 
@@ -98,7 +98,7 @@ class ProxyServer {
 
   // Format as a PAC result entry. This does the reverse of FromPacString().
   std::string ToPacString() const;
-  
+
   // Returns the default port number for a proxy server with the specified
   // scheme. Returns -1 if unknown.
   static int GetDefaultPortForScheme(Scheme scheme);
@@ -118,5 +118,4 @@ class ProxyServer {
 
 }  // namespace net
 
-#endif  // NET_PROXY_SERVER_H_
-
+#endif  // NET_PROXY_PROXY_SERVER_H_

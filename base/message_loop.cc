@@ -365,15 +365,23 @@ bool MessageLoop::DeletePendingTasks() {
       AddToDelayedWorkQueue(pending_task);
     } else {
       // TODO(darin): Delete all tasks once it is safe to do so.
-      //delete task;
+      // Until it is totally safe, just do it when running purify.
+#ifdef PURIFY
+      delete pending_task.task;
+#endif  // PURIFY
     }
   }
   did_work |= !deferred_non_nestable_work_queue_.empty();
   while (!deferred_non_nestable_work_queue_.empty()) {
     // TODO(darin): Delete all tasks once it is safe to do so.
-    //Task* task = deferred_non_nestable_work_queue_.front().task;
+    // Until it is totaly safe, just delete them to keep purify happy.
+#ifdef PURIFY
+    Task* task = deferred_non_nestable_work_queue_.front().task;
+#endif
     deferred_non_nestable_work_queue_.pop();
-    //delete task;
+#ifdef PURIFY
+    delete task;
+#endif
   }
   did_work |= !delayed_work_queue_.empty();
   while (!delayed_work_queue_.empty()) {

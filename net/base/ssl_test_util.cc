@@ -29,13 +29,16 @@
 #include "base/file_util.h"
 #include "base/logging.h"
 #include "base/path_service.h"
-#include "base/platform_thread.h"
 #include "base/string_util.h"
 #include "net/base/tcp_pinger.h"
 #include "net/base/host_resolver.h"
 #include "net/base/tcp_client_socket.h"
 #include "net/base/test_completion_callback.h"
 #include "testing/platform_test.h"
+
+#if defined(OS_WIN)
+#pragma comment(lib, "crypt32.lib")
+#endif
 
 namespace {
 
@@ -309,6 +312,10 @@ bool TestServerLauncher::LoadTestRootCert() {
     return true;
 
   // TODO(dkegel): figure out how to get this to only happen once?
+
+  // This currently leaks a little memory.
+  // TODO(dkegel): fix the leak and remove the entry in
+  // tools/valgrind/suppressions.txt
   cert_ = reinterpret_cast<PrivateCERTCertificate*>(
           LoadTemporaryCert(GetRootCertPath()));
   DCHECK(cert_);
@@ -349,4 +356,3 @@ bool TestServerLauncher::CheckCATrusted() {
 }
 
 }  // namespace net
-

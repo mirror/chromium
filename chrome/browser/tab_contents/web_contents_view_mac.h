@@ -8,15 +8,19 @@
 #import <Cocoa/Cocoa.h>
 
 #include "base/gfx/size.h"
-#include "base/scoped_cftyperef.h"
+#include "base/scoped_ptr.h"
+#include "base/scoped_nsobject.h"
 #include "chrome/browser/cocoa/base_view.h"
 #include "chrome/browser/tab_contents/web_contents_view.h"
 #include "chrome/common/notification_registrar.h"
 
 class FindBarMac;
 @class SadTabView;
+class WebContentsViewMac;
 
 @interface WebContentsViewCocoa : BaseView {
+ @private
+  WebContentsViewMac* webContentsView_;  // WEAK; owns us
 }
 
 @end
@@ -40,19 +44,20 @@ class WebContentsViewMac : public WebContentsView,
       RenderWidgetHost* render_widget_host);
   virtual gfx::NativeView GetNativeView() const;
   virtual gfx::NativeView GetContentNativeView() const;
-  virtual gfx::NativeWindow GetTopLevelNativeView() const;
+  virtual gfx::NativeWindow GetTopLevelNativeWindow() const;
   virtual void GetContainerBounds(gfx::Rect* out) const;
   virtual void OnContentsDestroy();
   virtual void SetPageTitle(const std::wstring& title);
   virtual void Invalidate();
   virtual void SizeContents(const gfx::Size& size);
-  virtual void OpenDeveloperTools();
-  virtual void ForwardMessageToDevToolsClient(const IPC::Message& message);
   virtual void FindInPage(const Browser& browser,
                           bool find_next, bool forward_direction);
   virtual void HideFindBar(bool end_session);
   virtual bool GetFindBarWindowInfo(gfx::Point* position,
                                     bool* fully_visible) const;
+  virtual void SetInitialFocus();
+  virtual void StoreFocus();
+  virtual void RestoreFocus();
 
   // Backend implementation of RenderViewHostDelegate::View.
   virtual WebContents* CreateNewWindowInternal(
@@ -69,7 +74,7 @@ class WebContentsViewMac : public WebContentsView,
   virtual void StartDragging(const WebDropData& drop_data);
   virtual void UpdateDragCursor(bool is_drop_target);
   virtual void TakeFocus(bool reverse);
-  virtual void HandleKeyboardEvent(const WebKeyboardEvent& event);
+  virtual void HandleKeyboardEvent(const NativeWebKeyboardEvent& event);
   virtual void OnFindReply(int request_id,
                            int number_of_matches,
                            const gfx::Rect& selection_rect,
@@ -88,7 +93,7 @@ class WebContentsViewMac : public WebContentsView,
   WebContents* web_contents_;
 
   // The Cocoa NSView that lives in the view hierarchy.
-  scoped_cftyperef<WebContentsViewCocoa*> cocoa_view_;
+  scoped_nsobject<WebContentsViewCocoa> cocoa_view_;
 
   // For find in page. This may be NULL if there is no find bar, and if it is
   // non-NULL, it may or may not be visible.
@@ -99,7 +104,7 @@ class WebContentsViewMac : public WebContentsView,
 
   // Used to render the sad tab. This will be non-NULL only when the sad tab is
   // visible.
-  scoped_cftyperef<SadTabView*> sad_tab_;
+  scoped_nsobject<SadTabView> sad_tab_;
 
   DISALLOW_COPY_AND_ASSIGN(WebContentsViewMac);
 };

@@ -139,7 +139,7 @@ uint64 URLRequestHttpJob::GetUploadProgress() const {
   return transaction_.get() ? transaction_->GetUploadProgress() : 0;
 }
 
-bool URLRequestHttpJob::GetMimeType(std::string* mime_type) {
+bool URLRequestHttpJob::GetMimeType(std::string* mime_type) const {
   DCHECK(transaction_.get());
 
   if (!response_info_)
@@ -204,9 +204,7 @@ bool URLRequestHttpJob::GetContentEncodings(
   }
 
   if (!encoding_types->empty()) {
-    std::string mime_type;
-    GetMimeType(&mime_type);
-    Filter::FixupEncodingTypes(IsSdchResponse(), mime_type, encoding_types);
+    Filter::FixupEncodingTypes(*this, encoding_types);
   }
   return !encoding_types->empty();
 }
@@ -576,4 +574,3 @@ void URLRequestHttpJob::FetchResponseCookies() {
   while (response_info_->headers->EnumerateHeader(&iter, name, &value))
     response_cookies_.push_back(value);
 }
-

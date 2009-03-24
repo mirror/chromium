@@ -12,7 +12,10 @@
 #include "chrome/browser/autofill_manager.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser.h"
+#include "chrome/browser/character_encoding.h"
 #include "chrome/browser/dom_operation_notification_details.h"
+#include "chrome/browser/dom_ui/dom_ui.h"
+#include "chrome/browser/dom_ui/dom_ui_factory.h"
 #include "chrome/browser/download/download_manager.h"
 #include "chrome/browser/gears_integration.h"
 #include "chrome/browser/google_util.h"
@@ -26,6 +29,7 @@
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/renderer_host/render_widget_host_view.h"
+#include "chrome/browser/renderer_host/web_cache_manager.h"
 #include "chrome/browser/search_engines/template_url_model.h"
 #include "chrome/browser/tab_contents/navigation_entry.h"
 #include "chrome/browser/tab_contents/provisional_load_details.h"
@@ -41,12 +45,11 @@
 #include "net/base/mime_util.h"
 #include "net/base/net_errors.h"
 #include "net/base/registry_controlled_domain.h"
+#include "webkit/glue/feed.h"
 #include "webkit/glue/webkit_glue.h"
 
 #if defined(OS_WIN)
 // TODO(port): fill these in as we flesh out the implementation of this class
-#include "chrome/browser/cache_manager_host.h"
-#include "chrome/browser/character_encoding.h"
 #include "chrome/browser/download/download_request_manager.h"
 #include "chrome/browser/modal_html_dialog_delegate.h"
 #include "chrome/browser/plugin_service.h"
@@ -343,8 +346,30 @@ void WebContents::Destroy() {
   TabContents::Destroy();
 }
 
+const string16& WebContents::GetTitle() const {
+  if (dom_ui_.get()) {
+    // Give the DOM UI the chance to override our title.
+    const string16& title = dom_ui_->overridden_title();
+    if (!title.empty())
+      return title;
+  }
+  return TabContents::GetTitle();
+}
+
 SiteInstance* WebContents::GetSiteInstance() const {
   return render_manager_.current_host()->site_instance();
+}
+
+bool WebContents::ShouldDisplayURL() {
+  if (dom_ui_.get())
+    return !dom_ui_->should_hide_url();
+  return true;
+}
+
+bool WebContents::ShouldDisplayFavIcon() {
+  if (dom_ui_.get())
+    return !dom_ui_->hide_favicon();
+  return true;
 }
 
 std::wstring WebContents::GetStatusText() const {
@@ -375,8 +400,13 @@ std::wstring WebContents::GetStatusText() const {
 }
 
 bool WebContents::NavigateToPendingEntry(bool reload) {
-  NavigationEntry* entry = controller()->GetPendingEntry();
-  RenderViewHost* dest_render_view_host = render_manager_.Navigate(*entry);
+  const NavigationEntry& entry = *controller()->GetPendingEntry();
+
+  // This will possibly create (or NULL out) a DOM UI object for the page. We'll
+  // use this later when the page starts doing stuff to allow it to do so.
+  dom_ui_.reset(DOMUIFactory::CreateDOMUIForURL(this, entry.url()));
+
+  RenderViewHost* dest_render_view_host = render_manager_.Navigate(entry);
   if (!dest_render_view_host)
     return false;  // Unable to create the desired render view host.
 
@@ -384,15 +414,15 @@ bool WebContents::NavigateToPendingEntry(bool reload) {
   current_load_start_ = TimeTicks::Now();
 
   // Navigate in the desired RenderViewHost.
-  dest_render_view_host->NavigateToEntry(*entry, reload);
+  dest_render_view_host->NavigateToEntry(entry, reload);
 
-  if (entry->page_id() == -1) {
+  if (entry.page_id() == -1) {
     // HACK!!  This code suppresses javascript: URLs from being added to
     // session history, which is what we want to do for javascript: URLs that
     // do not generate content.  What we really need is a message from the
     // renderer telling us that a new page was not created.  The same message
     // could be used for mailto: URLs and the like.
-    if (entry->url().SchemeIs(chrome::kJavaScriptScheme))
+    if (entry.url().SchemeIs(chrome::kJavaScriptScheme))
       return false;
   }
 
@@ -405,7 +435,7 @@ bool WebContents::NavigateToPendingEntry(bool reload) {
     HistoryService* history =
         profile()->GetHistoryService(Profile::IMPLICIT_ACCESS);
     if (history)
-      history->SetFavIconOutOfDateForPage(entry->url());
+      history->SetFavIconOutOfDateForPage(entry.url());
   }
 
   return true;
@@ -438,7 +468,10 @@ void WebContents::DidBecomeSelected() {
   if (render_widget_host_view())
     render_widget_host_view()->DidBecomeSelected();
 
-  CacheManagerHost::GetInstance()->ObserveActivity(process()->host_id());
+  // If pid() is -1, that means the RenderProcessHost still hasn't been
+  // initialized.  It'll register with CacheManagerHost when it is.
+  if (process()->pid() != -1)
+    WebCacheManager::GetInstance()->ObserveActivity(process()->pid());
 }
 
 void WebContents::WasHidden() {
@@ -484,6 +517,12 @@ void WebContents::HideContents() {
   WasHidden();
 }
 
+bool WebContents::IsBookmarkBarAlwaysVisible() {
+  if (dom_ui_.get())
+    return dom_ui_->force_bookmark_bar_visible();
+  return false;
+}
+
 void WebContents::SetDownloadShelfVisible(bool visible) {
   TabContents::SetDownloadShelfVisible(visible);
   if (visible) {
@@ -495,6 +534,13 @@ void WebContents::SetDownloadShelfVisible(bool visible) {
 
 void WebContents::PopupNotificationVisibilityChanged(bool visible) {
   render_view_host()->PopupNotificationVisibilityChanged(visible);
+}
+
+bool WebContents::FocusLocationBarByDefault() {
+  // Allow the DOM Ui to override the default.
+  if (dom_ui_.get())
+    return dom_ui_->focus_location_bar_by_default();
+  return false;
 }
 
 // Stupid view pass-throughs
@@ -538,7 +584,7 @@ void WebContents::CreateShortcut() {
   render_view_host()->GetApplicationInfo(pending_install_.page_id);
 }
 
-void WebContents::StartFinding(const std::wstring& find_text,
+void WebContents::StartFinding(const string16& find_text,
                                bool forward_direction) {
   // If find_text is empty, it means FindNext was pressed with a keyboard
   // shortcut so unless we have something to search for we return early.
@@ -680,7 +726,9 @@ void WebContents::RenderViewCreated(RenderViewHost* render_view_host) {
   if (!entry)
     return;
 
-  if (entry->IsViewSourceMode()) {
+  if (dom_ui_.get()) {
+    dom_ui_->RenderViewCreated(render_view_host);
+  } else if (entry->IsViewSourceMode()) {
     // Put the renderer in view source mode.
     render_view_host->Send(
         new ViewMsg_EnableViewSourceMode(render_view_host->routing_id()));
@@ -804,6 +852,29 @@ void WebContents::UpdateTitle(RenderViewHost* rvh,
     NotifyNavigationStateChanged(INVALIDATE_TITLE);
 }
 
+void WebContents::UpdateFeedList(
+    RenderViewHost* rvh, const ViewHostMsg_UpdateFeedList_Params& params) {
+  if (!controller())
+    return;
+
+  // We might have an old RenderViewHost sending messages, and we should ignore
+  // those messages.
+  if (rvh != render_view_host())
+    return;
+
+  NavigationEntry* entry = controller()->GetEntryWithPageID(type(),
+                                                            GetSiteInstance(),
+                                                            params.page_id);
+  if (!entry)
+    return;
+
+  entry->set_feedlist(params.feedlist);
+
+  // Broadcast notifications when the UI should be updated.
+  if (entry == controller()->GetEntryAtOffset(0))
+    NotifyNavigationStateChanged(INVALIDATE_FEEDLIST);
+}
+
 void WebContents::UpdateEncoding(RenderViewHost* render_view_host,
                                  const std::wstring& encoding) {
   set_encoding(encoding);
@@ -899,6 +970,8 @@ void WebContents::DidRedirectProvisionalLoad(int32 page_id,
 
 void WebContents::DidLoadResourceFromMemoryCache(
     const GURL& url,
+    const std::string& frame_origin,
+    const std::string& main_frame_origin,
     const std::string& security_info) {
   if (!controller())
     return;
@@ -908,7 +981,8 @@ void WebContents::DidLoadResourceFromMemoryCache(
   SSLManager::DeserializeSecurityInfo(security_info,
                                       &cert_id, &cert_status,
                                       &security_bits);
-  LoadFromMemoryCacheDetails details(url, cert_id, cert_status);
+  LoadFromMemoryCacheDetails details(url, frame_origin, main_frame_origin,
+                                     cert_id, cert_status);
 
   NotificationService::current()->Notify(
       NotificationType::LOAD_FROM_MEMORY_CACHE,
@@ -996,7 +1070,19 @@ void WebContents::DidDownloadImage(
 
 void WebContents::RequestOpenURL(const GURL& url, const GURL& referrer,
                                  WindowOpenDisposition disposition) {
-  OpenURL(url, referrer, disposition, PageTransition::LINK);
+  if (dom_ui_.get()) {
+    // When we're a DOM UI, it will provide a page transition type for us (this
+    // is so the new tab page can specify AUTO_BOOKMARK for automatically
+    // generated suggestions).
+    //
+    // Note also that we hide the referrer for DOM UI pages. We don't really
+    // want web sites to see a referrer of "chrome-ui://blah" (and some
+    // chrome-ui URLs might have search terms or other stuff we don't want to
+    // send to the site), so we send no referrer.
+    OpenURL(url, GURL(), disposition, dom_ui_->link_transition_type());
+  } else {
+    OpenURL(url, referrer, disposition, PageTransition::LINK);
+  }
 }
 
 void WebContents::DomOperationResponse(const std::string& json_string,
@@ -1007,9 +1093,23 @@ void WebContents::DomOperationResponse(const std::string& json_string,
       Details<DomOperationNotificationDetails>(&details));
 }
 
-void WebContents::ProcessExternalHostMessage(const std::string& message) {
+void WebContents::ProcessDOMUIMessage(const std::string& message,
+                                      const std::string& content) {
+  if (!dom_ui_.get()) {
+    // We shouldn't get a DOM UI message when we haven't enabled the DOM UI.
+    // Because the renderer might be owned and sending random messages, we need
+    // to ignore these inproper ones.
+    NOTREACHED();
+    return;
+  }
+  dom_ui_->ProcessDOMUIMessage(message, content);
+}
+
+void WebContents::ProcessExternalHostMessage(const std::string& message,
+                                             const std::string& origin,
+                                             const std::string& target) {
   if (delegate())
-    delegate()->ForwardMessageToExternalHost(message);
+    delegate()->ForwardMessageToExternalHost(message, origin, target);
 }
 
 void WebContents::GoToEntryAtOffset(int offset) {
@@ -1041,12 +1141,13 @@ void WebContents::RunFileChooser(bool multiple_files,
                      SelectFileDialog::SELECT_OPEN_FILE;
   select_file_dialog_->SelectFile(dialog_type, title, default_file, filter,
                                   std::wstring(),
-                                  view_->GetTopLevelNativeView(), NULL);
+                                  view_->GetTopLevelNativeWindow(), NULL);
 }
 
 void WebContents::RunJavaScriptMessage(
     const std::wstring& message,
     const std::wstring& default_prompt,
+    const GURL& frame_url,
     const int flags,
     IPC::Message* reply_msg,
     bool* did_suppress_message) {
@@ -1070,18 +1171,19 @@ void WebContents::RunJavaScriptMessage(
         TimeDelta::FromMilliseconds(kJavascriptMessageExpectedDelay))
       show_suppress_checkbox = true;
 
-    RunJavascriptMessageBox(this, flags, message, default_prompt,
+    RunJavascriptMessageBox(this, frame_url, flags, message, default_prompt,
                             show_suppress_checkbox, reply_msg);
   } else {
     // If we are suppressing messages, just reply as is if the user immediately
     // pressed "Cancel".
-    OnJavaScriptMessageBoxClosed(reply_msg, false, L"");
+    OnJavaScriptMessageBoxClosed(reply_msg, false, std::wstring());
   }
 }
 
-void WebContents::RunBeforeUnloadConfirm(const std::wstring& message,
+void WebContents::RunBeforeUnloadConfirm(const GURL& frame_url,
+                                         const std::wstring& message,
                                          IPC::Message* reply_msg) {
-  RunBeforeUnloadDialog(this, message, reply_msg);
+  RunBeforeUnloadDialog(this, frame_url, message, reply_msg);
 }
 
 void WebContents::ShowModalHTMLDialog(const GURL& url, int width, int height,
@@ -1109,6 +1211,11 @@ void WebContents::GetAutofillSuggestions(const std::wstring& field_name,
     const std::wstring& user_text, int64 node_id, int request_id) {
   GetAutofillManager()->FetchValuesForName(field_name, user_text,
       kMaxAutofillMenuItems, node_id, request_id);
+}
+
+void WebContents::RemoveAutofillEntry(const std::wstring& field_name,
+                                      const std::wstring& value) {
+  GetAutofillManager()->RemoveValueForName(field_name, value);
 }
 
 // Checks to see if we should generate a keyword based on the OSDD, and if
@@ -1295,8 +1402,14 @@ WebPreferences WebContents::GetWebkitPrefs() {
     web_prefs.default_encoding = prefs->GetString(
         prefs::kDefaultCharset);
   }
-
   DCHECK(!web_prefs.default_encoding.empty());
+
+  // Override some prefs when we're a DOM UI, or the pages won't work.
+  if (dom_ui_.get()) {
+    web_prefs.loads_images_automatically = true;
+    web_prefs.javascript_enabled = true;
+  }
+
   return web_prefs;
 }
 
@@ -1324,6 +1437,12 @@ void WebContents::OnCrashedPlugin(const FilePath& plugin_path) {
       this, l10n_util::GetStringF(IDS_PLUGIN_CRASHED_PROMPT, plugin_name),
       NULL));
 #endif
+}
+
+void WebContents::OnCrashedWorker() {
+  AddInfoBar(new SimpleAlertInfoBarDelegate(
+      this, l10n_util::GetString(IDS_WEBWORKER_CRASHED_PROMPT),
+      NULL));
 }
 
 void WebContents::OnJSOutOfMemory() {
@@ -1468,9 +1587,14 @@ WebContents::GetLastCommittedNavigationEntryForRenderManager() {
     return NULL;
   return controller()->GetLastCommittedEntry();
 }
-  
+
 bool WebContents::CreateRenderViewForRenderManager(
     RenderViewHost* render_view_host) {
+  // When we're running a DOM UI, the RenderViewHost needs to be put in DOM UI
+  // mode before CreateRenderView is called.
+  if (dom_ui_.get())
+    render_view_host->AllowDOMUIBindings();
+
   RenderWidgetHostView* rwh_view = view_->CreateViewForWidget(render_view_host);
   if (!render_view_host->CreateRenderView())
     return false;
@@ -1685,7 +1809,8 @@ void WebContents::UpdateMaxPageIDIfNecessary(SiteInstance* site_instance,
   }
 }
 
-void WebContents::UpdateHistoryForNavigation(const GURL& display_url,
+void WebContents::UpdateHistoryForNavigation(
+    const GURL& display_url,
     const ViewHostMsg_FrameNavigate_Params& params) {
   if (profile()->IsOffTheRecord())
     return;

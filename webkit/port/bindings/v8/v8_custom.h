@@ -95,9 +95,9 @@ class V8Custom {
   static const int kXMLHttpRequestInternalFieldCount =
                       kDefaultWrapperInternalFieldCount + 1;
 
-  static const int kMessageChannelPort1Index = 
+  static const int kMessageChannelPort1Index =
                       kDefaultWrapperInternalFieldCount + 0;
-  static const int kMessageChannelPort2Index = 
+  static const int kMessageChannelPort2Index =
                       kDefaultWrapperInternalFieldCount + 1;
   static const int kMessageChannelInternalFieldCount =
                       kDefaultWrapperInternalFieldCount + 2;
@@ -271,6 +271,9 @@ DECLARE_CALLBACK(HTMLOptionsCollectionAdd)
 DECLARE_CALLBACK(HTMLDocumentWrite)
 DECLARE_CALLBACK(HTMLDocumentWriteln)
 DECLARE_CALLBACK(HTMLDocumentOpen)
+DECLARE_PROPERTY_ACCESSOR(HTMLDocumentAll)
+DECLARE_NAMED_PROPERTY_GETTER(HTMLDocument)
+DECLARE_NAMED_PROPERTY_DELETER(HTMLDocument)
 
 // Document customized functions
 DECLARE_CALLBACK(DocumentEvaluate)
@@ -403,6 +406,15 @@ DECLARE_CALLBACK(TreeWalkerPreviousNode)
 DECLARE_CALLBACK(TreeWalkerNextSibling)
 DECLARE_CALLBACK(TreeWalkerPreviousSibling)
 
+// Custom implementation of InspectorController functions
+DECLARE_CALLBACK(InspectorControllerDebuggerEnabled)
+DECLARE_CALLBACK(InspectorControllerPauseOnExceptions)
+DECLARE_CALLBACK(InspectorControllerProfilerEnabled)
+#if ENABLE(DATABASE)
+DECLARE_CALLBACK(InspectorControllerDatabaseTableNames)
+#endif
+DECLARE_CALLBACK(InspectorControllerWrapCallback)
+
 // Custom implementation of NodeIterator functions
 DECLARE_CALLBACK(NodeIteratorNextNode)
 DECLARE_CALLBACK(NodeIteratorPreviousNode)
@@ -423,9 +435,6 @@ DECLARE_INDEXED_ACCESS_CHECK(DOMWindow)
 
 DECLARE_NAMED_PROPERTY_GETTER(HTMLFrameSetElement)
 DECLARE_NAMED_PROPERTY_GETTER(HTMLFormElement)
-DECLARE_NAMED_PROPERTY_GETTER(HTMLDocument)
-DECLARE_NAMED_PROPERTY_SETTER(HTMLDocument)
-DECLARE_NAMED_PROPERTY_DELETER(HTMLDocument)
 DECLARE_NAMED_PROPERTY_GETTER(NodeList)
 DECLARE_NAMED_PROPERTY_GETTER(NamedNodeMap)
 DECLARE_NAMED_PROPERTY_GETTER(CSSStyleDeclaration)
@@ -457,6 +466,12 @@ DECLARE_CALLBACK(MessagePortStartConversation)
 DECLARE_CALLBACK(MessagePortAddEventListener)
 DECLARE_CALLBACK(MessagePortRemoveEventListener)
 
+// Database
+DECLARE_CALLBACK(DatabaseChangeVersion)
+DECLARE_CALLBACK(DatabaseTransaction)
+DECLARE_CALLBACK(SQLTransactionExecuteSql)
+DECLARE_CALLBACK(SQLResultSetRowListItem)
+
 // SVG custom properties and callbacks
 #if ENABLE(SVG)
 DECLARE_PROPERTY_ACCESSOR_GETTER(SVGLengthValue)
@@ -477,6 +492,7 @@ DECLARE_CALLBACK(WorkerRemoveEventListener)
 
 DECLARE_PROPERTY_ACCESSOR_GETTER(WorkerContextSelf)
 DECLARE_PROPERTY_ACCESSOR(WorkerContextOnmessage)
+DECLARE_CALLBACK(WorkerContextImportScripts)
 DECLARE_CALLBACK(WorkerContextSetTimeout)
 DECLARE_CALLBACK(WorkerContextClearTimeout)
 DECLARE_CALLBACK(WorkerContextSetInterval)
@@ -525,4 +541,3 @@ DECLARE_CALLBACK(WorkerContextRemoveEventListener)
 }  // namespace WebCore
 
 #endif  // V8_CUSTOM_H__
-

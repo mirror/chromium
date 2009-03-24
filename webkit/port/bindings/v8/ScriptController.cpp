@@ -1,10 +1,10 @@
 // Copyright (c) 2008, Google Inc.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
 // met:
-// 
+//
 //     * Redistributions of source code must retain the above copyright
 // notice, this list of conditions and the following disclaimer.
 //     * Redistributions in binary form must reproduce the above
@@ -14,7 +14,7 @@
 //     * Neither the name of Google Inc. nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -41,13 +41,13 @@
 #include "Node.h"
 #include "NotImplemented.h"
 #include "npruntime_priv.h"
-#include "np_v8object.h"
+#include "NPV8Object.h"
 #include "ScriptSourceCode.h"
 #include "Widget.h"
 
 #include "v8_proxy.h"
 #include "v8_binding.h"
-#include "v8_npobject.h"
+#include "V8NPObject.h"
 
 NPRuntimeFunctions npruntime_functions = {
     NPN_GetStringIdentifier,
@@ -73,9 +73,6 @@ NPRuntimeFunctions npruntime_functions = {
 
 
 namespace WebCore {
-
-bool ScriptController::m_recordPlaybackMode = false;
-bool ScriptController::m_shouldExposeGCController = false;
 
 void ScriptController::setFlags(const char* str, int length)
 {
@@ -210,6 +207,10 @@ bool ScriptController::processingUserGesture() const
     return false;
 }
 
+void ScriptController::evaluateInNewContext(
+    const Vector<ScriptSourceCode>& sources) {
+  m_proxy->evaluateInNewContext(sources);
+}
 
 // Evaluate a script file in the environment of this proxy.
 ScriptValue ScriptController::evaluate(const ScriptSourceCode& sourceCode)
@@ -220,14 +221,7 @@ ScriptValue ScriptController::evaluate(const ScriptSourceCode& sourceCode)
         return ScriptValue();
 
     v8::Context::Scope scope(context);
-
-    // HTMLTokenizer used to use base zero line numbers for scripts, now it
-    // uses base 1. This confuses v8, which uses line offsets from the
-    // first line.
-    v8::Local<v8::Value> obj = m_proxy->Evaluate(sourceCode.url(), 
-                                                 sourceCode.startLine() - 1,
-                                                 sourceCode.source(),
-                                                 NULL);
+    v8::Local<v8::Value> obj = m_proxy->evaluate(sourceCode, NULL);
 
     if (obj.IsEmpty() || obj->IsUndefined())
         return ScriptValue();
@@ -292,7 +286,7 @@ void ScriptController::collectGarbage()
 
     v8::Context::Scope scope(context);
 
-    m_proxy->Evaluate("", 0, "if (window.gc) void(gc());", NULL);
+    m_proxy->evaluate(ScriptSourceCode("if (window.gc) void(gc());"), NULL);
 }
 
 NPRuntimeFunctions* ScriptController::functions()
@@ -328,21 +322,21 @@ PassScriptInstance ScriptController::createScriptInstanceForWidget(Widget* widge
     // NPObjects can be created either by the browser (e.g. the main
     // window object) or by the plugin (the main plugin object
     // for a HTMLEmbedElement).  Further,
-    // unlike most DOM Objects, the frame is especially careful to ensure 
-    // NPObjects terminate at frame teardown because if a plugin leaks a 
+    // unlike most DOM Objects, the frame is especially careful to ensure
+    // NPObjects terminate at frame teardown because if a plugin leaks a
     // reference, it could leak its objects (or the browser's objects).
-    // 
+    //
     // The Frame maintains a list of plugin objects (m_pluginObjects)
     // which it can use to quickly find the wrapped embed object.
-    // 
-    // Inside the NPRuntime, we've added a few methods for registering 
-    // wrapped NPObjects.  The purpose of the registration is because 
+    //
+    // Inside the NPRuntime, we've added a few methods for registering
+    // wrapped NPObjects.  The purpose of the registration is because
     // javascript garbage collection is non-deterministic, yet we need to
     // be able to tear down the plugin objects immediately.  When an object
     // is registered, javascript can use it.  When the object is destroyed,
     // or when the object's "owning" object is destroyed, the object will
     // be un-registered, and the javascript engine must not use it.
-    //  
+    //
     // Inside the javascript engine, the engine can keep a reference to the
     // NPObject as part of its wrapper.  However, before accessing the object
     // it must consult the NPN_Registry.
@@ -363,7 +357,7 @@ void ScriptController::cleanupScriptObjectsForPlugin(void* nativeHandle)
     _NPN_UnregisterObject(it->second);
     NPN_ReleaseObject(it->second);
     m_pluginObjects.remove(it);
-}    
+}
 
 static NPObject* createNoScriptObject()
 {
@@ -382,7 +376,7 @@ static NPObject* createScriptObject(Frame* frame)
     DOMWindow* window = frame->domWindow();
     v8::Handle<v8::Value> global = V8Proxy::ToV8Object(V8ClassIndex::DOMWINDOW, window);
     ASSERT(global->IsObject());
-    return NPN_CreateScriptObject(0, v8::Handle<v8::Object>::Cast(global), window);
+    return npCreateV8ScriptObject(0, v8::Handle<v8::Object>::Cast(global), window);
 }
 
 NPObject* ScriptController::windowScriptNPObject()
@@ -421,7 +415,7 @@ NPObject* ScriptController::createScriptObjectForPluginElement(HTMLPlugInElement
     if (!v8plugin->IsObject())
         return createNoScriptObject();
 
-    return NPN_CreateScriptObject(0, v8::Handle<v8::Object>::Cast(v8plugin), window);
+    return npCreateV8ScriptObject(0, v8::Handle<v8::Object>::Cast(v8plugin), window);
 }
 
 

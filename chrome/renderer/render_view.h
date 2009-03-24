@@ -16,22 +16,22 @@
 #include "base/timer.h"
 #include "base/values.h"
 #include "build/build_config.h"
-#include "chrome/common/resource_dispatcher.h"
 #ifdef CHROME_PERSONALIZATION
 #include "chrome/personalization/personalization.h"
 #endif
 #include "chrome/renderer/automation/dom_automation_controller.h"
 #include "chrome/renderer/dom_ui_bindings.h"
 #include "chrome/renderer/external_host_bindings.h"
-#include "chrome/renderer/extensions/extension_bindings.h"
 #include "chrome/renderer/external_js_object.h"
 #include "chrome/renderer/render_widget.h"
 #include "media/audio/audio_output.h"
 #include "testing/gtest/include/gtest/gtest_prod.h"
 #include "webkit/glue/console_message_level.h"
 #include "webkit/glue/dom_serializer_delegate.h"
+#include "webkit/glue/feed.h"
 #include "webkit/glue/form_data.h"
 #include "webkit/glue/password_form_dom_manager.h"
+#include "webkit/glue/webaccessibilitymanager.h"
 #include "webkit/glue/webview_delegate.h"
 #include "webkit/glue/webview.h"
 
@@ -48,17 +48,16 @@ class DebugMessageHandler;
 class DevToolsAgent;
 class DevToolsClient;
 class FilePath;
-class GlueAccessibility;
 class GURL;
 class RenderThread;
 class ResourceDispatcher;
 class SkBitmap;
+class WebAccessibilityManager;
 class WebError;
 class WebFrame;
 class WebPluginDelegate;
 class WebPluginDelegateProxy;
-struct AccessibilityInParams;
-struct AccessibilityOutParams;
+class WebDevToolsAgentDelegate;
 struct FindInPageRequest;
 struct ThumbnailScore;
 struct ViewMsg_Navigate_Params;
@@ -73,6 +72,9 @@ class WaitableEvent;
 
 namespace webkit_glue {
 struct FileUploadData;
+//class WebAccessibility;
+//struct InParams;
+//struct OutParams;
 }
 
 // We need to prevent a page from trying to create infinite popups. It is not
@@ -117,11 +119,6 @@ class RenderView : public RenderWidget,
   // Sets the "next page id" counter.
   static void SetNextPageID(int32 next_page_id);
 
-  // The resource dispatcher used to fetch resources for this view.
-  ResourceDispatcher* resource_dispatcher() {
-    return resource_dispatcher_;
-  }
-
   // May return NULL when the view is closing.
   WebView* webview() const {
     return static_cast<WebView*>(webwidget());
@@ -142,21 +139,23 @@ class RenderView : public RenderWidget,
   virtual void ShowModalHTMLDialog(const GURL& url, int width, int height,
                                    const std::string& json_arguments,
                                    std::string* json_retval);
-  virtual void RunJavaScriptAlert(WebView* webview,
+  virtual void RunJavaScriptAlert(WebFrame* webframe,
                                   const std::wstring& message);
-  virtual bool RunJavaScriptConfirm(WebView* webview,
+  virtual bool RunJavaScriptConfirm(WebFrame* webframe,
                                     const std::wstring& message);
-  virtual bool RunJavaScriptPrompt(WebView* webview,
+  virtual bool RunJavaScriptPrompt(WebFrame* webframe,
                                    const std::wstring& message,
                                    const std::wstring& default_value,
                                    std::wstring* result);
-  virtual bool RunBeforeUnloadConfirm(WebView* webview,
+  virtual bool RunBeforeUnloadConfirm(WebFrame* webframe,
                                       const std::wstring& message);
   virtual void EnableSuddenTermination();
   virtual void DisableSuddenTermination();
   virtual void QueryFormFieldAutofill(const std::wstring& field_name,
                                       const std::wstring& text,
                                       int64 node_id);
+  virtual void RemoveStoredAutofillEntry(const std::wstring& field_name,
+                                         const std::wstring& text);
   virtual void UpdateTargetURL(WebView* webview,
                                const GURL& url);
   virtual void RunFileChooser(bool multi_select,
@@ -219,6 +218,9 @@ class RenderView : public RenderWidget,
   virtual void DidCompleteClientRedirect(WebView* webview,
                                          WebFrame* frame,
                                          const GURL& source);
+  virtual void WillSendRequest(WebView* webview,
+                               uint32 identifier,
+                               WebRequest* request);
 
   virtual void WindowObjectCleared(WebFrame* webframe);
   virtual void DocumentElementAvailable(WebFrame* webframe);
@@ -278,6 +280,8 @@ class RenderView : public RenderWidget,
                               const std::wstring& tooltip_text);
 
   virtual void DownloadUrl(const GURL& url, const GURL& referrer);
+
+  virtual WebDevToolsAgentDelegate* GetWebDevToolsAgentDelegate();
 
   virtual void OnPasswordFormsSeen(WebView* webview,
                                    const std::vector<PasswordForm>& forms);
@@ -430,18 +434,21 @@ class RenderView : public RenderWidget,
   bool RunJavaScriptMessage(int type,
                             const std::wstring& message,
                             const std::wstring& default_value,
+                            const GURL& frame_url,
                             std::wstring* result);
 
   // Adds search provider from the given OpenSearch description URL as a
   // keyword search.
   void AddGURLSearchProvider(const GURL& osd_url, bool autodetected);
 
+  // Update the feed list.
+  void UpdateFeedList(scoped_refptr<FeedList> feedlist);
+
   // Tells the browser process to navigate to a back/forward entry at the given
   // offset from current.
   void GoToEntryAtOffset(int offset);
 
   // RenderView IPC message handlers
-  void OnCreatingNewAck(gfx::NativeViewId parent);
   void SendThumbnail();
   void OnPrintPages();
   void OnNavigate(const ViewMsg_Navigate_Params& params);
@@ -513,9 +520,10 @@ class RenderView : public RenderWidget,
   void OnEnableViewSourceMode();
   void OnUpdateBackForwardListCount(int back_list_count,
                                     int forward_list_count);
-  void OnGetAccessibilityInfo(const AccessibilityInParams& in_params,
-                              AccessibilityOutParams* out_params);
-  void OnClearAccessibilityInfo(int iaccessible_id, bool clear_all);
+  void OnGetAccessibilityInfo(
+      const webkit_glue::WebAccessibility::InParams& in_params,
+      webkit_glue::WebAccessibility::OutParams* out_params);
+  void OnClearAccessibilityInfo(int acc_obj_id, bool clear_all);
 
   void OnMoveOrResizeStarted();
 
@@ -545,7 +553,9 @@ class RenderView : public RenderWidget,
 #endif
 
   // Handles messages posted from automation.
-  void OnMessageFromExternalHost(const std::string& message);
+  void OnMessageFromExternalHost(const std::string& message,
+                                 const std::string& origin,
+                                 const std::string& target);
 
   // Message that we should no longer be part of the current popup window
   // grouping, and should form our own grouping.
@@ -566,17 +576,12 @@ class RenderView : public RenderWidget,
   // Notification of volume property of an audio output stream.
   void OnAudioStreamVolume(int stream_id, double left, double right);
 
-  // Switches the frame's CSS media type to "print" and calculate the number of
-  // printed pages that are to be expected. |frame| will be used to calculate
-  // the number of expected pages for this frame only.
-  int SwitchFrameToPrintMediaType(const ViewMsg_Print_Params& params,
-                                  WebFrame* frame);
-
-  // Switches the frame's CSS media type to "display".
-  void SwitchFrameToDisplayMediaType(WebFrame* frame);
+  void OnHandleExtensionMessage(const std::string& message, int channel_id);
 
   // Prints the page listed in |params|.
-  void PrintPage(const ViewMsg_PrintPage_Params& params, WebFrame* frame);
+  void PrintPage(const ViewMsg_PrintPage_Params& params,
+                 const gfx::Size& canvas_size,
+                 WebFrame* frame);
 
   // Prints all the pages listed in |params|.
   void PrintPages(const ViewMsg_PrintPages_Params& params, WebFrame* frame);
@@ -617,13 +622,6 @@ class RenderView : public RenderWidget,
   // A helper method used by WasOpenedByUserGesture.
   bool WasOpenedByUserGestureHelper() const;
 
-  void set_waiting_for_create_window_ack(bool wait) {
-    waiting_for_create_window_ack_ = wait;
-  }
-
-  // Handles resource loads for this view.
-  scoped_refptr<ResourceDispatcher> resource_dispatcher_;
-
   // Bitwise-ORed set of extra bindings that have been enabled.  See
   // BindingsPolicy for details.
   int enabled_bindings_;
@@ -643,9 +641,6 @@ class RenderView : public RenderWidget,
 
   // External host exposed through automation controller.
   ExternalHostBindings external_host_bindings_;
-
-  // Extension bindings exposed for script running in the extension process.
-  ExtensionBindings extension_bindings_;
 
   // The last gotten main frame's encoding.
   std::wstring last_encoding_name_;
@@ -734,21 +729,14 @@ class RenderView : public RenderWidget,
   // check this to know if they should pump messages/tasks then.
   scoped_ptr<base::WaitableEvent> modal_dialog_event_;
 
-  // Document width when in print CSS media type. 0 otherwise.
-  int printed_document_width_;
-
-  // Backup the view size before printing since it needs to be overriden. This
-  // value is set to restore the view size when printing is done.
-  gfx::Size printing_view_size_;
-
   scoped_refptr<DebugMessageHandler> debug_message_handler_;
 
   // Provides access to this renderer from the remote Inspector UI.
-  scoped_refptr<DevToolsAgent> dev_tools_agent_;
+  scoped_refptr<DevToolsAgent> devtools_agent_;
 
   // DevToolsClient for renderer hosting developer tools UI. It's NULL for other
   // render views.
-  scoped_ptr<DevToolsClient> dev_tools_client_;
+  scoped_ptr<DevToolsClient> devtools_client_;
 
   scoped_ptr<WebFileChooserCallback> file_chooser_;
 
@@ -771,19 +759,16 @@ class RenderView : public RenderWidget,
   // shouldn't count against their own |shared_popup_counter_|.
   bool decrement_shared_popup_at_destruction_;
 
-  // TODO(port): revisit once qwe have accessibility
+  // TODO(port): revisit once we have accessibility
 #if defined(OS_WIN)
   // Handles accessibility requests into the renderer side, as well as
   // maintains the cache and other features of the accessibility tree.
-  scoped_ptr<GlueAccessibility> glue_accessibility_;
+  scoped_ptr<webkit_glue::WebAccessibilityManager> web_accessibility_manager_;
 #endif
 
   // Resource message queue. Used to queue up resource IPCs if we need
   // to wait for an ACK from the browser before proceeding.
   std::queue<IPC::Message*> queued_resource_messages_;
-
-  // Set if we are waiting for an ack for ViewHostMsg_CreateWindow
-  bool waiting_for_create_window_ack_;
 
   // The id of the last request sent for form field autofill.  Used to ignore
   // out of date responses.

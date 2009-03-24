@@ -58,6 +58,7 @@ void ChromeFont::calculateMetrics() {
 void ChromeFont::CopyChromeFont(const ChromeFont& other) {
   typeface_helper_.reset(new SkAutoUnref(other.typeface_));
   typeface_ = other.typeface_;
+  typeface_->ref();
   font_name_ = other.font_name_;
   font_size_ = other.font_size_;
   style_ = other.style_;
@@ -78,7 +79,8 @@ int ChromeFont::ave_char_width() const {
   return avg_width_;
 }
 
-ChromeFont ChromeFont::CreateFont(const std::wstring& font_name, int font_size) {
+ChromeFont ChromeFont::CreateFont(const std::wstring& font_name,
+                                  int font_size) {
   DCHECK_GT(font_size, 0);
 
   SkTypeface* tf = SkTypeface::Create(base::SysWideToUTF8(font_name).c_str(),

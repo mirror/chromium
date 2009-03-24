@@ -6,7 +6,7 @@
 #define CHROME_BROWSER_VIEWS_OPTIONS_LANGUAGE_COMBOBOX_MODEL_H__
 
 #include "chrome/browser/profile.h"
-#include "chrome/views/combo_box.h"
+#include "chrome/views/controls/combo_box.h"
 
 ///////////////////////////////////////////////////////////////////////////////
 // LanguageComboboxModel
@@ -28,6 +28,11 @@ class LanguageComboboxModel : public views::ComboBox::Model {
   // Overload using a profile and customized local_codes vector.
   LanguageComboboxModel(Profile* profile,
                         const std::vector<std::wstring>& locale_codes);
+
+  // Temporary compatibility constructor.
+  // TODO(port): remove this once locale codes are all switched to ASCII.
+  LanguageComboboxModel(Profile* profile,
+                        const std::vector<std::string>& locale_codes);
 
   virtual ~LanguageComboboxModel() {}
 
@@ -68,4 +73,3 @@ class LanguageComboboxModel : public views::ComboBox::Model {
 };
 
 #endif  // #ifndef CHROME_BROWSER_VIEWS_OPTIONS_LANGUAGE_COMBOBOX_MODEL_H__
-

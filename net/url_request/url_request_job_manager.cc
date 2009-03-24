@@ -27,7 +27,7 @@ struct SchemeToFactory {
   const char* scheme;
   URLRequest::ProtocolFactory* factory;
 };
-  
+
 }  // namespace
 
 static const SchemeToFactory kBuiltinFactories[] = {
@@ -169,4 +169,3 @@ void URLRequestJobManager::UnregisterRequestInterceptor(
   DCHECK(i != interceptors_.end());
   interceptors_.erase(i);
 }
-

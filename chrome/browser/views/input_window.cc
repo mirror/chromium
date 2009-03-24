@@ -4,12 +4,14 @@
 
 #include "chrome/browser/views/input_window.h"
 
+#include "base/message_loop.h"
+#include "base/task.h"
 #include "chrome/browser/views/standard_layout.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/label.h"
-#include "chrome/views/text_field.h"
-#include "chrome/views/window.h"
+#include "chrome/views/controls/label.h"
+#include "chrome/views/controls/text_field.h"
+#include "chrome/views/window/window.h"
 #include "grit/generated_resources.h"
 
 // Width to make the text field, in pixels.
@@ -35,6 +37,7 @@ class ContentView : public views::View,
   virtual bool Accept();
   virtual bool Cancel();
   virtual void WindowClosing();
+  virtual void DeleteDelegate();
   virtual std::wstring GetWindowTitle() const;
   virtual bool IsModal() const { return true; }
   virtual views::View* GetContentsView();
@@ -90,6 +93,10 @@ bool ContentView::Cancel() {
 
 void ContentView::WindowClosing() {
   delegate_->WindowClosing();
+}
+
+void ContentView::DeleteDelegate() {
+  delegate_->DeleteDelegate();
 }
 
 std::wstring ContentView::GetWindowTitle() const {
@@ -160,7 +167,6 @@ views::Window* CreateInputWindow(HWND parent_hwnd,
   views::Window* window =
       views::Window::CreateChromeWindow(parent_hwnd, gfx::Rect(),
                                               new ContentView(delegate));
-  window->client_view()->AsDialogClientView()->UpdateDialogButtons();
+  window->GetClientView()->AsDialogClientView()->UpdateDialogButtons();
   return window;
 }
-

@@ -59,6 +59,35 @@ void BookmarkNode::Reset(const history::StarredEntry& entry) {
 
 // BookmarkModel --------------------------------------------------------------
 
+namespace {
+
+// Comparator used when sorting bookmarks. Folders are sorted first, then
+  // bookmarks.
+class SortComparator : public std::binary_function<BookmarkNode*,
+                                                   BookmarkNode*,
+                                                   bool> {
+ public:
+  explicit SortComparator(Collator* collator) : collator_(collator) { }
+
+  // Returns true if lhs preceeds rhs.
+  bool operator() (BookmarkNode* n1, BookmarkNode* n2) {
+    if (n1->GetType() == n2->GetType()) {
+      // Types are the same, compare the names.
+      if (!collator_)
+        return n1->GetTitle() < n2->GetTitle();
+      return l10n_util::CompareStringWithCollator(collator_, n1->GetTitle(),
+                                                  n2->GetTitle()) == UCOL_LESS;
+    }
+    // Types differ, sort such that folders come first.
+    return n1->is_folder();
+  }
+
+ private:
+  Collator* collator_;
+};
+
+}  // namespace
+
 BookmarkModel::BookmarkModel(Profile* profile)
     : profile_(profile),
       loaded_(false),
@@ -66,10 +95,8 @@ BookmarkModel::BookmarkModel(Profile* profile)
       bookmark_bar_node_(NULL),
       other_node_(NULL),
       observers_(ObserverList<BookmarkModelObserver>::NOTIFY_EXISTING_ONLY),
-      waiting_for_history_load_(false)
-#if defined(OS_WIN)
-    , loaded_signal_(CreateEvent(NULL, TRUE, FALSE, NULL))
-#endif
+      waiting_for_history_load_(false),
+      loaded_signal_(TRUE, FALSE)
 {
   // Create the bookmark bar and other bookmarks folders. These always exist.
   CreateBookmarkNode();
@@ -305,9 +332,18 @@ void BookmarkModel::SortChildren(BookmarkNode* parent) {
     return;
   }
 
-  l10n_util::SortStringsUsingMethod(g_browser_process->GetApplicationLocale(),
-                                    &(parent->children()),
-                                    &BookmarkNode::GetTitle);
+  UErrorCode error = U_ZERO_ERROR;
+  scoped_ptr<Collator> collator(
+      Collator::createInstance(
+          Locale(WideToUTF8(g_browser_process->GetApplicationLocale()).c_str()),
+          error));
+  if (U_FAILURE(error))
+    collator.reset(NULL);
+  std::sort(parent->children().begin(), parent->children().end(),
+            SortComparator(collator.get()));
+
+  if (store_.get())
+    store_->ScheduleSave();
 
   FOR_EACH_OBSERVER(BookmarkModelObserver, observers_,
                     BookmarkNodeChildrenReordered(this, parent));
@@ -454,13 +490,7 @@ void BookmarkModel::DoneLoading() {
 
   loaded_ = true;
 
-#if defined(OS_WIN)
-  if (loaded_signal_.Get())
-    SetEvent(loaded_signal_.Get());
-#else
-  NOTIMPLEMENTED();
-#endif
-
+  loaded_signal_.Signal();
 
   // Notify our direct observers.
   FOR_EACH_OBSERVER(BookmarkModelObserver, observers_, Loaded(this));
@@ -548,12 +578,7 @@ BookmarkNode* BookmarkModel::AddNode(BookmarkNode* parent,
 }
 
 void BookmarkModel::BlockTillLoaded() {
-#if defined(OS_WIN)
-  if (loaded_signal_.Get())
-    WaitForSingleObject(loaded_signal_.Get(), INFINITE);
-#else
-  NOTIMPLEMENTED();
-#endif
+  loaded_signal_.Wait();
 }
 
 BookmarkNode* BookmarkModel::GetNodeByID(BookmarkNode* node, int id) {

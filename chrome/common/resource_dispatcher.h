@@ -20,15 +20,10 @@
 
 struct ResourceResponseHead;
 
-// Uncomment this to disable loading resources via the parent process.  This
-// may be useful for debugging purposes.
-//#define USING_SIMPLE_RESOURCE_LOADER_BRIDGE
-
 // This class serves as a communication interface between the
 // ResourceDispatcherHost in the browser process and the ResourceLoaderBridge in
-// the child process.  It can be used from either the renderer or plugin
-// processes.
-class ResourceDispatcher : public base::RefCounted<ResourceDispatcher> {
+// the child process.  It can be used from any child process.
+class ResourceDispatcher {
  public:
   explicit ResourceDispatcher(IPC::Message::Sender* sender);
   ~ResourceDispatcher();
@@ -44,18 +39,19 @@ class ResourceDispatcher : public base::RefCounted<ResourceDispatcher> {
     const GURL& url,
     const GURL& policy_url,
     const GURL& referrer,
+    const std::string& frame_origin,
+    const std::string& main_frame_origin,
     const std::string& headers,
     int load_flags,
     int origin_pid,
     ResourceType::Type resource_type,
-    bool mixed_content,
-    uint32 request_context /* used for plugin->browser requests */);
+    uint32 request_context /* used for plugin->browser requests */,
+    int route_id);
 
   // Adds a request from the pending_requests_ list, returning the new
   // requests' ID
   int AddPendingRequest(webkit_glue::ResourceLoaderBridge::Peer* callback,
-                        ResourceType::Type resource_type,
-                        bool mixed_content);
+                        ResourceType::Type resource_type);
 
   // Removes a request from the pending_requests_ list, returning true if the
   // request was found and removed.
@@ -68,15 +64,6 @@ class ResourceDispatcher : public base::RefCounted<ResourceDispatcher> {
   // Toggles the is_deferred attribute for the specified request.
   void SetDefersLoading(int request_id, bool value);
 
-  // We can no longer use message sender
-  void ClearMessageSender() {
-    message_sender_ = NULL;
-  }
-
-  // Returns true if the message passed in is a resource related
-  // message.
-  bool IsResourceMessage(const IPC::Message& message) const;
-
  private:
   friend class ResourceDispatcherTest;
 
@@ -84,12 +71,10 @@ class ResourceDispatcher : public base::RefCounted<ResourceDispatcher> {
   struct PendingRequestInfo {
     PendingRequestInfo() { }
     PendingRequestInfo(webkit_glue::ResourceLoaderBridge::Peer* peer,
-                       ResourceType::Type resource_type,
-                       bool mixed_content)
+                       ResourceType::Type resource_type)
         : peer(peer),
           resource_type(resource_type),
           filter_policy(FilterPolicy::DONT_FILTER),
-          mixed_content(mixed_content),
           is_deferred(false) {
     }
     ~PendingRequestInfo() { }
@@ -97,18 +82,26 @@ class ResourceDispatcher : public base::RefCounted<ResourceDispatcher> {
     ResourceType::Type resource_type;
     FilterPolicy::Type filter_policy;
     MessageQueue deferred_message_queue;
-    bool mixed_content;
     bool is_deferred;
   };
   typedef base::hash_map<int, PendingRequestInfo> PendingRequestList;
 
   // Message response handlers, called by the message handler for this process.
-  void OnUploadProgress(int request_id, int64 position, int64 size);
+  void OnUploadProgress(const IPC::Message& message,
+                        int request_id,
+                        int64 position,
+                        int64 size);
+  void OnDownloadProgress(const IPC::Message& message,
+                          int request_id, int64 position, int64 size);
   void OnReceivedResponse(int request_id, const ResourceResponseHead&);
   void OnReceivedRedirect(int request_id, const GURL& new_url);
-  void OnReceivedData(int request_id, base::SharedMemoryHandle data,
+  void OnReceivedData(const IPC::Message& message,
+                      int request_id,
+                      base::SharedMemoryHandle data,
                       int data_len);
-  void OnRequestComplete(int request_id, const URLRequestStatus& status);
+  void OnRequestComplete(int request_id,
+                         const URLRequestStatus& status,
+                         const std::string& security_info);
 
   // Dispatch the message to one of the message response handlers.
   void DispatchMessage(const IPC::Message& message);
@@ -116,6 +109,9 @@ class ResourceDispatcher : public base::RefCounted<ResourceDispatcher> {
   // Dispatch any deferred messages for the given request, provided it is not
   // again in the deferred state.
   void FlushDeferredMessages(int request_id);
+
+  // Returns true if the message passed in is a resource related message.
+  static bool IsResourceDispatcherMessage(const IPC::Message& message);
 
   IPC::Message::Sender* message_sender_;
 

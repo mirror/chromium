@@ -11,6 +11,7 @@
 #include "SkTypes.h"
 #include "SkUtils.h"
 
+#include "base/ref_counted.h"
 #include "skia/ext/skia_utils_mac.h"
 
 namespace skia {
@@ -146,12 +147,11 @@ BitmapPlatformDeviceMac* BitmapPlatformDeviceMac::Create(CGContextRef context,
                                                          int width,
                                                          int height,
                                                          bool is_opaque) {
-  void* data = malloc(height * width * 4);
-  if (!data) return NULL;
-
   SkBitmap bitmap;
   bitmap.setConfig(SkBitmap::kARGB_8888_Config, width, height);
-  bitmap.setPixels(data);
+  if (bitmap.allocPixels() != true)
+    return NULL;
+  void* data = bitmap.getPixels();
 
   // Note: The Windows implementation clears the Bitmap later on.
   // This bears mentioning since removal of this line makes the
@@ -224,7 +224,7 @@ CGContextRef BitmapPlatformDeviceMac::GetBitmapContext() {
   return data_->GetBitmapContext();
 }
 
-void BitmapPlatformDeviceMac::setMatrixClip(const SkMatrix& transform, 
+void BitmapPlatformDeviceMac::setMatrixClip(const SkMatrix& transform,
                                             const SkRegion& region) {
   data_->SetMatrixClip(transform, region);
 }
@@ -296,4 +296,3 @@ void BitmapPlatformDeviceMac::processPixels(int x, int y,
 }
 
 }  // namespace skia
-

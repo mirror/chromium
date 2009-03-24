@@ -99,7 +99,8 @@ HistoryService::HistoryService()
     : thread_(new ChromeThread(ChromeThread::HISTORY)),
       profile_(NULL),
       backend_loaded_(false) {
-  if (NotificationService::current()) {  // Is NULL when running generate_profile.
+  // Is NULL when running generate_profile.
+  if (NotificationService::current()) {
     NotificationService::current()->AddObserver(
         this, NotificationType::HISTORY_URLS_DELETED,
         Source<Profile>(profile_));
@@ -119,7 +120,8 @@ HistoryService::~HistoryService() {
   Cleanup();
 
   // Unregister for notifications.
-  if (NotificationService::current()) {  // Is NULL when running generate_profile.
+  // Is NULL when running generate_profile.
+  if (NotificationService::current()) {
     NotificationService::current()->RemoveObserver(
         this, NotificationType::HISTORY_URLS_DELETED,
         Source<Profile>(profile_));
@@ -133,7 +135,7 @@ bool HistoryService::Init(const FilePath& history_dir,
 
   // Create the history backend.
   scoped_refptr<HistoryBackend> backend(
-      new HistoryBackend(history_dir.ToWStringHack(),
+      new HistoryBackend(history_dir,
                          new BackendDelegate(this),
                          bookmark_service));
   history_backend_.swap(backend);
@@ -574,7 +576,8 @@ bool HistoryService::CanAddURL(const GURL& url) const {
 
   if (url.SchemeIs(chrome::kJavaScriptScheme) ||
       url.SchemeIs(chrome::kChromeUIScheme) ||
-      url.SchemeIs(chrome::kViewSourceScheme))
+      url.SchemeIs(chrome::kViewSourceScheme) ||
+      url.SchemeIs(chrome::kChromeInternalScheme))
     return false;
 
   if (url.SchemeIs(chrome::kAboutScheme)) {

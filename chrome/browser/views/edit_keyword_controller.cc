@@ -14,11 +14,11 @@
 #include "chrome/browser/views/standard_layout.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
-#include "chrome/views/label.h"
+#include "chrome/views/controls/label.h"
+#include "chrome/views/controls/image_view.h"
+#include "chrome/views/controls/table/table_view.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/image_view.h"
-#include "chrome/views/table_view.h"
-#include "chrome/views/window.h"
+#include "chrome/views/window/window.h"
 #include "googleurl/src/gurl.h"
 #include "grit/generated_resources.h"
 #include "grit/theme_resources.h"
@@ -53,7 +53,7 @@ void EditKeywordController::Show() {
   // Window interprets an empty rectangle as needing to query the content for
   // the size as well as centering relative to the parent.
   views::Window::CreateChromeWindow(::IsWindow(parent_) ? parent_ : NULL,
-                                    gfx::Rect(), this); 
+                                    gfx::Rect(), this);
   window()->Show();
   GetDialogClientView()->UpdateDialogButtons();
   title_tf_->SelectAll();
@@ -88,7 +88,7 @@ bool EditKeywordController::IsDialogButtonEnabled(DialogButton button) const {
   return true;
 }
 
-void EditKeywordController::WindowClosing() {
+void EditKeywordController::DeleteDelegate() {
   // User canceled the save, delete us.
   delete this;
 }
@@ -366,4 +366,3 @@ void EditKeywordController::CleanUpCancelledAdd() {
     template_url_ = NULL;
   }
 }
-

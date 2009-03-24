@@ -12,6 +12,7 @@ enum MenuItemType {
   MENU_NORMAL = 0,
   MENU_CHECKBOX,
   MENU_SEPARATOR,
+  MENU_RADIO,
 
   // Speical value to stop processing this MenuCreateMaterial.
   MENU_END
@@ -28,11 +29,18 @@ struct MenuCreateMaterial {
   unsigned int label_id;
 
   // An argument to GetStringF(menu_label_id, ...). When 0, the value of
-  // menu_label_id is just passed to GetString().
+  // label_id is just passed to GetString(). If both are 0, the menu delegate
+  // is responsible for implementing GetLabel().
   unsigned int label_argument;
 
   // If non-NULL, a pointer to the struct we're supposed to use
   MenuCreateMaterial* submenu;
+
+  // A gdk keysym that is used to activate this item from outside the menu.
+  unsigned int accel_key;
+
+  // GDK modifiers for the menu items (i.e., shift, ctrl, etc).
+  unsigned int accel_modifiers;
 };
 
 // Returns the menu construction data structure for the page menu.

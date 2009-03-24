@@ -12,8 +12,9 @@
 #include "chrome/common/resource_bundle.h"
 #include "googleurl/src/gurl.h"
 #include "webkit/glue/webframe.h"
+#include "webkit/glue/webscriptsource.h"
 
-#include "grit/renderer_resources.h" 
+#include "grit/renderer_resources.h"
 
 // These two strings are injected before and after the Greasemonkey API and
 // user script to wrap it in an anonymous scope.
@@ -47,7 +48,6 @@ UserScriptSlave::UserScriptSlave()
 
 bool UserScriptSlave::UpdateScripts(base::SharedMemoryHandle shared_memory) {
   scripts_.clear();
-  script_contents_.clear();
 
   // Create the shared memory object (read only).
   shared_memory_.reset(new base::SharedMemory(shared_memory, true));
@@ -73,19 +73,27 @@ bool UserScriptSlave::UpdateScripts(base::SharedMemoryHandle shared_memory) {
                 pickle_size);
   pickle.ReadSize(&iter, &num_scripts);
 
+  scripts_.reserve(num_scripts);
   for (size_t i = 0; i < num_scripts; ++i) {
-    UserScript* script = new UserScript();
+    scripts_.push_back(new UserScript());
+    UserScript* script = scripts_.back();
     script->Unpickle(pickle, &iter);
 
     // Note that this is a pointer into shared memory. We don't own it. It gets
     // cleared up when the last renderer or browser process drops their
     // reference to the shared memory.
-    const char* body = NULL;
-    int body_length = 0;
-    CHECK(pickle.ReadData(&iter, &body, &body_length));
-
-    scripts_.push_back(script);
-    script_contents_[script] = StringPiece(body, body_length);
+    for (size_t j = 0; j < script->js_scripts().size(); ++j) {
+      const char* body = NULL;
+      int body_length = 0;
+      CHECK(pickle.ReadData(&iter, &body, &body_length));
+      script->js_scripts()[j].set_external_content(body);
+    }
+    for (size_t j = 0; j < script->css_scripts().size(); ++j) {
+      const char* body = NULL;
+      int body_length = 0;
+      CHECK(pickle.ReadData(&iter, &body, &body_length));
+      script->css_scripts()[j].set_external_content(body);
+    }
   }
 
   return true;
@@ -96,21 +104,36 @@ bool UserScriptSlave::InjectScripts(WebFrame* frame,
   PerfTimer timer;
   int num_matched = 0;
 
-  for (std::vector<UserScript*>::iterator script = scripts_.begin();
-       script != scripts_.end(); ++script) {
-    if ((*script)->MatchesUrl(frame->GetURL()) &&
-        (*script)->run_location() == location) {
-      std::string inject(kUserScriptHead);
-      inject.append(api_js_.as_string());
-      inject.append(script_contents_[*script].as_string());
-      inject.append(kUserScriptTail);
-      frame->ExecuteJavaScript(inject,
-                               GURL((*script)->url().spec()),
-                               -user_script_start_line_);
-      ++num_matched;
+  std::vector<webkit_glue::WebScriptSource> sources;
+  for (size_t i = 0; i < scripts_.size(); ++i) {
+    UserScript* script = scripts_[i];
+    if (!script->MatchesUrl(frame->GetURL()))
+      continue;  // This frame doesn't match the script url pattern, skip it.
+
+    ++num_matched;
+    // CSS files are always injected on document start before js scripts.
+    if (location == UserScript::DOCUMENT_START) {
+      for (size_t j = 0; j < script->css_scripts().size(); ++j) {
+        UserScript::File& file = script->css_scripts()[j];
+        frame->InsertCSSStyles(file.GetContent().as_string());
+      }
+    }
+    if (script->run_location() == location) {
+      for (size_t j = 0; j < script->js_scripts().size(); ++j) {
+        UserScript::File &file = script->js_scripts()[j];
+        sources.push_back(webkit_glue::WebScriptSource(
+          file.GetContent().as_string(), file.url()));
+      }
     }
   }
 
+  if (!sources.empty()) {
+    sources.insert(sources.begin(),
+                   webkit_glue::WebScriptSource(api_js_.as_string()));
+    frame->ExecuteScriptInNewContext(&sources.front(), sources.size());
+  }
+
+  // Log debug info.
   if (location == UserScript::DOCUMENT_START) {
     HISTOGRAM_COUNTS_100("UserScripts:DocStart:Count", num_matched);
     HISTOGRAM_TIMES("UserScripts:DocStart:Time", timer.Elapsed());
@@ -119,8 +142,7 @@ bool UserScriptSlave::InjectScripts(WebFrame* frame,
     HISTOGRAM_TIMES("UserScripts:DocEnd:Time", timer.Elapsed());
   }
 
-  LOG(INFO) << "Injected " << num_matched << " scripts into " <<
+  LOG(INFO) << "Injected " << num_matched << " user scripts into " <<
       frame->GetURL().spec();
-
   return true;
 }

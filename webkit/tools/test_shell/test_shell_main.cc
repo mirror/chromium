@@ -2,8 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Creates an instance of the test_shell.
-#include "build/build_config.h"
+#include <iostream>
 
 #include "base/at_exit.h"
 #include "base/basictypes.h"
@@ -25,8 +24,12 @@
 #include "net/http/http_cache.h"
 #include "net/base/ssl_test_util.h"
 #include "net/url_request/url_request_context.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebKit.h"
 #include "webkit/glue/webkit_glue.h"
 #include "webkit/glue/window_open_disposition.h"
+#include "webkit/extensions/v8/gc_extension.h"
+#include "webkit/extensions/v8/playback_extension.h"
+#include "webkit/extensions/v8/profiler_extension.h"
 #include "webkit/tools/test_shell/simple_resource_loader_bridge.h"
 #include "webkit/tools/test_shell/test_shell.h"
 #include "webkit/tools/test_shell/test_shell_platform_delegate.h"
@@ -34,9 +37,6 @@
 #include "webkit/tools/test_shell/test_shell_switches.h"
 #include "webkit/tools/test_shell/test_shell_webkit_init.h"
 
-#include "WebKit.h"
-
-#include <iostream>
 using namespace std;
 
 static const size_t kPathBufSize = 2048;
@@ -52,15 +52,15 @@ static int kStatsFileCounters = 200;
 
 int main(int argc, char* argv[]) {
   base::EnableTerminationOnHeapCorruption();
-  
+
   // Some tests may use base::Singleton<>, thus we need to instanciate
   // the AtExitManager or else we will leak objects.
-  base::AtExitManager at_exit_manager;  
+  base::AtExitManager at_exit_manager;
 
   TestShellPlatformDelegate::PreflightArgs(&argc, &argv);
   CommandLine::Init(argc, argv);
   const CommandLine& parsed_command_line = *CommandLine::ForCurrentProcess();
-  
+
   TestShellPlatformDelegate platform(parsed_command_line);
 
   if (parsed_command_line.HasSwitch(test_shell::kStartupDialog))
@@ -91,18 +91,27 @@ int main(int argc, char* argv[]) {
   // Initialize WebKit for this scope.
   TestShellWebKitInit test_shell_webkit_init(layout_test_mode);
 
-  // Suppress abort message in v8 library in debugging mode.
-  // V8 calls abort() when it hits assertion errors.
-  if (suppress_error_dialogs)
+  // Suppress abort message in v8 library in debugging mode (but not
+  // actually under a debugger).  V8 calls abort() when it hits
+  // assertion errors.
+  if (suppress_error_dialogs &&
+      !parsed_command_line.HasSwitch(test_shell::kGDB)) {
     platform.SuppressErrorReporting();
+  }
 
   if (parsed_command_line.HasSwitch(test_shell::kEnableTracing))
     base::TraceLog::StartTracing();
 
   net::HttpCache::Mode cache_mode = net::HttpCache::NORMAL;
-  bool playback_mode = 
+
+  // This is a special mode where JS helps the browser implement
+  // playback/record mode.  Generally, in this mode, some functions
+  // of client-side randomness are removed.  For example, in
+  // this mode Math.random() and Date.getTime() may not return
+  // values which vary.
+  bool playback_mode =
     parsed_command_line.HasSwitch(test_shell::kPlaybackMode);
-  bool record_mode = 
+  bool record_mode =
     parsed_command_line.HasSwitch(test_shell::kRecordMode);
 
   if (playback_mode)
@@ -178,8 +187,12 @@ int main(int argc, char* argv[]) {
   // Test shell always exposes the GC.
   js_flags += L" --expose-gc";
   webkit_glue::SetJavaScriptFlags(js_flags);
-  // Also expose GCController to JavaScript.
-  webkit_glue::SetShouldExposeGCController(true);
+  // Expose GCController to JavaScript.
+  WebKit::registerExtension(extensions_v8::GCExtension::Get());
+
+  if (parsed_command_line.HasSwitch(test_shell::kProfiler)) {
+    WebKit::registerExtension(extensions_v8::ProfilerExtension::Get());
+  }
 
   // Load and initialize the stats table.  Attempt to construct a somewhat
   // unique name to isolate separate instances from each other.
@@ -195,8 +208,7 @@ int main(int argc, char* argv[]) {
   if (TestShell::CreateNewWindow(uri, &shell)) {
     if (record_mode || playback_mode) {
       platform.SetWindowPositionForRecording(shell);
-      // Tell webkit as well.
-      webkit_glue::SetRecordPlaybackMode(true);
+      WebKit::registerExtension(extensions_v8::PlaybackExtension::Get());
     }
 
     shell->Show(shell->webView(), NEW_WINDOW);

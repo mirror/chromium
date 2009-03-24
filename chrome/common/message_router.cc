@@ -6,11 +6,13 @@
 #include "chrome/common/render_messages.h"
 
 void MessageRouter::OnControlMessageReceived(const IPC::Message& msg) {
-  NOTREACHED() << "should override in subclass if you care about control messages";
+  NOTREACHED() <<
+      "should override in subclass if you care about control messages";
 }
 
 bool MessageRouter::Send(IPC::Message* msg) {
-  NOTREACHED() << "should override in subclass if you care about sending messages";
+  NOTREACHED() <<
+      "should override in subclass if you care about sending messages";
   return false;
 }
 
@@ -39,4 +41,3 @@ bool MessageRouter::RouteMessage(const IPC::Message& msg) {
   listener->OnMessageReceived(msg);
   return true;
 }
-

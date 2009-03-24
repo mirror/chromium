@@ -7,16 +7,14 @@
 
 #include <vector>
 
-#include "base/scoped_ptr.h"
 #include "chrome/browser/views/password_manager_view.h"
 #include "chrome/browser/webdata/web_data_service.h"
 #include "chrome/common/stl_util-inl.h"
 #include "chrome/common/gfx/text_elider.h"
-#include "chrome/views/dialog_delegate.h"
-#include "chrome/views/label.h"
-#include "chrome/views/native_button.h"
-#include "chrome/views/table_view.h"
-#include "chrome/views/window.h"
+#include "chrome/views/controls/label.h"
+#include "chrome/views/controls/table/table_view.h"
+#include "chrome/views/window/dialog_delegate.h"
+#include "chrome/views/window/window.h"
 #include "webkit/glue/password_form.h"
 
 class PasswordManagerExceptionsTableModel : public PasswordManagerTableModel {
@@ -38,7 +36,8 @@ class PasswordManagerExceptionsTableModel : public PasswordManagerTableModel {
 class PasswordManagerExceptionsView : public views::View,
                                       public views::DialogDelegate,
                                       public views::TableViewObserver,
-                                      public views::NativeButton::Listener {
+                                      public views::ButtonListener,
+                                      public PasswordManagerTableModelObserver {
  public:
   explicit PasswordManagerExceptionsView(Profile* profile);
   virtual ~PasswordManagerExceptionsView();
@@ -55,8 +54,8 @@ class PasswordManagerExceptionsView : public views::View,
   // views::TableViewObserver implementation.
   virtual void OnSelectionChanged();
 
-  // NativeButton::Listener implementation.
-  virtual void ButtonPressed(views::NativeButton* sender);
+  // ButtonListener implementation.
+  virtual void ButtonPressed(views::Button* sender);
 
   // views::DialogDelegate methods:
   virtual int GetDialogButtons() const;
@@ -67,6 +66,9 @@ class PasswordManagerExceptionsView : public views::View,
   virtual std::wstring GetWindowTitle() const;
   virtual void WindowClosing();
   virtual views::View* GetContentsView();
+
+  // PasswordManagerTableModelObserver implementation.
+  virtual void OnRowCountChanged(size_t rows);
 
  private:
   // Wire up buttons, the model, and the table view, and query the DB for
@@ -87,7 +89,8 @@ class PasswordManagerExceptionsView : public views::View,
   views::NativeButton remove_button_;
   views::NativeButton remove_all_button_;
 
+  static PasswordManagerExceptionsView* instance_;
+
   DISALLOW_EVIL_CONSTRUCTORS(PasswordManagerExceptionsView);
 };
 #endif  // CHROME_BROWSER_PASSWORD_MANAGER_EXCEPTIONS_VIEW_H__
-

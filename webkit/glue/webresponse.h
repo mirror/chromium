@@ -15,9 +15,12 @@ class WebResponse {
  public:
   // Get the URL.
   virtual GURL GetURL() const = 0;
-  
+
   // Get the http status code.
   virtual int GetHttpStatusCode() const = 0;
+
+  // Returns the mime type of the response.
+  virtual std::string GetMimeType() const = 0;
 
   // Returns an opaque value containing the state of the SSL connection that
   // the resource was loaded on, or an empty string if no SSL connection was
@@ -28,11 +31,7 @@ class WebResponse {
   // security reasons).
   virtual bool IsContentFiltered() const = 0;
 
-  WebResponse() { }
-  virtual ~WebResponse() { }
-
-private:
-  DISALLOW_EVIL_CONSTRUCTORS(WebResponse);
+  virtual ~WebResponse() {}
 };
 
 #endif  // #ifndef WEBKIT_GLUE_WEBURLRESPONSE_H_

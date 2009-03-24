@@ -15,14 +15,14 @@
 #include "chrome/common/logging_chrome.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/result_codes.h"
-#include "chrome/views/client_view.h"
-#include "chrome/views/dialog_delegate.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/group_table_view.h"
-#include "chrome/views/image_view.h"
-#include "chrome/views/label.h"
-#include "chrome/views/native_button.h"
-#include "chrome/views/window.h"
+#include "chrome/views/controls/button/native_button.h"
+#include "chrome/views/controls/image_view.h"
+#include "chrome/views/controls/label.h"
+#include "chrome/views/controls/table/group_table_view.h"
+#include "chrome/views/window/client_view.h"
+#include "chrome/views/window/dialog_delegate.h"
+#include "chrome/views/window/window.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 #include "grit/theme_resources.h"
@@ -113,7 +113,7 @@ void HungPagesTableModel::GetGroupRangeForItem(int item,
 
 class HungRendererWarningView : public views::View,
                                 public views::DialogDelegate,
-                                public views::NativeButton::Listener {
+                                public views::ButtonListener {
  public:
   HungRendererWarningView();
   ~HungRendererWarningView();
@@ -130,9 +130,9 @@ class HungRendererWarningView : public views::View,
   virtual views::View* GetExtraView();
   virtual bool Accept(bool window_closing);
   virtual views::View* GetContentsView();
-  
-  // views::NativeButton::Listener overrides:
-  virtual void ButtonPressed(views::NativeButton* sender);
+
+  // views::ButtonListener overrides:
+  virtual void ButtonPressed(views::Button* sender);
 
  protected:
   // views::View overrides:
@@ -225,7 +225,7 @@ void HungRendererWarningView::ShowForWebContents(WebContents* contents) {
   HWND frame_hwnd = GetAncestor(contents->GetNativeView(), GA_ROOT);
   HWND foreground_window = GetForegroundWindow();
   if (foreground_window != frame_hwnd &&
-      foreground_window != window()->GetHWND()) {
+      foreground_window != window()->GetNativeWindow()) {
     return;
   }
 
@@ -303,9 +303,9 @@ views::View* HungRendererWarningView::GetContentsView() {
 }
 
 ///////////////////////////////////////////////////////////////////////////////
-// HungRendererWarningView, views::NativeButton::Listener implementation:
+// HungRendererWarningView, views::ButtonListener implementation:
 
-void HungRendererWarningView::ButtonPressed(views::NativeButton* sender) {
+void HungRendererWarningView::ButtonPressed(views::Button* sender) {
   if (sender == kill_button_) {
     // Kill the process.
     HANDLE process = contents_->process()->process().handle();
@@ -375,11 +375,10 @@ void HungRendererWarningView::Init() {
 
 void HungRendererWarningView::CreateKillButtonView() {
   kill_button_ = new views::NativeButton(
-      l10n_util::GetString(IDS_BROWSER_HANGMONITOR_RENDERER_END));
-  kill_button_->SetListener(this);
+      this, l10n_util::GetString(IDS_BROWSER_HANGMONITOR_RENDERER_END));
 
   kill_button_container_ = new ButtonContainer;
- 
+
   using views::GridLayout;
   using views::ColumnSet;
 
@@ -403,8 +402,7 @@ gfx::Rect HungRendererWarningView::GetDisplayBounds(
   CRect contents_bounds;
   GetWindowRect(contents_hwnd, &contents_bounds);
 
-  gfx::Rect window_bounds;
-  window()->GetBounds(&window_bounds, true);
+  gfx::Rect window_bounds = window()->GetBounds();
 
   int window_x = contents_bounds.left +
       (contents_bounds.Width() - window_bounds.width()) / 2;

@@ -6,11 +6,12 @@
 #define CHROME_BROWSER_VIEWS_FRAME_GLASS_BROWSER_FRAME_VIEW_H_
 
 #include "chrome/browser/views/frame/browser_frame.h"
-#include "chrome/views/non_client_view.h"
-#include "chrome/views/button.h"
+#include "chrome/views/controls/button/button.h"
+#include "chrome/views/window/non_client_view.h"
 
 class BrowserView;
 class GlassBrowserWindowResources;
+class SkBitmap;
 
 class GlassBrowserFrameView : public BrowserNonClientFrameView {
  public:
@@ -63,7 +64,7 @@ class GlassBrowserFrameView : public BrowserNonClientFrameView {
 
   // Returns the bounds of the client area for the specified view size.
   gfx::Rect CalculateClientAreaBounds(int width, int height) const;
- 
+
   // Starts/Stops the window throbber running.
   void StartThrobber();
   void StopThrobber();
@@ -104,4 +105,3 @@ class GlassBrowserFrameView : public BrowserNonClientFrameView {
 };
 
 #endif  // #ifndef CHROME_BROWSER_VIEWS_FRAME_GLASS_BROWSER_FRAME_VIEW_H_
-

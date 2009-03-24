@@ -13,15 +13,21 @@
 		/>
 	</Platforms>
 	<ToolFiles>
+		<ToolFile
+			RelativePath=".\devtools\devtools_copy.rules"
+		/>
 	</ToolFiles>
 	<Configurations>
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)..\build\debug.vsprops;.\glue.vsprops;..\build\WebKit\using_WebKit.vsprops"
+			InheritedPropertySheets="$(SolutionDir)..\build\debug.vsprops;.\glue.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+			/>
+			<Tool
+				Name="devtools file copy"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -69,7 +75,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets="$(SolutionDir)..\build\release.vsprops;.\glue.vsprops;..\build\WebKit\using_WebKit.vsprops"
+			InheritedPropertySheets="..\..\build\release.vsprops;.\glue.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -133,10 +139,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cache_manager.h"
-				>
-			</File>
-			<File
 				RelativePath=".\console_message_level.h"
 				>
 			</File>
@@ -177,7 +179,31 @@
 				>
 			</File>
 			<File
+				RelativePath=".\webaccessibility.h"
+				>
+			</File>
+			<File
+				RelativePath=".\webaccessibilitymanager.h"
+				>
+			</File>
+			<File
 				RelativePath=".\webdatasource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\webdevtoolsagent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\webdevtoolsagent_delegate.h"
+				>
+			</File>
+			<File
+				RelativePath=".\webdevtoolsclient.h"
+				>
+			</File>
+			<File
+				RelativePath=".\webdevtoolsclient_delegate.h"
 				>
 			</File>
 			<File
@@ -305,10 +331,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cache_manager.cc"
-				>
-			</File>
-			<File
 				RelativePath=".\chrome_client_impl.cc"
 				>
 			</File>
@@ -417,11 +439,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\glue_accessibility.cc"
+				RelativePath=".\glue_accessibility_object.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\glue_accessibility.h"
+				RelativePath=".\glue_accessibility_object.h"
 				>
 			</File>
 			<File
@@ -553,6 +575,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\webaccessibilitymanager_impl.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\webaccessibilitymanager_impl.h"
+				>
+			</File>
+			<File
 				RelativePath=".\webclipboard_impl.cc"
 				>
 			</File>
@@ -581,11 +611,19 @@
 				>
 			</File>
 			<File
-				RelativePath=".\webdocumentloader_impl.cc"
+				RelativePath=".\webdevtoolsagent_impl.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\webdocumentloader_impl.h"
+				RelativePath=".\webdevtoolsagent_impl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\webdevtoolsclient_impl.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\webdevtoolsclient_impl.h"
 				>
 			</File>
 			<File
@@ -629,6 +667,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\webinputevent_util.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\webinputevent_util.h"
+				>
+			</File>
+			<File
 				RelativePath=".\webkit_glue.cc"
 				>
 			</File>
@@ -638,14 +684,6 @@
 			</File>
 			<File
 				RelativePath=".\webkit_glue_win.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\webinputevent_util.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\webinputevent_util.h"
 				>
 			</File>
 			<File
@@ -681,11 +719,23 @@
 				>
 			</File>
 			<File
+				RelativePath=".\webscriptsource.h"
+				>
+			</File>
+			<File
 				RelativePath=".\webtextinput_impl.cc"
 				>
 			</File>
 			<File
 				RelativePath=".\webtextinput_impl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\webthemeengine_impl_win.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\webthemeengine_impl_win.h"
 				>
 			</File>
 			<File
@@ -828,6 +878,90 @@
 				RelativePath=".\plugins\webplugin_delegate_impl.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="DevTools"
+			>
+			<File
+				RelativePath=".\devtools\devtools_rpc.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\devtools\devtools_rpc.h"
+				>
+			</File>
+			<File
+				RelativePath=".\devtools\devtools_rpc_js.h"
+				>
+			</File>
+			<File
+				RelativePath=".\devtools\dom_agent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\devtools\dom_agent_impl.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\devtools\dom_agent_impl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\devtools\net_agent.h"
+				>
+			</File>
+			<File
+				RelativePath=".\devtools\net_agent_impl.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\devtools\net_agent_impl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\devtools\tools_agent.h"
+				>
+			</File>
+			<Filter
+				Name="js"
+				>
+				<File
+					RelativePath=".\devtools\js\base.js"
+					>
+				</File>
+				<File
+					RelativePath=".\devtools\js\devtools.html"
+					>
+				</File>
+				<File
+					RelativePath=".\devtools\js\devtools.js"
+					>
+				</File>
+				<File
+					RelativePath=".\devtools\js\devtools_host_stub.js"
+					>
+				</File>
+				<File
+					RelativePath=".\devtools\js\dom_agent.js"
+					>
+				</File>
+				<File
+					RelativePath=".\devtools\js\inspector_controller.js"
+					>
+				</File>
+				<File
+					RelativePath=".\devtools\js\inspector_controller_impl.js"
+					>
+				</File>
+				<File
+					RelativePath=".\devtools\js\json.js"
+					>
+				</File>
+				<File
+					RelativePath=".\devtools\js\net_agent.js"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

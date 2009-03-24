@@ -7,12 +7,8 @@ Import('env')
 env = env.Clone()
 
 env.Append(
-    CPPDEFINES = [
-        'WEBKIT_USING_SKIA'
-    ],
     CPPPATH = [
         '$WEBKIT_DIR/build/WebCore',
-        '$THIRD_PARTY_WEBKIT_DIR/WebKit/chromium/public',
     ],
     LIBS = [
         'port',
@@ -39,7 +35,6 @@ input_files = [
   'alt_error_page_resource_fetcher.cc',
   'autofill_form.cc',
   'back_forward_list_client_impl.cc',
-  'cache_manager.cc',
   'chrome_client_impl.cc',
   'chromium_bridge_impl.cc',
   'clipboard_conversion.cc',
@@ -48,6 +43,16 @@ input_files = [
   'cpp_bound_class.cc',
   'cpp_variant.cc',
   'debugger_bridge.cc',
+  'devtools/devtools_rpc.cc',
+  'devtools/devtools_rpc.h',
+  'devtools/devtools_rpc_js.h',
+  'devtools/dom_agent.h',
+  'devtools/dom_agent_impl.cc',
+  'devtools/dom_agent_impl.h',
+  'devtools/net_agent.h',
+  'devtools/net_agent_impl.cc',
+  'devtools/net_agent_impl.h',
+  'devtools/tools_agent.h',
   'dom_operations.cc',
   'dom_serializer.cc',
   'dragclient_impl.cc',
@@ -82,7 +87,14 @@ input_files = [
   'webclipboard_impl.cc',
   'webcursor.cc',
   'webdatasource_impl.cc',
-  'webdocumentloader_impl.cc',
+  'webdevtoolsagent.h',
+  'webdevtoolsagent_delegate.h',
+  'webdevtoolsagent_impl.cc',
+  'webdevtoolsagent_impl.h',
+  'webdevtoolsclient.h',
+  'webdevtoolsclient_delegate.h',
+  'webdevtoolsclient_impl.cc',
+  'webdevtoolsclient_impl.h',
   'weberror_impl.cc',
   'webframe_impl.cc',
   'webframeloaderclient_impl.cc',
@@ -105,7 +117,8 @@ if env.Bit('windows'):
   input_files.extend([
     '$PENDING_DIR/AccessibleBase.cpp',
     '$PENDING_DIR/AccessibleDocument.cpp',
-    'glue_accessibility.cc',
+    'webaccessibilitymanager_impl.cc',
+    'glue_accessibility_object.cc'
     'plugins/mozilla_extensions.cc',
     'plugins/webplugin_delegate_impl.cc',
     'webdropdata.cc',

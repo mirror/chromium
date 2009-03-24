@@ -16,9 +16,9 @@
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/notification_observer.h"
 #include "chrome/common/notification_registrar.h"
-#include "chrome/views/focus_manager.h"
-#include "chrome/views/root_view.h"
-#include "chrome/views/widget.h"
+#include "chrome/views/focus/focus_manager.h"
+#include "chrome/views/widget/root_view.h"
+#include "chrome/views/widget/widget.h"
 
 class AutomationProvider;
 class TabContents;
@@ -83,7 +83,9 @@ class ExternalTabContainer : public TabContentsDelegate,
   virtual void UpdateTargetURL(TabContents* source, const GURL& url);
   virtual void ContentsZoomChange(bool zoom_in);
   virtual void ToolbarSizeChanged(TabContents* source, bool is_animating);
-  virtual void ForwardMessageToExternalHost(const std::string& message);
+  virtual void ForwardMessageToExternalHost(const std::string& message,
+                                            const std::string& origin,
+                                            const std::string& target);
   virtual bool IsExternalTabContainer() const {
     return true;
   };
@@ -98,7 +100,7 @@ class ExternalTabContainer : public TabContentsDelegate,
   /////////////////////////////////////////////////////////////////////////////
   virtual void GetBounds(gfx::Rect* out, bool including_frame) const;
   virtual void MoveToFront(bool should_activate);
-  virtual HWND GetHWND() const;
+  virtual gfx::NativeView GetNativeView() const;
   virtual void PaintNow(const gfx::Rect& update_rect);
   virtual views::RootView* GetRootView();
   virtual bool IsVisible();

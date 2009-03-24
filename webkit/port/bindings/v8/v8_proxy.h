@@ -13,10 +13,12 @@
 #include "ChromiumBridge.h"
 #include "Node.h"
 #include "NodeFilter.h"
-#include "SecurityOrigin.h"  // for WebCore::SecurityOrigin
 #include "PlatformString.h"  // for WebCore::String
-#include <wtf/PassRefPtr.h> // so generated bindings don't have to
+#include "ScriptSourceCode.h"  // for WebCore::ScriptSourceCode
+#include "SecurityOrigin.h"  // for WebCore::SecurityOrigin
 #include <wtf/Assertions.h>
+#include <wtf/PassRefPtr.h> // so generated bindings don't have to
+#include <wtf/Vector.h>
 
 #include <iterator>
 #include <list>
@@ -87,7 +89,7 @@ void log_info(Frame* frame, const String& msg, const String& url);
   V(EVENT_LISTENER)             \
   V(NODE_FILTER)                \
   V(SCRIPTINSTANCE)             \
-  V(SCRIPTVALUE)                
+  V(SCRIPTVALUE)
 
 
 // Host information of persistent handles.
@@ -230,11 +232,16 @@ class V8Proxy {
   void setEventHandlerLineno(int lineno) { m_handlerLineno = lineno; }
   void finishedWithEvent(Event* event) { }
 
+  // Evaluate JavaScript in a new context. The script gets its own global scope
+  // and its own prototypes for intrinsic JavaScript objects (String, Array,
+  // and so-on). It shares the wrappers for all DOM nodes and DOM constructors.
+  void evaluateInNewContext(const Vector<ScriptSourceCode>& sources);
+
   // Evaluate a script file in the current execution environment.
   // The caller must hold an execution context.
   // If cannot evalute the script, it returns an error.
-  v8::Local<v8::Value> Evaluate(const String& filename, int baseLine,
-                                const String& code, Node* node);
+  v8::Local<v8::Value> evaluate(const ScriptSourceCode& source,
+                                Node* node);
 
   // Run an already compiled script.
   v8::Local<v8::Value> RunScript(v8::Handle<v8::Script> script,
@@ -248,6 +255,11 @@ class V8Proxy {
 
   // Returns the dom constructor function for the given node type.
   v8::Local<v8::Function> GetConstructor(V8ClassIndex::V8WrapperType type);
+
+  // To create JS Wrapper objects, we create a cache of a 'boiler plate'
+  // object, and then simply Clone that object each time we need a new one.
+  // This is faster than going through the full object creation process.
+  v8::Local<v8::Object> CreateWrapperFromCache(V8ClassIndex::V8WrapperType type);
 
   // Returns the window object of the currently executing context.
   static DOMWindow* retrieveWindow();
@@ -404,7 +416,7 @@ class V8Proxy {
     static v8::Handle<v8::Value> ConstructDOMObject(const v8::Arguments& args);
 
   // Checks whether a DOM object has a JS wrapper.
-  static bool DOMObjectHasJSWrapper(void* obj); 
+  static bool DOMObjectHasJSWrapper(void* obj);
   // Set JS wrapper of a DOM object, the caller in charge of increase ref.
   static void SetJSWrapperForDOMObject(void* obj,
                                        v8::Persistent<v8::Object> wrapper);
@@ -434,7 +446,7 @@ class V8Proxy {
   static int GetSourceLineNumber();
   static String GetSourceName();
 
-  
+
   // Returns a local handle of the context.
   v8::Local<v8::Context> GetContext() {
     return v8::Local<v8::Context>::New(m_context);
@@ -445,6 +457,7 @@ class V8Proxy {
   static void RegisterExtension(v8::Extension* extension);
 
  private:
+  v8::Persistent<v8::Context> createNewContext(v8::Handle<v8::Object> global);
   void InitContextIfNeeded();
   void DisconnectEventListeners();
   void SetSecurityToken();
@@ -529,22 +542,13 @@ class V8Proxy {
   Frame* m_frame;
 
   v8::Persistent<v8::Context> m_context;
-  // DOM constructors are cached per context. A DOM constructor is a function
-  // instance created from a DOM constructor template. There is one instance
-  // per context. A DOM constructor is different from a normal function in
-  // two ways: 1) it cannot be called as constructor (aka, used to create
-  // a DOM object); 2) its __proto__ points to Object.prototype rather than
-  // Function.prototype. The reason for 2) is that, in Safari, a DOM constructor
-  // is a normal JS object, but not a function. Hotmail relies on the fact
-  // that, in Safari, HTMLElement.__proto__ == Object.prototype.
-  //
-  // m_object_prototype is a cache of the original Object.prototype.
-  //
-  // Both handles must be disposed when the context is disposed. Otherwise,
-  // it can keep all objects alive.
-  v8::Persistent<v8::Array> m_dom_constructor_cache;
+  // For each possible type of wrapper, we keep a boilerplate object.
+  // The boilerplate is used to create additional wrappers of the same type.
+  // We keep a single persistent handle to an array of the activated
+  // boilerplates.
+  v8::Persistent<v8::Array> m_wrapper_boilerplates;
   v8::Persistent<v8::Value> m_object_prototype;
-  
+
   v8::Persistent<v8::Object> m_global;
   v8::Persistent<v8::Value> m_document;
 
@@ -600,4 +604,3 @@ v8::Handle<v8::Value> V8Proxy::ConstructDOMObject(const v8::Arguments& args) {
 }  // namespace WebCore
 
 #endif  // V8_PROXY_H__
-

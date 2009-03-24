@@ -8,6 +8,7 @@
 #include "net/base/client_socket_factory.h"
 #include "net/base/test_completion_callback.h"
 #include "net/base/upload_data.h"
+#include "net/http/http_auth_handler_ntlm.h"
 #include "net/http/http_network_session.h"
 #include "net/http/http_network_transaction.h"
 #include "net/http/http_transaction_unittest.h"
@@ -17,6 +18,10 @@
 
 //-----------------------------------------------------------------------------
 
+namespace net {
+
+// TODO(eroman): Now that this is inside the net namespace, remove the redundant
+// net:: qualifiers.
 
 struct MockConnect {
   // Asynchronous connection success.
@@ -295,6 +300,35 @@ void FillLargeHeadersString(std::string* str, int size) {
     str->append(row, sizeof_row);
 }
 
+// Alternative functions that eliminate randomness and dependency on the local
+// host name so that the generated NTLM messages are reproducible.
+void MockGenerateRandom1(uint8* output, size_t n) {
+  static const uint8 bytes[] = {
+    0x55, 0x29, 0x66, 0x26, 0x6b, 0x9c, 0x73, 0x54
+  };
+  static size_t current_byte = 0;
+  for (size_t i = 0; i < n; ++i) {
+    output[i] = bytes[current_byte++];
+    current_byte %= arraysize(bytes);
+  }
+}
+
+void MockGenerateRandom2(uint8* output, size_t n) {
+  static const uint8 bytes[] = {
+    0x96, 0x79, 0x85, 0xe7, 0x49, 0x93, 0x70, 0xa1,
+    0x4e, 0xe7, 0x87, 0x45, 0x31, 0x5b, 0xd3, 0x1f
+  };
+  static size_t current_byte = 0;
+  for (size_t i = 0; i < n; ++i) {
+    output[i] = bytes[current_byte++];
+    current_byte %= arraysize(bytes);
+  }
+}
+
+std::string MockGetHostName() {
+  return "WTC-WIN7";
+}
+
 //-----------------------------------------------------------------------------
 
 TEST_F(HttpNetworkTransactionTest, Basic) {
@@ -404,6 +438,70 @@ TEST_F(HttpNetworkTransactionTest, StopsReading204) {
   EXPECT_EQ(net::OK, out.rv);
   EXPECT_EQ("HTTP/1.1 204 No Content", out.status_line);
   EXPECT_EQ("", out.response_data);
+}
+
+// Do a request using the HEAD method. Verify that we don't try to read the
+// message body (since HEAD has none).
+TEST_F(HttpNetworkTransactionTest, Head) {
+  scoped_ptr<net::ProxyService> proxy_service(CreateNullProxyService());
+  scoped_ptr<net::HttpTransaction> trans(new net::HttpNetworkTransaction(
+      CreateSession(proxy_service.get()), &mock_socket_factory));
+
+  net::HttpRequestInfo request;
+  request.method = "HEAD";
+  request.url = GURL("http://www.google.com/");
+  request.load_flags = 0;
+
+  MockWrite data_writes1[] = {
+    MockWrite("HEAD / HTTP/1.1\r\n"
+              "Host: www.google.com\r\n"
+              "Connection: keep-alive\r\n"
+              "Content-Length: 0\r\n\r\n"),
+  };
+  MockRead data_reads1[] = {
+    MockRead("HTTP/1.1 404 Not Found\r\n"),
+    MockRead("Server: Blah\r\n"),
+    MockRead("Content-Length: 1234\r\n\r\n"),
+
+    // No response body because the test stops reading here.
+    MockRead(false, net::ERR_UNEXPECTED),  // Should not be reached.
+  };
+
+  MockSocket data1;
+  data1.reads = data_reads1;
+  data1.writes = data_writes1;
+  mock_sockets[0] = &data1;
+  mock_sockets[1] = NULL;
+
+  TestCompletionCallback callback1;
+
+  int rv = trans->Start(&request, &callback1);
+  EXPECT_EQ(net::ERR_IO_PENDING, rv);
+
+  rv = callback1.WaitForResult();
+  EXPECT_EQ(net::OK, rv);
+
+  const net::HttpResponseInfo* response = trans->GetResponseInfo();
+  EXPECT_FALSE(response == NULL);
+
+  // Check that the headers got parsed.
+  EXPECT_TRUE(response->headers != NULL);
+  EXPECT_EQ(1234, response->headers->GetContentLength());
+  EXPECT_EQ("HTTP/1.1 404 Not Found", response->headers->GetStatusLine());
+
+  std::string server_header;
+  void* iter = NULL;
+  bool has_server_header = response->headers->EnumerateHeader(
+      &iter, "Server", &server_header);
+  EXPECT_TRUE(has_server_header);
+  EXPECT_EQ("Blah", server_header);
+
+  // Reading should give EOF right away, since there is no message body
+  // (despite non-zero content-length).
+  std::string response_data;
+  rv = ReadTransaction(trans.get(), &response_data);
+  EXPECT_EQ(net::OK, rv);
+  EXPECT_EQ("", response_data);
 }
 
 TEST_F(HttpNetworkTransactionTest, ReuseConnection) {
@@ -1060,6 +1158,65 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthProxyKeepAlive) {
   EXPECT_EQ(L"basic", response->auth_challenge->scheme);
 }
 
+// Test that we don't read the response body when we fail to establish a tunnel,
+// even if the user cancels the proxy's auth attempt.
+TEST_F(HttpNetworkTransactionTest, BasicAuthProxyCancelTunnel) {
+  // Configure against proxy server "myproxy:70".
+  scoped_ptr<net::ProxyService> proxy_service(
+      CreateFixedProxyService("myproxy:70"));
+
+  scoped_refptr<net::HttpNetworkSession> session(
+      CreateSession(proxy_service.get()));
+
+  scoped_ptr<net::HttpTransaction> trans(new net::HttpNetworkTransaction(
+      session.get(), &mock_socket_factory));
+
+  net::HttpRequestInfo request;
+  request.method = "GET";
+  request.url = GURL("https://www.google.com/");
+  request.load_flags = 0;
+
+  // Since we have proxy, should try to establish tunnel.
+  MockWrite data_writes[] = {
+    MockWrite("CONNECT www.google.com:443 HTTP/1.1\r\n"
+              "Host: www.google.com\r\n\r\n"),
+  };
+
+  // The proxy responds to the connect with a 407.
+  MockRead data_reads[] = {
+    MockRead("HTTP/1.1 407 Proxy Authentication Required\r\n"),
+    MockRead("Proxy-Authenticate: Basic realm=\"MyRealm1\"\r\n"),
+    MockRead("Content-Length: 10\r\n\r\n"),
+    MockRead(false, net::ERR_UNEXPECTED),  // Should not be reached.
+  };
+
+  MockSocket data;
+  data.writes = data_writes;
+  data.reads = data_reads;
+  mock_sockets[0] = &data;
+  mock_sockets[1] = NULL;
+
+  TestCompletionCallback callback;
+
+  int rv = trans->Start(&request, &callback);
+  EXPECT_EQ(net::ERR_IO_PENDING, rv);
+
+  rv = callback.WaitForResult();
+  EXPECT_EQ(net::OK, rv);
+
+  const net::HttpResponseInfo* response = trans->GetResponseInfo();
+  EXPECT_FALSE(response == NULL);
+
+  EXPECT_TRUE(response->headers->IsKeepAlive());
+  EXPECT_EQ(407, response->headers->response_code());
+  EXPECT_EQ(10, response->headers->GetContentLength());
+  EXPECT_TRUE(net::HttpVersion(1, 1) == response->headers->GetHttpVersion());
+
+  std::string response_data;
+  rv = ReadTransaction(trans.get(), &response_data);
+  EXPECT_EQ(net::ERR_TUNNEL_CONNECTION_FAILED, rv);
+}
+
 static void ConnectStatusHelperWithExpectedStatus(
     const MockRead& status, int expected_status) {
   // Configure against proxy server "myproxy:70".
@@ -1412,10 +1569,15 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthProxyThenServer) {
   EXPECT_EQ(100, response->headers->GetContentLength());
 }
 
-// Test NTLM authentication.
-// TODO(wtc): This test doesn't work because we need to control the 8 random
-// bytes and the "workstation name" for a deterministic expected result.
-TEST_F(HttpNetworkTransactionTest, DISABLED_NTLMAuth) {
+// The NTLM authentication unit tests were generated by capturing the HTTP
+// requests and responses using Fiddler 2 and inspecting the generated random
+// bytes in the debugger.
+
+// Enter the correct password and authenticate successfully.
+TEST_F(HttpNetworkTransactionTest, NTLMAuth1) {
+  net::HttpAuthHandlerNTLM::ScopedProcSetter proc_setter(MockGenerateRandom1,
+                                                         MockGetHostName);
+
   scoped_ptr<net::ProxyService> proxy_service(CreateNullProxyService());
   scoped_ptr<net::HttpTransaction> trans(new net::HttpNetworkTransaction(
       CreateSession(proxy_service.get()), &mock_socket_factory));
@@ -1460,18 +1622,18 @@ TEST_F(HttpNetworkTransactionTest, DISABLED_NTLMAuth) {
     MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
               "Host: 172.22.68.17\r\n"
               "Connection: keep-alive\r\n"
-              "Authorization: NTLM TlRMTVNTUAADAAAAGAAYAHAAAAAYABgAiA"
-              "AAAAAAAABAAAAAGAAYAEAAAAAYABgAWAAAAAAAAAAAAAAABYIIAHQA"
-              "ZQBzAHQAaQBuAGcALQBuAHQAbABtAHcAdABjAGgAYQBuAGcALQBjAG"
-              "8AcgBwAMertjYHfqUhAAAAAAAAAAAAAAAAAAAAAEP3kddZKtMDMssm"
-              "KYA6SCllVGUeyoQppQ==\r\n\r\n"),
+              "Authorization: NTLM TlRMTVNTUAADAAAAGAAYAGgAAAAYABgAgA"
+              "AAAAAAAABAAAAAGAAYAEAAAAAQABAAWAAAAAAAAAAAAAAABYIIAHQA"
+              "ZQBzAHQAaQBuAGcALQBuAHQAbABtAFcAVABDAC0AVwBJAE4ANwBVKW"
+              "Yma5xzVAAAAAAAAAAAAAAAAAAAAACH+gWcm+YsP9Tqb9zCR3WAeZZX"
+              "ahlhx5I=\r\n\r\n"),
   };
 
   MockRead data_reads2[] = {
     // The origin server responds with a Type 2 message.
     MockRead("HTTP/1.1 401 Access Denied\r\n"),
     MockRead("WWW-Authenticate: NTLM "
-             "TlRMTVNTUAACAAAADAAMADgAAAAFgokCTroKF1e/DRcAAAAAAAAAALo"
+             "TlRMTVNTUAACAAAADAAMADgAAAAFgokCjGpMpPGlYKkAAAAAAAAAALo"
              "AugBEAAAABQEoCgAAAA9HAE8ATwBHAEwARQACAAwARwBPAE8ARwBMAE"
              "UAAQAaAEEASwBFAEUAUwBBAFIAQQAtAEMATwBSAFAABAAeAGMAbwByA"
              "HAALgBnAG8AbwBnAGwAZQAuAGMAbwBtAAMAQABhAGsAZQBlAHMAYQBy"
@@ -1520,16 +1682,210 @@ TEST_F(HttpNetworkTransactionTest, DISABLED_NTLMAuth) {
   EXPECT_EQ(L"", response->auth_challenge->realm);
   EXPECT_EQ(L"ntlm", response->auth_challenge->scheme);
 
-  // Pass a null identity to the first RestartWithAuth.
-  // TODO(wtc): In the future we may pass the actual identity to the first
-  // RestartWithAuth.
-
   TestCompletionCallback callback2;
 
   rv = trans->RestartWithAuth(L"testing-ntlm", L"testing-ntlm", &callback2);
   EXPECT_EQ(net::ERR_IO_PENDING, rv);
 
   rv = callback2.WaitForResult();
+  EXPECT_EQ(net::OK, rv);
+
+  response = trans->GetResponseInfo();
+  EXPECT_TRUE(response->auth_challenge.get() == NULL);
+  EXPECT_EQ(13, response->headers->GetContentLength());
+}
+
+// Enter a wrong password, and then the correct one.
+TEST_F(HttpNetworkTransactionTest, NTLMAuth2) {
+  net::HttpAuthHandlerNTLM::ScopedProcSetter proc_setter(MockGenerateRandom2,
+                                                         MockGetHostName);
+
+  scoped_ptr<net::ProxyService> proxy_service(CreateNullProxyService());
+  scoped_ptr<net::HttpTransaction> trans(new net::HttpNetworkTransaction(
+      CreateSession(proxy_service.get()), &mock_socket_factory));
+
+  net::HttpRequestInfo request;
+  request.method = "GET";
+  request.url = GURL("http://172.22.68.17/kids/login.aspx");
+  request.load_flags = 0;
+
+  MockWrite data_writes1[] = {
+    MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
+              "Host: 172.22.68.17\r\n"
+              "Connection: keep-alive\r\n\r\n"),
+  };
+
+  MockRead data_reads1[] = {
+    MockRead("HTTP/1.1 401 Access Denied\r\n"),
+    // Negotiate and NTLM are often requested together.  We only support NTLM.
+    MockRead("WWW-Authenticate: Negotiate\r\n"),
+    MockRead("WWW-Authenticate: NTLM\r\n"),
+    MockRead("Connection: close\r\n"),
+    MockRead("Content-Length: 42\r\n"),
+    MockRead("Content-Type: text/html\r\n"),
+    MockRead("Proxy-Support: Session-Based-Authentication\r\n\r\n"),
+    // Missing content -- won't matter, as connection will be reset.
+    MockRead(false, net::ERR_UNEXPECTED),
+  };
+
+  MockWrite data_writes2[] = {
+    // After automatically restarting with a null identity, this is the
+    // request we should be issuing -- the final header line contains a Type
+    // 1 message.
+    MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
+              "Host: 172.22.68.17\r\n"
+              "Connection: keep-alive\r\n"
+              "Authorization: NTLM "
+              "TlRMTVNTUAABAAAAB4IIAAAAAAAAAAAAAAAAAAAAAAA=\r\n\r\n"),
+
+    // After calling trans->RestartWithAuth(), we should send a Type 3 message
+    // (the credentials for the origin server).  The second request continues
+    // on the same connection.
+    MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
+              "Host: 172.22.68.17\r\n"
+              "Connection: keep-alive\r\n"
+              "Authorization: NTLM TlRMTVNTUAADAAAAGAAYAGgAAAAYABgAgA"
+              "AAAAAAAABAAAAAGAAYAEAAAAAQABAAWAAAAAAAAAAAAAAABYIIAHQA"
+              "ZQBzAHQAaQBuAGcALQBuAHQAbABtAFcAVABDAC0AVwBJAE4ANwCWeY"
+              "XnSZNwoQAAAAAAAAAAAAAAAAAAAADLa34/phTTKzNTWdub+uyFleOj"
+              "4Ww7b7E=\r\n\r\n"),
+  };
+
+  MockRead data_reads2[] = {
+    // The origin server responds with a Type 2 message.
+    MockRead("HTTP/1.1 401 Access Denied\r\n"),
+    MockRead("WWW-Authenticate: NTLM "
+             "TlRMTVNTUAACAAAADAAMADgAAAAFgokCbVWUZezVGpAAAAAAAAAAALo"
+             "AugBEAAAABQEoCgAAAA9HAE8ATwBHAEwARQACAAwARwBPAE8ARwBMAE"
+             "UAAQAaAEEASwBFAEUAUwBBAFIAQQAtAEMATwBSAFAABAAeAGMAbwByA"
+             "HAALgBnAG8AbwBnAGwAZQAuAGMAbwBtAAMAQABhAGsAZQBlAHMAYQBy"
+             "AGEALQBjAG8AcgBwAC4AYQBkAC4AYwBvAHIAcAAuAGcAbwBvAGcAbAB"
+             "lAC4AYwBvAG0ABQAeAGMAbwByAHAALgBnAG8AbwBnAGwAZQAuAGMAbw"
+             "BtAAAAAAA=\r\n"),
+    MockRead("Content-Length: 42\r\n"),
+    MockRead("Content-Type: text/html\r\n"),
+    MockRead("Proxy-Support: Session-Based-Authentication\r\n\r\n"),
+    MockRead("You are not authorized to view this page\r\n"),
+
+    // Wrong password.
+    MockRead("HTTP/1.1 401 Access Denied\r\n"),
+    MockRead("WWW-Authenticate: Negotiate\r\n"),
+    MockRead("WWW-Authenticate: NTLM\r\n"),
+    MockRead("Connection: close\r\n"),
+    MockRead("Content-Length: 42\r\n"),
+    MockRead("Content-Type: text/html\r\n"),
+    MockRead("Proxy-Support: Session-Based-Authentication\r\n\r\n"),
+    // Missing content -- won't matter, as connection will be reset.
+    MockRead(false, net::ERR_UNEXPECTED),
+  };
+
+  MockWrite data_writes3[] = {
+    // After automatically restarting with a null identity, this is the
+    // request we should be issuing -- the final header line contains a Type
+    // 1 message.
+    MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
+              "Host: 172.22.68.17\r\n"
+              "Connection: keep-alive\r\n"
+              "Authorization: NTLM "
+              "TlRMTVNTUAABAAAAB4IIAAAAAAAAAAAAAAAAAAAAAAA=\r\n\r\n"),
+
+    // After calling trans->RestartWithAuth(), we should send a Type 3 message
+    // (the credentials for the origin server).  The second request continues
+    // on the same connection.
+    MockWrite("GET /kids/login.aspx HTTP/1.1\r\n"
+              "Host: 172.22.68.17\r\n"
+              "Connection: keep-alive\r\n"
+              "Authorization: NTLM TlRMTVNTUAADAAAAGAAYAGgAAAAYABgAgA"
+              "AAAAAAAABAAAAAGAAYAEAAAAAQABAAWAAAAAAAAAAAAAAABYIIAHQA"
+              "ZQBzAHQAaQBuAGcALQBuAHQAbABtAFcAVABDAC0AVwBJAE4ANwBO54"
+              "dFMVvTHwAAAAAAAAAAAAAAAAAAAACS7sT6Uzw7L0L//WUqlIaVWpbI"
+              "+4MUm7c=\r\n\r\n"),
+  };
+
+  MockRead data_reads3[] = {
+    // The origin server responds with a Type 2 message.
+    MockRead("HTTP/1.1 401 Access Denied\r\n"),
+    MockRead("WWW-Authenticate: NTLM "
+             "TlRMTVNTUAACAAAADAAMADgAAAAFgokCL24VN8dgOR8AAAAAAAAAALo"
+             "AugBEAAAABQEoCgAAAA9HAE8ATwBHAEwARQACAAwARwBPAE8ARwBMAE"
+             "UAAQAaAEEASwBFAEUAUwBBAFIAQQAtAEMATwBSAFAABAAeAGMAbwByA"
+             "HAALgBnAG8AbwBnAGwAZQAuAGMAbwBtAAMAQABhAGsAZQBlAHMAYQBy"
+             "AGEALQBjAG8AcgBwAC4AYQBkAC4AYwBvAHIAcAAuAGcAbwBvAGcAbAB"
+             "lAC4AYwBvAG0ABQAeAGMAbwByAHAALgBnAG8AbwBnAGwAZQAuAGMAbw"
+             "BtAAAAAAA=\r\n"),
+    MockRead("Content-Length: 42\r\n"),
+    MockRead("Content-Type: text/html\r\n"),
+    MockRead("Proxy-Support: Session-Based-Authentication\r\n\r\n"),
+    MockRead("You are not authorized to view this page\r\n"),
+
+    // Lastly we get the desired content.
+    MockRead("HTTP/1.1 200 OK\r\n"),
+    MockRead("Content-Type: text/html; charset=utf-8\r\n"),
+    MockRead("Content-Length: 13\r\n\r\n"),
+    MockRead("Please Login\r\n"),
+    MockRead(false, net::OK),
+  };
+
+  MockSocket data1;
+  data1.reads = data_reads1;
+  data1.writes = data_writes1;
+  MockSocket data2;
+  data2.reads = data_reads2;
+  data2.writes = data_writes2;
+  MockSocket data3;
+  data3.reads = data_reads3;
+  data3.writes = data_writes3;
+  mock_sockets[0] = &data1;
+  mock_sockets[1] = &data2;
+  mock_sockets[2] = &data3;
+  mock_sockets[3] = NULL;
+
+  TestCompletionCallback callback1;
+
+  int rv = trans->Start(&request, &callback1);
+  EXPECT_EQ(net::ERR_IO_PENDING, rv);
+
+  rv = callback1.WaitForResult();
+  EXPECT_EQ(net::OK, rv);
+
+  const net::HttpResponseInfo* response = trans->GetResponseInfo();
+  EXPECT_FALSE(response == NULL);
+
+  // The password prompt info should have been set in response->auth_challenge.
+  EXPECT_FALSE(response->auth_challenge.get() == NULL);
+
+  // TODO(eroman): this should really include the effective port (80)
+  EXPECT_EQ(L"172.22.68.17", response->auth_challenge->host);
+  EXPECT_EQ(L"", response->auth_challenge->realm);
+  EXPECT_EQ(L"ntlm", response->auth_challenge->scheme);
+
+  TestCompletionCallback callback2;
+
+  // Enter the wrong password.
+  rv = trans->RestartWithAuth(L"testing-ntlm", L"wrongpassword", &callback2);
+  EXPECT_EQ(net::ERR_IO_PENDING, rv);
+
+  rv = callback2.WaitForResult();
+  EXPECT_EQ(net::OK, rv);
+
+  response = trans->GetResponseInfo();
+  EXPECT_FALSE(response == NULL);
+
+  // The password prompt info should have been set in response->auth_challenge.
+  EXPECT_FALSE(response->auth_challenge.get() == NULL);
+
+  // TODO(eroman): this should really include the effective port (80)
+  EXPECT_EQ(L"172.22.68.17", response->auth_challenge->host);
+  EXPECT_EQ(L"", response->auth_challenge->realm);
+  EXPECT_EQ(L"ntlm", response->auth_challenge->scheme);
+
+  TestCompletionCallback callback3;
+
+  // Now enter the right password.
+  rv = trans->RestartWithAuth(L"testing-ntlm", L"testing-ntlm", &callback3);
+  EXPECT_EQ(net::ERR_IO_PENDING, rv);
+
+  rv = callback3.WaitForResult();
   EXPECT_EQ(net::OK, rv);
 
   response = trans->GetResponseInfo();
@@ -2203,3 +2559,64 @@ TEST_F(HttpNetworkTransactionTest, BasicAuthCacheAndPreauth) {
     EXPECT_EQ(100, response->headers->GetContentLength());
   }
 }
+
+// Test the ResetStateForRestart() private method.
+TEST_F(HttpNetworkTransactionTest, ResetStateForRestart) {
+  // Create a transaction (the dependencies aren't important).
+  scoped_ptr<ProxyService> proxy_service(CreateNullProxyService());
+  scoped_ptr<HttpNetworkTransaction> trans(new HttpNetworkTransaction(
+      CreateSession(proxy_service.get()), &mock_socket_factory));
+
+  // Setup some state (which we expect ResetStateForRestart() will clear).
+  trans->header_buf_.reset(static_cast<char*>(malloc(10)));
+  trans->header_buf_capacity_ = 10;
+  trans->header_buf_len_ = 3;
+  trans->header_buf_body_offset_ = 11;
+  trans->header_buf_http_offset_ = 0;
+  trans->response_body_length_ = 100;
+  trans->response_body_read_ = 1;
+  trans->read_buf_ = new IOBuffer(15);
+  trans->read_buf_len_ = 15;
+  trans->request_headers_ = "Authorization: NTLM";
+  trans->request_headers_bytes_sent_ = 3;
+
+  // Setup state in response_
+  trans->response_.auth_challenge = new AuthChallengeInfo();
+  trans->response_.ssl_info.cert_status = -15;
+  trans->response_.response_time = base::Time::Now();
+  trans->response_.was_cached = true; // (Wouldn't ever actually be true...)
+
+  { // Setup state for response_.vary_data
+    HttpRequestInfo request;
+    std::string temp("HTTP/1.1 200 OK\nVary: foo, bar\n\n");
+    std::replace(temp.begin(), temp.end(), '\n', '\0');
+    scoped_refptr<HttpResponseHeaders> response = new HttpResponseHeaders(temp);
+    request.extra_headers = "Foo: 1\nbar: 23";
+    EXPECT_TRUE(trans->response_.vary_data.Init(request, *response));
+  }
+
+  // Cause the above state to be reset.
+  trans->ResetStateForRestart();
+
+  // Verify that the state that needed to be reset, has been reset.
+  EXPECT_EQ(NULL, trans->header_buf_.get());
+  EXPECT_EQ(0, trans->header_buf_capacity_);
+  EXPECT_EQ(0, trans->header_buf_len_);
+  EXPECT_EQ(-1, trans->header_buf_body_offset_);
+  EXPECT_EQ(-1, trans->header_buf_http_offset_);
+  EXPECT_EQ(-1, trans->response_body_length_);
+  EXPECT_EQ(0, trans->response_body_read_);
+  EXPECT_EQ(NULL, trans->read_buf_.get());
+  EXPECT_EQ(0, trans->read_buf_len_);
+  EXPECT_EQ("", trans->request_headers_);
+  EXPECT_EQ(0U, trans->request_headers_bytes_sent_);
+  EXPECT_EQ(NULL, trans->response_.auth_challenge.get());
+  EXPECT_EQ(NULL, trans->response_.headers.get());
+  EXPECT_EQ(false, trans->response_.was_cached);
+  EXPECT_EQ(base::kInvalidPlatformFileValue,
+            trans->response_.response_data_file);
+  EXPECT_EQ(0, trans->response_.ssl_info.cert_status);
+  EXPECT_FALSE(trans->response_.vary_data.is_valid());
+}
+
+}  // namespace net

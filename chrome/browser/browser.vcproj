@@ -314,14 +314,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\cache_manager_host.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\cache_manager_host.h"
-				>
-			</File>
-			<File
 				RelativePath=".\cancelable_request.cc"
 				>
 			</File>
@@ -602,6 +594,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\bookmarks\bookmark_menu_controller.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\bookmarks\bookmark_menu_controller.h"
+				>
+			</File>
+			<File
 				RelativePath=".\bookmarks\bookmark_model.cc"
 				>
 			</File>
@@ -699,6 +699,18 @@
 			</File>
 			<File
 				RelativePath=".\dock_info.h"
+				>
+			</File>
+			<File
+				RelativePath=".\find_bar.h"
+				>
+			</File>
+			<File
+				RelativePath=".\find_bar_controller.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\find_bar_controller.h"
 				>
 			</File>
 			<File
@@ -807,6 +819,10 @@
 			</File>
 			<File
 				RelativePath=".\automation\automation_provider_list.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\automation\automation_provider_list_generic.cc"
 				>
 			</File>
 			<File
@@ -1470,11 +1486,19 @@
 				>
 			</File>
 			<File
-				RelativePath=".\dom_ui\dev_tools_ui.cc"
+				RelativePath=".\dom_ui\debugger_ui.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\dom_ui\dev_tools_ui.h"
+				RelativePath=".\dom_ui\debugger_ui.h"
+				>
+			</File>
+			<File
+				RelativePath=".\dom_ui\devtools_ui.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\dom_ui\devtools_ui.h"
 				>
 			</File>
 			<File
@@ -1486,11 +1510,19 @@
 				>
 			</File>
 			<File
-				RelativePath=".\dom_ui\dom_ui_contents.cc"
+				RelativePath=".\dom_ui\dom_ui_factory.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\dom_ui\dom_ui_contents.h"
+				RelativePath=".\dom_ui\dom_ui_factory.h"
+				>
+			</File>
+			<File
+				RelativePath=".\dom_ui\dom_ui_favicon_source.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\dom_ui\dom_ui_favicon_source.h"
 				>
 			</File>
 			<File
@@ -1499,6 +1531,14 @@
 			</File>
 			<File
 				RelativePath=".\dom_ui\dom_ui_host.h"
+				>
+			</File>
+			<File
+				RelativePath=".\dom_ui\dom_ui_thumbnail_source.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\dom_ui\dom_ui_thumbnail_source.h"
 				>
 			</File>
 			<File
@@ -1698,14 +1738,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\safe_browsing\safe_browsing_database_impl.cc"
-				>
-			</File>
-			<File
-				RelativePath=".\safe_browsing\safe_browsing_database_impl.h"
-				>
-			</File>
-			<File
 				RelativePath=".\safe_browsing\safe_browsing_service.cc"
 				>
 			</File>
@@ -1882,6 +1914,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\extensions\extension_message_service.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\extensions\extension_message_service.h"
+				>
+			</File>
+			<File
 				RelativePath=".\extensions\extension_protocols.cc"
 				>
 			</File>
@@ -1994,6 +2034,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\renderer_host\media_resource_handler.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\media_resource_handler.h"
+				>
+			</File>
+			<File
 				RelativePath=".\renderer_host\render_process_host.cc"
 				>
 			</File>
@@ -2070,6 +2118,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\renderer_host\resource_message_filter_win.cc"
+				>
+			</File>
+			<File
 				RelativePath=".\renderer_host\resource_request_details.h"
 				>
 			</File>
@@ -2095,6 +2147,14 @@
 			</File>
 			<File
 				RelativePath=".\renderer_host\sync_resource_handler.h"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\web_cache_manager.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\renderer_host\web_cache_manager.h"
 				>
 			</File>
 		</Filter>
@@ -2158,11 +2218,11 @@
 				>
 			</File>
 			<File
-				RelativePath=".\tab_contents\render_view_context_menu_controller.cc"
+				RelativePath=".\tab_contents\render_view_context_menu_win.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\tab_contents\render_view_context_menu_controller.h"
+				RelativePath=".\tab_contents\render_view_context_menu_win.h"
 				>
 			</File>
 			<File

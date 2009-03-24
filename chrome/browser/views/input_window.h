@@ -5,7 +5,7 @@
 #ifndef CHROME_BROWSER_VIEWS_INPUT_WINDOW_H__
 #define CHROME_BROWSER_VIEWS_INPUT_WINDOW_H__
 
-#include "chrome/views/dialog_delegate.h"
+#include "chrome/views/window/dialog_delegate.h"
 
 // InputWindowDelegate --------------------------------------------------------
 
@@ -41,4 +41,3 @@ views::Window* CreateInputWindow(HWND parent_hwnd,
                                  InputWindowDelegate* delegate);
 
 #endif  // CHROME_BROWSER_VIEWS_INPUT_WINDOW_H__
-

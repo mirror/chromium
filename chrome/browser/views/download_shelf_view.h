@@ -7,10 +7,11 @@
 
 #include "chrome/browser/download/download_shelf.h"
 #include "chrome/common/slide_animation.h"
-#include "chrome/views/button.h"
-#include "chrome/views/link.h"
+#include "chrome/views/controls/button/button.h"
+#include "chrome/views/controls/link.h"
 
 namespace views {
+class ImageButton;
 class ImageView;
 }
 
@@ -28,7 +29,7 @@ class DownloadAnimation;
 // it'll automatically remove views once a certain point is reached.
 class DownloadShelfView : public DownloadShelf,
                           public views::View,
-                          public views::BaseButton::ButtonListener,
+                          public views::ButtonListener,
                           public views::LinkController,
                           public AnimationDelegate {
  public:
@@ -50,7 +51,7 @@ class DownloadShelfView : public DownloadShelf,
   // Implementation of ButtonListener.
   // Invoked when the user clicks the close button. Asks the browser to
   // hide the download shelf.
-  virtual void ButtonPressed(views::BaseButton* button);
+  virtual void ButtonPressed(views::Button* button);
 
   // Implementation of DownloadShelf.
   virtual void AddDownload(BaseDownloadItemModel* download_model);
@@ -90,10 +91,9 @@ class DownloadShelfView : public DownloadShelf,
 
   // Button for closing the downloads. This is contained as a child, and
   // deleted by View.
-  views::Button* close_button_;
+  views::ImageButton* close_button_;
 
   DISALLOW_COPY_AND_ASSIGN(DownloadShelfView);
 };
 
 #endif  // CHROME_BROWSER_VIEWS_DOWNLOAD_SHELF_VIEW_H_
-

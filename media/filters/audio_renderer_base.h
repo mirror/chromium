@@ -36,7 +36,7 @@ class AudioRendererBase : public AudioRenderer {
   virtual bool Initialize(AudioDecoder* decoder);
 
   // AssignableBuffer<AudioRendererBase, BufferInterface> implementation.
-  void OnAssignment(Buffer* buffer_in);
+  virtual void OnAssignment(Buffer* buffer_in);
 
  protected:
   // The default maximum size of the queue.
@@ -45,7 +45,7 @@ class AudioRendererBase : public AudioRenderer {
   // Only allow a factory to create this class.
   AudioRendererBase(size_t max_queue_size);
   virtual ~AudioRendererBase();
- 
+
   // Called by Initialize().  |media_format| is the format of the AudioDecoder.
   // Subclasses should return true if they were able to initialize, false
   // otherwise.

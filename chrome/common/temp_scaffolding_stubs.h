@@ -23,7 +23,6 @@
 #include "base/gfx/rect.h"
 #include "chrome/browser/bookmarks/bookmark_model.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/cache_manager_host.h"
 #include "chrome/browser/cancelable_request.h"
 #include "chrome/browser/download/download_shelf.h"
 #include "chrome/browser/download/save_types.h"
@@ -168,20 +167,12 @@ class GoogleUpdateSettings {
   DISALLOW_IMPLICIT_CONSTRUCTORS(GoogleUpdateSettings);
 };
 
-namespace browser {
-void RegisterAllPrefs(PrefService*, PrefService*);
-}
-
 void OpenFirstRunDialog(Profile* profile);
 
 void InstallJankometer(const CommandLine&);
 
 //---------------------------------------------------------------------------
 // These stubs are for BrowserProcessImpl
-
-class ClipboardService : public Clipboard {
- public:
-};
 
 class CancelableTask;
 class ViewMsg_Print_Params;
@@ -253,9 +244,6 @@ class BrokerServices {
 };
 
 }  // namespace sandbox
-
-class IconManager {
-};
 
 struct ViewHostMsg_DidPrintPage_Params;
 
@@ -387,13 +375,32 @@ class BookmarkEditorView {
   }
 };
 
-class BookmarkBarView {
- public:
-  static void ToggleWhenVisible(Profile* profile) { NOTIMPLEMENTED(); }
-};
-
 //---------------------------------------------------------------------------
 // These stubs are for Browser
+
+namespace download_util {
+void DragDownload(const DownloadItem* download, SkBitmap* icon);
+}  // namespace download_util
+
+class IconLoader {
+ public:
+  enum IconSize {
+    SMALL = 0,  // 16x16
+    NORMAL,     // 32x32
+    LARGE
+  };
+};
+
+class IconManager : public CancelableRequestProvider {
+ public:
+  typedef CancelableRequestProvider::Handle Handle;
+  typedef Callback2<Handle, SkBitmap*>::Type IconRequestCallback;
+  SkBitmap* LookupIcon(const std::wstring&, IconLoader::IconSize)
+      { NOTIMPLEMENTED(); return NULL; }
+  Handle LoadIcon(const std::wstring&, IconLoader::IconSize,
+                  CancelableRequestConsumerBase*, IconRequestCallback*)
+      { NOTIMPLEMENTED(); return NULL; }
+};
 
 class DebuggerWindow : public base::RefCountedThreadSafe<DebuggerWindow> {
  public:
@@ -406,121 +413,7 @@ class FaviconStatus {
   GURL url_;
 };
 
-class TabContents : public PageNavigator, public NotificationObserver {
- public:
-  enum InvalidateTypes {
-    INVALIDATE_URL = 1,
-    INVALIDATE_TITLE = 2,
-    INVALIDATE_FAVICON = 4,
-    INVALIDATE_LOAD = 8,
-    INVALIDATE_EVERYTHING = 0xFFFFFFFF
-  };
-  TabContents(TabContentsType type)
-      : type_(type), is_crashed_(false), is_active_(true), is_loading_(false),
-        is_being_destroyed_(false), waiting_for_response_(false), 
-        shelf_visible_(false), controller_(), delegate_(), max_page_id_(-1) { }
-  virtual ~TabContents() { }
-  NavigationController* controller() const { return controller_; }
-  void set_controller(NavigationController* c) { controller_ = c; }
-  virtual WebContents* AsWebContents() { return NULL; }
-  WebContents* AsWebContents() const {
-    return const_cast<TabContents*>(this)->AsWebContents();
-  }
-  virtual SkBitmap GetFavIcon() const;
-  const GURL& GetURL() const;
-  virtual const string16& GetTitle() const;
-  TabContentsType type() const { return type_; }
-  void set_type(TabContentsType type) { type_ = type; }
-  virtual void Focus() { NOTIMPLEMENTED(); }
-  virtual void Stop() { NOTIMPLEMENTED(); }
-  Profile* profile() const;
-  virtual void CloseContents();
-  virtual void SetupController(Profile* profile);
-  virtual void WasHidden() {
-    NOTIMPLEMENTED();
-  }
-  virtual void SetInitialFocus() { NOTIMPLEMENTED(); }
-  virtual void SetInitialFocus(bool reverse) { NOTIMPLEMENTED(); }
-  virtual void RestoreFocus() { NOTIMPLEMENTED(); }
-  static TabContentsType TypeForURL(GURL* url);
-  static TabContents* CreateWithType(TabContentsType type,
-                                     Profile* profile,
-                                     SiteInstance* instance);
-  virtual void Observe(NotificationType type,
-                       const NotificationSource& source,
-                       const NotificationDetails& details) { NOTIMPLEMENTED(); }
-  virtual void DidBecomeSelected() { NOTIMPLEMENTED(); }
-  virtual void SetDownloadShelfVisible(bool visible);
-  bool IsDownloadShelfVisible() { return shelf_visible_; }
-  virtual void Destroy();
-  virtual void SetIsLoading(bool, LoadNotificationDetails*);
-  bool is_crashed() const { return is_crashed_; }
-  virtual void SetIsCrashed(bool);
-  bool capturing_contents() const {
-    NOTIMPLEMENTED();
-    return false;
-  }
-  void set_capturing_contents(bool) { NOTIMPLEMENTED(); }
-  bool is_active() const { return is_active_; }
-  void set_is_active(bool active) { is_active_ = active; }
-  bool is_loading() const { return is_loading_; }
-  bool is_being_destroyed() const { return is_being_destroyed_; }
-  bool waiting_for_response() const { return waiting_for_response_; }
-  void SetNotWaitingForResponse() { waiting_for_response_ = false; }
-  void NotifyNavigationStateChanged(unsigned int);
-  TabContentsDelegate* delegate() const { return delegate_; }
-  void set_delegate(TabContentsDelegate* d) { delegate_ = d; }
-  void AddInfoBar(InfoBarDelegate*) { NOTIMPLEMENTED(); }
-  virtual void OpenURL(const GURL&, const GURL&, WindowOpenDisposition,
-               PageTransition::Type);
-  void AddNewContents(TabContents* new_contents,
-                      WindowOpenDisposition disposition,
-                      const gfx::Rect& initial_pos,
-                      bool user_gesture) { NOTIMPLEMENTED(); }
-  virtual void Activate() { NOTIMPLEMENTED(); }
-  virtual bool SupportsURL(GURL*);
-  virtual SiteInstance* GetSiteInstance() const { return NULL; }
-  int32 GetMaxPageID();
-  void UpdateMaxPageID(int32);
-  virtual bool NavigateToPendingEntry(bool) { NOTIMPLEMENTED(); return true; }
-  virtual DOMUIHost* AsDOMUIHost() { return NULL; }
-  virtual std::wstring GetStatusText() const { return std::wstring(); }
-  static void RegisterUserPrefs(PrefService* prefs) {
-    prefs->RegisterBooleanPref(prefs::kBlockPopups, false);
-  }
-  virtual void CreateView() {}
-  virtual gfx::NativeView GetNativeView() const { return NULL; }
-  static TabContentsFactory* RegisterFactory(TabContentsType type,
-                                             TabContentsFactory* factory);
-  void RemoveInfoBar(InfoBarDelegate* delegate) { NOTIMPLEMENTED(); }
-  virtual bool ShouldDisplayURL() { return true; }
-  void ToolbarSizeChanged(bool is_animating);
-  void OnStartDownload(DownloadItem* download);
-  DownloadShelf* GetDownloadShelf();
-  static void MigrateShelf(TabContents* from, TabContents* to);
-  void MigrateShelfFrom(TabContents* tab_contents);
- protected:
-  typedef std::vector<ConstrainedWindow*> ConstrainedWindowList;
-  ConstrainedWindowList child_windows_;
- private:
-  virtual void ReleaseDownloadShelf();
-  friend class AutomationProvider;
-
-  scoped_ptr<DownloadShelf> download_shelf_;
-  TabContentsType type_;
-  bool is_crashed_;
-  bool is_active_;
-  bool is_loading_;
-  bool is_being_destroyed_;
-  bool waiting_for_response_;
-  bool shelf_visible_;
-  GURL url_;
-  std::wstring title_;
-  NavigationController* controller_;
-  TabContentsDelegate* delegate_;
-  int32 max_page_id_;
-};
-
+#if defined(OS_MACOSX)
 class SelectFileDialog : public base::RefCountedThreadSafe<SelectFileDialog> {
  public:
   enum Type {
@@ -541,6 +434,7 @@ class SelectFileDialog : public base::RefCountedThreadSafe<SelectFileDialog> {
     return new SelectFileDialog;
   }
 };
+#endif
 
 class DockInfo {
  public:
@@ -669,15 +563,6 @@ class HtmlDialogContents {
   };
 };
 
-class CharacterEncoding {
- public:
-  static std::wstring GetCanonicalEncodingNameByAliasName(
-      const std::wstring&) {
-    NOTIMPLEMENTED();
-    return L"";
-  }
-};
-
 #if defined(OS_MACOSX)
 class FindBarMac {
  public:
@@ -709,23 +594,6 @@ LoginHandler* CreateLoginPrompt(net::AuthChallengeInfo* auth_info,
                                 URLRequest* request,
                                 MessageLoop* ui_loop);
 
-class ExternalProtocolHandler {
- public:
-  enum BlockState {
-    DONT_BLOCK,
-    BLOCK,
-    UNKNOWN,
-  };
-  static BlockState GetBlockState(const std::wstring& scheme) {
-    NOTIMPLEMENTED();
-    return UNKNOWN;
-  }
-  static void LaunchUrl(const GURL& url, int render_process_host_id,
-                        int tab_contents_id) {
-    NOTIMPLEMENTED();
-  }
-};
-
 class RepostFormWarningDialog {
  public:
   static void RunRepostFormWarningDialog(NavigationController*) { }
@@ -755,14 +623,6 @@ class FontsLanguagesWindowView {
   void SelectLanguagesTab() { NOTIMPLEMENTED(); }
 };
 
-class HistoryTabUI {
- public:
-  static const GURL GetHistoryURLWithSearchText(const std::wstring& text) {
-    NOTIMPLEMENTED();
-    return GURL();
-  }
-};
-
 class OSExchangeData {
  public:
   void SetString(const std::wstring& data) { NOTIMPLEMENTED(); }
@@ -785,6 +645,7 @@ class HWNDHtmlView {
 
   RenderViewHost* render_view_host() { NOTIMPLEMENTED(); return NULL; }
   void InitHidden() { NOTIMPLEMENTED(); }
+  void set_preferred_size(const gfx::Size& size) { NOTIMPLEMENTED(); }
 };
 
 #endif  // CHROME_COMMON_TEMP_SCAFFOLDING_STUBS_H_

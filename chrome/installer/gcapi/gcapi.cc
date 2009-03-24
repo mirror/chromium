@@ -16,65 +16,17 @@
 
 namespace {
 
-const wchar_t kChromeRegClientsKey[] = L"Software\\Google\\Update\\Clients\\{8A69D345-D564-463c-AFF1-A69D9E530F96}";
-const wchar_t kChromeRegClientStateKey[] = L"Software\\Google\\Update\\ClientState\\{8A69D345-D564-463c-AFF1-A69D9E530F96}";
+const wchar_t kChromeRegClientsKey[] =
+    L"Software\\Google\\Update\\Clients\\"
+    L"{8A69D345-D564-463c-AFF1-A69D9E530F96}";
+const wchar_t kChromeRegClientStateKey[] =
+    L"Software\\Google\\Update\\ClientState\\"
+    L"{8A69D345-D564-463c-AFF1-A69D9E530F96}";
 const wchar_t kChromeRegLaunchCmd[] = L"InstallerSuccessLaunchCmdLine";
 const wchar_t kChromeRegLastLaunchCmd[] = L"LastInstallerSuccessLaunchCmdLine";
 const wchar_t kChromeRegVersion[] = L"pv";
-const wchar_t kNoChromeOfferUntil[] = L"SOFTWARE\\Google\\No Chrome Offer Until";
-
-// Remove any registry key with non-numeric value or with the numeric value
-// equal or less than today's date represented in YYYYMMDD form.
-void CleanUpRegistryValues() {
-  HKEY key = NULL;
-  if (::RegOpenKeyEx(HKEY_LOCAL_MACHINE, kNoChromeOfferUntil,
-                     0, KEY_ALL_ACCESS, &key) != ERROR_SUCCESS)
-    return;
-
-  DWORD index = 0;
-  wchar_t value_name[260];
-  DWORD value_name_len = _countof(value_name);
-  DWORD value_type = REG_DWORD;
-  DWORD value_data = 0;
-  DWORD value_len = sizeof(DWORD);
-
-  // First, remove any value whose type is not DWORD.
-  while (::RegEnumValue(key, index, value_name, &value_name_len, NULL, 
-                        &value_type, NULL, &value_len) == ERROR_SUCCESS) {
-    if (value_type == REG_DWORD)
-      index++;
-    else
-      ::RegDeleteValue(key, value_name);
-
-    value_name_len = _countof(value_name);
-    value_type = REG_DWORD;
-    value_len = sizeof(DWORD);
-  }
-
-  // Get today's date, and format it as YYYYMMDD numeric value.
-  SYSTEMTIME now;
-  ::GetLocalTime(&now);
-  DWORD expiration_date = now.wYear * 10000 + now.wMonth * 100 + now.wDay;
-
-  // Remove any DWORD value smaller than the number represent the
-  // expiration date (YYYYMMDD).
-  index = 0;
-  while (::RegEnumValue(key, index, value_name, &value_name_len, NULL, 
-                        &value_type, (LPBYTE) &value_data, 
-                        &value_len) == ERROR_SUCCESS) {
-    if (value_type == REG_DWORD && value_data > expiration_date)
-      index++;  // move on to next value.
-    else
-      ::RegDeleteValue(key, value_name);  // delete this value.
-
-    value_name_len = _countof(value_name);
-    value_type = REG_DWORD;
-    value_data = 0;
-    value_len = sizeof(DWORD);
-  }
-
-  ::RegCloseKey(key);
-}
+const wchar_t kNoChromeOfferUntil[] =
+    L"SOFTWARE\\Google\\No Chrome Offer Until";
 
 // Return the company name specified in the file version info resource.
 bool GetCompanyName(const wchar_t* filename, wchar_t* buffer, DWORD out_len) {
@@ -144,23 +96,38 @@ bool CanReOfferChrome(BOOL set_flag) {
   if (::RegCreateKeyEx(HKEY_LOCAL_MACHINE, kNoChromeOfferUntil,
       0, NULL, REG_OPTION_NON_VOLATILE, KEY_READ | KEY_WRITE,
       NULL, &key, &disposition) == ERROR_SUCCESS) {
+    // Get today's date, and format it as YYYYMMDD numeric value.
+    SYSTEMTIME now;
+    GetLocalTime(&now);
+    DWORD today = now.wYear * 10000 + now.wMonth * 100 + now.wDay;
+
     // Cannot re-offer, if the timer already exists and is not expired yet.
-    if (::RegQueryValueEx(key, company, 0, 0, 0, 0) == ERROR_SUCCESS) {
-      // The expired timers were already removed in CleanUpRegistryValues.
-      // So if the key is not found, we can offer the Chrome.
+    DWORD value_type = REG_DWORD;
+    DWORD value_data = 0;
+    DWORD value_length = sizeof(DWORD);
+    if (::RegQueryValueEx(key, company, 0, &value_type,
+                          reinterpret_cast<LPBYTE>(&value_data),
+                          &value_length) == ERROR_SUCCESS &&
+        REG_DWORD == value_type &&
+        value_data > today) {
+      // The time has not expired, we cannot offer Chrome.
       can_re_offer = false;
-    } else if (set_flag) {
-      // Set expiration date for offer as six months from today,
-      // represented as a YYYYMMDD numeric value.
-      SYSTEMTIME timer;
-      ::GetLocalTime(&timer);
-      timer.wMonth = timer.wMonth + 6;
-      if (timer.wMonth > 12) {
-        timer.wMonth = timer.wMonth - 12;
-        timer.wYear = timer.wYear + 1;
+    } else {
+      // Delete the old or invalid value.
+      ::RegDeleteValue(key, company);
+      if (set_flag) {
+        // Set expiration date for offer as six months from today,
+        // represented as a YYYYMMDD numeric value.
+        SYSTEMTIME timer = now;
+        timer.wMonth = timer.wMonth + 6;
+        if (timer.wMonth > 12) {
+          timer.wMonth = timer.wMonth - 12;
+          timer.wYear = timer.wYear + 1;
+        }
+        DWORD value = timer.wYear * 10000 + timer.wMonth * 100 + timer.wDay;
+        ::RegSetValueEx(key, company, 0, REG_DWORD, (LPBYTE)&value,
+                        sizeof(DWORD));
       }
-      DWORD value = timer.wYear * 10000 + timer.wMonth * 100 + timer.wDay;
-      ::RegSetValueEx(key, company, 0, REG_DWORD, (LPBYTE)&value, sizeof(DWORD));
     }
 
     ::RegCloseKey(key);
@@ -226,12 +193,12 @@ bool VerifyAdminGroup() {
                                           SECURITY_BUILTIN_DOMAIN_RID,
                                           DOMAIN_ALIAS_RID_ADMINS, 0, 0, 0,
                                           0, 0, 0,
-                                          &Group); 
+                                          &Group);
   if (check) {
     if (!::CheckTokenMembership(NULL, Group, &check))
       check = FALSE;
   }
-  ::FreeSid(Group); 
+  ::FreeSid(Group);
   return (check == TRUE);
 }
 
@@ -316,7 +283,8 @@ bool GetUserIdForProcess(size_t pid, wchar_t** user_sid) {
 }  // namespace
 
 #pragma comment(linker, "/EXPORT:GoogleChromeCompatibilityCheck=_GoogleChromeCompatibilityCheck@8,PRIVATE")
-DLLEXPORT BOOL __stdcall GoogleChromeCompatibilityCheck(BOOL set_flag, DWORD *reasons) {
+DLLEXPORT BOOL __stdcall GoogleChromeCompatibilityCheck(BOOL set_flag,
+                                                        DWORD *reasons) {
   DWORD local_reasons = 0;
 
   bool is_vista_or_later = false;
@@ -338,12 +306,10 @@ DLLEXPORT BOOL __stdcall GoogleChromeCompatibilityCheck(BOOL set_flag, DWORD *re
     local_reasons |= GCCC_ERROR_INTEGRITYLEVEL;
   }
 
-   // First clean up the registry keys left over previously.
-   // Then only check whether we can re-offer, if everything else is OK.
-   CleanUpRegistryValues();	 
-   if (local_reasons == 0 && !CanReOfferChrome(set_flag))	 
-     local_reasons |= GCCC_ERROR_ALREADYOFFERED;	 
- 
+  // Then only check whether we can re-offer, if everything else is OK.
+  if (local_reasons == 0 && !CanReOfferChrome(set_flag))
+    local_reasons |= GCCC_ERROR_ALREADYOFFERED;
+
   // Done. Copy/return results.
   if (reasons != NULL)
     *reasons = local_reasons;

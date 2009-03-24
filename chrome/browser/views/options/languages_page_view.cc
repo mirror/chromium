@@ -25,20 +25,19 @@
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
-#include "chrome/views/checkbox.h"
-#include "chrome/views/combo_box.h"
+#include "chrome/views/controls/button/radio_button.h"
+#include "chrome/views/controls/combo_box.h"
+#include "chrome/views/controls/tabbed_pane.h"
+#include "chrome/views/controls/text_field.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/native_button.h"
-#include "chrome/views/radio_button.h"
-#include "chrome/views/tabbed_pane.h"
-#include "chrome/views/text_field.h"
-#include "chrome/views/widget.h"
+#include "chrome/views/widget/widget.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 #include "grit/theme_resources.h"
 #include "skia/include/SkBitmap.h"
 #include "unicode/uloc.h"
 
+// TODO(port): this should be a char* list.
 static const wchar_t* const accept_language_list[] = {
   L"af",     // Afrikaans
   L"am",     // Amharic
@@ -233,8 +232,9 @@ static const int kDialogPadding = 7;
 static int kDefaultWindowWidthChars = 60;
 static int kDefaultWindowHeightLines = 3;
 
-AddLanguageWindowView::AddLanguageWindowView(LanguagesPageView* language_delegate,
-                                             Profile* profile)
+AddLanguageWindowView::AddLanguageWindowView(
+    LanguagesPageView* language_delegate,
+    Profile* profile)
     : profile_(profile->GetOriginalProfile()),
       language_delegate_(language_delegate),
       accept_language_combobox_(NULL) {
@@ -323,6 +323,10 @@ class LanguageOrderTableModel : public views::TableModel {
   // Removes the entry at the specified index.
   void Remove(int index);
 
+  // Returns index corresponding to a given language. Returns -1 if the
+  // language is not found.
+  int GetIndex(const std::wstring& language);
+
   // Move down the entry at the specified index.
   void MoveDown(int index);
 
@@ -398,6 +402,22 @@ void LanguageOrderTableModel::Remove(int index) {
     observer_->OnItemsRemoved(index, 1);
 }
 
+int LanguageOrderTableModel::GetIndex(const std::wstring& language) {
+  if (language.empty())
+    return -1;
+
+  int index = 0;
+  for (std::vector<std::wstring>::const_iterator cit = languages_.begin();
+      cit != languages_.end(); ++cit) {
+    if (*cit == language)
+      return index;
+
+    index++;
+  }
+
+  return -1;
+}
+
 void LanguageOrderTableModel::MoveDown(int index) {
   if (index < 0 || index >= RowCount() - 1)
     return;
@@ -464,7 +484,7 @@ LanguagesPageView::LanguagesPageView(Profile* profile)
       starting_ui_language_index_(-1) {
   accept_languages_.Init(prefs::kAcceptLanguages,
       profile->GetPrefs(), NULL);
-  enable_spellcheck_.Init(prefs::kEnableSpellCheck, 
+  enable_spellcheck_.Init(prefs::kEnableSpellCheck,
       profile->GetPrefs(), NULL);
 }
 
@@ -473,7 +493,7 @@ LanguagesPageView::~LanguagesPageView() {
     language_order_table_->SetModel(NULL);
 }
 
-void LanguagesPageView::ButtonPressed(views::NativeButton* sender) {
+void LanguagesPageView::ButtonPressed(views::Button* sender) {
   if (sender == move_up_button_) {
     OnMoveUpLanguage();
     language_table_edited_ = true;
@@ -485,12 +505,12 @@ void LanguagesPageView::ButtonPressed(views::NativeButton* sender) {
     language_table_edited_ = true;
   } else if (sender == add_button_) {
     views::Window::CreateChromeWindow(
-        GetWidget()->GetHWND(),
+        GetWidget()->GetNativeView(),
         gfx::Rect(),
         new AddLanguageWindowView(this, profile()))->Show();
     language_table_edited_ = true;
   } else if (sender == enable_spellchecking_checkbox_) {
-    if (enable_spellchecking_checkbox_->IsSelected())
+    if (enable_spellchecking_checkbox_->checked())
       enable_spellcheck_.SetValue(true);
     else
       enable_spellcheck_.SetValue(false);
@@ -505,21 +525,17 @@ void LanguagesPageView::OnAddLanguage(const std::wstring& new_language) {
 
 void LanguagesPageView::InitControlLayout() {
   // Define the buttons.
-  add_button_ = new views::NativeButton(l10n_util::GetString(
+  add_button_ = new views::NativeButton(this, l10n_util::GetString(
       IDS_FONT_LANGUAGE_SETTING_LANGUAGES_SELECTOR_ADD_BUTTON_LABEL));
-  add_button_->SetListener(this);
-  remove_button_ = new views::NativeButton(l10n_util::GetString(
+  remove_button_ = new views::NativeButton(this, l10n_util::GetString(
       IDS_FONT_LANGUAGE_SETTING_LANGUAGES_SELECTOR_REMOVE_BUTTON_LABEL));
   remove_button_->SetEnabled(false);
-  remove_button_->SetListener(this);
-  move_up_button_ = new views::NativeButton(l10n_util::GetString(
+  move_up_button_ = new views::NativeButton(this, l10n_util::GetString(
       IDS_FONT_LANGUAGE_SETTING_LANGUAGES_SELECTOR_MOVEUP_BUTTON_LABEL));
   move_up_button_->SetEnabled(false);
-  move_up_button_->SetListener(this);
-  move_down_button_ = new views::NativeButton(l10n_util::GetString(
+  move_down_button_ = new views::NativeButton(this, l10n_util::GetString(
       IDS_FONT_LANGUAGE_SETTING_LANGUAGES_SELECTOR_MOVEDOWN_BUTTON_LABEL));
   move_down_button_->SetEnabled(false);
-  move_down_button_->SetListener(this);
 
   languages_contents_ = new views::View;
   using views::GridLayout;
@@ -592,7 +608,7 @@ void LanguagesPageView::InitControlLayout() {
 
   layout->AddView(button_stack_);
 
-  layout->AddPaddingRow(0, kUnrelatedControlLargeVerticalSpacing);
+  layout->AddPaddingRow(0, kUnrelatedControlVerticalSpacing);
 
   language_info_label_ = new views::Label(
       l10n_util::GetString(IDS_OPTIONS_CHROME_LANGUAGE_INFO));
@@ -607,10 +623,10 @@ void LanguagesPageView::InitControlLayout() {
   dictionary_language_label_ = new views::Label(
       l10n_util::GetString(IDS_OPTIONS_CHROME_DICTIONARY_LANGUAGE));
   dictionary_language_label_->SetHorizontalAlignment(
-      views::Label::ALIGN_LEFT);  
-  enable_spellchecking_checkbox_ = new views::CheckBox(
+      views::Label::ALIGN_LEFT);
+  enable_spellchecking_checkbox_ = new views::Checkbox(
       l10n_util::GetString(IDS_OPTIONS_ENABLE_SPELLCHECK));
-  enable_spellchecking_checkbox_->SetListener(this);
+  enable_spellchecking_checkbox_->set_listener(this);
   enable_spellchecking_checkbox_->SetMultiLine(true);
 
   // Determine Locale Codes.
@@ -639,7 +655,7 @@ void LanguagesPageView::InitControlLayout() {
   layout->AddView(change_dictionary_language_combobox_);
 
   // UI language settings.
-  layout->AddPaddingRow(0, kUnrelatedControlLargeVerticalSpacing);
+  layout->AddPaddingRow(0, kUnrelatedControlVerticalSpacing);
   layout->StartRow(0, single_column_view_set_id);
   layout->AddView(language_info_label_);
   layout->AddPaddingRow(0, kRelatedControlVerticalSpacing);
@@ -698,8 +714,9 @@ void LanguagesPageView::NotifyPrefChanged(const std::wstring* pref_name) {
       DCHECK(local_state);
       const std::wstring& lang_region = local_state->GetString(
           prefs::kSpellCheckDictionary);
-      dictionary_language_.SetValue(
-          SpellChecker::GetLanguageFromLanguageRegion(lang_region));
+      dictionary_language_.SetValue(ASCIIToWide(
+          SpellChecker::GetLanguageFromLanguageRegion(
+          WideToASCII(lang_region))));
       index = dictionary_language_model_->GetSelectedLanguageIndex(
           prefs::kSpellCheckDictionary);
     }
@@ -708,7 +725,7 @@ void LanguagesPageView::NotifyPrefChanged(const std::wstring* pref_name) {
     spellcheck_language_index_selected_ = -1;
   }
   if (!pref_name || *pref_name == prefs::kEnableSpellCheck) {
-    enable_spellchecking_checkbox_->SetIsSelected(
+    enable_spellchecking_checkbox_->SetChecked(
         enable_spellcheck_.GetValue());
   }
 }
@@ -730,9 +747,30 @@ void LanguagesPageView::ItemChanged(views::ComboBox* sender,
       language_warning_shown_ = true;
     }
   } else if (sender == change_dictionary_language_combobox_) {
+    // Set the spellcheck language selected.
     spellcheck_language_index_selected_ = new_index;
-    OnAddLanguage(dictionary_language_model_->GetLocaleFromIndex(new_index));
-    language_table_edited_ = true;
+
+    // Remove the previously added spell check language to the accept list.
+    if (!spellcheck_language_added_.empty()) {
+      int old_index = language_order_table_model_->GetIndex(
+          spellcheck_language_added_);
+      if (old_index > -1)
+        language_order_table_model_->Remove(old_index);
+    }
+
+    // Add this new spell check language only if it is not already in the
+    // accept language list.
+    std::wstring language =
+        dictionary_language_model_->GetLocaleFromIndex(new_index);
+    int index = language_order_table_model_->GetIndex(language);
+    if (index == -1) {
+      // Add the new language.
+      OnAddLanguage(language);
+      language_table_edited_ = true;
+      spellcheck_language_added_ = language;
+    } else {
+      spellcheck_language_added_ = L"";
+    }
   }
 }
 
@@ -791,6 +829,11 @@ void LanguagesPageView::SaveChanges() {
                             g_browser_process->local_state());
     app_locale_.SetValue(ui_language_model_->
         GetLocaleFromIndex(ui_language_index_selected_));
+
+    // Remove pref values for spellcheck dictionaries forcefully.
+    PrefService* prefs = profile()->GetPrefs();
+    if (prefs)
+      prefs->ClearPref(prefs::kSpellCheckDictionary);
   }
 
   if (spellcheck_language_index_selected_ != -1) {

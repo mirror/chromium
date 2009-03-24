@@ -10,6 +10,7 @@
 #include "base/lock.h"
 #include "base/lock_impl.h"
 #include "base/logging.h"
+#include "base/time.h"
 
 using base::Time;
 using base::TimeDelta;
@@ -58,4 +59,3 @@ void ConditionVariable::Signal() {
   int rv = pthread_cond_signal(&condition_);
   DCHECK(rv == 0);
 }
-

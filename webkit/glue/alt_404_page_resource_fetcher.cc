@@ -29,7 +29,7 @@ Alt404PageResourceFetcher::Alt404PageResourceFetcher(
     const GURL& url)
     : webframeloaderclient_(webframeloaderclient),
       doc_loader_(doc_loader) {
-  
+
   fetcher_.reset(new ResourceFetcherWithTimeout(url, frame,
                                                 kDownloadTimeoutSec, this));
 }
@@ -45,4 +45,3 @@ void Alt404PageResourceFetcher::OnURLFetchComplete(
   }
   doc_loader_ = NULL;
 }
-

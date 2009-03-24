@@ -27,8 +27,9 @@
 #include "chrome/common/url_constants.h"
 #include "chrome/renderer/about_handler.h"
 #include "chrome/renderer/debug_message_handler.h"
-#include "chrome/renderer/dev_tools_agent.h"
-#include "chrome/renderer/dev_tools_client.h"
+#include "chrome/renderer/devtools_agent.h"
+#include "chrome/renderer/devtools_client.h"
+#include "chrome/renderer/extensions/renderer_extension_bindings.h"
 #include "chrome/renderer/localized_error.h"
 #include "chrome/renderer/media/audio_renderer_impl.h"
 #include "chrome/renderer/render_process.h"
@@ -41,16 +42,18 @@
 #include "grit/renderer_resources.h"
 #include "net/base/escape.h"
 #include "net/base/net_errors.h"
+#include "printing/units.h"
 #include "skia/ext/bitmap_platform_device.h"
 #include "skia/ext/image_operations.h"
 #include "webkit/default_plugin/default_plugin_shared.h"
 #include "webkit/glue/dom_operations.h"
 #include "webkit/glue/dom_serializer.h"
-#include "webkit/glue/glue_accessibility.h"
 #include "webkit/glue/password_form.h"
 #include "webkit/glue/plugins/plugin_list.h"
 #include "webkit/glue/searchable_form_data.h"
+#include "webkit/glue/webaccessibilitymanager_impl.h"
 #include "webkit/glue/webdatasource.h"
+#include "webkit/glue/webdevtoolsagent_delegate.h"
 #include "webkit/glue/webdropdata.h"
 #include "webkit/glue/weberror.h"
 #include "webkit/glue/webframe.h"
@@ -65,20 +68,28 @@
 
 #if defined(OS_WIN)
 // TODO(port): these files are currently Windows only because they concern:
-//   * plugins
+//   * logging
 //   * printing
 //   * theming
 //   * views
 #include "base/gfx/gdi_util.h"
 #include "base/gfx/native_theme.h"
 #include "chrome/common/gfx/emf.h"
-#include "chrome/views/message_box_view.h"
-#include "chrome/common/chrome_plugin_lib.h"
-#include "chrome/renderer/chrome_plugin_host.h"
+#include "chrome/renderer/renderer_logging.h"
+#include "chrome/views/controls/message_box_view.h"
 #include "skia/ext/vector_canvas.h"
 #endif
 
+#if defined(OS_WIN)
+// If true, the URL of the active renderer is logged. Logging is done in such
+// way that if the renderer crashes the URL of the active renderer is contained
+// in the dump. Currently mini-dumps are only supported on windows, so this is
+// only enabled on windows.
+#define LOG_RENDERER_URL
+#endif
+
 using base::TimeDelta;
+using webkit_glue::WebAccessibility;
 
 //-----------------------------------------------------------------------------
 
@@ -170,19 +181,16 @@ RenderView::RenderView(RenderThreadBase* render_thread)
       opened_by_user_gesture_(true),
       method_factory_(this),
       first_default_plugin_(NULL),
-      printed_document_width_(0),
-      dev_tools_agent_(NULL),
-      dev_tools_client_(NULL),
+      devtools_agent_(NULL),
+      devtools_client_(NULL),
       history_back_list_count_(0),
       history_forward_list_count_(0),
       disable_popup_blocking_(false),
       has_unload_listener_(false),
       decrement_shared_popup_at_destruction_(false),
-      waiting_for_create_window_ack_(false),
       form_field_autofill_request_id_(0),
       popup_notification_visible_(false),
       delay_seconds_for_form_state_sync_(kDefaultDelaySecondsForFormStateSync) {
-  resource_dispatcher_ = new ResourceDispatcher(this);
 #ifdef CHROME_PERSONALIZATION
   personalization_ = Personalization::CreateRendererPersonalization();
 #endif
@@ -192,7 +200,6 @@ RenderView::~RenderView() {
   if (decrement_shared_popup_at_destruction_)
     shared_popup_counter_->data--;
 
-  resource_dispatcher_->ClearMessageSender();
   // Clear any back-pointers that might still be held by plugins.
   PluginDelegateList::iterator it = plugin_delegates_.begin();
   while (it != plugin_delegates_.end()) {
@@ -201,7 +208,9 @@ RenderView::~RenderView() {
   }
 
   render_thread_->RemoveFilter(debug_message_handler_);
-  render_thread_->RemoveFilter(dev_tools_agent_);
+
+  devtools_agent_->RenderViewDestroyed();
+  render_thread_->RemoveFilter(devtools_agent_);
 
 #ifdef CHROME_PERSONALIZATION
   Personalization::CleanupRendererPersonalization(personalization_);
@@ -288,6 +297,8 @@ void RenderView::Init(gfx::NativeViewId parent_hwnd,
     decrement_shared_popup_at_destruction_ = false;
   }
 
+  devtools_agent_ = new DevToolsAgent(routing_id, this,
+      MessageLoop::current());
   webwidget_ = WebView::Create(this, webkit_prefs);
 
   // Don't let WebCore keep a B/F list - we have our own.
@@ -320,33 +331,21 @@ void RenderView::Init(gfx::NativeViewId parent_hwnd,
   debug_message_handler_ = new DebugMessageHandler(this);
   render_thread_->AddFilter(debug_message_handler_);
 
-  dev_tools_agent_ = new DevToolsAgent(this, MessageLoop::current());
-  render_thread_->AddFilter(dev_tools_agent_);
+  render_thread_->AddFilter(devtools_agent_);
 }
 
 void RenderView::OnMessageReceived(const IPC::Message& message) {
-  // If the current RenderView instance represents a popup, then we
-  // need to wait for ViewMsg_CreatingNew_ACK to be sent by the browser.
-  // As part of this ack we also receive the browser window handle, which
-  // parents any plugins instantiated in this RenderView instance.
-  // Plugins can be instantiated only when we receive the parent window
-  // handle as they are child windows.
-  if (waiting_for_create_window_ack_ &&
-      resource_dispatcher_->IsResourceMessage(message)) {
-    queued_resource_messages_.push(new IPC::Message(message));
-    return;
-  }
-
-  // Let the resource dispatcher intercept resource messages first.
-  if (resource_dispatcher_->OnMessageReceived(message))
-    return;
+#ifdef LOG_RENDERER_URL
+  WebFrame* main_frame = webview() ? webview()->GetMainFrame() : NULL;
+  renderer_logging::ScopedActiveRenderingURLSetter url_setter(
+      main_frame ? main_frame->GetURL() : GURL());
+#endif
 
   // If this is developer tools renderer intercept tools messages first.
-  if (dev_tools_client_.get() && dev_tools_client_->OnMessageReceived(message))
+  if (devtools_client_.get() && devtools_client_->OnMessageReceived(message))
     return;
 
   IPC_BEGIN_MESSAGE_MAP(RenderView, message)
-    IPC_MESSAGE_HANDLER(ViewMsg_CreatingNew_ACK, OnCreatingNewAck)
     IPC_MESSAGE_HANDLER(ViewMsg_CaptureThumbnail, SendThumbnail)
     IPC_MESSAGE_HANDLER(ViewMsg_PrintPages, OnPrintPages)
     IPC_MESSAGE_HANDLER(ViewMsg_Navigate, OnNavigate)
@@ -400,8 +399,9 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
                         OnUpdateBackForwardListCount)
     IPC_MESSAGE_HANDLER(ViewMsg_GetAllSavableResourceLinksForCurrentPage,
                         OnGetAllSavableResourceLinksForCurrentPage)
-    IPC_MESSAGE_HANDLER(ViewMsg_GetSerializedHtmlDataForCurrentPageWithLocalLinks,
-                        OnGetSerializedHtmlDataForCurrentPageWithLocalLinks)
+    IPC_MESSAGE_HANDLER(
+        ViewMsg_GetSerializedHtmlDataForCurrentPageWithLocalLinks,
+        OnGetSerializedHtmlDataForCurrentPageWithLocalLinks)
     IPC_MESSAGE_HANDLER(ViewMsg_GetApplicationInfo, OnGetApplicationInfo)
     IPC_MESSAGE_HANDLER(ViewMsg_GetAccessibilityInfo, OnGetAccessibilityInfo)
     IPC_MESSAGE_HANDLER(ViewMsg_ClearAccessibilityInfo,
@@ -426,24 +426,12 @@ void RenderView::OnMessageReceived(const IPC::Message& message) {
                         OnAudioStreamStateChanged)
     IPC_MESSAGE_HANDLER(ViewMsg_NotifyAudioStreamVolume, OnAudioStreamVolume)
     IPC_MESSAGE_HANDLER(ViewMsg_MoveOrResizeStarted, OnMoveOrResizeStarted)
+    IPC_MESSAGE_HANDLER(ViewMsg_HandleExtensionMessage,
+                        OnHandleExtensionMessage)
 
     // Have the super handle all other messages.
     IPC_MESSAGE_UNHANDLED(RenderWidget::OnMessageReceived(message))
   IPC_END_MESSAGE_MAP()
-}
-
-// Got a response from the browser after the renderer decided to create a new
-// view.
-void RenderView::OnCreatingNewAck(gfx::NativeViewId parent) {
-  CompleteInit(parent);
-  waiting_for_create_window_ack_ = false;
-
-  while (!queued_resource_messages_.empty()) {
-    IPC::Message* queued_msg = queued_resource_messages_.front();
-    queued_resource_messages_.pop();
-    resource_dispatcher_->OnMessageReceived(*queued_msg);
-    delete queued_msg;
-  }
 }
 
 void RenderView::SendThumbnail() {
@@ -469,66 +457,10 @@ void RenderView::SendThumbnail() {
   Send(new ViewHostMsg_Thumbnail(routing_id_, url, score, thumbnail));
 }
 
-int RenderView::SwitchFrameToPrintMediaType(const ViewMsg_Print_Params& params,
-                                            WebFrame* frame) {
-  float ratio = static_cast<float>(params.desired_dpi / params.dpi);
-  float paper_width = params.printable_size.width() * ratio;
-  float paper_height = params.printable_size.height() * ratio;
-  float minLayoutWidth = static_cast<float>(paper_width * params.min_shrink);
-  float maxLayoutWidth = static_cast<float>(paper_width * params.max_shrink);
-
-  // Safari uses: 765 & 1224. Margins aren't exactly the same either.
-  // Scale = 2.222 for MDI printer.
-  int pages;
-  if (!frame->SetPrintingMode(true,
-                              minLayoutWidth,
-                              maxLayoutWidth,
-                              &printed_document_width_)) {
-    NOTREACHED();
-    pages = 0;
-  } else {
-    DCHECK_GT(printed_document_width_, 0);
-    // Force to recalculate the height, otherwise it reuse the current window
-    // height as the default.
-    float effective_shrink = printed_document_width_ / paper_width;
-    gfx::Size page_size(printed_document_width_,
-                        static_cast<int>(paper_height * effective_shrink) - 1);
-    WebView* view = frame->GetView();
-    if (view) {
-      // Hack around an issue where if the current view height is higher than
-      // the page height, empty pages will be printed even if the bottom of the
-      // web page is empty.
-      printing_view_size_ = view->GetSize();
-      view->Resize(page_size);
-      view->Layout();
-    }
-    pages = frame->ComputePageRects(params.printable_size);
-    DCHECK(pages);
-  }
-  return pages;
-}
-
-void RenderView::SwitchFrameToDisplayMediaType(WebFrame* frame) {
-  // Set the layout back to "normal" document; i.e. CSS media type = "screen".
-  frame->SetPrintingMode(false, 0, 0, NULL);
-  WebView* view = frame->GetView();
-  if (view) {
-    // Restore from the hack described at SwitchFrameToPrintMediaType().
-    view->Resize(printing_view_size_);
-    view->Layout();
-    printing_view_size_.SetSize(0, 0);
-  }
-  printed_document_width_ = 0;
-}
-
 void RenderView::PrintPage(const ViewMsg_PrintPage_Params& params,
+                           const gfx::Size& canvas_size,
                            WebFrame* frame) {
 #if defined(OS_WIN)
-  if (printed_document_width_ <= 0) {
-    NOTREACHED();
-    return;
-  }
-
   // Generate a memory-based EMF file. The EMF will use the current screen's
   // DPI.
   gfx::Emf emf;
@@ -537,48 +469,38 @@ void RenderView::PrintPage(const ViewMsg_PrintPage_Params& params,
   HDC hdc = emf.hdc();
   DCHECK(hdc);
   skia::PlatformDeviceWin::InitializeDC(hdc);
-
-  gfx::Rect rect;
-  frame->GetPageRect(params.page_number, &rect);
-  DCHECK(rect.height());
-  DCHECK(rect.width());
-  double shrink = static_cast<double>(printed_document_width_) /
-                  params.params.printable_size.width();
-  // This check would fire each time the page would get truncated on the
-  // right. This is not worth a DCHECK() but should be looked into, for
-  // example, wouldn't be worth trying in landscape?
-  // DCHECK_LE(rect.width(), printed_document_width_);
-
-  // Buffer one page at a time.
-  int src_size_x = printed_document_width_;
-  int src_size_y =
-      static_cast<int>(ceil(params.params.printable_size.height() *
-                            shrink));
+  int size_x = canvas_size.width();
+  int size_y = canvas_size.height();
+  // Calculate the dpi adjustment.
+  float shrink = static_cast<float>(canvas_size.width()) /
+      params.params.printable_size.width();
 #if 0
   // TODO(maruel): This code is kept for testing until the 100% GDI drawing
   // code is stable. maruels use this code's output as a reference when the
   // GDI drawing code fails.
 
   // Mix of Skia and GDI based.
-  skia::PlatformCanvasWin canvas(src_size_x, src_size_y, true);
+  skia::PlatformCanvasWin canvas(size_x, size_y, true);
   canvas.drawARGB(255, 255, 255, 255, SkPorterDuff::kSrc_Mode);
-  PlatformContextSkia context(&canvas);
-  if (!frame->SpoolPage(params.page_number, &context)) {
+  float webkit_shrink = frame->PrintPage(params.page_number, &canvas);
+  if (shrink <= 0) {
     NOTREACHED() << "Printing page " << params.page_number << " failed.";
-    return;
+  } else {
+    // Update the dpi adjustment with the "page shrink" calculated in webkit.
+    shrink /= webkit_shrink;
   }
 
   // Create a BMP v4 header that we can serialize.
   BITMAPV4HEADER bitmap_header;
-  gfx::CreateBitmapV4Header(src_size_x, src_size_y, &bitmap_header);
+  gfx::CreateBitmapV4Header(size_x, size_y, &bitmap_header);
   const SkBitmap& src_bmp = canvas.getDevice()->accessBitmap(true);
   SkAutoLockPixels src_lock(src_bmp);
   int retval = StretchDIBits(hdc,
                              0,
                              0,
-                             src_size_x, src_size_y,
+                             size_x, size_y,
                              0, 0,
-                             src_size_x, src_size_y,
+                             size_x, size_y,
                              src_bmp.getPixels(),
                              reinterpret_cast<BITMAPINFO*>(&bitmap_header),
                              DIB_RGB_COLORS,
@@ -586,14 +508,13 @@ void RenderView::PrintPage(const ViewMsg_PrintPage_Params& params,
   DCHECK(retval != GDI_ERROR);
 #else
   // 100% GDI based.
-  skia::VectorCanvas canvas(hdc, src_size_x, src_size_y);
-  // Set the clipping region to be sure to not overflow.
-  SkRect clip_rect;
-  clip_rect.set(0, 0, SkIntToScalar(src_size_x), SkIntToScalar(src_size_y));
-  canvas.clipRect(clip_rect);
-  if (!frame->SpoolPage(params.page_number, &canvas)) {
+  skia::VectorCanvas canvas(hdc, size_x, size_y);
+  float webkit_shrink = frame->PrintPage(params.page_number, &canvas);
+  if (shrink <= 0) {
     NOTREACHED() << "Printing page " << params.page_number << " failed.";
-    return;
+  } else {
+    // Update the dpi adjustment with the "page shrink" calculated in webkit.
+    shrink /= webkit_shrink;
   }
 #endif
 
@@ -656,26 +577,36 @@ void RenderView::OnPrintPages() {
 
 void RenderView::PrintPages(const ViewMsg_PrintPages_Params& params,
                             WebFrame* frame) {
-  int pages = SwitchFrameToPrintMediaType(params.params, frame);
+  int page_count = 0;
+  gfx::Size canvas_size;
+  canvas_size.set_width(
+      printing::ConvertUnit(params.params.printable_size.width(),
+                            static_cast<int>(params.params.dpi),
+                            params.params.desired_dpi));
+  canvas_size.set_height(
+      printing::ConvertUnit(params.params.printable_size.height(),
+                            static_cast<int>(params.params.dpi),
+                            params.params.desired_dpi));
+  frame->BeginPrint(canvas_size, &page_count);
   Send(new ViewHostMsg_DidGetPrintedPagesCount(routing_id_,
                                                params.params.document_cookie,
-                                               pages));
-  if (pages) {
+                                               page_count));
+  if (page_count) {
     ViewMsg_PrintPage_Params page_params;
     page_params.params = params.params;
     if (params.pages.empty()) {
-      for (int i = 0; i < pages; ++i) {
+      for (int i = 0; i < page_count; ++i) {
         page_params.page_number = i;
-        PrintPage(page_params, frame);
+        PrintPage(page_params, canvas_size, frame);
       }
     } else {
       for (size_t i = 0; i < params.pages.size(); ++i) {
         page_params.page_number = params.pages[i];
-        PrintPage(page_params, frame);
+        PrintPage(page_params, canvas_size, frame);
       }
     }
   }
-  SwitchFrameToDisplayMediaType(frame);
+  frame->EndPrint();
 }
 
 void RenderView::CapturePageInfo(int load_id, bool preliminary_capture) {
@@ -840,6 +771,10 @@ void RenderView::OnNavigate(const ViewMsg_Navigate_Params& params) {
   if (!webview())
     return;
 
+#ifdef LOG_RENDERER_URL
+  renderer_logging::ScopedActiveRenderingURLSetter url_setter(params.url);
+#endif
+
   AboutHandler::MaybeHandle(params.url);
 
   bool is_reload = params.reload;
@@ -916,8 +851,8 @@ void RenderView::OnShowJavaScriptConsole() {
 }
 
 void RenderView::OnSetupDevToolsClient() {
-  DCHECK(!dev_tools_client_.get());
-  dev_tools_client_.reset(new DevToolsClient(this));
+  DCHECK(!devtools_client_.get());
+  devtools_client_.reset(new DevToolsClient(this));
 }
 
 void RenderView::OnStopFinding(bool clear_selection) {
@@ -1085,8 +1020,7 @@ void RenderView::UpdateURL(WebFrame* frame) {
     // Top-level navigation.
 
     // Update contents MIME type for main frame.
-    std::wstring mime_type = ds->GetResponseMimeType();
-    params.contents_mime_type = WideToASCII(mime_type);
+    params.contents_mime_type = ds->GetResponse().GetMimeType();
 
     // We assume top level navigations initiated by the renderer are link
     // clicks.
@@ -1156,9 +1090,9 @@ void RenderView::UpdateURL(WebFrame* frame) {
     extra_data->transition_type = PageTransition::LINK;  // Just clear it.
 
 #if defined(OS_WIN)
-  if (glue_accessibility_.get()) {
+  if (web_accessibility_manager_.get()) {
     // Clear accessibility info cache.
-    glue_accessibility_->ClearIAccessibleMap(-1, true);
+    web_accessibility_manager_->ClearAccObjMap(-1, true);
   }
 #else
   // TODO(port): accessibility not yet implemented. See http://crbug.com/8288.
@@ -1234,6 +1168,9 @@ void RenderView::DidStopLoading(WebView* webview) {
   if (!favicon_url.is_empty())
     Send(new ViewHostMsg_UpdateFavIconURL(routing_id_, page_id_, favicon_url));
 
+  // Update the list of available feeds.
+  UpdateFeedList(webview->GetMainFrame()->GetFeedList());
+
   AddGURLSearchProvider(webview->GetMainFrame()->GetOSDDURL(),
                         true);  // autodetected
 
@@ -1275,7 +1212,9 @@ bool RenderView::DidLoadResourceFromMemoryCache(WebView* webview,
   // Let the browser know we loaded a resource from the memory cache.  This
   // message is needed to display the correct SSL indicators.
   Send(new ViewHostMsg_DidLoadResourceFromMemoryCache(routing_id_,
-      request.GetURL(), response.GetSecurityInfo()));
+      request.GetURL(), frame->GetSecurityOrigin(),
+      frame->GetTop()->GetSecurityOrigin(),
+      response.GetSecurityInfo()));
 
   return false;
 }
@@ -1490,9 +1429,9 @@ void RenderView::DidChangeLocationWithinPageForFrame(WebView* webview,
                                                      WebFrame* frame,
                                                      bool is_new_navigation) {
   DidCommitLoadForFrame(webview, frame, is_new_navigation);
-  const std::wstring& title =
+  const string16& title =
       webview->GetMainFrame()->GetDataSource()->GetPageTitle();
-  UpdateTitle(frame, title);
+  UpdateTitle(frame, UTF16ToWideHack(title));
 }
 
 void RenderView::DidReceiveIconForFrame(WebView* webview,
@@ -1518,6 +1457,12 @@ void RenderView::DidCompleteClientRedirect(WebView* webview,
     completed_client_redirect_src_ = source;
 }
 
+void RenderView::WillSendRequest(WebView* webview,
+                                 uint32 identifier,
+                                 WebRequest* request) {
+  request->SetRequestorID(routing_id_);
+}
+
 void RenderView::BindDOMAutomationController(WebFrame* webframe) {
   dom_automation_controller_.set_message_sender(this);
   dom_automation_controller_.set_routing_id(routing_id_);
@@ -1539,11 +1484,6 @@ void RenderView::WindowObjectCleared(WebFrame* webframe) {
     external_host_bindings_.set_message_sender(this);
     external_host_bindings_.set_routing_id(routing_id_);
     external_host_bindings_.BindToJavascript(webframe, L"externalHost");
-  }
-  if (BindingsPolicy::is_extension_enabled(enabled_bindings_)) {
-    extension_bindings_.set_message_sender(this);
-    extension_bindings_.set_routing_id(routing_id_);
-    extension_bindings_.BindToJavascript(webframe, L"extension");
   }
 
 #ifdef CHROME_PERSONALIZATION
@@ -1658,42 +1598,46 @@ class MessageBoxView {
 };
 #endif
 
-void RenderView::RunJavaScriptAlert(WebView* webview,
+void RenderView::RunJavaScriptAlert(WebFrame* webframe,
                                     const std::wstring& message) {
   RunJavaScriptMessage(MessageBoxView::kIsJavascriptAlert,
                        message,
                        std::wstring(),
+                       webframe->GetURL(),
                        NULL);
 }
 
-bool RenderView::RunJavaScriptConfirm(WebView* webview,
+bool RenderView::RunJavaScriptConfirm(WebFrame* webframe,
                                       const std::wstring& message) {
   return RunJavaScriptMessage(MessageBoxView::kIsJavascriptConfirm,
                               message,
                               std::wstring(),
+                              webframe->GetURL(),
                               NULL);
 }
 
-bool RenderView::RunJavaScriptPrompt(WebView* webview,
+bool RenderView::RunJavaScriptPrompt(WebFrame* webframe,
                                      const std::wstring& message,
                                      const std::wstring& default_value,
                                      std::wstring* result) {
   return RunJavaScriptMessage(MessageBoxView::kIsJavascriptPrompt,
                               message,
                               default_value,
+                              webframe->GetURL(),
                               result);
 }
 
 bool RenderView::RunJavaScriptMessage(int type,
                                       const std::wstring& message,
                                       const std::wstring& default_value,
+                                      const GURL& frame_url,
                                       std::wstring* result) {
   bool success = false;
   std::wstring result_temp;
   if (!result)
     result = &result_temp;
   IPC::SyncMessage* msg = new ViewHostMsg_RunJavaScriptMessage(
-      routing_id_, message, default_value, type, &success, result);
+      routing_id_, message, default_value, frame_url, type, &success, result);
 
   msg->set_pump_messages_event(modal_dialog_event_.get());
   Send(msg);
@@ -1707,14 +1651,21 @@ void RenderView::AddGURLSearchProvider(const GURL& osd_url, bool autodetected) {
                                      autodetected));
 }
 
-bool RenderView::RunBeforeUnloadConfirm(WebView* webview,
+void RenderView::UpdateFeedList(scoped_refptr<FeedList> feedlist) {
+  ViewHostMsg_UpdateFeedList_Params params;
+  params.page_id = page_id_;
+  params.feedlist = feedlist;
+  Send(new ViewHostMsg_UpdateFeedList(routing_id_, params));
+}
+
+bool RenderView::RunBeforeUnloadConfirm(WebFrame* webframe,
                                         const std::wstring& message) {
   bool success = false;
   // This is an ignored return value, but is included so we can accept the same
   // response as RunJavaScriptMessage.
   std::wstring ignored_result;
   IPC::SyncMessage* msg = new ViewHostMsg_RunBeforeUnloadConfirm(
-      routing_id_, message, &success,  &ignored_result);
+      routing_id_, webframe->GetURL(), message, &success,  &ignored_result);
 
   msg->set_pump_messages_event(modal_dialog_event_.get());
   Send(msg);
@@ -1739,6 +1690,11 @@ void RenderView::QueryFormFieldAutofill(const std::wstring& field_name,
                                               field_name, text,
                                               node_id,
                                               form_field_autofill_request_id_));
+}
+
+void RenderView::RemoveStoredAutofillEntry(const std::wstring& name,
+                                           const std::wstring& value) {
+  Send(new ViewHostMsg_RemoveAutofillEntry(routing_id_, name, value));
 }
 
 void RenderView::OnReceivedAutofillSuggestions(
@@ -1861,7 +1817,6 @@ WebView* RenderView::CreateWebView(WebView* webview, bool user_gesture) {
                                         prefs, shared_popup_counter_,
                                         routing_id);
   view->set_opened_by_user_gesture(user_gesture);
-  view->set_waiting_for_create_window_ack(true);
 
   // Copy over the alternate error page URL so we can have alt error pages in
   // the new render view (we don't need the browser to send the URL back down).
@@ -1878,24 +1833,6 @@ WebWidget* RenderView::CreatePopupWidget(WebView* webview,
   return widget->webwidget();
 }
 
-#if defined(OS_WIN)
-// TODO(port): This is only used on Windows since the plugin code is #ifdefed
-// out for other platforms currently
-
-static bool ShouldLoadPluginInProcess(const std::string& mime_type,
-                                      bool* is_gears) {
-  if (RenderProcess::current()->in_process_plugins())
-    return true;
-
-  if (mime_type == "application/x-googlegears") {
-    *is_gears = true;
-    return RenderProcess::current()->in_process_gears();
-  }
-
-  return false;
-}
-#endif
-
 WebPluginDelegate* RenderView::CreatePluginDelegate(
     WebView* webview,
     const GURL& url,
@@ -1903,8 +1840,7 @@ WebPluginDelegate* RenderView::CreatePluginDelegate(
     const std::string& clsid,
     std::string* actual_mime_type) {
 #if defined(OS_WIN)
-  bool is_gears = false;
-  if (ShouldLoadPluginInProcess(mime_type, &is_gears)) {
+  if (RenderProcess::current()->in_process_plugins()) {
     FilePath path;
     render_thread_->Send(
         new ViewHostMsg_GetPluginPath(url, mime_type, clsid, &path,
@@ -1918,8 +1854,6 @@ WebPluginDelegate* RenderView::CreatePluginDelegate(
     else
       mime_type_to_use = mime_type;
 
-    if (is_gears)
-      ChromePluginLib::Create(path, GetCPBrowserFuncsForRenderer());
     return WebPluginDelegate::Create(path,
                                      mime_type_to_use,
                                      gfx::NativeViewFromId(host_window_));
@@ -1976,7 +1910,7 @@ void RenderView::OnMissingPluginStatus(WebPluginDelegate* delegate,
 
 WebWorker* RenderView::CreateWebWorker(WebWorkerClient* client) {
 #if defined(OS_WIN)
-  return new WebWorkerProxy(this, client);
+  return new WebWorkerProxy(client, routing_id_);
 #else
   // TODO(port): out of process workers
   NOTIMPLEMENTED();
@@ -2349,10 +2283,19 @@ void RenderView::ScriptedPrint(WebFrame* frame) {
     msg = NULL;
     // Continue only if the settings are valid.
     if (default_settings.dpi && default_settings.document_cookie) {
-      int expected_pages_count = SwitchFrameToPrintMediaType(default_settings,
-                                                             frame);
+      int expected_pages_count = 0;
+      gfx::Size canvas_size;
+      canvas_size.set_width(
+          printing::ConvertUnit(default_settings.printable_size.width(),
+                                static_cast<int>(default_settings.dpi),
+                                default_settings.desired_dpi));
+      canvas_size.set_height(
+          printing::ConvertUnit(default_settings.printable_size.height(),
+                                static_cast<int>(default_settings.dpi),
+                                default_settings.desired_dpi));
+      frame->BeginPrint(canvas_size, &expected_pages_count);
       DCHECK(expected_pages_count);
-      SwitchFrameToDisplayMediaType(frame);
+      frame->EndPrint();
 
       // Ask the browser to show UI to retrieve the final print settings.
       ViewMsg_PrintPages_Params print_settings;
@@ -2484,6 +2427,10 @@ void RenderView::DownloadUrl(const GURL& url, const GURL& referrer) {
   Send(new ViewHostMsg_DownloadUrl(routing_id_, url, referrer));
 }
 
+WebDevToolsAgentDelegate* RenderView::GetWebDevToolsAgentDelegate() {
+  return devtools_agent_;
+}
+
 WebFrame* RenderView::GetChildFrame(const std::wstring& frame_xpath) const {
   WebFrame* web_frame;
   if (frame_xpath.empty()) {
@@ -2501,9 +2448,8 @@ void RenderView::EvaluateScript(const std::wstring& frame_xpath,
   if (!web_frame)
     return;
 
-  web_frame->ExecuteJavaScript(WideToUTF8(script),
-                               GURL(), // script url
-                               1); // base line number
+  web_frame->ExecuteScript(
+      webkit_glue::WebScriptSource(WideToUTF8(script)));
 }
 
 void RenderView::OnScriptEvalRequest(const std::wstring& frame_xpath,
@@ -2666,6 +2612,11 @@ void RenderView::OnInstallMissingPlugin() {
 
 void RenderView::OnFileChooserResponse(
          const std::vector<std::wstring>& file_names) {
+  // This could happen if we navigated to a different page before the user
+  // closed the chooser.
+  if (!file_chooser_.get())
+    return;
+
   file_chooser_->OnFileChoose(file_names);
   file_chooser_.reset();
 }
@@ -2687,14 +2638,16 @@ void RenderView::OnUpdateBackForwardListCount(int back_list_count,
 }
 
 void RenderView::OnGetAccessibilityInfo(
-    const AccessibilityInParams& in_params,
-    AccessibilityOutParams* out_params) {
+    const webkit_glue::WebAccessibility::InParams& in_params,
+    webkit_glue::WebAccessibility::OutParams* out_params) {
 #if defined(OS_WIN)
-  if (!glue_accessibility_.get())
-    glue_accessibility_.reset(new GlueAccessibility());
+  if (!web_accessibility_manager_.get()) {
+    web_accessibility_manager_.reset(
+        webkit_glue::WebAccessibilityManager::Create());
+  }
 
-  if (!glue_accessibility_->
-       GetAccessibilityInfo(webview(), in_params, out_params)) {
+  if (!web_accessibility_manager_->GetAccObjInfo(webview(), in_params,
+                                                 out_params)) {
     return;
   }
 #else  // defined(OS_WIN)
@@ -2703,14 +2656,13 @@ void RenderView::OnGetAccessibilityInfo(
 #endif
 }
 
-void RenderView::OnClearAccessibilityInfo(int iaccessible_id, bool clear_all) {
+void RenderView::OnClearAccessibilityInfo(int acc_obj_id, bool clear_all) {
 #if defined(OS_WIN)
-  if (!glue_accessibility_.get()) {
+  if (!web_accessibility_manager_.get()) {
     // If accessibility is not activated, ignore clearing message.
     return;
   }
-
-  if (!glue_accessibility_->ClearIAccessibleMap(iaccessible_id, clear_all))
+  if (!web_accessibility_manager_->ClearAccObjMap(acc_obj_id, clear_all))
     return;
 #else  // defined(OS_WIN)
   // TODO(port): accessibility not yet implemented
@@ -2834,11 +2786,14 @@ void RenderView::DidAddHistoryItem() {
   history_forward_list_count_ = 0;
 }
 
-void RenderView::OnMessageFromExternalHost(const std::string& message) {
+void RenderView::OnMessageFromExternalHost(const std::string& message,
+                                           const std::string& origin,
+                                           const std::string& target) {
   if (message.empty())
     return;
 
-  external_host_bindings_.ForwardMessageFromExternalHost(message);
+  external_host_bindings_.ForwardMessageFromExternalHost(message, origin,
+                                                         target);
 }
 
 void RenderView::OnDisassociateFromPopupCount() {
@@ -2924,7 +2879,7 @@ int32 RenderView::CreateAudioStream(AudioRendererImpl* audio_renderer,
                                     AudioManager::Format format, int channels,
                                     int sample_rate, int bits_per_sample,
                                     size_t packet_size) {
-  // TODO(hclam): make sure this method is called on render thread.
+  DCHECK(RenderThread::current()->message_loop() == MessageLoop::current());
   // Loop through the map and make sure there's no renderer already in the map.
   for (IDMap<AudioRendererImpl>::const_iterator iter = audio_renderers_.begin();
        iter != audio_renderers_.end(); ++iter) {
@@ -2944,31 +2899,34 @@ int32 RenderView::CreateAudioStream(AudioRendererImpl* audio_renderer,
 }
 
 void RenderView::StartAudioStream(int stream_id) {
-  // TODO(hclam): make sure this method is called on render thread.
+  DCHECK(RenderThread::current()->message_loop() == MessageLoop::current());
   DCHECK(audio_renderers_.Lookup(stream_id) != NULL);
   Send(new ViewHostMsg_StartAudioStream(routing_id_, stream_id));
 }
 
 void RenderView::CloseAudioStream(int stream_id) {
-  // TODO(hclam): make sure this method is called on render thread.
+  DCHECK(RenderThread::current()->message_loop() == MessageLoop::current());
   DCHECK(audio_renderers_.Lookup(stream_id) != NULL);
+  // Remove the entry from the map and send a close message to browser process,
+  // we won't be getting anything back from browser even if there's an error.
+  audio_renderers_.Remove(stream_id);
   Send(new ViewHostMsg_CloseAudioStream(routing_id_, stream_id));
 }
 
 void RenderView::NotifyAudioPacketReady(int stream_id, size_t size) {
-  // TODO(hclam): make sure this method is called on render thread.
+  DCHECK(RenderThread::current()->message_loop() == MessageLoop::current());
   DCHECK(audio_renderers_.Lookup(stream_id) != NULL);
   Send(new ViewHostMsg_NotifyAudioPacketReady(routing_id_, stream_id, size));
 }
 
 void RenderView::GetAudioVolume(int stream_id) {
-  // TODO(hclam): make sure this method is called on render thread.
+  DCHECK(RenderThread::current()->message_loop() == MessageLoop::current());
   DCHECK(audio_renderers_.Lookup(stream_id) != NULL);
   Send(new ViewHostMsg_GetAudioVolume(routing_id_, stream_id));
 }
 
 void RenderView::SetAudioVolume(int stream_id, double left, double right) {
-  // TODO(hclam): make sure this method is called on render thread.
+  DCHECK(RenderThread::current()->message_loop() == MessageLoop::current());
   DCHECK(audio_renderers_.Lookup(stream_id) != NULL);
   Send(new ViewHostMsg_SetAudioVolume(routing_id_, stream_id, left, right));
 }
@@ -2978,4 +2936,11 @@ void RenderView::OnResize(const gfx::Size& new_size,
   if (webview())
     webview()->HideAutofillPopup();
   RenderWidget::OnResize(new_size, resizer_rect);
+}
+
+void RenderView::OnHandleExtensionMessage(const std::string& message,
+                                          int channel_id) {
+  if (webview() && webview()->GetMainFrame())
+    extensions_v8::RendererExtensionBindings::HandleExtensionMessage(
+        webview()->GetMainFrame(), message, channel_id);
 }

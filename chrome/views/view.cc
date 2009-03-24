@@ -19,11 +19,11 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/views/background.h"
 #include "chrome/views/layout_manager.h"
-#include "chrome/views/root_view.h"
-#include "chrome/views/widget.h"
+#include "chrome/views/widget/root_view.h"
+#include "chrome/views/widget/widget.h"
 #if defined(OS_WIN)
-#include "chrome/views/tooltip_manager.h"
-#include "chrome/views/accessibility/accessible_wrapper.h"
+#include "chrome/views/widget/tooltip_manager.h"
+#include "chrome/views/accessibility/view_accessibility_wrapper.h"
 #endif
 #include "SkShader.h"
 
@@ -151,7 +151,8 @@ gfx::Rect View::GetLocalBounds(bool include_border) const {
   gfx::Insets insets;
   border_->GetInsets(&insets);
   return gfx::Rect(insets.left(), insets.top(),
-                   width() - insets.width(), height() - insets.height());
+                   std::max(0, width() - insets.width()),
+                   std::max(0, height() - insets.height()));
 }
 
 gfx::Point View::GetPosition() const {
@@ -498,9 +499,11 @@ void View::ProcessMouseReleased(const MouseEvent& e, bool canceled) {
     // Assume that if there is a context menu controller we won't be deleted
     // from mouse released.
     gfx::Point location(e.location());
-    ConvertPointToScreen(this, &location);
     OnMouseReleased(e, canceled);
-    ShowContextMenu(location.x(), location.y(), true);
+    if (HitTest(location)) {
+      ConvertPointToScreen(this, &location);
+      ShowContextMenu(location.x(), location.y(), true);
+    }
   } else {
     OnMouseReleased(e, canceled);
   }
@@ -971,6 +974,8 @@ void View::RemoveAccelerator(const Accelerator& accelerator) {
     return;
   }
 
+  // TODO(port): Fix this once we have a FocusManger for Linux.
+#if defined(OS_WIN)
   FocusManager* focus_manager = GetFocusManager();
   if (focus_manager) {
     // We may not have a FocusManager if the window containing us is being
@@ -978,6 +983,7 @@ void View::RemoveAccelerator(const Accelerator& accelerator) {
     // nothing to unregister.
     focus_manager->UnregisterAccelerator(accelerator, this);
   }
+#endif
 }
 
 void View::ResetAccelerators() {
@@ -998,6 +1004,9 @@ void View::RegisterAccelerators() {
     // added to one.
     return;
   }
+
+  // TODO(port): Fix this once we have a FocusManger for Linux.
+#if defined(OS_WIN)
   FocusManager* focus_manager = GetFocusManager();
   if (!focus_manager) {
     // Some crash reports seem to show that we may get cases where we have no
@@ -1010,6 +1019,7 @@ void View::RegisterAccelerators() {
        iter != accelerators_->end(); ++iter) {
     focus_manager->RegisterAccelerator(*iter, this);
   }
+#endif
 }
 
 void View::UnregisterAccelerators() {
@@ -1018,6 +1028,8 @@ void View::UnregisterAccelerators() {
 
   RootView* root_view = GetRootView();
   if (root_view) {
+    // TODO(port): Fix this once we have a FocusManger for Linux.
+#if defined(OS_WIN)
     FocusManager* focus_manager = GetFocusManager();
     if (focus_manager) {
       // We may not have a FocusManager if the window containing us is being
@@ -1025,6 +1037,7 @@ void View::UnregisterAccelerators() {
       // nothing to unregister.
       focus_manager->UnregisterAccelerators(this);
     }
+#endif
   }
 }
 
@@ -1142,7 +1155,10 @@ void View::DetachAllFloatingViews() {
       if (EnumerateFloatingViews(CURRENT,
                                  floating_views_[c]->GetFloatingViewID(),
                                  &tmp_id)) {
+        // TODO(port): Fix this once we have a FocusManger for Linux.
+#if defined(OS_WIN)
         focus_manager->StoreFocusedView();
+#endif
         should_restore_focus_ = true;
       }
       focused_view = NULL;
@@ -1177,10 +1193,13 @@ void View::RestoreFloatingViewFocus() {
   restore_focus_view_task_ = NULL;
   should_restore_focus_ = false;
 
+  // TODO(port): Fix this once we have a FocusManger for Linux.
+#if defined(OS_WIN)
   FocusManager* focus_manager = GetFocusManager();
   DCHECK(focus_manager);
   if (focus_manager)
     focus_manager->RestoreFocusedView();
+#endif
 }
 
 // static
@@ -1490,6 +1509,14 @@ std::string View::GetClassName() const {
   return kViewClassName;
 }
 
+View* View::GetAncestorWithClassName(const std::string& name) {
+  for (View* view = this; view; view = view->GetParent()) {
+    if (view->GetClassName() == name)
+      return view;
+  }
+  return NULL;
+}
+
 gfx::Rect View::GetVisibleBounds() {
   if (!IsVisibleInRootView())
     return gfx::Rect();
@@ -1608,4 +1635,3 @@ void View::DragInfo::PossibleDrag(int x, int y) {
 }
 
 }  // namespace
-

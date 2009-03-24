@@ -6,7 +6,6 @@
 #define NET_HTTP_HTTP_VARY_DATA_H__
 
 #include "base/md5.h"
-#include "base/ref_counted.h"
 
 class Pickle;
 
@@ -39,7 +38,7 @@ class HttpVaryData {
   // Vary header was not empty and did not contain the '*' value.  Upon
   // success, the object is also marked as valid such that is_valid() will
   // return true.  Otherwise, false is returned to indicate that this object
-  // was not modified.
+  // is marked as invalid.
   //
   bool Init(const HttpRequestInfo& request_info,
             const HttpResponseHeaders& response_headers);
@@ -49,11 +48,12 @@ class HttpVaryData {
   //
   // Upon success, true is returned and the object is marked as valid such that
   // is_valid() will return true.  Otherwise, false is returned to indicate
-  // that this object was not modified.
+  // that this object is marked as invalid.
   //
   bool InitFromPickle(const Pickle& pickle, void** pickle_iter);
 
-  // Call this method to persist the vary data.
+  // Call this method to persist the vary data. Illegal to call this on an
+  // invalid object.
   void Persist(Pickle* pickle) const;
 
   // Call this method to test if the given request matches the previous request
@@ -82,4 +82,3 @@ class HttpVaryData {
 }  // namespace net
 
 #endif  // NET_HTTP_HTTP_VARY_DATA_H__
-

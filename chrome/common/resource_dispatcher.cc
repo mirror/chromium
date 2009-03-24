@@ -47,12 +47,14 @@ class IPCResourceLoaderBridge : public ResourceLoaderBridge {
                           const GURL& url,
                           const GURL& policy_url,
                           const GURL& referrer,
+                          const std::string& frame_origin,
+                          const std::string& main_frame_origin,
                           const std::string& headers,
                           int load_flags,
                           int origin_pid,
                           ResourceType::Type resource_type,
-                          bool mixed_content,
-                          uint32 request_context);
+                          uint32 request_context,
+                          int route_id);
   virtual ~IPCResourceLoaderBridge();
 
   // ResourceLoaderBridge
@@ -71,8 +73,9 @@ class IPCResourceLoaderBridge : public ResourceLoaderBridge {
  private:
   ResourceLoaderBridge::Peer* peer_;
 
-  // The resource dispatcher for this loader.
-  scoped_refptr<ResourceDispatcher> dispatcher_;
+  // The resource dispatcher for this loader.  The bridge doesn't own it, but
+  // it's guaranteed to outlive the bridge.
+  ResourceDispatcher* dispatcher_;
 
   // The request to send, created on initialization for modification and
   // appending data.
@@ -80,6 +83,9 @@ class IPCResourceLoaderBridge : public ResourceLoaderBridge {
 
   // ID for the request, valid once Start()ed, -1 if not valid yet.
   int request_id_;
+
+  // The routing id used when sending IPC messages.
+  int route_id_;
 
 #ifdef LOG_RESOURCE_REQUESTS
   // indicates the URL of this resource request for help debugging
@@ -93,25 +99,29 @@ IPCResourceLoaderBridge::IPCResourceLoaderBridge(
     const GURL& url,
     const GURL& policy_url,
     const GURL& referrer,
+    const std::string& frame_origin,
+    const std::string& main_frame_origin,
     const std::string& headers,
     int load_flags,
     int origin_pid,
     ResourceType::Type resource_type,
-    bool mixed_content,
-    uint32 request_context)
+    uint32 request_context,
+    int route_id)
     : peer_(NULL),
       dispatcher_(dispatcher),
-      request_id_(-1) {
+      request_id_(-1),
+      route_id_(route_id) {
   DCHECK(dispatcher_) << "no resource dispatcher";
   request_.method = method;
   request_.url = url;
   request_.policy_url = policy_url;
   request_.referrer = referrer;
+  request_.frame_origin = frame_origin;
+  request_.main_frame_origin = main_frame_origin;
   request_.headers = headers;
   request_.load_flags = load_flags;
   request_.origin_pid = origin_pid;
   request_.resource_type = resource_type;
-  request_.mixed_content = mixed_content;
   request_.request_context = request_context;
 
 #ifdef LOG_RESOURCE_REQUESTS
@@ -161,16 +171,10 @@ bool IPCResourceLoaderBridge::Start(Peer* peer) {
   peer_ = peer;
 
   // generate the request ID, and append it to the message
-  request_id_ = dispatcher_->AddPendingRequest(peer_, request_.resource_type,
-                                               request_.mixed_content);
+  request_id_ = dispatcher_->AddPendingRequest(peer_, request_.resource_type);
 
-  IPC::Message::Sender* sender = dispatcher_->message_sender();
-  bool ret = false;
-  if (sender)
-    ret = sender->Send(new ViewHostMsg_RequestResource(MSG_ROUTING_NONE,
-                                                       request_id_,
-                                                       request_));
-  return ret;
+  return dispatcher_->message_sender()->Send(
+      new ViewHostMsg_RequestResource(route_id_, request_id_, request_));
 }
 
 void IPCResourceLoaderBridge::Cancel() {
@@ -181,9 +185,8 @@ void IPCResourceLoaderBridge::Cancel() {
 
   RESOURCE_LOG("Canceling request for " << url_);
 
-  IPC::Message::Sender* sender = dispatcher_->message_sender();
-  if (sender)
-    sender->Send(new ViewHostMsg_CancelRequest(MSG_ROUTING_NONE, request_id_));
+  dispatcher_->message_sender()->Send(
+      new ViewHostMsg_CancelRequest(route_id_, request_id_));
 
   // We can't remove the request ID from the resource dispatcher because more
   // data might be pending. Sending the cancel message may cause more data
@@ -211,15 +214,11 @@ void IPCResourceLoaderBridge::SyncLoad(SyncLoadResponse* response) {
   request_id_ = MakeRequestID();
 
   SyncLoadResult result;
-  IPC::Message::Sender* sender = dispatcher_->message_sender();
-
-  if (sender) {
-    IPC::Message* msg = new ViewHostMsg_SyncLoad(MSG_ROUTING_NONE, request_id_,
-                                                 request_, &result);
-    if (!sender->Send(msg)) {
-      response->status.set_status(URLRequestStatus::FAILED);
-      return;
-    }
+  IPC::Message* msg = new ViewHostMsg_SyncLoad(route_id_, request_id_,
+                                               request_, &result);
+  if (!dispatcher_->message_sender()->Send(msg)) {
+    response->status.set_status(URLRequestStatus::FAILED);
+    return;
   }
 
   response->status = result.status;
@@ -245,7 +244,7 @@ ResourceDispatcher::~ResourceDispatcher() {
 // ResourceDispatcher implementation ------------------------------------------
 
 bool ResourceDispatcher::OnMessageReceived(const IPC::Message& message) {
-  if (!IsResourceMessage(message)) {
+  if (!IsResourceDispatcherMessage(message)) {
     return false;
   }
 
@@ -278,8 +277,31 @@ bool ResourceDispatcher::OnMessageReceived(const IPC::Message& message) {
   return true;
 }
 
+void ResourceDispatcher::OnDownloadProgress(
+    const IPC::Message& message, int request_id, int64 position, int64 size) {
+  PendingRequestList::iterator it = pending_requests_.find(request_id);
+  if (it == pending_requests_.end()) {
+     DLOG(WARNING) << "Got download progress for a nonexistant or "
+         " finished requests";
+     return;
+  }
+
+  PendingRequestInfo& request_info = it->second;
+
+  RESOURCE_LOG("Dispatching download progress for " <<
+               request_info.peer->GetURLForDebugging());
+  request_info.peer->OnDownloadProgress(position, size);
+
+  // Send the ACK message back.
+  IPC::Message::Sender* sender = message_sender();
+  if (sender) {
+    sender->Send(
+        new ViewHostMsg_DownloadProgress_ACK(message.routing_id(), request_id));
+  }
+}
+
 void ResourceDispatcher::OnUploadProgress(
-    int request_id, int64 position, int64 size) {
+    const IPC::Message& message, int request_id, int64 position, int64 size) {
   PendingRequestList::iterator it = pending_requests_.find(request_id);
   if (it == pending_requests_.end()) {
     // this might happen for kill()ed requests on the webkit end, so perhaps
@@ -296,10 +318,8 @@ void ResourceDispatcher::OnUploadProgress(
   request_info.peer->OnUploadProgress(position, size);
 
   // Acknowlegde reciept
-  IPC::Message::Sender* sender = message_sender();
-  if (sender)
-    sender->Send(
-        new ViewHostMsg_UploadProgress_ACK(MSG_ROUTING_NONE, request_id));
+  message_sender()->Send(
+      new ViewHostMsg_UploadProgress_ACK(message.routing_id(), request_id));
 }
 
 void ResourceDispatcher::OnReceivedResponse(
@@ -333,14 +353,13 @@ void ResourceDispatcher::OnReceivedResponse(
   peer->OnReceivedResponse(response_head, false);
 }
 
-void ResourceDispatcher::OnReceivedData(int request_id,
+void ResourceDispatcher::OnReceivedData(const IPC::Message& message,
+                                        int request_id,
                                         base::SharedMemoryHandle shm_handle,
                                         int data_len) {
   // Acknowlegde the reception of this data.
-  IPC::Message::Sender* sender = message_sender();
-  if (sender)
-    sender->Send(
-        new ViewHostMsg_DataReceived_ACK(MSG_ROUTING_NONE, request_id));
+  message_sender()->Send(
+      new ViewHostMsg_DataReceived_ACK(message.routing_id(), request_id));
 
   const bool shm_valid = base::SharedMemory::IsHandleValid(shm_handle);
   DCHECK((shm_valid && data_len > 0) || (!shm_valid && !data_len));
@@ -382,7 +401,8 @@ void ResourceDispatcher::OnReceivedRedirect(int request_id,
 }
 
 void ResourceDispatcher::OnRequestComplete(int request_id,
-                                           const URLRequestStatus& status) {
+                                           const URLRequestStatus& status,
+                                           const std::string& security_info) {
   PendingRequestList::iterator it = pending_requests_.find(request_id);
   if (it == pending_requests_.end()) {
     // this might happen for kill()ed requests on the webkit end, so perhaps
@@ -414,19 +434,17 @@ void ResourceDispatcher::OnRequestComplete(int request_id,
   // The request ID will be removed from our pending list in the destructor.
   // Normally, dispatching this message causes the reference-counted request to
   // die immediately.
-  peer->OnCompletedRequest(status);
+  peer->OnCompletedRequest(status, security_info);
 
   webkit_glue::NotifyCacheStats();
 }
 
 int ResourceDispatcher::AddPendingRequest(
     webkit_glue::ResourceLoaderBridge::Peer* callback,
-    ResourceType::Type resource_type,
-    bool mixed_content) {
+    ResourceType::Type resource_type) {
   // Compute a unique request_id for this renderer process.
   int id = MakeRequestID();
-  pending_requests_[id] = PendingRequestInfo(callback, resource_type,
-                                             mixed_content);
+  pending_requests_[id] = PendingRequestInfo(callback, resource_type);
   return id;
 }
 
@@ -458,6 +476,7 @@ void ResourceDispatcher::SetDefersLoading(int request_id, bool value) {
 void ResourceDispatcher::DispatchMessage(const IPC::Message& message) {
   IPC_BEGIN_MESSAGE_MAP(ResourceDispatcher, message)
     IPC_MESSAGE_HANDLER(ViewMsg_Resource_UploadProgress, OnUploadProgress)
+    IPC_MESSAGE_HANDLER(ViewMsg_Resource_DownloadProgress, OnDownloadProgress)
     IPC_MESSAGE_HANDLER(ViewMsg_Resource_ReceivedResponse, OnReceivedResponse)
     IPC_MESSAGE_HANDLER(ViewMsg_Resource_ReceivedRedirect, OnReceivedRedirect)
     IPC_MESSAGE_HANDLER(ViewMsg_Resource_DataReceived, OnReceivedData)
@@ -489,22 +508,26 @@ webkit_glue::ResourceLoaderBridge* ResourceDispatcher::CreateBridge(
     const GURL& url,
     const GURL& policy_url,
     const GURL& referrer,
+    const std::string& frame_origin,
+    const std::string& main_frame_origin,
     const std::string& headers,
     int flags,
     int origin_pid,
     ResourceType::Type resource_type,
-    bool mixed_content,
-    uint32 request_context) {
+    uint32 request_context,
+    int route_id) {
   return new webkit_glue::IPCResourceLoaderBridge(this, method, url, policy_url,
-                                                  referrer, headers, flags,
-                                                  origin_pid, resource_type,
-                                                  mixed_content,
-                                                  request_context);
+                                                  referrer, frame_origin,
+                                                  main_frame_origin, headers,
+                                                  flags, origin_pid,
+                                                  resource_type,
+                                                  request_context, route_id);
 }
 
-
-bool ResourceDispatcher::IsResourceMessage(const IPC::Message& message) const {
+bool ResourceDispatcher::IsResourceDispatcherMessage(
+    const IPC::Message& message) {
   switch (message.type()) {
+    case ViewMsg_Resource_DownloadProgress::ID:
     case ViewMsg_Resource_UploadProgress::ID:
     case ViewMsg_Resource_ReceivedResponse::ID:
     case ViewMsg_Resource_ReceivedRedirect::ID:
@@ -518,4 +541,3 @@ bool ResourceDispatcher::IsResourceMessage(const IPC::Message& message) const {
 
   return false;
 }
-

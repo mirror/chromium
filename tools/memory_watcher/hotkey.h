@@ -7,7 +7,6 @@
 
 #include <atlbase.h>
 #include <atlwin.h>
-#include "base/logging.h"
 
 // HotKey handler.
 // Programs wishing to register a hotkey can use this.
@@ -47,4 +46,3 @@ END_MSG_MAP()
 };
 
 #endif  // TOOLS_MEMORY_WATCHER_HOTKEY_H_
-

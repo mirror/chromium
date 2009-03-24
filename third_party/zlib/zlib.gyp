@@ -10,10 +10,11 @@
     {
       'target_name': 'zlib',
       'type': 'static_library',
+      'msvs_guid': '8423AF0D-4B88-4EBF-94E1-E4D00D00E21C',
       'sources': [
         'contrib/minizip/ioapi.c',
         'contrib/minizip/ioapi.h',
-        'contrib/minizip/iowin32.c'
+        'contrib/minizip/iowin32.c',
         'contrib/minizip/iowin32.h',
         'contrib/minizip/unzip.c',
         'contrib/minizip/unzip.h',

@@ -17,7 +17,7 @@
 class TestShellTest : public testing::Test {
  protected:
   // Returns the path "test_case_path/test_case".
-  std::wstring GetTestURL(std::wstring test_case_path, 
+  std::wstring GetTestURL(std::wstring test_case_path,
                           const std::wstring& test_case);
 
   virtual void SetUp();
@@ -27,7 +27,7 @@ class TestShellTest : public testing::Test {
   virtual void CreateEmptyWindow();
 
   static const char* kJavascriptDelayExitScript;
-  
+
  protected:
   // Location of SOURCE_ROOT/webkit/data/
   std::wstring data_dir_;
@@ -36,4 +36,3 @@ class TestShellTest : public testing::Test {
 };
 
 #endif // WEBKIT_TOOLS_TEST_SHELL_TEST_SHELL_TEST_H__
-

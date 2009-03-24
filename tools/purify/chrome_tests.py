@@ -37,7 +37,8 @@ class ChromeTests:
                        "layout": self.TestLayout,
                        "dll": self.TestDll,
                        "layout_all": self.TestLayoutAll,
-                       "ui": self.TestUI}
+                       "ui": self.TestUI,
+                       "v8": self.TestV8}
 
     if test not in self._test_list:
       raise TestNotFound("Unknown test: %s" % test)
@@ -66,7 +67,7 @@ class ChromeTests:
         # On the buildbot, we archive to a specific location on chrome-web
         # with a directory based on the test name and the current svn revision.
         # NOTE: These modules are located in trunk/tools/buildbot, which is not
-        # in the default config.  You'll need to check this out and add 
+        # in the default config.  You'll need to check this out and add
         # scripts/* to your PYTHONPATH to test outside of the buildbot.
         import slave_utils
         import chromium_config
@@ -79,9 +80,41 @@ class ChromeTests:
       os.makedirs(self._report_dir)
 
     purify_test = os.path.join(script_dir, "purify_test.py")
-    self._command_preamble = ["python.exe", purify_test, "--echo_to_stdout", 
+    self._command_preamble = ["python.exe", purify_test, "--echo_to_stdout",
                               "--source_dir=%s" % (self._source_dir),
                               "--save_cache"]
+
+  def ComputeBuildDir(self, module, exe=None):
+    ''' Computes the build dir for the given module / exe '''
+    if self._options.build_dir:
+      self._build_dir = self._options.build_dir
+      return self._build_dir
+    # Recompute _build_dir since the module and exe might have changed from
+    # a previous call (we might be running multiple tests).
+    module_dir = os.path.join(self._source_dir, module)
+    dir_chrome = os.path.join(self._source_dir, "chrome", "Release")
+    dir_module = os.path.join(module_dir, "Release")
+    if exe:
+      exe_chrome = os.path.join(dir_chrome, exe)
+      exe_module = os.path.join(dir_module, exe)
+      if os.path.isfile(exe_chrome) and not os.path.isfile(exe_module):
+        self._build_dir = dir_chrome
+      elif os.path.isfile(exe_module) and not os.path.isfile(exe_chrome):
+        self._build_dir = dir_module
+      elif os.stat(exe_module)[stat.ST_MTIME] > os.stat(exe_chrome)[stat.ST_MTIME]:
+        self._build_dir = dir_module
+      else:
+        self._build_dir = dir_chrome
+    else:
+      if os.path.isdir(dir_chrome) and not os.path.isdir(dir_module):
+        self._build_dir = dir_chrome
+      elif os.path.isdir(dir_module) and not os.path.isdir(dir_chrome):
+        self._build_dir = dir_module
+      elif os.stat(dir_module)[stat.ST_MTIME] > os.stat(dir_chrome)[stat.ST_MTIME]:
+        self._build_dir = dir_module
+      else:
+        self._build_dir = dir_chrome
+    return self._build_dir;
 
   def _DefaultCommand(self, module, exe=None):
     '''Generates the default command array that most tests will use.'''
@@ -91,31 +124,7 @@ class ChromeTests:
       self._data_dir = os.path.join(module_dir, "test", "data", "purify")
     else:
       self._data_dir = os.path.join(module_dir, "data", "purify")
-
-    if not self._options.build_dir:
-      dir_chrome = os.path.join(self._source_dir, "chrome", "Release")
-      dir_module = os.path.join(module_dir, "Release")
-      if exe:
-        exe_chrome = os.path.join(dir_chrome, exe)
-        exe_module = os.path.join(dir_module, exe)
-        if os.path.isfile(exe_chrome) and not os.path.isfile(exe_module):
-          self._options.build_dir = dir_chrome
-        elif os.path.isfile(exe_module) and not os.path.isfile(exe_chrome):
-          self._options.build_dir = dir_module
-        elif os.stat(exe_module)[stat.ST_MTIME] > os.stat(exe_chrome)[stat.ST_MTIME]:
-          self._options.build_dir = dir_module
-        else:
-          self._options.build_dir = dir_chrome
-      else:
-        if os.path.isdir(dir_chrome) and not os.path.isdir(dir_module):
-          self._options.build_dir = dir_chrome
-        elif os.path.isdir(dir_module) and not os.path.isdir(dir_chrome):
-          self._options.build_dir = dir_module
-        elif os.stat(dir_module)[stat.ST_MTIME] > os.stat(dir_chrome)[stat.ST_MTIME]:
-          self._options.build_dir = dir_module
-        else:
-          self._options.build_dir = dir_chrome
-
+      
     cmd = list(self._command_preamble)
     cmd.append("--data_dir=%s" % self._data_dir)
     cmd.append("--report_dir=%s" % self._report_dir)
@@ -123,15 +132,16 @@ class ChromeTests:
       cmd.append("--baseline")
     if self._options.verbose:
       cmd.append("--verbose")
+    self.ComputeBuildDir(module, exe);
     if exe:
-      cmd.append(os.path.join(self._options.build_dir, exe))
+      cmd.append(os.path.join(self._build_dir, exe))
     return cmd
 
   def Run(self):
     ''' Runs the test specified by command-line argument --test '''
     logging.info("running test %s" % (self._test))
     return self._test_list[self._test]()
-    
+
   def _ReadGtestFilterFile(self, name, cmd):
     '''Read a file which is a list of tests to filter out with --gtest_filter
     and append the command-line option to cmd.
@@ -139,6 +149,7 @@ class ChromeTests:
     filters = []
     filename = os.path.join(self._data_dir, name + ".gtest.txt")
     if os.path.exists(filename):
+      logging.info("using gtest filter from %s" % filename)
       f = open(filename, 'r')
       for line in f.readlines():
         if line.startswith("#") or line.startswith("//") or line.isspace():
@@ -170,13 +181,13 @@ class ChromeTests:
 
   def ScriptedTest(self, module, exe, name, script, multi=False, cmd_args=None,
                    out_dir_extra=None):
-    '''Purify a target exe, which will be executed one or more times via a 
+    '''Purify a target exe, which will be executed one or more times via a
        script or driver program.
     Args:
       module - which top level component this test is from (webkit, base, etc.)
       exe - the name of the exe (it's assumed to exist in build_dir)
       name - the name of this test (used to name output files)
-      script - the driver program or script.  If it's python.exe, we use 
+      script - the driver program or script.  If it's python.exe, we use
         search-path behavior to execute, otherwise we assume that it is in
         build_dir.
       multi - a boolean hint that the exe will be run multiple times, generating
@@ -227,7 +238,7 @@ class ChromeTests:
 
   def TestIpc(self):
     return self.SimpleTest("chrome", "ipc_tests.exe")
-    
+
   def TestNet(self):
     return self.SimpleTest("net", "net_unittests.exe")
 
@@ -245,8 +256,8 @@ class ChromeTests:
     # runs a slice of the layout tests of size chunk_size that increments with
     # each run.  Since tests can be added and removed from the layout tests at
     # any time, this is not going to give exact coverage, but it will allow us
-    # to continuously run small slices of the layout tests under purify rather 
-    # than having to run all of them in one shot.    
+    # to continuously run small slices of the layout tests under purify rather
+    # than having to run all of them in one shot.
     chunk_num = 0
     # Tests currently seem to take about 20-30s each.
     chunk_size = 120  # so about 40-60 minutes per run
@@ -265,7 +276,7 @@ class ChromeTests:
             chunk_num = 0
           f.close()
       except IOError, (errno, strerror):
-        logging.error("error reading from file %s (%d, %s)" % (chunk_file, 
+        logging.error("error reading from file %s (%d, %s)" % (chunk_file,
                       errno, strerror))
 
     script = os.path.join(self._source_dir, "webkit", "tools", "layout_tests",
@@ -282,7 +293,7 @@ class ChromeTests:
         script_cmd.append("--test-list=%s" % self._args[0])
       else:
         script_cmd.extend(self._args)
-    
+
     if run_all:
       ret = self.ScriptedTest("webkit", "test_shell.exe", "layout",
                               script_cmd, multi=True, cmd_args=["--timeout=0"])
@@ -323,15 +334,29 @@ class ChromeTests:
       instrumentation_error = self.InstrumentDll()
       if instrumentation_error:
         return instrumentation_error
-    return self.ScriptedTest("chrome", "chrome.exe", "ui_tests", 
+    return self.ScriptedTest("chrome", "chrome.exe", "ui_tests",
                              ["ui_tests.exe",
                               "--single-process",
                               "--ui-test-timeout=180000",
                               "--ui-test-action-timeout=80000",
                               "--ui-test-action-max-timeout=180000",
                               "--ui-test-sleep-timeout=40000"],
-                              multi=True)
+                             multi=True)
 
+  def TestV8(self):
+    shell = "v8_shell_sample.exe"
+    # We need to compute _build_dir early to in order to pass in the
+    # shell path as an argument to the test script.
+    self.ComputeBuildDir("chrome", shell)
+    script = os.path.join(self._source_dir, "v8", "tools", "test.py")
+    shell_path = os.path.join(self._options.build_dir, shell)
+    return self.ScriptedTest("chrome", shell, "v8",
+                             ["python.exe",
+                              script,
+                              "--no-build",
+                              "--progress=dots",
+                              "--shell=" + shell_path],
+                             multi = True)
 
 def _main(argv):
   parser = optparse.OptionParser("usage: %prog -b <dir> -t <test> "
@@ -351,7 +376,7 @@ def _main(argv):
                     help="Don't force a re-instrumentation for ui_tests")
   parser.add_option("", "--run-singly", action="store_true", default=False,
                     help="run tests independently of each other so that they "
-                         "don't interfere with each other and so that errors " 
+                         "don't interfere with each other and so that errors "
                          "can be accurately attributed to their source");
   parser.add_option("", "--report_dir",
                     help="path where report files are saved")

@@ -4,12 +4,7 @@
 
 #include "chrome/browser/tabs/tab_strip_model_order_controller.h"
 
-#if defined(OS_WIN)
 #include "chrome/browser/tab_contents/tab_contents.h"
-#elif defined(OS_MACOSX) || (OS_LINUX)
-// TODO(port): remove this when the mock of TabContents is removed
-#include "chrome/common/temp_scaffolding_stubs.h"
-#endif
 #include "chrome/common/pref_names.h"
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -34,8 +29,8 @@ int TabStripModelOrderController::DetermineInsertionIndex(
 
   if (transition == PageTransition::LINK && tabstrip_->selected_index() != -1) {
     if (foreground) {
-      // If the page was opened in the foreground by a link click in another tab,
-      // insert it adjacent to the tab that opened that link.
+      // If the page was opened in the foreground by a link click in another
+      // tab, insert it adjacent to the tab that opened that link.
       // TODO(beng): (http://b/1085481) may want to open right of all locked
       //             tabs?
       return tabstrip_->selected_index() + 1;
@@ -129,4 +124,3 @@ int TabStripModelOrderController::GetValidIndex(int index,
     index = std::max(0, index - 1);
   return index;
 }
-

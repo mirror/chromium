@@ -10,7 +10,6 @@
 #include <sstream>
 
 #include "base/basictypes.h"
-#include "base/scoped_ptr.h"
 
 //
 // Optional message capabilities
@@ -259,7 +258,9 @@ std::string* MakeCheckOpString(const t1& v1, const t2& v2, const char* names) {
 extern std::string* MakeCheckOpStringIntInt(int v1, int v2, const char* names);
 
 template<int, int>
-std::string* MakeCheckOpString(const int& v1, const int& v2, const char* names) {
+std::string* MakeCheckOpString(const int& v1,
+                               const int& v2,
+                               const char* names) {
   return MakeCheckOpStringIntInt(v1, v2, names);
 }
 

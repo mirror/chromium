@@ -13,7 +13,7 @@
 
 // TODO(port): Port this file.
 #if defined(OS_WIN)
-#include "chrome/views/chrome_menu.h"
+#include "chrome/views/controls/menu/chrome_menu.h"
 #else
 #include "chrome/common/temp_scaffolding_stubs.h"
 #endif
@@ -22,7 +22,7 @@ class Browser;
 class PageNavigator;
 
 // BookmarkContextMenu manages the context menu shown for the
-// bookmark bar, items on the bookmark bar, submenus of the bookmark bar and 
+// bookmark bar, items on the bookmark bar, submenus of the bookmark bar and
 // the bookmark manager.
 class BookmarkContextMenu : public views::MenuDelegate,
                             public BookmarkModelObserver {

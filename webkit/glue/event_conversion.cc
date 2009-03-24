@@ -3,25 +3,19 @@
 // found in the LICENSE file.
 
 #include "config.h"
-
-#include "base/compiler_specific.h"
+#include "webkit/glue/event_conversion.h"
 
 #include "KeyboardCodes.h"
 #include "StringImpl.h"  // This is so that the KJS build works
-
-MSVC_PUSH_WARNING_LEVEL(0);
 #include "PlatformKeyboardEvent.h"
 #include "PlatformMouseEvent.h"
 #include "PlatformWheelEvent.h"
 #include "Widget.h"
-MSVC_POP_WARNING();
-
-#include "WebKit.h"
 
 #undef LOG
 #include "base/gfx/point.h"
 #include "base/logging.h"
-#include "webkit/glue/event_conversion.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebKit.h"
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/webinputevent.h"
 #include "webkit/glue/webkit_glue.h"
@@ -125,9 +119,11 @@ MakePlatformWheelEvent::MakePlatformWheelEvent(Widget* widget,
   m_globalPosition = IntPoint(e.global_x, e.global_y);
   m_deltaX = e.delta_x;
   m_deltaY = e.delta_y;
+  m_wheelTicksX = e.wheel_ticks_x;
+  m_wheelTicksY = e.wheel_ticks_y;
   m_isAccepted = false;
   m_granularity = e.scroll_by_page ?
-      ScrollByPageWheelEvent : ScrollByLineWheelEvent;
+      ScrollByPageWheelEvent : ScrollByPixelWheelEvent;
   m_shiftKey = (e.modifiers & WebInputEvent::SHIFT_KEY) != 0;
   m_ctrlKey = (e.modifiers & WebInputEvent::CTRL_KEY) != 0;
   m_altKey = (e.modifiers & WebInputEvent::ALT_KEY) != 0;
@@ -189,7 +185,7 @@ void MakePlatformKeyboardEvent::SetKeyType(Type type) {
 
 // Please refer to bug http://b/issue?id=961192, which talks about Webkit
 // keyboard event handling changes. It also mentions the list of keys
-// which don't have associated character events. 
+// which don't have associated character events.
 bool MakePlatformKeyboardEvent::IsCharacterKey() const {
   switch (windowsVirtualKeyCode()) {
     case VKEY_BACK:

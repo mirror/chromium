@@ -16,10 +16,9 @@ namespace WebCore {
 void WrapNPObject(v8::Handle<v8::Object> obj, NPObject *npobj);
 
 // Retrieves the V8 Context from the NP context pr obj (at most 1 may be NULL).
-v8::Local<v8::Context> GetV8Context(NPP npp, NPObject* npobj);
+v8::Local<v8::Context> getV8Context(NPP npp, NPObject* npobj);
 
 // Get V8Proxy object from an NPObject.
 WebCore::V8Proxy* GetV8Proxy(NPObject* npobj);
 
 #endif  // V8_HELPERS_H__
-

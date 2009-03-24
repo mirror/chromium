@@ -18,11 +18,11 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/pref_names.h"
 #include "chrome/common/pref_service.h"
-#include "chrome/views/checkbox.h"
-#include "chrome/views/client_view.h"
+#include "chrome/views/controls/button/checkbox.h"
+#include "chrome/views/controls/label.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/label.h"
-#include "chrome/views/Window.h"
+#include "chrome/views/window/client_view.h"
+#include "chrome/views/window/window.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 #include "grit/locale_settings.h"
@@ -167,12 +167,12 @@ void BugReportView::SetupControl() {
       new views::TextField(views::TextField::STYLE_MULTILINE);
   description_text_->SetHeightInLines(kDescriptionLines);
 
-  include_page_source_checkbox_ = new views::CheckBox(
+  include_page_source_checkbox_ = new views::Checkbox(
       l10n_util::GetString(IDS_BUGREPORT_INCLUDE_PAGE_SOURCE_CHKBOX));
-  include_page_source_checkbox_->SetIsSelected(true);
-  include_page_image_checkbox_ = new views::CheckBox(
+  include_page_source_checkbox_->SetChecked(true);
+  include_page_image_checkbox_ = new views::Checkbox(
       l10n_util::GetString(IDS_BUGREPORT_INCLUDE_PAGE_IMAGE_CHKBOX));
-  include_page_image_checkbox_->SetIsSelected(true);
+  include_page_image_checkbox_->SetChecked(true);
 
   // Arranges controls by using GridLayout.
   const int column_set_id = 0;
@@ -249,9 +249,9 @@ void BugReportView::ItemChanged(views::ComboBox* combo_box,
     old_report_text_.clear();
   }
   include_page_source_checkbox_->SetEnabled(!is_phishing_report);
-  include_page_source_checkbox_->SetIsSelected(!is_phishing_report);
+  include_page_source_checkbox_->SetChecked(!is_phishing_report);
   include_page_image_checkbox_->SetEnabled(!is_phishing_report);
-  include_page_image_checkbox_->SetIsSelected(!is_phishing_report);
+  include_page_image_checkbox_->SetChecked(!is_phishing_report);
 
   GetDialogClientView()->UpdateDialogButtons();
 }
@@ -448,7 +448,7 @@ void BugReportView::SendReport() {
   }
 
   // include the page image if we have one
-  if (include_page_image_checkbox_->IsSelected() && png_data_.get()) {
+  if (include_page_image_checkbox_->checked() && png_data_.get()) {
     post_body.append("--" + mime_boundary + "\r\n");
     post_body.append("Content-Disposition: form-data; name=\"screenshot\"; "
                       "filename=\"screenshot.png\"\r\n");
@@ -463,7 +463,7 @@ void BugReportView::SendReport() {
   }
 
   // TODO(awalker): include the page source if we can get it
-  if (include_page_source_checkbox_->IsSelected()) {
+  if (include_page_source_checkbox_->checked()) {
   }
 
   // terminate the body
@@ -487,4 +487,3 @@ void BugReportView::ReportPhishing() {
       GURL(),
       PageTransition::LINK);
 }
-

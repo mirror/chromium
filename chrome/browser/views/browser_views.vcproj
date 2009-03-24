@@ -133,6 +133,14 @@
 				>
 			</File>
 			<File
+				RelativePath=".\frame\browser_root_view.cc"
+				>
+			</File>
+			<File
+				RelativePath=".\frame\browser_root_view.h"
+				>
+			</File>
+			<File
 				RelativePath=".\frame\browser_view.cc"
 				>
 			</File>
@@ -415,6 +423,14 @@
 		</File>
 		<File
 			RelativePath=".\bookmark_manager_view.h"
+			>
+		</File>
+		<File
+			RelativePath=".\bookmark_menu_button.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\bookmark_menu_button.h"
 			>
 		</File>
 		<File

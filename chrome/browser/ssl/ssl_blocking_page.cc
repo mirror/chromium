@@ -70,24 +70,20 @@ std::string SSLBlockingPage::GetHTMLContents() {
 }
 
 void SSLBlockingPage::UpdateEntry(NavigationEntry* entry) {
-#if defined(OS_WIN)
   DCHECK(tab()->type() == TAB_CONTENTS_WEB);
   WebContents* web = tab()->AsWebContents();
   const net::SSLInfo& ssl_info = error_->ssl_info();
   int cert_id = CertStore::GetSharedInstance()->StoreCert(
-      ssl_info.cert, web->render_view_host()->process()->host_id());
+      ssl_info.cert, web->render_view_host()->process()->pid());
 
   entry->ssl().set_security_style(SECURITY_STYLE_AUTHENTICATION_BROKEN);
   entry->ssl().set_cert_id(cert_id);
   entry->ssl().set_cert_status(ssl_info.cert_status);
   entry->ssl().set_security_bits(ssl_info.security_bits);
   NotificationService::current()->Notify(
-      NotificationType::SSL_STATE_CHANGED,
+      NotificationType::SSL_VISIBLE_STATE_CHANGED,
       Source<NavigationController>(web->controller()),
       NotificationService::NoDetails());
-#else
-  NOTIMPLEMENTED();
-#endif
 }
 
 void SSLBlockingPage::CommandReceived(const std::string& command) {
@@ -142,4 +138,3 @@ void SSLBlockingPage::SetExtraInfo(
     strings->SetString(keys[i], L"");
   }
 }
-

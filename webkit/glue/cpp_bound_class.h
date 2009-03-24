@@ -23,6 +23,7 @@
 
 #include "webkit/glue/cpp_variant.h"
 
+#include "base/scoped_ptr.h"
 #include "base/task.h"
 
 class WebFrame;
@@ -144,4 +145,3 @@ class CppBoundClass {
 };
 
 #endif  // CPP_BOUNDCLASS_H__
-

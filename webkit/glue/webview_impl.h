@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef WEBKIT_GLUE_WEBVIEW_IMPL_H__
-#define WEBKIT_GLUE_WEBVIEW_IMPL_H__
+#ifndef WEBKIT_GLUE_WEBVIEW_IMPL_H_
+#define WEBKIT_GLUE_WEBVIEW_IMPL_H_
 
 #include <set>
 
@@ -26,6 +26,7 @@ namespace WebCore {
 class ChromiumDataObject;
 class Frame;
 class HistoryItem;
+class HitTestResult;
 class KeyboardEvent;
 class Page;
 class PlatformKeyboardEvent;
@@ -42,6 +43,8 @@ class WebHistoryItemImpl;
 class WebKeyboardEvent;
 class WebMouseEvent;
 class WebMouseWheelEvent;
+class WebDevToolsAgent;
+class WebDevToolsAgentImpl;
 class WebViewDelegate;
 
 class WebViewImpl : public WebView, public base::RefCounted<WebViewImpl> {
@@ -106,6 +109,9 @@ class WebViewImpl : public WebView, public base::RefCounted<WebViewImpl> {
       const std::vector<std::wstring>& suggestions,
       int default_suggestion_index);
   virtual void HideAutofillPopup();
+
+  virtual WebDevToolsAgent* GetWebDevToolsAgent();
+  WebDevToolsAgentImpl* GetWebDevToolsAgentImpl();
 
   // WebViewImpl
 
@@ -251,12 +257,22 @@ class WebViewImpl : public WebView, public base::RefCounted<WebViewImpl> {
   // Returns true if the autocomple has consumed the event.
   bool AutocompleteHandleKeyEvent(const WebKeyboardEvent& event);
 
+  // Repaints the autofill popup.  Should be called when the suggestions have
+  // changed.  Note that this should only be called when the autofill popup is
+  // showing.
+  void RefreshAutofillPopup();
+
   // Returns true if the view was scrolled.
   bool ScrollViewWithKeyboard(int key_code);
 
   // Removes fetcher from the set of pending image fetchers and deletes it.
   // This is invoked after the download is completed (or fails).
   void DeleteImageResourceFetcher(ImageResourceFetcher* fetcher);
+
+  // Converts |pos| from window coordinates to contents coordinates and gets
+  // the HitTestResult for it.
+  WebCore::HitTestResult HitTestResultForWindowPos(
+      const WebCore::IntPoint& pos);
 
   // Returns the currently focused Node or NULL if no node has focus.
   WebCore::Node* GetFocusedNode();
@@ -311,6 +327,8 @@ class WebViewImpl : public WebView, public base::RefCounted<WebViewImpl> {
   // The autocomplete client.
   scoped_ptr<AutocompletePopupMenuClient> autocomplete_popup_client_;
 
+  scoped_ptr<WebDevToolsAgentImpl> devtools_agent_;
+
   // HACK: current_input_event is for ChromeClientImpl::show(), until we can fix
   // WebKit to pass enough information up into ChromeClient::show() so we can
   // decide if the window.open event was caused by a middle-mouse click
@@ -321,8 +339,7 @@ public:
 private:
   static const WebInputEvent* g_current_input_event;
 
-  DISALLOW_EVIL_CONSTRUCTORS(WebViewImpl);
+  DISALLOW_COPY_AND_ASSIGN(WebViewImpl);
 };
 
-#endif  // WEBKIT_GLUE_WEBVIEW_IMPL_H__
-
+#endif  // WEBKIT_GLUE_WEBVIEW_IMPL_H_

@@ -14,7 +14,6 @@
 #include <map>
 #include <functional>
 #include "base/lock.h"
-#include "base/logging.h"
 #include "tools/memory_watcher/memory_hook.h"
 
 class CallStack;
@@ -33,7 +32,7 @@ class MemoryWatcher : MemoryObserver {
   // MemoryObserver interface.
   virtual void OnTrack(HANDLE heap, int32 id, int32 size);
   virtual void OnUntrack(HANDLE heap, int32 id, int32 size);
-  
+
   // Sets a name that appears in the generated file name.
   void SetLogName(char* log_name);
 
@@ -88,4 +87,3 @@ class MemoryWatcher : MemoryObserver {
 
 
 #endif  // MEMORY_WATCHER_
-

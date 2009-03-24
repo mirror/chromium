@@ -9,7 +9,6 @@
 #include <map>
 
 #include "base/basictypes.h"
-#include "base/time.h"
 #include "chrome/browser/history/history_types.h"
 
 namespace history {
@@ -65,4 +64,3 @@ class VisitTracker {
 }  // namespace history
 
 #endif  // CHROME_BROWSER_HISTORY_VISIT_TRACKER_H__
-

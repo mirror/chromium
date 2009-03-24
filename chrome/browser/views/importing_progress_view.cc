@@ -7,9 +7,9 @@
 #include "chrome/browser/views/standard_layout.h"
 #include "chrome/common/l10n_util.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/label.h"
-#include "chrome/views/throbber.h"
-#include "chrome/views/window.h"
+#include "chrome/views/controls/label.h"
+#include "chrome/views/controls/throbber.h"
+#include "chrome/views/window/window.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 #include "grit/locale_settings.h"
@@ -307,9 +307,8 @@ void StartImportingWithUI(HWND parent_window,
   // still need it to exist. No user interaction will be required.
   if (!coordinator->is_headless())
     window->Show();
- 
+
   coordinator->StartImportSettings(source_profile, items,
                                    new ProfileWriter(target_profile),
                                    first_run);
 }
-

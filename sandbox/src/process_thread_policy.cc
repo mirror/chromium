@@ -6,7 +6,6 @@
 
 #include <string>
 
-#include "base/logging.h"
 #include "base/scoped_ptr.h"
 #include "sandbox/src/ipc_tags.h"
 #include "sandbox/src/nt_internals.h"
@@ -248,5 +247,3 @@ DWORD ProcessPolicy::CreateProcessWAction(EvalResult eval_result,
 }
 
 }  // namespace sandbox
-
-

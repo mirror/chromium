@@ -9,10 +9,8 @@
 
 #include "base/base_paths.h"
 #include "base/file_util.h"
-#include "base/logging.h"
 #include "base/path_service.h"
 #include "base/process_util.h"
-#include "base/scoped_ptr.h"
 #include "base/string_util.h"
 #include "chrome/installer/util/helper.h"
 #include "chrome/installer/util/work_item.h"
@@ -193,4 +191,3 @@ TEST_F(SetupHelperTest, DeleteInUsed) {
   // the latest version should stay
   EXPECT_TRUE(file_util::PathExists(chrome_dll_4));
 }
-

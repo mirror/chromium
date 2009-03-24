@@ -52,7 +52,7 @@ int TabProxy::FindInPage(const std::wstring& search_string,
     return -1;
 
   FindInPageRequest request = {0};
-  request.search_string = search_string;
+  request.search_string = WideToUTF16(search_string);
   request.find_next = find_next;
   // The explicit comparison to TRUE avoids a warning (C4800).
   request.match_case = match_case == TRUE;
@@ -71,7 +71,8 @@ int TabProxy::FindInPage(const std::wstring& search_string,
   return matches;
 }
 
-AutomationMsg_NavigationResponseValues TabProxy::NavigateToURL(const GURL& url) {
+AutomationMsg_NavigationResponseValues TabProxy::NavigateToURL(
+    const GURL& url) {
   return NavigateToURLWithTimeout(url, base::kNoTimeout, NULL);
 }
 
@@ -114,7 +115,6 @@ bool TabProxy::CancelAuth() {
   if (!is_valid())
     return false;
 
-  IPC::Message* response = NULL;
   int navigate_response = -1;
   sender_->Send(new AutomationMsg_CancelAuth(0, handle_, &navigate_response));
   return navigate_response >= 0;
@@ -124,7 +124,6 @@ bool TabProxy::NeedsAuth() const {
   if (!is_valid())
     return false;
 
-  IPC::Message* response = NULL;
   bool needs_auth = false;
   sender_->Send(new AutomationMsg_NeedsAuth(0, handle_, &needs_auth));
   return needs_auth;
@@ -193,6 +192,8 @@ bool TabProxy::NavigateToURLAsync(const GURL& url) {
   return status;
 }
 
+#if defined(OS_WIN)
+// TODO(port): Get rid of HWND.
 bool TabProxy::GetHWND(HWND* hwnd) const {
   if (!is_valid())
     return false;
@@ -203,6 +204,7 @@ bool TabProxy::GetHWND(HWND* hwnd) const {
 
   return sender_->Send(new AutomationMsg_TabHWND(0, handle_, hwnd));
 }
+#endif  // defined(OS_WIN)
 
 bool TabProxy::GetProcessID(int* process_id) const {
   if (!is_valid())
@@ -342,7 +344,7 @@ bool TabProxy::WaitForChildWindowCountToChange(int count, int* new_count,
                                                int wait_timeout) {
   int intervals = std::min(wait_timeout/automation::kSleepTime, 1);
   for (int i = 0; i < intervals; ++i) {
-    Sleep(automation::kSleepTime);
+    PlatformThread::Sleep(automation::kSleepTime);
     bool succeeded = GetConstrainedWindowCount(new_count);
     if (!succeeded) return false;
     if (count != *new_count) return true;
@@ -437,6 +439,8 @@ bool TabProxy::Close(bool wait_until_closed) {
   return succeeded;
 }
 
+#if defined(OS_WIN)
+// TODO(port): Remove windowsisms.
 bool TabProxy::SetAccelerators(HACCEL accel_table,
                                int accel_table_entry_count) {
   if (!is_valid())
@@ -455,6 +459,7 @@ bool TabProxy::ProcessUnhandledAccelerator(const MSG& msg) {
       new AutomationMsg_ProcessUnhandledAccelerator(0, handle_, msg));
   // This message expects no response
 }
+#endif  // defined(OS_WIN)
 
 bool TabProxy::SetInitialFocus(bool reverse) {
   if (!is_valid())
@@ -531,13 +536,15 @@ bool TabProxy::SavePage(const std::wstring& file_name,
 }
 
 void TabProxy::HandleMessageFromExternalHost(AutomationHandle handle,
-                                             const std::string& message) {
+                                             const std::string& message,
+                                             const std::string& origin,
+                                             const std::string& target) {
   if (!is_valid())
     return;
 
   bool succeeded =
       sender_->Send(new AutomationMsg_HandleMessageFromExternalHost(0, handle,
-                                                                    message));
+          message, origin, target));
   DCHECK(succeeded);
 }
 
@@ -599,3 +606,20 @@ bool TabProxy::OverrideEncoding(const std::wstring& encoding) {
                                                    &succeeded));
   return succeeded;
 }
+
+#if defined(OS_WIN)
+void TabProxy::Reposition(HWND window, HWND window_insert_after, int left,
+                          int top, int width, int height, int flags) {
+
+  IPC::Reposition_Params params;
+  params.window = window;
+  params.window_insert_after = window_insert_after;
+  params.left = left;
+  params.top = top;
+  params.width = width;
+  params.height = height;
+  params.flags = flags;
+  sender_->Send(new AutomationMsg_TabReposition(0, handle_, params));
+}
+#endif  // defined(OS_WIN)
+

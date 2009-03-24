@@ -7,7 +7,6 @@
 #include "base/path_service.h"
 #include "base/string_util.h"
 #include "chrome/browser/chrome_plugin_host.h"
-#include "chrome/browser/net/url_fetcher.h"
 #include "chrome/browser/profile.h"
 #include "chrome/common/chrome_plugin_lib.h"
 #include "chrome/test/chrome_plugin/test_chrome_plugin.h"
@@ -286,4 +285,3 @@ TEST_F(ChromePluginTest, DoesNotInterceptOwnRequest) {
 
   MessageLoop::current()->Run();
 }
-

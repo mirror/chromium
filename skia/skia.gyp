@@ -10,6 +10,7 @@
     {
       'target_name': 'skia',
       'type': 'static_library',
+      'msvs_guid': 'CD9CA56E-4E94-444C-87D4-58CA1E6F300D',
       'sources': [
         'precompiled.cc',
         #'animator/SkAnimate.h',
@@ -229,8 +230,6 @@
         'ext/bitmap_platform_device_win.h',
         'ext/convolver.cc',
         'ext/convolver.h',
-        'ext/GdkSkia.cc',
-        'ext/GdkSkia.h',
         'ext/google_logging.cc',
         'ext/image_operations.cc',
         'ext/image_operations.h',
@@ -673,7 +672,6 @@
         [ 'OS != "linux"', {
           'sources/': [ ['exclude', '_linux\\.(cc|cpp)$'] ],
           'sources!': [
-            'ext/GdkSkia.cc',
             'ports/SkFontHost_FreeType.cpp',
             'ports/SkFontHost_TryeType_Tables.cpp',
             'ports/SkFontHost_gamma_none.cpp',
@@ -689,9 +687,16 @@
           ],
         }],
         [ 'OS == "linux"', {
+          'dependencies': [
+            '../build/linux/system.gyp:gtk',
+          ],
           'cflags': [
             '-Wno-unused',
             '-Wno-unused-function',
+          ],
+          'sources!': [
+            'ports/SkFontHost_none.cpp',
+            'sgl/SkTypeface_fake.cpp',
           ],
         }],
         [ 'OS == "mac"', {

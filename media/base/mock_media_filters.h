@@ -14,6 +14,7 @@
 #include "media/base/filters.h"
 #include "media/base/media_format.h"
 #include "media/base/pipeline.h"
+#include "media/base/video_frame_impl.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace media {
@@ -23,7 +24,7 @@ enum MockDataSourceBehavior {
   MOCK_DATA_SOURCE_NORMAL_INIT,
   MOCK_DATA_SOURCE_NEVER_INIT,
   MOCK_DATA_SOURCE_TASK_INIT,
-  MOCK_DATA_SOURCE_ERROR_IN_INIT,
+  MOCK_DATA_SOURCE_URL_ERROR_IN_INIT,
   MOCK_DATA_SOURCE_INIT_RETURN_FALSE,
   MOCK_DATA_SOURCE_TASK_ERROR_PRE_INIT,
   MOCK_DATA_SOURCE_TASK_ERROR_POST_INIT
@@ -37,6 +38,7 @@ enum MockDataSourceBehavior {
 struct MockFilterConfig {
   MockFilterConfig()
       : data_source_behavior(MOCK_DATA_SOURCE_NORMAL_INIT),
+        data_source_value('!'),
         has_video(true),
         video_width(1280u),
         video_height(720u),
@@ -52,6 +54,7 @@ struct MockFilterConfig {
   }
 
   MockDataSourceBehavior data_source_behavior;
+  char data_source_value;
   bool has_video;
   size_t video_width;
   size_t video_height;
@@ -72,6 +75,20 @@ class MockDataSource : public DataSource {
   static FilterFactory* CreateFactory(const MockFilterConfig* config) {
      return new FilterFactoryImpl1<MockDataSource,
                                    const MockFilterConfig*>(config);
+  }
+
+  explicit MockDataSource(const MockFilterConfig* config)
+      : config_(config),
+        position_(0),
+        deleted_(NULL) {
+  }
+
+  MockDataSource(const MockFilterConfig* config, bool* deleted)
+      : config_(config),
+        position_(0),
+        deleted_(deleted) {
+    EXPECT_TRUE(deleted);
+    EXPECT_FALSE(*deleted);
   }
 
   // Implementation of MediaFilter.
@@ -96,8 +113,8 @@ class MockDataSource : public DataSource {
       case MOCK_DATA_SOURCE_TASK_INIT:
         host_->PostTask(NewRunnableMethod(this, &MockDataSource::TaskBehavior));
         return true;
-      case MOCK_DATA_SOURCE_ERROR_IN_INIT:
-        host_->Error(PIPELINE_ERROR_NETWORK);
+      case MOCK_DATA_SOURCE_URL_ERROR_IN_INIT:
+        host_->Error(PIPELINE_ERROR_URL_NOT_FOUND);
         return false;
       case MOCK_DATA_SOURCE_INIT_RETURN_FALSE:
         return false;
@@ -116,7 +133,7 @@ class MockDataSource : public DataSource {
     if (size < read) {
       read = size;
     }
-    memset(data, 0, read);
+    memset(data, config_->data_source_value, read);
     return read;
   }
 
@@ -126,8 +143,6 @@ class MockDataSource : public DataSource {
   }
 
   virtual bool SetPosition(int64 position) {
-    EXPECT_GE(position, 0u);
-    EXPECT_LE(position, config_->media_total_bytes);
     if (position < 0u || position > config_->media_total_bytes) {
       return false;
     }
@@ -136,20 +151,22 @@ class MockDataSource : public DataSource {
   }
 
   virtual bool GetSize(int64* size_out) {
-    *size_out = config_->media_total_bytes;
+    if (config_->media_total_bytes >= 0) {
+      *size_out = config_->media_total_bytes;
+      return true;
+    }
     return false;
   }
 
+  // Simple position getter for unit testing.
+  int64 position() const { return position_; }
+
  private:
-  friend class FilterFactoryImpl1<MockDataSource,
-                                  const MockFilterConfig*>;
-
-  explicit MockDataSource(const MockFilterConfig* config)
-      : config_(config),
-        position_(0) {
+  virtual ~MockDataSource() {
+    if (deleted_) {
+      *deleted_ = true;
+    }
   }
-
-  virtual ~MockDataSource() {}
 
   void TaskBehavior() {
     switch (config_->data_source_behavior) {
@@ -169,6 +186,10 @@ class MockDataSource : public DataSource {
   int64 position_;
   MediaFormat media_format_;
 
+  // Set to true inside the destructor.  Used in FFmpegGlue unit tests for
+  // testing proper reference counting.
+  bool* deleted_;
+
   DISALLOW_COPY_AND_ASSIGN(MockDataSource);
 };
 
@@ -179,6 +200,12 @@ class MockDemuxer : public Demuxer {
   static FilterFactory* CreateFactory(const MockFilterConfig* config) {
      return new FilterFactoryImpl1<MockDemuxer,
                                    const MockFilterConfig*>(config);
+  }
+
+  explicit MockDemuxer(const MockFilterConfig* config)
+      : config_(config),
+        mock_audio_stream_(config, true),
+        mock_video_stream_(config, false) {
   }
 
   // Implementation of MediaFilter.
@@ -221,14 +248,6 @@ class MockDemuxer : public Demuxer {
   }
 
  private:
-  friend class FilterFactoryImpl1<MockDemuxer, const MockFilterConfig*>;
-
-  explicit MockDemuxer(const MockFilterConfig* config)
-      : config_(config),
-        mock_audio_stream_(config, true),
-        mock_video_stream_(config, false) {
-  }
-
   virtual ~MockDemuxer() {}
 
   // Internal class implements DemuxerStream interface.
@@ -283,6 +302,11 @@ class MockAudioDecoder : public AudioDecoder {
     return true;  // TODO(ralphl): check for a supported format.
   }
 
+  explicit MockAudioDecoder(const MockFilterConfig* config) {
+    media_format_.SetAsString(MediaFormat::kMimeType,
+                              config->uncompressed_audio_mime_type);
+  }
+
   // Implementation of MediaFilter.
   virtual void Stop() {}
 
@@ -302,13 +326,6 @@ class MockAudioDecoder : public AudioDecoder {
   }
 
  private:
-  friend class FilterFactoryImpl1<MockAudioDecoder, const MockFilterConfig*>;
-
-  explicit MockAudioDecoder(const MockFilterConfig* config) {
-    media_format_.SetAsString(MediaFormat::kMimeType,
-                              config->uncompressed_audio_mime_type);
-  }
-
   virtual ~MockAudioDecoder() {}
 
   MediaFormat media_format_;
@@ -329,6 +346,8 @@ class MockAudioRenderer : public AudioRenderer {
     return true;  // TODO(ralphl): check for a supported format
   }
 
+  explicit MockAudioRenderer(const MockFilterConfig* config) {}
+
   // Implementation of MediaFilter.
   virtual void Stop() {}
 
@@ -341,85 +360,12 @@ class MockAudioRenderer : public AudioRenderer {
   virtual void SetVolume(float volume) {}
 
  private:
-  friend class FilterFactoryImpl1<MockAudioRenderer, const MockFilterConfig*>;
-
-  explicit MockAudioRenderer(const MockFilterConfig* config) {}
-
   virtual ~MockAudioRenderer() {}
 
   DISALLOW_COPY_AND_ASSIGN(MockAudioRenderer);
 };
 
 //------------------------------------------------------------------------------
-
-class MockVideoFrame : public VideoFrame {
- public:
-  MockVideoFrame(size_t video_width,
-                 size_t video_height,
-                 VideoSurface::Format video_surface_format,
-                 base::TimeDelta timestamp,
-                 base::TimeDelta duration,
-                 double ratio_white_to_black) {
-    surface_locked_ = false;
-    SetTimestamp(timestamp);
-    SetDuration(duration);
-    size_t y_byte_count = video_width * video_height;
-    size_t uv_byte_count = y_byte_count / 4;
-    surface_.format = video_surface_format;
-    surface_.width = video_width;
-    surface_.height = video_height;
-    surface_.planes = 3;
-    surface_.data[0] = new uint8[y_byte_count];
-    surface_.data[1] = new uint8[uv_byte_count];
-    surface_.data[2] = new uint8[uv_byte_count];
-    surface_.strides[0] = video_width;
-    surface_.strides[1] = video_width / 2;
-    surface_.strides[2] = video_width / 2;
-    memset(surface_.data[0], 0, y_byte_count);
-    memset(surface_.data[1], 0x80, uv_byte_count);
-    memset(surface_.data[2], 0x80, uv_byte_count);
-    int64 num_white_pixels = static_cast<int64>(y_byte_count *
-                                                ratio_white_to_black);
-    if (num_white_pixels > y_byte_count) {
-      ADD_FAILURE();
-      num_white_pixels = y_byte_count;
-    }
-    if (num_white_pixels < 0) {
-      ADD_FAILURE();
-      num_white_pixels = 0;
-    }
-    memset(surface_.data[0], 0xFF, static_cast<size_t>(num_white_pixels));
-  }
-
-  virtual ~MockVideoFrame() {
-    delete[] surface_.data[0];
-    delete[] surface_.data[1];
-    delete[] surface_.data[2];
-  }
-
-  virtual bool Lock(VideoSurface* surface) {
-    EXPECT_FALSE(surface_locked_);
-    if (surface_locked_) {
-      memset(surface, 0, sizeof(*surface));
-      return false;
-    }
-    surface_locked_ = true;
-    COMPILE_ASSERT(sizeof(*surface) == sizeof(surface_), surface_size_mismatch);
-    memcpy(surface, &surface_, sizeof(*surface));
-    return true;
-  }
-
-  virtual void Unlock() {
-    EXPECT_TRUE(surface_locked_);
-    surface_locked_ = false;
-  }
-
- private:
-  bool surface_locked_;
-  VideoSurface surface_;
-
-  DISALLOW_COPY_AND_ASSIGN(MockVideoFrame);
-};
 
 class MockVideoDecoder : public VideoDecoder {
  public:
@@ -430,6 +376,43 @@ class MockVideoDecoder : public VideoDecoder {
 
   static bool IsMediaFormatSupported(const MediaFormat* media_format) {
     return true;  // TODO(ralphl): check for a supported format.
+  }
+
+  // Helper function that initializes a YV12 frame with white and black scan
+  // lines based on the |white_to_black| parameter.  If 0, then the entire
+  // frame will be black, if 1 then the entire frame will be white.
+  static void InitializeYV12Frame(VideoFrame* frame, double white_to_black) {
+    VideoSurface surface;
+    if (!frame->Lock(&surface)) {
+      ADD_FAILURE();
+    } else {
+      EXPECT_EQ(surface.format, VideoSurface::YV12);
+      size_t first_black_row = static_cast<size_t>(surface.height *
+                                                   white_to_black);
+      uint8* y_plane = surface.data[VideoSurface::kYPlane];
+      for (size_t row = 0; row < surface.height; ++row) {
+        int color = (row < first_black_row) ? 0xFF : 0x00;
+        memset(y_plane, color, surface.width);
+        y_plane += surface.strides[VideoSurface::kYPlane];
+      }
+      uint8* u_plane = surface.data[VideoSurface::kUPlane];
+      uint8* v_plane = surface.data[VideoSurface::kVPlane];
+      for (size_t row = 0; row < surface.height; row += 2) {
+        memset(u_plane, 0x80, surface.width / 2);
+        memset(v_plane, 0x80, surface.width / 2);
+        u_plane += surface.strides[VideoSurface::kUPlane];
+        v_plane += surface.strides[VideoSurface::kVPlane];
+      }
+      frame->Unlock();
+    }
+  }
+
+  explicit MockVideoDecoder(const MockFilterConfig* config)
+      : config_(config) {
+    media_format_.SetAsString(MediaFormat::kMimeType,
+                              config->uncompressed_video_mime_type);
+    media_format_.SetAsInteger(MediaFormat::kWidth, config->video_width);
+    media_format_.SetAsInteger(MediaFormat::kHeight, config->video_height);
   }
 
   // Implementation of MediaFilter.
@@ -451,37 +434,36 @@ class MockVideoDecoder : public VideoDecoder {
   }
 
  private:
-  friend class FilterFactoryImpl1<MockVideoDecoder, const MockFilterConfig*>;
-
-  explicit MockVideoDecoder(const MockFilterConfig* config)
-      : config_(config) {
-    media_format_.SetAsString(MediaFormat::kMimeType,
-                              config->uncompressed_video_mime_type);
-    media_format_.SetAsInteger(MediaFormat::kWidth, config->video_width);
-    media_format_.SetAsInteger(MediaFormat::kHeight, config->video_height);
-  }
+  virtual ~MockVideoDecoder() {}
 
   void DoRead(Assignable<VideoFrame>* buffer) {
     if (mock_frame_time_ < config_->media_duration) {
-      VideoFrame* frame = new MockVideoFrame(
-          config_->video_width,
-          config_->video_height,
-          config_->video_surface_format,
-          mock_frame_time_,
-          config_->frame_duration,
-          (mock_frame_time_.InSecondsF() /
-              config_->media_duration.InSecondsF()));
-      mock_frame_time_ += config_->frame_duration;
-      if (mock_frame_time_ >= config_->media_duration) {
-        frame->SetEndOfStream(true);
+      // TODO(ralphl): Mock video decoder only works with YV12.  Implement other
+      // formats as needed.
+      EXPECT_EQ(config_->video_surface_format, VideoSurface::YV12);
+      scoped_refptr<VideoFrame> frame;
+      VideoFrameImpl::CreateFrame(config_->video_surface_format,
+                                  config_->video_width,
+                                  config_->video_height,
+                                  mock_frame_time_,
+                                  config_->frame_duration,
+                                  &frame);
+      if (!frame) {
+        host_->Error(PIPELINE_ERROR_OUT_OF_MEMORY);
+        ADD_FAILURE();
+      } else {
+        mock_frame_time_ += config_->frame_duration;
+        if (mock_frame_time_ >= config_->media_duration) {
+          frame->SetEndOfStream(true);
+        }
+        InitializeYV12Frame(frame, (mock_frame_time_.InSecondsF() /
+                                    config_->media_duration.InSecondsF()));
+        buffer->SetBuffer(frame);
+        buffer->OnAssignment();
       }
-      buffer->SetBuffer(frame);
-      buffer->OnAssignment();
     }
     buffer->Release();
   }
-
-  virtual ~MockVideoDecoder() {}
 
   MediaFormat media_format_;
   base::TimeDelta mock_frame_time_;
@@ -503,6 +485,10 @@ class MockVideoRenderer : public VideoRenderer {
     return true;  // TODO(ralphl): check for a supported format
   }
 
+  explicit MockVideoRenderer(const MockFilterConfig* config)
+      : config_(config) {
+  }
+
   // Implementation of MediaFilter.
   virtual void Stop() {}
 
@@ -514,12 +500,6 @@ class MockVideoRenderer : public VideoRenderer {
   }
 
  private:
-  friend class FilterFactoryImpl1<MockVideoRenderer, const MockFilterConfig*>;
-
-  explicit MockVideoRenderer(const MockFilterConfig* config)
-      : config_(config) {
-  }
-
   virtual ~MockVideoRenderer() {}
 
   const MockFilterConfig* config_;
@@ -529,9 +509,10 @@ class MockVideoRenderer : public VideoRenderer {
 
 
 //------------------------------------------------------------------------------
-// Simple class that derives from the WaitableEvent class.  The event remains
-// in the reset state until the initialization complete callback is called from
-// a media pipeline.  The normal use of this object looks like:
+// A simple class that waits for a pipeline to be started and checks some
+// basic initialization values.  The Start() method will not return until
+// either a pre-dermined amount of time has passed or the pipeline calls the
+// InitCallback() callback.  A typical use would be:
 //   Pipeline p;
 //   FilterFactoryCollection f;
 //   f->AddFactory(a);
@@ -539,12 +520,17 @@ class MockVideoRenderer : public VideoRenderer {
 //   ...
 //   InitializationHelper h;
 //   h.Start(&p, f, uri);
-//   h.Wait();
-//   (when the Wait() returns, the pipeline is initialized or in error state)
-class InitializationHelper : public base::WaitableEvent {
+//
+// If the test is expecting to produce an error use would be:
+//   h.Start(&p, f, uri, PIPELINE_ERROR_REQUIRED_FILTER_MISSING)
+//
+// If the test expects the pipeline to hang during initialization (a filter
+// never calls FilterHost::InitializationComplete()) then the use would be:
+//   h.Start(&p, f, uri, PIPELINE_OK, true);
+class InitializationHelper {
  public:
   InitializationHelper()
-    : WaitableEvent(true, false),
+    : event_(true, false),
       callback_success_status_(false),
       waiting_for_callback_(false) {}
 
@@ -560,32 +546,45 @@ class InitializationHelper : public base::WaitableEvent {
   // to this object.
   void Start(Pipeline* pipeline,
              FilterFactory* filter_factory,
-             const std::string& uri) {
-    Reset();
+             const std::string& uri,
+             PipelineError expect_error = PIPELINE_OK,
+             bool expect_hang = false) {
+    // For tests that we expect to hang in initialization, we want to
+    // wait a short time.  If a hang is not expected, then wait long enough
+    // to make sure that the filters have time to initalize.  1/2 second if
+    // we expect to hang, and 3 seconds if we expect success.
+    base::TimeDelta max_wait = base::TimeDelta::FromMilliseconds(expect_hang ?
+                                                                 500 : 3000);
+    EXPECT_FALSE(waiting_for_callback_);
     waiting_for_callback_ = true;
+    callback_success_status_ = false;
+    event_.Reset();
     pipeline->Start(filter_factory, uri,
                     NewCallback(this, &InitializationHelper::InitCallback));
-  }
-
-  // Resets the state.   This method should not be called if waiting for
-  // a callback from a previous call to Start.  Note that the Start method
-  // resets the state, so callers are not required to call this method prior
-  // to calling the start method.
-  void Reset() {
-    EXPECT_FALSE(waiting_for_callback_);
-    base::WaitableEvent::Reset();
-    callback_success_status_ = false;
+    bool signaled = event_.TimedWait(max_wait);
+    if (expect_hang) {
+      EXPECT_FALSE(signaled);
+      EXPECT_FALSE(pipeline->IsInitialized());
+      EXPECT_TRUE(waiting_for_callback_);
+    } else {
+      EXPECT_TRUE(signaled);
+      EXPECT_FALSE(waiting_for_callback_);
+      EXPECT_EQ(pipeline->GetError(), expect_error);
+      EXPECT_EQ(callback_success_status_, (expect_error == PIPELINE_OK));
+      EXPECT_EQ(pipeline->IsInitialized(), (expect_error == PIPELINE_OK));
+    }
   }
 
  private:
   void InitCallback(bool success) {
     EXPECT_TRUE(waiting_for_callback_);
-    EXPECT_FALSE(IsSignaled());
+    EXPECT_FALSE(event_.IsSignaled());
     waiting_for_callback_ = false;
     callback_success_status_ = success;
-    Signal();
+    event_.Signal();
   }
 
+  base::WaitableEvent event_;
   bool callback_success_status_;
   bool waiting_for_callback_;
 

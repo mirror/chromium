@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef NET_HTTP_RESPONSE_HEADERS_H_
-#define NET_HTTP_RESPONSE_HEADERS_H_
+#ifndef NET_HTTP_HTTP_RESPONSE_HEADERS_H_
+#define NET_HTTP_HTTP_RESPONSE_HEADERS_H_
 
 #include <string>
 #include <vector>
@@ -201,10 +201,6 @@ class HttpResponseHeaders :
   // response code is not found in the raw headers.
   int response_code() const { return response_code_; }
 
-  // Sets the HTTP response code to the new code.  The original HTTP response
-  // code is still available in the raw and parsed headers.
-  void set_response_code(int new_code) { response_code_ = new_code; }
-
   // Returns the raw header string.
   const std::string& raw_headers() const { return raw_headers_; }
 
@@ -226,8 +222,8 @@ class HttpResponseHeaders :
                                   std::string::const_iterator line_end);
 
   // Tries to extract the status line from a header block, given the first
-  // line of said header block.  If the status line is malformed, we'll construct
-  // a valid one.  Example input:
+  // line of said header block.  If the status line is malformed, we'll
+  // construct a valid one.  Example input:
   //    HTTP/1.1 200 OK
   // with line_begin and end pointing at the begin and end of this line.
   // Output will be a normalized version of this, with a trailing \n.
@@ -308,4 +304,4 @@ class HttpResponseHeaders :
 
 }  // namespace net
 
-#endif  // NET_HTTP_RESPONSE_HEADERS_H_
+#endif  // NET_HTTP_HTTP_RESPONSE_HEADERS_H_

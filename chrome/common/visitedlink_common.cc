@@ -24,11 +24,8 @@ bool VisitedLinkCommon::IsVisited(const char* canonical_url,
                                   size_t url_len) const {
   if (url_len == 0)
     return false;
-  if (!hash_table_ || table_length_ == 0) {
-    // Init() will always create a table, this means somebody forgot
-    NOTREACHED();
+  if (!hash_table_ || table_length_ == 0)
     return false;
-  }
   return IsVisited(ComputeURLFingerprint(canonical_url, url_len));
 }
 
@@ -62,8 +59,8 @@ bool VisitedLinkCommon::IsVisited(Fingerprint fingerprint) const {
 // Uses the top 64 bits of the MD5 sum of the canonical URL as the fingerprint,
 // this is as random as any other subset of the MD5SUM.
 //
-// FIXME: this uses the MD5SUM of the 16-bit character version. For systems where
-// wchar_t is not 16 bits (Linux uses 32 bits, I think), this will not be
+// FIXME: this uses the MD5SUM of the 16-bit character version. For systems
+// where wchar_t is not 16 bits (Linux uses 32 bits, I think), this will not be
 // compatable. We should define explicitly what should happen here across
 // platforms, and convert if necessary (probably to UTF-16).
 

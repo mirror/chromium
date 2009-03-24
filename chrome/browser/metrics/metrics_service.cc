@@ -430,6 +430,19 @@ void MetricsService::SetRecording(bool enabled) {
     return;
 
   if (enabled) {
+    if (client_id_.empty()) {
+      PrefService* pref = g_browser_process->local_state();
+      DCHECK(pref);
+      client_id_ = WideToUTF8(pref->GetString(prefs::kMetricsClientID));
+      if (client_id_.empty()) {
+        client_id_ = GenerateClientID();
+        pref->SetString(prefs::kMetricsClientID, UTF8ToWide(client_id_));
+
+        // Might as well make a note of how long this ID has existed
+        pref->SetString(prefs::kMetricsClientIDTimestamp,
+                        Int64ToWString(Time::Now().ToTimeT()));
+      }
+    }
     StartRecording();
     ListenerRegistration(true);
   } else {
@@ -590,15 +603,6 @@ void MetricsService::InitializeMetricsState() {
     DiscardOldStabilityStats(pref);
     pref->SetString(prefs::kStabilityStatsVersion,
                     UTF8ToWide(MetricsLog::GetVersionString()));
-  }
-
-  client_id_ = WideToUTF8(pref->GetString(prefs::kMetricsClientID));
-  if (client_id_.empty()) {
-    client_id_ = GenerateClientID();
-    pref->SetString(prefs::kMetricsClientID, UTF8ToWide(client_id_));
-
-    // Might as well make a note of how long this ID has existed
-    pref->SetInt64(prefs::kMetricsClientIDTimestamp, Time::Now().ToTimeT());
   }
 
   // Update session ID
@@ -1494,8 +1498,9 @@ bool MetricsService::ProbabilityTest(double probability,
   // string somehow to get a big integer idnumber (could be negative
   // from wraparound)
   int big = 1;
-  for (size_t j = n - 1; j >= 0; --j) {
-    idnumber += static_cast<int>(client_id_c_str[j]) * big;
+  int last_pos = n - 1;
+  for (size_t j = 0; j < n; ++j) {
+    idnumber += static_cast<int>(client_id_c_str[last_pos - j]) * big;
     big *= 10;
   }
 

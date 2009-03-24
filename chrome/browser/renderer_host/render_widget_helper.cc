@@ -7,6 +7,7 @@
 #include "base/thread.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
+#include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/renderer_host/resource_dispatcher_host.h"
 #include "chrome/common/render_messages.h"
 
@@ -41,15 +42,16 @@ class RenderWidgetHelper::PaintMsgProxy : public Task {
   DISALLOW_COPY_AND_ASSIGN(PaintMsgProxy);
 };
 
-RenderWidgetHelper::RenderWidgetHelper(int render_process_id)
-    : render_process_id_(render_process_id),
+RenderWidgetHelper::RenderWidgetHelper()
+    : render_process_id_(-1),
       ui_loop_(MessageLoop::current()),
 #if defined(OS_WIN)
       event_(CreateEvent(NULL, FALSE /* auto-reset */, FALSE, NULL)),
 #elif defined(OS_POSIX)
       event_(false /* auto-reset */, false),
 #endif
-      block_popups_(false) {
+      block_popups_(false),
+      resource_dispatcher_host_(NULL) {
 }
 
 RenderWidgetHelper::~RenderWidgetHelper() {
@@ -62,16 +64,22 @@ RenderWidgetHelper::~RenderWidgetHelper() {
 #endif
 }
 
+void RenderWidgetHelper::Init(
+    int render_process_id,
+    ResourceDispatcherHost* resource_dispatcher_host) {
+  render_process_id_ = render_process_id;
+  resource_dispatcher_host_ = resource_dispatcher_host;
+}
+
 int RenderWidgetHelper::GetNextRoutingID() {
   return next_routing_id_.GetNext() + 1;
 }
 
 void RenderWidgetHelper::CancelResourceRequests(int render_widget_id) {
-  if (g_browser_process->io_thread()) {
+  if (g_browser_process->io_thread() && render_process_id_ != -1) {
     g_browser_process->io_thread()->message_loop()->PostTask(FROM_HERE,
         NewRunnableMethod(this,
                           &RenderWidgetHelper::OnCancelResourceRequests,
-                          g_browser_process->resource_dispatcher_host(),
                           render_widget_id));
   }
 }
@@ -82,7 +90,6 @@ void RenderWidgetHelper::CrossSiteClosePageACK(int new_render_process_host_id,
     g_browser_process->io_thread()->message_loop()->PostTask(FROM_HERE,
         NewRunnableMethod(this,
                           &RenderWidgetHelper::OnCrossSiteClosePageACK,
-                          g_browser_process->resource_dispatcher_host(),
                           new_render_process_host_id,
                           new_request_id));
   }
@@ -183,16 +190,16 @@ void RenderWidgetHelper::OnDispatchPaintMsg(PaintMsgProxy* proxy) {
 }
 
 void RenderWidgetHelper::OnCancelResourceRequests(
-    ResourceDispatcherHost* dispatcher,
     int render_widget_id) {
-  dispatcher->CancelRequestsForRenderView(render_process_id_, render_widget_id);
+  resource_dispatcher_host_->CancelRequestsForRoute(
+      render_process_id_, render_widget_id);
 }
 
 void RenderWidgetHelper::OnCrossSiteClosePageACK(
-    ResourceDispatcherHost* dispatcher,
     int new_render_process_host_id,
     int new_request_id) {
-  dispatcher->OnClosePageACK(new_render_process_host_id, new_request_id);
+  resource_dispatcher_host_->OnClosePageACK(
+      new_render_process_host_id, new_request_id);
 }
 
 void RenderWidgetHelper::CreateNewWindow(int opener_id,
@@ -225,28 +232,45 @@ void RenderWidgetHelper::CreateNewWindow(int opener_id,
   DCHECK(result) << "Couldn't duplicate modal dialog event for the renderer.";
 #endif
 
-  // The easiest way to reach RenderViewHost is just to send a routed message.
-  ViewHostMsg_CreateWindowWithRoute msg(opener_id, *route_id,
-                                        modal_dialog_event_internal);
+  // Block resource requests until the view is created, since the HWND might be
+  // needed if a response ends up creating a plugin.
+  resource_dispatcher_host_->BlockRequestsForRoute(
+      render_process_id_, *route_id);
 
   ui_loop_->PostTask(FROM_HERE, NewRunnableMethod(
-      this, &RenderWidgetHelper::OnSimulateReceivedMessage, msg));
+      this, &RenderWidgetHelper::OnCreateWindowOnUI, opener_id, *route_id,
+      modal_dialog_event_internal));
+}
+
+void RenderWidgetHelper::OnCreateWindowOnUI(
+    int opener_id, int route_id, ModalDialogEvent modal_dialog_event) {
+  RenderViewHost* host = RenderViewHost::FromID(render_process_id_, opener_id);
+  if (host)
+    host->CreateNewWindow(route_id, modal_dialog_event);
+
+  g_browser_process->io_thread()->message_loop()->PostTask(FROM_HERE,
+      NewRunnableMethod(this, &RenderWidgetHelper::OnCreateWindowOnIO, route_id));
+}
+
+void RenderWidgetHelper::OnCreateWindowOnIO(int route_id) {
+  resource_dispatcher_host_->ResumeBlockedRequestsForRoute(
+      render_process_id_, route_id);
 }
 
 void RenderWidgetHelper::CreateNewWidget(int opener_id,
                                          bool activatable,
                                          int* route_id) {
   *route_id = GetNextRoutingID();
-  ViewHostMsg_CreateWidgetWithRoute msg(opener_id, *route_id, activatable);
   ui_loop_->PostTask(FROM_HERE, NewRunnableMethod(
-      this, &RenderWidgetHelper::OnSimulateReceivedMessage, msg));
+      this, &RenderWidgetHelper::OnCreateWidgetOnUI, opener_id, *route_id,
+      activatable));
 }
 
-void RenderWidgetHelper::OnSimulateReceivedMessage(
-    const IPC::Message& message) {
-  RenderProcessHost* host = RenderProcessHost::FromID(render_process_id_);
+void RenderWidgetHelper::OnCreateWidgetOnUI(
+    int opener_id, int route_id, bool activatable) {
+  RenderViewHost* host = RenderViewHost::FromID(render_process_id_, opener_id);
   if (host)
-    host->OnMessageReceived(message);
+    host->CreateNewWidget(route_id, activatable);
 }
 
 #if defined(OS_MACOSX)
@@ -263,21 +287,21 @@ TransportDIB* RenderWidgetHelper::MapTransportDIB(TransportDIB::Id dib_id) {
 }
 
 void RenderWidgetHelper::AllocTransportDIB(
-    size_t size, IPC::Maybe<TransportDIB::Handle>* result) {
+    size_t size, TransportDIB::Handle* result) {
   base::SharedMemory* shared_memory = new base::SharedMemory();
   if (!shared_memory->Create(L"", false /* read write */,
                              false /* do not open existing */, size)) {
-    result->valid = false;
+    result->fd = -1;
+    result->auto_close = false;
     delete shared_memory;
     return;
   }
 
-  result->valid = true;
-  shared_memory->GiveToProcess(0 /* pid, not needed */, &result->value);
+  shared_memory->GiveToProcess(0 /* pid, not needed */, result);
 
   // Keep a copy of the file descriptor around
   AutoLock locked(allocated_dibs_lock_);
-  allocated_dibs_[shared_memory->id()] = dup(result->value.fd);
+  allocated_dibs_[shared_memory->id()] = dup(result->fd);
 }
 
 void RenderWidgetHelper::FreeTransportDIB(TransportDIB::Id dib_id) {

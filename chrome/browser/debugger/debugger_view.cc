@@ -23,9 +23,9 @@
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/grid_layout.h"
-#include "chrome/views/native_scroll_bar.h"
-#include "chrome/views/scroll_view.h"
-#include "chrome/views/text_field.h"
+#include "chrome/views/controls/scrollbar/native_scroll_bar.h"
+#include "chrome/views/controls/scroll_view.h"
+#include "chrome/views/controls/text_field.h"
 #include "chrome/views/view.h"
 
 #include "grit/debugger_resources.h"
@@ -97,9 +97,9 @@ void DebuggerView::OnInit() {
   // We can't create the WebContents until we've actually been put into a real
   // view hierarchy somewhere.
   Profile* profile = BrowserList::GetLastActive()->profile();
-  TabContents* tc = TabContents::CreateWithType(TAB_CONTENTS_DEBUGGER, profile,
-                                                NULL);
-  web_contents_ = tc->AsWebContents();
+  web_contents_ = new WebContents(profile, NULL, NULL, MSG_ROUTING_NONE, NULL);
+  web_contents_->CreateView();
+
   web_contents_->SetupController(profile);
   web_contents_->set_delegate(this);
   web_container_->SetTabContents(web_contents_);
@@ -157,4 +157,3 @@ void DebuggerView::LoadingStateChanged(TabContents* source) {
   if (!source->is_loading())
     SetOutputViewReady();
 }
-

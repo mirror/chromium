@@ -6,7 +6,6 @@
 
 #include "base/command_line.h"
 #include "base/path_service.h"
-#include "base/ref_counted.h"
 #include "base/thread.h"
 #include "chrome/browser/browser_list.h"
 #include "chrome/browser/browser_process.h"
@@ -20,13 +19,13 @@
 #include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/views/background.h"
-#include "chrome/views/checkbox.h"
-#include "chrome/views/client_view.h"
-#include "chrome/views/image_view.h"
-#include "chrome/views/label.h"
-#include "chrome/views/throbber.h"
-#include "chrome/views/separator.h"
-#include "chrome/views/window.h"
+#include "chrome/views/controls/button/checkbox.h"
+#include "chrome/views/controls/image_view.h"
+#include "chrome/views/controls/label.h"
+#include "chrome/views/controls/throbber.h"
+#include "chrome/views/controls/separator.h"
+#include "chrome/views/window/client_view.h"
+#include "chrome/views/window/window.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 #include "grit/theme_resources.h"
@@ -86,7 +85,7 @@ void FirstRunViewBase::SetupControls() {
   AddChildView(separator_1_);
 
   // The "make us default browser" check box.
-  default_browser_ = new views::CheckBox(
+  default_browser_ = new views::Checkbox(
       l10n_util::GetString(IDS_FR_CUSTOMIZE_DEFAULT_BROWSER));
   default_browser_->SetMultiLine(true);
   AddChildView(default_browser_);

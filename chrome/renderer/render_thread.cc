@@ -2,18 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "build/build_config.h"
-
-#if defined(OS_WIN)
-#include <windows.h>
-#include <objbase.h>
-#endif
-#include <algorithm>
-
 #include "chrome/renderer/render_thread.h"
 
+#include <algorithm>
+#include <vector>
+
+#include "base/command_line.h"
 #include "base/shared_memory.h"
-#include "chrome/common/chrome_plugin_lib.h"
+#include "base/stats_table.h"
+#include "chrome/common/chrome_switches.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/common/notification_service.h"
 #include "chrome/common/url_constants.h"
@@ -22,24 +19,33 @@
 #if defined(OS_WIN)
 #include "chrome/plugin/plugin_channel.h"
 #else
-#include <vector>
 #include "base/scoped_handle.h"
 #include "chrome/plugin/plugin_channel_base.h"
 #include "webkit/glue/weburlrequest.h"
 #endif
+#include "chrome/renderer/extensions/renderer_extension_bindings.h"
 #include "chrome/renderer/net/render_dns_master.h"
 #include "chrome/renderer/render_process.h"
 #include "chrome/renderer/render_view.h"
 #include "chrome/renderer/renderer_webkitclient_impl.h"
 #include "chrome/renderer/user_script_slave.h"
 #include "chrome/renderer/visitedlink_slave.h"
-#include "webkit/glue/cache_manager.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebCache.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebKit.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebString.h"
+#include "webkit/extensions/v8/gears_extension.h"
+#include "webkit/extensions/v8/interval_extension.h"
+#include "webkit/extensions/v8/playback_extension.h"
 
-#include "WebKit.h"
-#include "WebString.h"
+#if defined(OS_WIN)
+#include <windows.h>
+#include <objbase.h>
+#endif
+
+using WebKit::WebCache;
+using WebKit::WebString;
 
 static const unsigned int kCacheStatsDelayMS = 2000 /* milliseconds */;
-
 
 //-----------------------------------------------------------------------------
 // Methods below are only called on the owner's thread:
@@ -152,24 +158,9 @@ void RenderThread::OnControlMessageReceived(const IPC::Message& msg) {
                           OnGetRendererHistograms)
     IPC_MESSAGE_HANDLER(ViewMsg_GetCacheResourceStats,
                         OnGetCacheResourceStats)
-    IPC_MESSAGE_HANDLER(ViewMsg_PluginMessage, OnPluginMessage)
     IPC_MESSAGE_HANDLER(ViewMsg_UserScripts_NewScripts,
                         OnUpdateUserScripts)
   IPC_END_MESSAGE_MAP()
-}
-
-void RenderThread::OnPluginMessage(const FilePath& plugin_path,
-                                   const std::vector<uint8>& data) {
-  if (!ChromePluginLib::IsInitialized()) {
-    return;
-  }
-  CHECK(ChromePluginLib::IsPluginThread());
-  ChromePluginLib *chrome_plugin = ChromePluginLib::Find(plugin_path);
-  if (chrome_plugin) {
-    void *data_ptr = const_cast<void*>(reinterpret_cast<const void*>(&data[0]));
-    uint32 data_len = static_cast<uint32>(data.size());
-    chrome_plugin->functions().on_message(data_ptr, data_len);
-  }
 }
 
 void RenderThread::OnSetNextPageID(int32 next_page_id) {
@@ -206,13 +197,14 @@ void RenderThread::OnSetCacheCapacities(size_t min_dead_capacity,
                                         size_t max_dead_capacity,
                                         size_t capacity) {
   EnsureWebKitInitialized();
-  CacheManager::SetCapacities(min_dead_capacity, max_dead_capacity, capacity);
+  WebCache::setCapacities(
+      min_dead_capacity, max_dead_capacity, capacity);
 }
 
 void RenderThread::OnGetCacheResourceStats() {
   EnsureWebKitInitialized();
-  CacheManager::ResourceTypeStats stats;
-  CacheManager::GetResourceTypeStats(&stats);
+  WebCache::ResourceTypeStats stats;
+  WebCache::getResourceTypeStats(&stats);
   Send(new ViewHostMsg_ResourceTypeStats(stats));
 }
 
@@ -222,8 +214,8 @@ void RenderThread::OnGetRendererHistograms() {
 
 void RenderThread::InformHostOfCacheStats() {
   EnsureWebKitInitialized();
-  CacheManager::UsageStats stats;
-  CacheManager::GetUsageStats(&stats);
+  WebCache::UsageStats stats;
+  WebCache::getUsageStats(&stats);
   Send(new ViewHostMsg_UpdatedCacheStats(stats));
 }
 
@@ -241,7 +233,30 @@ void RenderThread::InformHostOfCacheStatsLater() {
 void RenderThread::EnsureWebKitInitialized() {
   if (webkit_client_.get())
     return;
+
+  v8::V8::SetCounterFunction(StatsTable::FindLocation);
+
   webkit_client_.reset(new RendererWebKitClientImpl);
   WebKit::initialize(webkit_client_.get());
-  WebKit::registerURLSchemeAsLocal(ASCIIToUTF16(chrome::kChromeUIScheme));
+
+  // chrome-ui pages should not be accessible by normal content, and should
+  // also be unable to script anything but themselves (to help limit the damage
+  // that a corrupt chrome-ui page could cause).
+  WebString chrome_ui_scheme(ASCIIToUTF16(chrome::kChromeUIScheme));
+  WebKit::registerURLSchemeAsLocal(chrome_ui_scheme);
+  WebKit::registerURLSchemeAsNoAccess(chrome_ui_scheme);
+
+  WebKit::registerExtension(extensions_v8::GearsExtension::Get());
+  WebKit::registerExtension(extensions_v8::IntervalExtension::Get());
+  WebKit::registerExtension(extensions_v8::RendererExtensionBindings::Get());
+
+  const CommandLine& command_line = *CommandLine::ForCurrentProcess();
+  if (command_line.HasSwitch(switches::kPlaybackMode) ||
+      command_line.HasSwitch(switches::kRecordMode)) {
+    WebKit::registerExtension(extensions_v8::PlaybackExtension::Get());
+  }
+
+  if (command_line.HasSwitch(switches::kEnableWebWorkers)) {
+    WebKit::enableWebWorkers();
+  }
 }

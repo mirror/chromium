@@ -3,11 +3,8 @@
 // found in the LICENSE file.
 
 #include "config.h"
+#include "webkit/glue/webplugin_impl.h"
 
-#include "base/compiler_specific.h"
-#include "build/build_config.h"
-
-MSVC_PUSH_WARNING_LEVEL(0);
 #include "Cursor.h"
 #include "Document.h"
 #include "DocumentLoader.h"
@@ -40,27 +37,23 @@ MSVC_PUSH_WARNING_LEVEL(0);
 #include "ScriptValue.h"
 #include "ScrollView.h"
 #include "Widget.h"
-MSVC_POP_WARNING();
-
-#include "WebKit.h"
-#include "WebKitClient.h"
-#include "WebString.h"
-#include "WebURL.h"
 
 #undef LOG
-
 #include "base/gfx/rect.h"
 #include "base/logging.h"
 #include "base/message_loop.h"
 #include "base/string_util.h"
 #include "base/sys_string_conversions.h"
 #include "net/base/escape.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebKit.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebKitClient.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebString.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebURL.h"
 #include "webkit/glue/chrome_client_impl.h"
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/multipart_response_delegate.h"
 #include "webkit/glue/webcursor.h"
 #include "webkit/glue/webkit_glue.h"
-#include "webkit/glue/webplugin_impl.h"
 #include "webkit/glue/plugins/plugin_host.h"
 #include "webkit/glue/plugins/plugin_instance.h"
 #include "webkit/glue/stacking_order_iterator.h"
@@ -138,13 +131,12 @@ bool WebPluginContainer::isPluginView() const {
 
 
 void WebPluginContainer::setFrameRect(const WebCore::IntRect& rect) {
-  // WebKit calls move every time it paints (see RenderWidget::paint).  No need
-  // to do expensive operations if we didn't actually move.
-  if (rect == frameRect())
-    return;
+  bool widget_dimensions_changed = (rect != frameRect());
 
-  WebCore::Widget::setFrameRect(rect);
-  impl_->setFrameRect(rect);
+  if (widget_dimensions_changed)
+    WebCore::Widget::setFrameRect(rect);
+
+  impl_->setFrameRect(rect, widget_dimensions_changed);
 }
 
 void WebPluginContainer::paint(WebCore::GraphicsContext* gc,
@@ -204,7 +196,20 @@ void WebPluginContainer::frameRectsChanged() {
   WebCore::Widget::frameRectsChanged();
   // This is a hack to tickle re-positioning of the plugin in the case where
   // our parent view was scrolled.
-  impl_->setFrameRect(frameRect());
+  impl_->setFrameRect(frameRect(), true);
+}
+
+// We override this function, to make sure that geometry updates are sent
+// over to the plugin. For e.g. when a plugin is instantiated it does
+// not have a valid parent. As a result the first geometry update from
+// webkit is ignored. This function is called when the plugin eventually
+// gets a parent.
+void WebPluginContainer::setParentVisible(bool visible) {
+  WebCore::Widget::setParentVisible(visible);
+  if (visible)
+    show();
+  else
+    hide();
 }
 
 // We override this function so that if the plugin is windowed, we can call
@@ -214,7 +219,7 @@ void WebPluginContainer::frameRectsChanged() {
 void WebPluginContainer::setParent(WebCore::ScrollView* view) {
   WebCore::Widget::setParent(view);
   if (view) {
-    impl_->setFrameRect(frameRect());
+    impl_->setFrameRect(frameRect(), true);
     impl_->delegate_->FlushGeometryUpdates();
   }
 }
@@ -632,7 +637,8 @@ void WebPluginImpl::windowCutoutRects(
   }
 }
 
-void WebPluginImpl::setFrameRect(const WebCore::IntRect& rect) {
+void WebPluginImpl::setFrameRect(const WebCore::IntRect& rect,
+                                 bool widget_dimensions_changed) {
   if (!parent())
     return;
 
@@ -652,9 +658,11 @@ void WebPluginImpl::setFrameRect(const WebCore::IntRect& rect) {
   std::vector<gfx::Rect> cutout_rects;
   CalculateBounds(rect, &window_rect, &clip_rect, &cutout_rects);
 
-  delegate_->UpdateGeometry(
-      webkit_glue::FromIntRect(window_rect),
-      webkit_glue::FromIntRect(clip_rect));
+  if (widget_dimensions_changed) {
+    delegate_->UpdateGeometry(
+        webkit_glue::FromIntRect(window_rect),
+        webkit_glue::FromIntRect(clip_rect));
+  }
 
   if (window_) {
     // Let the WebViewDelegate know that the plugin window needs to be moved,
@@ -705,15 +713,12 @@ void WebPluginImpl::paint(WebCore::GraphicsContext* gc,
   gc->translate(static_cast<float>(origin.x()),
                 static_cast<float>(origin.y()));
 
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_LINUX)
   // Note that |context| is only used when in windowless mode.
   gfx::NativeDrawingContext context =
       gc->platformContext()->canvas()->beginPlatformPaint();
-#elif defined (OS_MACOSX)
+#elif defined(OS_MACOSX)
   gfx::NativeDrawingContext context = gc->platformContext();
-#else
-  // TODO(port): the equivalent of the above.
-  void* context = NULL;  // Temporary, to reduce ifdefs.
 #endif
 
   WebCore::IntRect window_rect =
@@ -722,7 +727,7 @@ void WebPluginImpl::paint(WebCore::GraphicsContext* gc,
 
   delegate_->Paint(context, webkit_glue::FromIntRect(window_rect));
 
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_LINUX)
   gc->platformContext()->canvas()->endPlatformPaint();
 #endif
   gc->restore();
@@ -1231,9 +1236,8 @@ bool WebPluginImpl::InitiateHTTPRequest(int resource_id,
   ClientInfo info;
   info.id = resource_id;
   info.client = client;
-  info.request.setFrame(frame());
   info.request.setURL(kurl);
-  info.request.setOriginPid(delegate_->GetProcessId());
+  info.request.setRequestorProcessID(delegate_->GetProcessId());
   info.request.setTargetType(WebCore::ResourceRequest::TargetIsObject);
   info.request.setHTTPMethod(method);
 
@@ -1258,8 +1262,13 @@ bool WebPluginImpl::InitiateHTTPRequest(int resource_id,
     SetPostData(&info.request, buf, buf_len);
   }
 
-  info.handle = WebCore::ResourceHandle::create(info.request, this, frame(),
-                                                false, false);
+  // Sets the routing id to associate the ResourceRequest with the RenderView.
+  WebCore::ResourceResponse response;
+  frame()->loader()->client()->dispatchWillSendRequest(
+      NULL, 0, info.request, response);
+
+  info.handle = WebCore::ResourceHandle::create(
+      info.request, this, NULL, false, false);
   if (!info.handle) {
     return false;
   }

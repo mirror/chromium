@@ -8,8 +8,6 @@
 
 #include "webkit/tools/test_shell/test_webview_delegate.h"
 
-#include "WebKit.h"
-
 #include "base/file_util.h"
 #include "base/gfx/point.h"
 #include "base/gfx/native_widget_types.h"
@@ -17,6 +15,7 @@
 #include "base/string_util.h"
 #include "base/trace_event.h"
 #include "net/base/net_errors.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebKit.h"
 #include "webkit/glue/webdatasource.h"
 #include "webkit/glue/webdropdata.h"
 #include "webkit/glue/weberror.h"
@@ -163,12 +162,27 @@ std::string TestWebViewDelegate::GetResourceDescription(uint32 identifier) {
 void TestWebViewDelegate::WillSendRequest(WebView* webview,
                                           uint32 identifier,
                                           WebRequest* request) {
-  std::string request_url = request->GetURL().possibly_invalid_spec();
+  GURL url = request->GetURL();
+  std::string request_url = url.possibly_invalid_spec();
+  std::string host = request->GetURL().host();
 
   if (shell_->ShouldDumpResourceLoadCallbacks()) {
     printf("%s - willSendRequest <WebRequest URL \"%s\">\n",
            GetResourceDescription(identifier).c_str(),
            request_url.c_str());
+  }
+
+  if (TestShell::layout_test_mode() && !host.empty() &&
+      (url.SchemeIs("http") || url.SchemeIs("https")) &&
+       host != "127.0.0.1" &&
+       host != "255.255.255.255" &&  // Used in some tests that expect to get
+                                     // back an error.
+       host != "localhost") {
+    printf("Blocked access to external URL %s\n", request_url.c_str());
+
+    // To block the request, we set its URL to an empty one.
+    request->SetURL(GURL());
+    return;
   }
 
   TRACE_EVENT_BEGIN("url.load", identifier, request_url);
@@ -409,7 +423,7 @@ void TestWebViewDelegate::AddMessageToConsole(WebView* webview,
   }
 }
 
-void TestWebViewDelegate::RunJavaScriptAlert(WebView* webview,
+void TestWebViewDelegate::RunJavaScriptAlert(WebFrame* webframe,
                                              const std::wstring& message) {
   if (!shell_->layout_test_mode()) {
     ShowJavaScriptAlert(message);
@@ -419,7 +433,7 @@ void TestWebViewDelegate::RunJavaScriptAlert(WebView* webview,
   }
 }
 
-bool TestWebViewDelegate::RunJavaScriptConfirm(WebView* webview,
+bool TestWebViewDelegate::RunJavaScriptConfirm(WebFrame* webframe,
                                                const std::wstring& message) {
   if (shell_->layout_test_mode()) {
     // When running tests, write to stdout.
@@ -430,9 +444,10 @@ bool TestWebViewDelegate::RunJavaScriptConfirm(WebView* webview,
   return false;
 }
 
-bool TestWebViewDelegate::RunJavaScriptPrompt(WebView* webview,
-    const std::wstring& message, const std::wstring& default_value,
-    std::wstring* result) {
+bool TestWebViewDelegate::RunJavaScriptPrompt(WebFrame* webframe,
+                                              const std::wstring& message,
+                                              const std::wstring& default_value,
+                                              std::wstring* result) {
   if (shell_->layout_test_mode()) {
     // When running tests, write to stdout.
     std::string utf8_message = WideToUTF8(message);
@@ -834,4 +849,3 @@ std::wstring TestWebViewDelegate::GetFrameDescription(WebFrame* webframe) {
       return L"frame (anonymous)";
   }
 }
-

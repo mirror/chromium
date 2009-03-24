@@ -18,7 +18,7 @@
 		<Configuration
 			Name="Debug|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets=".\renderer.vsprops;$(SolutionDir)..\build\debug.vsprops;..\tools\build\win\precompiled_wtl.vsprops;..\..\webkit\build\WebKit\using_WebKit.vsprops"
+			InheritedPropertySheets=".\renderer.vsprops;$(SolutionDir)..\build\debug.vsprops;..\tools\build\win\precompiled_wtl.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -69,7 +69,7 @@
 		<Configuration
 			Name="Release|Win32"
 			ConfigurationType="4"
-			InheritedPropertySheets=".\renderer.vsprops;$(SolutionDir)..\build\release.vsprops;..\..\webkit\build\WebKit\using_WebKit.vsprops"
+			InheritedPropertySheets=".\renderer.vsprops;..\..\build\release.vsprops"
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
@@ -185,11 +185,11 @@
 			Name="extensions"
 			>
 			<File
-				RelativePath=".\extensions\extension_bindings.cc"
+				RelativePath=".\extensions\renderer_extension_bindings.cc"
 				>
 			</File>
 			<File
-				RelativePath=".\extensions\extension_bindings.h"
+				RelativePath=".\extensions\renderer_extension_bindings.h"
 				>
 			</File>
 		</Filter>
@@ -202,14 +202,6 @@
 			>
 		</File>
 		<File
-			RelativePath=".\chrome_plugin_host.cc"
-			>
-		</File>
-		<File
-			RelativePath=".\chrome_plugin_host.h"
-			>
-		</File>
-		<File
 			RelativePath=".\debug_message_handler.cc"
 			>
 		</File>
@@ -218,27 +210,27 @@
 			>
 		</File>
 		<File
-			RelativePath=".\dev_tools_agent.cc"
+			RelativePath=".\devtools_agent.cc"
 			>
 		</File>
 		<File
-			RelativePath=".\dev_tools_agent.h"
+			RelativePath=".\devtools_agent.h"
 			>
 		</File>
 		<File
-			RelativePath=".\dev_tools_client.cc"
+			RelativePath=".\devtools_client.cc"
 			>
 		</File>
 		<File
-			RelativePath=".\dev_tools_client.h"
+			RelativePath=".\devtools_client.h"
 			>
 		</File>
 		<File
-			RelativePath=".\dev_tools_messages.h"
+			RelativePath=".\devtools_messages.h"
 			>
 		</File>
 		<File
-			RelativePath=".\dev_tools_messages_internal.h"
+			RelativePath=".\devtools_messages_internal.h"
 			>
 		</File>
 		<File
@@ -339,6 +331,14 @@
 		</File>
 		<File
 			RelativePath=".\renderer_histogram_snapshots.h"
+			>
+		</File>
+		<File
+			RelativePath=".\renderer_logging.cc"
+			>
+		</File>
+		<File
+			RelativePath=".\renderer_logging.h"
 			>
 		</File>
 		<File

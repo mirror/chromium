@@ -1,10 +1,10 @@
 // Copyright (c) 2008, Google Inc.
 // All rights reserved.
-// 
+//
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
 // met:
-// 
+//
 //     * Redistributions of source code must retain the above copyright
 // notice, this list of conditions and the following disclaimer.
 //     * Redistributions in binary form must reproduce the above
@@ -14,7 +14,7 @@
 //     * Neither the name of Google Inc. nor the names of its
 // contributors may be used to endorse or promote products derived from
 // this software without specific prior written permission.
-// 
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -34,7 +34,7 @@
 #include "v8_helpers.h"
 #include "v8_proxy.h"
 #include "v8_index.h"
-#include "np_v8object.h"
+#include "NPV8Object.h"
 
 #include "DOMWindow.h"
 
@@ -45,7 +45,7 @@ void WrapNPObject(v8::Handle<v8::Object> obj, NPObject* npobj)
   WebCore::V8Proxy::SetDOMWrapper(obj, WebCore::V8ClassIndex::NPOBJECT, npobj);
 }
 
-v8::Local<v8::Context> GetV8Context(NPP npp, NPObject* npobj)
+v8::Local<v8::Context> getV8Context(NPP npp, NPObject* npobj)
 {
     V8NPObject* object = reinterpret_cast<V8NPObject*>(npobj);
     return WebCore::V8Proxy::GetContext(object->rootObject->frame());

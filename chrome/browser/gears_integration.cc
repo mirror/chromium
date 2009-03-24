@@ -7,7 +7,6 @@
 #include "base/gfx/png_encoder.h"
 #include "base/logging.h"
 #include "base/message_loop.h"
-#include "base/ref_counted.h"
 #include "base/string_util.h"
 #include "chrome/browser/chrome_plugin_host.h"
 #include "chrome/common/chrome_plugin_util.h"
@@ -134,7 +133,7 @@ static GURL ConvertSkBitmapToDataURL(const SkBitmap& icon) {
 class CreateShortcutCommand : public CPCommandInterface {
  public:
   CreateShortcutCommand(
-      const std::string& name, const std::string& orig_name, 
+      const std::string& name, const std::string& orig_name,
       const std::string& url, const std::string& description,
       const std::vector<webkit_glue::WebApplicationInfo::IconInfo> &icons,
       const SkBitmap& fallback_icon,
@@ -314,4 +313,3 @@ void GearsQueryShortcuts(GearsQueryShortcutsCallback* callback) {
       new QueryShortcutsCommand(callback),
       NULL);
 }
-

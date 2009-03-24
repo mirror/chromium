@@ -5,9 +5,10 @@
 #ifndef CHROME_BROWSER_ICON_LOADER_H__
 #define CHROME_BROWSER_ICON_LOADER_H__
 
-#include "base/logging.h"
 #include <string>
 #include <windows.h>
+
+#include "base/basictypes.h"
 
 namespace {
 class IconLoaderProcessor;
@@ -127,4 +128,3 @@ class IconLoader {
 };
 
 #endif  // CHROME_BROWSER_ICON_LOADER_H__
-

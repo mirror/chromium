@@ -25,12 +25,12 @@
 #include "chrome/common/pref_service.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/button.h"
-#include "chrome/views/client_view.h"
-#include "chrome/views/focus_manager.h"
-#include "chrome/views/hwnd_view.h"
-#include "chrome/views/non_client_view.h"
-#include "chrome/views/window_resources.h"
+#include "chrome/views/controls/button/image_button.h"
+#include "chrome/views/controls/hwnd_view.h"
+#include "chrome/views/focus/focus_manager.h"
+#include "chrome/views/window/client_view.h"
+#include "chrome/views/window/non_client_view.h"
+#include "chrome/views/window/window_resources.h"
 #include "grit/chromium_strings.h"
 #include "grit/generated_resources.h"
 #include "grit/theme_resources.h"
@@ -188,7 +188,7 @@ SkBitmap* OTRWindowResources::bitmaps_[];
 
 class ConstrainedWindowFrameView
     : public views::NonClientFrameView,
-      public views::BaseButton::ButtonListener {
+      public views::ButtonListener {
  public:
   explicit ConstrainedWindowFrameView(ConstrainedWindowImpl* container);
   virtual ~ConstrainedWindowFrameView();
@@ -211,8 +211,8 @@ class ConstrainedWindowFrameView
   virtual void Layout();
   virtual void ThemeChanged();
 
-  // Overridden from views::BaseButton::ButtonListener:
-  virtual void ButtonPressed(views::BaseButton* sender);
+  // Overridden from views::ButtonListener:
+  virtual void ButtonPressed(views::Button* sender);
 
  private:
   // Returns the thickness of the border that makes up the window frame edges.
@@ -259,7 +259,7 @@ class ConstrainedWindowFrameView
 
   gfx::Rect title_bounds_;
 
-  views::Button* close_button_;
+  views::ImageButton* close_button_;
 
   // The bounds of the ClientView.
   gfx::Rect client_view_bounds_;
@@ -309,19 +309,18 @@ ConstrainedWindowFrameView::ConstrainedWindowFrameView(
     ConstrainedWindowImpl* container)
         : NonClientFrameView(),
           container_(container),
-          close_button_(new views::Button) {
+          close_button_(new views::ImageButton(this)) {
   InitClass();
   InitWindowResources();
 
-  close_button_->SetImage(views::Button::BS_NORMAL,
+  close_button_->SetImage(views::CustomButton::BS_NORMAL,
       resources_->GetPartBitmap(FRAME_CLOSE_BUTTON_ICON));
-  close_button_->SetImage(views::Button::BS_HOT,
+  close_button_->SetImage(views::CustomButton::BS_HOT,
       resources_->GetPartBitmap(FRAME_CLOSE_BUTTON_ICON_H));
-  close_button_->SetImage(views::Button::BS_PUSHED,
+  close_button_->SetImage(views::CustomButton::BS_PUSHED,
       resources_->GetPartBitmap(FRAME_CLOSE_BUTTON_ICON_P));
-  close_button_->SetImageAlignment(views::Button::ALIGN_CENTER,
-                                   views::Button::ALIGN_MIDDLE);
-  close_button_->SetListener(this, 0);
+  close_button_->SetImageAlignment(views::ImageButton::ALIGN_CENTER,
+                                   views::ImageButton::ALIGN_MIDDLE);
   AddChildView(close_button_);
 }
 
@@ -368,7 +367,7 @@ int ConstrainedWindowFrameView::NonClientHitTest(const gfx::Point& point) {
   if (!bounds().Contains(point))
     return HTNOWHERE;
 
-  int frame_component = container_->client_view()->NonClientHitTest(point);
+  int frame_component = container_->GetClientView()->NonClientHitTest(point);
   if (frame_component != HTNOWHERE)
     return frame_component;
 
@@ -378,7 +377,7 @@ int ConstrainedWindowFrameView::NonClientHitTest(const gfx::Point& point) {
 
   int window_component = GetHTComponentForFrame(point, FrameBorderThickness(),
       NonClientBorderThickness(), kResizeAreaCornerSize, kResizeAreaCornerSize,
-      container_->window_delegate()->CanResize());
+      container_->GetDelegate()->CanResize());
   // Fall back to the caption if no other component matches.
   return (window_component == HTNOWHERE) ? HTCAPTION : window_component;
 }
@@ -430,10 +429,9 @@ void ConstrainedWindowFrameView::ThemeChanged() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// ConstrainedWindowFrameView, views::BaseButton::Button
-//     implementation:
+// ConstrainedWindowFrameView, views::ButtonListener implementation:
 
-void ConstrainedWindowFrameView::ButtonPressed(views::BaseButton* sender) {
+void ConstrainedWindowFrameView::ButtonPressed(views::Button* sender) {
   if (sender == close_button_)
     container_->ExecuteSystemMenuCommand(SC_CLOSE);
 }
@@ -606,10 +604,6 @@ views::NonClientFrameView* ConstrainedWindowImpl::CreateFrameViewForWindow() {
   return new ConstrainedWindowFrameView(this);
 }
 
-void ConstrainedWindowImpl::UpdateWindowTitle() {
-  UpdateUI(TabContents::INVALIDATE_TITLE);
-}
-
 void ConstrainedWindowImpl::ActivateConstrainedWindow() {
   // Other pop-ups are simply moved to the front of the z-order.
   SetWindowPos(HWND_TOP, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW);
@@ -617,7 +611,7 @@ void ConstrainedWindowImpl::ActivateConstrainedWindow() {
   // Store the focus of our parent focus manager so we can restore it when we
   // close.
   views::FocusManager* focus_manager =
-      views::FocusManager::GetFocusManager(GetHWND());
+      views::FocusManager::GetFocusManager(GetNativeView());
   DCHECK(focus_manager);
   focus_manager = focus_manager->GetParentFocusManager();
   if (focus_manager) {
@@ -628,7 +622,7 @@ void ConstrainedWindowImpl::ActivateConstrainedWindow() {
     focus_manager->StoreFocusedView();
 
     // Give our window the focus so we get keyboard messages.
-    ::SetFocus(GetHWND());
+    ::SetFocus(GetNativeView());
   }
 }
 
@@ -653,8 +647,8 @@ void ConstrainedWindowImpl::DidBecomeSelected() {
 
 std::wstring ConstrainedWindowImpl::GetWindowTitle() const {
   std::wstring display_title;
-  if (window_delegate())
-    display_title = window_delegate()->GetWindowTitle();
+  if (GetDelegate())
+    display_title = GetDelegate()->GetWindowTitle();
   else
     display_title = L"Untitled";
 
@@ -671,9 +665,9 @@ const gfx::Rect& ConstrainedWindowImpl::GetCurrentBounds() const {
 ConstrainedWindowImpl::ConstrainedWindowImpl(
     TabContents* owner,
     views::WindowDelegate* window_delegate)
-    : Window(window_delegate),
+    : WindowWin(window_delegate),
       owner_(owner) {
-  non_client_view_->SetFrameView(CreateFrameViewForWindow());
+  GetNonClientView()->SetFrameView(CreateFrameViewForWindow());
   Init();
 }
 
@@ -685,7 +679,7 @@ void ConstrainedWindowImpl::Init() {
 }
 
 void ConstrainedWindowImpl::InitAsDialog(const gfx::Rect& initial_bounds) {
-  Window::Init(owner_->GetNativeView(), initial_bounds);
+  WindowWin::Init(owner_->GetNativeView(), initial_bounds);
   ActivateConstrainedWindow();
 }
 
@@ -707,7 +701,7 @@ void ConstrainedWindowImpl::OnDestroy() {
   // WM_DESTROY in FocusManager).  So the FocusManager we retrieve here is the
   // parent one (the one from the top window).
   views::FocusManager* focus_manager =
-      views::FocusManager::GetFocusManager(GetHWND());
+      views::FocusManager::GetFocusManager(GetNativeView());
   if (focus_manager) {
     // We may not have a focus manager if:
     // - we are hidden when closed (the TabContent would be detached).
@@ -719,7 +713,7 @@ void ConstrainedWindowImpl::OnDestroy() {
   }
 
   // Make sure we call super so that it can do its cleanup.
-  Window::OnDestroy();
+  WindowWin::OnDestroy();
 }
 
 void ConstrainedWindowImpl::OnFinalMessage(HWND window) {
@@ -727,7 +721,7 @@ void ConstrainedWindowImpl::OnFinalMessage(HWND window) {
   // list.
   owner_->WillClose(this);
 
-  WidgetWin::OnFinalMessage(window);
+  WindowWin::OnFinalMessage(window);
 }
 
 LRESULT ConstrainedWindowImpl::OnMouseActivate(HWND window,

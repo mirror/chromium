@@ -2,13 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef THREAD_COLLISION_WARNER_H_
-#define THREAD_COLLISION_WARNER_H_
+#ifndef BASE_THREAD_COLLISION_WARNER_H_
+#define BASE_THREAD_COLLISION_WARNER_H_
 
 #include <memory>
 
 #include "base/atomicops.h"
-#include "base/platform_thread.h"
 
 // A helper class alongside macros to be used to verify assumptions about thread
 // safety of a class.
@@ -240,4 +239,4 @@ class ThreadCollisionWarner {
 
 }  // namespace base
 
-#endif  // THREAD_COLLISION_WARNER_H_
+#endif  // BASE_THREAD_COLLISION_WARNER_H_

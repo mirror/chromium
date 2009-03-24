@@ -18,7 +18,7 @@
 #include "chrome/browser/toolbar_model.h"
 #include "chrome/common/gfx/chrome_font.h"
 #include "chrome/common/page_transition_types.h"
-#include "chrome/views/menu.h"
+#include "chrome/views/controls/menu/menu.h"
 #include "webkit/glue/window_open_disposition.h"
 
 class AutocompletePopupModel;
@@ -133,6 +133,8 @@ class AutocompleteEditViewWin
   // typed in the specified text and pressed enter.
   void PasteAndGo(const std::wstring& text);
 
+  void set_force_hidden(bool force_hidden) { force_hidden_ = force_hidden; }
+
   // Called before an accelerator is processed to give us a chance to override
   // it.
   bool OverrideAccelerator(const views::Accelerator& accelerator);
@@ -149,6 +151,7 @@ class AutocompleteEditViewWin
     MSG_WM_CUT(OnCut)
     MESSAGE_HANDLER_EX(WM_GETOBJECT, OnGetObject)
     MESSAGE_HANDLER_EX(WM_IME_COMPOSITION, OnImeComposition)
+    MESSAGE_HANDLER_EX(WM_IME_NOTIFY, OnImeNotify)
     MSG_WM_KEYDOWN(OnKeyDown)
     MSG_WM_KEYUP(OnKeyUp)
     MSG_WM_KILLFOCUS(OnKillFocus)
@@ -167,6 +170,7 @@ class AutocompleteEditViewWin
     MSG_WM_SYSCHAR(OnSysChar)  // WM_SYSxxx == WM_xxx with ALT down
     MSG_WM_SYSKEYDOWN(OnKeyDown)
     MSG_WM_SYSKEYUP(OnKeyUp)
+    MSG_WM_WINDOWPOSCHANGING(OnWindowPosChanging)
     DEFAULT_REFLECTION_HANDLER()  // avoids black margin area
   END_MSG_MAP()
 
@@ -227,6 +231,7 @@ class AutocompleteEditViewWin
   void OnCut();
   LRESULT OnGetObject(UINT uMsg, WPARAM wparam, LPARAM lparam);
   LRESULT OnImeComposition(UINT message, WPARAM wparam, LPARAM lparam);
+  LRESULT OnImeNotify(UINT message, WPARAM wparam, LPARAM lparam);
   void OnKeyDown(TCHAR key, UINT repeat_count, UINT flags);
   void OnKeyUp(TCHAR key, UINT repeat_count, UINT flags);
   void OnKillFocus(HWND focus_wnd);
@@ -241,6 +246,7 @@ class AutocompleteEditViewWin
   void OnPaste();
   void OnSetFocus(HWND focus_wnd);
   void OnSysChar(TCHAR ch, UINT repeat_count, UINT flags);
+  void OnWindowPosChanging(WINDOWPOS* window_pos);
 
   // Helper function for OnChar() and OnKeyDown() that handles keystrokes that
   // could change the text in the edit.
@@ -364,6 +370,12 @@ class AutocompleteEditViewWin
   // When true, the location bar view is read only and also is has a slightly
   // different presentation (font size / color). This is used for popups.
   bool popup_window_mode_;
+
+  // True if we should prevent attempts to make the window visible when we
+  // handle WM_WINDOWPOSCHANGING.  While toggling fullscreen mode, the main
+  // window is hidden, and if the edit is shown it will draw over the main
+  // window when that window reappears.
+  bool force_hidden_;
 
   // Non-null when the edit is gaining focus from a left click.  This is only
   // needed between when WM_MOUSEACTIVATE and WM_LBUTTONDOWN get processed.  It

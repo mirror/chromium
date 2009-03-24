@@ -9,13 +9,12 @@
 #include "chrome/browser/bookmarks/bookmark_drag_data.h"
 #include "chrome/browser/browser.h"  // TODO(beng): this dependency is awful.
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/debugger/dev_tools_window.h"
+#include "chrome/browser/dom_ui/dom_ui_host.h"
 #include "chrome/browser/download/download_request_manager.h"
 #include "chrome/browser/renderer_host/render_process_host.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/renderer_host/render_widget_host_view_win.h"
-#include "chrome/browser/tab_contents/render_view_context_menu.h"
-#include "chrome/browser/tab_contents/render_view_context_menu_controller.h"
+#include "chrome/browser/tab_contents/render_view_context_menu_win.h"
 #include "chrome/browser/tab_contents/interstitial_page.h"
 #include "chrome/browser/tab_contents/tab_contents_delegate.h"
 #include "chrome/browser/tab_contents/web_contents.h"
@@ -25,6 +24,8 @@
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/os_exchange_data.h"
 #include "chrome/common/url_constants.h"
+#include "chrome/views/focus/view_storage.h"
+#include "chrome/views/widget/root_view.h"
 #include "net/base/net_util.h"
 #include "webkit/glue/plugins/webplugin_delegate_impl.h"
 #include "webkit/glue/webdropdata.h"
@@ -52,9 +53,18 @@ WebContentsView* WebContentsView::Create(WebContents* web_contents) {
 WebContentsViewWin::WebContentsViewWin(WebContents* web_contents)
     : web_contents_(web_contents),
       ignore_next_char_event_(false) {
+  last_focused_view_storage_id_ =
+      views::ViewStorage::GetSharedInstance()->CreateStorageID();
 }
 
 WebContentsViewWin::~WebContentsViewWin() {
+  // Makes sure to remove any stored view we may still have in the ViewStorage.
+  //
+  // It is possible the view went away before us, so we only do this if the
+  // view is registered.
+  views::ViewStorage* view_storage = views::ViewStorage::GetSharedInstance();
+  if (view_storage->RetrieveView(last_focused_view_storage_id_) != NULL)
+    view_storage->RemoveView(last_focused_view_storage_id_);
 }
 
 WebContents* WebContentsViewWin::GetWebContents() {
@@ -69,8 +79,8 @@ void WebContentsViewWin::CreateView() {
   WidgetWin::Init(GetDesktopWindow(), gfx::Rect(), false);
 
   // Remove the root view drop target so we can register our own.
-  RevokeDragDrop(GetHWND());
-  drop_target_ = new WebDropTarget(GetHWND(), web_contents_);
+  RevokeDragDrop(GetNativeView());
+  drop_target_ = new WebDropTarget(GetNativeView(), web_contents_);
 }
 
 RenderWidgetHostView* WebContentsViewWin::CreateViewForWidget(
@@ -78,13 +88,13 @@ RenderWidgetHostView* WebContentsViewWin::CreateViewForWidget(
   DCHECK(!render_widget_host->view());
   RenderWidgetHostViewWin* view =
       new RenderWidgetHostViewWin(render_widget_host);
-  view->Create(GetHWND());
+  view->Create(GetNativeView());
   view->ShowWindow(SW_SHOW);
   return view;
 }
 
 gfx::NativeView WebContentsViewWin::GetNativeView() const {
-  return GetHWND();
+  return WidgetWin::GetNativeView();
 }
 
 gfx::NativeView WebContentsViewWin::GetContentNativeView() const {
@@ -93,7 +103,7 @@ gfx::NativeView WebContentsViewWin::GetContentNativeView() const {
   return web_contents_->render_widget_host_view()->GetPluginNativeView();
 }
 
-gfx::NativeWindow WebContentsViewWin::GetTopLevelNativeView() const {
+gfx::NativeWindow WebContentsViewWin::GetTopLevelNativeWindow() const {
   return ::GetAncestor(GetNativeView(), GA_ROOT);
 }
 
@@ -146,7 +156,7 @@ void WebContentsViewWin::StartDragging(const WebDropData& drop_data) {
     data->SetString(drop_data.plain_text);
 
   scoped_refptr<WebDragSource> drag_source(
-      new WebDragSource(GetHWND(), web_contents_->render_view_host()));
+      new WebDragSource(GetNativeView(), web_contents_->render_view_host()));
 
   DWORD effects;
 
@@ -180,12 +190,12 @@ void WebContentsViewWin::OnContentsDestroy() {
   // away. This will prevent the plugin windows from getting destroyed
   // automatically. The detached plugin windows will get cleaned up in proper
   // sequence as part of the usual cleanup when the plugin instance goes away.
-  EnumChildWindows(GetHWND(), DetachPluginWindowsCallback, NULL);
+  EnumChildWindows(GetNativeView(), DetachPluginWindowsCallback, NULL);
 }
 
 void WebContentsViewWin::OnDestroy() {
   if (drop_target_.get()) {
-    RevokeDragDrop(GetHWND());
+    RevokeDragDrop(GetNativeView());
     drop_target_ = NULL;
   }
 }
@@ -213,24 +223,70 @@ void WebContentsViewWin::SizeContents(const gfx::Size& size) {
   WasSized(size);
 }
 
-void WebContentsViewWin::OpenDeveloperTools() {
-  if (!dev_tools_window_.get())
-    dev_tools_window_.reset(new DevToolsWindow);
-
-  RenderViewHost* host = web_contents_->render_view_host();
-  if (!host)
-    return;
-
-  dev_tools_window_->Show(host->process()->host_id(), host->routing_id());
+void WebContentsViewWin::SetInitialFocus() {
+  if (web_contents_->FocusLocationBarByDefault())
+    web_contents_->delegate()->SetFocusToLocationBar();
+  else
+    ::SetFocus(GetNativeView());
 }
 
-void WebContentsViewWin::ForwardMessageToDevToolsClient(
-    const IPC::Message& message) {
-  if (!dev_tools_window_.get()) {
-    NOTREACHED() << "Developer tools window is not open.";
-    return;
+void WebContentsViewWin::StoreFocus() {
+  views::ViewStorage* view_storage = views::ViewStorage::GetSharedInstance();
+
+  if (view_storage->RetrieveView(last_focused_view_storage_id_) != NULL)
+    view_storage->RemoveView(last_focused_view_storage_id_);
+
+  views::FocusManager* focus_manager =
+      views::FocusManager::GetFocusManager(GetNativeView());
+  if (focus_manager) {
+    // |focus_manager| can be NULL if the tab has been detached but still
+    // exists.
+    views::View* focused_view = focus_manager->GetFocusedView();
+    if (focused_view)
+      view_storage->StoreView(last_focused_view_storage_id_, focused_view);
+
+    // If the focus was on the page, explicitly clear the focus so that we
+    // don't end up with the focused HWND not part of the window hierarchy.
+    // TODO(brettw) this should move to the view somehow.
+    HWND container_hwnd = GetNativeView();
+    if (container_hwnd) {
+      views::View* focused_view = focus_manager->GetFocusedView();
+      if (focused_view) {
+        HWND hwnd = focused_view->GetRootView()->GetWidget()->GetNativeView();
+        if (container_hwnd == hwnd || ::IsChild(container_hwnd, hwnd))
+          focus_manager->ClearFocus();
+      }
+    }
   }
-  dev_tools_window_->SendDevToolsClientMessage(message);
+}
+
+void WebContentsViewWin::RestoreFocus() {
+  views::ViewStorage* view_storage = views::ViewStorage::GetSharedInstance();
+  views::View* last_focused_view =
+      view_storage->RetrieveView(last_focused_view_storage_id_);
+
+  if (!last_focused_view) {
+    SetInitialFocus();
+  } else {
+    views::FocusManager* focus_manager =
+        views::FocusManager::GetFocusManager(GetNativeView());
+
+    // If you hit this DCHECK, please report it to Jay (jcampan).
+    DCHECK(focus_manager != NULL) << "No focus manager when restoring focus.";
+
+    if (last_focused_view->IsFocusable() && focus_manager &&
+        focus_manager->ContainsView(last_focused_view)) {
+      last_focused_view->RequestFocus();
+    } else {
+      // The focused view may not belong to the same window hierarchy (e.g.
+      // if the location bar was focused and the tab is dragged out), or it may
+      // no longer be focusable (e.g. if the location bar was focused and then
+      // we switched to fullscreen mode).  In that case we default to the
+      // default focus.
+      SetInitialFocus();
+    }
+    view_storage->RemoveView(last_focused_view_storage_id_);
+  }
 }
 
 void WebContentsViewWin::UpdateDragCursor(bool is_drop_target) {
@@ -247,7 +303,8 @@ void WebContentsViewWin::TakeFocus(bool reverse) {
     focus_manager->AdvanceFocus(reverse);
 }
 
-void WebContentsViewWin::HandleKeyboardEvent(const WebKeyboardEvent& event) {
+void WebContentsViewWin::HandleKeyboardEvent(
+    const NativeWebKeyboardEvent& event) {
   // Previous calls to TranslateMessage can generate CHAR events as well as
   // RAW_KEY_DOWN events, even if the latter triggered an accelerator.  In these
   // cases, we discard the CHAR events.
@@ -261,7 +318,7 @@ void WebContentsViewWin::HandleKeyboardEvent(const WebKeyboardEvent& event) {
   // a keyboard shortcut that we have to process.
   if (event.type == WebInputEvent::RAW_KEY_DOWN) {
     views::FocusManager* focus_manager =
-        views::FocusManager::GetFocusManager(GetHWND());
+        views::FocusManager::GetFocusManager(GetNativeView());
     // We may not have a focus_manager at this point (if the tab has been
     // switched by the time this message returned).
     if (focus_manager) {
@@ -291,23 +348,19 @@ void WebContentsViewWin::HandleKeyboardEvent(const WebKeyboardEvent& event) {
 
   // Any unhandled keyboard/character messages should be defproced.
   // This allows stuff like Alt+F4, etc to work correctly.
-  DefWindowProc(event.actual_message.hwnd,
-                event.actual_message.message,
-                event.actual_message.wParam,
-                event.actual_message.lParam);
+  DefWindowProc(event.os_event.hwnd,
+                event.os_event.message,
+                event.os_event.wParam,
+                event.os_event.lParam);
 }
 
 void WebContentsViewWin::ShowContextMenu(const ContextMenuParams& params) {
-  RenderViewContextMenuController menu_controller(web_contents_, params);
-  RenderViewContextMenu menu(&menu_controller,
-                             GetHWND(),
-                             params.node,
-                             params.misspelled_word,
-                             params.dictionary_suggestions,
-                             web_contents_->profile());
+  RenderViewContextMenuWin menu(web_contents_,
+                                params,
+                                GetNativeView());
 
   POINT screen_pt = { params.x, params.y };
-  MapWindowPoints(GetHWND(), HWND_DESKTOP, &screen_pt, 1);
+  MapWindowPoints(GetNativeView(), HWND_DESKTOP, &screen_pt, 1);
 
   // Enable recursive tasks on the message loop so we can get updates while
   // the context menu is being displayed.
@@ -349,7 +402,7 @@ RenderWidgetHostView* WebContentsViewWin::CreateNewWidgetInternal(
   RenderWidgetHostViewWin* widget_view =
       new RenderWidgetHostViewWin(widget_host);
 
-  // We set the parent HWDN explicitly as pop-up HWNDs are parented and owned by
+  // We set the parent HWND explicitly as pop-up HWNDs are parented and owned by
   // the first non-child HWND of the HWND that was specified to the CreateWindow
   // call.
   // TODO(brettw) this should not need to get the current RVHView from the
@@ -417,7 +470,7 @@ void WebContentsViewWin::OnMouseLeave() {
   // Let our delegate know that the mouse moved (useful for resetting status
   // bubble state).
   if (web_contents_->delegate())
-    web_contents_->delegate()->ContentsMouseEvent(web_contents_, WM_MOUSELEAVE);
+    web_contents_->delegate()->ContentsMouseEvent(web_contents_, false);
   SetMsgHandled(FALSE);
 }
 
@@ -440,8 +493,7 @@ LRESULT WebContentsViewWin::OnMouseRange(UINT msg,
       // Let our delegate know that the mouse moved (useful for resetting status
       // bubble state).
       if (web_contents_->delegate()) {
-        web_contents_->delegate()->ContentsMouseEvent(web_contents_,
-                                                      WM_MOUSEMOVE);
+        web_contents_->delegate()->ContentsMouseEvent(web_contents_, true);
       }
       break;
     default:
@@ -459,7 +511,7 @@ void WebContentsViewWin::OnPaint(HDC junk_dc) {
     CRect cr;
     GetClientRect(&cr);
     sad_tab_->SetBounds(gfx::Rect(cr));
-    ChromeCanvasPaint canvas(GetHWND(), true);
+    ChromeCanvasPaint canvas(GetNativeView(), true);
     sad_tab_->ProcessPaint(&canvas);
     return;
   }
@@ -467,7 +519,7 @@ void WebContentsViewWin::OnPaint(HDC junk_dc) {
   // We need to do this to validate the dirty area so we don't end up in a
   // WM_PAINTstorm that causes other mysterious bugs (such as WM_TIMERs not
   // firing etc). It doesn't matter that we don't have any non-clipped area.
-  CPaintDC dc(GetHWND());
+  CPaintDC dc(GetNativeView());
   SetMsgHandled(FALSE);
 }
 
@@ -546,8 +598,8 @@ void WebContentsViewWin::OnSize(UINT param, const CSize& size) {
   si.nPage = 10;
   si.nPos = 50;
 
-  ::SetScrollInfo(GetHWND(), SB_HORZ, &si, FALSE);
-  ::SetScrollInfo(GetHWND(), SB_VERT, &si, FALSE);
+  ::SetScrollInfo(GetNativeView(), SB_HORZ, &si, FALSE);
+  ::SetScrollInfo(GetNativeView(), SB_VERT, &si, FALSE);
 }
 
 LRESULT WebContentsViewWin::OnNCCalcSize(BOOL w_param, LPARAM l_param) {

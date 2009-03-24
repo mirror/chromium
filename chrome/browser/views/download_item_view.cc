@@ -17,9 +17,10 @@
 #include "chrome/common/l10n_util.h"
 #include "chrome/common/resource_bundle.h"
 #include "chrome/common/win_util.h"
-#include "chrome/views/native_button.h"
-#include "chrome/views/root_view.h"
-#include "chrome/views/widget.h"
+#include "chrome/views/controls/button/native_button.h"
+#include "chrome/views/controls/menu/menu.h"
+#include "chrome/views/widget/root_view.h"
+#include "chrome/views/widget/widget.h"
 #include "grit/generated_resources.h"
 #include "grit/theme_resources.h"
 
@@ -55,6 +56,65 @@ static const SkColor kStatusColor = SkColorSetRGB(123, 141, 174);
 
 // How long the 'download complete' animation should last for.
 static const int kCompleteAnimationDurationMs = 2500;
+
+// DownloadShelfContextMenuWin -------------------------------------------------
+
+class DownloadShelfContextMenuWin : public DownloadShelfContextMenu,
+                                    public Menu::Delegate {
+ public:
+  DownloadShelfContextMenuWin::DownloadShelfContextMenuWin(
+     BaseDownloadItemModel* model,
+     HWND window,
+     const gfx::Point& point)
+       : DownloadShelfContextMenu(model) {
+    DCHECK(model);
+
+    // The menu's anchor point is determined based on the UI layout.
+    Menu::AnchorPoint anchor_point;
+    if (l10n_util::GetTextDirection() == l10n_util::RIGHT_TO_LEFT)
+      anchor_point = Menu::TOPRIGHT;
+    else
+      anchor_point = Menu::TOPLEFT;
+
+    Menu context_menu(this, anchor_point, window);
+    if (download_->state() == DownloadItem::COMPLETE)
+      context_menu.AppendMenuItem(OPEN_WHEN_COMPLETE, L"", Menu::NORMAL);
+    else
+      context_menu.AppendMenuItem(OPEN_WHEN_COMPLETE, L"", Menu::CHECKBOX);
+    context_menu.AppendMenuItem(ALWAYS_OPEN_TYPE, L"", Menu::CHECKBOX);
+    context_menu.AppendSeparator();
+    context_menu.AppendMenuItem(SHOW_IN_FOLDER, L"", Menu::NORMAL);
+    context_menu.AppendSeparator();
+    context_menu.AppendMenuItem(CANCEL, L"", Menu::NORMAL);
+    context_menu.RunMenuAt(point.x(), point.y());
+  }
+
+  // Menu::Delegate implementation ---------------------------------------------
+
+  virtual bool IsItemChecked(int id) const {
+    return ItemIsChecked(id);
+  }
+
+  virtual bool IsItemDefault(int id) const {
+    return ItemIsDefault(id);
+  }
+
+  virtual std::wstring GetLabel(int id) const {
+    return GetItemLabel(id);
+  }
+
+  virtual bool SupportsCommand(int id) const {
+    return id > 0 && id < MENU_LAST;
+  }
+
+  virtual bool IsCommandEnabled(int id) const {
+    return IsItemCommandEnabled(id);
+  }
+
+  virtual void ExecuteCommand(int id) {
+    return ExecuteItemCommand(id);
+  }
+};
 
 // DownloadItemView ------------------------------------------------------------
 
@@ -192,13 +252,11 @@ DownloadItemView::DownloadItemView(DownloadItem* download,
 
     warning_icon_ = rb.GetBitmapNamed(IDR_WARNING);
     save_button_ = new views::NativeButton(
-        l10n_util::GetString(IDS_SAVE_DOWNLOAD));
-    save_button_->set_enforce_dlu_min_size(false);
-    save_button_->SetListener(this);
+        this, l10n_util::GetString(IDS_SAVE_DOWNLOAD));
+    save_button_->set_ignore_minimum_size(true);
     discard_button_ = new views::NativeButton(
-        l10n_util::GetString(IDS_DISCARD_DOWNLOAD));
-    discard_button_->SetListener(this);
-    discard_button_->set_enforce_dlu_min_size(false);
+        this, l10n_util::GetString(IDS_DISCARD_DOWNLOAD));
+    discard_button_->set_ignore_minimum_size(true);
     AddChildView(save_button_);
     AddChildView(discard_button_);
     std::wstring file_name = download->original_name().ToWStringHack();
@@ -207,7 +265,7 @@ DownloadItemView::DownloadItemView(DownloadItem* download,
 
     // Extract the file extension (if any).
     std::wstring extension = file_util::GetFileExtensionFromPath(file_name);
-    std::wstring rootname = 
+    std::wstring rootname =
         file_util::GetFilenameWithoutExtensionFromPath(file_name);
 
     // Elide giant extensions (this shouldn't currently be hit, but might
@@ -217,7 +275,7 @@ DownloadItemView::DownloadItemView(DownloadItem* download,
 
     ElideString(rootname, kFileNameMaxLength - extension.length(), &rootname);
     dangerous_download_label_ = new views::Label(
-        l10n_util::GetStringF(IDS_PROMPT_DANGEROUS_DOWNLOAD, 
+        l10n_util::GetStringF(IDS_PROMPT_DANGEROUS_DOWNLOAD,
                               rootname + L"." + extension));
     dangerous_download_label_->SetMultiLine(true);
     dangerous_download_label_->SetHorizontalAlignment(
@@ -327,7 +385,7 @@ void DownloadItemView::Layout() {
   }
 }
 
-void DownloadItemView::ButtonPressed(views::NativeButton* sender) {
+void DownloadItemView::ButtonPressed(views::Button* sender) {
   if (sender == discard_button_) {
     if (download_->state() == DownloadItem::IN_PROGRESS)
       download_->Cancel(true);
@@ -456,7 +514,7 @@ void DownloadItemView::Paint(ChromeCanvas* canvas) {
   // Last value of x was the end of the right image, just before the button.
   // Note that in dangerous mode we use a label (as the text is multi-line).
   if (!IsDangerousMode()) {
-    std::wstring filename = 
+    std::wstring filename =
         gfx::ElideFilename(download_->GetFileName().ToWStringHack(),
                            font_,
                            kTextWidth);
@@ -658,10 +716,9 @@ bool DownloadItemView::OnMousePressed(const views::MouseEvent& event) {
     }
 
     views::View::ConvertPointToScreen(this, &point);
-    download_util::DownloadShelfContextMenu menu(download_,
-                                                 GetWidget()->GetHWND(),
-                                                 model_.get(),
-                                                 point.ToPOINT());
+    DownloadShelfContextMenuWin menu(model_.get(),
+                                     GetWidget()->GetNativeView(),
+                                     point);
     drop_down_pressed_ = false;
     // Showing the menu blocks. Here we revert the state.
     SetState(NORMAL, NORMAL);

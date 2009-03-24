@@ -130,6 +130,7 @@ env_dll.Append(
         'sdch',
         'sqlite',
         'v8_snapshot',
+        'views',
 
         'X11',
         'Xrender',
@@ -162,7 +163,6 @@ if env_dll.Bit('windows'):
       LIBS = [
           'activex_shim',
           'browser_views',
-          'views',
 
           #'comctl32.lib',
           #'dwmapi.lib',
@@ -618,12 +618,6 @@ sconscript_files = [
 
 if not env.WantSystemLib('hunspell'):
   sconscript_files.append('third_party/hunspell/SConscript')
-
-# TODO(port)
-if env.Bit('windows'):
-  sconscript_files.extend([
-      'app/resources/SConscript',
-  ])
 
 env.SConscript(sconscript_files, exports=['env', 'env_res', 'env_test'])
 

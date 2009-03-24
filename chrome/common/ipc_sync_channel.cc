@@ -10,7 +10,6 @@
 #include "base/message_loop.h"
 #include "base/waitable_event.h"
 #include "base/waitable_event_watcher.h"
-#include "chrome/common/ipc_logging.h"
 #include "chrome/common/ipc_sync_message.h"
 
 using base::TimeDelta;
@@ -104,20 +103,7 @@ class SyncChannel::ReceivedSyncMsgQueue :
         message_queue_.pop_front();
       }
 
-#ifdef IPC_MESSAGE_LOG_ENABLED
-      Logging* logger = Logging::current();
-      if (logger->Enabled())
-        logger->OnPreDispatchMessage(*message);
-#endif
-
-      if (context->listener())
-        context->listener()->OnMessageReceived(*message);
-
-#ifdef IPC_MESSAGE_LOG_ENABLED
-      if (logger->Enabled())
-        logger->OnPostDispatchMessage(*message, context->channel_id());
-#endif
-
+      context->OnDispatchMessage(*message);
       delete message;
     }
   }
@@ -388,7 +374,8 @@ bool SyncChannel::SendWithTimeout(Message* message, int timeout_ms) {
     return false;
   }
 
-  DCHECK(sync_messages_with_no_timeout_allowed_ || timeout_ms != base::kNoTimeout);
+  DCHECK(sync_messages_with_no_timeout_allowed_ ||
+         timeout_ms != base::kNoTimeout);
   SyncMessage* sync_msg = static_cast<SyncMessage*>(message);
   context->Push(sync_msg);
   int message_id = SyncMessage::GetMessageId(*sync_msg);
@@ -400,7 +387,7 @@ bool SyncChannel::SendWithTimeout(Message* message, int timeout_ms) {
     // We use the sync message id so that when a message times out, we don't
     // confuse it with another send that is either above/below this Send in
     // the call stack.
-    context->ipc_message_loop()->PostDelayedTask(FROM_HERE, 
+    context->ipc_message_loop()->PostDelayedTask(FROM_HERE,
         NewRunnableMethod(context.get(),
             &SyncContext::OnSendTimeout, message_id), timeout_ms);
   }

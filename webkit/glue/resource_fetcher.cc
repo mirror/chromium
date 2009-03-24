@@ -9,6 +9,7 @@
 
 MSVC_PUSH_WARNING_LEVEL(0);
 #include "FrameLoader.h"
+#include "FrameLoaderClient.h"
 #include "ResourceHandle.h"
 #include "ResourceRequest.h"
 MSVC_POP_WARNING();
@@ -56,7 +57,8 @@ void ResourceFetcher::Start(WebCore::Frame* frame) {
   }
 
   WebCore::ResourceRequest request(webkit_glue::GURLToKURL(url_));
-  request.setFrame(frame);
+  WebCore::ResourceResponse response;
+  frame_loader->client()->dispatchWillSendRequest(NULL, 0, request, response);
 
   loader_ = ResourceHandle::create(request, this, NULL, false, false);
 }
@@ -93,11 +95,11 @@ void ResourceFetcher::didFinishLoading(ResourceHandle* resource_handle) {
     delegate_->OnURLFetchComplete(response_, data_);
 }
 
-void ResourceFetcher::didFail(ResourceHandle* resource_handle, 
+void ResourceFetcher::didFail(ResourceHandle* resource_handle,
                               const ResourceError& error) {
   ASSERT(!completed_);
   completed_ = true;
-  
+
   // Go ahead and tell our delegate that we're done.  Send an empty
   // ResourceResponse and string.
   if (delegate_)
@@ -121,4 +123,3 @@ void ResourceFetcherWithTimeout::TimeoutFired(FetchTimer* timer) {
     didFail(NULL, ResourceError());
   }
 }
-

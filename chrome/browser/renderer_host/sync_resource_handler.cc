@@ -16,6 +16,14 @@ SyncResourceHandler::SyncResourceHandler(
   result_.filter_policy = FilterPolicy::DONT_FILTER;
 }
 
+SyncResourceHandler::~SyncResourceHandler() {
+  if (!result_message_)
+    return;
+
+  result_message_->set_reply_error();
+  receiver_->Send(result_message_);
+}
+
 bool SyncResourceHandler::OnRequestRedirected(int request_id,
                                               const GURL& new_url) {
   result_.final_url = new_url;
@@ -46,11 +54,14 @@ bool SyncResourceHandler::OnReadCompleted(int request_id, int* bytes_read) {
   return true;
 }
 
-bool SyncResourceHandler::OnResponseCompleted(int request_id,
-                                              const URLRequestStatus& status) {
+bool SyncResourceHandler::OnResponseCompleted(
+    int request_id,
+    const URLRequestStatus& status,
+    const std::string& security_info) {
   result_.status = status;
 
   ViewHostMsg_SyncLoad::WriteReplyParams(result_message_, result_);
   receiver_->Send(result_message_);
+  result_message_ = NULL;
   return true;
 }

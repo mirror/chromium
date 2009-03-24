@@ -15,9 +15,9 @@
 #include "chrome/common/notification_service.h"
 #include "chrome/common/notification_source.h"
 #include "chrome/common/notification_type.h"
-#include "chrome/views/focus_manager.h"
+#include "chrome/views/focus/focus_manager.h"
 #include "chrome/views/view.h"
-#include "chrome/views/window.h"
+#include "chrome/views/window/window.h"
 #include "chrome/test/in_process_browser_test.h"
 #include "chrome/test/ui_test_utils.h"
 
@@ -441,4 +441,28 @@ IN_PROC_BROWSER_TEST_F(BrowserFocusTest, FindFocusTest) {
   focused_view = focus_manager->GetFocusedView();
   ASSERT_TRUE(focused_view != NULL);
   EXPECT_EQ(VIEW_ID_FIND_IN_PAGE_TEXT_FIELD, focused_view->GetID());
+}
+
+// Makes sure the focus is in the right location when opening the different
+// types of tabs.
+IN_PROC_BROWSER_TEST_F(BrowserFocusTest, TabInitialFocus) {
+  HWND hwnd = reinterpret_cast<HWND>(browser()->window()->GetNativeHandle());
+  BrowserView* browser_view = BrowserView::GetBrowserViewForHWND(hwnd);
+  ASSERT_TRUE(browser_view);
+  views::FocusManager* focus_manager =
+      views::FocusManager::GetFocusManager(hwnd);
+  ASSERT_TRUE(focus_manager);
+
+  // Open the history tab, focus should be on the tab contents.
+  browser()->ShowHistoryTab();
+  EXPECT_EQ(browser_view->GetContentsView(), focus_manager->GetFocusedView());
+
+  // Open the new tab, focus should be on the location bar.
+  browser()->NewTab();
+  EXPECT_EQ(browser_view->GetLocationBarView(),
+            focus_manager->GetFocusedView());
+
+  // Open the download tab, focus should be on the tab contents.
+  browser()->ShowDownloadsTab();
+  EXPECT_EQ(browser_view->GetContentsView(), focus_manager->GetFocusedView());
 }

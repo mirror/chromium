@@ -81,7 +81,20 @@
         '../../webkit.gyp:webkit',
       ],
       'conditions': [
-        ['OS!="linux"', {'sources/': [['exclude', '_gtk\\.cc$']]}],
+        ['OS=="linux"', {
+          'dependencies': [
+            'test_shell_resources',
+            'npapi_layout_test_plugin',
+            'npapi_test_plugin',
+            '../../../build/linux/system.gyp:gtk',
+          ],
+          # for:  test_shell_gtk.cc
+          'cflags': ['-Wno-multichar'],
+        }, { # else: OS!=linux
+          'sources/': [
+            ['exclude', '_gtk\\.cc$']
+          ],
+        }],
         ['OS=="mac"', {
           'sources': [
             # Windows/Linux use this code normally when constructing events, so
@@ -105,6 +118,7 @@
           },
           'dependencies': [
             '../../../breakpad/breakpad.gyp:breakpad_handler',
+            '../../default_plugin/default_plugin.gyp:default_plugin',
           ],
         }, {  # else: OS!=win
           'sources/': [
@@ -119,7 +133,8 @@
     },
     {
       'target_name': 'test_shell',
-      'type': 'application',
+      'type': 'executable',
+      'mac_bundle': 1,
       'dependencies': [
         'test_shell_common',
       ],
@@ -144,7 +159,60 @@
         'INFOPLIST_FILE': 'mac/Info.plist',
       },
       'conditions': [
-        ['OS=="mac"', {'product_name': 'TestShell'}],
+        ['OS=="linux"', {
+          'dependencies': [
+            '../../../build/linux/system.gyp:gtk',
+            '../../../net/net.gyp:net_resources',
+            '../../webkit.gyp:glue', # for webkit_{resources,strings_en-US}.pak
+            'test_shell_resources',
+          ],
+          'actions': [
+            {
+              'action_name': 'test_shell_repack',
+              'inputs': [
+                '<(SHARED_INTERMEDIATE_DIR)/net/net_resources.pak',
+                '<(SHARED_INTERMEDIATE_DIR)/test_shell/test_shell_resources.pak',
+                '<(SHARED_INTERMEDIATE_DIR)/webkit/webkit_resources.pak',
+                '<(SHARED_INTERMEDIATE_DIR)/webkit/webkit_strings_en-US.pak',
+              ],
+              'outputs': [
+                '<(PRODUCT_DIR)/test_shell.pak',
+              ],
+              'action': ['python', '../../../tools/data_pack/repack.py', '<@(_outputs)', '<@(_inputs)'],
+            },
+          ],
+          'scons_depends': [
+            ['<(PRODUCT_DIR)/test_shell'],
+            ['<(PRODUCT_DIR)/test_shell.pak'],
+          ],
+        }],
+        ['OS=="mac"', {
+          'product_name': 'TestShell',
+          'variables': {
+            'repack_path': '../../../tools/data_pack/repack.py',
+          },
+          'actions': [
+            {
+              # TODO(mark): Make this work with more languages than the
+              # hardcoded en-US.
+              'action_name': 'repack_locale',
+              'variables': {
+                'pak_inputs': [
+                  '<(SHARED_INTERMEDIATE_DIR)/webkit/webkit_strings_en-US.pak',
+                ],
+              },
+              'inputs': [
+                '<(repack_path)',
+                '<@(pak_inputs)',
+              ],
+              'outputs': [
+                '<(INTERMEDIATE_DIR)/repack/test_shell.pak',
+              ],
+              'action': ['python', '<(repack_path)', '<@(_outputs)', '<@(pak_inputs)'],
+              'process_outputs_as_mac_bundle_resources': 1,
+            },
+          ]
+        }],
       ],
     },
     {
@@ -163,6 +231,8 @@
         '../../glue/context_menu_unittest.cc',
         '../../glue/cpp_bound_class_unittest.cc',
         '../../glue/cpp_variant_unittest.cc',
+        '../../glue/devtools/dom_agent_unittest.cc',
+        '../../glue/devtools/devtools_rpc_unittest.cc',
         '../../glue/dom_operations_unittest.cc',
         '../../glue/dom_serializer_unittest.cc',
         '../../glue/glue_serialize_unittest.cc',
@@ -192,6 +262,16 @@
         'text_input_controller_unittest.cc',
       ],
       'conditions': [
+        ['OS=="linux"', {
+          'dependencies': [
+            '../../../build/linux/system.gyp:gtk',
+          ],
+          'sources!': [
+             # TODO(port)
+            '../../../skia/ext/platform_canvas_unittest.cc',
+            '../../glue/webplugin_impl_unittest.cc',
+          ],
+        }],
         ['OS=="mac"', {
           # mac tests load the resources from the built test_shell beside the
           # test
@@ -208,5 +288,109 @@
         }],
       ],
     },
+  ],
+  'conditions': [
+    ['OS=="linux"', {
+      'targets': [
+        {
+          'target_name': 'test_shell_resources',
+          'type': 'none',
+          'sources': [
+            'test_shell_resources.grd',
+          ],
+          # This was orignally in grit_resources.rules
+          # NOTE: this version doesn't mimic the Properties specified there.
+          'rules': [
+            {
+              'rule_name': 'grit',
+              'extension': 'grd',
+              'inputs': [
+                '../../../tools/grit/grit.py',
+              ],
+              'outputs': [
+                '<(SHARED_INTERMEDIATE_DIR)/test_shell/grit/<(RULE_INPUT_ROOT).h',
+                '<(SHARED_INTERMEDIATE_DIR)/test_shell/<(RULE_INPUT_ROOT).pak',
+              ],
+              'action':
+                ['python', '<@(_inputs)', '-i', '<(RULE_INPUT_PATH)', 'build', '-o', '<(SHARED_INTERMEDIATE_DIR)/test_shell'],
+              'message': 'Generating resources from <(RULE_INPUT_PATH)',
+            },
+          ],
+          'direct_dependent_settings': {
+            'include_dirs': [
+              '<(SHARED_INTERMEDIATE_DIR)/test_shell',
+            ],
+          },
+        },
+      ],
+    }],
+    # TODO:  change this condition to 'OS!="mac"'
+    # when Windows is ready for the plugins, too.
+    ['OS=="linux"', {
+      'targets': [
+        {
+          'target_name': 'npapi_test_plugin',
+          'type': 'loadable_module',
+          'product_dir': '<(PRODUCT_DIR)/plugins',
+          'dependencies': [
+            '../../../base/base.gyp:base',
+            '../../../third_party/icu38/icu38.gyp:icuuc',
+            '../../../third_party/npapi/npapi.gyp:npapi',
+          ],
+          'sources': [
+            '../../glue/plugins/test/npapi_constants.cc',
+            '../../glue/plugins/test/npapi_test.cc',
+            '../../glue/plugins/test/plugin_arguments_test.cc',
+            '../../glue/plugins/test/plugin_client.cc',
+            '../../glue/plugins/test/plugin_delete_plugin_in_stream_test.cc',
+            '../../glue/plugins/test/plugin_execute_script_delete_test.cc',
+            '../../glue/plugins/test/plugin_get_javascript_url_test.cc',
+            '../../glue/plugins/test/plugin_geturl_test.cc',
+            '../../glue/plugins/test/plugin_javascript_open_popup.cc',
+            '../../glue/plugins/test/plugin_new_fails_test.cc',
+            '../../glue/plugins/test/plugin_npobject_lifetime_test.cc',
+            '../../glue/plugins/test/plugin_npobject_proxy_test.cc',
+            '../../glue/plugins/test/plugin_test.cc',
+            '../../glue/plugins/test/plugin_window_size_test.cc',
+          ],
+          'include_dirs': [
+            '../../..',
+          ],
+          'conditions': [
+            ['OS=="linux"', {
+              'sources!': [
+                # TODO(port):  Port these.
+                # plugin_client.cc includes not ported headers.
+                # plugin_npobject_lifetime_test.cc has win32-isms
+                #   (HWND, CALLBACK).
+                # plugin_window_size_test.cc has w32-isms including HWND.
+                '../../glue/plugins/test/plugin_execute_script_delete_test.cc',
+                '../../glue/plugins/test/plugin_javascript_open_popup.cc',
+                '../../glue/plugins/test/plugin_client.cc',
+                '../../glue/plugins/test/plugin_npobject_lifetime_test.cc',
+                '../../glue/plugins/test/plugin_window_size_test.cc',
+              ],
+            }],
+          ],
+        },
+        {
+          'target_name': 'npapi_layout_test_plugin',
+          'type': 'loadable_module',
+          'product_dir': '<(PRODUCT_DIR)/plugins',
+          'sources': [
+            '../npapi_layout_test_plugin/main.cpp',
+            '../npapi_layout_test_plugin/PluginObject.cpp',
+            '../npapi_layout_test_plugin/TestObject.cpp',
+          ],
+          'include_dirs': [
+            '../../..',
+          ],
+          'dependencies': [
+            '../../../third_party/npapi/npapi.gyp:npapi',
+            '../../webkit.gyp:wtf',
+          ],
+        },
+      ],
+    }],
   ],
 }

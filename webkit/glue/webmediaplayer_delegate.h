@@ -43,9 +43,9 @@ class WebMediaPlayerDelegate {
   virtual float GetMaxTimeSeekable() const = 0;
 
   // Methods for painting.
-  virtual void SetRect(const gfx::Rect& rect) = 0;
+  virtual void SetSize(const gfx::Size& size) = 0;
 
-  // TODO(hclam): Using paint at the moment, maybe we just need to return a 
+  // TODO(hclam): Using paint at the moment, maybe we just need to return a
   //              SkiaBitmap?
   virtual void Paint(skia::PlatformCanvas *canvas, const gfx::Rect& rect) = 0;
 

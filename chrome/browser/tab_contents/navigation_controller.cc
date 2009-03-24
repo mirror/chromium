@@ -7,6 +7,7 @@
 #include "base/file_util.h"
 #include "base/logging.h"
 #include "base/string_util.h"
+#include "base/time.h"
 #include "chrome/browser/browser_about_handler.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/dom_ui/dom_ui_host.h"
@@ -54,8 +55,6 @@ void NotifyPrunedEntries(NavigationController* nav_controller,
 void SetContentStateIfEmpty(NavigationEntry* entry) {
   if (entry->content_state().empty() &&
       (entry->tab_type() == TAB_CONTENTS_WEB ||
-       entry->tab_type() == TAB_CONTENTS_NEW_TAB_UI ||
-       entry->tab_type() == TAB_CONTENTS_DOM_UI ||
        entry->tab_type() == TAB_CONTENTS_HTML_DIALOG ||
        entry->IsViewSourceMode())) {
     entry->set_content_state(
@@ -476,7 +475,7 @@ NavigationEntry* NavigationController::CreateNavigationEntry(
     type = active->type();
   else
     type = TabContents::TypeForURL(&real_url);
-  
+
   NavigationEntry* entry = new NavigationEntry(type, NULL, -1, real_url,
                                                referrer,
                                                string16(), transition);
@@ -1012,10 +1011,6 @@ void NavigationController::NavigateToPendingEntry(bool reload) {
     pending_entry_ = entries_[pending_entry_index_].get();
   }
 
-  // Reset the security states as any SSL error may have been resolved since we
-  // last visited that page.
-  pending_entry_->ssl() = NavigationEntry::SSLStatus();
-
   if (from_contents && from_contents->type() != pending_entry_->tab_type())
     from_contents->set_is_active(false);
 
@@ -1037,7 +1032,6 @@ void NavigationController::NotifyNavigationEntryCommitted(
   // TODO(pkasting): http://b/1113079 Probably these explicit notification paths
   // should be removed, and interested parties should just listen for the
   // notification below instead.
-  ssl_manager_.NavigationStateChanged();
   active_contents_->NotifyNavigationStateChanged(
       TabContents::INVALIDATE_EVERYTHING);
 

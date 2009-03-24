@@ -9,7 +9,6 @@
 
 #include "libxml/xmlreader.h"
 #include "libxml/xmlwriter.h"
-#include "base/scoped_ptr.h"
 
 // Converts a libxml xmlChar* into a UTF-8 std::string.
 // NULL inputs produce an empty string.
@@ -163,7 +162,7 @@ class XmlWriter {
                                      BAD_CAST content.c_str()) >= 0;
   }
 
-  // Helper functions not provided by xmlTextWriter ----------------------------------
+  // Helper functions not provided by xmlTextWriter ---------------------------
 
   // Returns the string that has been written to the buffer.
   std::string GetWrittenString() {
@@ -181,4 +180,3 @@ class XmlWriter {
 };
 
 #endif  // CHROME_COMMON_LIBXML_UTILS_H__
-

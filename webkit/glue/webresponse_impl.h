@@ -5,6 +5,7 @@
 #ifndef WEBKIT_GLUE_WEBRESPONSEIMPL_H_
 #define WEBKIT_GLUE_WEBRESPONSEIMPL_H_
 
+#include "googleurl/src/gurl.h"
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/webresponse.h"
 
@@ -15,7 +16,7 @@ class WebResponseImpl : public WebResponse {
    WebResponseImpl() { }
    explicit WebResponseImpl(const WebCore::ResourceResponse& response)
       : response_(response) { }
-   
+
   virtual ~WebResponseImpl() { }
 
   // Get the URL.
@@ -25,6 +26,10 @@ class WebResponseImpl : public WebResponse {
 
   // Get the http status code.
   virtual int GetHttpStatusCode() const { return response_.httpStatusCode(); }
+
+  virtual std::string GetMimeType() const {
+    return webkit_glue::StringToStdString(response_.mimeType());
+  }
 
   // Get the security info (state of the SSL connection).
   virtual std::string GetSecurityInfo() const {

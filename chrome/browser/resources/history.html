@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html id="t">
+<html id="t" jsvalues="dir:textdirection;">
 <head>
 <meta charset="utf-8">
 <title jscontent="title"></title>
@@ -19,6 +19,12 @@ function createElementWithClassName(type, className) {
   var elm = document.createElement(type);
   elm.className = className;
   return elm;
+}
+
+// Escapes a URI as appropriate for CSS.
+function encodeURIForCSS(uri) {
+  // CSS uris need to have '(' and ')' escaped.
+  return uri.replace(/\(/g, "\\(").replace(/\)/g, "\\)");
 }
 
 // TODO(glen): Get rid of these global references, replace with a controller
@@ -157,7 +163,8 @@ Page.prototype.getTitleDOM_ = function() {
   node.className = 'title';
   var link = document.createElement('a');
   link.href = this.url_;
-  link.style.backgroundImage = 'url(chrome-ui://favicon/' + this.url_ + ')';
+  link.style.backgroundImage =
+      'url(chrome-ui://favicon/' + encodeURIForCSS(this.url_) + ')';
   link.appendChild(document.createTextNode(this.title_));
   this.highlightNodeContent_(link);
 
@@ -259,7 +266,7 @@ HistoryModel.prototype.getSearchText = function() {
 HistoryModel.prototype.requestPage = function(page) {
   this.requestedPage_ = page;
   this.changed = true;
-  this.updateSearch_();
+  this.updateSearch_(false);
 }
 
 /**
@@ -267,9 +274,9 @@ HistoryModel.prototype.requestPage = function(page) {
  * @param {String} term The search term that the results are for.
  * @param {Array} results A list of results
  */
-HistoryModel.prototype.addResults = function(term, results) {
+HistoryModel.prototype.addResults = function(info, results) {
   this.inFlight_ = false;
-  if (term != this.searchText_) {
+  if (info.term != this.searchText_) {
     // If our results aren't for our current search term, they're rubbish.
     return;
   }
@@ -298,11 +305,11 @@ HistoryModel.prototype.addResults = function(term, results) {
         lastURL = thisURL;
       }
     }
+    if (results.length)
+      this.changed = true;
   }
-  if (results.length)
-    this.changed = true;
 
-  this.updateSearch_();
+  this.updateSearch_(info.finished);
 }
 
 /**
@@ -354,8 +361,9 @@ HistoryModel.prototype.clearModel_ = function() {
  * page. If we think we can fill the page, call the view and let it know
  * we're ready to show something.
  */
-HistoryModel.prototype.updateSearch_ = function() {
-  if (this.searchText_ && this.searchDepth_ >= MAX_SEARCH_DEPTH_MONTHS) {
+HistoryModel.prototype.updateSearch_ = function(finished) {
+  if ((this.searchText_ && this.searchDepth_ >= MAX_SEARCH_DEPTH_MONTHS) ||
+      finished) {
     // We have maxed out. There will be no more data.
     this.complete_ = true;
     this.view_.onModelReady();
@@ -642,7 +650,7 @@ PageState.prototype.getHashData = function() {
   for (var i = 0; i < hashSplit.length; i++) {
     var pair = hashSplit[i].split("=");
     if (pair.length > 1) {
-      result[pair[0]] = unescape(pair[1]);
+      result[pair[0]] = decodeURIComponent(pair[1]);
     }
   }
 
@@ -675,7 +683,7 @@ PageState.prototype.setUIState = function(term, page) {
 PageState.getHashString = function(term, page) {
   var newHash = [];
   if (term) {
-    newHash.push("q=" + escape(term));
+    newHash.push("q=" + encodeURIComponent(term));
   }
   if (page) {
     newHash.push("p=" + page);
@@ -761,15 +769,15 @@ function deleteNextInQueue() {
 /**
  * Our history system calls this function with results from searches.
  */
-function historyResult(term, results) {
-  historyModel.addResults(term, results);
+function historyResult(info, results) {
+  historyModel.addResults(info, results);
 }
 
 /**
  * Our history system calls this function when a deletion has finished.
  */
 function deleteComplete() {
-  historyView.reload();
+  window.console.log("Delete complete");
   deleteInFlight = false;
   if (deleteQueue.length > 1) {
     deleteQueue = deleteQueue.slice(1, deleteQueue.length);
@@ -782,9 +790,19 @@ function deleteComplete() {
  * another delete is in-progress).
  */
 function deleteFailed() {
+  window.console.log("Delete failed");
   // The deletion failed - try again later.
   deleteInFlight = false;
   setTimeout(deleteNextInQueue, 500);
+}
+
+/**
+ * We're called when something is deleted (either by us or by someone
+ * else).
+ */
+function historyDeleted() {
+  window.console.log("History deleted");
+  historyView.reload();
 }
 </script>
 <style type="text/css">
@@ -807,6 +825,13 @@ body {
   margin-top:22px;
   margin-left:12px;
 }
+html[dir='rtl'] .logo {
+  float:right;
+}
+html[dir='rtl'] .form {
+  float:right;
+  margin-right:12px;
+}
 #results-summary {
   margin-top:12px;
   border-top:1px solid #9cc2ef;
@@ -826,6 +851,9 @@ body {
 .delete-day {
   width:200px;
   float:right;
+}
+html[dir='rtl'] .delete-day {
+  float:left;
 }
 .gap {
   margin-left:18px;
@@ -847,6 +875,9 @@ table.results {
   min-width:56px;
   margin-right:5px;
   padding-top:1px;
+}
+html[dir='rtl'] .time {
+  float:right;
 }
 .entry .title {
   max-width:600px;

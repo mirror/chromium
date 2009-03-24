@@ -8,12 +8,17 @@
 #include "base/json_writer.h"
 #include "base/string_util.h"
 #include "base/values.h"
+#include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/common/l10n_util.h"
+#include "chrome/common/stl_util-inl.h"
 
-///////////////////////////////////////////////////////////////////////////////
-// DOMMessageHandler
-
-DOMUI::DOMUI(DOMUIContents* contents) : contents_(contents) {
+DOMUI::DOMUI(WebContents* contents)
+    : hide_favicon_(false),
+      force_bookmark_bar_visible_(false),
+      focus_location_bar_by_default_(false),
+      should_hide_url_(false),
+      link_transition_type_(PageTransition::LINK),
+      web_contents_(contents) {
 }
 
 DOMUI::~DOMUI() {
@@ -27,7 +32,7 @@ DOMUI::~DOMUI() {
 void DOMUI::ProcessDOMUIMessage(const std::string& message,
                                 const std::string& content) {
   // Look up the callback for this message.
-  MessageCallbackMap::const_iterator callback = 
+  MessageCallbackMap::const_iterator callback =
       message_callbacks_.find(message);
   if (callback == message_callbacks_.end())
     return;
@@ -74,19 +79,13 @@ void DOMUI::CallJavascriptFunction(
   ExecuteJavascript(javascript);
 }
 
-void DOMUI::RegisterMessageCallback(const std::string &message, 
+void DOMUI::RegisterMessageCallback(const std::string &message,
                                     MessageCallback *callback) {
   message_callbacks_.insert(std::make_pair(message, callback));
 }
 
-void DOMUI::SetInitialFocus(bool reverse) {
-  get_contents()->render_view_host()->SetInitialFocus(reverse);
-}
-
-void DOMUI::RequestOpenURL(const GURL& url,
-                           const GURL& /* referer */,
-                           WindowOpenDisposition disposition) {
-  get_contents()->OpenURL(url, GURL(), disposition, PageTransition::LINK);
+Profile* DOMUI::GetProfile() {
+  return web_contents()->profile();
 }
 
 // DOMUI, protected: ----------------------------------------------------------
@@ -98,9 +97,8 @@ void DOMUI::AddMessageHandler(DOMMessageHandler* handler) {
 // DOMUI, private: ------------------------------------------------------------
 
 void DOMUI::ExecuteJavascript(const std::wstring& javascript) {
-  DCHECK(contents_);
-  contents_->render_view_host()->ExecuteJavascriptInWebFrame(std::wstring(), 
-                                                             javascript);
+  web_contents()->render_view_host()->ExecuteJavascriptInWebFrame(
+      std::wstring(), javascript);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -111,7 +109,7 @@ DOMMessageHandler::DOMMessageHandler(DOMUI *dom_ui) : dom_ui_(dom_ui) {
 
 // DOMMessageHandler, protected: ----------------------------------------------
 
-void DOMMessageHandler::SetURLAndTitle(DictionaryValue* dictionary, 
+void DOMMessageHandler::SetURLAndTitle(DictionaryValue* dictionary,
                                        std::wstring title,
                                        const GURL& gurl) {
   std::wstring wstring_url = UTF8ToWide(gurl.spec());

@@ -42,8 +42,8 @@
 #include "chrome/browser/printing/print_job.h"
 #include "chrome/browser/views/bookmark_bar_view.h"
 #include "chrome/browser/views/location_bar_view.h"
-#include "chrome/views/app_modal_dialog_delegate.h"
-#include "chrome/views/window.h"
+#include "chrome/views/window/app_modal_dialog_delegate.h"
+#include "chrome/views/window/window.h"
 #endif  // defined(OS_WIN)
 
 using base::Time;
@@ -813,8 +813,10 @@ void AutomationProvider::OnMessageReceived(const IPC::Message& message) {
                         WindowSimulateKeyPress)
     IPC_MESSAGE_HANDLER_DELAY_REPLY(AutomationMsg_WindowDrag,
                                     WindowSimulateDrag)
+#endif  // defined(OS_WIN)
     IPC_MESSAGE_HANDLER(AutomationMsg_TabCount, GetTabCount)
     IPC_MESSAGE_HANDLER(AutomationMsg_Tab, GetTab)
+#if defined(OS_WIN)
     IPC_MESSAGE_HANDLER(AutomationMsg_TabHWND, GetTabHWND)
 #endif  // defined(OS_WIN)
     IPC_MESSAGE_HANDLER(AutomationMsg_TabProcessID, GetTabProcessID)
@@ -867,6 +869,7 @@ void AutomationProvider::OnMessageReceived(const IPC::Message& message) {
                                     WaitForTabToBeRestored)
     IPC_MESSAGE_HANDLER(AutomationMsg_SetInitialFocus,
                         SetInitialFocus)
+    IPC_MESSAGE_HANDLER(AutomationMsg_TabReposition, OnTabReposition)
 #endif  // defined(OS_WIN)
     IPC_MESSAGE_HANDLER(AutomationMsg_GetSecurityState,
                         GetSecurityState)
@@ -1202,7 +1205,7 @@ void AutomationProvider::ClickAppModalDialogButton(int button, bool* success) {
   if (dialog_delegate &&
       (dialog_delegate->GetDialogButtons() & button) == button) {
     views::DialogClientView* client_view =
-        dialog_delegate->window()->client_view()->AsDialogClientView();
+        dialog_delegate->window()->GetClientView()->AsDialogClientView();
     if ((button & views::DialogDelegate::DIALOGBUTTON_OK) ==
         views::DialogDelegate::DIALOGBUTTON_OK) {
       client_view->AcceptWindow();
@@ -1972,11 +1975,12 @@ void AutomationProvider::HandleInspectElementRequest(
 }
 
 void AutomationProvider::ReceivedInspectElementResponse(int num_resources) {
-  DCHECK(reply_message_ != NULL);
-  AutomationMsg_InspectElement::WriteReplyParams(reply_message_,
-                                                 num_resources);
-  Send(reply_message_);
-  reply_message_ = NULL;
+  if (reply_message_) {
+    AutomationMsg_InspectElement::WriteReplyParams(reply_message_,
+                                                   num_resources);
+    Send(reply_message_);
+    reply_message_ = NULL;
+  }
 }
 
 // Helper class for making changes to the URLRequest ProtocolFactory on the
@@ -2435,8 +2439,10 @@ void AutomationProvider::AutocompleteEditIsQueryInProgress(
   }
 }
 
-void AutomationProvider::OnMessageFromExternalHost(
-    int handle, const std::string& message) {
+void AutomationProvider::OnMessageFromExternalHost(int handle,
+                                                   const std::string& message,
+                                                   const std::string& origin,
+                                                   const std::string& target) {
   if (tab_tracker_->ContainsHandle(handle)) {
     NavigationController* tab = tab_tracker_->GetResource(handle);
     if (!tab) {
@@ -2460,7 +2466,7 @@ void AutomationProvider::OnMessageFromExternalHost(
       return;
     }
 
-    view_host->ForwardMessageFromExternalHost(message);
+    view_host->ForwardMessageFromExternalHost(message, origin, target);
   }
 }
 
@@ -2709,3 +2715,27 @@ void AutomationProvider::OverrideEncoding(int tab_handle,
 void AutomationProvider::SavePackageShouldPromptUser(bool should_prompt) {
   SavePackage::SetShouldPromptUser(should_prompt);
 }
+
+#ifdef OS_WIN
+void AutomationProvider::OnTabReposition(
+    int tab_handle, const IPC::Reposition_Params& params) {
+  if (!tab_tracker_->ContainsHandle(tab_handle))
+    return;
+
+  if (!IsWindow(params.window))
+    return;
+
+  unsigned long process_id = 0;
+  unsigned long thread_id = 0;
+
+  thread_id = GetWindowThreadProcessId(params.window, &process_id);
+
+  if (thread_id != GetCurrentThreadId()) {
+    NOTREACHED();
+    return;
+  }
+
+  SetWindowPos(params.window, params.window_insert_after, params.left,
+               params.top, params.width, params.height, params.flags);
+}
+#endif  // defined(OS_WIN)
