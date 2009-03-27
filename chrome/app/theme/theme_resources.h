@@ -318,3 +318,7 @@
 #define IDR_BOOKMARK_MANAGER_SEARCH_ICON                 9310
 #define IDR_MENU_DROPARROW                               9311
 #define IDR_ABOUT_BACKGROUND_COLOR                       9312
+#define IDR_3D                                           9313
+#define IDR_3D_H                                         9314
+#define IDR_3D_P                                         9315
+#define IDR_3D_C                                         9316

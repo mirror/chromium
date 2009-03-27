@@ -14,6 +14,7 @@
 #include "chrome/browser/views/dom_view.h"
 #include "chrome/browser/views/go_button.h"
 #include "chrome/browser/views/location_bar_view.h"
+#include "chrome/common/notification_service.h"
 #include "chrome/common/pref_member.h"
 #include "chrome/views/menu.h"
 #include "chrome/views/menu_button.h"
@@ -37,7 +38,8 @@ class BrowserToolbarView : public views::View,
                            public views::ViewMenuDelegate,
                            public views::DragController,
                            public LocationBarView::Delegate,
-                           public NotificationObserver {
+                           public NotificationObserver,
+                           public views::BaseButton::ButtonListener {
  public:
   BrowserToolbarView(CommandController* controller, Browser* browser);
   virtual ~BrowserToolbarView();
@@ -112,6 +114,8 @@ class BrowserToolbarView : public views::View,
                        const NotificationSource& source,
                        const NotificationDetails& details);
 
+  virtual void ButtonPressed(views::BaseButton* sender);
+
   // DragController methods for the star button. These allow the drag if the
   // user hasn't edited the text, the url is valid and should be displayed.
   virtual void WriteDragData(View* sender,
@@ -171,6 +175,7 @@ class BrowserToolbarView : public views::View,
   views::Button* home_;
   ToolbarStarToggle* star_;
   LocationBarView* location_bar_;
+  views::ToggleButton* threedee_;
   GoButton* go_;
   views::MenuButton* page_menu_;
   views::MenuButton* app_menu_;

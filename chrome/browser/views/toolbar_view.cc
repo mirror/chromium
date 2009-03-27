@@ -66,6 +66,7 @@ BrowserToolbarView::BrowserToolbarView(CommandController* controller,
       model_(browser->toolbar_model()),
       back_(NULL),
       forward_(NULL),
+      threedee_(NULL),
       reload_(NULL),
       home_(NULL),
       star_(NULL),
@@ -84,9 +85,18 @@ BrowserToolbarView::BrowserToolbarView(CommandController* controller,
     display_mode_ = DISPLAYMODE_NORMAL;
   else
     display_mode_ = DISPLAYMODE_LOCATION;
+
+  NotificationService::current()->AddObserver(
+      this,
+      NOTIFY_THREEDEE_TOGGLED,
+      NotificationService::AllSources());
 }
 
 BrowserToolbarView::~BrowserToolbarView() {
+  NotificationService::current()->RemoveObserver(
+      this,
+      NOTIFY_THREEDEE_TOGGLED,
+      NotificationService::AllSources());
 }
 
 void BrowserToolbarView::Init(Profile* profile) {
@@ -134,6 +144,19 @@ void BrowserToolbarView::CreateLeftSideControls() {
   forward_->SetID(VIEW_ID_FORWARD_BUTTON);
   AddChildView(forward_);
   controller_->AddManagedButton(forward_, IDC_FORWARD);
+
+  threedee_ = new views::ToggleButton();
+  threedee_->SetListener(this, IDC_THREEDEE);
+  threedee_->SetImage(views::BaseButton::BS_NORMAL,
+                      rb.GetBitmapNamed(IDR_3D));
+  threedee_->SetImage(views::BaseButton::BS_HOT,
+                      rb.GetBitmapNamed(IDR_3D_H));
+  threedee_->SetImage(views::BaseButton::BS_PUSHED,
+                      rb.GetBitmapNamed(IDR_3D_P));
+  threedee_->SetToggledImage(views::BaseButton::BS_NORMAL,
+                             rb.GetBitmapNamed(IDR_3D_C));
+  threedee_->SetID(VIEW_ID_3D_BUTTON);
+  AddChildView(threedee_);
 
   reload_ = new views::Button();
   reload_->SetImage(views::Button::BS_NORMAL, rb.GetBitmapNamed(IDR_RELOAD));
@@ -264,10 +287,20 @@ void BrowserToolbarView::Layout() {
     forward_->SetBounds(back_->x() + back_->width(), kControlVertOffset,
                         sz.width(), sz.height());
 
-    sz = reload_->GetPreferredSize();
-    reload_->SetBounds(forward_->x() + forward_->width() +
-                           kControlHorizOffset,
-                       kControlVertOffset, sz.width(), sz.height());
+    if (threedee_) {
+      sz = threedee_->GetPreferredSize();
+      threedee_->SetBounds(forward_->x() + forward_->width() + kControlHorizOffset,
+                         kControlVertOffset, 45, sz.height());
+
+      reload_->SetBounds(threedee_->x() + threedee_->width() + kControlHorizOffset,
+                         kControlVertOffset, reload_->GetPreferredSize().width(),
+                         sz.height());
+    } else {
+      sz = reload_->GetPreferredSize();
+      reload_->SetBounds(forward_->x() + forward_->width() +
+                         kControlHorizOffset,
+                         kControlVertOffset, sz.width(), sz.height());
+    }
 
     int offset = 0;
     if (show_home_button_.GetValue()) {
@@ -697,6 +730,24 @@ void BrowserToolbarView::Observe(NotificationType type,
       Layout();
       SchedulePaint();
     }
+  } else if (type == NOTIFY_THREEDEE_TOGGLED) {
+    // Redraw the window when the user changes this setting.
+    threedee_->SetToggled(g_threedee_enabled);
+  }
+}
+
+void BrowserToolbarView::ButtonPressed(views::BaseButton* sender) {
+  if (sender->GetTag() == IDC_THREEDEE) {
+    g_threedee_enabled = !g_threedee_enabled;
+    // The toggle state of the button will get changed in our observer (to keep
+    // all toolbars in sync).
+
+    NotificationService::current()->Notify(
+        NOTIFY_THREEDEE_TOGGLED,
+        NotificationService::AllSources(),
+        NotificationService::NoDetails());
+
+    return;
   }
 }
 

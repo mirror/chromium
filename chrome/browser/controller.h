@@ -170,4 +170,8 @@ class CommandController : public Controller {
   DISALLOW_EVIL_CONSTRUCTORS(CommandController);
 };
 
+// Stupid global for the temporary 3d hack. This indicates whether the browser
+// should be in 3D mode.
+extern bool g_threedee_enabled;
+
 #endif // CHROME_BROWSER_CONTROLLER_H__

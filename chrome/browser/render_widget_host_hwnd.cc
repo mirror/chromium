@@ -6,12 +6,14 @@
 
 #include "base/command_line.h"
 #include "base/gfx/gdi_util.h"
+#include "base/gfx/platform_canvas.h"
 #include "base/gfx/rect.h"
 #include "base/histogram.h"
 #include "base/win_util.h"
 #include "chrome/browser/browser_accessibility.h"
 #include "chrome/browser/browser_accessibility_manager.h"
 #include "chrome/browser/browser_trial.h"
+#include "chrome/browser/controller.h"
 #include "chrome/browser/render_process_host.h"
 // TODO(beng): (Cleanup) we should not need to include this file... see comment
 //             in |DidBecomeSelected|.
@@ -20,6 +22,7 @@
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/l10n_util.h"
+#include "chrome/common/notification_service.h"
 #include "chrome/common/plugin_messages.h"
 #include "chrome/common/win_util.h"
 #include "chrome/views/container_win.h"
@@ -51,9 +54,19 @@ RenderWidgetHostHWND::RenderWidgetHostHWND(
       is_loading_(false) {
   renderer_accessible_ =
       CommandLine().HasSwitch(switches::kEnableRendererAccessibility);
+
+  NotificationService::current()->AddObserver(
+      this,
+      NOTIFY_THREEDEE_TOGGLED,
+      NotificationService::AllSources());
 }
 
 RenderWidgetHostHWND::~RenderWidgetHostHWND() {
+  NotificationService::current()->RemoveObserver(
+      this,
+      NOTIFY_THREEDEE_TOGGLED,
+      NotificationService::AllSources());
+
   if (real_cursor_type_ == WebCursor::CUSTOM)
     DestroyIcon(real_cursor_);
   ResetTooltip();
@@ -374,15 +387,73 @@ void RenderWidgetHostHWND::OnPaint(HDC dc) {
 
     gfx::Rect paint_rect = bitmap_rect.Intersect(damaged_rect);
     if (!paint_rect.IsEmpty()) {
-      BitBlt(paint_dc.m_hDC,
-             paint_rect.x(),
-             paint_rect.y(),
-             paint_rect.width(),
-             paint_rect.height(),
-             backing_store->dc(),
-             paint_rect.x(),
-             paint_rect.y(),
-             SRCCOPY);
+      if (g_threedee_enabled) {
+        // Do 3D effect ----------------------------------------------------------
+
+        const int kOverhang = 5;
+
+        // Paint the pixels into the canvas.
+        gfx::PlatformCanvas effect_canvas(bitmap_rect.width(),
+                                          bitmap_rect.height(), true);
+        HDC effect_dc = effect_canvas.beginPlatformPaint();
+        BitBlt(effect_dc,
+               0,
+               0,
+               bitmap_rect.width(),
+               bitmap_rect.height(),
+               backing_store->dc(),
+               0,
+               0,
+               SRCCOPY);
+
+        // We need to process the pixels manually, get them out.
+        SkBitmap effect_bitmap =
+            effect_canvas.getTopPlatformDevice().accessBitmap(true);
+        SkAutoLockPixels effect_lock(effect_bitmap);
+        
+        // Shift blue to the right. This will make the page pop into the screen
+        // for glasses with red on the left and blue on the right.
+        for (int y = 0; y < bitmap_rect.height(); y++) {
+          uint32* row = effect_bitmap.getAddr32(0, y);
+          for (int x = 0; x < bitmap_rect.width() - kOverhang; x++)
+            row[x] = (row[x] & 0xFF00FFFF) | (row[x + kOverhang] & 0x00FF0000);
+        }
+
+        // Shift red to the right. 
+        for (int y = 0; y < bitmap_rect.height(); y++) {
+          uint32* row = effect_bitmap.getAddr32(0, y);
+          for (int x = bitmap_rect.width() - 1; x >= kOverhang; x--)
+            row[x] = (row[x] & 0xFFFFFF00) | (row[x - kOverhang] & 0x000000FF);
+        }
+
+        // We actually need to draw more than the paint rect, since the modified
+        // pixels will spill out of their bounds due to shifting.
+        gfx::Rect final_rect = paint_rect;
+        final_rect.Inset(-kOverhang, 0);
+        final_rect = final_rect.Intersect(bitmap_rect);
+
+        BitBlt(paint_dc.m_hDC,
+               final_rect.x(),
+               final_rect.y(),
+               final_rect.width(),
+               final_rect.height(),
+               effect_dc,
+               final_rect.x(),
+               final_rect.y(),
+               SRCCOPY);
+
+      } else {
+        // Regular painting ----------------------------------------------------
+        BitBlt(paint_dc.m_hDC,
+               paint_rect.x(),
+               paint_rect.y(),
+               paint_rect.width(),
+               paint_rect.height(),
+               backing_store->dc(),
+               paint_rect.x(),
+               paint_rect.y(),
+               SRCCOPY);
+      }
     }
 
     // Fill the remaining portion of the damaged_rect with white
@@ -824,6 +895,14 @@ LRESULT RenderWidgetHostHWND::OnGetObject(UINT message, WPARAM wparam,
 void RenderWidgetHostHWND::OnFinalMessage(HWND window) {
   render_widget_host_->ViewDestroyed();
   delete this;
+}
+
+void RenderWidgetHostHWND::Observe(NotificationType type,
+                                   const NotificationSource& source,
+                                   const NotificationDetails& details) {
+  // Redraw the window when the user changes this setting.
+  if (type == NOTIFY_THREEDEE_TOGGLED)
+    ::InvalidateRect(m_hWnd, NULL, TRUE);
 }
 
 void RenderWidgetHostHWND::TrackMouseLeave(bool track) {
