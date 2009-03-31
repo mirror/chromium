@@ -2475,6 +2475,7 @@ Global
 		{5916D37D-8C97-424F-A904-74E52594C2D6}.Debug|Win32.ActiveCfg = Debug|Win32
 		{5916D37D-8C97-424F-A904-74E52594C2D6}.Debug|Win32.Build.0 = Debug|Win32
 		{5916D37D-8C97-424F-A904-74E52594C2D6}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{5916D37D-8C97-424F-A904-74E52594C2D6}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{5916D37D-8C97-424F-A904-74E52594C2D6}.Release|Win32.ActiveCfg = Release|Win32
 		{5916D37D-8C97-424F-A904-74E52594C2D6}.Release|Win32.Build.0 = Release|Win32
 		{5AEA4BF6-27CD-47FC-9370-D87771CFA196}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
