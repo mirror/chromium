@@ -30,6 +30,9 @@ env.Append(
     CPPPATH = [
         '$WEBKIT_DIR/build/localized_strings',
     ],
+    LIBS = [
+        'WebKit',
+    ],
 )
 
 if env.Bit('windows'):
