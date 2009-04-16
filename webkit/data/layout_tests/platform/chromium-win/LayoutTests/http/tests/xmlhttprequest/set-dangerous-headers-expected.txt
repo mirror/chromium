@@ -1,0 +1,39 @@
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "ACCEPT-CHARSET"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "ACCEPT-ENCODING"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "ACCESS-CONTROL-REQUEST-HEADERS"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "ACCESS-CONTROL-REQUEST-METHOD"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "CONNECTION"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "CONTENT-LENGTH"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "CONTENT-TRANSFER-ENCODING"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "COOKIE"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "COOKIE2"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "DATE"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "EXPECT"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "HOST"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "KEEP-ALIVE"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "ORIGIN"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "REFERER"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "TE"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "TRAILER"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "TRANSFER-ENCODING"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "UPGRADE"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "USER-AGENT"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "VIA"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "Proxy-"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "Proxy-test"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "PROXY-FOO"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "Sec-"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "Sec-test"
+CONSOLE MESSAGE: line 1: Refused to set unsafe header "SEC-FOO"
+Test that setRequestHeader cannot be used to alter security-sensitive headers.
+
+HTTP_REFERER: http://127.0.0.1:8000/xmlhttprequest/set-dangerous-headers.html
+HTTP_ACCEPT_ENCODING: gzip,deflate,bzip2
+HTTP_CONNECTION: keep-alive
+HTTP_ACCEPT: */*
+HTTP_ACCEPT_CHARSET: iso-8859-1,*,utf-8
+HTTP_USER_AGENT: Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/530.5 (KHTML, like Gecko) Version/3.2.1 Safari/530.5
+HTTP_ACCEPT_LANGUAGE: en-us,en
+HTTP_AUTHORIZATION: foobar
+HTTP_HOST: 127.0.0.1:8000
+
