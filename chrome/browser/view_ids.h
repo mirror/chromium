@@ -45,9 +45,6 @@ enum ViewID {
   // Tab Container window.
   VIEW_ID_TAB_CONTAINER,
 
-  // 3D button
-  VIEW_ID_3D_BUTTON,
-
   VIEW_ID_PREDEFINED_COUNT
 };
 

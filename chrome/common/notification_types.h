@@ -477,12 +477,6 @@ enum NotificationType {
   // Personalization -----------------------------------------------------------
   NOTIFY_PERSONALIZATION,
 
-  // 3D ----------------------------------------------------------------------
-
-  // When the user toggles the 3D button. The new state will be in
-  // g_threedee_enabled declared in command_updater.h
-  NOTIFY_THREEDEE_TOGGLED,
-
   // Count (must be last) ------------------------------------------------------
   // Used to determine the number of notification types.  Not valid as
   // a type parameter when registering for or posting notifications.

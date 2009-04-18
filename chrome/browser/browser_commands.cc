@@ -52,7 +52,6 @@ void Browser::InitCommandState() {
 
   controller_.UpdateCommandEnabled(IDC_STOP, true);
   controller_.UpdateCommandEnabled(IDC_RELOAD, true);
-  controller_.UpdateCommandEnabled(IDC_THREEDEE, true);
   controller_.UpdateCommandEnabled(IDC_HOME,
                                    GetType() == BrowserType::TABBED_BROWSER);
   controller_.UpdateCommandEnabled(IDC_GO, true);

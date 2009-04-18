@@ -90,8 +90,7 @@
 #define IDC_ABOUT                       32829
 #define IDC_IMPORT_SETTINGS             32830
 #define IDC_OPTIONS                     32831
-#define IDC_THREEDEE                    32832
-// Free space 32833 - 32890
+// Free space 32832 - 32890
 #define IDC_ENCODING                    32891
 #define IDC_ENCODING_AUTO_DETECT        32892
 #define IDC_ENCODING_UTF8               32893

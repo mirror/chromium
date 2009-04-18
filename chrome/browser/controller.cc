@@ -7,8 +7,6 @@
 #include "chrome/browser/controller.h"
 #include "base/logging.h"
 
-bool g_threedee_enabled = false;
-
 CommandController::CommandController(CommandHandler* handler) :
     handler_(handler) {
 }

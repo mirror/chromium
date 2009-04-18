@@ -17,7 +17,6 @@
 #include "base/task.h"
 #include "chrome/browser/ime_input.h"
 #include "chrome/browser/render_widget_host_view.h"
-#include "chrome/common/notification_service.h"
 #include "chrome/common/render_messages.h"
 #include "chrome/views/focus_manager.h"
 
@@ -54,8 +53,7 @@ class RenderWidgetHostHWND :
   public CWindowImpl<RenderWidgetHostHWND,
                      CWindow,
                      RenderWidgetHostHWNDTraits>,
-  public RenderWidgetHostView,
-  public NotificationObserver {
+  public RenderWidgetHostView {
  public:
   RenderWidgetHostHWND(RenderWidgetHost* render_widget_host);
   virtual ~RenderWidgetHostHWND();
@@ -180,10 +178,6 @@ class RenderWidgetHostHWND :
   void OnFinalMessage(HWND window);
 
  private:
-  void Observe(NotificationType type,
-               const NotificationSource& source,
-               const NotificationDetails& details);
-
   // Tells Windows that we want to hear about mouse exit messages.
   void TrackMouseLeave(bool start_tracking);
 
