@@ -100,11 +100,7 @@ namespace WebCore {
 
         Item insertItemBefore(Item newItem, unsigned int index, ExceptionCode&)
         {
-            if (index < m_vector.size()) {
-                m_vector.insert(index, newItem);
-            } else {
-                m_vector.append(newItem);
-            }
+            m_vector.insert(index, newItem);
             return newItem;
         }
 
