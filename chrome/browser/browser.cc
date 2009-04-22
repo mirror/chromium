@@ -301,7 +301,7 @@ void Browser::OpenURLOffTheRecord(Profile* profile, const GURL& url) {
   if (!browser)
     browser = Browser::Create(off_the_record_profile);
   // TODO(eroman): should we have referrer here?
-  browser->AddTabWithURL(url, GURL(), PageTransition::LINK, true, NULL);
+  browser->AddTabWithURL(url, GURL(), PageTransition::LINK, true, -1, NULL);
   browser->window()->Show();
 }
 
@@ -311,7 +311,8 @@ void Browser::OpenApplicationWindow(Profile* profile, const GURL& url) {
   RegisterAppPrefs(app_name);
 
   Browser* browser = Browser::CreateForApp(app_name, profile, false);
-  browser->AddTabWithURL(url, GURL(), PageTransition::START_PAGE, true, NULL);
+  browser->AddTabWithURL(url, GURL(), PageTransition::START_PAGE, true, -1,
+                         NULL);
   browser->window()->Show();
   // TODO(jcampan): http://crbug.com/8123 we should not need to set the initial
   //                focus explicitly.
@@ -472,15 +473,15 @@ void Browser::OnWindowClosing() {
 
 TabContents* Browser::AddTabWithURL(
     const GURL& url, const GURL& referrer, PageTransition::Type transition,
-    bool foreground, SiteInstance* instance) {
+    bool foreground, int index, SiteInstance* instance) {
   TabContents* contents = NULL;
-  if (type_ == TYPE_NORMAL) {
+  if (type_ == TYPE_NORMAL || tabstrip_model()->empty()) {
     GURL url_to_load = url;
     if (url_to_load.is_empty())
       url_to_load = GetHomePage();
     contents = CreateTabContentsForURL(url_to_load, referrer, profile_,
                                        transition, false, instance);
-    tabstrip_model_.AddTabContents(contents, -1, transition, foreground);
+    tabstrip_model_.AddTabContents(contents, index, transition, foreground);
     // By default, content believes it is not hidden.  When adding contents
     // in the background, tell it that it's hidden.
     if (!foreground)
@@ -489,7 +490,7 @@ TabContents* Browser::AddTabWithURL(
     // We're in an app window or a popup window. Find an existing browser to
     // open this URL in, creating one if none exists.
     Browser* b = GetOrCreateTabbedBrowser();
-    contents = b->AddTabWithURL(url, referrer, transition, foreground,
+    contents = b->AddTabWithURL(url, referrer, transition, foreground, index,
                                 instance);
     b->window()->Show();
   }
@@ -545,7 +546,7 @@ void Browser::ShowSingleDOMUITab(const GURL& url) {
   }
 
   // Otherwise, just create a new tab.
-  AddTabWithURL(url, GURL(), PageTransition::AUTO_BOOKMARK, true, NULL);
+  AddTabWithURL(url, GURL(), PageTransition::AUTO_BOOKMARK, true, -1, NULL);
 }
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -1071,7 +1072,7 @@ void Browser::OpenAboutChromeDialog() {
 
 void Browser::OpenHelpTab() {
   GURL help_url(WideToASCII(l10n_util::GetString(IDS_HELP_CONTENT_URL)));
-  AddTabWithURL(help_url, GURL(), PageTransition::AUTO_BOOKMARK, true,
+  AddTabWithURL(help_url, GURL(), PageTransition::AUTO_BOOKMARK, true, -1,
                 NULL);
 }
 
@@ -1303,8 +1304,13 @@ void Browser::ExecuteCommand(int id) {
 ///////////////////////////////////////////////////////////////////////////////
 // Browser, TabStripModelDelegate implementation:
 
-GURL Browser::GetBlankTabURL() const {
-  return GURL(chrome::kChromeUINewTabURL);
+TabContents* Browser::AddBlankTab(bool foreground) {
+  return AddBlankTabAt(-1, foreground);
+}
+
+TabContents* Browser::AddBlankTabAt(int index, bool foreground) {
+  return AddTabWithURL(GURL(chrome::kChromeUINewTabURL), GURL(),
+                       PageTransition::TYPED, foreground, index, NULL);
 }
 
 Browser* Browser::CreateNewStripWithContents(TabContents* detached_contents,
@@ -1643,7 +1649,7 @@ void Browser::OpenURLFromTab(TabContents* source,
     return;
   } else if (disposition == NEW_WINDOW) {
     Browser* browser = Browser::Create(profile_);
-    new_contents = browser->AddTabWithURL(url, referrer, transition, true,
+    new_contents = browser->AddTabWithURL(url, referrer, transition, true, -1,
                                           instance);
     browser->window()->Show();
   } else if ((disposition == CURRENT_TAB) && current_tab) {
@@ -1671,7 +1677,8 @@ void Browser::OpenURLFromTab(TabContents* source,
     return;
   } else if (disposition != SUPPRESS_OPEN) {
     new_contents = AddTabWithURL(url, referrer, transition,
-                                 disposition != NEW_BACKGROUND_TAB, instance);
+                                 disposition != NEW_BACKGROUND_TAB, -1,
+                                 instance);
   }
 
   if (disposition != NEW_BACKGROUND_TAB && source_tab_was_frontmost) {

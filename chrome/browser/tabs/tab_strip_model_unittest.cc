@@ -31,8 +31,9 @@ class TabStripDummyDelegate : public TabStripModelDelegate {
   virtual ~TabStripDummyDelegate() {}
 
   // Overridden from TabStripModelDelegate:
-  virtual GURL GetBlankTabURL() const {
-    return GURL(chrome::kChromeUINewTabURL);
+  virtual TabContents* AddBlankTab(bool foreground) { return NULL; }
+  virtual TabContents* AddBlankTabAt(int index, bool foreground) {
+    return NULL;
   }
   virtual Browser* CreateNewStripWithContents(TabContents* contents,
                                               const gfx::Rect& window_bounds,
@@ -1067,14 +1068,6 @@ TEST_F(TabStripModelTest, AppendContentsReselectionTest) {
   // and make sure the right tab gets selected when the new tab is closed.
   TabContents* target_blank_contents = CreateTabContents();
   tabstrip.AppendTabContents(target_blank_contents, true);
-  EXPECT_EQ(2, tabstrip.selected_index());
-  tabstrip.CloseTabContentsAt(2);
-  EXPECT_EQ(0, tabstrip.selected_index());
-
-  // Now open a blank tab...
-  // (see also AddTabContents_NewTabAtEndOfStripInheritsGroup for an
-  // explanation of this behavior)
-  tabstrip.AddBlankTab(true);
   EXPECT_EQ(2, tabstrip.selected_index());
   tabstrip.CloseTabContentsAt(2);
   EXPECT_EQ(0, tabstrip.selected_index());
