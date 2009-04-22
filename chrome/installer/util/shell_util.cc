@@ -53,6 +53,8 @@ class RegistryEntry {
 
     entries.push_front(new RegistryEntry(L"Software\\Classes\\ChromeHTML",
                                          ShellUtil::kChromeHTMLProgIdDesc));
+    entries.push_front(new RegistryEntry(chrome_html_prog_id,
+                                         ShellUtil::kRegUrlProtocol, L""));
     entries.push_front(new RegistryEntry(
         L"Software\\Classes\\ChromeHTML\\DefaultIcon", icon_path));
     entries.push_front(new RegistryEntry(
@@ -125,7 +127,7 @@ class RegistryEntry {
     return entries;
   }
 
-  // Generate work_item tasks required to create current regitry entry and
+  // Generate work_item tasks required to create current registry entry and
   // add them to the given work item list.
   void AddToWorkItemList(HKEY root, WorkItemList *items) {
     items->AddCreateRegKeyWorkItem(root, _key_path);
@@ -317,13 +319,6 @@ ShellUtil::RegisterStatus RegisterOnVista(const std::wstring& chrome_exe,
   return ShellUtil::FAILURE;
 }
 
-// Remove unnecessary "URL Protocol" entry from shell registration.  This value
-// was written by older installers so ignoring error conditions.
-void RemoveUrlProtocol(HKEY root) {
-  RegKey key(root, L"Software\\Classes\\ChromeHTML", KEY_ALL_ACCESS);
-  key.DeleteValue(ShellUtil::kRegUrlProtocol);
-}
-
 }  // namespace
 
 
@@ -348,9 +343,6 @@ const wchar_t* ShellUtil::kRegUrlProtocol = L"URL Protocol";
 
 ShellUtil::RegisterStatus ShellUtil::AddChromeToSetAccessDefaults(
     const std::wstring& chrome_exe, bool skip_if_not_admin) {
-  RemoveUrlProtocol(HKEY_LOCAL_MACHINE);
-  RemoveUrlProtocol(HKEY_CURRENT_USER);
-
   if (IsChromeRegistered(chrome_exe))
     return ShellUtil::SUCCESS;
 
