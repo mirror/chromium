@@ -53,7 +53,7 @@ class RegistryEntry {
 
     entries.push_front(new RegistryEntry(L"Software\\Classes\\ChromeHTML",
                                          ShellUtil::kChromeHTMLProgIdDesc));
-    entries.push_front(new RegistryEntry(chrome_html_prog_id,
+    entries.push_front(new RegistryEntry(L"Software\\Classes\\ChromeHTML",
                                          ShellUtil::kRegUrlProtocol, L""));
     entries.push_front(new RegistryEntry(
         L"Software\\Classes\\ChromeHTML\\DefaultIcon", icon_path));
