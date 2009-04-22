@@ -217,6 +217,8 @@ WebContents::WebContents(Profile* profile,
 
   render_manager_.Init(profile, site_instance, routing_id, modal_dialog_event);
 
+  view_->CreateView();
+
   // Register for notifications about all interested prefs change.
   PrefService* prefs = profile->GetPrefs();
   if (prefs) {
@@ -560,11 +562,6 @@ bool WebContents::FocusLocationBarByDefault() {
   if (dom_ui)
     return dom_ui->focus_location_bar_by_default();
   return false;
-}
-
-// Stupid view pass-throughs
-void WebContents::CreateView() {
-  view_->CreateView();
 }
 
 gfx::NativeView WebContents::GetNativeView() const {
@@ -1204,7 +1201,7 @@ void WebContents::ShowModalHTMLDialog(const GURL& url, int width, int height,
                                       const std::string& json_arguments,
                                       IPC::Message* reply_msg) {
   if (delegate()) {
-    ModalHtmlDialogDelegate* dialog_delegate =
+    HtmlDialogUIDelegate* dialog_delegate =
         new ModalHtmlDialogDelegate(url, width, height, json_arguments,
                                     reply_msg, this);
     delegate()->ShowHtmlDialog(dialog_delegate, NULL);
