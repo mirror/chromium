@@ -639,8 +639,8 @@ void Browser::OpenCurrentURL() {
   UserMetrics::RecordAction(L"LoadURL", profile_);
   LocationBar* location_bar = window_->GetLocationBar();
   OpenURL(GURL(WideToUTF8(location_bar->GetInputString())), GURL(),
-               location_bar->GetWindowOpenDisposition(),
-               location_bar->GetPageTransition());
+          location_bar->GetWindowOpenDisposition(),
+          location_bar->GetPageTransition());
 }
 
 void Browser::Go(WindowOpenDisposition disposition) {
@@ -1678,8 +1678,8 @@ void Browser::OpenURLFromTab(TabContents* source,
 
     // Update the location bar and load state. These are both synchronous
     // updates inside of ScheduleUIUpdate.
-    ScheduleUIUpdate(source, TabContents::INVALIDATE_URL |
-                             TabContents::INVALIDATE_LOAD);
+    ScheduleUIUpdate(current_tab, TabContents::INVALIDATE_URL |
+                                  TabContents::INVALIDATE_LOAD);
     UpdateToolbar(false);
   } else if (disposition == OFF_THE_RECORD) {
     OpenURLOffTheRecord(profile_, url);
