@@ -479,6 +479,12 @@ bool FindBarView::HandleKeystroke(views::TextField* sender, UINT message,
   if (!container_->IsVisible())
     return false;
 
+  // TODO(port): Handle this for other platforms.
+  #if defined(OS_WIN)
+  if (container_->MaybeForwardKeystrokeToWebpage(message, key, flags))
+    return true;  // Handled, we are done!
+  #endif
+
   switch (key) {
     case VK_RETURN: {
       // Pressing Return/Enter starts the search (unless text box is empty).
@@ -491,15 +497,6 @@ bool FindBarView::HandleKeystroke(views::TextField* sender, UINT message,
       }
       break;
     }
-#if defined(OS_WIN)
-    // TODO(port): Handle this for other platforms.
-    case VK_UP:
-    case VK_DOWN:
-    case VK_PRIOR:  // Page up
-    case VK_NEXT:   // Page down
-      container_->ForwardKeystrokeToWebpage(key);
-      return true;  // Message has been handled. No further processing needed.
-#endif
   }
 
   return false;
