@@ -947,26 +947,18 @@ bool WebFrameImpl::Find(const WebFindInPageRequest& request,
 
   if (!request.findNext)
     frame()->page()->unmarkAllTextMatches();
-  else
-    SetMarkerActive(active_match_.get(), false);  // Active match is changing.
 
   // Starts the search from the current selection.
   bool start_in_selection = true;
-
-  // If the user has selected something since the last Find operation we want
-  // to start from there. Otherwise, we start searching from where the last Find
-  // operation left off (either a Find or a FindNext operation).
-  VisibleSelection selection(frame()->selection()->selection());
-  if (selection.isNone() && active_match_) {
-    selection = VisibleSelection(active_match_.get());
-    frame()->selection()->setSelection(selection);
-  }
 
   DCHECK(frame() && frame()->view());
   bool found = frame()->findString(webcore_string, request.forward,
                                    request.matchCase, wrap_within_frame,
                                    start_in_selection);
   if (found) {
+#if defined(OS_WIN)
+    WebCore::RenderThemeChromiumWin::setFindInPageMode(true);
+#endif
     // Store which frame was active. This will come in handy later when we
     // change the active match ordinal below.
     WebFrameImpl* old_active_frame = main_frame_impl->active_match_frame_;
@@ -988,8 +980,6 @@ bool WebFrameImpl::Find(const WebFindInPageRequest& request,
     } else {
       active_match_ = new_selection.toNormalizedRange();
       curr_selection_rect = active_match_->boundingBox();
-      SetMarkerActive(active_match_.get(), true);  // Active.
-      ClearSelection();  // WebKit draws the highlighting for all matches.
     }
 
     if (!request.findNext) {
@@ -1100,7 +1090,7 @@ void WebFrameImpl::InvalidateIfNecessary() {
   }
 }
 
-void WebFrameImpl::AddMarker(WebCore::Range* range, bool active_match) {
+void WebFrameImpl::AddMarker(WebCore::Range* range) {
   // Use a TextIterator to visit the potentially multiple nodes the range
   // covers.
   TextIterator markedText(range);
@@ -1112,8 +1102,7 @@ void WebFrameImpl::AddMarker(WebCore::Range* range, bool active_match) {
         WebCore::DocumentMarker::TextMatch,
         textPiece->startOffset(exception),
         textPiece->endOffset(exception),
-        "",
-        active_match };
+        "" };
 
     if (marker.endOffset > marker.startOffset) {
       // Find the node to add a marker to and add it.
@@ -1132,13 +1121,6 @@ void WebFrameImpl::AddMarker(WebCore::Range* range, bool active_match) {
           range->boundingBox());
     }
   }
-}
-
-void WebFrameImpl::SetMarkerActive(WebCore::Range* range, bool active) {
-  if (!range)
-    return;
-
-  frame()->document()->setMarkersActive(range, active);
 }
 
 void WebFrameImpl::ScopeStringMatches(const WebFindInPageRequest& request,
@@ -1234,6 +1216,8 @@ void WebFrameImpl::ScopeStringMatches(const WebFindInPageRequest& request,
     if (frame()->editor()->insideVisibleArea(result_range.get())) {
       ++match_count;
 
+      AddMarker(result_range.get());
+
       setStart(search_range.get(), new_start);
       Node* shadow_tree_root = search_range->shadowTreeRootNode();
       if (search_range->collapsed(ec) && shadow_tree_root)
@@ -1254,11 +1238,9 @@ void WebFrameImpl::ScopeStringMatches(const WebFindInPageRequest& request,
       // match was found in active_selection_rect_ on the current frame. If we
       // find this rect during scoping it means we have found the active
       // tickmark.
-      bool found_active_match = false;
       if (locating_active_rect_ && (active_selection_rect == result_bounds)) {
         // We have found the active tickmark frame.
         main_frame_impl->active_match_frame_ = this;
-        found_active_match = true;
         // We also know which tickmark is active now.
         active_match_index_ = match_count - 1;
         // To stop looking for the active tickmark, we set this flag.
@@ -1276,8 +1258,6 @@ void WebFrameImpl::ScopeStringMatches(const WebFindInPageRequest& request,
                 request.identifier);
   #endif
       }
-
-      AddMarker(result_range.get(), found_active_match);
     }
 
     resume_scoping_from_range_ = result_range;
@@ -1382,6 +1362,10 @@ void WebFrameImpl::StopFinding(bool clear_selection) {
   if (!clear_selection)
     SetFindEndstateFocusAndSelection();
   CancelPendingScopingEffort();
+
+#if defined(OS_WIN)
+  WebCore::RenderThemeChromiumWin::setFindInPageMode(false);
+#endif
 
   // Remove all markers for matches found and turn off the highlighting.
   if (this == static_cast<WebFrameImpl*>(GetView()->GetMainFrame()))
