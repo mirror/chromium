@@ -227,7 +227,7 @@ bool MoveTabFunction::RunImpl() {
   // -windowId
 
   int new_index;
-  DCHECK(args->GetInteger(L"index", &new_index));
+  args->GetInteger(L"index", &new_index);
   if (new_index < 0) {
     DCHECK(false);
     return false;
