@@ -31,12 +31,9 @@ class GoButton : public views::ToggleImageButton,
 
   typedef enum Mode { MODE_GO = 0, MODE_STOP };
 
-  // Force the button state
-  void ChangeMode(Mode mode);
-
-  // Ask for a specified button state. This is commonly called by the Browser
-  // when page load state changes.
-  void ScheduleChangeMode(Mode mode);
+  // Ask for a specified button state.  If |force| is true this will be applied
+  // immediately.
+  void ChangeMode(Mode mode, bool force);
 
   // Overridden from views::ButtonListener:
   virtual void ButtonPressed(views::Button* button);
