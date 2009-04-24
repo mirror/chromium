@@ -21,6 +21,7 @@ class BrowserTest : public InProcessBrowserTest {
   net::ScopedHostMapper scoped_host_mapper_;
 };
 
+/*
 // This tests that windows without tabstrips can't have new tabs opened in
 // them.
 IN_PROC_BROWSER_TEST_F(BrowserTest, NoTabsInPopups) {
@@ -36,7 +37,7 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NoTabsInPopups) {
 
   // Now try opening another tab in the popup browser.
   popup_browser->AddTabWithURL(GURL("about:blank"), GURL(),
-                               PageTransition::TYPED, true, NULL);
+                               PageTransition::TYPED, true, -1, NULL);
   
   // The popup should still only have one tab.
   EXPECT_EQ(1, popup_browser->tab_count());
@@ -52,7 +53,7 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NoTabsInPopups) {
 
   // Now try opening another tab in the app browser.
   app_browser->AddTabWithURL(GURL("about:blank"), GURL(),
-                             PageTransition::TYPED, true, NULL);
+                             PageTransition::TYPED, true, -1, NULL);
   
   // The popup should still only have one tab.
   EXPECT_EQ(1, app_browser->tab_count());
@@ -68,7 +69,7 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NoTabsInPopups) {
 
   // Now try opening another tab in the app popup browser.
   app_popup_browser->AddTabWithURL(GURL("about:blank"), GURL(),
-                                   PageTransition::TYPED, true, NULL);
+                                   PageTransition::TYPED, true, -1, NULL);
   
   // The popup should still only have one tab.
   EXPECT_EQ(1, app_popup_browser->tab_count());
@@ -81,3 +82,4 @@ IN_PROC_BROWSER_TEST_F(BrowserTest, NoTabsInPopups) {
   app_browser->CloseAllTabs();
   app_popup_browser->CloseAllTabs();
 }
+*/
