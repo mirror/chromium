@@ -430,6 +430,11 @@ void BrowserWindowGtk::ShowHTMLDialog(HtmlDialogUIDelegate* delegate,
   NOTIMPLEMENTED();
 }
 
+void BrowserWindowGtk::ConfirmBrowserCloseWithPendingDownloads() {
+  NOTIMPLEMENTED();
+  browser_->InProgressDownloadResponse(false);
+}
+
 void BrowserWindowGtk::TabDetachedAt(TabContents* contents, int index) {
   // We use index here rather than comparing |contents| because by this time
   // the model has already removed |contents| from its list, so
