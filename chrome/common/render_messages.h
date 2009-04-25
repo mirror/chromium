@@ -25,7 +25,7 @@
 #include "net/http/http_response_headers.h"
 #include "net/url_request/url_request_status.h"
 #include "third_party/WebKit/WebKit/chromium/public/WebCache.h"
-#include "third_party/WebKit/WebKit/chromium/public/WebFindInPageRequest.h"
+#include "third_party/WebKit/WebKit/chromium/public/WebFindInPageRequest.h"    
 #include "third_party/WebKit/WebKit/chromium/public/WebInputEvent.h"
 #include "webkit/glue/autofill_form.h"
 #include "webkit/glue/context_menu.h"
@@ -1702,6 +1702,7 @@ struct ParamTraits<WebPreferences> {
     WriteParam(m, p.user_style_sheet_enabled);
     WriteParam(m, p.user_style_sheet_location);
     WriteParam(m, p.uses_page_cache);
+    WriteParam(m, p.remote_font_enabled);
   }
   static bool Read(const Message* m, void** iter, param_type* p) {
     return
@@ -1729,7 +1730,8 @@ struct ParamTraits<WebPreferences> {
         ReadParam(m, iter, &p->java_enabled) &&
         ReadParam(m, iter, &p->user_style_sheet_enabled) &&
         ReadParam(m, iter, &p->user_style_sheet_location) &&
-        ReadParam(m, iter, &p->uses_page_cache);
+        ReadParam(m, iter, &p->uses_page_cache) &&
+        ReadParam(m, iter, &p->remote_font_enabled);
   }
   static void Log(const param_type& p, std::wstring* l) {
     l->append(L"<WebPreferences>");

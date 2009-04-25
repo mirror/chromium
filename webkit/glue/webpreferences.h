@@ -39,6 +39,7 @@ struct WebPreferences {
   bool java_enabled;
   bool allow_scripts_to_close_windows;
   bool uses_page_cache;
+  bool remote_font_enabled;
 
   // TODO(tc): User style sheets will not work in chrome because it tries to
   // load the style sheet using a request without a frame.
@@ -73,7 +74,8 @@ struct WebPreferences {
         java_enabled(true),
         allow_scripts_to_close_windows(false),
         uses_page_cache(false),
-        user_style_sheet_enabled(false) {
+        user_style_sheet_enabled(false),
+        remote_font_enabled(false) {
   }
 };
 

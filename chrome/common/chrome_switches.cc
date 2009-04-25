@@ -329,6 +329,9 @@ const wchar_t kDisablePlugins[]                = L"disable-plugins";
 // Prevent images from loading.
 const wchar_t kDisableImages[]                 = L"disable-images";
 
+// Enable remote web font support.
+const wchar_t kEnableRemoteFont[]              = L"enable-remote-font";
+
 // Use the low fragmentation heap for the CRT.
 const wchar_t kUseLowFragHeapCrt[]             = L"use-lf-heap";
 

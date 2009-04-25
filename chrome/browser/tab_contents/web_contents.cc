@@ -1402,6 +1402,8 @@ WebPreferences WebContents::GetWebkitPrefs() {
         prefs->GetBoolean(prefs::kWebKitLoadsImagesAutomatically);
     web_prefs.uses_page_cache =
         command_line.HasSwitch(switches::kEnableFastback);
+    web_prefs.remote_font_enabled =
+        command_line.HasSwitch(switches::kEnableRemoteFont);
   }
 
   web_prefs.uses_universal_detector =
