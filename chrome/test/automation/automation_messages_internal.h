@@ -876,4 +876,8 @@ IPC_BEGIN_MESSAGES(Automation)
                       IPC::Reposition_Params /* SetWindowPos params */)
 #endif  // defined(OS_WIN)
 
+  // This message requests the tabstrip index of the tab with the given handle.
+  // The return value contains the index, which will be -1 on failure.
+  IPC_SYNC_MESSAGE_ROUTED1_1(AutomationMsg_TabIndex, int, int)
+
 IPC_END_MESSAGES(Automation)

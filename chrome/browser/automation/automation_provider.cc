@@ -858,6 +858,7 @@ void AutomationProvider::OnMessageReceived(const IPC::Message& message) {
 #endif  // defined(OS_WIN)
     IPC_MESSAGE_HANDLER(AutomationMsg_TabProcessID, GetTabProcessID)
     IPC_MESSAGE_HANDLER(AutomationMsg_TabTitle, GetTabTitle)
+    IPC_MESSAGE_HANDLER(AutomationMsg_TabIndex, GetTabIndex)
     IPC_MESSAGE_HANDLER(AutomationMsg_TabURL, GetTabURL)
     IPC_MESSAGE_HANDLER(AutomationMsg_ShelfVisibility,
                         GetShelfVisibility)
@@ -1670,6 +1671,16 @@ void AutomationProvider::GetTabTitle(int handle, int* title_string_size,
     NavigationController* tab = tab_tracker_->GetResource(handle);
     *title = UTF16ToWideHack(tab->GetActiveEntry()->title());
     *title_string_size = static_cast<int>(title->size());
+  }
+}
+
+void AutomationProvider::GetTabIndex(int handle, int* tabstrip_index) {
+  *tabstrip_index = -1;  // -1 is the error code
+
+  if (tab_tracker_->ContainsHandle(handle)) {
+    NavigationController* tab = tab_tracker_->GetResource(handle);
+    Browser* browser = Browser::GetBrowserForController(tab, NULL);
+    *tabstrip_index = browser->tabstrip_model()->GetIndexOfController(tab);
   }
 }
 
