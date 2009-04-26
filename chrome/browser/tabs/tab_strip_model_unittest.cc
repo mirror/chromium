@@ -134,9 +134,10 @@ class TabStripModelTest : public testing::Test {
 
  protected:
   TabContents* CreateTabContents() {
-    WebContents* con = new WebContents(profile(), NULL, 0, NULL);
-    con->SetupController(profile());
-    return con;
+    TabStripModelTestTabContents* contents =
+        new TabStripModelTestTabContents(kHTTPTabContentsType);
+    contents->SetupController(profile_);
+    return contents;
   }
   TabContents* CreateReplacementContents() {
     TabStripModelTestTabContents* contents =
