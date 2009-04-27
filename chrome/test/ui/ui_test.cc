@@ -472,14 +472,8 @@ void UITest::CleanupAppProcesses() {
 #endif
 }
 
-TabProxy* UITest::GetActiveTab(int window_index) {
-  EXPECT_GE(window_index, 0);
-  int window_count;
-  // Use EXPECT rather than ASSERT here because ASSERT_* returns void.
-  EXPECT_TRUE(automation()->GetBrowserWindowCount(&window_count));
-  EXPECT_GT(window_count, window_index);
-  scoped_ptr<BrowserProxy> window_proxy(automation()->
-      GetBrowserWindow(window_index));
+TabProxy* UITest::GetActiveTab() {
+  scoped_ptr<BrowserProxy> window_proxy(automation()->GetBrowserWindow(0));
   if (!window_proxy.get())
     return NULL;
 
@@ -565,8 +559,8 @@ bool UITest::WaitForBookmarkBarVisibilityChange(BrowserProxy* browser,
 }
 #endif  // defined(OS_WIN)
 
-GURL UITest::GetActiveTabURL(int window_index) {
-  scoped_ptr<TabProxy> tab_proxy(GetActiveTab(window_index));
+GURL UITest::GetActiveTabURL() {
+  scoped_ptr<TabProxy> tab_proxy(GetActiveTab());
   if (!tab_proxy.get())
     return GURL();
 
@@ -576,9 +570,9 @@ GURL UITest::GetActiveTabURL(int window_index) {
   return url;
 }
 
-std::wstring UITest::GetActiveTabTitle(int window_index) {
+std::wstring UITest::GetActiveTabTitle() {
   std::wstring title;
-  scoped_ptr<TabProxy> tab_proxy(GetActiveTab(window_index));
+  scoped_ptr<TabProxy> tab_proxy(GetActiveTab());
   if (!tab_proxy.get())
     return title;
 
@@ -586,8 +580,8 @@ std::wstring UITest::GetActiveTabTitle(int window_index) {
   return title;
 }
 
-int UITest::GetActiveTabIndex(int window_index) {
-  scoped_ptr<TabProxy> tab_proxy(GetActiveTab(window_index));
+int UITest::GetActiveTabIndex() {
+  scoped_ptr<TabProxy> tab_proxy(GetActiveTab());
   if (!tab_proxy.get())
     return -1;
 

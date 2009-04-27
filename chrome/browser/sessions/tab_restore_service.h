@@ -168,11 +168,9 @@ class TabRestoreService : public BaseSessionService {
     LOADED_LAST_SESSION  = 1 << 4
   };
 
-  // Populates the tab's navigations from the NavigationController, and its
-  // browser_id and tabstrip_index from the browser.
-  void PopulateTab(Tab* tab,
-                   Browser* browser,
-                   NavigationController* controller);
+  // Populates tabs->navigations from the NavigationController.
+  void PopulateTabFromController(NavigationController* controller,
+                                 Tab* tab);
 
   // Notifies observers the tabs have changed.
   void NotifyTabsChanged();
@@ -236,10 +234,6 @@ class TabRestoreService : public BaseSessionService {
   // This also deletes any entries beyond the max number of entries we can
   // hold.
   void ValidateAndDeleteEmptyEntries(std::vector<Entry*>* entries);
-
-  // Finds tab entries with the old browser_id and sets it to the new one.
-  void UpdateTabBrowserIDs(SessionID::id_type old_id,
-                           SessionID::id_type new_id);
 
   // Callback from SessionService when we've received the windows from the
   // previous session. This creates and add entries to |staging_entries_|

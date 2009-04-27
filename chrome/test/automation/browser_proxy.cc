@@ -19,7 +19,6 @@
 using base::TimeDelta;
 using base::TimeTicks;
 
-
 bool BrowserProxy::ActivateTab(int tab_index) {
   return ActivateTabWithTimeout(tab_index, base::kNoTimeout, NULL);
 }
