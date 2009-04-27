@@ -32,7 +32,7 @@ class MiniInstallTest : public testing::Test {
   };
 };
 
-TEST_F(MiniInstallTest, StandaloneInstallerTest) {
+TEST_F(MiniInstallTest, DISABLED_StandaloneInstallerTest) {
   if (win_util::GetWinVersion() < win_util::WINVERSION_VISTA) {
     ChromeMiniInstaller installer(mini_installer_constants::kUserInstall);
     installer.InstallStandaloneIntaller();
