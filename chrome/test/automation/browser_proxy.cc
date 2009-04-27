@@ -368,7 +368,7 @@ bool BrowserProxy::SetBooleanPreference(const std::wstring& name,
   return result;
 }
 
-WindowProxy* BrowserProxy::GetWindow() const {
+WindowProxy* BrowserProxy::GetWindow() {
   if (!is_valid())
     return false;
 

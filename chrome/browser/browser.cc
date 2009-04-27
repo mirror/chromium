@@ -540,8 +540,6 @@ NavigationController* Browser::AddRestoredTab(
       tab_index,
       restored_controller->active_contents(),
       select, false);
-  if (select)
-    window_->Activate();
   if (profile_->HasSessionService()) {
     SessionService* session_service = profile_->GetSessionService();
     if (session_service)
