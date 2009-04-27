@@ -147,7 +147,7 @@ void TabRestoreService::BrowserClosing(Browser* browser) {
   for (int tab_index = 0; tab_index < browser->tab_count(); ++tab_index) {
     PopulateTab(&(window->tabs[entry_index]),
                 browser,
-                &browser->GetTabContentsAt(tab_index)->controller());
+                browser->GetTabContentsAt(tab_index)->controller());
     if (window->tabs[entry_index].navigations.empty()) {
       window->tabs.erase(window->tabs.begin() + entry_index);
     } else {
