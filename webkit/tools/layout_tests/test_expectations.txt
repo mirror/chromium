@@ -2411,3 +2411,14 @@ WIN : LayoutTests/http/tests/navigation/onload-navigation-iframe.html = TIMEOUT 
 DEFER : LayoutTests/fast/block/positioning/negative-rel-position.html = FAIL
 DEFER : LayoutTests/http/tests/xmlhttprequest/redirect-cross-origin-tripmine.html = FAIL
 DEFER : LayoutTests/fast/forms/range-thumb-height-percentage.html = FAIL
+
+// Tests that depend on loading fonts.
+// In 172, loading fonts (@font-face { src: url(..url_to_load...);}) is disabled
+// by default. These tests are marked FAIL DEFER
+DEFER WIN : LayoutTests/fast/css/font-face-remote.html = FAIL
+DEFER WIN : LayoutTests/fast/css/font-face-unicode-range.html = FAIL
+DEFER WIN : LayoutTests/svg/W3C-SVG-1.1/fonts-elem-03-b.svg = FAIL
+DEFER WIN : LayoutTests/svg/W3C-SVG-1.1/fonts-elem-04-b.svg = FAIL
+DEFER WIN : LayoutTests/svg/W3C-SVG-1.1/fonts-elem-07-b.svg = FAIL
+DEFER WIN : LayoutTests/svg/custom/acid3-test-77.html = FAIL
+DEFER WIN : LayoutTests/svg/custom/svg-fonts-in-html.html = FAIL
