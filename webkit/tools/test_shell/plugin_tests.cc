@@ -123,7 +123,7 @@ TEST_F(PluginTest, DefaultPluginLoadTest) {
 // Tests that if a frame is deleted as a result of calling NPP_HandleEvent, we
 // don't crash.
 TEST_F(PluginTest, DeleteFrameDuringEvent) {
-  FilePath test_html = data_dir_;
+  FilePath test_html(data_dir_);
   test_html = test_html.AppendASCII("plugins");
   test_html = test_html.AppendASCII("delete_frame.html");
   test_shell_->LoadURL(test_html.ToWStringHack().c_str());
