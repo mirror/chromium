@@ -115,12 +115,8 @@ void TCPClientSocket::Disconnect() {
   // Make sure the message loop is not watching this object anymore.
   watcher_.StopWatching();
 
-  // Cancel any pending IO and wait for it to be aborted.
-  if (wait_state_ == WAITING_READ || wait_state_ == WAITING_WRITE) {
-    CancelIo(reinterpret_cast<HANDLE>(socket_));
-    WaitForSingleObject(overlapped_.hEvent, INFINITE);
-    wait_state_ = NOT_WAITING;
-  }
+  // Note: don't use CancelIo to cancel pending IO because it doesn't work
+  // when there is a Winsock layered service provider.
 
   // In most socket implementations, closing a socket results in a graceful
   // connection shutdown, but in Winsock we have to call shutdown explicitly.
@@ -128,14 +124,20 @@ void TCPClientSocket::Disconnect() {
   // at http://msdn.microsoft.com/en-us/library/ms738547.aspx
   shutdown(socket_, SD_SEND);
 
+  // This cancels any pending IO.
   closesocket(socket_);
   socket_ = INVALID_SOCKET;
+
+  if (wait_state_ == WAITING_READ || wait_state_ == WAITING_WRITE)
+    WaitForSingleObject(overlapped_.hEvent, INFINITE);
 
   WSACloseEvent(overlapped_.hEvent);
   memset(&overlapped_, 0, sizeof(overlapped_));
 
   // Reset for next time.
   current_ai_ = addresses_.head();
+
+  wait_state_ = NOT_WAITING;
 }
 
 bool TCPClientSocket::IsConnected() const {
