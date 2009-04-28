@@ -17,7 +17,9 @@ class WebContents;
 namespace views {
 class Window;
 }
-
+namespace JSMessageBox {
+std::wstring MakeTextSafe(const std::wstring& text);
+}
 class JavascriptMessageBoxHandler
     : public views::AppModalDialogDelegate,
       public NotificationObserver {

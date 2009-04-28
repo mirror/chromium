@@ -20,6 +20,18 @@
 #include "chrome/views/window/window.h"
 #include "grit/generated_resources.h"
 
+namespace JSMessageBox {
+const size_t kMaxReasonableTextLength = 2048;
+
+// In some platforms, the underlying processing of humongous strings takes too
+// long and thus make the UI thread unresponsive.
+std::wstring MakeTextSafe(const std::wstring& text) {
+  if (text.size() > kMaxReasonableTextLength)
+    return text.substr(0, kMaxReasonableTextLength) + L"\x2026";
+  return text;
+}
+}
+
 void RunJavascriptMessageBox(WebContents* web_contents,
                              const GURL& frame_url,
                              int dialog_flags,
@@ -29,7 +41,8 @@ void RunJavascriptMessageBox(WebContents* web_contents,
                              IPC::Message* reply_msg) {
   JavascriptMessageBoxHandler* handler =
       new JavascriptMessageBoxHandler(web_contents, frame_url, dialog_flags,
-                                      message_text, default_prompt_text,
+                                      JSMessageBox::MakeTextSafe(message_text),
+                                      default_prompt_text,
                                       display_suppress_checkbox, reply_msg);
   AppModalDialogQueue::AddDialog(handler);
 }

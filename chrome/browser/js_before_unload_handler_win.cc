@@ -32,7 +32,7 @@ JavascriptBeforeUnloadHandler::JavascriptBeforeUnloadHandler(
     : JavascriptMessageBoxHandler(web_contents,
                                   frame_url,
                                   MessageBox::kIsJavascriptConfirm,
-                                  message_text,
+                                  JSMessageBox::MakeTextSafe(message_text),
                                   std::wstring(),
                                   false,
                                   reply_msg) {
