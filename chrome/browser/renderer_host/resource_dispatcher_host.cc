@@ -380,7 +380,8 @@ void ResourceDispatcherHost::BeginRequest(
                                               request_data.url,
                                               request_data.resource_type,
                                               safe_browsing_,
-                                              this);
+                                              this,
+                                              receiver_);
   }
 
   // Insert a buffered event handler before the actual one.
@@ -512,7 +513,8 @@ void ResourceDispatcherHost::BeginDownload(const GURL& url,
                                               url,
                                               ResourceType::MAIN_FRAME,
                                               safe_browsing_,
-                                              this);
+                                              this,
+                                              receiver_);
   }
 
   bool known_proto = URLRequest::IsHandledURL(url);
