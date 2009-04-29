@@ -441,7 +441,7 @@ int BrowserMain(const MainFunctionParams& parameters) {
 
   // Set up a field trial.
   FieldTrial::Probability kDIVISOR = 100;
-  FieldTrial::Probability kDISABLE = 1;  // 1%.
+  FieldTrial::Probability kDISABLE = 0;  // 1%.
   scoped_refptr<FieldTrial> dns_trial = new FieldTrial("DnsImpact", kDIVISOR);
   int disabled_group = dns_trial->AppendGroup("_disabled_prefetch", kDISABLE);
 
