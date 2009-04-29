@@ -54,6 +54,7 @@
 #if defined(OS_MACOSX)
 #include "third_party/WebKit/WebKit/mac/WebCoreSupport/WebSystemInterface.h"
 #endif
+#include "skia/include/corecg/SkTypes.h"
 
 extern int BrowserMain(const MainFunctionParams&);
 extern int RendererMain(const MainFunctionParams&);
@@ -104,6 +105,12 @@ void PureCall() {
 }
 
 int OnNoMemory(size_t memory_size) {
+  // Skia indicates that it can safely handle some NULL allocs by clearing
+  // this flag.  In this case, we'll ignore the new_handler and won't crash.
+  if (!sk_malloc_will_throw()) {
+      return;
+  }
+
   __debugbreak();
   // Return memory_size so it is not optimized out. Make sure the return value
   // is at least 1 so malloc/new is retried, especially useful when under a
