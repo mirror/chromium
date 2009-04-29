@@ -108,7 +108,7 @@ int OnNoMemory(size_t memory_size) {
   // Skia indicates that it can safely handle some NULL allocs by clearing
   // this flag.  In this case, we'll ignore the new_handler and won't crash.
   if (!sk_malloc_will_throw()) {
-      return;
+      return 0;
   }
 
   __debugbreak();
