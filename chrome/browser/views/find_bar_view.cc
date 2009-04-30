@@ -497,6 +497,11 @@ bool FindBarView::HandleKeystroke(views::TextField* sender, UINT message,
       }
       break;
     }
+    case VK_HOME:
+    case VK_END:
+      // Ctrl+Home and Ctrl+End should be forwarded to the page.
+      if (GetKeyState(VK_CONTROL) >= 0)
+        return false;  // Ctrl not pressed: Abort. Otherwise fall through.
   }
 
   return false;
