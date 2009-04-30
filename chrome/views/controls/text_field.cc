@@ -1,4 +1,4 @@
-// Copyright (c) 2006-2008 The Chromium Authors. All rights reserved.
+// Copyright (c) 2009 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -114,7 +114,7 @@ class TextField::Edit
     Edit* const edit_;
     ITextDocument* const text_object_model_;
 
-    DISALLOW_EVIL_CONSTRUCTORS(ScopedFreeze);
+    DISALLOW_COPY_AND_ASSIGN(ScopedFreeze);
   };
 
   // message handlers
@@ -211,7 +211,7 @@ class TextField::Edit
 
   COLORREF bg_color_;
 
-  DISALLOW_EVIL_CONSTRUCTORS(Edit);
+  DISALLOW_COPY_AND_ASSIGN(Edit);
 };
 
 ///////////////////////////////////////////////////////////////////////////////
@@ -797,6 +797,9 @@ void TextField::Edit::OnPaste() {
     std::wstring collapsed(CollapseWhitespace(clipboard_str, false));
     if (parent_->GetStyle() & STYLE_LOWERCASE)
       collapsed = l10n_util::ToLower(collapsed);
+    // Force a Paste operation to trigger OnContentsChanged, even if identical
+    // contents are pasted into the text box.
+    text_before_change_.clear();
     ReplaceSel(collapsed.c_str(), true);
   }
 }
