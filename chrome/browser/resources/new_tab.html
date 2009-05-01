@@ -298,6 +298,7 @@ a.thumbnail {
   line-height:16px;
   display:block;
   margin:3px 0px 3px 0px;
+  padding-left:22px;
 }
 .recent-window-container img {
   margin:0 3px -2px 3px;
@@ -418,7 +419,7 @@ html[dir='rtl'] #searches input {
 <body onload="logEvent('body onload fired');"
       jsvalues=".style.fontFamily:fontfamily;.style.fontSize:fontsize">
 <div id="l10n" style="display:none;">
-  <span id="closedwindow" jscontent="closedwindow">Window</span>
+  <span id="closedwindow" jscontent="closedwindow"></span>
 </div>
 <script>
 // We apply the size class here so that we don't trigger layout animations onload.
@@ -823,8 +824,8 @@ function renderRecentlyClosedTabs(entries) {
 
         link = DOM('span', { className: 'recently-closed-window-link' } );
         windowSpan = DOM('span', {className: 'recently-close-window-text'});
-        windowSpan.appendChild(
-            document.createTextNode(localStrings.getString('closedwindow')));
+        windowSpan.appendChild(document.createTextNode(
+            localStrings.getString('closedwindow')));
         link.appendChild(windowSpan);
         link.appendChild(linkSpan);
         linkSpanContainer.appendChild(link);
@@ -1055,6 +1056,10 @@ setTimeout(function(){document.getElementById('main').className = 'visible'},
 }
 .edit-mode div.edit-cross:active {
   background: url('../../app/theme/ntp_x_icon_active.png');
+}
+.recent-window-container {
+  background: url('../../app/theme/closed_window.png');
+  background-repeat: no-repeat;
 }
 </style>
 
