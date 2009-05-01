@@ -235,6 +235,10 @@ const wchar_t kBookmarkManagerSplitLocation[] =
 // Boolean pref to define the default values for using spellchecker.
 const wchar_t kEnableSpellCheck[] = L"browser.enable_spellchecking";
 
+// Boolean that indicates whether we should check if we are the default browser
+// on start-up.
+const wchar_t kCheckDefaultBrowser[] = L"browser.check_default_browser";
+
 // *************** LOCAL STATE ***************
 // These are attached to the machine/installation
 
