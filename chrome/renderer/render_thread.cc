@@ -25,6 +25,7 @@
 #endif
 #include "chrome/renderer/extensions/extension_process_bindings.h"
 #include "chrome/renderer/extensions/renderer_extension_bindings.h"
+#include "chrome/renderer/external_extension.h"
 #include "chrome/renderer/net/render_dns_master.h"
 #include "chrome/renderer/render_process.h"
 #include "chrome/renderer/render_view.h"
@@ -273,6 +274,7 @@ void RenderThread::EnsureWebKitInitialized() {
   WebKit::registerExtension(extensions_v8::GearsExtension::Get());
   WebKit::registerExtension(extensions_v8::IntervalExtension::Get());
   WebKit::registerExtension(extensions_v8::RendererExtensionBindings::Get());
+  WebKit::registerExtension(extensions_v8::ExternalExtension::Get());
 
   WebKit::registerExtension(extensions_v8::ExtensionProcessBindings::Get(),
       WebKit::WebString::fromUTF8(chrome::kExtensionScheme));
