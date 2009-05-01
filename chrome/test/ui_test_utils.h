@@ -27,11 +27,22 @@ void RunMessageLoop();
 // the navigation finishes.
 void WaitForNavigation(NavigationController* controller);
 
+// Waits for |controller| to complete a navigation. This blocks until
+// the specified number of navigations complete.
+void WaitForNavigations(NavigationController* controller,
+                        int number_of_navigations);
+
 // Navigates the selected tab of |browser| to |url|, blocking until the
 // navigation finishes.
 void NavigateToURL(Browser* browser, const GURL& url);
 
+// Navigates the selected tab of |browser| to |url|, blocking until the
+// number of navigations specified complete.
+void NavigateToURLBlockUntilNavigationsComplete(Browser* browser,
+                                                const GURL& url,
+                                                int number_of_navigations);
 
+}
 
 // This class enables you to send JavaScript as a string from the browser to the
 // renderer for execution in a frame of your choice.
@@ -65,6 +76,5 @@ class JavaScriptRunner : public NotificationObserver {
   DISALLOW_COPY_AND_ASSIGN(JavaScriptRunner);
 };
 
-}
 
 #endif  // CHROME_TEST_UI_TEST_UTILS_H_
