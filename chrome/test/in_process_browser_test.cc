@@ -20,6 +20,7 @@
 #include "chrome/common/main_function_params.h"
 #include "chrome/test/testing_browser_process.h"
 #include "chrome/test/ui_test_utils.h"
+#include "net/base/host_resolver_unittest.h"
 #include "sandbox/src/sandbox_factory.h"
 #include "sandbox/src/dep.h"
 
@@ -121,6 +122,9 @@ void InProcessBrowserTest::SetUp() {
   MainFunctionParams params(*command_line, sandbox_wrapper, NULL);
   params.ui_task =
       NewRunnableMethod(this, &InProcessBrowserTest::RunTestOnMainThreadLoop);
+  scoped_refptr<net::RuleBasedHostMapper> host_mapper(
+      new net::RuleBasedHostMapper());
+  ConfigureHostMapper(host_mapper.get());
   BrowserMain(params);
 }
 
@@ -209,4 +213,12 @@ void InProcessBrowserTest::RunTestOnMainThreadLoop() {
   http_server_ = NULL;
 
   MessageLoopForUI::current()->Quit();
+}
+
+void InProcessBrowserTest::ConfigureHostMapper(
+    net::RuleBasedHostMapper* host_mapper) {
+  host_mapper->AllowDirectLookup("*.google.com");
+  // See http://en.wikipedia.org/wiki/Web_Proxy_Autodiscovery_Protocol
+  // We don't want the test code to use it.
+  host_mapper->AddSimulatedFailure("wpad");
 }
