@@ -354,6 +354,8 @@ WebViewImpl::WebViewImpl()
       ime_accept_events_(true),
       drag_target_dispatch_(false),
       drag_identity_(0),
+      drop_effect_(DROP_EFFECT_DEFAULT),
+      drop_accept_(false),
       autocomplete_popup_showing_(false) {
   // WebKit/win/WebView.cpp does the same thing, except they call the
   // KJS specific wrapper around this method. We need to have threading
@@ -1584,11 +1586,15 @@ bool WebViewImpl::DragTargetDragEnter(const WebDropData& drop_data,
 
   DragData drag_data(current_drop_data_.get(), IntPoint(client_x, client_y),
       IntPoint(screen_x, screen_y), kDropTargetOperation);
+
+  drop_effect_ = DROP_EFFECT_DEFAULT;
   drag_target_dispatch_ = true;
   DragOperation effect = page_->dragController()->dragEntered(&drag_data);
   drag_target_dispatch_ = false;
 
-  return effect != DragOperationNone;
+  if (drop_effect_ != DROP_EFFECT_DEFAULT)
+    return drop_accept_ = (drop_effect_ != DROP_EFFECT_NONE);
+  return drop_accept_ = (effect != DragOperationNone);
 }
 
 bool WebViewImpl::DragTargetDragOver(
@@ -1597,11 +1603,15 @@ bool WebViewImpl::DragTargetDragOver(
 
   DragData drag_data(current_drop_data_.get(), IntPoint(client_x, client_y),
       IntPoint(screen_x, screen_y), kDropTargetOperation);
+
+  drop_effect_ = DROP_EFFECT_DEFAULT;
   drag_target_dispatch_ = true;
   DragOperation effect = page_->dragController()->dragUpdated(&drag_data);
   drag_target_dispatch_ = false;
 
-  return effect != DragOperationNone;
+  if (drop_effect_ != DROP_EFFECT_DEFAULT)
+    return drop_accept_ = (drop_effect_ != DROP_EFFECT_NONE);
+  return drop_accept_ = (effect != DragOperationNone);
 }
 
 void WebViewImpl::DragTargetDragLeave() {
@@ -1609,11 +1619,14 @@ void WebViewImpl::DragTargetDragLeave() {
 
   DragData drag_data(current_drop_data_.get(), IntPoint(), IntPoint(),
                      DragOperationNone);
+
   drag_target_dispatch_ = true;
   page_->dragController()->dragExited(&drag_data);
   drag_target_dispatch_ = false;
 
   current_drop_data_ = NULL;
+  drop_effect_ = DROP_EFFECT_DEFAULT;
+  drop_accept_ = false;
   drag_identity_ = 0;
 }
 
@@ -1621,13 +1634,34 @@ void WebViewImpl::DragTargetDrop(
     int client_x, int client_y, int screen_x, int screen_y) {
   DCHECK(current_drop_data_.get());
 
-  DragData drag_data(current_drop_data_.get(), IntPoint(client_x, client_y),
-      IntPoint(screen_x, screen_y), kDropTargetOperation);
+  // If this webview transitions from the "drop accepting" state to the "not
+  // accepting" state, then our IPC message reply indicating that may be in-
+  // flight, or else delayed by javascript processing in this webview.  If a
+  // drop happens before our IPC reply has reached the browser process, then
+  // the browser forwards the drop to this webview.  So only allow a drop to
+  // proceed if our webview drop_accept_ state is true.
+
+  if (!drop_accept_) {  // IPC RACE CONDITION: do not allow this drop.
+    DragTargetDragLeave();
+    return;
+  }
+
+  // Originally this had current_drop_data_.get(), which I have here.
+  // r14162 changed it to current_drag_data_.get()/
+  // Which is correct?
+  DragData drag_data(
+      current_drop_data_.get(),
+      IntPoint(client_x, client_y),
+      IntPoint(screen_x, screen_y),
+      kDropTargetOperation);
+
   drag_target_dispatch_ = true;
   page_->dragController()->performDrag(&drag_data);
   drag_target_dispatch_ = false;
 
   current_drop_data_ = NULL;
+  drop_effect_ = DROP_EFFECT_DEFAULT;
+  drop_accept_ = false;
   drag_identity_ = 0;
 }
 
@@ -1635,6 +1669,15 @@ int32 WebViewImpl::GetDragIdentity() {
   if (drag_target_dispatch_)
     return drag_identity_;
   return 0;
+}
+
+bool WebViewImpl::SetDropEffect(bool accept) {
+  if (drag_target_dispatch_) {
+    drop_effect_ = accept ? DROP_EFFECT_COPY : DROP_EFFECT_NONE;
+    return true;
+  } else {
+    return false;
+  }
 }
 
 SearchableFormData* WebViewImpl::CreateSearchableFormDataForFocusedNode() {

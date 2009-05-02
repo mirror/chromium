@@ -109,6 +109,7 @@ class WebViewImpl : public WebView, public base::RefCounted<WebViewImpl> {
   virtual void DragTargetDrop(
       int client_x, int client_y, int screen_x, int screen_y);
   virtual int32 GetDragIdentity();
+  virtual bool SetDropEffect(bool accept);
   virtual void AutofillSuggestionsForNode(
       int64 node_id,
       const std::vector<std::wstring>& suggestions,
@@ -325,6 +326,18 @@ class WebViewImpl : public WebView, public base::RefCounted<WebViewImpl> {
   // Valid when drag_target_dispatch_ is true; the identity of the drag data
   // copied from the WebDropData object sent from the browser process.
   int32 drag_identity_;
+
+  // Valid when drag_target_dispatch_ is true.  Used to override the default
+  // browser drop effect with the effects "none" or "copy".
+  enum DragTargetDropEffect {
+    DROP_EFFECT_DEFAULT = -1,
+    DROP_EFFECT_NONE,
+    DROP_EFFECT_COPY
+  } drop_effect_;
+
+  // When true, the drag data can be dropped onto the current drop target in
+  // this WebView (the drop target can accept the drop).
+  bool drop_accept_;
 
   // The autocomplete popup.  Kept around and reused every-time new suggestions
   // should be shown.
