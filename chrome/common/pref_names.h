@@ -81,7 +81,6 @@ extern const wchar_t kBookmarkManagerPlacement[];
 extern const wchar_t kBookmarkManagerSplitLocation[];
 extern const wchar_t kEnableSpellCheck[];
 extern const wchar_t kDeleteTimePeriod[];
-
 extern const wchar_t kCheckDefaultBrowser[];
 
 // Local state

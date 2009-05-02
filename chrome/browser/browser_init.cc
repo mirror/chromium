@@ -81,14 +81,17 @@ class DefaultBrowserInfoBarDelegate : public ConfirmInfoBarDelegate {
   }
 
   virtual std::wstring GetMessageText() const {
-    return l10n_util::GetString(IDS_DEFAULT_BROWSER_INFOBAR_TEXT);
+    return l10n_util::GetString(IDS_DEFAULT_BROWSER_INFOBAR_SHORT_TEXT);
   }
 
   virtual SkBitmap* GetIcon() const {
-    return NULL;
+    return ResourceBundle::GetSharedInstance().GetBitmapNamed(
+       IDR_PRODUCT_ICON_32);
   }
 
-  virtual int GetButtons() const { return BUTTON_OK | BUTTON_CANCEL; }
+  virtual int GetButtons() const {
+    return BUTTON_OK | BUTTON_CANCEL | BUTTON_OK_DEFAULT;
+  }
 
   virtual std::wstring GetButtonLabel(InfoBarButton button) const {
     return button == BUTTON_OK ?
@@ -129,7 +132,7 @@ class NotifyNotDefaultBrowserTask : public Task {
   virtual void Run() {
     Browser* browser = BrowserList::GetLastActive();
     if (!browser) {
-      NOTREACHED();
+      // Reached during ui tests.
       return;
     }
     TabContents* tab = browser->GetSelectedTabContents();
