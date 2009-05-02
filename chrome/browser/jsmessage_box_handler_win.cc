@@ -66,6 +66,8 @@ JavascriptMessageBoxHandler::JavascriptMessageBoxHandler(
   DCHECK(message_box_view_);
   DCHECK(reply_msg_);
 
+  message_box_view_->AddAccelerator(
+      views::Accelerator('C', false, true, false));
   if (display_suppress_checkbox) {
     message_box_view_->SetCheckBoxLabel(
         l10n_util::GetString(IDS_JAVASCRIPT_MESSAGEBOX_SUPPRESS_OPTION));
