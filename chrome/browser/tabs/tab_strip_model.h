@@ -8,7 +8,7 @@
 #include <vector>
 
 #include "base/observer_list.h"
-#include "chrome/common/notification_observer.h"
+#include "chrome/common/notification_registrar.h"
 #include "chrome/common/page_transition_types.h"
 
 namespace gfx {
@@ -541,6 +541,9 @@ class TabStripModel : public NotificationObserver {
   // Our observers.
   typedef ObserverList<TabStripModelObserver> TabStripModelObservers;
   TabStripModelObservers observers_;
+
+  // A scoped container for notification registries.
+  NotificationRegistrar registrar_;
 
   DISALLOW_COPY_AND_ASSIGN(TabStripModel);
 };
