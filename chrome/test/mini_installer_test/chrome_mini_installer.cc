@@ -123,13 +123,12 @@ void ChromeMiniInstaller::UnInstall() {
   std::wstring uninstall_path = GetUninstallPath();
   ASSERT_TRUE(file_util::PathExists(uninstall_path));
   std::wstring uninstall_args = L"\"" + uninstall_path +
-                                L"\"" + L" -uninstall";
+                                L"\"" + L" --uninstall --force-uninstall";
   if (install_type_ == mini_installer_constants::kSystemInstall)
-    uninstall_args = uninstall_args + L" -system-level";
+    uninstall_args = uninstall_args + L" --system-level";
   base::LaunchApp(uninstall_args, false, false, NULL);
-  printf("Launched setup.exe -uninstall....\n");
-  ASSERT_TRUE(CloseWindow(mini_installer_constants::kChromeBuildType,
-                          WM_COMMAND));
+  printf("Launched setup.exe --uninstall --force-uninstall....\n");
+  // ASSERT_TRUE(CloseUninstallWindow());
   WaitUntilProcessStopsRunning(
       mini_installer_constants::kChromeSetupExecutable);
   ASSERT_FALSE(CheckRegistryKey(dist->GetVersionKey()));
