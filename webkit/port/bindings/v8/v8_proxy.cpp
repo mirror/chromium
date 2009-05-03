@@ -374,9 +374,6 @@ static void WeakSVGObjectWithContext(v8::Persistent<v8::Object> obj,
 }
 
 void V8Proxy::SetSVGContext(void* obj, SVGElement* context) {
-  if (!obj)
-    return;
-
   SVGElement* old_context = svg_object_to_context_map().get(obj);
 
   if (old_context == context) {
