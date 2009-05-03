@@ -125,13 +125,19 @@ void NativeButton::ConfigureNativeButton(HWND hwnd) {
 void NativeButton::SetDefaultButton(bool is_default_button) {
   if (is_default_button == is_default_)
     return;
-  is_default_ = is_default_button;
   if (is_default_button)
     AddAccelerator(Accelerator(VK_RETURN, false, false, false));
   else
     RemoveAccelerator(Accelerator(VK_RETURN, false, false, false));
+  SetDefaultButtonAppearance(is_default_button);
+}
+
+void NativeButton::SetDefaultButtonAppearance(
+    bool has_default_button_appearance) {
+  is_default_ = has_default_button_appearance;
   SendMessage(GetNativeControlHWND(), BM_SETSTYLE,
-              is_default_button ? BS_DEFPUSHBUTTON : BS_PUSHBUTTON, true);
+              has_default_button_appearance ? BS_DEFPUSHBUTTON : BS_PUSHBUTTON,
+              true);
 }
 
 bool NativeButton::AcceleratorPressed(const Accelerator& accelerator) {

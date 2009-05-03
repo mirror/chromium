@@ -60,6 +60,11 @@ class NativeButton : public NativeControl {
   void SetDefaultButton(bool is_default_button);
   bool IsDefaultButton() const { return is_default_; }
 
+  // Sets whether or not this button has the default button appearance. Unlike
+  // SetDefaultButton above, this does _not_ add key accelerators merely
+  // updates the button's look.
+  void SetDefaultButtonAppearance(bool has_default_button_appearance);
+
   virtual LRESULT OnNotify(int w_param, LPNMHDR l_param);
   virtual LRESULT OnCommand(UINT code, int id, HWND source);
 

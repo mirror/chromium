@@ -35,6 +35,9 @@ class InfoBarConfirmView : public InfoBarMessageView,
   // Sets the label on the Cancel button, if it exists.
   void SetCancelButtonLabel(const std::wstring& label);
 
+  // Sets the OK button as having a default appearance.
+  void SetOKButtonDefault();
+
   // Removes the cancel button from the info bar.
   // Can't be re-added.
   void RemoveCancelButton();

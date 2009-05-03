@@ -142,6 +142,10 @@ class BrowserInit {
     std::vector<GURL> GetURLsFromCommandLine(const CommandLine& command_line,
                                              Profile* profile);
 
+    // Checks whether Chrome is still the default browser (unless the user
+    // previously instructed not to do so) and warns the user if it is not.
+    void CheckDefaultBrowser(Profile* profile);
+
     std::wstring cur_dir_;
     std::wstring command_line_;
     int show_command_;

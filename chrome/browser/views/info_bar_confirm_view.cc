@@ -63,6 +63,11 @@ void InfoBarConfirmView::SetCancelButtonLabel(const std::wstring& label) {
   }
 }
 
+void InfoBarConfirmView::SetOKButtonDefault() {
+  if (ok_button_)
+    ok_button_->SetDefaultButtonAppearance(true);
+}
+
 void InfoBarConfirmView::RemoveCancelButton() {
   if (cancel_button_) {
     RemoveChildView(cancel_button_);

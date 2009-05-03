@@ -27,9 +27,11 @@
 #include "chrome/browser/session_crashed_view.h"
 #include "chrome/browser/session_restore.h"
 #include "chrome/browser/session_startup_pref.h"
+#include "chrome/browser/shell_integration.h"
 #include "chrome/browser/tabs/tab_strip_model.h"
 #include "chrome/browser/url_fixer_upper.h"
 #include "chrome/browser/web_app_launcher.h"
+#include "chrome/browser/views/default_browser_infobar.h"
 #include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
@@ -46,6 +48,46 @@
 #include "generated_resources.h"
 
 namespace {
+
+class NotifyNotDefaultBrowserTask : public Task {
+ public:
+  NotifyNotDefaultBrowserTask() { }
+
+  virtual void Run() {
+    Browser* browser = BrowserList::GetLastActive();
+    if (!browser) {
+      // Reached during ui tests.
+      return;
+    }
+
+    WebContents* web_contents =
+        browser->GetSelectedTabContents()->AsWebContents();
+    if (!web_contents->IsInfoBarVisible() && web_contents) {
+      web_contents->GetInfoBarView()->
+          AddChildView(new DefaultBrowserInfoBar(browser->profile()));
+      web_contents->SetInfoBarVisible(true);
+    }  
+  }
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(NotifyNotDefaultBrowserTask);
+};
+
+class CheckDefaultBrowserTask : public Task {
+ public:
+  explicit CheckDefaultBrowserTask(MessageLoop* ui_loop) : ui_loop_(ui_loop) {
+  }
+
+  virtual void Run() {
+    if (!ShellIntegration::IsDefaultBrowser())
+      ui_loop_->PostTask(FROM_HERE, new NotifyNotDefaultBrowserTask());
+  }
+
+ private:
+  MessageLoop* ui_loop_;
+
+  DISALLOW_COPY_AND_ASSIGN(CheckDefaultBrowserTask);
+};
 
 void SetOverrideHomePage(const CommandLine& command_line, PrefService* prefs) {
   // If homepage is specified on the command line, canonify & store it.
@@ -522,6 +564,9 @@ bool BrowserInit::LaunchWithProfile::Launch(Profile* profile,
   // has tweaked the startup session restore preferences.
 
   if (browser) {
+    // Check whether we are the default browser.
+    CheckDefaultBrowser(browser->profile());
+
     // If we're recording or playing back, startup the EventRecorder now
     // unless otherwise specified.
     if (!parsed_command_line.HasSwitch(switches::kNoEvents)) {
@@ -607,6 +652,18 @@ void BrowserInit::LaunchWithProfile::AddCrashedInfoBarIfNecessary(
         AddChildView(new SessionCrashedView(profile_));
     web_contents->SetInfoBarVisible(true);
   }
+}
+
+void BrowserInit::LaunchWithProfile::CheckDefaultBrowser(Profile* profile) {
+  // We do not check if we are the default browser if:
+  // - the user said "don't ask me again" on the infobar earlier.
+  // - this is the first launch after the first run flow.
+  if (!profile->GetPrefs()->GetBoolean(prefs::kCheckDefaultBrowser) ||
+      FirstRun::IsChromeFirstRun()) {
+    return;
+  }
+  g_browser_process->file_thread()->message_loop()->PostTask(FROM_HERE,
+      new CheckDefaultBrowserTask(MessageLoop::current()));
 }
 
 std::vector<GURL> BrowserInit::LaunchWithProfile::GetURLsFromCommandLine(

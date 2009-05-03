@@ -202,6 +202,10 @@ const wchar_t kDeleteCookies[] = L"browser.clear_data.cookies";
 const wchar_t kDeletePasswords[] = L"browser.clear_data.passwords";
 const wchar_t kDeleteTimePeriod[] = L"browser.clear_data.time_period";
 
+// Boolean that indicates whether we should check if we are the default browser
+// on start-up.
+const wchar_t kCheckDefaultBrowser[] = L"browser.check_default_browser";
+
 // Integer prefs giving the widths of the columns in the bookmark table. Two
 // configs are saved, one with the path column and one without.
 const wchar_t kBookmarkTableNameWidth1[] = L"bookmark_table.name_width_1";
