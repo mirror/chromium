@@ -2139,7 +2139,8 @@ BUG9164 MAC : LayoutTests/fast/text/atsui-multiple-renderers.html = FAIL
 // Merge 41709:41733
 // Expectations changed upstream.
 LINUX : LayoutTests/http/tests/misc/url-in-utf16le.html = FAIL
-WIN LINUX : LayoutTests/http/tests/misc/url-in-utf16be.html = TIMEOUT CRASH
+// In 172 for Win, this is passing:
+LINUX : LayoutTests/http/tests/misc/url-in-utf16be.html = TIMEOUT CRASH
 
 // Tests that fail in debug mode on linux
 DEBUG LINUX : LayoutTests/fast/css/remove-shorthand.html = FAIL
@@ -2397,7 +2398,8 @@ LINUX : LayoutTests/http/tests/navigation/timerredirect-goback.html = FAIL
 // END tests passing on WIN 172
 WIN LINUX : LayoutTests/http/tests/navigation/onload-navigation-iframe-timeout.html = TIMEOUT
 LINUX : LayoutTests/http/tests/navigation/onload-navigation-iframe.html = TIMEOUT
-WIN : LayoutTests/http/tests/security/originHeader/origin-header-for-https.html = TIMEOUT
+// Not timing out in 172:
+// WIN : LayoutTests/http/tests/security/originHeader/origin-header-for-https.html = TIMEOUT
 MAC : LayoutTests/http/tests/navigation/post-basic.html = FAIL
 MAC : LayoutTests/http/tests/navigation/post-frames.html = FAIL
 MAC : LayoutTests/http/tests/navigation/postredirect-basic.html = FAIL
