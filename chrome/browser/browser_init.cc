@@ -558,6 +558,8 @@ bool BrowserInit::LaunchWithProfile::Launch(Profile* profile,
     }
 
     browser = OpenURLsInBrowser(browser, process_startup, urls_to_open);
+  } else {
+    browser = BrowserList::GetLastActive();
   }
 
   // It is possible to end here with a NULL 'browser'. For example if the user
