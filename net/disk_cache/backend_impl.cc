@@ -135,13 +135,16 @@ bool DelayedCacheCleanup(const std::wstring& full_path) {
   return true;
 }
 
-// Sets |stored_value| for the current experiment.
-void InitExperiment(int* stored_value) {
-  if (*stored_value)
-    return;
+// Sets |stored_value| for the current experiment. Returns false if the files
+// should be discarded.
+bool InitExperiment(int* stored_value) {
+  if (*stored_value <= 2) {
+    *stored_value = 0;
+    return true;
+  }
 
-  // Don't add more people to the experiment; send them to group 1.
-  *stored_value = 1;
+  // Discard current cache for groups 3 and 4.
+  return false;
 }
 
 }  // namespace
@@ -186,6 +189,32 @@ Backend* CreateCacheBackend(const std::wstring& full_path, bool force,
   return NULL;
 }
 
+int PreferedCacheSize(int64 available) {
+  // If there is not enough space to use kDefaultCacheSize, use 80% of the
+  // available space.
+  if (available < kDefaultCacheSize)
+    return static_cast<int32>(available * 8 / 10);
+
+  // Don't use more than 10% of the available space.
+  if (available < 10 * kDefaultCacheSize)
+    return kDefaultCacheSize;
+
+  // Use 10% of the free space until we reach 2.5 * kDefaultCacheSize.
+  if (available < static_cast<int64>(kDefaultCacheSize) * 25)
+    return static_cast<int32>(available / 10);
+
+  // After reaching our target size (2.5 * kDefaultCacheSize), attempt to use
+  // 1% of the availabe space.
+  if (available < static_cast<int64>(kDefaultCacheSize) * 100)
+    return kDefaultCacheSize * 5 / 2;
+
+  int64 one_percent = available / 100;
+  if (one_percent > kint32max)
+    return kint32max;
+
+  return static_cast<int32>(one_percent);
+}
+
 // ------------------------------------------------------------------------
 
 bool BackendImpl::Init() {
@@ -214,8 +243,8 @@ bool BackendImpl::Init() {
   }
 
   init_ = true;
-  if (data_)
-    InitExperiment(&data_->header.experiment);
+  if (data_ && !InitExperiment(&data_->header.experiment))
+    return false;
 
   if (!CheckIndex()) {
     ReportError(ERR_INIT_FAILED);
@@ -875,9 +904,14 @@ bool BackendImpl::InitBackingStore(bool* file_created) {
   return true;
 }
 
+// The maximum cache size will be either set explicitly by the caller, or
+// calculated by this code.
 void BackendImpl::AdjustMaxCacheSize(int table_len) {
   if (max_size_)
     return;
+
+  // If table_len is provided, the index file exists.
+  DCHECK(!table_len || data_->header.magic);
 
   // The user is not setting the size, let's figure it out.
   int64 available = base::SysInfo::AmountOfFreeDiskSpace(path_);
@@ -886,32 +920,23 @@ void BackendImpl::AdjustMaxCacheSize(int table_len) {
     return;
   }
 
-  // Attempt to use 1% of the disk available for this user.
-  available /= 100;
+  if (table_len)
+    available += data_->header.num_bytes;
 
-  if (available < kDefaultCacheSize)
-    max_size_ = kDefaultCacheSize;
-  else if (available > kint32max)
-    max_size_ = kint32max;
-  else
-    max_size_ = static_cast<int32>(available);
+  max_size_ = PreferedCacheSize(available);
 
   // Let's not use more than the default size while we tune-up the performance
   // of bigger caches. TODO(rvargas): remove this limit.
-  // If we are creating the file, use 1 as the multiplier so the table size is
-  // the same for everybody.
-  int multiplier = table_len ? data_->header.experiment : 1;
-  DCHECK(multiplier > 0 && multiplier < 5);
-  max_size_ = kDefaultCacheSize * multiplier;
+  if (max_size_ > kDefaultCacheSize * 4)
+    max_size_ = kDefaultCacheSize * 4;
 
   if (!table_len)
     return;
 
   // If we already have a table, adjust the size to it.
-  // NOTE: Disabled for the experiment.
-  // int current_max_size = MaxStorageSizeForTable(table_len);
-  // if (max_size_ > current_max_size)
-  //   max_size_= current_max_size;
+  int current_max_size = MaxStorageSizeForTable(table_len);
+  if (max_size_ > current_max_size)
+    max_size_= current_max_size;
 }
 
 void BackendImpl::RestartCache() {
@@ -936,9 +961,6 @@ void BackendImpl::PrepareForRestart() {
   rankings_.Reset();
   init_ = false;
   restarted_ = true;
-
-  // TODO(rvargas): remove this line at the end of this experiment.
-  max_size_ = 0;
 }
 
 int BackendImpl::NewEntry(Addr address, EntryImpl** entry, bool* dirty) {
@@ -1274,33 +1296,17 @@ void BackendImpl::LogStats() {
 }
 
 void BackendImpl::ReportStats() {
-  int experiment = data_->header.experiment;
-  CACHE_UMA(COUNTS, "Entries", experiment, data_->header.num_entries);
-  CACHE_UMA(COUNTS, "Size", experiment,
-             data_->header.num_bytes / (1024 * 1024));
-  CACHE_UMA(COUNTS, "MaxSize", experiment, max_size_ / (1024 * 1024));
+  CACHE_UMA(COUNTS, "Entries", 0, data_->header.num_entries);
+  CACHE_UMA(COUNTS, "Size", 0, data_->header.num_bytes / (1024 * 1024));
+  CACHE_UMA(COUNTS, "MaxSize", 0, max_size_ / (1024 * 1024));
 
   CACHE_UMA(COUNTS, "AverageOpenEntries", 0,
-             static_cast<int>(stats_.GetCounter(Stats::OPEN_ENTRIES)));
+            static_cast<int>(stats_.GetCounter(Stats::OPEN_ENTRIES)));
   CACHE_UMA(COUNTS, "MaxOpenEntries", 0,
-             static_cast<int>(stats_.GetCounter(Stats::MAX_ENTRIES)));
+            static_cast<int>(stats_.GetCounter(Stats::MAX_ENTRIES)));
   stats_.SetCounter(Stats::MAX_ENTRIES, 0);
 
-  if (!data_->header.create_time) {
-    // This is a client running the experiment on the dev channel.
-    CACHE_UMA(PERCENTAGE, "HitRatio", experiment, stats_.GetHitRatio());
-    stats_.ResetRatios();
-
-    if (!data_->header.num_bytes)
-      return;
-
-    int large_entries_bytes = stats_.GetLargeEntriesSize();
-    int large_ratio = large_entries_bytes * 100 / data_->header.num_bytes;
-    CACHE_UMA(PERCENTAGE, "LargeEntriesRatio", experiment, large_ratio);
-    return;
-  }
-
-  if (!data_->header.lru.filled)
+  if (!data_->header.create_time || !data_->header.lru.filled)
     return;
 
   // This is an up to date client that will report FirstEviction() data. After
@@ -1310,6 +1316,13 @@ void BackendImpl::ReportStats() {
   CACHE_UMA(HOURS, "TotalTime", 0, static_cast<int>(total_hours));
 
   int64 use_hours = stats_.GetCounter(Stats::LAST_REPORT_TIMER) / 120;
+  stats_.SetCounter(Stats::LAST_REPORT_TIMER, stats_.GetCounter(Stats::TIMER));
+
+  // We may see users with no use_hours at this point if this is the first time
+  // we are running this code.
+  if (use_hours)
+    use_hours = total_hours - use_hours;
+
   if (!use_hours || !GetEntryCount() || !data_->header.num_bytes)
     return;
 
@@ -1329,7 +1342,6 @@ void BackendImpl::ReportStats() {
 
   stats_.ResetRatios();
   stats_.SetCounter(Stats::TRIM_ENTRY, 0);
-  stats_.SetCounter(Stats::LAST_REPORT_TIMER, 0);
 }
 
 void BackendImpl::UpgradeTo2_1() {
@@ -1399,14 +1411,6 @@ bool BackendImpl::CheckIndex() {
 
   if (!mask_)
     mask_ = data_->header.table_len - 1;
-
-  // TODO(rvargas): remove this. For some reason, we are receiving crashes with
-  // mask_ being bigger than the actual table length. (bug 7217).
-  if (mask_ > 0xffff) {
-    LOG(ERROR) << "Invalid cache mask";
-    ReportError(ERR_INVALID_MASK);
-    return false;
-  }
 
   return true;
 }
