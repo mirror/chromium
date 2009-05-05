@@ -178,6 +178,8 @@ void HtmlDialogView::InitDialog() {
   // Now Init the DOMView. This view runs in its own process to render the html.
   DOMView::Init(profile_, NULL);
 
+  web_contents_->set_delegate(this);
+
   // Set the delegate. This must be done before loading the page. See
   // the comment above HtmlDialogUI in its header file for why.
   HtmlDialogUI::GetPropertyAccessor().SetProperty(web_contents_->property_bag(),
