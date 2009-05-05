@@ -144,7 +144,7 @@ TEST_F(PluginTest, DeleteFrameDuringEvent) {
 TEST_F(PluginTest, HiddenPlugin) {
   CopyTestPlugin();
 
-  FilePath test_html = data_dir_;
+  FilePath test_html(data_dir_);
   test_html = test_html.AppendASCII("plugins");
   test_html = test_html.AppendASCII("hidden_plugin.html");
   test_shell_->LoadURL(test_html.ToWStringHack().c_str());
