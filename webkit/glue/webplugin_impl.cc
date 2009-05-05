@@ -200,7 +200,13 @@ void WebPluginContainer::frameRectsChanged() {
 // webkit is ignored. This function is called when the plugin eventually
 // gets a parent.
 void WebPluginContainer::setParentVisible(bool visible) {
+  if (isParentVisible() == visible)
+    return;  // No change.
+
   WebCore::Widget::setParentVisible(visible);
+  if (!isSelfVisible())
+    return;  // This widget has explicitely been marked as not visible.
+
   if (visible)
     show();
   else
@@ -651,8 +657,6 @@ void WebPluginImpl::setFrameRect(const WebCore::IntRect& rect) {
   std::vector<gfx::Rect> cutout_rects;
   CalculateBounds(rect, &window_rect, &clip_rect, &cutout_rects);
 
-  delegate_->UpdateGeometry(webkit_glue::FromIntRect(window_rect),
-                            webkit_glue::FromIntRect(clip_rect));
   if (window_) {
     // Let the WebViewDelegate know that the plugin window needs to be moved,
     // so that all the HWNDs are moved together.
@@ -665,6 +669,10 @@ void WebPluginImpl::setFrameRect(const WebCore::IntRect& rect) {
 
     webview->delegate()->DidMove(webview, move);
   }
+
+  // Notify the plugin that its parameters have changed.
+  delegate_->UpdateGeometry(webkit_glue::FromIntRect(window_rect),
+                            webkit_glue::FromIntRect(clip_rect));
 
   // Initiate a download on the plugin url. This should be done for the
   // first update geometry sequence.
