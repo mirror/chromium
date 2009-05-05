@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="ru">
 <translation id="6779164083355903755">&amp;Удалить</translation>
+<translation id="1604816462140255479">Размер &amp;текста</translation>
 <translation id="3581034179710640788">Срок действия сертификата безопасности сайта истек!</translation>
 <translation id="8275038454117074363">Импорт</translation>
 <translation id="8418445294933751433">&amp;Показать как вкладку</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">Импорт закладок...</translation>
 <translation id="1621207256975573490">Сохранить &amp;фрейм как...</translation>
 <translation id="2278562042389100163">Открыть окно браузера</translation>
+<translation id="9218430445555521422">Задать по умолчанию</translation>
 <translation id="4589279373639964403">Экспорт закладок...</translation>
 <translation id="5463275305984126951">Содержание <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">Память</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;Стандартный</translation>
 <translation id="3873963583678942942">(без имени)</translation>
 <translation id="8725178340343806893">Избранное/Закладки</translation>
+<translation id="8926389886865778422">Больше не спрашивать</translation>
 <translation id="3605499851022050619">Страница диагностики безопасного просмотра</translation>
 <translation id="4307992518367153382">Основные</translation>
 <translation id="5912378097832178659">&amp;Изменить поисковые системы...</translation>
@@ -179,7 +182,7 @@
 <translation id="5710435578057952990">Идентификационные данные этого веб-сайта не проверены.</translation>
 <translation id="5287240709317226393">Показать файлы сookie</translation>
 <translation id="333371639341676808">Предотвратить создание дополнительных диалоговых окон на этой странице.</translation>
-<translation id="5844183150118566785"><ph name="PRODUCT_NAME"/> является самой свежей (<ph name="VERSION"/>)</translation>
+<translation id="5844183150118566785">Вы используете самую последнюю версию <ph name="PRODUCT_NAME"/> (<ph name="VERSION"/>).</translation>
 <translation id="7791543448312431591">Добавить</translation>
 <translation id="772440777491435074">Информация сертификата...</translation>
 <translation id="2869459179306435079">Импорт настроек из:</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">Страница не отвечает на запросы</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Панель закладок</translation>
-<translation id="3493653833301553455">Автозаполнение форм:</translation>
 <translation id="644038709730536388">Подробнее о том, как защититься от вредоносного ПО, распространяемого в Интернете.</translation>
 <translation id="4172706149171596436">Изменить настройки прокси-сервера</translation>
 <translation id="5650551054760837876">Нет найденных результатов поиска.</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">&amp;Удалить</translation>
 <translation id="6100736666660498114">Меню &quot;Пуск&quot;</translation>
 <translation id="1120098871254928930">Разрешить загрузку всего содержания</translation>
-<translation id="3994878504415702912">&amp;Размер текста</translation>
 <translation id="5602600725402519729">Пере&amp;загрузить</translation>
 <translation id="7965010376480416255">Общая память</translation>
 <translation id="6248988683584659830">Поиск настроек</translation>
@@ -425,6 +426,7 @@
 <translation id="3745810751851099214">Отправить для:</translation>
 <translation id="8877448029301136595">[родительский каталог]</translation>
 <translation id="1963227389609234879">Удалить все</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">История просмотров</translation>
 <translation id="602251597322198729">Этот сайт пытается загрузить несколько файлов. Разрешить загрузку?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> час.</translation>
@@ -461,7 +463,7 @@
 <translation id="6484929352454160200">Доступна новая версия <ph name="PRODUCT_NAME"/></translation>
 <translation id="7035824132811506448">Недавно добавлено</translation>
 <translation id="2371076942591664043">Открыть по &amp;завершении</translation>
-<translation id="6069278982995177296">Повторяющиеся</translation>
+<translation id="6069278982995177296">Дублировать</translation>
 <translation id="2979639724566107830">Открыть в новом окне</translation>
 <translation id="2822854841007275488">Арабская</translation>
 <translation id="2815448242176260024">Не сохранять пароли</translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">Включить JavaScript</translation>
 <translation id="6451458296329894277">Подтвердите повторную отправку формы</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> час</translation>
 <translation id="1851266746056575977">Обновить сейчас</translation>
 <translation id="9065203028668620118">Изменить</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">Левый край</translation>
 <translation id="406259880812417922">(Ключевое слово: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">Отладчик JavaScript - Выполнение</translation>
-<translation id="1604816462140255479">Размер &amp;текста</translation>
 </translationbundle>

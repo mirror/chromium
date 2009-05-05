@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="tr">
 <translation id="6779164083355903755">&amp;Kaldır</translation>
+<translation id="1604816462140255479">Metin &amp;yaklaştır</translation>
 <translation id="3581034179710640788">Sitenin güvenlik sertifikasının süresi doldu!</translation>
 <translation id="8275038454117074363">Al</translation>
 <translation id="8418445294933751433">&amp;Farklı göster sekmesi</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">Yer imlerini içe aktar...</translation>
 <translation id="1621207256975573490">Çerçeveyi &amp;farklı kaydet...</translation>
 <translation id="2278562042389100163">Tarayıcı penceresini aç</translation>
+<translation id="9218430445555521422">Varsayılan olarak ayarla</translation>
 <translation id="4589279373639964403">Yer imlerini dışa aktar...</translation>
 <translation id="5463275305984126951"><ph name="LOCATION"/> dizini</translation>
 <translation id="5154917547274118687">Bellek</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;Normal</translation>
 <translation id="3873963583678942942">(Adsız)</translation>
 <translation id="8725178340343806893">Sık Kullanılanlar/Yer İmleri</translation>
+<translation id="8926389886865778422">Bir daha sorma</translation>
 <translation id="3605499851022050619">Güvenli Tarama tanı sayfası</translation>
 <translation id="4307992518367153382">Temel Bilgiler</translation>
 <translation id="5912378097832178659">&amp;Arama motorlarını düzenle...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">Sayfalar Yanıt Vermiyor</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Yer İmi Çubuğu</translation>
-<translation id="3493653833301553455">Otomatik form doldurma:</translation>
 <translation id="644038709730536388">Zararlı online yazılımlardan nasıl korunacağınız hakkında daha fazla bilgi edinin.</translation>
 <translation id="4172706149171596436">Proxy ayarlarını değiştir</translation>
 <translation id="5650551054760837876">Arama sonucu bulunamadı.</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">&amp;Sil</translation>
 <translation id="6100736666660498114">Başlat menüsü</translation>
 <translation id="1120098871254928930">Tüm içeriğin yüklenmesine izin ver</translation>
-<translation id="3994878504415702912">Y&amp;aklaştır</translation>
 <translation id="5602600725402519729">Yeni&amp;den yükle</translation>
 <translation id="7965010376480416255">Paylaşılan Bellek</translation>
 <translation id="6248988683584659830">Arama ayarları</translation>
@@ -425,6 +426,7 @@
 <translation id="3745810751851099214">Gönder:</translation>
 <translation id="8877448029301136595">[üst dizin]</translation>
 <translation id="1963227389609234879">Tümünü Kaldır</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Tarama geçmişi</translation>
 <translation id="602251597322198729">Bu site birden çok dosyayı indirmeye çalışıyor. Buna izin vermek istiyor musunuz?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> saat</translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">JavaScript'i etkinleştir</translation>
 <translation id="6451458296329894277">Yeniden Form Gönderme İşlemini Onayla</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> saat</translation>
 <translation id="1851266746056575977">Şimdi Güncelle</translation>
 <translation id="9065203028668620118">Düzenle</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">Sol Kenar</translation>
 <translation id="406259880812417922">(Anahtar kelime: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">JavaScript Hata Ayıklayıcı - Çalışıyor</translation>
-<translation id="1604816462140255479">Metin &amp;yaklaştır</translation>
 </translationbundle>

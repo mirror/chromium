@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="et">
 <translation id="6779164083355903755">&amp;Eemalda</translation>
+<translation id="1604816462140255479">Tekst &amp;suum</translation>
 <translation id="3581034179710640788">Saidi turvasert on aegunud!</translation>
 <translation id="8275038454117074363">Impordi</translation>
 <translation id="8418445294933751433">&amp;Kuva vahelehena</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">Impordi järjehoidjad...</translation>
 <translation id="1621207256975573490">Salvesta &amp;paneel nimega...</translation>
 <translation id="2278562042389100163">Ava brauseri aken</translation>
+<translation id="9218430445555521422">Seadista vaikebrauseriks</translation>
 <translation id="4589279373639964403">Ekspordi järjehoidjad...</translation>
 <translation id="5463275305984126951"><ph name="LOCATION"/> indeks</translation>
 <translation id="5154917547274118687">Mälu</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;Tavaline</translation>
 <translation id="3873963583678942942">(Pealkirjata)</translation>
 <translation id="8725178340343806893">Lemmikud/järjehoidjad</translation>
+<translation id="8926389886865778422">Ära enam küsi</translation>
 <translation id="3605499851022050619">Safe Browsing diagnostikaleht</translation>
 <translation id="4307992518367153382">Põhiteave</translation>
 <translation id="5912378097832178659">&amp;Muuda otsingumootoreid...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">Lehekülg või leheküljed ei reageeri</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Järjehoidjariba</translation>
-<translation id="3493653833301553455">Vormi automaatne täitmine:</translation>
 <translation id="644038709730536388">Lugege lisateavet selle kohta, kuidas end võrgus kahjuliku tarkvara eest kaitsta.</translation>
 <translation id="4172706149171596436">Muuda puhverserveri seadeid</translation>
 <translation id="5650551054760837876">Otsingutulemusi ei leitud.</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">&amp;Kustuta</translation>
 <translation id="6100736666660498114">Menüü Start</translation>
 <translation id="1120098871254928930">Luba kogu sisu laadimist</translation>
-<translation id="3994878504415702912">&amp;Suumi</translation>
 <translation id="5602600725402519729">Laadi &amp;uuesti</translation>
 <translation id="7965010376480416255">Ühismälu</translation>
 <translation id="6248988683584659830">Otsinguseaded</translation>
@@ -425,6 +426,7 @@
 <translation id="3745810751851099214">Saada:</translation>
 <translation id="8877448029301136595">[emakataloog]</translation>
 <translation id="1963227389609234879">Eemalda kõik</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Sirvimise ajalugu</translation>
 <translation id="602251597322198729">See sait proovib alla laadida mitut faili. Kas lubate seda?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> tundi</translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">Luba JavaScript</translation>
 <translation id="6451458296329894277">Kinnita vormi uuestiesitamist</translation>
+<translation id="3218545474413654570"><ph name="URL"/> — <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> tund</translation>
 <translation id="1851266746056575977">Värskenda kohe</translation>
 <translation id="9065203028668620118">Muuda</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">Vasak serv</translation>
 <translation id="406259880812417922">(Märksõna: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">JavaScripti vigade kõrvaldaja - töötab</translation>
-<translation id="1604816462140255479">Tekst &amp;suum</translation>
 </translationbundle>

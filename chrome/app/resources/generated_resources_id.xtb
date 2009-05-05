@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="id">
 <translation id="6779164083355903755">&amp;Hapus</translation>
+<translation id="1604816462140255479">&amp;Zoom teks</translation>
 <translation id="3581034179710640788">Sertifikat keamanan situs telah kedaluwarsa!</translation>
 <translation id="8275038454117074363">Impor</translation>
 <translation id="8418445294933751433">Tampilkan &amp;sebagai tab</translation>
@@ -190,7 +191,6 @@
 <translation id="2266011376676382776">Laman Tidak Merespons</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Bilah Bookmark</translation>
-<translation id="3493653833301553455">Pengisian formulir otomatis:</translation>
 <translation id="644038709730536388">Selengkapnya tentang cara melindungi diri dari perangkat lunak berbahaya secara online.</translation>
 <translation id="4172706149171596436">Ubah setelan proxy</translation>
 <translation id="5650551054760837876">Tak ada hasil penelusuran yang ditemukan.</translation>
@@ -259,7 +259,6 @@
 <translation id="5329858601952122676">&amp;Hapus</translation>
 <translation id="6100736666660498114">Menu mulai</translation>
 <translation id="1120098871254928930">Bolehkan pengambilan semua konten</translation>
-<translation id="3994878504415702912">&amp;Zum</translation>
 <translation id="5602600725402519729">Muat-U&amp;lang</translation>
 <translation id="7965010376480416255">Memori Bersama</translation>
 <translation id="6248988683584659830">Menelusuri setelan</translation>
@@ -425,6 +424,7 @@
 <translation id="3745810751851099214">Kirim untuk:</translation>
 <translation id="8877448029301136595">[direktori induk]</translation>
 <translation id="1963227389609234879">Hapus Semua</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Riwayat jelajah</translation>
 <translation id="602251597322198729">Situs ini mencoba mengunduh beberapa berkas. Bolehkan?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> jam</translation>
@@ -582,6 +582,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">Aktifkan Javascript</translation>
 <translation id="6451458296329894277">Konfirmasikan Pengiriman Ulang Formulir</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> jam</translation>
 <translation id="1851266746056575977">Perbarui Sekarang</translation>
 <translation id="9065203028668620118">Edit</translation>
@@ -722,5 +723,4 @@
 <translation id="8328145009876646418">Tepi Kiri</translation>
 <translation id="406259880812417922">(Kata kunci: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">Debugger Javascript - Berjalan</translation>
-<translation id="1604816462140255479">&amp;Zoom teks</translation>
 </translationbundle>

@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="vi">
 <translation id="6779164083355903755">Gỡ bỏ (&amp;R)</translation>
+<translation id="1604816462140255479">&amp;Zoom văn bản</translation>
 <translation id="3581034179710640788">Chứng chỉ an toàn của trang web đã hết hạn!</translation>
 <translation id="8275038454117074363">Nhập</translation>
 <translation id="8418445294933751433">Hiển thị (&amp;S) dạng tab</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">Nhập dấu trang...</translation>
 <translation id="1621207256975573490">Lưu khung (&amp;F) thành...</translation>
 <translation id="2278562042389100163">Mở cửa sổ trình duyệt</translation>
+<translation id="9218430445555521422">Đặt làm mặc định</translation>
 <translation id="4589279373639964403">Xuất dấu trang...</translation>
 <translation id="5463275305984126951">Chỉ mục của <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">Bộ nhớ</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">Thông thường (&amp;N)</translation>
 <translation id="3873963583678942942">(Không tên)</translation>
 <translation id="8725178340343806893">Mục ưu thích/Dấu trang</translation>
+<translation id="8926389886865778422">Không hỏi lại lần nữa</translation>
 <translation id="3605499851022050619">Trang chẩn đoán Duyệt An toàn</translation>
 <translation id="4307992518367153382">Cơ bản</translation>
 <translation id="5912378097832178659">Chỉnh sửa (&amp;E) công cụ tìm kiếm...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">(Các) Trang không Hồi đáp</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Thanh Dấu trang</translation>
-<translation id="3493653833301553455">Tự động điền mẫu:</translation>
 <translation id="644038709730536388">Tìm hiểu thêm về cách tự bảo vệ khỏi phần mềm độc hại trực tuyến.</translation>
 <translation id="4172706149171596436">Thay đổi cài đặt proxy</translation>
 <translation id="5650551054760837876">Không tìm thấy kết quả tìm kiếm.</translation>
@@ -240,7 +242,7 @@
 <translation id="254416073296957292">&amp;Cài đặt ngôn ngữ...</translation>
 <translation id="4222982218026733335">Chứng chỉ Máy chủ Không hợp lệ</translation>
 <translation id="495091556140548787">Các tab đã đóng gần đây</translation>
-<translation id="7762841930144642410"><ph name="BEGIN_BOLD"/>Bạn vừa truy cập nặc danh<ph name="END_BOLD"/>. Các trang bạn xem trong cửa sổ này sẽ không xuất hiện trong lịch sử trình duyệt hoặc lịch sử tìm kiếm, đồng thời các trang này sẽ không để lại dấu vết nào khác, ví dụ như cookie, trên máy vi tính của bạn sau khi bạn đóng cửa sổ nặc danh. Tuy nhiên, bất kỳ tệp tin nào bạn tải xuống hoặc dấu trang bạn tạo sẽ được giữ lại.        <ph name="LINE_BREAK"/>        <ph name="BEGIN_BOLD"/>Truy cập nặc danh không ảnh hưởng đến hoạt động của mọi người, máy chủ hay phần mềm khác. Cảnh giác:<ph name="END_BOLD"/>        <ph name="BEGIN_LIST"/>          <ph name="BEGIN_LIST_ITEM"/>Các trang web thu thập hoặc chia sẻ thông tin về bạn<ph name="END_LIST_ITEM"/>          <ph name="BEGIN_LIST_ITEM"/>Nhà cung cấp hoặc người cho thuê dịch vụ Internet theo dõi các trang bạn truy cập<ph name="END_LIST_ITEM"/>          <ph name="BEGIN_LIST_ITEM"/>Phần mềm độc hại theo dõi thao tác gõ phím của bạn để trao đổi miễn phí các biểu tượng mặt cười<ph name="END_LIST_ITEM"/>          <ph name="BEGIN_LIST_ITEM"/>Việc theo dõi của các đại lý bí mật<ph name="END_LIST_ITEM"/>          <ph name="BEGIN_LIST_ITEM"/>Những người đứng đằng sau bạn<ph name="END_LIST_ITEM"/>        <ph name="END_LIST"/>        <ph name="BEGIN_LINK"/>Tìm hiểu thêm<ph name="END_LINK"/> về duyệt web nặc danh.</translation>
+<translation id="7762841930144642410"><ph name="BEGIN_BOLD"/>Bạn vừa truy cập ẩn danh<ph name="END_BOLD"/>. Các trang bạn xem trong cửa sổ này sẽ không xuất hiện trong lịch sử trình duyệt hoặc lịch sử tìm kiếm, đồng thời các trang này sẽ không để lại dấu vết nào khác, ví dụ như cookie, trên máy vi tính của bạn sau khi bạn đóng cửa sổ ẩn danh. Tuy nhiên, bất kỳ tệp tin nào bạn tải xuống hoặc dấu trang bạn tạo sẽ được giữ lại.        <ph name="LINE_BREAK"/>        <ph name="BEGIN_BOLD"/>Truy cập ẩn danh không ảnh hưởng đến hoạt động của mọi người, máy chủ hay phần mềm khác. Hãy cảnh giác:<ph name="END_BOLD"/>        <ph name="BEGIN_LIST"/>          <ph name="BEGIN_LIST_ITEM"/>Các trang web thu thập hoặc chia sẻ thông tin về bạn<ph name="END_LIST_ITEM"/>          <ph name="BEGIN_LIST_ITEM"/>Nhà cung cấp hoặc người cho thuê dịch vụ Internet theo dõi các trang bạn truy cập<ph name="END_LIST_ITEM"/>          <ph name="BEGIN_LIST_ITEM"/>Phần mềm độc hại theo dõi thao tác gõ phím của bạn để trao đổi miễn phí các biểu tượng mặt cười<ph name="END_LIST_ITEM"/>          <ph name="BEGIN_LIST_ITEM"/>Việc theo dõi của các tổ chức bí mật<ph name="END_LIST_ITEM"/>          <ph name="BEGIN_LIST_ITEM"/>Những người đứng đằng sau bạn<ph name="END_LIST_ITEM"/>        <ph name="END_LIST"/>        <ph name="BEGIN_LINK"/>Tìm hiểu thêm<ph name="END_LINK"/> về duyệt web ẩn danh.</translation>
 <translation id="1813414402673211292">Xoá Dữ liệu Duyệt</translation>
 <translation id="2356762928523809690">Máy chủ cập nhật không có sẵn (lỗi: <ph name="ERROR_NUMBER"/>)</translation>
 <translation id="5436510242972373446">Tìm kiếm <ph name="SITE_NAME"/>:</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">Xoá (&amp;D)</translation>
 <translation id="6100736666660498114">Menu Start</translation>
 <translation id="1120098871254928930">Cho phép tất cả nội dung cần nạp</translation>
-<translation id="3994878504415702912">Thu phóng (&amp;Z)</translation>
 <translation id="5602600725402519729">&amp;Tải lại</translation>
 <translation id="7965010376480416255">Bộ nhớ Dùng chung</translation>
 <translation id="6248988683584659830">Cài đặt tìm kiếm</translation>
@@ -291,7 +292,7 @@
 <translation id="3966072572894326936">Chọn một thư mục khác...</translation>
 <translation id="7781829728241885113">Hôm qua</translation>
 <translation id="7596288230018319236">Tất cả trang bạn truy cập sẽ xuất hiện tại đây trừ khi bạn mở chúng bằng cửa sổ ẩn danh. Bạn có thể sử dụng nút Tìm kiếm trên trang này để tìm tất cả trang trong lịch sử của mình.</translation>
-<translation id="2665163749053788434">Truy cập lịch sử</translation>
+<translation id="2665163749053788434">Lịch sử truy cập</translation>
 <translation id="7434509671034404296">Nhà phát triển</translation>
 <translation id="6447842834002726250">Cookie</translation>
 <translation id="5170568018924773124">Hiển thị trong thư mục</translation>
@@ -382,7 +383,7 @@
 <translation id="5921544176073914576">Trang lừa đảo trực tuyến</translation>
 <translation id="2822650824848709219">Chặn tất cả nội dung không an toàn</translation>
 <translation id="1901303067676059328">Chọn tất cả (&amp;A)</translation>
-<translation id="2168039046890040389">Trang Trên</translation>
+<translation id="2168039046890040389">Page Up</translation>
 <translation id="1559333154119355392"><ph name="DOWNLOAD_SIZE"/>, Hoàn tất</translation>
 <translation id="2435457462613246316">Hiển thị mật khẩu</translation>
 <translation id="394984172568887996">Được Nhập từ IE</translation>
@@ -425,7 +426,8 @@
 <translation id="3745810751851099214">Gửi cho:</translation>
 <translation id="8877448029301136595">[thư mục cha]</translation>
 <translation id="1963227389609234879">Gỡ bỏ Tất cả</translation>
-<translation id="2496180316473517155">Đang duyệt lịch sử</translation>
+<translation id="7052633198403197513">F1</translation>
+<translation id="2496180316473517155">Lịch sử duyệt web</translation>
 <translation id="602251597322198729">Trang web này đang cố tải xuống nhiều tệp tin. Bạn có muốn thực hiện việc tải xuống này không?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> giờ</translation>
 <translation id="6691936601825168937">Chuyển tiếp (&amp;F)</translation>
@@ -471,7 +473,7 @@
 <translation id="1040471547130882189">Plug-in không Hồi đáp</translation>
 <translation id="790025292736025802">Không tìm thấy <ph name="URL"/></translation>
 <translation id="895347679606913382">Đang bắt đầu...</translation>
-<translation id="3319048459796106952">Cửa sổ mới &amp;nặc danh</translation>
+<translation id="3319048459796106952">Cửa sổ ẩn &amp;danh mới</translation>
 <translation id="4195643157523330669">Mở bằng tab mới</translation>
 <translation id="4178055285485194276">Khi khởi động:</translation>
 <translation id="1154228249304313899">Mở trang này:</translation>
@@ -564,9 +566,9 @@
 <translation id="5295309862264981122">Xác nhận Điều hướng</translation>
 <translation id="6847541693235449912">Tìm</translation>
 <translation id="5333374927882515515">Nhập dấu trang, mật khẩu và cài đặt khác từ <ph name="DEF_BROWSER"/></translation>
-<translation id="4239831617079978238">Cuối phiên</translation>
+<translation id="4239831617079978238">Kết thúc phiên</translation>
 <translation id="7377249249140280793"><ph name="RELATIVE_DATE"/> - <ph name="FULL_DATE"/></translation>
-<translation id="3748412725338508953">Có quá nhiều sự chuyển hướng.</translation>
+<translation id="3748412725338508953">Có quá nhiều lần chuyển hướng.</translation>
 <translation id="8929159553808058020">Thêm ngôn ngữ bạn sử dùng để đọc trang web, liệt kê theo thứ tự tuỳ chọn. Chỉ thêm ngôn ngữ bạn cần, vì một số ký tự có thể được sử dụng để giả mạo trang web bằng ngôn ngữ khác.</translation>
 <translation id="8831104962952173133">Phát hiện Lừa đảo trực tuyến!</translation>
 <translation id="4745142959976410383">Nếu không khởi tạo được yêu cầu này, có thể hệ thống của bạn đang bị tấn công. Trừ khi thực hiện hành động rõ ràng để khởi tạo yêu cầu này, bạn nên nhấp vào Huỷ.</translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">Bật JavaScript</translation>
 <translation id="6451458296329894277">Xác nhận việc Gửi lại Biểu mẫu</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> giờ</translation>
 <translation id="1851266746056575977">Cập nhật Bây giờ</translation>
 <translation id="9065203028668620118">Chỉnh sửa</translation>
@@ -590,7 +593,7 @@
 <translation id="5981759340456370804">Thống kê dữ liệu</translation>
 <translation id="6644971472240498405"><ph name="NUMBER_ONE"/> ngày</translation>
 <translation id="6512448926095770873">Để lại Trang này</translation>
-<translation id="5607455023223000189">Cài đặt plug-ins</translation>
+<translation id="5607455023223000189">Plug-in đã cài đặt</translation>
 <translation id="494645311413743213"><ph name="NUMBER_TWO"/> giây còn lại</translation>
 <translation id="1485146213770915382">Chèn <ph name="SEARCH_TERMS_LITERAL"/> vào URL, vị trí mà thuật ngữ tìm kiếm xuất hiện.</translation>
 <translation id="5626134646977739690">Tên:</translation>
@@ -664,7 +667,7 @@
 <translation id="1702534956030472451">Western</translation>
 <translation id="9141716082071217089">Không thể kiểm tra chứng chỉ của máy chủ đã bị thu hồi hay chưa.</translation>
 <translation id="4304224509867189079">Đăng nhập</translation>
-<translation id="988159990683914416">Xây dựng Nhà phát triển</translation>
+<translation id="988159990683914416">Phiên bản dành cho Nhà phát triển</translation>
 <translation id="3705722231355495246">-</translation>
 <translation id="4268574628540273656">URL:</translation>
 <translation id="7481312909269577407">Chuyển tiếp</translation>
@@ -699,7 +702,7 @@
 <translation id="1038842779957582377">tên không biết</translation>
 <translation id="5327248766486351172">Tên</translation>
 <translation id="8989148748219918422"><ph name="ORGANIZATION"/> [<ph name="COUNTRY"/>]</translation>
-<translation id="3037605927509011580">Ôi, trời!</translation>
+<translation id="3037605927509011580">Xin lỗi!</translation>
 <translation id="1918141783557917887">Nhỏ hơn (&amp;S)</translation>
 <translation id="4065006016613364460">Sao chép (&amp;O) URL hình ảnh</translation>
 <translation id="6965382102122355670">Đồng ý</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">Cạnh Bên trái</translation>
 <translation id="406259880812417922">(Từ khoá: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">Gỡ lỗi JavaScript - Đang chạy</translation>
-<translation id="1604816462140255479">&amp;Zoom văn bản</translation>
 </translationbundle>

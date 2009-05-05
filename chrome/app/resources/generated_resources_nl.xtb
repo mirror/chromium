@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="nl">
 <translation id="6779164083355903755">Ve&amp;rwijderen</translation>
+<translation id="1604816462140255479">Tekst &amp;zoomen</translation>
 <translation id="3581034179710640788">Het beveiligingscertificaat van de site is verlopen.</translation>
 <translation id="8275038454117074363">Importeren</translation>
 <translation id="8418445294933751433">Weergeven al&amp;s tabblad</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">Bladwijzers importeren...</translation>
 <translation id="1621207256975573490">&amp;Frame opslaan als...</translation>
 <translation id="2278562042389100163">Browservenster openen</translation>
+<translation id="9218430445555521422">Instellen als standaard</translation>
 <translation id="4589279373639964403">Bladwijzers exporteren...</translation>
 <translation id="5463275305984126951">Index van <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">Geheugen</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;Normaal</translation>
 <translation id="3873963583678942942">(Naamloos)</translation>
 <translation id="8725178340343806893">Favorieten/bladwijzers</translation>
+<translation id="8926389886865778422">Niet meer vragen</translation>
 <translation id="3605499851022050619">Diagnosepagina voor Safe Browsing</translation>
 <translation id="4307992518367153382">Basisinstellingen</translation>
 <translation id="5912378097832178659">Zo&amp;ekmachines bewerken...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">Niet-reagerende pagina('s)</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Bladwijzerbalk</translation>
-<translation id="3493653833301553455">Auto-aanvullen voor formulieren:</translation>
 <translation id="644038709730536388">Meer informatie over hoe u uzelf online kunt beschermen tegen schadelijke software.</translation>
 <translation id="4172706149171596436">Proxyinstellingen wijzigen</translation>
 <translation id="5650551054760837876">Geen zoekresultaten gevonden.</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">Verwij&amp;deren</translation>
 <translation id="6100736666660498114">Startmenu</translation>
 <translation id="1120098871254928930">Toestaan dat alle inhoud wordt geladen</translation>
-<translation id="3994878504415702912">&amp;Zoomen</translation>
 <translation id="5602600725402519729">Her&amp;laden</translation>
 <translation id="7965010376480416255">Gedeeld geheugen</translation>
 <translation id="6248988683584659830">Zoekinstellingen</translation>
@@ -269,7 +270,7 @@
 <translation id="1823768272150895732">Lettertype</translation>
 <translation id="4475552974751346499">Zoeken in downloads</translation>
 <translation id="1111153019813902504">Recente bladwijzers</translation>
-<translation id="3786934874263773074">&amp;Vinden op pagina</translation>
+<translation id="3786934874263773074">&amp;Zoeken op pagina</translation>
 <translation id="6295228342562451544">Wanneer u verbinding maakt met een beveiligde website, retourneert de server die deze site host een zogenaamd certificaat aan uw browser, om zijn identiteit te verifiëren. Dit certificaat bevat identiteitsgegevens zoals het adres van de website, die worden geverifieerd door een derde partij die uw computer vertrouwt. Door het adres in het certificaat te vergelijken met het adres van de website, kan worden geverifieerd dat u veilig communiceert met de website die u bedoelde en niet met iemand anders (zoals een hacker op uw netwerk).</translation>
 <translation id="5502500733115278303">Geïmporteerd uit Firefox</translation>
 <translation id="569109051430110155">Automatisch detecteren</translation>
@@ -425,10 +426,11 @@
 <translation id="3745810751851099214">Verzenden voor:</translation>
 <translation id="8877448029301136595">[hoofddirectory]</translation>
 <translation id="1963227389609234879">Alles verwijderen</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Browsegeschiedenis</translation>
 <translation id="602251597322198729">Deze site probeert meerdere bestanden te downloaden. Wilt u dit toestaan?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> uur</translation>
-<translation id="6691936601825168937">&amp;Doorsturen</translation>
+<translation id="6691936601825168937">&amp;Vooruit</translation>
 <translation id="7736284018483078792">Wijzig de taal van het woordenboek voor spellingcontrole.</translation>
 <translation id="2148716181193084225">Vandaag</translation>
 <translation id="3574305903863751447"><ph name="CITY"/>, <ph name="STATE"/> <ph name="COUNTRY"/></translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">JavaScript inschakelen</translation>
 <translation id="6451458296329894277">Opnieuw indienen bevestigen</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> uur</translation>
 <translation id="1851266746056575977">Nu bijwerken</translation>
 <translation id="9065203028668620118">Bewerken</translation>
@@ -667,7 +670,7 @@
 <translation id="988159990683914416">Ontwikkelaarsbuild</translation>
 <translation id="3705722231355495246">-</translation>
 <translation id="4268574628540273656">URL:</translation>
-<translation id="7481312909269577407">Doorsturen</translation>
+<translation id="7481312909269577407">Vooruit</translation>
 <translation id="3759876923365568382"><ph name="NUMBER_FEW"/> dagen resterend</translation>
 <translation id="1664314758578115406">Pagina toevoegen...</translation>
 <translation id="4084682180776658562">Bladwijzer maken</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">Linkerzijde</translation>
 <translation id="406259880812417922">(Zoekwoord: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">Foutopsporing voor JavaScript: actief</translation>
-<translation id="1604816462140255479">Tekst &amp;zoomen</translation>
 </translationbundle>

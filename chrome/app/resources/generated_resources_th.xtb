@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="th">
 <translation id="6779164083355903755">&amp;ลบออก</translation>
+<translation id="1604816462140255479">ซูม&amp;ข้อความ</translation>
 <translation id="3581034179710640788">ใบรับรองความปลอดภัยของเว็บไซต์หมดอายุ!</translation>
 <translation id="8275038454117074363">การนำเข้า</translation>
 <translation id="8418445294933751433">แ&amp;สดงเป็นแถบ</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">นำเข้าบุ๊คมาร์ค...</translation>
 <translation id="1621207256975573490">บันทึกเ&amp;ฟรมเป็น...</translation>
 <translation id="2278562042389100163">เปิดหน้าต่างเบราว์เซอร์</translation>
+<translation id="9218430445555521422">ตั้งเป็นค่าเริ่มต้น</translation>
 <translation id="4589279373639964403">ส่งออกบุ๊คมาร์ค...</translation>
 <translation id="5463275305984126951">ดัชนีของ <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">หน่วยความจำ</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;ปกติ</translation>
 <translation id="3873963583678942942">(ไม่ระบุชื่อ)</translation>
 <translation id="8725178340343806893">รายการโปรด/บุ๊คมาร์ค</translation>
+<translation id="8926389886865778422">ไม่ต้องถามอีก</translation>
 <translation id="3605499851022050619">หน้าวินิจฉัยของ Safe Browsing</translation>
 <translation id="4307992518367153382">พื้นฐาน</translation>
 <translation id="5912378097832178659">แ&amp;ก้ไขเครื่องมือค้นหา...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">หน้าที่ไม่ตอบสนอง</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">แถบบุ๊คมาร์ค</translation>
-<translation id="3493653833301553455">กรอกข้อมูลฟอร์มอัตโนมัติ:</translation>
 <translation id="644038709730536388">เรียนรู้เพิ่มเติมเกี่ยวกับวิธีการป้องกันตนเองจากซอร์ฟแวร์ที่เป็นอันตรายออนไลน์</translation>
 <translation id="4172706149171596436">เปลี่ยนการตั้งค่าพร็อกซี</translation>
 <translation id="5650551054760837876">ไม่พบผลลัพธ์การค้นหา</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">&amp;ลบ</translation>
 <translation id="6100736666660498114">เมนูเริ่มต้น</translation>
 <translation id="1120098871254928930">อนุญาตให้โหลดเนื้อหาทั้งหมด</translation>
-<translation id="3994878504415702912">ซู&amp;ม</translation>
 <translation id="5602600725402519729">โหล&amp;ดใหม่</translation>
 <translation id="7965010376480416255">หน่วยความจำที่ใช้ร่วมกัน</translation>
 <translation id="6248988683584659830">ค้นหาการตั้งค่า</translation>
@@ -425,6 +426,7 @@
 <translation id="3745810751851099214">ส่งให้:</translation>
 <translation id="8877448029301136595">[ไดเรกทอรีหลัก]</translation>
 <translation id="1963227389609234879">ลบทั้งหมด</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">ประวัติการเข้าชมที่เรียกดู</translation>
 <translation id="602251597322198729">ไซต์นี้พยายามดาวน์โหลดไฟล์หลายไฟล์ คุณจะอนุญาตหรือไม่</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> ชั่วโมง</translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">เปิดใช้งาน JavaScript</translation>
 <translation id="6451458296329894277">ยืนยันการส่งแบบฟอร์มอีกครั้ง</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> ชั่วโมง</translation>
 <translation id="1851266746056575977">อัปเดทเดี๋ยวนี้</translation>
 <translation id="9065203028668620118">แก้ไข</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">ขอบซ้าย</translation>
 <translation id="406259880812417922">(คำหลัก: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">ดีบักเกอร์ JavaScript - กำลังทำงาน</translation>
-<translation id="1604816462140255479">ซูม&amp;ข้อความ</translation>
 </translationbundle>

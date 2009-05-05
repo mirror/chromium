@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="cs">
 <translation id="6779164083355903755">Odstranit</translation>
+<translation id="1604816462140255479">&amp;Velikost písma</translation>
 <translation id="3581034179710640788">Platnost bezpečnostního certifikátu stránek již vypršela!</translation>
 <translation id="8275038454117074363">Importovat</translation>
 <translation id="8418445294933751433">Zobrazit jako kartu</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">Importovat záložky...</translation>
 <translation id="1621207256975573490">Uložit rámec jako...</translation>
 <translation id="2278562042389100163">Otevřít okno prohlížeče</translation>
+<translation id="9218430445555521422">Nastavit jako výchozí</translation>
 <translation id="4589279373639964403">Exportovat záložky...</translation>
 <translation id="5463275305984126951">Index <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">Paměť</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">Normální</translation>
 <translation id="3873963583678942942">(Bez názvu)</translation>
 <translation id="8725178340343806893">Oblíbené položky/záložky</translation>
+<translation id="8926389886865778422">Dotaz již nezobrazovat</translation>
 <translation id="3605499851022050619">Diagnostická stránka bezpečného prohlížení</translation>
 <translation id="4307992518367153382">Základy</translation>
 <translation id="5912378097832178659">Upravit vyhledávače...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">Stránka nereaguje/stránky nereagují</translation>
 <translation id="1805966933547717780">http://www.google.cz/chrome/help/</translation>
 <translation id="5782620817391526544">Lišta záložek</translation>
-<translation id="3493653833301553455">Automatické vyplňování formulářů:</translation>
 <translation id="644038709730536388">Další informace o tom, jak se chránit před škodlivým softwarem online.</translation>
 <translation id="4172706149171596436">Změna nastavení proxy</translation>
 <translation id="5650551054760837876">Nebyly nalezeny žádné výsledky vyhledávání.</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">&amp;Smazat</translation>
 <translation id="6100736666660498114">Nabídka Start</translation>
 <translation id="1120098871254928930">Povolit načtení veškerého obsahu</translation>
-<translation id="3994878504415702912">Velikost písma</translation>
 <translation id="5602600725402519729">Načíst &amp;znovu</translation>
 <translation id="7965010376480416255">Sdílená paměť</translation>
 <translation id="6248988683584659830">Nastavení vyhledávání</translation>
@@ -425,6 +426,7 @@
 <translation id="3745810751851099214">Odeslat pro:</translation>
 <translation id="8877448029301136595">[nadřazený adresář]</translation>
 <translation id="1963227389609234879">Odstranit vše</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Procházení historie</translation>
 <translation id="602251597322198729">Stránky se snaží stáhnout několik souborů. Chcete akci povolit?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> hod</translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">Povolit JavaScript</translation>
 <translation id="6451458296329894277">Potvrdit nové odeslání formuláře</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> hod</translation>
 <translation id="1851266746056575977">Aktualizovat ihned</translation>
 <translation id="9065203028668620118">Upravit</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">Levý okraj</translation>
 <translation id="406259880812417922">(Klíčové slovo: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">Ladicí program pro JavaScript - v chodu</translation>
-<translation id="1604816462140255479">&amp;Velikost písma</translation>
 </translationbundle>

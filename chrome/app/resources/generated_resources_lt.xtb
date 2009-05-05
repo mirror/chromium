@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="lt">
 <translation id="6779164083355903755">&amp;Pašalinti</translation>
+<translation id="1604816462140255479">Tekstas ir &amp;mastelis</translation>
 <translation id="3581034179710640788">Svetainės saugumo sertifikatas nebegalioja!</translation>
 <translation id="8275038454117074363">Importuoti</translation>
 <translation id="8418445294933751433">&amp;Rodyti kaip skirtuką</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">Importuoti žymas...</translation>
 <translation id="1621207256975573490">Išsaugoti &amp;rėmelį kaip...</translation>
 <translation id="2278562042389100163">Atidaryti naršyklės langą</translation>
+<translation id="9218430445555521422">Nustatyti kaip numatytąją</translation>
 <translation id="4589279373639964403">Eksportuoti žymas...</translation>
 <translation id="5463275305984126951">Turinys iš <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">Atmintis</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;Normalus</translation>
 <translation id="3873963583678942942">(Nepavadintas)</translation>
 <translation id="8725178340343806893">Adresynas / žymos</translation>
+<translation id="8926389886865778422">Neklauskite dar kartą</translation>
 <translation id="3605499851022050619">Išsaugoti naršyklės diagnozavimo puslapį</translation>
 <translation id="4307992518367153382">Pagrindai</translation>
 <translation id="5912378097832178659">&amp;Redaguoti paieškos sistemas...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">Puslapiai (-ių) neatsako</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Žymų juosta</translation>
-<translation id="3493653833301553455">Automatinis formos užpildymas:</translation>
 <translation id="644038709730536388">Sužinokite daugiau apie tai, kaip internete apsisaugoti nuo kenkėjiškų programų.</translation>
 <translation id="4172706149171596436">Pakeisti įgaliotojo serverio nuostatas</translation>
 <translation id="5650551054760837876">Nerasta paieškos rezultatų.</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">&amp;Pašalinti</translation>
 <translation id="6100736666660498114">Pradžios meniu</translation>
 <translation id="1120098871254928930">Leisti kelti visą turinį</translation>
-<translation id="3994878504415702912">Priartinti</translation>
 <translation id="5602600725402519729">Įkelti iš naujo</translation>
 <translation id="7965010376480416255">Bendrinama atmintis</translation>
 <translation id="6248988683584659830">Ieškoti nustatymų</translation>
@@ -425,6 +426,7 @@
 <translation id="3745810751851099214">Siųsti:</translation>
 <translation id="8877448029301136595">[parent directory]</translation>
 <translation id="1963227389609234879">Pašalinti viską</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Naršoma po istoriją</translation>
 <translation id="602251597322198729">Svetainėje bandoma atsisiųsti kelis failus. Ar norite tai leisti?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> valandos (-ų)</translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">„Google Gears“:</translation>
 <translation id="3891357445869647828">Suaktyvinti „JavaScript“</translation>
 <translation id="6451458296329894277">Patvirtinkite pakartotiną formos pateikimą</translation>
+<translation id="3218545474413654570"><ph name="URL"/>–<ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> val.</translation>
 <translation id="1851266746056575977">Atnaujinti</translation>
 <translation id="9065203028668620118">Redaguoti</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">Kairysis kraštas</translation>
 <translation id="406259880812417922">(Raktinis žodis: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">„JavaScript“ derinimo programa – veikia</translation>
-<translation id="1604816462140255479">Tekstas ir &amp;mastelis</translation>
 </translationbundle>

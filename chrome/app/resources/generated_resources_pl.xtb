@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="pl">
 <translation id="6779164083355903755">&amp;Usuń</translation>
+<translation id="1604816462140255479">Rozmiar tekstu</translation>
 <translation id="3581034179710640788">Ważność certyfikatu bezpieczeństwa tej witryny wygasła!</translation>
 <translation id="8275038454117074363">Importuj</translation>
 <translation id="8418445294933751433">&amp;Pokaż jako kartę</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">Importuj zakładki...</translation>
 <translation id="1621207256975573490">Zapisz &amp;ramkę jako...</translation>
 <translation id="2278562042389100163">Otwórz okno przeglądarki</translation>
+<translation id="9218430445555521422">Ustaw jako domyślną</translation>
 <translation id="4589279373639964403">Eksportuj zakładki...</translation>
 <translation id="5463275305984126951">Indeks – <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">Pamięć</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;Normalny</translation>
 <translation id="3873963583678942942">(Bez tytułu)</translation>
 <translation id="8725178340343806893">Ulubione/Zakładki</translation>
+<translation id="8926389886865778422">Nie pytaj ponownie</translation>
 <translation id="3605499851022050619">Strona diagnostyczna Safe Browsing</translation>
 <translation id="4307992518367153382">Podstawy</translation>
 <translation id="5912378097832178659">&amp;Edytuj wyszukiwarki...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">Strona nie odpowiada</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Pasek zakładek</translation>
-<translation id="3493653833301553455">Automatyczne wypełnianie formularza:</translation>
 <translation id="644038709730536388">Więcej informacji na temat ochrony przed szkodliwym oprogramowaniem w internecie.</translation>
 <translation id="4172706149171596436">Zmień ustawienia proxy</translation>
 <translation id="5650551054760837876">Nie znaleziono wyników wyszukiwania.</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">&amp;Usuń</translation>
 <translation id="6100736666660498114">Menu Start</translation>
 <translation id="1120098871254928930">Zezwól na ładowanie całej treści</translation>
-<translation id="3994878504415702912">&amp;Rozmiar tekstu</translation>
 <translation id="5602600725402519729">O&amp;dśwież</translation>
 <translation id="7965010376480416255">Pamięć współużytkowana</translation>
 <translation id="6248988683584659830">Ustawienia wyszukiwania</translation>
@@ -425,6 +426,7 @@
 <translation id="3745810751851099214">Wyślij do:</translation>
 <translation id="8877448029301136595">[katalog główny]</translation>
 <translation id="1963227389609234879">Usuń wszystko</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Historia przeglądania</translation>
 <translation id="602251597322198729">Witryna próbuje pobrać wiele plików. Czy chcesz na to zezwolić?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> godz.</translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">Włącz obsługę JavaScript</translation>
 <translation id="6451458296329894277">Potwierdź ponowne przesłanie formularza</translation>
+<translation id="3218545474413654570"><ph name="URL"/> – <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> godz.</translation>
 <translation id="1851266746056575977">Aktualizuj teraz</translation>
 <translation id="9065203028668620118">Edycja</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">Krawędź po lewej</translation>
 <translation id="406259880812417922">(Słowo kluczowe: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">Debuger JavaScript – uruchomiony</translation>
-<translation id="1604816462140255479">Rozmiar tekstu</translation>
 </translationbundle>

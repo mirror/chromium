@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="pt-PT">
 <translation id="6779164083355903755">&amp;Remover</translation>
+<translation id="1604816462140255479">&amp;Zoom do texto</translation>
 <translation id="3581034179710640788">O certificado de segurança do site expirou!</translation>
 <translation id="8275038454117074363">Importar</translation>
 <translation id="8418445294933751433">Mo&amp;strar como separador</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">Importar marcadores...</translation>
 <translation id="1621207256975573490">Guardar &amp;moldura como...</translation>
 <translation id="2278562042389100163">Abrir janela do browser</translation>
+<translation id="9218430445555521422">Definir como predefinição</translation>
 <translation id="4589279373639964403">Exportar marcadores...</translation>
 <translation id="5463275305984126951">Índice de <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">Memória</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;Normal</translation>
 <translation id="3873963583678942942">(Sem nome)</translation>
 <translation id="8725178340343806893">Favoritos/Marcadores</translation>
+<translation id="8926389886865778422">Não perguntar de novo</translation>
 <translation id="3605499851022050619">Página de diagnóstico Navegação segura</translation>
 <translation id="4307992518367153382">Noções básicas</translation>
 <translation id="5912378097832178659">&amp;Editar motores de pesquisa...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">Página(s) sem resposta</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Barra de marcadores</translation>
-<translation id="3493653833301553455">Preenchimento automático de formulário:</translation>
 <translation id="644038709730536388">Saiba mais sobre como proteger-se contra softwares malignos on-line.</translation>
 <translation id="4172706149171596436">Alterar definições de proxy</translation>
 <translation id="5650551054760837876">Nenhum resultado de pesquisa encontrado.</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">E&amp;liminar</translation>
 <translation id="6100736666660498114">Menu Iniciar</translation>
 <translation id="1120098871254928930">Permitir que todos os conteúdos sejam carregados</translation>
-<translation id="3994878504415702912">&amp;Zoom</translation>
 <translation id="5602600725402519729">&amp;Recarregar</translation>
 <translation id="7965010376480416255">Memória partilhada</translation>
 <translation id="6248988683584659830">Pesquisar definições</translation>
@@ -425,6 +426,7 @@
 <translation id="3745810751851099214">Enviar durante:</translation>
 <translation id="8877448029301136595">[directório principal]</translation>
 <translation id="1963227389609234879">Remover tudo</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Histórico de navegação</translation>
 <translation id="602251597322198729">Este site está a tentar transferir vários ficheiros. Pretende autorizar?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> horas</translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">Activar JavaScript</translation>
 <translation id="6451458296329894277">Confirmar nova submissão de formulário</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> hora</translation>
 <translation id="1851266746056575977">Actualizar agora</translation>
 <translation id="9065203028668620118">Editar</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">Margem esquerda</translation>
 <translation id="406259880812417922">(Palavra-chave: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">Depurador de JavaScript - Em execução</translation>
-<translation id="1604816462140255479">&amp;Zoom do texto</translation>
 </translationbundle>

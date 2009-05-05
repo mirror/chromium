@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="uk">
 <translation id="6779164083355903755">&amp;Видалити</translation>
+<translation id="1604816462140255479">&amp;Масштабування тексту</translation>
 <translation id="3581034179710640788">Сертифікат безпеки сайта втратив чинність!</translation>
 <translation id="8275038454117074363">Імпорт</translation>
 <translation id="8418445294933751433">&amp;Показати як вкладку</translation>
@@ -190,7 +191,6 @@
 <translation id="2266011376676382776">Сторінки не відповідають</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Панель закладок</translation>
-<translation id="3493653833301553455">Автоматичне заповнення форми:</translation>
 <translation id="644038709730536388">Докладніше про те, як захиститися від шкідливого програмного забезпечення онлайн.</translation>
 <translation id="4172706149171596436">Змінити налаштування проксі</translation>
 <translation id="5650551054760837876">Не знайдено результатів пошуку.</translation>
@@ -259,7 +259,6 @@
 <translation id="5329858601952122676">&amp;Видалити</translation>
 <translation id="6100736666660498114">Меню &quot;Пуск&quot;</translation>
 <translation id="1120098871254928930">Дозволити завантажувати весь вміст</translation>
-<translation id="3994878504415702912">&amp;Масштаб</translation>
 <translation id="5602600725402519729">Пере&amp;завантажити</translation>
 <translation id="7965010376480416255">Спільна пам’ять</translation>
 <translation id="6248988683584659830">Налаштування пошуку</translation>
@@ -425,6 +424,7 @@
 <translation id="3745810751851099214">Надіслати для:</translation>
 <translation id="8877448029301136595">[батьківський каталог]</translation>
 <translation id="1963227389609234879">Видалити всі</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Історія переглядів</translation>
 <translation id="602251597322198729">Здійснюється спроба завантажити декілька файлів із цього сайта. Надати дозвіл на завантаження?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> годин</translation>
@@ -582,6 +582,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">Активувати JavaScript</translation>
 <translation id="6451458296329894277">Підтвердити повторне надсилання форми</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> година</translation>
 <translation id="1851266746056575977">Оновити зараз</translation>
 <translation id="9065203028668620118">Редагувати</translation>
@@ -722,5 +723,4 @@
 <translation id="8328145009876646418">Лівий край</translation>
 <translation id="406259880812417922">(Ключове слово: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">Усунення несправностей JavaScript - виконується</translation>
-<translation id="1604816462140255479">&amp;Масштабування тексту</translation>
 </translationbundle>

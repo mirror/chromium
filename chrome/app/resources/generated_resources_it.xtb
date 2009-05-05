@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="it">
 <translation id="6779164083355903755">&amp;Rimuovi</translation>
+<translation id="1604816462140255479">&amp;Carattere</translation>
 <translation id="3581034179710640788">Il certificato di sicurezza del sito è scaduto!</translation>
 <translation id="8275038454117074363">Importa</translation>
 <translation id="8418445294933751433">&amp;Mostra come scheda</translation>
@@ -50,6 +51,7 @@
 <translation id="2956948609882871496">Importa Preferiti...</translation>
 <translation id="1621207256975573490">Salva &amp;frame con nome...</translation>
 <translation id="2278562042389100163">Apri finestra browser</translation>
+<translation id="9218430445555521422">Imposta come predefinito</translation>
 <translation id="4589279373639964403">Esporta Preferiti...</translation>
 <translation id="5463275305984126951">Indice di <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">Memoria</translation>
@@ -106,6 +108,7 @@
 <translation id="6163363155248589649">&amp;Normale</translation>
 <translation id="3873963583678942942">(Senza titolo)</translation>
 <translation id="8725178340343806893">Preferiti/Segnalibri</translation>
+<translation id="8926389886865778422">Non visualizzare più questo avviso</translation>
 <translation id="3605499851022050619">Pagina di diagnostica Navigazione sicura.</translation>
 <translation id="4307992518367153382">Impostazioni di base</translation>
 <translation id="5912378097832178659">&amp;Cambia motori di ricerca...</translation>
@@ -194,7 +197,6 @@
 <translation id="2266011376676382776">La pagina non risponde</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Barra dei Preferiti</translation>
-<translation id="3493653833301553455">Compilazione automatica moduli:</translation>
 <translation id="644038709730536388">Scopri come proteggere il tuo computer dai software dannosi presenti sulla Rete.</translation>
 <translation id="4172706149171596436">Modifica impostazioni proxy</translation>
 <translation id="5650551054760837876">Nessun risultato di ricerca trovato.</translation>
@@ -263,7 +265,6 @@
 <translation id="5329858601952122676">&amp;Elimina</translation>
 <translation id="6100736666660498114">Menu di avvio</translation>
 <translation id="1120098871254928930">Consenti il caricamento di tutti i contenuti</translation>
-<translation id="3994878504415702912">&amp;Carattere</translation>
 <translation id="5602600725402519729">Ri&amp;carica</translation>
 <translation id="7965010376480416255">Memoria condivisa</translation>
 <translation id="6248988683584659830">Impostazioni di ricerca</translation>
@@ -323,7 +324,7 @@
 <translation id="59174027418879706">Attivati</translation>
 <translation id="8141503649579618569"><ph name="DOWNLOAD_RECEIVED"/>/<ph name="DOWNLOAD_TOTAL"/>, <ph name="TIME_LEFT"/></translation>
 <translation id="6659594942844771486">TAB</translation>
-<translation id="5452592754878692665">Modifica impostazioni Google Gears</translation>
+<translation id="5452592754878692665">Modifica impostazioni Gears</translation>
 <translation id="5316814419223884568">Cerca da qui</translation>
 <translation id="965674096648379287">Questa pagina web richiede dati che hai già inserito per essere visualizzata correttamente. Puoi inviare nuovamente tali dati, ma così facendo ripeterai le azioni precedentemente eseguite dalla pagina. Fai clic su Ricarica per reinviare i dati e visualizzare la pagina.</translation>
 <translation id="43742617823094120">In questo caso il certificato presentato al browser è stato revocato dall'autorità emittente. Ciò significa che l'integrità del certificato è stata compromessa e il certificato non è affidabile. Non procedere oltre questo punto.</translation>
@@ -429,6 +430,7 @@
 <translation id="3745810751851099214">Invia per:</translation>
 <translation id="8877448029301136595">[directory principale]</translation>
 <translation id="1963227389609234879">Rimuovi tutto</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Cronologia di navigazione</translation>
 <translation id="602251597322198729">Questo sito sta tentando di scaricare più file. Consentire l'operazione?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> ore</translation>
@@ -586,6 +588,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">Attiva JavaScript</translation>
 <translation id="6451458296329894277">Conferma reinvio modulo</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> ora</translation>
 <translation id="1851266746056575977">Aggiorna ora</translation>
 <translation id="9065203028668620118">Modifica</translation>
@@ -726,5 +729,4 @@
 <translation id="8328145009876646418">Margine sinistro</translation>
 <translation id="406259880812417922">(Parola chiave: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">Debugger JavaScript - In corso</translation>
-<translation id="1604816462140255479">&amp;Carattere</translation>
 </translationbundle>

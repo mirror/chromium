@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="lv">
 <translation id="6779164083355903755">Noņemt</translation>
+<translation id="1604816462140255479">Teksta &amp;tālummaiņa</translation>
 <translation id="3581034179710640788">Šīs vietnes drošības sertifikātam ir beidzies derīguma termiņš!</translation>
 <translation id="8275038454117074363">Importēt</translation>
 <translation id="8418445294933751433">Rādīt kā cilni</translation>
@@ -190,7 +191,6 @@
 <translation id="2266011376676382776">Lapa(s) neatbild</translation>
 <translation id="1805966933547717780">http://www.google.lv/chrome/help/</translation>
 <translation id="5782620817391526544">Grāmatzīmju josla</translation>
-<translation id="3493653833301553455">Veidlapas automātiska aizpildīšana:</translation>
 <translation id="644038709730536388">Uzziniet vairāk par to, kā aizsargāt sevi no kaitīgām programmatūrām tiešsaistē.</translation>
 <translation id="4172706149171596436">Mainīt pilnvaras iestatījumus</translation>
 <translation id="5650551054760837876">Meklēšanas rezultāti nav atrasti.</translation>
@@ -259,7 +259,6 @@
 <translation id="5329858601952122676">Dzēst</translation>
 <translation id="6100736666660498114">Starta izvēlne</translation>
 <translation id="1120098871254928930">Atļaut visam saturam ielādēties</translation>
-<translation id="3994878504415702912">Tālummaiņa</translation>
 <translation id="5602600725402519729">Pār&amp;lādēt</translation>
 <translation id="7965010376480416255">Koplietotā atmiņa</translation>
 <translation id="6248988683584659830">Meklt iestatjumus</translation>
@@ -425,6 +424,7 @@
 <translation id="3745810751851099214">Sūtīt pēc:</translation>
 <translation id="8877448029301136595">[vecāku direktorija]</translation>
 <translation id="1963227389609234879">Izņemt visu</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Pārlūkošanas vēsture</translation>
 <translation id="602251597322198729">No šīs vietnes mēģina lejupielādēt vairākus failus. Vai atļaut?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> stundas</translation>
@@ -582,6 +582,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">Iespējot JavaScript</translation>
 <translation id="6451458296329894277">Apstiprināt veidlapas atkārtotu iesniegšanu</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> stunda</translation>
 <translation id="1851266746056575977">Atjaunināt tagad</translation>
 <translation id="9065203028668620118">Rediģēt</translation>
@@ -722,5 +723,4 @@
 <translation id="8328145009876646418">Kreisā mala</translation>
 <translation id="406259880812417922">(Atslēgvārds: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">JavaScript Defektu novēršana darbojas</translation>
-<translation id="1604816462140255479">Teksta &amp;tālummaiņa</translation>
 </translationbundle>

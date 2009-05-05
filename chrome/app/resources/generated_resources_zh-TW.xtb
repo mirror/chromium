@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="zh-TW">
 <translation id="6779164083355903755">移除(&amp;R)</translation>
+<translation id="1604816462140255479">文字與縮放</translation>
 <translation id="3581034179710640788">此網站的安全性憑證已過期!</translation>
 <translation id="8275038454117074363">匯入</translation>
 <translation id="8418445294933751433">顯示為分頁(&amp;S)</translation>
@@ -48,6 +49,7 @@
 <translation id="2956948609882871496">匯入書籤...</translation>
 <translation id="1621207256975573490">另存框架為(&amp;F)...</translation>
 <translation id="2278562042389100163">開啟瀏覽器視窗</translation>
+<translation id="9218430445555521422">設定為預設瀏覽器</translation>
 <translation id="4589279373639964403">匯出書籤...</translation>
 <translation id="5463275305984126951"><ph name="LOCATION"/> 的索引</translation>
 <translation id="5154917547274118687">記憶體</translation>
@@ -104,6 +106,7 @@
 <translation id="6163363155248589649">一般(&amp;N)</translation>
 <translation id="3873963583678942942">(無標題)</translation>
 <translation id="8725178340343806893">我的最愛/書籤</translation>
+<translation id="8926389886865778422">不要再詢問這個問題</translation>
 <translation id="3605499851022050619">安全瀏覽診斷頁面</translation>
 <translation id="4307992518367153382">基本選項</translation>
 <translation id="5912378097832178659">編輯搜尋引擎(&amp;E)...</translation>
@@ -192,7 +195,6 @@
 <translation id="2266011376676382776">網頁無回應</translation>
 <translation id="1805966933547717780">http: //www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">書籤列</translation>
-<translation id="3493653833301553455">表單自動填入：</translation>
 <translation id="644038709730536388">瞭解更多有關如何保障自己免受線上惡意軟體所影響。</translation>
 <translation id="4172706149171596436">變更代理伺服器設定</translation>
 <translation id="5650551054760837876">找不到搜尋結果。</translation>
@@ -261,7 +263,6 @@
 <translation id="5329858601952122676">刪除(&amp;D)</translation>
 <translation id="6100736666660498114">開始功能表</translation>
 <translation id="1120098871254928930">允許載入所有內容</translation>
-<translation id="3994878504415702912">縮放(&amp;Z)</translation>
 <translation id="5602600725402519729">重新載入(&amp;L)</translation>
 <translation id="7965010376480416255">共用記憶體</translation>
 <translation id="6248988683584659830">搜尋設定</translation>
@@ -427,6 +428,7 @@
 <translation id="3745810751851099214">送至:</translation>
 <translation id="8877448029301136595">[父目錄]</translation>
 <translation id="1963227389609234879">全部移除</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">瀏覽記錄</translation>
 <translation id="602251597322198729">此網站試圖下載多個檔案，請問您要允許下載嗎？</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> 小時</translation>
@@ -584,6 +586,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">啟用 JavaScript</translation>
 <translation id="6451458296329894277">確認重新提交表單</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> 小時</translation>
 <translation id="1851266746056575977">立即更新</translation>
 <translation id="9065203028668620118">編輯</translation>
@@ -591,7 +594,7 @@
 <translation id="4881695831933465202">開啟</translation>
 <translation id="5981759340456370804">統計資料</translation>
 <translation id="6644971472240498405"><ph name="NUMBER_ONE"/> 天</translation>
-<translation id="6512448926095770873">離開此網頁</translation>
+<translation id="6512448926095770873">離開此頁</translation>
 <translation id="5607455023223000189">已安裝的外掛程式</translation>
 <translation id="494645311413743213">剩下 <ph name="NUMBER_TWO"/> 秒</translation>
 <translation id="1485146213770915382">在網址中應該出現搜尋字詞的位置插入 <ph name="SEARCH_TERMS_LITERAL"/>。</translation>
@@ -646,7 +649,7 @@
 <translation id="4771973620359291008">發生不明的錯誤。</translation>
 <translation id="8155798677707647270">安裝新版本...</translation>
 <translation id="6886871292305414135">在新分頁中開啟連結(&amp;T)</translation>
-<translation id="6308937455967653460">另存連結為(&amp;k)...</translation>
+<translation id="6308937455967653460">另存連結為(&amp;K)...</translation>
 <translation id="3943582379552582368">上一頁(&amp;B)</translation>
 <translation id="7607002721634913082">已暫停</translation>
 <translation id="480990236307250886">開啟首頁</translation>
@@ -724,5 +727,4 @@
 <translation id="8328145009876646418">左邊緣</translation>
 <translation id="406259880812417922">(關鍵字: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">JavaScript 偵錯工具 - 執行中</translation>
-<translation id="1604816462140255479">文字與縮放</translation>
 </translationbundle>

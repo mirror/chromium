@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="sk">
 <translation id="6779164083355903755">&amp;Odstrániť</translation>
+<translation id="1604816462140255479">Priblíženie t&amp;extu</translation>
 <translation id="3581034179710640788">Skončila sa platnosť bezpečnostného certifikátu stránky!</translation>
 <translation id="8275038454117074363">Importovať</translation>
 <translation id="8418445294933751433">&amp;Zobraziť ako kartu</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">Importovať záložky...</translation>
 <translation id="1621207256975573490">Uložiť &amp;rám ako...</translation>
 <translation id="2278562042389100163">Otvoriť okno prehliadača</translation>
+<translation id="9218430445555521422">Nastaviť ako predvolený</translation>
 <translation id="4589279373639964403">Exportovať záložky...</translation>
 <translation id="5463275305984126951">Index adresára <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">Pamäť</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;Normálny</translation>
 <translation id="3873963583678942942">(Bez názvu)</translation>
 <translation id="8725178340343806893">Obľúbené položky/záložky</translation>
+<translation id="8926389886865778422">Túto otázku už nezobrazovať</translation>
 <translation id="3605499851022050619">diagnostická stránka Safe Browsing (bezpečné prehliadanie)</translation>
 <translation id="4307992518367153382">Základy</translation>
 <translation id="5912378097832178659">&amp;Upraviť vyhľadávacie mechanizmy...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">Stránka/-y nereaguje</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Panel so záložkami</translation>
-<translation id="3493653833301553455">Automatické dopĺňanie formulára:</translation>
 <translation id="644038709730536388">Získajte viac informácií o spôsoboch ochrany pred škodlivým softvérom online.</translation>
 <translation id="4172706149171596436">Zmeniť nastavenia proxy</translation>
 <translation id="5650551054760837876">Nenašli sa žiadne výsledky vyhľadávania.</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">&amp;Odstrániť</translation>
 <translation id="6100736666660498114">Ponuka Štart</translation>
 <translation id="1120098871254928930">Povoliť načítanie celého obsahu</translation>
-<translation id="3994878504415702912">&amp;Lupa</translation>
 <translation id="5602600725402519729">Znova &amp;načítať</translation>
 <translation id="7965010376480416255">Zdieľaná pamäť</translation>
 <translation id="6248988683584659830">Nastavenia vyhľadávania</translation>
@@ -425,6 +426,7 @@
 <translation id="3745810751851099214">Poslať pre:</translation>
 <translation id="8877448029301136595">[rodičovský adresár]</translation>
 <translation id="1963227389609234879">Odstrániť všetko</translation>
+<translation id="7052633198403197513">Kláves F1</translation>
 <translation id="2496180316473517155">História prehľadávania</translation>
 <translation id="602251597322198729">Stránka sa pokúša prevziať viacero súborov. Chcete to povoliť?</translation>
 <translation id="2052389551707911401">Počet hodín: <ph name="NUMBER_MANY"/></translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">Povoliť jazyk JavaScript</translation>
 <translation id="6451458296329894277">Potvrdiť opakované odoslanie formulára</translation>
+<translation id="3218545474413654570"><ph name="URL"/> – <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> hodina</translation>
 <translation id="1851266746056575977">Aktualizovať teraz</translation>
 <translation id="9065203028668620118">Upraviť</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">Ľavý okraj</translation>
 <translation id="406259880812417922">(Kľúčové slovo: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">Ladiaci program jazyka JavaScript – Spustený</translation>
-<translation id="1604816462140255479">Priblíženie t&amp;extu</translation>
 </translationbundle>

@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="hr">
 <translation id="6779164083355903755">&amp;Ukloni</translation>
+<translation id="1604816462140255479">Zum &amp;teksta</translation>
 <translation id="3581034179710640788">Istekla je sigurnosna potvrda ove web lokacije!</translation>
 <translation id="8275038454117074363">Uvezi</translation>
 <translation id="8418445294933751433">&amp;Prikaži kao karticu</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">Uvezi oznake...</translation>
 <translation id="1621207256975573490">Spremi &amp;okvir kao...</translation>
 <translation id="2278562042389100163">Otvori prozor preglednika</translation>
+<translation id="9218430445555521422">Postavi kao zadano</translation>
 <translation id="4589279373639964403">Izvezi oznake...</translation>
 <translation id="5463275305984126951">Indeks za <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">Memorija</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;Normalno</translation>
 <translation id="3873963583678942942">(Neimenovano)</translation>
 <translation id="8725178340343806893">Favoriti/oznake</translation>
+<translation id="8926389886865778422">Više me ne pitaj</translation>
 <translation id="3605499851022050619">Dijagnostička stranica Sigurno pregledavanje</translation>
 <translation id="4307992518367153382">Osnove</translation>
 <translation id="5912378097832178659">&amp;Uredi tražilicu...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">Stranica ne reagira</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Traka oznaka</translation>
-<translation id="3493653833301553455">Automatsko ispunjavanje obrasca:</translation>
 <translation id="644038709730536388">Saznajte više o tome kako se zaštiti od štetnog softvera na mreži.</translation>
 <translation id="4172706149171596436">Promijeni proxy postavke</translation>
 <translation id="5650551054760837876">Nisu pronađeni rezultati pretraživanja.</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">&amp;Obriši</translation>
 <translation id="6100736666660498114">Izbornik Start</translation>
 <translation id="1120098871254928930">Dopusti učitavanje cijelog sadržaja</translation>
-<translation id="3994878504415702912">&amp;Zum</translation>
 <translation id="5602600725402519729">Ponovno&amp; učitaj</translation>
 <translation id="7965010376480416255">Dijeljena memorija</translation>
 <translation id="6248988683584659830">Postavke pretraživanja</translation>
@@ -425,6 +426,7 @@
 <translation id="3745810751851099214">Prima:</translation>
 <translation id="8877448029301136595">[matični direktorij]</translation>
 <translation id="1963227389609234879">Ukloni sve</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Povijest pregledavanja</translation>
 <translation id="602251597322198729">Ova web lokacija pokušava preuzeti više datoteka. Želite li to dopustiti?</translation>
 <translation id="2052389551707911401">Sati: <ph name="NUMBER_MANY"/></translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">Omogući JavaScript</translation>
 <translation id="6451458296329894277">Potvrdi ponovno slanje obrasca</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773">Broj sati: <ph name="NUMBER_ONE"/></translation>
 <translation id="1851266746056575977">Ažuriraj odmah</translation>
 <translation id="9065203028668620118">Uredi</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">Lijevi rub</translation>
 <translation id="406259880812417922">(Ključna riječ: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">Program za ispravljanje pogrešaka JavaScripta - izvodi se</translation>
-<translation id="1604816462140255479">Zum &amp;teksta</translation>
 </translationbundle>

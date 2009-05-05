@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="fil">
 <translation id="6779164083355903755">&amp;Alisin</translation>
+<translation id="1604816462140255479">Text &amp;zoom</translation>
 <translation id="3581034179710640788">Ang sertipiko sa seguridad ng site ay mapapaso!</translation>
 <translation id="8275038454117074363">I-import</translation>
 <translation id="8418445294933751433">&amp;Ipakita bilang tab</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">Mag-import ng mga bookmark...</translation>
 <translation id="1621207256975573490">I-save &amp;frame bilang...</translation>
 <translation id="2278562042389100163">Magbukas ng browser window</translation>
+<translation id="9218430445555521422">Itakda bilang default</translation>
 <translation id="4589279373639964403">I-export ang mga bookmark...</translation>
 <translation id="5463275305984126951">Index ng <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">Memorya</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;Normal</translation>
 <translation id="3873963583678942942">(Walang pamagat)</translation>
 <translation id="8725178340343806893">Mga Paborito/Bookmark</translation>
+<translation id="8926389886865778422">Huwag nang itanong ulit</translation>
 <translation id="3605499851022050619">Pahina ng diagnostic sa Ligtas na Pagba-browse</translation>
 <translation id="4307992518367153382">Mga Pangunahing Kaalaman</translation>
 <translation id="5912378097832178659">&amp;I-edit ang mga search engine...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">(Mga)pahina Hindi matugunan</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Bookmark Bar</translation>
-<translation id="3493653833301553455">Form autofill:</translation>
 <translation id="644038709730536388">Dagdagan ang nalalaman tungkol sa kung paano protektahan ang iyong sarili mula sa nakakapinsalang software na online.</translation>
 <translation id="4172706149171596436">Baguhin ang mga proxy setting</translation>
 <translation id="5650551054760837876">Walang nahanap na mga resulta sa paghahanap</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">&amp;Tanggalin</translation>
 <translation id="6100736666660498114">Start menu</translation>
 <translation id="1120098871254928930">Pinahintulutan ang lahat ng nilalaman sa pagkarga</translation>
-<translation id="3994878504415702912">&amp;I-zoom</translation>
 <translation id="5602600725402519729">I-reload</translation>
 <translation id="7965010376480416255">Pamamahagi ng Memorya</translation>
 <translation id="6248988683584659830">Mga setting sa paghahanap</translation>
@@ -425,6 +426,7 @@
 <translation id="3745810751851099214">Nagpadala Para sa:</translation>
 <translation id="8877448029301136595">[parent directory]</translation>
 <translation id="1963227389609234879">Alisin lahat</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Pag-browse ng history</translation>
 <translation id="602251597322198729">Tinatangka ng site na ito na mag-download ng maramihang file. Nais mo ba itong payagan?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> mga oras</translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">Pinaganang JavaScript</translation>
 <translation id="6451458296329894277">Muling pagsusumite ng Form sa Pagkumpirma</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> oras</translation>
 <translation id="1851266746056575977">Mag-update Ngayon</translation>
 <translation id="9065203028668620118">I-edit</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">Kalwang Edge</translation>
 <translation id="406259880812417922">(Keyword: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">JavaScript Debugger - Tumatakbo</translation>
-<translation id="1604816462140255479">Text &amp;zoom</translation>
 </translationbundle>

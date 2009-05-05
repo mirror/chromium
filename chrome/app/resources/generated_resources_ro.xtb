@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="ro">
 <translation id="6779164083355903755">&amp;Eliminaţi</translation>
+<translation id="1604816462140255479">&amp;Panoramare text</translation>
 <translation id="3581034179710640788">Certificatul de securitate al site-ului a expirat!</translation>
 <translation id="8275038454117074363">Transferaţi</translation>
 <translation id="8418445294933751433">&amp;Afişaţi ca filă</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">Transferaţi marcajele...</translation>
 <translation id="1621207256975573490">Salvaţi &amp;cadrul ca...</translation>
 <translation id="2278562042389100163">Deschideţi fereastra de browser</translation>
+<translation id="9218430445555521422">Setaţi ca prestabilit</translation>
 <translation id="4589279373639964403">Exportaţi marcajele...</translation>
 <translation id="5463275305984126951">Index pentru <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">Memorie</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;Normal</translation>
 <translation id="3873963583678942942">(Fără titlu)</translation>
 <translation id="8725178340343806893">Favorite/Marcaje</translation>
+<translation id="8926389886865778422">Nu mai întreba</translation>
 <translation id="3605499851022050619">Pagina de diagnostic Navigare sigură</translation>
 <translation id="4307992518367153382">Elemente de bază</translation>
 <translation id="5912378097832178659">&amp;Editaţi motoarele de căutare...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">Pagină(i) inactivă(e)</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Bara de marcaje</translation>
-<translation id="3493653833301553455">Completare automată a formularelor:</translation>
 <translation id="644038709730536388">Aflaţi mai multe despre cum să vă protejaţi de software rău-intenţionat online.</translation>
 <translation id="4172706149171596436">Modificaţi setările proxy</translation>
 <translation id="5650551054760837876">Nu au fost găsite rezultate de căutare.</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">Ş&amp;tergeţi</translation>
 <translation id="6100736666660498114">Meniul Start</translation>
 <translation id="1120098871254928930">Permiteţi încărcarea întregului conţinut</translation>
-<translation id="3994878504415702912">&amp;Zoom</translation>
 <translation id="5602600725402519729">&amp;Reîncărcaţi</translation>
 <translation id="7965010376480416255">Memorie comună</translation>
 <translation id="6248988683584659830">Setări de căutare</translation>
@@ -425,6 +426,7 @@
 <translation id="3745810751851099214">Trimiteţi pentru:</translation>
 <translation id="8877448029301136595">[directorul părinte]</translation>
 <translation id="1963227389609234879">Eliminaţi toate</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Istoricul de navigare</translation>
 <translation id="602251597322198729">Acest site încearcă să descarce mai multe fişiere. Permiteţi această operaţie?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> ore</translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">Activaţi JavaScript</translation>
 <translation id="6451458296329894277">Confirmaţi retrimitere formular</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> oră</translation>
 <translation id="1851266746056575977">Actualizaţi acum</translation>
 <translation id="9065203028668620118">Editaţi</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">Marginea stângă</translation>
 <translation id="406259880812417922">(Cuvânt cheie: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">Depanator JavaScript - În curs de executare</translation>
-<translation id="1604816462140255479">&amp;Panoramare text</translation>
 </translationbundle>

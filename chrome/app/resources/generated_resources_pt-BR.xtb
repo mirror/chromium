@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="pt-BR">
 <translation id="6779164083355903755">&amp;Remover</translation>
+<translation id="1604816462140255479">&amp;Zoom de texto</translation>
 <translation id="3581034179710640788">O certificado de segurança do site expirou.</translation>
 <translation id="8275038454117074363">Importar</translation>
 <translation id="8418445294933751433">&amp;Mostrar como guia</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">Importar favoritos...</translation>
 <translation id="1621207256975573490">Salvar &amp;frame como...</translation>
 <translation id="2278562042389100163">Abrir janela do navegador</translation>
+<translation id="9218430445555521422">Definir como padrão</translation>
 <translation id="4589279373639964403">Exportar favoritos...</translation>
 <translation id="5463275305984126951">Índice de <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">Memória</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;Normal</translation>
 <translation id="3873963583678942942">(Sem título)</translation>
 <translation id="8725178340343806893">Favoritos</translation>
+<translation id="8926389886865778422">Não perguntar novamente</translation>
 <translation id="3605499851022050619">Página de diagnóstico de Navegação segura.</translation>
 <translation id="4307992518367153382">Básicas</translation>
 <translation id="5912378097832178659">&amp;Editar mecanismos de pesquisa...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">As páginas não respondem</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Barra de favoritos</translation>
-<translation id="3493653833301553455">Preenchimento automático de formulário:</translation>
 <translation id="644038709730536388">Saiba mais sobre como se proteger do software prejudicial on-line.</translation>
 <translation id="4172706149171596436">Alterar configurações de proxy</translation>
 <translation id="5650551054760837876">Nenhum resultado de pesquisa encontrado.</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">&amp;Excluir</translation>
 <translation id="6100736666660498114">Menu &quot;Iniciar&quot;</translation>
 <translation id="1120098871254928930">Permitir que todo o conteúdo seja carregado</translation>
-<translation id="3994878504415702912">&amp;Zoom</translation>
 <translation id="5602600725402519729">&amp;Recarregar</translation>
 <translation id="7965010376480416255">Memória compartilhada</translation>
 <translation id="6248988683584659830">Configurações de pesquisa</translation>
@@ -425,10 +426,11 @@
 <translation id="3745810751851099214">Enviar para:</translation>
 <translation id="8877448029301136595">[diretório pai]</translation>
 <translation id="1963227389609234879">Remover tudo</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Histórico de navegação</translation>
 <translation id="602251597322198729">Este site está tentando baixar vários arquivos. Você deseja permitir isso?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> horas</translation>
-<translation id="6691936601825168937">&amp;Encaminhar</translation>
+<translation id="6691936601825168937">&amp;Avançar</translation>
 <translation id="7736284018483078792">Altere o idioma do dicionário do corretor ortográfico.</translation>
 <translation id="2148716181193084225">Hoje</translation>
 <translation id="3574305903863751447"><ph name="CITY"/>, <ph name="STATE"/> <ph name="COUNTRY"/></translation>
@@ -490,7 +492,7 @@
 <translation id="7895330511272068835">Sobre plug-ins</translation>
 <translation id="9012607008263791152">Sei que a visita a este site pode prejudicar meu computador.</translation>
 <translation id="6004539838376062211">&amp;Opções do corretor ortográfico</translation>
-<translation id="7887334752153342268">Duplicado</translation>
+<translation id="7887334752153342268">Duplicar</translation>
 <translation id="703748601351783580">Abrir todos os favoritos em uma nova janela</translation>
 <translation id="1293699935367580298">Esc</translation>
 <translation id="8502249598105294518">Personalizar e controlar o <ph name="PRODUCT_NAME"/></translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">Ativar JavaScript</translation>
 <translation id="6451458296329894277">Confirmar reenvio do formulário</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> hora</translation>
 <translation id="1851266746056575977">Atualizar agora</translation>
 <translation id="9065203028668620118">Editar</translation>
@@ -667,7 +670,7 @@
 <translation id="988159990683914416">Versão do desenvolvedor</translation>
 <translation id="3705722231355495246">-</translation>
 <translation id="4268574628540273656">URL:</translation>
-<translation id="7481312909269577407">Encaminhar</translation>
+<translation id="7481312909269577407">Avançar</translation>
 <translation id="3759876923365568382"><ph name="NUMBER_FEW"/> dias restantes</translation>
 <translation id="1664314758578115406">Adicionar página...</translation>
 <translation id="4084682180776658562">Favorito</translation>
@@ -714,7 +717,7 @@
 <translation id="5941711191222866238">Minimizar</translation>
 <translation id="7167486101654761064">&amp;Sempre abrir arquivos deste tipo</translation>
 <translation id="2339641773402824483">Verificando atualizações...</translation>
-<translation id="2766006623206032690">&amp;Colar e inicializar</translation>
+<translation id="2766006623206032690">&amp;Colar e ir</translation>
 <translation id="9071050381089585305">O script não responde</translation>
 <translation id="969892804517981540">Versão oficial</translation>
 <translation id="724208122063442954">Você optou por abrir alguns tipos de arquivo automaticamente depois do download. Você pode apagar essas configurações para que os arquivos baixados não sejam abertos automaticamente.</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">Borda esquerda</translation>
 <translation id="406259880812417922">(Palavra-chave: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">Depurador JavaScript - Em execução</translation>
-<translation id="1604816462140255479">&amp;Zoom de texto</translation>
 </translationbundle>

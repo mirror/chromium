@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="bg">
 <translation id="6779164083355903755">Према&amp;хване</translation>
+<translation id="1604816462140255479">&amp;Мащабиране на текст</translation>
 <translation id="3581034179710640788">Сертификатът за сигурност на сайта е с изтекла валидност!</translation>
 <translation id="8275038454117074363">Импортиране</translation>
 <translation id="8418445294933751433">&amp;Показване като раздел</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">Импортиране на отметки...</translation>
 <translation id="1621207256975573490">&amp;Запазване на рамката като...</translation>
 <translation id="2278562042389100163">Отваряне на прозореца на браузъра</translation>
+<translation id="9218430445555521422">Задаване по подразбиране</translation>
 <translation id="4589279373639964403">Експортиране на отметките...</translation>
 <translation id="5463275305984126951">Индекс на <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">Памет</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;Нормален</translation>
 <translation id="3873963583678942942">(Без заглавие)</translation>
 <translation id="8725178340343806893">Любими/Отметки</translation>
+<translation id="8926389886865778422">Въпросът да не се показва отново</translation>
 <translation id="3605499851022050619">Страница за диагностика за безопасно сърфиране</translation>
 <translation id="4307992518367153382">Основни положения</translation>
 <translation id="5912378097832178659">&amp;Редактиране на търсещите машини...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">Блокирали страници</translation>
 <translation id="1805966933547717780">http://www.google.com/support/chrome/?hl=bg</translation>
 <translation id="5782620817391526544">Лента на отметките</translation>
-<translation id="3493653833301553455">Автоматично попълване на формуляри:</translation>
 <translation id="644038709730536388">Научете повече за това как да се предпазите от зловреден софтуер в интернет.</translation>
 <translation id="4172706149171596436">Промяна на настройките на прокси сървъра</translation>
 <translation id="5650551054760837876">Не са намерени резултати от търсенето.</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">&amp;Изтриване</translation>
 <translation id="6100736666660498114">Меню „Старт“</translation>
 <translation id="1120098871254928930">Да се зарежда цялото съдържание</translation>
-<translation id="3994878504415702912">&amp;Мащаб</translation>
 <translation id="5602600725402519729">&amp;Повторно зареждане</translation>
 <translation id="7965010376480416255">Споделена памет</translation>
 <translation id="6248988683584659830">Настройки за търсене</translation>
@@ -425,6 +426,7 @@
 <translation id="3745810751851099214">Изпращане за:</translation>
 <translation id="8877448029301136595">[главна директория]</translation>
 <translation id="1963227389609234879">Премахване на всички</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">История на сърфирането</translation>
 <translation id="602251597322198729">Прави се опит за изтегляне на няколко файла от този сайт на компютъра ви. Искате ли да разрешите това?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> часа</translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">Активиране на JavaScript</translation>
 <translation id="6451458296329894277">Потвърдете повторното изпращане на формуляра</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> час</translation>
 <translation id="1851266746056575977">Актуализиране сега</translation>
 <translation id="9065203028668620118">Редактиране</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">Ляв край</translation>
 <translation id="406259880812417922">(Ключова дума: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">Инструмент с JavaScript за откриване и отстраняване на грешки - Изпълнява се</translation>
-<translation id="1604816462140255479">&amp;Мащабиране на текст</translation>
 </translationbundle>

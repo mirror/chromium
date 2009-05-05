@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="de">
 <translation id="6779164083355903755">&amp;Löschen</translation>
+<translation id="1604816462140255479">Text&amp;zoom</translation>
 <translation id="3581034179710640788">Das Sicherheitszertifikat der Website ist abgelaufen!</translation>
 <translation id="8275038454117074363">Importieren</translation>
 <translation id="8418445294933751433">Al&amp;s Tab anzeigen</translation>
@@ -46,13 +47,14 @@
 <translation id="2956948609882871496">Lesezeichen importieren...</translation>
 <translation id="1621207256975573490">&amp;Frame speichern unter...</translation>
 <translation id="2278562042389100163">Browserfenster öffnen</translation>
+<translation id="9218430445555521422">Als Standardbrowser festlegen</translation>
 <translation id="4589279373639964403">Lesezeichen exportieren...</translation>
 <translation id="5463275305984126951">Index von <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">Arbeitsspeicher</translation>
 <translation id="873849583815421063">Wird fertiggestellt...</translation>
 <translation id="5819484510464120153">Anwendung&amp;sverknüpfungen erstellen...</translation>
 <translation id="1748246833559136615">Abbrechen</translation>
-<translation id="8927064607636892008">Fehler beim Anzeigen dieser Webseite. Klicken Sie auf &quot;Aktuelle Seite neu laden&quot; oder wechseln Sie auf eine andere Seite.</translation>
+<translation id="8927064607636892008">Fehler beim Anzeigen dieser Webseite. Klicken Sie auf &quot;Diese Seite neu laden&quot; oder wechseln Sie auf eine andere Seite.</translation>
 <translation id="5613020302032141669">Linkspfeil</translation>
 <translation id="3433489605821183222">Serverzertifikat enthält Fehler</translation>
 <translation id="6479177161510354016">Warnmeldung <ph name="SITE"/></translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;Normal</translation>
 <translation id="3873963583678942942">(Unbenannt)</translation>
 <translation id="8725178340343806893">Favoriten/Lesezeichen</translation>
+<translation id="8926389886865778422">Nicht erneut fragen</translation>
 <translation id="3605499851022050619">SafeBrowsing Diagnoseseite</translation>
 <translation id="4307992518367153382">Grundeinstellungen</translation>
 <translation id="5912378097832178659">Suchmaschin&amp;en bearbeiten...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">Seite(n) reagiert/en nicht</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Lesezeichenleiste</translation>
-<translation id="3493653833301553455">AutoFill für Formulare:</translation>
 <translation id="644038709730536388">Weitere Informationen zum Selbstschutz vor schädlicher Software im Internet.</translation>
 <translation id="4172706149171596436">Proxy-Einstellungen ändern</translation>
 <translation id="5650551054760837876">Keine Suchergebnisse gefunden.</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">&amp;Löschen</translation>
 <translation id="6100736666660498114">Startmenü</translation>
 <translation id="1120098871254928930">Laden von Content zulassen</translation>
-<translation id="3994878504415702912">&amp;Zoom</translation>
 <translation id="5602600725402519729">Neu &amp;laden</translation>
 <translation id="7965010376480416255">Freigegebener Arbeitsspeicher</translation>
 <translation id="6248988683584659830">Sucheinstellungen</translation>
@@ -425,6 +426,7 @@
 <translation id="3745810751851099214">Senden für:</translation>
 <translation id="8877448029301136595">[übergeordnetes Verzeichnis]</translation>
 <translation id="1963227389609234879">Alle entfernen</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Browserverlauf</translation>
 <translation id="602251597322198729">Die Website versucht, mehrere Dateien herunterzuladen. Möchten Sie dies zulassen?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> Stunden</translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">JavaScript aktivieren</translation>
 <translation id="6451458296329894277">Erneute Übermittlung des Formulars bestätigen</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> Stunde</translation>
 <translation id="1851266746056575977">Jetzt aktualisieren</translation>
 <translation id="9065203028668620118">Bearbeiten</translation>
@@ -699,7 +702,7 @@
 <translation id="1038842779957582377">Unbekannter Name</translation>
 <translation id="5327248766486351172">Name</translation>
 <translation id="8989148748219918422"><ph name="ORGANIZATION"/> [<ph name="COUNTRY"/>]</translation>
-<translation id="3037605927509011580">So'n Mist!</translation>
+<translation id="3037605927509011580">Oh nein!</translation>
 <translation id="1918141783557917887">&amp;Kleiner</translation>
 <translation id="4065006016613364460">Bild-URL k&amp;opieren</translation>
 <translation id="6965382102122355670">OK</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">Linker Rand</translation>
 <translation id="406259880812417922">(Suchkürzel: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">JavaScript-Debugger - Wird ausgeführt</translation>
-<translation id="1604816462140255479">Text&amp;zoom</translation>
 </translationbundle>

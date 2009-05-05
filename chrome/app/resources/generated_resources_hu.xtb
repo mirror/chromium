@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="hu">
 <translation id="6779164083355903755">&amp;Eltávolítás</translation>
+<translation id="1604816462140255479">Nagyítás/kicsinyítés</translation>
 <translation id="3581034179710640788">A hely biztonsági tanúsítványa lejárt!</translation>
 <translation id="8275038454117074363">Importálás</translation>
 <translation id="8418445294933751433">&amp;Megjelenítés lapként</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">Könyvjelzők importálása...</translation>
 <translation id="1621207256975573490">Keret mentése &amp;másként...</translation>
 <translation id="2278562042389100163">Böngészőablak megnyitása</translation>
+<translation id="9218430445555521422">Beállítás alapértelmezettként</translation>
 <translation id="4589279373639964403">Könyvjelzők exportálása...</translation>
 <translation id="5463275305984126951"><ph name="LOCATION"/> indexe</translation>
 <translation id="5154917547274118687">Memória</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;Normál</translation>
 <translation id="3873963583678942942">(Névtelen)</translation>
 <translation id="8725178340343806893">Kedvencek/könyvjelzők</translation>
+<translation id="8926389886865778422">Többször ne figyelmeztessen</translation>
 <translation id="3605499851022050619">Diagnosztikai oldal - Biztonságos böngészés</translation>
 <translation id="4307992518367153382">Alapok</translation>
 <translation id="5912378097832178659">&amp;Keresők beállítása...</translation>
@@ -115,7 +118,7 @@
 <translation id="7615851733760445951">&lt;nincs kiválasztott cookie&gt;</translation>
 <translation id="3660179305079774227">Felfelé nyíl</translation>
 <translation id="7400418766976504921">URL</translation>
-<translation id="68541483639528434">Egyéb lapok bezárása</translation>
+<translation id="68541483639528434">A többi lap bezárása</translation>
 <translation id="2897878306272793870">Biztosan meg szeretne nyitni <ph name="TAB_COUNT"/> lapot?</translation>
 <translation id="362276910939193118">Minden előzmény megjelenítése</translation>
 <translation id="1635247229519770914">Telepítés folytatása</translation>
@@ -123,7 +126,7 @@
 <translation id="5872213955895293073">JavaScript hibaelhárítás</translation>
 <translation id="5903264686717710770">Megszólítás:</translation>
 <translation id="8899851313684471736">Link megnyitása új &amp;ablakban</translation>
-<translation id="6686490380836145850">Zárja a lapokat jobbra</translation>
+<translation id="6686490380836145850">Jobbra lévő lapok bezárása</translation>
 <translation id="5608669887400696928"><ph name="NUMBER_DEFAULT"/> óra</translation>
 <translation id="3990502903496589789">Jobb sarok</translation>
 <translation id="5303890401939113396">A JavaScript hibajavító megszakadt</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">Oldal, amely nem válaszol</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Könyvjelzők eszköztára</translation>
-<translation id="3493653833301553455">Űrlap automatikus kitöltése:</translation>
 <translation id="644038709730536388">További tájékoztatás arról, hogyan védheti meg magát a kártékony internetes szoftverek ellen.</translation>
 <translation id="4172706149171596436">Proxybeállítások módosítása</translation>
 <translation id="5650551054760837876">Nincs keresési eredmény</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">&amp;Törlés</translation>
 <translation id="6100736666660498114">Start menü</translation>
 <translation id="1120098871254928930">Összes tartalom betöltésének engedélyezése</translation>
-<translation id="3994878504415702912">&amp;Szöveg mérete</translation>
 <translation id="5602600725402519729">Újra&amp;töltés</translation>
 <translation id="7965010376480416255">Megosztott memória</translation>
 <translation id="6248988683584659830">Keresési beállítások</translation>
@@ -409,7 +410,7 @@
 <translation id="1384616079544830839">A webhelyet a(z) <ph name="ISSUER"/> ellenőrizte.</translation>
 <translation id="4610637590575890427">Valójában ide szeretett volna menni: <ph name="SITE"/>?</translation>
 <translation id="8349305172487531364">Könyvjelzősáv</translation>
-<translation id="7208899522964477531">&amp;Keresés <ph name="SITE_NAME"/> keresővel a következő kifejezésre: &quot;<ph name="SEARCH_TERMS"/>&quot;</translation>
+<translation id="7208899522964477531">Keresés <ph name="SITE_NAME"/> keresővel a következő kifejezésre: &quot;<ph name="SEARCH_TERMS"/>&quot;</translation>
 <translation id="8004582292198964060">Böngésző</translation>
 <translation id="2224551243087462610">Mappa nevének szerkesztése</translation>
 <translation id="5433207235435438329">Helyesírás-ellenőrző nyelve:</translation>
@@ -426,6 +427,7 @@
 <translation id="3745810751851099214">Küldés:</translation>
 <translation id="8877448029301136595">[fölérendelt könyvtár]</translation>
 <translation id="1963227389609234879">Minden eltávolítása</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Böngészés előzményei</translation>
 <translation id="602251597322198729">A webhely több fájlt próbál letölteni. Engedélyezi?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> óra</translation>
@@ -526,7 +528,7 @@
 <translation id="3635774677705394651">A(z) &lt;strong&gt;<ph name="HOST_NAME"/>&lt;/strong&gt; URL-en úgy tűnik, hogy ártalmas program van – olyan szoftver, amely árthat számítógépének, vagy engedélye nélkül műveleteket végezhet.  Ha csak meglátogatja a kártékony programot tároló webhelyet, már az is megfertőzheti számítógépét.</translation>
 <translation id="7280343984261969618">A plugineket előjogok nélkül a homokveremben lehet folytatni. Néhány plugin nem fog megfelelően működni.</translation>
 <translation id="50030952220075532"><ph name="NUMBER_ONE"/> nap van hátra</translation>
-<translation id="2359808026110333948">Tovább</translation>
+<translation id="2359808026110333948">Folytatás</translation>
 <translation id="1618661679583408047">A szerver biztonsági tanúsítványa még nem érvényes!</translation>
 <translation id="9040508646567685134">Az oldalon futó egyik szkript meglehetősen lassan végzi feladatát. Szeretné látni, hogy a szkript be tudja-e fejezni, vagy abba szeretné hagyni most?</translation>
 <translation id="3065140616557457172">Írja be a keresett kifejezést, vagy írja be a felkeresni kívánt URL-címet – mindkét lehetőség működik.</translation>
@@ -583,6 +585,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">JavaScript engedélyezése</translation>
 <translation id="6451458296329894277">Képernyő újraküldésének megerősítése</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> óra</translation>
 <translation id="1851266746056575977">Frissítés most</translation>
 <translation id="9065203028668620118">Szerkesztés</translation>
@@ -715,7 +718,7 @@
 <translation id="5941711191222866238">Kicsinyítés</translation>
 <translation id="7167486101654761064">&amp;Az ilyen típusú fájlokat mindig nyissa meg</translation>
 <translation id="2339641773402824483">Frissítések keresése...</translation>
-<translation id="2766006623206032690">Beille&amp;sztés</translation>
+<translation id="2766006623206032690">Beille&amp;sztés és ugrás</translation>
 <translation id="9071050381089585305">Nem válaszol a szkript</translation>
 <translation id="969892804517981540">Hivatalos verzió</translation>
 <translation id="724208122063442954">Azt választotta, hogy bizonyos fájltípusokat automatikusan megnyit a letöltést követően. Törölheti ezeket a beállításokat annak érdekében, hogy a letöltött fájlok ne nyíljanak meg automatikusan.</translation>
@@ -723,5 +726,4 @@
 <translation id="8328145009876646418">Bal sarok</translation>
 <translation id="406259880812417922">(Kulcsszó: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">A JavaScript hibajavító fut</translation>
-<translation id="1604816462140255479">Nagyítás/kicsinyítés</translation>
 </translationbundle>

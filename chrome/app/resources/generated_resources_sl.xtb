@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="sl">
 <translation id="6779164083355903755">&amp;Odstrani</translation>
+<translation id="1604816462140255479">Besedilo &amp;povečaj</translation>
 <translation id="3581034179710640788">Varnostni certifikat spletnega mesta je potekel!</translation>
 <translation id="8275038454117074363">Uvozi</translation>
 <translation id="8418445294933751433">&amp;Prikaži kot zavihek</translation>
@@ -46,6 +47,7 @@
 <translation id="2956948609882871496">Uvozi zaznamke</translation>
 <translation id="1621207256975573490">Shrani &amp;okvir kot ...</translation>
 <translation id="2278562042389100163">Odpri okno brskalnika</translation>
+<translation id="9218430445555521422">Nastavi kot privzeto</translation>
 <translation id="4589279373639964403">Izvozi zaznamke</translation>
 <translation id="5463275305984126951">Kazalo lokacije <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">Pomnilnik</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;Navadno</translation>
 <translation id="3873963583678942942">(Brez naslova)</translation>
 <translation id="8725178340343806893">Priljubljene/Zaznamki</translation>
+<translation id="8926389886865778422">Ne sprašuj več</translation>
 <translation id="3605499851022050619">Diagnostična stran za varno brskanje</translation>
 <translation id="4307992518367153382">Osnove</translation>
 <translation id="5912378097832178659">&amp;Urejanje iskalnikov ...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">Strani se ne odzivajo</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">Vrstica z zaznamki</translation>
-<translation id="3493653833301553455">Samodejno izpolnjevanje obrazca:</translation>
 <translation id="644038709730536388">Več o tem, kako se lahko v spletu zaščitite pred zlonamerno programsko opremo.</translation>
 <translation id="4172706149171596436">Spremeni nastavitve proxyja</translation>
 <translation id="5650551054760837876">Najden ni bil noben rezultat iskanja.</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">&amp;Izbriši</translation>
 <translation id="6100736666660498114">Meni »Start«</translation>
 <translation id="1120098871254928930">Omogoči nalaganje vse vsebine</translation>
-<translation id="3994878504415702912">&amp;Povečaj</translation>
 <translation id="5602600725402519729">Naloži ponovno</translation>
 <translation id="7965010376480416255">Pomnilnik za skupno rabo</translation>
 <translation id="6248988683584659830">Nastavitve iskanja</translation>
@@ -425,6 +426,7 @@
 <translation id="3745810751851099214">Pošlji po:</translation>
 <translation id="8877448029301136595">[nadrejeni imenik]</translation>
 <translation id="1963227389609234879">Odstrani vse</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">Zgodovina brskanja</translation>
 <translation id="602251597322198729">Ta stran poskuša prenesti več datotek. Ali želite to dovoliti?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> ur</translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google Gears:</translation>
 <translation id="3891357445869647828">Omogoči JavaScript</translation>
 <translation id="6451458296329894277">Potrdite ponovno pošiljanje obrazca</translation>
+<translation id="3218545474413654570"><ph name="URL"/> – <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> h</translation>
 <translation id="1851266746056575977">Posodobi zdaj</translation>
 <translation id="9065203028668620118">Uredi</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">Levi rob</translation>
 <translation id="406259880812417922">(Ključna beseda: <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">Iskalnik napak JavaScript – se izvaja</translation>
-<translation id="1604816462140255479">Besedilo &amp;povečaj</translation>
 </translationbundle>

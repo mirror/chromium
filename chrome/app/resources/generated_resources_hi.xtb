@@ -2,6 +2,7 @@
 <!DOCTYPE translationbundle>
 <translationbundle lang="hi">
 <translation id="6779164083355903755">&amp;हटाएँ</translation>
+<translation id="1604816462140255479">पाठ &amp;ज़ूम</translation>
 <translation id="3581034179710640788">इस साइट के सुरक्षा प्रमाणपत्र की समय-सीमा समाप्त हो गई है!</translation>
 <translation id="8275038454117074363">आयात करें</translation>
 <translation id="8418445294933751433">टैब के रूप में &amp;प्रदर्शित करें</translation>
@@ -46,7 +47,8 @@
 <translation id="2956948609882871496">बुकमार्क इम्पोर्ट...</translation>
 <translation id="1621207256975573490">&amp;के रूप में फ़्रेम सहेजें ...</translation>
 <translation id="2278562042389100163">ब्राउज़र विंडो खोलें</translation>
-<translation id="4589279373639964403">Bookmarks को एक्सपोर्ट करें...</translation>
+<translation id="9218430445555521422">डिफ़ॉल्ट के रूप में सेट करें</translation>
+<translation id="4589279373639964403">बुकमार्क को एक्सपोर्ट करें...</translation>
 <translation id="5463275305984126951"><ph name="LOCATION"/> का इंडेक्स</translation>
 <translation id="5154917547274118687">स्मृति</translation>
 <translation id="873849583815421063">समाप्त कर रहा है ...</translation>
@@ -102,6 +104,7 @@
 <translation id="6163363155248589649">&amp;सामान्य</translation>
 <translation id="3873963583678942942">(शीर्षक रहित)</translation>
 <translation id="8725178340343806893">पसंदीदा/बुकमार्क बार</translation>
+<translation id="8926389886865778422">दोबारा न पूछें</translation>
 <translation id="3605499851022050619">सुरक्षित ब्राउज़िग निदान पृष्ठ</translation>
 <translation id="4307992518367153382">आधारभूत</translation>
 <translation id="5912378097832178659">खोज इंजन &amp;संपादित करें ...</translation>
@@ -190,7 +193,6 @@
 <translation id="2266011376676382776">पृष्ठ अप्रतिसादी</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
 <translation id="5782620817391526544">बुकमार्क बार</translation>
-<translation id="3493653833301553455">ऑटोफिल फॉ़र्म:</translation>
 <translation id="644038709730536388">ऑनलाइन हानिकारक सॉफ़्टवेयर से अपनी सुरक्षा करने की विधि के बारे में अधिक जानें.</translation>
 <translation id="4172706149171596436">प्रॉक्सी सेटिंग्स बदलें</translation>
 <translation id="5650551054760837876">कोई खोज परिणाम नहीं मिले.</translation>
@@ -259,7 +261,6 @@
 <translation id="5329858601952122676">&amp;हटाएँ</translation>
 <translation id="6100736666660498114">स्टार्ट मीनू</translation>
 <translation id="1120098871254928930">समस्त सामग्री लोड होने दें</translation>
-<translation id="3994878504415702912">&amp;ज़ूम करें</translation>
 <translation id="5602600725402519729">री&amp;लोड</translation>
 <translation id="7965010376480416255">साझा स्मृति</translation>
 <translation id="6248988683584659830">खोज सेटिंग्स</translation>
@@ -425,6 +426,7 @@
 <translation id="3745810751851099214">के लिए भेजें :</translation>
 <translation id="8877448029301136595">[मूल निर्देशिका]</translation>
 <translation id="1963227389609234879">सभी हटाएँ</translation>
+<translation id="7052633198403197513">F1</translation>
 <translation id="2496180316473517155">इतिहास ब्राउज़ कर रहा है ...</translation>
 <translation id="602251597322198729">साइट अनेक फ़ाइलों को डाउनलोड करने का प्रयास कर रही है. क्या आप इसकी अनुमति देना चाहते हैं?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/>घंटे</translation>
@@ -582,6 +584,7 @@
 <translation id="3702416240431471861">Google गीयर्स</translation>
 <translation id="3891357445869647828">JavaScript सक्षम करें</translation>
 <translation id="6451458296329894277">फ़ार्म पुन: जमा करने की पुष्टि करें</translation>
+<translation id="3218545474413654570"><ph name="URL"/> - <ph name="WINDOW_TITLE"/></translation>
 <translation id="5116333507878097773"><ph name="NUMBER_ONE"/> घंटे</translation>
 <translation id="1851266746056575977">अभी अद्यतन न करें</translation>
 <translation id="9065203028668620118">संपादित करें</translation>
@@ -722,5 +725,4 @@
 <translation id="8328145009876646418">बायाँ कोना</translation>
 <translation id="406259880812417922">कुंजीशब्द : <ph name="KEYWORD"/>)</translation>
 <translation id="2437750561138919253">JavaScript डीबगर - चल रहा है</translation>
-<translation id="1604816462140255479">पाठ &amp;ज़ूम</translation>
 </translationbundle>
