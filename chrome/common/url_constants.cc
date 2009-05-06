@@ -11,7 +11,7 @@ namespace chrome {
 
 const char kAboutScheme[] = "about";
 const char kChromeInternalScheme[] = "chrome-internal";
-const char kChromeUIScheme[] = "chrome-ui";
+const char kChromeUIScheme[] = "chrome";
 const char kDataScheme[] = "data";
 const char kExtensionScheme[] = "chrome-extension";
 const char kFileScheme[] = "file";
@@ -31,18 +31,14 @@ const char kAboutBlankURL[] = "about:blank";
 const char kAboutCacheURL[] = "about:cache";
 const char kAboutMemoryURL[] = "about:memory";
 
-const char kChromeUIDevToolsURL[] = "chrome-ui://devtools/";
-const char kChromeUIDownloadsURL[] = "chrome-ui://downloads/";
-const char kChromeUIExtensionsURL[] = "chrome-ui://extensions/";
-const char kChromeUIHistoryURL[] = "chrome-ui://history/";
-const char kChromeUIInspectorURL[] = "chrome-ui://inspector/";
-const char kChromeUIIPCURL[] = "chrome-ui://about/ipc";
-const char kChromeUINetworkURL[] = "chrome-ui://about/network";
-#if defined(OS_LINUX)
-// TODO(port): Remove ifdef when we think that Linux splash page is not needed.
-const char kChromeUINewTabURL[] = "about:linux-splash";
-#else
-const char kChromeUINewTabURL[] = "chrome-ui://newtab";
+const char kChromeUIDevToolsURL[] = "chrome://devtools/";
+const char kChromeUIDownloadsURL[] = "chrome://downloads/";
+const char kChromeUIExtensionsURL[] = "chrome://extensions/";
+const char kChromeUIHistoryURL[] = "chrome://history/";
+const char kChromeUIInspectorURL[] = "chrome://inspector/";
+const char kChromeUIIPCURL[] = "chrome://about/ipc";
+const char kChromeUINetworkURL[] = "chrome://about/network";
+const char kChromeUINewTabURL[] = "chrome://newtab";
 #endif
 
 const char kChromeUIDevToolsHost[] = "devtools";

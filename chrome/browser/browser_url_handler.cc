@@ -39,7 +39,7 @@ void BrowserURLHandler::InitURLHandlers() {
 
   // Add the default URL handlers.
   url_handlers_.push_back(&WillHandleBrowserAboutURL);  // about:
-  url_handlers_.push_back(&HandleDOMUI);                // chrome-ui: & friends.
+  url_handlers_.push_back(&HandleDOMUI);                // chrome: & friends.
   url_handlers_.push_back(&HandleViewSource);           // view-source:
 }
 

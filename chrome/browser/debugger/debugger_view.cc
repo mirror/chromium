@@ -22,6 +22,7 @@
 #include "chrome/browser/tab_contents/web_contents.h"
 #include "chrome/common/gfx/chrome_canvas.h"
 #include "chrome/common/resource_bundle.h"
+#include "chrome/common/url_constants.h"
 #include "chrome/views/grid_layout.h"
 #include "chrome/views/controls/scrollbar/native_scroll_bar.h"
 #include "chrome/views/controls/scroll_view.h"
@@ -104,7 +105,8 @@ void DebuggerView::OnInit() {
   web_container_->SetTabContents(web_contents_);
   web_contents_->render_view_host()->AllowDOMUIBindings();
 
-  GURL contents("chrome-ui://inspector/debugger.html");
+  GURL contents(std::string(chrome::kChromeUIScheme) +
+                "//inspector/debugger.html");
   web_contents_->controller()->LoadURL(contents, GURL(),
                                        PageTransition::START_PAGE);
 }

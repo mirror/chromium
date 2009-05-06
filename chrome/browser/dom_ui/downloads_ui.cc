@@ -519,7 +519,7 @@ DownloadsUI::DownloadsUI(WebContents* contents) : DOMUI(contents) {
 
   DownloadsUIHTMLSource* html_source = new DownloadsUIHTMLSource();
 
-  // Set up the chrome-ui://downloads/ source.
+  // Set up the chrome://downloads/ source.
   g_browser_process->io_thread()->message_loop()->PostTask(FROM_HERE,
       NewRunnableMethod(&chrome_url_data_manager,
           &ChromeURLDataManager::AddDataSource,
