@@ -106,7 +106,7 @@ void DebuggerView::OnInit() {
   web_contents_->render_view_host()->AllowDOMUIBindings();
 
   GURL contents(std::string(chrome::kChromeUIScheme) +
-                "//inspector/debugger.html");
+                "://inspector/debugger.html");
   web_contents_->controller()->LoadURL(contents, GURL(),
                                        PageTransition::START_PAGE);
 }
