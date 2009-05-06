@@ -898,14 +898,14 @@ PassRefPtr<EventListener> V8Proxy::createInlineEventListener(
                                                const String& functionName,
                                                const String& code, Node* node)
 {
-    return V8LazyEventListener::create(m_frame, code, functionName);
+    return V8LazyEventListener::create(m_frame, code, functionName, false);
 }
 
 #if ENABLE(SVG)
 PassRefPtr<EventListener> V8Proxy::createSVGEventHandler(const String& functionName,
                                               const String& code, Node* node)
 {
-    return V8LazyEventListener::create(m_frame, code, functionName);
+    return V8LazyEventListener::create(m_frame, code, functionName, true);
 }
 #endif
 
