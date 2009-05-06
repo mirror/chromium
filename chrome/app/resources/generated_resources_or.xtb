@@ -47,6 +47,7 @@
 <translation id="2956948609882871496">ବୁକମାର୍କଗୁଡିକୁ ଆମଦାନି କରନ୍ତୁ...</translation>
 <translation id="1621207256975573490">ଫ୍ରେମ୍ ଏହି ଭାବେ ସଞ୍ଚୟ କରନ୍ତୁ&amp;...</translation>
 <translation id="2278562042389100163">ବ୍ରାଉଜର ୱିଣ୍ଡୋ ଖୋଲନ୍ତୁ</translation>
+<translation id="9218430445555521422">ଡିଫଲ୍ଟ ଭାବେ ସେଟ୍ କରନ୍ତୁ</translation>
 <translation id="4589279373639964403">ବୁକମାର୍କଗୁଡିକୁ ରପ୍ତାନି କରନ୍ତୁ...</translation>
 <translation id="5463275305984126951"><ph name="LOCATION"/> ର ସୂଚୀପତ୍ର</translation>
 <translation id="5154917547274118687">ମେମୋରୀ</translation>
@@ -71,6 +72,7 @@
 <translation id="2994458892329442723">ପ୍ଲଗ୍-ଇନ୍ସ ସକ୍ଷମ କରନ୍ତୁ</translation>
 <translation id="1669397342410349095">ଫିସିଙ୍ଗ ୱେବସାଇଟ୍ ରିପୋର୍ଟ କରନ୍ତୁ...</translation>
 <translation id="1674989413181946727">କମ୍ପ୍ୟୁଟର୍-ପ୍ରସ୍ଥ SSL ସେଟିଂସମୂହ:</translation>
+<translation id="1773709998578631869">ଆପଣଙ୍କର <ph name="DOWNLOAD_COUNT"/>ଟି ଡାଉନଲୋଡସମୂହ ପ୍ରଗତିରେ ଅଛି | ଯଦି ଆପଣ ବର୍ତ୍ତମାନ Google Chrome ବନ୍ଦ କରନ୍ତି, ଏହି ଡାଉଲୋଡସମୂହ ବାତିଲ୍ ହୋଇଯିବେ |</translation>
 <translation id="8703575177326907206"><ph name="DOMAIN"/> ସହ ଆପଣଙ୍କର ସଂଯୋଜନା ଏନକ୍ରିପ୍ଟ ହୋଇ ନାହିଁ ।</translation>
 <translation id="1644574205037202324">ଇତିବୃତ୍ତି</translation>
 <translation id="2518917559152314023">ଯୋଡନ୍ତୁ&amp;...</translation>
@@ -89,6 +91,7 @@
 <translation id="7751559664766943798">ସର୍ବଦା ବୁକମାର୍କସ୍ ଦଣ୍ଡିକା ଦେଖାନ୍ତୁ</translation>
 <translation id="7511635910912978956"><ph name="NUMBER_FEW"/> ଅବଶିଷ୍ଟ ଘଣ୍ଟା</translation>
 <translation id="1720675772864601791">ବିପଦପୂର୍ଣ୍ଣ ପ୍ରତିଛବିଗୁଡିକୁ ଅନୁମତି ଦିଅନ୍ତୁ</translation>
+<translation id="2167276631610992935">Javascript</translation>
 <translation id="5233638681132016545">ନୂତନ ଟ୍ୟାବ୍</translation>
 <translation id="5210365745912300556">ଟ୍ୟାବ୍ ବନ୍ଦ କରନ୍ତୁ</translation>
 <translation id="8806796506533854282">ଏକ ନୂତନ ପ୍ରୋଫାଇଲ୍ ନାମ ପ୍ରବିଷ୍ଟ କରନ୍ତୁ</translation>
@@ -107,11 +110,13 @@
 <translation id="7222373446505536781">F11</translation>
 <translation id="3873963583678942942">(ବେନାମୀ)</translation>
 <translation id="8725178340343806893">ପସନ୍ଦିତାସମୂହ /ବୁକମାର୍କସ୍</translation>
+<translation id="8926389886865778422">ପୁର୍ନବାର ପଚାରନ୍ତୁ ନାହିଁ</translation>
 <translation id="3605499851022050619">ନିରାପତ୍ତା ବ୍ରାଉଜକରଣ ଡାଇଗ୍ନୋଷ୍ଟିକ୍ ପୃଷ୍ଠା</translation>
 <translation id="4307992518367153382">ଆଧାରଗୁଡିକ</translation>
 <translation id="5912378097832178659">&amp;ସନ୍ଧାନ ଇଞ୍ଜିନ ସଂପାଦନ କରନ୍ତୁ...</translation>
 <translation id="4813345808229079766">ସଂଯୋଜନ</translation>
 <translation id="411666854932687641">ବ୍ୟକ୍ତିଗତ ସ୍ମୃତି</translation>
+<translation id="119944043368869598">ସମସ୍ତ ଖାଲି କରନ୍ତୁ</translation>
 <translation id="4200983522494130825">ନୂତନ &amp;ଟ୍ୟାବ୍</translation>
 <translation id="5455790498993699893"><ph name="TOTAL_MATCHCOUNT"/> ର <ph name="ACTIVE_MATCH"/></translation>
 <translation id="2303544859777878640">ମୌଳିକସମୂହ:</translation>
@@ -146,6 +151,7 @@
 <translation id="8507996248087185956"><ph name="NUMBER_DEFAULT"/> ମିନଟ</translation>
 <translation id="5296476177639202243">କୌଣସି ବୁକମାର୍କ '<ph name="SEARCH_TEXT"/>' ଜିଜ୍ଞାସା ସହ ମେଳ ହେଲା ନାହିଁ ।</translation>
 <translation id="939736085109172342">ନୂତନ ଫୋଲ୍ଡର</translation>
+<translation id="2009541932026160416">ଥମ୍ବନେଲ୍ ଅପସାରଣ କରିବା ପାଇଁ <ph name="CROSS_IMAGE"/> କ୍ଲିକ୍ କରନ୍ତୁ</translation>
 <translation id="5641560969478423183">ସର୍ଭରର ପ୍ରମାଣପତ୍ରଟି URL ଗୋଟିକ ସହିତ ମେଳକ ହେଉ ନାହିଁ</translation>
 <translation id="121827551500866099">ସମସ୍ତ ଡାଉନଲୋଡଗୁଡିକ ଦେଖାନ୍ତୁ...</translation>
 <translation id="3115147772012638511">କେଚ୍ ନିମନ୍ତେ ପ୍ରତୀକ୍ଷାରତ...</translation>
@@ -190,6 +196,7 @@
 <translation id="9189691339671500905">ବହୁଉପଯୋଗୀ ବାକ୍ସ ଭିତରେ ବ୍ୟବହୃତ ସନ୍ଧାନ ଇଞ୍ଜିନଟି ସେଟ୍ କରନ୍ତୁ</translation>
 <translation id="4571852245489094179">ବୁକମାର୍କ ଓ ସେଟିଂସମୂହ ଆମଦାନି କରନ୍ତୁ</translation>
 <translation id="6514771739083339959">ମୂଳପୃଷ୍ଠା:</translation>
+<translation id="4421917670248123270">ଡାଉନଲୋଡସମୂହ ବନ୍ଦ ଏବଂ ବାତିଲ୍ କରନ୍ତୁ</translation>
 <translation id="5605623530403479164">ଅନ୍ୟ ସନ୍ଧାନ ଇଞ୍ଜିନସମୂହ</translation>
 <translation id="5710435578057952990">ଏହି ସାଇଟ୍ ଗୋଟିକର ପରିଚୟକରଣ ଯାଞ୍ଚ କରାଯାଇ ନାହିଁ ।</translation>
 <translation id="5287240709317226393">କୁକୀଗୁଡିକୁ ଦେଖାନ୍ତୁ</translation>
@@ -201,6 +208,7 @@
 <translation id="4999762576397546063">Ctrl+<ph name="KEY_COMBO_NAME"/></translation>
 <translation id="3369624026883419694">ପ୍ରାୟୋଜକ ସ୍ଥିର କରୁଛି...</translation>
 <translation id="3967132639560659870">ଏହି ପୃଷ୍ଠାଟିରେ ବିଭିନ୍ନ ପ୍ରକାର SSL ତ୍ରୁଟିଗୁଡିଏ ରହିଛି:</translation>
+<translation id="175196451752279553">ବନ୍ଦ ଟ୍ୟାବ୍ ପୁନଃ ଖୋଲନ୍ତୁ</translation>
 <translation id="5039804452771397117">ଅନୁମତି</translation>
 <translation id="2266011376676382776">ପୃଷ୍ଠା(ଗୁଡିକ) ଅପ୍ରତିକ୍ରିୟାଶୀଳ</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
@@ -239,6 +247,7 @@
 <translation id="358344266898797651">ସେଲଟିକ୍</translation>
 <translation id="5055518462594137986">ଏହି ପ୍ରକାରର ସମସ୍ତ ଲିଙ୍କଗୁଡିକ ଲାଗି ମୋର ପସନ୍ଦକୁ ମନେ ରଖନ୍ତୁ ।</translation>
 <translation id="2870560284913253234">ସାଇଟ୍</translation>
+<translation id="4164507027399414915">ସମସ୍ତ ଅପସାରିତ ଥମ୍ବନେଲସମୂହ ପୁନଃଗଚ୍ଛିତ କରନ୍ତୁ</translation>
 <translation id="7543025879977230179"><ph name="PRODUCT_NAME"/> ବିକଳ୍ପସମୂହ</translation>
 <translation id="2648845569394238430">ସନ୍ଧାନ:</translation>
 <translation id="2175607476662778685">ଶୀଘ୍ର ଉନ୍ମୋଚନ ଦଣ୍ଡିକା</translation>
@@ -273,7 +282,7 @@
 <translation id="5436510242972373446">ସନ୍ଧାନ <ph name="SITE_NAME"/>:</translation>
 <translation id="8730621377337864115">ସମାପ୍ତ ହୋଇଛି</translation>
 <translation id="2953767478223974804"><ph name="NUMBER_ONE"/> ମିନିଟ୍</translation>
-<translation id="8210608804940886430">Page Down</translation>
+<translation id="8210608804940886430">ତଳ ପୃଷ୍ଠା</translation>
 <translation id="5015344424288992913">ପ୍ରକ୍ସି ନିର୍ଦ୍ଦିଷ୍ଟକରଣ...</translation>
 <translation id="2398703750948514961">ବାତିଲହେଲା</translation>
 <translation id="3675321783533846350">ନେଟୱାର୍କକୁ ସଂଯୋଗ କରିବାକୁ ଏକ ପ୍ରୋକ୍ସି ସେଟ୍ ଅପ୍ କରନ୍ତୁ ।</translation>
@@ -295,6 +304,7 @@
 <translation id="8887733174653581061">ସର୍ବଦା ଶୀର୍ଷରେ</translation>
 <translation id="610886263749567451">Javascript ସତର୍କ</translation>
 <translation id="8413126021676339697">ସମ୍ପୂର୍ଣ୍ଣ ଇତିବୃତ୍ତି ଦେଖାନ୍ତୁ</translation>
+<translation id="8860923508273563464">ଡାଉନଲୋଡସମୂହ ସମାପ୍ତ ହେବା ପର୍ଯ୍ୟନ୍ତ ଅପେକ୍ଷା କରନ୍ତୁ</translation>
 <translation id="1823768272150895732">ଫଣ୍ଟ</translation>
 <translation id="4475552974751346499">ଡାଉନଲୋଡ୍ ସନ୍ଧାନ କରନ୍ତୁ</translation>
 <translation id="1111153019813902504">ସଦ୍ୟ ବୁକମାର୍କସ୍</translation>
@@ -350,6 +360,7 @@
 <translation id="1181037720776840403">ଅପସାରଣ</translation>
 <translation id="59174027418879706">ସାମର୍ଥ୍ୟ ହୋଇଛି</translation>
 <translation id="8141503649579618569"><ph name="DOWNLOAD_RECEIVED"/>/<ph name="DOWNLOAD_TOTAL"/>, <ph name="TIME_LEFT"/></translation>
+<translation id="2534091581909016888"><ph name="SITE"/></translation>
 <translation id="6659594942844771486">Tab</translation>
 <translation id="5452592754878692665">Google Gears ସେଟିଂସମୂହ ପରିବର୍ତ୍ତନ କରନ୍ତୁ</translation>
 <translation id="5316814419223884568">ଠିକ୍ ଏହି ଠାରୁ ସନ୍ଧାନ କରନ୍ତୁ</translation>
@@ -417,7 +428,7 @@
 <translation id="6192792657125177640">ବ୍ୟତିକ୍ରମଣଗୁଡିକ</translation>
 <translation id="2822650824848709219">ସମସ୍ତ ବିପଦସଙ୍କୁଳ ବିଷୟବସ୍ତୁକୁ ଅବରୋଧ କରନ୍ତୁ</translation>
 <translation id="1901303067676059328">&amp;ସମସ୍ତ ଚୟନ କରନ୍ତୁ</translation>
-<translation id="2168039046890040389">Page Up</translation>
+<translation id="2168039046890040389">ଉପର ପୃଷ୍ଠା</translation>
 <translation id="1559333154119355392"><ph name="DOWNLOAD_SIZE"/>, ସମାପ୍ତ</translation>
 <translation id="2435457462613246316">ପାସୱାର୍ଡ ଦେଖାନ୍ତୁ</translation>
 <translation id="394984172568887996">IE ରୁ ଆମଦାନି କରାଗଲା</translation>
@@ -434,6 +445,7 @@
 <translation id="4002066346123236978">ଆଖ୍ୟା</translation>
 <translation id="9015241028623917394">ସଂପ୍ରତି ପୃଷ୍ଠାଟି ନିୟନ୍ତ୍ରଣ କରନ୍ତୁ</translation>
 <translation id="7861215335140947162">&amp;ଡାଉନଲୋଡସମୂହ</translation>
+<translation id="5460429403253574028">ଥମ୍ବନେଲସମୂହ ଅପସାରଣ କରନ୍ତୁ</translation>
 <translation id="2505402373176859469"><ph name="TOTAL_SIZE"/> ର <ph name="RECEIVED_AMOUNT"/></translation>
 <translation id="6644512095122093795">ପାସୱାର୍ଡ୍ ସଞ୍ଚୟ କରିବା ଲାଗି ଅଫର୍</translation>
 <translation id="5384051050210890146">ଆସ୍ଥାଭାଜିତ SSL ସାର୍ଟିଫିକେଟ୍ ଗୁଡିକ ଚୟନ କରନ୍ତୁ ।</translation>
@@ -585,6 +597,7 @@
 <translation id="9170848237812810038">&amp;ପୂର୍ବବତ୍</translation>
 <translation id="8135557862853121765"><ph name="NUM_KILOBYTES"/>K</translation>
 <translation id="4444364671565852729"><ph name="VERSION"/> କୁ <ph name="PRODUCT_NAME"/> ଅଦ୍ୟତିତ ହୋଇଛି</translation>
+<translation id="6483805311199035658"><ph name="FILE"/> ଖୋଲୁଛି...</translation>
 <translation id="9154176715500758432">ଏହି ପୃଷ୍ଠାରେ ରହନ୍ତୁ</translation>
 <translation id="5875565123733157100">ବଗ୍ ପ୍ରକାର:</translation>
 <translation id="2440604414813129000">ଉ&amp;ତ୍ସ ଦର୍ଶନ୍ କରନ୍ତୁ</translation>

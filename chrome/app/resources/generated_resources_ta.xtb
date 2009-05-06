@@ -50,6 +50,7 @@
 <translation id="2956948609882871496">புக்மார்க்ஸை இறக்குமதி செய்க...</translation>
 <translation id="1621207256975573490">&amp;சட்டகத்தை இவ்வாறு சேமி...</translation>
 <translation id="2278562042389100163">உலாவி சாளரத்தைத் திற</translation>
+<translation id="9218430445555521422">இயல்பாக அமை</translation>
 <translation id="4589279373639964403">புக்மார்க்ஸை ஏற்றுமதி செய்க...</translation>
 <translation id="5463275305984126951"><ph name="LOCATION"/> இன் பொருளடக்கம்</translation>
 <translation id="5154917547274118687">நினைவகம்</translation>
@@ -74,6 +75,7 @@
 <translation id="2994458892329442723">செருகுநிரல்களை இயக்கு</translation>
 <translation id="1669397342410349095">ஃபிஷிங் வலைத்தளம் எனப் புகார் செய்க...</translation>
 <translation id="1674989413181946727">கணினிகளுக்கிடையேயான SSL அமைப்புகள்:</translation>
+<translation id="1773709998578631869">உங்கள் <ph name="DOWNLOAD_COUNT"/> பதிவிறக்கங்கள் செயலில். நீங்கள் இப்போது Google Chrome ஐ மூடினால், இந்த பதிவிறக்கங்கள் ரத்துசெய்யப்படும்.</translation>
 <translation id="8703575177326907206"><ph name="DOMAIN"/> க்கான உங்கள் இணைப்பு குறியாக்கம் செய்யப்படவில்லை.</translation>
 <translation id="1644574205037202324">வரலாறு</translation>
 <translation id="2518917559152314023">சே&amp;ர்...</translation>
@@ -92,6 +94,7 @@
 <translation id="7751559664766943798">புக்மார்க்ஸ் பட்டியை எப்பொழுதுமே காண்பி</translation>
 <translation id="7511635910912978956">இன்னும் <ph name="NUMBER_FEW"/> மணிநேரம் உள்ளது</translation>
 <translation id="1720675772864601791">பாதுகாப்பற்ற படங்களை அனுமதி</translation>
+<translation id="2167276631610992935">Javascript</translation>
 <translation id="5233638681132016545">புதிய தாவல்</translation>
 <translation id="5210365745912300556">தாவலை மூடுக</translation>
 <translation id="8806796506533854282">புதிய சுயவிவரப்பெயரை உள்ளிடுக</translation>
@@ -110,11 +113,13 @@
 <translation id="7222373446505536781">F11</translation>
 <translation id="3873963583678942942">(தலைப்பிடாதது)</translation>
 <translation id="8725178340343806893">விருப்பங்கள்/புக்மார்க்ஸ்</translation>
+<translation id="8926389886865778422">மீண்டும் கேட்கவேண்டாம்</translation>
 <translation id="3605499851022050619">பாதுகாப்பு உலாவல் கண்டறியும் பக்கம்</translation>
 <translation id="4307992518367153382">அடிப்படைகள்</translation>
 <translation id="5912378097832178659">&amp;தேடுபொறிகளைத் திருத்து...</translation>
 <translation id="4813345808229079766">இணைப்பு</translation>
 <translation id="411666854932687641">தனிப்பட்ட நினைவகம்</translation>
+<translation id="119944043368869598">அனைத்தையும் அழி</translation>
 <translation id="4200983522494130825">புதிய &amp;தாவல்</translation>
 <translation id="5455790498993699893"><ph name="TOTAL_MATCHCOUNT"/> இல் <ph name="ACTIVE_MATCH"/></translation>
 <translation id="2303544859777878640">மொழிகள்:</translation>
@@ -149,6 +154,7 @@
 <translation id="8507996248087185956"><ph name="NUMBER_DEFAULT"/> நிமிடங்கள்</translation>
 <translation id="5296476177639202243">'<ph name="SEARCH_TEXT"/>' வினவலுக்கு பொருத்தமான புக்மார்க்குகள் இல்லை.</translation>
 <translation id="939736085109172342">புதிய கோப்புறை</translation>
+<translation id="2009541932026160416">சிறுபடவுரு நீக்க <ph name="CROSS_IMAGE"/> ஐக் கிளிக் செய்க</translation>
 <translation id="5641560969478423183">சர்வரின் சான்றிதழ் URL உடன் பொருந்தாது</translation>
 <translation id="121827551500866099">அனைத்து பதிவிறக்கங்களையும் காண்பி…</translation>
 <translation id="3115147772012638511">தேக்ககத்திற்காக காத்திருக்கிறது...</translation>
@@ -193,6 +199,7 @@
 <translation id="9189691339671500905">சர்வபுலத்தில் பயன்படுத்தப்படும் தேடுபொறியை அமையுங்கள்.</translation>
 <translation id="4571852245489094179">புக்மார்க்ஸ் மற்றும் அமைப்புகளை இறக்குமதி செய்க</translation>
 <translation id="6514771739083339959">முகப்புப் பக்கம்:</translation>
+<translation id="4421917670248123270">பதிவிறக்கங்களை மூடு மற்றும் ரத்துசெய்</translation>
 <translation id="5605623530403479164">பிற தேடு பொறிகள்</translation>
 <translation id="5710435578057952990">இந்த தளத்தின் அடையாளம் சரிபார்க்கப்படவில்லை.</translation>
 <translation id="5287240709317226393">குக்கீகளைக் காண்பி</translation>
@@ -204,6 +211,7 @@
 <translation id="4999762576397546063">Ctrl+<ph name="KEY_COMBO_NAME"/></translation>
 <translation id="3369624026883419694">ஹோஸ்ட் சிக்கலைத் தீர்க்கிறது...</translation>
 <translation id="3967132639560659870">இந்த பக்கத்தில் பல SSL பிழைகள் உள்ளன:</translation>
+<translation id="175196451752279553">மூடிய தாவலை ம&amp;றுபடி திறக்கவும்</translation>
 <translation id="5039804452771397117">அனுமதி</translation>
 <translation id="2266011376676382776">பக்கங்கள் பதிலளிக்கவில்லை</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome</translation>
@@ -242,6 +250,7 @@
 <translation id="358344266898797651">செல்டிக்</translation>
 <translation id="5055518462594137986">இந்த வகையிலான அனைத்து இணைப்புகளுக்கும் எனது தெரிவை நினைவில் கொள்.</translation>
 <translation id="2870560284913253234">தளம்</translation>
+<translation id="4164507027399414915">நீக்கப்பட்ட அனைத்து சிறுபடவுருக்களையும் மறு ஏற்றம்செய்</translation>
 <translation id="7543025879977230179"><ph name="PRODUCT_NAME"/> விருப்பத்தேர்வுகள்</translation>
 <translation id="2648845569394238430">தேடு:</translation>
 <translation id="2175607476662778685">விரைவு தொடக்கப் பட்டி</translation>
@@ -276,7 +285,7 @@
 <translation id="5436510242972373446"><ph name="SITE_NAME"/> தளத்தைத் தேடுக:</translation>
 <translation id="8730621377337864115">முடிந்தது</translation>
 <translation id="2953767478223974804"><ph name="NUMBER_ONE"/> நிமிடம்</translation>
-<translation id="8210608804940886430">கடைசி பக்கம்</translation>
+<translation id="8210608804940886430">பக்கத்தின் கீழே</translation>
 <translation id="5015344424288992913">ப்ராக்ஸியைக் கண்டறிகிறது…</translation>
 <translation id="2398703750948514961">ரத்து செய்யப்பட்டது</translation>
 <translation id="3675321783533846350">நெட்வொர்க்கிற்கு இணைக்க உங்கள் பிராக்ஸியை அமையுங்கள்.</translation>
@@ -297,7 +306,8 @@
 <translation id="6248988683584659830">தேடல் அமைப்புகள்</translation>
 <translation id="8887733174653581061">எப்போதும் மேலே</translation>
 <translation id="610886263749567451">Javascript விழிப்பூட்டல்</translation>
-<translation id="8413126021676339697">முழு வரலாற்றைக் காண்பி</translation>
+<translation id="8413126021676339697">முழு வரலாற்றையும் காண்பி</translation>
+<translation id="8860923508273563464">பதிவிறக்கங்கள் முடிக்கும் வரை காத்திருக்கவும்</translation>
 <translation id="1823768272150895732">எழுத்துரு</translation>
 <translation id="4475552974751346499">பதிவிறக்கங்களைத் தேடு</translation>
 <translation id="1111153019813902504">சமீபத்திய புக்மார்க்ஸ்</translation>
@@ -353,6 +363,7 @@
 <translation id="1181037720776840403">அகற்று</translation>
 <translation id="59174027418879706">செயலாக்கப்பட்டது</translation>
 <translation id="8141503649579618569"><ph name="DOWNLOAD_RECEIVED"/>/<ph name="DOWNLOAD_TOTAL"/>, <ph name="TIME_LEFT"/></translation>
+<translation id="2534091581909016888"><ph name="SITE"/></translation>
 <translation id="6659594942844771486">Tab</translation>
 <translation id="5452592754878692665">Google Gears அமைப்புகளை மாற்று</translation>
 <translation id="5316814419223884568">இங்கிருந்து தேடு</translation>
@@ -363,7 +374,7 @@
 <translation id="3866249974567520381">விவரம்</translation>
 <translation id="5552632479093547648">தீம்பொருள் மற்றும் ஃபிஷிங் கண்டறியப்பட்டுள்ளது!</translation>
 <translation id="9118804773997839291">பக்கத்திற்கானப் பாதுகாப்பற்ற அனைத்து கூறுகளின் பட்டியலைக் கீழே காணலாம். வரிசையிலுள்ள குறிப்பிட்ட ஆதாரம் குறித்த மேலும் தகவலுக்கு, பகுப்பாய்வு என்ற இணைப்பினைக் கிளிக் செய்க.</translation>
-<translation id="7754704193130578113">பதிவிறக்கும் முன் ஒவ்வொரு கோப்பையும் எங்கு சேமிக்க வேண்டும் என கேள்</translation>
+<translation id="7754704193130578113">பதிவிறக்கும் முன் ஒவ்வொரு கோப்பையும் எங்கு சேமிக்க வேண்டும் எனக் கேட்கவும்</translation>
 <translation id="2497284189126895209">அனைத்து கோப்புகளும்</translation>
 <translation id="435463392378565996">சிறிய மாற்றங்கள்</translation>
 <translation id="5360606537916580043">நேற்று</translation>
@@ -420,7 +431,7 @@
 <translation id="6192792657125177640">விதிவிலக்குகள்</translation>
 <translation id="2822650824848709219">பாதுகாப்பற்ற உள்ளடக்கங்கள் அனைத்தையும் தடு</translation>
 <translation id="1901303067676059328">அ&amp;னைத்தையும் தேர்ந்தெடு</translation>
-<translation id="2168039046890040389">Page Up</translation>
+<translation id="2168039046890040389">பக்கத்தின் மேலே</translation>
 <translation id="1559333154119355392"><ph name="DOWNLOAD_SIZE"/>, முடிந்தது</translation>
 <translation id="2435457462613246316">கடவுச்சொல்லைக் காண்பி</translation>
 <translation id="394984172568887996">IE இலிருந்து இறக்குமதி செய்யப்பட்டது</translation>
@@ -437,6 +448,7 @@
 <translation id="4002066346123236978">தலைப்பு</translation>
 <translation id="9015241028623917394">நடப்பு பக்கத்தைக் கட்டுப்படுத்து</translation>
 <translation id="7861215335140947162">&amp;பதிவிறக்கங்கள்</translation>
+<translation id="5460429403253574028">சிறுபடவுருக்களை நீக்கு</translation>
 <translation id="2505402373176859469"><ph name="TOTAL_SIZE"/> இல் <ph name="RECEIVED_AMOUNT"/></translation>
 <translation id="6644512095122093795">கடவுச்சொற்களைச் சேமிப்பதற்கான சலுகை</translation>
 <translation id="5384051050210890146">நம்பப்படும் SSL சான்றிதழ்களைப் பயன்படுத்துக.</translation>
@@ -473,7 +485,7 @@
 <translation id="2148716181193084225">இன்று</translation>
 <translation id="3574305903863751447"><ph name="CITY"/>, <ph name="STATE"/> <ph name="COUNTRY"/></translation>
 <translation id="4756388243121344051">&amp;வரலாறு</translation>
-<translation id="4789872672210757069">&amp;<ph name="PRODUCT_NAME"/> ஓர் அறிமுகம்</translation>
+<translation id="4789872672210757069">&amp;<ph name="PRODUCT_NAME"/> ஐப் பற்றி</translation>
 <translation id="1017280919048282932">&amp;அகராதியுடன் சேர்</translation>
 <translation id="1829244130665387512">இந்தப் பக்கத்தில் தேடு</translation>
 <translation id="4115153316875436289"><ph name="NUMBER_TWO"/> நாட்கள்</translation>
@@ -588,6 +600,7 @@
 <translation id="9170848237812810038">&amp;செயல்தவிர்</translation>
 <translation id="8135557862853121765"><ph name="NUM_KILOBYTES"/>K</translation>
 <translation id="4444364671565852729"><ph name="VERSION"/> க்கு <ph name="PRODUCT_NAME"/> புதுப்பிக்கப்பட்டது</translation>
+<translation id="6483805311199035658"><ph name="FILE"/> ஐத் திறக்கிறது...</translation>
 <translation id="9154176715500758432">இந்தப் பக்கத்திலேயே இருக்க</translation>
 <translation id="5875565123733157100">பிழை வகை:</translation>
 <translation id="2440604414813129000">ஆ&amp;தாரத்தைக் காண்பி</translation>
@@ -637,7 +650,7 @@
 <translation id="9065203028668620118">திருத்து</translation>
 <translation id="4867297348137739678">கடந்த வாரம்</translation>
 <translation id="4881695831933465202">திற</translation>
-<translation id="5981759340456370804">புத்திசாலிகளுக்கு புள்ளிவிவரம்</translation>
+<translation id="5981759340456370804">மேதாவிகளுக்கான புள்ளிவிவரங்கள்</translation>
 <translation id="6644971472240498405"><ph name="NUMBER_ONE"/> நாள்</translation>
 <translation id="6512448926095770873">இந்த பக்கத்தை விட்டு வெளியேறுக</translation>
 <translation id="5607455023223000189">நிறுவப்பட்டுள்ள செருகுநிரல்கள்</translation>
@@ -726,7 +739,7 @@
 <translation id="988159990683914416">டெவலப்பர் கட்டமைப்பு</translation>
 <translation id="3705722231355495246">-</translation>
 <translation id="4268574628540273656">URL:</translation>
-<translation id="7481312909269577407">முன்னனுப்பு</translation>
+<translation id="7481312909269577407">அடுத்த பக்கம்</translation>
 <translation id="3759876923365568382">இன்னும் <ph name="NUMBER_FEW"/> நாட்கள் உள்ளன</translation>
 <translation id="1664314758578115406">பக்கத்தைச் சேர்…</translation>
 <translation id="4084682180776658562">புக்மார்க்</translation>
@@ -753,7 +766,7 @@
 <translation id="3435738964857648380">பாதுகாப்பு</translation>
 <translation id="2231233239095101917">பக்கத்தில் உள்ள ஸ்கிரிப்ட் அதிக அளவு நினைவகத்தைப் பயன்படுத்தியது. ஸ்கிரிப்டை செயலாக்க மறுநினைவேற்றுக.</translation>
 <translation id="5119173345047096771">Mozilla Firefox</translation>
-<translation id="385051799172605136">முந்தைய</translation>
+<translation id="385051799172605136">முந்தைய பக்கம்</translation>
 <translation id="1208126399996836490">மீட்டமைக்க வேண்டாம்</translation>
 <translation id="806812017500012252">தலைப்பின்படி மறுவரிசைப்படுத்து</translation>
 <translation id="2960316970329790041">இறக்குமதி செய்வதை நிறுத்துக</translation>

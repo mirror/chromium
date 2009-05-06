@@ -47,6 +47,7 @@
 <translation id="2956948609882871496">导入书签...</translation>
 <translation id="1621207256975573490">帧另存为(&amp;F)...</translation>
 <translation id="2278562042389100163">打开浏览器窗口</translation>
+<translation id="9218430445555521422">设为默认浏览器</translation>
 <translation id="4589279373639964403">导出书签...</translation>
 <translation id="5463275305984126951"><ph name="LOCATION"/> 的索引</translation>
 <translation id="5154917547274118687">内存</translation>
@@ -107,6 +108,7 @@
 <translation id="7222373446505536781">F11</translation>
 <translation id="3873963583678942942">（无标题）</translation>
 <translation id="8725178340343806893">收藏夹/书签</translation>
+<translation id="8926389886865778422">不再询问</translation>
 <translation id="3605499851022050619">安全浏览诊断页面</translation>
 <translation id="4307992518367153382">基本信息</translation>
 <translation id="5912378097832178659">修改搜索引擎(&amp;E)...</translation>

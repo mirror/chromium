@@ -47,6 +47,7 @@
 <translation id="2956948609882871496">Импорт закладок...</translation>
 <translation id="1621207256975573490">Сохранить &amp;фрейм как...</translation>
 <translation id="2278562042389100163">Открыть окно браузера</translation>
+<translation id="9218430445555521422">Задать по умолчанию</translation>
 <translation id="4589279373639964403">Экспорт закладок...</translation>
 <translation id="5463275305984126951">Содержание <ph name="LOCATION"/></translation>
 <translation id="5154917547274118687">Память</translation>
@@ -107,6 +108,7 @@
 <translation id="7222373446505536781">F11</translation>
 <translation id="3873963583678942942">(без имени)</translation>
 <translation id="8725178340343806893">Избранное/Закладки</translation>
+<translation id="8926389886865778422">Больше не спрашивать</translation>
 <translation id="3605499851022050619">Страница диагностики безопасного просмотра</translation>
 <translation id="4307992518367153382">Основные</translation>
 <translation id="5912378097832178659">&amp;Изменить поисковые системы...</translation>
@@ -643,7 +645,7 @@
 <translation id="486595306984036763">Открыть отчет о фишинге</translation>
 <translation id="1568162916422682473">Обнаружен неустранимый сбой следующих плагинов: <ph name="PLUGIN_NAME"/></translation>
 <translation id="2441719842399509963">Восстановить значения по умолчанию</translation>
-<translation id="170407012880898501">Сохранять введенный в формы текст, чтобы их было проще заполнять.</translation>
+<translation id="170407012880898501">Сохранять текст, вводимый в формы, для ускорения их последующего заполнения.</translation>
 <translation id="8116972784401310538">&amp;Диспетчер закладок</translation>
 <translation id="6040143037577758943">Закрыть</translation>
 <translation id="4943872375798546930">Нет результатов</translation>
