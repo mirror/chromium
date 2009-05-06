@@ -39,7 +39,6 @@ const char kChromeUIInspectorURL[] = "chrome://inspector/";
 const char kChromeUIIPCURL[] = "chrome://about/ipc";
 const char kChromeUINetworkURL[] = "chrome://about/network";
 const char kChromeUINewTabURL[] = "chrome://newtab";
-#endif
 
 const char kChromeUIDevToolsHost[] = "devtools";
 const char kChromeUIDialogHost[] = "dialog";
