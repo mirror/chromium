@@ -71,7 +71,7 @@
 <translation id="6370820475163108109"><ph name="ORGANIZATION_NAME"/> (<ph name="DOMAIN_NAME"/>)</translation>
 <translation id="8820817407110198400">బుక్‌మార్క్‌లు</translation>
 <translation id="2994458892329442723">ప్లగ్-ఇన్‌లను ప్రారంభించు</translation>
-<translation id="1669397342410349095">ఫిషింగ్ వెబ్‌సైట్‌ను రిపోర్ట్ చెయ్యి...</translation>
+<translation id="1669397342410349095">ఫిషింగ్ వెబ్‌సైట్‌ను నివేదించండి...</translation>
 <translation id="1674989413181946727">కంప్యూటర్-వెడల్పు SSL సెట్టింగులు:</translation>
 <translation id="8703575177326907206"><ph name="DOMAIN"/>కు మీ కనెక్షన్ గుప్తీకరించబడలేదు.</translation>
 <translation id="1644574205037202324">చరిత్ర</translation>
@@ -159,7 +159,7 @@
 <translation id="3122464029669770682">CPU</translation>
 <translation id="1684861821302948641">పేజీలను నాశనం చెయ్యి</translation>
 <translation id="5965640700983474726">శోధించడానికి టైప్ చెయ్యండి</translation>
-<translation id="5904714272463161824">బగ్ లేదా విభజించబడిన వెబ్‌సైట్‌ను &amp;రిపోర్ట్ చెయ్యి...</translation>
+<translation id="5904714272463161824">ఒక బగ్ లేదా విభజించబడిన వెబ్‌సైట్‌ గురించి &amp;నివేదించండి...</translation>
 <translation id="1608306110678187802">ఫ్రేమ్‌ను ప్రిం&amp;ట్ చెయ్యి...</translation>
 <translation id="4948468046837535074">ఈ క్రింది పేజీలను తెరువు:</translation>
 <translation id="6978121630131642226">శోధన ఇంజిన్‌లు</translation>
@@ -322,7 +322,7 @@
 <translation id="57646104491463491">తేదీ సవరించబడింది</translation>
 <translation id="3867260226944967367">ఈ వెబ్‍‌పేజీ దొరకలేదు.</translation>
 <translation id="6507969014813375884">సరళీకృత చైనీస్</translation>
-<translation id="1767991048059195456">రిపోర్ట్‌ను పంపు</translation>
+<translation id="1767991048059195456">నివేదికను పంపండి</translation>
 <translation id="5646376287012673985">స్థానం</translation>
 <translation id="1110155001042129815">వేచి ఉండండి</translation>
 <translation id="7071586181848220801">తెలియని ప్లగ్-ఇన్</translation>
@@ -496,7 +496,7 @@
 <translation id="8331626408530291785">పైకి స్క్రోల్ చెయ్యి</translation>
 <translation id="1526560967942511387">శీర్షికలేని పత్రం</translation>
 <translation id="5538307496474303926">క్లియర్ చేస్తోంది...</translation>
-<translation id="6783679543387074885">బగ్ లేదా విభజించబడిన వెబ్‌సైట్‌ను రిపోర్ట్ చెయ్యి</translation>
+<translation id="6783679543387074885">ఒక బగ్ లేదా విభజించబడిన వెబ్‌సైట్‌ గురించి నివేదించండి</translation>
 <translation id="8412968288526977732"><ph name="TITLE"/> వద్ద సర్వర్ <ph name="DOMAIN"/>కు ఒక యూజర్‌పేరు మరియు పాస్‌వర్డ్ అవసరం.</translation>
 <translation id="5285267187067365830">ప్లగ్‌ఇన్‌ను ఇన్‌స్టాల్ చెయ్యి...</translation>
 <translation id="8015746205953933323">ఈ వెబ్‍‌పేజీ అందుబాటులో లేదు.</translation>

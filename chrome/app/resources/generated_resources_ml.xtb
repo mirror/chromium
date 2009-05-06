@@ -49,7 +49,7 @@
 <translation id="1621207256975573490">ഇതു പോലെ സംരക്ഷിക്കുകയും &amp;ഫ്രെയിം ചെയ്യുകയും ചെയ്യുക...</translation>
 <translation id="2278562042389100163">ബ്രൌസര്‍ വിന്‍ഡോ തുറക്കുക</translation>
 <translation id="9218430445555521422">സ്ഥിരസ്ഥിതിയാക്കുക</translation>
-<translation id="4589279373639964403">ബുക്മാര്‍ക്കുകള്‍ കയറ്റുമതിചെയ്യുക...</translation>
+<translation id="4589279373639964403">ബുക്മാര്‍ക്കുകള്‍ കയറ്റുമതി ചെയ്യുക...</translation>
 <translation id="5463275305984126951"><ph name="LOCATION"/> ന്റെ സൂചിക</translation>
 <translation id="5154917547274118687">മെമ്മറി</translation>
 <translation id="873849583815421063">അവസാനിപ്പിക്കുന്നു...</translation>
@@ -120,7 +120,7 @@
 <translation id="3660179305079774227">മുകളിലേക്കുള്ള അമ്പടയാളം</translation>
 <translation id="7400418766976504921">URL</translation>
 <translation id="68541483639528434">മറ്റ് ടാബുകള്‍ അടയ്ക്കുക</translation>
-<translation id="2897878306272793870">നിങ്ങള്‍ <ph name="TAB_COUNT"/> ടാബുകള്‍ തുറക്കാന്‍ പോകുകയാണെന്ന് ഉറപ്പുണ്ടോ?</translation>
+<translation id="2897878306272793870">നിങ്ങള്‍ <ph name="TAB_COUNT"/> ടാബുകള്‍ തുറക്കാന്‍ പോവുകയാണെന്ന് ഉറപ്പുണ്ടോ?</translation>
 <translation id="362276910939193118">മുഴുവന്‍ ചരിത്രവും കാണിക്കുക</translation>
 <translation id="1635247229519770914">ഇന്‍സ്റ്റോളിംഗ് തുടരൂ</translation>
 <translation id="8945419807169257367">സെര്‍വറിന്റെ സര്‍ട്ടിഫിക്കറ്റ് പരിശോധിക്കാന്‍ കഴിയുന്നില്ല</translation>
@@ -223,7 +223,7 @@
 <translation id="5155632014218747366">ഈ സൈറ്റുകളിലെ പ്രശ്നങ്ങളെക്കുറിച്ചുള്ള കൂടുതല്‍ വിവരങ്ങള്‍ക്കായി, <ph name="DOMAIN"/> കള്‍ക്കായി Google <ph name="DIAGNOSTIC_PAGE"/> സന്ദര്‍ശിക്കുക.</translation>
 <translation id="1120026268649657149">കീവേഡ് ശൂന്യമോ അല്ലെങ്കില്‍ അദ്വിതീയമോ ആയിരിക്കണം</translation>
 <translation id="5317780077021120954">സംരക്ഷിക്കൂ</translation>
-<translation id="358344266898797651">Celtic</translation>
+<translation id="358344266898797651">കെല്‍റ്റിക്</translation>
 <translation id="5055518462594137986">ഈ തരത്തിലുള്ള എല്ലാ ലിങ്കുകള്‍ക്കായും എന്റെ അഭിരുചി ഓര്‍ക്കുക.</translation>
 <translation id="2870560284913253234">സൈറ്റ്</translation>
 <translation id="7543025879977230179"><ph name="PRODUCT_NAME"/> ഓപ്ഷനുകള്‍</translation>
@@ -268,7 +268,7 @@
 <translation id="7163503212501929773"><ph name="NUMBER_MANY"/> മണിക്കൂര്‍ ശേഷിക്കുന്നു</translation>
 <translation id="374530189620960299">സൈറ്റിന്റെ സുരക്ഷാ സര്‍ട്ടിഫിക്കറ്റ്‍ വിശ്വസ്തമല്ല!</translation>
 <translation id="5048040498971143039">'<ph name="SEARCH_STRING"/>' നുള്ള തിരയല്‍ ഫലങ്ങള്‍</translation>
-<translation id="5453632173748266363">Cyrillic</translation>
+<translation id="5453632173748266363">സിറിലിക്</translation>
 <translation id="5329858601952122676">&amp;ഇല്ലാതാക്കൂ</translation>
 <translation id="6100736666660498114">ആരംഭമെനു</translation>
 <translation id="1120098871254928930">എല്ലാ ഉള്ളടക്കവും ലോഡ് ചെയ്യാന്‍ അനുവദിക്കൂ</translation>
@@ -441,7 +441,7 @@
 <translation id="2496180316473517155">ബ്രൌസിംഗ് ചരിത്രം</translation>
 <translation id="602251597322198729">ഈ സൈറ്റ് ബഹുവിധ ഫയലുകള്‍ ഡൌണ്‍ലോഡ് ചെയ്യാന്‍ ശ്രമിച്ചു. നിങ്ങള്‍ക്കിത് അനുവദിക്കണോ?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> മണിക്കൂര്‍</translation>
-<translation id="6691936601825168937">&amp;കൈമാറൂ</translation>
+<translation id="6691936601825168937">&amp;മുന്നോട്ട്</translation>
 <translation id="7736284018483078792">സ്പെല്‍-ചെക്കര്‍ നിഘണ്ടുവിലെ സ്ഭാഷ മാറ്റുക.</translation>
 <translation id="2148716181193084225">ഇന്ന്</translation>
 <translation id="3574305903863751447"><ph name="CITY"/>, <ph name="STATE"/> <ph name="COUNTRY"/></translation>
@@ -484,9 +484,9 @@
 <translation id="1040471547130882189">Plug-in പ്രതികരിക്കുന്നില്ല</translation>
 <translation id="790025292736025802"><ph name="URL"/> കണ്ടെത്തിയില്ല</translation>
 <translation id="895347679606913382">ആരംഭിക്കുന്നു...</translation>
-<translation id="3319048459796106952">പുതിയ &amp;incognito വിന്‍ഡോ</translation>
+<translation id="3319048459796106952">പുതിയ &amp;അദൃശ്യ വിന്‍ഡോ</translation>
 <translation id="4195643157523330669">പുതിയ ടാബില്‍ തുറക്കുക</translation>
-<translation id="4178055285485194276">സ്റ്റാര്‍ട്ടപ്പില്‍‍:</translation>
+<translation id="4178055285485194276">തുടക്കത്തില്‍:</translation>
 <translation id="1154228249304313899">ഈ പേജ് തുറക്കുക:</translation>
 <translation id="3627588569887975815">അദൃ&amp;ശ്യ വിന്‍ഡോയിലെ ലിങ്ക് തുറക്കുക</translation>
 <translation id="5578327870501192725">നിങ്ങളുടെ <ph name="DOMAIN"/> ലേക്കുള്ള കണക്ഷന്‍ <ph name="BIT_COUNT"/>-ബിറ്റ് എന്‍‌ക്രിപ്ഷനുമായി എന്‍‌ക്രിപ്റ്റ് ചെയ്തിരിക്കുന്നു.</translation>
@@ -682,7 +682,7 @@
 <translation id="988159990683914416">വികാസക പതിപ്പ്</translation>
 <translation id="3705722231355495246">-</translation>
 <translation id="4268574628540273656">URL:</translation>
-<translation id="7481312909269577407">കൈമാറൂ</translation>
+<translation id="7481312909269577407">മുന്നോട്ട്</translation>
 <translation id="3759876923365568382"><ph name="NUMBER_FEW"/> ദിവസം‍ അവശേഷിക്കുന്നു</translation>
 <translation id="1664314758578115406">പേജ് ചേര്‍ക്കൂ...</translation>
 <translation id="4084682180776658562">ബുക്മാര്‍ക്ക്</translation>
