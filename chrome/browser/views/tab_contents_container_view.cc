@@ -118,8 +118,11 @@ void TabContentsContainerView::AboutToRequestFocusFromTabTraversal(
     bool reverse) {
   if (!tab_contents_)
     return;
+  WebContents* web_contents = tab_contents_->AsWebContents();
+  if (web_contents)
+    return;
   // Give an opportunity to the tab to reset its focus.
-  InterstitialPage* interstitial = tab_contents_->interstitial_page();
+  InterstitialPage* interstitial = web_contents->interstitial_page();
   if (interstitial) {
     interstitial->SetInitialFocus(reverse);
     return;
@@ -158,7 +161,11 @@ void TabContentsContainerView::Focus() {
   if (tab_contents_ && !tab_contents_->GetContentsRootView()) {
     // Set the native focus on the actual content of the tab, that is the
     // interstitial if one is showing.
-    InterstitialPage* interstitial = tab_contents_->interstitial_page();
+    WebContents* web_contents = tab_contents_->AsWebContents();
+    if (web_contents)
+      return;
+    // Give an opportunity to the tab to reset its focus.
+    InterstitialPage* interstitial = web_contents->interstitial_page();
     if (interstitial) {
       interstitial->Focus();
       return;
