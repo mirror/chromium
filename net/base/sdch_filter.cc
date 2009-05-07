@@ -98,8 +98,10 @@ SdchFilter::~SdchFilter() {
 
   switch (decoding_status_) {
     case DECODING_IN_PROGRESS: {
-      UMA_HISTOGRAM_PERCENTAGE("Sdch.Network_Decode_Ratio_a", static_cast<int>(
-          (filter_context().GetByteReadCount() * 100) / output_bytes_));
+      if (output_bytes_)
+        UMA_HISTOGRAM_PERCENTAGE("Sdch.Network_Decode_Ratio_a",
+            static_cast<int>(
+                (filter_context().GetByteReadCount() * 100) / output_bytes_));
       UMA_HISTOGRAM_CLIPPED_TIMES("Sdch.Network_Decode_Latency_F_a", duration,
                                   base::TimeDelta::FromMilliseconds(20),
                                   base::TimeDelta::FromMinutes(10), 100);
