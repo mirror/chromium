@@ -51,7 +51,7 @@ private:
 
 class TestInterstitialPage : public InterstitialPage {
  public:
-  TestInterstitialPage(TabContents* tab, bool new_navigation, const GURL& url)
+  TestInterstitialPage(WebContents* tab, bool new_navigation, const GURL& url)
       : InterstitialPage(tab, new_navigation, url),
         waiting_for_dom_response_(false) {
     std::wstring file_path;
@@ -405,8 +405,9 @@ IN_PROC_BROWSER_TEST_F(BrowserFocusTest, FocusTraversalOnInterstitial) {
 
   // Let's show an interstitial.
   TestInterstitialPage* interstitial_page =
-      new TestInterstitialPage(browser()->GetSelectedTabContents(),
-                               true, GURL("http://interstitial.com"));
+    new TestInterstitialPage(
+        browser()->GetSelectedTabContents()->AsWebContents(),
+        true, GURL("http://interstitial.com"));
   interstitial_page->Show();
   // Give some time for the interstitial to show.
   MessageLoop::current()->PostDelayedTask(FROM_HERE,
@@ -496,13 +497,14 @@ IN_PROC_BROWSER_TEST_F(BrowserFocusTest, InterstitialFocus) {
 
   // Page should have focus.
   EXPECT_EQ(browser_view->GetContentsView(), focus_manager->GetFocusedView());
-  EXPECT_TRUE(browser()->GetSelectedTabContents()->render_view_host()->view()->
-      HasFocus());
+  EXPECT_TRUE(browser()->GetSelectedTabContents()->AsWebContents()->
+              render_view_host()->view()->HasFocus());
 
   // Let's show an interstitial.
   TestInterstitialPage* interstitial_page =
-      new TestInterstitialPage(browser()->GetSelectedTabContents(),
-                               true, GURL("http://interstitial.com"));
+      new TestInterstitialPage(
+          browser()->GetSelectedTabContents()->AsWebContents(),
+          true, GURL("http://interstitial.com"));
   interstitial_page->Show();
   // Give some time for the interstitial to show.
   MessageLoop::current()->PostDelayedTask(FROM_HERE,
@@ -519,8 +521,8 @@ IN_PROC_BROWSER_TEST_F(BrowserFocusTest, InterstitialFocus) {
 
   // Focus should be back on the original page.
   EXPECT_EQ(browser_view->GetContentsView(), focus_manager->GetFocusedView());
-  EXPECT_TRUE(browser()->GetSelectedTabContents()->render_view_host()->view()->
-      HasFocus());
+  EXPECT_TRUE(browser()->GetSelectedTabContents()->AsWebContents()->
+              render_view_host()->view()->HasFocus());
 }
 
 // Make sure Find box can request focus, even when it is already open.
