@@ -9,7 +9,6 @@
 #include "base/logging.h"
 #include "chrome/browser/renderer_host/render_view_host.h"
 #include "chrome/browser/renderer_host/render_widget_host_view.h"
-#include "chrome/browser/tab_contents/interstitial_page.h"
 #include "chrome/browser/tab_contents/render_view_host_manager.h"
 #include "chrome/browser/tab_contents/tab_contents.h"
 #include "chrome/browser/tab_contents/web_contents.h"
@@ -118,15 +117,7 @@ void TabContentsContainerView::AboutToRequestFocusFromTabTraversal(
     bool reverse) {
   if (!tab_contents_)
     return;
-  WebContents* web_contents = tab_contents_->AsWebContents();
-  if (web_contents)
-    return;
   // Give an opportunity to the tab to reset its focus.
-  InterstitialPage* interstitial = web_contents->interstitial_page();
-  if (interstitial) {
-    interstitial->SetInitialFocus(reverse);
-    return;
-  }
   tab_contents_->SetInitialFocus(reverse);
 }
 
@@ -159,17 +150,7 @@ views::View* TabContentsContainerView::GetFocusTraversableParentView() {
 
 void TabContentsContainerView::Focus() {
   if (tab_contents_ && !tab_contents_->GetContentsRootView()) {
-    // Set the native focus on the actual content of the tab, that is the
-    // interstitial if one is showing.
-    WebContents* web_contents = tab_contents_->AsWebContents();
-    if (web_contents)
-      return;
-    // Give an opportunity to the tab to reset its focus.
-    InterstitialPage* interstitial = web_contents->interstitial_page();
-    if (interstitial) {
-      interstitial->Focus();
-      return;
-    }
+    // Set the native focus on the actual content of the tab.
     ::SetFocus(tab_contents_->GetContentNativeView());
   }
 }
