@@ -72,6 +72,7 @@
 <translation id="2994458892329442723">플러그인 활성화</translation>
 <translation id="1669397342410349095">피싱 웹사이트 신고하기...</translation>
 <translation id="1674989413181946727">컴퓨터 전체 SSL 설정:</translation>
+<translation id="1773709998578631869"><ph name="DOWNLOAD_COUNT"/>개의 다운로드가 진행 중입니다. 지금 Google 크롬을 닫으면 진행 중인 다운로드가 취소됩니다.</translation>
 <translation id="8703575177326907206"><ph name="DOMAIN"/>로의 연결은 암호화되지 않습니다.</translation>
 <translation id="1644574205037202324">방문한 페이지</translation>
 <translation id="2518917559152314023">추가(&amp;D)...</translation>
@@ -90,6 +91,7 @@
 <translation id="7751559664766943798">북마크바 항상 표시</translation>
 <translation id="7511635910912978956"><ph name="NUMBER_FEW"/>시간 남음</translation>
 <translation id="1720675772864601791">안전하지 않은 이미지 허용</translation>
+<translation id="2167276631610992935">자바스크립트</translation>
 <translation id="5233638681132016545">새 탭</translation>
 <translation id="5210365745912300556">탭 닫기</translation>
 <translation id="8806796506533854282">새 프로필 이름 입력</translation>
@@ -114,6 +116,7 @@
 <translation id="5912378097832178659">검색 엔진 수정(&amp;E)...</translation>
 <translation id="4813345808229079766">연결</translation>
 <translation id="411666854932687641">개별 메모리</translation>
+<translation id="119944043368869598">모두 삭제</translation>
 <translation id="4200983522494130825">새 탭(&amp;T)</translation>
 <translation id="5455790498993699893"><ph name="ACTIVE_MATCH"/>/<ph name="TOTAL_MATCHCOUNT"/></translation>
 <translation id="2303544859777878640">언어:</translation>
@@ -148,6 +151,7 @@
 <translation id="8507996248087185956"><ph name="NUMBER_DEFAULT"/>분</translation>
 <translation id="5296476177639202243">검색어 '<ph name="SEARCH_TEXT"/>'(와)과 일치하는 북마크가 없습니다.</translation>
 <translation id="939736085109172342">새 폴더</translation>
+<translation id="2009541932026160416">미리보기 이미지를 삭제하려면 <ph name="CROSS_IMAGE"/> 클릭</translation>
 <translation id="5641560969478423183">서버의 인증서가 URL과 일치하지 않음</translation>
 <translation id="121827551500866099">다운로드 항목 모두 표시...</translation>
 <translation id="3115147772012638511">캐시를 기다리는 중...</translation>
@@ -192,6 +196,7 @@
 <translation id="9189691339671500905">검색주소창에서 사용한 검색엔진을 설정합니다.</translation>
 <translation id="4571852245489094179">북마크 및 설정 가져오기</translation>
 <translation id="6514771739083339959">홈페이지:</translation>
+<translation id="4421917670248123270">닫기 및 다운로드 취소</translation>
 <translation id="5605623530403479164">기타 검색엔진</translation>
 <translation id="5710435578057952990">이 웹사이트의 주소가 확인되지 않았습니다.</translation>
 <translation id="5287240709317226393">쿠키 표시</translation>
@@ -203,6 +208,7 @@
 <translation id="4999762576397546063">Ctrl+<ph name="KEY_COMBO_NAME"/></translation>
 <translation id="3369624026883419694">호스트 알아내는 중...</translation>
 <translation id="3967132639560659870">다음 페이지에 여러 개의 SSL 오류가 있음:</translation>
+<translation id="175196451752279553">닫은 탭 다시 열기(&amp;E)</translation>
 <translation id="5039804452771397117">허용</translation>
 <translation id="2266011376676382776">페이지 응답없음</translation>
 <translation id="1805966933547717780">http://www.google.com/chrome/help/</translation>
@@ -241,6 +247,7 @@
 <translation id="358344266898797651">켈트어</translation>
 <translation id="5055518462594137986">이와 같은 유형의 모든 링크에 대해 내 선택을 기억합니다.</translation>
 <translation id="2870560284913253234">사이트</translation>
+<translation id="4164507027399414915">모든 삭제된 미리보기 이미지 복원</translation>
 <translation id="7543025879977230179"><ph name="PRODUCT_NAME"/> 옵션</translation>
 <translation id="2648845569394238430">검색:</translation>
 <translation id="2175607476662778685">빠른 실행 표시줄</translation>
@@ -287,6 +294,7 @@
 <translation id="8887733174653581061">항상 맨 위에 표시</translation>
 <translation id="610886263749567451">자바스크립트 알림</translation>
 <translation id="8413126021676339697">방문한 페이지 전체보기</translation>
+<translation id="8860923508273563464">다운로드가 완료될 때까지 대기</translation>
 <translation id="1823768272150895732">글꼴</translation>
 <translation id="4475552974751346499">다운로드 검색</translation>
 <translation id="1111153019813902504">최근 북마크</translation>
@@ -342,6 +350,7 @@
 <translation id="1181037720776840403">삭제</translation>
 <translation id="59174027418879706">활성화</translation>
 <translation id="8141503649579618569"><ph name="DOWNLOAD_RECEIVED"/>/<ph name="DOWNLOAD_TOTAL"/>, <ph name="TIME_LEFT"/></translation>
+<translation id="2534091581909016888"><ph name="SITE"/></translation>
 <translation id="6659594942844771486">탭</translation>
 <translation id="5452592754878692665">Google Gears 설정 변경</translation>
 <translation id="5316814419223884568">검색주소창에서 바로 검색</translation>
@@ -426,6 +435,7 @@
 <translation id="4002066346123236978">제목</translation>
 <translation id="9015241028623917394">현재 페이지 관리</translation>
 <translation id="7861215335140947162">다운로드(&amp;D)</translation>
+<translation id="5460429403253574028">미리보기 이미지 삭제</translation>
 <translation id="2505402373176859469"><ph name="TOTAL_SIZE"/>중 <ph name="RECEIVED_AMOUNT"/></translation>
 <translation id="6644512095122093795">비밀번호 저장 여부 확인</translation>
 <translation id="5384051050210890146">신뢰하는 SSL 인증서를 선택합니다.</translation>
@@ -577,6 +587,7 @@
 <translation id="9170848237812810038">실행 취소(&amp;U)</translation>
 <translation id="8135557862853121765"><ph name="NUM_KILOBYTES"/>K</translation>
 <translation id="4444364671565852729"><ph name="PRODUCT_NAME"/>이 <ph name="VERSION"/>로 업데이트되었습니다.</translation>
+<translation id="6483805311199035658"><ph name="FILE"/> 파일 여는 중...</translation>
 <translation id="9154176715500758432">이 페이지에 머무르기</translation>
 <translation id="5875565123733157100">버그 유형:</translation>
 <translation id="2440604414813129000">소스 보기(&amp;O)</translation>
