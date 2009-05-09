@@ -64,7 +64,8 @@ class NotifyNotDefaultBrowserTask : public Task {
         browser->GetSelectedTabContents()->AsWebContents();
     if (web_contents && !web_contents->IsInfoBarVisible()) {
       web_contents->GetInfoBarView()->
-          AddChildView(new DefaultBrowserInfoBar(browser->profile()));
+          AppendInfoBarItem(new DefaultBrowserInfoBar(browser->profile()),
+                            false);
       web_contents->SetInfoBarVisible(true);
     }  
   }
