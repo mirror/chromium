@@ -321,9 +321,49 @@ void RecordLaunchModeHistogram(LaunchMode mode) {
   UMA_HISTOGRAM_COUNTS_100("Launch.Modes", bucket);
 }
 
-}  // namespace
-
 static bool in_startup = false;
+
+bool LaunchBrowser(const CommandLine& command_line, Profile* profile,
+                   const std::wstring& cur_dir, bool process_startup,
+                   int* return_code, BrowserInit* browser_init) {
+  in_startup = process_startup;
+  DCHECK(profile);
+#ifdef FRAME_WINDOW
+  FrameWindow::Show(profile);
+  return true;
+#endif
+
+  // Continue with the off-the-record profile from here on if --incognito
+  if (command_line.HasSwitch(switches::kIncognito))
+    profile = profile->GetOffTheRecordProfile();
+
+  BrowserInit::LaunchWithProfile lwp(cur_dir, command_line, browser_init);
+  bool launched = lwp.Launch(profile, process_startup);
+  in_startup = false;
+
+  if (!launched) {
+    LOG(ERROR) << "launch error";
+    if (return_code)
+      *return_code = ResultCodes::INVALID_CMDLINE_URL;
+    return false;
+  }
+  return true;
+}
+
+#if defined(OS_WIN)
+GURL GetWelcomePageURL() {
+  std::wstring welcome_url = l10n_util::GetString(IDS_WELCOME_PAGE_URL);
+  return GURL(welcome_url);
+}
+#else
+GURL GetWelcomePageURL() {
+  // TODO(port): implement welcome page.
+  NOTIMPLEMENTED();
+  return GURL();
+}
+#endif
+
+}  // namespace
 
 // static
 bool BrowserInit::InProcessStartup() {
@@ -336,7 +376,17 @@ BrowserInit::LaunchWithProfile::LaunchWithProfile(
     const std::wstring& cur_dir,
     const CommandLine& command_line)
         : cur_dir_(cur_dir),
-          command_line_(command_line) {
+          command_line_(command_line),
+          browser_init_(NULL) {
+}
+
+BrowserInit::LaunchWithProfile::LaunchWithProfile(
+    const std::wstring& cur_dir,
+    const CommandLine& command_line,
+    BrowserInit* browser_init)
+        : cur_dir_(cur_dir),
+          command_line_(command_line),
+          browser_init_(browser_init) {
 }
 
 bool BrowserInit::LaunchWithProfile::Launch(Profile* profile,
@@ -536,26 +586,41 @@ std::vector<GURL> BrowserInit::LaunchWithProfile::GetURLsFromCommandLine(
 
 void BrowserInit::LaunchWithProfile::AddStartupURLs(
     std::vector<GURL>* startup_urls) const {
+  // If we have urls specified beforehand (i.e. from command line) use them
+  // and nothing else.
+  if (!startup_urls->empty())
+    return;
+  // If we have urls specified by the first run master preferences use them
+  // and nothing else.
+  if (browser_init_) {
+    if (!browser_init_->first_run_tabs_.empty()) {
+      std::vector<GURL>::iterator it = browser_init_->first_run_tabs_.begin();
+      while (it != browser_init_->first_run_tabs_.end()) {
+        // Replace magic names for the actual urls.
+        if (it->host() == "new_tab_page") {
+          startup_urls->push_back(GURL());
+        } else if (it->host() == "welcome_page") {
+          startup_urls->push_back(GetWelcomePageURL());
+        } else {
+          startup_urls->push_back(*it);
+        }
+        ++it;
+      }
+      browser_init_->first_run_tabs_.clear();
+      return;
+    }
+  }
+
   // Otherwise open at least the new tab page (and the welcome page, if this
   // is the first time the browser is being started), or the set of URLs
   // specified on the command line.
-  if (startup_urls->empty()) {
-    startup_urls->push_back(GURL());  // New tab page.
-    PrefService* prefs = g_browser_process->local_state();
-    if (prefs->IsPrefRegistered(prefs::kShouldShowWelcomePage) &&
-        prefs->GetBoolean(prefs::kShouldShowWelcomePage)) {
-      // Reset the preference so we don't show the welcome page next time.
-      prefs->ClearPref(prefs::kShouldShowWelcomePage);
-
-#if defined(OS_WIN)
-      // Add the welcome page.
-      std::wstring welcome_url = l10n_util::GetString(IDS_WELCOME_PAGE_URL);
-      startup_urls->push_back(GURL(welcome_url));
-#else
-      // TODO(port): implement welcome page.
-      NOTIMPLEMENTED();
-#endif
-    }
+  startup_urls->push_back(GURL());  // New tab page.
+  PrefService* prefs = g_browser_process->local_state();
+  if (prefs->IsPrefRegistered(prefs::kShouldShowWelcomePage) &&
+      prefs->GetBoolean(prefs::kShouldShowWelcomePage)) {
+    // Reset the preference so we don't show the welcome page next time.
+    prefs->ClearPref(prefs::kShouldShowWelcomePage);
+    startup_urls->push_back(GetWelcomePageURL());
   }
 }
 
@@ -571,9 +636,12 @@ void BrowserInit::LaunchWithProfile::CheckDefaultBrowser(Profile* profile) {
       new CheckDefaultBrowserTask(MessageLoop::current()));
 }
 
-bool BrowserInit::ProcessCommandLine(
-    const CommandLine& command_line, const std::wstring& cur_dir,
-    bool process_startup, Profile* profile, int* return_code) {
+bool BrowserInit::ProcessCmdLineImpl(const CommandLine& command_line,
+                                     const std::wstring& cur_dir,
+                                     bool process_startup,
+                                     Profile* profile,
+                                     int* return_code,
+                                     BrowserInit* browser_init) {
   DCHECK(profile);
   if (process_startup) {
     const std::wstring popup_count_string =
@@ -666,19 +734,9 @@ bool BrowserInit::ProcessCommandLine(
   // of an automation request), we are done here.
   if (!silent_launch) {
     return LaunchBrowser(command_line, profile, cur_dir, process_startup,
-                         return_code);
+                         return_code, browser_init);
   }
   return true;
-}
-
-bool BrowserInit::LaunchBrowser(const CommandLine& command_line,
-                                Profile* profile, const std::wstring& cur_dir,
-                                bool process_startup, int* return_code) {
-  in_startup = process_startup;
-  bool result = LaunchBrowserImpl(command_line, profile, cur_dir,
-                                  process_startup, return_code);
-  in_startup = false;
-  return result;
 }
 
 template <class AutomationProviderClass>
@@ -694,27 +752,4 @@ void BrowserInit::CreateAutomationProvider(const std::wstring& channel_id,
       g_browser_process->InitAutomationProviderList();
   DCHECK(list);
   list->AddProvider(automation);
-}
-
-bool BrowserInit::LaunchBrowserImpl(const CommandLine& command_line,
-                                    Profile* profile,
-                                    const std::wstring& cur_dir,
-                                    bool process_startup,
-                                    int* return_code) {
-  DCHECK(profile);
-
-  // Continue with the off-the-record profile from here on if --incognito
-  if (command_line.HasSwitch(switches::kIncognito))
-    profile = profile->GetOffTheRecordProfile();
-
-  LaunchWithProfile lwp(cur_dir, command_line);
-  bool launched = lwp.Launch(profile, process_startup);
-  if (!launched) {
-    LOG(ERROR) << "launch error";
-    if (return_code != NULL)
-      *return_code = ResultCodes::INVALID_CMDLINE_URL;
-    return false;
-  }
-
-  return true;
 }

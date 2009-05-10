@@ -181,6 +181,24 @@ void RunUIMessageLoop(BrowserProcess* browser_process) {
 #endif
 }
 
+#if defined(OS_WIN)
+void AddFirstRunNewTabs(BrowserInit* browser_init,
+                        const std::vector<std::wstring>& new_tabs) {
+  std::vector<std::wstring>::const_iterator it = new_tabs.begin();
+  while (it != new_tabs.end()) {
+    GURL url(*it);
+    if (url.is_valid())
+      browser_init->AddFirstRunTab(url);
+    ++it;
+  }
+}
+#else
+// TODO(cpu): implement first run experience for other platforms.
+void AddFirstRunNewTabs(BrowserInit* browser_init,
+                        const std::vector<std::wstring>& new_tabs) {
+}
+#endif
+
 }  // namespace
 
 // Main routine for running as the Browser process.
@@ -301,12 +319,19 @@ int BrowserMain(const MainFunctionParams& parameters) {
     ResourceBundle::GetSharedInstance().LoadThemeResources();
   }
 
+  BrowserInit browser_init;
+
   if (is_first_run) {
     // On first run, we  need to process the master preferences before the
     // browser's profile_manager object is created, but after ResourceBundle
     // is initialized.
+    std::vector<std::wstring> first_run_tabs;
     first_run_ui_bypass =
-        !FirstRun::ProcessMasterPreferences(user_data_dir, FilePath(), NULL);
+        !FirstRun::ProcessMasterPreferences(user_data_dir, FilePath(), NULL,
+                                            &first_run_tabs);
+    // The master prefs might specify a set of urls to display.
+    if (first_run_tabs.size())
+      AddFirstRunNewTabs(&browser_init, first_run_tabs);
 
     // If we are running in App mode, we do not want to show the importer
     // (first run) UI.
@@ -549,26 +574,28 @@ int BrowserMain(const MainFunctionParams& parameters) {
 #endif
 
   HandleErrorTestParameters(parsed_command_line);
-
   RecordBreakpadStatusUMA(metrics);
-
-  // Start up the extensions service.
-  // This should happen before ProcessCommandLine.
+  // Start up the extensions service. This should happen before Start().
   profile->InitExtensions();
 
-  // Call Recycle() here as late as possible, just before going into the main
-  // loop. We can't do it any earlier, as ProcessCommandLine() will add things
-  // to it in the act of creating the initial browser window.
   int result_code = ResultCodes::NORMAL_EXIT;
   if (parameters.ui_task) {
-    if (pool) pool->Recycle();
+    // We are in test mode. Run one task and enter the main message loop.
+    if (pool)
+      pool->Recycle();
     MessageLoopForUI::current()->PostTask(FROM_HERE, parameters.ui_task);
     RunUIMessageLoop(browser_process.get());
-  } else if (BrowserInit::ProcessCommandLine(parsed_command_line,
-                                             std::wstring(), true, profile,
-                                             &result_code)) {
-    if (pool) pool->Recycle();
-    RunUIMessageLoop(browser_process.get());
+  } else {
+    // We are in regular browser boot sequence. Open initial stabs and enter
+    // the main message loop.
+    if (browser_init.Start(parsed_command_line, std::wstring(), profile,
+                           &result_code)) {
+      // Call Recycle() here as late as possible, before going into the loop
+      // because Start() will add things to it while creating the main window.
+      if (pool)
+        pool->Recycle();
+      RunUIMessageLoop(browser_process.get());
+    }
   }
 
   Platform::WillTerminate();
