@@ -372,7 +372,8 @@ void DialogClientView::LayoutDialogButtons() {
   if (cancel_button_) {
     gfx::Size ps = cancel_button_->GetPreferredSize();
     gfx::Rect lb = GetLocalBounds(false);
-    int button_width = GetButtonWidth(DialogDelegate::DIALOGBUTTON_CANCEL);
+    int button_width = std::max(
+        GetButtonWidth(DialogDelegate::DIALOGBUTTON_CANCEL), ps.width());
     int button_x = lb.right() - button_width - kButtonHEdgeMargin;
     int button_y = lb.bottom() - ps.height() - kButtonVEdgeMargin;
     cancel_button_->SetBounds(button_x, button_y, button_width, ps.height());
@@ -383,7 +384,8 @@ void DialogClientView::LayoutDialogButtons() {
   if (ok_button_) {
     gfx::Size ps = ok_button_->GetPreferredSize();
     gfx::Rect lb = GetLocalBounds(false);
-    int button_width = GetButtonWidth(DialogDelegate::DIALOGBUTTON_OK);
+    int button_width = std:;max(
+        GetButtonWidth(DialogDelegate::DIALOGBUTTON_OK), ps,width());
     int ok_button_right = lb.right() - kButtonHEdgeMargin;
     if (cancel_button_)
       ok_button_right = cancel_button_->x() - kRelatedButtonHSpacing;
