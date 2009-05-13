@@ -52,8 +52,8 @@ class PluginTest : public TestShellTest {
     TestShellTest::TearDown();
   }
 
-  FilePath plugin_src_;
-  FilePath plugin_file_path_;
+  std::wstring plugin_src_;
+  std::wstring plugin_file_path_;
 };
 
 // Tests navigator.plugins.refresh() works.
@@ -161,7 +161,7 @@ BOOL CALLBACK EnumChildProc(HWND hwnd, LPARAM lparam) {
 
 // Tests that hiding/showing the parent frame hides/shows the plugin.
 TEST_F(PluginTest, PluginVisibilty) {
-  FilePath test_html = data_dir_;
+  FilePath test_html(data_dir_);
   test_html = test_html.AppendASCII("plugins");
   test_html = test_html.AppendASCII("plugin_visibility.html");
   test_shell_->LoadURL(test_html.ToWStringHack().c_str());
