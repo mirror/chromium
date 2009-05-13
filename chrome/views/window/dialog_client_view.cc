@@ -385,7 +385,7 @@ void DialogClientView::LayoutDialogButtons() {
     gfx::Size ps = ok_button_->GetPreferredSize();
     gfx::Rect lb = GetLocalBounds(false);
     int button_width = std::max(
-        GetButtonWidth(DialogDelegate::DIALOGBUTTON_OK), ps,width());
+        GetButtonWidth(DialogDelegate::DIALOGBUTTON_OK), ps.width());
     int ok_button_right = lb.right() - kButtonHEdgeMargin;
     if (cancel_button_)
       ok_button_right = cancel_button_->x() - kRelatedButtonHSpacing;
