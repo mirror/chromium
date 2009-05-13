@@ -2373,20 +2373,19 @@ void Browser::ProcessPendingUIUpdates() {
       window()->GetLocationBar()->UpdateFeedIcon();
 
     // Updating the URL happens synchronously in ScheduleUIUpdate.
-
-    if (flags & TabContents::INVALIDATE_LOAD && GetStatusBubble())
-      GetStatusBubble()->SetStatus(GetSelectedTabContents()->GetStatusText());
+    TabContents* selected_tab = GetSelectedTabContents();
+    if (selected_tab && flags & TabContents::INVALIDATE_LOAD && GetStatusBubble())
+      GetStatusBubble()->SetStatus(selected_tab->GetStatusText());
 
     if (invalidate_tab) {  // INVALIDATE_TITLE or INVALIDATE_FAVICON.
       tabstrip_model_.UpdateTabContentsStateAt(
           tabstrip_model_.GetIndexOfController(contents->controller()), false);
       window_->UpdateTitleBar();
 
-      if (contents == GetSelectedTabContents()) {
-        TabContents* current_tab = GetSelectedTabContents();
+      if (selected_tab && contents == selected_tab) {
         command_updater_.UpdateCommandEnabled(IDC_CREATE_SHORTCUTS,
-            current_tab->type() == TAB_CONTENTS_WEB &&
-            !current_tab->GetFavIcon().isNull());
+            selected_tab->type() == TAB_CONTENTS_WEB &&
+            !selected_tab->GetFavIcon().isNull());
       }
     }
 
