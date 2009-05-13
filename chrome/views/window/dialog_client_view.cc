@@ -299,6 +299,26 @@ gfx::Size DialogClientView::GetPreferredSize() {
       button_height = ok_button_->height();
     // Account for padding above and below the button.
     button_height += kDialogButtonContentSpacing + kButtonVEdgeMargin;
+
+    // Make sure the view is sized to the buttons' width if they are wider than
+    // the contents.
+    int width = 0;
+    if (cancel_button_)
+      width += GetButtonWidth(DialogDelegate::DIALOGBUTTON_CANCEL);
+    if (ok_button_) {
+      width += GetButtonWidth(DialogDelegate::DIALOGBUTTON_OK);
+      if (cancel_button_)
+        width += kRelatedButtonHSpacing;
+    }
+    if (extra_view_) {
+      width += extra_view_->GetPreferredSize().width();
+      if (cancel_button_ || ok_button_)
+        width += kRelatedButtonHSpacing;
+    }
+    if (width > 0) {
+      width += 2 * kButtonHEdgeMargin;
+      prefsize.set_width(std::max(prefsize.width(), width));
+    }
   }
   prefsize.Enlarge(0, button_height);
   return prefsize;
