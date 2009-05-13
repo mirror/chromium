@@ -2464,6 +2464,14 @@ void* V8Proxy::ToNativeObjectImpl(V8ClassIndex::V8WrapperType type,
   return DOMWrapperToNative<void>(object);
 }
 
+void* V8Proxy::ToSVGPODTypeImpl(V8ClassIndex::V8WrapperType type,
+                                v8::Handle<v8::Value> object) {
+  return IsWrapperOfType(object, type)
+      ? DOMWrapperToNative<void>(object)
+      : NULL;
+}
+
+
 v8::Handle<v8::Object> V8Proxy::LookupDOMWrapper(
     V8ClassIndex::V8WrapperType type, v8::Handle<v8::Value> value)
 {
