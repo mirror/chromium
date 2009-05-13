@@ -59,7 +59,7 @@ PfxEntry::~PfxEntry()
     appnd = NULL;
     strip = NULL;
     if (opts & aeUTF8) {
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < numconds; i++) {
             if (conds.utf8.wchars[i]) free(conds.utf8.wchars[i]);
         }
     }

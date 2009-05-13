@@ -3780,7 +3780,12 @@ int  AffixMgr::parse_affix(char * line, const char at, FILE * af, char * dupflag
                        ptr = (struct affentry *) malloc(numents * sizeof(struct affentry));
                        if (!ptr) return 1;
                        ptr->opts = ff;
-                       if (utf8) ptr->opts += aeUTF8;
+                       if (utf8) {
+                           ptr->opts += aeUTF8;
+                           for (int i = 0; i < numents; ++i)
+                               for (int j = 0; j < 8; ++j)
+                                   ptr[i].conds.utf8.wlen[j] = 0;
+                       }
                        if (pHMgr->is_aliasf()) ptr->opts += aeALIASF;
 #ifdef HUNSPELL_EXPERIMENTAL
                        if (pHMgr->is_aliasm()) ptr->opts += aeALIASM;
