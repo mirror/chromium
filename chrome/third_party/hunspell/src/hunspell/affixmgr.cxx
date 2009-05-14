@@ -1139,6 +1139,12 @@ int AffixMgr::encodeit(struct affentry * ptr, char * cs)
          neg = 0;
       }
       n++;
+      if (n > 8) {
+        HUNSPELL_WARNING(stderr, "Number of conditions is larger than 8. This"
+            "version of Hunspell does not support more than 8 conditions."
+            "Please, get rid of affentries with more than 8 conditions.");
+        break;
+      }
       ec = 0;
       neg = 0;
     }  
@@ -3777,15 +3783,10 @@ int  AffixMgr::parse_affix(char * line, const char at, FILE * af, char * dupflag
                            free(err);
                            return 1;
                        }
-                       ptr = (struct affentry *) malloc(numents * sizeof(struct affentry));
+                       ptr = (struct affentry *) calloc(numents, sizeof(struct affentry));
                        if (!ptr) return 1;
                        ptr->opts = ff;
-                       if (utf8) {
-                           ptr->opts += aeUTF8;
-                           for (int i = 0; i < numents; ++i)
-                               for (int j = 0; j < 8; ++j)
-                                   ptr[i].conds.utf8.wlen[j] = 0;
-                       }
+                       if (utf8) ptr->opts += aeUTF8;
                        if (pHMgr->is_aliasf()) ptr->opts += aeALIASF;
 #ifdef HUNSPELL_EXPERIMENTAL
                        if (pHMgr->is_aliasm()) ptr->opts += aeALIASM;

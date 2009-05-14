@@ -59,9 +59,7 @@ PfxEntry::~PfxEntry()
     appnd = NULL;
     strip = NULL;
     if (opts & aeUTF8) {
-        // For an unknown reason, numconds is sometimes larger than 8.
-        int nconds = numconds < 8 ? numconds : 8;
-        for (int i = 0; i < nconds; i++) {
+        for (int i = 0; i < numconds; i++) {
             if (conds.utf8.wchars[i]) free(conds.utf8.wchars[i]);
         }
     }
@@ -398,9 +396,7 @@ SfxEntry::~SfxEntry()
     appnd = NULL;
     strip = NULL;    
     if (opts & aeUTF8) {
-        // For an unknown reason, numconds is sometimes larger than 8.
-        int nconds = numconds < 8 ? numconds : 8;
-        for (int i = 0; i < nconds; i++) {
+        for (int i = 0; i < numconds; i++) {
             if (conds.utf8.wchars[i]) free(conds.utf8.wchars[i]);  
         }
     }
