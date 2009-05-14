@@ -85,7 +85,7 @@
 <translation id="3512466011168167042">வழிச்செலுத்து பிழைகளுக்கான பரிந்துரைகளைக் காண்பி</translation>
 <translation id="7767960058630128695">கடவுச்சொற்கள்:</translation>
 <translation id="6518014396551869914">படத்தை நகலெ&amp;டு</translation>
-<translation id="4120898696391891645">பக்கம் நினைவேறாது</translation>
+<translation id="4120898696391891645">பக்கம் நினைவேறவில்லை</translation>
 <translation id="5584537427775243893">இறக்குமதி செய்கிறது</translation>
 <translation id="4181841719683918333">மொழிகள்</translation>
 <translation id="6451650035642342749">தானாக திறத்தல் அமைப்புகளை சுத்தமாக்கு</translation>
@@ -154,7 +154,7 @@
 <translation id="8507996248087185956"><ph name="NUMBER_DEFAULT"/> நிமிடங்கள்</translation>
 <translation id="5296476177639202243">'<ph name="SEARCH_TEXT"/>' வினவலுக்கு பொருத்தமான புக்மார்க்குகள் இல்லை.</translation>
 <translation id="939736085109172342">புதிய கோப்புறை</translation>
-<translation id="2009541932026160416">சிறுபடவுரு நீக்க <ph name="CROSS_IMAGE"/> ஐக் கிளிக் செய்க</translation>
+<translation id="2009541932026160416">சிறுபடவுருவை நீக்க <ph name="CROSS_IMAGE"/> ஐக் கிளிக் செய்க</translation>
 <translation id="5641560969478423183">சர்வரின் சான்றிதழ் URL உடன் பொருந்தாது</translation>
 <translation id="121827551500866099">அனைத்து பதிவிறக்கங்களையும் காண்பி…</translation>
 <translation id="3115147772012638511">தேக்ககத்திற்காக காத்திருக்கிறது...</translation>
@@ -480,7 +480,7 @@
 <translation id="2496180316473517155">உலாவல் வரலாறு</translation>
 <translation id="602251597322198729">பல கோப்புகளை பதிவிறக்க, இந்த தளம் முயற்சி செய்கிறது. இதனை அனுமதிக்க விரும்புகிறீர்களா?</translation>
 <translation id="2052389551707911401"><ph name="NUMBER_MANY"/> மணிநேரம்</translation>
-<translation id="6691936601825168937">&amp;முன்னுப்பு</translation>
+<translation id="6691936601825168937">&amp;அடுத்த பக்கம்</translation>
 <translation id="7736284018483078792">எழுத்துப் பிழை சரிபார்ப்பு அகராதியின் மொழியை மாற்று.</translation>
 <translation id="2148716181193084225">இன்று</translation>
 <translation id="3574305903863751447"><ph name="CITY"/>, <ph name="STATE"/> <ph name="COUNTRY"/></translation>
@@ -502,7 +502,7 @@
 <translation id="8187473050234053012">சர்வரின் பாதுகாப்பு சான்றிதழ் திரும்பப் பெறப்பட்டது!</translation>
 <translation id="152482086482215392">இன்னும் <ph name="NUMBER_ONE"/> நொடிகள் உள்ளன</translation>
 <translation id="8447116497070723931">PgUp</translation>
-<translation id="1970746430676306437">பக்கத்தின் &amp;தகவலைக் காண்</translation>
+<translation id="1970746430676306437">பக்கத்தின் &amp;தகவலைக் காட்டு</translation>
 <translation id="4588090240171750605">வலப்புறம் உருட்டு</translation>
 <translation id="8940262601983387853">குக்கீ பெயர்</translation>
 <translation id="8053959338015477773">இந்த பக்கத்தில் உள்ள சில கூறுகளைக் காண்பிக்க, ஒரு கூடுதல் செருகுநிரல் தேவைப்படுகிறது.</translation>
@@ -716,7 +716,7 @@
 <translation id="6886871292305414135">இணைப்பை புதிய &amp;தாவலில் திற</translation>
 <translation id="6308937455967653460">இணை&amp;ப்பை இவ்வாறு சேமி…</translation>
 <translation id="5421136146218899937">உலாவல் தரவை அழி...</translation>
-<translation id="3943582379552582368">&amp;முந்தைய</translation>
+<translation id="3943582379552582368">&amp;முந்தைய பக்கம்</translation>
 <translation id="7607002721634913082">இடைநிறுத்தப்பட்டது</translation>
 <translation id="480990236307250886">முகப்புப் பக்கத்தைத் திற</translation>
 <translation id="5906719743126878045">இன்னும் <ph name="NUMBER_TWO"/> மணிநேரம் உள்ளது</translation>

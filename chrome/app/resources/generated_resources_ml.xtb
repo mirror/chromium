@@ -53,9 +53,9 @@
 <translation id="5463275305984126951"><ph name="LOCATION"/> ന്റെ സൂചിക</translation>
 <translation id="5154917547274118687">മെമ്മറി</translation>
 <translation id="873849583815421063">അവസാനിപ്പിക്കുന്നു...</translation>
-<translation id="5819484510464120153">ആ‍പ്ലിക്കേഷനുകളും &amp;കുറുക്കുവഴികളും സൃഷ്ടിക്കൂ...</translation>
+<translation id="5819484510464120153">അപ്ലിക്കേഷനുകളും കുറുക്കുവഴികളും സൃഷ്ടിക്കൂ...</translation>
 <translation id="1748246833559136615">ഉപേക്ഷിക്കുക</translation>
-<translation id="8927064607636892008">ഈ വെബ്പേജ് പ്രദര്‍ശിപ്പിക്കുമ്പോള്‍ ചിലതെറ്റുകള്‍ സംഭവിക്കുന്നു. തുടരുവാന്‍, റീലോഡ് അമര്‍ത്തുക അല്ലെങ്കില്‍  മറ്റ് പേജിലേക്ക് പോകുക.</translation>
+<translation id="8927064607636892008">ഈ വെബ് പേജ് പ്രദര്‍ശിപ്പിക്കുമ്പോള്‍ ചില തെറ്റുകള്‍ സംഭവിക്കുന്നു. തുടരുവാന്‍, റീലോഡ് അമര്‍ത്തുക അല്ലെങ്കില്‍ മറ്റൊരു പേജിലേയ്ക്ക് പോവുക.</translation>
 <translation id="5667293444945855280">ക്ഷുദ്രവെയര്‍‌</translation>
 <translation id="5613020302032141669">ഇടത് ആരോ അടയാളം</translation>
 <translation id="3433489605821183222">സെര്‍വറിന്റെ സര്‍ട്ടിഫിക്കറ്റില്‍ പിശകുകള്‍ ഉള്‍പ്പെടുന്നു</translation>
@@ -276,7 +276,7 @@
 <ph name="BEGIN_LIST_ITEM"/>രഹസ്യ ഏജന്റുമാരുടെ കാവല്‍<ph name="END_LIST_ITEM"/>
 <ph name="BEGIN_LIST_ITEM"/>ആളുകള്‍ നിങ്ങള്‍ക്ക് പുറകില്‍ നില്‍ക്കുകയാണ്<ph name="END_LIST_ITEM"/>
 <ph name="END_LIST"/>
-<ph name="BEGIN_LINK"/>കൂടുതല്‍ മനസിലാക്കുക<ph name="END_LINK"/>വേഷപ്രച്ഛന്ന ബ്രൌസിംഗിനെക്കുറിച്ച്.</translation>
+<ph name="BEGIN_LINK"/>വേഷപ്രച്ഛന്ന ബ്രൌസിംഗിനെക്കുറിച്ച്<ph name="END_LINK"/> കൂടുതല്‍ മനസിലാക്കുക.</translation>
 <translation id="4439241094464540230">&lt;പുതിയ പ്രൊഫൈല്‍&gt;...</translation>
 <translation id="1813414402673211292">ബ്രൌസിംഗ് ഡാറ്റാ മായ്ക്കുക...</translation>
 <translation id="2356762928523809690">അപ്‌ഡേറ്റ് സെര്‍വര്‍ ലഭ്യമല്ല (പിശക്: <ph name="ERROR_NUMBER"/>)</translation>
@@ -516,7 +516,7 @@
 <translation id="2822854841007275488">അറബിക്</translation>
 <translation id="2815448242176260024">പാസ്‌വേഡുകള്‍ ഒരിക്കലും സംരക്ഷിക്കരുത്</translation>
 <translation id="2666092431469916601">മുകളിലേക്ക്</translation>
-<translation id="4047498523333824092">അവസാനം തുറന്ന പേജുകള്‍ പുന:സംഭരിക്കുക</translation>
+<translation id="4047498523333824092">അവസാനം തുറന്ന പേജുകള്‍ പുനഃസംഭരിക്കുക</translation>
 <translation id="6503077044568424649">കൂടുതല്‍ സന്ദര്‍ശിച്ചത്</translation>
 <translation id="1040471547130882189">Plug-in പ്രതികരിക്കുന്നില്ല</translation>
 <translation id="790025292736025802"><ph name="URL"/> കണ്ടെത്തിയില്ല</translation>
@@ -648,7 +648,7 @@
 <translation id="9065203028668620118">എഡിറ്റ്‌ചെയ്യൂ</translation>
 <translation id="4867297348137739678">കഴിഞ്ഞ ആഴ്ച്ച</translation>
 <translation id="4881695831933465202">തുറക്കുക</translation>
-<translation id="5981759340456370804">ഏകബുദ്ധികള്‍ക്കായുള്ള സ്ഥിതി</translation>
+<translation id="5981759340456370804">വാശിക്കാര്‍ക്കുള്ള സ്ഥിതി</translation>
 <translation id="6644971472240498405"><ph name="NUMBER_ONE"/> ദിവസം</translation>
 <translation id="6512448926095770873">ഈ പേജ് വിടുക</translation>
 <translation id="5607455023223000189">പ്ലഗ്-ഇന്നുകള്‍‍ ഇന്‍സ്റ്റോള്‍ ചെയ്തു</translation>
@@ -704,7 +704,7 @@
 <translation id="116506693382293616">ഈ പേജിലെ ചില ഘടകങ്ങള്‍ SSL പിശകുകളുമായുള്ള കണക്ഷനു മേല്‍ വീണ്ടും തിരിച്ചെടുത്തു.</translation>
 <translation id="7887455386323777409">പ്ലഗ്-ഇന്‍ ഇല്ലാതാക്കുക</translation>
 <translation id="3761000923495507277">ടൂള്‍ബാറിലെ ഹോംബട്ടണ്‍ കാണിക്കുക</translation>
-<translation id="8709969075297564489">സര്‍വര്‍ സര്‍ട്ടിഫിക്കറ്റ് അസാധുവായതിനെ പരിശോധിക്കുക</translation>
+<translation id="8709969075297564489">സെര്‍വര്‍ സര്‍ട്ടിഫിക്കറ്റ് അസാധുവായത് പരിശോധിക്കുക</translation>
 <translation id="8698171900303917290">ഇന്‍‌സ്റ്റാള്‍‌ ചെയ്യുന്നതിന് പ്രശ്‌നങ്ങളെന്തെങ്കിലും‍?</translation>
 <translation id="2552545117464357659">ഏറ്റവും പുതിയ</translation>
 <translation id="5869522115854928033">സംരക്ഷിച്ച പാസ്‌വേഡുകള്‍</translation>
@@ -772,7 +772,7 @@
 <translation id="1038842779957582377">അജ്ഞാത നാമം</translation>
 <translation id="5327248766486351172">നാമം</translation>
 <translation id="8989148748219918422"><ph name="ORGANIZATION"/> [<ph name="COUNTRY"/>]</translation>
-<translation id="3037605927509011580">ഓ, സ്നാപ്!</translation>
+<translation id="3037605927509011580">കഷ്ടം!</translation>
 <translation id="1918141783557917887">&amp;വളരെ ചെറുത്</translation>
 <translation id="4065006016613364460">URLഇമേജ് പ&amp;കര്‍ത്തൂ</translation>
 <translation id="6965382102122355670">ശരി</translation>
