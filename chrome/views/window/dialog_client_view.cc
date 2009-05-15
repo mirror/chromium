@@ -303,10 +303,15 @@ gfx::Size DialogClientView::GetPreferredSize() {
     // Make sure the view is sized to the buttons' width if they are wider than
     // the contents.
     int width = 0;
-    if (cancel_button_)
-      width += GetButtonWidth(DialogDelegate::DIALOGBUTTON_CANCEL);
+    if (cancel_button_) {
+      gfx::Size ps = cancel_button_->GetPreferredSize();
+      width += std::max(
+          GetButtonWidth(DialogDelegate::DIALOGBUTTON_CANCEL), ps.width());
+    }
     if (ok_button_) {
-      width += GetButtonWidth(DialogDelegate::DIALOGBUTTON_OK);
+      gfx::Size ps = ok_button_->GetPreferredSize();
+      width += std::max(
+          GetButtonWidth(DialogDelegate::DIALOGBUTTON_OK), ps.width());
       if (cancel_button_)
         width += kRelatedButtonHSpacing;
     }
