@@ -133,14 +133,14 @@
 <translation id="2663762871503078613">ייבא:</translation>
 <translation id="1635247229519770914">המשך בהתקנה</translation>
 <translation id="8945419807169257367">לא ניתן לבדוק את אישור השרת</translation>
-<translation id="5872213955895293073">פתור באגים ב-JavaScript</translation>
+<translation id="5872213955895293073">Debug JavaScript</translation>
 <translation id="1965338962645102116">כדי לייבא סימניות סרגל כלים ל-Chrome, עליך להיות מחובר לחשבון Google. התחבר ונסה לייבא שוב.</translation>
 <translation id="5903264686717710770">כותרת:</translation>
 <translation id="8899851313684471736">פתח קישור &amp;בחלון חדש</translation>
 <translation id="6686490380836145850">סגור את הכרטיסיות משמאל</translation>
 <translation id="5608669887400696928"><ph name="NUMBER_DEFAULT"/> שעות</translation>
 <translation id="3990502903496589789">קצה ימני</translation>
-<translation id="5303890401939113396">פותר באגים ב-JavaScript - נקטע</translation>
+<translation id="5303890401939113396">JavaScript Debugger - נקטע</translation>
 <translation id="2423578206845792524">שמ&amp;ור תמונה בשם...</translation>
 <translation id="9068931793451030927">נתיב:</translation>
 <translation id="7052402604161570346">סוג קובץ זה יכול לגרום נזק למחשב שלך. האם אתה בטוח שברצונך להוריד <ph name="FILE_NAME"/>?</translation>
@@ -327,7 +327,7 @@
 <translation id="6447842834002726250">קבצי cookie</translation>
 <translation id="5170568018924773124">הצג בתיקייה</translation>
 <translation id="2674170444375937751">האם אתה בטוח שברצונך להסיר דפים אלו מההיסטוריה שלך?</translation>
-<translation id="7334704644505105275">פותר הבאגים JavaScript - תפוס</translation>
+<translation id="7334704644505105275">JavaScript Debugger - תפוס</translation>
 <translation id="7629827748548208700">כרטיסייה: <ph name="TAB_NAME"/></translation>
 <translation id="8028993641010258682">גודל</translation>
 <translation id="1383876407941801731">חיפוש</translation>
@@ -793,5 +793,5 @@ Del</translation>
 <translation id="4477534650265381513">לגישה מהירה מקם את הסימניות שלך כאן, בסרגל הסימניות</translation>
 <translation id="8328145009876646418">קצה שמאלי</translation>
 <translation id="406259880812417922">(מילת מפתח: <ph name="KEYWORD"/>)</translation>
-<translation id="2437750561138919253">פותר באגים ב-JavaScript - פעיל</translation>
+<translation id="2437750561138919253">JavaScript Debugger - פועל</translation>
 </translationbundle>
