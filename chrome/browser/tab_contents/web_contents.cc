@@ -45,7 +45,6 @@
 #include "net/base/mime_util.h"
 #include "net/base/net_errors.h"
 #include "net/base/registry_controlled_domain.h"
-#include "webkit/glue/feed.h"
 #include "webkit/glue/webkit_glue.h"
 
 #if defined(OS_WIN)
@@ -865,29 +864,6 @@ void WebContents::UpdateTitle(RenderViewHost* rvh,
   // Broadcast notifications when the UI should be updated.
   if (entry == controller()->GetEntryAtOffset(0))
     NotifyNavigationStateChanged(INVALIDATE_TITLE);
-}
-
-void WebContents::UpdateFeedList(
-    RenderViewHost* rvh, const ViewHostMsg_UpdateFeedList_Params& params) {
-  if (!controller())
-    return;
-
-  // We might have an old RenderViewHost sending messages, and we should ignore
-  // those messages.
-  if (rvh != render_view_host())
-    return;
-
-  NavigationEntry* entry = controller()->GetEntryWithPageID(type(),
-                                                            GetSiteInstance(),
-                                                            params.page_id);
-  if (!entry)
-    return;
-
-  entry->set_feedlist(params.feedlist);
-
-  // Broadcast notifications when the UI should be updated.
-  if (entry == controller()->GetEntryAtOffset(0))
-    NotifyNavigationStateChanged(INVALIDATE_FEEDLIST);
 }
 
 void WebContents::UpdateEncoding(RenderViewHost* render_view_host,

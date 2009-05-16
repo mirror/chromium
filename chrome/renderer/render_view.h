@@ -27,7 +27,6 @@
 #include "testing/gtest/include/gtest/gtest_prod.h"
 #include "webkit/glue/console_message_level.h"
 #include "webkit/glue/dom_serializer_delegate.h"
-#include "webkit/glue/feed.h"
 #include "webkit/glue/form_data.h"
 #include "webkit/glue/password_form_dom_manager.h"
 #include "webkit/glue/webaccessibilitymanager.h"
@@ -452,9 +451,6 @@ class RenderView : public RenderWidget,
   // Adds search provider from the given OpenSearch description URL as a
   // keyword search.
   void AddGURLSearchProvider(const GURL& osd_url, bool autodetected);
-
-  // Update the feed list.
-  void UpdateFeedList(scoped_refptr<FeedList> feedlist);
 
   // Tells the browser process to navigate to a back/forward entry at the given
   // offset from current.

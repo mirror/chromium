@@ -789,7 +789,6 @@ void RenderViewHost::OnMessageReceived(const IPC::Message& msg) {
                         OnQueryFormFieldAutofill)
     IPC_MESSAGE_HANDLER(ViewHostMsg_RemoveAutofillEntry,
                         OnRemoveAutofillEntry)
-    IPC_MESSAGE_HANDLER(ViewHostMsg_UpdateFeedList, OnMsgUpdateFeedList)
     IPC_MESSAGE_HANDLER(ViewHostMsg_ExtensionRequest, OnExtensionRequest)
     // Have the super handle all other messages.
     IPC_MESSAGE_UNHANDLED(RenderWidgetHost::OnMessageReceived(msg))
@@ -926,11 +925,6 @@ void RenderViewHost::OnMsgUpdateState(int32 page_id,
 void RenderViewHost::OnMsgUpdateTitle(int32 page_id,
                                       const std::wstring& title) {
   delegate_->UpdateTitle(this, page_id, title);
-}
-
-void RenderViewHost::OnMsgUpdateFeedList(
-        const ViewHostMsg_UpdateFeedList_Params& params) {
-  delegate_->UpdateFeedList(this, params);
 }
 
 void RenderViewHost::OnMsgUpdateEncoding(const std::wstring& encoding_name) {

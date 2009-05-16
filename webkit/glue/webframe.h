@@ -10,7 +10,6 @@
 #include "skia/ext/bitmap_platform_device.h"
 #include "skia/ext/platform_canvas.h"
 #include "webkit/glue/console_message_level.h"
-#include "webkit/glue/feed.h"
 
 class WebDataSource;
 class WebError;
@@ -139,10 +138,6 @@ class WebFrame {
   // Returns the URL to the OpenSearch description document for the frame. If
   // the page does not have a valid document, an empty GURL is returned.
   virtual GURL GetOSDDURL() const = 0;
-
-  // Return the list of feeds specified in the document for the frame. If
-  // the page does not have a valid document, an empty list is returned.
-  virtual scoped_refptr<class FeedList> GetFeedList() const = 0;
 
   // Returns the committed data source, which is the last data source that has
   // successfully started loading. Will return NULL if no provisional data

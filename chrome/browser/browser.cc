@@ -2369,9 +2369,6 @@ void Browser::ProcessPendingUIUpdates() {
       updated_stuff[contents] |= TabContents::INVALIDATE_FAVICON;
     }
 
-    if (flags & TabContents::INVALIDATE_FEEDLIST)
-      window()->GetLocationBar()->UpdateFeedIcon();
-
     // Updating the URL happens synchronously in ScheduleUIUpdate.
     TabContents* selected_tab = GetSelectedTabContents();
     if (selected_tab && flags & TabContents::INVALIDATE_LOAD && GetStatusBubble())
