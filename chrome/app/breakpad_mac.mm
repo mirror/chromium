@@ -50,7 +50,7 @@ bool IsStatsReportingAllowed() {
 } // namespace
 
 bool IsCrashReporterEnabled() {
-  return gBreakpadRef == NULL;
+  return gBreakpadRef != NULL;
 }
 
 void DestructCrashReporter() {
