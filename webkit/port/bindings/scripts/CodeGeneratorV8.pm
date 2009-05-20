@@ -1720,7 +1720,7 @@ my %typeCanFailConversion = (
     "SVGElement" => 0,
     "SVGLength" => 1,
     "SVGMatrix" => 1,
-    "SVGNumber" => 1,
+    "SVGNumber" => 0,
     "SVGPaintType" => 0,
     "SVGPathSeg" => 0,
     "SVGPoint" => 1,
@@ -1758,7 +1758,6 @@ sub BasicTypeCanFailConversion
 
   return 1 if $type eq "SVGLength";
   return 1 if $type eq "SVGMatrix";
-  return 1 if $type eq "SVGNumber";
   return 1 if $type eq "SVGPoint";
   return 1 if $type eq "SVGRect";
   return 1 if $type eq "SVGTransform";
