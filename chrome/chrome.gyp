@@ -67,8 +67,10 @@
                 # consistency they should look for GOOGLE_CHROME_BUILD like C++.
                 # Clean this up when Windows moves to gyp.
                 'chrome_build': '_google_chrome',
+		'branded_env': 'CHROMIUM_BUILD=google_chrome',
               }, {  # else: branding!="Chrome"
                 'chrome_build': '_chromium',
+		'branded_env': 'CHROMIUM_BUILD=chromium',
               }],
             ],
           },
@@ -81,7 +83,9 @@
           ],
           'action': ['python', '<@(_inputs)', '-i', '<(RULE_INPUT_PATH)',
             'build', '-o', '<(SHARED_INTERMEDIATE_DIR)/chrome',
-            '-D', '<(chrome_build)'],
+            '-D', '<(chrome_build)',
+	    '-E', '<(branded_env)',
+	    ],
           'message': 'Generating resources from <(RULE_INPUT_PATH)',
         },
       ],
