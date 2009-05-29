@@ -93,9 +93,11 @@ class DiskCacheBackendTest : public DiskCacheTestWithCache {
   void BackendDoomRecent();
   void BackendDoomBetween();
   void BackendDoomAll();
+  void BackendDoomAll2();
   void BackendInvalidRankings();
   void BackendDisable();
   void BackendDisable2();
+  void BackendDisable3();
 };
 
 void DiskCacheBackendTest::BackendBasics() {
@@ -946,6 +948,29 @@ TEST_F(DiskCacheBackendTest, DisableFailure2) {
   BackendDisable2();
 }
 
+// If the index size changes when we disable the cache, we should not crash.
+void DiskCacheBackendTest::BackendDisable3() {
+  disk_cache::Entry *entry1, *entry2;
+  void* iter = NULL;
+  EXPECT_EQ(2, cache_->GetEntryCount());
+  ASSERT_TRUE(cache_->OpenNextEntry(&iter, &entry1));
+  entry1->Close();
+
+  EXPECT_FALSE(cache_->OpenNextEntry(&iter, &entry2));
+  ASSERT_TRUE(cache_->CreateEntry("Something new", &entry2));
+  entry2->Close();
+
+  EXPECT_EQ(1, cache_->GetEntryCount());
+}
+
+TEST_F(DiskCacheBackendTest, DisableSuccess3) {
+  ASSERT_TRUE(CopyTestCache(L"bad_rankings2"));
+  DisableFirstCleanup();
+  SetMaxSize(20 * 1024 * 1024);
+  InitCache();
+  BackendDisable3();
+}
+
 TEST_F(DiskCacheTest, Backend_UsageStats) {
   MessageLoopHelper helper;
 
@@ -1011,6 +1036,26 @@ TEST_F(DiskCacheBackendTest, MemoryOnlyDoomAll) {
   SetMemoryOnlyMode();
   InitCache();
   BackendDoomAll();
+}
+
+// If the index size changes when we doom the cache, we should not crash.
+void DiskCacheBackendTest::BackendDoomAll2() {
+  EXPECT_EQ(2, cache_->GetEntryCount());
+  EXPECT_TRUE(cache_->DoomAllEntries());
+
+  disk_cache::Entry* entry;
+  ASSERT_TRUE(cache_->CreateEntry("Something new", &entry));
+  entry->Close();
+
+  EXPECT_EQ(1, cache_->GetEntryCount());
+}
+
+TEST_F(DiskCacheBackendTest, DoomAll2) {
+  ASSERT_TRUE(CopyTestCache(L"bad_rankings2"));
+  DisableFirstCleanup();
+  SetMaxSize(20 * 1024 * 1024);
+  InitCache();
+  BackendDoomAll2();
 }
 
 // We should be able to create the same entry on multiple simultaneous instances
