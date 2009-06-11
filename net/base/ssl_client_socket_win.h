@@ -68,6 +68,7 @@ class SSLClientSocketWin : public SSLClientSocket {
 
   int DidCallInitializeSecurityContext();
   int DidCompleteHandshake();
+  void DidCompleteRenegotiation(int result);
   void LogConnectionTypeMetrics() const;
   void SetNextStateForRead();
   void FreeSendBuffer();
