@@ -346,13 +346,14 @@ void HttpNetworkTransaction::BuildRequestHeaders() {
 // 5.3.
 void HttpNetworkTransaction::BuildTunnelRequest() {
   // RFC 2616 Section 9 says the Host request-header field MUST accompany all
-  // HTTP/1.1 requests.
+  // HTTP/1.1 requests.  Add "Proxy-Connection: keep-alive" for compat with
+  // HTTP/1.0 proxies such as Squid (required for NTLM authentication).
   request_headers_ = StringPrintf("CONNECT %s:%d HTTP/1.1\r\n",
       request_->url.host().c_str(), request_->url.EffectiveIntPort());
   request_headers_ += "Host: " + request_->url.host();
   if (request_->url.has_port())
     request_headers_ += ":" + request_->url.port();
-  request_headers_ += "\r\n";
+  request_headers_ += "\r\nProxy-Connection: keep-alive\r\n";
 
   if (!request_->user_agent.empty())
     request_headers_ += "User-Agent: " + request_->user_agent + "\r\n";
