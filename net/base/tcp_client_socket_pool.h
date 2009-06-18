@@ -212,6 +212,9 @@ class TCPClientSocketPool : public ClientSocketPool {
 
   ClientSocketFactory* const client_socket_factory_;
 
+  // Process a request from a group's pending_requests queue.
+  void ProcessPendingRequest(const std::string& group_name, Group* group);
+
   GroupMap group_map_;
 
   ConnectingSocketMap connecting_socket_map_;

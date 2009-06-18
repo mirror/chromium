@@ -231,6 +231,11 @@ void TCPClientSocketPool::CancelRequest(const std::string& group_name,
     group.connecting_requests.erase(map_it);
     group.active_socket_count--;
 
+    if (!group.pending_requests.empty()) {
+      ProcessPendingRequest(group_name, &group);
+      return;  // |group| may be invalid after this, so return to be safe.
+    }
+
     // Delete group if no longer needed.
     if (group.active_socket_count == 0 && group.idle_sockets.empty()) {
       CHECK(group.pending_requests.empty());
@@ -372,13 +377,7 @@ void TCPClientSocketPool::DoReleaseSocket(const std::string& group_name,
 
   // Process one pending request.
   if (!group.pending_requests.empty()) {
-    Request r = group.pending_requests.front();
-    group.pending_requests.pop_front();
-
-    int rv = RequestSocket(
-        group_name, r.resolve_info, r.priority, r.handle, r.callback);
-    if (rv != ERR_IO_PENDING)
-      r.callback->Run(rv);
+    ProcessPendingRequest(group_name, &group);
     return;
   }
 
@@ -449,6 +448,20 @@ void TCPClientSocketPool::RemoveConnectingSocket(
   CHECK(it != connecting_socket_map_.end());
   delete it->second;
   connecting_socket_map_.erase(it);
+}
+
+void TCPClientSocketPool::ProcessPendingRequest(const std::string& group_name,
+                                                 Group* group) {
+  Request r = group->pending_requests.front();
+  group->pending_requests.pop_front();
+
+  int rv = RequestSocket(
+      group_name, r.resolve_info, r.priority, r.handle, r.callback);
+  
+  // |group| may be invalid after RequestSocket.
+
+  if (rv != ERR_IO_PENDING)
+    r.callback->Run(rv);
 }
 
 }  // namespace net
